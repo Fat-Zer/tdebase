@@ -14,7 +14,7 @@
 #include <tqvbox.h>
 #include <kconfig.h>
 
-class QuartzConfig: public QObject
+class QuartzConfig: public TQObject
 {
 	Q_OBJECT
 

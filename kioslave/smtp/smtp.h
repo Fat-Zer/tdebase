@@ -1,6 +1,6 @@
 /* -*- c++ -*-
  * Copyright (c) 2000, 2001 Alex Zepeda <zipzippy@sonic.net>
- * Copyright (c) 2001 Michael Häckel <Michael@Haeckel.Net>
+ * Copyright (c) 2001 Michael Hï¿½ckel <Michael@Haeckel.Net>
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -39,7 +39,9 @@
 class KURL;
 class TQCString;
 template <typename T> class TQMemArray;
+#ifdef USE_QT3
 typedef TQMemArray<char> TQByteArray;
+#endif // USE_QT3
 
 namespace KioSMTP {
   class Response;

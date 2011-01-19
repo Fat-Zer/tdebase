@@ -1,6 +1,6 @@
 <!DOCTYPE UI><UI version="3.3" stdsetdef="1">
 <class>XineramaWidget</class>
-<widget class="QWidget">
+<widget class="TQWidget">
     <property name="name">
         <cstring>XineramaWidget</cstring>
     </property>
@@ -16,7 +16,7 @@
         <property name="name">
             <cstring>unnamed</cstring>
         </property>
-        <widget class="QTable" row="1" column="0" rowspan="1" colspan="2">
+        <widget class="TQTable" row="1" column="0" rowspan="1" colspan="2">
             <column>
                 <property name="text">
                     <string>X Coordinate</string>
@@ -73,7 +73,7 @@
                 <enum>FollowStyle</enum>
             </property>
         </widget>
-        <widget class="QButtonGroup" row="0" column="0" rowspan="1" colspan="2">
+        <widget class="TQButtonGroup" row="0" column="0" rowspan="1" colspan="2">
             <property name="name">
                 <cstring>ButtonGroup1</cstring>
             </property>
@@ -84,7 +84,7 @@
                 <property name="name">
                     <cstring>unnamed</cstring>
                 </property>
-                <widget class="QCheckBox">
+                <widget class="TQCheckBox">
                     <property name="name">
                         <cstring>_enableXinerama</cstring>
                     </property>
@@ -92,7 +92,7 @@
                         <string>Enable multiple monitor virtual desktop support</string>
                     </property>
                 </widget>
-                <widget class="QCheckBox">
+                <widget class="TQCheckBox">
                     <property name="name">
                         <cstring>_enableResistance</cstring>
                     </property>
@@ -103,7 +103,7 @@
                         <string>Enable multiple monitor window resistance support</string>
                     </property>
                 </widget>
-                <widget class="QCheckBox">
+                <widget class="TQCheckBox">
                     <property name="name">
                         <cstring>_enablePlacement</cstring>
                     </property>
@@ -114,7 +114,7 @@
                         <string>Enable multiple monitor window placement support</string>
                     </property>
                 </widget>
-                <widget class="QCheckBox">
+                <widget class="TQCheckBox">
                     <property name="name">
                         <cstring>_enableMaximize</cstring>
                     </property>
@@ -125,7 +125,7 @@
                         <string>Enable multiple monitor window maximize support</string>
                     </property>
                 </widget>
-                <widget class="QCheckBox">
+                <widget class="TQCheckBox">
                     <property name="name">
                         <cstring>_enableFullscreen</cstring>
                     </property>
@@ -138,7 +138,7 @@
                 </widget>
             </vbox>
         </widget>
-        <widget class="QPushButton" row="3" column="1">
+        <widget class="TQPushButton" row="3" column="1">
             <property name="name">
                 <cstring>_identify</cstring>
             </property>
@@ -156,14 +156,14 @@
             <property name="sizeType">
                 <enum>Expanding</enum>
             </property>
-            <property name="sizeHint">
+            <property name="tqsizeHint">
                 <size>
                     <width>431</width>
                     <height>21</height>
                 </size>
             </property>
         </spacer>
-        <widget class="QLayoutWidget" row="2" column="0" rowspan="1" colspan="2">
+        <widget class="TQLayoutWidget" row="2" column="0" rowspan="1" colspan="2">
             <property name="name">
                 <cstring>layout2</cstring>
             </property>
@@ -171,7 +171,7 @@
                 <property name="name">
                     <cstring>unnamed</cstring>
                 </property>
-                <widget class="QLabel" row="0" column="0">
+                <widget class="TQLabel" row="0" column="0">
                     <property name="name">
                         <cstring>TextLabel2</cstring>
                     </property>
@@ -185,7 +185,7 @@
                         <cstring>_unmanagedDisplay</cstring>
                     </property>
                 </widget>
-                <widget class="QComboBox" row="1" column="1">
+                <widget class="TQComboBox" row="1" column="1">
                     <property name="name">
                         <cstring>_ksplashDisplay</cstring>
                     </property>
@@ -193,7 +193,7 @@
                         <bool>false</bool>
                     </property>
                 </widget>
-                <widget class="QLabel" row="1" column="0">
+                <widget class="TQLabel" row="1" column="0">
                     <property name="name">
                         <cstring>TextLabel2_2</cstring>
                     </property>
@@ -207,7 +207,7 @@
                         <cstring>_unmanagedDisplay</cstring>
                     </property>
                 </widget>
-                <widget class="QComboBox" row="0" column="1">
+                <widget class="TQComboBox" row="0" column="1">
                     <property name="name">
                         <cstring>_unmanagedDisplay</cstring>
                     </property>
@@ -315,12 +315,12 @@
     <include location="local" impldecl="in implementation">kdialog.h</include>
     <include location="local" impldecl="in implementation">xineramawidget.ui.h</include>
 </includes>
-<signals>
+<Q_SIGNALS>
     <signal>configChanged()</signal>
-</signals>
-<slots>
+</Q_SIGNALS>
+<Q_SLOTS>
     <slot access="private">emitConfigChanged()</slot>
-</slots>
+</Q_SLOTS>
 <layoutdefaults spacing="3" margin="6"/>
 <layoutfunctions spacing="KDialog::spacingHint" margin="KDialog::marginHint"/>
 </UI>

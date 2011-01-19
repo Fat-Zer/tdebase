@@ -41,19 +41,19 @@ FaxAB::FaxAB(TQWidget *parent, const char *name)
 	m_list->addColumn( i18n( "Name" ) );
 	m_list->addColumn( i18n( "Fax Number" ) );
 	m_list->header()->setStretchEnabled( true, 0 );
-	QLabel	*m_listlabel = new TQLabel(i18n("Entries:"), this);
+	TQLabel	*m_listlabel = new TQLabel(i18n("Entries:"), this);
 	m_ok = new KPushButton(KStdGuiItem::ok(), this);
-	QPushButton	*m_cancel = new KPushButton(KStdGuiItem::cancel(), this);
-	QPushButton	*m_ab = new KPushButton(KGuiItem(i18n("&Edit Addressbook"), "contents"), this);
+	TQPushButton	*m_cancel = new KPushButton(KStdGuiItem::cancel(), this);
+	TQPushButton	*m_ab = new KPushButton(KGuiItem(i18n("&Edit Addressbook"), "contents"), this);
 	connect(m_ok, TQT_SIGNAL(clicked()), TQT_SLOT(accept()));
 	connect(m_cancel, TQT_SIGNAL(clicked()), TQT_SLOT(reject()));
 	connect(m_ab, TQT_SIGNAL(clicked()), TQT_SLOT(slotEditAb()));
 	m_ok->setDefault(true);
 
-	QVBoxLayout	*l0 = new TQVBoxLayout(this, 10, 10);
+	TQVBoxLayout	*l0 = new TQVBoxLayout(this, 10, 10);
 	l0->addWidget( m_listlabel );
 	l0->addWidget( m_list );
-	QHBoxLayout	*l2 = new TQHBoxLayout(0, 0, 10);
+	TQHBoxLayout	*l2 = new TQHBoxLayout(0, 0, 10);
 	l0->addLayout(l2, 0);
 	l2->addWidget(m_ab, 0);
 	l2->addStretch(1);
@@ -163,7 +163,7 @@ bool FaxAB::getEntry(TQStringList& number, TQStringList& name, TQStringList& ent
 		/*
 		number = kab.m_fax->currentText();
 		name = kab.m_name->currentText();
-		if (kab.m_entries.contains(name))
+		if (kab.m_entries.tqcontains(name))
 		{
 			enterprise = kab.m_entries[name][0];
 		}
@@ -180,7 +180,7 @@ bool FaxAB::getEntryByNumber(const TQString& number, TQString& name, TQString& e
 	for (KABC::AddressBook::Iterator it=bk->begin(); it!=bk->end(); ++it)
 	{
 		KABC::PhoneNumber::List	numbers = (*it).phoneNumbers();
-		QStringList	filteredNumbers;
+		TQStringList	filteredNumbers;
 		for (TQValueList<KABC::PhoneNumber>::Iterator nit=numbers.begin(); nit!=numbers.end(); ++nit)
 		{
 			if (((*nit).type() & KABC::PhoneNumber::Fax) )

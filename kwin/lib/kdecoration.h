@@ -205,7 +205,7 @@ public:
      * @param type   The requested color type.
      * @param active Whether to return the color for active or inactive windows.
      */
-    const TQColorGroup& colorGroup(ColorType type, bool active=true) const;
+    const TQColorGroup& tqcolorGroup(ColorType type, bool active=true) const;
     /**
      * Returns the active or inactive decoration font.
      * The changed flags for this setting is SettingFont.
@@ -286,7 +286,7 @@ public:
     /**
      * @internal
      */
-    WindowOperation operationMaxButtonClick( Qt::ButtonState button ) const;
+    WindowOperation operationMaxButtonClick( TQt::ButtonState button ) const;
 
     /**
      * @internal
@@ -481,15 +481,15 @@ class KWIN_EXPORT KDecoration
 	void performWindowOperation( WindowOperation op );
 	/**
 	 * If the decoration is non-rectangular, this function needs to be called
-	 * to set the shape of the decoration.
+	 * to set the tqshape of the decoration.
 	 *
-	 * @param reg  The shape of the decoration.
+	 * @param reg  The tqshape of the decoration.
 	 * @param mode The X11 values Unsorted, YSorted, YXSorted and YXBanded that specify
 	 *             the sorting of the rectangles, default value is Unsorted.
 	 */
         void setMask( const TQRegion& reg, int mode = 0 );
 	/**
-	 * This convenience function resets the shape mask.
+	 * This convenience function resets the tqshape mask.
 	 */
         void clearMask(); // convenience
 	/**
@@ -573,13 +573,13 @@ class KWIN_EXPORT KDecoration
 	 * whether it's shaded. Decorations often turn off their bottom border when the
 	 * window is shaded, and turn off their left/right/bottom borders when
 	 * the window is maximized and moving and resizing of maximized windows is disabled.
-	 * This function mustn't do any repaints or resizes. Also, if the sizes returned
+	 * This function mustn't do any tqrepaints or resizes. Also, if the sizes returned
 	 * by this function don't match the real values, this may result in drawing errors
 	 * or other problems.
 	 *
 	 * @see KDecorationOptions::moveResizeMaximizedWindows()
 	 */
-        // mustn't do any repaints, resizes or anything like that
+        // mustn't do any tqrepaints, resizes or anything like that
 	virtual void borders( int& left, int& right, int& top, int& bottom ) const = 0;
 	/**
 	 * This method is called by kwin when the style should resize the decoration window.
@@ -594,7 +594,7 @@ class KWIN_EXPORT KDecoration
 	 * Note that the returned size shouldn't be too large, because it will be
 	 * used to keep the decorated window at least as large.
 	 */
-	virtual TQSize minimumSize() const = 0;
+	virtual TQSize tqminimumSize() const = 0;
 	/**
 	 * This function is called whenever the window either becomes or stops being active.
 	 * Use isActive() to find out the current state.

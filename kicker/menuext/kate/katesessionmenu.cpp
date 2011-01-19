@@ -112,7 +112,7 @@ void KateSessionMenu::slotExec( int id )
     TQString name = KInputDialog::getText( i18n("Session Name"),
                                           i18n("Please enter a name for the new session"),
                                           TQString::null,
-                                          &ok, 0, 0, new Validator( m_parent ) );
+                                          &ok, 0, 0, new Validator( TQT_TQOBJECT(m_parent) ) );
     if ( ! ok )
       return;
 
@@ -124,7 +124,7 @@ void KateSessionMenu::slotExec( int id )
                           "kate_session_button_create_anonymous" ) == KMessageBox::No )
       return;
 
-    if ( m_sessions.contains( name ) &&
+    if ( m_sessions.tqcontains( name ) &&
          KMessageBox::warningYesNo( 0,
                                     i18n("You allready have a session named %1. Do you want to open that session?").arg( name ),
                                     i18n("Session exists") ) == KMessageBox::No )

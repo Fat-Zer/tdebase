@@ -25,7 +25,7 @@
 
 class TQComboBox;
 
-class ConfFax : public QWidget
+class ConfFax : public TQWidget
 {
 public:
 	ConfFax(TQWidget *parent = 0, const char *name = 0);
@@ -34,7 +34,7 @@ public:
 	void save();
 
 private:
-	QComboBox	*m_resolution, *m_pagesize;
+	TQComboBox	*m_resolution, *m_pagesize;
 };
 
 #endif

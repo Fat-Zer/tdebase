@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2003 Fredrik Höglund <fredrik@kde.org>
+ * Copyright (C) 2003 Fredrik Hï¿½glund <fredrik@kde.org>
  *
  * Based on the large cursor code written by Rik Hemsley,
  * Copyright (c) 2000 Rik Hemsley <rik@kde.org>
@@ -130,7 +130,7 @@ void ThemePage::load( bool useDefaults )
 		currentTheme = whiteCursor ? "SmallWhite" : "SmallBlack";
 
 	selectedTheme = currentTheme;
-	TQListViewItem *item = listview->findItem( currentTheme, DirColumn );
+	TQListViewItem *item = listview->tqfindItem( currentTheme, DirColumn );
 	item->setSelected( true );
 }
 

@@ -80,7 +80,7 @@ KIconConfig::KIconConfig(TQWidget *parent, const char *name)
 
     // Size
     TQLabel *lbl = new TQLabel(i18n("Size:"), m_pTab1);
-    lbl->setFixedSize(lbl->sizeHint());
+    lbl->setFixedSize(lbl->tqsizeHint());
     grid->addWidget(lbl, 0, 0, Qt::AlignLeft);
     mpSizeBox = new TQComboBox(m_pTab1);
     connect(mpSizeBox, TQT_SIGNAL(activated(int)), TQT_SLOT(slotSize(int)));
@@ -105,8 +105,8 @@ KIconConfig::KIconConfig(TQWidget *parent, const char *name)
 
     top->activate();
 
-    mpSystrayConfig = new KSimpleConfig( TQString::fromLatin1( "systemtray_panelappletrc" ));
-    mpKickerConfig = new KSimpleConfig( TQString::fromLatin1( "kickerrc" ));
+    mpSystrayConfig = new KSimpleConfig( TQString::tqfromLatin1( "systemtray_panelappletrc" ));
+    mpKickerConfig = new KSimpleConfig( TQString::tqfromLatin1( "kickerrc" ));
 
     init();
     read();
@@ -123,13 +123,13 @@ KIconConfig::~KIconConfig()
 TQPushButton *KIconConfig::addPreviewIcon(int i, const TQString &str, TQWidget *parent, TQGridLayout *lay)
 {
     TQLabel *lab = new TQLabel(str, parent);
-    lay->addWidget(lab, 1, i, AlignCenter);
+    lay->addWidget(lab, 1, i, Qt::AlignCenter);
     mpPreview[i] = new TQLabel(parent);
-    mpPreview[i]->setAlignment(AlignCenter);
+    mpPreview[i]->tqsetAlignment(AlignCenter);
     mpPreview[i]->setMinimumSize(105, 105);
     lay->addWidget(mpPreview[i], 2, i);
     TQPushButton *push = new TQPushButton(i18n("Set Effect..."), parent);
-    lay->addWidget(push, 3, i, AlignCenter);
+    lay->addWidget(push, 3, i, Qt::AlignCenter);
     return push;
 }
 
@@ -202,22 +202,22 @@ void KIconConfig::initDefaults()
 	mEffects[i][2] = mDefaultEffect[2];
     }
     // Animate desktop icons by default
-    int group = mGroups.findIndex( "Desktop" );
+    int group = mGroups.tqfindIndex( "Desktop" );
     if ( group != -1 )
         mbAnimated[group] = true;
 
     // This is the new default in KDE 2.2, in sync with the kiconeffect of kdelibs Nolden 2001/06/11
-    int activeState = mStates.findIndex( "Active" );
+    int activeState = mStates.tqfindIndex( "Active" );
     if ( activeState != -1 )
     {
-        int group = mGroups.findIndex( "Desktop" );
+        int group = mGroups.tqfindIndex( "Desktop" );
         if ( group != -1 )
         {
             mEffects[ group ][ activeState ].type = KIconEffect::ToGamma;
             mEffects[ group ][ activeState ].value = 0.7;
         }
 
-        group = mGroups.findIndex( "Panel" );
+        group = mGroups.tqfindIndex( "Panel" );
         if ( group != -1 )
         {
             mEffects[ group ][ activeState ].type = KIconEffect::ToGamma;
@@ -302,12 +302,12 @@ void KIconConfig::apply()
 
     if (mpUsageList->currentText() == i18n("Panel Buttons")) {
         mpSizeBox->clear();
-        mpSizeBox->insertItem(TQString().setNum(16));
-        mpSizeBox->insertItem(TQString().setNum(22));
-        mpSizeBox->insertItem(TQString().setNum(32));
-        mpSizeBox->insertItem(TQString().setNum(48));
-        mpSizeBox->insertItem(TQString().setNum(64));
-        mpSizeBox->insertItem(TQString().setNum(128));
+        mpSizeBox->insertItem(TQString().tqsetNum(16));
+        mpSizeBox->insertItem(TQString().tqsetNum(22));
+        mpSizeBox->insertItem(TQString().tqsetNum(32));
+        mpSizeBox->insertItem(TQString().tqsetNum(48));
+        mpSizeBox->insertItem(TQString().tqsetNum(64));
+        mpSizeBox->insertItem(TQString().tqsetNum(128));
         for (i=0;i<(mpSizeBox->count());i++) {
             if (mpSizeBox->text(i) == TQString().setNum(mQuickLaunchSize)) {
                 mpSizeBox->setCurrentItem(i);
@@ -316,12 +316,12 @@ void KIconConfig::apply()
     }
     else if (mpUsageList->currentText() == i18n("System Tray Icons")) {
         mpSizeBox->clear();
-        mpSizeBox->insertItem(TQString().setNum(16));
-        mpSizeBox->insertItem(TQString().setNum(22));
-        mpSizeBox->insertItem(TQString().setNum(32));
-        mpSizeBox->insertItem(TQString().setNum(48));
-        mpSizeBox->insertItem(TQString().setNum(64));
-        mpSizeBox->insertItem(TQString().setNum(128));
+        mpSizeBox->insertItem(TQString().tqsetNum(16));
+        mpSizeBox->insertItem(TQString().tqsetNum(22));
+        mpSizeBox->insertItem(TQString().tqsetNum(32));
+        mpSizeBox->insertItem(TQString().tqsetNum(48));
+        mpSizeBox->insertItem(TQString().tqsetNum(64));
+        mpSizeBox->insertItem(TQString().tqsetNum(128));
         for (i=0;i<(mpSizeBox->count());i++) {
             if (mpSizeBox->text(i) == TQString().setNum(mSysTraySize)) {
                 mpSizeBox->setCurrentItem(i);
@@ -335,7 +335,7 @@ void KIconConfig::apply()
         if (mUsage < KIcon::LastGroup) {
             for (it=mAvSizes[mUsage].begin(), i=0; it!=mAvSizes[mUsage].end(); ++it, i++)
             {
-                mpSizeBox->insertItem(TQString().setNum(*it));
+                mpSizeBox->insertItem(TQString().tqsetNum(*it));
                 dw = abs(mSizes[mUsage] - *it);
                 if (dw < delta)
                 {
@@ -477,8 +477,8 @@ void KIconConfig::save()
     g.writeEntry("IconUseRoundedRect", mpRoundedCheck->isChecked(), true, true);
     g.writeEntry("ShowKonqIconActivationEffect", mpActiveEffectCheck->isChecked(), true, true);
 
-    kapp->dcopClient()->send( "konqueror*", "KonquerorIface", "reparseConfiguration()", "" );
-    kapp->dcopClient()->send( "kdesktop", "KDesktopIface", "configure()", "" );
+    kapp->dcopClient()->send( "konqueror*", "KonquerorIface", "reparseConfiguration()", TQString("") );
+    kapp->dcopClient()->send( "kdesktop", "KDesktopIface", "configure()", TQString("") );
 
     mpConfig->sync();
     mpSystrayConfig->sync();
@@ -688,7 +688,7 @@ KIconEffectSetupDialog::KIconEffectSetupDialog(const Effect &effect,
     top->setRowStretch(1,1);
 
     lbl = new TQLabel(i18n("&Effect:"), page);
-    lbl->setFixedSize(lbl->sizeHint());
+    lbl->setFixedSize(lbl->tqsizeHint());
     top->addWidget(lbl, 0, 0, Qt::AlignLeft);
     mpEffectBox = new TQListBox(page);
     mpEffectBox->insertItem(i18n("No Effect"));
@@ -713,7 +713,7 @@ KIconEffectSetupDialog::KIconEffectSetupDialog(const Effect &effect,
     grid->setRowStretch(1, 1);
 
     mpPreview = new TQLabel(frame);
-    mpPreview->setAlignment(AlignCenter);
+    mpPreview->tqsetAlignment(AlignCenter);
     mpPreview->setMinimumSize(105, 105);
     grid->addWidget(mpPreview, 1, 0);
 
@@ -724,7 +724,7 @@ KIconEffectSetupDialog::KIconEffectSetupDialog(const Effect &effect,
 
     mpEffectLabel = new TQLabel(i18n("&Amount:"), mpEffectGroup);
     grid->addWidget(mpEffectLabel, 1, 0);
-    mpEffectSlider = new TQSlider(0, 100, 5, 10, TQSlider::Horizontal, mpEffectGroup);
+    mpEffectSlider = new TQSlider(0, 100, 5, 10, Qt::Horizontal, mpEffectGroup);
     mpEffectLabel->setBuddy( mpEffectSlider );
     connect(mpEffectSlider, TQT_SIGNAL(valueChanged(int)), TQT_SLOT(slotEffectValue(int)));
     grid->addWidget(mpEffectSlider, 1, 1);

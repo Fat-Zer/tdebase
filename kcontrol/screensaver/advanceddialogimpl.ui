@@ -1,6 +1,6 @@
 <!DOCTYPE UI><UI version="3.3" stdsetdef="1">
 <class>AdvancedDialogImpl</class>
-<widget class="QWidget">
+<widget class="TQWidget">
     <property name="name">
         <cstring>Form1</cstring>
     </property>
@@ -19,7 +19,7 @@
         <property name="margin">
             <number>0</number>
         </property>
-        <widget class="QGroupBox" row="1" column="0">
+        <widget class="TQGroupBox" row="1" column="0">
             <property name="name">
                 <cstring>qgbPriority</cstring>
             </property>
@@ -36,7 +36,7 @@
                 <property name="name">
                     <cstring>unnamed</cstring>
                 </property>
-                <widget class="QComboBox" row="0" column="0">
+                <widget class="TQComboBox" row="0" column="0">
                     <item>
                         <property name="text">
                             <string>Low</string>
@@ -69,7 +69,7 @@
                     <property name="sizeType">
                         <enum>Expanding</enum>
                     </property>
-                    <property name="sizeHint">
+                    <property name="tqsizeHint">
                         <size>
                             <width>31</width>
                             <height>20</height>
@@ -78,7 +78,7 @@
                 </spacer>
             </grid>
         </widget>
-        <widget class="QGroupBox" row="0" column="0">
+        <widget class="TQGroupBox" row="0" column="0">
             <property name="name">
                 <cstring>groupBox1</cstring>
             </property>
@@ -89,7 +89,7 @@
                 <property name="name">
                     <cstring>unnamed</cstring>
                 </property>
-                <widget class="QLabel" row="3" column="0" rowspan="2" colspan="2">
+                <widget class="TQLabel" row="3" column="0" rowspan="2" colspan="2">
                     <property name="name">
                         <cstring>qlMonitorLabel</cstring>
                     </property>
@@ -97,7 +97,7 @@
                         <string></string>
                     </property>
                 </widget>
-                <widget class="QLayoutWidget" row="0" column="0" rowspan="1" colspan="2">
+                <widget class="TQLayoutWidget" row="0" column="0" rowspan="1" colspan="2">
                     <property name="name">
                         <cstring>layout8</cstring>
                     </property>
@@ -105,7 +105,7 @@
                         <property name="name">
                             <cstring>unnamed</cstring>
                         </property>
-                        <widget class="QLayoutWidget">
+                        <widget class="TQLayoutWidget">
                             <property name="name">
                                 <cstring>layout1</cstring>
                             </property>
@@ -113,7 +113,7 @@
                                 <property name="name">
                                     <cstring>unnamed</cstring>
                                 </property>
-                                <widget class="QLabel">
+                                <widget class="TQLabel">
                                     <property name="name">
                                         <cstring>qlTopLeft</cstring>
                                     </property>
@@ -121,7 +121,7 @@
                                         <string>Top left:</string>
                                     </property>
                                 </widget>
-                                <widget class="QComboBox">
+                                <widget class="TQComboBox">
                                     <item>
                                         <property name="text">
                                             <string>No Action</string>
@@ -153,14 +153,14 @@
                             <property name="sizeType">
                                 <enum>Expanding</enum>
                             </property>
-                            <property name="sizeHint">
+                            <property name="tqsizeHint">
                                 <size>
                                     <width>41</width>
                                     <height>20</height>
                                 </size>
                             </property>
                         </spacer>
-                        <widget class="QLayoutWidget">
+                        <widget class="TQLayoutWidget">
                             <property name="name">
                                 <cstring>layout3</cstring>
                             </property>
@@ -168,7 +168,7 @@
                                 <property name="name">
                                     <cstring>unnamed</cstring>
                                 </property>
-                                <widget class="QLabel">
+                                <widget class="TQLabel">
                                     <property name="name">
                                         <cstring>qlTopRight</cstring>
                                     </property>
@@ -176,7 +176,7 @@
                                         <string>Top right:</string>
                                     </property>
                                 </widget>
-                                <widget class="QComboBox">
+                                <widget class="TQComboBox">
                                     <item>
                                         <property name="text">
                                             <string>No Action</string>
@@ -200,7 +200,7 @@
                         </widget>
                     </hbox>
                 </widget>
-                <widget class="QLayoutWidget" row="5" column="0" rowspan="1" colspan="2">
+                <widget class="TQLayoutWidget" row="5" column="0" rowspan="1" colspan="2">
                     <property name="name">
                         <cstring>layout9</cstring>
                     </property>
@@ -208,7 +208,7 @@
                         <property name="name">
                             <cstring>unnamed</cstring>
                         </property>
-                        <widget class="QLayoutWidget">
+                        <widget class="TQLayoutWidget">
                             <property name="name">
                                 <cstring>layout4</cstring>
                             </property>
@@ -216,7 +216,7 @@
                                 <property name="name">
                                     <cstring>unnamed</cstring>
                                 </property>
-                                <widget class="QLabel">
+                                <widget class="TQLabel">
                                     <property name="name">
                                         <cstring>qlBottomLeft</cstring>
                                     </property>
@@ -224,7 +224,7 @@
                                         <string>Bottom left:</string>
                                     </property>
                                 </widget>
-                                <widget class="QComboBox">
+                                <widget class="TQComboBox">
                                     <item>
                                         <property name="text">
                                             <string>No Action</string>
@@ -256,14 +256,14 @@
                             <property name="sizeType">
                                 <enum>Expanding</enum>
                             </property>
-                            <property name="sizeHint">
+                            <property name="tqsizeHint">
                                 <size>
                                     <width>20</width>
                                     <height>20</height>
                                 </size>
                             </property>
                         </spacer>
-                        <widget class="QLayoutWidget">
+                        <widget class="TQLayoutWidget">
                             <property name="name">
                                 <cstring>layout2</cstring>
                             </property>
@@ -271,7 +271,7 @@
                                 <property name="name">
                                     <cstring>unnamed</cstring>
                                 </property>
-                                <widget class="QLabel">
+                                <widget class="TQLabel">
                                     <property name="name">
                                         <cstring>qlBottomRight</cstring>
                                     </property>
@@ -279,7 +279,7 @@
                                         <string>Bottom right:</string>
                                     </property>
                                 </widget>
-                                <widget class="QComboBox">
+                                <widget class="TQComboBox">
                                     <item>
                                         <property name="text">
                                             <string>No Action</string>
@@ -303,7 +303,7 @@
                         </widget>
                     </hbox>
                 </widget>
-                <widget class="QLayoutWidget" row="2" column="0" rowspan="1" colspan="2">
+                <widget class="TQLayoutWidget" row="2" column="0" rowspan="1" colspan="2">
                     <property name="name">
                         <cstring>layout10</cstring>
                     </property>
@@ -321,14 +321,14 @@
                             <property name="sizeType">
                                 <enum>Expanding</enum>
                             </property>
-                            <property name="sizeHint">
+                            <property name="tqsizeHint">
                                 <size>
                                     <width>21</width>
                                     <height>20</height>
                                 </size>
                             </property>
                         </spacer>
-                        <widget class="QLabel">
+                        <widget class="TQLabel">
                             <property name="name">
                                 <cstring>monitorLabel</cstring>
                             </property>
@@ -346,7 +346,7 @@
                             <property name="sizeType">
                                 <enum>Expanding</enum>
                             </property>
-                            <property name="sizeHint">
+                            <property name="tqsizeHint">
                                 <size>
                                     <width>31</width>
                                     <height>20</height>
@@ -365,7 +365,7 @@
                     <property name="sizeType">
                         <enum>Expanding</enum>
                     </property>
-                    <property name="sizeHint">
+                    <property name="tqsizeHint">
                         <size>
                             <width>20</width>
                             <height>20</height>
@@ -382,7 +382,7 @@
                     <property name="sizeType">
                         <enum>Expanding</enum>
                     </property>
-                    <property name="sizeHint">
+                    <property name="tqsizeHint">
                         <size>
                             <width>20</width>
                             <height>20</height>

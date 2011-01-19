@@ -15,7 +15,7 @@
 
 class KFileItem;
 
-class KQuery : public QObject
+class KQuery : public TQObject
 {
   Q_OBJECT
 

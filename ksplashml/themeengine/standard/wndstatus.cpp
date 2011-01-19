@@ -37,7 +37,7 @@ WndStatus::WndStatus( TQPalette /*pal*/,
                       const TQColor& fgc, const TQColor & bgc,
                       const TQString& icon
                     )
-    :TQHBox( 0, "wndStatus", WStyle_Customize|WX11BypassWM )
+    :TQHBox( 0, "wndStatus", (WFlags)(WStyle_Customize|WX11BypassWM) )
 {
   setFrameStyle( TQFrame::NoFrame );
   //setPalette( pal );

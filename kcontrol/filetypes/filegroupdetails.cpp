@@ -27,11 +27,11 @@
 FileGroupDetails::FileGroupDetails(TQWidget *parent, const char *name )
     : TQWidget( parent, name )
 {
-  TQWidget * parentWidget = this;
-  TQVBoxLayout *secondLayout = new TQVBoxLayout(parentWidget,
+  TQWidget * tqparentWidget = this;
+  TQVBoxLayout *secondLayout = new TQVBoxLayout(tqparentWidget,
       0, KDialog::spacingHint());
 
-  m_autoEmbed = new TQVButtonGroup( i18n("Left Click Action"), parentWidget );
+  m_autoEmbed = new TQVButtonGroup( i18n("Left Click Action"), tqparentWidget );
   m_autoEmbed->layout()->setSpacing( KDialog::spacingHint() );
   secondLayout->addWidget( m_autoEmbed );
   // The order of those two items is very important. If you change it, fix typeslistitem.cpp !

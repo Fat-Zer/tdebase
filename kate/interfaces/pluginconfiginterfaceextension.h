@@ -26,7 +26,7 @@
 namespace Kate
 {
 
-class KDE_EXPORT PluginConfigPage : public QWidget
+class KDE_EXPORT PluginConfigPage : public TQWidget
 {
   Q_OBJECT
 

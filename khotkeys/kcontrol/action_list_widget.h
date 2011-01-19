@@ -61,7 +61,7 @@ class Action_list_widget
 typedef Action_list_widget Action_list_tab;
 
 class Action_list_item
-    : public QListViewItem
+    : public TQListViewItem
     {
     public:
         Action_list_item( TQListView* parent_P, Action* action_P );

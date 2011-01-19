@@ -33,7 +33,7 @@
 typedef KParts::GenericFactory<PrintPart> PrintPartFactory;
 K_EXPORT_COMPONENT_FACTORY( libkdeprint_part, PrintPartFactory )
 
-PrintPart::PrintPart(TQWidget *parentWidget, const char * /*widgetName*/ ,
+PrintPart::PrintPart(TQWidget *tqparentWidget, const char * /*widgetName*/ ,
 	             TQObject *parent, const char *name,
 		     const TQStringList & /*args*/ )
 : KParts::ReadOnlyPart(parent, name)
@@ -42,8 +42,8 @@ PrintPart::PrintPart(TQWidget *parentWidget, const char * /*widgetName*/ ,
     instance()->iconLoader()->addAppDir("kdeprint");
 	m_extension = new PrintPartExtension(this);
 
-	m_view = new KMMainView(parentWidget, "MainView", actionCollection());
-	m_view->setFocusPolicy(TQWidget::ClickFocus);
+	m_view = new KMMainView(tqparentWidget, "MainView", actionCollection());
+	m_view->setFocusPolicy(TQ_ClickFocus);
 	m_view->enableToolbar(false);
 	setWidget(m_view);
 

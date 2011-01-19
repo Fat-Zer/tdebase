@@ -29,7 +29,7 @@ class Voice;
 class VoiceRecorder;
 class VoiceSignature;
 
-class VoiceRecordPage : public QVBox
+class VoiceRecordPage : public TQVBox
     {
     Q_OBJECT
 

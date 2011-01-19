@@ -140,7 +140,7 @@ void PlastikButton::animate()
         }
     }
 
-    repaint(false);
+    tqrepaint(false);
 }
 
 void PlastikButton::enterEvent(TQEvent *e)
@@ -253,7 +253,7 @@ void PlastikButton::drawButton(TQPainter *painter)
     {
         TQPixmap menuIcon(m_client->icon().pixmap( TQIconSet::Small, TQIconSet::Normal));
         if (width() < menuIcon.width() || height() < menuIcon.height() ) {
-            menuIcon.convertFromImage( menuIcon.convertToImage().smoothScale(width(), height()));
+            menuIcon.convertFromImage( TQImage(menuIcon.convertToImage()).smoothScale(width(), height()));
         }
         bP.drawPixmap((width()-menuIcon.width())/2, (height()-menuIcon.height())/2, menuIcon);
     }
@@ -269,7 +269,7 @@ void PlastikButton::drawButton(TQPainter *painter)
 
         if(!isDown() && Handler()->titleShadow() ) {
             TQColor shadowColor;
-            if (qGray(Handler()->getColor(TitleFont,active).rgb()) < 100)
+            if (tqGray(Handler()->getColor(TitleFont,active).rgb()) < 100)
                 shadowColor = TQColor(255, 255, 255);
             else
                 shadowColor = TQColor(0,0,0);

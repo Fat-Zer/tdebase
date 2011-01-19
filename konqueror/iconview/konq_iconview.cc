@@ -72,13 +72,13 @@ public:
       s_defaultViewProps = 0;
    }
 
-    virtual KParts::Part* createPartObject( TQWidget *parentWidget, const char *,
+    virtual KParts::Part* createPartObject( TQWidget *tqparentWidget, const char *,
                                       TQObject *parent, const char *name, const char*, const TQStringList &args )
    {
       if( args.count() < 1 )
          kdWarning() << "KonqKfmIconView: Missing Parameter" << endl;
 
-      KonqKfmIconView *obj = new KonqKfmIconView( parentWidget, parent, name,args.first() );
+      KonqKfmIconView *obj = new KonqKfmIconView( tqparentWidget, parent, name,args.first() );
       return obj;
    }
 
@@ -164,7 +164,7 @@ void IconViewBrowserExtension::setNameFilter( const TQString &nameFilter )
   m_iconView->m_nameFilter = nameFilter;
 }
 
-KonqKfmIconView::KonqKfmIconView( TQWidget *parentWidget, TQObject *parent, const char *name, const TQString& mode  )
+KonqKfmIconView::KonqKfmIconView( TQWidget *tqparentWidget, TQObject *parent, const char *name, const TQString& mode  )
     : KonqDirPart( parent, name )
     , m_bNeedSetCurrentItem( false )
     , m_pEnsureVisible( 0 )
@@ -179,7 +179,7 @@ KonqKfmIconView::KonqKfmIconView( TQWidget *parentWidget, TQObject *parent, cons
     // Create a properties instance for this view
     m_pProps = new KonqPropsView( KonqIconViewFactory::instance(), KonqIconViewFactory::defaultViewProps() );
 
-    m_pIconView = new KonqIconViewWidget( parentWidget, "qiconview" );
+    m_pIconView = new KonqIconViewWidget( tqparentWidget, "qiconview" );
     m_pIconView->initConfig( true );
 
     connect( m_pIconView,  TQT_SIGNAL(imagePreviewFinished()),
@@ -206,7 +206,7 @@ KonqKfmIconView::KonqKfmIconView( TQWidget *parentWidget, TQObject *parent, cons
 
     setXMLFile( "konq_iconview.rc" );
 
-    // Don't repaint on configuration changes during construction
+    // Don't tqrepaint on configuration changes during construction
     m_bInit = true;
 
     m_paDotFiles = new KToggleAction( i18n( "Show &Hidden Files" ), 0, this, TQT_SLOT( slotShowDot() ),
@@ -359,7 +359,7 @@ KonqKfmIconView::KonqKfmIconView( TQWidget *parentWidget, TQObject *parent, cons
     // Create the directory lister
     m_dirLister = new KDirLister( true );
     setDirLister( m_dirLister );
-    m_dirLister->setMainWindow(m_pIconView->topLevelWidget());
+    m_dirLister->setMainWindow(m_pIconView->tqtopLevelWidget());
 
     connect( m_dirLister, TQT_SIGNAL( started( const KURL & ) ),
              this, TQT_SLOT( slotStarted() ) );
@@ -429,7 +429,7 @@ const KFileItem * KonqKfmIconView::currentItem()
 
 void KonqKfmIconView::slotPreview( bool toggle )
 {
-    TQCString name = sender()->name(); // e.g. clipartthumbnail (or audio/, special case)
+    TQCString name = TQT_TQOBJECT_CONST(sender())->name(); // e.g. clipartthumbnail (or audio/, special case)
     if (name == "iconview_preview_all")
     {
         m_pProps->setShowingPreview( toggle );
@@ -686,7 +686,7 @@ void KonqKfmIconView::newIconSize( int size )
     // Stop a preview job that might be running
     m_pIconView->stopImagePreview();
 
-    // Set icons size, arrage items in grid and repaint the whole view
+    // Set icons size, arrage items in grid and tqrepaint the whole view
     m_pIconView->setIcons( size );
 
     // If previews are enabled start a new job
@@ -794,7 +794,7 @@ void KonqKfmIconView::slotContextMenuRequested(TQIconViewItem* _item, const TQPo
 
 void KonqKfmIconView::slotMouseButtonPressed(int _button, TQIconViewItem* _item, const TQPoint&)
 {
-    if ( _button == RightButton && !_item )
+    if ( _button == Qt::RightButton && !_item )
     {
         // Right click on viewport
         KFileItem * item = m_dirLister->rootItem();
@@ -831,7 +831,7 @@ void KonqKfmIconView::slotMouseButtonPressed(int _button, TQIconViewItem* _item,
 
 void KonqKfmIconView::slotMouseButtonClicked(int _button, TQIconViewItem* _item, const TQPoint& )
 {
-    if( _button == MidButton )
+    if( _button == Qt::MidButton )
         mmbClicked( _item ? static_cast<KFileIVI*>(_item)->item() : 0L );
 }
 
@@ -873,7 +873,7 @@ void KonqKfmIconView::slotCanceled( const KURL& url )
     if ( !m_pIconView->viewport()->isUpdatesEnabled() )
     {
         m_pIconView->viewport()->setUpdatesEnabled( true );
-        m_pIconView->viewport()->repaint();
+        m_pIconView->viewport()->tqrepaint();
     }
     if ( m_pEnsureVisible ){
         m_pIconView->ensureItemVisible( m_pEnsureVisible );
@@ -889,11 +889,11 @@ void KonqKfmIconView::slotCompleted()
         m_pTimeoutRefreshTimer->stop();
 
     // If updates to the viewport are still blocked (so slotNewItems() has
-    // not been called), a viewport repaint is forced.
+    // not been called), a viewport tqrepaint is forced.
     if ( !m_pIconView->viewport()->isUpdatesEnabled() )
     {
         m_pIconView->viewport()->setUpdatesEnabled( true );
-        m_pIconView->viewport()->repaint();
+        m_pIconView->viewport()->tqrepaint();
     }
 
     // Root item ? Store root item in konqiconviewwidget (whether 0L or not)
@@ -962,7 +962,7 @@ void KonqKfmIconView::slotNewItems( const KFileItemList& entries )
         KFileItem* fileItem = item->item();
 
         if ( !m_itemsToSelect.isEmpty() ) {
-           TQStringList::Iterator tsit = m_itemsToSelect.find( fileItem->name() );
+           TQStringList::Iterator tsit = m_itemsToSelect.tqfind( fileItem->name() );
            if ( tsit != m_itemsToSelect.end() ) {
               m_itemsToSelect.remove( tsit );
               m_pIconView->setSelected( item, true, true );
@@ -1136,7 +1136,7 @@ void KonqKfmIconView::slotRefreshItems( const KFileItemList& entries )
     }
     else
     {
-        // In case we replace a big icon with a small one, need to repaint.
+        // In case we replace a big icon with a small one, need to tqrepaint.
         if ( bNeedRepaint )
             m_pIconView->updateContents();
     }
@@ -1248,7 +1248,7 @@ void KonqKfmIconView::slotRefreshViewport()
     TQWidget * vp = m_pIconView->viewport();
     bool prevState = vp->isUpdatesEnabled();
     vp->setUpdatesEnabled( true );
-    vp->repaint();
+    vp->tqrepaint();
     vp->setUpdatesEnabled( prevState );
 }
 

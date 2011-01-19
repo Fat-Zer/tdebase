@@ -68,8 +68,8 @@ ConfFilters::ConfFilters(TQWidget *parent, const char *name)
 	TQToolTip::add(m_up, i18n("Move filter up"));
 	TQToolTip::add(m_down, i18n("Move filter down"));
 
-	QHBoxLayout	*l0 = new TQHBoxLayout(this, 10, 10);
-	QVBoxLayout	*l1 = new TQVBoxLayout(0, 0, 0);
+	TQHBoxLayout	*l0 = new TQHBoxLayout(this, 10, 10);
+	TQVBoxLayout	*l1 = new TQVBoxLayout(0, 0, 0);
 	l0->addWidget(m_filters, 1);
 	l0->addLayout(l1, 0);
 	l1->addWidget(m_add);
@@ -85,19 +85,19 @@ ConfFilters::ConfFilters(TQWidget *parent, const char *name)
 
 void ConfFilters::load()
 {
-	QFile	f(locate("data","kdeprintfax/faxfilters"));
+	TQFile	f(locate("data","kdeprintfax/faxfilters"));
 	if (f.exists() && f.open(IO_ReadOnly))
 	{
-		QTextStream	t(&f);
-		QString		line;
+		TQTextStream	t(&f);
+		TQString		line;
 		int		p(-1);
-		QListViewItem	*item(0);
+		TQListViewItem	*item(0);
 		while (!t.eof())
 		{
 			line = t.readLine().stripWhiteSpace();
-			if ((p=line.find(TQRegExp("\\s"))) != -1)
+			if ((p=line.tqfind(TQRegExp("\\s"))) != -1)
 			{
-				QString	mime(line.left(p)), cmd(line.right(line.length()-p-1).stripWhiteSpace());
+				TQString	mime(line.left(p)), cmd(line.right(line.length()-p-1).stripWhiteSpace());
 				if (!mime.isEmpty() && !cmd.isEmpty())
 					item = new TQListViewItem(m_filters, item, mime, cmd);
 			}
@@ -107,11 +107,11 @@ void ConfFilters::load()
 
 void ConfFilters::save()
 {
-	QListViewItem	*item = m_filters->firstChild();
-	QFile	f(locateLocal("data","kdeprintfax/faxfilters"));
+	TQListViewItem	*item = m_filters->firstChild();
+	TQFile	f(locateLocal("data","kdeprintfax/faxfilters"));
 	if (f.open(IO_WriteOnly))
 	{
-		QTextStream	t(&f);
+		TQTextStream	t(&f);
 		while (item)
 		{
 			t << item->text(0) << ' ' << item->text(1) << endl;
@@ -122,7 +122,7 @@ void ConfFilters::save()
 
 void ConfFilters::slotAdd()
 {
-	QString	mime, cmd;
+	TQString	mime, cmd;
 	if (FilterDlg::doIt(this, &mime, &cmd))
 		if (!mime.isEmpty() && !cmd.isEmpty())
 		  {
@@ -135,7 +135,7 @@ void ConfFilters::slotAdd()
 
 void ConfFilters::slotRemove()
 {
-	QListViewItem	*item = m_filters->currentItem();
+	TQListViewItem	*item = m_filters->currentItem();
 	if (item)
 		delete item;
 	updateButton();
@@ -143,10 +143,10 @@ void ConfFilters::slotRemove()
 
 void ConfFilters::slotChange()
 {
-	QListViewItem	*item = m_filters->currentItem();
+	TQListViewItem	*item = m_filters->currentItem();
 	if (item)
 	{
-		QString	mime(item->text(0)), cmd(item->text(1));
+		TQString	mime(item->text(0)), cmd(item->text(1));
 		if (FilterDlg::doIt(this, &mime, &cmd))
 		{
 			item->setText(0, mime);
@@ -157,7 +157,7 @@ void ConfFilters::slotChange()
 
 void ConfFilters::slotUp()
 {
-	QListViewItem	*item = m_filters->currentItem();
+	TQListViewItem	*item = m_filters->currentItem();
 	if (item && item->itemAbove())
 	{
 		m_filters->moveItem(item, 0, item->itemAbove()->itemAbove());
@@ -168,7 +168,7 @@ void ConfFilters::slotUp()
 
 void ConfFilters::slotDown()
 {
-	QListViewItem	*item = m_filters->currentItem();
+	TQListViewItem	*item = m_filters->currentItem();
 	if (item && item->itemBelow())
 	{
 		m_filters->moveItem(item, 0, item->itemBelow());
@@ -179,7 +179,7 @@ void ConfFilters::slotDown()
 
 void ConfFilters::updateButton()
 {
-  QListViewItem	*item = m_filters->currentItem();
+  TQListViewItem	*item = m_filters->currentItem();
 
   bool state=item && item->itemBelow();
   m_remove->setEnabled(item);

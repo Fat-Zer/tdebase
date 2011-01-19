@@ -103,7 +103,7 @@ void USBDevice::parseSysDir(int bus, int parent, int level, TQString dname)
   TQStringList list = dir.entryList();
 
   for(TQStringList::Iterator it = list.begin(); it != list.end(); ++it) {
-    if ((*it).contains(':'))
+    if ((*it).tqcontains(':'))
       continue;
 
     USBDevice* dev = new USBDevice();
@@ -277,8 +277,8 @@ bool USBDevice::parse(TQString fname)
   // read in the device infos
   USBDevice *device = 0;
   int start=0, end;
-  result.replace(TQRegExp("^\n"),"");
-  while ((end = result.find('\n', start)) > 0)
+  result.tqreplace(TQRegExp("^\n"),"");
+  while ((end = result.tqfind('\n', start)) > 0)
     {
       TQString line = result.mid(start, end-start);
 
@@ -332,10 +332,10 @@ void USBDevice::collectData( int fd, int level, usb_device_info &di, int parent)
 	
 	_bus          = di.udi_bus;
 	_device       = di.udi_addr;
-	_product      = TQString::fromLatin1(di.udi_product);
+	_product      = TQString::tqfromLatin1(di.udi_product);
 	if ( _device == 1 )
 		_product += " " + TQString::number( _bus );
-	_manufacturer = TQString::fromLatin1(di.udi_vendor);
+	_manufacturer = TQString::tqfromLatin1(di.udi_vendor);
 	_prodID       = di.udi_productNo;
 	_vendorID     = di.udi_vendorNo;
 	_class        = di.udi_class;

@@ -88,8 +88,8 @@ MountHelper::MountHelper() : KApplication()
 	TQString device = medium.deviceNode();
 	TQString mount_point = medium.mountPoint();
 
-	m_isCdrom = medium.mimeType().find("dvd")!=-1
-	         || medium.mimeType().find("cd")!=-1;
+	m_isCdrom = medium.mimeType().tqfind("dvd")!=-1
+	         || medium.mimeType().tqfind("cd")!=-1;
 
 	if (args->isSet("d"))
 	{
@@ -182,7 +182,7 @@ MountHelper::MountHelper() : KApplication()
 
 void MountHelper::invokeEject(const TQString &device, bool quiet)
 {
-	KProcess *proc = new KProcess(this);
+	KProcess *proc = new KProcess(TQT_TQOBJECT(this));
 	*proc << "kdeeject";
 	if (quiet)
 	{

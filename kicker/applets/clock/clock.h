@@ -246,7 +246,7 @@ class FuzzyClock : public TQFrame, public ClockWidget
         bool alreadyDrawing;
 };
 
-class ClockAppletToolTip : public QToolTip
+class ClockAppletToolTip : public TQToolTip
 {
     public:
         ClockAppletToolTip( ClockApplet* clock );

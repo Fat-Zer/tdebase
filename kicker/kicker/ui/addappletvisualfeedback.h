@@ -38,7 +38,7 @@ class TQPaintEvent;
 class TQSimpleRichText;
 class TQTimer;
 
-class AddAppletVisualFeedback : QWidget
+class AddAppletVisualFeedback : TQWidget
 {
     Q_OBJECT
 

@@ -1,6 +1,6 @@
 <!DOCTYPE UI><UI version="3.0" stdsetdef="1">
 <class>KHotKeys::Window_trigger_widget_ui</class>
-<widget class="QWidget">
+<widget class="TQWidget">
     <property name="name">
         <cstring>Window_trigger_widget_ui</cstring>
     </property>
@@ -22,7 +22,7 @@
         <property name="spacing">
             <number>6</number>
         </property>
-        <widget class="QGroupBox">
+        <widget class="TQGroupBox">
             <property name="name">
                 <cstring>GroupBox4</cstring>
             </property>
@@ -39,7 +39,7 @@
                 <property name="spacing">
                     <number>6</number>
                 </property>
-                <widget class="QCheckBox">
+                <widget class="TQCheckBox">
                     <property name="name">
                         <cstring>window_appears_checkbox</cstring>
                     </property>
@@ -47,7 +47,7 @@
                         <string>Window appears</string>
                     </property>
                 </widget>
-                <widget class="QCheckBox">
+                <widget class="TQCheckBox">
                     <property name="name">
                         <cstring>window_disappears_checkbox</cstring>
                     </property>
@@ -55,7 +55,7 @@
                         <string>Window disappears</string>
                     </property>
                 </widget>
-                <widget class="QCheckBox">
+                <widget class="TQCheckBox">
                     <property name="name">
                         <cstring>window_activates_checkbox</cstring>
                     </property>
@@ -63,7 +63,7 @@
                         <string>Window activates</string>
                     </property>
                 </widget>
-                <widget class="QCheckBox">
+                <widget class="TQCheckBox">
                     <property name="name">
                         <cstring>window_deactivates_checkbox</cstring>
                     </property>
@@ -73,7 +73,7 @@
                 </widget>
             </vbox>
         </widget>
-        <widget class="QGroupBox">
+        <widget class="TQGroupBox">
             <property name="name">
                 <cstring>window_groupbox</cstring>
             </property>

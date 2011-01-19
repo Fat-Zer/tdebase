@@ -53,7 +53,7 @@ MultiMeter::MultiMeter(TQWidget* parent, const char* name,
 	Q_CHECK_PTR(lcd);
 	lcd->setSegmentStyle(TQLCDNumber::Filled);
 	setDigitColor(KSGRD::Style->backgroundColor());
-	lcd->setSizePolicy(TQSizePolicy(TQSizePolicy::Expanding,
+	lcd->tqsetSizePolicy(TQSizePolicy(TQSizePolicy::Expanding,
 					   TQSizePolicy::Expanding, false));
 
 	setBackgroundColor(KSGRD::Style->backgroundColor());
@@ -225,7 +225,7 @@ MultiMeter::applySettings()
 	alarmDigitColor = mms->alarmDigitColor();
 	setBackgroundColor(mms->meterBackgroundColor());
 
-	repaint();
+	tqrepaint();
 	setModified(true);
 }
 
@@ -234,7 +234,7 @@ MultiMeter::applyStyle()
 {
 	normalDigitColor = KSGRD::Style->firstForegroundColor();
 	setBackgroundColor(KSGRD::Style->backgroundColor());
-	repaint();
+	tqrepaint();
 	setModified(true);
 }
 

@@ -56,7 +56,7 @@ public:
 	 virtual void setMovingEnabled( bool b );
 };
 
-class KateFileSelectorToolBarParent: public QFrame
+class KateFileSelectorToolBarParent: public TQFrame
 {
 	Q_OBJECT
 public:
@@ -69,7 +69,7 @@ protected:
 	virtual void resizeEvent ( TQResizeEvent * );
 };
 
-class KateFileSelector : public QVBox
+class KateFileSelector : public TQVBox
 {
   Q_OBJECT
 

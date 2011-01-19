@@ -38,7 +38,7 @@ class TQPaintEvent;
 class TQSimpleRichText;
 class TQTimer;
 
-class KDE_EXPORT KickerTip : public QWidget
+class KDE_EXPORT KickerTip : public TQWidget
 {
     Q_OBJECT
 

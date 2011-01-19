@@ -134,7 +134,7 @@ void Windowdef_list_widget::new_selected( int type_P )
 void Windowdef_list_widget::copy_pressed()
     {
     windows_listview->setSelected( create_listview_item( selected_item->window(),
-        selected_item->parent() ? NULL : windows_listview, selected_item->parent(),
+        selected_item->tqparent() ? NULL : windows_listview, selected_item->tqparent(),
         selected_item, true ), true );
     }
 
@@ -192,7 +192,7 @@ void Windowdef_list_widget::edit_listview_item( Windowdef_list_item* item_P )
         {
         item_P->set_window( new_window );
         item_P->widthChanged( 0 ); // SELI tohle i u dalsich listview?
-        windows_listview->repaintItem( item_P );
+        windows_listview->tqrepaintItem( item_P );
         }
     delete dlg;
     }

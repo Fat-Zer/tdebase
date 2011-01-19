@@ -109,7 +109,7 @@ public:
 
 #include <tqlabel.h>
 
-class KonqDraggableLabel : public QLabel
+class KonqDraggableLabel : public TQLabel
 {
     Q_OBJECT
 public:

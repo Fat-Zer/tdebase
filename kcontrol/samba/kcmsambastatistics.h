@@ -75,7 +75,7 @@ class SambaLog
   LogItem* itemInList(TQString name);
 };
 
-class StatisticsView: public QWidget
+class StatisticsView: public TQWidget
 {
   Q_OBJECT
 public:

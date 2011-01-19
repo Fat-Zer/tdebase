@@ -106,7 +106,7 @@ KonqMainWindow * KonqMisc::createNewWindow( const KURL &url, const KParts::URLAr
                         KMimeType::findByURL(url)->name() == "text/html")
           ? "webbrowsing" : "filemanagement";
 
-  TQString profile = locate( "data", TQString::fromLatin1("konqueror/profiles/") + profileName );
+  TQString profile = locate( "data", TQString::tqfromLatin1("konqueror/profiles/") + profileName );
   return createBrowserWindowFromProfile(profile, profileName, 
 					url, args, 
 					forbidUseHTML, filesToSelect, tempFile, openURL );
@@ -224,9 +224,9 @@ KonqDraggableLabel::KonqDraggableLabel( KonqMainWindow* mw, const TQString& text
   : TQLabel( text, 0L, "kde toolbar widget" )	// Use this name for it to be styled!
   , m_mw(mw)
 {
-  setBackgroundMode( Qt::PaletteButton );
-  setAlignment( (TQApplication::reverseLayout() ? Qt::AlignRight : Qt::AlignLeft) |
-                 Qt::AlignVCenter | Qt::ShowPrefix );
+  setBackgroundMode( TQt::PaletteButton );
+  tqsetAlignment( (TQApplication::reverseLayout() ? Qt::AlignRight : Qt::AlignLeft) |
+                 Qt::AlignVCenter | TQt::ShowPrefix );
   setAcceptDrops(true);
   adjustSize();
   validDrag = false;

@@ -30,14 +30,14 @@
 FilterDlg::FilterDlg(TQWidget *parent, const char *name)
 : KDialogBase(parent, name, true, i18n("Filter Parameters"), Ok|Cancel, Ok)
 {
-	QWidget	*w = new TQWidget(this);
+	TQWidget	*w = new TQWidget(this);
 
 	m_mime = new TQLineEdit(w);
 	m_cmd = new TQLineEdit(w);
-	QLabel	*m_mimelabel = new TQLabel(i18n("MIME type:"), w);
-	QLabel	*m_cmdlabel = new TQLabel(i18n("Command:"), w);
+	TQLabel	*m_mimelabel = new TQLabel(i18n("MIME type:"), w);
+	TQLabel	*m_cmdlabel = new TQLabel(i18n("Command:"), w);
 
-	QGridLayout	*l0 = new TQGridLayout(w, 2, 2, 10, 5);
+	TQGridLayout	*l0 = new TQGridLayout(w, 2, 2, 10, 5);
 	l0->setColStretch(1, 1);
 	l0->addWidget(m_mimelabel, 0, 0);
 	l0->addWidget(m_cmdlabel, 1, 0);

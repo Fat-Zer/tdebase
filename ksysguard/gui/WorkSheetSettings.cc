@@ -50,7 +50,7 @@ WorkSheetSettings::WorkSheetSettings( TQWidget* parent, const char* name )
   group->layout()->setSpacing( spacingHint() );
 
   TQGridLayout *groupLayout = new TQGridLayout( group->layout(), 1, 1 );
-  groupLayout->setAlignment( Qt::AlignTop );
+  groupLayout->tqsetAlignment( Qt::AlignTop );
 
   mSheetTitle = new KLineEdit( group );
   groupLayout->addWidget( mSheetTitle, 0, 0 );
@@ -62,7 +62,7 @@ WorkSheetSettings::WorkSheetSettings( TQWidget* parent, const char* name )
   group->layout()->setSpacing( spacingHint() );
 
   groupLayout = new TQGridLayout( group->layout(), 3, 2 );
-  groupLayout->setAlignment( Qt::AlignTop );
+  groupLayout->tqsetAlignment( Qt::AlignTop );
 
   TQLabel *label = new TQLabel( i18n( "Rows:" ), group );
   groupLayout->addWidget( label, 0, 0 );
@@ -103,7 +103,7 @@ WorkSheetSettings::WorkSheetSettings( TQWidget* parent, const char* name )
 
   mSheetTitle->setFocus();
 
-  resize( TQSize( 250, 230 ).expandedTo( minimumSizeHint() ) );
+  resize( TQSize( 250, 230 ).expandedTo( tqminimumSizeHint() ) );
 }
 
 WorkSheetSettings::~WorkSheetSettings()

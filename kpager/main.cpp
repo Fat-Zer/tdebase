@@ -45,7 +45,7 @@ class KPagerApplication : public KUniqueApplication
 public:
   KPagerApplication() : KUniqueApplication() {}
 
-  void commitData(QSessionManager& sm) {
+  void commitData(TQSessionManager& sm) {
     if (mainWidget()->isHidden()) {
       sm.setRestartHint( QSessionManager::RestartNever );
       return;

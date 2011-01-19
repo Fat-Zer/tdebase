@@ -33,7 +33,7 @@
 #include <kiconloader.h>
 #include <tqwhatsthis.h>
 
-class KatePluginListItem : public QCheckListItem
+class KatePluginListItem : public TQCheckListItem
 {
   public:
     KatePluginListItem(bool checked, KatePluginInfo *info, TQListView *parent);

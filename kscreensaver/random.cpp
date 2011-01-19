@@ -41,7 +41,7 @@ static void usage(char *name)
 {
 	puts(i18n("Usage: %1 [-setup] [args]\n"
 				"Starts a random screen saver.\n"
-				"Any arguments (except -setup) are passed on to the screen saver.").arg( name ).local8Bit().data());
+				"Any arguments (except -setup) are passed on to the screen saver.").tqarg( name ).local8Bit().data());
 }
 
 static const char appName[] = "random";
@@ -148,7 +148,7 @@ int main(int argc, char *argv[])
         TQStringList defaults = type.readListEntry( "Defaults" );
         TQMap<TQString, int> def_numbers;
         for ( TQStringList::ConstIterator it = defaults.begin(); it != defaults.end(); ++it ) {
-            int index = ( *it ).find( ':' );
+            int index = ( *it ).tqfind( ':' );
             if ( index == -1 )
                 def_numbers[*it] = 1;
             else
@@ -160,7 +160,7 @@ int main(int argc, char *argv[])
                 int howoften = 1;
                 if ( defaults.count() != 0 ) {
                     TQFileInfo fi( tempSaverFileList[i] );
-                    if ( def_numbers.contains( fi.fileName() ) )
+                    if ( def_numbers.tqcontains( fi.fileName() ) )
                         howoften = def_numbers[fi.fileName()];
                     else
                         howoften = 0;
@@ -271,7 +271,7 @@ KRandomSetup::KRandomSetup( TQWidget *parent, const char *name )
 	manipulateScreen = new TQCheckBox(i18n("Use screen savers that manipulate the screen"), main);
 	grid->addWidget(manipulateScreen, 1, 0);
 
-	setMinimumSize( sizeHint() );
+	setMinimumSize( tqsizeHint() );
 
 	KConfig config("krandom.kssrc");
 	config.setGroup("Settings");

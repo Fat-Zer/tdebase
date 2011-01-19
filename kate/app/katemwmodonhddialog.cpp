@@ -40,7 +40,7 @@
 #include <tqwhatsthis.h>
 #include <tqvbox.h>
 
-class KateDocItem : public QCheckListItem
+class KateDocItem : public TQCheckListItem
 {
   public:
     KateDocItem( Kate::Document *doc, const TQString &status, KListView *lv )

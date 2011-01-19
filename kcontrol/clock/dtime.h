@@ -45,7 +45,7 @@ class HMSTimeWidget : public KIntSpinBox
   TQString mapValueToText(int);
 };
 
-class Dtime : public QWidget
+class Dtime : public TQWidget
 {
   Q_OBJECT
  public:
@@ -68,15 +68,15 @@ signals:
 
 private:
   void	findNTPutility();
-  QString	ntpUtility;
+  TQString	ntpUtility;
 
   TQWidget*	privateLayoutWidget;
-  QCheckBox	*setDateTimeAuto;
-  QComboBox	*timeServerList;
+  TQCheckBox	*setDateTimeAuto;
+  TQComboBox	*timeServerList;
 
   KDatePicker	*cal;
-  QComboBox	*month;
-  QSpinBox	*year;
+  TQComboBox	*month;
+  TQSpinBox	*year;
 
   HMSTimeWidget	*hour;
   HMSTimeWidget	*minute;
@@ -84,17 +84,17 @@ private:
 
   Kclock	*kclock;
   
-  QTime		time;
-  QDate		date;
-  QTimer	internalTimer;
+  TQTime	time;
+  TQDate	date;
+  TQTimer	internalTimer;
   
-  QString	BufS;
+  TQString	BufS;
   int		BufI;
   bool		refresh;
   bool		ontimeout;
 };
 
-class Kclock : public QWidget
+class Kclock : public TQWidget
 {
   Q_OBJECT
 
@@ -109,7 +109,7 @@ protected:
   
   
 private:
-  QTime		time;
+  TQTime	time;
 };
 
 class KStrictIntValidator : public TQIntValidator 
@@ -117,7 +117,7 @@ class KStrictIntValidator : public TQIntValidator
 public:
   KStrictIntValidator(int bottom, int top, TQWidget * parent,
 		      const char * name = 0 )
-    : TQIntValidator(bottom, top, parent, name) {};
+    : TQIntValidator(bottom, top, TQT_TQOBJECT(parent), name) {};
   
   TQValidator::State validate( TQString & input, int & d ) const; 
 };

@@ -433,7 +433,7 @@ bool Workspace::activateNextClient( Client* c )
                     if( c == NULL && !(*it)->isOnScreen( activeScreen()))
                         continue;
                     }
-                if( mainwindows.contains( *it ))
+                if( mainwindows.tqcontains( *it ))
                     {
                     get_focus = *it;
                     break;
@@ -486,7 +486,7 @@ void Workspace::setCurrentScreen( int new_screen )
 
 void Workspace::gotFocusIn( const Client* c )
     {
-    if( should_get_focus.contains( const_cast< Client* >( c )))
+    if( should_get_focus.tqcontains( const_cast< Client* >( c )))
         { // remove also all sooner elements that should have got FocusIn,
       // but didn't for some reason (and also won't anymore, because they were sooner)
         while( should_get_focus.first() != c )
@@ -523,7 +523,7 @@ bool Workspace::allowClientActivation( const Client* c, Time time, bool focus_in
     Client* ac = mostRecentlyActivatedClient();
     if( focus_in )
         {
-        if( should_get_focus.contains( const_cast< Client* >( c )))
+        if( should_get_focus.tqcontains( const_cast< Client* >( c )))
             return true; // FocusIn was result of KWin's action
         // Before getting FocusIn, the active Client already
         // got FocusOut, and therefore got deactivated.

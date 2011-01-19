@@ -159,7 +159,7 @@ KPanelApplet* PluginManager::loadApplet(const AppletInfo& info,
 
     if (applet)
     {
-        _dict.insert( applet, new AppletInfo( info ) );
+        _dict.insert( TQT_TQOBJECT(applet), new AppletInfo( info ) );
         connect( applet, TQT_SIGNAL( destroyed( TQObject* ) ),
                  TQT_SLOT( slotPluginDestroyed( TQObject* ) ) );
     }
@@ -197,7 +197,7 @@ KPanelExtension* PluginManager::loadExtension(
     KPanelExtension* extension = init_ptr( parent, info.configFile() );
 
     if( extension ) {
-        _dict.insert( extension, new AppletInfo( info ) );
+        _dict.insert( TQT_TQOBJECT(extension), new AppletInfo( info ) );
         connect( extension, TQT_SIGNAL( destroyed( TQObject* ) ),
                  TQT_SLOT( slotPluginDestroyed( TQObject* ) ) );
     }
@@ -272,7 +272,7 @@ AppletContainer* PluginManager::createAppletContainer(
         return 0;
     }
 
-    bool untrusted = m_untrustedApplets.find(desktopFile) != m_untrustedApplets.end();
+    bool untrusted = m_untrustedApplets.tqfind(desktopFile) != m_untrustedApplets.end();
     if (isStartup && untrusted)
     {
         // don't load extensions that bombed on us previously!
@@ -325,7 +325,7 @@ ExtensionContainer* PluginManager::createExtensionContainer(const TQString& desk
 
     if (!internal)
     {
-        bool untrusted = m_untrustedExtensions.find(desktopFile) != m_untrustedExtensions.end();
+        bool untrusted = m_untrustedExtensions.tqfind(desktopFile) != m_untrustedExtensions.end();
         if (isStartup && untrusted)
         {
             // don't load extensions that bombed on us previously!
@@ -365,7 +365,7 @@ LibUnloader::LibUnloader( const TQString &libName, TQObject *parent )
 
 void LibUnloader::unload( const TQString &libName )
 {
-    (void)new LibUnloader( libName, kapp );
+    (void)new LibUnloader( libName, TQT_TQOBJECT(kapp) );
 }
 
 void LibUnloader::unload()

@@ -79,7 +79,7 @@ AppletContainer::AppletContainer(const AppletInfo& info,
     _appletframe->setFrameStyle(TQFrame::NoFrame);
     _appletframe->installEventFilter(this);
 
-    if (orientation() == Horizontal)
+    if (orientation() == Qt::Horizontal)
     {
         _layout = new TQBoxLayout(this, TQBoxLayout::LeftToRight, 0, 0);
     }
@@ -92,7 +92,7 @@ AppletContainer::AppletContainer(const AppletInfo& info,
 
     _layout->addSpacing(APPLET_MARGIN);
     _handle = new AppletHandle(this);
-    _layout->addWidget(_handle, 0);
+    _layout->addWidget(TQT_TQWIDGET(_handle), 0);
     connect(_handle, TQT_SIGNAL(moveApplet(const TQPoint&)),
             this, TQT_SLOT(moveApplet(const TQPoint&)));
     connect(_handle, TQT_SIGNAL(showAppletMenu()), this, TQT_SLOT(showAppletMenu()));
@@ -117,7 +117,7 @@ AppletContainer::AppletContainer(const AppletInfo& info,
     _valid = true;
 
     _applet->setPosition((KPanelApplet::Position)KickerLib::directionToPosition(popupDirection()));
-    _applet->setAlignment((KPanelApplet::Alignment)alignment());
+    _applet->tqsetAlignment((KPanelApplet::Alignment)tqalignment());
 
     _actions = _applet->actions();
     _type = _applet->type();
@@ -191,7 +191,7 @@ void AppletContainer::resetLayout()
 {
     _handle->resetLayout();
 
-    if (orientation() == Horizontal)
+    if (orientation() == Qt::Horizontal)
     {
         _layout->setDirection( TQBoxLayout::LeftToRight );
     }
@@ -225,7 +225,7 @@ void AppletContainer::showAppletMenu()
 
     Kicker::the()->setInsertionPoint(_handle->mapToGlobal(_handle->rect().center()));
 
-    switch(menu->exec(KickerLib::popupPosition(popupDirection(), menu, _handle)))
+    switch(menu->exec(KickerLib::popupPosition(popupDirection(), menu, TQT_TQWIDGET(_handle))))
     {
         case PanelAppletOpMenu::Move:
             moveApplet(_handle->mapToParent(_handle->rect().center()));
@@ -275,14 +275,14 @@ void AppletContainer::slotRemoved(KConfig* config)
 
 void AppletContainer::activateWindow()
 {
-    KWin::forceActiveWindow(topLevelWidget()->winId());
+    KWin::forceActiveWindow(tqtopLevelWidget()->winId());
 }
 
 void AppletContainer::focusRequested(bool focus)
 {
     if (focus)
     {
-        KWin::forceActiveWindow(topLevelWidget()->winId());
+        KWin::forceActiveWindow(tqtopLevelWidget()->winId());
     }
 
     emit maintainFocus(focus);
@@ -298,7 +298,7 @@ void AppletContainer::doSaveConfiguration( KConfigGroup& config,
                                            bool layoutOnly ) const
 {
     // immutability is checked by ContainerBase
-    if (orientation() == Horizontal)
+    if (orientation() == Qt::Horizontal)
     {
         config.writeEntry( "WidthForHeightHint", widthForHeight(height()) );
     }
@@ -354,14 +354,14 @@ void AppletContainer::slotDelayedDestruct()
     delete this;
 }
 
-void AppletContainer::alignmentChange(KPanelExtension::Alignment a)
+void AppletContainer::tqalignmentChange(KPanelExtension::Alignment a)
 {
     if (!_applet)
     {
         return;
     }
 
-    _applet->setAlignment( (KPanelApplet::Alignment)a );
+    _applet->tqsetAlignment( (KPanelApplet::Alignment)a );
 }
 
 int AppletContainer::widthForHeight(int h) const
@@ -471,7 +471,7 @@ void AppletContainer::setImmutable(bool immutable)
     }
     else if (!_handle->isVisibleTo(this))
     {
-        TQToolTip::add(_handle, _info.name());
+        TQToolTip::add(TQT_TQWIDGET(_handle), _info.name());
         _handle->show();
         setBackground();
     }

@@ -67,7 +67,7 @@ public:
   PluginFactory();
   virtual ~PluginFactory();
 
-  virtual KParts::Part * createPartObject(TQWidget *parentWidget = 0, const char *widgetName = 0,
+  virtual KParts::Part * createPartObject(TQWidget *tqparentWidget = 0, const char *widgetName = 0,
   		            	    TQObject *parent = 0, const char *name = 0,
   			            const char *classname = "KParts::Part",
    			            const TQStringList &args = TQStringList());
@@ -82,7 +82,7 @@ private:
 };
 
 
-class PluginCanvasWidget : public QWidget
+class PluginCanvasWidget : public TQWidget
 {
   Q_OBJECT
 public:
@@ -102,7 +102,7 @@ class PluginPart: public KParts::ReadOnlyPart
 {
   Q_OBJECT
 public:
-  PluginPart(TQWidget *parentWidget, const char *widgetName, TQObject *parent,
+  PluginPart(TQWidget *tqparentWidget, const char *widgetName, TQObject *parent,
              const char *name, const TQStringList &args = TQStringList());
   virtual ~PluginPart();
 

@@ -145,7 +145,7 @@ void ShortcutsModule::initGUI()
 
 	m_pcbSchemes = new KComboBox( this );
 	m_pcbSchemes->setMinimumWidth( 100 );
-	m_pcbSchemes->setSizePolicy( TQSizePolicy::Preferred, TQSizePolicy::Fixed );
+	m_pcbSchemes->tqsetSizePolicy( TQSizePolicy::Preferred, TQSizePolicy::Fixed );
 	connect( m_pcbSchemes, TQT_SIGNAL(activated(int)), TQT_SLOT(slotSelectScheme(int)) );
 	pHLayout->addWidget( m_pcbSchemes );
 
@@ -190,10 +190,10 @@ void ShortcutsModule::initGUI()
 	m_pListGeneral = new KAccelShortcutList( m_actionsGeneral, true );
 
 	m_pkcGeneral = new KKeyChooser( m_pListGeneral, this, KKeyChooser::Global, false );
-	m_pkcGeneral->resize (m_pkcGeneral->sizeHint() );
+	m_pkcGeneral->resize (m_pkcGeneral->tqsizeHint() );
 	if (system("xmodmap 1> /dev/null 2> /dev/null") == 0) {
 		m_useRmWinKeys = new TQCheckBox( i18n("Use Win key as modifier (uncheck to bind Win key to Menu)"), this );
-		m_useRmWinKeys->resize( m_useRmWinKeys->sizeHint() );
+		m_useRmWinKeys->resize( m_useRmWinKeys->tqsizeHint() );
 		m_useRmWinKeys->setChecked( m_bUseRmWinKeys );
 		pVLayout->addWidget( m_useRmWinKeys, 1, 0 );
 		connect( m_useRmWinKeys, TQT_SIGNAL(clicked()), TQT_SLOT(slotUseRmWinKeysClicked()) );
@@ -227,14 +227,14 @@ void ShortcutsModule::createActionsGeneral()
 	for( uint i = 0; i < actions.count(); i++ ) {
 		TQString sConfigKey = actions[i].name();
 		//kdDebug(125) << "sConfigKey: " << sConfigKey << endl;
-		int iLastSpace = sConfigKey.findRev( ' ' );
+		int iLastSpace = sConfigKey.tqfindRev( ' ' );
 		bool bIsNum = false;
 		if( iLastSpace >= 0 )
 			sConfigKey.mid( iLastSpace+1 ).toInt( &bIsNum );
 
 		//kdDebug(125) << "sConfigKey: " << sConfigKey
 		//	<< " bIsNum: " << bIsNum << endl;
-		if( bIsNum && !sConfigKey.contains( ':' ) ) {
+		if( bIsNum && !sConfigKey.tqcontains( ':' ) ) {
 			actions[i].setConfigurable( false );
 			actions[i].setName( TQString::null );
 		}
@@ -248,14 +248,14 @@ void ShortcutsModule::createActionsSequence()
 	for( uint i = 0; i < actions.count(); i++ ) {
 		TQString sConfigKey = actions[i].name();
 		//kdDebug(125) << "sConfigKey: " << sConfigKey << endl;
-		int iLastSpace = sConfigKey.findRev( ' ' );
+		int iLastSpace = sConfigKey.tqfindRev( ' ' );
 		bool bIsNum = false;
 		if( iLastSpace >= 0 )
 			sConfigKey.mid( iLastSpace+1 ).toInt( &bIsNum );
 
 		//kdDebug(125) << "sConfigKey: " << sConfigKey
 		//	<< " bIsNum: " << bIsNum << endl;
-		if( !bIsNum && !sConfigKey.contains( ':' ) ) {
+		if( !bIsNum && !sConfigKey.tqcontains( ':' ) ) {
 			actions[i].setConfigurable( false );
 			actions[i].setName( TQString::null );
 		}
@@ -372,7 +372,7 @@ void ShortcutsModule::slotSaveSchemeAs()
 			int ind = 0;
 			while( ind < (int) sFile.length() ) {
 				// parse the string for first white space
-				ind = sFile.find(" ");
+				ind = sFile.tqfind(" ");
 				if( ind == -1 ) {
 					ind = sFile.length();
 					break;
@@ -384,7 +384,7 @@ void ShortcutsModule::slotSaveSchemeAs()
 				// Make the next letter upper case
 				TQString s = sFile.mid( ind, 1 );
 				s = s.upper();
-				sFile.replace( ind, 1, s );
+				sFile.tqreplace( ind, 1, s );
 			}
 
 			iScheme = -1;

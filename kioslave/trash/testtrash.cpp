@@ -152,10 +152,10 @@ void TestTrash::setup()
     for ( TrashImpl::TrashDirMap::ConstIterator it = trashDirs.begin(); it != trashDirs.end() ; ++it ) {
         if ( it.key() == 0 ) {
             assert( it.data() == m_trashDir );
-            assert( topDirs.find( 0 ) == topDirs.end() );
+            assert( topDirs.tqfind( 0 ) == topDirs.end() );
             foundTrashDir = true;
         } else {
-            assert( topDirs.find( it.key() ) != topDirs.end() );
+            assert( topDirs.tqfind( it.key() ) != topDirs.end() );
             const TQString topdir = topDirs[it.key()];
             if ( TQFileInfo( topdir ).isWritable() ) {
                 writableTopDirs.append( it.key() );
@@ -383,7 +383,7 @@ static void checkInfoFile( const TQString& infoPath, const TQString& origFilePat
     assert( origPath == KURL::encode_string( origFilePath, KGlobal::locale()->fileEncodingMib() ) );
     const TQString date = infoFile.readEntry( "DeletionDate" );
     assert( !date.isEmpty() );
-    assert( date.contains( "T" ) );
+    assert( date.tqcontains( "T" ) );
 }
 
 static void createTestFile( const TQString& path )
@@ -1104,7 +1104,7 @@ void TestTrash::listRootDir()
     assert( m_entryCount > 1 );
 
     kdDebug() << k_funcinfo << m_listResult << endl;
-    assert( m_listResult.contains( "." ) == 1 ); // found it, and only once
+    assert( m_listResult.tqcontains( "." ) == 1 ); // found it, and only once
 }
 
 void TestTrash::listRecursiveRootDir()
@@ -1121,7 +1121,7 @@ void TestTrash::listRecursiveRootDir()
     assert( m_entryCount > 1 );
 
     kdDebug() << k_funcinfo << m_listResult << endl;
-    assert( m_listResult.contains( "." ) == 1 ); // found it, and only once
+    assert( m_listResult.tqcontains( "." ) == 1 ); // found it, and only once
 }
 
 void TestTrash::listSubDir()
@@ -1138,8 +1138,8 @@ void TestTrash::listSubDir()
     assert( m_entryCount == 2 );
 
     kdDebug() << k_funcinfo << m_listResult << endl;
-    assert( m_listResult.contains( "." ) == 1 ); // found it, and only once
-    assert( m_listResult.contains( "testfile" ) == 1 ); // found it, and only once
+    assert( m_listResult.tqcontains( "." ) == 1 ); // found it, and only once
+    assert( m_listResult.tqcontains( "testfile" ) == 1 ); // found it, and only once
 }
 
 void TestTrash::slotEntries( KIO::Job*, const KIO::UDSEntryList& lst )

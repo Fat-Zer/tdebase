@@ -52,5 +52,5 @@ int main( int argc, char* argv[] )
     dest_cfg.sync();
     DCOPClient client;
     client.attach();
-    client.send("kwin*", "", "reconfigure()", "");
+    client.send("kwin*", "", "reconfigure()", TQString(""));
     }

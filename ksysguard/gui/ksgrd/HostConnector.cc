@@ -61,7 +61,7 @@ HostConnector::HostConnector( TQWidget *parent, const char *name )
                                           i18n( "Connection Type" ), page );
   TQGridLayout *groupLayout = new TQGridLayout( group->layout(), 4, 4,
       spacingHint() );
-  groupLayout->setAlignment( Qt::AlignTop );
+  groupLayout->tqsetAlignment( Qt::AlignTop );
 
   mUseSsh = new TQRadioButton( i18n( "ssh" ), group );
   mUseSsh->setEnabled( true );

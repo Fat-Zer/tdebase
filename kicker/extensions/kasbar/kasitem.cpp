@@ -179,11 +179,11 @@ void KasItem::mouseEnter()
 
 void KasItem::mouseReleaseEvent( TQMouseEvent *ev )
 {
-    if ( ev->button() == LeftButton )
+    if ( ev->button() == Qt::LeftButton )
 	emit leftButtonClicked( ev );
-    else if ( ev->button() == RightButton )
+    else if ( ev->button() == Qt::RightButton )
 	emit rightButtonClicked( ev );
-    else if ( ev->button() == MidButton )
+    else if ( ev->button() == Qt::MidButton )
 	emit middleButtonClicked( ev );
 }
 
@@ -301,7 +301,7 @@ void KasItem::paintFrame( TQPainter *p )
    if ( !frame )
        return;
 
-   qDrawShadePanel(p, 0, 0, extent(), extent(), colorGroup(), false, 2);
+   qDrawShadePanel(p, 0, 0, extent(), extent(), tqcolorGroup(), false, 2);
 
    TQPen pen;
    
@@ -547,15 +547,15 @@ void KasItem::paint( TQPainter *p, int x, int y )
     p->restore();
 }
 
-void KasItem::repaint()
+void KasItem::tqrepaint()
 {
-   repaint( true );
+   tqrepaint( true );
 }
 
-void KasItem::repaint( bool erase )
+void KasItem::tqrepaint( bool erase )
 {
    if ( kas->isVisible() )
-       kas->repaintItem( this, erase );
+       kas->tqrepaintItem( this, erase );
 }
 
 void KasItem::update()

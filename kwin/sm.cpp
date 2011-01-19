@@ -259,13 +259,13 @@ bool Workspace::windowRoleMatch( const TQCString& role1, const TQCString& role2 
     {
     if( role1.isEmpty() && role2.isEmpty())
         return true;
-    int pos1 = role1.find( '#' );
-    int pos2 = role2.find( '#' );
+    int pos1 = role1.tqfind( '#' );
+    int pos2 = role2.tqfind( '#' );
     bool ret;
     if( pos1 < 0 || pos2 < 0 || pos1 != pos2 )
         ret = role1 == role2;
     else
-        ret = qstrncmp( role1, role2, pos1 ) == 0;
+        ret = tqstrncmp( role1, role2, pos1 ) == 0;
     kdDebug() << "WR:" << role1 << ":" << pos1 << ":" << role2 << ":" << pos2 << ":::" << ret << endl;
     return ret;
     }
@@ -402,7 +402,7 @@ SessionSaveDoneHelper::SessionSaveDoneHelper()
     props[ 2 ].num_vals = 1;
     props[ 2 ].vals = &propvalue[ 2 ];
     propvalue[ 3 ].length = 0;
-    propvalue[ 3 ].value = qApp->argv()[ 0 ];
+    propvalue[ 3 ].value = tqApp->argv()[ 0 ];
     props[ 3 ].name = const_cast< char* >( SmProgram );
     props[ 3 ].type = const_cast< char* >( SmARRAY8 );
     props[ 3 ].num_vals = 1;
@@ -416,7 +416,7 @@ SessionSaveDoneHelper::SessionSaveDoneHelper()
     SmProp* p[ 5 ] = { &props[ 0 ], &props[ 1 ], &props[ 2 ], &props[ 3 ], &props[ 4 ] };
     SmcSetProperties( conn, 5, p );
     notifier = new TQSocketNotifier( IceConnectionNumber( SmcGetIceConnection( conn )),
-        TQSocketNotifier::Read, this );
+        TQSocketNotifier::Read, TQT_TQOBJECT(this) );
     connect( notifier, TQT_SIGNAL( activated( int )), TQT_SLOT( processData()));
     }
 

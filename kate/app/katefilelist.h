@@ -38,7 +38,7 @@ class KateMainWindow;
 class KAction;
 class KSelectAction;
 
-class KateFileListItem : public QListViewItem
+class KateFileListItem : public TQListViewItem
 {
   public:
     KateFileListItem( TQListView *lv,

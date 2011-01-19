@@ -1,6 +1,6 @@
 <!DOCTYPE UI><UI version="3.3" stdsetdef="1">
 <class>SessionDialog</class>
-<widget class="QWidget">
+<widget class="TQWidget">
     <property name="name">
         <cstring>SessionDialog</cstring>
     </property>
@@ -26,7 +26,7 @@
         <property name="margin">
             <number>0</number>
         </property>
-        <widget class="QLayoutWidget">
+        <widget class="TQLayoutWidget">
             <property name="name">
                 <cstring>layout8</cstring>
             </property>
@@ -34,7 +34,7 @@
                 <property name="name">
                     <cstring>unnamed</cstring>
                 </property>
-                <widget class="QGroupBox" row="1" column="1">
+                <widget class="TQGroupBox" row="1" column="1">
                     <property name="name">
                         <cstring>propertiesGroup</cstring>
                     </property>
@@ -45,7 +45,7 @@
                         <property name="name">
                             <cstring>unnamed</cstring>
                         </property>
-                        <widget class="QLayoutWidget" row="1" column="0" rowspan="1" colspan="2">
+                        <widget class="TQLayoutWidget" row="1" column="0" rowspan="1" colspan="2">
                             <property name="name">
                                 <cstring>Layout29</cstring>
                             </property>
@@ -53,7 +53,7 @@
                                 <property name="name">
                                     <cstring>unnamed</cstring>
                                 </property>
-                                <widget class="QComboBox" row="0" column="1">
+                                <widget class="TQComboBox" row="0" column="1">
                                     <item>
                                         <property name="text">
                                             <string>&lt;Default&gt;</string>
@@ -111,7 +111,7 @@
                                         <bool>false</bool>
                                     </property>
                                 </widget>
-                                <widget class="QLineEdit" row="1" column="1">
+                                <widget class="TQLineEdit" row="1" column="1">
                                     <property name="name">
                                         <cstring>termLine</cstring>
                                     </property>
@@ -124,12 +124,12 @@
                                         </sizepolicy>
                                     </property>
                                 </widget>
-                                <widget class="QComboBox" row="3" column="0" rowspan="1" colspan="2">
+                                <widget class="TQComboBox" row="3" column="0" rowspan="1" colspan="2">
                                     <property name="name">
                                         <cstring>keytabCombo</cstring>
                                     </property>
                                 </widget>
-                                <widget class="QLabel" row="0" column="0">
+                                <widget class="TQLabel" row="0" column="0">
                                     <property name="name">
                                         <cstring>TextLabel5</cstring>
                                     </property>
@@ -140,12 +140,12 @@
                                         <cstring>fontCombo</cstring>
                                     </property>
                                 </widget>
-                                <widget class="QComboBox" row="5" column="0" rowspan="1" colspan="2">
+                                <widget class="TQComboBox" row="5" column="0" rowspan="1" colspan="2">
                                     <property name="name">
                                         <cstring>schemaCombo</cstring>
                                     </property>
                                 </widget>
-                                <widget class="QLabel" row="4" column="0" rowspan="1" colspan="2">
+                                <widget class="TQLabel" row="4" column="0" rowspan="1" colspan="2">
                                     <property name="name">
                                         <cstring>TextLabel7</cstring>
                                     </property>
@@ -156,7 +156,7 @@
                                         <cstring>schemaCombo</cstring>
                                     </property>
                                 </widget>
-                                <widget class="QLabel" row="1" column="0">
+                                <widget class="TQLabel" row="1" column="0">
                                     <property name="name">
                                         <cstring>TextLabel8</cstring>
                                     </property>
@@ -167,7 +167,7 @@
                                         <cstring>termLine</cstring>
                                     </property>
                                 </widget>
-                                <widget class="QLabel" row="2" column="0" rowspan="1" colspan="2">
+                                <widget class="TQLabel" row="2" column="0" rowspan="1" colspan="2">
                                     <property name="name">
                                         <cstring>TextLabel6</cstring>
                                     </property>
@@ -184,13 +184,13 @@
                             <property name="name">
                                 <cstring>previewIcon</cstring>
                             </property>
-                            <property name="minimumSize">
+                            <property name="tqminimumSize">
                                 <size>
                                     <width>100</width>
                                     <height>100</height>
                                 </size>
                             </property>
-                            <property name="maximumSize">
+                            <property name="tqmaximumSize">
                                 <size>
                                     <width>100</width>
                                     <height>100</height>
@@ -200,7 +200,7 @@
                                 <string></string>
                             </property>
                         </widget>
-                        <widget class="QLabel" row="0" column="0">
+                        <widget class="TQLabel" row="0" column="0">
                             <property name="name">
                                 <cstring>TextLabel4</cstring>
                             </property>
@@ -212,7 +212,7 @@
                                     <verstretch>0</verstretch>
                                 </sizepolicy>
                             </property>
-                            <property name="minimumSize">
+                            <property name="tqminimumSize">
                                 <size>
                                     <width>90</width>
                                     <height>100</height>
@@ -221,7 +221,7 @@
                             <property name="text">
                                 <string>&amp;Icon:</string>
                             </property>
-                            <property name="alignment">
+                            <property name="tqalignment">
                                 <set>AlignTop|AlignLeft</set>
                             </property>
                             <property name="buddy" stdset="0">
@@ -230,7 +230,7 @@
                         </widget>
                     </grid>
                 </widget>
-                <widget class="QGroupBox" row="1" column="0">
+                <widget class="TQGroupBox" row="1" column="0">
                     <property name="name">
                         <cstring>sessionGroup</cstring>
                     </property>
@@ -241,12 +241,12 @@
                         <property name="name">
                             <cstring>unnamed</cstring>
                         </property>
-                        <widget class="QListBox">
+                        <widget class="TQListBox">
                             <property name="name">
                                 <cstring>sessionList</cstring>
                             </property>
                         </widget>
-                        <widget class="QLayoutWidget">
+                        <widget class="TQLayoutWidget">
                             <property name="name">
                                 <cstring>Layout3</cstring>
                             </property>
@@ -254,7 +254,7 @@
                                 <property name="name">
                                     <cstring>unnamed</cstring>
                                 </property>
-                                <widget class="QPushButton" row="0" column="0">
+                                <widget class="TQPushButton" row="0" column="0">
                                     <property name="name">
                                         <cstring>saveButton</cstring>
                                     </property>
@@ -262,7 +262,7 @@
                                         <string>Sa&amp;ve Session...</string>
                                     </property>
                                 </widget>
-                                <widget class="QPushButton" row="1" column="0">
+                                <widget class="TQPushButton" row="1" column="0">
                                     <property name="name">
                                         <cstring>removeButton</cstring>
                                     </property>
@@ -280,7 +280,7 @@
                                     <property name="sizeType">
                                         <enum>Expanding</enum>
                                     </property>
-                                    <property name="sizeHint">
+                                    <property name="tqsizeHint">
                                         <size>
                                             <width>20</width>
                                             <height>20</height>
@@ -291,7 +291,7 @@
                         </widget>
                     </vbox>
                 </widget>
-                <widget class="QGroupBox" row="0" column="0" rowspan="1" colspan="2">
+                <widget class="TQGroupBox" row="0" column="0" rowspan="1" colspan="2">
                     <property name="name">
                         <cstring>generalGroup</cstring>
                     </property>
@@ -310,7 +310,7 @@
                         <property name="name">
                             <cstring>unnamed</cstring>
                         </property>
-                        <widget class="QLayoutWidget">
+                        <widget class="TQLayoutWidget">
                             <property name="name">
                                 <cstring>layout6</cstring>
                             </property>
@@ -318,7 +318,7 @@
                                 <property name="name">
                                     <cstring>unnamed</cstring>
                                 </property>
-                                <widget class="QLayoutWidget">
+                                <widget class="TQLayoutWidget">
                                     <property name="name">
                                         <cstring>layout5</cstring>
                                     </property>
@@ -326,7 +326,7 @@
                                         <property name="name">
                                             <cstring>unnamed</cstring>
                                         </property>
-                                        <widget class="QLabel" row="0" column="0">
+                                        <widget class="TQLabel" row="0" column="0">
                                             <property name="name">
                                                 <cstring>TextLabel1</cstring>
                                             </property>
@@ -345,7 +345,7 @@
                                                 <cstring>nameLine</cstring>
                                             </property>
                                         </widget>
-                                        <widget class="QLabel" row="1" column="0">
+                                        <widget class="TQLabel" row="1" column="0">
                                             <property name="name">
                                                 <cstring>TextLabel2</cstring>
                                             </property>
@@ -356,7 +356,7 @@
                                                 <cstring>executeLine</cstring>
                                             </property>
                                         </widget>
-                                        <widget class="QLabel" row="2" column="0">
+                                        <widget class="TQLabel" row="2" column="0">
                                             <property name="name">
                                                 <cstring>TextLabel3</cstring>
                                             </property>
@@ -369,7 +369,7 @@
                                         </widget>
                                     </grid>
                                 </widget>
-                                <widget class="QLayoutWidget">
+                                <widget class="TQLayoutWidget">
                                     <property name="name">
                                         <cstring>layout4</cstring>
                                     </property>
@@ -377,7 +377,7 @@
                                         <property name="name">
                                             <cstring>unnamed</cstring>
                                         </property>
-                                        <widget class="QLineEdit">
+                                        <widget class="TQLineEdit">
                                             <property name="name">
                                                 <cstring>nameLine</cstring>
                                             </property>
@@ -390,7 +390,7 @@
                                                 </sizepolicy>
                                             </property>
                                         </widget>
-                                        <widget class="QLineEdit">
+                                        <widget class="TQLineEdit">
                                             <property name="name">
                                                 <cstring>executeLine</cstring>
                                             </property>

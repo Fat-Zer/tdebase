@@ -219,7 +219,7 @@ bool DocEntry::readFromFile( const TQString &fileName )
     mIdentifier = fi.baseName( true );
   }
   mIndexer = file.readEntry( "X-DOC-Indexer" );
-  mIndexer.replace( "%f", fileName );
+  mIndexer.tqreplace( "%f", fileName );
   mIndexTestFile = file.readEntry( "X-DOC-IndexTestFile" );
   mSearchEnabledDefault = file.readBoolEntry( "X-DOC-SearchEnabledDefault",
                                               false );

@@ -1,6 +1,6 @@
 <!DOCTYPE UI><UI version="3.3" stdsetdef="1">
 <class>ManagerModuleView</class>
-<widget class="QWidget">
+<widget class="TQWidget">
     <property name="name">
         <cstring>ManagerModuleView</cstring>
     </property>
@@ -16,7 +16,7 @@
         <property name="name">
             <cstring>unnamed</cstring>
         </property>
-        <widget class="QCheckBox">
+        <widget class="TQCheckBox">
             <property name="name">
                 <cstring>kcfg_HalBackendEnabled</cstring>
             </property>
@@ -27,7 +27,7 @@
                 <string>Select this if you want to enable the Hardware Abstraction Layer (http://hal.freedesktop.org/wiki/Software/hal) support.</string>
             </property>
         </widget>
-        <widget class="QCheckBox">
+        <widget class="TQCheckBox">
             <property name="name">
                 <cstring>kcfg_CdPollingEnabled</cstring>
             </property>
@@ -38,7 +38,7 @@
                 <string>Select this to enable the CD polling.</string>
             </property>
         </widget>
-        <widget class="QCheckBox">
+        <widget class="TQCheckBox">
             <property name="name">
                 <cstring>kcfg_AutostartEnabled</cstring>
             </property>
@@ -59,7 +59,7 @@
             <property name="sizeType">
                 <enum>Expanding</enum>
             </property>
-            <property name="sizeHint">
+            <property name="tqsizeHint">
                 <size>
                     <width>21</width>
                     <height>360</height>

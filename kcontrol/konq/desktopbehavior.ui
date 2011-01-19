@@ -1,6 +1,6 @@
 <!DOCTYPE UI><UI version="3.1" stdsetdef="1">
 <class>DesktopBehaviorBase</class>
-<widget class="QWidget">
+<widget class="TQWidget">
     <property name="name">
         <cstring>DesktopBehaviorBase</cstring>
     </property>
@@ -22,11 +22,11 @@
         <property name="spacing">
             <number>0</number>
         </property>
-        <widget class="QTabWidget">
+        <widget class="TQTabWidget">
             <property name="name">
                 <cstring>behaviorTab</cstring>
             </property>
-            <widget class="QWidget">
+            <widget class="TQWidget">
                 <property name="name">
                     <cstring>tab</cstring>
                 </property>
@@ -37,7 +37,7 @@
                     <property name="name">
                         <cstring>unnamed</cstring>
                     </property>
-                    <widget class="QCheckBox" row="0" column="0">
+                    <widget class="TQCheckBox" row="0" column="0">
                         <property name="name">
                             <cstring>iconsEnabledBox</cstring>
                         </property>
@@ -56,7 +56,7 @@
                             <string>Uncheck this option if you do not want to have icons on the desktop. Without icons the desktop will be somewhat faster but you will no longer be able to drag files to the desktop.</string>
                         </property>
                     </widget>
-                    <widget class="QLayoutWidget" row="1" column="0">
+                    <widget class="TQLayoutWidget" row="1" column="0">
                         <property name="name">
                             <cstring>layout1</cstring>
                         </property>
@@ -74,14 +74,14 @@
                                 <property name="sizeType">
                                     <enum>Fixed</enum>
                                 </property>
-                                <property name="sizeHint">
+                                <property name="tqsizeHint">
                                     <size>
                                         <width>20</width>
                                         <height>0</height>
                                     </size>
                                 </property>
                             </spacer>
-                            <widget class="QCheckBox">
+                            <widget class="TQCheckBox">
                                 <property name="name">
                                     <cstring>vrootBox</cstring>
                                 </property>
@@ -97,7 +97,7 @@
                             </widget>
                         </hbox>
                     </widget>
-                    <widget class="QCheckBox" row="2" column="0">
+                    <widget class="TQCheckBox" row="2" column="0">
                         <property name="name">
                             <cstring>toolTipBox</cstring>
                         </property>
@@ -105,7 +105,7 @@
                             <string>Show &amp;tooltips</string>
                         </property>
                     </widget>
-                    <widget class="QButtonGroup" row="3" column="0">
+                    <widget class="TQButtonGroup" row="3" column="0">
                         <property name="name">
                             <cstring>desktopMenuGroup</cstring>
                         </property>
@@ -116,7 +116,7 @@
                             <property name="name">
                                 <cstring>unnamed</cstring>
                             </property>
-                            <widget class="QRadioButton">
+                            <widget class="TQRadioButton">
                                 <property name="name">
                                     <cstring>radioButton1</cstring>
                                 </property>
@@ -127,7 +127,7 @@
                                     <string>If this option is selected, there is no menu bar at the top of the screen.</string>
                                 </property>
                             </widget>
-                            <widget class="QRadioButton">
+                            <widget class="TQRadioButton">
                                 <property name="name">
                                     <cstring>radioButton1_2</cstring>
                                 </property>
@@ -138,7 +138,7 @@
                                     <string>If this option is selected, there is one menu bar at the top of the screen which shows the desktop menus.</string>
                                 </property>
                             </widget>
-                            <widget class="QRadioButton">
+                            <widget class="TQRadioButton">
                                 <property name="name">
                                     <cstring>radioButton1_3</cstring>
                                 </property>
@@ -151,7 +151,7 @@
                             </widget>
                         </vbox>
                     </widget>
-                    <widget class="QGroupBox" row="4" column="0">
+                    <widget class="TQGroupBox" row="4" column="0">
                         <property name="name">
                             <cstring>groupBox3</cstring>
                         </property>
@@ -162,7 +162,7 @@
                             <property name="name">
                                 <cstring>unnamed</cstring>
                             </property>
-                            <widget class="QLabel" row="1" column="0">
+                            <widget class="TQLabel" row="1" column="0">
                                 <property name="name">
                                     <cstring>middleLabel</cstring>
                                 </property>
@@ -170,7 +170,7 @@
                                     <string>Middle button:</string>
                                 </property>
                             </widget>
-                            <widget class="QLabel" row="0" column="0">
+                            <widget class="TQLabel" row="0" column="0">
                                 <property name="name">
                                     <cstring>leftLabel</cstring>
                                 </property>
@@ -178,7 +178,7 @@
                                     <string>Left button:</string>
                                 </property>
                             </widget>
-                            <widget class="QLabel" row="2" column="0">
+                            <widget class="TQLabel" row="2" column="0">
                                 <property name="name">
                                     <cstring>rightLabel</cstring>
                                 </property>
@@ -186,7 +186,7 @@
                                     <string>Right button:</string>
                                 </property>
                             </widget>
-                            <widget class="QComboBox" row="2" column="1">
+                            <widget class="TQComboBox" row="2" column="1">
                                 <property name="name">
                                     <cstring>rightComboBox</cstring>
                                 </property>
@@ -199,7 +199,7 @@
                                     </sizepolicy>
                                 </property>
                             </widget>
-                            <widget class="QComboBox" row="0" column="1">
+                            <widget class="TQComboBox" row="0" column="1">
                                 <property name="name">
                                     <cstring>leftComboBox</cstring>
                                 </property>
@@ -212,7 +212,7 @@
                                     </sizepolicy>
                                 </property>
                             </widget>
-                            <widget class="QPushButton" row="0" column="2">
+                            <widget class="TQPushButton" row="0" column="2">
                                 <property name="name">
                                     <cstring>leftEditButton</cstring>
                                 </property>
@@ -223,7 +223,7 @@
                                     <string>Edit...</string>
                                 </property>
                             </widget>
-                            <widget class="QComboBox" row="1" column="1">
+                            <widget class="TQComboBox" row="1" column="1">
                                 <property name="name">
                                     <cstring>middleComboBox</cstring>
                                 </property>
@@ -236,7 +236,7 @@
                                     </sizepolicy>
                                 </property>
                             </widget>
-                            <widget class="QPushButton" row="1" column="2">
+                            <widget class="TQPushButton" row="1" column="2">
                                 <property name="name">
                                     <cstring>middleEditButton</cstring>
                                 </property>
@@ -247,7 +247,7 @@
                                     <string>Edit...</string>
                                 </property>
                             </widget>
-                            <widget class="QPushButton" row="2" column="2">
+                            <widget class="TQPushButton" row="2" column="2">
                                 <property name="name">
                                     <cstring>rightEditButton</cstring>
                                 </property>
@@ -268,7 +268,7 @@
                                 <property name="sizeType">
                                     <enum>Expanding</enum>
                                 </property>
-                                <property name="sizeHint">
+                                <property name="tqsizeHint">
                                     <size>
                                         <width>191</width>
                                         <height>80</height>
@@ -287,7 +287,7 @@
                         <property name="sizeType">
                             <enum>Expanding</enum>
                         </property>
-                        <property name="sizeHint">
+                        <property name="tqsizeHint">
                             <size>
                                 <width>20</width>
                                 <height>16</height>
@@ -296,7 +296,7 @@
                     </spacer>
                 </grid>
             </widget>
-            <widget class="QWidget">
+            <widget class="TQWidget">
                 <property name="name">
                     <cstring>tab</cstring>
                 </property>
@@ -307,7 +307,7 @@
                     <property name="name">
                         <cstring>unnamed</cstring>
                     </property>
-                    <widget class="QCheckBox" row="0" column="0">
+                    <widget class="TQCheckBox" row="0" column="0">
                         <property name="name">
                             <cstring>autoLineupIconsBox</cstring>
                         </property>
@@ -318,7 +318,7 @@
                             <string>Check this option if you want to see your icons automatically aligned to the grid when you move them.</string>
                         </property>
                     </widget>
-                    <widget class="QCheckBox" row="1" column="0">
+                    <widget class="TQCheckBox" row="1" column="0">
                         <property name="name">
                             <cstring>showHiddenBox</cstring>
                         </property>
@@ -354,7 +354,7 @@
                     </widget>
                 </grid>
             </widget>
-            <widget class="QWidget">
+            <widget class="TQWidget">
                 <property name="name">
                     <cstring>tab</cstring>
                 </property>
@@ -365,7 +365,7 @@
                     <property name="name">
                         <cstring>unnamed</cstring>
                     </property>
-                    <widget class="QCheckBox">
+                    <widget class="TQCheckBox">
                         <property name="name">
                             <cstring>enableMediaBox</cstring>
                         </property>

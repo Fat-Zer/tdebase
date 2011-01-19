@@ -35,7 +35,7 @@ class TQTimer;
 
 //--------------------------------------------------------------------------------
 
-class LIBKONQ_EXPORT KonqFileTip : public QFrame
+class LIBKONQ_EXPORT KonqFileTip : public TQFrame
 {
   Q_OBJECT
 

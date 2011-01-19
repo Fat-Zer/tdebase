@@ -1,6 +1,6 @@
 <!DOCTYPE UI><UI version="3.1" stdsetdef="1">
 <class>KRefinePageDlg</class>
-<widget class="QWidget">
+<widget class="TQWidget">
     <property name="name">
         <cstring>KRefinePageDlg</cstring>
     </property>
@@ -16,7 +16,7 @@
         <property name="name">
             <cstring>unnamed</cstring>
         </property>
-        <widget class="QLabel" row="0" column="1">
+        <widget class="TQLabel" row="0" column="1">
             <property name="name">
                 <cstring>TextLabel11</cstring>
             </property>
@@ -32,13 +32,13 @@
                 <string>&lt;h3&gt;Finished&lt;/h3&gt;
 &lt;p&gt;After closing this dialog you can always restart this Wizard by choosing the entry &lt;b&gt;Desktop Settings Wizard&lt;/b&gt; from the Settings menu.&lt;/p&gt;</string>
             </property>
-            <property name="alignment">
+            <property name="tqalignment">
                 <set>WordBreak|AlignVCenter|AlignLeft</set>
             </property>
             <property name="wordwrap" stdset="0">
             </property>
         </widget>
-        <widget class="QFrame" row="2" column="1">
+        <widget class="TQFrame" row="2" column="1">
             <property name="name">
                 <cstring>Frame3</cstring>
             </property>
@@ -52,7 +52,7 @@
                 <property name="name">
                     <cstring>unnamed</cstring>
                 </property>
-                <widget class="QLabel">
+                <widget class="TQLabel">
                     <property name="name">
                         <cstring>px_kcontrol</cstring>
                     </property>
@@ -65,7 +65,7 @@
                         </sizepolicy>
                     </property>
                 </widget>
-                <widget class="QLabel">
+                <widget class="TQLabel">
                     <property name="name">
                         <cstring>TextLabel1</cstring>
                     </property>
@@ -80,13 +80,13 @@
                     <property name="text">
                         <string>You can refine the settings you made by starting the Trinity Control Center by choosing the entry &lt;b&gt;Control Center&lt;/b&gt; in the K menu.</string>
                     </property>
-                    <property name="alignment">
+                    <property name="tqalignment">
                         <set>WordBreak|AlignTop|AlignLeft</set>
                     </property>
                 </widget>
             </hbox>
         </widget>
-        <widget class="QLabel" row="0" column="0" rowspan="7" colspan="1">
+        <widget class="TQLabel" row="0" column="0" rowspan="7" colspan="1">
             <property name="name">
                 <cstring>px_finishSidebar</cstring>
             </property>
@@ -98,7 +98,7 @@
                     <verstretch>0</verstretch>
                 </sizepolicy>
             </property>
-            <property name="minimumSize">
+            <property name="tqminimumSize">
                 <size>
                     <width>170</width>
                     <height>430</height>
@@ -117,7 +117,7 @@
                 <number>0</number>
             </property>
         </widget>
-        <widget class="QLabel" row="4" column="1">
+        <widget class="TQLabel" row="4" column="1">
             <property name="name">
                 <cstring>lb_kcontrol</cstring>
             </property>
@@ -132,7 +132,7 @@
             <property name="text">
                 <string>You can also start the Trinity Control Center using the button below.</string>
             </property>
-            <property name="alignment">
+            <property name="tqalignment">
                 <set>WordBreak|AlignCenter</set>
             </property>
         </widget>
@@ -146,7 +146,7 @@
             <property name="sizeType">
                 <enum>Fixed</enum>
             </property>
-            <property name="sizeHint">
+            <property name="tqsizeHint">
                 <size>
                     <width>30</width>
                     <height>16</height>
@@ -163,14 +163,14 @@
             <property name="sizeType">
                 <enum>Fixed</enum>
             </property>
-            <property name="sizeHint">
+            <property name="tqsizeHint">
                 <size>
                     <width>20</width>
                     <height>16</height>
                 </size>
             </property>
         </spacer>
-        <widget class="QLayoutWidget" row="5" column="1">
+        <widget class="TQLayoutWidget" row="5" column="1">
             <property name="name">
                 <cstring>Layout5</cstring>
             </property>
@@ -188,14 +188,14 @@
                     <property name="sizeType">
                         <enum>Expanding</enum>
                     </property>
-                    <property name="sizeHint">
+                    <property name="tqsizeHint">
                         <size>
                             <width>20</width>
                             <height>20</height>
                         </size>
                     </property>
                 </spacer>
-                <widget class="QPushButton">
+                <widget class="TQPushButton">
                     <property name="name">
                         <cstring>pb_kcontrol</cstring>
                     </property>
@@ -213,7 +213,7 @@
                     <property name="sizeType">
                         <enum>Expanding</enum>
                     </property>
-                    <property name="sizeHint">
+                    <property name="tqsizeHint">
                         <size>
                             <width>20</width>
                             <height>20</height>
@@ -232,7 +232,7 @@
             <property name="sizeType">
                 <enum>Expanding</enum>
             </property>
-            <property name="sizeHint">
+            <property name="tqsizeHint">
                 <size>
                     <width>20</width>
                     <height>20</height>

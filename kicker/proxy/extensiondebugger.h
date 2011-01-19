@@ -27,7 +27,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 class AppletInfo;
 class KPanelExtension;
 
-class ExtensionContainer : public QWidget
+class ExtensionContainer : public TQWidget
 {
     Q_OBJECT
 

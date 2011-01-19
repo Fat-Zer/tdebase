@@ -29,7 +29,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #include "appletinfo.h"
 
-class PanelAddExtensionMenu : public QPopupMenu
+class PanelAddExtensionMenu : public TQPopupMenu
 {
     Q_OBJECT
 

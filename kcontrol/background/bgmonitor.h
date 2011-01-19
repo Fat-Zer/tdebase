@@ -37,7 +37,7 @@ class KPixmap;
  * This class arranges and resizes a set of monitor images according to the
  * monitor geometries.
  */
-class BGMonitorArrangement : public QWidget
+class BGMonitorArrangement : public TQWidget
 {
     Q_OBJECT
 public:
@@ -72,7 +72,7 @@ protected:
 /**
  * Contains a BGMonitor.
  */
-class BGMonitorLabel : public QLabel
+class BGMonitorLabel : public TQLabel
 {
 public:
     BGMonitorLabel(TQWidget *parent, const char *name=0L);
@@ -93,7 +93,7 @@ protected:
 /**
  * This class handles drops on the preview monitor.
  */
-class BGMonitor : public QLabel
+class BGMonitor : public TQLabel
 {
     Q_OBJECT
 public:

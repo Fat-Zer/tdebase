@@ -307,7 +307,7 @@ void TEmuVt102::initTokenizer()
 #define ESC 27
 #define CNTL(c) ((c)-'@')
 
-// process an incoming unicode character
+// process an incoming tqunicode character
 
 void TEmuVt102::onRcvChar(int cc)
 { int i;
@@ -382,7 +382,7 @@ void TEmuVt102::XtermHack()
   for (i = 2; i < ppos && '0'<=pbuf[i] && pbuf[i]<'9' ; i++)
     arg = 10*arg + (pbuf[i]-'0');
   if (pbuf[i] != ';') { ReportErrorToken(); return; }
-  TQChar *str = new QChar[ppos-i-2];
+  TQChar *str = new TQChar[ppos-i-2];
   for (int j = 0; j < ppos-i-2; j++) str[j] = pbuf[i+1+j];
   TQString unistr(str,ppos-i-2);
   // arg == 1 doesn't change the title. In XTerm it only changes the icon name
@@ -939,13 +939,13 @@ void TEmuVt102::onKeyPress( TQKeyEvent* ev )
   const char* txt; 
   int len;
   bool metaspecified;
-  if (keytrans->findEntry(ev->key(), encodeMode(MODE_NewLine  , BITS_NewLine   ) + // OLD,
-                                     encodeMode(MODE_Ansi     , BITS_Ansi      ) + // OBSOLETE,
-                                     encodeMode(MODE_AppCuKeys, BITS_AppCuKeys ) + // VT100 stuff
-                                     encodeMode(MODE_AppScreen, BITS_AppScreen ) + // VT100 stuff
-                                     encodeStat(ControlButton , BITS_Control   ) +
-                                     encodeStat(ShiftButton   , BITS_Shift     ) +
-                                     encodeStat(AltButton     , BITS_Alt       ),
+  if (keytrans->findEntry(ev->key(), encodeMode(MODE_NewLine		, BITS_NewLine   ) + // OLD,
+                                     encodeMode(MODE_Ansi		, BITS_Ansi      ) + // OBSOLETE,
+                                     encodeMode(MODE_AppCuKeys		, BITS_AppCuKeys ) + // VT100 stuff
+                                     encodeMode(MODE_AppScreen		, BITS_AppScreen ) + // VT100 stuff
+                                     encodeStat(TQt::ControlButton	, BITS_Control   ) +
+                                     encodeStat(TQt::ShiftButton	, BITS_Shift     ) +
+                                     encodeStat(TQt::AltButton		, BITS_Alt       ),
                           &cmd, &txt, &len, &metaspecified ))
 //printf("cmd: %d, %s, %d\n",cmd,txt,len);
   if (connected)
@@ -963,21 +963,21 @@ void TEmuVt102::onKeyPress( TQKeyEvent* ev )
   {
     switch(ev->key())
     {
-    case Key_Down : gui->doScroll(+1); return;
-    case Key_Up : gui->doScroll(-1); return;
-    case Key_PageUp : gui->doScroll(-gui->Lines()/2); return;
-    case Key_PageDown : gui->doScroll(gui->Lines()/2); return;
+    case Qt::Key_Down : gui->doScroll(+1); return;
+    case Qt::Key_Up : gui->doScroll(-1); return;
+    case Qt::Key_PageUp : gui->doScroll(-gui->Lines()/2); return;
+    case Qt::Key_PageDown : gui->doScroll(gui->Lines()/2); return;
     }
   }
   
   // revert to non-history when typing
   if (scr->getHistCursor() != scr->getHistLines() && (!ev->text().isEmpty()
-    || ev->key()==Key_Down || ev->key()==Key_Up || ev->key()==Key_Left || ev->key()==Key_Right
-    || ev->key()==Key_PageUp || ev->key()==Key_PageDown))
+    || ev->key()==Qt::Key_Down || ev->key()==Qt::Key_Up || ev->key()==Qt::Key_Left || ev->key()==Qt::Key_Right
+    || ev->key()==Qt::Key_PageUp || ev->key()==Qt::Key_PageDown))
     scr->setHistCursor(scr->getHistLines());
 
   if (cmd==CMD_send) {
-    if ((ev->state() & AltButton) && !metaspecified ) sendString("\033");
+    if ((ev->state() & TQt::AltButton) && !metaspecified ) sendString("\033");
     emit sndBlock(txt,len);
     return;
   }
@@ -985,13 +985,13 @@ void TEmuVt102::onKeyPress( TQKeyEvent* ev )
   // fall back handling
   if (!ev->text().isEmpty())
   {
-    if (ev->state() & AltButton) sendString("\033"); // ESC, this is the ALT prefix
+    if (ev->state() & TQt::AltButton) sendString("\033"); // ESC, this is the ALT prefix
     TQCString s = m_codec->fromUnicode(ev->text());     // encode for application
     // FIXME: In Qt 2, TQKeyEvent::text() would return "\003" for Ctrl-C etc.
     //        while in Qt 3 it returns the actual key ("c" or "C") which caused
     //        the ControlButton to be ignored. This hack seems to work for
     //        latin1 locales at least. Please anyone find a clean solution (malte)
-    if (ev->state() & ControlButton)
+    if (ev->state() & TQt::ControlButton)
       s.fill(ev->ascii(), 1);
     emit sndBlock(s.data(),s.length());              // we may well have s.length() > 1 
     return;

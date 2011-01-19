@@ -163,7 +163,7 @@ KTitleBarActionsConfig::KTitleBarActionsConfig (bool _standAlone, KConfig *_conf
   combo->insertItem(i18n("Lower"));
   combo->insertItem(i18n("On All Desktops"));
   combo->insertItem(i18n("Nothing"));
-  combo->setSizePolicy(TQSizePolicy(TQSizePolicy::MinimumExpanding, TQSizePolicy::Fixed));
+  combo->tqsetSizePolicy(TQSizePolicy(TQSizePolicy::MinimumExpanding, TQSizePolicy::Fixed));
   connect(combo, TQT_SIGNAL(activated(int)), TQT_SLOT(changed()));
   hlayout->addWidget(combo);
   coTiDbl = combo;
@@ -188,7 +188,7 @@ KTitleBarActionsConfig::KTitleBarActionsConfig (bool _standAlone, KConfig *_conf
   comboW->insertItem(i18n("Move to Previous/Next Desktop"));  
   comboW->insertItem(i18n("Change Opacity"));  
   comboW->insertItem(i18n("Nothing"));  
-  comboW->setSizePolicy(TQSizePolicy(TQSizePolicy::MinimumExpanding, TQSizePolicy::Fixed));
+  comboW->tqsetSizePolicy(TQSizePolicy(TQSizePolicy::MinimumExpanding, TQSizePolicy::Fixed));
   connect(comboW, TQT_SIGNAL(activated(int)), TQT_SLOT(changed()));
   hlayoutW->addWidget(comboW);
   coTiAct4 = comboW;
@@ -219,8 +219,8 @@ KTitleBarActionsConfig::KTitleBarActionsConfig (bool _standAlone, KConfig *_conf
 
   if ( leftHandedMouse )
   {
-     qSwap(strMouseButton1, strMouseButton3);
-     qSwap(txtButton1, txtButton3);
+     tqSwap(strMouseButton1, strMouseButton3);
+     tqSwap(txtButton1, txtButton3);
   }
 
   label = new TQLabel(strMouseButton1, grid);
@@ -235,7 +235,7 @@ KTitleBarActionsConfig::KTitleBarActionsConfig (bool _standAlone, KConfig *_conf
 
 
   label = new TQLabel(i18n("Active"), grid);
-  label->setAlignment(AlignCenter);
+  label->tqsetAlignment(AlignCenter);
   TQWhatsThis::add( label, i18n("In this column you can customize mouse clicks into the titlebar"
                                " or the frame of an active window.") );
 
@@ -256,7 +256,7 @@ KTitleBarActionsConfig::KTitleBarActionsConfig (bool _standAlone, KConfig *_conf
      "<em>active</em> window.");
 
   // Be nice to left handed users
-  if ( leftHandedMouse ) qSwap(txtButton1, txtButton3);
+  if ( leftHandedMouse ) tqSwap(txtButton1, txtButton3);
 
   TQWhatsThis::add(combo, txtButton1);
 
@@ -289,10 +289,10 @@ KTitleBarActionsConfig::KTitleBarActionsConfig (bool _standAlone, KConfig *_conf
      "<em>inactive</em> window.");
 
   // Be nice to left handed users
-  if ( leftHandedMouse ) qSwap(txtButton1, txtButton3);
+  if ( leftHandedMouse ) tqSwap(txtButton1, txtButton3);
 
   label = new TQLabel(i18n("Inactive"), grid);
-  label->setAlignment(AlignCenter);
+  label->tqsetAlignment(AlignCenter);
   TQWhatsThis::add( label, i18n("In this column you can customize mouse clicks into the titlebar"
                                " or the frame of an inactive window.") );
 
@@ -345,8 +345,8 @@ KTitleBarActionsConfig::KTitleBarActionsConfig (bool _standAlone, KConfig *_conf
 
   if ( leftHandedMouse ) // Be nice to lefties
   {
-     qSwap(strMouseButton[0], strMouseButton[2]);
-     qSwap(txtButton[0], txtButton[2]);
+     tqSwap(strMouseButton[0], strMouseButton[2]);
+     tqSwap(txtButton[0], txtButton[2]);
   }
 
   createMaxButtonPixmaps();
@@ -356,14 +356,14 @@ KTitleBarActionsConfig::KTitleBarActionsConfig (bool _standAlone, KConfig *_conf
 
     TQLabel * label = new TQLabel(strMouseButton[b], box);
     TQWhatsThis::add( label,    txtButton[b] );
-    label   ->setSizePolicy( TQSizePolicy( TQSizePolicy::Fixed, TQSizePolicy::Minimum ));
+    label   ->tqsetSizePolicy( TQSizePolicy( TQSizePolicy::Fixed, TQSizePolicy::Minimum ));
 
     coMax[b] = new ToolTipComboBox(box, tbl_Max);
     for (int t = 0; t < 3; ++t) coMax[b]->insertItem(maxButtonPixmaps[t]);
     connect(coMax[b], TQT_SIGNAL(activated(int)), TQT_SLOT(changed()));
     connect(coMax[b], TQT_SIGNAL(activated(int)), coMax[b], TQT_SLOT(changed()));
     TQWhatsThis::add( coMax[b], txtButton[b] );
-    coMax[b]->setSizePolicy( TQSizePolicy( TQSizePolicy::Fixed, TQSizePolicy::Minimum ));
+    coMax[b]->tqsetSizePolicy( TQSizePolicy( TQSizePolicy::Fixed, TQSizePolicy::Minimum ));
   }
 
   connect(kapp, TQT_SIGNAL(kdisplayPaletteChanged()), TQT_SLOT(paletteChanged()));
@@ -565,7 +565,7 @@ void KTitleBarActionsConfig::save()
     config->sync();
     if ( !kapp->dcopClient()->isAttached() )
       kapp->dcopClient()->attach();
-    kapp->dcopClient()->send("kwin*", "", "reconfigure()", "");
+    kapp->dcopClient()->send("kwin*", "", "reconfigure()", TQString(""));
   }
 }
 
@@ -618,8 +618,8 @@ KWindowActionsConfig::KWindowActionsConfig (bool _standAlone, KConfig *_config, 
 
   if ( leftHandedMouse )
   {
-     qSwap(strMouseButton1, strMouseButton3);
-     qSwap(txtButton1, txtButton3);
+     tqSwap(strMouseButton1, strMouseButton3);
+     tqSwap(txtButton1, txtButton3);
   }
 
   strWin1 = i18n("In this row you can customize left click behavior when clicking into"
@@ -629,7 +629,7 @@ KWindowActionsConfig::KWindowActionsConfig (bool _standAlone, KConfig *_config, 
      " an inactive inner window ('inner' means: not titlebar, not frame).");
 
   // Be nice to lefties
-  if ( leftHandedMouse ) qSwap(strWin1, strWin3);
+  if ( leftHandedMouse ) tqSwap(strWin1, strWin3);
 
   label = new TQLabel(strMouseButton1, grid);
   TQWhatsThis::add( label, strWin1 );
@@ -696,8 +696,8 @@ KWindowActionsConfig::KWindowActionsConfig (bool _standAlone, KConfig *_config, 
 
   if ( leftHandedMouse )
   {
-     qSwap(strMouseButton1, strMouseButton3);
-     qSwap(strAll1, strAll3);
+     tqSwap(strMouseButton1, strMouseButton3);
+     tqSwap(strAll1, strAll3);
   }
 
   label = new TQLabel(strMouseButton1, grid);
@@ -839,7 +839,7 @@ void KWindowActionsConfig::save()
     config->sync();
     if ( !kapp->dcopClient()->isAttached() )
       kapp->dcopClient()->attach();
-    kapp->dcopClient()->send("kwin*", "", "reconfigure()", "");
+    kapp->dcopClient()->send("kwin*", "", "reconfigure()", TQString(""));
   }
 }
 

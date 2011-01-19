@@ -81,7 +81,7 @@ protected:
     TQPushButton *mSetupBt;
     TQPushButton *mTestBt;
     TQListView   *mSaverListView;
-    QSpinBox	*mWaitEdit;
+    TQSpinBox	*mWaitEdit;
     TQSpinBox    *mWaitLockEdit;
     TQCheckBox   *mLockCheckBox;
     TQCheckBox   *mStarsCheckBox;

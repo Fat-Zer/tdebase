@@ -33,7 +33,7 @@
 
 #include "SensorBrowser.h"
 
-class HostItem : public QListViewItem
+class HostItem : public TQListViewItem
 {
   public:
     HostItem( SensorBrowser *parent, const TQString &text, int id,
@@ -225,13 +225,13 @@ void SensorBrowser::answerReceived( int id, const TQString &answer )
           parent = lvi;
 
         // The child indicator might need to be updated.
-        repaintItem( parent );
+        tqrepaintItem( parent );
       } else
         parent = sibling;
     }
   }
 
-  repaintItem( (*it)->listViewItem() );
+  tqrepaintItem( (*it)->listViewItem() );
 }
 
 void SensorBrowser::viewportMouseMoveEvent( TQMouseEvent *e )
@@ -240,7 +240,7 @@ void SensorBrowser::viewportMouseMoveEvent( TQMouseEvent *e )
    * mouse tracking cannot be turned off. So we have to check each event
    * whether the LMB is really pressed. */
 
-  if ( !( e->state() & LeftButton ) )
+  if ( !( e->state() & Qt::LeftButton ) )
     return;
 
   TQListViewItem* item = itemAt( e->pos() );

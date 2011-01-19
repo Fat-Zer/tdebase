@@ -67,7 +67,7 @@
 
 //BEGIN Toolbar
  // from kfiledialog.cpp - avoid qt warning in STDERR (~/.xsessionerrors)
-static void silenceQToolBar(QtMsgType, const char *){}
+static void silenceQToolBar(TQtMsgType, const char *){}
 
 // helper classes to be able to have a toolbar without move handle
 KateFileSelectorToolBar::KateFileSelectorToolBar(TQWidget *parent)
@@ -96,7 +96,7 @@ void KateFileSelectorToolBarParent::resizeEvent ( TQResizeEvent * )
 {
 	if (m_tb)
 	{
-		setMinimumHeight(m_tb->sizeHint().height());
+		setMinimumHeight(m_tb->tqsizeHint().height());
 		m_tb->resize(width(),height());
 	}
 }
@@ -113,17 +113,17 @@ KateFileSelector::KateFileSelector( KateMainWindow *mainWindow,
 {
   mActionCollection = new KActionCollection( this );
 
-  QtMsgHandler oldHandler = qInstallMsgHandler( silenceQToolBar );
+  TQtMsgHandler oldHandler = tqInstallMsgHandler( silenceQToolBar );
 
   KateFileSelectorToolBarParent *tbp=new KateFileSelectorToolBarParent(this);
   toolbar = new KateFileSelectorToolBar(tbp);
   tbp->setToolBar(toolbar);
   toolbar->setMovingEnabled(false);
   toolbar->setFlat(true);
-  qInstallMsgHandler( oldHandler );
+  tqInstallMsgHandler( oldHandler );
 
   cmbPath = new KURLComboBox( KURLComboBox::Directories, true, this, "path combo" );
-  cmbPath->setSizePolicy( TQSizePolicy( TQSizePolicy::Expanding, TQSizePolicy::Fixed ));
+  cmbPath->tqsetSizePolicy( TQSizePolicy( TQSizePolicy::Expanding, TQSizePolicy::Fixed ));
   KURLCompletion* cmpl = new KURLCompletion(KURLCompletion::DirCompletion);
   cmbPath->setCompletionObject( cmpl );
   cmbPath->setAutoDeleteCompletionObject( true );
@@ -157,7 +157,7 @@ KateFileSelector::KateFileSelector( KateMainWindow *mainWindow,
   btnFilter->setIconSet( SmallIconSet("filter" ) );
   btnFilter->setToggleButton( true );
   filter = new KHistoryCombo( true, filterBox, "filter");
-  filter->setSizePolicy( TQSizePolicy( TQSizePolicy::Expanding, TQSizePolicy::Fixed ));
+  filter->tqsetSizePolicy( TQSizePolicy( TQSizePolicy::Expanding, TQSizePolicy::Fixed ));
   filterBox->setStretchFactor(filter, 2);
   connect( btnFilter, TQT_SIGNAL( clicked() ), this, TQT_SLOT( btnFilterClick() ) );
 
@@ -168,7 +168,7 @@ KateFileSelector::KateFileSelector( KateMainWindow *mainWindow,
 
   // kaction for the dir sync method
   acSyncDir = new KAction( i18n("Current Document Folder"), "curfiledir", 0,
-        this, TQT_SLOT( setActiveDocumentDir() ), mActionCollection, "sync_dir" );
+        TQT_TQOBJECT(this), TQT_SLOT( setActiveDocumentDir() ), mActionCollection, "sync_dir" );
   toolbar->setIconText( KToolBar::IconOnly );
   toolbar->setIconSize( 16 );
   toolbar->setEnableContextMenu( false );
@@ -354,7 +354,7 @@ void KateFileSelector::setDir( KURL u )
   newurl.setPath(pathstr);
 
   if ( !kateFileSelectorIsReadable ( newurl ) )
-    newurl.cd(TQString::fromLatin1(".."));
+    newurl.cd(TQString::tqfromLatin1(".."));
 
   if ( !kateFileSelectorIsReadable (newurl) )
      newurl.setPath( TQDir::homeDirPath() );
@@ -486,7 +486,7 @@ bool KateFileSelector::eventFilter( TQObject* o, TQEvent *e )
       And the popup is rather useless, if the paths are only partly visible.
   */
   TQListBox *lb = cmbPath->listBox();
-  if ( o == lb && e->type() == TQEvent::Show ) {
+  if ( TQT_BASE_OBJECT(o) == TQT_BASE_OBJECT(lb) && e->type() == TQEvent::Show ) {
     int add = lb->height() < lb->contentsHeight() ? lb->verticalScrollBar()->width() : 0;
     int w = QMIN( mainwin->width(), lb->contentsWidth() + add );
     lb->resize( w, lb->height() );
@@ -692,13 +692,13 @@ void KFSConfigPage::init()
   KAction *ac;
   TQListBox *lb;
   for ( TQStringList::Iterator it=allActions.begin(); it != allActions.end(); ++it ) {
-    lb = l.contains( *it ) ? acSel->selectedListBox() : acSel->availableListBox();
+    lb = l.tqcontains( *it ) ? acSel->selectedListBox() : acSel->availableListBox();
     if ( *it == "bookmarks" || *it == "sync_dir" )
       ac = fileSelector->actionCollection()->action( (*it).latin1() );
     else
       ac = fileSelector->dirOperator()->actionCollection()->action( (*it).latin1() );
     if ( ac )
-      new ActionLBItem( lb, SmallIcon( ac->icon() ), ac->text().replace( re, "" ), *it );
+      new ActionLBItem( lb, SmallIcon( ac->icon() ), ac->text().tqreplace( re, "" ), *it );
   }
 
   // sync

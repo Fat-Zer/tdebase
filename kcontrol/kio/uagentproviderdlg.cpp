@@ -47,7 +47,7 @@ void UALineEdit::keyPressEvent( TQKeyEvent* e )
   TQString keycode = e->text();
   if ( (key >= Qt::Key_Escape && key <= Qt::Key_Help) || key == Qt::Key_Period ||
        (cursorPosition() > 0 && key == Qt::Key_Minus) ||
-       (!keycode.isEmpty() && keycode.unicode()->isLetterOrNumber()) )
+       (!keycode.isEmpty() && keycode.tqunicode()->isLetterOrNumber()) )
   {
     KLineEdit::keyPressEvent(e);
     return;
@@ -121,7 +121,7 @@ void UAProviderDlg::setSiteName( const TQString& text )
 
 void UAProviderDlg::setIdentity( const TQString& text )
 {
-  int id = dlg->cbAlias->listBox()->index( dlg->cbAlias->listBox()->findItem(text) );
+  int id = dlg->cbAlias->listBox()->index( dlg->cbAlias->listBox()->tqfindItem(text) );
   dlg->cbAlias->setCurrentItem( id );
   slotActivated( dlg->cbAlias->currentText() );
   if ( !dlg->leSite->isEnabled() )

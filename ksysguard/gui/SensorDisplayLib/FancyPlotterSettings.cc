@@ -90,7 +90,7 @@ FancyPlotterSettings::FancyPlotterSettings( TQWidget* parent, const char* name )
   boxLayout->addWidget( label, 1, 0 );
 
   mMinValue = new KLineEdit( groupBox );
-  mMinValue->setAlignment( AlignRight );
+  mMinValue->tqsetAlignment( AlignRight );
   mMinValue->setEnabled( false );
   TQWhatsThis::add( mMinValue, i18n( "Enter the minimum value for the display here. If both values are 0, automatic range detection is enabled." ) );
   boxLayout->addWidget( mMinValue, 1, 1 );
@@ -100,7 +100,7 @@ FancyPlotterSettings::FancyPlotterSettings( TQWidget* parent, const char* name )
   boxLayout->addWidget( label, 1, 3 );
 
   mMaxValue = new KLineEdit( groupBox );
-  mMaxValue->setAlignment( AlignRight );
+  mMaxValue->tqsetAlignment( AlignRight );
   mMaxValue->setEnabled( false );
   TQWhatsThis::add( mMaxValue, i18n( "Enter the maximum value for the display here. If both values are 0, automatic range detection is enabled." ) );
   boxLayout->addWidget( mMaxValue, 1, 4 );
@@ -532,7 +532,7 @@ TQValueList< TQStringList > FancyPlotterSettings::sensors() const
     entry << it.current()->text( 3 );
     entry << it.current()->text( 4 );
     QRgb rgb = it.current()->pixmap( 2 )->convertToImage().pixel( 1, 1 );
-    TQColor color( qRed( rgb ), qGreen( rgb ), qBlue( rgb ) );
+    TQColor color( tqRed( rgb ), tqGreen( rgb ), tqBlue( rgb ) );
     entry << ( color.name() );
 
     list.prepend( entry );
@@ -549,7 +549,7 @@ void FancyPlotterSettings::editSensor()
     return;
 
   TQColor color = lvi->pixmap( 2 )->convertToImage().pixel( 1, 1 );
-  int result = KColorDialog::getColor( color, parentWidget() );
+  int result = KColorDialog::getColor( color, tqparentWidget() );
   if ( result == KColorDialog::Accepted ) {
     TQPixmap newPm( 12, 12 );
     newPm.fill( color );

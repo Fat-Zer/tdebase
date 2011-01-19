@@ -39,7 +39,7 @@
 #include <kdebug.h>
 #include <tqtimer.h>
 
-class WhatsThis : public QWhatsThis
+class WhatsThis : public TQWhatsThis
 {
 public:
     WhatsThis( ProxyWidget* parent )
@@ -60,7 +60,7 @@ private:
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void setVisible(TQPushButton *btn, bool vis)
+static void trinity_setVisible(TQPushButton *btn, bool vis)
 {
   if (vis)
     btn->show();
@@ -72,7 +72,7 @@ static void setVisible(TQPushButton *btn, bool vis)
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-class RootInfoWidget : public QLabel
+class RootInfoWidget : public TQLabel
 {
 public:
     RootInfoWidget(TQWidget *parent, const char *name);
@@ -100,7 +100,7 @@ RootInfoWidget::RootInfoWidget(TQWidget *parent, const char *name = 0)
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-class ProxyView : public QScrollView
+class ProxyView : public TQScrollView
 {
 public:
     ProxyView(KCModule *client, const TQString& title, TQWidget *parent, bool run_as_root, const char *name);
@@ -113,14 +113,14 @@ private:
     bool scroll;
 };
 
-class ProxyContentWidget : public QWidget
+class ProxyContentWidget : public TQWidget
 {
 public:
     ProxyContentWidget( TQWidget* parent ) : TQWidget( parent ) {}
     ~ProxyContentWidget(){}
 
     // this should be really done by qscrollview in AutoOneFit mode!
-    TQSize sizeHint() const { return minimumSizeHint(); }
+    TQSize tqsizeHint() const { return tqminimumSizeHint(); }
 };
 
 
@@ -144,7 +144,7 @@ ProxyView::ProxyView(KCModule *_client, const TQString&, TQWidget *parent, bool 
   }
   client->reparent(contentWidget,0,TQPoint(0,0),true);
   vbox->addWidget( client );
-  vbox->activate(); // make sure we have a proper minimumSizeHint
+  vbox->activate(); // make sure we have a proper tqminimumSizeHint
   addChild(contentWidget);
 }
 
@@ -215,11 +215,11 @@ ProxyWidget::ProxyWidget(KCModule *client, TQString title, const char *name,
 
   // only enable the requested buttons
   int b = _client->buttons();
-  setVisible(_handbook, (b & KCModule::Help));
-  setVisible(_default, mayModify && (b & KCModule::Default));
-  setVisible(_apply, mayModify && (b & KCModule::Apply));
-  setVisible(_reset, mayModify && (b & KCModule::Apply));
-  setVisible(_root, run_as_root);
+  trinity_setVisible(_handbook, (b & KCModule::Help));
+  trinity_setVisible(_default, mayModify && (b & KCModule::Default));
+  trinity_setVisible(_apply, mayModify && (b & KCModule::Apply));
+  trinity_setVisible(_reset, mayModify && (b & KCModule::Apply));
+  trinity_setVisible(_root, run_as_root);
 
   // disable initial buttons
   _apply->setEnabled( false );

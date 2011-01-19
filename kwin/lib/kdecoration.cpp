@@ -388,14 +388,14 @@ const TQFont& KDecorationOptions::font(bool active, bool small) const
         return(active ? d->activeFont : d->inactiveFont);
 }
 
-const TQColorGroup& KDecorationOptions::colorGroup(ColorType type, bool active) const
+const TQColorGroup& KDecorationOptions::tqcolorGroup(ColorType type, bool active) const
 {
     int idx = type + (active ? 0 : NUM_COLORS);
     if(d->cg[idx])
         return(*d->cg[idx]);
     d->cg[idx] = new TQColorGroup(Qt::black, d->colors[idx], d->colors[idx].light(150),
                               d->colors[idx].dark(), d->colors[idx].dark(120),
-                              Qt::black, TQApplication::palette().active().
+                              Qt::black, TQApplication::tqpalette().active().
                               base());
     return(*d->cg[idx]);
 }
@@ -434,7 +434,7 @@ bool KDecorationOptions::moveResizeMaximizedWindows() const
     return d->move_resize_maximized_windows;
 }
 
-KDecorationDefines::WindowOperation KDecorationOptions::operationMaxButtonClick( Qt::ButtonState button ) const
+KDecorationDefines::WindowOperation KDecorationOptions::operationMaxButtonClick( TQt::ButtonState button ) const
     {
     return button == Qt::RightButton? d->OpMaxButtonRightClick : 
            button == Qt::MidButton?   d->OpMaxButtonMiddleClick :

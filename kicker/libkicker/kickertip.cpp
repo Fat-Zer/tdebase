@@ -76,7 +76,7 @@ KickerTip::KickerTip(TQWidget * parent)
       m_timer(0, "KickerTip::m_timer"),
       m_frameTimer(0, "KickerTip::m_frameTimer")
 {
-    setFocusPolicy(NoFocus);
+    setFocusPolicy(TQ_NoFocus);
     setBackgroundMode(NoBackground);
     resize(0, 0);
     hide();
@@ -146,7 +146,7 @@ void KickerTip::display()
 
     delete m_richText;
     m_richText = new TQSimpleRichText("<qt><h3>" + data.message + "</h3><p>" +
-                                     data.subtext + "</p></qt>", font(), TQString::null, 0,
+                                     data.subtext + "</p></qt>", font(), TQString(), 0,
                                      m_mimeFactory);
     m_richText->setWidth(640);
     m_direction = data.direction;
@@ -308,7 +308,7 @@ void KickerTip::dissolveMask()
 
     if (m_dissolveSize > 0)
     {
-        maskPainter.setRasterOp(Qt::EraseROP);
+        maskPainter.setRasterOp(TQt::EraseROP);
 
         int x, y, s;
         const int size = 16;
@@ -392,8 +392,8 @@ void KickerTip::displayInternal()
 
     // draw background
     TQPainter bufferPainter(&m_pixmap);
-    bufferPainter.setPen(colorGroup().foreground());
-    bufferPainter.setBrush(colorGroup().background());
+    bufferPainter.setPen(tqcolorGroup().foreground());
+    bufferPainter.setBrush(tqcolorGroup().background());
     //bufferPainter.drawRoundRect(0, 0, width, height, 1600 / width, 1600 / height);
     drawRoundRect(bufferPainter, TQRect(0, 0, width, height));
 
@@ -409,13 +409,13 @@ void KickerTip::displayInternal()
     if (KickerSettings::mouseOversShowText())
     {
         // draw text shadow
-        TQColorGroup cg = colorGroup();
+        TQColorGroup cg = tqcolorGroup();
         cg.setColor(TQColorGroup::Text, cg.background().dark(115));
         int shadowOffset = TQApplication::reverseLayout() ? -1 : 1;
         m_richText->draw(&bufferPainter, textX + shadowOffset, textY + 1, TQRect(), cg);
 
         // draw text
-        cg = colorGroup();
+        cg = tqcolorGroup();
         m_richText->draw(&bufferPainter, textX, textY, rect(), cg);
     }
 }
@@ -452,13 +452,13 @@ void KickerTip::tipperDestroyed(TQObject* o)
 {
     // we can't do a dynamic cast because we are in the process of dieing
     // so static it is.
-    untipFor(static_cast<TQWidget*>(o));
+    untipFor(TQT_TQWIDGET(o));
 }
 
 void KickerTip::internalUpdate()
 {
     m_dirty = true;
-    repaint(false);
+    tqrepaint(false);
 }
 
 void KickerTip::enableTipping(bool tip)
@@ -508,7 +508,7 @@ bool KickerTip::eventFilter(TQObject *object, TQEvent *event)
         return false;
     }
 
-    TQWidget *widget = static_cast<TQWidget*>(object);
+    TQWidget *widget = TQT_TQWIDGET(object);
 
     switch (event->type())
     {
@@ -519,7 +519,7 @@ bool KickerTip::eventFilter(TQObject *object, TQEvent *event)
             }
 
             if (!mouseGrabber() &&
-                !qApp->activePopupWidget() &&
+                !tqApp->activePopupWidget() &&
                 !isTippingFor(widget))
             {
                 TQToolTip::setGloballyEnabled(false);

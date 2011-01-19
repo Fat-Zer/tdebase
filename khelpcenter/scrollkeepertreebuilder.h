@@ -31,7 +31,7 @@ class TQDomNode;
 
 namespace KHC {
 
-class ScrollKeeperTreeBuilder : public QObject
+class ScrollKeeperTreeBuilder : public TQObject
 {
   Q_OBJECT
   public:

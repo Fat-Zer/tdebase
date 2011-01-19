@@ -314,7 +314,7 @@ void ContainerArea::loadContainers(const TQStringList& containers)
 
         BaseContainer* a = 0;
 
-        int sep = appletId.findRev('_');
+        int sep = appletId.tqfindRev('_');
         Q_ASSERT(sep != -1);
         TQString appletType = appletId.left(sep);
 
@@ -923,7 +923,7 @@ void ContainerArea::startContainerMove(BaseContainer *a)
     KickerTip::enableTipping(false);
     emit maintainFocus(true);
     setMouseTracking(true);
-    grabMouse(sizeAllCursor);
+    grabMouse(tqsizeAllCursor);
 
     m_layout->setStretchEnabled(false);
     a->raise();
@@ -940,7 +940,7 @@ void ContainerArea::mouseReleaseEvent(TQMouseEvent *)
     // so we need to complete the move here
     _autoScrollTimer.stop();
     releaseMouse();
-    setCursor(arrowCursor);
+    setCursor(tqarrowCursor);
     setMouseTracking(false);
 
     _moveAC->completeMoveOperation();
@@ -962,12 +962,12 @@ void ContainerArea::mouseMoveEvent(TQMouseEvent *ev)
         return;
     }
 
-    if (ev->state() == LeftButton && !rect().contains(ev->pos()))
+    if (ev->state() == Qt::LeftButton && !TQT_TQRECT_OBJECT(rect()).tqcontains(ev->pos()))
     {
         // leaveEvent() doesn't work, while grabbing the mouse
         _autoScrollTimer.stop();
         releaseMouse();
-        setCursor(arrowCursor);
+        setCursor(tqarrowCursor);
         setMouseTracking(false);
 
         _moveAC->completeMoveOperation();
@@ -986,7 +986,7 @@ void ContainerArea::mouseMoveEvent(TQMouseEvent *ev)
         return;
     }
 
-    if (orientation() == Horizontal)
+    if (orientation() == Qt::Horizontal)
     {
         int oldX = _moveAC->x() + _moveAC->moveOffset().x();
         int x = ev->pos().x() + contentsX();
@@ -1082,7 +1082,7 @@ void ContainerArea::dragEnterEvent(TQDragEnterEvent *ev)
         preferedHeight = draggedContainer->heightForWidth(width());
     }
 
-    if (orientation() == Horizontal)
+    if (orientation() == Qt::Horizontal)
     {
         _dragIndicator->setPreferredSize(TQSize(preferedWidth, height()));
     }
@@ -1103,9 +1103,9 @@ void ContainerArea::dragEnterEvent(TQDragEnterEvent *ev)
             --it;
             BaseContainer* a = *it;
 
-            if ((orientation() == Horizontal &&
+            if ((orientation() == Qt::Horizontal &&
                  a->x() < (ev->pos().x() + contentsX()) - _dragMoveOffset.x()) ||
-                (orientation() == Vertical &&
+                (orientation() == Qt::Vertical &&
                  a->y() < (ev->pos().y() + contentsY()) - _dragMoveOffset.y()))
             {
                 _dragMoveAC = a;
@@ -1114,7 +1114,7 @@ void ContainerArea::dragEnterEvent(TQDragEnterEvent *ev)
         } while (it != m_containers.begin());
     }
 
-    if (orientation() == Horizontal)
+    if (orientation() == Qt::Horizontal)
     {
         moveDragIndicator(ev->pos().x() + contentsX() - _dragMoveOffset.x());
     }
@@ -1139,11 +1139,11 @@ void ContainerArea::dragMoveEvent(TQDragMoveEvent* ev)
         TQKeyEvent fakedKeyRelease(TQEvent::KeyRelease, Key_Escape, 0, 0);
         TQApplication::sendEvent(this, &fakedKeyPress);
         TQApplication::sendEvent(this, &fakedKeyRelease);
-        qApp->processEvents();
+        tqApp->processEvents();
         startContainerMove(_moveAC);
 
         // Align the container to the mouse position.
-        if (orientation() == Horizontal)
+        if (orientation() == Qt::Horizontal)
         {
             m_layout->moveContainerSwitch(_moveAC, ev->pos().x() + contentsX() - _moveAC->x());
         }
@@ -1159,7 +1159,7 @@ void ContainerArea::dragMoveEvent(TQDragMoveEvent* ev)
         return;
     }
 
-    if (orientation() == Horizontal)
+    if (orientation() == Qt::Horizontal)
     {
         moveDragIndicator(ev->pos().x() + contentsX() - _dragMoveOffset.x());
     }
@@ -1200,22 +1200,22 @@ void ContainerArea::dropEvent(TQDropEvent *ev)
             return;
         }
 
-        TQObject *parent = ev->source() ? ev->source()->parent() : 0;
-        while (parent && (parent != this))
+        TQObject *parent = ev->source() ? ev->source()->tqparent() : 0;
+        while (parent && (TQT_BASE_OBJECT(parent) != TQT_BASE_OBJECT(this)))
         {
-            parent = parent->parent();
+            parent = parent->tqparent();
         }
 
         if (parent)
         {
             // Move container a
-            if (orientation() == Horizontal)
+            if (orientation() == Qt::Horizontal)
             {
                 int oldX = a->x();
                 int x = _dragIndicator->x();
                 m_layout->moveContainerSwitch(a, x - oldX);
             }
-            else if (orientation() == Vertical)
+            else if (orientation() == Qt::Vertical)
             {
                 int oldY = a->y();
                 int y = _dragIndicator->y();
@@ -1387,7 +1387,7 @@ bool ContainerArea::eventFilter(TQObject* o, TQEvent* e)
     // which contain a ContainerArea can react to layout changes of its
     // contents. For example: If an applets grows, the top level widget may
     // want to grow as well.
-    if (o == m_contents)
+    if (TQT_BASE_OBJECT(o) == TQT_BASE_OBJECT(m_contents))
     {
         if (e->type() == TQEvent::LayoutHint)
         {
@@ -1408,7 +1408,7 @@ void ContainerArea::resizeEvent(TQResizeEvent *ev)
 void ContainerArea::viewportResizeEvent(TQResizeEvent* ev)
 {
     Panner::viewportResizeEvent(ev);
-    if (orientation() == Horizontal)
+    if (orientation() == Qt::Horizontal)
     {
         m_contents->resize(kMax(widthForHeight(ev->size().height()),
                                 ev->size().width()),
@@ -1430,7 +1430,7 @@ void ContainerArea::setBackground()
 
     if (KickerSettings::transparent() &&
         (KickerSettings::menubarPanelTransparent() ||
-        !ExtensionManager::the()->isMenuBar(topLevelWidget())))
+        !ExtensionManager::the()->isMenuBar(tqtopLevelWidget())))
     {
         if (!_rootPixmap)
         {
@@ -1441,7 +1441,7 @@ void ContainerArea::setBackground()
         }
         else
         {
-            _rootPixmap->repaint(true);
+            _rootPixmap->tqrepaint(true);
         }
 
         double tint = double(KickerSettings::tintValue()) / 100;
@@ -1481,7 +1481,7 @@ void ContainerArea::setBackground()
         {
             TQImage bgImage = srcImage;
 
-            if (orientation() == Vertical)
+            if (orientation() == Qt::Vertical)
             {
                 if (KickerSettings::rotateBackground())
                 {
@@ -1542,7 +1542,7 @@ TQRect ContainerArea::availableSpaceFollowing(BaseContainer* a)
 
     if (a)
     {
-        BaseContainer::Iterator it = m_containers.find(a);
+        BaseContainer::Iterator it = m_containers.tqfind(a);
         if (it != m_containers.end() &&
             ++it != m_containers.end())
         {
@@ -1559,7 +1559,7 @@ TQRect ContainerArea::availableSpaceFollowing(BaseContainer* a)
         }
     }
 
-    if (orientation() == Horizontal)
+    if (orientation() == Qt::Horizontal)
     {
         if (a)
         {
@@ -1593,7 +1593,7 @@ void ContainerArea::moveDragIndicator(int pos)
 
     // Move _dragIndicator to position pos, restricted by availableSpace.
     // Resize _dragIndicator if necessary.
-    if (orientation() == Horizontal)
+    if (orientation() == Qt::Horizontal)
     {
         if (availableSpace.size().width() <
             _dragIndicator->preferredSize().width())
@@ -1633,7 +1633,7 @@ void ContainerArea::moveDragIndicator(int pos)
 
 void ContainerArea::updateBackground( const TQPixmap& pm )
 {
-    TQBrush bgBrush(colorGroup().background(), pm);
+    TQBrush bgBrush(tqcolorGroup().background(), pm);
     TQPalette pal = kapp->palette();
     pal.setBrush(TQColorGroup::Background, bgBrush);
     setPalette(pal);
@@ -1690,7 +1690,7 @@ void ContainerArea::setPosition(KPanelExtension::Position p)
         // when that gets called AFTER we've been moved
         // it's not always safe to do the resize here, as scroll buttons
         // from the panner may get in our way. =/
-        if (o == Horizontal)
+        if (o == Qt::Horizontal)
         {
             resizeContents(0, height());
         }
@@ -1718,17 +1718,17 @@ void ContainerArea::setPosition(KPanelExtension::Position p)
     m_contents->move(0, 0);
     setBackground();
 
-    // container extension repaints for us!
-    //repaint();
+    // container extension tqrepaints for us!
+    //tqrepaint();
 }
 
-void ContainerArea::setAlignment(KPanelExtension::Alignment a)
+void ContainerArea::tqsetAlignment(KPanelExtension::Alignment a)
 {
     for (BaseContainer::ConstIterator it = m_containers.begin();
          it != m_containers.end();
          ++it)
     {
-        (*it)->setAlignment(a);
+        (*it)->tqsetAlignment(a);
     }
 }
 
@@ -1736,7 +1736,7 @@ void ContainerArea::autoScroll()
 {
     if(!_moveAC) return;
 
-    if(orientation() == Horizontal) {
+    if(orientation() == Qt::Horizontal) {
         if(_moveAC->pos().x() <= 80)
             scrollBy(-10, 0);
         else if(_moveAC->pos().x() >= width() - _moveAC->width() - 80)
@@ -1784,7 +1784,7 @@ void ContainerArea::updateContainersBackground()
     // properly, so just cache the geometry and update background only when
     // the geometry changes or when the background really changes (in which
     // case the cached is cleared).
-        if( !m_cachedGeometry.contains( *it ))
+        if( !m_cachedGeometry.tqcontains( *it ))
         {
             m_cachedGeometry[ *it ] = TQRect();
             connect( *it, TQT_SIGNAL( destroyed()), TQT_SLOT( destroyCachedGeometry()));
@@ -1894,9 +1894,9 @@ TQStringList ContainerArea::listContainers() const
     return m_layout->listItems();
 }
 
-void ContainerArea::repaint()
+void ContainerArea::tqrepaint()
 {
-    Panner::repaint();
+    Panner::tqrepaint();
 }
 
 void ContainerArea::showAddAppletDialog()
@@ -1952,8 +1952,8 @@ void DragIndicator::paintEvent(TQPaintEvent*)
 {
     TQPainter painter(this);
     TQRect rect(0, 0, width(), height());
-    style().drawPrimitive( TQStyle::PE_FocusRect, &painter, rect, colorGroup(),
-                           TQStyle::Style_Default, colorGroup().base() );
+    tqstyle().tqdrawPrimitive( TQStyle::PE_FocusRect, &painter, rect, tqcolorGroup(),
+                           TQStyle::Style_Default, tqcolorGroup().base() );
 }
 
 void DragIndicator::mousePressEvent(TQMouseEvent*)

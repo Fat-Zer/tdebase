@@ -142,12 +142,12 @@ void ConfigModule::runAsRoot()
 
   // create an embed widget that will embed the
   // kcmshell running as root
-  _embedLayout = new TQVBoxLayout(_module->parentWidget());
-  _embedFrame = new TQVBox( _module->parentWidget() );
+  _embedLayout = new TQVBoxLayout(_module->tqparentWidget());
+  _embedFrame = new TQVBox( _module->tqparentWidget() );
   _embedFrame->setFrameStyle( TQFrame::Box | TQFrame::Raised );
   TQPalette pal( red );
   pal.setColor( TQColorGroup::Background,
-		_module->parentWidget()->colorGroup().background() );
+		_module->tqparentWidget()->tqcolorGroup().background() );
   _embedFrame->setPalette( pal );
   _embedFrame->setLineWidth( 2 );
   _embedFrame->setMidLineWidth( 2 );
@@ -158,7 +158,7 @@ void ConfigModule::runAsRoot()
   _module->hide();
   _embedFrame->show();
   TQLabel *_busy = new TQLabel(i18n("<big>Loading...</big>"), _embedStack);
-  _busy->setAlignment(AlignCenter);
+  _busy->tqsetAlignment(AlignCenter);
   _busy->setTextFormat(RichText);
   _busy->setGeometry(0,0, _module->width(), _module->height());
   _busy->show();
@@ -170,18 +170,18 @@ void ConfigModule::runAsRoot()
   bool kdeshell = false;
   if (cmd.left(5) == "kdesu")
     {
-      cmd = cmd.remove(0,5).stripWhiteSpace();
+      cmd = TQString(cmd.remove(0,5)).stripWhiteSpace();
       // remove all kdesu switches
       while( cmd.length() > 1 && cmd[ 0 ] == '-' )
         {
-          int pos = cmd.find( ' ' );
-          cmd = cmd.remove( 0, pos ).stripWhiteSpace();
+          int pos = cmd.tqfind( ' ' );
+          cmd = TQString(cmd.remove( 0, pos )).stripWhiteSpace();
         }
     }
 
   if (cmd.left(8) == "kcmshell")
     {
-      cmd = cmd.remove(0,8).stripWhiteSpace();
+      cmd = TQString(cmd.remove(0,8)).stripWhiteSpace();
       kdeshell = true;
     }
 
@@ -316,7 +316,7 @@ bool ConfigModuleList::readDesktopEntriesRecursive(const TQString &path)
 
 TQPtrList<ConfigModule> ConfigModuleList::modules(const TQString &path)
 {
-  Menu *menu = subMenus.find(path);
+  Menu *menu = subMenus.tqfind(path);
   if (menu)
      return menu->modules;
 
@@ -325,7 +325,7 @@ TQPtrList<ConfigModule> ConfigModuleList::modules(const TQString &path)
 
 TQStringList ConfigModuleList::submenus(const TQString &path)
 {
-  Menu *menu = subMenus.find(path);
+  Menu *menu = subMenus.tqfind(path);
   if (menu)
      return menu->submenus;
 
@@ -338,7 +338,7 @@ TQString ConfigModuleList::findModule(ConfigModule *module)
   Menu *menu;
   for(;(menu = it.current());++it)
   {
-     if (menu->modules.containsRef(module))
+     if (menu->modules.tqcontainsRef(module))
         return it.currentKey();
   }
   return TQString::null;

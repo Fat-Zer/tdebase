@@ -82,7 +82,7 @@ void CmdHistory::slotCommandExecuted(KCommand *k) {
     CurrentMgr::self()->notifyManagers(bk.toGroup());
 
     // sets currentItem to something sensible
-    // if the currentItem was invalidated by executing
+    // if the currentItem was tqinvalidated by executing
     // CreateCommand or DeleteManyCommand
     // otherwise does nothing
     // sensible is either a already selected item or cmd->currentAddress()
@@ -184,8 +184,8 @@ TQString CurrentMgr::makeTimeStr(int b)
 {
     TQDateTime dt;
     dt.setTime_t(b);
-    return (dt.daysTo(TQDateTime::currentDateTime()) > 31)
-        ? KGlobal::locale()->formatDate(dt.date(), false)
+    return (dt.daysTo(TQDateTime::tqcurrentDateTime()) > 31)
+        ? KGlobal::locale()->formatDate(TQT_TQDATE_OBJECT(dt.date()), false)
         : KGlobal::locale()->formatDateTime(dt, false);
 }
 
@@ -231,13 +231,13 @@ KEBApp::KEBApp(
 
     m_bkinfo = new BookmarkInfoWidget(vsplitter);
 
-    vsplitter->setOrientation(TQSplitter::Vertical);
+    vsplitter->setOrientation(Qt::Vertical);
     vsplitter->setSizes(TQValueList<int>() << h << 380
-                                          << m_bkinfo->sizeHint().height() );
+                                          << m_bkinfo->tqsizeHint().height() );
 
     setCentralWidget(vsplitter);
-    resize(ListView::self()->widget()->sizeHint().width(),
-           vsplitter->sizeHint().height());
+    resize(ListView::self()->widget()->tqsizeHint().width(),
+           vsplitter->tqsizeHint().height());
 
     createActions();
     if (m_browser)
@@ -319,7 +319,7 @@ void KEBApp::slotClipboardDataChanged() {
     // kdDebug() << "KEBApp::slotClipboardDataChanged" << endl;
     if (!m_readOnly) {
         m_canPaste = KBookmarkDrag::canDecode(
-                        kapp->clipboard()->data(QClipboard::Clipboard));
+                        kapp->tqclipboard()->data(QClipboard::Clipboard));
         updateActions();
     }
 }

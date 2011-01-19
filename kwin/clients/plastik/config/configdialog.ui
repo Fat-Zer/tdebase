@@ -1,6 +1,6 @@
 <!DOCTYPE UI><UI version="3.3" stdsetdef="1">
 <class>ConfigDialog</class>
-<widget class="QWidget">
+<widget class="TQWidget">
     <property name="name">
         <cstring>ConfigDialog</cstring>
     </property>
@@ -22,7 +22,7 @@
         <property name="margin">
             <number>0</number>
         </property>
-        <widget class="QButtonGroup">
+        <widget class="TQButtonGroup">
             <property name="name">
                 <cstring>titleAlign</cstring>
             </property>
@@ -33,7 +33,7 @@
                 <property name="name">
                     <cstring>unnamed</cstring>
                 </property>
-                <widget class="QRadioButton">
+                <widget class="TQRadioButton">
                     <property name="name">
                         <cstring>AlignLeft</cstring>
                     </property>
@@ -41,7 +41,7 @@
                         <string>Left</string>
                     </property>
                 </widget>
-                <widget class="QRadioButton">
+                <widget class="TQRadioButton">
                     <property name="name">
                         <cstring>AlignHCenter</cstring>
                     </property>
@@ -49,7 +49,7 @@
                         <string>Center</string>
                     </property>
                 </widget>
-                <widget class="QRadioButton">
+                <widget class="TQRadioButton">
                     <property name="name">
                         <cstring>AlignRight</cstring>
                     </property>
@@ -59,7 +59,7 @@
                 </widget>
             </hbox>
         </widget>
-        <widget class="QCheckBox">
+        <widget class="TQCheckBox">
             <property name="name">
                 <cstring>coloredBorder</cstring>
             </property>
@@ -73,7 +73,7 @@
                 <string>Check this option if the window border should be painted in the titlebar color. Otherwise it will be painted in the background color.</string>
             </property>
         </widget>
-        <widget class="QCheckBox">
+        <widget class="TQCheckBox">
             <property name="name">
                 <cstring>titleShadow</cstring>
             </property>
@@ -84,7 +84,7 @@
                 <string>Check this option if you want the titlebar text to have a 3D look with a shadow behind it.</string>
             </property>
         </widget>
-        <widget class="QCheckBox">
+        <widget class="TQCheckBox">
             <property name="name">
                 <cstring>animateButtons</cstring>
             </property>
@@ -95,7 +95,7 @@
                 <string>Check this option if you want the buttons to fade in when the mouse pointer hovers over them and fade out again when it moves away.</string>
             </property>
         </widget>
-        <widget class="QCheckBox">
+        <widget class="TQCheckBox">
             <property name="name">
                 <cstring>menuClose</cstring>
             </property>

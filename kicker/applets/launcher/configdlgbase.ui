@@ -1,6 +1,6 @@
 <!DOCTYPE UI><UI version="3.3" stdsetdef="1">
 <class>ConfigDlgBase</class>
-<widget class="QWidget">
+<widget class="TQWidget">
     <property name="name">
         <cstring>ConfigDlgBase</cstring>
     </property>
@@ -19,7 +19,7 @@
         <property name="margin">
             <number>0</number>
         </property>
-        <widget class="QCheckBox">
+        <widget class="TQCheckBox">
             <property name="name">
                 <cstring>kcfg_DragEnabled</cstring>
             </property>
@@ -27,7 +27,7 @@
                 <string>Allow drag and drop</string>
             </property>
         </widget>
-        <widget class="QGroupBox">
+        <widget class="TQGroupBox">
             <property name="name">
                 <cstring>groupBox2</cstring>
             </property>
@@ -38,7 +38,7 @@
                 <property name="name">
                     <cstring>unnamed</cstring>
                 </property>
-                <widget class="QCheckBox" row="1" column="0" rowspan="1" colspan="3">
+                <widget class="TQCheckBox" row="1" column="0" rowspan="1" colspan="3">
                     <property name="name">
                         <cstring>kcfg_ConserveSpace</cstring>
                     </property>
@@ -49,7 +49,7 @@
                         <string>Do not expand icons to the size of the panel</string>
                     </property>
                 </widget>
-                <widget class="QLabel" row="0" column="0">
+                <widget class="TQLabel" row="0" column="0">
                     <property name="name">
                         <cstring>textLabel1_2</cstring>
                     </property>
@@ -57,7 +57,7 @@
                         <string>Icon size:</string>
                     </property>
                 </widget>
-                <widget class="QComboBox" row="0" column="1">
+                <widget class="TQComboBox" row="0" column="1">
                     <property name="name">
                         <cstring>iconDim</cstring>
                     </property>
@@ -75,7 +75,7 @@
                     <property name="sizeType">
                         <enum>Expanding</enum>
                     </property>
-                    <property name="sizeHint">
+                    <property name="tqsizeHint">
                         <size>
                             <width>332</width>
                             <height>20</height>
@@ -84,7 +84,7 @@
                 </spacer>
             </grid>
         </widget>
-        <widget class="QGroupBox">
+        <widget class="TQGroupBox">
             <property name="name">
                 <cstring>autoAdjustGroup</cstring>
             </property>
@@ -95,7 +95,7 @@
                 <property name="name">
                     <cstring>unnamed</cstring>
                 </property>
-                <widget class="QLayoutWidget" row="3" column="0" rowspan="1" colspan="3">
+                <widget class="TQLayoutWidget" row="3" column="0" rowspan="1" colspan="3">
                     <property name="name">
                         <cstring>layout1</cstring>
                     </property>
@@ -103,7 +103,7 @@
                         <property name="name">
                             <cstring>unnamed</cstring>
                         </property>
-                        <widget class="QSlider" row="0" column="0" rowspan="1" colspan="3">
+                        <widget class="TQSlider" row="0" column="0" rowspan="1" colspan="3">
                             <property name="name">
                                 <cstring>kcfg_HistoryHorizon</cstring>
                             </property>
@@ -130,38 +130,38 @@
                             <property name="sizeType">
                                 <enum>Expanding</enum>
                             </property>
-                            <property name="sizeHint">
+                            <property name="tqsizeHint">
                                 <size>
                                     <width>140</width>
                                     <height>20</height>
                                 </size>
                             </property>
                         </spacer>
-                        <widget class="QLabel" row="1" column="0">
+                        <widget class="TQLabel" row="1" column="0">
                             <property name="name">
                                 <cstring>textLabel1</cstring>
                             </property>
                             <property name="text">
                                 <string>Short Term</string>
                             </property>
-                            <property name="alignment">
+                            <property name="tqalignment">
                                 <set>AlignCenter</set>
                             </property>
                         </widget>
-                        <widget class="QLabel" row="1" column="2">
+                        <widget class="TQLabel" row="1" column="2">
                             <property name="name">
                                 <cstring>textLabel2</cstring>
                             </property>
                             <property name="text">
                                 <string>Long Term</string>
                             </property>
-                            <property name="alignment">
+                            <property name="tqalignment">
                                 <set>AlignCenter</set>
                             </property>
                         </widget>
                     </grid>
                 </widget>
-                <widget class="QLabel" row="2" column="0">
+                <widget class="TQLabel" row="2" column="0">
                     <property name="name">
                         <cstring>textLabel3</cstring>
                     </property>
@@ -184,7 +184,7 @@
                     <property name="sizeType">
                         <enum>Expanding</enum>
                     </property>
-                    <property name="sizeHint">
+                    <property name="tqsizeHint">
                         <size>
                             <width>50</width>
                             <height>20</height>
@@ -196,7 +196,7 @@
                         <cstring>kcfg_AutoAdjustMaxItems</cstring>
                     </property>
                 </widget>
-                <widget class="QLabel" row="1" column="0">
+                <widget class="TQLabel" row="1" column="0">
                     <property name="name">
                         <cstring>textLabel3_2</cstring>
                     </property>
@@ -204,7 +204,7 @@
                         <string>Minimum number of applications:</string>
                     </property>
                 </widget>
-                <widget class="QCheckBox" row="0" column="0" rowspan="1" colspan="3">
+                <widget class="TQCheckBox" row="0" column="0" rowspan="1" colspan="3">
                     <property name="name">
                         <cstring>kcfg_AutoAdjustEnabled</cstring>
                     </property>

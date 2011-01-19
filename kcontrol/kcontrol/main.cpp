@@ -59,7 +59,7 @@ KControlApp::KControlApp()
   KGlobal::setActiveInstance(this);
 
   // KUniqueApplication does dcop regitration for us
-  ModuleIface *modIface = new ModuleIface(toplevel, "moduleIface");
+  ModuleIface *modIface = new ModuleIface(TQT_TQOBJECT(toplevel), "moduleIface");
 
   connect (modIface, TQT_SIGNAL(helpClicked()), toplevel, TQT_SLOT(slotHelpRequest()));
   connect (modIface, TQT_SIGNAL(handbookClicked()), toplevel, TQT_SLOT(slotHandbookRequest()));
@@ -77,9 +77,9 @@ KControlApp::KControlApp()
   int fontSize = toplevel->fontInfo().pointSize();
   if (fontSize == 0)
     fontSize = (toplevel->fontInfo().pixelSize() * 72) / pdm.logicalDpiX();
-  int x = config->readNumEntry(TQString::fromLatin1("InitialWidth %1").arg(desk.width()), 
+  int x = config->readNumEntry(TQString::tqfromLatin1("InitialWidth %1").arg(desk.width()), 
 			       QMIN( desk.width(), 368 + (6*pdm.logicalDpiX()*fontSize)/12 ) );
-  int y = config->readNumEntry(TQString::fromLatin1("InitialHeight %1").arg(desk.height()), 
+  int y = config->readNumEntry(TQString::tqfromLatin1("InitialHeight %1").arg(desk.height()), 
 			       QMIN( desk.height(), 312 + (4*pdm.logicalDpiX()*fontSize)/12 ) );
   toplevel->resize(x,y);
 }
@@ -90,9 +90,9 @@ KControlApp::~KControlApp()
     {
       KConfig *config = KGlobal::config();
       config->setGroup("General");
-      TQWidget *desk = TQApplication::desktop();
-      config->writeEntry(TQString::fromLatin1("InitialWidth %1").arg(desk->width()), toplevel->width());
-      config->writeEntry(TQString::fromLatin1("InitialHeight %1").arg(desk->height()), toplevel->height());
+      TQWidget *desk = TQT_TQWIDGET(TQApplication::desktop());
+      config->writeEntry(TQString::tqfromLatin1("InitialWidth %1").arg(desk->width()), toplevel->width());
+      config->writeEntry(TQString::tqfromLatin1("InitialHeight %1").arg(desk->height()), toplevel->height());
       config->sync();
     }
   delete toplevel;

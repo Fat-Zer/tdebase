@@ -25,7 +25,7 @@
 #include <tqpushbutton.h>
 class KListView;
 
-class ConfFilters : public QWidget
+class ConfFilters : public TQWidget
 {
 	Q_OBJECT
 public:
@@ -42,7 +42,7 @@ protected slots:
 	void updateButton();
 private:
 	KListView	*m_filters;
-	QPushButton	*m_add,*m_remove,*m_up,*m_down,*m_change;
+	TQPushButton	*m_add,*m_remove,*m_up,*m_down,*m_change;
 };
 
 #endif

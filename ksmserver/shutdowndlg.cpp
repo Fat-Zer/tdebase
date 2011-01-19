@@ -79,7 +79,7 @@ KSMShutdownFeedback::KSMShutdownFeedback()
 
 {
     DCOPRef("kicker", "KMenu").call("hideMenu");	// Make sure the K Menu is completely removed from the screen before taking a snapshot...
-    m_grayImage = TQPixmap::grabWindow(qt_xrootwin(), 0, 0, TQApplication::desktop()->width(), TQApplication::desktop()->height()).convertToImage();
+    m_grayImage = TQPixmap(TQPixmap::grabWindow(qt_xrootwin(), 0, 0, TQApplication::desktop()->width(), TQApplication::desktop()->height())).convertToImage();
     m_unfadedImage = TQImage::TQImage();
     resize(0, 0);
     setShown(true);
@@ -247,7 +247,7 @@ void KSMShutdownFeedback::slotPaintEffect()
 	    }
 
 	    KPixmap pixmap;
-	    pixmap = TQPixmap::grabWindow( qt_xrootwin(), 0, m_currentY, width(), 10 );
+	    pixmap = TQPixmap(TQPixmap::grabWindow( qt_xrootwin(), 0, m_currentY, width(), 10 ));
 	    TQImage image = pixmap.convertToImage();
 	    KImageEffect::blend( Qt::black, image, 0.4 );
 	    KImageEffect::toGray( image, true );
@@ -264,7 +264,7 @@ void KSMShutdownFeedback::slotPaintEffect()
 
 KSMShutdownDlg::KSMShutdownDlg( TQWidget* parent,
                                 bool maysd, KApplication::ShutdownType sdtype )
-  : TQDialog( parent, 0, TRUE, WType_Popup ), targets(0)
+  : TQDialog( parent, 0, TRUE, (WFlags)WType_Popup ), targets(0)
     // this is a WType_Popup on purpose. Do not change that! Not
     // having a popup here has severe side effects.
 
@@ -274,7 +274,7 @@ KSMShutdownDlg::KSMShutdownDlg( TQWidget* parent,
 
     TQFrame* frame = new TQFrame( this );
     frame->setFrameStyle( TQFrame::StyledPanel | TQFrame::Raised );
-    frame->setLineWidth( style().pixelMetric( TQStyle::PM_DefaultFrameWidth, frame ) );
+    frame->setLineWidth( tqstyle().tqpixelMetric( TQStyle::PM_DefaultFrameWidth, frame ) );
 	// we need to set the minimum size for the logout box, since it
 	// gets too small if there isn't all options available
 	frame->setMinimumWidth(400);
@@ -315,12 +315,12 @@ KSMShutdownDlg::KSMShutdownDlg( TQWidget* parent,
 	{
 		// first line of buttons
 		hbuttonbox = new TQHBoxLayout( hbox, factor * KDialog::spacingHint() );
-		hbuttonbox->setAlignment( Qt::AlignHCenter );
+		hbuttonbox->tqsetAlignment( Qt::AlignHCenter );
 		// End session
 		FlatButton* btnLogout = new FlatButton( frame );
 		btnLogout->setTextLabel( TQString("&") + i18n("Log out"), false );
 		btnLogout->setPixmap( DesktopIcon( "back") );
-		int i = btnLogout->textLabel().find( TQRegExp("\\&"), 0 );    // i == 1
+		int i = btnLogout->textLabel().tqfind( TQRegExp("\\&"), 0 );    // i == 1
 		btnLogout->setAccel( "ALT+" + btnLogout->textLabel().lower()[i+1] ) ;
 		hbuttonbox->addWidget ( btnLogout );
 		connect(btnLogout, TQT_SIGNAL(clicked()), TQT_SLOT(slotLogout()));
@@ -335,12 +335,12 @@ KSMShutdownDlg::KSMShutdownDlg( TQWidget* parent,
 		hbox->addWidget( lfrm, AlignCenter );
 
 		buttonlay = new TQVBoxLayout( hbox, factor * KDialog::spacingHint() );
-		buttonlay->setAlignment( Qt::AlignHCenter );
+		buttonlay->tqsetAlignment( Qt::AlignHCenter );
 
 		TQLabel* icon = new TQLabel( lfrm );
 		icon->setPixmap( UserIcon( "shutdownkonq" ) );
-		lfrm->setFixedSize( icon->sizeHint());
-		icon->setFixedSize( icon->sizeHint());
+		lfrm->setFixedSize( icon->tqsizeHint());
+		icon->setFixedSize( icon->tqsizeHint());
 
 		buttonlay->addStretch( 1 );
 		// End session
@@ -431,7 +431,7 @@ KSMShutdownDlg::KSMShutdownDlg( TQWidget* parent,
 				FlatButton* btnSuspend = new FlatButton( frame );
 				btnSuspend->setTextLabel( i18n("&Suspend"), false );
 				btnSuspend->setPixmap( DesktopIcon( "suspend") );
-			    int i = btnSuspend->textLabel().find( TQRegExp("\\&"), 0 );    // i == 1
+			    int i = btnSuspend->textLabel().tqfind( TQRegExp("\\&"), 0 );    // i == 1
 				btnSuspend->setAccel( "ALT+" + btnSuspend->textLabel().lower()[i+1] ) ;
 				hbuttonbox->addWidget ( btnSuspend);
 				connect(btnSuspend, TQT_SIGNAL(clicked()), TQT_SLOT(slotSuspend()));
@@ -443,7 +443,7 @@ KSMShutdownDlg::KSMShutdownDlg( TQWidget* parent,
 				FlatButton* btnHibernate = new FlatButton( frame );
 		    	btnHibernate->setTextLabel( i18n("&Hibernate"), false );
 				btnHibernate->setPixmap( DesktopIcon( "hibernate") );
-				int i = btnHibernate->textLabel().find( TQRegExp("\\&"), 0 );    // i == 1
+				int i = btnHibernate->textLabel().tqfind( TQRegExp("\\&"), 0 );    // i == 1
 				btnHibernate->setAccel( "ALT+" + btnHibernate->textLabel().lower()[i+1] ) ;		
 				hbuttonbox->addWidget ( btnHibernate);	
 				connect(btnHibernate, TQT_SIGNAL(clicked()), TQT_SLOT(slotHibernate()));
@@ -454,13 +454,13 @@ KSMShutdownDlg::KSMShutdownDlg( TQWidget* parent,
 
 			// bottom buttons
 			TQHBoxLayout* hbuttonbox2 = new TQHBoxLayout( vbox, factor * KDialog::spacingHint() );
-			hbuttonbox2->setAlignment( Qt::AlignHCenter );
+			hbuttonbox2->tqsetAlignment( Qt::AlignHCenter );
 			
 			// Reboot
 			FlatButton* btnReboot = new FlatButton( frame );
 			btnReboot->setTextLabel( i18n("&Restart"), false );
 			btnReboot->setPixmap( DesktopIcon( "reload") );
-    		int i = btnReboot->textLabel().find( TQRegExp("\\&"), 0 );    // i == 1
+    		int i = btnReboot->textLabel().tqfind( TQRegExp("\\&"), 0 );    // i == 1
 			btnReboot->setAccel( "ALT+" + btnReboot->textLabel().lower()[i+1] ) ;
 			hbuttonbox2->addWidget ( btnReboot);
 			connect(btnReboot, TQT_SIGNAL(clicked()), TQT_SLOT(slotReboot()));
@@ -479,7 +479,7 @@ KSMShutdownDlg::KSMShutdownDlg( TQWidget* parent,
 			for (TQStringList::ConstIterator it = rebootOptions.begin(); it != rebootOptions.end(); ++it, ++index)
 				{
 					TQString label = (*it);
-					label=label.replace('&',"&&");
+					label=label.tqreplace('&',"&&");
 				if (index == cur)
 				targets->insertItem( label + i18n("current option in boot loader", " (current)"), index);
 				else
@@ -495,7 +495,7 @@ KSMShutdownDlg::KSMShutdownDlg( TQWidget* parent,
 			FlatButton* btnHalt = new FlatButton( frame );
 			btnHalt->setTextLabel( i18n("&Turn Off"), false );
 			btnHalt->setPixmap( DesktopIcon( "exit") );
-			i = btnHalt->textLabel().find( TQRegExp("\\&"), 0 );    // i == 1
+			i = btnHalt->textLabel().tqfind( TQRegExp("\\&"), 0 );    // i == 1
 			btnHalt->setAccel( "ALT+" + btnHalt->textLabel().lower()[i+1] ) ;
 			hbuttonbox2->addWidget ( btnHalt );
 			connect(btnHalt, TQT_SIGNAL(clicked()), TQT_SLOT(slotHalt()));
@@ -504,7 +504,7 @@ KSMShutdownDlg::KSMShutdownDlg( TQWidget* parent,
 
 			// cancel buttonbox
 			TQHBoxLayout* hbuttonbox3 = new TQHBoxLayout( vbox, factor * KDialog::spacingHint() );
-			hbuttonbox3->setAlignment( Qt::AlignRight );
+			hbuttonbox3->tqsetAlignment( Qt::AlignRight );
 
 			// Back to Desktop
 			KSMPushButton* btnBack = new KSMPushButton( KStdGuiItem::cancel(), frame );
@@ -544,7 +544,7 @@ KSMShutdownDlg::KSMShutdownDlg( TQWidget* parent,
 			for (TQStringList::ConstIterator it = rebootOptions.begin(); it != rebootOptions.end(); ++it, ++index)
 				{
 					TQString label = (*it);
-					label=label.replace('&',"&&");
+					label=label.tqreplace('&',"&&");
 				if (index == cur)
 				targets->insertItem( label + i18n("current option in boot loader", " (current)"), index);
 				else
@@ -591,7 +591,7 @@ KSMShutdownDlg::KSMShutdownDlg( TQWidget* parent,
 		{
 			// cancel buttonbox
 			TQHBoxLayout* hbuttonbox3 = new TQHBoxLayout( vbox, factor * KDialog::spacingHint() );
-			hbuttonbox3->setAlignment( Qt::AlignRight );
+			hbuttonbox3->tqsetAlignment( Qt::AlignRight );
 
 			// Back to Desktop
 			KSMPushButton* btnBack = new KSMPushButton( KStdGuiItem::cancel(), frame );
@@ -716,7 +716,7 @@ bool KSMShutdownDlg::confirmShutdown( bool maysd, KApplication::ShutdownType& sd
                                             maysd, sdtype );
 
     // Show dialog (will save the background in showEvent)
-    TQSize sh = l->sizeHint();
+    TQSize sh = l->tqsizeHint();
     TQRect rect = KGlobalSettings::desktopGeometry(TQCursor::pos());
 
     l->move(rect.x() + (rect.width() - sh.width())/2,
@@ -770,7 +770,7 @@ void KSMDelayedPushButton::slotTimeout()
 }
 
 KSMDelayedMessageBox::KSMDelayedMessageBox( KApplication::ShutdownType sdtype, const TQString &bootOption, int confirmDelay )
-    : TimedLogoutDlg( 0, 0, true, WType_Popup ), m_remaining(confirmDelay)
+    : TimedLogoutDlg( 0, 0, true, (WFlags)WType_Popup ), m_remaining(confirmDelay)
 {
     if ( sdtype == KApplication::ShutdownTypeHalt )
     {
@@ -798,7 +798,7 @@ KSMDelayedMessageBox::KSMDelayedMessageBox( KApplication::ShutdownType sdtype, c
     adjustSize();
     if (  double( height() ) / width() < 0.25 )
     {
-        setFixedHeight( qRound( width() * 0.3 ) );
+        setFixedHeight( tqRound( width() * 0.3 ) );
         adjustSize();
     }
     TQTimer *timer = new TQTimer( this );
@@ -822,7 +822,7 @@ bool KSMDelayedMessageBox::showTicker( KApplication::ShutdownType sdtype, const 
 {
     kapp->enableStyles();
     KSMDelayedMessageBox msg( sdtype, bootOption, confirmDelay );
-    TQSize sh = msg.sizeHint();
+    TQSize sh = msg.tqsizeHint();
     TQRect rect = KGlobalSettings::desktopGeometry(TQCursor::pos());
 
     msg.move(rect.x() + (rect.width() - sh.width())/2,
@@ -910,7 +910,7 @@ void FlatButton::init()
 	setUsesBigPixmap(true);
 	setAutoRaise(true);
 	setTextPosition( TQToolButton::Under );
-	setFocusPolicy(TQWidget::StrongFocus);	
+	setFocusPolicy(TQ_StrongFocus);	
  }
 
 

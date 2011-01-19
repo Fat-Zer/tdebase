@@ -28,7 +28,7 @@
 #include <tqptrvector.h>
 #include <tqwidget.h>
 
-class BarGraph : public QWidget
+class BarGraph : public TQWidget
 {
   Q_OBJECT
 

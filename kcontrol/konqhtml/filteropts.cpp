@@ -55,7 +55,7 @@ KCMFilter::KCMFilter(KConfig *config, TQString group,
     mKillCheck = new TQCheckBox(i18n("Hide filtered images"), this);
     topLayout->addWidget( mKillCheck );
 
-    TQGroupBox *topBox = new TQGroupBox( 1, Horizontal, i18n("URL Expressions to Filter"), this );
+    TQGroupBox *topBox = new TQGroupBox( 1, Qt::Horizontal, i18n("URL Expressions to Filter"), this );
     topLayout->addWidget( topBox );
 
     mListBox = new TQListBox( topBox );
@@ -189,7 +189,7 @@ void KCMFilter::importFilters()
                     }
                 }
 
-                if (!line.isEmpty() && mListBox->findItem(line, Qt::CaseSensitive|Qt::ExactMatch) == 0)
+                if (!line.isEmpty() && mListBox->tqfindItem(line, TQt::CaseSensitive|TQt::ExactMatch) == 0)
                     paths.append(line);
             }
             f.close();
@@ -267,7 +267,7 @@ void KCMFilter::load( bool useDefaults )
     for (int i=0; i<num; ++i)
     {
         TQString key = "Filter-" + TQString::number(i);
-        it = entryMap.find(key);
+        it = entryMap.tqfind(key);
         if (it != entryMap.end())
             paths.append(it.data());
     }

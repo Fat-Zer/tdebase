@@ -126,7 +126,7 @@ void TrashApplet::resizeEvent( TQResizeEvent * )
 				mButton->widthForHeight( height() ) );
 
 	
-	if(orientation() == Vertical)
+	if(orientation() == Qt::Vertical)
 	{
 		mButton->resize( width(), size );
 	}

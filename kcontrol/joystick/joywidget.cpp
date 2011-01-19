@@ -56,7 +56,7 @@ JoyWidget::JoyWidget(TQWidget *parent, const char *name)
     TQLabel *icon = new TQLabel(messageBox);
     icon->setPixmap(KGlobal::iconLoader()->loadIcon("messagebox_warning", KIcon::NoGroup,
                                                     KIcon::SizeMedium, KIcon::DefaultState, 0, true));
-    icon->setFixedSize(icon->sizeHint());
+    icon->setFixedSize(icon->tqsizeHint());
     message = new TQLabel(messageBox);
     messageBox->hide();
   }
@@ -170,7 +170,7 @@ void JoyWidget::init()
 
     // we found one
 
-    device->insertItem(TQString("%1 (%2)").arg(joy->text()).arg(joy->device()));
+    device->insertItem(TQString("%1 (%2)").tqarg(joy->text()).tqarg(joy->device()));
 
     // display values for first device
     if ( first )
@@ -213,7 +213,7 @@ void JoyWidget::restoreCurrDev()
   {
     // try to find the current open device in the combobox list
     TQListBoxItem *item;
-    item = device->listBox()->findItem(joydev->device(), Qt::Contains);
+    item = device->listBox()->tqfindItem(joydev->device(), TQt::Contains);
 
     if ( !item )  // the current open device is one the user entered (not in the list)
       device->setCurrentText(joydev->device());
@@ -230,7 +230,7 @@ void JoyWidget::deviceChanged(const TQString &dev)
   int start, stop;
   TQString devName;
 
-  if ( (start = dev.find("/dev")) == -1 )
+  if ( (start = dev.tqfind("/dev")) == -1 )
   {
     KMessageBox::sorry(this,
       i18n("The given device name is invalid (does not contain /dev).\n"
@@ -241,7 +241,7 @@ void JoyWidget::deviceChanged(const TQString &dev)
     return;
   }
 
-  if ( (stop = dev.find(")", start)) != -1 )  // seems to be text selected from our list
+  if ( (stop = dev.tqfind(")", start)) != -1 )  // seems to be text selected from our list
     devName = dev.mid(start, stop - start);
   else
     devName = dev.mid(start);

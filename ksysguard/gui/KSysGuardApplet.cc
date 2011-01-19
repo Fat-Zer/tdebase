@@ -156,7 +156,7 @@ void KSysGuardApplet::sensorDisplayModified( bool modified )
 
 void KSysGuardApplet::layout()
 {
-  if ( orientation() == Horizontal ) {
+  if ( orientation() == Qt::Horizontal ) {
     int h = height();
     int w = (int) ( h * mSizeRatio + 0.5 );
     for ( uint i = 0; i < mDockCount; ++i )
@@ -173,7 +173,7 @@ void KSysGuardApplet::layout()
 
 int KSysGuardApplet::findDock( const TQPoint& point )
 {
-  if ( orientation() == Horizontal )
+  if ( orientation() == Qt::Horizontal )
     return ( point.x() / (int) ( height() * mSizeRatio + 0.5 ) );
   else
     return ( point.y() / (int) ( width() * mSizeRatio + 0.5 ) );

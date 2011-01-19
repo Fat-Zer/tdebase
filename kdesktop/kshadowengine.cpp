@@ -110,7 +110,7 @@ TQImage KShadowEngine::makeShadow(const TQPixmap& textPixmap, const TQColor &bgC
       alphaShadow = (alphaShadow > m_shadowSettings->maxOpacity()) ? m_shadowSettings->maxOpacity() : alphaShadow;
 
       // update the shadow's i,j pixel.
-      result.setPixel(i,j, qRgba(bgRed, bgGreen , bgBlue, (int) alphaShadow));
+      result.setPixel(i,j, tqRgba(bgRed, bgGreen , bgBlue, (int) alphaShadow));
     }
   }
   return result;
@@ -127,15 +127,15 @@ double KShadowEngine::defaultDecay(TQImage& source, int i, int j)
     return 0;
 
   double alphaShadow;
-  alphaShadow =(qGray(source.pixel(i-1,j-1)) * DIAGONAL_FACTOR +
-		qGray(source.pixel(i-1,j  )) * AXIS_FACTOR +
-		qGray(source.pixel(i-1,j+1)) * DIAGONAL_FACTOR +
-		qGray(source.pixel(i  ,j-1)) * AXIS_FACTOR +
+  alphaShadow =(tqGray(source.pixel(i-1,j-1)) * DIAGONAL_FACTOR +
+		tqGray(source.pixel(i-1,j  )) * AXIS_FACTOR +
+		tqGray(source.pixel(i-1,j+1)) * DIAGONAL_FACTOR +
+		tqGray(source.pixel(i  ,j-1)) * AXIS_FACTOR +
 		0                         +
-		qGray(source.pixel(i  ,j+1)) * AXIS_FACTOR +
-		qGray(source.pixel(i+1,j-1)) * DIAGONAL_FACTOR +
-		qGray(source.pixel(i+1,j  )) * AXIS_FACTOR +
-		qGray(source.pixel(i+1,j+1)) * DIAGONAL_FACTOR) / m_shadowSettings->multiplicationFactor();
+		tqGray(source.pixel(i  ,j+1)) * AXIS_FACTOR +
+		tqGray(source.pixel(i+1,j-1)) * DIAGONAL_FACTOR +
+		tqGray(source.pixel(i+1,j  )) * AXIS_FACTOR +
+		tqGray(source.pixel(i+1,j+1)) * DIAGONAL_FACTOR) / m_shadowSettings->multiplicationFactor();
 
   return alphaShadow;
 }
@@ -185,7 +185,7 @@ double KShadowEngine::noDecay(TQImage& source, int i, int j)
 	else
 	  sy = j + m;
 
-	opacity += qGray(source.pixel(sx, sy));
+	opacity += tqGray(source.pixel(sx, sy));
       }
     }
     alphaShadow += opacity / m_shadowSettings->multiplicationFactor();

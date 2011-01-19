@@ -31,7 +31,7 @@ KickoffSearch::Plugin::~Plugin()
 
 KickoffSearch::KickoffSearchInterface* KickoffSearch::Plugin::kickoffSearchInterface()
 {
-    return static_cast<KickoffSearchInterface*>( parent()->child( 0, "KickoffSearch::KickoffSearchInterface" ) );
+    return static_cast<KickoffSearchInterface*>( tqparent()->child( 0, "KickoffSearch::KickoffSearchInterface" ) );
 }
 
 #include "kickoff-search-plugin.moc"

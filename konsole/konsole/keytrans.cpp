@@ -90,10 +90,10 @@ KeyTrans::KeyTrans(const TQString& path)
   else
   {
      m_id = m_path;
-     int i = m_id.findRev('/');
+     int i = m_id.tqfindRev('/');
      if (i > -1)
         m_id = m_id.mid(i+1);
-     i = m_id.findRev('.');
+     i = m_id.tqfindRev('.');
      if (i > -1)
         m_id = m_id.left(i);
   }
@@ -360,11 +360,11 @@ void KeyTrans::readConfig()
       TQCString txt =
 #include "default.keytab.h"
 ;
-      buf=new TQBuffer(txt);
+      buf=TQT_TQIODEVICE(new TQBuffer(txt));
    }
    else
    {
-      buf=new TQFile(m_path);
+      buf=TQT_TQIODEVICE(new TQFile(m_path));
    };
    KeytabReader ktr(m_path,*buf);
    ktr.parseTo(this);
@@ -533,8 +533,8 @@ void KeyTransSymbols::defKeySyms()
   defKeySym("Up",           Qt::Key_Up          );
   defKeySym("Right",        Qt::Key_Right       );
   defKeySym("Down",         Qt::Key_Down        );
-  defKeySym("Prior",        Qt::Key_Prior       );
-  defKeySym("Next",         Qt::Key_Next        );
+  defKeySym("Prior",        TQt::Key_Prior      );
+  defKeySym("Next",         TQt::Key_Next       );
   defKeySym("Shift",        Qt::Key_Shift       );
   defKeySym("Control",      Qt::Key_Control     );
   defKeySym("Meta",         Qt::Key_Meta        );
@@ -670,8 +670,8 @@ static TQIntDict<KeyTrans> * numb2keymap = 0L;
 
 KeyTrans* KeyTrans::find(int numb)
 {
-  KeyTrans* res = numb2keymap->find(numb);
-  return res ? res : numb2keymap->find(0);
+  KeyTrans* res = numb2keymap->tqfind(numb);
+  return res ? res : numb2keymap->tqfind(0);
 }
 
 KeyTrans* KeyTrans::find(const TQString &id)
@@ -683,7 +683,7 @@ KeyTrans* KeyTrans::find(const TQString &id)
        return it.current();
     ++it;
   }
-  return numb2keymap->find(0);
+  return numb2keymap->tqfind(0);
 }
 
 int KeyTrans::count()

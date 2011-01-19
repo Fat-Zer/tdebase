@@ -20,9 +20,9 @@
 
 using namespace KHC;
 
-View::View( TQWidget *parentWidget, const char *widgetName,
+View::View( TQWidget *tqparentWidget, const char *widgetName,
                   TQObject *parent, const char *name, KHTMLPart::GUIProfile prof, KActionCollection *col )
-    : KHTMLPart( parentWidget, widgetName, parent, name, prof ), mState( Docu ), mActionCollection(col)
+    : KHTMLPart( tqparentWidget, widgetName, parent, name, prof ), mState( Docu ), mActionCollection(col)
 {
     setJScriptEnabled(false);
     setJavaEnabled(false);
@@ -174,7 +174,7 @@ TQString View::langLookup( const TQString &fname )
         // css etc) then look in other languages first.
         if ( ( *it ).endsWith( "docbook" ) )
         {
-            TQString file = (*it).left((*it).findRev('/')) + "/index.docbook";
+            TQString file = (*it).left((*it).tqfindRev('/')) + "/index.docbook";
             info.setFile(file);
             if (info.exists() && info.isFile() && info.isReadable())
             {
@@ -328,8 +328,8 @@ bool View::eventFilter( TQObject *o, TQEvent *e )
        htmlDocument().links().length() == 0 )
     return KHTMLPart::eventFilter( o, e );
 
-  TQKeyEvent *ke = static_cast<TQKeyEvent *>( e );
-  if ( ke->state() & Qt::ShiftButton && ke->key() == Key_Space ) {
+  TQKeyEvent *ke = TQT_TQKEYEVENT( e );
+  if ( ke->state() & TQt::ShiftButton && ke->key() == Key_Space ) {
     // If we're on the first page, it does not make sense to go back.
     if ( baseURL().path().endsWith( "/index.html" ) )
       return KHTMLPart::eventFilter( o, e );
@@ -361,7 +361,7 @@ KURL View::urlFromLinkNode( const DOM::Node &n ) const
     return href;
 
   TQString path = baseURL().path();
-  path.truncate( path.findRev( '/' ) + 1 );
+  path.truncate( path.tqfindRev( '/' ) + 1 );
   path += href.url();
 
   KURL url = baseURL();

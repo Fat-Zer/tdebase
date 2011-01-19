@@ -46,7 +46,7 @@ int main( int argc, char* argv[] )
         kdWarning() << "File " << id << " not found!" << endl;
         return 1;
         }
-    init_global_data( false, &app );
+    init_global_data( false, TQT_TQOBJECT(&app) );
     Settings settings;
     settings.read_settings( true );
     KConfig cfg( file, true );

@@ -177,7 +177,7 @@ void KCMXinerama::save() {
 
 		if (!kapp->dcopClient()->isAttached())
 			kapp->dcopClient()->attach();
-		kapp->dcopClient()->send("kwin", "", "reconfigure()", "");
+		kapp->dcopClient()->send("kwin", "", "reconfigure()", TQString(""));
 
 		ksplashrc->setGroup("Xinerama");
 		ksplashrc->writeEntry("KSplashScreen", xw->_enableXinerama->isChecked() ? xw->_ksplashDisplay->currentItem() : -2 /* ignore Xinerama */);
@@ -216,17 +216,17 @@ void KCMXinerama::windowIndicator(int dpy) {
 }
 
 TQWidget *KCMXinerama::indicator(int dpy) {
-	TQLabel *si = new TQLabel(TQString::number(dpy+1), 0, "Screen Indicator", WX11BypassWM );
+	TQLabel *si = new TQLabel(TQString::number(dpy+1), 0, "Screen Indicator", (WFlags)WX11BypassWM );
 
 	TQFont fnt = KGlobalSettings::generalFont();
 	fnt.setPixelSize(100);
 	si->setFont(fnt);
 	si->setFrameStyle(TQFrame::Panel);
 	si->setFrameShadow(TQFrame::Plain);
-	si->setAlignment(Qt::AlignCenter);
+	si->tqsetAlignment(Qt::AlignCenter);
 
 	TQPoint screenCenter(TQApplication::desktop()->screenGeometry(dpy).center());
-	TQRect targetGeometry(TQPoint(0,0), si->sizeHint());
+	TQRect targetGeometry(TQPoint(0,0), si->tqsizeHint());
         targetGeometry.moveCenter(screenCenter);
 	si->setGeometry(targetGeometry);
 	si->show();

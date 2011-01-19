@@ -42,7 +42,7 @@ class TQLineEdit;
 class KLineEdit;
 
 
-class KDMAppearanceWidget : public QWidget
+class KDMAppearanceWidget : public TQWidget
 {
 	Q_OBJECT
 

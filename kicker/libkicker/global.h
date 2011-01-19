@@ -40,7 +40,7 @@ namespace KickerLib
 KDE_EXPORT KPanelExtension::Position directionToPosition(KPanelApplet::Direction d);
 KDE_EXPORT KPanelExtension::Position directionToPopupPosition(KPanelApplet::Direction d);
 KDE_EXPORT KPanelApplet::Direction positionToDirection(KPanelExtension::Position p);
-KDE_EXPORT KPanelApplet::Direction arrowToDirection(Qt::ArrowType p);
+KDE_EXPORT KPanelApplet::Direction arrowToDirection(TQt::ArrowType p);
 KDE_EXPORT int sizeValue(KPanelExtension::Size s);
 
 /**

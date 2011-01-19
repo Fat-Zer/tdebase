@@ -85,7 +85,7 @@ NaughtyConfigDialog::threshold() const
   return uint(kini_threshold_->value());
 }
 
-  QStringList
+  TQStringList
 NaughtyConfigDialog::ignoreList() const
 {
   TQStringList retval;

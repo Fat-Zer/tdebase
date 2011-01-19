@@ -68,7 +68,7 @@ struct KonqCommand
   KURL m_dst;
 };
 
-class KonqCommandRecorder : public QObject
+class KonqCommandRecorder : public TQObject
 {
   Q_OBJECT
 public:

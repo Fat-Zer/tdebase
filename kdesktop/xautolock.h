@@ -17,7 +17,7 @@
 // Detect user inactivity.
 // Named XAutoLock after the program that it is based on.
 //
-class XAutoLock : public QWidget
+class XAutoLock : public TQWidget
 {
     Q_OBJECT
 public:

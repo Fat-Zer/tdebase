@@ -37,7 +37,7 @@
 //--------------------------------------------------------------------------------
 
 KonqFileTip::KonqFileTip( TQScrollView* parent )
-  : TQFrame( 0, 0, WStyle_Customize | WStyle_NoBorder | WStyle_Tool | WStyle_StaysOnTop | WX11BypassWM ),
+  : TQFrame( 0, 0, (WFlags)(WStyle_Customize | WStyle_NoBorder | WStyle_Tool | WStyle_StaysOnTop | WX11BypassWM) ),
     m_on( false ),
     m_preview( false ),
     m_filter( false ),
@@ -49,7 +49,7 @@ KonqFileTip::KonqFileTip( TQScrollView* parent )
 {
     m_iconLabel = new TQLabel(this);
     m_textLabel = new TQLabel(this);
-    m_textLabel->setAlignment(Qt::AlignAuto | Qt::AlignTop);
+    m_textLabel->tqsetAlignment(TQt::AlignAuto | TQt::AlignTop);
 
     TQGridLayout* layout = new TQGridLayout(this, 1, 2, 8, 0);
     layout->addWidget(m_iconLabel, 0, 0);
@@ -189,7 +189,7 @@ void KonqFileTip::drawContents( TQPainter *p )
     }
 
     if ( m_corners[m_corner].isNull())
-        m_corners[m_corner].load( locate( "data", TQString::fromLatin1( "konqueror/pics/%1.png" ).arg( names[m_corner] ) ) );
+        m_corners[m_corner].load( locate( "data", TQString::tqfromLatin1( "konqueror/pics/%1.png" ).arg( names[m_corner] ) ) );
 
     TQPixmap &pix = m_corners[m_corner];
 

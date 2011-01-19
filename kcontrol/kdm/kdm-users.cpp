@@ -85,23 +85,23 @@ KDMUsersWidget::KDMUsersWidget(TQWidget *parent, const char *name)
 
     TQString wtstr;
 
-    minGroup = new TQGroupBox( 2, Horizontal, i18n("System U&IDs"), this );
+    minGroup = new TQGroupBox( 2, Qt::Horizontal, i18n("System U&IDs"), this );
     TQWhatsThis::add( minGroup, i18n("Users with a UID (numerical user identification) outside this range will not be listed by KDM and this setup dialog."
       " Note that users with the UID 0 (typically root) are not affected by this and must be"
       " explicitly hidden in \"Not hidden\" mode."));
     TQSizePolicy sp_ign_fix( TQSizePolicy::Ignored, TQSizePolicy::Fixed );
-    TQValidator *valid = new TQIntValidator( 0, 999999, minGroup );
+    TQValidator *valid = new TQIntValidator( 0, 999999, TQT_TQOBJECT(minGroup) );
     TQLabel *minlab = new TQLabel( i18n("Below:"), minGroup );
     leminuid = new KLineEdit( minGroup );
     minlab->setBuddy( leminuid );
-    leminuid->setSizePolicy( sp_ign_fix );
+    leminuid->tqsetSizePolicy( sp_ign_fix );
     leminuid->setValidator( valid );
     connect( leminuid, TQT_SIGNAL(textChanged( const TQString & )), TQT_SLOT(slotChanged()) );
     connect( leminuid, TQT_SIGNAL(textChanged( const TQString & )), TQT_SLOT(slotMinMaxChanged()) );
     TQLabel *maxlab = new TQLabel( i18n("Above:"), minGroup );
     lemaxuid = new KLineEdit( minGroup );
     maxlab->setBuddy( lemaxuid );
-    lemaxuid->setSizePolicy( sp_ign_fix );
+    lemaxuid->tqsetSizePolicy( sp_ign_fix );
     lemaxuid->setValidator( valid );
     connect(lemaxuid, TQT_SIGNAL(textChanged( const TQString & )), TQT_SLOT(slotChanged()) );
     connect(lemaxuid, TQT_SIGNAL(textChanged( const TQString & )), TQT_SLOT(slotMinMaxChanged()) );
@@ -168,7 +168,7 @@ KDMUsersWidget::KDMUsersWidget(TQWidget *parent, const char *name)
     userbutton = new TQPushButton( hlpw );
     userbutton->setAcceptDrops( true );
     userbutton->installEventFilter( this ); // for drag and drop
-    uint sz = style().pixelMetric( TQStyle::PM_ButtonMargin ) * 2 + 48;
+    uint sz = tqstyle().tqpixelMetric( TQStyle::PM_ButtonMargin ) * 2 + 48;
     userbutton->setFixedSize( sz, sz );
     connect( userbutton, TQT_SIGNAL(clicked()),
 	     TQT_SLOT(slotUserButtonClicked()) );
@@ -183,8 +183,8 @@ KDMUsersWidget::KDMUsersWidget(TQWidget *parent, const char *name)
     hlpl->addWidget( userlabel, 0, 0 );
 //    hlpl->addSpacing( KDialog::spacingHint() );
     hlpl->addWidget( usercombo, 0, 1 );
-    hlpl->addMultiCellWidget( userbutton, 1,1, 0,1, AlignHCenter );
-    hlpl->addMultiCellWidget( rstuserbutton, 2,2, 0,1, AlignHCenter );
+    hlpl->addMultiCellWidget( userbutton, 1,1, 0,1, Qt::AlignHCenter );
+    hlpl->addMultiCellWidget( rstuserbutton, 2,2, 0,1, Qt::AlignHCenter );
 
     TQHBoxLayout *main = new TQHBoxLayout( this, 10 );
 
@@ -263,7 +263,7 @@ void KDMUsersWidget::slotUserSelected()
 	p.load( m_userPixDir + ".default.face.icon" );
 	rstuserbutton->setEnabled( false );
     }
-    userbutton->setPixmap( p.smoothScale( 48, 48, TQImage::ScaleMin ) );
+    userbutton->setPixmap( p.smoothScale( 48, 48, TQ_ScaleMin ) );
 }
 
 
@@ -286,7 +286,7 @@ void KDMUsersWidget::changeUserPix(const TQString &pix)
 	return;
     }
 
-    p = p.smoothScale( 48, 48, TQImage::ScaleMin );
+    p = p.smoothScale( 48, 48, TQ_ScaleMin );
     TQString userpix = m_userPixDir + user + ".face.icon";
     if (!p.save( userpix, "PNG" ))
         KMessageBox::sorry(this,
@@ -346,7 +346,7 @@ void KDMUsersWidget::userButtonDropEvent(TQDropEvent *e)
     KURL *url = decodeImgDrop(e, this);
     if (url) {
 	TQString pixpath;
-	KIO::NetAccess::download(*url, pixpath, parentWidget());
+	KIO::NetAccess::download(*url, pixpath, tqparentWidget());
 	changeUserPix( pixpath );
 	KIO::NetAccess::removeTempFile(pixpath);
 	delete url;
@@ -381,7 +381,7 @@ void KDMUsersWidget::updateOptList( TQListViewItem *item, TQStringList &list )
     if ( !item )
         return;
     TQCheckListItem *itm = (TQCheckListItem *)item;
-    TQStringList::iterator it = list.find( itm->text() );
+    TQStringList::iterator it = list.tqfind( itm->text() );
     if (itm->isOn()) {
 	if (it == list.end())
 	    list.append( itm->text() );
@@ -415,9 +415,9 @@ void KDMUsersWidget::slotAddUsers(const TQMap<TQString,int> &users)
     for (it = users.begin(); it != users.end(); ++it) {
       const TQString *name = &it.key();
       (new TQCheckListItem(optinlv, *name, TQCheckListItem::CheckBox))->
-	      setOn(selectedUsers.find(*name) != selectedUsers.end());
+	      setOn(selectedUsers.tqfind(*name) != selectedUsers.end());
       (new TQCheckListItem(optoutlv, *name, TQCheckListItem::CheckBox))->
-	      setOn(hiddenUsers.find(*name) != hiddenUsers.end());
+	      setOn(hiddenUsers.tqfind(*name) != hiddenUsers.end());
       if ((*name)[0] != '@')
         usercombo->insertItem(*name);
     }
@@ -433,9 +433,9 @@ void KDMUsersWidget::slotDelUsers(const TQMap<TQString,int> &users)
     for (it = users.begin(); it != users.end(); ++it) {
         const TQString *name = &it.key();
         if (usercombo->listBox())
-            delete usercombo->listBox()->findItem( *name, ExactMatch | CaseSensitive );
-        delete optinlv->findItem( *name, 0 );
-        delete optoutlv->findItem( *name, 0 );
+            delete usercombo->listBox()->tqfindItem( *name, ExactMatch | CaseSensitive );
+        delete optinlv->tqfindItem( *name, 0 );
+        delete optoutlv->tqfindItem( *name, 0 );
     }
 }
 
@@ -457,11 +457,11 @@ void KDMUsersWidget::load()
     cbusrsrt->setChecked(config->readBoolEntry("SortUsers", true));
 
     TQString ps = config->readEntry( "FaceSource" );
-    if (ps == TQString::fromLatin1("UserOnly"))
+    if (ps == TQString::tqfromLatin1("UserOnly"))
 	rbusronly->setChecked(true);
-    else if (ps == TQString::fromLatin1("PreferUser"))
+    else if (ps == TQString::tqfromLatin1("PreferUser"))
 	rbprefusr->setChecked(true);
-    else if (ps == TQString::fromLatin1("PreferAdmin"))
+    else if (ps == TQString::tqfromLatin1("PreferAdmin"))
 	rbprefadm->setChecked(true);
     else
 	rbadmonly->setChecked(true);

@@ -136,7 +136,7 @@ JSPoliciesFrame::JSPoliciesFrame(JSPolicies *policies, const TQString &title,
   layout()->setSpacing(0);
   layout()->setMargin(0);
   TQGridLayout *this_layout = new TQGridLayout(layout(),5,10+is_per_domain*2);
-  this_layout->setAlignment(Qt::AlignTop);
+  this_layout->tqsetAlignment(Qt::AlignTop);
   this_layout->setSpacing(3);
   this_layout->setMargin(11);
 
@@ -362,19 +362,19 @@ JSPoliciesFrame::~JSPoliciesFrame() {
 
 void JSPoliciesFrame::refresh() {
   TQRadioButton *button;
-  button = static_cast<TQRadioButton *>(js_popup->find(
+  button = static_cast<TQRadioButton *>(js_popup->tqfind(
   		policies->window_open));
   if (button != 0) button->setChecked(true);
-  button = static_cast<TQRadioButton *>(js_resize->find(
+  button = static_cast<TQRadioButton *>(js_resize->tqfind(
   		policies->window_resize));
   if (button != 0) button->setChecked(true);
-  button = static_cast<TQRadioButton *>(js_move->find(
+  button = static_cast<TQRadioButton *>(js_move->tqfind(
   		policies->window_move));
   if (button != 0) button->setChecked(true);
-  button = static_cast<TQRadioButton *>(js_focus->find(
+  button = static_cast<TQRadioButton *>(js_focus->tqfind(
   		policies->window_focus));
   if (button != 0) button->setChecked(true);
-  button = static_cast<TQRadioButton *>(js_statusbar->find(
+  button = static_cast<TQRadioButton *>(js_statusbar->tqfind(
   		policies->window_status));
   if (button != 0) button->setChecked(true);
 }

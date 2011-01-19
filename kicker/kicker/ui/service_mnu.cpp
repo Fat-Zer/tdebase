@@ -231,7 +231,7 @@ void PanelServiceMenu::fillMenu(KServiceGroup::Ptr& _root,
             TQString inlineHeaderName = g->showInlineHeader() ? groupCaption : "";
             // Item names may contain ampersands. To avoid them being converted
             // to accelerators, replace them with two ampersands.
-            groupCaption.replace("&", "&&");
+            groupCaption.tqreplace("&", "&&");
 
             if ( nbChildCount == 1 && g->allowInline() && g->inlineAlias())
             {
@@ -411,10 +411,10 @@ void PanelServiceMenu::insertMenuItem(KService::Ptr & s, int nId,
         if (KickerSettings::menuEntryFormat() == KickerSettings::NameAndDescription)
         {
             if ((!suppressGenericNames ||
-                 !suppressGenericNames->contains(s->untranslatedGenericName())) &&
-                serviceName.find(comment, 0, true) == -1)
+                 !suppressGenericNames->tqcontains(s->untranslatedGenericName())) &&
+                serviceName.tqfind(comment, 0, true) == -1)
             {
-                if (comment.find(serviceName, 0, true) == -1)
+                if (comment.tqfind(serviceName, 0, true) == -1)
                 {
                     serviceName = i18n("Entries in K-menu: %1 app name, %2 description", "%1 - %2").arg(serviceName, comment);
                 }
@@ -450,7 +450,7 @@ void PanelServiceMenu::insertMenuItem(KService::Ptr & s, int nId,
 
     // item names may contain ampersands. To avoid them being converted
     // to accelerators, replace them with two ampersands.
-    serviceName.replace("&", "&&");
+    serviceName.tqreplace("&", "&&");
 
     TQString icon = s->icon();
     if (icon=="unknown")
@@ -544,7 +544,7 @@ bool PanelServiceMenu::highlightMenuItem( const TQString &menuItemId )
 
 void PanelServiceMenu::slotExec(int id)
 {
-    if (!entryMap_.contains(id))
+    if (!entryMap_.tqcontains(id))
     {
         return;
     }
@@ -569,7 +569,7 @@ void PanelServiceMenu::mousePressEvent(TQMouseEvent * ev)
 
 void PanelServiceMenu::mouseReleaseEvent(TQMouseEvent * ev)
 {
-    if (ev->button() == RightButton && !Kicker::the()->isKioskImmutable())
+    if (ev->button() == Qt::RightButton && !Kicker::the()->isKioskImmutable())
     {
         int id = idAt( ev->pos() );
 
@@ -578,7 +578,7 @@ void PanelServiceMenu::mouseReleaseEvent(TQMouseEvent * ev)
             return;
         }
 
-        if (!entryMap_.contains(id))
+        if (!entryMap_.tqcontains(id))
         {
             kdDebug(1210) << "Cannot find service with menu id " << id << endl;
             return;
@@ -694,8 +694,8 @@ void PanelServiceMenu::slotContextMenu(int selected)
         }
 
 	case EditItem:
-            proc = new KProcess(this);
-            *proc << KStandardDirs::findExe(TQString::fromLatin1("kmenuedit"));
+            proc = new KProcess(TQT_TQOBJECT(this));
+            *proc << KStandardDirs::findExe(TQString::tqfromLatin1("kmenuedit"));
             *proc << "/"+relPath_ << static_cast<KService *>(contextKSycocaEntry_)->menuId();
             proc->start();
 	    break;
@@ -738,8 +738,8 @@ void PanelServiceMenu::slotContextMenu(int selected)
         }
 
         case EditMenu:
-            proc = new KProcess(this);
-            *proc << KStandardDirs::findExe(TQString::fromLatin1("kmenuedit"));
+            proc = new KProcess(TQT_TQOBJECT(this));
+            *proc << KStandardDirs::findExe(TQString::tqfromLatin1("kmenuedit"));
             *proc << "/"+static_cast<KServiceGroup *>(contextKSycocaEntry_)->relPath();
             proc->start();
 	    break;
@@ -756,7 +756,7 @@ void PanelServiceMenu::mouseMoveEvent(TQMouseEvent * ev)
     if (Kicker::the()->isKioskImmutable())
         return;
 
-    if ( (ev->state() & LeftButton ) != LeftButton )
+    if ( (ev->state() & Qt::LeftButton ) != Qt::LeftButton )
         return;
 
     TQPoint p = ev->pos() - startPos_;
@@ -769,7 +769,7 @@ void PanelServiceMenu::mouseMoveEvent(TQMouseEvent * ev)
     if (id < serviceMenuStartId())
         return;
 
-    if (!entryMap_.contains(id)) {
+    if (!entryMap_.tqcontains(id)) {
         kdDebug(1210) << "Cannot find service with menu id " << id << endl;
         return;
     }
@@ -838,7 +838,7 @@ void PanelServiceMenu::dragEnterEvent(TQDragEnterEvent *event)
 void PanelServiceMenu::dragLeaveEvent(TQDragLeaveEvent *)
 {
     // see PanelServiceMenu::dragEnterEvent why this is nescessary
-    if (!frameGeometry().contains(TQCursor::pos()))
+    if (!TQT_TQRECT_OBJECT(frameGeometry()).tqcontains(TQCursor::pos()))
     {
         KURLDrag::setTarget(0);
     }
@@ -932,12 +932,12 @@ void PanelServiceMenu::setSearchString(const TQString &searchString)
         int id = *menuItemIt;
         KService* s = dynamic_cast< KService* >( static_cast< KSycocaEntry* >( entryMap_[ id ]));
         TQString menuText = text(id);
-        if (menuText.contains(searchString, false) > 0
-            || ( s != NULL && ( s->name().contains(searchString, false) > 0
-                               || s->exec().contains(searchString, false) > 0
-                               || s->comment().contains(searchString, false) > 0
-                               || s->genericName().contains(searchString, false) > 0
-                               || s->exec().contains(searchString, false) > 0 )
+        if (menuText.tqcontains(searchString, false) > 0
+            || ( s != NULL && ( s->name().tqcontains(searchString, false) > 0
+                               || s->exec().tqcontains(searchString, false) > 0
+                               || s->comment().tqcontains(searchString, false) > 0
+                               || s->genericName().tqcontains(searchString, false) > 0
+                               || s->exec().tqcontains(searchString, false) > 0 )
                 )) {
             setItemEnabled(id, true);
             foundSomething = true;
@@ -951,7 +951,7 @@ void PanelServiceMenu::setSearchString(const TQString &searchString)
     /*for (int i=count()-1; i>=0; --i) {
         int id = idAt(i);
         TQString menuText = text(id);
-        if (menuText.contains(searchString, false) > 0) {
+        if (menuText.tqcontains(searchString, false) > 0) {
             setItemEnabled(id, true);
             foundSomething = true;
             nonemptyMenus.insert(id);
@@ -995,7 +995,7 @@ void PanelServiceMenu::updateRecentlyUsedApps(KService::Ptr &service)
     TQString strItem(service->desktopEntryPath());
 
     // don't add an item from root kmenu level
-    if (!strItem.contains('/'))
+    if (!strItem.tqcontains('/'))
     {
         return;
     }

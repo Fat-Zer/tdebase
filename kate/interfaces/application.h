@@ -35,7 +35,7 @@ class MainWindow;
  * other objects like document/projectmanager, ... no way goes around this
  * central interface
  */
-class KDE_EXPORT Application : public QObject
+class KDE_EXPORT Application : public TQObject
 {
   friend class PrivateApplication;
 

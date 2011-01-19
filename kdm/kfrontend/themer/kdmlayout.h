@@ -80,7 +80,7 @@ public:
 
 	// Computes the size hint of the box, telling which is the
 	// smallest size inside which boxed items will fit
-	TQSize sizeHint();
+	TQSize tqsizeHint();
 
 private:
 	struct {

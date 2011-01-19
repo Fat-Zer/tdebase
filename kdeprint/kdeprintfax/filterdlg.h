@@ -35,7 +35,7 @@ public:
 protected slots:
     void slotTextFilterChanged();
 private:
-	QLineEdit	*m_mime, *m_cmd;
+	TQLineEdit	*m_mime, *m_cmd;
 };
 
 #endif

@@ -136,7 +136,7 @@ static TQString removeMultipleExtension(const KURL &url)
     TQString fname(url.fileName());
     int     pos;
 
-    if(-1!=(pos=fname.findRev(TQString::fromLatin1(constMultipleExtension))))
+    if(-1!=(pos=fname.tqfindRev(TQString::tqfromLatin1(constMultipleExtension))))
         fname=fname.left(pos);
 
     return fname;
@@ -147,7 +147,7 @@ static TQString modifyName(const TQString &fname)
     static const char constSymbols[]={ '-', ' ', ':', 0 };
 
     TQString rv(fname);
-    int     dotPos=rv.findRev('.');
+    int     dotPos=rv.tqfindRev('.');
 
     if(-1!=dotPos)
     {
@@ -158,7 +158,7 @@ static TQString modifyName(const TQString &fname)
     }
 
     for(int s=0; constSymbols[s]; ++s)
-        rv=rv.replace(constSymbols[s], '_');
+        rv=rv.tqreplace(constSymbols[s], '_');
 
     return rv;
 }
@@ -292,7 +292,7 @@ static bool createFolderUDSEntry(KIO::UDSEntry &entry, const TQString &name, con
                                                 ? KFI_KIO_FONTS_PROTOCOL"/system-folder" 
                                                 : KFI_KIO_FONTS_PROTOCOL"/folder");
         addAtom(entry, KIO::UDS_GUESSED_MIME_TYPE, 0, "application/octet-stream");
-        TQString url(KFI_KIO_FONTS_PROTOCOL+TQString::fromLatin1(":/"));
+        TQString url(KFI_KIO_FONTS_PROTOCOL+TQString::tqfromLatin1(":/"));
         return true;
     }
     else if (sys && !Misc::root())   // Default system fonts folder does not actually exist yet!
@@ -393,15 +393,15 @@ static bool createFontUDSEntry(KIO::UDSEntry &entry, const TQString &name, TQVal
             addAtom(entry, KIO::UDS_MIME_TYPE, 0, KMimeType::findByPath(path, 0, true)->name());
             addAtom(entry, KIO::UDS_GUESSED_MIME_TYPE, 0, "application/octet-stream");
 
-            TQString url(KFI_KIO_FONTS_PROTOCOL+TQString::fromLatin1(":/"));
+            TQString url(KFI_KIO_FONTS_PROTOCOL+TQString::tqfromLatin1(":/"));
 
             if(!Misc::root())
             {
                 url+=sys ? i18n(KFI_KIO_FONTS_SYS) : i18n(KFI_KIO_FONTS_USER);
-                url+=TQString::fromLatin1("/");
+                url+=TQString::tqfromLatin1("/");
             }
             if(multiple)
-                url+=name+TQString::fromLatin1(constMultipleExtension);
+                url+=name+TQString::tqfromLatin1(constMultipleExtension);
             else
                 url+=Misc::getFile(path);
             addAtom(entry, KIO::UDS_URL, 0, url);
@@ -427,7 +427,7 @@ static KURL getRedirect(const KURL &u)
             sect(CKioFonts::getSect(path));
 
     path.remove(sect);
-    path.replace("//", "/");
+    path.tqreplace("//", "/");
     redirect.setPath(path);
 
     KFI_DBUG << "Redirect from " << u.path() << " to " << redirect.path() << endl;
@@ -441,7 +441,7 @@ static bool nonRootSys(const KURL &u)
 
 static TQString getFontFolder(const TQString &defaultDir, const TQString &root, TQStringList &dirs)
 {
-    if(dirs.contains(defaultDir))
+    if(dirs.tqcontains(defaultDir))
         return defaultDir;
     else
     {
@@ -450,7 +450,7 @@ static TQString getFontFolder(const TQString &defaultDir, const TQString &root, 
         bool                  found=false;
 
         for(it=dirs.begin(); it!=end && !found; ++it)
-            if(0==(*it).find(root))
+            if(0==(*it).tqfind(root))
                 return *it;
     }
 
@@ -494,7 +494,7 @@ static bool isAAfm(const TQString &fname)
             {
                 line=stream.readLine();
 
-                if(line.contains("StartFontMetrics"))
+                if(line.tqcontains("StartFontMetrics"))
                 {
                     file.close();
                     return true;
@@ -646,11 +646,11 @@ static bool getFontList(const TQStringList &files, TQMap<TQString, TQString> &ma
     {
         TQString                        name(Misc::getFile(*it)),
                                        path(Misc::getDir(*it));
-        TQValueList<FontList>::Iterator entry=list.find(FontList(name));
+        TQValueList<FontList>::Iterator entry=list.tqfind(FontList(name));
 
         if(entry!=list.end())
         {
-            if(!(*entry).paths.contains(path))
+            if(!(*entry).paths.tqcontains(path))
                 (*entry).paths.append(path);
         }
         else
@@ -682,17 +682,17 @@ static bool getFontList(const TQStringList &files, TQMap<TQString, TQString> &ma
 
             for(; pIt!=pEnd; ++pIt)
             {
-                unsigned int len=QMIN((*pIt).orig.length(), beginLen);
+                unsigned int len=TQMIN((*pIt).orig.length(), beginLen);
 
                 for(unsigned int i=0; i<len; ++i)
                     if((*pIt).orig[i]!=(*pBegin).orig[i])
                     {
                         (*pIt).modified=(*pIt).orig.mid(i);
-                        (*pIt).modified=(*pIt).modified.replace('/', '_');
+                        (*pIt).modified=(*pIt).modified.tqreplace('/', '_');
                         if((*pBegin).modified.isEmpty())
                         {
                             (*pBegin).modified=(*pBegin).orig.mid(i);
-                            (*pBegin).modified=(*pBegin).modified.replace('/', '_');
+                            (*pBegin).modified=(*pBegin).modified.tqreplace('/', '_');
                         }
                         break;
                     }
@@ -806,9 +806,9 @@ CKioFonts::CKioFonts(const TQCString &pool, const TQCString &app)
                 {
                     TQString str(paths[path]);
 
-                    str.replace(TQRegExp("\\s*"), "");
+                    str.tqreplace(TQRegExp("\\s*"), "");
 
-                    if(0==str.find("unix/:"))
+                    if(0==str.tqfind("unix/:"))
                         itsUsingXfsFpe=true;
                     else if("fontconfig"==str)
                         itsUsingFcFpe=true;
@@ -1185,7 +1185,7 @@ bool CKioFonts::putReal(const TQString &destOrig, const TQCString &destOrigC, bo
 
     if (markPartial)
     {
-        TQString  destPart(destOrig+TQString::fromLatin1(".part"));
+        TQString  destPart(destOrig+TQString::tqfromLatin1(".part"));
         TQCString destPartC(TQFile::encodeName(destPart));
 
         dest = destPart;
@@ -1751,9 +1751,9 @@ void CKioFonts::special(const TQByteArray &a)
                 finished();
                 break;
             case SPECIAL_RECONFIG:  // Only itended to be called from kcmfontinst - when a user has re-enabled doX or doGs
-                if(itsRoot && !itsFolders[FOLDER_SYS].modified.contains(itsFolders[FOLDER_SYS].location))
+                if(itsRoot && !itsFolders[FOLDER_SYS].modified.tqcontains(itsFolders[FOLDER_SYS].location))
                     itsFolders[FOLDER_SYS].modified.add(itsFolders[FOLDER_SYS].location);
-                else if(!itsRoot && !itsFolders[FOLDER_USER].modified.contains(itsFolders[FOLDER_USER].location))
+                else if(!itsRoot && !itsFolders[FOLDER_USER].modified.tqcontains(itsFolders[FOLDER_USER].location))
                     itsFolders[FOLDER_USER].modified.add(itsFolders[FOLDER_USER].location);
 
                 doModified();
@@ -1831,7 +1831,7 @@ void CKioFonts::doModified()
             //
             // If a non-default folder has been modified, always configure X
             if(NULL==strchr(itsKfiParams, 'x') && 
-               (itsFolders[FOLDER_SYS].modified.count()>1 || !itsFolders[FOLDER_SYS].modified.contains(itsFolders[FOLDER_SYS].location)))
+               (itsFolders[FOLDER_SYS].modified.count()>1 || !itsFolders[FOLDER_SYS].modified.tqcontains(itsFolders[FOLDER_SYS].location)))
             {
                 if(0==itsKfiParams[0])
                     strcpy(itsKfiParams, "-x");
@@ -1850,7 +1850,7 @@ void CKioFonts::doModified()
                     KFI_DBUG << "RUN(root): kfontinst " << itsKfiParams << ' ' << *it << endl;
                 }
 
-                if(itsFolders[FOLDER_SYS].modified.contains(itsFolders[FOLDER_SYS].location))
+                if(itsFolders[FOLDER_SYS].modified.tqcontains(itsFolders[FOLDER_SYS].location))
                 {
                     itsHasSys=true;
                     itsAddToSysFc=false;
@@ -1862,7 +1862,7 @@ void CKioFonts::doModified()
             TQCString cmd;
 
             createRootRefreshCmd(cmd, itsFolders[FOLDER_SYS].modified, false);
-            if(doRootCmd(cmd, false) && itsFolders[FOLDER_SYS].modified.contains(itsFolders[FOLDER_SYS].location))
+            if(doRootCmd(cmd, false) && itsFolders[FOLDER_SYS].modified.tqcontains(itsFolders[FOLDER_SYS].location))
             {
                 itsHasSys=true;
                 itsAddToSysFc=false;
@@ -2039,7 +2039,7 @@ bool CKioFonts::updateFontList()
 
                 if(!file.isEmpty())
                 {
-                    if(!itsRoot && 0==file.find(home))
+                    if(!itsRoot && 0==file.tqfind(home))
                         folder=FOLDER_USER;
 
                     TQValueList<FcPattern *> &patterns=
@@ -2079,14 +2079,14 @@ CKioFonts::EFolder CKioFonts::getFolder(const KURL &url)
 TQMap<TQString, TQValueList<FcPattern *> >::Iterator CKioFonts::getMap(const KURL &url)
 {
     EFolder                                           folder(getFolder(url));
-    TQMap<TQString, TQValueList<FcPattern *> >::Iterator it=itsFolders[folder].fontMap.find(removeMultipleExtension(url));
+    TQMap<TQString, TQValueList<FcPattern *> >::Iterator it=itsFolders[folder].fontMap.tqfind(removeMultipleExtension(url));
 
     if(it==itsFolders[folder].fontMap.end()) // Perhaps it was fonts:/System/times.ttf ???
     {
         FcPattern *pat=getEntry(folder, url.fileName(), false);
 
         if(pat)
-            it=itsFolders[folder].fontMap.find(CFcEngine::createName(pat));
+            it=itsFolders[folder].fontMap.tqfind(CFcEngine::createName(pat));
     }
 
     return it;
@@ -2180,7 +2180,7 @@ bool CKioFonts::getSourceFiles(const KURL &src, TQStringList &files)
                                          uEnd=urls.end();
 
                     for(uIt=urls.begin(); uIt!=uEnd; ++uIt)
-                        if(-1==files.findIndex((*uIt).path()))
+                        if(-1==files.tqfindIndex((*uIt).path()))
                             files.append((*uIt).path());
                 }
            }
@@ -2290,7 +2290,7 @@ bool CKioFonts::confirmMultiple(const KURL &url, const TQStringList &files, EFol
         {
             TQString name(CFcEngine::createName(pat));
 
-            if(-1==fonts.findIndex(name))
+            if(-1==fonts.tqfindIndex(name))
                 fonts.append(name);
         }
     }
@@ -2356,7 +2356,7 @@ bool CKioFonts::checkUrl(const KURL &u, bool rootOk)
         if(itsRoot)
         {
             if((isSysFolder(sect) || isUserFolder(sect)) &&
-               (itsFolders[FOLDER_SYS].fontMap.end()==itsFolders[FOLDER_SYS].fontMap.find(sect)))
+               (itsFolders[FOLDER_SYS].fontMap.end()==itsFolders[FOLDER_SYS].fontMap.tqfind(sect)))
 //CPD: TODO: || it has a font specified! e.g. fonts:/System/Times -> even in have a fonts:/System font, redirect
 //should still happen
             {
@@ -2385,8 +2385,8 @@ bool CKioFonts::checkAllowed(const KURL &u)
 
         if(ds==TQString(TQChar('/')+i18n(KFI_KIO_FONTS_USER)+TQChar('/')) ||
            ds==TQString(TQChar('/')+i18n(KFI_KIO_FONTS_SYS)+TQChar('/')) ||
-           ds==TQString(TQChar('/')+TQString::fromLatin1(KFI_KIO_FONTS_USER)+TQChar('/')) ||
-           ds==TQString(TQChar('/')+TQString::fromLatin1(KFI_KIO_FONTS_SYS)+TQChar('/')))
+           ds==TQString(TQChar('/')+TQString::tqfromLatin1(KFI_KIO_FONTS_USER)+TQChar('/')) ||
+           ds==TQString(TQChar('/')+TQString::tqfromLatin1(KFI_KIO_FONTS_SYS)+TQChar('/')))
         {
             error(KIO::ERR_SLAVE_DEFINED, i18n("Sorry, you cannot rename, move, copy, or delete either \"%1\" or \"%2\".")
                   .arg(i18n(KFI_KIO_FONTS_USER)).arg(i18n(KFI_KIO_FONTS_SYS))); \

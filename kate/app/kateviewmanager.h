@@ -36,7 +36,7 @@ class KAction;
 
 class TQToolButton;
 
-class KateViewManager : public QObject
+class KateViewManager : public TQObject
 {
   Q_OBJECT
 

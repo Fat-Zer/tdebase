@@ -89,7 +89,7 @@ void Workspace::updateClientLayer( Client* c )
     if( c->layer() == c->belongsToLayer())
         return;
     StackingUpdatesBlocker blocker( this );
-    c->invalidateLayer(); // invalidate, will be updated when doing restacking
+    c->tqinvalidateLayer(); // tqinvalidate, will be updated when doing restacking
     for( ClientList::ConstIterator it = c->transients().begin();
          it != c->transients().end();
          ++it )
@@ -306,7 +306,7 @@ void Workspace::raiseOrLowerClient( Client *c)
     if (!c) return;
     Client* topmost = NULL;
 // TODO    Q_ASSERT( block_stacking_updates == 0 );
-    if ( most_recently_raised && stacking_order.contains( most_recently_raised ) &&
+    if ( most_recently_raised && stacking_order.tqcontains( most_recently_raised ) &&
          most_recently_raised->isShown( true ) && c->isOnCurrentDesktop())
         topmost = most_recently_raised;
     else
@@ -471,11 +471,11 @@ void Workspace::restackClientUnderActive( Client* c )
         return;
         }
 
-    assert( unconstrained_stacking_order.contains( active_client ));
+    assert( unconstrained_stacking_order.tqcontains( active_client ));
     if( Client::belongToSameApplication( active_client, c ))
         { // put it below the active window if it's the same app
         unconstrained_stacking_order.remove( c );
-        unconstrained_stacking_order.insert( unconstrained_stacking_order.find( active_client ), c );
+        unconstrained_stacking_order.insert( unconstrained_stacking_order.tqfind( active_client ), c );
         }
     else
         { // put in the stacking order below _all_ windows belonging to the active application
@@ -494,17 +494,17 @@ void Workspace::restackClientUnderActive( Client* c )
                 }
             }
         }
-    assert( unconstrained_stacking_order.contains( c ));
+    assert( unconstrained_stacking_order.tqcontains( c ));
     for( int desktop = 1;
          desktop <= numberOfDesktops();
          ++desktop )
         { // do for every virtual desktop to handle the case of onalldesktop windows
-        if( c->wantsTabFocus() && c->isOnDesktop( desktop ) && focus_chain[ desktop ].contains( active_client ))
+        if( c->wantsTabFocus() && c->isOnDesktop( desktop ) && focus_chain[ desktop ].tqcontains( active_client ))
             {
             if( Client::belongToSameApplication( active_client, c ))
                 { // put it after the active window if it's the same app
                 focus_chain[ desktop ].remove( c );
-                focus_chain[ desktop ].insert( focus_chain[ desktop ].find( active_client ), c );
+                focus_chain[ desktop ].insert( focus_chain[ desktop ].tqfind( active_client ), c );
                 }
             else
                 { // put it in focus_chain[currentDesktop()] after all windows belonging to the active applicationa
@@ -523,12 +523,12 @@ void Workspace::restackClientUnderActive( Client* c )
             }
       	}
     // the same for global_focus_chain
-    if( c->wantsTabFocus() && global_focus_chain.contains( active_client ))
+    if( c->wantsTabFocus() && global_focus_chain.tqcontains( active_client ))
         {
         if( Client::belongToSameApplication( active_client, c ))
             {
             global_focus_chain.remove( c );
-            global_focus_chain.insert( global_focus_chain.find( active_client ), c );
+            global_focus_chain.insert( global_focus_chain.tqfind( active_client ), c );
             }
         else
             {
@@ -583,7 +583,7 @@ ClientList Workspace::constrainedStackingOrder()
         // If a window is raised above some other window in the same window group
         // which is in the ActiveLayer (i.e. it's fulscreened), make sure it stays
         // above that window (see #95731).
-        if( minimum_layer.contains( (*it)->group())
+        if( minimum_layer.tqcontains( (*it)->group())
             && minimum_layer[ (*it)->group() ] == ActiveLayer
             && ( l == NormalLayer || l == AboveLayer ))
             {

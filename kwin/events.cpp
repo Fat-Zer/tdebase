@@ -384,7 +384,7 @@ bool Workspace::workspaceEvent( XEvent * e )
             {
             if ( TQWhatsThis::inWhatsThisMode() )
                 {
-                TQWidget* w = TQWidget::find( e->xcrossing.window );
+                TQWidget* w = TQWidget::tqfind( e->xcrossing.window );
                 if ( w )
                     TQWhatsThis::leaveWhatsThisMode();
                 }
@@ -625,9 +625,9 @@ bool Client::windowEvent( XEvent* e )
         default:
             if( e->xany.window == window())
             {
-            if( e->type == Shape::shapeEvent() )
+            if( e->type == Shape::tqshapeEvent() )
                 {
-                is_shape = Shape::hasShape( window()); // workaround for #19644
+                is_tqshape = Shape::hasShape( window()); // workaround for #19644
                 updateShape();
                 }
             }
@@ -923,9 +923,9 @@ void Client::leaveNotifyEvent( XCrossingEvent* e )
         if ( !buttonDown ) 
             {
             mode = PositionCenter;
-            setCursor( arrowCursor );
+            setCursor( tqarrowCursor );
             }
-        bool lostMouse = !rect().contains( TQPoint( e->x, e->y ) );
+        bool lostMouse = !rect().tqcontains( TQPoint( e->x, e->y ) );
         // 'lostMouse' wouldn't work with e.g. B2 or Keramik, which have non-rectangular decorations
         // (i.e. the LeaveNotify event comes before leaving the rect and no LeaveNotify event
         // comes after leaving the rect) - so lets check if the pointer is really outside the window
@@ -1043,7 +1043,7 @@ void Client::updateMouseGrab()
         }
     }
 
-int qtToX11Button( Qt::ButtonState button )
+int qtToX11Button( TQt::ButtonState button )
     {
     if( button == Qt::LeftButton )
         return Button1;
@@ -1054,7 +1054,7 @@ int qtToX11Button( Qt::ButtonState button )
     return AnyButton;
     }
     
-int qtToX11State( Qt::ButtonState state )
+int qtToX11State( TQt::ButtonState state )
     {
     int ret = 0;
     if( state & Qt::LeftButton )
@@ -1063,13 +1063,13 @@ int qtToX11State( Qt::ButtonState state )
         ret |= Button2Mask;
     if( state & Qt::RightButton )
         ret |= Button3Mask;
-    if( state & Qt::ShiftButton )
+    if( state & TQt::ShiftButton )
         ret |= ShiftMask;
-    if( state & Qt::ControlButton )
+    if( state & TQt::ControlButton )
         ret |= ControlMask;
-    if( state & Qt::AltButton )
+    if( state & TQt::AltButton )
         ret |= KKeyNative::modX(KKey::ALT);
-    if( state & Qt::MetaButton )
+    if( state & TQt::MetaButton )
         ret |= KKeyNative::modX(KKey::WIN);
     return ret;
     }
@@ -1078,7 +1078,7 @@ int qtToX11State( Qt::ButtonState state )
 // for the decoration window cannot be (easily) intercepted as X11 events
 bool Client::eventFilter( TQObject* o, TQEvent* e )
     {
-    if (o == shadowWidget)
+    if (TQT_BASE_OBJECT(o) == TQT_BASE_OBJECT(shadowWidget))
         {
         if (e->type() == TQEvent::MouseButtonRelease)
             {
@@ -1290,29 +1290,29 @@ bool Client::eventFilter( TQObject* o, TQEvent* e )
             }
         }
     if( decoration == NULL
-        || o != decoration->widget())
+        || TQT_BASE_OBJECT(o) != TQT_BASE_OBJECT(decoration->widget()))
         return false;
     if( e->type() == TQEvent::MouseButtonPress )
         {
-        TQMouseEvent* ev = static_cast< TQMouseEvent* >( e );
+        TQMouseEvent* ev = TQT_TQMOUSEEVENT( e );
         return buttonPressEvent( decorationId(), qtToX11Button( ev->button()), qtToX11State( ev->state()),
             ev->x(), ev->y(), ev->globalX(), ev->globalY() );
         }
     if( e->type() == TQEvent::MouseButtonRelease )
         {
-        TQMouseEvent* ev = static_cast< TQMouseEvent* >( e );
+        TQMouseEvent* ev = TQT_TQMOUSEEVENT( e );
         return buttonReleaseEvent( decorationId(), qtToX11Button( ev->button()), qtToX11State( ev->state()),
             ev->x(), ev->y(), ev->globalX(), ev->globalY() );
         }
     if( e->type() == TQEvent::MouseMove ) // FRAME i fake z enter/leave?
         {
-        TQMouseEvent* ev = static_cast< TQMouseEvent* >( e );
+        TQMouseEvent* ev = TQT_TQMOUSEEVENT( e );
         return motionNotifyEvent( decorationId(), qtToX11State( ev->state()),
             ev->x(), ev->y(), ev->globalX(), ev->globalY() );
         }
     if( e->type() == TQEvent::Wheel )
         {
-        TQWheelEvent* ev = static_cast< TQWheelEvent* >( e );
+        TQWheelEvent* ev = TQT_TQWHEELEVENT( e );
         bool r = buttonPressEvent( decorationId(), ev->delta() > 0 ? Button4 : Button5, qtToX11State( ev->state()),
             ev->x(), ev->y(), ev->globalX(), ev->globalY() );
         r = r || buttonReleaseEvent( decorationId(), ev->delta() > 0 ? Button4 : Button5, qtToX11State( ev->state()),
@@ -1321,7 +1321,7 @@ bool Client::eventFilter( TQObject* o, TQEvent* e )
         }
     if( e->type() == TQEvent::Resize )
         {
-        TQResizeEvent* ev = static_cast< TQResizeEvent* >( e );
+        TQResizeEvent* ev = TQT_TQRESIZEEVENT( e );
         // Filter out resize events that inform about size different than frame size.
         // This will ensure that decoration->width() etc. and decoration->widget()->width() will be in sync.
         // These events only seem to be delayed events from initial resizing before show() was called
@@ -1479,13 +1479,13 @@ void Client::processMousePressEvent( TQMouseEvent* e )
     int button;
     switch( e->button())
         {
-        case LeftButton:
+        case Qt::LeftButton:
             button = Button1;
           break;
-        case MidButton:
+        case Qt::MidButton:
             button = Button2;
           break;
-        case RightButton:
+        case Qt::RightButton:
             button = Button3;
           break;
         default:

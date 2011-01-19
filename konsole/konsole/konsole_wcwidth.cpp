@@ -19,7 +19,7 @@ struct interval {
 };
 
 /* auxiliary function for binary search in interval table */
-static int bisearch(Q_UINT16 ucs, const struct interval *table, int max) {
+static int bisearch(TQ_UINT16 ucs, const struct interval *table, int max) {
   int min = 0;
   int mid;
 
@@ -65,11 +65,11 @@ static int bisearch(Q_UINT16 ucs, const struct interval *table, int max) {
  *      ISO 8859-1 and WGL4 characters, Unicode control characters,
  *      etc.) have a column width of 1.
  *
- * This implementation assumes that Q_UINT16 characters are encoded
+ * This implementation assumes that TQ_UINT16 characters are encoded
  * in ISO 10646.
  */
 
-int konsole_wcwidth_normal(Q_UINT16 ucs)
+int konsole_wcwidth_normal(TQ_UINT16 ucs)
 {
   /* sorted list of non-overlapping intervals of non-spacing characters */
   static const struct interval combining[] = {
@@ -143,7 +143,7 @@ int konsole_wcwidth_normal(Q_UINT16 ucs)
  * encodings who want to migrate to UCS. It is not otherwise
  * recommended for general use.
  */
-int konsole_wcwidth_cjk(Q_UINT16 ucs)
+int konsole_wcwidth_cjk(TQ_UINT16 ucs)
 {
   /* sorted list of non-overlapping intervals of East Asian Ambiguous
    * characters */
@@ -214,13 +214,13 @@ int string_width( const TQString &txt )
   int w = 0;
 
   for ( uint i = 1; i < txt.length(); ++i ) {
-    w += konsole_wcwidth(txt[i].unicode());
+    w += konsole_wcwidth(txt[i].tqunicode());
   }
  return w;
 }
 
 
-int konsole_wcwidth(Q_UINT16 ucs) {
+int konsole_wcwidth(TQ_UINT16 ucs) {
 
   static int use_wcwidth_cjk = (getenv("KONSOLE_WCWIDTH_CJK")) ? 1: 0;
 

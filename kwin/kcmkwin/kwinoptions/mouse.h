@@ -30,7 +30,7 @@ class KConfig;
 #include <tqtooltip.h>
 
 
-class ToolTipComboBox: public QComboBox
+class ToolTipComboBox: public TQComboBox
 {
   Q_OBJECT
     

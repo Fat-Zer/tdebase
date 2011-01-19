@@ -88,7 +88,7 @@ KDEpasswd2Dialog::KDEpasswd2Dialog(const char *oldpass, TQCString user)
     if (m_User.isEmpty())
         setPrompt(i18n("Please enter your new password:"));
     else
-        setPrompt(i18n("Please enter the new password for user <b>%1</b>:").arg(m_User));
+        setPrompt(i18n("Please enter the new password for user <b>%1</b>:").arg(static_cast<const char *>(m_User)));
 }
 
 

@@ -25,7 +25,7 @@
 
 #include "menutab.h"
 
-class kSubMenuItem : public TQObject, public QCheckListItem
+class kSubMenuItem : public TQObject, public TQCheckListItem
 {
     Q_OBJECT
 

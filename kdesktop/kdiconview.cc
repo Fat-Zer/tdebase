@@ -130,7 +130,7 @@ void KDIconView::readIconPosition(KSimpleConfig *config, int &x, int &y)
 // -----------------------------------------------------------------------------
 
 KDIconView::KDIconView( TQWidget *parent, const char* name )
-    : KonqIconViewWidget( parent, name, WResizeNoErase, true ),
+    : KonqIconViewWidget( parent, name, (WFlags)WResizeNoErase, true ),
       m_actionCollection( this, "KDIconView::m_actionCollection" ),
       m_accel( 0L ),
       m_bNeedRepaint( false ),
@@ -296,7 +296,7 @@ void KDIconView::initConfig( bool init )
     m_bSortDirectoriesFirst = KDesktopSettings::directoriesFirst();
     m_itemsAlwaysFirst = KDesktopSettings::alwaysFirstItems(); // Distributor plug-in
 
-    if (KProtocolInfo::isKnownProtocol(TQString::fromLatin1("media")))
+    if (KProtocolInfo::isKnownProtocol(TQString::tqfromLatin1("media")))
         m_enableMedia=KDesktopSettings::mediaEnabled();
     else
         m_enableMedia=false;
@@ -321,7 +321,7 @@ void KDIconView::initConfig( bool init )
     if ( previewSettings().count() )
     {
         for ( TQStringList::ConstIterator it = oldPreview.begin(); it != oldPreview.end(); ++it)
-            if ( !previewSettings().contains( *it ) ){
+            if ( !previewSettings().tqcontains( *it ) ){
                 kdDebug(1204) << "Disabling preview for " << *it << endl;
                 if ( *it == "audio/" )
                     disableSoundPreviews();
@@ -425,28 +425,28 @@ void KDIconView::createActions()
              undo, TQT_SLOT( setText( const TQString & ) ) );
         undo->setEnabled( KonqUndoManager::self()->undoAvailable() );
 
-        KAction* paCut = KStdAction::cut( this, TQT_SLOT( slotCut() ), &m_actionCollection, "cut" );
+        KAction* paCut = KStdAction::cut( TQT_TQOBJECT(this), TQT_SLOT( slotCut() ), &m_actionCollection, "cut" );
         KShortcut cutShortCut = paCut->shortcut();
         cutShortCut.remove( KKey( SHIFT + Key_Delete ) ); // used for deleting files
         paCut->setShortcut( cutShortCut );
 
-        KStdAction::copy( this, TQT_SLOT( slotCopy() ), &m_actionCollection, "copy" );
-        KStdAction::paste( this, TQT_SLOT( slotPaste() ), &m_actionCollection, "paste" );
-        KAction *pasteTo = KStdAction::paste( this, TQT_SLOT( slotPopupPasteTo() ), &m_actionCollection, "pasteto" );
+        KStdAction::copy( TQT_TQOBJECT(this), TQT_SLOT( slotCopy() ), &m_actionCollection, "copy" );
+        KStdAction::paste( TQT_TQOBJECT(this), TQT_SLOT( slotPaste() ), &m_actionCollection, "paste" );
+        KAction *pasteTo = KStdAction::paste( TQT_TQOBJECT(this), TQT_SLOT( slotPopupPasteTo() ), &m_actionCollection, "pasteto" );
         pasteTo->setEnabled( false ); // only enabled during popupMenu()
 
         KShortcut reloadShortcut = KStdAccel::shortcut(KStdAccel::Reload);
-        new KAction( i18n( "&Reload" ), "reload", reloadShortcut, this, TQT_SLOT( refreshIcons() ), &m_actionCollection, "reload" );
+        new KAction( i18n( "&Reload" ), "reload", reloadShortcut, TQT_TQOBJECT(this), TQT_SLOT( refreshIcons() ), &m_actionCollection, "reload" );
 
-        (void) new KAction( i18n( "&Rename" ), /*"editrename",*/ Key_F2, this, TQT_SLOT( renameSelectedItem() ), &m_actionCollection, "rename" );
-        (void) new KAction( i18n( "&Properties" ), ALT+Key_Return, this, TQT_SLOT( slotProperties() ), &m_actionCollection, "properties" );
+        (void) new KAction( i18n( "&Rename" ), /*"editrename",*/ Key_F2, TQT_TQOBJECT(this), TQT_SLOT( renameSelectedItem() ), &m_actionCollection, "rename" );
+        (void) new KAction( i18n( "&Properties" ), ALT+Key_Return, TQT_TQOBJECT(this), TQT_SLOT( slotProperties() ), &m_actionCollection, "properties" );
         KAction* trash = new KAction( i18n( "&Move to Trash" ), "edittrash", Key_Delete, &m_actionCollection, "trash" );
         connect( trash, TQT_SIGNAL( activated( KAction::ActivationReason, Qt::ButtonState ) ),
                  this, TQT_SLOT( slotTrashActivated( KAction::ActivationReason, Qt::ButtonState ) ) );
 
         KConfig config("kdeglobals", true, false);
         config.setGroup( "KDE" );
-        (void) new KAction( i18n( "&Delete" ), "editdelete", SHIFT+Key_Delete, this, TQT_SLOT( slotDelete() ), &m_actionCollection, "del" );
+        (void) new KAction( i18n( "&Delete" ), "editdelete", SHIFT+Key_Delete, TQT_TQOBJECT(this), TQT_SLOT( slotDelete() ), &m_actionCollection, "del" );
 
         // Initial state of the actions (cut/copy/paste/...)
         slotSelectionChanged();
@@ -581,7 +581,7 @@ KURL KDIconView::desktopURL()
     if (kdesktop_screen_number != 0) {
         TQString dn = "Desktop";
         dn += TQString::number(kdesktop_screen_number);
-        desktopPath.replace("Desktop", dn);
+        desktopPath.tqreplace("Desktop", dn);
     }
 
     KURL desktopURL;
@@ -605,9 +605,9 @@ void KDIconView::contentsMousePressEvent( TQMouseEvent *e )
     if (!m_dirLister) return;
     //kdDebug(1204) << "KDIconView::contentsMousePressEvent" << endl;
     // TQIconView, as of Qt 2.2, doesn't emit mouseButtonPressed for LMB on background
-    if ( e->button() == LeftButton && KRootWm::self()->hasLeftButtonMenu() )
+    if ( e->button() == Qt::LeftButton && KRootWm::self()->hasLeftButtonMenu() )
     {
-        TQIconViewItem *item = findItem( e->pos() );
+        TQIconViewItem *item = tqfindItem( e->pos() );
         if ( !item )
         {
             // Left click menu
@@ -628,7 +628,7 @@ void KDIconView::wheelEvent( TQWheelEvent* e )
     if (!m_dirLister) return;
     //kdDebug(1204) << "KDIconView::wheelEvent" << endl;
 
-    TQIconViewItem *item = findItem( e->pos() );
+    TQIconViewItem *item = tqfindItem( e->pos() );
     if ( !item )
     {
       emit wheelRolled( e->delta() );
@@ -670,7 +670,7 @@ void KDIconView::slotMouseButtonClickedKDesktop(int _button, TQIconViewItem* _it
 {
     if (!m_dirLister) return;
     //kdDebug(1204) << "KDIconView::slotMouseButtonClickedKDesktop" << endl;
-    if ( _item && _button == MidButton )
+    if ( _item && _button == Qt::MidButton )
         slotExecuted(_item);
 }
 
@@ -723,7 +723,7 @@ void KDIconView::slotPopupPasteTo()
 }
 
 // These two functions and the following class are all lifted from desktopbehavior_impl.cpp to handle the media icons
-class DesktopBehaviorMediaItem : public QCheckListItem
+class DesktopBehaviorMediaItem : public TQCheckListItem
 {
 public:
     DesktopBehaviorMediaItem(TQListView *parent, const TQString name, const TQString mimetype, bool on)
@@ -748,7 +748,7 @@ void KDIconView::fillMediaListView()
     for (; it2 != mimetypes.end(); ++it2) {
        if ( ((*it2)->name().startsWith("media/")) )
 	{
-    	    bool ok=excludedMedia.contains((*it2)->name())==0;
+    	    bool ok=excludedMedia.tqcontains((*it2)->name())==0;
 		new DesktopBehaviorMediaItem (mMediaListView, (*it2)->comment(), (*it2)->name(),ok);
         }
     }
@@ -784,7 +784,7 @@ void KDIconView::removeBuiltinIcon(TQString iconName)
 {
     DesktopBehaviorMediaItem *changeItem;
     fillMediaListView();
-    changeItem = static_cast<DesktopBehaviorMediaItem *>(mMediaListView->findItem(iconName, 0));
+    changeItem = static_cast<DesktopBehaviorMediaItem *>(mMediaListView->tqfindItem(iconName, 0));
     if (changeItem != 0) {
         changeItem->setOn(false);
     }
@@ -860,12 +860,12 @@ bool KDIconView::deleteGlobalDesktopFiles()
     return !itemsLeft;
 }
 
-void KDIconView::slotTrashActivated( KAction::ActivationReason reason, Qt::ButtonState state )
+void KDIconView::slotTrashActivated( KAction::ActivationReason reason, TQt::ButtonState state )
 {
     if (deleteGlobalDesktopFiles())
        return; // All items deleted
 
-    if ( reason == KAction::PopupMenuActivation && ( state & Qt::ShiftButton ) )
+    if ( reason == KAction::PopupMenuActivation && ( state & TQt::ShiftButton ) )
        KonqOperations::del(this, KonqOperations::DEL, selectedUrls());
     else
        KonqOperations::del(this, KonqOperations::TRASH, selectedUrls());
@@ -960,20 +960,20 @@ bool KDIconView::isDesktopFile( KFileItem * _item ) const
     return false;
 
   // return true if desktop file
-  return ( (_item->mimetype() == TQString::fromLatin1("application/x-desktop"))
-       || (_item->mimetype() == TQString::fromLatin1("media/builtin-mydocuments"))
-       || (_item->mimetype() == TQString::fromLatin1("media/builtin-mycomputer"))
-       || (_item->mimetype() == TQString::fromLatin1("media/builtin-mynetworkplaces"))
-       || (_item->mimetype() == TQString::fromLatin1("media/builtin-printers"))
-       || (_item->mimetype() == TQString::fromLatin1("media/builtin-trash"))
-       || (_item->mimetype() == TQString::fromLatin1("media/builtin-webbrowser")) );
+  return ( (_item->mimetype() == TQString::tqfromLatin1("application/x-desktop"))
+       || (_item->mimetype() == TQString::tqfromLatin1("media/builtin-mydocuments"))
+       || (_item->mimetype() == TQString::tqfromLatin1("media/builtin-mycomputer"))
+       || (_item->mimetype() == TQString::tqfromLatin1("media/builtin-mynetworkplaces"))
+       || (_item->mimetype() == TQString::tqfromLatin1("media/builtin-printers"))
+       || (_item->mimetype() == TQString::tqfromLatin1("media/builtin-trash"))
+       || (_item->mimetype() == TQString::tqfromLatin1("media/builtin-webbrowser")) );
 }
 
 TQString KDIconView::stripDesktopExtension( const TQString & text )
 {
-    if (text.right(7) == TQString::fromLatin1(".kdelnk"))
+    if (text.right(7) == TQString::tqfromLatin1(".kdelnk"))
       return text.left(text.length() - 7);
-    else if (text.right(8) == TQString::fromLatin1(".desktop"))
+    else if (text.right(8) == TQString::tqfromLatin1(".desktop"))
       return text.left(text.length() - 8);
     return text;
 }
@@ -1009,12 +1009,12 @@ bool KDIconView::makeFriendlyText( KFileIVI *fileIVI )
         TQStringList tmpList;
         if (cfg.hasKey("OnlyShowIn"))
         {
-            if (!cfg.readListEntry("OnlyShowIn", ';').contains("KDE"))
+            if (!cfg.readListEntry("OnlyShowIn", ';').tqcontains("KDE"))
                 return false;
         }
         if (cfg.hasKey("NotShowIn"))
         {
-            if (cfg.readListEntry("NotShowIn", ';').contains("KDE"))
+            if (cfg.readListEntry("NotShowIn", ';').tqcontains("KDE"))
                 return false;
         }
         if (cfg.hasKey("TryExec"))
@@ -1055,7 +1055,7 @@ void KDIconView::slotNewItems( const KFileItemList & entries )
   KURL desktop_URL = desktopURL();
   if (desktop_URL.isLocalFile())
     desktopPath = desktop_URL.path();
-  // We have new items, so we'll need to repaint in slotCompleted
+  // We have new items, so we'll need to tqrepaint in slotCompleted
   m_bNeedRepaint = true;
   kdDebug(1214) << "KDIconView::slotNewItems count=" << entries.count() << endl;
   KFileItemListIterator it(entries);
@@ -1198,7 +1198,7 @@ void KDIconView::slotRefreshItems( const KFileItemList & entries )
     }
     else
     {
-        // In case we replace a big icon with a small one, need to repaint.
+        // In case we replace a big icon with a small one, need to tqrepaint.
         updateContents();
         // Can't do that with m_bNeedRepaint since slotCompleted isn't called
         m_bNeedRepaint = false;
@@ -1305,7 +1305,7 @@ void KDIconView::slotCompleted()
     if (!m_hasExistingPos)
         rearrangeIcons();
 
-//    kdDebug(1204) << "KDIconView::slotCompleted save:" << m_bNeedSave << " repaint:" << m_bNeedRepaint << endl;
+//    kdDebug(1204) << "KDIconView::slotCompleted save:" << m_bNeedSave << " tqrepaint:" << m_bNeedRepaint << endl;
     if ( m_bNeedSave )
     {
         // Done here because we want to align icons only once initially, and each time new icons appear.
@@ -1317,7 +1317,7 @@ void KDIconView::slotCompleted()
     }
     if ( m_bNeedRepaint )
     {
-        viewport()->repaint();
+        viewport()->tqrepaint();
         m_bNeedRepaint = false;
     }
 }
@@ -1327,7 +1327,7 @@ void KDIconView::slotClipboardDataChanged()
     // This is very related to KonqDirPart::slotClipboardDataChanged
 
     KURL::List lst;
-    TQMimeSource *data = TQApplication::clipboard()->data();
+    TQMimeSource *data = TQApplication::tqclipboard()->data();
     if ( data->provides( "application/x-kde-cutselection" ) && data->provides( "text/uri-list" ) )
         if ( KonqDrag::decodeIsCutSelection( data ) )
             (void) KURLDrag::decode( data, lst );
@@ -1471,7 +1471,7 @@ void KDIconView::contentsDropEvent( TQDropEvent * e )
     bool isImmutable = KGlobal::config()->isImmutable();
 
     if ( (isColorDrag || isImageDrag) && !isUrlDrag ) {
-        // Hack to clear the drag shape
+        // Hack to clear the drag tqshape
         bool bMovable = itemsMovable();
         bool bSignals = signalsBlocked();
         setItemsMovable(false);
@@ -1499,7 +1499,7 @@ void KDIconView::contentsDropEvent( TQDropEvent * e )
     bool adjustedAnyItems = false;
     for( TQIconViewItem *item = firstItem(); item; item = item->nextItem() )
     {
-        if( !desk.contains( item->rect(), true ))
+        if( !desk.tqcontains( item->rect(), true ))
         {
             TQRect r = item->rect();
 
@@ -1519,7 +1519,7 @@ void KDIconView::contentsDropEvent( TQDropEvent * e )
     if( adjustedAnyItems )
     {
         // Make sure the viewport isn't unnecessarily resized by now,
-        // then schedule a repaint to remove any garbage pixels.
+        // then schedule a tqrepaint to remove any garbage pixels.
         resizeContents( width(), height() );
         viewport()->update();
     }
@@ -1541,7 +1541,7 @@ void KDIconView::updateWorkArea( const TQRect &wr )
 {
     m_gotIconsArea = true;  // now we have it!
 
-    if (( iconArea() == wr ) && (m_needDesktopAlign == false)) return;  // nothing changed; avoid repaint/saveIconPosition ...
+    if (( iconArea() == wr ) && (m_needDesktopAlign == false)) return;  // nothing changed; avoid tqrepaint/saveIconPosition ...
 
     TQRect oldArea = iconArea();
     setIconArea( wr );
@@ -1593,8 +1593,8 @@ void KDIconView::updateWorkArea( const TQRect &wr )
             }
         }
         if ( needRepaint ) {
-            viewport()->repaint( FALSE );
-            repaint( FALSE );
+            viewport()->tqrepaint( FALSE );
+            tqrepaint( FALSE );
             saveIconPositions();
         }
     }
@@ -1615,7 +1615,7 @@ void KDIconView::setupSortKeys()
         if (!m_itemsAlwaysFirst.isEmpty())
         {
             TQString strFileName = static_cast<KFileIVI *>( it )->item()->url().fileName();
-            int nFind = m_itemsAlwaysFirst.findIndex(strFileName);
+            int nFind = m_itemsAlwaysFirst.tqfindIndex(strFileName);
             if (nFind >= 0)
                 strKey = "0" + TQString::number(nFind);
         }
@@ -1718,7 +1718,7 @@ void KDIconView::moveToFreePosition(TQIconViewItem *item )
     TQRect rect=item->rect();
     if (m_bVertAlign)
     {
-	kdDebug(1214)<<"moveToFreePosition for vertical alignment"<<endl;
+	kdDebug(1214)<<"moveToFreePosition for vertical tqalignment"<<endl;
 
 	rect.moveTopLeft(TQPoint(spacing(),spacing()));
       do

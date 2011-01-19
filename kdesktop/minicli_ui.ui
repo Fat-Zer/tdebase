@@ -1,6 +1,6 @@
 <!DOCTYPE UI><UI version="3.3" stdsetdef="1">
 <class>MinicliDlgUI</class>
-<widget class="QWidget">
+<widget class="TQWidget">
     <property name="name">
         <cstring>MinicliDlgUI</cstring>
     </property>
@@ -27,7 +27,7 @@
         <property name="resizeMode">
             <enum>FreeResize</enum>
         </property>
-        <widget class="QLayoutWidget" row="4" column="0" rowspan="1" colspan="2">
+        <widget class="TQLayoutWidget" row="4" column="0" rowspan="1" colspan="2">
             <property name="name">
                 <cstring>layout4</cstring>
             </property>
@@ -61,7 +61,7 @@
                     <property name="sizeType">
                         <enum>Expanding</enum>
                     </property>
-                    <property name="sizeHint">
+                    <property name="tqsizeHint">
                         <size>
                             <width>80</width>
                             <height>20</height>
@@ -105,7 +105,7 @@
                 </widget>
             </hbox>
         </widget>
-        <widget class="QLayoutWidget" row="2" column="0" rowspan="1" colspan="2">
+        <widget class="TQLayoutWidget" row="2" column="0" rowspan="1" colspan="2">
             <property name="name">
                 <cstring>layout4</cstring>
             </property>
@@ -123,14 +123,14 @@
                     <property name="sizeType">
                         <enum>Fixed</enum>
                     </property>
-                    <property name="sizeHint">
+                    <property name="tqsizeHint">
                         <size>
                             <width>57</width>
                             <height>20</height>
                         </size>
                     </property>
                 </spacer>
-                <widget class="QFrame">
+                <widget class="TQFrame">
                     <property name="name">
                         <cstring>gbAdvanced</cstring>
                     </property>
@@ -157,14 +157,14 @@
                             <property name="sizeType">
                                 <enum>Fixed</enum>
                             </property>
-                            <property name="sizeHint">
+                            <property name="tqsizeHint">
                                 <size>
                                     <width>20</width>
                                     <height>30</height>
                                 </size>
                             </property>
                         </spacer>
-                        <widget class="QCheckBox" row="7" column="0" rowspan="1" colspan="4">
+                        <widget class="TQCheckBox" row="7" column="0" rowspan="1" colspan="4">
                             <property name="name">
                                 <cstring>cbRealtime</cstring>
                             </property>
@@ -180,7 +180,7 @@
 &lt;/qt&gt;</string>
                             </property>
                         </widget>
-			<widget class="QCheckBox" row="8" column="0" rowspan="1" colspan="4">
+			<widget class="TQCheckBox" row="8" column="0" rowspan="1" colspan="4">
 				<property name="name">
 					<cstring>cbAutocomplete</cstring>
 				</property>
@@ -192,7 +192,7 @@
 						&lt;/qt&gt;</string>
 				</property>
                         </widget>
-			<widget class="QCheckBox" row="9" column="0" rowspan="1" colspan="4">
+			<widget class="TQCheckBox" row="9" column="0" rowspan="1" colspan="4">
 				<property name="name">
 					<cstring>cbAutohistory</cstring>
 				</property>
@@ -204,7 +204,7 @@
 						&lt;/qt&gt;</string>
 				</property>
                         </widget>
-                        <widget class="QLabel" row="3" column="1">
+                        <widget class="TQLabel" row="3" column="1">
                             <property name="name">
                                 <cstring>lbUsername</cstring>
                             </property>
@@ -248,7 +248,7 @@
                                 <string>Enter the password here for the user you specified above.</string>
                             </property>
                         </widget>
-                        <widget class="QLabel" row="4" column="1">
+                        <widget class="TQLabel" row="4" column="1">
                             <property name="name">
                                 <cstring>lbPassword</cstring>
                             </property>
@@ -273,7 +273,7 @@
                                 <string>Enter the password here for the user you specified above.</string>
                             </property>
                         </widget>
-                        <widget class="QCheckBox" row="1" column="0" rowspan="1" colspan="4">
+                        <widget class="TQCheckBox" row="1" column="0" rowspan="1" colspan="4">
                             <property name="name">
                                 <cstring>cbRunInTerminal</cstring>
                             </property>
@@ -284,7 +284,7 @@
                                 <string>Check this option if the application you want to run is a text mode application. The application will then be run in a terminal emulator window.</string>
                             </property>
                         </widget>
-                        <widget class="QLayoutWidget" row="6" column="1">
+                        <widget class="TQLayoutWidget" row="6" column="1">
                             <property name="name">
                                 <cstring>layout30</cstring>
                             </property>
@@ -292,7 +292,7 @@
                                 <property name="name">
                                     <cstring>unnamed</cstring>
                                 </property>
-                                <widget class="QLabel">
+                                <widget class="TQLabel">
                                     <property name="name">
                                         <cstring>textLabel1</cstring>
                                     </property>
@@ -319,7 +319,7 @@
                                     <property name="sizeType">
                                         <enum>Minimum</enum>
                                     </property>
-                                    <property name="sizeHint">
+                                    <property name="tqsizeHint">
                                         <size>
                                             <width>20</width>
                                             <height>9</height>
@@ -328,7 +328,7 @@
                                 </spacer>
                             </vbox>
                         </widget>
-                        <widget class="QCheckBox" row="5" column="0" rowspan="1" colspan="4">
+                        <widget class="TQCheckBox" row="5" column="0" rowspan="1" colspan="4">
                             <property name="name">
                                 <cstring>cbPriority</cstring>
                             </property>
@@ -358,7 +358,7 @@
                                 <string>Enter the user you want to run the application as here.</string>
                             </property>
                         </widget>
-                        <widget class="QLayoutWidget" row="6" column="2" rowspan="1" colspan="2">
+                        <widget class="TQLayoutWidget" row="6" column="2" rowspan="1" colspan="2">
                             <property name="name">
                                 <cstring>layout29</cstring>
                             </property>
@@ -369,7 +369,7 @@
                                 <property name="spacing">
                                     <number>0</number>
                                 </property>
-                                <widget class="QLabel" row="1" column="0">
+                                <widget class="TQLabel" row="1" column="0">
                                     <property name="name">
                                         <cstring>lbLowPriority</cstring>
                                     </property>
@@ -383,7 +383,7 @@
                                         <string>The priority that the command will be run with can be set here. From left to right, it goes from low to high. The center position is the default value. For priorities higher than the default, you will need to provide the root password.</string>
                                     </property>
                                 </widget>
-                                <widget class="QLabel" row="1" column="1">
+                                <widget class="TQLabel" row="1" column="1">
                                     <property name="name">
                                         <cstring>lbHighPriority</cstring>
                                     </property>
@@ -393,14 +393,14 @@
                                     <property name="text">
                                         <string>High</string>
                                     </property>
-                                    <property name="alignment">
+                                    <property name="tqalignment">
                                         <set>AlignVCenter|AlignRight</set>
                                     </property>
                                     <property name="whatsThis" stdset="0">
                                         <string>The priority that the command will be run with can be set here. From left to right, it goes from low to high. The center position is the default value. For priorities higher than the default, you will need to provide the root password.</string>
                                     </property>
                                 </widget>
-                                <widget class="QSlider" row="0" column="0" rowspan="1" colspan="2">
+                                <widget class="TQSlider" row="0" column="0" rowspan="1" colspan="2">
                                     <property name="name">
                                         <cstring>slPriority</cstring>
                                     </property>
@@ -427,7 +427,7 @@
                                 </widget>
                             </grid>
                         </widget>
-                        <widget class="QCheckBox" row="2" column="0" rowspan="1" colspan="4">
+                        <widget class="TQCheckBox" row="2" column="0" rowspan="1" colspan="4">
                             <property name="name">
                                 <cstring>cbRunAsOther</cstring>
                             </property>
@@ -448,7 +448,7 @@
                             <property name="sizeType">
                                 <enum>Fixed</enum>
                             </property>
-                            <property name="sizeHint">
+                            <property name="tqsizeHint">
                                 <size>
                                     <width>20</width>
                                     <height>40</height>
@@ -459,7 +459,7 @@
                 </widget>
             </hbox>
         </widget>
-        <widget class="QFrame" row="3" column="0" rowspan="1" colspan="2">
+        <widget class="TQFrame" row="3" column="0" rowspan="1" colspan="2">
             <property name="name">
                 <cstring>separator</cstring>
             </property>
@@ -478,7 +478,7 @@
                 <enum>Sunken</enum>
             </property>
         </widget>
-        <widget class="QLabel" row="1" column="0">
+        <widget class="TQLabel" row="1" column="0">
             <property name="name">
                 <cstring>lbCommand</cstring>
             </property>
@@ -500,7 +500,7 @@
                 <string>Enter the command you wish to execute or the address of the resource you want to open. This can be a remote URL like "www.kde.org" or a local one like "~/.kderc".</string>
             </property>
         </widget>
-        <widget class="QLabel" row="0" column="0">
+        <widget class="TQLabel" row="0" column="0">
             <property name="name">
                 <cstring>lbRunIcon</cstring>
             </property>
@@ -515,7 +515,7 @@
             <property name="text">
                 <string></string>
             </property>
-            <property name="alignment">
+            <property name="tqalignment">
                 <set>AlignCenter</set>
             </property>
         </widget>
@@ -531,7 +531,7 @@
                     <verstretch>0</verstretch>
                 </sizepolicy>
             </property>
-            <property name="minimumSize">
+            <property name="tqminimumSize">
                 <size>
                     <width>388</width>
                     <height>0</height>
@@ -541,7 +541,7 @@
                 <string>Enter the command you wish to execute or the address of the resource you want to open. This can be a remote URL like "www.kde.org" or a local one like "~/.kderc".</string>
             </property>
         </widget>
-        <widget class="QLabel" row="0" column="1">
+        <widget class="TQLabel" row="0" column="1">
             <property name="name">
                 <cstring>lbComment</cstring>
             </property>
@@ -556,7 +556,7 @@
             <property name="text">
                 <string>Enter the name of the application you want to run or the URL you want to view</string>
             </property>
-            <property name="alignment">
+            <property name="tqalignment">
                 <set>WordBreak|AlignVCenter</set>
             </property>
         </widget>

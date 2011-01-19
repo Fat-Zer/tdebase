@@ -138,7 +138,7 @@ void g_NPN_ForceRedraw(NPP /*instance*/)
 }
 
 
-// invalidate rect
+// tqinvalidate rect
 void g_NPN_InvalidateRect(NPP /*instance*/, NPRect* /*invalidRect*/)
 {
    // http://devedge.netscape.com/library/manuals/2002/plugin/1.0/npn_api7.html#999503
@@ -147,7 +147,7 @@ void g_NPN_InvalidateRect(NPP /*instance*/, NPRect* /*invalidRect*/)
 }
 
 
-// invalidate region
+// tqinvalidate region
 void g_NPN_InvalidateRegion(NPP /*instance*/, NPRegion /*invalidRegion*/)
 {
    // http://devedge.netscape.com/library/manuals/2002/plugin/1.0/npn_api8.html#999528
@@ -252,8 +252,8 @@ NPError g_NPN_GetURL(NPP instance, const char *url, const char *target)
 
    NSPluginInstance *inst = static_cast<NSPluginInstance*>(instance->ndata);
    if (inst) {
-      inst->requestURL( TQString::fromLatin1(url), TQString::null,
-                        TQString::fromLatin1(target), 0 );
+      inst->requestURL( TQString::tqfromLatin1(url), TQString::null,
+                        TQString::tqfromLatin1(target), 0 );
    }
 
    return NPERR_NO_ERROR;
@@ -267,8 +267,8 @@ NPError g_NPN_GetURLNotify(NPP instance, const char *url, const char *target,
    NSPluginInstance *inst = static_cast<NSPluginInstance*>(instance->ndata);
    if (inst) {
       kdDebug(1431) << "g_NPN_GetURLNotify: ndata=" << (void*)inst << endl;
-      inst->requestURL( TQString::fromLatin1(url), TQString::null,
-                        TQString::fromLatin1(target), notifyData, true );
+      inst->requestURL( TQString::tqfromLatin1(url), TQString::null,
+                        TQString::tqfromLatin1(target), notifyData, true );
    }
 
    return NPERR_NO_ERROR;
@@ -318,7 +318,7 @@ NPError g_NPN_PostURLNotify(NPP instance, const char* url, const char* target,
                break;
             }
 
-            TQString thisLine = TQString::fromLatin1(previousStart, &buf[l-1] - previousStart).stripWhiteSpace();
+            TQString thisLine = TQString::tqfromLatin1(previousStart, &buf[l-1] - previousStart).stripWhiteSpace();
 
             previousStart = &buf[l];
             previousCR = true;
@@ -360,9 +360,9 @@ NPError g_NPN_PostURLNotify(NPP instance, const char* url, const char* target,
    }
 
    NSPluginInstance *inst = static_cast<NSPluginInstance*>(instance->ndata);
-   if (inst && !inst->normalizedURL(TQString::fromLatin1(url)).isNull()) {
-      inst->postURL( TQString::fromLatin1(url), postdata, args.contentType(),
-                     TQString::fromLatin1(target), notifyData, args, true );
+   if (inst && !inst->normalizedURL(TQString::tqfromLatin1(url)).isNull()) {
+      inst->postURL( TQString::tqfromLatin1(url), postdata, args.contentType(),
+                     TQString::tqfromLatin1(target), notifyData, args, true );
    } else {
       // Unsupported / insecure
       return NPERR_INVALID_URL;
@@ -415,7 +415,7 @@ NPError g_NPN_PostURL(NPP instance, const char* url, const char* target,
                break;
             }
 
-            TQString thisLine = TQString::fromLatin1(previousStart, &buf[l-1] - previousStart).stripWhiteSpace();
+            TQString thisLine = TQString::tqfromLatin1(previousStart, &buf[l-1] - previousStart).stripWhiteSpace();
 
             previousStart = &buf[l];
             previousCR = true;
@@ -457,9 +457,9 @@ NPError g_NPN_PostURL(NPP instance, const char* url, const char* target,
    }
 
    NSPluginInstance *inst = static_cast<NSPluginInstance*>(instance->ndata);
-   if (inst && !inst->normalizedURL(TQString::fromLatin1(url)).isNull()) {
-      inst->postURL( TQString::fromLatin1(url), postdata, args.contentType(),
-                     TQString::fromLatin1(target), 0L, args, false );
+   if (inst && !inst->normalizedURL(TQString::tqfromLatin1(url)).isNull()) {
+      inst->postURL( TQString::tqfromLatin1(url), postdata, args.contentType(),
+                     TQString::tqfromLatin1(target), 0L, args, false );
    } else {
       // Unsupported / insecure
       return NPERR_INVALID_URL;
@@ -820,7 +820,7 @@ void NSPluginInstance::timer()
                     s->post( url, req.data, req.mime, req.notify, req.args );
                 } else if (url.lower().startsWith("javascript:")){
                     if (_callback) {
-                        static Q_INT32 _jsrequestid = 0;
+                        static TQ_INT32 _jsrequestid = 0;
 			_jsrequests.insert(_jsrequestid, new Request(req));
                         _callback->evalJavaScript(_jsrequestid++, url.mid(11));
                     } else {
@@ -916,7 +916,7 @@ void NSPluginInstance::streamFinished( NSPluginStreamBase* strm )
    _timer->start( 100, true );
 }
 
-int NSPluginInstance::setWindow(Q_INT8 remove)
+int NSPluginInstance::setWindow(TQ_INT8 remove)
 {
    if (remove)
    {
@@ -980,7 +980,7 @@ static void resizeWidgets(Window w, int width, int height) {
 }
 
 
-void NSPluginInstance::resizePlugin(Q_INT32 w, Q_INT32 h)
+void NSPluginInstance::resizePlugin(TQ_INT32 w, TQ_INT32 h)
 {
    if (w == _width && h == _height)
       return;
@@ -1021,8 +1021,8 @@ void NSPluginInstance::resizePlugin(Q_INT32 w, Q_INT32 h)
 }
 
 
-void NSPluginInstance::javascriptResult(Q_INT32 id, TQString result) {
-    TQMap<int, Request*>::iterator i = _jsrequests.find( id );
+void NSPluginInstance::javascriptResult(TQ_INT32 id, TQString result) {
+    TQMap<int, Request*>::iterator i = _jsrequests.tqfind( id );
     if (i != _jsrequests.end()) {
         Request *req = i.data();
         _jsrequests.remove( i );
@@ -1295,7 +1295,7 @@ void NSPluginViewer::shutdown()
 #if QT_VERSION < 0x030100
    quitXt();
 #else
-   qApp->quit();
+   tqApp->quit();
 #endif
 }
 
@@ -1434,8 +1434,8 @@ int NSPluginClass::initialize()
    _nsFuncs.posturlnotify = g_NPN_PostURLNotify;
    _nsFuncs.getvalue = g_NPN_GetValue;
    _nsFuncs.setvalue = g_NPN_SetValue;
-   _nsFuncs.invalidaterect = g_NPN_InvalidateRect;
-   _nsFuncs.invalidateregion = g_NPN_InvalidateRegion;
+   _nsFuncs.tqinvalidaterect = g_NPN_InvalidateRect;
+   _nsFuncs.tqinvalidateregion = g_NPN_InvalidateRegion;
    _nsFuncs.forceredraw = g_NPN_ForceRedraw;
 
    // initialize plugin
@@ -1458,10 +1458,10 @@ void NSPluginClass::shutdown()
 }
 
 
-DCOPRef NSPluginClass::newInstance( TQString url, TQString mimeType, Q_INT8 embed,
+DCOPRef NSPluginClass::newInstance( TQString url, TQString mimeType, TQ_INT8 embed,
                                     TQStringList argn, TQStringList argv,
                                     TQString appId, TQString callbackId,
-                                    Q_INT8 reload, Q_INT8 doPost, TQByteArray postData, Q_UINT32 xembed )
+                                    TQ_INT8 reload, TQ_INT8 doPost, TQByteArray postData, TQ_UINT32 xembed )
 {
    kdDebug(1431) << "-> NSPluginClass::NewInstance" << endl;
 
@@ -1670,7 +1670,7 @@ void NSPluginStreamBase::updateURL( const KURL& newURL )
 int NSPluginStreamBase::process( const TQByteArray &data, int start )
 {
    int32 max, sent, to_sent, len;
-   char *d = data.data() + start;
+   char *d = const_cast<TQByteArray&>(data).data() + start;
 
    to_sent = data.size() - start;
    while (to_sent > 0)

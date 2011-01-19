@@ -76,7 +76,7 @@
 #define KDESU_ERR strerror(errno)
 
 Minicli::Minicli( TQWidget *parent, const char *name)
-        :KDialog( parent, name, false, WType_TopLevel ),
+        :KDialog( parent, name, false, (WFlags)WType_TopLevel ),
          m_autoCheckedRunInTerm(false)
 {
   m_pURLCompletion = 0L;
@@ -89,7 +89,7 @@ Minicli::Minicli( TQWidget *parent, const char *name)
   mainLayout->addWidget(m_dlg);
 
   m_dlg->lbRunIcon->setPixmap(DesktopIcon("kmenu"));
-  m_dlg->lbComment->setAlignment( Qt::WordBreak );
+  m_dlg->lbComment->tqsetAlignment( TQt::WordBreak );
 
   m_dlg->cbCommand->setDuplicatesEnabled( false );
   m_dlg->cbCommand->setTrapReturnKey( true );
@@ -173,15 +173,15 @@ void Minicli::setCommand(const TQString& command)
 {
   m_dlg->cbCommand->lineEdit()->setText(command);
   m_dlg->cbCommand->lineEdit()->deselect();
-  int firstSpace = command.find(' ');
+  int firstSpace = command.tqfind(' ');
   if (firstSpace > 0) {
     m_dlg->cbCommand->lineEdit()->setSelection(firstSpace+1, command.length());
   }
 }
 
-TQSize Minicli::sizeHint() const
+TQSize Minicli::tqsizeHint() const
 {
-  int maxWidth = qApp->desktop()->screenGeometry((TQWidget*)this).width();
+  int maxWidth = tqApp->desktop()->screenGeometry((TQWidget*)this).width();
   if (maxWidth < 603)
   {
     // a sensible max for smaller screens
@@ -319,7 +319,7 @@ void Minicli::accept()
      int kicker_screen_number = qt_xscreen();
      if ( kicker_screen_number )
          appname.sprintf("kdesktop-screen-%d", kicker_screen_number);
-     kapp->dcopClient()->send(appname, "KScreensaverIface", "lock()", "");
+     kapp->dcopClient()->send(appname, "KScreensaverIface", "lock()", TQString(""));
   }
 }
 
@@ -389,7 +389,7 @@ TQString Minicli::terminalCommand (const TQString& cmd, const TQString& args)
   else
     terminal += TQString(" -e /bin/sh -c \"%1 %2\"").arg(cmd).arg(args);
 
-  if (!m_terminalAppList.contains(cmd))
+  if (!m_terminalAppList.tqcontains(cmd))
     m_terminalAppList << cmd;
 
   return terminal;
@@ -414,13 +414,13 @@ int Minicli::runCommand()
     cmd = uri.url();
     
   TQCString asn;
-  if( qApp->desktop()->isVirtualDesktop())
+  if( tqApp->desktop()->isVirtualDesktop())
   {
     asn = KStartupInfo::createNewStartupId();
     KStartupInfoId id;
     id.initId( asn );
     KStartupInfoData data;
-    data.setXinerama( qApp->desktop()->screenNumber( this ));
+    data.setXinerama( tqApp->desktop()->screenNumber( this ));
     KStartupInfo::sendChange( id, data );
   }
 
@@ -558,7 +558,7 @@ int Minicli::runCommand()
         case KURIFilterData::HELP:
         {
           // No need for kfmclient, KRun does it all (David)
-          (void) new KRun( m_filterData->uri(), parentWidget(), asn );
+          (void) new KRun( m_filterData->uri(), tqparentWidget(), asn );
           return 0;
         }
         case KURIFilterData::EXECUTABLE:
@@ -570,7 +570,7 @@ int Minicli::runCommand()
             if (service && service->isValid() && service->type() == "Application")
             {
               notifyServiceStarted(service);
-              KRun::run(*service, KURL::List(), parentWidget(), asn );
+              KRun::run(*service, KURL::List(), tqparentWidget(), asn );
               return 0;
             }
           }
@@ -605,7 +605,7 @@ int Minicli::runCommand()
           if (service && service->isValid() && service->type() == "Application")
           {
             notifyServiceStarted(service);
-            KRun::run(*service, KURL::List(), parentWidget(), asn );
+            KRun::run(*service, KURL::List(), tqparentWidget(), asn );
             return 0;
           }
 
@@ -613,7 +613,7 @@ int Minicli::runCommand()
           if (service && service->isValid() && service->type() == "Application")
           {
             notifyServiceStarted(service);
-            KRun::run(*service, KURL::List(), parentWidget(), asn );
+            KRun::run(*service, KURL::List(), tqparentWidget(), asn );
             return 0;
           }
 
@@ -625,7 +625,7 @@ int Minicli::runCommand()
       }
     }
 
-    if ( KRun::runCommand( cmd, exec, m_iconName, parentWidget(), asn ) )
+    if ( KRun::runCommand( cmd, exec, m_iconName, tqparentWidget(), asn ) )
       return 0;
     else
     {
@@ -674,7 +674,7 @@ void Minicli::slotCmdChanged(const TQString& text)
     // Also use autocompletion if it appears that I am using some kind of ioslave, except the http:// ioslave
     m_urlCompletionStarted = true; // flag for slotMatch()
 
-    if ((text.startsWith( "/" ) || text.startsWith( "~" ) || (text.contains("://", false) != 0)) && (text.contains("http://", false) == 0)) {
+    if ((text.startsWith( "/" ) || text.startsWith( "~" ) || (text.tqcontains("://", false) != 0)) && (text.tqcontains("http://", false) == 0)) {
         TQString completion = m_pURLCompletion->makeCompletion( text );
     }
   }
@@ -730,7 +730,7 @@ void Minicli::slotAdvanced()
 
     // Set the focus back to the widget that had it to begin with, i.e.
     // do not put the focus on the "Options" button.
-    m_FocusWidget = focusWidget();
+    m_FocusWidget = tqfocusWidget();
 
     if( m_FocusWidget )
       m_FocusWidget->setFocus();
@@ -763,7 +763,7 @@ void Minicli::parseLine( bool final )
     KURIFilter::self()->filterURI( *(m_filterData), m_middleFilters );
 
   bool isTerminalApp = ((m_filterData->uriType() == KURIFilterData::EXECUTABLE) &&
-                        m_terminalAppList.contains(m_filterData->uri().url()));
+                        m_terminalAppList.tqcontains(m_filterData->uri().url()));
 
   if( !isTerminalApp )
   {
@@ -792,7 +792,7 @@ void Minicli::parseLine( bool final )
 void Minicli::setIcon ()
 {
   if( m_iconName.isEmpty() || m_iconName == "unknown" || m_iconName == "kde" )
-    m_iconName = TQString::fromLatin1("kmenu");
+    m_iconName = TQString::tqfromLatin1("kmenu");
 
   TQPixmap icon = DesktopIcon( m_iconName );
 
@@ -806,13 +806,13 @@ void Minicli::setIcon ()
     {
       int x = icon.width() - overlay.width();
       int y = icon.height() - overlay.height();
-      if ( icon.mask() )
+      if ( icon.tqmask() )
       {
-        TQBitmap mask = *icon.mask();
+        TQBitmap mask = *icon.tqmask();
         bitBlt( &mask, x, y,
-                overlay.mask() ? const_cast<TQBitmap *>(overlay.mask()) : &overlay,
+                overlay.tqmask() ? TQT_TQPIXMAP(const_cast<TQBitmap *>(overlay.tqmask())) : &overlay,
                 0, 0, overlay.width(), overlay.height(),
-                overlay.mask() ? OrROP : SetROP );
+                overlay.tqmask() ? OrROP : SetROP );
         icon.setMask(mask);
       }
       bitBlt( &icon, x, y, &overlay );
@@ -837,9 +837,9 @@ void Minicli::updateAuthLabel()
       m_prevChecked = m_dlg->cbRunAsOther->isChecked();
       m_prevCached = true;
     }
-    if (m_dlg->leUsername->text() != TQString::fromLatin1("root"))
+    if (m_dlg->leUsername->text() != TQString::tqfromLatin1("root"))
       m_dlg->lePassword->setText(TQString::null);
-    m_dlg->leUsername->setText(TQString::fromLatin1("root"));
+    m_dlg->leUsername->setText(TQString::tqfromLatin1("root"));
     m_dlg->cbRunAsOther->setChecked(true);
     m_dlg->cbRunAsOther->setEnabled(false);
     m_dlg->leUsername->setEnabled(false);
@@ -884,7 +884,7 @@ void Minicli::slotTerminal(bool enable)
   if (enable)
   {
     m_prevIconName = m_iconName;
-    m_iconName = TQString::fromLatin1( "konsole" );
+    m_iconName = TQString::tqfromLatin1( "konsole" );
     setIcon();
   }
   else if (!m_prevIconName.isEmpty())

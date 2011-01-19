@@ -30,7 +30,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #include "taskmanager.h"
 
-class TaskMenuItem : public QCustomMenuItem
+class TaskMenuItem : public TQCustomMenuItem
 {
 public:
     TaskMenuItem(const TQString &text,
@@ -38,7 +38,7 @@ public:
     ~TaskMenuItem();
 
     void paint(TQPainter*, const TQColorGroup&, bool, bool, int, int, int, int);
-    TQSize sizeHint();
+    TQSize tqsizeHint();
     void setAttentionState(bool state) { m_attentionState = state; }
 
 private:
@@ -51,7 +51,7 @@ private:
 
 /*****************************************************************************/
 
-class KDE_EXPORT TaskLMBMenu : public QPopupMenu
+class KDE_EXPORT TaskLMBMenu : public TQPopupMenu
 {
     Q_OBJECT
 

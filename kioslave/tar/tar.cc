@@ -103,7 +103,7 @@ bool ArchiveProtocol::checkNewFile( const KURL & url, TQString & path, KIO::Erro
     kdDebug(7109) << "the full path is " << fullPath << endl;
     KDE_struct_stat statbuf;
     statbuf.st_mode = 0; // be sure to clear the directory bit
-    while ( (pos=fullPath.find( '/', pos+1 )) != -1 )
+    while ( (pos=fullPath.tqfind( '/', pos+1 )) != -1 )
     {
         TQString tryPath = fullPath.left( pos );
         kdDebug(7109) << fullPath << "  trying " << tryPath << endl;
@@ -125,7 +125,7 @@ bool ArchiveProtocol::checkNewFile( const KURL & url, TQString & path, KIO::Erro
                     path.truncate( len - 1 );
             }
             else
-                path = TQString::fromLatin1("/");
+                path = TQString::tqfromLatin1("/");
             kdDebug(7109) << "Found. archiveFile=" << archiveFile << " path=" << path << endl;
             break;
         }
@@ -248,9 +248,9 @@ void ArchiveProtocol::listDir( const KURL & url )
 
     if ( path.isEmpty() )
     {
-        KURL redir( url.protocol() + TQString::fromLatin1( ":/") );
+        KURL redir( url.protocol() + TQString::tqfromLatin1( ":/") );
         kdDebug( 7109 ) << "url.path()==" << url.path() << endl;
-        redir.setPath( url.path() + TQString::fromLatin1("/") );
+        redir.setPath( url.path() + TQString::tqfromLatin1("/") );
         kdDebug( 7109 ) << "ArchiveProtocol::listDir: redirection " << redir.url() << endl;
         redirection( redir );
         finished();
@@ -264,7 +264,7 @@ void ArchiveProtocol::listDir( const KURL & url )
     const KArchiveDirectory* dir;
     if (!path.isEmpty() && path != "/")
     {
-        kdDebug(7109) << TQString("Looking for entry %1").arg(path) << endl;
+        kdDebug(7109) << TQString(TQString("Looking for entry %1").arg(path)) << endl;
         const KArchiveEntry* e = root->entry( path );
         if ( !e )
         {
@@ -360,7 +360,7 @@ void ArchiveProtocol::stat( const KURL & url )
     const KArchiveEntry* archiveEntry;
     if ( path.isEmpty() )
     {
-        path = TQString::fromLatin1( "/" );
+        path = TQString::tqfromLatin1( "/" );
         archiveEntry = root;
     } else {
         path = TQString::fromLocal8Bit(remoteEncoding()->encode(path));
@@ -504,9 +504,9 @@ void ArchiveProtocol::get( const KURL & url )
         if ( !firstRead )
         {
             bufferSize = kMin( maxSize, fileSize );
-            buffer.resize( bufferSize, TQGArray::SpeedOptim );
+            buffer.tqresize( bufferSize, TQGArray::SpeedOptim );
         }
-        const Q_LONG read = io->readBlock( buffer.data(), buffer.size() ); // Avoid to use bufferSize here, in case something went wrong.
+        const TQ_LONG read = io->readBlock( buffer.data(), buffer.size() ); // Avoid to use bufferSize here, in case something went wrong.
         if ( read != bufferSize )
         {
             kdWarning(7109) << "Read " << read << " bytes but expected " << bufferSize << endl;

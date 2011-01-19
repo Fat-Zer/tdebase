@@ -1,6 +1,6 @@
 <!DOCTYPE UI><UI version="3.2" stdsetdef="1">
 <class>KHotKeys::Actions_listview_widget_ui</class>
-<widget class="QWidget">
+<widget class="TQWidget">
     <property name="name">
         <cstring>Actions_listview_widget_ui</cstring>
     </property>
@@ -22,7 +22,7 @@
         <property name="spacing">
             <number>6</number>
         </property>
-        <widget class="QGroupBox">
+        <widget class="TQGroupBox">
             <property name="name">
                 <cstring>actions_listview_groupbox</cstring>
             </property>
@@ -72,7 +72,7 @@
     </image>
 </images>
 <forwards>
-    <forward>class QListViewItem;</forward>
+    <forward>class TQListViewItem;</forward>
 </forwards>
 <includes>
     <include location="global" impldecl="in implementation">kdialog.h</include>

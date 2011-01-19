@@ -29,7 +29,7 @@ namespace Kate
 /**
   Interface to the toolviewmanager
  */
-class KDE_EXPORT ToolViewManager : public QObject
+class KDE_EXPORT ToolViewManager : public TQObject
 {
   friend class PrivateToolViewManager;
 

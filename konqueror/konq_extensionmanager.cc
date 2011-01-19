@@ -100,8 +100,8 @@ void KonqExtensionManager::apply()
 		setChanged(false);
 		if( d->mainWindow )
 		{
-			KParts::Plugin::loadPlugins(d->mainWindow, d->mainWindow, KGlobal::instance());
-			TQPtrList<KParts::Plugin> plugins = KParts::Plugin::pluginObjects(d->mainWindow);
+			KParts::Plugin::loadPlugins(TQT_TQOBJECT(d->mainWindow), d->mainWindow, KGlobal::instance());
+			TQPtrList<KParts::Plugin> plugins = KParts::Plugin::pluginObjects(TQT_TQOBJECT(d->mainWindow));
 			TQPtrListIterator<KParts::Plugin> it(plugins);
 			KParts::Plugin *plugin;
 			while((plugin = it.current()) != 0)

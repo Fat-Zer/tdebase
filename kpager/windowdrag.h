@@ -27,7 +27,7 @@
 #include <tqdragobject.h>
 #include <X11/Xlib.h>
 
-class PagerWindowDrag : public QStoredDrag
+class PagerWindowDrag : public TQStoredDrag
 {
 public:
     PagerWindowDrag(WId w,int deltax,int deltay,int origdesk,TQWidget *parent);

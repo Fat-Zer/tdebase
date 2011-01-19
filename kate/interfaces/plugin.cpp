@@ -99,7 +99,7 @@ PluginViewInterface *pluginViewInterface (Plugin *plugin)
   if (!plugin)
     return 0;
 
-  return static_cast<PluginViewInterface*>(plugin->qt_cast("Kate::PluginViewInterface"));
+  return static_cast<PluginViewInterface*>(plugin->tqqt_cast("Kate::PluginViewInterface"));
 }
 
 }

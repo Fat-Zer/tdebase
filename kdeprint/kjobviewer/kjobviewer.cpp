@@ -141,10 +141,10 @@ void KJobViewerApp::initialize()
 
         }
 
-        view = m_views.find(prname);
+        view = m_views.tqfind(prname);
         if (!view)
         {
-            kdDebug() << "creating new view: " << prname << endl;
+            kdDebug() << "creating new view: " << TQString(prname) << endl;
             view = new KMJobViewer();
             connect(view, TQT_SIGNAL(jobsShown(KMJobViewer*,bool)), TQT_SLOT(slotJobsShown(KMJobViewer*,bool)));
             connect(view, TQT_SIGNAL(printerChanged(KMJobViewer*,const TQString&)), TQT_SLOT(slotPrinterChanged(KMJobViewer*,const TQString&)));
@@ -200,7 +200,7 @@ void KJobViewerApp::slotTimer()
 
 void KJobViewerApp::slotPrinterChanged(KMJobViewer *view, const TQString& prname)
 {
-	KMJobViewer	*other = m_views.find(prname);
+	KMJobViewer	*other = m_views.tqfind(prname);
 	if (other)
 	{
 		if (other->isVisible())

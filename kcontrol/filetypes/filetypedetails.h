@@ -18,7 +18,7 @@ class KServiceListWidget;
  * It is implemented as a separate class so that it can be used by
  * the keditfiletype program to show the details of a single mimetype.
  */
-class FileTypeDetails : public QTabWidget
+class FileTypeDetails : public TQTabWidget
 {
   Q_OBJECT
 public:

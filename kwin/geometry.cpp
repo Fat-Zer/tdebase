@@ -87,7 +87,7 @@ void Workspace::updateClientArea( bool force )
     TQDesktopWidget *desktopwidget = KApplication::desktop();
     int nscreens = desktopwidget -> numScreens ();
 //    kdDebug () << "screens: " << nscreens << endl;
-    TQRect* new_wareas = new QRect[ numberOfDesktops() + 1 ];
+    TQRect* new_wareas = new TQRect[ numberOfDesktops() + 1 ];
     TQRect** new_sareas = new TQRect*[ numberOfDesktops() + 1];
     TQRect* screens = new TQRect [ nscreens ];
     TQRect desktopArea = desktopwidget -> geometry ();
@@ -728,7 +728,7 @@ void Client::keepInArea( TQRect area, bool partial )
         move( area.right() - width(), y() );
     if ( geometry().bottom() > area.bottom() && height() < area.height() )
         move( x(), area.bottom() - height() );
-    if( !area.contains( geometry().topLeft() ))
+    if( !area.tqcontains( geometry().topLeft() ))
         {
         int tx = x();
         int ty = y();
@@ -1122,7 +1122,7 @@ TQSize Client::sizeForClientSize( const TQSize& wsize, Sizemode mode, bool nofra
     TQSize max_size = maxSize();
     if( decoration != NULL )
         {
-        TQSize decominsize = decoration->minimumSize();
+        TQSize decominsize = decoration->tqminimumSize();
         TQSize border_size( border_left + border_right, border_top + border_bottom );
         if( border_size.width() > decominsize.width()) // just in case
             decominsize.setWidth( border_size.width());
@@ -1348,10 +1348,10 @@ void Client::getWmNormalHints()
                 // try to keep the window in its xinerama screen if possible,
                 // if that fails at least keep it visible somewhere
                 TQRect area = workspace()->clientArea( MovementArea, this );
-                if( area.contains( orig_geometry ))
+                if( area.tqcontains( orig_geometry ))
                     keepInArea( area );
                 area = workspace()->clientArea( WorkArea, this );
-                if( area.contains( orig_geometry ))
+                if( area.tqcontains( orig_geometry ))
                     keepInArea( area );
                 }
             }
@@ -1502,7 +1502,7 @@ void Client::configureRequest( int value_mask, int rx, int ry, int rw, int rh, i
             updateFullScreenHack( TQRect( new_pos, TQSize( nw, nh )));
             TQRect area = workspace()->clientArea( WorkArea, this );
             if( !from_tool && ( !isSpecialWindow() || isToolbar()) && !isFullScreen()
-                && area.contains( orig_geometry ))
+                && area.tqcontains( orig_geometry ))
                 keepInArea( area );
 
             // this is part of the kicker-xinerama-hack... it should be
@@ -1539,10 +1539,10 @@ void Client::configureRequest( int value_mask, int rx, int ry, int rw, int rh, i
                 // try to keep the window in its xinerama screen if possible,
                 // if that fails at least keep it visible somewhere
                 TQRect area = workspace()->clientArea( MovementArea, this );
-                if( area.contains( orig_geometry ))
+                if( area.tqcontains( orig_geometry ))
                     keepInArea( area );
                 area = workspace()->clientArea( WorkArea, this );
-                if( area.contains( orig_geometry ))
+                if( area.tqcontains( orig_geometry ))
                     keepInArea( area );
                 }
             }
@@ -2248,7 +2248,7 @@ void Client::doDrawbound( const TQRect& geom, bool clear )
         return; // done by decoration
     TQPainter p ( workspace()->desktopWidget() );
     p.setPen( TQPen( Qt::white, 5 ) );
-    p.setRasterOp( Qt::XorROP );
+    p.setRasterOp( TQt::XorROP );
     // the line is 5 pixel thick, so compensate for the extra two pixels
     // on outside (#88657)
     TQRect g = geom;
@@ -2296,7 +2296,7 @@ class EatAllPaintEvents
     {
     protected:
         virtual bool eventFilter( TQObject* o, TQEvent* e )
-            { return e->type() == TQEvent::Paint && o != geometryTip; }
+            { return e->type() == TQEvent::Paint && TQT_BASE_OBJECT(o) != TQT_BASE_OBJECT(geometryTip); }
     };
 
 static EatAllPaintEvents* eater = 0;
@@ -2637,7 +2637,7 @@ void Client::handleMoveResize( int x, int y, int x_root, int y_root )
             ( isResize() ? options->resizeMode : options->moveMode ) == Options::Transparent )
             {
             clearbound();  // it's necessary to move the geometry tip when there's no outline
-            positionGeometryTip(); // shown, otherwise it would cause repaint problems in case
+            positionGeometryTip(); // shown, otherwise it would cause tqrepaint problems in case
             drawbound( moveResizeGeom ); // they overlap; the paint event will come after this,
             }                               // so the geometry tip will be painted above the outline
         }

@@ -20,7 +20,7 @@ class TQCheckBox;
 
 class KeyChooserSpec;
 
-class KKeyModule : public QWidget
+class KKeyModule : public TQWidget
 {
 	Q_OBJECT
 public:

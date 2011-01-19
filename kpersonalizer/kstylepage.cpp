@@ -238,7 +238,7 @@ void KStylePage::saveIcons(bool curSettings) {
 	for (KIcon::Group i=KIcon::FirstGroup; i<KIcon::LastGroup; i++) {
 		if (groups[i] == 0L)
 			break;
-		KGlobal::config()->setGroup(TQString::fromLatin1(groups[i]) + "Icons");
+		KGlobal::config()->setGroup(TQString::tqfromLatin1(groups[i]) + "Icons");
 		KGlobal::config()->writeEntry("Size", icontheme.defaultSize(i));
 	}
 	KGlobal::config()->sync();
@@ -522,9 +522,9 @@ void KStylePage::liveUpdate() {
 	// color palette changes
 	KIPC::sendMessageAll(KIPC::PaletteChanged);
 	// kwin-style
-	kapp->dcopClient()->send("kwin*", "", "reconfigure()", "");
+	kapp->dcopClient()->send("kwin*", "", "reconfigure()", TQString(""));
 	// kdesktop-background
-	kapp->dcopClient()->send("kdesktop", "KBackgroundIface", "configure()", "");
+	kapp->dcopClient()->send("kdesktop", "KBackgroundIface", "configure()", TQString(""));
 }
 
 /** show the previewWidget styled with the selected one */
@@ -542,7 +542,7 @@ void KStylePage::switchPrevStyle() {
 	// go ahead
 	setStyleRecursive( stylePreview, palette, style );
 	// this flickers, but reliably draws the widgets corretly.
-	stylePreview->resize( stylePreview->sizeHint() );
+	stylePreview->resize( stylePreview->tqsizeHint() );
 
 	delete appliedStyle;
 	appliedStyle = style;
@@ -552,11 +552,11 @@ void KStylePage::setStyleRecursive(TQWidget* w, TQPalette &palette, TQStyle* s) 
 	// Apply the new style.
 	w->setStyle(s);
 	// Recursively update all children.
-	const TQObjectList *children = w->children();
-	if (!children)
+	const TQObjectList children = w->childrenListObject();
+	if (children.isEmpty())
 		return;
 	// Apply the style to each child widget.
-	TQPtrListIterator<TQObject> childit(*children);
+	TQPtrListIterator<TQObject> childit(children);
 	TQObject *child;
 	while ((child = childit.current()) != 0) {
 		++childit;

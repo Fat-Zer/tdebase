@@ -93,9 +93,9 @@ MenuTab::MenuTab( TQWidget *parent, const char* name )
     btnCustomKMenuIcon->setPixmap(kmenu_icon);
 
     KConfig *config;
-    config = new KConfig(TQString::fromLatin1("kdeglobals"), false, false);
-    config->setGroup(TQString::fromLatin1("RecentDocuments"));
-    maxrecentdocs->setValue(config->readNumEntry(TQString::fromLatin1("MaxEntries"), 10));
+    config = new KConfig(TQString::tqfromLatin1("kdeglobals"), false, false);
+    config->setGroup(TQString::tqfromLatin1("RecentDocuments"));
+    maxrecentdocs->setValue(config->readNumEntry(TQString::tqfromLatin1("MaxEntries"), 10));
 
     m_browserGroupLayout->setColStretch( 1, 1 );
     m_pRecentOrderGroupLayout->setColStretch( 1, 1 );
@@ -148,7 +148,7 @@ void MenuTab::load( bool useDefaults )
                                         df.readName(),
                                         *it,
                                         SmallIcon(df.readIcon()),
-                                        qFind(ext.begin(), ext.end(), *it) != ext.end());
+                                        tqFind(ext.begin(), ext.end(), *it) != ext.end());
             connect(menuItem, TQT_SIGNAL(toggled(bool)), TQT_SIGNAL(changed()));
         }
     }
@@ -247,8 +247,8 @@ void MenuTab::save()
 
     // Save recent documents
     KConfig *config;
-    config = new KConfig(TQString::fromLatin1("kdeglobals"), false, false);
-    config->setGroup(TQString::fromLatin1("RecentDocuments"));
+    config = new KConfig(TQString::tqfromLatin1("kdeglobals"), false, false);
+    config->setGroup(TQString::tqfromLatin1("RecentDocuments"));
     config->writeEntry("MaxEntries", maxrecentdocs->value());
     config->sync();
 

@@ -240,7 +240,7 @@ void BGAdvancedDialog::updateUI()
 
 void BGAdvancedDialog::removeProgram(const TQString &name)
 {
-   if (m_programItems.find(name))
+   if (m_programItems.tqfind(name))
    {
       delete m_programItems[name];
       m_programItems.remove(name);
@@ -265,7 +265,7 @@ void BGAdvancedDialog::addProgram(const TQString &name)
 
 void BGAdvancedDialog::selectProgram(const TQString &name)
 {
-   if (m_programItems.find(name))
+   if (m_programItems.tqfind(name))
    {
       TQListViewItem *item = m_programItems[name];
       dlg->m_listPrograms->ensureItemVisible(item);
@@ -432,9 +432,9 @@ KProgramEditDialog::KProgramEditDialog(const TQString &program, TQWidget *parent
     m_RefreshEdit->setRange(5, 60);
     m_RefreshEdit->setSteps(5, 10);
     m_RefreshEdit->setSuffix(i18n(" min"));
-    m_RefreshEdit->setFixedSize(m_RefreshEdit->sizeHint());
+    m_RefreshEdit->setFixedSize(m_RefreshEdit->tqsizeHint());
     lbl->setBuddy(m_RefreshEdit);
-    grid->addWidget(m_RefreshEdit, 5, 1, AlignLeft);
+    grid->addWidget(m_RefreshEdit, 5, 1, Qt::AlignLeft);
 
     m_Program = program;
     if (m_Program.isEmpty()) {

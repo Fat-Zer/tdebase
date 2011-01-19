@@ -207,7 +207,7 @@ void QuartzHandler::readConfig()
 	extraSlim    = conf.readBoolEntry( "UseQuartzExtraSlim", false );
 
 	// A small hack to make the on all desktops button look nicer
-	onAllDesktopsButtonOnLeft = KDecoration::options()->titleButtonsLeft().contains( 'S' );
+	onAllDesktopsButtonOnLeft = KDecoration::options()->titleButtonsLeft().tqcontains( 'S' );
         if ( TQApplication::reverseLayout() )
             onAllDesktopsButtonOnLeft = !onAllDesktopsButtonOnLeft;
 	switch(options()->preferredBorderSize(this)) {
@@ -291,18 +291,18 @@ void QuartzHandler::drawBlocks( KPixmap *pi, KPixmap &p, const TQColor &c1, cons
 void QuartzHandler::createPixmaps()
 {
     // Obtain titlebar blend colours, and create the block stuff on pixmaps.
-    TQColorGroup g2 = options()->colorGroup(ColorTitleBlend, true);
+    TQColorGroup g2 = options()->tqcolorGroup(ColorTitleBlend, true);
     TQColor c2 = g2.background();
-    g2 = options()->colorGroup(ColorTitleBar, true );
+    g2 = options()->tqcolorGroup(ColorTitleBar, true );
     TQColor c = g2.background().light(130);
 
 	titleBlocks = new KPixmap();
     titleBlocks->resize( normalTitleHeight*25/18, normalTitleHeight );
     drawBlocks( titleBlocks, *titleBlocks, c, c2 );
 
-    g2 = options()->colorGroup(ColorTitleBlend, false);
+    g2 = options()->tqcolorGroup(ColorTitleBlend, false);
     c2 = g2.background();
-    g2 = options()->colorGroup(ColorTitleBar, false );
+    g2 = options()->tqcolorGroup(ColorTitleBar, false );
     c = g2.background().light(130);
 
 	ititleBlocks = new KPixmap();
@@ -313,9 +313,9 @@ void QuartzHandler::createPixmaps()
 	TQColorGroup g;
 	TQPainter p;
 
-	g = options()->colorGroup( onAllDesktopsButtonOnLeft ? ColorTitleBar : ColorTitleBlend, true );
-	c = onAllDesktopsButtonOnLeft ? g.background().light(130) : g.background();
-	g2 = options()->colorGroup( ColorButtonBg, true );
+	g = options()->tqcolorGroup( onAllDesktopsButtonOnLeft ? ColorTitleBar : ColorTitleBlend, true );
+	c = onAllDesktopsButtonOnLeft ? TQColor(g.background().light(130)) : g.background();
+	g2 = options()->tqcolorGroup( ColorButtonBg, true );
 
 	pinUpPix = new KPixmap();
 	pinUpPix->resize(16, 16);
@@ -335,9 +335,9 @@ void QuartzHandler::createPixmaps()
 
 
 	// Inactive pins
-	g = options()->colorGroup( onAllDesktopsButtonOnLeft ? ColorTitleBar : ColorTitleBlend, false );
-	c = onAllDesktopsButtonOnLeft ? g.background().light(130) : g.background();
-	g2 = options()->colorGroup( ColorButtonBg, false );
+	g = options()->tqcolorGroup( onAllDesktopsButtonOnLeft ? ColorTitleBar : ColorTitleBlend, false );
+	c = onAllDesktopsButtonOnLeft ? TQColor(g.background().light(130)) : g.background();
+	g2 = options()->tqcolorGroup( ColorButtonBg, false );
 
 	ipinUpPix = new KPixmap();
 	ipinUpPix->resize(16, 16);
@@ -437,7 +437,7 @@ void QuartzButton::setBitmap(const unsigned char *bitmap)
 	if (bitmap) {
 		deco = new TQBitmap(10, 10, bitmap, true);
 		deco->setMask( *deco );
-		repaint( false );
+		tqrepaint( false );
 	}
 }
 
@@ -492,7 +492,7 @@ void QuartzButton::drawButton(TQPainter *p)
 				TQPixmap tmpPix;
 
 				// Smooth scale the image
-				tmpPix.convertFromImage( btnpix.convertToImage().smoothScale(height(), height()));
+				tmpPix.convertFromImage( TQImage(btnpix.convertToImage()).smoothScale(height(), height()));
 				p->drawPixmap( 0, 0, tmpPix );
 			} else {
 				Offset += (height() - 16)/2;
@@ -643,8 +643,8 @@ void QuartzClient::reset( unsigned long changed )
 {
 	if (changed & SettingColors || changed & SettingFont)
 	{
-		// repaint the whole thing
-		widget()->repaint(false);
+		// tqrepaint the whole thing
+		widget()->tqrepaint(false);
 	}
 
 	KCommonDecoration::reset(changed);
@@ -675,9 +675,9 @@ void QuartzClient::paintEvent( TQPaintEvent* )
     // Draw part of the frame that is the title color
 
 	if( coloredFrame )
-    	g = options()->colorGroup(ColorTitleBar, isActive());
+    	g = options()->tqcolorGroup(ColorTitleBar, isActive());
 	else
-		g = options()->colorGroup(ColorFrame, isActive());
+		g = options()->tqcolorGroup(ColorFrame, isActive());
 
     // Draw outer highlights and lowlights
     p.setPen( g.light().light(120) );
@@ -723,7 +723,7 @@ void QuartzClient::paintEvent( TQPaintEvent* )
     // Draw the title bar.
     // ===================
     int r_x, r_y, r_x2, r_y2;
-    widget()->rect().coords(&r_x, &r_y, &r_x2, &r_y2);
+    TQT_TQRECT_OBJECT(widget()->rect()).coords(&r_x, &r_y, &r_x2, &r_y2);
     const int titleEdgeLeft = layoutMetric(LM_TitleEdgeLeft);
     const int titleEdgeTop = layoutMetric(LM_TitleEdgeTop);
     const int titleEdgeRight = layoutMetric(LM_TitleEdgeRight);

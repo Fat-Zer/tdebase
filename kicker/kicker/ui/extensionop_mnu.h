@@ -26,7 +26,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #include <tqpopupmenu.h>
 
-class PanelExtensionOpMenu : public QPopupMenu
+class PanelExtensionOpMenu : public TQPopupMenu
 {
 public:
     enum OpButton{Move = 9900, Remove = 9901, Help = 9902, About = 9903, Preferences = 9904, ReportBug = 9905, Shade = 9906 };

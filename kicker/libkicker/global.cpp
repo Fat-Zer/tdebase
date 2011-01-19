@@ -110,7 +110,7 @@ KPanelApplet::Direction positionToDirection(KPanelExtension::Position p)
     }
 }
 
-KPanelApplet::Direction arrowToDirection(Qt::ArrowType p)
+KPanelApplet::Direction arrowToDirection(TQt::ArrowType p)
 {
     switch (p)
     {
@@ -161,7 +161,7 @@ int maxButtonDim()
     int maxDim;
     //return (2 * KickerSettings::iconMargin()) + KIcon::SizeLarge;
 
-    KSimpleConfig *kickerconfig = new KSimpleConfig( TQString::fromLatin1( "kickerrc" ));
+    KSimpleConfig *kickerconfig = new KSimpleConfig( TQString::tqfromLatin1( "kickerrc" ));
     kickerconfig->setGroup("General");
     maxDim = (2 * KickerSettings::iconMargin()) + kickerconfig->readNumEntry("panelIconWidth", KIcon::SizeLarge);;
     delete kickerconfig;
@@ -207,7 +207,7 @@ TQPopupMenu* reduceMenu(TQPopupMenu *menu)
        return menu;
     }
 
-    TQMenuItem *item = menu->findItem(menu->idAt(0));
+    TQMenuItem *item = menu->tqfindItem(menu->idAt(0));
 
     if (item->popup())
     {
@@ -236,13 +236,13 @@ TQPoint popupPosition(KPanelApplet::Direction d,
         {
             case KPanelApplet::Left:
             case KPanelApplet::Right:
-                r.setLeft( source->topLevelWidget()->x() );
-                r.setWidth( source->topLevelWidget()->width() );
+                r.setLeft( source->tqtopLevelWidget()->x() );
+                r.setWidth( source->tqtopLevelWidget()->width() );
                 break;
             case KPanelApplet::Up:
             case KPanelApplet::Down:
-                r.setTop( source->topLevelWidget()->y() );
-                r.setHeight( source->topLevelWidget()->height() );
+                r.setTop( source->tqtopLevelWidget()->y() );
+                r.setHeight( source->tqtopLevelWidget()->height() );
                 break;
         }
     }
@@ -328,7 +328,7 @@ void colorize(TQImage& image)
 {
     KConfig *config = KGlobal::config();
     config->setGroup("WM");
-    TQColor color = TQApplication::palette().active().highlight();
+    TQColor color = TQApplication::tqpalette().active().highlight();
     TQColor activeTitle = config->readColorEntry("activeBackground", &color);
     TQColor inactiveTitle = config->readColorEntry("inactiveBackground", &color);
 
@@ -336,7 +336,7 @@ void colorize(TQImage& image)
     int h1, s1, v1, h2, s2, v2, h3, s3, v3;
     activeTitle.hsv(&h1, &s1, &v1);
     inactiveTitle.hsv(&h2, &s2, &v2);
-    TQApplication::palette().active().background().hsv(&h3, &s3, &v3);
+    TQApplication::tqpalette().active().background().hsv(&h3, &s3, &v3);
 
     if ( (kAbs(h1-h3)+kAbs(s1-s3)+kAbs(v1-v3) < kAbs(h2-h3)+kAbs(s2-s3)+kAbs(v2-v3)) &&
             ((kAbs(h1-h3)+kAbs(s1-s3)+kAbs(v1-v3) < 32) || (s1 < 32)) && (s2 > s1))
@@ -347,7 +347,7 @@ void colorize(TQImage& image)
     // limit max/min brightness
     int r, g, b;
     color.rgb(&r, &g, &b);
-    int gray = qGray(r, g, b);
+    int gray = tqGray(r, g, b);
     if (gray > 180) {
         r = (r - (gray - 180) < 0 ? 0 : r - (gray - 180));
         g = (g - (gray - 180) < 0 ? 0 : g - (gray - 180));
@@ -437,12 +437,12 @@ TQIconSet menuIconSet(const TQString& icon)
             // make sure they are not larger than 20x20
             if (normal.width() > 20 || normal.height() > 20)
             {
-                normal.convertFromImage(normal.convertToImage().smoothScale(20,20));
+                normal.convertFromImage(TQImage(normal.convertToImage()).smoothScale(20,20));
             }
 
             if (active.width() > 20 || active.height() > 20)
             {
-                active.convertFromImage(active.convertToImage().smoothScale(20,20));
+                active.convertFromImage(TQImage(active.convertToImage()).smoothScale(20,20));
             }
 
             iconset.setPixmap(normal, TQIconSet::Small, TQIconSet::Normal);

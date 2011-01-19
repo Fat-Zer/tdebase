@@ -67,12 +67,12 @@ void KMenuEdit::setupActions()
     if (!m_controlCenter)
        (void)new KAction(i18n("New S&eparator"), "menu_new_sep", 0, actionCollection(), "newsep");
 
-    (void)new KAction(i18n("Save && Quit"), "filesave_and_close", 0, this, TQT_SLOT( slotSave_and_close()), actionCollection(), "file_save_and_quit");
+    (void)new KAction(i18n("Save && Quit"), "filesave_and_close", 0, TQT_TQOBJECT(this), TQT_SLOT( slotSave_and_close()), actionCollection(), "file_save_and_quit");
 
     m_actionDelete = 0;
 
-    KStdAction::save(this, TQT_SLOT( slotSave() ), actionCollection());
-    KStdAction::quit(this, TQT_SLOT( close() ), actionCollection());
+    KStdAction::save(TQT_TQOBJECT(this), TQT_SLOT( slotSave() ), actionCollection());
+    KStdAction::quit(TQT_TQOBJECT(this), TQT_SLOT( close() ), actionCollection());
     KStdAction::cut(0, 0, actionCollection());
     KStdAction::copy(0, 0, actionCollection());
     KStdAction::paste(0, 0, actionCollection());
@@ -80,7 +80,7 @@ void KMenuEdit::setupActions()
 
 void KMenuEdit::setupView()
 {
-    m_splitter = new TQSplitter(Horizontal, this);
+    m_splitter = new TQSplitter(Qt::Horizontal, this);
     m_tree = new TreeView(m_controlCenter, actionCollection(), m_splitter);
     m_basicTab = new BasicTab(m_splitter);
 

@@ -38,7 +38,7 @@
 #include <ktrader.h>
 #include <kurlrequester.h>
 
-class MyListBoxItem: public QListBoxText
+class MyListBoxItem: public TQListBoxText
 {
 public:
 	MyListBoxItem(const TQString& text, const TQString &file):TQListBoxText(text),File(file){}
@@ -147,7 +147,7 @@ void CfgEmailClient::load(KConfig *)
 	kmailCB->setChecked(useKMail);
 	otherCB->setChecked(!useKMail);
 	txtEMailClient->setText(emailClient);
-	txtEMailClient->setFixedHeight(txtEMailClient->sizeHint().height());
+	txtEMailClient->setFixedHeight(txtEMailClient->tqsizeHint().height());
 	chkRunTerminal->setChecked((pSettings->getSetting(KEMailSettings::ClientTerminal) == "true"));
 
 	emit changed(false);
@@ -169,9 +169,9 @@ void CfgEmailClient::selectEmailClient()
 	TQString client = dlg.text();
 
 	// get the preferred Terminal Application 
-	KConfigGroup confGroup( KGlobal::config(), TQString::fromLatin1("General") );
-	TQString preferredTerminal = confGroup.readPathEntry("TerminalApplication", TQString::fromLatin1("konsole"));
-	preferredTerminal += TQString::fromLatin1(" -e ");
+	KConfigGroup confGroup( KGlobal::config(), TQString::tqfromLatin1("General") );
+	TQString preferredTerminal = confGroup.readPathEntry("TerminalApplication", TQString::tqfromLatin1("konsole"));
+	preferredTerminal += TQString::tqfromLatin1(" -e ");
 	
 	int len = preferredTerminal.length();
 	bool b = client.left(len) == preferredTerminal;
@@ -393,7 +393,7 @@ ComponentChooser::ComponentChooser(TQWidget *parent, const char *name):
 		ServiceChooser->insertItem(new MyListBoxItem(cfg.readEntry("Name",i18n("Unknown")),(*it)));
 
 	}
-	ServiceChooser->setFixedWidth(ServiceChooser->sizeHint().width());
+	ServiceChooser->setFixedWidth(ServiceChooser->tqsizeHint().width());
 	ServiceChooser->sort();
 	connect(ServiceChooser,TQT_SIGNAL(highlighted(TQListBoxItem*)),this,TQT_SLOT(slotServiceSelected(TQListBoxItem*)));
 	ServiceChooser->setSelected(0,true);
@@ -410,14 +410,14 @@ void ComponentChooser::slotServiceSelected(TQListBoxItem* it) {
 	KSimpleConfig cfg(static_cast<MyListBoxItem*>(it)->File);
 
 	ComponentDescription->setText(cfg.readEntry("Comment",i18n("No description available")));
-	ComponentDescription->setMinimumSize(ComponentDescription->sizeHint());
+	ComponentDescription->setMinimumSize(ComponentDescription->tqsizeHint());
 
 
 	TQString cfgType=cfg.readEntry("configurationType");
 	TQWidget *newConfigWidget = 0;
 	if (cfgType.isEmpty() || (cfgType=="component"))
 	{
-		if (!(configWidget && configWidget->qt_cast("CfgComponent")))
+		if (!(configWidget && configWidget->tqqt_cast("CfgComponent")))
 		{
 			CfgComponent* cfgcomp = new CfgComponent(configContainer);
                         cfgcomp->ChooserDocu->setText(i18n("Choose from the list below which component should be used by default for the %1 service.").arg(it->text()));
@@ -430,7 +430,7 @@ void ComponentChooser::slotServiceSelected(TQListBoxItem* it) {
 	}
 	else if (cfgType=="internal_email")
 	{
-		if (!(configWidget && configWidget->qt_cast("CfgEmailClient")))
+		if (!(configWidget && configWidget->tqqt_cast("CfgEmailClient")))
 		{
 			newConfigWidget = new CfgEmailClient(configContainer);
 		}
@@ -438,7 +438,7 @@ void ComponentChooser::slotServiceSelected(TQListBoxItem* it) {
 	}
 	else if (cfgType=="internal_terminal")
 	{
-		if (!(configWidget && configWidget->qt_cast("CfgTerminalEmulator")))
+		if (!(configWidget && configWidget->tqqt_cast("CfgTerminalEmulator")))
 		{
 			newConfigWidget = new CfgTerminalEmulator(configContainer);
 		}
@@ -446,7 +446,7 @@ void ComponentChooser::slotServiceSelected(TQListBoxItem* it) {
 	}
 	else if (cfgType=="internal_browser")
 	{
-		if (!(configWidget && configWidget->qt_cast("CfgBrowser")))
+		if (!(configWidget && configWidget->tqqt_cast("CfgBrowser")))
 		{
 			newConfigWidget = new CfgBrowser(configContainer);
 		}
@@ -461,11 +461,11 @@ void ComponentChooser::slotServiceSelected(TQListBoxItem* it) {
 		delete configWidget;
 		configWidget=newConfigWidget;
 		connect(configWidget,TQT_SIGNAL(changed(bool)),this,TQT_SLOT(emitChanged(bool)));
-	        configContainer->setMinimumSize(configWidget->sizeHint());
+	        configContainer->setMinimumSize(configWidget->tqsizeHint());
 	}
 	
 	if (configWidget)
-		static_cast<CfgPlugin*>(configWidget->qt_cast("CfgPlugin"))->load(&cfg);
+		static_cast<CfgPlugin*>(configWidget->tqqt_cast("CfgPlugin"))->load(&cfg);
 	
 	emitChanged(false);
 	latestEditedService=static_cast<MyListBoxItem*>(it)->File;
@@ -487,7 +487,7 @@ void ComponentChooser::load() {
 	if( configWidget )
 	{
 		CfgPlugin * plugin = static_cast<CfgPlugin*>(
-				configWidget->qt_cast( "CfgPlugin" ) );
+				configWidget->tqqt_cast( "CfgPlugin" ) );
 		if( plugin )
 		{
 			KSimpleConfig cfg(latestEditedService);
@@ -500,7 +500,7 @@ void ComponentChooser::save() {
 	if( configWidget )
 	{
 		CfgPlugin * plugin = static_cast<CfgPlugin*>(
-				configWidget->qt_cast( "CfgPlugin" ) );
+				configWidget->tqqt_cast( "CfgPlugin" ) );
 		if( plugin )
 		{
 			KSimpleConfig cfg(latestEditedService);
@@ -512,7 +512,7 @@ void ComponentChooser::save() {
 void ComponentChooser::restoreDefault() {
     if (configWidget)
     {
-        static_cast<CfgPlugin*>(configWidget->qt_cast("CfgPlugin"))->defaults();
+        static_cast<CfgPlugin*>(configWidget->tqqt_cast("CfgPlugin"))->defaults();
         emitChanged(true);
     }
 

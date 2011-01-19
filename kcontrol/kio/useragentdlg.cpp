@@ -111,12 +111,12 @@ void UserAgentDlg::load()
   dlg->cbSendUAString->setChecked( b );
   m_ua_keys = m_config->readEntry("UserAgentKeys", DEFAULT_USER_AGENT_KEYS).lower();
   dlg->leDefaultId->setSqueezedText( KProtocolManager::defaultUserAgent( m_ua_keys ) );
-  dlg->cbOS->setChecked( m_ua_keys.contains('o') );
-  dlg->cbOSVersion->setChecked( m_ua_keys.contains('v') );
-  dlg->cbOSVersion->setEnabled( m_ua_keys.contains('o') );
-  dlg->cbPlatform->setChecked( m_ua_keys.contains('p') );
-  dlg->cbProcessorType->setChecked( m_ua_keys.contains('m') );
-  dlg->cbLanguage->setChecked( m_ua_keys.contains('l') );
+  dlg->cbOS->setChecked( m_ua_keys.tqcontains('o') );
+  dlg->cbOSVersion->setChecked( m_ua_keys.tqcontains('v') );
+  dlg->cbOSVersion->setEnabled( m_ua_keys.tqcontains('o') );
+  dlg->cbPlatform->setChecked( m_ua_keys.tqcontains('p') );
+  dlg->cbProcessorType->setChecked( m_ua_keys.tqcontains('m') );
+  dlg->cbLanguage->setChecked( m_ua_keys.tqcontains('l') );
   updateButtons();
   emit changed( false );
 }
@@ -135,12 +135,12 @@ void UserAgentDlg::defaults()
   dlg->lvDomainPolicyList->clear();
   m_ua_keys = DEFAULT_USER_AGENT_KEYS;
   dlg->leDefaultId->setSqueezedText( KProtocolManager::defaultUserAgent(m_ua_keys) );
-  dlg->cbOS->setChecked( m_ua_keys.contains('o') );
-  dlg->cbOSVersion->setChecked( m_ua_keys.contains('v') );
-  dlg->cbOSVersion->setEnabled( m_ua_keys.contains('o') );
-  dlg->cbPlatform->setChecked( m_ua_keys.contains('p') );
-  dlg->cbProcessorType->setChecked( m_ua_keys.contains('m') );
-  dlg->cbLanguage->setChecked( m_ua_keys.contains('l') );
+  dlg->cbOS->setChecked( m_ua_keys.tqcontains('o') );
+  dlg->cbOSVersion->setChecked( m_ua_keys.tqcontains('v') );
+  dlg->cbOSVersion->setEnabled( m_ua_keys.tqcontains('o') );
+  dlg->cbPlatform->setChecked( m_ua_keys.tqcontains('p') );
+  dlg->cbProcessorType->setChecked( m_ua_keys.tqcontains('m') );
+  dlg->cbLanguage->setChecked( m_ua_keys.tqcontains('l') );
   dlg->cbSendUAString->setChecked( true );
   updateButtons();
   configChanged();
@@ -351,7 +351,7 @@ void UserAgentDlg::changeDefaultUAModifiers( int )
   if ( dlg->cbLanguage->isChecked() )
      m_ua_keys += 'l';
 
-  dlg->cbOSVersion->setEnabled(m_ua_keys.contains('o'));
+  dlg->cbOSVersion->setEnabled(m_ua_keys.tqcontains('o'));
 
   TQString modVal = KProtocolManager::defaultUserAgent( m_ua_keys );
   if ( dlg->leDefaultId->text() != modVal )

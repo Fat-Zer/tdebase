@@ -335,7 +335,7 @@ public slots:
 
   // for KBookmarkMenu and KBookmarkBar
   void slotFillContextMenu( const KBookmark &, TQPopupMenu * );
-  void slotOpenBookmarkURL( const TQString & url, Qt::ButtonState state );
+  void slotOpenBookmarkURL( const TQString & url, TQt::ButtonState state );
 
   void slotPopupMenu( const TQPoint &_global, const KURL &_url, const TQString &_mimeType, mode_t mode );
   void slotPopupMenu( KXMLGUIClient *client, const TQPoint &_global, const KURL &_url, const TQString &_mimeType, mode_t mode );
@@ -381,14 +381,14 @@ public slots:
 
   // Go menu
   void slotUp();
-  void slotUp(KAction::ActivationReason, Qt::ButtonState state);
+  void slotUp(KAction::ActivationReason, TQt::ButtonState state);
   void slotUpDelayed();
   void slotBack();
-  void slotBack(KAction::ActivationReason, Qt::ButtonState state);
+  void slotBack(KAction::ActivationReason, TQt::ButtonState state);
   void slotForward();
-  void slotForward(KAction::ActivationReason, Qt::ButtonState state);
+  void slotForward(KAction::ActivationReason, TQt::ButtonState state);
   void slotHome();
-  void slotHome(KAction::ActivationReason, Qt::ButtonState state);
+  void slotHome(KAction::ActivationReason, TQt::ButtonState state);
   void slotGoSystem();
   void slotGoApplications();
   void slotGoMedia();
@@ -410,7 +410,7 @@ public slots:
   void slotPartChanged( KonqView *childView, KParts::ReadOnlyPart *oldPart, KParts::ReadOnlyPart *newPart );
 
   void slotRunFinished();
-  void slotClearLocationBar( KAction::ActivationReason reason, Qt::ButtonState state );
+  void slotClearLocationBar( KAction::ActivationReason reason, TQt::ButtonState state );
 
   // reimplement from KParts::MainWindow
   virtual void slotSetStatusBarText( const TQString &text );
@@ -420,7 +420,7 @@ public slots:
 
   virtual void setIcon( const TQPixmap& );
   void slotGoHistoryActivated( int steps );
-  void slotGoHistoryActivated( int steps, Qt::ButtonState state );
+  void slotGoHistoryActivated( int steps, TQt::ButtonState state );
 
   void slotAddTab();
   void slotSplitViewHorizontal();
@@ -556,7 +556,7 @@ private slots:
   void bookmarksIntoCompletion();
 
   void initBookmarkBar();
-  void slotTrashActivated( KAction::ActivationReason reason, Qt::ButtonState state );
+  void slotTrashActivated( KAction::ActivationReason reason, TQt::ButtonState state );
 
   void showPageSecurity();
 
@@ -689,7 +689,7 @@ private:
   uint m_bViewModeToggled:1;
 
   int m_goBuffer;
-  Qt::ButtonState m_goState;
+  TQt::ButtonState m_goState;
 
   MapViews m_mapViews;
 

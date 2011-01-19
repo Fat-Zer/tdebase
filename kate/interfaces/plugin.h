@@ -32,7 +32,7 @@ namespace Kate
 class Application;
 class MainWindow;
 
-class KDE_EXPORT Plugin : public QObject
+class KDE_EXPORT Plugin : public TQObject
 {
   friend class PrivatePlugin;
 

@@ -35,7 +35,7 @@ class Windowdef_list;
 /*class Action_data_base;*/
 
 class KDE_EXPORT Windows
-    : public QObject
+    : public TQObject
     {
     Q_OBJECT
     public:

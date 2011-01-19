@@ -54,7 +54,7 @@ class KateDocumentInfo
 
 typedef QPair<KURL,TQDateTime> TPair;
 
-class KateDocManager : public QObject
+class KateDocManager : public TQObject
 {
   Q_OBJECT
 

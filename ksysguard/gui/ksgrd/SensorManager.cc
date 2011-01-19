@@ -162,7 +162,7 @@ bool SensorManager::engageHost( const TQString &hostName )
 {
   bool retVal = true;
 
-  if ( hostName.isEmpty() || mAgents.find( hostName ) == 0 ) {
+  if ( hostName.isEmpty() || mAgents.tqfind( hostName ) == 0 ) {
     if(hostName == "localhost") {
       //There was a bug where the xml file would end up not specifying to connect to localhost.
       //This work around makes sure we always connect to localhost
@@ -202,7 +202,7 @@ bool SensorManager::engage( const TQString &hostName, const TQString &shell,
 {
   SensorAgent *agent;
 
-  if ( ( agent = mAgents.find( hostName ) ) == 0 ) {
+  if ( ( agent = mAgents.tqfind( hostName ) ) == 0 ) {
     if ( port == -1 )
       agent = new SensorShellAgent( this );
     else
@@ -253,7 +253,7 @@ bool SensorManager::disengage( const SensorAgent *agent )
 bool SensorManager::disengage( const TQString &hostName )
 {
   SensorAgent *agent;
-  if ( ( agent = mAgents.find( hostName ) ) != 0 ) {
+  if ( ( agent = mAgents.tqfind( hostName ) ) != 0 ) {
     mAgents.remove( hostName );
     emit update();
     return true;
@@ -266,7 +266,7 @@ bool SensorManager::resynchronize( const TQString &hostName )
 {
   SensorAgent *agent;
 
-  if ( ( agent = mAgents.find( hostName ) ) == 0 )
+  if ( ( agent = mAgents.tqfind( hostName ) ) == 0 )
     return false;
 
   TQString shell, command;
@@ -327,11 +327,11 @@ bool SensorManager::event( TQEvent *event )
 bool SensorManager::sendRequest( const TQString &hostName, const TQString &req,
                                  SensorClient *client, int id )
 {
-  SensorAgent *agent = mAgents.find( hostName );
+  SensorAgent *agent = mAgents.tqfind( hostName );
   if( !agent && hostName == "localhost") {
      //we should always be able to reconnect to localhost
      engage("localhost", "", "ksysguardd", -1);
-     agent = mAgents.find( hostName );
+     agent = mAgents.tqfind( hostName );
   }
   if ( agent ) {
     agent->sendRequest( req, client, id );
@@ -358,7 +358,7 @@ bool SensorManager::hostInfo( const TQString &hostName, TQString &shell,
                               TQString &command, int &port )
 {
   SensorAgent *agent;
-  if ( ( agent = mAgents.find( hostName ) ) != 0 ) {
+  if ( ( agent = mAgents.tqfind( hostName ) ) != 0 ) {
     agent->hostInfo( shell, command, port );
     return true;
   }
@@ -395,7 +395,7 @@ TQString SensorManager::translateSensor( const TQString &sensor ) const
   TQString token, out;
   int start = 0, end = 0;
   for ( ; ; ) {
-    end = sensor.find( '/', start );
+    end = sensor.tqfind( '/', start );
     if ( end > 0 )
       out += translateSensorPath( sensor.mid( start, end - start ) ) + "/";
     else {

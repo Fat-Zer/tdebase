@@ -58,7 +58,7 @@ KPixmapServer::~KPixmapServer()
 
 void KPixmapServer::add(TQString name, TQPixmap *pm, bool overwrite)
 {
-    if (m_Names.contains(name)) 
+    if (m_Names.tqcontains(name)) 
     {
 	if (overwrite)
 	    remove(name);
@@ -77,7 +77,7 @@ void KPixmapServer::add(TQString name, TQPixmap *pm, bool overwrite)
     si.handle = pm->handle();
     m_Selections[sel] = si;
 
-    DataIterator it = m_Data.find(pm->handle());
+    DataIterator it = m_Data.tqfind(pm->handle());
     if (it == m_Data.end()) 
     {
 	KPixmapData data;
@@ -95,20 +95,20 @@ void KPixmapServer::add(TQString name, TQPixmap *pm, bool overwrite)
 void KPixmapServer::remove(TQString name)
 {
     // Remove the name
-    NameIterator it = m_Names.find(name);
+    NameIterator it = m_Names.tqfind(name);
     if (it == m_Names.end())
 	return;
     KPixmapInode pi = it.data();
     m_Names.remove(it);
 
     // Remove and disown the selection
-    SelectionIterator it2 = m_Selections.find(pi.selection);
+    SelectionIterator it2 = m_Selections.tqfind(pi.selection);
     assert(it2 != m_Selections.end());
     m_Selections.remove(it2);
     XSetSelectionOwner(qt_xdisplay(), pi.selection, None, CurrentTime);
 
     // Decrease refcount on data
-    DataIterator it3 = m_Data.find(pi.handle);
+    DataIterator it3 = m_Data.tqfind(pi.handle);
     assert(it3 != m_Data.end());
     it3.data().refcount--;
     if (!it3.data().refcount && !it3.data().usecount) 
@@ -131,7 +131,7 @@ TQStringList KPixmapServer::list()
 
 void KPixmapServer::setOwner(TQString name)
 {
-    NameIterator it = m_Names.find(name);
+    NameIterator it = m_Names.tqfind(name);
     if (it == m_Names.end())
 	return;
 
@@ -160,7 +160,7 @@ bool KPixmapServer::x11Event(XEvent *event)
 
 	// Check if we know about this selection
 	Atom sel = ev->selection;
-	SelectionIterator it = m_Selections.find(sel);
+	SelectionIterator it = m_Selections.tqfind(sel);
 	if (it == m_Selections.end())
 	    return false;
 	KSelectionInode si = it.data();
@@ -174,7 +174,7 @@ bool KPixmapServer::x11Event(XEvent *event)
 	}
 
 	// Check if there is no transaction in progress to the same property
-	if (m_Active.contains(ev->property)) 
+	if (m_Active.tqcontains(ev->property)) 
 	{
 	    kdDebug(1204) << ID << "selection is busy.\n";
 	    XSendEvent(qt_xdisplay(), ev->requestor, false, 0, &reply);
@@ -182,7 +182,7 @@ bool KPixmapServer::x11Event(XEvent *event)
 	}
 
 	// Check if the selection was not deleted
-	DataIterator it2 = m_Data.find(si.handle);
+	DataIterator it2 = m_Data.tqfind(si.handle);
 	if (it2 == m_Data.end()) 
 	{
 	    kdDebug(1204) << ID << "selection has been deleted.\n";
@@ -216,13 +216,13 @@ bool KPixmapServer::x11Event(XEvent *event)
     {
 	XPropertyEvent *ev = &event->xproperty;
 
-	AtomIterator it = m_Active.find(ev->atom);
+	AtomIterator it = m_Active.tqfind(ev->atom);
 	if (it == m_Active.end())
 	    return false;
 	HANDLE handle = it.data();
 	m_Active.remove(it);
 
-	DataIterator it2 = m_Data.find(handle);
+	DataIterator it2 = m_Data.tqfind(handle);
 	assert(it2 != m_Data.end());
 	it2.data().usecount--;
 	if (!it2.data().usecount && !it2.data().refcount) 
@@ -239,7 +239,7 @@ bool KPixmapServer::x11Event(XEvent *event)
     {
 	XSelectionClearEvent *ev = &event->xselectionclear;
 
-	SelectionIterator it = m_Selections.find(ev->selection);
+	SelectionIterator it = m_Selections.tqfind(ev->selection);
 	if (it == m_Selections.end())
 	    return false;
 

@@ -115,7 +115,7 @@ KDMShutdownBase::complete( TQWidget *prevWidget )
 	hlay->addStretch( 1 );
 	if (mayOk) {
 		okButton = new KPushButton( KStdGuiItem::ok(), this );
-		okButton->setSizePolicy( fp );
+		okButton->tqsetSizePolicy( fp );
 		okButton->setDefault( true );
 		hlay->addWidget( okButton );
 		hlay->addStretch( 1 );
@@ -124,13 +124,13 @@ KDMShutdownBase::complete( TQWidget *prevWidget )
 	if (maySched) {
 		KPushButton *schedButton =
 			new KPushButton( KGuiItem( i18n("&Schedule...") ), this );
-		schedButton->setSizePolicy( fp );
+		schedButton->tqsetSizePolicy( fp );
 		hlay->addWidget( schedButton );
 		hlay->addStretch( 1 );
 		connect( schedButton, TQT_SIGNAL(clicked()), TQT_SLOT(slotSched()) );
 	}
 	cancelButton = new KPushButton( KStdGuiItem::cancel(), this );
-	cancelButton->setSizePolicy( fp );
+	cancelButton->tqsetSizePolicy( fp );
 	if (!mayOk)
 		cancelButton->setDefault( true );
 	hlay->addWidget( cancelButton );
@@ -147,7 +147,7 @@ KDMShutdownBase::slotActivatePlugMenu()
 		TQPopupMenu *cmnu = verify->getPlugMenu();
 		if (!cmnu)
 			return;
-		TQSize sh( cmnu->sizeHint() / 2 );
+		TQSize sh( cmnu->tqsizeHint() / 2 );
 		cmnu->exec( geometry().center() - TQPoint( sh.width(), sh.height() ) );
 	}
 }
@@ -268,11 +268,11 @@ KDMShutdown::KDMShutdown( int _uid, TQWidget *_parent )
 		TQWidget *hlp = new TQWidget( howGroup );
 		targets = new TQComboBox( hlp );
 		for (int i = 0; tlist[i]; i++)
-			targets->insertItem( TQString::fromLocal8Bit( tlist[i] ) );
+			targets->insertItem( TQString(TQString::fromLocal8Bit( tlist[i] )) );
 		freeStrArr( tlist );
 		targets->setCurrentItem( oldTarget == -1 ? defaultTarget : oldTarget );
 		TQHBoxLayout *hb = new TQHBoxLayout( hlp, 0, KDsh );
-		int spc = kapp->style().pixelMetric( TQStyle::PM_ExclusiveIndicatorWidth )
+		int spc = kapp->tqstyle().tqpixelMetric( TQStyle::PM_ExclusiveIndicatorWidth )
 		          + howGroup->insideSpacing();
 		hb->addSpacing( spc );
 		hb->addWidget( targets );
@@ -280,7 +280,7 @@ KDMShutdown::KDMShutdown( int _uid, TQWidget *_parent )
 	}
 	GSet( 0 );
 
-	howGroup->setSizePolicy( fp );
+	howGroup->tqsetSizePolicy( fp );
 
 	schedGroup = new TQGroupBox( i18n("Scheduling"), this );
 	hlay->addWidget( schedGroup, 0, AlignTop );
@@ -300,13 +300,13 @@ KDMShutdown::KDMShutdown( int _uid, TQWidget *_parent )
 
 	TQGridLayout *grid = new TQGridLayout( schedGroup, 0, 0, KDmh, KDsh );
 	grid->addRowSpacing( 0, schedGroup->fontMetrics().height() - 5 );
-	grid->addWidget( lab1, 1, 0, AlignRight );
+	grid->addWidget( lab1, 1, 0, Qt::AlignRight );
 	grid->addWidget( le_start, 1, 1 );
-	grid->addWidget( lab2, 2, 0, AlignRight );
+	grid->addWidget( lab2, 2, 0, Qt::AlignRight );
 	grid->addWidget( le_timeout, 2, 1 );
 	grid->addMultiCellWidget( cb_force, 3,3, 0,1 );
 
-	schedGroup->setSizePolicy( fp );
+	schedGroup->tqsetSizePolicy( fp );
 
 	le_start->setText( "0" );
 	if (_defSdMode == SHUT_SCHEDULE)
@@ -477,7 +477,7 @@ KDMSlimShutdown::KDMSlimShutdown( TQWidget *_parent )
 	if(doUbuntuLogout)
 	{		
 		lfrm->setFrameStyle( TQFrame::StyledPanel | TQFrame::Raised );
-		lfrm->setLineWidth( style().pixelMetric( TQStyle::PM_DefaultFrameWidth, lfrm ) );
+		lfrm->setLineWidth( tqstyle().tqpixelMetric( TQStyle::PM_DefaultFrameWidth, lfrm ) );
 		// we need to set the minimum size for the logout box, since it
 		// gets too small if there isn't all options available
 		lfrm->setMinimumSize(300,120);
@@ -487,13 +487,13 @@ KDMSlimShutdown::KDMSlimShutdown( TQWidget *_parent )
 
 		// first line of buttons
 		hbuttonbox = new TQHBoxLayout( vbox, 8 * KDialog::spacingHint() );
-		hbuttonbox->setAlignment( Qt::AlignHCenter );
+		hbuttonbox->tqsetAlignment( Qt::AlignHCenter );
 
 		// Reboot
 		FlatButton* btnReboot = new FlatButton( lfrm );
 		btnReboot->setTextLabel( i18n("&Restart"), false );
 		btnReboot->setPixmap( DesktopIcon( "reload") );
-                int i = btnReboot->textLabel().find( TQRegExp("\\&"), 0 );    // i == 1
+                int i = btnReboot->textLabel().tqfind( TQRegExp("\\&"), 0 );    // i == 1
                 btnReboot->setAccel( "ALT+" + btnReboot->textLabel().lower()[i+1] ) ;
 		hbuttonbox->addWidget ( btnReboot);
 		connect(btnReboot, TQT_SIGNAL(clicked()), TQT_SLOT(slotReboot()));
@@ -524,14 +524,14 @@ KDMSlimShutdown::KDMSlimShutdown( TQWidget *_parent )
 		FlatButton* btnHalt = new FlatButton( lfrm );
 		btnHalt->setTextLabel( i18n("&Turn Off"), false );
 		btnHalt->setPixmap( DesktopIcon( "exit") );
-                i = btnHalt->textLabel().find( TQRegExp("\\&"), 0 );    // i == 1
+                i = btnHalt->textLabel().tqfind( TQRegExp("\\&"), 0 );    // i == 1
                 btnHalt->setAccel( "ALT+" + btnHalt->textLabel().lower()[i+1] ) ;
 		hbuttonbox->addWidget ( btnHalt );
 		connect(btnHalt, TQT_SIGNAL(clicked()), TQT_SLOT(slotHalt()));
 
 		// cancel buttonbox
 		TQHBoxLayout* hbuttonbox2 = new TQHBoxLayout( vbox, 8 * KDialog::spacingHint()  );
-		hbuttonbox2->setAlignment( Qt::AlignRight );
+		hbuttonbox2->tqsetAlignment( Qt::AlignRight );
 
 		// Back to kdm
 		KSMPushButton* btnBack = new KSMPushButton( KStdGuiItem::cancel(), lfrm );
@@ -744,7 +744,7 @@ void FlatButton::init()
 	setUsesBigPixmap(true);
 	setAutoRaise(true);
 	setTextPosition( TQToolButton::Under );
-	setFocusPolicy(TQWidget::StrongFocus);	
+	setFocusPolicy(TQ_StrongFocus);	
  }
 
 
@@ -816,7 +816,7 @@ KDMConfShutdown::KDMConfShutdown( int _uid, dpySpec *sess, int type, const char 
 	                            .arg( os ?
 	                                  i18n("<br>(Next boot: %1)")
 	                                  .arg( TQString::fromLocal8Bit( os ) ) :
-	                                  TQString::null ),
+	                                  TQString() ),
 	                            this ) );
 
 	if (sess) {
@@ -876,13 +876,13 @@ KDMCancelShutdown::KDMCancelShutdown( int how, int start, int timeout,
 		strt = i18n("now");
 	else {
 		qdt.setTime_t( start );
-		strt = qdt.toString( LocalDate );
+		strt = qdt.toString( Qt::LocalDate );
 	}
 	if (timeout == TO_INF)
 		end = i18n("infinite");
 	else {
 		qdt.setTime_t( timeout );
-		end = qdt.toString( LocalDate );
+		end = qdt.toString( Qt::LocalDate );
 	}
 	TQString trg =
 		i18n("Owner: %1"
@@ -900,7 +900,7 @@ KDMCancelShutdown::KDMCancelShutdown( int how, int start, int timeout,
 		.arg( strt ).arg( end )
 		.arg( os ?
 		      i18n("\nNext boot: %1").arg( TQString::fromLocal8Bit( os ) ) :
-		      TQString::null );
+		      TQString() );
 	if (timeout != TO_INF)
 		trg += i18n("\nAfter timeout: %1")
 		       .arg( force == SHUT_FORCE ?

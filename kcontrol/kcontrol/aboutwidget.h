@@ -31,7 +31,7 @@ class ConfigModule;
 class KHTMLPart;
 class KURL;
 
-class AboutWidget : public QHBox
+class AboutWidget : public TQHBox
 {  
   Q_OBJECT    
   

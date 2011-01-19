@@ -111,11 +111,11 @@ void NNTPProtocol::get(const KURL& url) {
     return;
   }
 
-  pos = path.find('<');
+  pos = path.tqfind('<');
   group = path.left(pos);
   msg_id = KURL::decode_string( path.right(path.length()-pos) );
   if (group.left(1) == "/") group.remove(0,1);
-  if ((pos = group.find('/')) > 0) group = group.left(pos);
+  if ((pos = group.tqfind('/')) > 0) group = group.left(pos);
   DBG << "get group: " << group << " msg: " << msg_id << endl;
 
   if ( !nntp_open() )
@@ -228,7 +228,7 @@ bool NNTPProtocol::post_article() {
         pos += 2;
       }
       last_chunk_had_line_ending = (data.right(2) == "\r\n");
-      while ((pos = data.find("\r\n.",pos)) > 0) {
+      while ((pos = data.tqfind("\r\n.",pos)) > 0) {
         data.insert(pos+2,'.');
         pos += 4;
       }
@@ -280,7 +280,7 @@ void NNTPProtocol::stat( const KURL& url ) {
   // /group = message list
   } else if (regGroup.search(path) == 0) {
     if (path.left(1) == "/") path.remove(0,1);
-    if ((pos = path.find('/')) > 0) group = path.left(pos);
+    if ((pos = path.tqfind('/')) > 0) group = path.left(pos);
     else group = path;
     DBG << "stat group: " << group << endl;
     // postingAllowed should be ored here with "group not moderated" flag
@@ -289,11 +289,11 @@ void NNTPProtocol::stat( const KURL& url ) {
 
   // /group/<msg_id> = message
   } else if (regMsgId.search(path) == 0) {
-    pos = path.find('<');
+    pos = path.tqfind('<');
     group = path.left(pos);
     msg_id = KURL::decode_string( path.right(path.length()-pos) );
     if (group.left(1) == "/") group.remove(0,1);
-    if ((pos = group.find('/')) > 0) group = group.left(pos);
+    if ((pos = group.tqfind('/')) > 0) group = group.left(pos);
     DBG << "stat group: " << group << " msg: " << msg_id << endl;
     fillUDSEntry(entry, msg_id, 0, false, true);
 
@@ -332,7 +332,7 @@ void NNTPProtocol::listDir( const KURL& url ) {
     TQString group;
     if (path.left(1) == "/")
       path.remove(0,1);
-    if ((pos = path.find('/')) > 0)
+    if ((pos = path.tqfind('/')) > 0)
       group = path.left(pos);
     else
       group = path;
@@ -383,15 +383,15 @@ void NNTPProtocol::fetchGroups( const TQString &since )
     DBG << "  fetchGroups -- data: " << line.stripWhiteSpace() << endl;
 
     // group name
-    if ((pos = line.find(' ')) > 0) {
+    if ((pos = line.tqfind(' ')) > 0) {
 
       group = line.left(pos);
 
       // number of messages
       line.remove(0,pos+1);
       long last = 0;
-      if (((pos = line.find(' ')) > 0 || (pos = line.find('\t')) > 0) &&
-          ((pos2 = line.find(' ',pos+1)) > 0 || (pos2 = line.find('\t',pos+1)) > 0)) {
+      if (((pos = line.tqfind(' ')) > 0 || (pos = line.tqfind('\t')) > 0) &&
+          ((pos2 = line.tqfind(' ',pos+1)) > 0 || (pos2 = line.tqfind('\t',pos+1)) > 0)) {
         last = line.left(pos).toLong();
         long first = line.mid(pos+1,pos2-pos-1).toLong();
         msg_cnt = abs(last-first+1);
@@ -441,8 +441,8 @@ bool NNTPProtocol::fetchGroup( TQString &group, unsigned long first ) {
   int pos, pos2;
   unsigned long firstSerNum;
   resp_line = readBuffer;
-  if (((pos = resp_line.find(' ',4)) > 0 || (pos = resp_line.find('\t',4)) > 0) &&
-      ((pos2 = resp_line.find(' ',pos+1)) > 0 || (pos = resp_line.find('\t',pos+1)) > 0))
+  if (((pos = resp_line.tqfind(' ',4)) > 0 || (pos = resp_line.tqfind('\t',4)) > 0) &&
+      ((pos2 = resp_line.tqfind(' ',pos+1)) > 0 || (pos = resp_line.tqfind('\t',pos+1)) > 0))
   {
     firstSerNum = resp_line.mid(pos+1,pos2-pos-1).toLong();
   } else {
@@ -481,7 +481,7 @@ bool NNTPProtocol::fetchGroupRFC977( unsigned long first )
   //STAT res_line: 223 nnn <msg_id> ...
   TQString msg_id;
   int pos, pos2;
-  if ((pos = resp_line.find('<')) > 0 && (pos2 = resp_line.find('>',pos+1))) {
+  if ((pos = resp_line.tqfind('<')) > 0 && (pos2 = resp_line.tqfind('>',pos+1))) {
     msg_id = resp_line.mid(pos,pos2-pos+1);
     fillUDSEntry(entry, msg_id, 0, false, true);
     entryList.append(entry);
@@ -506,7 +506,7 @@ bool NNTPProtocol::fetchGroupRFC977( unsigned long first )
 
     //res_line: 223 nnn <msg_id> ...
     resp_line = readBuffer;
-    if ((pos = resp_line.find('<')) > 0 && (pos2 = resp_line.find('>',pos+1))) {
+    if ((pos = resp_line.tqfind('<')) > 0 && (pos2 = resp_line.tqfind('>',pos+1))) {
       msg_id = resp_line.mid(pos,pos2-pos+1);
       fillUDSEntry(entry, msg_id, 0, false, true);
       entryList.append(entry);
@@ -589,7 +589,7 @@ bool NNTPProtocol::fetchGroupXOVER( unsigned long first, bool &notSupported )
     TQStringList::ConstIterator it2 = fields.constBegin();
     ++it2; // first entry is the serial number
     for ( ; it != headers.constEnd() && it2 != fields.constEnd(); ++it, ++it2 ) {
-      if ( (*it).contains( "Message-ID:", false ) ) {
+      if ( (*it).tqcontains( "Message-ID:", false ) ) {
         msgId = (*it2);
         continue;
       }

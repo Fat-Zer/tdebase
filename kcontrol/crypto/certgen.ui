@@ -1,6 +1,6 @@
 <!DOCTYPE UI><UI version="3.3" stdsetdef="1">
 <class>D_GenCert</class>
-<widget class="QDialog">
+<widget class="TQDialog">
     <property name="name">
         <cstring>D_GenCert</cstring>
     </property>
@@ -15,7 +15,7 @@
     <property name="caption">
         <string>Certificate Creation Wizard</string>
     </property>
-    <widget class="QLabel">
+    <widget class="TQLabel">
         <property name="name">
             <cstring>TextLabel2</cstring>
         </property>
@@ -37,7 +37,7 @@
             <string>Passphrase:</string>
         </property>
     </widget>
-    <widget class="QLabel">
+    <widget class="TQLabel">
         <property name="name">
             <cstring>TextLabel3</cstring>
         </property>
@@ -53,7 +53,7 @@
             <string>Country code:</string>
         </property>
     </widget>
-    <widget class="QLabel">
+    <widget class="TQLabel">
         <property name="name">
             <cstring>TextLabel4</cstring>
         </property>
@@ -69,7 +69,7 @@
             <string>State or province (in full):</string>
         </property>
     </widget>
-    <widget class="QLabel">
+    <widget class="TQLabel">
         <property name="name">
             <cstring>T_CertType</cstring>
         </property>
@@ -85,7 +85,7 @@
             <string>Certificate type:</string>
         </property>
     </widget>
-    <widget class="QLabel">
+    <widget class="TQLabel">
         <property name="name">
             <cstring>TextLabel2_2</cstring>
         </property>
@@ -101,7 +101,7 @@
             <string>Passphrase (verify):</string>
         </property>
     </widget>
-    <widget class="QLabel">
+    <widget class="TQLabel">
         <property name="name">
             <cstring>TextLabel5</cstring>
         </property>
@@ -117,7 +117,7 @@
             <string>City:</string>
         </property>
     </widget>
-    <widget class="QLabel">
+    <widget class="TQLabel">
         <property name="name">
             <cstring>TextLabel6</cstring>
         </property>
@@ -133,7 +133,7 @@
             <string>Organization name:</string>
         </property>
     </widget>
-    <widget class="QLabel">
+    <widget class="TQLabel">
         <property name="name">
             <cstring>TextLabel7</cstring>
         </property>
@@ -149,7 +149,7 @@
             <string>Organizational unit/group:</string>
         </property>
     </widget>
-    <widget class="QLabel">
+    <widget class="TQLabel">
         <property name="name">
             <cstring>TextLabel8</cstring>
         </property>
@@ -165,7 +165,7 @@
             <string>Full hostname of the server:</string>
         </property>
     </widget>
-    <widget class="QComboBox">
+    <widget class="TQComboBox">
         <property name="name">
             <cstring>L_CertType</cstring>
         </property>
@@ -178,7 +178,7 @@
             </rect>
         </property>
     </widget>
-    <widget class="QLineEdit">
+    <widget class="TQLineEdit">
         <property name="name">
             <cstring>LineEdit3</cstring>
         </property>
@@ -194,7 +194,7 @@
             <number>2</number>
         </property>
     </widget>
-    <widget class="QLabel">
+    <widget class="TQLabel">
         <property name="name">
             <cstring>TextLabel9</cstring>
         </property>
@@ -210,7 +210,7 @@
             <string>Email address:</string>
         </property>
     </widget>
-    <widget class="QLineEdit">
+    <widget class="TQLineEdit">
         <property name="name">
             <cstring>LineEdit4_2_2_2</cstring>
         </property>
@@ -226,7 +226,7 @@
             <number>200</number>
         </property>
     </widget>
-    <widget class="QLineEdit">
+    <widget class="TQLineEdit">
         <property name="name">
             <cstring>LineEdit4_2_2_2_2</cstring>
         </property>
@@ -242,7 +242,7 @@
             <number>200</number>
         </property>
     </widget>
-    <widget class="QLineEdit">
+    <widget class="TQLineEdit">
         <property name="name">
             <cstring>LineEdit4_2_2_2_3</cstring>
         </property>
@@ -258,7 +258,7 @@
             <number>200</number>
         </property>
     </widget>
-    <widget class="QLineEdit">
+    <widget class="TQLineEdit">
         <property name="name">
             <cstring>E_Passphrase</cstring>
         </property>
@@ -277,7 +277,7 @@
             <enum>Password</enum>
         </property>
     </widget>
-    <widget class="QLineEdit">
+    <widget class="TQLineEdit">
         <property name="name">
             <cstring>E_Passphrase_2</cstring>
         </property>
@@ -296,7 +296,7 @@
             <enum>Password</enum>
         </property>
     </widget>
-    <widget class="QLabel">
+    <widget class="TQLabel">
         <property name="name">
             <cstring>TextLabel10</cstring>
         </property>
@@ -312,7 +312,7 @@
             <string>Days valid:</string>
         </property>
     </widget>
-    <widget class="QSpinBox">
+    <widget class="TQSpinBox">
         <property name="name">
             <cstring>SpinBox1</cstring>
         </property>
@@ -334,7 +334,7 @@
             <number>365</number>
         </property>
     </widget>
-    <widget class="QLabel">
+    <widget class="TQLabel">
         <property name="name">
             <cstring>TextLabel11</cstring>
         </property>
@@ -350,7 +350,7 @@
             <string>Digest:</string>
         </property>
     </widget>
-    <widget class="QCheckBox">
+    <widget class="TQCheckBox">
         <property name="name">
             <cstring>CheckBox1</cstring>
         </property>
@@ -369,7 +369,7 @@
             <bool>true</bool>
         </property>
     </widget>
-    <widget class="QLabel">
+    <widget class="TQLabel">
         <property name="name">
             <cstring>TextLabel12</cstring>
         </property>
@@ -385,7 +385,7 @@
             <string>Alias:</string>
         </property>
     </widget>
-    <widget class="QLineEdit">
+    <widget class="TQLineEdit">
         <property name="name">
             <cstring>LineEdit19</cstring>
         </property>
@@ -398,7 +398,7 @@
             </rect>
         </property>
     </widget>
-    <widget class="QLineEdit">
+    <widget class="TQLineEdit">
         <property name="name">
             <cstring>LineEdit4_2_2</cstring>
         </property>
@@ -414,7 +414,7 @@
             <number>200</number>
         </property>
     </widget>
-    <widget class="QLineEdit">
+    <widget class="TQLineEdit">
         <property name="name">
             <cstring>LineEdit4_2</cstring>
         </property>
@@ -430,7 +430,7 @@
             <number>200</number>
         </property>
     </widget>
-    <widget class="QComboBox">
+    <widget class="TQComboBox">
         <property name="name">
             <cstring>ComboBox2</cstring>
         </property>
@@ -443,7 +443,7 @@
             </rect>
         </property>
     </widget>
-    <widget class="QCheckBox">
+    <widget class="TQCheckBox">
         <property name="name">
             <cstring>CheckBox2</cstring>
         </property>
@@ -459,7 +459,7 @@
             <string>Use DSA instead of RSA</string>
         </property>
     </widget>
-    <widget class="QLabel">
+    <widget class="TQLabel">
         <property name="name">
             <cstring>TextLabel13</cstring>
         </property>
@@ -475,7 +475,7 @@
             <string>Bit strength:</string>
         </property>
     </widget>
-    <widget class="QComboBox">
+    <widget class="TQComboBox">
         <property name="name">
             <cstring>ComboBox5</cstring>
         </property>
@@ -488,7 +488,7 @@
             </rect>
         </property>
     </widget>
-    <widget class="QLineEdit">
+    <widget class="TQLineEdit">
         <property name="name">
             <cstring>LineEdit4</cstring>
         </property>

@@ -50,7 +50,7 @@ typedef struct DirTreeConfigData_
 } DirTreeConfigData;
 
 
-class KonqSidebarTreeToolTip : public QToolTip
+class KonqSidebarTreeToolTip : public TQToolTip
 {
 public:
     KonqSidebarTreeToolTip( TQListView *view ) : TQToolTip( view->viewport() ), m_view( view ) {}
@@ -77,7 +77,7 @@ class KonqSidebarTree : public KListView, public KDirNotify
 {
     Q_OBJECT
 public:
-    KonqSidebarTree( KonqSidebar_Tree *parent, TQWidget *parentWidget, int virt, const TQString& path );
+    KonqSidebarTree( KonqSidebar_Tree *parent, TQWidget *tqparentWidget, int virt, const TQString& path );
     virtual ~KonqSidebarTree();
 
     void followURL( const KURL &url );

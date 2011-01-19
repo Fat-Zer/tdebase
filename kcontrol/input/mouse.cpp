@@ -150,7 +150,7 @@ MouseConfig::MouseConfig (TQWidget * parent, const char *name)
     connect(tab1->slAutoSelect, TQT_SIGNAL(valueChanged(int)), this, TQT_SLOT(changed()));
     connect(tab1->cbVisualActivate, TQT_SIGNAL(clicked()), this, TQT_SLOT(changed()));
 
-    connect(tab1->cb_pointershape, TQT_SIGNAL(clicked()), this, TQT_SLOT(changed()));
+    connect(tab1->cb_pointertqshape, TQT_SIGNAL(clicked()), this, TQT_SLOT(changed()));
 
     connect(tab1->singleClick, TQT_SIGNAL(clicked()), this, TQT_SLOT(changed()));
     connect(tab1->singleClick, TQT_SIGNAL(clicked()), this, TQT_SLOT(slotClick()));
@@ -291,7 +291,7 @@ MouseConfig::MouseConfig (TQWidget * parent, const char *name)
   TQBoxLayout *vbox = new TQVBoxLayout(mouse, KDialog::marginHint(),
     KDialog::spacingHint());
 
-  TQVBoxLayout *vvbox = new TQVBoxLayout(mouse->layout(), KDialog::spacingHint());
+  TQVBoxLayout *vvbox = new TQVBoxLayout(mouse->tqlayout(), KDialog::spacingHint());
 
   mouseKeys = new TQCheckBox(i18n("&Move pointer with keyboard (using the num pad)"), mouse);
   vvbox->addWidget(mouseKeys);
@@ -506,7 +506,7 @@ void MouseConfig::load( bool useDefaults )
 
   tab1->singleClick->setChecked( settings->singleClick );
   tab1->doubleClick->setChecked(!settings->singleClick);
-  tab1->cb_pointershape->setChecked(settings->changeCursor);
+  tab1->cb_pointertqshape->setChecked(settings->changeCursor);
   tab1->cbAutoSelect->setChecked( settings->autoSelectDelay >= 0 );
   if ( settings->autoSelectDelay < 0 )
      tab1->slAutoSelect->setValue( 0 );
@@ -564,7 +564,7 @@ void MouseConfig::save()
   settings->autoSelectDelay = tab1->cbAutoSelect->isChecked()? tab1->slAutoSelect->value():-1;
   settings->visualActivate = tab1->cbVisualActivate->isChecked();
 //  settings->changeCursor = tab1->singleClick->isChecked();
-  settings->changeCursor = tab1->cb_pointershape->isChecked();
+  settings->changeCursor = tab1->cb_pointertqshape->isChecked();
   settings->reverseScrollPolarity = tab1->cbScrollPolarity->isChecked();
 
   settings->apply();
@@ -723,7 +723,7 @@ void MouseConfig::slotWheelScrollLinesChanged(int value)
 void MouseSettings::apply(bool force)
 {
   XChangePointerControl( kapp->getDisplay(),
-                         true, true, int(qRound(accelRate*10)), 10, thresholdMove);
+                         true, true, int(tqRound(accelRate*10)), 10, thresholdMove);
 
   // 256 might seems extreme, but X has already been known to return 32, 
   // and we don't want to truncate things. Xlib limits the table to 256 bytes,

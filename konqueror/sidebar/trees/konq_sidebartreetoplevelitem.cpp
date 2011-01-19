@@ -50,14 +50,14 @@ void KonqSidebarTreeTopLevelItem::setOpen( bool open )
 void KonqSidebarTreeTopLevelItem::itemSelected()
 {
     kdDebug() << "KonqSidebarTreeTopLevelItem::itemSelected" << endl;
-    TQMimeSource *data = TQApplication::clipboard()->data();
+    TQMimeSource *data = TQApplication::tqclipboard()->data();
     bool paste = m_bTopLevelGroup && data->provides("text/uri-list");
     tree()->enableActions( true, true, paste, true, true, true /*rename*/ );
 }
 
 bool KonqSidebarTreeTopLevelItem::acceptsDrops( const TQStrList & formats )
 {
-    return formats.contains("text/uri-list") &&
+    return formats.tqcontains("text/uri-list") &&
         ( m_bTopLevelGroup || !externalURL().isEmpty() );
 }
 
@@ -157,7 +157,7 @@ void KonqSidebarTreeTopLevelItem::paste()
 {
     // move or not move ?
     bool move = false;
-    TQMimeSource *data = TQApplication::clipboard()->data();
+    TQMimeSource *data = TQApplication::tqclipboard()->data();
     if ( data->provides( "application/x-kde-cutselection" ) ) {
         move = KonqDrag::decodeIsCutSelection( data );
         kdDebug(1201) << "move (from clipboard data) = " << move << endl;

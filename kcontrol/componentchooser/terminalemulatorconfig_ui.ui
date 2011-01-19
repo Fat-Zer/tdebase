@@ -1,6 +1,6 @@
 <!DOCTYPE UI><UI version="3.2" stdsetdef="1">
 <class>TerminalEmulatorConfig_UI</class>
-<widget class="QWidget">
+<widget class="TQWidget">
     <property name="name">
         <cstring>TerminalEmulatorConfig_UI</cstring>
     </property>
@@ -27,7 +27,7 @@
         <property name="margin">
             <number>0</number>
         </property>
-        <widget class="QButtonGroup">
+        <widget class="TQButtonGroup">
             <property name="name">
                 <cstring>ButtonGroup1</cstring>
             </property>
@@ -57,14 +57,14 @@
                     <property name="sizeType">
                         <enum>Expanding</enum>
                     </property>
-                    <property name="sizeHint">
+                    <property name="tqsizeHint">
                         <size>
                             <width>0</width>
                             <height>87</height>
                         </size>
                     </property>
                 </spacer>
-                <widget class="QRadioButton" row="1" column="0" rowspan="1" colspan="2">
+                <widget class="TQRadioButton" row="1" column="0" rowspan="1" colspan="2">
                     <property name="name">
                         <cstring>otherCB</cstring>
                     </property>
@@ -82,14 +82,14 @@
                     <property name="sizeType">
                         <enum>Fixed</enum>
                     </property>
-                    <property name="sizeHint">
+                    <property name="tqsizeHint">
                         <size>
                             <width>31</width>
                             <height>20</height>
                         </size>
                     </property>
                 </spacer>
-                <widget class="QRadioButton" row="0" column="0" rowspan="1" colspan="2">
+                <widget class="TQRadioButton" row="0" column="0" rowspan="1" colspan="2">
                     <property name="name">
                         <cstring>terminalCB</cstring>
                     </property>
@@ -97,7 +97,7 @@
                         <string>&amp;Use Konsole as terminal application</string>
                     </property>
                 </widget>
-                <widget class="QLayoutWidget" row="2" column="1">
+                <widget class="TQLayoutWidget" row="2" column="1">
                     <property name="name">
                         <cstring>Layout4</cstring>
                     </property>
@@ -105,7 +105,7 @@
                         <property name="name">
                             <cstring>unnamed</cstring>
                         </property>
-                        <widget class="QLineEdit">
+                        <widget class="TQLineEdit">
                             <property name="name">
                                 <cstring>terminalLE</cstring>
                             </property>
@@ -120,7 +120,7 @@
                                     <verstretch>0</verstretch>
                                 </sizepolicy>
                             </property>
-                            <property name="minimumSize">
+                            <property name="tqminimumSize">
                                 <size>
                                     <width>0</width>
                                     <height>0</height>
@@ -130,7 +130,7 @@
                                 <string>Press this button to select your favorite terminal client. Please note that the file you select has to have the executable attribute set in order to be accepted.&lt;br&gt; Also note that some programs that utilize Terminal Emulator will not work if you add command line arguments (Example: konsole -ls).</string>
                             </property>
                         </widget>
-                        <widget class="QToolButton">
+                        <widget class="TQToolButton">
                             <property name="name">
                                 <cstring>btnSelectTerminal</cstring>
                             </property>

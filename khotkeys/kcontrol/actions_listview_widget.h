@@ -66,7 +66,7 @@ class Actions_listview
 
 // CHECKME a jak to bude s parent itemu, kdyz Action_data uz maji vlastni parent ?
 class Action_listview_item
-    : public QListViewItem
+    : public TQListViewItem
     {
     public:
         virtual TQString text( int column_P ) const;

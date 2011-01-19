@@ -53,7 +53,7 @@ History::~History()
 
 void History::setupActions( KActionCollection *coll )
 {
-  QPair<KGuiItem, KGuiItem> backForward = KStdGuiItem::backAndForward();
+  TQPair<KGuiItem, KGuiItem> backForward = KStdGuiItem::backAndForward();
 
   m_backAction = new KToolBarPopupAction( backForward.first, ALT+Key_Left,
       this, TQT_SLOT( back() ), coll, "back" );
@@ -257,7 +257,7 @@ void History::fillForwardMenu()
 void History::fillGoMenu()
 {
   KMainWindow *mainWindow = static_cast<KMainWindow *>( kapp->mainWidget() );
-  TQPopupMenu *goMenu = dynamic_cast<TQPopupMenu *>( mainWindow->guiFactory()->container( TQString::fromLatin1( "go" ), mainWindow ) );
+  TQPopupMenu *goMenu = dynamic_cast<TQPopupMenu *>( mainWindow->guiFactory()->container( TQString::tqfromLatin1( "go" ), mainWindow ) );
   if ( !goMenu || m_goMenuIndex == -1 )
     return;
 
@@ -290,7 +290,7 @@ void History::fillGoMenu()
 void History::goMenuActivated( int id )
 {
   KMainWindow *mainWindow = static_cast<KMainWindow *>( kapp->mainWidget() );
-  TQPopupMenu *goMenu = dynamic_cast<TQPopupMenu *>( mainWindow->guiFactory()->container( TQString::fromLatin1( "go" ), mainWindow ) );
+  TQPopupMenu *goMenu = dynamic_cast<TQPopupMenu *>( mainWindow->guiFactory()->container( TQString::tqfromLatin1( "go" ), mainWindow ) );
   if ( !goMenu )
     return;
 
@@ -324,7 +324,7 @@ void History::fillHistoryPopup( TQPopupMenu *popup, bool onlyBack, bool onlyForw
   {
     TQString text = it.current()->title;
     text = KStringHandler::csqueeze(text, 50); //CT: squeeze
-    text.replace( "&", "&&" );
+    text.tqreplace( "&", "&&" );
     if ( checkCurrentItem && it.current() == current )
     {
       int id = popup->insertItem( text ); // no pixmap if checked

@@ -19,7 +19,7 @@ namespace KHotKeys
 {
 
 class KHListBox
-    : public QListBox
+    : public TQListBox
     {
     Q_OBJECT
     Q_PROPERTY( bool forceSelect READ forceSelect WRITE setForceSelect )

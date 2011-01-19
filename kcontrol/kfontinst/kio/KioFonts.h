@@ -75,14 +75,14 @@ class CKioFonts : public KIO::SlaveBase
         OP_DELETE
     };
 
-    class CDirList : public QStringList
+    class CDirList : public TQStringList
     {
         public:
 
         CDirList()                                      { }
         CDirList(const TQString &str) : TQStringList(str) { }
 
-        void add(const TQString &d)                      { if (!contains(d)) append(d); }
+        void add(const TQString &d)                      { if ( tqcontains(d)) append(d); }
     };
 
     struct TFolder

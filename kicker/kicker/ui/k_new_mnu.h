@@ -104,8 +104,8 @@ public:
 
     enum MaskEffect { Plain, Dissolve };
 
-    virtual TQSize sizeHint() const;
-    virtual TQSize minimumSizeHint() const;
+    virtual TQSize tqsizeHint() const;
+    virtual TQSize tqminimumSizeHint() const;
 
     void searchOver();
     void initCategoryTitlesUpdate();
@@ -319,7 +319,7 @@ private:
     TQStringList m_programsInMenu;
     TQStringList m_newInstalledPrograms, m_seenPrograms;
     bool m_seenProgramsChanged;
-    TQString m_currentDate;
+    TQString m_tqcurrentDate;
 
     MenuOrientation m_orientation;
     bool m_toolTipsEnabled;

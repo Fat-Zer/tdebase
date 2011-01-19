@@ -57,7 +57,7 @@ FileTypesView::FileTypesView(TQWidget *p, const char *name)
   leftLayout->setSpacing( KDialog::spacingHint() );
   leftLayout->setColStretch(1, 1);
 
-  l->addLayout( leftLayout );
+  l->addLayout( TQT_TQLAYOUT(leftLayout) );
 
   TQLabel *patternFilterLBL = new TQLabel(i18n("F&ind filename pattern:"), this);
   leftLayout->addMultiCellWidget(patternFilterLBL, 0, 0, 0, 2);
@@ -126,7 +126,7 @@ FileTypesView::FileTypesView(TQWidget *p, const char *name)
 
   // Widget shown on startup
   m_emptyWidget = new TQLabel( i18n("Select a file type by name or by extension"), m_widgetStack);
-  m_emptyWidget->setAlignment(AlignCenter);
+  m_emptyWidget->tqsetAlignment(AlignCenter);
 
   m_widgetStack->addWidget( m_emptyWidget, 3 /*id*/ );
 
@@ -174,11 +174,11 @@ void FileTypesView::readFileTypes()
     TQValueListIterator<KMimeType::Ptr> it2(mimetypes.begin());
     for (; it2 != mimetypes.end(); ++it2) {
 	TQString mimetype = (*it2)->name();
-	int index = mimetype.find("/");
+	int index = mimetype.tqfind("/");
 	TQString maj = mimetype.left(index);
 	TQString min = mimetype.right(mimetype.length() - index+1);
 
-	TQMapIterator<TQString,TypesListItem*> mit = m_majorMap.find( maj );
+	TQMapIterator<TQString,TypesListItem*> mit = m_majorMap.tqfind( maj );
 	if ( mit == m_majorMap.end() ) {
 	    groupItem = new TypesListItem( typesLV, maj );
 	    m_majorMap.insert( maj, groupItem );
@@ -196,7 +196,7 @@ void FileTypesView::readFileTypes()
 void FileTypesView::slotEmbedMajor(const TQString &major, bool &embed)
 {
     TypesListItem *groupItem;
-    TQMapIterator<TQString,TypesListItem*> mit = m_majorMap.find( major );
+    TQMapIterator<TQString,TypesListItem*> mit = m_majorMap.tqfind( major );
     if ( mit == m_majorMap.end() )
         return;
         
@@ -301,10 +301,10 @@ void FileTypesView::removeType()
   if (!li)
       li = current->itemBelow();
   if (!li)
-      li = current->parent();
+      li = current->tqparent();
 
   removedList.append(current->name());
-  current->parent()->takeItem(current);
+  current->tqparent()->takeItem(current);
   m_itemList.removeRef( current );
   setDirty(true);
 
@@ -425,7 +425,7 @@ void FileTypesView::slotDatabaseChanged()
     TQValueList<TypesListItem *>::Iterator it = m_itemsModified.begin();
     for( ; it != m_itemsModified.end(); ++it ) {
         TQString name = (*it)->name();
-        if ( removedList.find( name ) == removedList.end() ) // if not deleted meanwhile
+        if ( removedList.tqfind( name ) == removedList.end() ) // if not deleted meanwhile
             (*it)->refresh();
     }
     m_itemsModified.clear();

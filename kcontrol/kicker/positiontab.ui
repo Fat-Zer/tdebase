@@ -1,7 +1,7 @@
 <!DOCTYPE UI><UI version="3.3" stdsetdef="1">
 <class>PositionTabBase</class>
 <author>Aaron J. Seigo</author>
-<widget class="QWidget">
+<widget class="TQWidget">
     <property name="name">
         <cstring>PositionTabBase</cstring>
     </property>
@@ -23,7 +23,7 @@
         <property name="margin">
             <number>0</number>
         </property>
-        <widget class="QGroupBox" row="0" column="0" rowspan="1" colspan="2">
+        <widget class="TQGroupBox" row="0" column="0" rowspan="1" colspan="2">
             <property name="name">
                 <cstring>m_panelsGroupBox</cstring>
             </property>
@@ -40,7 +40,7 @@
                 <property name="margin">
                     <number>0</number>
                 </property>
-                <widget class="QLabel">
+                <widget class="TQLabel">
                     <property name="name">
                         <cstring>m_panelListLabel</cstring>
                     </property>
@@ -51,7 +51,7 @@
                         <cstring>m_panelList</cstring>
                     </property>
                 </widget>
-                <widget class="QComboBox">
+                <widget class="TQComboBox">
                     <property name="name">
                         <cstring>m_panelList</cstring>
                     </property>
@@ -66,7 +66,7 @@
                     <property name="sizeType">
                         <enum>Expanding</enum>
                     </property>
-                    <property name="sizeHint">
+                    <property name="tqsizeHint">
                         <size>
                             <width>342</width>
                             <height>20</height>
@@ -75,7 +75,7 @@
                 </spacer>
             </hbox>
         </widget>
-        <widget class="QGroupBox" row="1" column="1" rowspan="3" colspan="1">
+        <widget class="TQGroupBox" row="1" column="1" rowspan="3" colspan="1">
             <property name="name">
                 <cstring>XineramaGroup</cstring>
             </property>
@@ -86,7 +86,7 @@
                 <property name="name">
                     <cstring>unnamed</cstring>
                 </property>
-                <widget class="QLayoutWidget" row="0" column="0">
+                <widget class="TQLayoutWidget" row="0" column="0">
                     <property name="name">
                         <cstring>Layout13</cstring>
                     </property>
@@ -104,14 +104,14 @@
                             <property name="sizeType">
                                 <enum>Expanding</enum>
                             </property>
-                            <property name="sizeHint">
+                            <property name="tqsizeHint">
                                 <size>
                                     <width>20</width>
                                     <height>0</height>
                                 </size>
                             </property>
                         </spacer>
-                        <widget class="QLabel">
+                        <widget class="TQLabel">
                             <property name="name">
                                 <cstring>m_monitorImage</cstring>
                             </property>
@@ -123,7 +123,7 @@
                                     <verstretch>0</verstretch>
                                 </sizepolicy>
                             </property>
-                            <property name="minimumSize">
+                            <property name="tqminimumSize">
                                 <size>
                                     <width>151</width>
                                     <height>115</height>
@@ -132,7 +132,7 @@
                             <property name="scaledContents">
                                 <bool>true</bool>
                             </property>
-                            <property name="alignment">
+                            <property name="tqalignment">
                                 <set>AlignCenter</set>
                             </property>
                             <property name="whatsThis" stdset="0">
@@ -149,7 +149,7 @@
                             <property name="sizeType">
                                 <enum>Expanding</enum>
                             </property>
-                            <property name="sizeHint">
+                            <property name="tqsizeHint">
                                 <size>
                                     <width>20</width>
                                     <height>0</height>
@@ -158,7 +158,7 @@
                         </spacer>
                     </hbox>
                 </widget>
-                <widget class="QLayoutWidget" row="1" column="0">
+                <widget class="TQLayoutWidget" row="1" column="0">
                     <property name="name">
                         <cstring>Layout12</cstring>
                     </property>
@@ -176,14 +176,14 @@
                             <property name="sizeType">
                                 <enum>Expanding</enum>
                             </property>
-                            <property name="sizeHint">
+                            <property name="tqsizeHint">
                                 <size>
                                     <width>20</width>
                                     <height>0</height>
                                 </size>
                             </property>
                         </spacer>
-                        <widget class="QPushButton">
+                        <widget class="TQPushButton">
                             <property name="name">
                                 <cstring>m_identifyButton</cstring>
                             </property>
@@ -196,7 +196,7 @@
                         </widget>
                     </hbox>
                 </widget>
-                <widget class="QLayoutWidget" row="2" column="0">
+                <widget class="TQLayoutWidget" row="2" column="0">
                     <property name="name">
                         <cstring>Layout9</cstring>
                     </property>
@@ -204,7 +204,7 @@
                         <property name="name">
                             <cstring>unnamed</cstring>
                         </property>
-                        <widget class="QLabel">
+                        <widget class="TQLabel">
                             <property name="name">
                                 <cstring>m_xineramaScreenLabel</cstring>
                             </property>
@@ -215,7 +215,7 @@
                                 <cstring>m_xineramaScreenComboBox</cstring>
                             </property>
                         </widget>
-                        <widget class="QComboBox">
+                        <widget class="TQComboBox">
                             <property name="name">
                                 <cstring>m_xineramaScreenComboBox</cstring>
                             </property>
@@ -235,7 +235,7 @@
                     <property name="sizeType">
                         <enum>Expanding</enum>
                     </property>
-                    <property name="sizeHint">
+                    <property name="tqsizeHint">
                         <size>
                             <width>0</width>
                             <height>101</height>
@@ -244,7 +244,7 @@
                 </spacer>
             </grid>
         </widget>
-        <widget class="QButtonGroup" row="2" column="0">
+        <widget class="TQButtonGroup" row="2" column="0">
             <property name="name">
                 <cstring>m_rsizeGroup</cstring>
             </property>
@@ -267,7 +267,7 @@ how it is positioned on the screen and how much of the screen it should use.</st
                 <property name="name">
                     <cstring>unnamed</cstring>
                 </property>
-                <widget class="QLayoutWidget">
+                <widget class="TQLayoutWidget">
                     <property name="name">
                         <cstring>Layout8</cstring>
                     </property>
@@ -275,7 +275,7 @@ how it is positioned on the screen and how much of the screen it should use.</st
                         <property name="name">
                             <cstring>unnamed</cstring>
                         </property>
-                        <widget class="QSlider">
+                        <widget class="TQSlider">
                             <property name="name">
                                 <cstring>m_percentSlider</cstring>
                             </property>
@@ -334,7 +334,7 @@ how it is positioned on the screen and how much of the screen it should use.</st
                         </widget>
                     </hbox>
                 </widget>
-                <widget class="QCheckBox">
+                <widget class="TQCheckBox">
                     <property name="name">
                         <cstring>m_expandCheckBox</cstring>
                     </property>
@@ -357,14 +357,14 @@ how it is positioned on the screen and how much of the screen it should use.</st
             <property name="sizeType">
                 <enum>Expanding</enum>
             </property>
-            <property name="sizeHint">
+            <property name="tqsizeHint">
                 <size>
                     <width>16</width>
                     <height>16</height>
                 </size>
             </property>
         </spacer>
-        <widget class="QButtonGroup" row="3" column="0">
+        <widget class="TQButtonGroup" row="3" column="0">
             <property name="name">
                 <cstring>m_sizeGroup</cstring>
             </property>
@@ -386,7 +386,7 @@ how it is positioned on the screen and how much of the screen it should use.</st
                 <property name="name">
                     <cstring>unnamed</cstring>
                 </property>
-                <widget class="QComboBox" row="0" column="0" rowspan="1" colspan="2">
+                <widget class="TQComboBox" row="0" column="0" rowspan="1" colspan="2">
                     <item>
                         <property name="text">
                             <string>Tiny</string>
@@ -426,14 +426,14 @@ how it is positioned on the screen and how much of the screen it should use.</st
                     <property name="sizeType">
                         <enum>Fixed</enum>
                     </property>
-                    <property name="sizeHint">
+                    <property name="tqsizeHint">
                         <size>
                             <width>30</width>
                             <height>40</height>
                         </size>
                     </property>
                 </spacer>
-                <widget class="QLayoutWidget" row="1" column="1">
+                <widget class="TQLayoutWidget" row="1" column="1">
                     <property name="name">
                         <cstring>Layout9</cstring>
                     </property>
@@ -441,7 +441,7 @@ how it is positioned on the screen and how much of the screen it should use.</st
                         <property name="name">
                             <cstring>unnamed</cstring>
                         </property>
-                        <widget class="QSlider">
+                        <widget class="TQSlider">
                             <property name="name">
                                 <cstring>m_customSlider</cstring>
                             </property>
@@ -511,7 +511,7 @@ how it is positioned on the screen and how much of the screen it should use.</st
                 </widget>
             </grid>
         </widget>
-        <widget class="QButtonGroup" row="1" column="0">
+        <widget class="TQButtonGroup" row="1" column="0">
             <property name="name">
                 <cstring>m_locationGroup</cstring>
             </property>
@@ -538,7 +538,7 @@ how it is positioned on the screen and how much of the screen it should use.</st
                     <property name="sizeType">
                         <enum>Expanding</enum>
                     </property>
-                    <property name="sizeHint">
+                    <property name="tqsizeHint">
                         <size>
                             <width>20</width>
                             <height>0</height>
@@ -555,14 +555,14 @@ how it is positioned on the screen and how much of the screen it should use.</st
                     <property name="sizeType">
                         <enum>Expanding</enum>
                     </property>
-                    <property name="sizeHint">
+                    <property name="tqsizeHint">
                         <size>
                             <width>21</width>
                             <height>0</height>
                         </size>
                     </property>
                 </spacer>
-                <widget class="QLayoutWidget" row="0" column="1">
+                <widget class="TQLayoutWidget" row="0" column="1">
                     <property name="name">
                         <cstring>Layout7</cstring>
                     </property>
@@ -570,7 +570,7 @@ how it is positioned on the screen and how much of the screen it should use.</st
                         <property name="name">
                             <cstring>unnamed</cstring>
                         </property>
-                        <widget class="QLayoutWidget" row="0" column="1">
+                        <widget class="TQLayoutWidget" row="0" column="1">
                             <property name="name">
                                 <cstring>Layout8</cstring>
                             </property>
@@ -578,7 +578,7 @@ how it is positioned on the screen and how much of the screen it should use.</st
                                 <property name="name">
                                     <cstring>unnamed</cstring>
                                 </property>
-                                <widget class="QPushButton">
+                                <widget class="TQPushButton">
                                     <property name="name">
                                         <cstring>locationTopLeft</cstring>
                                     </property>
@@ -590,13 +590,13 @@ how it is positioned on the screen and how much of the screen it should use.</st
                                             <verstretch>0</verstretch>
                                         </sizepolicy>
                                     </property>
-                                    <property name="minimumSize">
+                                    <property name="tqminimumSize">
                                         <size>
                                             <width>32</width>
                                             <height>16</height>
                                         </size>
                                     </property>
-                                    <property name="maximumSize">
+                                    <property name="tqmaximumSize">
                                         <size>
                                             <width>32</width>
                                             <height>16</height>
@@ -612,7 +612,7 @@ how it is positioned on the screen and how much of the screen it should use.</st
                                         <bool>true</bool>
                                     </property>
                                 </widget>
-                                <widget class="QPushButton">
+                                <widget class="TQPushButton">
                                     <property name="name">
                                         <cstring>locationTop</cstring>
                                     </property>
@@ -624,13 +624,13 @@ how it is positioned on the screen and how much of the screen it should use.</st
                                             <verstretch>0</verstretch>
                                         </sizepolicy>
                                     </property>
-                                    <property name="minimumSize">
+                                    <property name="tqminimumSize">
                                         <size>
                                             <width>32</width>
                                             <height>16</height>
                                         </size>
                                     </property>
-                                    <property name="maximumSize">
+                                    <property name="tqmaximumSize">
                                         <size>
                                             <width>32</width>
                                             <height>16</height>
@@ -646,7 +646,7 @@ how it is positioned on the screen and how much of the screen it should use.</st
                                         <bool>true</bool>
                                     </property>
                                 </widget>
-                                <widget class="QPushButton">
+                                <widget class="TQPushButton">
                                     <property name="name">
                                         <cstring>locationTopRight</cstring>
                                     </property>
@@ -658,13 +658,13 @@ how it is positioned on the screen and how much of the screen it should use.</st
                                             <verstretch>0</verstretch>
                                         </sizepolicy>
                                     </property>
-                                    <property name="minimumSize">
+                                    <property name="tqminimumSize">
                                         <size>
                                             <width>32</width>
                                             <height>16</height>
                                         </size>
                                     </property>
-                                    <property name="maximumSize">
+                                    <property name="tqmaximumSize">
                                         <size>
                                             <width>32</width>
                                             <height>16</height>
@@ -682,7 +682,7 @@ how it is positioned on the screen and how much of the screen it should use.</st
                                 </widget>
                             </hbox>
                         </widget>
-                        <widget class="QLayoutWidget" row="1" column="0">
+                        <widget class="TQLayoutWidget" row="1" column="0">
                             <property name="name">
                                 <cstring>Layout10</cstring>
                             </property>
@@ -690,7 +690,7 @@ how it is positioned on the screen and how much of the screen it should use.</st
                                 <property name="name">
                                     <cstring>unnamed</cstring>
                                 </property>
-                                <widget class="QPushButton">
+                                <widget class="TQPushButton">
                                     <property name="name">
                                         <cstring>locationLeftTop</cstring>
                                     </property>
@@ -702,13 +702,13 @@ how it is positioned on the screen and how much of the screen it should use.</st
                                             <verstretch>0</verstretch>
                                         </sizepolicy>
                                     </property>
-                                    <property name="minimumSize">
+                                    <property name="tqminimumSize">
                                         <size>
                                             <width>16</width>
                                             <height>24</height>
                                         </size>
                                     </property>
-                                    <property name="maximumSize">
+                                    <property name="tqmaximumSize">
                                         <size>
                                             <width>16</width>
                                             <height>24</height>
@@ -724,7 +724,7 @@ how it is positioned on the screen and how much of the screen it should use.</st
                                         <bool>true</bool>
                                     </property>
                                 </widget>
-                                <widget class="QPushButton">
+                                <widget class="TQPushButton">
                                     <property name="name">
                                         <cstring>locationLeft</cstring>
                                     </property>
@@ -736,13 +736,13 @@ how it is positioned on the screen and how much of the screen it should use.</st
                                             <verstretch>0</verstretch>
                                         </sizepolicy>
                                     </property>
-                                    <property name="minimumSize">
+                                    <property name="tqminimumSize">
                                         <size>
                                             <width>16</width>
                                             <height>24</height>
                                         </size>
                                     </property>
-                                    <property name="maximumSize">
+                                    <property name="tqmaximumSize">
                                         <size>
                                             <width>16</width>
                                             <height>24</height>
@@ -758,7 +758,7 @@ how it is positioned on the screen and how much of the screen it should use.</st
                                         <bool>true</bool>
                                     </property>
                                 </widget>
-                                <widget class="QPushButton">
+                                <widget class="TQPushButton">
                                     <property name="name">
                                         <cstring>locationLeftBottom</cstring>
                                     </property>
@@ -770,13 +770,13 @@ how it is positioned on the screen and how much of the screen it should use.</st
                                             <verstretch>0</verstretch>
                                         </sizepolicy>
                                     </property>
-                                    <property name="minimumSize">
+                                    <property name="tqminimumSize">
                                         <size>
                                             <width>16</width>
                                             <height>24</height>
                                         </size>
                                     </property>
-                                    <property name="maximumSize">
+                                    <property name="tqmaximumSize">
                                         <size>
                                             <width>16</width>
                                             <height>24</height>
@@ -794,7 +794,7 @@ how it is positioned on the screen and how much of the screen it should use.</st
                                 </widget>
                             </vbox>
                         </widget>
-                        <widget class="QLayoutWidget" row="2" column="1">
+                        <widget class="TQLayoutWidget" row="2" column="1">
                             <property name="name">
                                 <cstring>Layout7</cstring>
                             </property>
@@ -802,7 +802,7 @@ how it is positioned on the screen and how much of the screen it should use.</st
                                 <property name="name">
                                     <cstring>unnamed</cstring>
                                 </property>
-                                <widget class="QPushButton">
+                                <widget class="TQPushButton">
                                     <property name="name">
                                         <cstring>locationBottomLeft</cstring>
                                     </property>
@@ -814,13 +814,13 @@ how it is positioned on the screen and how much of the screen it should use.</st
                                             <verstretch>0</verstretch>
                                         </sizepolicy>
                                     </property>
-                                    <property name="minimumSize">
+                                    <property name="tqminimumSize">
                                         <size>
                                             <width>32</width>
                                             <height>16</height>
                                         </size>
                                     </property>
-                                    <property name="maximumSize">
+                                    <property name="tqmaximumSize">
                                         <size>
                                             <width>32</width>
                                             <height>16</height>
@@ -836,7 +836,7 @@ how it is positioned on the screen and how much of the screen it should use.</st
                                         <bool>true</bool>
                                     </property>
                                 </widget>
-                                <widget class="QPushButton">
+                                <widget class="TQPushButton">
                                     <property name="name">
                                         <cstring>locationBottom</cstring>
                                     </property>
@@ -848,13 +848,13 @@ how it is positioned on the screen and how much of the screen it should use.</st
                                             <verstretch>0</verstretch>
                                         </sizepolicy>
                                     </property>
-                                    <property name="minimumSize">
+                                    <property name="tqminimumSize">
                                         <size>
                                             <width>32</width>
                                             <height>16</height>
                                         </size>
                                     </property>
-                                    <property name="maximumSize">
+                                    <property name="tqmaximumSize">
                                         <size>
                                             <width>32</width>
                                             <height>16</height>
@@ -870,7 +870,7 @@ how it is positioned on the screen and how much of the screen it should use.</st
                                         <bool>true</bool>
                                     </property>
                                 </widget>
-                                <widget class="QPushButton">
+                                <widget class="TQPushButton">
                                     <property name="name">
                                         <cstring>locationBottomRight</cstring>
                                     </property>
@@ -882,13 +882,13 @@ how it is positioned on the screen and how much of the screen it should use.</st
                                             <verstretch>0</verstretch>
                                         </sizepolicy>
                                     </property>
-                                    <property name="minimumSize">
+                                    <property name="tqminimumSize">
                                         <size>
                                             <width>32</width>
                                             <height>16</height>
                                         </size>
                                     </property>
-                                    <property name="maximumSize">
+                                    <property name="tqmaximumSize">
                                         <size>
                                             <width>32</width>
                                             <height>16</height>
@@ -906,7 +906,7 @@ how it is positioned on the screen and how much of the screen it should use.</st
                                 </widget>
                             </hbox>
                         </widget>
-                        <widget class="QLayoutWidget" row="1" column="2">
+                        <widget class="TQLayoutWidget" row="1" column="2">
                             <property name="name">
                                 <cstring>Layout9</cstring>
                             </property>
@@ -914,7 +914,7 @@ how it is positioned on the screen and how much of the screen it should use.</st
                                 <property name="name">
                                     <cstring>unnamed</cstring>
                                 </property>
-                                <widget class="QPushButton">
+                                <widget class="TQPushButton">
                                     <property name="name">
                                         <cstring>locationRightTop</cstring>
                                     </property>
@@ -926,13 +926,13 @@ how it is positioned on the screen and how much of the screen it should use.</st
                                             <verstretch>0</verstretch>
                                         </sizepolicy>
                                     </property>
-                                    <property name="minimumSize">
+                                    <property name="tqminimumSize">
                                         <size>
                                             <width>16</width>
                                             <height>24</height>
                                         </size>
                                     </property>
-                                    <property name="maximumSize">
+                                    <property name="tqmaximumSize">
                                         <size>
                                             <width>16</width>
                                             <height>24</height>
@@ -948,7 +948,7 @@ how it is positioned on the screen and how much of the screen it should use.</st
                                         <bool>true</bool>
                                     </property>
                                 </widget>
-                                <widget class="QPushButton">
+                                <widget class="TQPushButton">
                                     <property name="name">
                                         <cstring>locationRight</cstring>
                                     </property>
@@ -960,13 +960,13 @@ how it is positioned on the screen and how much of the screen it should use.</st
                                             <verstretch>0</verstretch>
                                         </sizepolicy>
                                     </property>
-                                    <property name="minimumSize">
+                                    <property name="tqminimumSize">
                                         <size>
                                             <width>16</width>
                                             <height>24</height>
                                         </size>
                                     </property>
-                                    <property name="maximumSize">
+                                    <property name="tqmaximumSize">
                                         <size>
                                             <width>16</width>
                                             <height>24</height>
@@ -982,7 +982,7 @@ how it is positioned on the screen and how much of the screen it should use.</st
                                         <bool>true</bool>
                                     </property>
                                 </widget>
-                                <widget class="QPushButton">
+                                <widget class="TQPushButton">
                                     <property name="name">
                                         <cstring>locationRightBottom</cstring>
                                     </property>
@@ -994,13 +994,13 @@ how it is positioned on the screen and how much of the screen it should use.</st
                                             <verstretch>0</verstretch>
                                         </sizepolicy>
                                     </property>
-                                    <property name="minimumSize">
+                                    <property name="tqminimumSize">
                                         <size>
                                             <width>16</width>
                                             <height>24</height>
                                         </size>
                                     </property>
-                                    <property name="maximumSize">
+                                    <property name="tqmaximumSize">
                                         <size>
                                             <width>16</width>
                                             <height>24</height>

@@ -1,6 +1,6 @@
 <!DOCTYPE UI><UI version="3.2" stdsetdef="1">
 <class>CacheDlgUI</class>
-<widget class="QWidget">
+<widget class="TQWidget">
     <property name="name">
         <cstring>CacheDlgUI</cstring>
     </property>
@@ -29,14 +29,14 @@
             <property name="sizeType">
                 <enum>Fixed</enum>
             </property>
-            <property name="sizeHint">
+            <property name="tqsizeHint">
                 <size>
                     <width>16</width>
                     <height>21</height>
                 </size>
             </property>
         </spacer>
-        <widget class="QLabel" row="2" column="1">
+        <widget class="TQLabel" row="2" column="1">
             <property name="name">
                 <cstring>lbMaxCacheSize</cstring>
             </property>
@@ -67,7 +67,7 @@
                 <string> KB</string>
             </property>
         </widget>
-        <widget class="QPushButton" row="2" column="3">
+        <widget class="TQPushButton" row="2" column="3">
             <property name="name">
                 <cstring>pbClearCache</cstring>
             </property>
@@ -88,14 +88,14 @@
             <property name="sizeType">
                 <enum>MinimumExpanding</enum>
             </property>
-            <property name="sizeHint">
+            <property name="tqsizeHint">
                 <size>
                     <width>0</width>
                     <height>21</height>
                 </size>
             </property>
         </spacer>
-        <widget class="QCheckBox" row="0" column="0" rowspan="1" colspan="5">
+        <widget class="TQCheckBox" row="0" column="0" rowspan="1" colspan="5">
             <property name="name">
                 <cstring>cbUseCache</cstring>
             </property>
@@ -106,7 +106,7 @@
                 <string>Check this box if you want the web pages you visit to be stored on your hard disk for quicker access. The stored pages will only be updated as needed instead of on every visit to that site. This is especially useful if you have a slow connection to the Internet.</string>
             </property>
         </widget>
-        <widget class="QButtonGroup" row="1" column="0" rowspan="1" colspan="5">
+        <widget class="TQButtonGroup" row="1" column="0" rowspan="1" colspan="5">
             <property name="name">
                 <cstring>bgCachePolicy</cstring>
             </property>
@@ -120,7 +120,7 @@
                 <property name="name">
                     <cstring>unnamed</cstring>
                 </property>
-                <widget class="QRadioButton">
+                <widget class="TQRadioButton">
                     <property name="name">
                         <cstring>rbVerifyCache</cstring>
                     </property>
@@ -131,7 +131,7 @@
                         <string>Verify whether the cached web page is valid before attempting to fetch the web page again.</string>
                     </property>
                 </widget>
-                <widget class="QRadioButton">
+                <widget class="TQRadioButton">
                     <property name="name">
                         <cstring>rbCacheIfPossible</cstring>
                     </property>
@@ -142,7 +142,7 @@
                         <string>Always use documents from the cache when available. You can still use the reload button to synchronize the cache with the remote host.</string>
                     </property>
                 </widget>
-                <widget class="QRadioButton">
+                <widget class="TQRadioButton">
                     <property name="name">
                         <cstring>rbOfflineMode</cstring>
                     </property>

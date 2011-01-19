@@ -115,7 +115,7 @@ Kicker::Kicker()
 
     // initialize our keys
     // note that this creates the KMenu by calling MenuManager::the()
-    keys = new KGlobalAccel( this );
+    keys = new KGlobalAccel( TQT_TQOBJECT(this) );
 #define KICKER_ALL_BINDINGS
 #include "kickerbindings.cpp"
     keys->readSettings();
@@ -199,7 +199,7 @@ void Kicker::paletteChanged()
 {
     KConfigGroup c(KGlobal::config(), "General");
     KickerSettings::setTintColor(c.readColorEntry("TintColor",
-                                           &palette().active().mid()));
+                                           &tqpalette().active().mid()));
     KickerSettings::self()->writeConfig();
 }
 

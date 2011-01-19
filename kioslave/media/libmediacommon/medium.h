@@ -109,8 +109,8 @@ namespace MediaManagerUtils {
 
       for (TQStringList::ConstIterator it = options.begin(); it != options.end(); ++it)
 	{
-	  TQString key = (*it).left((*it).find('='));
-	  TQString value = (*it).mid((*it).find('=') + 1);
+	  TQString key = (*it).left((*it).tqfind('='));
+	  TQString value = (*it).mid((*it).tqfind('=') + 1);
 	  valids[key] = value;
 	}
       return valids;

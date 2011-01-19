@@ -1,6 +1,6 @@
 <!DOCTYPE UI><UI version="3.3" stdsetdef="1">
 <class>System_ui</class>
-<widget class="QWidget">
+<widget class="TQWidget">
     <property name="name">
         <cstring>System_ui</cstring>
     </property>
@@ -16,7 +16,7 @@
         <property name="name">
             <cstring>unnamed</cstring>
         </property>
-        <widget class="QGroupBox">
+        <widget class="TQGroupBox">
             <property name="name">
                 <cstring>gb_</cstring>
             </property>
@@ -27,7 +27,7 @@
                 <property name="name">
                     <cstring>unnamed</cstring>
                 </property>
-                <widget class="QCheckBox">
+                <widget class="TQCheckBox">
                     <property name="name">
                         <cstring>cb_disable_kbuildsycoca</cstring>
                     </property>
@@ -35,7 +35,7 @@
                         <string>Disable &amp;system configuration startup check</string>
                     </property>
                 </widget>
-                <widget class="QLabel">
+                <widget class="TQLabel">
                     <property name="name">
                         <cstring>label_kbuildsycoca</cstring>
                     </property>
@@ -55,7 +55,7 @@
             <property name="sizeType">
                 <enum>Expanding</enum>
             </property>
-            <property name="sizeHint">
+            <property name="tqsizeHint">
                 <size>
                     <width>20</width>
                     <height>40</height>

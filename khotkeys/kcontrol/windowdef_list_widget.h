@@ -59,7 +59,7 @@ class Windowdef_list_widget
 typedef Windowdef_list_widget Windowdef_list_tab;
 
 class Windowdef_list_item
-    : public QListViewItem
+    : public TQListViewItem
     {
     public:
         Windowdef_list_item( TQListView* parent_P, Windowdef* window_P );

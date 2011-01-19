@@ -1,6 +1,6 @@
 <!DOCTYPE UI><UI version="3.1" stdsetdef="1">
 <class>KeyboardConfigWidget</class>
-<widget class="QWidget">
+<widget class="TQWidget">
     <property name="name">
         <cstring>KeyboardConfigWidget</cstring>
     </property>
@@ -19,7 +19,7 @@
         <property name="margin">
             <number>0</number>
         </property>
-        <widget class="QButtonGroup" row="1" column="0" rowspan="1" colspan="2">
+        <widget class="TQButtonGroup" row="1" column="0" rowspan="1" colspan="2">
             <property name="name">
                 <cstring>numlockGroup</cstring>
             </property>
@@ -39,7 +39,7 @@
                 <property name="name">
                     <cstring>unnamed</cstring>
                 </property>
-                <widget class="QRadioButton" row="1" column="0">
+                <widget class="TQRadioButton" row="1" column="0">
                     <property name="name">
                         <cstring>RadioButton1_2</cstring>
                     </property>
@@ -50,7 +50,7 @@
                         <number>1</number>
                     </property>
                 </widget>
-                <widget class="QRadioButton" row="2" column="0">
+                <widget class="TQRadioButton" row="2" column="0">
                     <property name="name">
                         <cstring>RadioButton1_3</cstring>
                     </property>
@@ -61,7 +61,7 @@
                         <number>2</number>
                     </property>
                 </widget>
-                <widget class="QRadioButton" row="0" column="0">
+                <widget class="TQRadioButton" row="0" column="0">
                     <property name="name">
                         <cstring>RadioButton1</cstring>
                     </property>
@@ -74,7 +74,7 @@
                 </widget>
             </grid>
         </widget>
-        <widget class="QGroupBox" row="0" column="0" rowspan="1" colspan="2">
+        <widget class="TQGroupBox" row="0" column="0" rowspan="1" colspan="2">
             <property name="name">
                 <cstring>groupBox1</cstring>
             </property>
@@ -85,7 +85,7 @@
                 <property name="name">
                     <cstring>unnamed</cstring>
                 </property>
-                <widget class="QLabel" row="1" column="0">
+                <widget class="TQLabel" row="1" column="0">
                     <property name="name">
                         <cstring>lblDelay</cstring>
                     </property>
@@ -104,7 +104,7 @@
                         <cstring>delay</cstring>
                     </property>
                  </widget>
-                 <widget class="QSlider" row="1" column="1">
+                 <widget class="TQSlider" row="1" column="1">
                     <property name="name">
                        <cstring>delaySlider</cstring>
                     </property>
@@ -156,7 +156,7 @@
                        <string>If supported, this option allows you to set the delay after which a pressed key will start generating keycodes. The 'Repeat rate' option controls the frequency of these keycodes.</string>
                     </property>
                 </widget>
-                <widget class="QLabel" row="2" column="0">
+                <widget class="TQLabel" row="2" column="0">
                     <property name="name">
                         <cstring>lblRate</cstring>
                     </property>
@@ -175,7 +175,7 @@
                         <cstring>rate</cstring>
                     </property>
                 </widget>
-                <widget class="QSlider" row="2" column="1" rowspan="1" colspan="1">
+                <widget class="TQSlider" row="2" column="1" rowspan="1" colspan="1">
                     <property name="name">
                         <cstring>rateSlider</cstring>
                     </property>
@@ -230,7 +230,7 @@
                        <string>If supported, this option allows you to set the rate at which keycodes are generated while a key is pressed.</string>
                     </property>
                 </widget>
-                <widget class="QCheckBox" row="0" column="0" rowspan="1" colspan="2">
+                <widget class="TQCheckBox" row="0" column="0" rowspan="1" colspan="2">
                     <property name="name">
                         <cstring>repeatBox</cstring>
                     </property>
@@ -266,7 +266,7 @@
                 <string>If supported, this option allows you to hear audible clicks from your computer's speakers when you press the keys on your keyboard. This might be useful if your keyboard does not have mechanical keys, or if the sound that the keys make is very soft.&lt;p&gt;You can change the loudness of the key click feedback by dragging the slider button or by clicking the up/down arrows on the spin box. Setting the volume to 0% turns off the key click.</string>
             </property>
         </widget>
-        <widget class="QLabel" row="2" column="0">
+        <widget class="TQLabel" row="2" column="0">
             <property name="name">
                 <cstring>TextLabel1</cstring>
             </property>

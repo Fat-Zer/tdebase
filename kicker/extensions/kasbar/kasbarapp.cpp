@@ -83,12 +83,12 @@ int main( int argc, char **argv )
 
   kdDebug(1345) << "Kasbar starting..." << endl;
 
-  int wflags = Qt::WStyle_Customize | Qt::WX11BypassWM | Qt::WStyle_DialogBorder | Qt::WStyle_StaysOnTop;
+  int wflags = TQt::WStyle_Customize | TQt::WX11BypassWM | TQt::WStyle_DialogBorder | TQt::WStyle_StaysOnTop;
   KasBar *kasbar;
   KConfig conf( "kasbarrc" );
 
   if ( args->isSet("test") ) {
-      kasbar = new KasBar( Qt::Vertical, 0, "testkas", wflags );
+      kasbar = new KasBar( Qt::Vertical, 0, "testkas", (TQt::WFlags)wflags );
       kasbar->setItemSize( KasBar::Large );
       kasbar->append( new KasClockItem(kasbar) );
       kasbar->append( new KasItem(kasbar) );
@@ -97,7 +97,7 @@ int main( int argc, char **argv )
       kasbar->addTestItems();
   }
   else {
-      KasTasker *kastasker = new KasTasker( Qt::Vertical, 0, "testkas", wflags );
+      KasTasker *kastasker = new KasTasker( Qt::Vertical, 0, "testkas", (TQt::WFlags)wflags );
       kastasker->setConfig( &conf );
       kastasker->setStandAlone( true );
       kasbar = kastasker;

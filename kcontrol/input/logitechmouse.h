@@ -68,10 +68,10 @@ private:
     void setLogitechTo800();
 
     TQString cordlessName();
-    Q_UINT8 resolution();
+    TQ_UINT8 resolution();
     void updateResolution();
-    Q_UINT8 batteryLevel();
-    Q_UINT8 channel();
+    TQ_UINT8 batteryLevel();
+    TQ_UINT8 channel();
     bool isDualChannelCapable();
 
     TQTimer *doUpdate;
@@ -83,14 +83,14 @@ private:
                            // of the receiver's CONNECT button
     bool m_waitLock; // true if receiver searching for new mouse because the
                      // CONNECT button on the receiver was pressed
-    Q_UINT8 m_batteryLevel;
-    Q_UINT8 m_channel;
-    Q_UINT8 m_cordlessNameIndex; // this gets convered into a TQString in cordlessName()
-    Q_UINT16 m_cordlessSecurity;
-    Q_UINT16 m_useSecondChannel;
-    Q_UINT8 m_caseShape;
-    Q_UINT8 m_numberOfButtons;
-    Q_UINT8 m_resolution;
+    TQ_UINT8 m_batteryLevel;
+    TQ_UINT8 m_channel;
+    TQ_UINT8 m_cordlessNameIndex; // this gets convered into a TQString in cordlessName()
+    TQ_UINT16 m_cordlessSecurity;
+    TQ_UINT16 m_useSecondChannel;
+    TQ_UINT8 m_caseShape;
+    TQ_UINT8 m_numberOfButtons;
+    TQ_UINT8 m_resolution;
     bool m_twoChannelCapable; // true if the mouse supports dual channels
     bool m_verticalRoller; // true if the mouse has a vertical roller (wheel)
     bool m_horizontalRoller; // true if the mouse has a horizontal roller (wheel)

@@ -39,7 +39,7 @@
 #include <pwd.h>
 
 
-class KDMConvenienceWidget : public QWidget
+class KDMConvenienceWidget : public TQWidget
 {
 	Q_OBJECT
 
@@ -68,15 +68,15 @@ private slots:
 	void slotUpdateNoPassUser( TQListViewItem *item );
 
 private:
-	QGroupBox	*alGroup, *puGroup, *npGroup, *btGroup;
-	QCheckBox	*againcb, *cbarlen, *cbjumppw, *autoLockCheck;
-	QRadioButton	*npRadio, *ppRadio, *spRadio;
+	TQGroupBox	*alGroup, *puGroup, *npGroup, *btGroup;
+	TQCheckBox	*againcb, *cbarlen, *cbjumppw, *autoLockCheck;
+	TQRadioButton	*npRadio, *ppRadio, *spRadio;
 	KComboBox	*userlb, *puserlb;
-	QSpinBox	*delaysb;
+	TQSpinBox	*delaysb;
 	KListView	*npuserlv;
-	QLabel		*u_label, *d_label, *pu_label, *w_label, *n_label, *pl_label;
-	QString		autoUser, preselUser;
-	QStringList	noPassUsers;
+	TQLabel		*u_label, *d_label, *pu_label, *w_label, *n_label, *pl_label;
+	TQString	autoUser, preselUser;
+	TQStringList	noPassUsers;
 };
 
 #endif

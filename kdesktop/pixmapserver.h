@@ -48,7 +48,7 @@ struct KSelectionInode
  *
  * @author Geert Jansen <g.t.jansen@stud.tue.nl>
  */
-class KPixmapServer: public QWidget
+class KPixmapServer: public TQWidget
 {
     Q_OBJECT
 

@@ -26,7 +26,7 @@ class KPrinter;
 class KPrintDialog;
 class TQSocketNotifier;
 
-class PrintWrapper : public QWidget
+class PrintWrapper : public TQWidget
 {
 	Q_OBJECT
 public:

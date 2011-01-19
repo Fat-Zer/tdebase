@@ -28,7 +28,7 @@ class TQCheckBox;
 class KURLRequester;
 class KBackedComboBox;
 
-class KDMSessionsWidget : public QWidget
+class KDMSessionsWidget : public TQWidget
 {
 	Q_OBJECT
 
@@ -52,8 +52,8 @@ private:
 	void readSD (TQComboBox *, TQString);
 	void writeSD (TQComboBox *);
 
-	QComboBox	*sdlcombo, *sdrcombo;
-	QLabel		*sdllabel, *sdrlabel;
+	TQComboBox	*sdlcombo, *sdrcombo;
+	TQLabel		*sdllabel, *sdrlabel;
 	KURLRequester	*restart_lined, *shutdown_lined;
 	KBackedComboBox	*bm_combo;
 };

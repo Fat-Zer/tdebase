@@ -101,7 +101,7 @@ void SMBRoOptions::load()
 
 //   TQStringList _strList = KGlobal::charsets()->availableEncodingNames();
 //   TQString m_encoding = TQTextCodec::codecForLocale()->name();
-//   m_encodingList->setCurrentItem( _strList.findIndex( cfg->readEntry( "Encoding", m_encoding.lower() ) ) );
+//   m_encodingList->setCurrentItem( _strList.tqfindIndex( cfg->readEntry( "Encoding", m_encoding.lower() ) ) );
 
    // unscramble
    TQString scrambled = cfg->readEntry( "Password" );
@@ -140,7 +140,7 @@ void SMBRoOptions::save()
    for (uint i=0; i<password.length(); i++)
    {
       TQChar c = password[i];
-      unsigned int num = (c.unicode() ^ 173) + 17;
+      unsigned int num = (c.tqunicode() ^ 173) + 17;
       unsigned int a1 = (num & 0xFC00) >> 10;
       unsigned int a2 = (num & 0x3E0) >> 5;
       unsigned int a3 = (num & 0x1F);

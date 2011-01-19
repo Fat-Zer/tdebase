@@ -392,7 +392,7 @@ void KCookiesPolicies::save()
 
   while( at )
   {
-    domainConfig.append(TQString::fromLatin1("%1:%2").arg(KIDNA::toAscii(at->text(0))).arg(m_pDomainPolicy[at]));
+    domainConfig.append(TQString::tqfromLatin1("%1:%2").arg(KIDNA::toAscii(at->text(0))).arg(m_pDomainPolicy[at]));
     at = at->nextSibling();
   }
 
@@ -434,7 +434,7 @@ void KCookiesPolicies::defaults()
 void KCookiesPolicies::splitDomainAdvice (const TQString& cfg, TQString &domain,
                                           KCookieAdvice::Value &advice)
 {
-  int sepPos = cfg.findRev(':');
+  int sepPos = cfg.tqfindRev(':');
 
   // Ignore any policy that does not contain a domain...
   if ( sepPos <= 0 )

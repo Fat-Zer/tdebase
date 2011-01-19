@@ -17,7 +17,7 @@
 #include <tqlabel.h>
 #include <tqvbox.h>
 
-class KDEDefaultConfig: public QObject
+class KDEDefaultConfig: public TQObject
 {
 	Q_OBJECT
 

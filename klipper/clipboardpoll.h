@@ -26,7 +26,7 @@
 #include <fixx11h.h>
 
 class ClipboardPoll
-    : public QWidget
+    : public TQWidget
     {
     Q_OBJECT
     public:

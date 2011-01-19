@@ -28,7 +28,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 class ContainerArea;
 
-class RemoveContainerMenu : public QPopupMenu
+class RemoveContainerMenu : public TQPopupMenu
 {
     Q_OBJECT
 

@@ -8,7 +8,7 @@ class TQLabel;
 class KComboBox;
 class KListView;
 
-class ModifiersModule : public QWidget
+class ModifiersModule : public TQWidget
 {
 	Q_OBJECT
  public:

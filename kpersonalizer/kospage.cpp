@@ -93,7 +93,7 @@ void KOSPage::save(bool currSettings){
 	kapp->dcopClient()->send("kdesktop", "KDesktopIface", "configure()", TQByteArray());
 	///////////////////////////////////////////
 	/// restart kwin  for window effects
-	kapp->dcopClient()->send("kwin*", "", "reconfigure()", "");
+	kapp->dcopClient()->send("kwin*", "", "reconfigure()", TQString(""));
 	///////////////////////////////////////////
 	
 	// Make the kaccess daemon read the changed config file

@@ -97,13 +97,13 @@ KCMIOSlaveInfo::KCMIOSlaveInfo(TQWidget *parent, const char *name, const TQStrin
 void KCMIOSlaveInfo::slaveHelp( KIO::Job *, const TQByteArray &data)
 {
     if ( data.size() == 0 ) { // EOF
-        int index = helpData.find( "<meta http-equiv=\"Content-Type\"" );
-        index = helpData.find( "charset=", index ) + 8;
-        TQString charset = helpData.mid( index, helpData.find( '\"', index ) - index );
+        int index = helpData.tqfind( "<meta http-equiv=\"Content-Type\"" );
+        index = helpData.tqfind( "charset=", index ) + 8;
+        TQString charset = helpData.mid( index, helpData.tqfind( '\"', index ) - index );
         TQString text = TQTextCodec::codecForName(charset.latin1())->toUnicode( helpData );
-        index = text.find( "<div class=\"titlepage\">" );
+        index = text.tqfind( "<div class=\"titlepage\">" );
         text = text.mid( index );
-        index = text.find( "<table width=\"100%\" class=\"bottom-nav\"" );
+        index = text.tqfind( "<table width=\"100%\" class=\"bottom-nav\"" );
         text = text.left( index );
         m_info->setText(text);
         return;

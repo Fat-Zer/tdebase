@@ -146,10 +146,10 @@ void InfoTree::parseInfoDirFile( const TQString &infoDirFileName )
     while ( !stream.eof() && !s.stripWhiteSpace().isEmpty() ) {
       s = stream.readLine();
       if ( s[ 0 ] == '*' ) {
-        const int colon = s.find( ":" );
-        const int openBrace = s.find( "(", colon );
-        const int closeBrace = s.find( ")", openBrace );
-        const int dot = s.find( ".", closeBrace );
+        const int colon = s.tqfind( ":" );
+        const int openBrace = s.tqfind( "(", colon );
+        const int closeBrace = s.tqfind( ")", openBrace );
+        const int dot = s.tqfind( ".", closeBrace );
 
         TQString appName = s.mid( 2, colon - 2 );
         TQString url = "info:/" + s.mid( openBrace + 1, closeBrace - openBrace - 1 );

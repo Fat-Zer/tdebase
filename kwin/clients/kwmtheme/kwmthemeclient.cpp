@@ -231,7 +231,7 @@ void MyButton::drawButtonLabel(TQPainter *p)
 	int offset = (isDown() && ((pixmap()->width() >= width()) || 
                          (pixmap()->height() >= height()))) ? 1 : 0;
         style().drawItem(p, TQRect( offset, offset, width(), height() ), 
-                         AlignCenter, colorGroup(),
+                         AlignCenter, tqcolorGroup(),
                          true, pixmap(), TQString::null);
     }
 }
@@ -364,7 +364,7 @@ void KWMThemeClient::drawTitle(TQPainter &dest)
     p.begin(&buffer);
 
     if(titleSunken){
-        qDrawShadeRect(&p, r, options()->colorGroup(KDecorationOptions::ColorFrame, isActive()),
+        qDrawShadeRect(&p, r, options()->tqcolorGroup(KDecorationOptions::ColorFrame, isActive()),
                        true, 1, 0);
         r.setRect(r.x()+1, r.y()+1, r.width()-2, r.height()-2);
     }
@@ -384,7 +384,7 @@ void KWMThemeClient::drawTitle(TQPainter &dest)
         p.drawTiledPixmap(r, *fill);
     }
     else{
-        p.fillRect(r, options()->colorGroup(KDecorationOptions::ColorTitleBar, isActive()).
+        p.fillRect(r, options()->tqcolorGroup(KDecorationOptions::ColorTitleBar, isActive()).
                    brush(TQColorGroup::Button));
     }
     p.setFont(options()->font(isActive()));
@@ -402,12 +402,12 @@ void KWMThemeClient::drawTitle(TQPainter &dest)
 void KWMThemeClient::resizeEvent( TQResizeEvent* )
 {
     doShape();
-    widget()->repaint();
+    widget()->tqrepaint();
 }
 
 void KWMThemeClient::captionChange()
 {
-    widget()->repaint( titlebar->geometry(), false );
+    widget()->tqrepaint( titlebar->geometry(), false );
 }
 
 void KWMThemeClient::paintEvent( TQPaintEvent *)
@@ -557,7 +557,7 @@ void KWMThemeClient::paintEvent( TQPaintEvent *)
     }
     drawTitle(p);
 
-    TQColor c = widget()->colorGroup().background();
+    TQColor c = widget()->tqcolorGroup().background();
 
     // KWM evidently had a 1 pixel border around the client window. We
     // emulate it here, but should be removed at some point in order to
@@ -576,10 +576,10 @@ void KWMThemeClient::paintEvent( TQPaintEvent *)
 void KWMThemeClient::doShape()
 {
 
-    TQBitmap shapemask(width(), height());
-    shapemask.fill(color0);
+    TQBitmap tqshapemask(width(), height());
+    tqshapemask.fill(color0);
     TQPainter p;
-    p.begin(&shapemask);
+    p.begin(&tqshapemask);
     p.setBrush(color1);
     p.setPen(color1);
     int x,y;
@@ -740,19 +740,19 @@ void KWMThemeClient::doShape()
         }
     }
     p.fillRect(maxExtent-1, maxExtent-1, width()-2*maxExtent+2, height()-2*maxExtent+2, color1);
-    setMask(shapemask);
+    setMask(tqshapemask);
 }
 
 
 void KWMThemeClient::showEvent(TQShowEvent *)
 {
     doShape();
-    widget()->repaint(false);
+    widget()->tqrepaint(false);
 }
 
 void KWMThemeClient::mouseDoubleClickEvent( TQMouseEvent * e )
 {
-    if (e->button() == LeftButton && titlebar->geometry().contains( e->pos() ) )
+    if (e->button() == LeftButton && titlebar->geometry().tqcontains( e->pos() ) )
         titlebarDblClickOperation();
 }
 
@@ -868,9 +868,9 @@ bool KWMThemeClient::eventFilter( TQObject* o, TQEvent* e )
 	}
 }
 
-TQSize KWMThemeClient::minimumSize() const
+TQSize KWMThemeClient::tqminimumSize() const
 {
-    return widget()->minimumSize().expandedTo( TQSize( 100, 50 ));
+    return widget()->tqminimumSize().expandedTo( TQSize( 100, 50 ));
 }
 
 void KWMThemeClient::resize( const TQSize& s )

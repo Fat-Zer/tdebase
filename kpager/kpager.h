@@ -57,7 +57,7 @@ protected:
     bool m_reallyClose;
 };
 
-class KPager : public QFrame
+class KPager : public TQFrame
 {
     Q_OBJECT
 
@@ -76,7 +76,7 @@ public:
 
     KWin::WindowInfo* info( WId win );
 
-    TQSize sizeHint() const;
+    TQSize tqsizeHint() const;
 
     enum LayoutTypes { Classical=0, Horizontal, Vertical };
 

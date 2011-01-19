@@ -164,7 +164,7 @@ NaughtyProcessMonitor::slotTimeout()
   void
 NaughtyProcessMonitor::_process(ulong pid, uint load)
 {
-  if (!d->loadMap_.contains(pid))
+  if (!d->loadMap_.tqcontains(pid))
   {
     d->loadMap_.insert(pid, load);
     return;
@@ -172,12 +172,12 @@ NaughtyProcessMonitor::_process(ulong pid, uint load)
 
   uint oldLoad = d->loadMap_[pid];
   bool misbehaving = (load - oldLoad) > 40 * (d->interval_ / 1000);
-  bool wasMisbehaving = d->scoreMap_.contains(pid);
+  bool wasMisbehaving = d->scoreMap_.tqcontains(pid);
 
   if (misbehaving)
     if (wasMisbehaving)
     {
-      d->scoreMap_.replace(pid, d->scoreMap_[pid] + 1);
+      d->scoreMap_.tqreplace(pid, d->scoreMap_[pid] + 1);
       if (canKill(pid))
         emit(runawayProcess(pid, processName(pid)));
     }
@@ -187,7 +187,7 @@ NaughtyProcessMonitor::_process(ulong pid, uint load)
     if (wasMisbehaving)
       d->scoreMap_.remove(pid);
 
-  d->loadMap_.replace(pid, load);
+  d->loadMap_.tqreplace(pid, load);
 }
 
 // Here begins the set of system-specific methods.
@@ -221,7 +221,7 @@ NaughtyProcessMonitor::canKill(ulong pid) const
   return geteuid() == a;
 #elif defined(__OpenBSD__)
   // simply check if entry exists in the uid map and use it
-  if (!d->uidMap_.contains(pid))
+  if (!d->uidMap_.tqcontains(pid))
       return false ;
   
   return geteuid () == d->uidMap_[pid] ;
@@ -231,7 +231,7 @@ NaughtyProcessMonitor::canKill(ulong pid) const
 #endif
 }
 
-  QString
+  TQString
 NaughtyProcessMonitor::processName(ulong pid) const
 {
 #if defined(__linux__) || defined(__OpenBSD__)
@@ -255,7 +255,7 @@ NaughtyProcessMonitor::processName(ulong pid) const
   }
 
  // Now strip 'kdeinit:' prefix.
-  TQString unicode(TQString::fromLocal8Bit(s));
+  TQString tqunicode(TQString::fromLocal8Bit(s));
 
 #elif defined(__OpenBSD__)
   int mib[4] ;
@@ -280,16 +280,16 @@ NaughtyProcessMonitor::processName(ulong pid) const
   }
   
  // Now strip 'kdeinit:' prefix.
-  TQString unicode(TQString::fromLocal8Bit(argv[0]));
+  TQString tqunicode(TQString::fromLocal8Bit(argv[0]));
 
   free (argv) ;
 #endif
 
-  TQStringList parts(TQStringList::split(' ', unicode));
+  TQStringList parts(TQStringList::split(' ', tqunicode));
 
   TQString processName = parts[0] == "kdeinit:" ? parts[1] : parts[0];
 
-  int lastSlash = processName.findRev('/');
+  int lastSlash = processName.tqfindRev('/');
 
   // Get basename, if there's a path.
   if (-1 != lastSlash)
@@ -449,7 +449,7 @@ NaughtyProcessMonitor::getLoad(ulong pid, uint & load) const
   return true;
 #elif defined(__OpenBSD__)
   // use cache
-  if (!d->cacheLoadMap_.contains(pid))
+  if (!d->cacheLoadMap_.tqcontains(pid))
       return false ;
   
   load = d->cacheLoadMap_[pid] ;

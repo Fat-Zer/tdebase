@@ -28,7 +28,7 @@ namespace KHC
 {
 
 class NavigatorItem;
-class TreeBuilder : public QObject
+class TreeBuilder : public TQObject
 {
 	Q_OBJECT
 	public:

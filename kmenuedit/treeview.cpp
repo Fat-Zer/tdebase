@@ -278,7 +278,7 @@ void TreeView::readMenuFolderInfo(MenuFolderInfo *folderInfo, KServiceGroup::Ptr
     folderInfo->directoryFile = folder->directoryEntryPath();
     folderInfo->icon = folder->icon();
     TQString id = folder->relPath();
-    int i = id.findRev('/', -2);
+    int i = id.tqfindRev('/', -2);
     id = id.mid(i+1);
     folderInfo->id = id;
     folderInfo->fullId = prefix + id;
@@ -472,7 +472,7 @@ void TreeView::selectMenu(const TQString &menu)
    TreeItem *item = 0;
    do
    {
-      int i = restMenu.find("/");
+      int i = restMenu.tqfind("/");
       TQString subMenu = restMenu.left(i+1);
       restMenu = restMenu.mid(i+1);
    
@@ -592,7 +592,7 @@ TQStringList TreeView::fileList(const TQString& rPath)
     TQString relativePath = rPath;
 
     // truncate "/.directory"
-    int pos = relativePath.findRev("/.directory");
+    int pos = relativePath.tqfindRev("/.directory");
     if (pos > 0) relativePath.truncate(pos);
 
     TQStringList filelist;
@@ -611,7 +611,7 @@ TQStringList TreeView::fileList(const TQString& rPath)
         TQStringList files = dir.entryList();
         for (TQStringList::ConstIterator it = files.begin(); it != files.end(); ++it) {
             // does not work?!
-            //if (filelist.contains(*it)) continue;
+            //if (filelist.tqcontains(*it)) continue;
 
             if (relativePath.isEmpty()) {
                 filelist.remove(*it); // hack
@@ -631,7 +631,7 @@ TQStringList TreeView::dirList(const TQString& rPath)
     TQString relativePath = rPath;
 
     // truncate "/.directory"
-    int pos = relativePath.findRev("/.directory");
+    int pos = relativePath.tqfindRev("/.directory");
     if (pos > 0) relativePath.truncate(pos);
 
     TQStringList dirlist;
@@ -649,7 +649,7 @@ TQStringList TreeView::dirList(const TQString& rPath)
         for (TQStringList::ConstIterator it = subdirs.begin(); it != subdirs.end(); ++it) {
             if ((*it) == "." || (*it) == "..") continue;
             // does not work?!
-            // if (dirlist.contains(*it)) continue;
+            // if (dirlist.tqcontains(*it)) continue;
 
             if (relativePath.isEmpty()) {
                 dirlist.remove(*it); //hack
@@ -679,8 +679,8 @@ bool TreeView::acceptDrag(TQDropEvent* e) const
 
 static TQString createDesktopFile(const TQString &file, TQString *menuId, TQStringList *excludeList)
 {
-   TQString base = file.mid(file.findRev('/')+1);
-   base = base.left(base.findRev('.'));
+   TQString base = file.mid(file.tqfindRev('/')+1);
+   base = base.left(base.tqfindRev('.'));
 
    TQRegExp r("(.*)(?=-\\d+)");
    base = (r.search(base) > -1) ? r.cap(1) : base;
@@ -703,8 +703,8 @@ static KDesktopFile *copyDesktopFile(MenuEntryInfo *entryInfo, TQString *menuId,
 
 static TQString createDirectoryFile(const TQString &file, TQStringList *excludeList)
 {
-   TQString base = file.mid(file.findRev('/')+1);
-   base = base.left(base.findRev('.'));
+   TQString base = file.mid(file.tqfindRev('/')+1);
+   base = base.left(base.tqfindRev('.'));
 
    TQString result;
    int i = 1;
@@ -715,7 +715,7 @@ static TQString createDirectoryFile(const TQString &file, TQStringList *excludeL
       else
          result = base + TQString("-%1.directory").arg(i);
 
-      if (!excludeList->contains(result))
+      if (!excludeList->tqcontains(result))
       {
          if (locate("xdgdata-dirs", result).isEmpty())
             break;
@@ -808,11 +808,11 @@ void TreeView::slotDropped (TQDropEvent * e, TQListViewItem *parent, TQListViewI
                   m_drag = 0;
                   return;
               }
-              tmpItem = static_cast<TreeItem*>(tmpItem->parent() );
+              tmpItem = static_cast<TreeItem*>(tmpItem->tqparent() );
           }
 
          // Remove MenuFolderInfo
-         TreeItem *oldParentItem = static_cast<TreeItem*>(m_dragItem->parent());
+         TreeItem *oldParentItem = static_cast<TreeItem*>(m_dragItem->tqparent());
          MenuFolderInfo *oldParentFolderInfo = oldParentItem ? oldParentItem->folderInfo() : m_rootFolder;
          oldParentFolderInfo->take(folderInfo);
 
@@ -997,7 +997,7 @@ void TreeView::newsubmenu()
    if (!ok) return;
 
    TQString file = caption;
-   file.replace('/', '-');
+   file.tqreplace('/', '-');
 
    file = createDirectoryFile(file, &m_newDirectoryList); // Create
 
@@ -1017,7 +1017,7 @@ void TreeView::newsubmenu()
    }
    else
    {
-      parentItem = static_cast<TreeItem*>(item->parent());
+      parentItem = static_cast<TreeItem*>(item->tqparent());
       folder = parentItem ? parentItem->directory() : TQString::null;
    }
 
@@ -1069,7 +1069,7 @@ void TreeView::newitem()
 
    TQString menuId;
    TQString file = caption;
-   file.replace('/', '-');
+   file.tqreplace('/', '-');
 
    file = createDesktopFile(file, &menuId, &m_newMenuIds); // Create
 
@@ -1093,7 +1093,7 @@ void TreeView::newitem()
    }
    else
    {
-      parentItem = static_cast<TreeItem*>(item->parent());
+      parentItem = static_cast<TreeItem*>(item->tqparent());
       folder = parentItem ? parentItem->directory() : TQString::null;
    }
 
@@ -1139,7 +1139,7 @@ void TreeView::newsep()
    }
    else
    {
-      parentItem = static_cast<TreeItem*>(item->parent());
+      parentItem = static_cast<TreeItem*>(item->tqparent());
    }
 
    // create the TreeItem
@@ -1181,7 +1181,7 @@ void TreeView::copy( bool cutting )
     if (item == 0) return;
 
     if (cutting)
-       setLayoutDirty((TreeItem*)item->parent());
+       setLayoutDirty((TreeItem*)item->tqparent());
 
     // clean up old stuff
     cleanupClipboard();
@@ -1256,7 +1256,7 @@ void TreeView::paste()
    }
    else
    {
-      parentItem = static_cast<TreeItem*>(item->parent());
+      parentItem = static_cast<TreeItem*>(item->tqparent());
       folder = parentItem ? parentItem->directory() : TQString::null;
    }
 
@@ -1384,7 +1384,7 @@ void TreeView::del()
 
 void TreeView::del(TreeItem *item, bool deleteInfo)
 {
-    TreeItem *parentItem = static_cast<TreeItem*>(item->parent());
+    TreeItem *parentItem = static_cast<TreeItem*>(item->tqparent());
     // is file a .directory or a .desktop file
     if(item->isDirectory())
     {

@@ -27,7 +27,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <tqframe.h>
 #include <tqvaluevector.h>
 
-class DockContainer : public QFrame
+class DockContainer : public TQFrame
 {
     Q_OBJECT
 

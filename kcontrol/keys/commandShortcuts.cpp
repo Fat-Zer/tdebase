@@ -83,13 +83,13 @@ void CommandShortcutsModule::initGUI()
     label->setText(i18n("<qt>Below is a list of known commands which you may assign keyboard shortcuts to. "
                         "To edit, add or remove entries from this list use the "
                         "<a href=\"launchMenuEditor\">KDE menu editor</a>.</qt>"));
-    label->setSizePolicy(TQSizePolicy::Preferred, TQSizePolicy::Minimum);
+    label->tqsetSizePolicy(TQSizePolicy::Preferred, TQSizePolicy::Minimum);
     disconnect(label, TQT_SIGNAL(linkClicked(const TQString &)), label, TQT_SLOT(openLink(const TQString &)));
     connect(label, TQT_SIGNAL(linkClicked(const TQString &)), this, TQT_SLOT(launchMenuEditor()));
     mainLayout->addWidget(label);
 
     m_tree = new AppTreeView(this, "appTreeView");
-    m_tree->setSizePolicy(TQSizePolicy::Preferred, TQSizePolicy::Expanding);
+    m_tree->tqsetSizePolicy(TQSizePolicy::Preferred, TQSizePolicy::Expanding);
     mainLayout->setStretchFactor(m_tree, 10);
     mainLayout->addWidget(m_tree);
     TQWhatsThis::add(m_tree,
@@ -131,7 +131,7 @@ void CommandShortcutsModule::initGUI()
 void CommandShortcutsModule::launchMenuEditor()
 {
     if ( KApplication::startServiceByDesktopName( "kmenuedit",
-                                                  TQString::null /*url*/,
+                                                  TQString() /*url*/,
                                                   0 /*error*/,
                                                   0 /*dcopservice*/,
                                                   0 /*pid*/,
@@ -156,9 +156,9 @@ void CommandShortcutsModule::shortcutRadioToggled(bool remove)
 
     if (remove)
     {
-        m_shortcutButton->setShortcut(TQString::null, false);
-        item->setAccel(TQString::null);
-        if (m_changedItems.findRef(item) == -1)
+        m_shortcutButton->setShortcut(TQString(), false);
+        item->setAccel(TQString());
+        if (m_changedItems.tqfindRef(item) == -1)
         {
             m_changedItems.append(item);
         }
@@ -186,7 +186,7 @@ void CommandShortcutsModule::shortcutChanged(const KShortcut& shortcut)
     m_shortcutButton->setShortcut(accel, false);
     item->setAccel(accel);
     m_noneRadio->blockSignals(false);
-    if (m_changedItems.findRef(item) == -1)
+    if (m_changedItems.tqfindRef(item) == -1)
     {
        m_changedItems.append(item);
     }

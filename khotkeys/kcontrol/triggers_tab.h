@@ -58,7 +58,7 @@ class Triggers_tab
     };
 
 class Trigger_list_item
-    : public QListViewItem
+    : public TQListViewItem
     {
     public:
         Trigger_list_item( TQListView* parent_P, Trigger* trigger_P );
@@ -80,7 +80,7 @@ class Trigger_dialog
 
 // TODO no need for such extra class?    
 class Shortcut_trigger_widget
-    : public QWidget
+    : public TQWidget
     {
     Q_OBJECT
     public:

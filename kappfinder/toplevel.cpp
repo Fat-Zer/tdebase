@@ -54,7 +54,7 @@ TopLevel::TopLevel( const TQString &destDir, TQWidget *parent, const char *name 
                                     "applications on your system and adds "
                                     "them to the KDE menu system. "
                                     "Click 'Scan' to begin, select the desired applications and then click 'Apply'."), this);
-  label->setAlignment( AlignAuto | WordBreak );
+  label->tqsetAlignment( AlignAuto | WordBreak );
   layout->addWidget( label );
 
   layout->addSpacing( 5 );
@@ -77,18 +77,18 @@ TopLevel::TopLevel( const TQString &destDir, TQWidget *parent, const char *name 
   layout->addWidget( mSummary );
 
   KButtonBox* bbox = new KButtonBox( this );
-  mScanButton = bbox->addButton( KGuiItem( i18n( "Scan" ), "find"), this, TQT_SLOT( slotScan() ) );
+  mScanButton = bbox->addButton( KGuiItem( i18n( "Scan" ), "find"), TQT_TQOBJECT(this), TQT_SLOT( slotScan() ) );
   bbox->addStretch( 5 );
-  mSelectButton = bbox->addButton( i18n( "Select All" ), this,
+  mSelectButton = bbox->addButton( i18n( "Select All" ), TQT_TQOBJECT(this),
                                    TQT_SLOT( slotSelectAll() ) );
   mSelectButton->setEnabled( false );
-  mUnSelectButton = bbox->addButton( i18n( "Unselect All" ), this,
+  mUnSelectButton = bbox->addButton( i18n( "Unselect All" ), TQT_TQOBJECT(this),
                                      TQT_SLOT( slotUnselectAll() ) );
   mUnSelectButton->setEnabled( false );
   bbox->addStretch( 5 );
-  mApplyButton = bbox->addButton( KStdGuiItem::apply(), this, TQT_SLOT( slotCreate() ) );
+  mApplyButton = bbox->addButton( KStdGuiItem::apply(), TQT_TQOBJECT(this), TQT_SLOT( slotCreate() ) );
   mApplyButton->setEnabled( false );
-  bbox->addButton( KStdGuiItem::close(), kapp, TQT_SLOT( quit() ) );
+  bbox->addButton( KStdGuiItem::close(), TQT_TQOBJECT(kapp), TQT_SLOT( quit() ) );
   bbox->layout();
 
   layout->addWidget( bbox );
@@ -100,7 +100,7 @@ TopLevel::TopLevel( const TQString &destDir, TQWidget *parent, const char *name 
   adjustSize();
 
   mDestDir = destDir;
-  mDestDir = mDestDir.replace( TQRegExp( "^~/" ), TQDir::homeDirPath() + "/" );
+  mDestDir = mDestDir.tqreplace( TQRegExp( "^~/" ), TQDir::homeDirPath() + "/" );
 	
   KStartupInfo::appStarted();
 
@@ -183,9 +183,9 @@ void TopLevel::slotScan()
     mProgress->setProgress( mProgress->progress() + 1 );
 
     TQString desktopName = *it;
-    int i = desktopName.findRev('/');
+    int i = desktopName.tqfindRev('/');
     desktopName = desktopName.mid(i+1);
-    i = desktopName.findRev('.');
+    i = desktopName.tqfindRev('.');
     if (i != -1)
        desktopName = desktopName.left(i);
 
@@ -207,9 +207,9 @@ void TopLevel::slotScan()
     // copy over the desktop file, if exists
     if ( scanDesktopFile( mAppCache, *it, mDestDir ) ) {
       TQString relPath = *it;
-      int pos = relPath.find( "kappfinder/apps/" );
+      int pos = relPath.tqfind( "kappfinder/apps/" );
       relPath = relPath.mid( pos + strlen( "kappfinder/apps/" ) );
-      relPath = relPath.left( relPath.findRev( '/' ) + 1 );
+      relPath = relPath.left( relPath.tqfindRev( '/' ) + 1 );
       TQStringList dirList = TQStringList::split( '/', relPath );
 
       TQListViewItem *dirItem = 0;

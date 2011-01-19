@@ -32,7 +32,7 @@ KonqPixmapProvider * KonqPixmapProvider::s_self = 0L;
 KonqPixmapProvider * KonqPixmapProvider::self()
 {
     if ( !s_self )
-	s_self = new KonqPixmapProvider( kapp, "KonqPixmapProvider" );
+	s_self = new KonqPixmapProvider( TQT_TQOBJECT(kapp), "KonqPixmapProvider" );
 
     return s_self;
 }
@@ -54,7 +54,7 @@ KonqPixmapProvider::~KonqPixmapProvider()
 // finally, inserts the url/icon pair into the cache
 TQString KonqPixmapProvider::iconNameFor( const TQString& url )
 {
-    TQMapIterator<TQString,TQString> it = iconMap.find( url );
+    TQMapIterator<TQString,TQString> it = iconMap.tqfind( url );
     TQString icon;
     if ( it != iconMap.end() ) {
         icon = it.data();
@@ -120,7 +120,7 @@ void KonqPixmapProvider::save( KConfig *kc, const TQString& key,
     TQStringList::ConstIterator it = items.begin();
     TQMapConstIterator<TQString,TQString> mit;
     while ( it != items.end() ) {
-	mit = iconMap.find( *it );
+	mit = iconMap.tqfind( *it );
 	if ( mit != iconMap.end() ) {
 	    list.append( mit.key() );
 	    list.append( mit.data() );
@@ -182,12 +182,12 @@ TQPixmap KonqPixmapProvider::loadIcon( const TQString& url, const TQString& icon
 	int x = big.width()  - small.width();
 	int y = 0;
 
- 	if ( big.mask() ) {
- 	    TQBitmap mask = *big.mask();
+ 	if ( big.tqmask() ) {
+ 	    TQBitmap mask = *big.tqmask();
  	    bitBlt( &mask, x, y,
-            small.mask() ? const_cast<TQBitmap *>(small.mask()) : &small, 0, 0,
+            small.tqmask() ? TQT_TQPIXMAP(const_cast<TQBitmap *>(small.tqmask())) : &small, 0, 0,
  		    small.width(), small.height(),
- 		    small.mask() ? OrROP : SetROP );
+ 		    small.tqmask() ? OrROP : SetROP );
  	    big.setMask( mask );
  	}
 

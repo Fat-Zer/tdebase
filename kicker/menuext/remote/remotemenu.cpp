@@ -93,7 +93,7 @@ void RemoteMenu::initialize()
 
         for(; name!=endf; ++name)
         {
-            if (!names_found.contains(*name))
+            if (!names_found.tqcontains(*name))
             {
                 names_found.append(*name);
                 TQString filename = *dirpath+*name;
@@ -124,7 +124,7 @@ void RemoteMenu::openRemoteDir()
 
 void RemoteMenu::slotExec(int id)
 {
-    if (m_desktopMap.contains(id))
+    if (m_desktopMap.tqcontains(id))
     {
         new KRun(m_desktopMap[id]);
     }

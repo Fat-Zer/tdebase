@@ -38,7 +38,7 @@ class KService;
 class MenuFolderInfo;
 class MenuEntryInfo;
 
-class BasicTab : public QWidget
+class BasicTab : public TQWidget
 {
     Q_OBJECT
 
@@ -77,7 +77,7 @@ protected:
     KIconButton  *_iconButton;
     TQGroupBox    *_path_group, *_term_group, *_uid_group, *general_group_keybind;
     TQLabel *_termOptLabel, *_uidLabel, *_pathLabel, *_nameLabel, *_commentLabel, *_execLabel;
-    QLabel	*_descriptionLabel;
+    TQLabel	*_descriptionLabel;
 
     MenuFolderInfo *_menuFolderInfo;
     MenuEntryInfo  *_menuEntryInfo;

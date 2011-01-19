@@ -1,6 +1,6 @@
 <!DOCTYPE UI><UI version="3.3" stdsetdef="1">
 <class>ListViewSettingsWidget</class>
-<widget class="QWidget">
+<widget class="TQWidget">
     <property name="name">
         <cstring>ListViewSettingsWidget</cstring>
     </property>
@@ -16,7 +16,7 @@
         <property name="name">
             <cstring>unnamed</cstring>
         </property>
-        <widget class="QGroupBox">
+        <widget class="TQGroupBox">
             <property name="name">
                 <cstring>titleFrame</cstring>
             </property>
@@ -27,14 +27,14 @@
                 <property name="name">
                     <cstring>unnamed</cstring>
                 </property>
-                <widget class="QLineEdit">
+                <widget class="TQLineEdit">
                     <property name="name">
                         <cstring>m_title</cstring>
                     </property>
                 </widget>
             </vbox>
         </widget>
-        <widget class="QGroupBox">
+        <widget class="TQGroupBox">
             <property name="name">
                 <cstring>colorFrame</cstring>
             </property>
@@ -55,7 +55,7 @@
             <property name="title">
                 <string>Colors</string>
             </property>
-            <property name="alignment">
+            <property name="tqalignment">
                 <set>WordBreak|AlignVCenter|AlignLeft</set>
             </property>
             <property name="vAlign" stdset="0">
@@ -66,7 +66,7 @@
                 <property name="name">
                     <cstring>unnamed</cstring>
                 </property>
-                <widget class="QLayoutWidget" row="0" column="0">
+                <widget class="TQLayoutWidget" row="0" column="0">
                     <property name="name">
                         <cstring>layout2</cstring>
                     </property>
@@ -74,7 +74,7 @@
                         <property name="name">
                             <cstring>unnamed</cstring>
                         </property>
-                        <widget class="QLabel">
+                        <widget class="TQLabel">
                             <property name="name">
                                 <cstring>textLabel1</cstring>
                             </property>
@@ -82,7 +82,7 @@
                                 <string>Text color:</string>
                             </property>
                         </widget>
-                        <widget class="QLabel">
+                        <widget class="TQLabel">
                             <property name="name">
                                 <cstring>textLabel2</cstring>
                             </property>
@@ -90,7 +90,7 @@
                                 <string>Grid color:</string>
                             </property>
                         </widget>
-                        <widget class="QLabel">
+                        <widget class="TQLabel">
                             <property name="name">
                                 <cstring>textLabel3</cstring>
                             </property>
@@ -100,7 +100,7 @@
                         </widget>
                     </vbox>
                 </widget>
-                <widget class="QLayoutWidget" row="0" column="1">
+                <widget class="TQLayoutWidget" row="0" column="1">
                     <property name="name">
                         <cstring>layout1</cstring>
                     </property>
@@ -164,14 +164,14 @@
     <include location="local" impldecl="in implementation">ListViewSettingsWidget.ui.h</include>
 </includes>
 <functions>
-    <function specifier="non virtual" returnType="QString">title()</function>
-    <function specifier="non virtual" returnType="QColor">gridColor()</function>
-    <function specifier="non virtual" returnType="QColor">backgroundColor()</function>
-    <function specifier="non virtual" returnType="QColor">textColor()</function>
-    <function specifier="non virtual">setTitle( const QString &amp; t )</function>
-    <function specifier="non virtual">setBackgroundColor( const QColor &amp; c )</function>
-    <function specifier="non virtual">setTextColor( const QColor &amp; c )</function>
-    <function specifier="non virtual">setGridColor( const QColor &amp; c )</function>
+    <function specifier="non virtual" returnType="TQString">title()</function>
+    <function specifier="non virtual" returnType="TQColor">gridColor()</function>
+    <function specifier="non virtual" returnType="TQColor">backgroundColor()</function>
+    <function specifier="non virtual" returnType="TQColor">textColor()</function>
+    <function specifier="non virtual">setTitle( const TQString &amp; t )</function>
+    <function specifier="non virtual">setBackgroundColor( const TQColor &amp; c )</function>
+    <function specifier="non virtual">setTextColor( const TQColor &amp; c )</function>
+    <function specifier="non virtual">setGridColor( const TQColor &amp; c )</function>
 </functions>
 <layoutdefaults spacing="6" margin="11"/>
 <layoutfunctions spacing="KDialog::spacingHint" margin="KDialog::marginHint"/>

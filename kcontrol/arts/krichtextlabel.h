@@ -45,8 +45,8 @@ public:
   int defaultWidth() const { return m_defaultWidth; }
   void setDefaultWidth(int defaultWidth);
 
-  virtual TQSize minimumSizeHint() const;
-  virtual TQSize sizeHint() const;
+  virtual TQSize tqminimumSizeHint() const;
+  virtual TQSize tqsizeHint() const;
   TQSizePolicy sizePolicy() const;
 
 public slots:

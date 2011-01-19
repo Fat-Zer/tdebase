@@ -1,6 +1,6 @@
 <!DOCTYPE UI><UI version="3.2" stdsetdef="1">
 <class>KMouseDlg</class>
-<widget class="QWidget">
+<widget class="TQWidget">
     <property name="name">
         <cstring>KMouseDlg</cstring>
     </property>
@@ -16,7 +16,7 @@
         <property name="name">
             <cstring>unnamed</cstring>
         </property>
-        <widget class="QButtonGroup">
+        <widget class="TQButtonGroup">
             <property name="name">
                 <cstring>handedBox</cstring>
             </property>
@@ -57,7 +57,7 @@
                     <property name="sizeType">
                         <enum>Expanding</enum>
                     </property>
-                    <property name="sizeHint">
+                    <property name="tqsizeHint">
                         <size>
                             <width>20</width>
                             <height>20</height>
@@ -74,14 +74,14 @@
                     <property name="sizeType">
                         <enum>Expanding</enum>
                     </property>
-                    <property name="sizeHint">
+                    <property name="tqsizeHint">
                         <size>
                             <width>20</width>
                             <height>20</height>
                         </size>
                     </property>
                 </spacer>
-                <widget class="QRadioButton" row="0" column="0">
+                <widget class="TQRadioButton" row="0" column="0">
                     <property name="name">
                         <cstring>rightHanded</cstring>
                     </property>
@@ -92,7 +92,7 @@
                         <bool>true</bool>
                     </property>
                 </widget>
-                <widget class="QRadioButton" row="1" column="0">
+                <widget class="TQRadioButton" row="1" column="0">
                     <property name="name">
                         <cstring>leftHanded</cstring>
                     </property>
@@ -100,7 +100,7 @@
                         <string>Le&amp;ft handed</string>
                     </property>
                 </widget>
-                <widget class="QLabel" row="0" column="1" rowspan="3" colspan="1">
+                <widget class="TQLabel" row="0" column="1" rowspan="3" colspan="1">
                     <property name="name">
                         <cstring>mousePix</cstring>
                     </property>
@@ -112,7 +112,7 @@
                             <verstretch>0</verstretch>
                         </sizepolicy>
                     </property>
-                    <property name="maximumSize">
+                    <property name="tqmaximumSize">
                         <size>
                             <width>150</width>
                             <height>115</height>
@@ -124,7 +124,7 @@
                 </widget>
             </grid>
         </widget>
-        <widget class="QCheckBox">
+        <widget class="TQCheckBox">
             <property name="name">
                 <cstring>cbScrollPolarity</cstring>
             </property>
@@ -135,7 +135,7 @@
                 <string>Change the direction of scrolling for the mouse wheel or the 4th and 5th mouse buttons.</string>
             </property>
         </widget>
-        <widget class="QGroupBox">
+        <widget class="TQGroupBox">
             <property name="name">
                 <cstring>GroupBox1</cstring>
             </property>
@@ -146,7 +146,7 @@
                 <property name="name">
                     <cstring>unnamed</cstring>
                 </property>
-                <widget class="QRadioButton" row="0" column="0" rowspan="1" colspan="3">
+                <widget class="TQRadioButton" row="0" column="0" rowspan="1" colspan="3">
                     <property name="name">
                         <cstring>doubleClick</cstring>
                     </property>
@@ -171,7 +171,7 @@
                         <enum>Horizontal</enum>
                     </property>
                 </widget>
-                <widget class="QCheckBox" row="6" column="0" rowspan="1" colspan="3">
+                <widget class="TQCheckBox" row="6" column="0" rowspan="1" colspan="3">
                     <property name="name">
                         <cstring>cbVisualActivate</cstring>
                     </property>
@@ -179,18 +179,18 @@
                         <string>Visual f&amp;eedback on activation</string>
                     </property>
                 </widget>
-                <widget class="QCheckBox" row="2" column="1" rowspan="1" colspan="2">
+                <widget class="TQCheckBox" row="2" column="1" rowspan="1" colspan="2">
                     <property name="name">
-                        <cstring>cb_pointershape</cstring>
+                        <cstring>cb_pointertqshape</cstring>
                     </property>
                     <property name="text">
-                        <string>Cha&amp;nge pointer shape over icons</string>
+                        <string>Cha&amp;nge pointer tqshape over icons</string>
                     </property>
                     <property name="checked">
                         <bool>true</bool>
                     </property>
                 </widget>
-                <widget class="QCheckBox" row="3" column="1" rowspan="1" colspan="2">
+                <widget class="TQCheckBox" row="3" column="1" rowspan="1" colspan="2">
                     <property name="name">
                         <cstring>cbAutoSelect</cstring>
                     </property>
@@ -208,14 +208,14 @@
                     <property name="sizeType">
                         <enum>Fixed</enum>
                     </property>
-                    <property name="sizeHint">
+                    <property name="tqsizeHint">
                         <size>
                             <width>20</width>
                             <height>60</height>
                         </size>
                     </property>
                 </spacer>
-                <widget class="QLayoutWidget" row="4" column="2">
+                <widget class="TQLayoutWidget" row="4" column="2">
                     <property name="name">
                         <cstring>layout7</cstring>
                     </property>
@@ -223,7 +223,7 @@
                         <property name="name">
                             <cstring>unnamed</cstring>
                         </property>
-                        <widget class="QLabel" row="1" column="1">
+                        <widget class="TQLabel" row="1" column="1">
                             <property name="name">
                                 <cstring>lb_short</cstring>
                             </property>
@@ -231,11 +231,11 @@
                                 <string>Short</string>
                             </property>
                         </widget>
-                        <widget class="QSlider" row="0" column="1" rowspan="1" colspan="2">
+                        <widget class="TQSlider" row="0" column="1" rowspan="1" colspan="2">
                             <property name="name">
                                 <cstring>slAutoSelect</cstring>
                             </property>
-                            <property name="minimumSize">
+                            <property name="tqminimumSize">
                                 <size>
                                     <width>250</width>
                                     <height>0</height>
@@ -258,14 +258,14 @@
                             <property name="sizeType">
                                 <enum>Expanding</enum>
                             </property>
-                            <property name="sizeHint">
+                            <property name="tqsizeHint">
                                 <size>
                                     <width>230</width>
                                     <height>20</height>
                                 </size>
                             </property>
                         </spacer>
-                        <widget class="QLabel" row="0" column="0">
+                        <widget class="TQLabel" row="0" column="0">
                             <property name="name">
                                 <cstring>lDelay</cstring>
                             </property>
@@ -276,14 +276,14 @@
                                 <cstring>slAutoSelect</cstring>
                             </property>
                         </widget>
-                        <widget class="QLabel" row="1" column="2">
+                        <widget class="TQLabel" row="1" column="2">
                             <property name="name">
                                 <cstring>lb_long</cstring>
                             </property>
                             <property name="text">
                                 <string>Long</string>
                             </property>
-                            <property name="alignment">
+                            <property name="tqalignment">
                                 <set>AlignVCenter|AlignRight</set>
                             </property>
                             <property name="hAlign" stdset="0">
@@ -301,14 +301,14 @@
                     <property name="sizeType">
                         <enum>Fixed</enum>
                     </property>
-                    <property name="sizeHint">
+                    <property name="tqsizeHint">
                         <size>
                             <width>20</width>
                             <height>21</height>
                         </size>
                     </property>
                 </spacer>
-                <widget class="QRadioButton" row="1" column="0" rowspan="1" colspan="3">
+                <widget class="TQRadioButton" row="1" column="0" rowspan="1" colspan="3">
                     <property name="name">
                         <cstring>singleClick</cstring>
                     </property>
@@ -331,7 +331,7 @@
             <property name="sizeType">
                 <enum>Expanding</enum>
             </property>
-            <property name="sizeHint">
+            <property name="tqsizeHint">
                 <size>
                     <width>20</width>
                     <height>16</height>
@@ -344,7 +344,7 @@
     <connection>
         <sender>singleClick</sender>
         <signal>toggled(bool)</signal>
-        <receiver>cb_pointershape</receiver>
+        <receiver>cb_pointertqshape</receiver>
         <slot>setEnabled(bool)</slot>
     </connection>
     <connection>
@@ -364,7 +364,7 @@
     <tabstop>rightHanded</tabstop>
     <tabstop>leftHanded</tabstop>
     <tabstop>singleClick</tabstop>
-    <tabstop>cb_pointershape</tabstop>
+    <tabstop>cb_pointertqshape</tabstop>
     <tabstop>cbAutoSelect</tabstop>
     <tabstop>slAutoSelect</tabstop>
     <tabstop>doubleClick</tabstop>

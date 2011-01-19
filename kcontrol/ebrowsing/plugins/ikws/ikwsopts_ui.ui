@@ -1,6 +1,6 @@
 <!DOCTYPE UI><UI version="3.2" stdsetdef="1">
 <class>FilterOptionsUI</class>
-<widget class="QWidget">
+<widget class="TQWidget">
     <property name="name">
         <cstring>FilterOptionsUI</cstring>
     </property>
@@ -19,7 +19,7 @@
         <property name="margin">
             <number>0</number>
         </property>
-        <widget class="QCheckBox">
+        <widget class="TQCheckBox">
             <property name="name">
                 <cstring>cbEnableShortcuts</cstring>
             </property>
@@ -32,7 +32,7 @@ Enable shortcuts that allow you to quickly search for information on the web. Fo
 &lt;/qt&gt;</string>
             </property>
         </widget>
-        <widget class="QLayoutWidget">
+        <widget class="TQLayoutWidget">
             <property name="name">
                 <cstring>layout10</cstring>
             </property>
@@ -40,7 +40,7 @@ Enable shortcuts that allow you to quickly search for information on the web. Fo
                 <property name="name">
                     <cstring>unnamed</cstring>
                 </property>
-                <widget class="QLabel" row="5" column="0">
+                <widget class="TQLabel" row="5" column="0">
                     <property name="name">
                         <cstring>lbDelimiter</cstring>
                     </property>
@@ -62,7 +62,7 @@ Enable shortcuts that allow you to quickly search for information on the web. Fo
                         <string>Choose the delimiter that separates the keyword from the phrase or word to be searched.</string>
                     </property>
                 </widget>
-                <widget class="QLabel" row="4" column="0">
+                <widget class="TQLabel" row="4" column="0">
                     <property name="name">
                         <cstring>lbDefaultEngine</cstring>
                     </property>
@@ -112,7 +112,7 @@ Select the search engine to use for input boxes that provide automatic lookup se
 &lt;/qt&gt;</string>
                     </property>
                 </widget>
-                <widget class="QPushButton" row="1" column="2">
+                <widget class="TQPushButton" row="1" column="2">
                     <property name="name">
                         <cstring>pbChange</cstring>
                     </property>
@@ -126,7 +126,7 @@ Select the search engine to use for input boxes that provide automatic lookup se
                         <string>Modify a search provider.</string>
                     </property>
                 </widget>
-                <widget class="QPushButton" row="2" column="2">
+                <widget class="TQPushButton" row="2" column="2">
                     <property name="name">
                         <cstring>pbDelete</cstring>
                     </property>
@@ -140,7 +140,7 @@ Select the search engine to use for input boxes that provide automatic lookup se
                         <string>Delete the selected search provider.</string>
                     </property>
                 </widget>
-                <widget class="QPushButton" row="0" column="2">
+                <widget class="TQPushButton" row="0" column="2">
                     <property name="name">
                         <cstring>pbNew</cstring>
                     </property>
@@ -161,7 +161,7 @@ Select the search engine to use for input boxes that provide automatic lookup se
                     <property name="sizeType">
                         <enum>Expanding</enum>
                     </property>
-                    <property name="sizeHint">
+                    <property name="tqsizeHint">
                         <size>
                             <width>21</width>
                             <height>170</height>

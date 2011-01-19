@@ -31,7 +31,7 @@
 class BGMultiWallpaperBase;
 class KBackgroundSettings;
 
-class BGMultiWallpaperList : public QListBox
+class BGMultiWallpaperList : public TQListBox
 {
 public:
    BGMultiWallpaperList(TQWidget *parent, const char *name);

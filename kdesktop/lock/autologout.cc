@@ -27,7 +27,7 @@
 
 #define COUNTDOWN 30 
 
-AutoLogout::AutoLogout(LockProcess *parent) : TQDialog(parent, "password dialog", true, WX11BypassWM)
+AutoLogout::AutoLogout(LockProcess *parent) : TQDialog(parent, "password dialog", true, (WFlags)WX11BypassWM)
 {
     frame = new TQFrame(this);
     frame->setFrameStyle(TQFrame::Panel | TQFrame::Raised);
@@ -40,7 +40,7 @@ AutoLogout::AutoLogout(LockProcess *parent) : TQDialog(parent, "password dialog"
     TQLabel *infoLabel = new TQLabel(i18n("<qt>To prevent being logged out, resume using this session by moving the mouse or pressing a key.</qt>"), frame);
 
     mStatusLabel = new TQLabel("<b> </b>", frame);
-    mStatusLabel->setAlignment(TQLabel::AlignCenter);
+    mStatusLabel->tqsetAlignment(TQLabel::AlignCenter);
 
     TQLabel *mProgressLabel = new TQLabel("Time Remaining:", frame);
     mProgressRemaining = new TQProgressBar(frame);
@@ -66,7 +66,7 @@ AutoLogout::AutoLogout(LockProcess *parent) : TQDialog(parent, "password dialog"
 
     mCountdownTimerId = startTimer(1000/25);
 
-    connect(qApp, TQT_SIGNAL(activity()), TQT_SLOT(slotActivity()));
+    connect(tqApp, TQT_SIGNAL(activity()), TQT_SLOT(slotActivity()));
 }
 
 AutoLogout::~AutoLogout()
@@ -102,7 +102,7 @@ void AutoLogout::slotActivity()
 
 void AutoLogout::logout()
 {
-	killTimers();
+	TQT_TQOBJECT(this)->killTimers();
 	DCOPRef("ksmserver","ksmserver").send("logout", 0, 0, 0);
 }
 

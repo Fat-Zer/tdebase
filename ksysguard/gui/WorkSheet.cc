@@ -450,14 +450,14 @@ void WorkSheet::dropEvent( TQDropEvent *e )
      * event and replace or add sensor. */
     for ( uint r = 0; r < mRows; ++r )
       for ( uint c = 0; c < mColumns; ++c )
-        if ( mDisplayList[ r ][ c ]->geometry().contains( e->pos() ) ) {
+        if ( mDisplayList[ r ][ c ]->tqgeometry().tqcontains( e->pos() ) ) {
           addDisplay( hostName, sensorName, sensorType, sensorDescr, r, c );
           return;
         }
   }
 }
 
-TQSize WorkSheet::sizeHint() const
+TQSize WorkSheet::tqsizeHint() const
 {
   return TQSize( 200,150 );
 }
@@ -531,7 +531,7 @@ void WorkSheet::replaceDisplay( uint row, uint column, KSGRD::SensorDisplay* new
     mDisplayList[ row ][ column ]->show();
   }
 
-  setMinimumSize(sizeHint());
+  setMinimumSize(tqsizeHint());
 
   setModified( true );
 }

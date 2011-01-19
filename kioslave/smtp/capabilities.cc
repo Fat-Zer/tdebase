@@ -126,7 +126,7 @@ namespace KioSMTP {
       if ( it.key() == "AUTH" )
 	result += it.data();
       else if ( it.key().startsWith( "AUTH=" ) ) {
-	result.push_back( it.key().mid( qstrlen("AUTH=") ) );
+	result.push_back( it.key().mid( tqstrlen("AUTH=") ) );
 	result += it.data();
       }
     }

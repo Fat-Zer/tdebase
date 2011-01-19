@@ -1,6 +1,6 @@
 <!DOCTYPE UI><UI version="3.3" stdsetdef="1">
 <class>NotificationDialogView</class>
-<widget class="QWidget">
+<widget class="TQWidget">
     <property name="name">
         <cstring>NotificationDialogView</cstring>
     </property>
@@ -19,7 +19,7 @@
         <property name="spacing">
             <number>15</number>
         </property>
-        <widget class="QLayoutWidget">
+        <widget class="TQLayoutWidget">
             <property name="name">
                 <cstring>layout2</cstring>
             </property>
@@ -30,7 +30,7 @@
                 <property name="spacing">
                     <number>20</number>
                 </property>
-                <widget class="QLabel">
+                <widget class="TQLabel">
                     <property name="name">
                         <cstring>iconLabel</cstring>
                     </property>
@@ -42,13 +42,13 @@
                             <verstretch>0</verstretch>
                         </sizepolicy>
                     </property>
-                    <property name="minimumSize">
+                    <property name="tqminimumSize">
                         <size>
                             <width>64</width>
                             <height>64</height>
                         </size>
                     </property>
-                    <property name="maximumSize">
+                    <property name="tqmaximumSize">
                         <size>
                             <width>64</width>
                             <height>64</height>
@@ -61,7 +61,7 @@
                         <bool>true</bool>
                     </property>
                 </widget>
-                <widget class="QLabel">
+                <widget class="TQLabel">
                     <property name="name">
                         <cstring>textLabel1</cstring>
                     </property>
@@ -74,7 +74,7 @@
                 </widget>
             </hbox>
         </widget>
-        <widget class="QLabel">
+        <widget class="TQLabel">
             <property name="name">
                 <cstring>mimetypeLabel</cstring>
             </property>
@@ -95,7 +95,7 @@
                 <cstring>actionsList</cstring>
             </property>
         </widget>
-        <widget class="QCheckBox">
+        <widget class="TQCheckBox">
             <property name="name">
                 <cstring>autoActionCheck</cstring>
             </property>

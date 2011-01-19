@@ -35,7 +35,7 @@ class TQLabel;
 class QBoxGroup;
 class ListViewSettings;
 
-class PrivateListView : public QListView
+class PrivateListView : public TQListView
 {
 	Q_OBJECT
 public:
@@ -52,14 +52,14 @@ private:
   TQStringList mColumnTypes;
 };
 
-class PrivateListViewItem : public QListViewItem
+class PrivateListViewItem : public TQListViewItem
 {
 public:
 	PrivateListViewItem(PrivateListView *parent = 0);
 
-	void paintCell(TQPainter *p, const TQColorGroup &, int column, int width, int alignment) {
-		TQColorGroup cgroup = _parent->colorGroup();
-		TQListViewItem::paintCell(p, cgroup, column, width, alignment);
+	void paintCell(TQPainter *p, const TQColorGroup &, int column, int width, int tqalignment) {
+		TQColorGroup cgroup = _parent->tqcolorGroup();
+		TQListViewItem::paintCell(p, cgroup, column, width, tqalignment);
 		p->setPen(cgroup.color(TQColorGroup::Link));
 		p->drawLine(0, height() - 1, width - 1, height() - 1);
 	}

@@ -1,6 +1,6 @@
 <!DOCTYPE UI><UI version="3.3" stdsetdef="1">
 <class>KWinInternal::DetectWidgetBase</class>
-<widget class="QWidget">
+<widget class="TQWidget">
     <property name="name">
         <cstring>Form3</cstring>
     </property>
@@ -29,14 +29,14 @@
             <property name="sizeType">
                 <enum>Expanding</enum>
             </property>
-            <property name="sizeHint">
+            <property name="tqsizeHint">
                 <size>
                     <width>20</width>
                     <height>40</height>
                 </size>
             </property>
         </spacer>
-        <widget class="QLabel" row="6" column="0">
+        <widget class="TQLabel" row="6" column="0">
             <property name="name">
                 <cstring>textLabel11</cstring>
             </property>
@@ -44,7 +44,7 @@
                 <string>Extra role:</string>
             </property>
         </widget>
-        <widget class="QLabel" row="2" column="0">
+        <widget class="TQLabel" row="2" column="0">
             <property name="name">
                 <cstring>textLabel1</cstring>
             </property>
@@ -52,7 +52,7 @@
                 <string>Class:</string>
             </property>
         </widget>
-        <widget class="QLabel" row="3" column="0">
+        <widget class="TQLabel" row="3" column="0">
             <property name="name">
                 <cstring>textLabel3</cstring>
             </property>
@@ -60,7 +60,7 @@
                 <string>Role:</string>
             </property>
         </widget>
-        <widget class="QLabel" row="4" column="1">
+        <widget class="TQLabel" row="4" column="1">
             <property name="name">
                 <cstring>type_label</cstring>
             </property>
@@ -68,7 +68,7 @@
                 <string></string>
             </property>
         </widget>
-        <widget class="QLabel" row="5" column="0">
+        <widget class="TQLabel" row="5" column="0">
             <property name="name">
                 <cstring>textLabel8</cstring>
             </property>
@@ -76,7 +76,7 @@
                 <string>Title:</string>
             </property>
         </widget>
-        <widget class="QLabel" row="2" column="1">
+        <widget class="TQLabel" row="2" column="1">
             <property name="name">
                 <cstring>class_label</cstring>
             </property>
@@ -84,7 +84,7 @@
                 <string></string>
             </property>
         </widget>
-        <widget class="QLabel" row="3" column="1">
+        <widget class="TQLabel" row="3" column="1">
             <property name="name">
                 <cstring>role_label</cstring>
             </property>
@@ -92,7 +92,7 @@
                 <string></string>
             </property>
         </widget>
-        <widget class="QLabel" row="5" column="1">
+        <widget class="TQLabel" row="5" column="1">
             <property name="name">
                 <cstring>title_label</cstring>
             </property>
@@ -100,7 +100,7 @@
                 <string></string>
             </property>
         </widget>
-        <widget class="QLabel" row="7" column="1">
+        <widget class="TQLabel" row="7" column="1">
             <property name="name">
                 <cstring>machine_label</cstring>
             </property>
@@ -108,7 +108,7 @@
                 <string></string>
             </property>
         </widget>
-        <widget class="QLabel" row="4" column="0">
+        <widget class="TQLabel" row="4" column="0">
             <property name="name">
                 <cstring>textLabel4</cstring>
             </property>
@@ -116,7 +116,7 @@
                 <string>Type:</string>
             </property>
         </widget>
-        <widget class="QLabel" row="6" column="1">
+        <widget class="TQLabel" row="6" column="1">
             <property name="name">
                 <cstring>extrarole_label</cstring>
             </property>
@@ -124,7 +124,7 @@
                 <string></string>
             </property>
         </widget>
-        <widget class="QLabel" row="7" column="0">
+        <widget class="TQLabel" row="7" column="0">
             <property name="name">
                 <cstring>textLabel13</cstring>
             </property>
@@ -146,7 +146,7 @@
                 <enum>Horizontal</enum>
             </property>
         </widget>
-        <widget class="QLabel" row="0" column="0" rowspan="1" colspan="2">
+        <widget class="TQLabel" row="0" column="0" rowspan="1" colspan="2">
             <property name="name">
                 <cstring>textLabel9</cstring>
             </property>
@@ -154,7 +154,7 @@
                 <string>Information About Selected Window</string>
             </property>
         </widget>
-        <widget class="QButtonGroup" row="8" column="0" rowspan="1" colspan="2">
+        <widget class="TQButtonGroup" row="8" column="0" rowspan="1" colspan="2">
             <property name="name">
                 <cstring>buttonGroup1</cstring>
             </property>
@@ -165,7 +165,7 @@
                 <property name="name">
                     <cstring>unnamed</cstring>
                 </property>
-                <widget class="QRadioButton">
+                <widget class="TQRadioButton">
                     <property name="name">
                         <cstring>use_class</cstring>
                     </property>
@@ -179,7 +179,7 @@
                         <string>For selecting all windows belonging to a specific application, selecting only window class should usually work.</string>
                     </property>
                 </widget>
-                <widget class="QRadioButton">
+                <widget class="TQRadioButton">
                     <property name="name">
                         <cstring>use_role</cstring>
                     </property>
@@ -190,7 +190,7 @@
                         <string>For selecting a specific window in an application, both window class and window role should be selected. Window class will determine the application, and window role the specific window in the application; many applications do not provide useful window roles though.</string>
                     </property>
                 </widget>
-                <widget class="QRadioButton">
+                <widget class="TQRadioButton">
                     <property name="name">
                         <cstring>use_whole_class</cstring>
                     </property>
@@ -201,7 +201,7 @@
                         <string>With some (non-KDE) applications whole window class can be sufficient for selecting a specific window in an application, as they set whole window class to contain both application and window role.</string>
                     </property>
                 </widget>
-                <widget class="QCheckBox">
+                <widget class="TQCheckBox">
                     <property name="name">
                         <cstring>match_title</cstring>
                     </property>

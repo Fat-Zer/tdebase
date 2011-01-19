@@ -56,7 +56,7 @@ static TQString defaultDomain;
 static void
 splitEntity( const TQString &ent, TQString &dom, TQString &usr )
 {
-	int pos = ent.find( separator );
+	int pos = ent.tqfind( separator );
 	if (pos < 0)
 		dom = "<local>", usr = ent;
 	else
@@ -89,7 +89,8 @@ KWinbindGreeter::KWinbindGreeter( KGreeterPluginHandler *_handler,
 		themer = 0;
 
 	if (!themer)
-		layoutItem = grid = new TQGridLayout( 0, 0, 10 );
+		grid = new TQGridLayout( 0, 0, 10 );
+		layoutItem = TQT_TQLAYOUTITEM(grid);
 
 	domainLabel = loginLabel = passwdLabel = passwd1Label = passwd2Label = 0;
 	domainCombo = 0;
@@ -212,7 +213,7 @@ KWinbindGreeter::~KWinbindGreeter()
 		delete domainCombo;
 		return;
 	}
-	TQLayoutIterator it = static_cast<TQLayout *>(layoutItem)->iterator();
+	TQLayoutIterator it = TQT_TQLAYOUT(static_cast<QLayoutItem *>(layoutItem))->iterator();
 	for (TQLayoutItem *itm = it.current(); itm; itm = ++it)
 		delete itm->widget();
 	delete layoutItem;
@@ -227,7 +228,7 @@ KWinbindGreeter::slotChangedDomain( const TQString &dom )
 	TQStringList users;
 	if (dom == "<local>") {
 		for (TQStringList::ConstIterator it = allUsers.begin(); it != allUsers.end(); ++it)
-			if ((*it).find( separator ) < 0)
+			if ((*it).tqfind( separator ) < 0)
 				users << *it;
 	} else {
 		TQString st( dom + separator );
@@ -340,7 +341,7 @@ bool // virtual
 KWinbindGreeter::textMessage( const char *text, bool err )
 {
 	if (!err &&
-	    TQString( text ).find( TQRegExp( "^Changing password for [^ ]+$" ) ) >= 0)
+	    TQString( text ).tqfind( TQRegExp( "^Changing password for [^ ]+$" ) ) >= 0)
 		return true;
 	return false;
 }
@@ -355,15 +356,15 @@ KWinbindGreeter::textPrompt( const char *prompt, bool echo, bool nonBlocking )
 		exp = 1;
 	else {
 		TQString pr( prompt );
-		if (pr.find( TQRegExp( "\\b(old|current)\\b", false ) ) >= 0) {
+		if (pr.tqfind( TQRegExp( "\\b(old|current)\\b", false ) ) >= 0) {
 			handler->gplugReturnText( "",
 			                          KGreeterPluginHandler::IsOldPassword |
 			                          KGreeterPluginHandler::IsSecret );
 			return;
-		} else if (pr.find( TQRegExp( "\\b(re-?(enter|type)|again|confirm|repeat)\\b",
+		} else if (pr.tqfind( TQRegExp( "\\b(re-?(enter|type)|again|confirm|repeat)\\b",
 		                             false ) ) >= 0)
 			exp = 3;
-		else if (pr.find( TQRegExp( "\\bnew\\b", false ) ) >= 0)
+		else if (pr.tqfind( TQRegExp( "\\bnew\\b", false ) ) >= 0)
 			exp = 2;
 		else {
 			handler->gplugMsgBox( TQMessageBox::Critical,
@@ -593,7 +594,7 @@ KWinbindGreeter::slotEndDomainList()
     for (TQStringList::const_iterator it = mDomainListing.begin();
          it != mDomainListing.end(); ++it) {
 
-        if (!domainList.contains(*it))
+        if (!domainList.tqcontains(*it))
             domainList.append(*it);
     }
 
@@ -625,7 +626,7 @@ static bool init( const TQString &,
 {
 	echoMode = getConf( ctx, "EchoMode", TQVariant( -1 ) ).toInt();
 	staticDomains = TQStringList::split( ':', getConf( ctx, "winbind.Domains", TQVariant( "" ) ).toString() );
-	if (!staticDomains.contains("<local>"))
+	if (!staticDomains.tqcontains("<local>"))
 		staticDomains << "<local>";
 
 	defaultDomain = getConf( ctx, "winbind.DefaultDomain", TQVariant( staticDomains.first() ) ).toString();

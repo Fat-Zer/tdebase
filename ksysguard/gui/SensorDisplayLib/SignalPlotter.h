@@ -34,7 +34,7 @@
 
 class TQColor;
 
-class SignalPlotter : public QWidget
+class SignalPlotter : public TQWidget
 {
   Q_OBJECT
 

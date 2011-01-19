@@ -64,7 +64,7 @@ void WidgetCanvas::paintEvent(TQPaintEvent *)
 void WidgetCanvas::mousePressEvent( TQMouseEvent *me )
 {
     for ( int i = 0; i < MAX_HOTSPOTS; i++ )
-	if ( hotspots[i].rect.contains( me->pos() ) ) {
+	if ( hotspots[i].rect.tqcontains( me->pos() ) ) {
 	    emit widgetSelected( hotspots[i].number );
 	    return;
 	}
@@ -73,7 +73,7 @@ void WidgetCanvas::mousePressEvent( TQMouseEvent *me )
 void WidgetCanvas::mouseMoveEvent( TQMouseEvent *me )
 {
     for ( int i = 0; i < MAX_HOTSPOTS; i++ )
-	if ( hotspots[i].rect.contains( me->pos() ) ) {
+	if ( hotspots[i].rect.tqcontains( me->pos() ) ) {
 	    if ( i != currentHotspot ) {
 		TQString tip = tips[hotspots[i].number];
 		TQToolTip::remove( this );
@@ -91,7 +91,7 @@ void WidgetCanvas::dropEvent( TQDropEvent *e)
     TQColor c;
     if (KColorDrag::decode( e, c)) {
 	for ( int i = 0; i < MAX_HOTSPOTS; i++ )
-	    if ( hotspots[i].rect.contains( e->pos() ) ) {
+	    if ( hotspots[i].rect.tqcontains( e->pos() ) ) {
 		emit colorDropped( hotspots[i].number, c);
 		return;
 	    }
@@ -315,7 +315,7 @@ void WidgetCanvas::drawSampleWidgets()
     // Create a scrollbar and redirect drawing into a temp. pixmap to save a
     // lot of fiddly drawing later.
 
-    TQScrollBar *vertScrollBar = new TQScrollBar( TQScrollBar::Vertical, this );
+    TQScrollBar *vertScrollBar = new TQScrollBar( Qt::Vertical, this );
     // TODO: vertScrollBar->setStyle( new TQMotifStyle() );
     vertScrollBar->setGeometry( 400, 400, SCROLLBAR_SIZE, height());
     vertScrollBar->setRange( 0,  0 );
@@ -327,7 +327,7 @@ void WidgetCanvas::drawSampleWidgets()
 #ifndef __osf__
     TQPainter::redirect( vertScrollBar, &pm );
 #endif
-    vertScrollBar->repaint();
+    vertScrollBar->tqrepaint();
     TQPainter::redirect( vertScrollBar, 0 );
     vertScrollBar->hide();
 
@@ -337,8 +337,8 @@ void WidgetCanvas::drawSampleWidgets()
     // Initialize the pixmap which we draw sample widgets into.
 
     smplw.resize(width(), height());
-    //smplw.fill( parentWidget()->back() );
-    smplw.fill( parentWidget()->colorGroup().mid() );
+    //smplw.fill( tqparentWidget()->back() );
+    smplw.fill( tqparentWidget()->tqcolorGroup().mid() );
 
     // Actually start painting in
 
@@ -435,7 +435,7 @@ void WidgetCanvas::drawSampleWidgets()
     // Menu bar
 
     //qDrawShadePanel ( &paint, 25, 55, width()-52, 28, cg, FALSE, 2, &brush);
-    kapp->style().drawPrimitive(TQStyle::PE_PanelMenuBar, &paint, 
+    kapp->tqstyle().tqdrawPrimitive(TQStyle::PE_PanelMenuBar, &paint, 
 			TQRect(TQPoint(25, 55), TQSize(width()-52, 28)), cg);
 
     paint.setFont( menuFont );
@@ -443,7 +443,7 @@ void WidgetCanvas::drawSampleWidgets()
 	TQString file = i18n("File");
     textLen = paint.fontMetrics().width( file );
     //qDrawShadePanel ( &paint, 30, 59, textLen + 10, 21, cg, FALSE, 2, &brush);
-	kapp->style().drawPrimitive(TQStyle::PE_Panel, &paint,
+	kapp->tqstyle().tqdrawPrimitive(TQStyle::PE_Panel, &paint,
 			TQRect(30, 59, textLen + 10, 21), cg);
     paint.drawText( 35, 74, file );
 
@@ -528,7 +528,7 @@ void WidgetCanvas::drawSampleWidgets()
     cg2.setColor(TQColorGroup::Button, button);
     cg2.setColor(TQColorGroup::Background, window);
     //qDrawWinButton(&paint, xpos, ypos, textLen+32, 28, cg, false, &brush);
-	kapp->style().drawPrimitive(TQStyle::PE_ButtonCommand, &paint,
+	kapp->tqstyle().tqdrawPrimitive(TQStyle::PE_ButtonCommand, &paint,
 			TQRect(xpos, ypos, textLen+32, 28), cg2, TQStyle::Style_Enabled | TQStyle::Style_Raised);
     paint.setPen(buttonTxt);
     paint.drawText(xpos, ypos, textLen+32, 28, AlignCenter,
@@ -567,9 +567,9 @@ void WidgetCanvas::drawSampleWidgets()
 	popup->setItemEnabled( id, false );
 
 	// HACK: Force Layouting
-	//Sad Eagle: sizeHint() forces layouting too, and it's a lot less visible
-	//popup->sizeHint(); // Breaks with Qt 3.3
-	popup->resize(popup->sizeHint());
+	//Sad Eagle: tqsizeHint() forces layouting too, and it's a lot less visible
+	//popup->tqsizeHint(); // Breaks with Qt 3.3
+	popup->resize(popup->tqsizeHint());
 
 	pm = TQPixmap::grabWidget( popup );
 	delete popup;
@@ -585,12 +585,12 @@ void WidgetCanvas::drawSampleWidgets()
     // Valance
 
     qDrawWinPanel ( &paint, 0, 0, width(), height(),
-                    parentWidget()->colorGroup(), TRUE, 0);
+                    tqparentWidget()->tqcolorGroup(), TRUE, 0);
 
     // Stop the painting
 
     hotspots[ spot++ ] =
         HotSpot( TQRect( 0, 0, width(), height() ), CSM_Background ); // ?
 
-    repaint( FALSE );
+    tqrepaint( FALSE );
 }

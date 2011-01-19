@@ -63,7 +63,7 @@ bool Settings::read_settings( KConfig& cfg_P, bool include_disabled_P, ImportTyp
         TQString import_id = cfg_P.readEntry( "ImportId" );
         if( !import_id.isEmpty())
             {
-            if( already_imported.contains( import_id ))
+            if( already_imported.tqcontains( import_id ))
                 {
                 if( import_P == ImportSilent
                     || KMessageBox::warningContinueCancel( NULL,

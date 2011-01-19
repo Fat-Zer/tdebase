@@ -27,7 +27,7 @@
 class TQLineEdit;
 class TQComboBox;
 
-class ConfSystem : public QWidget
+class ConfSystem : public TQWidget
 {
 	Q_OBJECT
 public:
@@ -41,9 +41,9 @@ protected slots:
 	void slotDeviceChanged(int);
 
 private:
-	QComboBox	*m_system, *m_device;
-	QLineEdit	*m_command, *m_server, *m_device_edit;
-	QStringList	m_commands;
+	TQComboBox	*m_system, *m_device;
+	TQLineEdit	*m_command, *m_server, *m_device_edit;
+	TQStringList	m_commands;
 	int		m_current;
 };
 

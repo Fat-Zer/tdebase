@@ -70,7 +70,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ExtensionContainer::ExtensionContainer(const AppletInfo& info,
                                        const TQString& extensionId,
                                        TQWidget *parent)
-  : TQFrame(parent, ("ExtensionContainer#" + extensionId).latin1(), WStyle_Customize | WStyle_NoBorder),
+  : TQFrame(parent, ("ExtensionContainer#" + extensionId).latin1(), (WFlags)(WStyle_Customize | WStyle_NoBorder)),
     m_settings(KSharedConfig::openConfig(info.configFile())),
     m_hideMode(ManualHide),
     m_unhideTriggeredAt(UnhideTrigger::None),
@@ -97,7 +97,7 @@ ExtensionContainer::ExtensionContainer(KPanelExtension* extension,
                                        const AppletInfo& info,
                                        const TQString& extensionId,
                                        TQWidget *parent)
-  : TQFrame(parent, ("ExtensionContainer#" + extensionId).latin1(), WStyle_Customize | WStyle_NoBorder),
+  : TQFrame(parent, ("ExtensionContainer#" + extensionId).latin1(), (WFlags)(WStyle_Customize | WStyle_NoBorder)),
     m_settings(KSharedConfig::openConfig(info.configFile())),
     _autoHidden(false),
     _userHidden(Unhidden),
@@ -136,7 +136,7 @@ void ExtensionContainer::init()
     connect(UnhideTrigger::the(), TQT_SIGNAL(triggerUnhide(UnhideTrigger::Trigger,int)),
             this, TQT_SLOT(unhideTriggered(UnhideTrigger::Trigger,int)));
 
-    _popupWidgetFilter = new PopupWidgetFilter( this );
+    _popupWidgetFilter = new PopupWidgetFilter( TQT_TQOBJECT(this) );
     connect(_popupWidgetFilter, TQT_SIGNAL(popupWidgetHiding()), TQT_SLOT(maybeStartAutoHideTimer()));
 
     // layout
@@ -212,7 +212,7 @@ ExtensionContainer::~ExtensionContainer()
 {
 }
 
-TQSize ExtensionContainer::sizeHint(KPanelExtension::Position p, const TQSize &maxSize) const
+TQSize ExtensionContainer::tqsizeHint(KPanelExtension::Position p, const TQSize &maxSize) const
 {
     int width = 0;
     int height = 0;
@@ -262,7 +262,7 @@ TQSize ExtensionContainer::sizeHint(KPanelExtension::Position p, const TQSize &m
 
     if (m_extension)
     {
-        size = m_extension->sizeHint(p, maxSize - size) + size;
+        size = m_extension->tqsizeHint(p, maxSize - size) + size;
     }
 
     return size.boundedTo(maxSize);
@@ -293,7 +293,7 @@ void ExtensionContainer::readConfig()
     }
 
     positionChange(position());
-    alignmentChange(alignment());
+    tqalignmentChange(tqalignment());
     setSize(static_cast<KPanelExtension::Size>(m_settings.size()),
             m_settings.customSize());
 
@@ -471,7 +471,7 @@ void ExtensionContainer::moveMe()
                                                 KPanelExtension::Right,
                                                 KPanelExtension::Top,
                                                 KPanelExtension::Bottom };
-    KPanelExtension::Alignment alignments[] = { KPanelExtension::LeftTop,
+    KPanelExtension::Alignment tqalignments[] = { KPanelExtension::LeftTop,
                                                 KPanelExtension::Center,
                                                 KPanelExtension::RightBottom };
 
@@ -488,20 +488,20 @@ void ExtensionContainer::moveMe()
                 // on other parameters this can lead to Bad Things(tm)
                 //
                 // we need to find a way to do this that doesn't result in
-                // sizeHint's getting called on the extension =/
+                // tqsizeHint's getting called on the extension =/
                 //
                 // or else we need to change the semantics for applets so that
                 // they don't get their "you're changing position" signals through
                 // heightForWidth/widthForHeight
                 rects.append(UserRectSel::PanelStrut(initialGeometry(positions[i],
-                                                                     alignments[j], s),
-                                                     s, positions[i], alignments[j]));
+                                                                     tqalignments[j], s),
+                                                     s, positions[i], tqalignments[j]));
             }
         }
     }
 
     UserRectSel::PanelStrut newStrut = UserRectSel::select(rects, rect().center(), m_highlightColor);
-    arrange(newStrut.m_pos, newStrut.m_alignment, newStrut.m_screen);
+    arrange(newStrut.m_pos, newStrut.m_tqalignment, newStrut.m_screen);
 
     _is_lmb_down = false;
 
@@ -556,12 +556,12 @@ void ExtensionContainer::enableMouseOverEffects()
     KickerTip::enableTipping(true);
     TQPoint globalPos = TQCursor::pos();
     TQPoint localPos = mapFromGlobal(globalPos);
-    TQWidget* child = childAt(localPos);
+    TQWidget* child = tqchildAt(localPos);
 
     if (child)
     {
         TQMouseEvent* e = new TQMouseEvent(TQEvent::Enter, localPos, globalPos, 0, 0);
-        qApp->sendEvent(child, e);
+        tqApp->sendEvent(child, e);
     }
 }
 
@@ -658,7 +658,7 @@ void ExtensionContainer::unhideTriggered(UnhideTrigger::Trigger tr, int Xinerama
     // Otherwise hide mode is automatic. The code below is slightly
     // complex so as to keep the same behavior as it has always had:
     // only unhide when the cursor position is within the widget geometry.
-    // We can't just do geometry().contains(TQCursor::pos()) because
+    // We can't just do geometry().tqcontains(TQCursor::pos()) because
     // now we hide the panel completely off screen.
 
     int x = TQCursor::pos().x();
@@ -702,7 +702,7 @@ void ExtensionContainer::autoHideTimeout()
 {
 //    kdDebug(1210) << "PanelContainer::autoHideTimeout() " << name() << endl;
     // Hack: If there is a popup open, don't autohide until it closes.
-    TQWidget* popup = TQApplication::activePopupWidget();
+    TQWidget* popup = TQT_TQWIDGET(TQApplication::activePopupWidget());
     if (popup)
     {
 
@@ -732,7 +732,7 @@ void ExtensionContainer::autoHideTimeout()
 
     TQRect r = geometry();
     TQPoint p = TQCursor::pos();
-    if (!r.contains(p) &&
+    if (!r.tqcontains(p) &&
         (m_settings.unhideLocation() == UnhideTrigger::None ||
          !shouldUnhideForTrigger(m_unhideTriggeredAt)))
     {
@@ -766,7 +766,7 @@ void ExtensionContainer::autoHide(bool hide)
     blockUserInput(true);
 
     TQPoint oldpos = pos();
-    TQRect newextent = initialGeometry( position(), alignment(), xineramaScreen(), hide, Unhidden );
+    TQRect newextent = initialGeometry( position(), tqalignment(), xineramaScreen(), hide, Unhidden );
     TQPoint newpos = newextent.topLeft();
 
     if (hide)
@@ -821,8 +821,8 @@ void ExtensionContainer::autoHide(bool hide)
                     move(oldpos.x() - i, newpos.y());
                 }
 
-                qApp->syncX();
-                qApp->processEvents();
+                tqApp->syncX();
+                tqApp->processEvents();
             }
         }
         else
@@ -839,8 +839,8 @@ void ExtensionContainer::autoHide(bool hide)
                     move(newpos.x(), oldpos.y() - i);
                 }
 
-                qApp->syncX();
-                qApp->processEvents();
+                tqApp->syncX();
+                tqApp->processEvents();
             }
         }
     }
@@ -878,7 +878,7 @@ void ExtensionContainer::animatedHide(bool left)
     }
 
     TQPoint oldpos = pos();
-    TQRect newextent = initialGeometry(position(), alignment(), xineramaScreen(), false, newState);
+    TQRect newextent = initialGeometry(position(), tqalignment(), xineramaScreen(), false, newState);
     TQPoint newpos(newextent.topLeft());
 
     if (newState != Unhidden)
@@ -920,8 +920,8 @@ void ExtensionContainer::animatedHide(bool left)
                 {
                     move(newpos.x(), oldpos.y() - i);
                 }
-                qApp->syncX();
-                qApp->processEvents();
+                tqApp->syncX();
+                tqApp->processEvents();
             }
         }
         else
@@ -937,8 +937,8 @@ void ExtensionContainer::animatedHide(bool left)
                 {
                     move(oldpos.x() - i, newpos.y());
                 }
-                qApp->syncX();
-                qApp->processEvents();
+                tqApp->syncX();
+                tqApp->processEvents();
             }
         }
     }
@@ -948,8 +948,8 @@ void ExtensionContainer::animatedHide(bool left)
     _userHidden = newState;
 
     actuallyUpdateLayout();
-    qApp->syncX();
-    qApp->processEvents();
+    tqApp->syncX();
+    tqApp->processEvents();
 
     // save our hidden status so that when kicker starts up again
     // we'll come back in the same state
@@ -965,7 +965,7 @@ bool ExtensionContainer::reserveStrut() const
     return !m_extension || m_extension->reserveStrut();
 }
 
-KPanelExtension::Alignment ExtensionContainer::alignment() const
+KPanelExtension::Alignment ExtensionContainer::tqalignment() const
 {
     // KConfigXT really needs to get support for vars that are enums that
     // are defined in other classes
@@ -983,7 +983,7 @@ void ExtensionContainer::updateWindowManager()
         int w = 0;
         int h = 0;
 
-        TQRect geom = initialGeometry(position(), alignment(), xineramaScreen());
+        TQRect geom = initialGeometry(position(), tqalignment(), xineramaScreen());
         TQRect virtRect(TQApplication::desktop()->geometry());
         TQRect screenRect(TQApplication::desktop()->screenGeometry(xineramaScreen()));
 
@@ -1106,11 +1106,11 @@ void ExtensionContainer::blockUserInput( bool block )
     // eventfilter discard those events.
     if ( block )
     {
-        qApp->installEventFilter( this );
+        tqApp->installEventFilter( this );
     }
     else
     {
-        qApp->removeEventFilter( this );
+        tqApp->removeEventFilter( this );
     }
 
     _block_user_input = block;
@@ -1177,7 +1177,7 @@ int ExtensionContainer::arrangeHideButtons()
         _layout->setEnabled(false);
     }
 
-    if (orientation() == Vertical)
+    if (orientation() == Qt::Vertical)
     {
         int maxWidth = width();
 
@@ -1221,11 +1221,11 @@ int ExtensionContainer::arrangeHideButtons()
             _layout->remove(_ltHB);
             if (kapp->reverseLayout())
             {
-                _layout->addWidget(_ltHB, 1, 2, vertAlignment);
+                _layout->addWidget(_ltHB, 1, 2, (TQ_Alignment)vertAlignment);
             }
             else
             {
-                _layout->addWidget(_ltHB, 1, 0, leftAlignment | vertAlignment);
+                _layout->addWidget(_ltHB, 1, 0, (TQ_Alignment)(leftAlignment | vertAlignment));
             }
         }
 
@@ -1236,11 +1236,11 @@ int ExtensionContainer::arrangeHideButtons()
             _layout->remove(_rbHB);
             if (kapp->reverseLayout())
             {
-                _layout->addWidget(_rbHB, 1, 0, leftAlignment | vertAlignment);
+                _layout->addWidget(_rbHB, 1, 0, (TQ_Alignment)(leftAlignment | vertAlignment));
             }
             else
             {
-                _layout->addWidget(_rbHB, 1, 2, vertAlignment);
+                _layout->addWidget(_rbHB, 1, 2, (TQ_Alignment)vertAlignment);
             }
         }
     }
@@ -1270,7 +1270,7 @@ int ExtensionContainer::setupBorderSpace()
     TQRect r = TQApplication::desktop()->screenGeometry(xineramaScreen());
     TQRect h = geometry();
 
-    if (orientation() == Vertical)
+    if (orientation() == Qt::Vertical)
     {
         if (h.top() > 0)
         {
@@ -1342,7 +1342,7 @@ void ExtensionContainer::updateHighlightColor()
 {
     KConfig *config = KGlobal::config();
     config->setGroup("WM");
-    TQColor color = TQApplication::palette().active().highlight();
+    TQColor color = TQApplication::tqpalette().active().highlight();
     m_highlightColor = config->readColorEntry("activeBackground", &color);
     update();
 }
@@ -1368,14 +1368,14 @@ void ExtensionContainer::leaveEvent(TQEvent*)
     maybeStartAutoHideTimer();
 }
 
-void ExtensionContainer::alignmentChange(KPanelExtension::Alignment a)
+void ExtensionContainer::tqalignmentChange(KPanelExtension::Alignment a)
 {
     if (!m_extension)
     {
         return;
     }
 
-    m_extension->setAlignment(a);
+    m_extension->tqsetAlignment(a);
 }
 
 void ExtensionContainer::setSize(KPanelExtension::Size size, int custom)
@@ -1482,7 +1482,7 @@ void ExtensionContainer::arrange(KPanelExtension::Position p,
     if (a != m_settings.alignment())
     {
         m_settings.setAlignment(a);
-        setAlignment(a);
+        tqsetAlignment(a);
     }
 
     if (XineramaScreen != xineramaScreen())
@@ -1504,11 +1504,11 @@ KPanelExtension::Orientation ExtensionContainer::orientation() const
 {
     if (position() == KPanelExtension::Top || position() == KPanelExtension::Bottom)
     {
-        return Horizontal;
+        return Qt::Horizontal;
     }
     else
     {
-        return Vertical;
+        return Qt::Vertical;
     }
 }
 
@@ -1521,7 +1521,7 @@ KPanelExtension::Position ExtensionContainer::position() const
 
 void ExtensionContainer::resetLayout()
 {
-    TQRect g = initialGeometry(position(), alignment(), xineramaScreen(),
+    TQRect g = initialGeometry(position(), tqalignment(), xineramaScreen(),
                               autoHidden(), userHidden());
 
     // Disable the layout while we rearrange the panel.
@@ -1553,7 +1553,7 @@ void ExtensionContainer::resetLayout()
             haveToArrangeButtons = true;
         }
 
-        if (orientation() == Horizontal)
+        if (orientation() == Qt::Horizontal)
         {
             _ltHB->setArrowType(Qt::LeftArrow);
             _ltHB->setFixedSize(m_settings.hideButtonSize(), height());
@@ -1584,7 +1584,7 @@ void ExtensionContainer::resetLayout()
             haveToArrangeButtons = true;
         }
 
-        if ( orientation() == Horizontal)
+        if ( orientation() == Qt::Horizontal)
         {
             _rbHB->setArrowType(Qt::RightArrow);
             _rbHB->setFixedSize(m_settings.hideButtonSize(), height());
@@ -1631,7 +1631,7 @@ void ExtensionContainer::resetLayout()
     updateGeometry();
     int endBorderWidth = haveToArrangeButtons ? arrangeHideButtons() : setupBorderSpace();
 
-    if (orientation() == Horizontal)
+    if (orientation() == Qt::Horizontal)
     {
         if (m_extension)
         {
@@ -1700,7 +1700,7 @@ TQSize ExtensionContainer::initialSize(KPanelExtension::Position p, TQRect workA
         ", " << workArea.topLeft().y() << ") to (" << workArea.bottomRight().x() <<
         ", " << workArea.bottomRight().y() << ")" << endl;*/
 
-    TQSize hint = sizeHint(p, workArea.size()).boundedTo(workArea.size());
+    TQSize hint = tqsizeHint(p, workArea.size()).boundedTo(workArea.size());
     int width = 0;
     int height = 0;
 
@@ -1920,12 +1920,12 @@ void ExtensionContainer::setXineramaScreen(int screen)
         return;
     }
 
-    arrange(position(),alignment(), screen);
+    arrange(position(),tqalignment(), screen);
 }
 
 TQRect ExtensionContainer::currentGeometry() const
 {
-    return initialGeometry(position(), alignment(), xineramaScreen(),
+    return initialGeometry(position(), tqalignment(), xineramaScreen(),
                            autoHidden(), userHidden());
 }
 
@@ -1986,13 +1986,13 @@ bool ExtensionContainer::eventFilter( TQObject*, TQEvent * e)
     {
         case TQEvent::MouseButtonPress:
         {
-            TQMouseEvent* me = static_cast<TQMouseEvent*>(e);
-            if ( me->button() == LeftButton )
+            TQMouseEvent* me = TQT_TQMOUSEEVENT(e);
+            if ( me->button() == Qt::LeftButton )
             {
                 _last_lmb_press = me->globalPos();
                 _is_lmb_down = true;
             }
-            else if (me->button() == RightButton)
+            else if (me->button() == Qt::RightButton)
             {
                 showPanelMenu(me->globalPos());
                 return true; // don't crash!
@@ -2002,8 +2002,8 @@ bool ExtensionContainer::eventFilter( TQObject*, TQEvent * e)
 
         case TQEvent::MouseButtonRelease:
         {
-            TQMouseEvent* me = static_cast<TQMouseEvent*>(e);
-            if ( me->button() == LeftButton )
+            TQMouseEvent* me = TQT_TQMOUSEEVENT(e);
+            if ( me->button() == Qt::LeftButton )
             {
                 _is_lmb_down = false;
             }
@@ -2014,7 +2014,7 @@ bool ExtensionContainer::eventFilter( TQObject*, TQEvent * e)
         {
             TQMouseEvent* me = (TQMouseEvent*) e;
             if (_is_lmb_down &&
-                ((me->state() & LeftButton) == LeftButton) &&
+                ((me->state() & Qt::LeftButton) == Qt::LeftButton) &&
                 !Kicker::the()->isImmutable() &&
                 !m_settings.config()->isImmutable() &&
                 !ExtensionManager::the()->isMenuBar(this))

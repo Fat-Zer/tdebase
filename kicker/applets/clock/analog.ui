@@ -1,6 +1,6 @@
 <!DOCTYPE UI><UI version="3.3" stdsetdef="1">
 <class>AnalogWidget</class>
-<widget class="QWidget">
+<widget class="TQWidget">
     <property name="name">
         <cstring>AnalogWidget</cstring>
     </property>
@@ -19,7 +19,7 @@
         <property name="margin">
             <number>0</number>
         </property>
-        <widget class="QButtonGroup">
+        <widget class="TQButtonGroup">
             <property name="name">
                 <cstring>ButtonGroup2_3_2</cstring>
             </property>
@@ -30,7 +30,7 @@
                 <property name="name">
                     <cstring>unnamed</cstring>
                 </property>
-                <widget class="QCheckBox">
+                <widget class="TQCheckBox">
                     <property name="name">
                         <cstring>kcfg_AnalogShowDate</cstring>
                     </property>
@@ -38,7 +38,7 @@
                         <string>Dat&amp;e</string>
                     </property>
                 </widget>
-                <widget class="QCheckBox">
+                <widget class="TQCheckBox">
                     <property name="name">
                         <cstring>kcfg_AnalogShowSeconds</cstring>
                     </property>
@@ -49,7 +49,7 @@
                         <bool>true</bool>
                     </property>
                 </widget>
-                <widget class="QCheckBox">
+                <widget class="TQCheckBox">
                     <property name="name">
                         <cstring>kcfg_AnalogShowDayOfWeek</cstring>
                     </property>
@@ -57,7 +57,7 @@
                         <string>Da&amp;y of week</string>
                     </property>
                 </widget>
-                <widget class="QCheckBox">
+                <widget class="TQCheckBox">
                     <property name="name">
                         <cstring>kcfg_AnalogShowFrame</cstring>
                     </property>
@@ -75,7 +75,7 @@
                     <property name="sizeType">
                         <enum>Expanding</enum>
                     </property>
-                    <property name="sizeHint">
+                    <property name="tqsizeHint">
                         <size>
                             <width>40</width>
                             <height>20</height>
@@ -84,7 +84,7 @@
                 </spacer>
             </hbox>
         </widget>
-        <widget class="QGroupBox">
+        <widget class="TQGroupBox">
             <property name="name">
                 <cstring>groupBox1</cstring>
             </property>
@@ -95,7 +95,7 @@
                 <property name="name">
                     <cstring>unnamed</cstring>
                 </property>
-                <widget class="QLayoutWidget" row="2" column="0" rowspan="1" colspan="3">
+                <widget class="TQLayoutWidget" row="2" column="0" rowspan="1" colspan="3">
                     <property name="name">
                         <cstring>layout9</cstring>
                     </property>
@@ -125,7 +125,7 @@
                                 <string></string>
                             </property>
                         </widget>
-                        <widget class="QLabel" row="0" column="0">
+                        <widget class="TQLabel" row="0" column="0">
                             <property name="name">
                                 <cstring>foregroundAnalogLabel</cstring>
                             </property>
@@ -149,14 +149,14 @@
                             <property name="sizeType">
                                 <enum>Expanding</enum>
                             </property>
-                            <property name="sizeHint">
+                            <property name="tqsizeHint">
                                 <size>
                                     <width>16</width>
                                     <height>20</height>
                                 </size>
                             </property>
                         </spacer>
-                        <widget class="QLabel" row="2" column="0">
+                        <widget class="TQLabel" row="2" column="0">
                             <property name="name">
                                 <cstring>backgroundAnalogLabel</cstring>
                             </property>
@@ -181,7 +181,7 @@
                                 <string></string>
                             </property>
                         </widget>
-                        <widget class="QLabel" row="1" column="0">
+                        <widget class="TQLabel" row="1" column="0">
                             <property name="name">
                                 <cstring>shadowAnalogLabel</cstring>
                             </property>
@@ -197,7 +197,7 @@
                         </widget>
                     </grid>
                 </widget>
-                <widget class="QLabel" row="0" column="0">
+                <widget class="TQLabel" row="0" column="0">
                     <property name="name">
                         <cstring>TextLabel1_3</cstring>
                     </property>
@@ -208,7 +208,7 @@
                         <cstring>kcfg_AnalogAntialias</cstring>
                     </property>
                 </widget>
-                <widget class="QComboBox" row="0" column="1">
+                <widget class="TQComboBox" row="0" column="1">
                     <item>
                         <property name="text">
                             <string>None</string>
@@ -241,14 +241,14 @@
                     <property name="sizeType">
                         <enum>Expanding</enum>
                     </property>
-                    <property name="sizeHint">
+                    <property name="tqsizeHint">
                         <size>
                             <width>310</width>
                             <height>20</height>
                         </size>
                     </property>
                 </spacer>
-                <widget class="QCheckBox" row="1" column="0" rowspan="1" colspan="3">
+                <widget class="TQCheckBox" row="1" column="0" rowspan="1" colspan="3">
                     <property name="name">
                         <cstring>kcfg_AnalogLCDStyle</cstring>
                     </property>
@@ -269,7 +269,7 @@
                     <property name="sizeType">
                         <enum>Expanding</enum>
                     </property>
-                    <property name="sizeHint">
+                    <property name="tqsizeHint">
                         <size>
                             <width>20</width>
                             <height>50</height>

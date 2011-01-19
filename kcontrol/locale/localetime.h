@@ -36,7 +36,7 @@ class KLanguageCombo;
 
 class StringPair;
 
-class KLocaleConfigTime : public QWidget
+class KLocaleConfigTime : public TQWidget
 {
   Q_OBJECT
 

@@ -1,6 +1,6 @@
 <!DOCTYPE UI><UI version="3.2" stdsetdef="1">
 <class>SearchProviderDlgUI</class>
-<widget class="QWidget">
+<widget class="TQWidget">
     <property name="name">
         <cstring>SearchProviderDlgUI</cstring>
     </property>
@@ -27,7 +27,7 @@
                 <string>Enter the human readable name of the search provider here.</string>
             </property>
         </widget>
-        <widget class="QLabel" row="6" column="0">
+        <widget class="TQLabel" row="6" column="0">
             <property name="name">
                 <cstring>lbCharset</cstring>
             </property>
@@ -41,7 +41,7 @@
                 <string>Select the character set that will be used to encode your search query</string>
             </property>
         </widget>
-        <widget class="QLabel" row="2" column="0">
+        <widget class="TQLabel" row="2" column="0">
             <property name="name">
                 <cstring>lbQuery</cstring>
             </property>
@@ -58,7 +58,7 @@ Recommended is \{@}, since it removes all query variables (name=value) from the 
 &lt;/qt&gt;</string>
             </property>
         </widget>
-        <widget class="QLabel" row="0" column="0">
+        <widget class="TQLabel" row="0" column="0">
             <property name="name">
                 <cstring>lbName</cstring>
             </property>
@@ -82,7 +82,7 @@ The shortcuts entered here can be used as a pseudo-URI scheme in KDE. For exampl
 &lt;/qt&gt;</string>
             </property>
         </widget>
-        <widget class="QLabel" row="4" column="0">
+        <widget class="TQLabel" row="4" column="0">
             <property name="name">
                 <cstring>lbShortcut</cstring>
             </property>

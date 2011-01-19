@@ -31,7 +31,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 const int XineramaAllScreens = -2;
 
-class ExtensionManager : public QObject
+class ExtensionManager : public TQObject
 {
     Q_OBJECT
 

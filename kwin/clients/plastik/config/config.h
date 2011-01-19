@@ -30,7 +30,7 @@ class TQGroupBox;
 class KConfig;
 class ConfigDialog;
 
-class PlastikConfig : public QObject
+class PlastikConfig : public TQObject
 {
     Q_OBJECT
 public:

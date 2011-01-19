@@ -25,7 +25,7 @@
 
 class NaughtyProcessMonitorPrivate;
 
-class NaughtyProcessMonitor : public QObject
+class NaughtyProcessMonitor : public TQObject
 {
   Q_OBJECT
 

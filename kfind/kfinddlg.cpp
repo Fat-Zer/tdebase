@@ -31,7 +31,7 @@ KfindDlg::KfindDlg(const KURL & url, TQWidget *parent, const char *name)
 	KStdGuiItem::saveAs())
 {
   TQWidget::setCaption( i18n("Find Files/Folders" ) );
-  setButtonBoxOrientation(Vertical);
+  setButtonBoxOrientation(Qt::Vertical);
 
   enableButton(Apply, true); // Enable "Find"
   enableButton(User1, false); // Disable "Stop"
@@ -72,7 +72,7 @@ KfindDlg::KfindDlg(const KURL & url, TQWidget *parent, const char *name)
   connect(win ,TQT_SIGNAL(resultSelected(bool)),
 	  this,TQT_SIGNAL(resultSelected(bool)));
 
-  query = new KQuery(frame);
+  query = new KQuery(TQT_TQOBJECT(frame));
   connect(query, TQT_SIGNAL(addFile(const KFileItem*,const TQString&)),
 	  TQT_SLOT(addFile(const KFileItem*,const TQString&)));
   connect(query, TQT_SIGNAL(result(int)), TQT_SLOT(slotResult(int)));
@@ -236,7 +236,7 @@ void  KfindDlg::about ()
 
 void KfindDlg::slotDeleteItem(const TQString& file)
 {
-  kdDebug()<<TQString("Will remove one item: %1").arg(file)<<endl;
+  kdDebug()<<TQString(TQString("Will remove one item: %1").arg(file))<<endl;
   TQListViewItem *iter;
   TQString iterwithpath;
 
@@ -260,7 +260,7 @@ void KfindDlg::slotNewItems( const TQString& file )
   TQListViewItem *checkiter;
   TQString checkiterwithpath;
 
-  if(file.find(query->url().path(+1))==0)
+  if(file.tqfind(query->url().path(+1))==0)
   {
     kdDebug()<<TQString("Can be added, path OK")<<endl;
     checkiter=win->firstChild();

@@ -69,19 +69,19 @@ KateApp::KateApp (KCmdLineArgs *args)
   m_application = new Kate::Application (this);
 
   // doc + project man
-  m_docManager = new KateDocManager (this);
+  m_docManager = new KateDocManager (TQT_TQOBJECT(this));
 
   // init all normal plugins
-  m_pluginManager = new KatePluginManager (this);
+  m_pluginManager = new KatePluginManager (TQT_TQOBJECT(this));
 
   // session manager up
-  m_sessionManager = new KateSessionManager (this);
+  m_sessionManager = new KateSessionManager (TQT_TQOBJECT(this));
 
   // application dcop interface
   m_obj = new KateAppDCOPIface (this);
 
   kdDebug()<<"Setting KATE_PID: '"<<getpid()<<"'"<<endl;
-  ::setenv( "KATE_PID", TQString("%1").arg(getpid()).latin1(), 1 );
+  ::setenv( "KATE_PID", TQString(TQString("%1").arg(getpid())).latin1(), 1 );
 
   // handle restore different
   if (isRestored())
@@ -375,7 +375,7 @@ KateMainWindow *KateApp::activeMainWindow ()
   if (m_mainWindows.isEmpty())
     return 0;
 
-  int n = m_mainWindows.findIndex ((KateMainWindow *)activeWindow());
+  int n = m_mainWindows.tqfindIndex ((KateMainWindow *)activeWindow());
 
   if (n < 0)
     n=0;

@@ -151,7 +151,7 @@ void Action_list_widget::copy_pressed()
         if ( !selected_item )
             return;
     actions_listview->setSelected( create_listview_item( selected_item->action(),
-        selected_item->parent() ? NULL : actions_listview, selected_item->parent(),
+        selected_item->tqparent() ? NULL : actions_listview, selected_item->tqparent(),
         selected_item, true ), true );
     }
 
@@ -222,7 +222,7 @@ void Action_list_widget::edit_listview_item( Action_list_item* item_P )
         {
         item_P->set_action( new_action );
         item_P->widthChanged( 0 );
-        actions_listview->repaintItem( item_P );
+        actions_listview->tqrepaintItem( item_P );
         }
     delete dlg;
     }

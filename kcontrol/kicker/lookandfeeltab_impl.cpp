@@ -190,35 +190,35 @@ void LookAndFeelTab::load(bool useDefaults)
         if (config.readBoolEntry("EnableKMenuTiles", false))
         {
             tile = config.readEntry("KMenuTile", "solid_blue");
-            m_kmenuTile->setCurrentItem(m_tilename.findIndex(tile));
+            m_kmenuTile->setCurrentItem(m_tilename.tqfindIndex(tile));
             kcfg_KMenuTileColor->setEnabled(tile == "Colorize");
         }
 
         if (config.readBoolEntry("EnableDesktopButtonTiles", false))
         {
             tile = config.readEntry("DesktopButtonTile", "solid_orange");
-            m_desktopTile->setCurrentItem(m_tilename.findIndex(tile));
+            m_desktopTile->setCurrentItem(m_tilename.tqfindIndex(tile));
             kcfg_DesktopButtonTileColor->setEnabled(tile == "Colorize");
         }
 
         if (config.readBoolEntry("EnableURLTiles", false))
         {
             tile = config.readEntry("URLTile", "solid_gray");
-            m_urlTile->setCurrentItem(m_tilename.findIndex(tile));
+            m_urlTile->setCurrentItem(m_tilename.tqfindIndex(tile));
             kcfg_URLTileColor->setEnabled(tile == "Colorize");
         }
 
         if (config.readBoolEntry("EnableBrowserTiles", false))
         {
             tile = config.readEntry("BrowserTile", "solid_green");
-            m_browserTile->setCurrentItem(m_tilename.findIndex(tile));
+            m_browserTile->setCurrentItem(m_tilename.tqfindIndex(tile));
             kcfg_BrowserTileColor->setEnabled(tile == "Colorize");
         }
 
         if (config.readBoolEntry("EnableWindowListTiles", false))
         {
             tile = config.readEntry("WindowListTile", "solid_green");
-            m_windowListTile->setCurrentItem(m_tilename.findIndex(tile));
+            m_windowListTile->setCurrentItem(m_tilename.tqfindIndex(tile));
             kcfg_WindowListTileColor->setEnabled(tile == "Colorize");
         }
     }
@@ -328,7 +328,7 @@ void LookAndFeelTab::fillTileCombos()
     TQPixmap pix(tile);
     TQFileInfo fi(tile);
     tile = fi.fileName();
-    tile.truncate(tile.find("_tiny_up.png"));
+    tile.truncate(tile.tqfind("_tiny_up.png"));
     m_tilename << tile;
 
     // Transform tile to words with title case

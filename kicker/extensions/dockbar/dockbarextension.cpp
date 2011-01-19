@@ -57,10 +57,10 @@ DockBarExtension::DockBarExtension(const TQString& configFile, Type type,
   : KPanelExtension(configFile, type, actions, parent, name)
 {
     dragging_container = 0;
-    kwin_module = new KWinModule(this);
+    kwin_module = new KWinModule(TQT_TQOBJECT(this));
     connect( kwin_module, TQT_SIGNAL( windowAdded(WId) ), TQT_SLOT( windowAdded(WId) ) );
     setMinimumSize(DockContainer::sz(), DockContainer::sz());
-    setSizePolicy(TQSizePolicy::Expanding, TQSizePolicy::Expanding);
+    tqsetSizePolicy(TQSizePolicy::Expanding, TQSizePolicy::Expanding);
     loadContainerConfig();
 }
 
@@ -77,7 +77,7 @@ DockBarExtension::~DockBarExtension()
     if (dragging_container) delete dragging_container;
 }
 
-TQSize DockBarExtension::sizeHint(Position p, TQSize) const
+TQSize DockBarExtension::tqsizeHint(Position p, TQSize) const
 {
     if (p == Left || p == Right)
 	return TQSize(DockContainer::sz(), DockContainer::sz() * containers.count());
@@ -174,7 +174,7 @@ void DockBarExtension::layoutContainers()
          it != containers.constEnd();
          ++it)
     {
-        if (orientation() == Horizontal)
+        if (orientation() == Qt::Horizontal)
             (*it)->move(DockContainer::sz() * i, 0);
         else
             (*it)->move(0, DockContainer::sz() * i);
@@ -246,7 +246,7 @@ void DockBarExtension::addContainer(DockContainer* c, int pos)
 
 void DockBarExtension::removeContainer(DockContainer* c)
 {
-    DockContainer::Vector::iterator it = qFind(containers.begin(), containers.end(), c);
+    DockContainer::Vector::iterator it = tqFind(containers.begin(), containers.end(), c);
 
     if (it == containers.end())
     {
@@ -335,7 +335,7 @@ int DockBarExtension::findContainerAtPoint(const TQPoint& p)
          it != containers.constEnd();
          ++it, ++i)
     {
-        if ((*it)->geometry().contains(p))
+        if ((*it)->tqgeometry().tqcontains(p))
         {
             return i;
         }
@@ -345,17 +345,17 @@ int DockBarExtension::findContainerAtPoint(const TQPoint& p)
 }
 
 void DockBarExtension::mousePressEvent(TQMouseEvent *e ) {
-    if (e->button() == LeftButton) {
+    if (e->button() == Qt::LeftButton) {
         // Store the position of the mouse clic.
         mclic_pos = e->pos();
-    } else if (e->button() == RightButton) {
+    } else if (e->button() == Qt::RightButton) {
         int pos = findContainerAtPoint(e->pos());
         if (pos != -1) containers.at(pos)->popupMenu(e->globalPos());
     }
 }
 
 void DockBarExtension::mouseReleaseEvent(TQMouseEvent *e ) {
-    if (e->button() != LeftButton) return;
+    if (e->button() != Qt::LeftButton) return;
     if (dragging_container) {  
         releaseMouse();
         original_container->embed(dragging_container->embeddedWinId());
@@ -366,7 +366,7 @@ void DockBarExtension::mouseReleaseEvent(TQMouseEvent *e ) {
 }
 
 void DockBarExtension::mouseMoveEvent(TQMouseEvent *e) {
-    if (! (e->state() & LeftButton) ) return;
+    if (! (e->state() & Qt::LeftButton) ) return;
     if (dragging_container == 0) {
         // Check whether the user has moved far enough.
         int delay = TQApplication::startDragDistance();
@@ -393,7 +393,7 @@ void DockBarExtension::mouseMoveEvent(TQMouseEvent *e) {
         int pdrag1,pdrag2,psz;
         pdrag1 = dragpos.x() - barpos.x() + DockContainer::sz()/2;
         pdrag2 = dragpos.y() - barpos.y() + DockContainer::sz()/2;
-        if (orientation() == Vertical) {
+        if (orientation() == Qt::Vertical) {
             int tmp = pdrag1; pdrag1 = pdrag2; pdrag2 = tmp;
             psz = height();
         } else psz = width();
@@ -403,7 +403,7 @@ void DockBarExtension::mouseMoveEvent(TQMouseEvent *e) {
             pdrag1 = dragged_container_original_pos;
 
 
-        DockContainer::Vector::iterator it = qFind(containers.begin(), containers.end(), original_container);
+        DockContainer::Vector::iterator it = tqFind(containers.begin(), containers.end(), original_container);
 
         if (it == containers.end())
         {

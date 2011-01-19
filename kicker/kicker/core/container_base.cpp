@@ -37,8 +37,8 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 BaseContainer::BaseContainer( TQPopupMenu* appletOpMenu, TQWidget* parent, const char * name )
   : TQWidget( parent, name )
   , _dir(KPanelApplet::Up)
-  , _orient(Horizontal)
-  , _alignment(KPanelExtension::LeftTop)
+  , _orient(Qt::Horizontal)
+  , _tqalignment(KPanelExtension::LeftTop)
   , _fspace(0)
   , _moveOffset(TQPoint(0,0))
   , _aid(TQString::null)
@@ -72,7 +72,7 @@ void BaseContainer::setImmutable(bool immutable)
 
 void BaseContainer::loadConfiguration( KConfigGroup& group )
 {
-    setFreeSpace( QMIN( group.readDoubleNumEntry( "FreeSpace2", 0 ), 1 ) );
+    setFreeSpace( TQMIN( group.readDoubleNumEntry( "FreeSpace2", 0 ), 1 ) );
     doLoadConfiguration( group );
 }
 
@@ -110,15 +110,15 @@ void BaseContainer::slotRemoved(KConfig* config)
     config->sync();
 }
 
-void BaseContainer::setAlignment(KPanelExtension::Alignment a)
+void BaseContainer::tqsetAlignment(KPanelExtension::Alignment a)
 {
-    if (_alignment == a)
+    if (_tqalignment == a)
     {
         return;
     }
 
-    _alignment = a;
-    alignmentChange(a);
+    _tqalignment = a;
+    tqalignmentChange(a);
 }
 
 TQPopupMenu* BaseContainer::opMenu()

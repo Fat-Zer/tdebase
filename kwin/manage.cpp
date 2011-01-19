@@ -266,7 +266,7 @@ bool Client::manage( Window w, bool isMapped )
         usePosition = true;
     if( !rules()->checkIgnoreGeometry( !usePosition ))
         {
-        bool ignorePPosition = ( options->ignorePositionClasses.contains(TQString::fromLatin1(resourceClass())));
+        bool ignorePPosition = ( options->ignorePositionClasses.tqcontains(TQString::tqfromLatin1(resourceClass())));
 
         if ( ( (xSizeHint.flags & PPosition) && !ignorePPosition ) ||
              (xSizeHint.flags & USPosition) ) 
@@ -321,7 +321,7 @@ bool Client::manage( Window w, bool isMapped )
         keepInArea( area, partial_keep_in_area );
 
     XShapeSelectInput( qt_xdisplay(), window(), ShapeNotifyMask );
-    is_shape = Shape::hasShape( window());
+    is_tqshape = Shape::hasShape( window());
     updateShape();
 	
     //CT extra check for stupid jdk 1.3.1. But should make sense in general
@@ -573,9 +573,9 @@ void Client::embedClient( Window w, const XWindowAttributes &attr )
 		    attr.depth, InputOutput, attr.visual,
 		    CWColormap | CWBackPixmap | CWBorderPixel, &swa );
 
-    XDefineCursor( qt_xdisplay(), frame, arrowCursor.handle());
+    XDefineCursor( qt_xdisplay(), frame, TQCursor(tqarrowCursor).handle());
     // some apps are stupid and don't define their own cursor - set the arrow one for them
-    XDefineCursor( qt_xdisplay(), wrapper, arrowCursor.handle());
+    XDefineCursor( qt_xdisplay(), wrapper, TQCursor(tqarrowCursor).handle());
     XReparentWindow( qt_xdisplay(), client, wrapper, 0, 0 );
     XSelectInput( qt_xdisplay(), frame,
             KeyPressMask | KeyReleaseMask |

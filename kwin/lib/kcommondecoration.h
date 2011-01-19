@@ -177,7 +177,7 @@ class KWIN_EXPORT KCommonDecoration : public KDecoration
         /**
          * This updates the window mask using the information provided by
          * cornerShape(). Edges which are aligned to screen corners are not
-         * shaped for better usability (remember to paint these areas in paintEvent(), too).
+         * tqshaped for better usability (remember to paint these areas in paintEvent(), too).
          * You normally don't want/need to reimplement updateWindowShape().
          * @see cornerShape()
          */
@@ -202,7 +202,7 @@ class KWIN_EXPORT KCommonDecoration : public KDecoration
          */
         void updateLayout() const;
         /**
-         * Makes sure all buttons are repainted.
+         * Makes sure all buttons are tqrepainted.
          */
         void updateButtons() const;
         /**
@@ -233,7 +233,7 @@ class KWIN_EXPORT KCommonDecoration : public KDecoration
         virtual void borders( int& left, int& right, int& top, int& bottom ) const;
         virtual void show();
         virtual void resize(const TQSize& s);
-        virtual TQSize minimumSize() const;
+        virtual TQSize tqminimumSize() const;
         virtual void maximizeChange();
         virtual void desktopChange();
         virtual void shadeChange();
@@ -287,9 +287,12 @@ class KWIN_EXPORT KCommonDecoration : public KDecoration
 /**
  * Title bar buttons of KCommonDecoration need to inherit this class.
  */
-class KWIN_EXPORT KCommonDecorationButton : public QButton
+class KWIN_EXPORT KCommonDecorationButton : public TQButton
 {
     friend class KCommonDecoration;
+
+    Q_OBJECT
+    TQ_OBJECT
 
     public:
         KCommonDecorationButton(ButtonType type, KCommonDecoration *parent, const char *name);
@@ -343,7 +346,7 @@ class KWIN_EXPORT KCommonDecorationButton : public QButton
          */
         ButtonState lastMousePress() const { return m_lastMouse; }
 
-        TQSize sizeHint() const;
+        TQSize tqsizeHint() const;
 
     protected:
         void setToggleButton(bool toggle);

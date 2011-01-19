@@ -61,7 +61,7 @@ signals:
 
 private:
 
-  QTabWidget		*tab;
+  TQTabWidget		*tab;
 
   KDMAppearanceWidget	*appearance;
   KBackground		*background;

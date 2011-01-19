@@ -128,7 +128,7 @@ GUIClient::GUIClient ( MainWindow *mw )
 
   if ( domDocument().documentElement().isNull() )
   {
-    TQString completeDescription = TQString::fromLatin1( guiDescription )
+    TQString completeDescription = TQString::tqfromLatin1( guiDescription )
           .arg( actionListName );
 
     setXML( completeDescription, false /*merge*/ );
@@ -176,7 +176,7 @@ void GUIClient::registerToolView (ToolView *tv)
   KToggleAction *a = new ToggleToolViewAction(i18n("Show %1").arg(tv->text),
     sc,tv, actionCollection(), aname.latin1() );
 
-  a->setCheckedState(i18n("Hide %1").arg(tv->text));
+  a->setCheckedState(TQString(i18n("Hide %1").arg(tv->text)));
 
   m_toolViewActions.append(a);
   m_toolMenu->insert(a);
@@ -256,8 +256,8 @@ bool ToolView::visible () const
 void ToolView::childEvent ( TQChildEvent *ev )
 {
   // set the widget to be focus proxy if possible
-  if (ev->inserted() && ev->child() && ev->child()->qt_cast("TQWidget"))
-    setFocusProxy ((TQWidget *)(ev->child()->qt_cast("TQWidget")));
+  if (ev->inserted() && ev->child() && TQT_TQOBJECT(ev->child())->tqqt_cast("TQWidget"))
+    setFocusProxy ((TQWidget *)(TQT_TQOBJECT(ev->child())->tqqt_cast("TQWidget")));
 
   TQVBox::childEvent (ev);
 }
@@ -339,7 +339,7 @@ ToolView *Sidebar::addWidget (const TQPixmap &icon, const TQString &text, ToolVi
 
 bool Sidebar::removeWidget (ToolView *widget)
 {
-  if (!m_widgetToId.contains(widget))
+  if (!m_widgetToId.tqcontains(widget))
     return false;
 
   removeTab(m_widgetToId[widget]);
@@ -369,7 +369,7 @@ bool Sidebar::removeWidget (ToolView *widget)
 
 bool Sidebar::showWidget (ToolView *widget)
 {
-  if (!m_widgetToId.contains(widget))
+  if (!m_widgetToId.tqcontains(widget))
     return false;
 
   // hide other non-persistent views
@@ -394,7 +394,7 @@ bool Sidebar::showWidget (ToolView *widget)
 
 bool Sidebar::hideWidget (ToolView *widget)
 {
-  if (!m_widgetToId.contains(widget))
+  if (!m_widgetToId.tqcontains(widget))
     return false;
 
   bool anyVis = false;
@@ -659,8 +659,8 @@ void Sidebar::saveSession (KConfig *config)
 
 //BEGIN MAIN WINDOW
 
-MainWindow::MainWindow (TQWidget* parentWidget, const char* name)
- : KParts::MainWindow( parentWidget, name)
+MainWindow::MainWindow (TQWidget* tqparentWidget, const char* name)
+ : KParts::MainWindow( tqparentWidget, name)
  , m_sidebarsVisible(true)
  , m_restoreConfig (0)
  , m_guiClient (new GUIClient (this))

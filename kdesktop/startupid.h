@@ -32,7 +32,7 @@
 class TQStyle;
 
 class StartupId
-    : public QWidget
+    : public TQWidget
     {
     Q_OBJECT
     public:

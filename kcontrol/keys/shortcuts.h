@@ -33,7 +33,7 @@
 #include <kcombobox.h>
 #include <kkeydialog.h>
 
-class ShortcutsModule : public QWidget
+class ShortcutsModule : public TQWidget
 {
 	Q_OBJECT
  public:

@@ -1,6 +1,6 @@
 <!DOCTYPE UI><UI version="3.2" stdsetdef="1">
 <class>General_settings_tab_ui</class>
-<widget class="QWidget">
+<widget class="TQWidget">
     <property name="name">
         <cstring>General_settings_tab_ui</cstring>
     </property>
@@ -16,7 +16,7 @@
         <property name="name">
             <cstring>unnamed</cstring>
         </property>
-        <widget class="QCheckBox">
+        <widget class="TQCheckBox">
             <property name="name">
                 <cstring>disable_daemon_checkbox</cstring>
             </property>
@@ -24,7 +24,7 @@
                 <string>Disable KHotKeys daemon</string>
             </property>
         </widget>
-        <widget class="QLayoutWidget">
+        <widget class="TQLayoutWidget">
             <property name="name">
                 <cstring>layout1</cstring>
             </property>
@@ -42,7 +42,7 @@
                     <property name="sizeType">
                         <enum>Expanding</enum>
                     </property>
-                    <property name="sizeHint">
+                    <property name="tqsizeHint">
                         <size>
                             <width>40</width>
                             <height>20</height>
@@ -67,7 +67,7 @@
                     <property name="sizeType">
                         <enum>Expanding</enum>
                     </property>
-                    <property name="sizeHint">
+                    <property name="tqsizeHint">
                         <size>
                             <width>40</width>
                             <height>20</height>
@@ -86,7 +86,7 @@
             <property name="sizeType">
                 <enum>Expanding</enum>
             </property>
-            <property name="sizeHint">
+            <property name="tqsizeHint">
                 <size>
                     <width>20</width>
                     <height>40</height>

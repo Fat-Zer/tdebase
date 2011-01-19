@@ -118,7 +118,7 @@ void KasAboutDialog::addDemoBar()
    box->setSpacing( spacingHint() );
    box->setMargin( marginHint() );
 
-   KasBar *bar = new KasBar( Horizontal, box );
+   KasBar *bar = new KasBar( Qt::Horizontal, box );
    bar->setItemSize( KasBar::Large );
    bar->setMasked( false );
 
@@ -131,7 +131,7 @@ void KasAboutDialog::addDemoBar()
    ci->setCustomPopup( true );
    connect( ci, TQT_SIGNAL(leftButtonClicked(TQMouseEvent *)), ci, TQT_SLOT(togglePopup()) );
 
-   KasBar *groupbar = bar->createChildBar( ( bar->orientation() == Horizontal ) ? Vertical : Horizontal, pop );
+   KasBar *groupbar = bar->createChildBar( ( bar->orientation() == Qt::Horizontal ) ? Qt::Vertical : Qt::Horizontal, pop );
    KasItem *i = 0;
 
    KasClockItem *clk = new KasClockItem( groupbar );

@@ -78,7 +78,7 @@ KateMailDialog::KateMailDialog( TQWidget *parent, KateMainWindow  *mainwin )
   }
   list->hide();
   connect( this, TQT_SIGNAL(user1Clicked()), this, TQT_SLOT(slotShowButton()) );
-  mw->setMinimumSize( lInfo->sizeHint() );
+  mw->setMinimumSize( lInfo->tqsizeHint() );
 }
 
 TQPtrList<Kate::Document> KateMailDialog::selectedDocs()
@@ -105,8 +105,8 @@ void KateMailDialog::slotShowButton()
     lInfo->setText( i18n("Press <strong>Mail...</strong> to send selected documents") );
 
   }
-  mw->setMinimumSize( TQSize( lInfo->sizeHint().width(), mw->sizeHint().height()) );
-  setMinimumSize( calculateSize( mw->minimumSize().width(), mw->sizeHint().height() ) );
+  mw->setMinimumSize( TQSize( lInfo->tqsizeHint().width(), mw->tqsizeHint().height()) );
+  setMinimumSize( calculateSize( mw->tqminimumSize().width(), mw->tqsizeHint().height() ) );
   resize( width(), minimumHeight() );
 }
 #include "katemailfilesdialog.moc"

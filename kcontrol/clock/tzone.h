@@ -29,7 +29,7 @@
 class TQComboBox;
 class TQLabel;
 
-class Tzone : public QVGroupBox
+class Tzone : public TQVGroupBox
 {
   Q_OBJECT
 

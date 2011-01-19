@@ -66,7 +66,7 @@ SensorDisplay::SensorDisplay( TQWidget *parent, const char *name,
   if(!nf) {
     mFrame = new TQGroupBox( 2, Qt::Vertical, "", this, "displayFrame");
     mFrame->setFlat(true);
-    mFrame->setAlignment(Qt::AlignHCenter);
+    mFrame->tqsetAlignment(Qt::AlignHCenter);
     mFrame->setInsideMargin(2);
 
     setTitle( title );
@@ -124,7 +124,7 @@ void SensorDisplay::configureUpdateInterval()
     if ( dlg.useGlobalUpdate() ) {
       mUseGlobalUpdateInterval = true;
 
-      SensorBoard* sb = dynamic_cast<SensorBoard*>( parentWidget() );
+      SensorBoard* sb = dynamic_cast<SensorBoard*>( tqparentWidget() );
       if ( !sb ) {
         kdDebug(1215) << "dynamic cast lacks" << endl;
         setUpdateInterval( 2 );
@@ -156,7 +156,7 @@ void SensorDisplay::resizeEvent( TQResizeEvent* )
 bool SensorDisplay::eventFilter( TQObject *object, TQEvent *event )
 {
   if ( event->type() == TQEvent::MouseButtonPress &&
-     ( (TQMouseEvent*)event)->button() == RightButton ) {
+     ( (TQMouseEvent*)event)->button() == Qt::RightButton ) {
     TQPopupMenu pm;
     if ( mIsApplet ) {
       pm.insertItem( i18n( "Launch &System Guard"), 1 );
@@ -200,7 +200,7 @@ bool SensorDisplay::eventFilter( TQObject *object, TQEvent *event )
 
     return true;
   } else if ( event->type() == TQEvent::MouseButtonRelease &&
-            ( ( TQMouseEvent*)event)->button() == LeftButton ) {
+            ( ( TQMouseEvent*)event)->button() == Qt::LeftButton ) {
     setFocus();
   }
 
@@ -247,7 +247,7 @@ void SensorDisplay::updateWhatsThis()
 void SensorDisplay::hosts( TQStringList& list )
 {
   for ( SensorProperties *s = mSensors.first(); s; s = mSensors.next() )
-    if ( !list.contains( s->hostName() ) )
+    if ( !list.tqcontains( s->hostName() ) )
       list.append( s->hostName() );
 }
 
@@ -344,7 +344,7 @@ bool SensorDisplay::restoreSettings( TQDomElement &element )
   } else {
     mUseGlobalUpdateInterval = true;
 
-    SensorBoard* sb = dynamic_cast<SensorBoard*>( parentWidget() );
+    SensorBoard* sb = dynamic_cast<SensorBoard*>( tqparentWidget() );
     if ( !sb ) {
       kdDebug(1215) << "dynamic cast lacks" << endl;
       setUpdateInterval( 2 );
@@ -447,8 +447,8 @@ void SensorDisplay::setSensorOk( bool ok )
     mErrorIndicator = new TQWidget( mPlotterWdg );
     mErrorIndicator->setErasePixmap( errorIcon );
     mErrorIndicator->resize( errorIcon.size() );
-    if ( errorIcon.mask() )
-      mErrorIndicator->setMask( *errorIcon.mask() );
+    if ( errorIcon.tqmask() )
+      mErrorIndicator->setMask( *errorIcon.tqmask() );
     mErrorIndicator->move( 0, 0 );
     mErrorIndicator->show();
   }

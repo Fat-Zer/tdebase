@@ -96,8 +96,8 @@ KdmPixmap::KdmPixmap( KdmItem *parent, const TQDomNode &node, const char *name )
 	  loadPixmap( &pixmap.normal );
 }
 
-QSize
-KdmPixmap::sizeHint()
+TQSize
+KdmPixmap::tqsizeHint()
 {
 	// choose the correct pixmap class
 	PixmapStruct::PixmapClass * pClass = &pixmap.normal;
@@ -108,7 +108,7 @@ KdmPixmap::sizeHint()
 	// use the pixmap size as the size hint
 	if (!pClass->pixmap.isNull())
 		return pClass->pixmap.size();
-	return KdmItem::sizeHint();
+	return KdmItem::tqsizeHint();
 }
 
 void
@@ -163,11 +163,11 @@ KdmPixmap::loadPixmap( PixmapStruct::PixmapClass *pClass )
   TQString fullpath = pClass->fullpath;
 
   kdDebug() << timestamp() << " load " << fullpath << endl;
-  int index = fullpath.findRev('.');
+  int index = fullpath.tqfindRev('.');
   TQString ext = fullpath.right(fullpath.length() - index);
   fullpath = fullpath.left(index);
   kdDebug() << timestamp() << " ext " << ext << " " << fullpath << endl;
-  TQString testpath = TQString("-%1x%2").arg(area.width()).arg(area.height()) + ext;
+  TQString testpath = TQString("-%1x%2").tqarg(area.width()).arg(area.height()) + ext;
   kdDebug() << timestamp() << " testing for " << fullpath + testpath << endl;
   if (KStandardDirs::exists(fullpath + testpath)) 
     pClass->pixmap.load(fullpath + testpath);
@@ -268,11 +268,11 @@ KdmPixmap::drawContents( TQPainter *p, const TQRect &r )
 				QRgb *ls = (QRgb *)scaledImage.scanLine( y );
 				for (int x = 0; x < w; ++x) {
 					QRgb l = ls[x];
-					int r = int( qRed( l ) * tint_red );
-					int g = int( qGreen( l ) * tint_green );
-					int b = int( qBlue( l ) * tint_blue );
-					int a = int( qAlpha( l ) * tint_alpha );
-					ls[x] = qRgba( r, g, b, a );
+					int r = int( tqRed( l ) * tint_red );
+					int g = int( tqGreen( l ) * tint_green );
+					int b = int( tqBlue( l ) * tint_blue );
+					int a = int( tqAlpha( l ) * tint_alpha );
+					ls[x] = tqRgba( r, g, b, a );
 				}
 			}
 

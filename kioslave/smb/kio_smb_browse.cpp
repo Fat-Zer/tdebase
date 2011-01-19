@@ -208,13 +208,13 @@ KURL SMBSlave::checkURL(const KURL& kurl) const
 
     // smb:/ normaly have no userinfo
     // we must redirect ourself to remove the username and password
-    if (surl.contains('@') && !surl.contains("smb://")) {
+    if (surl.tqcontains('@') && !surl.tqcontains("smb://")) {
         KURL url(kurl);
-        url.setPath("/"+kurl.url().right( kurl.url().length()-kurl.url().find('@') -1));
-        TQString userinfo = kurl.url().mid(5, kurl.url().find('@')-5);
-        if(userinfo.contains(':'))  {
-            url.setUser(userinfo.left(userinfo.find(':')));
-            url.setPass(userinfo.right(userinfo.length()-userinfo.find(':')-1));
+        url.setPath("/"+kurl.url().right( kurl.url().length()-kurl.url().tqfind('@') -1));
+        TQString userinfo = kurl.url().mid(5, kurl.url().tqfind('@')-5);
+        if(userinfo.tqcontains(':'))  {
+            url.setUser(userinfo.left(userinfo.tqfind(':')));
+            url.setPass(userinfo.right(userinfo.length()-userinfo.tqfind(':')-1));
         } else {
             url.setUser(userinfo);
         }
@@ -409,7 +409,7 @@ void SMBSlave::listDir( const KURL& kurl )
                    udsentry.append(atom);
 
                    atom.m_uds = KIO::UDS_MIME_TYPE;
-                   atom.m_str = TQString::fromLatin1("application/x-smb-server");
+                   atom.m_str = TQString::tqfromLatin1("application/x-smb-server");
                    udsentry.append(atom);
                }
 
@@ -429,7 +429,7 @@ void SMBSlave::listDir( const KURL& kurl )
                udsentry.append(atom);
 
                atom.m_uds = KIO::UDS_MIME_TYPE;
-               atom.m_str = TQString::fromLatin1("application/x-smb-workgroup");
+               atom.m_str = TQString::tqfromLatin1("application/x-smb-workgroup");
                udsentry.append(atom);
 
                atom.m_uds = KIO::UDS_URL;

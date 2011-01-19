@@ -1,6 +1,6 @@
 <!DOCTYPE UI><UI version="3.1" stdsetdef="1">
 <class>BGMultiWallpaperBase</class>
-<widget class="QWidget">
+<widget class="TQWidget">
     <property name="name">
         <cstring>BGMultiWallPaperBase</cstring>
     </property>
@@ -19,7 +19,7 @@
         <property name="margin">
             <number>0</number>
         </property>
-        <widget class="QLabel" row="2" column="0">
+        <widget class="TQLabel" row="2" column="0">
             <property name="name">
                 <cstring>textLabel2</cstring>
             </property>
@@ -27,7 +27,7 @@
                 <string>Show the following pictures:</string>
             </property>
         </widget>
-        <widget class="QCheckBox" row="1" column="0">
+        <widget class="TQCheckBox" row="1" column="0">
             <property name="name">
                 <cstring>m_cbRandom</cstring>
             </property>
@@ -35,7 +35,7 @@
                 <string>&amp;Show pictures in random order</string>
             </property>
         </widget>
-        <widget class="QLayoutWidget" row="0" column="0">
+        <widget class="TQLayoutWidget" row="0" column="0">
             <property name="name">
                 <cstring>layout3</cstring>
             </property>
@@ -43,7 +43,7 @@
                 <property name="name">
                     <cstring>unnamed</cstring>
                 </property>
-                <widget class="QLabel">
+                <widget class="TQLabel">
                     <property name="name">
                         <cstring>textLabel1</cstring>
                     </property>
@@ -54,7 +54,7 @@
                         <cstring>m_spinInterval</cstring>
                     </property>
                 </widget>
-                <widget class="QSpinBox">
+                <widget class="TQSpinBox">
                     <property name="name">
                         <cstring>m_spinInterval</cstring>
                     </property>
@@ -69,7 +69,7 @@
                     <property name="sizeType">
                         <enum>Expanding</enum>
                     </property>
-                    <property name="sizeHint">
+                    <property name="tqsizeHint">
                         <size>
                             <width>20</width>
                             <height>20</height>
@@ -78,7 +78,7 @@
                 </spacer>
             </hbox>
         </widget>
-        <widget class="QLayoutWidget" row="3" column="0">
+        <widget class="TQLayoutWidget" row="3" column="0">
             <property name="name">
                 <cstring>layout4</cstring>
             </property>
@@ -98,14 +98,14 @@
                             <verstretch>0</verstretch>
                         </sizepolicy>
                     </property>
-                    <property name="minimumSize">
+                    <property name="tqminimumSize">
                         <size>
                             <width>300</width>
                             <height>100</height>
                         </size>
                     </property>
                 </widget>
-                <widget class="QPushButton" row="0" column="1">
+                <widget class="TQPushButton" row="0" column="1">
                     <property name="name">
                         <cstring>m_buttonAdd</cstring>
                     </property>
@@ -123,14 +123,14 @@
                     <property name="sizeType">
                         <enum>Expanding</enum>
                     </property>
-                    <property name="sizeHint">
+                    <property name="tqsizeHint">
                         <size>
                             <width>20</width>
                             <height>20</height>
                         </size>
                     </property>
                 </spacer>
-                <widget class="QPushButton" row="1" column="1">
+                <widget class="TQPushButton" row="1" column="1">
                     <property name="name">
                         <cstring>m_buttonRemove</cstring>
                     </property>
@@ -138,7 +138,7 @@
                         <string>&amp;Remove</string>
                     </property>
                 </widget>
-                <widget class="QPushButton" row="3" column="1">
+                <widget class="TQPushButton" row="3" column="1">
                     <property name="name">
                         <cstring>m_buttonMoveDown</cstring>
                     </property>
@@ -146,7 +146,7 @@
                         <string>Move &amp;Down</string>
                     </property>
                 </widget>
-                <widget class="QPushButton" row="2" column="1">
+                <widget class="TQPushButton" row="2" column="1">
                     <property name="name">
                         <cstring>m_buttonMoveUp</cstring>
                     </property>

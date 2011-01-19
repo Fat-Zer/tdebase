@@ -49,7 +49,7 @@ Actions_listview_widget::Actions_listview_widget( TQWidget* parent_P, const char
 void Actions_listview_widget::action_name_changed( const TQString& )
     {
     current_action()->widthChanged( 0 );
-    actions_listview->repaintItem( current_action());
+    actions_listview->tqrepaintItem( current_action());
     }
 
 void Actions_listview_widget::set_action_data( Action_data_base* data_P, bool recent_action_P )
@@ -92,7 +92,7 @@ void Actions_listview_widget::new_action( Action_data_base* data_P )
         if( dynamic_cast< Action_data_group* >( current_action()->data()) != NULL )
             parent = current_action();
         else
-            parent = current_action()->parent();
+            parent = current_action()->tqparent();
         }
     if( parent )
         parent->setOpen( true );
@@ -124,7 +124,7 @@ void Actions_listview_widget::delete_action()
 void Actions_listview_widget::item_moved( TQListViewItem* item_P, TQListViewItem*, TQListViewItem* )
     {
     Action_listview_item* item = static_cast< Action_listview_item* >( item_P );
-    Action_listview_item* parent = static_cast< Action_listview_item* >( item->parent());
+    Action_listview_item* parent = static_cast< Action_listview_item* >( item->tqparent());
     if( parent == NULL )
         item->data()->reparent( module->actions_root());
     else if( Action_data_group* group = dynamic_cast< Action_data_group* >( parent->data()))

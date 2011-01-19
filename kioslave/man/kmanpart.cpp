@@ -50,10 +50,10 @@ KManPartFactory::~KManPartFactory()
    delete s_about;
 }
 
-KParts::Part* KManPartFactory::createPartObject( TQWidget * parentWidget, const char* /*widgetName*/, TQObject *,
+KParts::Part* KManPartFactory::createPartObject( TQWidget * tqparentWidget, const char* /*widgetName*/, TQObject *,
                                  const char* name, const char* /*className*/,const TQStringList & )
 {
-   KManPart* part = new KManPart(parentWidget, name );
+   KManPart* part = new KManPart(tqparentWidget, name );
    return part;
 }
 

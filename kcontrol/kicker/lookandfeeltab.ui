@@ -1,6 +1,6 @@
 <!DOCTYPE UI><UI version="3.3" stdsetdef="1">
 <class>LookAndFeelTabBase</class>
-<widget class="QWidget">
+<widget class="TQWidget">
     <property name="name">
         <cstring>LookAndFeelTabBase</cstring>
     </property>
@@ -22,7 +22,7 @@
         <property name="margin">
             <number>0</number>
         </property>
-        <widget class="QGroupBox">
+        <widget class="TQGroupBox">
             <property name="name">
                 <cstring>general_group</cstring>
             </property>
@@ -33,7 +33,7 @@
                 <property name="name">
                     <cstring>unnamed</cstring>
                 </property>
-                <widget class="QCheckBox">
+                <widget class="TQCheckBox">
                     <property name="name">
                         <cstring>kcfg_ShowMouseOverEffects</cstring>
                     </property>
@@ -44,7 +44,7 @@
                         <string>When this option is selected a mouseover effect appears when the mouse cursor is moved over panel buttons</string>
                     </property>
                 </widget>
-		<widget class="QCheckBox">
+		<widget class="TQCheckBox">
 			<property name="name">
 				<cstring>kcfg_ShowIconActivationEffect</cstring>
 			</property>
@@ -55,7 +55,7 @@
 				<string>When this option is selected an activation effect appears when panel buttons are left clicked.</string>
 			</property>
                 </widget>
-                <widget class="QCheckBox">
+                <widget class="TQCheckBox">
                     <property name="name">
                         <cstring>kcfg_ShowToolTips</cstring>
                     </property>
@@ -68,7 +68,7 @@
                 </widget>
             </hbox>
         </widget>
-        <widget class="QGroupBox">
+        <widget class="TQGroupBox">
             <property name="name">
                 <cstring>GroupBox9</cstring>
             </property>
@@ -79,7 +79,7 @@
                 <property name="name">
                     <cstring>unnamed</cstring>
                 </property>
-                <widget class="QLabel" row="0" column="0">
+                <widget class="TQLabel" row="0" column="0">
                     <property name="name">
                         <cstring>TextLabel1</cstring>
                     </property>
@@ -93,7 +93,7 @@
                         <string>Choose a tile image for the K menu.</string>
                     </property>
                 </widget>
-                <widget class="QLabel" row="3" column="0">
+                <widget class="TQLabel" row="3" column="0">
                     <property name="name">
                         <cstring>TextLabel2</cstring>
                     </property>
@@ -227,7 +227,7 @@
                         <string>When the Custom Color option is selected, use this button to pick a color for window list tile backgrounds</string>
                     </property>
                 </widget>
-                <widget class="QLabel" row="4" column="0">
+                <widget class="TQLabel" row="4" column="0">
                     <property name="name">
                         <cstring>TextLabel5</cstring>
                     </property>
@@ -281,7 +281,7 @@
                         <string>When the Custom Color option is selected, use this button to pick a color for the desktop tile background</string>
                     </property>
                 </widget>
-                <widget class="QLabel" row="2" column="0">
+                <widget class="TQLabel" row="2" column="0">
                     <property name="name">
                         <cstring>TextLabel6</cstring>
                     </property>
@@ -306,7 +306,7 @@
                         <string>When the Custom Color option is selected, use this button to pick a color for application tile backgrounds</string>
                     </property>
                 </widget>
-                <widget class="QLabel" row="1" column="0">
+                <widget class="TQLabel" row="1" column="0">
                     <property name="name">
                         <cstring>TextLabel3</cstring>
                     </property>
@@ -359,7 +359,7 @@
                     <property name="sizeType">
                         <enum>Expanding</enum>
                     </property>
-                    <property name="sizeHint">
+                    <property name="tqsizeHint">
                         <size>
                             <width>66</width>
                             <height>130</height>
@@ -368,7 +368,7 @@
                 </spacer>
             </grid>
         </widget>
-        <widget class="QButtonGroup">
+        <widget class="TQButtonGroup">
             <property name="name">
                 <cstring>buttonGroup1</cstring>
             </property>
@@ -389,14 +389,14 @@
                     <property name="sizeType">
                         <enum>Fixed</enum>
                     </property>
-                    <property name="sizeHint">
+                    <property name="tqsizeHint">
                         <size>
                             <width>20</width>
                             <height>20</height>
                         </size>
                     </property>
                 </spacer>
-                <widget class="QCheckBox" row="3" column="1">
+                <widget class="TQCheckBox" row="3" column="1">
                     <property name="name">
                         <cstring>kcfg_ColorizeBackground</cstring>
                     </property>
@@ -413,7 +413,7 @@
                         <string>If this option is selected, the panel background image will be colored to match the default colors. To change the default colors, go to the 'Colors' control module.</string>
                     </property>
                 </widget>
-                <widget class="QLabel" row="0" column="2" rowspan="2" colspan="1">
+                <widget class="TQLabel" row="0" column="2" rowspan="2" colspan="1">
                     <property name="name">
                         <cstring>m_backgroundLabel</cstring>
                     </property>
@@ -428,13 +428,13 @@
                             <verstretch>0</verstretch>
                         </sizepolicy>
                     </property>
-                    <property name="minimumSize">
+                    <property name="tqminimumSize">
                         <size>
                             <width>50</width>
                             <height>50</height>
                         </size>
                     </property>
-                    <property name="maximumSize">
+                    <property name="tqmaximumSize">
                         <size>
                             <width>50</width>
                             <height>50</height>
@@ -449,7 +449,7 @@
                     <property name="scaledContents">
                         <bool>true</bool>
                     </property>
-                    <property name="alignment">
+                    <property name="tqalignment">
                         <set>AlignCenter</set>
                     </property>
                     <property name="hAlign" stdset="0">
@@ -480,7 +480,7 @@
 This option is only active if 'Enable background image' is selected.</string>
                     </property>
                 </widget>
-                <widget class="QCheckBox" row="1" column="0" rowspan="1" colspan="2">
+                <widget class="TQCheckBox" row="1" column="0" rowspan="1" colspan="2">
                     <property name="name">
                         <cstring>kcfg_UseBackgroundTheme</cstring>
                     </property>
@@ -488,7 +488,7 @@ This option is only active if 'Enable background image' is selected.</string>
                         <string>Enable &amp;background image</string>
                     </property>
                 </widget>
-                <widget class="QCheckBox" row="0" column="0" rowspan="1" colspan="2">
+                <widget class="TQCheckBox" row="0" column="0" rowspan="1" colspan="2">
                     <property name="name">
                         <cstring>kcfg_Transparent</cstring>
                     </property>
@@ -498,7 +498,7 @@ This option is only active if 'Enable background image' is selected.</string>
                 </widget>
             </grid>
         </widget>
-        <widget class="QLayoutWidget">
+        <widget class="TQLayoutWidget">
             <property name="name">
                 <cstring>layout3</cstring>
             </property>
@@ -506,7 +506,7 @@ This option is only active if 'Enable background image' is selected.</string>
                 <property name="name">
                     <cstring>unnamed</cstring>
                 </property>
-                <widget class="QPushButton">
+                <widget class="TQPushButton">
                     <property name="name">
                         <cstring>advancedOptionsButton</cstring>
                     </property>
@@ -527,7 +527,7 @@ This option is only active if 'Enable background image' is selected.</string>
                     <property name="sizeType">
                         <enum>Expanding</enum>
                     </property>
-                    <property name="sizeHint">
+                    <property name="tqsizeHint">
                         <size>
                             <width>289</width>
                             <height>20</height>
@@ -546,7 +546,7 @@ This option is only active if 'Enable background image' is selected.</string>
             <property name="sizeType">
                 <enum>Expanding</enum>
             </property>
-            <property name="sizeHint">
+            <property name="tqsizeHint">
                 <size>
                     <width>20</width>
                     <height>0</height>

@@ -29,7 +29,7 @@
 #include <dcopobject.h>
 #include <tqtimer.h>
 
-class QClipboard;
+class TQClipboard;
 class KToggleAction;
 class KAboutData;
 class URLGrabber;
@@ -158,7 +158,7 @@ private slots:
 
 private:
 
-    QClipboard *clip;
+    TQClipboard *clip;
 
     TQTime *hideTimer;
     TQTime *showTimer;

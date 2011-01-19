@@ -298,9 +298,9 @@ void ThumbnailProtocol::get(const KURL &url)
     {
         double imgRatio = (double)img.height() / (double)img.width();
         if (imgRatio > (double)m_height / (double)m_width)
-            img = img.smoothScale( int(QMAX((double)m_height / imgRatio, 1)), m_height);
+            img = img.smoothScale( int(TQMAX((double)m_height / imgRatio, 1)), m_height);
         else
-            img = img.smoothScale(m_width, int(QMAX((double)m_width * imgRatio, 1)));
+            img = img.smoothScale(m_width, int(TQMAX((double)m_width * imgRatio, 1)));
     }
 
 // ### FIXME
@@ -322,7 +322,7 @@ void ThumbnailProtocol::get(const KURL &url)
         p.drawLine( 0, 0, 0, y2 );
         p.end();
 
-        const TQBitmap *mask = pix.mask();
+        const TQBitmap *mask = pix.tqmask();
         if ( mask ) // need to update it so we can see the frame
         {
             TQBitmap bitmap( *mask );
@@ -417,7 +417,7 @@ void ThumbnailProtocol::get(const KURL &url)
 
 const TQImage& ThumbnailProtocol::getIcon()
 {
-    TQImage* icon = m_iconDict.find(m_mimeType);
+    TQImage* icon = m_iconDict.tqfind(m_mimeType);
     if ( !icon ) // generate it!
     {
         icon = new TQImage( KMimeType::mimeType(m_mimeType)->pixmap( KIcon::Desktop, m_iconSize ).convertToImage() );

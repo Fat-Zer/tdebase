@@ -53,13 +53,13 @@ void MenuFolderInfo::add(MenuFolderInfo *info, bool initial)
 // Remove sub menu (without deleting it)
 void MenuFolderInfo::take(MenuFolderInfo *info)
 {
-   subFolders.take(subFolders.findRef(info));
+   subFolders.take(subFolders.tqfindRef(info));
 }
 
 // Remove sub menu (without deleting it)
 bool MenuFolderInfo::takeRecursive(MenuFolderInfo *info)
 {
-   int i = subFolders.findRef(info);
+   int i = subFolders.tqfindRef(info);
    if (i >= 0)
    {
       subFolders.take(i);
@@ -106,7 +106,7 @@ void MenuFolderInfo::take(MenuEntryInfo *entry)
 TQString MenuFolderInfo::uniqueMenuCaption(const TQString &caption)
 {
    TQRegExp r("(.*)(?=-\\d+)");
-   TQString cap = (r.search(caption) > -1) ? r.cap(1) : caption;
+   TQString cap = (r.search(caption) > -1) ? TQString(r.cap(1)) : caption;
 
    TQString result = caption;
 
@@ -134,7 +134,7 @@ TQString MenuFolderInfo::uniqueMenuCaption(const TQString &caption)
 TQString MenuFolderInfo::uniqueItemCaption(const TQString &caption, const TQString &exclude)
 {
    TQRegExp r("(.*)(?=-\\d+)");
-   TQString cap = (r.search(caption) > -1) ? r.cap(1) : caption;
+   TQString cap = (r.search(caption) > -1) ? TQString(r.cap(1)) : caption;
 
    TQString result = caption;
 
@@ -489,14 +489,14 @@ bool MenuEntryInfo::isShortcutAvailable(const KShortcut &_shortcut)
    {
       s_allShortcuts = new TQStringList(KHotKeys::allShortCuts());
    }
-   available = !s_allShortcuts->contains(shortcutKey);
+   available = !s_allShortcuts->tqcontains(shortcutKey);
    if (available && s_newShortcuts)
    {
-      available = !s_newShortcuts->contains(shortcutKey);
+      available = !s_newShortcuts->tqcontains(shortcutKey);
    }
    if (!available && s_freeShortcuts)
    {
-      available = s_freeShortcuts->contains(shortcutKey);
+      available = s_freeShortcuts->tqcontains(shortcutKey);
    }
    return available;
 }

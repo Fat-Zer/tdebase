@@ -62,7 +62,7 @@ bool SystemImpl::listRoot(TQValueList<KIO::UDSEntry> &list)
 
 		for(; filename!=endf; ++filename)
 		{
-			if (!names_found.contains(*filename))
+			if (!names_found.tqcontains(*filename))
 			{
 				entry.clear();
 				createEntry(entry, *dirpath, *filename);
@@ -82,7 +82,7 @@ bool SystemImpl::parseURL(const KURL &url, TQString &name, TQString &path) const
 {
 	TQString url_path = url.path();
 
-	int i = url_path.find('/', 1);
+	int i = url_path.tqfind('/', 1);
 	if (i > 0)
 	{
 		name = url_path.mid(1, i-1);
@@ -285,7 +285,7 @@ void SystemImpl::createEntry(KIO::UDSEntry &entry,
 			             const KIO::UDSEntryList &) ) );
 		connect( job, TQT_SIGNAL( result(KIO::Job *) ),
 		         this, TQT_SLOT( slotResult(KIO::Job *) ) );
-		qApp->eventLoop()->enterLoop();
+		tqApp->eventLoop()->enterLoop();
 
 		if (m_lastListingEmpty) icon = empty_icon;
 	}
@@ -299,13 +299,13 @@ void SystemImpl::slotEntries(KIO::Job *job, const KIO::UDSEntryList &list)
 	{
 		job->kill(true);
 		m_lastListingEmpty = false;
-		qApp->eventLoop()->exitLoop();
+		tqApp->eventLoop()->exitLoop();
 	}
 }
 
 void SystemImpl::slotResult(KIO::Job *)
 {
-	qApp->eventLoop()->exitLoop();
+	tqApp->eventLoop()->exitLoop();
 }
 
 

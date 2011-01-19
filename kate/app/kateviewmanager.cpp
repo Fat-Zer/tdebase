@@ -94,47 +94,47 @@ void KateViewManager::setupActions ()
   /**
    * tabbing
    */
-  a=new KAction ( i18n("New Tab"),"tab_new", 0, this, TQT_SLOT(slotNewTab()),
+  a=new KAction ( i18n("New Tab"),"tab_new", 0, TQT_TQOBJECT(this), TQT_SLOT(slotNewTab()),
                   m_mainWindow->actionCollection(), "view_new_tab" );
 
-  m_closeTab = new KAction ( i18n("Close Current Tab"),"tab_remove",0,this,TQT_SLOT(slotCloseTab()),
+  m_closeTab = new KAction ( i18n("Close Current Tab"),"tab_remove",0,TQT_TQOBJECT(this),TQT_SLOT(slotCloseTab()),
                              m_mainWindow->actionCollection(),"view_close_tab");
 
   m_activateNextTab
       = new KAction( i18n( "Activate Next Tab" ),
                      TQApplication::reverseLayout() ? KStdAccel::tabPrev() : KStdAccel::tabNext(),
-                     this, TQT_SLOT( activateNextTab() ), m_mainWindow->actionCollection(), "view_next_tab" );
+                     TQT_TQOBJECT(this), TQT_SLOT( activateNextTab() ), m_mainWindow->actionCollection(), "view_next_tab" );
 
   m_activatePrevTab
       = new KAction( i18n( "Activate Previous Tab" ),
                      TQApplication::reverseLayout() ? KStdAccel::tabNext() : KStdAccel::tabPrev(),
-                     this, TQT_SLOT( activatePrevTab() ), m_mainWindow->actionCollection(), "view_prev_tab" );
+                     TQT_TQOBJECT(this), TQT_SLOT( activatePrevTab() ), m_mainWindow->actionCollection(), "view_prev_tab" );
 
   /**
    * view splitting
    */
-  a=new KAction ( i18n("Split Ve&rtical"), "view_right", CTRL+SHIFT+Key_L, this, TQT_SLOT(
+  a=new KAction ( i18n("Split Ve&rtical"), "view_right", CTRL+SHIFT+Key_L, TQT_TQOBJECT(this), TQT_SLOT(
                   slotSplitViewSpaceVert() ), m_mainWindow->actionCollection(), "view_split_vert");
 
   a->setWhatsThis(i18n("Split the currently active view vertically into two views."));
 
-  a=new KAction ( i18n("Split &Horizontal"), "view_bottom", CTRL+SHIFT+Key_T, this, TQT_SLOT(
+  a=new KAction ( i18n("Split &Horizontal"), "view_bottom", CTRL+SHIFT+Key_T, TQT_TQOBJECT(this), TQT_SLOT(
                   slotSplitViewSpaceHoriz() ), m_mainWindow->actionCollection(), "view_split_horiz");
 
   a->setWhatsThis(i18n("Split the currently active view horizontally into two views."));
 
-  m_closeView = new KAction ( i18n("Cl&ose Current View"), "view_remove", CTRL+SHIFT+Key_R, this,
+  m_closeView = new KAction ( i18n("Cl&ose Current View"), "view_remove", CTRL+SHIFT+Key_R, TQT_TQOBJECT(this),
                     TQT_SLOT( slotCloseCurrentViewSpace() ), m_mainWindow->actionCollection(),
                     "view_close_current_space" );
 
   m_closeView->setWhatsThis(i18n("Close the currently active splitted view"));
 
-  goNext=new KAction(i18n("Next View"),Key_F8,this,
+  goNext=new KAction(i18n("Next View"),Key_F8,TQT_TQOBJECT(this),
                      TQT_SLOT(activateNextView()),m_mainWindow->actionCollection(),"go_next");
 
   goNext->setWhatsThis(i18n("Make the next split view the active one."));
 
-  goPrev=new KAction(i18n("Previous View"),SHIFT+Key_F8, this, TQT_SLOT(activatePrevView()),m_mainWindow->actionCollection(),"go_prev");
+  goPrev=new KAction(i18n("Previous View"),SHIFT+Key_F8, TQT_TQOBJECT(this), TQT_SLOT(activatePrevView()),m_mainWindow->actionCollection(),"go_prev");
 
   goPrev->setWhatsThis(i18n("Make the previous split view the active one."));
 
@@ -168,7 +168,7 @@ void KateViewManager::updateViewSpaceActions ()
 }
 
 void KateViewManager::tabChanged(TQWidget* widget) {
-  KateViewSpaceContainer *container=static_cast<KateViewSpaceContainer*>(widget->qt_cast("KateViewSpaceContainer"));
+  KateViewSpaceContainer *container=static_cast<KateViewSpaceContainer*>(widget->tqqt_cast("KateViewSpaceContainer"));
   Q_ASSERT(container);
   m_currentContainer=container;
 
@@ -215,7 +215,7 @@ void KateViewManager::slotCloseTab()
   if (m_viewSpaceContainerList.count() <= 1) return;
   if (!m_currentContainer) return;
 
-  int pos = m_viewSpaceContainerList.find (m_currentContainer);
+  int pos = m_viewSpaceContainerList.tqfind (m_currentContainer);
 
   if (pos == -1)
     return;

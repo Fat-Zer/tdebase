@@ -59,5 +59,5 @@ PluginConfigInterface *Kate::pluginConfigInterface (Plugin *plugin)
   if (!plugin)
     return 0;
 
-  return static_cast<PluginConfigInterface*>(plugin->qt_cast("Kate::PluginConfigInterface"));
+  return static_cast<PluginConfigInterface*>(plugin->tqqt_cast("Kate::PluginConfigInterface"));
 }

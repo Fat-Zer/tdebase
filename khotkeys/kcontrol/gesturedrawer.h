@@ -22,7 +22,7 @@
 namespace KHotKeys
 {
 
-class GestureDrawer : public QFrame
+class GestureDrawer : public TQFrame
     {
     Q_OBJECT
     public:
@@ -31,13 +31,13 @@ class GestureDrawer : public QFrame
 
         void setData(const TQString &data);
 
-        virtual TQSize sizeHint() const { return TQSize(30, 30); }
+        virtual TQSize tqsizeHint() const { return TQSize(30, 30); }
 
     protected:
         void paintEvent(TQPaintEvent *ev);
 
     private:
-        TQPoint lookupCellCoords(Q_UINT32 cell);
+        TQPoint lookupCellCoords(TQ_UINT32 cell);
         void drawArrowHead(TQPoint &start, TQPoint &end,
                            TQPainter &p);
 

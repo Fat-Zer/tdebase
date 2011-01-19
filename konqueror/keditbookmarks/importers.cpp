@@ -45,7 +45,7 @@ TQString ImportCommand::name() const {
 }
 
 TQString ImportCommand::folder() const {
-    return m_folder ? i18n("%1 Bookmarks").arg(visibleName()) : TQString::null;
+    return m_folder ? i18n("%1 Bookmarks").arg(visibleName()) : TQString();
 }
 
 ImportCommand* ImportCommand::importerFactory(const TQCString &type) {

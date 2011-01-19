@@ -76,7 +76,7 @@ TopLevel::TopLevel( const char *name )
   mTimerId = -1;
 
   mSplitter = new TQSplitter( this );
-  mSplitter->setOrientation( Horizontal );
+  mSplitter->setOrientation( Qt::Horizontal );
   mSplitter->setOpaqueResize( KGlobalSettings::opaqueResize() );
   setCentralWidget( mSplitter );
 
@@ -105,42 +105,42 @@ TopLevel::TopLevel( const char *name )
   statusBar()->hide();
 
   // create actions for menue entries
-  new KAction( i18n( "&New Worksheet..." ), "tab_new", 0, mWorkSpace,
+  new KAction( i18n( "&New Worksheet..." ), "tab_new", 0, TQT_TQOBJECT(mWorkSpace),
 		   TQT_SLOT( newWorkSheet() ), actionCollection(), "new_worksheet" );
   
-  new KAction( i18n( "Import Worksheet..." ), "fileopen", 0, mWorkSpace,
+  new KAction( i18n( "Import Worksheet..." ), "fileopen", 0, TQT_TQOBJECT(mWorkSpace),
 		   TQT_SLOT( loadWorkSheet() ), actionCollection(), "import_worksheet" );
   
   mActionOpenRecent = new KRecentFilesAction( i18n( "&Import Recent Worksheet" ),"fileopen", 0,
-		   mWorkSpace, TQT_SLOT( loadWorkSheet( const KURL& ) ), actionCollection(), "recent_import_worksheet" );	
+		   TQT_TQOBJECT(mWorkSpace), TQT_SLOT( loadWorkSheet( const KURL& ) ), actionCollection(), "recent_import_worksheet" );	
   
-  new KAction( i18n( "&Remove Worksheet" ), "tab_remove", 0, mWorkSpace,
+  new KAction( i18n( "&Remove Worksheet" ), "tab_remove", 0, TQT_TQOBJECT(mWorkSpace),
 		   TQT_SLOT( deleteWorkSheet() ), actionCollection(), "remove_worksheet" );
 
-  new KAction( i18n( "&Export Worksheet..." ), "filesaveas", 0, mWorkSpace,
+  new KAction( i18n( "&Export Worksheet..." ), "filesaveas", 0, TQT_TQOBJECT(mWorkSpace),
 		   TQT_SLOT( saveWorkSheetAs() ), actionCollection(), "export_worksheet" );
    
-  KStdAction::quit( this, TQT_SLOT( close() ), actionCollection() );
+  KStdAction::quit( TQT_TQOBJECT(this), TQT_SLOT( close() ), actionCollection() );
 
-  new KAction( i18n( "C&onnect Host..." ), "connect_established", 0, this,
+  new KAction( i18n( "C&onnect Host..." ), "connect_established", 0, TQT_TQOBJECT(this),
                TQT_SLOT( connectHost() ), actionCollection(), "connect_host" );
-  new KAction( i18n( "D&isconnect Host" ), "connect_no", 0, this,
+  new KAction( i18n( "D&isconnect Host" ), "connect_no", 0, TQT_TQOBJECT(this),
                TQT_SLOT( disconnectHost() ), actionCollection(), "disconnect_host" );
 
 //  KStdAction::cut( mWorkSpace, TQT_SLOT( cut() ), actionCollection() );
 //  KStdAction::copy( mWorkSpace, TQT_SLOT( copy() ), actionCollection() );
 //  KStdAction::paste( mWorkSpace, TQT_SLOT( paste() ), actionCollection() );
-  new KAction( i18n( "&Worksheet Properties" ), "configure", 0, mWorkSpace,
+  new KAction( i18n( "&Worksheet Properties" ), "configure", 0, TQT_TQOBJECT(mWorkSpace),
                TQT_SLOT( configure() ), actionCollection(), "configure_sheet" );
 
   new KAction( i18n( "Load Standard Sheets" ), "revert",
-               0, this, TQT_SLOT( resetWorkSheets() ),
+               0, TQT_TQOBJECT(this), TQT_SLOT( resetWorkSheets() ),
                actionCollection(), "revert_all_worksheets"  );
 
-  new KAction( i18n( "Configure &Style..." ), "colorize", 0, this,
+  new KAction( i18n( "Configure &Style..." ), "colorize", 0, TQT_TQOBJECT(this),
                TQT_SLOT( editStyle() ), actionCollection(), "configure_style" );
 
-  // TODO remove resize and fix so sizeHints() determines default size.
+  // TODO remove resize and fix so tqsizeHints() determines default size.
   if (!initialGeometrySet())
     resize( 640, 480 );
   setupGUI(ToolBar | Keys | StatusBar | Create);
@@ -212,9 +212,9 @@ TQStringList TopLevel::listHosts()
 
 TQString TopLevel::readIntegerSensor( const TQString &sensorLocator )
 {
-  TQString host = sensorLocator.left( sensorLocator.find( ':' ) );
+  TQString host = sensorLocator.left( sensorLocator.tqfind( ':' ) );
   TQString sensor = sensorLocator.right( sensorLocator.length() -
-                                        sensorLocator.find( ':' ) - 1 );
+                                        sensorLocator.tqfind( ':' ) - 1 );
 
   DCOPClientTransaction *dcopTransaction = kapp->dcopClient()->beginTransaction();
   mDCopFIFO.prepend( dcopTransaction );
@@ -229,9 +229,9 @@ TQStringList TopLevel::readListSensor( const TQString& sensorLocator )
 {
   TQStringList retval;
 
-  TQString host = sensorLocator.left( sensorLocator.find( ':' ) );
+  TQString host = sensorLocator.left( sensorLocator.tqfind( ':' ) );
   TQString sensor = sensorLocator.right( sensorLocator.length() -
-                                        sensorLocator.find( ':' ) - 1 );
+                                        sensorLocator.tqfind( ':' ) - 1 );
 
   DCOPClientTransaction *dcopTransaction = kapp->dcopClient()->beginTransaction();
   mDCopFIFO.prepend( dcopTransaction );

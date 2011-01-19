@@ -47,7 +47,7 @@ class KSSLSigners;
 class KURLLabel;
 class KURLRequester;
 
-class CipherItem : public QCheckListItem
+class CipherItem : public TQCheckListItem
 {
 public:
     CipherItem( TQListView *view, const TQString& cipher, int bits, int maxBits,
@@ -72,7 +72,7 @@ private:
 
 
 
-class OtherCertItem : public QListViewItem
+class OtherCertItem : public TQListViewItem
 {
 public:
     OtherCertItem(TQListView *view, const TQString& sub, const TQString& md5, bool perm, int policy, TQDateTime exp, KCryptoConfig *module );
@@ -102,7 +102,7 @@ private:
 
 
 
-class YourCertItem : public QListViewItem
+class YourCertItem : public TQListViewItem
 {
 public:
     YourCertItem(TQListView *view, TQString pkcs, TQString pass, TQString name, KCryptoConfig *module );
@@ -132,7 +132,7 @@ private:
 
 
 
-class CAItem : public QListViewItem
+class CAItem : public TQListViewItem
 {
 public:
     CAItem(TQListView *view, TQString name, TQString cert, bool site, bool email, bool code, KCryptoConfig *module );
@@ -166,7 +166,7 @@ private:
 
 
 
-class HostAuthItem : public QListViewItem
+class HostAuthItem : public TQListViewItem
 {
 public:
     HostAuthItem(TQListView *view, TQString host, TQString name, KCryptoConfig *module ) : TQListViewItem(view, TQString::null ) {

@@ -286,7 +286,7 @@ int main(int argc, char** argv)
    }
 
    kdDebug(1430) << "6 - dcop->registerAs" << endl;
-   if (g_dcopId)
+   if (g_dcopId != 0)
       g_dcopId = dcop->registerAs( g_dcopId, false );
    else
       g_dcopId = dcop->registerAs("nspluginviewer");

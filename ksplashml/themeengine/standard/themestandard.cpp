@@ -156,8 +156,8 @@ void ThemeStandard::_readSettings()
   if( mSbFontItalic )
     mSbFont.setItalic( true );
 
-  mSbFg = cfg->readColorEntry( "Statusbar Foreground", &Qt::white );
-  mSbBg = cfg->readColorEntry( "Statusbar Background", &Qt::black );
+  mSbFg = cfg->readColorEntry( "Statusbar Foreground", &TQt::white );
+  mSbBg = cfg->readColorEntry( "Statusbar Background", &TQt::black );
   mSbIcon = cfg->readEntry( "Statusbar Icon", "run" );
   mIconsVisible = cfg->readBoolEntry( "Icons Visible", true);
   mIconsJumping = cfg->readBoolEntry( "Icons Jumping", true);

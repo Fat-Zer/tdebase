@@ -41,7 +41,7 @@ class KDIconView;
 class Minicli;
 class KActionCollection;
 
-class KRootWidget : public QObject
+class KRootWidget : public TQObject
 {
     Q_OBJECT
 public:

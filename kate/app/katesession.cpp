@@ -596,7 +596,7 @@ void KateSessionManager::sessionManage ()
 
 //BEGIN CHOOSER DIALOG
 
-class KateSessionChooserItem : public QListViewItem
+class KateSessionChooserItem : public TQListViewItem
 {
   public:
     KateSessionChooserItem (KListView *lv, KateSession::Ptr s)

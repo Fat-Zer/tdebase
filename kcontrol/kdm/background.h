@@ -20,7 +20,7 @@ class KGlobalBackgroundSettings;
 class TQCheckBox;
 class TQLabel;
 
-class KBackground: public QWidget
+class KBackground: public TQWidget
 {
     Q_OBJECT
 public:

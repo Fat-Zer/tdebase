@@ -91,7 +91,7 @@ DM::DM() : fd( -1 )
 	case OldKDM:
 		{
 			TQString tf( ctl );
-			tf.truncate( tf.find( ',' ) );
+			tf.truncate( tf.tqfind( ',' ) );
 			fd = ::open( tf.latin1(), O_WRONLY );
 		}
 		break;
@@ -178,9 +178,9 @@ DM::canShutdown()
 	TQCString re;
 
 	if (DMType == GDM)
-		return exec( "QUERY_LOGOUT_ACTION\n", re ) && re.find("HALT") >= 0;
+		return exec( "QUERY_LOGOUT_ACTION\n", re ) && re.tqfind("HALT") >= 0;
 
-	return exec( "caps\n", re ) && re.find( "\tshutdown" ) >= 0;
+	return exec( "caps\n", re ) && re.tqfind( "\tshutdown" ) >= 0;
 }
 
 void
@@ -194,7 +194,7 @@ DM::shutdown( KApplication::ShutdownType shutdownType,
 	bool cap_ask;
 	if (DMType == NewKDM) {
 		TQCString re;
-		cap_ask = exec( "caps\n", re ) && re.find( "\tshutdown ask" ) >= 0;
+		cap_ask = exec( "caps\n", re ) && re.tqfind( "\tshutdown ask" ) >= 0;
 	} else {
 		if (!bootOption.isEmpty())
 			return;
@@ -249,7 +249,7 @@ DM::bootOptions( TQStringList &opts, int &defopt, int &current )
 
 	opts = TQStringList::split( ' ', opts[1] );
 	for (TQStringList::Iterator it = opts.begin(); it != opts.end(); ++it)
-		(*it).replace( "\\s", " " );
+		(*it).tqreplace( "\\s", " " );
 
 	return true;
 }
@@ -272,7 +272,7 @@ DM::isSwitchable()
 
 	TQCString re;
 
-	return exec( "caps\n", re ) && re.find( "\tlocal" ) >= 0;
+	return exec( "caps\n", re ) && re.tqfind( "\tlocal" ) >= 0;
 }
 
 int
@@ -287,7 +287,7 @@ DM::numReserve()
 	TQCString re;
 	int p;
 
-	if (!(exec( "caps\n", re ) && (p = re.find( "\treserve " )) >= 0))
+	if (!(exec( "caps\n", re ) && (p = re.tqfind( "\treserve " )) >= 0))
 		return -1;
 	return atoi( re.data() + p + 9 );
 }
@@ -338,8 +338,8 @@ DM::localSessions( SessList &list )
 				se.vt = ts[1].mid( 2 ).toInt();
 			se.user = ts[2];
 			se.session = ts[3];
-			se.self = (ts[4].find( '*' ) >= 0);
-			se.tty = (ts[4].find( 't' ) >= 0);
+			se.self = (ts[4].tqfind( '*' ) >= 0);
+			se.tty = (ts[4].tqfind( 't' ) >= 0);
 			list.append( se );
 		}
 	}
@@ -351,7 +351,7 @@ DM::sess2Str2( const SessEnt &se, TQString &user, TQString &loc )
 {
 	if (se.tty) {
 		user = i18n("user: ...", "%1: TTY login").arg( se.user );
-		loc = se.vt ? TQString("vt%1").arg( se.vt ) : se.display ;
+		loc = se.vt ? TQString(TQString("vt%1").arg( se.vt )) : se.display ;
 	} else {
 		user =
 			se.user.isEmpty() ?
@@ -359,19 +359,19 @@ DM::sess2Str2( const SessEnt &se, TQString &user, TQString &loc )
 					i18n("Unused") :
 					se.session == "<remote>" ?
 						i18n("X login on remote host") :
-						i18n("... host", "X login on %1").arg( se.session ) :
+						TQString(i18n("... host", "X login on %1").arg( se.session )) :
 				se.session == "<unknown>" ?
 					se.user :
-					i18n("user: session type", "%1: %2")
-						.arg( se.user ).arg( se.session );
+					TQString(i18n("user: session type", "%1: %2")
+						.arg( se.user ).arg( se.session ));
 		loc =
 			se.vt ?
-				TQString("%1, vt%2").arg( se.display ).arg( se.vt ) :
+				TQString(TQString("%1, vt%2").arg( se.display ).arg( se.vt )) :
 				se.display;
 	}
 }
 
-QString
+TQString
 DM::sess2Str( const SessEnt &se )
 {
 	TQString user, loc;
@@ -384,16 +384,16 @@ bool
 DM::switchVT( int vt )
 {
 	if (DMType == GDM)
-		return exec( TQString("SET_VT %1\n").arg(vt).latin1() );
+		return exec( TQString(TQString("SET_VT %1\n").arg(vt)).latin1() );
 
-	return exec( TQString("activate\tvt%1\n").arg(vt).latin1() );
+	return exec( TQString(TQString("activate\tvt%1\n").arg(vt)).latin1() );
 }
 
 void
 DM::lockSwitchVT( int vt )
 {
 	if (switchVT( vt ))
-		kapp->dcopClient()->send( "kdesktop", "KScreensaverIface", "lock()", "" );
+		kapp->dcopClient()->send( "kdesktop", "KScreensaverIface", "lock()", TQString("") );
 }
 
 void

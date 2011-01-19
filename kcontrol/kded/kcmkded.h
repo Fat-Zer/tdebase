@@ -62,7 +62,7 @@ private:
 	TQString NOT_RUNNING;
 };
 
-class CheckListItem : public TQObject, public QCheckListItem
+class CheckListItem : public TQObject, public TQCheckListItem
 {
 	Q_OBJECT
 public:

@@ -32,14 +32,14 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 class BaseContainer;
 
-class KDE_EXPORT PanelDrag : public QDragObject
+class KDE_EXPORT PanelDrag : public TQDragObject
 {
     public:
         PanelDrag(BaseContainer* container, TQWidget *dragSource);
         ~PanelDrag();
 
         virtual const char * format(int i = 0) const;
-        virtual TQByteArray encodedData(const char *) const;
+        virtual TQByteArray tqencodedData(const char *) const;
 
         static bool canDecode(const TQMimeSource * e);
         static bool decode(const TQMimeSource* e, BaseContainer** container);
@@ -48,14 +48,14 @@ class KDE_EXPORT PanelDrag : public QDragObject
         TQByteArray a;
 };
 
-class KDE_EXPORT AppletInfoDrag : public QDragObject
+class KDE_EXPORT AppletInfoDrag : public TQDragObject
 {
     public:
         AppletInfoDrag(const AppletInfo& container, TQWidget *dragSource);
         ~AppletInfoDrag();
 
         virtual const char * format(int i = 0) const;
-        virtual TQByteArray encodedData(const char *) const;
+        virtual TQByteArray tqencodedData(const char *) const;
 
         static bool canDecode(const TQMimeSource * e);
         static bool decode(const TQMimeSource* e, AppletInfo& container);

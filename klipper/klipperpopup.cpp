@@ -146,7 +146,7 @@ void KlipperPopup::buildFromScratch() {
     m_filterWidget = new KLineEditBlackKey( this, "Klipper filter widget" );
     insertTitle( SmallIcon( "klipper" ), i18n("Klipper - Clipboard Tool"));
     m_filterWidgetId = insertItem( m_filterWidget, m_filterWidgetId, 1 );
-    m_filterWidget->setFocusPolicy( TQWidget::NoFocus );
+    m_filterWidget->setFocusPolicy( TQ_NoFocus );
     setItemVisible( m_filterWidgetId,  false );
     m_filterWidget->hide();
     TQString lastGroup;
@@ -225,11 +225,11 @@ void KlipperPopup::keyPressEvent( TQKeyEvent* e ) {
     // If alt-something is pressed, select a shortcut
     // from the menu. Do this by sending a keyPress
     // without the alt-modifier to the superobject.
-    if ( e->state() & Qt::AltButton ) {
+    if ( e->state() & AltButton ) {
         TQKeyEvent ke( TQEvent::KeyPress,
                       e->key(),
                       e->ascii(),
-                      e->state() ^ Qt::AltButton,
+                      e->state() ^ AltButton,
                       e->text(),
                       e->isAutoRepeat(),
                       e->count() );

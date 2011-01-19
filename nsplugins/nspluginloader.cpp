@@ -130,7 +130,7 @@ void NSPluginInstance::windowChanged(WId w)
     setBackgroundMode(w == 0 ? TQWidget::PaletteBackground : TQWidget::NoBackground);
     if (w == 0) {
         // FIXME: Put a notice here to tell the user that it crashed.
-        repaint();
+        tqrepaint();
     }
 }
 
@@ -174,13 +174,13 @@ void NSPluginInstance::focusOutEvent( TQFocusEvent* event )
 
 void NSPluginInstance::displayPlugin()
 {
-  qApp->syncX(); // process pending X commands
+  tqApp->syncX(); // process pending X commands
   stub->displayPlugin();
 }
 
 void NSPluginInstance::resizePlugin( int w, int h )
 {
-  qApp->syncX();
+  tqApp->syncX();
   stub->resizePlugin( w, h );
 }
 
@@ -292,7 +292,7 @@ void NSPluginLoader::scanPlugins()
               stripped = stripped.right( stripped.length()-p );
 
               // add filetype to list
-              if ( !stripped.isEmpty() && !_filetype.find(stripped) )
+              if ( !stripped.isEmpty() && !_filetype.tqfind(stripped) )
                   _filetype.insert( stripped, new TQString(mime));
           }
         }

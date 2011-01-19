@@ -280,7 +280,7 @@ void PlastikClient::paintEvent(TQPaintEvent *e)
     if(titleEdgeTop > 0)
     {
         tempRect.setRect(r_x+2, r_y, r_w-2*2, titleEdgeTop );
-        if (tempRect.isValid() && region.contains(tempRect) ) {
+        if (tempRect.isValid() && region.tqcontains(tempRect) ) {
             painter.drawTiledPixmap(tempRect, handler->pixmap(TitleBarTileTop, active, toolWindow) );
         }
     }
@@ -291,7 +291,7 @@ void PlastikClient::paintEvent(TQPaintEvent *e)
     if(titleEdgeLeft > 0)
     {
         tempRect.setRect(r_x, r_y, borderLeft, titleEdgeTop+titleHeight+titleEdgeBottom);
-        if (tempRect.isValid() && region.contains(tempRect) ) {
+        if (tempRect.isValid() && region.tqcontains(tempRect) ) {
             painter.drawTiledPixmap(tempRect, handler->pixmap(TitleBarLeft, active, toolWindow) );
             titleMarginLeft = borderLeft;
         }
@@ -301,7 +301,7 @@ void PlastikClient::paintEvent(TQPaintEvent *e)
     if(titleEdgeRight > 0)
     {
         tempRect.setRect(borderRightLeft, r_y, borderRight, titleEdgeTop+titleHeight+titleEdgeBottom);
-        if (tempRect.isValid() && region.contains(tempRect) ) {
+        if (tempRect.isValid() && region.tqcontains(tempRect) ) {
             painter.drawTiledPixmap(tempRect, handler->pixmap(TitleBarRight, active, toolWindow) );
             titleMarginRight = borderRight;
         }
@@ -312,7 +312,7 @@ void PlastikClient::paintEvent(TQPaintEvent *e)
     if(Rtitle.width() > 0)
     {
         m_captionRect = captionRect(); // also update m_captionRect!
-        if (m_captionRect.isValid() && region.contains(m_captionRect) )
+        if (m_captionRect.isValid() && region.tqcontains(m_captionRect) )
         {
             painter.drawTiledPixmap(m_captionRect, caption);
         }
@@ -320,14 +320,14 @@ void PlastikClient::paintEvent(TQPaintEvent *e)
         // left to the title
         tempRect.setRect(r_x+titleMarginLeft, m_captionRect.top(),
                          m_captionRect.left() - (r_x+titleMarginLeft), m_captionRect.height() );
-        if (tempRect.isValid() && region.contains(tempRect) ) {
+        if (tempRect.isValid() && region.tqcontains(tempRect) ) {
             painter.drawTiledPixmap(tempRect, handler->pixmap(TitleBarTile, active, toolWindow) );
         }
 
         // right to the title
         tempRect.setRect(m_captionRect.right()+1, m_captionRect.top(),
                          (r_x2-titleMarginRight) - m_captionRect.right(), m_captionRect.height() );
-        if (tempRect.isValid() && region.contains(tempRect) ) {
+        if (tempRect.isValid() && region.tqcontains(tempRect) ) {
             painter.drawTiledPixmap(tempRect, handler->pixmap(TitleBarTile, active, toolWindow) );
         }
 
@@ -337,7 +337,7 @@ void PlastikClient::paintEvent(TQPaintEvent *e)
     if(borderLeft > 0 && sideHeight > 0)
     {
         tempRect.setCoords(r_x, titleEdgeBottomBottom+1, borderLeftRight, borderBottomTop-1);
-        if (tempRect.isValid() && region.contains(tempRect) ) {
+        if (tempRect.isValid() && region.tqcontains(tempRect) ) {
             painter.drawTiledPixmap(tempRect, handler->pixmap(BorderLeftTile, active, toolWindow) );
         }
     }
@@ -346,7 +346,7 @@ void PlastikClient::paintEvent(TQPaintEvent *e)
     if(borderRight > 0 && sideHeight > 0)
     {
         tempRect.setCoords(borderRightLeft, titleEdgeBottomBottom+1, r_x2, borderBottomTop-1);
-        if (tempRect.isValid() && region.contains(tempRect) ) {
+        if (tempRect.isValid() && region.tqcontains(tempRect) ) {
             painter.drawTiledPixmap(tempRect, handler->pixmap(BorderRightTile, active, toolWindow) );
         }
     }
@@ -358,19 +358,19 @@ void PlastikClient::paintEvent(TQPaintEvent *e)
         int r = r_x2;
 
         tempRect.setRect(r_x, borderBottomTop, borderLeft, borderBottom);
-        if (tempRect.isValid() && region.contains(tempRect) ) {
+        if (tempRect.isValid() && region.tqcontains(tempRect) ) {
             painter.drawTiledPixmap(tempRect, handler->pixmap(BorderBottomLeft, active, toolWindow) );
             l = tempRect.right()+1;
         }
 
         tempRect.setRect(borderRightLeft, borderBottomTop, borderLeft, borderBottom);
-        if (tempRect.isValid() && region.contains(tempRect) ) {
+        if (tempRect.isValid() && region.tqcontains(tempRect) ) {
             painter.drawTiledPixmap(tempRect, handler->pixmap(BorderBottomRight, active, toolWindow) );
             r = tempRect.left()-1;
         }
 
         tempRect.setCoords(l, borderBottomTop, r, r_y2);
-        if (tempRect.isValid() && region.contains(tempRect) ) {
+        if (tempRect.isValid() && region.tqcontains(tempRect) ) {
             painter.drawTiledPixmap(tempRect, handler->pixmap(BorderBottomTile, active, toolWindow) );
         }
     }
@@ -394,7 +394,7 @@ TQRect PlastikClient::captionRect() const
             buttonsLeftWidth() - buttonsRightWidth() -
             marginLeft - marginRight;
 
-    Qt::AlignmentFlags a = Handler()->titleAlign();
+    TQ_Alignment a = Handler()->titleAlign();
 
     int tX, tW; // position/width of the title buffer
     if (caption.width() >  titleWidth) {
@@ -435,7 +435,7 @@ void PlastikClient::reset( unsigned long changed )
 {
     if (changed & SettingColors)
     {
-        // repaint the whole thing
+        // tqrepaint the whole thing
         clearCaptionPixmaps();
         widget()->update();
         updateButtons();
@@ -445,7 +445,7 @@ void PlastikClient::reset( unsigned long changed )
 
         updateLayout();
 
-        // then repaint
+        // then tqrepaint
         clearCaptionPixmaps();
         widget()->update();
     }
@@ -496,7 +496,7 @@ const TQPixmap &PlastikClient::captionPixmap() const
     if(Handler()->titleShadow())
     {
         TQColor shadowColor;
-        if (qGray(Handler()->getColor(TitleFont,active).rgb()) < 100)
+        if (tqGray(Handler()->getColor(TitleFont,active).rgb()) < 100)
             shadowColor = TQColor(255, 255, 255);
         else
             shadowColor = TQColor(0,0,0);

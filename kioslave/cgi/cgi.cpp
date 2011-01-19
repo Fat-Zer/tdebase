@@ -71,7 +71,8 @@ static TQCString extractQCString( const TQByteArray &ba, uint start, uint len = 
   if ( ( ba.size() - start ) < len )
     realLen = ba.size() - start;
 
-  return TQCString( &ba[ start ], realLen + 1 );
+//   return TQCString( &ba[ start ], realLen + 1 );
+  return TQCString( ba ).mid(start, realLen + 1);
 }
 
 /**
@@ -80,7 +81,7 @@ static TQCString extractQCString( const TQByteArray &ba, uint start, uint len = 
  */
 static int qByteArrayFindStr( const TQByteArray &ba, const char *str )
 {
-  int strLen = qstrlen( str );
+  int strLen = tqstrlen( str );
   int searchLen = ba.size() - strLen;
 
   for ( int i = 0; i <= searchLen; ++i ) {
@@ -116,7 +117,7 @@ void CgiProtocol::get( const KURL& url )
 
   TQString file;
 
-  int pos = path.findRev('/');
+  int pos = path.tqfindRev('/');
   if ( pos >= 0 ) file = path.mid( pos + 1 );
   else file = path;
 
@@ -189,8 +190,8 @@ void CgiProtocol::get( const KURL& url )
       // Access the buffer in-place by using setRawData()
       output.setRawData( buffer, n );
 
-      int colon = output.find( ':' );
-      int newline = output.find( '\n' );
+      int colon = output.tqfind( ':' );
+      int newline = output.tqfind( '\n' );
       int semicolon = qByteArrayFindRev( output, ';', newline );
       int end;
       if ( semicolon < 0 ) end = newline;

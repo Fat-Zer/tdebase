@@ -114,7 +114,7 @@ KMiniPager::KMiniPager(const TQString& configFile, Type type, int actions,
 
     setFont( KGlobalSettings::taskbarFont() );
 
-    m_kwin = new KWinModule(this);
+    m_kwin = new KWinModule(TQT_TQOBJECT(this));
     m_activeWindow = m_kwin->activeWindow();
     m_curDesk = m_kwin->currentDesktop();
 
@@ -365,8 +365,8 @@ void KMiniPager::updateDesktopLayout(int o, int x, int y)
     if( m_desktopLayoutOwner == NULL )
     { // must own manager selection before setting global desktop layout
         int screen = DefaultScreen( qt_xdisplay());
-        m_desktopLayoutOwner = new KSelectionOwner( TQString( "_NET_DESKTOP_LAYOUT_S%1" ).arg( screen ).latin1(),
-            screen, this );
+        m_desktopLayoutOwner = new KSelectionOwner( TQString( "_NET_DESKTOP_LAYOUT_S%1" ).tqarg( screen ).latin1(),
+            screen, TQT_TQOBJECT(this) );
         if( !m_desktopLayoutOwner->claim( false ))
         {
             delete m_desktopLayoutOwner;
@@ -381,7 +381,7 @@ void KMiniPager::updateDesktopLayout(int o, int x, int y)
 
 void KMiniPager::resizeEvent(TQResizeEvent*)
 {
-    bool horiz = orientation() == Horizontal;
+    bool horiz = orientation() == Qt::Horizontal;
 
     int deskNum = m_desktops.count();
     int rowNum = m_settings->numberOfRows();
@@ -723,7 +723,7 @@ void KMiniPager::aboutToShowContextMenu()
     rowMenu->insertItem(i18n("two rows or columns", "&2"), 2 + rowOffset);
     rowMenu->insertItem( i18n("three rows or columns", "&3"), 3 + rowOffset);
     connect(rowMenu, TQT_SIGNAL(activated(int)), TQT_SLOT(contextMenuActivated(int)));
-    showMenu->insertItem((orientation()==Horizontal) ? i18n("&Rows"):
+    showMenu->insertItem((orientation()==Qt::Horizontal) ? i18n("&Rows"):
                                                        i18n("&Columns"),
                          rowMenu);
 
@@ -865,7 +865,7 @@ void KMiniPager::slotDesktopNamesChanged()
     {
         TQString name = m_kwin->desktopName(i);
         (*it)->setDesktopName(name);
-        (*it)->repaint();
+        (*it)->tqrepaint();
         TQToolTip::remove((*it));
         TQToolTip::add((*it), name);
     }

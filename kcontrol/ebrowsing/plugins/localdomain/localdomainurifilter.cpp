@@ -41,7 +41,7 @@ LocalDomainURIFilter::LocalDomainURIFilter( TQObject *parent, const char *name,
     : KURIFilterPlugin( parent, name ? name : "localdomainurifilter", 1.0 ),
       DCOPObject( "LocalDomainURIFilterIface" ),
       last_time( 0 ),
-      m_hostPortPattern( TQString::fromLatin1(HOSTPORT_PATTERN) )
+      m_hostPortPattern( TQString::tqfromLatin1(HOSTPORT_PATTERN) )
 {
     configure();
 }
@@ -56,7 +56,7 @@ bool LocalDomainURIFilter::filterURI( KURIFilterData& data ) const
     if( m_hostPortPattern.exactMatch( cmd ) && 
         isLocalDomainHost( cmd ) )
     {
-        cmd.prepend( TQString::fromLatin1("http://") );
+        cmd.prepend( TQString::tqfromLatin1("http://") );
         setFilteredURI( data, KURL( cmd ) );
         setURIType( data, KURIFilterData::NET_PROTOCOL );
         
@@ -71,12 +71,12 @@ bool LocalDomainURIFilter::filterURI( KURIFilterData& data ) const
 bool LocalDomainURIFilter::isLocalDomainHost( TQString& cmd ) const
 {
     // find() returns -1 when no match -> left()/truncate() are noops then
-    TQString host( cmd.left( cmd.find( '/' ) ) );
-    host.truncate( host.find( ':' ) ); // Remove port number
+    TQString host( cmd.left( cmd.tqfind( '/' ) ) );
+    host.truncate( host.tqfind( ':' ) ); // Remove port number
 
     if( !(host == last_host && last_time > time( NULL ) - 5 ) ) {
 
-        TQString helper = KStandardDirs::findExe(TQString::fromLatin1( "klocaldomainurifilterhelper" ));
+        TQString helper = KStandardDirs::findExe(TQString::tqfromLatin1( "klocaldomainurifilterhelper" ));
         if( helper.isEmpty())
             return last_result = false;
 
@@ -95,7 +95,7 @@ bool LocalDomainURIFilter::isLocalDomainHost( TQString& cmd ) const
         last_result = proc.wait( 1 ) && proc.normalExit() && !proc.exitStatus();
 
         if( !m_fullname.isEmpty() )
-            cmd.replace( 0, host.length(), m_fullname );
+            cmd.tqreplace( 0, host.length(), m_fullname );
     }
 
     return last_result;

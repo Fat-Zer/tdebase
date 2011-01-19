@@ -49,7 +49,7 @@ static TQPixmap appIcon(const TQString &iconName)
      return normal;
 }
 
-class ModuleTreeWhatsThis : public QWhatsThis
+class ModuleTreeWhatsThis : public TQWhatsThis
 {
 public:
     ModuleTreeWhatsThis( ModuleTreeView* tree)
@@ -133,9 +133,9 @@ void ModuleTreeView::fill(ModuleTreeItem *parent, const TQString &parentPath)
 
 
 
-TQSize ModuleTreeView::sizeHint() const
+TQSize ModuleTreeView::tqsizeHint() const
 {
-    return TQListView::sizeHint().boundedTo( 
+    return TQListView::tqsizeHint().boundedTo( 
 	TQSize( fontMetrics().maxWidth()*35, QWIDGETSIZE_MAX) );
 }
 
@@ -166,7 +166,7 @@ void ModuleTreeView::expandItem(TQListViewItem *item, TQPtrList<TQListViewItem> 
 {
   while (item)
     {
-      setOpen(item, parentList->contains(item));
+      setOpen(item, parentList-.tqcontains(item));
 
           if (item->childCount() != 0)
                 expandItem(item->firstChild(), parentList);
@@ -312,7 +312,7 @@ void ModuleTreeItem::setPixmap(int column, const TQPixmap& pm)
 {
   if (!pm.isNull())
   {
-    ModuleTreeItem* p = dynamic_cast<ModuleTreeItem*>(parent());
+    ModuleTreeItem* p = dynamic_cast<ModuleTreeItem*>(tqparent());
     if (p)
       p->regChildIconWidth(pm.width());
   }
@@ -331,7 +331,7 @@ void ModuleTreeItem::paintCell( TQPainter * p, const TQColorGroup & cg, int colu
   if (!pixmap(0))
   {
     int offset = 0;
-    ModuleTreeItem* parentItem = dynamic_cast<ModuleTreeItem*>(parent());
+    ModuleTreeItem* parentItem = dynamic_cast<ModuleTreeItem*>(tqparent());
     if (parentItem)
     {
       offset = parentItem->maxChildIconWidth();
@@ -356,7 +356,7 @@ void ModuleTreeItem::setGroup(const TQString &path)
 {
   KServiceGroup::Ptr group = KServiceGroup::group(path);
   TQString defName = path.left(path.length()-1);
-  int pos = defName.findRev('/');
+  int pos = defName.tqfindRev('/');
   if (pos >= 0)
      defName = defName.mid(pos+1);
   if (group && group->isValid())

@@ -84,7 +84,7 @@ public slots:
 protected:
     virtual void doLoadConfiguration( KConfigGroup& );
     virtual void doSaveConfiguration( KConfigGroup&, bool layoutOnly ) const;
-    virtual void alignmentChange(KPanelExtension::Alignment a);
+    virtual void tqalignmentChange(KPanelExtension::Alignment a);
 
     virtual TQPopupMenu* createOpMenu();
 

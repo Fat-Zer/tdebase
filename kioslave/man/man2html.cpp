@@ -822,7 +822,7 @@ static void add_links(char *c)
 		    e=h+1;
 		    sec=f[1];
 		    subsec=f[2];
-		    int index = fstr.find(')', 2);
+		    int index = fstr.tqfind(')', 2);
 		    if (index != -1)
 		      subsec = fstr.mid(2, index - 2);
 		    else // No closing ')' found, take first character as subsection.
@@ -882,7 +882,7 @@ static void add_links(char *c)
             if (g-7>=c && g[-1]==':')
             {
                 // We have perhaps an email address starting with mailto:
-                if (!qstrncmp("mailto:",g-7,7))
+                if (!tqstrncmp("mailto:",g-7,7))
                     g-=7;
             }
 	    h=f+1;
@@ -1166,7 +1166,7 @@ static TQCString scan_named_character( char*& c )
             {
                 TQCString cstr;
                 c = scan_escape_direct( c+1, cstr );
-                const int result = cstr.find(']');
+                const int result = cstr.tqfind(']');
                 if ( result == -1 )
                     name += cstr;
                 else
@@ -1198,7 +1198,7 @@ static TQCString scan_named_character( char*& c )
             {
                 TQCString cstr;
                 c = scan_escape_direct( c+1, cstr );
-                const int result = cstr.find('\'');
+                const int result = cstr.tqfind('\'');
                 if ( result == -1 )
                     name += cstr;
                 else
@@ -1223,7 +1223,7 @@ static TQCString scan_named_character( char*& c )
     // Note: characters with a one character length name doe not exist, as they would collide with other escapes
     
     // Now we have the name, let us find it between the string names
-    TQMap<TQCString,StringDefinition>::iterator it=s_characterDefinitionMap.find(name);
+    TQMap<TQCString,StringDefinition>::iterator it=s_characterDefinitionMap.tqfind(name);
     if (it==s_characterDefinitionMap.end())
     {
         kdDebug(7107) << "EXCEPTION: cannot find character with name: " << name << endl;
@@ -1270,7 +1270,7 @@ static TQCString scan_named_string(char*& c)
             {
                 TQCString cstr;
                 c = scan_escape_direct( c+1, cstr );
-                const int result = cstr.find(']');
+                const int result = cstr.tqfind(']');
                 if ( result == -1 )
                     name += cstr;
                 else
@@ -1299,7 +1299,7 @@ static TQCString scan_named_string(char*& c)
         c++;
     }
     // Now we have the name, let us find it between the string names
-    TQMap<TQCString,StringDefinition>::iterator it=s_stringDefinitionMap.find(name);
+    TQMap<TQCString,StringDefinition>::iterator it=s_stringDefinitionMap.tqfind(name);
     if (it==s_stringDefinitionMap.end())
     {
         kdDebug(7107) << "EXCEPTION: cannot find string with name: " << name << endl;
@@ -1514,7 +1514,7 @@ static int scan_number_register( char*& c)
     }
     else
     {
-        TQMap< TQCString, NumberDefinition >::iterator it = s_numberDefinitionMap.find( name );
+        TQMap< TQCString, NumberDefinition >::iterator it = s_numberDefinitionMap.tqfind( name );
         if ( it == s_numberDefinitionMap.end() )
         {
             return 0; // Undefined variable
@@ -1560,7 +1560,7 @@ static TQCString scan_named_font( char*& c )
             {
                 TQCString cstr;
                 c = scan_escape_direct( c+1, cstr );
-                const int result = cstr.find(']');
+                const int result = cstr.tqfind(']');
                 if ( result == -1 )
                     name += cstr;
                 else
@@ -2085,7 +2085,7 @@ static char *scan_table(char *c)
 	/* scan table options */
 	while (c<h) {
 	    while (isspace(*c)) c++;
-	    for (i=0; tableopt[i] && qstrncmp(tableopt[i],c,tableoptl[i]);i++);
+	    for (i=0; tableopt[i] && tqstrncmp(tableopt[i],c,tableoptl[i]);i++);
 	    c=c+tableoptl[i];
 	    switch (i) {
 	    case 0: center=1; break;
@@ -2360,14 +2360,14 @@ static char *scan_expression( char *c, int *result, const unsigned int numLoop )
 	}
 	c++;
 	h=c;
-	while (*c!= sep && (!tcmp || qstrncmp(c,tcmp,4))) c++;
+	while (*c!= sep && (!tcmp || tqstrncmp(c,tcmp,4))) c++;
 	*c='\n';
 	scan_troff(h, 1, &st1);
 	*c=sep;
 	if (tcmp) c=c+3;
 	c++;
 	h=c;
-	while (*c!=sep && (!tcmp || qstrncmp(c,tcmp,4))) c++;
+	while (*c!=sep && (!tcmp || tqstrncmp(c,tcmp,4))) c++;
 	*c='\n';
 	scan_troff(h,1,&st2);
 	*c=sep;
@@ -3032,7 +3032,7 @@ static int get_request(char *req, int len)
         "%T", "An", "Aq", "Bq", "Qq", "UR", "UE", "UN", "troff", "nroff", "als",
         "rr", "rnn", "aln", "shift", "while", "do", "Dx", 0 };
     int r = 0;
-    while (requests[r] && qstrncmp(req, requests[r], len)) r++;
+    while (requests[r] && tqstrncmp(req, requests[r], len)) r++;
     return requests[r] ? r : REQ_UNKNOWN;
 }
 
@@ -3149,7 +3149,7 @@ static char *scan_request(char *c)
         int j = nlen;
         while (c[j] && c[j]==' ' || c[j]=='\t') j++;
         /* search macro database of self-defined macros */
-        TQMap<TQCString,StringDefinition>::iterator it=s_stringDefinitionMap.find(macroName);
+        TQMap<TQCString,StringDefinition>::iterator it=s_stringDefinitionMap.tqfind(macroName);
         if (it!=s_stringDefinitionMap.end())
         {
             kdDebug(7107) << "CALLING MACRO: " << macroName << endl;
@@ -3237,11 +3237,11 @@ static char *scan_request(char *c)
                     while (*c && *c!='\n') c++;
                     c++;
                     h=c;
-                    while (*c && qstrncmp(c,".di",3)) while (*c && *c++!='\n');
+                    while (*c && tqstrncmp(c,".di",3)) while (*c && *c++!='\n');
                     *c='\0';
                     char* result=0;
                     scan_troff(h,0,&result);
-                    TQMap<TQCString,StringDefinition>::iterator it=s_stringDefinitionMap.find(name);
+                    TQMap<TQCString,StringDefinition>::iterator it=s_stringDefinitionMap.tqfind(name);
                     if (it==s_stringDefinitionMap.end())
                     {
                         StringDefinition def;
@@ -3276,7 +3276,7 @@ static char *scan_request(char *c)
                     curpos=0;
                     char* result=0;
                     c=scan_troff(c,1,&result);
-                    TQMap<TQCString,StringDefinition>::iterator it=s_stringDefinitionMap.find(name);
+                    TQMap<TQCString,StringDefinition>::iterator it=s_stringDefinitionMap.tqfind(name);
                     if (it==s_stringDefinitionMap.end())
                     {
                         StringDefinition def;
@@ -3358,7 +3358,7 @@ static char *scan_request(char *c)
                         {
                             char *line=NULL;
                             c=scan_troff(c,1, &line);
-                            if (line && qstrncmp(line, "<BR>", 4))
+                            if (line && tqstrncmp(line, "<BR>", 4))
                             {
                                 out_html(line);
                                 out_html("<BR>\n");
@@ -3489,7 +3489,7 @@ static char *scan_request(char *c)
                         while (*c && *c!='\n') c++,i++;
                     }
                     c++;
-                    while (*c && qstrncmp(c,endwith,i)) while (*c++!='\n');
+                    while (*c && tqstrncmp(c,endwith,i)) while (*c++!='\n');
                     while (*c && *c++!='\n');
                     break;
                 }
@@ -4015,7 +4015,7 @@ static char *scan_request(char *c)
                         out_html("\n<H3>");
                     else
                         out_html("\n<H2>");
-                    mandoc_synopsis = qstrncmp(c, "SYNOPSIS", 8) == 0;
+                    mandoc_synopsis = tqstrncmp(c, "SYNOPSIS", 8) == 0;
                     c = mandoc_command ? scan_troff_mandoc(c,1,NULL) : scan_troff(c,1,NULL);
                     if (mode)
                         out_html("</H3>\n");
@@ -4064,8 +4064,8 @@ static char *scan_request(char *c)
                             {
                                 if (wordlist[i][0] == '\007')
                                     wordlist[i]++;
-                                if (wordlist[i][qstrlen(wordlist[i])-1] == '\007')
-                                    wordlist[i][qstrlen(wordlist[i])-1] = 0;
+                                if (wordlist[i][tqstrlen(wordlist[i])-1] == '\007')
+                                    wordlist[i][tqstrlen(wordlist[i])-1] = 0;
                             }
                             output_possible=true;
                             out_html( DOCTYPE"<HTML>\n<HEAD>\n");
@@ -4147,7 +4147,7 @@ static char *scan_request(char *c)
                     out_html(set_font("I"));
                     if (words>1) wordlist[1][-1]='\0';
                     const char *c2=lookup_abbrev(wordlist[0]);
-                    curpos+=qstrlen(c2);
+                    curpos+=tqstrlen(c2);
                     out_html(c2);
                     out_html(set_font("R"));
                     if (words>1)
@@ -4181,7 +4181,7 @@ static char *scan_request(char *c)
                         }
                     }
                     c=skip_till_newline(c);
-                    TQMap<TQCString,StringDefinition>::iterator it=s_stringDefinitionMap.find(name);
+                    TQMap<TQCString,StringDefinition>::iterator it=s_stringDefinitionMap.tqfind(name);
                     if (it==s_stringDefinitionMap.end())
                     {
                         kdDebug(7107) << "EXCEPTION: cannot find string to rename or remove: " << name << endl;
@@ -4240,7 +4240,7 @@ static char *scan_request(char *c)
                         c=scan_expression( c, &increment );
                     }
                     c = skip_till_newline( c );
-                    TQMap <TQCString, NumberDefinition>::iterator it = s_numberDefinitionMap.find( name );
+                    TQMap <TQCString, NumberDefinition>::iterator it = s_numberDefinitionMap.tqfind( name );
                     if ( it == s_numberDefinitionMap.end() )
                     {
                         if ( sign < 1 )
@@ -4293,8 +4293,8 @@ static char *scan_request(char *c)
                     }
                     c = next_line;
                     sl=c;
-                    const int length=qstrlen(endmacro);
-                    while (*c && qstrncmp(c,endmacro,length))
+                    const int length=tqstrlen(endmacro);
+                    while (*c && tqstrncmp(c,endmacro,length))
                         c=skip_till_newline(c);
 
                     TQCString macro;
@@ -4310,7 +4310,7 @@ static char *scan_request(char *c)
                         sl++;
                     }
 
-                    TQMap<TQCString,StringDefinition>::iterator it=s_stringDefinitionMap.find(name);
+                    TQMap<TQCString,StringDefinition>::iterator it=s_stringDefinitionMap.tqfind(name);
                     if (it==s_stringDefinitionMap.end())
                     {
                         StringDefinition def;
@@ -4322,7 +4322,8 @@ static char *scan_request(char *c)
                     {
                         // .am Append Macro
                         (*it).m_length=0; // It could be formerly a string
-                        if ((*it).m_output.right(1)!='\n')
+//                         if ((*it).m_output.right(1)!='\n')
+                        if (*((*it).m_output.right(1).data())!='\n')
                             (*it).m_output+='\n';
                         (*it).m_output+=macro;
                     }
@@ -4401,7 +4402,7 @@ static char *scan_request(char *c)
                 case REQ_It: // mdoc(7) "list ITem"
                 {
                     c=c+j;
-                    if (qstrncmp(c, "Xo", 2) == 0 && isspace(*(c+2)))
+                    if (tqstrncmp(c, "Xo", 2) == 0 && isspace(*(c+2)))
                     c = skip_till_newline(c);
                     if (dl_set[itemdepth] & BL_DESC_LIST)
                     {
@@ -5090,7 +5091,7 @@ static char *scan_request(char *c)
                         break;
                     }
                     // Second parametr is origin (unlike in .rn)
-                    TQMap<TQCString,StringDefinition>::iterator it=s_stringDefinitionMap.find(name2);
+                    TQMap<TQCString,StringDefinition>::iterator it=s_stringDefinitionMap.tqfind(name2);
                     if (it==s_stringDefinitionMap.end())
                     {
                         kdDebug(7107) << "EXCEPTION: cannot find string to make alias: " << name2 << endl;
@@ -5114,7 +5115,7 @@ static char *scan_request(char *c)
                             break;
                     }
                     c = skip_till_newline( c );
-                    TQMap <TQCString, NumberDefinition>::iterator it = s_numberDefinitionMap.find( name );
+                    TQMap <TQCString, NumberDefinition>::iterator it = s_numberDefinitionMap.tqfind( name );
                     if ( it == s_numberDefinitionMap.end() )
                     {
                             kdDebug(7107) << "EXCEPTION: trying to remove inexistant number register: " << endl;
@@ -5144,7 +5145,7 @@ static char *scan_request(char *c)
                         break;
                     }
                     c = skip_till_newline( c );
-                    TQMap<TQCString,NumberDefinition>::iterator it=s_numberDefinitionMap.find(name);
+                    TQMap<TQCString,NumberDefinition>::iterator it=s_numberDefinitionMap.tqfind(name);
                     if (it==s_numberDefinitionMap.end())
                     {
                         kdDebug(7107) << "EXCEPTION: cannot find number register to rename: " << name << endl;
@@ -5188,7 +5189,7 @@ static char *scan_request(char *c)
                         break;
                     }
                     // Second parametr is origin (unlike in .rnn)
-                    TQMap<TQCString,NumberDefinition>::iterator it=s_numberDefinitionMap.find(name2);
+                    TQMap<TQCString,NumberDefinition>::iterator it=s_numberDefinitionMap.tqfind(name2);
                     if (it==s_numberDefinitionMap.end())
                     {
                         kdDebug(7107) << "EXCEPTION: cannot find string to make alias: " << name2 << endl;
@@ -5303,7 +5304,7 @@ static char *scan_troff(char *c, bool san, char **result)
     if (result) {
 	if (*result) {
 	    buffer=*result;
-	    buffpos=qstrlen(buffer);
+	    buffpos=tqstrlen(buffer);
 	    buffmax=buffpos;
 	} else {
             buffer = stralloc(LARGE_STR_MAX);
@@ -5528,7 +5529,7 @@ void scan_man_page(const char *man_page)
     s_dollarZero = ""; // No macro called yet!
     
     output_possible = false;
-    int strLength = qstrlen(man_page);
+    int strLength = tqstrlen(man_page);
     char *buf = new char[strLength + 2];
     qstrcpy(buf+1, man_page);
     buf[0] = '\n';

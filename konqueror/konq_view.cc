@@ -45,7 +45,7 @@
 #include <tqmetaobject.h>
 #include <tqobjectlist.h>
 #include <config.h>
-#include <private/qucomextra_p.h>
+#include <tqucomextra_p.h>
 #include <kmessagebox.h>
 #include <klocale.h>
 
@@ -117,7 +117,7 @@ KonqView::~KonqView()
      if (part_url.isNull())
         part_url = "";
      TQCString line;
-     line = ( TQString("close(%1):%2\n").arg(m_randID,0,16).arg(part_url) ).utf8();
+     line = ( TQString("close(%1):%2\n").tqarg(m_randID,0,16).tqarg(part_url) ).utf8();
      KonqMainWindow::s_crashlog_file->writeBlock(line, line.length());
      KonqMainWindow::s_crashlog_file->flush();
   }
@@ -155,9 +155,9 @@ void KonqView::openURL( const KURL &url, const TQString & locationBarURL,
 
      TQCString line;
 
-     line = ( TQString("closed(%1):%2\n").arg(m_randID,0,16).arg(part_url) ).utf8();
+     line = ( TQString("closed(%1):%2\n").tqarg(m_randID,0,16).tqarg(part_url) ).utf8();
      KonqMainWindow::s_crashlog_file->writeBlock(line,line.length());
-     line = ( TQString("opened(%3):%4\n").arg(m_randID,0,16).arg(url_url)  ).utf8();
+     line = ( TQString("opened(%3):%4\n").tqarg(m_randID,0,16).tqarg(url_url)  ).utf8();
      KonqMainWindow::s_crashlog_file->writeBlock(line,line.length());
      KonqMainWindow::s_crashlog_file->flush();
   }
@@ -528,8 +528,8 @@ void KonqView::slotStarted( KIO::Job * job )
       // Manage passwords properly...
       if (m_pMainWindow)
       {
-        kdDebug(7035) << "slotStarted: Window ID = " << m_pMainWindow->topLevelWidget()->winId() << endl;
-        job->setWindow (m_pMainWindow->topLevelWidget ());
+        kdDebug(7035) << "slotStarted: Window ID = " << m_pMainWindow->tqtopLevelWidget()->winId() << endl;
+        job->setWindow (m_pMainWindow->tqtopLevelWidget ());
       }
 
       connect( job, TQT_SIGNAL( percent( KIO::Job *, unsigned long ) ), this, TQT_SLOT( slotPercent( KIO::Job *, unsigned long ) ) );
@@ -1056,7 +1056,7 @@ KParts::BrowserHostExtension* KonqView::hostExtension( KParts::ReadOnlyPart *par
   if ( !ext )
     return 0;
 
-  if ( ext->frameNames().contains( name ) )
+  if ( ext->frameNames().tqcontains( name ) )
     return ext;
 
   const TQPtrList<KParts::ReadOnlyPart> children = ext->frames();
@@ -1077,10 +1077,10 @@ bool KonqView::callExtensionMethod( const char *methodName )
   if ( !obj ) // not all views have a browser extension !
     return false;
 
-  int id = obj->metaObject()->findSlot( methodName );
+  int id = obj->tqmetaObject()->tqfindSlot( methodName );
   if ( id == -1 )
     return false;
-  QUObject o[ 1 ];
+  TQUObject o[ 1 ];
 
   obj->qt_invoke( id, o );
   return true;
@@ -1092,12 +1092,12 @@ bool KonqView::callExtensionBoolMethod( const char *methodName, bool value )
   if ( !obj ) // not all views have a browser extension !
     return false;
 
-  int id = obj->metaObject()->findSlot( methodName );
+  int id = obj->tqmetaObject()->tqfindSlot( methodName );
   if ( id == -1 )
     return false;
-  QUObject o[ 2 ];
+  TQUObject o[ 2 ];
 
-  static_QUType_bool.set( o + 1, value );
+  static_TQUType_bool.set( o + 1, value );
 
   obj->qt_invoke( id, o );
   return true;
@@ -1109,12 +1109,12 @@ bool KonqView::callExtensionStringMethod( const char *methodName, TQString value
   if ( !obj ) // not all views have a browser extension !
     return false;
 
-  int id = obj->metaObject()->findSlot( methodName );
+  int id = obj->tqmetaObject()->tqfindSlot( methodName );
   if ( id == -1 )
     return false;
-  QUObject o[ 2 ];
+  TQUObject o[ 2 ];
 
-  static_QUType_QString.set( o + 1, value );
+  static_TQUType_TQString.set( o + 1, value );
 
   obj->qt_invoke( id, o );
   return true;
@@ -1126,12 +1126,12 @@ bool KonqView::callExtensionURLMethod( const char *methodName, const KURL& value
   if ( !obj ) // not all views have a browser extension !
     return false;
 
-  int id = obj->metaObject()->findSlot( methodName );
+  int id = obj->tqmetaObject()->tqfindSlot( methodName );
   if ( id == -1 )
     return false;
-  QUObject o[ 2 ];
+  TQUObject o[ 2 ];
 
-  static_QUType_ptr.set( o + 1, &value );
+  static_TQUType_ptr.set( o + 1, &value );
 
   obj->qt_invoke( id, o );
   return true;
@@ -1146,7 +1146,7 @@ void KonqView::setViewName( const TQString &name )
 
 TQString KonqView::viewName() const
 {
-    return m_pPart ? TQString::fromLocal8Bit( m_pPart->name() ) : TQString::null;
+    return m_pPart ? TQString::fromLocal8Bit( m_pPart->name() ) : TQString();
 }
 
 void KonqView::enablePopupMenu( bool b )
@@ -1256,7 +1256,7 @@ bool KonqView::eventFilter( TQObject *obj, TQEvent *e )
     if ( !m_pPart )
         return false;
 //  kdDebug() << "--" << obj->className() << "--" << e->type() << "--"  << endl;
-    if ( e->type() == TQEvent::DragEnter && m_bURLDropHandling && obj == m_pPart->widget() )
+    if ( e->type() == TQEvent::DragEnter && m_bURLDropHandling && TQT_BASE_OBJECT(obj) == TQT_BASE_OBJECT(m_pPart->widget()) )
     {
         TQDragEnterEvent *ev = static_cast<TQDragEnterEvent *>( e );
 
@@ -1268,16 +1268,16 @@ bool KonqView::eventFilter( TQObject *obj, TQEvent *e )
             TQObjectList *children = m_pPart->widget()->queryList( "TQWidget" );
 
             if ( ok &&
-                 !lstDragURLs.first().url().contains( "javascript:", false ) && // ### this looks like a hack to me
+                 !lstDragURLs.first().url().tqcontains( "javascript:", false ) && // ### this looks like a hack to me
                  ev->source() != m_pPart->widget() &&
                  children &&
-                 children->findRef( ev->source() ) == -1 )
+                 children->tqfindRef( TQT_TQOBJECT(ev->source()) ) == -1 )
                 ev->acceptAction();
 
             delete children;
         }
     }
-    else if ( e->type() == TQEvent::Drop && m_bURLDropHandling && obj == m_pPart->widget() )
+    else if ( e->type() == TQEvent::Drop && m_bURLDropHandling && TQT_BASE_OBJECT(obj) == TQT_BASE_OBJECT(m_pPart->widget()) )
     {
         TQDropEvent *ev = static_cast<TQDropEvent *>( e );
 
@@ -1293,7 +1293,7 @@ bool KonqView::eventFilter( TQObject *obj, TQEvent *e )
     {
         if ( e->type() == TQEvent::ContextMenu )
         {
-            TQContextMenuEvent *ev = static_cast<TQContextMenuEvent *>( e );
+            TQContextMenuEvent *ev = TQT_TQCONTEXTMENUEVENT( e );
             if ( ev->reason() == TQContextMenuEvent::Mouse )
             {
                 return true;
@@ -1301,16 +1301,16 @@ bool KonqView::eventFilter( TQObject *obj, TQEvent *e )
         }
         else if ( e->type() == TQEvent::MouseButtonPress )
         {
-            TQMouseEvent *ev = static_cast<TQMouseEvent *>( e );
-            if ( ev->button() == RightButton )
+            TQMouseEvent *ev = TQT_TQMOUSEEVENT( e );
+            if ( ev->button() == Qt::RightButton )
             {
                 return true;
             }
         }
         else if ( e->type() == TQEvent::MouseButtonRelease )
         {
-            TQMouseEvent *ev = static_cast<TQMouseEvent *>( e );
-            if ( ev->button() == RightButton )
+            TQMouseEvent *ev = TQT_TQMOUSEEVENT( e );
+            if ( ev->button() == Qt::RightButton )
             {
                 emit backRightClick();
                 return true;
@@ -1318,8 +1318,8 @@ bool KonqView::eventFilter( TQObject *obj, TQEvent *e )
         }
         else if ( e->type() == TQEvent::MouseMove )
         {
-            TQMouseEvent *ev = static_cast<TQMouseEvent *>( e );
-            if ( ev->state() == RightButton )
+            TQMouseEvent *ev = TQT_TQMOUSEEVENT( e );
+            if ( ev->state() == Qt::RightButton )
             {
                 obj->removeEventFilter( this );
                 TQMouseEvent me( TQEvent::MouseButtonPress, ev->pos(), 2, 2 );

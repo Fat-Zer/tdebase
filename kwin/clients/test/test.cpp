@@ -22,7 +22,7 @@ void Decoration::init()
 	{
         button = new TQPushButton( widget());
         button->show();
-        button->setCursor( arrowCursor );
+        button->setCursor( tqarrowCursor );
 	button->move( 0, 0 );
         connect( button, TQT_SIGNAL( clicked()), TQT_SLOT( closeWindow()));
 	TQToolTip::add( button, "Zelva Mana" );
@@ -93,20 +93,20 @@ void Decoration::resize( const TQSize& s )
     widget()->resize( s );
     }
     
-TQSize Decoration::minimumSize() const
+TQSize Decoration::tqminimumSize() const
     {
     return TQSize( 100, 50 );
     }
     
 bool Decoration::eventFilter( TQObject* o, TQEvent* e )
     {
-    if( o == widget())
+    if( TQT_BASE_OBJECT(o) == TQT_BASE_OBJECT(widget()))
         {
         switch( e->type())
             {
             case TQEvent::MouseButtonPress:
 	        { // FRAME
-                processMousePressEvent( static_cast< TQMouseEvent* >( e ));
+                processMousePressEvent( TQT_TQMOUSEEVENT( e ));
         	return true;
 	        }
             case TQEvent::Show:
@@ -144,7 +144,7 @@ bool Decoration::animateMinimize(bool iconify)
 
         // Go away quick.
         helperShowHide( false );
-        qApp->syncX();
+        tqApp->syncX();
 
         TQRect r = iconGeometry();
 
@@ -179,7 +179,7 @@ bool Decoration::animateMinimize(bool iconify)
         double delta  = finalAngle / steps;
 
         TQPainter p( workspaceWidget());
-        p.setRasterOp(Qt::NotROP);
+        p.setRasterOp(TQt::NotROP);
 
         for (double angle = 0; ; angle += delta) {
 
@@ -213,7 +213,7 @@ bool Decoration::animateMinimize(bool iconify)
 
           ungrabXServer();
 
-// FRAME          qApp->processEvents(); // FRAME ???
+// FRAME          tqApp->processEvents(); // FRAME ???
 
           cx += xstep;
           cy += ystep;
@@ -236,7 +236,7 @@ bool Decoration::animateMinimize(bool iconify)
         // Go away quick.
         helperShowHide( false );
         
-        qApp->syncX();
+        tqApp->syncX();
 
         int stepCount = 12;
 
@@ -246,7 +246,7 @@ bool Decoration::animateMinimize(bool iconify)
         int dy = r.height() / (stepCount * 2);
 
         TQPainter p( workspaceWidget());
-        p.setRasterOp(Qt::NotROP);
+        p.setRasterOp(TQt::NotROP);
 
         for (int step = 0; step < stepCount; step++) {
 
@@ -263,7 +263,7 @@ bool Decoration::animateMinimize(bool iconify)
 
           ungrabXServer();
 
-// FRAME          qApp->processEvents();
+// FRAME          tqApp->processEvents();
         }
       }
       break;
@@ -280,7 +280,7 @@ bool Decoration::animateMinimize(bool iconify)
 
         TQPainter p( workspaceWidget());
 
-        p.setRasterOp(Qt::NotROP);
+        p.setRasterOp(TQt::NotROP);
 
 #if 0
         if (iconify)
@@ -298,7 +298,7 @@ bool Decoration::animateMinimize(bool iconify)
 
         p.flush();
 
-        qApp->syncX();
+        tqApp->syncX();
 
         usleep(30000);
 

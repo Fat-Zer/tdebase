@@ -39,7 +39,7 @@ class Konsole;
 class TQLabel;
 class TQTimer;
 
-class TEWidget : public QFrame
+class TEWidget : public TQFrame
 // a widget representing attributed text
 {
    Q_OBJECT
@@ -96,7 +96,7 @@ public:
     void updateImageSize();
     void setSize(int cols, int lins);
     void setFixedSize(int cols, int lins);
-    TQSize sizeHint() const;
+    TQSize tqsizeHint() const;
 
     void setWordCharacters(TQString wc);
     TQString wordCharacters() { return word_characters; }

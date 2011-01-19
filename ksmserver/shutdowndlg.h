@@ -30,13 +30,16 @@ class KAction;
 #include <kapplication.h>
 #include <kpixmapio.h>
 
+#ifndef NO_QT3_DBUS_SUPPORT
 /* We acknowledge the the dbus API is unstable */
 #define DBUS_API_SUBJECT_TO_CHANGE
 #include <dbus/connection.h>
-#include <libhal.h>
+#endif // NO_QT3_DBUS_SUPPORT
+
+#include <hal/libhal.h>
 
 // The (singleton) widget that makes/fades the desktop gray.
-class KSMShutdownFeedback : public QWidget
+class KSMShutdownFeedback : public TQWidget
 {
     Q_OBJECT
 
@@ -72,7 +75,7 @@ private:
 
 
 // The confirmation dialog
-class KSMShutdownDlg : public QDialog
+class KSMShutdownDlg : public TQDialog
 {
     Q_OBJECT
 
@@ -140,7 +143,7 @@ private:
 
 
 
-class FlatButton : public QToolButton
+class FlatButton : public TQToolButton
 {
   Q_OBJECT
 

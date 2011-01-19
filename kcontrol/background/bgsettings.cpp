@@ -122,7 +122,7 @@ void KBackgroundPattern::readSettings()
     m_Pattern = m_pConfig->readPathEntry("File");
     m_Comment = m_pConfig->readEntry("Comment");
     if (m_Comment.isEmpty())
-       m_Comment = m_File.mid(m_File.findRev('/')+1);
+       m_Comment = m_File.mid(m_File.tqfindRev('/')+1);
 }
 
 
@@ -172,7 +172,7 @@ TQString KBackgroundPattern::fingerprint()
 int KBackgroundPattern::hash()
 {
     if (hashdirty) {
-	m_Hash = QHash(fingerprint());
+	m_Hash = TQHash(fingerprint());
 	hashdirty = false;
     }
     return m_Hash;
@@ -190,10 +190,10 @@ TQStringList KBackgroundPattern::list()
     TQStringList::Iterator it;
     for (it=lst.begin(); it!=lst.end(); ++it) {
         // Strip path and suffix
-        int pos = (*it).findRev('/');
+        int pos = (*it).tqfindRev('/');
         if (pos != -1)
             (*it) = (*it).mid(pos+1);
-        pos = (*it).findRev('.');
+        pos = (*it).tqfindRev('.');
         if (pos != -1)
             (*it) = (*it).left(pos);
     }
@@ -383,7 +383,7 @@ TQString KBackgroundProgram::fingerprint()
 int KBackgroundProgram::hash()
 {
     if (hashdirty) {
-	m_Hash = QHash(fingerprint());
+	m_Hash = TQHash(fingerprint());
 	hashdirty = false;
     }
     return m_Hash;
@@ -401,10 +401,10 @@ TQStringList KBackgroundProgram::list()
     TQStringList::Iterator it;
     for (it=lst.begin(); it!=lst.end(); ++it) {
         // Strip path and suffix
-        int pos = (*it).findRev('/');
+        int pos = (*it).tqfindRev('/');
         if (pos != -1)
             (*it) = (*it).mid(pos+1);
-        pos = (*it).findRev('.');
+        pos = (*it).tqfindRev('.');
         if (pos != -1)
             (*it) = (*it).left(pos);
     }
@@ -665,7 +665,7 @@ void KBackgroundSettings::setWallpaperList(TQStringList list)
     }
     updateWallpaperFiles();
     // Try to keep the current wallpaper (-1 to set position to one before it)
-    m_CurrentWallpaper = m_WallpaperFiles.findIndex(m_CurrentWallpaperName) - 1;
+    m_CurrentWallpaper = m_WallpaperFiles.tqfindIndex(m_CurrentWallpaperName) - 1;
     changeWallpaper(m_CurrentWallpaper < 0);
 }
 
@@ -751,7 +751,7 @@ void KBackgroundSettings::readSettings(bool reparse)
     m_BackgroundMode = defBackgroundMode;
     s = m_pConfig->readEntry("BackgroundMode", "invalid");
 
-    if (m_BMMap.contains(s)) {
+    if (m_BMMap.tqcontains(s)) {
         int mode = m_BMMap[s];
         // consistency check
         if  ( ((mode != Pattern) && (mode != Program)) ||
@@ -763,7 +763,7 @@ void KBackgroundSettings::readSettings(bool reparse)
 
     m_BlendMode = defBlendMode;
     s = m_pConfig->readEntry("BlendMode", "invalid");
-    if (m_BlMMap.contains(s)) {
+    if (m_BlMMap.tqcontains(s)) {
       m_BlendMode = m_BlMMap[s];
     }
 
@@ -784,14 +784,14 @@ void KBackgroundSettings::readSettings(bool reparse)
 
     m_MultiMode = defMultiMode;
     s = m_pConfig->readEntry("MultiWallpaperMode");
-    if (m_MMMap.contains(s)) {
+    if (m_MMMap.tqcontains(s)) {
 	int mode = m_MMMap[s];
 	m_MultiMode = mode;
     }
 
     updateWallpaperFiles();
     if( !m_CurrentWallpaperName.isEmpty())
-        m_CurrentWallpaper = m_WallpaperFiles.findIndex(m_CurrentWallpaperName);
+        m_CurrentWallpaper = m_WallpaperFiles.tqfindIndex(m_CurrentWallpaperName);
     if(m_CurrentWallpaper < 0)
         m_CurrentWallpaper = 0;
 
@@ -799,7 +799,7 @@ void KBackgroundSettings::readSettings(bool reparse)
     m_WallpaperMode = defWallpaperMode;
     m_Wallpaper = m_pConfig->readPathEntry("Wallpaper");
     s = m_pConfig->readEntry("WallpaperMode", "invalid");
-    if (m_WMMap.contains(s)) {
+    if (m_WMMap.tqcontains(s)) {
         int mode = m_WMMap[s];
         // consistency check.
         if ((mode == NoWallpaper) || !m_Wallpaper.isEmpty() || (m_MultiMode == InOrder || m_MultiMode == Random))
@@ -1029,7 +1029,7 @@ TQString KBackgroundSettings::fingerprint()
     s += TQString("wm:%1;").arg(m_WallpaperMode);
     if (m_WallpaperMode != NoWallpaper)
     {
-        Q_UINT32 rh = KGlobal::dirs()->calcResourceHash("wallpaper", currentWallpaper(), false);
+        TQ_UINT32 rh = KGlobal::dirs()->calcResourceHash("wallpaper", currentWallpaper(), false);
         s += TQString("wp:%2:%1;").arg(rh).arg(currentWallpaper());
         
     }
@@ -1048,7 +1048,7 @@ TQString KBackgroundSettings::fingerprint()
 int KBackgroundSettings::hash()
 {
     if (hashdirty) {
-        m_Hash = QHash(fingerprint());
+        m_Hash = TQHash(fingerprint());
 	hashdirty = false;
     }
     return m_Hash;

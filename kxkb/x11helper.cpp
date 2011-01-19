@@ -59,7 +59,7 @@ static const TQRegExp NON_CLEAN_LAYOUT_REGEXP("[^a-z]");
 
 bool X11Helper::m_layoutsClean = true;
 
-const QString
+const TQString
 X11Helper::findX11Dir()
 {
 	for(int ii=0; ii<X11_DIR_COUNT; ii++) {
@@ -78,7 +78,7 @@ X11Helper::findX11Dir()
 	return NULL;	
 }
 
-const QString
+const TQString
 X11Helper::findXkbRulesFile(TQString x11Dir, Display *dpy)
 {
 	TQString rulesFile;
@@ -120,10 +120,10 @@ X11Helper::loadRules(const TQString& file, bool layoutsOnly)
 
 	for (int i = 0; i < xkbRules->layouts.num_desc; ++i) {
 		TQString layoutName(xkbRules->layouts.desc[i].name);
-		rulesInfo->layouts.replace( layoutName, qstrdup( xkbRules->layouts.desc[i].desc ) );
+		rulesInfo->layouts.tqreplace( layoutName, qstrdup( xkbRules->layouts.desc[i].desc ) );
 
 		if( m_layoutsClean == true
-				  && layoutName.find( NON_CLEAN_LAYOUT_REGEXP ) != -1 
+				  && layoutName.tqfind( NON_CLEAN_LAYOUT_REGEXP ) != -1 
 				  && layoutName.endsWith("/jp") == false ) {
 			kdDebug() << "Layouts are not clean (Xorg < 6.9.0 or XFree86)" << endl;
 			m_layoutsClean = false;
@@ -136,33 +136,33 @@ X11Helper::loadRules(const TQString& file, bool layoutsOnly)
 	}
   
   for (int i = 0; i < xkbRules->models.num_desc; ++i)
-      rulesInfo->models.replace(xkbRules->models.desc[i].name, qstrdup( xkbRules->models.desc[i].desc ) );
+      rulesInfo->models.tqreplace(xkbRules->models.desc[i].name, qstrdup( xkbRules->models.desc[i].desc ) );
   for (int i = 0; i < xkbRules->options.num_desc; ++i)
-      rulesInfo->options.replace(xkbRules->options.desc[i].name, qstrdup( xkbRules->options.desc[i].desc ) );
+      rulesInfo->options.tqreplace(xkbRules->options.desc[i].name, qstrdup( xkbRules->options.desc[i].desc ) );
 
   XkbRF_Free(xkbRules, true);
 
 // workaround for empty 'compose' options group description
-   if( rulesInfo->options.find("compose:menu") && !rulesInfo->options.find("compose") ) {
-     rulesInfo->options.replace("compose", "Compose Key Position");
+   if( rulesInfo->options.tqfind("compose:menu") && !rulesInfo->options.tqfind("compose") ) {
+     rulesInfo->options.tqreplace("compose", "Compose Key Position");
    }
 
   for(TQDictIterator<char> it(rulesInfo->options) ; it.current() != NULL; ++it ) {
 	  TQString option(it.currentKey());
-	  int columnPos = option.find(":");
+	  int columnPos = option.tqfind(":");
 	  
 	  if( columnPos != -1 ) {
 		  TQString group = option.mid(0, columnPos);
-		  if( rulesInfo->options.find(group) == NULL ) {
-			  rulesInfo->options.replace(group, group.latin1());
+		  if( rulesInfo->options.tqfind(group) == NULL ) {
+			  rulesInfo->options.tqreplace(group, group.latin1());
 			  kdDebug() << "Added missing option group: " << group << endl;
 		  }
 	  }
   }
   
 //   // workaround for empty misc options group description in XFree86 4.4.0
-//   if( rulesInfo->options.find("numpad:microsoft") && !rulesInfo->options.find("misc") ) {
-//     rulesInfo->options.replace("misc", "Miscellaneous compatibility options" );
+//   if( rulesInfo->options.tqfind("numpad:microsoft") && !rulesInfo->options.tqfind("misc") ) {
+//     rulesInfo->options.tqreplace("misc", "Miscellaneous compatibility options" );
 //   }
 
   return rulesInfo;
@@ -187,10 +187,10 @@ X11Helper::loadOldLayouts(const TQString& rulesFile)
       while (!ts.eof()) {
 	  line = ts.readLine().simplifyWhiteSpace();
 
-	  if( line.find(oldLayoutsTag) == 0 ) {
+	  if( line.tqfind(oldLayoutsTag) == 0 ) {
 
 	    line = line.mid(strlen(oldLayoutsTag));
-	    line = line.mid(line.find('=')+1).simplifyWhiteSpace();
+	    line = line.mid(line.tqfind('=')+1).simplifyWhiteSpace();
 	    while( !ts.eof() && line.endsWith("\\") )
 		line = line.left(line.length()-1) + ts.readLine();
 	    line = line.simplifyWhiteSpace();
@@ -202,10 +202,10 @@ X11Helper::loadOldLayouts(const TQString& rulesFile)
 	    
 	  }
 	  else
-	  if( line.find(nonLatinLayoutsTag) == 0 ) {
+	  if( line.tqfind(nonLatinLayoutsTag) == 0 ) {
 
 	    line = line.mid(strlen(nonLatinLayoutsTag)+1).simplifyWhiteSpace();
-	    line = line.mid(line.find('=')+1).simplifyWhiteSpace();
+	    line = line.mid(line.tqfind('=')+1).simplifyWhiteSpace();
 	    while( !ts.eof() && line.endsWith("\\") )
 		line = line.left(line.length()-1) + ts.readLine();
 	    line = line.simplifyWhiteSpace();
@@ -262,15 +262,15 @@ X11Helper::getVariants(const TQString& layout, const TQString& x11Dir, bool oldL
 	    if (line[0] == '#' || line.left(2) == "//" || line.isEmpty())
 		continue;
 
-	    int pos = line.find("xkb_symbols");
+	    int pos = line.tqfind("xkb_symbols");
 	    if (pos < 0)
 		continue;
 
-	    if( prev_line.find("hidden") >=0 )
+	    if( prev_line.tqfind("hidden") >=0 )
 		continue;
 
-	    pos = line.find('"', pos) + 1;
-	    int pos2 = line.find('"', pos);
+	    pos = line.tqfind('"', pos) + 1;
+	    int pos2 = line.tqfind('"', pos);
 	    if( pos < 0 || pos2 < 0 )
 		continue;
 

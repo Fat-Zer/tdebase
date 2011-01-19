@@ -1,6 +1,6 @@
 <!DOCTYPE UI><UI version="3.3" stdsetdef="1">
 <class>TaskbarConfigUI</class>
-<widget class="QWidget">
+<widget class="TQWidget">
     <property name="name">
         <cstring>TaskbarConfigUI</cstring>
     </property>
@@ -24,7 +24,7 @@
         <property name="margin">
             <number>0</number>
         </property>
-        <widget class="QButtonGroup">
+        <widget class="TQButtonGroup">
             <property name="name">
                 <cstring>taskbarGroup</cstring>
             </property>
@@ -39,7 +39,7 @@
                 <property name="name">
                     <cstring>unnamed</cstring>
                 </property>
-                <widget class="QCheckBox" row="1" column="1" rowspan="1" colspan="2">
+                <widget class="TQCheckBox" row="1" column="1" rowspan="1" colspan="2">
                     <property name="name">
                         <cstring>kcfg_SortByDesktop</cstring>
                     </property>
@@ -55,7 +55,7 @@
 By default this option is selected.</string>
                     </property>
                 </widget>
-                <widget class="QCheckBox" row="0" column="0" rowspan="1" colspan="3">
+                <widget class="TQCheckBox" row="0" column="0" rowspan="1" colspan="3">
                     <property name="name">
                         <cstring>kcfg_ShowAllWindows</cstring>
                     </property>
@@ -71,7 +71,7 @@ By default this option is selected.</string>
 By default, this option is selected and all windows are shown.</string>
                     </property>
                 </widget>
-                <widget class="QCheckBox" row="6" column="0" rowspan="1" colspan="3">
+                <widget class="TQCheckBox" row="6" column="0" rowspan="1" colspan="3">
                     <property name="name">
                         <cstring>kcfg_ShowWindowListBtn</cstring>
                     </property>
@@ -85,7 +85,7 @@ By default, this option is selected and all windows are shown.</string>
                         <string>Selecting this option causes the taskbar to display a button that, when clicked, shows a list of all windows in a popup menu.</string>
                     </property>
                 </widget>
-                <widget class="QComboBox" row="7" column="2">
+                <widget class="TQComboBox" row="7" column="2">
                     <property name="name">
                         <cstring>kcfg_GroupTasks</cstring>
                     </property>
@@ -105,7 +105,7 @@ You can set the taskbar to &lt;strong&gt;Never&lt;/strong&gt; group windows, to 
 By default the taskbar groups windows when it is full.</string>
                     </property>
                 </widget>
-                <widget class="QLabel" row="7" column="0" rowspan="1" colspan="2">
+                <widget class="TQLabel" row="7" column="0" rowspan="1" colspan="2">
                     <property name="name">
                         <cstring>groupTasksLabel</cstring>
                     </property>
@@ -116,7 +116,7 @@ By default the taskbar groups windows when it is full.</string>
                         <cstring>kcfg_GroupTasks</cstring>
                     </property>
                 </widget>
-                <widget class="QCheckBox" row="4" column="0" rowspan="1" colspan="3">
+                <widget class="TQCheckBox" row="4" column="0" rowspan="1" colspan="3">
                     <property name="name">
                         <cstring>kcfg_ShowOnlyIconified</cstring>
                     </property>
@@ -129,7 +129,7 @@ By default the taskbar groups windows when it is full.</string>
 By default, this option is not selected and the taskbar will show all windows.</string>
                     </property>
                 </widget>
-                <widget class="QCheckBox" row="5" column="0" rowspan="1" colspan="3">
+                <widget class="TQCheckBox" row="5" column="0" rowspan="1" colspan="3">
                     <property name="name">
                         <cstring>kcfg_ShowIcon</cstring>
                     </property>
@@ -145,7 +145,7 @@ By default, this option is not selected and the taskbar will show all windows.</
 By default this option is selected.</string>
                     </property>
                 </widget>
-                <widget class="QCheckBox" row="3" column="0" rowspan="1" colspan="3">
+                <widget class="TQCheckBox" row="3" column="0" rowspan="1" colspan="3">
                     <property name="name">
                         <cstring>showAllScreens</cstring>
                     </property>
@@ -161,12 +161,12 @@ By default this option is selected.</string>
 By default, this option is selected and all windows are shown.</string>
                     </property>
                 </widget>
-                <widget class="QComboBox" row="8" column="2">
+                <widget class="TQComboBox" row="8" column="2">
                     <property name="name">
                         <cstring>appearance</cstring>
                     </property>
                 </widget>
-                <widget class="QLabel" row="8" column="0" rowspan="1" colspan="2">
+                <widget class="TQLabel" row="8" column="0" rowspan="1" colspan="2">
                     <property name="name">
                         <cstring>textLabel1</cstring>
                     </property>
@@ -177,7 +177,7 @@ By default, this option is selected and all windows are shown.</string>
                         <cstring>appearance</cstring>
                     </property>
                 </widget>
-                <widget class="QCheckBox" row="9" column="0" rowspan="1" colspan="2">
+                <widget class="TQCheckBox" row="9" column="0" rowspan="1" colspan="2">
                     <property name="name">
                         <cstring>kcfg_UseCustomColors</cstring>
                     </property>
@@ -191,7 +191,7 @@ By default, this option is selected and all windows are shown.</string>
                         <bool>true</bool>
                     </property>
                 </widget>
-                <widget class="QLayoutWidget" row="10" column="0" rowspan="1" colspan="3">
+                <widget class="TQLayoutWidget" row="10" column="0" rowspan="1" colspan="3">
                     <property name="name">
                         <cstring>layout9</cstring>
                     </property>
@@ -209,7 +209,7 @@ By default, this option is selected and all windows are shown.</string>
                             <property name="sizeType">
                                 <enum>Expanding</enum>
                             </property>
-                            <property name="sizeHint">
+                            <property name="tqsizeHint">
                                 <size>
                                     <width>191</width>
                                     <height>20</height>
@@ -234,7 +234,7 @@ By default, this option is selected and all windows are shown.</string>
                             <property name="sizeType">
                                 <enum>Expanding</enum>
                             </property>
-                            <property name="sizeHint">
+                            <property name="tqsizeHint">
                                 <size>
                                     <width>191</width>
                                     <height>20</height>
@@ -249,7 +249,7 @@ By default, this option is selected and all windows are shown.</string>
                                 <string></string>
                             </property>
                         </widget>
-                        <widget class="QLabel" row="2" column="0">
+                        <widget class="TQLabel" row="2" column="0">
                             <property name="name">
                                 <cstring>taskBackgroundColorLabel</cstring>
                             </property>
@@ -268,7 +268,7 @@ By default, this option is selected and all windows are shown.</string>
                                 <string></string>
                             </property>
                         </widget>
-                        <widget class="QLabel" row="0" column="0">
+                        <widget class="TQLabel" row="0" column="0">
                             <property name="name">
                                 <cstring>inactiveTaskTextColorLabel</cstring>
                             </property>
@@ -279,7 +279,7 @@ By default, this option is selected and all windows are shown.</string>
                                 <cstring>kcfg_InactiveTaskTextColor</cstring>
                             </property>
                         </widget>
-                        <widget class="QLabel" row="1" column="0">
+                        <widget class="TQLabel" row="1" column="0">
                             <property name="name">
                                 <cstring>activeTaskTextColorLabel</cstring>
                             </property>
@@ -300,7 +300,7 @@ By default, this option is selected and all windows are shown.</string>
                             <property name="sizeType">
                                 <enum>Expanding</enum>
                             </property>
-                            <property name="sizeHint">
+                            <property name="tqsizeHint">
                                 <size>
                                     <width>191</width>
                                     <height>20</height>
@@ -319,14 +319,14 @@ By default, this option is selected and all windows are shown.</string>
                     <property name="sizeType">
                         <enum>Fixed</enum>
                     </property>
-                    <property name="sizeHint">
+                    <property name="tqsizeHint">
                         <size>
                             <width>20</width>
                             <height>20</height>
                         </size>
                     </property>
                 </spacer>
-                <widget class="QCheckBox" row="2" column="0" rowspan="1" colspan="3">
+                <widget class="TQCheckBox" row="2" column="0" rowspan="1" colspan="3">
                     <property name="name">
                         <cstring>kcfg_SortByApp</cstring>
                     </property>
@@ -339,7 +339,7 @@ By default, this option is selected and all windows are shown.</string>
                 </widget>
             </grid>
         </widget>
-        <widget class="QGroupBox">
+        <widget class="TQGroupBox">
             <property name="name">
                 <cstring>GroupBox1</cstring>
             </property>
@@ -350,7 +350,7 @@ By default, this option is selected and all windows are shown.</string>
                 <property name="name">
                     <cstring>unnamed</cstring>
                 </property>
-                <widget class="QLabel" row="0" column="0">
+                <widget class="TQLabel" row="0" column="0">
                     <property name="name">
                         <cstring>leftButtonLabel</cstring>
                     </property>
@@ -361,7 +361,7 @@ By default, this option is selected and all windows are shown.</string>
                         <cstring>kcfg_LeftButtonAction</cstring>
                     </property>
                 </widget>
-                <widget class="QLabel" row="1" column="0">
+                <widget class="TQLabel" row="1" column="0">
                     <property name="name">
                         <cstring>middleButtonLabel</cstring>
                     </property>
@@ -372,7 +372,7 @@ By default, this option is selected and all windows are shown.</string>
                         <cstring>kcfg_MiddleButtonAction</cstring>
                     </property>
                 </widget>
-                <widget class="QLabel" row="2" column="0">
+                <widget class="TQLabel" row="2" column="0">
                     <property name="name">
                         <cstring>rightButtonLabel</cstring>
                     </property>
@@ -383,7 +383,7 @@ By default, this option is selected and all windows are shown.</string>
                         <cstring>kcfg_RightButtonAction</cstring>
                     </property>
                 </widget>
-                <widget class="QComboBox" row="0" column="1">
+                <widget class="TQComboBox" row="0" column="1">
                     <property name="name">
                         <cstring>kcfg_LeftButtonAction</cstring>
                     </property>
@@ -396,7 +396,7 @@ By default, this option is selected and all windows are shown.</string>
                         </sizepolicy>
                     </property>
                 </widget>
-                <widget class="QComboBox" row="1" column="1">
+                <widget class="TQComboBox" row="1" column="1">
                     <property name="name">
                         <cstring>kcfg_MiddleButtonAction</cstring>
                     </property>
@@ -409,7 +409,7 @@ By default, this option is selected and all windows are shown.</string>
                         </sizepolicy>
                     </property>
                 </widget>
-                <widget class="QComboBox" row="2" column="1">
+                <widget class="TQComboBox" row="2" column="1">
                     <property name="name">
                         <cstring>kcfg_RightButtonAction</cstring>
                     </property>
@@ -434,7 +434,7 @@ By default, this option is selected and all windows are shown.</string>
             <property name="sizeType">
                 <enum>Expanding</enum>
             </property>
-            <property name="sizeHint">
+            <property name="tqsizeHint">
                 <size>
                     <width>20</width>
                     <height>20</height>

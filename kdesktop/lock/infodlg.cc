@@ -59,7 +59,7 @@
 // Simple dialog for displaying an unlock status or recurring error message
 //
 InfoDlg::InfoDlg(LockProcess *parent)
-    : TQDialog(parent, "information dialog", true, WX11BypassWM),
+    : TQDialog(parent, "information dialog", true, (WFlags)WX11BypassWM),
       mUnlockingFailed(false)
 {
     frame = new TQFrame( this );
@@ -72,7 +72,7 @@ InfoDlg::InfoDlg(LockProcess *parent)
     KUser user;
 
     mStatusLabel = new TQLabel( "<b> </b>", frame );
-    mStatusLabel->setAlignment( TQLabel::AlignCenter );
+    mStatusLabel->tqsetAlignment( TQLabel::AlignCenter );
 
     TQVBoxLayout *unlockDialogLayout = new TQVBoxLayout( this );
     unlockDialogLayout->addWidget( frame );
@@ -81,7 +81,7 @@ InfoDlg::InfoDlg(LockProcess *parent)
     layStatus->addWidget( mStatusLabel );
 
     frameLayout = new TQGridLayout( frame, 1, 1, KDialog::marginHint(), KDialog::spacingHint() );
-    frameLayout->addMultiCellWidget( mpixLabel, 0, 2, 0, 0, AlignTop );
+    frameLayout->addMultiCellWidget( mpixLabel, 0, 2, 0, 0, Qt::AlignTop );
     frameLayout->addLayout( layStatus, 1, 1 );
 
     installEventFilter(this);

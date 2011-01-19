@@ -42,7 +42,7 @@ class TQPushButton;
 class TQDialog;
 class ConfigDialog;
 
-class GeneralWidget : public QVBox
+class GeneralWidget : public TQVBox
 {
     Q_OBJECT
 
@@ -66,7 +66,7 @@ private:
 
 
 // only for use inside ActionWidget
-class AdvancedWidget : public QVBox
+class AdvancedWidget : public TQVBox
 {
     Q_OBJECT
 
@@ -81,7 +81,7 @@ private:
     KEditListBox *editListBox;
 };
 
-class ActionWidget : public QVBox
+class ActionWidget : public TQVBox
 {
     Q_OBJECT
 
@@ -237,11 +237,11 @@ public:
     ListView( ConfigDialog* configWidget, TQWidget *parent, const char *name )
 	: KListView( parent, name ), _configWidget( configWidget ),
           _regExpEditor(0L) {}
-    // TQListView has a weird idea of a sizeHint...
-    virtual TQSize sizeHint () const {
-	int w = minimumSizeHint().width();
+    // TQListView has a weird idea of a tqsizeHint...
+    virtual TQSize tqsizeHint () const {
+	int w = tqminimumSizeHint().width();
 	int h = header()->height();
-	h += viewport()->sizeHint().height();
+	h += viewport()->tqsizeHint().height();
 	h += horizontalScrollBar()->height();
 	
 	TQListViewItem *item = firstChild();

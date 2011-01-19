@@ -78,7 +78,7 @@ private: // wrappers
 };
 
 
-class NSPluginLoader : public QObject
+class NSPluginLoader : public TQObject
 {
   Q_OBJECT
 

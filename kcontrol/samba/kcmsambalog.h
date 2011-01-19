@@ -35,7 +35,7 @@
 
 #define LOGGROUPNAME "SambaLogFileSettings"
 
-class LogView: public QWidget
+class LogView: public TQWidget
 {
    Q_OBJECT
    public:
@@ -57,7 +57,7 @@ class LogView: public QWidget
       void contentsChanged(TQListView* list, int nrOfFiles, int nrOfConnections);
 };
 
-class QListViewItemX:public QListViewItem
+class QListViewItemX:public TQListViewItem
 {
    public:
       //a faster constructor saves a lot time

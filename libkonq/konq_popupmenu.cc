@@ -43,6 +43,7 @@
 #include "knewmenu.h"
 #include "konq_popupmenu.h"
 #include "konq_operations.h"
+#include "konq_xmlguiclient.h"
 #include <dcopclient.h>
 
 /*
@@ -95,12 +96,12 @@ public:
 class KonqPopupMenu::KonqPopupMenuPrivate
 {
 public:
-  KonqPopupMenuPrivate() : m_parentWidget( 0 ),
+  KonqPopupMenuPrivate() : m_tqparentWidget( 0 ),
                            m_itemFlags( KParts::BrowserExtension::DefaultPopupItems )
   {
   }
   TQString m_urlTitle;
-  TQWidget *m_parentWidget;
+  TQWidget *m_tqparentWidget;
   KParts::BrowserExtension::PopupFlags m_itemFlags;
 };
 
@@ -199,30 +200,30 @@ KonqPopupMenu::KonqPopupMenu( KBookmarkManager *mgr, const KFileItemList &items,
                               KURL viewURL,
                               KActionCollection & actions,
                               KNewMenu * newMenu,
-                              TQWidget * parentWidget,
+                              TQWidget * tqparentWidget,
                               bool showProperties )
-    : TQPopupMenu( parentWidget, "konq_popupmenu" ), m_actions( actions ), m_ownActions( static_cast<TQWidget *>( 0 ), "KonqPopupMenu::m_ownActions" ), m_pMenuNew( newMenu ), m_sViewURL(viewURL), m_lstItems(items), m_pManager(mgr)
+    : TQPopupMenu( tqparentWidget, "konq_popupmenu" ), m_actions( actions ), m_ownActions( static_cast<TQWidget *>( 0 ), "KonqPopupMenu::m_ownActions" ), m_pMenuNew( newMenu ), m_sViewURL(viewURL), m_lstItems(items), m_pManager(mgr)
 {
     KonqPopupFlags kpf = ( showProperties ? ShowProperties : IsLink ) | ShowNewWindow;
-    init(parentWidget, kpf, KParts::BrowserExtension::DefaultPopupItems);
+    init(tqparentWidget, kpf, KParts::BrowserExtension::DefaultPopupItems);
 }
 
 KonqPopupMenu::KonqPopupMenu( KBookmarkManager *mgr, const KFileItemList &items,
                               const KURL& viewURL,
                               KActionCollection & actions,
                               KNewMenu * newMenu,
-                              TQWidget * parentWidget,
+                              TQWidget * tqparentWidget,
                               KonqPopupFlags kpf,
                               KParts::BrowserExtension::PopupFlags flags)
-  : TQPopupMenu( parentWidget, "konq_popupmenu" ), m_actions( actions ), m_ownActions( static_cast<TQWidget *>( 0 ), "KonqPopupMenu::m_ownActions" ), m_pMenuNew( newMenu ), m_sViewURL(viewURL), m_lstItems(items), m_pManager(mgr)
+  : TQPopupMenu( tqparentWidget, "konq_popupmenu" ), m_actions( actions ), m_ownActions( static_cast<TQWidget *>( 0 ), "KonqPopupMenu::m_ownActions" ), m_pMenuNew( newMenu ), m_sViewURL(viewURL), m_lstItems(items), m_pManager(mgr)
 {
-    init(parentWidget, kpf, flags);
+    init(tqparentWidget, kpf, flags);
 }
 
-void KonqPopupMenu::init (TQWidget * parentWidget, KonqPopupFlags kpf, KParts::BrowserExtension::PopupFlags flags)
+void KonqPopupMenu::init (TQWidget * tqparentWidget, KonqPopupFlags kpf, KParts::BrowserExtension::PopupFlags flags)
 {
     d = new KonqPopupMenuPrivate;
-    d->m_parentWidget = parentWidget;
+    d->m_tqparentWidget = tqparentWidget;
     d->m_itemFlags = flags;
     setup(kpf);
 }
@@ -280,8 +281,8 @@ int KonqPopupMenu::insertServices(const ServiceList& list,
             TQCString name;
             name.setNum( id );
             name.prepend( isBuiltin ? "builtinservice_" : "userservice_" );
-            KAction * act = new KAction( TQString((*it).m_strName).replace('&',"&&"), 0,
-                                         this, TQT_SLOT( slotRunService() ),
+            KAction * act = new KAction( TQString((*it).m_strName).tqreplace('&',"&&"), 0,
+                                         TQT_TQOBJECT(this), TQT_SLOT( slotRunService() ),
                                          &m_ownActions, name );
 
             if ( !(*it).m_strIcon.isEmpty() )
@@ -290,7 +291,7 @@ int KonqPopupMenu::insertServices(const ServiceList& list,
                 act->setIconSet( pix );
             }
 
-            addAction( act, menu ); // Add to toplevel menu
+            tqaddAction( act, menu ); // Add to toplevel menu
 
             m_mapPopupServices[ id++ ] = *it;
             ++count;
@@ -338,7 +339,7 @@ void KonqPopupMenu::setup(KonqPopupFlags kpf)
     bool sMoving        = sDeleting;
     bool sWriting       = sDeleting && m_lstItems.first()->isWritable();
     m_sMimeType         = m_lstItems.first()->mimetype();
-    TQString mimeGroup   = m_sMimeType.left(m_sMimeType.find('/'));
+    TQString mimeGroup   = m_sMimeType.left(m_sMimeType.tqfind('/'));
     mode_t mode         = m_lstItems.first()->mode();
     bool isDirectory    = S_ISDIR(mode);
     bool bTrashIncluded = false;
@@ -354,7 +355,7 @@ void KonqPopupMenu::setup(KonqPopupFlags kpf)
     m_pluginList.setAutoDelete( true );
     m_ownActions.setHighlightingEnabled( true );
 
-    attrName = TQString::fromLatin1( "name" );
+    attrName = TQString::tqfromLatin1( "name" );
 
     prepareXMLGUIStuff();
     m_builder = new KonqPopupMenuGUIBuilder( this );
@@ -380,11 +381,11 @@ void KonqPopupMenu::setup(KonqPopupFlags kpf)
         {
             m_sMimeType = TQString::null; // mimetypes are different => null
 
-            if ( mimeGroup != (*it)->mimetype().left((*it)->mimetype().find('/')))
+            if ( mimeGroup != (*it)->mimetype().left((*it)->mimetype().tqfind('/')))
                 mimeGroup = TQString::null; // mimetype groups are different as well!
         }
 
-        if ( mimeTypeList.findIndex( (*it)->mimetype() ) == -1 )
+        if ( mimeTypeList.tqfindIndex( (*it)->mimetype() ) == -1 )
             mimeTypeList << (*it)->mimetype();
 
         if ( isReallyLocal && !url.isLocalFile() )
@@ -475,7 +476,7 @@ void KonqPopupMenu::setup(KonqPopupFlags kpf)
     if ( ((kpf & ShowNewWindow) != 0) && sReading )
     {
         TQString openStr = isKDesktop ? i18n( "&Open" ) : i18n( "Open in New &Window" );
-        actNewWindow = new KAction( openStr, "window_new", 0, this, TQT_SLOT( slotPopupNewView() ), &m_ownActions, "newview" );
+        actNewWindow = new KAction( openStr, "window_new", 0, TQT_TQOBJECT(this), TQT_SLOT( slotPopupNewView() ), &m_ownActions, "newview" );
     }
 
     if ( actNewWindow && !isKDesktop )
@@ -496,7 +497,7 @@ void KonqPopupMenu::setup(KonqPopupFlags kpf)
             m_pMenuNew->slotCheckUpToDate();
             m_pMenuNew->setPopupFiles( m_lstPopupURLs );
 
-            addAction( m_pMenuNew );
+            tqaddAction( m_pMenuNew );
 
             addSeparator();
         }
@@ -504,32 +505,32 @@ void KonqPopupMenu::setup(KonqPopupFlags kpf)
         {
             if (d->m_itemFlags & KParts::BrowserExtension::ShowCreateDirectory)
             {
-                KAction *actNewDir = new KAction( i18n( "Create &Folder..." ), "folder_new", 0, this, TQT_SLOT( slotPopupNewDir() ), &m_ownActions, "newdir" );
-                addAction( actNewDir );
+                KAction *actNewDir = new KAction( i18n( "Create &Folder..." ), "folder_new", 0, TQT_TQOBJECT(this), TQT_SLOT( slotPopupNewDir() ), &m_ownActions, "newdir" );
+                tqaddAction( actNewDir );
                 addSeparator();
             }
         }
     } else if ( isIntoTrash ) {
         // Trashed item, offer restoring
-        act = new KAction( i18n( "&Restore" ), 0, this, TQT_SLOT( slotPopupRestoreTrashedItems() ), &m_ownActions, "restore" );
-        addAction( act );
+        act = new KAction( i18n( "&Restore" ), 0, TQT_TQOBJECT(this), TQT_SLOT( slotPopupRestoreTrashedItems() ), &m_ownActions, "restore" );
+        tqaddAction( act );
     }
 
     if (d->m_itemFlags & KParts::BrowserExtension::ShowNavigationItems)
     {
         if (d->m_itemFlags & KParts::BrowserExtension::ShowUp)
-            addAction( "up" );
-        addAction( "back" );
-        addAction( "forward" );
+            tqaddAction( "up" );
+        tqaddAction( "back" );
+        tqaddAction( "forward" );
         if (d->m_itemFlags & KParts::BrowserExtension::ShowReload)
-            addAction( "reload" );
+            tqaddAction( "reload" );
         addSeparator();
     }
 
     // "open in new window" is either provided by us, or by the tabhandling group
     if (actNewWindow)
     {
-        addAction( actNewWindow );
+        tqaddAction( actNewWindow );
         addSeparator();
     }
     addGroup( "tabhandling" ); // includes a separator
@@ -538,21 +539,21 @@ void KonqPopupMenu::setup(KonqPopupFlags kpf)
     {
         if ( !currentDir && sReading ) {
             if ( sDeleting ) {
-                addAction( "cut" );
+                tqaddAction( "cut" );
             }
-            addAction( "copy" );
+            tqaddAction( "copy" );
         }
 
         if ( S_ISDIR(mode) && sWriting ) {
             if ( currentDir )
-                addAction( "paste" );
+                tqaddAction( "paste" );
             else
-                addAction( "pasteto" );
+                tqaddAction( "pasteto" );
         }
         if ( !currentDir )
         {
             if ( m_lstItems.count() == 1 && sMoving )
-                addAction( "rename" );
+                tqaddAction( "rename" );
 
             bool addTrash = false;
             bool addDel = false;
@@ -563,7 +564,7 @@ void KonqPopupMenu::setup(KonqPopupFlags kpf)
             if ( sDeleting ) {
                 if ( !isLocal )
                     addDel = true;
-                else if (KApplication::keyboardMouseState() & Qt::ShiftButton) {
+                else if (KApplication::keyboardMouseState() & TQt::ShiftButton) {
                     addTrash = false;
                     addDel = true;
                 }
@@ -575,18 +576,18 @@ void KonqPopupMenu::setup(KonqPopupFlags kpf)
             }
 
             if ( addTrash )
-                addAction( "trash" );
+                tqaddAction( "trash" );
             if ( addDel )
-                addAction( "del" );
+                tqaddAction( "del" );
         }
     }
     if ( isCurrentTrash )
     {
-        act = new KAction( i18n( "&Empty Trash Bin" ), "emptytrash", 0, this, TQT_SLOT( slotPopupEmptyTrashBin() ), &m_ownActions, "empytrash" );
+        act = new KAction( i18n( "&Empty Trash Bin" ), "emptytrash", 0, TQT_TQOBJECT(this), TQT_SLOT( slotPopupEmptyTrashBin() ), &m_ownActions, "empytrash" );
         KSimpleConfig trashConfig( "trashrc", true );
         trashConfig.setGroup( "Status" );
         act->setEnabled( !trashConfig.readBoolEntry( "Empty", true ) );
-        addAction( act );
+        tqaddAction( act );
     }
     addGroup( "editactions" );
 
@@ -602,7 +603,7 @@ void KonqPopupMenu::setup(KonqPopupFlags kpf)
         TQString caption;
         if (currentDir)
         {
-           bool httpPage = (m_sViewURL.protocol().find("http", 0, false) == 0);
+           bool httpPage = (m_sViewURL.protocol().tqfind("http", 0, false) == 0);
            if (httpPage)
               caption = i18n("&Bookmark This Page");
            else
@@ -615,11 +616,11 @@ void KonqPopupMenu::setup(KonqPopupFlags kpf)
         else
            caption = i18n("&Bookmark This File");
 
-        act = new KAction( caption, "bookmark_add", 0, this, TQT_SLOT( slotPopupAddToBookmark() ), &m_ownActions, "bookmark_add" );
+        act = new KAction( caption, "bookmark_add", 0, TQT_TQOBJECT(this), TQT_SLOT( slotPopupAddToBookmark() ), &m_ownActions, "bookmark_add" );
         if (m_lstItems.count() > 1)
             act->setEnabled(false);
         if (kapp->authorizeKAction("bookmarks"))
-            addAction( act );
+            tqaddAction( act );
         if (bIsLink)
             addGroup( "linkactions" );
     }
@@ -706,7 +707,7 @@ void KonqPopupMenu::setup(KonqPopupFlags kpf)
             if ( cfg.hasKey( "X-KDE-ShowIfDcopCall" ) )
             {
                 TQString dcopcall = cfg.readEntry( "X-KDE-ShowIfDcopCall" );
-                const TQCString app = dcopcall.section(' ', 0,0).utf8();
+                const TQCString app = TQString(dcopcall.section(' ', 0,0)).utf8();
 
                 //if( !kapp->dcopClient()->isApplicationRegistered( app ))
                 //	continue; //app does not exist so cannot send call
@@ -717,8 +718,8 @@ void KonqPopupMenu::setup(KonqPopupFlags kpf)
 
                 TQCString replyType;
                 TQByteArray replyData;
-                TQCString object =    dcopcall.section(' ', 1,-2).utf8();
-                TQString function =  dcopcall.section(' ', -1);
+                TQCString object = TQString(dcopcall.section(' ', 1,-2)).utf8();
+                TQString function =  TQString(dcopcall.section(' ', -1));
                 if(!function.endsWith("(KURL::List)")) {
                     kdWarning() << "Desktop file " << *eIt << " contains an invalid X-KDE-ShowIfDcopCall - the function must take the exact parameter (KURL::List) and must be specified." << endl;
                     continue; //Be safe.
@@ -741,7 +742,7 @@ void KonqPopupMenu::setup(KonqPopupFlags kpf)
             else if ( cfg.hasKey( "X-KDE-Protocols" ) )
             {
                 TQStringList protocols = TQStringList::split( "," , cfg.readEntry( "X-KDE-Protocols" ) );
-                if ( !protocols.contains( urlForServiceMenu.protocol() ) )
+                if ( !protocols.tqcontains( urlForServiceMenu.protocol() ) )
                     continue;
             }
             else if ( urlForServiceMenu.protocol() == "trash" || urlForServiceMenu.url().startsWith( "system:/trash" ) )
@@ -755,7 +756,7 @@ void KonqPopupMenu::setup(KonqPopupFlags kpf)
             if ( cfg.hasKey( "X-KDE-Require" ) )
             {
                 const TQStringList capabilities = cfg.readListEntry( "X-KDE-Require" );
-                if ( capabilities.contains( "Write" ) && !sWriting )
+                if ( capabilities.tqcontains( "Write" ) && !sWriting )
                     continue;
             }
             if ( (cfg.hasKey( "Actions" ) || cfg.hasKey( "X-KDE-GetActionMenu") ) && cfg.hasKey( "ServiceTypes" ) )
@@ -791,7 +792,7 @@ void KonqPopupMenu::setup(KonqPopupFlags kpf)
                          *it == m_sMimeType) ||
                         (!mimeGroup.isEmpty() &&
                          ((*it).right(1) == "*" &&
-                          (*it).left((*it).find('/')) == mimeGroup)))
+                          (*it).left((*it).tqfind('/')) == mimeGroup)))
                     {
                         checkTheMimetypes = true;
                     }
@@ -801,7 +802,7 @@ void KonqPopupMenu::setup(KonqPopupFlags kpf)
                         ok = true;
                         for (TQStringList::ConstIterator itex = excludeTypes.begin(); itex != excludeTypes.end(); ++itex)
                         {
-                            if( ((*itex).right(1) == "*" && (*itex).left((*itex).find('/')) == mimeGroup) ||
+                            if( ((*itex).right(1) == "*" && (*itex).left((*itex).tqfind('/')) == mimeGroup) ||
                                 ((*itex) == m_sMimeType) )
                             {
                                 ok = false;
@@ -882,27 +883,27 @@ void KonqPopupMenu::setup(KonqPopupFlags kpf)
                     const TQString onlyShowIn = service->property("OnlyShowIn", TQVariant::String).toString();
                     if ( !onlyShowIn.isEmpty() ) {
                         const TQStringList aList = TQStringList::split(';', onlyShowIn);
-                        if (!aList.contains("KDE"))
+                        if (!aList.tqcontains("KDE"))
                             continue;
                     }
                     const TQString notShowIn = service->property("NotShowIn", TQVariant::String).toString();
                     if ( !notShowIn.isEmpty() ) {
                         const TQStringList aList = TQStringList::split(';', notShowIn);
-                        if (aList.contains("KDE"))
+                        if (aList.tqcontains("KDE"))
                             continue;
                     }
 
                     TQCString nam;
                     nam.setNum( id );
 
-                    TQString actionName( (*it)->name().replace("&", "&&") );
+                    TQString actionName( (*it)->name().tqreplace("&", "&&") );
                     if ( menu == m_menuElement ) // no submenu -> prefix single offer
                         actionName = i18n( "Open with %1" ).arg( actionName );
 
                     act = new KAction( actionName, (*it)->pixmap( KIcon::Small ), 0,
-                                       this, TQT_SLOT( slotRunService() ),
+                                       TQT_TQOBJECT(this), TQT_SLOT( slotRunService() ),
                                        &m_ownActions, nam.prepend( "appservice_" ) );
-                    addAction( act, menu );
+                    tqaddAction( act, menu );
 
                     m_mapPopup[ id++ ] = *it;
                 }
@@ -917,13 +918,13 @@ void KonqPopupMenu::setup(KonqPopupFlags kpf)
                 {
                     openWithActionName = i18n( "&Open With..." );
                 }
-                KAction *openWithAct = new KAction( openWithActionName, 0, this, TQT_SLOT( slotPopupOpenWith() ), &m_ownActions, "openwith" );
-                addAction( openWithAct, menu );
+                KAction *openWithAct = new KAction( openWithActionName, 0, TQT_TQOBJECT(this), TQT_SLOT( slotPopupOpenWith() ), &m_ownActions, "openwith" );
+                tqaddAction( openWithAct, menu );
             }
             else // no app offers -> Open With...
             {
-                act = new KAction( i18n( "&Open With..." ), 0, this, TQT_SLOT( slotPopupOpenWith() ), &m_ownActions, "openwith" );
-                addAction( act );
+                act = new KAction( i18n( "&Open With..." ), 0, TQT_TQOBJECT(this), TQT_SLOT( slotPopupOpenWith() ), &m_ownActions, "openwith" );
+                tqaddAction( act );
             }
 
         }
@@ -976,9 +977,9 @@ void KonqPopupMenu::setup(KonqPopupFlags kpf)
 
     if ( KPropertiesDialog::canDisplay( m_lstItems ) && (kpf & ShowProperties) )
     {
-        act = new KAction( i18n( "&Properties" ), 0, this, TQT_SLOT( slotPopupProperties() ),
+        act = new KAction( i18n( "&Properties" ), 0, TQT_TQOBJECT(this), TQT_SLOT( slotPopupProperties() ),
                            &m_ownActions, "properties" );
-        addAction( act );
+        tqaddAction( act );
     }
 
     while ( !m_menuElement.lastChild().isNull() &&
@@ -990,9 +991,9 @@ void KonqPopupMenu::setup(KonqPopupFlags kpf)
         if ( KFileShare::authorization() == KFileShare::Authorized )
         {
             addSeparator();
-            act = new KAction( i18n("Share"), 0, this, TQT_SLOT( slotOpenShareFileDialog() ),
+            act = new KAction( i18n("Share"), 0, TQT_TQOBJECT(this), TQT_SLOT( slotOpenShareFileDialog() ),
                                &m_ownActions, "sharefile" );
-            addAction( act );
+            tqaddAction( act );
         }
     }
 
@@ -1034,7 +1035,7 @@ void KonqPopupMenu::slotPopupNewDir()
   if (m_lstPopupURLs.empty())
     return;
 
-  KonqOperations::newDir(d->m_parentWidget, m_lstPopupURLs.first());
+  KonqOperations::newDir(d->m_tqparentWidget, m_lstPopupURLs.first());
 }
 
 void KonqPopupMenu::slotPopupEmptyTrashBin()
@@ -1072,11 +1073,11 @@ void KonqPopupMenu::slotPopupAddToBookmark()
 
 void KonqPopupMenu::slotRunService()
 {
-  TQCString senderName = sender()->name();
-  int id = senderName.mid( senderName.find( '_' ) + 1 ).toInt();
+  TQCString senderName = TQT_TQOBJECT_CONST(sender())->name();
+  int id = senderName.mid( senderName.tqfind( '_' ) + 1 ).toInt();
 
   // Is it a usual service (application)
-  TQMap<int,KService::Ptr>::Iterator it = m_mapPopup.find( id );
+  TQMap<int,KService::Ptr>::Iterator it = m_mapPopup.tqfind( id );
   if ( it != m_mapPopup.end() )
   {
     KRun::run( **it, m_lstPopupURLs );
@@ -1084,7 +1085,7 @@ void KonqPopupMenu::slotRunService()
   }
 
   // Is it a service specific to desktop entry files ?
-  TQMap<int,KDEDesktopMimeType::Service>::Iterator it2 = m_mapPopupServices.find( id );
+  TQMap<int,KDEDesktopMimeType::Service>::Iterator it2 = m_mapPopupServices.tqfind( id );
   if ( it2 != m_mapPopupServices.end() )
   {
       KDEDesktopMimeType::executeService( m_lstPopupURLs, it2.data() );
@@ -1115,19 +1116,19 @@ KPropertiesDialog* KonqPopupMenu::showPropertiesDialog()
         if (item->entry().count() == 0) // this item wasn't listed by a slave
         {
             // KPropertiesDialog will use stat to get more info on the file
-            return new KPropertiesDialog( item->url(), d->m_parentWidget );
+            return new KPropertiesDialog( item->url(), d->m_tqparentWidget );
         }
     }
-    return new KPropertiesDialog( m_lstItems, d->m_parentWidget );
+    return new KPropertiesDialog( m_lstItems, d->m_tqparentWidget );
 }
 
 KAction *KonqPopupMenu::action( const TQDomElement &element ) const
 {
   TQCString name = element.attribute( attrName ).ascii();
-  KAction *res = m_ownActions.action( name );
+  KAction *res = m_ownActions.action( static_cast<const char *>(name) );
 
   if ( !res )
-    res = m_actions.action( name );
+    res = m_actions.action( static_cast<const char *>(name) );
 
   if ( !res && m_pMenuNew && strcmp( name, m_pMenuNew->name() ) == 0 )
     return m_pMenuNew;
@@ -1156,7 +1157,7 @@ void KonqPopupMenu::addPlugins()
     //search for a plugin with the right protocol
     KTrader::OfferList plugin_offers;
     unsigned int pluginCount = 0;
-    plugin_offers = KTrader::self()->query( m_sMimeType.isNull() ? TQString::fromLatin1( "all/all" ) : m_sMimeType, "'KonqPopupMenu/Plugin' in ServiceTypes");
+    plugin_offers = KTrader::self()->query( m_sMimeType.isNull() ? TQString::tqfromLatin1( "all/all" ) : m_sMimeType, "'KonqPopupMenu/Plugin' in ServiceTypes");
     if ( plugin_offers.isEmpty() )
         return; // no plugins installed do not bother about it
 
@@ -1170,12 +1171,12 @@ void KonqPopupMenu::addPlugins()
         KonqPopupMenuPlugin *plugin =
             KParts::ComponentFactory::
             createInstanceFromLibrary<KonqPopupMenuPlugin>( TQFile::encodeName( (*iterator)->library() ),
-                                                            this,
+                                                            TQT_TQOBJECT(this),
                                                             (*iterator)->name().latin1() );
         if ( !plugin )
             continue;
         // This make the kuick plugin insert its stuff above "Properties"
-        TQString pluginClientName = TQString::fromLatin1( "Plugin%1" ).arg( pluginCount );
+        TQString pluginClientName = TQString::tqfromLatin1( "Plugin%1" ).arg( pluginCount );
         addMerge( pluginClientName );
         plugin->domDocument().documentElement().setAttribute( "name", pluginClientName );
         m_pluginList.append( plugin );

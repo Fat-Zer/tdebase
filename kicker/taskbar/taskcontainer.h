@@ -49,7 +49,7 @@ public:
                   TQWidget *parent = 0, const char *name = 0);
     virtual ~TaskContainer();
 
-    void setArrowType( Qt::ArrowType at );
+    void setArrowType( TQt::ArrowType at );
 
     void init();
 
@@ -57,9 +57,9 @@ public:
     void remove(Task::Ptr);
     void remove(Startup::Ptr);
 
-    bool contains(Task::Ptr);
-    bool contains(Startup::Ptr);
-    bool contains(WId);
+    bool tqcontains(Task::Ptr);
+    bool tqcontains(Startup::Ptr);
+    bool tqcontains(WId);
 
     bool isEmpty();
     bool onCurrentDesktop();

@@ -72,7 +72,7 @@ KBackgroundManager::KBackgroundManager(TQWidget *desktop, KWinModule* kwinModule
 
     m_pDesktop = desktop;
     if (desktop == 0L)
-        desktop = KApplication::desktop()->screen();
+        desktop = TQT_TQWIDGET(KApplication::desktop()->screen());
 
     m_Renderer.resize( 1 );
     m_Cache.resize( 1 );
@@ -334,7 +334,7 @@ void KBackgroundManager::slotChangeNumberOfDesktops(int num)
 /*
  * Call this when the desktop has been changed.
  * Desk is in KWin convention: [1..desks], instead of [0..desks-1].
- * 0 repaints the current desktop.
+ * 0 tqrepaints the current desktop.
  */
 void KBackgroundManager::slotChangeDesktop(int desk)
 {
@@ -394,7 +394,7 @@ void KBackgroundManager::slotChangeDesktop(int desk)
 /*
  * Call this when the viewport has been changed.
  * Desk is in KWin convention: [1..desks], instead of [0..desks-1].
- * 0 repaints the current viewport.
+ * 0 tqrepaints the current viewport.
  */
 void KBackgroundManager::slotChangeViewport(int desk, const TQPoint& viewport)
 {
@@ -518,25 +518,25 @@ void KBackgroundManager::setPixmap(KPixmap *pm, int hash, int desk)
     {
        TQScrollView* sv = dynamic_cast<TQScrollView*>( m_pDesktop );
        if ( sv ) {
-         // Qt eats repaint events in this case :-((
+         // Qt eats tqrepaint events in this case :-((
          sv->viewport()->update();
        }
        m_pDesktop->setErasePixmap(*ep);
-       m_pDesktop->repaint();
+       m_pDesktop->tqrepaint();
        static bool root_cleared = false;
        if( !root_cleared )
        { // clear the root window pixmap set by kdm
           root_cleared = true;
 	  TQTimer::singleShot( 0, this, TQT_SLOT( clearRoot()));
           // but make the pixmap visible until m_pDesktop is visible
-          KApplication::desktop()->screen()->setErasePixmap(*ep);
-          KApplication::desktop()->screen()->erase();
+          TQT_TQWIDGET(KApplication::desktop()->screen())->setErasePixmap(*ep);
+          TQT_TQWIDGET(KApplication::desktop()->screen())->erase();
        }
     }
     else
     {
-        KApplication::desktop()->screen()->setErasePixmap(*ep);
-        KApplication::desktop()->screen()->erase();
+        TQT_TQWIDGET(KApplication::desktop()->screen())->setErasePixmap(*ep);
+        TQT_TQWIDGET(KApplication::desktop()->screen())->erase();
     }
 
      // and export it via Esetroot-style for gnome/GTK apps to share in the pretties
@@ -556,8 +556,8 @@ void KBackgroundManager::setPixmap(KPixmap *pm, int hash, int desk)
 
 void KBackgroundManager::clearRoot()
 {
-    KApplication::desktop()->screen()->setErasePixmap( TQPixmap());
-    KApplication::desktop()->screen()->erase();
+    TQT_TQWIDGET(KApplication::desktop()->screen())->setErasePixmap( TQPixmap());
+    TQT_TQWIDGET(KApplication::desktop()->screen())->erase();
 }
 
 /*
@@ -920,12 +920,12 @@ void KBackgroundManager::setWallpaper(int desk, TQString wallpaper, int mode)
     slotChangeDesktop(sdesk);
 }
 
-void KBackgroundManager::repaintBackground()
+void KBackgroundManager::tqrepaintBackground()
 {
     if (m_pDesktop)
-       m_pDesktop->repaint();
+       m_pDesktop->tqrepaint();
     else
-        KApplication::desktop()->screen()->erase();
+        TQT_TQWIDGET(KApplication::desktop()->screen())->erase();
 }
 
 void KBackgroundManager::desktopResized()
@@ -955,7 +955,7 @@ void KBackgroundManager::desktopResized()
         m_pDesktop->resize( kapp->desktop()->geometry().size());
     // Repaint desktop
     slotChangeDesktop(0);
-    repaintBackground();
+    tqrepaintBackground();
 
     // Redraw all desktops so that applications relying on exported data, e.g. kpager, continue to work properly
     TQSize s(m_pKwinmodule->numberOfViewports(m_pKwinmodule->currentDesktop()));

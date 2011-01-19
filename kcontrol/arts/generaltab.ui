@@ -1,6 +1,6 @@
 <!DOCTYPE UI><UI version="3.3" stdsetdef="1">
 <class>generalTab</class>
-<widget class="QWidget">
+<widget class="TQWidget">
     <property name="name">
         <cstring>generalTab</cstring>
     </property>
@@ -12,7 +12,7 @@
             <height>613</height>
         </rect>
     </property>
-    <property name="minimumSize">
+    <property name="tqminimumSize">
         <size>
             <width>0</width>
             <height>450</height>
@@ -22,7 +22,7 @@
         <property name="name">
             <cstring>unnamed</cstring>
         </property>
-        <widget class="QCheckBox">
+        <widget class="TQCheckBox">
             <property name="name">
                 <cstring>startServer</cstring>
             </property>
@@ -42,7 +42,7 @@
 Recommended if you want sound.</string>
             </property>
         </widget>
-        <widget class="QFrame">
+        <widget class="TQFrame">
             <property name="name">
                 <cstring>frame3</cstring>
             </property>
@@ -53,7 +53,7 @@ Recommended if you want sound.</string>
                 <enum>Sunken</enum>
             </property>
         </widget>
-        <widget class="QGroupBox">
+        <widget class="TQGroupBox">
             <property name="name">
                 <cstring>networkedSoundGroupBox</cstring>
             </property>
@@ -75,7 +75,7 @@ Recommended if you want sound.</string>
                         <string>&lt;i&gt;Enable this option if you want to play sound on a remote computer or you want to be able to control sound on this system from another computer.&lt;/i&gt;</string>
                     </property>
                 </widget>
-                <widget class="QCheckBox">
+                <widget class="TQCheckBox">
                     <property name="name">
                         <cstring>networkTransparent</cstring>
                     </property>
@@ -88,7 +88,7 @@ Recommended if you want sound.</string>
                 </widget>
             </vbox>
         </widget>
-        <widget class="QGroupBox">
+        <widget class="TQGroupBox">
             <property name="name">
                 <cstring>realtimeGroupBox</cstring>
             </property>
@@ -107,7 +107,7 @@ Recommended if you want sound.</string>
                         <string>&lt;i&gt;If your sound is skipping during playback, enable running with highest possible priority. Increasing your sound buffer might also help.&lt;/i&gt;</string>
                     </property>
                 </widget>
-                <widget class="QCheckBox" row="1" column="0" rowspan="1" colspan="2">
+                <widget class="TQCheckBox" row="1" column="0" rowspan="1" colspan="2">
                     <property name="name">
                         <cstring>startRealtime</cstring>
                     </property>
@@ -121,7 +121,7 @@ Recommended if you want sound.</string>
                         <string>On systems which support realtime scheduling, if you have sufficient permissions, this option will enable a very high priority for processing sound requests.</string>
                     </property>
                 </widget>
-                <widget class="QSlider" row="2" column="1">
+                <widget class="TQSlider" row="2" column="1">
                     <property name="name">
                         <cstring>latencySlider</cstring>
                     </property>
@@ -144,7 +144,7 @@ Recommended if you want sound.</string>
                         <number>50</number>
                     </property>
                 </widget>
-                <widget class="QLabel" row="2" column="0">
+                <widget class="TQLabel" row="2" column="0">
                     <property name="name">
                         <cstring>textLabel5</cstring>
                     </property>
@@ -155,7 +155,7 @@ Recommended if you want sound.</string>
                         <cstring>latencySlider</cstring>
                     </property>
                 </widget>
-                <widget class="QLabel" row="3" column="1">
+                <widget class="TQLabel" row="3" column="1">
                     <property name="name">
                         <cstring>latencyLabel</cstring>
                     </property>
@@ -165,7 +165,7 @@ Recommended if you want sound.</string>
                 </widget>
             </grid>
         </widget>
-        <widget class="QGroupBox">
+        <widget class="TQGroupBox">
             <property name="name">
                 <cstring>autoSuspendGroupBox</cstring>
             </property>
@@ -184,7 +184,7 @@ Recommended if you want sound.</string>
                         <string>&lt;i&gt;The KDE sound system takes exclusive control over your audio hardware, blocking programs that may wish to use it directly. If the KDE sound system sits idle it can give up this exclusive control.&lt;/i&gt;</string>
                     </property>
                 </widget>
-                <widget class="QLayoutWidget">
+                <widget class="TQLayoutWidget">
                     <property name="name">
                         <cstring>layout7</cstring>
                     </property>
@@ -192,7 +192,7 @@ Recommended if you want sound.</string>
                         <property name="name">
                             <cstring>unnamed</cstring>
                         </property>
-                        <widget class="QCheckBox">
+                        <widget class="TQCheckBox">
                             <property name="name">
                                 <cstring>autoSuspend</cstring>
                             </property>
@@ -227,7 +227,7 @@ Recommended if you want sound.</string>
                             <property name="sizeType">
                                 <enum>Expanding</enum>
                             </property>
-                            <property name="sizeHint">
+                            <property name="tqsizeHint">
                                 <size>
                                     <width>173</width>
                                     <height>20</height>
@@ -238,7 +238,7 @@ Recommended if you want sound.</string>
                 </widget>
             </vbox>
         </widget>
-        <widget class="QLayoutWidget">
+        <widget class="TQLayoutWidget">
             <property name="name">
                 <cstring>layout3</cstring>
             </property>
@@ -256,14 +256,14 @@ Recommended if you want sound.</string>
                     <property name="sizeType">
                         <enum>Expanding</enum>
                     </property>
-                    <property name="sizeHint">
+                    <property name="tqsizeHint">
                         <size>
                             <width>40</width>
                             <height>20</height>
                         </size>
                     </property>
                 </spacer>
-                <widget class="QPushButton">
+                <widget class="TQPushButton">
                     <property name="name">
                         <cstring>testSound</cstring>
                     </property>
@@ -289,7 +289,7 @@ Recommended if you want sound.</string>
                     <property name="sizeType">
                         <enum>Expanding</enum>
                     </property>
-                    <property name="sizeHint">
+                    <property name="tqsizeHint">
                         <size>
                             <width>40</width>
                             <height>20</height>
@@ -308,7 +308,7 @@ Recommended if you want sound.</string>
             <property name="sizeType">
                 <enum>Expanding</enum>
             </property>
-            <property name="sizeHint">
+            <property name="tqsizeHint">
                 <size>
                     <width>20</width>
                     <height>0</height>

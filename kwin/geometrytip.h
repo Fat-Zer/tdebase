@@ -17,7 +17,7 @@ License. See the file "COPYING" for the exact licensing terms.
 namespace KWinInternal
 {
 
-class GeometryTip: public QLabel
+class GeometryTip: public TQLabel
     {
     Q_OBJECT
     public:
@@ -26,7 +26,7 @@ class GeometryTip: public QLabel
         void setGeometry( const TQRect& geom );
 
     private:
-        const XSizeHints* sizeHints;
+        const XSizeHints* tqsizeHints;
     };
 
 } // namespace

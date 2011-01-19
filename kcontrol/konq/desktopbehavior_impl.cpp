@@ -60,7 +60,7 @@ void DesktopBehaviorModule::changed()
     emit KCModule::changed( true );
 }
 
-class DesktopBehaviorPreviewItem : public QCheckListItem
+class DesktopBehaviorPreviewItem : public TQCheckListItem
 {
 public:
     DesktopBehaviorPreviewItem(DesktopBehavior *rootOpts, TQListView *parent,
@@ -90,7 +90,7 @@ private:
 };
 
 
-class DesktopBehaviorMediaItem : public QCheckListItem
+class DesktopBehaviorMediaItem : public TQCheckListItem
 {
 public:
     DesktopBehaviorMediaItem(DesktopBehavior *rootOpts, TQListView *parent,
@@ -124,7 +124,7 @@ DesktopBehavior::DesktopBehavior(KConfig *config, TQWidget *parent, const char *
    */
   bool leftHandedMouse = ( KGlobalSettings::mouseSettings().handed == KGlobalSettings::KMouseSettings::LeftHanded);
 
-  m_bHasMedia = KProtocolInfo::isKnownProtocol(TQString::fromLatin1("media"));
+  m_bHasMedia = KProtocolInfo::isKnownProtocol(TQString::tqfromLatin1("media"));
 
   connect(desktopMenuGroup, TQT_SIGNAL(clicked(int)), this, TQT_SIGNAL(changed()));
   connect(iconsEnabledBox, TQT_SIGNAL(clicked()), this, TQT_SLOT(enableChanged()));
@@ -144,8 +144,8 @@ DesktopBehavior::DesktopBehavior(KConfig *config, TQWidget *parent, const char *
 
   if ( leftHandedMouse )
   {
-     qSwap(strMouseButton1, strMouseButton3);
-     qSwap(strButtonTxt1, strButtonTxt3);
+     tqSwap(strMouseButton1, strMouseButton3);
+     tqSwap(strButtonTxt1, strButtonTxt3);
   }
 
   leftLabel->setText( strMouseButton1 );
@@ -259,7 +259,7 @@ void DesktopBehavior::fillMediaListView()
     for (; it2 != mimetypes.end(); ++it2) {
         if ( ((*it2)->name().startsWith("media/")) )
         {
-            bool ok=excludedMedia.contains((*it2)->name())==0;
+            bool ok=excludedMedia.tqcontains((*it2)->name())==0;
             new DesktopBehaviorMediaItem (this, mediaListView, (*it2)->comment(), (*it2)->name(),ok);
         }
     }
@@ -309,8 +309,8 @@ void DesktopBehavior::load( bool useDefaults )
     previewListView->clear();
     TQStringList previews = g_pConfig->readListEntry("Preview");
     for (KTrader::OfferList::ConstIterator it = plugins.begin(); it != plugins.end(); ++it)
-        new DesktopBehaviorPreviewItem(this, previewListView, *it, previews.contains((*it)->desktopEntryName()));
-    new DesktopBehaviorPreviewItem(this, previewListView, previews.contains("audio/"));
+        new DesktopBehaviorPreviewItem(this, previewListView, *it, previews.tqcontains((*it)->desktopEntryName()));
+    new DesktopBehaviorPreviewItem(this, previewListView, previews.tqcontains("audio/"));
     //
     g_pConfig->setGroup( "FMSettings" );
     toolTipBox->setChecked(g_pConfig->readBoolEntry( "ShowFileTips", true ) );

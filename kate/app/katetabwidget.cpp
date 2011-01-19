@@ -70,7 +70,7 @@ void KateTabWidget::insertTab ( TQWidget * child, const TQString & label, int in
   KTabWidget::insertTab(child,label,index);
   showPage(child);
   maybeShow();
-  tabBar()->repaint();
+  tabBar()->tqrepaint();
 }
 
 void KateTabWidget::insertTab ( TQWidget * child, const TQIconSet & iconset, const TQString & label, int index )
@@ -78,7 +78,7 @@ void KateTabWidget::insertTab ( TQWidget * child, const TQIconSet & iconset, con
   KTabWidget::insertTab(child,iconset,label,index);
   showPage(child);
   maybeShow();
-  tabBar()->repaint();
+  tabBar()->tqrepaint();
 }
 
 void KateTabWidget::insertTab ( TQWidget * child, TQTab * tab, int index)
@@ -86,7 +86,7 @@ void KateTabWidget::insertTab ( TQWidget * child, TQTab * tab, int index)
   KTabWidget::insertTab(child,tab,index);
   showPage(child);
   maybeShow();
-  tabBar()->repaint();
+  tabBar()->tqrepaint();
 }
 
 void KateTabWidget::removePage ( TQWidget * w )
@@ -132,18 +132,18 @@ void KateTabWidget::setCornerWidgetVisibility(bool visible)
 {
   // there are two corner widgets: on TopLeft and on TopTight!
 
-  if (cornerWidget(Qt::TopLeft) ) {
+  if (cornerWidget(TQt::TopLeft) ) {
     if (visible)
-      cornerWidget(Qt::TopLeft)->show();
+      cornerWidget(TQt::TopLeft)->show();
     else
-      cornerWidget(Qt::TopLeft)->hide();
+      cornerWidget(TQt::TopLeft)->hide();
   }
 
-  if (cornerWidget(Qt::TopRight) ) {
+  if (cornerWidget(TQt::TopRight) ) {
     if (visible)
-      cornerWidget(Qt::TopRight)->show();
+      cornerWidget(TQt::TopRight)->show();
     else
-      cornerWidget(Qt::TopRight)->hide();
+      cornerWidget(TQt::TopRight)->hide();
   }
 }
 

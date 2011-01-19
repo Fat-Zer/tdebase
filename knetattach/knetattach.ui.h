@@ -190,7 +190,7 @@ void KNetAttach::finished()
 	recent.setGroup("General");
 	TQStringList idx = recent.readListEntry("Index");
 	recent.deleteGroup(name); // erase anything stale
-	if (idx.contains(name)) {
+	if (idx.tqcontains(name)) {
 	    idx.remove(name);
 	    idx.prepend(name);
 	    recent.writeEntry("Index", idx);

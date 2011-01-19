@@ -24,15 +24,15 @@
 
 TQString defaultCommand(const TQString& cmd)
 {
-	QString	str(cmd);
-	QRegExp	r("%exe_(\\w+)");
+	TQString	str(cmd);
+	TQRegExp	r("%exe_(\\w+)");
 	int	p(-1);
 	if ((p=r.search(str)) != -1)
 	{
-		QString	exe = KStandardDirs::findExe(r.cap(1));
+		TQString	exe = KStandardDirs::findExe(r.cap(1));
 		if (exe.isEmpty())
 			exe = "/usr/bin/"+r.cap(1);
-		str.replace(p, r.matchedLength(), exe);
+		str.tqreplace(p, r.matchedLength(), exe);
 	}
 	return str;
 }

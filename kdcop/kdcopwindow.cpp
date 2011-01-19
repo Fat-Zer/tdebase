@@ -60,7 +60,7 @@ class DCOPBrowserFunctionItem;
 
 //------------------------------
 
-class KMultiIntEdit : public QVBox
+class KMultiIntEdit : public TQVBox
 {
 public:
 	KMultiIntEdit(TQWidget *parent , const char * name=0) : TQVBox(parent,name) {}
@@ -70,7 +70,7 @@ public:
 		new TQLabel(caption + ": ", l);
 		KLineEdit* e = new KLineEdit( l );
 		m_widgets.insert(key, e ) ;
-        	e->setValidator( new TQIntValidator( e ) );
+        	e->setValidator( new TQIntValidator( TQT_TQOBJECT(e) ) );
 	}
 	int field(int key)
 	{
@@ -114,7 +114,7 @@ DCOPBrowserApplicationItem::DCOPBrowserApplicationItem
 {
   setExpandable(true);
   setText(0, TQString::fromUtf8(app_));
-  setPixmap(0,  KGlobal::iconLoader()->loadIcon( TQString::fromLatin1( "exec" ), KIcon::Small ));
+  setPixmap(0,  KGlobal::iconLoader()->loadIcon( TQString::tqfromLatin1( "exec" ), KIcon::Small ));
 
 
 	/* Get the icon:  we use the icon from a mainwindow in that class.
@@ -157,7 +157,7 @@ DCOPBrowserApplicationItem::setOpen(bool o)
   void
 DCOPBrowserApplicationItem::populate()
 {
-  KApplication::setOverrideCursor(waitCursor);
+  KApplication::setOverrideCursor(tqwaitCursor);
 
   bool ok = false;
   bool isDefault = false;
@@ -202,7 +202,7 @@ void DCOPBrowserApplicationItem::retreiveIcon(int /*callId*/,const TQCString& /*
 	TQPixmap returnQPixmap;
 	reply >> returnQPixmap;
 	if(!returnQPixmap.isNull())
-		setPixmap(0, TQPixmap(returnQPixmap.convertToImage().smoothScale(16,16)) );
+		setPixmap(0, TQPixmap(TQImage(returnQPixmap.convertToImage()).smoothScale(16,16)) );
 	else
 		kdDebug() << "Unable to retreive the icon" << endl;
 }
@@ -240,7 +240,7 @@ DCOPBrowserInterfaceItem::setOpen(bool o)
   void
 DCOPBrowserInterfaceItem::populate()
 {
-  KApplication::setOverrideCursor(waitCursor);
+  KApplication::setOverrideCursor(tqwaitCursor);
 
   bool ok = false;
 
@@ -312,12 +312,12 @@ KDCOPWindow::KDCOPWindow(TQWidget *parent, const char * name)
 
 
   // set up the actions
-  KStdAction::quit( this, TQT_SLOT( close() ), actionCollection() );
-  KStdAction::copy( this, TQT_SLOT( slotCopy()), actionCollection() );
+  KStdAction::quit( TQT_TQOBJECT(this), TQT_SLOT( close() ), actionCollection() );
+  KStdAction::copy( TQT_TQOBJECT(this), TQT_SLOT( slotCopy()), actionCollection() );
   KStdAction::keyBindings( guiFactory(), TQT_SLOT( configureShortcuts() ), actionCollection() );
 
 
-  (void) new KAction( i18n( "&Reload" ), "reload", KStdAccel::shortcut(KStdAccel::Reload), this, TQT_SLOT( slotReload() ), actionCollection(), "reload" );
+  (void) new KAction( i18n( "&Reload" ), "reload", KStdAccel::shortcut(KStdAccel::Reload), TQT_TQOBJECT(this), TQT_SLOT( slotReload() ), actionCollection(), "reload" );
 
   exeaction =
     new KAction
@@ -325,7 +325,7 @@ KDCOPWindow::KDCOPWindow(TQWidget *parent, const char * name)
      i18n("&Execute"),
       "exec",
      CTRL + Key_E,
-     this,
+     TQT_TQOBJECT(this),
      TQT_SLOT(slotCallFunction()),
      actionCollection(),
      "execute"
@@ -336,7 +336,7 @@ KDCOPWindow::KDCOPWindow(TQWidget *parent, const char * name)
 
   langmode = new KSelectAction ( i18n("Language Mode"),
   		CTRL + Key_M,
-		this,
+		TQT_TQOBJECT(this),
 		TQT_SLOT(slotMode()),
 		actionCollection(),
 		"langmode");
@@ -424,7 +424,7 @@ void KDCOPWindow::slotCallFunction( TQListViewItem* it )
     TQString::null, KDialogBase::Ok|KDialogBase::Cancel, KDialogBase::Ok, true );
 
   mydialog.setCaption
-    ( i18n("Call Function %1").arg( fitem->function() ) );
+    ( i18n("Call Function %1").arg( static_cast<const char *>(fitem->function()) ) );
 
   TQFrame *frame = mydialog.makeMainWidget();
 
@@ -464,10 +464,10 @@ void KDCOPWindow::slotCallFunction( TQListViewItem* it )
         KLineEdit* e = new KLineEdit( frame );
         grid->addWidget( e, i, 2 );
         wl.append( e );
-        e->setValidator( new TQIntValidator( e ) );
+        e->setValidator( new TQIntValidator( TQT_TQOBJECT(e) ) );
       }
       else if ( type == "unsigned"  || type == "uint" || type == "unsigned int"
-             || type == "Q_UINT32" )
+             || type == "TQ_UINT32" )
       {
         TQLabel* n = new TQLabel( name, frame );
         grid->addWidget( n, i, 0 );
@@ -477,7 +477,7 @@ void KDCOPWindow::slotCallFunction( TQListViewItem* it )
         grid->addWidget( e, i, 2 );
         wl.append( e );
 
-        TQIntValidator* iv = new TQIntValidator( e );
+        TQIntValidator* iv = new TQIntValidator( TQT_TQOBJECT(e) );
         iv->setBottom( 0 );
         e->setValidator( iv );
       }
@@ -490,10 +490,10 @@ void KDCOPWindow::slotCallFunction( TQListViewItem* it )
         KLineEdit* e = new KLineEdit( frame );
         grid->addWidget( e, i, 2 );
         wl.append( e );
-        e->setValidator( new TQIntValidator( e ) );
+        e->setValidator( new TQIntValidator( TQT_TQOBJECT(e) ) );
       }
       else if ( type == "ulong" || type == "unsigned long" || type == "unsigned long int"
-             || type == "Q_UINT64" )
+             || type == "TQ_UINT64" )
       {
         TQLabel* n = new TQLabel( name, frame );
         grid->addWidget( n, i, 0 );
@@ -502,7 +502,7 @@ void KDCOPWindow::slotCallFunction( TQListViewItem* it )
         KLineEdit* e = new KLineEdit( frame );
         grid->addWidget( e, i, 2 );
         wl.append( e );
-        e->setValidator( new TQIntValidator( e ) );
+        e->setValidator( new TQIntValidator( TQT_TQOBJECT(e) ) );
       }
       else if ( type == "short" || type == "short int" )
       {
@@ -513,7 +513,7 @@ void KDCOPWindow::slotCallFunction( TQListViewItem* it )
         KLineEdit* e = new KLineEdit( frame );
         grid->addWidget( e, i, 2 );
         wl.append( e );
-        e->setValidator( new TQIntValidator( e ) );
+        e->setValidator( new TQIntValidator( TQT_TQOBJECT(e) ) );
       }
       else if ( type == "ushort" || type == "unsigned short" || type == "unsigned short int"  )
       {
@@ -524,7 +524,7 @@ void KDCOPWindow::slotCallFunction( TQListViewItem* it )
         KLineEdit* e = new KLineEdit( frame );
         grid->addWidget( e, i, 2 );
         wl.append( e );
-        e->setValidator( new TQIntValidator( e ) );
+        e->setValidator( new TQIntValidator( TQT_TQOBJECT(e) ) );
       }
       else if ( type == "float" )
       {
@@ -535,7 +535,7 @@ void KDCOPWindow::slotCallFunction( TQListViewItem* it )
         KLineEdit* e = new KLineEdit( frame );
         grid->addWidget( e, i, 2 );
         wl.append( e );
-        e->setValidator( new TQDoubleValidator( e ) );
+        e->setValidator( new TQDoubleValidator( TQT_TQOBJECT(e) ) );
       }
       else if ( type == "double" )
       {
@@ -546,7 +546,7 @@ void KDCOPWindow::slotCallFunction( TQListViewItem* it )
         KLineEdit* e = new KLineEdit( frame );
         grid->addWidget( e, i, 2 );
         wl.append( e );
-        e->setValidator( new TQDoubleValidator( e ) );
+        e->setValidator( new TQDoubleValidator( TQT_TQOBJECT(e) ) );
       }
       else if ( type == "bool" )
       {
@@ -697,7 +697,7 @@ void KDCOPWindow::slotCallFunction( TQListViewItem* it )
         arg << e->text().toInt();
       }
       else if ( type == "unsigned" || type == "uint" || type == "unsigned int"
-             || type == "Q_UINT32" )
+             || type == "TQ_UINT32" )
       {
         KLineEdit* e = (KLineEdit*)wl.at( i );
         arg << e->text().toUInt();
@@ -722,7 +722,7 @@ void KDCOPWindow::slotCallFunction( TQListViewItem* it )
         KLineEdit* e = (KLineEdit*)wl.at( i );
         arg << e->text().toUShort();
       }
-      else if ( type == "Q_UINT64" )
+      else if ( type == "TQ_UINT64" )
       {
         KLineEdit* e = ( KLineEdit* )wl.at( i );
         arg << e->text().toULongLong();
@@ -902,7 +902,7 @@ void KDCOPWindow::slotCallFunction( TQListViewItem* it )
 
 void KDCOPWindow::slotFillApplications()
 {
-  KApplication::setOverrideCursor(waitCursor);
+  KApplication::setOverrideCursor(tqwaitCursor);
 
   QCStringList apps = dcopClient->registeredApplications();
   TQCString appId = dcopClient->appId();
@@ -924,7 +924,7 @@ bool KDCOPWindow::demarshal
 (
  TQCString &   replyType,
  TQDataStream & reply,
- QListBox	*theList
+ TQListBox	*theList
 )
 {
   TQStringList ret;
@@ -936,7 +936,7 @@ bool KDCOPWindow::demarshal
   if ( replyType == "TQVariant" )
   {
     // read data type from stream
-    Q_INT32 type;
+    TQ_INT32 type;
     reply >> type;
 
     // change replyType to real typename
@@ -952,7 +952,7 @@ bool KDCOPWindow::demarshal
     ret << TQString::number(i);
   }
   else if ( replyType == "uint" || replyType == "unsigned int"
-         || replyType == "Q_UINT32" )
+         || replyType == "TQ_UINT32" )
   {
     uint i;
     reply >> i;
@@ -970,9 +970,9 @@ bool KDCOPWindow::demarshal
     reply >> l;
     ret << TQString::number(l);
   }
-  else if ( replyType == "Q_UINT64" )
+  else if ( replyType == "TQ_UINT64" )
   {
-    Q_UINT64 i;
+    TQ_UINT64 i;
     reply >> i;
     ret << TQString::number(i);
   }
@@ -1053,7 +1053,7 @@ bool KDCOPWindow::demarshal
 	TQCursor r;
 	reply >> r;
 	//theList->insertItem(r, 1);
-	ret << "Cursor #" + TQString::number(r.shape());
+	ret << "Cursor #" + TQString::number(r.tqshape());
   }
   else if (replyType == "TQPixmap")
   {
@@ -1093,7 +1093,7 @@ bool KDCOPWindow::demarshal
 	DCOPRef r;
 	reply >> r;
 	if (!r.app().isEmpty() && !r.obj().isEmpty())
-	  ret << TQString("DCOPRef(%1, %2)").arg(r.app(), r.obj());
+	  ret << TQString("DCOPRef(%1, %2)").arg(static_cast<const char *>(r.app()), static_cast<const char *>(r.obj()));
   }
   else
   {
@@ -1158,7 +1158,7 @@ KDCOPWindow::getParameters
 {
   TQString unNormalisedSignature(_unNormalisedSignature);
 
-  int s = unNormalisedSignature.find(' ');
+  int s = unNormalisedSignature.tqfind(' ');
 
   if ( s < 0 )
     s = 0;
@@ -1167,8 +1167,8 @@ KDCOPWindow::getParameters
 
   unNormalisedSignature = unNormalisedSignature.mid(s);
 
-  int left  = unNormalisedSignature.find('(');
-  int right = unNormalisedSignature.findRev(')');
+  int left  = unNormalisedSignature.tqfind('(');
+  int right = unNormalisedSignature.tqfindRev(')');
 
   if (-1 == left)
   {
@@ -1189,9 +1189,9 @@ KDCOPWindow::getParameters
     {
       (*it) = (*it).simplifyWhiteSpace();
 
-      int s = (*it).findRev(' ');
+      int s = (*it).tqfindRev(' ');
 
-      if (-1 != s && !intTypes.contains((*it).mid(s + 1)))
+      if (-1 != s && !intTypes.tqcontains((*it).mid(s + 1)))
       {
         names.append((*it).mid(s + 1));
 

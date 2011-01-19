@@ -23,7 +23,7 @@
             <property name="text">
                 <string>&lt;b&gt;Unable to contact the KDE smartcard service.&lt;/b&gt;</string>
             </property>
-            <property name="alignment">
+            <property name="tqalignment">
                 <set>WordBreak|AlignVCenter</set>
             </property>
         </widget>
@@ -48,7 +48,7 @@
 
 2) You don't appear to have smartcard support in the KDE libraries. You will need to recompile the kdelibs package with libpcsclite installed.</string>
                     </property>
-                    <property name="alignment">
+                    <property name="tqalignment">
                         <set>WordBreak|AlignVCenter</set>
                     </property>
                 </widget>
@@ -64,7 +64,7 @@
             <property name="sizeType">
                 <enum>Expanding</enum>
             </property>
-            <property name="sizeHint">
+            <property name="tqsizeHint">
                 <size>
                     <width>20</width>
                     <height>20</height>

@@ -62,7 +62,7 @@ TaskContainer::TaskContainer(Task::Ptr task, TaskBar* bar,
       lastActivated(0),
       m_menu(0),
       m_startup(0),
-      arrowType(Qt::UpArrow),
+      arrowType(TQt::UpArrow),
       taskBar(bar),
       discardNextMouseEvent(false),
       aboutToActivate(false),
@@ -94,7 +94,7 @@ TaskContainer::TaskContainer(Startup::Ptr startup, PixmapList& startupFrames,
       lastActivated(0),
       m_menu(0),
       m_startup(startup),
-      arrowType(Qt::LeftArrow),
+      arrowType(TQt::LeftArrow),
       taskBar(bar),
       discardNextMouseEvent(false),
       aboutToActivate(false),
@@ -167,7 +167,7 @@ void TaskContainer::taskChanged(bool geometryOnlyChange)
         return;
     }
 
-    const TQObject* source = sender();
+    const TQObject* source = TQT_TQOBJECT_CONST(sender());
     Task::Ptr task = 0;
     Task::List::const_iterator itEnd = tasks.constEnd();
     for (Task::List::const_iterator it = tasks.constBegin(); it != itEnd; ++it)
@@ -190,7 +190,7 @@ void TaskContainer::taskChanged(bool geometryOnlyChange)
 
 void TaskContainer::iconChanged()
 {
-    const TQObject* source = sender();
+    const TQObject* source = TQT_TQOBJECT_CONST(sender());
     Task::Ptr task = 0;
     Task::List::const_iterator itEnd = tasks.constEnd();
     for (Task::List::const_iterator it = tasks.constBegin(); it != itEnd; ++it)
@@ -314,8 +314,8 @@ TQSizePolicy TaskContainer::sizePolicy() const
 void TaskContainer::resizeEvent( TQResizeEvent * )
 {
     // calculate the icon rect
-    TQRect br( style().subRect( TQStyle::SR_PushButtonContents, this ) );
-    iconRect = TQStyle::visualRect( TQRect(br.x() + 2, (height() - 16) / 2, 16, 16), this );
+    TQRect br( tqstyle().subRect( TQStyle::SR_PushButtonContents, this ) );
+    iconRect = TQStyle::tqvisualRect( TQRect(br.x() + 2, (height() - 16) / 2, 16, 16), this );
 }
 
 void TaskContainer::add(Task::Ptr task)
@@ -390,7 +390,7 @@ void TaskContainer::remove(Startup::Ptr startup)
     }
 }
 
-bool TaskContainer::contains(Task::Ptr task)
+bool TaskContainer::tqcontains(Task::Ptr task)
 {
     if (!task)
     {
@@ -408,12 +408,12 @@ bool TaskContainer::contains(Task::Ptr task)
     return false;
 }
 
-bool TaskContainer::contains(Startup::Ptr startup)
+bool TaskContainer::tqcontains(Startup::Ptr startup)
 {
     return startup && (m_startup == startup);
 }
 
-bool TaskContainer::contains(WId win)
+bool TaskContainer::tqcontains(WId win)
 {
     Task::List::iterator itEnd = tasks.end();
     for (Task::List::iterator it = tasks.begin(); it != itEnd; ++it)
@@ -477,7 +477,7 @@ void TaskContainer::paintEvent( TQPaintEvent* )
     }
 
     TQPainter p;
-    p.begin(pm ,this);
+    p.tqbegin(pm ,this);
     drawButton(&p);
     p.end();
 
@@ -530,7 +530,7 @@ void TaskContainer::drawButton(TQPainter *p)
 
     font.setBold(active);
 
-    TQColorGroup colors = palette().active();
+    TQColorGroup colors = tqpalette().active();
     
     if (TaskBarSettings::useCustomColors())
     {
@@ -579,14 +579,14 @@ void TaskContainer::drawButton(TQPainter *p)
 
     bool sunken = isDown() || (alwaysDrawButtons && (active || aboutToActivate));
     bool reverse = TQApplication::reverseLayout();
-    TQRect br(style().subRect(TQStyle::SR_PushButtonContents, this));
-    TQPoint shift = TQPoint(style().pixelMetric(TQStyle::PM_ButtonShiftHorizontal),
-                          style().pixelMetric(TQStyle::PM_ButtonShiftVertical));
+    TQRect br(tqstyle().subRect(TQStyle::SR_PushButtonContents, this));
+    TQPoint shift = TQPoint(tqstyle().tqpixelMetric(TQStyle::PM_ButtonShiftHorizontal),
+                          tqstyle().tqpixelMetric(TQStyle::PM_ButtonShiftVertical));
 
     // draw button background
     if (drawButton)
     {
-        style().drawPrimitive(TQStyle::PE_HeaderSection, p,
+        tqstyle().tqdrawPrimitive(TQStyle::PE_HeaderSection, p,
                               TQRect(0, 0, width(), height()),
                               colors);
     }
@@ -631,7 +631,7 @@ void TaskContainer::drawButton(TQPainter *p)
 
     // modified overlay
     static TQString modStr = "[" + i18n( "modified" ) + "]";
-    int modStrPos = text.find( modStr );
+    int modStrPos = text.tqfind( modStr );
     int textPos = ( taskBar->showIcon() && (!pixmap.isNull() || m_startup)) ? 2 + 16 + 2 : 0;
 
     if (modStrPos >= 0)
@@ -643,7 +643,7 @@ void TaskContainer::drawButton(TQPainter *p)
         // draw modified overlay
         if (!modPixmap.isNull())
         {
-            TQRect r = TQStyle::visualRect(TQRect(br.x() + textPos,
+            TQRect r = TQStyle::tqvisualRect(TQRect(br.x() + textPos,
                                                (height() - 16) / 2, 16, 16),
                                          this);
 
@@ -660,7 +660,7 @@ void TaskContainer::drawButton(TQPainter *p)
     // draw text
     if (!text.isEmpty())
     {
-        TQRect tr = TQStyle::visualRect(TQRect(br.x() + textPos + 1, 0,
+        TQRect tr = TQStyle::tqvisualRect(TQRect(br.x() + textPos + 1, 0,
                                             width() - textPos, height()),
                                       this);
         int textFlags = AlignVCenter | SingleLine;
@@ -772,19 +772,19 @@ void TaskContainer::drawButton(TQPainter *p)
         }
 
         int flags = TQStyle::Style_Enabled;
-        TQRect ar = TQStyle::visualRect(TQRect(br.x() + br.width() - 8 - 2,
+        TQRect ar = TQStyle::tqvisualRect(TQRect(br.x() + br.width() - 8 - 2,
                                             br.y(), 8, br.height()), this);
         if (sunken)
         {
             flags |= TQStyle::Style_Down;
         }
 
-        style().drawPrimitive(e, p, ar, colors, flags);
+        tqstyle().tqdrawPrimitive(e, p, ar, colors, flags);
     }
     
     // draw mouse over frame in transparent mode
     if (m_mouseOver && halo)
-        KickerLib::drawBlendedRect(p, TQRect(0, 0, width(), height()), colorGroup().foreground());
+        KickerLib::drawBlendedRect(p, TQRect(0, 0, width(), height()), tqcolorGroup().foreground());
 
     if (aboutToActivate)
     {
@@ -815,13 +815,13 @@ TQString TaskContainer::name()
         // in common, and then use everything UP TO that as the name in the button
         while (i < maxLength)
         {
-            TQChar check = match.at(i).lower();
+            TQChar check = match.tqat(i).lower();
             Task::List::iterator itEnd = m_filteredTasks.end();
             for (Task::List::iterator it = m_filteredTasks.begin(); it != itEnd; ++it)
             {
                 // we're doing a lot of Utf8 -> TQString conversions here
                 // by repeatedly calling visibleIconicName() =/
-                if (check != (*it)->visibleName().at(i).lower())
+                if (check != (*it)->visibleName().tqat(i).lower())
                 {
                     if (i > 0)
                     {
@@ -886,7 +886,7 @@ void TaskContainer::mousePressEvent( TQMouseEvent* e )
         return;
     }
 
-    if (e->button() == LeftButton)
+    if (e->button() == Qt::LeftButton)
     {
         m_dragStartPos = e->pos();
     }
@@ -901,13 +901,13 @@ void TaskContainer::mousePressEvent( TQMouseEvent* e )
     // Other actions will be handled in mouseReleaseEvent
     switch (e->button())
     {
-        case LeftButton:
+        case Qt::LeftButton:
             buttonAction = TaskBarSettings::action(TaskBarSettings::LeftButton);
             break;
-        case MidButton:
+        case Qt::MidButton:
             buttonAction = TaskBarSettings::action(TaskBarSettings::MiddleButton);
             break;
-        case RightButton:
+        case Qt::RightButton:
         default:
             buttonAction = TaskBarSettings::action(TaskBarSettings::RightButton);
             break;
@@ -932,7 +932,7 @@ void TaskContainer::mouseReleaseEvent(TQMouseEvent *e)
 
     // This is to avoid the flicker caused by redrawing the
     // button as unpressed just before it's activated.
-    if (!rect().contains(e->pos()))
+    if (!TQT_TQRECT_OBJECT(rect()).tqcontains(e->pos()))
     {
         TQToolButton::mouseReleaseEvent(e);
         return;
@@ -942,13 +942,13 @@ void TaskContainer::mouseReleaseEvent(TQMouseEvent *e)
 
     switch (e->button())
     {
-        case LeftButton:
+        case Qt::LeftButton:
             buttonAction = TaskBarSettings::action(TaskBarSettings::LeftButton);
             break;
-        case MidButton:
+        case Qt::MidButton:
             buttonAction = TaskBarSettings::action(TaskBarSettings::MiddleButton);
             break;
-        case RightButton:
+        case Qt::RightButton:
         default:
             buttonAction = TaskBarSettings::action(TaskBarSettings::RightButton);
             break;
@@ -1146,17 +1146,17 @@ void TaskContainer::popupMenu(int action)
             pos.setX(pos.x() + width());
             break;
         case LeftArrow:
-            pos.setX(pos.x() - m_menu->sizeHint().width());
+            pos.setX(pos.x() - m_menu->tqsizeHint().width());
             break;
         case DownArrow:
             if ( TQApplication::reverseLayout() )
-                pos.setX( pos.x() + width() - m_menu->sizeHint().width() );
+                pos.setX( pos.x() + width() - m_menu->tqsizeHint().width() );
             pos.setY( pos.y() + height() );
             break;
         case UpArrow:
             if ( TQApplication::reverseLayout() )
-                pos.setX( pos.x() + width() - m_menu->sizeHint().width() );
-            pos.setY(pos.y() - m_menu->sizeHint().height());
+                pos.setX( pos.x() + width() - m_menu->tqsizeHint().width() );
+            pos.setY(pos.y() - m_menu->tqsizeHint().height());
             break;
         default:
             break;
@@ -1228,7 +1228,7 @@ bool TaskContainer::eventFilter(TQObject *o, TQEvent *e)
             if ( TQApplication::widgetAt( p, true ) == this )
             {
                 if (me->type() == TQEvent::MouseButtonPress &&
-                    me->button() == LeftButton)
+                    me->button() == Qt::LeftButton)
                 {
                     m_dragStartPos = mapFromGlobal(p);
                 }
@@ -1246,10 +1246,10 @@ bool TaskContainer::eventFilter(TQObject *o, TQEvent *e)
         {
             if (!m_dragStartPos.isNull())
             {
-                TQMouseEvent* me = static_cast<TQMouseEvent*>(e);
+                TQMouseEvent* me = TQT_TQMOUSEEVENT(e);
                 TQPoint p(me->globalPos());
 
-                if (me->state() & LeftButton &&
+                if (me->state() & Qt::LeftButton &&
                     TQApplication::widgetAt(p, true) == this)
                 {
                     kdDebug() << "event move" << endl;
@@ -1274,7 +1274,7 @@ bool TaskContainer::eventFilter(TQObject *o, TQEvent *e)
     return TQToolButton::eventFilter( o, e );
 }
 
-void TaskContainer::setArrowType( Qt::ArrowType at )
+void TaskContainer::setArrowType( TQt::ArrowType at )
 {
     if (arrowType == at)
     {
@@ -1611,7 +1611,7 @@ void TaskContainer::updateKickerTip(KickerTip::Data& data)
             details.append(i18n("Has unsaved changes"));
     
             static TQString modStr = "[" + i18n( "modified" ) + "]";
-            int modStrPos = name.find(modStr);
+            int modStrPos = name.tqfind(modStr);
     
             if (modStrPos >= 0)
             {

@@ -111,7 +111,7 @@ class KAccelAction
 
 	bool setKeySequence( uint i, const KKeySequence& );
 	void clearShortcut();
-	bool contains( const KKeySequence& );
+	bool tqcontains( const KKeySequence& );
 
 	TQString toString() const;
 	TQString toStringInternal() const;

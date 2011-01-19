@@ -30,7 +30,7 @@
 #include "policydlg_ui.h"
 
 
-class DomainLineValidator : public QValidator
+class DomainLineValidator : public TQValidator
 {
 public:
   DomainLineValidator(TQObject *parent)
@@ -63,14 +63,14 @@ PolicyDlg::PolicyDlg (const TQString& caption, TQWidget *parent,
   m_dlgUI = new PolicyDlgUI (this);
   setMainWidget(m_dlgUI);
 
-  m_dlgUI->leDomain->setValidator(new DomainLineValidator(m_dlgUI->leDomain));
+  m_dlgUI->leDomain->setValidator(new DomainLineValidator(TQT_TQOBJECT(m_dlgUI->leDomain)));
   m_dlgUI->cbPolicy->setMinimumWidth( m_dlgUI->cbPolicy->fontMetrics().maxWidth() * 25 );
   
   enableButtonOK( false );
   connect(m_dlgUI->leDomain, TQT_SIGNAL(textChanged(const TQString&)),
     TQT_SLOT(slotTextChanged(const TQString&)));
 
-  setFixedSize (sizeHint());
+  setFixedSize (tqsizeHint());
   m_dlgUI->leDomain->setFocus ();
 }
 

@@ -17,7 +17,7 @@ class TQFileInfo;
 class KPopupMenu;
 class KfindWindow;
 
-class KfFileLVI : public QListViewItem
+class KfFileLVI : public TQListViewItem
 {
  public:
   KfFileLVI(KfindWindow* lv, const KFileItem &item,const TQString& matchingLine);

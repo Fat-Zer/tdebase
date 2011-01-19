@@ -25,7 +25,7 @@ class KProgress;
 
 /** @short Window displaying status and progress bar. */
 class WndStatus:
-      public QHBox
+      public TQHBox
 {
   Q_OBJECT
 public:

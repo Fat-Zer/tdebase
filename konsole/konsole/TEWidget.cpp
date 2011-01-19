@@ -144,7 +144,7 @@ static const ColorEntry base_color_table[TABLE_COLORS] =
 void TEWidget::setDefaultBackColor(const TQColor& color)
 {
   defaultBgColor = color;
-  if (qAlpha(blend_color) != 0xff && !backgroundPixmap())
+  if (tqAlpha(blend_color) != 0xff && !backgroundPixmap())
     setBackgroundColor(getDefaultBackColor());
 }
 
@@ -165,14 +165,14 @@ void TEWidget::setColorTable(const ColorEntry table[])
   for (int i = 0; i < TABLE_COLORS; i++) color_table[i] = table[i];
   const TQPixmap* pm = backgroundPixmap();
   if (!pm)
-    if (!argb_visual || (qAlpha(blend_color) == 0xff))
+    if (!argb_visual || (tqAlpha(blend_color) == 0xff))
       setBackgroundColor(getDefaultBackColor());
     else {
-      float alpha = qAlpha(blend_color) / 255.;
-      int pixel = qAlpha(blend_color) << 24 |
-                  int(qRed(blend_color) * alpha) << 16 |
-                  int(qGreen(blend_color) * alpha) << 8  |
-                  int(qBlue(blend_color) * alpha);
+      float alpha = tqAlpha(blend_color) / 255.;
+      int pixel = tqAlpha(blend_color) << 24 |
+                  int(tqRed(blend_color) * alpha) << 16 |
+                  int(tqGreen(blend_color) * alpha) << 8  |
+                  int(tqBlue(blend_color) * alpha);
       setBackgroundColor(TQColor(blend_color, pixel));
     }
   update();
@@ -191,14 +191,14 @@ void TEWidget::setColorTable(const ColorEntry table[])
    xterm fonts have these at 0x00..0x1f.
 
    QT's iso mapping leaves 0x00..0x7f without any changes. But the graphicals
-   come in here as proper unicode characters.
+   come in here as proper tqunicode characters.
 
    We treat non-iso10646 fonts as VT100 extended and do the requiered mapping
-   from unicode to 0x00..0x1f. The remaining translation is then left to the
+   from tqunicode to 0x00..0x1f. The remaining translation is then left to the
    QCodec.
 */
 
-static inline bool isLineChar(Q_UINT16 c) { return ((c & 0xFF80) == 0x2500);}
+static inline bool isLineChar(TQ_UINT16 c) { return ((c & 0xFF80) == 0x2500);}
 
 // assert for i in [0..31] : vt100extended(vt100_graphics[i]) == i.
 
@@ -213,7 +213,7 @@ unsigned short vt100_graphics[32] =
 /*
 static TQChar vt100extended(TQChar c)
 {
-  switch (c.unicode())
+  switch (c.tqunicode())
   {
     case 0x25c6 : return  1;
     case 0x2592 : return  2;
@@ -265,7 +265,7 @@ void TEWidget::fontChange(const TQFont &)
   // "Base character width on widest ASCII character. This prevents too wide
   //  characters in the presence of double wide (e.g. Japanese) characters."
   // Get the width from representative normal width characters
-  font_w = qRound((double)fm.width(REPCHAR)/(double)strlen(REPCHAR));
+  font_w = tqRound((double)fm.width(REPCHAR)/(double)strlen(REPCHAR));
 
   fixed_font = true;
   int fw = fm.width(REPCHAR[0]);
@@ -382,7 +382,7 @@ TEWidget::TEWidget(TQWidget *parent, const char *name)
 ,m_cursorCol(0)
 ,m_isIMEdit(false)
 ,m_isIMSel(false)
-,blend_color(qRgba(0,0,0,0xff))
+,blend_color(tqRgba(0,0,0,0xff))
 {
   // The offsets are not yet calculated.
   // Do not calculate these too often to be more smoothly when resizing
@@ -394,7 +394,7 @@ TEWidget::TEWidget(TQWidget *parent, const char *name)
                     this, TQT_SLOT(onClearSelection()) );
 
   scrollbar = new TQScrollBar(this);
-  scrollbar->setCursor( arrowCursor );
+  scrollbar->setCursor( tqarrowCursor );
   connect(scrollbar, TQT_SIGNAL(valueChanged(int)), this, TQT_SLOT(scrollChanged(int)));
 
   blinkT   = new TQTimer(this);
@@ -405,14 +405,14 @@ TEWidget::TEWidget(TQWidget *parent, const char *name)
   setMouseMarks(true);
   setColorTable(base_color_table); // init color table
 
-  qApp->installEventFilter( this ); //FIXME: see below
+  tqApp->installEventFilter( this ); //FIXME: see below
   KCursor::setAutoHideCursor( this, true );
 
   // Init DnD ////////////////////////////////////////////////////////////////
   setAcceptDrops(true); // attempt
   dragInfo.state = diNone;
 
-  setFocusPolicy( WheelFocus );
+  setFocusPolicy( TQ_WheelFocus );
 
   // im
   setInputMethodEnabled(true);
@@ -428,7 +428,7 @@ TEWidget::TEWidget(TQWidget *parent, const char *name)
 // Here's a start (David)
 TEWidget::~TEWidget()
 {
-  qApp->removeEventFilter( this );
+  tqApp->removeEventFilter( this );
   if (image) free(image);
 }
 
@@ -439,7 +439,7 @@ TEWidget::~TEWidget()
 /* ------------------------------------------------------------------------- */
 
 /**
- A table for emulating the simple (single width) unicode drawing chars.
+ A table for emulating the simple (single width) tqunicode drawing chars.
  It represents the 250x - 257x glyphs. If it's zero, we can't use it.
  if it's not, it's encoded as follows: imagine a 5x5 grid where the points are numbered
  0 to 24 left to top, top to bottom. Each point is represented by the corresponding bit.
@@ -496,7 +496,7 @@ static void drawLineChar(TQPainter& paint, int x, int y, int w, int h, uchar cod
     int ex = x + w - 1;
     int ey = y + h - 1;
 
-    Q_UINT32 toDraw = LineChars[code];
+    TQ_UINT32 toDraw = LineChars[code];
 
     //Top lines:
     if (toDraw & TopL)
@@ -576,7 +576,7 @@ void TEWidget::drawTextFixed(TQPainter &paint, int x, int y,
     }
 
     //Check for line-drawing char
-    if (isLineChar(drawstr[0].unicode()))
+    if (isLineChar(drawstr[0].tqunicode()))
     {
         uchar code = drawstr[0].cell();
         if (LineChars[code])
@@ -587,7 +587,7 @@ void TEWidget::drawTextFixed(TQPainter &paint, int x, int y,
         }
     }
 
-    paint.drawText(x,y, w, font_h, Qt::AlignHCenter | Qt::DontClip, drawstr, -1);
+    paint.drawText(x,y, w, font_h, Qt::AlignHCenter | TQt::DontClip, drawstr, -1);
     x += w;
   }
 }
@@ -614,7 +614,7 @@ void TEWidget::drawAttrStr(TQPainter &paint, TQRect rect,
     if (attr->isTransparent(color_table))
     {
       if (pm)
-        paint.setBackgroundMode( TransparentMode );
+        paint.setBackgroundMode( Qt::TransparentMode );
       if (clear || (blinking && (attr->r & RE_BLINK)))
         erase(rect);
     }
@@ -624,17 +624,17 @@ void TEWidget::drawAttrStr(TQPainter &paint, TQRect rect,
           attr->b == cacol(CO_DFT, colorsSwapped ? DEFAULT_FORE_COLOR : DEFAULT_BACK_COLOR) )
 
         // draw background colors with 75% opacity
-        if ( argb_visual && qAlpha(blend_color) < 0xff ) {
+        if ( argb_visual && tqAlpha(blend_color) < 0xff ) {
           QRgb col = bColor.rgb();
 
-          Q_UINT8 salpha = 192;
-          Q_UINT8 dalpha = 255 - salpha;
+          TQ_UINT8 salpha = 192;
+          TQ_UINT8 dalpha = 255 - salpha;
 
           int a, r, g, b;
-          a = QMIN( (qAlpha (col) * salpha) / 255 + (qAlpha (blend_color) * dalpha) / 255, 255 );
-          r = QMIN( (qRed   (col) * salpha) / 255 + (qRed   (blend_color) * dalpha) / 255, 255 );
-          g = QMIN( (qGreen (col) * salpha) / 255 + (qGreen (blend_color) * dalpha) / 255, 255 );
-          b = QMIN( (qBlue  (col) * salpha) / 255 + (qBlue  (blend_color) * dalpha) / 255, 255 );
+          a = QMIN( (tqAlpha (col) * salpha) / 255 + (tqAlpha (blend_color) * dalpha) / 255, 255 );
+          r = QMIN( (tqRed   (col) * salpha) / 255 + (tqRed   (blend_color) * dalpha) / 255, 255 );
+          g = QMIN( (tqGreen (col) * salpha) / 255 + (tqGreen (blend_color) * dalpha) / 255, 255 );
+          b = QMIN( (tqBlue  (col) * salpha) / 255 + (tqBlue  (blend_color) * dalpha) / 255, 255 );
 
           col = a << 24 | r << 16 | g << 8 | b;
           int pixel = a << 24 | (r * a / 255) << 16 | (g * a / 255) << 8 | (b * a / 255);
@@ -673,7 +673,7 @@ void TEWidget::drawAttrStr(TQPainter &paint, TQRect rect,
 
   // Paint cursor
   if ((attr->r & RE_CURSOR) && !isPrinting) {
-    paint.setBackgroundMode( TransparentMode );
+    paint.setBackgroundMode( Qt::TransparentMode );
     int h = font_h - m_lineSpacing;
     TQRect r(rect.x(),rect.y()+m_lineSpacing/2,rect.width(),h);
     if (hasFocus())
@@ -695,8 +695,8 @@ void TEWidget::drawAttrStr(TQPainter &paint, TQRect rect,
   {
     // ### Disabled for now, since it causes problems with characters
     // that use the full width and/or height of the character cells.
-    //bool shadow = ( !isPrinting && qAlpha(blend_color) < 0xff
-    //		    && qGray( fColor.rgb() ) > 64 );
+    //bool shadow = ( !isPrinting && tqAlpha(blend_color) < 0xff
+    //		    && tqGray( fColor.rgb() ) > 64 );
     bool shadow = false;
     paint.setPen(fColor);
     int x = rect.x();
@@ -747,7 +747,7 @@ void TEWidget::drawAttrStr(TQPainter &paint, TQRect rect,
     {
       paint.setClipRect(rect);
       // On screen we use overstrike for bold
-      paint.setBackgroundMode( TransparentMode );
+      paint.setBackgroundMode( Qt::TransparentMode );
       int x = rect.x()+1;
       if(!fixed_font)
       {
@@ -819,9 +819,9 @@ void TEWidget::setImage(const ca* const newimg, int lines, int columns)
   cacol cb;       // undefined
   int   cr  = -1; // undefined
 
-  int lins = QMIN(this->lines,  QMAX(0,lines  ));
-  int cols = QMIN(this->columns,QMAX(0,columns));
-  TQChar *disstrU = new QChar[cols];
+  int lins = TQMIN(this->lines,  TQMAX(0,lines  ));
+  int cols = TQMIN(this->columns,TQMAX(0,columns));
+  TQChar *disstrU = new TQChar[cols];
   char *dirtyMask = (char *) malloc(cols+2);
 
 //{ static int cnt = 0; printf("setImage %d\n",cnt++); }
@@ -830,7 +830,7 @@ void TEWidget::setImage(const ca* const newimg, int lines, int columns)
     const ca*       lcl = &image[y*this->columns];
     const ca* const ext = &newimg[y*columns];
 
-    // The dirty mask indicates which characters need repainting. We also
+    // The dirty mask indicates which characters need tqrepainting. We also
     // mark surrounding neighbours dirty, in case the character exceeds
     // its cell boundaries
     memset(dirtyMask, 0, cols+2);
@@ -856,7 +856,7 @@ void TEWidget::setImage(const ca* const newimg, int lines, int columns)
       // where characters exceed their cell width.
       if (dirtyMask[x])
       {
-        Q_UINT16 c = ext[x+0].c;
+        TQ_UINT16 c = ext[x+0].c;
         if ( !c )
             continue;
         int p = 0;
@@ -947,7 +947,7 @@ void TEWidget::setImage(const ca* const newimg, int lines, int columns)
         mResizeLabel = new TQLabel(i18n("Size: XXX x XXX"), mResizeWidget);
         l->addWidget(mResizeLabel, 1, AlignCenter);
         mResizeWidget->setMinimumWidth(mResizeLabel->fontMetrics().width(i18n("Size: XXX x XXX"))+20);
-        mResizeWidget->setMinimumHeight(mResizeLabel->sizeHint().height()+20);
+        mResizeWidget->setMinimumHeight(mResizeLabel->tqsizeHint().height()+20);
         mResizeTimer = new TQTimer(this);
         connect(mResizeTimer, TQT_SIGNAL(timeout()), mResizeWidget, TQT_SLOT(hide()));
      }
@@ -988,7 +988,7 @@ void TEWidget::paintEvent( TQPaintEvent* pe )
   TQPainter paint;
   setUpdatesEnabled(false);
   paint.begin( this );
-  paint.setBackgroundMode( TransparentMode );
+  paint.setBackgroundMode( Qt::TransparentMode );
 
   // Note that the actual widget size can be slightly larger
   // that the image (the size is truncated towards the smaller
@@ -1065,7 +1065,7 @@ void TEWidget::print(TQPainter &paint, bool friendly, bool exact)
      pm.fill();
 
      TQPainter pm_paint;
-     pm_paint.begin(&pm, this);
+     pm_paint.tqbegin(&pm, TQT_TQWIDGET(this));
      paintContents(pm_paint, contentsRect(), true);
      pm_paint.end();
      paint.drawPixmap(0, 0, pm);
@@ -1089,15 +1089,15 @@ void TEWidget::paintContents(TQPainter &paint, const TQRect &rect, bool pm)
   int    tLx = tL.x();
   int    tLy = tL.y();
 
-  int lux = QMIN(columns-1, QMAX(0,(rect.left()   - tLx - bX ) / font_w));
-  int luy = QMIN(lines-1,   QMAX(0,(rect.top()    - tLy - bY  ) / font_h));
-  int rlx = QMIN(columns-1, QMAX(0,(rect.right()  - tLx - bX ) / font_w));
-  int rly = QMIN(lines-1,   QMAX(0,(rect.bottom() - tLy - bY  ) / font_h));
+  int lux = TQMIN(columns-1, TQMAX(0,(rect.left()   - tLx - bX ) / font_w));
+  int luy = TQMIN(lines-1,   TQMAX(0,(rect.top()    - tLy - bY  ) / font_h));
+  int rlx = TQMIN(columns-1, TQMAX(0,(rect.right()  - tLx - bX ) / font_w));
+  int rly = TQMIN(lines-1,   TQMAX(0,(rect.bottom() - tLy - bY  ) / font_h));
 
-  TQChar *disstrU = new QChar[columns];
+  TQChar *disstrU = new TQChar[columns];
   for (int y = luy; y <= rly; y++)
   {
-    Q_UINT16 c = image[loc(lux,y)].c;
+    TQ_UINT16 c = image[loc(lux,y)].c;
     int x = lux;
     if(!c && x)
       x--; // Search for start of multi-col char
@@ -1152,14 +1152,14 @@ void TEWidget::blinkEvent()
 {
   blinking = !blinking;
   isBlinkEvent = true;
-  repaint(false);
+  tqrepaint(false);
   isBlinkEvent = false;
 }
 
 void TEWidget::blinkCursorEvent()
 {
   cursorBlinking = !cursorBlinking;
-  repaint(cursorRect, true);
+  tqrepaint(cursorRect, true);
 }
 
 /* ------------------------------------------------------------------------- */
@@ -1178,9 +1178,9 @@ void TEWidget::propagateSize()
   if (isFixedSize)
   {
      setSize(columns, lines);
-     TQFrame::setFixedSize(sizeHint());
-     parentWidget()->adjustSize();
-     parentWidget()->setFixedSize(parentWidget()->sizeHint());
+     TQFrame::setFixedSize(tqsizeHint());
+     tqparentWidget()->adjustSize();
+     tqparentWidget()->setFixedSize(tqparentWidget()->tqsizeHint());
      return;
   }
   if (image)
@@ -1283,12 +1283,12 @@ void TEWidget::mousePressEvent(TQMouseEvent* ev)
 {
 //printf("press [%d,%d] %d\n",ev->x()/font_w,ev->y()/font_h,ev->button());
 
-  if ( possibleTripleClick && (ev->button()==LeftButton) ) {
+  if ( possibleTripleClick && (ev->button()==Qt::LeftButton) ) {
     mouseTripleClickEvent(ev);
     return;
   }
 
-  if ( !contentsRect().contains(ev->pos()) ) return;
+  if ( !contentsRect().tqcontains(ev->pos()) ) return;
   TQPoint tL  = contentsRect().topLeft();
   int    tLx = tL.x();
   int    tLy = tL.y();
@@ -1296,7 +1296,7 @@ void TEWidget::mousePressEvent(TQMouseEvent* ev)
   TQPoint pos = TQPoint((ev->x()-tLx-bX+(font_w/2))/font_w,(ev->y()-tLy-bY)/font_h);
 
 //printf("press top left [%d,%d] by=%d\n",tLx,tLy, bY);
-  if ( ev->button() == LeftButton)
+  if ( ev->button() == Qt::LeftButton)
   {
     line_selection_mode = false;
     word_selection_mode = false;
@@ -1333,14 +1333,14 @@ void TEWidget::mousePressEvent(TQMouseEvent* ev)
       }
     }
   }
-  else if ( ev->button() == MidButton )
+  else if ( ev->button() == Qt::MidButton )
   {
     if ( mouse_marks || (!mouse_marks && (ev->state() & ShiftButton)) )
       emitSelection(true,ev->state() & ControlButton);
     else
       emit mouseSignal( 1, (ev->x()-tLx-bX)/font_w +1, (ev->y()-tLy-bY)/font_h +1 +scrollbar->value() -scrollbar->maxValue() );
   }
-  else if ( ev->button() == RightButton )
+  else if ( ev->button() == Qt::RightButton )
   {
     if (mouse_marks || (ev->state() & ShiftButton)) {
       configureRequestPoint = TQPoint( ev->x(), ev->y() );
@@ -1354,7 +1354,7 @@ void TEWidget::mousePressEvent(TQMouseEvent* ev)
 void TEWidget::mouseMoveEvent(TQMouseEvent* ev)
 {
   // for auto-hiding the cursor, we need mouseTracking
-  if (ev->state() == NoButton ) return;
+  if (ev->state() == Qt::NoButton ) return;
 
   if (dragInfo.state == diPending) {
     // we had a mouse down, but haven't confirmed a drag yet
@@ -1378,7 +1378,7 @@ void TEWidget::mouseMoveEvent(TQMouseEvent* ev)
   if (actSel == 0) return;
 
  // don't extend selection while pasting
-  if (ev->state() & MidButton) return;
+  if (ev->state() & Qt::MidButton) return;
 
   extendSelection( ev->pos() );
 }
@@ -1390,7 +1390,7 @@ void TEWidget::setSelectionEnd()
 
 void TEWidget::extendSelection( TQPoint pos )
 {
-  //if ( !contentsRect().contains(ev->pos()) ) return;
+  //if ( !contentsRect().tqcontains(ev->pos()) ) return;
   TQPoint tL  = contentsRect().topLeft();
   int    tLx = tL.x();
   int    tLy = tL.y();
@@ -1570,7 +1570,7 @@ void TEWidget::extendSelection( TQPoint pos )
 void TEWidget::mouseReleaseEvent(TQMouseEvent* ev)
 {
 //printf("release [%d,%d] %d\n",ev->x()/font_w,ev->y()/font_h,ev->button());
-  if ( ev->button() == LeftButton)
+  if ( ev->button() == Qt::LeftButton)
   {
     emit isBusySelecting(false); // Ok.. we can breath again.
     if(dragInfo.state == diPending)
@@ -1600,8 +1600,8 @@ void TEWidget::mouseReleaseEvent(TQMouseEvent* ev)
     }
     dragInfo.state = diNone;
   }
-  if ( !mouse_marks && ((ev->button() == RightButton && !(ev->state() & ShiftButton))
-                        || ev->button() == MidButton) ) {
+  if ( !mouse_marks && ((ev->button() == Qt::RightButton && !(ev->state() & ShiftButton))
+                        || ev->button() == Qt::MidButton) ) {
     TQPoint tL  = contentsRect().topLeft();
     int    tLx = tL.x();
     int    tLy = tL.y();
@@ -1613,7 +1613,7 @@ void TEWidget::mouseReleaseEvent(TQMouseEvent* ev)
 
 void TEWidget::mouseDoubleClickEvent(TQMouseEvent* ev)
 {
-  if ( ev->button() != LeftButton) return;
+  if ( ev->button() != Qt::LeftButton) return;
 
   TQPoint tL  = contentsRect().topLeft();
   int    tLx = tL.x();
@@ -1735,14 +1735,14 @@ void TEWidget::mouseTripleClickEvent(TQMouseEvent* ev)
 
 void TEWidget::focusInEvent( TQFocusEvent * )
 {
-  repaint(cursorRect, true);  // *do* erase area, to get rid of the
+  tqrepaint(cursorRect, true);  // *do* erase area, to get rid of the
                               // hollow cursor rectangle.
 }
 
 
 void TEWidget::focusOutEvent( TQFocusEvent * )
 {
-  repaint(cursorRect, true);  // don't erase area
+  tqrepaint(cursorRect, true);  // don't erase area
 }
 
 bool TEWidget::focusNextPrevChild( bool next )
@@ -1759,7 +1759,7 @@ int TEWidget::charClass(UINT16 ch) const
     TQChar qch=TQChar(ch);
     if ( qch.isSpace() ) return ' ';
 
-    if ( qch.isLetterOrNumber() || word_characters.contains(qch, false) )
+    if ( qch.isLetterOrNumber() || word_characters.tqcontains(qch, false) )
     return 'a';
 
     // Everything else is weird
@@ -1774,7 +1774,7 @@ void TEWidget::setWordCharacters(TQString wc)
 void TEWidget::setMouseMarks(bool on)
 {
   mouse_marks = on;
-  setCursor( mouse_marks ? ibeamCursor : arrowCursor );
+  setCursor( mouse_marks ? tqibeamCursor : tqarrowCursor );
 }
 
 /* ------------------------------------------------------------------------- */
@@ -1796,24 +1796,24 @@ void TEWidget::emitText(TQString text)
 void TEWidget::emitSelection(bool useXselection,bool appendReturn)
 // Paste Clipboard by simulating keypress events
 {
-  TQApplication::clipboard()->setSelectionMode( useXselection );
-  TQString text = TQApplication::clipboard()->text();
+  TQApplication::tqclipboard()->setSelectionMode( useXselection );
+  TQString text = TQApplication::tqclipboard()->text();
   if(appendReturn)
     text.append("\r");
   if ( ! text.isEmpty() )
   {
-    text.replace("\n", "\r");
+    text.tqreplace("\n", "\r");
     TQKeyEvent e(TQEvent::KeyPress, 0,-1,0, text);
     emit keyPressedSignal(&e); // expose as a big fat keypress event
     emit clearSelectionSignal();
   }
-  TQApplication::clipboard()->setSelectionMode( false );
+  TQApplication::tqclipboard()->setSelectionMode( false );
 }
 
 void TEWidget::setSelection(const TQString& t)
 {
   // Disconnect signal while WE set the clipboard
-  QClipboard *cb = TQApplication::clipboard();
+  TQClipboard *cb = TQApplication::tqclipboard();
   TQObject::disconnect( cb, TQT_SIGNAL(selectionChanged()),
                      this, TQT_SLOT(onClearSelection()) );
 
@@ -1853,7 +1853,7 @@ void TEWidget::onClearSelection()
 
 //FIXME: an `eventFilter' has been installed instead of a `keyPressEvent'
 //       due to a bug in `QT' or the ignorance of the author to prevent
-//       repaint events being emitted to the screen whenever one leaves
+//       tqrepaint events being emitted to the screen whenever one leaves
 //       or reenters the screen to/from another application.
 //
 //   Troll says one needs to change focusInEvent() and focusOutEvent(),
@@ -1873,12 +1873,12 @@ void TEWidget::doScroll(int lines)
 bool TEWidget::eventFilter( TQObject *obj, TQEvent *e )
 {
   if ( (e->type() == TQEvent::Accel ||
-       e->type() == TQEvent::AccelAvailable ) && qApp->focusWidget() == this )
+       e->type() == TQEvent::AccelAvailable ) && tqApp->tqfocusWidget() == this )
   {
-      static_cast<TQKeyEvent *>( e )->ignore();
+      TQT_TQKEYEVENT( e )->ignore();
       return false;
   }
-  if ( obj != this /* when embedded */ && obj != parent() /* when standalone */ )
+  if ( TQT_BASE_OBJECT(obj) != TQT_BASE_OBJECT(this) /* when embedded */ && TQT_BASE_OBJECT(obj) != TQT_BASE_OBJECT(tqparent()) /* when standalone */ )
       return false; // not us
   if ( e->type() == TQEvent::KeyPress )
   {
@@ -1971,13 +1971,13 @@ void TEWidget::imEndEvent( TQIMEvent *e )
   int tLx = tL.x();
   int tLy = tL.y();
 
-  TQRect repaintRect = TQRect( bX+tLx, bY+tLy+font_h*m_imStartLine,
+  TQRect tqrepaintRect = TQRect( bX+tLx, bY+tLy+font_h*m_imStartLine,
                              contentsRect().width(), contentsRect().height() );
   m_imStart = 0;
   m_imPreeditLength = 0;
 
   m_isIMEdit = m_isIMSel = false;
-  repaint( repaintRect, true );
+  tqrepaint( tqrepaintRect, true );
 }
 
 // Override any Ctrl+<key> accelerator when pressed with the keyboard
@@ -1986,11 +1986,11 @@ bool TEWidget::event( TQEvent *e )
 {
   if ( e->type() == TQEvent::AccelOverride )
   {
-    TQKeyEvent *ke = static_cast<TQKeyEvent *>( e );
+    TQKeyEvent *ke = TQT_TQKEYEVENT( e );
     KKey key( ke );
     int keyCodeQt = key.keyCodeQt();
 
-    if ( !standalone() && (ke->state() == Qt::ControlButton) )
+    if ( !standalone() && (ke->state() == ControlButton) )
     {
       ke->accept();
       return true;
@@ -2097,7 +2097,7 @@ void TEWidget::clearImage()
 
 void TEWidget::calcGeometry()
 {
-  scrollbar->resize(TQApplication::style().pixelMetric(TQStyle::PM_ScrollBarExtent),
+  scrollbar->resize(TQApplication::tqstyle().tqpixelMetric(TQStyle::PM_ScrollBarExtent),
                     contentsRect().height());
   switch(scrollLoc)
   {
@@ -2170,7 +2170,7 @@ void TEWidget::setFixedSize(int cols, int lins)
   TQFrame::setFixedSize(m_size);
 }
 
-TQSize TEWidget::sizeHint() const
+TQSize TEWidget::tqsizeHint() const
 {
   return m_size;
 }
@@ -2235,7 +2235,7 @@ void TEWidget::dropEvent(TQDropEvent* event)
         TQString tmp;
         if (url.isLocalFile()) {
           tmp = url.path(); // local URL : remove protocol. This helps "ln" & "cd" and doesn't harm the others
-        } else if ( url.protocol() == TQString::fromLatin1( "mailto" ) ) {
+        } else if ( url.protocol() == TQString::tqfromLatin1( "mailto" ) ) {
 	  justPaste = true;
 	  break;
 	} else {

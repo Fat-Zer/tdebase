@@ -87,7 +87,7 @@
 uint KateMainWindow::uniqueID = 1;
 
 KateMainWindow::KateMainWindow (KConfig *sconfig, const TQString &sgroup)
-  : KateMDI::MainWindow (0,(TQString("__KateMainWindow#%1").arg(uniqueID)).latin1())
+  : KateMDI::MainWindow (0,(TQString(TQString("__KateMainWindow#%1").arg(uniqueID))).latin1())
 {
   // first the very important id
   myID = uniqueID;
@@ -101,7 +101,7 @@ KateMainWindow::KateMainWindow (KConfig *sconfig, const TQString &sgroup)
   // here we go, set some usable default sizes
   if (!initialGeometrySet())
   {
-    int scnum = TQApplication::desktop()->screenNumber(parentWidget());
+    int scnum = TQApplication::desktop()->screenNumber(tqparentWidget());
     TQRect desk = TQApplication::desktop()->screenGeometry(scnum);
 
     TQSize size;
@@ -110,8 +110,8 @@ KateMainWindow::KateMainWindow (KConfig *sconfig, const TQString &sgroup)
     if (sconfig)
     {
       sconfig->setGroup (sgroup);
-      size.setWidth (sconfig->readNumEntry( TQString::fromLatin1("Width %1").arg(desk.width()), 0 ));
-      size.setHeight (sconfig->readNumEntry( TQString::fromLatin1("Height %1").arg(desk.height()), 0 ));
+      size.setWidth (sconfig->readNumEntry( TQString::tqfromLatin1("Width %1").arg(desk.width()), 0 ));
+      size.setHeight (sconfig->readNumEntry( TQString::tqfromLatin1("Height %1").arg(desk.height()), 0 ));
     }
 
     // if thats fails, try to reuse size
@@ -131,8 +131,8 @@ KateMainWindow::KateMainWindow (KConfig *sconfig, const TQString &sgroup)
       {
         // first try global app config
         KateApp::self()->config()->setGroup ("MainWindow");
-        size.setWidth (KateApp::self()->config()->readNumEntry( TQString::fromLatin1("Width %1").arg(desk.width()), 0 ));
-        size.setHeight (KateApp::self()->config()->readNumEntry( TQString::fromLatin1("Height %1").arg(desk.height()), 0 ));
+        size.setWidth (KateApp::self()->config()->readNumEntry( TQString::tqfromLatin1("Width %1").arg(desk.width()), 0 ));
+        size.setHeight (KateApp::self()->config()->readNumEntry( TQString::tqfromLatin1("Height %1").arg(desk.height()), 0 ));
 
         if (size.isEmpty())
           size = TQSize (kMin (700, desk.width()), kMin(480, desk.height()));
@@ -239,25 +239,25 @@ void KateMainWindow::setupActions()
 {
   KAction *a;
 
-  KStdAction::openNew( m_viewManager, TQT_SLOT( slotDocumentNew() ), actionCollection(), "file_new" )->setWhatsThis(i18n("Create a new document"));
-  KStdAction::open( m_viewManager, TQT_SLOT( slotDocumentOpen() ), actionCollection(), "file_open" )->setWhatsThis(i18n("Open an existing document for editing"));
+  KStdAction::openNew( TQT_TQOBJECT(m_viewManager), TQT_SLOT( slotDocumentNew() ), actionCollection(), "file_new" )->setWhatsThis(i18n("Create a new document"));
+  KStdAction::open( TQT_TQOBJECT(m_viewManager), TQT_SLOT( slotDocumentOpen() ), actionCollection(), "file_open" )->setWhatsThis(i18n("Open an existing document for editing"));
 
-  fileOpenRecent = KStdAction::openRecent (m_viewManager, TQT_SLOT(openURL (const KURL&)), actionCollection());
+  fileOpenRecent = KStdAction::openRecent (TQT_TQOBJECT(m_viewManager), TQT_SLOT(openURL (const KURL&)), actionCollection());
   fileOpenRecent->setWhatsThis(i18n("This lists files which you have opened recently, and allows you to easily open them again."));
 
   a=new KAction( i18n("Save A&ll"),"save_all", CTRL+Key_L, KateDocManager::self(), TQT_SLOT( saveAll() ), actionCollection(), "file_save_all" );
   a->setWhatsThis(i18n("Save all open, modified documents to disk."));
 
-  KStdAction::close( m_viewManager, TQT_SLOT( slotDocumentClose() ), actionCollection(), "file_close" )->setWhatsThis(i18n("Close the current document."));
+  KStdAction::close( TQT_TQOBJECT(m_viewManager), TQT_SLOT( slotDocumentClose() ), actionCollection(), "file_close" )->setWhatsThis(i18n("Close the current document."));
 
-  a=new KAction( i18n( "Clos&e All" ), 0, this, TQT_SLOT( slotDocumentCloseAll() ), actionCollection(), "file_close_all" );
+  a=new KAction( i18n( "Clos&e All" ), 0, TQT_TQOBJECT(this), TQT_SLOT( slotDocumentCloseAll() ), actionCollection(), "file_close_all" );
   a->setWhatsThis(i18n("Close all open documents."));
 
-  KStdAction::mail( this, TQT_SLOT(slotMail()), actionCollection() )->setWhatsThis(i18n("Send one or more of the open documents as email attachments."));
+  KStdAction::mail( TQT_TQOBJECT(this), TQT_SLOT(slotMail()), actionCollection() )->setWhatsThis(i18n("Send one or more of the open documents as email attachments."));
 
-  KStdAction::quit( this, TQT_SLOT( slotFileQuit() ), actionCollection(), "file_quit" )->setWhatsThis(i18n("Close this window"));
+  KStdAction::quit( TQT_TQOBJECT(this), TQT_SLOT( slotFileQuit() ), actionCollection(), "file_quit" )->setWhatsThis(i18n("Close this window"));
 
-  a=new KAction(i18n("&New Window"), "window_new", 0, this, TQT_SLOT(newWindow()), actionCollection(), "view_new_view");
+  a=new KAction(i18n("&New Window"), "window_new", 0, TQT_TQOBJECT(this), TQT_SLOT(newWindow()), actionCollection(), "view_new_view");
   a->setWhatsThis(i18n("Create a new Kate view (a new window with the same document list)."));
 
   if ( KateApp::self()->authorize("shell_access") )
@@ -274,39 +274,39 @@ void KateMainWindow::setupActions()
   connect(documentOpenWith->popupMenu(), TQT_SIGNAL(aboutToShow()), this, TQT_SLOT(mSlotFixOpenWithMenu()));
   connect(documentOpenWith->popupMenu(), TQT_SIGNAL(activated(int)), this, TQT_SLOT(slotOpenWithMenuAction(int)));
 
-  a=KStdAction::keyBindings(this, TQT_SLOT(editKeys()), actionCollection());
+  a=KStdAction::keyBindings(TQT_TQOBJECT(this), TQT_SLOT(editKeys()), actionCollection());
   a->setWhatsThis(i18n("Configure the application's keyboard shortcut assignments."));
 
-  a=KStdAction::configureToolbars(this, TQT_SLOT(slotEditToolbars()), actionCollection());
+  a=KStdAction::configureToolbars(TQT_TQOBJECT(this), TQT_SLOT(slotEditToolbars()), actionCollection());
   a->setWhatsThis(i18n("Configure which items should appear in the toolbar(s)."));
 
-  KAction* settingsConfigure = KStdAction::preferences(this, TQT_SLOT(slotConfigure()), actionCollection(), "settings_configure");
+  KAction* settingsConfigure = KStdAction::preferences(TQT_TQOBJECT(this), TQT_SLOT(slotConfigure()), actionCollection(), "settings_configure");
   settingsConfigure->setWhatsThis(i18n("Configure various aspects of this application and the editing component."));
 
   // pipe to terminal action
   if (KateApp::self()->authorize("shell_access"))
-    new KAction(i18n("&Pipe to Console"), "pipe", 0, console, TQT_SLOT(slotPipeToConsole()), actionCollection(), "tools_pipe_to_terminal");
+    new KAction(i18n("&Pipe to Console"), "pipe", 0, TQT_TQOBJECT(console), TQT_SLOT(slotPipeToConsole()), actionCollection(), "tools_pipe_to_terminal");
 
   // tip of the day :-)
-  KStdAction::tipOfDay( this, TQT_SLOT( tipOfTheDay() ), actionCollection() )->setWhatsThis(i18n("This shows useful tips on the use of this application."));
+  KStdAction::tipOfDay( TQT_TQOBJECT(this), TQT_SLOT( tipOfTheDay() ), actionCollection() )->setWhatsThis(i18n("This shows useful tips on the use of this application."));
 
   if (KatePluginManager::self()->pluginList().count() > 0)
   {
-    a=new KAction(i18n("&Plugins Handbook"), 0, this, TQT_SLOT(pluginHelp()), actionCollection(), "help_plugins_contents");
+    a=new KAction(i18n("&Plugins Handbook"), 0, TQT_TQOBJECT(this), TQT_SLOT(pluginHelp()), actionCollection(), "help_plugins_contents");
     a->setWhatsThis(i18n("This shows help files for various available plugins."));
   }
 
-  connect(m_viewManager,TQT_SIGNAL(viewChanged()),this,TQT_SLOT(slotWindowActivated()));
-  connect(m_viewManager,TQT_SIGNAL(viewChanged()),this,TQT_SLOT(slotUpdateOpenWith()));
+  connect(m_viewManager,TQT_SIGNAL(viewChanged()),TQT_TQOBJECT(this),TQT_SLOT(slotWindowActivated()));
+  connect(m_viewManager,TQT_SIGNAL(viewChanged()),TQT_TQOBJECT(this),TQT_SLOT(slotUpdateOpenWith()));
 
   slotWindowActivated ();
 
   // session actions
-  new KAction(i18n("Menu entry Session->New", "&New"), "filenew", 0, KateSessionManager::self(), TQT_SLOT(sessionNew()), actionCollection(), "sessions_new");
-  new KAction(i18n("&Open..."), "fileopen", 0, KateSessionManager::self(), TQT_SLOT(sessionOpen()), actionCollection(), "sessions_open");
-  new KAction(i18n("&Save"), "filesave", 0, KateSessionManager::self(), TQT_SLOT(sessionSave()), actionCollection(), "sessions_save");
-  new KAction(i18n("Save &As..."), "filesaveas", 0, KateSessionManager::self(), TQT_SLOT(sessionSaveAs()), actionCollection(), "sessions_save_as");
-  new KAction(i18n("&Manage..."), "view_choose", 0, KateSessionManager::self(), TQT_SLOT(sessionManage()), actionCollection(), "sessions_manage");
+  new KAction(i18n("Menu entry Session->New", "&New"), "filenew", 0, TQT_TQOBJECT(KateSessionManager::self()), TQT_SLOT(sessionNew()), actionCollection(), "sessions_new");
+  new KAction(i18n("&Open..."), "fileopen", 0, TQT_TQOBJECT(KateSessionManager::self()), TQT_SLOT(sessionOpen()), actionCollection(), "sessions_open");
+  new KAction(i18n("&Save"), "filesave", 0, TQT_TQOBJECT(KateSessionManager::self()), TQT_SLOT(sessionSave()), actionCollection(), "sessions_save");
+  new KAction(i18n("Save &As..."), "filesaveas", 0, TQT_TQOBJECT(KateSessionManager::self()), TQT_SLOT(sessionSaveAs()), actionCollection(), "sessions_save_as");
+  new KAction(i18n("&Manage..."), "view_choose", 0, TQT_TQOBJECT(KateSessionManager::self()), TQT_SLOT(sessionManage()), actionCollection(), "sessions_manage");
 
   // quick open menu ;)
   new KateSessionsAction (i18n("&Quick Open"), actionCollection(), "sessions_list");

@@ -86,8 +86,8 @@ void MacProtocol::get(const KURL& url) {
 
     //find out if a mode has been specified in the query e.g. ?mode=t
     //or if it's a text file then set the mode to text
-    int modepos = query.find("mode=");
-    int textpos = mime.find("text");
+    int modepos = query.tqfind("mode=");
+    int textpos = mime.tqfind("text");
     if (modepos != -1) {
         mode += query.mid(modepos + 5, 1);
         if (mode != "-r" && mode != "-b" && mode != "-m" && mode != "-t" && mode != "-a") {
@@ -157,7 +157,7 @@ void MacProtocol::listDir(const KURL& url) {
 
             while (line != NULL) {
                 //1.0.4 puts this funny line in sometimes, we don't want it
-                if (line.contains("Thread               ") == 0) {
+                if (line.tqcontains("Thread               ") == 0) {
                     entry = makeUDS(line);
                     listEntry(entry, false);
                 }
@@ -207,11 +207,11 @@ TQValueList<KIO::UDSAtom> MacProtocol::doStat(const KURL& url) {
                 this, TQT_SLOT(slotGetStdOutput(KProcess *, char *, int)));
 
         if (standardOutputStream.isEmpty()) {
-            filename.replace("\\ ", " "); //get rid of escapes
-            filename.replace("\\&", "&"); //mm, slashes...
-            filename.replace("\\!", "!");
-            filename.replace("\\(", "(");
-            filename.replace("\\)", ")");
+            filename.tqreplace("\\ ", " "); //get rid of escapes
+            filename.tqreplace("\\&", "&"); //mm, slashes...
+            filename.tqreplace("\\!", "!");
+            filename.tqreplace("\\(", "(");
+            filename.tqreplace("\\)", ")");
             error(ERR_DOES_NOT_EXIST, filename);
         } else {
             //remove trailing \n
@@ -242,7 +242,7 @@ TQString MacProtocol::prepareHP(const KURL& url) {
     KConfig* config = new KConfig("macrc");
 
     TQString query = url.query();
-    int modepos = query.find("dev=");
+    int modepos = query.tqfind("dev=");
     if (modepos == -1) {
         //no device specified, read from config or go with #define PARTITION
         device = config->readEntry("device",PARTITION);
@@ -264,7 +264,7 @@ TQString MacProtocol::prepareHP(const KURL& url) {
 
     bool version102 = true;
 
-    if (standardOutputStream.contains("options") != 0) {
+    if (standardOutputStream.tqcontains("options") != 0) {
         version102 = false;
     }
 
@@ -297,15 +297,15 @@ TQString MacProtocol::prepareHP(const KURL& url) {
 
     //escape any funny characters
     //TODO are there any more characters to escape?
-    path.replace(" ", "\\ ");
-    path.replace("&", "\\&");
-    path.replace("!", "\\!");
-    path.replace("(", "\\(");
-    path.replace(")", "\\)");
+    path.tqreplace(" ", "\\ ");
+    path.tqreplace("&", "\\&");
+    path.tqreplace("!", "\\!");
+    path.tqreplace("(", "\\(");
+    path.tqreplace(")", "\\)");
 
     //then change to the right directory
     int s;  TQString dir;
-    s = path.find('/');
+    s = path.tqfind('/');
     while (s != -1) {
         dir = path.left(s);
         path = path.mid(s+1);
@@ -324,7 +324,7 @@ TQString MacProtocol::prepareHP(const KURL& url) {
         //clean up
         delete myKProcess; myKProcess = 0;
 
-        s = path.find('/');
+        s = path.tqfind('/');
     }
 
     return path;
@@ -455,12 +455,12 @@ int MacProtocol::makeTime(TQString mday, TQString mon, TQString third) {
     // otherwise it only prints the year
     TQRegExp hourMin("(..):(..)");
     if (hourMin.exactMatch(third)) {
-        TQDate currentDate(TQDate::currentDate());
+        TQDate tqcurrentDate(TQDate::currentDate());
 
-        if (month > currentDate.month()) {
-            year = currentDate.year() - 1;
+        if (month > tqcurrentDate.month()) {
+            year = tqcurrentDate.year() - 1;
         } else {
-            year = currentDate.year();
+            year = tqcurrentDate.year();
         }
         TQString h(hourMin.cap(1));
         TQString m(hourMin.cap(2));

@@ -36,7 +36,7 @@ class MenuEntryInfo;
 class MenuSeparatorInfo;
 class KShortcut;
 
-class TreeItem : public QListViewItem
+class TreeItem : public TQListViewItem
 {
 public:
   TreeItem(TQListViewItem *parent, TQListViewItem *after, const TQString &menuIdn, bool __init = false);

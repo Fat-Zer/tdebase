@@ -28,7 +28,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 class ContainerAreaLayout;
 
-class ContainerAreaLayoutItem : public Qt
+class ContainerAreaLayoutItem : public TQt
 {
     public:
         ContainerAreaLayoutItem(TQLayoutItem* i, ContainerAreaLayout* layout)
@@ -71,7 +71,7 @@ class ContainerAreaLayoutItem : public Qt
         ContainerAreaLayout* m_layout;
 };
 
-class ContainerAreaLayout : public QLayout
+class ContainerAreaLayout : public TQLayout
 {
     public:
         typedef ContainerAreaLayoutItem Item;
@@ -79,12 +79,12 @@ class ContainerAreaLayout : public QLayout
 
         ContainerAreaLayout(TQWidget* parent);
 
-        void addItem(TQLayoutItem* item);
+        void addItem(QLayoutItem* item);
         void insertIntoFreeSpace(TQWidget* item, TQPoint insertionPoint);
         TQStringList listItems() const;
         TQWidget* widgetAt(int index) const;
-        TQSize sizeHint() const;
-        TQSize minimumSize() const;
+        TQSize tqsizeHint() const;
+        TQSize tqminimumSize() const;
         TQLayoutIterator iterator();
         void setGeometry(const TQRect& rect);
 
@@ -107,6 +107,12 @@ class ContainerAreaLayout : public QLayout
         int heightR() const;
         int leftR() const;
         int rightR() const;
+
+#ifdef USE_QT4
+
+        QLAYOUT_REQUIRED_METHOD_DECLARATIONS
+
+#endif // USE_QT4
 
     private:
         int moveContainerPushRecursive(ItemList::const_iterator it, int distance);

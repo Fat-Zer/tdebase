@@ -215,7 +215,7 @@ void ButtonContainer::dragButton(const TQPixmap icon)
 
 bool ButtonContainer::eventFilter(TQObject *o, TQEvent *e)
 {
-    if (o == _button && e->type() == TQEvent::MouseButtonPress)
+    if (TQT_BASE_OBJECT(o) == TQT_BASE_OBJECT(_button) && e->type() == TQEvent::MouseButtonPress)
     {
         static bool sentinal = false;
 
@@ -225,10 +225,10 @@ bool ButtonContainer::eventFilter(TQObject *o, TQEvent *e)
         }
 
         sentinal = true;
-        TQMouseEvent* me = static_cast<TQMouseEvent*>(e);
+        TQMouseEvent* me = TQT_TQMOUSEEVENT(e);
         switch (me->button())
         {
-        case MidButton:
+        case Qt::MidButton:
         {
             if (isImmutable())
             {
@@ -242,7 +242,7 @@ bool ButtonContainer::eventFilter(TQObject *o, TQEvent *e)
             return true;
         }
 
-        case RightButton:
+        case Qt::RightButton:
         {
             if (!kapp->authorizeKAction("kicker_rmb") ||
                 isImmutable())
@@ -252,8 +252,8 @@ bool ButtonContainer::eventFilter(TQObject *o, TQEvent *e)
 
             TQPopupMenu* menu = opMenu();
             connect( menu, TQT_SIGNAL( aboutToHide() ), this, TQT_SLOT( slotMenuClosed() ) );
-            TQPoint pos = KickerLib::popupPosition(popupDirection(), menu, this,
-                                                  (orientation() == Horizontal) ?
+            TQPoint pos = KickerLib::popupPosition(popupDirection(), menu, TQT_TQWIDGET(this),
+                                                  (orientation() == Qt::Horizontal) ?
                                                    TQPoint(0, 0) : me->pos());
 
             Kicker::the()->setInsertionPoint(me->globalPos());

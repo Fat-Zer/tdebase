@@ -175,7 +175,7 @@ static void stripTrailingSlash(TQString& path)
 
 static void getLastPart(const TQString& path, TQString& lastPart, TQString& rest)
 {
-   int slashPos=path.findRev("/");
+   int slashPos=path.tqfindRev("/");
    lastPart=path.mid(slashPos+1);
    rest=path.left(slashPos+1);
 }
@@ -185,7 +185,7 @@ static TQString removeFirstPart(const TQString& path)
    TQString result("");
    if (path.isEmpty()) return result;
    result=path.mid(1);
-   int slashPos=result.find("/");
+   int slashPos=result.tqfind("/");
    return result.mid(slashPos+1);
 }
 
@@ -293,7 +293,7 @@ void NFSProtocol::closeConnection()
 
 bool NFSProtocol::isExportedDir(const TQString& path)
 {
-   return (m_exportedDirs.find(path.mid(1))!=m_exportedDirs.end());
+   return (m_exportedDirs.tqfind(path.mid(1))!=m_exportedDirs.end());
 }
 
 /* This one works recursive.
@@ -321,7 +321,7 @@ NFSFileHandle NFSProtocol::getFileHandle(TQString path)
    }
    //check wether we have this filehandle cached
    //the filehandles of the exported root dirs are always in the cache
-   if (m_handleCache.find(path)!=m_handleCache.end())
+   if (m_handleCache.tqfind(path)!=m_handleCache.end())
    {
       kdDebug(7121)<<"path is in the cache, returning the FH -"<<m_handleCache[path]<<"-"<<endl;
       return m_handleCache[path];
@@ -800,14 +800,14 @@ void NFSProtocol::completeAbsoluteLinkUDSEntry(UDSEntry& entry, const TQCString&
 
    atom.m_uds = KIO::UDS_USER;
    uid_t uid = buff.st_uid;
-   TQString *temp = m_usercache.find( uid );
+   TQString *temp = m_usercache.tqfind( uid );
 
    if ( !temp )
    {
       struct passwd *user = getpwuid( uid );
       if ( user )
       {
-         m_usercache.insert( uid, new TQString(TQString::fromLatin1(user->pw_name)) );
+         m_usercache.insert( uid, new TQString(TQString::tqfromLatin1(user->pw_name)) );
          atom.m_str = user->pw_name;
       }
       else
@@ -819,13 +819,13 @@ void NFSProtocol::completeAbsoluteLinkUDSEntry(UDSEntry& entry, const TQCString&
 
    atom.m_uds = KIO::UDS_GROUP;
    gid_t gid = buff.st_gid;
-   temp = m_groupcache.find( gid );
+   temp = m_groupcache.tqfind( gid );
    if ( !temp )
    {
       struct group *grp = getgrgid( gid );
       if ( grp )
       {
-         m_groupcache.insert( gid, new TQString(TQString::fromLatin1(grp->gr_name)) );
+         m_groupcache.insert( gid, new TQString(TQString::tqfromLatin1(grp->gr_name)) );
          atom.m_str = grp->gr_name;
       }
       else
@@ -893,7 +893,7 @@ void NFSProtocol::completeUDSEntry(UDSEntry& entry, fattr& attributes)
 
    atom.m_uds = KIO::UDS_USER;
    uid_t uid = attributes.uid;
-   TQString *temp = m_usercache.find( uid );
+   TQString *temp = m_usercache.tqfind( uid );
    if ( !temp )
    {
       struct passwd *user = getpwuid( uid );
@@ -911,7 +911,7 @@ void NFSProtocol::completeUDSEntry(UDSEntry& entry, fattr& attributes)
 
    atom.m_uds = KIO::UDS_GROUP;
    gid_t gid = attributes.gid;
-   temp = m_groupcache.find( gid );
+   temp = m_groupcache.tqfind( gid );
    if ( !temp )
    {
       struct group *grp = getgrgid( gid );
@@ -1125,7 +1125,7 @@ void NFSProtocol::del( const KURL& url, bool isfile)
                             (xdrproc_t) xdr_nfsstat, (char*)&nfsStat,total_timeout);
       if (!checkForError(clnt_stat,nfsStat,thePath)) return;
       kdDebug(7121)<<"removing "<<thePath<<" from cache"<<endl;
-      m_handleCache.remove(m_handleCache.find(thePath));
+      m_handleCache.remove(m_handleCache.tqfind(thePath));
       finished();
    }
    else
@@ -1143,7 +1143,7 @@ void NFSProtocol::del( const KURL& url, bool isfile)
                             (xdrproc_t) xdr_nfsstat, (char*)&nfsStat,total_timeout);
       if (!checkForError(clnt_stat,nfsStat,thePath)) return;
       kdDebug(7121)<<"removing "<<thePath<<" from cache"<<endl;
-      m_handleCache.remove(m_handleCache.find(thePath));
+      m_handleCache.remove(m_handleCache.tqfind(thePath));
       finished();
    }
 }
@@ -1600,7 +1600,7 @@ bool NFSProtocol::isValidLink(const TQString& parentDir, const TQString& linkDes
       kdDebug(7121)<<"removed first part "<<absDest<<endl;
       absDest=TQDir::cleanDirPath(absDest);
       kdDebug(7121)<<"simplified to "<<absDest<<endl;
-      if (absDest.find("../")==0)
+      if (absDest.tqfind("../")==0)
          return FALSE;
 
       kdDebug(7121)<<"is inside the nfs tree"<<endl;

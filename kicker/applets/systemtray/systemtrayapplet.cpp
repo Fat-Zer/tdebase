@@ -85,7 +85,7 @@ SystemTrayApplet::SystemTrayApplet(const TQString& configFile, Type type, int ac
 
     setBackgroundOrigin(AncestorOrigin);
 
-    kwin_module = new KWinModule(this);
+    kwin_module = new KWinModule(TQT_TQOBJECT(this));
 
     // kApplication notifies us of settings changes. added to support
     // disabling of frame effect on mouse hover
@@ -228,7 +228,7 @@ void SystemTrayApplet::preferences()
     for (; it != itEnd; ++it)
     {
         TQString name = KWin::windowInfo((*it)->embeddedWinId()).name();
-        if(!shownListBox->findItem(name, Qt::ExactMatch | Qt::CaseSensitive))
+        if(!shownListBox->tqfindItem(name, TQt::ExactMatch | TQt::CaseSensitive))
         {
             shownListBox->insertItem(KWin::icon((*it)->embeddedWinId(), 22, 22, true), name);
         }
@@ -239,7 +239,7 @@ void SystemTrayApplet::preferences()
     for (; it != itEnd; ++it)
     {
         TQString name = KWin::windowInfo((*it)->embeddedWinId()).name();
-        if(!hiddenListBox->findItem(name, Qt::ExactMatch | Qt::CaseSensitive))
+        if(!hiddenListBox->tqfindItem(name, TQt::ExactMatch | TQt::CaseSensitive))
         {
             hiddenListBox->insertItem(KWin::icon((*it)->embeddedWinId(), 22, 22, true), name);
         }
@@ -288,7 +288,7 @@ void SystemTrayApplet::applySettings()
         item;
         item = item->next())
     {
-        if( windowNameToClass.contains(item->text()))
+        if( windowNameToClass.tqcontains(item->text()))
             m_sortOrderIconList.append(windowNameToClass[item->text()]);
         else
             m_sortOrderIconList.append(item->text());
@@ -301,7 +301,7 @@ void SystemTrayApplet::applySettings()
         item;
         item = item->next())
     {
-        if( windowNameToClass.contains(item->text()))
+        if( windowNameToClass.tqcontains(item->text()))
             m_hiddenIconList.append(windowNameToClass[item->text()]);
         else
             m_hiddenIconList.append(item->text());
@@ -350,7 +350,7 @@ void SystemTrayApplet::checkAutoRetract()
         return;
     }
 
-    if (!geometry().contains(mapFromGlobal(TQCursor::pos())))
+    if (!tqgeometry().tqcontains(mapFromGlobal(TQCursor::pos())))
     {
         m_autoRetractTimer->stop();
         if (m_autoRetract)
@@ -386,15 +386,15 @@ void SystemTrayApplet::showExpandButton(bool show)
             m_expandButton->installEventFilter(this);
             refreshExpandButton();
 
-            if (orientation() == Vertical)
+            if (orientation() == Qt::Vertical)
             {
                 m_expandButton->setFixedSize(width() - 4,
-                                             m_expandButton->sizeHint()
+                                             m_expandButton->tqsizeHint()
                                                             .height());
             }
             else
             {
-                m_expandButton->setFixedSize(m_expandButton->sizeHint()
+                m_expandButton->setFixedSize(m_expandButton->tqsizeHint()
                                                             .width(),
                                              height() - 4);
             }
@@ -551,8 +551,8 @@ bool SystemTrayApplet::isWinManaged(WId w)
 
 bool SystemTrayApplet::shouldHide(WId w)
 {
-    return m_hiddenIconList.find(KWin::windowInfo(w).name()) != m_hiddenIconList.end()
-        || m_hiddenIconList.find('!'+KWin::windowInfo(w,0,NET::WM2WindowClass).windowClassClass())
+    return m_hiddenIconList.tqfind(KWin::windowInfo(w).name()) != m_hiddenIconList.end()
+        || m_hiddenIconList.tqfind('!'+KWin::windowInfo(w,0,NET::WM2WindowClass).windowClassClass())
             != m_hiddenIconList.end();
 }
 
@@ -628,7 +628,7 @@ void SystemTrayApplet::refreshExpandButton()
 
     Qt::ArrowType a;
 
-    if (orientation() == Vertical)
+    if (orientation() == Qt::Vertical)
         a = m_showHidden ? Qt::DownArrow : Qt::UpArrow;
     else
         a = (m_showHidden ^ kapp->reverseLayout()) ? Qt::RightArrow : Qt::LeftArrow;
@@ -672,7 +672,7 @@ void SystemTrayApplet::updateTrayWindows()
         WId wid = (*emb)->embeddedWinId();
         if ((wid == 0) ||
             ((*emb)->kdeTray() &&
-             !kwin_module->systemTrayWindows().contains(wid)))
+             !kwin_module->systemTrayWindows().tqcontains(wid)))
         {
             (*emb)->deleteLater();
             emb = m_shownWins.erase(emb);
@@ -689,7 +689,7 @@ void SystemTrayApplet::updateTrayWindows()
         WId wid = (*emb)->embeddedWinId();
         if ((wid == 0) ||
             ((*emb)->kdeTray() &&
-             !kwin_module->systemTrayWindows().contains(wid)))
+             !kwin_module->systemTrayWindows().tqcontains(wid)))
         {
             (*emb)->deleteLater();
             emb = m_hiddenWins.erase(emb);
@@ -782,16 +782,16 @@ int SystemTrayApplet::maxIconHeight() const
 
 bool SystemTrayApplet::eventFilter(TQObject* watched, TQEvent* e)
 {
-    if (watched == m_expandButton)
+    if (TQT_BASE_OBJECT(watched) == TQT_BASE_OBJECT(m_expandButton))
     {
         TQPoint p;
         if (e->type() == TQEvent::ContextMenu)
         {
-            p = static_cast<TQContextMenuEvent*>(e)->globalPos();
+            p = TQT_TQCONTEXTMENUEVENT(e)->globalPos();
         }
         else if (e->type() == TQEvent::MouseButtonPress)
         {
-            TQMouseEvent* me = static_cast<TQMouseEvent*>(e);
+            TQMouseEvent* me = TQT_TQMOUSEEVENT(e);
             if (me->button() == Qt::RightButton)
             {
                 p = me->globalPos();
@@ -804,7 +804,7 @@ bool SystemTrayApplet::eventFilter(TQObject* watched, TQEvent* e)
             contextMenu->insertItem(SmallIcon("configure"), i18n("Configure System Tray..."),
                                     this, TQT_SLOT(configure()));
 
-            contextMenu->exec(static_cast<TQContextMenuEvent*>(e)->globalPos());
+            contextMenu->exec(TQT_TQCONTEXTMENUEVENT(e)->globalPos());
 
             delete contextMenu;
             return true;
@@ -830,7 +830,7 @@ int SystemTrayApplet::widthForHeight(int h) const
         me->setFixedHeight(h);
     }
 
-    return sizeHint().width(); 
+    return tqsizeHint().width(); 
 }
 
 int SystemTrayApplet::heightForWidth(int w) const
@@ -849,7 +849,7 @@ int SystemTrayApplet::heightForWidth(int w) const
         me->setFixedWidth(w);
     }
 
-    return sizeHint().height(); 
+    return tqsizeHint().height(); 
 }
 
 void SystemTrayApplet::moveEvent( TQMoveEvent* )
@@ -886,13 +886,13 @@ void SystemTrayApplet::layoutTray()
 
     if (m_expandButton)
     {
-        if (orientation() == Vertical)
+        if (orientation() == Qt::Vertical)
         {
-            m_expandButton->setFixedSize(width() - 4, m_expandButton->sizeHint().height());
+            m_expandButton->setFixedSize(width() - 4, m_expandButton->tqsizeHint().height());
         }
         else
         {
-            m_expandButton->setFixedSize(m_expandButton->sizeHint().width(), height() - 4);
+            m_expandButton->setFixedSize(m_expandButton->tqsizeHint().width(), height() - 4);
         }
     }
 
@@ -910,7 +910,7 @@ void SystemTrayApplet::layoutTray()
     // This fix makes the workarounds in the heightForWidth() and widthForHeight() methods unneeded.
     //
 
-    if (orientation() == Vertical)
+    if (orientation() == Qt::Vertical)
     {
         int iconWidth = maxIconWidth() + ICON_MARGIN; // +2 for the margins that implied by the layout
         heightWidth = width() - ICON_MARGIN;
@@ -1051,7 +1051,7 @@ TrayEmbed::TrayEmbed( bool kdeTray, TQWidget* parent )
 
 void TrayEmbed::getIconSize(int defaultIconSize)
 {
-    TQSize minSize = minimumSizeHint();
+    TQSize minSize = tqminimumSizeHint();
     
     int width = minSize.width();
     int height = minSize.height();
@@ -1067,12 +1067,12 @@ void TrayEmbed::getIconSize(int defaultIconSize)
 
 void TrayEmbed::setBackground()
 {
-    const TQPixmap *pbg = parentWidget()->backgroundPixmap();
+    const TQPixmap *pbg = tqparentWidget()->backgroundPixmap();
     
     if (pbg)
     {
         TQPixmap bg(width(), height());
-        bg.fill(parentWidget(), pos());
+        bg.fill(tqparentWidget(), pos());
         setPaletteBackgroundPixmap(bg);
         setBackgroundOrigin(WidgetOrigin);
     }

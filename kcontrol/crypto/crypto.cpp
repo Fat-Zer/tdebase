@@ -98,7 +98,7 @@ K_EXPORT_COMPONENT_FACTORY( kcm_crypto, KryptoFactory("kcmcrypto") )
 
 CipherItem::CipherItem( TQListView *view, const TQString& cipher, int bits,
 			int maxBits, KCryptoConfig *module )
-    : TQCheckListItem( view, TQString::null, CheckBox )
+    : TQCheckListItem( view, TQString(), CheckBox )
 {
     m_cipher = cipher;
     m_bits = bits;
@@ -122,13 +122,13 @@ TQString CipherItem::configName() const
 
 
 OtherCertItem::OtherCertItem( TQListView *view, const TQString& sub, const TQString& md5, bool perm, int policy, TQDateTime exp, KCryptoConfig *module )
-    : TQListViewItem( view, TQString::null ), _sub(sub), _md5(md5), _exp(exp), _perm(perm), _policy(policy)
+    : TQListViewItem( view, TQString() ), _sub(sub), _md5(md5), _exp(exp), _perm(perm), _policy(policy)
 
 {
     m_module = module;
 KSSLX509Map cert(sub);
     setText(0, cert.getValue("O"));
-    setText(1, cert.getValue("CN").replace("\n", ", "));
+    setText(1, cert.getValue("CN").tqreplace("\n", ", "));
 
     if (_exp.date().year() > 3000 || _exp.date().year() < 1900)
        _exp.setDate(TQDate(3000,1,1));
@@ -146,12 +146,12 @@ TQString OtherCertItem::configName() const
 
 
 YourCertItem::YourCertItem( TQListView *view, TQString pkcs, TQString pass, TQString name, KCryptoConfig *module )
-    : TQListViewItem( view, TQString::null )
+    : TQListViewItem( view, TQString() )
 
 {
     m_module = module;
 KSSLX509Map cert(name);
-    TQString tmp = cert.getValue("CN").replace("\n", ", ");
+    TQString tmp = cert.getValue("CN").tqreplace("\n", ", ");
     setText(0, tmp);
     setText(1, cert.getValue("Email"));
     _pkcs = pkcs;
@@ -172,7 +172,7 @@ TQString YourCertItem::configName() const
 
 
 CAItem::CAItem( TQListView *view, TQString name, TQString cert, bool site, bool email, bool code, KCryptoConfig *module )
-    : TQListViewItem( view, TQString::null )
+    : TQListViewItem( view, TQString() )
 
 {
     m_module = module;
@@ -180,10 +180,10 @@ KSSLX509Map mcert(name);
 TQString tmp;
     setText(0, mcert.getValue("O"));
     tmp = mcert.getValue("OU");
-    tmp.replace("\n", ", ");
+    tmp.tqreplace("\n", ", ");
     setText(1, tmp);
     tmp = mcert.getValue("CN");
-    tmp.replace("\n", ", ");
+    tmp.tqreplace("\n", ", ");
     setText(2, tmp);
     _name = name;
     _cert = cert;
@@ -334,7 +334,7 @@ TQString whatstr;
   grid->addMultiCellWidget(cwbg, 3, 3, 0, 1);
   TQString whatStr = i18n("<qt>Use these preconfigurations to more easily configure the SSL encryption settings. You can choose among the following modes: <ul>");
 
-  cwcb->insertItem(TQString::null);
+  cwcb->insertItem(TQString());
   cwcb->insertItem(i18n("Most Compatible"));
   whatStr += i18n("<li><b>Most Compatible:</b> Select the settings found to be most compatible.</li>");
   cwcb->insertItem(i18n("US Ciphers Only"));
@@ -486,8 +486,8 @@ TQString whatstr;
   grid->addWidget(yourSSLPass, 5, 5);
 
   grid->addMultiCellWidget(new KSeparator(KSeparator::HLine, tabYourSSLCert), 6, 6, 0, 5);
-  ySubject = KSSLInfoDlg::certInfoWidget(tabYourSSLCert, TQString(TQString::null));
-  yIssuer = KSSLInfoDlg::certInfoWidget(tabYourSSLCert, TQString(TQString::null));
+  ySubject = KSSLInfoDlg::certInfoWidget(tabYourSSLCert, TQString(TQString()));
+  yIssuer = KSSLInfoDlg::certInfoWidget(tabYourSSLCert, TQString(TQString()));
   grid->addMultiCellWidget(ySubject, 7, 11, 0, 2);
   grid->addMultiCellWidget(yIssuer, 7, 11, 3, 5);
   whatstr = i18n("This is the information known about the owner of the certificate.");
@@ -641,8 +641,8 @@ TQString whatstr;
       otherSSLRemove->setEnabled(false);
 
   grid->addMultiCellWidget(new KSeparator(KSeparator::HLine, tabOtherSSLCert), 8, 8, 0, 5);
-  oSubject = KSSLInfoDlg::certInfoWidget(tabOtherSSLCert, TQString(TQString::null));
-  oIssuer = KSSLInfoDlg::certInfoWidget(tabOtherSSLCert, TQString(TQString::null));
+  oSubject = KSSLInfoDlg::certInfoWidget(tabOtherSSLCert, TQString(TQString()));
+  oIssuer = KSSLInfoDlg::certInfoWidget(tabOtherSSLCert, TQString(TQString()));
   grid->addMultiCellWidget(oSubject, 9, 13, 0, 2);
   grid->addMultiCellWidget(oIssuer, 9, 13, 3, 5);
   whatstr = i18n("This is the information known about the owner of the certificate.");
@@ -668,7 +668,7 @@ TQString whatstr;
   cacheGroup = new TQVButtonGroup(i18n("Cache"), tabOtherSSLCert);
   cachePerm = new TQRadioButton(i18n("Permanentl&y"), cacheGroup);
   cacheUntil = new TQRadioButton(i18n("&Until"), cacheGroup);
-  untilDate = new KURLLabel(TQString::null, TQString::null, cacheGroup);
+  untilDate = new KURLLabel(TQString(), TQString(), cacheGroup);
   cacheGroup->setEnabled(false);
   grid->addMultiCellWidget(cacheGroup, 16, 19, 0, 2);
 
@@ -744,8 +744,8 @@ TQString whatstr;
   connect(caSSLRestore, TQT_SIGNAL(clicked()), TQT_SLOT(slotCARestore()));
   grid->addWidget(caSSLRestore, 2, 7);
 
-  caSubject = KSSLInfoDlg::certInfoWidget(tabSSLCA, TQString(TQString::null));
-  caIssuer = KSSLInfoDlg::certInfoWidget(tabSSLCA, TQString(TQString::null));
+  caSubject = KSSLInfoDlg::certInfoWidget(tabSSLCA, TQString(TQString()));
+  caIssuer = KSSLInfoDlg::certInfoWidget(tabSSLCA, TQString(TQString()));
   grid->addMultiCellWidget(caSubject, 4, 6, 0, 3);
   grid->addMultiCellWidget(caIssuer, 4, 6, 4, 7);
 
@@ -842,7 +842,7 @@ TQString whatstr;
   tabs->addTab(tabSSLCOpts, i18n("Validation Options"));
 #endif
 
-  tabs->resize(tabs->sizeHint());
+  tabs->resize(tabs->tqsizeHint());
   load();
 }
 
@@ -938,7 +938,7 @@ void KCryptoConfig::load( bool useDefaults )
   for (TQStringList::Iterator i = groups.begin(); i != groups.end(); ++i) {
     if ((*i).isEmpty() || *i == "<default>" || *i == "General") continue;
     policies->setGroup(*i);
-    KSSLCertificate *cert = KSSLCertificate::fromString(policies->readEntry("Certificate", TQString::null).local8Bit());
+    KSSLCertificate *cert = KSSLCertificate::fromString(policies->readEntry("Certificate", TQString()).local8Bit());
     if (cert) {
       new OtherCertItem(otherSSLBox, cert->getSubject(), *i,
                         policies->readBoolEntry("Permanent", true),
@@ -958,7 +958,7 @@ void KCryptoConfig::load( bool useDefaults )
                      pcerts->readEntry("PKCS12Base64"),
                      pcerts->readEntry("Password"),
                      *i, this );
-    j->setPassCache(TQString::null);
+    j->setPassCache(TQString());
   }
 
   setAuthCertLists();
@@ -1181,7 +1181,7 @@ void KCryptoConfig::save()
     config->writeEntry("AuthMethod", "none");
 
   if (defCertBox->currentItem() == 0)
-     config->writeEntry("DefaultCert", TQString::null);
+     config->writeEntry("DefaultCert", TQString());
   else config->writeEntry("DefaultCert", defCertBox->currentText());
 
   for (HostAuthItem *x = authDelList.first(); x != 0; x = authDelList.next()) {
@@ -1331,7 +1331,7 @@ void KCryptoConfig::slotExportCert() {
 OtherCertItem *x = static_cast<OtherCertItem *>(otherSSLBox->selectedItem());
    if (x) {
      policies->setGroup(x->getMD5());
-     KSSLCertificate *cert = KSSLCertificate::fromString(policies->readEntry("Certificate", TQString::null).local8Bit());
+     KSSLCertificate *cert = KSSLCertificate::fromString(policies->readEntry("Certificate", TQString()).local8Bit());
      if (cert) {
         KCertExport kce;
         kce.setCertificate(cert);
@@ -1364,7 +1364,7 @@ OtherCertItem *x = static_cast<OtherCertItem *>(otherSSLBox->selectedItem());
   if (!x) return;
 
   policies->setGroup(x->getMD5());
-  KSSLCertificate *cert = KSSLCertificate::fromString(policies->readEntry("Certificate", TQString::null).local8Bit());
+  KSSLCertificate *cert = KSSLCertificate::fromString(policies->readEntry("Certificate", TQString()).local8Bit());
 
   if (!cert) {
     KMessageBox::error(this, i18n("Error obtaining the certificate."), i18n("SSL"));
@@ -1460,7 +1460,7 @@ TQDateTime qdt = x->getExpires();
 
 void KCryptoConfig::slotOtherCertSelect() {
 OtherCertItem *x = static_cast<OtherCertItem *>(otherSSLBox->selectedItem());
-TQString iss = TQString::null;
+TQString iss = TQString();
    if (x) {
       otherSSLExport->setEnabled(true);
       otherSSLVerify->setEnabled(true);
@@ -1474,13 +1474,13 @@ TQString iss = TQString::null;
       cacheUntil->setEnabled(true);
       policies->setGroup(x->getMD5());
 
-      KSSLCertificate *cert = KSSLCertificate::fromString(policies->readEntry("Certificate", TQString::null).local8Bit());
+      KSSLCertificate *cert = KSSLCertificate::fromString(policies->readEntry("Certificate", TQString()).local8Bit());
 
       if (cert) {
          TQPalette cspl;
          iss = cert->getIssuer();
          cspl = validFrom->palette();
-         if (TQDateTime::currentDateTime(Qt::UTC) < cert->getQDTNotBefore()) {
+         if (TQDateTime::tqcurrentDateTime(Qt::UTC) < cert->getQDTNotBefore()) {
             cspl.setColor(TQColorGroup::Foreground, TQColor(196,33,21));
          } else {
             cspl.setColor(TQColorGroup::Foreground, TQColor(42,153,59));
@@ -1488,7 +1488,7 @@ TQString iss = TQString::null;
          validFrom->setPalette(cspl);
 
          cspl = validUntil->palette();
-         if (TQDateTime::currentDateTime(Qt::UTC) > cert->getQDTNotAfter()) {
+         if (TQDateTime::tqcurrentDateTime(Qt::UTC) > cert->getQDTNotAfter()) {
             cspl.setColor(TQColorGroup::Foreground, TQColor(196,33,21));
          } else {
             cspl.setColor(TQColorGroup::Foreground, TQColor(42,153,59));
@@ -1498,13 +1498,13 @@ TQString iss = TQString::null;
          validFrom->setText(cert->getNotBefore());
          validUntil->setText(cert->getNotAfter());
          untilDate->setText(x ? KGlobal::locale()->formatDateTime(x->getExpires())
-                              : KGlobal::locale()->formatDateTime(TQDateTime::currentDateTime(Qt::UTC)));
+                              : KGlobal::locale()->formatDateTime(TQDateTime::tqcurrentDateTime(Qt::UTC)));
          untilDate->setEnabled(x && !x->isPermanent());
          pHash->setText(cert->getMD5DigestText());
          delete cert;
       } else {
-         validFrom->setText(TQString::null);
-         validUntil->setText(TQString::null);
+         validFrom->setText(TQString());
+         validUntil->setText(TQString());
          pHash->clear();
       }
 
@@ -1538,15 +1538,15 @@ TQString iss = TQString::null;
       policyPrompt->setChecked(false);
       cachePerm->setEnabled(false);
       cacheUntil->setEnabled(false);
-      validFrom->setText(TQString::null);
-      validUntil->setText(TQString::null);
-      untilDate->setText(TQString::null);
+      validFrom->setText(TQString());
+      validUntil->setText(TQString());
+      untilDate->setText(TQString());
       untilDate->setEnabled(false);
       pHash->clear();
    }
 
 
-   oSubject->setValues(x ? x->getSub() : TQString(TQString::null));
+   oSubject->setValues(x ? x->getSub() : TQString(TQString()));
    oIssuer->setValues(iss);
 
 }
@@ -1554,7 +1554,7 @@ TQString iss = TQString::null;
 
 void KCryptoConfig::slotYourImport() {
 
-   TQString certFile = KFileDialog::getOpenFileName(TQString::null, "application/x-pkcs12");
+   TQString certFile = KFileDialog::getOpenFileName(TQString(), "application/x-pkcs12");
    if (certFile.isEmpty())
       return;
 
@@ -1599,7 +1599,7 @@ TryImportPassAgain:
 
    new YourCertItem(yourSSLBox,
                     cert->toString(),
-                    TQString::null,  // the password - don't store it yet!
+                    TQString(),  // the password - don't store it yet!
                     name,
                     this );
 
@@ -1633,7 +1633,7 @@ YourCertItem *x = static_cast<YourCertItem *>(yourSSLBox->selectedItem());
    }
 
   // For now, we will only export to PKCS#12
-   TQString certFile = KFileDialog::getSaveFileName(TQString::null,
+   TQString certFile = KFileDialog::getSaveFileName(TQString(),
 		                                   "application/x-pkcs12");
    if (certFile.isEmpty())
       return;
@@ -1713,12 +1713,12 @@ TQString iss;
 
    // update the info
    iss = pkcs->getCertificate()->getIssuer();
-   ySubject->setValues(x ? x->getName() : TQString(TQString::null));
+   ySubject->setValues(x ? x->getName() : TQString(TQString()));
    yIssuer->setValues(iss);
    TQPalette cspl;
    KSSLCertificate *cert = pkcs->getCertificate();
    cspl = yValidFrom->palette();
-   if (TQDateTime::currentDateTime(Qt::UTC) < cert->getQDTNotBefore()) {
+   if (TQDateTime::tqcurrentDateTime(Qt::UTC) < cert->getQDTNotBefore()) {
 	   cspl.setColor(TQColorGroup::Foreground, TQColor(196,33,21));
    } else {
 	   cspl.setColor(TQColorGroup::Foreground, TQColor(42,153,59));
@@ -1726,7 +1726,7 @@ TQString iss;
    yValidFrom->setPalette(cspl);
 
    cspl = yValidUntil->palette();
-   if (TQDateTime::currentDateTime(Qt::UTC) > cert->getQDTNotAfter()) {
+   if (TQDateTime::tqcurrentDateTime(Qt::UTC) > cert->getQDTNotAfter()) {
 	   cspl.setColor(TQColorGroup::Foreground, TQColor(196,33,21));
    } else {
 	   cspl.setColor(TQColorGroup::Foreground, TQColor(42,153,59));
@@ -1758,7 +1758,7 @@ TQString iss;
          KSSLCertificate *cert = pkcs->getCertificate();
          iss = cert->getIssuer();
          cspl = yValidFrom->palette();
-         if (TQDateTime::currentDateTime(Qt::UTC) < cert->getQDTNotBefore()) {
+         if (TQDateTime::tqcurrentDateTime(Qt::UTC) < cert->getQDTNotBefore()) {
             cspl.setColor(TQColorGroup::Foreground, TQColor(196,33,21));
          } else {
             cspl.setColor(TQColorGroup::Foreground, TQColor(42,153,59));
@@ -1766,7 +1766,7 @@ TQString iss;
          yValidFrom->setPalette(cspl);
 
          cspl = yValidUntil->palette();
-         if (TQDateTime::currentDateTime(Qt::UTC) > cert->getQDTNotAfter()) {
+         if (TQDateTime::tqcurrentDateTime(Qt::UTC) > cert->getQDTNotAfter()) {
             cspl.setColor(TQColorGroup::Foreground, TQColor(196,33,21));
          } else {
             cspl.setColor(TQColorGroup::Foreground, TQColor(42,153,59));
@@ -1785,7 +1785,7 @@ TQString iss;
       yHash->clear();
    }
 
-   ySubject->setValues(x ? x->getName() : TQString(TQString::null));
+   ySubject->setValues(x ? x->getName() : TQString(TQString()));
    yIssuer->setValues(iss);
 }
 
@@ -1830,7 +1830,7 @@ TQCString oldpass = "";
 
 
 void KCryptoConfig::slotCAImport() {
-    TQString certFile = KFileDialog::getOpenFileName(TQString::null, "application/x-x509-ca-cert");
+    TQString certFile = KFileDialog::getOpenFileName(TQString(), "application/x-x509-ca-cert");
 
     if (certFile.isEmpty())
         return;
@@ -1921,18 +1921,18 @@ void KCryptoConfig::slotCAImport() {
 		if (certStore) { KOSSL::self()->X509_STORE_free(certStore);
 				certStore = NULL; }
 
-		if (certtext.contains("-----BEGIN CERTIFICATE-----")) {
+		if (certtext.tqcontains("-----BEGIN CERTIFICATE-----")) {
 			qf.reset();
-			certtext = TQString::null;
+			certtext = TQString();
 			while (!qf.atEnd()) {
 				TQString xx;
 				qf.readLine(xx, qf.size());
 				certtext += xx;
 			}
-			certtext = certtext.replace("-----BEGIN CERTIFICATE-----", TQString::null);
-			certtext = certtext.replace("-----END CERTIFICATE-----", TQString::null);
+			certtext = certtext.tqreplace("-----BEGIN CERTIFICATE-----", TQString());
+			certtext = certtext.tqreplace("-----END CERTIFICATE-----", TQString());
 			certtext = certtext.stripWhiteSpace();
-			certtext = certtext.replace("\n", TQString::null);
+			certtext = certtext.tqreplace("\n", TQString());
 		} else {
 			// Must [could?] be DER
 			qf.close();
@@ -2003,7 +2003,7 @@ void KCryptoConfig::slotCAImport() {
 
 void KCryptoConfig::offerImportToKMail( const TQString& certFile )
 {
-    if ( KMessageBox::questionYesNo( this, i18n( "Do you want to make this certificate available to KMail as well?" ), TQString::null, i18n("Make Available"), i18n("Do Not Make Available") ) == KMessageBox::Yes ) {
+    if ( KMessageBox::questionYesNo( this, i18n( "Do you want to make this certificate available to KMail as well?" ), TQString(), i18n("Make Available"), i18n("Do Not Make Available") ) == KMessageBox::Yes ) {
        KProcess proc;
        proc << "kleopatra";
        proc << "--import-certificate";
@@ -2057,7 +2057,7 @@ void KCryptoConfig::slotCARestore() {
     if (!sigcfg.hasKey("x509")) continue;
                 new CAItem(caList,
                      (*i),
-                     sigcfg.readEntry("x509", TQString::null),
+                     sigcfg.readEntry("x509", TQString()),
                      sigcfg.readBoolEntry("site", false),
                      sigcfg.readBoolEntry("email", false),
                      sigcfg.readBoolEntry("code", false),
@@ -2073,10 +2073,10 @@ void KCryptoConfig::slotCAItemChanged() {
 CAItem *x = static_cast<CAItem *>(caList->selectedItem());
  if (x) {
     caSSLRemove->setEnabled(true);
-    caSubject->setValues(x ? x->getName() : TQString(TQString::null));
+    caSubject->setValues(x ? x->getName() : TQString(TQString()));
     KSSLCertificate *cert = KSSLCertificate::fromString(x->getCert().local8Bit());
     if (!cert) {
-       caIssuer->setValues(TQString(TQString::null));
+       caIssuer->setValues(TQString(TQString()));
        caSite->setEnabled(false);
        caEmail->setEnabled(false);
        caCode->setEnabled(false);
@@ -2100,8 +2100,8 @@ CAItem *x = static_cast<CAItem *>(caList->selectedItem());
     caSite->setEnabled(false);
     caEmail->setEnabled(false);
     caCode->setEnabled(false);
-    caSubject->setValues(TQString(TQString::null));
-    caIssuer->setValues(TQString(TQString::null));
+    caSubject->setValues(TQString(TQString()));
+    caIssuer->setValues(TQString(TQString()));
     cHash->clear();
  }
 }
@@ -2122,8 +2122,8 @@ CAItem *x = static_cast<CAItem *>(caList->selectedItem());
 
 void KCryptoConfig::slotNewHostAuth() {
     HostAuthItem *j = new HostAuthItem(hostAuthList,
-                                       TQString::null,
-                                       TQString::null,
+                                       TQString(),
+                                       TQString(),
                                        this );
     j->setAction(KSSLCertificateHome::AuthSend);
     hostAuthList->setSelected(j, true);
@@ -2241,7 +2241,7 @@ HostAuthItem *x = static_cast<HostAuthItem *>(hostAuthList->selectedItem());
 
   if (x) {
     if (hostCertBox->currentItem() == 0)
-      x->setCertName(TQString::null);
+      x->setCertName(TQString());
     else x->setCertName(hostCertBox->currentText());
     configChanged();
   }
@@ -2350,7 +2350,7 @@ SSL_CONST SSL_METHOD *meth;
       break;
     // Leak of sc*?
     TQString scn(sc->name);
-    if (scn.contains("ADH-") || scn.contains("NULL-") || scn.contains("DES-CBC3-SHA") || scn.contains("FZA-")) {
+    if (scn.tqcontains("ADH-") || scn.tqcontains("NULL-") || scn.tqcontains("DES-CBC3-SHA") || scn.tqcontains("FZA-")) {
       continue;
     }
     k = SSL_CIPHER_get_bits(sc, &j);
@@ -2378,7 +2378,7 @@ SSL_CONST SSL_METHOD *meth;
       break;
     // Leak of sc*?
     TQString scn(sc->name);
-    if (scn.contains("ADH-") || scn.contains("NULL-") || scn.contains("DES-CBC3-SHA") || scn.contains("FZA-")) {
+    if (scn.tqcontains("ADH-") || scn.tqcontains("NULL-") || scn.tqcontains("DES-CBC3-SHA") || scn.tqcontains("FZA-")) {
       continue;
     }
     k = SSL_CIPHER_get_bits(sc, &j);
@@ -2448,7 +2448,7 @@ bool noneDef, noneHost;
         static_cast<HostAuthItem *>(hostAuthList->firstChild());
                                                               x;
              x = static_cast<HostAuthItem *>(x->nextSibling())) {
-     TQString newValue = TQString::null;
+     TQString newValue = TQString();
      for (int i = 1; i < hostCertBox->count(); i++) {
         if (hostCertBox->text(i) == x->getCertName()) {
            newValue = x->getCertName();

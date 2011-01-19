@@ -86,7 +86,7 @@ KateDocManager::~KateDocManager ()
       {
         m_metaInfos->setGroup(*it);
         TQDateTime last = m_metaInfos->readDateTimeEntry("Time", def);
-        if (last.daysTo(TQDateTime::currentDateTime()) > m_daysMetaInfos)
+        if (last.daysTo(TQDateTime::tqcurrentDateTime()) > m_daysMetaInfos)
           m_metaInfos->deleteGroup(*it);
       }
       delete def;
@@ -194,7 +194,7 @@ const KateDocumentInfo *KateDocManager::documentInfo (Kate::Document *doc)
 
 int KateDocManager::findDocument (Kate::Document *doc)
 {
-  return m_docList.find (doc);
+  return m_docList.tqfind (doc);
 }
 
 uint KateDocManager::documents ()
@@ -306,7 +306,7 @@ bool KateDocManager::closeDocument(class Kate::Document *doc,bool closeURL)
     KateApp::self()->mainWindow(i)->viewManager()->closeViews(documentNumber);
   }
 
-  if ( closeURL && m_tempFiles.contains( documentNumber ) )
+  if ( closeURL && m_tempFiles.tqcontains( documentNumber ) )
   {
     TQFileInfo fi( m_tempFiles[ documentNumber ].first.path() );
     if ( fi.lastModified() <= m_tempFiles[ documentNumber ].second /*||
@@ -583,7 +583,7 @@ void KateDocManager::saveMetaInfos(Kate::Document *doc)
     m_metaInfos->setGroup(doc->url().prettyURL());
     doc->writeSessionConfig(m_metaInfos);
     m_metaInfos->writeEntry("MD5", (const char *)md5);
-    m_metaInfos->writeEntry("Time", TQDateTime::currentDateTime());
+    m_metaInfos->writeEntry("Time", TQDateTime::tqcurrentDateTime());
     m_metaInfos->sync();
   }
 }
@@ -596,7 +596,7 @@ bool KateDocManager::computeUrlMD5(const KURL &url, TQCString &result)
   {
     KMD5 md5;
 
-    if (!md5.update(f))
+    if (!md5.update(TQT_TQIODEVICE_OBJECT(f)))
       return false;
 
     md5.hexDigest(result);

@@ -30,7 +30,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 class KDatePicker;
 class Prefs;
 
-class DatePicker : public QVBox
+class DatePicker : public TQVBox
 {
     public:
         DatePicker(TQWidget*, const TQDate&, Prefs* _prefs);

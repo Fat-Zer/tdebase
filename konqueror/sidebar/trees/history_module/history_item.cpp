@@ -29,7 +29,7 @@
 #include <kiconloader.h>
 
 #define MYMODULE static_cast<KonqSidebarHistoryModule*>(module())
-#define MYGROUP static_cast<KonqSidebarHistoryGroupItem*>(parent())
+#define MYGROUP static_cast<KonqSidebarHistoryGroupItem*>(tqparent())
 
 KonqSidebarHistorySettings * KonqSidebarHistoryItem::s_settings = 0L;
 
@@ -126,30 +126,30 @@ TQString KonqSidebarHistoryItem::toolTipText() const
 }
 
 void KonqSidebarHistoryItem::paintCell( TQPainter *p, const TQColorGroup & cg,
-				 int column, int width, int alignment )
+				 int column, int width, int tqalignment )
 {
     TQDateTime dt;
-    TQDateTime current = TQDateTime::currentDateTime();
+    TQDateTime current = TQDateTime::tqcurrentDateTime();
 
     if ( s_settings->m_metricYoungerThan == KonqSidebarHistorySettings::DAYS )
-	dt = current.addDays( - s_settings->m_valueYoungerThan );
+	dt = TQT_TQDATETIME_OBJECT(current.addDays( - s_settings->m_valueYoungerThan ));
     else
-	dt = current.addSecs( - (s_settings->m_valueYoungerThan * 60) );
+	dt = TQT_TQDATETIME_OBJECT(current.addSecs( - (s_settings->m_valueYoungerThan * 60) ));
 
     if ( m_entry->lastVisited > dt )
 	p->setFont( s_settings->m_fontYoungerThan );
 
     else {
 	if ( s_settings->m_metricOlderThan == KonqSidebarHistorySettings::DAYS )
-	    dt = current.addDays( - s_settings->m_valueOlderThan );
+	    dt = TQT_TQDATETIME_OBJECT(current.addDays( - s_settings->m_valueOlderThan ));
 	else
-	    dt = current.addSecs( - (s_settings->m_valueOlderThan * 60) );
+	    dt = TQT_TQDATETIME_OBJECT(current.addSecs( - (s_settings->m_valueOlderThan * 60) ));
 
 	if ( m_entry->lastVisited < dt )
 	    p->setFont( s_settings->m_fontOlderThan );
     }
 
-    KonqSidebarTreeItem::paintCell( p, cg, column, width, alignment );
+    KonqSidebarTreeItem::paintCell( p, cg, column, width, tqalignment );
 }
 
 ///////////////////////////////////////////////////////////////////

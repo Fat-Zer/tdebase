@@ -1,6 +1,6 @@
 <!DOCTYPE UI><UI version="3.2" stdsetdef="1">
 <class>ManualProxyDlgUI</class>
-<widget class="QWidget">
+<widget class="TQWidget">
     <property name="name">
         <cstring>ManualProxyDlgUI</cstring>
     </property>
@@ -19,7 +19,7 @@
         <property name="margin">
             <number>0</number>
         </property>
-        <widget class="QGroupBox">
+        <widget class="TQGroupBox">
             <property name="name">
                 <cstring>gbServers</cstring>
             </property>
@@ -30,7 +30,7 @@
                 <property name="name">
                     <cstring>unnamed</cstring>
                 </property>
-                <widget class="QLabel" row="2" column="0">
+                <widget class="TQLabel" row="2" column="0">
                     <property name="name">
                         <cstring>lbFtp</cstring>
                     </property>
@@ -49,7 +49,7 @@
                         <cstring>leFtp</cstring>
                     </property>
                 </widget>
-                <widget class="QLabel" row="1" column="0">
+                <widget class="TQLabel" row="1" column="0">
                     <property name="name">
                         <cstring>lbHttps</cstring>
                     </property>
@@ -68,7 +68,7 @@
                         <cstring>leHttps</cstring>
                     </property>
                 </widget>
-                <widget class="QLabel" row="0" column="0">
+                <widget class="TQLabel" row="0" column="0">
                     <property name="name">
                         <cstring>lbHttp</cstring>
                     </property>
@@ -137,7 +137,7 @@
                     <property name="name">
                         <cstring>sbHttp</cstring>
                     </property>
-                    <property name="maximumSize">
+                    <property name="tqmaximumSize">
                         <size>
                             <width>32767</width>
                             <height>32767</height>
@@ -160,14 +160,14 @@
                     <property name="sizeType">
                         <enum>Minimum</enum>
                     </property>
-                    <property name="sizeHint">
+                    <property name="tqsizeHint">
                         <size>
                             <width>51</width>
                             <height>20</height>
                         </size>
                     </property>
                 </spacer>
-                <widget class="QCheckBox" row="3" column="1" rowspan="1" colspan="2">
+                <widget class="TQCheckBox" row="3" column="1" rowspan="1" colspan="2">
                     <property name="name">
                         <cstring>cbSameProxy</cstring>
                     </property>
@@ -175,7 +175,7 @@
                         <string>&amp;Use the same proxy server for all protocols</string>
                     </property>
                 </widget>
-                <widget class="QPushButton" row="0" column="3">
+                <widget class="TQPushButton" row="0" column="3">
                     <property name="name">
                         <cstring>pbCopyDown</cstring>
                     </property>
@@ -185,7 +185,7 @@
                 </widget>
             </grid>
         </widget>
-        <widget class="QGroupBox">
+        <widget class="TQGroupBox">
             <property name="name">
                 <cstring>gbExceptions</cstring>
             </property>
@@ -196,7 +196,7 @@
                 <property name="name">
                     <cstring>unnamed</cstring>
                 </property>
-                <widget class="QCheckBox">
+                <widget class="TQCheckBox">
                     <property name="name">
                         <cstring>cbReverseProxy</cstring>
                     </property>
@@ -209,7 +209,7 @@ Reverse the use of the exception list. Checking this box will result in the prox
 &lt;/qt&gt;</string>
                     </property>
                 </widget>
-                <widget class="QLayoutWidget">
+                <widget class="TQLayoutWidget">
                     <property name="name">
                         <cstring>layout2</cstring>
                     </property>
@@ -217,7 +217,7 @@ Reverse the use of the exception list. Checking this box will result in the prox
                         <property name="name">
                             <cstring>unnamed</cstring>
                         </property>
-                        <widget class="QPushButton" row="3" column="1">
+                        <widget class="TQPushButton" row="3" column="1">
                             <property name="name">
                                 <cstring>pbDeleteAll</cstring>
                             </property>
@@ -231,7 +231,7 @@ Reverse the use of the exception list. Checking this box will result in the prox
                                 <string>Remove all proxy exception addresses from the list.</string>
                             </property>
                         </widget>
-                        <widget class="QPushButton" row="2" column="1">
+                        <widget class="TQPushButton" row="2" column="1">
                             <property name="name">
                                 <cstring>pbDelete</cstring>
                             </property>
@@ -245,7 +245,7 @@ Reverse the use of the exception list. Checking this box will result in the prox
                                 <string>Remove the selected proxy exception address from the list.</string>
                             </property>
                         </widget>
-                        <widget class="QPushButton" row="0" column="1">
+                        <widget class="TQPushButton" row="0" column="1">
                             <property name="name">
                                 <cstring>pbNew</cstring>
                             </property>
@@ -256,7 +256,7 @@ Reverse the use of the exception list. Checking this box will result in the prox
                                 <string>Add new proxy exception address to the list.</string>
                             </property>
                         </widget>
-                        <widget class="QPushButton" row="1" column="1">
+                        <widget class="TQPushButton" row="1" column="1">
                             <property name="name">
                                 <cstring>pbChange</cstring>
                             </property>
@@ -280,7 +280,7 @@ Reverse the use of the exception list. Checking this box will result in the prox
                             <property name="sizeType">
                                 <enum>Expanding</enum>
                             </property>
-                            <property name="sizeHint">
+                            <property name="tqsizeHint">
                                 <size>
                                     <width>20</width>
                                     <height>114</height>

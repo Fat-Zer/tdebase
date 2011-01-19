@@ -45,8 +45,8 @@ private:
   bool 		(*getlistbox) (TQListView *);
   TQString title;
   
-  QLabel	*NoInfoText;
-  QString	ErrorString;
+  TQLabel	*NoInfoText;
+  TQString	ErrorString;
   TQWidgetStack  *widgetStack;
 };
 

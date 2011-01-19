@@ -29,7 +29,7 @@ class TQSpinBox;
 
 class KfDirDialog;
 
-class KfindTabWidget: public QTabWidget
+class KfindTabWidget: public TQTabWidget
 {
   Q_OBJECT
 
@@ -49,7 +49,7 @@ public:
 
   void setURL( const KURL & url );
 
-  virtual TQSize sizeHint() const;
+  virtual TQSize tqsizeHint() const;
 
 public slots:
   void setFocus();
@@ -119,7 +119,7 @@ private:
   TQStringList m_AudioTypes;
 };
 
-class KDigitValidator : public QValidator
+class KDigitValidator : public TQValidator
 {
   Q_OBJECT
 

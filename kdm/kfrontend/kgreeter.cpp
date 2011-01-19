@@ -79,7 +79,7 @@ class UserListView : public KListView {
 		: KListView( parent, name )
 		, themed(_them), cachedSizeHint( -1, 0 )
 	{
-		setSizePolicy( TQSizePolicy::Preferred, TQSizePolicy::Ignored );
+		tqsetSizePolicy( TQSizePolicy::Preferred, TQSizePolicy::Ignored );
 		header()->hide();
 		addColumn( TQString::null );
 		setColumnAlignment( 0, AlignVCenter );
@@ -105,10 +105,10 @@ class UserListView : public KListView {
         return sum;
     }
 public:
-	virtual TQSize sizeHint() const
+	virtual TQSize tqsizeHint() const
 	{
 	  if (themed)
-            return KListView::sizeHint();
+            return KListView::tqsizeHint();
 
 		if (!cachedSizeHint.isValid()) {
 			constPolish();
@@ -119,7 +119,7 @@ public:
 					maxw = thisw;
 			}
 			cachedSizeHint.setWidth(
-				style().pixelMetric( TQStyle::PM_ScrollBarExtent ) +
+				tqstyle().tqpixelMetric( TQStyle::PM_ScrollBarExtent ) +
 				frameWidth() * 2 + maxw );
 		}
 		return cachedSizeHint;
@@ -133,14 +133,14 @@ public:
         // painting of list background for now.
         return KListView::paintEmptyArea(p, rect );
 
-        const TQPixmap *pm = paletteBackgroundPixmap();
+        const TQPixmap *pm = TQT_TQPIXMAP_CONST(paletteBackgroundPixmap());
         if (!pm || pm->isNull())
             return;
 
         kdDebug() << "paintEmpty " << rect << endl;
         TQRect devRect = p->xForm( rect );
         kdDebug() << "paintEmpty2 " << devRect << endl;
-        p->drawPixmap(0, 0, *pm, devRect.left(), devRect.top() );
+        p->tqdrawPixmap(0, 0, *pm, devRect.left(), devRect.top() );
     }
 
     TQPixmap background;
@@ -207,7 +207,7 @@ void KGreeter::readFacesList()
         if ( line.isEmpty() )
             continue;
         TQString icon;
-        int index = line.find( ' ' );
+        int index = line.tqfind( ' ' );
         if ( index > 0 ) {
             icon = line.left( index );
             line = line.mid( index );
@@ -235,12 +235,12 @@ class UserListViewItem : public KListViewItem {
 		parent->cachedSizeHint.setWidth( -1 );
 	}
 
-        virtual void paintCell(TQPainter *p, const TQColorGroup &cg, int column, int width, int alignment)
+        virtual void paintCell(TQPainter *p, const TQColorGroup &cg, int column, int width, int tqalignment)
     {
       if (((UserListView*)listView())->themed)
-        TQListViewItem::paintCell(p, cg, column, width, alignment);
+        TQListViewItem::paintCell(p, cg, column, width, tqalignment);
       else
-	KListViewItem::paintCell(p, cg, column, width, alignment);
+	KListViewItem::paintCell(p, cg, column, width, tqalignment);
     }
 
 	TQString login;
@@ -277,7 +277,7 @@ KGreeter::insertUser( const TQImage &default_pix,
 		dp ^= 1;
 		TQCString fn = !dp ?
 		              TQCString( ps->pw_dir ) + '/' :
-		              TQFile::encodeName( _faceDir + '/' + username );
+		              TQCString(TQFile::encodeName( _faceDir + '/' + username ));
 		fn += ".face.icon";
 		int fd, ico;
 		if ((fd = open( fn.data(), O_RDONLY | O_NONBLOCK )) < 0) {
@@ -302,7 +302,7 @@ KGreeter::insertUser( const TQImage &default_pix,
 		TQBuffer buf( fc );
 		buf.open( IO_ReadOnly );
 		TQImageIO ir;
-		ir.setIODevice( &buf );
+		ir.setIODevice( TQT_TQIODEVICE(&buf) );
 		if (!ir.read()) {
 			LogInfo( "%s is no valid image\n", fn.data() );
 			continue;
@@ -310,7 +310,7 @@ KGreeter::insertUser( const TQImage &default_pix,
 		p = ir.image();
 		TQSize ns( 48, 48 );
 		if (p.size() != ns)
-			p = p.convertDepth( 32 ).smoothScale( ns, TQImage::ScaleMin );
+			p = p.convertDepth( 32 ).smoothScale( ns, TQ_ScaleMin );
 		break;
 	} while (--nd >= 0);
 
@@ -319,7 +319,7 @@ KGreeter::insertUser( const TQImage &default_pix,
             if ( randomFace.isNull() ) {
                 TQStringList::size_type index = 0;
                 for ( size_t i = 0; i < username.length(); ++i )
-                    index += ( 0x7f - username.at( i ).latin1() ) % 37;
+                    index += ( 0x7f - username.tqat( i ).latin1() ) % 37;
                 randomFace = randomFaces[ index % randomFaces.count() ];
             }
             p.load( _faceDir + "/../pics/users/" + randomFace + ".png" );
@@ -329,7 +329,7 @@ KGreeter::insertUser( const TQImage &default_pix,
             p = default_pix;
 
 	TQString realname = KStringHandler::from8Bit( ps->pw_gecos );
-	realname.truncate( realname.find( ',' ) );
+	realname.truncate( realname.tqfind( ',' ) );
 	if (realname.isEmpty() || realname == username)
 		new UserListViewItem( userView, username, TQPixmap( p ), username );
 	else {
@@ -343,7 +343,7 @@ KGreeter::insertUser( const TQImage &default_pix,
 
 class KCStringList : public TQValueList<TQCString> {
   public:
-	bool contains( const char *str ) const
+	bool tqcontains( const char *str ) const
 	{
 		for (ConstIterator it = begin(); it != end(); ++it)
 			if (*it == str)
@@ -355,9 +355,9 @@ class KCStringList : public TQValueList<TQCString> {
 class UserList {
   public:
 	UserList( char **in );
-	bool hasUser( const char *str ) const { return users.contains( str ); }
+	bool hasUser( const char *str ) const { return users.tqcontains( str ); }
 	bool hasGroup( gid_t gid ) const
-		{ return groups.find( gid ) != groups.end(); }
+		{ return groups.tqfind( gid ) != groups.end(); }
 	bool hasGroups() const { return !groups.isEmpty(); }
 	KCStringList users;
 
@@ -396,7 +396,7 @@ KGreeter::insertUsers(int limit_users)
 		TQSize ns( 48, 48 );
 		if (default_pix.size() != ns)
 			default_pix =
-			  default_pix.convertDepth( 32 ).smoothScale( ns, TQImage::ScaleMin );
+			  default_pix.convertDepth( 32 ).smoothScale( ns, TQ_ScaleMin );
 	}
 	if (_showUsers == SHOW_ALL) {
 		UserList noUsers( _noUsers );
@@ -412,7 +412,7 @@ KGreeter::insertUsers(int limit_users)
 			    !noUsers.hasGroup( ps->pw_gid ))
 			{
 				TQString username( TQFile::decodeName( ps->pw_name ) );
-				if (!dupes.find( username )) {
+				if (!dupes.tqfind( username )) {
 					dupes.insert( username, (int *)-1 );
                                         toinsert.append( username );
 
@@ -443,7 +443,7 @@ KGreeter::insertUsers(int limit_users)
 // 			    !noUsers.hasGroup( ps->pw_gid ))
 //                         {
 //                             TQString username( TQFile::decodeName( ent->ut_user ) );
-//                             if (!dupes.find( username )) {
+//                             if (!dupes.tqfind( username )) {
 //                                 dupes.insert( username, (int *)-1 );
 //                                 toinsert.append( username );
 //                                 count++;
@@ -477,7 +477,7 @@ KGreeter::insertUsers(int limit_users)
 				     users.hasGroup( ps->pw_gid )))
 				{
 					TQString username( TQFile::decodeName( ps->pw_name ) );
-					if (!dupes.find( username )) {
+					if (!dupes.tqfind( username )) {
 						dupes.insert( username, (int *)-1 );
 						insertUser( default_pix, username, ps );
 					}
@@ -786,14 +786,14 @@ KStdGreeter::KStdGreeter()
 		               i18n("This display requires no X authorization.\n"
 		                    "This means that anybody can connect to it,\n"
 		                    "open windows on it or intercept your input.") );
-		complainLabel->setAlignment( AlignCenter );
+		complainLabel->tqsetAlignment( AlignCenter );
 		complainLabel->setFont( _failFont );
 		complainLabel->setPaletteForegroundColor( Qt::red );
 		inner_box->addWidget( complainLabel );
 	}
 	if (!_greetString.isEmpty()) {
 		TQLabel *welcomeLabel = new TQLabel( _greetString, this );
-		welcomeLabel->setAlignment( AlignCenter );
+		welcomeLabel->tqsetAlignment( AlignCenter );
 		welcomeLabel->setFont( _greetFont );
 		inner_box->addWidget( welcomeLabel );
 	}

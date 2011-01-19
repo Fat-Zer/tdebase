@@ -129,7 +129,7 @@ void PanelBrowserMenu::initialize()
     }
 
     // get entry list
-    const QFileInfoList *list = dir.entryInfoList();
+    const TQFileInfoList *list = dir.entryInfoList();
 
     // no list -> read error
     if (!list) {
@@ -163,7 +163,7 @@ void PanelBrowserMenu::initialize()
     int run_id = _startid;
 
     // get list iterator
-    QFileInfoListIterator it(*list);
+    TQFileInfoListIterator it(*list);
 
     // jump to startid
     it += _startid;
@@ -244,7 +244,7 @@ void PanelBrowserMenu::initialize()
                 title = c.readEntry("Name", title);
 
                 TQString s = c.readEntry("Icon");
-                if(!_icons->contains(s)) {
+                if(!_icons->tqcontains(s)) {
                     icon  = KGlobal::iconLoader()->loadIcon(s, KIcon::Small, KIcon::SizeSmall,
                                                             KIcon::DefaultState, 0, true);
 
@@ -344,7 +344,7 @@ void PanelBrowserMenu::append(const TQPixmap &pixmap, const TQString &title, con
     // avoid &'s being converted to accelerators
     TQString newTitle = title;
     newTitle = KStringHandler::cEmSqueeze( newTitle, fontMetrics(), 20 );
-    newTitle.replace("&", "&&");
+    newTitle.tqreplace("&", "&&");
 
     // insert menu item
     int id = insertItem(pixmap, newTitle);
@@ -362,7 +362,7 @@ void PanelBrowserMenu::append(const TQPixmap &pixmap, const TQString &title, Pan
     // avoid &'s being converted to accelerators
     TQString newTitle = title;
     newTitle = KStringHandler::cEmSqueeze( newTitle, fontMetrics(), 20 );
-    newTitle.replace("&", "&&");
+    newTitle.tqreplace("&", "&&");
 
     // insert submenu
     insertItem(pixmap, newTitle, subMenu);
@@ -380,7 +380,7 @@ void PanelBrowserMenu::mouseMoveEvent(TQMouseEvent *e)
 {
     TQPopupMenu::mouseMoveEvent(e);
 
-    if (!(e->state() & LeftButton)) return;
+    if (!(e->state() & Qt::LeftButton)) return;
     if(_lastpress == TQPoint(-1, -1)) return;
 
     // DND delay
@@ -388,7 +388,7 @@ void PanelBrowserMenu::mouseMoveEvent(TQMouseEvent *e)
 
     // get id
     int id = idAt(_lastpress);
-    if(!_filemap.contains(id)) return;
+    if(!_filemap.tqcontains(id)) return;
 
     // reset _lastpress
     _lastpress = TQPoint(-1, -1);
@@ -429,7 +429,7 @@ void PanelBrowserMenu::dragMoveEvent(TQDragMoveEvent *ev)
 void PanelBrowserMenu::dropEvent( TQDropEvent *ev )
 {
     KURL u( path() );
-    KFileItem item( u, TQString::fromLatin1( "inode/directory" ),  KFileItem::Unknown );
+    KFileItem item( u, TQString::tqfromLatin1( "inode/directory" ),  KFileItem::Unknown );
     KonqOperations::doDrop( &item, u, ev, this );
     KPanelMenu::dropEvent(ev);
     // ### TODO: Update list
@@ -439,7 +439,7 @@ void PanelBrowserMenu::slotExec(int id)
 {
     kapp->propagateSessionManager();
 
-    if(!_filemap.contains(id)) return;
+    if(!_filemap.tqcontains(id)) return;
 
     KURL url;
     url.setPath(path() + "/" + _filemap[id]);
@@ -494,9 +494,9 @@ void PanelBrowserMenu::slotMimeCheck()
 //    kdDebug() << url.url() << ": " << icon << endl;
 
     file = KStringHandler::cEmSqueeze( file, fontMetrics(), 20 );
-    file.replace("&", "&&");
+    file.tqreplace("&", "&&");
 
-    if(!_icons->contains(icon)) {
+    if(!_icons->tqcontains(icon)) {
         TQPixmap pm = SmallIcon(icon);
         if( pm.height() > 16 )
         {

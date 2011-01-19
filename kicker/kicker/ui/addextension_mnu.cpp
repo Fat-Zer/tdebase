@@ -44,7 +44,7 @@ void PanelAddExtensionMenu::slotAboutToShow()
     AppletInfo::List::const_iterator it = extensions.constBegin();
     for( int i = 0; it != extensions.constEnd(); ++it, ++i ) {
         const AppletInfo& ai = (*it);
-        insertItem( ai.name().replace( "&", "&&" ), i );
+        insertItem( ai.name().tqreplace( "&", "&&" ), i );
         if ( ai.isUniqueApplet() && PluginManager::the()->hasInstance(ai) ) {
             setItemEnabled( i, false );
             setItemChecked( i, true );

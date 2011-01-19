@@ -242,7 +242,7 @@ void KQuery::processQuery( KFileItem* file)
           return;
         break;
       default:
-        if (!m_mimetype.isEmpty() && !m_mimetype.contains(file->mimetype()))
+        if (!m_mimetype.isEmpty() && !m_mimetype.tqcontains(file->mimetype()))
           return;
     }
 
@@ -270,7 +270,7 @@ void KQuery::processQuery( KFileItem* file)
              continue;
           metaitem=metadatas.item(*it);
           strmetakeycontent=metaitem.string();
-          if(strmetakeycontent.find(m_metainfo)!=-1)
+          if(strmetakeycontent.tqfind(m_metainfo)!=-1)
           {
              foundmeta=true;
              break;
@@ -285,7 +285,7 @@ void KQuery::processQuery( KFileItem* file)
     if (!m_context.isEmpty())
     {
 
-       if( !m_search_binary && ignore_mimetypes.findIndex(file->mimetype()) != -1 ) {
+       if( !m_search_binary && ignore_mimetypes.tqfindIndex(file->mimetype()) != -1 ) {
          kdDebug() << "ignoring, mime type is in exclusion list: " << file->url() << endl;
          return;
        }
@@ -303,8 +303,8 @@ void KQuery::processQuery( KFileItem* file)
        TQByteArray zippedXmlFileContent;
 
        // KWord's and OpenOffice.org's files are zipped...
-       if( ooo_mimetypes.findIndex(file->mimetype()) != -1 ||
-           koffice_mimetypes.findIndex(file->mimetype()) != -1 )
+       if( ooo_mimetypes.tqfindIndex(file->mimetype()) != -1 ||
+           koffice_mimetypes.tqfindIndex(file->mimetype()) != -1 )
        {
          KZip zipfile(file->url().path());
          KZipFileEntry *zipfileEntry;
@@ -313,7 +313,7 @@ void KQuery::processQuery( KFileItem* file)
          {
            const KArchiveDirectory *zipfileContent = zipfile.directory();
 
-           if( koffice_mimetypes.findIndex(file->mimetype()) != -1 )
+           if( koffice_mimetypes.tqfindIndex(file->mimetype()) != -1 )
              zipfileEntry = (KZipFileEntry*)zipfileContent->entry("maindoc.xml");
            else
              zipfileEntry = (KZipFileEntry*)zipfileContent->entry("content.xml"); //for OpenOffice.org
@@ -359,7 +359,7 @@ void KQuery::processQuery( KFileItem* file)
 
           if (str.isNull()) break;
           if(isZippedOfficeDocument)
-            str.replace(xmlTags, "");
+            str.tqreplace(xmlTags, "");
 
           if (m_regexpForContent)
           {
@@ -373,7 +373,7 @@ void KQuery::processQuery( KFileItem* file)
           else
           {
              if ((!str.isNull()) && (!m_context.isNull())) {
-                 if (str.find(m_context, 0, m_casesensitive) != -1)
+                 if (str.tqfind(m_context, 0, m_casesensitive) != -1)
                  {
                     matchingLine=TQString::number(matchingLineNumber)+": "+str;
                     found = true;
@@ -458,7 +458,7 @@ void KQuery::setRegExp(const TQString &regexp, bool caseSensitive)
 //  m_regexpsContainsGlobs.clear();
   for ( TQStringList::ConstIterator it = strList.begin(); it != strList.end(); ++it ) {
     regExp = new TQRegExp((*it),caseSensitive,true);
-//    m_regexpsContainsGlobs.append(regExp->pattern().contains(globChars));
+//    m_regexpsContainsGlobs.append(regExp->pattern().tqcontains(globChars));
     m_regexps.append(regExp);
   }
 }

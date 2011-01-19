@@ -27,7 +27,7 @@
 @author Ralf Hoelzer
 */
 
-class KPrivacyManager : public QObject
+class KPrivacyManager : public TQObject
 {
 Q_OBJECT
 public:

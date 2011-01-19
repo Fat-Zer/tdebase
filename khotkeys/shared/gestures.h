@@ -101,7 +101,7 @@ class KDE_EXPORT Gesture
 // Gesture class must be TQWidget derived because of x11Event()
 // but it should be TQObject owned -> use a TQObject proxy that will delete it
 class DeleteObject
-    : public QObject
+    : public TQObject
     {
     Q_OBJECT
     public:

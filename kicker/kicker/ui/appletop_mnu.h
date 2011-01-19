@@ -29,7 +29,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 class AppletInfo;
 
 // The button operations menu (usually right click)
-class PanelAppletOpMenu : public QPopupMenu
+class PanelAppletOpMenu : public TQPopupMenu
 {
 Q_OBJECT
 

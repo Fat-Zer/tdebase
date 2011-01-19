@@ -39,7 +39,7 @@
 #include "modules.h"
 #include "proxywidget.h"
 
-class ModuleTitle : public QHBox
+class ModuleTitle : public TQHBox
 {
   public:
     ModuleTitle( TQWidget *parent, const char *name=0 );
@@ -131,7 +131,7 @@ DockContainer::DockContainer(TQWidget *parent)
   , _module(0L)
 {
   _busyw = new TQLabel(i18n("<big><b>Loading...</b></big>"), this);
-  _busyw->setAlignment(AlignCenter);
+  _busyw->tqsetAlignment(AlignCenter);
   _busyw->setTextFormat(RichText);
   _busyw->setGeometry(0,0, width(), height());
   addWidget( _busyw );
@@ -163,7 +163,7 @@ void DockContainer::setBaseWidget(TQWidget *widget)
 
 ProxyWidget* DockContainer::loadModule( ConfigModule *module )
 {
-  TQApplication::setOverrideCursor( waitCursor );
+  TQApplication::setOverrideCursor( tqwaitCursor );
 
   ProxyWidget *widget = _modulew->load( module );
 
@@ -221,7 +221,7 @@ i18n("There are unsaved changes in the active module.\n"
 
   ProxyWidget *widget = loadModule( module );
 
-  KCGlobal::repairAccels( topLevelWidget() );
+  KCGlobal::repairAccels( tqtopLevelWidget() );
   return ( widget!=0 );
 }
 

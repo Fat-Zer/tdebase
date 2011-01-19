@@ -151,7 +151,7 @@ static Rules* findRule( const TQValueList< Rules* >& rules, Window wid, bool who
     Rules* ret = new Rules;
     if( whole_app )
         {
-        ret->description = i18n( "Application settings for %1" ).arg( wmclass_class );
+        ret->description = i18n( "Application settings for %1" ).tqarg( static_cast<const char *>(wmclass_class) );
         // TODO maybe exclude some types? If yes, then also exclude them above
         // when searching.
         ret->types = NET::AllTypesMask; 
@@ -175,7 +175,7 @@ static Rules* findRule( const TQValueList< Rules* >& rules, Window wid, bool who
             }
         return ret;
         }
-    ret->description = i18n( "Window settings for %1" ).arg( wmclass_class );
+    ret->description = i18n( "Window settings for %1" ).tqarg( static_cast<const char *>(wmclass_class) );
     if( type == NET::Unknown )
         ret->types = NET::NormalMask;
     else
@@ -248,7 +248,7 @@ static int edit( Window wid, bool whole_app )
         }
     else if( edited_rule != orig_rule )
         {
-        TQValueList< Rules* >::Iterator pos = rules.find( orig_rule );
+        TQValueList< Rules* >::Iterator pos = rules.tqfind( orig_rule );
         if( pos != rules.end())
             *pos = edited_rule;
         else
@@ -258,7 +258,7 @@ static int edit( Window wid, bool whole_app )
     saveRules( rules );
     if( !kapp->dcopClient()->isAttached())
         kapp->dcopClient()->attach();
-    kapp->dcopClient()->send("kwin*", "", "reconfigure()", "");
+    kapp->dcopClient()->send("kwin*", "", "reconfigure()", TQString(""));
     return 0;
     }
     

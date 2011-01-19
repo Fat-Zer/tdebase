@@ -113,7 +113,7 @@ bool MediaNotifier::autostart( const KFileItem &medium )
 	TQString mimetype = medium.mimetype();
 
 	bool is_cdrom = mimetype.startsWith( "media/cd" ) || mimetype.startsWith( "media/dvd" );
-	bool is_mounted = mimetype.contains( "_mounted" );
+	bool is_mounted = mimetype.tqcontains( "_mounted" );
 	
 	// We autorun only on CD/DVD or removable disks (USB, Firewire)
 	if ( !( is_cdrom || is_mounted )
@@ -222,7 +222,7 @@ bool MediaNotifier::execAutoopen( const KFileItem &medium, const TQString &path,
 
 	// The relative path MUST NOT contain path components that
 	// refer to a parent directory ( ../ )
-	if ( relative_path.startsWith( "/" ) || relative_path.contains( "../" ) )
+	if ( relative_path.startsWith( "/" ) || relative_path.tqcontains( "../" ) )
 	{
 		return false;
 	}
@@ -369,7 +369,7 @@ void MediaNotifier::slotFreeCancel()
 
 void MediaNotifier::slotFreeFinished( KMessageBox::ButtonCode res )
 {
-    TQCheckBox *checkbox = ::qt_cast<TQCheckBox*>( m_freeDialog->child( 0, "TQCheckBox" ) );
+    TQCheckBox *checkbox = ::tqqt_cast<TQCheckBox*>( m_freeDialog->child( 0, "TQCheckBox" ) );
     if ( checkbox && checkbox->isChecked() )
         KMessageBox::saveDontShowAgainYesNo("dontagainfreespace", res);
     m_freeDialog->delayedDestruct();

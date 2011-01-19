@@ -94,9 +94,9 @@ CookieProp* CookieListViewItem::leaveCookie()
 TQString CookieListViewItem::text(int f) const
 {
     if (mCookie)
-        return f == 0 ? TQString::null : KIDNA::toUnicode(mCookie->host);
+        return f == 0 ? TQString() : KIDNA::toUnicode(mCookie->host);
     else
-        return f == 0 ? KIDNA::toUnicode(mDomain) : TQString::null;
+        return f == 0 ? KIDNA::toUnicode(mDomain) : TQString();
 }
 
 KCookiesManagement::KCookiesManagement(TQWidget *parent)
@@ -285,9 +285,9 @@ void KCookiesManagement::getCookies(TQListViewItem *cookieDom)
   DCOPReply reply = DCOPRef ("kded", "kcookiejar").call ("findCookies",
                                                          DCOPArg(fields, "TQValueList<int>"),
                                                          ckd->domain(),
-                                                         TQString::null,
-                                                         TQString::null,
-                                                         TQString::null);
+                                                         TQString(),
+                                                         TQString(),
+                                                         TQString());
   if(reply.isValid())
   {
     TQStringList fieldVal = reply;
@@ -383,7 +383,7 @@ void KCookiesManagement::doPolicy()
 
     if( domain.isEmpty() )
     {
-      CookieListViewItem *parent = static_cast<CookieListViewItem*>( item->parent() );
+      CookieListViewItem *parent = static_cast<CookieListViewItem*>( item->tqparent() );
 
       if ( parent )
         domain = parent->domain ();
@@ -407,8 +407,8 @@ void KCookiesManagement::deleteCookie(TQListViewItem* deleteItem)
   CookieListViewItem *item = static_cast<CookieListViewItem*>( deleteItem );
   if( item->cookie() )
   {
-    CookieListViewItem *parent = static_cast<CookieListViewItem*>(item->parent());
-    CookiePropList *list = deletedCookies.find(parent->domain());
+    CookieListViewItem *parent = static_cast<CookieListViewItem*>(item->tqparent());
+    CookiePropList *list = deletedCookies.tqfind(parent->domain());
     if(!list)
     {
       list = new CookiePropList;

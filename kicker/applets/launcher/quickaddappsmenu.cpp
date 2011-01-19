@@ -53,7 +53,7 @@ QuickAddAppsMenu::QuickAddAppsMenu(TQWidget *target, TQWidget *parent, const TQS
 
 void QuickAddAppsMenu::slotExec(int id)
 {
-   if (!entryMap_.contains(id)) return;
+   if (!entryMap_.tqcontains(id)) return;
    KSycocaEntry * e = entryMap_[id];
    KService::Ptr service = static_cast<KService *>(e);
    emit addAppBefore(locate("apps", service->desktopEntryPath()),_sender);

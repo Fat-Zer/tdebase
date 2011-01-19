@@ -69,7 +69,7 @@ class KasBar;
  *
  * @author Richard Moore, rich@kde.org
  */
-class KasPopup : public QHBox
+class KasPopup : public TQHBox
 {
    Q_OBJECT
 

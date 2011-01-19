@@ -62,7 +62,7 @@ namespace Web
 
       int titleHeight_, borderSize_;
 
-      bool shape_;
+      bool tqshape_;
 
       TQBitmap       _buttonBitmap(ButtonType t) const;
   };

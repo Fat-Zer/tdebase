@@ -26,7 +26,7 @@
 /**
   Widget to display the joystick-selected (x,y) position
 */
-class PosWidget : public QWidget
+class PosWidget : public TQWidget
 {
   Q_OBJECT
   

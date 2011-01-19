@@ -62,7 +62,7 @@ Lockout::Lockout( const TQString& configFile, TQWidget *parent, const char *name
     //setFrameStyle(Panel | Sunken);
     setBackgroundOrigin( AncestorOrigin );
 
-    if ( orientation() == Horizontal )
+    if ( orientation() == Qt::Horizontal )
         layout = new TQBoxLayout( this, TQBoxLayout::TopToBottom );
     else
         layout = new TQBoxLayout( this, TQBoxLayout::LeftToRight );
@@ -94,8 +94,8 @@ Lockout::Lockout( const TQString& configFile, TQWidget *parent, const char *name
     if (!kapp->authorize("logout"))
        logoutButton->hide();
 
-    lockButton->setSizePolicy(TQSizePolicy(TQSizePolicy::MinimumExpanding, TQSizePolicy::MinimumExpanding));
-    logoutButton->setSizePolicy(TQSizePolicy(TQSizePolicy::MinimumExpanding, TQSizePolicy::MinimumExpanding));
+    lockButton->tqsetSizePolicy(TQSizePolicy(TQSizePolicy::MinimumExpanding, TQSizePolicy::MinimumExpanding));
+    logoutButton->tqsetSizePolicy(TQSizePolicy(TQSizePolicy::MinimumExpanding, TQSizePolicy::MinimumExpanding));
 
     if ( !kapp->dcopClient()->isAttached() )
         kapp->dcopClient()->attach();
@@ -113,17 +113,17 @@ Lockout::~Lockout()
 // direction and wasting a lot of space.
 void Lockout::checkLayout( int height ) const
 {
-    TQSize s = minimumSizeHint();
+    TQSize s = tqminimumSizeHint();
     TQBoxLayout::Direction direction = layout->direction();
 
     if ( direction == TQBoxLayout::LeftToRight &&
-         ( ( orientation() == Vertical   && s.width() - 2 >= height ) ||
-           ( orientation() == Horizontal && s.width() - 2 < height ) ) ) {
+         ( ( orientation() == Qt::Vertical   && s.width() - 2 >= height ) ||
+           ( orientation() == Qt::Horizontal && s.width() - 2 < height ) ) ) {
         layout->setDirection( TQBoxLayout::TopToBottom );
     }
     else if ( direction == TQBoxLayout::TopToBottom &&
-              ( ( orientation() == Vertical   && s.height() - 2 < height ) ||
-                ( orientation() == Horizontal && s.height() - 2 >= height ) ) ) {
+              ( ( orientation() == Qt::Vertical   && s.height() - 2 < height ) ||
+                ( orientation() == Qt::Horizontal && s.height() - 2 >= height ) ) ) {
         layout->setDirection( TQBoxLayout::LeftToRight );
     }
 }
@@ -131,13 +131,13 @@ void Lockout::checkLayout( int height ) const
 int Lockout::widthForHeight( int height ) const
 {
     checkLayout( height );
-    return sizeHint().width();
+    return tqsizeHint().width();
 }
 
 int Lockout::heightForWidth( int width ) const
 {
     checkLayout( width );
-    return sizeHint().height();
+    return tqsizeHint().height();
 }
 
 void Lockout::lock()
@@ -146,7 +146,7 @@ void Lockout::lock()
     int kicker_screen_number = qt_xscreen();
     if ( kicker_screen_number )
         appname.sprintf("kdesktop-screen-%d", kicker_screen_number);
-    kapp->dcopClient()->send(appname, "KScreensaverIface", "lock()", "");
+    kapp->dcopClient()->send(appname, "KScreensaverIface", "lock()", TQString(""));
 }
 
 void Lockout::logout()
@@ -177,9 +177,9 @@ void Lockout::mouseMoveEvent(TQMouseEvent* e)
 void Lockout::propagateMouseEvent(TQMouseEvent* e)
 {
     if ( !isTopLevel()  ) {
-        TQMouseEvent me(e->type(), mapTo( topLevelWidget(), e->pos() ),
+        TQMouseEvent me(e->type(), mapTo( tqtopLevelWidget(), e->pos() ),
                        e->globalPos(), e->button(), e->state() );
-        TQApplication::sendEvent( topLevelWidget(), &me );
+        TQApplication::sendEvent( tqtopLevelWidget(), &me );
     }
 }
 
@@ -193,10 +193,10 @@ bool Lockout::eventFilter( TQObject *o, TQEvent *e )
         KConfig *conf = config();
         conf->setGroup("lockout");
 
-        TQMouseEvent *me = static_cast<TQMouseEvent *>( e );
-        if( me->button() == TQMouseEvent::RightButton )
+        TQMouseEvent *me = TQT_TQMOUSEEVENT( e );
+        if( me->button() == Qt::RightButton )
         {
-            if( o == lockButton )
+            if( TQT_BASE_OBJECT(o) == TQT_BASE_OBJECT(lockButton) )
             {
                 TQPopupMenu *popup = new TQPopupMenu();
 
@@ -219,7 +219,7 @@ bool Lockout::eventFilter( TQObject *o, TQEvent *e )
 
                 return true;
             }
-            else if ( o == logoutButton )
+            else if ( TQT_BASE_OBJECT(o) == TQT_BASE_OBJECT(logoutButton) )
             {
                 TQPopupMenu *popup = new TQPopupMenu();
 

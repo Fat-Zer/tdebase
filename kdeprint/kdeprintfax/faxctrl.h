@@ -30,7 +30,7 @@
 class KProcess;
 class TQTextEdit;
 
-class FaxCtrl : public QObject
+class FaxCtrl : public TQObject
 {
 	Q_OBJECT
 public:
@@ -64,9 +64,9 @@ protected:
 
 private:
 	KProcess	*m_process;
-	QString		m_log, m_command;
-	QStringList	m_files, m_filteredfiles, m_tempfiles;
-	QTextEdit	*m_logview;
+	TQString		m_log, m_command;
+	TQStringList	m_files, m_filteredfiles, m_tempfiles;
+	TQTextEdit	*m_logview;
 	KdeprintFax::FaxItemList m_faxlist;
 };
 

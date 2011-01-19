@@ -28,7 +28,7 @@ class KDCOPListView : public KListView
 
 };
 
-class DCOPBrowserItem : public QListViewItem
+class DCOPBrowserItem : public TQListViewItem
 {
   public:
 

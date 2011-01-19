@@ -113,7 +113,7 @@ void KBackground::save()
     else
 	appname.sprintf("kdesktop-screen-%d", screen_number);
 
-    client->send(appname, "KBackgroundIface", "configure()", "");
+    client->send(appname, "KBackgroundIface", "configure()", TQString(""));
 }
 
 void KBackground::defaults()

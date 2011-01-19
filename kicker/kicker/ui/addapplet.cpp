@@ -61,7 +61,7 @@ AppletWidget::AppletWidget(const AppletInfo& info, bool odd, TQWidget *parent)
       m_odd(odd),
       m_selected(false)
 {
-    setFocusPolicy(TQWidget::StrongFocus);
+    setFocusPolicy(TQ_StrongFocus);
     setSelected(m_selected);
     
     itemTitle->setText("<h3>" + info.name() + "</h3>");
@@ -84,8 +84,8 @@ bool AppletWidget::eventFilter(TQObject*, TQEvent* e)
 {
     if (e->type() == TQEvent::MouseButtonPress)
     {
-        TQMouseEvent* me = static_cast<TQMouseEvent*>(e);
-        if (me->button() & LeftButton)
+        TQMouseEvent* me = TQT_TQMOUSEEVENT(e);
+        if (me->button() & Qt::LeftButton)
         {
             m_dragStart = me->pos();
         }
@@ -97,7 +97,7 @@ bool AppletWidget::eventFilter(TQObject*, TQEvent* e)
 
     if (e->type() == TQEvent::MouseMove)
     {
-        TQMouseEvent* me = static_cast<TQMouseEvent*>(e);
+        TQMouseEvent* me = TQT_TQMOUSEEVENT(e);
         if ((me->pos() - m_dragStart).manhattanLength() >
             KGlobalSettings::dndEventDelay())
         {
@@ -130,7 +130,7 @@ void AppletWidget::keyPressEvent(TQKeyEvent *e)
     }
     else if (e->key() == Qt::Key_Up)
     {
-        TQKeyEvent fakedKeyPress(TQEvent::KeyPress, Qt::Key_BackTab, 0, 0);
+        TQKeyEvent fakedKeyPress(TQEvent::KeyPress, TQt::Key_BackTab, 0, 0);
         TQKeyEvent fakedKeyRelease(TQEvent::KeyRelease, Key_BackTab, 0, 0);
         TQApplication::sendEvent(this, &fakedKeyPress);
         TQApplication::sendEvent(this, &fakedKeyRelease);
@@ -150,7 +150,7 @@ void AppletWidget::keyPressEvent(TQKeyEvent *e)
 
 void AppletWidget::mousePressEvent(TQMouseEvent *e)
 {
-    if (e->button() == TQMouseEvent::LeftButton)
+    if (e->button() == Qt::LeftButton)
     {
         emit clicked(this);
         m_dragStart = e->pos();
@@ -162,7 +162,7 @@ void AppletWidget::mousePressEvent(TQMouseEvent *e)
 
 void AppletWidget::mouseMoveEvent(TQMouseEvent *e)
 {
-    if (e->button() == TQMouseEvent::LeftButton &&
+    if (e->button() == Qt::LeftButton &&
         !m_dragStart.isNull() &&
         (e->pos() - m_dragStart).manhattanLength() >
          KGlobalSettings::dndEventDelay())
@@ -186,7 +186,7 @@ void AppletWidget::mouseReleaseEvent(TQMouseEvent *e)
 
 void AppletWidget::mouseDoubleClickEvent(TQMouseEvent *e)
 {
-    if (!e->button() == TQMouseEvent::LeftButton)
+    if (!e->button() == Qt::LeftButton)
     {
         AppletItem::mouseDoubleClickEvent(e);
         return;
@@ -291,7 +291,7 @@ void AddAppletDialog::resizeAppletView()
     {
         m_appletBox->layout()->activate();
         w = v->visibleWidth();
-        h = m_appletBox->layout()->minimumSize().height();
+        h = m_appletBox->tqlayout()->tqminimumSize().height();
         v->resizeContents(w, QMAX(h, v->visibleHeight()));
         if (w == m_appletBox->width() && h == m_appletBox->height())
         break;
@@ -305,7 +305,7 @@ bool AddAppletDialog::eventFilter(TQObject *o, TQEvent *e)
     if (e->type() == TQEvent::Resize)
         TQTimer::singleShot(0, this, TQT_SLOT(resizeAppletView()));
     
-    return TQObject::eventFilter(o, e);
+    return TQT_TQOBJECT(this)->TQObject::eventFilter(o, e);
 }
 
 void AddAppletDialog::populateApplets()
@@ -435,7 +435,7 @@ void AddAppletDialog::addApplet(AppletWidget* applet)
 
             // reset the odd/even colouring from this item on down in the list
             bool odd = applet->odd();
-            AppletWidget::List::const_iterator it = m_appletWidgetList.find(applet);
+            AppletWidget::List::const_iterator it = m_appletWidgetList.tqfind(applet);
             for (; it != m_appletWidgetList.constEnd(); ++it)
             {
                 if ((*it)->isHidden())
@@ -456,7 +456,7 @@ void AddAppletDialog::addApplet(AppletWidget* applet)
     if (appletContainer)
     {
         ExtensionContainer* ec =
-           dynamic_cast<ExtensionContainer*>(m_containerArea->topLevelWidget());
+           dynamic_cast<ExtensionContainer*>(m_containerArea->tqtopLevelWidget());
 
         if (ec)
         {
@@ -484,8 +484,8 @@ bool AddAppletDialog::appletMatchesSearch(const AppletWidget* w,
 
     return (m_selectedType == AppletInfo::Undefined ||
             w->info().type() & m_selectedType) &&
-           (w->info().name().contains(s, false) ||
-            w->info().comment().contains(s, false));
+           (w->info().name().tqcontains(s, false) ||
+            w->info().comment().tqcontains(s, false));
 }
 
 void AddAppletDialog::delayedSearch()

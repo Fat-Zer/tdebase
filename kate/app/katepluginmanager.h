@@ -41,7 +41,7 @@ class KatePluginInfo
 
 typedef TQValueList<KatePluginInfo> KatePluginList;
 
-class KatePluginManager : public QObject
+class KatePluginManager : public TQObject
 {
   Q_OBJECT
 

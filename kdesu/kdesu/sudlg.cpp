@@ -26,7 +26,7 @@ KDEsuDialog::KDEsuDialog(TQCString user, TQCString auth_user, bool enableKeep,co
     }
 
     m_User = auth_user;
-    setCaption(i18n("Run as %1").arg(user));
+    setCaption(i18n("Run as %1").arg(static_cast<const char *>(user)));
 
     TQString prompt;
     if (superUserCommand == "sudo" && m_User == "root") {
@@ -39,7 +39,7 @@ KDEsuDialog::KDEsuDialog(TQCString user, TQCString auth_user, bool enableKeep,co
         } else {
 	    prompt = i18n("The action you requested needs additional privileges. "
 		"Please enter the password for \"%1\" below or click "
-		"Ignore to continue with your current privileges.").arg(m_User);
+		"Ignore to continue with your current privileges.").arg(static_cast<const char *>(m_User));
 	}
     }
     setPrompt(prompt);

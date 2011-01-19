@@ -35,7 +35,7 @@ class KListView;
 
 typedef TQMap<TQString, TQString> KonqProfileMap;
 
-class KonqProfileItem : public QListViewItem
+class KonqProfileItem : public TQListViewItem
 {
 public:
   KonqProfileItem( KListView *, const TQString & );

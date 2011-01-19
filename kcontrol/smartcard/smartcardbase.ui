@@ -74,7 +74,7 @@
                                 <property name="sizeType">
                                     <enum>Fixed</enum>
                                 </property>
-                                <property name="sizeHint">
+                                <property name="tqsizeHint">
                                     <size>
                                         <width>15</width>
                                         <height>20</height>
@@ -118,7 +118,7 @@
                         <property name="sizeType">
                             <enum>Expanding</enum>
                         </property>
-                        <property name="sizeHint">
+                        <property name="tqsizeHint">
                             <size>
                                 <width>20</width>
                                 <height>20</height>
@@ -250,7 +250,7 @@
                                     <property name="text">
                                         <string>To add new readers you have to modify /etc/readers.conf file and re-start pcscd</string>
                                     </property>
-                                    <property name="alignment">
+                                    <property name="tqalignment">
                                         <set>WordBreak|AlignVCenter</set>
                                     </property>
                                 </widget>

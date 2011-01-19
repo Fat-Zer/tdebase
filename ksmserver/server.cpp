@@ -297,7 +297,7 @@ void KSMGetPropertiesProc (
 }
 
 
-class KSMListener : public QSocketNotifier
+class KSMListener : public TQSocketNotifier
 {
 public:
     KSMListener( IceListenObj obj )
@@ -310,7 +310,7 @@ public:
     IceListenObj listenObj;
 };
 
-class KSMConnection : public QSocketNotifier
+class KSMConnection : public TQSocketNotifier
 {
  public:
   KSMConnection( IceConn conn )
@@ -632,9 +632,9 @@ KSMServer::KSMServer( const TQString& windowManager, bool _only_local )
         TQCString fName = TQFile::encodeName(locateLocal("socket", "KSMserver"));
         TQCString display = ::getenv("DISPLAY");
         // strip the screen number from the display
-        display.replace(TQRegExp("\\.[0-9]+$"), "");
+        display.tqreplace(TQRegExp("\\.[0-9]+$"), "");
         int i;
-        while( (i = display.find(':')) >= 0)
+        while( (i = display.tqfind(':')) >= 0)
            display[i] = '_';
 
         fName += "_"+display;
@@ -697,9 +697,9 @@ void KSMServer::cleanUp()
     TQCString fName = TQFile::encodeName(locateLocal("socket", "KSMserver"));
     TQCString display = ::getenv("DISPLAY");
     // strip the screen number from the display
-    display.replace(TQRegExp("\\.[0-9]+$"), "");
+    display.tqreplace(TQRegExp("\\.[0-9]+$"), "");
     int i;
-    while( (i = display.find(':')) >= 0)
+    while( (i = display.tqfind(':')) >= 0)
          display[i] = '_';
 
     fName += "_"+display;
@@ -761,7 +761,7 @@ KSMClient* KSMServer::newClient( SmsConn conn )
 
 void KSMServer::deleteClient( KSMClient* client )
 {
-    if ( clients.findRef( client ) == -1 ) // paranoia
+    if ( clients.tqfindRef( client ) == -1 ) // paranoia
         return;
     clients.removeRef( client );
     if ( client == clientInteracting ) {
@@ -868,7 +868,7 @@ void KSMServer::storeSession()
         TQStringList restartCommand = c->restartCommand();
         if (program.isEmpty() && restartCommand.isEmpty())
            continue;
-        if (excludeApps.contains( program.lower()))
+        if (excludeApps.tqcontains( program.lower()))
             continue;
 
         count++;

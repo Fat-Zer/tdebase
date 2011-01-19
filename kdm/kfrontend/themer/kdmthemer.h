@@ -60,9 +60,9 @@ public:
 
 	bool isOK() { return rootItem != 0; }
 	/*
-	 * Gives a sizeHint to the widget (parent size)
+	 * Gives a tqsizeHint to the widget (parent size)
 	 */
-	//TQSize sizeHint() const{ return parentWidget()->size(); }
+	//TQSize tqsizeHint() const{ return tqparentWidget()->size(); }
 
 	/*
 	 * Takes a shot of the current widget

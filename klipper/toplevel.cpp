@@ -142,7 +142,7 @@ KlipperWidget::KlipperWidget( TQWidget *parent, KConfig* config )
 
     updateTimestamp(); // read initial X user time
     setBackgroundMode( X11ParentRelative );
-    clip = kapp->clipboard();
+    clip = kapp->tqclipboard();
 
     connect( &m_overflowClearTimer, TQT_SIGNAL( timeout()), TQT_SLOT( slotClearOverflow()));
     m_overflowClearTimer.start( 1000 );
@@ -159,7 +159,7 @@ KlipperWidget::KlipperWidget( TQWidget *parent, KConfig* config )
     clearHistoryAction = new KAction( i18n("C&lear Clipboard History"),
                                       "history_clear",
                                       0,
-                                      history(),
+                                      TQT_TQOBJECT(history()),
                                       TQT_SLOT( slotClear() ),
                                       collection,
                                       "clearHistoryAction" );
@@ -168,7 +168,7 @@ KlipperWidget::KlipperWidget( TQWidget *parent, KConfig* config )
     configureAction = new KAction( i18n("&Configure Klipper..."),
                                    "configure",
                                    0,
-                                   this,
+                                   TQT_TQOBJECT(this),
                                    TQT_SLOT( slotConfigure() ),
                                    collection,
                                    "configureAction" );
@@ -176,7 +176,7 @@ KlipperWidget::KlipperWidget( TQWidget *parent, KConfig* config )
     quitAction = new KAction( i18n("&Quit"),
                               "exit",
                               0,
-                              this,
+                              TQT_TQOBJECT(this),
                               TQT_SLOT( slotQuit() ),
                               collection,
                               "quitAction" );
@@ -206,7 +206,7 @@ KlipperWidget::KlipperWidget( TQWidget *parent, KConfig* config )
     m_iconOrigHeight = height();
     adjustSize();
 
-    globalKeys = new KGlobalAccel(this);
+    globalKeys = new KGlobalAccel(TQT_TQOBJECT(this));
     KGlobalAccel* keys = globalKeys;
 #include "klipperbindings.cpp"
     // the keys need to be read from kdeglobals, not kickerrc --ellis, 22/9/02
@@ -283,7 +283,7 @@ void KlipperWidget::clearClipboardHistory()
 
 void KlipperWidget::mousePressEvent(TQMouseEvent *e)
 {
-    if ( e->button() != LeftButton && e->button() != RightButton )
+    if ( e->button() != Qt::LeftButton && e->button() != Qt::RightButton )
         return;
 
     // if we only hid the menu less than a third of a second ago,
@@ -327,7 +327,7 @@ void KlipperWidget::showPopupMenu( TQPopupMenu *menu )
 {
     Q_ASSERT( menu != 0L );
 
-    TQSize size = menu->sizeHint(); // geometry is not valid until it's shown
+    TQSize size = menu->tqsizeHint(); // geometry is not valid until it's shown
     if (bPopupAtMouse) {
         TQPoint g = TQCursor::pos();
         if ( size.height() < g.y() )
@@ -369,7 +369,7 @@ bool KlipperWidget::loadHistory() {
         }
     }
     if ( !history_file.open( IO_ReadOnly ) ) {
-        kdWarning() << failed_load_warning << ": " << history_file.errorString() << endl;
+        kdWarning() << failed_load_warning << ": " << TQString(history_file.errorString()) << endl;
         return false;
     }
     TQDataStream file_stream( &history_file );
@@ -380,10 +380,10 @@ bool KlipperWidget::loadHistory() {
     TQDataStream* history_stream = &file_stream;
     TQByteArray data;
     if( !oldfile ) {
-        Q_UINT32 crc;
+        TQ_UINT32 crc;
         file_stream >> crc >> data;
         if( crc32( 0, reinterpret_cast<unsigned char *>( data.data() ), data.size() ) != crc ) {
-            kdWarning() << failed_load_warning << ": " << history_file.errorString() << endl;
+            kdWarning() << failed_load_warning << ": " << TQString(history_file.errorString()) << endl;
             return false;
         }
         
@@ -444,7 +444,7 @@ void KlipperWidget::saveHistory() {
     for (  const HistoryItem* item = history()->first(); item; item = history()->next() ) {
         history_stream << item;
     }
-    Q_UINT32 crc = crc32( 0, reinterpret_cast<unsigned char *>( data.data() ), data.size() );
+    TQ_UINT32 crc = crc32( 0, reinterpret_cast<unsigned char *>( data.data() ), data.size() );
     *history_file.dataStream() << crc << data;
 }
 
@@ -786,8 +786,8 @@ bool KlipperWidget::blockFetchingNewData()
 //   contents, so in practice it's like the user has selected only the part which was
 //   selected when Klipper asked first.
     ButtonState buttonstate = kapp->keyboardMouseState();
-    if( ( buttonstate & ( ShiftButton | LeftButton )) == ShiftButton // #85198
-        || ( buttonstate & LeftButton ) == LeftButton ) { // #80302
+    if( ( buttonstate & ( ShiftButton | Qt::LeftButton )) == ShiftButton // #85198
+        || ( buttonstate & Qt::LeftButton ) == Qt::LeftButton ) { // #80302
         m_pendingContentsCheck = true;
         m_pendingCheckTimer.start( 100, true );
         return true;
@@ -856,7 +856,7 @@ void KlipperWidget::checkClipData( bool selectionMode )
         qDebug( "    format: %s", format);
     }
 #endif
-    TQMimeSource* data = clip->data( selectionMode ? QClipboard::Selection : QClipboard::Clipboard );
+    TQMimeSource* data = clip->data( selectionMode ? TQClipboard::Selection : TQClipboard::Clipboard );
     if ( !data ) {
         kdWarning("No data in clipboard. This not not supposed to happen." );
         return;
@@ -1013,13 +1013,13 @@ TQString KlipperWidget::getClipboardHistoryItem(int i)
 //
 bool KlipperWidget::ignoreClipboardChanges() const
 {
-    TQWidget *focusWidget = qApp->focusWidget();
-    if ( focusWidget )
+    TQWidget *tqfocusWidget = tqApp->tqfocusWidget();
+    if ( tqfocusWidget )
     {
-        if ( focusWidget->inherits( "QSpinBox" ) ||
-             (focusWidget->parentWidget() &&
-              focusWidget->inherits("QLineEdit") &&
-              focusWidget->parentWidget()->inherits("QSpinWidget")) )
+        if ( tqfocusWidget->inherits( "QSpinBox" ) ||
+             (tqfocusWidget->tqparentWidget() &&
+              tqfocusWidget->inherits("QLineEdit") &&
+              tqfocusWidget->tqparentWidget()->inherits("QSpinWidget")) )
         {
             return true;
         }

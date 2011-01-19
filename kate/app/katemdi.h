@@ -38,7 +38,7 @@ namespace KateMDI {
 
 
 /** This class is needed because TQSplitter cant return an index for a widget. */
-class Splitter : public QSplitter
+class Splitter : public TQSplitter
 {
   Q_OBJECT
 
@@ -99,7 +99,7 @@ class GUIClient : public TQObject, public KXMLGUIClient
     KActionMenu *m_toolMenu;
 };
 
-class ToolView : public QVBox
+class ToolView : public TQVBox
 {
   Q_OBJECT
 
@@ -258,7 +258,7 @@ class MainWindow : public KParts::MainWindow
     /**
      * Constructor
      */
-    MainWindow (TQWidget* parentWidget = 0, const char* name = 0);
+    MainWindow (TQWidget* tqparentWidget = 0, const char* name = 0);
 
     /**
      * Destructor

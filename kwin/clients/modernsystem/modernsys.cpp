@@ -171,20 +171,20 @@ static void create_pixmaps()
                                 KPixmapEffect::VerticalGradient);
     }
     // buttons
-    TQColorGroup btnColor(options()->colorGroup(KDecoration::ColorButtonBg, true));
+    TQColorGroup btnColor(options()->tqcolorGroup(KDecoration::ColorButtonBg, true));
     buttonPix = new TQPixmap(14, 15);
     make_button_fx(btnColor, buttonPix);
     buttonPixDown = new TQPixmap(14, 15);
     make_button_fx(btnColor, buttonPixDown, true);
 
-    btnColor = options()->colorGroup(KDecoration::ColorButtonBg, false);
+    btnColor = options()->tqcolorGroup(KDecoration::ColorButtonBg, false);
     iButtonPix = new TQPixmap(14, 15);
     make_button_fx(btnColor, iButtonPix);
     iButtonPixDown = new TQPixmap(14, 15);
     make_button_fx(btnColor, iButtonPixDown, true);
 
 
-    if(qGray(btnColor.background().rgb()) < 150)
+    if(tqGray(btnColor.background().rgb()) < 150)
         buttonFg = new TQColor(Qt::white);
     else
         buttonFg = new TQColor(Qt::black);
@@ -515,7 +515,7 @@ void ModernSys::recalcTitleBuffer()
         p.drawTiledPixmap(0, 0, width(), title_height+2, *aUpperGradient);
     else
         p.fillRect(0, 0, width(), title_height+2,
-                   options()->colorGroup(ColorTitleBar, true).
+                   options()->tqcolorGroup(ColorTitleBar, true).
                    brush(TQColorGroup::Button));
 
     TQRect t = titleRect(); // titlebar->geometry();
@@ -554,7 +554,7 @@ void ModernSys::updateCaption()
 void ModernSys::drawRoundFrame(TQPainter &p, int x, int y, int w, int h)
 {
     kDrawRoundButton(&p, x, y, w, h,
-                     options()->colorGroup(ColorFrame, isActive()), false);
+                     options()->tqcolorGroup(ColorFrame, isActive()), false);
 
 }
 
@@ -570,9 +570,9 @@ void ModernSys::paintEvent( TQPaintEvent* )
     TQPainter p( widget() );
     TQRect t = titleRect(); // titlebar->geometry();
 
-    TQBrush fillBrush(widget()->colorGroup().brush(TQColorGroup::Background).pixmap() ?
-                     widget()->colorGroup().brush(TQColorGroup::Background) :
-                     options()->colorGroup(ColorFrame, isActive()).
+    TQBrush fillBrush(widget()->tqcolorGroup().tqbrush(TQColorGroup::Background).pixmap() ?
+                     widget()->tqcolorGroup().brush(TQColorGroup::Background) :
+                     options()->tqcolorGroup(ColorFrame, isActive()).
                      brush(TQColorGroup::Button));
 
     p.fillRect(1, title_height+3, width()-2, height()-(title_height+3), fillBrush);
@@ -586,7 +586,7 @@ void ModernSys::paintEvent( TQPaintEvent* )
     int h = height() - hw;
 
     // titlebar
-    TQColorGroup g = options()->colorGroup(ColorTitleBar, isActive());
+    TQColorGroup g = options()->tqcolorGroup(ColorTitleBar, isActive());
     if(isActive()){
         p.drawPixmap(1, 1, titleBuffer, 0, 0, w-2, title_height+2);
     }
@@ -609,7 +609,7 @@ void ModernSys::paintEvent( TQPaintEvent* )
     p.drawLine(0, title_height+2, w-2, title_height+2);
 
     // frame
-    g = options()->colorGroup(ColorFrame, isActive());
+    g = options()->tqcolorGroup(ColorFrame, isActive());
     p.setPen(g.light());
     p.drawLine(1, title_height+3, 1, h-2);
     p.setPen(g.dark());

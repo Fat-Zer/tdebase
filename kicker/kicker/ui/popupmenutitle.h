@@ -33,7 +33,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #include <kapplication.h>
 
-class PopupMenuTitle : public QCustomMenuItem
+class PopupMenuTitle : public TQCustomMenuItem
 {
 public:
     PopupMenuTitle(const TQString &name, const TQFont &font);
@@ -46,7 +46,7 @@ public:
     {
         p->save();
         TQRect r(x, y, w, h);
-        kapp->style().drawPrimitive(TQStyle::PE_HeaderSection, 
+        kapp->tqstyle().tqdrawPrimitive(TQStyle::PE_HeaderSection, 
                                     p, r, cg);
 
         if (!m_desktopName.isEmpty())
@@ -69,11 +69,11 @@ public:
         m_font.setBold(true);
     }
 
-    TQSize sizeHint()
+    TQSize tqsizeHint()
     {
       TQSize size = TQFontMetrics(m_font).size(AlignHCenter, m_desktopName);
       size.setHeight(size.height() + 
-                     (kapp->style().pixelMetric(TQStyle::PM_DefaultFrameWidth) * 2 + 1));
+                     (kapp->tqstyle().tqpixelMetric(TQStyle::PM_DefaultFrameWidth) * 2 + 1));
       return size;
     }
 

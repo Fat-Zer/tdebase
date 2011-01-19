@@ -195,7 +195,7 @@ LockProcess::LockProcess(bool child, bool useBlankOnly)
 
     TQStringList dmopt =
         TQStringList::split(TQChar(','),
-                            TQString::fromLatin1( ::getenv( "XDM_MANAGED" )));
+                            TQString::tqfromLatin1( ::getenv( "XDM_MANAGED" )));
     for (TQStringList::ConstIterator it = dmopt.begin(); it != dmopt.end(); ++it)
         if ((*it).startsWith("method="))
             mMethod = (*it).mid(7);
@@ -421,7 +421,7 @@ void LockProcess::setupSignals()
 
     pipe(signal_pipe);
     TQSocketNotifier* notif = new TQSocketNotifier(signal_pipe[0],
-	TQSocketNotifier::Read, this );
+	TQSocketNotifier::Read, TQT_TQOBJECT(this) );
     connect( notif, TQT_SIGNAL(activated(int)), TQT_SLOT(signalPipeSignal()));
 }
 
@@ -550,7 +550,7 @@ void LockProcess::readSaver()
 	bool opengl = kapp->authorize("opengl_screensavers");
 	bool manipulatescreen = kapp->authorize("manipulatescreen_screensavers");
         KDesktopFile config(file, true);
-	if (config.readEntry("X-KDE-Type").utf8())
+	if (config.readEntry("X-KDE-Type").utf8() != 0)
 	{
 		TQString saverType = config.readEntry("X-KDE-Type").utf8();
 		TQStringList saverTypes = TQStringList::split(";", saverType);
@@ -660,7 +660,7 @@ void LockProcess::createSaverWindow()
     // screen state if necessary
     setBackgroundMode(TQWidget::NoBackground);
 
-    setCursor( blankCursor );
+    setCursor( tqblankCursor );
     setGeometry(0, 0, mRootWidth, mRootHeight);
 
     kdDebug(1204) << "Saver window Id: " << winId() << endl;
@@ -670,7 +670,7 @@ void LockProcess::desktopResized()
 {
     mBusy = true;
     suspend();
-    setCursor( blankCursor );
+    setCursor( tqblankCursor );
 
     // Get root window size
     XWindowAttributes rootAttr;
@@ -840,7 +840,7 @@ bool LockProcess::grabMouse()
 {
     int rv = XGrabPointer( qt_xdisplay(), TQApplication::desktop()->winId(),
             True, GRABEVENTS, GrabModeAsync, GrabModeAsync, None,
-            blankCursor.handle(), CurrentTime );
+            TQCursor(tqblankCursor).handle(), CurrentTime );
 
     return (rv == GrabSuccess);
 }
@@ -904,13 +904,13 @@ bool LockProcess::startSaver()
     saveVRoot();
 
     if (mParent) {
-        TQSocketNotifier *notifier = new TQSocketNotifier(mParent, TQSocketNotifier::Read, this, "notifier");
+        TQSocketNotifier *notifier = new TQSocketNotifier(mParent, TQSocketNotifier::Read, TQT_TQOBJECT(this), "notifier");
         connect(notifier, TQT_SIGNAL( activated (int)), TQT_SLOT( quitSaver()));
     }
     createSaverWindow();
     move(0, 0);
     show();
-    setCursor( blankCursor );
+    setCursor( tqblankCursor );
 
     raise();
     XSync(qt_xdisplay(), False);
@@ -944,7 +944,7 @@ void LockProcess::stopSaver()
 TQVariant LockProcess::getConf(void *ctx, const char *key, const TQVariant &dflt)
 {
     LockProcess *that = (LockProcess *)ctx;
-    TQString fkey = TQString::fromLatin1( key ) + '=';
+    TQString fkey = TQString::tqfromLatin1( key ) + '=';
     for (TQStringList::ConstIterator it = that->mPluginOptions.begin();
          it != that->mPluginOptions.end(); ++it)
         if ((*it).startsWith( fkey ))
@@ -1182,7 +1182,7 @@ int LockProcess::execDialog( TQDialog *dlg )
     {
         suspend();
         XChangeActivePointerGrab( qt_xdisplay(), GRABEVENTS,
-                arrowCursor.handle(), CurrentTime);
+                TQCursor(tqarrowCursor).handle(), CurrentTime);
     }
     mDialogs.prepend( dlg );
     fakeFocusIn( dlg->winId());
@@ -1192,7 +1192,7 @@ int LockProcess::execDialog( TQDialog *dlg )
     mDialogs.remove( dlg );
     if( mDialogs.isEmpty() ) {
         XChangeActivePointerGrab( qt_xdisplay(), GRABEVENTS,
-                blankCursor.handle(), CurrentTime);
+                TQCursor(tqblankCursor).handle(), CurrentTime);
         resume( false );
     } else
         fakeFocusIn( mDialogs.first()->winId());
@@ -1226,7 +1226,7 @@ void LockProcess::doFunctionKeyBroadcast() {
         }
         mDialogControlLock = false;
     }
-    setCursor( blankCursor );
+    setCursor( tqblankCursor );
 
     DCOPRef ref( "*", "MainApplication-Interface");
     ref.send("sendFakeKey", DCOPArg(mkeyCode , "unsigned int"));
@@ -1341,7 +1341,7 @@ bool LockProcess::x11Event(XEvent *event)
     {
         XEvent ev2 = *event;
         ev2.xkey.window = ev2.xkey.subwindow = mDialogs.first()->winId();
-        qApp->x11ProcessEvent( &ev2 );
+        tqApp->x11ProcessEvent( &ev2 );
         return true;
     }
 
@@ -1444,7 +1444,7 @@ void LockProcess::unlockXF86()
 
 void LockProcess::msgBox( TQMessageBox::Icon type, const TQString &txt )
 {
-    TQDialog box( 0, "messagebox", true, WX11BypassWM );
+    TQDialog box( 0, "messagebox", true, (WFlags)WX11BypassWM );
     TQFrame *winFrame = new TQFrame( &box );
     winFrame->setFrameStyle( TQFrame::WinPanel | TQFrame::Raised );
     winFrame->setLineWidth( 2 );
@@ -1453,7 +1453,7 @@ void LockProcess::msgBox( TQMessageBox::Icon type, const TQString &txt )
     TQLabel *label2 = new TQLabel( txt, winFrame );
     KPushButton *button = new KPushButton( KStdGuiItem::ok(), winFrame );
     button->setDefault( true );
-    button->setSizePolicy( TQSizePolicy( TQSizePolicy::Preferred, TQSizePolicy::Preferred ) );
+    button->tqsetSizePolicy( TQSizePolicy( TQSizePolicy::Preferred, TQSizePolicy::Preferred ) );
     connect( button, TQT_SIGNAL( clicked() ), &box, TQT_SLOT( accept() ) );
 
     TQVBoxLayout *vbox = new TQVBoxLayout( &box );
@@ -1525,7 +1525,7 @@ void LockProcess::windowAdded( WId w, bool managed )
                                         &length, &after, &data );
             bool withdrawn = true;
             if ( r == Success && data && format == 32 ) {
-                Q_UINT32 *wstate = (Q_UINT32*)data;
+                TQ_UINT32 *wstate = (TQ_UINT32*)data;
                 withdrawn  = (*wstate == WithdrawnState );
                 XFree( (char *)data );
             }
@@ -1576,7 +1576,7 @@ bool LockProcess::forwardVkbdEvent( XEvent* event )
     for( TQValueList< VkbdWindow >::ConstIterator it = mVkbdWindows.begin();
          it != mVkbdWindows.end();
          ++it ) {
-        if( (*it).rect.contains( pos )) {
+        if( TQT_TQRECT_OBJECT((*it).rect).tqcontains( pos )) {
             // Find the subwindow where the event should actually go.
             // Not exactly cheap in the number of X roundtrips but oh well.
             Window window = (*it).id;

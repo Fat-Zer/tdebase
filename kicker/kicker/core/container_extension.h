@@ -49,7 +49,7 @@ class PopupWidgetFilter;
 class PanelExtensionOpMenu;
 class TQColor;
 
-class ExtensionContainer : public QFrame
+class ExtensionContainer : public TQFrame
 {
     Q_OBJECT
 
@@ -66,7 +66,7 @@ public:
                        TQWidget *parent = 0);
     virtual ~ExtensionContainer();
 
-    virtual TQSize sizeHint(KPanelExtension::Position, const TQSize &maxSize) const;
+    virtual TQSize tqsizeHint(KPanelExtension::Position, const TQSize &maxSize) const;
 
     const AppletInfo& info() const { return _info; }
 
@@ -86,7 +86,7 @@ public:
 
     KPanelExtension::Orientation orientation() const;
     KPanelExtension::Position position() const;
-    void setPosition(KPanelExtension::Position p) { arrange( p, alignment(), xineramaScreen() ); }
+    void setPosition(KPanelExtension::Position p) { arrange( p, tqalignment(), xineramaScreen() ); }
 
     int xineramaScreen() const;
     void setXineramaScreen(int screen);
@@ -100,8 +100,8 @@ public:
     void unhideIfHidden(int showForHowManyMS = 0);
     bool reserveStrut() const;
 
-    KPanelExtension::Alignment alignment() const;
-    void setAlignment(KPanelExtension::Alignment a) { arrange( position(), a, xineramaScreen() ); }
+    KPanelExtension::Alignment tqalignment() const;
+    void tqsetAlignment(KPanelExtension::Alignment a) { arrange( position(), a, xineramaScreen() ); }
 
     TQRect currentGeometry() const;
     TQRect initialGeometry(KPanelExtension::Position p, KPanelExtension::Alignment a,
@@ -159,7 +159,7 @@ private:
                            int XineramaScreen, const TQSize &s, TQRect workArea,
                            bool autohidden = false, UserHidden userHidden = Unhidden) const;
     void positionChange(KPanelExtension::Position p);
-    void alignmentChange(KPanelExtension::Alignment a);
+    void tqalignmentChange(KPanelExtension::Alignment a);
     void xineramaScreenChange(int /*XineramaScreen*/) {}
     int arrangeHideButtons();
     int setupBorderSpace();
@@ -198,7 +198,7 @@ private:
     TQColor m_highlightColor;
 };
 
-class PopupWidgetFilter : public QObject
+class PopupWidgetFilter : public TQObject
 {
   Q_OBJECT
 

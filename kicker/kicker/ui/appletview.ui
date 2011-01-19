@@ -1,6 +1,6 @@
 <!DOCTYPE UI><UI version="3.3" stdsetdef="1">
 <class>AppletView</class>
-<widget class="QWidget">
+<widget class="TQWidget">
     <property name="name">
         <cstring>AppletView</cstring>
     </property>
@@ -19,7 +19,7 @@
         <property name="margin">
             <number>0</number>
         </property>
-        <widget class="QLayoutWidget">
+        <widget class="TQLayoutWidget">
             <property name="name">
                 <cstring>layout8</cstring>
             </property>
@@ -27,7 +27,7 @@
                 <property name="name">
                     <cstring>unnamed</cstring>
                 </property>
-                <widget class="QLabel">
+                <widget class="TQLabel">
                     <property name="name">
                         <cstring>textLabel8</cstring>
                     </property>
@@ -38,7 +38,7 @@
                         <cstring>appletSearch</cstring>
                     </property>
                 </widget>
-                <widget class="QLineEdit">
+                <widget class="TQLineEdit">
                     <property name="name">
                         <cstring>appletSearch</cstring>
                     </property>
@@ -54,7 +54,7 @@
                         <string>&lt;qt&gt;Type here some text to filter on the applet names and comments&lt;/qt&gt;</string>
                     </property>
                 </widget>
-                <widget class="QLabel">
+                <widget class="TQLabel">
                     <property name="name">
                         <cstring>textLabel1</cstring>
                     </property>
@@ -65,7 +65,7 @@
                         <cstring>appletFilter</cstring>
                     </property>
                 </widget>
-                <widget class="QComboBox">
+                <widget class="TQComboBox">
                     <item>
                         <property name="text">
                             <string>All</string>
@@ -98,7 +98,7 @@
                 </widget>
             </hbox>
         </widget>
-        <widget class="QScrollView">
+        <widget class="TQScrollView">
             <property name="name">
                 <cstring>appletScrollView</cstring>
             </property>
@@ -110,7 +110,7 @@
                     <verstretch>1</verstretch>
                 </sizepolicy>
             </property>
-            <property name="maximumSize">
+            <property name="tqmaximumSize">
                 <size>
                     <width>32767</width>
                     <height>32767</height>
@@ -123,7 +123,7 @@
                 <string>&lt;qt&gt;This is the applet list. Select an applet and click on &lt;b&gt;Add to panel&lt;/b&gt; to add it&lt;/qt&gt;</string>
             </property>
         </widget>
-        <widget class="QLayoutWidget">
+        <widget class="TQLayoutWidget">
             <property name="name">
                 <cstring>layout3</cstring>
             </property>
@@ -141,7 +141,7 @@
                     <property name="sizeType">
                         <enum>Expanding</enum>
                     </property>
-                    <property name="sizeHint">
+                    <property name="tqsizeHint">
                         <size>
                             <width>284</width>
                             <height>20</height>
@@ -171,7 +171,7 @@
 <customwidgets>
     <customwidget>
         <class>QScrollView</class>
-        <header location="global">qscrollview.h</header>
+        <header location="global">tqscrollview.h</header>
         <sizehint>
             <width>-1</width>
             <height>-1</height>
@@ -197,7 +197,7 @@
 </tabstops>
 <layoutdefaults spacing="6" margin="11"/>
 <includehints>
-    <includehint>qscrollview.h</includehint>
+    <includehint>tqscrollview.h</includehint>
     <includehint>kpushbutton.h</includehint>
     <includehint>kpushbutton.h</includehint>
 </includehints>

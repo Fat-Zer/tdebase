@@ -54,13 +54,13 @@ KDebugDialog::KDebugDialog( TQStringList areaList, TQWidget *parent, const char 
 
   // Build combo of debug areas
   pDebugAreas = new TQComboBox( false, this );
-  pDebugAreas->setFixedHeight( pDebugAreas->sizeHint().height() );
+  pDebugAreas->setFixedHeight( pDebugAreas->tqsizeHint().height() );
   pDebugAreas->insertStringList( areaList );
   topLayout->addWidget( pDebugAreas );
 
   TQGridLayout *gbox = new TQGridLayout( 2, 2, KDialog::marginHint() );
   if( gbox == 0 ) { return; }
-  topLayout->addLayout( gbox );
+  topLayout->addLayout( TQT_TQLAYOUT(gbox) );
 
   TQStringList destList;
   destList.append( i18n("File") );
@@ -200,7 +200,7 @@ void KDebugDialog::slotDebugAreaChanged( const TQString & text )
     save();
 
   TQString data = text.simplifyWhiteSpace();
-  int space = data.find(" ");
+  int space = data.tqfind(" ");
   if (space == -1)
       kdError() << "No space:" << data << endl;
 

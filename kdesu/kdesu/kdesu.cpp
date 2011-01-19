@@ -128,7 +128,7 @@ int main(int argc, char *argv[])
 
     if (result == 127)
     {
-        KMessageBox::sorry(0, i18n("Command '%1' not found.").arg(command));
+        KMessageBox::sorry(0, i18n("Command '%1' not found.").arg(static_cast<const char *>(command)));
     }
 
     return result;
@@ -204,7 +204,7 @@ static int startApp()
     int priority = tmp.toInt(&ok);
     if (!ok || (priority < 0) || (priority > 100))
     {
-        KCmdLineArgs::usage(i18n("Illegal priority: %1").arg(tmp));
+        KCmdLineArgs::usage(i18n("Illegal priority: %1").arg(static_cast<const char *>(tmp)));
         exit(1);
     }
     int scheduler = SuProcess::SchedNormal;

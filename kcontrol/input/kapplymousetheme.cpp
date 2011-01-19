@@ -35,8 +35,8 @@
 #endif
 
 static Display* dpy;
-static Display* qt_xdisplay() { return dpy; }\
-static Window qt_xrootwin() { return DefaultRootWindow( dpy ); }
+static Display* trinity_qt_xdisplay() { return dpy; }\
+static Window trinity_qt_xrootwin() { return DefaultRootWindow( dpy ); }
 
 bool isEmpty( const char* str )
     {
@@ -63,8 +63,8 @@ int main( int argc, char* argv[] )
 
     // use a default value for theme only if it's not configured at all, not even in X resources
     if( isEmpty( theme )
-        && isEmpty( XGetDefault( qt_xdisplay(), "Xcursor", "theme" ))
-        && isEmpty( XcursorGetTheme( qt_xdisplay())))
+        && isEmpty( XGetDefault( trinity_qt_xdisplay(), "Xcursor", "theme" ))
+        && isEmpty( XcursorGetTheme( trinity_qt_xdisplay())))
     {
         theme = "default";
         ret = 10; // means to switch to default
@@ -72,19 +72,19 @@ int main( int argc, char* argv[] )
 
      // Apply the KDE cursor theme to ourselves
     if( !isEmpty( theme ))
-        XcursorSetTheme(qt_xdisplay(), theme );
+        XcursorSetTheme(trinity_qt_xdisplay(), theme );
 
     if (!isEmpty( size ))
-    	XcursorSetDefaultSize(qt_xdisplay(), atoi( size ));
+    	XcursorSetDefaultSize(trinity_qt_xdisplay(), atoi( size ));
 
     // Load the default cursor from the theme and apply it to the root window.
-    Cursor handle = XcursorLibraryLoadCursor(qt_xdisplay(), "left_ptr");
-    XDefineCursor(qt_xdisplay(), qt_xrootwin(), handle);
-    XFreeCursor(qt_xdisplay(), handle); // Don't leak the cursor
+    Cursor handle = XcursorLibraryLoadCursor(trinity_qt_xdisplay(), "left_ptr");
+    XDefineCursor(trinity_qt_xdisplay(), trinity_qt_xrootwin(), handle);
+    XFreeCursor(trinity_qt_xdisplay(), handle); // Don't leak the cursor
 
 #else
-    ( void ) qt_xdisplay();
-    ( void ) qt_xrootwin();
+    ( void ) trinity_qt_xdisplay();
+    ( void ) trinity_qt_xrootwin();
     ( void ) argv;
 #endif
     XCloseDisplay( dpy );

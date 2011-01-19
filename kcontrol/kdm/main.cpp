@@ -132,9 +132,9 @@ KDModule::KDModule(TQWidget *parent, const char *name, const TQStringList &)
   struct passwd *ps;
   for (setpwent(); (ps = getpwent()); ) {
     TQString un( TQFile::decodeName( ps->pw_name ) );
-    if (usermap.find( un ) == usermap.end()) {
+    if (usermap.tqfind( un ) == usermap.end()) {
       usermap.insert( un, QPair<int,TQStringList>( ps->pw_uid, sl ) );
-      if ((tgmapi = tgmap.find( ps->pw_gid )) != tgmap.end())
+      if ((tgmapi = tgmap.tqfind( ps->pw_gid )) != tgmap.end())
         (*tgmapi).append( un );
       else
 	tgmap[ps->pw_gid] = un;
@@ -146,7 +146,7 @@ KDModule::KDModule(TQWidget *parent, const char *name, const TQStringList &)
   for (setgrent(); (grp = getgrent()); ) {
     TQString gn( TQFile::decodeName( grp->gr_name ) );
     bool delme = false;
-    if ((tgmapi = tgmap.find( grp->gr_gid )) != tgmap.end()) {
+    if ((tgmapi = tgmap.tqfind( grp->gr_gid )) != tgmap.end()) {
       if ((*tgmapi).count() == 1 && (*tgmapi).first() == gn)
         delme = true;
       else
@@ -160,8 +160,8 @@ KDModule::KDModule(TQWidget *parent, const char *name, const TQStringList &)
       continue;
     do {
       TQString un( TQFile::decodeName( *grp->gr_mem ) );
-      if ((umapi = usermap.find( un )) != usermap.end()) {
-        if ((*umapi).second.find( gn ) == (*umapi).second.end())
+      if ((umapi = usermap.tqfind( un )) != usermap.end()) {
+        if ((*umapi).second.tqfind( gn ) == (*umapi).second.end())
 	  (*umapi).second.append( gn );
       } else
         kdWarning() << "group '" << gn << "' contains unknown user '" << un << "'" << endl;
@@ -173,7 +173,7 @@ KDModule::KDModule(TQWidget *parent, const char *name, const TQStringList &)
     kdWarning() << "user(s) '" << tgmapci.data().join(",")
 	<< "' have unknown GID " << tgmapci.key() << endl;
 
-  config = new KSimpleConfig( TQString::fromLatin1( KDE_CONFDIR "/kdm/kdmrc" ));
+  config = new KSimpleConfig( TQString::tqfromLatin1( KDE_CONFDIR "/kdm/kdmrc" ));
 
   TQVBoxLayout *top = new TQVBoxLayout(this);
   tab = new TQTabWidget(this);
@@ -281,7 +281,7 @@ void KDModule::propagateUsers()
     if (!uid || (uid >= minshowuid && uid <= maxshowuid)) {
       lusers[it.key()] = uid;
       for (jt = it.data().second.begin(); jt != it.data().second.end(); ++jt)
-	if ((gmapi = groupmap.find( *jt )) == groupmap.end()) {
+	if ((gmapi = groupmap.tqfind( *jt )) == groupmap.end()) {
 	  groupmap[*jt] = 1;
 	  lusers['@' + *jt] = -uid;
 	} else
@@ -307,7 +307,7 @@ void KDModule::slotMinMaxUID(int min, int max)
         dlusers[it.key()] = uid;
 	for (jt = it.data().second.begin();
 	     jt != it.data().second.end(); ++jt) {
-	  gmapi = groupmap.find( *jt );
+	  gmapi = groupmap.tqfind( *jt );
 	  if (!--(*gmapi)) {
 	    groupmap.remove( gmapi );
 	    dlusers['@' + *jt] = -uid;
@@ -319,7 +319,7 @@ void KDModule::slotMinMaxUID(int min, int max)
         alusers[it.key()] = uid;
 	for (jt = it.data().second.begin();
 	     jt != it.data().second.end(); ++jt)
-	  if ((gmapi = groupmap.find( *jt )) == groupmap.end()) {
+	  if ((gmapi = groupmap.tqfind( *jt )) == groupmap.end()) {
 	    groupmap[*jt] = 1;
 	    alusers['@' + *jt] = -uid;
 	  } else

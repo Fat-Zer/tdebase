@@ -37,7 +37,7 @@ class KonqSidebarTreeTopLevelItem;
  * Items belonging to a given module are created and managed by the module,
  * but they should all be KonqSidebarTreeItems, for the event handling in KonqSidebarTree.
  */
-class KonqSidebarTreeItem : public QListViewItem
+class KonqSidebarTreeItem : public TQListViewItem
 {
 public:
     // Create an item under another one

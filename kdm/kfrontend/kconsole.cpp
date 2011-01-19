@@ -163,7 +163,7 @@ KConsole::slotData()
 		           verticalScrollBar()->maxValue());
 		TQString str( TQString::fromLocal8Bit( buffer, n ).remove( '\r' ) );
 		int pos, opos;
-		for (opos = 0; (pos = str.find( '\n', opos )) >= 0; opos = pos + 1) {
+		for (opos = 0; (pos = str.tqfind( '\n', opos )) >= 0; opos = pos + 1) {
 			if (paragraphs() == 100)
 				removeParagraph( 0 );
 			if (!leftover.isEmpty()) {

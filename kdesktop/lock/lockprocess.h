@@ -41,7 +41,7 @@ struct GreeterPluginHandle {
 // starting screensaver hacks, and password entry.
 //
 class LockProcess
-    : public QWidget
+    : public TQWidget
 {
     Q_OBJECT
 public:
@@ -153,7 +153,7 @@ private:
         WId id;
         QRect rect;
         };
-    QValueList< VkbdWindow > mVkbdWindows;
+    TQValueList< VkbdWindow > mVkbdWindows;
     WId         mVkbdLastEventWindow;
 
     bool        mPipeOpen;

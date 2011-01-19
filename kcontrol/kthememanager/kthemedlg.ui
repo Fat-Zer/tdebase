@@ -1,7 +1,7 @@
 <!DOCTYPE UI><UI version="3.3" stdsetdef="1">
 <class>KThemeDlg</class>
 <author>Lukas Tinkl &lt;lukas@kde.org&gt;</author>
-<widget class="QWidget">
+<widget class="TQWidget">
     <property name="name">
         <cstring>KThemeDlg</cstring>
     </property>
@@ -28,7 +28,7 @@
         <property name="margin">
             <number>0</number>
         </property>
-        <widget class="QLayoutWidget" row="0" column="0">
+        <widget class="TQLayoutWidget" row="0" column="0">
             <property name="name">
                 <cstring>layout2</cstring>
             </property>
@@ -36,7 +36,7 @@
                 <property name="name">
                     <cstring>unnamed</cstring>
                 </property>
-                <widget class="QLabel">
+                <widget class="TQLabel">
                     <property name="name">
                         <cstring>textLabel1</cstring>
                     </property>
@@ -60,7 +60,7 @@
                     <property name="sizeType">
                         <enum>MinimumExpanding</enum>
                     </property>
-                    <property name="sizeHint">
+                    <property name="tqsizeHint">
                         <size>
                             <width>170</width>
                             <height>20</height>
@@ -86,7 +86,7 @@
                 </widget>
             </hbox>
         </widget>
-        <widget class="QLayoutWidget" row="1" column="0">
+        <widget class="TQLayoutWidget" row="1" column="0">
             <property name="name">
                 <cstring>layout1</cstring>
             </property>
@@ -94,7 +94,7 @@
                 <property name="name">
                     <cstring>unnamed</cstring>
                 </property>
-                <widget class="QLabel" row="0" column="1" rowspan="4" colspan="1">
+                <widget class="TQLabel" row="0" column="1" rowspan="4" colspan="1">
                     <property name="name">
                         <cstring>lbPreview</cstring>
                     </property>
@@ -109,11 +109,11 @@
                     <property name="frameShape">
                         <enum>Box</enum>
                     </property>
-                    <property name="alignment">
+                    <property name="tqalignment">
                         <set>AlignCenter</set>
                     </property>
                 </widget>
-                <widget class="QPushButton" row="2" column="0">
+                <widget class="TQPushButton" row="2" column="0">
                     <property name="name">
                         <cstring>btnRemove</cstring>
                     </property>
@@ -121,7 +121,7 @@
                         <string>&amp;Remove Theme</string>
                     </property>
                 </widget>
-                <widget class="QPushButton" row="3" column="0">
+                <widget class="TQPushButton" row="3" column="0">
                     <property name="name">
                         <cstring>btnCreate</cstring>
                     </property>
@@ -129,7 +129,7 @@
                         <string>Create &amp;New Theme...</string>
                     </property>
                 </widget>
-                <widget class="QPushButton" row="1" column="0">
+                <widget class="TQPushButton" row="1" column="0">
                     <property name="name">
                         <cstring>btnInstall</cstring>
                     </property>
@@ -137,7 +137,7 @@
                         <string>&amp;Install New Theme...</string>
                     </property>
                 </widget>
-                <widget class="QListView" row="0" column="0">
+                <widget class="TQListView" row="0" column="0">
                     <column>
                         <property name="text">
                             <string>Theme</string>
@@ -183,7 +183,7 @@
                 <enum>Horizontal</enum>
             </property>
         </widget>
-        <widget class="QLabel" row="3" column="0">
+        <widget class="TQLabel" row="3" column="0">
             <property name="name">
                 <cstring>textLabel1_2</cstring>
             </property>
@@ -191,7 +191,7 @@
                 <string>Customize your theme:</string>
             </property>
         </widget>
-        <widget class="QLayoutWidget" row="4" column="0">
+        <widget class="TQLayoutWidget" row="4" column="0">
             <property name="name">
                 <cstring>layout4</cstring>
             </property>
@@ -199,7 +199,7 @@
                 <property name="name">
                     <cstring>unnamed</cstring>
                 </property>
-                <widget class="QToolButton">
+                <widget class="TQToolButton">
                     <property name="name">
                         <cstring>btnBackground</cstring>
                     </property>
@@ -211,13 +211,13 @@
                             <verstretch>0</verstretch>
                         </sizepolicy>
                     </property>
-                    <property name="minimumSize">
+                    <property name="tqminimumSize">
                         <size>
                             <width>80</width>
                             <height>60</height>
                         </size>
                     </property>
-                    <property name="maximumSize">
+                    <property name="tqmaximumSize">
                         <size>
                             <width>32767</width>
                             <height>60</height>
@@ -239,7 +239,7 @@
                         <string>Customize the desktop background</string>
                     </property>
                 </widget>
-                <widget class="QToolButton">
+                <widget class="TQToolButton">
                     <property name="name">
                         <cstring>btnColors</cstring>
                     </property>
@@ -251,13 +251,13 @@
                             <verstretch>0</verstretch>
                         </sizepolicy>
                     </property>
-                    <property name="minimumSize">
+                    <property name="tqminimumSize">
                         <size>
                             <width>80</width>
                             <height>60</height>
                         </size>
                     </property>
-                    <property name="maximumSize">
+                    <property name="tqmaximumSize">
                         <size>
                             <width>32767</width>
                             <height>60</height>
@@ -279,7 +279,7 @@
                         <string>Customize colors</string>
                     </property>
                 </widget>
-                <widget class="QToolButton">
+                <widget class="TQToolButton">
                     <property name="name">
                         <cstring>btnStyle</cstring>
                     </property>
@@ -291,13 +291,13 @@
                             <verstretch>0</verstretch>
                         </sizepolicy>
                     </property>
-                    <property name="minimumSize">
+                    <property name="tqminimumSize">
                         <size>
                             <width>80</width>
                             <height>60</height>
                         </size>
                     </property>
-                    <property name="maximumSize">
+                    <property name="tqmaximumSize">
                         <size>
                             <width>32767</width>
                             <height>60</height>
@@ -319,7 +319,7 @@
                         <string>Customize the widget style</string>
                     </property>
                 </widget>
-                <widget class="QToolButton">
+                <widget class="TQToolButton">
                     <property name="name">
                         <cstring>btnIcons</cstring>
                     </property>
@@ -331,13 +331,13 @@
                             <verstretch>0</verstretch>
                         </sizepolicy>
                     </property>
-                    <property name="minimumSize">
+                    <property name="tqminimumSize">
                         <size>
                             <width>80</width>
                             <height>60</height>
                         </size>
                     </property>
-                    <property name="maximumSize">
+                    <property name="tqmaximumSize">
                         <size>
                             <width>32767</width>
                             <height>60</height>
@@ -359,7 +359,7 @@
                         <string>Customize the icon theme</string>
                     </property>
                 </widget>
-                <widget class="QToolButton">
+                <widget class="TQToolButton">
                     <property name="name">
                         <cstring>btnFonts</cstring>
                     </property>
@@ -371,13 +371,13 @@
                             <verstretch>0</verstretch>
                         </sizepolicy>
                     </property>
-                    <property name="minimumSize">
+                    <property name="tqminimumSize">
                         <size>
                             <width>80</width>
                             <height>60</height>
                         </size>
                     </property>
-                    <property name="maximumSize">
+                    <property name="tqmaximumSize">
                         <size>
                             <width>32767</width>
                             <height>60</height>
@@ -399,7 +399,7 @@
                         <string>Customize the font theme</string>
                     </property>
                 </widget>
-                <widget class="QToolButton">
+                <widget class="TQToolButton">
                     <property name="name">
                         <cstring>btnSaver</cstring>
                     </property>
@@ -411,13 +411,13 @@
                             <verstretch>0</verstretch>
                         </sizepolicy>
                     </property>
-                    <property name="minimumSize">
+                    <property name="tqminimumSize">
                         <size>
                             <width>80</width>
                             <height>60</height>
                         </size>
                     </property>
-                    <property name="maximumSize">
+                    <property name="tqmaximumSize">
                         <size>
                             <width>32767</width>
                             <height>60</height>
@@ -502,15 +502,15 @@
 <includes>
     <include location="local" impldecl="in implementation">kthemedlg.ui.h</include>
 </includes>
-<slots>
-    <slot specifier="non virtual">startKonqui( const QString &amp; url )</slot>
+<Q_SLOTS>
+    <slot specifier="non virtual">startKonqui( const TQString &amp; url )</slot>
     <slot specifier="non virtual">startBackground()</slot>
     <slot specifier="non virtual">startColors()</slot>
     <slot specifier="non virtual">startStyle()</slot>
     <slot specifier="non virtual">startIcons()</slot>
     <slot specifier="non virtual">startFonts()</slot>
     <slot specifier="non virtual">startSaver()</slot>
-</slots>
+</Q_SLOTS>
 <layoutdefaults spacing="6" margin="11"/>
 <includehints>
     <includehint>kurllabel.h</includehint>

@@ -62,7 +62,7 @@ namespace KParts
  * unchecked radiobutton in b2k style if unchecked and contains a little
  * anchor if checked.
  */
-class KonqCheckBox : public QCheckBox
+class KonqCheckBox : public TQCheckBox
 {
     Q_OBJECT // for classname
 public:

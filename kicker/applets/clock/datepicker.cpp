@@ -33,9 +33,9 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 DatePicker::DatePicker(TQWidget *parent, const TQDate& date, Prefs* _prefs)
     : TQVBox( parent, 0,
              _prefs->calendarFullWindow()
-                ? (WType_TopLevel | WDestructiveClose |
+                ? (WFlags)(WType_TopLevel | WDestructiveClose |
                    WStyle_StaysOnTop)
-                : (WStyle_Customize | WStyle_NoBorder |
+                : (WFlags)(WStyle_Customize | WStyle_NoBorder |
                    WType_TopLevel | WDestructiveClose |
                    WStyle_StaysOnTop) ),
       prefs(_prefs)

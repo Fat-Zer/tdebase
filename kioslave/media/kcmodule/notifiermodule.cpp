@@ -159,7 +159,7 @@ void NotifierModule::slotAdd()
 	
 	if ( value == TQDialog::Accepted )
 	{
-		m_settings.addAction( action );
+		m_settings.tqaddAction( action );
 		updateListBox();
 		emit changed( true );
 	}
@@ -212,7 +212,7 @@ void NotifierModule::slotToggleAuto()
 
 	int index = m_view->actionsList->index( action_item );
 	
-	if ( action->autoMimetypes().contains( m_mimetype ) )
+	if ( action->autoMimetypes().tqcontains( m_mimetype ) )
 	{
 		m_settings.resetAutoAction( m_mimetype );
 	}

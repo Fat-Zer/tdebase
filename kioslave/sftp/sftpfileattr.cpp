@@ -44,7 +44,7 @@ sftpFileAttr::sftpFileAttr(KRemoteEncoding* encoding){
 /** Constructor to initialize the file attributes on declaration. */
 sftpFileAttr::sftpFileAttr(Q_ULLONG size, uid_t uid, gid_t gid,
                     mode_t permissions, time_t atime,
-                    time_t mtime, Q_UINT32 extendedCount) {
+                    time_t mtime, TQ_UINT32 extendedCount) {
     clear();
     mDirAttrs = false;
     mSize  = size;
@@ -124,22 +124,22 @@ UDSEntry sftpFileAttr::entry() {
 
 /** Use to output the file attributes to a sftp packet */
 TQDataStream& operator<< (TQDataStream& s, const sftpFileAttr& fa) {
-    s << (Q_UINT32)fa.mFlags;
+    s << (TQ_UINT32)fa.mFlags;
 
     if( fa.mFlags & SSH2_FILEXFER_ATTR_SIZE )
         { s << (Q_ULLONG)fa.mSize; }
 
     if( fa.mFlags & SSH2_FILEXFER_ATTR_UIDGID )
-        { s << (Q_UINT32)fa.mUid << (Q_UINT32)fa.mGid; }
+        { s << (TQ_UINT32)fa.mUid << (TQ_UINT32)fa.mGid; }
 
     if( fa.mFlags & SSH2_FILEXFER_ATTR_PERMISSIONS )
-        { s << (Q_UINT32)fa.mPermissions; }
+        { s << (TQ_UINT32)fa.mPermissions; }
 
     if( fa.mFlags & SSH2_FILEXFER_ATTR_ACMODTIME )
-        { s << (Q_UINT32)fa.mAtime << (Q_UINT32)fa.mMtime; }
+        { s << (TQ_UINT32)fa.mAtime << (TQ_UINT32)fa.mMtime; }
 
     if( fa.mFlags & SSH2_FILEXFER_ATTR_EXTENDED ) {
-        s << (Q_UINT32)fa.mExtendedCount;
+        s << (TQ_UINT32)fa.mExtendedCount;
         // XXX: Write extensions to data stream here
         // s.writeBytes(extendedtype).writeBytes(extendeddata);
     }
@@ -175,7 +175,7 @@ TQDataStream& operator>> (TQDataStream& s, sftpFileAttr& fa) {
         fa.setFileSize(fileSize);
     }
 
-    Q_UINT32 x;
+    TQ_UINT32 x;
 
     if( fa.mFlags & SSH2_FILEXFER_ATTR_UIDGID ) {
         s >> x; fa.setUid(x);
@@ -295,8 +295,8 @@ void sftpFileAttr::clear(){
 }
 
 /** Return the size of the sftp attribute. */
-Q_UINT32 sftpFileAttr::size() const{
-    Q_UINT32 size = 4; // for the attr flag
+TQ_UINT32 sftpFileAttr::size() const{
+    TQ_UINT32 size = 4; // for the attr flag
     if( mFlags & SSH2_FILEXFER_ATTR_SIZE )
         size += 8;
 

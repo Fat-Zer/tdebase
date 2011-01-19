@@ -269,7 +269,7 @@ int main(int argc, char *argv[])
 
         if(folderRequired && !KFI::Misc::dExists(folder))
         {
-            std::cerr << "ERROR: " << TQFile::encodeName(folder) << " does not exist!" << std::endl;
+            std::cerr << "ERROR: " << static_cast<const char *>(TQFile::encodeName(folder)) << " does not exist!" << std::endl;
             rv=-2;
         }
         else
@@ -285,7 +285,7 @@ int main(int argc, char *argv[])
                     bool      found=false;
 
                     while((dir=FcStrListNext(list)))
-                        if(0==KFI::Misc::dirSyntax((const char *)dir).find(folder))
+                        if(0==KFI::Misc::dirSyntax((const char *)dir).tqfind(folder))
                             found=true;
 
                     if(!found)

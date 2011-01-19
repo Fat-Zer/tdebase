@@ -623,13 +623,13 @@ void KEyeCandyPage::save(bool currSettings){
 	kdesktopconf->sync();
 	KGlobal::config()->sync();
 	// restart kwin  for window effects
-	kapp->dcopClient()->send("knotify", "Notify", "reconfigure()", "");
-	kapp->dcopClient()->send("kwin*", "", "reconfigure()", "");
+	kapp->dcopClient()->send("knotify", "Notify", "reconfigure()", TQString(""));
+	kapp->dcopClient()->send("kwin*", "", "reconfigure()", TQString(""));
 	// set the display options (style effects)
 	KIPC::sendMessageAll(KIPC::SettingsChanged);
 	TQApplication::syncX();
 	// kicker stuff: Iconzooming etc.
-	kapp->dcopClient()->send( "kicker", "Panel", "configure()", "" );
+	kapp->dcopClient()->send( "kicker", "Panel", "configure()", TQString("") );
 	// Icon stuff
 	for (int i=0; i<KIcon::LastGroup; i++) {
 		KIPC::sendMessageAll(KIPC::IconChanged, i);
@@ -637,10 +637,10 @@ void KEyeCandyPage::save(bool currSettings){
 	// font stuff
 	KIPC::sendMessageAll(KIPC::FontChanged);
 	// unfortunately, the konqiconview does not re-read the configuration to restructure the previews and the background picture
-	kapp->dcopClient()->send( "konqueror*", "KonquerorIface", "reparseConfiguration()", "" );
-	kapp->dcopClient()->send( "kdesktop", "KDesktopIface", "configure()", "" );
-	kapp->dcopClient()->send( "kdesktop", "KBackgroundIface", "configure()", "" );
-	kapp->dcopClient()->send( "kdesktop", "KDesktopIface", "lineupIcons()", "" );
+	kapp->dcopClient()->send( "konqueror*", "KonquerorIface", "reparseConfiguration()", TQString("") );
+	kapp->dcopClient()->send( "kdesktop", "KDesktopIface", "configure()", TQString("") );
+	kapp->dcopClient()->send( "kdesktop", "KBackgroundIface", "configure()", TQString("") );
+	kapp->dcopClient()->send( "kdesktop", "KDesktopIface", "lineupIcons()", TQString("") );
 }
 
 void KEyeCandyPage::slotEyeCandyShowDetails(bool details){

@@ -108,7 +108,7 @@ QuickLauncher::QuickLauncher(const TQString& configFile, Type type, int actions,
     m_dragButtons = 0;
 
     m_configAction = new KAction(i18n("Configure Quicklauncher..."), "configure", KShortcut(),
-        this, TQT_SLOT(slotConfigure()), this);
+        TQT_TQOBJECT(this), TQT_SLOT(slotConfigure()), TQT_TQOBJECT(this));
 
     m_saveTimer = new TQTimer(this, "m_saveTimer");
     connect(m_saveTimer, TQT_SIGNAL(timeout()), this, TQT_SLOT(saveConfig()));
@@ -503,7 +503,7 @@ void QuickLauncher::about()
 
 void QuickLauncher::mousePressEvent(TQMouseEvent *e)
 {
-    if (e->button() == RightButton)
+    if (e->button() == Qt::RightButton)
     {
         m_popup->popup(e->globalPos());
     }
@@ -828,7 +828,7 @@ void QuickLauncher::loadConfig()
     for (n=0; n<int(m_buttons->size()); ++n)
     {
         QuickButton* button = (*m_buttons)[n];
-        if (volatileButtons.contains(button->menuId()) == false)
+        if (volatileButtons.tqcontains(button->menuId()) == false)
         {
             button->setSticky(true);
         }
@@ -1040,19 +1040,19 @@ void QuickLauncher::updateStickyHighlightLayer()
     m_stickyHighlightLayer = TQImage(width(), height(), 32);
     m_stickyHighlightLayer.setAlphaBuffer(true);
     int pix, tlPix, brPix, w(width()), h(height());
-    QRgb transparent(qRgba(0, 0, 0, 0));
+    QRgb transparent(tqRgba(0, 0, 0, 0));
     for (int y = h-1; y >= 0; --y)
     {
         for (int x = w-1; x >= 0; --x)
         {
-            pix = qRed(areaLayer.pixel(x, y));
+            pix = tqRed(areaLayer.pixel(x, y));
             if (pix == 0)
             {
-                tlPix = (y>0 && x>0) ? qRed(areaLayer.pixel(x-1,y-1)) : 255;
-                brPix = (y<h-1 && x<w-1) ? qRed(areaLayer.pixel(x+1,y+1)) : 255;
+                tlPix = (y>0 && x>0) ? tqRed(areaLayer.pixel(x-1,y-1)) : 255;
+                brPix = (y<h-1 && x<w-1) ? tqRed(areaLayer.pixel(x+1,y+1)) : 255;
                 int c = tlPix-brPix < 0 ? 255 : 0;
                 int alpha = abs(tlPix-brPix)/2;
-                m_stickyHighlightLayer.setPixel(x, y, qRgba(c, c, c, alpha));
+                m_stickyHighlightLayer.setPixel(x, y, tqRgba(c, c, c, alpha));
             }
             else 
             {
@@ -1060,7 +1060,7 @@ void QuickLauncher::updateStickyHighlightLayer()
             }
         }
     }
-    repaint();
+    tqrepaint();
 }
 
 void QuickLauncher::paintEvent(TQPaintEvent* e)

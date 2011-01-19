@@ -68,20 +68,20 @@ KonqFrameStatusBar::KonqFrameStatusBar( KonqFrame *_parent, const char *_name )
     setSizeGripEnabled( false );
 
     m_led = new TQLabel( this );
-    m_led->setAlignment( Qt::AlignCenter );
-    m_led->setSizePolicy(TQSizePolicy( TQSizePolicy::Fixed, TQSizePolicy::Fixed ));
+    m_led->tqsetAlignment( Qt::AlignCenter );
+    m_led->tqsetSizePolicy(TQSizePolicy( TQSizePolicy::Fixed, TQSizePolicy::Fixed ));
     addWidget( m_led, 0, false ); // led (active view indicator)
     m_led->hide();
 
     m_pStatusLabel = new KSqueezedTextLabel( this );
     m_pStatusLabel->setMinimumSize( 0, 0 );
-    m_pStatusLabel->setSizePolicy(TQSizePolicy( TQSizePolicy::Ignored, TQSizePolicy::Fixed ));
+    m_pStatusLabel->tqsetSizePolicy(TQSizePolicy( TQSizePolicy::Ignored, TQSizePolicy::Fixed ));
     m_pStatusLabel->installEventFilter(this);
     addWidget( m_pStatusLabel, 1 /*stretch*/, false ); // status label
 
     m_pLinkedViewCheckBox = new KonqCheckBox( this, "m_pLinkedViewCheckBox" );
-    m_pLinkedViewCheckBox->setFocusPolicy(NoFocus);
-    m_pLinkedViewCheckBox->setSizePolicy(TQSizePolicy( TQSizePolicy::Fixed, TQSizePolicy::Fixed ));
+    m_pLinkedViewCheckBox->setFocusPolicy(TQ_NoFocus);
+    m_pLinkedViewCheckBox->tqsetSizePolicy(TQSizePolicy( TQSizePolicy::Fixed, TQSizePolicy::Fixed ));
     TQWhatsThis::add( m_pLinkedViewCheckBox,
                      i18n("Checking this box on at least two views sets those views as 'linked'. "
                           "Then, when you change directories in one view, the other views "
@@ -151,7 +151,7 @@ void KonqFrameStatusBar::splitFrameMenu()
 
    // We have to ship the remove view action ourselves,
    // since this may not be the active view (passive view)
-   KAction actRemoveView(i18n("Close View"), "view_remove", 0, m_pParentKonqFrame, TQT_SLOT(slotRemoveView()), (TQObject*)0, "removethisview");
+   KAction actRemoveView(i18n("Close View"), "view_remove", 0, TQT_TQOBJECT(m_pParentKonqFrame), TQT_SLOT(slotRemoveView()), (TQObject*)0, "removethisview");
    //KonqView * nextView = mw->viewManager()->chooseNextView( m_pParentKonqFrame->childView() );
    actRemoveView.setEnabled( mw->mainViewsCount() > 1 || m_pParentKonqFrame->childView()->isToggleView() || m_pParentKonqFrame->childView()->isPassiveMode() );
 
@@ -173,15 +173,15 @@ void KonqFrameStatusBar::splitFrameMenu()
 
 bool KonqFrameStatusBar::eventFilter(TQObject* o, TQEvent *e)
 {
-   if (o == m_pStatusLabel && e->type()==TQEvent::MouseButtonPress)
+   if (TQT_BASE_OBJECT(o) == TQT_BASE_OBJECT(m_pStatusLabel) && e->type()==TQEvent::MouseButtonPress)
    {
       emit clicked();
       update();
-      if ( static_cast<TQMouseEvent *>(e)->button() == RightButton)
+      if ( TQT_TQMOUSEEVENT(e)->button() == Qt::RightButton)
          splitFrameMenu();
       return true;
    }
-   else if ( o == this && e->type() == TQEvent::ApplicationPaletteChange )
+   else if ( TQT_BASE_OBJECT(o) == TQT_BASE_OBJECT(this) && e->type() == TQEvent::ApplicationPaletteChange )
    {
       unsetPalette();
       updateActiveStatus();
@@ -274,7 +274,7 @@ void KonqFrameStatusBar::updateActiveStatus()
 
     bool hasFocus = m_pParentKonqFrame->isActivePart();
 
-    const TQColorGroup& activeCg = kapp->palette().active();
+    const TQColorGroup& activeCg = kapp->tqpalette().active();
     setPaletteBackgroundColor( hasFocus ? activeCg.midlight() : activeCg.mid() );
 
     static TQPixmap indicator_viewactive( UserIcon( "indicator_viewactive" ) );
@@ -301,7 +301,7 @@ KonqFrame::KonqFrame( TQWidget* parent, KonqFrameContainerBase *parentContainer,
 
    // the frame statusbar
    m_pStatusBar = new KonqFrameStatusBar( this, "KonquerorFrameStatusBar");
-   m_pStatusBar->setSizePolicy(TQSizePolicy( TQSizePolicy::Expanding, TQSizePolicy::Fixed ));
+   m_pStatusBar->tqsetSizePolicy(TQSizePolicy( TQSizePolicy::Expanding, TQSizePolicy::Fixed ));
    connect(m_pStatusBar, TQT_SIGNAL(clicked()), this, TQT_SLOT(slotStatusBarClicked()));
    connect( m_pStatusBar, TQT_SIGNAL( linkedViewClicked( bool ) ), this, TQT_SLOT( slotLinkedViewClicked( bool ) ) );
    m_separator = 0;
@@ -327,16 +327,16 @@ void KonqFrame::listViews( ChildViewList *viewList )
 void KonqFrame::saveConfig( KConfig* config, const TQString &prefix, bool saveURLs, KonqFrameBase* docContainer, int /*id*/, int /*depth*/ )
 {
   if (saveURLs)
-    config->writePathEntry( TQString::fromLatin1( "URL" ).prepend( prefix ),
+    config->writePathEntry( TQString::tqfromLatin1( "URL" ).prepend( prefix ),
                         childView()->url().url() );
-  config->writeEntry( TQString::fromLatin1( "ServiceType" ).prepend( prefix ), childView()->serviceType() );
-  config->writeEntry( TQString::fromLatin1( "ServiceName" ).prepend( prefix ), childView()->service()->desktopEntryName() );
-  config->writeEntry( TQString::fromLatin1( "PassiveMode" ).prepend( prefix ), childView()->isPassiveMode() );
-  config->writeEntry( TQString::fromLatin1( "LinkedView" ).prepend( prefix ), childView()->isLinkedView() );
-  config->writeEntry( TQString::fromLatin1( "ToggleView" ).prepend( prefix ), childView()->isToggleView() );
-  config->writeEntry( TQString::fromLatin1( "LockedLocation" ).prepend( prefix ), childView()->isLockedLocation() );
-  //config->writeEntry( TQString::fromLatin1( "ShowStatusBar" ).prepend( prefix ), statusbar()->isVisible() );
-  if (this == docContainer) config->writeEntry( TQString::fromLatin1( "docContainer" ).prepend( prefix ), true );
+  config->writeEntry( TQString::tqfromLatin1( "ServiceType" ).prepend( prefix ), childView()->serviceType() );
+  config->writeEntry( TQString::tqfromLatin1( "ServiceName" ).prepend( prefix ), childView()->service()->desktopEntryName() );
+  config->writeEntry( TQString::tqfromLatin1( "PassiveMode" ).prepend( prefix ), childView()->isPassiveMode() );
+  config->writeEntry( TQString::tqfromLatin1( "LinkedView" ).prepend( prefix ), childView()->isLinkedView() );
+  config->writeEntry( TQString::tqfromLatin1( "ToggleView" ).prepend( prefix ), childView()->isToggleView() );
+  config->writeEntry( TQString::tqfromLatin1( "LockedLocation" ).prepend( prefix ), childView()->isLockedLocation() );
+  //config->writeEntry( TQString::tqfromLatin1( "ShowStatusBar" ).prepend( prefix ), statusbar()->isVisible() );
+  if (this == docContainer) config->writeEntry( TQString::tqfromLatin1( "docContainer" ).prepend( prefix ), true );
 
   KonqConfigEvent ev( config, prefix+"_", true/*save*/);
   TQApplication::sendEvent( childView()->part(), &ev );
@@ -352,8 +352,8 @@ void KonqFrame::printFrameInfo( const TQString& spaces )
 {
    TQString className = "NoPart";
    if (part()) className = part()->widget()->className();
-   kdDebug(1202) << spaces << "KonqFrame " << this << " visible=" << TQString("%1").arg(isVisible()) << " containing view "
-                 << childView() << " visible=" << TQString("%1").arg(isVisible())
+   kdDebug(1202) << spaces << "KonqFrame " << this << " visible=" << TQString("%1").tqarg(isVisible()) << " containing view "
+                 << childView() << " visible=" << TQString("%1").tqarg(isVisible())
                  << " and part " << part() << " whose widget is a " << className << endl;
 }
 
@@ -397,7 +397,7 @@ bool KonqFrame::eventFilter(TQObject* /*obj*/, TQEvent *ev)
 {
    if (ev->type()==TQEvent::KeyPress)
    {
-      TQKeyEvent * keyEv = static_cast<TQKeyEvent*>(ev);
+      TQKeyEvent * keyEv = TQT_TQKEYEVENT(ev);
       if ((keyEv->key()==Key_Tab) && (keyEv->state()==ControlButton))
       {
          emit ((KonqFrameContainer*)parent())->ctrlTabPressed();
@@ -460,7 +460,7 @@ void KonqFrame::slotLinkedViewClicked( bool mode )
 void
 KonqFrame::paintEvent( TQPaintEvent* )
 {
-   m_pStatusBar->repaint();
+   m_pStatusBar->tqrepaint();
 }
 
 void KonqFrame::slotRemoveView()
@@ -517,40 +517,40 @@ void KonqFrameContainer::saveConfig( KConfig* config, const TQString &prefix, bo
   int idSecond = id + (int)pow( 2.0, depth );
 
   //write children sizes
-  config->writeEntry( TQString::fromLatin1( "SplitterSizes" ).prepend( prefix ), sizes() );
+  config->writeEntry( TQString::tqfromLatin1( "SplitterSizes" ).prepend( prefix ), sizes() );
 
   //write children
   TQStringList strlst;
   if( firstChild() )
-    strlst.append( TQString::fromLatin1( firstChild()->frameType() ) + TQString::number(idSecond - 1) );
+    strlst.append( TQString::tqfromLatin1( firstChild()->frameType() ) + TQString::number(idSecond - 1) );
   if( secondChild() )
-    strlst.append( TQString::fromLatin1( secondChild()->frameType() ) + TQString::number( idSecond ) );
+    strlst.append( TQString::tqfromLatin1( secondChild()->frameType() ) + TQString::number( idSecond ) );
 
-  config->writeEntry( TQString::fromLatin1( "Children" ).prepend( prefix ), strlst );
+  config->writeEntry( TQString::tqfromLatin1( "Children" ).prepend( prefix ), strlst );
 
   //write orientation
   TQString o;
   if( orientation() == Qt::Horizontal )
-    o = TQString::fromLatin1("Horizontal");
+    o = TQString::tqfromLatin1("Horizontal");
   else if( orientation() == Qt::Vertical )
-    o = TQString::fromLatin1("Vertical");
-  config->writeEntry( TQString::fromLatin1( "Orientation" ).prepend( prefix ), o );
+    o = TQString::tqfromLatin1("Vertical");
+  config->writeEntry( TQString::tqfromLatin1( "Orientation" ).prepend( prefix ), o );
 
   //write docContainer
-  if (this == docContainer) config->writeEntry( TQString::fromLatin1( "docContainer" ).prepend( prefix ), true );
+  if (this == docContainer) config->writeEntry( TQString::tqfromLatin1( "docContainer" ).prepend( prefix ), true );
 
-  if (m_pSecondChild == m_pActiveChild) config->writeEntry( TQString::fromLatin1( "activeChildIndex" ).prepend( prefix ), 1 );
-  else config->writeEntry( TQString::fromLatin1( "activeChildIndex" ).prepend( prefix ), 0 );
+  if (m_pSecondChild == m_pActiveChild) config->writeEntry( TQString::tqfromLatin1( "activeChildIndex" ).prepend( prefix ), 1 );
+  else config->writeEntry( TQString::tqfromLatin1( "activeChildIndex" ).prepend( prefix ), 0 );
 
   //write child configs
   if( firstChild() ) {
-    TQString newPrefix = TQString::fromLatin1( firstChild()->frameType() ) + TQString::number(idSecond - 1);
+    TQString newPrefix = TQString::tqfromLatin1( firstChild()->frameType() ) + TQString::number(idSecond - 1);
     newPrefix.append( '_' );
     firstChild()->saveConfig( config, newPrefix, saveURLs, docContainer, id, depth + 1 );
   }
 
   if( secondChild() ) {
-    TQString newPrefix = TQString::fromLatin1( secondChild()->frameType() ) + TQString::number( idSecond );
+    TQString newPrefix = TQString::tqfromLatin1( secondChild()->frameType() ) + TQString::number( idSecond );
     newPrefix.append( '_' );
     secondChild()->saveConfig( config, newPrefix, saveURLs, docContainer, idSecond, depth + 1 );
   }
@@ -576,7 +576,7 @@ KonqFrameBase* KonqFrameContainer::otherChild( KonqFrameBase* child )
 
 void KonqFrameContainer::printFrameInfo( const TQString& spaces )
 {
-        kdDebug(1202) << spaces << "KonqFrameContainer " << this << " visible=" << TQString("%1").arg(isVisible())
+        kdDebug(1202) << spaces << "KonqFrameContainer " << this << " visible=" << TQString("%1").tqarg(isVisible())
                       << " activeChild=" << m_pActiveChild << endl;
         if (!m_pActiveChild)
             kdDebug(1202) << "WARNING: " << this << " has a null active child!" << endl;

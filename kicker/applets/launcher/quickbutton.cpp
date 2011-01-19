@@ -67,7 +67,7 @@ QuickURL::QuickURL(const TQString &u)
       if (_menuId.endsWith(".desktop")) {
          // Strip path
          TQString s = _menuId;
-         s = s.mid(s.findRev('/')+1);
+         s = s.mid(s.tqfindRev('/')+1);
          s = s.left(s.length()-8);
          _service = KService::serviceByStorageId(s);
          if (!_service) {
@@ -121,7 +121,7 @@ TQPixmap QuickURL::pixmap( mode_t _mode, KIcon::Group _group,
 {  // Load icon
    TQPixmap pxmap = KMimeType::pixmapForURL(_kurl, _mode, _group, _force_size, _state);
    // Resize to fit button
-   pxmap.convertFromImage(pxmap.convertToImage().smoothScale(_force_size,_force_size, TQImage::ScaleMin));
+   pxmap.convertFromImage(pxmap.convertToImage().smoothScale(_force_size,_force_size, TQ_ScaleMin));
    return pxmap;
 }
 
@@ -140,7 +140,7 @@ QuickButton::QuickButton(const TQString &u, KAction* configAction,
     
     TQToolTip::add(this, _qurl->name());
     resize(int(DEFAULT_ICON_DIM),int(DEFAULT_ICON_DIM));
-    TQBrush bgbrush(colorGroup().brush(TQColorGroup::Background));
+    TQBrush bgbrush(tqcolorGroup().brush(TQColorGroup::Background));
     
     QuickAddAppsMenu *addAppsMenu = new QuickAddAppsMenu(
         parent, this, _qurl->url());
@@ -152,7 +152,7 @@ QuickButton::QuickButton(const TQString &u, KAction* configAction,
             this, TQT_SLOT(removeApp()));
 
     m_stickyAction = new KToggleAction(i18n("Never Remove Automatically"),
-        KShortcut(), this);
+        KShortcut(), TQT_TQOBJECT(this));
     connect(m_stickyAction, TQT_SIGNAL(toggled(bool)), 
         this, TQT_SLOT(slotStickyToggled(bool)));
     m_stickyAction->plug(_popup, 2);
@@ -197,9 +197,9 @@ void QuickButton::resizeEvent(TQResizeEvent *e)
 
 void QuickButton::mousePressEvent(TQMouseEvent *e)
 {
-   if (e->button() == RightButton)
+   if (e->button() == Qt::RightButton)
       _popup->popup(e->globalPos());
-   else if (e->button() == LeftButton) {
+   else if (e->button() == Qt::LeftButton) {
       _dragPos = e->pos();
       TQButton::mousePressEvent(e);
    }
@@ -207,7 +207,7 @@ void QuickButton::mousePressEvent(TQMouseEvent *e)
 
 void QuickButton::mouseMoveEvent(TQMouseEvent *e)
 {
-   if ((e->state() & LeftButton) == 0) return;
+   if ((e->state() & Qt::LeftButton) == 0) return;
    TQPoint p(e->pos() - _dragPos);
    if (p.manhattanLength() <= KGlobalSettings::dndEventDelay())
       return;

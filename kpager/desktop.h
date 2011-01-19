@@ -35,7 +35,7 @@ class KPopupMenu;
 class TQPainter;
 class TQPoint;
 
-class Desktop : public QWidget
+class Desktop : public TQWidget
 {
     Q_OBJECT
 
@@ -74,7 +74,7 @@ public:
 
 	static void removeCachedPixmap(int nWin) { m_windowPixmaps.remove(nWin); };
 
-  TQSize sizeHint() const;
+  TQSize tqsizeHint() const;
 
   /**
    * active is a bool that specifies if the frame is the active

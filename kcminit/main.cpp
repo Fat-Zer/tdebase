@@ -113,10 +113,10 @@ void KCMInit::runModules( int phase )
       TQString libName = TQString("kcm_%1").arg(library);
 
       // try to load the library
-      if (! alreadyInitialized.contains( libName.ascii() )) {
+      if (! alreadyInitialized.tqcontains( libName.ascii() )) {
 	  if (!runModule(libName, service)) {
 	      libName = TQString("libkcm_%1").arg(library);
-	      if (! alreadyInitialized.contains( libName.ascii() )) {
+	      if (! alreadyInitialized.tqcontains( libName.ascii() )) {
 		  runModule(libName, service);
 		  alreadyInitialized.append( libName.ascii() );
 	      }
@@ -159,7 +159,7 @@ KCMInit::KCMInit( KCmdLineArgs* args )
     KService::Ptr serv = KService::serviceByStorageId( module );
     if ( !serv || serv->library().isEmpty() ||
 	 serv->init().isEmpty()) {
-      kdError(1208) << i18n("Module %1 not found!").arg(module) << endl;
+      kdError(1208) << TQString(i18n("Module %1 not found!").arg(module)) << endl;
       return;
     } else
       list.append(serv);
@@ -193,8 +193,8 @@ KCMInit::KCMInit( KCmdLineArgs* args )
      runModules( 0 );
      kapp->dcopClient()->send( "ksplash", "", "upAndRunning(TQString)",  TQString("kcminit"));
      sendReady();
-     TQTimer::singleShot( 300 * 1000, qApp, TQT_SLOT( quit())); // just in case
-     qApp->exec(); // wait for runPhase1() and runPhase2()
+     TQTimer::singleShot( 300 * 1000, tqApp, TQT_SLOT( quit())); // just in case
+     tqApp->exec(); // wait for runPhase1() and runPhase2()
   }
   else
      runModules( -1 ); // all phases
@@ -215,7 +215,7 @@ void KCMInit::runPhase2()
 {
   runModules( 2 );
   emitDCOPSignal( "phase2Done()", TQByteArray());
-  qApp->exit( 0 );
+  tqApp->exit( 0 );
 }
 
 extern "C" KDE_EXPORT int kdemain(int argc, char *argv[])

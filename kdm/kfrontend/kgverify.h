@@ -184,7 +184,7 @@ class KGStdVerify : public KGVerify {
 	             const PluginList &pluginList,
 	             KGreeterPlugin::Function func, KGreeterPlugin::Context ctx );
 	virtual ~KGStdVerify();
-	TQLayout *getLayout() const { return grid; }
+	TQLayout *getLayout() const { return TQT_TQLAYOUT(grid); }
 	void selectPlugin( int id );
 
   protected:

@@ -8,7 +8,7 @@
 #include <tqslider.h>
 #include <tqlabel.h>
 
-class ModernSysConfig : public QObject
+class ModernSysConfig : public TQObject
 {
 	Q_OBJECT
 
@@ -30,16 +30,16 @@ class ModernSysConfig : public QObject
 
 	private:
 		KConfig   	*clientrc;
-		QWidget		*mainw;
-		QVBoxLayout	*vbox;
+		TQWidget		*mainw;
+		TQVBoxLayout	*vbox;
 		TQWidget         *handleBox;
 		TQCheckBox 	*cbShowHandle;
-		QVBox		*sliderBox;
-		QSlider		*handleSizeSlider;
-		QHBox		*hbox;
-		QLabel		*label1;
-		QLabel		*label2;
-		QLabel		*label3;
+		TQVBox		*sliderBox;
+		TQSlider		*handleSizeSlider;
+		TQHBox		*hbox;
+		TQLabel		*label1;
+		TQLabel		*label2;
+		TQLabel		*label3;
 		
 		unsigned  	handleWidth;
 		unsigned  	handleSize;

@@ -298,7 +298,7 @@ void PlayerSettingsDialog::slotApply()
     save();
     dataChanged = false;
     enableButton(Apply, false);
-    kapp->dcopClient()->send("knotify", "", "reconfigure()", "");
+    kapp->dcopClient()->send("knotify", "", "reconfigure()", TQString(""));
 
     KDialogBase::slotApply();
 }

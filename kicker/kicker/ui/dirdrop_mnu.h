@@ -27,7 +27,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <tqpopupmenu.h>
 
 // The directory dropped menu
-class PanelDirDropMenu : public QPopupMenu
+class PanelDirDropMenu : public TQPopupMenu
 {
 public:
     enum OpButton{Url=1, Browser};

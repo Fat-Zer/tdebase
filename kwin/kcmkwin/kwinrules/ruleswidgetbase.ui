@@ -1,6 +1,6 @@
 <!DOCTYPE UI><UI version="3.3" stdsetdef="1">
 <class>KWinInternal::RulesWidgetBase</class>
-<widget class="QWidget">
+<widget class="TQWidget">
     <property name="name">
         <cstring>Form2</cstring>
     </property>
@@ -19,11 +19,11 @@
         <property name="margin">
             <number>0</number>
         </property>
-        <widget class="QTabWidget">
+        <widget class="TQTabWidget">
             <property name="name">
                 <cstring>tabs</cstring>
             </property>
-            <widget class="QWidget">
+            <widget class="TQWidget">
                 <property name="name">
                     <cstring>tab</cstring>
                 </property>
@@ -34,7 +34,7 @@
                     <property name="name">
                         <cstring>unnamed</cstring>
                     </property>
-                    <widget class="QLabel" row="0" column="0" rowspan="1" colspan="5">
+                    <widget class="TQLabel" row="0" column="0" rowspan="1" colspan="5">
                         <property name="name">
                             <cstring>textLabel1</cstring>
                         </property>
@@ -50,7 +50,7 @@
                             <cstring>description</cstring>
                         </property>
                     </widget>
-                    <widget class="QLabel" row="2" column="0" rowspan="1" colspan="5">
+                    <widget class="TQLabel" row="2" column="0" rowspan="1" colspan="5">
                         <property name="name">
                             <cstring>textLabel2</cstring>
                         </property>
@@ -61,7 +61,7 @@
                             <cstring>wmclass</cstring>
                         </property>
                     </widget>
-                    <widget class="QLabel" row="5" column="0" rowspan="1" colspan="5">
+                    <widget class="TQLabel" row="5" column="0" rowspan="1" colspan="5">
                         <property name="name">
                             <cstring>textLabel3</cstring>
                         </property>
@@ -87,7 +87,7 @@
                         <property name="sizeType">
                             <enum>Expanding</enum>
                         </property>
-                        <property name="sizeHint">
+                        <property name="tqsizeHint">
                             <size>
                                 <width>20</width>
                                 <height>40</height>
@@ -129,7 +129,7 @@
                         <property name="sizeType">
                             <enum>Expanding</enum>
                         </property>
-                        <property name="sizeHint">
+                        <property name="tqsizeHint">
                             <size>
                                 <width>212</width>
                                 <height>20</height>
@@ -157,7 +157,7 @@
                         <property name="sizeType">
                             <enum>Expanding</enum>
                         </property>
-                        <property name="sizeHint">
+                        <property name="tqsizeHint">
                             <size>
                                 <width>211</width>
                                 <height>20</height>
@@ -199,7 +199,7 @@
                         <property name="sizeType">
                             <enum>Expanding</enum>
                         </property>
-                        <property name="sizeHint">
+                        <property name="tqsizeHint">
                             <size>
                                 <width>212</width>
                                 <height>20</height>
@@ -230,7 +230,7 @@
                         <property name="sizeType">
                             <enum>Expanding</enum>
                         </property>
-                        <property name="sizeHint">
+                        <property name="tqsizeHint">
                             <size>
                                 <width>211</width>
                                 <height>20</height>
@@ -242,7 +242,7 @@
                             <cstring>wmclass</cstring>
                         </property>
                     </widget>
-                    <widget class="QCheckBox" row="3" column="4">
+                    <widget class="TQCheckBox" row="3" column="4">
                         <property name="name">
                             <cstring>whole_wmclass</cstring>
                         </property>
@@ -250,7 +250,7 @@
                             <string>Match w&amp;hole window class</string>
                         </property>
                     </widget>
-                    <widget class="QGroupBox" row="8" column="0" rowspan="1" colspan="5">
+                    <widget class="TQGroupBox" row="8" column="0" rowspan="1" colspan="5">
                         <property name="name">
                             <cstring>groupBox1</cstring>
                         </property>
@@ -271,7 +271,7 @@
                                 <property name="sizeType">
                                     <enum>Expanding</enum>
                                 </property>
-                                <property name="sizeHint">
+                                <property name="tqsizeHint">
                                     <size>
                                         <width>270</width>
                                         <height>20</height>
@@ -296,7 +296,7 @@
                                 <property name="sizeType">
                                     <enum>Expanding</enum>
                                 </property>
-                                <property name="sizeHint">
+                                <property name="tqsizeHint">
                                     <size>
                                         <width>269</width>
                                         <height>20</height>
@@ -307,7 +307,7 @@
                     </widget>
                 </grid>
             </widget>
-            <widget class="QWidget">
+            <widget class="TQWidget">
                 <property name="name">
                     <cstring>tab</cstring>
                 </property>
@@ -318,7 +318,7 @@
                     <property name="name">
                         <cstring>unnamed</cstring>
                     </property>
-                    <widget class="QLabel" row="0" column="0" rowspan="1" colspan="4">
+                    <widget class="TQLabel" row="0" column="0" rowspan="1" colspan="4">
                         <property name="name">
                             <cstring>textLabel4</cstring>
                         </property>
@@ -387,7 +387,7 @@
                             <enum>Multi</enum>
                         </property>
                     </widget>
-                    <widget class="QLabel" row="2" column="0" rowspan="1" colspan="4">
+                    <widget class="TQLabel" row="2" column="0" rowspan="1" colspan="4">
                         <property name="name">
                             <cstring>textLabel5</cstring>
                         </property>
@@ -403,7 +403,7 @@
                             <cstring>title</cstring>
                         </property>
                     </widget>
-                    <widget class="QLabel" row="5" column="0" rowspan="1" colspan="4">
+                    <widget class="TQLabel" row="5" column="0" rowspan="1" colspan="4">
                         <property name="name">
                             <cstring>textLabel6</cstring>
                         </property>
@@ -419,7 +419,7 @@
                             <cstring>extra</cstring>
                         </property>
                     </widget>
-                    <widget class="QLabel" row="8" column="0" rowspan="1" colspan="4">
+                    <widget class="TQLabel" row="8" column="0" rowspan="1" colspan="4">
                         <property name="name">
                             <cstring>textLabel7</cstring>
                         </property>
@@ -470,7 +470,7 @@
                         <property name="sizeType">
                             <enum>Expanding</enum>
                         </property>
-                        <property name="sizeHint">
+                        <property name="tqsizeHint">
                             <size>
                                 <width>199</width>
                                 <height>20</height>
@@ -501,7 +501,7 @@
                         <property name="sizeType">
                             <enum>Expanding</enum>
                         </property>
-                        <property name="sizeHint">
+                        <property name="tqsizeHint">
                             <size>
                                 <width>199</width>
                                 <height>20</height>
@@ -543,7 +543,7 @@
                         <property name="sizeType">
                             <enum>Expanding</enum>
                         </property>
-                        <property name="sizeHint">
+                        <property name="tqsizeHint">
                             <size>
                                 <width>199</width>
                                 <height>20</height>
@@ -574,7 +574,7 @@
                         <property name="sizeType">
                             <enum>Expanding</enum>
                         </property>
-                        <property name="sizeHint">
+                        <property name="tqsizeHint">
                             <size>
                                 <width>199</width>
                                 <height>20</height>
@@ -616,7 +616,7 @@
                         <property name="sizeType">
                             <enum>Expanding</enum>
                         </property>
-                        <property name="sizeHint">
+                        <property name="tqsizeHint">
                             <size>
                                 <width>199</width>
                                 <height>20</height>
@@ -647,7 +647,7 @@
                         <property name="sizeType">
                             <enum>Expanding</enum>
                         </property>
-                        <property name="sizeHint">
+                        <property name="tqsizeHint">
                             <size>
                                 <width>199</width>
                                 <height>20</height>
@@ -656,7 +656,7 @@
                     </spacer>
                 </grid>
             </widget>
-            <widget class="QWidget">
+            <widget class="TQWidget">
                 <property name="name">
                     <cstring>TabPage</cstring>
                 </property>
@@ -716,7 +716,7 @@
                             <string>0123456789-+,xX:</string>
                         </property>
                     </widget>
-                    <widget class="QCheckBox" row="1" column="0">
+                    <widget class="TQCheckBox" row="1" column="0">
                         <property name="name">
                             <cstring>enable_size</cstring>
                         </property>
@@ -724,7 +724,7 @@
                             <string>&amp;Size</string>
                         </property>
                     </widget>
-                    <widget class="QCheckBox" row="0" column="0">
+                    <widget class="TQCheckBox" row="0" column="0">
                         <property name="name">
                             <cstring>enable_position</cstring>
                         </property>
@@ -781,7 +781,7 @@
                             <bool>false</bool>
                         </property>
                     </widget>
-                    <widget class="QCheckBox" row="3" column="2">
+                    <widget class="TQCheckBox" row="3" column="2">
                         <property name="name">
                             <cstring>maximizevert</cstring>
                         </property>
@@ -830,7 +830,7 @@
                             <bool>false</bool>
                         </property>
                     </widget>
-                    <widget class="QCheckBox" row="4" column="2">
+                    <widget class="TQCheckBox" row="4" column="2">
                         <property name="name">
                             <cstring>fullscreen</cstring>
                         </property>
@@ -841,7 +841,7 @@
                             <string></string>
                         </property>
                     </widget>
-                    <widget class="QCheckBox" row="2" column="0">
+                    <widget class="TQCheckBox" row="2" column="0">
                         <property name="name">
                             <cstring>enable_maximizehoriz</cstring>
                         </property>
@@ -849,7 +849,7 @@
                             <string>Maximized &amp;horizontally</string>
                         </property>
                     </widget>
-                    <widget class="QCheckBox" row="2" column="2">
+                    <widget class="TQCheckBox" row="2" column="2">
                         <property name="name">
                             <cstring>maximizehoriz</cstring>
                         </property>
@@ -898,7 +898,7 @@
                             <bool>false</bool>
                         </property>
                     </widget>
-                    <widget class="QCheckBox" row="4" column="0">
+                    <widget class="TQCheckBox" row="4" column="0">
                         <property name="name">
                             <cstring>enable_fullscreen</cstring>
                         </property>
@@ -944,7 +944,7 @@
                             <bool>false</bool>
                         </property>
                     </widget>
-                    <widget class="QCheckBox" row="3" column="0">
+                    <widget class="TQCheckBox" row="3" column="0">
                         <property name="name">
                             <cstring>enable_maximizevert</cstring>
                         </property>
@@ -998,7 +998,7 @@
                             <bool>false</bool>
                         </property>
                     </widget>
-                    <widget class="QCheckBox" row="5" column="0">
+                    <widget class="TQCheckBox" row="5" column="0">
                         <property name="name">
                             <cstring>enable_desktop</cstring>
                         </property>
@@ -1006,7 +1006,7 @@
                             <string>&amp;Desktop</string>
                         </property>
                     </widget>
-                    <widget class="QCheckBox" row="7" column="0">
+                    <widget class="TQCheckBox" row="7" column="0">
                         <property name="name">
                             <cstring>enable_shade</cstring>
                         </property>
@@ -1014,7 +1014,7 @@
                             <string>Sh&amp;aded</string>
                         </property>
                     </widget>
-                    <widget class="QCheckBox" row="7" column="2">
+                    <widget class="TQCheckBox" row="7" column="2">
                         <property name="name">
                             <cstring>shade</cstring>
                         </property>
@@ -1063,7 +1063,7 @@
                             <bool>false</bool>
                         </property>
                     </widget>
-                    <widget class="QCheckBox" row="6" column="2">
+                    <widget class="TQCheckBox" row="6" column="2">
                         <property name="name">
                             <cstring>minimize</cstring>
                         </property>
@@ -1074,7 +1074,7 @@
                             <string></string>
                         </property>
                     </widget>
-                    <widget class="QCheckBox" row="6" column="0">
+                    <widget class="TQCheckBox" row="6" column="0">
                         <property name="name">
                             <cstring>enable_minimize</cstring>
                         </property>
@@ -1163,7 +1163,7 @@
                             <bool>false</bool>
                         </property>
                     </widget>
-                    <widget class="QCheckBox" row="8" column="0">
+                    <widget class="TQCheckBox" row="8" column="0">
                         <property name="name">
                             <cstring>enable_placement</cstring>
                         </property>
@@ -1181,7 +1181,7 @@
                         <property name="sizeType">
                             <enum>Expanding</enum>
                         </property>
-                        <property name="sizeHint">
+                        <property name="tqsizeHint">
                             <size>
                                 <width>20</width>
                                 <height>16</height>
@@ -1228,7 +1228,7 @@
                     </widget>
                 </grid>
             </widget>
-            <widget class="QWidget">
+            <widget class="TQWidget">
                 <property name="name">
                     <cstring>TabPage</cstring>
                 </property>
@@ -1239,7 +1239,7 @@
                     <property name="name">
                         <cstring>unnamed</cstring>
                     </property>
-                    <widget class="QCheckBox" row="0" column="0">
+                    <widget class="TQCheckBox" row="0" column="0">
                         <property name="name">
                             <cstring>enable_above</cstring>
                         </property>
@@ -1247,7 +1247,7 @@
                             <string>Keep &amp;above</string>
                         </property>
                     </widget>
-                    <widget class="QCheckBox" row="1" column="0">
+                    <widget class="TQCheckBox" row="1" column="0">
                         <property name="name">
                             <cstring>enable_below</cstring>
                         </property>
@@ -1255,7 +1255,7 @@
                             <string>Keep &amp;below</string>
                         </property>
                     </widget>
-                    <widget class="QCheckBox" row="4" column="0">
+                    <widget class="TQCheckBox" row="4" column="0">
                         <property name="name">
                             <cstring>enable_skippager</cstring>
                         </property>
@@ -1263,7 +1263,7 @@
                             <string>Skip pa&amp;ger</string>
                         </property>
                     </widget>
-                    <widget class="QCheckBox" row="3" column="0">
+                    <widget class="TQCheckBox" row="3" column="0">
                         <property name="name">
                             <cstring>enable_skiptaskbar</cstring>
                         </property>
@@ -1271,7 +1271,7 @@
                             <string>Skip &amp;taskbar</string>
                         </property>
                     </widget>
-                    <widget class="QCheckBox" row="2" column="0">
+                    <widget class="TQCheckBox" row="2" column="0">
                         <property name="name">
                             <cstring>enable_noborder</cstring>
                         </property>
@@ -1279,7 +1279,7 @@
                             <string>&amp;No border</string>
                         </property>
                     </widget>
-                    <widget class="QCheckBox" row="5" column="0">
+                    <widget class="TQCheckBox" row="5" column="0">
                         <property name="name">
                             <cstring>enable_acceptfocus</cstring>
                         </property>
@@ -1287,7 +1287,7 @@
                             <string>Accept &amp;focus</string>
                         </property>
                     </widget>
-                    <widget class="QCheckBox" row="6" column="0">
+                    <widget class="TQCheckBox" row="6" column="0">
                         <property name="name">
                             <cstring>enable_closeable</cstring>
                         </property>
@@ -1295,7 +1295,7 @@
                             <string>&amp;Closeable</string>
                         </property>
                     </widget>
-                    <widget class="QCheckBox" row="7" column="0">
+                    <widget class="TQCheckBox" row="7" column="0">
                         <property name="name">
                             <cstring>enable_opacityactive</cstring>
                         </property>
@@ -1347,7 +1347,7 @@
                         <property name="sizeType">
                             <enum>Expanding</enum>
                         </property>
-                        <property name="sizeHint">
+                        <property name="tqsizeHint">
                             <size>
                                 <width>171</width>
                                 <height>20</height>
@@ -1364,7 +1364,7 @@
                         <property name="sizeType">
                             <enum>Expanding</enum>
                         </property>
-                        <property name="sizeHint">
+                        <property name="tqsizeHint">
                             <size>
                                 <width>290</width>
                                 <height>20</height>
@@ -1381,7 +1381,7 @@
                         <property name="sizeType">
                             <enum>Expanding</enum>
                         </property>
-                        <property name="sizeHint">
+                        <property name="tqsizeHint">
                             <size>
                                 <width>290</width>
                                 <height>20</height>
@@ -1398,7 +1398,7 @@
                         <property name="sizeType">
                             <enum>Expanding</enum>
                         </property>
-                        <property name="sizeHint">
+                        <property name="tqsizeHint">
                             <size>
                                 <width>290</width>
                                 <height>20</height>
@@ -1415,7 +1415,7 @@
                         <property name="sizeType">
                             <enum>Expanding</enum>
                         </property>
-                        <property name="sizeHint">
+                        <property name="tqsizeHint">
                             <size>
                                 <width>290</width>
                                 <height>20</height>
@@ -1432,7 +1432,7 @@
                         <property name="sizeType">
                             <enum>Expanding</enum>
                         </property>
-                        <property name="sizeHint">
+                        <property name="tqsizeHint">
                             <size>
                                 <width>290</width>
                                 <height>20</height>
@@ -1449,7 +1449,7 @@
                         <property name="sizeType">
                             <enum>Expanding</enum>
                         </property>
-                        <property name="sizeHint">
+                        <property name="tqsizeHint">
                             <size>
                                 <width>290</width>
                                 <height>20</height>
@@ -1466,14 +1466,14 @@
                         <property name="sizeType">
                             <enum>Expanding</enum>
                         </property>
-                        <property name="sizeHint">
+                        <property name="tqsizeHint">
                             <size>
                                 <width>290</width>
                                 <height>20</height>
                             </size>
                         </property>
                     </spacer>
-                    <widget class="QCheckBox" row="0" column="2">
+                    <widget class="TQCheckBox" row="0" column="2">
                         <property name="name">
                             <cstring>above</cstring>
                         </property>
@@ -1484,7 +1484,7 @@
                             <string></string>
                         </property>
                     </widget>
-                    <widget class="QCheckBox" row="1" column="2">
+                    <widget class="TQCheckBox" row="1" column="2">
                         <property name="name">
                             <cstring>below</cstring>
                         </property>
@@ -1495,7 +1495,7 @@
                             <string></string>
                         </property>
                     </widget>
-                    <widget class="QCheckBox" row="2" column="2">
+                    <widget class="TQCheckBox" row="2" column="2">
                         <property name="name">
                             <cstring>noborder</cstring>
                         </property>
@@ -1506,7 +1506,7 @@
                             <string></string>
                         </property>
                     </widget>
-                    <widget class="QCheckBox" row="3" column="2">
+                    <widget class="TQCheckBox" row="3" column="2">
                         <property name="name">
                             <cstring>skiptaskbar</cstring>
                         </property>
@@ -1517,7 +1517,7 @@
                             <string></string>
                         </property>
                     </widget>
-                    <widget class="QCheckBox" row="4" column="2">
+                    <widget class="TQCheckBox" row="4" column="2">
                         <property name="name">
                             <cstring>skippager</cstring>
                         </property>
@@ -1528,7 +1528,7 @@
                             <string></string>
                         </property>
                     </widget>
-                    <widget class="QCheckBox" row="5" column="2">
+                    <widget class="TQCheckBox" row="5" column="2">
                         <property name="name">
                             <cstring>acceptfocus</cstring>
                         </property>
@@ -1539,7 +1539,7 @@
                             <string></string>
                         </property>
                     </widget>
-                    <widget class="QCheckBox" row="6" column="2">
+                    <widget class="TQCheckBox" row="6" column="2">
                         <property name="name">
                             <cstring>closeable</cstring>
                         </property>
@@ -1796,7 +1796,7 @@
                         <property name="sizeType">
                             <enum>Expanding</enum>
                         </property>
-                        <property name="sizeHint">
+                        <property name="tqsizeHint">
                             <size>
                                 <width>20</width>
                                 <height>80</height>
@@ -1847,14 +1847,14 @@
                         <property name="sizeType">
                             <enum>Expanding</enum>
                         </property>
-                        <property name="sizeHint">
+                        <property name="tqsizeHint">
                             <size>
                                 <width>181</width>
                                 <height>20</height>
                             </size>
                         </property>
                     </spacer>
-                    <widget class="QCheckBox" row="8" column="0">
+                    <widget class="TQCheckBox" row="8" column="0">
                         <property name="name">
                             <cstring>enable_opacityinactive</cstring>
                         </property>
@@ -1862,7 +1862,7 @@
                             <string>I&amp;nactive opacity in %</string>
                         </property>
                     </widget>
-                    <widget class="QCheckBox" row="9" column="0">
+                    <widget class="TQCheckBox" row="9" column="0">
                         <property name="name">
                             <cstring>enable_shortcut</cstring>
                         </property>
@@ -1911,7 +1911,7 @@
                             <bool>false</bool>
                         </property>
                     </widget>
-                    <widget class="QPushButton" row="9" column="5">
+                    <widget class="TQPushButton" row="9" column="5">
                         <property name="name">
                             <cstring>shortcut_edit</cstring>
                         </property>
@@ -1929,7 +1929,7 @@
                     </widget>
                 </grid>
             </widget>
-            <widget class="QWidget">
+            <widget class="TQWidget">
                 <property name="name">
                     <cstring>TabPage</cstring>
                 </property>
@@ -1940,7 +1940,7 @@
                     <property name="name">
                         <cstring>unnamed</cstring>
                     </property>
-                    <widget class="QCheckBox" row="0" column="0">
+                    <widget class="TQCheckBox" row="0" column="0">
                         <property name="name">
                             <cstring>enable_fsplevel</cstring>
                         </property>
@@ -2047,7 +2047,7 @@
                             <bool>false</bool>
                         </property>
                     </widget>
-                    <widget class="QCheckBox" row="2" column="0">
+                    <widget class="TQCheckBox" row="2" column="0">
                         <property name="name">
                             <cstring>enable_type</cstring>
                         </property>
@@ -2055,7 +2055,7 @@
                             <string>Window &amp;type</string>
                         </property>
                     </widget>
-                    <widget class="QCheckBox" row="1" column="0">
+                    <widget class="TQCheckBox" row="1" column="0">
                         <property name="name">
                             <cstring>enable_moveresizemode</cstring>
                         </property>
@@ -2153,7 +2153,7 @@
                             <string>0123456789-+,xX:</string>
                         </property>
                     </widget>
-                    <widget class="QCheckBox" row="4" column="0">
+                    <widget class="TQCheckBox" row="4" column="0">
                         <property name="name">
                             <cstring>enable_minsize</cstring>
                         </property>
@@ -2184,7 +2184,7 @@
                             <bool>false</bool>
                         </property>
                     </widget>
-                    <widget class="QCheckBox" row="5" column="0">
+                    <widget class="TQCheckBox" row="5" column="0">
                         <property name="name">
                             <cstring>enable_maxsize</cstring>
                         </property>
@@ -2226,7 +2226,7 @@
                             <bool>false</bool>
                         </property>
                     </widget>
-                    <widget class="QCheckBox" row="3" column="0">
+                    <widget class="TQCheckBox" row="3" column="0">
                         <property name="name">
                             <cstring>enable_ignoreposition</cstring>
                         </property>
@@ -2257,7 +2257,7 @@
                             <bool>false</bool>
                         </property>
                     </widget>
-                    <widget class="QCheckBox" row="3" column="3">
+                    <widget class="TQCheckBox" row="3" column="3">
                         <property name="name">
                             <cstring>ignoreposition</cstring>
                         </property>
@@ -2278,14 +2278,14 @@
                         <property name="sizeType">
                             <enum>Expanding</enum>
                         </property>
-                        <property name="sizeHint">
+                        <property name="tqsizeHint">
                             <size>
                                 <width>20</width>
                                 <height>160</height>
                             </size>
                         </property>
                     </spacer>
-                    <widget class="QCheckBox" row="6" column="0">
+                    <widget class="TQCheckBox" row="6" column="0">
                         <property name="name">
                             <cstring>enable_strictgeometry</cstring>
                         </property>
@@ -2319,7 +2319,7 @@
                             <bool>false</bool>
                         </property>
                     </widget>
-                    <widget class="QCheckBox" row="6" column="3">
+                    <widget class="TQCheckBox" row="6" column="3">
                         <property name="name">
                             <cstring>strictgeometry</cstring>
                         </property>
@@ -2330,7 +2330,7 @@
                             <string></string>
                         </property>
                     </widget>
-                    <widget class="QCheckBox" row="7" column="3">
+                    <widget class="TQCheckBox" row="7" column="3">
                         <property name="name">
                             <cstring>disableglobalshortcuts</cstring>
                         </property>
@@ -2341,7 +2341,7 @@
                             <string></string>
                         </property>
                     </widget>
-                    <widget class="QCheckBox" row="7" column="0">
+                    <widget class="TQCheckBox" row="7" column="0">
                         <property name="name">
                             <cstring>enable_disableglobalshortcuts</cstring>
                         </property>

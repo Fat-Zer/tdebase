@@ -37,7 +37,7 @@ bool HomeImpl::parseURL(const KURL &url, TQString &name, TQString &path) const
 {
 	TQString url_path = url.path();
 
-	int i = url_path.find('/', 1);
+	int i = url_path.tqfind('/', 1);
 	if (i > 0)
 	{
 		name = url_path.mid(1, i-1);
@@ -90,7 +90,7 @@ bool HomeImpl::listHomes(TQValueList<KIO::UDSEntry> &list)
 		for(; it!=users_end; ++it)
 		{
 			if ((*it).uid()>=MINIMUM_UID
-			 && !uid_list.contains( (*it).uid() ) )
+			 && !uid_list.tqcontains( (*it).uid() ) )
 			{
 				uid_list.append( (*it).uid() );
 				KIO::UDSEntry entry;
@@ -185,7 +185,7 @@ void HomeImpl::slotStatResult(KIO::Job *job)
 		m_entryBuffer = stat_job->statResult();
 	}
 
-	qApp->eventLoop()->exitLoop();
+	tqApp->eventLoop()->exitLoop();
 }
 
 KIO::UDSEntry HomeImpl::extractUrlInfos(const KURL &url)
@@ -195,7 +195,7 @@ KIO::UDSEntry HomeImpl::extractUrlInfos(const KURL &url)
 	KIO::StatJob *job = KIO::stat(url, false);
 	connect( job, TQT_SIGNAL( result(KIO::Job *) ),
 	         this, TQT_SLOT( slotStatResult(KIO::Job *) ) );
-	qApp->eventLoop()->enterLoop();
+	tqApp->eventLoop()->enterLoop();
 
 	KIO::UDSEntry::iterator it = m_entryBuffer.begin();
 	KIO::UDSEntry::iterator end = m_entryBuffer.end();

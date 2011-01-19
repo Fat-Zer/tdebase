@@ -31,7 +31,7 @@ class TQComboBox;
 
 class KLocale;
 
-class KLocaleConfigOther : public QWidget
+class KLocaleConfigOther : public TQWidget
 {
   Q_OBJECT
 

@@ -29,7 +29,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #include "container_extension.h"
 
-class PanelRemoveExtensionMenu : public QPopupMenu
+class PanelRemoveExtensionMenu : public TQPopupMenu
 {
     Q_OBJECT
 

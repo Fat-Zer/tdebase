@@ -35,7 +35,7 @@ class TQCheckBox;
 class TQHBox;
 
 // the widget which displays all buttons, values, etc.
-class JoyWidget : public QWidget
+class JoyWidget : public TQWidget
 {
   Q_OBJECT
   

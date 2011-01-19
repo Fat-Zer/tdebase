@@ -1,6 +1,6 @@
 <!DOCTYPE UI><UI version="3.1" stdsetdef="1">
 <class>KHotKeys::Dcop_widget_ui</class>
-<widget class="QWidget">
+<widget class="TQWidget">
     <property name="name">
         <cstring>Dcop_widget_ui</cstring>
     </property>
@@ -22,7 +22,7 @@
         <property name="spacing">
             <number>6</number>
         </property>
-        <widget class="QLabel">
+        <widget class="TQLabel">
             <property name="name">
                 <cstring>remote_app_label</cstring>
             </property>
@@ -33,7 +33,7 @@
                 <cstring>remote_app_lineedit</cstring>
             </property>
         </widget>
-        <widget class="QLineEdit">
+        <widget class="TQLineEdit">
             <property name="name">
                 <cstring>remote_app_lineedit</cstring>
             </property>
@@ -48,14 +48,14 @@
             <property name="sizeType">
                 <enum>Expanding</enum>
             </property>
-            <property name="sizeHint">
+            <property name="tqsizeHint">
                 <size>
                     <width>0</width>
                     <height>20</height>
                 </size>
             </property>
         </spacer>
-        <widget class="QLabel">
+        <widget class="TQLabel">
             <property name="name">
                 <cstring>remote_object_label</cstring>
             </property>
@@ -66,7 +66,7 @@
                 <cstring>remote_object_lineedit</cstring>
             </property>
         </widget>
-        <widget class="QLineEdit">
+        <widget class="TQLineEdit">
             <property name="name">
                 <cstring>remote_object_lineedit</cstring>
             </property>
@@ -81,14 +81,14 @@
             <property name="sizeType">
                 <enum>Expanding</enum>
             </property>
-            <property name="sizeHint">
+            <property name="tqsizeHint">
                 <size>
                     <width>0</width>
                     <height>20</height>
                 </size>
             </property>
         </spacer>
-        <widget class="QLabel">
+        <widget class="TQLabel">
             <property name="name">
                 <cstring>called_function_label</cstring>
             </property>
@@ -99,7 +99,7 @@
                 <cstring>called_function_lineedit</cstring>
             </property>
         </widget>
-        <widget class="QLineEdit">
+        <widget class="TQLineEdit">
             <property name="name">
                 <cstring>called_function_lineedit</cstring>
             </property>
@@ -114,14 +114,14 @@
             <property name="sizeType">
                 <enum>Expanding</enum>
             </property>
-            <property name="sizeHint">
+            <property name="tqsizeHint">
                 <size>
                     <width>0</width>
                     <height>20</height>
                 </size>
             </property>
         </spacer>
-        <widget class="QLabel">
+        <widget class="TQLabel">
             <property name="name">
                 <cstring>arguments_label</cstring>
             </property>
@@ -132,7 +132,7 @@
                 <cstring>arguments_lineedit</cstring>
             </property>
         </widget>
-        <widget class="QLineEdit">
+        <widget class="TQLineEdit">
             <property name="name">
                 <cstring>arguments_lineedit</cstring>
             </property>
@@ -147,14 +147,14 @@
             <property name="sizeType">
                 <enum>Expanding</enum>
             </property>
-            <property name="sizeHint">
+            <property name="tqsizeHint">
                 <size>
                     <width>0</width>
                     <height>20</height>
                 </size>
             </property>
         </spacer>
-        <widget class="QLayoutWidget">
+        <widget class="TQLayoutWidget">
             <property name="name">
                 <cstring>Layout2</cstring>
             </property>
@@ -178,14 +178,14 @@
                     <property name="sizeType">
                         <enum>Expanding</enum>
                     </property>
-                    <property name="sizeHint">
+                    <property name="tqsizeHint">
                         <size>
                             <width>20</width>
                             <height>0</height>
                         </size>
                     </property>
                 </spacer>
-                <widget class="QPushButton">
+                <widget class="TQPushButton">
                     <property name="name">
                         <cstring>try_button</cstring>
                     </property>
@@ -203,14 +203,14 @@
                     <property name="sizeType">
                         <enum>Expanding</enum>
                     </property>
-                    <property name="sizeHint">
+                    <property name="tqsizeHint">
                         <size>
                             <width>20</width>
                             <height>0</height>
                         </size>
                     </property>
                 </spacer>
-                <widget class="QPushButton">
+                <widget class="TQPushButton">
                     <property name="name">
                         <cstring>PushButton1</cstring>
                     </property>
@@ -228,7 +228,7 @@
                     <property name="sizeType">
                         <enum>Expanding</enum>
                     </property>
-                    <property name="sizeHint">
+                    <property name="tqsizeHint">
                         <size>
                             <width>20</width>
                             <height>0</height>

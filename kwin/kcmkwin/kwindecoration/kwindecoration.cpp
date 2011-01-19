@@ -97,7 +97,7 @@ KWinDecorationModule::KWinDecorationModule(TQWidget* parent, const char* name, c
 	pluginLayout->addWidget(decorationList);
 
 	TQGroupBox *pluginSettingsGrp = new TQGroupBox( i18n("Decoration Options"), pluginPage );
-	pluginSettingsGrp->setColumnLayout( 0, Vertical );
+	pluginSettingsGrp->setColumnLayout( 0, Qt::Vertical );
 	pluginSettingsGrp->setFlat( true );
 	pluginSettingsGrp->layout()->setMargin( 0 );
 	pluginSettingsGrp->layout()->setSpacing( KDialog::spacingHint() );
@@ -112,13 +112,13 @@ KWinDecorationModule::KWinDecorationModule(TQWidget* parent, const char* name, c
 	TQWhatsThis::add( cBorder, i18n( "Use this combobox to change the border size of the decoration." ));
 	lBorder->hide();
 	cBorder->hide();
-	TQHBoxLayout *borderSizeLayout = new TQHBoxLayout(pluginSettingsGrp->layout() );
+	TQHBoxLayout *borderSizeLayout = new TQHBoxLayout(pluginSettingsGrp->tqlayout() );
 	borderSizeLayout->addWidget(lBorder);
 	borderSizeLayout->addWidget(cBorder);
 	borderSizeLayout->addStretch();
 
 	pluginConfigWidget = new TQVBox(pluginSettingsGrp);
-	pluginSettingsGrp->layout()->add( pluginConfigWidget );
+	pluginSettingsGrp->tqlayout()->add( pluginConfigWidget );
 
 	// Page 2 (Button Selector)
 	TQWidget* buttonPage = new TQWidget( tabWidget );
@@ -154,8 +154,8 @@ KWinDecorationModule::KWinDecorationModule(TQWidget* parent, const char* name, c
 	preview = new KDecorationPreview( this );
 	previewLayout->addWidget(preview);
 
-	preview->setSizePolicy(TQSizePolicy::Expanding, TQSizePolicy::Expanding);
-	tabWidget->setSizePolicy(TQSizePolicy::Expanding, TQSizePolicy::Maximum);
+	preview->tqsetSizePolicy(TQSizePolicy::Expanding, TQSizePolicy::Expanding);
+	tabWidget->tqsetSizePolicy(TQSizePolicy::Expanding, TQSizePolicy::Maximum);
 
 	// Page 3 (Window Shadows)
 	TQHBox *inactiveShadowColourHBox, *shadowColourHBox;
@@ -374,7 +374,7 @@ void KWinDecorationModule::findDecorations()
 	{
 		TQDir d(*it);
 		if (d.exists())
-			for (QFileInfoListIterator it(*d.entryInfoList()); it.current(); ++it)
+			for (TQFileInfoListIterator it(*d.entryInfoList()); it.current(); ++it)
 			{
 				TQString filename(it.current()->absFilePath());
 				if (KDesktopFile::isDesktopFile(filename))
@@ -640,7 +640,7 @@ void KWinDecorationModule::readConfig( KConfig* conf )
 	activeShadowSettings->setEnabled(shadowEnabled);
 	inactiveShadowSettings->setEnabled(shadowEnabled);
 	whichShadowSettings->setEnabled(shadowEnabled);
-	shadowColourButton->setColor(conf->readColorEntry("ShadowColour", &Qt::black));
+	shadowColourButton->setColor(conf->readColorEntry("ShadowColour", &TQt::black));
  	shadowOpacitySlider->setValue((int)ceil(conf->readDoubleNumEntry("ShadowOpacity", 0.70) * 100));
  	shadowXOffsetSpinBox->setValue(conf->readNumEntry("ShadowXOffset", 0));
  	shadowYOffsetSpinBox->setValue(conf->readNumEntry("ShadowYOffset", 10));
@@ -649,7 +649,7 @@ void KWinDecorationModule::readConfig( KConfig* conf )
  	cbShadowTopMenus->setChecked(conf->readBoolEntry("ShadowTopMenus", false));
  	shadowThicknessSpinBox->setValue(conf->readNumEntry("ShadowThickness", 10));
  	cbInactiveShadow->setChecked(conf->readBoolEntry("InactiveShadowEnabled", false));
- 	inactiveShadowColourButton->setColor(conf->readColorEntry("InactiveShadowColour", &Qt::black));
+ 	inactiveShadowColourButton->setColor(conf->readColorEntry("InactiveShadowColour", &TQt::black));
  	inactiveShadowOpacitySlider->setValue((int)ceil(conf->readDoubleNumEntry("InactiveShadowOpacity", 0.70) * 100));
  	inactiveShadowXOffsetSpinBox->setValue(conf->readNumEntry("InactiveShadowXOffset", 0));
  	inactiveShadowYOffsetSpinBox->setValue(conf->readNumEntry("InactiveShadowYOffset", 5));

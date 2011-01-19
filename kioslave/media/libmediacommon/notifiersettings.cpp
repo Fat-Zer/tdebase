@@ -109,9 +109,9 @@ TQValueList<NotifierAction*> NotifierSettings::actionsForMimetype( const TQStrin
 	return result;
 }
 
-bool NotifierSettings::addAction( NotifierServiceAction *action )
+bool NotifierSettings::tqaddAction( NotifierServiceAction *action )
 {
-	if ( !m_idMap.contains( action->id() ) )
+	if ( !m_idMap.tqcontains( action->id() ) )
 	{
 		m_actions.insert( --m_actions.end(), action );
 		m_idMap[ action->id() ] = action;
@@ -153,7 +153,7 @@ void NotifierSettings::setAutoAction( const TQString &mimetype, NotifierAction *
 
 void NotifierSettings::resetAutoAction( const TQString &mimetype )
 {
-	if ( m_autoMimetypesMap.contains( mimetype ) )
+	if ( m_autoMimetypesMap.tqcontains( mimetype ) )
 	{
 		NotifierAction *action = m_autoMimetypesMap[mimetype];
 		action->removeAutoMimetype( mimetype );
@@ -179,7 +179,7 @@ void NotifierSettings::clearAutoActions()
 
 NotifierAction *NotifierSettings::autoActionForMimetype( const TQString &mimetype )
 {
-	if ( m_autoMimetypesMap.contains( mimetype ) )
+	if ( m_autoMimetypesMap.tqcontains( mimetype ) )
 	{
 		return m_autoMimetypesMap[mimetype];
 	}
@@ -238,7 +238,7 @@ void NotifierSettings::reload()
 		TQString mime = auto_it.key();
 		TQString action_id = auto_it.data();
 
-		if ( m_idMap.contains( action_id ) )
+		if ( m_idMap.tqcontains( action_id ) )
 		{
 			setAutoAction( mime, m_idMap[action_id] );
 		}
@@ -349,7 +349,7 @@ bool NotifierSettings::shouldLoadActions( KDesktopFile &desktop, const TQString 
 				}
 			}
 		}
-		else if ( types.contains(mimetype) )
+		else if ( types.tqcontains(mimetype) )
 		{
 			return true;
 		}

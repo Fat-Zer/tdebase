@@ -54,13 +54,13 @@ KRandRSystemTray::KRandRSystemTray(TQWidget* parent, const char *name)
 	, m_help(new KHelpMenu(this, KGlobal::instance()->aboutData(), false, actionCollection()))
 {
 	setPixmap(KSystemTray::loadSizedIcon("randr", width()));
-	setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
+	tqsetAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
 	connect(this, TQT_SIGNAL(quitSelected()), this, TQT_SLOT(_quit()));
 	TQToolTip::add(this, i18n("Screen resize & rotate"));
 	my_parent = parent;
 
 	//printf("Reading configuration...\n\r");
-	globalKeys = new KGlobalAccel(this);
+	globalKeys = new KGlobalAccel(TQT_TQOBJECT(this));
 	KGlobalAccel* keys = globalKeys;
 #include "krandrbindings.cpp"
 	// the keys need to be read from kdeglobals, not kickerrc
@@ -123,7 +123,7 @@ void KRandRSystemTray::resizeEvent ( TQResizeEvent * )
 void KRandRSystemTray::mousePressEvent(TQMouseEvent* e)
 {
 	// Popup the context menu with left-click
-	if (e->button() == LeftButton) {
+	if (e->button() == Qt::LeftButton) {
 		contextMenuAboutToShow(contextMenu());
 		contextMenu()->popup(e->globalPos());
 		e->accept();
@@ -205,7 +205,7 @@ void KRandRSystemTray::contextMenuAboutToShow(KPopupMenu* menu)
 				/*lastIndex = menu->insertItem(i18n("Screen %1").arg(s+1));
 				menu->setItemEnabled(lastIndex, false);*/
 			} else {
-				KPopupMenu* subMenu = new KPopupMenu(menu, TQString("screen%1").arg(s+1).latin1());
+				KPopupMenu* subMenu = new KPopupMenu(menu, TQString("screen%1").tqarg(s+1).latin1());
 				m_screenPopups.append(subMenu);
 				populateMenu(subMenu);
 				lastIndex = menu->insertItem(i18n("Screen %1").arg(s+1), subMenu);
@@ -237,7 +237,7 @@ void KRandRSystemTray::contextMenuAboutToShow(KPopupMenu* menu)
 	menu->insertTitle(SmallIcon("randr"), i18n("Global Configuation"));
 
 	KAction *actColors = new KAction( i18n( "Configure Color Profiles..." ),
-		SmallIconSet( "configure" ), KShortcut(), this, TQT_SLOT( slotColorConfig() ),
+		SmallIconSet( "configure" ), KShortcut(), TQT_TQOBJECT(this), TQT_SLOT( slotColorConfig() ),
 		actionCollection() );
 	actColors->plug( menu );
 
@@ -247,7 +247,7 @@ void KRandRSystemTray::contextMenuAboutToShow(KPopupMenu* menu)
 // 	actPrefs->plug( menu );
 
 	KAction *actSKeys = new KAction( i18n( "Configure Shortcut Keys..." ),
-		SmallIconSet( "configure" ), KShortcut(), this, TQT_SLOT( slotSKeys() ),
+		SmallIconSet( "configure" ), KShortcut(), TQT_TQOBJECT(this), TQT_SLOT( slotSKeys() ),
 		actionCollection() );
 	actSKeys->plug( menu );
 
@@ -260,7 +260,7 @@ void KRandRSystemTray::contextMenuAboutToShow(KPopupMenu* menu)
 
 void KRandRSystemTray::slotScreenActivated()
 {
-	setCurrentScreen(m_screenPopups.find(static_cast<const KPopupMenu*>(sender())));
+	setCurrentScreen(m_screenPopups.tqfind(static_cast<const KPopupMenu*>(sender())));
 }
 
 void KRandRSystemTray::configChanged()

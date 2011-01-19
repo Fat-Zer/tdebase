@@ -84,7 +84,7 @@ void PrefMenu::insertMenuItem(KService::Ptr& s,
         if (KickerSettings::menuEntryFormat() == KickerSettings::NameAndDescription)
         {
             if (!suppressGenericNames ||
-                !suppressGenericNames->contains(s->untranslatedGenericName()))
+                !suppressGenericNames->tqcontains(s->untranslatedGenericName()))
             {
                 serviceName = TQString("%1 (%2)").arg(serviceName).arg(comment);
             }
@@ -120,7 +120,7 @@ void PrefMenu::insertMenuItem(KService::Ptr& s,
 
     // item names may contain ampersands. To avoid them being converted
     // to accelerators, replace them with two ampersands.
-    serviceName.replace("&", "&&");
+    serviceName.tqreplace("&", "&&");
 
     int newId = insertItem(KickerLib::menuIconSet(s->icon()), serviceName, nId, nIndex);
     m_entryMap.insert(newId, static_cast<KSycocaEntry*>(s));
@@ -136,7 +136,7 @@ void PrefMenu::mouseMoveEvent(TQMouseEvent * ev)
 {
     KPanelMenu::mouseMoveEvent(ev);
 
-    if ((ev->state() & LeftButton) != LeftButton)
+    if ((ev->state() & Qt::LeftButton) != Qt::LeftButton)
     {
         return;
     }
@@ -155,7 +155,7 @@ void PrefMenu::mouseMoveEvent(TQMouseEvent * ev)
         return;
     }
 
-    if (!m_entryMap.contains(id))
+    if (!m_entryMap.tqcontains(id))
     {
         kdDebug(1210) << "Cannot find service with menu id " << id << endl;
         return;
@@ -224,7 +224,7 @@ void PrefMenu::dragEnterEvent(TQDragEnterEvent *event)
 void PrefMenu::dragLeaveEvent(TQDragLeaveEvent */*event*/)
 {
     // see PrefMenu::dragEnterEvent why this is nescessary
-    if (!frameGeometry().contains(TQCursor::pos()))
+    if (!TQT_TQRECT_OBJECT(frameGeometry()).tqcontains(TQCursor::pos()))
     {
         KURLDrag::setTarget(0);
     }
@@ -297,7 +297,7 @@ void PrefMenu::initialize()
 
             // Item names may contain ampersands. To avoid them being converted
             // to accelerators, replace each ampersand with two ampersands.
-            groupCaption.replace("&", "&&");
+            groupCaption.tqreplace("&", "&&");
 
             PrefMenu* m = new PrefMenu(g->name(), g->relPath(), this);
             m->setCaption(groupCaption);
@@ -323,7 +323,7 @@ void PrefMenu::initialize()
 
 void PrefMenu::slotExec(int id)
 {
-    if (!m_entryMap.contains(id))
+    if (!m_entryMap.tqcontains(id))
     {
         return;
     }

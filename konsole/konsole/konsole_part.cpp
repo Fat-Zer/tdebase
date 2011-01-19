@@ -76,12 +76,12 @@ konsoleFactory::~konsoleFactory()
   s_aboutData = 0;
 }
 
-KParts::Part *konsoleFactory::createPartObject(TQWidget *parentWidget, const char *widgetName,
+KParts::Part *konsoleFactory::createPartObject(TQWidget *tqparentWidget, const char *widgetName,
                                          TQObject *parent, const char *name, const char *classname,
                                          const TQStringList&)
 {
-//  kdDebug(1211) << "konsoleFactory::createPart parentWidget=" << parentWidget << " parent=" << parent << endl;
-  KParts::Part *obj = new konsolePart(parentWidget, widgetName, parent, name, classname);
+//  kdDebug(1211) << "konsoleFactory::createPart tqparentWidget=" << tqparentWidget << " parent=" << parent << endl;
+  KParts::Part *obj = new konsolePart(tqparentWidget, widgetName, parent, name, classname);
   return obj;
 }
 
@@ -97,7 +97,7 @@ KInstance *konsoleFactory::instance()
 
 #define DEFAULT_HISTORY_SIZE 1000
 
-konsolePart::konsolePart(TQWidget *_parentWidget, const char *widgetName, TQObject *parent, const char *name, const char *classname)
+konsolePart::konsolePart(TQWidget *_tqparentWidget, const char *widgetName, TQObject *parent, const char *name, const char *classname)
   : KParts::ReadOnlyPart(parent, name)
 ,te(0)
 ,se(0)
@@ -120,7 +120,7 @@ konsolePart::konsolePart(TQWidget *_parentWidget, const char *widgetName, TQObje
 ,m_histSize(DEFAULT_HISTORY_SIZE)
 ,m_runningShell( false )
 {
-  parentWidget=_parentWidget;
+  tqparentWidget=_tqparentWidget;
   setInstance(konsoleFactory::instance());
 
   m_extension = new konsoleBrowserExtension(this);
@@ -137,10 +137,10 @@ konsolePart::konsolePart(TQWidget *_parentWidget, const char *widgetName, TQObje
   const char* shell = getenv("SHELL");
   if (shell == NULL || *shell == '\0') shell = "/bin/sh";
   eargs.append(shell);
-  te = new TEWidget(parentWidget,widgetName);
+  te = new TEWidget(tqparentWidget,widgetName);
   te->setMinimumSize(150,70);    // allow resizing, cause resize in TEWidget
 
-  setWidget(te);
+  setWidget(TQT_TQWIDGET(te));
   te->setFocus();
   connect( te,TQT_SIGNAL(configureRequest(TEWidget*,int,int,int)),
            this,TQT_SLOT(configureRequest(TEWidget*,int,int,int)) );
@@ -197,7 +197,7 @@ konsolePart::konsolePart(TQWidget *_parentWidget, const char *widgetName, TQObje
         KeyTrans* ktr = kt_map[*it];
         assert( ktr );
         TQString title=ktr->hdr();
-        m_keytab->insertItem(title.replace('&',"&&"),ktr->numb());
+        m_keytab->insertItem(title.tqreplace('&',"&&"),ktr->numb());
      }
   }
 
@@ -317,13 +317,13 @@ void konsolePart::makeGUI()
   if (!kapp->authorizeKAction("konsole_rmb"))
      return;
 
-  actions = new KActionCollection( (KMainWindow*)parentWidget );
-  settingsActions = new KActionCollection( (KMainWindow*)parentWidget );
+  actions = new KActionCollection( (KMainWindow*)tqparentWidget );
+  settingsActions = new KActionCollection( (KMainWindow*)tqparentWidget );
 
   // Send Signal Menu -------------------------------------------------------------
   if (kapp->authorizeKAction("send_signal"))
   {
-     m_signals = new KPopupMenu((KMainWindow*)parentWidget);
+     m_signals = new KPopupMenu((KMainWindow*)tqparentWidget);
      m_signals->insertItem( i18n( "&Suspend Task" )   + " (STOP)", SIGSTOP);
      m_signals->insertItem( i18n( "&Continue Task" )  + " (CONT)", SIGCONT);
      m_signals->insertItem( i18n( "&Hangup" )         + " (HUP)",   SIGHUP);
@@ -338,7 +338,7 @@ void konsolePart::makeGUI()
   // Settings Menu ----------------------------------------------------------------
   if (kapp->authorizeKAction("settings"))
   {
-     m_options = new KPopupMenu((KMainWindow*)parentWidget);
+     m_options = new KPopupMenu((KMainWindow*)tqparentWidget);
 
      // Scrollbar
      selectScrollbar = new KSelectAction(i18n("Sc&rollbar"), 0, this,
@@ -379,7 +379,7 @@ void konsolePart::makeGUI()
      // Keyboard Options Menu ---------------------------------------------------
      if (kapp->authorizeKAction("keyboard"))
      {
-        m_keytab = new KPopupMenu((KMainWindow*)parentWidget);
+        m_keytab = new KPopupMenu((KMainWindow*)tqparentWidget);
         m_keytab->setCheckable(true);
         connect(m_keytab, TQT_SIGNAL(activated(int)), TQT_SLOT(keytab_menu_activated(int)));
         m_options->insertItem( SmallIconSet( "key_bindings" ), i18n( "&Keyboard" ), m_keytab );
@@ -388,7 +388,7 @@ void konsolePart::makeGUI()
      // Schema Options Menu -----------------------------------------------------
      if (kapp->authorizeKAction("schema"))
      {
-        m_schema = new KPopupMenu((KMainWindow*)parentWidget);
+        m_schema = new KPopupMenu((KMainWindow*)tqparentWidget);
         m_schema->setCheckable(true);
         connect(m_schema, TQT_SIGNAL(activated(int)), TQT_SLOT(schema_menu_activated(int)));
         connect(m_schema, TQT_SIGNAL(aboutToShow()), TQT_SLOT(schema_menu_check()));
@@ -452,17 +452,17 @@ void konsolePart::makeGUI()
   }
 
   // Popup Menu -------------------------------------------------------------------
-  m_popupMenu = new KPopupMenu((KMainWindow*)parentWidget);
-  KAction* selectionEnd = new KAction(i18n("Set Selection End"), 0, te,
+  m_popupMenu = new KPopupMenu((KMainWindow*)tqparentWidget);
+  KAction* selectionEnd = new KAction(i18n("Set Selection End"), 0, TQT_TQOBJECT(te),
                                TQT_SLOT(setSelectionEnd()), actions, "selection_end");
   selectionEnd->plug(m_popupMenu);
 
   KAction *copyClipboard = new KAction(i18n("&Copy"), "editcopy", 0,
-                                        te, TQT_SLOT(copyClipboard()), actions, "edit_copy");
+                                        TQT_TQOBJECT(te), TQT_SLOT(copyClipboard()), actions, "edit_copy");
   copyClipboard->plug(m_popupMenu);
 
   KAction *pasteClipboard = new KAction(i18n("&Paste"), "editpaste", 0,
-                                        te, TQT_SLOT(pasteClipboard()), actions, "edit_paste");
+                                        TQT_TQOBJECT(te), TQT_SLOT(pasteClipboard()), actions, "edit_paste");
   pasteClipboard->plug(m_popupMenu);
 
   if (m_signals)
@@ -561,9 +561,9 @@ void konsolePart::readProperties()
 
   b_framevis = config->readBoolEntry("has frame",false);
   b_histEnabled = config->readBoolEntry("historyenabled",true);
-  n_bell = QMIN(config->readUnsignedNumEntry("bellmode",TEWidget::BELLSYSTEM),3);
+  n_bell = TQMIN(config->readUnsignedNumEntry("bellmode",TEWidget::BELLSYSTEM),3);
   n_keytab=config->readNumEntry("keytab",0); // act. the keytab for this session
-  n_scroll = QMIN(config->readUnsignedNumEntry("scrollbar",TEWidget::SCRRIGHT),2);
+  n_scroll = TQMIN(config->readUnsignedNumEntry("scrollbar",TEWidget::SCRRIGHT),2);
   m_histSize = config->readNumEntry("history",DEFAULT_HISTORY_SIZE);
   s_word_seps= config->readEntry("wordseps",":@-./_~");
 
@@ -587,10 +587,10 @@ void konsolePart::readProperties()
 
   if (sch->useTransparency()) {
     if (!rootxpm)
-      rootxpm = new KRootPixmap(te);
+      rootxpm = new KRootPixmap(TQT_TQWIDGET(te));
     rootxpm->setFadeEffect(sch->tr_x(), TQColor(sch->tr_r(), sch->tr_g(), sch->tr_b()));
     rootxpm->start();
-    rootxpm->repaint(true);
+    rootxpm->tqrepaint(true);
   }
   else {
     if (rootxpm) {
@@ -598,7 +598,7 @@ void konsolePart::readProperties()
       delete rootxpm;
       rootxpm=0;
     }
-    pixmap_menu_activated(sch->alignment());
+    pixmap_menu_activated(sch->tqalignment());
   }
 
   te->setBellMode(n_bell);
@@ -733,7 +733,7 @@ void konsolePart::updateSchemaMenu()
   for (int i = 0; i < (int) colors->count(); i++)  {
     ColorSchema* s = (ColorSchema*)colors->at(i);
     TQString title=s->title();
-    m_schema->insertItem(title.replace('&',"&&"),s->numb(),0);
+    m_schema->insertItem(title.tqreplace('&',"&&"),s->numb(),0);
   }
 
   if (te && se) {
@@ -775,10 +775,10 @@ void konsolePart::setSchema(ColorSchema* s)
 
   if (s->useTransparency()) {
     if (!rootxpm)
-      rootxpm = new KRootPixmap(te);
+      rootxpm = new KRootPixmap(TQT_TQWIDGET(te));
     rootxpm->setFadeEffect(s->tr_x(), TQColor(s->tr_r(), s->tr_g(), s->tr_b()));
     rootxpm->start();
-    rootxpm->repaint(true);
+    rootxpm->tqrepaint(true);
   }
   else {
     if (rootxpm) {
@@ -786,7 +786,7 @@ void konsolePart::setSchema(ColorSchema* s)
       delete rootxpm;
       rootxpm=0;
     }
-    pixmap_menu_activated(s->alignment());
+    pixmap_menu_activated(s->tqalignment());
   }
 
   te->setColorTable(s->table());
@@ -797,8 +797,8 @@ void konsolePart::notifySize(int /* columns */, int /* lines */)
 {
   ColorSchema *sch=colors->find(s_schema);
 
-  if (sch && sch->alignment() >= 3)
-    pixmap_menu_activated(sch->alignment());
+  if (sch && sch->tqalignment() >= 3)
+    pixmap_menu_activated(sch->tqalignment());
 }
 
 void konsolePart::pixmap_menu_activated(int item)
@@ -847,7 +847,7 @@ void konsolePart::pixmap_menu_activated(int item)
 void konsolePart::slotHistoryType()
 {
   if ( ! se ) return;
-  HistoryTypeDialog dlg(se->history(), m_histSize, (KMainWindow*)parentWidget);
+  HistoryTypeDialog dlg(se->history(), m_histSize, (KMainWindow*)tqparentWidget);
   if (dlg.exec()) {
     if (dlg.isOn()) {
       if (dlg.nbLines() > 0) {
@@ -917,7 +917,7 @@ void konsolePart::slotWordSeps() {
   bool ok;
 
   TQString seps = KInputDialog::getText( i18n( "Word Connectors" ),
-      i18n( "Characters other than alphanumerics considered part of a word when double clicking:" ), s_word_seps, &ok, parentWidget );
+      i18n( "Characters other than alphanumerics considered part of a word when double clicking:" ), s_word_seps, &ok, tqparentWidget );
   if ( ok )
   {
     s_word_seps = seps;
@@ -1077,7 +1077,7 @@ bool konsolePart::setPtyFd( int master_pty )
 void konsolePart::newSession()
 {
   if ( se ) delete se;
-  se = new TESession(te, "xterm", parentWidget->winId());
+  se = new TESession(te, "xterm", tqparentWidget->winId());
   connect( se,TQT_SIGNAL(done(TESession*)),
            this,TQT_SLOT(doneSession(TESession*)) );
   connect( se,TQT_SIGNAL(openURLRequest(const TQString &)),
@@ -1125,7 +1125,7 @@ void konsolePart::showShellInDir( const TQString& dir )
   {
       TQString text = dir;
       KRun::shellQuote(text);
-      text = TQString::fromLatin1("cd ") + text + '\n';
+      text = TQString::tqfromLatin1("cd ") + text + '\n';
       te->emitText( text );
   };
 }

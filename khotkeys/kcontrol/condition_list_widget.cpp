@@ -165,9 +165,9 @@ void Condition_list_widget::new_selected( int type_P )
                 parent = NULL;
             }
         }
-    if( parent == NULL && selected_item != NULL && selected_item->parent() != NULL )
+    if( parent == NULL && selected_item != NULL && selected_item->tqparent() != NULL )
         {
-        parent = static_cast< Condition_list_item* >( selected_item->parent());
+        parent = static_cast< Condition_list_item* >( selected_item->tqparent());
         after = selected_item;
         }
     Condition_list_base* parent_cond = parent
@@ -217,8 +217,8 @@ void Condition_list_widget::copy_pressed()
             return;
     conditions_listview->setSelected( create_listview_item(
         selected_item->condition()->copy( selected_item->condition()->parent()),
-        selected_item->parent() ? NULL : conditions_listview,
-        static_cast< Condition_list_item* >( selected_item->parent()),
+        selected_item->tqparent() ? NULL : conditions_listview,
+        static_cast< Condition_list_item* >( selected_item->tqparent()),
         selected_item, true ), true );
     }
 
@@ -321,14 +321,14 @@ void Condition_list_widget::edit_listview_item( Condition_list_item* item_P )
         {
         Condition* old_cond = item_P->condition();
         item_P->set_condition( new_condition );
-        int pos = conditions.find( old_cond );
+        int pos = conditions.tqfind( old_cond );
         if( pos >= 0 )
             {
             conditions.remove( pos ); // we own it
             conditions.insert( pos, new_condition );
             }
         item_P->widthChanged( 0 );
-        conditions_listview->repaintItem( item_P );
+        conditions_listview->tqrepaintItem( item_P );
         }
 #ifdef KHOTKEYS_DEBUG
     kdDebug( 1217 ) << "Condition_list_widget::edit_listview_item():" << endl;

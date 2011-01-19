@@ -2,7 +2,7 @@
  *
  * Keramik KWin client (version 0.8)
  *
- * Copyright (C) 2002 Fredrik Höglund <fredrik@kde.org>
+ * Copyright (C) 2002 Fredrik Hï¿½glund <fredrik@kde.org>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -111,10 +111,10 @@ namespace Keramik {
 	}; // class KeramikHandler
 
 	class KeramikClient;
-	class KeramikButton : public QButton
+	class KeramikButton : public TQButton
 	{
 		public:
-			KeramikButton( KeramikClient *, const char *, Button, const TQString &, const int realizeBtns = LeftButton );
+			KeramikButton( KeramikClient *, const char *, Button, const TQString &, const int realizeBtns = Qt::LeftButton );
 			~KeramikButton();
 
 			ButtonState lastButton() const { return lastbutton; }
@@ -148,7 +148,7 @@ namespace Keramik {
 			virtual Position mousePosition( const TQPoint& p ) const;
 		    	virtual void borders( int& left, int& right, int& top, int& bottom ) const;
 			virtual void resize( const TQSize& s );
-			virtual TQSize minimumSize() const;
+			virtual TQSize tqminimumSize() const;
 			virtual bool eventFilter( TQObject* o, TQEvent* e );
 			virtual void activeChange();
 			virtual void captionChange();

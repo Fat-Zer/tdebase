@@ -109,7 +109,7 @@ bool GetInfo_ReadfromFile(TQListView * lbox, const char *FileName,
 	line = stream.readLine();
 	if (!line.isEmpty()) {
 	    if (!splitChar.isNull()) {
-		int pos = line.find(splitChar);
+		int pos = line.tqfind(splitChar);
 		s1 = line.left(pos-1).stripWhiteSpace();
 		s2 = line.mid(pos+1).stripWhiteSpace();
 	    }
@@ -228,11 +228,11 @@ bool GetInfo_Devices(TQListView * lBox)
 	while (!stream.atEnd()) {
 	    line = stream.readLine();
 	    if (!line.isEmpty()) {
-		if (-1 != line.find("character device",0,false)) {
+		if (-1 != line.tqfind("character device",0,false)) {
 		    parent = new TQListViewItem(lBox,parent,i18n("Character Devices"));
 		    parent->setPixmap(0,SmallIcon("chardevice"));
 		    parent->setOpen(true);
-		} else if (-1 != line.find("block device",0,false)) {
+		} else if (-1 != line.tqfind("block device",0,false)) {
 		    parent = new TQListViewItem(lBox,parent,i18n("Block Devices"));
 		    parent->setPixmap(0,SmallIcon("blockdevice"));
 		    parent->setOpen(true);
@@ -293,7 +293,7 @@ static void cleanPassword(TQString & str)
 
     while (index >= 0)
     {
-	index = str.find(passwd, index, FALSE);
+	index = str.tqfind(passwd, index, FALSE);
 	if (index >= 0) {
 	    index += passwd.length();
 	    while (index < (int) str.length() &&
@@ -473,7 +473,7 @@ bool GetInfo_Partitions(TQListView * lbox)
 	while (file->readLine(buf, sizeof( buf )) > 0) {
 	    str = TQString::fromLocal8Bit(buf);
 	    if (str.length()) {
-		int p = str.find(' ');	/* find first space. */
+		int p = str.tqfind(' ');	/* find first space. */
 		if (p)
 		    str.remove(p, 1024); /* erase all chars including space. */
 		Mounted_Partitions.append(str);
@@ -503,7 +503,7 @@ bool GetInfo_Partitions(TQListView * lbox)
 #endif
     {
 	total = avail = 0;	/* initialize size.. */
-	found_in_List = (Mounted_Partitions.contains(FS_NAME) > 0);
+	found_in_List = (Mounted_Partitions.tqcontains(FS_NAME) > 0);
 	if (found_in_List && statfs(FS_FILE, &sfs) == 0) {
 	    total = ((LONG_TYPE) sfs.f_blocks) * sfs.f_bsize;
 	    avail = (getuid()? sfs.f_bavail : sfs.f_bfree)
@@ -573,7 +573,7 @@ bool GetInfo_CD_ROM(TQListView * lBox)
 				if (-1 != rx.search(line)) {
 					TQString text = rx.cap(1);
 					TQString value = rx.cap(2);
-					if (!text.contains('#')) {
+					if (!text.tqcontains('#')) {
 						if (value == "0")
 							value = KStdGuiItem::no().plainText();
 						if (value == "1")

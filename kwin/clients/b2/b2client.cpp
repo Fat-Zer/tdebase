@@ -146,7 +146,7 @@ static void drawB2Rect(KPixmap *pix, const TQColor &primary, bool down)
     TQColor hColor = primary.light(150);
     TQColor lColor = primary.dark(150);
 
-    if (down) qSwap(hColor, lColor);
+    if (down) tqSwap(hColor, lColor);
 
     if (TQPixmap::defaultDepth() > 8) {
 	KPixmapEffect::gradient(*pix, hColor, lColor, 
@@ -355,7 +355,7 @@ void B2Client::init()
     // Check this early, otherwise the preview will be rendered badly.
     resizable = isResizable();
 
-    createMainWidget(WResizeNoErase | WRepaintNoErase);
+    createMainWidget((WFlags)(WResizeNoErase | WRepaintNoErase));
     widget()->installEventFilter(this);
 
     widget()->setBackgroundMode(NoBackground);
@@ -418,7 +418,7 @@ void B2Client::init()
 
     titleLayout->addSpacing(3);
 
-    TQColor c = options()->colorGroup(KDecoration::ColorTitleBar, isActive()).
+    TQColor c = options()->tqcolorGroup(KDecoration::ColorTitleBar, isActive()).
         color(TQColorGroup::Button);
 
     for (int i = 0; i < BtnCount; i++) {
@@ -443,7 +443,7 @@ void B2Client::addButtons(const TQString& s, const TQString tips[],
 	case 'M':  // Menu button
 	    if (!button[BtnMenu]) {
 		button[BtnMenu] = new B2Button(this, tb, tips[BtnMenu], 
-			LeftButton | RightButton);
+			Qt::LeftButton | Qt::RightButton);
 		button[BtnMenu]->setPixmaps(P_MENU);
 		button[BtnMenu]->setUseMiniIcon();
 		connect(button[BtnMenu], TQT_SIGNAL(pressed()),
@@ -483,7 +483,7 @@ void B2Client::addButtons(const TQString& s, const TQString tips[],
 	case 'A':  // Maximize button
 	    if (isMaximizable() && (!button[BtnMax])) {
 		button[BtnMax] = new B2Button(this, tb, tips[BtnMax], 
-			LeftButton | MidButton | RightButton);
+			Qt::LeftButton | Qt::MidButton | Qt::RightButton);
 		button[BtnMax]->setPixmaps(maximizeMode() == MaximizeFull ?
 			P_NORMALIZE : P_MAX);
 		connect(button[BtnMax], TQT_SIGNAL(clicked()),
@@ -537,7 +537,7 @@ bool B2Client::mustDrawHandle() const
 void B2Client::iconChange()
 {
     if (button[BtnMenu])
-        button[BtnMenu]->repaint(false);
+        button[BtnMenu]->tqrepaint(false);
 }
 
 // Gallium: New button show/hide magic for customizable
@@ -586,7 +586,7 @@ void B2Client::resizeEvent(TQResizeEvent * /*e*/)
     titleMoveAbs(bar_x_ofs);
 
     doShape();
-    widget()->repaint(); // the frame is misrendered without this
+    widget()->tqrepaint(); // the frame is misrendered without this
 }
 
 void B2Client::captionChange()
@@ -595,7 +595,7 @@ void B2Client::captionChange()
     titleMoveAbs(bar_x_ofs);
     doShape();
     titlebar->recalcBuffer();
-    titlebar->repaint(false);
+    titlebar->tqrepaint(false);
 }
 
 void B2Client::paintEvent(TQPaintEvent* e)
@@ -614,7 +614,7 @@ void B2Client::paintEvent(TQPaintEvent* e)
     int bb = mustDrawHandle() ? 4 : 0;
     int bDepth = thickness + bb;
 
-    TQColorGroup fillColor = options()->colorGroup(frameColorGroup, isActive());
+    TQColorGroup fillColor = options()->tqcolorGroup(frameColorGroup, isActive());
     TQBrush fillBrush(options()->color(frameColorGroup, isActive()));
 
     // outer frame rect
@@ -689,7 +689,7 @@ void B2Client::paintEvent(TQPaintEvent* e)
        visibilitinotify events until its state changes, so we just try
      */
     if (titlebar->isFullyObscured()) {
-        /* We first see, if our repaint contained the titlebar area */
+        /* We first see, if our tqrepaint contained the titlebar area */
 	TQRegion reg(TQRect(0, 0, width(), buttonSize + 4));
 	reg = reg.intersect(e->region());
 	if (!reg.isEmpty())
@@ -794,8 +794,8 @@ void B2Client::titleMoveAbs(int new_ofs)
         bar_x_ofs = new_ofs;
 	positionButtons();
 	doShape();
-	widget()->repaint(0, 0, width(), buttonSize + 4, false);
-	titlebar->repaint(false);
+	widget()->tqrepaint(0, 0, width(), buttonSize + 4, false);
+	titlebar->tqrepaint(false);
     }
 }
 
@@ -820,7 +820,7 @@ void B2Client::maximizeChange()
     bool m = maximizeMode() == MaximizeFull;
     if (button[BtnMax]) {
         button[BtnMax]->setPixmaps(m ? P_NORMALIZE : P_MAX);
-        button[BtnMax]->repaint();
+        button[BtnMax]->tqrepaint();
 	TQToolTip::remove(button[BtnMax]);
 	TQToolTip::add(button[BtnMax],
 		m ? i18n("Restore") : i18n("Maximize"));
@@ -830,21 +830,21 @@ void B2Client::maximizeChange()
 
     g->activate();
     doShape();
-    widget()->repaint(false);
+    widget()->tqrepaint(false);
 }
 
 void B2Client::activeChange()
 {
-    widget()->repaint(false);
-    titlebar->repaint(false);
+    widget()->tqrepaint(false);
+    titlebar->tqrepaint(false);
 
-    TQColor c = options()->colorGroup(
+    TQColor c = options()->tqcolorGroup(
 	    KDecoration::ColorTitleBar, isActive()).color(TQColorGroup::Button);
 
     for (int i = 0; i < BtnCount; i++)
         if (button[i]) {
            button[i]->setBg(c);
-           button[i]->repaint(false);
+           button[i]->tqrepaint(false);
         }
 }
 
@@ -860,7 +860,7 @@ void B2Client::shadeChange()
     }
 }
 
-TQSize B2Client::minimumSize() const
+TQSize B2Client::tqminimumSize() const
 {
     int left, right, top, bottom;
     borders(left, right, top, bottom);
@@ -939,8 +939,8 @@ void B2Client::unobscureTitlebar()
 static void redraw_pixmaps()
 {
     int i;
-    TQColorGroup aGrp = options()->colorGroup(KDecoration::ColorButtonBg, true);
-    TQColorGroup iGrp = options()->colorGroup(KDecoration::ColorButtonBg, false);
+    TQColorGroup aGrp = options()->tqcolorGroup(KDecoration::ColorButtonBg, true);
+    TQColorGroup iGrp = options()->tqcolorGroup(KDecoration::ColorButtonBg, false);
 
     // close
     drawB2Rect(PIXMAP_A(P_CLOSE), aGrp.button(), false);
@@ -961,8 +961,8 @@ static void redraw_pixmaps()
 	TQColor color = is_act ? aGrp.button() : iGrp.button();
 	drawB2Rect(&thinBox, color, is_down);
 	pix->fill(Qt::black);
-	bitBlt(pix, 0, 0, &thinBox, 
-		0, 0, thinBox.width(), thinBox.height(), Qt::CopyROP, true);
+	bitBlt(TQT_TQPAINTDEVICE(pix), 0, 0, TQT_TQPAINTDEVICE(&thinBox), 
+		0, 0, thinBox.width(), thinBox.height(), TQt::CopyROP, true);
     }
 
     // maximize
@@ -984,12 +984,12 @@ static void redraw_pixmaps()
 	drawB2Rect(&smallBox, is_act ? aGrp.button() : iGrp.button(), is_down);
 	drawB2Rect(&largeBox, is_act ? aGrp.button() : iGrp.button(), is_down);
 	pix->fill(options()->color(KDecoration::ColorTitleBar, is_act));
-	bitBlt(pix, pix->width() - 12, pix->width() - 12, &largeBox,
-	       0, 0, 12, 12, Qt::CopyROP, true);
-	bitBlt(pix, 0, 0, &smallBox, 0, 0, 10, 10, Qt::CopyROP, true);
+	bitBlt(TQT_TQPAINTDEVICE(pix), pix->width() - 12, pix->width() - 12, TQT_TQPAINTDEVICE(&largeBox),
+	       0, 0, 12, 12, TQt::CopyROP, true);
+	bitBlt(TQT_TQPAINTDEVICE(pix), 0, 0, TQT_TQPAINTDEVICE(&smallBox), 0, 0, 10, 10, TQt::CopyROP, true);
 
-	bitBlt(pixmap[P_ICONIFY * NumStates + i], 0, 0,
-	       &smallBox, 0, 0, 10, 10, Qt::CopyROP, true);
+	bitBlt(TQT_TQPAINTDEVICE(pixmap[P_ICONIFY * NumStates + i]), 0, 0,
+	       TQT_TQPAINTDEVICE(&smallBox), 0, 0, 10, 10, TQt::CopyROP, true);
     }
     
     // resize
@@ -999,8 +999,8 @@ static void redraw_pixmaps()
 	*pixmap[P_RESIZE * NumStates + i] = *pixmap[P_CLOSE * NumStates + i];
 	pixmap[P_RESIZE * NumStates + i]->detach();
 	drawB2Rect(&smallBox, is_act ? aGrp.button() : iGrp.button(), is_down);
-	bitBlt(pixmap[P_RESIZE * NumStates + i], 
-		0, 0, &smallBox, 0, 0, 10, 10, Qt::CopyROP, true);
+	bitBlt(TQT_TQPAINTDEVICE(pixmap[P_RESIZE * NumStates + i]), 
+		0, 0, TQT_TQPAINTDEVICE(&smallBox), 0, 0, 10, 10, TQt::CopyROP, true);
     }
 
 
@@ -1107,7 +1107,7 @@ void B2Client::positionButtons()
 // Transparent bound stuff.
 
 static TQRect *visible_bound;
-static TQPointArray bound_shape;
+static TQPointArray bound_tqshape;
 
 bool B2Client::drawbound(const TQRect& geom, bool clear)
 {
@@ -1132,7 +1132,7 @@ bool B2Client::drawbound(const TQRect& geom, bool clear)
         barLeft += 2;
         barRight -= 2;
 
-	bound_shape.putPoints(0, 8,
+	bound_tqshape.putPoints(0, 8,
 		g.left(), frameTop,
 		barLeft, frameTop,
 		barLeft, g.top(),
@@ -1146,8 +1146,8 @@ bool B2Client::drawbound(const TQRect& geom, bool clear)
     }
     TQPainter p(workspaceWidget());
     p.setPen(TQPen(Qt::white, 5));
-    p.setRasterOp(Qt::XorROP);
-    p.drawPolygon(bound_shape);
+    p.setRasterOp(TQt::XorROP);
+    p.drawPolygon(bound_tqshape);
 
     if (clear) {
 	delete visible_bound;
@@ -1158,26 +1158,26 @@ bool B2Client::drawbound(const TQRect& geom, bool clear)
 
 bool B2Client::eventFilter(TQObject *o, TQEvent *e)
 {
-    if (o != widget())
+    if (TQT_BASE_OBJECT(o) != TQT_BASE_OBJECT(widget()))
 	return false;
     switch (e->type()) {
     case TQEvent::Resize:
-	resizeEvent(static_cast< TQResizeEvent* >(e));
+	resizeEvent(TQT_TQRESIZEEVENT(e));
 	return true;
     case TQEvent::Paint:
-	paintEvent(static_cast< TQPaintEvent* >(e));
+	paintEvent(TQT_TQPAINTEVENT(e));
 	return true;
     case TQEvent::MouseButtonDblClick:
-	titlebar->mouseDoubleClickEvent(static_cast< TQMouseEvent* >(e));
+	titlebar->mouseDoubleClickEvent(TQT_TQMOUSEEVENT(e));
 	return true;
     case TQEvent::Wheel:
-	titlebar->wheelEvent(static_cast< TQWheelEvent* >(e));
+	titlebar->wheelEvent(TQT_TQWHEELEVENT(e));
 	return true;
     case TQEvent::MouseButtonPress:
-	processMousePressEvent(static_cast< TQMouseEvent* >(e));
+	processMousePressEvent(TQT_TQMOUSEEVENT(e));
 	return true;
     case TQEvent::Show:
-	showEvent(static_cast< TQShowEvent* >(e));
+	showEvent(TQT_TQSHOWEVENT(e));
 	return true;
     default:
 	break;
@@ -1192,7 +1192,7 @@ B2Button::B2Button(B2Client *_client, TQWidget *parent,
    : TQButton(parent, 0), hover(false)
 {
     setBackgroundMode(NoBackground);
-    setCursor(arrowCursor);
+    setCursor(tqarrowCursor);
     realizeButtons = realizeBtns;
     client = _client;
     useMiniIcon = false;
@@ -1201,7 +1201,7 @@ B2Button::B2Button(B2Client *_client, TQWidget *parent,
 }
 
 
-TQSize B2Button::sizeHint() const
+TQSize B2Button::tqsizeHint() const
 {
     return TQSize(buttonSize, buttonSize);
 }
@@ -1252,14 +1252,14 @@ void B2Button::setPixmaps(int button_id)
     for (int i = 0; i < NumStates; i++) {
 	icon[i] = B2::pixmap[button_id + i];
     }
-    repaint(false);
+    tqrepaint(false);
 }
 
 void B2Button::mousePressEvent(TQMouseEvent * e)
 {
     last_button = e->button();
     TQMouseEvent me(e->type(), e->pos(), e->globalPos(), 
-	    (e->button() & realizeButtons) ? LeftButton : NoButton, 
+	    (e->button() & realizeButtons) ? Qt::LeftButton : Qt::NoButton, 
 	    e->state());
     TQButton::mousePressEvent(&me);
 }
@@ -1268,7 +1268,7 @@ void B2Button::mouseReleaseEvent(TQMouseEvent * e)
 {
     last_button = e->button();
     TQMouseEvent me(e->type(), e->pos(), e->globalPos(), 
-	    (e->button() & realizeButtons) ? LeftButton : NoButton, 
+	    (e->button() & realizeButtons) ? Qt::LeftButton : Qt::NoButton, 
 	    e->state());
     TQButton::mouseReleaseEvent(&me);
 }
@@ -1276,21 +1276,21 @@ void B2Button::mouseReleaseEvent(TQMouseEvent * e)
 void B2Button::enterEvent(TQEvent *e)
 {
     hover = true;
-    repaint(false);
+    tqrepaint(false);
     TQButton::enterEvent(e);
 }
 
 void B2Button::leaveEvent(TQEvent *e)
 {
     hover = false;
-    repaint(false);
+    tqrepaint(false);
     TQButton::leaveEvent(e);
 }
 
 // =====================================
 
 B2Titlebar::B2Titlebar(B2Client *parent)
-    : TQWidget(parent->widget(), 0, WStyle_Customize | WRepaintNoErase),
+    : TQWidget(parent->widget(), 0, (WFlags)(WStyle_Customize | WRepaintNoErase)),
       client(parent),
       set_x11mask(false), isfullyobscured(false), shift_move(false)
 {
@@ -1342,7 +1342,7 @@ void B2Titlebar::drawTitlebar(TQPainter &p, bool state)
 
     // titlebar fill
     const TQColorGroup cg =
-	options()->colorGroup(KDecoration::ColorTitleBar, state);
+	options()->tqcolorGroup(KDecoration::ColorTitleBar, state);
     TQBrush brush(cg.background());
     if (gradient) brush.setPixmap(*gradient);
     qDrawShadeRect(&p, 1, 1, t.right() - 1, t.height() - 1,
@@ -1367,15 +1367,15 @@ void B2Titlebar::recalcBuffer()
 void B2Titlebar::resizeEvent(TQResizeEvent *)
 {
     recalcBuffer();
-    repaint(false);
+    tqrepaint(false);
 }
 
 
 void B2Titlebar::paintEvent(TQPaintEvent *)
 {
     if(client->isActive())
-        bitBlt(this, 0, 0, &titleBuffer, 0, 0, titleBuffer.width(),
-               titleBuffer.height(), Qt::CopyROP, true);
+        bitBlt(TQT_TQPAINTDEVICE(this), 0, 0, TQT_TQPAINTDEVICE(&titleBuffer), 0, 0, titleBuffer.width(),
+               titleBuffer.height(), TQt::CopyROP, true);
     else {
         TQPainter p(this);
 	drawTitlebar(p, false);
@@ -1384,14 +1384,14 @@ void B2Titlebar::paintEvent(TQPaintEvent *)
 
 void B2Titlebar::mouseDoubleClickEvent(TQMouseEvent *e)
 {
-    if (e->button() == LeftButton && e->y() < height()) {
+    if (e->button() == Qt::LeftButton && e->y() < height()) {
 	client->titlebarDblClickOperation();
     }
 }
 
 void B2Titlebar::wheelEvent(TQWheelEvent *e)
 {
-    if (client->isSetShade() || rect().contains(e->pos())) 
+    if (client->isSetShade() || TQT_TQRECT_OBJECT(rect()).tqcontains(e->pos())) 
 	client->titlebarMouseWheelOperation( e->delta());
 }
 

@@ -31,16 +31,16 @@
 ConfigDlg::ConfigDlg(TQWidget *parent, const char *name)
 : KDialogBase(IconList, i18n("Configuration"), Ok|Cancel, Ok, parent, name, true)
 {
-	QVBox	*page1 = addVBoxPage(i18n("Personal"), i18n("Personal Settings"), DesktopIcon("kdmconfig"));
+	TQVBox	*page1 = addVBoxPage(i18n("Personal"), i18n("Personal Settings"), DesktopIcon("kdmconfig"));
 	m_general = new ConfGeneral(page1, "Personal");
 
-	QVBox	*page2 = addVBoxPage(i18n("Page setup"), i18n("Page Setup"), DesktopIcon("editcopy"));
+	TQVBox	*page2 = addVBoxPage(i18n("Page setup"), i18n("Page Setup"), DesktopIcon("editcopy"));
 	m_fax = new ConfFax(page2, "Fax");
 
-	QVBox	*page3 = addVBoxPage(i18n("System"), i18n("Fax System Selection"), DesktopIcon("kdeprintfax"));
+	TQVBox	*page3 = addVBoxPage(i18n("System"), i18n("Fax System Selection"), DesktopIcon("kdeprintfax"));
 	m_system = new ConfSystem(page3, "System");
 
-	QVBox	*page4 = addVBoxPage(i18n("Filters"), i18n("Filters Configuration"), DesktopIcon("filter"));
+	TQVBox	*page4 = addVBoxPage(i18n("Filters"), i18n("Filters Configuration"), DesktopIcon("filter"));
 	m_filters = new ConfFilters(page4, "Filters");
 
 	resize(450, 300);

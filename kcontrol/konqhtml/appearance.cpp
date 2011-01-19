@@ -40,7 +40,7 @@ KAppearanceOptions::KAppearanceOptions(KConfig *config, TQString group, TQWidget
   int r = 0;
   int E = 0, M = 1, W = 3; //CT 3 (instead 2) allows smaller color buttons
 
-  TQGroupBox* gb = new TQGroupBox( 1, TQGroupBox::Horizontal, i18n("Font Si&ze"), this );
+  TQGroupBox* gb = new TQGroupBox( 1, Qt::Horizontal, i18n("Font Si&ze"), this );
   lay->addMultiCellWidget(gb, r, r, E, W);
 
   TQWhatsThis::add( gb, i18n("This is the relative font size Konqueror uses to display web sites.") );
@@ -231,7 +231,7 @@ KAppearanceOptions::KAppearanceOptions(KConfig *config, TQString group, TQWidget
 
   TQFontDatabase db;
 
-  m_families = db.families();
+  m_families = db.tqfamilies();
 
   m_pFonts[0]->setFonts( m_families );
   m_pFonts[1]->setFonts( m_families );

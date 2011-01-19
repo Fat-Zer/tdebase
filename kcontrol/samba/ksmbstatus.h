@@ -32,7 +32,7 @@ class TQListView;
 class TQListViewItem;
 class KProcess;
 
-class NetMon : public QWidget
+class NetMon : public TQWidget
 {
 Q_OBJECT
 public:

@@ -34,7 +34,7 @@
  * Implementation of all low-level operations done by kio_trash
  * The structure of the trash directory follows the freedesktop.org standard <TODO URL>
  */
-class TrashImpl : public QObject
+class TrashImpl : public TQObject
 {
     Q_OBJECT
 public:

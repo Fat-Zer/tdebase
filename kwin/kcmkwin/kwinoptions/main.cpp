@@ -171,7 +171,7 @@ void KWinOptions::save()
   mConfig->sync();
   if ( !kapp->dcopClient()->isAttached() )
       kapp->dcopClient()->attach();
-  kapp->dcopClient()->send("kwin*", "", "reconfigure()", "");
+  kapp->dcopClient()->send("kwin*", "", "reconfigure()", TQString(""));
 }
 
 
@@ -244,7 +244,7 @@ void KActionsOptions::save()
   mConfig->sync();
   if ( !kapp->dcopClient()->isAttached() )
       kapp->dcopClient()->attach();
-  kapp->dcopClient()->send("kwin*", "", "reconfigure()", "");
+  kapp->dcopClient()->send("kwin*", "", "reconfigure()", TQString(""));
 }
 
 

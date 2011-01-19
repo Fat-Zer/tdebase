@@ -1,6 +1,6 @@
 <!DOCTYPE UI><UI version="3.1" stdsetdef="1">
 <class>AppletTabBase</class>
-<widget class="QWidget">
+<widget class="TQWidget">
     <property name="name">
         <cstring>AppletTabBase</cstring>
     </property>
@@ -16,7 +16,7 @@
         <property name="name">
             <cstring>unnamed</cstring>
         </property>
-        <widget class="QButtonGroup">
+        <widget class="TQButtonGroup">
             <property name="name">
                 <cstring>level_group</cstring>
             </property>
@@ -27,7 +27,7 @@
                 <property name="name">
                     <cstring>unnamed</cstring>
                 </property>
-                <widget class="QRadioButton">
+                <widget class="TQRadioButton">
                     <property name="name">
                         <cstring>trusted_rb</cstring>
                     </property>
@@ -35,7 +35,7 @@
                         <string>Load only trusted applets internal</string>
                     </property>
                 </widget>
-                <widget class="QRadioButton">
+                <widget class="TQRadioButton">
                     <property name="name">
                         <cstring>new_rb</cstring>
                     </property>
@@ -43,7 +43,7 @@
                         <string>Load startup config applets internal</string>
                     </property>
                 </widget>
-                <widget class="QRadioButton">
+                <widget class="TQRadioButton">
                     <property name="name">
                         <cstring>all_rb</cstring>
                     </property>
@@ -53,7 +53,7 @@
                 </widget>
             </vbox>
         </widget>
-        <widget class="QGroupBox">
+        <widget class="TQGroupBox">
             <property name="name">
                 <cstring>list_group</cstring>
             </property>
@@ -70,7 +70,7 @@
                 <property name="name">
                     <cstring>unnamed</cstring>
                 </property>
-                <widget class="QLayoutWidget">
+                <widget class="TQLayoutWidget">
                     <property name="name">
                         <cstring>Layout13</cstring>
                     </property>
@@ -78,7 +78,7 @@
                         <property name="name">
                             <cstring>unnamed</cstring>
                         </property>
-                        <widget class="QListView">
+                        <widget class="TQListView">
                             <column>
                                 <property name="text">
                                     <string>Available Applets</string>
@@ -94,7 +94,7 @@
                                 <cstring>lb_available</cstring>
                             </property>
                         </widget>
-                        <widget class="QLayoutWidget">
+                        <widget class="TQLayoutWidget">
                             <property name="name">
                                 <cstring>Layout12</cstring>
                             </property>
@@ -112,18 +112,18 @@
                                     <property name="sizeType">
                                         <enum>Expanding</enum>
                                     </property>
-                                    <property name="sizeHint">
+                                    <property name="tqsizeHint">
                                         <size>
                                             <width>20</width>
                                             <height>20</height>
                                         </size>
                                     </property>
                                 </spacer>
-                                <widget class="QToolButton">
+                                <widget class="TQToolButton">
                                     <property name="name">
                                         <cstring>pb_add</cstring>
                                     </property>
-                                    <property name="minimumSize">
+                                    <property name="tqminimumSize">
                                         <size>
                                             <width>0</width>
                                             <height>0</height>
@@ -143,14 +143,14 @@
                                     <property name="sizeType">
                                         <enum>Minimum</enum>
                                     </property>
-                                    <property name="sizeHint">
+                                    <property name="tqsizeHint">
                                         <size>
                                             <width>20</width>
                                             <height>20</height>
                                         </size>
                                     </property>
                                 </spacer>
-                                <widget class="QToolButton">
+                                <widget class="TQToolButton">
                                     <property name="name">
                                         <cstring>pb_remove</cstring>
                                     </property>
@@ -162,7 +162,7 @@
                                             <verstretch>0</verstretch>
                                         </sizepolicy>
                                     </property>
-                                    <property name="minimumSize">
+                                    <property name="tqminimumSize">
                                         <size>
                                             <width>0</width>
                                             <height>0</height>
@@ -182,7 +182,7 @@
                                     <property name="sizeType">
                                         <enum>Expanding</enum>
                                     </property>
-                                    <property name="sizeHint">
+                                    <property name="tqsizeHint">
                                         <size>
                                             <width>20</width>
                                             <height>20</height>
@@ -191,7 +191,7 @@
                                 </spacer>
                             </vbox>
                         </widget>
-                        <widget class="QListView">
+                        <widget class="TQListView">
                             <column>
                                 <property name="text">
                                     <string>Trusted Applets</string>

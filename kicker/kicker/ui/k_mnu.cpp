@@ -94,7 +94,7 @@ PanelKMenu::PanelKMenu()
         "slotServiceStartedByStorageId(TQString,TQString)",
         false);
     displayRepairTimer = new TQTimer( this );
-    connect( displayRepairTimer, SIGNAL(timeout()), this, SLOT(repairDisplay()) );
+    connect( displayRepairTimer, TQT_SIGNAL(timeout()), this, TQT_SLOT(repairDisplay()) );
 }
 
 PanelKMenu::~PanelKMenu()
@@ -125,7 +125,7 @@ void PanelKMenu::hideMenu()
     while (isShown() == true)
         kapp->eventLoop()->processEvents(1000);
     TQTimer *windowtimer = new TQTimer( this );
-    connect( windowtimer, SIGNAL(timeout()), this, SLOT(windowClearTimeout()) );
+    connect( windowtimer, TQT_SIGNAL(timeout()), this, TQT_SLOT(windowClearTimeout()) );
     windowTimerTimedOut = false;
     windowtimer->start( 0, TRUE );	// Wait for all window system events to be processed
     while (windowTimerTimedOut == false)
@@ -138,7 +138,7 @@ void PanelKMenu::hideMenu()
     // thereby removing a bad shutdown screen artifact while still providing
     // a somewhat snappy user interface.
     TQTimer *delaytimer = new TQTimer( this );
-    connect( delaytimer, SIGNAL(timeout()), this, SLOT(windowClearTimeout()) );
+    connect( delaytimer, TQT_SIGNAL(timeout()), this, TQT_SLOT(windowClearTimeout()) );
     windowTimerTimedOut = false;
     delaytimer->start( 100, TRUE );	// Wait for 100 milliseconds
     while (windowTimerTimedOut == false)
@@ -207,7 +207,7 @@ void PanelKMenu::paletteChanged()
     if (!loadSidePixmap())
     {
         sidePixmap = sideTilePixmap = TQPixmap();
-        setMinimumSize( sizeHint() );
+        setMinimumSize( tqsizeHint() );
     }
 }
 
@@ -261,7 +261,7 @@ void PanelKMenu::initialize()
         TQHBox* hbox = new TQHBox( this );
         KToolBarButton *clearButton = new KToolBarButton( "locationbar_erase", 0, hbox );
         searchEdit = new KPIM::ClickLineEdit(hbox, " "+i18n("Press '/' to search..."));
-        hbox->setFocusPolicy(TQWidget::StrongFocus);
+        hbox->setFocusPolicy(TQ_StrongFocus);
         hbox->setFocusProxy(searchEdit);
         hbox->setSpacing( 3 );
         connect(clearButton, TQT_SIGNAL(clicked()), searchEdit, TQT_SLOT(clear()));
@@ -415,10 +415,10 @@ void PanelKMenu::repairDisplay(void) {
         displayRepairTimer->stop();
 
         // Now do a nasty hack to prevent search bar merging into the side image
-        // This forces a layout/repaint of the qpopupmenu
-        repaint();			// This ensures that the side bar image was applied
-        styleChange(style());		// This forces a call to the private function updateSize(TRUE) inside the qpopupmenu.
-        update();			// This repaints the entire popup menu to apply the widget size/alignment changes made above
+        // This forces a layout/tqrepaint of the qpopupmenu
+        tqrepaint();			// This ensures that the side bar image was applied
+        styleChange(tqstyle());		// This forces a call to the private function updateSize(TRUE) inside the qpopupmenu.
+        update();			// This tqrepaints the entire popup menu to apply the widget size/tqalignment changes made above
     }
 }
 
@@ -444,7 +444,7 @@ void PanelKMenu::slotLock()
     TQCString appname( "kdesktop" );
     if ( kicker_screen_number )
         appname.sprintf("kdesktop-screen-%d", kicker_screen_number);
-    kapp->dcopClient()->send(appname, "KScreensaverIface", "lock()", "");
+    kapp->dcopClient()->send(appname, "KScreensaverIface", "lock()", TQString(""));
 }
 
 void PanelKMenu::slotLogout()
@@ -493,7 +493,7 @@ void PanelKMenu::slotSessionActivated( int ent )
 void PanelKMenu::doNewSession( bool lock )
 {
     int result = KMessageBox::warningContinueCancel(
-        kapp->desktop()->screen(kapp->desktop()->screenNumber(this)),
+        TQT_TQWIDGET(kapp->desktop()->screen(kapp->desktop()->screenNumber(this))),
         i18n("<p>You have chosen to open another desktop session.<br>"
                "The current session will be hidden "
                "and a new login screen will be displayed.<br>"
@@ -579,7 +579,7 @@ void PanelKMenu::showMenu()
 
 TQRect PanelKMenu::sideImageRect()
 {
-    return TQStyle::visualRect( TQRect( frameWidth(), frameWidth(), sidePixmap.width(),
+    return TQStyle::tqvisualRect( TQRect( frameWidth(), frameWidth(), sidePixmap.width(),
                                       height() - 2*frameWidth() ), this );
 }
 
@@ -590,21 +590,21 @@ void PanelKMenu::resizeEvent(TQResizeEvent * e)
 
     PanelServiceMenu::resizeEvent(e);
 
-    setFrameRect( TQStyle::visualRect( TQRect( sidePixmap.width(), 0,
+    setFrameRect( TQStyle::tqvisualRect( TQRect( sidePixmap.width(), 0,
                                       width() - sidePixmap.width(), height() ), this ) );
 }
 
 //Workaround Qt3.3.x sizing bug, by ensuring we're always wide enough.
 void PanelKMenu::resize(int width, int height)
 {
-    width = kMax(width, maximumSize().width());
+    width = kMax(width, tqmaximumSize().width());
     PanelServiceMenu::resize(width, height);
 }
 
-TQSize PanelKMenu::sizeHint() const
+TQSize PanelKMenu::tqsizeHint() const
 {
-    TQSize s = PanelServiceMenu::sizeHint();
-//    kdDebug(1210) << "PanelKMenu::sizeHint()" << endl;
+    TQSize s = PanelServiceMenu::tqsizeHint();
+//    kdDebug(1210) << "PanelKMenu::tqsizeHint()" << endl;
 //    kdDebug(1210) << s.width() << ", " << s.height() << endl;
     return s;
 }
@@ -619,9 +619,9 @@ void PanelKMenu::paintEvent(TQPaintEvent * e)
     TQPainter p(this);
     p.setClipRegion(e->region());
 
-    style().drawPrimitive( TQStyle::PE_PanelPopup, &p,
+    tqstyle().tqdrawPrimitive( TQStyle::PE_PanelPopup, &p,
                            TQRect( 0, 0, width(), height() ),
-                           colorGroup(), TQStyle::Style_Default,
+                           tqcolorGroup(), TQStyle::Style_Default,
                            TQStyleOption( frameWidth(), 0 ) );
 
     TQRect r = sideImageRect();
@@ -648,7 +648,7 @@ TQMouseEvent PanelKMenu::translateMouseEvent( TQMouseEvent* e )
 {
     TQRect side = sideImageRect();
 
-    if ( !side.contains( e->pos() ) )
+    if ( !side.tqcontains( e->pos() ) )
         return *e;
 
     TQPoint newpos( e->pos() );

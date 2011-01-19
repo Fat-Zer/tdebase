@@ -24,7 +24,7 @@
 
 class KPixmap;
 
-class MenuPreview : public QWidget
+class MenuPreview : public TQWidget
 {
 	Q_OBJECT
 

@@ -26,7 +26,7 @@
 #include <klistview.h>
 #include <kfiledetailview.h>
 
-class MediumTypeItem : public QCheckListItem
+class MediumTypeItem : public TQCheckListItem
 {
 public:
 	MediumTypeItem(TQListView *parent, const TQString name,
@@ -40,7 +40,7 @@ private:
 	TQString mMimeType;
 };
 
-class MediumItem : public QCheckListItem
+class MediumItem : public TQCheckListItem
 {
 public:
 	MediumItem(TQListView *parent, const TQString name,
@@ -125,7 +125,7 @@ void PreferencesDialog::setExcludedMediumTypes(TQStringList excludedTypesList)
 	{
 		if ((*it)->name().startsWith("media/"))
 		{
-			bool ok=excludedTypesList.contains((*it)->name())==0;
+			bool ok=excludedTypesList.tqcontains((*it)->name())==0;
 			MediumTypeItem *item = new MediumTypeItem(mpMediumTypesListView, (*it)->comment(), (*it)->name());
 			item->setOn(ok);
 		}
@@ -156,7 +156,7 @@ void PreferencesDialog::setExcludedMedia(TQStringList excludedList)
 	{
 		++it;
 
-		bool ok = excludedList.contains(file->url().url())==0;
+		bool ok = excludedList.tqcontains(file->url().url())==0;
 		MediumItem *item = new MediumItem(mpMediaListView,
 		                                  file->text(), *file);
 		item->setOn(ok);

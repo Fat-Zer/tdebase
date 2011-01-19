@@ -131,19 +131,19 @@ KdmThemer::widgetEvent( TQEvent *e )
 	switch (e->type()) {
 	case TQEvent::MouseMove:
 		{
-			TQMouseEvent *me = static_cast<TQMouseEvent *>(e);
+			TQMouseEvent *me = TQT_TQMOUSEEVENT(e);
 			rootItem->mouseEvent( me->x(), me->y() );
 		}
 		break;
 	case TQEvent::MouseButtonPress:
 		{
-			TQMouseEvent *me = static_cast<TQMouseEvent *>(e);
+			TQMouseEvent *me = TQT_TQMOUSEEVENT(e);
 			rootItem->mouseEvent( me->x(), me->y(), true );
 		}
 		break;
 	case TQEvent::MouseButtonRelease:
 		{
-			TQMouseEvent *me = static_cast<TQMouseEvent *>(e);
+			TQMouseEvent *me = TQT_TQMOUSEEVENT(e);
 			rootItem->mouseEvent( me->x(), me->y(), false, true );
 		}
 		break;
@@ -156,7 +156,7 @@ KdmThemer::widgetEvent( TQEvent *e )
 		break;
 	case TQEvent::Paint:
 		{
-			TQRect paintRect = static_cast<TQPaintEvent *>(e)->rect();
+			TQRect paintRect = TQT_TQPAINTEVENT(e)->rect();
 			kdDebug() << timestamp() << " paint on: " << paintRect << endl;
 
 			if (!backBuffer)
@@ -223,7 +223,7 @@ KdmThemer::generateItems( KdmItem *parent, const TQDomNode &node )
 			TQString id = el.attribute("id");
 			if (id.startsWith("plugin-specific-")) {
 			        id = id.mid(strlen("plugin-specific-"));
-			        if (!_pluginsLogin.contains(id))
+			        if (!_pluginsLogin.tqcontains(id))
 			               continue;
 			}
 
@@ -281,7 +281,7 @@ bool KdmThemer::willDisplay( const TQDomNode &node )
 		TQStringList modeList = TQStringList::split( ",", modes );
 
 		// If current mode isn't in this list, do not display item
-		if (modeList.find( m_currentMode ) == modeList.end())
+		if (modeList.tqfind( m_currentMode ) == modeList.end())
 			return false;
 	}
 
@@ -314,13 +314,13 @@ void
 KdmThemer::showStructure( TQObject *obj )
 {
 
-	const TQObjectList *wlist = obj->children();
+	const TQObjectList wlist = obj->childrenListObject();
 	static int counter = 0;
 	if (counter == 0)
 		kdDebug() << timestamp() << " \n\n<=======  Widget tree =================" << endl;
-	if (wlist) {
+	if (!wlist.isEmpty()) {
 		counter++;
-		TQObjectListIterator it( *wlist );
+		TQObjectListIterator it( wlist );
 		TQObject *object;
 
 		while ((object = it.current()) != 0) {
@@ -358,7 +358,7 @@ KdmThemer::slotActivated( const TQString &id )
     return;
 
   item->widget()->setFocus();
-  TQLineEdit *le = (TQLineEdit*)item->widget()->qt_cast("TQLineEdit");
+  TQLineEdit *le = (TQLineEdit*)item->widget()->tqqt_cast("TQLineEdit");
   if (le)
     le->selectAll();
 }
@@ -377,8 +377,8 @@ KdmThemer::slotPaintRoot()
   back_item->paint( &painter, back_item->rect());
   painter.end();
 
-  TQApplication::desktop()->screen()->setErasePixmap(pm);
-  TQApplication::desktop()->screen()->erase();
+  TQT_TQWIDGET(TQApplication::desktop()->screen())->setErasePixmap(pm);
+  TQT_TQWIDGET(TQApplication::desktop()->screen())->erase();
 }
 
 #include "kdmthemer.moc"

@@ -112,8 +112,8 @@ CKCmFontInst::CKCmFontInst(TQWidget *parent, const char *, const TQStringList&)
     {
         itsSplitter=new TQSplitter(this);
         fontsFrame=new TQFrame(itsSplitter),
-        itsPreview=(KParts::ReadOnlyPart *)factory->create(itsSplitter, "kcmfontinst", "KParts::ReadOnlyPart");
-        itsSplitter->setSizePolicy(TQSizePolicy::MinimumExpanding, TQSizePolicy::MinimumExpanding);
+        itsPreview=(KParts::ReadOnlyPart *)factory->create(TQT_TQOBJECT(itsSplitter), "kcmfontinst", "KParts::ReadOnlyPart");
+        itsSplitter->tqsetSizePolicy(TQSizePolicy::MinimumExpanding, TQSizePolicy::MinimumExpanding);
 
         TQValueList<int> sizes(itsConfig.readIntListEntry(CFG_SPLITTER_SIZES));
 
@@ -129,7 +129,7 @@ CKCmFontInst::CKCmFontInst(TQWidget *parent, const char *, const TQStringList&)
     {
 #endif
         fontsFrame=new TQFrame(this);
-        fontsFrame->setSizePolicy(TQSizePolicy::MinimumExpanding, TQSizePolicy::MinimumExpanding);
+        fontsFrame->tqsetSizePolicy(TQSizePolicy::MinimumExpanding, TQSizePolicy::MinimumExpanding);
 #ifdef HAVE_XFT
     }
 #endif
@@ -140,7 +140,7 @@ CKCmFontInst::CKCmFontInst(TQWidget *parent, const char *, const TQStringList&)
     bool        showBitmap(itsConfig.readBoolEntry(CFG_SHOW_BITMAP, false));
 
     fontsFrame->setLineWidth(0);
-    toolbar->setSizePolicy(TQSizePolicy::MinimumExpanding, TQSizePolicy::Minimum);
+    toolbar->tqsetSizePolicy(TQSizePolicy::MinimumExpanding, TQSizePolicy::Minimum);
     toolbar->setMovingEnabled(false);
 
     TQString previousPath=itsConfig.readEntry(CFG_PATH);
@@ -151,14 +151,14 @@ CKCmFontInst::CKCmFontInst(TQWidget *parent, const char *, const TQStringList&)
     itsDirOp->setMinimumSize(TQSize(96, 64));
     setMimeTypes(showBitmap);
     itsDirOp->dirLister()->setMainWindow(this);
-    itsDirOp->setSizePolicy(TQSizePolicy::MinimumExpanding, TQSizePolicy::MinimumExpanding);
+    itsDirOp->tqsetSizePolicy(TQSizePolicy::MinimumExpanding, TQSizePolicy::MinimumExpanding);
     fontsLayout->addMultiCellWidget(itsDirOp, 0, 0, 0, 1);
 
     KPushButton *button=new KPushButton(KGuiItem(i18n("Add Fonts..."), "newfont"), fontsFrame);
     connect(button, TQT_SIGNAL(clicked()), TQT_SLOT(addFonts()));
-    button->setSizePolicy(TQSizePolicy::Minimum, TQSizePolicy::Minimum);
+    button->tqsetSizePolicy(TQSizePolicy::Minimum, TQSizePolicy::Minimum);
     fontsLayout->addWidget(button, 1, 0);
-    fontsLayout->addItem(new TQSpacerItem(4, 4, TQSizePolicy::Expanding, TQSizePolicy::Minimum));
+    TQT_TQLAYOUT(fontsLayout)->addItem(new TQSpacerItem(4, 4, TQSizePolicy::Expanding, TQSizePolicy::Minimum));
 
     layout->addWidget(toolbar);
 #ifdef HAVE_XFT
@@ -210,14 +210,14 @@ CKCmFontInst::CKCmFontInst(TQWidget *parent, const char *, const TQStringList&)
         itsListAct->plug(toolbar);
     }
 
-    itsShowBitmapAct=new KToggleAction(i18n("Show Bitmap Fonts"), "font_bitmap", 0, this, TQT_SLOT(filterFonts()), 
+    itsShowBitmapAct=new KToggleAction(i18n("Show Bitmap Fonts"), "font_bitmap", 0, TQT_TQOBJECT(this), TQT_SLOT(filterFonts()), 
                                        itsDirOp->actionCollection(), "showbitmap");
     itsShowBitmapAct->setChecked(showBitmap);
     itsShowBitmapAct->plug(toolbar);
 
     toolbar->insertLineSeparator();
 
-    act=new KAction(i18n("Add Fonts..."), "newfont", 0, this, TQT_SLOT(addFonts()), itsDirOp->actionCollection(), "addfonts");
+    act=new KAction(i18n("Add Fonts..."), "newfont", 0, TQT_TQOBJECT(this), TQT_SLOT(addFonts()), itsDirOp->actionCollection(), "addfonts");
     act->plug(toolbar);
     topMnu->insert(act);
 
@@ -231,11 +231,11 @@ CKCmFontInst::CKCmFontInst(TQWidget *parent, const char *, const TQStringList&)
     }
 
     toolbar->insertLineSeparator();
-    act=new KAction(i18n("Configure..."), "configure", 0, this, TQT_SLOT(configure()), itsDirOp->actionCollection(), "configure");
+    act=new KAction(i18n("Configure..."), "configure", 0, TQT_TQOBJECT(this), TQT_SLOT(configure()), itsDirOp->actionCollection(), "configure");
     act->plug(toolbar);
 #ifdef HAVE_XFT
     toolbar->insertLineSeparator();
-    act=new KAction(i18n("Print..."), "fileprint", 0, this, TQT_SLOT(print()), itsDirOp->actionCollection(), "print");
+    act=new KAction(i18n("Print..."), "fileprint", 0, TQT_TQOBJECT(this), TQT_SLOT(print()), itsDirOp->actionCollection(), "print");
     act->plug(toolbar);
 #endif
 
@@ -390,7 +390,7 @@ void CKCmFontInst::fileHighlighted(const KFileItem *item)
                                              ? list->getFirst()
                                              : NULL;
 
-        if(previewItem && list && list->contains(previewItem))  // OK, check its been selected - not deselected!!!
+        if(previewItem && list && list->tqcontains(previewItem))  // OK, check its been selected - not deselected!!!
             itsPreview->openURL(previewItem->url());
     }
 #endif
@@ -550,7 +550,7 @@ void CKCmFontInst::infoMessage(const TQString &msg)
 
 static TQString family(const TQString &name)
 {
-    int commaPos=name.find(',');
+    int commaPos=name.tqfind(',');
 
     return -1==commaPos ? name : name.left(commaPos);
 }
@@ -570,7 +570,7 @@ void CKCmFontInst::updateInformation(int, int fonts)
             TQString fam(family(item->text()));
 
             size+=item->size();
-            if(-1==families.findIndex(fam))
+            if(-1==families.tqfindIndex(fam))
                 families+=fam;
         }
     }

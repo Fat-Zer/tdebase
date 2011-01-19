@@ -76,7 +76,7 @@ KonqOperations::~KonqOperations()
 
 void KonqOperations::editMimeType( const TQString & mimeType )
 {
-  TQString keditfiletype = TQString::fromLatin1("keditfiletype");
+  TQString keditfiletype = TQString::tqfromLatin1("keditfiletype");
   KRun::runCommand( keditfiletype + " " + KProcess::quote(mimeType),
                     keditfiletype, keditfiletype /*unused*/);
 }
@@ -124,7 +124,7 @@ void KonqOperations::doPaste( TQWidget * parent, const KURL & destURL, const TQP
 {
     // move or not move ?
     bool move = false;
-    TQMimeSource *data = TQApplication::clipboard()->data();
+    TQMimeSource *data = TQApplication::tqclipboard()->data();
     if ( data->provides( "application/x-kde-cutselection" ) ) {
       move = KonqDrag::decodeIsCutSelection( data );
       kdDebug(1203) << "move (from clipboard data) = " << move << endl;
@@ -185,7 +185,7 @@ void KonqOperations::_del( int method, const KURL::List & _selectedURLs, Confirm
         return;
     }
 
-    if ( askDeleteConfirmation( selectedURLs, method, confirmation, parentWidget() ) )
+    if ( askDeleteConfirmation( selectedURLs, method, confirmation, tqparentWidget() ) )
     {
         //m_srcURLs = selectedURLs;
         KIO::Job *job;
@@ -525,7 +525,7 @@ void KonqOperations::doFileCopy()
         }
 
         m_method = TRASH;
-        if ( askDeleteConfirmation( mlst, TRASH, DEFAULT_CONFIRMATION, parentWidget() ) )
+        if ( askDeleteConfirmation( mlst, TRASH, DEFAULT_CONFIRMATION, tqparentWidget() ) )
             action = TQDropEvent::Move;
         else
         {
@@ -815,7 +815,7 @@ void KonqMultiRestoreJob::slotResult( KIO::Job *job )
     slotStart();
 }
 
-TQWidget* KonqOperations::parentWidget() const
+TQWidget* KonqOperations::tqparentWidget() const
 {
     return static_cast<TQWidget *>( parent() );
 }

@@ -22,7 +22,7 @@
 
 #include "clicklineedit.h"
 
-#include "qpainter.h"
+#include "tqpainter.h"
 
 using namespace KPIM;
 
@@ -39,13 +39,13 @@ ClickLineEdit::~ClickLineEdit() {}
 void ClickLineEdit::setClickMessage( const TQString &msg )
 {
   mClickMessage = msg;
-  repaint();
+  tqrepaint();
 }
 
 void ClickLineEdit::setText( const TQString &txt )
 {
   mDrawClickMsg = txt.isEmpty();
-  repaint();
+  tqrepaint();
   KLineEdit::setText( txt );
 }
 
@@ -67,7 +67,7 @@ void ClickLineEdit::focusInEvent( TQFocusEvent *ev )
   if ( mDrawClickMsg == true ) 
   { 
     mDrawClickMsg = false;
-    repaint();
+    tqrepaint();
   }
   TQLineEdit::focusInEvent( ev );
 }
@@ -77,7 +77,7 @@ void ClickLineEdit::focusOutEvent( TQFocusEvent *ev )
   if ( text().isEmpty() )
   {
     mDrawClickMsg = true;
-    repaint();
+    tqrepaint();
   }
   TQLineEdit::focusOutEvent( ev );
 }

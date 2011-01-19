@@ -28,7 +28,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include "userrectsel.moc"
 
 UserRectSel::UserRectSel(const RectList& rects, const TQPoint& _offset, const TQColor& color)
-  : TQWidget(0, 0, WStyle_Customize | WX11BypassWM),
+  : TQWidget(0, 0, (WFlags)(WStyle_Customize | WX11BypassWM)),
     rectangles(rects),
     offset(_offset)
 {
@@ -46,9 +46,9 @@ UserRectSel::~UserRectSel()
 
 void UserRectSel::mouseReleaseEvent(TQMouseEvent * e)
 {
-    if (e->button() == LeftButton)
+    if (e->button() == Qt::LeftButton)
     {
-        qApp->exit_loop();
+        tqApp->exit_loop();
     }
 }
 
@@ -88,12 +88,12 @@ void UserRectSel::paintCurrent()
     {
         for (i = 0; i < 4; i++)
         {
-            _frame[i] = new TQWidget(0, 0, Qt::WStyle_Customize | Qt::WStyle_NoBorder | Qt::WX11BypassWM);
+            _frame[i] = new TQWidget(0, 0, (WFlags)(WStyle_Customize | WStyle_NoBorder | WX11BypassWM));
             _frame[i]->setPaletteBackgroundColor(Qt::black);
         }
         for (i = 4; i < 8; i++)
         {
-            _frame[i] = new TQWidget(0, 0, Qt::WStyle_Customize | Qt::WStyle_NoBorder | Qt::WX11BypassWM);
+            _frame[i] = new TQWidget(0, 0, (WFlags)(WStyle_Customize | WStyle_NoBorder | WX11BypassWM));
             _frame[i]->setPaletteBackgroundColor(_color);
         }
     }
@@ -138,10 +138,10 @@ UserRectSel::PanelStrut UserRectSel::select(const RectList& rects, const TQPoint
     sel.show();
     sel.grabMouse();
     sel.paintCurrent();
-    qApp->enter_loop();
+    tqApp->enter_loop();
     sel.paintCurrent();
     sel.releaseMouse();
-    qApp->syncX();
+    tqApp->syncX();
     return sel.current;
 }
 

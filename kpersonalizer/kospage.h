@@ -64,7 +64,7 @@ private:
 	// DEFAULT VALUES SET BY USER
 	bool b_Gestures, b_MacMenuBar, b_SingleClick, b_BusyCursor, b_ShowMenuBar,
 		 b_DesktopUnderline, b_KonqUnderline, b_ChangeCursor, b_syncClipboards;
-	QString	s_TitlebarDCC, s_FocusPolicy, s_AltTabStyle, s_MMB,
+	TQString	s_TitlebarDCC, s_FocusPolicy, s_AltTabStyle, s_MMB,
 			s_TitlebarMMB, s_TitlebarRMB;
 	TQMap<TQString, TQString> map_AppUserKeys, map_GlobalUserKeys;
 	// DEFAULT VALLUES SET BY USER (END)

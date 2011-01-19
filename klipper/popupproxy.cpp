@@ -94,12 +94,12 @@ void PopupProxy::tryInsertItem( HistoryItem const * const item,
         // Squeeze text strings so that do not take up the entire screen (or more)
         TQString text( KStringHandler::cPixelSqueeze(item->text().simplifyWhiteSpace(),
                                                     proxy_for_menu->fontMetrics(),
-                                                    m_menu_width).replace( "&", "&&" ) );
+                                                    m_menu_width).tqreplace( "&", "&&" ) );
         id = proxy_for_menu->insertItem( text, -1, index );
     } else {
         const TQSize max_size( m_menu_width,m_menu_height/4 );
         if ( image.height() > max_size.height() || image.width() > max_size.width() ) {
-            image.convertFromImage( image.convertToImage().smoothScale( max_size, TQImage::ScaleMin ) );
+            image.convertFromImage( TQImage(image.convertToImage()).smoothScale( max_size, TQ_ScaleMin ) );
         }
         id = proxy_for_menu->insertItem( image,  -1,  index );
     }
@@ -107,9 +107,9 @@ void PopupProxy::tryInsertItem( HistoryItem const * const item,
 
     // Determine height of a menu item.
     Q_ASSERT( id != -1 ); // Be sure that the item was inserted.
-    TQMenuItem* mi = proxy_for_menu->findItem( id );
+    TQMenuItem* mi = proxy_for_menu->tqfindItem( id );
     int fontheight = TQFontMetrics( proxy_for_menu->fontMetrics()  ).height();
-    int itemheight = proxy_for_menu->style().sizeFromContents(TQStyle::CT_PopupMenuItem,
+    int itemheight = proxy_for_menu->tqstyle().tqsizeFromContents(TQStyle::CT_PopupMenuItem,
                                                               proxy_for_menu,
                                                               TQSize( 0, fontheight ),
                                                               TQStyleOption(mi,10,0) ).height();
@@ -133,7 +133,7 @@ int PopupProxy::insertFromSpill( int index ) {
     // discarding any that doesn't match the current filter.
     // stop when the total number of items equal m_itemsPerMenu;
     int count = 0;
-    int remainingHeight = m_menu_height - proxy_for_menu->sizeHint().height();
+    int remainingHeight = m_menu_height - proxy_for_menu->tqsizeHint().height();
     // Force at least one item to be inserted.
     remainingHeight = QMAX( remainingHeight, 0 );
     for ( const HistoryItem* item = spillPointer.current();

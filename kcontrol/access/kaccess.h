@@ -86,7 +86,7 @@ private:
 };
 
 
-class VisualBell : public QWidget
+class VisualBell : public TQWidget
 {
   Q_OBJECT
 

@@ -80,7 +80,7 @@ void KLocaleConfigOther::save()
   KConfigGroupSaver saver(config, "Locale");
 
   KSimpleConfig ent(locate("locale",
-                           TQString::fromLatin1("l10n/%1/entry.desktop")
+                           TQString::tqfromLatin1("l10n/%1/entry.desktop")
                            .arg(m_locale->country())), true);
   ent.setGroup("KCM Locale");
 

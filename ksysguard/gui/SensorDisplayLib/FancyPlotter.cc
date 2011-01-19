@@ -52,13 +52,13 @@ FancyPlotter::FancyPlotter( TQWidget* parent, const char* name,
   mPlotter->setTitle( title );
   mPlotter->setThinFrame(!isApplet);   //if we aren't an applet, draw a thin white frame on the left and bottom, for a 3d effect
 
-  setMinimumSize( sizeHint() );
+  setMinimumSize( tqsizeHint() );
 
   /* All RMB clicks to the mPlotter widget will be handled by 
    * SensorDisplay::eventFilter. */
 	mPlotter->installEventFilter( this );
 
-  setPlotterWidget( mPlotter );
+  setPlotterWidget( TQT_TQWIDGET(mPlotter) );
 
   setModified( false );
 }
@@ -242,8 +242,8 @@ bool FancyPlotter::addSensor( const TQString &hostName, const TQString &name,
                                    .arg( sensors().at( mBeams - i - 1  )->name() );
   }
 
-  TQToolTip::remove( mPlotter );
-  TQToolTip::add( mPlotter, tooltip );
+  TQToolTip::remove( TQT_TQWIDGET(mPlotter) );
+  TQToolTip::add( TQT_TQWIDGET(mPlotter), tooltip );
 
   return true;
 }
@@ -267,8 +267,8 @@ bool FancyPlotter::removeSensor( uint pos )
                                    .arg( sensors().at( mBeams - i - 1  )->name() );
   }
 
-  TQToolTip::remove( mPlotter );
-  TQToolTip::add( mPlotter, tooltip );
+  TQToolTip::remove( TQT_TQWIDGET(mPlotter) );
+  TQToolTip::add( TQT_TQWIDGET(mPlotter), tooltip );
 
   return true;
 }
@@ -281,12 +281,12 @@ void FancyPlotter::resizeEvent( TQResizeEvent* )
     frame()->setGeometry( 0, 0, width(), height() );
 }
 
-TQSize FancyPlotter::sizeHint()
+TQSize FancyPlotter::tqsizeHint()
 {
   if ( noFrame() )
-    return mPlotter->sizeHint();
+    return mPlotter->tqsizeHint();
   else
-    return frame()->sizeHint();
+    return frame()->tqsizeHint();
 }
 
 void FancyPlotter::answerReceived( int id, const TQString &answer )

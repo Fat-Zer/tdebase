@@ -101,7 +101,7 @@ IndexProgressDialog::IndexProgressDialog( TQWidget *parent )
   topLayout->setSpacing( spacingHint() );
 
   mLabel = new TQLabel( this );
-  mLabel->setAlignment( AlignHCenter );
+  mLabel->tqsetAlignment( AlignHCenter );
   topLayout->addWidget( mLabel );
 
   mProgressBar = new TQProgressBar( this );
@@ -417,9 +417,9 @@ bool KCMHelpCenter::buildIndex()
               .arg( entry->documentType() ) );
             hasError = true;
           } else {
-            indexer.replace( TQRegExp( "%i" ), entry->identifier() );
-            indexer.replace( TQRegExp( "%d" ), Prefs::indexDirectory() );
-            indexer.replace( TQRegExp( "%p" ), entry->url() );
+            indexer.tqreplace( TQRegExp( "%i" ), entry->identifier() );
+            indexer.tqreplace( TQRegExp( "%d" ), Prefs::indexDirectory() );
+            indexer.tqreplace( TQRegExp( "%p" ), entry->url() );
             kdDebug() << "INDEXER: " << indexer << endl;
             *ts << indexer << endl;
 
@@ -611,7 +611,7 @@ void KCMHelpCenter::advanceProgress()
 void KCMHelpCenter::slotReceivedStdout( KProcess *, char *buffer, int buflen )
 {
   TQString text = TQString::fromLocal8Bit( buffer, buflen );
-  int pos = text.findRev( '\n' );
+  int pos = text.tqfindRev( '\n' );
   if ( pos < 0 ) {
     mStdOut.append( text );
   } else {
@@ -625,7 +625,7 @@ void KCMHelpCenter::slotReceivedStdout( KProcess *, char *buffer, int buflen )
 void KCMHelpCenter::slotReceivedStderr( KProcess *, char *buffer, int buflen )
 {
   TQString text = TQString::fromLocal8Bit( buffer, buflen );
-  int pos = text.findRev( '\n' );
+  int pos = text.tqfindRev( '\n' );
   if ( pos < 0 ) {
     mStdErr.append( text );
   } else {

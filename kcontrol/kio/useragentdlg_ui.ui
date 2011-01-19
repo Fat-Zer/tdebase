@@ -1,6 +1,6 @@
 <!DOCTYPE UI><UI version="3.2" stdsetdef="1">
 <class>UserAgentDlgUI</class>
-<widget class="QWidget">
+<widget class="TQWidget">
     <property name="name">
         <cstring>UserAgentDlgUI</cstring>
     </property>
@@ -25,7 +25,7 @@ To add a new site specific identification text, click the &lt;code&gt;New&lt;/co
         <property name="margin">
             <number>0</number>
         </property>
-        <widget class="QCheckBox">
+        <widget class="TQCheckBox">
             <property name="name">
                 <cstring>cbSendUAString</cstring>
             </property>
@@ -43,7 +43,7 @@ By default, only minimal identification information is sent to remote sites. The
 &lt;/qt&gt;</string>
             </property>
         </widget>
-        <widget class="QButtonGroup">
+        <widget class="TQButtonGroup">
             <property name="name">
                 <cstring>gbDefaultId</cstring>
             </property>
@@ -88,7 +88,7 @@ By default, only minimal identification information is sent to remote sites. The
                         <string>The browser identification text sent to the sites you visit. You can customize it using the options provided below.</string>
                     </property>
                 </widget>
-                <widget class="QCheckBox">
+                <widget class="TQCheckBox">
                     <property name="name">
                         <cstring>cbOS</cstring>
                     </property>
@@ -99,7 +99,7 @@ By default, only minimal identification information is sent to remote sites. The
                         <string>Includes your operating system's name in the browser identification text.</string>
                     </property>
                 </widget>
-                <widget class="QLayoutWidget">
+                <widget class="TQLayoutWidget">
                     <property name="name">
                         <cstring>layout2</cstring>
                     </property>
@@ -117,14 +117,14 @@ By default, only minimal identification information is sent to remote sites. The
                             <property name="sizeType">
                                 <enum>Fixed</enum>
                             </property>
-                            <property name="sizeHint">
+                            <property name="tqsizeHint">
                                 <size>
                                     <width>16</width>
                                     <height>20</height>
                                 </size>
                             </property>
                         </spacer>
-                        <widget class="QCheckBox">
+                        <widget class="TQCheckBox">
                             <property name="name">
                                 <cstring>cbOSVersion</cstring>
                             </property>
@@ -140,7 +140,7 @@ By default, only minimal identification information is sent to remote sites. The
                         </widget>
                     </hbox>
                 </widget>
-                <widget class="QCheckBox">
+                <widget class="TQCheckBox">
                     <property name="name">
                         <cstring>cbPlatform</cstring>
                     </property>
@@ -151,7 +151,7 @@ By default, only minimal identification information is sent to remote sites. The
                         <string>Includes your platform type in the browser identification text</string>
                     </property>
                 </widget>
-                <widget class="QCheckBox">
+                <widget class="TQCheckBox">
                     <property name="name">
                         <cstring>cbProcessorType</cstring>
                     </property>
@@ -162,7 +162,7 @@ By default, only minimal identification information is sent to remote sites. The
                         <string>Includes your machine's CPU type in the browser identification text.</string>
                     </property>
                 </widget>
-                <widget class="QCheckBox">
+                <widget class="TQCheckBox">
                     <property name="name">
                         <cstring>cbLanguage</cstring>
                     </property>
@@ -175,7 +175,7 @@ By default, only minimal identification information is sent to remote sites. The
                 </widget>
             </vbox>
         </widget>
-        <widget class="QGroupBox">
+        <widget class="TQGroupBox">
             <property name="name">
                 <cstring>gbDomainPolicy</cstring>
             </property>
@@ -248,7 +248,7 @@ By default, only minimal identification information is sent to remote sites. The
                         <string>List of sites for which the specified identification text will be used instead of the default one.</string>
                     </property>
                 </widget>
-                <widget class="QLayoutWidget">
+                <widget class="TQLayoutWidget">
                     <property name="name">
                         <cstring>layout1</cstring>
                     </property>
@@ -256,7 +256,7 @@ By default, only minimal identification information is sent to remote sites. The
                         <property name="name">
                             <cstring>unnamed</cstring>
                         </property>
-                        <widget class="QPushButton">
+                        <widget class="TQPushButton">
                             <property name="name">
                                 <cstring>pbNew</cstring>
                             </property>
@@ -267,7 +267,7 @@ By default, only minimal identification information is sent to remote sites. The
                                 <string>Add new identification text for a site.</string>
                             </property>
                         </widget>
-                        <widget class="QPushButton">
+                        <widget class="TQPushButton">
                             <property name="name">
                                 <cstring>pbChange</cstring>
                             </property>
@@ -278,7 +278,7 @@ By default, only minimal identification information is sent to remote sites. The
                                 <string>Change the selected identifier text.</string>
                             </property>
                         </widget>
-                        <widget class="QPushButton">
+                        <widget class="TQPushButton">
                             <property name="name">
                                 <cstring>pbDelete</cstring>
                             </property>
@@ -289,7 +289,7 @@ By default, only minimal identification information is sent to remote sites. The
                                 <string>Delete the selected identifier text.</string>
                             </property>
                         </widget>
-                        <widget class="QPushButton">
+                        <widget class="TQPushButton">
                             <property name="name">
                                 <cstring>pbDeleteAll</cstring>
                             </property>
@@ -310,7 +310,7 @@ By default, only minimal identification information is sent to remote sites. The
                             <property name="sizeType">
                                 <enum>Expanding</enum>
                             </property>
-                            <property name="sizeHint">
+                            <property name="tqsizeHint">
                                 <size>
                                     <width>21</width>
                                     <height>16</height>

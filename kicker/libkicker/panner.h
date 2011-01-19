@@ -31,7 +31,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 class TQBoxLayout;
 class TQTimer;
 
-class KDE_EXPORT Panner : public QWidget
+class KDE_EXPORT Panner : public TQWidget
 {
     Q_OBJECT
 
@@ -39,10 +39,10 @@ public:
     Panner( TQWidget* parent, const char* name = 0 );
     ~Panner();
 
-    TQSize minimumSizeHint() const { return TQWidget::minimumSizeHint(); }
+    TQSize tqminimumSizeHint() const { return TQWidget::tqminimumSizeHint(); }
 
     Qt::Orientation orientation() const { return _orient; }
-    virtual void setOrientation(Orientation orientation);
+    virtual void setOrientation(Qt::Orientation orientation);
     
     TQWidget *viewport() const { return _viewport; }
     
@@ -59,8 +59,8 @@ public:
     
     void	contentsToViewport( int x, int y, int& vx, int& vy ) const;
     void	viewportToContents( int vx, int vy, int& x, int& y ) const;
-    QPoint	contentsToViewport( const TQPoint& ) const;
-    QPoint	viewportToContents( const TQPoint& ) const;
+    TQPoint	contentsToViewport( const TQPoint& ) const;
+    TQPoint	viewportToContents( const TQPoint& ) const;
     
     void addChild(TQWidget *child) { child->show(); }
     void removeChild(TQWidget *child) { child->hide(); }

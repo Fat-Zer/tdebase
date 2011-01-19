@@ -585,39 +585,39 @@ TQPixmap *KeramikHandler::composite( TQImage *over, TQImage *under )
 	int width = over->width(), height = over->height();
 
 	// Clear the destination image
-	Q_UINT32 *data = reinterpret_cast<Q_UINT32*>( dest.bits() );
+	TQ_UINT32 *data = reinterpret_cast<TQ_UINT32*>( dest.bits() );
 	for (int i = 0; i < width * height; i++)
 		*(data++) = 0;
 
 	// Copy the under image (bottom aligned) to the destination image
 	for (int y1 = height - under->height(), y2 = 0; y1 < height; y1++, y2++ )
 	{
-		register Q_UINT32 *dst = reinterpret_cast<Q_UINT32*>( dest.scanLine(y1) );
-		register Q_UINT32 *src = reinterpret_cast<Q_UINT32*>( under->scanLine(y2) );
+		register TQ_UINT32 *dst = reinterpret_cast<TQ_UINT32*>( dest.scanLine(y1) );
+		register TQ_UINT32 *src = reinterpret_cast<TQ_UINT32*>( under->scanLine(y2) );
 
 		for ( int x = 0; x < width; x++ )
 			*(dst++) = *(src++);
 	}
 
 	// Blend the over image onto the destination
-	register Q_UINT32 *dst = reinterpret_cast<Q_UINT32*>( dest.bits() );
-	register Q_UINT32 *src = reinterpret_cast<Q_UINT32*>( over->bits() );
+	register TQ_UINT32 *dst = reinterpret_cast<TQ_UINT32*>( dest.bits() );
+	register TQ_UINT32 *src = reinterpret_cast<TQ_UINT32*>( over->bits() );
 	for ( int i = 0; i < width * height; i++ )
 	{
-		int r1 = qRed( *dst ), g1 = qGreen( *dst ), b1 = qBlue( *dst );
-		int r2 = qRed( *src ), g2 = qGreen( *src ), b2 = qBlue( *src );
-		int a  = qAlpha( *src );
+		int r1 = tqRed( *dst ), g1 = tqGreen( *dst ), b1 = tqBlue( *dst );
+		int r2 = tqRed( *src ), g2 = tqGreen( *src ), b2 = tqBlue( *src );
+		int a  = tqAlpha( *src );
 
 		if ( a == 0xff )
 			*dst = *src;
 
 		else if ( a != 0x00 )
-			*dst = qRgba( Q_UINT8( r1 + (((r2 - r1) * a) >> 8) ),
-		                  Q_UINT8( g1 + (((g2 - g1) * a) >> 8) ),
-		                  Q_UINT8( b1 + (((b2 - b1) * a) >> 8) ),
+			*dst = tqRgba( TQ_UINT8( r1 + (((r2 - r1) * a) >> 8) ),
+		                  TQ_UINT8( g1 + (((g2 - g1) * a) >> 8) ),
+		                  TQ_UINT8( b1 + (((b2 - b1) * a) >> 8) ),
 		                  0xff );
 
-		else if ( qAlpha(*dst) == 0x00 )
+		else if ( tqAlpha(*dst) == 0x00 )
 			*dst = 0;
 
 		src++; dst++;
@@ -758,13 +758,13 @@ TQValueList< KeramikHandler::BorderSize > KeramikHandler::borderSizes() const
 
 KeramikButton::KeramikButton( KeramikClient* c, const char *name, Button btn, const TQString &tip, const int realizeBtns )
 		: TQButton( c->widget(), name ),
-		client( c ), button( btn ), hover( false ), lastbutton( NoButton )
+		client( c ), button( btn ), hover( false ), lastbutton( Qt::NoButton )
 {
 	realizeButtons = realizeBtns;
 
 	TQToolTip::add( this, tip ); // FRAME
 	setBackgroundMode( NoBackground );
-        setCursor( arrowCursor );
+        setCursor( tqarrowCursor );
 	int size = clientHandler->roundButton()->height();
 	setFixedSize( size, size );
 
@@ -783,7 +783,7 @@ void KeramikButton::enterEvent( TQEvent *e )
 	TQButton::enterEvent( e );
 
 	hover = true;
-	repaint( false );
+	tqrepaint( false );
 }
 
 
@@ -792,14 +792,14 @@ void KeramikButton::leaveEvent( TQEvent *e )
 	TQButton::leaveEvent( e );
 
 	hover = false;
-	repaint( false );
+	tqrepaint( false );
 }
 
 
 void KeramikButton::mousePressEvent( TQMouseEvent *e )
 {
 	lastbutton = e->button();
-	TQMouseEvent me( e->type(), e->pos(), e->globalPos(), (e->button()&realizeButtons)?LeftButton:NoButton, e->state() );
+	TQMouseEvent me( e->type(), e->pos(), e->globalPos(), (e->button()&realizeButtons)?Qt::LeftButton:Qt::NoButton, e->state() );
 	TQButton::mousePressEvent( &me );
 }
 
@@ -807,7 +807,7 @@ void KeramikButton::mousePressEvent( TQMouseEvent *e )
 void KeramikButton::mouseReleaseEvent( TQMouseEvent *e )
 {
 	lastbutton = e->button();
-	TQMouseEvent me( e->type(), e->pos(), e->globalPos(), (e->button()&realizeButtons)?LeftButton:NoButton, e->state() );
+	TQMouseEvent me( e->type(), e->pos(), e->globalPos(), (e->button()&realizeButtons)?Qt::LeftButton:Qt::NoButton, e->state() );
 	TQButton::mouseReleaseEvent( &me );
 }
 
@@ -831,14 +831,14 @@ void KeramikButton::drawButton( TQPainter *p )
 
 	if ( isDown() ) {
 		// Pressed
-		p->drawPixmap( TQPoint(), *pix, TQStyle::visualRect( TQRect(2*size, 0, size, size), pix->rect() ) );
+		p->drawPixmap( TQPoint(), *pix, TQStyle::tqvisualRect( TQRect(2*size, 0, size, size), pix->rect() ) );
 		p->translate( TQApplication::reverseLayout() ? -1 : 1,  1 );
 	} else if ( hover )
 		// Mouse over
-		p->drawPixmap( TQPoint(), *pix, TQStyle::visualRect( TQRect(size, 0, size, size), pix->rect() ) );
+		p->drawPixmap( TQPoint(), *pix, TQStyle::tqvisualRect( TQRect(size, 0, size, size), pix->rect() ) );
 	else
 		// Normal
-		p->drawPixmap( TQPoint(), *pix, TQStyle::visualRect( TQRect(0, 0, size, size), pix->rect() ) );
+		p->drawPixmap( TQPoint(), *pix, TQStyle::tqvisualRect( TQRect(0, 0, size, size), pix->rect() ) );
 
 
 	// Draw the button deco on the bevel
@@ -909,7 +909,7 @@ void KeramikClient::init()
 	connect( this, TQT_SIGNAL( keepAboveChanged( bool )), TQT_SLOT( keepAboveChange( bool )));
 	connect( this, TQT_SIGNAL( keepBelowChanged( bool )), TQT_SLOT( keepBelowChange( bool )));
 
-        createMainWidget( WStaticContents | WResizeNoErase | WRepaintNoErase );
+        createMainWidget( (WFlags)(WStaticContents | WResizeNoErase | WRepaintNoErase) );
 	widget()->installEventFilter( this );
 
 	// Minimize flicker
@@ -1013,13 +1013,13 @@ void KeramikClient::reset( unsigned long )
 
 	captionBufferDirty = maskDirty = true;
 
-	// Only repaint the window if it's visible
+	// Only tqrepaint the window if it's visible
 	// (i.e. not minimized and on the current desktop)
 	if ( widget()->isVisible() ) {
-		widget()->repaint( false );
+		widget()->tqrepaint( false );
 
 		for ( int i = 0; i < NumButtons; i++ )
-			if ( button[i] ) button[i]->repaint( false );
+			if ( button[i] ) button[i]->tqrepaint( false );
 	}
 }
 
@@ -1033,7 +1033,7 @@ void KeramikClient::addButtons( TQBoxLayout *layout, const TQString &s )
 			// Menu button
 			case 'M' :
 				if ( !button[MenuButton] ) {
-					button[MenuButton] = new KeramikButton( this, "menu", MenuButton, i18n("Menu"), LeftButton|RightButton );
+					button[MenuButton] = new KeramikButton( this, "menu", MenuButton, i18n("Menu"), Qt::LeftButton|Qt::RightButton );
 					connect( button[MenuButton], TQT_SIGNAL( pressed() ), TQT_SLOT( menuButtonPressed() ) );
 					layout->addWidget( button[MenuButton] );
 				}
@@ -1072,7 +1072,7 @@ void KeramikClient::addButtons( TQBoxLayout *layout, const TQString &s )
 			// Maximize button
 			case 'A' :
 				if ( !button[MaxButton] && isMaximizable() ) {
-					button[MaxButton] = new KeramikButton( this, "maximize", MaxButton, i18n("Maximize"), LeftButton|MidButton|RightButton );
+					button[MaxButton] = new KeramikButton( this, "maximize", MaxButton, i18n("Maximize"), Qt::LeftButton|Qt::MidButton|Qt::RightButton );
 					connect( button[MaxButton], TQT_SIGNAL( clicked() ), TQT_SLOT( slotMaximize() ) );
 					layout->addWidget( button[MaxButton] );
 				}
@@ -1260,7 +1260,7 @@ void KeramikClient::updateCaptionBuffer()
 		( clientHandler->showAppIcons() ? 16 + iconSpacing : 0 );
 
 	int xpos = QMAX( (captionRect.width() - tw) / 3, 8 );
-	TQRect tr = TQStyle::visualRect( TQRect(xpos, 1, captionRect.width() - xpos - 10,
+	TQRect tr = TQStyle::tqvisualRect( TQRect(xpos, 1, captionRect.width() - xpos - 10,
 				captionRect.height() - 4), captionBuffer.rect() );
 
 	//p.setPen( Qt::red ); // debug
@@ -1269,7 +1269,7 @@ void KeramikClient::updateCaptionBuffer()
 	// Application icon
 	if ( clientHandler->showAppIcons() )
 	{
-		TQRect iconRect = TQStyle::visualRect( TQRect(tr.x(),
+		TQRect iconRect = TQStyle::tqvisualRect( TQRect(tr.x(),
 					1 + (captionRect.height() - 4 - 16) / 2, 16, 16), tr );
 		TQRect r( icon->rect() );
 		r.moveCenter( iconRect.center() );
@@ -1304,7 +1304,7 @@ void KeramikClient::updateCaptionBuffer()
 	{
 		p.translate( TQApplication::reverseLayout() ? -1 : 1, 1 );
 		//p.setPen( options()->color(ColorTitleBar, active).dark() );
-                if (qGray(options()->color(ColorFont, active).rgb()) < 100)
+                if (tqGray(options()->color(ColorFont, active).rgb()) < 100)
                     p.setPen( TQColor(200,200,200) );
                 else
                     p.setPen( black );
@@ -1329,7 +1329,7 @@ void KeramikClient::calculateCaptionRect()
 		cw += 16 + 4; // icon width + space
 
 	cw = QMIN( cw, titlebar->geometry().width() );
-	captionRect = TQStyle::visualRect( TQRect(titlebar->geometry().x(), (largeCaption ? 0 : titleBaseY),
+	captionRect = TQStyle::tqvisualRect( TQRect(titlebar->geometry().x(), (largeCaption ? 0 : titleBaseY),
 				cw, clientHandler->titleBarHeight(largeCaption) ),
 				titlebar->geometry() );
 }
@@ -1345,7 +1345,7 @@ void KeramikClient::captionChange()
 
 	captionBufferDirty = true;
 
-	widget()->repaint( r | captionRect, false );
+	widget()->tqrepaint( r | captionRect, false );
 }
 
 
@@ -1361,7 +1361,7 @@ void KeramikClient::iconChange()
 		activeIcon = inactiveIcon = NULL;
 
 		captionBufferDirty = true;
-		widget()->repaint( captionRect, false );
+		widget()->tqrepaint( captionRect, false );
 	}
 }
 
@@ -1380,10 +1380,10 @@ void KeramikClient::activeChange()
 
 	captionBufferDirty = true;
 
-	widget()->repaint( false );
+	widget()->tqrepaint( false );
 
 	for ( int i=0; i < NumButtons; i++ )
-		if ( button[i] ) button[i]->repaint( false );
+		if ( button[i] ) button[i]->tqrepaint( false );
 }
 
 
@@ -1400,7 +1400,7 @@ void KeramikClient::maximizeChange()
 			captionBufferDirty = maskDirty = true;
 
 			widget()->layout()->activate();
-			widget()->repaint( false );
+			widget()->tqrepaint( false );
 		} else if (( maximizeMode() & MaximizeVertical ) == 0 && !largeTitlebar ) {
 			// We've been restored - enlarge the titlebar by 3 pixels
 			topSpacer->changeSize( 10, 4, TQSizePolicy::Expanding, TQSizePolicy::Minimum );
@@ -1410,14 +1410,14 @@ void KeramikClient::maximizeChange()
 			captionBufferDirty = maskDirty = true;
 
 			widget()->layout()->activate();
-			widget()->repaint( false );
+			widget()->tqrepaint( false );
 		}
 	}
 
 	if ( button[ MaxButton ] ) {
 		TQToolTip::remove( button[ MaxButton ] );
 		TQToolTip::add( button[ MaxButton ], maximizeMode() == MaximizeFull ? i18n("Restore") : i18n("Maximize") );
-		button[ MaxButton ]->repaint();
+		button[ MaxButton ]->tqrepaint();
 	}
 }
 
@@ -1426,7 +1426,7 @@ void KeramikClient::desktopChange()
 {
 	if ( button[ OnAllDesktopsButton ] )
 		{
-                button[ OnAllDesktopsButton ]->repaint( true );
+                button[ OnAllDesktopsButton ]->tqrepaint( true );
 		TQToolTip::remove( button[ OnAllDesktopsButton ] );
 		TQToolTip::add( button[ OnAllDesktopsButton ], isOnAllDesktops() ? i18n("Not on all desktops") : i18n("On all desktops") );
 		}
@@ -1437,7 +1437,7 @@ void KeramikClient::shadeChange()
 {
 	if ( button[ ShadeButton ] )
 		{
-                button[ ShadeButton ]->repaint( true );
+                button[ ShadeButton ]->tqrepaint( true );
 		TQToolTip::remove( button[ ShadeButton ] );
 		TQToolTip::add( button[ ShadeButton ], isSetShade() ? i18n("Unshade") : i18n("Shade") );
 		}
@@ -1447,14 +1447,14 @@ void KeramikClient::shadeChange()
 void KeramikClient::keepAboveChange( bool )
 {
 	if ( button[ AboveButton ] )
-                button[ AboveButton ]->repaint( true );
+                button[ AboveButton ]->tqrepaint( true );
 }
 
 
 void KeramikClient::keepBelowChange( bool )
 {
 	if ( button[ BelowButton ] )
-                button[ BelowButton ]->repaint( true );
+                button[ BelowButton ]->tqrepaint( true );
 }
 
 
@@ -1482,21 +1482,21 @@ void KeramikClient::slotMaximize()
 void KeramikClient::slotAbove()
 {
     setKeepAbove( !keepAbove());
-    button[ AboveButton ]->repaint( true );
+    button[ AboveButton ]->tqrepaint( true );
 }
 
 
 void KeramikClient::slotBelow()
 {
     setKeepBelow( !keepBelow());
-    button[ BelowButton ]->repaint( true );
+    button[ BelowButton ]->tqrepaint( true );
 }
 
 
 void KeramikClient::slotShade()
 {
     setShade( !isSetShade());
-    button[ ShadeButton ]->repaint( true );
+    button[ ShadeButton ]->tqrepaint( true );
 }
 
 
@@ -1656,15 +1656,15 @@ void KeramikClient::resizeEvent( TQResizeEvent *e )
 
 void KeramikClient::mouseDoubleClickEvent( TQMouseEvent *e )
 {
-	if ( e->button() == LeftButton
-            && TQRect( 0, 0, width(), clientHandler->titleBarHeight( largeTitlebar ) ).contains( e->pos() ) )
+	if ( e->button() == Qt::LeftButton
+            && TQRect( 0, 0, width(), clientHandler->titleBarHeight( largeTitlebar ) ).tqcontains( e->pos() ) )
 		titlebarDblClickOperation();
 }
 
 void KeramikClient::wheelEvent( TQWheelEvent *e )
 {
 	if (isSetShade() 
-            || TQRect( 0, 0, width(), clientHandler->titleBarHeight( largeTitlebar ) ).contains( e->pos() ) )
+            || TQRect( 0, 0, width(), clientHandler->titleBarHeight( largeTitlebar ) ).tqcontains( e->pos() ) )
 		titlebarMouseWheelOperation( e->delta());
 }
 
@@ -1774,37 +1774,37 @@ void KeramikClient::borders( int& left, int& right, int& top, int& bottom ) cons
 }
 
 
-TQSize KeramikClient::minimumSize() const
+TQSize KeramikClient::tqminimumSize() const
 {
-	return widget()->minimumSize();
+	return widget()->tqminimumSize();
 }
 
 
 bool KeramikClient::eventFilter( TQObject* o, TQEvent* e )
 {
-	if ( o != widget() )
+	if ( TQT_BASE_OBJECT(o) != TQT_BASE_OBJECT(widget()) )
 		return false;
 
 	switch ( e->type() )
 	{
 		case TQEvent::Resize:
-			resizeEvent( static_cast< TQResizeEvent* >( e ) );
+			resizeEvent( TQT_TQRESIZEEVENT( e ) );
 			return true;
 
 		case TQEvent::Paint:
-			paintEvent( static_cast< TQPaintEvent* >( e ) );
+			paintEvent( TQT_TQPAINTEVENT( e ) );
 			return true;
 
 		case TQEvent::MouseButtonDblClick:
-			mouseDoubleClickEvent( static_cast< TQMouseEvent* >( e ) );
+			mouseDoubleClickEvent( TQT_TQMOUSEEVENT( e ) );
 			return true;
 
 		case TQEvent::MouseButtonPress:
-			processMousePressEvent( static_cast< TQMouseEvent* >( e ) );
+			processMousePressEvent( TQT_TQMOUSEEVENT( e ) );
 			return true;
 
 		case TQEvent::Wheel:
-			wheelEvent( static_cast< TQWheelEvent* >( e ));
+			wheelEvent( TQT_TQWHEELEVENT( e ));
 			return true;
 
 		default:

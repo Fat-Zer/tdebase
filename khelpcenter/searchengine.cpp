@@ -93,7 +93,7 @@ void SearchTraverser::startProcess( DocEntry *entry )
 void SearchTraverser::connectHandler( SearchHandler *handler )
 {
   TQMap<SearchHandler *,int>::Iterator it;
-  it = mConnectCount.find( handler );
+  it = mConnectCount.tqfind( handler );
   int count = 0;
   if ( it != mConnectCount.end() ) count = *it;
   if ( count == 0 ) {
@@ -108,7 +108,7 @@ void SearchTraverser::connectHandler( SearchHandler *handler )
 void SearchTraverser::disconnectHandler( SearchHandler *handler )
 {
   TQMap<SearchHandler *,int>::Iterator it;
-  it = mConnectCount.find( handler );
+  it = mConnectCount.tqfind( handler );
   if ( it == mConnectCount.end() ) {
     kdError() << "SearchTraverser::disconnectHandler() handler not connected."
       << endl;
@@ -326,15 +326,15 @@ bool SearchEngine::search( TQString words, TQString method, int matches,
 	  lang = "en";
 
     // if the string contains '&' replace with a '+' and set search method to and
-    if (mWords.find("&") != -1) {
-      mWords.replace("&", " ");
+    if (mWords.tqfind("&") != -1) {
+      mWords.tqreplace("&", " ");
       method = "and";
     }
 
     // replace whitespace with a '+'
     mWords = mWords.stripWhiteSpace();
     mWords = mWords.simplifyWhiteSpace();
-    mWords.replace(TQRegExp("\\s"), "+");
+    mWords.tqreplace(TQRegExp("\\s"), "+");
 
     commonSearchProgram = substituteSearchQuery( commonSearchProgram );
 
@@ -379,8 +379,8 @@ bool SearchEngine::search( TQString words, TQString method, int matches,
     delete mProc;
 
     // modify the search result
-    mSearchResult = mSearchResult.replace("http://localhost/", "file:/");
-    mSearchResult = mSearchResult.mid( mSearchResult.find( '<' ) );
+    mSearchResult = mSearchResult.tqreplace("http://localhost/", "file:/");
+    mSearchResult = mSearchResult.mid( mSearchResult.tqfind( '<' ) );
 
     mView->beginSearchResult();
     mView->writeSearchResult( mSearchResult );
@@ -395,11 +395,11 @@ bool SearchEngine::search( TQString words, TQString method, int matches,
 TQString SearchEngine::substituteSearchQuery( const TQString &query )
 {
   TQString result = query;
-  result.replace( "%k", mWords );
-  result.replace( "%n", TQString::number( mMatches ) );
-  result.replace( "%m", mMethod );
-  result.replace( "%l", mLang );
-  result.replace( "%s", mScope );
+  result.tqreplace( "%k", mWords );
+  result.tqreplace( "%n", TQString::number( mMatches ) );
+  result.tqreplace( "%m", mMethod );
+  result.tqreplace( "%l", mLang );
+  result.tqreplace( "%s", mScope );
 
   return result;
 }
@@ -409,15 +409,15 @@ TQString SearchEngine::substituteSearchQuery( const TQString &query,
   Operation operation, const TQString &lang )
 {
   TQString result = query;
-  result.replace( "%i", identifier );
-  result.replace( "%w", words.join( "+" ) );
-  result.replace( "%m", TQString::number( maxResults ) );
+  result.tqreplace( "%i", identifier );
+  result.tqreplace( "%w", words.join( "+" ) );
+  result.tqreplace( "%m", TQString::number( maxResults ) );
   TQString o;
   if ( operation == Or ) o = "or";
   else o = "and";
-  result.replace( "%o", o );
-  result.replace( "%d", Prefs::indexDirectory() );
-  result.replace( "%l", lang );
+  result.tqreplace( "%o", o );
+  result.tqreplace( "%d", Prefs::indexDirectory() );
+  result.tqreplace( "%l", lang );
 
   return result;
 }
@@ -458,7 +458,7 @@ bool SearchEngine::isRunning() const
 SearchHandler *SearchEngine::handler( const TQString &documentType ) const
 {
   TQMap<TQString,SearchHandler *>::ConstIterator it;
-  it = mHandlers.find( documentType );
+  it = mHandlers.tqfind( documentType );
 
   if ( it == mHandlers.end() ) return 0;
   else return *it;

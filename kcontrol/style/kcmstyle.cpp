@@ -160,8 +160,8 @@ KCMStyle::KCMStyle( TQWidget* parent, const char* name )
 	gbWidgetStyle->layout()->setMargin( KDialog::marginHint() );
 	gbWidgetStyle->layout()->setSpacing( KDialog::spacingHint() );
 
-	gbWidgetStyleLayout = new TQVBoxLayout( gbWidgetStyle->layout() );
-	gbWidgetStyleLayout->setAlignment( Qt::AlignTop );
+	gbWidgetStyleLayout = new TQVBoxLayout( gbWidgetStyle->tqlayout() );
+	gbWidgetStyleLayout->tqsetAlignment( Qt::AlignTop );
 	hbLayout = new TQHBoxLayout( KDialog::spacingHint(), "hbLayout" );
 
 	cbStyle = new KComboBox( gbWidgetStyle, "cbStyle" );
@@ -169,14 +169,14 @@ KCMStyle::KCMStyle( TQWidget* parent, const char* name )
 	hbLayout->addWidget( cbStyle );
 
 	pbConfigStyle = new TQPushButton( i18n("Con&figure..."), gbWidgetStyle );
-	pbConfigStyle->setSizePolicy( TQSizePolicy::Maximum, TQSizePolicy::Minimum );
+	pbConfigStyle->tqsetSizePolicy( TQSizePolicy::Maximum, TQSizePolicy::Minimum );
 	pbConfigStyle->setEnabled( FALSE );
 	hbLayout->addWidget( pbConfigStyle );
 
 	gbWidgetStyleLayout->addLayout( hbLayout );
 
 	lblStyleDesc = new TQLabel( gbWidgetStyle );
-	lblStyleDesc->setTextFormat(Qt::RichText);
+	lblStyleDesc->setTextFormat(TQt::RichText);
 	gbWidgetStyleLayout->addWidget( lblStyleDesc );
 
 	cbIconsOnButtons = new TQCheckBox( i18n("Sho&w icons on buttons"), gbWidgetStyle );
@@ -187,13 +187,13 @@ KCMStyle::KCMStyle( TQWidget* parent, const char* name )
 	gbWidgetStyleLayout->addWidget( cbTearOffHandles );
 	cbTearOffHandles->hide(); // reenable when the corresponding Qt method is virtual and properly reimplemented
 
-    TQGroupBox *gbPreview = new TQGroupBox( i18n( "Preview" ), page1 );
-	gbPreview->setColumnLayout( 0, Vertical );
+	TQGroupBox *gbPreview = new TQGroupBox( i18n( "Preview" ), page1 );
+	gbPreview->setColumnLayout( 0, Qt::Vertical );
 	gbPreview->layout()->setMargin( 0 );
 	gbPreview->layout()->setSpacing( KDialog::spacingHint() );
 	gbPreview->setFlat( true );
 	stylePreview = new StylePreview( gbPreview );
-	gbPreview->layout()->add( stylePreview );
+	gbPreview->tqlayout()->add( stylePreview );
 
 	page1Layout->addWidget( gbWidgetStyle );
 	page1Layout->addWidget( gbPreview );
@@ -294,16 +294,16 @@ KCMStyle::KCMStyle( TQWidget* parent, const char* name )
 	box1->setSpacing( KDialog::spacingHint() );
 	box1->setMargin( 0 );
 	TQLabel* lbl = new TQLabel( i18n("0%"), box1 );
-	lbl->setAlignment( AlignLeft );
+	lbl->tqsetAlignment( AlignLeft );
 	lbl = new TQLabel( i18n("50%"), box1 );
-	lbl->setAlignment( AlignHCenter );
+	lbl->tqsetAlignment( AlignHCenter );
 	lbl = new TQLabel( i18n("100%"), box1 );
-	lbl->setAlignment( AlignRight );
+	lbl->tqsetAlignment( AlignRight );
 
 	lblMenuEffectType = new TQLabel( comboMenuEffectType, i18n("Menu trans&lucency type:"), menuContainer );
-	lblMenuEffectType->setAlignment( AlignBottom | AlignLeft );
+	lblMenuEffectType->tqsetAlignment( AlignBottom | AlignLeft );
 	lblMenuOpacity    = new TQLabel( slOpacity, i18n("Menu &opacity:"), menuContainer );
-	lblMenuOpacity->setAlignment( AlignBottom | AlignLeft );
+	lblMenuOpacity->tqsetAlignment( AlignBottom | AlignLeft );
 
 	menuContainerLayout->addWidget( lblMenuEffectType, 0, 0 );
 	menuContainerLayout->addWidget( comboMenuEffectType, 1, 0 );
@@ -642,7 +642,7 @@ void KCMStyle::save()
 
 	if (m_bEffectsDirty) {
 		KIPC::sendMessageAll(KIPC::SettingsChanged);
-		kapp->dcopClient()->send("kwin*", "", "reconfigure()", "");
+		kapp->dcopClient()->send("kwin*", "", "reconfigure()", TQString(""));
 	}
         //update kicker to re-used tooltips kicker parameter otherwise, it overwritted
         //by style tooltips parameters.
@@ -659,7 +659,7 @@ void KCMStyle::save()
 
 bool KCMStyle::findStyle( const TQString& str, int& combobox_item )
 {
-	StyleEntry* se   = styleEntries.find(str.lower());
+	StyleEntry* se   = styleEntries.tqfind(str.lower());
 
 	TQString     name = se ? se->name : str;
 
@@ -754,7 +754,7 @@ void KCMStyle::loadStyle( KConfig& config )
 	{
 		TQString id = (*it).lower();
 		// Find the entry.
-		if ( (entry = styleEntries.find(id)) != 0 )
+		if ( (entry = styleEntries.tqfind(id)) != 0 )
 		{
 			// Do not add hidden entries
 			if (entry->hidden)
@@ -795,9 +795,9 @@ void KCMStyle::loadStyle( KConfig& config )
 		item = i;
 		if ( id == cfgStyle )	// ExactMatch
 			break;
-		else if ( id.contains( cfgStyle ) )
+		else if ( id.tqcontains( cfgStyle ) )
 			break;
-		else if ( id.contains( TQApplication::style().className() ) )
+		else if ( id.tqcontains( TQApplication::tqstyle().className() ) )
 			break;
 		item = 0;
 	}
@@ -823,7 +823,7 @@ void KCMStyle::styleChanged()
 void KCMStyle::switchStyle(const TQString& styleName, bool force)
 {
 	// Don't flicker the preview if the same style is chosen in the cb
-	if (!force && appliedStyle && appliedStyle->name() == styleName) 
+	if (!force && appliedStyle && TQT_TQOBJECT(appliedStyle)->name() == styleName) 
 		return;
          
 	// Create an instance of the new style...
@@ -837,13 +837,13 @@ void KCMStyle::switchStyle(const TQString& styleName, bool force)
 	setStyleRecursive( stylePreview, style );
 
 	// this flickers, but reliably draws the widgets correctly.
-	stylePreview->resize( stylePreview->sizeHint() );
+	stylePreview->resize( stylePreview->tqsizeHint() );
 
 	delete appliedStyle;
 	appliedStyle = style;
 
 	// Set the correct style description
-	StyleEntry* entry = styleEntries.find( styleName );
+	StyleEntry* entry = styleEntries.tqfind( styleName );
 	TQString desc;
 	desc = i18n("Description: %1").arg( entry ? entry->desc : i18n("No description available.") );
 	lblStyleDesc->setText( desc );
@@ -863,12 +863,12 @@ void KCMStyle::setStyleRecursive(TQWidget* w, TQStyle* s)
 	w->setStyle(s);
 
 	// Recursively update all children.
-	const TQObjectList *children = w->children();
-	if (!children)
+	const TQObjectList children = w->childrenListObject();
+	if (children.isEmpty())
 		return;
 
 	// Apply the style to each child widget.
-	TQPtrListIterator<TQObject> childit(*children);
+	TQPtrListIterator<TQObject> childit(children);
 	TQObject *child;
 	while ((child = childit.current()) != 0)
 	{

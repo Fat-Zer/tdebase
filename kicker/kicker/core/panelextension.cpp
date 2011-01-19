@@ -100,7 +100,7 @@ void PanelExtension::populateContainerArea()
 {
     _containerArea->show();
 
-    if (ExtensionManager::the()->isMainPanel(topLevelWidget()))
+    if (ExtensionManager::the()->isMainPanel(tqtopLevelWidget()))
     {
         setObjId("Panel");
         _containerArea->initialize(true);
@@ -139,7 +139,7 @@ void PanelExtension::positionChange(Position p)
     _containerArea->setPosition(p);
 }
 
-TQSize PanelExtension::sizeHint(Position p, TQSize maxSize) const
+TQSize PanelExtension::tqsizeHint(Position p, TQSize maxSize) const
 {
     TQSize size;
 
@@ -162,7 +162,7 @@ bool PanelExtension::eventFilter(TQObject*, TQEvent * e)
     if ( e->type() == TQEvent::MouseButtonPress )
     {
         TQMouseEvent* me = (TQMouseEvent*) e;
-        if ( me->button() == RightButton && kapp->authorize("action/kicker_rmb"))
+        if ( me->button() == Qt::RightButton && kapp->authorize("action/kicker_rmb"))
         {
             Kicker::the()->setInsertionPoint(me->globalPos());
             opMenu()->exec(me->globalPos());

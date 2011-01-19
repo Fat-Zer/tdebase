@@ -28,7 +28,7 @@
 
 class KPty;
 
-class KWrited : public QTextEdit
+class KWrited : public TQTextEdit
 { Q_OBJECT
 public:
   KWrited();

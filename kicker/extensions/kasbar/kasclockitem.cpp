@@ -23,7 +23,7 @@
 #include "kasclockitem.h"
 #include "kasclockitem.moc"
 
-class LCD : public QLCDNumber
+class LCD : public TQLCDNumber
 {
 public:
     LCD( TQWidget *parent, const char *name=0 )
@@ -45,7 +45,7 @@ KasClockItem::KasClockItem( KasBar *parent )
     lcd = new LCD( parent );
     lcd->hide();
 
-    lcd->setSizePolicy( TQSizePolicy::Minimum, TQSizePolicy::Minimum );
+    lcd->tqsetSizePolicy( TQSizePolicy::Minimum, TQSizePolicy::Minimum );
     lcd->setBackgroundMode( NoBackground );
     lcd->setFrameStyle( TQFrame::NoFrame );
     lcd->setSegmentStyle( TQLCDNumber::Flat );
@@ -89,7 +89,7 @@ void KasClockItem::paint( TQPainter *p )
 
     p->save();
     p->translate( 3, 15 );
-    lcd->setPaletteForegroundColor( kasbar()->colorGroup().mid() );
+    lcd->setPaletteForegroundColor( kasbar()->tqcolorGroup().mid() );
     lcd->draw( p );
     p->restore();
 

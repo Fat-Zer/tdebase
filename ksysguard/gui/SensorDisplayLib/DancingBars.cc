@@ -53,7 +53,7 @@ DancingBars::DancingBars( TQWidget *parent, const char *name, const TQString &ti
   else
     mPlotter = new BarGraph( frame() );
 
-  setMinimumSize( sizeHint() );
+  setMinimumSize( tqsizeHint() );
 
   /* All RMB clicks to the mPlotter widget will be handled by 
    * SensorDisplay::eventFilter. */
@@ -147,7 +147,7 @@ void DancingBars::applySettings()
       removeSensor( i );
   }
 
-  repaint();
+  tqrepaint();
   setModified( true );
 }
 
@@ -158,7 +158,7 @@ void DancingBars::applyStyle()
   mPlotter->backgroundColor = KSGRD::Style->backgroundColor();
   mPlotter->fontSize = KSGRD::Style->fontSize();
 
-  repaint();
+  tqrepaint();
   setModified( true );
 }
 
@@ -231,12 +231,12 @@ void DancingBars::resizeEvent( TQResizeEvent* )
     frame()->setGeometry( 0, 0, width(), height() );
 }
 
-TQSize DancingBars::sizeHint()
+TQSize DancingBars::tqsizeHint()
 {
   if ( noFrame() )
-    return ( mPlotter->sizeHint() );
+    return ( mPlotter->tqsizeHint() );
   else
-    return ( frame()->sizeHint() );
+    return ( frame()->tqsizeHint() );
 }
 
 void DancingBars::answerReceived( int id, const TQString &answer )

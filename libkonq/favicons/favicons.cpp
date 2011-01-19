@@ -97,7 +97,7 @@ TQString FaviconsModule::iconForURL(const KURL &url)
     TQString icon;
     TQString simplifiedURL = simplifyURL(url);
 
-    TQString *iconURL = d->faviconsCache.find( removeSlash(simplifiedURL) );
+    TQString *iconURL = d->faviconsCache.tqfind( removeSlash(simplifiedURL) );
     if (iconURL)
         icon = *iconURL;
     else
@@ -181,7 +181,7 @@ void FaviconsModule::downloadHostIcon(const KURL &url)
 
 void FaviconsModule::startDownload(const TQString &hostOrURL, bool isHost, const KURL &iconURL)
 {
-    if (d->failedDownloads.contains(iconURL.url()))
+    if (d->failedDownloads.tqcontains(iconURL.url()))
         return;
 
     KIO::Job *job = KIO::get(iconURL, false, false);
@@ -219,7 +219,7 @@ void FaviconsModule::slotResult(KIO::Job *job)
         TQBuffer buffer(download.iconData);
         buffer.open(IO_ReadOnly);
         TQImageIO io;
-        io.setIODevice(&buffer);
+        io.setIODevice(TQT_TQIODEVICE(&buffer));
         io.setParameters("size=16");
         // Check here too, the job might have had no error, but the downloaded
         // file contains just a 404 message sent with a 200 status.

@@ -28,7 +28,7 @@ class TQLineEdit;
 class TQPushButton;
 class KService;
 
-class KServiceListItem : public QListBoxText
+class KServiceListItem : public TQListBoxText
 {
 public:
     KServiceListItem(  KService *pService, int kind );
@@ -43,7 +43,7 @@ public:
  * module, once for applications and once for services.
  * The "kind" is determined by the argument given to the constructor.
  */
-class KServiceListWidget : public QGroupBox
+class KServiceListWidget : public TQGroupBox
 {
   Q_OBJECT
 public:

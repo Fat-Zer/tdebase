@@ -125,7 +125,7 @@ bool XKBExtension::setLayout(const TQString& model,
 	const TQString layoutKey = getLayoutKey(layout, variant);
 	
 	bool res;
-	if( fileCache.contains(layoutKey) ) {
+	if( fileCache.tqcontains(layoutKey) ) {
 		res = setCompiledLayout( layoutKey );
 		kdDebug() << "setCompiledLayout " << layoutKey << ": " << res << endl;
 
@@ -224,7 +224,7 @@ bool XKBExtension::compileCurrentLayout(const TQString &layoutKey)
 	const TQString fileName = getPrecompiledLayoutFilename(layoutKey);
 
 	kdDebug() << "compiling layout " << this << " cache size: " << fileCache.count() << endl;
-	if( fileCache.contains(layoutKey) ) {
+	if( fileCache.tqcontains(layoutKey) ) {
 		kdDebug() << "trashing old compiled layout for " << fileName << endl;
 		if( fileCache[ layoutKey ] != NULL )
 			fclose( fileCache[ layoutKey ] );	// recompiling - trash the old file
@@ -263,7 +263,7 @@ bool XKBExtension::setCompiledLayout(const TQString &layoutKey)
 {
 	FILE *input = NULL;
 	
-	if( fileCache.contains(layoutKey) ) {
+	if( fileCache.tqcontains(layoutKey) ) {
 		input = fileCache[ layoutKey ];
 	}
 	

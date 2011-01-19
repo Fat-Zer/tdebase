@@ -22,7 +22,7 @@ class TQMouseEvent;
 namespace KHotKeys
 {
 
-class GestureRecorder : public QFrame
+class GestureRecorder : public TQFrame
     {
     Q_OBJECT
 

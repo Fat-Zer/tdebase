@@ -247,9 +247,9 @@ Task::Ptr TaskManager::findTask(int desktop, const TQPoint& p)
             continue;
         }
 
-        if (t->geometry().contains(p))
+        if (t->geometry().tqcontains(p))
         {
-            int index = list.findIndex(t->window());
+            int index = list.tqfindIndex(t->window());
             if (index > currentIndex)
             {
                 currentIndex = index;
@@ -295,7 +295,7 @@ void TaskManager::windowAdded(WId w )
         WId transient_for = (WId) transient_for_tmp;
 
         // check if it's transient for a skiptaskbar window
-        if( _skiptaskbar_windows.contains( transient_for ))
+        if( _skiptaskbar_windows.tqcontains( transient_for ))
             return;
 
         // lets see if this is a transient for an existing task
@@ -807,7 +807,7 @@ bool Task::isModified() const
   static TQString modStr = TQString::fromUtf8("[") +
                           i18n("modified") +
                           TQString::fromUtf8("]");
-  int modStrPos = _info.visibleName().find(modStr);
+  int modStrPos = _info.visibleName().tqfind(modStr);
 
   return ( modStrPos != -1 );
 }
@@ -831,7 +831,7 @@ void Task::updateDemandsAttentionState( WId w )
         NETWinInfo i( qt_xdisplay(), w, qt_xrootwin(), NET::WMState );
         if(i.state() & NET::DemandsAttention)
         {
-            if (!_transients_demanding_attention.contains(w))
+            if (!_transients_demanding_attention.tqcontains(w))
             {
                 _transients_demanding_attention.append(w);
             }
@@ -984,10 +984,10 @@ bool Task::idMatch( const TQString& id1, const TQString& id2 )
   if ( id1.isEmpty() || id2.isEmpty() )
     return false;
 
-  if ( id1.contains( id2 ) > 0 )
+  if ( id1.tqcontains( id2 ) > 0 )
     return true;
 
-  if ( id2.contains( id1 ) > 0 )
+  if ( id2.tqcontains( id1 ) > 0 )
     return true;
 
   return false;
@@ -1305,7 +1305,7 @@ void Task::updateThumbnail()
     // by the thumbnail generation. This makes things much smoother
     // on slower machines.
     //
-    TQWidget *rootWin = qApp->desktop();
+    TQWidget *rootWin = TQT_TQWIDGET(tqApp->desktop());
     TQRect geom = _info.geometry();
     _grab = TQPixmap::grabWindow(rootWin->winId(),
                                 geom.x(), geom.y(),
@@ -1329,7 +1329,7 @@ void Task::generateThumbnail()
    width = width * _thumbSize;
    height = height * _thumbSize;
 
-   img = img.smoothScale( qRound(width), qRound(height) );
+   img = img.smoothScale( tqRound(width), tqRound(height) );
    _thumb = img;
    _grab.resize( 0, 0 ); // Makes grab a null image.
 
@@ -1356,7 +1356,7 @@ TQPixmap Task::thumbnail(int maxDimension)
     Picture picture = XRenderCreatePicture(dpy, m_windowPixmap, format,
                                            CPSubwindowMode, &picAttr);
 
-    // Get shaped windows handled correctly.
+    // Get tqshaped windows handled correctly.
     XserverRegion region = XFixesCreateRegionFromWindow(dpy, m_frameId,
                                                         WindowRegionBounding);
     XFixesSetPictureClipRegion(dpy, picture, 0, 0, region);
@@ -1375,7 +1375,7 @@ TQPixmap Task::thumbnail(int maxDimension)
     int thumbnailHeight = (int)(winAttr.height * factor);
 
     TQPixmap thumbnail(thumbnailWidth, thumbnailHeight);
-    thumbnail.fill(TQApplication::palette().active().background());
+    thumbnail.fill(TQApplication::tqpalette().active().background());
 
 #if 0 // TQImage::smoothScale() scaling
     TQPixmap full(winAttr.width, winAttr.height);
@@ -1499,7 +1499,7 @@ bool TaskDrag::canDecode(const TQMimeSource* e)
 
 Task::List TaskDrag::decode( const TQMimeSource* e )
 {
-    TQByteArray data(e->encodedData("taskbar/task"));
+    TQByteArray data(e->tqencodedData("taskbar/task"));
     Task::List tasks;
 
     if (data.size())

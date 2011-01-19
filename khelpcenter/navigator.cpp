@@ -262,8 +262,8 @@ void Navigator::insertIOSlaveDocs( const TQString &name, NavigatorItem *topItem 
 
 void Navigator::insertAppletDocs( NavigatorItem *topItem )
 {
-  TQDir appletDir( locate( "data", TQString::fromLatin1( "kicker/applets/" ) ) );
-  appletDir.setNameFilter( TQString::fromLatin1( "*.desktop" ) );
+  TQDir appletDir( locate( "data", TQString::tqfromLatin1( "kicker/applets/" ) ) );
+  appletDir.setNameFilter( TQString::tqfromLatin1( "*.desktop" ) );
 
   TQStringList files = appletDir.entryList( TQDir::Files | TQDir::Readable );
   TQStringList::ConstIterator it = files.begin();
@@ -290,14 +290,14 @@ void Navigator::createItemFromDesktopFile( NavigatorItem *topItem,
 
 void Navigator::insertInfoDocs( NavigatorItem *topItem )
 {
-  InfoTree *infoTree = new InfoTree( this );
+  InfoTree *infoTree = new InfoTree( TQT_TQOBJECT(this) );
   infoTree->build( topItem );
 }
 
 NavigatorItem *Navigator::insertScrollKeeperDocs( NavigatorItem *topItem,
                                                   NavigatorItem *after )
 {
-  ScrollKeeperTreeBuilder *builder = new ScrollKeeperTreeBuilder( this );
+  ScrollKeeperTreeBuilder *builder = new ScrollKeeperTreeBuilder( TQT_TQOBJECT(this) );
   return builder->build( topItem, after );
 }
 
@@ -337,7 +337,7 @@ void Navigator::selectItem( const KURL &url )
           item = item->nextSibling() ) {
       NavigatorAppItem *appItem = dynamic_cast<NavigatorAppItem *>( item );
       if ( appItem ) appItem->populate( true /* recursive */ );
-      for ( QListViewItem *subitem = item->firstChild(); subitem;
+      for ( TQListViewItem *subitem = item->firstChild(); subitem;
 	    subitem = subitem->nextSibling() ) {
 	appItem = dynamic_cast<NavigatorAppItem *>( subitem );
 	if ( appItem ) appItem->populate( true /* recursive */ );
@@ -407,9 +407,9 @@ void Navigator::slotItemSelected( TQListViewItem *currentItem )
         // Enforce the original .docbook version, in case langLookup returns a
         // cached version
         if ( !doc.isNull() ) {
-          int pos = doc.find( ".html" );
+          int pos = doc.tqfind( ".html" );
           if ( pos >= 0 ) {
-            doc.replace( pos, 5, ".docbook" );
+            doc.tqreplace( pos, 5, ".docbook" );
           }
           kdDebug( 1400 ) << "slotItemSelected(): doc = " << doc << endl;
 
@@ -552,7 +552,7 @@ void Navigator::slotSearch()
 
   // disable search Button during searches
   mSearchButton->setEnabled(false);
-  TQApplication::setOverrideCursor(waitCursor);
+  TQApplication::setOverrideCursor(tqwaitCursor);
 
   if ( !mSearchEngine->search( words, method, pages, scope ) ) {
     slotSearchFinished();
@@ -563,7 +563,7 @@ void Navigator::slotSearch()
 void Navigator::slotShowSearchResult( const TQString &url )
 {
   TQString u = url;
-  u.replace( "%k", mSearchEdit->text() );
+  u.tqreplace( "%k", mSearchEdit->text() );
 
   emit itemSelected( u );
 }

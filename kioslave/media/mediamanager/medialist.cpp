@@ -38,7 +38,7 @@ const Medium *MediaList::findById(const TQString &id) const
 {
 	kdDebug(1219) << "MediaList::findById(" << id << ")" << endl;
 
-	if ( !m_idMap.contains(id) ) return 0L;
+	if ( !m_idMap.tqcontains(id) ) return 0L;
 
 	return m_idMap[id];
 }
@@ -47,7 +47,7 @@ const Medium *MediaList::findByName(const TQString &name) const
 {
 	kdDebug(1219) << "MediaList::findByName(" << name << ")" << endl;
 
-	if ( !m_nameMap.contains(name) ) return 0L;
+	if ( !m_nameMap.tqcontains(name) ) return 0L;
 
 	return m_nameMap[name];
 }
@@ -70,13 +70,13 @@ TQString MediaList::addMedium(Medium *medium, bool allowNotification)
 	kdDebug(1219) << "MediaList::addMedium(@" << medium->id() << ")" << endl;
 
 	TQString id = medium->id();
-	if ( m_idMap.contains(id) ) return TQString::null;
+	if ( m_idMap.tqcontains(id) ) return TQString::null;
 
 	m_media.append( medium );
 	m_idMap[id] = medium;
 
 	TQString name = medium->name();
-	if ( !m_nameMap.contains(name) )
+	if ( !m_nameMap.tqcontains(name) )
 	{
 		m_nameMap[name] = medium;
 
@@ -90,7 +90,7 @@ TQString MediaList::addMedium(Medium *medium, bool allowNotification)
 	TQString base_name = name+"_";
 	int i = 1;
 
-	while ( m_nameMap.contains(base_name+TQString::number(i)) )
+	while ( m_nameMap.tqcontains(base_name+TQString::number(i)) )
 	{
 		i++;
 	}
@@ -109,7 +109,7 @@ bool MediaList::removeMedium(const TQString &id, bool allowNotification)
 {
 	kdDebug(1219) << "MediaList::removeMedium(" << id << ")" << endl;
 
-	if ( !m_idMap.contains(id) ) return false;
+	if ( !m_idMap.tqcontains(id) ) return false;
 
 	Medium *medium = m_idMap[id];
 	TQString name = medium->name();
@@ -126,7 +126,7 @@ bool MediaList::changeMediumState(const Medium &medium, bool allowNotification)
 {
 	kdDebug(1219) << "MediaList::changeMediumState(const Medium &)" << endl;
 
-	if ( !m_idMap.contains(medium.id()) ) return false;
+	if ( !m_idMap.tqcontains(medium.id()) ) return false;
 
 	Medium *m = m_idMap[medium.id()];
 
@@ -177,7 +177,7 @@ bool MediaList::changeMediumState(const TQString &id,
 	          << baseURL << ", " << mimeType << ", " << iconName << ")"
 	          << endl;
 
-	if ( !m_idMap.contains(id) ) return false;
+	if ( !m_idMap.tqcontains(id) ) return false;
 
 	Medium *medium = m_idMap[id];
 
@@ -218,7 +218,7 @@ bool MediaList::changeMediumState(const TQString &id,
 	          << mounted << ", " << mimeType << ", " << iconName << ")"
 	          << endl;
 
-	if ( !m_idMap.contains(id) ) return false;
+	if ( !m_idMap.tqcontains(id) ) return false;
 
 	Medium *medium = m_idMap[id];
 
@@ -255,7 +255,7 @@ bool MediaList::changeMediumState(const TQString &id, bool mounted,
 	          << mounted << ", " << mimeType << ", " << iconName << ")"
 	          << endl;
 
-	if ( !m_idMap.contains(id) ) return false;
+	if ( !m_idMap.tqcontains(id) ) return false;
 
 	Medium *medium = m_idMap[id];
 
@@ -287,7 +287,7 @@ bool MediaList::setUserLabel(const TQString &name, const TQString &label)
 	kdDebug(1219) << "MediaList::setUserLabel(" << name << ", "
 	          << label << ")" << endl;
 
-	if ( !m_nameMap.contains(name) ) return false;
+	if ( !m_nameMap.tqcontains(name) ) return false;
 
 	Medium *medium = m_nameMap[name];
 	medium->setUserLabel(label);

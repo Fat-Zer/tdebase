@@ -161,22 +161,22 @@ void DetectDialog::selectWindow()
     // use a dialog, so that all user input is blocked
     // use WX11BypassWM and moving away so that it's not actually visible
     // grab only mouse, so that keyboard can be used e.g. for switching windows
-    grabber = new TQDialog( NULL, NULL, true, WX11BypassWM );
+    grabber = new TQDialog( NULL, NULL, true, (WFlags)WX11BypassWM );
     grabber->move( -1000, -1000 );
     grabber->show();
-    grabber->grabMouse( crossCursor );
+    grabber->grabMouse( tqcrossCursor );
     grabber->installEventFilter( this );
     }
 
 bool DetectDialog::eventFilter( TQObject* o, TQEvent* e )
     {
-    if( o != grabber )
+    if( TQT_BASE_OBJECT(o) != TQT_BASE_OBJECT(grabber) )
         return false;
     if( e->type() != TQEvent::MouseButtonRelease )
         return false;
     delete grabber;
     grabber = NULL;
-    if( static_cast< TQMouseEvent* >( e )->button() != LeftButton )
+    if( TQT_TQMOUSEEVENT( e )->button() != Qt::LeftButton )
         {
         emit detectionDone( false );
         return true;

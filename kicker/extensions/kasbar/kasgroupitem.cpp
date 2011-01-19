@@ -255,7 +255,7 @@ void KasGroupItem::updatePopup()
 KasPopup *KasGroupItem::createPopup()
 {
     KasPopup *pop = new KasPopup( this );
-    bar = kasbar()->createChildBar( ( kasbar()->orientation() == Horizontal ) ? Vertical : Horizontal, pop );
+    bar = kasbar()->createChildBar( ( kasbar()->orientation() == Qt::Horizontal ) ? Qt::Vertical : Qt::Horizontal, pop );
 
     connect( pop, TQT_SIGNAL(shown()), TQT_SLOT(updatePopup()) );
 

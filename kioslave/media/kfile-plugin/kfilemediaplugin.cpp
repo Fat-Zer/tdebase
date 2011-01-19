@@ -140,7 +140,7 @@ bool KFileMediaPlugin::readInfo(KFileMetaInfo &info, uint /*what*/)
 
 			group = appendGroup(info, "mediumSummary");
 
-			appendItem(group, "percent", TQString("%1%").arg(percent));
+			appendItem(group, "percent", TQString("%1%").tqarg(percent));
 
 			TQPixmap bar(150, 20);
 			TQPainter p(&bar);
@@ -148,9 +148,9 @@ bool KFileMediaPlugin::readInfo(KFileMetaInfo &info, uint /*what*/)
 			p.fillRect(0, 0, length, 20, Qt::red);
 			p.fillRect(length, 0, 150-length, 20, Qt::green);
 
-			TQColorGroup cg = TQApplication::palette().active();
+			TQColorGroup cg = TQApplication::tqpalette().active();
 
-			TQApplication::style().drawPrimitive(TQStyle::PE_Panel, &p,
+			TQApplication::tqstyle().tqdrawPrimitive(TQStyle::PE_Panel, &p,
 							    TQRect(0, 0, 150, 20), cg,
 							    TQStyle::Style_Sunken);
 

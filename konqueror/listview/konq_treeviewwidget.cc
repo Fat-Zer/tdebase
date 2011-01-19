@@ -27,8 +27,8 @@
 template class TQDict<KonqListViewDir>;
 
 
-KonqTreeViewWidget::KonqTreeViewWidget( KonqListView *parent, TQWidget *parentWidget)
-   : KonqBaseListViewWidget( parent, parentWidget )
+KonqTreeViewWidget::KonqTreeViewWidget( KonqListView *parent, TQWidget *tqparentWidget)
+   : KonqBaseListViewWidget( parent, tqparentWidget )
 {
    kdDebug(1202) << "+KonqTreeViewWidget" << endl;
 
@@ -246,7 +246,7 @@ void KonqTreeViewWidget::slotNewItems( const KFileItemList &entries )
         }
         
         if ( !m_itemsToSelect.isEmpty() ) {
-           TQStringList::Iterator tsit = m_itemsToSelect.find( (*kit)->name() );
+           TQStringList::Iterator tsit = m_itemsToSelect.tqfind( (*kit)->name() );
            if ( tsit != m_itemsToSelect.end() ) {
               m_itemsToSelect.remove( tsit );
               setSelected( fileItem ? fileItem : dirItem, true );

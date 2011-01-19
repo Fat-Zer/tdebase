@@ -24,7 +24,7 @@ class TQListView;
 // Simple dialog for displaying an info message.
 // It does not handle password validation.
 //
-class InfoDlg : public QDialog
+class InfoDlg : public TQDialog
 {
     Q_OBJECT
 

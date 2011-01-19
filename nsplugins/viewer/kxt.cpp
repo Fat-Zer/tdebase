@@ -255,7 +255,7 @@ static
 void np_event_proc( XEvent* e )
 {
     Widget xtw = XtWindowToWidget( e->xany.display, e->xany.window );
-    if ( xtw && qApp->loopLevel() > 0 ) {
+    if ( xtw && tqApp->loopLevel() > 0 ) {
         // Allow Xt to process the event
         qt_np_cascade_event_handler[e->type]( e );
     }
@@ -505,7 +505,7 @@ KXtWidget::~KXtWidget()
 
     if ( need_reroot ) {
         hide();
-        XReparentWindow(qt_xdisplay(), winId(), qApp->desktop()->winId(),
+        XReparentWindow(qt_xdisplay(), winId(), tqApp->desktop()->winId(),
             x(), y());
     }
 
@@ -567,7 +567,7 @@ bool KXtWidget::isActiveWindow() const
     TQWidget *w = find( (WId)win );
     if ( w ) {
         // We know that window
-        return w->topLevelWidget() == topLevelWidget();
+        return w->tqtopLevelWidget() == tqtopLevelWidget();
     } else {
         // Window still may be a parent (if top-level is foreign window)
         Window root, parent;

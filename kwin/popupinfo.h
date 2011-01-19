@@ -20,7 +20,7 @@ namespace KWinInternal
 
 class Workspace;
 
-class PopupInfo : public QWidget
+class PopupInfo : public TQWidget
     {
     Q_OBJECT
     public:

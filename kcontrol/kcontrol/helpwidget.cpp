@@ -42,7 +42,7 @@ void HelpWidget::setText(const TQString& docPath, const TQString& text)
     helptext = text;
   else
     helptext = (text + i18n("<p>Use the \"What's This?\" (Shift+F1) to get help on specific options.</p><p>To read the full manual click <a href=\"%1\">here</a>.</p>")
-		      .arg(docPath.local8Bit()));
+		      .tqarg(static_cast<const char *>(docPath.local8Bit())));
 }
 
 void HelpWidget::setBaseText()
@@ -69,7 +69,7 @@ bool HelpWidget::clicked(const TQString & _url)
     if ( _url.isNull() )
         return true;
 
-    if ( _url.find('@') > -1 ) {
+    if ( _url.tqfind('@') > -1 ) {
         kapp->invokeMailer(_url);
         return true;
     }

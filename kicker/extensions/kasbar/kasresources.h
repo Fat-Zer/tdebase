@@ -73,7 +73,7 @@ class KasBar;
  *
  * @author Richard Moore, rich@kde.org
  */
-class KasResources : public QObject
+class KasResources : public TQObject
 {
     Q_OBJECT
 

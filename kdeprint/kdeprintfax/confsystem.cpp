@@ -47,24 +47,24 @@ ConfSystem::ConfSystem(TQWidget *parent, const char *name)
 	m_system->insertItem("Mgetty-sendfax");
 	m_system->insertItem( "Other" );
 	m_command = new TQLineEdit(this);
-	QLabel	*syslabel = new TQLabel(i18n("F&ax system:"), this);
-	QLabel	*cmdlabel = new TQLabel(i18n("Co&mmand:"), this);
+	TQLabel	*syslabel = new TQLabel(i18n("F&ax system:"), this);
+	TQLabel	*cmdlabel = new TQLabel(i18n("Co&mmand:"), this);
 	syslabel->setBuddy(m_system);
 	cmdlabel->setBuddy(m_command);
 	connect(m_system, TQT_SIGNAL(activated(int)), TQT_SLOT(slotSystemChanged(int)));
 	m_current = 0;
 	m_system->setCurrentItem(m_current);
 
-	QWidget	*m_dummy1 = new TQWidget(this), *m_dummy2 = new TQWidget(this);
+	TQWidget	*m_dummy1 = new TQWidget(this), *m_dummy2 = new TQWidget(this);
 	m_server = new TQLineEdit(m_dummy1);
 	m_device = new TQComboBox(m_dummy2);
-	QLabel	*srvlabel = new TQLabel(i18n("Fax &server (if any):"), m_dummy1);
-	QLabel	*devlabel = new TQLabel(i18n("&Fax/Modem device:"), m_dummy2);
+	TQLabel	*srvlabel = new TQLabel(i18n("Fax &server (if any):"), m_dummy1);
+	TQLabel	*devlabel = new TQLabel(i18n("&Fax/Modem device:"), m_dummy2);
 	srvlabel->setBuddy(m_server);
 	devlabel->setBuddy(m_device);
 	m_device->insertItem(i18n("Standard Modem Port"));
 	for (int i=0; i<10; i++)
-		m_device->insertItem(i18n("Serial Port #%1").arg(i));
+		m_device->insertItem(TQString(i18n("Serial Port #%1").arg(i)));
 	m_device->insertItem( i18n( "Other" ) );
 	connect( m_device, TQT_SIGNAL( activated( int ) ), TQT_SLOT( slotDeviceChanged( int ) ) );
 	m_device_edit = new TQLineEdit( m_dummy2 );
@@ -73,9 +73,9 @@ ConfSystem::ConfSystem(TQWidget *parent, const char *name)
 	KSeparator	*sep = new KSeparator(this);
 	sep->setMinimumHeight(10);
  
-	QVBoxLayout	*l0 = new TQVBoxLayout(this, 10, 10);
-	QGridLayout	*l1 = new TQGridLayout(0, 2, 2, 0, 10);
-	l0->addLayout(l1);
+	TQVBoxLayout	*l0 = new TQVBoxLayout(this, 10, 10);
+	TQGridLayout	*l1 = new TQGridLayout(0, 2, 2, 0, 10);
+	l0->addLayout(TQT_TQLAYOUT(l1));
 	l1->setColStretch(1, 1);
 	l1->addWidget(syslabel, 0, 0);
 	l1->addWidget(cmdlabel, 1, 0);
@@ -85,10 +85,10 @@ ConfSystem::ConfSystem(TQWidget *parent, const char *name)
 	l0->addWidget(m_dummy1);
 	l0->addWidget(m_dummy2);
 	l0->addStretch(1); 
-	QHBoxLayout	*l4 = new TQHBoxLayout(m_dummy1, 0, 10);
+	TQHBoxLayout	*l4 = new TQHBoxLayout(m_dummy1, 0, 10);
 	l4->addWidget(srvlabel, 0);
 	l4->addWidget(m_server, 1);
-	QGridLayout	*l5 = new TQGridLayout( m_dummy2, 2, 2, 0, 10 );
+	TQGridLayout	*l5 = new TQGridLayout( m_dummy2, 2, 2, 0, 10 );
 	l5->setColStretch( 1, 1 );
 	l5->addWidget(devlabel, 0, 0);
 	l5->addWidget(m_device, 0, 1);
@@ -103,7 +103,7 @@ void ConfSystem::load()
 	m_commands << conf->readPathEntry("HylaFax", defaultCommand(hylafax_default_cmd));
 	m_commands << conf->readPathEntry("Mgetty", defaultCommand(mgetty_default_cmd));
 	m_commands << conf->readPathEntry( "Other", TQString::null );
-	QString	v = conf->readEntry("System", "efax");
+	TQString	v = conf->readEntry("System", "efax");
 	if (v == "mgetty") m_current = MGETTY_ID;
 	else if (v == "hylafax") m_current = HYLAFAX_ID;
 	else if ( v == "other" ) m_current = OTHER_ID;
@@ -158,7 +158,7 @@ void ConfSystem::save()
 	}
 	conf->setGroup("Fax");
 	if ( m_device->currentItem() != ( m_device->count()-1 ) )
-		conf->writeEntry("Device", m_device->currentItem() == 0 ? TQString("modem") : TQString("ttyS%1").arg(m_device->currentItem()-1));
+		conf->writeEntry("Device", m_device->currentItem() == 0 ? TQString("modem") : TQString(TQString("ttyS%1").arg(m_device->currentItem()-1)));
 	else
 	{
 		TQString dev = m_device_edit->text();
@@ -178,13 +178,13 @@ void ConfSystem::slotSystemChanged(int ID)
 	m_commands[m_current] = m_command->text();
 	m_current = ID;
 	if (ID == EFAX_ID)
-		m_device->parentWidget()->show();
+		m_device->tqparentWidget()->show();
 	else
-		m_device->parentWidget()->hide();
+		m_device->tqparentWidget()->hide();
 	if (ID == HYLAFAX_ID)
-		m_server->parentWidget()->show();
+		m_server->tqparentWidget()->show();
 	else
-		m_server->parentWidget()->hide();
+		m_server->tqparentWidget()->hide();
 	m_command->setText(m_commands[m_current]);
 }
 

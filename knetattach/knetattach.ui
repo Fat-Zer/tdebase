@@ -1,6 +1,6 @@
 <!DOCTYPE UI><UI version="3.3" stdsetdef="1">
 <class>KNetAttach</class>
-<widget class="QWizard">
+<widget class="TQWizard">
     <property name="name">
         <cstring>KNetAttach</cstring>
     </property>
@@ -20,7 +20,7 @@
             <pointsize>16</pointsize>
         </font>
     </property>
-    <widget class="QWidget">
+    <widget class="TQWidget">
         <property name="name">
             <cstring>_folderType</cstring>
         </property>
@@ -31,7 +31,7 @@
             <property name="name">
                 <cstring>unnamed</cstring>
             </property>
-            <widget class="QButtonGroup" row="2" column="0">
+            <widget class="TQButtonGroup" row="2" column="0">
                 <property name="name">
                     <cstring>buttonGroup1</cstring>
                 </property>
@@ -51,7 +51,7 @@
                     <property name="margin">
                         <number>0</number>
                     </property>
-                    <widget class="QRadioButton" row="4" column="0">
+                    <widget class="TQRadioButton" row="4" column="0">
                         <property name="name">
                             <cstring>_recent</cstring>
                         </property>
@@ -59,7 +59,7 @@
                             <string>&amp;Recent connection:</string>
                         </property>
                     </widget>
-                    <widget class="QRadioButton" row="0" column="0" rowspan="1" colspan="2">
+                    <widget class="TQRadioButton" row="0" column="0" rowspan="1" colspan="2">
                         <property name="name">
                             <cstring>_webfolder</cstring>
                         </property>
@@ -70,7 +70,7 @@
                             <bool>true</bool>
                         </property>
                     </widget>
-                    <widget class="QRadioButton" row="3" column="0" rowspan="1" colspan="2">
+                    <widget class="TQRadioButton" row="3" column="0" rowspan="1" colspan="2">
                         <property name="name">
                             <cstring>_fish</cstring>
                         </property>
@@ -96,14 +96,14 @@
                                 <verstretch>0</verstretch>
                             </sizepolicy>
                         </property>
-                        <property name="minimumSize">
+                        <property name="tqminimumSize">
                             <size>
                                 <width>250</width>
                                 <height>0</height>
                             </size>
                         </property>
                     </widget>
-                    <widget class="QRadioButton" row="1" column="0" rowspan="1" colspan="2">
+                    <widget class="TQRadioButton" row="1" column="0" rowspan="1" colspan="2">
                         <property name="name">
                             <cstring>_ftp</cstring>
                         </property>
@@ -111,7 +111,7 @@
                             <string>FT&amp;P</string>
                         </property>
                     </widget>
-                    <widget class="QRadioButton" row="2" column="0" rowspan="1" colspan="2">
+                    <widget class="TQRadioButton" row="2" column="0" rowspan="1" colspan="2">
                         <property name="name">
                             <cstring>_smb</cstring>
                         </property>
@@ -131,21 +131,21 @@
                 <property name="sizeType">
                     <enum>Expanding</enum>
                 </property>
-                <property name="sizeHint">
+                <property name="tqsizeHint">
                     <size>
                         <width>31</width>
                         <height>16</height>
                     </size>
                 </property>
             </spacer>
-            <widget class="QLabel" row="0" column="0">
+            <widget class="TQLabel" row="0" column="0">
                 <property name="name">
                     <cstring>textLabel1_2</cstring>
                 </property>
                 <property name="text">
                     <string>Select the type of network folder you wish to connect to and press the Next button.</string>
                 </property>
-                <property name="alignment">
+                <property name="tqalignment">
                     <set>WordBreak|AlignVCenter</set>
                 </property>
             </widget>
@@ -159,7 +159,7 @@
                 <property name="sizeType">
                     <enum>Fixed</enum>
                 </property>
-                <property name="sizeHint">
+                <property name="tqsizeHint">
                     <size>
                         <width>20</width>
                         <height>21</height>
@@ -168,7 +168,7 @@
             </spacer>
         </grid>
     </widget>
-    <widget class="QWidget">
+    <widget class="TQWidget">
         <property name="name">
             <cstring>_folderParameters</cstring>
         </property>
@@ -179,14 +179,14 @@
             <property name="name">
                 <cstring>unnamed</cstring>
             </property>
-            <widget class="QLabel" row="0" column="0" rowspan="1" colspan="3">
+            <widget class="TQLabel" row="0" column="0" rowspan="1" colspan="3">
                 <property name="name">
                     <cstring>_informationText</cstring>
                 </property>
                 <property name="text">
                     <string>Enter a name for this &lt;i&gt;%1&lt;/i&gt; as well as the server address, port and folder path to use and press the Next button.</string>
                 </property>
-                <property name="alignment">
+                <property name="tqalignment">
                     <set>WordBreak|AlignVCenter</set>
                 </property>
             </widget>
@@ -200,14 +200,14 @@
                 <property name="sizeType">
                     <enum>Fixed</enum>
                 </property>
-                <property name="sizeHint">
+                <property name="tqsizeHint">
                     <size>
                         <width>20</width>
                         <height>21</height>
                     </size>
                 </property>
             </spacer>
-            <widget class="QLabel" row="2" column="0">
+            <widget class="TQLabel" row="2" column="0">
                 <property name="name">
                     <cstring>textLabel4_2</cstring>
                 </property>
@@ -223,7 +223,7 @@
                     <cstring>_connectionName</cstring>
                 </property>
             </widget>
-            <widget class="QSpinBox" row="5" column="1">
+            <widget class="TQSpinBox" row="5" column="1">
                 <property name="name">
                     <cstring>_port</cstring>
                 </property>
@@ -247,7 +247,7 @@
                     <cstring>_path</cstring>
                 </property>
             </widget>
-            <widget class="QLabel" row="3" column="0">
+            <widget class="TQLabel" row="3" column="0">
                 <property name="name">
                     <cstring>_userText</cstring>
                 </property>
@@ -258,7 +258,7 @@
                     <cstring>_user</cstring>
                 </property>
             </widget>
-            <widget class="QLabel" row="4" column="0">
+            <widget class="TQLabel" row="4" column="0">
                 <property name="name">
                     <cstring>textLabel1</cstring>
                 </property>
@@ -269,7 +269,7 @@
                     <cstring>_host</cstring>
                 </property>
             </widget>
-            <widget class="QLabel" row="5" column="0">
+            <widget class="TQLabel" row="5" column="0">
                 <property name="name">
                     <cstring>_portText</cstring>
                 </property>
@@ -306,7 +306,7 @@
                     </sizepolicy>
                 </property>
             </widget>
-            <widget class="QLabel" row="6" column="0">
+            <widget class="TQLabel" row="6" column="0">
                 <property name="name">
                     <cstring>textLabel3</cstring>
                 </property>
@@ -327,14 +327,14 @@
                 <property name="sizeType">
                     <enum>Expanding</enum>
                 </property>
-                <property name="sizeHint">
+                <property name="tqsizeHint">
                     <size>
                         <width>560</width>
                         <height>16</height>
                     </size>
                 </property>
             </spacer>
-            <widget class="QCheckBox" row="7" column="1" rowspan="1" colspan="2">
+            <widget class="TQCheckBox" row="7" column="1" rowspan="1" colspan="2">
                 <property name="name">
                     <cstring>_createIcon</cstring>
                 </property>
@@ -345,7 +345,7 @@
                     <bool>true</bool>
                 </property>
             </widget>
-            <widget class="QCheckBox" row="8" column="1" rowspan="1" colspan="2">
+            <widget class="TQCheckBox" row="8" column="1" rowspan="1" colspan="2">
                 <property name="name">
                     <cstring>_useEncryption</cstring>
                 </property>
@@ -418,23 +418,24 @@
     <include location="global" impldecl="in implementation">kcombobox.h</include>
     <include location="global" impldecl="in implementation">klineedit.h</include>
     <include location="global" impldecl="in declaration">kurl.h</include>
+    <include location="global" impldecl="in declaration">kwizard.h</include>
     <include location="local" impldecl="in implementation">knetattach.ui.h</include>
 </includes>
 <variables>
-    <variable access="private">QString _type;</variable>
+    <variable access="private">TQString _type;</variable>
 </variables>
-<slots>
+<Q_SLOTS>
     <slot access="private">init()</slot>
-    <slot>setInformationText( const QString &amp; type )</slot>
-    <slot access="private">showPage( QWidget * page )</slot>
+    <slot>setInformationText( const TQString &amp; type )</slot>
+    <slot access="private">showPage( TQWidget * page )</slot>
     <slot access="private">updateParametersPageStatus()</slot>
     <slot access="private">finished()</slot>
     <slot access="private">updatePort( bool encryption )</slot>
     <slot access="private">updateFinishButtonText( bool save )</slot>
-</slots>
+</Q_SLOTS>
 <functions>
     <function access="private" returnType="bool">doConnectionTest( const KURL &amp; url )</function>
-    <function access="private" returnType="bool">updateForProtocol( const QString &amp; protocol )</function>
+    <function access="private" returnType="bool">updateForProtocol( const TQString &amp; protocol )</function>
 </functions>
 <layoutdefaults spacing="6" margin="11"/>
 </UI>

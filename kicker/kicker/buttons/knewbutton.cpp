@@ -29,7 +29,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <tqtooltip.h>
 #include <tqpainter.h>
 #include <tqcursor.h>
-#include <private/qeffects_p.h>
+#include <tqeffects_p.h>
 
 #include <klocale.h>
 #include <kapplication.h>
@@ -63,14 +63,14 @@ KNewButton::KNewButton( TQWidget* parent )
     m_mouseInside = false;
     m_drag = false;
 
-    setIconAlignment((Qt::AlignmentFlags)(AlignTop|AlignRight));
+    setIconAlignment((TQ_Alignment)(AlignTop|AlignRight));
     setAcceptDrops(true);
     setIcon("kmenu-suse");
     setDrawArrow(false);
 
     m_movie = new TQMovie(locate("data", "kicker/pics/kmenu_basic.mng"));
     m_movie->connectUpdate(this, TQT_SLOT(updateMovie()));
-    m_movie->connectStatus(this, TQT_SLOT(slotStatus(int)));
+    m_movie->connectStatus(TQT_TQOBJECT(this), TQT_SLOT(slotStatus(int)));
     m_movie->connectResize(this, TQT_SLOT(slotSetSize(const TQSize&)));
 
     TQApplication::desktop()->screen()->installEventFilter(this);
@@ -99,7 +99,7 @@ TQColor KNewButton::borderColor() const
         QRgb rgb = img.pixel(orientation() == Qt::Horizontal ? img.width() - i - 1 :
                     i, 2);
 
-        if (qGreen(rgb) > 0x50)
+        if (tqGreen(rgb) > 0x50)
             return rgb;
     }
 
@@ -134,24 +134,24 @@ void KNewButton::setPopupDirection(KPanelApplet::Direction d)
 
     switch (d) {
     case KPanelApplet::Left:
-        setIconAlignment((Qt::AlignmentFlags)(AlignTop|AlignLeft));
+        setIconAlignment((TQ_Alignment)(AlignTop|AlignLeft));
         m_movie = new TQMovie(locate("data", "kicker/pics/kmenu_vertical.mng"));
         break;
     case KPanelApplet::Right:
-        setIconAlignment((Qt::AlignmentFlags)(AlignTop|AlignRight));
+        setIconAlignment((TQ_Alignment)(AlignTop|AlignRight));
         m_movie = new TQMovie(locate("data", "kicker/pics/kmenu_vertical.mng"));
         break;
     case KPanelApplet::Up:
-        setIconAlignment((Qt::AlignmentFlags)(AlignTop|AlignHCenter));
+        setIconAlignment((TQ_Alignment)(AlignTop|AlignHCenter));
         m_movie = new TQMovie(locate("data", "kicker/pics/kmenu_basic.mng"));
         break;
     case KPanelApplet::Down:
-        setIconAlignment((Qt::AlignmentFlags)(AlignBottom|AlignHCenter));
+        setIconAlignment((TQ_Alignment)(AlignBottom|AlignHCenter));
         m_movie = new TQMovie(locate("data", "kicker/pics/kmenu_flipped.mng"));
     }
 
     m_movie->connectUpdate(this, TQT_SLOT(updateMovie()));
-    m_movie->connectStatus(this, TQT_SLOT(slotStatus(int)));
+    m_movie->connectStatus(TQT_TQOBJECT(this), TQT_SLOT(slotStatus(int)));
     m_movie->connectResize(this, TQT_SLOT(slotSetSize(const TQSize&)));
 }
 
@@ -214,8 +214,8 @@ bool KNewButton::eventFilter(TQObject *o, TQEvent *e)
         e->type() == TQEvent::MouseButtonPress   ||
         e->type() == TQEvent::MouseButtonDblClick )
     {
-        TQMouseEvent *me = static_cast<TQMouseEvent *>(e);
-        if (rect().contains(mapFromGlobal(me->globalPos())))
+        TQMouseEvent *me = TQT_TQMOUSEEVENT(e);
+        if (TQT_TQRECT_OBJECT(rect()).tqcontains(mapFromGlobal(me->globalPos())))
         {
             if (m_pressedDuringPopup && m_popup && m_openTimer != -1
                     && (me->button() & Qt::LeftButton) )
@@ -225,8 +225,8 @@ bool KNewButton::eventFilter(TQObject *o, TQEvent *e)
 
     if (KickerSettings::kickoffDrawGeekoEye() && e->type() == TQEvent::MouseMove)
     {
-        TQMouseEvent *me = static_cast<TQMouseEvent *>(e);
-        if ((me->state() & MouseButtonMask) == NoButton) 
+        TQMouseEvent *me = TQT_TQMOUSEEVENT(e);
+        if ((me->state() & Qt::MouseButtonMask) == Qt::NoButton) 
             drawEye();
     }
 
@@ -286,7 +286,7 @@ void KNewButton::drawEye()
         }
         m_active_pixmap = pixmap.xForm(matrix);
 
-        repaint(false);
+        tqrepaint(false);
     }
 #undef eye_x
 #undef eye_y
@@ -355,9 +355,9 @@ void KNewButton::mouseMoveEvent(TQMouseEvent* e)
 {
     KButton::mouseMoveEvent(e);
 
-    m_mouseInside = m_sloppyRegion.contains(e->pos());
+    m_mouseInside = m_sloppyRegion.tqcontains(e->pos());
 
-    if ( m_sloppyRegion.contains(e->pos())) 
+    if ( m_sloppyRegion.tqcontains(e->pos())) 
     {
         if (m_hoverTimer == -1 && KickerSettings::openOnHover())
             m_hoverTimer = startTimer(kMax(200,TQApplication::doubleClickInterval()/2));
@@ -420,16 +420,16 @@ void KNewButton::slotExecMenu()
     {
         switch (popupDirection()) {
         case KPanelApplet::Left:
-            qScrollEffect(m_popup, QEffects::LeftScroll);
+            qScrollEffect(m_popup, TQEffects::LeftScroll);
             break;
         case KPanelApplet::Up:
-            qScrollEffect(m_popup, QEffects::UpScroll);
+            qScrollEffect(m_popup, TQEffects::UpScroll);
             break;
         case KPanelApplet::Right:
-            qScrollEffect(m_popup, QEffects::RightScroll);
+            qScrollEffect(m_popup, TQEffects::RightScroll);
             break;
         case KPanelApplet::Down:
-            qScrollEffect(m_popup, QEffects::DownScroll);
+            qScrollEffect(m_popup, TQEffects::DownScroll);
             break;
         }
     }

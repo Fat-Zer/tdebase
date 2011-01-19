@@ -35,7 +35,7 @@ class KIntNumInput;
 class KLocale;
 class KLanguageCombo;
 
-class KLocaleConfigMoney : public QWidget
+class KLocaleConfigMoney : public TQWidget
 {
   Q_OBJECT
 

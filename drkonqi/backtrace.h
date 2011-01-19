@@ -34,7 +34,7 @@ class KTempFile;
 
 #include <tqobject.h>
 
-class BackTrace : public QObject
+class BackTrace : public TQObject
 {
   Q_OBJECT
 

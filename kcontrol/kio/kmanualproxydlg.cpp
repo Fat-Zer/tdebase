@@ -52,7 +52,7 @@ KManualProxyDlg::KManualProxyDlg( TQWidget* parent, const char* name )
     mDlg->pbCopyDown->setPixmap( BarIcon("down", KIcon::SizeSmall) );
     TQSizePolicy sizePolicy( TQSizePolicy::Fixed, TQSizePolicy::Fixed,
                             mDlg->pbCopyDown->sizePolicy().hasHeightForWidth() );
-    mDlg->pbCopyDown->setSizePolicy( sizePolicy );
+    mDlg->pbCopyDown->tqsetSizePolicy( sizePolicy );
 
     init();
 }
@@ -337,7 +337,7 @@ bool KManualProxyDlg::handleDuplicate( const TQString& site )
     TQListBoxItem* item = mDlg->lbExceptions->firstItem();
     while ( item != 0 )
     {
-        if ( item->text().findRev( site ) != -1 &&
+        if ( item->text().tqfindRev( site ) != -1 &&
              item != mDlg->lbExceptions->selectedItem() )
         {
             TQString msg = i18n("You entered a duplicate address. "

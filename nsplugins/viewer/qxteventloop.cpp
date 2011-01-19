@@ -154,12 +154,12 @@ Boolean qmotif_event_dispatcher( XEvent *event )
     TQApplication::sendPostedEvents();
 
     TQWidgetIntDict *mapper = &static_d->mapper;
-    TQWidget* qMotif = mapper->find( event->xany.window );
+    TQWidget* qMotif = mapper->tqfind( event->xany.window );
     if ( !qMotif && TQWidget::find( event->xany.window) == 0 ) {
 	// event is not for Qt, try Xt
 	Display* dpy = TQPaintDevice::x11AppDisplay();
 	Widget w = XtWindowToWidget( dpy, event->xany.window );
-	while ( w && ! ( qMotif = mapper->find( XtWindow( w ) ) ) ) {
+	while ( w && ! ( qMotif = mapper->tqfind( XtWindow( w ) ) ) ) {
 	    if ( XtIsShell( w ) ) {
 		break;
 	    }
@@ -174,7 +174,7 @@ Boolean qmotif_event_dispatcher( XEvent *event )
     }
 
     last_xevent = event;
-    bool delivered = ( qApp->x11ProcessEvent( event ) != -1 );
+    bool delivered = ( tqApp->x11ProcessEvent( event ) != -1 );
     last_xevent = 0;
     if ( qMotif ) {
 	switch ( event->type ) {
@@ -309,15 +309,15 @@ XtAppContext QXtEventLoop::applicationContext() const
 
 void QXtEventLoop::appStartingUp()
 {
-    int argc = qApp->argc();
+    int argc = tqApp->argc();
     XtDisplayInitialize( d->appContext,
 			 TQPaintDevice::x11AppDisplay(),
-			 qApp->name(),
+			 tqApp->name(),
 			 d->applicationClass,
 			 d->options,
 			 d->numOptions,
 			 &argc,
-			 qApp->argv() );
+			 tqApp->argv() );
     d->hookMeUp();
 }
 
@@ -352,7 +352,7 @@ void QXtEventLoop::unregisterWidget( TQWidget* w )
 void qmotif_socknot_handler( XtPointer pointer, int *, XtInputId *id )
 {
     QXtEventLoop *eventloop = (QXtEventLoop *) pointer;
-    TQSocketNotifier *socknot = static_d->socknotDict.find( *id );
+    TQSocketNotifier *socknot = static_d->socknotDict.tqfind( *id );
     if ( ! socknot ) // this shouldn't happen
 	return;
     eventloop->setSocketNotifierPending( socknot );
@@ -420,7 +420,7 @@ void qmotif_timeout_handler( XtPointer, XtIntervalId * )
  */
 bool QXtEventLoop::processEvents( ProcessEventsFlags flags )
 {
-    // Qt uses posted events to do lots of delayed operations, like repaints... these
+    // Qt uses posted events to do lots of delayed operations, like tqrepaints... these
     // need to be delivered before we go to sleep
     TQApplication::sendPostedEvents();
 

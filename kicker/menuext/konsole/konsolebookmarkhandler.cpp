@@ -84,7 +84,7 @@ void KonsoleBookmarkHandler::slotNewBookmark( const TQString& /*text*/,
 {
     *m_importStream << "<bookmark icon=\"" << KMimeType::iconForURL( KURL( url ) );
     *m_importStream << "\" href=\"" << TQString::fromUtf8(url) << "\">\n";
-    *m_importStream << "<title>" << (additionalInfo.isEmpty() ? TQString::fromUtf8(url) : additionalInfo) << "</title>\n</bookmark>\n";
+    *m_importStream << "<title>" << (additionalInfo.isEmpty() ? TQString(TQString::fromUtf8(url)) : additionalInfo) << "</title>\n</bookmark>\n";
 }
 
 void KonsoleBookmarkHandler::slotNewFolder( const TQString& text, bool /*open*/,

@@ -16,7 +16,7 @@
 #include <tqcombobox.h>
 #include <kconfig.h>
 
-class B2Config: public QObject
+class B2Config: public TQObject
 {
 	Q_OBJECT
 

@@ -94,13 +94,13 @@ private:
 
     /*
     * a slower algorithm where the influence of a pixel
-    * is  qGray(px)/(abs(dx) + abs(dy) +1).
+    * is  tqGray(px)/(abs(dx) + abs(dy) +1).
     */
     double doubleLinearDecay(TQImage& source, int x, int y);
 
     /*
     * a very slow algorithm where the influence of a pixel
-    * is  qGray(px)/(sqrt(sqr(dx) + sqr(dy)) +1).
+    * is  tqGray(px)/(sqrt(sqr(dx) + sqr(dy)) +1).
     */
     double radialDecay(TQImage& source, int x, int y);
 

@@ -25,7 +25,7 @@
 class KFontRequester;
 class TQCheckBox;
 
-class KDMFontWidget : public QWidget
+class KDMFontWidget : public TQWidget
 {
 	Q_OBJECT
 
@@ -45,7 +45,7 @@ protected slots:
     void set_def();
 
 private:
-	QCheckBox	*aacb;
+	TQCheckBox	*aacb;
         KFontRequester *greetingFontChooser;
         KFontRequester *failFontChooser;
         KFontRequester *stdFontChooser;

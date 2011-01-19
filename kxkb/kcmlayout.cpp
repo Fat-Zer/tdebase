@@ -48,7 +48,7 @@ enum {
 static const TQString DEFAULT_VARIANT_NAME("<default>");
 
 
-class OptionListItem : public QCheckListItem
+class OptionListItem : public TQCheckListItem
 {
 	public:
 
@@ -101,39 +101,39 @@ LayoutConfig::LayoutConfig(TQWidget *parent, const char *name)
   TQVBoxLayout *main = new TQVBoxLayout(this, 0, KDialog::spacingHint());
 
   widget = new LayoutConfigWidget(this, "widget");
-  main->addWidget(widget);
+  main->addWidget(TQT_TQWIDGET(widget));
 
-  connect( widget->chkEnable, TQT_SIGNAL( toggled( bool )), this, TQT_SLOT(changed()));
-  connect( widget->chkShowSingle, TQT_SIGNAL( toggled( bool )), this, TQT_SLOT(changed()));
-  connect( widget->chkShowFlag, TQT_SIGNAL( toggled( bool )), this, TQT_SLOT(changed()));
-  connect( widget->comboModel, TQT_SIGNAL(activated(int)), this, TQT_SLOT(changed()));
+  connect( TQT_TQOBJECT(widget->chkEnable), TQT_SIGNAL( toggled( bool )), TQT_TQOBJECT(this), TQT_SLOT(changed()));
+  connect( TQT_TQOBJECT(widget->chkShowSingle), TQT_SIGNAL( toggled( bool )), TQT_TQOBJECT(this), TQT_SLOT(changed()));
+  connect( TQT_TQOBJECT(widget->chkShowFlag), TQT_SIGNAL( toggled( bool )), TQT_TQOBJECT(this), TQT_SLOT(changed()));
+  connect( TQT_TQOBJECT(widget->comboModel), TQT_SIGNAL(activated(int)), TQT_TQOBJECT(this), TQT_SLOT(changed()));
 
-  connect( widget->listLayoutsSrc, TQT_SIGNAL(doubleClicked(TQListViewItem*,const TQPoint&, int)),
-									this, TQT_SLOT(add()));
-  connect( widget->btnAdd, TQT_SIGNAL(clicked()), this, TQT_SLOT(add()));
-  connect( widget->btnRemove, TQT_SIGNAL(clicked()), this, TQT_SLOT(remove()));
+  connect( TQT_TQOBJECT(widget->listLayoutsSrc), TQT_SIGNAL(doubleClicked(TQListViewItem*,const TQPoint&, int)),
+									TQT_TQOBJECT(this), TQT_SLOT(add()));
+  connect( TQT_TQOBJECT(widget->btnAdd), TQT_SIGNAL(clicked()), TQT_TQOBJECT(this), TQT_SLOT(add()));
+  connect( TQT_TQOBJECT(widget->btnRemove), TQT_SIGNAL(clicked()), TQT_TQOBJECT(this), TQT_SLOT(remove()));
 
-  connect( widget->comboVariant, TQT_SIGNAL(activated(int)), this, TQT_SLOT(changed()));
-  connect( widget->comboVariant, TQT_SIGNAL(activated(int)), this, TQT_SLOT(variantChanged()));
-  connect( widget->listLayoutsDst, TQT_SIGNAL(selectionChanged(TQListViewItem *)),
-		this, TQT_SLOT(layoutSelChanged(TQListViewItem *)));
+  connect( TQT_TQOBJECT(widget->comboVariant), TQT_SIGNAL(activated(int)), TQT_TQOBJECT(this), TQT_SLOT(changed()));
+  connect( TQT_TQOBJECT(widget->comboVariant), TQT_SIGNAL(activated(int)), TQT_TQOBJECT(this), TQT_SLOT(variantChanged()));
+  connect( TQT_TQOBJECT(widget->listLayoutsDst), TQT_SIGNAL(selectionChanged(TQListViewItem *)),
+		TQT_TQOBJECT(this), TQT_SLOT(layoutSelChanged(TQListViewItem *)));
 
-  connect( widget->editDisplayName, TQT_SIGNAL(textChanged(const TQString&)), this, TQT_SLOT(displayNameChanged(const TQString&)));
+  connect( widget->editDisplayName, TQT_SIGNAL(textChanged(const TQString&)), TQT_TQOBJECT(this), TQT_SLOT(displayNameChanged(const TQString&)));
 
-  connect( widget->chkLatin, TQT_SIGNAL(clicked()), this, TQT_SLOT(changed()));
-  connect( widget->chkLatin, TQT_SIGNAL(clicked()), this, TQT_SLOT(latinChanged()));
+  connect( widget->chkLatin, TQT_SIGNAL(clicked()), TQT_TQOBJECT(this), TQT_SLOT(changed()));
+  connect( widget->chkLatin, TQT_SIGNAL(clicked()), TQT_TQOBJECT(this), TQT_SLOT(latinChanged()));
 
   widget->btnUp->setIconSet(SmallIconSet("1uparrow"));
-  connect( widget->btnUp, TQT_SIGNAL(clicked()), this, TQT_SLOT(changed()));
-  connect( widget->btnUp, TQT_SIGNAL(clicked()), this, TQT_SLOT(moveUp()));
+  connect( widget->btnUp, TQT_SIGNAL(clicked()), TQT_TQOBJECT(this), TQT_SLOT(changed()));
+  connect( widget->btnUp, TQT_SIGNAL(clicked()), TQT_TQOBJECT(this), TQT_SLOT(moveUp()));
   widget->btnDown->setIconSet(SmallIconSet("1downarrow"));
-  connect( widget->btnDown, TQT_SIGNAL(clicked()), this, TQT_SLOT(changed()));
-  connect( widget->btnDown, TQT_SIGNAL(clicked()), this, TQT_SLOT(moveDown()));
+  connect( widget->btnDown, TQT_SIGNAL(clicked()), TQT_TQOBJECT(this), TQT_SLOT(changed()));
+  connect( widget->btnDown, TQT_SIGNAL(clicked()), TQT_TQOBJECT(this), TQT_SLOT(moveDown()));
 
   connect( widget->grpSwitching, TQT_SIGNAL( clicked( int ) ), TQT_SLOT(changed()));
 
-  connect( widget->chkEnableSticky, TQT_SIGNAL(toggled(bool)), this, TQT_SLOT(changed()));
-  connect( widget->spinStickyDepth, TQT_SIGNAL(valueChanged(int)), this, TQT_SLOT(changed()));
+  connect( widget->chkEnableSticky, TQT_SIGNAL(toggled(bool)), TQT_TQOBJECT(this), TQT_SLOT(changed()));
+  connect( widget->spinStickyDepth, TQT_SIGNAL(valueChanged(int)), TQT_TQOBJECT(this), TQT_SLOT(changed()));
 
   widget->listLayoutsSrc->setColumnText(LAYOUT_COLUMN_FLAG, "");
   widget->listLayoutsDst->setColumnText(LAYOUT_COLUMN_FLAG, "");
@@ -245,7 +245,7 @@ void LayoutConfig::initUI() {
 	for (TQStringList::ConstIterator it = options.begin(); it != options.end(); ++it)
 	{
 		TQString option = *it;
-		TQString optionKey = option.mid(0, option.find(':'));
+		TQString optionKey = option.mid(0, option.tqfind(':'));
 		TQString optionName = m_rules->options()[option];
 		OptionListItem *item = m_optionGroups[i18n(optionKey.latin1())];
 		
@@ -444,7 +444,7 @@ void LayoutConfig::displayNameChanged(const TQString& newDisplayName)
 		return;
 	
 	const LayoutUnit layoutUnitKey = getLayoutUnitKey( selLayout );
-	LayoutUnit& layoutUnit = *m_kxkbConfig.m_layouts.find(layoutUnitKey);
+	LayoutUnit& layoutUnit = *m_kxkbConfig.m_layouts.tqfind(layoutUnitKey);
 	
 	TQString oldName = selLayout->text(LAYOUT_COLUMN_DISPLAY_NAME);
 	 
@@ -557,7 +557,7 @@ TQWidget* LayoutConfig::makeOptionsTab()
   OptionListItem *parent;
   for (; it.current(); ++it)
   {
-    if (!it.currentKey().contains(':'))
+    if (!it.currentKey().tqcontains(':'))
     {
       if( it.currentKey() == "ctrl" || it.currentKey() == "caps"
           || it.currentKey() == "altwin" ) {
@@ -580,7 +580,7 @@ TQWidget* LayoutConfig::makeOptionsTab()
   for( ; it.current(); ++it)
   {
     TQString key = it.currentKey();
-    int pos = key.find(':');
+    int pos = key.tqfind(':');
     if (pos >= 0)
     {
       OptionListItem *parent = m_optionGroups[key.left(pos)];
@@ -589,7 +589,7 @@ TQWidget* LayoutConfig::makeOptionsTab()
       if (parent != NULL) {
       // workaroung for mistake in rules file for xkb options in XFree 4.2.0
         TQString text(it.current());
-        text = text.replace( "Cap$", "Caps." );
+        text = text.tqreplace( "Cap$", "Caps." );
         if( parent->type() == TQCheckListItem::RadioButtonController )
             new OptionListItem(parent, i18n(text.utf8()),
                 TQCheckListItem::RadioButton, key);
@@ -639,7 +639,7 @@ void LayoutConfig::updateLayoutCommand()
       setxkbmap += ",us";
 
 /*	LayoutUnit layoutUnitKey = getLayoutUnitKey(sel);
-	layoutDisplayName = m_kxkbConfig.getLayoutDisplayName( *m_kxkbConfig.m_layouts.find(layoutUnitKey) );*/
+	layoutDisplayName = m_kxkbConfig.getLayoutDisplayName( *m_kxkbConfig.m_layouts.tqfind(layoutUnitKey) );*/
 	layoutDisplayName = sel->text(LAYOUT_COLUMN_DISPLAY_NAME);
 	if( layoutDisplayName.isEmpty() ) {
 		int count = 0;
@@ -724,9 +724,9 @@ TQString LayoutConfig::createOptionString()
   {
     TQString option(it.currentKey());
 
-    if (option.contains(':')) {
+    if (option.tqcontains(':')) {
 
-      TQString optionKey = option.mid(0, option.find(':'));
+      TQString optionKey = option.mid(0, option.tqfind(':'));
       OptionListItem *item = m_optionGroups[optionKey];
 
       if( !item ) {

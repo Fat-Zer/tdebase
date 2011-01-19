@@ -48,7 +48,7 @@ void StylePreview::init()
     {
         ++it;
         obj->installEventFilter(this);
-        ((TQWidget*)obj)->setFocusPolicy(NoFocus);
+        ((TQWidget*)obj)->setFocusPolicy(TQ_NoFocus);
     }
     delete l;
 }

@@ -91,7 +91,7 @@ LogView::LogView(TQWidget *parent,KConfig *config, const char *name)
    logFileName.setURL("/var/log/samba.log");
 
    viewHistory.setAllColumnsShowFocus(TRUE);
-   viewHistory.setFocusPolicy(TQWidget::ClickFocus);
+   viewHistory.setFocusPolicy(TQ_ClickFocus);
    viewHistory.setShowSortIndicator(true);
 
    viewHistory.addColumn(i18n("Date & Time"),130);
@@ -116,14 +116,14 @@ LogView::LogView(TQWidget *parent,KConfig *config, const char *name)
    connect(&updateButton,TQT_SIGNAL(clicked()),this,TQT_SLOT(updateList()));
    emit contentsChanged(&viewHistory,0,0);
 
-   label.setMinimumSize(label.sizeHint());
-   logFileName.setMinimumSize(250,logFileName.sizeHint().height());
+   label.setMinimumSize(label.tqsizeHint());
+   logFileName.setMinimumSize(250,logFileName.tqsizeHint().height());
    viewHistory.setMinimumSize(425,200);
-   showConnOpen.setMinimumSize(showConnOpen.sizeHint());
-   showConnClose.setMinimumSize(showConnClose.sizeHint());
-   showFileOpen.setMinimumSize(showFileOpen.sizeHint());
-   showFileClose.setMinimumSize(showFileClose.sizeHint());
-   updateButton.setFixedSize(updateButton.sizeHint());
+   showConnOpen.setMinimumSize(showConnOpen.tqsizeHint());
+   showConnClose.setMinimumSize(showConnClose.tqsizeHint());
+   showFileOpen.setMinimumSize(showFileOpen.tqsizeHint());
+   showFileClose.setMinimumSize(showFileClose.tqsizeHint());
+   updateButton.setFixedSize(updateButton.tqsizeHint());
 }
 
 void LogView::loadSettings()
@@ -161,7 +161,7 @@ void LogView::updateList()
    TQFile logFile(logFileName.url());
    if (logFile.open(IO_ReadOnly))
    {
-      TQApplication::setOverrideCursor(waitCursor);
+      TQApplication::setOverrideCursor(tqwaitCursor);
       viewHistory.clear();
       filesCount=0;
       connectionsCount=0;

@@ -65,7 +65,7 @@ KdeprintFax::KdeprintFax(TQWidget *parent, const char *name)
 	connect(m_faxctrl, TQT_SIGNAL(message(const TQString&)), TQT_SLOT(slotMessage(const TQString&)));
 	connect(m_faxctrl, TQT_SIGNAL(faxSent(bool)), TQT_SLOT(slotFaxSent(bool)));
 
-	QWidget	*mainw = new TQWidget(this);
+	TQWidget	*mainw = new TQWidget(this);
 	setCentralWidget(mainw);
 	m_files = new KListBox(mainw);
 	connect( m_files, TQT_SIGNAL( currentChanged( TQListBoxItem* ) ), TQT_SLOT( slotCurrentChanged() ) );
@@ -79,7 +79,7 @@ KdeprintFax::KdeprintFax(TQWidget *parent, const char *name)
 	TQToolTip::add( m_downbtn, i18n( "Move down" ) );
 	connect( m_downbtn, TQT_SIGNAL( clicked() ), TQT_SLOT( slotMoveDown() ) );
 	m_downbtn->setEnabled( false );
-	QLabel	*m_filelabel = new TQLabel(i18n("F&iles:"), mainw);
+	TQLabel	*m_filelabel = new TQLabel(i18n("F&iles:"), mainw);
         m_filelabel->setBuddy(m_files);
         KSeparator*m_line = new KSeparator( KSeparator::HLine, mainw);
 		KSeparator *m_line2 = new KSeparator( KSeparator::HLine, mainw );
@@ -104,7 +104,7 @@ KdeprintFax::KdeprintFax(TQWidget *parent, const char *name)
 	TQToolTip::add( m_delbtn, i18n( "Remove fax number" ) );
 	m_delbtn->setEnabled( false );
 	connect( m_delbtn, TQT_SIGNAL( clicked() ), TQT_SLOT( slotFaxRemove() ) );
-	QLabel	*m_commentlabel = new TQLabel(i18n("&Comment:"), mainw);
+	TQLabel	*m_commentlabel = new TQLabel(i18n("&Comment:"), mainw);
 	KSystemTray	*m_tray = new KSystemTray(this);
 	m_tray->setPixmap(SmallIcon("kdeprintfax"));
 	m_tray->show();
@@ -115,13 +115,13 @@ KdeprintFax::KdeprintFax(TQWidget *parent, const char *name)
 //	m_comment->setWordWrap(TQTextEdit::NoWrap);
 	m_comment->setLineWidth(1);
 	m_commentlabel->setBuddy(m_comment);
-	QLabel	*m_timelabel = new TQLabel(i18n("Sched&ule:"), mainw);
+	TQLabel	*m_timelabel = new TQLabel(i18n("Sched&ule:"), mainw);
 	m_timecombo = new TQComboBox(mainw);
 	m_timecombo->insertItem(i18n("Now"));
 	m_timecombo->insertItem(i18n("At Specified Time"));
 	m_timecombo->setCurrentItem(0);
 	m_timelabel->setBuddy(m_timecombo);
-	m_time = new QTimeEdit(mainw);
+	m_time = new TQTimeEdit(mainw);
 	m_time->setTime(TQTime::currentTime());
 	m_time->setEnabled(false);
 	connect(m_timecombo, TQT_SIGNAL(activated(int)), TQT_SLOT(slotTimeComboActivated(int)));
@@ -131,7 +131,7 @@ KdeprintFax::KdeprintFax(TQWidget *parent, const char *name)
 	TQLabel *m_subjectlabel = new TQLabel( i18n( "Su&bject:" ), mainw );
 	m_subjectlabel->setBuddy( m_subject );
 
-	QGridLayout	*l0 = new TQGridLayout(mainw, 10, 2, 10, 5);
+	TQGridLayout	*l0 = new TQGridLayout(mainw, 10, 2, 10, 5);
 	l0->setColStretch(1,1);
 	l0->addWidget(m_filelabel, 0, 0, Qt::AlignLeft|Qt::AlignTop);
 	TQHBoxLayout *l2 = new TQHBoxLayout( 0, 0, 10 );
@@ -162,7 +162,7 @@ KdeprintFax::KdeprintFax(TQWidget *parent, const char *name)
 	l0->addWidget(m_commentlabel, 8, 0, Qt::AlignTop|Qt::AlignLeft);
 	l0->addWidget(m_comment, 8, 1);
 	l0->addWidget(m_timelabel, 9, 0);
-	QHBoxLayout	*l1 = new TQHBoxLayout(0, 0, 5);
+	TQHBoxLayout	*l1 = new TQHBoxLayout(0, 0, 5);
 	l0->addLayout(l1, 9, 1);
 	l1->addWidget(m_timecombo, 1);
 	l1->addWidget(m_time, 0);
@@ -178,7 +178,7 @@ KdeprintFax::KdeprintFax(TQWidget *parent, const char *name)
 	updateState();
 
 	resize(550,500);
-	QWidget	*d = kapp->desktop();
+	TQWidget	*d = TQT_TQWIDGET(kapp->desktop());
 	move((d->width()-width())/2, (d->height()-height())/2);
 }
 
@@ -188,19 +188,19 @@ KdeprintFax::~KdeprintFax()
 
 void KdeprintFax::initActions()
 {
-	new KAction(i18n("&Add File..."), "filenew", Qt::Key_Insert, this, TQT_SLOT(slotAdd()), actionCollection(), "file_add");
-	new KAction(i18n("&Remove File"), "remove", Qt::Key_Delete, this, TQT_SLOT(slotRemove()), actionCollection(), "file_remove");
-	new KAction(i18n("&Send Fax"), "connect_established", Qt::Key_Return, this, TQT_SLOT(slotFax()), actionCollection(), "fax_send");
-	new KAction(i18n("A&bort"), "stop", Qt::Key_Escape, this, TQT_SLOT(slotAbort()), actionCollection(), "fax_stop");
-	new KAction(i18n("A&ddress Book"), "kaddressbook", Qt::CTRL+Qt::Key_A, this, TQT_SLOT(slotKab()), actionCollection(), "fax_ab");
-	new KAction(i18n("V&iew Log"), "contents", Qt::CTRL+Qt::Key_L, this, TQT_SLOT(slotViewLog()), actionCollection(), "fax_log");
-	new KAction(i18n("Vi&ew File"), "filefind", Qt::CTRL+Qt::Key_O, this, TQT_SLOT(slotView()), actionCollection(), "file_view");
-	new KAction( i18n( "&New Fax Recipient..." ), "edit", Qt::CTRL+Qt::Key_N, this, TQT_SLOT( slotFaxAdd() ), actionCollection(), "fax_add" );
+	new KAction(i18n("&Add File..."), "filenew", Qt::Key_Insert, TQT_TQOBJECT(this), TQT_SLOT(slotAdd()), actionCollection(), "file_add");
+	new KAction(i18n("&Remove File"), "remove", Qt::Key_Delete, TQT_TQOBJECT(this), TQT_SLOT(slotRemove()), actionCollection(), "file_remove");
+	new KAction(i18n("&Send Fax"), "connect_established", Qt::Key_Return, TQT_TQOBJECT(this), TQT_SLOT(slotFax()), actionCollection(), "fax_send");
+	new KAction(i18n("A&bort"), "stop", Qt::Key_Escape, TQT_TQOBJECT(this), TQT_SLOT(slotAbort()), actionCollection(), "fax_stop");
+	new KAction(i18n("A&ddress Book"), "kaddressbook", Qt::CTRL+Qt::Key_A, TQT_TQOBJECT(this), TQT_SLOT(slotKab()), actionCollection(), "fax_ab");
+	new KAction(i18n("V&iew Log"), "contents", Qt::CTRL+Qt::Key_L, TQT_TQOBJECT(this), TQT_SLOT(slotViewLog()), actionCollection(), "fax_log");
+	new KAction(i18n("Vi&ew File"), "filefind", Qt::CTRL+Qt::Key_O, TQT_TQOBJECT(this), TQT_SLOT(slotView()), actionCollection(), "file_view");
+	new KAction( i18n( "&New Fax Recipient..." ), "edit", Qt::CTRL+Qt::Key_N, TQT_TQOBJECT(this), TQT_SLOT( slotFaxAdd() ), actionCollection(), "fax_add" );
 
-	KStdAction::quit(this, TQT_SLOT(slotQuit()), actionCollection());
+	KStdAction::quit(TQT_TQOBJECT(this), TQT_SLOT(slotQuit()), actionCollection());
 	setStandardToolBarMenuEnabled(true);
-	KStdAction::showMenubar(this, TQT_SLOT(slotToggleMenuBar()), actionCollection());
-	KStdAction::preferences(this, TQT_SLOT(slotConfigure()), actionCollection());
+	KStdAction::showMenubar(TQT_TQOBJECT(this), TQT_SLOT(slotToggleMenuBar()), actionCollection());
+	KStdAction::preferences(TQT_TQOBJECT(this), TQT_SLOT(slotConfigure()), actionCollection());
         KStdAction::keyBindings(guiFactory(), TQT_SLOT(configureShortcuts()), 
 actionCollection());
 	actionCollection()->action("fax_stop")->setEnabled(false);
@@ -263,7 +263,7 @@ void KdeprintFax::slotAbort()
 
 void KdeprintFax::slotKab()
 {
-	QStringList	number, name, enterprise;
+	TQStringList	number, name, enterprise;
 	if (FaxAB::getEntry(number, name, enterprise, this))
 	{
 		for ( unsigned int i = 0; i<number.count(); i++ )
@@ -273,7 +273,7 @@ void KdeprintFax::slotKab()
 
 void KdeprintFax::addURL(KURL url)
 {
-	QString	target;
+	TQString	target;
 	if (KIO::NetAccess::download(url,target,this))
 	{
 		m_files->insertItem(KMimeType::pixmapForURL(url,0,KIcon::Small),target);
@@ -314,7 +314,7 @@ void KdeprintFax::dropEvent(TQDropEvent *e)
 
 TQStringList KdeprintFax::files()
 {
-	QStringList	l;
+	TQStringList	l;
 	for (uint i=0; i<m_files->count(); i++)
 		l.append(m_files->text(i));
 	return l;
@@ -424,25 +424,25 @@ void KdeprintFax::slotConfigure()
 
 void KdeprintFax::updateState()
 {
-	QString	cmd = m_faxctrl->faxCommand();
-	m_cover->setEnabled(cmd.find("%cover") != -1);
+	TQString	cmd = m_faxctrl->faxCommand();
+	m_cover->setEnabled(cmd.tqfind("%cover") != -1);
 	if ( !m_cover->isEnabled() )
 		m_cover->setChecked(false);
-	m_comment->setEnabled(cmd.find("%comment") != -1 && m_cover->isChecked());
-	//m_comment->setPaper(m_comment->isEnabled() ? colorGroup().brush(TQColorGroup::Base) : colorGroup().brush(TQColorGroup::Background));
+	m_comment->setEnabled(cmd.tqfind("%comment") != -1 && m_cover->isChecked());
+	//m_comment->setPaper(m_comment->isEnabled() ? tqcolorGroup().brush(TQColorGroup::Base) : tqcolorGroup().brush(TQColorGroup::Background));
 	if (!m_comment->isEnabled())
 	{
 		m_comment->setText("");
-		m_comment->setPaper( colorGroup().background() );
+		m_comment->setPaper( tqcolorGroup().background() );
 	}
 	else
-		m_comment->setPaper( colorGroup().base() );
+		m_comment->setPaper( tqcolorGroup().base() );
 	/*
-	m_enterprise->setEnabled(cmd.find("%enterprise") != -1);
+	m_enterprise->setEnabled(cmd.tqfind("%enterprise") != -1);
 	if (!m_enterprise->isEnabled())
 		m_enterprise->setText("");
 	*/
-	if (cmd.find("%time") == -1)
+	if (cmd.tqfind("%time") == -1)
 	{
 		m_timecombo->setCurrentItem(0);
 		m_timecombo->setEnabled(false);
@@ -450,8 +450,8 @@ void KdeprintFax::updateState()
 	}
 	else
 		m_timecombo->setEnabled( true );
-	/*m_name->setEnabled( cmd.find( "%name" ) != -1 );*/
-	m_subject->setEnabled( cmd.find( "%subject" ) != -1 && m_cover->isChecked() );
+	/*m_name->setEnabled( cmd.tqfind( "%name" ) != -1 );*/
+	m_subject->setEnabled( cmd.tqfind( "%subject" ) != -1 && m_cover->isChecked() );
 	statusBar()->changeItem(m_faxctrl->faxSystem(), 2);
 }
 

@@ -25,7 +25,7 @@
 #include <kmimetype.h>
 #include <kuserprofile.h>
 
-class TypesListItem : public QListViewItem
+class TypesListItem : public TQListViewItem
 {
 public:
   /**

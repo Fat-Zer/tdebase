@@ -30,7 +30,7 @@ class TQPopupMenu;
 class TQWidget;
 class QptrListIterator;
 
-class History : public QObject
+class History : public TQObject
 {
     Q_OBJECT
 public:

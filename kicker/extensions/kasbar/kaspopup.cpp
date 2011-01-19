@@ -60,7 +60,7 @@
 #include "kaspopup.moc"
 
 KasPopup::KasPopup( KasItem *item, const char *name )
-    : TQHBox( 0, name, WStyle_Customize | WStyle_StaysOnTop | WStyle_Tool | WStyle_NoBorder | WX11BypassWM ),
+    : TQHBox( 0, name, (WFlags)(WStyle_Customize | WStyle_StaysOnTop | WStyle_Tool | WStyle_NoBorder | WX11BypassWM) ),
       item_( item ),
       kasbar_( item->kasbar() )
 {
@@ -95,22 +95,22 @@ TQPoint KasPopup::calcPosition( KasItem *item, int w, int h )
    int x = pos.x();
    int y = pos.y();
 
-   if ( kasbar->orientation() == Horizontal ) {
-      if ( y < ( qApp->desktop()->height() / 2 ) )
+   if ( kasbar->orientation() == Qt::Horizontal ) {
+      if ( y < ( tqApp->desktop()->height() / 2 ) )
 	 y = y + kasbar->itemExtent();
       else
 	 y = y - h;
 
-      if ( (x + w) > qApp->desktop()->width() )
+      if ( (x + w) > tqApp->desktop()->width() )
          x = x - w + kasbar->itemExtent();
    }
    else {
-      if ( x < ( qApp->desktop()->width() / 2 ) )
+      if ( x < ( tqApp->desktop()->width() / 2 ) )
 	 x = x + kasbar->itemExtent();
       else
 	 x = x - w;
 
-      if ( (y + h) > qApp->desktop()->height() )
+      if ( (y + h) > tqApp->desktop()->height() )
          y = y - h + kasbar->itemExtent();
    }
 

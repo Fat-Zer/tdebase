@@ -35,7 +35,7 @@ class KConfig;
 class KURLRequester;
 class TQEvent;
 
-class GrepTool : public QWidget
+class GrepTool : public TQWidget
 {
     Q_OBJECT
 

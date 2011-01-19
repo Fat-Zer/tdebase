@@ -166,9 +166,9 @@ int create_socket()
     }
 
     // strip the screen number from the display
-    display.replace(TQRegExp("\\.[0-9]+$"), "");
+    display.tqreplace(TQRegExp("\\.[0-9]+$"), "");
 
-    sock = TQFile::encodeName(locateLocal("socket", TQString("kdesud_%1").arg(display)));
+    sock = TQFile::encodeName(locateLocal("socket", TQString("kdesud_%1").arg(static_cast<const char *>(display))));
     int stat_err=lstat(sock, &s);
     if(!stat_err && S_ISLNK(s.st_mode)) {
         kdWarning(1205) << "Someone is running a symlink attack on you\n";
@@ -400,7 +400,7 @@ int main(int argc, char *argv[])
                 if (fd+1 > (int) handler.size())
                     handler.resize(fd+1);
                 handler.insert(fd, new ConnectionHandler(fd));
-                maxfd = QMAX(maxfd, fd);
+                maxfd = TQMAX(maxfd, fd);
                 FD_SET(fd, &active_fds);
                 continue;
             }

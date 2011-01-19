@@ -25,7 +25,7 @@
  * images, so we'll just use a nice shade of gray or black as the
  * background...
  */
-class PreviewRedmond: public QWidget
+class PreviewRedmond: public TQWidget
 {
   Q_OBJECT
 public:

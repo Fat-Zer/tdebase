@@ -137,24 +137,24 @@ bool inExclusionPattern(KMountPoint *mount, bool networkSharesOnly)
 	  || mount->mountType() == "fdescfs"
 	  || mount->mountType() == "kernfs"
 	  || mount->mountType() == "usbfs"
-	  || mount->mountType().contains( "proc" )
+	  || mount->mountType().tqcontains( "proc" )
 	  || mount->mountType() == "unknown"
 	  || mount->mountType() == "none"
 	  || mount->mountType() == "sunrpc"
 	  || mount->mountedFrom() == "none"
 	  || mount->mountedFrom() == "tmpfs"
-	  || mount->mountedFrom().find("shm") != -1
+	  || mount->mountedFrom().tqfind("shm") != -1
 	  || mount->mountPoint() == "/dev/swap"
 	  || mount->mountPoint() == "/dev/pts"
-	  || mount->mountPoint().find("/proc") == 0
-	  || mount->mountPoint().find("/sys") == 0
+	  || mount->mountPoint().tqfind("/proc") == 0
+	  || mount->mountPoint().tqfind("/sys") == 0
 
 	  // We might want to display only network shares
 	  // since HAL doesn't handle them
 	  || ( networkSharesOnly
-	    && mount->mountType().find( "smb" ) == -1
-	    && mount->mountType().find( "cifs" ) == -1
-	    && mount->mountType().find( "nfs" ) == -1
+	    && mount->mountType().tqfind( "smb" ) == -1
+	    && mount->mountType().tqfind( "cifs" ) == -1
+	    && mount->mountType().tqfind( "nfs" ) == -1
 	     )
 	   )
 	{
@@ -187,7 +187,7 @@ void FstabBackend::handleMtabChange(bool allowNotification)
 		   nothing has changed, do not stat the mount point. Avoids
 		   hang if network shares are stalling */
 		TQString mtabEntry = dev + "*" + mp + "*" + fs;
-		if(m_mtabEntries.contains(mtabEntry)) {
+		if(m_mtabEntries.tqcontains(mtabEntry)) {
 		        new_mtabIds += m_mtabEntries[mtabEntry];
 			continue;
 		}
@@ -196,7 +196,7 @@ void FstabBackend::handleMtabChange(bool allowNotification)
 		new_mtabIds+=id;
 		m_mtabEntries[mtabEntry] = id;
 
-		if ( !m_mtabIds.contains(id) && m_fstabIds.contains(id) )
+		if ( !m_mtabIds.tqcontains(id) && m_fstabIds.tqcontains(id) )
 		{
 			TQString mime, icon, label;
 			guess(dev, mp, fs, true, mime, icon, label);
@@ -204,7 +204,7 @@ void FstabBackend::handleMtabChange(bool allowNotification)
 			                              mime, icon, label);
 		}
 #if 0
-		else if ( !m_mtabIds.contains(id) )
+		else if ( !m_mtabIds.tqcontains(id) )
 		{
 			TQString name = generateName(dev, fs);
 
@@ -229,7 +229,7 @@ void FstabBackend::handleMtabChange(bool allowNotification)
 
 	for (; it2!=end2; ++it2)
 	{
-		if ( !new_mtabIds.contains(*it2) && m_fstabIds.contains(*it2) )
+		if ( !new_mtabIds.tqcontains(*it2) && m_fstabIds.tqcontains(*it2) )
 		{
 			const Medium *medium = m_mediaList.findById(*it2);
 
@@ -248,7 +248,7 @@ void FstabBackend::handleMtabChange(bool allowNotification)
 			                              mime, icon, label);
 		}
 #if 0
-		else if ( !new_mtabIds.contains(*it2) )
+		else if ( !new_mtabIds.tqcontains(*it2) )
 		{
 			m_mediaList.removeMedium(*it2, allowNotification);
 		}
@@ -277,7 +277,7 @@ void FstabBackend::handleFstabChange(bool allowNotification)
 		TQString id = generateId(dev, mp);
 		new_fstabIds+=id;
 
-		if ( !m_fstabIds.contains(id) )
+		if ( !m_fstabIds.tqcontains(id) )
 		{
 			TQString name = generateName(dev, fs);
 
@@ -301,7 +301,7 @@ void FstabBackend::handleFstabChange(bool allowNotification)
 
 	for (; it2!=end2; ++it2)
 	{
-		if ( !new_fstabIds.contains(*it2) )
+		if ( !new_fstabIds.tqcontains(*it2) )
 		{
 			m_mediaList.removeMedium(*it2, allowNotification);
 		}
@@ -317,8 +317,8 @@ TQString FstabBackend::generateId(const TQString &devNode,
 	TQString m = KStandardDirs::realPath(mountPoint);
 
 	return "/org/kde/mediamanager/fstab/"
-	      +d.replace("/", "")
-	      +m.replace("/", "");
+	      +d.tqreplace("/", "")
+	      +m.tqreplace("/", "");
 }
 
 TQString FstabBackend::generateName(const TQString &devNode, const TQString &fsType)
@@ -363,7 +363,7 @@ void FstabBackend::guess(const TQString &devNode, const TQString &mountPoint,
 			{
 				TQString buf;
 				m.readLine(buf, 1024);
-				if(buf.contains("cdrom"))
+				if(buf.tqcontains("cdrom"))
 					isCd=true;
 				m.close();
 			}
@@ -387,37 +387,37 @@ void FstabBackend::guess(const TQString &devNode, const TQString &mountPoint,
 	}
 #endif
 	if ( devType == CDWRITER
-	  || devNode.find("cdwriter")!=-1 || mountPoint.find("cdwriter")!=-1
-	  || devNode.find("cdrecorder")!=-1 || mountPoint.find("cdrecorder")!=-1
-	  || devNode.find("cdburner")!=-1 || mountPoint.find("cdburner")!=-1
-	  || devNode.find("cdrw")!=-1 || mountPoint.find("cdrw")!=-1
-	  || devNode.find("graveur")!=-1
+	  || devNode.tqfind("cdwriter")!=-1 || mountPoint.tqfind("cdwriter")!=-1
+	  || devNode.tqfind("cdrecorder")!=-1 || mountPoint.tqfind("cdrecorder")!=-1
+	  || devNode.tqfind("cdburner")!=-1 || mountPoint.tqfind("cdburner")!=-1
+	  || devNode.tqfind("cdrw")!=-1 || mountPoint.tqfind("cdrw")!=-1
+	  || devNode.tqfind("graveur")!=-1
 	   )
 	{
 		mimeType = "media/cdwriter";
 		label = i18n("CD Recorder");
 	}
 	else if ( devType == DVD || devType == DVDWRITER
-	       || devNode.find("dvd")!=-1 || mountPoint.find("dvd")!=-1 )
+	       || devNode.tqfind("dvd")!=-1 || mountPoint.tqfind("dvd")!=-1 )
 	{
 		mimeType = "media/dvd";
 		label = i18n("DVD");
 	}
 	else if ( devType == CD
-	       || devNode.find("cdrom")!=-1 || mountPoint.find("cdrom")!=-1
+	       || devNode.tqfind("cdrom")!=-1 || mountPoint.tqfind("cdrom")!=-1
 	       // LINUX SPECIFIC
-	       || devNode.find("/dev/scd")!=-1 || devNode.find("/dev/sr")!=-1
+	       || devNode.tqfind("/dev/scd")!=-1 || devNode.tqfind("/dev/sr")!=-1
 	       // FREEBSD SPECIFIC
-	       || devNode.find("/acd")!=-1 || devNode.find("/scd")!=-1
+	       || devNode.tqfind("/acd")!=-1 || devNode.tqfind("/scd")!=-1
 	        )
 	{
 		mimeType = "media/cdrom";
 		label = i18n("CD-ROM");
 	}
-	else if ( devNode.find("fd")!=-1 || mountPoint.find("fd")!=-1
-	       || devNode.find("floppy")!=-1 || mountPoint.find("floppy")!=-1 )
+	else if ( devNode.tqfind("fd")!=-1 || mountPoint.tqfind("fd")!=-1
+	       || devNode.tqfind("floppy")!=-1 || mountPoint.tqfind("floppy")!=-1 )
 	{
-		if ( devNode.find("360")!=-1 || devNode.find("1200")!=-1 )
+		if ( devNode.tqfind("360")!=-1 || devNode.tqfind("1200")!=-1 )
 		{
 			mimeType = "media/floppy5";
 		}
@@ -427,32 +427,32 @@ void FstabBackend::guess(const TQString &devNode, const TQString &mountPoint,
 		}
 		label = i18n("Floppy");
 	}
-	else if ( mountPoint.find("zip")!=-1
+	else if ( mountPoint.tqfind("zip")!=-1
 	       // FREEBSD SPECIFIC
-	       || devNode.find("/afd")!=-1
+	       || devNode.tqfind("/afd")!=-1
 	        )
 	{
 		mimeType = "media/zip";
 		label = i18n("Zip Disk");
 	}
-	else if ( mountPoint.find("removable")!=-1
-	       || mountPoint.find("hotplug")!=-1
-	       || mountPoint.find("usb")!=-1
-	       || mountPoint.find("firewire")!=-1
-	       || mountPoint.find("ieee1394")!=-1
-	       || devNode.find("/usb/")!= -1
+	else if ( mountPoint.tqfind("removable")!=-1
+	       || mountPoint.tqfind("hotplug")!=-1
+	       || mountPoint.tqfind("usb")!=-1
+	       || mountPoint.tqfind("firewire")!=-1
+	       || mountPoint.tqfind("ieee1394")!=-1
+	       || devNode.tqfind("/usb/")!= -1
 	        )
 	{
 		mimeType = "media/removable";
 		label = i18n("Removable Device");
 	}
-	else if ( fsType.find("nfs")!=-1 )
+	else if ( fsType.tqfind("nfs")!=-1 )
 	{
 		mimeType = "media/nfs";
 		label = i18n("Remote Share");
 	}
-	else if ( fsType.find("smb")!=-1 || fsType.find("cifs")!=-1
-	       || devNode.find("//")!=-1 )
+	else if ( fsType.tqfind("smb")!=-1 || fsType.tqfind("cifs")!=-1
+	       || devNode.tqfind("//")!=-1 )
 	{
 		mimeType = "media/smb";
 		label = i18n("Remote Share");

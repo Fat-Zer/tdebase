@@ -1,6 +1,6 @@
 <!DOCTYPE UI><UI version="3.3" stdsetdef="1">
 <class>DigitalWidget</class>
-<widget class="QWidget">
+<widget class="TQWidget">
     <property name="name">
         <cstring>DigitalWidget</cstring>
     </property>
@@ -19,7 +19,7 @@
         <property name="margin">
             <number>0</number>
         </property>
-        <widget class="QButtonGroup">
+        <widget class="TQButtonGroup">
             <property name="name">
                 <cstring>ButtonGroup2_3</cstring>
             </property>
@@ -30,7 +30,7 @@
                 <property name="name">
                     <cstring>unnamed</cstring>
                 </property>
-                <widget class="QCheckBox">
+                <widget class="TQCheckBox">
                     <property name="name">
                         <cstring>kcfg_DigitalShowDate</cstring>
                     </property>
@@ -41,7 +41,7 @@
                         <bool>true</bool>
                     </property>
                 </widget>
-                <widget class="QCheckBox">
+                <widget class="TQCheckBox">
                     <property name="name">
                         <cstring>kcfg_DigitalShowSeconds</cstring>
                     </property>
@@ -49,7 +49,7 @@
                         <string>Seco&amp;nds</string>
                     </property>
                 </widget>
-                <widget class="QCheckBox">
+                <widget class="TQCheckBox">
                     <property name="name">
                         <cstring>kcfg_DigitalShowDayOfWeek</cstring>
                     </property>
@@ -57,7 +57,7 @@
                         <string>Da&amp;y of week</string>
                     </property>
                 </widget>
-                <widget class="QCheckBox">
+                <widget class="TQCheckBox">
                     <property name="name">
                         <cstring>kcfg_DigitalBlink</cstring>
                     </property>
@@ -65,7 +65,7 @@
                         <string>Blin&amp;king dots</string>
                     </property>
                 </widget>
-                <widget class="QCheckBox">
+                <widget class="TQCheckBox">
                     <property name="name">
                         <cstring>kcfg_DigitalShowFrame</cstring>
                     </property>
@@ -83,7 +83,7 @@
                     <property name="sizeType">
                         <enum>Expanding</enum>
                     </property>
-                    <property name="sizeHint">
+                    <property name="tqsizeHint">
                         <size>
                             <width>20</width>
                             <height>20</height>
@@ -92,7 +92,7 @@
                 </spacer>
             </hbox>
         </widget>
-        <widget class="QGroupBox">
+        <widget class="TQGroupBox">
             <property name="name">
                 <cstring>groupBox1</cstring>
             </property>
@@ -103,7 +103,7 @@
                 <property name="name">
                     <cstring>unnamed</cstring>
                 </property>
-                <widget class="QCheckBox">
+                <widget class="TQCheckBox">
                     <property name="name">
                         <cstring>kcfg_DigitalLCDStyle</cstring>
                     </property>
@@ -114,7 +114,7 @@
                         <bool>false</bool>
                     </property>
                 </widget>
-                <widget class="QLayoutWidget">
+                <widget class="TQLayoutWidget">
                     <property name="name">
                         <cstring>layout14</cstring>
                     </property>
@@ -122,7 +122,7 @@
                         <property name="name">
                             <cstring>unnamed</cstring>
                         </property>
-                        <widget class="QLabel" row="0" column="0">
+                        <widget class="TQLabel" row="0" column="0">
                             <property name="name">
                                 <cstring>Foreground_ColorL</cstring>
                             </property>
@@ -147,7 +147,7 @@
                                 <string></string>
                             </property>
                         </widget>
-                        <widget class="QLabel" row="2" column="0">
+                        <widget class="TQLabel" row="2" column="0">
                             <property name="name">
                                 <cstring>backgroundDigitalLabel</cstring>
                             </property>
@@ -193,14 +193,14 @@
                             <property name="sizeType">
                                 <enum>Expanding</enum>
                             </property>
-                            <property name="sizeHint">
+                            <property name="tqsizeHint">
                                 <size>
                                     <width>110</width>
                                     <height>20</height>
                                 </size>
                             </property>
                         </spacer>
-                        <widget class="QLabel" row="1" column="0">
+                        <widget class="TQLabel" row="1" column="0">
                             <property name="name">
                                 <cstring>Shadow_ColorL</cstring>
                             </property>
@@ -226,7 +226,7 @@
                     <property name="sizeType">
                         <enum>Expanding</enum>
                     </property>
-                    <property name="sizeHint">
+                    <property name="tqsizeHint">
                         <size>
                             <width>20</width>
                             <height>20</height>

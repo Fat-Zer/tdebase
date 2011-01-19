@@ -96,7 +96,7 @@ KdmLabel::KdmLabel( KdmItem *parent, const TQDomNode &node, const char *name )
 	}
 
 	// Check if this is a timer label)
-	label.isTimer = label.text.find( "%c" ) >= 0;
+	label.isTimer = label.text.tqfind( "%c" ) >= 0;
 	if (label.isTimer) {
 		timer = new TQTimer( this );
 		timer->start( 1000 );
@@ -110,13 +110,13 @@ KdmLabel::setTextInt( const TQString &txt)
 {
   // TODO: catch &&
         cText = txt;
-	cAccel = txt.find('&');
+	cAccel = txt.tqfind('&');
 	delete myAccel;
 	myAccel = 0;
 	if (cAccel != -1) {
 	  cText.remove('&');
-	  myAccel = new TQAccel(parentWidget());
-	  myAccel->insertItem(ALT + UNICODE_ACCEL + cText.at(cAccel).lower().unicode());
+	  myAccel = new TQAccel(tqparentWidget());
+	  myAccel->insertItem(ALT + UNICODE_ACCEL + cText.tqat(cAccel).lower().tqunicode());
 	  connect(myAccel, TQT_SIGNAL(activated(int)), TQT_SLOT(slotAccel()));
 	}
 }
@@ -137,8 +137,8 @@ KdmLabel::setText( const TQString &txt )
 	setTextInt( lookupText( label.text ) );
 }
 
-QSize
-KdmLabel::sizeHint()
+TQSize
+KdmLabel::tqsizeHint()
 {
 	// choose the correct label class
 	struct LabelStruct::LabelClass *l = &label.normal;
@@ -231,7 +231,7 @@ static const struct {
 	{ "login",              I18N_NOOP("Login") }
 };
 
-QString
+TQString
 KdmLabel::lookupStock( const TQString &stock )
 {
 	//FIXME add key accels!
@@ -245,12 +245,12 @@ KdmLabel::lookupStock( const TQString &stock )
 	return stock;
 }
 
-QString
+TQString
 KdmLabel::lookupText( const TQString &t )
 {
 	TQString text = t;
 
-	text.replace( '_', '&' );
+	text.tqreplace( '_', '&' );
 
 	TQMap<TQChar,TQString> m;
 	struct utsname uts;
@@ -268,7 +268,7 @@ KdmLabel::lookupText( const TQString &t )
 	m['s'] = KThemedGreeter::timedUser;
 	// xgettext:no-c-format
 	KGlobal::locale()->setDateFormat( i18n("date format", "%a %d %B") );
-	m['c'] = KGlobal::locale()->formatDateTime( TQDateTime::currentDateTime(), false, false );
+	m['c'] = KGlobal::locale()->formatDateTime( TQDateTime::tqcurrentDateTime(), false, false );
 
 	return KMacroExpander::expandMacros( text, m );
 }

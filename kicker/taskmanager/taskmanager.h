@@ -282,7 +282,7 @@ public:
     //* @internal
     void removeTransient( WId w );
     //* @internal
-    bool hasTransient(WId w) const { return _transients.find(w) != _transients.end(); }
+    bool hasTransient(WId w) const { return _transients.tqfind(w) != _transients.end(); }
     //* @internal
     void updateDemandsAttentionState( WId w );
     //* @internal
@@ -483,7 +483,7 @@ private:
 /**
  * Provids a drag object for tasks across desktops.
  */
-class KDE_EXPORT TaskDrag : public QStoredDrag
+class KDE_EXPORT TaskDrag : public TQStoredDrag
 {
 public:
     /**
@@ -565,7 +565,7 @@ private:
  * @see Startup
  * @see KWinModule
  */
-class KDE_EXPORT TaskManager : public QObject
+class KDE_EXPORT TaskManager : public TQObject
 {
     Q_OBJECT
     Q_PROPERTY( int currentDesktop READ currentDesktop )

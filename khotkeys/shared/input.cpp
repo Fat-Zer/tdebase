@@ -55,7 +55,7 @@ Kbd::~Kbd()
     
 void Kbd::insert_item( const KShortcut& shortcut_P, Kbd_receiver* receiver_P )
     {
-    Receiver_data& rcv = receivers[ receiver_P ];
+    Receiver_data& rcv = tqreceivers[ receiver_P ];
     rcv.shortcuts.append( shortcut_P );
     if( rcv.active )
         grab_shortcut( shortcut_P );
@@ -63,17 +63,17 @@ void Kbd::insert_item( const KShortcut& shortcut_P, Kbd_receiver* receiver_P )
 
 void Kbd::remove_item( const KShortcut& shortcut_P, Kbd_receiver* receiver_P )
     {
-    Receiver_data& rcv = receivers[ receiver_P ];
+    Receiver_data& rcv = tqreceivers[ receiver_P ];
     rcv.shortcuts.remove( shortcut_P );
     if( rcv.active )
         ungrab_shortcut( shortcut_P );
     if( rcv.shortcuts.count() == 0 )
-        receivers.remove( receiver_P );
+        tqreceivers.remove( receiver_P );
     }
     
 void Kbd::activate_receiver( Kbd_receiver* receiver_P )
     {
-    Receiver_data& rcv = receivers[ receiver_P ];
+    Receiver_data& rcv = tqreceivers[ receiver_P ];
     if( rcv.active )
         return;
     rcv.active = true;
@@ -85,7 +85,7 @@ void Kbd::activate_receiver( Kbd_receiver* receiver_P )
 
 void Kbd::deactivate_receiver( Kbd_receiver* receiver_P )
     {
-    Receiver_data& rcv = receivers[ receiver_P ];
+    Receiver_data& rcv = tqreceivers[ receiver_P ];
     if( !rcv.active )
         return;
     rcv.active = false;
@@ -97,7 +97,7 @@ void Kbd::deactivate_receiver( Kbd_receiver* receiver_P )
 
 void Kbd::grab_shortcut( const KShortcut& shortcut_P )
     {
-    if( grabs.contains( shortcut_P ))
+    if( grabs.tqcontains( shortcut_P ))
         ++grabs[ shortcut_P ];
     else
         {
@@ -117,7 +117,7 @@ void Kbd::grab_shortcut( const KShortcut& shortcut_P )
     
 void Kbd::ungrab_shortcut( const KShortcut& shortcut_P )
     {
-    if( !grabs.contains( shortcut_P ))
+    if( !grabs.tqcontains( shortcut_P ))
         return;
     if( --grabs[ shortcut_P ] == 0 )
         {
@@ -142,12 +142,12 @@ void Kbd::key_slot( TQString key_P )
     {
     kdDebug( 1217 ) << "Key pressed:" << key_P << endl;
     KShortcut shortcut( key_P );
-    if( !grabs.contains( shortcut ))
+    if( !grabs.tqcontains( shortcut ))
         return;
-    for( TQMap< Kbd_receiver*, Receiver_data >::ConstIterator it = receivers.begin();
-         it != receivers.end();
+    for( TQMap< Kbd_receiver*, Receiver_data >::ConstIterator it = tqreceivers.begin();
+         it != tqreceivers.end();
          ++it )
-        if( ( *it ).shortcuts.contains( shortcut ) && ( *it ).active
+        if( ( *it ).shortcuts.tqcontains( shortcut ) && ( *it ).active
             && it.key()->handle_key( shortcut ))
             return;
     }

@@ -1,6 +1,6 @@
 <!DOCTYPE UI><UI version="3.3" stdsetdef="1">
 <class>PlayerSettingsUI</class>
-<widget class="QWidget">
+<widget class="TQWidget">
     <property name="name">
         <cstring>PlayerSettingsUI</cstring>
     </property>
@@ -19,7 +19,7 @@
         <property name="margin">
             <number>0</number>
         </property>
-        <widget class="QLabel">
+        <widget class="TQLabel">
             <property name="name">
                 <cstring>textLabel1</cstring>
             </property>
@@ -41,7 +41,7 @@
                 <enum>Horizontal</enum>
             </property>
         </widget>
-        <widget class="QButtonGroup">
+        <widget class="TQButtonGroup">
             <property name="name">
                 <cstring>grpPlayers</cstring>
             </property>
@@ -58,7 +58,7 @@
                 <property name="margin">
                     <number>0</number>
                 </property>
-                <widget class="QRadioButton" row="4" column="0" rowspan="1" colspan="3">
+                <widget class="TQRadioButton" row="4" column="0" rowspan="1" colspan="3">
                     <property name="name">
                         <cstring>cbNone</cstring>
                     </property>
@@ -66,7 +66,7 @@
                         <string>&amp;No audio output</string>
                     </property>
                 </widget>
-                <widget class="QRadioButton" row="2" column="0" rowspan="1" colspan="3">
+                <widget class="TQRadioButton" row="2" column="0" rowspan="1" colspan="3">
                     <property name="name">
                         <cstring>cbExternal</cstring>
                     </property>
@@ -84,14 +84,14 @@
                     <property name="sizeType">
                         <enum>Fixed</enum>
                     </property>
-                    <property name="sizeHint">
+                    <property name="tqsizeHint">
                         <size>
                             <width>20</width>
                             <height>20</height>
                         </size>
                     </property>
                 </spacer>
-                <widget class="QLayoutWidget" row="1" column="1" rowspan="1" colspan="2">
+                <widget class="TQLayoutWidget" row="1" column="1" rowspan="1" colspan="2">
                     <property name="name">
                         <cstring>layout5</cstring>
                     </property>
@@ -109,14 +109,14 @@
                             <property name="sizeType">
                                 <enum>Expanding</enum>
                             </property>
-                            <property name="sizeHint">
+                            <property name="tqsizeHint">
                                 <size>
                                     <width>20</width>
                                     <height>20</height>
                                 </size>
                             </property>
                         </spacer>
-                        <widget class="QLayoutWidget" row="0" column="1" rowspan="2" colspan="1">
+                        <widget class="TQLayoutWidget" row="0" column="1" rowspan="2" colspan="1">
                             <property name="name">
                                 <cstring>layout4</cstring>
                             </property>
@@ -140,14 +140,14 @@
                                     <property name="sizeType">
                                         <enum>Expanding</enum>
                                     </property>
-                                    <property name="sizeHint">
+                                    <property name="tqsizeHint">
                                         <size>
                                             <width>233</width>
                                             <height>20</height>
                                         </size>
                                     </property>
                                 </spacer>
-                                <widget class="QLabel" row="1" column="2">
+                                <widget class="TQLabel" row="1" column="2">
                                     <property name="name">
                                         <cstring>textLabel3</cstring>
                                     </property>
@@ -155,7 +155,7 @@
                                         <string>100%</string>
                                     </property>
                                 </widget>
-                                <widget class="QLabel" row="1" column="0">
+                                <widget class="TQLabel" row="1" column="0">
                                     <property name="name">
                                         <cstring>textLabel2</cstring>
                                     </property>
@@ -163,7 +163,7 @@
                                         <string>0%</string>
                                     </property>
                                 </widget>
-                                <widget class="QSlider" row="0" column="0" rowspan="1" colspan="3">
+                                <widget class="TQSlider" row="0" column="0" rowspan="1" colspan="3">
                                     <property name="name">
                                         <cstring>volumeSlider</cstring>
                                     </property>
@@ -182,7 +182,7 @@
                                 </widget>
                             </grid>
                         </widget>
-                        <widget class="QLabel" row="0" column="0">
+                        <widget class="TQLabel" row="0" column="0">
                             <property name="name">
                                 <cstring>textLabel4</cstring>
                             </property>
@@ -205,14 +205,14 @@
                     <property name="sizeType">
                         <enum>Fixed</enum>
                     </property>
-                    <property name="sizeHint">
+                    <property name="tqsizeHint">
                         <size>
                             <width>20</width>
                             <height>20</height>
                         </size>
                     </property>
                 </spacer>
-                <widget class="QRadioButton" row="0" column="0" rowspan="1" colspan="4">
+                <widget class="TQRadioButton" row="0" column="0" rowspan="1" colspan="4">
                     <property name="name">
                         <cstring>cbArts</cstring>
                     </property>
@@ -223,7 +223,7 @@
                         <bool>true</bool>
                     </property>
                 </widget>
-                <widget class="QLabel" row="3" column="1">
+                <widget class="TQLabel" row="3" column="1">
                     <property name="name">
                         <cstring>textLabel5</cstring>
                     </property>
@@ -265,7 +265,7 @@
             <property name="sizeType">
                 <enum>Expanding</enum>
             </property>
-            <property name="sizeHint">
+            <property name="tqsizeHint">
                 <size>
                     <width>20</width>
                     <height>16</height>

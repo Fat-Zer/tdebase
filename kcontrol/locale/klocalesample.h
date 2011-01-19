@@ -32,7 +32,7 @@ class TQResizeEvent;
 
 class KLocale;
 
-class KLocaleSample : public QWidget
+class KLocaleSample : public TQWidget
 {
   Q_OBJECT
 public:

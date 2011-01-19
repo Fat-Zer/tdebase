@@ -57,7 +57,7 @@ Panner::Panner( TQWidget* parent, const char* name )
     // layout
     _layout = new TQBoxLayout(this, TQBoxLayout::LeftToRight);
     _layout->addWidget(_clipper, 1);
-    setOrientation(Horizontal);
+    setOrientation(Qt::Horizontal);
 }
 
 Panner::~Panner() 
@@ -97,14 +97,14 @@ void Panner::createScrollButtons()
 
 void Panner::setupButtons()
 {
-    if (orientation() == Horizontal)
+    if (orientation() == Qt::Horizontal)
     {
         if (_luSB)
         {
             _luSB->setArrowType(Qt::LeftArrow);
             _rdSB->setArrowType(Qt::RightArrow);
-            _luSB->setSizePolicy(TQSizePolicy(TQSizePolicy::Minimum, TQSizePolicy::Expanding));
-            _rdSB->setSizePolicy(TQSizePolicy(TQSizePolicy::Minimum, TQSizePolicy::Expanding));
+            _luSB->tqsetSizePolicy(TQSizePolicy(TQSizePolicy::Minimum, TQSizePolicy::Expanding));
+            _rdSB->tqsetSizePolicy(TQSizePolicy(TQSizePolicy::Minimum, TQSizePolicy::Expanding));
             TQToolTip::add(_luSB, i18n("Scroll left"));
             TQToolTip::add(_rdSB, i18n("Scroll right"));
             setMinimumSize(24, 0);
@@ -117,8 +117,8 @@ void Panner::setupButtons()
         {
             _luSB->setArrowType(Qt::UpArrow);
             _rdSB->setArrowType(Qt::DownArrow);
-            _luSB->setSizePolicy(TQSizePolicy(TQSizePolicy::Expanding, TQSizePolicy::Minimum));
-            _rdSB->setSizePolicy(TQSizePolicy(TQSizePolicy::Expanding, TQSizePolicy::Minimum));
+            _luSB->tqsetSizePolicy(TQSizePolicy(TQSizePolicy::Expanding, TQSizePolicy::Minimum));
+            _rdSB->tqsetSizePolicy(TQSizePolicy(TQSizePolicy::Expanding, TQSizePolicy::Minimum));
             TQToolTip::add(_luSB, i18n("Scroll up"));
             TQToolTip::add(_rdSB, i18n("Scroll down"));
             setMinimumSize(0, 24);
@@ -149,7 +149,7 @@ void Panner::resizeEvent( TQResizeEvent* )
 
 void Panner::scrollRightDown()
 {
-    if(orientation() == Horizontal) // scroll right
+    if(orientation() == Qt::Horizontal) // scroll right
         scrollBy( _step, 0 );
     else // scroll down
         scrollBy( 0, _step );
@@ -159,7 +159,7 @@ void Panner::scrollRightDown()
 
 void Panner::scrollLeftUp()
 {
-    if(orientation() == Horizontal) // scroll left
+    if(orientation() == Qt::Horizontal) // scroll left
         scrollBy( -_step, 0 );
     else // scroll up
         scrollBy( 0, -_step );
@@ -197,7 +197,7 @@ void Panner::reallyUpdateScrollButtons()
     
     _updateScrollButtonsTimer->stop();
 
-    if (orientation() == Horizontal)
+    if (orientation() == Qt::Horizontal)
     {
         delta = contentsWidth() - width();
     }
@@ -336,7 +336,7 @@ void Panner::ensureVisible( int x, int y, int xmargin, int ymargin )
 
 bool Panner::eventFilter( TQObject *obj, TQEvent *e )
 {
-    if ( obj == _viewport || obj == _clipper ) 
+    if ( TQT_BASE_OBJECT(obj) == TQT_BASE_OBJECT(_viewport) || TQT_BASE_OBJECT(obj) == TQT_BASE_OBJECT(_clipper) ) 
     {
         switch ( e->type() ) 
         {

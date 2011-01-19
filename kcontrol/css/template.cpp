@@ -23,16 +23,16 @@ bool CSSTemplate::expand(TQString destname, const TQMap<TQString,TQString> &dict
     {
       line = is.readLine();
 
-      int start = line.find('$');
+      int start = line.tqfind('$');
       if (start >= 0)
 	{
-	  int end = line.find('$', start+1);
+	  int end = line.tqfind('$', start+1);
 	  if (end >= 0)
             {
 	      TQString expr = line.mid(start+1, end-start-1);
 	      TQString res = dict[expr];
 
-	      line.replace(start, end-start+1, res);
+	      line.tqreplace(start, end-start+1, res);
 	    }
 	}
       os << line << endl;

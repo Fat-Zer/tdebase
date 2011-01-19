@@ -80,7 +80,7 @@ KasBar::KasBar( Orientation o, TQWidget *parent, const char *name, WFlags f )
    : TQWidget( parent, name, f ),
      master_(0),
      orient( o ),
-     direction_( o == Horizontal ? TQBoxLayout::LeftToRight : TQBoxLayout::TopToBottom ),
+     direction_( o == Qt::Horizontal ? TQBoxLayout::LeftToRight : TQBoxLayout::TopToBottom ),
      itemUnderMouse_( 0 ),
      boxesPerLine_(10), // Temp value
      inDrag( false ),
@@ -93,7 +93,7 @@ KasBar::KasBar( Orientation o, TQWidget *parent, const char *name, WFlags f )
      rootPix( 0 ),
      enableTint_( false ),
      tintAmount_( 0.1 ), 
-     tintColour_( colorGroup().mid() ),
+     tintColour_( tqcolorGroup().mid() ),
      useMask_( true ),
      res(0)
 {
@@ -102,14 +102,14 @@ KasBar::KasBar( Orientation o, TQWidget *parent, const char *name, WFlags f )
     setMouseTracking( true );
     setMaxBoxes( 0 );
 
-    connect( this, TQT_SIGNAL( configChanged() ), TQT_SLOT( repaint() ) );
+    connect( this, TQT_SIGNAL( configChanged() ), TQT_SLOT( tqrepaint() ) );
 }
 
 KasBar::KasBar( Orientation o, KasBar *master, TQWidget *parent, const char *name, WFlags f )
    : TQWidget( parent, name, f ),
      master_(master),
      orient( o ),
-     direction_( o == Horizontal ? TQBoxLayout::LeftToRight : TQBoxLayout::TopToBottom ),
+     direction_( o == Qt::Horizontal ? TQBoxLayout::LeftToRight : TQBoxLayout::TopToBottom ),
      itemUnderMouse_( 0 ),
      boxesPerLine_(10), // Temp value
      inDrag( false ),
@@ -122,7 +122,7 @@ KasBar::KasBar( Orientation o, KasBar *master, TQWidget *parent, const char *nam
      rootPix( 0 ),
      enableTint_( false ),
      tintAmount_( 0.1 ), 
-     tintColour_( colorGroup().mid() ),
+     tintColour_( tqcolorGroup().mid() ),
      useMask_( true ),
      res(0)
 {
@@ -130,7 +130,7 @@ KasBar::KasBar( Orientation o, KasBar *master, TQWidget *parent, const char *nam
     items.setAutoDelete( true );
     setMouseTracking( true );
     setMaxBoxes( 0 );
-    connect( master_, TQT_SIGNAL( configChanged() ), TQT_SLOT( repaint() ) );
+    connect( master_, TQT_SIGNAL( configChanged() ), TQT_SLOT( tqrepaint() ) );
 }
 
 KasBar::~KasBar()
@@ -255,7 +255,7 @@ void KasBar::setTint( bool enable )
       }
 
       emit configChanged();
-      repaint( true );
+      tqrepaint( true );
    }
 }
 
@@ -269,7 +269,7 @@ void KasBar::setTint( double amount, TQColor color )
       emit configChanged();
 
       if ( rootPix->isAvailable() )
-	rootPix->repaint( true );
+	rootPix->tqrepaint( true );
    }
 }
 
@@ -318,9 +318,9 @@ void KasBar::setDirection( Direction dir )
 	return;
 
     if ( ( dir == TQBoxLayout::LeftToRight ) || ( dir == TQBoxLayout::RightToLeft ) )
-	orient = Horizontal;
+	orient = Qt::Horizontal;
     else
-	orient = Vertical;
+	orient = Qt::Vertical;
 
     direction_ = dir;
     emit directionChanged();
@@ -332,7 +332,7 @@ void KasBar::setOrientation( Orientation o )
     if ( orient == o )
 	return;
 
-    if ( o == Horizontal )
+    if ( o == Qt::Horizontal )
 	setDirection( TQBoxLayout::LeftToRight );
     else
 	setDirection( TQBoxLayout::TopToBottom );
@@ -375,9 +375,9 @@ void KasBar::setDetached( bool detach )
     emit detachedChanged( detached );
 }
 
-TQSize KasBar::sizeHint( Orientation o,  TQSize sz )
+TQSize KasBar::tqsizeHint( Orientation o,  TQSize sz )
 {
-    if ( o == Horizontal )
+    if ( o == Qt::Horizontal )
 	setBoxesPerLine( sz.width() / itemExtent() );
     else
 	setBoxesPerLine( sz.height() / itemExtent() );
@@ -396,7 +396,7 @@ TQSize KasBar::sizeHint( Orientation o,  TQSize sz )
       ++r;
 
    TQSize s;
-   if( o == Horizontal ) {
+   if( o == Qt::Horizontal ) {
       s.setWidth( c*itemExtent() );
       s.setHeight( r*itemExtent() );
    }
@@ -434,7 +434,7 @@ void KasBar::updateLayout()
       ++r;
 
    TQSize sz;
-   if ( orient == Horizontal )
+   if ( orient == Qt::Horizontal )
        sz = TQSize( c * itemExtent(), r * itemExtent() );
    else
        sz = TQSize( r * itemExtent(), c * itemExtent() );
@@ -445,11 +445,11 @@ void KasBar::updateLayout()
 
    setUpdatesEnabled( updates );
 
-   TQWidget *top = topLevelWidget();
+   TQWidget *top = tqtopLevelWidget();
    TQRegion mask;
 
    KasItem *i;
-   if ( orient == Horizontal ) {
+   if ( orient == Qt::Horizontal ) {
        for ( i = items.first(); i; i = items.next() ) {
 	   int x = (items.at() % c) * itemExtent();
 
@@ -646,7 +646,7 @@ void KasBar::updateItem( KasItem *i )
     update( TQRect( pos, TQSize( itemExtent(), itemExtent() ) ) );
 }
 
-void KasBar::repaintItem(KasItem *i, bool erase )
+void KasBar::tqrepaintItem(KasItem *i, bool erase )
 {
     if ( !i )
 	return;
@@ -658,7 +658,7 @@ void KasBar::repaintItem(KasItem *i, bool erase )
 
     paintBackground( &p, TQRect( pos, TQSize( itemExtent(), itemExtent() ) ) );
     i->paint( &p, pos.x(), pos.y() );
-    repaint( TQRect( pos, TQSize( itemExtent(), itemExtent()  ) ), transparent_ || erase );
+    tqrepaint( TQRect( pos, TQSize( itemExtent(), itemExtent()  ) ), transparent_ || erase );
 }
 
 KasItem* KasBar::itemAt(const TQPoint &p)
@@ -670,7 +670,7 @@ KasItem* KasBar::itemAt(const TQPoint &p)
        cr.setTopLeft( i->pos() );
        cr.setSize( TQSize( itemExtent(), itemExtent() ) );
 
-       if(cr.contains(p))
+       if(cr.tqcontains(p))
 	   return i;
    }
 

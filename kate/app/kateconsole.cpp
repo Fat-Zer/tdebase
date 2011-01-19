@@ -57,14 +57,14 @@ void KateConsole::loadConsoleIfNeeded()
 {
   if (m_part) return;
 
-  if (!topLevelWidget() || !parentWidget()) return;
-  if (!topLevelWidget() || !isVisibleTo(topLevelWidget())) return;
+  if (!tqtopLevelWidget() || !tqparentWidget()) return;
+  if (!tqtopLevelWidget() || !isVisibleTo(tqtopLevelWidget())) return;
 
   KLibFactory *factory = KLibLoader::self()->factory("libkonsolepart");
 
   if (!factory) return;
 
-  m_part = static_cast<KParts::ReadOnlyPart *>(factory->create(this,"libkonsolepart", "KParts::ReadOnlyPart"));
+  m_part = static_cast<KParts::ReadOnlyPart *>(factory->create(TQT_TQOBJECT(this),"libkonsolepart", "KParts::ReadOnlyPart"));
 
   if (!m_part) return;
 
@@ -86,7 +86,7 @@ void KateConsole::slotDestroyed ()
   m_part = 0;
 
   // hide the dockwidget
-  if (parentWidget())
+  if (tqparentWidget())
   {
     m_mw->hideToolView (m_toolView);
     m_mw->centralWidget()->setFocus ();
@@ -115,7 +115,7 @@ void KateConsole::sendInput( const TQString& text )
 
   if (!m_part) return;
 
-  TerminalInterface *t = static_cast<TerminalInterface*>( m_part->qt_cast( "TerminalInterface" ) );
+  TerminalInterface *t = static_cast<TerminalInterface*>( m_part->tqqt_cast( "TerminalInterface" ) );
 
   if (!t) return;
 

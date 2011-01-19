@@ -49,7 +49,7 @@
 #include "toplevel.moc"
 
 TopLevel::TopLevel(const char* name)
-  : KMainWindow( 0, name, WStyle_ContextHelp  )
+  : KMainWindow( 0, name, (WFlags)WStyle_ContextHelp  )
   , _active(0), dummyAbout(0)
 {
   setCaption(TQString::null);
@@ -86,7 +86,7 @@ TopLevel::TopLevel(const char* name)
   }
 
   // create the layout box
-  _splitter = new TQSplitter( TQSplitter::Horizontal, this );
+  _splitter = new TQSplitter( Qt::Horizontal, this );
 
   TQFrame* leftFrame = new TQFrame ( _splitter );
   TQBoxLayout *leftFrameLayout = new TQVBoxLayout( leftFrame );
@@ -142,7 +142,7 @@ TopLevel::TopLevel(const char* name)
   // help widget
   _help = new HelpWidget(_dock);
 
-  _stack->setSizePolicy( TQSizePolicy( TQSizePolicy::Expanding, TQSizePolicy::Expanding ) );
+  _stack->tqsetSizePolicy( TQSizePolicy( TQSizePolicy::Expanding, TQSizePolicy::Expanding ) );
 
  // Restore sizes
   config->setGroup("General");
@@ -234,40 +234,40 @@ bool TopLevel::queryClose()
 
 void TopLevel::setupActions()
 {
-  KStdAction::quit(this, TQT_SLOT(close()), actionCollection());
+  KStdAction::quit(TQT_TQOBJECT(this), TQT_SLOT(close()), actionCollection());
   KStdAction::keyBindings(guiFactory(), TQT_SLOT(configureShortcuts()),
 actionCollection());
   icon_view = new KRadioAction
-    (i18n("&Icon View"), 0, this, TQT_SLOT(activateIconView()),
+    (i18n("&Icon View"), 0, TQT_TQOBJECT(this), TQT_SLOT(activateIconView()),
      actionCollection(), "activate_iconview");
   icon_view->setExclusiveGroup( "viewmode" );
 
   tree_view = new KRadioAction
-    (i18n("&Tree View"), 0, this, TQT_SLOT(activateTreeView()),
+    (i18n("&Tree View"), 0, TQT_TQOBJECT(this), TQT_SLOT(activateTreeView()),
      actionCollection(), "activate_treeview");
   tree_view->setExclusiveGroup( "viewmode" );
 
   icon_small = new KRadioAction
-    (i18n("&Small"), 0, this, TQT_SLOT(activateSmallIcons()),
+    (i18n("&Small"), 0, TQT_TQOBJECT(this), TQT_SLOT(activateSmallIcons()),
      actionCollection(), "activate_smallicons");
   icon_small->setExclusiveGroup( "iconsize" );
 
   icon_medium = new KRadioAction
-    (i18n("&Medium"), 0, this, TQT_SLOT(activateMediumIcons()),
+    (i18n("&Medium"), 0, TQT_TQOBJECT(this), TQT_SLOT(activateMediumIcons()),
      actionCollection(), "activate_mediumicons");
   icon_medium->setExclusiveGroup( "iconsize" );
 
   icon_large = new KRadioAction
-    (i18n("&Large"), 0, this, TQT_SLOT(activateLargeIcons()),
+    (i18n("&Large"), 0, TQT_TQOBJECT(this), TQT_SLOT(activateLargeIcons()),
      actionCollection(), "activate_largeicons");
   icon_large->setExclusiveGroup( "iconsize" );
 
   icon_huge = new KRadioAction
-    (i18n("&Huge"), 0, this, TQT_SLOT(activateHugeIcons()),
+    (i18n("&Huge"), 0, TQT_TQOBJECT(this), TQT_SLOT(activateHugeIcons()),
      actionCollection(), "activate_hugeicons");
   icon_huge->setExclusiveGroup( "iconsize" );
 
-  about_module = new KAction(i18n("About Current Module"), 0, this, TQT_SLOT(aboutModule()), actionCollection(), "help_about_module");
+  about_module = new KAction(i18n("About Current Module"), 0, TQT_TQOBJECT(this), TQT_SLOT(aboutModule()), actionCollection(), "help_about_module");
   about_module->setEnabled(false);
 
   // I need to add this so that each module can get a bug reported,
@@ -514,7 +514,7 @@ void TopLevel::aboutModule()
 
 TQString TopLevel::handleAmpersand( TQString modulename ) const
 {
-   if( modulename.contains( '&' )) // double it
+   if( modulename.tqcontains( '&' )) // double it
    {
       for( int i = modulename.length();
            i >= 0;

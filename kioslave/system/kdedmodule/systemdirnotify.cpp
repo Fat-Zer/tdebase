@@ -59,7 +59,7 @@ void SystemDirNotify::init()
 
 		for(; name!=endf; ++name)
 		{
-			if (!names_found.contains(*name))
+			if (!names_found.tqcontains(*name))
 			{
 				KDesktopFile desktop(*dirpath+*name, true);
 

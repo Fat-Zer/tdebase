@@ -35,7 +35,7 @@
  *****************************************************************************/
 
 // Clipboard/dnd data for: Icons + URLS + isCut
-class LIBKONQ_EXPORT KonqIconDrag : public QIconDrag
+class LIBKONQ_EXPORT KonqIconDrag : public TQIconDrag
 {
     Q_OBJECT
 
@@ -44,7 +44,7 @@ public:
     virtual ~KonqIconDrag() {}
 
     const char* format( int i ) const;
-    TQByteArray encodedData( const char* mime ) const;
+    TQByteArray tqencodedData( const char* mime ) const;
 
     void append( const TQIconDragItem &item, const TQRect &pr,
                  const TQRect &tr, const TQString &url );
@@ -72,7 +72,7 @@ public:
     virtual ~KonqIconDrag2() {}
 
     virtual const char* format( int i ) const;
-    virtual TQByteArray encodedData( const char* mime ) const;
+    virtual TQByteArray tqencodedData( const char* mime ) const;
 
     void append( const TQIconDragItem &item, const TQRect &pr,
                  const TQRect &tr, const TQString &url, const KURL &mostLocalURL );
@@ -82,7 +82,7 @@ private:
 };
 
 // Clipboard/dnd data for: URLS + isCut
-class LIBKONQ_EXPORT KonqDrag : public QUriDrag
+class LIBKONQ_EXPORT KonqDrag : public TQUriDrag
 {
 public:
     // KDE4: remove, use KonqDrag constructor instead
@@ -107,7 +107,7 @@ public:
     virtual ~KonqDrag() {}
 
     virtual const char* format( int i ) const;
-    virtual TQByteArray encodedData( const char* mime ) const;
+    virtual TQByteArray tqencodedData( const char* mime ) const;
 
     void setMoveSelection( bool move ) { m_bCutSelection = move; }
 

@@ -41,7 +41,7 @@
 
 #include "kremoteencodingplugin.h"
 
-#define DATA_KEY	TQString::fromLatin1("Charset")
+#define DATA_KEY	TQString::tqfromLatin1("Charset")
 
 KRemoteEncodingPlugin::KRemoteEncodingPlugin(TQObject * parent,
 					     const char *name,
@@ -142,7 +142,7 @@ KRemoteEncodingPlugin::updateMenu()
       int id = 1;
       TQStringList::Iterator it;
       for (it = m_encodingDescriptions.begin(); it != m_encodingDescriptions.end(); ++it, ++id)
-	if ((*it).find(charset) != -1)
+	if ((*it).tqfind(charset) != -1)
 	  break;
 
       kdDebug() << k_funcinfo << "URL=" << m_currentURL << " charset=" << charset << endl;

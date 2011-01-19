@@ -206,7 +206,7 @@ void KonqInfoListViewItem::setDisabled( bool disabled )
     setPixmap( 0, m_fileitem->pixmap( iconSize, state() ) );
 }
 
-void KonqInfoListViewItem::paintCell( TQPainter *_painter, const TQColorGroup & _cg, int _column, int _width, int _alignment )
+void KonqInfoListViewItem::paintCell( TQPainter *_painter, const TQColorGroup & _cg, int _column, int _width, int _tqalignment )
 {
     TQColorGroup cg( _cg );
 
@@ -218,7 +218,7 @@ void KonqInfoListViewItem::paintCell( TQPainter *_painter, const TQColorGroup & 
     cg.setColor( TQColorGroup::Text, m_pListViewWidget->itemColor() );
 
     KListView *lv = static_cast< KListView* >( listView() );
-    const TQPixmap *pm = lv->viewport()->paletteBackgroundPixmap();
+    const TQPixmap *pm = TQT_TQPIXMAP_CONST(lv->viewport()->paletteBackgroundPixmap());
     if ( _column == 0 && isSelected() && !lv->allColumnsShowFocus() )
     {
         int newWidth = width( lv->fontMetrics(), lv, _column );
@@ -242,7 +242,7 @@ void KonqInfoListViewItem::paintCell( TQPainter *_painter, const TQColorGroup & 
         _width = newWidth;
     }
 
-    KListViewItem::paintCell( _painter, cg, _column, _width, _alignment );
+    KListViewItem::paintCell( _painter, cg, _column, _width, _tqalignment );
 }
 
 void KonqInfoListViewItem::paintFocus( TQPainter * _painter, const TQColorGroup & cg, const TQRect & _r )

@@ -54,7 +54,7 @@ ButtonDrag::ButtonDrag( Button btn, TQWidget* parent, const char* name)
 	TQDataStream stream(data, IO_WriteOnly);
 	stream << btn.name;
 	stream << btn.icon;
-	stream << btn.type.unicode();
+	stream << btn.type.tqunicode();
 	stream << (int) btn.duplicate;
 	stream << (int) btn.supported;
 	setEncodedData( data );
@@ -123,7 +123,7 @@ TQPixmap bitmapPixmap(const TQBitmap& bm, const TQColor& color)
 ButtonSource::ButtonSource(TQWidget *parent, const char* name)
 	: KListView(parent, name)
 {
-	setSizePolicy(TQSizePolicy::Expanding, TQSizePolicy::Expanding);
+	tqsetSizePolicy(TQSizePolicy::Expanding, TQSizePolicy::Expanding);
 
 	setResizeMode(TQListView::AllColumns);
 	setDragEnabled(true);
@@ -140,19 +140,19 @@ ButtonSource::~ButtonSource()
 {
 }
 
-TQSize ButtonSource::sizeHint() const
+TQSize ButtonSource::tqsizeHint() const
 {
-	// make the sizeHint height a bit smaller than the one of TQListView...
+	// make the tqsizeHint height a bit smaller than the one of TQListView...
 
 	if ( cachedSizeHint().isValid() )
 		return cachedSizeHint();
 
 	constPolish();
 
-	TQSize s( header()->sizeHint() );
+	TQSize s( header()->tqsizeHint() );
 
 	if ( verticalScrollBar()->isVisible() )
-		s.setWidth( s.width() + style().pixelMetric(TQStyle::PM_ScrollBarExtent) );
+		s.setWidth( s.width() + tqstyle().tqpixelMetric(TQStyle::PM_ScrollBarExtent) );
 	s += TQSize(frameWidth()*2,frameWidth()*2);
 
 	// size hint: 4 lines of text...
@@ -218,7 +218,7 @@ TQDragObject *ButtonSource::dragObject()
 
 	if (i) {
 		ButtonDrag *bd = new ButtonDrag(i->button(), viewport(), "button_drag");
-		bd->setPixmap(bitmapPixmap(i->button().icon, colorGroup().foreground() ));
+		bd->setPixmap(bitmapPixmap(i->button().icon, tqcolorGroup().foreground() ));
 		return bd;
 	}
 
@@ -306,15 +306,15 @@ void ButtonDropSite::clearRight()
 void ButtonDropSite::dragMoveEvent( TQDragMoveEvent* e )
 {
 	TQPoint p = e->pos();
-	if (leftDropArea().contains(p) || rightDropArea().contains(p) || buttonAt(p) ) {
+	if (leftDropArea().tqcontains(p) || rightDropArea().tqcontains(p) || buttonAt(p) ) {
 		e->accept();
 
 		// 2 pixel wide drop visualizer...
 		TQRect r = contentsRect();
 		int x = -1;
-		if (leftDropArea().contains(p) ) {
+		if (leftDropArea().tqcontains(p) ) {
 			x = leftDropArea().left();
-		} else if (rightDropArea().contains(p) ) {
+		} else if (rightDropArea().tqcontains(p) ) {
 			x = rightDropArea().right()+1;
 		} else {
 			ButtonDropSiteItem *item = buttonAt(p);
@@ -373,10 +373,10 @@ void ButtonDropSite::dropEvent( TQDropEvent* e )
 	ButtonList *buttonList = 0;
 	ButtonList::iterator buttonPosition;
 
-	if (leftDropArea().contains(p) ) {
+	if (leftDropArea().tqcontains(p) ) {
 		buttonList = &buttonsLeft;
 		buttonPosition = buttonsLeft.end();
-	} else if (rightDropArea().contains(p) ) {
+	} else if (rightDropArea().tqcontains(p) ) {
 		buttonList = &buttonsRight;
 		buttonPosition = buttonsRight.begin();
 	} else {
@@ -446,9 +446,9 @@ bool ButtonDropSite::getItemIterator(ButtonDropSiteItem *item, ButtonList* &list
 	if (!item)
 		return false;
 
-	ButtonList::iterator it = buttonsLeft.find(item); // try the left list first...
+	ButtonList::iterator it = buttonsLeft.tqfind(item); // try the left list first...
 	if (it == buttonsLeft.end() ) {
-		it = buttonsRight.find(item); // try the right list...
+		it = buttonsRight.tqfind(item); // try the right list...
 		if (it == buttonsRight.end() ) {
 			return false; // item hasn't been found in one of the list, return...
 		} else {
@@ -487,7 +487,7 @@ void ButtonDropSite::mousePressEvent( TQMouseEvent* e )
 	m_selected = buttonAt(e->pos() );
 	if (m_selected) {
 		ButtonDrag *bd = new ButtonDrag(m_selected->button(), this);
-		bd->setPixmap(bitmapPixmap(m_selected->button().icon, colorGroup().foreground() ) );
+		bd->setPixmap(bitmapPixmap(m_selected->button().icon, tqcolorGroup().foreground() ) );
 		bd->dragMove();
 	}
 }
@@ -521,14 +521,14 @@ void ButtonDropSite::recalcItemGeometry()
 ButtonDropSiteItem *ButtonDropSite::buttonAt(TQPoint p) {
 	// try to find the item in the left button list
 	for (ButtonList::const_iterator it = buttonsLeft.begin(); it != buttonsLeft.end(); ++it) {
-		if ( (*it)->rect.contains(p) ) {
+		if ( (*it)->rect.tqcontains(p) ) {
 			return *it;
 		}
 	}
 
 	// try to find the item in the right button list
 	for (ButtonList::const_iterator it = buttonsRight.begin(); it != buttonsRight.end(); ++it) {
-		if ( (*it)->rect.contains(p) ) {
+		if ( (*it)->rect.tqcontains(p) ) {
 			return *it;
 		}
 	}
@@ -572,7 +572,7 @@ bool ButtonDropSite::removeSelectedButton()
 		delete m_selected;
 		m_selected = 0;
 		recalcItemGeometry();
-		update(); // repaint...
+		update(); // tqrepaint...
 	}
 
 	return succ;
@@ -581,9 +581,9 @@ bool ButtonDropSite::removeSelectedButton()
 void ButtonDropSite::drawButtonList(TQPainter *p, const ButtonList& btns, int offset)
 {
 	for (ButtonList::const_iterator it = btns.begin(); it != btns.end(); ++it) {
-		TQRect itemRect = (*it)->rect;
-		if (itemRect.isValid() ) {
-			(*it)->draw(p, colorGroup(), itemRect);
+		TQRect tqitemRect = (*it)->rect;
+		if (tqitemRect.isValid() ) {
+			(*it)->draw(p, tqcolorGroup(), tqitemRect);
 		}
 		offset += (*it)->width();
 	}
@@ -675,11 +675,11 @@ ButtonPositionWidget::ButtonPositionWidget(TQWidget *parent, const char* name)
       m_factory(0)
 {
 	TQVBoxLayout *layout = new TQVBoxLayout(this, 0, KDialog::spacingHint() );
-	setSizePolicy(TQSizePolicy::Expanding, TQSizePolicy::Maximum);
+	tqsetSizePolicy(TQSizePolicy::Expanding, TQSizePolicy::Maximum);
 
 	TQLabel* label = new TQLabel( this );
 	m_dropSite = new ButtonDropSite( this );
-	label->setAlignment( int( TQLabel::WordBreak ) );
+	label->tqsetAlignment( int( TQLabel::WordBreak ) );
 	label->setText( i18n( "To add or remove titlebar buttons, simply <i>drag</i> items "
 		"between the available item list and the titlebar preview. Similarly, "
 		"drag items within the titlebar preview to re-position them.") );
@@ -761,7 +761,7 @@ void ButtonPositionWidget::setDecorationFactory(KDecorationFactory *factory)
 		ButtonSourceItem *i = dynamic_cast<ButtonSourceItem*>(it.current() );
 		if (i) {
 			Button b = i->button();
-			b.supported = m_supportedButtons.contains(b.type);
+			b.supported = m_supportedButtons.tqcontains(b.type);
 			i->setButton(b);
 		}
 		++it;
@@ -777,47 +777,47 @@ Button ButtonPositionWidget::getButton(TQChar type, bool& success) {
 	if (type == 'R') {
 		TQBitmap bmp(resize_width, resize_height, resize_bits, true);
 		bmp.setMask(bmp);
-		return Button(i18n("Resize"), bmp, 'R', false, m_supportedButtons.contains('R') );
+		return Button(i18n("Resize"), bmp, 'R', false, m_supportedButtons.tqcontains('R') );
 	} else if (type == 'L') {
 		TQBitmap bmp(shade_width, shade_height, shade_bits, true);
 		bmp.setMask(bmp);
-		return Button(i18n("Shade"), bmp, 'L', false, m_supportedButtons.contains('L') );
+		return Button(i18n("Shade"), bmp, 'L', false, m_supportedButtons.tqcontains('L') );
 	} else if (type == 'B') {
 		TQBitmap bmp(keepbelowothers_width, keepbelowothers_height, keepbelowothers_bits, true);
 		bmp.setMask(bmp);
-		return Button(i18n("Keep Below Others"), bmp, 'B', false, m_supportedButtons.contains('B') );
+		return Button(i18n("Keep Below Others"), bmp, 'B', false, m_supportedButtons.tqcontains('B') );
 	} else if (type == 'F') {
 		TQBitmap bmp(keepaboveothers_width, keepaboveothers_height, keepaboveothers_bits, true);
 		bmp.setMask(bmp);
-		return Button(i18n("Keep Above Others"), bmp, 'F', false, m_supportedButtons.contains('F') );
+		return Button(i18n("Keep Above Others"), bmp, 'F', false, m_supportedButtons.tqcontains('F') );
 	} else if (type == 'X') {
 		TQBitmap bmp(close_width, close_height, close_bits, true);
 		bmp.setMask(bmp);
-		return Button(i18n("Close"), bmp, 'X', false,  m_supportedButtons.contains('X') );
+		return Button(i18n("Close"), bmp, 'X', false,  m_supportedButtons.tqcontains('X') );
 	} else if (type == 'A') {
 		TQBitmap bmp(maximize_width, maximize_height, maximize_bits, true);
 		bmp.setMask(bmp);
-		return Button(i18n("Maximize"), bmp, 'A', false, m_supportedButtons.contains('A') );
+		return Button(i18n("Maximize"), bmp, 'A', false, m_supportedButtons.tqcontains('A') );
 	} else if (type == 'I') {
 		TQBitmap bmp(minimize_width, minimize_height, minimize_bits, true);
 		bmp.setMask(bmp);
-		return Button(i18n("Minimize"), bmp, 'I', false, m_supportedButtons.contains('I') );
+		return Button(i18n("Minimize"), bmp, 'I', false, m_supportedButtons.tqcontains('I') );
 	} else if (type == 'H') {
 		TQBitmap bmp(help_width, help_height, help_bits, true);
 		bmp.setMask(bmp);
-		return Button(i18n("Help"), bmp, 'H', false, m_supportedButtons.contains('H') );
+		return Button(i18n("Help"), bmp, 'H', false, m_supportedButtons.tqcontains('H') );
 	} else if (type == 'S') {
 		TQBitmap bmp(onalldesktops_width, onalldesktops_height, onalldesktops_bits, true);
 		bmp.setMask(bmp);
-		return Button(i18n("On All Desktops"), bmp, 'S', false, m_supportedButtons.contains('S') );
+		return Button(i18n("On All Desktops"), bmp, 'S', false, m_supportedButtons.tqcontains('S') );
 	} else if (type == 'M') {
 		TQBitmap bmp(menu_width, menu_height, menu_bits, true);
 		bmp.setMask(bmp);
-		return Button(i18n("Menu"), bmp, 'M', false, m_supportedButtons.contains('M') );
+		return Button(i18n("Menu"), bmp, 'M', false, m_supportedButtons.tqcontains('M') );
 	} else if (type == '_') {
 		TQBitmap bmp(spacer_width, spacer_height, spacer_bits, true);
 		bmp.setMask(bmp);
-		return Button(i18n("--- spacer ---"), bmp, '_', true, m_supportedButtons.contains('_') );
+		return Button(i18n("--- spacer ---"), bmp, '_', true, m_supportedButtons.tqcontains('_') );
 	} else {
 		success = false;
 		return Button();

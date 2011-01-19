@@ -66,7 +66,7 @@ void showmsgdialog(const TQString& msg, int type = 0)
 
 void showmsgconsole(const TQString& msg, int type = 0)
 {
-	QString	errmsg = TQString::fromLatin1("%1 : ").arg((type == 0 ? i18n("Print info") : (type == 1 ? i18n("Print warning") : i18n("Print error"))));
+	TQString	errmsg = TQString::tqfromLatin1("%1 : ").arg((type == 0 ? i18n("Print info") : (type == 1 ? i18n("Print warning") : i18n("Print error"))));
 	kdDebug() << errmsg << msg << endl;
 }
 
@@ -142,15 +142,15 @@ void PrintWrapper::slotPrint()
 #endif /* HAVE_SIGACTION && !HAVE_SIGSET*/
 
 	// read variables from command line
-	QString	printer = args->getOption("d");
-	QString	title = args->getOption("t");
+	TQString	printer = args->getOption("d");
+	TQString	title = args->getOption("t");
 	int	ncopies = TQString(args->getOption("n")).toInt();
-	QString	job_mode = args->getOption("j");
-	QString	system = args->getOption("system");
+	TQString	job_mode = args->getOption("j");
+	TQString	system = args->getOption("system");
 	QCStringList	optlist = args->getOptionList("o");
 	TQMap<TQString,TQString>	opts;
 	KURL::List	files;
-	QStringList	filestoprint;
+	TQStringList	filestoprint;
 	force_stdin = args->isSet("stdin");
 	docopy = args->isSet( "c" );
 	bool	nodialog = !(args->isSet("dialog"));
@@ -164,7 +164,7 @@ void PrintWrapper::slotPrint()
 	// parse options
 	for (QCStringList::ConstIterator it=optlist.begin(); it!=optlist.end(); ++it)
 	{
-		QStringList	l = TQStringList::split('=',TQString(*it),false);
+		TQStringList	l = TQStringList::split('=',TQString(*it),false);
 		if (l.count() >= 1) opts[l[0]] = (l.count() == 2 ? l[1] : TQString::null);
 	}
 
@@ -265,7 +265,7 @@ void PrintWrapper::slotPrint()
 			connect(dlg, TQT_SIGNAL(printRequested(KPrinter*)), TQT_SLOT(slotPrintRequested(KPrinter*)));
 			if( check_stdin )
 			{
-			    notif = new TQSocketNotifier( 0, TQSocketNotifier::Read, this );
+			    notif = new TQSocketNotifier( 0, TQSocketNotifier::Read, TQT_TQOBJECT(this) );
 			    connect( notif, TQT_SIGNAL( activated( int )), this, TQT_SLOT( slotGotStdin()));
 			    kdDebug( 500 ) << "waiting for input on stdin" << endl;
 			}
@@ -300,10 +300,10 @@ void PrintWrapper::slotPrintRequested(KPrinter *kprinter)
 	kprinter->setDocName(TQString::null);
 
 	// download files if needed
-	QStringList	files = TQStringList::split("@@", kprinter->option("kde-filelist"), false), filestoprint;
+	TQStringList	files = TQStringList::split("@@", kprinter->option("kde-filelist"), false), filestoprint;
 	for (TQStringList::ConstIterator it=files.begin(); it!=files.end(); ++it)
 	{
-		QString	tmpFile;
+		TQString	tmpFile;
 		KURL	url = KURL::fromPathOrURL(*it);
 		kdDebug( 500 ) << url.url() << endl;
 		if (KIO::NetAccess::download(url, tmpFile, this))

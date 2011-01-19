@@ -1,6 +1,6 @@
 <!DOCTYPE UI><UI version="3.2" stdsetdef="1">
 <class>EmailClientConfig_UI</class>
-<widget class="QWidget">
+<widget class="TQWidget">
     <property name="name">
         <cstring>EmailClientConfig_UI</cstring>
     </property>
@@ -30,7 +30,7 @@
         <property name="margin">
             <number>0</number>
         </property>
-        <widget class="QButtonGroup">
+        <widget class="TQButtonGroup">
             <property name="name">
                 <cstring>ButtonGroup2</cstring>
             </property>
@@ -50,7 +50,7 @@
                 <property name="margin">
                     <number>0</number>
                 </property>
-                <widget class="QLayoutWidget" row="2" column="1">
+                <widget class="TQLayoutWidget" row="2" column="1">
                     <property name="name">
                         <cstring>Layout4</cstring>
                     </property>
@@ -58,7 +58,7 @@
                         <property name="name">
                             <cstring>unnamed</cstring>
                         </property>
-                        <widget class="QLineEdit">
+                        <widget class="TQLineEdit">
                             <property name="name">
                                 <cstring>txtEMailClient</cstring>
                             </property>
@@ -73,7 +73,7 @@
                                     <verstretch>0</verstretch>
                                 </sizepolicy>
                             </property>
-                            <property name="minimumSize">
+                            <property name="tqminimumSize">
                                 <size>
                                     <width>0</width>
                                     <height>0</height>
@@ -86,7 +86,7 @@
                                 <string>Press this button to select your favorite email client. Please note that the file you select has to have the executable attribute set in order to be accepted.&lt;br&gt; You can also use several placeholders which will be replaced with the actual values when the email client is called:&lt;ul&gt; &lt;li&gt;%t: Recipient's address&lt;/li&gt; &lt;li&gt;%s: Subject&lt;/li&gt; &lt;li&gt;%c: Carbon Copy (CC)&lt;/li&gt; &lt;li&gt;%b: Blind Carbon Copy (BCC)&lt;/li&gt; &lt;li&gt;%B: Template body text&lt;/li&gt; &lt;li&gt;%A: Attachment &lt;/li&gt; &lt;/ul&gt;</string>
                             </property>
                         </widget>
-                        <widget class="QToolButton">
+                        <widget class="TQToolButton">
                             <property name="name">
                                 <cstring>btnSelectEmail</cstring>
                             </property>
@@ -102,7 +102,7 @@
                         </widget>
                     </hbox>
                 </widget>
-                <widget class="QCheckBox" row="3" column="1">
+                <widget class="TQCheckBox" row="3" column="1">
                     <property name="name">
                         <cstring>chkRunTerminal</cstring>
                     </property>
@@ -126,14 +126,14 @@
                     <property name="sizeType">
                         <enum>Expanding</enum>
                     </property>
-                    <property name="sizeHint">
+                    <property name="tqsizeHint">
                         <size>
                             <width>0</width>
                             <height>16</height>
                         </size>
                     </property>
                 </spacer>
-                <widget class="QRadioButton" row="0" column="0" rowspan="1" colspan="2">
+                <widget class="TQRadioButton" row="0" column="0" rowspan="1" colspan="2">
                     <property name="name">
                         <cstring>kmailCB</cstring>
                     </property>
@@ -144,7 +144,7 @@
                         <string>Kmail is the standard Mail program for the KDE desktop.</string>
                     </property>
                 </widget>
-                <widget class="QRadioButton" row="1" column="0" rowspan="1" colspan="2">
+                <widget class="TQRadioButton" row="1" column="0" rowspan="1" colspan="2">
                     <property name="name">
                         <cstring>otherCB</cstring>
                     </property>
@@ -165,7 +165,7 @@
                     <property name="sizeType">
                         <enum>Fixed</enum>
                     </property>
-                    <property name="sizeHint">
+                    <property name="tqsizeHint">
                         <size>
                             <width>30</width>
                             <height>16</height>
@@ -182,7 +182,7 @@
                     <property name="sizeType">
                         <enum>Fixed</enum>
                     </property>
-                    <property name="sizeHint">
+                    <property name="tqsizeHint">
                         <size>
                             <width>30</width>
                             <height>16</height>

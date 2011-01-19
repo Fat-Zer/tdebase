@@ -36,7 +36,7 @@
 class TQSplitter;
 class KListViewSearchLine;
 
-class KEBListViewItem : public QListViewItem
+class KEBListViewItem : public TQListViewItem
 {
 public:
    KEBListViewItem(TQListView *, const KBookmarkGroup &);
@@ -56,7 +56,7 @@ public:
    void setTmpStatus(const TQString &);
    void restoreStatus();
 
-   void paintCell(TQPainter *p, const TQColorGroup &cg, int column, int width, int alignment);
+   void paintCell(TQPainter *p, const TQColorGroup &cg, int column, int width, int tqalignment);
    void setSelected ( bool s );
 
    virtual void setOpen(bool);
@@ -127,7 +127,7 @@ private:
 };
 
 // DESIGN - make some stuff private if possible
-class ListView : public QObject
+class ListView : public TQObject
 {
    Q_OBJECT
 public:
@@ -140,8 +140,8 @@ public:
    // selected item stuff
    void selected(KEBListViewItem * item, bool s);
    
-   void invalidate(const TQString & address);
-   void invalidate(TQListViewItem * item);
+   void tqinvalidate(const TQString & address);
+   void tqinvalidate(TQListViewItem * item);
    void fixUpCurrent(const TQString & address);
 
    KEBListViewItem * firstSelected() const;

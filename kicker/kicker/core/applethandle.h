@@ -35,7 +35,7 @@ class TQTimer;
 class AppletHandleDrag;
 class AppletHandleButton;
 
-class AppletHandle : public QWidget
+class AppletHandle : public TQWidget
 {
     Q_OBJECT
     
@@ -85,16 +85,16 @@ class AppletHandle : public QWidget
         bool m_inside;
 };
 
-class AppletHandleDrag : public QWidget
+class AppletHandleDrag : public TQWidget
 {
     Q_OBJECT
     
     public:
         AppletHandleDrag(AppletHandle* parent);
 
-        TQSize minimumSizeHint() const;
-        TQSize minimumSize() const { return minimumSizeHint(); }
-        TQSize sizeHint() const { return minimumSize(); }
+        TQSize tqminimumSizeHint() const;
+        TQSize tqminimumSize() const { return tqminimumSizeHint(); }
+        TQSize tqsizeHint() const { return tqminimumSize(); }
         TQSizePolicy sizePolicy() const;
 
     protected:
@@ -113,9 +113,9 @@ class AppletHandleButton : public SimpleArrowButton
     
     public:
         AppletHandleButton(AppletHandle *parent);
-        TQSize minimumSizeHint() const;
-        TQSize minimumSize() const { return minimumSizeHint(); }
-        TQSize sizeHint() const { return minimumSize(); }
+        TQSize tqminimumSizeHint() const;
+        TQSize tqminimumSize() const { return tqminimumSizeHint(); }
+        TQSize tqsizeHint() const { return tqminimumSize(); }
         TQSizePolicy sizePolicy() const;
 
     private:

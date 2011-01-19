@@ -1,6 +1,6 @@
 <!DOCTYPE UI><UI version="3.1" stdsetdef="1">
 <class>KeramikConfigUI</class>
-<widget class="QWidget">
+<widget class="TQWidget">
     <property name="name">
         <cstring>KeramikConfigUI</cstring>
     </property>
@@ -22,7 +22,7 @@
         <property name="name">
             <cstring>unnamed</cstring>
         </property>
-        <widget class="QCheckBox">
+        <widget class="TQCheckBox">
             <property name="name">
                 <cstring>showAppIcons</cstring>
             </property>
@@ -33,7 +33,7 @@
                 <string>Check this option if you want the window icon to be displayed in the caption bubble next to the titlebar text.</string>
             </property>
         </widget>
-        <widget class="QCheckBox">
+        <widget class="TQCheckBox">
             <property name="name">
                 <cstring>smallCaptions</cstring>
             </property>
@@ -44,7 +44,7 @@
                 <string>Check this option if you want the caption bubble to have the same size on active windows that it has on inactive ones. This option is useful for laptops or low resolution displays where you want maximize the amount of space available to the window contents.</string>
             </property>
         </widget>
-        <widget class="QCheckBox">
+        <widget class="TQCheckBox">
             <property name="name">
                 <cstring>largeGrabBars</cstring>
             </property>
@@ -55,7 +55,7 @@
                 <string>Check this option if you want a grab bar to be drawn below windows. When this option is not selected only a thin border will be drawn in its place.</string>
             </property>
         </widget>
-        <widget class="QCheckBox">
+        <widget class="TQCheckBox">
             <property name="name">
                 <cstring>useShadowedText</cstring>
             </property>

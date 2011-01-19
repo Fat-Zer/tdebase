@@ -82,7 +82,7 @@ void KSaveIOConfig::reparseConfiguration ()
 void KSaveIOConfig::setReadTimeout( int _timeout )
 {
   KConfig* cfg = config ();
-  cfg->setGroup( TQString::null );
+  cfg->setGroup( TQString() );
   cfg->writeEntry("ReadTimeout", QMAX(MIN_TIMEOUT_VALUE,_timeout));
   cfg->sync();
 }
@@ -90,7 +90,7 @@ void KSaveIOConfig::setReadTimeout( int _timeout )
 void KSaveIOConfig::setConnectTimeout( int _timeout )
 {
   KConfig* cfg = config ();
-  cfg->setGroup( TQString::null );
+  cfg->setGroup( TQString() );
   cfg->writeEntry("ConnectTimeout", QMAX(MIN_TIMEOUT_VALUE,_timeout));
   cfg->sync();
 }
@@ -98,7 +98,7 @@ void KSaveIOConfig::setConnectTimeout( int _timeout )
 void KSaveIOConfig::setProxyConnectTimeout( int _timeout )
 {
   KConfig* cfg = config ();
-  cfg->setGroup( TQString::null );
+  cfg->setGroup( TQString() );
   cfg->writeEntry("ProxyConnectTimeout", QMAX(MIN_TIMEOUT_VALUE,_timeout));
   cfg->sync();
 }
@@ -106,7 +106,7 @@ void KSaveIOConfig::setProxyConnectTimeout( int _timeout )
 void KSaveIOConfig::setResponseTimeout( int _timeout )
 {
   KConfig* cfg = config ();
-  cfg->setGroup( TQString::null );
+  cfg->setGroup( TQString() );
   cfg->writeEntry("ResponseTimeout", QMAX(MIN_TIMEOUT_VALUE,_timeout));
   cfg->sync();
 }
@@ -115,7 +115,7 @@ void KSaveIOConfig::setResponseTimeout( int _timeout )
 void KSaveIOConfig::setMarkPartial( bool _mode )
 {
   KConfig* cfg = config ();
-  cfg->setGroup( TQString::null );
+  cfg->setGroup( TQString() );
   cfg->writeEntry( "MarkPartial", _mode );
   cfg->sync();
 }
@@ -123,7 +123,7 @@ void KSaveIOConfig::setMarkPartial( bool _mode )
 void KSaveIOConfig::setMinimumKeepSize( int _size )
 {
   KConfig* cfg = config ();
-  cfg->setGroup( TQString::null );
+  cfg->setGroup( TQString() );
   cfg->writeEntry( "MinimumKeepSize", _size );
   cfg->sync();
 }
@@ -131,7 +131,7 @@ void KSaveIOConfig::setMinimumKeepSize( int _size )
 void KSaveIOConfig::setAutoResume( bool _mode )
 {
   KConfig* cfg = config ();
-  cfg->setGroup( TQString::null );
+  cfg->setGroup( TQString() );
   cfg->writeEntry( "AutoResume", _mode );
   cfg->sync();
 }
@@ -217,7 +217,7 @@ void KSaveIOConfig::setProxyConfigScript( const TQString& _url )
 void KSaveIOConfig::setPersistentProxyConnection( bool enable )
 {
   KConfig* cfg = config ();
-  cfg->setGroup( TQString::null );
+  cfg->setGroup( TQString() );
   cfg->writeEntry( "PersistentProxyConnection", enable );
   cfg->sync();
 }
@@ -225,7 +225,7 @@ void KSaveIOConfig::setPersistentProxyConnection( bool enable )
 void KSaveIOConfig::setPersistentConnections( bool enable )
 {
   KConfig* cfg = config ();
-  cfg->setGroup( TQString::null );
+  cfg->setGroup( TQString() );
   cfg->writeEntry( "PersistentConnections", enable );
   cfg->sync();
 }
@@ -234,7 +234,7 @@ void KSaveIOConfig::updateRunningIOSlaves (TQWidget *parent)
 {
   // Inform all running io-slaves about the changes...
   // if we cannot update, ioslaves inform the end user...
-  if (!DCOPRef("*", "KIO::Scheduler").send("reparseSlaveConfiguration", TQString::null))
+  if (!DCOPRef("*", "KIO::Scheduler").send("reparseSlaveConfiguration", TQString()))
   {
     TQString caption = i18n("Update Failed");
     TQString message = i18n("You have to restart the running applications "

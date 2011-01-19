@@ -184,7 +184,7 @@ void KSMServer::shutdownInternal( KApplication::ShutdownConfirm confirm,
 
         // Set the real desktop background to black so that exit looks
         // clean regardless of what was on "our" desktop.
-        kapp->desktop()->setBackgroundColor( Qt::black );
+        TQT_TQWIDGET(kapp->desktop())->setBackgroundColor( Qt::black );
         state = Shutdown;
         wmPhase1WaitingCount = 0;
         saveType = saveSession?SmSaveBoth:SmSaveGlobal;

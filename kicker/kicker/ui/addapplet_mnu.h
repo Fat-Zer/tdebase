@@ -31,7 +31,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 class ContainerArea;
 
-class PanelAddAppletMenu : public QPopupMenu
+class PanelAddAppletMenu : public TQPopupMenu
 {
     Q_OBJECT
 

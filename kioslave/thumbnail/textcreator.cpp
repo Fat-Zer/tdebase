@@ -148,7 +148,7 @@ bool TextCreator::create(const TQString &path, int width, int height, TQImage &i
                     // physical newline in the file if we don't come from one
                     if ( !newLine )
                     {
-                        int pos = text.find( '\n', i );
+                        int pos = text.tqfind( '\n', i );
                         if ( pos == -1 )
 			    break;
                         i = pos + 1;
@@ -174,7 +174,7 @@ bool TextCreator::create(const TQString &path, int width, int height, TQImage &i
                 rect = m_splitter->coordinates( ch );
                 if ( !rect.isEmpty() )
                 {
-                    bitBlt( &m_pixmap, TQPoint(x,y), fontPixmap, rect, Qt::CopyROP );
+                    bitBlt( &m_pixmap, TQPoint(x,y), fontPixmap, rect, TQt::CopyROP );
                 }
 
                 x += xOffset; // next character

@@ -1,6 +1,6 @@
 <!DOCTYPE UI><UI version="3.3" stdsetdef="1">
 <class>KHotKeys::Keyboard_input_widget_ui</class>
-<widget class="QWidget">
+<widget class="TQWidget">
     <property name="name">
         <cstring>Keyboard_input_widget_ui</cstring>
     </property>
@@ -25,7 +25,7 @@
         <property name="spacing">
             <number>6</number>
         </property>
-        <widget class="QLabel">
+        <widget class="TQLabel">
             <property name="name">
                 <cstring>keyboard_input_label</cstring>
             </property>
@@ -36,7 +36,7 @@
                 <cstring>keyboard_input_multilineedit</cstring>
             </property>
         </widget>
-        <widget class="QLayoutWidget">
+        <widget class="TQLayoutWidget">
             <property name="name">
                 <cstring>Layout2</cstring>
             </property>
@@ -58,7 +58,7 @@
                         <enum>PlainText</enum>
                     </property>
                 </widget>
-                <widget class="QPushButton">
+                <widget class="TQPushButton">
                     <property name="name">
                         <cstring>modify_button</cstring>
                     </property>
@@ -68,7 +68,7 @@
                 </widget>
             </hbox>
         </widget>
-        <widget class="QButtonGroup">
+        <widget class="TQButtonGroup">
             <property name="name">
                 <cstring>buttonGroup1</cstring>
             </property>
@@ -86,7 +86,7 @@
                 <property name="name">
                     <cstring>unnamed</cstring>
                 </property>
-                <widget class="QRadioButton">
+                <widget class="TQRadioButton">
                     <property name="name">
                         <cstring>action_window_radio</cstring>
                     </property>
@@ -97,7 +97,7 @@
                         <bool>true</bool>
                     </property>
                 </widget>
-                <widget class="QRadioButton">
+                <widget class="TQRadioButton">
                     <property name="name">
                         <cstring>active_window_radio</cstring>
                     </property>
@@ -105,7 +105,7 @@
                         <string>Active window</string>
                     </property>
                 </widget>
-                <widget class="QRadioButton">
+                <widget class="TQRadioButton">
                     <property name="name">
                         <cstring>specific_window_radio</cstring>
                     </property>
@@ -115,7 +115,7 @@
                 </widget>
             </vbox>
         </widget>
-        <widget class="QGroupBox">
+        <widget class="TQGroupBox">
             <property name="name">
                 <cstring>window_groupbox</cstring>
             </property>

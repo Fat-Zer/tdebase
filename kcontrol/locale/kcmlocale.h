@@ -37,7 +37,7 @@ class TQLabel;
 class TQListBox;
 class TQPushButton;
 
-class KLocaleConfig : public QWidget
+class KLocaleConfig : public TQWidget
 {
   Q_OBJECT
 

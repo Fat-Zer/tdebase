@@ -56,7 +56,7 @@ protected:
 };
 
 static FILE* log;
-static void debug(const char* fmt, ...)
+static void kg_debug(const char* fmt, ...)
 {
     va_list lst;
     va_start(lst, fmt);
@@ -92,9 +92,9 @@ KPamGreeter::KPamGreeter( KGreeterPluginHandler *_handler,
 {
         ctx = Login;
 
-        debug("KPamGreeter constructed\n");
+        kg_debug("KPamGreeter constructed\n");
 
-	m_parentWidget = parent;
+	m_tqparentWidget = parent;
 
 	KdmItem *user_entry = 0, *pw_entry = 0;
 	int line = 0;
@@ -109,7 +109,7 @@ KPamGreeter::KPamGreeter( KGreeterPluginHandler *_handler,
         m_themer = themer;
 
 	if (!themer)
-		layoutItem = new TQGridLayout( 0, 0, 10 );
+		layoutItem = TQT_TQLAYOUTITEM(new TQGridLayout( 0, 0, 10 ));
 
         loginLabel = 0;
         authLabel.clear();
@@ -119,8 +119,8 @@ KPamGreeter::KPamGreeter( KGreeterPluginHandler *_handler,
 	if (ctx == ExUnlock || ctx == ExChangeTok)
 		fixedUser = KUser().loginName();
 	if (func != ChAuthTok) {
-		debug("func != ChAuthTok\n");
-		debug("fixedUser: *%s*\n", fixedUser.latin1());
+		kg_debug("func != ChAuthTok\n");
+		kg_debug("fixedUser: *%s*\n", fixedUser.latin1());
 
 		if (fixedUser.isEmpty()) {
 			loginEdit = new KLineEdit( parent );
@@ -203,17 +203,17 @@ KPamGreeter::KPamGreeter( KGreeterPluginHandler *_handler,
 // virtual
 KPamGreeter::~KPamGreeter()
 {
-        debug("KPamGreeter::~KPamGreeter");
+        kg_debug("KPamGreeter::~KPamGreeter");
 	abort();
 	if (!layoutItem) {
 		delete loginEdit;
 		return;
 	}
-	TQLayoutIterator it = static_cast<TQLayout *>(layoutItem)->iterator();
+	TQLayoutIterator it = TQT_TQLAYOUT(static_cast<QLayoutItem*>(layoutItem))->iterator();
 	for (TQLayoutItem *itm = it.current(); itm; itm = ++it)
 		 delete itm->widget();
 	delete layoutItem;
-        debug("destructor finished, good bye");
+        kg_debug("destructor finished, good bye");
 }
 
 void // virtual
@@ -229,7 +229,7 @@ KPamGreeter::loadUsers( const TQStringList &users )
 void // virtual
 KPamGreeter::presetEntity( const TQString &entity, int field )
 {
-        debug("presetEntity(%s,%d) called!\n", entity.latin1(), field);
+        kg_debug("presetEntity(%s,%d) called!\n", entity.latin1(), field);
 	loginEdit->setText( entity );
 	if (field == 1 && authEdit.size() >= 1)
 		authEdit[0]->setFocus();
@@ -279,7 +279,7 @@ KPamGreeter::setEnabled(bool enable)
 void // private
 KPamGreeter::returnData()
 {
-       debug("*************** returnData called with exp %d\n", exp);
+       kg_debug("*************** returnData called with exp %d\n", exp);
 
 
 	switch (exp) {
@@ -308,13 +308,13 @@ KPamGreeter::returnData()
 bool // virtual
 KPamGreeter::textMessage( const char *text, bool err )
 {
-    debug(" ************** textMessage(%s, %d)\n", text, err);
+    kg_debug(" ************** textMessage(%s, %d)\n", text, err);
 
     if (!authEdit.size())
 	    return false;
 
     if (getLayoutItem()) {
-      TQLabel* label = new TQLabel(TQString::fromUtf8(text), m_parentWidget);
+      TQLabel* label = new TQLabel(TQString::fromUtf8(text), m_tqparentWidget);
       getLayoutItem()->addWidget(label, state+1, 0, 0);
     }
 
@@ -324,8 +324,8 @@ KPamGreeter::textMessage( const char *text, bool err )
 void // virtual
 KPamGreeter::textPrompt( const char *prompt, bool echo, bool nonBlocking )
 {
-    debug("textPrompt called with prompt %s echo %d nonBlocking %d", prompt, echo, nonBlocking);
-    debug("state is %d, authEdit.size is %d\n", state, authEdit.size());
+    kg_debug("textPrompt called with prompt %s echo %d nonBlocking %d", prompt, echo, nonBlocking);
+    kg_debug("state is %d, authEdit.size is %d\n", state, authEdit.size());
 
     if (state == 0 && echo) {
         if (loginLabel)
@@ -341,12 +341,12 @@ KPamGreeter::textPrompt( const char *prompt, bool echo, bool nonBlocking )
     }
     else if (state >= authEdit.size()) {
 	if (getLayoutItem()) {
-   	    TQLabel* label = new TQLabel(TQString::fromUtf8(prompt), m_parentWidget);
+   	    TQLabel* label = new TQLabel(TQString::fromUtf8(prompt), m_tqparentWidget);
 	    getLayoutItem()->addWidget(label, state+1, 0, 0);
-            debug("added label widget to layout");
+            kg_debug("added label widget to layout");
         }
         else if (m_themer) {
-            debug("themer found!");
+            kg_debug("themer found!");
 	    KdmItem *pw_label = 0;
 
             KdmLabel *kdmlabel = static_cast<KdmLabel*>(m_themer->findNode("pw-label"));
@@ -361,9 +361,9 @@ KPamGreeter::textPrompt( const char *prompt, bool echo, bool nonBlocking )
 	KDMPasswordEdit* passwdEdit;
 
 	if (echoMode == -1)
-	    passwdEdit = new KDMPasswordEdit( m_parentWidget );
+	    passwdEdit = new KDMPasswordEdit( m_tqparentWidget );
 	else
-	    passwdEdit = new KDMPasswordEdit( echoMode, m_parentWidget);
+	    passwdEdit = new KDMPasswordEdit( echoMode, m_tqparentWidget);
 	connect( passwdEdit, TQT_SIGNAL(textChanged( const TQString & )),
 		TQT_SLOT(slotActivity()) );
 	connect( passwdEdit, TQT_SIGNAL(lostFocus()), TQT_SLOT(slotActivity()) );
@@ -383,7 +383,7 @@ KPamGreeter::textPrompt( const char *prompt, bool echo, bool nonBlocking )
 	   getLayoutItem()->addWidget(passwdEdit, state+1, 1, 0);
 
        if (m_themer) {
-           debug("themer found!");
+           kg_debug("themer found!");
 	   KdmItem *pw_entry = 0;
 
 	   pw_entry = m_themer->findNode("pw-entry");
@@ -398,13 +398,13 @@ KPamGreeter::textPrompt( const char *prompt, bool echo, bool nonBlocking )
            }
        } 
        else
-           debug("no themer found!");
+           kg_debug("no themer found!");
     }
     ++state;
     pExp = exp;
 
     exp = authEdit.size();
-    debug("state %d exp: %d, has %d\n", state, exp, has);
+    kg_debug("state %d exp: %d, has %d\n", state, exp, has);
 
     if (has >= exp || nonBlocking)
 	returnData();
@@ -420,7 +420,7 @@ KPamGreeter::binaryPrompt( const char *, bool )
 void // virtual
 KPamGreeter::start()
 {
-   debug("******* start() called\n");
+   kg_debug("******* start() called\n");
 
    while(authEdit.begin() != authEdit.end()) {
        KPasswordEdit* item = *authEdit.remove(authEdit.begin());
@@ -452,10 +452,10 @@ KPamGreeter::resume()
 void // virtual
 KPamGreeter::next()
 {
-        debug("********* next() called state %d\n", state);
+        kg_debug("********* next() called state %d\n", state);
 
 	if (state == 0 && running && handler) {
-                debug(" **** returned text!\n");
+                kg_debug(" **** returned text!\n");
 		handler->gplugReturnText( (loginEdit ? loginEdit->text() :
 		                  fixedUser).local8Bit(),
 		                          KGreeterPluginHandler::IsUser );
@@ -479,7 +479,7 @@ KPamGreeter::next()
            has = -1;
    }
 
-   debug(" has %d and exp %d\n", has, exp);
+   kg_debug(" has %d and exp %d\n", has, exp);
 
 #if 0
 	// assert( running );
@@ -508,7 +508,7 @@ KPamGreeter::next()
 void // virtual
 KPamGreeter::abort()
 {
-	debug("***** abort() called\n");
+	kg_debug("***** abort() called\n");
 
 	running = false;
 	if (exp >= 0) {
@@ -520,7 +520,7 @@ KPamGreeter::abort()
 void // virtual
 KPamGreeter::succeeded()
 {
-        debug("**** succeeded() called\n");
+        kg_debug("**** succeeded() called\n");
 
 	// assert( running || timed_login );
 	if (!authTok)
@@ -617,14 +617,14 @@ KPamGreeter::slotLoginLostFocus()
 		handler->gplugReturnText( 0, 0 );
 	}
 	curUser = loginEdit->text();
-        debug("curUser is %s", curUser.latin1());
+        kg_debug("curUser is %s", curUser.latin1());
 	handler->gplugSetUser( curUser );
 }
 
 void
 KPamGreeter::slotActivity()
 {  
-        debug("slotActivity");
+        kg_debug("slotActivity");
 
 	if (running)
 		handler->gplugActivity();

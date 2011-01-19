@@ -42,7 +42,7 @@ WndIcon::WndIcon(
   Position icon_position,
   bool statusAtTop,
   bool iconsJumping )
-    :TQHBox( 0, "wndSplash", WStyle_Customize|WX11BypassWM ),
+    :TQHBox( 0, "wndSplash", (WFlags)(WStyle_Customize|WX11BypassWM) ),
      mStatusText(text), mIconPos(icon_position), mXineramaScreen( xineramaScreen ), mPosX(0), mPosY(0), mGroundX(0), mGroundY(0),
      mVelocity(8.0), mInitialVelocity(8.0), mGravity(0.8),
      mIconNum(icon_num), mStatusHeight(status_height), mIconSize(icon_std_width), mStatusAtTop(statusAtTop),
@@ -53,10 +53,10 @@ WndIcon::WndIcon(
   TQLabel *w = new TQLabel( this );
   w->setFixedSize( pix.width(), pix.height() );
   w->setPixmap( pix );
-  if(pix.mask())
+  if(pix.tqmask())
   {
-    setMask(*pix.mask());
-    w->setMask(*pix.mask());
+    setMask(*pix.tqmask());
+    w->setMask(*pix.tqmask());
   }
 
   resize( pix.width(), pix.height() );

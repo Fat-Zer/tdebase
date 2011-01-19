@@ -54,7 +54,7 @@ KonqSidebarHistoryModule::KonqSidebarHistoryModule( KonqSidebarTree * parentTree
     connect( s_settings, TQT_SIGNAL( settingsChanged() ), TQT_SLOT( slotSettingsChanged() ));
 
     m_dict.setAutoDelete( true );
-    m_currentTime = TQDateTime::currentDateTime();
+    m_currentTime = TQDateTime::tqcurrentDateTime();
 
     KConfig *kc = KGlobal::config();
     KConfigGroupSaver cs( kc, "HistorySettings" );
@@ -132,7 +132,7 @@ void KonqSidebarHistoryModule::slotCreateItems()
     KonqHistoryEntry *entry;
     KonqHistoryList entries( KonqHistoryManager::kself()->entries() );
     KonqHistoryIterator it( entries );
-    m_currentTime = TQDateTime::currentDateTime();
+    m_currentTime = TQDateTime::tqcurrentDateTime();
 
     // the group item and the item of the serverroot '/' get a fav-icon
     // if available. All others get the protocol icon.
@@ -149,7 +149,7 @@ void KonqSidebarHistoryModule::slotCreateItems()
     TQStringList::Iterator it2 = openGroups.begin();
     KonqSidebarHistoryGroupItem *group;
     while ( it2 != openGroups.end() ) {
-	group = m_dict.find( *it2 );
+	group = m_dict.tqfind( *it2 );
 	if ( group )
 	    group->setOpen( true );
 
@@ -171,7 +171,7 @@ void KonqSidebarHistoryModule::slotEntryAdded( const KonqHistoryEntry *entry )
     if ( !m_initialized )
 	return;
 
-    m_currentTime = TQDateTime::currentDateTime();
+    m_currentTime = TQDateTime::tqcurrentDateTime();
     KonqSidebarHistoryGroupItem *group = getGroupItem( entry->url );
     KonqSidebarHistoryItem *item = group->findChild( entry );
     if ( !item )
@@ -185,7 +185,7 @@ void KonqSidebarHistoryModule::slotEntryAdded( const KonqHistoryEntry *entry )
     t->lockScrolling( true );
     group->sort();
     m_topLevelItem->sort();
-    qApp->processOneEvent();
+    tqApp->processOneEvent();
     t->lockScrolling( false );
 }
 
@@ -195,7 +195,7 @@ void KonqSidebarHistoryModule::slotEntryRemoved( const KonqHistoryEntry *entry )
 	return;
 
     TQString groupKey = groupForURL( entry->url );
-    KonqSidebarHistoryGroupItem *group = m_dict.find( groupKey );
+    KonqSidebarHistoryGroupItem *group = m_dict.tqfind( groupKey );
     if ( !group )
 	return;
 
@@ -324,7 +324,7 @@ void KonqSidebarHistoryModule::groupOpened( KonqSidebarHistoryGroupItem *item, b
 KonqSidebarHistoryGroupItem * KonqSidebarHistoryModule::getGroupItem( const KURL& url )
 {
     const TQString& groupKey = groupForURL( url );
-    KonqSidebarHistoryGroupItem *group = m_dict.find( groupKey );
+    KonqSidebarHistoryGroupItem *group = m_dict.tqfind( groupKey );
     if ( !group ) {
 	group = new KonqSidebarHistoryGroupItem( url, m_topLevelItem );
 

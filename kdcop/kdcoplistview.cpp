@@ -62,7 +62,7 @@ TQString KDCOPListView::encode(TQListViewItem *theCode)
 
 	TQString unNormalisedSignature(function);
 
-	int s = unNormalisedSignature.find(' ');
+	int s = unNormalisedSignature.tqfind(' ');
 
 	if ( s < 0 )
 		s = 0;
@@ -71,8 +71,8 @@ TQString KDCOPListView::encode(TQListViewItem *theCode)
 
 	unNormalisedSignature = unNormalisedSignature.mid(s);
 
-	int left  = unNormalisedSignature.find('(');
-	int right = unNormalisedSignature.findRev(')');
+	int left  = unNormalisedSignature.tqfind('(');
+	int right = unNormalisedSignature.tqfindRev(')');
 
 	if (-1 == left)
 	{
@@ -86,7 +86,7 @@ TQString KDCOPListView::encode(TQListViewItem *theCode)
 		for (TQStringList::Iterator it = types.begin(); it != types.end(); ++it)
 		{
 			(*it) = (*it).stripWhiteSpace();
-			int s = (*it).find(' ');
+			int s = (*it).tqfind(' ');
 			if (-1 != s)
 			{
 				names.append((*it).mid(s + 1));

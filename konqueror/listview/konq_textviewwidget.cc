@@ -29,8 +29,8 @@
 #include <assert.h>
 
 
-KonqTextViewWidget::KonqTextViewWidget( KonqListView *parent, TQWidget *parentWidget )
-:KonqBaseListViewWidget(parent,parentWidget)
+KonqTextViewWidget::KonqTextViewWidget( KonqListView *parent, TQWidget *tqparentWidget )
+:KonqBaseListViewWidget(parent,tqparentWidget)
 {
    kdDebug(1202) << "+KonqTextViewWidget" << endl;
    m_filenameColumn=1;
@@ -88,7 +88,7 @@ void KonqTextViewWidget::slotNewItems( const KFileItemList & entries )
          m_itemFound = true;
       }
       if ( !m_itemsToSelect.isEmpty() ) {
-         TQStringList::Iterator tsit = m_itemsToSelect.find( (*kit)->name() );
+         TQStringList::Iterator tsit = m_itemsToSelect.tqfind( (*kit)->name() );
          if ( tsit != m_itemsToSelect.end() ) {
             m_itemsToSelect.remove( tsit );
             setSelected( tmp, true );

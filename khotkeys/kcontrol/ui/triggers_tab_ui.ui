@@ -1,6 +1,6 @@
 <!DOCTYPE UI><UI version="3.1" stdsetdef="1">
 <class>KHotKeys::Triggers_tab_ui</class>
-<widget class="QWidget">
+<widget class="TQWidget">
     <property name="name">
         <cstring>Triggers_tab_ui</cstring>
     </property>
@@ -22,7 +22,7 @@
         <property name="spacing">
             <number>6</number>
         </property>
-        <widget class="QLabel">
+        <widget class="TQLabel">
             <property name="name">
                 <cstring>comment_label</cstring>
             </property>
@@ -33,12 +33,12 @@
                 <cstring>comment_lineedit</cstring>
             </property>
         </widget>
-        <widget class="QLineEdit">
+        <widget class="TQLineEdit">
             <property name="name">
                 <cstring>comment_lineedit</cstring>
             </property>
         </widget>
-        <widget class="QLayoutWidget">
+        <widget class="TQLayoutWidget">
             <property name="name">
                 <cstring>layout3</cstring>
             </property>
@@ -51,7 +51,7 @@
                         <cstring>triggers_listview</cstring>
                     </property>
                 </widget>
-                <widget class="QLayoutWidget">
+                <widget class="TQLayoutWidget">
                     <property name="name">
                         <cstring>Layout3</cstring>
                     </property>
@@ -65,7 +65,7 @@
                         <property name="spacing">
                             <number>6</number>
                         </property>
-                        <widget class="QPushButton">
+                        <widget class="TQPushButton">
                             <property name="name">
                                 <cstring>new_button</cstring>
                             </property>
@@ -73,7 +73,7 @@
                                 <string>&amp;New</string>
                             </property>
                         </widget>
-                        <widget class="QPushButton">
+                        <widget class="TQPushButton">
                             <property name="name">
                                 <cstring>modify_button</cstring>
                             </property>
@@ -81,7 +81,7 @@
                                 <string>&amp;Modify...</string>
                             </property>
                         </widget>
-                        <widget class="QPushButton">
+                        <widget class="TQPushButton">
                             <property name="name">
                                 <cstring>copy_button</cstring>
                             </property>
@@ -89,7 +89,7 @@
                                 <string>&amp;Copy</string>
                             </property>
                         </widget>
-                        <widget class="QPushButton">
+                        <widget class="TQPushButton">
                             <property name="name">
                                 <cstring>delete_button</cstring>
                             </property>

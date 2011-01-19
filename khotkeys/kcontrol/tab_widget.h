@@ -19,7 +19,7 @@ namespace KHotKeys
 {
 
 class Tab_widget
-    : public QTabWidget
+    : public TQTabWidget
     {
     Q_OBJECT
     public:

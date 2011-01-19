@@ -63,7 +63,7 @@ class KLibrary;
 class TQTimer;
 
 
-class NSPluginStreamBase : public QObject
+class NSPluginStreamBase : public TQObject
 {
 Q_OBJECT
 friend class NSPluginInstance;
@@ -172,9 +172,9 @@ public:
   // DCOP functions
   void shutdown();
   int winId() { return _form != 0 ? XtWindow(_form) : 0; }
-  int setWindow(Q_INT8 remove=0);
-  void resizePlugin(Q_INT32 w, Q_INT32 h);
-  void javascriptResult(Q_INT32 id, TQString result);
+  int setWindow(TQ_INT8 remove=0);
+  void resizePlugin(TQ_INT32 w, TQ_INT32 h);
+  void javascriptResult(TQ_INT32 id, TQString result);
   void displayPlugin();
   void gotFocusIn();
   void gotFocusOut();
@@ -281,10 +281,10 @@ public:
   ~NSPluginClass();
 
   TQString getMIMEDescription();
-  DCOPRef newInstance(TQString url, TQString mimeType, Q_INT8 embed,
+  DCOPRef newInstance(TQString url, TQString mimeType, TQ_INT8 embed,
                       TQStringList argn, TQStringList argv,
-                      TQString appId, TQString callbackId, Q_INT8 reload, Q_INT8 post,
-                      TQByteArray postData, Q_UINT32 xembed );
+                      TQString appId, TQString callbackId, TQ_INT8 reload, TQ_INT8 post,
+                      TQByteArray postData, TQ_UINT32 xembed );
   void destroyInstance( NSPluginInstance* inst );
   bool error() { return _error; }
 

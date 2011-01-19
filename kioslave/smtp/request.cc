@@ -50,7 +50,7 @@ namespace KioSMTP {
     kdDebug(7112) << "Parsing request from query:\n" + query.join("\n" ) << endl;
 #endif
     for ( TQStringList::const_iterator it = query.begin() ; it != query.end() ; ++it ) {
-      int equalsPos = (*it).find( '=' );
+      int equalsPos = (*it).tqfind( '=' );
       if ( equalsPos <= 0 )
 	continue;
 
@@ -93,7 +93,7 @@ namespace KioSMTP {
 
   static bool isUsAscii( const TQString & s ) {
     for ( uint i = 0 ; i < s.length() ; ++i )
-      if ( s[i].unicode() > 127 ) return false;
+      if ( s[i].tqunicode() > 127 ) return false;
     return true;
   }
 
@@ -101,7 +101,7 @@ namespace KioSMTP {
 
   static inline bool isSpecial( char ch ) {
     static const TQCString specials = "()<>[]:;@\\,.\"";
-    return specials.find( ch ) >= 0;
+    return specials.tqfind( ch ) >= 0;
   }
 
 
@@ -159,7 +159,7 @@ namespace KioSMTP {
 
   static TQCString formatSubject( TQString s ) {
     if ( isUsAscii( s ) )
-      return s.remove( '\n' ).latin1(); // don't break header folding,
+      return TQString(s.remove( '\n' )).latin1(); // don't break header folding,
 					// so remove any line break
 					// that happen to be around
     else

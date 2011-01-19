@@ -38,11 +38,11 @@ ConfGeneral::ConfGeneral(TQWidget *parent, const char *name)
 	m_name = new TQLineEdit(this);
 	m_company = new TQLineEdit(this);
 	m_number = new TQLineEdit(this);
-	QLabel	*m_namelabel = new TQLabel(i18n("&Name:"), this);
+	TQLabel	*m_namelabel = new TQLabel(i18n("&Name:"), this);
 	m_namelabel->setBuddy(m_name);
-	QLabel	*m_companylabel = new TQLabel(i18n("&Company:"), this);
+	TQLabel	*m_companylabel = new TQLabel(i18n("&Company:"), this);
 	m_companylabel->setBuddy(m_company);
-	QLabel	*m_numberlabel = new TQLabel(i18n("N&umber:"), this);
+	TQLabel	*m_numberlabel = new TQLabel(i18n("N&umber:"), this);
         m_numberlabel->setBuddy(m_number);
 	KSeparator *sep = new KSeparator( this );
 	m_replace_int_char = new TQCheckBox( i18n( "Replace international prefix '+' with:" ), this );
@@ -51,7 +51,7 @@ ConfGeneral::ConfGeneral(TQWidget *parent, const char *name)
 
 	connect( m_replace_int_char, TQT_SIGNAL( toggled( bool ) ), m_replace_int_char_val, TQT_SLOT( setEnabled( bool ) ) );
 
-	QGridLayout	*l0 = new TQGridLayout(this, 6, 2, 10, 10);
+	TQGridLayout	*l0 = new TQGridLayout(this, 6, 2, 10, 10);
 	l0->setColStretch(1, 1);
 	l0->setRowStretch(5, 1);
 	l0->addWidget(m_namelabel, 0, 0);

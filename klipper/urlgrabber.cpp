@@ -224,8 +224,8 @@ void URLGrabber::slotItemSelected( int id )
 	emit sigDisablePopup();
 	break;
     default:
-        ClipCommand *command = myCommandMapper.find( id );
-        TQStringList *backrefs = myGroupingMapper.find( id );
+        ClipCommand *command = myCommandMapper.tqfind( id );
+        TQStringList *backrefs = myGroupingMapper.tqfind( id );
         if ( !command || !backrefs )
             qWarning("Klipper: can't find associated action");
         else
@@ -365,7 +365,7 @@ bool URLGrabber::isAvoidedWindow() const
                             &unused, &data_ret ) == Success) {
         if ( type_ret == XA_STRING && format_ret == 8 && nitems_ret > 0 ) {
             wmClass = TQString::fromUtf8( (const char *) data_ret );
-            ret = (myAvoidWindows.find( wmClass ) != myAvoidWindows.end());
+            ret = (myAvoidWindows.tqfind( wmClass ) != myAvoidWindows.end());
         }
 
         XFree( data_ret );
@@ -379,7 +379,7 @@ void URLGrabber::slotKillPopupMenu()
 {
     if ( myMenu && myMenu->isVisible() )
     {
-        if ( myMenu->geometry().contains( TQCursor::pos() ) &&
+        if ( myMenu->tqgeometry().tqcontains( TQCursor::pos() ) &&
              myPopupKillTimeout > 0 )
         {
             myPopupKillTimer->start( 1000 * myPopupKillTimeout, true );
@@ -400,7 +400,7 @@ ClipCommand::ClipCommand(const TQString &_command, const TQString &_description,
       description(_description),
       isEnabled(_isEnabled)
 {
-    int len = command.find(" ");
+    int len = command.tqfind(" ");
     if (len == -1)
         len = command.length();
 

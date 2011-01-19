@@ -44,7 +44,7 @@ KCMRules::KCMRules( TQWidget *parent, const char *name )
     {
     TQVBoxLayout *layout = new TQVBoxLayout( this );
     widget = new KCMRulesList( this );
-    layout->addWidget( widget );
+    layout->addWidget( TQT_TQWIDGET(widget) );
     connect( widget, TQT_SIGNAL( changed( bool )), TQT_SLOT( moduleChanged( bool )));
     KAboutData *about = new KAboutData(I18N_NOOP( "kcmkwinrules" ),
         I18N_NOOP( "Window-Specific Settings Configuration Module" ),
@@ -68,7 +68,7 @@ void KCMRules::save()
     config.sync();
     if( !kapp->dcopClient()->isAttached())
         kapp->dcopClient()->attach();
-    kapp->dcopClient()->send("kwin*", "", "reconfigure()", "");
+    kapp->dcopClient()->send("kwin*", "", "reconfigure()", TQString(""));
     }
 
 void KCMRules::defaults()

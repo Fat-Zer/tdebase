@@ -26,7 +26,7 @@ class TQButtonGroup;
  * This widget contains the details for a filetype group.
  * Currently this only involves the embedding configuration.
  */
-class FileGroupDetails : public QWidget
+class FileGroupDetails : public TQWidget
 {
   Q_OBJECT
 public:

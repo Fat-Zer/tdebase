@@ -83,7 +83,7 @@ LayoutIcon::findPixmap(const TQString& code_, bool showFlag, const TQString& dis
 		if( pm->height() < FLAG_MAX_HEIGHT ) {
 			TQPixmap* pix = new TQPixmap(FLAG_MAX_WIDTH, FLAG_MAX_HEIGHT);
 			pix->fill( Qt::lightGray );
-//			pix->fill( TQColor(qRgba(127,127,127,255)) );
+//			pix->fill( TQColor(tqRgba(127,127,127,255)) );
 //			TQBitmap mask;
 //			mask.fill(1);
 //			pix->setMask(mask);
@@ -183,7 +183,7 @@ TQString LayoutIcon::getCountryFromLayoutName(const TQString& layoutName)
 						 || layoutName == "tel" || layoutName == "tml" || layoutName == "ben" ) // some Indian languages
 				flag = "in";
 		else {
-			int sepPos = layoutName.find(TQRegExp("[-_]"));
+			int sepPos = layoutName.tqfind(TQRegExp("[-_]"));
 			TQString leftCode = layoutName.mid(0, sepPos);
 			TQString rightCode;
 			if( sepPos != -1 )
@@ -211,7 +211,7 @@ void LayoutIcon::dimPixmap(TQPixmap& pm)
 		for(int x=0; x<image.width(); x++)
 	{
 		QRgb rgb = image.pixel(x,y);
-		QRgb dimRgb(qRgb(qRed(rgb)*3/4, qGreen(rgb)*3/4, qBlue(rgb)*3/4));
+		QRgb dimRgb(tqRgb(tqRed(rgb)*3/4, tqGreen(rgb)*3/4, tqBlue(rgb)*3/4));
 		image.setPixel(x, y, dimRgb);
 	}
 	pm.convertFromImage(image);

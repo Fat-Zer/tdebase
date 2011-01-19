@@ -20,7 +20,7 @@ namespace KHotKeys
 GestureRecorder::GestureRecorder(TQWidget *parent, const char *name)
   : TQFrame(parent, name), _mouseButtonDown(false)
     {
-    setBackgroundColor( colorGroup().base());
+    setBackgroundColor( tqcolorGroup().base());
     setFrameStyle(TQFrame::Sunken | TQFrame::Panel);
     setLineWidth(2);
     setMidLineWidth(0);
@@ -32,7 +32,7 @@ GestureRecorder::~GestureRecorder()
 
 void GestureRecorder::mousePressEvent(TQMouseEvent *ev)
     {
-    if (ev->button() == TQMouseEvent::LeftButton)
+    if (ev->button() == Qt::LeftButton)
         {
         _mouseButtonDown = true;
         stroke.reset();
@@ -43,7 +43,7 @@ void GestureRecorder::mousePressEvent(TQMouseEvent *ev)
 
 void GestureRecorder::mouseReleaseEvent(TQMouseEvent *ev)
     {
-    if ((ev->button() == TQMouseEvent::LeftButton) && (_mouseButtonDown))
+    if ((ev->button() == Qt::LeftButton) && (_mouseButtonDown))
         {
         TQPoint pos = ev->pos();
         stroke.record(pos.x(), pos.y());

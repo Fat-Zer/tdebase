@@ -61,8 +61,8 @@ KPluginOptions::KPluginOptions( KConfig* config, TQString group, TQWidget *paren
     enablePluginsGloballyCB = new TQCheckBox( i18n( "&Enable plugins globally" ), globalGB );
     enableHTTPOnly = new TQCheckBox( i18n( "Only allow &HTTP and HTTPS URLs for plugins" ), globalGB );
     enableUserDemand = new TQCheckBox( i18n( "&Load plugins on demand only" ), globalGB );
-    priorityLabel = new TQLabel(i18n("CPU priority for plugins: %1").arg(TQString::null), globalGB);
-    priority = new TQSlider(5, 100, 5, 100, Horizontal, globalGB);
+    priorityLabel = new TQLabel(i18n("CPU priority for plugins: %1").arg(TQString()), globalGB);
+    priority = new TQSlider(5, 100, 5, 100, Qt::Horizontal, globalGB);
     connect( enablePluginsGloballyCB, TQT_SIGNAL( clicked() ), this, TQT_SLOT( slotChanged() ) );
     connect( enablePluginsGloballyCB, TQT_SIGNAL( clicked() ), this, TQT_SLOT( slotTogglePluginsEnabled() ) );
     connect( enableHTTPOnly, TQT_SIGNAL( clicked() ), this, TQT_SLOT( slotChanged() ) );
@@ -72,14 +72,14 @@ KPluginOptions::KPluginOptions( KConfig* config, TQString group, TQWidget *paren
 
     TQFrame *hrule = new TQFrame(globalGB);
     hrule->setFrameStyle(TQFrame::HLine | TQFrame::Sunken);
-    hrule->setSizePolicy(TQSizePolicy::MinimumExpanding,TQSizePolicy::Fixed);
+    hrule->tqsetSizePolicy(TQSizePolicy::MinimumExpanding,TQSizePolicy::Fixed);
 
     /**************************************************************************
      ********************* Domain-specific Settings ***************************
      *************************************************************************/
     TQPushButton *domainSpecPB = new TQPushButton(i18n("Domain-Specific Settin&gs"),
     						globalGB);
-    domainSpecPB->setSizePolicy(TQSizePolicy::Fixed,TQSizePolicy::Fixed);
+    domainSpecPB->tqsetSizePolicy(TQSizePolicy::Fixed,TQSizePolicy::Fixed);
     connect(domainSpecPB,TQT_SIGNAL(clicked()),TQT_SLOT(slotShowDomainDlg()));
 
     domainSpecificDlg = new KDialogBase(KDialogBase::Swallow,
@@ -282,7 +282,7 @@ void KPluginOptions::scan()
         int ret = KMessageBox::warningYesNoCancel( this,
                                                     i18n("Do you want to apply your changes "
                                                          "before the scan? Otherwise the "
-                                                         "changes will be lost."), TQString::null, KStdGuiItem::save(), KStdGuiItem::discard() );
+                                                         "changes will be lost."), TQString(), KStdGuiItem::save(), KStdGuiItem::discard() );
         if ( ret==KMessageBox::Cancel ) {
             m_widget->scanButton->setEnabled(true);
             return;
@@ -430,16 +430,16 @@ void KPluginOptions::dirSelect( TQListBoxItem *item )
     unsigned cur = m_widget->dirList->index(m_widget->dirList->selectedItem());
     m_widget->dirDown->setEnabled( item!=0 && cur<m_widget->dirList->count()-1 );
     m_widget->dirUp->setEnabled( item!=0 && cur>0 );
-    m_widget->dirEdit->setURL( item!=0 ? item->text() : TQString::null );
+    m_widget->dirEdit->setURL( item!=0 ? item->text() : TQString() );
  }
 
 
 void KPluginOptions::dirNew()
 {
-    m_widget->dirList->insertItem( TQString::null, 0 );
+    m_widget->dirList->insertItem( TQString(), 0 );
     m_widget->dirList->setCurrentItem( 0 );
     dirSelect( m_widget->dirList->selectedItem() );
-    m_widget->dirEdit->setURL(TQString::null);
+    m_widget->dirEdit->setURL(TQString());
     m_widget->dirEdit->setFocus();
     change();
 }
@@ -447,7 +447,7 @@ void KPluginOptions::dirNew()
 
 void KPluginOptions::dirRemove()
 {
-    m_widget->dirEdit->setURL(TQString::null);
+    m_widget->dirEdit->setURL(TQString());
     delete m_widget->dirList->selectedItem();
     m_widget->dirRemove->setEnabled( false );
     m_widget->dirUp->setEnabled( false );

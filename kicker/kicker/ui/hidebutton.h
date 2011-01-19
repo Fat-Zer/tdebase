@@ -23,7 +23,7 @@
 #include <tqbutton.h>
 #include <tqpixmap.h>
 
-class HideButton : public QButton
+class HideButton : public TQButton
 {
   Q_OBJECT
 

@@ -160,7 +160,7 @@ class KateSession  : public KShared
 
 typedef TQValueList<KateSession::Ptr> KateSessionList;
 
-class KateSessionManager : public QObject
+class KateSessionManager : public TQObject
 {
   Q_OBJECT
 

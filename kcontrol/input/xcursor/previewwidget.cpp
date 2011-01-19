@@ -303,7 +303,7 @@ void PreviewWidget::setTheme( const TQString &theme )
 	current = -1;
 	setFixedSize( ( maxWidth + cursorSpacing ) * numCursors, kMax( maxHeight, minHeight ) );
 	setUpdatesEnabled( true );
-	repaint( false );
+	tqrepaint( false );
 }
 
 
@@ -311,7 +311,7 @@ void PreviewWidget::paintEvent( TQPaintEvent * )
 {
 	TQPixmap buffer( size() );
 	TQPainter p( &buffer );
-	p.fillRect( rect(), colorGroup().brush( TQColorGroup::Background ) );
+	p.fillRect( rect(), tqcolorGroup().brush( TQColorGroup::Background ) );
 	Picture dest;
 
 	if ( !qt_has_xft || !qt_use_xrender ) {

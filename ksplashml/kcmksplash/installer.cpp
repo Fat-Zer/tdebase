@@ -99,7 +99,7 @@ SplashInstaller::SplashInstaller (TQWidget *aParent, const char *aName, bool aIn
   hbox->setStretchFactor( leftbox, 1 );
 
   mThemesList = new ThemeListBox(this);
-  mThemesList->setSizePolicy( TQSizePolicy::Preferred, TQSizePolicy::Expanding );
+  mThemesList->tqsetSizePolicy( TQSizePolicy::Preferred, TQSizePolicy::Expanding );
   connect(mThemesList, TQT_SIGNAL(highlighted(int)), TQT_SLOT(slotSetTheme(int)));
   connect(mThemesList, TQT_SIGNAL(filesDropped(const KURL::List&)), TQT_SLOT(slotFilesDropped(const KURL::List&)));
   leftbox->addWidget(mThemesList);
@@ -120,16 +120,16 @@ SplashInstaller::SplashInstaller (TQWidget *aParent, const char *aName, bool aIn
   hbox->setStretchFactor( rightbox, 3 );
 
   mPreview = new TQLabel(this);
-  mPreview->setSizePolicy( TQSizePolicy::Expanding, TQSizePolicy::Expanding );
+  mPreview->tqsetSizePolicy( TQSizePolicy::Expanding, TQSizePolicy::Expanding );
   mPreview->setFrameStyle(TQFrame::Panel|TQFrame::Sunken);
   mPreview->setMinimumSize(TQSize(320,240));
-  mPreview->setAlignment(Qt::AlignHCenter|Qt::AlignVCenter);
+  mPreview->tqsetAlignment(Qt::AlignHCenter|Qt::AlignVCenter);
   rightbox->addWidget(mPreview);
   rightbox->setStretchFactor( mPreview, 3 );
 
   mText = new TQTextEdit(this);
-  mText->setSizePolicy( TQSizePolicy::Expanding, TQSizePolicy::Preferred );
-  mText->setMinimumSize(mText->sizeHint());
+  mText->tqsetSizePolicy( TQSizePolicy::Expanding, TQSizePolicy::Preferred );
+  mText->setMinimumSize(mText->tqsizeHint());
   mText->setReadOnly(true);
   rightbox->addWidget(mText);
   rightbox->setStretchFactor( mText, 1 );
@@ -164,7 +164,7 @@ void SplashInstaller::addNewTheme(const KURL &srcURL)
   TQString dir = KGlobal::dirs()->saveLocation("ksplashthemes");
   KURL url;
   TQString filename = srcURL.fileName();
-  int i = filename.findRev('.');
+  int i = filename.tqfindRev('.');
   // Convert extension to lower case.
   if (i >= 0)
      filename = filename.left(i)+filename.mid(i).lower();
@@ -275,9 +275,9 @@ void SplashInstaller::save()
   if (cur < 0)
     return;
   TQString path = mThemesList->text(cur);
-  if ( mThemesList->text2path.contains( path ) )
+  if ( mThemesList->text2path.tqcontains( path ) )
     path = mThemesList->text2path[path];
-  cur = path.findRev('/');
+  cur = path.tqfindRev('/');
   cnf.writeEntry("Theme", path.mid(cur+1) );
   cnf.sync();
   emit changed( false );
@@ -331,7 +331,7 @@ void SplashInstaller::slotSetTheme(int id)
   {
     TQString error = i18n("(Could not load theme)");
     path = mThemesList->text(id);
-    if ( mThemesList->text2path.contains( path ) )
+    if ( mThemesList->text2path.tqcontains( path ) )
         path = mThemesList->text2path[path];
     enabled = false;
     KURL url;
@@ -339,7 +339,7 @@ void SplashInstaller::slotSetTheme(int id)
     if (!path.isEmpty())
     {
       // Make sure the correct plugin is installed.
-      int i = path.findRev('/');
+      int i = path.tqfindRev('/');
       if (i >= 0)
         themeName = path.mid(i+1);
       url.setPath( path + "/Theme.rc" );
@@ -459,7 +459,7 @@ void SplashInstaller::slotTest()
   if (i < 0)
     return;
   TQString themeName = mThemesList->text2path[mThemesList->text(i)];
-  int r = themeName.findRev('/');
+  int r = themeName.tqfindRev('/');
   if (r >= 0)
     themeName = themeName.mid(r+1);
 

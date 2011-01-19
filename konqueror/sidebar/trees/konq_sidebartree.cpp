@@ -55,7 +55,7 @@ static const int autoOpenTimeout = 750;
 
 getModule KonqSidebarTree::getPluginFactory(TQString name)
 {
-  if (!pluginFactories.contains(name))
+  if (!pluginFactories.tqcontains(name))
   {
     KLibLoader *loader = KLibLoader::self();
     TQString libName    = pluginInfo[name];
@@ -114,8 +114,8 @@ public:
 };
 
 
-KonqSidebarTree::KonqSidebarTree( KonqSidebar_Tree *parent, TQWidget *parentWidget, int virt, const TQString& path )
-    : KListView( parentWidget ),
+KonqSidebarTree::KonqSidebarTree( KonqSidebar_Tree *parent, TQWidget *tqparentWidget, int virt, const TQString& path )
+    : KListView( tqparentWidget ),
       m_currentTopLevelItem( 0 ),
       m_toolTip( this ),
       m_scrollingLocked( false ),
@@ -272,7 +272,7 @@ void KonqSidebarTree::contentsDragMoveEvent( TQDragMoveEvent *e )
     TQListViewItem *item = itemAt( contentsToViewport( e->pos() ) );
 
     // Accept drops on the background, if URLs
-    if ( !item && m_lstDropFormats.contains("text/uri-list") )
+    if ( !item && m_lstDropFormats.tqcontains("text/uri-list") )
     {
         m_dropItem = 0;
         e->acceptAction();
@@ -417,7 +417,7 @@ bool KonqSidebarTree::acceptDrag(TQDropEvent* e) const
 {
     // for KListViewMode...
     for( int i = 0; e->format( i ); i++ )
-        if ( d->m_dropFormats.contains(e->format( i ) ) )
+        if ( d->m_dropFormats.tqcontains(e->format( i ) ) )
             return true;
     return false;
 }
@@ -482,7 +482,7 @@ void KonqSidebarTree::slotExecuted( TQListViewItem *item )
 void KonqSidebarTree::slotMouseButtonPressed( int _button, TQListViewItem* _item, const TQPoint&, int col )
 {
     KonqSidebarTreeItem * item = static_cast<KonqSidebarTreeItem*>( _item );
-    if (_button == RightButton)
+    if (_button == Qt::RightButton)
     {
         if ( item && col < 2)
         {
@@ -498,10 +498,10 @@ void KonqSidebarTree::slotMouseButtonClicked(int _button, TQListViewItem* _item,
     if(_item && col < 2)
     {
         switch( _button ) {
-        case LeftButton:
+        case Qt::LeftButton:
             slotExecuted( item );
             break;
-        case MidButton:
+        case Qt::MidButton:
             item->middleButtonClicked();
             break;
         }
@@ -516,7 +516,7 @@ void KonqSidebarTree::slotAutoOpenFolder()
         return;
 
     m_dropItem->setOpen( true );
-    m_dropItem->repaint();
+    m_dropItem->tqrepaint();
 }
 
 void KonqSidebarTree::rescanConfiguration()
@@ -606,7 +606,7 @@ void KonqSidebarTree::scanDir( KonqSidebarTreeItem *parent, const TQString &path
             // Version 5 includes the audiocd browser
             // Version 6 includes the printmanager and lan browser
             const int currentVersion = 6;
-            TQString key = TQString::fromLatin1("X-KDE-DirTreeVersionNumber");
+            TQString key = TQString::tqfromLatin1("X-KDE-DirTreeVersionNumber");
             KSimpleConfig versionCfg( path + "/.directory" );
             int versionNumber = versionCfg.readNumEntry( key, 1 );
             kdDebug(1201) << "KonqSidebarTree::scanDir found version " << versionNumber << endl;
@@ -652,7 +652,7 @@ void KonqSidebarTree::scanDir( KonqSidebarTreeItem *parent, const TQString &path
                 	{
 	                    //kdDebug(1201) << "KonqSidebarTree::scanDir dirtree_dir contains " << *eIt << endl;
         	            if ( *eIt != "." && *eIt != ".."
-                	         && !entries.contains( *eIt ) && !dirEntries.contains( *eIt ) )
+                	         && !entries.tqcontains( *eIt ) && !dirEntries.tqcontains( *eIt ) )
 	                    { // we don't have that one yet -> copy it.
                 	        TQString cp("cp -R -- ");
         	                cp += KProcess::quote(dirtree_dir + *eIt);
@@ -813,7 +813,7 @@ void KonqSidebarTree::slotAnimation()
     for (; it != end; ++it )
     {
         uint & iconNumber = it.data().iconNumber;
-        TQString icon = TQString::fromLatin1( it.data().iconBaseName ).append( TQString::number( iconNumber ) );
+        TQString icon = TQString::tqfromLatin1( it.data().iconBaseName ).append( TQString::number( iconNumber ) );
         it.key()->setPixmap( 0, SmallIcon( icon));
 
         iconNumber++;
@@ -836,7 +836,7 @@ void KonqSidebarTree::startAnimation( KonqSidebarTreeItem * item, const char * i
 
 void KonqSidebarTree::stopAnimation( KonqSidebarTreeItem * item )
 {
-    MapCurrentOpeningFolders::Iterator it = m_mapCurrentOpeningFolders.find(item);
+    MapCurrentOpeningFolders::Iterator it = m_mapCurrentOpeningFolders.tqfind(item);
     if ( it != m_mapCurrentOpeningFolders.end() )
     {
         item->setPixmap( 0, it.data().originalPixmap );
@@ -882,7 +882,7 @@ void KonqSidebarTree::enableActions( bool copy, bool cut, bool paste,
 bool KonqSidebarTree::tabSupport()
 {
     // see if the newTab() dcop function is available (i.e. the sidebar is embedded into konqueror)
-   DCOPRef ref(kapp->dcopClient()->appId(), topLevelWidget()->name());
+   DCOPRef ref(kapp->dcopClient()->appId(), tqtopLevelWidget()->name());
     DCOPReply reply = ref.call("functions()");
     if (reply.isValid()) {
         QCStringList funcs;
@@ -907,21 +907,21 @@ void KonqSidebarTree::showToplevelContextMenu()
     if (!m_collection)
     {
         m_collection = new KActionCollection( this, "bookmark actions" );
-        (void) new KAction( i18n("&Create New Folder..."), "folder_new", 0, this,
+        (void) new KAction( i18n("&Create New Folder..."), "folder_new", 0, TQT_TQOBJECT(this),
                             TQT_SLOT( slotCreateFolder() ), m_collection, "create_folder");
-        (void) new KAction( i18n("Delete Folder"), "editdelete", 0, this,
+        (void) new KAction( i18n("Delete Folder"), "editdelete", 0, TQT_TQOBJECT(this),
                             TQT_SLOT( slotDelete() ), m_collection, "delete_folder");
-        (void) new KAction( i18n("Rename"), 0, this,
+        (void) new KAction( i18n("Rename"), 0, TQT_TQOBJECT(this),
                             TQT_SLOT( slotRename() ), m_collection, "rename");
-        (void) new KAction( i18n("Delete Link"), "editdelete", 0, this,
+        (void) new KAction( i18n("Delete Link"), "editdelete", 0, TQT_TQOBJECT(this),
                             TQT_SLOT( slotDelete() ), m_collection, "delete_link");
-        (void) new KAction( i18n("Properties"), "edit", 0, this,
+        (void) new KAction( i18n("Properties"), "edit", 0, TQT_TQOBJECT(this),
                             TQT_SLOT( slotProperties() ), m_collection, "item_properties");
-        (void) new KAction( i18n("Open in New Window"), "window_new", 0, this,
+        (void) new KAction( i18n("Open in New Window"), "window_new", 0, TQT_TQOBJECT(this),
                             TQT_SLOT( slotOpenNewWindow() ), m_collection, "open_window");
-        (void) new KAction( i18n("Open in New Tab"), "tab_new", 0, this,
+        (void) new KAction( i18n("Open in New Tab"), "tab_new", 0, TQT_TQOBJECT(this),
                             TQT_SLOT( slotOpenTab() ), m_collection, "open_tab");
-        (void) new KAction( i18n("Copy Link Address"), "editcopy", 0, this,
+        (void) new KAction( i18n("Copy Link Address"), "editcopy", 0, TQT_TQOBJECT(this),
                             TQT_SLOT( slotCopyLocation() ), m_collection, "copy_location");
     }
 
@@ -1023,7 +1023,7 @@ void KonqSidebarTree::slotOpenNewWindow()
 void KonqSidebarTree::slotOpenTab()
 {
     if (!m_currentTopLevelItem) return;
-    DCOPRef ref(kapp->dcopClient()->appId(), topLevelWidget()->name());
+    DCOPRef ref(kapp->dcopClient()->appId(), tqtopLevelWidget()->name());
     ref.call( "newTab(TQString)", m_currentTopLevelItem->externalURL().url() );
 }
 
@@ -1031,8 +1031,8 @@ void KonqSidebarTree::slotCopyLocation()
 {
     if (!m_currentTopLevelItem) return;
     KURL url = m_currentTopLevelItem->externalURL();
-    kapp->clipboard()->setData( new KURLDrag(url, 0), QClipboard::Selection );
-    kapp->clipboard()->setData( new KURLDrag(url, 0), QClipboard::Clipboard );
+    kapp->tqclipboard()->setData( new KURLDrag(url, 0), QClipboard::Selection );
+    kapp->tqclipboard()->setData( new KURLDrag(url, 0), QClipboard::Clipboard );
 }
 
 ///////////////////////////////////////////////////////////////////
@@ -1045,7 +1045,7 @@ void KonqSidebarTreeToolTip::maybeTip( const TQPoint &point )
     if ( item ) {
 	TQString text = static_cast<KonqSidebarTreeItem*>( item )->toolTipText();
 	if ( !text.isEmpty() )
-	    tip ( m_view->itemRect( item ), text );
+	    tip ( m_view->tqitemRect( item ), text );
     }
 }
 

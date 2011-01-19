@@ -13,7 +13,7 @@ public:
       closed_by_sm( false ) {}
 
   bool closedByUser() const { return !closed_by_sm; }
-  void commitData(QSessionManager& sm) {
+  void commitData(TQSessionManager& sm) {
     closed_by_sm = true;
     KApplication::commitData( sm );
     closed_by_sm = false;

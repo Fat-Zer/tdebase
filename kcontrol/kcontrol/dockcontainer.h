@@ -28,7 +28,7 @@ class ModuleTitle;
 class ProxyWidget;
 class TQLabel;
 
-class ModuleWidget : public QVBox
+class ModuleWidget : public TQVBox
 {
   Q_OBJECT
 
@@ -46,7 +46,7 @@ class ModuleWidget : public QVBox
     TQVBox *m_body;
 };
 
-class DockContainer : public QWidgetStack
+class DockContainer : public TQWidgetStack
 {
   Q_OBJECT
 

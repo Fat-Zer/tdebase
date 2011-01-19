@@ -42,7 +42,7 @@ class KateMainWindow;
  * This class is used for the internal terminal emulator
  * It uses internally the konsole part, thx to konsole devs :)
  */
-class KateConsole : public QVBox
+class KateConsole : public TQVBox
 {
   Q_OBJECT
 

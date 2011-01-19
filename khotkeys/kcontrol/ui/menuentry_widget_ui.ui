@@ -1,6 +1,6 @@
 <!DOCTYPE UI><UI version="3.1" stdsetdef="1">
 <class>KHotKeys::Menuentry_widget_ui</class>
-<widget class="QWidget">
+<widget class="TQWidget">
     <property name="name">
         <cstring>Menuentry_widget_ui</cstring>
     </property>
@@ -22,7 +22,7 @@
         <property name="spacing">
             <number>6</number>
         </property>
-        <widget class="QLabel">
+        <widget class="TQLabel">
             <property name="name">
                 <cstring>menuentry_label</cstring>
             </property>
@@ -33,7 +33,7 @@
                 <cstring>command_url_lineedit</cstring>
             </property>
         </widget>
-        <widget class="QLayoutWidget">
+        <widget class="TQLayoutWidget">
             <property name="name">
                 <cstring>Layout7</cstring>
             </property>
@@ -47,12 +47,12 @@
                 <property name="spacing">
                     <number>6</number>
                 </property>
-                <widget class="QLineEdit">
+                <widget class="TQLineEdit">
                     <property name="name">
                         <cstring>menuentry_lineedit</cstring>
                     </property>
                 </widget>
-                <widget class="QPushButton">
+                <widget class="TQPushButton">
                     <property name="name">
                         <cstring>browse_button</cstring>
                     </property>
@@ -72,7 +72,7 @@
             <property name="sizeType">
                 <enum>Expanding</enum>
             </property>
-            <property name="sizeHint">
+            <property name="tqsizeHint">
                 <size>
                     <width>0</width>
                     <height>20</height>

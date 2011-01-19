@@ -18,7 +18,7 @@ class KQuery;
 class KURL;
 class KfindTabWidget;
 
-class Kfind: public QWidget
+class Kfind: public TQWidget
 {
     Q_OBJECT
 

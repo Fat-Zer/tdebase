@@ -109,9 +109,9 @@ private: // private methods
   /** Send an sftp packet to stdin of the ssh process. */
   bool putPacket(TQByteArray& p);
   /** Process SSH_FXP_STATUS packets. */
-  void processStatus(Q_UINT8, const TQString& message = TQString::null);
+  void processStatus(TQ_UINT8, const TQString& message = TQString::null);
   /** Process SSH_FXP_STATUS packes and return the result. */
-  Status doProcessStatus(Q_UINT8, const TQString& message = TQString::null);
+  Status doProcessStatus(TQ_UINT8, const TQString& message = TQString::null);
   /** Opens a directory handle for url.path. Returns true if succeeds. */
   int sftpOpenDirectory(const KURL& url, TQByteArray& handle);
   /** Closes a directory or file handle. */
@@ -131,9 +131,9 @@ private: // private methods
   /** Stats a file. */
   int sftpStat(const KURL& url, sftpFileAttr& attr);
   /** No descriptions */
-  int sftpOpen(const KURL& url, const Q_UINT32 pflags, const sftpFileAttr& attr, TQByteArray& handle);
+  int sftpOpen(const KURL& url, const TQ_UINT32 pflags, const sftpFileAttr& attr, TQByteArray& handle);
   /** No descriptions */
-  int sftpRead(const TQByteArray& handle, KIO::filesize_t offset, Q_UINT32 len, TQByteArray& data);
+  int sftpRead(const TQByteArray& handle, KIO::filesize_t offset, TQ_UINT32 len, TQByteArray& data);
   /** No descriptions */
   int sftpWrite(const TQByteArray& handle, KIO::filesize_t offset, const TQByteArray& data);
   

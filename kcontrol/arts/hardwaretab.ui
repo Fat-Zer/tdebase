@@ -1,6 +1,6 @@
 <!DOCTYPE UI><UI version="3.3" stdsetdef="1">
 <class>hardwareTab</class>
-<widget class="QWidget">
+<widget class="TQWidget">
     <property name="name">
         <cstring>hardwareTab</cstring>
     </property>
@@ -16,7 +16,7 @@
         <property name="name">
             <cstring>unnamed</cstring>
         </property>
-        <widget class="QGroupBox">
+        <widget class="TQGroupBox">
             <property name="name">
                 <cstring>groupBox4</cstring>
             </property>
@@ -33,7 +33,7 @@
                 <property name="name">
                     <cstring>unnamed</cstring>
                 </property>
-                <widget class="QLayoutWidget" row="0" column="0" rowspan="1" colspan="2">
+                <widget class="TQLayoutWidget" row="0" column="0" rowspan="1" colspan="2">
                     <property name="name">
                         <cstring>layout57</cstring>
                     </property>
@@ -41,7 +41,7 @@
                         <property name="name">
                             <cstring>unnamed</cstring>
                         </property>
-                        <widget class="QLabel">
+                        <widget class="TQLabel">
                             <property name="name">
                                 <cstring>textLabel3_2</cstring>
                             </property>
@@ -60,7 +60,7 @@
                                 <cstring>audioIO</cstring>
                             </property>
                         </widget>
-                        <widget class="QComboBox">
+                        <widget class="TQComboBox">
                             <property name="name">
                                 <cstring>audioIO</cstring>
                             </property>
@@ -75,7 +75,7 @@
                         </widget>
                     </hbox>
                 </widget>
-                <widget class="QLayoutWidget" row="1" column="0" rowspan="1" colspan="2">
+                <widget class="TQLayoutWidget" row="1" column="0" rowspan="1" colspan="2">
                     <property name="name">
                         <cstring>layout31</cstring>
                     </property>
@@ -83,7 +83,7 @@
                         <property name="name">
                             <cstring>unnamed</cstring>
                         </property>
-                        <widget class="QCheckBox">
+                        <widget class="TQCheckBox">
                             <property name="name">
                                 <cstring>fullDuplex</cstring>
                             </property>
@@ -99,7 +99,7 @@
                         </widget>
                     </hbox>
                 </widget>
-                <widget class="QCheckBox" row="5" column="0">
+                <widget class="TQCheckBox" row="5" column="0">
                     <property name="name">
                         <cstring>customOptions</cstring>
                     </property>
@@ -107,7 +107,7 @@
                         <string>Use other custom &amp;options:</string>
                     </property>
                 </widget>
-                <widget class="QCheckBox" row="4" column="0">
+                <widget class="TQCheckBox" row="4" column="0">
                     <property name="name">
                         <cstring>customDevice</cstring>
                     </property>
@@ -115,7 +115,7 @@
                         <string>Override &amp;device location:</string>
                     </property>
                 </widget>
-                <widget class="QLayoutWidget" row="3" column="0" rowspan="1" colspan="2">
+                <widget class="TQLayoutWidget" row="3" column="0" rowspan="1" colspan="2">
                     <property name="name">
                         <cstring>layout4</cstring>
                     </property>
@@ -133,14 +133,14 @@
                             <property name="sizeType">
                                 <enum>Fixed</enum>
                             </property>
-                            <property name="sizeHint">
+                            <property name="tqsizeHint">
                                 <size>
                                     <width>20</width>
                                     <height>20</height>
                                 </size>
                             </property>
                         </spacer>
-                        <widget class="QLabel">
+                        <widget class="TQLabel">
                             <property name="name">
                                 <cstring>textLabel2</cstring>
                             </property>
@@ -151,7 +151,7 @@
                                 <cstring>soundQuality</cstring>
                             </property>
                         </widget>
-                        <widget class="QComboBox">
+                        <widget class="TQComboBox">
                             <item>
                                 <property name="text">
                                     <string>Default</string>
@@ -189,7 +189,7 @@
                             <property name="sizeType">
                                 <enum>Expanding</enum>
                             </property>
-                            <property name="sizeHint">
+                            <property name="tqsizeHint">
                                 <size>
                                     <width>0</width>
                                     <height>20</height>
@@ -198,7 +198,7 @@
                         </spacer>
                     </hbox>
                 </widget>
-                <widget class="QCheckBox" row="2" column="0">
+                <widget class="TQCheckBox" row="2" column="0">
                     <property name="name">
                         <cstring>customRate</cstring>
                     </property>
@@ -206,7 +206,7 @@
                         <string>Use &amp;custom sampling rate:</string>
                     </property>
                 </widget>
-                <widget class="QLayoutWidget" row="2" column="1">
+                <widget class="TQLayoutWidget" row="2" column="1">
                     <property name="name">
                         <cstring>layout6</cstring>
                     </property>
@@ -214,7 +214,7 @@
                         <property name="name">
                             <cstring>unnamed</cstring>
                         </property>
-                        <widget class="QSpinBox">
+                        <widget class="TQSpinBox">
                             <property name="name">
                                 <cstring>samplingRate</cstring>
                             </property>
@@ -252,7 +252,7 @@
                             <property name="sizeType">
                                 <enum>Expanding</enum>
                             </property>
-                            <property name="sizeHint">
+                            <property name="tqsizeHint">
                                 <size>
                                     <width>0</width>
                                     <height>20</height>
@@ -261,7 +261,7 @@
                         </spacer>
                     </hbox>
                 </widget>
-                <widget class="QLineEdit" row="5" column="1">
+                <widget class="TQLineEdit" row="5" column="1">
                     <property name="name">
                         <cstring>addOptions</cstring>
                     </property>
@@ -269,7 +269,7 @@
                         <bool>false</bool>
                     </property>
                 </widget>
-                <widget class="QLineEdit" row="4" column="1">
+                <widget class="TQLineEdit" row="4" column="1">
                     <property name="name">
                         <cstring>deviceName</cstring>
                     </property>
@@ -282,7 +282,7 @@
                 </widget>
             </grid>
         </widget>
-        <widget class="QGroupBox">
+        <widget class="TQGroupBox">
             <property name="name">
                 <cstring>groupBox3</cstring>
             </property>
@@ -293,7 +293,7 @@
                 <property name="name">
                     <cstring>unnamed</cstring>
                 </property>
-                <widget class="QCheckBox" row="1" column="0">
+                <widget class="TQCheckBox" row="1" column="0">
                     <property name="name">
                         <cstring>midiUseMapper</cstring>
                     </property>
@@ -301,7 +301,7 @@
                         <string>Use MIDI ma&amp;pper:</string>
                     </property>
                 </widget>
-                <widget class="QLabel" row="0" column="0">
+                <widget class="TQLabel" row="0" column="0">
                     <property name="name">
                         <cstring>textLabel4</cstring>
                     </property>
@@ -312,7 +312,7 @@
                         <cstring>deviceName</cstring>
                     </property>
                 </widget>
-                <widget class="QComboBox" row="0" column="1">
+                <widget class="TQComboBox" row="0" column="1">
                     <property name="name">
                         <cstring>midiDevice</cstring>
                     </property>
@@ -345,7 +345,7 @@
             <property name="sizeType">
                 <enum>Expanding</enum>
             </property>
-            <property name="sizeHint">
+            <property name="tqsizeHint">
                 <size>
                     <width>20</width>
                     <height>60</height>

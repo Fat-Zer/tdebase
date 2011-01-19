@@ -13,7 +13,7 @@ class TQGridLayout;
 
 namespace KWMTheme {
 
-class MyButton : public QToolButton
+class MyButton : public TQToolButton
 {
 public:
     MyButton(TQWidget *parent=0, const char *name=0)
@@ -30,7 +30,7 @@ public:
     ~KWMThemeClient(){;}
     void init();
     void resize( const TQSize& s );
-    TQSize minimumSize() const;
+    TQSize tqminimumSize() const;
     void borders( int& left, int& right, int& top, int& bottom ) const;
 protected:
     void doShape();

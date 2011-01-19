@@ -1,6 +1,6 @@
 <!DOCTYPE UI><UI version="3.3" stdsetdef="1">
 <class>UAProviderDlgUI</class>
-<widget class="QWidget">
+<widget class="TQWidget">
     <property name="name">
         <cstring>UAProviderDlgUI</cstring>
     </property>
@@ -24,7 +24,7 @@
         <property name="name">
             <cstring>unnamed</cstring>
         </property>
-        <widget class="QLabel" row="0" column="0">
+        <widget class="TQLabel" row="0" column="0">
             <property name="name">
                 <cstring>lbSite</cstring>
             </property>
@@ -52,7 +52,7 @@ Enter the site or domain name where a fake browser identification should be used
 &lt;/qt&gt;</string>
             </property>
         </widget>
-        <widget class="QLabel" row="2" column="0">
+        <widget class="TQLabel" row="2" column="0">
             <property name="name">
                 <cstring>lbAlias</cstring>
             </property>
@@ -78,7 +78,7 @@ Select the browser identification to use whenever contacting the site you specif
 &lt;/qt&gt;</string>
             </property>
         </widget>
-        <widget class="QLabel" row="4" column="0">
+        <widget class="TQLabel" row="4" column="0">
             <property name="name">
                 <cstring>lbIdentity</cstring>
             </property>
@@ -117,14 +117,14 @@ The actual browser identification text that will be sent to the remote machine.
             <property name="sizeType">
                 <enum>MinimumExpanding</enum>
             </property>
-            <property name="sizeHint">
+            <property name="tqsizeHint">
                 <size>
                     <width>21</width>
                     <height>16</height>
                 </size>
             </property>
         </spacer>
-        <widget class="QLayoutWidget" row="8" column="0">
+        <widget class="TQLayoutWidget" row="8" column="0">
             <property name="name">
                 <cstring>layout3</cstring>
             </property>
@@ -142,14 +142,14 @@ The actual browser identification text that will be sent to the remote machine.
                     <property name="sizeType">
                         <enum>MinimumExpanding</enum>
                     </property>
-                    <property name="sizeHint">
+                    <property name="tqsizeHint">
                         <size>
                             <width>29</width>
                             <height>20</height>
                         </size>
                     </property>
                 </spacer>
-                <widget class="QPushButton">
+                <widget class="TQPushButton">
                     <property name="name">
                         <cstring>pbOk</cstring>
                     </property>
@@ -160,7 +160,7 @@ The actual browser identification text that will be sent to the remote machine.
                         <string>&amp;OK</string>
                     </property>
                 </widget>
-                <widget class="QPushButton">
+                <widget class="TQPushButton">
                     <property name="name">
                         <cstring>pbCancel</cstring>
                     </property>

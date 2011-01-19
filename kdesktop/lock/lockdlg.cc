@@ -65,7 +65,7 @@
 // Simple dialog for entering a password.
 //
 PasswordDlg::PasswordDlg(LockProcess *parent, GreeterPluginHandle *plugin)
-    : TQDialog(parent, "password dialog", true, WX11BypassWM),
+    : TQDialog(parent, "password dialog", true, (WFlags)WX11BypassWM),
       mPlugin( plugin ),
       mCapsLocked(-1),
       mUnlockingFailed(false)
@@ -83,7 +83,7 @@ PasswordDlg::PasswordDlg(LockProcess *parent, GreeterPluginHandle *plugin)
             i18n("<nobr><b>The session was locked by %1</b><br>").arg( user.fullName() ), frame );
 
     mStatusLabel = new TQLabel( "<b> </b>", frame );
-    mStatusLabel->setAlignment( TQLabel::AlignCenter );
+    mStatusLabel->tqsetAlignment( TQLabel::AlignCenter );
 
     mLayoutButton = new TQPushButton( frame );
     mLayoutButton->setFlat( true );
@@ -112,7 +112,7 @@ PasswordDlg::PasswordDlg(LockProcess *parent, GreeterPluginHandle *plugin)
     layButtons->addWidget( cancel );
 
     frameLayout = new TQGridLayout( frame, 1, 1, KDialog::marginHint(), KDialog::spacingHint() );
-    frameLayout->addMultiCellWidget( pixLabel, 0, 2, 0, 0, AlignTop );
+    frameLayout->addMultiCellWidget( pixLabel, 0, 2, 0, 0, Qt::AlignTop );
     frameLayout->addWidget( greetLabel, 0, 1 );
     frameLayout->addItem( greet->getLayoutItem(), 1, 1 );
     frameLayout->addLayout( layStatus, 2, 1 );
@@ -135,7 +135,7 @@ PasswordDlg::PasswordDlg(LockProcess *parent, GreeterPluginHandle *plugin)
 
     mFailedTimerId = 0;
     mTimeoutTimerId = startTimer(PASSDLG_HIDE_TIMEOUT);
-    connect(qApp, TQT_SIGNAL(activity()), TQT_SLOT(slotActivity()) );
+    connect(tqApp, TQT_SIGNAL(activity()), TQT_SLOT(slotActivity()) );
 
     greet->start();
 
@@ -144,7 +144,7 @@ PasswordDlg::PasswordDlg(LockProcess *parent, GreeterPluginHandle *plugin)
         layoutsList = kxkb.call("getLayoutsList");
         TQString currentLayout = kxkb.call("getCurrentLayout");
         if( !currentLayout.isEmpty() && layoutsList.count() > 1 ) {
-            currLayout = layoutsList.find(currentLayout);
+            currLayout = layoutsList.tqfind(currentLayout);
             if (currLayout == layoutsList.end())
                 setLayoutText("err");
             else
@@ -179,7 +179,7 @@ void PasswordDlg::setLayoutText( const TQString &txt )
 {
     mLayoutButton->setText( txt );
     TQSize sz = mLayoutButton->fontMetrics().size( 0, txt );
-    int mrg = mLayoutButton->style().pixelMetric( TQStyle::PM_ButtonMargin ) * 2;
+    int mrg = mLayoutButton->tqstyle().tqpixelMetric( TQStyle::PM_ButtonMargin ) * 2;
     mLayoutButton->setFixedSize( sz.width() + mrg, sz.height() + mrg );
 }
 
@@ -468,7 +468,7 @@ void PasswordDlg::gplugActivity()
 
 void PasswordDlg::gplugMsgBox( TQMessageBox::Icon type, const TQString &text )
 {
-    TQDialog dialog( this, 0, true, WX11BypassWM );
+    TQDialog dialog( this, 0, true, (WFlags)WX11BypassWM );
     TQFrame *winFrame = new TQFrame( &dialog );
     winFrame->setFrameStyle( TQFrame::WinPanel | TQFrame::Raised );
     winFrame->setLineWidth( 2 );
@@ -480,7 +480,7 @@ void PasswordDlg::gplugMsgBox( TQMessageBox::Icon type, const TQString &text )
     TQLabel *label2 = new TQLabel( text, winFrame );
     KPushButton *button = new KPushButton( KStdGuiItem::ok(), winFrame );
     button->setDefault( true );
-    button->setSizePolicy( TQSizePolicy( TQSizePolicy::Preferred, TQSizePolicy::Preferred ) );
+    button->tqsetSizePolicy( TQSizePolicy( TQSizePolicy::Preferred, TQSizePolicy::Preferred ) );
     connect( button, TQT_SIGNAL( clicked() ), TQT_SLOT( accept() ) );
 
     TQGridLayout *grid = new TQGridLayout( winFrame, 2, 2, 10 );
@@ -513,7 +513,7 @@ void PasswordDlg::slotStartNewSession()
     killTimer(mTimeoutTimerId);
     mTimeoutTimerId = 0;
 
-    TQDialog *dialog = new TQDialog( this, "warnbox", true, WX11BypassWM );
+    TQDialog *dialog = new TQDialog( this, "warnbox", true, (WFlags)WX11BypassWM );
     TQFrame *winFrame = new TQFrame( dialog );
     winFrame->setFrameStyle( TQFrame::WinPanel | TQFrame::Raised );
     winFrame->setLineWidth( 2 );
@@ -627,7 +627,7 @@ void PasswordDlg::slotSwitchUser()
     int p = 0;
     DM dm;
 
-    TQDialog dialog( this, "sessbox", true, WX11BypassWM );
+    TQDialog dialog( this, "sessbox", true, (WFlags)WX11BypassWM );
     TQFrame *winFrame = new TQFrame( &dialog );
     winFrame->setFrameStyle( TQFrame::WinPanel | TQFrame::Raised );
     winFrame->setLineWidth( 2 );
@@ -667,9 +667,9 @@ void PasswordDlg::slotSwitchUser()
             ns++;
         }
         int fw = lv->frameWidth() * 2;
-        TQSize hds( lv->header()->sizeHint() );
+        TQSize hds( lv->header()->tqsizeHint() );
         lv->setMinimumWidth( fw + hds.width() +
-            (ns > 10 ? style().pixelMetric(TQStyle::PM_ScrollBarExtent) : 0 ) );
+            (ns > 10 ? tqstyle().tqpixelMetric(TQStyle::PM_ScrollBarExtent) : 0 ) );
         lv->setFixedHeight( fw + hds.height() +
             itm->height() * (ns < 6 ? 6 : ns > 10 ? 10 : ns) );
         lv->header()->adjustHeaderSize();

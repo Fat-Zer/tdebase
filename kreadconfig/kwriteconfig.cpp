@@ -1,6 +1,6 @@
 /* Write KConfig() entries - for use in shell scripts.
- * (c) 2001 Red Hat, Inc. & Luís Pedro Coelho
- * Programmed by Luís Pedro Coelho <luis_pedro@netcabo.pt>
+ * (c) 2001 Red Hat, Inc. & Luï¿½s Pedro Coelho
+ * Programmed by Luï¿½s Pedro Coelho <luis_pedro@netcabo.pt>
  *  based on kreadconfig by Bernhard Rosenkraenzer <bero@redhat.com>
  *
  * License: GPL
@@ -29,8 +29,8 @@ int main(int argc, char **argv)
 		"1.0.0",
 		I18N_NOOP("Write KConfig entries - for use in shell scripts"),
 		KAboutData::License_GPL,
-		"(c) 2001 Red Hat, Inc. & Luís Pedro Coelho");
-	aboutData.addAuthor("Luís Pedro Coelho", 0, "luis_pedro@netcabo.pt");
+		"(c) 2001 Red Hat, Inc. & Luï¿½s Pedro Coelho");
+	aboutData.addAuthor("Luï¿½s Pedro Coelho", 0, "luis_pedro@netcabo.pt");
 	aboutData.addAuthor("Bernhard Rosenkraenzer", "Wrote kreadconfig on which this is based", "bero@redhat.com");
 	KCmdLineArgs::init(argc, argv, &aboutData);
 	KCmdLineArgs::addCmdLineOptions(options);
@@ -52,7 +52,7 @@ int main(int argc, char **argv)
 
 	KConfig *konfig;
 	if (file.isEmpty())
-	   konfig = new KConfig(TQString::fromLatin1("kdeglobals"), false, false);
+	   konfig = new KConfig(TQString::tqfromLatin1("kdeglobals"), false, false);
 	else
 	   konfig = new KConfig(file, false, false);
 
@@ -66,7 +66,7 @@ int main(int argc, char **argv)
 	} else if (type=="path") {
 		konfig->writePathEntry( key, TQString::fromLocal8Bit( value ) );
 	} else {
-		konfig->writeEntry( key, TQString::fromLocal8Bit( value ) );
+		konfig->writeEntry( key, TQString(TQString::fromLocal8Bit( value )) );
 	}
 	konfig->sync();
         delete konfig;

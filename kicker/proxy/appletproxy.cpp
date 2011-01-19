@@ -134,7 +134,7 @@ AppletProxy::AppletProxy(TQObject* parent, const char* name)
 	exit(0);
     }
 
-    if (!kapp->dcopClient()->registerAs("applet_proxy", true)) {
+    if (kapp->dcopClient()->registerAs("applet_proxy", true) == 0) {
 	kdError() << "Failed to register at DCOP server." << endl;
         KMessageBox::error(0,
                            i18n("The applet proxy could not be started due to DCOP registration problems."),
@@ -226,24 +226,24 @@ KPanelApplet* AppletProxy::loadApplet(const AppletInfo& info)
     return init_ptr(0, info.configFile());
 }
 
-void AppletProxy::repaintApplet(TQWidget* widget) 
+void AppletProxy::tqrepaintApplet(TQWidget* widget) 
 {
-    widget->repaint();
+    widget->tqrepaint();
  
-    const TQObjectList* children = widget->children();
+    const TQObjectList children = widget->childrenListObject();
 
-    if (!children)
+    if (children.isEmpty())
     {
         return;
     }
 
-    TQObjectList::iterator it = children->begin();
-    for (; it != children->end(); ++it)
+    TQObjectList::iterator it = children.begin();
+    for (; it != children.end(); ++it)
     {
         TQWidget *w = dynamic_cast<TQWidget*>(*it);
         if (w)
         {
-            repaintApplet(w);
+            tqrepaintApplet(w);
         }
     }
 }
@@ -372,14 +372,14 @@ bool AppletProxy::process(const TQCString &fun, const TQByteArray &data,
 	    }
 	    return true;
 	}
-    else if ( fun == "setAlignment(int)" )
+    else if ( fun == "tqsetAlignment(int)" )
 	{
 	    TQDataStream dataStream( data, IO_ReadOnly );
-	    int alignment;
-	    dataStream >> alignment;
+	    int tqalignment;
+	    dataStream >> tqalignment;
 
 	    if(_applet) {
-		_applet->setAlignment( (KPanelApplet::Alignment)alignment );
+		_applet->tqsetAlignment( (KPanelApplet::Alignment)tqalignment );
 	    }
 	    return true;
 	}
@@ -435,13 +435,13 @@ bool AppletProxy::process(const TQCString &fun, const TQByteArray &data,
             if(_applet)
                 if ( _bg.isNull() ) { // no transparency
 		    _applet->unsetPalette();
-		    _applet->repaint();
+		    _applet->tqrepaint();
 		}
                 else { //transparency
 		    _applet->blockSignals(true);
-		    _applet->setBackgroundMode(Qt::FixedPixmap);
+		    _applet->setBackgroundMode(TQt::FixedPixmap);
 		    _applet->setPaletteBackgroundPixmap(_bg);
-		    repaintApplet(_applet);
+		    tqrepaintApplet(_applet);
 		    _applet->blockSignals(false);
                 }
             return true;

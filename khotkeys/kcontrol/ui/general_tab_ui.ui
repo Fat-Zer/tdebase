@@ -1,6 +1,6 @@
 <!DOCTYPE UI><UI version="3.1" stdsetdef="1">
 <class>KHotKeys::General_tab_ui</class>
-<widget class="QWidget">
+<widget class="TQWidget">
     <property name="name">
         <cstring>General_tab_ui</cstring>
     </property>
@@ -22,7 +22,7 @@
         <property name="spacing">
             <number>6</number>
         </property>
-        <widget class="QLabel">
+        <widget class="TQLabel">
             <property name="name">
                 <cstring>action_name_label</cstring>
             </property>
@@ -33,12 +33,12 @@
                 <cstring>action_name_lineedit</cstring>
             </property>
         </widget>
-        <widget class="QLineEdit">
+        <widget class="TQLineEdit">
             <property name="name">
                 <cstring>action_name_lineedit</cstring>
             </property>
         </widget>
-        <widget class="QLayoutWidget">
+        <widget class="TQLayoutWidget">
             <property name="name">
                 <cstring>Layout1</cstring>
             </property>
@@ -52,7 +52,7 @@
                 <property name="spacing">
                     <number>6</number>
                 </property>
-                <widget class="QLabel">
+                <widget class="TQLabel">
                     <property name="name">
                         <cstring>action_type_label</cstring>
                     </property>
@@ -63,7 +63,7 @@
                         <cstring>action_type_combo</cstring>
                     </property>
                 </widget>
-                <widget class="QComboBox">
+                <widget class="TQComboBox">
                     <property name="name">
                         <cstring>action_type_combo</cstring>
                     </property>
@@ -80,14 +80,14 @@
             <property name="sizeType">
                 <enum>Fixed</enum>
             </property>
-            <property name="sizeHint">
+            <property name="tqsizeHint">
                 <size>
                     <width>20</width>
                     <height>20</height>
                 </size>
             </property>
         </spacer>
-        <widget class="QCheckBox">
+        <widget class="TQCheckBox">
             <property name="name">
                 <cstring>disable_checkbox</cstring>
             </property>
@@ -105,14 +105,14 @@
             <property name="sizeType">
                 <enum>Fixed</enum>
             </property>
-            <property name="sizeHint">
+            <property name="tqsizeHint">
                 <size>
                     <width>20</width>
                     <height>20</height>
                 </size>
             </property>
         </spacer>
-        <widget class="QLabel">
+        <widget class="TQLabel">
             <property name="name">
                 <cstring>comment_label</cstring>
             </property>

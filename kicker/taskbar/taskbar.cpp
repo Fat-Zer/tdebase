@@ -66,7 +66,7 @@ TaskBar::TaskBar( TQWidget *parent, const char *name )
     blocklayout = true;
     
     // init
-    setSizePolicy( TQSizePolicy( TQSizePolicy::Expanding, TQSizePolicy::Expanding ) );
+    tqsetSizePolicy( TQSizePolicy( TQSizePolicy::Expanding, TQSizePolicy::Expanding ) );
 
     // setup animation frames
     for (int i = 1; i < 11; i++)
@@ -117,7 +117,7 @@ TaskBar::TaskBar( TQWidget *parent, const char *name )
     blocklayout = false;
 
     connect(kapp, TQT_SIGNAL(settingsChanged(int)), TQT_SLOT(slotSettingsChanged(int)));
-    keys = new KGlobalAccel( this );
+    keys = new KGlobalAccel( TQT_TQOBJECT(this) );
 #include "taskbarbindings.cpp"
     keys->readSettings();
     keys->updateConnections();
@@ -160,7 +160,7 @@ KTextShadowEngine *TaskBar::textShadowEngine()
 }
 
 
-TQSize TaskBar::sizeHint() const
+TQSize TaskBar::tqsizeHint() const
 {
     // get our minimum height based on the minimum button height or the
     // height of the font in use, which is largest
@@ -171,7 +171,7 @@ TQSize TaskBar::sizeHint() const
     return TQSize(BUTTON_MIN_WIDTH, minButtonHeight);
 }
 
-TQSize TaskBar::sizeHint( KPanelExtension::Position p, TQSize maxSize) const
+TQSize TaskBar::tqsizeHint( KPanelExtension::Position p, TQSize maxSize) const
 {
     // get our minimum height based on the minimum button height or the
     // height of the font in use, which is largest
@@ -358,7 +358,7 @@ void TaskBar::add(Startup::Ptr startup)
          it != containers.end();
          ++it)
     {
-        if ((*it)->contains(startup))
+        if ((*it)->tqcontains(startup))
         {
             return;
         }
@@ -372,7 +372,7 @@ void TaskBar::add(Startup::Ptr startup)
 
 void TaskBar::showTaskContainer(TaskContainer* container)
 {
-    TaskContainer::List::iterator it = m_hiddenContainers.find(container);
+    TaskContainer::List::iterator it = m_hiddenContainers.tqfind(container);
     if (it != m_hiddenContainers.end())
     {
         m_hiddenContainers.erase(it);
@@ -432,7 +432,7 @@ void TaskBar::remove(Task::Ptr task, TaskContainer* container)
          it != m_hiddenContainers.end();
          ++it)
     {
-        if ((*it)->contains(task))
+        if ((*it)->tqcontains(task))
         {
             (*it)->finish();
             m_deletableContainers.append(*it);
@@ -447,7 +447,7 @@ void TaskBar::remove(Task::Ptr task, TaskContainer* container)
              it != containers.end();
              ++it)
         {
-            if ((*it)->contains(task))
+            if ((*it)->tqcontains(task))
             {
                 container = *it;
                 break;
@@ -464,7 +464,7 @@ void TaskBar::remove(Task::Ptr task, TaskContainer* container)
 
     if (container->isEmpty())
     {
-        TaskContainer::List::iterator it = containers.find(container);
+        TaskContainer::List::iterator it = containers.tqfind(container);
         if (it != containers.end())
         {
             containers.erase(it);
@@ -490,7 +490,7 @@ void TaskBar::remove(Startup::Ptr startup, TaskContainer* container)
          it != m_hiddenContainers.end();
          ++it)
     {
-        if ((*it)->contains(startup))
+        if ((*it)->tqcontains(startup))
         {
             (*it)->remove(startup);
 
@@ -511,7 +511,7 @@ void TaskBar::remove(Startup::Ptr startup, TaskContainer* container)
              it != containers.end();
              ++it)
         {
-            if ((*it)->contains(startup))
+            if ((*it)->tqcontains(startup))
             {
                 container = *it;
                 break;
@@ -530,7 +530,7 @@ void TaskBar::remove(Startup::Ptr startup, TaskContainer* container)
         return;
     }
 
-    TaskContainer::List::iterator it = containers.find(container);
+    TaskContainer::List::iterator it = containers.tqfind(container);
     if (it != containers.end())
     {
         containers.erase(it);
@@ -580,7 +580,7 @@ void TaskBar::windowChanged(Task::Ptr task)
     {
         TaskContainer* c = *it;
 
-        if (c->contains(task))
+        if (c->tqcontains(task))
         {
             container = c;
             break;
@@ -620,7 +620,7 @@ void TaskBar::windowChangedGeometry(Task::Ptr task)
          ++it)
     {
         TaskContainer* c = *it;
-        if (c->contains(task))
+        if (c->tqcontains(task))
         {
             container = c;
             break;
@@ -701,7 +701,7 @@ void TaskBar::reLayout()
                           fm.height() : TaskBarSettings::minimumButtonHeight();
 
     // horizontal layout
-    if (orientation() == Horizontal)
+    if (orientation() == Qt::Horizontal)
     {
         int bwidth = BUTTON_MIN_WIDTH;
         int rows = contentsRect().height() / minButtonHeight;
@@ -818,12 +818,12 @@ void TaskBar::reLayout()
 
 void TaskBar::setViewportBackground()
 {
-    const TQPixmap *bg = parentWidget()->backgroundPixmap();
+    const TQPixmap *bg = tqparentWidget()->backgroundPixmap();
     
     if (bg)
     {
-        TQPixmap pm(parentWidget()->size());
-        pm.fill(parentWidget(), pos() + viewport()->pos());
+        TQPixmap pm(tqparentWidget()->size());
+        pm.fill(tqparentWidget(), pos() + viewport()->pos());
         viewport()->setPaletteBackgroundPixmap(pm);
         viewport()->setBackgroundOrigin(WidgetOrigin);
     }
@@ -846,7 +846,7 @@ void TaskBar::setBackground()
     }
 }
 
-void TaskBar::setArrowType(Qt::ArrowType at)
+void TaskBar::setArrowType(TQt::ArrowType at)
 {
     if (arrowType == at)
     {
@@ -898,9 +898,9 @@ void TaskBar::propagateMouseEvent( TQMouseEvent* e )
 {
     if ( !isTopLevel()  )
     {
-        TQMouseEvent me( e->type(), mapTo( topLevelWidget(), e->pos() ),
+        TQMouseEvent me( e->type(), mapTo( tqtopLevelWidget(), e->pos() ),
                         e->globalPos(), e->button(), e->state() );
-        TQApplication::sendEvent( topLevelWidget(), &me );
+        TQApplication::sendEvent( tqtopLevelWidget(), &me );
     }
 }
 
@@ -960,7 +960,7 @@ int TaskBar::maximumButtonsWithoutShrinking() const
         rows = 1;
     }
 
-    if ( orientation() == Horizontal ) {
+    if ( orientation() == Qt::Horizontal ) {
         // maxWidth of 0 means no max width, drop back to default
         int maxWidth = TaskBarSettings::maximumButtonWidth();
         if (maxWidth == 0)

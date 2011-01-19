@@ -3,6 +3,6 @@ Singleton=true
 ClassName=KickerSettings
 Mutators=true
 Visibility=KDE_EXPORT
-IncludeFiles=qapplication.h
+IncludeFiles=tqapplication.h
 GlobalEnums=true
 MemberVariables=dpointer

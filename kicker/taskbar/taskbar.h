@@ -47,11 +47,11 @@ public:
     TaskBar( TQWidget *parent = 0, const char *name = 0 );
     ~TaskBar();
 
-    TQSize sizeHint() const;
-    TQSize sizeHint( KPanelExtension::Position, TQSize maxSize ) const;
+    TQSize tqsizeHint() const;
+    TQSize tqsizeHint( KPanelExtension::Position, TQSize maxSize ) const;
 
     void setOrientation( Orientation );
-    void setArrowType( Qt::ArrowType at );
+    void setArrowType( TQt::ArrowType at );
 
     int containerCount() const;
     int taskCount() const;

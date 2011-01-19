@@ -22,7 +22,7 @@
 
 #include <tqobject.h>
 
-class DelayedInitializer : public QObject
+class DelayedInitializer : public TQObject
 {
     Q_OBJECT
 public:

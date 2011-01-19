@@ -36,7 +36,7 @@ class KCookiesManagementDlgUI;
 
 struct CookieProp;
 
-class CookieListViewItem : public QListViewItem
+class CookieListViewItem : public TQListViewItem
 {
 public:
     CookieListViewItem(TQListView *parent, TQString dom);

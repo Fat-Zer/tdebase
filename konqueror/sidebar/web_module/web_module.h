@@ -82,7 +82,7 @@ class KHTMLSideBar : public KHTMLPart
 		virtual void urlSelected( const TQString &url, int button,
 				int state, const TQString &_target,
 				KParts::URLArgs args = KParts::URLArgs()) {
-			if (button == LeftButton ){
+			if (button == Qt::LeftButton ){
 				if (_target.lower() == "_self") {
 					openURL(url);
 				} else if (_target.lower() == "_blank") {
@@ -92,7 +92,7 @@ class KHTMLSideBar : public KHTMLPart
 				}
 				return;
 			}
-			if (button == MidButton) {
+			if (button == Qt::MidButton) {
 				emit openURLNewWindow(completeURL(url).url(),
 						args);
 				return;

@@ -26,7 +26,7 @@ class TQListView;
 // Simple dialog for displaying an query dialog.
 // It does not handle password validation.
 //
-class QueryDlg : public QDialog
+class QueryDlg : public TQDialog
 {
     Q_OBJECT
 

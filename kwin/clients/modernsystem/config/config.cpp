@@ -47,7 +47,7 @@ ModernSysConfig::ModernSysConfig(KConfig* conf, TQWidget* parent) : TQObject(par
 	connect(cbShowHandle, TQT_SIGNAL(clicked()), this, TQT_SLOT(slotSelectionChanged()));
 
 	sliderBox = new TQVBox(handleBox);
-	handleSizeSlider = new TQSlider(0, 4, 1, 0, TQSlider::Horizontal, sliderBox);
+	handleSizeSlider = new TQSlider(0, 4, 1, 0, Qt::Horizontal, sliderBox);
 	TQWhatsThis::add(handleSizeSlider,
 			i18n("Here you can change the size of the resize handle."));
 	handleSizeSlider->setTickInterval(1);
@@ -59,11 +59,11 @@ ModernSysConfig::ModernSysConfig(KConfig* conf, TQWidget* parent) : TQObject(par
 
 	bool rtl = kapp->reverseLayout();
 	label1 = new TQLabel(i18n("Small"), hbox);
-	label1->setAlignment(rtl ? AlignRight : AlignLeft);
+	label1->tqsetAlignment(rtl ? AlignRight : AlignLeft);
 	label2 = new TQLabel(i18n("Medium"), hbox);
-	label2->setAlignment(AlignHCenter);
+	label2->tqsetAlignment(AlignHCenter);
 	label3 = new TQLabel(i18n("Large"), hbox);
-	label3->setAlignment(rtl ? AlignLeft : AlignRight);
+	label3->tqsetAlignment(rtl ? AlignLeft : AlignRight);
 	
 	vbox->addWidget(handleBox);
 	vbox->addStretch(1);
@@ -104,7 +104,7 @@ void ModernSysConfig::load(KConfig* /*conf*/)
 	handleSizeSlider->setEnabled(i);
 	handleWidth = clientrc->readUnsignedNumEntry("HandleWidth", 6);
 	handleSize = clientrc->readUnsignedNumEntry("HandleSize", 30);
-	handleSizeSlider->setValue(QMIN((handleWidth - 6) / 2, 4));
+	handleSizeSlider->setValue(TQMIN((handleWidth - 6) / 2, 4));
 	
 }
 

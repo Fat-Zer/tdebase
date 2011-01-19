@@ -64,7 +64,7 @@ class SearchTraverser : public TQObject, public DocEntryTraverser
 };
 
 
-class SearchEngine : public QObject
+class SearchEngine : public TQObject
 {
     Q_OBJECT
   public:

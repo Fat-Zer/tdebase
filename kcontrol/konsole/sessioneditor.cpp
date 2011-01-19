@@ -35,7 +35,7 @@
 #include <kshell.h>
 
 // SessionListBoxText is a list box text item with session filename
-class SessionListBoxText : public QListBoxText
+class SessionListBoxText : public TQListBoxText
 {
   public:
     SessionListBoxText(const TQString &title, const TQString &filename): TQListBoxText(title)

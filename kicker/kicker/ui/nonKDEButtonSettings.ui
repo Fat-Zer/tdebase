@@ -1,6 +1,6 @@
 <!DOCTYPE UI><UI version="3.3" stdsetdef="1">
 <class>NonKDEButtonSettings</class>
-<widget class="QWidget">
+<widget class="TQWidget">
     <property name="name">
         <cstring>NonKDEButtonSettings</cstring>
     </property>
@@ -30,7 +30,7 @@
                 <string>Enter the name of the executable file to be run when this button is selected. If it is not in your $PATH then you will need to provide an absolute path.</string>
             </property>
         </widget>
-        <widget class="QLabel" row="8" column="0" rowspan="1" colspan="2">
+        <widget class="TQLabel" row="8" column="0" rowspan="1" colspan="2">
             <property name="name">
                 <cstring>textLabel3</cstring>
             </property>
@@ -46,7 +46,7 @@
 &lt;i&gt;Example&lt;/i&gt;: For the command `rm -rf` enter "-rf" in this text box.</string>
             </property>
         </widget>
-        <widget class="QCheckBox" row="10" column="0" rowspan="1" colspan="2">
+        <widget class="TQCheckBox" row="10" column="0" rowspan="1" colspan="2">
             <property name="name">
                 <cstring>m_inTerm</cstring>
             </property>
@@ -57,7 +57,7 @@
                 <string>Select this option if the command is a command line application and you wish to be able to see its output when run.</string>
             </property>
         </widget>
-        <widget class="QLineEdit" row="9" column="0" rowspan="1" colspan="2">
+        <widget class="TQLineEdit" row="9" column="0" rowspan="1" colspan="2">
             <property name="name">
                 <cstring>m_commandLine</cstring>
             </property>
@@ -67,7 +67,7 @@
 &lt;i&gt;Example&lt;/i&gt;: For the command `rm -rf` enter "-rf" in this text box.</string>
             </property>
         </widget>
-        <widget class="QLabel" row="6" column="0">
+        <widget class="TQLabel" row="6" column="0">
             <property name="name">
                 <cstring>textLabel2</cstring>
             </property>
@@ -81,7 +81,7 @@
                 <string>Enter the name of the executable file to be run when this button is selected. If it is not in your $PATH then you will need to provide an absolute path.</string>
             </property>
         </widget>
-        <widget class="QLineEdit" row="1" column="1">
+        <widget class="TQLineEdit" row="1" column="1">
             <property name="name">
                 <cstring>m_title</cstring>
             </property>
@@ -97,7 +97,7 @@
                 <string>Enter the name you would like to appear for this button here.</string>
             </property>
         </widget>
-        <widget class="QLabel" row="0" column="1">
+        <widget class="TQLabel" row="0" column="1">
             <property name="name">
                 <cstring>textLabel1</cstring>
             </property>
@@ -121,7 +121,7 @@
             <property name="sizeType">
                 <enum>Expanding</enum>
             </property>
-            <property name="sizeHint">
+            <property name="tqsizeHint">
                 <size>
                     <width>20</width>
                     <height>16</height>
@@ -140,13 +140,13 @@
                     <verstretch>0</verstretch>
                 </sizepolicy>
             </property>
-            <property name="minimumSize">
+            <property name="tqminimumSize">
                 <size>
                     <width>58</width>
                     <height>58</height>
                 </size>
             </property>
-            <property name="maximumSize">
+            <property name="tqmaximumSize">
                 <size>
                     <width>58</width>
                     <height>58</height>
@@ -159,7 +159,7 @@
                 <number>48</number>
             </property>
         </widget>
-        <widget class="QLabel" row="4" column="0">
+        <widget class="TQLabel" row="4" column="0">
             <property name="name">
                 <cstring>textLabel4</cstring>
             </property>
@@ -173,7 +173,7 @@
                 <string>Enter the name you would like to appear for this button here.</string>
             </property>
         </widget>
-        <widget class="QLineEdit" row="5" column="0" rowspan="1" colspan="2">
+        <widget class="TQLineEdit" row="5" column="0" rowspan="1" colspan="2">
             <property name="name">
                 <cstring>m_description</cstring>
             </property>
@@ -199,7 +199,7 @@
             <property name="sizeType">
                 <enum>Minimum</enum>
             </property>
-            <property name="sizeHint">
+            <property name="tqsizeHint">
                 <size>
                     <width>20</width>
                     <height>8</height>

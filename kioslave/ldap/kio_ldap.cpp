@@ -166,22 +166,22 @@ void LDAPProtocol::controlsFromMetaData( LDAPControl ***serverctrls,
 {
   TQString oid; bool critical; TQByteArray value;
   int i = 0;
-  while ( hasMetaData( TQString::fromLatin1("SERVER_CTRL%1").arg(i) ) ) {
-    TQCString val = metaData( TQString::fromLatin1("SERVER_CTRL%1").arg(i) ).utf8();
+  while ( hasMetaData( TQString::tqfromLatin1("SERVER_CTRL%1").arg(i) ) ) {
+    TQCString val = metaData( TQString::tqfromLatin1("SERVER_CTRL%1").arg(i) ).utf8();
     LDIF::splitControl( val, oid, critical, value );
     kdDebug(7125) << "server ctrl #" << i << " value: " << val << 
       " oid: " << oid << " critical: " << critical << " value: " << 
-      TQString::fromUtf8( value, value.size() ) << endl;
+      TQString(TQString::fromUtf8( value, value.size() )) << endl;
     addControlOp( serverctrls, oid, value, critical );
     i++;
   }
   i = 0;
-  while ( hasMetaData( TQString::fromLatin1("CLIENT_CTRL%1").arg(i) ) ) {
-    TQCString val = metaData( TQString::fromLatin1("CLIENT_CTRL%1").arg(i) ).utf8();
+  while ( hasMetaData( TQString::tqfromLatin1("CLIENT_CTRL%1").arg(i) ) ) {
+    TQCString val = metaData( TQString::tqfromLatin1("CLIENT_CTRL%1").arg(i) ).utf8();
     LDIF::splitControl( val, oid, critical, value );
     kdDebug(7125) << "client ctrl #" << i << " value: " << val << 
       " oid: " << oid << " critical: " << critical << " value: " << 
-      TQString::fromUtf8( value, value.size() ) << endl;
+      TQString(TQString::fromUtf8( value, value.size() )) << endl;
     addControlOp( clientctrls, oid, value, critical );
     i++;
   }
@@ -285,7 +285,7 @@ void LDAPProtocol::addControlOp( LDAPControl ***pctrls, const TQString &oid,
   ctrls = *pctrls;
 
   kdDebug(7125) << "addControlOp: oid:'" << oid << "' val: '" << 
-    TQString::fromUtf8(value, value.size()) << "'" << endl;
+    TQString(TQString::fromUtf8(value, value.size())) << "'" << endl;
   int vallen = value.size();
   ctrl->ldctl_value.bv_len = vallen;
   if ( vallen ) {
@@ -390,11 +390,11 @@ void LDAPProtocol::LDAPEntry2UDSEntry( const TQString &dn, UDSEntry &entry,
   atom.m_uds = UDS_NAME;
   atom.m_long = 0;
   TQString name = dn;
-  if ( (pos = name.find(",")) > 0 )
+  if ( (pos = name.tqfind(",")) > 0 )
     name = name.left( pos );
-  if ( (pos = name.find("=")) > 0 )
+  if ( (pos = name.tqfind("=")) > 0 )
     name.remove( 0, pos+1 );
-  name.replace(' ', "_");
+  name.tqreplace(' ', "_");
   if ( !dir ) name += ".ldif";
   atom.m_str = name;
   entry.append( atom );
@@ -519,7 +519,7 @@ void LDAPProtocol::fillAuthInfo( AuthInfo &info )
   info.url.setPort( mPort );
   info.url.setUser( mUser );
   info.caption = i18n("LDAP Login");
-  info.comment = TQString::fromLatin1( mProtocol ) + "://" + mHost + ":" + 
+  info.comment = TQString::tqfromLatin1( mProtocol ) + "://" + mHost + ":" + 
     TQString::number( mPort );
   info.commentLabel = i18n("site:");
   info.username = mAuthSASL ? mUser : mBindName;

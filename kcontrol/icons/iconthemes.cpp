@@ -138,7 +138,7 @@ void IconThemesConfig::loadThemes()
     tname=name;
 
  //  Just in case we have duplicated icon theme names on separate directories
-    for (int i=2; m_themeNames.find(tname)!=m_themeNames.end() ; i++)
+    for (int i=2; m_themeNames.tqfind(tname)!=m_themeNames.end() ; i++)
         tname=TQString("%1-%2").arg(name).arg(i);
 
     m_iconThemes->insertItem(new TQListViewItem(m_iconThemes,name,

@@ -25,7 +25,7 @@ namespace KWinInternal
 class Workspace;
 class Client;
 
-class TabBox : public QFrame
+class TabBox : public TQFrame
     {
     Q_OBJECT
     public:

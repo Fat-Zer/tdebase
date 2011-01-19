@@ -486,7 +486,7 @@ ProcessList::buildList()
 
 			addProcess(p, pli);
 
-			if (selectedPIds.findIndex(p->pid()) != -1)
+			if (selectedPIds.tqfindIndex(p->pid()) != -1)
 				pli->setSelected(true);
 		}
 		pl.removeFirst();
@@ -513,7 +513,7 @@ ProcessList::buildTree()
 			int pid = ps->pid();
 			pl.remove();
 
-			if (selectedPIds.findIndex(pid) != -1)
+			if (selectedPIds.tqfindIndex(pid) != -1)
 				pli->setSelected(true);
 
 			// insert all child processes of current process
@@ -569,10 +569,10 @@ ProcessList::extendTree(TQPtrList<KSGRD::SensorPSLine>* pl, ProcessLVI* parent, 
 
 			addProcess(ps, pli);
 
-			if (selectedPIds.findIndex(ps->pid()) != -1)
+			if (selectedPIds.tqfindIndex(ps->pid()) != -1)
 				pli->setSelected(true);
 
-			if (ps->ppid() != INIT_PID && closedSubTrees.findIndex(ps->ppid()) != -1)
+			if (ps->ppid() != INIT_PID && closedSubTrees.tqfindIndex(ps->ppid()) != -1)
 				parent->setOpen(false);
 			else
 				parent->setOpen(true);
@@ -635,7 +635,7 @@ ProcessList::addProcess(KSGRD::SensorPSLine* p, ProcessLVI* pli)
 			icon.fill();
 			bitBlt(&icon, 4, 0, &pix, 0, 0, pix.width(), pix.height());
 			TQBitmap mask(24, 16, true);
-			bitBlt(&mask, 4, 0, pix.mask(), 0, 0, pix.width(), pix.height());
+			bitBlt(&mask, 4, 0, pix.tqmask(), 0, 0, pix.width(), pix.height());
 			icon.setMask(mask);
 			pix = icon;
 		}
@@ -909,7 +909,7 @@ ProcessList::selectAllItems(bool select)
 	for ( ; it.current(); ++it )
 	{
 		it.current()->setSelected(select);
-		repaintItem(it.current());
+		tqrepaintItem(it.current());
 		if (select)
 			selectedPIds.append(it.current()->text(1).toInt());
 	}
@@ -928,7 +928,7 @@ ProcessList::selectAllChilds(int pid, bool select)
 		{
 			int currPId = it.current()->text(1).toInt();
 			it.current()->setSelected(select);
-			repaintItem(it.current());
+			tqrepaintItem(it.current());
 			if (select)
 				selectedPIds.append(currPId);
 			else

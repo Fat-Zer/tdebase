@@ -1,6 +1,6 @@
 <!DOCTYPE UI><UI version="3.2" stdsetdef="1">
 <class>SMServerConfigDlg</class>
-<widget class="QWidget">
+<widget class="TQWidget">
     <property name="name">
         <cstring>SMServerConfigDlg</cstring>
     </property>
@@ -24,7 +24,7 @@
         <property name="margin">
             <number>0</number>
         </property>
-        <widget class="QGroupBox">
+        <widget class="TQGroupBox">
             <property name="name">
                 <cstring>topBox</cstring>
             </property>
@@ -43,7 +43,7 @@
                 <property name="name">
                     <cstring>unnamed</cstring>
                 </property>
-                <widget class="QCheckBox">
+                <widget class="TQCheckBox">
                     <property name="name">
                         <cstring>confirmLogoutCheck</cstring>
                     </property>
@@ -54,7 +54,7 @@
                         <string>Check this option if you want the session manager to display a logout confirmation dialog box.</string>
                     </property>
                 </widget>
-                <widget class="QCheckBox">
+                <widget class="TQCheckBox">
                     <property name="name">
                         <cstring>offerShutdownCheck</cstring>
                     </property>
@@ -64,7 +64,7 @@
                 </widget>
             </vbox>
         </widget>
-        <widget class="QButtonGroup">
+        <widget class="TQButtonGroup">
             <property name="name">
                 <cstring>loginGroup</cstring>
             </property>
@@ -82,7 +82,7 @@
                 <property name="name">
                     <cstring>unnamed</cstring>
                 </property>
-                <widget class="QRadioButton">
+                <widget class="TQRadioButton">
                     <property name="name">
                         <cstring>previousSessionRadio</cstring>
                     </property>
@@ -90,7 +90,7 @@
                         <string>Restore &amp;previous session</string>
                     </property>
                 </widget>
-                <widget class="QRadioButton">
+                <widget class="TQRadioButton">
                     <property name="name">
                         <cstring>savedSessionRadio</cstring>
                     </property>
@@ -98,7 +98,7 @@
                         <string>Restore &amp;manually saved session</string>
                     </property>
                 </widget>
-                <widget class="QRadioButton">
+                <widget class="TQRadioButton">
                     <property name="name">
                         <cstring>emptySessionRadio</cstring>
                     </property>
@@ -108,7 +108,7 @@
                 </widget>
             </vbox>
         </widget>
-        <widget class="QButtonGroup">
+        <widget class="TQButtonGroup">
             <property name="name">
                 <cstring>sdGroup</cstring>
             </property>
@@ -122,7 +122,7 @@
                 <property name="name">
                     <cstring>unnamed</cstring>
                 </property>
-                <widget class="QRadioButton">
+                <widget class="TQRadioButton">
                     <property name="name">
                         <cstring>logoutRadio</cstring>
                     </property>
@@ -130,7 +130,7 @@
                         <string>&amp;End current session</string>
                     </property>
                 </widget>
-                <widget class="QRadioButton">
+                <widget class="TQRadioButton">
                     <property name="name">
                         <cstring>haltRadio</cstring>
                     </property>
@@ -138,7 +138,7 @@
                         <string>&amp;Turn off computer</string>
                     </property>
                 </widget>
-                <widget class="QRadioButton">
+                <widget class="TQRadioButton">
                     <property name="name">
                         <cstring>rebootRadio</cstring>
                     </property>
@@ -148,7 +148,7 @@
                 </widget>
             </vbox>
         </widget>
-        <widget class="QButtonGroup">
+        <widget class="TQButtonGroup">
             <property name="name">
                 <cstring>advancedGroup</cstring>
             </property>
@@ -159,7 +159,7 @@
                 <property name="name">
                     <cstring>unnamed</cstring>
                 </property>
-                <widget class="QLabel">
+                <widget class="TQLabel">
                     <property name="name">
                         <cstring>textLabel1</cstring>
                     </property>
@@ -190,7 +190,7 @@
             <property name="sizeType">
                 <enum>Expanding</enum>
             </property>
-            <property name="sizeHint">
+            <property name="tqsizeHint">
                 <size>
                     <width>20</width>
                     <height>130</height>

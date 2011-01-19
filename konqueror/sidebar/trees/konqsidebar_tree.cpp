@@ -75,14 +75,14 @@ void KonqSidebar_Tree::cut()
 {
     TQDragObject * drag = static_cast<KonqSidebarTreeItem*>(tree->selectedItem())->dragObject( 0L, true );
     if (drag)
-        TQApplication::clipboard()->setData( drag );
+        TQApplication::tqclipboard()->setData( drag );
 }
 
 void KonqSidebar_Tree::copy()
 {
     TQDragObject * drag = static_cast<KonqSidebarTreeItem*>(tree->selectedItem())->dragObject( 0L );
     if (drag)
-        TQApplication::clipboard()->setData( drag );
+        TQApplication::tqclipboard()->setData( drag );
 }
 
 void KonqSidebar_Tree::paste()
@@ -147,7 +147,7 @@ extern "C"
 		i18n( "Select type:" ), names );
 	if (!item.isEmpty())
 		{
-			int id=names.findIndex( item );
+			int id=names.tqfindIndex( item );
 			if (id==-1) return false;
 			KSimpleConfig ksc2(*list.at(id));
 			ksc2.setGroup("Desktop Entry");

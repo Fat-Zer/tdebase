@@ -1,6 +1,6 @@
 <!DOCTYPE UI><UI version="3.0" stdsetdef="1">
 <class>ComponentConfig_UI</class>
-<widget class="QWidget">
+<widget class="TQWidget">
     <property name="name">
         <cstring>ComponentConfig_UI</cstring>
     </property>
@@ -19,14 +19,14 @@
         <property name="margin">
             <number>0</number>
         </property>
-        <widget class="QLabel">
+        <widget class="TQLabel">
             <property name="name">
                 <cstring>ChooserDocu</cstring>
             </property>
             <property name="text">
                 <string></string>
             </property>
-            <property name="alignment">
+            <property name="tqalignment">
                 <set>WordBreak|AlignVCenter</set>
             </property>
         </widget>
@@ -45,7 +45,7 @@
             <property name="sizeType">
                 <enum>Expanding</enum>
             </property>
-            <property name="sizeHint">
+            <property name="tqsizeHint">
                 <size>
                     <width>0</width>
                     <height>91</height>

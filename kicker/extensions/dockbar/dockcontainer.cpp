@@ -41,9 +41,9 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 DockContainer::DockContainer( TQString command, TQWidget *parent,
                               TQString resname, TQString resclass, bool undocked_style )
     : TQFrame( parent, resname.ascii(),
-              undocked_style ? WStyle_Customize |
+              undocked_style ? (WFlags)(WStyle_Customize |
               WStyle_StaysOnTop | WStyle_Tool |
-              WStyle_NoBorder | WX11BypassWM : 0 ),
+              WStyle_NoBorder | WX11BypassWM) : (WFlags)0 ),
       _embeddedWinId(0),
       _command(command),
       _resName(resname),

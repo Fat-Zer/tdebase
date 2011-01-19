@@ -131,7 +131,7 @@ KRootWm::KRootWm(KDesktop* _desktop) : TQObject(_desktop)
 
   if (kapp->authorize("run_command"))
   {
-     new KAction(i18n("Run Command..."), "run", 0, m_pDesktop, TQT_SLOT( slotExecuteCommand() ), m_actionCollection, "exec" );
+     new KAction(i18n("Run Command..."), "run", 0, TQT_TQOBJECT(m_pDesktop), TQT_SLOT( slotExecuteCommand() ), m_actionCollection, "exec" );
      new KAction(i18n("Open Terminal Here..." ), "terminal", CTRL+Key_T, this, TQT_SLOT( slotOpenTerminal() ),
 	m_actionCollection, "open_terminal" );
   }
@@ -243,7 +243,7 @@ void KRootWm::initConfig()
     if (s == s_choices[c])
       { rightButtonChoice = (menuChoice) c; break; }
 
-  // Read configuration for icons alignment
+  // Read configuration for icons tqalignment
   if ( m_bDesktopEnabled ) {
     bool startup = true; m_pDesktop->iconView()->setAutoAlign( KDesktopSettings::autoLineUpIcons() ); 
     if ( kapp->authorize( "editable_desktop_icons" ) ) {
@@ -606,15 +606,15 @@ void KRootWm::mousePressed( const TQPoint& _global, int _button )
 {
     if (!desktopMenu) return; // initialisation not yet done
     switch ( _button ) {
-    case LeftButton:
+    case Qt::LeftButton:
         if ( m_bShowMenuBar && menuBar )
             menuBar->raise();
         activateMenu( leftButtonChoice, _global );
         break;
-    case MidButton:
+    case Qt::MidButton:
         activateMenu( middleButtonChoice, _global );
         break;
-    case RightButton:
+    case Qt::RightButton:
         if (!kapp->authorize("action/kdesktop_rmb")) return;
         activateMenu( rightButtonChoice, _global );
         break;
@@ -636,8 +636,8 @@ void KRootWm::slotWindowList() {
   windowListMenu->init();
   disconnect( windowListMenu, TQT_SIGNAL( aboutToShow() ),
            this, TQT_SLOT( slotWindowListAboutToShow() ) ); // avoid calling init() twice
-  // windowListMenu->rect() is not valid before showing, use sizeHint()
-  windowListMenu->popup(r.center() - TQRect( TQPoint( 0, 0 ), windowListMenu->sizeHint()).center());
+  // windowListMenu->rect() is not valid before showing, use tqsizeHint()
+  windowListMenu->popup(r.center() - TQRect( TQPoint( 0, 0 ), windowListMenu->tqsizeHint()).center());
   windowListMenu->selectActiveWindow(); // make the popup more useful
   connect( windowListMenu, TQT_SIGNAL( aboutToShow() ),
            this, TQT_SLOT( slotWindowListAboutToShow() ) );
@@ -656,7 +656,7 @@ void KRootWm::slotSwitchUser() {
   slotPopulateSessions();
   disconnect( sessionsMenu, TQT_SIGNAL( aboutToShow() ),
            this, TQT_SLOT( slotPopulateSessions() ) ); // avoid calling init() twice
-  sessionsMenu->popup(r.center() - TQRect( TQPoint( 0, 0 ), sessionsMenu->sizeHint()).center());
+  sessionsMenu->popup(r.center() - TQRect( TQPoint( 0, 0 ), sessionsMenu->tqsizeHint()).center());
   connect( sessionsMenu, TQT_SIGNAL( aboutToShow() ),
            TQT_SLOT( slotPopulateSessions() ) );
 }
@@ -810,17 +810,17 @@ void KRootWm::slotToggleDesktopMenu()
 
 void KRootWm::slotUnclutterWindows()
 {
-    kapp->dcopClient()->send(kwin_name, "KWinInterface", "unclutterDesktop()", "");
+    kapp->dcopClient()->send(kwin_name, "KWinInterface", "unclutterDesktop()", TQString(""));
 }
 
 
 void KRootWm::slotCascadeWindows() {
-    kapp->dcopClient()->send(kwin_name, "KWinInterface", "cascadeDesktop()", "");
+    kapp->dcopClient()->send(kwin_name, "KWinInterface", "cascadeDesktop()", TQString(""));
 }
 
 
 void KRootWm::slotLock() {
-    kapp->dcopClient()->send(kdesktop_name, "KScreensaverIface", "lock()", "");
+    kapp->dcopClient()->send(kdesktop_name, "KScreensaverIface", "lock()", TQString(""));
 }
 
 

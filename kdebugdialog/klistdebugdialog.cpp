@@ -83,9 +83,9 @@ void KListDebugDialog::generateCheckBoxes( const TQString& filter )
   for ( ; it != m_areaList.end() ; ++it )
   {
     TQString data = (*it).simplifyWhiteSpace();
-    if ( filter.isEmpty() || data.lower().contains( filter.lower() ) )
+    if ( filter.isEmpty() || data.lower().tqcontains( filter.lower() ) )
     {
-      int space = data.find(" ");
+      int space = data.tqfind(" ");
       if (space == -1)
         kdError() << "No space:" << data << endl;
 
@@ -129,7 +129,7 @@ void KListDebugDialog::load()
 
       int setting = pConfig->readNumEntry( "InfoOutput", 2 );
       // override setting if in m_changes
-      if( m_changes.find( (*it)->name() ) != m_changes.end() ) {
+      if( m_changes.tqfind( (*it)->name() ) != m_changes.end() ) {
         setting = m_changes[ (*it)->name() ];
       }
 
@@ -182,7 +182,7 @@ void KListDebugDialog::activateArea( TQCString area, bool activate )
   for ( ; it.current() ; ++it )
   {
       if ( area == (*it)->name()  // debug area code = cb's name
-          || (*it)->text().find( TQString::fromLatin1(area) ) != -1 ) // area name included in cb text
+          || (*it)->text().tqfind( TQString::tqfromLatin1(area) ) != -1 ) // area name included in cb text
       {
           (*it)->setChecked( activate );
           return;

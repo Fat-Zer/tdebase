@@ -45,7 +45,7 @@ class KatePluginListView : public KListView
     void stateChanged(KatePluginListItem *, bool);
 };
 
-class KateConfigPluginPage: public QVBox
+class KateConfigPluginPage: public TQVBox
 {
   Q_OBJECT
 

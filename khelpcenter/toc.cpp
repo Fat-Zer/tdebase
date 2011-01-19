@@ -88,7 +88,7 @@ void TOC::build( const TQString &file )
 		}
 	}
 
-	TQString cacheFile = fileName.replace( TQDir::separator(), "__" );
+	TQString cacheFile = fileName.tqreplace( TQDir::separator(), "__" );
 	m_cacheFile = locateLocal( "cache", "help/" + cacheFile );
 	m_sourceFile = file;
 
@@ -188,9 +188,9 @@ void TOC::fillTree()
 	TQDomNodeList chapters = doc.documentElement().elementsByTagName( "chapter" );
 	for ( unsigned int chapterCount = 0; chapterCount < chapters.count(); chapterCount++ ) {
 		TQDomElement chapElem = chapters.item( chapterCount ).toElement();
-		TQDomElement chapTitleElem = childElement( chapElem, TQString::fromLatin1( "title" ) );
+		TQDomElement chapTitleElem = childElement( chapElem, TQString::tqfromLatin1( "title" ) );
 		TQString chapTitle = chapTitleElem.text().simplifyWhiteSpace();
-		TQDomElement chapRefElem = childElement( chapElem, TQString::fromLatin1( "anchor" ) );
+		TQDomElement chapRefElem = childElement( chapElem, TQString::tqfromLatin1( "anchor" ) );
 		TQString chapRef = chapRefElem.text().stripWhiteSpace();
 
 		chapItem = new TOCChapterItem( this, m_parentItem, chapItem, chapTitle, chapRef );
@@ -199,9 +199,9 @@ void TOC::fillTree()
 		TQDomNodeList sections = chapElem.elementsByTagName( "section" );
 		for ( unsigned int sectCount = 0; sectCount < sections.count(); sectCount++ ) {
 			TQDomElement sectElem = sections.item( sectCount ).toElement();
-			TQDomElement sectTitleElem = childElement( sectElem, TQString::fromLatin1( "title" ) );
+			TQDomElement sectTitleElem = childElement( sectElem, TQString::tqfromLatin1( "title" ) );
 			TQString sectTitle = sectTitleElem.text().simplifyWhiteSpace();
-			TQDomElement sectRefElem = childElement( sectElem, TQString::fromLatin1( "anchor" ) );
+			TQDomElement sectRefElem = childElement( sectElem, TQString::tqfromLatin1( "anchor" ) );
 			TQString sectRef = sectRefElem.text().stripWhiteSpace();
 
 			sectItem = new TOCSectionItem( this, chapItem, sectItem, sectTitle, sectRef );
@@ -261,8 +261,8 @@ TOCSectionItem::TOCSectionItem( TOC *toc, TOCChapterItem *parent, TQListViewItem
 
 TQString TOCSectionItem::url()
 {
-	if ( static_cast<TOCSectionItem *>( parent()->firstChild() ) == this )
-		return static_cast<TOCChapterItem *>( parent() )->url() + "#" + m_name;
+	if ( static_cast<TOCSectionItem *>( tqparent()->firstChild() ) == this )
+		return static_cast<TOCChapterItem *>( tqparent() )->url() + "#" + m_name;
 	
 	return "help:" + toc()->application() + "/" + m_name + ".html";
 }

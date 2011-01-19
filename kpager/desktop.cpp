@@ -78,22 +78,22 @@ void Desktop::mouseMoveEvent( TQMouseEvent *ev )
 {
     if ( !KPagerConfigDialog::m_windowDragging )
 	return;
-    if ( (ev->state() & LeftButton) == 0 )
+    if ( (ev->state() & Qt::LeftButton) == 0 )
 	return;
     TQPoint p( ev->pos() - pressPos );
-    if ( p.manhattanLength() >= qApp->startDragDistance() )
+    if ( p.manhattanLength() >= tqApp->startDragDistance() )
 	startDrag( pressPos );
 }
 
 void Desktop::mousePressEvent( TQMouseEvent * ev)
 {
     bool showWindows= KPagerConfigDialog::m_showWindows;
-    if (ev->button()==LeftButton){
+    if (ev->button()==Qt::LeftButton){
 	pressPos = ev->pos();
     }
-    else if ((ev->button()==MidButton)&&(showWindows))
+    else if ((ev->button()==Qt::MidButton)&&(showWindows))
 	startDrag(ev->pos());
-    else if (ev->button()==RightButton) {
+    else if (ev->button()==Qt::RightButton) {
 	TQPoint pos;
 	KWin::WindowInfo *info = windowAtPosition(ev->pos(), &pos);
 	if ( info && showWindows )
@@ -107,7 +107,7 @@ void Desktop::mouseReleaseEvent( TQMouseEvent *ev )
 {
 /** Note that mouseReleaseEvent is not called when releasing the mouse
  to drop a window in this desktop */
-  if (ev->button()==LeftButton)
+  if (ev->button()==Qt::LeftButton)
   {
     bool showWindows= KPagerConfigDialog::m_showWindows;
     TQPoint pos;
@@ -120,7 +120,7 @@ void Desktop::mouseReleaseEvent( TQMouseEvent *ev )
 	KWin::forceActiveWindow(info->win());
 
 	//	    if ( static_cast<WindowDrawMode>( KPagerConfigDialog::m_windowDrawMode ) == Pixmap )
-	//		m_windowPixmapsDirty.replace(info->win,true);
+	//		m_windowPixmapsDirty.tqreplace(info->win,true);
       }
     }
   }
@@ -140,7 +140,7 @@ KWin::WindowInfo *Desktop::windowAtPosition(const TQPoint &p, TQPoint *internalp
 		{
 			r=info->geometry();
 			convertRectS2P(r);
-			if (r.contains(p))
+			if (r.tqcontains(p))
 			{
 				if (internalpos)
 				{
@@ -181,7 +181,7 @@ TQPixmap scalePixmap(const TQPixmap &pixmap, int width, int height)
     return io.convertToPixmap(img.smoothScale(width,height));
   }
 
-  TQImage img(pixmap.convertToImage().smoothScale(width,height));
+  TQImage img(TQImage(pixmap.convertToImage()).smoothScale(width,height));
   TQPixmap pix;
   pix.convertFromImage(img);
 
@@ -295,7 +295,7 @@ TQPixmap *Desktop::paintNewWindow(const KWin::WindowInfo *info)
 
     p.begin(pixmap);
     p.setFont(font());
-    p.fillRect( r, colorGroup().brush(TQColorGroup::Dark));
+    p.fillRect( r, tqcolorGroup().brush(TQColorGroup::Dark));
     paintWindow(p, info, false);
     p.end();
 
@@ -425,7 +425,7 @@ void Desktop::paintEvent( TQPaintEvent * )
 
   p.begin(&pixmap);
 //  p.setFont(font());
-//  p.fillRect(rect(), colorGroup().brush(TQColorGroup::Dark));
+//  p.fillRect(rect(), tqcolorGroup().brush(TQColorGroup::Dark));
 //  p.setPen(Qt::black);
 //  p.drawRect(rect());
 
@@ -450,7 +450,7 @@ void Desktop::paintEvent( TQPaintEvent * )
      else pixmap.fill(Qt::gray);
   }
   else
-    p.fillRect(rect(), colorGroup().brush(TQColorGroup::Mid));
+    p.fillRect(rect(), tqcolorGroup().brush(TQColorGroup::Mid));
 
     // set in/active pen
   if (isCurrent())
@@ -523,21 +523,21 @@ void Desktop::paintWindowPlain(TQPainter &p, const KWin::WindowInfo *info, bool 
 
   TQBrush brush;
 
-  if ( isActive ) brush=colorGroup().brush( TQColorGroup::Highlight );
-  else brush=colorGroup().brush(  TQColorGroup::Button );
+  if ( isActive ) brush=tqcolorGroup().brush( TQColorGroup::Highlight );
+  else brush=tqcolorGroup().brush(  TQColorGroup::Button );
 
   if ( m_transparentMode==AllWindows
       || (m_transparentMode==MaximizedWindows && ( info->state() & NET::Max )) )
-    brush.setStyle(TQBrush::Dense4Pattern);
+    brush.setStyle(Qt::Dense4Pattern);
 
   if ( isActive )
   {
-    qDrawShadeRect( &p, r, colorGroup(), false, 1, 0, &brush );
+    qDrawShadeRect( &p, r, tqcolorGroup(), false, 1, 0, &brush );
   }
   else
   {
     p.fillRect( r, brush );
-    qDrawShadeRect( &p, r, colorGroup(), true, 1, 0 );
+    qDrawShadeRect( &p, r, tqcolorGroup(), true, 1, 0 );
   }
 
 }
@@ -602,8 +602,8 @@ void Desktop::paintWindowPixmap(TQPainter &p, const KWin::WindowInfo *info,
 		nHg = rSmall.height();
 	}
 	pixmap=new TQPixmap(fastScalePixmap(tmp, nWd, nHg));
-	m_windowPixmaps.replace(info->win(),pixmap);
-	m_windowPixmapsDirty.replace(info->win(),false);
+	m_windowPixmaps.tqreplace(info->win(),pixmap);
+	m_windowPixmapsDirty.tqreplace(info->win(),false);
       }
     }
 
@@ -669,7 +669,7 @@ void Desktop::backgroundLoaded(bool b)
   } else kdDebug() << "Error getting the background\n";
 }
 
-TQSize Desktop::sizeHint() const
+TQSize Desktop::tqsizeHint() const
 {
   return TQSize(67,50);
 }

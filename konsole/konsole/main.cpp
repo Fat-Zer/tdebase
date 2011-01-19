@@ -133,7 +133,7 @@ const char *konsole_shell(TQStrList &args)
  */
 class KonsoleSessionManaged: public KSessionManaged {
 public:
-    bool saveState( QSessionManager&sm) {
+    bool saveState( TQSessionManager&sm) {
         TQStringList restartCommand = sm.restartCommand();
         if (has_noxft)
             restartCommand.append("--noxft");
@@ -324,7 +324,7 @@ extern "C" int KDE_EXPORT kdemain(int argc, char* argv[])
 
   TQString term = "";
   if(args->isSet("tn")) {
-    term=TQString::fromLatin1(args->getOption("tn"));
+    term=TQString::tqfromLatin1(args->getOption("tn"));
   }
   login_shell = args->isSet("ls");
 
@@ -375,7 +375,7 @@ extern "C" int KDE_EXPORT kdemain(int argc, char* argv[])
         it != types.end(); ++it)
     {
        TQString file = *it;
-       file = file.mid(file.findRev('/')+1);
+       file = file.mid(file.tqfindRev('/')+1);
        if (file.endsWith(".desktop"))
           file = file.left(file.length()-8);
        printf("%s\n", TQFile::encodeName(file).data());
@@ -437,7 +437,7 @@ extern "C" int KDE_EXPORT kdemain(int argc, char* argv[])
          it != profiles.end(); ++it)
      {
         TQString file = *it;
-        file = file.mid(file.findRev('/')+1);
+        file = file.mid(file.tqfindRev('/')+1);
         printf("%s\n", TQFile::encodeName(file).data());
      }
      return 0;
@@ -515,7 +515,7 @@ extern "C" int KDE_EXPORT kdemain(int argc, char* argv[])
         sIcon = sessionconfig->readEntry("Icon0","konsole");
         sCwd = sessionconfig->readPathEntry("Cwd0");
         workDir = sessionconfig->readPathEntry("workdir");
-	n_tabbar = QMIN(sessionconfig->readUnsignedNumEntry("tabbar",Konsole::TabBottom),2);
+	n_tabbar = TQMIN(sessionconfig->readUnsignedNumEntry("tabbar",Konsole::TabBottom),2);
         Konsole *m = new Konsole(wname,histon,menubaron,tabbaron,frameon,scrollbaron,0/*type*/,true,n_tabbar, workDir);
 
         m->newSession(sPgm, eargs, sTerm, sIcon, sTitle, sCwd);
@@ -558,7 +558,7 @@ extern "C" int KDE_EXPORT kdemain(int argc, char* argv[])
           // if the -e option is passed on the command line, this overrides the program specified 
           // in the profile file
           if ( args->isSet("e") )
-            sPgm = (shell ? TQFile::decodeName(shell) : TQString::null);
+            sPgm = (shell ? TQFile::decodeName(shell) : TQString());
           else
             sPgm = sessionconfig->readEntry(key, shell);
 
@@ -614,7 +614,7 @@ extern "C" int KDE_EXPORT kdemain(int argc, char* argv[])
   else
   {
     Konsole*  m = new Konsole(wname,histon,menubaron,tabbaron,frameon,scrollbaron,type, false, 0, workDir);
-    m->newSession((shell ? TQFile::decodeName(shell) : TQString::null), eargs, term, TQString::null, title, workDir);
+    m->newSession((shell ? TQFile::decodeName(shell) : TQString()), eargs, term, TQString(), title, workDir);
     m->enableFullScripting(full_script);
     m->enableFixedSize(fixed_size);
     //3.8 :-(
@@ -644,13 +644,13 @@ extern "C" int KDE_EXPORT kdemain(int argc, char* argv[])
  //// Temporary code, waiting for Qt to do this properly
 
   // Delete all toplevel widgets that have WDestructiveClose
-  TQWidgetList *list = TQApplication::topLevelWidgets();
+  TQWidgetList *list = TQApplication::tqtopLevelWidgets();
   // remove all toplevel widgets that have a parent (i.e. they
   // got WTopLevel explicitly), they'll be deleted by the parent
   list->first();
   while( list->current())
   {
-    if( list->current()->parentWidget() != NULL || !list->current()->testWFlags( Qt::WDestructiveClose ) )
+    if( list->current()->tqparentWidget() != NULL || !list->current()->testWFlags( TQt::WDestructiveClose ) )
     {
         list->remove();
         continue;

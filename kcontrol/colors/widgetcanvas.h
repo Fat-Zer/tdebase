@@ -58,7 +58,7 @@ public:
     int number;
 };
 
-class WidgetCanvas : public QWidget
+class WidgetCanvas : public TQWidget
 {
     Q_OBJECT
 

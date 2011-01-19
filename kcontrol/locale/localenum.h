@@ -34,7 +34,7 @@ class TQLineEdit;
 class KLocale;
 class KLanguageCombo;
 
-class KLocaleConfigNumber : public QWidget
+class KLocaleConfigNumber : public TQWidget
 {
   Q_OBJECT
 

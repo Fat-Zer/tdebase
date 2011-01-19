@@ -152,7 +152,7 @@ void PopupMenuGUIClient::addEmbeddingService( TQDomElement &menu, int idx, const
   action.setAttribute( "group", "preview" );
 
   (void)new KAction( name, service->pixmap( KIcon::Small ), 0,
-                     m_mainWindow, TQT_SLOT( slotOpenEmbedded() ), actionCollection(), actName );
+                     TQT_TQOBJECT(m_mainWindow), TQT_SLOT( slotOpenEmbedded() ), actionCollection(), actName );
 }
 
 ToggleViewGUIClient::ToggleViewGUIClient( KonqMainWindow *mainWindow )
@@ -191,7 +191,7 @@ ToggleViewGUIClient::ToggleViewGUIClient( KonqMainWindow *mainWindow )
     TQString name = (*cIt)->desktopEntryName();
     //kdDebug(1202) << "ToggleViewGUIClient: name=" << name << endl;
     KToggleAction *action = new KToggleAction( description, 0, mainWindow->actionCollection(), name.latin1() );
-    action->setCheckedState( i18n( "Hide %1" ).arg( (*cIt)->name() ) );
+    action->setCheckedState( i18n( "Hide %1" ).tqarg( (*cIt)->name() ) );
 
     // HACK
     if ( (*cIt)->icon() != "unknown" )
@@ -230,7 +230,7 @@ TQPtrList<KAction> ToggleViewGUIClient::actions() const
 
 void ToggleViewGUIClient::slotToggleView( bool toggle )
 {
-  TQString serviceName = TQString::fromLatin1( sender()->name() );
+  TQString serviceName = TQString::tqfromLatin1( TQT_TQOBJECT_CONST(sender())->name() );
 
   bool horizontal = m_mapOrientation[ serviceName ];
 
@@ -240,7 +240,7 @@ void ToggleViewGUIClient::slotToggleView( bool toggle )
   {
 
     KonqView *childView = viewManager->splitWindow( horizontal ? Qt::Vertical : Qt::Horizontal,
-                                                    TQString::fromLatin1( "Browser/View" ),
+                                                    TQString::tqfromLatin1( "Browser/View" ),
                                                     serviceName,
                                                     !horizontal /* vertical = make it first */);
 
@@ -305,7 +305,7 @@ void ToggleViewGUIClient::saveConfig( bool add, const TQString &serviceName )
   TQStringList toggableViewsShown = KonqSettings::toggableViewsShown();
   if (add)
   {
-      if ( !toggableViewsShown.contains( serviceName ) )
+      if ( !toggableViewsShown.tqcontains( serviceName ) )
           toggableViewsShown.append(serviceName);
   }
   else

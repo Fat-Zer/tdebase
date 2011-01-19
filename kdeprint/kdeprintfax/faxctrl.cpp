@@ -87,9 +87,9 @@ static TQString stripNumber( const TQString& s )
 
 	// removes any non-numeric character, except ('+','*','#') (hope it's supported by faxing tools)
 	TQString strip_s = s;
-	strip_s.replace( TQRegExp( "[^\\d+*#]" ), "" );
-	if ( strip_s.find( '+' ) != -1 && conf->readBoolEntry( "ReplaceIntChar", false ) )
-		strip_s.replace( "+", conf->readEntry( "ReplaceIntCharVal" ) );
+	strip_s.tqreplace( TQRegExp( "[^\\d+*#]" ), "" );
+	if ( strip_s.tqfind( '+' ) != -1 && conf->readBoolEntry( "ReplaceIntChar", false ) )
+		strip_s.tqreplace( "+", conf->readEntry( "ReplaceIntCharVal" ) );
 	return strip_s;
 }
 
@@ -133,11 +133,11 @@ static TQString tagList( int n, ... )
 static TQString processTag( const TQString& match, bool value)
 {
 	TQString v;
-	int p = match.find( '_' );
+	int p = match.tqfind( '_' );
 	if ( p != -1 && match[ p+1 ] == '{' )
 	{
 		// Find the ?? that separates the iftrue from the iffalse parts.
-		int q = match.find( "?\?", p+2 );
+		int q = match.tqfind( "?\?", p+2 );
 		if ( q == -1 )
 		{
 			// No iffalse part
@@ -162,7 +162,7 @@ static TQString processTag( const TQString& match, bool value)
 static TQString processTag( const TQString& match, const TQString& value )
 {
 	TQString v;
-	int p = match.find( '_' );
+	int p = match.tqfind( '_' );
 	if ( p != -1 )
 	{
 		if ( value.isEmpty() )
@@ -172,7 +172,7 @@ static TQString processTag( const TQString& match, const TQString& value )
 			if ( match[ p+1 ] == '{' )
 			{
 				v = match.mid( p+2, match.length()-p-3 );
-				v.replace( "@@", quote( value ) );
+				v.tqreplace( "@@", quote( value ) );
 			}
 			else
 				v = ( "-" + match.mid( p+1 ) + " " + quote( value ) );
@@ -291,7 +291,7 @@ static TQString replaceTags( const TQString& s, const TQString& tags, KdeprintFa
 				if (v.isEmpty())
 					v = getenv("FAXSERVER");
 				if (v.isEmpty())
-					v = TQString::fromLatin1("localhost");
+					v = TQString::tqfromLatin1("localhost");
 				v = processTag( match, v );
 			}
 			else if (isTag( match, "%page" ))
@@ -392,7 +392,7 @@ bool FaxCtrl::send(KdeprintFax *f)
 
 void FaxCtrl::slotReceivedStdout(KProcess*, char *buffer, int len)
 {
-	QCString	str(buffer, len);
+	TQCString	str(buffer, len);
 	kdDebug() << "Received stdout: " << str << endl;
 	addLog(TQString(str));
 }
@@ -428,7 +428,7 @@ TQString FaxCtrl::faxCommand()
 {
 	KConfig	*conf = KGlobal::config();
 	conf->setGroup("System");
-	QString	sys = conf->readPathEntry("System", "efax");
+	TQString	sys = conf->readPathEntry("System", "efax");
 	TQString cmd;
 	if (sys == "hylafax")
 		cmd = conf->readPathEntry("HylaFax", hylafax_default_cmd);
@@ -445,13 +445,13 @@ TQString FaxCtrl::faxCommand()
 
 void FaxCtrl::sendFax()
 {
-	if ( m_command.find( "%files" ) != -1 )
+	if ( m_command.tqfind( "%files" ) != -1 )
 	{
 		// replace %files tag
-		QString	filestr;
+		TQString	filestr;
 		for (TQStringList::ConstIterator it=m_filteredfiles.begin(); it!=m_filteredfiles.end(); ++it)
 			filestr += (quote(*it)+" ");
-		m_command.replace("%files", filestr);
+		m_command.tqreplace("%files", filestr);
 	}
 
 	if ( !m_faxlist.isEmpty() )
@@ -476,7 +476,7 @@ void FaxCtrl::filter()
 {
 	if (m_files.count() > 0)
 	{
-		QString	mimeType = KMimeType::findByURL(KURL(m_files[0]), 0, true)->name();
+		TQString	mimeType = KMimeType::findByURL(KURL(m_files[0]), 0, true)->name();
 		if (mimeType == "application/postscript" || mimeType == "image/tiff")
 		{
 			emit message(i18n("Skipping %1...").arg(m_files[0]));
@@ -486,12 +486,12 @@ void FaxCtrl::filter()
 		}
 		else
 		{
-			QString	tmp = locateLocal("tmp","kdeprintfax_") + kapp->randomString(8);
+			TQString	tmp = locateLocal("tmp","kdeprintfax_") + kapp->randomString(8);
 			m_filteredfiles.prepend(tmp);
 			m_tempfiles.append(tmp);
 			m_process->clearArguments();
 			*m_process << locate("data","kdeprintfax/anytops") << "-m" << KProcess::quote(locate("data","kdeprintfax/faxfilters"))
-				<< TQString::fromLatin1("--mime=%1").arg(mimeType)
+				<< TQString::tqfromLatin1("--mime=%1").arg(mimeType)
 				<< "-p" << pageSize()
 				<<  KProcess::quote(m_files[0]) << KProcess::quote(tmp);
 			if (!m_process->start(KProcess::NotifyOnExit, KProcess::AllOutput))
@@ -518,15 +518,15 @@ void FaxCtrl::viewLog(TQWidget *)
 {
 	if (!m_logview)
 	{
-		QWidget	*topView = new TQWidget(0, "LogView", WType_TopLevel|WStyle_DialogBorder|WDestructiveClose);
+		TQWidget	*topView = new TQWidget(0, "LogView", (WFlags)(WType_TopLevel|WStyle_DialogBorder|WDestructiveClose));
 		m_logview = new KTextEdit(topView);
-		m_logview->setTextFormat( Qt::LogText );
+		m_logview->setTextFormat( TQt::LogText );
 		m_logview->setWordWrap( TQTextEdit::WidgetWidth );
 		m_logview->setPaper( Qt::white );
 		//m_logview->setReadOnly(true);
 		//m_logview->setWordWrap(TQTextEdit::NoWrap);
-		QPushButton	*m_clear = new KPushButton(KStdGuiItem::clear(), topView);
-		QPushButton	*m_close = new KPushButton(KStdGuiItem::close(), topView);
+		TQPushButton	*m_clear = new KPushButton(KStdGuiItem::clear(), topView);
+		TQPushButton	*m_close = new KPushButton(KStdGuiItem::close(), topView);
 		TQPushButton *m_print = new KPushButton( KStdGuiItem::print(), topView );
 		TQPushButton *m_save = new KPushButton( KStdGuiItem::saveAs(), topView );
 		m_close->setDefault(true);
@@ -536,9 +536,9 @@ void FaxCtrl::viewLog(TQWidget *)
 		connect( m_print, TQT_SIGNAL( clicked() ), TQT_SLOT( slotPrintLog() ) );
 		connect( m_save, TQT_SIGNAL( clicked() ), TQT_SLOT( slotSaveLog() ) );
 
-		QVBoxLayout	*l0 = new TQVBoxLayout(topView, 10, 10);
+		TQVBoxLayout	*l0 = new TQVBoxLayout(topView, 10, 10);
 		l0->addWidget(m_logview);
-		QHBoxLayout	*l1 = new TQHBoxLayout(0, 0, 10);
+		TQHBoxLayout	*l1 = new TQHBoxLayout(0, 0, 10);
 		l0->addLayout(l1);
 		l1->addStretch(1);
 		l1->addWidget( m_save );
@@ -553,7 +553,7 @@ void FaxCtrl::viewLog(TQWidget *)
 	}
 	else
 	{
-		KWin::activateWindow(m_logview->parentWidget()->winId());
+		KWin::activateWindow(m_logview->tqparentWidget()->winId());
 	}
 }
 
@@ -578,7 +578,7 @@ TQString FaxCtrl::faxSystem()
 {
 	KConfig	*conf = KGlobal::config();
 	conf->setGroup("System");
-	QString	s = conf->readEntry("System", "efax");
+	TQString	s = conf->readEntry("System", "efax");
 	s[0] = s[0].upper();
 	return s;
 }
@@ -599,13 +599,13 @@ void FaxCtrl::slotClearLog()
 
 void FaxCtrl::slotCloseLog()
 {
-	const QObject	*obj = sender();
+	const TQObject	*obj = TQT_TQOBJECT_CONST(sender());
 	if (m_logview)
 	{
-		QTextEdit	*view = m_logview;
+		TQTextEdit	*view = m_logview;
 		m_logview = 0;
 		if (obj && obj->inherits("QPushButton"))
-			delete view->parentWidget();
+			delete view->tqparentWidget();
 kdDebug() << "slotClose()" << endl;
 	}
 }
@@ -617,7 +617,7 @@ void FaxCtrl::slotPrintLog()
 		KPrinter printer;
 		printer.setDocName( i18n( "Fax log" ) );
 		printer.setDocFileName( "faxlog" );
-		if ( printer.setup( m_logview->topLevelWidget(), i18n( "Fax Log" ) ) )
+		if ( printer.setup( m_logview->tqtopLevelWidget(), i18n( "Fax Log" ) ) )
 		{
 			TQPainter painter( &printer );
 			TQPaintDeviceMetrics metric( &printer );
@@ -625,7 +625,7 @@ void FaxCtrl::slotPrintLog()
 			//TQString txt = m_logview->text();
 			TQString txt = m_log;
 
-			txt.replace( '\n', "<br>" );
+			txt.tqreplace( '\n', "<br>" );
 			txt.prepend( "<h2>" + i18n( "KDEPrint Fax Tool Log" ) + "</h2>" );
 
 			kdDebug() << "Log: " << txt << endl;
@@ -634,7 +634,7 @@ void FaxCtrl::slotPrintLog()
 			richText.setWidth( &painter, body.width() );
 			do
 			{
-				richText.draw( &painter, body.left(), body.top(), view, m_logview->colorGroup() );
+				richText.draw( &painter, body.left(), body.top(), view, m_logview->tqcolorGroup() );
 				view.moveBy( 0, body.height() );
 				painter.translate( 0, -body.height() );
 				if ( view.top() >= richText.height() )

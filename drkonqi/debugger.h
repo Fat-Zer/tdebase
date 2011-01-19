@@ -36,7 +36,7 @@ class BackTrace;
 
 #include <tqwidget.h>
 
-class KrashDebugger : public QWidget
+class KrashDebugger : public TQWidget
 {
   Q_OBJECT
 

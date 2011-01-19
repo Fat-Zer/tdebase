@@ -21,7 +21,7 @@
 
 #include <klibloader.h>
 
-class KonqSoundPlayer : public QObject
+class KonqSoundPlayer : public TQObject
 {
 public:
 	virtual const TQStringList &mimeTypes() = 0;

@@ -121,8 +121,8 @@ void KasBarExtension::setDetached( bool detach )
 
     if ( detach ) {
 
-	int wflags = Qt::WStyle_Customize | Qt::WX11BypassWM | Qt::WStyle_DialogBorder | Qt::WStyle_StaysOnTop;
-	kasbar->reparent( 0, wflags, kasbar->detachedPosition(), true );
+	int wflags = TQt::WStyle_Customize | TQt::WX11BypassWM | TQt::WStyle_DialogBorder | TQt::WStyle_StaysOnTop;
+	kasbar->reparent( 0, (WFlags)wflags, kasbar->detachedPosition(), true );
 	updateGeometry();
 	resize( detachedSize() );
     }
@@ -141,33 +141,33 @@ void KasBarExtension::showEvent( TQShowEvent */*se*/ )
 {
     updateGeometry();
     resize( kasbar->size() );
-    repaint( true );
+    tqrepaint( true );
 }
 
 TQSize KasBarExtension::detachedSize()
 {
-    if ( orientation() == Vertical )
+    if ( orientation() == Qt::Vertical )
 	return TQSize( kasbar->itemExtent()/2, 0 );
     else
 	return TQSize( 0, kasbar->itemExtent()/2 );
 
 }
 
-TQSize KasBarExtension::sizeHint(Position p, TQSize maxSize ) const
+TQSize KasBarExtension::tqsizeHint(Position p, TQSize maxSize ) const
 {
-   Orientation o = Horizontal;
+   Orientation o = Qt::Horizontal;
 
    if ( p == Left || p == Right )
-      o = Vertical;
+      o = Qt::Vertical;
 
    if ( detached_ ) {
-       if ( o == Vertical )
+       if ( o == Qt::Vertical )
 	   return TQSize( kasbar->itemExtent()/2, 0 );
        else
 	   return TQSize( 0, kasbar->itemExtent()/2 );
    }
 
-   return kasbar->sizeHint( o, maxSize );
+   return kasbar->tqsizeHint( o, maxSize );
 }
 
 void KasBarExtension::positionChange( Position /* position */)

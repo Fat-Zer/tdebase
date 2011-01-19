@@ -41,7 +41,7 @@ TQString _stsFile;
 bool _isLocal;
 bool _authorized;
 
-static QString
+static TQString
 GetCfgQStr( int id )
 {
 	char *tmp = GetCfgStr( id );
@@ -50,7 +50,7 @@ GetCfgQStr( int id )
 	return qs;
 }
 
-static QStringList
+static TQStringList
 GetCfgQStrList( int id )
 {
 	int i, len;
@@ -65,14 +65,14 @@ GetCfgQStrList( int id )
 }
 
 // Based on kconfigbase.cpp
-static QFont
+static TQFont
 Str2Font( const TQString &aValue )
 {
 	uint nFontBits;
 	TQFont aRetFont;
 	TQString chStr;
 
-	TQStringList sl = TQStringList::split( TQString::fromLatin1(","), aValue );
+	TQStringList sl = TQStringList::split( TQString::tqfromLatin1(","), aValue );
 
 	if (sl.count() == 1) {
 		/* X11 font spec */
@@ -160,7 +160,7 @@ decodeSess( dpySpec *sess, TQString &user, TQString &loc )
 			sess->vt ?
 				TQString("vt%1").arg( sess->vt ) :
 #endif
-				TQString::fromLatin1( *sess->from ? sess->from : sess->display );
+				TQString::tqfromLatin1( *sess->from ? sess->from : sess->display );
 	} else {
 		user =
 			!sess->user ?
@@ -174,6 +174,6 @@ decodeSess( dpySpec *sess, TQString &user, TQString &loc )
 			sess->vt ?
 				TQString("%1, vt%2").arg( sess->display ).arg( sess->vt ) :
 #endif
-				TQString::fromLatin1( sess->display );
+				TQString::tqfromLatin1( sess->display );
 	}
 }

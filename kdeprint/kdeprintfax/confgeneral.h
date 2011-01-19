@@ -26,7 +26,7 @@
 class TQLineEdit;
 class TQCheckBox;
 
-class ConfGeneral : public QWidget
+class ConfGeneral : public TQWidget
 {
 public:
 	ConfGeneral(TQWidget *parent = 0, const char *name = 0);
@@ -35,7 +35,7 @@ public:
 	void save();
 
 private:
-	QLineEdit	*m_name, *m_company, *m_number;
+	TQLineEdit	*m_name, *m_company, *m_number;
 	TQCheckBox   *m_replace_int_char;
 	TQLineEdit   *m_replace_int_char_val;
 };

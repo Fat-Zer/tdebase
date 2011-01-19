@@ -77,7 +77,7 @@ typedef TQPtrList<KasItem> KasItemList;
 /**
  * The main view for KasBar.
  */
-class KDE_EXPORT KasBar : public QWidget
+class KDE_EXPORT KasBar : public TQWidget
 {
    Q_OBJECT
    Q_PROPERTY( int maxBoxes READ maxBoxes )
@@ -89,8 +89,8 @@ class KDE_EXPORT KasBar : public QWidget
 
    friend class KasItem;
 public:
-   KasBar( Orientation o, TQWidget *parent=0, const char *name=0, WFlags f=0 );
-   KasBar( Orientation o, KasBar *master, 
+   KasBar( Qt::Orientation o, TQWidget *parent=0, const char *name=0, WFlags f=0 );
+   KasBar( Qt::Orientation o, KasBar *master, 
 	   TQWidget* parent=0, const char* name=0, WFlags f=0 );
 
    virtual ~KasBar();
@@ -104,7 +104,7 @@ public:
    KasBar *master() const { return master_; }
 
    /** Creates a child bar of the kasbar. The child will inherit the appearance options. */
-   virtual KasBar *createChildBar( Orientation o, TQWidget *parent, const char *name=0 );
+   virtual KasBar *createChildBar( Qt::Orientation o, TQWidget *parent, const char *name=0 );
 
    /** Factory method that returns the singleton resources object. */
    virtual KasResources *resources();
@@ -121,7 +121,7 @@ public:
    void clear();
    KasItem *take( KasItem *i ) { return items.take( indexOf(i) ); }
    KasItem *itemAt( uint i ) { return items.at( i ); }
-   int indexOf( KasItem *i ) { return items.find( i ); }
+   int indexOf( KasItem *i ) { return items.tqfind( i ); }
 
    KasItemList *itemList() { return &items; }
 
@@ -141,8 +141,8 @@ public:
    int maxBoxes() const { return maxBoxes_; }
    uint boxesPerLine() const { return boxesPerLine_; }
 
-   void setOrientation( Orientation o );
-   Orientation orientation() const { return orient; }
+   void setOrientation( Qt::Orientation o );
+   Qt::Orientation orientation() const { return orient; }
 
    void setDirection( Direction dir );
    Direction direction() const { return direction_; }
@@ -152,7 +152,7 @@ public:
 
    bool isDrag() const { return inDrag; }
 
-   TQSize sizeHint( Orientation,  TQSize max );
+   TQSize tqsizeHint( Qt::Orientation,  TQSize max );
 
    //
    // Look and feel options
@@ -188,7 +188,7 @@ public:
    void updateItem( KasItem *i );
 
    /** Redraws the specified item. */
-   void repaintItem(KasItem *i, bool erase = true );
+   void tqrepaintItem(KasItem *i, bool erase = true );
 
    /** Returns the item at p or 0. */
    KasItem* itemAt(const TQPoint &p);
@@ -287,7 +287,7 @@ private:
    TQPixmap offscreen;
    KasBar *master_;
    KasItemList items;
-   Orientation orient;
+   Qt::Orientation orient;
    Direction direction_;
    KasItem *itemUnderMouse_;
    uint boxesPerLine_;

@@ -34,7 +34,7 @@ namespace KHC {
 
 class View;
 
-class History : public QObject
+class History : public TQObject
 {
     Q_OBJECT
   public:

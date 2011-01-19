@@ -62,7 +62,7 @@ struct HistoryEntry
  * handles it. It's more or less the backend structure for the views.
  * The widget handling stuff is done by the KonqFrame.
  */
-class KonqView : public QObject
+class KonqView : public TQObject
 {
   Q_OBJECT
 public:

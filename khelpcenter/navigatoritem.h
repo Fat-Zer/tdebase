@@ -27,7 +27,7 @@ namespace KHC {
 class TOC;
 class DocEntry;
 
-class NavigatorItem : public QListViewItem
+class NavigatorItem : public TQListViewItem
 {
   public:
     NavigatorItem( DocEntry *entry, TQListView *parent );

@@ -26,7 +26,7 @@
  * @short Displays an icon on the screen.
  */
 class WndIcon:
-      public QHBox
+      public TQHBox
 {
   Q_OBJECT
 public:

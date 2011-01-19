@@ -26,7 +26,7 @@
 
 namespace KIO { class Job; }
 
-class KWebDesktop : public QObject
+class KWebDesktop : public TQObject
 {
     Q_OBJECT
 public:

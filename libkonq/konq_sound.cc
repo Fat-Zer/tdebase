@@ -71,7 +71,7 @@ const TQStringList &KonqSoundPlayerImpl::mimeTypes()
 			vector<string> *prop = (*it).getProperty("MimeType");
 			for (vector<string>::iterator mt = prop->begin();
 				mt != prop->end(); ++mt)
-				if ((*mt).length()) // && (*mt).find("video/") == string::npos)
+				if ((*mt).length()) // && (*mt).tqfind("video/") == string::npos)
 					m_mimeTypes << (*mt).c_str();
 			delete prop;
 		}
@@ -122,7 +122,7 @@ TQObject *KonqSoundFactory::createObject(TQObject *, const char *,
 	const char *className, const TQStringList &)
 {
 	if (qstrcmp(className, "KonqSoundPlayer") == 0)
-		return new KonqSoundPlayerImpl();
+		return TQT_TQOBJECT(new KonqSoundPlayerImpl());
 	return 0;
 }
 

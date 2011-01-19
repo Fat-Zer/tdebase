@@ -60,7 +60,7 @@ DocEntry *DocMetaInfo::addDocEntry( const TQString &fileName )
     lang = extensions[ extensions.count() - 2 ];
   }
 
-  if ( !lang.isEmpty() && mLanguages.find( lang ) == mLanguages.end() ) {
+  if ( !lang.isEmpty() && mLanguages.tqfind( lang ) == mLanguages.end() ) {
     return 0;
   }
 
@@ -77,7 +77,7 @@ DocEntry *DocMetaInfo::addDocEntry( const TQString &fileName )
       mHtmlSearch->setupDocEntry( entry );
     }
     TQString indexer = entry->indexer();
-    indexer.replace( "%f", fileName );
+    indexer.tqreplace( "%f", fileName );
     entry->setIndexer( indexer );
     addDocEntry( entry );
     return entry;
@@ -108,7 +108,7 @@ TQString DocMetaInfo::languageName( const TQString &langcode )
   if ( langcode == "en" ) return i18n("English");
 
   TQString cfgfile = locate( "locale",
-      TQString::fromLatin1( "%1/entry.desktop" ).arg( langcode ) );
+      TQString::tqfromLatin1( "%1/entry.desktop" ).arg( langcode ) );
 
   kdDebug() << "-- langcode: " << langcode << " cfgfile: " << cfgfile << endl;
   
@@ -155,8 +155,8 @@ DocEntry *DocMetaInfo::scanMetaInfoDir( const TQString &dirName,
   TQDir dir( dirName );
   if ( !dir.exists() ) return 0;
 
-  const QFileInfoList *entryList = dir.entryInfoList();
-  QFileInfoListIterator it( *entryList );
+  const TQFileInfoList *entryList = dir.entryInfoList();
+  TQFileInfoListIterator it( *entryList );
   TQFileInfo *fi;
   for( ; ( fi = it.current() ); ++it ) {
     DocEntry *entry = 0;

@@ -51,7 +51,7 @@ KonqBgndDialog::KonqBgndDialog( TQWidget* parent,
     m_buttonGroup->layout()->setMargin( KDialog::marginHint() );
     m_buttonGroup->layout()->setSpacing( KDialog::spacingHint() );
     TQGridLayout* groupLayout = new TQGridLayout( m_buttonGroup->layout() );
-    groupLayout->setAlignment( Qt::AlignTop );
+    groupLayout->tqsetAlignment( Qt::AlignTop );
     mainLayout->addWidget( m_buttonGroup );
 
     connect( m_buttonGroup, TQT_SIGNAL( clicked(int) ),
@@ -61,7 +61,7 @@ KonqBgndDialog::KonqBgndDialog( TQWidget* parent,
     m_radioColor = new TQRadioButton( i18n("Co&lor:"), m_buttonGroup );
     groupLayout->addWidget( m_radioColor, 0, 0 );
     m_buttonColor = new KColorButton( theColor, defaultColor, m_buttonGroup );
-    m_buttonColor->setSizePolicy( TQSizePolicy::Preferred,
+    m_buttonColor->tqsetSizePolicy( TQSizePolicy::Preferred,
                                 TQSizePolicy::Minimum );
     groupLayout->addWidget( m_buttonColor, 0, 1 );
 
@@ -90,14 +90,14 @@ KonqBgndDialog::KonqBgndDialog( TQWidget* parent,
     TQLabel* lbl = new TQLabel( i18n("Preview"), page );
     hlay->addWidget( lbl );
     TQFrame* frame = new TQFrame( page );
-    frame->setSizePolicy( TQSizePolicy::Expanding, TQSizePolicy::Minimum );
+    frame->tqsetSizePolicy( TQSizePolicy::Expanding, TQSizePolicy::Minimum );
     frame->setFrameShape( TQFrame::HLine );
     frame->setFrameShadow( TQFrame::Sunken );
     hlay->addWidget( frame );
 
     // preview frame
     m_preview = new TQFrame( page );
-    m_preview->setSizePolicy( TQSizePolicy::Expanding, TQSizePolicy::Expanding );
+    m_preview->tqsetSizePolicy( TQSizePolicy::Expanding, TQSizePolicy::Expanding );
     m_preview->setMinimumSize( 370, 180 );
     m_preview->setFrameShape( TQFrame::Panel );
     m_preview->setFrameShadow( TQFrame::Raised );

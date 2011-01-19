@@ -32,7 +32,7 @@
 class KConfig;
 class KateMainWindow;
 
-class KateViewSpaceContainer: public QVBox
+class KateViewSpaceContainer: public TQVBox
 {
   Q_OBJECT
 

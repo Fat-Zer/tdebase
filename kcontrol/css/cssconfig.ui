@@ -1,6 +1,6 @@
 <!DOCTYPE UI><UI version="3.3" stdsetdef="1">
 <class>CSSConfigDialog</class>
-<widget class="QWidget">
+<widget class="TQWidget">
     <property name="name">
         <cstring>CSSConfigDialog</cstring>
     </property>
@@ -29,7 +29,7 @@
         <property name="spacing">
             <number>0</number>
         </property>
-        <widget class="QButtonGroup">
+        <widget class="TQButtonGroup">
             <property name="name">
                 <cstring>ButtonGroup1</cstring>
             </property>
@@ -60,7 +60,7 @@
                 <property name="spacing">
                     <number>6</number>
                 </property>
-                <widget class="QRadioButton">
+                <widget class="TQRadioButton">
                     <property name="name">
                         <cstring>useDefault</cstring>
                     </property>
@@ -74,7 +74,7 @@
                         <string>&lt;b&gt;Use default stylesheet&lt;/b&gt;&lt;p&gt;Select this option to use the default stylesheet.&lt;/p&gt;</string>
                     </property>
                 </widget>
-                <widget class="QRadioButton">
+                <widget class="TQRadioButton">
                     <property name="name">
                         <cstring>useUser</cstring>
                     </property>
@@ -85,7 +85,7 @@
                         <string>&lt;b&gt;Use user-defined stylesheet&lt;/b&gt;&lt;p&gt;If this box is checked, Konqueror will try to load a user-defined style sheet as specified in the location below. The style sheet allows you to completely override the way web pages are rendered in your browser. The file specified should contain a valid style sheet (see http://www.w3.org/Style/CSS for further information on cascading style sheets).&lt;/p&gt;</string>
                     </property>
                 </widget>
-                <widget class="QLayoutWidget">
+                <widget class="TQLayoutWidget">
                     <property name="name">
                         <cstring>layout3</cstring>
                     </property>
@@ -103,7 +103,7 @@
                             <property name="sizeType">
                                 <enum>Fixed</enum>
                             </property>
-                            <property name="sizeHint">
+                            <property name="tqsizeHint">
                                 <size>
                                     <width>16</width>
                                     <height>20</height>
@@ -120,7 +120,7 @@
                         </widget>
                     </hbox>
                 </widget>
-                <widget class="QRadioButton">
+                <widget class="TQRadioButton">
                     <property name="name">
                         <cstring>useAccess</cstring>
                     </property>
@@ -139,7 +139,7 @@
                         <string>&lt;b&gt;Use accessibility stylesheet&lt;/b&gt;&lt;p&gt;Selecting this option will allow you to define a default font, font size, and font color with a few simple clicks of the mouse. Simply wander over to the Customize... dialog and pick out your desired options.&lt;/p&gt;</string>
                     </property>
                 </widget>
-                <widget class="QLayoutWidget">
+                <widget class="TQLayoutWidget">
                     <property name="name">
                         <cstring>layout2</cstring>
                     </property>
@@ -157,14 +157,14 @@
                             <property name="sizeType">
                                 <enum>Fixed</enum>
                             </property>
-                            <property name="sizeHint">
+                            <property name="tqsizeHint">
                                 <size>
                                     <width>16</width>
                                     <height>20</height>
                                 </size>
                             </property>
                         </spacer>
-                        <widget class="QPushButton">
+                        <widget class="TQPushButton">
                             <property name="name">
                                 <cstring>customize</cstring>
                             </property>
@@ -185,7 +185,7 @@
                             <property name="sizeType">
                                 <enum>Expanding</enum>
                             </property>
-                            <property name="sizeHint">
+                            <property name="tqsizeHint">
                                 <size>
                                     <width>451</width>
                                     <height>20</height>
@@ -206,7 +206,7 @@
             <property name="sizeType">
                 <enum>Expanding</enum>
             </property>
-            <property name="sizeHint">
+            <property name="tqsizeHint">
                 <size>
                     <width>20</width>
                     <height>50</height>

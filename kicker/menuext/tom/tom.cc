@@ -109,7 +109,7 @@ class runMenuWidget : public TQWidget, public QMenuItem
             l2->setBuddy(this);
             runLayout->addWidget(l2);*/
             m_runEdit = new KHistoryCombo(this);
-            m_runEdit->setSizePolicy(TQSizePolicy::Expanding, TQSizePolicy::Preferred);
+            m_runEdit->tqsetSizePolicy(TQSizePolicy::Expanding, TQSizePolicy::Preferred);
             runLayout->addWidget(m_runEdit, 10);
             runLayout->addSpacing(KDialog::spacingHint());
 
@@ -143,7 +143,7 @@ class runMenuWidget : public TQWidget, public QMenuItem
             TQPainter p(this);
             TQRect r(rect());
             // ew, nasty hack. may result in coredumps due to horrid C-style cast???
-            kapp->style().drawControl(TQStyle::CE_PopupMenuItem, &p, m_menu, r, palette().active(), TQStyle::Style_Enabled,
+            kapp->style().tqdrawControl(TQStyle::CE_PopupMenuItem, &p, m_menu, r, palette().active(), TQStyle::Style_Enabled,
                                       TQStyleOption(static_cast<TQMenuItem*>(this), 0, KIcon::SizeMedium ));
             p.drawPixmap(KDialog::spacingHint(), 1, icon);
             p.drawText((KDialog::spacingHint() * 2) + KIcon::SizeMedium, textRect.height() + ((height() - textRect.height()) / 2), i18n("Run:"));
@@ -239,7 +239,7 @@ void TOM::initializeRecentDocs()
 
         KDesktopFile f(*it, true /* read only */);
         m_recentDocsMenu->insertItem(DesktopIcon(f.readIcon(), KIcon::SizeMedium),
-                                     f.readName().replace('&', "&&"), id);
+                                     f.readName().tqreplace('&', "&&"), id);
         ++id;
     }
 }
@@ -302,7 +302,7 @@ int TOM::appendTaskGroup(KConfig& config, bool inSubMenu)
 
             TQString name = config.readEntry("Name");
             // in case the name contains an ampersand, double 'em up
-            name.replace("&", "&&");
+            name.tqreplace("&", "&&");
             TQString desktopfile = config.readPathEntry("DesktopFile");
             KService::Ptr pService = KService::serviceByDesktopPath(desktopfile);
 
@@ -551,10 +551,10 @@ void TOM::initialize()
     if (userInfo)
     {
         username = TQString::fromLocal8Bit(userInfo->pw_gecos);
-        if (username.find(',') != -1)
+        if (username.tqfind(',') != -1)
         {
             // Remove everything from and including first comma
-            username.truncate(username.find(','));
+            username.truncate(username.tqfind(','));
         }
 
         if (username.isEmpty())
@@ -583,7 +583,7 @@ void TOM::contextualizeRMBmenu(KPopupMenu* menu, int menuItem, TQPopupMenu* ctxM
 
     ctxMenu->removeItem(contextMenuTitleID);
     TQString text = menu->text(menuItem);
-    int parens = text.find('(') - 1;
+    int parens = text.tqfind('(') - 1;
     if (parens > 0)
     {
         text = text.left(parens);
@@ -655,7 +655,7 @@ bool TOM::loadSidePixmap()
   // limit max/min brightness
   int r, g, b;
   color.rgb(&r, &g, &b);
-  int gray = qGray(r, g, b);
+  int gray = tqGray(r, g, b);
   if (gray > 180) {
     r = (r - (gray - 180) < 0 ? 0 : r - (gray - 180));
     g = (g - (gray - 180) < 0 ? 0 : g - (gray - 180));
@@ -736,13 +736,13 @@ void TOM::setMaximumSize(int w, int h)
 
 TQRect TOM::sideImageRect()
 {
-    return TQStyle::visualRect( TQRect( frameWidth(), frameWidth(), m_sidePixmap.width(),
+    return TQStyle::tqvisualRect( TQRect( frameWidth(), frameWidth(), m_sidePixmap.width(),
                                       height() - 2*frameWidth() ), this );
 }
 
 void TOM::resizeEvent(TQResizeEvent * e)
 {
-    setFrameRect( TQStyle::visualRect( TQRect( m_sidePixmap.width(), 0,
+    setFrameRect( TQStyle::tqvisualRect( TQRect( m_sidePixmap.width(), 0,
                                       width() - m_sidePixmap.width(), height() ), this ) );
 }
 
@@ -757,7 +757,7 @@ void TOM::paintEvent(TQPaintEvent * e)
 
     style().drawPrimitive( TQStyle::PE_PanelPopup, &p,
                            TQRect( 0, 0, width(), height() ),
-                           colorGroup(), TQStyle::Style_Default,
+                           tqcolorGroup(), TQStyle::Style_Default,
                            TQStyleOption( frameWidth(), 0 ) );
 
     TQRect r = sideImageRect();
@@ -775,7 +775,7 @@ TQMouseEvent TOM::translateMouseEvent( TQMouseEvent* e )
 {
     TQRect side = sideImageRect();
 
-    if ( !side.contains( e->pos() ) )
+    if ( !side.tqcontains( e->pos() ) )
         return *e;
 
     TQPoint newpos( e->pos() );
@@ -824,7 +824,7 @@ void TOM::runCommand()
 
 void TOM::runTask(int id)
 {
-    if (!m_tasks.contains(id)) return;
+    if (!m_tasks.tqcontains(id)) return;
 
     kapp->propagateSessionManager();
     KApplication::startServiceByDesktopPath(m_tasks[id]->desktopEntryPath(),

@@ -90,7 +90,7 @@ MainWindow::MainWindow()
 {
     mSplitter = new TQSplitter( this );
 
-    mDoc = new View( mSplitter, 0, this, 0, KHTMLPart::DefaultGUI, actionCollection() );
+    mDoc = new View( mSplitter, 0, TQT_TQOBJECT(this), 0, KHTMLPart::DefaultGUI, actionCollection() );
     connect( mDoc, TQT_SIGNAL( setWindowCaption( const TQString & ) ),
              TQT_SLOT( setCaption( const TQString & ) ) );
     connect( mDoc, TQT_SIGNAL( setStatusBarText( const TQString & ) ),
@@ -208,8 +208,8 @@ void MainWindow::writeConfig()
 
 void MainWindow::setupActions()
 {
-    KStdAction::quit( this, TQT_SLOT( close() ), actionCollection() );
-    KStdAction::print( this, TQT_SLOT( print() ), actionCollection(),
+    KStdAction::quit( TQT_TQOBJECT(this), TQT_SLOT( close() ), actionCollection() );
+    KStdAction::print( TQT_TQOBJECT(this), TQT_SLOT( print() ), actionCollection(),
                        "printFrame" );
 
     KAction *prevPage  = new KAction( i18n( "Previous Page" ), CTRL+Key_PageUp, mDoc, TQT_SLOT( prevPage() ),
@@ -220,19 +220,19 @@ void MainWindow::setupActions()
                          actionCollection(), "nextPage" );
     nextPage->setWhatsThis( i18n( "Moves to the next page of the document" ) );
 
-    KAction *home = KStdAction::home( this, TQT_SLOT( slotShowHome() ), actionCollection() );
+    KAction *home = KStdAction::home( TQT_TQOBJECT(this), TQT_SLOT( slotShowHome() ), actionCollection() );
     home->setText(i18n("Table of &Contents"));
     home->setToolTip(i18n("Table of contents"));
     home->setWhatsThis(i18n("Go back to the table of contents"));
 
-    mCopyText = KStdAction::copy( this, TQT_SLOT(slotCopySelectedText()), actionCollection(), "copy_text");
+    mCopyText = KStdAction::copy( TQT_TQOBJECT(this), TQT_SLOT(slotCopySelectedText()), actionCollection(), "copy_text");
 
-    mLastSearchAction = new KAction( i18n("&Last Search Result"), 0, this,
+    mLastSearchAction = new KAction( i18n("&Last Search Result"), 0, TQT_TQOBJECT(this),
                                      TQT_SLOT( slotLastSearch() ),
                                      actionCollection(), "lastsearch" );
     mLastSearchAction->setEnabled( false );
 
-    new KAction( i18n("Build Search Index..."), 0, mNavigator,
+    new KAction( i18n("Build Search Index..."), 0, TQT_TQOBJECT(mNavigator),
       TQT_SLOT( showIndexDialog() ), actionCollection(), "build_index" );
     KStdAction::keyBindings( guiFactory(), TQT_SLOT( configureShortcuts() ),
       actionCollection() );
@@ -240,16 +240,16 @@ void MainWindow::setupActions()
     KConfig *cfg = KGlobal::config();
     cfg->setGroup( "Debug" );
     if ( cfg->readBoolEntry( "SearchErrorLog", false ) ) {
-      new KAction( i18n("Show Search Error Log"), 0, this,
+      new KAction( i18n("Show Search Error Log"), 0, TQT_TQOBJECT(this),
                    TQT_SLOT( showSearchStderr() ), actionCollection(),
                    "show_search_stderr" );
     }
 
     History::self().setupActions( actionCollection() );
 
-    new KAction( i18n( "Configure Fonts..." ), KShortcut(), this, TQT_SLOT( slotConfigureFonts() ), actionCollection(), "configure_fonts" );
-    new KAction( i18n( "Increase Font Sizes" ), "viewmag+", KShortcut(), this, TQT_SLOT( slotIncFontSizes() ), actionCollection(), "incFontSizes" );
-    new KAction( i18n( "Decrease Font Sizes" ), "viewmag-", KShortcut(), this, TQT_SLOT( slotDecFontSizes() ), actionCollection(), "decFontSizes" );
+    new KAction( i18n( "Configure Fonts..." ), KShortcut(), TQT_TQOBJECT(this), TQT_SLOT( slotConfigureFonts() ), actionCollection(), "configure_fonts" );
+    new KAction( i18n( "Increase Font Sizes" ), "viewmag+", KShortcut(), TQT_TQOBJECT(this), TQT_SLOT( slotIncFontSizes() ), actionCollection(), "incFontSizes" );
+    new KAction( i18n( "Decrease Font Sizes" ), "viewmag-", KShortcut(), TQT_TQOBJECT(this), TQT_SLOT( slotDecFontSizes() ), actionCollection(), "decFontSizes" );
 }
 
 void MainWindow::slotCopySelectedText()
@@ -325,7 +325,7 @@ void MainWindow::viewUrl( const KURL &url, const KParts::URLArgs &args )
 
     mDoc->browserExtension()->setURLArgs( args );
 
-    if ( proto == TQString::fromLatin1("glossentry") ) {
+    if ( proto == TQString::tqfromLatin1("glossentry") ) {
         TQString decodedEntryId = KURL::decode_string( url.encodedPathAndQuery() );
         slotGlossSelected( mNavigator->glossEntry( decodedEntryId ) );
         mNavigator->slotSelectGlossEntry( decodedEntryId );

@@ -14,7 +14,7 @@ class KWinModule;
  *
  * @author Richard Moore, rich@kde.org
  */
-class KSysTrayCmd : public QLabel
+class KSysTrayCmd : public TQLabel
 {
   Q_OBJECT
 public:

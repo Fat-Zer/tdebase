@@ -78,8 +78,8 @@ PanelExeDialog::PanelExeDialog(const TQString& title, const TQString& descriptio
             this, TQT_SLOT(slotIconChanged(TQString)));
 
     // leave decent space for the commandline
-    resize(sizeHint().width() > 300 ? sizeHint().width() : 300,
-           sizeHint().height());
+    resize(tqsizeHint().width() > 300 ? tqsizeHint().width() : 300,
+           tqsizeHint().height());
 }
 
 void PanelExeDialog::slotOk()
@@ -135,11 +135,11 @@ void PanelExeDialog::fillCompletion()
         TQDir d( (*it) );
         d.setFilter( TQDir::Files | TQDir::Executable );
 
-        const QFileInfoList *list = d.entryInfoList();
+        const TQFileInfoList *list = d.entryInfoList();
         if (!list)
             continue;
 
-        QFileInfoListIterator it2( *list );
+        TQFileInfoListIterator it2( *list );
         TQFileInfo *fi;
 
         while ( (fi = it2.current()) != 0 ) {
@@ -164,7 +164,7 @@ void PanelExeDialog::slotTextChanged(const TQString &str)
     }
 
     TQString exeLocation = str;
-    TQMap<TQString, TQString>::iterator it = m_partialPath2full.find(str);
+    TQMap<TQString, TQString>::iterator it = m_partialPath2full.tqfind(str);
 
     if (it != m_partialPath2full.end())
         exeLocation = it.data();
@@ -174,7 +174,7 @@ void PanelExeDialog::slotTextChanged(const TQString &str)
 
 void PanelExeDialog::slotReturnPressed()
 {
-    if (m_partialPath2full.contains(ui->m_exec->url()))
+    if (m_partialPath2full.tqcontains(ui->m_exec->url()))
         ui->m_exec->setURL(m_partialPath2full[ui->m_exec->url()]);
 }
 

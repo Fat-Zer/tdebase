@@ -77,7 +77,7 @@ void Tzone::currentZone()
     time_t now = time(0);
     tzset();
     strftime(result.data(), result.size(), "%Z", localtime(&now));
-    m_local->setText(localZone.arg(KTimezoneWidget::displayName(m_zoneDb.local())).arg(result));
+    m_local->setText(localZone.tqarg(KTimezoneWidget::displayName(m_zoneDb.local())).tqarg(static_cast<const char *>(result)));
 }
 
 // FIXME: Does the logic in this routine actually work correctly? For example,
@@ -113,7 +113,7 @@ void Tzone::save()
             for (TQString line = is.readLine(); !line.isNull();
                  line = is.readLine())
             {
-                if (line.find("TZ=") == 0)
+                if (line.tqfind("TZ=") == 0)
                 {
                     *ts << "TZ=" << selectedzone << endl;
                     found = true;

@@ -261,7 +261,7 @@ KateConfigDialog::KateConfigDialog ( KateMainWindow *parent, Kate::View *view )
   /*TQVBox **/page=addVBoxPage(path,i18n("Plugin Manager"),
                           BarIcon("connect_established",KIcon::SizeSmall));
   KateConfigPluginPage *configPluginPage = new KateConfigPluginPage(page, this);
-  connect( configPluginPage, TQT_SIGNAL( changed() ), this, TQT_SLOT( slotChanged() ) );
+  connect( configPluginPage, TQT_SIGNAL( changed() ), TQT_TQOBJECT(this), TQT_SLOT( slotChanged() ) );
 
   // Tools->External Tools menu
   path.clear();
@@ -269,7 +269,7 @@ KateConfigDialog::KateConfigDialog ( KateMainWindow *parent, Kate::View *view )
   page = addVBoxPage( path, i18n("External Tools"),
       BarIcon("configure", KIcon::SizeSmall) );
   configExternalToolsPage = new KateExternalToolsConfigWidget(page, "external tools config page");
-  connect( configExternalToolsPage, TQT_SIGNAL(changed()), this, TQT_SLOT(slotChanged()) );
+  connect( configExternalToolsPage, TQT_SIGNAL(changed()), TQT_TQOBJECT(this), TQT_SLOT(slotChanged()) );
 
   // editor widgets from kwrite/kwdialog
   path.clear();
@@ -334,7 +334,7 @@ void KateConfigDialog::removePluginPage (Kate::Plugin *plugin)
   {
     if  ( pluginPages.at(i)->plugin == plugin )
     {
-      TQWidget *w = pluginPages.at(i)->page->parentWidget();
+      TQWidget *w = pluginPages.at(i)->page->tqparentWidget();
       delete pluginPages.at(i)->page;
       delete w;
       pluginPages.remove(pluginPages.at(i));

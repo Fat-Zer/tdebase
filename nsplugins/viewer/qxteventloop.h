@@ -38,7 +38,7 @@
 
 #include <tqglobal.h>
 
-#if QT_VERSION >= 0x030100
+// #if QT_VERSION >= 0x030100
 #include <tqeventloop.h>
 
 
@@ -47,9 +47,10 @@
 
 class QXtEventLoopPrivate;
 
-class QXtEventLoop : public QEventLoop
+class QXtEventLoop : public TQEventLoop
 {
     Q_OBJECT
+    TQ_OBJECT
 
 public:
     QXtEventLoop( const char *applicationClass, XtAppContext context = NULL, XrmOptionDescRec *options = 0, int numOptions = 0);
@@ -75,6 +76,6 @@ private:
 
 };
 
-#endif
+// #endif
 
 #endif // QMOTIF_H

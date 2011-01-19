@@ -75,12 +75,12 @@ bool KPrivacyManager::clearThumbnails()
 
 bool KPrivacyManager::clearRunCommandHistory() const
 {
-  return kapp->dcopClient()->send( "kdesktop", "KDesktopIface", "clearCommandHistory()", "" );
+  return kapp->dcopClient()->send( "kdesktop", "KDesktopIface", "clearCommandHistory()", TQString("") );
 }
 
 bool KPrivacyManager::clearAllCookies() const
 {
-  return kapp->dcopClient()->send( "kded", "kcookiejar", "deleteAllCookies()", "" );
+  return kapp->dcopClient()->send( "kded", "kcookiejar", "deleteAllCookies()", TQString("") );
 }
 
 bool KPrivacyManager::clearSavedClipboardContents()
@@ -98,7 +98,7 @@ bool KPrivacyManager::clearSavedClipboardContents()
     return true;
   }
 
-  return kapp->dcopClient()->send( "klipper", "klipper", "clearClipboardHistory()", "" );
+  return kapp->dcopClient()->send( "klipper", "klipper", "clearClipboardHistory()", TQString("") );
 }
 
 bool KPrivacyManager::clearFormCompletion() const
@@ -123,7 +123,7 @@ bool KPrivacyManager::clearRecentDocuments() const
 
 bool KPrivacyManager::clearQuickStartMenu() const
 {
-  return kapp->dcopClient()->send( "kicker", "kicker", "clearQuickStartMenu()", "" );
+  return kapp->dcopClient()->send( "kicker", "kicker", "clearQuickStartMenu()", TQString("") );
 }
 
 bool KPrivacyManager::clearWebHistory()
@@ -138,7 +138,7 @@ bool KPrivacyManager::clearWebHistory()
   }
 
   return kapp->dcopClient()->send( "konqueror*", "KonqHistoryManager",
-                                   "notifyClear(TQCString)", "" );
+                                   "notifyClear(TQCString)", TQString("") );
 }
 
 bool KPrivacyManager::clearFavIcons()
@@ -161,7 +161,7 @@ bool KPrivacyManager::isApplicationRegistered(const TQString &appName)
   QCStringList regApps = kapp->dcopClient()->registeredApplications();
 
   for ( QCStringList::Iterator it = regApps.begin(); it != regApps.end(); ++it )
-    if((*it).find(appName.latin1()) != -1) return true;
+    if((*it).tqfind(appName.latin1()) != -1) return true;
 
   return false;
 }

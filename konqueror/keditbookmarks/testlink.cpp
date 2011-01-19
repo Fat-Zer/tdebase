@@ -107,10 +107,10 @@ void TestLinkItr::slotJobData(KIO::Job *job, const TQByteArray &data) {
     if (transfer->isErrorPage()) {
         TQStringList lines = TQStringList::split('\n', data);
         for (TQStringList::Iterator it = lines.begin(); it != lines.end(); ++it) {
-            int open_pos = (*it).find("<title>", 0, false);
+            int open_pos = (*it).tqfind("<title>", 0, false);
             if (open_pos >= 0) {
                 TQString leftover = (*it).mid(open_pos + 7);
-                int close_pos = leftover.findRev("</title>", -1, false);
+                int close_pos = leftover.tqfindRev("</title>", -1, false);
                 if (close_pos >= 0) {
                     // if no end tag found then just 
                     // print the first line of the <title>
@@ -144,7 +144,7 @@ void TestLinkItr::slotJobResult(KIO::Job *job) {
         // can we assume that errorString will contain no entities?
         TQString jerr = job->errorString();
         if (!jerr.isEmpty()) {
-            jerr.replace("\n", " ");
+            jerr.tqreplace("\n", " ");
             curItem()->nsPut(jerr);
             chkErr = false;
         }
@@ -166,13 +166,13 @@ void TestLinkItr::slotJobResult(KIO::Job *job) {
 /* -------------------------- */
 
 const TQString TestLinkItrHolder::getMod(const TQString &url) const {
-    return m_modify.contains(url) 
+    return m_modify.tqcontains(url) 
         ? m_modify[url] 
         : TQString::null;
 }
 
 const TQString TestLinkItrHolder::getOldVisit(const TQString &url) const {
-    return self()->m_oldModify.contains(url) 
+    return self()->m_oldModify.tqcontains(url) 
         ? self()->m_oldModify[url] 
         : TQString::null;
 }

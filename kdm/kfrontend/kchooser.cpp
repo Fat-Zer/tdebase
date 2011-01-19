@@ -59,7 +59,7 @@ ChooserDlg::ChooserDlg()
 	TQBoxLayout *vbox = new TQVBoxLayout( this, 10, 10 );
 
 	TQLabel *title = new TQLabel( i18n("XDMCP Host Menu"), this );
-	title->setAlignment( AlignCenter );
+	title->tqsetAlignment( AlignCenter );
 	vbox->addWidget( title );
 
 	host_view = new TQListView( this, "hosts" );
@@ -106,7 +106,7 @@ ChooserDlg::ChooserDlg()
 		vbox->addWidget( consoleView );
 #endif
 
-	sn = new TQSocketNotifier( rfd, TQSocketNotifier::Read, this );
+	sn = new TQSocketNotifier( rfd, TQSocketNotifier::Read, TQT_TQOBJECT(this) );
 	connect( sn, TQT_SIGNAL(activated( int )), TQT_SLOT(slotReadPipe()) );
 
 	connect( pingButton, TQT_SIGNAL(clicked()), TQT_SLOT(pingHosts()) );
@@ -145,14 +145,14 @@ void ChooserDlg::pingHosts()
 
 void ChooserDlg::accept()
 {
-	if (focusWidget() == iline) {
+	if (tqfocusWidget() == iline) {
 		if (!iline->text().isEmpty()) {
 			GSendInt( G_Ch_DirectChoice );
 			GSendStr( iline->text().latin1() );
 			iline->clear();
 		}
 		return;
-	} else /*if (focusWidget() == host_view)*/ {
+	} else /*if (tqfocusWidget() == host_view)*/ {
 		TQListViewItem *item = host_view->currentItem();
 		if (item) {
 			GSendInt( G_Ready );
@@ -170,7 +170,7 @@ TQString ChooserDlg::recvStr()
 {
 	char *arr = GRecvStr();
 	if (arr) {
-		TQString str = TQString::fromLatin1( arr );
+		TQString str = TQString::tqfromLatin1( arr );
 		free( arr );
 		return str;
 	} else

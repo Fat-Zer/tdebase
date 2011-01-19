@@ -95,7 +95,7 @@ unsigned long Options::updateSettings()
 
     placement = Placement::policyFromString( config->readEntry("Placement"), true );
     xineramaPlacementScreen = KCLAMP( config->readNumEntry( "XineramaPlacementScreen", -1 ),
-        -1, qApp->desktop()->numScreens() - 1 );
+        -1, tqApp->desktop()->numScreens() - 1 );
 
     animateShade = config->readBoolEntry("AnimateShade", TRUE );
     animateMinimize = config->readBoolEntry("AnimateMinimize", TRUE );
@@ -195,11 +195,11 @@ unsigned long Options::updateSettings()
     
      // window drop shadows
     config->setGroup("Style");
-    shadow_colour = config->readColorEntry("ShadowColour", &Qt::black);
+    shadow_colour = config->readColorEntry("ShadowColour", &TQt::black);
     shadow_docks = config->readBoolEntry("ShadowDocks", false);
     shadow_overrides = config->readBoolEntry("ShadowOverrides", false);
     shadow_topMenus = config->readBoolEntry("ShadowTopMenus", false);
-    shadow_inactive_colour = config->readColorEntry("InactiveShadowColour", &Qt::black);
+    shadow_inactive_colour = config->readColorEntry("InactiveShadowColour", &TQt::black);
     shadow_inactive_enabled = config->readBoolEntry("InactiveShadowEnabled", false);
     shadow_inactive_opacity = config->readDoubleNumEntry("InactiveShadowOpacity", 0.70);
     shadow_inactive_thickness = config->readNumEntry("InactiveShadowThickness", 5);
@@ -379,7 +379,7 @@ int Options::electricBorderDelay()
 
 bool Options::checkIgnoreFocusStealing( const Client* c )
     {
-    return ignoreFocusStealingClasses.contains(TQString::fromLatin1(c->resourceClass()));
+    return ignoreFocusStealingClasses.tqcontains(TQString::tqfromLatin1(c->resourceClass()));
     }
 
 Options::MouseCommand Options::wheelToMouseCommand( MouseWheelCommand com, int delta )

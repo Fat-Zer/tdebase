@@ -101,7 +101,7 @@ void TaskBarExtension::positionChange( Position p )
         m_container->popupDirectionChange(KPanelApplet::Right);
         break;
     case Floating:
-        if (orientation() == Horizontal)
+        if (orientation() == Qt::Horizontal)
         {
             m_container->popupDirectionChange(KPanelApplet::Down);
         }
@@ -123,17 +123,17 @@ void TaskBarExtension::preferences()
     m_container->preferences();
 }
 
-TQSize TaskBarExtension::sizeHint(Position p, TQSize maxSize) const
+TQSize TaskBarExtension::tqsizeHint(Position p, TQSize maxSize) const
 {
     if (p == Left || p == Right)
         maxSize.setWidth(sizeInPixels());
     else
         maxSize.setHeight(sizeInPixels());
 
-//    kdDebug(1210) << "TaskBarExtension::sizeHint( Position, TQSize )" << endl;
+//    kdDebug(1210) << "TaskBarExtension::tqsizeHint( Position, TQSize )" << endl;
 //    kdDebug(1210) << " width: " << size.width() << endl;
 //    kdDebug(1210) << "height: " << size.height() << endl;
-    return m_container->sizeHint(p, maxSize);
+    return m_container->tqsizeHint(p, maxSize);
 }
 
 void TaskBarExtension::configure()
@@ -155,7 +155,7 @@ void TaskBarExtension::setBackgroundTheme()
         }
         else
         {
-            m_rootPixmap->repaint(true);
+            m_rootPixmap->tqrepaint(true);
         }
 
         double tint = double(KickerSettings::tintValue()) / 100;
@@ -185,7 +185,7 @@ void TaskBarExtension::setBackgroundTheme()
         {
             TQImage bgImage = m_bgImage;
 
-            if (orientation() == Vertical)
+            if (orientation() == Qt::Vertical)
             {
                 if (KickerSettings::rotateBackground())
                 {
@@ -213,7 +213,7 @@ void TaskBarExtension::setBackgroundTheme()
             {
                 KickerLib::colorize(bgImage);
             }
-            setPaletteBackgroundPixmap(bgImage);
+            setPaletteBackgroundPixmap(TQPixmap(bgImage));
         }
     }
     

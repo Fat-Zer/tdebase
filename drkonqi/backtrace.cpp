@@ -71,7 +71,7 @@ void BackTrace::start()
   TQString exec = m_krashconf->tryExec();
   if ( !exec.isEmpty() && KStandardDirs::findExe(exec).isEmpty() )
   {
-    TQObject * o = parent();
+    TQObject * o = tqparent();
 
     if (o && !o->inherits("QWidget"))
     {
@@ -137,7 +137,7 @@ bool BackTrace::usefulBacktrace()
 {
   // remove crap
   if( !m_krashconf->removeFromBacktraceRegExp().isEmpty())
-    m_strBt.replace(TQRegExp( m_krashconf->removeFromBacktraceRegExp()), TQString::null);
+    m_strBt.tqreplace(TQRegExp( m_krashconf->removeFromBacktraceRegExp()), TQString());
 
   if( m_krashconf->disableChecks())
       return true;
@@ -146,16 +146,16 @@ bool BackTrace::usefulBacktrace()
   // how many " ?? " in the bt ?
   int unknown = 0;
   if( !m_krashconf->invalidStackFrameRegExp().isEmpty())
-    unknown = strBt.contains( TQRegExp( m_krashconf->invalidStackFrameRegExp()));
+    unknown = strBt.tqcontains( TQRegExp( m_krashconf->invalidStackFrameRegExp()));
   // how many stack frames in the bt ?
   int frames = 0;
   if( !m_krashconf->frameRegExp().isEmpty())
-    frames = strBt.contains( TQRegExp( m_krashconf->frameRegExp()));
+    frames = strBt.tqcontains( TQRegExp( m_krashconf->frameRegExp()));
   else
-    frames = strBt.contains('\n');
+    frames = strBt.tqcontains('\n');
   bool tooShort = false;
   if( !m_krashconf->neededInValidBacktraceRegExp().isEmpty())
-    tooShort = ( strBt.find( TQRegExp( m_krashconf->neededInValidBacktraceRegExp())) == -1 );
+    tooShort = ( strBt.tqfind( TQRegExp( m_krashconf->neededInValidBacktraceRegExp())) == -1 );
   return !m_strBt.isNull() && !tooShort && (unknown < frames);
 }
 
@@ -175,7 +175,7 @@ void BackTrace::processBacktrace()
         --len;
         }
       m_strBt.remove( pos, len );
-      m_strBt.insert( pos, TQString::fromLatin1( "[KCrash handler]\n" ));
+      m_strBt.insert( pos, TQString::tqfromLatin1( "[KCrash handler]\n" ));
       }
     }
 }

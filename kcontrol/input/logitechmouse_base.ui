@@ -1,6 +1,6 @@
 <!DOCTYPE UI><UI version="3.3" stdsetdef="1">
 <class>LogitechMouseBase</class>
-<widget class="QDialog">
+<widget class="TQDialog">
     <property name="name">
         <cstring>LogitechMouseBase</cstring>
     </property>
@@ -16,7 +16,7 @@
         <property name="name">
             <cstring>unnamed</cstring>
         </property>
-        <widget class="QLabel" row="0" column="0">
+        <widget class="TQLabel" row="0" column="0">
             <property name="name">
                 <cstring>cordlessNameLabel</cstring>
             </property>
@@ -24,18 +24,18 @@
                 <string>Cordless Name</string>
             </property>
         </widget>
-        <widget class="QLabel" row="4" column="0">
+        <widget class="TQLabel" row="4" column="0">
             <property name="name">
                 <cstring>permissionProblemText</cstring>
             </property>
             <property name="text">
                 <string>You have a Logitech Mouse connected, and libusb was found at compile time, but it was not possible to access this mouse. This is probably caused by a permissions problem - you should consult the manual on how to fix this.</string>
             </property>
-            <property name="alignment">
+            <property name="tqalignment">
                 <set>WordBreak|AlignVCenter</set>
             </property>
         </widget>
-        <widget class="QButtonGroup" row="1" column="0">
+        <widget class="TQButtonGroup" row="1" column="0">
             <property name="name">
                 <cstring>resolutionSelector</cstring>
             </property>
@@ -52,7 +52,7 @@
                 <property name="name">
                     <cstring>unnamed</cstring>
                 </property>
-                <widget class="QRadioButton">
+                <widget class="TQRadioButton">
                     <property name="name">
                         <cstring>button400cpi</cstring>
                     </property>
@@ -63,7 +63,7 @@
                         <number>1</number>
                     </property>
                 </widget>
-                <widget class="QRadioButton">
+                <widget class="TQRadioButton">
                     <property name="name">
                         <cstring>button800cpi</cstring>
                     </property>
@@ -76,7 +76,7 @@
                 </widget>
             </hbox>
         </widget>
-        <widget class="QGroupBox" row="2" column="0">
+        <widget class="TQGroupBox" row="2" column="0">
             <property name="name">
                 <cstring>batteryBox</cstring>
             </property>
@@ -90,7 +90,7 @@
                 <property name="name">
                     <cstring>unnamed</cstring>
                 </property>
-                <widget class="QProgressBar">
+                <widget class="TQProgressBar">
                     <property name="name">
                         <cstring>batteryBar</cstring>
                     </property>
@@ -100,7 +100,7 @@
                 </widget>
             </hbox>
         </widget>
-        <widget class="QButtonGroup" row="3" column="0">
+        <widget class="TQButtonGroup" row="3" column="0">
             <property name="name">
                 <cstring>channelSelector</cstring>
             </property>
@@ -117,7 +117,7 @@
                 <property name="name">
                     <cstring>unnamed</cstring>
                 </property>
-                <widget class="QRadioButton">
+                <widget class="TQRadioButton">
                     <property name="name">
                         <cstring>channel1</cstring>
                     </property>
@@ -131,7 +131,7 @@
                         <number>3</number>
                     </property>
                 </widget>
-                <widget class="QRadioButton">
+                <widget class="TQRadioButton">
                     <property name="name">
                         <cstring>channel2</cstring>
                     </property>

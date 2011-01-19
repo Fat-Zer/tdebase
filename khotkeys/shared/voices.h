@@ -28,7 +28,7 @@ class Voice_trigger;
 class VoiceSignature;
 
 
-class KDE_EXPORT Voice  : public QObject
+class KDE_EXPORT Voice  : public TQObject
     {
     Q_OBJECT
     public:

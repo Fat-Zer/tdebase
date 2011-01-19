@@ -1,6 +1,6 @@
 <!DOCTYPE UI><UI version="3.2" stdsetdef="1">
 <class>PolicyDlgUI</class>
-<widget class="QWidget">
+<widget class="TQWidget">
     <property name="name">
         <cstring>PolicyDlgUI</cstring>
     </property>
@@ -19,7 +19,7 @@
         <property name="margin">
             <number>0</number>
         </property>
-        <widget class="QLabel">
+        <widget class="TQLabel">
             <property name="name">
                 <cstring>lbDomain</cstring>
             </property>
@@ -45,7 +45,7 @@ Enter the host or domain to which this policy applies, e.g. &lt;b&gt;www.kde.org
 &lt;/qt&gt;</string>
             </property>
         </widget>
-        <widget class="QLabel">
+        <widget class="TQLabel">
             <property name="name">
                 <cstring>lbPolicy</cstring>
             </property>

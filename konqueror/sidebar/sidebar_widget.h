@@ -70,7 +70,7 @@ public:
 };
 
 
-class addBackEnd: public QObject
+class addBackEnd: public TQObject
 {
 	Q_OBJECT
 public:
@@ -93,7 +93,7 @@ private:
 	TQWidget *m_parent;
 };
 
-class KDE_EXPORT Sidebar_Widget: public QWidget
+class KDE_EXPORT Sidebar_Widget: public TQWidget
 {
 	Q_OBJECT
 public:
@@ -107,7 +107,7 @@ public:
 	void stdAction(const char *handlestd);
 	//virtual KParts::ReadOnlyPart *getPart();
 	KParts::BrowserExtension *getExtension();
-        virtual TQSize sizeHint() const;	
+        virtual TQSize tqsizeHint() const;	
 
 public slots:
 	void addWebSideBar(const KURL& url, const TQString& name);

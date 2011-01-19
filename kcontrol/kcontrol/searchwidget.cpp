@@ -34,7 +34,7 @@
 /**
  * Helper class for sorting icon modules by name without losing the fileName ID
  */
-class ModuleItem : public QListBoxPixmap
+class ModuleItem : public TQListBoxPixmap
 {
 public:
  ModuleItem(ConfigModule *module, TQListBox * listbox = 0) :

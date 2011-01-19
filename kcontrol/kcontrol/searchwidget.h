@@ -48,7 +48,7 @@ class KeywordListEntry
   
 };
 
-class SearchWidget : public QWidget
+class SearchWidget : public TQWidget
 {  
   Q_OBJECT    
   

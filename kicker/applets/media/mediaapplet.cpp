@@ -154,7 +154,7 @@ void MediaApplet::arrangeButtons()
         MediumButton *button = *it;
         
         button_size = std::max(button_size,
-                            orientation() == Vertical ?
+                            orientation() == Qt::Vertical ?
                     button->heightForWidth(width()) :
                 button->widthForHeight(height()) );
     //		                           button->widthForHeight(height()) :
@@ -162,7 +162,7 @@ void MediaApplet::arrangeButtons()
     }
     
     int kicker_size;
-    if (orientation() == Vertical)
+    if (orientation() == Qt::Vertical)
     {
         kicker_size = width();
     }
@@ -200,7 +200,7 @@ void MediaApplet::arrangeButtons()
         
         ++pack_count;
     
-        if(orientation() == Vertical)
+        if(orientation() == Qt::Vertical)
                     {
         if (pack_count < max_packed_buttons)
         {
@@ -285,7 +285,7 @@ void MediaApplet::slotNewItems(const KFileItemList &entries)
         }
         }
         
-        if(!found && !mExcludedList.contains(it.current()->url().url()) )
+        if(!found && !mExcludedList.tqcontains(it.current()->url().url()) )
         {
         MediumButton *button = new MediumButton(this, *it.current());
         button->show();
@@ -336,7 +336,7 @@ void MediaApplet::slotRefreshItems(const KFileItemList &entries)
         
         if(button->fileItem().url()==(*it.current()).url())
         {
-            if(mExcludedTypesList.contains(mimetype))
+            if(mExcludedTypesList.tqcontains(mimetype))
             {
             mButtonList.remove(button);
             delete button;
@@ -350,7 +350,7 @@ void MediaApplet::slotRefreshItems(const KFileItemList &entries)
         }
         }
     
-        if(!found && !mExcludedTypesList.contains(mimetype) && !mExcludedList.contains(it.current()->url().url()) )
+        if(!found && !mExcludedTypesList.tqcontains(mimetype) && !mExcludedList.tqcontains(it.current()->url().url()) )
         {
         MediumButton *button = new MediumButton(this, *it.current());
         button->show();
@@ -425,7 +425,7 @@ void MediaApplet::reloadList()
 
 void MediaApplet::mousePressEvent(TQMouseEvent *e)
 {
-    if(e->button()==RightButton)
+    if(e->button()==Qt::RightButton)
     {
         KPopupMenu menu(this);
     

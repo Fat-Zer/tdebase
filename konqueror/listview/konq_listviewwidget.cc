@@ -84,8 +84,8 @@ void ColumnInfo::setData(const TQString& n, const TQString& desktopName, int kio
 }
 
 
-KonqBaseListViewWidget::KonqBaseListViewWidget( KonqListView *parent, TQWidget *parentWidget)
-   : KListView(parentWidget)
+KonqBaseListViewWidget::KonqBaseListViewWidget( KonqListView *parent, TQWidget *tqparentWidget)
+   : KListView(tqparentWidget)
    ,sortedByColumn(0)
    ,m_pBrowserView(parent)
    ,m_dirLister(new KDirLister( true /*m_showIcons==false*/))
@@ -107,7 +107,7 @@ KonqBaseListViewWidget::KonqBaseListViewWidget( KonqListView *parent, TQWidget *
 {
    kdDebug(1202) << "+KonqBaseListViewWidget" << endl;
 
-   m_dirLister->setMainWindow(topLevelWidget());
+   m_dirLister->setMainWindow(tqtopLevelWidget());
 
    m_bTopLevelComplete  = true;
 
@@ -169,8 +169,8 @@ KonqBaseListViewWidget::KonqBaseListViewWidget( KonqListView *parent, TQWidget *
    connect( header(), TQT_SIGNAL(sizeChange( int, int, int )), TQT_SLOT(slotUpdateBackground()) );
 
    viewport()->setMouseTracking( true );
-   viewport()->setFocusPolicy( TQWidget::WheelFocus );
-   setFocusPolicy( TQWidget::WheelFocus );
+   viewport()->setFocusPolicy( TQ_WheelFocus );
+   setFocusPolicy( TQ_WheelFocus );
    setAcceptDrops( true );
 
    //looks better with the statusbar
@@ -228,7 +228,7 @@ void KonqBaseListViewWidget::readProtocolConfig( const KURL & url )
    for ( int num = 1; extraFieldsIt != extraFields.end(); ++extraFieldsIt, ++num )
    {
       const TQString column = (*extraFieldsIt).name;
-      if ( lstColumns.find(column) == lstColumns.end() )
+      if ( lstColumns.tqfind(column) == lstColumns.end() )
          lstColumns << column;
       const TQString type = (*extraFieldsIt).type; // ## TODO use when sorting
       TQVariant::Type t = TQVariant::Invalid;
@@ -325,7 +325,7 @@ void KonqBaseListViewWidget::readProtocolConfig( const KURL & url )
          continue;
       }
 
-      TQStringList::Iterator listIt = listingList.find( confColumns[i].desktopFileName );
+      TQStringList::Iterator listIt = listingList.tqfind( confColumns[i].desktopFileName );
       if ( listIt == listingList.end() ) // not found -> hide
       {
          //move all columns behind one to the front
@@ -410,7 +410,7 @@ void KonqBaseListViewWidget::contentsMousePressEvent( TQMouseEvent *e )
       TQRect r( m_rubber->normalize() );
        delete m_rubber;
        m_rubber = 0;
-      repaintContents( r, FALSE );
+      tqrepaintContents( r, FALSE );
    }
 
    delete m_selected;
@@ -424,14 +424,14 @@ void KonqBaseListViewWidget::contentsMousePressEvent( TQMouseEvent *e )
       KListView::contentsMousePressEvent( e );
       }
    else {
-      if ( e->button() == LeftButton )
+      if ( e->button() == Qt::LeftButton )
       {
          m_rubber = new TQRect( e->x(), e->y(), 0, 0 );
 	  clearSelection();
 	 emit selectionChanged();
          m_fileTip->setItem( 0 );
       }
-      if ( e->button() != RightButton )
+      if ( e->button() != Qt::RightButton )
          TQListView::contentsMousePressEvent( e );
    }
    // Store list of selected items at mouse-press time.
@@ -448,7 +448,7 @@ void KonqBaseListViewWidget::contentsMouseReleaseEvent( TQMouseEvent *e )
       TQRect r( m_rubber->normalize() );
       delete m_rubber;
       m_rubber = 0;
-      repaintContents( r, FALSE );
+      tqrepaintContents( r, FALSE );
    }
 
    if ( m_scrollTimer )
@@ -489,7 +489,7 @@ void KonqBaseListViewWidget::contentsMouseMoveEvent( TQMouseEvent *e )
          emit m_pBrowserView->setStatusBarText( item->item()->getStatusBarInfo() );
          m_pBrowserView->emitMouseOver( item->item() );
 
-         vp.setY( itemRect( item ).y() );
+         vp.setY( tqitemRect( item ).y() );
          TQRect rect( viewportToContents( vp ), TQSize(20, item->height()) );
          m_fileTip->setItem( item->item(), rect, item->pixmap( 0 ) );
          m_fileTip->setPreview( KGlobalSettings::showFilePreview( item->item()->url() ) );
@@ -551,9 +551,9 @@ void KonqBaseListViewWidget::drawRubber( TQPainter *p )
 
    TQPoint pt( m_rubber->x(), m_rubber->y() );
    pt = contentsToViewport( pt );
-   style().drawPrimitive( TQStyle::PE_RubberBand, p,
+   tqstyle().tqdrawPrimitive( TQStyle::PE_RubberBand, p,
                           TQRect( pt.x(), pt.y(), m_rubber->width(), m_rubber->height() ),
-                          colorGroup(), TQStyle::Style_Default, colorGroup().base() );
+                          tqcolorGroup(), TQStyle::Style_Default, tqcolorGroup().base() );
    
 }
 
@@ -591,9 +591,9 @@ void KonqBaseListViewWidget::slotAutoScroll()
    {
          TQRect rect;
       if ( allColumnsShowFocus() )
-          rect = itemRect( cur );
+          rect = tqitemRect( cur );
       else {
-          rect = itemRect( cur );
+          rect = tqitemRect( cur );
           rect.setWidth( executeArea( cur ) );
       }
   
@@ -623,7 +623,7 @@ void KonqBaseListViewWidget::slotAutoScroll()
 	    {
                setSelected( cur, true );
                changed = TRUE;
-               rr = rr.unite( itemRect( cur ) );
+               rr = rr.unite( tqitemRect( cur ) );
 	    }
          } 
 	 else 
@@ -631,10 +631,10 @@ void KonqBaseListViewWidget::slotAutoScroll()
             if ( cur->isSelected() )
 	    {
                changed = TRUE;
-               rr = rr.unite( itemRect( cur ) );
+               rr = rr.unite( tqitemRect( cur ) );
 	    }
 	    
-	    if ( !m_selected || !m_selected->contains( (KonqBaseListViewItem*)cur ) )
+	    if ( !m_selected || !m_selected->tqcontains( (KonqBaseListViewItem*)cur ) )
 	    {
                setSelected( cur, false );
 	    }
@@ -659,7 +659,7 @@ void KonqBaseListViewWidget::slotAutoScroll()
 	    {
                setSelected( cur, true );
                changed = TRUE;
-               rr = rr.unite( itemRect( cur ) );
+               rr = rr.unite( tqitemRect( cur ) );
 	    }
 	 }
 	 else 
@@ -667,10 +667,10 @@ void KonqBaseListViewWidget::slotAutoScroll()
             if ( cur->isSelected() )
 	    {
                changed = TRUE;
-              rr = rr.unite( itemRect( cur ) );
+              rr = rr.unite( tqitemRect( cur ) );
 	    }
 
-            if ( !m_selected || !m_selected->contains( (KonqBaseListViewItem*)cur ) )
+            if ( !m_selected || !m_selected->tqcontains( (KonqBaseListViewItem*)cur ) )
 	    {
                setSelected( cur, false );
 	    }
@@ -718,7 +718,7 @@ void KonqBaseListViewWidget::slotAutoScroll()
 
    if ( !TQRect( scroll_margin, scroll_margin,
                 viewport()->width() - 2*scroll_margin,
-                viewport()->height() - 2*scroll_margin ).contains( pos ) )
+                viewport()->height() - 2*scroll_margin ).tqcontains( pos ) )
    {
       if ( !m_scrollTimer )
       {
@@ -762,7 +762,7 @@ void KonqBaseListViewWidget::viewportDragMoveEvent( TQDragMoveEvent *_ev )
 
    // Unselect previous drag-over-item
    if ( m_dragOverItem && m_dragOverItem != item )
-       if ( !m_selected || !m_selected->contains( m_dragOverItem ) )
+       if ( !m_selected || !m_selected->tqcontains( m_dragOverItem ) )
            setSelected( m_dragOverItem, false );
 
    if ( !item )
@@ -900,7 +900,7 @@ void KonqBaseListViewWidget::slotSelectionChanged()
 void KonqBaseListViewWidget::slotMouseButtonClicked2( int _button,
       TQListViewItem *_item, const TQPoint& pos, int )
 {
-   if ( _button == MidButton )
+   if ( _button == Qt::MidButton )
    {
       if ( _item && isExecuteArea( viewport()->mapFromGlobal(pos) ) )
          m_pBrowserView->mmbClicked( static_cast<KonqBaseListViewItem *>(_item)->item() );
@@ -985,17 +985,17 @@ void KonqBaseListViewWidget::slotReturnPressed( TQListViewItem *_item )
 	 if (_item->pixmap(0) != 0)
 	 {
 	   // Rect of the QListViewItem's pixmap area.
-           TQRect rect = _item->listView()->itemRect(_item);
+           TQRect rect = _item->listView()->tqitemRect(_item);
 
 	   // calculate nesting depth
 	   int nestingDepth = 0;
-	   for (TQListViewItem *currentItem = _item->parent();
+	   for (TQListViewItem *currentItem = _item->tqparent();
 	        currentItem != 0;
-	        currentItem = currentItem->parent())
+	        currentItem = currentItem->tqparent())
 	  	  nestingDepth++;
 	
 	   // no parent no indent
-	   if (_item->parent() == 0)
+	   if (_item->tqparent() == 0)
 		nestingDepth = 0;
 	
 	   // Root decoration means additional indent
@@ -1111,7 +1111,7 @@ bool KonqBaseListViewWidget::openURL( const KURL &url )
       args.yOffset = contentsY();
       m_pBrowserView->extension()->setURLArgs( args );
 
-      if ( currentItem() && itemRect( currentItem() ).isValid() )
+      if ( currentItem() && tqitemRect( currentItem() ).isValid() )
          m_itemToGoTo = currentItem()->text(0);
 
       m_pBrowserView->m_filesToSelect.clear();
@@ -1255,7 +1255,7 @@ void KonqBaseListViewWidget::slotNewItems( const KFileItemList & entries )
          m_itemFound = true;
       }
       if ( !m_itemsToSelect.isEmpty() ) {
-         TQStringList::Iterator tsit = m_itemsToSelect.find( (*kit)->name() );
+         TQStringList::Iterator tsit = m_itemsToSelect.tqfind( (*kit)->name() );
          if ( tsit != m_itemsToSelect.end() ) {
             m_itemsToSelect.remove( tsit );
             setSelected( tmp, true );
@@ -1371,13 +1371,13 @@ KonqBaseListViewWidget::iterator& KonqBaseListViewWidget::iterator::operator++()
       m_p = i;
       return *this;
    }
-   m_p = (KonqBaseListViewItem *)m_p->parent();
+   m_p = (KonqBaseListViewItem *)m_p->tqparent();
 
    while ( m_p )
    {
       if ( m_p->nextSibling() )
          break;
-      m_p = (KonqBaseListViewItem *)m_p->parent();
+      m_p = (KonqBaseListViewItem *)m_p->tqparent();
    }
 
    if ( m_p )
@@ -1402,13 +1402,13 @@ KonqBaseListViewWidget::iterator KonqBaseListViewWidget::iterator::operator++(in
       m_p = i;
       return it;
    }
-   m_p = (KonqBaseListViewItem *)m_p->parent();
+   m_p = (KonqBaseListViewItem *)m_p->tqparent();
 
    while ( m_p )
    {
       if ( m_p->nextSibling() )
          break;
-      m_p = (KonqBaseListViewItem *)m_p->parent();
+      m_p = (KonqBaseListViewItem *)m_p->tqparent();
    }
 
    if ( m_p )
@@ -1418,7 +1418,7 @@ KonqBaseListViewWidget::iterator KonqBaseListViewWidget::iterator::operator++(in
 
 void KonqBaseListViewWidget::paintEmptyArea( TQPainter *p, const TQRect &r )
 {
-   const TQPixmap *pm = viewport()->paletteBackgroundPixmap();
+   const TQPixmap *pm = TQT_TQPIXMAP_CONST(viewport()->paletteBackgroundPixmap());
 
    if (!pm || pm->isNull())
       p->fillRect(r, viewport()->backgroundColor());

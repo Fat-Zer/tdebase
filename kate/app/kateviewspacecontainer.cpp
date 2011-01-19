@@ -141,7 +141,7 @@ bool KateViewSpaceContainer::deleteView (Kate::View *view, bool delViewSpace)
 {
   if (!view) return true;
 
-  KateViewSpace *viewspace = (KateViewSpace *)view->parentWidget()->parentWidget();
+  KateViewSpace *viewspace = (KateViewSpace *)view->tqparentWidget()->tqparentWidget();
 
   viewspace->removeView (view);
 
@@ -241,7 +241,7 @@ void KateViewSpaceContainer::activateSpace (Kate::View* v)
 {
   if (!v) return;
 
-  KateViewSpace* vs = (KateViewSpace*)v->parentWidget()->parentWidget();
+  KateViewSpace* vs = (KateViewSpace*)v->tqparentWidget()->tqparentWidget();
 
   if (!vs->isActiveSpace()) {
     setActiveSpace (vs);
@@ -275,7 +275,7 @@ void KateViewSpaceContainer::activateView ( Kate::View *view )
     }
 
     setActiveView (view);
-    m_viewList.findRef (view);
+    m_viewList.tqfindRef (view);
 
     mainWindow()->toolBar ()->setUpdatesEnabled (false);
 
@@ -337,7 +337,7 @@ void KateViewSpaceContainer::slotViewChanged()
 
 void KateViewSpaceContainer::activateNextView()
 {
-  uint i = m_viewSpaceList.find (activeViewSpace())+1;
+  uint i = m_viewSpaceList.tqfind (activeViewSpace())+1;
 
   if (i >= m_viewSpaceList.count())
     i=0;
@@ -348,7 +348,7 @@ void KateViewSpaceContainer::activateNextView()
 
 void KateViewSpaceContainer::activatePrevView()
 {
-  int i = m_viewSpaceList.find (activeViewSpace())-1;
+  int i = m_viewSpaceList.tqfind (activeViewSpace())-1;
 
   if (i < 0)
     i=m_viewSpaceList.count()-1;
@@ -446,23 +446,23 @@ void KateViewSpaceContainer::splitViewSpace( KateViewSpace* vs,
   if (!activeView()) return;
   if (!vs) vs = activeViewSpace();
 
-  bool isFirstTime = vs->parentWidget() == this;
+  bool isFirstTime = vs->tqparentWidget() == this;
 
   TQValueList<int> psizes;
   if ( ! isFirstTime )
-    if ( TQSplitter *ps = static_cast<TQSplitter*>(vs->parentWidget()->qt_cast("TQSplitter")) )
+    if ( TQSplitter *ps = static_cast<TQSplitter*>(vs->tqparentWidget()->tqqt_cast("TQSplitter")) )
       psizes = ps->sizes();
 
   Qt::Orientation o = isHoriz ? Qt::Vertical : Qt::Horizontal;
-  KateMDI::Splitter* s = new KateMDI::Splitter(o, vs->parentWidget());
+  KateMDI::Splitter* s = new KateMDI::Splitter(o, vs->tqparentWidget());
   s->setOpaqueResize( KGlobalSettings::opaqueResize() );
 
   if (! isFirstTime) {
     // anders: make sure the split' viewspace is always
     // correctly positioned.
     // If viewSpace is the first child, the new splitter must be moveToFirst'd
-    if ( !((KateMDI::Splitter*)vs->parentWidget())->isLastChild( vs ) )
-       ((KateMDI::Splitter*)s->parentWidget())->moveToFirst( s );
+    if ( !((KateMDI::Splitter*)vs->tqparentWidget())->isLastChild( vs ) )
+       ((KateMDI::Splitter*)s->tqparentWidget())->moveToFirst( s );
   }
   vs->reparent( s, 0, TQPoint(), true );
   KateViewSpace* vsNew = new KateViewSpace( this, s );
@@ -471,13 +471,13 @@ void KateViewSpaceContainer::splitViewSpace( KateViewSpace* vs,
     s->moveToFirst( vsNew );
 
   if (!isFirstTime)
-    if (TQSplitter *ps = static_cast<TQSplitter*>(s->parentWidget()->qt_cast("TQSplitter")) )
+    if (TQSplitter *ps = static_cast<TQSplitter*>(s->tqparentWidget()->tqqt_cast("TQSplitter")) )
       ps->setSizes( psizes );
 
   s->show();
 
   TQValueList<int> sizes;
-  int space = 50;//isHoriz ? s->parentWidget()->height()/2 : s->parentWidget()->width()/2;
+  int space = 50;//isHoriz ? s->tqparentWidget()->height()/2 : s->tqparentWidget()->width()/2;
   sizes << space << space;
   s->setSizes( sizes );
 
@@ -503,7 +503,7 @@ void KateViewSpaceContainer::removeViewSpace (KateViewSpace *viewspace)
   // abort if this is the last viewspace
   if (m_viewSpaceList.count() < 2) return;
 
-  KateMDI::Splitter* p = (KateMDI::Splitter*)viewspace->parentWidget();
+  KateMDI::Splitter* p = (KateMDI::Splitter*)viewspace->tqparentWidget();
 
   // find out if it is the first child for repositioning
   // see below
@@ -512,16 +512,16 @@ void KateViewSpaceContainer::removeViewSpace (KateViewSpace *viewspace)
   // save some size information
   KateMDI::Splitter* pp=0L;
   TQValueList<int> ppsizes;
-  if (m_viewSpaceList.count() > 2 && p->parentWidget() != this)
+  if (m_viewSpaceList.count() > 2 && p->tqparentWidget() != this)
   {
-    pp = (KateMDI::Splitter*)p->parentWidget();
+    pp = (KateMDI::Splitter*)p->tqparentWidget();
     ppsizes = pp->sizes();
     pIsFirst = !pp->isLastChild( p ); // simple logic, right-
   }
 
   // Figure out where to put views that are still needed
   KateViewSpace* next;
-  if (m_viewSpaceList.find(viewspace) == 0)
+  if (m_viewSpaceList.tqfind(viewspace) == 0)
     next = m_viewSpaceList.next();
   else
     next = m_viewSpaceList.prev();
@@ -550,14 +550,14 @@ void KateViewSpaceContainer::removeViewSpace (KateViewSpace *viewspace)
   m_viewSpaceList.remove( viewspace );
 
   // reparent the other sibling of the parent.
-  while (p->children ())
+  while (!p->childrenListObject().isEmpty())
   {
-    TQWidget* other = ((TQWidget *)(( TQPtrList<TQObject>*)p->children())->first());
+    TQWidget* other = ((TQWidget *)(( TQPtrList<TQObject>)p->childrenListObject()).first());
 
-    other->reparent( p->parentWidget(), 0, TQPoint(), true );
+    other->reparent( p->tqparentWidget(), 0, TQPoint(), true );
     // We also need to find the right viewspace to become active
     if (pIsFirst)
-       ((KateMDI::Splitter*)p->parentWidget())->moveToFirst( other );
+       ((KateMDI::Splitter*)p->tqparentWidget())->moveToFirst( other );
     if ( other->isA("KateViewSpace") ) {
       setActiveSpace( (KateViewSpace*)other );
     }
@@ -676,20 +676,20 @@ void KateViewSpaceContainer::saveSplitterConfig( KateMDI::Splitter* s, int idx, 
 
   TQStringList childList;
   // a katesplitter has two children, of which one may be a KateSplitter.
-  const TQObjectList* l = s->children();
-  TQObjectListIt it( *l );
+  const TQObjectList l = s->childrenListObject();
+  TQObjectListIt it( l );
   TQObject* obj;
   for (; it.current(); ++it) {
    obj = it.current();
    TQString n;  // name for child list, see below
    // For KateViewSpaces, ask them to save the file list.
    if ( obj->isA("KateViewSpace") ) {
-     n = TQString(viewConfGrp+"-ViewSpace %1").arg( m_viewSpaceList.find((KateViewSpace*)obj) );
-     ((KateViewSpace*)obj)->saveConfig ( config, m_viewSpaceList.find((KateViewSpace*)obj), viewConfGrp);
+     n = TQString(viewConfGrp+"-ViewSpace %1").arg( m_viewSpaceList.tqfind((KateViewSpace*)obj) );
+     ((KateViewSpace*)obj)->saveConfig ( config, m_viewSpaceList.tqfind((KateViewSpace*)obj), viewConfGrp);
      // save active viewspace
      if ( ((KateViewSpace*)obj)->isActiveSpace() ) {
        config->setGroup(viewConfGrp);
-       config->writeEntry("Active Viewspace", m_viewSpaceList.find((KateViewSpace*)obj) );
+       config->writeEntry("Active Viewspace", m_viewSpaceList.tqfind((KateViewSpace*)obj) );
      }
    }
    // For KateSplitters, recurse

@@ -1,6 +1,6 @@
 <!DOCTYPE UI><UI version="3.0" stdsetdef="1">
 <class>KHotKeys::Gesture_triggers_tab_ui</class>
-<widget class="QWidget">
+<widget class="TQWidget">
     <property name="name">
         <cstring>Gesture_triggers_tab_ui</cstring>
     </property>
@@ -22,7 +22,7 @@
         <property name="spacing">
             <number>6</number>
         </property>
-        <widget class="QLabel">
+        <widget class="TQLabel">
             <property name="name">
                 <cstring>TextLabel1</cstring>
             </property>
@@ -46,14 +46,14 @@
             <property name="sizeType">
                 <enum>Expanding</enum>
             </property>
-            <property name="sizeHint">
+            <property name="tqsizeHint">
                 <size>
                     <width>0</width>
                     <height>30</height>
                 </size>
             </property>
         </spacer>
-        <widget class="QLayoutWidget">
+        <widget class="TQLayoutWidget">
             <property name="name">
                 <cstring>Layout5</cstring>
             </property>
@@ -77,14 +77,14 @@
                     <property name="sizeType">
                         <enum>Expanding</enum>
                     </property>
-                    <property name="sizeHint">
+                    <property name="tqsizeHint">
                         <size>
                             <width>30</width>
                             <height>0</height>
                         </size>
                     </property>
                 </spacer>
-                <widget class="QLineEdit">
+                <widget class="TQLineEdit">
                     <property name="name">
                         <cstring>gesture_lineedit1</cstring>
                     </property>
@@ -102,7 +102,7 @@
                     <property name="sizeType">
                         <enum>Expanding</enum>
                     </property>
-                    <property name="sizeHint">
+                    <property name="tqsizeHint">
                         <size>
                             <width>30</width>
                             <height>0</height>
@@ -121,7 +121,7 @@
                             <verstretch>0</verstretch>
                         </sizepolicy>
                     </property>
-                    <property name="minimumSize">
+                    <property name="tqminimumSize">
                         <size>
                             <width>100</width>
                             <height>100</height>
@@ -138,14 +138,14 @@
                     <property name="sizeType">
                         <enum>Expanding</enum>
                     </property>
-                    <property name="sizeHint">
+                    <property name="tqsizeHint">
                         <size>
                             <width>30</width>
                             <height>0</height>
                         </size>
                     </property>
                 </spacer>
-                <widget class="QPushButton">
+                <widget class="TQPushButton">
                     <property name="name">
                         <cstring>gesture_edit_button1</cstring>
                     </property>
@@ -163,7 +163,7 @@
                     <property name="sizeType">
                         <enum>Expanding</enum>
                     </property>
-                    <property name="sizeHint">
+                    <property name="tqsizeHint">
                         <size>
                             <width>30</width>
                             <height>0</height>
@@ -182,14 +182,14 @@
             <property name="sizeType">
                 <enum>Expanding</enum>
             </property>
-            <property name="sizeHint">
+            <property name="tqsizeHint">
                 <size>
                     <width>0</width>
                     <height>30</height>
                 </size>
             </property>
         </spacer>
-        <widget class="QLayoutWidget">
+        <widget class="TQLayoutWidget">
             <property name="name">
                 <cstring>Layout6</cstring>
             </property>
@@ -213,14 +213,14 @@
                     <property name="sizeType">
                         <enum>Expanding</enum>
                     </property>
-                    <property name="sizeHint">
+                    <property name="tqsizeHint">
                         <size>
                             <width>30</width>
                             <height>0</height>
                         </size>
                     </property>
                 </spacer>
-                <widget class="QLineEdit">
+                <widget class="TQLineEdit">
                     <property name="name">
                         <cstring>gesture_lineedit2</cstring>
                     </property>
@@ -238,7 +238,7 @@
                     <property name="sizeType">
                         <enum>Expanding</enum>
                     </property>
-                    <property name="sizeHint">
+                    <property name="tqsizeHint">
                         <size>
                             <width>30</width>
                             <height>0</height>
@@ -257,7 +257,7 @@
                             <verstretch>0</verstretch>
                         </sizepolicy>
                     </property>
-                    <property name="minimumSize">
+                    <property name="tqminimumSize">
                         <size>
                             <width>100</width>
                             <height>100</height>
@@ -274,14 +274,14 @@
                     <property name="sizeType">
                         <enum>Expanding</enum>
                     </property>
-                    <property name="sizeHint">
+                    <property name="tqsizeHint">
                         <size>
                             <width>30</width>
                             <height>0</height>
                         </size>
                     </property>
                 </spacer>
-                <widget class="QPushButton">
+                <widget class="TQPushButton">
                     <property name="name">
                         <cstring>gesture_edit_button2</cstring>
                     </property>
@@ -299,7 +299,7 @@
                     <property name="sizeType">
                         <enum>Expanding</enum>
                     </property>
-                    <property name="sizeHint">
+                    <property name="tqsizeHint">
                         <size>
                             <width>30</width>
                             <height>0</height>
@@ -318,14 +318,14 @@
             <property name="sizeType">
                 <enum>Expanding</enum>
             </property>
-            <property name="sizeHint">
+            <property name="tqsizeHint">
                 <size>
                     <width>0</width>
                     <height>30</height>
                 </size>
             </property>
         </spacer>
-        <widget class="QLayoutWidget">
+        <widget class="TQLayoutWidget">
             <property name="name">
                 <cstring>Layout7</cstring>
             </property>
@@ -349,14 +349,14 @@
                     <property name="sizeType">
                         <enum>Expanding</enum>
                     </property>
-                    <property name="sizeHint">
+                    <property name="tqsizeHint">
                         <size>
                             <width>30</width>
                             <height>0</height>
                         </size>
                     </property>
                 </spacer>
-                <widget class="QLineEdit">
+                <widget class="TQLineEdit">
                     <property name="name">
                         <cstring>gesture_lineedit3</cstring>
                     </property>
@@ -374,7 +374,7 @@
                     <property name="sizeType">
                         <enum>Expanding</enum>
                     </property>
-                    <property name="sizeHint">
+                    <property name="tqsizeHint">
                         <size>
                             <width>30</width>
                             <height>0</height>
@@ -393,7 +393,7 @@
                             <verstretch>0</verstretch>
                         </sizepolicy>
                     </property>
-                    <property name="minimumSize">
+                    <property name="tqminimumSize">
                         <size>
                             <width>100</width>
                             <height>100</height>
@@ -410,14 +410,14 @@
                     <property name="sizeType">
                         <enum>Expanding</enum>
                     </property>
-                    <property name="sizeHint">
+                    <property name="tqsizeHint">
                         <size>
                             <width>30</width>
                             <height>0</height>
                         </size>
                     </property>
                 </spacer>
-                <widget class="QPushButton">
+                <widget class="TQPushButton">
                     <property name="name">
                         <cstring>gesture_edit_button3</cstring>
                     </property>
@@ -435,7 +435,7 @@
                     <property name="sizeType">
                         <enum>Expanding</enum>
                     </property>
-                    <property name="sizeHint">
+                    <property name="tqsizeHint">
                         <size>
                             <width>30</width>
                             <height>0</height>
@@ -454,7 +454,7 @@
             <property name="sizeType">
                 <enum>Expanding</enum>
             </property>
-            <property name="sizeHint">
+            <property name="tqsizeHint">
                 <size>
                     <width>0</width>
                     <height>30</height>

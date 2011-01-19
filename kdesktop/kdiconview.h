@@ -138,7 +138,7 @@ protected slots:
     // slots connected to the popupmenu (actions)
     void slotCut();
     void slotCopy();
-    void slotTrashActivated( KAction::ActivationReason reason, Qt::ButtonState state );
+    void slotTrashActivated( KAction::ActivationReason reason, TQt::ButtonState state );
     void slotDelete();
     void slotPopupPasteTo();
     void slotProperties();

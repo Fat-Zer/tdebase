@@ -31,7 +31,7 @@ class TQTextEdit;
 class FaxCtrl;
 class TQCheckBox;
 class TQLabel;
-class QTimeEdit;
+class TQTimeEdit;
 class TQComboBox;
 class TQPushButton;
 class TQListViewItem;
@@ -100,13 +100,13 @@ protected:
 private:
 	KListBox	*m_files;
 	KListView   *m_numbers;
-	QLineEdit	*m_subject;
-	QTextEdit	*m_comment;
+	TQLineEdit	*m_subject;
+	TQTextEdit	*m_comment;
 	FaxCtrl		*m_faxctrl;
-	QCheckBox	*m_cover;
-	QLabel		*m_msglabel;
-	QTimeEdit	*m_time;
-	QComboBox	*m_timecombo;
+	TQCheckBox	*m_cover;
+	TQLabel		*m_msglabel;
+	TQTimeEdit	*m_time;
+	TQComboBox	*m_timecombo;
 	TQPushButton *m_upbtn, *m_downbtn;
 	TQPushButton *m_newbtn, *m_abbtn, *m_delbtn;
 	bool m_quitAfterSend;

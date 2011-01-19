@@ -157,13 +157,13 @@ CFontEngine::EWeight CFontEngine::strToWeight(const char *str)
 
 static void removeSymbols(TQString &str)
 {
-    str.replace(TQRegExp("[\\-\\[\\]()]"), " ");
+    str.tqreplace(TQRegExp("[\\-\\[\\]()]"), " ");
 
     int   len=str.length();
     TQChar space(' ');
 
     for(int c=0; c<len; ++c)
-        if(str[c].unicode()<0x20 || str[c].unicode()>0x7E)
+        if(str[c].tqunicode()<0x20 || str[c].tqunicode()>0x7E)
             str[c]=space;
 
     str=str.simplifyWhiteSpace();

@@ -75,7 +75,7 @@ void TaskMenuItem::paint(TQPainter *p, const TQColorGroup &cg,
     p->drawText(x, y, w, h, AlignAuto|AlignVCenter|DontClip|ShowPrefix, m_text);
 }
 
-TQSize TaskMenuItem::sizeHint()
+TQSize TaskMenuItem::tqsizeHint()
 {
     TQFont font = TQFont();
     if (m_isActive)
@@ -111,7 +111,7 @@ void TaskLMBMenu::fillMenu()
     {
         Task::Ptr t = (*it);
 
-        TQString text = t->visibleName().replace("&", "&&");
+        TQString text = t->visibleName().tqreplace("&", "&&");
 
         TaskMenuItem *menuItem = new TaskMenuItem(text,
                                                   t->isActive(),
@@ -229,7 +229,7 @@ void TaskLMBMenu::dragSwitch()
 
 void TaskLMBMenu::mousePressEvent( TQMouseEvent* e )
 {
-    if (e->button() == LeftButton)
+    if (e->button() == Qt::LeftButton)
     {
         m_dragStartPos = e->pos();
     }

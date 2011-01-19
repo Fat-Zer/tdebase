@@ -44,7 +44,7 @@
 #include <tqimage.h>
 
 // SchemaListBoxText is a list box text item with schema filename
-class SchemaListBoxText : public QListBoxText
+class SchemaListBoxText : public TQListBoxText
 {
   public:
     SchemaListBoxText(const TQString &title, const TQString &filename): TQListBoxText(title)
@@ -241,7 +241,7 @@ void SchemaEditor::loadAllSchema(TQString currentFile)
 	TQString title = readSchemaTitle(name);
 
 	// Only insert new items so that local items override global
-	if (schemaList->findItem(title, ExactMatch) == 0) {
+	if (schemaList->tqfindItem(title, ExactMatch) == 0) {
 	    if (title.isNull() || title.isEmpty())
 		title=i18n("untitled");
 
@@ -594,7 +594,7 @@ void SchemaEditor::readSchema(int num)
 		    continue;
 
 		TQString qline(line);
-		backgndLine->setText(locate("wallpaper", qline.mid( qline.find(" ",7)+1 ) ));
+		backgndLine->setText(locate("wallpaper", qline.mid( qline.tqfind(" ",7)+1 ) ));
 		modeCombo->setCurrentItem(attr - 2);
 
 	    }
@@ -666,7 +666,7 @@ void SchemaEditor::readSchema(int num)
 		    continue;
 		if (!(0 <= bo && bo <= 1))
 		    continue;
-		color[fi] = kapp->palette().active().text();
+		color[fi] = kapp->tqpalette().active().text();
 		transparent[fi] = tr;
 		bold[fi] = bo;
 		type[fi] = 1;
@@ -681,7 +681,7 @@ void SchemaEditor::readSchema(int num)
 		    continue;
 		if (!(0 <= bo && bo <= 1))
 		    continue;
-		color[fi] = kapp->palette().active().base();
+		color[fi] = kapp->tqpalette().active().base();
 		transparent[fi] = tr;
 		bold[fi] = bo;
 		type[fi] = 2;

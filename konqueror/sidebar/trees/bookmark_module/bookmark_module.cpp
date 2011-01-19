@@ -161,10 +161,10 @@ void KonqSidebarBookmarkModule::slotMoved(TQListViewItem *i, TQListViewItem*, TQ
     KBookmarkGroup parentGroup;
     // try to get the parent group (assume that the TQListViewItem has been reparented by KListView)...
     // if anything goes wrong, use the root.
-    if (item->parent()) {
+    if (item->tqparent()) {
         bool error = false;
 
-        KonqSidebarBookmarkItem *parent = dynamic_cast<KonqSidebarBookmarkItem*>( (item->parent()) );
+        KonqSidebarBookmarkItem *parent = dynamic_cast<KonqSidebarBookmarkItem*>( (item->tqparent()) );
         if (!parent) {
             error = true;
         } else {
@@ -387,7 +387,7 @@ void KonqSidebarBookmarkModule::slotOpenTab()
     else
 	return;
 
-    DCOPRef ref(kapp->dcopClient()->appId(), tree()->topLevelWidget()->name());
+    DCOPRef ref(kapp->dcopClient()->appId(), tree()->tqtopLevelWidget()->name());
 
     if (bookmark.isGroup()) {
         KBookmarkGroup group = bookmark.toGroup();
@@ -412,9 +412,9 @@ void KonqSidebarBookmarkModule::slotCopyLocation()
 
     if ( !bookmark.isGroup() )
     {
-        kapp->clipboard()->setData( KBookmarkDrag::newDrag(bookmark, 0),
+        kapp->tqclipboard()->setData( KBookmarkDrag::newDrag(bookmark, 0),
                                     QClipboard::Selection );
-        kapp->clipboard()->setData( KBookmarkDrag::newDrag(bookmark, 0),
+        kapp->tqclipboard()->setData( KBookmarkDrag::newDrag(bookmark, 0),
                                     QClipboard::Clipboard );
     }
 }
@@ -484,7 +484,7 @@ void KonqSidebarBookmarkModule::fillGroup( KonqSidebarTreeItem * parentItem, KBo
                 fillGroup( item, grp );
 
                 TQString address(grp.address());
-                if (m_folderOpenState.contains(address))
+                if (m_folderOpenState.tqcontains(address))
                     item->setOpen(m_folderOpenState[address]);
                 else
                     item->setOpen(false);

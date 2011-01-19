@@ -124,32 +124,32 @@ TQString KBackgroundRenderer::buildCommand()
     if (cmd.isEmpty())
 	return TQString();
 
-    while ((pos = cmd.find('%', pos)) != -1) {
+    while ((pos = cmd.tqfind('%', pos)) != -1) {
 
         if (pos == (int) (cmd.length() - 1))
             break;
 
-        switch (cmd.at(pos+1).latin1()) {
+        switch (cmd.tqat(pos+1).latin1()) {
         case 'f':
             createTempFile();
-            cmd.replace(pos, 2, KShellProcess::quote(m_Tempfile->name()));
+            cmd.tqreplace(pos, 2, KShellProcess::quote(m_Tempfile->name()));
             pos += m_Tempfile->name().length() - 2;
             break;
 
         case 'x':
             num.setNum(m_Size.width());
-            cmd.replace(pos, 2, num);
+            cmd.tqreplace(pos, 2, num);
             pos += num.length() - 2;
             break;
 
         case 'y':
             num.setNum(m_Size.height());
-            cmd.replace(pos, 2, num);
+            cmd.tqreplace(pos, 2, num);
             pos += num.length() - 2;
             break;
 
         case '%':
-            cmd.replace(pos, 2, "%");
+            cmd.tqreplace(pos, 2, "%");
             pos--;
             break;
         default:
@@ -191,7 +191,7 @@ int KBackgroundRenderer::doBackground(bool quit)
         int tile_val = TQPixmap::defaultDepth() >= 24 ? 1 : 2;
     // some dithering may be needed even with bpb==15/16, so don't use tileWidth==1
     // for them
-    // with tileWidth>2, repainting the desktop causes nasty effect (XFree86 4.1.0 )
+    // with tileWidth>2, tqrepainting the desktop causes nasty effect (XFree86 4.1.0 )
         if( XQueryBestTile( qt_xdisplay(), qt_xrootwin(), tile_val, tile_val,
             &tileWidth, &tileHeight ) != Success )
             tileWidth = tileHeight = tile_val; // some defaults
@@ -383,7 +383,7 @@ wp_load:
 	    wpmode = NoWallpaper;
 	    goto wp_out;
 	}
-	m_Wallpaper = m_Wallpaper.convertDepth(32, DiffuseAlphaDither);
+	m_Wallpaper = m_Wallpaper.convertDepth(32, Qt::DiffuseAlphaDither);
 
 	// If we're previewing, scale the wallpaper down to make the preview
 	// look more like the real desktop.
@@ -584,7 +584,7 @@ void KBackgroundRenderer::fastWallpaperBlend()
             m_Pixmap.convertFromImage( m_Wallpaper );
         return;
     }
-    else if( m_WallpaperRect.contains( TQRect( TQPoint( 0, 0 ), m_Size ))
+    else if( m_WallpaperRect.tqcontains( TQRect( TQPoint( 0, 0 ), m_Size ))
         && !m_Wallpaper.hasAlphaBuffer()) // wallpaper covers all and no blending
         m_Pixmap = TQPixmap( m_Size );
     else if (m_Background.size() == m_Size)
@@ -627,7 +627,7 @@ void KBackgroundRenderer::fullWallpaperBlend()
 	m_Image = m_Background.copy();
 
 	if (m_Image.depth() < 32)
-	    m_Image = m_Image.convertDepth(32, DiffuseAlphaDither);
+	    m_Image = m_Image.convertDepth(32, Qt::DiffuseAlphaDither);
 
     } else {
 	m_Image.create(w, h, 32);
@@ -724,16 +724,16 @@ void KBackgroundRenderer::blend(TQImage& dst, TQRect dr, const TQImage& src, TQP
 
     for (y = 0; y < dr.height(); y++) {
 	if (dst.scanLine(dr.y() + y) && src.scanLine(soffs.y() + y)) {
-	    QRgb *b, *d;
+	    TQRgb *b, *d;
 	    for (x = 0; x < dr.width(); x++) {
-		b = reinterpret_cast<QRgb*>(dst.scanLine(dr.y() + y)
-			+ (dr.x() + x) * sizeof(QRgb));
-                d = reinterpret_cast<QRgb*>(src.scanLine(soffs.y() + y)
-			+ (soffs.x() + x) * sizeof(QRgb));
-                a = (qAlpha(*d) * blendFactor) / 100;
-                *b = qRgb(qRed(*b) - (((qRed(*b) - qRed(*d)) * a) >> 8),
-                          qGreen(*b) - (((qGreen(*b) - qGreen(*d)) * a) >> 8),
-                          qBlue(*b) - (((qBlue(*b) - qBlue(*d)) * a) >> 8));
+		b = reinterpret_cast<TQRgb*>(dst.scanLine(dr.y() + y)
+			+ (dr.x() + x) * sizeof(TQRgb));
+                d = reinterpret_cast<TQRgb*>(const_cast<TQImage&>(src).scanLine(soffs.y() + y)
+			+ (soffs.x() + x) * sizeof(TQRgb));
+                a = (tqAlpha(*d) * blendFactor) / 100;
+                *b = tqRgb(tqRed(*b) - (((tqRed(*b) - tqRed(*d)) * a) >> 8),
+                          tqGreen(*b) - (((tqGreen(*b) - tqGreen(*d)) * a) >> 8),
+                          tqBlue(*b) - (((tqBlue(*b) - tqBlue(*d)) * a) >> 8));
             }
         }
     }
@@ -996,13 +996,13 @@ void KBackgroundRenderer::saveCacheFile()
         m_Image.save( f, "PNG" );
         // remove old entries from the cache
         TQDir dir( locateLocal( "cache", "background/" ));
-        if( const QFileInfoList* list = dir.entryInfoList( "*.png", TQDir::Files, TQDir::Time | TQDir::Reversed )) {
+        if( const TQFileInfoList* list = dir.entryInfoList( "*.png", TQDir::Files, TQDir::Time | TQDir::Reversed )) {
             int size = 0;
-            for( QFileInfoListIterator it( *list );
+            for( TQFileInfoListIterator it( *list );
                  TQFileInfo* info = it.current();
                  ++it )
                 size += info->size();
-            for( QFileInfoListIterator it( *list );
+            for( TQFileInfoListIterator it( *list );
                  TQFileInfo* info = it.current();
                  ++it ) {
                 if( size < 8 * 1024 * 1024 )
@@ -1129,7 +1129,7 @@ int KVirtualBGRenderer::hash()
         fp += m_renderer[i]->fingerprint();
     }
     //kdDebug() << k_funcinfo << " fp=\""<<fp<<"\" h="<<QHash(fp)<<endl;
-    return QHash(fp);
+    return TQHash(fp);
 }
 
 
@@ -1251,7 +1251,7 @@ void KVirtualBGRenderer::screenDone(int _desk, int _screen)
     Q_UNUSED(_screen);
 
     const KBackgroundRenderer * sender = dynamic_cast<const KBackgroundRenderer*>(this->sender());
-    int screen = m_renderer.find(sender);
+    int screen = m_renderer.tqfind(sender);
     if (screen == -1)
         //??
         return;

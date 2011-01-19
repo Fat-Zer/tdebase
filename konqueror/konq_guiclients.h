@@ -69,7 +69,7 @@ private:
   TQDomDocument m_doc;
 };
 
-class ToggleViewGUIClient : public QObject
+class ToggleViewGUIClient : public TQObject
 {
   Q_OBJECT
 public:

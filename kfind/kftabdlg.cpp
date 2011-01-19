@@ -60,11 +60,11 @@ KfindTabWidget::KfindTabWidget(TQWidget *parent, const char *name)
     pages[0] = new TQWidget( this, "page1" );
 
     nameBox = new KComboBox(TRUE, pages[0], "combo1");
-    nameBox->setSizePolicy(TQSizePolicy::Preferred, TQSizePolicy::Fixed);  // allow smaller than widest entry
+    nameBox->tqsetSizePolicy(TQSizePolicy::Preferred, TQSizePolicy::Fixed);  // allow smaller than widest entry
     TQLabel * namedL = new TQLabel(nameBox, i18n("&Named:"), pages[0], "named");
     TQToolTip::add( namedL, i18n("You can use wildcard matching and \";\" for separating multiple names") );
     dirBox  = new KComboBox(TRUE, pages[0], "combo2");
-    dirBox->setSizePolicy(TQSizePolicy::Preferred, TQSizePolicy::Fixed);  // allow smaller than widest entry
+    dirBox->tqsetSizePolicy(TQSizePolicy::Preferred, TQSizePolicy::Fixed);  // allow smaller than widest entry
     TQLabel * lookinL = new TQLabel(dirBox, i18n("Look &in:"), pages[0], "named");
     subdirsCb  = new TQCheckBox(i18n("Include &subfolders"), pages[0]);
     caseSensCb  = new TQCheckBox(i18n("Case s&ensitive search"), pages[0]);
@@ -187,7 +187,7 @@ KfindTabWidget::KfindTabWidget(TQWidget *parent, const char *name)
     sizeUnitBox ->setCurrentItem(1);
 
     int tmp = sizeEdit->fontMetrics().width(" 000000000 ");
-    sizeEdit->setMinimumSize(tmp, sizeEdit->sizeHint().height());
+    sizeEdit->setMinimumSize(tmp, sizeEdit->tqsizeHint().height());
 
     m_usernameBox->setDuplicatesEnabled(FALSE);
     m_groupBox->setDuplicatesEnabled(FALSE);
@@ -212,7 +212,7 @@ KfindTabWidget::KfindTabWidget(TQWidget *parent, const char *name)
 
     grid1->addWidget(rb[0], 1, 1 );
     grid1->addWidget(fromDate, 1, 2 );
-    grid1->addWidget(andL, 1, 3, AlignHCenter );
+    grid1->addWidget(andL, 1, 3, Qt::AlignHCenter );
     grid1->addWidget(toDate, 1, 4 );
 
     grid1->addWidget(rb[1], 2, 1 );
@@ -245,7 +245,7 @@ KfindTabWidget::KfindTabWidget(TQWidget *parent, const char *name)
     pages[2] = new TQWidget( this, "page3" );
 
     typeBox =new KComboBox(FALSE, pages[2], "typeBox");
-    typeBox->setSizePolicy(TQSizePolicy::Preferred, TQSizePolicy::Fixed);  // allow smaller than widest entry
+    typeBox->tqsetSizePolicy(TQSizePolicy::Preferred, TQSizePolicy::Fixed);  // allow smaller than widest entry
     TQLabel * typeL   =new TQLabel(typeBox, i18n("File &type:"), pages[2], "type");
     textEdit=new KLineEdit(pages[2], "textEdit" );
     TQLabel * textL   =new TQLabel(textEdit, i18n("C&ontaining text:"), pages[2], "text");
@@ -315,7 +315,7 @@ KfindTabWidget::KfindTabWidget(TQWidget *parent, const char *name)
 
     // Layout
     tmp = sizeEdit->fontMetrics().width(" 00000 ");
-    sizeEdit->setMinimumSize(tmp, sizeEdit->sizeHint().height());
+    sizeEdit->setMinimumSize(tmp, sizeEdit->tqsizeHint().height());
 
     TQGridLayout *grid2 = new TQGridLayout( pages[2], 5, 4,
 					  KDialog::marginHint(),
@@ -330,7 +330,7 @@ KfindTabWidget::KfindTabWidget(TQWidget *parent, const char *name)
 
     grid2->addWidget( textMetaKey, 4, 0 );
     grid2->addWidget( metainfokeyEdit, 4, 1 );
-    grid2->addWidget( textMetaInfo, 4, 2, AlignHCenter  );
+    grid2->addWidget( textMetaInfo, 4, 2, Qt::AlignHCenter  );
     grid2->addWidget( metainfoEdit, 4, 3 );
 
     metainfokeyEdit->setText("*");
@@ -390,7 +390,7 @@ void KfindTabWidget::setURL( const KURL & url )
     dirBox->insertStringList(sl);
     // If the _searchPath already exists in the list we do not
     // want to add it again
-    int indx = sl.findIndex(m_url.prettyURL());
+    int indx = sl.tqfindIndex(m_url.prettyURL());
     if(indx == -1)
       dirBox->insertItem(m_url.prettyURL(), 0); // make it the first one
     else
@@ -472,7 +472,7 @@ void KfindTabWidget::loadHistory()
     dirBox->insertStringList(sl);
     // If the _searchPath already exists in the list we do not
     // want to add it again
-    int indx = sl.findIndex(m_url.prettyURL());
+    int indx = sl.tqfindIndex(m_url.prettyURL());
     if(indx == -1)
       dirBox->insertItem(m_url.prettyURL(), 0); // make it the first one
     else
@@ -496,9 +496,9 @@ void KfindTabWidget::loadHistory()
 void KfindTabWidget::slotEditRegExp()
 {
   if ( ! regExpDialog )
-    regExpDialog = KParts::ComponentFactory::createInstanceFromQuery<TQDialog>( "KRegExpEditor/KRegExpEditor", TQString::null, this );
+    regExpDialog = KParts::ComponentFactory::createInstanceFromQuery<TQDialog>( "KRegExpEditor/KRegExpEditor", TQString(), TQT_TQOBJECT(this) );
 
-  KRegExpEditorInterface *iface = static_cast<KRegExpEditorInterface *>( regExpDialog->qt_cast( "KRegExpEditorInterface" ) );
+  KRegExpEditorInterface *iface = static_cast<KRegExpEditorInterface *>( regExpDialog->tqqt_cast( "KRegExpEditorInterface" ) );
   if ( !iface )
        return;
 
@@ -651,8 +651,8 @@ void KfindTabWidget::setQuery(KQuery *query)
       toDate->getDate(&q2);
 
       // do not generate negative numbers .. find doesn't handle that
-      time_t time1 = epoch.secsTo(q1);
-      time_t time2 = epoch.secsTo(q2.addDays(1)) - 1; // Include the last day
+      time_t time1 = epoch.secsTo(TQDateTime(q1));
+      time_t time2 = epoch.secsTo(TQDateTime(q2.addDays(1))) - 1; // Include the last day
 
       query->setTimeRange(time1, time2);
     }
@@ -712,7 +712,7 @@ void KfindTabWidget::setQuery(KQuery *query)
   }
   else
   {
-     query->setMimeType( TQString::null );
+     query->setMimeType( TQString() );
   }
 
   //Metainfo
@@ -807,7 +807,7 @@ bool KfindTabWidget::isSearchRecursive()
    Digit validator. Allows only digits to be typed.
 **/
 KDigitValidator::KDigitValidator( TQWidget * parent, const char *name )
-  : TQValidator( parent, name )
+  : TQValidator( TQT_TQOBJECT(parent), name )
 {
   r = new TQRegExp("^[0-9]*$");
 }
@@ -854,15 +854,15 @@ static void save_pattern(TQComboBox *obj,
   conf->writePathEntry(entry, sl);
 }
 
-TQSize KfindTabWidget::sizeHint() const
+TQSize KfindTabWidget::tqsizeHint() const
 {
   // #44662: avoid a huge default size when the comboboxes have very large items
   // Like in minicli, we changed the combobox size policy so that they can resize down,
   // and then we simply provide a reasonable size hint for the whole window, depending
   // on the screen width.
-  TQSize sz = TQTabWidget::sizeHint();
+  TQSize sz = TQTabWidget::tqsizeHint();
   KfindTabWidget* me = const_cast<KfindTabWidget*>( this );
-  const int screenWidth = qApp->desktop()->screenGeometry(me).width();
+  const int screenWidth = tqApp->desktop()->screenGeometry(me).width();
   if ( sz.width() > screenWidth / 2 )
     sz.setWidth( screenWidth / 2 );
   return sz;

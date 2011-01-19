@@ -31,7 +31,7 @@ class KWinModule;
 /**
  * Singleton class that handles desktop access (minimizing all windows)
  */
-class ShowDesktop : public QObject
+class ShowDesktop : public TQObject
 {
     Q_OBJECT
 

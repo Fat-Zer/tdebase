@@ -36,7 +36,7 @@ class KAboutData;
 
 class ProxyView;
 
-class ProxyWidget : public QWidget
+class ProxyWidget : public TQWidget
 {
   Q_OBJECT
 

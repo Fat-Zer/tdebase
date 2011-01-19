@@ -80,136 +80,136 @@ void KEBApp::createActions() {
 
     // save and quit should probably not be in the toplevel???
     (void) KStdAction::quit(
-        this, TQT_SLOT( close() ), actionCollection());
+        TQT_TQOBJECT(this), TQT_SLOT( close() ), actionCollection());
     KStdAction::keyBindings(guiFactory(), TQT_SLOT(configureShortcuts()), actionCollection());
     (void) KStdAction::configureToolbars(
-        this, TQT_SLOT( slotConfigureToolbars() ), actionCollection());
+        TQT_TQOBJECT(this), TQT_SLOT( slotConfigureToolbars() ), actionCollection());
 
     if (m_browser) {
         (void) KStdAction::open(
-            actn, TQT_SLOT( slotLoad() ), actionCollection());
+            TQT_TQOBJECT(actn), TQT_SLOT( slotLoad() ), actionCollection());
         (void) KStdAction::saveAs(
-            actn, TQT_SLOT( slotSaveAs() ), actionCollection());
+            TQT_TQOBJECT(actn), TQT_SLOT( slotSaveAs() ), actionCollection());
     }
 
-    (void) KStdAction::cut(actn, TQT_SLOT( slotCut() ), actionCollection());
-    (void) KStdAction::copy(actn, TQT_SLOT( slotCopy() ), actionCollection());
-    (void) KStdAction::paste(actn, TQT_SLOT( slotPaste() ), actionCollection());
-    (void) KStdAction::print(actn, TQT_SLOT( slotPrint() ), actionCollection());
+    (void) KStdAction::cut(TQT_TQOBJECT(actn), TQT_SLOT( slotCut() ), actionCollection());
+    (void) KStdAction::copy(TQT_TQOBJECT(actn), TQT_SLOT( slotCopy() ), actionCollection());
+    (void) KStdAction::paste(TQT_TQOBJECT(actn), TQT_SLOT( slotPaste() ), actionCollection());
+    (void) KStdAction::print(TQT_TQOBJECT(actn), TQT_SLOT( slotPrint() ), actionCollection());
 
     // settings menu
     (void) new KToggleAction(
         i18n("&Show Netscape Bookmarks in Konqueror"), 0,
-        actn, TQT_SLOT( slotShowNS() ), actionCollection(),
+        TQT_TQOBJECT(actn), TQT_SLOT( slotShowNS() ), actionCollection(),
         "settings_showNS");
 
     // actions
     (void) new KAction(
         i18n("&Delete"), "editdelete", Key_Delete,
-        actn, TQT_SLOT( slotDelete() ), actionCollection(), "delete");
+        TQT_TQOBJECT(actn), TQT_SLOT( slotDelete() ), actionCollection(), "delete");
     (void) new KAction(
         i18n("Rename"), "text", Key_F2,
-        actn, TQT_SLOT( slotRename() ), actionCollection(), "rename");
+        TQT_TQOBJECT(actn), TQT_SLOT( slotRename() ), actionCollection(), "rename");
     (void) new KAction(
         i18n("C&hange URL"), "text", Key_F3,
-        actn, TQT_SLOT( slotChangeURL() ), actionCollection(), "changeurl");
+        TQT_TQOBJECT(actn), TQT_SLOT( slotChangeURL() ), actionCollection(), "changeurl");
     (void) new KAction(
         i18n("C&hange Comment"), "text", Key_F4,
-        actn, TQT_SLOT( slotChangeComment() ), actionCollection(), "changecomment");
+        TQT_TQOBJECT(actn), TQT_SLOT( slotChangeComment() ), actionCollection(), "changecomment");
     (void) new KAction(
         i18n("Chan&ge Icon..."), "icons", 0,
-        actn, TQT_SLOT( slotChangeIcon() ), actionCollection(), "changeicon");
+        TQT_TQOBJECT(actn), TQT_SLOT( slotChangeIcon() ), actionCollection(), "changeicon");
     (void) new KAction(
         i18n("Update Favicon"), 0,
-        actn, TQT_SLOT( slotUpdateFavIcon() ), actionCollection(), "updatefavicon");
+        TQT_TQOBJECT(actn), TQT_SLOT( slotUpdateFavIcon() ), actionCollection(), "updatefavicon");
     (void) new KAction(
         i18n("Recursive Sort"), 0,
-        actn, TQT_SLOT( slotRecursiveSort() ), actionCollection(), "recursivesort");
+        TQT_TQOBJECT(actn), TQT_SLOT( slotRecursiveSort() ), actionCollection(), "recursivesort");
     (void) new KAction(
         i18n("&New Folder..."), "folder_new", CTRL+Key_N,
-        actn, TQT_SLOT( slotNewFolder() ), actionCollection(), "newfolder");
+        TQT_TQOBJECT(actn), TQT_SLOT( slotNewFolder() ), actionCollection(), "newfolder");
     (void) new KAction(
         i18n("&New Bookmark"), "www", 0,
-        actn, TQT_SLOT( slotNewBookmark() ), actionCollection(), "newbookmark");
+        TQT_TQOBJECT(actn), TQT_SLOT( slotNewBookmark() ), actionCollection(), "newbookmark");
     (void) new KAction(
         i18n("&Insert Separator"), CTRL+Key_I,
-        actn, TQT_SLOT( slotInsertSeparator() ), actionCollection(),
+        TQT_TQOBJECT(actn), TQT_SLOT( slotInsertSeparator() ), actionCollection(),
         "insertseparator");
     (void) new KAction(
         i18n("&Sort Alphabetically"), 0,
-        actn, TQT_SLOT( slotSort() ), actionCollection(), "sort");
+        TQT_TQOBJECT(actn), TQT_SLOT( slotSort() ), actionCollection(), "sort");
     (void) new KAction(
         i18n("Set as T&oolbar Folder"), "bookmark_toolbar", 0,
-        actn, TQT_SLOT( slotSetAsToolbar() ), actionCollection(), "setastoolbar");
+        TQT_TQOBJECT(actn), TQT_SLOT( slotSetAsToolbar() ), actionCollection(), "setastoolbar");
     (void) new KAction(
         i18n("Show in T&oolbar"), "bookmark_toolbar", 0,
-        actn, TQT_SLOT( slotShowInToolbar() ), actionCollection(), "showintoolbar");
+        TQT_TQOBJECT(actn), TQT_SLOT( slotShowInToolbar() ), actionCollection(), "showintoolbar");
     (void) new KAction(
         i18n("Hide in T&oolbar"), "bookmark_toolbar", 0,
-        actn, TQT_SLOT( slotHideInToolbar() ), actionCollection(), "hideintoolbar");
+        TQT_TQOBJECT(actn), TQT_SLOT( slotHideInToolbar() ), actionCollection(), "hideintoolbar");
     (void) new KAction(
         i18n("&Expand All Folders"), 0,
-        actn, TQT_SLOT( slotExpandAll() ), actionCollection(), "expandall");
+        TQT_TQOBJECT(actn), TQT_SLOT( slotExpandAll() ), actionCollection(), "expandall");
     (void) new KAction(
         i18n("Collapse &All Folders"), 0,
-        actn, TQT_SLOT( slotCollapseAll() ), actionCollection(), "collapseall" );
+        TQT_TQOBJECT(actn), TQT_SLOT( slotCollapseAll() ), actionCollection(), "collapseall" );
     (void) new KAction(
         i18n("&Open in Konqueror"), "fileopen", 0,
-        actn, TQT_SLOT( slotOpenLink() ), actionCollection(), "openlink" );
+        TQT_TQOBJECT(actn), TQT_SLOT( slotOpenLink() ), actionCollection(), "openlink" );
     (void) new KAction(
         i18n("Check &Status"), "bookmark", 0,
-        actn, TQT_SLOT( slotTestSelection() ), actionCollection(), "testlink" );
+        TQT_TQOBJECT(actn), TQT_SLOT( slotTestSelection() ), actionCollection(), "testlink" );
 
     (void) new KAction(
         i18n("Check Status: &All"), 0,
-        actn, TQT_SLOT( slotTestAll() ), actionCollection(), "testall" );
+        TQT_TQOBJECT(actn), TQT_SLOT( slotTestAll() ), actionCollection(), "testall" );
     (void) new KAction(
         i18n("Update All &Favicons"), 0,
-        actn, TQT_SLOT( slotUpdateAllFavIcons() ), actionCollection(),
+        TQT_TQOBJECT(actn), TQT_SLOT( slotUpdateAllFavIcons() ), actionCollection(),
         "updateallfavicons" );
     (void) new KAction(
         i18n("Cancel &Checks"), 0,
-        actn, TQT_SLOT( slotCancelAllTests() ), actionCollection(), "canceltests" );
+        TQT_TQOBJECT(actn), TQT_SLOT( slotCancelAllTests() ), actionCollection(), "canceltests" );
     (void) new KAction(
         i18n("Cancel &Favicon Updates"), 0,
-        actn, TQT_SLOT( slotCancelFavIconUpdates() ), actionCollection(),
+        TQT_TQOBJECT(actn), TQT_SLOT( slotCancelFavIconUpdates() ), actionCollection(),
         "cancelfaviconupdates" );
     (void) new KAction(
         i18n("Import &Netscape Bookmarks..."), "netscape", 0,
-        actn, TQT_SLOT( slotImport() ), actionCollection(), "importNS");
+        TQT_TQOBJECT(actn), TQT_SLOT( slotImport() ), actionCollection(), "importNS");
     (void) new KAction(
         i18n("Import &Opera Bookmarks..."), "opera", 0,
-        actn, TQT_SLOT( slotImport() ), actionCollection(), "importOpera");
+        TQT_TQOBJECT(actn), TQT_SLOT( slotImport() ), actionCollection(), "importOpera");
     (void) new KAction(
         i18n("Import All &Crash Sessions as Bookmarks..."), 0,
-        actn, TQT_SLOT( slotImport() ), actionCollection(), "importCrashes");
+        TQT_TQOBJECT(actn), TQT_SLOT( slotImport() ), actionCollection(), "importCrashes");
     (void) new KAction(
         i18n("Import &Galeon Bookmarks..."), 0,
-        actn, TQT_SLOT( slotImport() ), actionCollection(), "importGaleon");
+        TQT_TQOBJECT(actn), TQT_SLOT( slotImport() ), actionCollection(), "importGaleon");
     (void) new KAction(
         i18n("Import &KDE2/KDE3 Bookmarks..."), 0,
-        actn, TQT_SLOT( slotImport() ), actionCollection(), "importKDE2");
+        TQT_TQOBJECT(actn), TQT_SLOT( slotImport() ), actionCollection(), "importKDE2");
     (void) new KAction(
         i18n("Import &IE Bookmarks..."), 0,
-        actn, TQT_SLOT( slotImport() ), actionCollection(), "importIE");
+        TQT_TQOBJECT(actn), TQT_SLOT( slotImport() ), actionCollection(), "importIE");
     (void) new KAction(
         i18n("Import &Mozilla Bookmarks..."), "mozilla", 0,
-        actn, TQT_SLOT( slotImport() ), actionCollection(), "importMoz");
+        TQT_TQOBJECT(actn), TQT_SLOT( slotImport() ), actionCollection(), "importMoz");
     (void) new KAction(
         i18n("Export to &Netscape Bookmarks"), "netscape", 0,
-        actn, TQT_SLOT( slotExportNS() ), actionCollection(), "exportNS");
+        TQT_TQOBJECT(actn), TQT_SLOT( slotExportNS() ), actionCollection(), "exportNS");
     (void) new KAction(
         i18n("Export to &Opera Bookmarks..."), "opera", 0,
-        actn, TQT_SLOT( slotExportOpera() ), actionCollection(), "exportOpera");
+        TQT_TQOBJECT(actn), TQT_SLOT( slotExportOpera() ), actionCollection(), "exportOpera");
     (void) new KAction(
         i18n("Export to &HTML Bookmarks..."), "html", 0,
-        actn, TQT_SLOT( slotExportHTML() ), actionCollection(), "exportHTML");
+        TQT_TQOBJECT(actn), TQT_SLOT( slotExportHTML() ), actionCollection(), "exportHTML");
     (void) new KAction(
         i18n("Export to &IE Bookmarks..."), 0,
-        actn, TQT_SLOT( slotExportIE() ), actionCollection(), "exportIE");
+        TQT_TQOBJECT(actn), TQT_SLOT( slotExportIE() ), actionCollection(), "exportIE");
     (void) new KAction(
         i18n("Export to &Mozilla Bookmarks..."), "mozilla", 0,
-        actn, TQT_SLOT( slotExportMoz() ), actionCollection(), "exportMoz");
+        TQT_TQOBJECT(actn), TQT_SLOT( slotExportMoz() ), actionCollection(), "exportMoz");
 }
 
 void ActionsImpl::slotLoad() {
@@ -345,7 +345,7 @@ void ActionsImpl::slotCopy() {
     TQValueList<KBookmark> bookmarks
         = ListView::self()->itemsToBookmarks(ListView::self()->selectedItemsMap());
     KBookmarkDrag* data = KBookmarkDrag::newDrag(bookmarks, 0 /* not this ! */);
-    kapp->clipboard()->setData(data, QClipboard::Clipboard);
+    kapp->tqclipboard()->setData(data, QClipboard::Clipboard);
 }
 
 void ActionsImpl::slotPaste() {
@@ -353,7 +353,7 @@ void ActionsImpl::slotPaste() {
     KEBMacroCommand *mcmd =
         CmdGen::insertMimeSource(
                             i18n("Paste"),
-                            kapp->clipboard()->data(QClipboard::Clipboard),
+                            kapp->tqclipboard()->data(QClipboard::Clipboard),
                             ListView::self()->userAddress());
     CmdHistory::self()->didCommand(mcmd);
 }
@@ -394,7 +394,7 @@ void ActionsImpl::slotImport() {
     // kdDebug() << "ActionsImpl::slotImport() where sender()->name() == "
     //           << sender()->name() << endl;
     ImportCommand* import
-        = ImportCommand::performImport(sender()->name()+6, KEBApp::self());
+        = ImportCommand::performImport(TQT_TQOBJECT_CONST(sender())->name()+6, KEBApp::self());
     if (!import)
         return;
     CmdHistory::self()->addCommand(import);

@@ -1,6 +1,6 @@
 <!DOCTYPE UI><UI version="3.1" stdsetdef="1">
 <class>KCMPerformance::Konqueror_ui</class>
-<widget class="QWidget">
+<widget class="TQWidget">
     <property name="name">
         <cstring>Konqueror_ui</cstring>
     </property>
@@ -19,7 +19,7 @@
         <property name="margin">
             <number>0</number>
         </property>
-        <widget class="QButtonGroup">
+        <widget class="TQButtonGroup">
             <property name="name">
                 <cstring>reuse_group</cstring>
             </property>
@@ -30,7 +30,7 @@
                 <property name="name">
                     <cstring>unnamed</cstring>
                 </property>
-                <widget class="QRadioButton">
+                <widget class="TQRadioButton">
                     <property name="name">
                         <cstring>rb_never_reuse</cstring>
                     </property>
@@ -38,7 +38,7 @@
                         <string>&amp;Never</string>
                     </property>
                 </widget>
-                <widget class="QRadioButton">
+                <widget class="TQRadioButton">
                     <property name="name">
                         <cstring>rb_file_browsing_reuse</cstring>
                     </property>
@@ -46,7 +46,7 @@
                         <string>For &amp;file browsing only (recommended)</string>
                     </property>
                 </widget>
-                <widget class="QRadioButton">
+                <widget class="TQRadioButton">
                     <property name="name">
                         <cstring>rb_always_reuse</cstring>
                     </property>
@@ -56,7 +56,7 @@
                 </widget>
             </vbox>
         </widget>
-        <widget class="QGroupBox">
+        <widget class="TQGroupBox">
             <property name="name">
                 <cstring>groupBox1</cstring>
             </property>
@@ -67,7 +67,7 @@
                 <property name="name">
                     <cstring>unnamed</cstring>
                 </property>
-                <widget class="QLayoutWidget">
+                <widget class="TQLayoutWidget">
                     <property name="name">
                         <cstring>layout2</cstring>
                     </property>
@@ -75,7 +75,7 @@
                         <property name="name">
                             <cstring>unnamed</cstring>
                         </property>
-                        <widget class="QLabel">
+                        <widget class="TQLabel">
                             <property name="name">
                                 <cstring>lb_preload_count</cstring>
                             </property>
@@ -86,7 +86,7 @@
                                 <cstring>sb_preload_count</cstring>
                             </property>
                         </widget>
-                        <widget class="QSpinBox">
+                        <widget class="TQSpinBox">
                             <property name="name">
                                 <cstring>sb_preload_count</cstring>
                             </property>
@@ -101,7 +101,7 @@
                             <property name="sizeType">
                                 <enum>Expanding</enum>
                             </property>
-                            <property name="sizeHint">
+                            <property name="tqsizeHint">
                                 <size>
                                     <width>40</width>
                                     <height>20</height>
@@ -110,7 +110,7 @@
                         </spacer>
                     </hbox>
                 </widget>
-                <widget class="QCheckBox">
+                <widget class="TQCheckBox">
                     <property name="name">
                         <cstring>cb_preload_on_startup</cstring>
                     </property>
@@ -118,7 +118,7 @@
                         <string>Preload an instance after KDE startup</string>
                     </property>
                 </widget>
-                <widget class="QCheckBox">
+                <widget class="TQCheckBox">
                     <property name="name">
                         <cstring>cb_always_have_preloaded</cstring>
                     </property>
@@ -138,7 +138,7 @@
             <property name="sizeType">
                 <enum>Expanding</enum>
             </property>
-            <property name="sizeHint">
+            <property name="tqsizeHint">
                 <size>
                     <width>20</width>
                     <height>160</height>

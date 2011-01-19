@@ -92,7 +92,7 @@ RunApplet::RunApplet(const TQString& configFile, Type type, int actions,
 
     _filterData = new KURIFilterData();
 
-    _hbox = new TQHBox( 0, 0, WStyle_Customize | WType_Popup );
+    _hbox = new TQHBox( 0, 0, (WFlags)(WStyle_Customize | WType_Popup) );
     _hbox->setFixedSize(120, 22);
 }
 
@@ -115,20 +115,20 @@ RunApplet::~RunApplet()
 
 void RunApplet::resizeEvent(TQResizeEvent*)
 {
-    if(orientation() == Horizontal)
+    if(orientation() == Qt::Horizontal)
 	{
 	    _btn->hide();
 	    _input->reparent(this, TQPoint(0,0), true);
 	    _label->setGeometry(0,0, width(), _label->height());
 
-	    if(height() >= _input->sizeHint().height() + _label->height())
+	    if(height() >= _input->tqsizeHint().height() + _label->height())
 		{
-                    int inputVOffset = height() - _input->sizeHint().height() - 2;
-                    int labelHeight = _label->sizeHint().height();
+                    int inputVOffset = height() - _input->tqsizeHint().height() - 2;
+                    int labelHeight = _label->tqsizeHint().height();
 		    _label->setGeometry(0, inputVOffset - labelHeight,
                                         width(), labelHeight);
 		    _input->setGeometry(0, inputVOffset,
-					width(), _input->sizeHint().height());
+					width(), _input->tqsizeHint().height());
 		    _label->show();
 		}
 	    else
@@ -138,7 +138,7 @@ void RunApplet::resizeEvent(TQResizeEvent*)
                     // make it as high as the combobox naturally wants to be
                     // but no taller than the panel is!
                     // don't forget to center it vertically either.
-                    int newHeight = _input->sizeHint().height();
+                    int newHeight = _input->tqsizeHint().height();
                     if (newHeight > height())
                         newHeight = height();
 		    _input->setGeometry(0, (height() - newHeight) / 2,
@@ -184,7 +184,7 @@ void RunApplet::setButtonText()
 
 int RunApplet::widthForHeight(int ) const
 {
-    return _label->sizeHint().width();
+    return _label->tqsizeHint().width();
 }
 
 int RunApplet::heightForWidth(int ) const
@@ -288,7 +288,7 @@ void RunApplet::run_command(const TQString& command)
     return;
 
  hide:
-    if (orientation() == Vertical)
+    if (orientation() == Qt::Vertical)
 	_hbox->hide();
     needsFocus(focusNeeded);
 }

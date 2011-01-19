@@ -34,7 +34,7 @@ class KonqMainWindow;
  * Implements file operations (move,del,trash,shred,paste,copy,move,link...)
  * for konqueror and kdesktop whatever the view mode is (icon, tree, ...)
  */
-class LIBKONQ_EXPORT KonqOperations : public QObject
+class LIBKONQ_EXPORT KonqOperations : public TQObject
 {
     Q_OBJECT
 protected:
@@ -173,7 +173,7 @@ protected:
     void setPasteInfo( KIOPasteInfo * info ) { m_pasteInfo = info; }
 
 private:
-    TQWidget* parentWidget() const;
+    TQWidget* tqparentWidget() const;
 
 protected slots:
 

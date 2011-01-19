@@ -69,7 +69,7 @@ PanelButton::PanelButton( TQWidget* parent, const char* name )
       m_arrowDirection(KPanelExtension::Bottom),
       m_popupDirection(KPanelApplet::Up),
       m_iconAlignment(AlignCenter),
-      m_orientation(Horizontal),
+      m_orientation(Qt::Horizontal),
       m_size((KIcon::StdSizes)-1),
       m_fontPercent(0.40)
 {
@@ -190,7 +190,7 @@ void PanelButton::setPopupDirection(KPanelApplet::Direction d)
     setArrowDirection(KickerLib::directionToPopupPosition(d));
 }
 
-void PanelButton::setIconAlignment(AlignmentFlags align)
+void PanelButton::setIconAlignment(TQ_Alignment align)
 {
     m_iconAlignment = align;
     update();
@@ -296,7 +296,7 @@ int PanelButton::widthForHeight(int height) const
 
     // we only paint the text when horizontal, so make sure we're horizontal
     // before adding the text in here
-    if (orientation() == Horizontal && !m_buttonText.isEmpty())
+    if (orientation() == Qt::Horizontal && !m_buttonText.isEmpty())
     {
         TQFont f(font());
         //f.setPixelSize(KMIN(height, KMAX(int(float(height) * m_fontPercent), 16)));
@@ -427,7 +427,7 @@ void PanelButton::enterEvent(TQEvent* e)
     if (!m_highlight)
     {
         m_highlight = true;
-        repaint(false);
+        tqrepaint(false);
     }
 
     TQButton::enterEvent(e);
@@ -438,7 +438,7 @@ void PanelButton::leaveEvent(TQEvent* e)
     if (m_highlight)
     {
         m_highlight = false;
-        repaint(false);
+        tqrepaint(false);
     }
 
     TQButton::leaveEvent(e);
@@ -471,7 +471,7 @@ void PanelButton::dropEvent(TQDropEvent* e)
 
 void PanelButton::mouseMoveEvent(TQMouseEvent *e)
 {
-    if (!m_isLeftMouseButtonDown || (e->state() & LeftButton) == 0)
+    if (!m_isLeftMouseButtonDown || (e->state() & Qt::LeftButton) == 0)
     {
         return;
     }
@@ -489,7 +489,7 @@ void PanelButton::mouseMoveEvent(TQMouseEvent *e)
 
 void PanelButton::mousePressEvent(TQMouseEvent *e)
 {
-    if (e->button() == LeftButton)
+    if (e->button() == Qt::LeftButton)
     {
         m_lastLeftMouseButtonPress = e->pos();
         m_isLeftMouseButtonDown = true;
@@ -499,7 +499,7 @@ void PanelButton::mousePressEvent(TQMouseEvent *e)
 
 void PanelButton::mouseReleaseEvent(TQMouseEvent *e)
 {
-    if (e->button() == LeftButton)
+    if (e->button() == Qt::LeftButton)
     {
         m_isLeftMouseButtonDown = false;
 	
@@ -528,7 +528,7 @@ void PanelButton::drawButton(TQPainter *p)
     if (m_tileColor.isValid())
     {
         p->fillRect(rect(), m_tileColor);
-        style().drawPrimitive(TQStyle::PE_Panel, p, rect(), colorGroup());
+        tqstyle().tqdrawPrimitive(TQStyle::PE_Panel, p, rect(), tqcolorGroup());
     }
     else if (paletteBackgroundPixmap())
     {
@@ -547,8 +547,8 @@ void PanelButton::drawButton(TQPainter *p)
     }
     else if (isDown() || isOn())
     {
-        // Draw shapes to indicate the down state.
-        style().drawPrimitive(TQStyle::PE_Panel, p, rect(), colorGroup(), TQStyle::Style_Sunken);
+        // Draw tqshapes to indicate the down state.
+        tqstyle().tqdrawPrimitive(TQStyle::PE_Panel, p, rect(), tqcolorGroup(), TQStyle::Style_Sunken);
     }
 
     drawButtonLabel(p);
@@ -556,10 +556,10 @@ void PanelButton::drawButton(TQPainter *p)
     if (hasFocus() || m_hasAcceptedDrag)
     {
         int x1, y1, x2, y2;
-        rect().coords(&x1, &y1, &x2, &y2);
+        TQT_TQRECT_OBJECT(rect()).coords(&x1, &y1, &x2, &y2);
         TQRect r(x1+2, y1+2, x2-x1-3, y2-y1-3);
-        style().drawPrimitive(TQStyle::PE_FocusRect, p, r, colorGroup(),
-        TQStyle::Style_Default, colorGroup().button());
+        tqstyle().tqdrawPrimitive(TQStyle::PE_FocusRect, p, r, tqcolorGroup(),
+        TQStyle::Style_Default, tqcolorGroup().button());
     }
 }
 
@@ -570,7 +570,7 @@ void PanelButton::drawButtonLabel(TQPainter *p)
 
     if (active)
     {
-        icon = icon.convertToImage().smoothScale(icon.width() - 2,
+        icon = TQImage(icon.convertToImage()).smoothScale(icon.width() - 2,
                                                  icon.height() - 2);
     }
 
@@ -580,7 +580,7 @@ void PanelButton::drawButtonLabel(TQPainter *p)
     else if (m_iconAlignment & AlignBottom)
         y = (height() - icon.height());
 
-    if (!m_buttonText.isEmpty() && orientation() == Horizontal)
+    if (!m_buttonText.isEmpty() && orientation() == Qt::Horizontal)
     {
         int h = height();
         int w = width();
@@ -663,7 +663,7 @@ void PanelButton::drawButtonLabel(TQPainter *p)
     if (m_drawArrow && (m_highlight || active))
     {
         TQStyle::PrimitiveElement e = TQStyle::PE_ArrowUp;
-        int arrowSize = style().pixelMetric(TQStyle::PM_MenuButtonIndicator);
+        int arrowSize = tqstyle().tqpixelMetric(TQStyle::PM_MenuButtonIndicator);
         TQRect r((width() - arrowSize)/2, 0, arrowSize, arrowSize);
 
         switch (m_arrowDirection)
@@ -684,7 +684,7 @@ void PanelButton::drawButtonLabel(TQPainter *p)
                 r = TQRect(0, (height() - arrowSize)/2, arrowSize, arrowSize);
                 break;
             case KPanelExtension::Floating:
-                if (orientation() == Horizontal)
+                if (orientation() == Qt::Horizontal)
                 {
                     e = TQStyle::PE_ArrowDown;
                     r.moveBy(0, height() - arrowSize);
@@ -707,7 +707,7 @@ void PanelButton::drawButtonLabel(TQPainter *p)
         {
             flags |= TQStyle::Style_Down;
         }
-        style().drawPrimitive(e, p, r, colorGroup(), flags);
+        tqstyle().tqdrawPrimitive(e, p, r, tqcolorGroup(), flags);
     }
 }
 
@@ -730,7 +730,7 @@ int PanelButton::preferredIconSize(int proposed_size) const
 
     if (proposed_size < 0)
     {
-        proposed_size = (orientation() == Horizontal) ? height() : width();
+        proposed_size = (orientation() == Qt::Horizontal) ? height() : width();
     }
 
     // determine the upper limit on the size.  Normally, this is panelSize,
@@ -922,8 +922,8 @@ bool PanelPopupButton::eventFilter(TQObject *, TQEvent *e)
 {
     if (e->type() == TQEvent::MouseMove)
     {
-        TQMouseEvent *me = static_cast<TQMouseEvent *>(e);
-        if (rect().contains(mapFromGlobal(me->globalPos())) &&
+        TQMouseEvent *me = TQT_TQMOUSEEVENT(e);
+        if (TQT_TQRECT_OBJECT(rect()).tqcontains(mapFromGlobal(me->globalPos())) &&
             ((me->state() & ControlButton) != 0 ||
              (me->state() & ShiftButton) != 0))
         {
@@ -934,8 +934,8 @@ bool PanelPopupButton::eventFilter(TQObject *, TQEvent *e)
     else if (e->type() == TQEvent::MouseButtonPress ||
              e->type() == TQEvent::MouseButtonDblClick)
     {
-        TQMouseEvent *me = static_cast<TQMouseEvent *>(e);
-        if (rect().contains(mapFromGlobal(me->globalPos())))
+        TQMouseEvent *me = TQT_TQMOUSEEVENT(e);
+        if (TQT_TQRECT_OBJECT(rect()).tqcontains(mapFromGlobal(me->globalPos())))
         {
             m_pressedDuringPopup = true;
             return true;
@@ -943,8 +943,8 @@ bool PanelPopupButton::eventFilter(TQObject *, TQEvent *e)
     }
     else if (e->type() == TQEvent::MouseButtonRelease)
     {
-        TQMouseEvent *me = static_cast<TQMouseEvent *>(e);
-        if (rect().contains(mapFromGlobal(me->globalPos())))
+        TQMouseEvent *me = TQT_TQMOUSEEVENT(e);
+        if (TQT_TQRECT_OBJECT(rect()).tqcontains(mapFromGlobal(me->globalPos())))
         {
             if (m_pressedDuringPopup && m_popup)
             {

@@ -66,7 +66,7 @@ void ConfigDialog::show()
 {
     if ( !isVisible() ) {
 	KWinModule module(0, KWinModule::INFO_DESKTOP);
-	TQSize s1 = sizeHint();
+	TQSize s1 = tqsizeHint();
 	TQSize s2 = module.workArea().size();
 	int w = s1.width();
 	int h = s1.height();
@@ -203,8 +203,8 @@ void ListView::rename( TQListViewItem* item, int c )
 
   if ( gui ) {
     if ( ! _regExpEditor )
-      _regExpEditor = KParts::ComponentFactory::createInstanceFromQuery<TQDialog>( "KRegExpEditor/KRegExpEditor", TQString::null, this );
-    KRegExpEditorInterface *iface = static_cast<KRegExpEditorInterface *>( _regExpEditor->qt_cast( "KRegExpEditorInterface" ) );
+      _regExpEditor = KParts::ComponentFactory::createInstanceFromQuery<TQDialog>( "KRegExpEditor/KRegExpEditor", TQString(), TQT_TQOBJECT(this) );
+    KRegExpEditorInterface *iface = static_cast<KRegExpEditorInterface *>( _regExpEditor->tqqt_cast( "KRegExpEditorInterface" ) );
     assert( iface );
     iface->setRegExp( item->text( 0 ) );
 
@@ -299,13 +299,13 @@ ActionWidget::ActionWidget( const ActionList *list, ConfigDialog* configWidget, 
     connect( delActionButton, TQT_SIGNAL( clicked() ), TQT_SLOT( slotDeleteAction() ));
 
     TQLabel *label = new TQLabel(i18n("Click on a highlighted item's column to change it. \"%s\" in a command will be replaced with the clipboard contents."), box);
-    label->setAlignment( WordBreak | AlignLeft | AlignVCenter );
+    label->tqsetAlignment( WordBreak | AlignLeft | AlignVCenter );
 
     box->setStretchFactor( label, 5 );
 
     box = new TQHBox( this );
     TQPushButton *advanced = new TQPushButton( i18n("Advanced..."), box );
-    advanced->setFixedSize( advanced->sizeHint() );
+    advanced->setFixedSize( advanced->tqsizeHint() );
     connect( advanced, TQT_SIGNAL( clicked() ), TQT_SLOT( slotAdvanced() ));
     (void) new TQWidget( box ); // spacer
 
@@ -331,14 +331,14 @@ void ActionWidget::slotContextMenu( KListView *, TQListViewItem *item,
     KPopupMenu *menu = new KPopupMenu;
     addCmd = menu->insertItem( i18n("Add Command") );
     rmCmd = menu->insertItem( i18n("Remove Command") );
-    if ( !item->parent() ) {// no "command" item
+    if ( !item->tqparent() ) {// no "command" item
         menu->setItemEnabled( rmCmd, false );
         item->setOpen( true );
     }
 
     int id = menu->exec( pos );
     if ( id == addCmd ) {
-        TQListViewItem *p = item->parent() ? item->parent() : item;
+        TQListViewItem *p = item->tqparent() ? item->tqparent() : item;
         TQListViewItem *cmdItem = new TQListViewItem( p, item,
                          i18n("Click here to set the command to be executed"),
                          i18n("<new command>") );
@@ -352,7 +352,7 @@ void ActionWidget::slotContextMenu( KListView *, TQListViewItem *item,
 
 void ActionWidget::slotItemChanged( TQListViewItem *item, const TQPoint&, int col )
 {
-    if ( !item->parent() || col != 0 )
+    if ( !item->tqparent() || col != 0 )
         return;
     ClipCommand command( item->text(0), item->text(1) );
         item->setPixmap( 0, SmallIcon( command.pixmap.isEmpty() ?
@@ -371,8 +371,8 @@ void ActionWidget::slotAddAction()
 void ActionWidget::slotDeleteAction()
 {
     TQListViewItem *item = listView->currentItem();
-    if ( item && item->parent() )
-        item = item->parent();
+    if ( item && item->tqparent() )
+        item = item->tqparent();
     delete item;
 }
 
@@ -410,8 +410,8 @@ void ActionWidget::slotAdvanced()
     AdvancedWidget *widget = new AdvancedWidget( box );
     widget->setWMClasses( m_wmClasses );
 
-    dlg.resize( dlg.sizeHint().width(),
-                dlg.sizeHint().height() +40); // or we get an ugly scrollbar :(
+    dlg.resize( dlg.tqsizeHint().width(),
+                dlg.tqsizeHint().height() +40); // or we get an ugly scrollbar :(
 
     if ( dlg.exec() == TQDialog::Accepted ) {
         m_wmClasses = widget->wmClasses();

@@ -133,8 +133,8 @@ void CSSConfig::load( bool useDefaults )
   customDialog->blackOnWhite->setChecked(m == "black-on-white");
   customDialog->whiteOnBlack->setChecked(m == "white-on-black");
   customDialog->customColor->setChecked(m == "custom");
-  customDialog->backgroundColor->setColor(c->readColorEntry("BackColor", &Qt::white));
-  customDialog->foregroundColor->setColor(c->readColorEntry("ForeColor", &Qt::black));
+  customDialog->backgroundColor->setColor(c->readColorEntry("BackColor", &TQt::white));
+  customDialog->foregroundColor->setColor(c->readColorEntry("ForeColor", &TQt::black));
   customDialog->sameColor->setChecked(c->readBoolEntry("SameColor", false));
 
   // Images

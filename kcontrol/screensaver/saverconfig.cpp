@@ -29,7 +29,7 @@ bool SaverConfig::read(const TQString &file)
       mSaver = config.readPathEntry("Exec");
     }
 
-    int indx = file.findRev('/');
+    int indx = file.tqfindRev('/');
     if (indx >= 0) {
         mFile = file.mid(indx+1);
     }

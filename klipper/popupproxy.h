@@ -35,7 +35,7 @@ class KlipperPopup;
  * Proxy helper for the "more" menu item
  *
  */
-class PopupProxy : public QObject
+class PopupProxy : public TQObject
 {
     Q_OBJECT
 

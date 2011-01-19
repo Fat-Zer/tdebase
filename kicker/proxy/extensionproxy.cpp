@@ -113,7 +113,7 @@ ExtensionProxy::ExtensionProxy(TQObject* parent, const char* name)
 	exit(0);
     }
 
-    if (!kapp->dcopClient()->registerAs("extension_proxy", true)) {
+    if (kapp->dcopClient()->registerAs("extension_proxy", true) == 0) {
 	kdError() << "Failed to register at DCOP server." << endl;
 	exit(0);
     }
@@ -258,7 +258,7 @@ void ExtensionProxy::dock(const TQCString& callbackID)
 bool ExtensionProxy::process(const TQCString &fun, const TQByteArray &data,
                           TQCString& replyType, TQByteArray &replyData)
 {
-    if ( fun == "sizeHint(int,TQSize)" )
+    if ( fun == "tqsizeHint(int,TQSize)" )
 	{
 	    TQDataStream dataStream( data, IO_ReadOnly );
 	    int pos;
@@ -272,7 +272,7 @@ bool ExtensionProxy::process(const TQCString &fun, const TQByteArray &data,
 	    if(!_extension)
 		reply << maxSize;
 	    else
-		reply << _extension->sizeHint((KPanelExtension::Position)pos, maxSize);
+		reply << _extension->tqsizeHint((KPanelExtension::Position)pos, maxSize);
 
 	    return true;
 	}
@@ -287,14 +287,14 @@ bool ExtensionProxy::process(const TQCString &fun, const TQByteArray &data,
 	    }
 	    return true;
 	}
-    else if ( fun == "setAlignment(int)" )
+    else if ( fun == "tqsetAlignment(int)" )
 	{
 	    TQDataStream dataStream( data, IO_ReadOnly );
-	    int alignment;
-	    dataStream >> alignment;
+	    int tqalignment;
+	    dataStream >> tqalignment;
 
 	    if(_extension) {
-		_extension->setAlignment( (KPanelExtension::Alignment)alignment );
+		_extension->tqsetAlignment( (KPanelExtension::Alignment)tqalignment );
 	    }
 	    return true;
 	}

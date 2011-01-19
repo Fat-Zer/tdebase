@@ -152,62 +152,62 @@ KPopupMenu *KasTasker::contextMenu()
 	menu = new KPopupMenu;
 
 	showAllWindowsAction = new KToggleAction( i18n("Show &All Windows"), KShortcut(),
-						  this, "toggle_show_all_windows" );
+						  TQT_TQOBJECT(this), "toggle_show_all_windows" );
 	showAllWindowsAction->setChecked( showAllWindows() );
 	showAllWindowsAction->plug( menu );
 	connect( showAllWindowsAction, TQT_SIGNAL(toggled(bool)), TQT_SLOT(setShowAllWindows(bool)) );
-	connect( this, TQT_SIGNAL(showAllWindowsChanged(bool)), showAllWindowsAction, TQT_SLOT(setChecked(bool)) );
+	connect( TQT_TQOBJECT(this), TQT_SIGNAL(showAllWindowsChanged(bool)), showAllWindowsAction, TQT_SLOT(setChecked(bool)) );
 
 	groupWindowsAction = new KToggleAction( i18n("&Group Windows"), KShortcut(),
-						this, "toggle_group_windows" );
+						TQT_TQOBJECT(this), "toggle_group_windows" );
 	groupWindowsAction->setChecked( groupWindows() );
 	groupWindowsAction->plug( menu );
 	connect( groupWindowsAction, TQT_SIGNAL(toggled(bool)), TQT_SLOT(setGroupWindows(bool)) );
-	connect( this, TQT_SIGNAL(groupWindowsChanged(bool)), groupWindowsAction, TQT_SLOT(setChecked(bool)) );
+	connect( TQT_TQOBJECT(this), TQT_SIGNAL(groupWindowsChanged(bool)), groupWindowsAction, TQT_SLOT(setChecked(bool)) );
 
-	showClockAction = new KToggleAction( i18n("Show &Clock"), KShortcut(), this, "toggle_show_clock" );
+	showClockAction = new KToggleAction( i18n("Show &Clock"), KShortcut(), TQT_TQOBJECT(this), "toggle_show_clock" );
 	showClockAction->setChecked( showClock() );
 	showClockAction->plug( menu );
 	connect( showClockAction, TQT_SIGNAL(toggled(bool)), TQT_SLOT(setShowClock(bool)) );
-	connect( this, TQT_SIGNAL(showClockChanged(bool)), showClockAction, TQT_SLOT(setChecked(bool)) );
+	connect( TQT_TQOBJECT(this), TQT_SIGNAL(showClockChanged(bool)), showClockAction, TQT_SLOT(setChecked(bool)) );
 
-	showLoadAction = new KToggleAction( i18n("Show &Load Meter"), KShortcut(), this, "toggle_show_load" );
+	showLoadAction = new KToggleAction( i18n("Show &Load Meter"), KShortcut(), TQT_TQOBJECT(this), "toggle_show_load" );
 	showLoadAction->setChecked( showLoad() );
 	showLoadAction->plug( menu );
 	connect( showLoadAction, TQT_SIGNAL(toggled(bool)), TQT_SLOT(setShowLoad(bool)) );
-	connect( this, TQT_SIGNAL(showLoadChanged(bool)), showLoadAction, TQT_SLOT(setChecked(bool)) );
+	connect( TQT_TQOBJECT(this), TQT_SIGNAL(showLoadChanged(bool)), showLoadAction, TQT_SLOT(setChecked(bool)) );
 
 	menu->insertSeparator();
 
 	if ( !standalone_ ) {
-	    toggleDetachedAction = new KToggleAction( i18n("&Floating"), KShortcut(), this, "toggle_detached" );
+	    toggleDetachedAction = new KToggleAction( i18n("&Floating"), KShortcut(), TQT_TQOBJECT(this), "toggle_detached" );
 	    toggleDetachedAction->setChecked( isDetached() );
 	    toggleDetachedAction->plug( menu );
 	    connect( toggleDetachedAction, TQT_SIGNAL(toggled(bool)), TQT_SLOT(setDetached(bool)) );
-	    connect( this, TQT_SIGNAL(detachedChanged(bool)), toggleDetachedAction, TQT_SLOT(setChecked(bool)) );
+	    connect( TQT_TQOBJECT(this), TQT_SIGNAL(detachedChanged(bool)), toggleDetachedAction, TQT_SLOT(setChecked(bool)) );
 	}
 
 	rotateBarAction = new KAction( i18n("R&otate Bar"), TQString("rotate"), KShortcut(),
-				       this, TQT_SLOT( toggleOrientation() ),
-				       this, "rotate_bar" );
+				       TQT_TQOBJECT(this), TQT_SLOT( toggleOrientation() ),
+				       TQT_TQOBJECT(this), "rotate_bar" );
 	rotateBarAction->plug( menu );
-	connect( this, TQT_SIGNAL(detachedChanged(bool)), rotateBarAction, TQT_SLOT(setEnabled(bool)) );
+	connect( TQT_TQOBJECT(this), TQT_SIGNAL(detachedChanged(bool)), rotateBarAction, TQT_SLOT(setEnabled(bool)) );
 	connect( rotateBarAction, TQT_SIGNAL(activated()), TQT_SLOT(writeConfigLater()) );
 
-	menu->insertItem( SmallIcon("reload"), i18n("&Refresh"), this, TQT_SLOT( refreshAll() ) );
+	menu->insertItem( SmallIcon("reload"), i18n("&Refresh"), TQT_TQOBJECT(this), TQT_SLOT( refreshAll() ) );
 
 	menu->insertSeparator();
 
-	menu->insertItem( SmallIcon("configure"), i18n("&Configure Kasbar..."), this, TQT_SLOT( showPreferences() ) );
+	menu->insertItem( SmallIcon("configure"), i18n("&Configure Kasbar..."), TQT_TQOBJECT(this), TQT_SLOT( showPreferences() ) );
 
 	// Help menu
 	KPopupMenu *help = new KPopupMenu;
-	help->insertItem( SmallIcon("about"), i18n("&About Kasbar"), this, TQT_SLOT( showAbout() ) );
+	help->insertItem( SmallIcon("about"), i18n("&About Kasbar"), TQT_TQOBJECT(this), TQT_SLOT( showAbout() ) );
 	menu->insertItem( SmallIcon("help"), i18n("&Help"), help );
 
 	if ( standalone_ ) {
 	    menu->insertSeparator();
-	    menu->insertItem( SmallIcon("exit"), i18n("&Quit"), qApp, TQT_SLOT( quit() ) );
+	    menu->insertItem( SmallIcon("exit"), i18n("&Quit"), tqApp, TQT_SLOT( quit() ) );
 	}
     }
 
@@ -587,7 +587,7 @@ void KasTasker::readConfig( KConfig *conf )
        setItemSize( conf->readNumEntry( "ItemSize", KasBar::Medium ) );
 
    setTint( conf->readBoolEntry( "EnableTint", false ) );
-   setTintColor( conf->readColorEntry( "TintColor", &Qt::black ) );
+   setTintColor( conf->readColorEntry( "TintColor", &TQt::black ) );
    setTintAmount( conf->readDoubleNumEntry( "TintAmount", 0.1 ) );
    setTransparent( conf->readBoolEntry( "Transparent", true ) );
    setPaintInactiveFrames( conf->readBoolEntry( "PaintInactiveFrames", true ) );
@@ -598,14 +598,14 @@ void KasTasker::readConfig( KConfig *conf )
    conf->setGroup("Colors");
 
    KasResources *res = resources();
-   res->setLabelPenColor( conf->readColorEntry( "LabelPenColor", &Qt::white ) );
-   res->setLabelBgColor( conf->readColorEntry( "LabelBgColor", &Qt::black ) );
-   res->setInactivePenColor( conf->readColorEntry( "InactivePenColor", &Qt::black ) );
-   res->setInactiveBgColor( conf->readColorEntry( "InactiveBgColor", &Qt::white ) );
-   res->setActivePenColor( conf->readColorEntry( "ActivePenColor", &Qt::black ) );
-   res->setActiveBgColor( conf->readColorEntry( "ActiveBgColor", &Qt::white ) );
-   res->setProgressColor( conf->readColorEntry( "ProgressColor", &Qt::green ) );
-   res->setAttentionColor( conf->readColorEntry( "AttentionColor", &Qt::red ) );
+   res->setLabelPenColor( conf->readColorEntry( "LabelPenColor", &TQt::white ) );
+   res->setLabelBgColor( conf->readColorEntry( "LabelBgColor", &TQt::black ) );
+   res->setInactivePenColor( conf->readColorEntry( "InactivePenColor", &TQt::black ) );
+   res->setInactiveBgColor( conf->readColorEntry( "InactiveBgColor", &TQt::white ) );
+   res->setActivePenColor( conf->readColorEntry( "ActivePenColor", &TQt::black ) );
+   res->setActiveBgColor( conf->readColorEntry( "ActiveBgColor", &TQt::white ) );
+   res->setProgressColor( conf->readColorEntry( "ProgressColor", &TQt::green ) );
+   res->setAttentionColor( conf->readColorEntry( "AttentionColor", &TQt::red ) );
 
    //
    // Thumbnail Settings
@@ -635,7 +635,7 @@ void KasTasker::readConfig( KConfig *conf )
    conf->setGroup("Layout");
 
    setDirection( (Direction) conf->readNumEntry( "Direction", TQBoxLayout::LeftToRight ) );
-   setOrientation( (Qt::Orientation) conf->readNumEntry( "Orientation", Horizontal ) );
+   setOrientation( (Qt::Orientation) conf->readNumEntry( "Orientation", Qt::Horizontal ) );
    setMaxBoxes( conf->readUnsignedNumEntry( "MaxBoxes", 0 ) );
 
    TQPoint pos(100, 100);

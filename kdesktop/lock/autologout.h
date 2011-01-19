@@ -20,7 +20,7 @@ class TQLabel;
 class TQDialog;
 class TQProgressBar;
 
-class AutoLogout : public QDialog
+class AutoLogout : public TQDialog
 {
     Q_OBJECT
 

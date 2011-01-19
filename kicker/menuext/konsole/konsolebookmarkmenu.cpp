@@ -112,7 +112,7 @@ void KonsoleBookmarkMenu::fillBookmarkMenu()
         bm = parentBookmark.next(bm) )
   {
     TQString text = bm.text();
-    text.replace( '&', "&&" );
+    text.tqreplace( '&', "&&" );
     if ( !separatorInserted && m_bIsRoot) { // inserted before the first konq bookmark, to avoid the separator if no konq bookmark
       m_parentMenu->insertSeparator();
       separatorInserted = true;
@@ -168,7 +168,7 @@ void KonsoleBookmarkMenu::slotBookmarkSelected()
     if ( !m_pOwner ) return; // this view doesn't handle bookmarks...
     a = (KAction*)sender();
     b = a->text();
-    m_kOwner->openBookmarkURL( TQString::fromUtf8(sender()->name()), /* URL */
+    m_kOwner->openBookmarkURL( TQString::fromUtf8(TQT_TQOBJECT_CONST(sender())->name()), /* URL */
                                ( (KAction *)sender() )->text() /* Title */ );
 }
 
@@ -177,7 +177,7 @@ void KonsoleBookmarkMenu::slotNSBookmarkSelected()
     KAction *a;
     TQString b;
 
-    TQString link(sender()->name()+8);
+    TQString link(TQT_TQOBJECT_CONST(sender())->name()+8);
     a = (KAction*)sender();
     b = a->text();
     m_kOwner->openBookmarkURL( link, /*URL */

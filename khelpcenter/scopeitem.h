@@ -7,7 +7,7 @@
 
 namespace KHC {
 
-class ScopeItem : public QCheckListItem
+class ScopeItem : public TQCheckListItem
 {
   public:
     ScopeItem( TQListView *parent, DocEntry *entry )

@@ -79,19 +79,19 @@ bool KRootWidget::eventFilter ( TQObject *, TQEvent * e )
 {
      if (e->type() == TQEvent::MouseButtonPress)
      {
-       TQMouseEvent *me = static_cast<TQMouseEvent *>(e);
+       TQMouseEvent *me = TQT_TQMOUSEEVENT(e);
        KRootWm::self()->mousePressed( me->globalPos(), me->button() );
        return true;
      }
      else if (e->type() == TQEvent::Wheel)
      {
-       TQWheelEvent *we = static_cast<TQWheelEvent *>(e);
+       TQWheelEvent *we = TQT_TQWHEELEVENT(e);
        emit wheelRolled(we->delta());
        return true;
      }
      else if ( e->type() == TQEvent::DragEnter )
      {
-       TQDragEnterEvent* de = static_cast<TQDragEnterEvent *>( e );
+       TQDragEnterEvent* de = static_cast<TQDragEnterEvent*>( e );
        bool b = !KGlobal::config()->isImmutable() && !KGlobal::dirs()->isRestrictedResource( "wallpaper" );
 
        bool imageURL = false;
@@ -136,7 +136,7 @@ const char* KDesktop::m_wheelDirectionStrings[2] = { "Forward", "Reverse" };
 
 KDesktop::KDesktop( bool x_root_hack, bool wait_for_kded ) :
     DCOPObject( "KDesktopIface" ),
-    TQWidget( 0L, "desktop", WResizeNoErase | ( x_root_hack ? (WStyle_Customize | WStyle_NoBorder) : 0) ),
+    TQWidget( 0L, "desktop", (WFlags)(WResizeNoErase | ( x_root_hack ? (WStyle_Customize | WStyle_NoBorder) : 0)) ),
     // those two WStyle_ break kdesktop when the root-hack isn't used (no Dnd)
    startup_id( NULL ), m_waitForKicker(0)
 {
@@ -153,17 +153,17 @@ KDesktop::KDesktop( bool x_root_hack, bool wait_for_kded ) :
   setCaption( "KDE Desktop");
 
   setAcceptDrops(true); // WStyle_Customize seems to disable that
-  m_pKwinmodule = new KWinModule( this );
+  m_pKwinmodule = new KWinModule( TQT_TQOBJECT(this) );
 
   kapp->dcopClient()->setNotifications(true);
   kapp->dcopClient()->connectDCOPSignal(kicker_name, kicker_name, "desktopIconsAreaChanged(TQRect, int)",
                                         "KDesktopIface", "desktopIconsAreaChanged(TQRect, int)", false);
 
-  // Dont repaint on configuration changes during construction
+  // Dont tqrepaint on configuration changes during construction
   m_bInit = true;
 
   // It's the child widget that gets the focus, not us
-  setFocusPolicy( NoFocus );
+  setFocusPolicy( TQ_NoFocus );
 
   if ( x_root_hack )
   {
@@ -277,8 +277,8 @@ KDesktop::initRoot()
      m_pIconView->setDragAutoScroll( false );
      m_pIconView->setFrameStyle( TQFrame::NoFrame );
      m_pIconView->viewport()->setBackgroundMode( X11ParentRelative );
-     m_pIconView->setFocusPolicy( StrongFocus );
-     m_pIconView->viewport()->setFocusPolicy( StrongFocus );
+     m_pIconView->setFocusPolicy( TQ_StrongFocus );
+     m_pIconView->viewport()->setFocusPolicy( TQ_StrongFocus );
      m_pIconView->setGeometry( geometry() );
      m_pIconView->show();
 
@@ -356,7 +356,7 @@ KDesktop::backgroundInitDone()
     // avoid flicker
     if (m_bDesktopEnabled)
     {
-       const TQPixmap *bg = TQApplication::desktop()->screen()->backgroundPixmap();
+       const TQPixmap *bg = TQT_TQWIDGET(TQApplication::desktop()->screen())->backgroundPixmap();
        if ( bg )
           m_pIconView->setErasePixmap( *bg );
 
@@ -393,7 +393,7 @@ KDesktop::slotStart()
      m_pIconView->start();
 
   // Global keys
-  keys = new KGlobalAccel( this );
+  keys = new KGlobalAccel( TQT_TQOBJECT(this) );
   (void) new KRootWm( this );
 
 #include "kdesktopbindings.cpp"
@@ -836,7 +836,7 @@ void KDesktop::refresh()
   m_bNeedRepaint |= 1;
   updateWorkArea();
 #endif
-  kapp->dcopClient()->send( kwin_name, "", "refresh()", "");
+  kapp->dcopClient()->send( kwin_name, "", "refresh()", TQString(""));
   refreshIcons();
 }
 
@@ -1160,7 +1160,7 @@ void KDesktop::addIcon(const TQString & _url, int x, int y)
 
 void KDesktop::addIcon(const TQString & _url, const TQString & _dest, int x, int y)
 {
-    TQString filename = _url.mid(_url.findRev('/') + 1);
+    TQString filename = _url.mid(_url.tqfindRev('/') + 1);
 
     TQValueList<KIO::CopyInfo> files;
     KIO::CopyInfo i;
@@ -1168,7 +1168,7 @@ void KDesktop::addIcon(const TQString & _url, const TQString & _dest, int x, int
     i.uDest   = KURL::fromPathOrURL( _dest );
     i.uDest.addPath( filename );
     files.append(i);
-    if (!TQFile::exists(i.uDest.prettyURL().replace("file://",TQString::null))) { m_pIconView->slotAboutToCreate( TQPoint( x, y ), files );
+    if (!TQFile::exists(i.uDest.prettyURL().tqreplace("file://",TQString()))) { m_pIconView->slotAboutToCreate( TQPoint( x, y ), files );
     KIO::copy( i.uSource, i.uDest, false ); }
 
 //    m_pIconView->addFuturePosition(filename, x, y);
@@ -1184,7 +1184,7 @@ void KDesktop::removeIcon(const TQString &_url)
 		return;
 	}
 	unlink(KURL(_url).path().latin1());
-	TQString dest = _url.left(_url.findRev('/') + 1);
+	TQString dest = _url.left(_url.tqfindRev('/') + 1);
         m_pIconView->update( dest );
 }
 

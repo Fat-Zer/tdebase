@@ -38,7 +38,7 @@ class KPanelApplet;
 class KPanelExtension;
 class TQPopupMenu;
 
-class KDE_EXPORT PluginManager : public QObject
+class KDE_EXPORT PluginManager : public TQObject
 {
     Q_OBJECT
 
@@ -88,7 +88,7 @@ private:
     TQStringList m_untrustedExtensions;
 };
 
-class LibUnloader : public QObject
+class LibUnloader : public TQObject
 {
     Q_OBJECT
 public:

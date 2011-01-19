@@ -133,12 +133,12 @@ KScreenSaver::KScreenSaver(TQWidget *parent, const char *name, const TQStringLis
     mSaverGroup->setColumnLayout( 0, Qt::Horizontal );
     vLayout->addWidget(mSaverGroup);
     vLayout->setStretchFactor( mSaverGroup, 10 );
-    TQBoxLayout *groupLayout = new TQVBoxLayout( mSaverGroup->layout(),
+    TQBoxLayout *groupLayout = new TQVBoxLayout( mSaverGroup->tqlayout(),
         KDialog::spacingHint() );
 
     mSaverListView = new TQListView( mSaverGroup );
     mSaverListView->setMinimumHeight( 120 );
-    mSaverListView->setSizePolicy(TQSizePolicy::Preferred, TQSizePolicy::Expanding);
+    mSaverListView->tqsetSizePolicy(TQSizePolicy::Preferred, TQSizePolicy::Expanding);
     mSaverListView->addColumn("");
     mSaverListView->header()->hide();
     mSelected = -1;
@@ -162,7 +162,7 @@ KScreenSaver::KScreenSaver(TQWidget *parent, const char *name, const TQStringLis
     mSettingsGroup = new TQGroupBox( i18n("Settings"), this );
     mSettingsGroup->setColumnLayout( 0, Qt::Vertical );
     leftColumnLayout->addWidget( mSettingsGroup );
-    groupLayout = new TQVBoxLayout( mSettingsGroup->layout(),
+    groupLayout = new TQVBoxLayout( mSettingsGroup->tqlayout(),
         KDialog::spacingHint() );
 
     mEnabledCheckBox = new TQCheckBox(i18n(
@@ -221,14 +221,14 @@ KScreenSaver::KScreenSaver(TQWidget *parent, const char *name, const TQStringLis
     mWaitLockEdit->setSuffix(i18n(" sec"));
     mWaitLockEdit->setValue(mLockTimeout/1000);
     mWaitLockEdit->setEnabled(mEnabled && mLock);
-    if ( mWaitLockEdit->sizeHint().width() <
-         mWaitEdit->sizeHint().width() ) {
-        mWaitLockEdit->setFixedWidth( mWaitEdit->sizeHint().width() );
-        mWaitEdit->setFixedWidth( mWaitEdit->sizeHint().width() );
+    if ( mWaitLockEdit->tqsizeHint().width() <
+         mWaitEdit->tqsizeHint().width() ) {
+        mWaitLockEdit->setFixedWidth( mWaitEdit->tqsizeHint().width() );
+        mWaitEdit->setFixedWidth( mWaitEdit->tqsizeHint().width() );
     }
     else {
-        mWaitEdit->setFixedWidth( mWaitLockEdit->sizeHint().width() );
-        mWaitLockEdit->setFixedWidth( mWaitLockEdit->sizeHint().width() );
+        mWaitEdit->setFixedWidth( mWaitLockEdit->tqsizeHint().width() );
+        mWaitLockEdit->setFixedWidth( mWaitLockEdit->tqsizeHint().width() );
     }
     connect(mWaitLockEdit, TQT_SIGNAL(valueChanged(int)),
             this, TQT_SLOT(slotLockTimeoutChanged(int)));
@@ -246,7 +246,7 @@ KScreenSaver::KScreenSaver(TQWidget *parent, const char *name, const TQStringLis
         new TQVBoxLayout(topLayout, KDialog::spacingHint());
 
     mMonitorLabel = new TQLabel( this );
-    mMonitorLabel->setAlignment( AlignCenter );
+    mMonitorLabel->tqsetAlignment( AlignCenter );
     mMonitorLabel->setPixmap( TQPixmap(locate("data",
                          "kcontrol/pics/monitor.png")));
     rightColumnLayout->addWidget(mMonitorLabel, 0);
@@ -256,7 +256,7 @@ KScreenSaver::KScreenSaver(TQWidget *parent, const char *name, const TQStringLis
     advancedLayout->addWidget( new TQWidget( this ) );
     TQPushButton* advancedBt = new TQPushButton(
         i18n( "Advanced &Options" ), this, "advancedBtn" );
-    advancedBt->setSizePolicy( TQSizePolicy(
+    advancedBt->tqsetSizePolicy( TQSizePolicy(
         TQSizePolicy::Fixed, TQSizePolicy::Fixed) );
     connect( advancedBt, TQT_SIGNAL( clicked() ),
              this, TQT_SLOT( slotAdvanced() ) );
@@ -360,7 +360,7 @@ void KScreenSaver::load( bool useDefaults )
     for (SaverConfig* saver = mSaverList.first(); saver != 0; saver = mSaverList.next()) {
         if (saver->file() == mSaver)
         {
-            selectedItem = mSaverListView->findItem ( saver->name(), 0 );
+            selectedItem = mSaverListView->tqfindItem ( saver->name(), 0 );
             if (selectedItem) {
                 mSelected = i;
                 break;
@@ -454,7 +454,7 @@ void KScreenSaver::save()
     // on exit. I don't know why yet.
 
     DCOPClient *client = kapp->dcopClient();
-    client->send("kdesktop", "KScreensaverIface", "configure()", "");
+    client->send("kdesktop", "KScreensaverIface", "configure()", TQString(""));
 
     mChanged = false;
     emit changed(false);
@@ -503,7 +503,7 @@ void KScreenSaver::findSavers()
                 item = new TQListViewItem ( mSaverListView, s->name(), "2" + s->name() );
             else
             {
-                TQListViewItem *categoryItem = mSaverListView->findItem( s->category(), 0 );
+                TQListViewItem *categoryItem = mSaverListView->tqfindItem( s->category(), 0 );
                 if ( !categoryItem ) {
                     categoryItem = new TQListViewItem ( mSaverListView, s->category(), "1" + s->category() );
                     categoryItem->setPixmap ( 0, SmallIcon ( "kscreensaver" ) );
@@ -639,9 +639,9 @@ void KScreenSaver::slotScreenSaver(TQListViewItem *item)
 
     int i = 0, indx = -1;
     for (SaverConfig* saver = mSaverList.first(); saver != 0; saver = mSaverList.next()) {
-        if ( item->parent() )
+        if ( item->tqparent() )
         {
-            if (  item->parent()->text( 0 ) == saver->category() && saver->name() == item->text (0))
+            if (  item->tqparent()->text( 0 ) == saver->category() && saver->name() == item->text (0))
             {
                 indx = i;
                 break;
@@ -739,7 +739,7 @@ void KScreenSaver::slotSetup()
 //
 void KScreenSaver::slotAdvanced()
 {
-   KScreenSaverAdvancedDialog dlg( topLevelWidget() );
+   KScreenSaverAdvancedDialog dlg( tqtopLevelWidget() );
    if ( dlg.exec() ) {
        mChanged = true;
        emit changed(true);

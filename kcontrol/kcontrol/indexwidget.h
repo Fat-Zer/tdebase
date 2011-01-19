@@ -29,7 +29,7 @@ class ConfigModule;
 class ModuleTreeView;
 class ModuleIconView;
 
-class IndexWidget : public QWidgetStack
+class IndexWidget : public TQWidgetStack
 {
   Q_OBJECT
   

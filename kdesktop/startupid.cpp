@@ -218,8 +218,8 @@ void StartupId::start_startupid( const TQString& icon_P )
         }
     else
         {
-        if( icon_pixmap.mask() != NULL )
-            startup_widget->setMask( *icon_pixmap.mask());
+        if( icon_pixmap.tqmask() != NULL )
+            startup_widget->setMask( *icon_pixmap.tqmask());
         else
             startup_widget->clearMask();
         startup_widget->setBackgroundPixmap( icon_pixmap );
@@ -257,8 +257,8 @@ void StartupId::update_startupid()
         yoffset = frame_to_yoffset[ frame ];
         TQPixmap pm = pixmaps[ frame_to_pixmap[ frame ] ];
         startup_widget->setBackgroundPixmap( pm );
-        if ( pm.mask() != NULL )
-            startup_widget->setMask( *pm.mask() );
+        if ( pm.tqmask() != NULL )
+            startup_widget->setMask( *pm.tqmask() );
         else
             startup_widget->clearMask();
         if ( ++frame >= ( sizeof( frame_to_yoffset ) / sizeof( frame_to_yoffset[ 0 ] ) ) )

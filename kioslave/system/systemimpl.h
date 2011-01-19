@@ -29,7 +29,7 @@
 #include <tqobject.h>
 #include <tqstring.h>
 
-class SystemImpl : public QObject
+class SystemImpl : public TQObject
 {
 Q_OBJECT
 public:

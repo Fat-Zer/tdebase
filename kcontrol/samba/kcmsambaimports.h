@@ -28,7 +28,7 @@
 #include <tqlistview.h>
 #include <kconfig.h>
 
-class ImportsView: public QWidget
+class ImportsView: public TQWidget
 {
    Q_OBJECT
    public:

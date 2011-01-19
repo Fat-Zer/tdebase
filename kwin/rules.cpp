@@ -84,7 +84,7 @@ Rules::Rules( const TQString& str, bool temporary )
 
 #define READ_MATCH_STRING( var, func ) \
     var = cfg.readEntry( #var ) func; \
-    var##match = (StringMatch) QMAX( FirstStringMatch, QMIN( LastStringMatch, cfg.readNumEntry( #var "match" )));
+    var##match = (StringMatch) TQMAX( FirstStringMatch, TQMIN( LastStringMatch, cfg.readNumEntry( #var "match" )));
     
 #define READ_SET_RULE( var, type, func ) \
     var = func ( cfg.read##type##Entry( #var )); \
@@ -1038,7 +1038,7 @@ void Workspace::discardUsedWindowRules( Client* c, bool withdrawn )
          it != rules.end();
          )
         {
-        if( c->rules()->contains( *it ))
+        if( c->rules()->tqcontains( *it ))
             {
             updated = true;
             (*it)->discardUsed( withdrawn );

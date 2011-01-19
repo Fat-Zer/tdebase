@@ -81,14 +81,14 @@ CFontViewPart::CFontViewPart(TQWidget *parent, const char *name)
     TQHBoxLayout *toolsLayout=new TQHBoxLayout(itsToolsFrame, 0, KDialog::spacingHint());
 
     itsFrame->setFrameShape(TQFrame::NoFrame);
-    itsFrame->setFocusPolicy(TQWidget::ClickFocus);
+    itsFrame->setFocusPolicy(TQ_ClickFocus);
     itsToolsFrame->setFrameShape(TQFrame::NoFrame);
     previewFrame->setFrameShadow(kcm ? TQFrame::Sunken : TQFrame::Raised);
     previewFrame->setFrameShape(TQFrame::Panel);
     setInstance(new KInstance("kfontview"));
 
     itsPreview=new CFontPreview(previewFrame, "FontViewPart::Preview");
-    itsPreview->setSizePolicy(TQSizePolicy::MinimumExpanding, TQSizePolicy::MinimumExpanding);
+    itsPreview->tqsetSizePolicy(TQSizePolicy::MinimumExpanding, TQSizePolicy::MinimumExpanding);
     itsFaceLabel=new TQLabel(i18n("Face:"), itsToolsFrame);
     itsFaceSelector=new KIntNumInput(1, itsToolsFrame);
     itsInstallButton=new TQPushButton(i18n("Install..."), itsToolsFrame, "button");
@@ -165,17 +165,17 @@ void CFontViewPart::timeout()
         if(Misc::root())
         {
             destUrl=TQString("fonts:/")+itsPreview->engine().getName(m_url);
-            itsShowInstallButton=!KIO::NetAccess::exists(destUrl, true, itsFrame->parentWidget());
+            itsShowInstallButton=!KIO::NetAccess::exists(destUrl, true, itsFrame->tqparentWidget());
         }
         else
         {
             destUrl=TQString("fonts:/")+i18n(KFI_KIO_FONTS_SYS)+TQChar('/')+itsPreview->engine().getName(m_url);
-            if(KIO::NetAccess::exists(destUrl, true, itsFrame->parentWidget()))
+            if(KIO::NetAccess::exists(destUrl, true, itsFrame->tqparentWidget()))
                 itsShowInstallButton=false;
             else
             {
                 destUrl=TQString("fonts:/")+i18n(KFI_KIO_FONTS_USER)+TQChar('/')+itsPreview->engine().getName(m_url);
-                itsShowInstallButton=!KIO::NetAccess::exists(destUrl, true, itsFrame->parentWidget());
+                itsShowInstallButton=!KIO::NetAccess::exists(destUrl, true, itsFrame->tqparentWidget());
             }
         }
     }
@@ -220,7 +220,7 @@ void CFontViewPart::install()
     {
         KURL destUrl(getDest(m_url, KMessageBox::No==resp));
 
-        if(KIO::NetAccess::copy(m_url, destUrl, itsFrame->parentWidget()))
+        if(KIO::NetAccess::copy(m_url, destUrl, itsFrame->tqparentWidget()))
         {
             //
             // OK file copied, now look for any AFM or PFM file...
@@ -236,7 +236,7 @@ void CFontViewPart::install()
                 for(it=urls.begin(); it!=end; ++it)
                 {
                     destUrl=getDest(*it, KMessageBox::No==resp);
-                    KIO::NetAccess::copy(*it, destUrl, itsFrame->parentWidget());
+                    KIO::NetAccess::copy(*it, destUrl, itsFrame->tqparentWidget());
                 }
             }
 
@@ -274,7 +274,7 @@ void CFontViewPart::print()
 
     items.append(itsPreview->engine().getName(m_url));
 
-    Print::printItems(items, 0, itsFrame->parentWidget(), itsPreview->engine());
+    Print::printItems(items, 0, itsFrame->tqparentWidget(), itsPreview->engine());
 }
 
 }

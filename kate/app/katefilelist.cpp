@@ -51,7 +51,7 @@
 //END Includes
 
 //BEGIN ToolTip
-class ToolTip : public QToolTip
+class ToolTip : public TQToolTip
 {
   public:
     ToolTip( TQWidget *parent, KateFileList *lv )
@@ -69,7 +69,7 @@ class ToolTip : public QToolTip
       KateFileListItem *item = ((KateFileListItem*)i);
       if ( ! item ) return;
 
-      tip( m_listView->itemRect( i ), m_listView->tooltip( item, 0 ) );
+      tip( m_listView->tqitemRect( i ), m_listView->tooltip( item, 0 ) );
 
     }
 
@@ -94,7 +94,7 @@ KateFileList::KateFileList (KateMainWindow *main,
   m_editShade = TQColor( 255, 102, 153 );
   m_enableBgShading = false;
 
-  setFocusPolicy ( TQWidget::NoFocus  );
+  setFocusPolicy ( TQ_NoFocus  );
 
   viewManager = _viewManager;
 
@@ -134,14 +134,14 @@ KateFileList::~KateFileList ()
 
 void KateFileList::setupActions ()
 {
-  windowNext = KStdAction::back(this, TQT_SLOT(slotPrevDocument()), m_main->actionCollection());
-  windowPrev = KStdAction::forward(this, TQT_SLOT(slotNextDocument()), m_main->actionCollection());
+  windowNext = KStdAction::back(TQT_TQOBJECT(this), TQT_SLOT(slotPrevDocument()), m_main->actionCollection());
+  windowPrev = KStdAction::forward(TQT_TQOBJECT(this), TQT_SLOT(slotNextDocument()), m_main->actionCollection());
   sortAction = new KSelectAction( i18n("Sort &By"), 0,
       m_main->actionCollection(), "filelist_sortby"  );
   TQStringList l;
   l << i18n("Opening Order") << i18n("Document Name") << i18n("URL");
   sortAction->setItems( l );
-  connect( sortAction, TQT_SIGNAL(activated(int)), this, TQT_SLOT(setSortType(int)) );
+  connect( sortAction, TQT_SIGNAL(activated(int)), TQT_TQOBJECT(this), TQT_SLOT(setSortType(int)) );
 }
 
 void KateFileList::updateActions ()
@@ -273,11 +273,11 @@ void KateFileList::slotModChanged (Kate::Document *doc)
     for ( uint i=0; i <  m_editHistory.count(); i++ )
     {
       m_editHistory.at( i )->setEditHistPos( i+1 );
-      repaintItem(  m_editHistory.at( i ) );
+      tqrepaintItem(  m_editHistory.at( i ) );
     }
   }
   else
-    repaintItem( item );
+    tqrepaintItem( item );
 }
 
 void KateFileList::slotModifiedOnDisc (Kate::Document *doc, bool, unsigned char)
@@ -296,7 +296,7 @@ void KateFileList::slotNameChanged (Kate::Document *doc)
     if ( ((KateFileListItem*)item)->document() == doc )
     {
       item->setText( 0, doc->docName() );
-      repaintItem( item );
+      tqrepaintItem( item );
       break;
     }
     item = item->nextSibling();
@@ -334,7 +334,7 @@ void KateFileList::slotViewChanged ()
 //   int p = 0;
 //   if (  m_viewHistory.count() )
 //   {
-//     int p =  m_viewHistory.findRef( item ); // only repaint items that needs it
+//     int p =  m_viewHistory.findRef( item ); // only tqrepaint items that needs it
 //   }
 
   m_viewHistory.removeRef( item );
@@ -343,7 +343,7 @@ void KateFileList::slotViewChanged ()
   for ( uint i=0; i <  m_viewHistory.count(); i++ )
   {
     m_viewHistory.at( i )->setViewHistPos( i+1 );
-    repaintItem(  m_viewHistory.at( i ) );
+    tqrepaintItem(  m_viewHistory.at( i ) );
   }
 
 }
@@ -616,7 +616,7 @@ void KFLConfigPage::apply()
   m_filelist->m_editShade = kcbEditShade->color();
   m_filelist->m_enableBgShading = cbEnableShading->isChecked();
   m_filelist->setSortType( cmbSort->currentItem() );
-  // repaint the affected items
+  // tqrepaint the affected items
   m_filelist->triggerUpdate();
 }
 

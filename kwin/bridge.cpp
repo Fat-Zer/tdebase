@@ -160,7 +160,7 @@ TQRegion Bridge::unobscuredRegion( const TQRegion& r ) const
     {
     TQRegion reg( r );
     const ClientList stacking_order = c->workspace()->stackingOrder();
-    ClientList::ConstIterator it = stacking_order.find( c );
+    ClientList::ConstIterator it = stacking_order.tqfind( c );
     ++it;
     for(;
          it != stacking_order.end();

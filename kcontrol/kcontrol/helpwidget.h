@@ -23,7 +23,7 @@
 class TQWidget;
 class TQWhatsThis;
 
-class HelpWidget : public QWhatsThis
+class HelpWidget : public TQWhatsThis
 {
 public:
   HelpWidget(TQWidget *parent);

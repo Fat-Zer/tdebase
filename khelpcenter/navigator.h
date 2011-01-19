@@ -52,7 +52,7 @@ class SearchEngine;
 class SearchWidget;
 class Formatter;
 
-class Navigator : public QWidget
+class Navigator : public TQWidget
 {
     Q_OBJECT
   public:

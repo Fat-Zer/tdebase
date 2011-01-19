@@ -26,7 +26,7 @@
 class PtyProcess;
 class TQSocketNotifier;
 
-class KShellCommandExecutor:public QTextView
+class KShellCommandExecutor:public TQTextView
 {
    Q_OBJECT
    public:

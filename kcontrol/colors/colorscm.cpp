@@ -254,9 +254,9 @@ KColorScheme::KColorScheme(TQWidget *parent, const char *name, const TQStringLis
     groupLayout = new TQHBoxLayout;
     groupLayout2->addLayout(groupLayout);
 
-    sb = new TQSlider( TQSlider::Horizontal,group,"Slider" );
+    sb = new TQSlider( Qt::Horizontal,group,"Slider" );
     sb->setRange( 0, 10 );
-    sb->setFocusPolicy( TQWidget::StrongFocus );
+    sb->setFocusPolicy( TQ_StrongFocus );
     connect(sb, TQT_SIGNAL(valueChanged(int)), TQT_SLOT(sliderValueChanged(int)));
 
     TQWhatsThis::add(sb, i18n("Use this slider to change the contrast level"
@@ -444,7 +444,7 @@ void KColorScheme::slotSave( )
     if (!entry) return;
     sCurrentScheme = entry->path;
     KSimpleConfig *config = new KSimpleConfig(sCurrentScheme );
-    int i = sCurrentScheme.findRev('/');
+    int i = sCurrentScheme.tqfindRev('/');
     if (i >= 0)
       sCurrentScheme = sCurrentScheme.mid(i+1);
 
@@ -800,7 +800,7 @@ void KColorScheme::readScheme( int index )
       sCurrentScheme = entry->path;
       config = new KSimpleConfig(sCurrentScheme, true);
       config->setGroup("Color Scheme");
-      int i = sCurrentScheme.findRev('/');
+      int i = sCurrentScheme.tqfindRev('/');
       if (i >= 0)
         sCurrentScheme = sCurrentScheme.mid(i+1);
     }
@@ -905,7 +905,7 @@ int KColorScheme::findSchemeByName(const TQString &scheme)
       return 1;
 
    TQString search = scheme;
-   int i = search.findRev('/');
+   int i = search.tqfindRev('/');
    if (i >= 0)
       search = search.mid(i+1);
 
@@ -972,7 +972,7 @@ void KColorScheme::insertEntry(const TQString &sFile, const TQString &sName)
 {
        KColorSchemeEntry *newEntry = new KColorSchemeEntry(sFile, sName, true);
        mSchemeList->inSort(newEntry);
-       int newIndex = mSchemeList->findRef(newEntry)+nSysSchemes;
+       int newIndex = mSchemeList->tqfindRef(newEntry)+nSysSchemes;
        sList->insertItem(sName, newIndex);
        sList->setCurrentItem(newIndex);
 }

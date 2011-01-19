@@ -52,9 +52,9 @@ void readXdgUserDirs(TQString *desktop, TQString *documents)
 	while (!line.isNull())
 	{
 		if (line.startsWith("XDG_DESKTOP_DIR="))
-			*desktop = line.remove("XDG_DESKTOP_DIR=").remove("\"").replace("$HOME", TQDir::homeDirPath());
+			*desktop = TQString(line.remove("XDG_DESKTOP_DIR=").remove("\"")).tqreplace("$HOME", TQDir::homeDirPath());
 		else if (line.startsWith("XDG_DOCUMENTS_DIR="))
-			*documents = line.remove("XDG_DOCUMENTS_DIR=").remove("\"").replace("$HOME", TQDir::homeDirPath());
+			*documents = TQString(line.remove("XDG_DOCUMENTS_DIR=").remove("\"")).tqreplace("$HOME", TQDir::homeDirPath());
 
 		line = s.readLine();
 	}
@@ -132,7 +132,7 @@ int main( int argc, char **argv)
 						}
 						if (directoryOk == true) {
 							TQString xdgModifiedDirectory = newDirectory;
-							xdgModifiedDirectory = xdgModifiedDirectory.replace(TQDir::homeDirPath(), "$HOME");
+							xdgModifiedDirectory = xdgModifiedDirectory.tqreplace(TQDir::homeDirPath(), "$HOME");
 							while (xdgModifiedDirectory.endsWith("/")) {
 								xdgModifiedDirectory.truncate(xdgModifiedDirectory.length()-1);
 							}

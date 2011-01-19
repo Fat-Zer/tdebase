@@ -1,6 +1,6 @@
 <!DOCTYPE UI><UI version="3.3" stdsetdef="1">
 <class>Gestures_settings_tab_ui</class>
-<widget class="QWidget">
+<widget class="TQWidget">
     <property name="name">
         <cstring>Gestures_settings_tab_ui</cstring>
     </property>
@@ -16,7 +16,7 @@
         <property name="name">
             <cstring>unnamed</cstring>
         </property>
-        <widget class="QCheckBox">
+        <widget class="TQCheckBox">
             <property name="name">
                 <cstring>mouse_gestures_globally</cstring>
             </property>
@@ -24,7 +24,7 @@
                 <string>Disable mouse gestures globally</string>
             </property>
         </widget>
-        <widget class="QLayoutWidget">
+        <widget class="TQLayoutWidget">
             <property name="name">
                 <cstring>layout1</cstring>
             </property>
@@ -32,7 +32,7 @@
                 <property name="name">
                     <cstring>unnamed</cstring>
                 </property>
-                <widget class="QLabel">
+                <widget class="TQLabel">
                     <property name="name">
                         <cstring>mouse_button_label</cstring>
                     </property>
@@ -43,14 +43,14 @@
                         <cstring>mouse_button_combo</cstring>
                     </property>
                 </widget>
-                <widget class="QComboBox">
+                <widget class="TQComboBox">
                     <property name="name">
                         <cstring>mouse_button_combo</cstring>
                     </property>
                 </widget>
             </hbox>
         </widget>
-        <widget class="QLayoutWidget">
+        <widget class="TQLayoutWidget">
             <property name="name">
                 <cstring>layout2</cstring>
             </property>
@@ -58,7 +58,7 @@
                 <property name="name">
                     <cstring>unnamed</cstring>
                 </property>
-                <widget class="QLabel">
+                <widget class="TQLabel">
                     <property name="name">
                         <cstring>timeout_label</cstring>
                     </property>
@@ -82,7 +82,7 @@
                 </widget>
             </hbox>
         </widget>
-        <widget class="QGroupBox">
+        <widget class="TQGroupBox">
             <property name="name">
                 <cstring>window_groupbox</cstring>
             </property>
@@ -116,7 +116,7 @@
             <property name="sizeType">
                 <enum>Expanding</enum>
             </property>
-            <property name="sizeHint">
+            <property name="tqsizeHint">
                 <size>
                     <width>20</width>
                     <height>50</height>

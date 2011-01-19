@@ -48,10 +48,10 @@ static TQString titleOfURL( const TQString& urlStr )
         url.setPath( url.path()+'/' );
         historyentry = historylist.findEntry( url );
     }
-    return ( historyentry ? historyentry->title : TQString::null );
+    return ( historyentry ? historyentry->title : TQString() );
 }
 
-class Q_EXPORT KonqComboListBoxPixmap : public QListBoxItem
+class TQ_EXPORT KonqComboListBoxPixmap : public TQListBoxItem
 {
 public:
     KonqComboListBoxPixmap( const TQString& text );
@@ -95,11 +95,11 @@ KonqCombo::KonqCombo( TQWidget *parent, const char *name )
           : KHistoryCombo( parent, name ),
             m_returnPressed( false ), 
             m_permanent( false ),
-            m_modifier( NoButton ),
+            m_modifier( Qt::NoButton ),
 	    m_pageSecurity( KonqMainWindow::NotCrypted )
 {
     setInsertionPolicy( NoInsertion );
-    setSizePolicy( TQSizePolicy( TQSizePolicy::Expanding, TQSizePolicy::Fixed ));
+    tqsetSizePolicy( TQSizePolicy( TQSizePolicy::Expanding, TQSizePolicy::Fixed ));
 
     Q_ASSERT( s_config );
 
@@ -307,7 +307,7 @@ void KonqCombo::updatePixmaps()
         updateItem( prov->pixmapFor( text( i ) ), text( i ), i, titleOfURL( text( i ) ) );
     }
     setUpdatesEnabled( true );
-    repaint();
+    tqrepaint();
 
     restoreState();
 }
@@ -396,10 +396,10 @@ bool KonqCombo::eventFilter( TQObject *o, TQEvent *ev )
     // Handle Ctrl+Del/Backspace etc better than the Qt widget, which always
     // jumps to the next whitespace.
     TQLineEdit *edit = lineEdit();
-    if ( o == edit ) {
+    if ( TQT_BASE_OBJECT(o) == TQT_BASE_OBJECT(edit) ) {
         int type = ev->type();
         if ( type == TQEvent::KeyPress ) {
-            TQKeyEvent *e = static_cast<TQKeyEvent *>( ev );
+            TQKeyEvent *e = TQT_TQKEYEVENT( ev );
 
             if ( e->key() == Key_Return || e->key() == Key_Enter ) {
                 m_modifier = e->state();
@@ -459,7 +459,7 @@ void KonqCombo::selectWord(TQKeyEvent *e)
             count++;
             if( allow_space_break && text[pos].isSpace() && count > 1 )
                 break;
-        } while( pos >= 0 && (chars.findIndex(text[pos]) == -1 || count <= 1) );
+        } while( pos >= 0 && (chars.tqfindIndex(text[pos]) == -1 || count <= 1) );
 
         if( e->state() & ShiftButton ) {
                   edit->cursorForward(true, 1-count);
@@ -482,7 +482,7 @@ void KonqCombo::selectWord(TQKeyEvent *e)
             count++;
                   if( allow_space_break && text[pos].isSpace() )
                       break;
-        } while( pos < (int) text.length() && chars.findIndex(text[pos]) == -1 );
+        } while( pos < (int) text.length() && chars.tqfindIndex(text[pos]) == -1 );
 
         if( e->state() & ShiftButton ) {
             edit->cursorForward(true, count+1);
@@ -537,10 +537,10 @@ void KonqCombo::mousePressEvent( TQMouseEvent *e )
 {
     m_dragStart = TQPoint(); // null QPoint
 
-    if ( e->button() == LeftButton && pixmap( currentItem()) ) {
+    if ( e->button() == Qt::LeftButton && pixmap( currentItem()) ) {
         // check if the pixmap was clicked
         int x = e->pos().x();
-        int x0 = TQStyle::visualRect( style().querySubControlMetrics( TQStyle::CC_ComboBox, this, TQStyle::SC_ComboBoxEditField ), this ).x();
+        int x0 = TQStyle::tqvisualRect( tqstyle().querySubControlMetrics( TQStyle::CC_ComboBox, this, TQStyle::SC_ComboBoxEditField ), this ).x();
 
         if ( x > x0 + 2 && x < lineEdit()->x() ) {
             m_dragStart = e->pos();
@@ -548,10 +548,10 @@ void KonqCombo::mousePressEvent( TQMouseEvent *e )
         }
     }
 
-    if ( e->button() == LeftButton && m_pageSecurity!=KonqMainWindow::NotCrypted ) {
+    if ( e->button() == Qt::LeftButton && m_pageSecurity!=KonqMainWindow::NotCrypted ) {
         // check if the lock icon was clicked
         int x = e->pos().x();
-        int x0 = TQStyle::visualRect( style().querySubControlMetrics( TQStyle::CC_ComboBox, this, TQStyle::SC_ComboBoxArrow ), this ).x();
+        int x0 = TQStyle::tqvisualRect( tqstyle().querySubControlMetrics( TQStyle::CC_ComboBox, this, TQStyle::SC_ComboBoxArrow ), this ).x();
         if ( x < x0 )
             emit showPageSecurity();
 
@@ -566,7 +566,7 @@ void KonqCombo::mouseMoveEvent( TQMouseEvent *e )
     if ( m_dragStart.isNull() || currentText().isEmpty() )
         return;
 
-    if ( e->state() & LeftButton &&
+    if ( e->state() & Qt::LeftButton &&
          (e->pos() - m_dragStart).manhattanLength() >
          KGlobalSettings::dndEventDelay() )
     {
@@ -591,7 +591,7 @@ void KonqCombo::slotActivated( const TQString& text )
     applyPermanent();
     m_returnPressed = true;
     emit activated( text, m_modifier );
-    m_modifier = NoButton;
+    m_modifier = Qt::NoButton;
 }
 
 void KonqCombo::setConfig( KConfig *kc )
@@ -604,8 +604,8 @@ void KonqCombo::paintEvent( TQPaintEvent *pe )
     TQComboBox::paintEvent( pe );
 
     TQLineEdit *edit = lineEdit();
-    TQRect re = style().querySubControlMetrics( TQStyle::CC_ComboBox, this, TQStyle::SC_ComboBoxEditField );
-    re = TQStyle::visualRect(re, this);
+    TQRect re = tqstyle().querySubControlMetrics( TQStyle::CC_ComboBox, this, TQStyle::SC_ComboBoxEditField );
+    re = TQStyle::tqvisualRect(re, this);
     
     if ( m_pageSecurity!=KonqMainWindow::NotCrypted ) {
         TQColor color(245, 246, 190);
@@ -646,7 +646,7 @@ void KonqCombo::paintEvent( TQPaintEvent *pe )
 void KonqCombo::setPageSecurity( int pageSecurity )
 {
     m_pageSecurity = pageSecurity;
-    repaint();
+    tqrepaint();
 }
 
 bool KonqCombo::hasSufficientContrast(const TQColor &c1, const TQColor &c2)
@@ -701,7 +701,7 @@ void KonqComboListBoxPixmap::paint( TQPainter *painter )
         title = titleOfURL( text() );
         if ( !title.isEmpty() )
             pm = KonqPixmapProvider::self()->pixmapFor( text(), KIcon::SizeSmall );
-        else if ( text().find( "://" ) == -1 ) {
+        else if ( text().tqfind( "://" ) == -1 ) {
             title = titleOfURL( "http://"+text() );
             if ( !title.isEmpty() )
                 pm = KonqPixmapProvider::self()->pixmapFor( "http://"+text(), KIcon::SizeSmall );
@@ -723,8 +723,8 @@ void KonqComboListBoxPixmap::paint( TQPainter *painter )
         pmWidth = pm->width() + 5;
     }
 
-    int entryWidth = listBox()->width() - listBox()->style().pixelMetric( TQStyle::PM_ScrollBarExtent ) -
-                     2 * listBox()->style().pixelMetric( TQStyle::PM_DefaultFrameWidth );
+    int entryWidth = listBox()->width() - listBox()->tqstyle().tqpixelMetric( TQStyle::PM_ScrollBarExtent ) -
+                     2 * listBox()->tqstyle().tqpixelMetric( TQStyle::PM_DefaultFrameWidth );
     int titleWidth = ( entryWidth / 3 ) - 1;
     int urlWidth = entryWidth - titleWidth - pmWidth - 2;
 
@@ -803,7 +803,7 @@ void KonqComboLineEdit::setCompletedItems( const TQStringList& items )
             bool wasSelected = completionbox->isSelected( completionbox->currentItem() );
             const TQString currentSelection = completionbox->currentText();
             completionbox->setItems( items );
-            TQListBoxItem* item = completionbox->findItem( currentSelection, Qt::ExactMatch );
+            TQListBoxItem* item = completionbox->tqfindItem( currentSelection, TQt::ExactMatch );
             if( !item || !wasSelected )
             {
                 wasSelected = false;
@@ -824,7 +824,7 @@ void KonqComboLineEdit::setCompletedItems( const TQStringList& items )
         }
 
         if ( autoSuggest() ) {
-            int index = items.first().find( txt );
+            int index = items.first().tqfind( txt );
             TQString newText = items.first().mid( index );
             setUserSelection( false );
             setCompletedText( newText, true );
@@ -850,7 +850,7 @@ void KonqComboCompletionBox::setItems( const TQStringList& items )
         insertStringList( items );
     else {
         //Keep track of whether we need to change anything,
-        //so we can avoid a repaint for identical updates,
+        //so we can avoid a tqrepaint for identical updates,
         //to reduce flicker
         bool dirty = false;
 
@@ -884,7 +884,7 @@ void KonqComboCompletionBox::setItems( const TQStringList& items )
             triggerUpdate( false );
     }
 
-    if ( isVisible() && size().height() != sizeHint().height() )
+    if ( isVisible() && size().height() != tqsizeHint().height() )
         sizeAndPosition();
 
     blockSignals( block );

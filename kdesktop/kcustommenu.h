@@ -27,7 +27,7 @@
  * This class provides a Popup Menu with programs that can be executed and
  * that reads its configuration from a config file.
  */
-class KCustomMenu : public QPopupMenu
+class KCustomMenu : public TQPopupMenu
 {
    Q_OBJECT
 public:

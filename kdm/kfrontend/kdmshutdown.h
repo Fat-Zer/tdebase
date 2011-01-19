@@ -213,7 +213,7 @@ private:
 
 };
 
-class FlatButton : public QToolButton
+class FlatButton : public TQToolButton
 {
   Q_OBJECT
 

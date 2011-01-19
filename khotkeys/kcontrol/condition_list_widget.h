@@ -60,7 +60,7 @@ class Condition_list_widget
 typedef Condition_list_widget Condition_list_tab;
 
 class Condition_list_item
-    : public QListViewItem
+    : public TQListViewItem
     {
     public:
         Condition_list_item( TQListView* parent_P, Condition* condition_P );

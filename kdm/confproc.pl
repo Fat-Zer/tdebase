@@ -207,12 +207,12 @@ my %th = (
   "bool" => [ "C_TYPE_INT", " | C_BOOL", "int\t", "bool\t", "GetCfgInt", "GetCfgInt" ],
   "enum" => [ "C_TYPE_INT", " | C_ENUM", "int\t", "", "GetCfgInt", "" ],
   "group" => [ "C_TYPE_INT", " | C_GRP", "int\t", "", "GetCfgInt", "" ],
-  "string" => [ "C_TYPE_STR", "", "char\t*", "QString\t", "GetCfgStr", "GetCfgQStr" ],
-  "path" => [ "C_TYPE_STR", " | C_PATH", "char\t*", "QString\t", "GetCfgStr", "GetCfgQStr" ],
-  "list" => [ "C_TYPE_ARGV", "", "char\t**", "QStringList\t", "GetCfgStrArr", "GetCfgQStrList" ]
+  "string" => [ "C_TYPE_STR", "", "char\t*", "TQString\t", "GetCfgStr", "GetCfgQStr" ],
+  "path" => [ "C_TYPE_STR", " | C_PATH", "char\t*", "TQString\t", "GetCfgStr", "GetCfgQStr" ],
+  "list" => [ "C_TYPE_ARGV", "", "char\t**", "TQStringList\t", "GetCfgStrArr", "GetCfgQStrList" ]
 );
 
-my @tl = ("QFont\t", "QStringList\t", "QString\t", "char\t**", "char\t*", "int\t", "bool\t");
+my @tl = ("QFont\t", "TQStringList\t", "TQString\t", "char\t**", "char\t*", "int\t", "bool\t");
 
 sub init_defs($)
 {

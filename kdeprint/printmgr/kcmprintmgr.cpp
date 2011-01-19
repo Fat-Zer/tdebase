@@ -43,7 +43,7 @@ KCMPrintMgr::KCMPrintMgr(TQWidget *parent, const char *name, const TQStringList 
 
 	m_mainview = new KMMainView(this,"MainView");
 
-	QVBoxLayout	*main_ = new TQVBoxLayout(this, 0, 0);
+	TQVBoxLayout	*main_ = new TQVBoxLayout(this, 0, 0);
 	main_->addWidget(m_mainview);
 	main_->activate();
 	

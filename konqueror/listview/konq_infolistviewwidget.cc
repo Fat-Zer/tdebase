@@ -32,12 +32,12 @@
 #include <tqstringlist.h>
 
 KonqInfoListViewWidget::KonqInfoListViewWidget( KonqListView* parent,
-                                                TQWidget* parentWidget)
-  : KonqBaseListViewWidget(parent, parentWidget)
+                                                TQWidget* tqparentWidget)
+  : KonqBaseListViewWidget(parent, tqparentWidget)
 {
     m_metaInfoJob = 0;
 
-    m_mtSelector = new KSelectAction(i18n("View &As"), 0, this,
+    m_mtSelector = new KSelectAction(i18n("View &As"), 0, TQT_TQOBJECT(this),
                                      TQT_SLOT(slotSelectMimeType()),
                                      parent->actionCollection(), "view_as" );
 
@@ -201,7 +201,7 @@ void KonqInfoListViewWidget::slotNewItems( const KFileItemList& list)
         }
 
         if ( !m_itemsToSelect.isEmpty() ) {
-           TQStringList::Iterator tsit = m_itemsToSelect.find( (*kit)->name() );
+           TQStringList::Iterator tsit = m_itemsToSelect.tqfind( (*kit)->name() );
            if ( tsit != m_itemsToSelect.end() ) {
               m_itemsToSelect.remove( tsit );
               setSelected( tmp, true );
@@ -375,7 +375,7 @@ void KonqInfoListViewWidget::determineCounts(const KFileItemList& list)
 
     if (m_favorite.mimetype)
     {
-          m_mtSelector->setCurrentItem(mtlist.findIndex(m_favorite.mimetype->comment()));
+          m_mtSelector->setCurrentItem(mtlist.tqfindIndex(m_favorite.mimetype->comment()));
           kdDebug(1203) << "favorite mimetype is " << m_favorite.mimetype->name() << endl;
     }
     createFavoriteColumns();

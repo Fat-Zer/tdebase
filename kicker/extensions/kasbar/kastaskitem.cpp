@@ -135,7 +135,7 @@ TQPixmap KasTaskItem::icon()
 
 	TQPixmap thumb = task_->thumbnail();
 	TQSize sz = thumb.size();
-	sz.scale( sizes[kasbar()->itemSize()], sizes[kasbar()->itemSize()], TQSize::ScaleMin );
+	sz.tqscale( sizes[kasbar()->itemSize()], sizes[kasbar()->itemSize()], TQSize::ScaleMin );
 
 	TQImage img = thumb.convertToImage();
 	img = img.smoothScale( sz );
@@ -390,7 +390,7 @@ void KasTaskItem::showPropertiesDialog()
     tabs->addTab( createTaskProps( task_, tabs ), i18n("Task") );
 
     tabs->addTab( createTaskProps( this, tabs ), i18n("Item") );
-    tabs->addTab( createTaskProps( kasbar(), tabs, false ), i18n("Bar") );
+    tabs->addTab( createTaskProps( TQT_TQOBJECT(kasbar()), tabs, false ), i18n("Bar") );
 
 #if 0
     tabs->addTab( createNETProps( tabs ), i18n("NET") );
@@ -422,7 +422,7 @@ TQWidget *KasTaskItem::createTaskProps( TQObject *target, TQWidget *parent, bool
     taskprops->addColumn( i18n("Value") );
 
     // Create List Items
-    TQMetaObject *mo = target->metaObject();
+    TQMetaObject *mo = target->tqmetaObject();
     for ( int i = 0; i < mo->numProperties( recursive ); i++ ) {
 	const TQMetaProperty *p = mo->property(i, recursive);
 
@@ -443,9 +443,9 @@ TQString KasTaskItem::expandMacros( const TQString &format, TQObject *data )
     while ( pos >= 0 ) {
         pos = re.search( s, pos );
         if ( pos >= 0 ) {
-	    TQVariant val = data->property( re.cap(1).latin1() );
+	    TQVariant val = data->property( TQString(re.cap(1)).latin1() );
 	    TQString v = val.asString();
-	    s.replace( pos, re.matchedLength(), v );
+	    s.tqreplace( pos, re.matchedLength(), v );
             pos = pos + v.length();
         }
     }
@@ -456,7 +456,7 @@ TQString KasTaskItem::expandMacros( const TQString &format, TQObject *data )
 TQWidget *KasTaskItem::createX11Props( TQWidget *parent )
 {
     TQVBox *vb2 = new TQVBox( parent );
-    vb2->setSizePolicy( TQSizePolicy::Minimum, TQSizePolicy::Preferred );
+    vb2->tqsetSizePolicy( TQSizePolicy::Minimum, TQSizePolicy::Preferred );
     vb2->setSpacing( KDialog::spacingHint() );
     vb2->setMargin( KDialog::marginHint() );
 

@@ -140,7 +140,7 @@ void ExtensionManager::initialize()
         TQString extensionId(*it);
 
         // create a matching applet container
-        if (extensionId.find("Extension") == -1)
+        if (extensionId.tqfind("Extension") == -1)
         {
             continue;
         }
@@ -259,7 +259,7 @@ void ExtensionManager::migrateMenubar()
     {
         TQString extensionId(*it);
 
-        if (extensionId.find("Extension") == -1)
+        if (extensionId.tqfind("Extension") == -1)
         {
             continue;
         }
@@ -291,12 +291,12 @@ void ExtensionManager::migrateMenubar()
                 }
 
                 KConfigGroup group(&extensionConfig, appletId.latin1());
-                TQString appletType = appletId.left(appletId.findRev('_'));
+                TQString appletType = appletId.left(appletId.tqfindRev('_'));
 
                 if (appletType == "Applet")
                 {
                     TQString appletFile = group.readPathEntry("DesktopFile");
-                    if (appletFile.find("menuapplet.desktop") != -1)
+                    if (appletFile.tqfind("menuapplet.desktop") != -1)
                     {
                         TQString menubarConfig = locate("config", extension);
                         KIO::NetAccess::copy(menubarConfig,
@@ -371,7 +371,7 @@ void ExtensionManager::updateMenubar()
     KMenuBar tmpmenu;
     tmpmenu.insertItem("KDE Rocks!");
     m_menubarPanel->setSize(KPanelExtension::SizeCustom,
-                            tmpmenu.sizeHint().height());
+                            tmpmenu.tqsizeHint().height());
     m_menubarPanel->writeConfig();
 
     emit desktopIconsAreaChanged(desktopIconsArea(m_menubarPanel->xineramaScreen()),
@@ -702,7 +702,7 @@ void ExtensionManager::reduceArea(TQRect &area, const ExtensionContainer *extens
         return;
     }
 
-    TQRect geom = extension->initialGeometry(extension->position(), extension->alignment(),
+    TQRect geom = extension->initialGeometry(extension->position(), extension->tqalignment(),
                                             extension->xineramaScreen());
 
     // reduce given area (TQRect) to the space not covered by the given extension

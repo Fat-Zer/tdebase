@@ -41,7 +41,7 @@ struct ThemeEngine::ThemeEnginePrivate
 };
 
 ThemeEngine::ThemeEngine( TQWidget *, const char *, const TQStringList& args )
-  : TQVBox( 0, "wndSplash", WStyle_Customize|WX11BypassWM ), d(0)
+  : TQVBox( 0, "wndSplash", (WFlags)(WStyle_Customize|WX11BypassWM) ), d(0)
 {
   d = new ThemeEnginePrivate;
   kapp->installX11EventFilter( this );
@@ -74,7 +74,7 @@ ThemeEngine::~ThemeEngine()
 bool ThemeEngine::eventFilter( TQObject* o, TQEvent* e )
 {
     if( e->type() == TQEvent::Show && o->isWidgetType())
-        addSplashWindow( static_cast< TQWidget* >( o ));
+        addSplashWindow( TQT_TQWIDGET( o ));
     return false;
 }
 
@@ -87,7 +87,7 @@ void ThemeEngine::addSplashWindow( TQWidget* w )
 {
     if( !w->isTopLevel())
         return;
-    if( d->mSplashWindows.contains( w->winId()))
+    if( d->mSplashWindows.tqcontains( w->winId()))
         return;
     if( !w->testWFlags( WX11BypassWM ))
     { // All toplevel widgets should be probably required to be WX11BypassWM
@@ -104,7 +104,7 @@ void ThemeEngine::addSplashWindow( TQWidget* w )
 
 void ThemeEngine::splashWindowDestroyed( TQObject* obj )
 {
-    d->mSplashWindows.remove( static_cast< TQWidget* >( obj )->winId());
+    d->mSplashWindows.remove( TQT_TQWIDGET( obj )->winId());
 }
 
 bool ThemeEngine::x11Event( XEvent* e )

@@ -60,8 +60,8 @@ MyApplication::MyApplication( const char *conf )
 void
 MyApplication::renderDone()
 {
-	desktop()->setBackgroundPixmap( renderer.pixmap() );
-	desktop()->repaint( true );
+	TQT_TQWIDGET(desktop())->setBackgroundPixmap( renderer.pixmap() );
+	TQT_TQWIDGET(desktop())->tqrepaint( true );
 	renderer.saveCacheFile();
 	renderer.cleanup();
 	for (unsigned i=0; i<renderer.numRenderers(); ++i)

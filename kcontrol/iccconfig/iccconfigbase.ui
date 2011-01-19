@@ -1,6 +1,6 @@
 <!DOCTYPE UI><UI version="3.0" stdsetdef="1">
 <class>ICCConfigBase</class>
-<widget class="QWidget">
+<widget class="TQWidget">
     <property name="name">
 	    <cstring>ICCConfigBase</cstring>
     </property>
@@ -16,14 +16,14 @@
         <property name="name">
             <cstring>unnamed</cstring>
         </property>
-        <widget class="QTabWidget" row="0" column="0">
+        <widget class="TQTabWidget" row="0" column="0">
             <property name="name">
                 <cstring>TabWidget2</cstring>
             </property>
             <property name="enabled">
                 <bool>true</bool>
             </property>
-            <widget class="QWidget">
+            <widget class="TQWidget">
                 <property name="name">
                     <cstring>tab</cstring>
                 </property>
@@ -34,7 +34,7 @@
                     <property name="name">
                         <cstring>unnamed</cstring>
                     </property>
-		    <widget class="QGroupBox" row="0" column="0">
+		    <widget class="TQGroupBox" row="0" column="0">
 			    <property name="name">
 				    <cstring>groupSystemSettings</cstring>
 			    </property>
@@ -45,7 +45,7 @@
 				<property name="name">
 					    <cstring>unnamed</cstring>
 				</property>
-				<widget class="QCheckBox" row="0" column="0" colspan="2">
+				<widget class="TQCheckBox" row="0" column="0" colspan="2">
 					<property name="name">
 						<cstring>systemEnableSupport</cstring>
 					</property>
@@ -61,7 +61,7 @@
 						<string>*.icc</string>
 					</property>
 				</widget>
-				<widget class="QLabel" row="1" column="0">
+				<widget class="TQLabel" row="1" column="0">
 					<property name="name">
 						<cstring>textLabel4_2</cstring>
 					</property>
@@ -71,7 +71,7 @@
 				</widget>
 			    </grid>
 		    </widget>
-		    <widget class="QGroupBox" row="1" column="0">
+		    <widget class="TQGroupBox" row="1" column="0">
 			    <property name="name">
 				    <cstring>groupUserSettings</cstring>
 			    </property>
@@ -82,7 +82,7 @@
 				<property name="name">
 					<cstring>unnamed</cstring>
 				</property>
-				<widget class="QCheckBox" row="0" column="0" colspan="2">
+				<widget class="TQCheckBox" row="0" column="0" colspan="2">
 					<property name="name">
 						<cstring>enableSupport</cstring>
 					</property>
@@ -95,7 +95,7 @@
 						<cstring>iccProfileList</cstring>
 					</property>
 				</widget>
-				<widget class="QLabel" row="1" column="0">
+				<widget class="TQLabel" row="1" column="0">
 					<property name="name">
 						<cstring>textLabel2_9</cstring>
 					</property>
@@ -132,7 +132,7 @@
 						<cstring>randrScreenList</cstring>
 					</property>
 				</widget>
-				<widget class="QLabel" row="2" column="0">
+				<widget class="TQLabel" row="2" column="0">
 					<property name="name">
 						<cstring>textLabel2_8</cstring>
 					</property>
@@ -148,7 +148,7 @@
 						<string>*.icc</string>
 					</property>
 				</widget>
-				<widget class="QLabel" row="3" column="0">
+				<widget class="TQLabel" row="3" column="0">
 					<property name="name">
 						<cstring>textLabel2_2</cstring>
 					</property>
@@ -168,7 +168,7 @@
                         <property name="sizeType">
                             <enum>Expanding</enum>
                         </property>
-                        <property name="sizeHint">
+                        <property name="tqsizeHint">
                             <size>
                                 <width>20</width>
                                 <height>20</height>

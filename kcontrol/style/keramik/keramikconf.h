@@ -26,7 +26,7 @@ DEALINGS IN THE SOFTWARE.
 
 class TQCheckBox;
 
-class KeramikStyleConfig: public QWidget
+class KeramikStyleConfig: public TQWidget
 {
 	Q_OBJECT
 public:

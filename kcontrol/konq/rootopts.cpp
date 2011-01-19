@@ -286,7 +286,7 @@ bool DesktopPathConfig::moveDir( const KURL & src, const KURL & dest, const TQSt
             KIO::ListJob* job = KIO::listDir( src );
             connect( job, TQT_SIGNAL( entries( KIO::Job *, const KIO::UDSEntryList& ) ),
                      this, TQT_SLOT( slotEntries( KIO::Job *, const KIO::UDSEntryList& ) ) );
-            qApp->enter_loop();
+            tqApp->enter_loop();
 
             if (m_ok)
             {
@@ -298,7 +298,7 @@ bool DesktopPathConfig::moveDir( const KURL & src, const KURL & dest, const TQSt
             KIO::Job * job = KIO::move( src, dest );
             connect( job, TQT_SIGNAL( result( KIO::Job * ) ), this, TQT_SLOT( slotResult( KIO::Job * ) ) );
             // wait for job
-            qApp->enter_loop();
+            tqApp->enter_loop();
         }
     }
     kdDebug() << "DesktopPathConfig::slotResult returning " << m_ok << endl;
@@ -325,9 +325,9 @@ void DesktopPathConfig::slotEntries( KIO::Job * job, const KIO::UDSEntryList& li
 
         KIO::Job * moveJob = KIO::move( file.url(), m_copyToDest );
         connect( moveJob, TQT_SIGNAL( result( KIO::Job * ) ), this, TQT_SLOT( slotResult( KIO::Job * ) ) );
-        qApp->enter_loop();
+        tqApp->enter_loop();
     }
-    qApp->exit_loop();
+    tqApp->exit_loop();
 }
 
 void DesktopPathConfig::slotResult( KIO::Job * job )
@@ -341,7 +341,7 @@ void DesktopPathConfig::slotResult( KIO::Job * job )
 
         job->showErrorDialog(this);
     }
-    qApp->exit_loop();
+    tqApp->exit_loop();
 }
 
 #include "rootopts.moc"

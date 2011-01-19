@@ -48,7 +48,7 @@ KTheme::KTheme( TQWidget *parent, const TQString & xmlFile )
 {
     TQFile file( xmlFile );
     file.open( IO_ReadOnly );
-    m_dom.setContent( file.readAll() );
+    m_dom.setContent( TQByteArray(file.readAll()) );
     file.close();
 
     //kdDebug() << m_dom.toString( 2 ) << endl;
@@ -107,7 +107,7 @@ bool KTheme::load( const KURL & url )
     // create the DOM
     TQFile file( location + m_name + ".xml" );
     file.open( IO_ReadOnly );
-    m_dom.setContent( file.readAll() );
+    m_dom.setContent( TQByteArray(file.readAll()) );
     file.close();
 
     // remove the temp file
@@ -441,7 +441,7 @@ void KTheme::apply()
     DCOPClient *client = kapp->dcopClient();
     if ( !client->isAttached() )
         client->attach();
-    client->send("kdesktop", "KBackgroundIface", "configure()", "");
+    client->send("kdesktop", "KBackgroundIface", "configure()", TQString(""));
     // FIXME Xinerama
 
     // 3. Icons
@@ -469,14 +469,14 @@ void KTheme::apply()
                 iconConf->setGroup( "ToolbarIcons" );
 
             TQString iconName = iconSubElem.tagName();
-            if ( iconName.contains( "Color" ) )
+            if ( iconName.tqcontains( "Color" ) )
             {
                 TQColor iconColor = TQColor( iconSubElem.attribute( "rgb" ) );
                 iconConf->writeEntry( iconName, iconColor, true, true );
             }
-            else if ( iconName.contains( "Value" ) || iconName == "Size" )
+            else if ( iconName.tqcontains( "Value" ) || iconName == "Size" )
                 iconConf->writeEntry( iconName, iconSubElem.attribute( "value" ).toUInt(), true, true );
-            else if ( iconName.contains( "Effect" ) )
+            else if ( iconName.tqcontains( "Effect" ) )
                 iconConf->writeEntry( iconName, iconSubElem.attribute( "name" ), true, true );
             else
                 iconConf->writeEntry( iconName, static_cast<bool>( iconSubElem.attribute( "value" ).toUInt() ), true, true );
@@ -516,7 +516,7 @@ void KTheme::apply()
 
         soundConf.sync();
         kwinSoundConf.sync();
-        client->send("knotify", "", "reconfigure()", "");
+        client->send("knotify", "", "reconfigure()", TQString(""));
         // TODO signal kwin sounds change?
     }
 
@@ -593,7 +593,7 @@ void KTheme::apply()
         kwinConf.writeEntry( "BorderSize", getProperty( wmElem, "border", "size" ) );
 
         kwinConf.sync();
-        client->send( "kwin", "", "reconfigure()", "" );
+        client->send( "kwin", "", "reconfigure()", TQString("") );
     }
 
     // 8. Konqueror
@@ -607,7 +607,7 @@ void KTheme::apply()
         konqConf.writeEntry( "BgColor", TQColor( getProperty( konqElem, "bgcolor", "rgb" ) ) );
 
         konqConf.sync();
-        client->send("konqueror*", "KonquerorIface", "reparseConfiguration()", ""); // FIXME seems not to work :(
+        client->send("konqueror*", "KonquerorIface", "reparseConfiguration()", TQString("")); // FIXME seems not to work :(
     }
 
     // 9. Kicker
@@ -635,7 +635,7 @@ void KTheme::apply()
         kickerConf.writeEntry( "ShowRightHideButton", static_cast<bool>( getProperty( panelElem, "showrighthidebutton", "value").toInt()));
 
         kickerConf.sync();
-        client->send("kicker", "Panel", "configure()", "");
+        client->send("kicker", "Panel", "configure()", TQString(""));
     }
 
     // 10. Widget style
@@ -720,7 +720,7 @@ TQString KTheme::getProperty( TQDomElement parent, const TQString & tag,
     else
     {
         kdWarning() << TQString( "No such property found: %1->%2->%3" )
-            .arg( parent.tagName() ).arg( tag ).arg( attr ) << endl;
+            .tqarg( parent.tagName() ).tqarg( tag ).tqarg( attr ) << endl;
         return TQString::null;
     }
 }
@@ -738,18 +738,18 @@ void KTheme::createIconElems( const TQString & group, const TQString & object,
               << "DisabledColor" << "DisabledColor2" << "DisabledEffect"
               << "DisabledSemiTransparent" << "DisabledValue";
     for ( TQStringList::ConstIterator it = elemNames.begin(); it != elemNames.end(); ++it ) {
-        if ( (*it).contains( "Color" ) )
+        if ( (*it).tqcontains( "Color" ) )
             createColorElem( *it, object, parent, cfg );
         else
         {
             TQDomElement tmpCol = m_dom.createElement( *it );
             tmpCol.setAttribute( "object", object );
 
-            if ( (*it).contains( "Value" ) || *it == "Size" )
+            if ( (*it).tqcontains( "Value" ) || *it == "Size" )
                 tmpCol.setAttribute( "value", cfg->readNumEntry( *it, 1 ) );
-            else if ( (*it).contains( "DisabledEffect" ) )
+            else if ( (*it).tqcontains( "DisabledEffect" ) )
                 tmpCol.setAttribute( "name", cfg->readEntry( *it, "togray" ) );
-	    else if ( (*it).contains( "Effect" ) )
+	    else if ( (*it).tqcontains( "Effect" ) )
                 tmpCol.setAttribute( "name", cfg->readEntry( *it, "none" ) );
             else
                 tmpCol.setAttribute( "value", cfg->readBoolEntry( *it, false ) );
@@ -832,7 +832,7 @@ TQString KTheme::processFilePath( const TQString & section, const TQString & pat
 TQString KTheme::unprocessFilePath( const TQString & section, TQString path )
 {
     if ( path.startsWith( "theme:/" ) )
-        return path.replace( TQRegExp( "^theme:/" ), m_kgd->findResourceDir( "themes", m_name + "/" + m_name + ".xml") + m_name + "/" );
+        return path.tqreplace( TQRegExp( "^theme:/" ), m_kgd->findResourceDir( "themes", m_name + "/" + m_name + ".xml") + m_name + "/" );
 
     if ( TQFile::exists( path ) )
         return path;

@@ -1,7 +1,7 @@
 <!DOCTYPE UI><UI version="3.3" stdsetdef="1">
 <class>MainWidget</class>
 <author>Frans Englich &lt;frans.englich@telia.com&gt;</author>
-<widget class="QWidget">
+<widget class="TQWidget">
     <property name="name">
         <cstring>MainWidget</cstring>
     </property>
@@ -32,13 +32,13 @@
                     <verstretch>0</verstretch>
                 </sizepolicy>
             </property>
-            <property name="minimumSize">
+            <property name="tqminimumSize">
                 <size>
                     <width>74</width>
                     <height>74</height>
                 </size>
             </property>
-            <property name="maximumSize">
+            <property name="tqmaximumSize">
                 <size>
                     <width>74</width>
                     <height>74</height>
@@ -51,7 +51,7 @@
                 <string></string>
             </property>
         </widget>
-        <widget class="QGroupBox" row="1" column="0" rowspan="1" colspan="4">
+        <widget class="TQGroupBox" row="1" column="0" rowspan="1" colspan="4">
             <property name="name">
                 <cstring>grpUserInformation</cstring>
             </property>
@@ -62,7 +62,7 @@
                 <property name="name">
                     <cstring>unnamed</cstring>
                 </property>
-                <widget class="QLabel" row="1" column="0">
+                <widget class="TQLabel" row="1" column="0">
                     <property name="name">
                         <cstring>lblOrganisation</cstring>
                     </property>
@@ -73,12 +73,12 @@
                         <cstring>leOrganization</cstring>
                     </property>
                 </widget>
-                <widget class="QLineEdit" row="0" column="1">
+                <widget class="TQLineEdit" row="0" column="1">
                     <property name="name">
                         <cstring>leRealname</cstring>
                     </property>
                 </widget>
-                <widget class="QLabel" row="0" column="0">
+                <widget class="TQLabel" row="0" column="0">
                     <property name="name">
                         <cstring>lblRealName</cstring>
                     </property>
@@ -89,12 +89,12 @@
                         <cstring>leRealname</cstring>
                     </property>
                 </widget>
-                <widget class="QLineEdit" row="1" column="1">
+                <widget class="TQLineEdit" row="1" column="1">
                     <property name="name">
                         <cstring>leOrganization</cstring>
                     </property>
                 </widget>
-                <widget class="QLabel" row="2" column="0">
+                <widget class="TQLabel" row="2" column="0">
                     <property name="name">
                         <cstring>lblEmail</cstring>
                     </property>
@@ -105,12 +105,12 @@
                         <cstring>leEmail</cstring>
                     </property>
                 </widget>
-                <widget class="QLineEdit" row="2" column="1">
+                <widget class="TQLineEdit" row="2" column="1">
                     <property name="name">
                         <cstring>leEmail</cstring>
                     </property>
                 </widget>
-                <widget class="QLabel" row="3" column="0">
+                <widget class="TQLabel" row="3" column="0">
                     <property name="name">
                         <cstring>textLabel3</cstring>
                     </property>
@@ -121,12 +121,12 @@
                         <cstring>leSMTP</cstring>
                     </property>
                 </widget>
-                <widget class="QLineEdit" row="3" column="1">
+                <widget class="TQLineEdit" row="3" column="1">
                     <property name="name">
                         <cstring>leSMTP</cstring>
                     </property>
                 </widget>
-                <widget class="QLabel" row="5" column="0">
+                <widget class="TQLabel" row="5" column="0">
                     <property name="name">
                         <cstring>lblUIDTell</cstring>
                     </property>
@@ -134,7 +134,7 @@
                         <string>User ID:</string>
                     </property>
                 </widget>
-                <widget class="QLabel" row="5" column="1">
+                <widget class="TQLabel" row="5" column="1">
                     <property name="name">
                         <cstring>lblUID</cstring>
                     </property>
@@ -154,14 +154,14 @@
             <property name="sizeType">
                 <enum>Expanding</enum>
             </property>
-            <property name="sizeHint">
+            <property name="tqsizeHint">
                 <size>
                     <width>20</width>
                     <height>16</height>
                 </size>
             </property>
         </spacer>
-        <widget class="QLayoutWidget" row="0" column="1" rowspan="1" colspan="3">
+        <widget class="TQLayoutWidget" row="0" column="1" rowspan="1" colspan="3">
             <property name="name">
                 <cstring>layout1</cstring>
             </property>
@@ -169,7 +169,7 @@
                 <property name="name">
                     <cstring>unnamed</cstring>
                 </property>
-                <widget class="QLabel">
+                <widget class="TQLabel">
                     <property name="name">
                         <cstring>lblUsername</cstring>
                     </property>
@@ -182,18 +182,18 @@
                     <property name="text">
                         <string></string>
                     </property>
-                    <property name="alignment">
+                    <property name="tqalignment">
                         <set>AlignVCenter</set>
                     </property>
                 </widget>
-                <widget class="QLabel">
+                <widget class="TQLabel">
                     <property name="name">
                         <cstring>lblClickButtonInfo</cstring>
                     </property>
                     <property name="text">
                         <string>&lt;i&gt;(Click the button to change your image)&lt;/i&gt;</string>
                     </property>
-                    <property name="alignment">
+                    <property name="tqalignment">
                         <set>AlignVCenter</set>
                     </property>
                 </widget>
@@ -217,14 +217,14 @@
             <property name="sizeType">
                 <enum>Expanding</enum>
             </property>
-            <property name="sizeHint">
+            <property name="tqsizeHint">
                 <size>
                     <width>111</width>
                     <height>20</height>
                 </size>
             </property>
         </spacer>
-        <widget class="QButtonGroup" row="2" column="0" rowspan="1" colspan="4">
+        <widget class="TQButtonGroup" row="2" column="0" rowspan="1" colspan="4">
             <property name="name">
                 <cstring>kcfg_EchoMode</cstring>
             </property>
@@ -247,7 +247,7 @@
                 <property name="name">
                     <cstring>unnamed</cstring>
                 </property>
-                <widget class="QRadioButton" row="0" column="0">
+                <widget class="TQRadioButton" row="0" column="0">
                     <property name="name">
                         <cstring>rdbOneStar</cstring>
                     </property>
@@ -255,7 +255,7 @@
                         <string>Show one star for each letter</string>
                     </property>
                 </widget>
-                <widget class="QRadioButton" row="1" column="0">
+                <widget class="TQRadioButton" row="1" column="0">
                     <property name="name">
                         <cstring>rdbThreeStars</cstring>
                     </property>
@@ -263,7 +263,7 @@
                         <string>Show three stars for each letter</string>
                     </property>
                 </widget>
-                <widget class="QRadioButton" row="2" column="0">
+                <widget class="TQRadioButton" row="2" column="0">
                     <property name="name">
                         <cstring>rdbShowPassword</cstring>
                     </property>

@@ -49,7 +49,7 @@
 #include "searchproviderdlg.h"
 
 
-class SearchProviderItem : public QCheckListItem
+class SearchProviderItem : public TQCheckListItem
 {
 public:
     SearchProviderItem(TQListView *parent, SearchProvider *provider)
@@ -459,7 +459,7 @@ SearchProviderItem *FilterOptions::displaySearchProvider(SearchProvider *p, bool
 
     item = new SearchProviderItem(m_dlg->lvSearchProviders, p);
 
-    if (m_favoriteEngines.find(p->desktopEntryName())!=m_favoriteEngines.end())
+    if (m_favoriteEngines.tqfind(p->desktopEntryName())!=m_favoriteEngines.end())
        item->setOn(true);
 
     for (itemCount = 1; itemCount < totalCount; itemCount++)

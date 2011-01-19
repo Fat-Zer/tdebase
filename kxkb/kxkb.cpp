@@ -73,7 +73,7 @@ KXKBApp::KXKBApp(bool allowStyles, bool GUIenabled)
     }
 	
     // keep in sync with kcmlayout.cpp
-    keys = new KGlobalAccel(this);
+    keys = new KGlobalAccel(TQT_TQOBJECT(this));
 #include "kxkbbindings.cpp"
     keys->updateConnections();
 
@@ -217,8 +217,8 @@ void KXKBApp::layoutApply()
 bool KXKBApp::setLayout(const TQString& layoutPair)
 {
 	const LayoutUnit layoutUnitKey(layoutPair);
-	if( kxkbConfig.m_layouts.contains(layoutUnitKey) ) {
-		return setLayout( *kxkbConfig.m_layouts.find(layoutUnitKey) );
+	if( kxkbConfig.m_layouts.tqcontains(layoutUnitKey) ) {
+		return setLayout( *kxkbConfig.m_layouts.tqfind(layoutUnitKey) );
 	}
 	return false;
 }

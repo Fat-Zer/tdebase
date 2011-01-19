@@ -65,8 +65,8 @@ KICCConfig::KICCConfig(TQWidget *parent, const char *name, const TQStringList &)
 {
 
   TQVBoxLayout *layout = new TQVBoxLayout(this, KDialog::marginHint(), KDialog::spacingHint());
-  config = new KSimpleConfig( TQString::fromLatin1( "kiccconfigrc" ));
-  systemconfig = new KSimpleConfig( TQString::fromLatin1( KDE_CONFDIR "/kicc/kiccconfigrc" ));
+  config = new KSimpleConfig( TQString::tqfromLatin1( "kiccconfigrc" ));
+  systemconfig = new KSimpleConfig( TQString::tqfromLatin1( KDE_CONFDIR "/kicc/kiccconfigrc" ));
 
   KAboutData *about =
   new KAboutData(I18N_NOOP("kcmiccconfig"), I18N_NOOP("KDE ICC Profile Control Module"),
@@ -136,7 +136,7 @@ void KICCConfig::deleteProfile () {
 
 	// Contract the profile memory
 	numberOfProfiles--;
-	iccFileArrayNew = new QString[numberOfProfiles*numberOfScreens];
+	iccFileArrayNew = new TQString[numberOfProfiles*numberOfScreens];
 	for (i=0;i<(numberOfProfiles*numberOfScreens);i++) {
 		iccFileArrayNew[i] = iccFileArray[i];
 	}
@@ -206,7 +206,7 @@ void KICCConfig::addProfile () {
 
 	// Expand the profile memory
 	numberOfProfiles++;
-	iccFileArrayNew = new QString[numberOfProfiles*numberOfScreens];
+	iccFileArrayNew = new TQString[numberOfProfiles*numberOfScreens];
 	for (i=0;i<((numberOfProfiles-1)*numberOfScreens);i++) {
 		iccFileArrayNew[i] = iccFileArray[i];
 	}
@@ -327,7 +327,7 @@ void KICCConfig::load(bool useDefaults )
   }
 
   // Load all profiles into memory
-  iccFileArray = new QString[numberOfProfiles*numberOfScreens];
+  iccFileArray = new TQString[numberOfProfiles*numberOfScreens];
   for (i=0;i<(base->iccProfileList->count());i++) {
       config->setGroup(base->iccProfileList->text(i));
       for (j=0;j<(base->randrScreenList->count());j++) {

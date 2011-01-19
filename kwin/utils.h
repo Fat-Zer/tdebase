@@ -111,14 +111,14 @@ enum ShadeMode
 class Shape 
     {
     public:
-        static bool available() { return kwin_shape_version > 0; }
-        static int version() { return kwin_shape_version; } // as 16*major+minor, i.e. two hex digits
+        static bool available() { return kwin_tqshape_version > 0; }
+        static int version() { return kwin_tqshape_version; } // as 16*major+minor, i.e. two hex digits
         static bool hasShape( WId w);
-        static int shapeEvent();
+        static int tqshapeEvent();
         static void init();
     private:
-        static int kwin_shape_version;
-        static int kwin_shape_event;
+        static int kwin_tqshape_version;
+        static int kwin_tqshape_event;
     };
 
 // compile with XShape older than 1.0

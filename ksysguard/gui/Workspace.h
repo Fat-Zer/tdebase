@@ -32,7 +32,7 @@ class KURL;
 class TQString;
 class WorkSheet;
 
-class Workspace : public QTabWidget
+class Workspace : public TQTabWidget
 {
   Q_OBJECT
 

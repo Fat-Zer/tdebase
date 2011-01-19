@@ -92,7 +92,7 @@ KRandRModule::KRandRModule(TQWidget *parent, const char *name, const TQStringLis
 	m_screenSelector = new KComboBox(screenBox);
 
 	for (int s = 0; s < numScreens(); s++) {
-		m_screenSelector->insertItem(i18n("Screen %1").arg(s+1));
+		m_screenSelector->insertItem(i18n("Screen %1").tqarg(s+1));
 	}
 
 	m_screenSelector->setCurrentItem(currentScreenIndex());
@@ -171,7 +171,7 @@ void KRandRModule::slotScreenChanged(int screen)
 
 	// Add new resolutions
 	for (int i = 0; i < currentScreen()->numSizes(); i++) {
-		m_sizeCombo->insertItem(i18n("%1 x %2").arg(currentScreen()->pixelSize(i).width()).arg(currentScreen()->pixelSize(i).height()));
+		m_sizeCombo->insertItem(i18n("%1 x %2").tqarg(currentScreen()->pixelSize(i).width()).tqarg(currentScreen()->pixelSize(i).height()));
 
 		// Aspect ratio
 		/* , aspect ratio %5)*/
@@ -180,7 +180,7 @@ void KRandRModule::slotScreenChanged(int screen)
 
 	// Clear rotations
 	for (int i = m_rotationGroup->count() - 1; i >= 0; i--)
-		m_rotationGroup->remove(m_rotationGroup->find(i));
+		m_rotationGroup->remove(m_rotationGroup->tqfind(i));
 
 	// Create rotations
 	for (int i = 0; i < RandRScreen::OrientationCount; i++)
@@ -195,21 +195,21 @@ void KRandRModule::slotScreenChanged(int screen)
 
 void KRandRModule::slotRotationChanged()
 {
-	if (m_rotationGroup->find(0)->isOn())
+	if (m_rotationGroup->tqfind(0)->isOn())
 		currentScreen()->proposeRotation(RandRScreen::Rotate0);
-	else if (m_rotationGroup->find(1)->isOn())
+	else if (m_rotationGroup->tqfind(1)->isOn())
 		currentScreen()->proposeRotation(RandRScreen::Rotate90);
-	else if (m_rotationGroup->find(2)->isOn())
+	else if (m_rotationGroup->tqfind(2)->isOn())
 		currentScreen()->proposeRotation(RandRScreen::Rotate180);
 	else {
-		Q_ASSERT(m_rotationGroup->find(3)->isOn());
+		Q_ASSERT(m_rotationGroup->tqfind(3)->isOn());
 		currentScreen()->proposeRotation(RandRScreen::Rotate270);
 	}
 
-	if (m_rotationGroup->find(4)->isOn())
+	if (m_rotationGroup->tqfind(4)->isOn())
 		currentScreen()->proposeRotation(currentScreen()->proposedRotation() ^ RandRScreen::ReflectX);
 
-	if (m_rotationGroup->find(5)->isOn())
+	if (m_rotationGroup->tqfind(5)->isOn())
 		currentScreen()->proposeRotation(currentScreen()->proposedRotation() ^ RandRScreen::ReflectY);
 
 	setChanged();
@@ -353,8 +353,8 @@ void KRandRModule::update()
 			Q_ASSERT(currentScreen()->proposedRotation() & RandRScreen::RotateMask);
 			break;
 	}
-	m_rotationGroup->find(4)->setDown(currentScreen()->proposedRotation() & RandRScreen::ReflectX);
-	m_rotationGroup->find(5)->setDown(currentScreen()->proposedRotation() & RandRScreen::ReflectY);
+	m_rotationGroup->tqfind(4)->setDown(currentScreen()->proposedRotation() & RandRScreen::ReflectX);
+	m_rotationGroup->tqfind(5)->setDown(currentScreen()->proposedRotation() & RandRScreen::ReflectY);
 	m_rotationGroup->blockSignals(false);
 
 	m_refreshRates->blockSignals(true);

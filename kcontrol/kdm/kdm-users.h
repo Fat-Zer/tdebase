@@ -37,7 +37,7 @@
 #include <pwd.h>
 
 
-class KDMUsersWidget : public QWidget
+class KDMUsersWidget : public TQWidget
 {
 	Q_OBJECT
 
@@ -76,27 +76,27 @@ private:
 	void userButtonDropEvent( TQDropEvent *e );
 	void changeUserPix( const TQString & );
 
-	QGroupBox	*minGroup;	// top left
-	QLineEdit	*leminuid, *lemaxuid;
+	TQGroupBox	*minGroup;	// top left
+	TQLineEdit	*leminuid, *lemaxuid;
 
-	QButtonGroup	*usrGroup; // right below
-	QCheckBox	*cbshowlist, *cbcomplete, *cbinverted, *cbusrsrt;
+	TQButtonGroup	*usrGroup; // right below
+	TQCheckBox	*cbshowlist, *cbcomplete, *cbinverted, *cbusrsrt;
 
-	QLabel		*s_label; // middle
-	QWidgetStack	*wstack;
+	TQLabel		*s_label; // middle
+	TQWidgetStack	*wstack;
 	KListView	*optoutlv, *optinlv;
 
-	QButtonGroup	*faceGroup; // right
-	QRadioButton	*rbadmonly, *rbprefadm, *rbprefusr, *rbusronly;
+	TQButtonGroup	*faceGroup; // right
+	TQRadioButton	*rbadmonly, *rbprefadm, *rbprefusr, *rbusronly;
 
 	KComboBox	*usercombo; // right below
-	QPushButton	*userbutton;
-	QPushButton	*rstuserbutton;
+	TQPushButton	*userbutton;
+	TQPushButton	*rstuserbutton;
 
-	QString		m_userPixDir;
-	QString		m_defaultText;
-	QStringList	hiddenUsers, selectedUsers;
-	QString		defminuid, defmaxuid;
+	TQString	m_userPixDir;
+	TQString	m_defaultText;
+	TQStringList	hiddenUsers, selectedUsers;
+	TQString	defminuid, defmaxuid;
 
 	bool		m_notFirst;
 };

@@ -49,10 +49,10 @@ CFontViewerAppMainWindow::CFontViewerAppMainWindow()
 
     if(factory)
     {
-        KStdAction::open(this, TQT_SLOT(fileOpen()), actionCollection());
-        KStdAction::quit(kapp, TQT_SLOT(quit()), actionCollection());
+        KStdAction::open(TQT_TQOBJECT(this), TQT_SLOT(fileOpen()), actionCollection());
+        KStdAction::quit(TQT_TQOBJECT(kapp), TQT_SLOT(quit()), actionCollection());
 
-        itsPreview=(KParts::ReadOnlyPart *)factory->create(this, "fontvier", "KParts::ReadOnlyPart");
+        itsPreview=(KParts::ReadOnlyPart *)factory->create(TQT_TQOBJECT(this), "fontvier", "KParts::ReadOnlyPart");
 
         KCmdLineArgs *args = KCmdLineArgs::parsedArgs();
         KURL         openURL;

@@ -30,7 +30,7 @@ class KDecorationPreviewBridge;
 class KDecorationPreviewOptions;
 
 class KDecorationPreview
-    : public QWidget
+    : public TQWidget
     {
     Q_OBJECT
     public:

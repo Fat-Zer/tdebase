@@ -72,7 +72,7 @@ NaughtyApplet::NaughtyApplet
   TQVBoxLayout * layout = new TQVBoxLayout(this);
   layout->addWidget(button_);
 
-  monitor_ = new NaughtyProcessMonitor(2, 20, this);
+  monitor_ = new NaughtyProcessMonitor(2, 20, TQT_TQOBJECT(this));
 
   connect
     (
@@ -105,7 +105,7 @@ NaughtyApplet::~NaughtyApplet()
   void
 NaughtyApplet::slotWarn(ulong pid, const TQString & name)
 {
-  if (ignoreList_.contains(name))
+  if (ignoreList_.tqcontains(name))
     return;
 
   TQString s = i18n("A program called '%1' is slowing down the others "

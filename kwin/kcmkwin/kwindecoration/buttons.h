@@ -57,7 +57,7 @@ class Button
 		bool supported;
 };
 
-class ButtonDrag : public QStoredDrag
+class ButtonDrag : public TQStoredDrag
 {
 	public:
 		ButtonDrag( Button btn, TQWidget* parent, const char* name=0 );
@@ -91,7 +91,7 @@ class ButtonDropSiteItem
 /**
  * This is plugged into ButtonSource
  */
-class ButtonSourceItem : public QListViewItem
+class ButtonSourceItem : public TQListViewItem
 {
 	public:
 		ButtonSourceItem(TQListView * parent, const Button& btn);
@@ -117,7 +117,7 @@ class ButtonSource : public KListView
 		ButtonSource(TQWidget *parent = 0, const char* name = 0);
 		virtual ~ButtonSource();
 
-		TQSize sizeHint() const;
+		TQSize tqsizeHint() const;
 
 		void hideAllButtons();
 		void showAllButtons();
@@ -136,7 +136,7 @@ typedef TQValueList<ButtonDropSiteItem*> ButtonList;
 /**
  * This class renders and handles the demo titlebar dropsite
  */
-class ButtonDropSite: public QFrame
+class ButtonDropSite: public TQFrame
 {
 	Q_OBJECT
 
@@ -189,7 +189,7 @@ class ButtonDropSite: public QFrame
 		ButtonDropSiteItem *m_selected;
 };
 
-class ButtonPositionWidget : public QWidget
+class ButtonPositionWidget : public TQWidget
 {
 	Q_OBJECT
 

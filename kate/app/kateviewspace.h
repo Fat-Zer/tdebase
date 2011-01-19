@@ -68,7 +68,7 @@ class KateVSStatusBar : public KStatusBar
       class KateViewSpace *m_viewSpace;
 };
 
-class KateViewSpace : public QVBox
+class KateViewSpace : public TQVBox
 {
   friend class KateViewSpaceContainer;
   friend class KateVSStatusBar;

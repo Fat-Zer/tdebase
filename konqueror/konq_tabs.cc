@@ -196,16 +196,16 @@ void KonqFrameTabs::saveConfig( KConfig* config, const TQString &prefix, bool sa
   TQString newPrefix;
   for (KonqFrameBase* it = m_pChildFrameList->first(); it; it = m_pChildFrameList->next())
     {
-      newPrefix = TQString::fromLatin1( it->frameType() ) + "T" + TQString::number(i);
+      newPrefix = TQString::tqfromLatin1( it->frameType() ) + "T" + TQString::number(i);
       strlst.append( newPrefix );
       newPrefix.append( '_' );
       it->saveConfig( config, newPrefix, saveURLs, docContainer, id, depth + i );
       i++;
     }
 
-  config->writeEntry( TQString::fromLatin1( "Children" ).prepend( prefix ), strlst );
+  config->writeEntry( TQString::tqfromLatin1( "Children" ).prepend( prefix ), strlst );
 
-  config->writeEntry( TQString::fromLatin1( "activeChildIndex" ).prepend( prefix ),
+  config->writeEntry( TQString::tqfromLatin1( "activeChildIndex" ).prepend( prefix ),
                       currentPageIndex() );
 }
 
@@ -225,7 +225,7 @@ void KonqFrameTabs::copyHistory( KonqFrameBase *other )
 void KonqFrameTabs::printFrameInfo( const TQString& spaces )
 {
   kdDebug(1202) << spaces << "KonqFrameTabs " << this << " visible="
-                << TQString("%1").arg(isVisible()) << " activeChild="
+                << TQString("%1").tqarg(isVisible()) << " activeChild="
                 << m_pActiveChild << endl;
 
   if (!m_pActiveChild)
@@ -440,7 +440,7 @@ void KonqFrameTabs::slotSubPopupMenuTabActivated( int _id)
 
 void KonqFrameTabs::slotMouseMiddleClick()
 {
-  TQApplication::clipboard()->setSelectionMode( QClipboard::Selection );
+  TQApplication::tqclipboard()->setSelectionMode( QClipboard::Selection );
   KURL filteredURL ( KonqMisc::konqFilteredURL( this, TQApplication::clipboard()->text() ) );
   if ( !filteredURL.isEmpty() ) {
     KonqView* newView = m_pViewManager->addTab(TQString::null, TQString::null, false, false);
@@ -461,7 +461,7 @@ void KonqFrameTabs::slotMouseMiddleClick( TQWidget *w )
     }
   }
   else {
-  TQApplication::clipboard()->setSelectionMode( QClipboard::Selection );
+  TQApplication::tqclipboard()->setSelectionMode( QClipboard::Selection );
   KURL filteredURL ( KonqMisc::konqFilteredURL( this, TQApplication::clipboard()->text() ) );
   if ( !filteredURL.isEmpty() ) {
     KonqFrameBase* frame = dynamic_cast<KonqFrameBase*>(w);

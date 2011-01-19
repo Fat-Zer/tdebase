@@ -67,7 +67,7 @@ Module::Module( TQWidget* parent_P, const char* )
     {
     setButtons( Help | Cancel | Apply | Ok );
     module = this;
-    init_global_data( false, this ); // don't grab keys
+    init_global_data( false, TQT_TQOBJECT(this) ); // don't grab keys
     init_arts();
     TQVBoxLayout* vbox = new TQVBoxLayout( this ); 
     vbox->setSpacing( 6 );
@@ -272,14 +272,14 @@ void Module::set_gestures_exclude( Windowdef_list* windows )
 
 void Module::import()
     {
-    TQString file = KFileDialog::getOpenFileName( TQString::null, "*.khotkeys", topLevelWidget(),
+    TQString file = KFileDialog::getOpenFileName( TQString::null, "*.khotkeys", tqtopLevelWidget(),
         i18n( "Select File with Actions to Be Imported" ));
     if( file.isEmpty())
         return;
     KSimpleConfig cfg( file, true );
     if( !settings.import( cfg, true ))
         {
-        KMessageBox::error( topLevelWidget(),
+        KMessageBox::error( tqtopLevelWidget(),
             i18n( "Import of the specified file failed. Most probably the file is not a valid "
                 "file with actions." ));
         return;

@@ -133,8 +133,8 @@ KGDialog::inserten( const TQString& txt, int accel, TQPopupMenu *cmnu )
 void
 KGDialog::slotActivateMenu( int id )
 {
-	TQPopupMenu *cmnu = optMenu->findItem( id )->popup();
-	TQSize sh( cmnu->sizeHint() / 2 );
+	TQPopupMenu *cmnu = optMenu->tqfindItem( id )->popup();
+	TQSize sh( cmnu->tqsizeHint() / 2 );
 	cmnu->exec( geometry().center() - TQPoint( sh.width(), sh.height() ) );
 }
 

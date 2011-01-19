@@ -1,7 +1,7 @@
 <!DOCTYPE UI><UI version="3.2" stdsetdef="1">
 <class>NewThemeWidget</class>
 <author>Lukas Tinkl &lt;lukas@kde.org&gt;</author>
-<widget class="QWidget">
+<widget class="TQWidget">
     <property name="name">
         <cstring>NewThemeWidget</cstring>
     </property>
@@ -17,7 +17,7 @@
         <property name="name">
             <cstring>unnamed</cstring>
         </property>
-        <widget class="QLabel" row="0" column="0">
+        <widget class="TQLabel" row="0" column="0">
             <property name="name">
                 <cstring>textLabel1</cstring>
             </property>
@@ -28,7 +28,7 @@
                 <cstring>leName</cstring>
             </property>
         </widget>
-        <widget class="QLabel" row="1" column="0">
+        <widget class="TQLabel" row="1" column="0">
             <property name="name">
                 <cstring>textLabel2</cstring>
             </property>
@@ -39,7 +39,7 @@
                 <cstring>leAuthor</cstring>
             </property>
         </widget>
-        <widget class="QLabel" row="2" column="0">
+        <widget class="TQLabel" row="2" column="0">
             <property name="name">
                 <cstring>textLabel3</cstring>
             </property>
@@ -50,7 +50,7 @@
                 <cstring>leEmail</cstring>
             </property>
         </widget>
-        <widget class="QLabel" row="3" column="0">
+        <widget class="TQLabel" row="3" column="0">
             <property name="name">
                 <cstring>textLabel4</cstring>
             </property>
@@ -61,51 +61,51 @@
                 <cstring>leHomepage</cstring>
             </property>
         </widget>
-        <widget class="QLineEdit" row="2" column="1">
+        <widget class="TQLineEdit" row="2" column="1">
             <property name="name">
                 <cstring>leEmail</cstring>
             </property>
         </widget>
-        <widget class="QLineEdit" row="0" column="1">
+        <widget class="TQLineEdit" row="0" column="1">
             <property name="name">
                 <cstring>leName</cstring>
             </property>
         </widget>
-        <widget class="QLineEdit" row="3" column="1">
+        <widget class="TQLineEdit" row="3" column="1">
             <property name="name">
                 <cstring>leHomepage</cstring>
             </property>
         </widget>
-        <widget class="QLineEdit" row="1" column="1">
+        <widget class="TQLineEdit" row="1" column="1">
             <property name="name">
                 <cstring>leAuthor</cstring>
             </property>
         </widget>
-        <widget class="QLabel" row="5" column="0">
+        <widget class="TQLabel" row="5" column="0">
             <property name="name">
                 <cstring>textLabel5</cstring>
             </property>
             <property name="text">
                 <string>Co&amp;mment:</string>
             </property>
-            <property name="alignment">
+            <property name="tqalignment">
                 <set>AlignTop</set>
             </property>
             <property name="buddy" stdset="0">
                 <cstring>teComment</cstring>
             </property>
         </widget>
-        <widget class="QTextEdit" row="5" column="1">
+        <widget class="TQTextEdit" row="5" column="1">
             <property name="name">
                 <cstring>teComment</cstring>
             </property>
         </widget>
-        <widget class="QLineEdit" row="4" column="1">
+        <widget class="TQLineEdit" row="4" column="1">
             <property name="name">
                 <cstring>leVersion</cstring>
             </property>
         </widget>
-        <widget class="QLabel" row="4" column="0">
+        <widget class="TQLabel" row="4" column="0">
             <property name="name">
                 <cstring>textLabel6</cstring>
             </property>

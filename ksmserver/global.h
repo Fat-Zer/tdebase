@@ -10,4 +10,8 @@ Copyright (C) 2000 Matthias Ettrich <ettrich@kde.org>
 #define KSMVendorString "KDE"
 #define KSMReleaseString "1.0"
 
+#ifdef USE_QT4
+#define NO_QT3_DBUS_SUPPORT
+#endif
+
 #endif

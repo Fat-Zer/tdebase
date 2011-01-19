@@ -31,7 +31,7 @@ class ConfigModule;
 class ConfigModuleList;
 class TQPainter;
 
-class ModuleTreeItem : public QListViewItem
+class ModuleTreeItem : public TQListViewItem
 {
 
 public:
@@ -74,7 +74,7 @@ public:
   void makeSelected(ConfigModule* module);
   void makeVisible(ConfigModule *module);
   void fill();
-  TQSize sizeHint() const;
+  TQSize tqsizeHint() const;
 
 signals:
   void moduleSelected(ConfigModule*);

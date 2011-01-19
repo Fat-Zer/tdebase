@@ -38,7 +38,7 @@ PrintSettings::PrintSettings(TQWidget *parent, const char *name)
 
         m_printheader->hide(); // Not yet implemented.
 
-	QVBoxLayout	*l0 = new TQVBoxLayout(this, 0, 10);
+	TQVBoxLayout	*l0 = new TQVBoxLayout(this, 0, 10);
 	l0->addWidget(m_printfriendly);
 	l0->addWidget(m_printexact);
 	l0->addWidget(m_printheader);
