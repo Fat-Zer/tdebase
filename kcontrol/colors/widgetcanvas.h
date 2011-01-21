@@ -9,6 +9,7 @@
 #define __WIDGETCANVAS_H__
 
 #include <tqmap.h>
+#undef None	// Qt4
 #include <kapplication.h>
 
 #define MAX_HOTSPOTS   28

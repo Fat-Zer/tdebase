@@ -64,6 +64,7 @@ class KasPopup;
 #include <tqguardedptr.h>
 #include <tqpoint.h>
 #include <tqvaluevector.h>
+#include <tqapplication.h>
 
 #include <kdemacros.h>
 

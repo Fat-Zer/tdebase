@@ -133,10 +133,10 @@
         </widget>
     </vbox>
 </widget>
-<slots>
+<Q_SLOTS>
     <slot access="protected" specifier="pure virtual">action_name_changed( const QString&amp; )</slot>
     <slot access="protected" specifier="pure virtual">action_type_changed(int)</slot>
-</slots>
+</Q_SLOTS>
 <includes>
     <include location="global" impldecl="in implementation">kdialog.h</include>
 </includes>

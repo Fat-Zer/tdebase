@@ -22,9 +22,10 @@
 #ifndef dtime_included
 #define dtime_included
 
-#include <tqdatetime.h> 
-#include <tqlineedit.h> 
-#include <tqspinbox.h> 
+#include <tqapplication.h>
+#include <tqdatetime.h>
+#include <tqlineedit.h>
+#include <tqspinbox.h>
 #include <tqstring.h>
 #include <tqtimer.h>
 #include <tqvalidator.h>

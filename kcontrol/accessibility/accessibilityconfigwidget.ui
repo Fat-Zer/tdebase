@@ -1607,9 +1607,9 @@ Please note that on slow machines this may cause a "lag" between the event causi
     <include location="local" impldecl="in implementation">accessibilityconfigwidget.ui.h</include>
     <include location="local" impldecl="in implementation">kdialog.h</include>
 </includes>
-<slots>
+<Q_SLOTS>
     <slot access="private" specifier="non virtual">updateFlashScreenColor()</slot>
-</slots>
+</Q_SLOTS>
 <layoutdefaults spacing="3" margin="6"/>
 <layoutfunctions spacing="KDialog::spacingHint" margin="KDialog::marginHint"/>
 <includehints>

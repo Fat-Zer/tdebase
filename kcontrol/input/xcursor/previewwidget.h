@@ -24,7 +24,7 @@
 class PreviewCursor;
 
 
-class PreviewWidget : public QWidget
+class PreviewWidget : public TQWidget
 {
 	public:
 		PreviewWidget( TQWidget *parent = NULL, const char *name = NULL );

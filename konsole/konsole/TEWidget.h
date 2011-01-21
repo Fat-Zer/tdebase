@@ -27,6 +27,7 @@
 #include <tqkeycode.h>
 #include <tqtimer.h>
 #include <tqscrollbar.h>
+#include <tqdragobject.h>
 
 #include <kpopupmenu.h>
 

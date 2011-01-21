@@ -19,6 +19,7 @@
 #ifndef ICONTHEMES_H
 #define ICONTHEMES_H
 
+#include <tqimage.h>
 #include <kcmodule.h>
 #include <tqmap.h>
 #include <klistview.h>

@@ -16,6 +16,7 @@
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
+#include <tqapplication.h>
 #include <tqbuttongroup.h>
 #include <tqcheckbox.h>
 #include <tqdesktopwidget.h>

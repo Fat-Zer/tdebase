@@ -12,6 +12,7 @@
 #include <tqdragobject.h>
 #include <tqtoolbutton.h>
 #include <tqvbox.h>
+#include <tqapplication.h>
 
 KonqSidebar_Tree::KonqSidebar_Tree(KInstance *instance,TQObject *parent,TQWidget *widgetParent, TQString &desktopName_, const char* name):
                    KonqSidebarPlugin(instance,parent,widgetParent,desktopName_,name)

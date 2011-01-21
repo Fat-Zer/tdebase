@@ -26,7 +26,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include "tasklmbmenu.moc"
 
 #include <tqpainter.h>
-#include <tqstyle.h>
+//#include <tqstyle.h>
 
 #include <kdebug.h>
 #include <kglobalsettings.h>

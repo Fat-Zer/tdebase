@@ -98,9 +98,9 @@
         </widget>
     </vbox>
 </widget>
-<slots>
+<Q_SLOTS>
     <slot access="protected" specifier="pure virtual">action_group_name_changed( const QString&amp; )</slot>
-</slots>
+</Q_SLOTS>
 <layoutdefaults spacing="6" margin="11"/>
 <includehints>
     <includehint>ktextedit.h</includehint>

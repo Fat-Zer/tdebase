@@ -251,10 +251,10 @@ If you have a fast, new processor, you might want to turn them all on, but for t
         <slot>slotEyeCandySliderMoved(int)</slot>
     </connection>
 </connections>
-<slots>
+<Q_SLOTS>
     <slot>slotEyeCandyShowDetails(bool)</slot>
     <slot>slotEyeCandySliderMoved(int)</slot>
-</slots>
+</Q_SLOTS>
 <includes>
     <include location="local" impldecl="in implementation">kdialog.h</include>
 </includes>

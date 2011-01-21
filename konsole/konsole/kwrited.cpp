@@ -30,6 +30,7 @@
 #include <fixx11h.h>
 
 // Qt
+#undef FontChange	// Qt4
 #include <dcopclient.h>
 #include <tqsocketnotifier.h>
 

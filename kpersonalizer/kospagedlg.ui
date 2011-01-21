@@ -207,12 +207,12 @@ Trinity allows you to customize its behavior according to your needs.</string>
         <slot>slotMacDescription()</slot>
     </connection>
 </connections>
-<slots>
+<Q_SLOTS>
     <slot>slotWindowsDescription()</slot>
     <slot>slotKDEDescription()</slot>
     <slot>slotMacDescription()</slot>
     <slot>slotUnixDescription()</slot>
-</slots>
+</Q_SLOTS>
 <includes>
     <include location="local" impldecl="in implementation">kdialog.h</include>
 </includes>

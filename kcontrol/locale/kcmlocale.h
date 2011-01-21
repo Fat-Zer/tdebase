@@ -25,6 +25,7 @@
 #ifndef KCMLOCALE_H
 #define KCMLOCALE_H
 
+#include <tqapplication.h>
 #include <tqwidget.h>
 #include <tqstringlist.h>
 

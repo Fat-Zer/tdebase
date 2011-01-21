@@ -90,11 +90,11 @@
         <slot>slotPlayPressed()</slot>
     </connection>
 </connections>
-<slots>
+<Q_SLOTS>
     <slot access="protected" specifier="pure virtual">slotRecordPressed()</slot>
     <slot access="protected" specifier="pure virtual">slotPlayPressed()</slot>
     <slot access="protected" specifier="pure virtual">slotStopPressed()</slot>
-</slots>
+</Q_SLOTS>
 <layoutdefaults spacing="6" margin="11"/>
 <includehints>
     <includehint>kpushbutton.h</includehint>

@@ -34,6 +34,7 @@
 #include "KfiPrint.h"
 #include "FcEngine.h"
 #endif
+#include <tqapplication.h>
 #include <tqlayout.h>
 #include <tqlabel.h>
 #include <tqpainter.h>

@@ -32,7 +32,7 @@ class TQPushButton;
 struct ThemeInfo;
 
 
-class ThemePage : public QWidget
+class ThemePage : public TQWidget
 {
 	Q_OBJECT
 

@@ -374,12 +374,12 @@ Display the short name as is; store a long name when the short name is not all u
 <variables>
     <variable>bool m_hasChanged;</variable>
 </variables>
-<signals>
+<Q_SIGNALS>
     <signal>changed()</signal>
-</signals>
-<slots>
+</Q_SIGNALS>
+<Q_SLOTS>
     <slot access="protected">changedSlot()</slot>
-</slots>
+</Q_SLOTS>
 <functions>
     <function returnType="bool">hasChanged()</function>
 </functions>
