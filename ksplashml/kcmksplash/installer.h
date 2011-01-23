@@ -22,7 +22,7 @@ class TQTextEdit;
 class TQPushButton;
 class ThemeListBox;
 
-class SplashInstaller : public QWidget
+class SplashInstaller : public TQWidget
 {
   Q_OBJECT
 public:

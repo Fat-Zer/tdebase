@@ -19,12 +19,15 @@
 #ifndef __THEMEPAGE_H
 #define __THEMEPAGE_H
 
+#include <tqwidget.h>
+
 class KListView;
 class TQListViewItem;
 
 class ThemePage : public TQWidget
 {
 	Q_OBJECT
+	TQ_OBJECT
 
 	public:
 		ThemePage( TQWidget* parent = 0, const char* name = 0 );

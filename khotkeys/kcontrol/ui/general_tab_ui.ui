@@ -134,7 +134,7 @@
     </vbox>
 </widget>
 <Q_SLOTS>
-    <slot access="protected" specifier="pure virtual">action_name_changed( const QString&amp; )</slot>
+    <slot access="protected" specifier="pure virtual">action_name_changed( const TQString&amp; )</slot>
     <slot access="protected" specifier="pure virtual">action_type_changed(int)</slot>
 </Q_SLOTS>
 <includes>

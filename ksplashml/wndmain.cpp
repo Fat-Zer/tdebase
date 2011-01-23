@@ -38,7 +38,7 @@
 // KSplash::KSplash(): This is a hidden object. Its sole purpose
 // is to manage the other objects, which are presented on the screen.
 KSplash::KSplash(const char *name)
-    : DCOPObject( name ),  TQWidget( 0, name, WStyle_Customize|WStyle_NoBorder|WX11BypassWM ),
+    : DCOPObject( name ),  TQWidget( 0, name, (WFlags)(WStyle_Customize|WStyle_NoBorder|WX11BypassWM) ),
       mState( 0 ), mMaxProgress( 0 ), mStep( 0 )
 {
   hide(); // We never show this object.
@@ -381,7 +381,7 @@ ThemeEngine *KSplash::_loadThemeEngine( const TQString& pluginName, const TQStri
   {
     TQStringList themeTitle;
     themeTitle << theme;
-    return static_cast<ThemeEngine *>(factory->create(this, "theme", objName.latin1(), themeTitle));
+    return static_cast<ThemeEngine *>(TQT_TQWIDGET(factory->create(TQT_TQOBJECT(this), "theme", objName.latin1(), themeTitle)));
   }
   else
     return 0L;
@@ -416,7 +416,7 @@ TQPtrList<Action> KSplash::actionList()
 
 bool KSplash::eventFilter( TQObject *o, TQEvent *e )
 {
-  if ( ( e->type() == TQEvent::MouseButtonRelease ) && ( o == mThemeEngine ) )
+  if ( ( e->type() == TQEvent::MouseButtonRelease ) && ( TQT_BASE_OBJECT(o) == TQT_BASE_OBJECT(mThemeEngine) ) )
   {
     TQTimer::singleShot( 0, this, TQT_SLOT(close()));
     return TRUE;

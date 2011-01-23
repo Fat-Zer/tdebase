@@ -56,7 +56,7 @@ void ThemeListBox::dropEvent(TQDropEvent* event)
 
 void ThemeListBox::slotMouseButtonPressed(int button, TQListBoxItem *item, const TQPoint &p)
 {
-   if ((button & LeftButton) == 0) return;
+   if ((button & Qt::LeftButton) == 0) return;
    mOldPos = p;
    mDragFile = TQString::null;
    int cur = index(item);
@@ -66,7 +66,7 @@ void ThemeListBox::slotMouseButtonPressed(int button, TQListBoxItem *item, const
 
 void ThemeListBox::mouseMoveEvent(TQMouseEvent *e)
 {
-   if (((e->state() & LeftButton) != 0) && !mDragFile.isEmpty())
+   if (((e->state() & Qt::LeftButton) != 0) && !mDragFile.isEmpty())
    {
       int delay = KGlobalSettings::dndEventDelay();
       TQPoint newPos = e->globalPos();
