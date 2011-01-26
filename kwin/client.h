@@ -580,7 +580,7 @@ class Client : public TQObject, public KDecorationDefines
         friend struct CheckIgnoreFocusStealingProcedure;
         friend struct ResetupRulesProcedure;
         friend class GeometryUpdatesPostponer;
-        void show() { assert( false ); } // SELI remove after Client is no longer QWidget
+        void show() { assert( false ); } // SELI remove after Client is no longer TQWidget
         void hide() { assert( false ); }
         uint opacity_;
         uint savedOpacity_;

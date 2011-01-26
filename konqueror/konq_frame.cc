@@ -460,7 +460,8 @@ void KonqFrame::slotLinkedViewClicked( bool mode )
 void
 KonqFrame::paintEvent( TQPaintEvent* )
 {
-   m_pStatusBar->tqrepaint();
+//    m_pStatusBar->tqrepaint();
+   m_pStatusBar->update();
 }
 
 void KonqFrame::slotRemoveView()
