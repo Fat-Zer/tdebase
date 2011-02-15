@@ -1305,7 +1305,7 @@ void Konsole::slotTabContextMenu(TQWidget* _te, const TQPoint & pos)
    if (!m_menuCreated)
       makeGUI();
 
-  m_contextMenuSession = sessions.at( tabwidget->indexOf( _te ) );
+  m_contextMenuSession = sessions.tqat( tabwidget->indexOf( _te ) );
 
   m_tabDetachSession->setEnabled( tabwidget->count()>1 );
 
@@ -1376,12 +1376,12 @@ void Konsole::slotTabSetViewOptions(int mode)
   for(int i = 0; i < tabwidget->count(); i++) {
 
     TQWidget *page = tabwidget->page(i);
-    TQIconSet icon = iconSetForSession(sessions.at(i));
+    TQIconSet icon = iconSetForSession(sessions.tqat(i));
     TQString title;
     if (b_matchTabWinTitle)
-      title = sessions.at(i)->fullTitle();
+      title = sessions.tqat(i)->fullTitle();
     else
-      title = sessions.at(i)->Title();
+      title = sessions.tqat(i)->Title();
 
     title=title.tqreplace('&',"&&");
     switch(mode) {
@@ -1614,7 +1614,7 @@ void Konsole::readProperties(KConfig* config, const TQString &schema, bool globa
       ColorSchema* sch = colors->find(schema.isEmpty() ? s_kconfigSchema : schema);
       if (!sch)
       {
-         sch = (ColorSchema*)colors->at(0);  //the default one
+         sch = (ColorSchema*)colors->tqat(0);  //the default one
          kdWarning() << "Could not find schema named " <<s_kconfigSchema<<"; using "<<sch->relPath()<<endl;
          s_kconfigSchema = sch->relPath();
       }
@@ -1872,7 +1872,7 @@ void Konsole::updateSchemaMenu()
   m_schema->clear();
   for (int i = 0; i < (int) colors->count(); i++)
   {
-     ColorSchema* s = (ColorSchema*)colors->at(i);
+     ColorSchema* s = (ColorSchema*)colors->tqat(i);
     assert( s );
     TQString title=s->title();
     m_schema->insertItem(title.tqreplace('&',"&&"),s->numb(),0);
@@ -2115,7 +2115,7 @@ void Konsole::reparseConfiguration()
   ColorSchema* sch = colors->find(s_kconfigSchema);
   if (!sch)
   {
-     sch = (ColorSchema*)colors->at(0);  //the default one
+     sch = (ColorSchema*)colors->tqat(0);  //the default one
      kdWarning() << "Could not find schema named " <<s_kconfigSchema<<"; using "<<sch->relPath()<<endl;
      s_kconfigSchema = sch->relPath();
   }
@@ -2486,7 +2486,7 @@ TQString Konsole::sessionId(const int position)
   if (position<=0 || position>(int)sessions.count())
     return "";
 
-  return sessions.at(position-1)->SessionId();
+  return sessions.tqat(position-1)->SessionId();
 }
 
 void Konsole::listSessions()
@@ -2512,7 +2512,7 @@ void Konsole::activateSession(int position)
 {
   if (position<0 || position>=(int)sessions.count())
     return;
-  activateSession( sessions.at(position) );
+  activateSession( sessions.tqat(position) );
 }
 
 void Konsole::activateSession(TQWidget* w)
@@ -2572,7 +2572,7 @@ void Konsole::activateSession(TESession *s)
   // Set the required schema variables for the current session
   ColorSchema* cs = colors->find( se->schemaNo() );
   if (!cs)
-      cs = (ColorSchema*)colors->at(0);  //the default one
+      cs = (ColorSchema*)colors->tqat(0);  //the default one
   s_schema = cs->relPath();
   curr_schema = cs->numb();
   pmPath = cs->imagePath();
@@ -2618,7 +2618,7 @@ void Konsole::activateSession(TESession *s)
   if (monitorSilence) monitorSilence->setChecked( se->isMonitorSilence() );
   masterMode->setChecked( se->isMasterMode() );
   sessions.tqfind(se);
-  uint position=sessions.at();
+  uint position=sessions.tqat();
   if (m_moveSessionLeft) m_moveSessionLeft->setEnabled(position>0);
   if (m_moveSessionRight) m_moveSessionRight->setEnabled(position<sessions.count()-1);
 }
@@ -2857,7 +2857,7 @@ TQString Konsole::newSession(KSimpleConfig *co, TQString program, const TQStrLis
 
   ColorSchema* schema = colors->find(sch);
   if (!schema)
-      schema=(ColorSchema*)colors->at(0);  //the default one
+      schema=(ColorSchema*)colors->tqat(0);  //the default one
   int schmno = schema->numb();
 
   if (sessions.count()==1 && n_tabbar!=TabNone)
@@ -3049,7 +3049,7 @@ void Konsole::doneSession(TESession* s)
     se = 0;
     if (sessions.count())
     {
-      se = sessions.at(sessionIndex ? sessionIndex - 1 : 0);
+      se = sessions.tqat(sessionIndex ? sessionIndex - 1 : 0);
 
       session2action.tqfind(se)->setChecked(true);
       //FIXME: this Timer stupidity originated from the connected
@@ -3067,7 +3067,7 @@ void Konsole::doneSession(TESession* s)
   }
   else {
     sessions.tqfind(se);
-    uint position=sessions.at();
+    uint position=sessions.tqat();
     m_moveSessionLeft->setEnabled(position>0);
     m_moveSessionRight->setEnabled(position<sessions.count()-1);
   }
@@ -3121,7 +3121,7 @@ void Konsole::slotMovedTab(int from, int to)
 void Konsole::moveSessionLeft()
 {
   sessions.tqfind(se);
-  uint position=sessions.at();
+  uint position=sessions.tqat();
   if (position==0)
     return;
 
@@ -3153,7 +3153,7 @@ void Konsole::moveSessionLeft()
 void Konsole::moveSessionRight()
 {
   sessions.tqfind(se);
-  uint position=sessions.at();
+  uint position=sessions.tqat();
 
   if (position==sessions.count()-1)
     return;
@@ -3556,7 +3556,7 @@ void Konsole::setSchema(int numb, TEWidget* tewidget)
   ColorSchema* s = colors->find(numb);
   if (!s)
   {
-    s = (ColorSchema*)colors->at(0);
+    s = (ColorSchema*)colors->tqat(0);
     kdWarning() << "No schema with serial #"<<numb<<", using "<<s->relPath()<<" (#"<<s->numb()<<")." << endl;
     s_kconfigSchema = s->relPath();
   }
@@ -3573,7 +3573,7 @@ void Konsole::setSchema(const TQString & path)
   ColorSchema* s = colors->find(path);
   if (!s)
   {
-     s = (ColorSchema*)colors->at(0);  //the default one
+     s = (ColorSchema*)colors->tqat(0);  //the default one
      kdWarning() << "No schema with the name " <<path<<", using "<<s->relPath()<<endl;
      s_kconfigSchema = s->relPath();
   }
@@ -3704,7 +3704,7 @@ void Konsole::detachSession(TESession* _se) {
     if (se_previous)
       se = se_previous;
     else
-      se = sessions.at(sessionIndex ? sessionIndex - 1 : 0);
+      se = sessions.tqat(sessionIndex ? sessionIndex - 1 : 0);
     session2action.tqfind(se)->setChecked(true);
     TQTimer::singleShot(1,this,TQT_SLOT(activateSession()));
   }

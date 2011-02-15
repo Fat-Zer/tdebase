@@ -78,7 +78,7 @@ bool BarGraph::removeBar( uint idx )
   }
 
   samples.resize( --bars );
-  footers.remove( footers.at( idx ) );
+  footers.remove( footers.tqat( idx ) );
   update();
 
   return true;

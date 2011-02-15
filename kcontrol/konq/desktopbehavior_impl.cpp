@@ -241,9 +241,9 @@ void DesktopBehavior::setMediaListViewEnabled(bool enabled)
         it; it=static_cast<DesktopBehaviorMediaItem *>(it->nextSibling()))
     {
         if (it->mimeType().startsWith("media/builtin-") == false)
-            it->setVisible(enabled);
+            it->tqsetVisible(enabled);
         else
-            it->setVisible(TRUE);
+            it->tqsetVisible(TRUE);
     }
 }
 

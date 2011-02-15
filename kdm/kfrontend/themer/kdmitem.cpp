@@ -564,7 +564,7 @@ KdmItem::parseAttribute( const TQString &s, int &val, enum DataType &dType )
 	} else {		// int value
 		dType = DTpixel;
 		TQString sCopy = s;
-		if (sCopy.at( 0 ) == '-') {
+		if (sCopy.tqat( 0 ) == '-') {
 			sCopy.remove( 0, 1 );
 			dType = DTnpixel;
 		}
@@ -588,7 +588,7 @@ KdmItem::parseFont( const TQString &s, TQFont &font )
 void
 KdmItem::parseColor( const TQString &s, TQColor &color )
 {
-	if (s.at( 0 ) != '#')
+	if (s.tqat( 0 ) != '#')
 		return;
 	bool ok;
 	TQString sCopy = s;
@@ -621,7 +621,7 @@ KdmItem::tqparentWidget() const
   if (!this->parent())
     return 0;
 
-  if (tqparent()->tqqt_cast("TQWidget"))
+  if (tqparent()->qt_cast("TQWidget"))
     return (TQWidget*)parent();
   return ((KdmItem*)parent())->tqparentWidget();
 }

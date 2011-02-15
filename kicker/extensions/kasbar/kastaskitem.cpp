@@ -173,14 +173,14 @@ void KasTaskItem::updateTask(bool geometryChangeOnly)
     }
 
     bool updates = kasbar()->isUpdatesEnabled();
-    kasbar()->setUpdatesEnabled( false );
+    kasbar()->tqsetUpdatesEnabled( false );
 
     setProgress( kasbar()->showProgress() ? 0 : -1 );
     setText( task_->visibleIconicName() );
     setModified( task_->isModified() );
     setActive( task_->isActive() );
 
-    kasbar()->setUpdatesEnabled( updates );
+    kasbar()->tqsetUpdatesEnabled( updates );
     update();
 }
 

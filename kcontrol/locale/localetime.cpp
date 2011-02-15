@@ -150,7 +150,7 @@ TQString KLocaleConfigTime::userToStore(const TQValueList<StringPair> & list,
 
       if ( !bFound )
 	{
-	  TQChar c = userFormat.at( pos );
+	  TQChar c = userFormat.tqat( pos );
 	  if ( c == '%' )
 	    result += c;
 
@@ -169,7 +169,7 @@ TQString KLocaleConfigTime::storeToUser(const TQValueList<StringPair> & list,
   bool escaped = false;
   for ( uint pos = 0; pos < storeFormat.length(); ++pos )
     {
-      TQChar c = storeFormat.at(pos);
+      TQChar c = storeFormat.tqat(pos);
       if ( escaped )
 	{
 	  StringPair it = StringPair::find( list, c );
@@ -323,7 +323,7 @@ void KLocaleConfigTime::slotCalendarSystemChanged(int calendarSystem)
 
   TQString calendarType;
   bool ok;
-  calendarType = calendars.at(calendarSystem, &ok);
+  calendarType = calendars.tqat(calendarSystem, &ok);
   if ( !ok )
     calendarType = calendars.first();
 

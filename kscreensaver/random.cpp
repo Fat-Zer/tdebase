@@ -201,7 +201,7 @@ int main(int argc, char *argv[])
 
 	KRandomSequence rnd;
 	int indx = rnd.getLong(saverFileList.count());
-	TQString filename = *(saverFileList.at(indx));
+	TQString filename = *(saverFileList.tqat(indx));
 
 	KDesktopFile config(filename, true);
 

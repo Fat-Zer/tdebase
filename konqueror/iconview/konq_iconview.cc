@@ -273,7 +273,7 @@ KonqKfmIconView::KonqKfmIconView( TQWidget *tqparentWidget, TQObject *parent, co
 
     //enable menu item representing the saved sorting criterion
     TQString sortcrit = KonqIconViewFactory::defaultViewProps()->sortCriterion();
-    KRadioAction *sort_action = dynamic_cast<KRadioAction *>(actionCollection()->action(sortcrit.latin1()));
+    KRadioAction *sort_action = tqt_dynamic_cast<KRadioAction *>(actionCollection()->action(sortcrit.latin1()));
     if(sort_action!=NULL) sort_action->activate();
 
     m_paSortDirsFirst = new KToggleAction( i18n( "Folders First" ), 0, actionCollection(), "sort_directoriesfirst" );
@@ -872,7 +872,7 @@ void KonqKfmIconView::slotCanceled( const KURL& url )
     // the completed() signal, so handle that case.
     if ( !m_pIconView->viewport()->isUpdatesEnabled() )
     {
-        m_pIconView->viewport()->setUpdatesEnabled( true );
+        m_pIconView->viewport()->tqsetUpdatesEnabled( true );
         m_pIconView->viewport()->tqrepaint();
     }
     if ( m_pEnsureVisible ){
@@ -892,7 +892,7 @@ void KonqKfmIconView::slotCompleted()
     // not been called), a viewport tqrepaint is forced.
     if ( !m_pIconView->viewport()->isUpdatesEnabled() )
     {
-        m_pIconView->viewport()->setUpdatesEnabled( true );
+        m_pIconView->viewport()->tqsetUpdatesEnabled( true );
         m_pIconView->viewport()->tqrepaint();
     }
 
@@ -952,7 +952,7 @@ void KonqKfmIconView::slotNewItems( const KFileItemList& entries )
     // We need to disable graphics updates on the iconview when
     // inserting items, or else a blank paint operation will be
     // performed on the top-left corner for each inserted item!
-    m_pIconView->setUpdatesEnabled( false );
+    m_pIconView->tqsetUpdatesEnabled( false );
     for (KFileItemListIterator it(entries); it.current(); ++it)
     {
         //kdDebug(1202) << "KonqKfmIconView::slotNewItem(...)" << _fileitem->url().url() << endl;
@@ -1006,11 +1006,11 @@ void KonqKfmIconView::slotNewItems( const KFileItemList& entries )
         m_itemDict.insert( *it, item );
     }
     // After filtering out updates-on-insertions we can re-enable updates
-    m_pIconView->setUpdatesEnabled( true );
+    m_pIconView->tqsetUpdatesEnabled( true );
     // Locking the viewport has filtered out blanking and now, since we
     // have some items to draw, we can restore updating.
     if ( !m_pIconView->viewport()->isUpdatesEnabled() )
-        m_pIconView->viewport()->setUpdatesEnabled( true );
+        m_pIconView->viewport()->tqsetUpdatesEnabled( true );
     KonqDirPart::newItems( entries );
 }
 
@@ -1150,7 +1150,7 @@ void KonqKfmIconView::slotClear()
     // meaningless paint operations (such as a clear() just before drawing
     // fresh contents) we disable updating the viewport until we'll
     // receive some data or a timeout timer expires.
-    m_pIconView->viewport()->setUpdatesEnabled( false );
+    m_pIconView->viewport()->tqsetUpdatesEnabled( false );
     if ( !m_pTimeoutRefreshTimer )
     {
         m_pTimeoutRefreshTimer = new TQTimer( this );
@@ -1247,9 +1247,9 @@ void KonqKfmIconView::slotRefreshViewport()
     kdDebug(1202) << "KonqKfmIconView::slotRefreshViewport()" << endl;
     TQWidget * vp = m_pIconView->viewport();
     bool prevState = vp->isUpdatesEnabled();
-    vp->setUpdatesEnabled( true );
+    vp->tqsetUpdatesEnabled( true );
     vp->tqrepaint();
-    vp->setUpdatesEnabled( prevState );
+    vp->tqsetUpdatesEnabled( prevState );
 }
 
 bool KonqKfmIconView::doOpenURL( const KURL & url )

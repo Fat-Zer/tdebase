@@ -35,7 +35,7 @@ DCOPRef KateDocManagerDCOPIface::document (uint n)
   if (!doc)
     return DCOPRef ();
 
-  DCOPObject *obj = static_cast<DCOPObject*>(doc->tqqt_cast("DCOPObject"));
+  DCOPObject *obj = static_cast<DCOPObject*>(doc->qt_cast("DCOPObject"));
 
   if (!obj)
     return DCOPRef ();
@@ -50,7 +50,7 @@ DCOPRef KateDocManagerDCOPIface::activeDocument ()
   if (!doc)
     return DCOPRef ();
 
-  DCOPObject *obj = static_cast<DCOPObject*>(doc->tqqt_cast("DCOPObject"));
+  DCOPObject *obj = static_cast<DCOPObject*>(doc->qt_cast("DCOPObject"));
 
   if (!obj)
     return DCOPRef ();
@@ -75,7 +75,7 @@ DCOPRef KateDocManagerDCOPIface::documentWithID (uint id)
   if (!doc)
     return DCOPRef ();
 
-  DCOPObject *obj = static_cast<DCOPObject*>(doc->tqqt_cast("DCOPObject"));
+  DCOPObject *obj = static_cast<DCOPObject*>(doc->qt_cast("DCOPObject"));
 
   if (!obj)
     return DCOPRef ();
@@ -90,7 +90,7 @@ DCOPRef KateDocManagerDCOPIface::openURL (KURL url, TQString encoding)
   if (!doc)
     return DCOPRef ();
 
-  DCOPObject *obj = static_cast<DCOPObject*>(doc->tqqt_cast("DCOPObject"));
+  DCOPObject *obj = static_cast<DCOPObject*>(doc->qt_cast("DCOPObject"));
 
   if (!obj)
     return DCOPRef ();

@@ -360,7 +360,10 @@ void KeyTrans::readConfig()
       TQCString txt =
 #include "default.keytab.h"
 ;
-      buf=TQT_TQIODEVICE(new TQBuffer(txt));
+      TQBuffer* newbuf;
+      newbuf = new TQBuffer();
+      newbuf->tqsetBufferFromCopy(txt);
+      buf=TQT_TQIODEVICE(newbuf);
    }
    else
    {

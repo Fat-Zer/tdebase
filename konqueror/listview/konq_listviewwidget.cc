@@ -259,7 +259,7 @@ void KonqBaseListViewWidget::readProtocolConfig( const KURL & url )
       //search the column in confColumns
       for ( unsigned int j = 0; j < NumberOfAtoms; j++ )
       {
-         if ( confColumns[j].name == *lstColumns.at(i) )
+         if ( confColumns[j].name == *lstColumns.tqat(i) )
          {
             confColumns[j].displayThisOne = true;
             confColumns[j].displayInColumn = currentColumn;
@@ -268,7 +268,7 @@ void KonqBaseListViewWidget::readProtocolConfig( const KURL & url )
             currentColumn++;
 
             if ( i < lstColumnWidths.count() )
-               confColumns[j].width = *lstColumnWidths.at(i);
+               confColumns[j].width = *lstColumnWidths.tqat(i);
             else
             {
                // Default Column widths
@@ -984,7 +984,7 @@ void KonqBaseListViewWidget::slotReturnPressed( TQListViewItem *_item )
 
 	 if (_item->pixmap(0) != 0)
 	 {
-	   // Rect of the QListViewItem's pixmap area.
+	   // Rect of the TQListViewItem's pixmap area.
            TQRect rect = _item->listView()->tqitemRect(_item);
 
 	   // calculate nesting depth
@@ -1192,8 +1192,8 @@ void KonqBaseListViewWidget::setComplete()
 
    if ( !isUpdatesEnabled() || !viewport()->isUpdatesEnabled() )
    {
-      viewport()->setUpdatesEnabled( true );
-      setUpdatesEnabled( true );
+      viewport()->tqsetUpdatesEnabled( true );
+      tqsetUpdatesEnabled( true );
       triggerUpdate();
    }
 
@@ -1237,8 +1237,8 @@ void KonqBaseListViewWidget::slotClear()
    m_pBrowserView->resetCount();
    m_pBrowserView->lstPendingMimeIconItems().clear();
 
-   viewport()->setUpdatesEnabled( false );
-   setUpdatesEnabled( false );
+   viewport()->tqsetUpdatesEnabled( false );
+   tqsetUpdatesEnabled( false );
    clear();
 }
 
@@ -1268,8 +1268,8 @@ void KonqBaseListViewWidget::slotNewItems( const KFileItemList & entries )
 
    if ( !viewport()->isUpdatesEnabled() )
    {
-      viewport()->setUpdatesEnabled( true );
-      setUpdatesEnabled( true );
+      viewport()->tqsetUpdatesEnabled( true );
+      tqsetUpdatesEnabled( true );
       triggerUpdate();
    }
    slotUpdateBackground();
@@ -1301,7 +1301,7 @@ void KonqBaseListViewWidget::slotDeleteItem( KFileItem * _fileitem )
       }
 
       delete &(*it);
-      // HACK HACK HACK: QListViewItem/KonqBaseListViewItem should
+      // HACK HACK HACK: TQListViewItem/KonqBaseListViewItem should
       // take care and the source looks like it does; till the
       // real bug is found, this fixes some crashes (malte)
       emit selectionChanged();
@@ -1314,8 +1314,8 @@ void KonqBaseListViewWidget::slotDeleteItem( KFileItem * _fileitem )
   // OK, but this code also gets activated when deleting a hidden file... (dfaure)
   if ( !viewport()->isUpdatesEnabled() )
   {
-    viewport()->setUpdatesEnabled( true );
-    setUpdatesEnabled( true );
+    viewport()->tqsetUpdatesEnabled( true );
+    tqsetUpdatesEnabled( true );
     triggerUpdate();
   }
   slotUpdateBackground();

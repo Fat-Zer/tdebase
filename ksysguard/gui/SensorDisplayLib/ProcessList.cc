@@ -297,8 +297,8 @@ ProcessList::update(const TQString& list)
 	/* Disable painting to avoid flickering effects,
 	 * especially when in tree view mode.
 	 * Ditto for the scrollbar. */
-	setUpdatesEnabled(false);
-	viewport()->setUpdatesEnabled(false);
+	tqsetUpdatesEnabled(false);
+	viewport()->tqsetUpdatesEnabled(false);
 
 	pl.clear();
 
@@ -349,8 +349,8 @@ ProcessList::update(const TQString& list)
 	horizontalScrollBar()->setValue(hpos);
 
 	// Re-enable painting, and force an update.
-	setUpdatesEnabled(true);
-	viewport()->setUpdatesEnabled(true);
+	tqsetUpdatesEnabled(true);
+	viewport()->tqsetUpdatesEnabled(true);
 
 	triggerUpdate();
 
@@ -532,8 +532,8 @@ ProcessList::deleteLeaves(void)
 	{
 		unsigned int i;
 		for (i = 0; i < pl.count() &&
-				 (!isLeafProcess(pl.at(i)->pid()) ||
-				  matchesFilter(pl.at(i))); i++)
+				 (!isLeafProcess(pl.tqat(i)->pid()) ||
+				  matchesFilter(pl.tqat(i))); i++)
 			;
 		if (i == pl.count())
 			return;
@@ -546,7 +546,7 @@ bool
 ProcessList::isLeafProcess(int pid)
 {
 	for (unsigned int i = 0; i < pl.count(); i++)
-		if (pl.at(i)->ppid() == pid)
+		if (pl.tqat(i)->ppid() == pid)
 			return (false);
 
 	return (true);

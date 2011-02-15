@@ -77,7 +77,7 @@ void JobTray::mousePressEvent(TQMouseEvent *e)
 			int	choice = menu.exec(mapToGlobal(e->pos()));
 			if (choice != -1)
 			{
-				KMJobViewer	*view = list.at(choice);
+				KMJobViewer	*view = list.tqat(choice);
 				if (view->isVisible())
 					KWin::activateWindow(view->winId());
 				else

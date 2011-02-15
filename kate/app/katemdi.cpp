@@ -239,7 +239,7 @@ ToolView::~ToolView ()
   m_mainWin->toolViewDeleted (this);
 }
 
-void ToolView::setVisible (bool vis)
+void ToolView::tqsetVisible (bool vis)
 {
   if (m_visible == vis)
     return;
@@ -256,8 +256,9 @@ bool ToolView::visible () const
 void ToolView::childEvent ( TQChildEvent *ev )
 {
   // set the widget to be focus proxy if possible
-  if (ev->inserted() && ev->child() && TQT_TQOBJECT(ev->child())->tqqt_cast("TQWidget"))
-    setFocusProxy ((TQWidget *)(TQT_TQOBJECT(ev->child())->tqqt_cast("TQWidget")));
+  if (ev->inserted() && ev->child() && TQT_TQOBJECT(ev->child())->qt_cast("TQWidget")) {
+    setFocusProxy (::tqqt_cast<QWidget*>(TQT_TQOBJECT(ev->child())));
+}
 
   TQVBox::childEvent (ev);
 }
@@ -379,7 +380,7 @@ bool Sidebar::showWidget (ToolView *widget)
     {
       it.current()->hide();
       setTab (it.currentKey(), false);
-      it.current()->setVisible(false);
+      it.current()->tqsetVisible(false);
     }
 
   setTab (m_widgetToId[widget], true);
@@ -387,7 +388,7 @@ bool Sidebar::showWidget (ToolView *widget)
   m_ownSplit->show ();
   widget->show ();
 
-  widget->setVisible (true);
+  widget->tqsetVisible (true);
 
   return true;
 }
@@ -419,7 +420,7 @@ bool Sidebar::hideWidget (ToolView *widget)
   if (!anyVis)
     m_ownSplit->hide ();
 
-  widget->setVisible (false);
+  widget->tqsetVisible (false);
 
   return true;
 }
@@ -448,7 +449,7 @@ bool Sidebar::eventFilter(TQObject *obj, TQEvent *ev)
   if (ev->type()==TQEvent::ContextMenu)
   {
     TQContextMenuEvent *e = (TQContextMenuEvent *) ev;
-    KMultiTabBarTab *bt = dynamic_cast<KMultiTabBarTab*>(obj);
+    KMultiTabBarTab *bt = tqt_dynamic_cast<KMultiTabBarTab*>(obj);
     if (bt)
     {
       kdDebug()<<"Request for popup"<<endl;
@@ -617,7 +618,7 @@ void Sidebar::restoreSession (KConfig *config)
     ToolView *tv = m_toolviews[i];
 
     tv->persistent = config->readBoolEntry (TQString ("Kate-MDI-ToolView-%1-Persistent").arg(tv->id), false);
-    tv->setVisible (config->readBoolEntry (TQString ("Kate-MDI-ToolView-%1-Visible").arg(tv->id), false));
+    tv->tqsetVisible (config->readBoolEntry (TQString ("Kate-MDI-ToolView-%1-Visible").arg(tv->id), false));
 
     if (!anyVis)
       anyVis = tv->visible();

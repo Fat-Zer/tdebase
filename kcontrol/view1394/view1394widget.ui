@@ -1,6 +1,6 @@
 <!DOCTYPE UI><UI version="3.1" stdsetdef="1">
 <class>View1394Widget</class>
-<widget class="QWidget">
+<widget class="TQWidget">
     <property name="name">
         <cstring>View1394Widget</cstring>
     </property>
@@ -16,7 +16,7 @@
         <property name="name">
             <cstring>unnamed</cstring>
         </property>
-        <widget class="QListView">
+        <widget class="TQListView">
             <column>
                 <property name="text">
                     <string>Name</string>
@@ -145,7 +145,7 @@
                 <bool>true</bool>
             </property>
         </widget>
-        <widget class="QLayoutWidget">
+        <widget class="TQLayoutWidget">
             <property name="name">
                 <cstring>layout1</cstring>
             </property>
@@ -170,7 +170,7 @@
                         </size>
                     </property>
                 </spacer>
-                <widget class="QPushButton">
+                <widget class="TQPushButton">
                     <property name="name">
                         <cstring>m_busResetPb</cstring>
                     </property>

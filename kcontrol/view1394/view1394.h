@@ -28,6 +28,7 @@
 #include <tqstring.h>
 #include <tqtimer.h>
 #include <tqvaluelist.h>
+#include <tqlistview.h>
 
 #include "view1394widget.h"
 

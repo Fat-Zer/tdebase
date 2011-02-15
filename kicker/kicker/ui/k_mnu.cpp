@@ -344,7 +344,7 @@ void PanelKMenu::initialize()
     if (clients.count() > 0) {
         TQIntDictIterator<KickerClientMenu> it(clients);
         while (it){
-            if (it.current()->text.at(0) != '.')
+            if (it.current()->text.tqat(0) != '.')
                 insertItem(
                     it.current()->icon,
                     it.current()->text,

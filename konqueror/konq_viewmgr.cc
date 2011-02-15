@@ -132,7 +132,7 @@ KonqView* KonqViewManager::splitView ( Qt::Orientation orientation,
   //printSizeInfo( splitFrame, parentContainer, "before split");
 #endif
 
-  parentContainer->widget()->setUpdatesEnabled( false );
+  parentContainer->widget()->tqsetUpdatesEnabled( false );
 
   //kdDebug(1202) << "Move out child" << endl;
   TQPoint pos = splitFrame->widget()->pos();
@@ -184,7 +184,7 @@ KonqView* KonqViewManager::splitView ( Qt::Orientation orientation,
   //newView->frame()->show();
   newContainer->show();
 
-  parentContainer->widget()->setUpdatesEnabled( true );
+  parentContainer->widget()->tqsetUpdatesEnabled( true );
 
   if (m_pDocContainer == splitFrame) m_pDocContainer = newContainer;
 
@@ -226,7 +226,7 @@ KonqView* KonqViewManager::splitWindow( Qt::Orientation orientation,
 
   KonqFrameBase* mainFrame = m_pMainWindow->childFrame();
 
-  mainFrame->widget()->setUpdatesEnabled( false );
+  mainFrame->widget()->tqsetUpdatesEnabled( false );
 
   //kdDebug(1202) << "Move out child" << endl;
   TQPoint pos = mainFrame->widget()->pos();
@@ -249,7 +249,7 @@ KonqView* KonqViewManager::splitWindow( Qt::Orientation orientation,
 
   newContainer->show();
 
-  mainFrame->widget()->setUpdatesEnabled( true );
+  mainFrame->widget()->tqsetUpdatesEnabled( true );
 
   if( childView )
     childView->openURL( url, locationBarURL );
@@ -279,7 +279,7 @@ void KonqViewManager::convertDocContainer()
     splitterSizes = static_cast<KonqFrameContainer*>(parentContainer)->sizes();
   }
 
-  parentContainer->widget()->setUpdatesEnabled( false );
+  parentContainer->widget()->tqsetUpdatesEnabled( false );
 
   //kdDebug(1202) << "Move out child" << endl;
   TQPoint pos = m_pDocContainer->widget()->pos();
@@ -302,7 +302,7 @@ void KonqViewManager::convertDocContainer()
 
   newContainer->show();
 
-  parentContainer->widget()->setUpdatesEnabled( true );
+  parentContainer->widget()->tqsetUpdatesEnabled( true );
 
   m_pDocContainer = newContainer;
 }
@@ -410,7 +410,7 @@ void KonqViewManager::duplicateTab( KonqFrameBase* tab, bool openAfterCurrentPag
 
   KonqFrameBase* currentFrame;
   if ( tab == 0L )
-    currentFrame = dynamic_cast<KonqFrameBase*>(tabContainer->currentPage());
+    currentFrame = tqt_dynamic_cast<KonqFrameBase*>(tabContainer->currentPage());
   else
     currentFrame = tab;
 
@@ -451,7 +451,7 @@ void KonqViewManager::duplicateTab( KonqFrameBase* tab, bool openAfterCurrentPag
   else
   tabContainer->setCurrentPage( tabContainer->count() - 1 );
 
-  KonqFrameBase* duplicatedFrame = dynamic_cast<KonqFrameBase*>(tabContainer->currentPage());
+  KonqFrameBase* duplicatedFrame = tqt_dynamic_cast<KonqFrameBase*>(tabContainer->currentPage());
   if (duplicatedFrame)
     duplicatedFrame->copyHistory( currentFrame );
 
@@ -480,7 +480,7 @@ void KonqViewManager::breakOffTab( KonqFrameBase* tab )
 
   KonqFrameBase* currentFrame;
   if ( tab == 0L )
-    currentFrame = dynamic_cast<KonqFrameBase*>(tabContainer->currentPage());
+    currentFrame = tqt_dynamic_cast<KonqFrameBase*>(tabContainer->currentPage());
   else
     currentFrame = tab;
 
@@ -508,7 +508,7 @@ void KonqViewManager::breakOffTab( KonqFrameBase* tab )
   if( newDocContainer && newDocContainer->frameType() == "Tabs")
   {
     KonqFrameTabs *kft = static_cast<KonqFrameTabs *>(newDocContainer);
-    KonqFrameBase *newFrame = dynamic_cast<KonqFrameBase*>(kft->currentPage());
+    KonqFrameBase *newFrame = tqt_dynamic_cast<KonqFrameBase*>(kft->currentPage());
     if(newFrame)
       newFrame->copyHistory( currentFrame );
   }
@@ -553,7 +553,7 @@ void KonqViewManager::removeTab( KonqFrameBase* tab )
   if ( tab != 0L ) {
     currentFrame = tab;
   } else {
-    currentFrame = dynamic_cast<KonqFrameBase*>(tabContainer->currentPage());
+    currentFrame = tqt_dynamic_cast<KonqFrameBase*>(tabContainer->currentPage());
     if (!currentFrame) {
       return;
     }
@@ -622,7 +622,7 @@ void KonqViewManager::removeOtherTabs( KonqFrameBase* tab )
   KonqFrameBase *currentFrame;
 
   if ( tab == 0L )
-    currentFrame = dynamic_cast<KonqFrameBase*>(tabContainer->currentPage());
+    currentFrame = tqt_dynamic_cast<KonqFrameBase*>(tabContainer->currentPage());
   else
     currentFrame = tab;
 
@@ -784,7 +784,7 @@ void KonqViewManager::removeView( KonqView *view )
 
     if (m_pDocContainer == parentContainer) m_pDocContainer = otherFrame;
 
-    grandParentContainer->widget()->setUpdatesEnabled( false );
+    grandParentContainer->widget()->tqsetUpdatesEnabled( false );
     static_cast<KonqFrameContainer*>(parentContainer)->setAboutToBeDeleted();
 
     //kdDebug(1202) << "--- Reparenting otherFrame to m_pMainWindow " << m_pMainWindow << endl;
@@ -826,7 +826,7 @@ void KonqViewManager::removeView( KonqView *view )
     grandParentContainer->setActiveChild( otherFrame );
     grandParentContainer->activateChild();
 
-    grandParentContainer->widget()->setUpdatesEnabled( true );
+    grandParentContainer->widget()->tqsetUpdatesEnabled( true );
   }
   else if (parentContainer->frameType()=="Tabs") {
     kdDebug(1202) << "parentContainer " << parentContainer << " is a KonqFrameTabs" << endl;
@@ -1611,8 +1611,8 @@ void KonqViewManager::loadItem( KConfig &cfg, KonqFrameContainerBase *parent,
       if (cfg.readBoolEntry( TQString::tqfromLatin1( "docContainer" ).prepend( prefix ), false ))
         m_pDocContainer = newContainer;
 
-      loadItem( cfg, newContainer, childList.at(0), defaultURL, openURL );
-      loadItem( cfg, newContainer, childList.at(1), defaultURL, openURL );
+      loadItem( cfg, newContainer, childList.tqat(0), defaultURL, openURL );
+      loadItem( cfg, newContainer, childList.tqat(1), defaultURL, openURL );
 
       newContainer->setSizes( sizes );
 
@@ -1642,7 +1642,7 @@ void KonqViewManager::loadItem( KConfig &cfg, KonqFrameContainerBase *parent,
         loadItem( cfg, newContainer, *it, defaultURL, openURL );
         TQWidget* currentPage = newContainer->currentPage();
         if (currentPage != 0L) {
-          KonqView* activeChildView = dynamic_cast<KonqFrameBase*>(currentPage)->activeChildView();
+          KonqView* activeChildView = tqt_dynamic_cast<KonqFrameBase*>(currentPage)->activeChildView();
           if (activeChildView != 0L) {
             activeChildView->setCaption( activeChildView->caption() );
             activeChildView->setTabIcon( activeChildView->url() );
@@ -1650,7 +1650,7 @@ void KonqViewManager::loadItem( KConfig &cfg, KonqFrameContainerBase *parent,
         }
     }
 
-    newContainer->setActiveChild( dynamic_cast<KonqFrameBase*>(newContainer->page(index)) );
+    newContainer->setActiveChild( tqt_dynamic_cast<KonqFrameBase*>(newContainer->page(index)) );
     newContainer->setCurrentPage( index );
 
     newContainer->show();

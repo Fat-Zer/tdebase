@@ -186,12 +186,12 @@ void KateExternalToolsCommand::reload () {
 }
 
 bool KateExternalToolsCommand::exec (Kate::View *view, const TQString &cmd, TQString &) {
-	TQWidget *wv=dynamic_cast<TQWidget*>(view);
+	TQWidget *wv=tqt_dynamic_cast<TQWidget*>(view);
 	if (!wv) {
 // 		kdDebug(13001)<<"KateExternalToolsCommand::exec: Could not get view widget"<<endl;
 		return false;
 	}
-  KateMDI::MainWindow *dmw=dynamic_cast<KateMDI::MainWindow*>(wv->tqtopLevelWidget());
+  KateMDI::MainWindow *dmw=tqt_dynamic_cast<KateMDI::MainWindow*>(wv->tqtopLevelWidget());
 	if (!dmw) {
 // 		kdDebug(13001)<<"KateExternalToolsCommand::exec: Could not get main window"<<endl;
 		return false;
@@ -201,7 +201,7 @@ bool KateExternalToolsCommand::exec (Kate::View *view, const TQString &cmd, TQSt
 	if (actionName.isEmpty()) return false;
 // 	kdDebug(13001)<<"actionName is not empty:"<<actionName<<endl;
 	KateExternalToolsMenuAction *a=
-		dynamic_cast<KateExternalToolsMenuAction*>(dmw->action("tools_external"));
+		tqt_dynamic_cast<KateExternalToolsMenuAction*>(dmw->action("tools_external"));
 	if (!a) return false;
 // 	kdDebug(13001)<<"trying to find action"<<endl;
 	KAction *a1=a->actionCollection()->action(static_cast<const char *>(actionName.utf8()));
@@ -390,7 +390,7 @@ void KateExternalToolsMenuAction::slotDocumentChanged()
     KActionPtrList actions = m_actionCollection->actions();
     for (KActionPtrList::iterator it = actions.begin(); it != actions.end(); ++it )
     {
-      KateExternalToolAction *action = dynamic_cast<KateExternalToolAction*>(*it);
+      KateExternalToolAction *action = tqt_dynamic_cast<KateExternalToolAction*>(*it);
       if ( action )
       {
         l = action->tool->mimetypes;

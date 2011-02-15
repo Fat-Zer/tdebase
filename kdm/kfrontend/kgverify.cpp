@@ -952,7 +952,7 @@ KGStdVerify::slotPluginSelected( int id )
 		return;
 	if (id != curPlugin) {
 		plugMenu->setItemChecked( curPlugin, false );
-		parent->setUpdatesEnabled( false );
+		parent->tqsetUpdatesEnabled( false );
 		grid->removeItem( greet->getLayoutItem() );
 		Debug( "delete %s\n", pName.data() );
 		delete greet;
@@ -960,7 +960,7 @@ KGStdVerify::slotPluginSelected( int id )
 		handler->verifyPluginChanged( id );
 		if (running)
 			start();
-		parent->setUpdatesEnabled( true );
+		parent->tqsetUpdatesEnabled( true );
 	}
 }
 

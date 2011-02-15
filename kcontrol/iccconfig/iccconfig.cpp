@@ -286,7 +286,7 @@ void KICCConfig::load(bool useDefaults )
   base->deleteProfileButton->setFixedWidth(90);
 
   XRROutputInfo *output_info;
-  KRandrSimpleAPI *randrsimple = new KRandrSimpleAPI::KRandrSimpleAPI();
+  KRandrSimpleAPI *randrsimple = new KRandrSimpleAPI();
 
   config->setReadDefaults( useDefaults );
 
@@ -356,7 +356,7 @@ void KICCConfig::save()
 {
 	int i;
 	int j;
-	KRandrSimpleAPI *randrsimple = new KRandrSimpleAPI::KRandrSimpleAPI();
+	KRandrSimpleAPI *randrsimple = new KRandrSimpleAPI();
 
 	// Write system configuration
 	systemconfig->setGroup(NULL);

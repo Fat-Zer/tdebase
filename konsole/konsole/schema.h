@@ -187,6 +187,10 @@ public:
 	uint count() const { return TQPtrList<ColorSchema>::count(); } ;
 	const ColorSchema *at(unsigned int i)
 		{ return TQPtrList<ColorSchema>::at(i); } ;
+#ifdef USE_QT4
+	const ColorSchema *tqat(unsigned int i)
+		{ return at(i); ;
+#endif // USE_QT4
 
    void sort() {TQPtrList<ColorSchema>::sort();};
 

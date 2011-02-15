@@ -164,7 +164,7 @@ void TOC::meinprocExited( KProcess *meinproc )
 	TQDomComment timestamp = doc.createComment( TQString::number( sourceFileCTime() ) );
 	doc.documentElement().appendChild( timestamp );
 
-	f.at( 0 );
+	f.tqat( 0 );
 	TQTextStream stream( &f );
 	stream.setEncoding( TQTextStream::UnicodeUTF8 );
 	stream << doc.toString();

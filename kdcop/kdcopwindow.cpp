@@ -674,7 +674,7 @@ void KDCOPWindow::slotCallFunction( TQListViewItem* it )
     }
 
     if (!wl.isEmpty())
-      wl.at(0)->setFocus();
+      wl.tqat(0)->setFocus();
 
     i++;
 
@@ -693,104 +693,104 @@ void KDCOPWindow::slotCallFunction( TQListViewItem* it )
 
       if ( type == "int" )
       {
-        KLineEdit* e = (KLineEdit*)wl.at( i );
+        KLineEdit* e = (KLineEdit*)wl.tqat( i );
         arg << e->text().toInt();
       }
       else if ( type == "unsigned" || type == "uint" || type == "unsigned int"
              || type == "TQ_UINT32" )
       {
-        KLineEdit* e = (KLineEdit*)wl.at( i );
+        KLineEdit* e = (KLineEdit*)wl.tqat( i );
         arg << e->text().toUInt();
       }
       else if( type == "long" || type == "long int" )
       {
-        KLineEdit* e = (KLineEdit*)wl.at( i );
+        KLineEdit* e = (KLineEdit*)wl.tqat( i );
         arg << e->text().toLong();
       }
       else if( type == "ulong" || type == "unsigned long" || type == "unsigned long int" )
       {
-        KLineEdit* e = (KLineEdit*)wl.at( i );
+        KLineEdit* e = (KLineEdit*)wl.tqat( i );
         arg << e->text().toULong();
       }
       else if( type == "short" || type == "short int" )
       {
-        KLineEdit* e = (KLineEdit*)wl.at( i );
+        KLineEdit* e = (KLineEdit*)wl.tqat( i );
         arg << e->text().toShort();
       }
       else if( type == "ushort" || type == "unsigned short" || type == "unsigned short int" )
       {
-        KLineEdit* e = (KLineEdit*)wl.at( i );
+        KLineEdit* e = (KLineEdit*)wl.tqat( i );
         arg << e->text().toUShort();
       }
       else if ( type == "TQ_UINT64" )
       {
-        KLineEdit* e = ( KLineEdit* )wl.at( i );
+        KLineEdit* e = ( KLineEdit* )wl.tqat( i );
         arg << e->text().toULongLong();
       }
       else if( type == "float" )
       {
-        KLineEdit* e = (KLineEdit*)wl.at( i );
+        KLineEdit* e = (KLineEdit*)wl.tqat( i );
         arg << e->text().toFloat();
       }
       else if( type == "double" )
       {
-        KLineEdit* e = (KLineEdit*)wl.at( i );
+        KLineEdit* e = (KLineEdit*)wl.tqat( i );
         arg << e->text().toDouble();
       }
       else if( type == "bool" )
       {
-        TQCheckBox* c = (TQCheckBox*)wl.at( i );
+        TQCheckBox* c = (TQCheckBox*)wl.tqat( i );
         arg << c->isChecked();
       }
       else if( type == "TQCString" )
       {
-        KLineEdit* e = (KLineEdit*)wl.at( i );
+        KLineEdit* e = (KLineEdit*)wl.tqat( i );
         arg << TQCString( e->text().local8Bit() );
       }
       else if( type == "TQString" )
       {
-        KLineEdit* e = (KLineEdit*)wl.at( i );
+        KLineEdit* e = (KLineEdit*)wl.tqat( i );
         arg << e->text();
       }
       else if( type == "TQStringList" )
       {
-        KEditListBox* e = (KEditListBox*)wl.at( i );
+        KEditListBox* e = (KEditListBox*)wl.tqat( i );
         arg << e->items();
       }
       else if( type == "TQValueList<TQCString>" )
       {
-        KEditListBox* e = (KEditListBox*)wl.at( i );
+        KEditListBox* e = (KEditListBox*)wl.tqat( i );
         for (int i = 0; i < e->count(); i++)
           arg << TQCString( e->text(i).local8Bit() );
       }
       else if( type == "KURL" )
       {
-        KLineEdit* e = (KLineEdit*)wl.at( i );
+        KLineEdit* e = (KLineEdit*)wl.tqat( i );
         arg << KURL( e->text() );
       }
       else if( type == "TQColor" )
       {
-       KColorButton* e = (KColorButton*)wl.at( i );
+       KColorButton* e = (KColorButton*)wl.tqat( i );
        arg << e->color();
       }
       else if( type == "TQSize" )
       {
-       KMultiIntEdit* e = (KMultiIntEdit*)wl.at( i );
+       KMultiIntEdit* e = (KMultiIntEdit*)wl.tqat( i );
        arg << TQSize(e->field(1) , e->field(2)) ;
       }
       else if( type == "TQPoint" )
       {
-       KMultiIntEdit* e = (KMultiIntEdit*)wl.at( i );
+       KMultiIntEdit* e = (KMultiIntEdit*)wl.tqat( i );
        arg << TQPoint(e->field(1) , e->field(2)) ;
       }
       else if( type == "TQRect" )
       {
-       KMultiIntEdit* e = (KMultiIntEdit*)wl.at( i );
+       KMultiIntEdit* e = (KMultiIntEdit*)wl.tqat( i );
        arg << TQRect(e->field(1) , e->field(2) , e->field(3) , e->field(4)) ;
       }
       else if( type == "TQPixmap" )
       {
-       KURLRequester* e= (KURLRequester*)wl.at( i );
+       KURLRequester* e= (KURLRequester*)wl.tqat( i );
        arg << TQPixmap(e->url());
       }
       else
@@ -1211,7 +1211,7 @@ void KDCOPWindow::slotCopy()
 	// below list view.  If there is nothing selected from
 	// the below menu then tell the tree to copy its current
 	// selection as text.
-	QClipboard *clipboard = TQApplication::clipboard();
+	TQClipboard *clipboard = TQApplication::tqclipboard();
 	if (mainView->lb_replyData->count()!= 0)
 	{
 

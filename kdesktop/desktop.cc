@@ -1179,7 +1179,7 @@ void KDesktop::addIcon(const TQString & _url, const TQString & _dest, int x, int
 
 void KDesktop::removeIcon(const TQString &_url)
 {
-	if (_url.at(0) != '/') {
+	if (_url.tqat(0) != '/') {
 		qDebug("removeIcon with relative path not supported for now");
 		return;
 	}

@@ -164,7 +164,7 @@ version 2.0
 + 2.8. kmanagerselection.* in kdecore
 + 2. (rest of the section)
         Not a KWin thing.
-*   - patch sent to TT to make QClipboard sufficiently compliant
+*   - patch sent to TT to make TQClipboard sufficiently compliant
 + 3.
         Feature not supported, obsolete.
 + 4.1.1

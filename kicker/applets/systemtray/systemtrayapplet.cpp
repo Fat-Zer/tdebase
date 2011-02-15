@@ -867,7 +867,7 @@ void SystemTrayApplet::resizeEvent( TQResizeEvent* )
 
 void SystemTrayApplet::layoutTray()
 {
-    setUpdatesEnabled(false);
+    tqsetUpdatesEnabled(false);
 
     int iconCount = m_shownWins.count();
 
@@ -1017,7 +1017,7 @@ void SystemTrayApplet::layoutTray()
         }
     }
 
-    setUpdatesEnabled(true);
+    tqsetUpdatesEnabled(true);
     updateGeometry();
     setBackground();
 }

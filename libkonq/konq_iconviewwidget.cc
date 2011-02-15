@@ -653,7 +653,7 @@ void KonqIconViewWidget::setIcons( int size, const TQStringList& stopImagePrevie
     // or bottom icons exceed the size of the viewport.. here we prevent the tqrepaint
     // event that will be triggered in that case.
     bool prevUpdatesState = viewport()->isUpdatesEnabled();
-    viewport()->setUpdatesEnabled( false );
+    viewport()->tqsetUpdatesEnabled( false );
 
     // Do this even if size didn't change, since this is used by refreshMimeTypes...
     for ( TQIconViewItem *it = firstItem(); it; it = it->nextItem() ) {
@@ -673,7 +673,7 @@ void KonqIconViewWidget::setIcons( int size, const TQStringList& stopImagePrevie
     }
 
     // Restore viewport update to previous state
-    viewport()->setUpdatesEnabled( prevUpdatesState );
+    viewport()->tqsetUpdatesEnabled( prevUpdatesState );
 
     if ( ( sizeChanged || previewSizeChanged || oldGridX != gridX() ||
          !stopImagePreviewFor.isEmpty() ) && autoArrange() )

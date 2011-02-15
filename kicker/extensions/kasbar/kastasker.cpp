@@ -315,7 +315,7 @@ void KasTasker::moveToMain( KasGroupItem *gi, Task::Ptr t )
 void KasTasker::moveToMain( KasGroupItem *gi )
 {
    bool updates = isUpdatesEnabled();
-   setUpdatesEnabled( false );
+   tqsetUpdatesEnabled( false );
 
    int i = indexOf( gi );
 
@@ -327,7 +327,7 @@ void KasTasker::moveToMain( KasGroupItem *gi )
    gi->hidePopup();
    remove( gi );
 
-   setUpdatesEnabled( updates );
+   tqsetUpdatesEnabled( updates );
    updateLayout();
 }
 
@@ -346,7 +346,7 @@ void KasTasker::removeStartup( Startup::Ptr s )
 void KasTasker::refreshAll()
 {
    bool updates = isUpdatesEnabled();
-   setUpdatesEnabled( false );
+   tqsetUpdatesEnabled( false );
 
    clear();
 
@@ -365,7 +365,7 @@ void KasTasker::refreshAll()
       addTask( t.data() );
    }
 
-   setUpdatesEnabled( updates );
+   tqsetUpdatesEnabled( updates );
    updateLayout();
 }
 
@@ -572,7 +572,7 @@ void KasTasker::readConfig( KConfig *conf )
     }
 
     bool updates = isUpdatesEnabled();
-    setUpdatesEnabled( false );
+    tqsetUpdatesEnabled( false );
 
 
    //
@@ -653,7 +653,7 @@ void KasTasker::readConfig( KConfig *conf )
    //    fillActiveBg = conf->readBoolEntry( "FillActiveIconBackground", true );
    //    enablePopup = conf->readBoolEntry( "EnablePopup", true );
 
-   setUpdatesEnabled( updates );
+   tqsetUpdatesEnabled( updates );
    emit configChanged();
 }
 

@@ -1197,7 +1197,7 @@ void ObscuringWindows::create( Client* c )
 
 ObscuringWindows::~ObscuringWindows()
     {
-    max_cache_size = QMAX( max_cache_size, obscuring_windows.count() + 4 ) - 1;
+    max_cache_size = TQMAX( max_cache_size, obscuring_windows.count() + 4 ) - 1;
     for( TQValueList<Window>::ConstIterator it = obscuring_windows.begin();
          it != obscuring_windows.end();
          ++it ) 
@@ -1829,7 +1829,7 @@ void Workspace::slotGrabWindow()
                 }
             }
 
-        QClipboard *cb = TQApplication::clipboard();
+        TQClipboard *cb = TQApplication::tqclipboard();
         cb->setPixmap( snapshot );
         }
     else
@@ -1842,7 +1842,7 @@ void Workspace::slotGrabWindow()
 void Workspace::slotGrabDesktop()
     {
     TQPixmap p = TQPixmap::grabWindow( qt_xrootwin() );
-    QClipboard *cb = TQApplication::clipboard();
+    TQClipboard *cb = TQApplication::tqclipboard();
     cb->setPixmap( p );
     }
 

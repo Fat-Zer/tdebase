@@ -204,7 +204,7 @@ void ListView::rename( TQListViewItem* item, int c )
   if ( gui ) {
     if ( ! _regExpEditor )
       _regExpEditor = KParts::ComponentFactory::createInstanceFromQuery<TQDialog>( "KRegExpEditor/KRegExpEditor", TQString(), TQT_TQOBJECT(this) );
-    KRegExpEditorInterface *iface = static_cast<KRegExpEditorInterface *>( _regExpEditor->tqqt_cast( "KRegExpEditorInterface" ) );
+    KRegExpEditorInterface *iface = static_cast<KRegExpEditorInterface *>( _regExpEditor->qt_cast( "KRegExpEditorInterface" ) );
     assert( iface );
     iface->setRegExp( item->text( 0 ) );
 

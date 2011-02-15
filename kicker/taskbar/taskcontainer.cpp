@@ -233,9 +233,9 @@ void TaskContainer::setLastActivated()
 
 void TaskContainer::animationTimerFired()
 {
-    if (!frames.isEmpty() && taskBar->showIcon() && frames.at(currentFrame) != frames.end())
+    if (!frames.isEmpty() && taskBar->showIcon() && frames.tqat(currentFrame) != frames.end())
     {
-        TQPixmap *pm = *frames.at(currentFrame);
+        TQPixmap *pm = *frames.tqat(currentFrame);
 
         // draw pixmap
         if ( pm && !pm->isNull() ) {
@@ -586,9 +586,9 @@ void TaskContainer::drawButton(TQPainter *p)
     // draw button background
     if (drawButton)
     {
-        tqstyle().tqdrawPrimitive(TQStyle::PE_HeaderSection, p,
-                              TQRect(0, 0, width(), height()),
-                              colors);
+        tqstyle().tqdrawPrimitive(TQStyle::PE_ButtonTool, p,
+                              TQRect(1, 1, width()-2, height()-2),
+                              colors, sunken ? TQStyle::Style_Down : TQStyle::Style_Raised);
     }
 
     // shift button label on sunken buttons
@@ -684,11 +684,11 @@ void TaskContainer::drawButton(TQPainter *p)
             }
             else
             {
-                textPen = p->pen();
+                textPen = TQPen(colors.buttonText()); // textPen = p->pen();
             }
         }
 
-        int availableWidth = width() - (br.x() * 2) - textPos;
+        int availableWidth = width() - (br.x() * 2) - textPos - 2;
         if (m_filteredTasks.count() > 1)
         {
             availableWidth -= 8;
@@ -721,7 +721,12 @@ void TaskContainer::drawButton(TQPainter *p)
             TQImage img = pm->convertToImage();
             TQImage timg = tpm.convertToImage();
             KImageEffect::blend(img, timg, *taskBar->blendGradient(size()), KImageEffect::Red);
+
+            // End painting before assigning the pixmap
+            QPaintDevice* opd = p->device();
+            p->end();
             pm->convertFromImage(img);
+            p->tqbegin(opd ,this);
         }
         else
         {
@@ -739,9 +744,9 @@ void TaskContainer::drawButton(TQPainter *p)
         }
     }
 
-    if (!frames.isEmpty() && m_startup && frames.at(currentFrame) != frames.end())
+    if (!frames.isEmpty() && m_startup && frames.tqat(currentFrame) != frames.end())
     {
-        TQPixmap *anim = *frames.at(currentFrame);
+        TQPixmap *anim = *frames.tqat(currentFrame);
 
         if (anim && !anim->isNull())
         {
@@ -841,7 +846,7 @@ TQString TaskContainer::name()
         }
 
         // strip trailing crap
-        while (i > 0 && !match.at(i).isLetterOrNumber())
+        while (i > 0 && !match.tqat(i).isLetterOrNumber())
         {
             --i;
         }

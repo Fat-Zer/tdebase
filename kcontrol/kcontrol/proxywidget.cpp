@@ -256,7 +256,12 @@ ProxyWidget::ProxyWidget(KCModule *client, TQString title, const char *name,
 
 ProxyWidget::~ProxyWidget()
 {
-  delete _client;
+#ifdef USE_QT4
+  #warning Possible memory leak in ProxyWidget::~ProxyWidget()
+#else // USE_QT4
+  if (_client) delete _client;
+  _client = 0;
+#endif // USE_QT4
 }
 
 TQString ProxyWidget::quickHelp() const

@@ -241,7 +241,7 @@ void WorkSheet::cut()
   if ( !currentDisplay() || currentDisplay()->isA( "DummyDisplay" ) )
     return;
 
-  QClipboard* clip = TQApplication::clipboard();
+  TQClipboard* clip = TQApplication::tqclipboard();
 
   clip->setText( currentDisplayAsXML() );
 
@@ -253,7 +253,7 @@ void WorkSheet::copy()
   if ( !currentDisplay() || currentDisplay()->isA( "DummyDisplay" ) )
     return;
 
-  QClipboard* clip = TQApplication::clipboard();
+  TQClipboard* clip = TQApplication::tqclipboard();
 
   clip->setText( currentDisplayAsXML() );
 }
@@ -264,7 +264,7 @@ void WorkSheet::paste()
   if ( !currentDisplay( &row, &column ) )
     return;
 
-  QClipboard* clip = TQApplication::clipboard();
+  TQClipboard* clip = TQApplication::tqclipboard();
 
   TQDomDocument doc;
   /* Get text from clipboard and check for a valid XML header and

@@ -272,14 +272,14 @@ void KonqCombo::updateItem( const TQPixmap& pix, const TQString& t, int index, c
     listBox()->changeItem( item, index );
 
     /*
-    setUpdatesEnabled( false );
-    lineEdit()->setUpdatesEnabled( false );
+    tqsetUpdatesEnabled( false );
+    lineEdit()->tqsetUpdatesEnabled( false );
 
     removeItem( index );
     insertItem( pix, t, index );
 
-    setUpdatesEnabled( true );
-    lineEdit()->setUpdatesEnabled( true );
+    tqsetUpdatesEnabled( true );
+    lineEdit()->tqsetUpdatesEnabled( true );
     update();
     */
 }
@@ -301,12 +301,12 @@ void KonqCombo::updatePixmaps()
 {
     saveState();
 
-    setUpdatesEnabled( false );
+    tqsetUpdatesEnabled( false );
     KonqPixmapProvider *prov = KonqPixmapProvider::self();
     for ( int i = 1; i < count(); i++ ) {
         updateItem( prov->pixmapFor( text( i ) ), text( i ), i, titleOfURL( text( i ) ) );
     }
-    setUpdatesEnabled( true );
+    tqsetUpdatesEnabled( true );
     tqrepaint();
 
     restoreState();
@@ -521,15 +521,15 @@ void KonqCombo::slotRemoved( const TQString& item )
 
 void KonqCombo::removeURL( const TQString& url )
 {
-    setUpdatesEnabled( false );
-    lineEdit()->setUpdatesEnabled( false );
+    tqsetUpdatesEnabled( false );
+    lineEdit()->tqsetUpdatesEnabled( false );
 
     removeFromHistory( url );
     applyPermanent();
     setTemporary( currentText() );
 
-    setUpdatesEnabled( true );
-    lineEdit()->setUpdatesEnabled( true );
+    tqsetUpdatesEnabled( true );
+    lineEdit()->tqsetUpdatesEnabled( true );
     update();
 }
 

@@ -49,7 +49,7 @@ public:
     inline virtual const TQPixmap& image() const;
 
     /**
-     * Returns TQMimeSource suitable for QClipboard::setData().
+     * Returns TQMimeSource suitable for TQClipboard::setData().
      */
     virtual TQMimeSource* mimeSource() const = 0;
 

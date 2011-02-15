@@ -177,8 +177,8 @@ KdmLabel::drawContents( TQPainter *p, const TQRect &/*r*/  )
 	  TQFont f(l->font);
 	  f.setUnderline(true);
 	  p->setFont ( f );
-	  p->drawText( tarea, AlignLeft | SingleLine, TQString(cText.at(cAccel)));
-	  tarea.rLeft() += fm.width(cText.at(cAccel));
+	  p->drawText( tarea, AlignLeft | SingleLine, TQString(cText.tqat(cAccel)));
+	  tarea.rLeft() += fm.width(cText.tqat(cAccel));
 	  p->setFont( l->font );
 	  p->drawText( tarea, AlignLeft | SingleLine, right);
         } else {

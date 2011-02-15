@@ -1131,7 +1131,7 @@ void KMenu::fillMenu(KServiceGroup::Ptr&
             }
 
             // Ignore dotfiles.
-            if ((g->name().at(0) == '.'))
+            if ((g->name().tqat(0) == '.'))
             {
                 continue;
             }

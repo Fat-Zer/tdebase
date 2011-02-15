@@ -46,7 +46,7 @@
  In order to avoid transferring all the data on every time pulse, this file implements two
  optimizations: The first one is checking whether the selection owner is Qt application (using
  the _QT_SELECTION/CLIPBOARD_SENTINEL atoms on the root window of screen 0), and if yes,
- Klipper can rely on QClipboard's signals. If the owner is not Qt app, and the ownership has changed,
+ Klipper can rely on TQClipboard's signals. If the owner is not Qt app, and the ownership has changed,
  it means the selection has changed as well. Otherwise, first only the timestamp
  of the last selection change is requested using the TIMESTAMP selection target, and if it's
  the same, it's assumed the contents haven't changed. Note that some applications (like XEmacs) does
@@ -111,8 +111,8 @@ ClipboardPoll::ClipboardPoll( TQWidget* parent )
     
 void ClipboardPoll::initPolling()
 {
-    connect( kapp->clipboard(), TQT_SIGNAL( selectionChanged() ), TQT_SLOT(qtSelectionChanged()));
-    connect( kapp->clipboard(), TQT_SIGNAL( dataChanged() ), TQT_SLOT( qtClipboardChanged() ));
+    connect( kapp->tqclipboard(), TQT_SIGNAL( selectionChanged() ), TQT_SLOT(qtSelectionChanged()));
+    connect( kapp->tqclipboard(), TQT_SIGNAL( dataChanged() ), TQT_SLOT( qtClipboardChanged() ));
     connect( &timer, TQT_SIGNAL( timeout()), TQT_SLOT( timeout()));
     timer.start( 1000, false );
     selection.atom = XA_PRIMARY;
@@ -149,7 +149,7 @@ bool ClipboardPoll::x11Event( XEvent* e )
     if( xfixes_event_base != -1 && e->type == xfixes_event_base + XFixesSelectionNotify )
     {
         XFixesSelectionNotifyEvent* ev = reinterpret_cast< XFixesSelectionNotifyEvent* >( e );
-        if( ev->selection == XA_PRIMARY && !kapp->clipboard()->ownsSelection())
+        if( ev->selection == XA_PRIMARY && !kapp->tqclipboard()->ownsSelection())
         {
 #ifdef NOISY_KLIPPER_
             kdDebug() << "SELECTION CHANGED (XFIXES)" << endl;
@@ -157,7 +157,7 @@ bool ClipboardPoll::x11Event( XEvent* e )
             qt_x_time = ev->timestamp;
             emit clipboardChanged( true );
         }
-        else if( ev->selection == xa_clipboard && !kapp->clipboard()->ownsClipboard())
+        else if( ev->selection == xa_clipboard && !kapp->tqclipboard()->ownsClipboard())
         {
 #ifdef NOISY_KLIPPER_
             kdDebug() << "CLIPBOARD CHANGED (XFIXES)" << endl;
@@ -220,13 +220,13 @@ void ClipboardPoll::updateQtOwnership( SelectionData& data )
 void ClipboardPoll::timeout()
 {
     KlipperWidget::updateTimestamp();
-    if( !kapp->clipboard()->ownsSelection() && checkTimestamp( selection ) ) {
+    if( !kapp->tqclipboard()->ownsSelection() && checkTimestamp( selection ) ) {
 #ifdef NOISY_KLIPPER_
         kdDebug() << "SELECTION CHANGED" << endl;
 #endif
         emit clipboardChanged( true );
     }
-    if( !kapp->clipboard()->ownsClipboard() && checkTimestamp( clipboard ) ) {
+    if( !kapp->tqclipboard()->ownsClipboard() && checkTimestamp( clipboard ) ) {
 #ifdef NOISY_KLIPPER_
         kdDebug() << "CLIPBOARD CHANGED" << endl;
 #endif

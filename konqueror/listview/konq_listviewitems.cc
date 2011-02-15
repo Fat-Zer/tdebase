@@ -234,7 +234,7 @@ const TQPixmap* KonqListViewItem::pixmap( int column ) const
    if ((int)m_pixmaps.count() <= column)
       return 0;
 
-   TQPixmap *pm = m_pixmaps.at( column, &ok );
+   TQPixmap *pm = m_pixmaps.tqat( column, &ok );
    if( !ok )
       return 0;
    return pm;

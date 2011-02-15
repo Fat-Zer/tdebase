@@ -80,6 +80,7 @@ class KonqBaseListViewWidget : public KListView
    friend class ListViewBrowserExtension;
 
    Q_OBJECT
+   TQ_OBJECT
 public:
    KonqBaseListViewWidget( KonqListView *parent, TQWidget *tqparentWidget );
    virtual ~KonqBaseListViewWidget();
@@ -161,7 +162,7 @@ public slots:
 protected slots:
    void slotAutoScroll();
 
-   // from QListView
+   // from TQListView
    virtual void slotReturnPressed( TQListViewItem *_item );
    virtual void slotCurrentChanged( TQListViewItem *_item ) { slotOnItem( _item ); }
 

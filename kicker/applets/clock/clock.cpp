@@ -364,9 +364,9 @@ void DigitalClock::updateClock()
     if (_force || newStr != _timeStr)
     {
         _timeStr = newStr;
-        setUpdatesEnabled( FALSE );
+        tqsetUpdatesEnabled( FALSE );
         display(_timeStr);
-        setUpdatesEnabled( TRUE );
+        tqsetUpdatesEnabled( TRUE );
         update();
     }
     
@@ -426,7 +426,7 @@ void DigitalClock::paintEvent(TQPaintEvent*)
 // but other colors would break the lcd-lock anyway
 void DigitalClock::drawContents( TQPainter * p)
 {
-    setUpdatesEnabled( FALSE );
+    tqsetUpdatesEnabled( FALSE );
     TQPalette pal = palette();
     if (_prefs->digitalLCDStyle())
         pal.setColor( TQColorGroup::Foreground, TQColor(128,128,128));
@@ -441,7 +441,7 @@ void DigitalClock::drawContents( TQPainter * p)
         pal.setColor( TQColorGroup::Foreground, _prefs->digitalForegroundColor());
     setPalette( pal );
     p->translate( -2, -2 );
-    setUpdatesEnabled( TRUE );
+    tqsetUpdatesEnabled( TRUE );
     TQLCDNumber::drawContents( p );
     p->translate( +1, +1 );
 }
@@ -1031,7 +1031,7 @@ int ClockApplet::widthForHeight(int h) const
                 // if the date format STARTS with a year, assume it's in descending
                 // order and should therefore PRECEED the date.
                 TQString dateFormat = KGlobal::locale()->dateFormatShort();
-                dateFirst = dateFormat.at(1) == 'y' || dateFormat.at(1) == 'Y';
+                dateFirst = dateFormat.tqat(1) == 'y' || dateFormat.tqat(1) == 'Y';
             }
 
             if (dateFirst)
@@ -1616,7 +1616,7 @@ void ClockApplet::slotCopyMenuActivated( int id )
 {
     TQPopupMenu *m = (TQPopupMenu *) sender();
     TQString s = m->text(id);
-    TQApplication::clipboard()->setText(s);
+    TQApplication::tqclipboard()->setText(s);
 }
 
 TQTime ClockApplet::clockGetTime()

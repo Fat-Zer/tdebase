@@ -413,9 +413,9 @@ void KonqSidebarBookmarkModule::slotCopyLocation()
     if ( !bookmark.isGroup() )
     {
         kapp->tqclipboard()->setData( KBookmarkDrag::newDrag(bookmark, 0),
-                                    QClipboard::Selection );
+                                    TQClipboard::Selection );
         kapp->tqclipboard()->setData( KBookmarkDrag::newDrag(bookmark, 0),
-                                    QClipboard::Clipboard );
+                                    TQClipboard::Clipboard );
     }
 }
 
@@ -490,7 +490,7 @@ void KonqSidebarBookmarkModule::fillGroup( KonqSidebarTreeItem * parentItem, KBo
                     item->setOpen(false);
             }
             else if ( bk.isSeparator() )
-                item->setVisible( false );
+                item->tqsetVisible( false );
             else
                 item->setExpandable( false );
     }

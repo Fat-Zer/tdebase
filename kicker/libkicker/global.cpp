@@ -470,9 +470,8 @@ void drawBlendedRect(TQPainter *p, const TQRect &r, const TQColor &color, int al
     if (pix.isNull() || last_color != color || last_alpha != alpha)
     {
         TQImage img(16, 16, 32);
-        img.setAlphaBuffer(false);
-        img.fill(((uint)(alpha & 0xFF) << 24) | (color.rgb() & 0xFFFFFF));
         img.setAlphaBuffer(true);
+        img.fill(((uint)(alpha & 0xFF) << 24) | (color.rgb() & 0xFFFFFF));
         pix.convertFromImage(img);
         last_color = color;
         last_alpha = alpha;

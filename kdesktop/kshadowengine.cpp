@@ -84,8 +84,8 @@ TQImage KShadowEngine::makeShadow(const TQPixmap& textPixmap, const TQColor &bgC
     result.create(w, h, 32);
   }
 
-  result.fill(0); // all black
   result.setAlphaBuffer(true);
+  result.fill(0); // all black
 
   for (int i = thick; i < w - thick; i++)
   {

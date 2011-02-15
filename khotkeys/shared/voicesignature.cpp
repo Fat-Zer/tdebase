@@ -210,7 +210,7 @@ TQMemArray<double> VoiceSignature::fft(const Sound& sound, unsigned int start, u
 
 		for(uint x=start; x<stop; x++)
 		{
-			Complex s(sound.at(x));
+			Complex s(sound.tqat(x));
 			double angle=-2*PI*f*x/8000;
 			s*= Complex( cos(angle) , sin(angle) );
 			c+=s;
@@ -228,7 +228,7 @@ bool VoiceSignature::window(const Sound& sound, unsigned int *_start, unsigned i
 	if(length < unit ) 
 		return false;
 
-	//Fenêtrage
+	//Fenï¿½trage
 	unsigned int start=0 , stop=0;
 	double moy=0;
 	for(uint x=0;x<unit;x++)

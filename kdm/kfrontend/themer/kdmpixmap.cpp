@@ -128,7 +128,7 @@ KdmPixmap::fullPath( const TQString &fileName)
 		return TQString::null;
 
 	TQString fullName = fileName;
-	if (fullName.at( 0 ) != '/')
+	if (fullName.tqat( 0 ) != '/')
 		fullName = baseDir() + "/" + fileName;
 	return fullName;
 }

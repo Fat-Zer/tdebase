@@ -44,6 +44,7 @@ class TEWidget : public TQFrame
 // a widget representing attributed text
 {
    Q_OBJECT
+   TQ_OBJECT
 
   friend class Konsole;
 public:
@@ -165,7 +166,7 @@ signals:
     void endSelectionSignal(const bool preserve_line_breaks);
     void isBusySelecting(bool);
     void testIsSelected(const int x, const int y, bool &selected /* result */);
-  void sendStringToEmu(const char*);
+    void sendStringToEmu(const char*);
 
 protected:
 
@@ -265,7 +266,7 @@ private:
     bool    preserve_line_breaks;
     bool    column_selection_mode;
 
-    QClipboard*    cb;
+    TQClipboard*    cb;
     TQScrollBar* scrollbar;
     int         scrollLoc;
     TQString     word_characters;

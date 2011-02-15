@@ -48,9 +48,9 @@ KonqBgndDialog::KonqBgndDialog( TQWidget* parent,
 
     m_buttonGroup = new TQButtonGroup( i18n("Background"), page );
     m_buttonGroup->setColumnLayout( 0, Qt::Vertical );
-    m_buttonGroup->layout()->setMargin( KDialog::marginHint() );
-    m_buttonGroup->layout()->setSpacing( KDialog::spacingHint() );
-    TQGridLayout* groupLayout = new TQGridLayout( m_buttonGroup->layout() );
+    m_buttonGroup->tqlayout()->setMargin( KDialog::marginHint() );
+    m_buttonGroup->tqlayout()->setSpacing( KDialog::spacingHint() );
+    TQGridLayout* groupLayout = new TQGridLayout( m_buttonGroup->tqlayout() );
     groupLayout->tqsetAlignment( Qt::AlignTop );
     mainLayout->addWidget( m_buttonGroup );
 
@@ -142,7 +142,7 @@ void KonqBgndDialog::initPictures()
         TQStringList::ConstIterator it;
         for ( it = list.begin(); it != list.end(); it++ )
             m_comboPicture->comboBox()->insertItem(
-                ( (*it).at(0) == '/' ) ?    // if absolute path
+                ( (*it).tqat(0) == '/' ) ?    // if absolute path
                 KURL( *it ).fileName() :  // then only fileName
                 *it );
     }

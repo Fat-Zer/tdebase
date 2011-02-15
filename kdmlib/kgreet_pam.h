@@ -64,7 +64,7 @@ class KPamGreeter : public TQObject, public KGreeterPlugin {
 	virtual void revive();
 	virtual void clear();
 
-        TQGridLayout *getLayoutItem() const { return TQT_TQGRIDLAYOUT(static_cast<QLayoutItem*>(layoutItem)); }
+        TQGridLayout *getLayoutItem() const { return static_cast<TQGridLayout*>(TQT_TQLAYOUT(static_cast<QLayoutItem*>(layoutItem))); }
 
   public slots:
 	void slotLoginLostFocus();

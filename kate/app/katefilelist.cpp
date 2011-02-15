@@ -272,8 +272,8 @@ void KateFileList::slotModChanged (Kate::Document *doc)
 
     for ( uint i=0; i <  m_editHistory.count(); i++ )
     {
-      m_editHistory.at( i )->setEditHistPos( i+1 );
-      tqrepaintItem(  m_editHistory.at( i ) );
+      m_editHistory.tqat( i )->setEditHistPos( i+1 );
+      tqrepaintItem(  m_editHistory.tqat( i ) );
     }
   }
   else
@@ -342,8 +342,8 @@ void KateFileList::slotViewChanged ()
 
   for ( uint i=0; i <  m_viewHistory.count(); i++ )
   {
-    m_viewHistory.at( i )->setViewHistPos( i+1 );
-    tqrepaintItem(  m_viewHistory.at( i ) );
+    m_viewHistory.tqat( i )->setViewHistPos( i+1 );
+    tqrepaintItem(  m_viewHistory.tqat( i ) );
   }
 
 }

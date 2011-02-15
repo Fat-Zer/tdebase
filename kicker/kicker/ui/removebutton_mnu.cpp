@@ -95,9 +95,9 @@ void PanelRemoveButtonMenu::slotAboutToShow()
 
 void PanelRemoveButtonMenu::slotExec( int id )
 {
-    if (containers.at(id) != containers.end())
+    if (containers.tqat(id) != containers.end())
     {
-        containerArea->removeContainer(*containers.at(id));
+        containerArea->removeContainer(*containers.tqat(id));
     }
 }
 

@@ -392,7 +392,7 @@ void TEmulation::clearSelection() {
 void TEmulation::copySelection() {
   if (!connected) return;
   TQString t = scr->getSelText(true);
-  TQApplication::clipboard()->setText(t);
+  TQApplication::tqclipboard()->setText(t);
 }
 
 TQString TEmulation::getSelection() {

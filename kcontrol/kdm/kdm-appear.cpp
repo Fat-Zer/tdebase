@@ -216,7 +216,7 @@ KDMAppearanceWidget::KDMAppearanceWidget(TQWidget *parent, const char *name)
   loadLanguageList(langcombo);
   connect(langcombo, TQT_SIGNAL(activated(const TQString &)), TQT_SLOT(changed()));
   label = new TQLabel(langcombo, i18n("Languag&e:"), group);
-  TQGridLayout *hbox = new TQGridLayout( group->layout(), 2, 2, KDialog::spacingHint() );
+  TQGridLayout *hbox = new TQGridLayout( group->tqlayout(), 2, 2, KDialog::spacingHint() );
   hbox->setColStretch(1, 1);
   hbox->addWidget(label, 1, 0);
   hbox->addWidget(langcombo, 1, 1);

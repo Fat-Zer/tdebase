@@ -577,7 +577,7 @@ void konsolePart::readProperties()
   s_kconfigSchema=config->readEntry("schema");
   ColorSchema* sch = colors->find(schema.isEmpty() ? s_kconfigSchema : schema);
   if (!sch) {
-    sch=(ColorSchema*)colors->at(0);  //the default one
+    sch=(ColorSchema*)colors->tqat(0);  //the default one
   }
   if (sch->hasSchemaFileChanged()) sch->rereadSchemaFile();
   s_schema = sch->relPath();
@@ -731,7 +731,7 @@ void konsolePart::updateSchemaMenu()
 
   m_schema->clear();
   for (int i = 0; i < (int) colors->count(); i++)  {
-    ColorSchema* s = (ColorSchema*)colors->at(i);
+    ColorSchema* s = (ColorSchema*)colors->tqat(i);
     TQString title=s->title();
     m_schema->insertItem(title.tqreplace('&',"&&"),s->numb(),0);
   }
@@ -746,7 +746,7 @@ void konsolePart::setSchema(int numb)
   ColorSchema* s = colors->find(numb);
   if (!s) {
     kdWarning() << "No schema found. Using default." << endl;
-    s=(ColorSchema*)colors->at(0);
+    s=(ColorSchema*)colors->tqat(0);
   }
   if (s->numb() != numb)  {
     kdWarning() << "No schema with number " << numb << endl;

@@ -120,7 +120,7 @@ public:
    void remove( KasItem *i );
    void clear();
    KasItem *take( KasItem *i ) { return items.take( indexOf(i) ); }
-   KasItem *itemAt( uint i ) { return items.at( i ); }
+   KasItem *itemAt( uint i ) { return items.tqat( i ); }
    int indexOf( KasItem *i ) { return items.tqfind( i ); }
 
    KasItemList *itemList() { return &items; }
@@ -251,7 +251,7 @@ signals:
    void directionChanged();
 
    /** Emitted when kasbar wants to resize. This happens when a new window is added. */
-   void layoutChanged();
+   void tqlayoutChanged();
 
    /** Emitted when the item size is changed. */
    void itemSizeChanged( int );

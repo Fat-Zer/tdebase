@@ -28,9 +28,10 @@
 class KDirLister;
 class KFileIVI;
 
-class LIBKONQ_EXPORT KIVDirectoryOverlay : public QObject
+class LIBKONQ_EXPORT KIVDirectoryOverlay : public TQObject
 {
     Q_OBJECT
+    TQ_OBJECT
 public:
     KIVDirectoryOverlay(KFileIVI* directory);
     virtual ~KIVDirectoryOverlay();

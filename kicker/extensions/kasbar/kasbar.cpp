@@ -414,7 +414,7 @@ void KasBar::updateLayout()
     if ( !isUpdatesEnabled() )
 	return;
     bool updates = isUpdatesEnabled();
-    setUpdatesEnabled( false );
+    tqsetUpdatesEnabled( false );
 
 // This is for testing a rectangular layout
 //    boxesPerLine_ = (uint) ceil(sqrt( items.count() ));
@@ -443,7 +443,7 @@ void KasBar::updateLayout()
        resize( sz );
    }
 
-   setUpdatesEnabled( updates );
+   tqsetUpdatesEnabled( updates );
 
    TQWidget *top = tqtopLevelWidget();
    TQRegion mask;
@@ -451,24 +451,24 @@ void KasBar::updateLayout()
    KasItem *i;
    if ( orient == Qt::Horizontal ) {
        for ( i = items.first(); i; i = items.next() ) {
-	   int x = (items.at() % c) * itemExtent();
+	   int x = (items.tqat() % c) * itemExtent();
 
 	   if ( direction_ == TQBoxLayout::RightToLeft )
 	       x = width() - x - itemExtent();
 
-	   i->setPos( x, (items.at() / c) * itemExtent() );
+	   i->setPos( x, (items.tqat() / c) * itemExtent() );
 	   i->update();
 	   mask = mask.unite( TQRegion( TQRect( i->pos(), TQSize(itemExtent(),itemExtent()) ) ) );
        }
    }
    else {
        for ( i = items.first(); i; i = items.next() ) {
-	   int y = (items.at() / r) * itemExtent();
+	   int y = (items.tqat() / r) * itemExtent();
 
 	   if ( direction_ == TQBoxLayout::BottomToTop )
 	       y = height() - y - itemExtent();
 
-	   i->setPos( (items.at() % r) * itemExtent(), y );
+	   i->setPos( (items.tqat() % r) * itemExtent(), y );
 	   i->update();
 	   mask = mask.unite( TQRegion( TQRect( i->pos(), TQSize(itemExtent(),itemExtent()) ) ) );
        }
@@ -622,7 +622,7 @@ void KasBar::resizeEvent(TQResizeEvent *ev)
     TQPainter p( &offscreen );
     paintBackground( &p, TQRect(TQPoint(0,0),size()) );
     TQWidget::resizeEvent(ev);
-    emit layoutChanged();
+    emit tqlayoutChanged();
 }
 
 

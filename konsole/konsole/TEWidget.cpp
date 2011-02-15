@@ -389,7 +389,7 @@ TEWidget::TEWidget(TQWidget *parent, const char *name)
   // konsole in opaque mode.
   bY = bX = 1;
 
-  cb = TQApplication::clipboard();
+  cb = TQApplication::tqclipboard();
   TQObject::connect( (TQObject*)cb, TQT_SIGNAL(selectionChanged()),
                     this, TQT_SLOT(onClearSelection()) );
 
@@ -562,7 +562,7 @@ void TEWidget::drawTextFixed(TQPainter &paint, int x, int y,
   int w;
   for(unsigned int i=0;i<str.length();i++)
   {
-    drawstr = str.at(i);
+    drawstr = str.tqat(i);
     // Add double of the width if next c is 0;
     if ((attr+nc+1)->c) // This may access image[image_size] See makeImage()
     {
@@ -615,8 +615,13 @@ void TEWidget::drawAttrStr(TQPainter &paint, TQRect rect,
     {
       if (pm)
         paint.setBackgroundMode( Qt::TransparentMode );
-      if (clear || (blinking && (attr->r & RE_BLINK)))
+      if (clear || (blinking && (attr->r & RE_BLINK))) {
+#ifdef USE_QT4
+        paint.eraseRect(rect);
+#else // USE_QT4
         erase(rect);
+#endif // USE_QT4
+      }
     }
     else
     {
@@ -807,7 +812,7 @@ void TEWidget::setImage(const ca* const newimg, int lines, int columns)
   int y,x,len;
   const TQPixmap* pm = backgroundPixmap();
   TQPainter paint;
-  setUpdatesEnabled(false);
+  tqsetUpdatesEnabled(false);
   paint.begin( this );
 
   TQPoint tL  = contentsRect().topLeft();
@@ -919,7 +924,7 @@ void TEWidget::setImage(const ca* const newimg, int lines, int columns)
   }
   drawFrame( &paint );
   paint.end();
-  setUpdatesEnabled(true);
+  tqsetUpdatesEnabled(true);
   if ( hasBlinker && !blinkT->isActive()) blinkT->start(1000); // 1000 ms
   if (!hasBlinker && blinkT->isActive()) { blinkT->stop(); blinking = false; }
   free(dirtyMask);
@@ -986,7 +991,7 @@ void TEWidget::paintEvent( TQPaintEvent* pe )
 {
   const TQPixmap* pm = backgroundPixmap();
   TQPainter paint;
-  setUpdatesEnabled(false);
+  tqsetUpdatesEnabled(false);
   paint.begin( this );
   paint.setBackgroundMode( Qt::TransparentMode );
 
@@ -1044,7 +1049,7 @@ void TEWidget::paintEvent( TQPaintEvent* pe )
   erase( er );
 
   paint.end();
-  setUpdatesEnabled(true);
+  tqsetUpdatesEnabled(true);
 }
 
 void TEWidget::print(TQPainter &paint, bool friendly, bool exact)
@@ -2261,7 +2266,7 @@ void TEWidget::dropEvent(TQDropEvent* event)
 void TEWidget::doDrag()
 {
   dragInfo.state = diDragging;
-  dragInfo.dragObject = new TQTextDrag(TQApplication::clipboard()->text(QClipboard::Selection), this);
+  dragInfo.dragObject = new TQTextDrag(TQApplication::tqclipboard()->text(TQClipboard::Selection), this);
   dragInfo.dragObject->dragCopy();
   // Don't delete the TQTextDrag object.  Qt will delete it when it's done with it.
 }

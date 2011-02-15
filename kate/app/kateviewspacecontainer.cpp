@@ -277,7 +277,7 @@ void KateViewSpaceContainer::activateView ( Kate::View *view )
     setActiveView (view);
     m_viewList.tqfindRef (view);
 
-    mainWindow()->toolBar ()->setUpdatesEnabled (false);
+    mainWindow()->toolBar ()->tqsetUpdatesEnabled (false);
 
     if (m_viewManager->guiMergedView)
       mainWindow()->guiFactory()->removeClient (m_viewManager->guiMergedView );
@@ -287,7 +287,7 @@ void KateViewSpaceContainer::activateView ( Kate::View *view )
     if (!m_blockViewCreationAndActivation)
       mainWindow()->guiFactory ()->addClient( view );
 
-    mainWindow()->toolBar ()->setUpdatesEnabled (true);
+    mainWindow()->toolBar ()->tqsetUpdatesEnabled (true);
 
     statusMsg();
 
@@ -342,8 +342,8 @@ void KateViewSpaceContainer::activateNextView()
   if (i >= m_viewSpaceList.count())
     i=0;
 
-  setActiveSpace (m_viewSpaceList.at(i));
-  activateView(m_viewSpaceList.at(i)->currentView());
+  setActiveSpace (m_viewSpaceList.tqat(i));
+  activateView(m_viewSpaceList.tqat(i)->currentView());
 }
 
 void KateViewSpaceContainer::activatePrevView()
@@ -353,8 +353,8 @@ void KateViewSpaceContainer::activatePrevView()
   if (i < 0)
     i=m_viewSpaceList.count()-1;
 
-  setActiveSpace (m_viewSpaceList.at(i));
-  activateView(m_viewSpaceList.at(i)->currentView());
+  setActiveSpace (m_viewSpaceList.tqat(i));
+  activateView(m_viewSpaceList.tqat(i)->currentView());
 }
 
 void KateViewSpaceContainer::closeViews(uint documentNumber)
@@ -363,7 +363,7 @@ void KateViewSpaceContainer::closeViews(uint documentNumber)
 
     for (uint z=0 ; z < m_viewList.count(); z++)
     {
-      Kate::View* current = m_viewList.at(z);
+      Kate::View* current = m_viewList.tqat(z);
       if ( current->getDoc()->documentNumber() == documentNumber )
       {
         closeList.append (current);
@@ -450,7 +450,7 @@ void KateViewSpaceContainer::splitViewSpace( KateViewSpace* vs,
 
   TQValueList<int> psizes;
   if ( ! isFirstTime )
-    if ( TQSplitter *ps = static_cast<TQSplitter*>(vs->tqparentWidget()->tqqt_cast("TQSplitter")) )
+    if ( TQSplitter *ps = static_cast<TQSplitter*>(vs->tqparentWidget()->qt_cast("TQSplitter")) )
       psizes = ps->sizes();
 
   Qt::Orientation o = isHoriz ? Qt::Vertical : Qt::Horizontal;
@@ -471,7 +471,7 @@ void KateViewSpaceContainer::splitViewSpace( KateViewSpace* vs,
     s->moveToFirst( vsNew );
 
   if (!isFirstTime)
-    if (TQSplitter *ps = static_cast<TQSplitter*>(s->tqparentWidget()->tqqt_cast("TQSplitter")) )
+    if (TQSplitter *ps = static_cast<TQSplitter*>(s->tqparentWidget()->qt_cast("TQSplitter")) )
       ps->setSizes( psizes );
 
   s->show();
@@ -644,7 +644,7 @@ void KateViewSpaceContainer::restoreViewConfiguration (KConfig *config, const TQ
   {
     // send all views + their gui to **** ;)
     for (uint i=0; i < m_viewList.count(); i++)
-      mainWindow()->guiFactory ()->removeClient (m_viewList.at(i));
+      mainWindow()->guiFactory ()->removeClient (m_viewList.tqat(i));
 
     m_viewList.clear ();
 
@@ -658,7 +658,7 @@ void KateViewSpaceContainer::restoreViewConfiguration (KConfig *config, const TQ
   // finally, make the correct view active.
   config->setGroup (group);
 /*
-  KateViewSpace *vs = m_viewSpaceList.at( config->readNumEntry("Active ViewSpace") );
+  KateViewSpace *vs = m_viewSpaceList.tqat( config->readNumEntry("Active ViewSpace") );
   if ( vs )
     activateSpace( vs->currentView() );
   */

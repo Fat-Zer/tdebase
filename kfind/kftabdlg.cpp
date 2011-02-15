@@ -498,7 +498,7 @@ void KfindTabWidget::slotEditRegExp()
   if ( ! regExpDialog )
     regExpDialog = KParts::ComponentFactory::createInstanceFromQuery<TQDialog>( "KRegExpEditor/KRegExpEditor", TQString(), TQT_TQOBJECT(this) );
 
-  KRegExpEditorInterface *iface = static_cast<KRegExpEditorInterface *>( regExpDialog->tqqt_cast( "KRegExpEditorInterface" ) );
+  KRegExpEditorInterface *iface = static_cast<KRegExpEditorInterface *>( regExpDialog->qt_cast( "KRegExpEditorInterface" ) );
   if ( !iface )
        return;
 

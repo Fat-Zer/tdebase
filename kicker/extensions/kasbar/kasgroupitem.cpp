@@ -83,8 +83,8 @@ KasGroupItem::KasGroupItem( KasTasker *parent )
     setGroupItem( true );
     setText( i18n("Group") );
 
-    connect( parent, TQT_SIGNAL( layoutChanged() ), this, TQT_SLOT( hidePopup() ) );
-    connect( parent, TQT_SIGNAL( layoutChanged() ), this, TQT_SLOT( update() ) );
+    connect( parent, TQT_SIGNAL( tqlayoutChanged() ), this, TQT_SLOT( hidePopup() ) );
+    connect( parent, TQT_SIGNAL( tqlayoutChanged() ), this, TQT_SLOT( update() ) );
     connect( this, TQT_SIGNAL(leftButtonClicked(TQMouseEvent *)), TQT_SLOT(togglePopup()) );
     connect( this, TQT_SIGNAL(rightButtonClicked(TQMouseEvent *)), TQT_SLOT(showGroupMenuAt(TQMouseEvent *) ) );
 }
@@ -213,7 +213,7 @@ void KasGroupItem::paint( TQPainter *p )
     int ypos = 16;
 
     for ( int i = 0; ( i < (int) items.count() ) && ( i < microsPerCol ); i++ ) {
-	Task::Ptr t = items.at( i );
+	Task::Ptr t = items.tqat( i );
 
 	if( t->isIconified() )
 	    p->drawPixmap( xpos, ypos, res->microMinIcon() );

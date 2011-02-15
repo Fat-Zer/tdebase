@@ -698,8 +698,8 @@ void KlipperWidget::slotClearClipboard()
 {
     Ignore lock( locklevel );
 
-    clip->clear(QClipboard::Selection);
-    clip->clear(QClipboard::Clipboard);
+    clip->clear(TQClipboard::Selection);
+    clip->clear(TQClipboard::Clipboard);
 
 
 }
@@ -712,11 +712,11 @@ TQString KlipperWidget::clipboardContents( bool * /*isSelection*/ )
 
 #if 0
     bool selection = true;
-    TQMimeSource* data = clip->data(QClipboard::Selection);
+    TQMimeSource* data = clip->data(TQClipboard::Selection);
 
     if ( data->serialNumber() == m_lastSelection )
     {
-        TQString clipContents = clip->text(QClipboard::Clipboard);
+        TQString clipContents = clip->text(TQClipboard::Clipboard);
         if ( clipContents != m_lastClipboard )
         {
             contents = clipContents;
@@ -845,7 +845,7 @@ void KlipperWidget::checkClipData( bool selectionMode )
     kdDebug() << "\nselectionMode=" << selectionMode
               << "\nserialNo=" << clip->data()->serialNumber() << " (sel,cli)=(" << m_lastSelection << "," << m_lastClipboard << ")"
               << "\nowning (sel,cli)=(" << clip->ownsSelection() << "," << clip->ownsClipboard() << ")"
-              << "\ntext=" << clip->text( selectionMode ? QClipboard::Selection : QClipboard::Clipboard) << endl;
+              << "\ntext=" << clip->text( selectionMode ? TQClipboard::Selection : TQClipboard::Clipboard) << endl;
 
 #endif
 #if 0
@@ -963,14 +963,14 @@ void KlipperWidget::setClipboard( const HistoryItem& item, int mode )
 #ifdef NOSIY_KLIPPER
         kdDebug() << "Setting selection to <" << item.text() << ">" << endl;
 #endif
-        clip->setData( item.mimeSource(), QClipboard::Selection );
+        clip->setData( item.mimeSource(), TQClipboard::Selection );
         m_lastSelection = clip->data()->serialNumber();
     }
     if ( mode & Clipboard ) {
 #ifdef NOSIY_KLIPPER
         kdDebug() << "Setting clipboard to <" << item.text() << ">" << endl;
 #endif
-        clip->setData( item.mimeSource(), QClipboard::Clipboard );
+        clip->setData( item.mimeSource(), TQClipboard::Clipboard );
         m_lastClipboard = clip->data()->serialNumber();
     }
 
@@ -1028,10 +1028,10 @@ bool KlipperWidget::ignoreClipboardChanges() const
     return false;
 }
 
-// QClipboard uses qt_x_time as the timestamp for selection operations.
+// TQClipboard uses qt_x_time as the timestamp for selection operations.
 // It is updated mainly from user actions, but Klipper polls the clipboard
 // without any user action triggering it, so qt_x_time may be old,
-// which could possibly lead to QClipboard reporting empty clipboard.
+// which could possibly lead to TQClipboard reporting empty clipboard.
 // Therefore, qt_x_time needs to be updated to current X server timestamp.
 
 // Call KApplication::updateUserTime() only from functions that are

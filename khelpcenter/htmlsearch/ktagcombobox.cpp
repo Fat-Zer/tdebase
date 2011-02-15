@@ -211,7 +211,7 @@ bool KTagComboBox::containsTag( const TQString &str ) const
 
 TQString KTagComboBox::currentTag() const
 {
-  return *tags->at(currentItem());
+  return *tags->tqat(currentItem());
 }
 
 TQString KTagComboBox::tag(int i) const
@@ -221,7 +221,7 @@ TQString KTagComboBox::tag(int i) const
     kdDebug() << "KTagComboBox::tag(), unknown tag " << i << endl;
     return TQString::null;
   }
-  return *tags->at(i);
+  return *tags->tqat(i);
 }
 
 int KTagComboBox::currentItem() const

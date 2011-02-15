@@ -541,7 +541,7 @@ void KonqOperations::doFileCopy()
               linkOnly )
     {
         // Neither control nor shift are pressed => show popup menu
-        KonqIconViewWidget *iconView = dynamic_cast<KonqIconViewWidget*>(parent());
+        KonqIconViewWidget *iconView = tqt_dynamic_cast<KonqIconViewWidget*>(parent());
         bool bSetWallpaper = false;
         if ( iconView && iconView->maySetWallpaper() && lst.count() == 1 )
 	{
@@ -658,8 +658,8 @@ void KonqOperations::setOperation( KIO::Job * job, int method, const KURL::List 
     {
         connect( job, TQT_SIGNAL( result( KIO::Job * ) ),
                  TQT_SLOT( slotResult( KIO::Job * ) ) );
-        KIO::CopyJob *copyJob = dynamic_cast<KIO::CopyJob*>(job);
-        KonqIconViewWidget *iconView = dynamic_cast<KonqIconViewWidget*>(parent());
+        KIO::CopyJob *copyJob = tqt_dynamic_cast<KIO::CopyJob*>(job);
+        KonqIconViewWidget *iconView = tqt_dynamic_cast<KonqIconViewWidget*>(parent());
         if (copyJob && iconView)
         {
             connect(copyJob, TQT_SIGNAL(aboutToCreate(KIO::Job *,const TQValueList<KIO::CopyInfo> &)),

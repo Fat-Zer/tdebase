@@ -3495,7 +3495,7 @@ bool KonqMainWindow::eventFilter(TQObject*obj,TQEvent *ev)
       connect( m_paCut, TQT_SIGNAL( activated() ), m_combo->lineEdit(), TQT_SLOT( cut() ) );
       connect( m_paCopy, TQT_SIGNAL( activated() ), m_combo->lineEdit(), TQT_SLOT( copy() ) );
       connect( m_paPaste, TQT_SIGNAL( activated() ), m_combo->lineEdit(), TQT_SLOT( paste() ) );
-      connect( TQApplication::clipboard(), TQT_SIGNAL(dataChanged()), this, TQT_SLOT(slotClipboardDataChanged()) );
+      connect( TQApplication::tqclipboard(), TQT_SIGNAL(dataChanged()), this, TQT_SLOT(slotClipboardDataChanged()) );
       connect( m_combo->lineEdit(), TQT_SIGNAL(textChanged(const TQString &)), this, TQT_SLOT(slotCheckComboSelection()) );
       connect( m_combo->lineEdit(), TQT_SIGNAL(selectionChanged()), this, TQT_SLOT(slotCheckComboSelection()) );
 
@@ -3536,7 +3536,7 @@ bool KonqMainWindow::eventFilter(TQObject*obj,TQEvent *ev)
       disconnect( m_paCut, TQT_SIGNAL( activated() ), m_combo->lineEdit(), TQT_SLOT( cut() ) );
       disconnect( m_paCopy, TQT_SIGNAL( activated() ), m_combo->lineEdit(), TQT_SLOT( copy() ) );
       disconnect( m_paPaste, TQT_SIGNAL( activated() ), m_combo->lineEdit(), TQT_SLOT( paste() ) );
-      disconnect( TQApplication::clipboard(), TQT_SIGNAL(dataChanged()), this, TQT_SLOT(slotClipboardDataChanged()) );
+      disconnect( TQApplication::tqclipboard(), TQT_SIGNAL(dataChanged()), this, TQT_SLOT(slotClipboardDataChanged()) );
       disconnect( m_combo->lineEdit(), TQT_SIGNAL(textChanged(const TQString &)), this, TQT_SLOT(slotCheckComboSelection()) );
       disconnect( m_combo->lineEdit(), TQT_SIGNAL(selectionChanged()), this, TQT_SLOT(slotCheckComboSelection()) );
 
@@ -3584,7 +3584,7 @@ void KonqMainWindow::slotClearLocationBar( KAction::ActivationReason, TQt::Butto
   m_combo->clearTemporary();
   focusLocationBar();
   if ( state & Qt::MidButton )
-      m_combo->setURL( TQApplication::clipboard()->text( QClipboard::Selection ) );
+      m_combo->setURL( TQApplication::tqclipboard()->text( TQClipboard::Selection ) );
 }
 
 void KonqMainWindow::slotForceSaveMainWindowSettings()

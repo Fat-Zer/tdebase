@@ -60,7 +60,7 @@ TQWidget *ToolViewManager::createToolView (const TQString &identifier, ToolViewM
 
 bool ToolViewManager::moveToolView (TQWidget *widget, ToolViewManager::Position  pos)
 {
-  if (!widget || !widget->tqqt_cast("KateMDI::ToolView"))
+  if (!widget || !widget->qt_cast("KateMDI::ToolView"))
     return false;
 
   return d->toolViewMan->moveToolView (static_cast<KateMDI::ToolView*>(widget), (KMultiTabBar::KMultiTabBarPosition)pos);
@@ -68,7 +68,7 @@ bool ToolViewManager::moveToolView (TQWidget *widget, ToolViewManager::Position 
 
 bool ToolViewManager::showToolView(TQWidget *widget)
 {
-  if (!widget || !widget->tqqt_cast("KateMDI::ToolView"))
+  if (!widget || !widget->qt_cast("KateMDI::ToolView"))
     return false;
 
   return d->toolViewMan->showToolView (static_cast<KateMDI::ToolView*>(widget));
@@ -76,7 +76,7 @@ bool ToolViewManager::showToolView(TQWidget *widget)
 
 bool ToolViewManager::hideToolView(TQWidget *widget)
 {
-  if (!widget || !widget->tqqt_cast("KateMDI::ToolView"))
+  if (!widget || !widget->qt_cast("KateMDI::ToolView"))
     return false;
 
   return d->toolViewMan->hideToolView (static_cast<KateMDI::ToolView*>(widget));

@@ -281,7 +281,7 @@ void PanelServiceMenu::fillMenu(KServiceGroup::Ptr& _root,
             }
 
             // Ignore dotfiles.
-            if ((g->name().at(0) == '.'))
+            if ((g->name().tqat(0) == '.'))
             {
                 continue;
             }
@@ -445,7 +445,7 @@ void PanelServiceMenu::insertMenuItem(KService::Ptr & s, int nId,
         return;
 
     // ignore dotfiles.
-    if ((serviceName.at(0) == '.'))
+    if ((serviceName.tqat(0) == '.'))
         return;
 
     // item names may contain ampersands. To avoid them being converted

@@ -537,7 +537,7 @@ void KScreenSaver::findSavers()
             mSaverListView->setSelected(selectedItem, true);
             mSaverListView->setCurrentItem(selectedItem);
             mSaverListView->ensureItemVisible(selectedItem);
-            mSetupBt->setEnabled(!mSaverList.at(mSelected)->setup().isEmpty());
+            mSetupBt->setEnabled(!mSaverList.tqat(mSelected)->setup().isEmpty());
             mTestBt->setEnabled(true);
         }
 
@@ -587,7 +587,7 @@ void KScreenSaver::slotPreviewExited(KProcess *)
     if (mSelected >= 0) {
         mPreviewProc->clearArguments();
 
-        TQString saver = mSaverList.at(mSelected)->saver();
+        TQString saver = mSaverList.tqat(mSelected)->saver();
         TQTextStream ts(&saver, IO_ReadOnly);
 
         TQString word;
@@ -665,9 +665,9 @@ void KScreenSaver::slotScreenSaver(TQListViewItem *item)
     bool bChanged = (indx != mSelected);
 
     if (!mSetupProc->isRunning())
-        mSetupBt->setEnabled(!mSaverList.at(indx)->setup().isEmpty());
+        mSetupBt->setEnabled(!mSaverList.tqat(indx)->setup().isEmpty());
     mTestBt->setEnabled(true);
-    mSaver = mSaverList.at(indx)->file();
+    mSaver = mSaverList.tqat(indx)->file();
 
     mSelected = indx;
     setMonitor();
@@ -690,7 +690,7 @@ void KScreenSaver::slotSetup()
 
     mSetupProc->clearArguments();
 
-    TQString saver = mSaverList.at(mSelected)->setup();
+    TQString saver = mSaverList.tqat(mSelected)->setup();
     if( saver.isEmpty())
         return;
     TQTextStream ts(&saver, IO_ReadOnly);
@@ -708,7 +708,7 @@ void KScreenSaver::slotSetup()
         if (!kxsconfig) {
             word = "-caption";
             (*mSetupProc) << word;
-            word = mSaverList.at(mSelected)->name();
+            word = mSaverList.tqat(mSelected)->name();
             (*mSetupProc) << word;
             word = "-icon";
             (*mSetupProc) << word;
@@ -724,7 +724,7 @@ void KScreenSaver::slotSetup()
 
         // Pass translated name to kxsconfig
         if (kxsconfig) {
-          word = mSaverList.at(mSelected)->name();
+          word = mSaverList.tqat(mSelected)->name();
           (*mSetupProc) << word;
         }
 
@@ -758,7 +758,7 @@ void KScreenSaver::slotTest()
     }
 
     mTestProc->clearArguments();
-    TQString saver = mSaverList.at(mSelected)->saver();
+    TQString saver = mSaverList.tqat(mSelected)->saver();
     TQTextStream ts(&saver, IO_ReadOnly);
 
     TQString word;

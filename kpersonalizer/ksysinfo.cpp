@@ -104,7 +104,7 @@ void KSysInfo::initFontFamilies() {
 	m_fixed_font = TQString::null;
 	int normal_priority = 0, fixed_priority = 0;
 	for (uint i=0; i < families.count(); i++) {
-		TQString font = *families.at(i);
+		TQString font = *families.tqat(i);
 		//add further NORMAL fonts here
 		if ( (font.tqcontains("Arial [") || font=="Arial") && normal_priority < 15 ) {
 			m_normal_font = font;

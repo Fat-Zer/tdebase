@@ -159,7 +159,7 @@ KDIconView::KDIconView( TQWidget *parent, const char* name )
     // Initialize media handler
     mMediaListView = new TQListView();
 
-    connect( TQApplication::clipboard(), TQT_SIGNAL(dataChanged()),
+    connect( TQApplication::tqclipboard(), TQT_SIGNAL(dataChanged()),
              this, TQT_SLOT(slotClipboardDataChanged()) );
 
     setURL( desktopURL() ); // sets m_url
@@ -441,8 +441,8 @@ void KDIconView::createActions()
         (void) new KAction( i18n( "&Rename" ), /*"editrename",*/ Key_F2, TQT_TQOBJECT(this), TQT_SLOT( renameSelectedItem() ), &m_actionCollection, "rename" );
         (void) new KAction( i18n( "&Properties" ), ALT+Key_Return, TQT_TQOBJECT(this), TQT_SLOT( slotProperties() ), &m_actionCollection, "properties" );
         KAction* trash = new KAction( i18n( "&Move to Trash" ), "edittrash", Key_Delete, &m_actionCollection, "trash" );
-        connect( trash, TQT_SIGNAL( activated( KAction::ActivationReason, Qt::ButtonState ) ),
-                 this, TQT_SLOT( slotTrashActivated( KAction::ActivationReason, Qt::ButtonState ) ) );
+        connect( trash, TQT_SIGNAL( activated( KAction::ActivationReason, TQt::ButtonState ) ),
+                 this, TQT_SLOT( slotTrashActivated( KAction::ActivationReason, TQt::ButtonState ) ) );
 
         KConfig config("kdeglobals", true, false);
         config.setGroup( "KDE" );
@@ -1047,7 +1047,7 @@ void KDIconView::slotNewItems( const KFileItemList & entries )
   bool firstRun = (count() == 0);  // no icons yet, this seems to be the initial loading
 
   // delay updates until all new items have been created
-  setUpdatesEnabled( false );
+  tqsetUpdatesEnabled( false );
   TQRect area = iconArea();
   setIconArea( TQRect(  0, 0, -1, -1 ) );
 
@@ -1150,7 +1150,7 @@ void KDIconView::slotNewItems( const KFileItemList & entries )
   if ( m_autoAlign )
       lineupIcons();
 
-  setUpdatesEnabled( true );
+  tqsetUpdatesEnabled( true );
 }
 
 // -----------------------------------------------------------------------------

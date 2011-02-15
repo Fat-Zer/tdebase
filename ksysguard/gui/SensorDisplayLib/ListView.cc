@@ -116,8 +116,8 @@ PrivateListView::PrivateListView(TQWidget *parent, const char *name)
 
 void PrivateListView::update(const TQString& answer)
 {
-	setUpdatesEnabled(false);
-	viewport()->setUpdatesEnabled(false);
+	tqsetUpdatesEnabled(false);
+	viewport()->tqsetUpdatesEnabled(false);
 
 	int vpos = verticalScrollBar()->value();
 	int hpos = horizontalScrollBar()->value();
@@ -143,8 +143,8 @@ void PrivateListView::update(const TQString& answer)
 	verticalScrollBar()->setValue(vpos);
 	horizontalScrollBar()->setValue(hpos);
 
-	viewport()->setUpdatesEnabled(true);
-	setUpdatesEnabled(true);
+	viewport()->tqsetUpdatesEnabled(true);
+	tqsetUpdatesEnabled(true);
 
 	triggerUpdate();
 }
@@ -239,7 +239,7 @@ ListView::addSensor(const TQString& hostName, const TQString& sensorName, const 
 void
 ListView::updateList()
 {
-	sendRequest(sensors().at(0)->hostName(), sensors().at(0)->name(), 19);
+	sendRequest(sensors().tqat(0)->hostName(), sensors().tqat(0)->name(), 19);
 }
 
 void
@@ -307,9 +307,9 @@ ListView::restoreSettings(TQDomElement& element)
 bool
 ListView::saveSettings(TQDomDocument& doc, TQDomElement& element, bool save)
 {
-	element.setAttribute("hostName", sensors().at(0)->hostName());
-	element.setAttribute("sensorName", sensors().at(0)->name());
-	element.setAttribute("sensorType", sensors().at(0)->type());
+	element.setAttribute("hostName", sensors().tqat(0)->hostName());
+	element.setAttribute("sensorName", sensors().tqat(0)->name());
+	element.setAttribute("sensorType", sensors().tqat(0)->type());
 
 	TQColorGroup tqcolorGroup = monitor->tqcolorGroup();
 	saveColor(element, "gridColor", tqcolorGroup.color(TQColorGroup::Link));

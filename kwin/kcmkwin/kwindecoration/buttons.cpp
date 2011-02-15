@@ -167,7 +167,7 @@ void ButtonSource::hideAllButtons()
 {
 	TQListViewItemIterator it(this);
 	while (it.current() ) {
-		it.current()->setVisible(false);
+		it.current()->tqsetVisible(false);
 		++it;
 	}
 }
@@ -176,7 +176,7 @@ void ButtonSource::showAllButtons()
 {
 	TQListViewItemIterator it(this);
 	while (it.current() ) {
-		it.current()->setVisible(true);
+		it.current()->tqsetVisible(true);
 		++it;
 	}
 }
@@ -187,7 +187,7 @@ void ButtonSource::showButton( TQChar btn )
 	while (it.current() ) {
 		ButtonSourceItem *item = dynamic_cast<ButtonSourceItem*>(it.current() );
 		if (item && item->button().type == btn) {
-			it.current()->setVisible(true);
+			it.current()->tqsetVisible(true);
 			return;
 		}
 		++it;
@@ -200,7 +200,7 @@ void ButtonSource::hideButton( TQChar btn )
 	while (it.current() ) {
 		ButtonSourceItem *item = dynamic_cast<ButtonSourceItem*>(it.current() );
 		if (item && item->button().type == btn && !item->button().duplicate) {
-			it.current()->setVisible(false);
+			it.current()->tqsetVisible(false);
 			return;
 		}
 		++it;
