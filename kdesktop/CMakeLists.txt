@@ -9,6 +9,8 @@
 #
 #################################################
 
+include( ConfigureChecks.cmake )
+
 add_subdirectory( lock )
 add_subdirectory( pics )
 add_subdirectory( patterns )

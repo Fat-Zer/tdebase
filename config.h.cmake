@@ -81,11 +81,14 @@
 #cmakedefine HAVE_SYS_WAIT_H 1
 #cmakedefine DEFAULT_SUPER_USER_COMMAND "@DEFAULT_SUPER_USER_COMMAND@"
 
-// kdm, kcheckpass
+// kdm, kcheckpass, kdesktop
 #cmakedefine HAVE_PAM 1
 
 // kcheckpass
 #cmakedefine KCHECKPASS_PAM_SERVICE "@KCHECKPASS_PAM_SERVICE@"
+
+// kdesktop
+#cmakedefine KSCREENSAVER_PAM_SERVICE "@KSCREENSAVER_PAM_SERVICE@"
 
 // kdm
 #cmakedefine XBINDIR "@XBINDIR@"
