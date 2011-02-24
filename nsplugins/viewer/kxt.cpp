@@ -177,7 +177,7 @@ static
 QWidgetClassRec qwidgetClassRec = {
   { /* core fields */
     /* superclass               */      (WidgetClass) &widgetClassRec,
-    /* class_name               */      (char*)"TQWidget",
+    /* class_name               */      (char*)TQWIDGET_OBJECT_NAME_STRING,
     /* widget_size              */      sizeof(QWidgetRec),
     /* class_initialize         */      0,
     /* class_part_initialize    */      0,
@@ -438,7 +438,7 @@ void KXtWidget::init(const char* name, WidgetClass widget_class,
 
 /*!
   Constructs a KXtWidget of the special Xt widget class known as
-  "TQWidget" to the resource manager.
+  TQWIDGET_OBJECT_NAME_STRING to the resource manager.
 
   Use this constructor to utilize Qt widgets in an Xt/Motif
   application.  The KXtWidget is a TQWidget, so you can create
@@ -492,7 +492,7 @@ KXtWidget::~KXtWidget()
 {
     // Delete children first, as Xt will destroy their windows
     //
-    TQObjectList* list = queryList("TQWidget", 0, FALSE, FALSE);
+    TQObjectList* list = queryList(TQWIDGET_OBJECT_NAME_STRING, 0, FALSE, FALSE);
     if ( list ) {
         TQWidget* c;
         TQObjectListIt it( *list );

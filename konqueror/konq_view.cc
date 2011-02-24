@@ -1265,7 +1265,7 @@ bool KonqView::eventFilter( TQObject *obj, TQEvent *e )
             KURL::List lstDragURLs;
             bool ok = KURLDrag::decode( ev, lstDragURLs );
 
-            TQObjectList *children = m_pPart->widget()->queryList( "TQWidget" );
+            TQObjectList *children = m_pPart->widget()->queryList( TQWIDGET_OBJECT_NAME_STRING );
 
             if ( ok &&
                  !lstDragURLs.first().url().tqcontains( "javascript:", false ) && // ### this looks like a hack to me

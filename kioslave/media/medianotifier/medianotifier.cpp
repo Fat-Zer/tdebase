@@ -369,7 +369,7 @@ void MediaNotifier::slotFreeCancel()
 
 void MediaNotifier::slotFreeFinished( KMessageBox::ButtonCode res )
 {
-    TQCheckBox *checkbox = ::tqqt_cast<TQCheckBox*>( m_freeDialog->child( 0, "TQCheckBox" ) );
+    TQCheckBox *checkbox = ::tqqt_cast<TQCheckBox*>( m_freeDialog->child( 0, TQCHECKBOX_OBJECT_NAME_STRING ) );
     if ( checkbox && checkbox->isChecked() )
         KMessageBox::saveDontShowAgainYesNo("dontagainfreespace", res);
     m_freeDialog->delayedDestruct();
