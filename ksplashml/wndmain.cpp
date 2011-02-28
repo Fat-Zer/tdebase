@@ -311,6 +311,9 @@ void KSplash::startupComplete()
 void KSplash::close()
 {
   TQWidget::close();
+#ifdef USE_QT4
+  exit(0);
+#endif // USE_QT4
 }
 
 void KSplash::hide()

@@ -39,6 +39,7 @@ class KConfig;
 class KSplash: public TQWidget, virtual public KSplashIface
 {
   Q_OBJECT
+  TQ_OBJECT
 
 public:
   KSplash(const char *name = "ksplash");
@@ -53,9 +54,19 @@ public:
   ASYNC setStartupItemCount( int count );
   ASYNC programStarted( TQString programIcon, TQString programName, TQString description );
   ASYNC startupComplete();
-  ASYNC close();
-  ASYNC hide();
   ASYNC show();
+  ASYNC hide();
+
+  // [FIXME] How can I more easily let Qt know about these slots?  moc-tqt perhaps?
+  // More importantly, how was this code even running under Qt3?
+  // Was it somehow running the TQWidget::close() slot instead of the KSplash::close() non-slot method?
+  // Either way it looks like accidental/undefined behaviour to me...
+#ifndef Q_MOC_RUN
+  ASYNC close();
+#else // Q_MOC_RUN
+public slots:
+  void close();
+#endif // Q_MOC_RUN
 
 signals:
   void stepsChanged(int);

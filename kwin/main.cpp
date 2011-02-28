@@ -86,6 +86,10 @@ int x11ErrorHandler(Display *d, XErrorEvent *e)
 Application::Application( )
 : KApplication( ), owner( screen_number )
     {
+#ifdef USE_QT4
+    // I'm special...
+    setQuitOnLastWindowClosed(false);
+#endif // USE_QT4
     KCmdLineArgs* args = KCmdLineArgs::parsedArgs();
     if (!config()->isImmutable() && args->isSet("lock"))
         {

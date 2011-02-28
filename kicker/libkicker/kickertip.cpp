@@ -283,9 +283,9 @@ void KickerTip::plainMask()
 {
     TQPainter maskPainter(&m_mask);
 
-    m_mask.fill(Qt::black);
+    m_mask.fill(Qt::color0);
 
-    maskPainter.setBrush(Qt::white);
+    maskPainter.setBrush(Qt::color1);
     maskPainter.setPen(Qt::NoPen);
     //maskPainter.drawRoundRect(m_mask.rect(), 1600 / m_mask.rect().width(), 1600 / m_mask.rect().height());
     drawRoundRect(maskPainter, m_mask.rect());
@@ -297,9 +297,9 @@ void KickerTip::dissolveMask()
 {
     TQPainter maskPainter(&m_mask);
 
-    m_mask.fill(Qt::black);
+    m_mask.fill(Qt::color0);
 
-    maskPainter.setBrush(Qt::white);
+    maskPainter.setBrush(Qt::color1);
     maskPainter.setPen(Qt::NoPen);
     //maskPainter.drawRoundRect(m_mask.rect(), 1600 / m_mask.rect().width(), 1600 / m_mask.rect().height());
     drawRoundRect(maskPainter, m_mask.rect());
@@ -450,7 +450,7 @@ bool KickerTip::isTippingFor(const TQWidget* w) const
 
 void KickerTip::tipperDestroyed(TQObject* o)
 {
-    // we can't do a dynamic cast because we are in the process of dieing
+    // we can't do a dynamic cast because we are in the process of dying
     // so static it is.
     untipFor(TQT_TQWIDGET(o));
 }
