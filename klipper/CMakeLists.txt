@@ -59,5 +59,5 @@ tde_add_library( klipper_common STATIC_PIC AUTOMOC
     toplevel.skel clipboardpoll.cpp history.cpp historyitem.cpp
     historystringitem.cpp klipperpopup.cpp popupproxy.cpp
     historyimageitem.cpp historyurlitem.cpp
-  LINK kio-shared
+  LINK kio-shared ${XFIXES_LIBRARIES}
 )

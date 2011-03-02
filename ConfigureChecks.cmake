@@ -54,13 +54,23 @@ endif( )
 
 
 # xcursor (kioslave, kcontrol)
-
 if( WITH_XCURSOR )
   pkg_search_module( XCURSOR xcursor )
   if( XCURSOR_FOUND )
     set( HAVE_XCURSOR 1 CACHE INTERNAL "" FORCE )
   else( )
     tde_message_fatal( "xcursor are requested, but not found on your system" )
+  endif( )
+endif( )
+
+
+# xfixes (klipper)
+if( WITH_XFIXES )
+  pkg_search_module( XFIXES xfixes )
+  if( XFIXES_FOUND )
+    set( HAVE_XFIXES 1 CACHE INTERNAL "" FORCE )
+  else( )
+    tde_message_fatal( "xfixes are requested, but not found on your system" )
   endif( )
 endif( )
 

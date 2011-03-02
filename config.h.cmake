@@ -6,6 +6,9 @@
 // kdesktop, konsole, kcontrol, kicker
 #cmakedefine HAVE_XRENDER 1
 
+// taskmanager, klipper
+#cmakedefine HAVE_XFIXES 1
+
 // kdesktop, kcontrol, ksplashml
 #cmakedefine HAVE_XCURSOR 1
 
@@ -43,7 +46,6 @@
 
 // taskmanager
 #cmakedefine HAVE_XCOMPOSITE
-#cmakedefine HAVE_XFIXES
 
 // kcontrol/fonts
 #cmakedefine HAVE_FONTCONFIG 1
