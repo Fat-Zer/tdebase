@@ -39,4 +39,5 @@ tde_add_kpart( khotkeys_arts AUTOMOC
   SOURCES soundrecorder_arts.cpp voicerecorder_arts.cpp
   LINK khotkeys_shared-shared artskde-shared
   DESTINATION ${PLUGIN_INSTALL_DIR}
+  DEPENDENCIES ui-static
 )
