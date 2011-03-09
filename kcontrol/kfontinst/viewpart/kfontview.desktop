@@ -97,4 +97,4 @@ GenericName[zh_CN]=字体查看器
 GenericName[zh_TW]=字型檢視器
 Terminal=false
 InitialPreference=1
-Categories=Qt;KDE;Utility;X-KDE-More;
+Categories=Qt;KDE;Graphics;
