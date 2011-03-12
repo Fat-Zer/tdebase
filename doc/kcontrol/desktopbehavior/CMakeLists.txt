@@ -9,4 +9,4 @@
 #
 #################################################
 
-tde_create_handbook( DESTINATION kcontrol/desktopbehaviour )
+tde_create_handbook( DESTINATION kcontrol/desktopbehavior )
