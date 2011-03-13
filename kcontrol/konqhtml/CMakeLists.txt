@@ -28,6 +28,15 @@ install( FILES
     khtml_fonts.desktop khtml_filter.desktop
   DESTINATION ${XDG_APPS_INSTALL_DIR} )
 
+install(
+  FILES uninstall.desktop
+  DESTINATION ${APPS_INSTALL_DIR}/Settings/WebBrowsing
+  RENAME nsplugin.desktop )
+
+install(
+  FILES uninstall.desktop
+  DESTINATION ${APPS_INSTALL_DIR}/Settings/WebBrowsing
+  RENAME khtml_appearance.desktop )
 
 ##### kcm_konqhtml (module) #####################
 
