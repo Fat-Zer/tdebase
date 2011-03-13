@@ -1203,20 +1203,20 @@ void Sidebar_Widget::connectModule(TQObject *mod)
 		connect(mod,TQT_SIGNAL(completed()),this,TQT_SIGNAL(completed()));
 	}
 
-	if (mod->tqmetaObject()->tqfindSignal("popupMenu(const TQPoint&,const KURL&,const TQString&,mode_t)") != -1) {
+	if (mod->tqmetaObject()->tqfindSignal("popupMenu(const " TQPOINT_OBJECT_NAME_STRING "&,const KURL&,const " TQSTRING_OBJECT_NAME_STRING "&,mode_t)") != -1) {
 		connect(mod,TQT_SIGNAL(popupMenu( const TQPoint &, const KURL &,
 			const TQString &, mode_t)),this,TQT_SLOT(popupMenu( const
 			TQPoint &, const KURL&, const TQString &, mode_t)));
 	}
 
-	if (mod->tqmetaObject()->tqfindSignal("popupMenu(KXMLGUIClient*,const TQPoint&,const KURL&,const TQString&,mode_t)") != -1) {
+	if (mod->tqmetaObject()->tqfindSignal("popupMenu(KXMLGUIClient*,const " TQPOINT_OBJECT_NAME_STRING " &,const KURL&,const " TQSTRING_OBJECT_NAME_STRING "&,mode_t)") != -1) {
 		connect(mod,TQT_SIGNAL(popupMenu( KXMLGUIClient *, const TQPoint &,
 			const KURL &,const TQString &, mode_t)),this,
 			TQT_SLOT(popupMenu( KXMLGUIClient *, const TQPoint &,
 			const KURL &,const TQString &, mode_t)));
 	}
 
-	if (mod->tqmetaObject()->tqfindSignal("popupMenu(const TQPoint&,const KFileItemList&)") != -1) {
+	if (mod->tqmetaObject()->tqfindSignal("popupMenu(const " TQPOINT_OBJECT_NAME_STRING "&,const KFileItemList&)") != -1) {
 		connect(mod,TQT_SIGNAL(popupMenu( const TQPoint &, const KFileItemList & )),
 			this,TQT_SLOT(popupMenu( const TQPoint &, const KFileItemList & )));
 	}
@@ -1226,7 +1226,7 @@ void Sidebar_Widget::connectModule(TQObject *mod)
 			this,TQT_SLOT(openURLRequest( const KURL &, const KParts::URLArgs &)));
 	}
 
-	if (mod->tqmetaObject()->tqfindSignal("submitFormRequest(const char*,const TQString&,const TQByteArray&,const TQString&,const TQString&,const TQString&)") != -1) {
+	if (mod->tqmetaObject()->tqfindSignal("submitFormRequest(const char*,const " TQSTRING_OBJECT_NAME_STRING "&,const " TQBYTEARRAY_OBJECT_NAME_STRING "&,const " TQSTRING_OBJECT_NAME_STRING "&,const " TQSTRING_OBJECT_NAME_STRING "&,const " TQSTRING_OBJECT_NAME_STRING "&)") != -1) {
 		connect(mod,
 			TQT_SIGNAL(submitFormRequest(const char*,const TQString&,const TQByteArray&,const TQString&,const TQString&,const TQString&)),
 			this,
