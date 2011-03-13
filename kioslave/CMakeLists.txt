@@ -11,8 +11,6 @@
 
 include( ConfigureChecks.cmake )
 
-# FIXME no LDAP and SAMBA support yet
-
 add_subdirectory( about )
 add_subdirectory( cgi )
 add_subdirectory( floppy )
@@ -35,5 +33,5 @@ add_subdirectory( media )
 add_subdirectory( remote )
 add_subdirectory( home )
 add_subdirectory( system )
-# tde_conditional_add_subdirectory( WITH_LDAP ldap )
-# tde_conditional_add_subdirectory( WITH_SAMBA smb )
+tde_conditional_add_subdirectory( WITH_LDAP ldap )
+tde_conditional_add_subdirectory( WITH_SAMBA smb )
