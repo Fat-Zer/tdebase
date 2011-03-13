@@ -46,6 +46,6 @@ tde_add_library( filetypes STATIC_PIC AUTOMOC
 
 tde_add_executable( keditfiletype AUTOMOC
   SOURCES keditfiletype.cpp
-  LINK keditfiletype_common-static
+  LINK filetypes-static kio-shared
   DESTINATION ${BIN_INSTALL_DIR}
 )
