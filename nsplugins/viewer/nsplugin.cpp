@@ -1330,6 +1330,9 @@ DCOPRef NSPluginViewer::newClass( TQString plugin )
 
 /****************************************************************************/
 
+bool NSPluginClass::s_initedGTK = false;
+
+typedef void gtkInitFunc(int *argc, char ***argv);
 
 NSPluginClass::NSPluginClass( const TQString &library,
                               TQObject *parent, const char *name )
@@ -1377,6 +1380,23 @@ NSPluginClass::NSPluginClass( const TQString &library,
 
     // initialize plugin
     kdDebug(1431) << "Plugin library " << library << " loaded!" << endl;
+
+    // see if it uses gtk
+    if (!s_initedGTK) {
+        gtkInitFunc* gtkInit = (gtkInitFunc*)_handle->symbol("gtk_init");
+        if (gtkInit) {
+            kdDebug(1431) << "Calling gtk_init for the plugin" << endl;
+            // Prevent gtk_init() from replacing the X error handlers, since the Gtk
+            // handlers abort when they receive an X error, thus killing the viewer.
+            int (*old_error_handler)(Display*,XErrorEvent*) = XSetErrorHandler(0);
+            int (*old_io_error_handler)(Display*) = XSetIOErrorHandler(0);
+            gtkInit(0, 0);
+            XSetErrorHandler(old_error_handler);
+            XSetIOErrorHandler(old_io_error_handler);
+            s_initedGTK = true;
+        }
+    }
+
     _constructed = true;
     _error = initialize()!=NPERR_NO_ERROR;
 }

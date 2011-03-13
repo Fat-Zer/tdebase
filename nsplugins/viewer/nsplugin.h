@@ -315,6 +315,10 @@ private:
   TQPtrList<NSPluginInstance> _trash;
 
   TQCString _app;
+
+  // If plugins use gtk, we call the gtk_init function for them ---
+  // but only do it once.
+  static bool s_initedGTK;
 };
 
 
