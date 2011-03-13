@@ -41,3 +41,11 @@ tde_add_library( filetypes STATIC_PIC AUTOMOC
     kservicelistwidget.cpp typeslistitem.cpp newtypedlg.cpp
     kserviceselectdlg.cpp
 )
+
+##### keditfiletype (executable) ######################
+
+tde_add_executable( keditfiletype AUTOMOC
+  SOURCES keditfiletype.cpp
+  LINK keditfiletype_common-static
+  DESTINATION ${BIN_INSTALL_DIR}
+)
