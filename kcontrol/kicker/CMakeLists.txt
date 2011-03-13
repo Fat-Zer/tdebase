@@ -48,7 +48,7 @@ install(
 
 install(
   FILES uninstall.desktop
-  DESTINATION ${APPS_INSTALL_DIR}
+  DESTINATION ${XDG_APPS_INSTALL_DIR}
   RENAME panel_appearance.desktop )
 
 
