@@ -36,3 +36,8 @@ tde_add_library( ${target} SHARED AUTOMOC
   LINK kdecore-shared
   DESTINATION ${LIB_INSTALL_DIR}
 )
+
+##### headers ###################################
+
+install( FILES kdecoration.h kdecoration_p.h kdecoration_plugins_p.h kdecorationfactory.h kcommondecoration.h
+         DESTINATION ${INCLUDE_INSTALL_DIR} )
