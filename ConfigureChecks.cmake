@@ -35,11 +35,11 @@ if( WITH_PAM AND (BUILD_KCHECKPASS OR BUILD_KDM) )
 endif( )
 
 
-# hal (ksmserver )
-if( BUILD_KSMSERVER )
+# hal (ksmserver, kioslaves)
+if( BUILD_KSMSERVER OR (WITH_HAL AND BUILD_KIOSLAVES))
   pkg_search_module( HAL hal )
   if( NOT HAL_FOUND )
-    tde_message_fatal( "hal are required, but not found on your system" )
+    tde_message_fatal( "hal is required, but was not found on your system" )
   endif( )
 endif( )
 

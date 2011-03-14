@@ -9,8 +9,6 @@
 #
 #################################################
 
-# FIXME no HAL support yet
-
 add_subdirectory( libmediacommon )
 add_subdirectory( mediamanager )
 add_subdirectory( medianotifier )
@@ -19,7 +17,7 @@ add_subdirectory( kfile-plugin )
 add_subdirectory( kcmodule )
 add_subdirectory( mimetypes )
 add_subdirectory( services )
-# tde_conditional_add_subdirectory( WITH_HAL propsdlgplugin )
+tde_conditional_add_subdirectory( WITH_HAL propsdlgplugin )
 
 
 include_directories(
