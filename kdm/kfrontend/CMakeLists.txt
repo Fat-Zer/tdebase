@@ -31,6 +31,10 @@ link_directories(
 
 ##### other data ################################
 
+if( NOT DEFINED GENKDMCONF_FLAGS )
+  set( GENKDMCONF_FLAGS "--no-old" )
+endif( )
+
 install( CODE "execute_process( COMMAND ${CMAKE_CURRENT_BINARY_DIR}/genkdmconf --in \$ENV{DESTDIR}${CONFIG_INSTALL_DIR}/kdm --no-in-notice --face-src ${CMAKE_CURRENT_SOURCE_DIR}/pics ${GENKDMCONF_FLAGS} )" )
 
 
