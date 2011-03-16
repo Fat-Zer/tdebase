@@ -56,6 +56,7 @@ option( WITH_LIBRAW1394 "Enable visualization of ieee1394 devices through libraw
 option( WITH_SUDO_KDESU_BACKEND "Use sudo as backend for kdesu (default is su)" OFF )
 option( WITH_PAM "kdm should use PAM" OFF )
 option( WITH_SHADOW "kdm should use shadow passwords" OFF )
+option( WITH_XDMCP "xdmcp support for kdm" OFF )
 option( WITH_XINERAMA "Enable xinerama extension support" OFF )
 option( WITH_ARTS "Enable aRts support" OFF )
 option( WITH_I8K "Enable Dell laptop support (ksysguard)" OFF )

@@ -106,6 +106,17 @@ if( NOT XAU_FOUND )
 endif()
 
 
+# xdmcp
+if( WITH_XDMCP )
+  pkg_search_module( XDMCP xdmcp )
+  if( XDMCP_FOUND )
+    set( XDMCP 1 CACHE INTERNAL "" FORCE )
+  else()
+    tde_message_fatal( "xdmcp is requested, but was not found on your system" )
+  endif()
+endif()
+
+
 if( WITH_PAM )
 
   set( USE_PAM 1 CACHE INTERNAL "" FORCE )

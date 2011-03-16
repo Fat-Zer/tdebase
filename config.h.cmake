@@ -136,6 +136,9 @@
 #define USESHADOW 1
 #define HAVE_SHADOW 1
 
+#cmakedefine XDMCP 1
+
+
 // ksmserver
 #cmakedefine DBUS_SYSTEM_BUS "@DBUS_SYSTEM_BUS@"
 
