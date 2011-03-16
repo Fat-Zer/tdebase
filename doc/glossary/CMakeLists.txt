@@ -9,4 +9,6 @@
 #
 #################################################
 
-tde_create_handbook( DESTINATION khelpcenter/glossary )
+tde_create_handbook(
+  FILES checkxrefs index.docbook kdeprintingglossary.docbook
+  DESTINATION khelpcenter/glossary )
