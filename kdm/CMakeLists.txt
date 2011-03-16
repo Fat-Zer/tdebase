@@ -13,6 +13,10 @@
 # FIXME needs more checks (for kerberos, etc)
 # FIXME Xsession need some improvements
 
+if( NOT DEFINED KDM_PAM_SERVICE )
+  set( KDM_PAM_SERVICE "kde" CACHE INTERNAL "" )
+endif( )
+
 include( ConfigureChecks.cmake )
 
 add_subdirectory( backend )

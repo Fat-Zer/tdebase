@@ -131,7 +131,7 @@
 #cmakedefine DEV_RANDOM "@DEV_RANDOM@"
 
 #cmakedefine USE_PAM 1
-#define KDM_PAM_SERVICE "kde"
+#cmakedefine KDM_PAM_SERVICE "@KDM_PAM_SERVICE@"
 
 #define USESHADOW 1
 #define HAVE_SHADOW 1
