@@ -22,6 +22,11 @@ link_directories(
 )
 
 
+##### other data ################################
+
+install( FILES taskbar.kcfg DESTINATION ${KCFG_INSTALL_DIR} )
+
+
 ##### taskbar (shared) ##########################
 
 set( target taskbar )
