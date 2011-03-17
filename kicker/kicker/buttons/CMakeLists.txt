@@ -31,7 +31,7 @@ link_directories(
 install( FILES
     bookmarks.desktop browser.desktop desktop.desktop
     exec.desktop kmenu.desktop windowlist.desktop
-  DESTINATION ${DATA_INSTALL_DIR} )
+  DESTINATION ${DATA_INSTALL_DIR}/kicker/builtins )
 
 
 ##### kicker_buttons (static) ###################
