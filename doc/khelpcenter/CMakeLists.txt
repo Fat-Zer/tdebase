@@ -9,4 +9,6 @@
 #
 #################################################
 
-tde_create_handbook( FILES konq.css DESTINATION khelpcenter )
+tde_create_handbook( DESTINATION khelpcenter )
+
+install( FILES konq.css DESTINATION ${HTML_INSTALL_DIR}/en/khelpcenter/konq.css )
