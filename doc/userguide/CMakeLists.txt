@@ -9,4 +9,4 @@
 #
 #################################################
 
-tde_create_handbook( DESTINATION userguide )
+tde_create_handbook( DESTINATION khelpcenter/userguide )
