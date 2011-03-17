@@ -9,4 +9,4 @@
 #
 #################################################
 
-tde_create_handbook( DESTINATION quickstart )
+tde_create_handbook( DESTINATION khelpcenter/quickstart )
