@@ -9,4 +9,4 @@
 #
 #################################################
 
-tde_create_handbook( DESTINATION khelpcenter )
+tde_create_handbook( FILES konq.css DESTINATION khelpcenter )
