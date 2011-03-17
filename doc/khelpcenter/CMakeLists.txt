@@ -13,4 +13,10 @@ tde_create_handbook(
   FILES contact.docbook help.docbook index.docbook support.docbook welcome.docbook whatiskde.docbook
   DESTINATION khelpcenter )
 
-install( FILES konq.css DESTINATION ${HTML_INSTALL_DIR}/en/khelpcenter/konq.css )
+install(
+  FILES konq.css
+  DESTINATION ${HTML_INSTALL_DIR}/en/khelpcenter/konq.css )
+
+install(
+  FILES background.png bgtable.png kdelogo2.png khelpcenter.png lines2.png lines.png pointers.png shadow1.png
+  DESTINATION ${HTML_INSTALL_DIR}/en/khelpcenter )
