@@ -9,4 +9,4 @@
 #
 #################################################
 
-tde_create_handbook( DESTINATION visualdict )
+tde_create_handbook( DESTINATION khelpcenter/visualdict )
