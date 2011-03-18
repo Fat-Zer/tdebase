@@ -132,6 +132,17 @@ if( BUILD_KDM OR BUILD_KXKB )
 endif( )
 
 
+# arts
+if( WITH_ARTS )
+  pkg_search_module( ARTS arts )
+  if( NOT ARTS_FOUND )
+    message( FATAL_ERROR "\naRts is requested, but was not found on your system" )
+  endif( )
+else( )
+  set( WITHOUT_ARTS 1 )
+endif( )
+
+
 # required stuff
 find_package( Qt )
 find_package( TQt )

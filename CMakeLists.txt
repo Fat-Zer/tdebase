@@ -112,6 +112,11 @@ option( BUILD_KSYSGUARD "Build ksysguard"  ${BUILD_ALL} )
 option( BUILD_KXKB "Build kxkb"  ${BUILD_ALL} )
 
 
+##### set PKG_CONFIG_PATH #######################
+
+set( ENV{PKG_CONFIG_PATH} "${PKG_CONFIG_PATH}:$ENV{PKG_CONFIG_PATH}:${LIB_INSTALL_DIR}/pkgconfig" )
+
+
 ##### configure checks ##########################
 
 include( ConfigureChecks.cmake )

@@ -15,19 +15,17 @@ project( libkonq )
 add_subdirectory( pics )
 add_subdirectory( favicons )
 
-add_definitions(
-  -include tqt.h
-)
-
 include_directories(
   ${CMAKE_CURRENT_BINARY_DIR}
   ${CMAKE_CURRENT_SOURCE_DIR}
   ${TDE_INCLUDE_DIR}
   ${TQT_INCLUDE_DIRS}
+  ${ARTS_INCLUDE_DIRS}
 )
 
 link_directories(
   ${TQT_LIBRARY_DIRS}
+  ${ARTS_LIBRARY_DIRS}
 )
 
 
@@ -52,25 +50,28 @@ install( FILES konqpopupmenuplugin.desktop DESTINATION ${SERVICETYPES_INSTALL_DI
 
 ##### konq (shared lib) #########################
 
-set( target konq )
-
-set( ${target}_SRCS
-  konq_popupmenu.cc knewmenu.cc konq_xmlguiclient.cc
-  kfileivi.cc konq_iconviewwidget.cc konq_settings.cc
-  konq_drag.cc konq_operations.cc konq_dirpart.cc
-  konq_propsview.cc konq_events.cc konq_bgnddlg.cc
-  konq_undo.cc konq_undo.skel konq_historymgr.cc
-  konq_historycomm.cc konq_historycomm.skel konq_pixmapprovider.cc
-  kivdirectoryoverlay.cc konq_faviconmgr.cc konq_faviconmgr.skel
-  konq_filetip.cc
-)
-
-tde_add_library( ${target} SHARED AUTOMOC
-  SOURCES ${${target}_SRCS}
+tde_add_library( konq SHARED AUTOMOC
+  SOURCES
+    konq_popupmenu.cc knewmenu.cc konq_xmlguiclient.cc kfileivi.cc
+    konq_iconviewwidget.cc konq_settings.cc konq_drag.cc konq_operations.cc
+    konq_dirpart.cc konq_propsview.cc konq_events.cc konq_bgnddlg.cc konq_undo.cc
+    konq_undo.skel konq_historymgr.cc konq_historycomm.cc konq_historycomm.skel
+    konq_pixmapprovider.cc kivdirectoryoverlay.cc konq_faviconmgr.cc
+    konq_faviconmgr.skel konq_filetip.cc
   VERSION 4.2.0
   LINK kparts-shared
   DESTINATION ${LIB_INSTALL_DIR}
 )
+
+
+##### konq_sound (module) #######################
+
+if( WITH_ARTS )
+  tde_add_kpart( konq_sound
+    SOURCES konq_sound.cc
+    LINK artskde-shared
+    DESTINATION ${PLUGIN_INSTALL_DIR} )
+endif( )
 
 
 ##### install import cmake modules ###############
