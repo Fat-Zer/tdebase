@@ -49,8 +49,8 @@ link_directories(
 
 ##### kompmgr (executable) #######################
 
-tde_add_executable( kstart AUTOMOC
+tde_add_executable( kompmgr AUTOMOC
   SOURCES kompmgr.c
-  LINK X11 ${XFIXES_LIBRARIES} ${XRENDER_LIBRARIES} ${XCOMPOSITE_LIBRARIES} ${XDAMAGE_LIBRARIES}
+  LINK m X11 ${XFIXES_LIBRARIES} ${XRENDER_LIBRARIES} ${XCOMPOSITE_LIBRARIES} ${XDAMAGE_LIBRARIES}
   DESTINATION ${BIN_INSTALL_DIR}
 )
