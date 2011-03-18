@@ -14,6 +14,8 @@ install( FILES
     ${CMAKE_CURRENT_BINARY_DIR}/9x15.pcf.gz
   DESTINATION ${DATA_INSTALL_DIR}/konsole/fonts )
 
+# FIXME this should be improved, to guarantee that mkfontdir is executed after fonts are installed
+install( CODE "execute_process( COMMAND mkfontdir \$ENV{DESTDIR}${DATA_INSTALL_DIR}/konsole/fonts )" )
 
 # FIXME generating fonts can be improved
 
