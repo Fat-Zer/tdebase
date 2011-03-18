@@ -19,6 +19,9 @@ link_directories(
   ${TQT_LIBRARY_DIRS}
 )
 
+##### icons #######################
+
+tde_install_icons()
 
 ##### other data ################################
 
