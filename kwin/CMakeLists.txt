@@ -16,7 +16,7 @@ add_subdirectory( pics )
 add_subdirectory( clients )
 add_subdirectory( oldheaders )
 add_subdirectory( data )
-# add_subdirectory( kompmgr )
+add_subdirectory( kompmgr )
 
 
 include_directories(
