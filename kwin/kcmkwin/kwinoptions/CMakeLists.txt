@@ -28,7 +28,7 @@ install( FILES kwinoptions.desktop DESTINATION ${XDG_APPS_INSTALL_DIR} )
 install( FILES
     kwinactions.desktop kwinadvanced.desktop kwinfocus.desktop
     kwinmoving.desktop kwintranslucency.desktop
-  DESTINATION ${DATA_INSTALL_DIR}/.hidden )
+  DESTINATION ${APPS_INSTALL_DIR}/.hidden )
 
 
 ##### kcm_kwinoptions (module) ##################
