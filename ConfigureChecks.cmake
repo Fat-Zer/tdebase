@@ -163,6 +163,7 @@ if( BUILD_KDM OR BUILD_KSMSERVER )
   set( CMAKE_REQUIRED_INCLUDES ${QT_INCLUDE_DIRS} ${DBUS_INCLUDE_DIRS} )
   set( CMAKE_REQUIRED_LIBRARIES ${TQT_LDFLAGS} )
   check_cxx_source_compiles("
+    #include <tqt.h>
     #include <dbus/connection.h>
     int main(int, char**) { return 0; } "
     HAVE_DBUS_QT3_07 )
