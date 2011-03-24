@@ -63,6 +63,6 @@ tde_add_kpart( kcm_input AUTOMOC
 tde_add_executable( kapplymousetheme
   SOURCES
     kapplymousetheme.cpp
-  LINK ${XCURSOR_LIBRARIES} X11
+  LINK ${TQT_LIBRARIES} ${XCURSOR_LIBRARIES} X11
   DESTINATION ${BIN_INSTALL_DIR}
 )
