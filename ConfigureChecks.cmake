@@ -149,16 +149,16 @@ find_package( TQt )
 find_package( TDE )
 
 
-# dbus-qt3 need Qt flags
+# dbus-tqt need Qt flags
 # dbus (kdm, ksmserver)
 if( BUILD_KDM OR BUILD_KSMSERVER )
 
   pkg_search_module( DBUS dbus-1 )
   if( NOT DBUS_FOUND )
-    tde_message_fatal( "dbus-1 are required, but not found on your system" )
+    tde_message_fatal( "dbus-1 is required, but was not found on your system" )
   endif( )
 
-  # check for dbus-qt3 (version 0.7)
+  # check for dbus-tqt
   tde_save( CMAKE_REQUIRED_INCLUDES CMAKE_REQUIRED_LIBRARIES )
   set( CMAKE_REQUIRED_INCLUDES ${QT_INCLUDE_DIRS} ${DBUS_INCLUDE_DIRS} )
   set( CMAKE_REQUIRED_LIBRARIES ${TQT_LDFLAGS} )
@@ -168,7 +168,7 @@ if( BUILD_KDM OR BUILD_KSMSERVER )
     HAVE_DBUS_QT3_07 )
   tde_restore( CMAKE_REQUIRED_INCLUDES CMAKE_REQUIRED_LIBRARIES )
   if( NOT HAVE_DBUS_QT3_07 )
-    tde_message_fatal( "dbus-qt3 (version 0.7) are required, but not found on your system" )
+    tde_message_fatal( "dbus-tqt is required, but was not found on your system" )
   endif( )
 
 endif( )
