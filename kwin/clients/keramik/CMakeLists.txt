@@ -9,7 +9,9 @@
 #
 #################################################
 
-add_subdirectory( config )
+if( NOT WITH_QT4 )
+  add_subdirectory( config )
+endif( NOT WITH_QT4 )
 
 include_directories(
   ${CMAKE_CURRENT_BINARY_DIR}
