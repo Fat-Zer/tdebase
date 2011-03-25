@@ -58,7 +58,7 @@ install( FILES kdesktop.kcfg klaunch.kcfg DESTINATION ${KCFG_INSTALL_DIR} )
 
 tde_add_executable( kcheckrunning
   SOURCES kcheckrunning.cpp
-  LINK X11
+  LINK ${TQT_LIBRARIES} X11
   DESTINATION ${BIN_INSTALL_DIR}
 )
 
