@@ -39,7 +39,7 @@ tde_add_kpart( kcm_kwinrules AUTOMOC
 
 tde_add_kdeinit_executable( kwin_rules_dialog
   SOURCES main.cpp
-  LINK kwinrules-static )
+  LINK ${TQT_LIBRARIES} kwinrules-static )
 
 
 ##### kwinrules (static) ########################
