@@ -38,6 +38,7 @@ configure_file( ${CMAKE_SOURCE_DIR}/cmake/modules/template_dummy_cpp.cmake dummy
 
 tde_add_kdeinit_executable( klipper AUTOMOC
   SOURCES dummy.cpp
+  LINK ${TQT_LIBRARIES}
   EMBED klipper_common-static
 )
 
@@ -46,7 +47,7 @@ tde_add_kdeinit_executable( klipper AUTOMOC
 
 tde_add_kpart( klipper_panelapplet AUTOMOC
   SOURCES applet.cpp applet.skel
-  LINK klipper_common-static
+  LINK ${TQT_LIBRARIES} klipper_common-static
   DESTINATION ${PLUGIN_INSTALL_DIR}
 )
 
