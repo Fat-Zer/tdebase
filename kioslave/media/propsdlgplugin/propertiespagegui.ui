@@ -1,6 +1,6 @@
 <!DOCTYPE UI><UI version="3.3" stdsetdef="1">
 <class>PropertiesPageGUI</class>
-<widget class="QWidget">
+<widget class="TQWidget">
     <property name="name">
         <cstring>PropertiesPageGUI</cstring>
     </property>
@@ -19,7 +19,7 @@
         <property name="margin">
             <number>0</number>
         </property>
-        <widget class="QLayoutWidget">
+        <widget class="TQLayoutWidget">
             <property name="name">
                 <cstring>layout17</cstring>
             </property>
@@ -27,7 +27,7 @@
                 <property name="name">
                     <cstring>unnamed</cstring>
                 </property>
-                <widget class="QGroupBox">
+                <widget class="TQGroupBox">
                     <property name="name">
                         <cstring>groupbox_generic</cstring>
                     </property>
@@ -38,7 +38,7 @@
                         <property name="name">
                             <cstring>unnamed</cstring>
                         </property>
-                        <widget class="QLayoutWidget">
+                        <widget class="TQLayoutWidget">
                             <property name="name">
                                 <cstring>layout15</cstring>
                             </property>
@@ -46,7 +46,7 @@
                                 <property name="name">
                                     <cstring>unnamed</cstring>
                                 </property>
-                                <widget class="QCheckBox">
+                                <widget class="TQCheckBox">
                                     <property name="name">
                                         <cstring>option_ro</cstring>
                                     </property>
@@ -57,7 +57,7 @@
                                         <string>Mount the file system read-only.</string>
                                     </property>
                                 </widget>
-                                <widget class="QCheckBox">
+                                <widget class="TQCheckBox">
                                     <property name="name">
                                         <cstring>option_quiet</cstring>
                                     </property>
@@ -68,7 +68,7 @@
                                         <string>Attempts to chown or chmod files do not return errors, although they fail. Use with caution!</string>
                                     </property>
                                 </widget>
-                                <widget class="QCheckBox">
+                                <widget class="TQCheckBox">
                                     <property name="name">
                                         <cstring>option_sync</cstring>
                                     </property>
@@ -79,7 +79,7 @@
                                         <string>All I/O to the file system should be done synchronously.</string>
                                     </property>
                                 </widget>
-                                <widget class="QCheckBox">
+                                <widget class="TQCheckBox">
                                     <property name="name">
                                         <cstring>option_atime</cstring>
                                     </property>
@@ -90,7 +90,7 @@
                                         <string>Update inode access time for each access.</string>
                                     </property>
                                 </widget>
-                                <widget class="QLayoutWidget">
+                                <widget class="TQLayoutWidget">
                                     <property name="name">
                                         <cstring>layout14</cstring>
                                     </property>
@@ -98,7 +98,7 @@
                                         <property name="name">
                                             <cstring>unnamed</cstring>
                                         </property>
-                                        <widget class="QLabel">
+                                        <widget class="TQLabel">
                                             <property name="name">
                                                 <cstring>textLabel3</cstring>
                                             </property>
@@ -112,7 +112,7 @@
                                                 <string>Under what directory this file system shall be mounted. Please note that there is no guarantee that the system will respect your wish. For one the directory has to be below /media - and it does not yet have to exist.</string>
                                             </property>
                                         </widget>
-                                        <widget class="QLineEdit">
+                                        <widget class="TQLineEdit">
                                             <property name="name">
                                                 <cstring>option_mountpoint</cstring>
                                             </property>
@@ -122,7 +122,7 @@
                                         </widget>
                                     </hbox>
                                 </widget>
-                                <widget class="QCheckBox">
+                                <widget class="TQCheckBox">
                                     <property name="name">
                                         <cstring>option_automount</cstring>
                                     </property>
@@ -137,7 +137,7 @@
                         </widget>
                     </vbox>
                 </widget>
-                <widget class="QGroupBox">
+                <widget class="TQGroupBox">
                     <property name="name">
                         <cstring>groupbox_specific</cstring>
                     </property>
@@ -148,7 +148,7 @@
                         <property name="name">
                             <cstring>unnamed</cstring>
                         </property>
-                        <widget class="QLayoutWidget">
+                        <widget class="TQLayoutWidget">
                             <property name="name">
                                 <cstring>layout11</cstring>
                             </property>
@@ -156,7 +156,7 @@
                                 <property name="name">
                                     <cstring>unnamed</cstring>
                                 </property>
-                                <widget class="QCheckBox">
+                                <widget class="TQCheckBox">
                                     <property name="name">
                                         <cstring>option_flush</cstring>
                                     </property>
@@ -167,7 +167,7 @@
                                         <string>Always flush all data to the hot plug devices immediately and don't cache it.</string>
                                     </property>
                                 </widget>
-                                <widget class="QCheckBox">
+                                <widget class="TQCheckBox">
                                     <property name="name">
                                         <cstring>option_utf8</cstring>
                                     </property>
@@ -178,7 +178,7 @@
                                         <string>UTF8 is the filesystem safe 8-bit encoding of Unicode that is used by the console. It can be be enabled for the filesystem with this option.</string>
                                     </property>
                                 </widget>
-                                <widget class="QCheckBox">
+                                <widget class="TQCheckBox">
                                     <property name="name">
                                         <cstring>option_uid</cstring>
                                     </property>
@@ -189,7 +189,7 @@
                                         <string>Mount this file system as user.</string>
                                     </property>
                                 </widget>
-                                <widget class="QLayoutWidget">
+                                <widget class="TQLayoutWidget">
                                     <property name="name">
                                         <cstring>layout7</cstring>
                                     </property>
@@ -197,7 +197,7 @@
                                         <property name="name">
                                             <cstring>unnamed</cstring>
                                         </property>
-                                        <widget class="QLabel">
+                                        <widget class="TQLabel">
                                             <property name="name">
                                                 <cstring>text_journaling</cstring>
                                             </property>
@@ -220,7 +220,7 @@
            Data ordering is not preserved - data may be written into the main file system after its metadata has been committed to the journal.  This is rumoured to  be the  highest-throughput option.  It guarantees internal file system integrity,  however it can allow old data to appear in files after  a  crash  and  journal recovery.</string>
                                             </property>
                                         </widget>
-                                        <widget class="QComboBox">
+                                        <widget class="TQComboBox">
                                             <item>
                                                 <property name="text">
                                                     <string>All Data</string>
@@ -254,7 +254,7 @@
                                         </widget>
                                     </hbox>
                                 </widget>
-                                <widget class="QLayoutWidget">
+                                <widget class="TQLayoutWidget">
                                     <property name="name">
                                         <cstring>layout14</cstring>
                                     </property>
@@ -262,7 +262,7 @@
                                         <property name="name">
                                             <cstring>unnamed</cstring>
                                         </property>
-                                        <widget class="QLabel">
+                                        <widget class="TQLabel">
                                             <property name="name">
                                                 <cstring>text_shortname</cstring>
                                             </property>
@@ -288,7 +288,7 @@ Display the shortname as is; store a long name when the short name is not all lo
 Display the short name as is; store a long name when the short name is not all upper case.</string>
                                             </property>
                                         </widget>
-                                        <widget class="QComboBox">
+                                        <widget class="TQComboBox">
                                             <item>
                                                 <property name="text">
                                                     <string>Lower</string>
@@ -334,7 +334,7 @@ Display the short name as is; store a long name when the short name is not all u
                         </widget>
                     </vbox>
                 </widget>
-                <widget class="QLabel">
+                <widget class="TQLabel">
                     <property name="name">
                         <cstring>label_filesystem</cstring>
                     </property>
