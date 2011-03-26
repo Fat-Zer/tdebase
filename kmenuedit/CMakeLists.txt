@@ -36,7 +36,7 @@ install( FILES kcontroleditui.rc DESTINATION ${DATA_INSTALL_DIR}/kcontroledit )
 
 tde_add_kdeinit_executable( kmenuedit AUTOMOC
   SOURCES main.cpp
-  LINK kmenueditcommon-static
+  LINK ${TQT_LIBRARIES} kmenueditcommon-static
 )
 
 
@@ -44,7 +44,7 @@ tde_add_kdeinit_executable( kmenuedit AUTOMOC
 
 tde_add_kdeinit_executable( kcontroledit AUTOMOC
   SOURCES kcontrol_main.cpp
-  LINK kmenueditcommon-static
+  LINK ${TQT_LIBRARIES} kmenueditcommon-static
 )
 
 
