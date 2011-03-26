@@ -31,6 +31,6 @@ include_directories(
 
 tde_add_executable( ksplashsimple
   SOURCES main.cpp
-  LINK X11 ${XINERAMA_LIBRARY}
+  LINK ${TQT_LIBRARIES} X11 ${XINERAMA_LIBRARY}
   DESTINATION ${BIN_INSTALL_DIR}
 )
