@@ -144,7 +144,6 @@ endif( )
 
 
 # required stuff
-find_package( Qt )
 find_package( TQt )
 find_package( TDE )
 
