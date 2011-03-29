@@ -26,6 +26,10 @@ include_directories(
   ${TQT_INCLUDE_DIRS}
 )
 
+link_directories(
+  ${TQT_LIBRARY_DIRS}
+)
+
 
 ##### ksplashsimple (executable) ################
 
