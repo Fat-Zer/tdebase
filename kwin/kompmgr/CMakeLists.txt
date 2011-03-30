@@ -9,35 +9,19 @@
 #
 #################################################
 
-##### check for xcomposite ######################
 
-if( WITH_XCOMPOSITE )
+if( NOT WITH_XRENDER )
+  tde_message_fatal( "xrender support is needed to build kompmgr.\n Pass -DWITH_XRENDER=ON to cmake arguments." )
+elseif( NOT WITH_XFIXES )
+  tde_message_fatal( "xfixes support is needed to build kompmgr.\n Pass -DWITH_XFIXES=ON to cmake arguments." )
+elseif( NOT WITH_XDAMAGE )
+  tde_message_fatal( "xdamage support is needed to build kompmgr.\n Pass -DWITH_XDAMAGE=ON to cmake arguments." )
+elseif( NOT WITH_XEXT )
+  tde_message_fatal( "xext support is needed to build kompmgr.\n Pass -DWITH_XEXT=ON to cmake arguments." )
+endif( )
 
-  pkg_search_module( XCOMPOSITE xcomposite )
-  if( XCOMPOSITE_FOUND )
-    set( HAVE_XCOMPOSITE 1 CACHE INTERNAL "" )
-  else( XCOMPOSITE_FOUND )
-    message(FATAL_ERROR "\nxcomposite are requested, but not found on your system" )
-  endif( XCOMPOSITE_FOUND )
-
-  pkg_search_module( XFIXES xfixes )
-  if( XFIXES_FOUND )
-    set( HAVE_XFIXES 1 CACHE INTERNAL "" )
-  else( XFIXES_FOUND )
-    message(FATAL_ERROR "\nxfixes are required, but not found on your system" )
-  endif( XFIXES_FOUND )
-
-  pkg_search_module( XDAMAGE xdamage )
-  if( XDAMAGE_FOUND )
-    set( HAVE_XDAMAGE 1 CACHE INTERNAL "" )
-  else( XDAMAGE_FOUND )
-    message(FATAL_ERROR "\nxdamage are required, but not found on your system" )
-  endif( XDAMAGE_FOUND )
-
-endif( WITH_XCOMPOSITE )
 
 include_directories(
-  ${CMAKE_CURRENT_BINARY_DIR}
   ${TDE_INCLUDE_DIR}
   ${TQT_INCLUDE_DIRS}
 )
@@ -49,8 +33,8 @@ link_directories(
 
 ##### kompmgr (executable) #######################
 
-tde_add_executable( kompmgr AUTOMOC
+tde_add_executable( kompmgr
   SOURCES kompmgr.c
-  LINK m X11 ${XFIXES_LIBRARIES} ${XRENDER_LIBRARIES} ${XCOMPOSITE_LIBRARIES} ${XDAMAGE_LIBRARIES}
+  LINK m ${XRENDER_LIBRARIES} ${XFIXES_LIBRARIES} ${XDAMAGE_LIBRARIES} ${XEXT_LIBRARIES} ${XCOMPOSITE_LIBRARIES}
   DESTINATION ${BIN_INSTALL_DIR}
 )

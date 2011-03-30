@@ -16,7 +16,7 @@ add_subdirectory( pics )
 add_subdirectory( clients )
 add_subdirectory( oldheaders )
 add_subdirectory( data )
-add_subdirectory( kompmgr )
+tde_conditional_add_subdirectory( WITH_XCOMPOSITE kompmgr )
 
 
 include_directories(
