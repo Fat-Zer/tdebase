@@ -52,6 +52,12 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include <X11/keysym.h>
 #include <X11/cursorfont.h>
 
+static int
+ignoreXError( Display *dpy ATTR_UNUSED, XErrorEvent *event ATTR_UNUSED )
+{
+        return 0;
+}
+
 extern "C" {
 
 static void
@@ -239,7 +245,11 @@ kg_main( const char *argv0 )
 		}
 		app.restoreOverrideCursor();
 		Debug( "entering event loop\n" );
+		// Qt4 has a nasty habit of generating BadWindow errors in normal operation, so we simply ignore them
+		// This also prevents the user from being dropped to a console login if Xorg glitches or is buggy
+		XSetErrorHandler( ignoreXError );
 		rslt = dialog->exec();
+		XSetErrorHandler( (XErrorHandler)0 );
 		Debug( "left event loop\n" );
 		delete dialog;
 		delete proc2;
