@@ -1044,7 +1044,7 @@ TQObject *KonqMainWindow::lastFrame( KonqView *view )
   TQObject *nextFrame, *viewFrame;
   nextFrame = TQT_TQOBJECT(view->frame());
   viewFrame = 0;
-  while ( nextFrame != 0 && ! nextFrame->inherits( "QWidgetStack" ) ) {
+  while ( nextFrame != 0 && ! nextFrame->inherits( TQWIDGETSTACK_OBJECT_NAME_STRING ) ) {
     viewFrame = nextFrame;
     nextFrame = nextFrame->tqparent();
   }

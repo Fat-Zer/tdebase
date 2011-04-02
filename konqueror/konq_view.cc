@@ -472,7 +472,7 @@ void KonqView::connectPart(  )
 
   m_pPart->widget()->installEventFilter( this );
 
-  if (m_bBackRightClick && m_pPart->widget()->inherits("QScrollView") )
+  if (m_bBackRightClick && m_pPart->widget()->inherits(TQSCROLLVIEW_OBJECT_NAME_STRING) )
   {
     (static_cast<TQScrollView *>(m_pPart->widget()))->viewport()->installEventFilter( this );
   }
@@ -1220,7 +1220,7 @@ void KonqView::reparseConfiguration()
     bool b = KonqSettings::backRightClick();
     if ( m_bBackRightClick != b )
     {
-        if (m_bBackRightClick && m_pPart->widget()->inherits("QScrollView") )
+        if (m_bBackRightClick && m_pPart->widget()->inherits(TQSCROLLVIEW_OBJECT_NAME_STRING) )
         {
             (static_cast<TQScrollView *>(m_pPart->widget()))->viewport()->installEventFilter( this );
         }
