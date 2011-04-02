@@ -182,13 +182,13 @@ void ModifiersModule::initGUI()
 	plbl = new TQLabel( i18n("X11-Mod"), pGroup );
 	plbl->setFont( font );
 
-	new TQLabel( i18n("TQAccel", "Shift"), pGroup );
+	new TQLabel( i18n(TQACCEL_OBJECT_NAME_STRING, "Shift"), pGroup );
 	new TQLabel( "shift", pGroup );
 
-	m_plblCtrl = new TQLabel( i18n("TQAccel", "Ctrl"), pGroup );
+	m_plblCtrl = new TQLabel( i18n(TQACCEL_OBJECT_NAME_STRING, "Ctrl"), pGroup );
 	new TQLabel( "control", pGroup );
 
-	m_plblAlt = new TQLabel( i18n("TQAccel", "Alt"), pGroup );
+	m_plblAlt = new TQLabel( i18n(TQACCEL_OBJECT_NAME_STRING, "Alt"), pGroup );
 	new TQLabel( "mod1", pGroup );
 
 	m_plblWin = new TQLabel( i18n("Win"), pGroup );
@@ -285,8 +285,8 @@ void ModifiersModule::updateWidgets()
 		}
 		m_pchkMacSwap->setEnabled( true );
 	} else {
-		m_plblCtrl->setText( i18n("TQAccel", "Ctrl") );
-		m_plblAlt->setText( i18n("TQAccel", "Alt") );
+		m_plblCtrl->setText( i18n(TQACCEL_OBJECT_NAME_STRING, "Ctrl") );
+		m_plblAlt->setText( i18n(TQACCEL_OBJECT_NAME_STRING, "Alt") );
 		m_plblWin->setText( i18n("Win") );
 		m_pchkMacSwap->setEnabled( false );
 	}
