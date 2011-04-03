@@ -19,6 +19,10 @@
 #define COMPOSITE
 #endif
 
+#ifdef Q_MOC_RUN
+#define COMPOSITE
+#endif
+
 class KConfig;
 class TQTimer;
 class TQPixmap;
@@ -54,6 +58,7 @@ class KBackgroundManager
       virtual public KBackgroundIface
 {
     Q_OBJECT
+    TQ_OBJECT
 
 public:
     KBackgroundManager(TQWidget *desktop, KWinModule* kwinModule);
