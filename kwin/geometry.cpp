@@ -29,8 +29,6 @@ License. See the file "COPYING" for the exact licensing terms.
 #include "geometrytip.h"
 #include "rules.h"
 
-extern Time qt_x_time;
-
 namespace KWinInternal
 {
 
@@ -688,7 +686,7 @@ void Workspace::updateTopMenuGeometry( Client* c )
         static Atom msg_type_atom = XInternAtom( qt_xdisplay(), "_KDE_TOPMENU_MINSIZE", False );
         ev.xclient.message_type = msg_type_atom;
         ev.xclient.format = 32;
-        ev.xclient.data.l[0] = qt_x_time;
+        ev.xclient.data.l[0] = GET_QT_X_TIME();
         ev.xclient.data.l[1] = topmenu_space->width();
         ev.xclient.data.l[2] = topmenu_space->height();
         ev.xclient.data.l[3] = 0;
@@ -2319,9 +2317,9 @@ bool Client::startMoveResize()
     XMapRaised( qt_xdisplay(), move_resize_grab_window );
     if( XGrabPointer( qt_xdisplay(), move_resize_grab_window, False,
         ButtonPressMask | ButtonReleaseMask | PointerMotionMask | EnterWindowMask | LeaveWindowMask,
-        GrabModeAsync, GrabModeAsync, move_resize_grab_window, cursor.handle(), qt_x_time ) == Success )
+        GrabModeAsync, GrabModeAsync, move_resize_grab_window, cursor.handle(), GET_QT_X_TIME() ) == Success )
         has_grab = true;
-    if( XGrabKeyboard( qt_xdisplay(), frameId(), False, GrabModeAsync, GrabModeAsync, qt_x_time ) == Success )
+    if( XGrabKeyboard( qt_xdisplay(), frameId(), False, GrabModeAsync, GrabModeAsync, GET_QT_X_TIME() ) == Success )
         has_grab = true;
     if( !has_grab ) // at least one grab is necessary in order to be able to finish move/resize
         {
@@ -2389,8 +2387,8 @@ void Client::leaveMoveResize()
     if ( ( isMove() && rules()->checkMoveResizeMode( options->moveMode ) != Options::Opaque )
       || ( isResize() && rules()->checkMoveResizeMode( options->resizeMode ) != Options::Opaque ) )
         ungrabXServer();
-    XUngrabKeyboard( qt_xdisplay(), qt_x_time );
-    XUngrabPointer( qt_xdisplay(), qt_x_time );
+    XUngrabKeyboard( qt_xdisplay(), GET_QT_X_TIME() );
+    XUngrabPointer( qt_xdisplay(), GET_QT_X_TIME() );
     XDestroyWindow( qt_xdisplay(), move_resize_grab_window );
     move_resize_grab_window = None;
     workspace()->setClientIsMoving(0);
@@ -2507,7 +2505,7 @@ void Client::handleMoveResize( int x, int y, int x_root, int y_root )
     bool update = false;
     if( isResize())
         {
-        // first resize (without checking constrains), then snap, then check bounds, then check constrains
+        // first resize (without checking constraints), then snap, then check bounds, then check constraints
         TQRect orig = initialMoveResizeGeom;
         Sizemode sizemode = SizemodeAny;
         switch ( mode )
@@ -2642,7 +2640,7 @@ void Client::handleMoveResize( int x, int y, int x_root, int y_root )
             }                               // so the geometry tip will be painted above the outline
         }
     if ( isMove() )
-      workspace()->clientMoved(globalPos, qt_x_time);
+      workspace()->clientMoved(globalPos, GET_QT_X_TIME());
     }
 
 

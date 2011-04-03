@@ -30,7 +30,6 @@ License. See the file "COPYING" for the exact licensing terms.
 #include <X11/Xatom.h>
 #include <stdlib.h>
 
-extern Time qt_x_time;
 extern Atom qt_window_role;
 
 namespace KWinInternal
@@ -198,7 +197,7 @@ bool Workspace::workspaceEvent( XEvent * e )
     if ( mouse_emulation && (e->type == ButtonPress || e->type == ButtonRelease ) ) 
         {
         mouse_emulation = FALSE;
-        XUngrabKeyboard( qt_xdisplay(), qt_x_time );
+        XUngrabKeyboard( qt_xdisplay(), GET_QT_X_TIME() );
         }
 
     if( e->type == PropertyNotify || e->type == ClientMessage )
@@ -293,9 +292,11 @@ bool Workspace::workspaceEvent( XEvent * e )
                  !e->xcreatewindow.override_redirect )
             {
         // see comments for allowClientActivation()
+            Time my_qtx_time = GET_QT_X_TIME();
             XChangeProperty(qt_xdisplay(), e->xcreatewindow.window,
                             atoms->kde_net_wm_user_creation_time, XA_CARDINAL,
-                            32, PropModeReplace, (unsigned char *)&qt_x_time, 1);
+                            32, PropModeReplace, (unsigned char *)&my_qtx_time, 1);
+            SET_QT_X_TIME(my_qtx_time);
             }
         break;
 
@@ -1344,6 +1345,7 @@ bool Client::buttonPressEvent( Window w, int button, int state, int x, int y, in
 
     if( w == wrapperId() || w == frameId() || w == decorationId())
         { // FRAME neco s tohohle by se melo zpracovat, nez to dostane dekorace
+        { // FRAME something out of this would be processed before it gets decorations
         updateUserTime();
         workspace()->setWasUserInteraction();
         uint keyModX = (options->keyCmdAllModKey() == Qt::Key_Meta) ?
@@ -1548,7 +1550,7 @@ static bool waitingMotionEvent()
 // of processes events reaches the timestamp of the last suitable
 // MotionNotify event in the queue.
     if( next_motion_time != CurrentTime
-        && timestampCompare( qt_x_time, next_motion_time ) < 0 )
+        && timestampCompare( GET_QT_X_TIME(), next_motion_time ) < 0 )
         return true;
     was_motion = false;
     XSync( qt_xdisplay(), False ); // this helps to discard more MotionNotify events

@@ -68,8 +68,6 @@ static Atom wm_save_yourself = None;
 static Atom wm_protocols = None;
 static Atom wm_client_leader = None;
 
-extern Time qt_x_time;
-
 static int winsErrorHandler(Display *, XErrorEvent *ev)
 {
     if (windowMapPtr) {
@@ -153,7 +151,7 @@ void KSMServer::performLegacySessionSave()
             ev.xclient.message_type = wm_protocols;
             ev.xclient.format = 32;
             ev.xclient.data.l[0] = wm_save_yourself;
-            ev.xclient.data.l[1] = qt_x_time;
+            ev.xclient.data.l[1] = GET_QT_X_TIME();
             XSelectInput(newdisplay, w, PropertyChangeMask|StructureNotifyMask);
             XSendEvent(newdisplay, w, False, 0, &ev);
         }

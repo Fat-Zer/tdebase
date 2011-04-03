@@ -36,8 +36,6 @@ License. See the file "COPYING" for the exact licensing terms.
 #undef INT8
 #undef INT32
 
-extern Time qt_x_time;
-
 namespace KWinInternal
 {
 
@@ -148,7 +146,7 @@ Application::~Application()
     delete Workspace::self();
     if( owner.ownerWindow() != None ) // if there was no --replace (no new WM)
         {
-        XSetInputFocus( qt_xdisplay(), PointerRoot, RevertToPointerRoot, qt_x_time );
+        XSetInputFocus( qt_xdisplay(), PointerRoot, RevertToPointerRoot, GET_QT_X_TIME() );
         DCOPRef ref( "kded", "kded" );
         if( !ref.send( "loadModule", TQCString( "kdetrayproxy" )))
             kdWarning( 176 ) << "Loading of kdetrayproxy failed." << endl;

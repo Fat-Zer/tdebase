@@ -31,8 +31,6 @@ License. See the file "COPYING" for the exact licensing terms.
 #include "group.h"
 #include "rules.h"
 
-extern Time qt_x_time;
-
 namespace KWinInternal
 {
 
@@ -672,7 +670,7 @@ void Workspace::unfakeActivity( Client* c )
 void Client::updateUserTime( Time time )
     { // copied in Group::updateUserTime
     if( time == CurrentTime )
-        time = qt_x_time;
+        time = GET_QT_X_TIME();
     if( time != -1U
         && ( user_time == CurrentTime
             || timestampCompare( time, user_time ) > 0 )) // time > user_time
@@ -997,7 +995,7 @@ void Group::startupIdChanged()
 void Group::updateUserTime( Time time )
     { // copy of Client::updateUserTime
     if( time == CurrentTime )
-        time = qt_x_time;
+        time = GET_QT_X_TIME();
     if( time != -1U
         && ( user_time == CurrentTime
             || timestampCompare( time, user_time ) > 0 )) // time > user_time

@@ -45,8 +45,6 @@ License. See the file "COPYING" for the exact licensing terms.
 #include <X11/keysymdef.h>
 #include <X11/cursorfont.h>
 
-extern Time qt_x_time;
-
 namespace KWinInternal
 {
 
@@ -153,8 +151,8 @@ Workspace::Workspace( bool restore )
 
     delayFocusTimer = 0; 
     
-    electric_time_first = qt_x_time;
-    electric_time_last = qt_x_time;
+    electric_time_first = GET_QT_X_TIME();
+    electric_time_last = GET_QT_X_TIME();
 
     if ( restore )
       loadSessionInfo();
@@ -1855,7 +1853,7 @@ void Workspace::slotMouseEmulation()
 
     if ( mouse_emulation ) 
         {
-        XUngrabKeyboard(qt_xdisplay(), qt_x_time);
+        XUngrabKeyboard(qt_xdisplay(), GET_QT_X_TIME());
         mouse_emulation = FALSE;
         return;
         }
@@ -1863,7 +1861,7 @@ void Workspace::slotMouseEmulation()
     if ( XGrabKeyboard(qt_xdisplay(),
                        root, FALSE,
                        GrabModeAsync, GrabModeAsync,
-                       qt_x_time) == GrabSuccess ) 
+                       GET_QT_X_TIME()) == GrabSuccess ) 
         {
         mouse_emulation = TRUE;
         mouse_emulation_state = 0;
@@ -1919,7 +1917,7 @@ unsigned int Workspace::sendFakedMouseEvent( TQPoint pos, WId w, MouseEmulation 
             e.xmotion.window = w;
             e.xmotion.root = qt_xrootwin();
             e.xmotion.subwindow = w;
-            e.xmotion.time = qt_x_time;
+            e.xmotion.time = GET_QT_X_TIME();
             e.xmotion.x = x;
             e.xmotion.y = y;
             e.xmotion.x_root = pos.x();
@@ -1935,7 +1933,7 @@ unsigned int Workspace::sendFakedMouseEvent( TQPoint pos, WId w, MouseEmulation 
             e.xbutton.window = w;
             e.xbutton.root = qt_xrootwin();
             e.xbutton.subwindow = w;
-            e.xbutton.time = qt_x_time;
+            e.xbutton.time = GET_QT_X_TIME();
             e.xbutton.x = x;
             e.xbutton.y = y;
             e.xbutton.x_root = pos.x();
@@ -2061,7 +2059,7 @@ bool Workspace::keyPressMouseEmulation( XKeyEvent& ev )
             }
     // fall through
         case XK_Escape:
-            XUngrabKeyboard(qt_xdisplay(), qt_x_time);
+            XUngrabKeyboard(qt_xdisplay(), GET_QT_X_TIME());
             mouse_emulation = FALSE;
             return TRUE;
         default:
@@ -2356,7 +2354,7 @@ bool Workspace::electricBorder(XEvent *e)
                  || e->xclient.window == electric_right_border ))
             {
             updateXTime();
-            clientMoved( TQPoint( e->xclient.data.l[2]>>16, e->xclient.data.l[2]&0xffff), qt_x_time );
+            clientMoved( TQPoint( e->xclient.data.l[2]>>16, e->xclient.data.l[2]&0xffff), GET_QT_X_TIME() );
             return true;
             }
         }
@@ -2492,7 +2490,7 @@ bool Workspace::checkStartupNotification( Window w, KStartupInfoId& id, KStartup
  */
 void Workspace::focusToNull()
     {
-    XSetInputFocus(qt_xdisplay(), null_focus_window, RevertToPointerRoot, qt_x_time );
+    XSetInputFocus(qt_xdisplay(), null_focus_window, RevertToPointerRoot, GET_QT_X_TIME() );
     }
 
 void Workspace::helperDialog( const TQString& message, const Client* c )

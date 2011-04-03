@@ -39,7 +39,6 @@
 // TODO a valid timestamp should be passed in the DCOP calls that
 // are not for user scripting
 #include <X11/Xlib.h>
-extern Time qt_x_user_time;
 
 KonquerorIface::KonquerorIface()
  : DCOPObject( "KonquerorIface" )
@@ -52,7 +51,7 @@ KonquerorIface::~KonquerorIface()
 
 DCOPRef KonquerorIface::openBrowserWindow( const TQString &url )
 {
-    qt_x_user_time = 0;
+    SET_QT_X_USER_TIME(0);
     KonqMainWindow *res = KonqMisc::createSimpleWindow( KURL(url) );
     if ( !res )
         return DCOPRef();
@@ -78,7 +77,7 @@ DCOPRef KonquerorIface::createNewWindowASN( const TQString &url, const TQCString
 
 DCOPRef KonquerorIface::createNewWindowWithSelection( const TQString &url, TQStringList filesToSelect )
 {
-    qt_x_user_time = 0;
+    SET_QT_X_USER_TIME(0);
     KonqMainWindow *res = KonqMisc::createNewWindow( KURL(url), KParts::URLArgs(), false, filesToSelect );
     if ( !res )
         return DCOPRef();
@@ -93,7 +92,7 @@ DCOPRef KonquerorIface::createNewWindowWithSelectionASN( const TQString &url, TQ
 
 DCOPRef KonquerorIface::createNewWindow( const TQString &url, const TQString &mimetype, bool tempFile )
 {
-    qt_x_user_time = 0;
+    SET_QT_X_USER_TIME(0);
     KParts::URLArgs args;
     args.serviceType = mimetype;
     // Filter the URL, so that "kfmclient openURL gg:foo" works also when konq is already running
@@ -113,7 +112,7 @@ DCOPRef KonquerorIface::createNewWindowASN( const TQString &url, const TQString 
 
 DCOPRef KonquerorIface::createBrowserWindowFromProfile( const TQString &path )
 {
-    qt_x_user_time = 0;
+    SET_QT_X_USER_TIME(0);
     kdDebug(1202) << "void KonquerorIface::createBrowserWindowFromProfile( const TQString &path ) " << endl;
     kdDebug(1202) << path << endl;
     KonqMainWindow *res = KonqMisc::createBrowserWindowFromProfile( path, TQString::null );
@@ -130,7 +129,7 @@ DCOPRef KonquerorIface::createBrowserWindowFromProfileASN( const TQString &path,
 
 DCOPRef KonquerorIface::createBrowserWindowFromProfile( const TQString & path, const TQString &filename )
 {
-    qt_x_user_time = 0;
+    SET_QT_X_USER_TIME(0);
     kdDebug(1202) << "void KonquerorIface::createBrowserWindowFromProfile( path, filename ) " << endl;
     kdDebug(1202) << path << "," << filename << endl;
     KonqMainWindow *res = KonqMisc::createBrowserWindowFromProfile( path, filename );
@@ -148,7 +147,7 @@ DCOPRef KonquerorIface::createBrowserWindowFromProfileASN( const TQString &path,
 
 DCOPRef KonquerorIface::createBrowserWindowFromProfileAndURL( const TQString & path, const TQString &filename, const TQString &url )
 {
-    qt_x_user_time = 0;
+    SET_QT_X_USER_TIME(0);
     KonqMainWindow *res = KonqMisc::createBrowserWindowFromProfile( path, filename, KURL(url) );
     if ( !res )
         return DCOPRef();
@@ -164,7 +163,7 @@ DCOPRef KonquerorIface::createBrowserWindowFromProfileAndURLASN( const TQString 
 
 DCOPRef KonquerorIface::createBrowserWindowFromProfileAndURL( const TQString &path, const TQString &filename, const TQString &url, const TQString &mimetype )
 {
-    qt_x_user_time = 0;
+    SET_QT_X_USER_TIME(0);
     KParts::URLArgs args;
     args.serviceType = mimetype;
     KonqMainWindow *res = KonqMisc::createBrowserWindowFromProfile( path, filename, KURL(url), args );

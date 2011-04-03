@@ -35,8 +35,6 @@ License. See the file "COPYING" for the exact licensing terms.
 
 // specify externals before namespace
 
-extern Time qt_x_time;
-
 namespace KWinInternal
 {
 
@@ -694,7 +692,7 @@ void TabBox::delayedShow()
 
 void TabBox::handleMouseEvent( XEvent* e )
     {
-    XAllowEvents( qt_xdisplay(), AsyncPointer, qt_x_time );
+    XAllowEvents( qt_xdisplay(), AsyncPointer, GET_QT_X_TIME() );
     if( e->type != ButtonPress )
         return;
     TQPoint pos( e->xbutton.x_root, e->xbutton.y_root );
@@ -852,7 +850,7 @@ void Workspace::slotWalkThroughWindows()
         return;
     if ( options->altTabStyle == Options::CDE || !options->focusPolicyIsReasonable())
         {
-        //XUngrabKeyboard(qt_xdisplay(), qt_x_time); // need that because of accelerator raw mode
+        //XUngrabKeyboard(qt_xdisplay(), GET_QT_X_TIME()); // need that because of accelerator raw mode
         // CDE style raise / lower
         CDEWalkThroughWindows( true );
         }
@@ -1319,7 +1317,7 @@ Client* Workspace::previousStaticClient( Client* c ) const
 bool Workspace::establishTabBoxGrab()
     {
     if( XGrabKeyboard( qt_xdisplay(), root, FALSE,
-        GrabModeAsync, GrabModeAsync, qt_x_time) != GrabSuccess )
+        GrabModeAsync, GrabModeAsync, GET_QT_X_TIME()) != GrabSuccess )
         return false;
     // Don't try to establish a global mouse grab using XGrabPointer, as that would prevent
     // using Alt+Tab while DND (#44972). However force passive grabs on all windows
@@ -1335,7 +1333,7 @@ bool Workspace::establishTabBoxGrab()
 
 void Workspace::removeTabBoxGrab()
     {
-    XUngrabKeyboard(qt_xdisplay(), qt_x_time);
+    XUngrabKeyboard(qt_xdisplay(), GET_QT_X_TIME());
     assert( forced_global_mouse_grab );
     forced_global_mouse_grab = false;
     if( active_client != NULL )

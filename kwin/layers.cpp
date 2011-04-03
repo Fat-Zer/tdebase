@@ -73,8 +73,6 @@ License. See the file "COPYING" for the exact licensing terms.
 #include "group.h"
 #include "rules.h"
 
-extern Time qt_x_time;
-
 namespace KWinInternal
 {
 

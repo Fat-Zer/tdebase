@@ -58,8 +58,6 @@
 
 */
 
-extern Time qt_x_time;
-
 ClipboardPoll::ClipboardPoll( TQWidget* parent )
     :   TQWidget( parent )
     , xfixes_event_base( -1 )
@@ -117,7 +115,7 @@ void ClipboardPoll::initPolling()
     timer.start( 1000, false );
     selection.atom = XA_PRIMARY;
     clipboard.atom = xa_clipboard;
-    selection.last_change = clipboard.last_change = qt_x_time; // don't trigger right after startup
+    selection.last_change = clipboard.last_change = GET_QT_X_TIME(); // don't trigger right after startup
     selection.last_owner = XGetSelectionOwner( qt_xdisplay(), XA_PRIMARY );
 #ifdef NOISY_KLIPPER_
     kdDebug() << "(1) Setting last_owner for =" << "selection" << ":" << selection.last_owner << endl;
@@ -154,7 +152,7 @@ bool ClipboardPoll::x11Event( XEvent* e )
 #ifdef NOISY_KLIPPER_
             kdDebug() << "SELECTION CHANGED (XFIXES)" << endl;
 #endif
-            qt_x_time = ev->timestamp;
+            SET_QT_X_TIME(ev->timestamp);
             emit clipboardChanged( true );
         }
         else if( ev->selection == xa_clipboard && !kapp->tqclipboard()->ownsClipboard())
@@ -162,7 +160,7 @@ bool ClipboardPoll::x11Event( XEvent* e )
 #ifdef NOISY_KLIPPER_
             kdDebug() << "CLIPBOARD CHANGED (XFIXES)" << endl;
 #endif
-            qt_x_time = ev->timestamp;
+            SET_QT_X_TIME(ev->timestamp);
             emit clipboardChanged( false );
         }
     }
@@ -272,9 +270,9 @@ bool ClipboardPoll::checkTimestamp( SelectionData& data )
         return false;
     }
     XDeleteProperty( qt_xdisplay(), winId(), data.timestamp_atom );
-    XConvertSelection( qt_xdisplay(), data.atom, xa_timestamp, data.timestamp_atom, winId(), qt_x_time );
+    XConvertSelection( qt_xdisplay(), data.atom, xa_timestamp, data.timestamp_atom, winId(), GET_QT_X_TIME() );
     data.waiting_for_timestamp = true;
-    data.waiting_x_time = qt_x_time;
+    data.waiting_x_time = GET_QT_X_TIME();
 #ifdef REALLY_NOISY_KLIPPER_
     kdDebug() << "WAITING TIMESTAMP:" << ( data.atom == XA_PRIMARY ) << endl;
 #endif

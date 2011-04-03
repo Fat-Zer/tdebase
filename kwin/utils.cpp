@@ -36,14 +36,6 @@ License. See the file "COPYING" for the exact licensing terms.
 #include <Qt/qx11info_x11.h>
 #endif // USE_QT4
 
-#ifdef USE_QT4
-#define SET_X_TIME(x) QX11Info::setAppTime(x)
-#else // USE_QT4
-#define SET_X_TIME(x) qt_x_time = x
-#endif // USE_QT4
-
-extern Time qt_x_time;
-
 #endif
 
 namespace KWinInternal
@@ -281,7 +273,7 @@ void updateXTime()
         XCheckIfEvent( qt_xdisplay(), &dummy, update_x_time_predicate, NULL );
         }
     assert( next_x_time != CurrentTime );
-    SET_X_TIME(next_x_time);
+    SET_QT_X_TIME(next_x_time);
     XEvent ev; // remove the PropertyNotify event from the events queue
     XWindowEvent( qt_xdisplay(), w->winId(), PropertyChangeMask, &ev );
     }

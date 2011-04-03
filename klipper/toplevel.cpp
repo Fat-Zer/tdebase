@@ -1037,9 +1037,6 @@ bool KlipperWidget::ignoreClipboardChanges() const
 // Call KApplication::updateUserTime() only from functions that are
 // called from outside (DCOP), or from TQTimer timeout !
 
-extern Time qt_x_time;
-extern Time qt_x_user_time;
-
 static Time next_x_time;
 static Bool update_x_time_predicate( Display*, XEvent* event, XPointer )
 {
@@ -1080,7 +1077,7 @@ void KlipperWidget::updateTimestamp()
 { // Qt3.3.0 and 3.3.1 use qt_x_user_time for clipboard operations
     Time& time = ( strcmp( qVersion(), "3.3.1" ) == 0
                 || strcmp( qVersion(), "3.3.0" ) == 0 )
-                ? qt_x_user_time : qt_x_time;
+                ? GET_QT_X_USER_TIME() : GET_QT_X_TIME();
     static TQWidget* w = 0;
     if ( !w )
         w = new TQWidget;

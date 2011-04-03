@@ -57,8 +57,6 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
 
-extern Time qt_x_time;
-
 extern "C"
 {
     KDE_EXPORT KPanelApplet* init( TQWidget* parent_P, const TQString& configFile_P )
@@ -478,7 +476,7 @@ void MenuEmbed::setMinimumSize( int w, int h )
         assert( msg_type_atom != None );
         ev.xclient.message_type = msg_type_atom;
         ev.xclient.format = 32;
-        ev.xclient.data.l[0] = qt_x_time;
+        ev.xclient.data.l[0] = GET_QT_X_TIME();
         ev.xclient.data.l[1] = minimumWidth();
         ev.xclient.data.l[2] = minimumHeight();
         ev.xclient.data.l[3] = 0;
