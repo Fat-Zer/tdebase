@@ -21,6 +21,7 @@ License. See the file "COPYING" for the exact licensing terms.
 
 #ifndef KCMRULES
 
+#include <tqapplication.h>
 #include <kxerrorhandler.h>
 #include <assert.h>
 #include <kdebug.h>
