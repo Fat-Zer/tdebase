@@ -12,7 +12,7 @@ In this file:
 
 About kdebase
 -------------
-kdebase is the second mandatory package (besides kdelibs) for the K Desktop
+kdebase is the second mandatory package (besides kdelibs) for the Trinity Desktop
 Environment. Here we have various applications and infrastructure files and
 libraries. Here is an overview of the directories:
 
