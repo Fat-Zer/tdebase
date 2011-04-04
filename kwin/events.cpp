@@ -1345,7 +1345,7 @@ bool Client::buttonPressEvent( Window w, int button, int state, int x, int y, in
 
     if( w == wrapperId() || w == frameId() || w == decorationId())
         { // FRAME neco s tohohle by se melo zpracovat, nez to dostane dekorace
-        { // FRAME something out of this would be processed before it gets decorations
+          // FRAME something out of this would be processed before it gets decorations
         updateUserTime();
         workspace()->setWasUserInteraction();
         uint keyModX = (options->keyCmdAllModKey() == Qt::Key_Meta) ?
