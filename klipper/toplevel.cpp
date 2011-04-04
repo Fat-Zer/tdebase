@@ -1075,7 +1075,7 @@ static Bool update_x_time_predicate( Display*, XEvent* event, XPointer )
 
 void KlipperWidget::updateTimestamp()
 { // Qt3.3.0 and 3.3.1 use qt_x_user_time for clipboard operations
-    Time& time = ( strcmp( qVersion(), "3.3.1" ) == 0
+    Time time = ( strcmp( qVersion(), "3.3.1" ) == 0
                 || strcmp( qVersion(), "3.3.0" ) == 0 )
                 ? GET_QT_X_USER_TIME() : GET_QT_X_TIME();
     static TQWidget* w = 0;
