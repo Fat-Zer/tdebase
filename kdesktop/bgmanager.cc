@@ -59,8 +59,19 @@ extern KDesktopApp *myApp;
 
 /**** KBackgroundManager ****/
 
+KBackgroundManager::KBackgroundManager()
+    : DCOPObject("KBackgroundIface")
+{
+    // Everything will be initialized later
+}
+
 KBackgroundManager::KBackgroundManager(TQWidget *desktop, KWinModule* kwinModule)
     : DCOPObject("KBackgroundIface")
+{
+    initializeManager(desktop, kwinModule);
+}
+
+void KBackgroundManager::initializeManager(TQWidget *desktop, KWinModule* kwinModule)
 {
     if( !properties_inited )
     {

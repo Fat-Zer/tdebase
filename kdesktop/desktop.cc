@@ -20,7 +20,6 @@
 
 #include "desktop.h"
 #include "krootwm.h"
-#include "bgmanager.h"
 #include "bgsettings.h"
 #include "startupid.h"
 #include "kdiconview.h"
@@ -197,7 +196,6 @@ KDesktop::KDesktop( bool x_root_hack, bool wait_for_kded ) :
 
   m_pIconView = 0;
   m_pRootWidget = 0;
-  bgMgr = 0;
   initRoot();
 
   TQTimer::singleShot(0, this, TQT_SLOT( slotStart() ));
@@ -218,8 +216,6 @@ KDesktop::initRoot()
   if ( !m_bDesktopEnabled && !m_pRootWidget )
   {
      hide();
-     delete bgMgr;
-     bgMgr = 0;
      if ( m_pIconView )
         m_pIconView->saveIconPositions();
      delete m_pIconView;
@@ -243,9 +239,9 @@ KDesktop::initRoot()
 
      // Geert Jansen: backgroundmanager belongs here
      // TODO tell KBackgroundManager if we change widget()
-     bgMgr = new KBackgroundManager( m_pIconView, m_pKwinmodule );
-     bgMgr->setExport(1);
-     connect( bgMgr, TQT_SIGNAL( initDone()), TQT_SLOT( backgroundInitDone()));
+     bgMgr.initializeManager( m_pIconView, m_pKwinmodule );
+     bgMgr.setExport(1);
+     connect( &bgMgr, TQT_SIGNAL( initDone()), TQT_SLOT( backgroundInitDone()));
      if (!m_bInit)
      {
         delete KRootWm::self();
@@ -256,8 +252,6 @@ KDesktop::initRoot()
   }
   else if (m_bDesktopEnabled && !m_pIconView)
   {
-     delete bgMgr;
-     bgMgr = 0;
      delete m_pRootWidget;
      m_pRootWidget = 0;
      m_pIconView = new KDIconView( this, 0 );
@@ -284,9 +278,9 @@ KDesktop::initRoot()
 
      // Geert Jansen: backgroundmanager belongs here
      // TODO tell KBackgroundManager if we change widget()
-     bgMgr = new KBackgroundManager( m_pIconView, m_pKwinmodule );
-     bgMgr->setExport(1);
-     connect( bgMgr, TQT_SIGNAL( initDone()), TQT_SLOT( backgroundInitDone()));
+     bgMgr.initializeManager( m_pIconView, m_pKwinmodule );
+     bgMgr.setExport(1);
+     connect( &bgMgr, TQT_SIGNAL( initDone()), TQT_SLOT( backgroundInitDone()));
 
      // make sure it is initialized before we first call updateWorkArea()
      m_pIconView->initConfig( m_bInit );
@@ -436,8 +430,6 @@ KDesktop::~KDesktop()
 {
   delete m_miniCli;
   m_miniCli = 0; // see #120382
-  delete bgMgr;
-  bgMgr = 0;
   delete startup_id;
 }
 
@@ -937,11 +929,11 @@ void KDesktop::handleColorDropEvent(TQDropEvent * e)
     TQColor c;
     KColorDrag::decode(e, c);
     switch (result) {
-      case 1: bgMgr->setColor(c, true); break;
-      case 2: bgMgr->setColor(c, false); break;
+      case 1: bgMgr.setColor(c, true); break;
+      case 2: bgMgr.setColor(c, false); break;
       default: return;
     }
-    bgMgr->setWallpaper(0,0);
+    bgMgr.setWallpaper(0,0);
 }
 
 void KDesktop::handleImageDropEvent(TQDropEvent * e)
@@ -993,7 +985,7 @@ void KDesktop::handleImageDropEvent(TQDropEvent * e)
         KTempFile tmpFile(KGlobal::dirs()->saveLocation("wallpaper"), ".png");
         i.save(tmpFile.name(), "PNG");
         kdDebug(1204) << "KDesktop::contentsDropEvent " << tmpFile.name() << endl;
-        bgMgr->setWallpaper(tmpFile.name());
+        bgMgr.setWallpaper(tmpFile.name());
     }
 }
 
@@ -1002,7 +994,7 @@ void KDesktop::slotNewWallpaper(const KURL &url)
     // This is called when a file containing an image is dropped
     // (called by KonqOperations)
     if ( url.isLocalFile() )
-        bgMgr->setWallpaper( url.path() );
+        bgMgr.setWallpaper( url.path() );
     else
     {
         // Figure out extension
@@ -1014,7 +1006,7 @@ void KDesktop::slotNewWallpaper(const KURL &url)
         KURL localURL; localURL.setPath( tmpFile.name() );
         // We pass 0 as parent window because passing the desktop is not a good idea
         KIO::NetAccess::file_copy( url, localURL, -1, true /*overwrite*/ );
-        bgMgr->setWallpaper( localURL.path() );
+        bgMgr.setWallpaper( localURL.path() );
     }
 }
 

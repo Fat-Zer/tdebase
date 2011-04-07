@@ -61,9 +61,11 @@ class KBackgroundManager
     TQ_OBJECT
 
 public:
+    KBackgroundManager();
     KBackgroundManager(TQWidget *desktop, KWinModule* kwinModule);
     ~KBackgroundManager();
 
+    void initializeManager(TQWidget *desktop, KWinModule* kwinModule);
     void configure();
     void setCommon(int);
     bool isCommon() { return m_bCommon; };

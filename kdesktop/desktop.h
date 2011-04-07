@@ -21,6 +21,7 @@
 #define __desktop_h__
 
 #include "KDesktopIface.h"
+#include "bgmanager.h"
 
 #include <tqwidget.h>
 #include <tqstringlist.h>
@@ -190,7 +191,7 @@ private:
 
   KWinModule* m_pKwinmodule;
 
-  KBackgroundManager* bgMgr;
+  KBackgroundManager bgMgr;
 
   KDIconView *m_pIconView;
   KRootWidget *m_pRootWidget;
