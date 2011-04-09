@@ -228,13 +228,17 @@ kg_main( const char *argv0 )
 			    _autoLoginUser.isEmpty())
 				_autoLoginDelay = 0;
 			if (_useTheme && !_theme.isEmpty()) {
+				// Qt4 has a nasty habit of generating BadWindow errors in normal operation, so we simply ignore them
+				// This also prevents the user from being dropped to a console login if Xorg glitches or is buggy
+				XSetErrorHandler( ignoreXError );
 				KThemedGreeter *tgrt;
 				dialog = tgrt = new KThemedGreeter;
-				kdDebug() << timestamp() << " themed" << endl;	
+				kdDebug() << timestamp() << " themed" << endl;
 				if (!tgrt->isOK()) {
 					delete tgrt;
 					dialog = new KStdGreeter;
 				}
+				XSetErrorHandler( (XErrorHandler)0 );
 			} else
 				dialog = new KStdGreeter;
 			if (*_preloader) {
