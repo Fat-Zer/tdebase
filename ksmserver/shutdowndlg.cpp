@@ -80,7 +80,7 @@ KSMShutdownFeedback::KSMShutdownFeedback()
 {
     DCOPRef("kicker", "KMenu").call("hideMenu");	// Make sure the K Menu is completely removed from the screen before taking a snapshot...
     m_grayImage = TQPixmap(TQPixmap::grabWindow(qt_xrootwin(), 0, 0, TQApplication::desktop()->width(), TQApplication::desktop()->height())).convertToImage();
-    m_unfadedImage = TQImage();
+    m_unfadedImage = m_grayImage;
     resize(0, 0);
     setShown(true);
     TQTimer::singleShot( 500, this, TQT_SLOT( slotPaintEffect() ) );
