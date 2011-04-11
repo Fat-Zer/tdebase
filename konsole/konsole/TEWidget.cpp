@@ -331,7 +331,7 @@ void TEWidget::setFont(const TQFont &)
 /* ------------------------------------------------------------------------- */
 
 TEWidget::TEWidget(TQWidget *parent, const char *name)
-:TQFrame(parent,name,WNoAutoErase)
+:TQFrame(parent,name,TQt::WNoAutoErase)
 ,font_h(1)
 ,font_w(1)
 ,font_a(1)
@@ -1007,7 +1007,7 @@ void TEWidget::paintEvent( TQPaintEvent* pe )
 
   drawFrame( &paint );
 
-  // Since we're using WNoAutoErase, we have to make sure that
+  // Since we're using TQt::WNoAutoErase, we have to make sure that
   // every single pixel is painted by the paint event.
   // To do this, we must figure out which pixels are left in the
   // area between the terminal image and the frame border.

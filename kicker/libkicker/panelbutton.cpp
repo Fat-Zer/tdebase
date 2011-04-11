@@ -75,7 +75,7 @@ PanelButton::PanelButton( TQWidget* parent, const char* name )
       m_fontPercent(0.40)
 {
     setBackgroundOrigin(AncestorOrigin);
-    setWFlags(WNoAutoErase);
+    setWFlags(TQt::WNoAutoErase);
     KGlobal::locale()->insertCatalogue("libkicker");
     calculateIconSize();
     setAcceptDrops(true);

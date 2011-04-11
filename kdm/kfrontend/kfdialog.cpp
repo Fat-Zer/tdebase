@@ -39,7 +39,7 @@ FDialog::FDialog( TQWidget *parent, bool framed )
 	: inherited( parent, 0, true/*, framed ? 0 : WStyle_NoBorder*/ )
 {
 	if (framed) {
-		winFrame = new TQFrame( this, 0, WNoAutoErase );
+		winFrame = new TQFrame( this, 0, TQt::WNoAutoErase );
 		winFrame->setFrameStyle( TQFrame::WinPanel | TQFrame::Raised );
 		winFrame->setLineWidth( 2 );
 	} else

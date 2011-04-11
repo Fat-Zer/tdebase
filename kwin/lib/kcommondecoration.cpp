@@ -109,7 +109,7 @@ int KCommonDecoration::layoutMetric(LayoutMetric lm, bool, const KCommonDecorati
 
 void KCommonDecoration::init()
 {
-    createMainWidget(WNoAutoErase);
+    createMainWidget(TQt::WNoAutoErase);
 
     // for flicker-free redraws
     widget()->setBackgroundMode(NoBackground);

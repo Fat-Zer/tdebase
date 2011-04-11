@@ -220,7 +220,7 @@ ClockWidget::~ClockWidget()
 PlainClock::PlainClock(ClockApplet *applet, Prefs *prefs, TQWidget *parent, const char *name)
     : TQLabel(parent, name), ClockWidget(applet, prefs)
 {
-    setWFlags(WNoAutoErase);
+    setWFlags(TQt::WNoAutoErase);
     setBackgroundOrigin(AncestorOrigin);
     loadSettings();
     updateClock();
@@ -300,7 +300,7 @@ void PlainClock::drawContents(TQPainter *p)
 DigitalClock::DigitalClock(ClockApplet *applet, Prefs *prefs, TQWidget *parent, const char *name)
     : TQLCDNumber(parent, name), ClockWidget(applet, prefs)
 {
-    setWFlags(WNoAutoErase);
+    setWFlags(TQt::WNoAutoErase);
     setBackgroundOrigin(AncestorOrigin);
     loadSettings();
     updateClock();
@@ -472,7 +472,7 @@ bool DigitalClock::showDayOfWeek()
 AnalogClock::AnalogClock(ClockApplet *applet, Prefs *prefs, TQWidget *parent, const char *name)
     : TQFrame(parent, name), ClockWidget(applet, prefs), _spPx(NULL)
 {
-    setWFlags(WNoAutoErase);
+    setWFlags(TQt::WNoAutoErase);
     setBackgroundOrigin(AncestorOrigin);
     loadSettings();
 }

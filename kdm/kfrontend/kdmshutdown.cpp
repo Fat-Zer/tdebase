@@ -729,7 +729,7 @@ void KSMPushButton::keyReleaseEvent( TQKeyEvent* e )
 }
 
 FlatButton::FlatButton( TQWidget *parent, const char *name )
-  : TQToolButton( parent, name/*, WNoAutoErase*/ ),
+  : TQToolButton( parent, name/*, TQt::WNoAutoErase*/ ),
     m_pressed(false)
 {
   init();

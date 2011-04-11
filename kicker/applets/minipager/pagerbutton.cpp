@@ -76,7 +76,7 @@ KMiniPagerButton::KMiniPagerButton(int desk, bool useViewPorts, const TQPoint& v
 {
     setToggleButton(true);
     setAcceptDrops(true);
-    setWFlags(WNoAutoErase);
+    setWFlags(TQt::WNoAutoErase);
 
     setBackgroundOrigin(AncestorOrigin);
     installEventFilter(KickerTip::the());

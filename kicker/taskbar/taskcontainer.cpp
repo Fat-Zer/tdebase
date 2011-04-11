@@ -117,7 +117,7 @@ TaskContainer::TaskContainer(Startup::Ptr startup, PixmapList& startupFrames,
 
 void TaskContainer::init()
 {
-    setWFlags(WNoAutoErase);
+    setWFlags(TQt::WNoAutoErase);
     setBackgroundMode(NoBackground);
     animBg = TQPixmap(16, 16);
 
