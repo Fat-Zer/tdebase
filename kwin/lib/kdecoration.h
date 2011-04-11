@@ -695,7 +695,7 @@ class KWIN_EXPORT KDecoration
 	 *              flags that affect widget drawing are allowed. Window type flags
 	 *              like WX11BypassWM or WStyle_NoBorder are forbidden.
 	 */
-        void createMainWidget( WFlags flags = 0 );
+        void createMainWidget( TQt::WFlags flags = 0 );
 	/**
 	 * The parent widget that should be used for the main widget.
 	 */
@@ -706,7 +706,7 @@ class KWIN_EXPORT KDecoration
 	 * that affect widget drawing are allowed. Window type flags like WX11BypassWM
 	 * or WStyle_NoBorder are forbidden.
 	 */
-        WFlags initialWFlags() const;
+        TQt::WFlags initialWFlags() const;
 	/**
 	 * This function is only allowed to be called once from animateMinimize().
 	 * It can be used if the window should be shown or hidden at a specific

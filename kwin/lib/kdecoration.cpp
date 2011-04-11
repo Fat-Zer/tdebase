@@ -57,7 +57,7 @@ const KDecorationOptions* KDecoration::options()
     return options_;
     }
 
-void KDecoration::createMainWidget( WFlags flags )
+void KDecoration::createMainWidget( TQt::WFlags flags )
     {
     // FRAME check flags?
     setMainWidget( new TQWidget( initialParentWidget(), "decoration widget", initialWFlags() | flags ));
@@ -76,7 +76,7 @@ TQWidget* KDecoration::initialParentWidget() const
     return bridge_->initialParentWidget();
     }
 
-WFlags KDecoration::initialWFlags() const
+TQt::WFlags KDecoration::initialWFlags() const
     {
     return bridge_->initialWFlags();
     }
