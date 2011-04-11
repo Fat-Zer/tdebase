@@ -75,8 +75,8 @@ TQWidget* KDecoration::initialParentWidget() const
     {
     return bridge_->initialParentWidget();
     }
-    
-Qt::WFlags KDecoration::initialWFlags() const
+
+WFlags KDecoration::initialWFlags() const
     {
     return bridge_->initialWFlags();
     }
