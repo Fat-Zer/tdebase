@@ -140,12 +140,12 @@ bool MediaImpl::listMedia(TQValueList<KIO::UDSEntry> &list)
 		return false;
 	}
 
-	Medium::List media = Medium::createList(reply);
+	Medium::MList media = Medium::createList(reply);
 
 	KIO::UDSEntry entry;
 
-	Medium::List::iterator it = media.begin();
-	Medium::List::iterator end = media.end();
+	Medium::MList::iterator it = media.begin();
+	Medium::MList::iterator end = media.end();
 
 	for(; it!=end; ++it)
 	{
