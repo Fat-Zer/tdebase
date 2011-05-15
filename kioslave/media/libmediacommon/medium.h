@@ -92,8 +92,10 @@ public:
 	void setHalMounted(bool flag) const { m_halmounted = flag; }
 	bool halMounted() const { return m_halmounted; }
 
-private:
+//private:
 	Medium();
+
+private:
 	void loadUserLabel();
 
 	TQStringList m_properties;
