@@ -27,7 +27,7 @@
 class Medium
 {
 public:
-	typedef TQValueList<const Medium> List;
+	typedef TQValueList<const Medium> MList;
 
 	static const uint ID = 0;
 	static const uint NAME = 1;
@@ -48,7 +48,7 @@ public:
 
 	Medium(const TQString &id, const TQString &name);
 	static const Medium create(const TQStringList &properties);
-	static List createList(const TQStringList &properties);
+	static MList createList(const TQStringList &properties);
 
 	const TQStringList &properties() const { return m_properties; }
 

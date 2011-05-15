@@ -93,9 +93,9 @@ const Medium Medium::create(const TQStringList &properties)
 	return m;
 }
 
-Medium::List Medium::createList(const TQStringList &properties)
+Medium::MList Medium::createList(const TQStringList &properties)
 {
-	List l;
+	MList l;
 
 	if ( properties.size() % (PROPERTIES_COUNT+1) == 0)
 	{
