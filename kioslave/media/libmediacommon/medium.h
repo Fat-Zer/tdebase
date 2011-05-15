@@ -27,7 +27,7 @@
 class Medium
 {
 public:
-	typedef TQValueList<const Medium> MList;
+	typedef TQValueList<Medium> MList;
 
 	static const uint ID = 0;
 	static const uint NAME = 1;
