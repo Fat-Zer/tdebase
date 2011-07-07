@@ -390,7 +390,7 @@ void SignalPlotter::paintEvent( TQPaintEvent* )
   uint w = width();
   uint h = height();
 
-  /* Do not do tqrepaints when the widget is not yet setup properly. */
+  /* Do not do repaints when the widget is not yet setup properly. */
   if ( w <= 2 )
     return;
 

@@ -345,7 +345,7 @@ void KBackgroundManager::slotChangeNumberOfDesktops(int num)
 /*
  * Call this when the desktop has been changed.
  * Desk is in KWin convention: [1..desks], instead of [0..desks-1].
- * 0 tqrepaints the current desktop.
+ * 0 repaints the current desktop.
  */
 void KBackgroundManager::slotChangeDesktop(int desk)
 {
@@ -405,7 +405,7 @@ void KBackgroundManager::slotChangeDesktop(int desk)
 /*
  * Call this when the viewport has been changed.
  * Desk is in KWin convention: [1..desks], instead of [0..desks-1].
- * 0 tqrepaints the current viewport.
+ * 0 repaints the current viewport.
  */
 void KBackgroundManager::slotChangeViewport(int desk, const TQPoint& viewport)
 {
@@ -931,7 +931,7 @@ void KBackgroundManager::setWallpaper(int desk, TQString wallpaper, int mode)
     slotChangeDesktop(sdesk);
 }
 
-void KBackgroundManager::tqrepaintBackground()
+void KBackgroundManager::repaintBackground()
 {
     if (m_pDesktop)
        m_pDesktop->tqrepaint();
@@ -966,7 +966,7 @@ void KBackgroundManager::desktopResized()
         m_pDesktop->resize( kapp->desktop()->geometry().size());
     // Repaint desktop
     slotChangeDesktop(0);
-    tqrepaintBackground();
+    repaintBackground();
 
     // Redraw all desktops so that applications relying on exported data, e.g. kpager, continue to work properly
     TQSize s(m_pKwinmodule->numberOfViewports(m_pKwinmodule->currentDesktop()));

@@ -61,7 +61,7 @@ KDecorationPreview::~KDecorationPreview()
 
 void KDecorationPreview::performRepaintTest(int n)
 {
-    kdDebug() << "start " << n << " tqrepaints..." << endl;
+    kdDebug() << "start " << n << " repaints..." << endl;
     bridge->setCaption("Deco Benchmark");
     deco->captionChange();
     positionPreviews(0);

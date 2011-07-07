@@ -56,7 +56,7 @@ protected slots:
     void slotApplicationRemoved(const TQCString&);
 
 private:
-    void tqrepaintApplet(TQWidget* widget);
+    void repaintApplet(TQWidget* widget);
 
     AppletInfo          *_info;
     KPanelApplet        *_applet;

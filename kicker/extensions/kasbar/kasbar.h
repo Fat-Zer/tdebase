@@ -188,7 +188,7 @@ public:
    void updateItem( KasItem *i );
 
    /** Redraws the specified item. */
-   void tqrepaintItem(KasItem *i, bool erase = true );
+   void repaintItem(KasItem *i, bool erase = true );
 
    /** Returns the item at p or 0. */
    KasItem* itemAt(const TQPoint &p);

@@ -420,7 +420,7 @@ void qmotif_timeout_handler( XtPointer, XtIntervalId * )
  */
 bool QXtEventLoop::processEvents( ProcessEventsFlags flags )
 {
-    // Qt uses posted events to do lots of delayed operations, like tqrepaints... these
+    // Qt uses posted events to do lots of delayed operations, like repaints... these
     // need to be delivered before we go to sleep
     TQApplication::sendPostedEvents();
 

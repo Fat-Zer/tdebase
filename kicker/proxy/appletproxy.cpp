@@ -226,7 +226,7 @@ KPanelApplet* AppletProxy::loadApplet(const AppletInfo& info)
     return init_ptr(0, info.configFile());
 }
 
-void AppletProxy::tqrepaintApplet(TQWidget* widget) 
+void AppletProxy::repaintApplet(TQWidget* widget) 
 {
     widget->tqrepaint();
  
@@ -243,7 +243,7 @@ void AppletProxy::tqrepaintApplet(TQWidget* widget)
         TQWidget *w = dynamic_cast<TQWidget*>(*it);
         if (w)
         {
-            tqrepaintApplet(w);
+            repaintApplet(w);
         }
     }
 }
@@ -441,7 +441,7 @@ bool AppletProxy::process(const TQCString &fun, const TQByteArray &data,
 		    _applet->blockSignals(true);
 		    _applet->setBackgroundMode(TQt::FixedPixmap);
 		    _applet->setPaletteBackgroundPixmap(_bg);
-		    tqrepaintApplet(_applet);
+		    repaintApplet(_applet);
 		    _applet->blockSignals(false);
                 }
             return true;

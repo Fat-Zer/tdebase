@@ -48,7 +48,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  This is because TQMenuBar tries really hard to keep its preffered size,
  se even if the X window for the menubar has the size enforced by this
  applet, Qt thinks it has the size Qt wants. This results in parts
- of the menubar not being tqrepainted. Also, old KMenuBar always forced
+ of the menubar not being repainted. Also, old KMenuBar always forced
  with to be the width of the screen, so even if the menubar has only
  few entries, this applet will still indicate the menubar doesn't
  fit completely in it. There's no way to fix this, besides upgrading

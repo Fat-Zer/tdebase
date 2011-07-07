@@ -478,7 +478,7 @@ void KonqIconViewWidget::slotMovieUpdate( const TQRect& rect )
         }
         d->pActiveItem->setPixmapDirect( frame, false, false /*no redraw*/ );
         TQRect pixRect = d->pActiveItem->pixmapRect(false);
-        tqrepaintContents( pixRect.x() + rect.x(), pixRect.y() + rect.y(), rect.width(), rect.height(), false );
+        repaintContents( pixRect.x() + rect.x(), pixRect.y() + rect.y(), rect.width(), rect.height(), false );
     }
 }
 
@@ -648,7 +648,7 @@ void KonqIconViewWidget::setIcons( int size, const TQStringList& stopImagePrevie
     }
     bool stopAll = !stopImagePreviewFor.isEmpty() && stopImagePreviewFor.first() == "*";
 
-    // Disable tqrepaints that can be triggered by ivi->setIcon(). Since icons are
+    // Disable repaints that can be triggered by ivi->setIcon(). Since icons are
     // resized in-place, if the icon size is increasing it can happens that the right
     // or bottom icons exceed the size of the viewport.. here we prevent the tqrepaint
     // event that will be triggered in that case.
@@ -1703,7 +1703,7 @@ void KonqIconViewWidget::lineupIcons()
     }
 
     // Perform the actual moving
-    TQRegion tqrepaintRegion;
+    TQRegion repaintRegion;
     TQValueList<TQIconViewItem*> movedItems;
 
     for ( i = 0; i < nx; i++ ) {
@@ -1722,7 +1722,7 @@ void KonqIconViewWidget::lineupIcons()
                     movedItems.prepend( item );
                     item->move( newX, newY );
                     if ( item->rect() != oldRect )
-                        tqrepaintRegion = tqrepaintRegion.unite( oldRect );
+                        repaintRegion = repaintRegion.unite( oldRect );
                 }
             }
             delete bin;
@@ -1734,16 +1734,16 @@ void KonqIconViewWidget::lineupIcons()
     if ( newItemWidth )
         updateContents();
     else {
-        // Repaint only tqrepaintRegion...
-        TQMemArray<TQRect> rects = tqrepaintRegion.tqrects();
+        // Repaint only repaintRegion...
+        TQMemArray<TQRect> rects = repaintRegion.tqrects();
         for ( uint l = 0; l < rects.count(); l++ ) {
             kdDebug( 1203 ) << "Repainting (" << rects[l].x() << ","
                             << rects[l].y() << ")\n";
-            tqrepaintContents( rects[l], false );
+            repaintContents( rects[l], false );
         }
         // Repaint icons that were moved
         while ( !movedItems.isEmpty() ) {
-            tqrepaintItem( movedItems.first() );
+            repaintItem( movedItems.first() );
             movedItems.remove( movedItems.first() );
         }
     }
@@ -1760,7 +1760,7 @@ void KonqIconViewWidget::lineupIcons( TQIconView::Arrangement arrangement )
     gridValues( &x0, &y0, &dx, &dy, &nxmax, &nymax );
     int textHeight = iconTextHeight() * fontMetrics().height();
 
-    TQRegion tqrepaintRegion;
+    TQRegion repaintRegion;
     TQValueList<TQIconViewItem*> movedItems;
     int nx = 0, ny = 0;
 
@@ -1775,7 +1775,7 @@ void KonqIconViewWidget::lineupIcons( TQIconView::Arrangement arrangement )
             movedItems.prepend( item );
             item->move( newX, newY );
             if ( item->rect() != oldRect )
-                tqrepaintRegion = tqrepaintRegion.unite( oldRect );
+                repaintRegion = repaintRegion.unite( oldRect );
         }
         if ( arrangement == TQIconView::LeftToRight ) {
             nx++;
@@ -1793,16 +1793,16 @@ void KonqIconViewWidget::lineupIcons( TQIconView::Arrangement arrangement )
         }
     }
 
-    // Repaint only tqrepaintRegion...
-    TQMemArray<TQRect> rects = tqrepaintRegion.tqrects();
+    // Repaint only repaintRegion...
+    TQMemArray<TQRect> rects = repaintRegion.tqrects();
     for ( uint l = 0; l < rects.count(); l++ ) {
         kdDebug( 1203 ) << "Repainting (" << rects[l].x() << ","
                         << rects[l].y() << ")\n";
-        tqrepaintContents( rects[l], false );
+        repaintContents( rects[l], false );
     }
     // Repaint icons that were moved
     while ( !movedItems.isEmpty() ) {
-        tqrepaintItem( movedItems.first() );
+        repaintItem( movedItems.first() );
         movedItems.remove( movedItems.first() );
     }
 }

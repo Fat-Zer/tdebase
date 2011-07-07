@@ -646,7 +646,7 @@ void KasBar::updateItem( KasItem *i )
     update( TQRect( pos, TQSize( itemExtent(), itemExtent() ) ) );
 }
 
-void KasBar::tqrepaintItem(KasItem *i, bool erase )
+void KasBar::repaintItem(KasItem *i, bool erase )
 {
     if ( !i )
 	return;

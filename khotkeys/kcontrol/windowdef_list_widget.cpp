@@ -192,7 +192,7 @@ void Windowdef_list_widget::edit_listview_item( Windowdef_list_item* item_P )
         {
         item_P->set_window( new_window );
         item_P->widthChanged( 0 ); // SELI tohle i u dalsich listview?
-        windows_listview->tqrepaintItem( item_P );
+        windows_listview->repaintItem( item_P );
         }
     delete dlg;
     }

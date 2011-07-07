@@ -410,7 +410,7 @@ void KonqBaseListViewWidget::contentsMousePressEvent( TQMouseEvent *e )
       TQRect r( m_rubber->normalize() );
        delete m_rubber;
        m_rubber = 0;
-      tqrepaintContents( r, FALSE );
+      repaintContents( r, FALSE );
    }
 
    delete m_selected;
@@ -448,7 +448,7 @@ void KonqBaseListViewWidget::contentsMouseReleaseEvent( TQMouseEvent *e )
       TQRect r( m_rubber->normalize() );
       delete m_rubber;
       m_rubber = 0;
-      tqrepaintContents( r, FALSE );
+      repaintContents( r, FALSE );
    }
 
    if ( m_scrollTimer )

@@ -909,7 +909,7 @@ ProcessList::selectAllItems(bool select)
 	for ( ; it.current(); ++it )
 	{
 		it.current()->setSelected(select);
-		tqrepaintItem(it.current());
+		repaintItem(it.current());
 		if (select)
 			selectedPIds.append(it.current()->text(1).toInt());
 	}
@@ -928,7 +928,7 @@ ProcessList::selectAllChilds(int pid, bool select)
 		{
 			int currPId = it.current()->text(1).toInt();
 			it.current()->setSelected(select);
-			tqrepaintItem(it.current());
+			repaintItem(it.current());
 			if (select)
 				selectedPIds.append(currPId);
 			else

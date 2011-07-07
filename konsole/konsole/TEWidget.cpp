@@ -835,7 +835,7 @@ void TEWidget::setImage(const ca* const newimg, int lines, int columns)
     const ca*       lcl = &image[y*this->columns];
     const ca* const ext = &newimg[y*columns];
 
-    // The dirty mask indicates which characters need tqrepainting. We also
+    // The dirty mask indicates which characters need repainting. We also
     // mark surrounding neighbours dirty, in case the character exceeds
     // its cell boundaries
     memset(dirtyMask, 0, cols+2);
@@ -1976,13 +1976,13 @@ void TEWidget::imEndEvent( TQIMEvent *e )
   int tLx = tL.x();
   int tLy = tL.y();
 
-  TQRect tqrepaintRect = TQRect( bX+tLx, bY+tLy+font_h*m_imStartLine,
+  TQRect repaintRect = TQRect( bX+tLx, bY+tLy+font_h*m_imStartLine,
                              contentsRect().width(), contentsRect().height() );
   m_imStart = 0;
   m_imPreeditLength = 0;
 
   m_isIMEdit = m_isIMSel = false;
-  tqrepaint( tqrepaintRect, true );
+  tqrepaint( repaintRect, true );
 }
 
 // Override any Ctrl+<key> accelerator when pressed with the keyboard

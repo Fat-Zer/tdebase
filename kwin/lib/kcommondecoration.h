@@ -202,7 +202,7 @@ class KWIN_EXPORT KCommonDecoration : public KDecoration
          */
         void updateLayout() const;
         /**
-         * Makes sure all buttons are tqrepainted.
+         * Makes sure all buttons are repainted.
          */
         void updateButtons() const;
         /**

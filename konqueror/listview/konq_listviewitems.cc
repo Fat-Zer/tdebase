@@ -216,7 +216,7 @@ void KonqListViewItem::setPixmap( int column, const TQPixmap& pm )
    }
 
    // If we're just replacing the icon with another one its size -- i.e. a
-   // "highlighted" icon, don't bother tqrepainting the whole widget.
+   // "highlighted" icon, don't bother repainting the whole widget.
 
    TQListView *lv = m_pListViewWidget;
 
@@ -225,7 +225,7 @@ void KonqListViewItem::setPixmap( int column, const TQPixmap& pm )
    int y = lv->itemPos( this );
    int w = newWidth;
    int h = height();
-   lv->tqrepaintContents( x, y, w, h );
+   lv->repaintContents( x, y, w, h );
 }
 
 const TQPixmap* KonqListViewItem::pixmap( int column ) const

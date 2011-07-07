@@ -1718,7 +1718,7 @@ void ContainerArea::setPosition(KPanelExtension::Position p)
     m_contents->move(0, 0);
     setBackground();
 
-    // container extension tqrepaints for us!
+    // container extension repaints for us!
     //tqrepaint();
 }
 

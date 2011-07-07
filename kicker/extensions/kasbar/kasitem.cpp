@@ -555,7 +555,7 @@ void KasItem::tqrepaint()
 void KasItem::tqrepaint( bool erase )
 {
    if ( kas->isVisible() )
-       kas->tqrepaintItem( this, erase );
+       kas->repaintItem( this, erase );
 }
 
 void KasItem::update()

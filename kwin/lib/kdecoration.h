@@ -573,13 +573,13 @@ class KWIN_EXPORT KDecoration
 	 * whether it's shaded. Decorations often turn off their bottom border when the
 	 * window is shaded, and turn off their left/right/bottom borders when
 	 * the window is maximized and moving and resizing of maximized windows is disabled.
-	 * This function mustn't do any tqrepaints or resizes. Also, if the sizes returned
+	 * This function mustn't do any repaints or resizes. Also, if the sizes returned
 	 * by this function don't match the real values, this may result in drawing errors
 	 * or other problems.
 	 *
 	 * @see KDecorationOptions::moveResizeMaximizedWindows()
 	 */
-        // mustn't do any tqrepaints, resizes or anything like that
+        // mustn't do any repaints, resizes or anything like that
 	virtual void borders( int& left, int& right, int& top, int& bottom ) const = 0;
 	/**
 	 * This method is called by kwin when the style should resize the decoration window.

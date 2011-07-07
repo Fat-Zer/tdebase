@@ -829,7 +829,7 @@ void KEBListViewItem::setSelected(bool s)
     {
         ListView::self()->selected(this, false);
         TQListViewItem::setSelected( false );
-        ListView::deselectAllChildren( this ); //tqrepaints
+        ListView::deselectAllChildren( this ); //repaints
     }
     else if(parentSelected(this))
         return;

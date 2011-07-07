@@ -91,7 +91,7 @@ private slots:
     void slotChangeDesktop(int);
     void slotChangeViewport(int, const TQPoint&);
     void slotChangeNumberOfDesktops(int);
-    void tqrepaintBackground();
+    void repaintBackground();
     void desktopResized();
     void clearRoot();
     void saveImages();

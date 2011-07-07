@@ -1145,7 +1145,7 @@ void Workspace::refresh()
   going to be hidden are first obscured by new windows with no background
   ( i.e. transparent ) placed right below the windows. These invisible windows
   are removed after the switch is complete.
-  Reduces desktop ( wallpaper ) tqrepaints during desktop switching
+  Reduces desktop ( wallpaper ) repaints during desktop switching
 */
 class ObscuringWindows
     {

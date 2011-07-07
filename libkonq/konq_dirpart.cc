@@ -548,7 +548,7 @@ void KonqDirPart::slotIconSizeToggled( bool toggleOn )
 
     // This slot is called when an iconsize action is checked or by calling
     // action->setChecked(false) (previously true). So we must filter out
-    // the 'untoggled' case to prevent odd results here (tqrepaints/loops!)
+    // the 'untoggled' case to prevent odd results here (repaints/loops!)
     if ( !toggleOn )
         return;
 

@@ -273,11 +273,11 @@ void KateFileList::slotModChanged (Kate::Document *doc)
     for ( uint i=0; i <  m_editHistory.count(); i++ )
     {
       m_editHistory.tqat( i )->setEditHistPos( i+1 );
-      tqrepaintItem(  m_editHistory.tqat( i ) );
+      repaintItem(  m_editHistory.tqat( i ) );
     }
   }
   else
-    tqrepaintItem( item );
+    repaintItem( item );
 }
 
 void KateFileList::slotModifiedOnDisc (Kate::Document *doc, bool, unsigned char)
@@ -296,7 +296,7 @@ void KateFileList::slotNameChanged (Kate::Document *doc)
     if ( ((KateFileListItem*)item)->document() == doc )
     {
       item->setText( 0, doc->docName() );
-      tqrepaintItem( item );
+      repaintItem( item );
       break;
     }
     item = item->nextSibling();
@@ -343,7 +343,7 @@ void KateFileList::slotViewChanged ()
   for ( uint i=0; i <  m_viewHistory.count(); i++ )
   {
     m_viewHistory.tqat( i )->setViewHistPos( i+1 );
-    tqrepaintItem(  m_viewHistory.tqat( i ) );
+    repaintItem(  m_viewHistory.tqat( i ) );
   }
 
 }
