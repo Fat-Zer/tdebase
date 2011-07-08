@@ -69,7 +69,7 @@ KRootWm * KRootWm::s_rootWm = 0;
 
 extern TQCString kdesktop_name, kicker_name, kwin_name;
 
-KRootWm::KRootWm(KDesktop* _desktop) : TQObject(_desktop), startup(FALSE)
+KRootWm::KRootWm(KDesktop* _desktop) : TQObject(_desktop)
 {
   s_rootWm = this;
   m_actionCollection = new KActionCollection(_desktop, this, "KRootWm::m_actionCollection");
