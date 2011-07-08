@@ -60,7 +60,7 @@ extern KDesktopApp *myApp;
 /**** KBackgroundManager ****/
 
 KBackgroundManager::KBackgroundManager(TQWidget *desktop, KWinModule* kwinModule)
-    : DCOPObject("KBackgroundIface")
+    : KBackgroundIface()
 {
     if( !properties_inited )
     {

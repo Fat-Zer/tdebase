@@ -8,10 +8,12 @@
 #include <dcopobject.h>
 #include <tqcolor.h>
 
-class KBackgroundIface : virtual public DCOPObject
+class KBackgroundIface : public DCOPObject
 {
     K_DCOP
 public:
+
+    KBackgroundIface() : DCOPObject("KBackgroundIface") {}
 
 k_dcop:
     /** Reread the configuration */

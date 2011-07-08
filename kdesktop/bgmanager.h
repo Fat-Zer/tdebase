@@ -55,7 +55,7 @@ struct KBackgroundCacheEntry
 
 class KBackgroundManager
     : public TQObject,
-      virtual public KBackgroundIface
+      public KBackgroundIface
 {
     Q_OBJECT
     TQ_OBJECT
