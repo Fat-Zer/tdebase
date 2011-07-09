@@ -130,7 +130,7 @@ TQSize KickoffTabBar::tqsizeHint() const
 
 void KickoffTabBar::layoutTabs()
 {
-    TQTabBar::tqlayoutTabs();
+    TQTabBar::layoutTabs();
 
     TQFontMetrics fm = fontMetrics();
     int fh = ((KickerSettings::kickoffTabBarFormat() != KickerSettings::IconOnly) ? fm.height() : 0) + 4;

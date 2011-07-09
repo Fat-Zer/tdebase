@@ -346,7 +346,7 @@ void KDMUsersWidget::userButtonDropEvent(TQDropEvent *e)
     KURL *url = decodeImgDrop(e, this);
     if (url) {
 	TQString pixpath;
-	KIO::NetAccess::download(*url, pixpath, tqparentWidget());
+	KIO::NetAccess::download(*url, pixpath, parentWidget());
 	changeUserPix( pixpath );
 	KIO::NetAccess::removeTempFile(pixpath);
 	delete url;

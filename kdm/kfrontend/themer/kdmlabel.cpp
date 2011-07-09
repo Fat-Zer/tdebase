@@ -115,7 +115,7 @@ KdmLabel::setTextInt( const TQString &txt)
 	myAccel = 0;
 	if (cAccel != -1) {
 	  cText.remove('&');
-	  myAccel = new TQAccel(tqparentWidget());
+	  myAccel = new TQAccel(parentWidget());
 	  myAccel->insertItem(ALT + UNICODE_ACCEL + cText.tqat(cAccel).lower().tqunicode());
 	  connect(myAccel, TQT_SIGNAL(activated(int)), TQT_SLOT(slotAccel()));
 	}

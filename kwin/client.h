@@ -162,7 +162,7 @@ class Client : public TQObject, public KDecorationDefines
         void setKeepBelow( bool );
         Layer layer() const;
         Layer belongsToLayer() const;
-        void tqinvalidateLayer();
+        void invalidateLayer();
 
         void setModal( bool modal );
         bool isModal() const;
@@ -832,7 +832,7 @@ inline pid_t Client::pid() const
     return info->pid();
     }
 
-inline void Client::tqinvalidateLayer()
+inline void Client::invalidateLayer()
     {
     in_layer = UnknownLayer;
     }

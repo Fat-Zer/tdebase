@@ -56,10 +56,10 @@ KDirWatch * KNewMenu::s_pDirWatch = 0L;
 class KNewMenu::KNewMenuPrivate
 {
 public:
-    KNewMenuPrivate() : m_tqparentWidget(0) {}
+    KNewMenuPrivate() : m_parentWidget(0) {}
     KActionCollection * m_actionCollection;
     TQString m_destPath;
-    TQWidget *m_tqparentWidget;
+    TQWidget *m_parentWidget;
     KActionMenu *m_menuDev;
 };
 
@@ -75,13 +75,13 @@ KNewMenu::KNewMenu( KActionCollection * _collec, const char *name ) :
     makeMenus();
 }
 
-KNewMenu::KNewMenu( KActionCollection * _collec, TQWidget *tqparentWidget, const char *name ) :
+KNewMenu::KNewMenu( KActionCollection * _collec, TQWidget *parentWidget, const char *name ) :
   KActionMenu( i18n( "Create New" ), "filenew", _collec, name ),
   menuItemsVersion( 0 )
 {
     d = new KNewMenuPrivate;
     d->m_actionCollection = _collec;
-    d->m_tqparentWidget = tqparentWidget;
+    d->m_parentWidget = parentWidget;
     makeMenus();
 }
 
@@ -363,7 +363,7 @@ void KNewMenu::slotNewDir()
     if (popupFiles.isEmpty())
        return;
 
-    KonqOperations::newDir(d->m_tqparentWidget, popupFiles.first());
+    KonqOperations::newDir(d->m_parentWidget, popupFiles.first());
 }
 
 void KNewMenu::slotNewFile()
@@ -396,7 +396,7 @@ void KNewMenu::slotNewFile()
     	{
     	    m_isURLDesktopFile = true;
     	    // entry.comment contains i18n("Enter link to location (URL):"). JFYI :)
-    	    KURLDesktopFileDlg dlg( i18n("File name:"), entry.comment, d->m_tqparentWidget );
+    	    KURLDesktopFileDlg dlg( i18n("File name:"), entry.comment, d->m_parentWidget );
     	    // TODO dlg.setCaption( i18n( ... ) );
     	    if ( dlg.exec() )
     	    {
@@ -428,7 +428,7 @@ void KNewMenu::slotNewFile()
 
                 KURL templateURL;
                 templateURL.setPath( entry.templatePath );
-                (void) new KPropertiesDialog( templateURL, *it, text, d->m_tqparentWidget );
+                (void) new KPropertiesDialog( templateURL, *it, text, d->m_parentWidget );
     	    }
     	    return; // done, exit.
     	}
@@ -447,7 +447,7 @@ void KNewMenu::slotNewFile()
 	    text = KIO::RenameDlg::suggestName( *(popupFiles.begin()), text);
 
         name = KInputDialog::getText( TQString::null, entry.comment,
-    	text, &ok, d->m_tqparentWidget );
+    	text, &ok, d->m_parentWidget );
         if ( !ok )
 	    return;
     }

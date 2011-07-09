@@ -549,7 +549,7 @@ void FancyPlotterSettings::editSensor()
     return;
 
   TQColor color = lvi->pixmap( 2 )->convertToImage().pixel( 1, 1 );
-  int result = KColorDialog::getColor( color, tqparentWidget() );
+  int result = KColorDialog::getColor( color, parentWidget() );
   if ( result == KColorDialog::Accepted ) {
     TQPixmap newPm( 12, 12 );
     newPm.fill( color );

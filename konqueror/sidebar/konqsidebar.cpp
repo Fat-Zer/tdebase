@@ -22,7 +22,7 @@
 #include <tqapplication.h>
 #include <kaccelmanager.h>
 
-KonqSidebar::KonqSidebar( TQWidget *tqparentWidget, const char *widgetName,
+KonqSidebar::KonqSidebar( TQWidget *parentWidget, const char *widgetName,
                           TQObject *parent, const char *name, bool universalMode )
 : KParts::ReadOnlyPart(parent, name),KonqSidebarIface()
 {
@@ -30,7 +30,7 @@ KonqSidebar::KonqSidebar( TQWidget *tqparentWidget, const char *widgetName,
 	setInstance( KonqSidebarFactory::instance() );
 	m_extension = 0;
 	// this should be your custom internal widget
-	m_widget = new Sidebar_Widget( tqparentWidget, this, widgetName ,universalMode, tqparentWidget->tqtopLevelWidget()->property("currentProfile").toString() );
+	m_widget = new Sidebar_Widget( parentWidget, this, widgetName ,universalMode, parentWidget->tqtopLevelWidget()->property("currentProfile").toString() );
 	m_extension = new KonqSidebarBrowserExtension( this, m_widget,"KonqSidebar::BrowserExtension" );
 	connect(m_widget,TQT_SIGNAL(started(KIO::Job *)),
 		this, TQT_SIGNAL(started(KIO::Job*)));
@@ -97,12 +97,12 @@ KonqSidebarFactory::~KonqSidebarFactory()
 	s_about = 0L;
 }
 
-KParts::Part* KonqSidebarFactory::createPartObject( TQWidget *tqparentWidget, const char *widgetName,
+KParts::Part* KonqSidebarFactory::createPartObject( TQWidget *parentWidget, const char *widgetName,
                                                         TQObject *parent, const char *name,
                                                         const char * /*classname*/, const TQStringList &args )
 {
     // Create an instance of our Part
-    KonqSidebar* obj = new KonqSidebar( tqparentWidget, widgetName, parent, name, args.tqcontains("universal") );
+    KonqSidebar* obj = new KonqSidebar( parentWidget, widgetName, parent, name, args.tqcontains("universal") );
 
     // See if we are to be read-write or not
 //    if (TQCString(classname) == "KParts::ReadOnlyPart")

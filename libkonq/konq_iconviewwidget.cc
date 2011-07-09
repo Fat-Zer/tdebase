@@ -669,7 +669,7 @@ void KonqIconViewWidget::setIcons( int size, const TQStringList& stopImagePrevie
             ivi->setIcon( size, ivi->state(), true, false );
         }
         else
-            ivi->tqinvalidateThumb( ivi->state(), true );
+            ivi->invalidateThumb( ivi->state(), true );
     }
 
     // Restore viewport update to previous state

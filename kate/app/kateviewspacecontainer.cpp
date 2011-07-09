@@ -141,7 +141,7 @@ bool KateViewSpaceContainer::deleteView (Kate::View *view, bool delViewSpace)
 {
   if (!view) return true;
 
-  KateViewSpace *viewspace = (KateViewSpace *)view->tqparentWidget()->tqparentWidget();
+  KateViewSpace *viewspace = (KateViewSpace *)view->parentWidget()->parentWidget();
 
   viewspace->removeView (view);
 
@@ -241,7 +241,7 @@ void KateViewSpaceContainer::activateSpace (Kate::View* v)
 {
   if (!v) return;
 
-  KateViewSpace* vs = (KateViewSpace*)v->tqparentWidget()->tqparentWidget();
+  KateViewSpace* vs = (KateViewSpace*)v->parentWidget()->parentWidget();
 
   if (!vs->isActiveSpace()) {
     setActiveSpace (vs);
@@ -446,23 +446,23 @@ void KateViewSpaceContainer::splitViewSpace( KateViewSpace* vs,
   if (!activeView()) return;
   if (!vs) vs = activeViewSpace();
 
-  bool isFirstTime = vs->tqparentWidget() == this;
+  bool isFirstTime = vs->parentWidget() == this;
 
   TQValueList<int> psizes;
   if ( ! isFirstTime )
-    if ( TQSplitter *ps = static_cast<TQSplitter*>(vs->tqparentWidget()->qt_cast(TQSPLITTER_OBJECT_NAME_STRING)) )
+    if ( TQSplitter *ps = static_cast<TQSplitter*>(vs->parentWidget()->qt_cast(TQSPLITTER_OBJECT_NAME_STRING)) )
       psizes = ps->sizes();
 
   Qt::Orientation o = isHoriz ? Qt::Vertical : Qt::Horizontal;
-  KateMDI::Splitter* s = new KateMDI::Splitter(o, vs->tqparentWidget());
+  KateMDI::Splitter* s = new KateMDI::Splitter(o, vs->parentWidget());
   s->setOpaqueResize( KGlobalSettings::opaqueResize() );
 
   if (! isFirstTime) {
     // anders: make sure the split' viewspace is always
     // correctly positioned.
     // If viewSpace is the first child, the new splitter must be moveToFirst'd
-    if ( !((KateMDI::Splitter*)vs->tqparentWidget())->isLastChild( vs ) )
-       ((KateMDI::Splitter*)s->tqparentWidget())->moveToFirst( s );
+    if ( !((KateMDI::Splitter*)vs->parentWidget())->isLastChild( vs ) )
+       ((KateMDI::Splitter*)s->parentWidget())->moveToFirst( s );
   }
   vs->reparent( s, 0, TQPoint(), true );
   KateViewSpace* vsNew = new KateViewSpace( this, s );
@@ -471,13 +471,13 @@ void KateViewSpaceContainer::splitViewSpace( KateViewSpace* vs,
     s->moveToFirst( vsNew );
 
   if (!isFirstTime)
-    if (TQSplitter *ps = static_cast<TQSplitter*>(s->tqparentWidget()->qt_cast(TQSPLITTER_OBJECT_NAME_STRING)) )
+    if (TQSplitter *ps = static_cast<TQSplitter*>(s->parentWidget()->qt_cast(TQSPLITTER_OBJECT_NAME_STRING)) )
       ps->setSizes( psizes );
 
   s->show();
 
   TQValueList<int> sizes;
-  int space = 50;//isHoriz ? s->tqparentWidget()->height()/2 : s->tqparentWidget()->width()/2;
+  int space = 50;//isHoriz ? s->parentWidget()->height()/2 : s->parentWidget()->width()/2;
   sizes << space << space;
   s->setSizes( sizes );
 
@@ -503,7 +503,7 @@ void KateViewSpaceContainer::removeViewSpace (KateViewSpace *viewspace)
   // abort if this is the last viewspace
   if (m_viewSpaceList.count() < 2) return;
 
-  KateMDI::Splitter* p = (KateMDI::Splitter*)viewspace->tqparentWidget();
+  KateMDI::Splitter* p = (KateMDI::Splitter*)viewspace->parentWidget();
 
   // find out if it is the first child for repositioning
   // see below
@@ -512,9 +512,9 @@ void KateViewSpaceContainer::removeViewSpace (KateViewSpace *viewspace)
   // save some size information
   KateMDI::Splitter* pp=0L;
   TQValueList<int> ppsizes;
-  if (m_viewSpaceList.count() > 2 && p->tqparentWidget() != this)
+  if (m_viewSpaceList.count() > 2 && p->parentWidget() != this)
   {
-    pp = (KateMDI::Splitter*)p->tqparentWidget();
+    pp = (KateMDI::Splitter*)p->parentWidget();
     ppsizes = pp->sizes();
     pIsFirst = !pp->isLastChild( p ); // simple logic, right-
   }
@@ -554,10 +554,10 @@ void KateViewSpaceContainer::removeViewSpace (KateViewSpace *viewspace)
   {
     TQWidget* other = ((TQWidget *)(( TQPtrList<TQObject>)p->childrenListObject()).first());
 
-    other->reparent( p->tqparentWidget(), 0, TQPoint(), true );
+    other->reparent( p->parentWidget(), 0, TQPoint(), true );
     // We also need to find the right viewspace to become active
     if (pIsFirst)
-       ((KateMDI::Splitter*)p->tqparentWidget())->moveToFirst( other );
+       ((KateMDI::Splitter*)p->parentWidget())->moveToFirst( other );
     if ( other->isA("KateViewSpace") ) {
       setActiveSpace( (KateViewSpace*)other );
     }

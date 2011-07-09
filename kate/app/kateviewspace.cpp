@@ -69,7 +69,7 @@ protected:
     TQPainter p( this );
     p.setPen( tqcolorGroup().shadow() );
     p.drawLine( e->rect().left(), 0, e->rect().right(), 0 );
-    p.setPen( ((KateViewSpace*)tqparentWidget())->isActiveSpace() ? tqcolorGroup().light() : tqcolorGroup().midlight() );
+    p.setPen( ((KateViewSpace*)parentWidget())->isActiveSpace() ? tqcolorGroup().light() : tqcolorGroup().midlight() );
     p.drawLine( e->rect().left(), 1, e->rect().right(), 1 );
   }
 };
@@ -228,7 +228,7 @@ bool KateViewSpace::event( TQEvent *e )
 
 void KateViewSpace::slotStatusChanged (Kate::View *view, int r, int c, int ovr, bool block, int mod, const TQString &msg)
 {
-  if ((TQWidgetStack *)view->tqparentWidget() != stack)
+  if ((TQWidgetStack *)view->parentWidget() != stack)
     return;
   mStatusBar->setStatus( r, c, ovr, block, mod, msg );
 }

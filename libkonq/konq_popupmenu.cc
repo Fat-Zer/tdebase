@@ -96,12 +96,12 @@ public:
 class KonqPopupMenu::KonqPopupMenuPrivate
 {
 public:
-  KonqPopupMenuPrivate() : m_tqparentWidget( 0 ),
+  KonqPopupMenuPrivate() : m_parentWidget( 0 ),
                            m_itemFlags( KParts::BrowserExtension::DefaultPopupItems )
   {
   }
   TQString m_urlTitle;
-  TQWidget *m_tqparentWidget;
+  TQWidget *m_parentWidget;
   KParts::BrowserExtension::PopupFlags m_itemFlags;
 };
 
@@ -200,30 +200,30 @@ KonqPopupMenu::KonqPopupMenu( KBookmarkManager *mgr, const KFileItemList &items,
                               KURL viewURL,
                               KActionCollection & actions,
                               KNewMenu * newMenu,
-                              TQWidget * tqparentWidget,
+                              TQWidget * parentWidget,
                               bool showProperties )
-    : TQPopupMenu( tqparentWidget, "konq_popupmenu" ), m_actions( actions ), m_ownActions( static_cast<TQWidget *>( 0 ), "KonqPopupMenu::m_ownActions" ), m_pMenuNew( newMenu ), m_sViewURL(viewURL), m_lstItems(items), m_pManager(mgr)
+    : TQPopupMenu( parentWidget, "konq_popupmenu" ), m_actions( actions ), m_ownActions( static_cast<TQWidget *>( 0 ), "KonqPopupMenu::m_ownActions" ), m_pMenuNew( newMenu ), m_sViewURL(viewURL), m_lstItems(items), m_pManager(mgr)
 {
     KonqPopupFlags kpf = ( showProperties ? ShowProperties : IsLink ) | ShowNewWindow;
-    init(tqparentWidget, kpf, KParts::BrowserExtension::DefaultPopupItems);
+    init(parentWidget, kpf, KParts::BrowserExtension::DefaultPopupItems);
 }
 
 KonqPopupMenu::KonqPopupMenu( KBookmarkManager *mgr, const KFileItemList &items,
                               const KURL& viewURL,
                               KActionCollection & actions,
                               KNewMenu * newMenu,
-                              TQWidget * tqparentWidget,
+                              TQWidget * parentWidget,
                               KonqPopupFlags kpf,
                               KParts::BrowserExtension::PopupFlags flags)
-  : TQPopupMenu( tqparentWidget, "konq_popupmenu" ), m_actions( actions ), m_ownActions( static_cast<TQWidget *>( 0 ), "KonqPopupMenu::m_ownActions" ), m_pMenuNew( newMenu ), m_sViewURL(viewURL), m_lstItems(items), m_pManager(mgr)
+  : TQPopupMenu( parentWidget, "konq_popupmenu" ), m_actions( actions ), m_ownActions( static_cast<TQWidget *>( 0 ), "KonqPopupMenu::m_ownActions" ), m_pMenuNew( newMenu ), m_sViewURL(viewURL), m_lstItems(items), m_pManager(mgr)
 {
-    init(tqparentWidget, kpf, flags);
+    init(parentWidget, kpf, flags);
 }
 
-void KonqPopupMenu::init (TQWidget * tqparentWidget, KonqPopupFlags kpf, KParts::BrowserExtension::PopupFlags flags)
+void KonqPopupMenu::init (TQWidget * parentWidget, KonqPopupFlags kpf, KParts::BrowserExtension::PopupFlags flags)
 {
     d = new KonqPopupMenuPrivate;
-    d->m_tqparentWidget = tqparentWidget;
+    d->m_parentWidget = parentWidget;
     d->m_itemFlags = flags;
     setup(kpf);
 }
@@ -1035,7 +1035,7 @@ void KonqPopupMenu::slotPopupNewDir()
   if (m_lstPopupURLs.empty())
     return;
 
-  KonqOperations::newDir(d->m_tqparentWidget, m_lstPopupURLs.first());
+  KonqOperations::newDir(d->m_parentWidget, m_lstPopupURLs.first());
 }
 
 void KonqPopupMenu::slotPopupEmptyTrashBin()
@@ -1116,10 +1116,10 @@ KPropertiesDialog* KonqPopupMenu::showPropertiesDialog()
         if (item->entry().count() == 0) // this item wasn't listed by a slave
         {
             // KPropertiesDialog will use stat to get more info on the file
-            return new KPropertiesDialog( item->url(), d->m_tqparentWidget );
+            return new KPropertiesDialog( item->url(), d->m_parentWidget );
         }
     }
-    return new KPropertiesDialog( m_lstItems, d->m_tqparentWidget );
+    return new KPropertiesDialog( m_lstItems, d->m_parentWidget );
 }
 
 KAction *KonqPopupMenu::action( const TQDomElement &element ) const

@@ -72,13 +72,13 @@ public:
       s_defaultViewProps = 0;
    }
 
-    virtual KParts::Part* createPartObject( TQWidget *tqparentWidget, const char *,
+    virtual KParts::Part* createPartObject( TQWidget *parentWidget, const char *,
                                       TQObject *parent, const char *name, const char*, const TQStringList &args )
    {
       if( args.count() < 1 )
          kdWarning() << "KonqKfmIconView: Missing Parameter" << endl;
 
-      KonqKfmIconView *obj = new KonqKfmIconView( tqparentWidget, parent, name,args.first() );
+      KonqKfmIconView *obj = new KonqKfmIconView( parentWidget, parent, name,args.first() );
       return obj;
    }
 
@@ -164,7 +164,7 @@ void IconViewBrowserExtension::setNameFilter( const TQString &nameFilter )
   m_iconView->m_nameFilter = nameFilter;
 }
 
-KonqKfmIconView::KonqKfmIconView( TQWidget *tqparentWidget, TQObject *parent, const char *name, const TQString& mode  )
+KonqKfmIconView::KonqKfmIconView( TQWidget *parentWidget, TQObject *parent, const char *name, const TQString& mode  )
     : KonqDirPart( parent, name )
     , m_bNeedSetCurrentItem( false )
     , m_pEnsureVisible( 0 )
@@ -179,7 +179,7 @@ KonqKfmIconView::KonqKfmIconView( TQWidget *tqparentWidget, TQObject *parent, co
     // Create a properties instance for this view
     m_pProps = new KonqPropsView( KonqIconViewFactory::instance(), KonqIconViewFactory::defaultViewProps() );
 
-    m_pIconView = new KonqIconViewWidget( tqparentWidget, "qiconview" );
+    m_pIconView = new KonqIconViewWidget( parentWidget, "qiconview" );
     m_pIconView->initConfig( true );
 
     connect( m_pIconView,  TQT_SIGNAL(imagePreviewFinished()),

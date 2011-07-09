@@ -88,14 +88,14 @@ public:
                           bool redraw=false);
 
     /**
-     * Notifies that all icon effects on thumbs should be tqinvalidated,
+     * Notifies that all icon effects on thumbs should be invalidated,
      * e.g. because the effect settings have been changed. The thumb itself
      * is assumed to be still valid (use setThumbnailPixmap() instead
      * otherwise).
      * @param state the state of the icon (enum in KIcon)
      * @param redraw whether to redraw the item after setting the icon
      */
-    void tqinvalidateThumb( int state, bool redraw = false );
+    void invalidateThumb( int state, bool redraw = false );
 
     /**
      * Our current thumbnail is not longer "current".

@@ -82,7 +82,7 @@ class KonqBaseListViewWidget : public KListView
    Q_OBJECT
    TQ_OBJECT
 public:
-   KonqBaseListViewWidget( KonqListView *parent, TQWidget *tqparentWidget );
+   KonqBaseListViewWidget( KonqListView *parent, TQWidget *parentWidget );
    virtual ~KonqBaseListViewWidget();
    unsigned int NumberOfAtoms;
 

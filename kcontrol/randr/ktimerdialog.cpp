@@ -95,7 +95,7 @@ void KTimerDialog::setMainWidget( QWidget *widget )
     // yuck, here goes.
     QVBox *newWidget = new QVBox( this );
 
-    if ( widget->tqparentWidget() != mainWidget ) {
+    if ( widget->parentWidget() != mainWidget ) {
         widget->reparent( newWidget, 0, QPoint(0,0) );
     } else {
         newWidget->insertChild( widget );

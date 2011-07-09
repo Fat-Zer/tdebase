@@ -818,12 +818,12 @@ void TaskBar::reLayout()
 
 void TaskBar::setViewportBackground()
 {
-    const TQPixmap *bg = tqparentWidget()->backgroundPixmap();
+    const TQPixmap *bg = parentWidget()->backgroundPixmap();
     
     if (bg)
     {
-        TQPixmap pm(tqparentWidget()->size());
-        pm.fill(tqparentWidget(), pos() + viewport()->pos());
+        TQPixmap pm(parentWidget()->size());
+        pm.fill(parentWidget(), pos() + viewport()->pos());
         viewport()->setPaletteBackgroundPixmap(pm);
         viewport()->setBackgroundOrigin(WidgetOrigin);
     }

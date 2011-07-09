@@ -94,7 +94,7 @@ KPamGreeter::KPamGreeter( KGreeterPluginHandler *_handler,
 
         kg_debug("KPamGreeter constructed\n");
 
-	m_tqparentWidget = parent;
+	m_parentWidget = parent;
 
 	KdmItem *user_entry = 0, *pw_entry = 0;
 	int line = 0;
@@ -314,7 +314,7 @@ KPamGreeter::textMessage( const char *text, bool err )
 	    return false;
 
     if (getLayoutItem()) {
-      TQLabel* label = new TQLabel(TQString::fromUtf8(text), m_tqparentWidget);
+      TQLabel* label = new TQLabel(TQString::fromUtf8(text), m_parentWidget);
       getLayoutItem()->addWidget(label, state+1, 0, 0);
     }
 
@@ -341,7 +341,7 @@ KPamGreeter::textPrompt( const char *prompt, bool echo, bool nonBlocking )
     }
     else if (state >= authEdit.size()) {
 	if (getLayoutItem()) {
-   	    TQLabel* label = new TQLabel(TQString::fromUtf8(prompt), m_tqparentWidget);
+   	    TQLabel* label = new TQLabel(TQString::fromUtf8(prompt), m_parentWidget);
 	    getLayoutItem()->addWidget(label, state+1, 0, 0);
             kg_debug("added label widget to layout");
         }
@@ -361,9 +361,9 @@ KPamGreeter::textPrompt( const char *prompt, bool echo, bool nonBlocking )
 	KDMPasswordEdit* passwdEdit;
 
 	if (echoMode == -1)
-	    passwdEdit = new KDMPasswordEdit( m_tqparentWidget );
+	    passwdEdit = new KDMPasswordEdit( m_parentWidget );
 	else
-	    passwdEdit = new KDMPasswordEdit( echoMode, m_tqparentWidget);
+	    passwdEdit = new KDMPasswordEdit( echoMode, m_parentWidget);
 	connect( passwdEdit, TQT_SIGNAL(textChanged( const TQString & )),
 		TQT_SLOT(slotActivity()) );
 	connect( passwdEdit, TQT_SIGNAL(lostFocus()), TQT_SLOT(slotActivity()) );

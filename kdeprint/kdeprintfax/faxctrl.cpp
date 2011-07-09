@@ -553,7 +553,7 @@ void FaxCtrl::viewLog(TQWidget *)
 	}
 	else
 	{
-		KWin::activateWindow(m_logview->tqparentWidget()->winId());
+		KWin::activateWindow(m_logview->parentWidget()->winId());
 	}
 }
 
@@ -605,7 +605,7 @@ void FaxCtrl::slotCloseLog()
 		TQTextEdit	*view = m_logview;
 		m_logview = 0;
 		if (obj && obj->inherits(TQPUSHBUTTON_OBJECT_NAME_STRING))
-			delete view->tqparentWidget();
+			delete view->parentWidget();
 kdDebug() << "slotClose()" << endl;
 	}
 }

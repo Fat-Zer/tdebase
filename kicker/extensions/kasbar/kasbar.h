@@ -251,7 +251,7 @@ signals:
    void directionChanged();
 
    /** Emitted when kasbar wants to resize. This happens when a new window is added. */
-   void tqlayoutChanged();
+   void layoutChanged();
 
    /** Emitted when the item size is changed. */
    void itemSizeChanged( int );

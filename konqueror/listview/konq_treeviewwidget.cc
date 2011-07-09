@@ -27,8 +27,8 @@
 template class TQDict<KonqListViewDir>;
 
 
-KonqTreeViewWidget::KonqTreeViewWidget( KonqListView *parent, TQWidget *tqparentWidget)
-   : KonqBaseListViewWidget( parent, tqparentWidget )
+KonqTreeViewWidget::KonqTreeViewWidget( KonqListView *parent, TQWidget *parentWidget)
+   : KonqBaseListViewWidget( parent, parentWidget )
 {
    kdDebug(1202) << "+KonqTreeViewWidget" << endl;
 

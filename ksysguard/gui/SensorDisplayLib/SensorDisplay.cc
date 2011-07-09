@@ -124,7 +124,7 @@ void SensorDisplay::configureUpdateInterval()
     if ( dlg.useGlobalUpdate() ) {
       mUseGlobalUpdateInterval = true;
 
-      SensorBoard* sb = dynamic_cast<SensorBoard*>( tqparentWidget() );
+      SensorBoard* sb = dynamic_cast<SensorBoard*>( parentWidget() );
       if ( !sb ) {
         kdDebug(1215) << "dynamic cast lacks" << endl;
         setUpdateInterval( 2 );
@@ -344,7 +344,7 @@ bool SensorDisplay::restoreSettings( TQDomElement &element )
   } else {
     mUseGlobalUpdateInterval = true;
 
-    SensorBoard* sb = dynamic_cast<SensorBoard*>( tqparentWidget() );
+    SensorBoard* sb = dynamic_cast<SensorBoard*>( parentWidget() );
     if ( !sb ) {
       kdDebug(1215) << "dynamic cast lacks" << endl;
       setUpdateInterval( 2 );

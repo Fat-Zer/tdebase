@@ -178,13 +178,13 @@ void ConfSystem::slotSystemChanged(int ID)
 	m_commands[m_current] = m_command->text();
 	m_current = ID;
 	if (ID == EFAX_ID)
-		m_device->tqparentWidget()->show();
+		m_device->parentWidget()->show();
 	else
-		m_device->tqparentWidget()->hide();
+		m_device->parentWidget()->hide();
 	if (ID == HYLAFAX_ID)
-		m_server->tqparentWidget()->show();
+		m_server->parentWidget()->show();
 	else
-		m_server->tqparentWidget()->hide();
+		m_server->parentWidget()->hide();
 	m_command->setText(m_commands[m_current]);
 }
 

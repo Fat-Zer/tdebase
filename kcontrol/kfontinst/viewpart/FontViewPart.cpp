@@ -165,17 +165,17 @@ void CFontViewPart::timeout()
         if(Misc::root())
         {
             destUrl=TQString("fonts:/")+itsPreview->engine().getName(m_url);
-            itsShowInstallButton=!KIO::NetAccess::exists(destUrl, true, itsFrame->tqparentWidget());
+            itsShowInstallButton=!KIO::NetAccess::exists(destUrl, true, itsFrame->parentWidget());
         }
         else
         {
             destUrl=TQString("fonts:/")+i18n(KFI_KIO_FONTS_SYS)+TQChar('/')+itsPreview->engine().getName(m_url);
-            if(KIO::NetAccess::exists(destUrl, true, itsFrame->tqparentWidget()))
+            if(KIO::NetAccess::exists(destUrl, true, itsFrame->parentWidget()))
                 itsShowInstallButton=false;
             else
             {
                 destUrl=TQString("fonts:/")+i18n(KFI_KIO_FONTS_USER)+TQChar('/')+itsPreview->engine().getName(m_url);
-                itsShowInstallButton=!KIO::NetAccess::exists(destUrl, true, itsFrame->tqparentWidget());
+                itsShowInstallButton=!KIO::NetAccess::exists(destUrl, true, itsFrame->parentWidget());
             }
         }
     }
@@ -220,7 +220,7 @@ void CFontViewPart::install()
     {
         KURL destUrl(getDest(m_url, KMessageBox::No==resp));
 
-        if(KIO::NetAccess::copy(m_url, destUrl, itsFrame->tqparentWidget()))
+        if(KIO::NetAccess::copy(m_url, destUrl, itsFrame->parentWidget()))
         {
             //
             // OK file copied, now look for any AFM or PFM file...
@@ -236,7 +236,7 @@ void CFontViewPart::install()
                 for(it=urls.begin(); it!=end; ++it)
                 {
                     destUrl=getDest(*it, KMessageBox::No==resp);
-                    KIO::NetAccess::copy(*it, destUrl, itsFrame->tqparentWidget());
+                    KIO::NetAccess::copy(*it, destUrl, itsFrame->parentWidget());
                 }
             }
 
@@ -274,7 +274,7 @@ void CFontViewPart::print()
 
     items.append(itsPreview->engine().getName(m_url));
 
-    Print::printItems(items, 0, itsFrame->tqparentWidget(), itsPreview->engine());
+    Print::printItems(items, 0, itsFrame->parentWidget(), itsPreview->engine());
 }
 
 }

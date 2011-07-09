@@ -392,7 +392,7 @@ void KDMAppearanceWidget::iconLoaderDropEvent(TQDropEvent *e)
 	if(!url->isLocalFile()) {
 	    pixurl.setPath(KGlobal::dirs()->resourceDirs("data").last() +
 		     "kdm/pics/" + url->fileName());
-	    KIO::NetAccess::copy(*url, pixurl, tqparentWidget());
+	    KIO::NetAccess::copy(*url, pixurl, parentWidget());
 	    istmp = true;
 	} else {
 	    pixurl = *url;
@@ -401,7 +401,7 @@ void KDMAppearanceWidget::iconLoaderDropEvent(TQDropEvent *e)
 
 	// By now url should be "file:/..."
 	if (!setLogo(pixurl.path())) {
-	    KIO::NetAccess::del(pixurl, tqparentWidget());
+	    KIO::NetAccess::del(pixurl, parentWidget());
 	    TQString msg = i18n("There was an error loading the image:\n"
 			       "%1\n"
 			       "It will not be saved.")

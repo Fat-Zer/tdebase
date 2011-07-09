@@ -50,15 +50,15 @@ KonqAboutPageFactory::~KonqAboutPageFactory()
     s_plugins_html = 0;
 }
 
-KParts::Part *KonqAboutPageFactory::createPartObject( TQWidget *tqparentWidget, const char *widgetName,
+KParts::Part *KonqAboutPageFactory::createPartObject( TQWidget *parentWidget, const char *widgetName,
                                                       TQObject *parent, const char *name,
                                                       const char *, const TQStringList & )
 {
-    //KonqFrame *frame = tqt_dynamic_cast<KonqFrame *>( tqparentWidget );
+    //KonqFrame *frame = tqt_dynamic_cast<KonqFrame *>( parentWidget );
     //if ( !frame ) return 0;
 
     return new KonqAboutPage( //frame->childView()->mainWindow(),
-                              tqparentWidget, widgetName, parent, name );
+                              parentWidget, widgetName, parent, name );
 }
 
 TQString KonqAboutPageFactory::loadFile( const TQString& file )
@@ -427,9 +427,9 @@ TQString KonqAboutPageFactory::plugins()
 
 
 KonqAboutPage::KonqAboutPage( //KonqMainWindow *
-                              TQWidget *tqparentWidget, const char *widgetName,
+                              TQWidget *parentWidget, const char *widgetName,
                               TQObject *parent, const char *name )
-    : KHTMLPart( tqparentWidget, widgetName, parent, name, BrowserViewGUI )
+    : KHTMLPart( parentWidget, widgetName, parent, name, BrowserViewGUI )
 {
     //m_mainWindow = mainWindow;
     TQTextCodec* codec = KGlobal::locale()->codecForEncoding();

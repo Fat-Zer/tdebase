@@ -82,7 +82,7 @@ void CmdHistory::slotCommandExecuted(KCommand *k) {
     CurrentMgr::self()->notifyManagers(bk.toGroup());
 
     // sets currentItem to something sensible
-    // if the currentItem was tqinvalidated by executing
+    // if the currentItem was invalidated by executing
     // CreateCommand or DeleteManyCommand
     // otherwise does nothing
     // sensible is either a already selected item or cmd->currentAddress()

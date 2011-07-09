@@ -660,8 +660,8 @@ void Sidebar::saveSession (KConfig *config)
 
 //BEGIN MAIN WINDOW
 
-MainWindow::MainWindow (TQWidget* tqparentWidget, const char* name)
- : KParts::MainWindow( tqparentWidget, name)
+MainWindow::MainWindow (TQWidget* parentWidget, const char* name)
+ : KParts::MainWindow( parentWidget, name)
  , m_sidebarsVisible(true)
  , m_restoreConfig (0)
  , m_guiClient (new GUIClient (this))

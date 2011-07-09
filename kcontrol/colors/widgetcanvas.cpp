@@ -337,8 +337,8 @@ void WidgetCanvas::drawSampleWidgets()
     // Initialize the pixmap which we draw sample widgets into.
 
     smplw.resize(width(), height());
-    //smplw.fill( tqparentWidget()->back() );
-    smplw.fill( tqparentWidget()->tqcolorGroup().mid() );
+    //smplw.fill( parentWidget()->back() );
+    smplw.fill( parentWidget()->tqcolorGroup().mid() );
 
     // Actually start painting in
 
@@ -585,7 +585,7 @@ void WidgetCanvas::drawSampleWidgets()
     // Valance
 
     qDrawWinPanel ( &paint, 0, 0, width(), height(),
-                    tqparentWidget()->tqcolorGroup(), TRUE, 0);
+                    parentWidget()->tqcolorGroup(), TRUE, 0);
 
     // Stop the painting
 

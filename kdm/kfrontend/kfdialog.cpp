@@ -74,7 +74,7 @@ FDialog::adjustGeometry()
 		adjustSize();
 	}
 
-	if (tqparentWidget())
+	if (parentWidget())
 		return;
 
 	TQRect grt( rect() );

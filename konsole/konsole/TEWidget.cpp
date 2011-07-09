@@ -1184,8 +1184,8 @@ void TEWidget::propagateSize()
   {
      setSize(columns, lines);
      TQFrame::setFixedSize(tqsizeHint());
-     tqparentWidget()->adjustSize();
-     tqparentWidget()->setFixedSize(tqparentWidget()->tqsizeHint());
+     parentWidget()->adjustSize();
+     parentWidget()->setFixedSize(parentWidget()->tqsizeHint());
      return;
   }
   if (image)

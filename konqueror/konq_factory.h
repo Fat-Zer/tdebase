@@ -52,7 +52,7 @@ public:
     return *this;
   }
 
-  KParts::ReadOnlyPart *create( TQWidget *tqparentWidget, const char *widgetName,
+  KParts::ReadOnlyPart *create( TQWidget *parentWidget, const char *widgetName,
                                 TQObject *parent, const char *name );
 
   bool isNull() const { return m_factory ? false : true; }

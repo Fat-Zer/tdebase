@@ -29,8 +29,8 @@
 #include <assert.h>
 
 
-KonqTextViewWidget::KonqTextViewWidget( KonqListView *parent, TQWidget *tqparentWidget )
-:KonqBaseListViewWidget(parent,tqparentWidget)
+KonqTextViewWidget::KonqTextViewWidget( KonqListView *parent, TQWidget *parentWidget )
+:KonqBaseListViewWidget(parent,parentWidget)
 {
    kdDebug(1202) << "+KonqTextViewWidget" << endl;
    m_filenameColumn=1;

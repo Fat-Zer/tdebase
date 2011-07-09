@@ -159,7 +159,7 @@ private:
                            int XineramaScreen, const TQSize &s, TQRect workArea,
                            bool autohidden = false, UserHidden userHidden = Unhidden) const;
     void positionChange(KPanelExtension::Position p);
-    void tqalignmentChange(KPanelExtension::Alignment a);
+    void alignmentChange(KPanelExtension::Alignment a);
     void xineramaScreenChange(int /*XineramaScreen*/) {}
     int arrangeHideButtons();
     int setupBorderSpace();

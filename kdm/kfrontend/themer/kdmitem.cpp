@@ -614,7 +614,7 @@ KdmItem::setFixedLayout( const TQDomNode &node )
 }
 
 TQWidget *
-KdmItem::tqparentWidget() const
+KdmItem::parentWidget() const
 {
   if (myWidget)
     return myWidget;
@@ -623,7 +623,7 @@ KdmItem::tqparentWidget() const
 
   if (tqparent()->qt_cast(TQWIDGET_OBJECT_NAME_STRING))
     return (TQWidget*)parent();
-  return ((KdmItem*)parent())->tqparentWidget();
+  return ((KdmItem*)parent())->parentWidget();
 }
 
 #include "kdmitem.moc"

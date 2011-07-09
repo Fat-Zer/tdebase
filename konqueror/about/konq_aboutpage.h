@@ -13,7 +13,7 @@ public:
     KonqAboutPageFactory( TQObject *parent = 0, const char *name = 0 );
     virtual ~KonqAboutPageFactory();
 
-    virtual KParts::Part *createPartObject( TQWidget *tqparentWidget, const char *widgetName,
+    virtual KParts::Part *createPartObject( TQWidget *parentWidget, const char *widgetName,
                                             TQObject *parent, const char *name,
                                             const char *classname, const TQStringList &args );
 
@@ -37,7 +37,7 @@ class KonqAboutPage : public KHTMLPart
     Q_OBJECT
 public:
     KonqAboutPage( /*KonqMainWindow *mainWindow,*/
-                   TQWidget *tqparentWidget, const char *widgetName,
+                   TQWidget *parentWidget, const char *widgetName,
                    TQObject *parent, const char *name );
     ~KonqAboutPage();
 

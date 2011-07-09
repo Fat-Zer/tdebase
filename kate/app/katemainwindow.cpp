@@ -101,7 +101,7 @@ KateMainWindow::KateMainWindow (KConfig *sconfig, const TQString &sgroup)
   // here we go, set some usable default sizes
   if (!initialGeometrySet())
   {
-    int scnum = TQApplication::desktop()->screenNumber(tqparentWidget());
+    int scnum = TQApplication::desktop()->screenNumber(parentWidget());
     TQRect desk = TQApplication::desktop()->screenGeometry(scnum);
 
     TQSize size;

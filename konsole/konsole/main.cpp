@@ -650,7 +650,7 @@ extern "C" int KDE_EXPORT kdemain(int argc, char* argv[])
   list->first();
   while( list->current())
   {
-    if( list->current()->tqparentWidget() != NULL || !list->current()->testWFlags( TQt::WDestructiveClose ) )
+    if( list->current()->parentWidget() != NULL || !list->current()->testWFlags( TQt::WDestructiveClose ) )
     {
         list->remove();
         continue;

@@ -264,7 +264,7 @@ class MainWindow : public KParts::MainWindow
     /**
      * Constructor
      */
-    MainWindow (TQWidget* tqparentWidget = 0, const char* name = 0);
+    MainWindow (TQWidget* parentWidget = 0, const char* name = 0);
 
     /**
      * Destructor

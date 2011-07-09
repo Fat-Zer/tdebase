@@ -54,7 +54,7 @@ KSWidget::KSWidget( TQWidget* parent, const char* name, int f )
             }
         }
     }
-    Window w = XCreateWindow( x11Display(), tqparentWidget() ? tqparentWidget()->winId() : RootWindow( x11Display(), x11Screen()),
+    Window w = XCreateWindow( x11Display(), parentWidget() ? parentWidget()->winId() : RootWindow( x11Display(), x11Screen()),
         x(), y(), width(), height(), 0, x11Depth(), InputOutput, visual, flags, &attrs );
     create( w );
 #endif

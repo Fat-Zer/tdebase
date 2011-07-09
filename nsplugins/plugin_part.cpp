@@ -171,13 +171,13 @@ PluginFactory::~PluginFactory()
    s_instance = 0;
 }
 
-KParts::Part * PluginFactory::createPartObject(TQWidget *tqparentWidget, const char *widgetName,
+KParts::Part * PluginFactory::createPartObject(TQWidget *parentWidget, const char *widgetName,
                                          TQObject *parent, const char *name,
                                          const char *classname, const TQStringList &args)
 {
     Q_UNUSED(classname)
     kdDebug(1432) << "PluginFactory::create" << endl;
-    KParts::Part *obj = new PluginPart(tqparentWidget, widgetName, parent, name, args);
+    KParts::Part *obj = new PluginPart(parentWidget, widgetName, parent, name, args);
     return obj;
 }
 
@@ -201,7 +201,7 @@ KAboutData *PluginFactory::aboutData()
 /**************************************************************************/
 
 
-PluginPart::PluginPart(TQWidget *tqparentWidget, const char *widgetName, TQObject *parent,
+PluginPart::PluginPart(TQWidget *parentWidget, const char *widgetName, TQObject *parent,
                        const char *name, const TQStringList &args)
     : KParts::ReadOnlyPart(parent, name), _widget(0), _args(args),
       _destructed(0L)
@@ -226,7 +226,7 @@ PluginPart::PluginPart(TQWidget *tqparentWidget, const char *widgetName, TQObjec
     _callback = new NSPluginCallback(this);
 
     // create a canvas to insert our widget
-    _canvas = new PluginCanvasWidget( tqparentWidget, widgetName );
+    _canvas = new PluginCanvasWidget( parentWidget, widgetName );
     //_canvas->setFocusPolicy( TQWidget::ClickFocus );
     _canvas->setFocusPolicy( TQ_WheelFocus );
     _canvas->setBackgroundMode( TQWidget::NoBackground );

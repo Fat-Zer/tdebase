@@ -44,7 +44,7 @@ public:
   KonqListViewFactory();
   virtual ~KonqListViewFactory();
 
-  virtual KParts::Part* createPartObject( TQWidget *tqparentWidget, const char *, TQObject *parent, const char *name, const char*, const TQStringList &args );
+  virtual KParts::Part* createPartObject( TQWidget *parentWidget, const char *, TQObject *parent, const char *name, const char*, const TQStringList &args );
 
   static KInstance *instance();
   static KonqPropsView *defaultViewProps();
@@ -65,7 +65,7 @@ class KonqListView : public KonqDirPart
   Q_OBJECT
   Q_PROPERTY( bool supportsUndo READ supportsUndo )
 public:
-  KonqListView( TQWidget *tqparentWidget, TQObject *parent, const char *name, const TQString& mode );
+  KonqListView( TQWidget *parentWidget, TQObject *parent, const char *name, const TQString& mode );
   virtual ~KonqListView();
 
   virtual const KFileItem * currentItem();

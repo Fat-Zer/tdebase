@@ -111,7 +111,7 @@ protected:
     virtual void doLoadConfiguration( KConfigGroup& ) {}
     virtual void doSaveConfiguration( KConfigGroup&,
                                       bool /* layoutOnly */ ) const {}
-    virtual void tqalignmentChange(KPanelExtension::Alignment) {}
+    virtual void alignmentChange(KPanelExtension::Alignment) {}
 
     virtual TQPopupMenu* createOpMenu() = 0;
     TQPopupMenu *appletOpMenu() const { return _appletOpMnu; }

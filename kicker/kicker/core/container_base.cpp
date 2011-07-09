@@ -118,7 +118,7 @@ void BaseContainer::tqsetAlignment(KPanelExtension::Alignment a)
     }
 
     _tqalignment = a;
-    tqalignmentChange(a);
+    alignmentChange(a);
 }
 
 TQPopupMenu* BaseContainer::opMenu()

@@ -622,7 +622,7 @@ void KasBar::resizeEvent(TQResizeEvent *ev)
     TQPainter p( &offscreen );
     paintBackground( &p, TQRect(TQPoint(0,0),size()) );
     TQWidget::resizeEvent(ev);
-    emit tqlayoutChanged();
+    emit layoutChanged();
 }
 
 

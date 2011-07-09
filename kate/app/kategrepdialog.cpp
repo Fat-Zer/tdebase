@@ -476,7 +476,7 @@ void GrepTool::childExited()
 
   if ( ! errbuf.isEmpty() )
   {
-    KMessageBox::information( tqparentWidget(), i18n("<strong>Error:</strong><p>") + errbuf, i18n("Grep Tool Error") );
+    KMessageBox::information( parentWidget(), i18n("<strong>Error:</strong><p>") + errbuf, i18n("Grep Tool Error") );
     errbuf.truncate(0);
   }
   else

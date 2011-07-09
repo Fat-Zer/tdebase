@@ -163,7 +163,7 @@ public:
 	bool isExplicitlyHidden() const { return isShown == ExplicitlyHidden; }
 	TQRect rect() const { return area; }
 
-	TQWidget *tqparentWidget() const;
+	TQWidget *parentWidget() const;
 	TQString getId() const { return id; }
 
 signals:

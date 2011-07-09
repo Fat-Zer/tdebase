@@ -762,7 +762,7 @@ void ItemView::slotMoveContent()
     TQListViewItemIterator it( this );
     while ( it.current() ) {
         if ( !dynamic_cast<KMenuSpacer*>( it.current() ) && !it.current()->tqparent() && it.current()->isVisible() )  {
-            it.current()->tqinvalidateHeight();
+            it.current()->invalidateHeight();
             item_height += it.current()->totalHeight();
         }
         ++it;

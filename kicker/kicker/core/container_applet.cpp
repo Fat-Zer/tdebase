@@ -354,7 +354,7 @@ void AppletContainer::slotDelayedDestruct()
     delete this;
 }
 
-void AppletContainer::tqalignmentChange(KPanelExtension::Alignment a)
+void AppletContainer::alignmentChange(KPanelExtension::Alignment a)
 {
     if (!_applet)
     {

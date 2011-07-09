@@ -58,7 +58,7 @@ public:
      * Constructor
      */
     KNewMenu( KActionCollection * _collec, const char *name=0L );
-    KNewMenu( KActionCollection * _collec, TQWidget *tqparentWidget, const char *name=0L );
+    KNewMenu( KActionCollection * _collec, TQWidget *parentWidget, const char *name=0L );
     virtual ~KNewMenu();
 
     /**

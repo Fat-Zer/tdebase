@@ -211,7 +211,7 @@ void KonqListViewItem::setPixmap( int column, const TQPixmap& pm )
    {
       setup();
       widthChanged( column );
-      tqinvalidateHeight();
+      invalidateHeight();
       return;
    }
 

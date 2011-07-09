@@ -114,8 +114,8 @@ public:
 };
 
 
-KonqSidebarTree::KonqSidebarTree( KonqSidebar_Tree *parent, TQWidget *tqparentWidget, int virt, const TQString& path )
-    : KListView( tqparentWidget ),
+KonqSidebarTree::KonqSidebarTree( KonqSidebar_Tree *parent, TQWidget *parentWidget, int virt, const TQString& path )
+    : KListView( parentWidget ),
       m_currentTopLevelItem( 0 ),
       m_toolTip( this ),
       m_scrollingLocked( false ),

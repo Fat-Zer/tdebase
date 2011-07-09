@@ -495,7 +495,7 @@ bool KMenu::eventFilter ( TQObject * receiver, TQEvent* e)
             if(raiseWidget)
                 break;
             if(receiver->isWidgetType())
-                receiver = TQT_TQOBJECT(TQT_TQWIDGET(receiver)->tqparentWidget(true));
+                receiver = TQT_TQOBJECT(TQT_TQWIDGET(receiver)->parentWidget(true));
             else
                 break;
         }
@@ -1556,7 +1556,7 @@ bool KMenu::runCommand()
       case KURIFilterData::HELP:
       {
         // No need for kfmclient, KRun does it all (David)
-        (void) new KRun( m_filterData->uri(), tqparentWidget());
+        (void) new KRun( m_filterData->uri(), parentWidget());
         return false;
       }
       case KURIFilterData::EXECUTABLE:
@@ -2715,7 +2715,7 @@ void KMenu::slotStartURL(const TQString& u)
         }
 
         kapp->propagateSessionManager();
-        (void) new KRun( u, tqparentWidget());
+        (void) new KRun( u, parentWidget());
     }
 }
 
@@ -3280,7 +3280,7 @@ void KMenu::searchActionClicked(TQListViewItem* item)
          data.setData(file.readEntry("Query").tqreplace("\\{@}", m_kcommand->currentText()));
      }
 
-     (void) new KRun( data.uri(), tqparentWidget());
+     (void) new KRun( data.uri(), parentWidget());
    }
 }
 

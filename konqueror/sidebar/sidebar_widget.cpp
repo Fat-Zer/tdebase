@@ -1043,18 +1043,18 @@ void Sidebar_Widget::showHidePage(int page)
 
 void Sidebar_Widget::collapseExpandSidebar()
 {
-	if (!tqparentWidget())
+	if (!parentWidget())
 		return; // Can happen during destruction
 		
 	if (m_visibleViews.count()==0)
 	{
 		m_somethingVisible = false;
-		tqparentWidget()->setMaximumWidth(tqminimumSizeHint().width());
+		parentWidget()->setMaximumWidth(tqminimumSizeHint().width());
 		updateGeometry();
 		emit panelHasBeenExpanded(false);
 	} else {
 		m_somethingVisible = true;
-		tqparentWidget()->setMaximumWidth(32767);
+		parentWidget()->setMaximumWidth(32767);
 		updateGeometry();
 		emit panelHasBeenExpanded(true);
 	}

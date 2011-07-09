@@ -1454,8 +1454,8 @@ int NSPluginClass::initialize()
    _nsFuncs.posturlnotify = g_NPN_PostURLNotify;
    _nsFuncs.getvalue = g_NPN_GetValue;
    _nsFuncs.setvalue = g_NPN_SetValue;
-   _nsFuncs.tqinvalidaterect = g_NPN_InvalidateRect;
-   _nsFuncs.tqinvalidateregion = g_NPN_InvalidateRegion;
+   _nsFuncs.invalidaterect = g_NPN_InvalidateRect;
+   _nsFuncs.invalidateregion = g_NPN_InvalidateRegion;
    _nsFuncs.forceredraw = g_NPN_ForceRedraw;
 
    // initialize plugin

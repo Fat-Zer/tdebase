@@ -215,7 +215,7 @@ void KfindWindow::saveResults()
   TQFile file(filename);
 
   if ( !file.open(IO_WriteOnly) )
-    KMessageBox::error(tqparentWidget(),
+    KMessageBox::error(parentWidget(),
 		       i18n("Unable to save results."));
   else {
     TQTextStream stream( &file );
@@ -255,7 +255,7 @@ void KfindWindow::saveResults()
     }
 
     file.close();
-    KMessageBox::information(tqparentWidget(),
+    KMessageBox::information(parentWidget(),
 			     i18n("Results were saved to file\n")+
 			     filename);
   }
@@ -287,7 +287,7 @@ void KfindWindow::deleteFiles()
 {
   TQString tmp = i18n("Do you really want to delete the selected file?",
                      "Do you really want to delete the %n selected files?",selectedItems().count());
-  if (KMessageBox::warningContinueCancel(tqparentWidget(), tmp, "", KGuiItem( i18n("&Delete"), "editdelete")) == KMessageBox::Cancel)
+  if (KMessageBox::warningContinueCancel(parentWidget(), tmp, "", KGuiItem( i18n("&Delete"), "editdelete")) == KMessageBox::Cancel)
     return;
 
   // Iterate on all selected elements

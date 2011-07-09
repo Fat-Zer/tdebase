@@ -84,8 +84,8 @@ void ColumnInfo::setData(const TQString& n, const TQString& desktopName, int kio
 }
 
 
-KonqBaseListViewWidget::KonqBaseListViewWidget( KonqListView *parent, TQWidget *tqparentWidget)
-   : KListView(tqparentWidget)
+KonqBaseListViewWidget::KonqBaseListViewWidget( KonqListView *parent, TQWidget *parentWidget)
+   : KListView(parentWidget)
    ,sortedByColumn(0)
    ,m_pBrowserView(parent)
    ,m_dirLister(new KDirLister( true /*m_showIcons==false*/))

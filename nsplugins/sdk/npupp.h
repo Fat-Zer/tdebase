@@ -1690,8 +1690,8 @@ typedef struct _NPNetscapeFuncs {
     NPN_PostURLNotifyUPP posturlnotify;
     NPN_GetValueUPP getvalue;
     NPN_SetValueUPP setvalue;
-    NPN_InvalidateRectUPP tqinvalidaterect;
-    NPN_InvalidateRegionUPP tqinvalidateregion;
+    NPN_InvalidateRectUPP invalidaterect;
+    NPN_InvalidateRegionUPP invalidateregion;
     NPN_ForceRedrawUPP forceredraw;
     NPN_GetStringIdentifierUPP getstringidentifier;
     NPN_GetStringIdentifiersUPP getstringidentifiers;

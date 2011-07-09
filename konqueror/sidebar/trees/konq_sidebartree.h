@@ -77,7 +77,7 @@ class KonqSidebarTree : public KListView, public KDirNotify
 {
     Q_OBJECT
 public:
-    KonqSidebarTree( KonqSidebar_Tree *parent, TQWidget *tqparentWidget, int virt, const TQString& path );
+    KonqSidebarTree( KonqSidebar_Tree *parent, TQWidget *parentWidget, int virt, const TQString& path );
     virtual ~KonqSidebarTree();
 
     void followURL( const KURL &url );

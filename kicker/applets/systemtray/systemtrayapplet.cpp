@@ -1067,12 +1067,12 @@ void TrayEmbed::getIconSize(int defaultIconSize)
 
 void TrayEmbed::setBackground()
 {
-    const TQPixmap *pbg = tqparentWidget()->backgroundPixmap();
+    const TQPixmap *pbg = parentWidget()->backgroundPixmap();
     
     if (pbg)
     {
         TQPixmap bg(width(), height());
-        bg.fill(tqparentWidget(), pos());
+        bg.fill(parentWidget(), pos());
         setPaletteBackgroundPixmap(bg);
         setBackgroundOrigin(WidgetOrigin);
     }

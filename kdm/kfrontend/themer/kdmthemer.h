@@ -62,7 +62,7 @@ public:
 	/*
 	 * Gives a tqsizeHint to the widget (parent size)
 	 */
-	//TQSize tqsizeHint() const{ return tqparentWidget()->size(); }
+	//TQSize tqsizeHint() const{ return parentWidget()->size(); }
 
 	/*
 	 * Takes a shot of the current widget

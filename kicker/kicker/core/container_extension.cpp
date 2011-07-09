@@ -293,7 +293,7 @@ void ExtensionContainer::readConfig()
     }
 
     positionChange(position());
-    tqalignmentChange(tqalignment());
+    alignmentChange(tqalignment());
     setSize(static_cast<KPanelExtension::Size>(m_settings.size()),
             m_settings.customSize());
 
@@ -471,7 +471,7 @@ void ExtensionContainer::moveMe()
                                                 KPanelExtension::Right,
                                                 KPanelExtension::Top,
                                                 KPanelExtension::Bottom };
-    KPanelExtension::Alignment tqalignments[] = { KPanelExtension::LeftTop,
+    KPanelExtension::Alignment alignments[] = { KPanelExtension::LeftTop,
                                                 KPanelExtension::Center,
                                                 KPanelExtension::RightBottom };
 
@@ -494,8 +494,8 @@ void ExtensionContainer::moveMe()
                 // they don't get their "you're changing position" signals through
                 // heightForWidth/widthForHeight
                 rects.append(UserRectSel::PanelStrut(initialGeometry(positions[i],
-                                                                     tqalignments[j], s),
-                                                     s, positions[i], tqalignments[j]));
+                                                                     alignments[j], s),
+                                                     s, positions[i], alignments[j]));
             }
         }
     }
@@ -1368,7 +1368,7 @@ void ExtensionContainer::leaveEvent(TQEvent*)
     maybeStartAutoHideTimer();
 }
 
-void ExtensionContainer::tqalignmentChange(KPanelExtension::Alignment a)
+void ExtensionContainer::alignmentChange(KPanelExtension::Alignment a)
 {
     if (!m_extension)
     {

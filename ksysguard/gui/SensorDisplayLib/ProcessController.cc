@@ -247,7 +247,7 @@ ProcessController::killProcess()
 
 		KDialogBase *dlg = new KDialogBase (  i18n ("Kill Process"), 
 						      KDialogBase::Yes | KDialogBase::Cancel,
-						      KDialogBase::Yes, KDialogBase::Cancel, this->tqparentWidget(),
+						      KDialogBase::Yes, KDialogBase::Cancel, this->parentWidget(),
 						      "killconfirmation",
 			       			      true, true, KGuiItem(i18n("Kill")));
 

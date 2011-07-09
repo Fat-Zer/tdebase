@@ -142,12 +142,12 @@ void ConfigModule::runAsRoot()
 
   // create an embed widget that will embed the
   // kcmshell running as root
-  _embedLayout = new TQVBoxLayout(_module->tqparentWidget());
-  _embedFrame = new TQVBox( _module->tqparentWidget() );
+  _embedLayout = new TQVBoxLayout(_module->parentWidget());
+  _embedFrame = new TQVBox( _module->parentWidget() );
   _embedFrame->setFrameStyle( TQFrame::Box | TQFrame::Raised );
   TQPalette pal( red );
   pal.setColor( TQColorGroup::Background,
-		_module->tqparentWidget()->tqcolorGroup().background() );
+		_module->parentWidget()->tqcolorGroup().background() );
   _embedFrame->setPalette( pal );
   _embedFrame->setLineWidth( 2 );
   _embedFrame->setMidLineWidth( 2 );
