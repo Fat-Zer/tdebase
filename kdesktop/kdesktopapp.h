@@ -49,14 +49,14 @@ class KDesktopApp : public KUniqueApplication
             return m_bgSupported;
         }
 #endif
-        
+
     signals:
         void cmBackgroundChanged(bool supported);
 
 #ifdef COMPOSITE
     private:
         void initCmBackground();
-        
+
     private:
 
         Atom m_cmBackground;

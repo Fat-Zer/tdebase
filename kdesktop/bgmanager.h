@@ -19,10 +19,6 @@
 #define COMPOSITE
 #endif
 
-#ifdef Q_MOC_RUN
-#define COMPOSITE
-#endif
-
 class KConfig;
 class TQTimer;
 class TQPixmap;
@@ -93,11 +89,8 @@ private slots:
     void desktopResized();
     void clearRoot();
     void saveImages();
-
-#ifdef COMPOSITE
     void slotCmBackgroundChanged(bool);
-#endif
-    
+
 private:
     void applyCommon(bool common);
     void applyExport(bool _export);
@@ -129,9 +122,7 @@ private:
     TQWidget *m_pDesktop;
     TQTimer *m_pTimer;
 
-#ifdef COMPOSITE
-	KPixmap *m_tPixmap;
-#endif
+    KPixmap *m_tPixmap;
 	
     TQPtrVector<KVirtualBGRenderer> m_Renderer;
     TQPtrVector<KBackgroundCacheEntry> m_Cache;

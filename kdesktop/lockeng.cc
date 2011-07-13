@@ -34,7 +34,7 @@ extern xautolock_corner_t xautolock_corners[ 4 ];
 // a newly started process.
 //
 SaverEngine::SaverEngine()
-    : DCOPObject("KScreensaverIface"),
+    : KScreensaverIface(),
       TQWidget(),
       mBlankOnly(false)
 {

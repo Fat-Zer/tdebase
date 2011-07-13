@@ -6,10 +6,12 @@
 #include <dcopobject.h>
 #include <dcopref.h>
 
-class KDesktopIface : virtual public DCOPObject
+class KDesktopIface : public DCOPObject
 {
     K_DCOP
 public:
+
+    KDesktopIface() : DCOPObject("KDesktopIface") {}
 
 k_dcop:
     /**

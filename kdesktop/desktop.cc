@@ -135,7 +135,7 @@ KDesktop::WheelDirection KDesktop::m_eWheelDirection = KDesktop::m_eDefaultWheel
 const char* KDesktop::m_wheelDirectionStrings[2] = { "Forward", "Reverse" };
 
 KDesktop::KDesktop( bool x_root_hack, bool wait_for_kded ) :
-    DCOPObject( "KDesktopIface" ),
+    KDesktopIface(),
     TQWidget( 0L, "desktop", (WFlags)(WResizeNoErase | ( x_root_hack ? (WStyle_Customize | WStyle_NoBorder) : 0)) ),
     // those two WStyle_ break kdesktop when the root-hack isn't used (no Dnd)
    startup_id( NULL ), m_waitForKicker(0)

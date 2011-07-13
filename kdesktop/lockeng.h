@@ -24,7 +24,7 @@ class DCOPClientTransaction;
  */
 class SaverEngine
     : public TQWidget,
-      virtual public KScreensaverIface
+      public KScreensaverIface
 {
     Q_OBJECT
 public:

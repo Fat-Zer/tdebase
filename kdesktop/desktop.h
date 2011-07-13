@@ -59,7 +59,8 @@ signals:
  * It handles the background, the screensaver and all the rest of the global stuff.
  * The icon view is a child widget of KDesktop.
  */
-class KDesktop : public TQWidget, virtual public KDesktopIface
+class KDesktop : public TQWidget,
+                 public KDesktopIface
 {
   Q_OBJECT
 

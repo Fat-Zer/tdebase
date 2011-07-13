@@ -4,10 +4,12 @@
 
 #include <dcopobject.h>
 
-class KScreensaverIface : virtual public DCOPObject
+class KScreensaverIface : public DCOPObject
 {
   K_DCOP
 public:
+
+  KScreensaverIface() : DCOPObject("KScreensaverIface") {}
 
 k_dcop:
   /** Lock the screen now even if the screensaver does not lock by default. */
