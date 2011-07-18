@@ -21,7 +21,7 @@ GeometryTip::GeometryTip( const XSizeHints* xSizeHints, bool save_under ):
     setLineWidth(1);
     setFrameStyle( TQFrame::Raised | TQFrame::StyledPanel );
     tqsetAlignment( AlignCenter | AlignTop );
-    tqsizeHints = xSizeHints;
+    sizeHints = xSizeHints;
     if( save_under )
         {
         XSetWindowAttributes attr;
@@ -39,12 +39,12 @@ void GeometryTip::setGeometry( const TQRect& geom )
     int w = geom.width();
     int h = geom.height();
 
-    if (tqsizeHints) 
+    if (sizeHints) 
         {
-        if (tqsizeHints->flags & PResizeInc) 
+        if (sizeHints->flags & PResizeInc) 
             {
-            w = ( w - tqsizeHints->base_width ) / tqsizeHints->width_inc;
-            h = ( h - tqsizeHints->base_height ) / tqsizeHints->height_inc; 
+            w = ( w - sizeHints->base_width ) / sizeHints->width_inc;
+            h = ( h - sizeHints->base_height ) / sizeHints->height_inc; 
             }
         }
 

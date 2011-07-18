@@ -140,7 +140,7 @@ TopLevel::TopLevel( const char *name )
   new KAction( i18n( "Configure &Style..." ), "colorize", 0, TQT_TQOBJECT(this),
                TQT_SLOT( editStyle() ), actionCollection(), "configure_style" );
 
-  // TODO remove resize and fix so tqsizeHints() determines default size.
+  // TODO remove resize and fix so sizeHints() determines default size.
   if (!initialGeometrySet())
     resize( 640, 480 );
   setupGUI(ToolBar | Keys | StatusBar | Create);
