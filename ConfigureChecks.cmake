@@ -189,9 +189,10 @@ if( BUILD_KDM OR BUILD_KSMSERVER )
   endif( )
 
   # check for dbus-tqt
+  pkg_check_modules( DBUS_TQT REQUIRED dbus-tqt )
   tde_save( CMAKE_REQUIRED_INCLUDES CMAKE_REQUIRED_LIBRARIES )
-  set( CMAKE_REQUIRED_INCLUDES ${QT_INCLUDE_DIRS} ${TQT_INCLUDE_DIRS} ${DBUS_INCLUDE_DIRS} )
-  set( CMAKE_REQUIRED_LIBRARIES ${TQT_LDFLAGS} )
+  set( CMAKE_REQUIRED_INCLUDES ${DBUS_TQT_INCLUDE_DIRS} ${TQT_INCLUDE_DIRS} ${QT_INCLUDE_DIRS})
+  set( CMAKE_REQUIRED_LIBRARIES ${DBUS_TQT_LDFLAGS} ${TQT_LDFLAGS} ${QT_LDFLAGS} )
   check_cxx_source_compiles("
     #include <tqt.h>
     #include <dbus/connection.h>

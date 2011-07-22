@@ -14,9 +14,12 @@
 include_directories(
   ${CMAKE_CURRENT_BINARY_DIR}
   ${CMAKE_BINARY_DIR}
-  ${DBUS_INCLUDE_DIRS}
+  ${DBUS_TQT_INCLUDE_DIRS}
 )
 
+link_directories(
+  ${DBUS_TQT_LIBRARY_DIRS}
+)
 
 ##### kdm (executable) ##########################
 
@@ -34,6 +37,6 @@ tde_add_executable( kdm
     process.c protodpy.c reset.c resource.c rpcauth.c
     server.c session.c sessreg.c socket.c streams.c
     util.c xdmauth.c xdmcp.c
-  LINK X11 ${XAU_LIBRARIES} ${DBUS_LIBRARIES} ${PAM_LIBRARY}
+  LINK X11 ${XAU_LIBRARIES} ${DBUS_TQT_LIBRARIES} ${PAM_LIBRARY}
   DESTINATION ${BIN_INSTALL_DIR}
 )
