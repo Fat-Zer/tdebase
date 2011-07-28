@@ -408,7 +408,10 @@ else
 fi
 
 if [ -n $KGTK_PRELOAD ]; then
-  export LD_PRELOAD=$KGTK_PRELOAD:$LD_PRELOAD
+  if [ -e /usr/lib/libnspr4.so ]; then
+    KGTK_NSPR_PRELOAD="/usr/lib/libnspr4.so:"
+  fi
+  export LD_PRELOAD=$KGTK_PRELOAD:$KGTK_NSPR_PRELOAD$LD_PRELOAD
 fi
 
 # We run mkfontdir on the user's font dirs (if we have permission) to pick
