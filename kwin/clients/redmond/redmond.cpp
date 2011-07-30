@@ -395,7 +395,7 @@ int RedmondDeco::layoutMetric(LayoutMetric lm, bool respectWindowState, const KC
 			return border ? borderWidth+2 : 2;
 
 		case LM_TitleEdgeTop:
-			return border ? borderWidth+1 : 2;
+			return border ? borderWidth+1 : 1;
 
 		case LM_TitleEdgeBottom:
 			return border ? 1 : 0;
@@ -405,7 +405,7 @@ int RedmondDeco::layoutMetric(LayoutMetric lm, bool respectWindowState, const KC
 			return border ? 1 : 0;
 
 		case LM_TitleHeight:
-			return titleHeight-2;
+			return border ? titleHeight-2 : titleHeight-1;
 
 		case LM_ButtonWidth:
 			return titleHeight-2;
