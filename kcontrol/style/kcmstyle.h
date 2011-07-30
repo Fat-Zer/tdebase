@@ -157,6 +157,7 @@ private:
 	TQComboBox* comboToolbarIcons;
 
 	TQCheckBox* cbIconsOnButtons;
+	TQCheckBox* cbScrollablePopupMenus;
 	TQCheckBox* cbTearOffHandles;
 };
 

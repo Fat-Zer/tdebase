@@ -181,6 +181,8 @@ KCMStyle::KCMStyle( TQWidget* parent, const char* name )
 
 	cbIconsOnButtons = new TQCheckBox( i18n("Sho&w icons on buttons"), gbWidgetStyle );
 	gbWidgetStyleLayout->addWidget( cbIconsOnButtons );
+	cbScrollablePopupMenus = new TQCheckBox( i18n("Enable &scrolling in popup menus"), gbWidgetStyle );
+	gbWidgetStyleLayout->addWidget( cbScrollablePopupMenus );
 	cbEnableTooltips = new TQCheckBox( i18n("E&nable tooltips"), gbWidgetStyle );
 	gbWidgetStyleLayout->addWidget( cbEnableTooltips );
 	cbTearOffHandles = new TQCheckBox( i18n("Show tear-off handles in &popup menus"), gbWidgetStyle );
@@ -379,6 +381,7 @@ KCMStyle::KCMStyle( TQWidget* parent, const char* name )
 	connect( cbTransparentToolbars, TQT_SIGNAL(toggled(bool)),    this, TQT_SLOT(setToolbarsDirty()));
 	connect( cbEnableTooltips,      TQT_SIGNAL(toggled(bool)),    this, TQT_SLOT(setEffectsDirty()));
 	connect( cbIconsOnButtons,      TQT_SIGNAL(toggled(bool)),    this, TQT_SLOT(setEffectsDirty()));
+	connect( cbScrollablePopupMenus,TQT_SIGNAL(toggled(bool)),    this, TQT_SLOT(setEffectsDirty()));
 	connect( cbTearOffHandles,      TQT_SIGNAL(toggled(bool)),    this, TQT_SLOT(setEffectsDirty()));
 	connect( comboToolbarIcons,     TQT_SIGNAL(activated(int)), this, TQT_SLOT(setToolbarsDirty()));
 
@@ -597,6 +600,10 @@ void KCMStyle::save()
 
 	// Misc page
 	config.writeEntry( "ShowIconsOnPushButtons", cbIconsOnButtons->isChecked(), true, true );
+	{       // Braces force a TQSettings::sync()
+		TQSettings settings;    // Only for KStyle stuff
+		settings.writeEntry("/KStyle/Settings/ScrollablePopupMenus", cbScrollablePopupMenus->isChecked() );
+	}
 	config.writeEntry( "EffectNoTooltip", !cbEnableTooltips->isChecked(), true, true );
 
 	config.setGroup("General");
@@ -1022,6 +1029,9 @@ void KCMStyle::loadMisc( KConfig& config )
 	cbEnableTooltips->setChecked(!config.readBoolEntry("EffectNoTooltip", false));
 	cbTearOffHandles->setChecked(config.readBoolEntry("InsertTearOffHandle", false));
 
+	TQSettings settings;
+	cbScrollablePopupMenus->setChecked(settings.readBoolEntry("/KStyle/Settings/ScrollablePopupMenus", false));
+
 	m_bToolbarsDirty = false;
 }
 
@@ -1079,6 +1089,7 @@ void KCMStyle::addWhatsThis()
 							"Text is aligned below the icon.") );
 	TQWhatsThis::add( cbIconsOnButtons, i18n( "If you enable this option, KDE Applications will "
 							"show small icons alongside some important buttons.") );
+	TQWhatsThis::add( cbScrollablePopupMenus, i18n( "If you enable this option, pop-up menus will scroll if vertical space is exhausted." ) );
 	TQWhatsThis::add( cbTearOffHandles, i18n( "If you enable this option some pop-up menus will "
 							"show so called tear-off handles. If you click them, you get the menu "
 							"inside a widget. This can be very helpful when performing "
