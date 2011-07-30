@@ -113,7 +113,8 @@ class KWIN_EXPORT KCommonDecoration : public KDecoration
             LM_ButtonHeight,
             LM_ButtonSpacing,
             LM_ExplicitButtonSpacer,
-            LM_ButtonMarginTop
+            LM_ButtonMarginTop,
+            LM_RightButtonsMarginTop
         };
 
         enum DecorationBehaviour

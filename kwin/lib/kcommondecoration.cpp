@@ -97,6 +97,7 @@ int KCommonDecoration::layoutMetric(LayoutMetric lm, bool, const KCommonDecorati
             return 5;
 
         case LM_ButtonMarginTop:
+        case LM_RightButtonsMarginTop:
             return 0;
 
         case LM_ExplicitButtonSpacer:
@@ -212,6 +213,7 @@ void KCommonDecoration::updateLayout() const
     }
 
     if (m_buttonsRight.count() > 0) {
+        int y = r_y + layoutMetric(LM_TitleEdgeTop) + layoutMetric(LM_ButtonMarginTop) + layoutMetric(LM_RightButtonsMarginTop);
         const int titleEdgeRightLeft = r_x2-layoutMetric(LM_TitleEdgeRight)+1;
 
         const int buttonSpacing = layoutMetric(LM_ButtonSpacing);

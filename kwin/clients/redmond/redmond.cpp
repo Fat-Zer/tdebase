@@ -395,7 +395,7 @@ int RedmondDeco::layoutMetric(LayoutMetric lm, bool respectWindowState, const KC
 			return border ? borderWidth+2 : 2;
 
 		case LM_TitleEdgeTop:
-			return border ? borderWidth+2 : 2;
+			return border ? borderWidth+1 : 2;
 
 		case LM_TitleEdgeBottom:
 			return border ? 1 : 0;
@@ -421,6 +421,12 @@ int RedmondDeco::layoutMetric(LayoutMetric lm, bool respectWindowState, const KC
 
 		case LM_ExplicitButtonSpacer:
 			return 2;
+
+		case LM_ButtonMarginTop:
+			return 0;
+
+		case LM_RightButtonsMarginTop:
+			return 1;
 
 		default:
 			return KCommonDecoration::layoutMetric(lm, respectWindowState, btn);
@@ -560,8 +566,12 @@ void RedmondDeco::paintEvent( TQPaintEvent* )
 
         p2.setFont( fnt );
         p2.setPen( options()->color(KDecoration::ColorFont, isActive() ));
-		p2.drawText( r.x(), fontoffset, r.width()-3, r.height()-1,
-                     AlignLeft | AlignVCenter, caption() );
+        if (border)
+            p2.drawText( r.x()-3, fontoffset, r.width(), r.height()+1,
+                         AlignLeft | AlignVCenter, caption() );
+        else
+            p2.drawText( r.x()+1, fontoffset, r.width()-4, r.height()+1,
+                         AlignLeft | AlignVCenter, caption() );
         p2.end();
 
         p.drawPixmap( modBorderWidth, modBorderWidth, *titleBuffer );
@@ -576,7 +586,7 @@ void RedmondDeco::paintEvent( TQPaintEvent* )
        // Draw the title text.
        p.setFont( fnt );
        p.setPen(options()->color(KDecoration::ColorFont, isActive() ));
-	   p.drawText(r.x()+4, r.y()+fontoffset-2, r.width()-3, r.height()-1,
+	   p.drawText(r.x()+4, r.y()+fontoffset-2, r.width()-3, r.height()+1,
                   AlignLeft | AlignVCenter, caption() );
    }
 
@@ -616,7 +626,7 @@ void RedmondDecoFactory::readConfig() {
 	case BorderTiny:
 	case BorderNormal:
 	default:
-		borderWidth = 4;
+		borderWidth = 3;
 		if (normalTitleHeight < 16) normalTitleHeight = 16;
 		if (toolTitleHeight < 16) toolTitleHeight = 16;
 	}
