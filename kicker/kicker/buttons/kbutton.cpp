@@ -22,6 +22,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ******************************************************************/
 
 #include <tqtooltip.h>
+#include <tqstyle.h>
 
 #include <klocale.h>
 #include <kapplication.h>
@@ -39,7 +40,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include "kbutton.moc"
 
 KButton::KButton( TQWidget* parent )
-    : PanelPopupButton( parent, "KButton" )
+    : PanelPopupButton( parent, "KButton", KickerSettings::showDeepButtons() )
 {
     TQToolTip::add(this, i18n("Applications, tasks and desktop sessions"));
     setTitle(i18n("K Menu"));
@@ -79,3 +80,10 @@ void KButton::initPopup()
     MenuManager::the()->kmenu()->initialize();
 }
 
+void KButton::drawButton(TQPainter *p)
+{
+    if (KickerSettings::showDeepButtons())
+        PanelPopupButton::drawDeepButton(p);
+    else
+        PanelPopupButton::drawButton(p);
+}

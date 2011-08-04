@@ -45,6 +45,7 @@ protected:
     virtual TQString tileName() { return "KMenu"; }
     virtual void initPopup();
     virtual TQString defaultIcon() const { return "go"; }
+    virtual void drawButton(TQPainter *);
 };
 
 #endif

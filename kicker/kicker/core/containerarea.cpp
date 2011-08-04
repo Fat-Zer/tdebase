@@ -1513,6 +1513,24 @@ void ContainerArea::setBackground()
             TQTimer::singleShot(0, this, TQT_SLOT(updateContainersBackground()));
         }
     }
+//     else {		// RAJA
+//         TQRect rect;
+//         TQImage bgImage;
+//         TQPixmap bgPixmap(size().width(), size().height());
+//         bgPixmap.fill(tqcolorGroup().background());
+//         TQPainter p( TQT_TQPAINTDEVICE(&bgPixmap) );
+// 
+// // FIXME This should change the rectangle based on the container's location on the screen (top, bottom, etc.)
+// rect = TQRect(0,0,size().width(),2);
+// tqstyle().tqdrawPrimitive( TQStyle::PE_DockWindowSeparator, &p, rect, tqcolorGroup(), TQStyle::Style_Default );
+// 
+// printf("[RAJA DEBUG 100.0] Hi there!\n\r"); fflush(stdout);
+// p.fillRect(0,0,100,100,TQColor(0,0,0));
+// 
+//         bgImage = bgPixmap;
+//         setPaletteBackgroundPixmap(TQPixmap(bgImage));
+//         TQTimer::singleShot(0, this, TQT_SLOT(updateContainersBackground()));
+//     }
 
     _bgSet = true;
 }

@@ -32,6 +32,8 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <tqtimer.h>
 #include <tqtooltip.h>
 #include <tqvbox.h>
+#include <tqimage.h>
+#include <tqstyle.h>
 #include <qxembed.h>
 #include <tqcolor.h>
 
@@ -66,6 +68,15 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 /* PANEL_SPEED_MULTIPLIER is used to increase the overall speed as the panel seems to have slowed down over the various releases! */
 #define PANEL_SPEED_MULTIPLIER 10.0
 #define PANEL_SPEED(x, c) (int)(((1.0-2.0*fabs((x)-(c)/2.0)/c)*m_settings.hideAnimationSpeed()+1.0)*PANEL_SPEED_MULTIPLIER)
+
+// #define PANEL_RESIZE_HANDLE_WIDTH 3
+// #define PANEL_BOTTOM_SPACING_W_RESIZE_HANDLE 2
+
+// #define PANEL_RESIZE_HANDLE_WIDTH 4
+// #define PANEL_BOTTOM_SPACING_W_RESIZE_HANDLE 2
+
+#define PANEL_RESIZE_HANDLE_WIDTH 6
+#define PANEL_BOTTOM_SPACING_W_RESIZE_HANDLE 0
 
 ExtensionContainer::ExtensionContainer(const AppletInfo& info,
                                        const TQString& extensionId,
@@ -109,6 +120,7 @@ ExtensionContainer::ExtensionContainer(KPanelExtension* extension,
     _info(info),
     _ltHB(0),
     _rbHB(0),
+    _resizeHandle(0),
     m_extension(extension),
     m_maintainFocus(0),
     m_panelOrder(ExtensionManager::the()->nextPanelOrder())
@@ -223,6 +235,11 @@ TQSize ExtensionContainer::tqsizeHint(KPanelExtension::Position p, const TQSize 
             height += 1; // border
         }
 
+        if (KickerSettings::useResizeHandle())
+        {
+            height += (PANEL_RESIZE_HANDLE_WIDTH + PANEL_BOTTOM_SPACING_W_RESIZE_HANDLE); // resize handle area
+        }
+
         if (m_settings.showLeftHideButton())
         {
             width += m_settings.hideButtonSize();
@@ -241,6 +258,11 @@ TQSize ExtensionContainer::tqsizeHint(KPanelExtension::Position p, const TQSize 
         if (needsBorder())
         {
             width += 1; // border
+        }
+
+        if (KickerSettings::useResizeHandle())
+        {
+            width += (PANEL_RESIZE_HANDLE_WIDTH + PANEL_BOTTOM_SPACING_W_RESIZE_HANDLE); // resize handle area
         }
 
         if (m_settings.showLeftHideButton())
@@ -1186,6 +1208,11 @@ int ExtensionContainer::arrangeHideButtons()
             --maxWidth;
         }
 
+        if (KickerSettings::useResizeHandle())
+        {
+            maxWidth = maxWidth - (PANEL_RESIZE_HANDLE_WIDTH + PANEL_BOTTOM_SPACING_W_RESIZE_HANDLE);
+        }
+
         if (_ltHB)
         {
             _ltHB->setMaximumWidth(maxWidth);
@@ -1209,6 +1236,11 @@ int ExtensionContainer::arrangeHideButtons()
         if (needsBorder())
         {
             --maxHeight;
+        }
+
+        if (KickerSettings::useResizeHandle())
+        {
+            maxHeight = maxHeight - (PANEL_RESIZE_HANDLE_WIDTH + PANEL_BOTTOM_SPACING_W_RESIZE_HANDLE);
         }
 
         int vertAlignment = (position() == KPanelExtension::Top) ? Qt::AlignTop : 0;
@@ -1261,10 +1293,14 @@ int ExtensionContainer::setupBorderSpace()
     _layout->setColSpacing(0, 0);
     _layout->setColSpacing(2, 0);
 
-    if (!needsBorder())
+    if (!needsBorder() && !KickerSettings::useResizeHandle())
     {
         return 0;
     }
+
+    int borderWidth = 1;
+    if (KickerSettings::useResizeHandle())
+        borderWidth = PANEL_RESIZE_HANDLE_WIDTH + PANEL_BOTTOM_SPACING_W_RESIZE_HANDLE;
 
     int layoutOffset = 0;
     TQRect r = TQApplication::desktop()->screenGeometry(xineramaScreen());
@@ -1274,14 +1310,14 @@ int ExtensionContainer::setupBorderSpace()
     {
         if (h.top() > 0)
         {
-            int topHeight = (_ltHB && _ltHB->isVisibleTo(this)) ? _ltHB->height() + 1 : 1;
+            int topHeight = (_ltHB && _ltHB->isVisibleTo(this)) ? _ltHB->height() + borderWidth : borderWidth;
             _layout->setRowSpacing(0, topHeight);
             ++layoutOffset;
         }
 
         if (h.bottom() < r.bottom())
         {
-            int bottomHeight = (_rbHB && _rbHB->isVisibleTo(this)) ? _rbHB->height() + 1 : 1;
+            int bottomHeight = (_rbHB && _rbHB->isVisibleTo(this)) ? _rbHB->height() + borderWidth : borderWidth;
             _layout->setRowSpacing(1, bottomHeight);
             ++layoutOffset;
         }
@@ -1290,14 +1326,14 @@ int ExtensionContainer::setupBorderSpace()
     {
         if (h.left() > 0)
         {
-            int leftWidth = (_ltHB && _ltHB->isVisibleTo(this)) ? _ltHB->width() + 1 : 1;
+            int leftWidth = (_ltHB && _ltHB->isVisibleTo(this)) ? _ltHB->width() + borderWidth : borderWidth;
             _layout->setColSpacing(0, leftWidth);
             ++layoutOffset;
         }
 
         if (h.right() < r.right())
         {
-            int rightWidth = (_rbHB && _rbHB->isVisibleTo(this)) ? _rbHB->width() + 1 : 1;
+            int rightWidth = (_rbHB && _rbHB->isVisibleTo(this)) ? _rbHB->width() + borderWidth : borderWidth;
             _layout->setColSpacing(1, rightWidth);
             ++layoutOffset;
         }
@@ -1306,20 +1342,20 @@ int ExtensionContainer::setupBorderSpace()
     switch (position())
     {
         case KPanelExtension::Left:
-            _layout->setColSpacing(2, 1);
+            _layout->setColSpacing(2, PANEL_BOTTOM_SPACING_W_RESIZE_HANDLE);
         break;
 
         case KPanelExtension::Right:
-            _layout->setColSpacing(0, 1);
+            _layout->setColSpacing(0, PANEL_BOTTOM_SPACING_W_RESIZE_HANDLE);
         break;
 
         case KPanelExtension::Top:
-            _layout->setRowSpacing(2, 1);
+            _layout->setRowSpacing(2, PANEL_BOTTOM_SPACING_W_RESIZE_HANDLE);
         break;
 
         case KPanelExtension::Bottom:
         default:
-            _layout->setRowSpacing(0, 1);
+            _layout->setRowSpacing(0, PANEL_BOTTOM_SPACING_W_RESIZE_HANDLE);
         break;
     }
 
@@ -1360,6 +1396,39 @@ void ExtensionContainer::paintEvent(TQPaintEvent *e)
         else
             p.setPen(palette().color(TQPalette::Active, TQColorGroup::Mid));
         p.drawRect(0, 0, width(), height());
+    }
+
+    if (KickerSettings::useResizeHandle())
+    {
+        // draw resize handle [RAJA]
+        TQRect rect;
+        TQPainter p( this );
+
+        // FIXME
+        // KPanelExtension::Left/Right don't seem to draw the separators at all!
+        if (position() == KPanelExtension::Left) {
+            rect = TQRect(width()-2,0,PANEL_RESIZE_HANDLE_WIDTH,height());
+            tqstyle().tqdrawPrimitive( TQStyle::PE_Separator, &p, rect, tqcolorGroup(), TQStyle::Style_Horizontal );
+        }
+        else if (position() == KPanelExtension::Right) {
+            rect = TQRect(0,0,PANEL_RESIZE_HANDLE_WIDTH,height());
+            tqstyle().tqdrawPrimitive( TQStyle::PE_Separator, &p, rect, tqcolorGroup(), TQStyle::Style_Horizontal );
+        }
+        else if (position() == KPanelExtension::Top) {
+            // Nastiness to both vertically flip the PE_Separator
+            // and make sure it pops out of, not sinks into, the screen
+            TQPixmap inv_pm(width(),PANEL_RESIZE_HANDLE_WIDTH);
+            TQPainter myp(TQT_TQPAINTDEVICE(&inv_pm));
+            rect = TQRect(0,0,width(),PANEL_RESIZE_HANDLE_WIDTH);
+            TQColorGroup darkcg = tqcolorGroup();
+            darkcg.setColor(TQColorGroup::Light, tqcolorGroup().dark());
+            tqstyle().tqdrawPrimitive( TQStyle::PE_Separator, &myp, rect, darkcg, TQStyle::Style_Default );
+            p.drawPixmap(0,height()-2,inv_pm);
+        }
+        else {
+            rect = TQRect(0,0,width(),PANEL_RESIZE_HANDLE_WIDTH);
+            tqstyle().tqdrawPrimitive( TQStyle::PE_Separator, &p, rect, tqcolorGroup(), TQStyle::Style_Default );
+        }
     }
 }
 
@@ -1469,7 +1538,7 @@ void ExtensionContainer::arrange(KPanelExtension::Position p,
     {
         m_settings.setPosition(p);
     }
-    else if (!needsBorder())
+    else if (!needsBorder() && !KickerSettings::useResizeHandle())
     {
         // this ensures that the layout gets rejigged
         // even if position doesn't change
@@ -1653,6 +1722,10 @@ void ExtensionContainer::resetLayout()
             {
                 m_extension->setFixedHeight(height() - 1);
             }
+            else if (KickerSettings::useResizeHandle())
+            {
+                m_extension->setFixedHeight(height() - (PANEL_RESIZE_HANDLE_WIDTH + PANEL_BOTTOM_SPACING_W_RESIZE_HANDLE));
+            }
             else
             {
                 m_extension->setFixedHeight(height());
@@ -1679,6 +1752,10 @@ void ExtensionContainer::resetLayout()
         {
             m_extension->setFixedWidth(width() - 1);
         }
+        else if (KickerSettings::useResizeHandle())
+        {
+            m_extension->setFixedWidth(width() - (PANEL_RESIZE_HANDLE_WIDTH + PANEL_BOTTOM_SPACING_W_RESIZE_HANDLE));
+        }
         else
         {
             m_extension->setFixedWidth(width());
@@ -1690,7 +1767,7 @@ void ExtensionContainer::resetLayout()
 
 bool ExtensionContainer::needsBorder() const
 {
-    return !KickerSettings::transparent();
+    return !KickerSettings::transparent() && !KickerSettings::useResizeHandle();
            //&& !KickerSettings::useBackgroundTheme();
 }
 

@@ -11,6 +11,7 @@
 
 include_directories(
   ${CMAKE_CURRENT_BINARY_DIR}
+  ${CMAKE_BINARY_DIR}/kicker/libkicker
   ${CMAKE_SOURCE_DIR}/kicker/libkicker
   ${TDE_INCLUDE_DIR}
   ${TQT_INCLUDE_DIRS}
@@ -38,4 +39,5 @@ tde_add_kpart( ${target} AUTOMOC
   SOURCES ${${target}_SRCS}
   LINK kickermain-shared
   DESTINATION ${PLUGIN_INSTALL_DIR}
+  DEPENDENCIES kicker_core-static kicker-static kicker-shared
 )

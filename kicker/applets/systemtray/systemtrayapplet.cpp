@@ -27,7 +27,6 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ******************************************************************/
 
 #include <tqcursor.h>
-#include <tqlayout.h>
 #include <tqpopupmenu.h>
 #include <tqtimer.h>
 #include <tqpixmap.h>
@@ -48,6 +47,8 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <kiconloader.h>
 #include <kwin.h>
 
+#include "kickerSettings.h"
+
 #include "simplebutton.h"
 
 #include "systemtrayapplet.h"
@@ -55,7 +56,9 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #include <X11/Xlib.h>
 
+//#define ICON_MARGIN KickerSettings::showDeepButtons()?2:1
 #define ICON_MARGIN 1
+#define ICON_END_MARGIN KickerSettings::showDeepButtons()?4:0
 
 extern "C"
 {
@@ -70,9 +73,11 @@ extern "C"
 SystemTrayApplet::SystemTrayApplet(const TQString& configFile, Type type, int actions,
                                    TQWidget *parent, const char *name)
   : KPanelApplet(configFile, type, actions, parent, name),
-    m_showFrame(false),
+    m_showFrame(KickerSettings::showDeepButtons()?true:false),
     m_showHidden(false),
     m_expandButton(0),
+    m_leftSpacer(0),
+    m_rightSpacer(0),
     m_settingsDialog(0),
     m_iconSelector(0),
     m_autoRetractTimer(0),
@@ -82,6 +87,11 @@ SystemTrayApplet::SystemTrayApplet(const TQString& configFile, Type type, int ac
 {
     DCOPObject::setObjId("SystemTrayApplet");
     loadSettings();
+
+    m_leftSpacer = new TQWidget(this);
+    m_leftSpacer->setFixedSize(ICON_END_MARGIN,1);
+    m_rightSpacer = new TQWidget(this);
+    m_rightSpacer->setFixedSize(ICON_END_MARGIN,1);
 
     setBackgroundOrigin(AncestorOrigin);
 
@@ -445,13 +455,13 @@ void SystemTrayApplet::loadSettings()
 {
     // set our defaults
     setFrameStyle(NoFrame);
-    m_showFrame = false;
+    m_showFrame = KickerSettings::showDeepButtons()?true:false;
 
     KConfig *conf = config();
     conf->reparseConfiguration();
     conf->setGroup("General");
 
-    if (conf->readBoolEntry("ShowPanelFrame", false))
+    if (conf->readBoolEntry("ShowPanelFrame", false) || m_showFrame)	// Does ShowPanelFrame even exist?
     {
         setFrameStyle(Panel | Sunken);
     }
@@ -918,13 +928,19 @@ void SystemTrayApplet::layoutTray()
         heightWidth = heightWidth < iconWidth ? iconWidth : heightWidth;
         nbrOfLines = heightWidth / iconWidth;
 
+        m_layout->addMultiCellWidget(m_leftSpacer,
+                                     0, 0,
+                                     0, nbrOfLines - 1,
+                                     Qt::AlignHCenter | Qt::AlignVCenter);
+        col = 1;
+
         if (showExpandButton)
         {
             m_layout->addMultiCellWidget(m_expandButton,
-                                         0, 0,
+                                         1, 1,
                                          0, nbrOfLines - 1,
                                          Qt::AlignHCenter | Qt::AlignVCenter);
-            col = 1;
+            col = 2;
         }
 
         if (m_showHidden)
@@ -963,6 +979,11 @@ void SystemTrayApplet::layoutTray()
 
             ++i;
         }
+
+        m_layout->addMultiCellWidget(m_rightSpacer,
+                                     col, col,
+                                     0, nbrOfLines - 1,
+                                     Qt::AlignHCenter | Qt::AlignVCenter);
     }
     else // horizontal
     {
@@ -971,13 +992,19 @@ void SystemTrayApplet::layoutTray()
         heightWidth = heightWidth < iconHeight ? iconHeight : heightWidth; // to avoid nbrOfLines=0
         nbrOfLines = heightWidth / iconHeight;
 
+        m_layout->addMultiCellWidget(m_leftSpacer,
+                                     0, nbrOfLines - 1,
+                                     0, 0,
+                                     Qt::AlignHCenter | Qt::AlignVCenter);
+        col = 1;
+
         if (showExpandButton)
         {
             m_layout->addMultiCellWidget(m_expandButton,
                                          0, nbrOfLines - 1,
-                                         0, 0,
+                                         1, 1,
                                          Qt::AlignHCenter | Qt::AlignVCenter);
-            col = 1;
+            col = 2;
         }
 
         if (m_showHidden)
@@ -1015,6 +1042,11 @@ void SystemTrayApplet::layoutTray()
 
             ++i;
         }
+
+        m_layout->addMultiCellWidget(m_rightSpacer,
+                                     0, nbrOfLines - 1,
+                                     col, col,
+                                     Qt::AlignHCenter | Qt::AlignVCenter);
     }
 
     tqsetUpdatesEnabled(true);

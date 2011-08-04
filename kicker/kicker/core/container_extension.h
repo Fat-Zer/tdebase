@@ -190,7 +190,8 @@ private:
     // Widgets
     HideButton     *_ltHB; // Left Hide Button
     HideButton     *_rbHB; // Right Hide Button
-    TQGridLayout    *_layout;
+    TQGridLayout   *_layout;
+    TQWidget       *_resizeHandle; 
 
     KPanelExtension *m_extension;
     int m_maintainFocus;

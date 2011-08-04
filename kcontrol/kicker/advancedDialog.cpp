@@ -63,6 +63,10 @@ advancedDialog::advancedDialog(TQWidget* parent, const char* name)
             this, TQT_SLOT(changed()));
     connect(m_advancedWidget->menubarPanelTransparent, TQT_SIGNAL(clicked()),
             this, TQT_SLOT(changed()));
+    connect(m_advancedWidget->kickerResizeHandle, TQT_SIGNAL(clicked()),
+            this, TQT_SLOT(changed()));
+    connect(m_advancedWidget->kickerDeepButtons, TQT_SIGNAL(clicked()),
+            this, TQT_SLOT(changed()));
     load();
 }
 
@@ -94,6 +98,11 @@ void advancedDialog::load()
     bool transparentMenubarPanel = c.readBoolEntry("MenubarPanelTransparent", false);
     m_advancedWidget->menubarPanelTransparent->setChecked( transparentMenubarPanel );
 
+    bool useKickerResizeHandle = c.readBoolEntry("UseResizeHandle", false);
+    m_advancedWidget->kickerResizeHandle->setChecked( useKickerResizeHandle );
+    bool usekickerDeepButtons = c.readBoolEntry("ShowDeepButtons", false);
+    m_advancedWidget->kickerDeepButtons->setChecked( usekickerDeepButtons );
+
     enableButtonApply(false);
 }
 
@@ -114,6 +123,10 @@ void advancedDialog::save()
                  m_advancedWidget->tintSlider->value());
     c.writeEntry("MenubarPanelTransparent",
                  m_advancedWidget->menubarPanelTransparent->isChecked());
+    c.writeEntry("UseResizeHandle",
+                 m_advancedWidget->kickerResizeHandle->isChecked());
+    c.writeEntry("ShowDeepButtons",
+                 m_advancedWidget->kickerDeepButtons->isChecked());
 
     TQStringList elist = c.readListEntry("Extensions2");
     for (TQStringList::Iterator it = elist.begin(); it != elist.end(); ++it)
@@ -144,6 +157,10 @@ void advancedDialog::save()
                              m_advancedWidget->tintSlider->value());
         extConfig.writeEntry("MenubarPanelTransparent",
                              m_advancedWidget->menubarPanelTransparent->isChecked());
+        extConfig.writeEntry("UseResizeHandle",
+                             m_advancedWidget->kickerResizeHandle->isChecked());
+        extConfig.writeEntry("ShowDeepButtons",
+                             m_advancedWidget->kickerDeepButtons->isChecked());
 
         extConfig.sync();
     }

@@ -53,7 +53,7 @@ public:
      * @param parent the parent widget
      * @param name the widget's name
      */
-    PanelButton( TQWidget* parent, const char* name );
+    PanelButton( TQWidget* parent, const char* name, bool forceStandardCursor = FALSE );
 
     /**
      * Configures this button according to the user's preferences for
@@ -294,7 +294,9 @@ protected:
     virtual void mouseReleaseEvent(TQMouseEvent *);
     virtual void resizeEvent(TQResizeEvent*);
     virtual void drawButton(TQPainter *);
+    virtual void drawDeepButton(TQPainter *);
     virtual void drawButtonLabel(TQPainter *);
+    virtual void drawButtonLabel(TQPainter *, int voffset, bool drawArrow);
 
     /**
      * @return the preferred icon size.
@@ -397,6 +399,7 @@ private:
     Orientation m_orientation;
     int m_size;
     double m_fontPercent;
+    bool m_forceStandardCursor;
     static KShadowEngine* s_textShadowEngine;
 
     class PanelPopupPrivate;
@@ -416,7 +419,7 @@ public:
     * @param parent the parent widget
     * @param name the widget's name
     */
-    PanelPopupButton(TQWidget *parent=0, const char *name=0);
+    PanelPopupButton(TQWidget *parent=0, const char *name=0, bool forceStandardCursor = FALSE);
 
     /**
      * Sets the button's popup menu.

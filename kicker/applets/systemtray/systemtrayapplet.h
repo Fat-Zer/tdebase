@@ -27,6 +27,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <tqvaluevector.h>
 #include <tqstringlist.h>
 #include <tqevent.h>
+#include <tqlayout.h>
 #include <qxembed.h>
 
 #include <dcopobject.h>
@@ -105,6 +106,8 @@ private:
     bool m_showFrame;
     bool m_showHidden;
     SimpleArrowButton *m_expandButton;
+    TQWidget *m_leftSpacer;
+    TQWidget *m_rightSpacer;
     KDialogBase* m_settingsDialog;
     KActionSelector* m_iconSelector;
     TQTimer* m_autoRetractTimer;

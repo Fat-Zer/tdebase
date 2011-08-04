@@ -690,7 +690,7 @@ void TaskBar::reLayout()
     }
 
     // needed because Panner doesn't know how big it's contents are so it's
-    // up to use to initialize it. =(
+    // up to us to initialize it. =(
     resizeContents(contentsRect().width(), contentsRect().height());
 
     // number of rows simply depends on our height which is either the

@@ -56,23 +56,27 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include "panelbutton.h"
 #include "panelbutton.moc"
 
+// For now link these two
+#define m_disableHighlighting m_forceStandardCursor
+
 // init static variable
 KShadowEngine* PanelButton::s_textShadowEngine = 0L;
 
-PanelButton::PanelButton( TQWidget* parent, const char* name )
+PanelButton::PanelButton( TQWidget* parent, const char* name, bool forceStandardCursor )
     : TQButton(parent, name),
       m_valid(true),
       m_isLeftMouseButtonDown(false),
       m_drawArrow(false),
       m_highlight(false),
-      m_changeCursorOverItem(true),
+      m_changeCursorOverItem(forceStandardCursor?false:true),
       m_hasAcceptedDrag(false),
       m_arrowDirection(KPanelExtension::Bottom),
       m_popupDirection(KPanelApplet::Up),
       m_iconAlignment(AlignCenter),
       m_orientation(Qt::Horizontal),
       m_size((KIcon::StdSizes)-1),
-      m_fontPercent(0.40)
+      m_fontPercent(0.40),
+      m_forceStandardCursor(forceStandardCursor)
 {
     setBackgroundOrigin(AncestorOrigin);
     setWFlags(TQt::WNoAutoErase);
@@ -220,7 +224,10 @@ void PanelButton::updateSettings(int category)
         return;
     }
 
-    m_changeCursorOverItem = KGlobalSettings::changeCursorOverIcon();
+    if (m_forceStandardCursor == FALSE)
+        m_changeCursorOverItem = KGlobalSettings::changeCursorOverIcon();
+    else
+        m_changeCursorOverItem = FALSE;
 
     if (m_changeCursorOverItem)
     {
@@ -319,7 +326,10 @@ int PanelButton::heightForWidth(int width) const
 
 const TQPixmap& PanelButton::labelIcon() const
 {
-    return m_highlight ? m_iconh : m_icon;
+    if (m_disableHighlighting)
+        return m_icon;
+    else
+        return m_highlight ? m_iconh : m_icon;
 }
 
 const TQPixmap& PanelButton::zoomIcon() const
@@ -425,7 +435,7 @@ void PanelButton::startDrag()
 
 void PanelButton::enterEvent(TQEvent* e)
 {
-    if (!m_highlight)
+    if (!m_highlight && m_disableHighlighting == FALSE)
     {
         m_highlight = true;
         tqrepaint(false);
@@ -564,7 +574,51 @@ void PanelButton::drawButton(TQPainter *p)
     }
 }
 
+void PanelButton::drawDeepButton(TQPainter *p)
+{
+    const TQPixmap& tile = (isDown() || isOn()) ? m_down : m_up;
+    
+    if (m_tileColor.isValid())
+    {
+        p->fillRect(rect(), m_tileColor);
+        tqstyle().tqdrawPrimitive(TQStyle::PE_Panel, p, rect(), tqcolorGroup());
+    }
+    else if (paletteBackgroundPixmap())
+    {
+        // Draw the background. This is always needed, even when using tiles,
+        // because they don't have to cover the entire button.
+        TQPoint offset = backgroundOffset();
+        int ox = offset.x();
+        int oy = offset.y();
+        p->drawTiledPixmap( 0, 0, width(), height(),*paletteBackgroundPixmap(), ox, oy);
+    }
+
+    TQRect btn_rect = TQRect(rect().x(), rect().y()+1, rect().width(), rect().height()-2);
+    if (isDown() || isOn()) {
+        tqstyle().tqdrawPrimitive(TQStyle::PE_ButtonBevel, p, btn_rect, tqcolorGroup(), TQStyle::Style_Down);
+    }
+    else {
+        tqstyle().tqdrawPrimitive(TQStyle::PE_ButtonBevel, p, btn_rect, tqcolorGroup(), TQStyle::Style_Raised);
+    }
+
+    drawButtonLabel(p,0,FALSE);
+
+    if (hasFocus() || m_hasAcceptedDrag)
+    {
+        int x1, y1, x2, y2;
+        TQT_TQRECT_OBJECT(rect()).coords(&x1, &y1, &x2, &y2);
+        TQRect r(x1+2, y1+2, x2-x1-3, y2-y1-3);
+        tqstyle().tqdrawPrimitive(TQStyle::PE_FocusRect, p, r, tqcolorGroup(),
+        TQStyle::Style_Default, tqcolorGroup().button());
+    }
+}
+
 void PanelButton::drawButtonLabel(TQPainter *p)
+{
+    drawButtonLabel(p,0,TRUE);
+}
+
+void PanelButton::drawButtonLabel(TQPainter *p, int voffset, bool drawArrow)
 {
     TQPixmap icon = labelIcon();
     bool active = isDown() || isOn();
@@ -604,7 +658,7 @@ void PanelButton::drawButtonLabel(TQPainter *p)
         if (!reverse && !icon.isNull())
         {
             /* Draw icon */
-            p->drawPixmap(3, y, icon);
+            p->drawPixmap(3, y+voffset, icon);
         }
 
         int tX = reverse ? 3 : icon.width() + KMIN(25, KMAX(5, fm.width('m') / 2));
@@ -641,12 +695,12 @@ void PanelButton::drawButtonLabel(TQPainter *p)
         p->drawImage(0, 0, img);
         p->save();
         p->setPen(m_textColor);
-        p->drawText(tX, tY, m_buttonText, -1, rtl);
+        p->drawText(tX, tY+voffset, m_buttonText, -1, rtl);
         p->restore();
 
         if (reverse && !icon.isNull())
         {
-            p->drawPixmap(w - icon.width() - 3, y, icon);
+            p->drawPixmap(w - icon.width() - 3, y+voffset, icon);
         }
 
         p->restore();
@@ -658,10 +712,10 @@ void PanelButton::drawButtonLabel(TQPainter *p)
            x = (width()  - icon.width()) / 2;
         else if (m_iconAlignment & AlignRight)
            x = (width() - icon.width());
-        p->drawPixmap(x, y, icon);
+        p->drawPixmap(x, y+voffset, icon);
     }
 
-    if (m_drawArrow && (m_highlight || active))
+    if (m_drawArrow && (m_highlight || active) && drawArrow)
     {
         TQStyle::PrimitiveElement e = TQStyle::PE_ArrowUp;
         int arrowSize = tqstyle().tqpixelMetric(TQStyle::PM_MenuButtonIndicator);
@@ -887,8 +941,8 @@ void PanelButton::updateKickerTip(KickerTip::Data& data)
 // PanelPopupButton class
 //
 
-PanelPopupButton::PanelPopupButton(TQWidget *parent, const char *name)
-  : PanelButton(parent, name),
+PanelPopupButton::PanelPopupButton(TQWidget *parent, const char *name, bool forceStandardCursor)
+  : PanelButton(parent, name, forceStandardCursor),
     m_popup(0),
     m_pressedDuringPopup(false),
     m_initialized(false)

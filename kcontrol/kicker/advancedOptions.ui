@@ -298,6 +298,41 @@
                 </widget>
             </grid>
         </widget>
+	<widget class="TQGroupBox">
+		<property name="name">
+			<cstring>groupBox3</cstring>
+		</property>
+		<property name="title">
+			<string>Texture</string>
+		</property>
+		<grid>
+			<property name="name">
+				<cstring>unnamed</cstring>
+			</property>
+			<widget class="TQCheckBox" row="0" column="0" rowspan="0" colspan="2">
+				<property name="name">
+					<cstring>kickerResizeHandle</cstring>
+				</property>
+				<property name="text">
+					<string>Show resize handle on panels</string>
+				</property>
+				<property name="whatsThis" stdset="0">
+					<string>Enabling this option will show a resize handle on the resizable end of each panel.</string>
+				</property>
+			</widget>
+			<widget class="TQCheckBox" row="0" column="2" rowspan="0" colspan="2">
+				<property name="name">
+					<cstring>kickerDeepButtons</cstring>
+				</property>
+				<property name="text">
+					<string>Use deep buttons</string>
+				</property>
+				<property name="whatsThis" stdset="0">
+					<string>Enabling this option will yield more highly textured panels.</string>
+				</property>
+			</widget>
+		</grid>
+        </widget>
     </vbox>
 </widget>
 <tabstops>

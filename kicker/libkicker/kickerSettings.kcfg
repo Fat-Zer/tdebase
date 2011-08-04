@@ -26,6 +26,17 @@
       <default>false</default>
    </entry>
 
+<entry name="UseResizeHandle" type="Bool" >
+      <label>Enable resize handles</label>
+      <whatsthis>When this option is enabled, the panel will provide a resize handle on order to change its width via click-and-drag</whatsthis>
+      <default>false</default>
+   </entry>
+
+<entry name="ShowDeepButtons" type="Bool" >
+     <label>Make the task buttons push further into the screen when activated</label>
+     <default>false</default>
+   </entry>
+
 <entry name="MenubarPanelTransparent" type="Bool" >
       <label>Enable transparency for menubar panel</label>
       <whatsthis>When this option is enabled, the panel containing the menubar will become pseudo-transparent as well</whatsthis>

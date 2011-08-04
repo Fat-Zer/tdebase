@@ -586,9 +586,16 @@ void TaskContainer::drawButton(TQPainter *p)
     // draw button background
     if (drawButton)
     {
-        tqstyle().tqdrawPrimitive(TQStyle::PE_ButtonTool, p,
+        if (KickerSettings::showDeepButtons()) {
+            tqstyle().tqdrawPrimitive(TQStyle::PE_ButtonBevel, p,
+                              TQRect(1, 1, width()-3, height()-2),
+                              colors, sunken ? TQStyle::Style_On : TQStyle::Style_Raised);
+        }
+        else {
+            tqstyle().tqdrawPrimitive(TQStyle::PE_ButtonTool, p,
                               TQRect(1, 1, width()-2, height()-2),
                               colors, sunken ? TQStyle::Style_Down : TQStyle::Style_Raised);
+        }
     }
 
     // shift button label on sunken buttons
@@ -688,7 +695,7 @@ void TaskContainer::drawButton(TQPainter *p)
             }
         }
 
-        int availableWidth = width() - (br.x() * 2) - textPos - 2;
+        int availableWidth = width() - (br.x() * 2) - textPos - 2 - KickerSettings::showDeepButtons()?2:0;
         if (m_filteredTasks.count() > 1)
         {
             availableWidth -= 8;
