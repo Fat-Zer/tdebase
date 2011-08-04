@@ -62,7 +62,7 @@ fi
 #
 # * Then ksmserver is started which takes control of the rest of the startup sequence
 
-# The user's personal KDE directory usually is $HOME/.kde or $HOME/.kde3.
+# The user's personal KDE directory usually is $HOME/.kde or $HOME/.trinity.
 # This setting may be overridden by setting $KDEHOME.
 # Must be careful here because $HOME/.kde was used commonly in the pre-KDE4
 # days for the user's KDE3 profile, but now with KDE4 common on systems,
@@ -77,30 +77,35 @@ else
   # $KDEHOME is NOT already preset in the environment. Try to help.
   # This might be overkill but does provide flexibility.
   echo "[startkde] KDEHOME is not set." 1>&2
-  if [ -d $HOME/.kde3 ]; then
+  if [ -d $HOME/.trinity ]; then
     # OK, this one is obvious.
-    export KDEHOME=$HOME/.kde3
+    export KDEHOME=$HOME/.trinity
+  elif [ -d $HOME/.kde3 ]; then
+    # Looks like the user had an old version of Trinity installed at last login
+    echo "[startkde] Migrating old ~/.kde3 directory to new ~/.trinity name." 1>&2
+    mv $HOME/.kde3 $HOME/.trinity
+    export KDEHOME=$HOME/.trinity
   elif [ -f /usr/bin/kde4-config ]; then
     # Looks like KDE4 is installed.
-    if [ -d $HOME/.kde ] && [ ! -d $HOME/.kde3 ]; then
+    if [ -d $HOME/.kde ] && [ ! -d $HOME/.trinity ]; then
       # Presume $HOME/.kde is being used for KDE4 as it already exists.
-      export KDEHOME=$HOME/.kde3
+      export KDEHOME=$HOME/.trinity
     else
       # Presume $HOME/.kde is being used for KDE4 to be on the safe side.
-      export KDEHOME=$HOME/.kde3
+      export KDEHOME=$HOME/.trinity
     fi
-  elif [ -f /opt/kde3/bin/kde-config ]; then
+  elif [ -f /opt/trinity/bin/kde-config ]; then
     # Looks like KDE3 or Trinity is installed and playing second fiddle to KDE4.
-    export KDEHOME=$HOME/.kde3
-  elif [ -f /opt/kde3/bin/kde-config ]; then
+    export KDEHOME=$HOME/.trinity
+  elif [ -f /opt/trinity/bin/kde-config ]; then
     # Looks like KDE3 or Trinity is installed and playing second fiddle to KDE4.
-    export KDEHOME=$HOME/.kde3
+    export KDEHOME=$HOME/.trinity
   elif [ -f /usr/bin/kde-config ] && [ -d $HOME/.kde ]; then
     # Looks like KDE3 or Trinity is installed and not playing second fiddle to KDE4.
     export KDEHOME=$HOME/.kde
   else
     # Resort to this and hope for the best!
-    export KDEHOME=$HOME/.kde3
+    export KDEHOME=$HOME/.trinity
   fi
   echo "[startkde] Set KDEHOME to $KDEHOME." 1>&2
 fi
@@ -162,7 +167,7 @@ echo "[startkde] kdehome: $kdehome" 1>&2
 
 # Allow interested applications, such as the Plasma control wrapper,
 # to know that this is a Trinity desktop and not a KDE one.
-export DESKTOP_SESSION=kde3
+export DESKTOP_SESSION=trinity
 
 # Please see kstartupconfig source for usage.
 mkdir -m 700 -p $kdehome
@@ -316,7 +321,7 @@ then
 fi
 
 # Source scripts found in <localprefix>/env/*.sh and <prefixes>/env/*.sh
-# (where <localprefix> is $KDEHOME or ~/.kde3, and <prefixes> is where KDE is installed)
+# (where <localprefix> is $KDEHOME or ~/.trinity, and <prefixes> is where KDE is installed)
 #
 # This is where you can define environment variables that will be available to
 # all KDE programs, so this is where you can run agents using e.g. eval `ssh-agent`
