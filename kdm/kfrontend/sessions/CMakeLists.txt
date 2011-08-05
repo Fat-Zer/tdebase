@@ -9,10 +9,10 @@
 #
 #################################################
 
-configure_file( kde.desktop.cmake kde.desktop @ONLY )
+configure_file( tde.desktop.cmake tde.desktop @ONLY )
 
 install( FILES
-    admin.desktop ${CMAKE_CURRENT_BINARY_DIR}/kde.desktop
+    admin.desktop ${CMAKE_CURRENT_BINARY_DIR}/tde.desktop
     gnome.desktop 9wm.desktop aewm++.desktop aewm.desktop
     afterstep.desktop amaterus.desktop amiwm.desktop
     asclassic.desktop blackbox.desktop cde.desktop
