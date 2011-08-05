@@ -259,9 +259,11 @@ void QuickButton::slotIconChanged(int group)
 
 void QuickButton::launch()
 {
-   setDown(false);
-   update();
-   KIconEffect::visualActivate(this, rect());
+   if (!KickerSettings::showDeepButtons()) {
+       setDown(false);
+       update();
+       KIconEffect::visualActivate(this, rect());
+   }
    if (_qurl->kurl().url() == "SPECIAL_BUTTON__SHOW_DESKTOP") {
        if (isOn()) {
            ShowDesktop::the()->showDesktop(TRUE);
