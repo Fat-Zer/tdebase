@@ -290,7 +290,7 @@ class ClockApplet : public KPanelApplet, public KickerTip::Client, public DCOPOb
         void reconfigure();
 
     protected slots:
-        void slotReconfigure() { reconfigure(); }
+        void slotReconfigure() { reconfigure(); emit clockReconfigured(); }
         void slotUpdate();
         void slotCalendarDeleted();
         void slotEnableCalendar();
@@ -300,6 +300,9 @@ class ClockApplet : public KPanelApplet, public KickerTip::Client, public DCOPOb
         void fixupLayout();
         void globalPaletteChange();
         void setTimerTo60();
+
+    signals:
+        void clockReconfigured();
 
     protected:
         void toggleCalendar();

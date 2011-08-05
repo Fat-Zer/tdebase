@@ -66,17 +66,6 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include "fuzzy.h"
 #include "prefs.h"
 
-extern "C"
-{
-    KDE_EXPORT KPanelApplet* init(TQWidget *parent, const TQString& configFile)
-    {
-        KGlobal::locale()->insertCatalogue("clockapplet");
-        KGlobal::locale()->insertCatalogue("timezones"); // For time zone translations
-        return new ClockApplet(configFile, KPanelApplet::Normal,
-                               KPanelApplet::Preferences, parent, "clockapplet");
-    }
-}
-
 // Settings
 
 KConfigDialogSingle::KConfigDialogSingle(Zone *zone, TQWidget *parent,

@@ -46,6 +46,9 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <math.h>
 #include <algorithm>
 
+#include "showdesktop.h"
+#include "kickerSettings.h"
+
 #ifdef DEBUG
    #define DEBUGSTR kdDebug()
 #else
@@ -56,6 +59,12 @@ QuickURL::QuickURL(const TQString &u)
 {  DEBUGSTR<<"QuickURL::QuickURL("<<u<<")"<<endl<<flush;
    KService::Ptr _service=0;
    _menuId = u;
+   if (_menuId == "SPECIAL_BUTTON__SHOW_DESKTOP") {
+       m_name = i18n("Show Desktop");
+       m_genericName = i18n("Show Desktop");
+       _kurl = _menuId;
+   }
+   else {
    if (_menuId.startsWith("file:") && _menuId.endsWith(".desktop")) {
       // this ensures that desktop entries are referenced by desktop name instead of by file name
       _menuId=KURL(_menuId).path();
@@ -104,6 +113,7 @@ QuickURL::QuickURL(const TQString &u)
    } else {
       m_name = _kurl.prettyURL();
    }
+   }
    DEBUGSTR<<"QuickURL::QuickURL("<<u<<") END"<<endl<<flush;
 }
 
@@ -118,8 +128,15 @@ void QuickURL::run() const
 //similar to MimeType::pixmapForURL
 TQPixmap QuickURL::pixmap( mode_t _mode, KIcon::Group _group,
                           int _force_size, int _state, TQString *) const
-{  // Load icon
-   TQPixmap pxmap = KMimeType::pixmapForURL(_kurl, _mode, _group, _force_size, _state);
+{
+   TQPixmap pxmap;
+   // Load icon
+   if (_kurl.url() == "SPECIAL_BUTTON__SHOW_DESKTOP") {
+       pxmap = KGlobal::iconLoader()->loadIcon("desktop", _group, _force_size, _state);
+   }
+   else {
+       pxmap = KMimeType::pixmapForURL(_kurl, _mode, _group, _force_size, _state);
+   }
    // Resize to fit button
    pxmap.convertFromImage(pxmap.convertToImage().smoothScale(_force_size,_force_size, TQ_ScaleMin));
    return pxmap;
@@ -128,7 +145,7 @@ TQPixmap QuickURL::pixmap( mode_t _mode, KIcon::Group _group,
 
 QuickButton::QuickButton(const TQString &u, KAction* configAction, 
                          TQWidget *parent, const char *name) : 
-     SimpleButton(parent, name),
+     SimpleButton(parent, name, KickerSettings::showDeepButtons()),
      m_flashCounter(0),
      m_sticky(false)
 {
@@ -137,18 +154,24 @@ QuickButton::QuickButton(const TQString &u, KAction* configAction,
     _highlight = false;
     _oldCursor = cursor();
     _qurl=new QuickURL(u);
-    
+
+    if (_qurl->url() == "SPECIAL_BUTTON__SHOW_DESKTOP") {
+        setToggleButton(true);
+        setOn( ShowDesktop::the()->desktopShowing() );
+        connect( ShowDesktop::the(), TQT_SIGNAL(desktopShown(bool)), this, TQT_SLOT(toggle(bool)) );
+    }
+
     TQToolTip::add(this, _qurl->name());
     resize(int(DEFAULT_ICON_DIM),int(DEFAULT_ICON_DIM));
     TQBrush bgbrush(tqcolorGroup().brush(TQColorGroup::Background));
-    
+
     QuickAddAppsMenu *addAppsMenu = new QuickAddAppsMenu(
         parent, this, _qurl->url());
     _popup = new TQPopupMenu(this);
     _popup->insertItem(i18n("Add Application"), addAppsMenu);
     configAction->plug(_popup);
         _popup->insertSeparator();
-    _popup->insertItem(SmallIcon("remove"), i18n("Remove"), 
+    _popup->insertItem(SmallIcon("remove"), i18n("Remove Application"), 
             this, TQT_SLOT(removeApp()));
 
     m_stickyAction = new KToggleAction(i18n("Never Remove Automatically"),
@@ -167,7 +190,6 @@ QuickButton::~QuickButton()
 {
     delete _qurl;
 }
-
 
 TQString QuickButton::url() const
 {
@@ -240,8 +262,23 @@ void QuickButton::launch()
    setDown(false);
    update();
    KIconEffect::visualActivate(this, rect());
-   _qurl->run();
+   if (_qurl->kurl().url() == "SPECIAL_BUTTON__SHOW_DESKTOP") {
+       if (isOn()) {
+           ShowDesktop::the()->showDesktop(TRUE);
+       }
+       else {
+           ShowDesktop::the()->showDesktop(FALSE);
+       }
+   }
+   else {
+       _qurl->run();
+   }
    emit executed(_qurl->menuId());
+}
+
+void QuickButton::toggle(bool showDesktop)
+{
+    setOn(showDesktop);
 }
 
 void QuickButton::setDragging(bool enable)

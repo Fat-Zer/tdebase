@@ -11,8 +11,10 @@
 
 include_directories(
   ${CMAKE_CURRENT_BINARY_DIR}
+  ${CMAKE_BINARY_DIR}/kicker/libkicker
   ${CMAKE_SOURCE_DIR}/kicker/libkicker
   ${CMAKE_SOURCE_DIR}/kicker/kicker/ui
+  ${CMAKE_SOURCE_DIR}/kicker/kicker/core
   ${TDE_INCLUDE_DIR}
   ${TQT_INCLUDE_DIRS}
 )
@@ -43,5 +45,6 @@ tde_add_kpart( launcher_panelapplet AUTOMOC
       kicker_core-static kicker_buttons-static kicker_ui-static
     -Wl,--end-group
     kickermain-shared kutils-shared kabc-shared
+  DEPENDENCIES libkicker-shared
   DESTINATION ${PLUGIN_INSTALL_DIR}
 )

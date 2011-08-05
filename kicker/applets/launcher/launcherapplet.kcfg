@@ -7,10 +7,14 @@
     <group name="General">
         <entry name="ConserveSpace" type="Bool">
             <label>Conserve Space</label>
-            <default>true</default>
+            <default>false</default>
         </entry>
         <entry name="DragEnabled" type="Bool">
             <label>Drag Enabled</label>
+            <default>true</default>
+        </entry>
+        <entry name="ShowDesktopEnabled" type="Bool">
+            <label>Show Desktop Button Enabled</label>
             <default>true</default>
         </entry>
         <entry name="IconDim" type="Int">

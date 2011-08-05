@@ -29,13 +29,26 @@ install( FILES clockapplet.desktop DESTINATION ${DATA_INSTALL_DIR}/kicker/applet
 install( FILES lcd.png DESTINATION ${DATA_INSTALL_DIR}/clockapplet/pics )
 
 
-##### clock_panelapplet (module) ################
+##### clock_panelapplet (static) ######################
 
 set( target clock_panelapplet )
 
 set( ${target}_SRCS
   clock.skel clock.cpp datepicker.cpp zone.cpp
   analog.ui digital.ui fuzzy.ui settings.ui prefs.kcfgc
+)
+
+tde_add_library( ${target} STATIC AUTOMOC
+  SOURCES ${${target}_SRCS}
+)
+
+##### clock_panelapplet (module) ################
+
+set( target clock_panelapplet )
+
+set( ${target}_SRCS
+  clock.skel clock.cpp datepicker.cpp zone.cpp
+  analog.ui digital.ui fuzzy.ui settings.ui prefs.kcfgc init.cpp
 )
 
 tde_add_kpart( ${target} AUTOMOC

@@ -32,12 +32,18 @@
 #include <kipc.h>
 #include <kstandarddirs.h>
 
+#include "kickerSettings.h"
+
 #define BUTTON_MARGIN KDialog::spacingHint()
 
-SimpleButton::SimpleButton(TQWidget *parent, const char *name)
+// For now link these two
+#define m_disableHighlighting m_forceStandardCursor
+
+SimpleButton::SimpleButton(TQWidget *parent, const char *name, bool forceStandardCursor)
     : TQButton(parent, name),
       m_highlight(false),
-      m_orientation(Qt::Horizontal)
+      m_orientation(Qt::Horizontal),
+      m_forceStandardCursor(forceStandardCursor)
 {
     setBackgroundOrigin( AncestorOrigin );
 
@@ -87,6 +93,16 @@ TQSize SimpleButton::tqminimumSizeHint() const
 
 void SimpleButton::drawButton( TQPainter *p )
 {
+    TQRect r(0, 0, width(), height());
+
+    if (m_disableHighlighting == TRUE) {
+        if (m_highlight || isDown() || isOn()) {
+            int flags = TQStyle::Style_Default | TQStyle::Style_Enabled;
+            if (isDown() || isOn()) flags |= TQStyle::Style_Down;
+            tqstyle().tqdrawPrimitive(TQStyle::PE_ButtonTool, p, r, tqcolorGroup(), flags);
+        }
+    }
+
     drawButtonLabel(p);
 }
 
@@ -97,12 +113,17 @@ void SimpleButton::drawButtonLabel( TQPainter *p )
         return;
     }
 
-    TQPixmap pix = isEnabled() ? (m_highlight? m_activeIcon : m_normalIcon) : m_disabledIcon;
+    TQPixmap pix = isEnabled() ? ((m_highlight&&(!m_disableHighlighting))? m_activeIcon : m_normalIcon) : m_disabledIcon;
 
-    if (isOn() || isDown())
+    if ((isOn() || isDown()) && (m_disableHighlighting == FALSE))
     {
         pix = TQImage(pix.convertToImage()).smoothScale(pix.width() - 2,
                                                pix.height() - 2);
+    }
+
+    if (m_disableHighlighting == TRUE) {
+        pix = TQImage(pix.convertToImage()).smoothScale(pix.width() - 4,
+                                               pix.height() - 4);
     }
 
     int h = height();
@@ -149,7 +170,11 @@ void SimpleButton::slotSettingsChanged(int category)
         return;
     }
 
-    bool changeCursor = KGlobalSettings::changeCursorOverIcon();
+    bool changeCursor;
+    if (m_forceStandardCursor == FALSE)
+        changeCursor = KGlobalSettings::changeCursorOverIcon();
+    else
+        changeCursor = FALSE;
 
     if (changeCursor)
     {
@@ -174,7 +199,8 @@ void SimpleButton::slotIconChanged( int group )
 
 void SimpleButton::enterEvent( TQEvent *e )
 {
-    m_highlight = true;
+    if (KickerSettings::showMouseOverEffects())
+        m_highlight = true;
 
     tqrepaint( false );
     TQButton::enterEvent( e );
@@ -194,8 +220,9 @@ void SimpleButton::resizeEvent( TQResizeEvent * )
 }
 
 
-SimpleArrowButton::SimpleArrowButton(TQWidget *parent, Qt::ArrowType arrow, const char *name)
-    : SimpleButton(parent, name)
+SimpleArrowButton::SimpleArrowButton(TQWidget *parent, Qt::ArrowType arrow, const char *name, bool forceStandardCursor)
+    : SimpleButton(parent, name, forceStandardCursor),
+      m_forceStandardCursor(forceStandardCursor)
 {
     setBackgroundOrigin(AncestorOrigin);
     _arrow = arrow;
@@ -224,7 +251,7 @@ Qt::ArrowType SimpleArrowButton::arrowType() const
 void SimpleArrowButton::drawButton( TQPainter *p )
 {
     TQRect r(1, 1, width() - 2, height() - 2);
-    
+
     TQStyle::PrimitiveElement pe = TQStyle::PE_ArrowLeft;
     switch (_arrow)
     {
@@ -233,10 +260,14 @@ void SimpleArrowButton::drawButton( TQPainter *p )
         case Qt::UpArrow: pe = TQStyle::PE_ArrowUp; break;
         case Qt::DownArrow: pe = TQStyle::PE_ArrowDown; break;
     }
-    
+
     int flags = TQStyle::Style_Default | TQStyle::Style_Enabled;
     if (isDown() || isOn())	flags |= TQStyle::Style_Down;
     tqstyle().tqdrawPrimitive(pe, p, r, tqcolorGroup(), flags);
+
+    if (m_forceStandardCursor) {
+        SimpleButton::drawButton(p);
+    }
 }
 
 void SimpleArrowButton::enterEvent( TQEvent *e )
@@ -249,7 +280,7 @@ void SimpleArrowButton::enterEvent( TQEvent *e )
 void SimpleArrowButton::leaveEvent( TQEvent *e )
 {
     _inside = false;
-    SimpleButton::enterEvent( e );
+    SimpleButton::leaveEvent( e );
     update();
 }
 

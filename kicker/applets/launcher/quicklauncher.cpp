@@ -287,6 +287,10 @@ void QuickLauncher::removeApp(int index, bool manuallyRemoved)
 
     TQString removeAppUrl = (*m_buttons)[index]->url();
     TQString removeAppMenuId = (*m_buttons)[index]->menuId();
+
+    if (removeAppUrl == "SPECIAL_BUTTON__SHOW_DESKTOP") {
+        m_settings->setShowDesktopEnabled(false);
+    }
    
     delete (*m_buttons)[index];
     m_buttons->eraseAt(index);
@@ -689,6 +693,31 @@ void QuickLauncher::clearTempButtons()
 void QuickLauncher::refreshContents()
 {
     int idim, d(dimension());
+
+    // make sure show desktop setting is honored
+    TQStringList urls, volatileUrls;
+    ButtonIter iter = m_buttons->begin();
+    while (iter != m_buttons->end()) {
+        if ((*iter)->sticky() == false)
+        {
+            volatileUrls.append((*iter)->menuId());
+        }
+        urls.append((*iter)->menuId());
+        ++iter;
+    }
+    if (m_settings->showDesktopEnabled()) {
+        if (!urls.contains("SPECIAL_BUTTON__SHOW_DESKTOP")) {
+            urls.prepend("SPECIAL_BUTTON__SHOW_DESKTOP");
+            addApp("SPECIAL_BUTTON__SHOW_DESKTOP", 0, true);
+        }
+    }
+    else {
+        if (urls.contains("SPECIAL_BUTTON__SHOW_DESKTOP")) {
+            urls.remove("SPECIAL_BUTTON__SHOW_DESKTOP");
+            removeApp("SPECIAL_BUTTON__SHOW_DESKTOP", true);
+        }
+    }
+
     // determine button size
     if (m_settings->iconDim() == SIZE_AUTO)
     {
@@ -814,6 +843,14 @@ void QuickLauncher::loadConfig()
     DEBUGSTR << "    DragEnabled=" << isDragEnabled() << endl << flush;*/
     TQStringList volatileButtons = m_settings->volatileButtons();
     TQStringList urls = m_settings->buttons();
+    if (m_settings->showDesktopEnabled()) {
+        if (!urls.contains("SPECIAL_BUTTON__SHOW_DESKTOP"))
+            urls.prepend("SPECIAL_BUTTON__SHOW_DESKTOP");
+    }
+    else {
+        if (urls.contains("SPECIAL_BUTTON__SHOW_DESKTOP"))
+            urls.remove("SPECIAL_BUTTON__SHOW_DESKTOP");
+    }
     kdDebug() << "GetButtons " << urls.join("/") << endl;
     TQStringList::Iterator iter(urls.begin());
     int n = 0;

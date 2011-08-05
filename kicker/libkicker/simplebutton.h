@@ -31,7 +31,7 @@ class KDE_EXPORT SimpleButton : public TQButton
     Q_OBJECT
 
     public:
-        SimpleButton(TQWidget *parent, const char *name = 0);
+        SimpleButton(TQWidget *parent, const char *name = 0, bool forceStandardCursor = FALSE);
         void setPixmap(const TQPixmap &pix);
         void setOrientation(Qt::Orientation orientaton);
         TQSize tqsizeHint() const;
@@ -56,6 +56,7 @@ class KDE_EXPORT SimpleButton : public TQButton
         TQPixmap m_activeIcon;
         TQPixmap m_disabledIcon;
         Qt::Orientation m_orientation;
+        bool m_forceStandardCursor;
         class SimpleButtonPrivate;
         SimpleButtonPrivate* d;
 };
@@ -65,7 +66,7 @@ class KDE_EXPORT SimpleArrowButton: public SimpleButton
     Q_OBJECT
     
     public:
-        SimpleArrowButton(TQWidget *parent = 0, Qt::ArrowType arrow = Qt::UpArrow, const char *name = 0);
+        SimpleArrowButton(TQWidget *parent = 0, Qt::ArrowType arrow = Qt::UpArrow, const char *name = 0, bool forceStandardCursor = FALSE);
         virtual ~SimpleArrowButton() {};
         TQSize tqsizeHint() const;
     
@@ -80,6 +81,7 @@ class KDE_EXPORT SimpleArrowButton: public SimpleButton
     
     private:
         Qt::ArrowType _arrow;
+        bool m_forceStandardCursor;
         bool _inside;
 };
 

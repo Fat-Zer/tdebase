@@ -104,6 +104,7 @@ protected slots:
     void removeApp();
     void slotFlash();
     void slotStickyToggled(bool isSticky);
+    void toggle(bool);
 
 private:
     int m_flashCounter;

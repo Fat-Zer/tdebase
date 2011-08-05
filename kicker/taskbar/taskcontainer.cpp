@@ -771,7 +771,7 @@ void TaskContainer::drawButton(TQPainter *p)
     }
 
     // draw popup arrow
-    if (m_filteredTasks.count() > 1)
+    if ((m_filteredTasks.count() > 1) && (!KickerSettings::showDeepButtons()))
     {
         TQStyle::PrimitiveElement e = TQStyle::PE_ArrowLeft;
 

@@ -32,6 +32,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <tqpixmap.h>
 #include <tqevent.h>
 #include <tqstyle.h>
+#include <tqgrid.h>
 #include <tqpainter.h>
 
 #include <dcopclient.h>
@@ -56,7 +57,6 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #include <X11/Xlib.h>
 
-//#define ICON_MARGIN KickerSettings::showDeepButtons()?2:1
 #define ICON_MARGIN 1
 #define ICON_END_MARGIN KickerSettings::showDeepButtons()?4:0
 
@@ -78,11 +78,14 @@ SystemTrayApplet::SystemTrayApplet(const TQString& configFile, Type type, int ac
     m_expandButton(0),
     m_leftSpacer(0),
     m_rightSpacer(0),
+    m_clockApplet(0),
     m_settingsDialog(0),
     m_iconSelector(0),
     m_autoRetractTimer(0),
     m_autoRetract(false),
     m_iconSize(24),
+    m_showClockInTray(false),
+    m_showClockSettingCB(0),
     m_layout(0)
 {
     DCOPObject::setObjId("SystemTrayApplet");
@@ -92,6 +95,10 @@ SystemTrayApplet::SystemTrayApplet(const TQString& configFile, Type type, int ac
     m_leftSpacer->setFixedSize(ICON_END_MARGIN,1);
     m_rightSpacer = new TQWidget(this);
     m_rightSpacer->setFixedSize(ICON_END_MARGIN,1);
+
+    m_clockApplet = new ClockApplet(configFile, KPanelApplet::Normal, KPanelApplet::Preferences, this, "clockapplet");
+    updateClockGeometry();
+    connect(m_clockApplet, TQT_SIGNAL(clockReconfigured()), this, TQT_SLOT(updateClockGeometry()));
 
     setBackgroundOrigin(AncestorOrigin);
 
@@ -103,6 +110,12 @@ SystemTrayApplet::SystemTrayApplet(const TQString& configFile, Type type, int ac
     connectDCOPSignal("kicker", "kicker", "configurationChanged()", "loadSettings()", false);
 
     TQTimer::singleShot(0, this, TQT_SLOT(initialize()));
+}
+
+void SystemTrayApplet::updateClockGeometry()
+{
+    if (m_clockApplet)
+        m_clockApplet->setFixedSize(m_clockApplet->widthForHeight(height()-2),height()-2);
 }
 
 void SystemTrayApplet::initialize()
@@ -185,6 +198,9 @@ SystemTrayApplet::~SystemTrayApplet()
         delete *it;
     }
 
+    if (m_leftSpacer) delete m_leftSpacer;
+    if (m_rightSpacer) delete m_rightSpacer;
+
     KGlobal::locale()->removeCatalogue("ksystemtrayapplet");
 }
 
@@ -225,10 +241,16 @@ void SystemTrayApplet::preferences()
     connect(m_settingsDialog, TQT_SIGNAL(okClicked()), this, TQT_SLOT(applySettings()));
     connect(m_settingsDialog, TQT_SIGNAL(finished()), this, TQT_SLOT(settingsDialogFinished()));
 
-    m_iconSelector = new KActionSelector(m_settingsDialog);
+    TQGrid *settingsGrid = m_settingsDialog->makeGridMainWidget( 2, Qt::Vertical);
+
+    m_showClockSettingCB = new TQCheckBox("Show Clock in Tray", settingsGrid);
+    m_showClockSettingCB->setChecked(m_showClockInTray);
+
+    //m_iconSelector = new KActionSelector(m_settingsDialog);
+    m_iconSelector = new KActionSelector(settingsGrid);
     m_iconSelector->setAvailableLabel(i18n("Hidden icons:"));
     m_iconSelector->setSelectedLabel(i18n("Visible icons:"));
-    m_settingsDialog->setMainWidget(m_iconSelector);
+    //m_settingsDialog->setMainWidget(m_iconSelector);
 
     TQListBox *hiddenListBox = m_iconSelector->availableListBox();
     TQListBox *shownListBox = m_iconSelector->selectedListBox();
@@ -271,6 +293,8 @@ void SystemTrayApplet::applySettings()
     {
         return;
     }
+
+    m_showClockInTray = m_showClockSettingCB->isChecked();
 
     KConfig *conf = config();
 
@@ -317,6 +341,10 @@ void SystemTrayApplet::applySettings()
             m_hiddenIconList.append(item->text());
     }
     conf->writeEntry("Hidden", m_hiddenIconList);
+
+    conf->setGroup("System Tray");
+    conf->writeEntry("ShowClockInTray", m_showClockInTray);
+
     conf->sync();
 
     TrayEmbedList::iterator it = m_shownWins.begin();
@@ -392,7 +420,7 @@ void SystemTrayApplet::showExpandButton(bool show)
     {
         if (!m_expandButton)
         {
-            m_expandButton = new SimpleArrowButton(this);
+            m_expandButton = new SimpleArrowButton(this, Qt::UpArrow, 0, KickerSettings::showDeepButtons());
             m_expandButton->installEventFilter(this);
             refreshExpandButton();
 
@@ -475,6 +503,7 @@ void SystemTrayApplet::loadSettings()
     //Note This setting comes from kdeglobal.
     conf->setGroup("System Tray");
     m_iconSize = conf->readNumEntry("systrayIconWidth", 22);
+    m_showClockInTray = conf->readNumEntry("ShowClockInTray", false);
 }
 
 void SystemTrayApplet::systemTrayWindowAdded( WId w )
@@ -984,6 +1013,18 @@ void SystemTrayApplet::layoutTray()
                                      col, col,
                                      0, nbrOfLines - 1,
                                      Qt::AlignHCenter | Qt::AlignVCenter);
+
+        if (m_clockApplet) {
+            if (m_showClockInTray)
+                m_clockApplet->show();
+            else
+                m_clockApplet->hide();
+
+            m_layout->addMultiCellWidget(m_clockApplet,
+                                     col+1, col+1,
+                                     0, nbrOfLines - 1,
+                                     Qt::AlignHCenter | Qt::AlignVCenter);
+        }
     }
     else // horizontal
     {
@@ -1047,11 +1088,25 @@ void SystemTrayApplet::layoutTray()
                                      0, nbrOfLines - 1,
                                      col, col,
                                      Qt::AlignHCenter | Qt::AlignVCenter);
+
+        if (m_clockApplet) {
+            if (m_showClockInTray)
+                m_clockApplet->show();
+            else
+                m_clockApplet->hide();
+
+            m_layout->addMultiCellWidget(m_clockApplet,
+                                         0, nbrOfLines - 1,
+                                         col+1, col+1,
+                                         Qt::AlignHCenter | Qt::AlignVCenter);
+        }
     }
 
     tqsetUpdatesEnabled(true);
     updateGeometry();
     setBackground();
+
+    updateClockGeometry();
 }
 
 void SystemTrayApplet::paletteChange(const TQPalette & /* oldPalette */)

@@ -40,13 +40,13 @@ public:
 
     bool fullSpan () const { return true; }
 
-    void paint(TQPainter* p, const TQColorGroup& cg, 
-               bool /* act */, bool /*enabled*/, 
+    void paint(TQPainter* p, const TQColorGroup& cg,
+               bool /* act */, bool /*enabled*/,
                int x, int y, int w, int h)
     {
         p->save();
         TQRect r(x, y, w, h);
-        kapp->tqstyle().tqdrawPrimitive(TQStyle::PE_HeaderSection, 
+        kapp->tqstyle().tqdrawPrimitive(TQStyle::PE_HeaderSectionMenu,
                                     p, r, cg);
 
         if (!m_desktopName.isEmpty())
@@ -54,7 +54,7 @@ public:
             p->setPen(cg.buttonText());
             p->setFont(m_font);
             p->drawText(x, y, w, h,
-                        AlignCenter | SingleLine, 
+                        AlignCenter | SingleLine,
                         m_desktopName);
         }
 
@@ -72,7 +72,7 @@ public:
     TQSize tqsizeHint()
     {
       TQSize size = TQFontMetrics(m_font).size(AlignHCenter, m_desktopName);
-      size.setHeight(size.height() + 
+      size.setHeight(size.height() +
                      (kapp->tqstyle().tqpixelMetric(TQStyle::PM_DefaultFrameWidth) * 2 + 1));
       return size;
     }

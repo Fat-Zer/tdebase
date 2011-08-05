@@ -326,7 +326,7 @@ int PanelButton::heightForWidth(int width) const
 
 const TQPixmap& PanelButton::labelIcon() const
 {
-    if (m_disableHighlighting)
+    if (m_disableHighlighting || (!KickerSettings::showMouseOverEffects()))
         return m_icon;
     else
         return m_highlight ? m_iconh : m_icon;

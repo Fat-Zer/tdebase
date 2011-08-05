@@ -27,6 +27,14 @@
                 <string>Allow drag and drop</string>
             </property>
         </widget>
+	<widget class="TQCheckBox">
+		<property name="name">
+			<cstring>kcfg_ShowDesktopEnabled</cstring>
+		</property>
+		<property name="text">
+			<string>Enable 'Show Desktop' button</string>
+		</property>
+        </widget>
         <widget class="TQGroupBox">
             <property name="name">
                 <cstring>groupBox2</cstring>

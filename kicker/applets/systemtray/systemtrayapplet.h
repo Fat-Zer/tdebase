@@ -28,11 +28,14 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <tqstringlist.h>
 #include <tqevent.h>
 #include <tqlayout.h>
+#include <tqcheckbox.h>
 #include <qxembed.h>
 
 #include <dcopobject.h>
 #include <kapplication.h>
 #include <kpanelapplet.h>
+
+#include "clock.h"
 
 #include "simplebutton.h"
 
@@ -85,6 +88,7 @@ protected slots:
     void checkAutoRetract();
     void configure() { preferences(); }
     void setBackground();
+    void updateClockGeometry();
 
 private:
     void embedWindow( WId w, bool kde_tray );
@@ -108,11 +112,14 @@ private:
     SimpleArrowButton *m_expandButton;
     TQWidget *m_leftSpacer;
     TQWidget *m_rightSpacer;
+    ClockApplet *m_clockApplet;
     KDialogBase* m_settingsDialog;
     KActionSelector* m_iconSelector;
     TQTimer* m_autoRetractTimer;
     bool m_autoRetract;
     int m_iconSize;
+    bool m_showClockInTray;
+    TQCheckBox *m_showClockSettingCB;
     TQGridLayout* m_layout;
 };
 

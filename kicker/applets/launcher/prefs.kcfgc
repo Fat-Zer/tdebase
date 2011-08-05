@@ -2,5 +2,5 @@
 File=launcherapplet.kcfg
 ClassName=Prefs
 Singleton=false
-Mutators=AutoAdjustMaxItems,Buttons,VolatileButtons,AutoAdjustMaxItems,AutoAdjustMinItems,AutoAdjustEnabled,IconDim,DragEnabled,ConserveSpace,ServiceInspos,ServiceNames,ServiceHistories
+Mutators=AutoAdjustMaxItems,Buttons,VolatileButtons,AutoAdjustMaxItems,AutoAdjustMinItems,AutoAdjustEnabled,IconDim,DragEnabled,ShowDesktopEnabled,ConserveSpace,ServiceInspos,ServiceNames,ServiceHistories
 # MemberVariables=public

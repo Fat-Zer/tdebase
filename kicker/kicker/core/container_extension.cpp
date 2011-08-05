@@ -1400,7 +1400,7 @@ void ExtensionContainer::paintEvent(TQPaintEvent *e)
 
     if (KickerSettings::useResizeHandle())
     {
-        // draw resize handle [RAJA]
+        // draw resize handle
         TQRect rect;
         TQPainter p( this );
 
