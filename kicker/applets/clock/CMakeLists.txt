@@ -38,7 +38,7 @@ set( ${target}_SRCS
   analog.ui digital.ui fuzzy.ui settings.ui prefs.kcfgc
 )
 
-tde_add_library( ${target} STATIC AUTOMOC
+tde_add_library( ${target} STATIC_PIC AUTOMOC
   SOURCES ${${target}_SRCS}
 )
 
