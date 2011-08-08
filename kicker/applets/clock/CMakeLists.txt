@@ -47,12 +47,12 @@ tde_add_library( ${target} STATIC_PIC AUTOMOC
 set( target clock_panelapplet )
 
 set( ${target}_SRCS
-  clock.skel clock.cpp datepicker.cpp zone.cpp
-  analog.ui digital.ui fuzzy.ui settings.ui prefs.kcfgc init.cpp
+  init.cpp
 )
 
 tde_add_kpart( ${target} AUTOMOC
   SOURCES ${${target}_SRCS}
-  LINK kickermain-shared
+  DEPENDENCIES clock_panelapplet-static
+  LINK kickermain-shared clock_panelapplet-static
   DESTINATION ${PLUGIN_INSTALL_DIR}
 )
