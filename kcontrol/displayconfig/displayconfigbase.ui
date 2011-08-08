@@ -1,0 +1,299 @@
+<!DOCTYPE UI><UI version="3.0" stdsetdef="1">
+<class>DisplayConfigBase</class>
+<widget class="TQWidget">
+    <property name="name">
+	    <cstring>DisplayConfigBase</cstring>
+    </property>
+    <property name="geometry">
+        <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>519</width>
+            <height>356</height>
+        </rect>
+    </property>
+    <grid>
+        <property name="name">
+            <cstring>unnamed</cstring>
+        </property>
+        <widget class="TQTabWidget" row="0" column="0">
+            <property name="name">
+                <cstring>mainTabContainerWidget</cstring>
+            </property>
+            <property name="enabled">
+                <bool>true</bool>
+            </property>
+	    <widget class="TQWidget">
+		    <property name="name">
+			    <cstring>globalTab</cstring>
+		    </property>
+		    <attribute name="title">
+			    <string>Global Settings</string>
+		    </attribute>
+		    <grid>
+			    <property name="name">
+				    <cstring>unnamed</cstring>
+			    </property>
+			    <widget class="TQGroupBox" row="0" column="0">
+				    <property name="name">
+					    <cstring>groupSystemSettings</cstring>
+				    </property>
+				    <property name="title">
+					    <string>Global</string>
+				    </property>
+				    <grid>
+					    <property name="name">
+						    <cstring>unnamed</cstring>
+					    </property>
+					    <widget class="TQCheckBox" row="0" column="0" colspan="4">
+						    <property name="name">
+							    <cstring>systemEnableSupport</cstring>
+						    </property>
+						    <property name="text">
+							    <string>&amp;Enable global display control</string>
+						    </property>
+					    </widget>
+				    </grid>
+			    </widget>
+		    </grid>
+	    </widget>
+            <widget class="TQWidget">
+                <property name="name">
+                    <cstring>resolutionTab</cstring>
+                </property>
+                <attribute name="title">
+                    <string>Resolution and Layout</string>
+                </attribute>
+                <grid>
+                    <property name="name">
+                        <cstring>unnamed</cstring>
+                    </property>
+		    <widget class="TQGroupBox" row="1" column="0">
+			    <property name="name">
+				    <cstring>groupMonitorSettings</cstring>
+			    </property>
+			    <property name="title">
+				    <string>Monitors</string>
+			    </property>
+			    <grid>
+				    <property name="name">
+					    <cstring>unnamed</cstring>
+				    </property>
+				    <widget class="TQLabel" row="0" column="0" colspan="4">
+					    <property name="name">
+						    <cstring>textLabel4_3</cstring>
+					    </property>
+					    <property name="text">
+						    <string>Drag the monitor icons to match the physical arrangement of your monitors.</string>
+					    </property>
+				    </widget>
+				    <widget class="MonitorWorkspace" row="1" column="0" colspan="4">
+					    <property name="name">
+						    <cstring>monitorPhyArrange</cstring>
+					    </property>
+					    <property name="sizePolicy">
+						    <sizepolicy>
+							    <hsizetype>7</hsizetype>
+							    <vsizetype>1</vsizetype>
+							    <horstretch>1</horstretch>
+							    <verstretch>0</verstretch>
+						    </sizepolicy>
+					    </property>
+					    <property name="maximumSize">
+						    <size>
+							    <width>32767</width>
+							    <height>200</height>
+						    </size>
+					    </property>
+				    </widget>
+				    <widget class="TQLabel" row="2" column="0" colspan="4">
+					    <property name="name">
+						    <cstring>textLabel4_4</cstring>
+					    </property>
+					    <property name="text">
+						    <string>Display:</string>
+					    </property>
+				    </widget>
+				    <widget class="KComboBox" row="3" column="0" colspan="4">
+					    <property name="name">
+						    <cstring>monitorDisplaySelectDD</cstring>
+					    </property>
+				    </widget>
+				    <widget class="TQGroupBox" row="4" column="0" colspan="2">
+					    <property name="name">
+						    <cstring>groupResolution</cstring>
+					    </property>
+					    <property name="title">
+						    <string>&amp;Screen resolution</string>
+					    </property>
+					    <grid>
+						    <property name="name">
+							    <cstring>unnamed</cstring>
+						    </property>
+						    <widget class="TQLabel" row="0" column="0">
+							    <property name="name">
+								    <cstring>textLabel4_5</cstring>
+							    </property>
+							    <property name="text">
+								    <string>Less</string>
+							    </property>
+						    </widget>
+						    <widget class="TQSlider" row="0" column="1">
+							    <property name="name">
+								    <cstring>resolutionSlider</cstring>
+							    </property>
+							    <property name="maxValue">
+								    <number>0</number>
+							    </property>
+							    <property name="orientation">
+								    <enum>Horizontal</enum>
+							    </property>
+							    <property name="tickmarks">
+								    <enum>Below</enum>
+							    </property>
+							    <property name="tickInterval">
+								    <number>1</number>
+							    </property>
+						    </widget>
+						    <widget class="TQLabel" row="0" column="2">
+							    <property name="name">
+								    <cstring>textLabel4_6</cstring>
+							    </property>
+							    <property name="text">
+								    <string>More</string>
+							    </property>
+						    </widget>
+						    <widget class="TQLabel" row="1" column="1">
+							    <property name="name">
+								    <cstring>resolutionLabel</cstring>
+							    </property>
+							    <property name="text">
+								    <string>unset</string>
+							    </property>
+							    <property name="alignment">
+								    <set>AlignCenter</set>
+							    </property>
+						    </widget>
+					    </grid>
+		    		    </widget>
+				    <widget class="TQGroupBox" row="4" column="2" colspan="2">
+					    <property name="name">
+						    <cstring>groupColorDepth</cstring>
+					    </property>
+					    <property name="title">
+						    <string>&amp;Refresh rate</string>
+					    </property>
+					    <grid>
+						    <property name="name">
+							    <cstring>unnamed</cstring>
+						    </property>
+						    <widget class="KComboBox" row="0" column="0">
+							    <property name="name">
+								    <cstring>refreshRateDD</cstring>
+							    </property>
+						    </widget>
+						    <widget class="TQWidget" row="1" column="0">
+							    <property name="name">
+								    <cstring>colorBarWidget</cstring>
+							    </property>
+						    </widget>
+					    </grid>
+		    		    </widget>
+				    <widget class="TQGroupBox" row="5" column="0" colspan="4">
+					    <property name="name">
+						    <cstring>groupOrientation</cstring>
+					    </property>
+					    <property name="title">
+						    <string>Screen Transformations</string>
+					    </property>
+					    <grid>
+						    <property name="name">
+							    <cstring>unnamed</cstring>
+						    </property>
+						    <widget class="KComboBox" row="0" column="0" colspan="1">
+							    <property name="name">
+								    <cstring>rotationSelectDD</cstring>
+							    </property>
+						    </widget>
+						    <widget class="TQCheckBox" row="0" column="1" colspan="1">
+							    <property name="name">
+								    <cstring>orientationHFlip</cstring>
+							    </property>
+							    <property name="text">
+								    <string>&amp;Mirror screen horizontally</string>
+							    </property>
+						    </widget>
+						    <widget class="TQCheckBox" row="0" column="2" colspan="1">
+							    <property name="name">
+								    <cstring>orientationVFlip</cstring>
+							    </property>
+							    <property name="text">
+								    <string>Mirror screen &amp;vertically</string>
+							    </property>
+						    </widget>
+					    </grid>
+				    </widget>
+				    <widget class="TQCheckBox" row="6" column="0" colspan="4">
+					    <property name="name">
+						    <cstring>isPrimaryMonitorCB</cstring>
+					    </property>
+					    <property name="text">
+						    <string>&amp;Use this device as the primary monitor.</string>
+					    </property>
+				    </widget>
+				    <widget class="TQCheckBox" row="7" column="0" colspan="4">
+					    <property name="name">
+						    <cstring>isExtendedMonitorCB</cstring>
+					    </property>
+					    <property name="text">
+						    <string>&amp;Extend my Trinity desktop onto this monitor.</string>
+					    </property>
+				    </widget>
+				    <widget class="KPushButton" row="8" column="3" colspan="4">
+					    <property name="name">
+						    <cstring>identifyMonitors</cstring>
+					    </property>
+					    <property name="text">
+						    <string>&amp;Identify</string>
+					    </property>
+				    </widget>
+			    </grid>
+		    </widget>
+                    <spacer row="4" column="0">
+                        <property name="name" stdset="0">
+                            <cstring>Spacer4</cstring>
+                        </property>
+                        <property name="orientation">
+                            <enum>Vertical</enum>
+                        </property>
+                        <property name="sizeType">
+                            <enum>Expanding</enum>
+                        </property>
+                        <property name="tqsizeHint">
+                            <size>
+                                <width>20</width>
+                                <height>20</height>
+                            </size>
+                        </property>
+                    </spacer>
+                </grid>
+            </widget>
+        </widget>
+    </grid>
+</widget>
+<includes>
+	<include location="local" impldecl="in implementation">DisplayConfigBase.ui.h</include>
+</includes>
+<Q_SLOTS>
+    <slot>enableSupport_toggled(bool)</slot>
+</Q_SLOTS>
+<includes>
+    <include location="local" impldecl="in implementation">kdialog.h</include>
+    <include location="local" impldecl="in implementation">kcombobox.h</include>
+    <include location="local" impldecl="in implementation">kpushbutton.h</include>
+    <include location="local" impldecl="in implementation">tqworkspace.h</include>
+    <include location="global" impldecl="in implementation">monitorworkspace.h</include>
+</includes>
+<layoutdefaults spacing="3" margin="6"/>
+<layoutfunctions spacing="KDialog::spacingHint" margin="KDialog::marginHint"/>
+</UI>

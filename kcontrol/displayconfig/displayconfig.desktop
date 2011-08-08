@@ -1,0 +1,23 @@
+[Desktop Entry]
+Exec=kcmshell displayconfig
+Icon=background
+Type=Application
+DocPath=kcontrol/displayconfig/index.html
+
+X-KDE-Library=displayconfig
+X-KDE-ParentApp=kcontrol
+X-KDE-RootOnly=true
+X-KDE-SubstituteUID=true
+
+Categories=Qt;KDE;X-KDE-settings-peripherals;
+Comment=Configure display
+Comment[en_US]=Configure display
+DocPath=kcontrol/displayconfig.html
+GenericName=
+GenericName[en_US]=
+Keywords=monitor,resolution,display
+MimeType=
+Name=Monitor and Display
+Name[en_US]=Monitor and Display
+
+NoDisplay=true
