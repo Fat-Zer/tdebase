@@ -2563,10 +2563,10 @@ void Workspace::startKompmgr()
         kompmgr_selection = new KSelectionOwner( selection_name );
         connect( kompmgr_selection, TQT_SIGNAL( lostOwnership()), TQT_SLOT( stopKompmgr()));
         kompmgr_selection->claim( true );
-        connect(kompmgr, TQT_SIGNAL(processExited(KProcess*)), TQT_SLOT(restartKompmgr()));
+        connect(kompmgr, TQT_SIGNAL(processExited(KProcess*)), TQT_SLOT(restartKompmgr(KProcess*)));
         options->useTranslucency = TRUE;
-        allowKompmgrRestart = FALSE;
-        TQTimer::singleShot( 60000, this, TQT_SLOT(unblockKompmgrRestart()) );
+        //allowKompmgrRestart = FALSE;
+        //TQTimer::singleShot( 60000, this, TQT_SLOT(unblockKompmgrRestart()) );
         TQByteArray ba;
         TQDataStream arg(ba, IO_WriteOnly);
         arg << "";
@@ -2601,47 +2601,49 @@ void Workspace::unblockKompmgrRestart()
     allowKompmgrRestart = TRUE;
 }
 
-void Workspace::restartKompmgr()
+void Workspace::restartKompmgr( KProcess *proc )
 // this is for inernal purpose (crashhandling) only, usually you want to use workspace->stopKompmgr(); TQTimer::singleShot(200, workspace, TQT_SLOT(startKompmgr()));
 {
-    if (!allowKompmgrRestart) // uh-ohh
-        {
-        delete kompmgr_selection;
-        kompmgr_selection = NULL;
-        options->useTranslucency = FALSE;
-        KProcess proc;
-        proc << "kdialog" << "--error"
-            << i18n( "The Composite Manager crashed twice within a minute and is therefore disabled for this session.")
-            << "--title" << i18n("Composite Manager Failure");
-        proc.start(KProcess::DontCare);
-        return;
-        }
-    if (!kompmgr)
-        return;
+    if (proc->signalled()) {	// looks like kompmgr crashed
+       if (!allowKompmgrRestart)   // uh oh, it crashed recently already
+            {
+            delete kompmgr_selection;
+            kompmgr_selection = NULL;
+            options->useTranslucency = FALSE;
+            KProcess proc;
+            proc << "kdialog" << "--error"
+                << i18n( "The Composite Manager crashed twice within a minute and is therefore disabled for this session.")
+                << "--title" << i18n("Composite Manager Failure");
+            proc.start(KProcess::DontCare);
+            return;
+            }
+        if (!kompmgr)
+            return;
 // this should be useless, i keep it for maybe future need
-//     if (!kcompmgr)
-//         {
-//         kompmgr = new KProcess;
-//         kompmgr->clearArguments();
-//         *kompmgr << "kompmgr";
-//         }
+//         if (!kcompmgr)
+//             {
+//             kompmgr = new KProcess;
+//             kompmgr->clearArguments();
+//             *kompmgr << "kompmgr";
+//             }
 // -------------------
-    if (!kompmgr->start(KProcess::NotifyOnExit, KProcess::Stderr))
-        {
-        delete kompmgr_selection;
-        kompmgr_selection = NULL;
-        options->useTranslucency = FALSE;
-        KProcess proc;
-        proc << "kdialog" << "--error"
-            << i18n("The Composite Manager could not be started.\\nMake sure you have \"kompmgr\" in a $PATH directory.")
-            << "--title" << i18n("Composite Manager Failure");
-        proc.start(KProcess::DontCare);
-        }
-    else
-        {
-        allowKompmgrRestart = FALSE;
-        TQTimer::singleShot( 60000, this, TQT_SLOT(unblockKompmgrRestart()) );
-        }
+        if (!kompmgr->start(KProcess::NotifyOnExit, KProcess::Stderr))
+            {
+            delete kompmgr_selection;
+            kompmgr_selection = NULL;
+            options->useTranslucency = FALSE;
+            KProcess proc;
+            proc << "kdialog" << "--error"
+                << i18n("The Composite Manager could not be started.\\nMake sure you have \"kompmgr\" in a $PATH directory.")
+                << "--title" << i18n("Composite Manager Failure");
+            proc.start(KProcess::DontCare);
+            }
+        else
+            {
+            allowKompmgrRestart = FALSE;
+            TQTimer::singleShot( 60000, this, TQT_SLOT(unblockKompmgrRestart()) );
+            }
+    }
 }
 
 void Workspace::handleKompmgrOutput( KProcess* , char *buffer, int buflen)

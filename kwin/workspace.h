@@ -401,7 +401,7 @@ class Workspace : public TQObject, public KWinInterface, public KDecorationDefin
         void resetClientOpacity();
         void setTransButtonText(int value);
         void unblockKompmgrRestart();
-        void restartKompmgr();
+        void restartKompmgr( KProcess *proc );
         void handleKompmgrOutput( KProcess *proc, char *buffer, int buflen);
         void stopKompmgr();
         // end 

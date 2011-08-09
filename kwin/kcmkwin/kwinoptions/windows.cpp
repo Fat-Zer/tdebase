@@ -1526,7 +1526,7 @@ void KTranslucencyConfig::load( void )
 
   KConfig conf_(TQDir::homeDirPath() + "/.xcompmgrrc");
   conf_.setGroup("xcompmgr");
-  
+
   disableARGB->setChecked(conf_.readBoolEntry("DisableARGB",FALSE));
 
   useShadows->setChecked(conf_.readEntry("Compmode","CompClientShadows").compare("CompClientShadows") == 0);
@@ -1581,7 +1581,7 @@ void KTranslucencyConfig::save( void )
    config->writeEntry("DockShadowSize",(int)(200.0 * dockWindowShadowSize->value() / (activeWindowShadowSize->value() + inactiveWindowShadowSize->value())));
    config->writeEntry("ActiveWindowShadowSize",(int)(200.0 * activeWindowShadowSize->value() / (activeWindowShadowSize->value() + inactiveWindowShadowSize->value())));
    config->writeEntry("InactiveWindowShadowSize",(int)(200.0 * inactiveWindowShadowSize->value() / (activeWindowShadowSize->value() + inactiveWindowShadowSize->value())));
-   
+
   config->writeEntry("RemoveShadowsOnMove",removeShadowsOnMove->isChecked());
   config->writeEntry("RemoveShadowsOnResize",removeShadowsOnResize->isChecked());
   config->writeEntry("OnlyDecoTranslucent", onlyDecoTranslucent->isChecked());
@@ -1671,8 +1671,8 @@ bool KTranslucencyConfig::kompmgrAvailable()
 
 void KTranslucencyConfig::showWarning(bool alphaActivated)
 {
-    if (alphaActivated)
-        KMessageBox::information(this, i18n("<qt>Translucency support is new and may cause problems<br> including crashes (sometimes the translucency engine, seldom even X).</qt>"), i18n("Warning"));
+//    if (alphaActivated)
+//        KMessageBox::information(this, i18n("<qt>Translucency support is new and may cause problems<br> including crashes (sometimes the translucency engine, seldom even X).</qt>"), i18n("Warning"));
 }
 
 #include "windows.moc"
