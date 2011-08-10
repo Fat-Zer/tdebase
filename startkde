@@ -475,6 +475,9 @@ dcopserver_shutdown
 
 echo '[startkde] Starting Trinity...'  1>&2
 
+# Detect any running Xorg composition managers
+$KDEDIR/bin/kdetcompmgr
+
 # Run KPersonalizer before the session if this is the first login.
 if test "$kpersonalizerrc_general_firstlogin" = "true"; then
   if [ ! -x $KDEDIR/bin/kpersonalizer ]; then
