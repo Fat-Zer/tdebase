@@ -69,7 +69,7 @@ TQString NotifierAction::label() const
 
 void NotifierAction::addAutoMimetype( const TQString &mimetype )
 {
-	if ( !m_autoMimetypes.tqcontains( mimetype ) )
+	if ( !m_autoMimetypes.contains( mimetype ) )
 	{
 		m_autoMimetypes.append( mimetype );
 	}

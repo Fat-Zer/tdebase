@@ -208,13 +208,13 @@ KURL SMBSlave::checkURL(const KURL& kurl) const
 
     // smb:/ normaly have no userinfo
     // we must redirect ourself to remove the username and password
-    if (surl.tqcontains('@') && !surl.tqcontains("smb://")) {
+    if (surl.contains('@') && !surl.contains("smb://")) {
         KURL url(kurl);
-        url.setPath("/"+kurl.url().right( kurl.url().length()-kurl.url().tqfind('@') -1));
-        TQString userinfo = kurl.url().mid(5, kurl.url().tqfind('@')-5);
-        if(userinfo.tqcontains(':'))  {
-            url.setUser(userinfo.left(userinfo.tqfind(':')));
-            url.setPass(userinfo.right(userinfo.length()-userinfo.tqfind(':')-1));
+        url.setPath("/"+kurl.url().right( kurl.url().length()-kurl.url().find('@') -1));
+        TQString userinfo = kurl.url().mid(5, kurl.url().find('@')-5);
+        if(userinfo.contains(':'))  {
+            url.setUser(userinfo.left(userinfo.find(':')));
+            url.setPass(userinfo.right(userinfo.length()-userinfo.find(':')-1));
         } else {
             url.setUser(userinfo);
         }

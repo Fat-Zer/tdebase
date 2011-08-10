@@ -200,7 +200,7 @@ void KDebugDialog::slotDebugAreaChanged( const TQString & text )
     save();
 
   TQString data = text.simplifyWhiteSpace();
-  int space = data.tqfind(" ");
+  int space = data.find(" ");
   if (space == -1)
       kdError() << "No space:" << data << endl;
 

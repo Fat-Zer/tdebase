@@ -207,7 +207,7 @@ void QuartzHandler::readConfig()
 	extraSlim    = conf.readBoolEntry( "UseQuartzExtraSlim", false );
 
 	// A small hack to make the on all desktops button look nicer
-	onAllDesktopsButtonOnLeft = KDecoration::options()->titleButtonsLeft().tqcontains( 'S' );
+	onAllDesktopsButtonOnLeft = KDecoration::options()->titleButtonsLeft().contains( 'S' );
         if ( TQApplication::reverseLayout() )
             onAllDesktopsButtonOnLeft = !onAllDesktopsButtonOnLeft;
 	switch(options()->preferredBorderSize(this)) {

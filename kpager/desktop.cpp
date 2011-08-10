@@ -120,7 +120,7 @@ void Desktop::mouseReleaseEvent( TQMouseEvent *ev )
 	KWin::forceActiveWindow(info->win());
 
 	//	    if ( static_cast<WindowDrawMode>( KPagerConfigDialog::m_windowDrawMode ) == Pixmap )
-	//		m_windowPixmapsDirty.tqreplace(info->win,true);
+	//		m_windowPixmapsDirty.replace(info->win,true);
       }
     }
   }
@@ -140,7 +140,7 @@ KWin::WindowInfo *Desktop::windowAtPosition(const TQPoint &p, TQPoint *internalp
 		{
 			r=info->geometry();
 			convertRectS2P(r);
-			if (r.tqcontains(p))
+			if (r.contains(p))
 			{
 				if (internalpos)
 				{
@@ -602,8 +602,8 @@ void Desktop::paintWindowPixmap(TQPainter &p, const KWin::WindowInfo *info,
 		nHg = rSmall.height();
 	}
 	pixmap=new TQPixmap(fastScalePixmap(tmp, nWd, nHg));
-	m_windowPixmaps.tqreplace(info->win(),pixmap);
-	m_windowPixmapsDirty.tqreplace(info->win(),false);
+	m_windowPixmaps.replace(info->win(),pixmap);
+	m_windowPixmapsDirty.replace(info->win(),false);
       }
     }
 

@@ -111,7 +111,7 @@ bool Query::matches(const TQString &term)
       bool next_alternative = false;
 
       for ( TQStringList::ConstIterator it = alt->excludes.begin(); it != alt->excludes.end(); ++it ) {
-         if ( lower_term.tqfind(*it)!=-1 ) {
+         if ( lower_term.find(*it)!=-1 ) {
             next_alternative = true;
             continue;
          }
@@ -120,7 +120,7 @@ bool Query::matches(const TQString &term)
          continue;
 
       for ( TQStringList::ConstIterator it = alt->includes.begin(); it != alt->includes.end(); ++it ) {
-         if ( lower_term.tqfind(*it)==-1 ) {
+         if ( lower_term.find(*it)==-1 ) {
             next_alternative = true;
             continue;
          }

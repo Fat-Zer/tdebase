@@ -114,7 +114,7 @@ void TabBox::createClientList(ClientList &list, int desktop /*-1 = all*/, Client
             Client* modal = c->findModal();
             if( modal == NULL || modal == c )
                 add = c;
-            else if( !list.tqcontains( modal ))
+            else if( !list.contains( modal ))
                 add = modal;
             else
                 {
@@ -271,7 +271,7 @@ void TabBox::nextPrev( bool next)
                 client = 0;
                 break;
                 }
-            } while ( client && !clients.tqcontains( client ));
+            } while ( client && !clients.contains( client ));
         setCurrentClient( client );
         }
     else if( mode() == DesktopMode )
@@ -696,7 +696,7 @@ void TabBox::handleMouseEvent( XEvent* e )
     if( e->type != ButtonPress )
         return;
     TQPoint pos( e->xbutton.x_root, e->xbutton.y_root );
-    if( !tqgeometry().tqcontains( pos ))
+    if( !tqgeometry().contains( pos ))
         {
         workspace()->closeTabBox();  // click outside closes tab
         return;
@@ -1227,7 +1227,7 @@ void Workspace::tabBoxKeyRelease( const XKeyEvent& ev )
 
 int Workspace::nextDesktopFocusChain( int iDesktop ) const
     {
-    int i = desktop_focus_chain.tqfind( iDesktop );
+    int i = desktop_focus_chain.find( iDesktop );
     if( i >= 0 && i+1 < (int)desktop_focus_chain.size() )
             return desktop_focus_chain[i+1];
     else if( desktop_focus_chain.size() > 0 )
@@ -1238,7 +1238,7 @@ int Workspace::nextDesktopFocusChain( int iDesktop ) const
 
 int Workspace::previousDesktopFocusChain( int iDesktop ) const
     {
-    int i = desktop_focus_chain.tqfind( iDesktop );
+    int i = desktop_focus_chain.find( iDesktop );
     if( i-1 >= 0 )
             return desktop_focus_chain[i-1];
     else if( desktop_focus_chain.size() > 0 )
@@ -1255,7 +1255,7 @@ Client* Workspace::nextFocusChainClient( Client* c ) const
     {
     if ( global_focus_chain.isEmpty() )
         return 0;
-    ClientList::ConstIterator it = global_focus_chain.tqfind( c );
+    ClientList::ConstIterator it = global_focus_chain.find( c );
     if ( it == global_focus_chain.end() )
         return global_focus_chain.last();
     if ( it == global_focus_chain.begin() )
@@ -1272,7 +1272,7 @@ Client* Workspace::previousFocusChainClient( Client* c ) const
     {
     if ( global_focus_chain.isEmpty() )
         return 0;
-    ClientList::ConstIterator it = global_focus_chain.tqfind( c );
+    ClientList::ConstIterator it = global_focus_chain.find( c );
     if ( it == global_focus_chain.end() )
         return global_focus_chain.first();
     ++it;
@@ -1289,7 +1289,7 @@ Client* Workspace::nextStaticClient( Client* c ) const
     {
     if ( !c || clients.isEmpty() )
         return 0;
-    ClientList::ConstIterator it = clients.tqfind( c );
+    ClientList::ConstIterator it = clients.find( c );
     if ( it == clients.end() )
         return clients.first();
     ++it;
@@ -1305,7 +1305,7 @@ Client* Workspace::previousStaticClient( Client* c ) const
     {
     if ( !c || clients.isEmpty() )
         return 0;
-    ClientList::ConstIterator it = clients.tqfind( c );
+    ClientList::ConstIterator it = clients.find( c );
     if ( it == clients.end() )
         return clients.last();
     if ( it == clients.begin() )

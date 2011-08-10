@@ -112,7 +112,7 @@ void FingerProtocol::get(const KURL& url )
   // Check the validity of the query
 
   TQRegExp regExp("?refreshRate=[0-9][0-9]*", true, true);
-  if (query.tqcontains(regExp)) {
+  if (query.contains(regExp)) {
     //kdDebug() << "looks like a valid query" << endl;
     TQRegExp regExp( "([0-9]+)" );
     regExp.search(query);

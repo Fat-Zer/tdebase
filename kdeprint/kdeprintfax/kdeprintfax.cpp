@@ -425,10 +425,10 @@ void KdeprintFax::slotConfigure()
 void KdeprintFax::updateState()
 {
 	TQString	cmd = m_faxctrl->faxCommand();
-	m_cover->setEnabled(cmd.tqfind("%cover") != -1);
+	m_cover->setEnabled(cmd.find("%cover") != -1);
 	if ( !m_cover->isEnabled() )
 		m_cover->setChecked(false);
-	m_comment->setEnabled(cmd.tqfind("%comment") != -1 && m_cover->isChecked());
+	m_comment->setEnabled(cmd.find("%comment") != -1 && m_cover->isChecked());
 	//m_comment->setPaper(m_comment->isEnabled() ? tqcolorGroup().brush(TQColorGroup::Base) : tqcolorGroup().brush(TQColorGroup::Background));
 	if (!m_comment->isEnabled())
 	{
@@ -438,11 +438,11 @@ void KdeprintFax::updateState()
 	else
 		m_comment->setPaper( tqcolorGroup().base() );
 	/*
-	m_enterprise->setEnabled(cmd.tqfind("%enterprise") != -1);
+	m_enterprise->setEnabled(cmd.find("%enterprise") != -1);
 	if (!m_enterprise->isEnabled())
 		m_enterprise->setText("");
 	*/
-	if (cmd.tqfind("%time") == -1)
+	if (cmd.find("%time") == -1)
 	{
 		m_timecombo->setCurrentItem(0);
 		m_timecombo->setEnabled(false);
@@ -450,8 +450,8 @@ void KdeprintFax::updateState()
 	}
 	else
 		m_timecombo->setEnabled( true );
-	/*m_name->setEnabled( cmd.tqfind( "%name" ) != -1 );*/
-	m_subject->setEnabled( cmd.tqfind( "%subject" ) != -1 && m_cover->isChecked() );
+	/*m_name->setEnabled( cmd.find( "%name" ) != -1 );*/
+	m_subject->setEnabled( cmd.find( "%subject" ) != -1 && m_cover->isChecked() );
 	statusBar()->changeItem(m_faxctrl->faxSystem(), 2);
 }
 

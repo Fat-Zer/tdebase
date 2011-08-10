@@ -105,7 +105,7 @@ void Gesture::active_window_changed( WId )
 
 void Gesture::register_handler( TQObject* receiver_P, const char* slot_P )
     {
-    if( handlers.tqcontains( receiver_P ))
+    if( handlers.contains( receiver_P ))
         return;
     handlers[ receiver_P ] = true;
     connect( this, TQT_SIGNAL( handle_gesture( const TQString&, WId )),
@@ -116,7 +116,7 @@ void Gesture::register_handler( TQObject* receiver_P, const char* slot_P )
 
 void Gesture::unregister_handler( TQObject* receiver_P, const char* slot_P )
     {
-    if( !handlers.tqcontains( receiver_P ))
+    if( !handlers.contains( receiver_P ))
         return;
     handlers.remove( receiver_P );
     disconnect( this, TQT_SIGNAL( handle_gesture( const TQString&, WId )),

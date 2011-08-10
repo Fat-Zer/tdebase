@@ -407,9 +407,9 @@ void Navigator::slotItemSelected( TQListViewItem *currentItem )
         // Enforce the original .docbook version, in case langLookup returns a
         // cached version
         if ( !doc.isNull() ) {
-          int pos = doc.tqfind( ".html" );
+          int pos = doc.find( ".html" );
           if ( pos >= 0 ) {
-            doc.tqreplace( pos, 5, ".docbook" );
+            doc.replace( pos, 5, ".docbook" );
           }
           kdDebug( 1400 ) << "slotItemSelected(): doc = " << doc << endl;
 
@@ -563,7 +563,7 @@ void Navigator::slotSearch()
 void Navigator::slotShowSearchResult( const TQString &url )
 {
   TQString u = url;
-  u.tqreplace( "%k", mSearchEdit->text() );
+  u.replace( "%k", mSearchEdit->text() );
 
   emit itemSelected( u );
 }

@@ -305,7 +305,7 @@ void ToggleViewGUIClient::saveConfig( bool add, const TQString &serviceName )
   TQStringList toggableViewsShown = KonqSettings::toggableViewsShown();
   if (add)
   {
-      if ( !toggableViewsShown.tqcontains( serviceName ) )
+      if ( !toggableViewsShown.contains( serviceName ) )
           toggableViewsShown.append(serviceName);
   }
   else

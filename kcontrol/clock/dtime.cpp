@@ -272,7 +272,7 @@ void Dtime::save()
     list.append(timeServerList->currentText());
   for ( int i=0; i<timeServerList->count();i++ ) {
     TQString text = timeServerList->text(i);
-    if( list.tqfind(text) == list.end())
+    if( list.find(text) == list.end())
       list.append(text);
     // Limit so errors can go away and not stored forever
     if( list.count() == 10)
@@ -284,9 +284,9 @@ void Dtime::save()
   if(setDateTimeAuto->isChecked() && !ntpUtility.isEmpty()){
     // NTP Time setting
     TQString timeServer = timeServerList->currentText();
-    if( timeServer.tqfind( TQRegExp(".*\\(.*\\)$") ) != -1 ) {
-      timeServer.tqreplace( TQRegExp(".*\\("), "" );
-      timeServer.tqreplace( TQRegExp("\\).*"), "" );
+    if( timeServer.find( TQRegExp(".*\\(.*\\)$") ) != -1 ) {
+      timeServer.replace( TQRegExp(".*\\("), "" );
+      timeServer.replace( TQRegExp("\\).*"), "" );
       // Would this be better?: s/^.*\(([^)]*)\).*$/\1/
     }
     KProcess proc;

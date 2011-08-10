@@ -125,18 +125,18 @@ static bool GetDmesgInfo(TQListView *lBox, const char *filter,
 	TQListViewItem *olditem = NULL;
 	while(!(s = t->readLine().local8Bit()).isEmpty()) {
 		if (!seencpu) {
-			if (s.tqcontains("cpu"))
+			if (s.contains("cpu"))
 				seencpu = true;
 			else
 				continue;
 		}
-		if (s.tqcontains("boot device") ||
-			s.tqcontains("WARNING: old BSD partition ID!"))
+		if (s.contains("boot device") ||
+			s.contains("WARNING: old BSD partition ID!"))
 			break;
 
 		if (!filter
-		    || (filter[0] == '^' && s.tqfind(&filter[1]) == 0)
-		    || (filter[0] != '^' && s.tqcontains(filter))) {
+		    || (filter[0] == '^' && s.find(&filter[1]) == 0)
+		    || (filter[0] != '^' && s.contains(filter))) {
 			if (func)
 				func(lBox, s);
 			else
@@ -163,7 +163,7 @@ AddIRQLine(TQListView *lBox, TQString s)
 	int pos, irqnum;
 	char numstr[3];
 
-	pos = s.tqfind(" irq ");
+	pos = s.find(" irq ");
 	irqnum = (pos < 0) ? 0 : atoi(&s.ascii()[pos+5]);
 	if (irqnum)
 		snprintf(numstr, 3, "%02d", irqnum);
@@ -221,7 +221,7 @@ bool GetInfo_Sound (TQListView *lbox)
 
 		s = lvitem->text(0);
 		// The autoconf message is in form 'audio0 at auvia0: ...'
-		if (s.tqfind("audio") == 0 && (pos = s.tqfind(" at ")) > 0) {
+		if (s.find("audio") == 0 && (pos = s.find(" at ")) > 0) {
 			pos += 4;	// skip " at "
 			start = s.ascii() + pos;
 			len = (int) strcspn(start, ":\n\t ");
@@ -253,7 +253,7 @@ bool GetInfo_SCSI (TQListView *lbox)
 	for(; lvitem; lvitem = lvitem->nextSibling()) {
 		TQString s = lvitem->text(0);
 
-		if (s.tqcontains("seconds for devices to settle")) {
+		if (s.contains("seconds for devices to settle")) {
 			lbox->removeItem(lvitem);
 			break;
 		}

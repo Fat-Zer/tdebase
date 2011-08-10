@@ -102,7 +102,7 @@ KParts::Part* KonqSidebarFactory::createPartObject( TQWidget *parentWidget, cons
                                                         const char * /*classname*/, const TQStringList &args )
 {
     // Create an instance of our Part
-    KonqSidebar* obj = new KonqSidebar( parentWidget, widgetName, parent, name, args.tqcontains("universal") );
+    KonqSidebar* obj = new KonqSidebar( parentWidget, widgetName, parent, name, args.contains("universal") );
 
     // See if we are to be read-write or not
 //    if (TQCString(classname) == "KParts::ReadOnlyPart")

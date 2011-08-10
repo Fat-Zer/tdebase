@@ -444,7 +444,7 @@ void KColorScheme::slotSave( )
     if (!entry) return;
     sCurrentScheme = entry->path;
     KSimpleConfig *config = new KSimpleConfig(sCurrentScheme );
-    int i = sCurrentScheme.tqfindRev('/');
+    int i = sCurrentScheme.findRev('/');
     if (i >= 0)
       sCurrentScheme = sCurrentScheme.mid(i+1);
 
@@ -800,7 +800,7 @@ void KColorScheme::readScheme( int index )
       sCurrentScheme = entry->path;
       config = new KSimpleConfig(sCurrentScheme, true);
       config->setGroup("Color Scheme");
-      int i = sCurrentScheme.tqfindRev('/');
+      int i = sCurrentScheme.findRev('/');
       if (i >= 0)
         sCurrentScheme = sCurrentScheme.mid(i+1);
     }
@@ -905,7 +905,7 @@ int KColorScheme::findSchemeByName(const TQString &scheme)
       return 1;
 
    TQString search = scheme;
-   int i = search.tqfindRev('/');
+   int i = search.findRev('/');
    if (i >= 0)
       search = search.mid(i+1);
 
@@ -972,7 +972,7 @@ void KColorScheme::insertEntry(const TQString &sFile, const TQString &sName)
 {
        KColorSchemeEntry *newEntry = new KColorSchemeEntry(sFile, sName, true);
        mSchemeList->inSort(newEntry);
-       int newIndex = mSchemeList->tqfindRef(newEntry)+nSysSchemes;
+       int newIndex = mSchemeList->findRef(newEntry)+nSysSchemes;
        sList->insertItem(sName, newIndex);
        sList->setCurrentItem(newIndex);
 }

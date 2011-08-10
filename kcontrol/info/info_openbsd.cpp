@@ -122,16 +122,16 @@ static bool GetDmesgInfo(TQListView *lBox, const char *filter,
 	TQListViewItem *olditem = NULL;
 	while(!(s = t->readLine()).isNull()) {
 		if (!seencpu) {
-			if (s.tqcontains("cpu"))
+			if (s.contains("cpu"))
 				seencpu = true;
 			else
 				continue;
 		}
-		if (s.tqcontains("boot device") ||
-			s.tqcontains("WARNING: old BSD partition ID!"))
+		if (s.contains("boot device") ||
+			s.contains("WARNING: old BSD partition ID!"))
 			break;
 
-		if (!filter || s.tqcontains(filter)) {
+		if (!filter || s.contains(filter)) {
 			if (func) {
 				func(lBox, s, &opaque, false);
 			}
@@ -180,7 +180,7 @@ void AddIRQLine(TQListView *lBox, TQString s, void **opaque, bool ending)
 		return;
 	}
 
-	pos = s.tqfind(" irq ");
+	pos = s.find(" irq ");
 	irqnum = (pos < 0) ? 0 : atoi(&p[pos+5]);
 	if (irqnum) {
 		s.sprintf("%02d%s", irqnum, p);
@@ -232,7 +232,7 @@ bool GetInfo_Sound (TQListView *lbox)
 		char *dev;
 
 		s = lvitem->text(0);
-		if ((pos = s.tqfind("at ")) >= 0) {
+		if ((pos = s.find("at ")) >= 0) {
 			pos += 3;	// skip "at "
 			start = end = s.ascii();
 			for(; (*end!=':') && (*end!='\n'); end++);

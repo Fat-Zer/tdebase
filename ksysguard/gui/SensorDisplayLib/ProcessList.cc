@@ -486,7 +486,7 @@ ProcessList::buildList()
 
 			addProcess(p, pli);
 
-			if (selectedPIds.tqfindIndex(p->pid()) != -1)
+			if (selectedPIds.findIndex(p->pid()) != -1)
 				pli->setSelected(true);
 		}
 		pl.removeFirst();
@@ -513,7 +513,7 @@ ProcessList::buildTree()
 			int pid = ps->pid();
 			pl.remove();
 
-			if (selectedPIds.tqfindIndex(pid) != -1)
+			if (selectedPIds.findIndex(pid) != -1)
 				pli->setSelected(true);
 
 			// insert all child processes of current process
@@ -569,10 +569,10 @@ ProcessList::extendTree(TQPtrList<KSGRD::SensorPSLine>* pl, ProcessLVI* parent, 
 
 			addProcess(ps, pli);
 
-			if (selectedPIds.tqfindIndex(ps->pid()) != -1)
+			if (selectedPIds.findIndex(ps->pid()) != -1)
 				pli->setSelected(true);
 
-			if (ps->ppid() != INIT_PID && closedSubTrees.tqfindIndex(ps->ppid()) != -1)
+			if (ps->ppid() != INIT_PID && closedSubTrees.findIndex(ps->ppid()) != -1)
 				parent->setOpen(false);
 			else
 				parent->setOpen(true);

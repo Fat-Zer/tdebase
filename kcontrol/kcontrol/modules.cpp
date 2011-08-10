@@ -174,7 +174,7 @@ void ConfigModule::runAsRoot()
       // remove all kdesu switches
       while( cmd.length() > 1 && cmd[ 0 ] == '-' )
         {
-          int pos = cmd.tqfind( ' ' );
+          int pos = cmd.find( ' ' );
           cmd = TQString(cmd.remove( 0, pos )).stripWhiteSpace();
         }
     }
@@ -316,7 +316,7 @@ bool ConfigModuleList::readDesktopEntriesRecursive(const TQString &path)
 
 TQPtrList<ConfigModule> ConfigModuleList::modules(const TQString &path)
 {
-  Menu *menu = subMenus.tqfind(path);
+  Menu *menu = subMenus.find(path);
   if (menu)
      return menu->modules;
 
@@ -325,7 +325,7 @@ TQPtrList<ConfigModule> ConfigModuleList::modules(const TQString &path)
 
 TQStringList ConfigModuleList::submenus(const TQString &path)
 {
-  Menu *menu = subMenus.tqfind(path);
+  Menu *menu = subMenus.find(path);
   if (menu)
      return menu->submenus;
 
@@ -338,7 +338,7 @@ TQString ConfigModuleList::findModule(ConfigModule *module)
   Menu *menu;
   for(;(menu = it.current());++it)
   {
-     if (menu->modules.tqcontainsRef(module))
+     if (menu->modules.containsRef(module))
         return it.currentKey();
   }
   return TQString::null;

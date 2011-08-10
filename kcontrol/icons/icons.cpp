@@ -202,22 +202,22 @@ void KIconConfig::initDefaults()
 	mEffects[i][2] = mDefaultEffect[2];
     }
     // Animate desktop icons by default
-    int group = mGroups.tqfindIndex( "Desktop" );
+    int group = mGroups.findIndex( "Desktop" );
     if ( group != -1 )
         mbAnimated[group] = true;
 
     // This is the new default in KDE 2.2, in sync with the kiconeffect of kdelibs Nolden 2001/06/11
-    int activeState = mStates.tqfindIndex( "Active" );
+    int activeState = mStates.findIndex( "Active" );
     if ( activeState != -1 )
     {
-        int group = mGroups.tqfindIndex( "Desktop" );
+        int group = mGroups.findIndex( "Desktop" );
         if ( group != -1 )
         {
             mEffects[ group ][ activeState ].type = KIconEffect::ToGamma;
             mEffects[ group ][ activeState ].value = 0.7;
         }
 
-        group = mGroups.tqfindIndex( "Panel" );
+        group = mGroups.findIndex( "Panel" );
         if ( group != -1 )
         {
             mEffects[ group ][ activeState ].type = KIconEffect::ToGamma;

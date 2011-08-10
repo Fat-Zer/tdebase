@@ -91,7 +91,7 @@ DM::DM() : fd( -1 )
 	case OldKDM:
 		{
 			TQString tf( ctl );
-			tf.truncate( tf.tqfind( ',' ) );
+			tf.truncate( tf.find( ',' ) );
 			fd = ::open( tf.latin1(), O_WRONLY );
 		}
 		break;
@@ -178,9 +178,9 @@ DM::canShutdown()
 	TQCString re;
 
 	if (DMType == GDM)
-		return exec( "QUERY_LOGOUT_ACTION\n", re ) && re.tqfind("HALT") >= 0;
+		return exec( "QUERY_LOGOUT_ACTION\n", re ) && re.find("HALT") >= 0;
 
-	return exec( "caps\n", re ) && re.tqfind( "\tshutdown" ) >= 0;
+	return exec( "caps\n", re ) && re.find( "\tshutdown" ) >= 0;
 }
 
 void
@@ -194,7 +194,7 @@ DM::shutdown( KApplication::ShutdownType shutdownType,
 	bool cap_ask;
 	if (DMType == NewKDM) {
 		TQCString re;
-		cap_ask = exec( "caps\n", re ) && re.tqfind( "\tshutdown ask" ) >= 0;
+		cap_ask = exec( "caps\n", re ) && re.find( "\tshutdown ask" ) >= 0;
 	} else {
 		if (!bootOption.isEmpty())
 			return;
@@ -249,7 +249,7 @@ DM::bootOptions( TQStringList &opts, int &defopt, int &current )
 
 	opts = TQStringList::split( ' ', opts[1] );
 	for (TQStringList::Iterator it = opts.begin(); it != opts.end(); ++it)
-		(*it).tqreplace( "\\s", " " );
+		(*it).replace( "\\s", " " );
 
 	return true;
 }
@@ -272,7 +272,7 @@ DM::isSwitchable()
 
 	TQCString re;
 
-	return exec( "caps\n", re ) && re.tqfind( "\tlocal" ) >= 0;
+	return exec( "caps\n", re ) && re.find( "\tlocal" ) >= 0;
 }
 
 int
@@ -287,7 +287,7 @@ DM::numReserve()
 	TQCString re;
 	int p;
 
-	if (!(exec( "caps\n", re ) && (p = re.tqfind( "\treserve " )) >= 0))
+	if (!(exec( "caps\n", re ) && (p = re.find( "\treserve " )) >= 0))
 		return -1;
 	return atoi( re.data() + p + 9 );
 }
@@ -338,8 +338,8 @@ DM::localSessions( SessList &list )
 				se.vt = ts[1].mid( 2 ).toInt();
 			se.user = ts[2];
 			se.session = ts[3];
-			se.self = (ts[4].tqfind( '*' ) >= 0);
-			se.tty = (ts[4].tqfind( 't' ) >= 0);
+			se.self = (ts[4].find( '*' ) >= 0);
+			se.tty = (ts[4].find( 't' ) >= 0);
 			list.append( se );
 		}
 	}

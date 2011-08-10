@@ -321,7 +321,7 @@ void Condition_list_widget::edit_listview_item( Condition_list_item* item_P )
         {
         Condition* old_cond = item_P->condition();
         item_P->set_condition( new_condition );
-        int pos = conditions.tqfind( old_cond );
+        int pos = conditions.find( old_cond );
         if( pos >= 0 )
             {
             conditions.remove( pos ); // we own it

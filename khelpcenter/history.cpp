@@ -324,7 +324,7 @@ void History::fillHistoryPopup( TQPopupMenu *popup, bool onlyBack, bool onlyForw
   {
     TQString text = it.current()->title;
     text = KStringHandler::csqueeze(text, 50); //CT: squeeze
-    text.tqreplace( "&", "&&" );
+    text.replace( "&", "&&" );
     if ( checkCurrentItem && it.current() == current )
     {
       int id = popup->insertItem( text ); // no pixmap if checked

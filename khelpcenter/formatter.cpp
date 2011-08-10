@@ -73,7 +73,7 @@ bool Formatter::readTemplates()
     switch ( state ) {
       case IDLE:
         if ( !line.isEmpty() && !line.startsWith( "#" ) ) {
-          int pos = line.tqfind( "<<" );
+          int pos = line.find( "<<" );
           if ( pos >= 0 ) {
             state = MULTILINE;
             symbol = line.left( pos ).stripWhiteSpace();
@@ -120,7 +120,7 @@ bool Formatter::readTemplates()
   bool success = true;
   TQStringList::ConstIterator it2;
   for( it2 = requiredSymbols.begin(); it2 != requiredSymbols.end(); ++it2 ) {
-    if ( !mSymbols.tqcontains( *it2 ) ) {
+    if ( !mSymbols.contains( *it2 ) ) {
       success = false;
       kdError() << "Symbol '" << *it2 << "' is missing from main template file."
                 << endl;
@@ -137,7 +137,7 @@ TQString Formatter::header( const TQString &title )
   TQString s;
   if ( mHasTemplate ) {
     s = mSymbols[ "HEADER" ];
-    s.tqreplace( "--TITLE:--", title );
+    s.replace( "--TITLE:--", title );
   } else {
     s = "<html><head><title>" + title + "</title></head>\n<body>\n";
   }

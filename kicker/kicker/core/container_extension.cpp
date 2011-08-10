@@ -680,7 +680,7 @@ void ExtensionContainer::unhideTriggered(UnhideTrigger::Trigger tr, int Xinerama
     // Otherwise hide mode is automatic. The code below is slightly
     // complex so as to keep the same behavior as it has always had:
     // only unhide when the cursor position is within the widget geometry.
-    // We can't just do geometry().tqcontains(TQCursor::pos()) because
+    // We can't just do geometry().contains(TQCursor::pos()) because
     // now we hide the panel completely off screen.
 
     int x = TQCursor::pos().x();
@@ -754,7 +754,7 @@ void ExtensionContainer::autoHideTimeout()
 
     TQRect r = geometry();
     TQPoint p = TQCursor::pos();
-    if (!r.tqcontains(p) &&
+    if (!r.contains(p) &&
         (m_settings.unhideLocation() == UnhideTrigger::None ||
          !shouldUnhideForTrigger(m_unhideTriggeredAt)))
     {

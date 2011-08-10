@@ -113,7 +113,7 @@ void Tzone::save()
             for (TQString line = is.readLine(); !line.isNull();
                  line = is.readLine())
             {
-                if (line.tqfind("TZ=") == 0)
+                if (line.find("TZ=") == 0)
                 {
                     *ts << "TZ=" << selectedzone << endl;
                     found = true;

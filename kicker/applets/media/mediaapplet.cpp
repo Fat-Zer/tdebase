@@ -285,7 +285,7 @@ void MediaApplet::slotNewItems(const KFileItemList &entries)
         }
         }
         
-        if(!found && !mExcludedList.tqcontains(it.current()->url().url()) )
+        if(!found && !mExcludedList.contains(it.current()->url().url()) )
         {
         MediumButton *button = new MediumButton(this, *it.current());
         button->show();
@@ -336,7 +336,7 @@ void MediaApplet::slotRefreshItems(const KFileItemList &entries)
         
         if(button->fileItem().url()==(*it.current()).url())
         {
-            if(mExcludedTypesList.tqcontains(mimetype))
+            if(mExcludedTypesList.contains(mimetype))
             {
             mButtonList.remove(button);
             delete button;
@@ -350,7 +350,7 @@ void MediaApplet::slotRefreshItems(const KFileItemList &entries)
         }
         }
     
-        if(!found && !mExcludedTypesList.tqcontains(mimetype) && !mExcludedList.tqcontains(it.current()->url().url()) )
+        if(!found && !mExcludedTypesList.contains(mimetype) && !mExcludedList.contains(it.current()->url().url()) )
         {
         MediumButton *button = new MediumButton(this, *it.current());
         button->show();

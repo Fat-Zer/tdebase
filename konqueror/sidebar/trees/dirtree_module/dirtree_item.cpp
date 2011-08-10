@@ -134,7 +134,7 @@ TQString KonqSidebarDirTreeItem::externalMimeType() const
 
 bool KonqSidebarDirTreeItem::acceptsDrops( const TQStrList & formats )
 {
-    if ( formats.tqcontains("text/uri-list") )
+    if ( formats.contains("text/uri-list") )
         return m_fileItem->acceptsDrops();
     return false;
 }

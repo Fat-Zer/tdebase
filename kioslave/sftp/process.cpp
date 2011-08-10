@@ -107,7 +107,7 @@ TQCString MyPtyProcess::readLineFrom(int fd, TQCString& inbuf, bool block)
     if (!inbuf.isEmpty())
     {
 
-        pos = inbuf.tqfind('\n');
+        pos = inbuf.find('\n');
         
         if (pos == -1) 
 	{
@@ -155,7 +155,7 @@ TQCString MyPtyProcess::readLineFrom(int fd, TQCString& inbuf, bool block)
 	buf[nbytes] = '\000';
 	inbuf += buf;
 
-	pos = inbuf.tqfind('\n');
+	pos = inbuf.find('\n');
         if (pos == -1) 
 	{
 	    ret = inbuf;
@@ -260,7 +260,7 @@ int MyPtyProcess::exec(TQCString command, QCStringList args)
 
     // From now on, terminal output goes through the tty.
     TQCString path;
-    if (command.tqcontains('/'))
+    if (command.contains('/'))
 	    path = command;
     else 
     {

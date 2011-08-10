@@ -261,7 +261,7 @@ static void parseCommand(KProcess *proc, TQString cmd)
 
     cmd += " ";
 
-    pos = cmd.tqfind(' ');
+    pos = cmd.find(' ');
     *proc << cmd.left(pos);
     cmd.remove(0,pos);
     cmd = cmd.stripWhiteSpace();

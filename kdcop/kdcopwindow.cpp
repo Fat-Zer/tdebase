@@ -1158,7 +1158,7 @@ KDCOPWindow::getParameters
 {
   TQString unNormalisedSignature(_unNormalisedSignature);
 
-  int s = unNormalisedSignature.tqfind(' ');
+  int s = unNormalisedSignature.find(' ');
 
   if ( s < 0 )
     s = 0;
@@ -1167,8 +1167,8 @@ KDCOPWindow::getParameters
 
   unNormalisedSignature = unNormalisedSignature.mid(s);
 
-  int left  = unNormalisedSignature.tqfind('(');
-  int right = unNormalisedSignature.tqfindRev(')');
+  int left  = unNormalisedSignature.find('(');
+  int right = unNormalisedSignature.findRev(')');
 
   if (-1 == left)
   {
@@ -1189,9 +1189,9 @@ KDCOPWindow::getParameters
     {
       (*it) = (*it).simplifyWhiteSpace();
 
-      int s = (*it).tqfindRev(' ');
+      int s = (*it).findRev(' ');
 
-      if (-1 != s && !intTypes.tqcontains((*it).mid(s + 1)))
+      if (-1 != s && !intTypes.contains((*it).mid(s + 1)))
       {
         names.append((*it).mid(s + 1));
 

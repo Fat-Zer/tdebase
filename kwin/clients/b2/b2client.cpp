@@ -1391,7 +1391,7 @@ void B2Titlebar::mouseDoubleClickEvent(TQMouseEvent *e)
 
 void B2Titlebar::wheelEvent(TQWheelEvent *e)
 {
-    if (client->isSetShade() || TQT_TQRECT_OBJECT(rect()).tqcontains(e->pos())) 
+    if (client->isSetShade() || TQT_TQRECT_OBJECT(rect()).contains(e->pos())) 
 	client->titlebarMouseWheelOperation( e->delta());
 }
 

@@ -163,7 +163,7 @@ void DomainListView::deletePressed()
         return;
     }
 
-    DomainPolicyMap::Iterator it = domainPolicies.tqfind(index);
+    DomainPolicyMap::Iterator it = domainPolicies.find(index);
     if (it != domainPolicies.end()) {
       delete it.data();
       domainPolicies.remove(it);

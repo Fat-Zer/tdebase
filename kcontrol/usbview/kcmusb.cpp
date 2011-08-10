@@ -104,7 +104,7 @@ static void delete_recursive( TQListViewItem *item, const TQIntDict<TQListViewIt
 
   TQListViewItemIterator it( item );
   while ( it.current() ) {
-        if (!new_items.tqfind(it.current()->text(1).toUInt())) {
+        if (!new_items.find(it.current()->text(1).toUInt())) {
 		delete_recursive( it.current()->firstChild(), new_items);
 		delete it.current();
 	}
@@ -133,7 +133,7 @@ void USBViewer::refresh()
 	    TQ_UINT32 k = key(*it.current());
 	    if (level == 0)
 	      {
-		TQListViewItem *item = _items.tqfind(k);
+		TQListViewItem *item = _items.find(k);
 		if (!item) {
 		    item = new TQListViewItem(_devices,
 				it.current()->product(),
@@ -144,10 +144,10 @@ void USBViewer::refresh()
 	      }
 	    else
 	      {
-		TQListViewItem *parent = new_items.tqfind(key_parent(*it.current()));
+		TQListViewItem *parent = new_items.find(key_parent(*it.current()));
 		if (parent)
 		  {
-		    TQListViewItem *item = _items.tqfind(k);
+		    TQListViewItem *item = _items.find(k);
 
 		    if (!item) {
 		        item = new TQListViewItem(parent,

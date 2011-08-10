@@ -94,7 +94,7 @@ void PopupProxy::tryInsertItem( HistoryItem const * const item,
         // Squeeze text strings so that do not take up the entire screen (or more)
         TQString text( KStringHandler::cPixelSqueeze(item->text().simplifyWhiteSpace(),
                                                     proxy_for_menu->fontMetrics(),
-                                                    m_menu_width).tqreplace( "&", "&&" ) );
+                                                    m_menu_width).replace( "&", "&&" ) );
         id = proxy_for_menu->insertItem( text, -1, index );
     } else {
         const TQSize max_size( m_menu_width,m_menu_height/4 );
@@ -107,7 +107,7 @@ void PopupProxy::tryInsertItem( HistoryItem const * const item,
 
     // Determine height of a menu item.
     Q_ASSERT( id != -1 ); // Be sure that the item was inserted.
-    TQMenuItem* mi = proxy_for_menu->tqfindItem( id );
+    TQMenuItem* mi = proxy_for_menu->findItem( id );
     int fontheight = TQFontMetrics( proxy_for_menu->fontMetrics()  ).height();
     int itemheight = proxy_for_menu->tqstyle().tqsizeFromContents(TQStyle::CT_PopupMenuItem,
                                                               proxy_for_menu,

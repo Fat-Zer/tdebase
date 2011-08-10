@@ -692,13 +692,13 @@ void KFSConfigPage::init()
   KAction *ac;
   TQListBox *lb;
   for ( TQStringList::Iterator it=allActions.begin(); it != allActions.end(); ++it ) {
-    lb = l.tqcontains( *it ) ? acSel->selectedListBox() : acSel->availableListBox();
+    lb = l.contains( *it ) ? acSel->selectedListBox() : acSel->availableListBox();
     if ( *it == "bookmarks" || *it == "sync_dir" )
       ac = fileSelector->actionCollection()->action( (*it).latin1() );
     else
       ac = fileSelector->dirOperator()->actionCollection()->action( (*it).latin1() );
     if ( ac )
-      new ActionLBItem( lb, SmallIcon( ac->icon() ), ac->text().tqreplace( re, "" ), *it );
+      new ActionLBItem( lb, SmallIcon( ac->icon() ), ac->text().replace( re, "" ), *it );
   }
 
   // sync

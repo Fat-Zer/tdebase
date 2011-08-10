@@ -247,7 +247,7 @@ void SensorDisplay::updateWhatsThis()
 void SensorDisplay::hosts( TQStringList& list )
 {
   for ( SensorProperties *s = mSensors.first(); s; s = mSensors.next() )
-    if ( !list.tqcontains( s->hostName() ) )
+    if ( !list.contains( s->hostName() ) )
       list.append( s->hostName() );
 }
 

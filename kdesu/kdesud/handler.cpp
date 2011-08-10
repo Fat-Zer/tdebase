@@ -87,7 +87,7 @@ int ConnectionHandler::handle()
     // Do we have a complete command yet?
     int n;
     TQCString newbuf;
-    while ((n = m_Buf.tqfind('\n')) != -1)
+    while ((n = m_Buf.find('\n')) != -1)
     {
         newbuf = m_Buf.left(n+1);
         m_Buf.fill('x', n+1);
@@ -304,9 +304,9 @@ int ConnectionHandler::doCommand(TQCString buf)
             SuProcess proc;
             proc.setCommand(command);
             proc.setUser(user);
-            if (options.tqcontains('x'))
+            if (options.contains('x'))
                proc.setXOnly(true);
-            if (options.tqcontains('f'))
+            if (options.contains('f'))
                proc.setDCOPForwarding(true);
             proc.setPriority(m_Priority);
             proc.setScheduler(m_Scheduler);

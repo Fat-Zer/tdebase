@@ -408,7 +408,7 @@ void KCookiesManagement::deleteCookie(TQListViewItem* deleteItem)
   if( item->cookie() )
   {
     CookieListViewItem *parent = static_cast<CookieListViewItem*>(item->tqparent());
-    CookiePropList *list = deletedCookies.tqfind(parent->domain());
+    CookiePropList *list = deletedCookies.find(parent->domain());
     if(!list)
     {
       list = new CookiePropList;

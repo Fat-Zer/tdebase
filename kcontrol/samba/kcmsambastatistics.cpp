@@ -150,8 +150,8 @@ void StatisticsView::calculate()
       {
          if (connCount)
          {
-            if ((TQString(item->text(1)).tqcontains(i18n("CONNECTION OPENED")))
-                && (TQString(item->text(2)).tqcontains(rService)) && (TQString(item->text(3)).tqcontains(rHost)))
+            if ((TQString(item->text(1)).contains(i18n("CONNECTION OPENED")))
+                && (TQString(item->text(2)).contains(rService)) && (TQString(item->text(3)).contains(rHost)))
             {
                if (expandedInfoCb->isChecked()) item2=item->text(2);
                else item2=serviceLe->text();
@@ -163,8 +163,8 @@ void StatisticsView::calculate()
          }
          else
          {
-            if ((TQString(item->text(1)).tqcontains(i18n("FILE OPENED")))
-                && (TQString(item->text(2)).tqcontains(rService)) && (TQString(item->text(3)).tqcontains(rHost)))
+            if ((TQString(item->text(1)).contains(i18n("FILE OPENED")))
+                && (TQString(item->text(2)).contains(rService)) && (TQString(item->text(3)).contains(rHost)))
             {
                if (expandedInfoCb->isChecked()) item2=item->text(2);
                else item2=serviceLe->text();
@@ -201,14 +201,14 @@ void StatisticsView::calculate()
       {
          if (connCount)
          {
-            if ((TQString(item->text(1)).tqcontains(i18n("CONNECTION OPENED")))
-                && (TQString(item->text(2)).tqcontains(rService)) && (TQString(item->text(3)).tqcontains(rHost)))
+            if ((TQString(item->text(1)).contains(i18n("CONNECTION OPENED")))
+                && (TQString(item->text(2)).contains(rService)) && (TQString(item->text(3)).contains(rHost)))
                count++;
          }
          else
          {
-            if ((TQString(item->text(1)).tqcontains(i18n("FILE OPENED")))
-                && (TQString(item->text(2)).tqcontains(rService)) && (TQString(item->text(3)).tqcontains(rHost)))
+            if ((TQString(item->text(1)).contains(i18n("FILE OPENED")))
+                && (TQString(item->text(2)).contains(rService)) && (TQString(item->text(3)).contains(rHost)))
                count++;
          };
          item=item->nextSibling();

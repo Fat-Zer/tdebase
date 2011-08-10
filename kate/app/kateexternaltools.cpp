@@ -127,7 +127,7 @@ bool KateExternalTool::checkExec()
 
 bool KateExternalTool::valid( const TQString &mt ) const
 {
-  return mimetypes.isEmpty() || mimetypes.tqcontains( mt );
+  return mimetypes.isEmpty() || mimetypes.contains( mt );
 }
 //END KateExternalTool
 
@@ -330,8 +330,8 @@ void KateExternalToolsMenuAction::reload()
     bool sepadded = false;
     for (TQStringList::iterator itg = dtools.begin(); itg != dtools.end(); ++itg )
     {
-      if ( ! tools.tqcontains( *itg ) &&
-            ! removed.tqcontains( *itg ) )
+      if ( ! tools.contains( *itg ) &&
+            ! removed.contains( *itg ) )
       {
         if ( ! sepadded )
         {
@@ -394,7 +394,7 @@ void KateExternalToolsMenuAction::slotDocumentChanged()
       if ( action )
       {
         l = action->tool->mimetypes;
-        b = ( ! l.count() || l.tqcontains( mt ) );
+        b = ( ! l.count() || l.contains( mt ) );
         action->setEnabled( b );
       }
     }
@@ -745,7 +745,7 @@ void KateExternalToolsConfigWidget::slotNew()
 
     // This is sticky, it does not change again, so that shortcuts sticks
     // TODO check for dups
-    t->acname = "externaltool_" + TQString(t->name).tqreplace( TQRegExp("\\W+"), "" );
+    t->acname = "externaltool_" + TQString(t->name).replace( TQRegExp("\\W+"), "" );
 
     new ToolItem ( lbTools, t->icon.isEmpty() ? blankIcon() : SmallIcon( t->icon ), t );
 

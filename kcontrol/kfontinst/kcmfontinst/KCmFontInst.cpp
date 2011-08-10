@@ -391,7 +391,7 @@ void CKCmFontInst::fileHighlighted(const KFileItem *item)
                                              ? list->getFirst()
                                              : NULL;
 
-        if(previewItem && list && list->tqcontains(previewItem))  // OK, check its been selected - not deselected!!!
+        if(previewItem && list && list->contains(previewItem))  // OK, check its been selected - not deselected!!!
             itsPreview->openURL(previewItem->url());
     }
 #endif
@@ -551,7 +551,7 @@ void CKCmFontInst::infoMessage(const TQString &msg)
 
 static TQString family(const TQString &name)
 {
-    int commaPos=name.tqfind(',');
+    int commaPos=name.find(',');
 
     return -1==commaPos ? name : name.left(commaPos);
 }
@@ -571,7 +571,7 @@ void CKCmFontInst::updateInformation(int, int fonts)
             TQString fam(family(item->text()));
 
             size+=item->size();
-            if(-1==families.tqfindIndex(fam))
+            if(-1==families.findIndex(fam))
                 families+=fam;
         }
     }

@@ -78,7 +78,7 @@ bool KxkbConfig::load(int loadMode)
 	m_layouts.clear();
 	for(TQStringList::ConstIterator it = layoutList.begin(); it != layoutList.end() ; ++it) {
 		m_layouts.append( LayoutUnit(*it) );
-		kdDebug() << " layout " << LayoutUnit(*it).toPair() << " in list: " << m_layouts.tqcontains( LayoutUnit(*it) ) << endl;
+		kdDebug() << " layout " << LayoutUnit(*it).toPair() << " in list: " << m_layouts.contains( LayoutUnit(*it) ) << endl;
 	}
 
 	kdDebug() << "Found " << m_layouts.count() << " layouts, default is " << getDefaultLayout().toPair() << endl;
@@ -88,8 +88,8 @@ bool KxkbConfig::load(int loadMode)
 		TQStringList displayNamePair = TQStringList::split(':', *it );
 		if( displayNamePair.count() == 2 ) {
 			LayoutUnit layoutUnit( displayNamePair[0] );
-			if( m_layouts.tqcontains( layoutUnit ) ) {
-				m_layouts[m_layouts.tqfindIndex(layoutUnit)].displayName = displayNamePair[1].left(3);
+			if( m_layouts.contains( layoutUnit ) ) {
+				m_layouts[m_layouts.findIndex(layoutUnit)].displayName = displayNamePair[1].left(3);
 			}
 		}
 	}
@@ -102,8 +102,8 @@ bool KxkbConfig::load(int loadMode)
 				TQStringList includePair = TQStringList::split(':', *it );
 				if( includePair.count() == 2 ) {
 					LayoutUnit layoutUnit( includePair[0] );
-					if( m_layouts.tqcontains( layoutUnit ) ) {
-						m_layouts[m_layouts.tqfindIndex(layoutUnit)].includeGroup = includePair[1];
+					if( m_layouts.contains( layoutUnit ) ) {
+						m_layouts[m_layouts.findIndex(layoutUnit)].includeGroup = includePair[1];
 						kdDebug() << "Got inc group: " << includePair[0] << ": " << includePair[1] << endl;
 					}
 				}
@@ -115,10 +115,10 @@ bool KxkbConfig::load(int loadMode)
 			for(TQStringList::ConstIterator it = includeList.begin(); it != includeList.end() ; ++it) {
 				TQString layoutName = LayoutUnit::parseLayout( *it );
 				LayoutUnit layoutUnit( layoutName, "" );
-				kdDebug() << "old layout for inc: " << layoutUnit.toPair() << " included " << m_layouts.tqcontains( layoutUnit ) << endl;
-				if( m_layouts.tqcontains( layoutUnit ) ) {
+				kdDebug() << "old layout for inc: " << layoutUnit.toPair() << " included " << m_layouts.contains( layoutUnit ) << endl;
+				if( m_layouts.contains( layoutUnit ) ) {
 					TQString variantName = LayoutUnit::parseVariant(*it);
-					m_layouts[m_layouts.tqfindIndex(layoutUnit)].includeGroup = variantName;
+					m_layouts[m_layouts.findIndex(layoutUnit)].includeGroup = variantName;
 					kdDebug() << "Got inc group: " << layoutUnit.toPair() << ": " <<  variantName << endl;
 				}
 			}
@@ -276,7 +276,7 @@ TQString KxkbConfig::getDefaultDisplayName(const TQString& code_)
 		displayName = code_;
 	}
 	else {
-		int sepPos = code_.tqfind(TQRegExp("[-_]"));
+		int sepPos = code_.find(TQRegExp("[-_]"));
 		TQString leftCode = code_.mid(0, sepPos);
 		TQString rightCode;
 		if( sepPos != -1 )

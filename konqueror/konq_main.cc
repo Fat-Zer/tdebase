@@ -93,7 +93,7 @@ extern "C" KDE_EXPORT int kdemain( int argc, char **argv )
            it != profiles.end(); ++it)
        {
          TQString file = *it;
-         file = file.mid(file.tqfindRev('/')+1);
+         file = file.mid(file.findRev('/')+1);
          printf("%s\n", TQFile::encodeName(file).data());
        }
 

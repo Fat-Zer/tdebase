@@ -107,7 +107,7 @@ static bool get_dri_device()
     TQTextStream stream(&file);
     TQString line = stream.readLine();
     if (!line.isEmpty()) {
-	dri_info.module = line.mid(0, line.tqfind(0x20));
+	dri_info.module = line.mid(0, line.find(0x20));
 
 	// possible formats, for regression testing
 	// line = " PCI:01:00:0";
@@ -115,8 +115,8 @@ static bool get_dri_device()
 	TQRegExp rx = TQRegExp("\\b[Pp][Cc][Ii][:]([0-9a-fA-F]+[:])?([0-9a-fA-F]+[:][0-9a-fA-F]+[:.][0-9a-fA-F]+)\\b");
 	if (rx.search(line)>0)	 {
 		dri_info.pci = rx.cap(2);
-		int end = dri_info.pci.tqfindRev(':');
-		int end2 = dri_info.pci.tqfindRev('.');
+		int end = dri_info.pci.findRev(':');
+		int end2 = dri_info.pci.findRev('.');
 		if (end2>end) end=end2;
 		dri_info.pci[end]='.';
 
@@ -151,7 +151,7 @@ static bool get_dri_device() {
 
 	TQStringList pci_info;
 	if (ReadPipe("sysctl -n hw.dri.0.name",pci_info)) {
-		dri_info.module = pci_info[0].mid(0, pci_info[0].tqfind(0x20));
+		dri_info.module = pci_info[0].mid(0, pci_info[0].find(0x20));
 		}
 	return false;
 }

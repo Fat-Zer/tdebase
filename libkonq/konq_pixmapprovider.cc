@@ -54,7 +54,7 @@ KonqPixmapProvider::~KonqPixmapProvider()
 // finally, inserts the url/icon pair into the cache
 TQString KonqPixmapProvider::iconNameFor( const TQString& url )
 {
-    TQMapIterator<TQString,TQString> it = iconMap.tqfind( url );
+    TQMapIterator<TQString,TQString> it = iconMap.find( url );
     TQString icon;
     if ( it != iconMap.end() ) {
         icon = it.data();
@@ -120,7 +120,7 @@ void KonqPixmapProvider::save( KConfig *kc, const TQString& key,
     TQStringList::ConstIterator it = items.begin();
     TQMapConstIterator<TQString,TQString> mit;
     while ( it != items.end() ) {
-	mit = iconMap.tqfind( *it );
+	mit = iconMap.find( *it );
 	if ( mit != iconMap.end() ) {
 	    list.append( mit.key() );
 	    list.append( mit.data() );

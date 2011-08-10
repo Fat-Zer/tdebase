@@ -140,7 +140,7 @@ void ExtensionManager::initialize()
         TQString extensionId(*it);
 
         // create a matching applet container
-        if (extensionId.tqfind("Extension") == -1)
+        if (extensionId.find("Extension") == -1)
         {
             continue;
         }
@@ -259,7 +259,7 @@ void ExtensionManager::migrateMenubar()
     {
         TQString extensionId(*it);
 
-        if (extensionId.tqfind("Extension") == -1)
+        if (extensionId.find("Extension") == -1)
         {
             continue;
         }
@@ -291,12 +291,12 @@ void ExtensionManager::migrateMenubar()
                 }
 
                 KConfigGroup group(&extensionConfig, appletId.latin1());
-                TQString appletType = appletId.left(appletId.tqfindRev('_'));
+                TQString appletType = appletId.left(appletId.findRev('_'));
 
                 if (appletType == "Applet")
                 {
                     TQString appletFile = group.readPathEntry("DesktopFile");
-                    if (appletFile.tqfind("menuapplet.desktop") != -1)
+                    if (appletFile.find("menuapplet.desktop") != -1)
                     {
                         TQString menubarConfig = locate("config", extension);
                         KIO::NetAccess::copy(menubarConfig,

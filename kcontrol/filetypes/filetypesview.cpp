@@ -174,11 +174,11 @@ void FileTypesView::readFileTypes()
     TQValueListIterator<KMimeType::Ptr> it2(mimetypes.begin());
     for (; it2 != mimetypes.end(); ++it2) {
 	TQString mimetype = (*it2)->name();
-	int index = mimetype.tqfind("/");
+	int index = mimetype.find("/");
 	TQString maj = mimetype.left(index);
 	TQString min = mimetype.right(mimetype.length() - index+1);
 
-	TQMapIterator<TQString,TypesListItem*> mit = m_majorMap.tqfind( maj );
+	TQMapIterator<TQString,TypesListItem*> mit = m_majorMap.find( maj );
 	if ( mit == m_majorMap.end() ) {
 	    groupItem = new TypesListItem( typesLV, maj );
 	    m_majorMap.insert( maj, groupItem );
@@ -196,7 +196,7 @@ void FileTypesView::readFileTypes()
 void FileTypesView::slotEmbedMajor(const TQString &major, bool &embed)
 {
     TypesListItem *groupItem;
-    TQMapIterator<TQString,TypesListItem*> mit = m_majorMap.tqfind( major );
+    TQMapIterator<TQString,TypesListItem*> mit = m_majorMap.find( major );
     if ( mit == m_majorMap.end() )
         return;
         
@@ -425,7 +425,7 @@ void FileTypesView::slotDatabaseChanged()
     TQValueList<TypesListItem *>::Iterator it = m_itemsModified.begin();
     for( ; it != m_itemsModified.end(); ++it ) {
         TQString name = (*it)->name();
-        if ( removedList.tqfind( name ) == removedList.end() ) // if not deleted meanwhile
+        if ( removedList.find( name ) == removedList.end() ) // if not deleted meanwhile
             (*it)->refresh();
     }
     m_itemsModified.clear();

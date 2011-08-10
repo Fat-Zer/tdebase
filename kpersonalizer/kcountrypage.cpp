@@ -92,11 +92,11 @@ void KCountryPage::loadCountryList(KLanguageButton *combo) {
 		TQString tag = *it;
 		int index;
 
-		index = tag.tqfindRev('/');
+		index = tag.findRev('/');
 		if (index != -1)
 			tag = tag.mid(index + 1);
 
-		index = tag.tqfindRev('.');
+		index = tag.findRev('.');
 		if (index != -1)
 			tag.truncate(index);
 
@@ -118,9 +118,9 @@ void KCountryPage::loadCountryList(KLanguageButton *combo) {
 		TQString submenu = '-' + entry.readEntry("Region");
 
 		TQString tag = *it;
-		int index = tag.tqfindRev('/');
+		int index = tag.findRev('/');
 		tag.truncate(index);
-		index = tag.tqfindRev('/');
+		index = tag.findRev('/');
 		tag = tag.mid(index+1);
 
 		TQPixmap flag( locate( "locale", TQString::tqfromLatin1("l10n/%1/flag.png").arg(tag) ) );

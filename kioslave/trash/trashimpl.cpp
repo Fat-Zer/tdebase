@@ -898,7 +898,7 @@ TQString TrashImpl::trashDirectoryPath( int trashId ) const
     // and reusing a directory listing from the earlier instance.)
     if ( !m_trashDirectoriesScanned )
         scanTrashDirectories();
-    Q_ASSERT( m_trashDirectories.tqcontains( trashId ) );
+    Q_ASSERT( m_trashDirectories.contains( trashId ) );
     return m_trashDirectories[trashId];
 }
 
@@ -907,7 +907,7 @@ TQString TrashImpl::topDirectoryPath( int trashId ) const
     if ( !m_trashDirectoriesScanned )
         scanTrashDirectories();
     assert( trashId != 0 );
-    Q_ASSERT( m_topDirectories.tqcontains( trashId ) );
+    Q_ASSERT( m_topDirectories.contains( trashId ) );
     return m_topDirectories[trashId];
 }
 
@@ -939,7 +939,7 @@ bool TrashImpl::parseURL( const KURL& url, int& trashId, TQString& fileId, TQStr
     int start = 0;
     if ( path[0] == '/' ) // always true I hope
         start = 1;
-    int slashPos = path.tqfind( '-', 0 ); // don't match leading slash
+    int slashPos = path.find( '-', 0 ); // don't match leading slash
     if ( slashPos <= 0 )
         return false;
     bool ok = false;
@@ -948,7 +948,7 @@ bool TrashImpl::parseURL( const KURL& url, int& trashId, TQString& fileId, TQStr
     if ( !ok )
         return false;
     start = slashPos + 1;
-    slashPos = path.tqfind( '/', start );
+    slashPos = path.find( '/', start );
     if ( slashPos <= 0 ) {
         fileId = path.mid( start );
         relativePath = TQString::null;

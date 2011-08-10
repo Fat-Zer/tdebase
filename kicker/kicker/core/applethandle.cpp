@@ -200,7 +200,7 @@ bool AppletHandle::eventFilter(TQObject *o, TQEvent *e)
                     // a hack for applets that have out-of-process
                     // elements (e.g the systray) so that the handle
                     // doesn't flicker when moving over those elements
-                    if (TQT_TQRECT_OBJECT(w->rect()).tqcontains(w->mapFromGlobal(TQCursor::pos())))
+                    if (TQT_TQRECT_OBJECT(w->rect()).contains(w->mapFromGlobal(TQCursor::pos())))
                     {
                         nowDrawIt = true;
                     }
@@ -269,7 +269,7 @@ void AppletHandle::checkHandleHover()
 {
     if (!m_handleHoverTimer ||
         (m_menuButton && m_menuButton->isOn()) ||
-        m_applet->tqgeometry().tqcontains(m_applet->mapToParent(
+        m_applet->tqgeometry().contains(m_applet->mapToParent(
                                       m_applet->mapFromGlobal(TQCursor::pos()))))
     {
         return;

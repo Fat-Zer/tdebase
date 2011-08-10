@@ -55,7 +55,7 @@ void AppTreeItem::setName(const TQString &name)
 void AppTreeItem::setAccel(const TQString &accel)
 {
     m_accel = accel;
-    int temp = accel.tqfind(';');
+    int temp = accel.find(';');
     if (temp != -1)
     {
         setText(1, accel.left(temp));
@@ -157,7 +157,7 @@ void AppTreeView::fillBranch(const TQString& rPath, AppTreeItem *parent)
 
             // Item names may contain ampersands. To avoid them being converted
             // to accelerators, replace them with two ampersands.
-            groupCaption.tqreplace("&", "&&");
+            groupCaption.replace("&", "&&");
 
             AppTreeItem *item;
             if (parent == 0)
@@ -178,7 +178,7 @@ void AppTreeView::fillBranch(const TQString& rPath, AppTreeItem *parent)
 
             // Item names may contain ampersands. To avoid them being converted
             // to accelerators, replace them with two ampersands.
-            serviceCaption.tqreplace("&", "&&");
+            serviceCaption.replace("&", "&&");
 
             AppTreeItem* item;
             if (parent == 0)
@@ -209,7 +209,7 @@ TQStringList AppTreeView::fileList(const TQString& rPath)
     TQString relativePath = rPath;
 
     // truncate "/.directory"
-    int pos = relativePath.tqfindRev("/.directory");
+    int pos = relativePath.findRev("/.directory");
     if (pos > 0) relativePath.truncate(pos);
 
     TQStringList filelist;
@@ -228,7 +228,7 @@ TQStringList AppTreeView::fileList(const TQString& rPath)
         TQStringList files = dir.entryList();
         for (TQStringList::ConstIterator it = files.begin(); it != files.end(); ++it) {
             // does not work?!
-            //if (filelist.tqcontains(*it)) continue;
+            //if (filelist.contains(*it)) continue;
 
             if (relativePath.isEmpty()) {
                 filelist.remove(*it); // hack
@@ -248,7 +248,7 @@ TQStringList AppTreeView::dirList(const TQString& rPath)
     TQString relativePath = rPath;
 
     // truncate "/.directory"
-    int pos = relativePath.tqfindRev("/.directory");
+    int pos = relativePath.findRev("/.directory");
     if (pos > 0) relativePath.truncate(pos);
 
     TQStringList dirlist;
@@ -266,7 +266,7 @@ TQStringList AppTreeView::dirList(const TQString& rPath)
         for (TQStringList::ConstIterator it = subdirs.begin(); it != subdirs.end(); ++it) {
             if ((*it) == "." || (*it) == "..") continue;
             // does not work?!
-            // if (dirlist.tqcontains(*it)) continue;
+            // if (dirlist.contains(*it)) continue;
 
             if (relativePath.isEmpty()) {
                 dirlist.remove(*it); //hack

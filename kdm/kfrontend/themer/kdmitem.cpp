@@ -368,7 +368,7 @@ KdmItem::mouseEvent( int x, int y, bool pressed, bool released )
 	}
 
 	ItemState oldState = state;
-	if (area.tqcontains( x, y )) {
+	if (area.contains( x, y )) {
 		if (released && oldState == Sactive) {
 			if (buttonParent)
 				emit activated( id );
@@ -504,13 +504,13 @@ KdmItem::placementHint( const TQRect &parentRect )
 
 	// anchor the rect to an edge / corner
 	if (pos.anchor.length() > 0 && pos.anchor.length() < 3) {
-		if (pos.anchor.tqfind( 'n' ) >= 0)
+		if (pos.anchor.find( 'n' ) >= 0)
 			dy = 0;
-		if (pos.anchor.tqfind( 's' ) >= 0)
+		if (pos.anchor.find( 's' ) >= 0)
 			dy = -h;
-		if (pos.anchor.tqfind( 'w' ) >= 0)
+		if (pos.anchor.find( 'w' ) >= 0)
 			dx = 0;
-		if (pos.anchor.tqfind( 'e' ) >= 0)
+		if (pos.anchor.find( 'e' ) >= 0)
 			dx = -w;
 	}
 	// KdmItem *p = static_cast<KdmItem*>( parent() );
@@ -555,11 +555,11 @@ KdmItem::parseAttribute( const TQString &s, int &val, enum DataType &dType )
 	if (s == "box") {	// box value
 		dType = DTbox;
 		val = 0;
-	} else if ((p = s.tqfind( '%' )) >= 0) {	// percent value
+	} else if ((p = s.find( '%' )) >= 0) {	// percent value
 		dType = DTpercent;
 		TQString sCopy = s;
 		sCopy.remove( p, 1 );
-		sCopy.tqreplace( ',', '.' );
+		sCopy.replace( ',', '.' );
 		val = (int)sCopy.toDouble();
 	} else {		// int value
 		dType = DTpixel;
@@ -568,7 +568,7 @@ KdmItem::parseAttribute( const TQString &s, int &val, enum DataType &dType )
 			sCopy.remove( 0, 1 );
 			dType = DTnpixel;
 		}
-		sCopy.tqreplace( ',', '.' );
+		sCopy.replace( ',', '.' );
 		val = (int)sCopy.toDouble();
 	}
 }
@@ -576,7 +576,7 @@ KdmItem::parseAttribute( const TQString &s, int &val, enum DataType &dType )
 void
 KdmItem::parseFont( const TQString &s, TQFont &font )
 {
-	int splitAt = s.tqfindRev( ' ' );
+	int splitAt = s.findRev( ' ' );
 	if (splitAt < 1)
 		return;
 	font.setFamily( s.left( splitAt ) );

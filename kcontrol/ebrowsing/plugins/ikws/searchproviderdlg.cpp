@@ -60,7 +60,7 @@ SearchProviderDialog::SearchProviderDialog(SearchProvider *provider,
         m_dlg->leName->setText(m_provider->name());
         m_dlg->leQuery->setText(m_provider->query());
         m_dlg->leShortcut->setText(m_provider->keys().join(","));
-        m_dlg->cbCharset->setCurrentItem(m_provider->charset().isEmpty() ? 0 : charsets.tqfindIndex(m_provider->charset()));
+        m_dlg->cbCharset->setCurrentItem(m_provider->charset().isEmpty() ? 0 : charsets.findIndex(m_provider->charset()));
         m_dlg->leName->setEnabled(false);
         m_dlg->leQuery->setFocus();
     }
@@ -81,7 +81,7 @@ void SearchProviderDialog::slotChanged()
 
 void SearchProviderDialog::slotOk()
 {
-    if ((m_dlg->leQuery->text().tqfind("\\{") == -1)
+    if ((m_dlg->leQuery->text().find("\\{") == -1)
         && KMessageBox::warningContinueCancel(0,
             i18n("The URI does not contain a \\{...} placeholder for the user query.\n"
                  "This means that the same page is always going to be visited, "

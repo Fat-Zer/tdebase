@@ -183,7 +183,7 @@ TQString LayoutIcon::getCountryFromLayoutName(const TQString& layoutName)
 						 || layoutName == "tel" || layoutName == "tml" || layoutName == "ben" ) // some Indian languages
 				flag = "in";
 		else {
-			int sepPos = layoutName.tqfind(TQRegExp("[-_]"));
+			int sepPos = layoutName.find(TQRegExp("[-_]"));
 			TQString leftCode = layoutName.mid(0, sepPos);
 			TQString rightCode;
 			if( sepPos != -1 )

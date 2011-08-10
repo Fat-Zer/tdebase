@@ -321,7 +321,7 @@ void KDIconView::initConfig( bool init )
     if ( previewSettings().count() )
     {
         for ( TQStringList::ConstIterator it = oldPreview.begin(); it != oldPreview.end(); ++it)
-            if ( !previewSettings().tqcontains( *it ) ){
+            if ( !previewSettings().contains( *it ) ){
                 kdDebug(1204) << "Disabling preview for " << *it << endl;
                 if ( *it == "audio/" )
                     disableSoundPreviews();
@@ -581,7 +581,7 @@ KURL KDIconView::desktopURL()
     if (kdesktop_screen_number != 0) {
         TQString dn = "Desktop";
         dn += TQString::number(kdesktop_screen_number);
-        desktopPath.tqreplace("Desktop", dn);
+        desktopPath.replace("Desktop", dn);
     }
 
     KURL desktopURL;
@@ -607,7 +607,7 @@ void KDIconView::contentsMousePressEvent( TQMouseEvent *e )
     // TQIconView, as of Qt 2.2, doesn't emit mouseButtonPressed for LMB on background
     if ( e->button() == Qt::LeftButton && KRootWm::self()->hasLeftButtonMenu() )
     {
-        TQIconViewItem *item = tqfindItem( e->pos() );
+        TQIconViewItem *item = findItem( e->pos() );
         if ( !item )
         {
             // Left click menu
@@ -628,7 +628,7 @@ void KDIconView::wheelEvent( TQWheelEvent* e )
     if (!m_dirLister) return;
     //kdDebug(1204) << "KDIconView::wheelEvent" << endl;
 
-    TQIconViewItem *item = tqfindItem( e->pos() );
+    TQIconViewItem *item = findItem( e->pos() );
     if ( !item )
     {
       emit wheelRolled( e->delta() );
@@ -748,7 +748,7 @@ void KDIconView::fillMediaListView()
     for (; it2 != mimetypes.end(); ++it2) {
        if ( ((*it2)->name().startsWith("media/")) )
 	{
-    	    bool ok=excludedMedia.tqcontains((*it2)->name())==0;
+    	    bool ok=excludedMedia.contains((*it2)->name())==0;
 		new DesktopBehaviorMediaItem (mMediaListView, (*it2)->comment(), (*it2)->name(),ok);
         }
     }
@@ -784,7 +784,7 @@ void KDIconView::removeBuiltinIcon(TQString iconName)
 {
     DesktopBehaviorMediaItem *changeItem;
     fillMediaListView();
-    changeItem = static_cast<DesktopBehaviorMediaItem *>(mMediaListView->tqfindItem(iconName, 0));
+    changeItem = static_cast<DesktopBehaviorMediaItem *>(mMediaListView->findItem(iconName, 0));
     if (changeItem != 0) {
         changeItem->setOn(false);
     }
@@ -1009,12 +1009,12 @@ bool KDIconView::makeFriendlyText( KFileIVI *fileIVI )
         TQStringList tmpList;
         if (cfg.hasKey("OnlyShowIn"))
         {
-            if (!cfg.readListEntry("OnlyShowIn", ';').tqcontains("KDE"))
+            if (!cfg.readListEntry("OnlyShowIn", ';').contains("KDE"))
                 return false;
         }
         if (cfg.hasKey("NotShowIn"))
         {
-            if (cfg.readListEntry("NotShowIn", ';').tqcontains("KDE"))
+            if (cfg.readListEntry("NotShowIn", ';').contains("KDE"))
                 return false;
         }
         if (cfg.hasKey("TryExec"))
@@ -1499,7 +1499,7 @@ void KDIconView::contentsDropEvent( TQDropEvent * e )
     bool adjustedAnyItems = false;
     for( TQIconViewItem *item = firstItem(); item; item = item->nextItem() )
     {
-        if( !desk.tqcontains( item->rect(), true ))
+        if( !desk.contains( item->rect(), true ))
         {
             TQRect r = item->rect();
 
@@ -1615,7 +1615,7 @@ void KDIconView::setupSortKeys()
         if (!m_itemsAlwaysFirst.isEmpty())
         {
             TQString strFileName = static_cast<KFileIVI *>( it )->item()->url().fileName();
-            int nFind = m_itemsAlwaysFirst.tqfindIndex(strFileName);
+            int nFind = m_itemsAlwaysFirst.findIndex(strFileName);
             if (nFind >= 0)
                 strKey = "0" + TQString::number(nFind);
         }

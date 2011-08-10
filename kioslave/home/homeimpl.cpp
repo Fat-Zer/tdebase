@@ -37,7 +37,7 @@ bool HomeImpl::parseURL(const KURL &url, TQString &name, TQString &path) const
 {
 	TQString url_path = url.path();
 
-	int i = url_path.tqfind('/', 1);
+	int i = url_path.find('/', 1);
 	if (i > 0)
 	{
 		name = url_path.mid(1, i-1);
@@ -90,7 +90,7 @@ bool HomeImpl::listHomes(TQValueList<KIO::UDSEntry> &list)
 		for(; it!=users_end; ++it)
 		{
 			if ((*it).uid()>=MINIMUM_UID
-			 && !uid_list.tqcontains( (*it).uid() ) )
+			 && !uid_list.contains( (*it).uid() ) )
 			{
 				uid_list.append( (*it).uid() );
 				KIO::UDSEntry entry;

@@ -260,7 +260,7 @@ void KfindDlg::slotNewItems( const TQString& file )
   TQListViewItem *checkiter;
   TQString checkiterwithpath;
 
-  if(file.tqfind(query->url().path(+1))==0)
+  if(file.find(query->url().path(+1))==0)
   {
     kdDebug()<<TQString("Can be added, path OK")<<endl;
     checkiter=win->firstChild();

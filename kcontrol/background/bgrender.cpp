@@ -124,7 +124,7 @@ TQString KBackgroundRenderer::buildCommand()
     if (cmd.isEmpty())
 	return TQString();
 
-    while ((pos = cmd.tqfind('%', pos)) != -1) {
+    while ((pos = cmd.find('%', pos)) != -1) {
 
         if (pos == (int) (cmd.length() - 1))
             break;
@@ -132,24 +132,24 @@ TQString KBackgroundRenderer::buildCommand()
         switch (cmd.tqat(pos+1).latin1()) {
         case 'f':
             createTempFile();
-            cmd.tqreplace(pos, 2, KShellProcess::quote(m_Tempfile->name()));
+            cmd.replace(pos, 2, KShellProcess::quote(m_Tempfile->name()));
             pos += m_Tempfile->name().length() - 2;
             break;
 
         case 'x':
             num.setNum(m_Size.width());
-            cmd.tqreplace(pos, 2, num);
+            cmd.replace(pos, 2, num);
             pos += num.length() - 2;
             break;
 
         case 'y':
             num.setNum(m_Size.height());
-            cmd.tqreplace(pos, 2, num);
+            cmd.replace(pos, 2, num);
             pos += num.length() - 2;
             break;
 
         case '%':
-            cmd.tqreplace(pos, 2, "%");
+            cmd.replace(pos, 2, "%");
             pos--;
             break;
         default:
@@ -584,7 +584,7 @@ void KBackgroundRenderer::fastWallpaperBlend()
             m_Pixmap.convertFromImage( m_Wallpaper );
         return;
     }
-    else if( m_WallpaperRect.tqcontains( TQRect( TQPoint( 0, 0 ), m_Size ))
+    else if( m_WallpaperRect.contains( TQRect( TQPoint( 0, 0 ), m_Size ))
         && !m_Wallpaper.hasAlphaBuffer()) // wallpaper covers all and no blending
         m_Pixmap = TQPixmap( m_Size );
     else if (m_Background.size() == m_Size)
@@ -1251,7 +1251,7 @@ void KVirtualBGRenderer::screenDone(int _desk, int _screen)
     Q_UNUSED(_screen);
 
     const KBackgroundRenderer * sender = dynamic_cast<const KBackgroundRenderer*>(this->sender());
-    int screen = m_renderer.tqfind(sender);
+    int screen = m_renderer.find(sender);
     if (screen == -1)
         //??
         return;

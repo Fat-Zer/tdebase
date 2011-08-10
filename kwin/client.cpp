@@ -1514,7 +1514,7 @@ void Client::imposeRegionShadow(TQPixmap &pixmap, TQRegion occluded,
                         // irTop is not necessarily larger than irBottom and
                         // yIncrement isn't necessarily positive
                         for (i = irLeft; i <= irRight; i++) {
-                            if (occluded.tqcontains(TQPoint(i, j)))
+                            if (occluded.contains(TQPoint(i, j)))
                                 intersectCount++;
                         }
                     }
@@ -1524,7 +1524,7 @@ void Client::imposeRegionShadow(TQPixmap &pixmap, TQRegion occluded,
                         intersectCount = 0;
 
                     for (i = irLeft; i <= irRight; i++) {
-                        if (occluded.tqcontains(TQPoint(i, irBottom)))
+                        if (occluded.contains(TQPoint(i, irBottom)))
                             intersectCount++;
                     }
                 }
@@ -1543,7 +1543,7 @@ void Client::imposeRegionShadow(TQPixmap &pixmap, TQRegion occluded,
                             (int)(pixelBlue + (blue - pixelBlue) * opacity)));
 
                 for (i = irLeft; i <= irRight; i++) {
-                    if (occluded.tqcontains(TQPoint(i, irTop)))
+                    if (occluded.contains(TQPoint(i, irTop)))
                         intersectCount--;
                 }
 
@@ -1553,12 +1553,12 @@ void Client::imposeRegionShadow(TQPixmap &pixmap, TQRegion occluded,
 
             irTop += yIncrement;
             for (j = irTop; j != irBottom; j += yIncrement) {
-                if (occluded.tqcontains(TQPoint(irLeft, j)))
+                if (occluded.contains(TQPoint(irLeft, j)))
                     intersectCount--;
             }
             irRight++;
             for (j = irTop; j != irBottom; j += yIncrement) {
-                if (occluded.tqcontains(TQPoint(irRight, j)))
+                if (occluded.contains(TQPoint(irRight, j)))
                     intersectCount++;
             }
 

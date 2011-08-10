@@ -362,19 +362,19 @@ JSPoliciesFrame::~JSPoliciesFrame() {
 
 void JSPoliciesFrame::refresh() {
   TQRadioButton *button;
-  button = static_cast<TQRadioButton *>(js_popup->tqfind(
+  button = static_cast<TQRadioButton *>(js_popup->find(
   		policies->window_open));
   if (button != 0) button->setChecked(true);
-  button = static_cast<TQRadioButton *>(js_resize->tqfind(
+  button = static_cast<TQRadioButton *>(js_resize->find(
   		policies->window_resize));
   if (button != 0) button->setChecked(true);
-  button = static_cast<TQRadioButton *>(js_move->tqfind(
+  button = static_cast<TQRadioButton *>(js_move->find(
   		policies->window_move));
   if (button != 0) button->setChecked(true);
-  button = static_cast<TQRadioButton *>(js_focus->tqfind(
+  button = static_cast<TQRadioButton *>(js_focus->find(
   		policies->window_focus));
   if (button != 0) button->setChecked(true);
-  button = static_cast<TQRadioButton *>(js_statusbar->tqfind(
+  button = static_cast<TQRadioButton *>(js_statusbar->find(
   		policies->window_status));
   if (button != 0) button->setChecked(true);
 }

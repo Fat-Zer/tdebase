@@ -87,9 +87,9 @@ static TQString stripNumber( const TQString& s )
 
 	// removes any non-numeric character, except ('+','*','#') (hope it's supported by faxing tools)
 	TQString strip_s = s;
-	strip_s.tqreplace( TQRegExp( "[^\\d+*#]" ), "" );
-	if ( strip_s.tqfind( '+' ) != -1 && conf->readBoolEntry( "ReplaceIntChar", false ) )
-		strip_s.tqreplace( "+", conf->readEntry( "ReplaceIntCharVal" ) );
+	strip_s.replace( TQRegExp( "[^\\d+*#]" ), "" );
+	if ( strip_s.find( '+' ) != -1 && conf->readBoolEntry( "ReplaceIntChar", false ) )
+		strip_s.replace( "+", conf->readEntry( "ReplaceIntCharVal" ) );
 	return strip_s;
 }
 
@@ -133,11 +133,11 @@ static TQString tagList( int n, ... )
 static TQString processTag( const TQString& match, bool value)
 {
 	TQString v;
-	int p = match.tqfind( '_' );
+	int p = match.find( '_' );
 	if ( p != -1 && match[ p+1 ] == '{' )
 	{
 		// Find the ?? that separates the iftrue from the iffalse parts.
-		int q = match.tqfind( "?\?", p+2 );
+		int q = match.find( "?\?", p+2 );
 		if ( q == -1 )
 		{
 			// No iffalse part
@@ -162,7 +162,7 @@ static TQString processTag( const TQString& match, bool value)
 static TQString processTag( const TQString& match, const TQString& value )
 {
 	TQString v;
-	int p = match.tqfind( '_' );
+	int p = match.find( '_' );
 	if ( p != -1 )
 	{
 		if ( value.isEmpty() )
@@ -172,7 +172,7 @@ static TQString processTag( const TQString& match, const TQString& value )
 			if ( match[ p+1 ] == '{' )
 			{
 				v = match.mid( p+2, match.length()-p-3 );
-				v.tqreplace( "@@", quote( value ) );
+				v.replace( "@@", quote( value ) );
 			}
 			else
 				v = ( "-" + match.mid( p+1 ) + " " + quote( value ) );
@@ -445,13 +445,13 @@ TQString FaxCtrl::faxCommand()
 
 void FaxCtrl::sendFax()
 {
-	if ( m_command.tqfind( "%files" ) != -1 )
+	if ( m_command.find( "%files" ) != -1 )
 	{
 		// replace %files tag
 		TQString	filestr;
 		for (TQStringList::ConstIterator it=m_filteredfiles.begin(); it!=m_filteredfiles.end(); ++it)
 			filestr += (quote(*it)+" ");
-		m_command.tqreplace("%files", filestr);
+		m_command.replace("%files", filestr);
 	}
 
 	if ( !m_faxlist.isEmpty() )
@@ -625,7 +625,7 @@ void FaxCtrl::slotPrintLog()
 			//TQString txt = m_logview->text();
 			TQString txt = m_log;
 
-			txt.tqreplace( '\n', "<br>" );
+			txt.replace( '\n', "<br>" );
 			txt.prepend( "<h2>" + i18n( "KDEPrint Fax Tool Log" ) + "</h2>" );
 
 			kdDebug() << "Log: " << txt << endl;

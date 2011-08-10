@@ -286,11 +286,11 @@ void GrepTool::itemSelected(const TQString& item)
   TQString filename, linenumber;
 
   TQString str = item;
-  if ( (pos = str.tqfind(':')) != -1)
+  if ( (pos = str.find(':')) != -1)
   {
     filename = str.left(pos);
     str = str.mid(pos+1);
-    if ( (pos = str.tqfind(':')) != -1)
+    if ( (pos = str.find(':')) != -1)
     {
       filename = m_workingDir + TQDir::separator() + filename;
       linenumber = str.left(pos);
@@ -302,7 +302,7 @@ void GrepTool::itemSelected(const TQString& item)
 void GrepTool::processOutput()
 {
   int pos;
-  while ( (pos = buf.tqfind('\n')) != -1)
+  while ( (pos = buf.find('\n')) != -1)
   {
     TQString item = buf.mid(2,pos-2);
     if (!item.isEmpty())
@@ -329,7 +329,7 @@ void GrepTool::slotSearch()
     return;
   }
 
-  if ( ! leTemplate->text().tqcontains("%s") )
+  if ( ! leTemplate->text().contains("%s") )
   {
     leTemplate->setFocus();
     return;
@@ -347,9 +347,9 @@ void GrepTool::slotSearch()
 
   TQString s = cmbPattern->currentText();
   if ( ! cbRegex->isChecked() )
-    s.tqreplace( TQRegExp( "([^\\w'()<>])" ), "\\\\1" );
+    s.replace( TQRegExp( "([^\\w'()<>])" ), "\\\\1" );
   TQString pattern = leTemplate->text();
-  pattern.tqreplace( "%s", s );
+  pattern.replace( "%s", s );
 
   childproc = new KProcess();
   childproc->setWorkingDirectory( m_workingDir );

@@ -77,7 +77,7 @@ void SystemMenu::initialize()
 
 void SystemMenu::slotExec(int id)
 {
-    if(!m_urlMap.tqcontains(id)) return;
+    if(!m_urlMap.contains(id)) return;
 
     new KRun(m_urlMap[id]); // will delete itself
 }

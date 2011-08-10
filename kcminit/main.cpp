@@ -113,10 +113,10 @@ void KCMInit::runModules( int phase )
       TQString libName = TQString("kcm_%1").arg(library);
 
       // try to load the library
-      if (! alreadyInitialized.tqcontains( libName.ascii() )) {
+      if (! alreadyInitialized.contains( libName.ascii() )) {
 	  if (!runModule(libName, service)) {
 	      libName = TQString("libkcm_%1").arg(library);
-	      if (! alreadyInitialized.tqcontains( libName.ascii() )) {
+	      if (! alreadyInitialized.contains( libName.ascii() )) {
 		  runModule(libName, service);
 		  alreadyInitialized.append( libName.ascii() );
 	      }

@@ -245,7 +245,7 @@ void LayoutConfig::initUI() {
 	for (TQStringList::ConstIterator it = options.begin(); it != options.end(); ++it)
 	{
 		TQString option = *it;
-		TQString optionKey = option.mid(0, option.tqfind(':'));
+		TQString optionKey = option.mid(0, option.find(':'));
 		TQString optionName = m_rules->options()[option];
 		OptionListItem *item = m_optionGroups[i18n(optionKey.latin1())];
 		
@@ -444,7 +444,7 @@ void LayoutConfig::displayNameChanged(const TQString& newDisplayName)
 		return;
 	
 	const LayoutUnit layoutUnitKey = getLayoutUnitKey( selLayout );
-	LayoutUnit& layoutUnit = *m_kxkbConfig.m_layouts.tqfind(layoutUnitKey);
+	LayoutUnit& layoutUnit = *m_kxkbConfig.m_layouts.find(layoutUnitKey);
 	
 	TQString oldName = selLayout->text(LAYOUT_COLUMN_DISPLAY_NAME);
 	 
@@ -557,7 +557,7 @@ TQWidget* LayoutConfig::makeOptionsTab()
   OptionListItem *parent;
   for (; it.current(); ++it)
   {
-    if (!it.currentKey().tqcontains(':'))
+    if (!it.currentKey().contains(':'))
     {
       if( it.currentKey() == "ctrl" || it.currentKey() == "caps"
           || it.currentKey() == "altwin" ) {
@@ -580,7 +580,7 @@ TQWidget* LayoutConfig::makeOptionsTab()
   for( ; it.current(); ++it)
   {
     TQString key = it.currentKey();
-    int pos = key.tqfind(':');
+    int pos = key.find(':');
     if (pos >= 0)
     {
       OptionListItem *parent = m_optionGroups[key.left(pos)];
@@ -589,7 +589,7 @@ TQWidget* LayoutConfig::makeOptionsTab()
       if (parent != NULL) {
       // workaroung for mistake in rules file for xkb options in XFree 4.2.0
         TQString text(it.current());
-        text = text.tqreplace( "Cap$", "Caps." );
+        text = text.replace( "Cap$", "Caps." );
         if( parent->type() == TQCheckListItem::RadioButtonController )
             new OptionListItem(parent, i18n(text.utf8()),
                 TQCheckListItem::RadioButton, key);
@@ -639,7 +639,7 @@ void LayoutConfig::updateLayoutCommand()
       setxkbmap += ",us";
 
 /*	LayoutUnit layoutUnitKey = getLayoutUnitKey(sel);
-	layoutDisplayName = m_kxkbConfig.getLayoutDisplayName( *m_kxkbConfig.m_layouts.tqfind(layoutUnitKey) );*/
+	layoutDisplayName = m_kxkbConfig.getLayoutDisplayName( *m_kxkbConfig.m_layouts.find(layoutUnitKey) );*/
 	layoutDisplayName = sel->text(LAYOUT_COLUMN_DISPLAY_NAME);
 	if( layoutDisplayName.isEmpty() ) {
 		int count = 0;
@@ -724,9 +724,9 @@ TQString LayoutConfig::createOptionString()
   {
     TQString option(it.currentKey());
 
-    if (option.tqcontains(':')) {
+    if (option.contains(':')) {
 
-      TQString optionKey = option.mid(0, option.tqfind(':'));
+      TQString optionKey = option.mid(0, option.find(':'));
       OptionListItem *item = m_optionGroups[optionKey];
 
       if( !item ) {

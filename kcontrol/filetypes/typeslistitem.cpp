@@ -92,7 +92,7 @@ void TypesListItem::init(KMimeType::Ptr mimetype)
   m_bFullInit = false;
   m_mimetype = mimetype;
 
-  int index = mimetype->name().tqfind("/");
+  int index = mimetype->name().find("/");
   if (index != -1) {
     m_major = mimetype->name().left(index);
     m_minor = mimetype->name().right(mimetype->name().length() -
@@ -343,18 +343,18 @@ void TypesListItem::sync()
           continue; // Only those which were added in init()
 
       // Look in the correct list...
-      if ( (isApplication && ! m_appServices.tqcontains( pService->desktopEntryPath() ))
-           || (!isApplication && !m_embedServices.tqcontains( pService->desktopEntryPath() ))
+      if ( (isApplication && ! m_appServices.contains( pService->desktopEntryPath() ))
+           || (!isApplication && !m_embedServices.contains( pService->desktopEntryPath() ))
           ) {
         // The service was in m_appServices but has been removed
         // create a new .desktop file without this mimetype
 
         if( s_changedServices == NULL )
             deleter.setObject( s_changedServices, new TQMap< TQString, TQStringList > );
-        TQStringList mimeTypeList = s_changedServices->tqcontains( pService->desktopEntryPath())
+        TQStringList mimeTypeList = s_changedServices->contains( pService->desktopEntryPath())
             ? (*s_changedServices)[ pService->desktopEntryPath() ] : pService->serviceTypes();
 
-        if ( mimeTypeList.tqcontains( name() ) ) {
+        if ( mimeTypeList.contains( name() ) ) {
           // The mimetype is listed explicitly in the .desktop files, so
           // just remove it and we're done
           KConfig *desktop;
@@ -370,12 +370,12 @@ void TypesListItem::sync()
           }
           desktop->setDesktopGroup();
 
-          mimeTypeList = s_changedServices->tqcontains( pService->desktopEntryPath())
+          mimeTypeList = s_changedServices->contains( pService->desktopEntryPath())
             ? (*s_changedServices)[ pService->desktopEntryPath() ] : desktop->readListEntry("MimeType", ';');
 
           // Remove entry and the number that might follow.
           TQStringList::Iterator it;
-          for(;(it = mimeTypeList.tqfind(name())) != mimeTypeList.end();)
+          for(;(it = mimeTypeList.find(name())) != mimeTypeList.end();)
           {
              it = mimeTypeList.remove(it);
              if (it != mimeTypeList.end())
@@ -438,7 +438,7 @@ KMimeType::Ptr TypesListItem::findImplicitAssociation(const TQString &desktop)
 
     if( s_changedServices == NULL )
        deleter.setObject( s_changedServices, new TQMap< TQString, TQStringList > );
-    TQStringList mimeTypeList = s_changedServices->tqcontains( s->desktopEntryPath())
+    TQStringList mimeTypeList = s_changedServices->contains( s->desktopEntryPath())
        ? (*s_changedServices)[ s->desktopEntryPath() ] : s->serviceTypes();
 
     for(TQStringList::ConstIterator it = mimeTypeList.begin();
@@ -477,10 +477,10 @@ void TypesListItem::saveServices( KConfig & profile, TQStringList services, cons
     // merge new mimetype
     if( s_changedServices == NULL )
        deleter.setObject( s_changedServices, new TQMap< TQString, TQStringList > );
-    TQStringList mimeTypeList = s_changedServices->tqcontains( pService->desktopEntryPath())
+    TQStringList mimeTypeList = s_changedServices->contains( pService->desktopEntryPath())
        ? (*s_changedServices)[ pService->desktopEntryPath() ] : pService->serviceTypes();
 
-    if (!mimeTypeList.tqcontains(name()) && !inheritsMimetype(m_mimetype, mimeTypeList))
+    if (!mimeTypeList.contains(name()) && !inheritsMimetype(m_mimetype, mimeTypeList))
     {
       KConfig *desktop;
       if ( pService->type() == TQString("Service") )
@@ -495,7 +495,7 @@ void TypesListItem::saveServices( KConfig & profile, TQStringList services, cons
       }
 
       desktop->setDesktopGroup();
-      mimeTypeList = s_changedServices->tqcontains( pService->desktopEntryPath())
+      mimeTypeList = s_changedServices->contains( pService->desktopEntryPath())
             ? (*s_changedServices)[ pService->desktopEntryPath() ] : desktop->readListEntry("MimeType", ';');
       mimeTypeList.append(name());
 

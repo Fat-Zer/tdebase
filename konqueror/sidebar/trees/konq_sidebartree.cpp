@@ -55,7 +55,7 @@ static const int autoOpenTimeout = 750;
 
 getModule KonqSidebarTree::getPluginFactory(TQString name)
 {
-  if (!pluginFactories.tqcontains(name))
+  if (!pluginFactories.contains(name))
   {
     KLibLoader *loader = KLibLoader::self();
     TQString libName    = pluginInfo[name];
@@ -272,7 +272,7 @@ void KonqSidebarTree::contentsDragMoveEvent( TQDragMoveEvent *e )
     TQListViewItem *item = itemAt( contentsToViewport( e->pos() ) );
 
     // Accept drops on the background, if URLs
-    if ( !item && m_lstDropFormats.tqcontains("text/uri-list") )
+    if ( !item && m_lstDropFormats.contains("text/uri-list") )
     {
         m_dropItem = 0;
         e->acceptAction();
@@ -417,7 +417,7 @@ bool KonqSidebarTree::acceptDrag(TQDropEvent* e) const
 {
     // for KListViewMode...
     for( int i = 0; e->format( i ); i++ )
-        if ( d->m_dropFormats.tqcontains(e->format( i ) ) )
+        if ( d->m_dropFormats.contains(e->format( i ) ) )
             return true;
     return false;
 }
@@ -652,7 +652,7 @@ void KonqSidebarTree::scanDir( KonqSidebarTreeItem *parent, const TQString &path
                 	{
 	                    //kdDebug(1201) << "KonqSidebarTree::scanDir dirtree_dir contains " << *eIt << endl;
         	            if ( *eIt != "." && *eIt != ".."
-                	         && !entries.tqcontains( *eIt ) && !dirEntries.tqcontains( *eIt ) )
+                	         && !entries.contains( *eIt ) && !dirEntries.contains( *eIt ) )
 	                    { // we don't have that one yet -> copy it.
                 	        TQString cp("cp -R -- ");
         	                cp += KProcess::quote(dirtree_dir + *eIt);
@@ -836,7 +836,7 @@ void KonqSidebarTree::startAnimation( KonqSidebarTreeItem * item, const char * i
 
 void KonqSidebarTree::stopAnimation( KonqSidebarTreeItem * item )
 {
-    MapCurrentOpeningFolders::Iterator it = m_mapCurrentOpeningFolders.tqfind(item);
+    MapCurrentOpeningFolders::Iterator it = m_mapCurrentOpeningFolders.find(item);
     if ( it != m_mapCurrentOpeningFolders.end() )
     {
         item->setPixmap( 0, it.data().originalPixmap );

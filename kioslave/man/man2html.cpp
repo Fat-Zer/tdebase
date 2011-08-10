@@ -822,7 +822,7 @@ static void add_links(char *c)
 		    e=h+1;
 		    sec=f[1];
 		    subsec=f[2];
-		    int index = fstr.tqfind(')', 2);
+		    int index = fstr.find(')', 2);
 		    if (index != -1)
 		      subsec = fstr.mid(2, index - 2);
 		    else // No closing ')' found, take first character as subsection.
@@ -1166,7 +1166,7 @@ static TQCString scan_named_character( char*& c )
             {
                 TQCString cstr;
                 c = scan_escape_direct( c+1, cstr );
-                const int result = cstr.tqfind(']');
+                const int result = cstr.find(']');
                 if ( result == -1 )
                     name += cstr;
                 else
@@ -1198,7 +1198,7 @@ static TQCString scan_named_character( char*& c )
             {
                 TQCString cstr;
                 c = scan_escape_direct( c+1, cstr );
-                const int result = cstr.tqfind('\'');
+                const int result = cstr.find('\'');
                 if ( result == -1 )
                     name += cstr;
                 else
@@ -1223,7 +1223,7 @@ static TQCString scan_named_character( char*& c )
     // Note: characters with a one character length name doe not exist, as they would collide with other escapes
     
     // Now we have the name, let us find it between the string names
-    TQMap<TQCString,StringDefinition>::iterator it=s_characterDefinitionMap.tqfind(name);
+    TQMap<TQCString,StringDefinition>::iterator it=s_characterDefinitionMap.find(name);
     if (it==s_characterDefinitionMap.end())
     {
         kdDebug(7107) << "EXCEPTION: cannot find character with name: " << name << endl;
@@ -1270,7 +1270,7 @@ static TQCString scan_named_string(char*& c)
             {
                 TQCString cstr;
                 c = scan_escape_direct( c+1, cstr );
-                const int result = cstr.tqfind(']');
+                const int result = cstr.find(']');
                 if ( result == -1 )
                     name += cstr;
                 else
@@ -1299,7 +1299,7 @@ static TQCString scan_named_string(char*& c)
         c++;
     }
     // Now we have the name, let us find it between the string names
-    TQMap<TQCString,StringDefinition>::iterator it=s_stringDefinitionMap.tqfind(name);
+    TQMap<TQCString,StringDefinition>::iterator it=s_stringDefinitionMap.find(name);
     if (it==s_stringDefinitionMap.end())
     {
         kdDebug(7107) << "EXCEPTION: cannot find string with name: " << name << endl;
@@ -1514,7 +1514,7 @@ static int scan_number_register( char*& c)
     }
     else
     {
-        TQMap< TQCString, NumberDefinition >::iterator it = s_numberDefinitionMap.tqfind( name );
+        TQMap< TQCString, NumberDefinition >::iterator it = s_numberDefinitionMap.find( name );
         if ( it == s_numberDefinitionMap.end() )
         {
             return 0; // Undefined variable
@@ -1560,7 +1560,7 @@ static TQCString scan_named_font( char*& c )
             {
                 TQCString cstr;
                 c = scan_escape_direct( c+1, cstr );
-                const int result = cstr.tqfind(']');
+                const int result = cstr.find(']');
                 if ( result == -1 )
                     name += cstr;
                 else
@@ -3149,7 +3149,7 @@ static char *scan_request(char *c)
         int j = nlen;
         while (c[j] && c[j]==' ' || c[j]=='\t') j++;
         /* search macro database of self-defined macros */
-        TQMap<TQCString,StringDefinition>::iterator it=s_stringDefinitionMap.tqfind(macroName);
+        TQMap<TQCString,StringDefinition>::iterator it=s_stringDefinitionMap.find(macroName);
         if (it!=s_stringDefinitionMap.end())
         {
             kdDebug(7107) << "CALLING MACRO: " << macroName << endl;
@@ -3241,7 +3241,7 @@ static char *scan_request(char *c)
                     *c='\0';
                     char* result=0;
                     scan_troff(h,0,&result);
-                    TQMap<TQCString,StringDefinition>::iterator it=s_stringDefinitionMap.tqfind(name);
+                    TQMap<TQCString,StringDefinition>::iterator it=s_stringDefinitionMap.find(name);
                     if (it==s_stringDefinitionMap.end())
                     {
                         StringDefinition def;
@@ -3276,7 +3276,7 @@ static char *scan_request(char *c)
                     curpos=0;
                     char* result=0;
                     c=scan_troff(c,1,&result);
-                    TQMap<TQCString,StringDefinition>::iterator it=s_stringDefinitionMap.tqfind(name);
+                    TQMap<TQCString,StringDefinition>::iterator it=s_stringDefinitionMap.find(name);
                     if (it==s_stringDefinitionMap.end())
                     {
                         StringDefinition def;
@@ -4181,7 +4181,7 @@ static char *scan_request(char *c)
                         }
                     }
                     c=skip_till_newline(c);
-                    TQMap<TQCString,StringDefinition>::iterator it=s_stringDefinitionMap.tqfind(name);
+                    TQMap<TQCString,StringDefinition>::iterator it=s_stringDefinitionMap.find(name);
                     if (it==s_stringDefinitionMap.end())
                     {
                         kdDebug(7107) << "EXCEPTION: cannot find string to rename or remove: " << name << endl;
@@ -4240,7 +4240,7 @@ static char *scan_request(char *c)
                         c=scan_expression( c, &increment );
                     }
                     c = skip_till_newline( c );
-                    TQMap <TQCString, NumberDefinition>::iterator it = s_numberDefinitionMap.tqfind( name );
+                    TQMap <TQCString, NumberDefinition>::iterator it = s_numberDefinitionMap.find( name );
                     if ( it == s_numberDefinitionMap.end() )
                     {
                         if ( sign < 1 )
@@ -4310,7 +4310,7 @@ static char *scan_request(char *c)
                         sl++;
                     }
 
-                    TQMap<TQCString,StringDefinition>::iterator it=s_stringDefinitionMap.tqfind(name);
+                    TQMap<TQCString,StringDefinition>::iterator it=s_stringDefinitionMap.find(name);
                     if (it==s_stringDefinitionMap.end())
                     {
                         StringDefinition def;
@@ -5091,7 +5091,7 @@ static char *scan_request(char *c)
                         break;
                     }
                     // Second parametr is origin (unlike in .rn)
-                    TQMap<TQCString,StringDefinition>::iterator it=s_stringDefinitionMap.tqfind(name2);
+                    TQMap<TQCString,StringDefinition>::iterator it=s_stringDefinitionMap.find(name2);
                     if (it==s_stringDefinitionMap.end())
                     {
                         kdDebug(7107) << "EXCEPTION: cannot find string to make alias: " << name2 << endl;
@@ -5115,7 +5115,7 @@ static char *scan_request(char *c)
                             break;
                     }
                     c = skip_till_newline( c );
-                    TQMap <TQCString, NumberDefinition>::iterator it = s_numberDefinitionMap.tqfind( name );
+                    TQMap <TQCString, NumberDefinition>::iterator it = s_numberDefinitionMap.find( name );
                     if ( it == s_numberDefinitionMap.end() )
                     {
                             kdDebug(7107) << "EXCEPTION: trying to remove inexistant number register: " << endl;
@@ -5145,7 +5145,7 @@ static char *scan_request(char *c)
                         break;
                     }
                     c = skip_till_newline( c );
-                    TQMap<TQCString,NumberDefinition>::iterator it=s_numberDefinitionMap.tqfind(name);
+                    TQMap<TQCString,NumberDefinition>::iterator it=s_numberDefinitionMap.find(name);
                     if (it==s_numberDefinitionMap.end())
                     {
                         kdDebug(7107) << "EXCEPTION: cannot find number register to rename: " << name << endl;
@@ -5189,7 +5189,7 @@ static char *scan_request(char *c)
                         break;
                     }
                     // Second parametr is origin (unlike in .rnn)
-                    TQMap<TQCString,NumberDefinition>::iterator it=s_numberDefinitionMap.tqfind(name2);
+                    TQMap<TQCString,NumberDefinition>::iterator it=s_numberDefinitionMap.find(name2);
                     if (it==s_numberDefinitionMap.end())
                     {
                         kdDebug(7107) << "EXCEPTION: cannot find string to make alias: " << name2 << endl;

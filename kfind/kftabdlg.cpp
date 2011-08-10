@@ -390,7 +390,7 @@ void KfindTabWidget::setURL( const KURL & url )
     dirBox->insertStringList(sl);
     // If the _searchPath already exists in the list we do not
     // want to add it again
-    int indx = sl.tqfindIndex(m_url.prettyURL());
+    int indx = sl.findIndex(m_url.prettyURL());
     if(indx == -1)
       dirBox->insertItem(m_url.prettyURL(), 0); // make it the first one
     else
@@ -472,7 +472,7 @@ void KfindTabWidget::loadHistory()
     dirBox->insertStringList(sl);
     // If the _searchPath already exists in the list we do not
     // want to add it again
-    int indx = sl.tqfindIndex(m_url.prettyURL());
+    int indx = sl.findIndex(m_url.prettyURL());
     if(indx == -1)
       dirBox->insertItem(m_url.prettyURL(), 0); // make it the first one
     else

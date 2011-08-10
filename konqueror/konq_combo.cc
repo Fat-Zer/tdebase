@@ -459,7 +459,7 @@ void KonqCombo::selectWord(TQKeyEvent *e)
             count++;
             if( allow_space_break && text[pos].isSpace() && count > 1 )
                 break;
-        } while( pos >= 0 && (chars.tqfindIndex(text[pos]) == -1 || count <= 1) );
+        } while( pos >= 0 && (chars.findIndex(text[pos]) == -1 || count <= 1) );
 
         if( e->state() & ShiftButton ) {
                   edit->cursorForward(true, 1-count);
@@ -482,7 +482,7 @@ void KonqCombo::selectWord(TQKeyEvent *e)
             count++;
                   if( allow_space_break && text[pos].isSpace() )
                       break;
-        } while( pos < (int) text.length() && chars.tqfindIndex(text[pos]) == -1 );
+        } while( pos < (int) text.length() && chars.findIndex(text[pos]) == -1 );
 
         if( e->state() & ShiftButton ) {
             edit->cursorForward(true, count+1);
@@ -701,7 +701,7 @@ void KonqComboListBoxPixmap::paint( TQPainter *painter )
         title = titleOfURL( text() );
         if ( !title.isEmpty() )
             pm = KonqPixmapProvider::self()->pixmapFor( text(), KIcon::SizeSmall );
-        else if ( text().tqfind( "://" ) == -1 ) {
+        else if ( text().find( "://" ) == -1 ) {
             title = titleOfURL( "http://"+text() );
             if ( !title.isEmpty() )
                 pm = KonqPixmapProvider::self()->pixmapFor( "http://"+text(), KIcon::SizeSmall );
@@ -803,7 +803,7 @@ void KonqComboLineEdit::setCompletedItems( const TQStringList& items )
             bool wasSelected = completionbox->isSelected( completionbox->currentItem() );
             const TQString currentSelection = completionbox->currentText();
             completionbox->setItems( items );
-            TQListBoxItem* item = completionbox->tqfindItem( currentSelection, TQt::ExactMatch );
+            TQListBoxItem* item = completionbox->findItem( currentSelection, TQt::ExactMatch );
             if( !item || !wasSelected )
             {
                 wasSelected = false;
@@ -824,7 +824,7 @@ void KonqComboLineEdit::setCompletedItems( const TQStringList& items )
         }
 
         if ( autoSuggest() ) {
-            int index = items.first().tqfind( txt );
+            int index = items.first().find( txt );
             TQString newText = items.first().mid( index );
             setUserSelection( false );
             setCompletedText( newText, true );

@@ -189,7 +189,7 @@ void KCMFilter::importFilters()
                     }
                 }
 
-                if (!line.isEmpty() && mListBox->tqfindItem(line, TQt::CaseSensitive|TQt::ExactMatch) == 0)
+                if (!line.isEmpty() && mListBox->findItem(line, TQt::CaseSensitive|TQt::ExactMatch) == 0)
                     paths.append(line);
             }
             f.close();
@@ -267,7 +267,7 @@ void KCMFilter::load( bool useDefaults )
     for (int i=0; i<num; ++i)
     {
         TQString key = "Filter-" + TQString::number(i);
-        it = entryMap.tqfind(key);
+        it = entryMap.find(key);
         if (it != entryMap.end())
             paths.append(it.data());
     }

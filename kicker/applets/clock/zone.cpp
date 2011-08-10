@@ -105,7 +105,7 @@ void Zone::readZoneList(KListView *listView )
     if (!comment.isEmpty())
       comment = i18n(comment.utf8());
 
-    const TQStringList KontCity = TQStringList::split("/", i18n(tzName.utf8()).tqreplace("_", " "));
+    const TQStringList KontCity = TQStringList::split("/", i18n(tzName.utf8()).replace("_", " "));
     TQListViewItem* Kontinent = KontinentMap[KontCity[0]];
     if (!Kontinent) {
 	KontinentMap[KontCity[0]] = new TQListViewItem(listView, KontCity[0]);
@@ -117,7 +117,7 @@ void Zone::readZoneList(KListView *listView )
     li->setText(1, comment);
     li->setText(2, tzName); /* store complete path in ListView */
 
-    if (_remotezonelist.tqfindIndex(tzName) != -1)
+    if (_remotezonelist.findIndex(tzName) != -1)
        li->setOn(true);
 
     // locate the flag from /l10n/%1/flag.png

@@ -103,7 +103,7 @@ void USBDevice::parseSysDir(int bus, int parent, int level, TQString dname)
   TQStringList list = dir.entryList();
 
   for(TQStringList::Iterator it = list.begin(); it != list.end(); ++it) {
-    if ((*it).tqcontains(':'))
+    if ((*it).contains(':'))
       continue;
 
     USBDevice* dev = new USBDevice();
@@ -277,8 +277,8 @@ bool USBDevice::parse(TQString fname)
   // read in the device infos
   USBDevice *device = 0;
   int start=0, end;
-  result.tqreplace(TQRegExp("^\n"),"");
-  while ((end = result.tqfind('\n', start)) > 0)
+  result.replace(TQRegExp("^\n"),"");
+  while ((end = result.find('\n', start)) > 0)
     {
       TQString line = result.mid(start, end-start);
 

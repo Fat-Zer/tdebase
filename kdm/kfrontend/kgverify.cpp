@@ -148,8 +148,8 @@ TQString // public
 KGVerify::pluginName() const
 {
 	TQString name( greetPlugins[pluginList[curPlugin]].library->fileName() );
-	uint st = name.tqfindRev( '/' ) + 1;
-	uint en = name.tqfind( '.', st );
+	uint st = name.findRev( '/' ) + 1;
+	uint en = name.find( '.', st );
 	if (en - st > 7 && TQConstString( name.tqunicode() + st, 7 ).string() == "kgreet_")
 		st += 7;
 	return name.mid( st, en - st );

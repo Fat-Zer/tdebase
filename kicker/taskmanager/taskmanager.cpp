@@ -247,9 +247,9 @@ Task::Ptr TaskManager::findTask(int desktop, const TQPoint& p)
             continue;
         }
 
-        if (t->geometry().tqcontains(p))
+        if (t->geometry().contains(p))
         {
-            int index = list.tqfindIndex(t->window());
+            int index = list.findIndex(t->window());
             if (index > currentIndex)
             {
                 currentIndex = index;
@@ -295,7 +295,7 @@ void TaskManager::windowAdded(WId w )
         WId transient_for = (WId) transient_for_tmp;
 
         // check if it's transient for a skiptaskbar window
-        if( _skiptaskbar_windows.tqcontains( transient_for ))
+        if( _skiptaskbar_windows.contains( transient_for ))
             return;
 
         // lets see if this is a transient for an existing task
@@ -807,7 +807,7 @@ bool Task::isModified() const
   static TQString modStr = TQString::fromUtf8("[") +
                           i18n("modified") +
                           TQString::fromUtf8("]");
-  int modStrPos = _info.visibleName().tqfind(modStr);
+  int modStrPos = _info.visibleName().find(modStr);
 
   return ( modStrPos != -1 );
 }
@@ -831,7 +831,7 @@ void Task::updateDemandsAttentionState( WId w )
         NETWinInfo i( qt_xdisplay(), w, qt_xrootwin(), NET::WMState );
         if(i.state() & NET::DemandsAttention)
         {
-            if (!_transients_demanding_attention.tqcontains(w))
+            if (!_transients_demanding_attention.contains(w))
             {
                 _transients_demanding_attention.append(w);
             }
@@ -984,10 +984,10 @@ bool Task::idMatch( const TQString& id1, const TQString& id2 )
   if ( id1.isEmpty() || id2.isEmpty() )
     return false;
 
-  if ( id1.tqcontains( id2 ) > 0 )
+  if ( id1.contains( id2 ) > 0 )
     return true;
 
-  if ( id2.tqcontains( id1 ) > 0 )
+  if ( id2.contains( id1 ) > 0 )
     return true;
 
   return false;

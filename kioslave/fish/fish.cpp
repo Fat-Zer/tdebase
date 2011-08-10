@@ -558,7 +558,7 @@ int fishProtocol::establishConnection(char *buffer, KIO::fileoffset_t len) {
        buf.truncate(buf.length()-1);
 
     myDebug( << "establishing: got " << buf << endl);
-    while (childPid && ((pos = buf.tqfind('\n')) >= 0 ||
+    while (childPid && ((pos = buf.find('\n')) >= 0 ||
             buf.endsWith(":") || buf.endsWith("?"))) {
         pos++;
         TQString str = buf.left(pos);
@@ -738,11 +738,11 @@ bool fishProtocol::sendCommand(fish_command_type cmd, ...) {
         TQString arg(va_arg(list, const char *));
         int pos = -2;
         while ((pos = rx.search(arg,pos+2)) >= 0) {
-            arg.tqreplace(pos,0,TQString("\\"));
+            arg.replace(pos,0,TQString("\\"));
         }
         //myDebug( << "arg " << i << ": " << arg << endl);
         realCmd.append(" ").append(arg);
-        realAlt.tqreplace(TQRegExp("%"+TQString::number(i+1)),arg);
+        realAlt.replace(TQRegExp("%"+TQString::number(i+1)),arg);
     }
     TQString s("#");
     s.append(realCmd).append("\n ").append(realAlt).append(" 2>&1;echo '### 000'\n");
@@ -790,7 +790,7 @@ int fishProtocol::makeTimeFromLs(const TQString &monthStr, const TQString &daySt
         break;
     }
 
-    int pos = timeyearStr.tqfind(':');
+    int pos = timeyearStr.find(':');
     if (timeyearStr.length() == 4 && pos == -1) {
         year = timeyearStr.toInt();
     } else if (pos == -1) {
@@ -820,7 +820,7 @@ void fishProtocol::manageConnection(const TQString &l) {
         case FISH_VER:
             if (line.startsWith("VER 0.0.3")) {
                 line.append(" ");
-                hasAppend = line.tqcontains(" append ");
+                hasAppend = line.contains(" append ");
             } else {
                 error(ERR_UNSUPPORTED_PROTOCOL,line);
                 shutdownConnection();
@@ -897,7 +897,7 @@ void fishProtocol::manageConnection(const TQString &l) {
 
                     atom.m_uds = UDS_USER;
                     atom.m_long = 0;
-                    pos = line.tqfind('.',12);
+                    pos = line.find('.',12);
                     if (pos < 0) {
                         errorCount++;
                         break;
@@ -913,8 +913,8 @@ void fishProtocol::manageConnection(const TQString &l) {
 
                 case 'd':
                     atom.m_uds = UDS_MODIFICATION_TIME;
-                    pos = line.tqfind(' ');
-                    pos2 = line.tqfind(' ',pos+1);
+                    pos = line.find(' ');
+                    pos2 = line.find(' ',pos+1);
                     if (pos < 0 || pos2 < 0) break;
                     errorCount--;
                     atom.m_long = makeTimeFromLs(line.mid(1,pos-1), line.mid(pos+1,pos2-pos), line.mid(pos2+1));
@@ -923,14 +923,14 @@ void fishProtocol::manageConnection(const TQString &l) {
 
                 case 'D':
                     atom.m_uds = UDS_MODIFICATION_TIME;
-                    pos = line.tqfind(' ');
-                    pos2 = line.tqfind(' ',pos+1);
-                    pos3 = line.tqfind(' ',pos2+1);
+                    pos = line.find(' ');
+                    pos2 = line.find(' ',pos+1);
+                    pos3 = line.find(' ',pos2+1);
                     if (pos < 0 || pos2 < 0 || pos3 < 0) break;
                     dt.setDate(TQDate(line.mid(1,pos-1).toInt(),line.mid(pos+1,pos2-pos-1).toInt(),line.mid(pos2+1,pos3-pos2-1).toInt()));
                     pos = pos3;
-                    pos2 = line.tqfind(' ',pos+1);
-                    pos3 = line.tqfind(' ',pos2+1);
+                    pos2 = line.find(' ',pos+1);
+                    pos3 = line.find(' ',pos2+1);
                     if (pos < 0 || pos2 < 0 || pos3 < 0) break;
                     dt.setTime(TQTime(line.mid(pos+1,pos2-pos-1).toInt(),line.mid(pos2+1,pos3-pos2-1).toInt(),line.mid(pos3+1).toInt()));
                     errorCount--;
@@ -953,7 +953,7 @@ void fishProtocol::manageConnection(const TQString &l) {
                 case ':':
                     atom.m_uds = UDS_NAME;
                     atom.m_long = 0;
-                    pos = line.tqfindRev('/');
+                    pos = line.findRev('/');
                     atom.m_str = thisFn = line.mid(pos < 0?1:pos+1);
                     if (fishCommand == FISH_LIST)
                         udsEntry.append(atom);
@@ -981,7 +981,7 @@ void fishProtocol::manageConnection(const TQString &l) {
                     // This is getting ugly. file(1) makes some uneducated
                     // guesses, so we must try to ignore them (#51274)
                     else if (mimeAtom.m_str.isEmpty() && line.right(8) != "/unknown" &&
-                            (thisFn.tqfind('.') < 0 || (line.left(8) != "Mtext/x-"
+                            (thisFn.find('.') < 0 || (line.left(8) != "Mtext/x-"
                                                   && line != "Mtext/plain"))) {
                         mimeAtom.m_str = type;
                     }
@@ -1186,7 +1186,7 @@ void fishProtocol::writeStdin(const TQString &line)
 
     if (writeReady) {
         writeReady = false;
-        //myDebug( << "Writing: " << qlist.first().mid(0,qlist.first().tqfind('\n')) << endl);
+        //myDebug( << "Writing: " << qlist.first().mid(0,qlist.first().find('\n')) << endl);
         myDebug( << "Writing: " << qlist.first() << endl);
         myDebug( << "---------" << endl);
         writeChild((const char *)qlist.first().latin1(), qlist.first().length());
@@ -1218,7 +1218,7 @@ void fishProtocol::sent()
     if (qlist.count() == 0) {
         writeReady = true;
     } else {
-        //myDebug( << "Writing: " << qlist.first().mid(0,qlist.first().tqfind('\n')) << endl);
+        //myDebug( << "Writing: " << qlist.first().mid(0,qlist.first().find('\n')) << endl);
         myDebug( << "Writing: " << qlist.first() << endl);
         myDebug( << "---------" << endl);
         writeChild((const char *)qlist.first().latin1(),qlist.first().length());
@@ -1364,7 +1364,7 @@ void fishProtocol::finished() {
         udsEntry.clear();
         udsStatEntry.clear();
         writeStdin(commandList.first());
-        //if (fishCommand != FISH_APPEND && fishCommand != FISH_WRITE) infoMessage("Sending "+(commandList.first().mid(1,commandList.first().tqfind("\n")-1))+"...");
+        //if (fishCommand != FISH_APPEND && fishCommand != FISH_WRITE) infoMessage("Sending "+(commandList.first().mid(1,commandList.first().find("\n")-1))+"...");
         commandList.remove(commandList.begin());
         commandCodes.remove(commandCodes.begin());
     } else {

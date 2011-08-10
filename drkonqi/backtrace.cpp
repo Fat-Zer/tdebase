@@ -137,7 +137,7 @@ bool BackTrace::usefulBacktrace()
 {
   // remove crap
   if( !m_krashconf->removeFromBacktraceRegExp().isEmpty())
-    m_strBt.tqreplace(TQRegExp( m_krashconf->removeFromBacktraceRegExp()), TQString());
+    m_strBt.replace(TQRegExp( m_krashconf->removeFromBacktraceRegExp()), TQString());
 
   if( m_krashconf->disableChecks())
       return true;
@@ -146,16 +146,16 @@ bool BackTrace::usefulBacktrace()
   // how many " ?? " in the bt ?
   int unknown = 0;
   if( !m_krashconf->invalidStackFrameRegExp().isEmpty())
-    unknown = strBt.tqcontains( TQRegExp( m_krashconf->invalidStackFrameRegExp()));
+    unknown = strBt.contains( TQRegExp( m_krashconf->invalidStackFrameRegExp()));
   // how many stack frames in the bt ?
   int frames = 0;
   if( !m_krashconf->frameRegExp().isEmpty())
-    frames = strBt.tqcontains( TQRegExp( m_krashconf->frameRegExp()));
+    frames = strBt.contains( TQRegExp( m_krashconf->frameRegExp()));
   else
-    frames = strBt.tqcontains('\n');
+    frames = strBt.contains('\n');
   bool tooShort = false;
   if( !m_krashconf->neededInValidBacktraceRegExp().isEmpty())
-    tooShort = ( strBt.tqfind( TQRegExp( m_krashconf->neededInValidBacktraceRegExp())) == -1 );
+    tooShort = ( strBt.find( TQRegExp( m_krashconf->neededInValidBacktraceRegExp())) == -1 );
   return !m_strBt.isNull() && !tooShort && (unknown < frames);
 }
 

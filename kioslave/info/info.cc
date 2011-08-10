@@ -93,7 +93,7 @@ void InfoProtocol::get( const KURL& url )
     decodeURL( url );
 
     TQString path = KGlobal::iconLoader()->iconPath("up", KIcon::Toolbar, true);
-    int revindex = path.tqfindRev('/');
+    int revindex = path.findRev('/');
     path = path.left(revindex);
 
     TQString cmd = KProcess::quote(m_perl);
@@ -205,7 +205,7 @@ void InfoProtocol::decodePath( TQString path )
     }
     //kdDebug( 7108 ) << "Path: " << path << endl;
 
-    int slashPos = path.tqfind( "/" );
+    int slashPos = path.find( "/" );
 
     if( slashPos < 0 )
     {

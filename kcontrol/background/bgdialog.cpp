@@ -510,7 +510,7 @@ void BGDialog::loadWallpaperFilesList() {
       KSimpleConfig fileConfig(*it);
       fileConfig.setGroup("Wallpaper");
 
-      int slash = (*it).tqfindRev('/') + 1;
+      int slash = (*it).findRev('/') + 1;
       TQString directory = (*it).left(slash);
       
       TQString imageCaption = fileConfig.readEntry("Name");
@@ -524,14 +524,14 @@ void BGDialog::loadWallpaperFilesList() {
       if (imageCaption.isEmpty())
       {
          imageCaption = fileName;
-         imageCaption.tqreplace('_', ' ');
+         imageCaption.replace('_', ' ');
          imageCaption = KStringHandler::capwords(imageCaption);
       }
 
       // avoid name collisions
       TQString rs = imageCaption;
       TQString lrs = rs.lower();
-      for (int n = 1; papers.tqfind(lrs) != papers.end(); ++n)
+      for (int n = 1; papers.find(lrs) != papers.end(); ++n)
       {
          rs = imageCaption + " (" + TQString::number(n) + ')';
          lrs = rs.lower();
@@ -562,8 +562,8 @@ void BGDialog::loadWallpaperFilesList() {
 
          if (imageCaption.isEmpty())
          {
-            int slash = (*it).tqfindRev('/') + 1;
-            int endDot = (*it).tqfindRev('.');
+            int slash = (*it).findRev('/') + 1;
+            int endDot = (*it).findRev('.');
 
             // strip the extension if it exists
             if (endDot != -1 && endDot > slash)
@@ -571,14 +571,14 @@ void BGDialog::loadWallpaperFilesList() {
             else
                imageCaption = (*it).mid(slash);
 
-            imageCaption.tqreplace('_', ' ');
+            imageCaption.replace('_', ' ');
             imageCaption = KStringHandler::capwords(imageCaption);
          }
 
          // avoid name collisions
          TQString rs = imageCaption;
          TQString lrs = rs.lower();
-         for (int n = 1; papers.tqfind(lrs) != papers.end(); ++n)
+         for (int n = 1; papers.find(lrs) != papers.end(); ++n)
          {
             rs = imageCaption + " (" + TQString::number(n) + ')';
             lrs = rs.lower();
@@ -606,12 +606,12 @@ void BGDialog::setWallpaper(const TQString &s)
    KComboBox *comboWallpaper = m_urlWallpaperBox;
    comboWallpaper->blockSignals(true);
 
-   if (m_wallpaper.tqfind(s) == m_wallpaper.end())
+   if (m_wallpaper.find(s) == m_wallpaper.end())
    {
       int i = comboWallpaper->count();
       TQString imageCaption;
-      int slash = s.tqfindRev('/') + 1;
-      int endDot = s.tqfindRev('.');
+      int slash = s.findRev('/') + 1;
+      int endDot = s.findRev('.');
 
       // strip the extension if it exists
       if (endDot != -1 && endDot > slash)
@@ -750,7 +750,7 @@ void BGDialog::updateUI()
 
      case KBackgroundSettings::Pattern:
         {
-           int i = m_patterns.tqfindIndex(r->KBackgroundPattern::name());
+           int i = m_patterns.findIndex(r->KBackgroundPattern::name());
            if (i >= 0)
               m_comboPattern->setCurrentItem(NR_PREDEF_PATTERNS+i);
            else

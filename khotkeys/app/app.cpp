@@ -112,7 +112,7 @@ int KDE_EXPORT kdemain( int argc, char** argv )
 	    XCloseDisplay(dpy);
 	    dpy = 0;
 
-	    if ((pos = displayname.tqfindRev('.')) != -1)
+	    if ((pos = displayname.findRev('.')) != -1)
 		displayname.remove(pos, 10);
 
 	    TQCString env;

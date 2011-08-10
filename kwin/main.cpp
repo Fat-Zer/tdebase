@@ -227,7 +227,7 @@ KDE_EXPORT int kdemain( int argc, char * argv[] )
             XCloseDisplay( dpy );
             dpy = 0;
 
-            if ((pos = display_name.tqfindRev('.')) != -1 )
+            if ((pos = display_name.findRev('.')) != -1 )
                 display_name.remove(pos,10); // 10 is enough to be sure we removed ".s"
 
             TQCString envir;

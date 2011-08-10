@@ -207,7 +207,7 @@ void KGreeter::readFacesList()
         if ( line.isEmpty() )
             continue;
         TQString icon;
-        int index = line.tqfind( ' ' );
+        int index = line.find( ' ' );
         if ( index > 0 ) {
             icon = line.left( index );
             line = line.mid( index );
@@ -329,7 +329,7 @@ KGreeter::insertUser( const TQImage &default_pix,
             p = default_pix;
 
 	TQString realname = KStringHandler::from8Bit( ps->pw_gecos );
-	realname.truncate( realname.tqfind( ',' ) );
+	realname.truncate( realname.find( ',' ) );
 	if (realname.isEmpty() || realname == username)
 		new UserListViewItem( userView, username, TQPixmap( p ), username );
 	else {
@@ -343,7 +343,7 @@ KGreeter::insertUser( const TQImage &default_pix,
 
 class KCStringList : public TQValueList<TQCString> {
   public:
-	bool tqcontains( const char *str ) const
+	bool contains( const char *str ) const
 	{
 		for (ConstIterator it = begin(); it != end(); ++it)
 			if (*it == str)
@@ -355,9 +355,9 @@ class KCStringList : public TQValueList<TQCString> {
 class UserList {
   public:
 	UserList( char **in );
-	bool hasUser( const char *str ) const { return users.tqcontains( str ); }
+	bool hasUser( const char *str ) const { return users.contains( str ); }
 	bool hasGroup( gid_t gid ) const
-		{ return groups.tqfind( gid ) != groups.end(); }
+		{ return groups.find( gid ) != groups.end(); }
 	bool hasGroups() const { return !groups.isEmpty(); }
 	KCStringList users;
 
@@ -412,7 +412,7 @@ KGreeter::insertUsers(int limit_users)
 			    !noUsers.hasGroup( ps->pw_gid ))
 			{
 				TQString username( TQFile::decodeName( ps->pw_name ) );
-				if (!dupes.tqfind( username )) {
+				if (!dupes.find( username )) {
 					dupes.insert( username, (int *)-1 );
                                         toinsert.append( username );
 
@@ -443,7 +443,7 @@ KGreeter::insertUsers(int limit_users)
 // 			    !noUsers.hasGroup( ps->pw_gid ))
 //                         {
 //                             TQString username( TQFile::decodeName( ent->ut_user ) );
-//                             if (!dupes.tqfind( username )) {
+//                             if (!dupes.find( username )) {
 //                                 dupes.insert( username, (int *)-1 );
 //                                 toinsert.append( username );
 //                                 count++;
@@ -477,7 +477,7 @@ KGreeter::insertUsers(int limit_users)
 				     users.hasGroup( ps->pw_gid )))
 				{
 					TQString username( TQFile::decodeName( ps->pw_name ) );
-					if (!dupes.tqfind( username )) {
+					if (!dupes.find( username )) {
 						dupes.insert( username, (int *)-1 );
 						insertUser( default_pix, username, ps );
 					}

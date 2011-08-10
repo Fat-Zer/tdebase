@@ -292,7 +292,7 @@ void NSPluginLoader::scanPlugins()
               stripped = stripped.right( stripped.length()-p );
 
               // add filetype to list
-              if ( !stripped.isEmpty() && !_filetype.tqfind(stripped) )
+              if ( !stripped.isEmpty() && !_filetype.find(stripped) )
                   _filetype.insert( stripped, new TQString(mime));
           }
         }

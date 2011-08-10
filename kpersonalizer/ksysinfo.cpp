@@ -57,9 +57,9 @@ void KSysInfo::initXInfo() {
 	// vendor
 	m_xvendor = !dpy ? TQString::null : (TQString)ServerVendor(dpy);
 	// XFree-Inc?
-	m_xfree_inc = m_xvendor.tqcontains("XFree86");
+	m_xfree_inc = m_xvendor.contains("XFree86");
 	// X.org ?
-	m_xorg = m_xvendor.tqcontains("X.Org");
+	m_xorg = m_xvendor.contains("X.Org");
 	// release-number
 	m_xrelease = !dpy ? 0 : VendorRelease(dpy);
 	// RENDER-support
@@ -106,22 +106,22 @@ void KSysInfo::initFontFamilies() {
 	for (uint i=0; i < families.count(); i++) {
 		TQString font = *families.tqat(i);
 		//add further NORMAL fonts here
-		if ( (font.tqcontains("Arial [") || font=="Arial") && normal_priority < 15 ) {
+		if ( (font.contains("Arial [") || font=="Arial") && normal_priority < 15 ) {
 			m_normal_font = font;
 			normal_priority = 15;
-		} else if ( font.tqcontains("Vera Sans") && normal_priority < 12 ) {
+		} else if ( font.contains("Vera Sans") && normal_priority < 12 ) {
 			m_normal_font = font;
 			normal_priority = 12;
-		} else if ( (font.tqcontains("Luxi Sans") || font.tqcontains("Lucidux Sans")) && normal_priority < 10 ) {
+		} else if ( (font.contains("Luxi Sans") || font.contains("Lucidux Sans")) && normal_priority < 10 ) {
 			m_normal_font = font;
 			normal_priority = 10;
-		} else if ( font.tqcontains("Helmet") && normal_priority < 7 ) {
+		} else if ( font.contains("Helmet") && normal_priority < 7 ) {
 			m_normal_font = font;
 			normal_priority = 7;
-		} else if ( font.tqcontains("Nimbus Sans") && normal_priority < 5 ) {
+		} else if ( font.contains("Nimbus Sans") && normal_priority < 5 ) {
 			m_normal_font = font;
 			normal_priority = 5;
-		} else if ( font.tqcontains("Sans") & m_fdb->isSmoothlyScalable(font) && normal_priority < 3 ) {
+		} else if ( font.contains("Sans") & m_fdb->isSmoothlyScalable(font) && normal_priority < 3 ) {
 			m_normal_font = font;
 			normal_priority = 3;
 		} else if ( m_fdb->isSmoothlyScalable(font) && !(m_fdb->isFixedPitch(font,"Normal") && m_fdb->isFixedPitch(font,"Bold")) && normal_priority < 2) {
@@ -132,16 +132,16 @@ void KSysInfo::initFontFamilies() {
 			normal_priority = 1;
 		}
 		//add further FIXED fonts here
-		if (font.tqcontains("Courier New") && fixed_priority < 15){
+		if (font.contains("Courier New") && fixed_priority < 15){
 			m_fixed_font = font;
 			fixed_priority = 15;
-		} else if ( (font.tqcontains("Luxi Mono") || font.tqcontains("Lucidux Mono")) && fixed_priority < 10 ) {
+		} else if ( (font.contains("Luxi Mono") || font.contains("Lucidux Mono")) && fixed_priority < 10 ) {
 			m_fixed_font = font;
 			fixed_priority = 10;
-		} else if (font.tqcontains("Andale Mono") && fixed_priority < 5) {
+		} else if (font.contains("Andale Mono") && fixed_priority < 5) {
 			m_fixed_font = font;
 			fixed_priority = 5;
-		} else if ( font.tqcontains("Mono") && m_fdb->isSmoothlyScalable(font) && fixed_priority < 3 ) {
+		} else if ( font.contains("Mono") && m_fdb->isSmoothlyScalable(font) && fixed_priority < 3 ) {
 			m_fixed_font = font;
 			fixed_priority = 3;
 		} else if ( m_fdb->isSmoothlyScalable(font) && m_fdb->isFixedPitch(font,"Normal") && fixed_priority < 2 ) {
@@ -201,11 +201,11 @@ TQFont KSysInfo::getFixedWidthFont(){
 		// File Parser
 		while (file->readLine(buf, sizeof(buf) - 1) > 0) {
 			TQString s1 = TQString::fromLocal8Bit(buf);
-			TQString s2 = s1.mid(s1.tqfind(":") + 1);
-			s1.truncate(s1.tqfind(":"));
+			TQString s2 = s1.mid(s1.find(":") + 1);
+			s1.truncate(s1.find(":"));
 			s1=s1.stripWhiteSpace();
 			s2=s2.stripWhiteSpace();
-			if(s1.tqcontains("MHz")){
+			if(s1.contains("MHz")){
 				float fspeed = s2.toFloat(0);
 				fspeed = floor(fspeed);
 				m_cpu_speed = (int)fspeed;

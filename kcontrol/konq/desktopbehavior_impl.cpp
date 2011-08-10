@@ -259,7 +259,7 @@ void DesktopBehavior::fillMediaListView()
     for (; it2 != mimetypes.end(); ++it2) {
         if ( ((*it2)->name().startsWith("media/")) )
         {
-            bool ok=excludedMedia.tqcontains((*it2)->name())==0;
+            bool ok=excludedMedia.contains((*it2)->name())==0;
             new DesktopBehaviorMediaItem (this, mediaListView, (*it2)->comment(), (*it2)->name(),ok);
         }
     }
@@ -309,8 +309,8 @@ void DesktopBehavior::load( bool useDefaults )
     previewListView->clear();
     TQStringList previews = g_pConfig->readListEntry("Preview");
     for (KTrader::OfferList::ConstIterator it = plugins.begin(); it != plugins.end(); ++it)
-        new DesktopBehaviorPreviewItem(this, previewListView, *it, previews.tqcontains((*it)->desktopEntryName()));
-    new DesktopBehaviorPreviewItem(this, previewListView, previews.tqcontains("audio/"));
+        new DesktopBehaviorPreviewItem(this, previewListView, *it, previews.contains((*it)->desktopEntryName()));
+    new DesktopBehaviorPreviewItem(this, previewListView, previews.contains("audio/"));
     //
     g_pConfig->setGroup( "FMSettings" );
     toolTipBox->setChecked(g_pConfig->readBoolEntry( "ShowFileTips", true ) );

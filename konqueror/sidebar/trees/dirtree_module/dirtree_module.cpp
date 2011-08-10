@@ -549,7 +549,7 @@ void KonqSidebarDirTreeModule::slotRedirection( const KURL & oldUrl, const KURL 
 
     do 
     {
-	if (item->alias.tqcontains(newUrlStr)) continue;
+	if (item->alias.contains(newUrlStr)) continue;
 	kdDebug()<<"Redirectiong element"<<endl;
         // We need to update the URL in m_dictSubDirs
         m_dictSubDirs.insert( newUrlStr, item );

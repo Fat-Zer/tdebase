@@ -174,7 +174,7 @@ TQString View::langLookup( const TQString &fname )
         // css etc) then look in other languages first.
         if ( ( *it ).endsWith( "docbook" ) )
         {
-            TQString file = (*it).left((*it).tqfindRev('/')) + "/index.docbook";
+            TQString file = (*it).left((*it).findRev('/')) + "/index.docbook";
             info.setFile(file);
             if (info.exists() && info.isFile() && info.isReadable())
             {
@@ -361,7 +361,7 @@ KURL View::urlFromLinkNode( const DOM::Node &n ) const
     return href;
 
   TQString path = baseURL().path();
-  path.truncate( path.tqfindRev( '/' ) + 1 );
+  path.truncate( path.findRev( '/' ) + 1 );
   path += href.url();
 
   KURL url = baseURL();

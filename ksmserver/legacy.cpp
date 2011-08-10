@@ -71,7 +71,7 @@ static Atom wm_client_leader = None;
 static int winsErrorHandler(Display *, XErrorEvent *ev)
 {
     if (windowMapPtr) {
-        WindowMap::Iterator it = windowMapPtr->tqfind(ev->resourceid);
+        WindowMap::Iterator it = windowMapPtr->find(ev->resourceid);
         if (it != windowMapPtr->end())
             (*it).type = SM_ERROR;
     }
@@ -101,7 +101,7 @@ void KSMServer::performLegacySessionSave()
     for ( TQValueList<WId>::ConstIterator it = module.windows().begin();
 	  it != module.windows().end(); ++it) {
         WId leader = windowWmClientLeader( *it );
-        if (!legacyWindows.tqcontains(leader) && windowSessionId( *it, leader ).isEmpty()) {
+        if (!legacyWindows.contains(leader) && windowSessionId( *it, leader ).isEmpty()) {
             SMType wtype = SM_WMCOMMAND;
             int nprotocols = 0;
             Atom *protocols = 0;
@@ -165,7 +165,7 @@ void KSMServer::performLegacySessionSave()
             XNextEvent(newdisplay, &ev);
             if ( ( ev.xany.type == UnmapNotify ) ||
                  ( ev.xany.type == PropertyNotify && ev.xproperty.atom == XA_WM_COMMAND ) ) {
-                WindowMap::Iterator it = legacyWindows.tqfind( ev.xany.window );
+                WindowMap::Iterator it = legacyWindows.find( ev.xany.window );
                 if ( it != legacyWindows.end() && (*it).type != SM_WMCOMMAND ) {
                     awaiting_replies -= 1;
                     if ( (*it).type != SM_ERROR )
@@ -217,8 +217,8 @@ void KSMServer::storeLegacySession( KConfig* config )
     int count = 0;
     for (WindowMap::ConstIterator it = legacyWindows.begin(); it != legacyWindows.end(); ++it) {
         if ( (*it).type != SM_ERROR) {
-            if( excludeApps.tqcontains( (*it).wmclass1.lower())
-                || excludeApps.tqcontains( (*it).wmclass2.lower()) || (*it).wmCommand[0] == "compiz" || (*it).wmCommand[0] == "beryl" || (*it).wmCommand[0] == "aquamarine" || (*it).wmCommand[0] == "beryl-manager" || (*it).wmCommand[0] == "beryl-settings" || (*it).wmCommand[0] == "kde-window-decorator" || (*it).wmCommand[0] == "emerald")
+            if( excludeApps.contains( (*it).wmclass1.lower())
+                || excludeApps.contains( (*it).wmclass2.lower()) || (*it).wmCommand[0] == "compiz" || (*it).wmCommand[0] == "beryl" || (*it).wmCommand[0] == "aquamarine" || (*it).wmCommand[0] == "beryl-manager" || (*it).wmCommand[0] == "beryl-settings" || (*it).wmCommand[0] == "kde-window-decorator" || (*it).wmCommand[0] == "emerald")
                 continue;
             if ( !(*it).wmCommand.isEmpty() && !(*it).wmClientMachine.isEmpty() ) {
                 count++;

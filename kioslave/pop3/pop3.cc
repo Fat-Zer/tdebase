@@ -537,7 +537,7 @@ int POP3Protocol::loginSASL( KIO::AuthInfo &ai )
     challenge.resize( 2049 );
     resp = command( firstCommand.latin1(), challenge.data(), 2049 );
     while( resp == Cont ) {
-      challenge.resize(challenge.tqfind(0));
+      challenge.resize(challenge.find(0));
 //      POP3_DEBUG << "S: " << TQCString(challenge.data(),challenge.size()+1) << endl;
       KCodecs::base64Decode( challenge, tmp );
       do {
@@ -704,7 +704,7 @@ bool POP3Protocol::pop3_open()
     TQRegExp re("<[A-Za-z0-9\\.\\-_]+@[A-Za-z0-9\\.\\-_]+>$", false);
 
     POP3_DEBUG << "greeting: " << greeting << endl;
-    int apop_pos = greeting.tqfind(re);
+    int apop_pos = greeting.find(re);
     supports_apop = (bool) (apop_pos != -1);
 
     if (metaData("nologin") == "on")
@@ -794,7 +794,7 @@ size_t POP3Protocol::realGetSize(unsigned int msg_num)
     return 0;
   } else {
     cmd = buf;
-    cmd.remove(0, cmd.tqfind(" "));
+    cmd.remove(0, cmd.find(" "));
     ret = cmd.toLong();
   }
   delete[]buf;
@@ -821,7 +821,7 @@ void POP3Protocol::special(const TQByteArray & aData)
       if (qstrcmp(buf, ".\r\n") == 0)
         break;
       result += " " + TQString(buf).left(strlen(buf) - 2)
-          .tqreplace(" ", "-");
+          .replace(" ", "-");
     }
   }
   if (supports_apop)
@@ -866,15 +866,15 @@ void POP3Protocol::get(const KURL & url)
     return;
   }
 
-  if (((path.tqfind('/') == -1) && (path != "index") && (path != "uidl")
+  if (((path.find('/') == -1) && (path != "index") && (path != "uidl")
        && (path != "commit"))) {
     error(ERR_MALFORMED_URL, url.url());
     m_cmd = CMD_NONE;
     return;
   }
 
-  cmd = path.left(path.tqfind('/'));
-  path.remove(0, path.tqfind('/') + 1);
+  cmd = path.left(path.find('/'));
+  path.remove(0, path.find('/') + 1);
 
   if (!pop3_open()) {
     POP3_DEBUG << "pop3_open failed" << endl;
@@ -949,13 +949,13 @@ void POP3Protocol::get(const KURL & url)
       if ( command(list_cmd.ascii(), buf, sizeof(buf) - 1) == Ok ) {
         list_cmd = buf;
         // We need a space, otherwise we got an invalid reply
-        if (!list_cmd.tqfind(" ")) {
+        if (!list_cmd.find(" ")) {
           POP3_DEBUG << "List command needs a space? " << list_cmd << endl;
           closeConnection();
           error(ERR_INTERNAL, i18n("Unexpected response from POP3 server."));
           return;
         }
-        list_cmd.remove(0, list_cmd.tqfind(" ") + 1);
+        list_cmd.remove(0, list_cmd.find(" ") + 1);
         msg_len = list_cmd.toUInt(&ok);
         if (!ok) {
           POP3_DEBUG << "LIST command needs to return a number? :" <<
@@ -1134,13 +1134,13 @@ void POP3Protocol::listDir(const KURL &)
   }
   POP3_DEBUG << "The stat buf is :" << buf << ":" << endl;
   q_buf = buf;
-  if (q_buf.tqfind(" ") == -1) {
+  if (q_buf.find(" ") == -1) {
     error(ERR_INTERNAL,
           "Invalid POP3 response, we should have at least one space!");
     closeConnection();
     return;
   }
-  q_buf.remove(q_buf.tqfind(" "), q_buf.length());
+  q_buf.remove(q_buf.find(" "), q_buf.length());
 
   num_messages = q_buf.toUInt(&isINT);
   if (!isINT) {

@@ -99,7 +99,7 @@ void SensorAgent::processAnswer( const TQString &buffer )
 
   int end;
   // And now the real information
-  while ( ( end = mAnswerBuffer.tqfind( "\nksysguardd> " ) ) >= 0 ) {
+  while ( ( end = mAnswerBuffer.find( "\nksysguardd> " ) ) >= 0 ) {
 #if SA_TRACE
     kdDebug(1215) << "<= " << mAnswerBuffer.left( end )
                   << "(" << mInputFIFO.count() << "/"

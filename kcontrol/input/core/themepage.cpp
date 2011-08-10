@@ -130,7 +130,7 @@ void ThemePage::load( bool useDefaults )
 		currentTheme = whiteCursor ? "SmallWhite" : "SmallBlack";
 
 	selectedTheme = currentTheme;
-	TQListViewItem *item = listview->tqfindItem( currentTheme, DirColumn );
+	TQListViewItem *item = listview->findItem( currentTheme, DirColumn );
 	item->setSelected( true );
 }
 

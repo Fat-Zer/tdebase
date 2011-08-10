@@ -457,7 +457,7 @@ void HistoryScrollBlockArray::addCells(ca a[], int count)
   size_t *pLen = new size_t;
   *pLen = count;
   
-  m_lineLengths.tqreplace(m_blockArray.getCurrent(), pLen);
+  m_lineLengths.replace(m_blockArray.getCurrent(), pLen);
 }
 
 void HistoryScrollBlockArray::addLine(bool)

@@ -96,7 +96,7 @@ KdmLabel::KdmLabel( KdmItem *parent, const TQDomNode &node, const char *name )
 	}
 
 	// Check if this is a timer label)
-	label.isTimer = label.text.tqfind( "%c" ) >= 0;
+	label.isTimer = label.text.find( "%c" ) >= 0;
 	if (label.isTimer) {
 		timer = new TQTimer( this );
 		timer->start( 1000 );
@@ -110,7 +110,7 @@ KdmLabel::setTextInt( const TQString &txt)
 {
   // TODO: catch &&
         cText = txt;
-	cAccel = txt.tqfind('&');
+	cAccel = txt.find('&');
 	delete myAccel;
 	myAccel = 0;
 	if (cAccel != -1) {
@@ -250,7 +250,7 @@ KdmLabel::lookupText( const TQString &t )
 {
 	TQString text = t;
 
-	text.tqreplace( '_', '&' );
+	text.replace( '_', '&' );
 
 	TQMap<TQChar,TQString> m;
 	struct utsname uts;

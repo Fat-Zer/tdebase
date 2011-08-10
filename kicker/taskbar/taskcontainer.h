@@ -57,9 +57,9 @@ public:
     void remove(Task::Ptr);
     void remove(Startup::Ptr);
 
-    bool tqcontains(Task::Ptr);
-    bool tqcontains(Startup::Ptr);
-    bool tqcontains(WId);
+    bool contains(Task::Ptr);
+    bool contains(Startup::Ptr);
+    bool contains(WId);
 
     bool isEmpty();
     bool onCurrentDesktop();

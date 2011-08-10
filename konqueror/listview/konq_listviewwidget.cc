@@ -228,7 +228,7 @@ void KonqBaseListViewWidget::readProtocolConfig( const KURL & url )
    for ( int num = 1; extraFieldsIt != extraFields.end(); ++extraFieldsIt, ++num )
    {
       const TQString column = (*extraFieldsIt).name;
-      if ( lstColumns.tqfind(column) == lstColumns.end() )
+      if ( lstColumns.find(column) == lstColumns.end() )
          lstColumns << column;
       const TQString type = (*extraFieldsIt).type; // ## TODO use when sorting
       TQVariant::Type t = TQVariant::Invalid;
@@ -325,7 +325,7 @@ void KonqBaseListViewWidget::readProtocolConfig( const KURL & url )
          continue;
       }
 
-      TQStringList::Iterator listIt = listingList.tqfind( confColumns[i].desktopFileName );
+      TQStringList::Iterator listIt = listingList.find( confColumns[i].desktopFileName );
       if ( listIt == listingList.end() ) // not found -> hide
       {
          //move all columns behind one to the front
@@ -634,7 +634,7 @@ void KonqBaseListViewWidget::slotAutoScroll()
                rr = rr.unite( tqitemRect( cur ) );
 	    }
 	    
-	    if ( !m_selected || !m_selected->tqcontains( (KonqBaseListViewItem*)cur ) )
+	    if ( !m_selected || !m_selected->contains( (KonqBaseListViewItem*)cur ) )
 	    {
                setSelected( cur, false );
 	    }
@@ -670,7 +670,7 @@ void KonqBaseListViewWidget::slotAutoScroll()
               rr = rr.unite( tqitemRect( cur ) );
 	    }
 
-            if ( !m_selected || !m_selected->tqcontains( (KonqBaseListViewItem*)cur ) )
+            if ( !m_selected || !m_selected->contains( (KonqBaseListViewItem*)cur ) )
 	    {
                setSelected( cur, false );
 	    }
@@ -718,7 +718,7 @@ void KonqBaseListViewWidget::slotAutoScroll()
 
    if ( !TQRect( scroll_margin, scroll_margin,
                 viewport()->width() - 2*scroll_margin,
-                viewport()->height() - 2*scroll_margin ).tqcontains( pos ) )
+                viewport()->height() - 2*scroll_margin ).contains( pos ) )
    {
       if ( !m_scrollTimer )
       {
@@ -762,7 +762,7 @@ void KonqBaseListViewWidget::viewportDragMoveEvent( TQDragMoveEvent *_ev )
 
    // Unselect previous drag-over-item
    if ( m_dragOverItem && m_dragOverItem != item )
-       if ( !m_selected || !m_selected->tqcontains( m_dragOverItem ) )
+       if ( !m_selected || !m_selected->contains( m_dragOverItem ) )
            setSelected( m_dragOverItem, false );
 
    if ( !item )
@@ -1255,7 +1255,7 @@ void KonqBaseListViewWidget::slotNewItems( const KFileItemList & entries )
          m_itemFound = true;
       }
       if ( !m_itemsToSelect.isEmpty() ) {
-         TQStringList::Iterator tsit = m_itemsToSelect.tqfind( (*kit)->name() );
+         TQStringList::Iterator tsit = m_itemsToSelect.find( (*kit)->name() );
          if ( tsit != m_itemsToSelect.end() ) {
             m_itemsToSelect.remove( tsit );
             setSelected( tmp, true );

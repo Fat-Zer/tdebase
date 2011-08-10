@@ -244,7 +244,7 @@ void PanelBrowserMenu::initialize()
                 title = c.readEntry("Name", title);
 
                 TQString s = c.readEntry("Icon");
-                if(!_icons->tqcontains(s)) {
+                if(!_icons->contains(s)) {
                     icon  = KGlobal::iconLoader()->loadIcon(s, KIcon::Small, KIcon::SizeSmall,
                                                             KIcon::DefaultState, 0, true);
 
@@ -344,7 +344,7 @@ void PanelBrowserMenu::append(const TQPixmap &pixmap, const TQString &title, con
     // avoid &'s being converted to accelerators
     TQString newTitle = title;
     newTitle = KStringHandler::cEmSqueeze( newTitle, fontMetrics(), 20 );
-    newTitle.tqreplace("&", "&&");
+    newTitle.replace("&", "&&");
 
     // insert menu item
     int id = insertItem(pixmap, newTitle);
@@ -362,7 +362,7 @@ void PanelBrowserMenu::append(const TQPixmap &pixmap, const TQString &title, Pan
     // avoid &'s being converted to accelerators
     TQString newTitle = title;
     newTitle = KStringHandler::cEmSqueeze( newTitle, fontMetrics(), 20 );
-    newTitle.tqreplace("&", "&&");
+    newTitle.replace("&", "&&");
 
     // insert submenu
     insertItem(pixmap, newTitle, subMenu);
@@ -388,7 +388,7 @@ void PanelBrowserMenu::mouseMoveEvent(TQMouseEvent *e)
 
     // get id
     int id = idAt(_lastpress);
-    if(!_filemap.tqcontains(id)) return;
+    if(!_filemap.contains(id)) return;
 
     // reset _lastpress
     _lastpress = TQPoint(-1, -1);
@@ -439,7 +439,7 @@ void PanelBrowserMenu::slotExec(int id)
 {
     kapp->propagateSessionManager();
 
-    if(!_filemap.tqcontains(id)) return;
+    if(!_filemap.contains(id)) return;
 
     KURL url;
     url.setPath(path() + "/" + _filemap[id]);
@@ -494,9 +494,9 @@ void PanelBrowserMenu::slotMimeCheck()
 //    kdDebug() << url.url() << ": " << icon << endl;
 
     file = KStringHandler::cEmSqueeze( file, fontMetrics(), 20 );
-    file.tqreplace("&", "&&");
+    file.replace("&", "&&");
 
-    if(!_icons->tqcontains(icon)) {
+    if(!_icons->contains(icon)) {
         TQPixmap pm = SmallIcon(icon);
         if( pm.height() > 16 )
         {

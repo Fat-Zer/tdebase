@@ -63,7 +63,7 @@ void PanelRemoveAppletMenu::slotAboutToShow()
         }
 
         items.append(PanelMenuItemInfo(container->icon(),
-                                       container->visibleName().tqreplace("&", "&&"),
+                                       container->visibleName().replace("&", "&&"),
                                        id));
         ++id;
         ++it;

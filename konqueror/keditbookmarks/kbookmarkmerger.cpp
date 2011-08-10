@@ -108,7 +108,7 @@ int main( int argc, char**argv )
 
 	for ( unsigned int i = 0; i < extraBookmarksDir.count(); ++i ) {
 		const TQString fileName = extraBookmarksDir[ i ];
-		if ( mergedFiles.tqfind( fileName ) != mergedFiles.end() ) {
+		if ( mergedFiles.find( fileName ) != mergedFiles.end() ) {
 			continue;
 		}
 

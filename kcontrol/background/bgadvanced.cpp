@@ -240,7 +240,7 @@ void BGAdvancedDialog::updateUI()
 
 void BGAdvancedDialog::removeProgram(const TQString &name)
 {
-   if (m_programItems.tqfind(name))
+   if (m_programItems.find(name))
    {
       delete m_programItems[name];
       m_programItems.remove(name);
@@ -265,7 +265,7 @@ void BGAdvancedDialog::addProgram(const TQString &name)
 
 void BGAdvancedDialog::selectProgram(const TQString &name)
 {
-   if (m_programItems.tqfind(name))
+   if (m_programItems.find(name))
    {
       TQListViewItem *item = m_programItems[name];
       dlg->m_listPrograms->ensureItemVisible(item);

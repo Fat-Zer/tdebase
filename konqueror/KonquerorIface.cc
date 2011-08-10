@@ -280,7 +280,7 @@ bool KonquerorIface::processCanBeReused( int screen )
              ++it2 )
         {
             kdDebug(1202) << "processCanBeReused: part=" << (*it2)->service()->desktopEntryPath() << ", URL=" << (*it2)->url().prettyURL() << endl;
-            if( !allowed_parts.tqcontains( (*it2)->service()->desktopEntryPath()))
+            if( !allowed_parts.contains( (*it2)->service()->desktopEntryPath()))
                 return false;
         }
     }

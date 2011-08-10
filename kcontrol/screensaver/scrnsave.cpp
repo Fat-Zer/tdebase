@@ -360,7 +360,7 @@ void KScreenSaver::load( bool useDefaults )
     for (SaverConfig* saver = mSaverList.first(); saver != 0; saver = mSaverList.next()) {
         if (saver->file() == mSaver)
         {
-            selectedItem = mSaverListView->tqfindItem ( saver->name(), 0 );
+            selectedItem = mSaverListView->findItem ( saver->name(), 0 );
             if (selectedItem) {
                 mSelected = i;
                 break;
@@ -503,7 +503,7 @@ void KScreenSaver::findSavers()
                 item = new TQListViewItem ( mSaverListView, s->name(), "2" + s->name() );
             else
             {
-                TQListViewItem *categoryItem = mSaverListView->tqfindItem( s->category(), 0 );
+                TQListViewItem *categoryItem = mSaverListView->findItem( s->category(), 0 );
                 if ( !categoryItem ) {
                     categoryItem = new TQListViewItem ( mSaverListView, s->category(), "1" + s->category() );
                     categoryItem->setPixmap ( 0, SmallIcon ( "kscreensaver" ) );

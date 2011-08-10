@@ -70,7 +70,7 @@ KStart::KStart()
         data.addPid( proc.pid() );
         TQCString bin = proc.args().first();
         data.setName( bin );
-        data.setBin( bin.mid( bin.tqfindRev( '/' ) + 1 ));
+        data.setBin( bin.mid( bin.findRev( '/' ) + 1 ));
         KStartupInfo::sendChange( id, data );
     }
     else
@@ -88,7 +88,7 @@ void KStart::sendRule() {
         message += "wmclass=" + windowclass + "\nwmclassmatch=1\n" // 1 = exact match
             + "wmclasscomplete="
             // if windowclass contains a space (i.e. 2 words, use whole WM_CLASS)
-            + ( windowclass.tqcontains( ' ' ) ? "true" : "false" ) + "\n";
+            + ( windowclass.contains( ' ' ) ? "true" : "false" ) + "\n";
     if( (windowtitle != 0) || (windowclass != 0) ) {
         // always ignore these window types
         message += "types=" + TQCString().setNum( -1U &
@@ -153,7 +153,7 @@ void KStart::windowAdded(WId w){
         XClassHint hint;
         if( !XGetClassHint( qt_xdisplay(), w, &hint ))
             return;
-        TQCString cls = windowclass.tqcontains( ' ' )
+        TQCString cls = windowclass.contains( ' ' )
             ? TQCString( hint.res_name ) + ' ' + hint.res_class : TQCString( hint.res_class );
         cls = cls.lower();
         XFree( hint.res_name );

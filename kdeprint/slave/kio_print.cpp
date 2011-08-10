@@ -563,7 +563,7 @@ void KIO_Print::get(const KURL& url)
 
 	if (group.startsWith("jobs"))
 	{
-		int	p = group.tqfind('?');
+		int	p = group.find('?');
 		if (p != -1)
 			query = group.mid(p+1);
 		if (!query.isEmpty() && query != "jobs" && query != "completed_jobs")
@@ -576,7 +576,7 @@ void KIO_Print::get(const KURL& url)
 		return;
 	}
 
-	int	p = printer.tqfind('?');
+	int	p = printer.find('?');
 	if (p != -1)
 	{
 		query = printer.mid(p+1);

@@ -40,7 +40,7 @@ class WindowRules
         WindowRules();
         void update( Client* );
         void discardTemporary();
-        bool tqcontains( const Rules* rule ) const;
+        bool contains( const Rules* rule ) const;
         void remove( Rules* rule );
         Placement::Policy checkPlacement( Placement::Policy placement ) const;
         TQRect checkGeometry( TQRect rect, bool init = false ) const;
@@ -284,7 +284,7 @@ WindowRules::WindowRules()
     }
 
 inline
-bool WindowRules::tqcontains( const Rules* rule ) const
+bool WindowRules::contains( const Rules* rule ) const
     {
     return tqFind( rules.begin(), rules.end(), rule ) != rules.end();
     }

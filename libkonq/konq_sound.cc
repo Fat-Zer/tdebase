@@ -71,7 +71,7 @@ const TQStringList &KonqSoundPlayerImpl::mimeTypes()
 			vector<string> *prop = (*it).getProperty("MimeType");
 			for (vector<string>::iterator mt = prop->begin();
 				mt != prop->end(); ++mt)
-				if ((*mt).length()) // && (*mt).tqfind("video/") == string::npos)
+				if ((*mt).length()) // && (*mt).find("video/") == string::npos)
 					m_mimeTypes << (*mt).c_str();
 			delete prop;
 		}

@@ -187,7 +187,7 @@ void KickerConfig::setupExtensionInfo(KConfig& config, bool checkExists, bool re
         TQString group(*it);
 
         // is there a config group for this extension?
-        if (!config.hasGroup(group) || group.tqcontains("Extension") < 1)
+        if (!config.hasGroup(group) || group.contains("Extension") < 1)
         {
             continue;
         }

@@ -148,7 +148,7 @@ bool TextCreator::create(const TQString &path, int width, int height, TQImage &i
                     // physical newline in the file if we don't come from one
                     if ( !newLine )
                     {
-                        int pos = text.tqfind( '\n', i );
+                        int pos = text.find( '\n', i );
                         if ( pos == -1 )
 			    break;
                         i = pos + 1;

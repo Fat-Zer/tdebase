@@ -232,7 +232,7 @@ void TESession::setUserTitle( int what, const TQString &caption )
        renameSession(caption);
     if (what == 31) {
        cwd=caption;
-       cwd=cwd.tqreplace( TQRegExp("^~"), TQDir::homeDirPath() );
+       cwd=cwd.replace( TQRegExp("^~"), TQDir::homeDirPath() );
        emit openURLRequest(cwd);
     }    
     if (what == 32) { // change icon via \033]32;Icon\007
@@ -676,8 +676,8 @@ void TESession::zmodemStatus(KProcess *, char *data, int len)
   TQCString msg(data, len+1);
   while(!msg.isEmpty())
   {
-     int i = msg.tqfind('\015');
-     int j = msg.tqfind('\012');
+     int i = msg.find('\015');
+     int j = msg.find('\012');
      TQCString txt;
      if ((i != -1) && ((j == -1) || (i < j)))
      {

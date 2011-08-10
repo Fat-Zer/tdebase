@@ -227,7 +227,7 @@ static bool startNewKonqueror( TQString url, TQString mimetype, const TQString& 
     KService::Ptr serv;
     if( offers.count() > 0 )
         serv = offers.first();
-    return serv == NULL || !allowed_parts.tqcontains( serv->desktopEntryName() + TQString::tqfromLatin1(".desktop") );
+    return serv == NULL || !allowed_parts.contains( serv->desktopEntryName() + TQString::tqfromLatin1(".desktop") );
 }
 
 static int currentScreen()

@@ -295,7 +295,7 @@ void KDMConvenienceWidget::slotUpdateNoPassUser( TQListViewItem *item )
     if ( !item )
         return;
     TQCheckListItem *itm = (TQCheckListItem *)item;
-    TQStringList::iterator it = noPassUsers.tqfind( itm->text() );
+    TQStringList::iterator it = noPassUsers.find( itm->text() );
     if (itm->isOn()) {
 	if (it == noPassUsers.end())
 	    noPassUsers.append( itm->text() );
@@ -328,7 +328,7 @@ void KDMConvenienceWidget::slotAddUsers(const TQMap<TQString,int> &users)
         }
         if (it.data() != 0)
             (new TQCheckListItem(npuserlv, it.key(), TQCheckListItem::CheckBox))->
-    	        setOn(noPassUsers.tqfind(it.key()) != noPassUsers.end());
+    	        setOn(noPassUsers.find(it.key()) != noPassUsers.end());
     }
 
     if (userlb->listBox())
@@ -349,13 +349,13 @@ void KDMConvenienceWidget::slotDelUsers(const TQMap<TQString,int> &users)
 	if (it.data() > 0) {
 	    if (it.key() != autoUser && userlb->listBox())
 	        delete userlb->listBox()->
-		  tqfindItem( it.key(), ExactMatch | CaseSensitive );
+		  findItem( it.key(), ExactMatch | CaseSensitive );
 	    if (it.key() != preselUser && puserlb->listBox())
 	        delete puserlb->listBox()->
-		  tqfindItem( it.key(), ExactMatch | CaseSensitive );
+		  findItem( it.key(), ExactMatch | CaseSensitive );
 	}
 	if (it.data() != 0)
-	    delete npuserlv->tqfindItem( it.key(), 0 );
+	    delete npuserlv->findItem( it.key(), 0 );
     }
 }
 

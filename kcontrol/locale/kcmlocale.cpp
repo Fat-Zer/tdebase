@@ -172,7 +172,7 @@ void KLocaleConfig::slotAddLanguage(const TQString & code)
     pos = 0;
 
   // If it's already in list, just move it (delete the old, then insert a new)
-  int oldPos = languageList.tqfindIndex( code );
+  int oldPos = languageList.findIndex( code );
   if ( oldPos != -1 )
     languageList.remove( languageList.tqat(oldPos) );
 
@@ -305,9 +305,9 @@ void KLocaleConfig::loadLanguageList()
                                    m_locale->translate("without name"));
 
     TQString tag = *it;
-    int index = tag.tqfindRev('/');
+    int index = tag.findRev('/');
     tag = tag.left(index);
-    index = tag.tqfindRev('/');
+    index = tag.findRev('/');
     tag = tag.mid(index + 1);
     m_addLanguage->insertItem(name, tag, submenu, menu_index);
   }
@@ -338,11 +338,11 @@ void KLocaleConfig::loadCountryList()
     TQString tag = *it;
     int index;
 
-    index = tag.tqfindRev('/');
+    index = tag.findRev('/');
     if (index != -1)
       tag = tag.mid(index + 1);
 
-    index = tag.tqfindRev('.');
+    index = tag.findRev('.');
     if (index != -1)
       tag.truncate(index);
 
@@ -374,9 +374,9 @@ void KLocaleConfig::loadCountryList()
     TQString submenu = entry.readEntry("Region");
 
     TQString tag = *it;
-    int index = tag.tqfindRev('/');
+    int index = tag.findRev('/');
     tag.truncate(index);
-    index = tag.tqfindRev('/');
+    index = tag.findRev('/');
     tag = tag.mid(index + 1);
     int menu_index = submenu.isEmpty() ? -1 : -2;
 

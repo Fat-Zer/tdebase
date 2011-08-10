@@ -111,7 +111,7 @@ void TaskLMBMenu::fillMenu()
     {
         Task::Ptr t = (*it);
 
-        TQString text = t->visibleName().tqreplace("&", "&&");
+        TQString text = t->visibleName().replace("&", "&&");
 
         TaskMenuItem *menuItem = new TaskMenuItem(text,
                                                   t->isActive(),

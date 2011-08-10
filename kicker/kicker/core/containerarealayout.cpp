@@ -350,7 +350,7 @@ void ContainerAreaLayout::insertIntoFreeSpace(TQWidget* widget, TQPoint insertio
     if (current)
     {
         m_items.erase(m_items.fromLast());
-        ItemList::iterator insertIt = m_items.tqfind(current);
+        ItemList::iterator insertIt = m_items.find(current);
 
         if (insertIt == m_items.begin())
         {
@@ -625,7 +625,7 @@ void ContainerAreaLayout::moveContainerSwitch(TQWidget* container, int distance)
                          : kMin(newPos, last->leftR() - moving->widthR());
 
         // Move 'moving' to its new position in the container list.
-        ItemList::iterator itMoving = m_items.tqfind(moving);
+        ItemList::iterator itMoving = m_items.find(moving);
 
         if (itMoving != m_items.end())
         {

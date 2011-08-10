@@ -161,7 +161,7 @@ bool KPrivacyManager::isApplicationRegistered(const TQString &appName)
   QCStringList regApps = kapp->dcopClient()->registeredApplications();
 
   for ( QCStringList::Iterator it = regApps.begin(); it != regApps.end(); ++it )
-    if((*it).tqfind(appName.latin1()) != -1) return true;
+    if((*it).find(appName.latin1()) != -1) return true;
 
   return false;
 }

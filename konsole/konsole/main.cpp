@@ -375,7 +375,7 @@ extern "C" int KDE_EXPORT kdemain(int argc, char* argv[])
         it != types.end(); ++it)
     {
        TQString file = *it;
-       file = file.mid(file.tqfindRev('/')+1);
+       file = file.mid(file.findRev('/')+1);
        if (file.endsWith(".desktop"))
           file = file.left(file.length()-8);
        printf("%s\n", TQFile::encodeName(file).data());
@@ -437,7 +437,7 @@ extern "C" int KDE_EXPORT kdemain(int argc, char* argv[])
          it != profiles.end(); ++it)
      {
         TQString file = *it;
-        file = file.mid(file.tqfindRev('/')+1);
+        file = file.mid(file.findRev('/')+1);
         printf("%s\n", TQFile::encodeName(file).data());
      }
      return 0;

@@ -97,7 +97,7 @@ TQString FaviconsModule::iconForURL(const KURL &url)
     TQString icon;
     TQString simplifiedURL = simplifyURL(url);
 
-    TQString *iconURL = d->faviconsCache.tqfind( removeSlash(simplifiedURL) );
+    TQString *iconURL = d->faviconsCache.find( removeSlash(simplifiedURL) );
     if (iconURL)
         icon = *iconURL;
     else
@@ -181,7 +181,7 @@ void FaviconsModule::downloadHostIcon(const KURL &url)
 
 void FaviconsModule::startDownload(const TQString &hostOrURL, bool isHost, const KURL &iconURL)
 {
-    if (d->failedDownloads.tqcontains(iconURL.url()))
+    if (d->failedDownloads.contains(iconURL.url()))
         return;
 
     KIO::Job *job = KIO::get(iconURL, false, false);

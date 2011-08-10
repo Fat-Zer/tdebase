@@ -123,7 +123,7 @@ void KIVDirectoryOverlay::slotNewItems( const KFileItemList& items )
         TQString iconName = file -> iconName();
         if (!iconName) continue;
 
-        int* iconCount = m_popularIcons -> tqfind( file -> iconName() );
+        int* iconCount = m_popularIcons -> find( file -> iconName() );
         if (!iconCount) {
             iconCount = new int(0);
             Q_ASSERT(file);

@@ -71,8 +71,8 @@ bool LocalDomainURIFilter::filterURI( KURIFilterData& data ) const
 bool LocalDomainURIFilter::isLocalDomainHost( TQString& cmd ) const
 {
     // find() returns -1 when no match -> left()/truncate() are noops then
-    TQString host( cmd.left( cmd.tqfind( '/' ) ) );
-    host.truncate( host.tqfind( ':' ) ); // Remove port number
+    TQString host( cmd.left( cmd.find( '/' ) ) );
+    host.truncate( host.find( ':' ) ); // Remove port number
 
     if( !(host == last_host && last_time > time( NULL ) - 5 ) ) {
 
@@ -95,7 +95,7 @@ bool LocalDomainURIFilter::isLocalDomainHost( TQString& cmd ) const
         last_result = proc.wait( 1 ) && proc.normalExit() && !proc.exitStatus();
 
         if( !m_fullname.isEmpty() )
-            cmd.tqreplace( 0, host.length(), m_fullname );
+            cmd.replace( 0, host.length(), m_fullname );
     }
 
     return last_result;

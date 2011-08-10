@@ -144,7 +144,7 @@ PasswordDlg::PasswordDlg(LockProcess *parent, GreeterPluginHandle *plugin)
         layoutsList = kxkb.call("getLayoutsList");
         TQString currentLayout = kxkb.call("getCurrentLayout");
         if( !currentLayout.isEmpty() && layoutsList.count() > 1 ) {
-            currLayout = layoutsList.tqfind(currentLayout);
+            currLayout = layoutsList.find(currentLayout);
             if (currLayout == layoutsList.end())
                 setLayoutText("err");
             else

@@ -962,7 +962,7 @@ void KonqKfmIconView::slotNewItems( const KFileItemList& entries )
         KFileItem* fileItem = item->item();
 
         if ( !m_itemsToSelect.isEmpty() ) {
-           TQStringList::Iterator tsit = m_itemsToSelect.tqfind( fileItem->name() );
+           TQStringList::Iterator tsit = m_itemsToSelect.find( fileItem->name() );
            if ( tsit != m_itemsToSelect.end() ) {
               m_itemsToSelect.remove( tsit );
               m_pIconView->setSelected( item, true, true );

@@ -37,11 +37,11 @@ FakeUASProvider::FakeUASProvider()
 FakeUASProvider::StatusCode FakeUASProvider::createNewUAProvider( const TQString& uaStr )
 {
   TQStringList split;
-  int pos = (uaStr).tqfind("::");
+  int pos = (uaStr).find("::");
 
   if ( pos == -1 )
   {
-    pos = (uaStr).tqfind(':');
+    pos = (uaStr).find(':');
     if ( pos != -1 )
     {
       split.append(uaStr.left(pos));
@@ -53,7 +53,7 @@ FakeUASProvider::StatusCode FakeUASProvider::createNewUAProvider( const TQString
     split = TQStringList::split("::", uaStr);
   }
 
-  if ( m_lstIdentity.tqcontains(split[1]) )
+  if ( m_lstIdentity.contains(split[1]) )
     return DUPLICATE_ENTRY;
   else
   {
@@ -90,29 +90,29 @@ void FakeUASProvider::parseDescription()
       struct utsname utsn;
       uname( &utsn );
 
-      tmp.tqreplace( QFL("appSysName"), TQString(utsn.sysname) );
-      tmp.tqreplace( QFL("appSysRelease"), TQString(utsn.release) );
-      tmp.tqreplace( QFL("appMachineType"), TQString(utsn.machine) );
+      tmp.replace( QFL("appSysName"), TQString(utsn.sysname) );
+      tmp.replace( QFL("appSysRelease"), TQString(utsn.release) );
+      tmp.replace( QFL("appMachineType"), TQString(utsn.machine) );
 
       TQStringList languageList = KGlobal::locale()->languageList();
       if ( languageList.count() )
       {
-        TQStringList::Iterator it = languageList.tqfind( TQString::tqfromLatin1("C") );
+        TQStringList::Iterator it = languageList.find( TQString::tqfromLatin1("C") );
         if( it != languageList.end() )
         {
-          if( languageList.tqcontains( TQString::tqfromLatin1("en") ) > 0 )
+          if( languageList.contains( TQString::tqfromLatin1("en") ) > 0 )
             languageList.remove( it );
           else
             (*it) = TQString::tqfromLatin1("en");
         }
       }
 
-      tmp.tqreplace( QFL("appLanguage"), TQString("%1").arg(languageList.join(", ")) );
-      tmp.tqreplace( QFL("appPlatform"), QFL("X11") );
+      tmp.replace( QFL("appLanguage"), TQString("%1").arg(languageList.join(", ")) );
+      tmp.replace( QFL("appPlatform"), QFL("X11") );
     }
 
     // Ignore dups...
-    if ( m_lstIdentity.tqcontains(tmp) )
+    if ( m_lstIdentity.contains(tmp) )
       continue;
 
     m_lstIdentity << tmp;
@@ -133,7 +133,7 @@ void FakeUASProvider::parseDescription()
 
 TQString FakeUASProvider::aliasStr( const TQString& name )
 {
-  int id = userAgentStringList().tqfindIndex(name);
+  int id = userAgentStringList().findIndex(name);
   if ( id == -1 )
     return TQString::null;
   else
@@ -142,7 +142,7 @@ TQString FakeUASProvider::aliasStr( const TQString& name )
 
 TQString FakeUASProvider::agentStr( const TQString& name )
 {
-  int id = userAgentAliasList().tqfindIndex(name);
+  int id = userAgentAliasList().findIndex(name);
   if ( id == -1 )
     return TQString::null;
   else

@@ -189,7 +189,7 @@ KonqViewFactory KonqFactory::createView( const TQString &serviceType,
     args = TQStringList::split( " ", argStr );
   }
 
-  return KonqViewFactory( factory, args, service->serviceTypes().tqcontains( "Browser/View" ) );
+  return KonqViewFactory( factory, args, service->serviceTypes().contains( "Browser/View" ) );
 }
 
 void KonqFactory::getOffers( const TQString & serviceType,

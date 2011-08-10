@@ -66,7 +66,7 @@ static bool isValidShortURL( const TQString& cmd, bool verbose = false )
 
   // Match FQDN_PATTERN
   exp.setPattern( QFL1(FQDN_PATTERN) );
-  if ( cmd.tqcontains( exp ) )
+  if ( cmd.contains( exp ) )
   {
     if (verbose)
       kdDebug() << "KShortURIFilter::isValidShortURL: " << cmd
@@ -85,7 +85,7 @@ static bool isValidShortURL( const TQString& cmd, bool verbose = false )
 
   // Match IPv4 addresses
   exp.setPattern( QFL1(IPv4_PATTERN) );
-  if ( cmd.tqcontains( exp ) )
+  if ( cmd.contains( exp ) )
   {
     if (verbose)
       kdDebug() << "KShortURIFilter::isValidShortURL: " << cmd
@@ -95,7 +95,7 @@ static bool isValidShortURL( const TQString& cmd, bool verbose = false )
 
   // Match IPv6 addresses
   exp.setPattern( QFL1(IPv6_PATTERN) );
-  if ( cmd.tqcontains( exp ) )
+  if ( cmd.contains( exp ) )
   {
     if (verbose)
       kdDebug() << "KShortURIFilter::isValidShortURL: " << cmd
@@ -121,7 +121,7 @@ static TQString removeArgs( const TQString& _cmd )
 
     do
     {
-      spacePos = cmd.tqfind( ' ', spacePos+1 );
+      spacePos = cmd.find( ' ', spacePos+1 );
     } while ( spacePos > 1 && cmd[spacePos - 1] == '\\' );
 
     if( spacePos > 0 )
@@ -182,7 +182,7 @@ bool KShortURIFilter::filterURI( KURIFilterData& data ) const
   // You mean caching the last filtering, to try and reuse it, to save stat()s? (David)
 
   const TQString starthere_proto = QFL1("start-here:");
-  if (cmd.tqfind(starthere_proto, 0, true) == 0 )
+  if (cmd.find(starthere_proto, 0, true) == 0 )
   {
     setFilteredURI( data, KURL("system:/") );
     setURIType( data, KURIFilterData::LOCAL_DIR );
@@ -193,8 +193,8 @@ bool KShortURIFilter::filterURI( KURIFilterData& data ) const
   const TQString man_proto = QFL1("man:");
   const TQString info_proto = QFL1("info:");
   if( cmd[0] == '#' ||
-      cmd.tqfind( man_proto, 0, true ) == 0 ||
-      cmd.tqfind( info_proto, 0, true ) == 0 )
+      cmd.find( man_proto, 0, true ) == 0 ||
+      cmd.find( info_proto, 0, true ) == 0 )
   {
     if( cmd.left(2) == QFL1("##") )
       cmd = QFL1("info:/") + cmd.mid(2);
@@ -213,7 +213,7 @@ bool KShortURIFilter::filterURI( KURIFilterData& data ) const
   if ( cmd.startsWith( TQString::tqfromLatin1( "\\\\") ) )
   {
     // make sure path is unix style
-    cmd.tqreplace('\\', '/');
+    cmd.replace('\\', '/');
     cmd.prepend( TQString::tqfromLatin1( "smb:" ) );
     setFilteredURI( data, KURL( cmd ));
     setURIType( data, KURIFilterData::NET_PROTOCOL );
@@ -257,7 +257,7 @@ bool KShortURIFilter::filterURI( KURIFilterData& data ) const
 
   if( path[0] == '~' )
   {
-    int slashPos = path.tqfind('/');
+    int slashPos = path.find('/');
     if( slashPos == -1 )
       slashPos = path.length();
     if( slashPos == 1 )   // ~/
@@ -293,7 +293,7 @@ bool KShortURIFilter::filterURI( KURIFilterData& data ) const
       const char* exp = getenv( path.mid( 1, r.matchedLength() - 1 ).local8Bit().data() );
       if(exp)
       {
-        path.tqreplace( 0, r.matchedLength(), TQString::fromLocal8Bit(exp) );
+        path.replace( 0, r.matchedLength(), TQString::fromLocal8Bit(exp) );
         expanded = true;
       }
     }
@@ -303,7 +303,7 @@ bool KShortURIFilter::filterURI( KURIFilterData& data ) const
   {
     // Look for #ref again, after $ and ~ expansion (testcase: $QTDIR/doc/html/functions.html#s)
     // Can't use KURL here, setPath would escape it...
-    int pos = path.tqfind('#');
+    int pos = path.find('#');
     if ( pos > -1 )
     {
       ref = path.mid( pos + 1 );
@@ -354,12 +354,12 @@ bool KShortURIFilter::filterURI( KURIFilterData& data ) const
     if ( !exists ) {
       // Support for name filter (/foo/*.txt), see also KonqMainWindow::detectNameFilter
       // If the app using this filter doesn't support it, well, it'll simply error out itself
-      int lastSlash = path.tqfindRev( '/' );
-      if ( lastSlash > -1 && path.tqfind( ' ', lastSlash ) == -1 ) // no space after last slash, otherwise it's more likely command-line arguments
+      int lastSlash = path.findRev( '/' );
+      if ( lastSlash > -1 && path.find( ' ', lastSlash ) == -1 ) // no space after last slash, otherwise it's more likely command-line arguments
       {
         TQString fileName = path.mid( lastSlash + 1 );
         TQString testPath = path.left( lastSlash + 1 );
-        if ( ( fileName.tqfind( '*' ) != -1 || fileName.tqfind( '[' ) != -1 || fileName.tqfind( '?' ) != -1 )
+        if ( ( fileName.find( '*' ) != -1 || fileName.find( '[' ) != -1 || fileName.find( '?' ) != -1 )
            && stat( TQFile::encodeName(testPath).data(), &buff ) == 0 )
         {
           nameFilter = fileName;
@@ -453,7 +453,7 @@ bool KShortURIFilter::filterURI( KURIFilterData& data ) const
   // Okay this is the code that allows users to supply custom matches for
   // specific URLs using Qt's regexp class. This is hard-coded for now.
   // TODO: Make configurable at some point...
-  if ( !cmd.tqcontains( ' ' ) )
+  if ( !cmd.contains( ' ' ) )
   {
     TQValueList<URLHint>::ConstIterator it;
     for( it = m_urlHints.begin(); it != m_urlHints.end(); ++it )

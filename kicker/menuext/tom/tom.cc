@@ -239,7 +239,7 @@ void TOM::initializeRecentDocs()
 
         KDesktopFile f(*it, true /* read only */);
         m_recentDocsMenu->insertItem(DesktopIcon(f.readIcon(), KIcon::SizeMedium),
-                                     f.readName().tqreplace('&', "&&"), id);
+                                     f.readName().replace('&', "&&"), id);
         ++id;
     }
 }
@@ -302,7 +302,7 @@ int TOM::appendTaskGroup(KConfig& config, bool inSubMenu)
 
             TQString name = config.readEntry("Name");
             // in case the name contains an ampersand, double 'em up
-            name.tqreplace("&", "&&");
+            name.replace("&", "&&");
             TQString desktopfile = config.readPathEntry("DesktopFile");
             KService::Ptr pService = KService::serviceByDesktopPath(desktopfile);
 
@@ -551,10 +551,10 @@ void TOM::initialize()
     if (userInfo)
     {
         username = TQString::fromLocal8Bit(userInfo->pw_gecos);
-        if (username.tqfind(',') != -1)
+        if (username.find(',') != -1)
         {
             // Remove everything from and including first comma
-            username.truncate(username.tqfind(','));
+            username.truncate(username.find(','));
         }
 
         if (username.isEmpty())
@@ -583,7 +583,7 @@ void TOM::contextualizeRMBmenu(KPopupMenu* menu, int menuItem, TQPopupMenu* ctxM
 
     ctxMenu->removeItem(contextMenuTitleID);
     TQString text = menu->text(menuItem);
-    int parens = text.tqfind('(') - 1;
+    int parens = text.find('(') - 1;
     if (parens > 0)
     {
         text = text.left(parens);
@@ -775,7 +775,7 @@ TQMouseEvent TOM::translateMouseEvent( TQMouseEvent* e )
 {
     TQRect side = sideImageRect();
 
-    if ( !side.tqcontains( e->pos() ) )
+    if ( !side.contains( e->pos() ) )
         return *e;
 
     TQPoint newpos( e->pos() );
@@ -824,7 +824,7 @@ void TOM::runCommand()
 
 void TOM::runTask(int id)
 {
-    if (!m_tasks.tqcontains(id)) return;
+    if (!m_tasks.contains(id)) return;
 
     kapp->propagateSessionManager();
     KApplication::startServiceByDesktopPath(m_tasks[id]->desktopEntryPath(),

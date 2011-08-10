@@ -136,7 +136,7 @@ void kthememanager::load(bool useDefaults)
 
     conf.setGroup( "General" );
     TQString themeName = conf.readEntry( "CurrentTheme" );
-    TQListViewItem * cur =  dlg->lvThemes->tqfindItem( themeName, 0 );
+    TQListViewItem * cur =  dlg->lvThemes->findItem( themeName, 0 );
     if ( cur )
     {
         dlg->lvThemes->setSelected( cur, true );
@@ -264,7 +264,7 @@ void kthememanager::slotRemoveTheme()
 
 bool kthememanager::themeExist(const TQString &_themeName)
 {
-    return ( dlg->lvThemes->tqfindItem( _themeName, 0 )!=0 );
+    return ( dlg->lvThemes->findItem( _themeName, 0 )!=0 );
 }
 
 void kthememanager::slotCreateTheme()
@@ -298,7 +298,7 @@ void kthememanager::slotCreateTheme()
             m_theme->setAuthor( dlg.getAuthor() );
             m_theme->setEmail( dlg.getEmail() );
             m_theme->setHomepage( dlg.getHomepage() );
-            m_theme->setComment( dlg.getComment().tqreplace( "\n", "" ) );
+            m_theme->setComment( dlg.getComment().replace( "\n", "" ) );
             m_theme->setVersion( dlg.getVersion() );
 
             TQString result = m_theme->createYourself( true );

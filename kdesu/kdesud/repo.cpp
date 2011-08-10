@@ -27,7 +27,7 @@ Repository::~Repository()
 
 void Repository::add(const TQCString &key, Data_entry &data)
 {
-    RepoIterator it = repo.tqfind(key);
+    RepoIterator it = repo.find(key);
     if (it != repo.end())
         remove(key);
     if (data.timeout == 0)
@@ -43,7 +43,7 @@ int Repository::remove(const TQCString &key)
     if( key.isEmpty() )
         return -1;
 
-     RepoIterator it = repo.tqfind(key);
+     RepoIterator it = repo.find(key);
      if (it == repo.end())
         return -1;
      it.data().value.fill('x');
@@ -60,8 +60,8 @@ int Repository::removeSpecialKey(const TQCString &key)
         TQValueStack<TQCString> rm_keys;
         for (RepoCIterator it=repo.begin(); it!=repo.end(); ++it)
         {
-            if (  key.tqfind( static_cast<const char *>(it.data().group) ) == 0 &&
-                  it.key().tqfind( static_cast<const char *>(key) ) >= 0 )
+            if (  key.find( static_cast<const char *>(it.data().group) ) == 0 &&
+                  it.key().find( static_cast<const char *>(key) ) >= 0 )
             {
                 rm_keys.push(it.key());
                 found = 0;
@@ -128,13 +128,13 @@ TQCString Repository::findKeys(const TQCString &group, const char *sep ) const
             {
                 key = it.key().copy();
                 kdDebug(1205) << "Matching key found: " << key << endl;
-                pos = key.tqfindRev(sep);
+                pos = key.findRev(sep);
                 key.truncate( pos );
                 key.remove(0, 2);
                 if (!list.isEmpty())
                 {
                     // Add the same keys only once please :)
-                    if( !list.tqcontains(static_cast<const char *>(key)) )
+                    if( !list.contains(static_cast<const char *>(key)) )
                     {
                         kdDebug(1205) << "Key added to list: " << key << endl;
                         list += '\007'; // I do not know
@@ -154,7 +154,7 @@ TQCString Repository::find(const TQCString &key) const
     if( key.isEmpty() )
         return 0;
 
-    RepoCIterator it = repo.tqfind(key);
+    RepoCIterator it = repo.find(key);
     if (it == repo.end())
         return 0;
     return it.data().value;

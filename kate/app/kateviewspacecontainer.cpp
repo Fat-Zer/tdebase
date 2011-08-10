@@ -275,7 +275,7 @@ void KateViewSpaceContainer::activateView ( Kate::View *view )
     }
 
     setActiveView (view);
-    m_viewList.tqfindRef (view);
+    m_viewList.findRef (view);
 
     mainWindow()->toolBar ()->tqsetUpdatesEnabled (false);
 
@@ -337,7 +337,7 @@ void KateViewSpaceContainer::slotViewChanged()
 
 void KateViewSpaceContainer::activateNextView()
 {
-  uint i = m_viewSpaceList.tqfind (activeViewSpace())+1;
+  uint i = m_viewSpaceList.find (activeViewSpace())+1;
 
   if (i >= m_viewSpaceList.count())
     i=0;
@@ -348,7 +348,7 @@ void KateViewSpaceContainer::activateNextView()
 
 void KateViewSpaceContainer::activatePrevView()
 {
-  int i = m_viewSpaceList.tqfind (activeViewSpace())-1;
+  int i = m_viewSpaceList.find (activeViewSpace())-1;
 
   if (i < 0)
     i=m_viewSpaceList.count()-1;
@@ -521,7 +521,7 @@ void KateViewSpaceContainer::removeViewSpace (KateViewSpace *viewspace)
 
   // Figure out where to put views that are still needed
   KateViewSpace* next;
-  if (m_viewSpaceList.tqfind(viewspace) == 0)
+  if (m_viewSpaceList.find(viewspace) == 0)
     next = m_viewSpaceList.next();
   else
     next = m_viewSpaceList.prev();
@@ -684,12 +684,12 @@ void KateViewSpaceContainer::saveSplitterConfig( KateMDI::Splitter* s, int idx, 
    TQString n;  // name for child list, see below
    // For KateViewSpaces, ask them to save the file list.
    if ( obj->isA("KateViewSpace") ) {
-     n = TQString(viewConfGrp+"-ViewSpace %1").arg( m_viewSpaceList.tqfind((KateViewSpace*)obj) );
-     ((KateViewSpace*)obj)->saveConfig ( config, m_viewSpaceList.tqfind((KateViewSpace*)obj), viewConfGrp);
+     n = TQString(viewConfGrp+"-ViewSpace %1").arg( m_viewSpaceList.find((KateViewSpace*)obj) );
+     ((KateViewSpace*)obj)->saveConfig ( config, m_viewSpaceList.find((KateViewSpace*)obj), viewConfGrp);
      // save active viewspace
      if ( ((KateViewSpace*)obj)->isActiveSpace() ) {
        config->setGroup(viewConfGrp);
-       config->writeEntry("Active Viewspace", m_viewSpaceList.tqfind((KateViewSpace*)obj) );
+       config->writeEntry("Active Viewspace", m_viewSpaceList.find((KateViewSpace*)obj) );
      }
    }
    // For KateSplitters, recurse

@@ -174,10 +174,10 @@ static void applyQtSettings( KConfig& kglobals, TQSettings& settings )
     // end it with.. So keep a TQMap to bool, specifying whether the path is KDE-specified..
 
   TQString qversion = qVersion();
-  if ( qversion.tqcontains( '.' ) > 1 )
-     qversion.truncate( qversion.tqfindRev( '.' ) );
-  if ( qversion.tqcontains( '-' ) )
-     qversion.truncate( qversion.tqfindRev( '-' ) );
+  if ( qversion.contains( '.' ) > 1 )
+     qversion.truncate( qversion.findRev( '.' ) );
+  if ( qversion.contains( '-' ) )
+     qversion.truncate( qversion.findRev( '-' ) );
 
   TQStringList kdeAdded =
     settings.readListEntry("/qt/KDE/kdeAddedLibraryPaths");
@@ -220,8 +220,8 @@ static void applyQtSettings( KConfig& kglobals, TQSettings& settings )
 
     pathDb[path]=true;
 
-    if(path.tqcontains("/lib64/"))
-        path.tqreplace("/lib64/","/lib/");
+    if(path.contains("/lib64/"))
+        path.replace("/lib64/","/lib/");
     pathDb[path]=true;
   }
 

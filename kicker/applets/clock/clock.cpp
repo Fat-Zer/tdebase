@@ -806,9 +806,9 @@ void FuzzyClock::drawContents(TQPainter *p)
       }
 
       newTimeStr = normalFuzzy[sector];
-      int phStart = newTimeStr.tqfind("%");
+      int phStart = newTimeStr.find("%");
       if (phStart >= 0) { // protect yourself from translations
-          int phLength = newTimeStr.tqfind(" ", phStart) - phStart;
+          int phLength = newTimeStr.find(" ", phStart) - phStart;
 
           // larrosa: we want the exact length, in case the translation needs it,
           // in other case, we would cut off the end of the translation.
@@ -821,13 +821,13 @@ void FuzzyClock::drawContents(TQPainter *p)
               realHour = 12 - ((_time.hour() + deltaHour) % 12 + 1);
           if (realHour==0) {
               newTimeStr = normalFuzzyOne[sector];
-              phStart = newTimeStr.tqfind("%");
+              phStart = newTimeStr.find("%");
               // larrosa: Note that length is the same,
               // so we only have to update phStart
           }
           if (phStart >= 0)
-              newTimeStr.tqreplace(phStart, phLength, hourNames[realHour]);
-          newTimeStr.tqreplace(0, 1, TQString(newTimeStr.tqat(0).upper()));
+              newTimeStr.replace(phStart, phLength, hourNames[realHour]);
+          newTimeStr.replace(0, 1, TQString(newTimeStr.tqat(0).upper()));
       }
     } else if (_prefs->fuzzyness() == 3) {
         newTimeStr = dayTime[_time.hour() / 3];
@@ -1120,7 +1120,7 @@ int ClockApplet::heightForWidth(int w) const
         {
             TQString dateStr = _date->text();
             // if we're too wide to fit, replace the first non-digit from the end with a space
-            int p = dateStr.tqfindRev(TQRegExp("[^0-9]"));
+            int p = dateStr.findRev(TQRegExp("[^0-9]"));
             if (p > 0)
             {
                 _date->setText(dateStr.insert(p, '\n'));
@@ -1568,7 +1568,7 @@ void ClockApplet::aboutToShowContextMenu()
             }
             else
             {
-                zoneMenu->insertItem(i18n(zone->zone(i).utf8()).tqreplace("_", " "), 500 + i);
+                zoneMenu->insertItem(i18n(zone->zone(i).utf8()).replace("_", " "), 500 + i);
             }
         }
         zoneMenu->setItemChecked(500 + zone->zoneIndex(),true);
@@ -1699,7 +1699,7 @@ void ClockApplet::updateDateLabel(bool reLayout)
     if (zone->zoneIndex() != 0)
     {
         TQString zone_s = i18n(zone->zone().utf8());
-        _date->setText(zone_s.mid(zone_s.tqfind('/') + 1).tqreplace("_", " "));
+        _date->setText(zone_s.mid(zone_s.find('/') + 1).replace("_", " "));
         _date->setShown(true);
     }
     else
@@ -1737,7 +1737,7 @@ void ClockApplet::updateKickerTip(KickerTip::Data& data)
         if (!activeZone.isEmpty())
         {
             activeZone = i18n(activeZone.utf8());
-            data.subtext.append("<br>").append(activeZone.mid(activeZone.tqfind('/') + 1).tqreplace("_", " "));
+            data.subtext.append("<br>").append(activeZone.mid(activeZone.find('/') + 1).replace("_", " "));
         }
     }
     else
@@ -1760,7 +1760,7 @@ void ClockApplet::updateKickerTip(KickerTip::Data& data)
 
             if (activeIndex == i)
             {
-                data.message = m_zone.mid(m_zone.tqfind('/') + 1).tqreplace("_", " ");
+                data.message = m_zone.mid(m_zone.find('/') + 1).replace("_", " ");
                 data.message += "  " + _time + "<br>" + _date;
             }
             else
@@ -1771,7 +1771,7 @@ void ClockApplet::updateKickerTip(KickerTip::Data& data)
                 }
                 else
                 {
-                    data.subtext += "<b>" + m_zone.mid(m_zone.tqfind('/') + 1).tqreplace("_", " ") + "</b>";
+                    data.subtext += "<b>" + m_zone.mid(m_zone.find('/') + 1).replace("_", " ") + "</b>";
                 }
                 data.subtext += " " + _time + ", " + _date + "<br>";
             }

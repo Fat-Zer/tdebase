@@ -87,7 +87,7 @@ void ThemeEngine::addSplashWindow( TQWidget* w )
 {
     if( !w->isTopLevel())
         return;
-    if( d->mSplashWindows.tqcontains( w->winId()))
+    if( d->mSplashWindows.contains( w->winId()))
         return;
     if( !w->testWFlags( WX11BypassWM ))
     { // All toplevel widgets should be probably required to be WX11BypassWM

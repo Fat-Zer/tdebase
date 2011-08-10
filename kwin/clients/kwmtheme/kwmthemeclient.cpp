@@ -752,7 +752,7 @@ void KWMThemeClient::showEvent(TQShowEvent *)
 
 void KWMThemeClient::mouseDoubleClickEvent( TQMouseEvent * e )
 {
-    if (e->button() == LeftButton && titlebar->geometry().tqcontains( e->pos() ) )
+    if (e->button() == LeftButton && titlebar->geometry().contains( e->pos() ) )
         titlebarDblClickOperation();
 }
 

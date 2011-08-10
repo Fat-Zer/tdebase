@@ -652,7 +652,7 @@ TQMouseEvent PanelKMenu::translateMouseEvent( TQMouseEvent* e )
 {
     TQRect side = sideImageRect();
 
-    if ( !side.tqcontains( e->pos() ) )
+    if ( !side.contains( e->pos() ) )
         return *e;
 
     TQPoint newpos( e->pos() );

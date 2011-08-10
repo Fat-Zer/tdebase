@@ -303,7 +303,7 @@ TQString Glossary::entryToHtml( const GlossaryEntry &entry )
 
 void Glossary::slotSelectGlossEntry( const TQString &id )
 {
-    EntryItem *newItem = m_idDict.tqfind( id );
+    EntryItem *newItem = m_idDict.find( id );
     if ( newItem == 0 )
         return;
 

@@ -60,7 +60,7 @@ DocEntry *DocMetaInfo::addDocEntry( const TQString &fileName )
     lang = extensions[ extensions.count() - 2 ];
   }
 
-  if ( !lang.isEmpty() && mLanguages.tqfind( lang ) == mLanguages.end() ) {
+  if ( !lang.isEmpty() && mLanguages.find( lang ) == mLanguages.end() ) {
     return 0;
   }
 
@@ -77,7 +77,7 @@ DocEntry *DocMetaInfo::addDocEntry( const TQString &fileName )
       mHtmlSearch->setupDocEntry( entry );
     }
     TQString indexer = entry->indexer();
-    indexer.tqreplace( "%f", fileName );
+    indexer.replace( "%f", fileName );
     entry->setIndexer( indexer );
     addDocEntry( entry );
     return entry;

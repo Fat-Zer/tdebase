@@ -54,7 +54,7 @@ namespace KioSMTP {
     void clear() { mCapabilities.clear(); }
 
     bool have( const TQString & cap ) const {
-      return mCapabilities.tqfind( cap.upper() ) != mCapabilities.end();
+      return mCapabilities.find( cap.upper() ) != mCapabilities.end();
     }
     bool have( const TQCString & cap ) const { return have( TQString( cap.data() ) ); }
     bool have( const char * cap ) const { return have( TQString::tqfromLatin1( cap ) ); }

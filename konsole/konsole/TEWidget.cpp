@@ -1293,7 +1293,7 @@ void TEWidget::mousePressEvent(TQMouseEvent* ev)
     return;
   }
 
-  if ( !contentsRect().tqcontains(ev->pos()) ) return;
+  if ( !contentsRect().contains(ev->pos()) ) return;
   TQPoint tL  = contentsRect().topLeft();
   int    tLx = tL.x();
   int    tLy = tL.y();
@@ -1395,7 +1395,7 @@ void TEWidget::setSelectionEnd()
 
 void TEWidget::extendSelection( TQPoint pos )
 {
-  //if ( !contentsRect().tqcontains(ev->pos()) ) return;
+  //if ( !contentsRect().contains(ev->pos()) ) return;
   TQPoint tL  = contentsRect().topLeft();
   int    tLx = tL.x();
   int    tLy = tL.y();
@@ -1764,7 +1764,7 @@ int TEWidget::charClass(UINT16 ch) const
     TQChar qch=TQChar(ch);
     if ( qch.isSpace() ) return ' ';
 
-    if ( qch.isLetterOrNumber() || word_characters.tqcontains(qch, false) )
+    if ( qch.isLetterOrNumber() || word_characters.contains(qch, false) )
     return 'a';
 
     // Everything else is weird
@@ -1807,7 +1807,7 @@ void TEWidget::emitSelection(bool useXselection,bool appendReturn)
     text.append("\r");
   if ( ! text.isEmpty() )
   {
-    text.tqreplace("\n", "\r");
+    text.replace("\n", "\r");
     TQKeyEvent e(TQEvent::KeyPress, 0,-1,0, text);
     emit keyPressedSignal(&e); // expose as a big fat keypress event
     emit clearSelectionSignal();

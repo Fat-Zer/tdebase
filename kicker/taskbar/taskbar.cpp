@@ -358,7 +358,7 @@ void TaskBar::add(Startup::Ptr startup)
          it != containers.end();
          ++it)
     {
-        if ((*it)->tqcontains(startup))
+        if ((*it)->contains(startup))
         {
             return;
         }
@@ -372,7 +372,7 @@ void TaskBar::add(Startup::Ptr startup)
 
 void TaskBar::showTaskContainer(TaskContainer* container)
 {
-    TaskContainer::List::iterator it = m_hiddenContainers.tqfind(container);
+    TaskContainer::List::iterator it = m_hiddenContainers.find(container);
     if (it != m_hiddenContainers.end())
     {
         m_hiddenContainers.erase(it);
@@ -432,7 +432,7 @@ void TaskBar::remove(Task::Ptr task, TaskContainer* container)
          it != m_hiddenContainers.end();
          ++it)
     {
-        if ((*it)->tqcontains(task))
+        if ((*it)->contains(task))
         {
             (*it)->finish();
             m_deletableContainers.append(*it);
@@ -447,7 +447,7 @@ void TaskBar::remove(Task::Ptr task, TaskContainer* container)
              it != containers.end();
              ++it)
         {
-            if ((*it)->tqcontains(task))
+            if ((*it)->contains(task))
             {
                 container = *it;
                 break;
@@ -464,7 +464,7 @@ void TaskBar::remove(Task::Ptr task, TaskContainer* container)
 
     if (container->isEmpty())
     {
-        TaskContainer::List::iterator it = containers.tqfind(container);
+        TaskContainer::List::iterator it = containers.find(container);
         if (it != containers.end())
         {
             containers.erase(it);
@@ -490,7 +490,7 @@ void TaskBar::remove(Startup::Ptr startup, TaskContainer* container)
          it != m_hiddenContainers.end();
          ++it)
     {
-        if ((*it)->tqcontains(startup))
+        if ((*it)->contains(startup))
         {
             (*it)->remove(startup);
 
@@ -511,7 +511,7 @@ void TaskBar::remove(Startup::Ptr startup, TaskContainer* container)
              it != containers.end();
              ++it)
         {
-            if ((*it)->tqcontains(startup))
+            if ((*it)->contains(startup))
             {
                 container = *it;
                 break;
@@ -530,7 +530,7 @@ void TaskBar::remove(Startup::Ptr startup, TaskContainer* container)
         return;
     }
 
-    TaskContainer::List::iterator it = containers.tqfind(container);
+    TaskContainer::List::iterator it = containers.find(container);
     if (it != containers.end())
     {
         containers.erase(it);
@@ -580,7 +580,7 @@ void TaskBar::windowChanged(Task::Ptr task)
     {
         TaskContainer* c = *it;
 
-        if (c->tqcontains(task))
+        if (c->contains(task))
         {
             container = c;
             break;
@@ -620,7 +620,7 @@ void TaskBar::windowChangedGeometry(Task::Ptr task)
          ++it)
     {
         TaskContainer* c = *it;
-        if (c->tqcontains(task))
+        if (c->contains(task))
         {
             container = c;
             break;

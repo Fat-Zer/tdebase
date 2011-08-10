@@ -65,7 +65,7 @@ TQString get_menu_entry_from_path( const TQString& path_P )
     for( TQStringList::ConstIterator it = dirs.begin();
          it != dirs.end();
          ++it )
-        if( path_P.tqfind( *it ) == 0 )
+        if( path_P.find( *it ) == 0 )
             {
             TQString ret = path_P;
             ret.remove( 0, (*it).length());

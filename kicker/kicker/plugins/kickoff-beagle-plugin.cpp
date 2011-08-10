@@ -315,7 +315,7 @@ HitMenuItem *KickoffBeaglePlugin::hitToHitMenuItem (int category, Hit *hit)
 	case WEBHIST:
 	    uri = hit->getUri ();
 	    title = (*hit) [dc_title];
-	    title = title.tqreplace(TQRegExp("\n")," ");
+	    title = title.replace(TQRegExp("\n")," ");
 	    mimetype = "text/html";
 	    if (title.isEmpty () || title.stripWhiteSpace ().isEmpty ()) {
 		title = uri.prettyURL ();
@@ -375,15 +375,15 @@ HitMenuItem *KickoffBeaglePlugin::hitToHitMenuItem (int category, Hit *hit)
 		TQString command = desktopfile.readEntry("Exec");
 		if (command==input)
                   score = 100;
-                else if (command.tqfind(input)==0)
+                else if (command.find(input)==0)
                   score = 50;
-                else if (command.tqfind(input)!=-1)
+                else if (command.find(input)!=-1)
                   score = 10;
 		else if (title==input)
                   score = 100;
-                else if (title.tqfind(input)==0)
+                else if (title.find(input)==0)
                   score = 50;
-                else if (title.tqfind(input)!=-1)
+                else if (title.find(input)!=-1)
                   score = 10;
 	    	break;
 	    }

@@ -493,7 +493,7 @@ KDMSlimShutdown::KDMSlimShutdown( TQWidget *_parent )
 		FlatButton* btnReboot = new FlatButton( lfrm );
 		btnReboot->setTextLabel( i18n("&Restart"), false );
 		btnReboot->setPixmap( DesktopIcon( "reload") );
-                int i = btnReboot->textLabel().tqfind( TQRegExp("\\&"), 0 );    // i == 1
+                int i = btnReboot->textLabel().find( TQRegExp("\\&"), 0 );    // i == 1
                 btnReboot->setAccel( "ALT+" + btnReboot->textLabel().lower()[i+1] ) ;
 		hbuttonbox->addWidget ( btnReboot);
 		connect(btnReboot, TQT_SIGNAL(clicked()), TQT_SLOT(slotReboot()));
@@ -524,7 +524,7 @@ KDMSlimShutdown::KDMSlimShutdown( TQWidget *_parent )
 		FlatButton* btnHalt = new FlatButton( lfrm );
 		btnHalt->setTextLabel( i18n("&Turn Off"), false );
 		btnHalt->setPixmap( DesktopIcon( "exit") );
-                i = btnHalt->textLabel().tqfind( TQRegExp("\\&"), 0 );    // i == 1
+                i = btnHalt->textLabel().find( TQRegExp("\\&"), 0 );    // i == 1
                 btnHalt->setAccel( "ALT+" + btnHalt->textLabel().lower()[i+1] ) ;
 		hbuttonbox->addWidget ( btnHalt );
 		connect(btnHalt, TQT_SIGNAL(clicked()), TQT_SLOT(slotHalt()));

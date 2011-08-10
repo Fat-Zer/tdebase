@@ -390,11 +390,11 @@ void LDAPProtocol::LDAPEntry2UDSEntry( const TQString &dn, UDSEntry &entry,
   atom.m_uds = UDS_NAME;
   atom.m_long = 0;
   TQString name = dn;
-  if ( (pos = name.tqfind(",")) > 0 )
+  if ( (pos = name.find(",")) > 0 )
     name = name.left( pos );
-  if ( (pos = name.tqfind("=")) > 0 )
+  if ( (pos = name.find("=")) > 0 )
     name.remove( 0, pos+1 );
-  name.tqreplace(' ', "_");
+  name.replace(' ', "_");
   if ( !dir ) name += ".ldif";
   atom.m_str = name;
   entry.append( atom );

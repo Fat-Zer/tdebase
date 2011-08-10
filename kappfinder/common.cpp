@@ -61,13 +61,13 @@ bool scanDesktopFile( TQPtrList<AppLnkCache> &appCache, const TQString &templ,
 
   // find out the name of the file to store
   destName = templ;
-  int pos = templ.tqfind( "kappfinder/apps/" );
+  int pos = templ.find( "kappfinder/apps/" );
   if ( pos > 0 )
     destName = destName.mid( pos + strlen( "kappfinder/apps/" ) );
 
   // calculate real dir and filename
   destName = destDir + destName;
-  pos = destName.tqfindRev( '/' );
+  pos = destName.findRev( '/' );
   if ( pos > 0 ) {
     destDir = destName.left( pos );
     destName = destName.mid( pos + 1 );
@@ -77,7 +77,7 @@ bool scanDesktopFile( TQPtrList<AppLnkCache> &appCache, const TQString &templ,
   TQString exec = desktop.readPathEntry( "TryExec" );
   if ( exec.isEmpty() )
     exec = desktop.readPathEntry( "Exec" );
-  pos = exec.tqfind( ' ' );
+  pos = exec.find( ' ' );
   if ( pos > 0 )
     exec = exec.left( pos );
 
@@ -117,7 +117,7 @@ void createDesktopFiles( TQPtrList<AppLnkCache> &appCache, int &added )
       destDir += "/";
       TQDir d;
       int pos = -1;
-      while ( ( pos = destDir.tqfind( '/', pos + 1 ) ) >= 0 ) {
+      while ( ( pos = destDir.find( '/', pos + 1 ) ) >= 0 ) {
         TQString path = destDir.left( pos + 1 );
         d = path;
         if ( !d.exists() )
@@ -144,7 +144,7 @@ void decorateDirs( TQString destDir )
   for ( it = dirs.begin(); it != dirs.end(); ++it ) {
     // find out the name of the file to store
     TQString destName = *it;
-    int pos = destName.tqfind( "kappfinder/apps/" );
+    int pos = destName.find( "kappfinder/apps/" );
     if ( pos > 0 )
       destName = destName.mid( pos + strlen( "kappfinder/apps/" ) );
 

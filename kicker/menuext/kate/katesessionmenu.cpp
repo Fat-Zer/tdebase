@@ -124,7 +124,7 @@ void KateSessionMenu::slotExec( int id )
                           "kate_session_button_create_anonymous" ) == KMessageBox::No )
       return;
 
-    if ( m_sessions.tqcontains( name ) &&
+    if ( m_sessions.contains( name ) &&
          KMessageBox::warningYesNo( 0,
                                     i18n("You allready have a session named %1. Do you want to open that session?").arg( name ),
                                     i18n("Session exists") ) == KMessageBox::No )

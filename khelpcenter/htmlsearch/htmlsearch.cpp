@@ -43,7 +43,7 @@ void HTMLSearch::scanDir(const TQString& dir)
         for (it=list.begin(); it != list.end(); ++it)
         {
             file = adir + *it;
-            if ( !_files.tqcontains( file ) ) {
+            if ( !_files.contains( file ) ) {
                 _files.append(file);
                 progress->setFilesScanned(++_filesScanned);
             }
@@ -375,13 +375,13 @@ void HTMLSearch::htdigStdout(KProcess *, char *buffer, int len)
     TQString line = TQString(buffer).left(len);
 
     int cnt=0, index=-1;
-    while ( (index = line.tqfind("file://", index+1)) > 0)
+    while ( (index = line.find("file://", index+1)) > 0)
         cnt++;
     _filesDigged += cnt;
 
     cnt=0;
     index=-1;
-    while ( (index = line.tqfind("not changed", index+1)) > 0)
+    while ( (index = line.find("not changed", index+1)) > 0)
         cnt++;
     _filesDigged -= cnt;
 
@@ -467,8 +467,8 @@ TQString HTMLSearch::search(TQString _lang, TQString words, TQString method, int
   delete _proc;
 
   // modify the search result
-  _searchResult = _searchResult.tqreplace("http://localhost/", "file:/");
-  _searchResult = _searchResult.tqreplace("Content-type: text/html", TQString::null);
+  _searchResult = _searchResult.replace("http://localhost/", "file:/");
+  _searchResult = _searchResult.replace("Content-type: text/html", TQString::null);
 
   // dump the search result
   TQFile f(result);

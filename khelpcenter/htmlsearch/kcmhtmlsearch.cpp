@@ -189,9 +189,9 @@ void KHTMLSearchConfig::loadLanguages()
       TQString name = entry.readEntry(TQString::tqfromLatin1("Name"), KGlobal::locale()->translate("without name"));
 
       TQString path = *it;
-      int index = path.tqfindRev('/');
+      int index = path.findRev('/');
       path = path.left(index);
-      index = path.tqfindRev('/');
+      index = path.findRev('/');
       path = path.mid(index+1);
       language->insertLanguage(path, name);
     }

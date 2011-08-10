@@ -110,8 +110,8 @@ void KrashDebugger :: slotSave()
   else
   {
     TQString defname = m_krashconf->execName() + TQString::tqfromLatin1( ".kcrash" );
-    if( defname.tqcontains( '/' ))
-        defname = defname.mid( defname.tqfindRev( '/' ) + 1 );
+    if( defname.contains( '/' ))
+        defname = defname.mid( defname.findRev( '/' ) + 1 );
     TQString filename = KFileDialog::getSaveFileName(defname, TQString::null, this, i18n("Select Filename"));
     if (!filename.isEmpty())
     {

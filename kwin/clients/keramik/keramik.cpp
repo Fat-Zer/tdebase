@@ -1657,14 +1657,14 @@ void KeramikClient::resizeEvent( TQResizeEvent *e )
 void KeramikClient::mouseDoubleClickEvent( TQMouseEvent *e )
 {
 	if ( e->button() == Qt::LeftButton
-            && TQRect( 0, 0, width(), clientHandler->titleBarHeight( largeTitlebar ) ).tqcontains( e->pos() ) )
+            && TQRect( 0, 0, width(), clientHandler->titleBarHeight( largeTitlebar ) ).contains( e->pos() ) )
 		titlebarDblClickOperation();
 }
 
 void KeramikClient::wheelEvent( TQWheelEvent *e )
 {
 	if (isSetShade() 
-            || TQRect( 0, 0, width(), clientHandler->titleBarHeight( largeTitlebar ) ).tqcontains( e->pos() ) )
+            || TQRect( 0, 0, width(), clientHandler->titleBarHeight( largeTitlebar ) ).contains( e->pos() ) )
 		titlebarMouseWheelOperation( e->delta());
 }
 

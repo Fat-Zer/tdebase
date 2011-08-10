@@ -385,7 +385,7 @@ bool Workspace::workspaceEvent( XEvent * e )
             {
             if ( TQWhatsThis::inWhatsThisMode() )
                 {
-                TQWidget* w = TQWidget::tqfind( e->xcrossing.window );
+                TQWidget* w = TQWidget::find( e->xcrossing.window );
                 if ( w )
                     TQWhatsThis::leaveWhatsThisMode();
                 }
@@ -926,7 +926,7 @@ void Client::leaveNotifyEvent( XCrossingEvent* e )
             mode = PositionCenter;
             setCursor( tqarrowCursor );
             }
-        bool lostMouse = !rect().tqcontains( TQPoint( e->x, e->y ) );
+        bool lostMouse = !rect().contains( TQPoint( e->x, e->y ) );
         // 'lostMouse' wouldn't work with e.g. B2 or Keramik, which have non-rectangular decorations
         // (i.e. the LeaveNotify event comes before leaving the rect and no LeaveNotify event
         // comes after leaving the rect) - so lets check if the pointer is really outside the window

@@ -194,7 +194,7 @@ const KateDocumentInfo *KateDocManager::documentInfo (Kate::Document *doc)
 
 int KateDocManager::findDocument (Kate::Document *doc)
 {
-  return m_docList.tqfind (doc);
+  return m_docList.find (doc);
 }
 
 uint KateDocManager::documents ()
@@ -306,7 +306,7 @@ bool KateDocManager::closeDocument(class Kate::Document *doc,bool closeURL)
     KateApp::self()->mainWindow(i)->viewManager()->closeViews(documentNumber);
   }
 
-  if ( closeURL && m_tempFiles.tqcontains( documentNumber ) )
+  if ( closeURL && m_tempFiles.contains( documentNumber ) )
   {
     TQFileInfo fi( m_tempFiles[ documentNumber ].first.path() );
     if ( fi.lastModified() <= m_tempFiles[ documentNumber ].second /*||

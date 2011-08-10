@@ -123,7 +123,7 @@ static TQString realDesktopPath()
     if (kdesktop_screen_number != 0) {
 	TQString dn = "Desktop";
 	dn += TQString::number(kdesktop_screen_number);
-	desktopPath.tqreplace("Desktop", dn);
+	desktopPath.replace("Desktop", dn);
     }
     return desktopPath;
 }

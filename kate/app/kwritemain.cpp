@@ -458,7 +458,7 @@ void KWrite::readProperties(KConfig *config)
 void KWrite::saveProperties(KConfig *config)
 {
   writeConfig(config);
-  config->writeEntry("DocumentNumber",docList.tqfind(m_view->document()) + 1);
+  config->writeEntry("DocumentNumber",docList.find(m_view->document()) + 1);
 
   if (KTextEditor::sessionConfigInterface(m_view))
     KTextEditor::sessionConfigInterface(m_view)->writeSessionConfig(config);
@@ -485,7 +485,7 @@ void KWrite::saveGlobalProperties(KConfig *config) //save documents
      TQString buf = TQString("Window %1").arg(z);
      config->setGroup(buf);
 
-     config->writeEntry("DocumentNumber",docList.tqfind(winList.tqat(z-1)->view()->document()) + 1);
+     config->writeEntry("DocumentNumber",docList.find(winList.tqat(z-1)->view()->document()) + 1);
   }
 }
 

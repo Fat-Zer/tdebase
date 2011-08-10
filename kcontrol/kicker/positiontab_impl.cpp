@@ -220,7 +220,7 @@ void PositionTab::sizeChanged(int which)
 
 void PositionTab::movePanel(int whichButton)
 {
-    TQPushButton* pushed = reinterpret_cast<TQPushButton*>(m_locationGroup->tqfind(whichButton));
+    TQPushButton* pushed = reinterpret_cast<TQPushButton*>(m_locationGroup->find(whichButton));
 
     if (pushed == locationTopLeft)
     {

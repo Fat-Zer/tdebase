@@ -1160,7 +1160,7 @@ void KDesktop::addIcon(const TQString & _url, int x, int y)
 
 void KDesktop::addIcon(const TQString & _url, const TQString & _dest, int x, int y)
 {
-    TQString filename = _url.mid(_url.tqfindRev('/') + 1);
+    TQString filename = _url.mid(_url.findRev('/') + 1);
 
     TQValueList<KIO::CopyInfo> files;
     KIO::CopyInfo i;
@@ -1168,7 +1168,7 @@ void KDesktop::addIcon(const TQString & _url, const TQString & _dest, int x, int
     i.uDest   = KURL::fromPathOrURL( _dest );
     i.uDest.addPath( filename );
     files.append(i);
-    if (!TQFile::exists(i.uDest.prettyURL().tqreplace("file://",TQString()))) { m_pIconView->slotAboutToCreate( TQPoint( x, y ), files );
+    if (!TQFile::exists(i.uDest.prettyURL().replace("file://",TQString()))) { m_pIconView->slotAboutToCreate( TQPoint( x, y ), files );
     KIO::copy( i.uSource, i.uDest, false ); }
 
 //    m_pIconView->addFuturePosition(filename, x, y);
@@ -1184,7 +1184,7 @@ void KDesktop::removeIcon(const TQString &_url)
 		return;
 	}
 	unlink(KURL(_url).path().latin1());
-	TQString dest = _url.left(_url.tqfindRev('/') + 1);
+	TQString dest = _url.left(_url.findRev('/') + 1);
         m_pIconView->update( dest );
 }
 

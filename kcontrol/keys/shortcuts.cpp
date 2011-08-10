@@ -227,14 +227,14 @@ void ShortcutsModule::createActionsGeneral()
 	for( uint i = 0; i < actions.count(); i++ ) {
 		TQString sConfigKey = actions[i].name();
 		//kdDebug(125) << "sConfigKey: " << sConfigKey << endl;
-		int iLastSpace = sConfigKey.tqfindRev( ' ' );
+		int iLastSpace = sConfigKey.findRev( ' ' );
 		bool bIsNum = false;
 		if( iLastSpace >= 0 )
 			sConfigKey.mid( iLastSpace+1 ).toInt( &bIsNum );
 
 		//kdDebug(125) << "sConfigKey: " << sConfigKey
 		//	<< " bIsNum: " << bIsNum << endl;
-		if( bIsNum && !sConfigKey.tqcontains( ':' ) ) {
+		if( bIsNum && !sConfigKey.contains( ':' ) ) {
 			actions[i].setConfigurable( false );
 			actions[i].setName( TQString::null );
 		}
@@ -248,14 +248,14 @@ void ShortcutsModule::createActionsSequence()
 	for( uint i = 0; i < actions.count(); i++ ) {
 		TQString sConfigKey = actions[i].name();
 		//kdDebug(125) << "sConfigKey: " << sConfigKey << endl;
-		int iLastSpace = sConfigKey.tqfindRev( ' ' );
+		int iLastSpace = sConfigKey.findRev( ' ' );
 		bool bIsNum = false;
 		if( iLastSpace >= 0 )
 			sConfigKey.mid( iLastSpace+1 ).toInt( &bIsNum );
 
 		//kdDebug(125) << "sConfigKey: " << sConfigKey
 		//	<< " bIsNum: " << bIsNum << endl;
-		if( !bIsNum && !sConfigKey.tqcontains( ':' ) ) {
+		if( !bIsNum && !sConfigKey.contains( ':' ) ) {
 			actions[i].setConfigurable( false );
 			actions[i].setName( TQString::null );
 		}
@@ -372,7 +372,7 @@ void ShortcutsModule::slotSaveSchemeAs()
 			int ind = 0;
 			while( ind < (int) sFile.length() ) {
 				// parse the string for first white space
-				ind = sFile.tqfind(" ");
+				ind = sFile.find(" ");
 				if( ind == -1 ) {
 					ind = sFile.length();
 					break;
@@ -384,7 +384,7 @@ void ShortcutsModule::slotSaveSchemeAs()
 				// Make the next letter upper case
 				TQString s = sFile.mid( ind, 1 );
 				s = s.upper();
-				sFile.tqreplace( ind, 1, s );
+				sFile.replace( ind, 1, s );
 			}
 
 			iScheme = -1;

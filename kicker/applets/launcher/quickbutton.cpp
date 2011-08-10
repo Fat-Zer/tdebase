@@ -76,7 +76,7 @@ QuickURL::QuickURL(const TQString &u)
       if (_menuId.endsWith(".desktop")) {
          // Strip path
          TQString s = _menuId;
-         s = s.mid(s.tqfindRev('/')+1);
+         s = s.mid(s.findRev('/')+1);
          s = s.left(s.length()-8);
          _service = KService::serviceByStorageId(s);
          if (!_service) {

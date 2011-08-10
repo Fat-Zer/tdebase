@@ -141,7 +141,7 @@ void KonqProfileDlg::loadAllProfiles(const TQString & preselectProfile)
     for (; eIt != eEnd; ++eIt )
     {
         TQListViewItem *item = new KonqProfileItem( m_pListView, eIt.key() );
-        TQString filename = eIt.data().mid( eIt.data().tqfindRev( '/' ) + 1 );
+        TQString filename = eIt.data().mid( eIt.data().findRev( '/' ) + 1 );
         kdDebug(1202) << filename << endl;
         if ( filename == preselectProfile )
         {
@@ -161,7 +161,7 @@ void KonqProfileDlg::slotUser3() // Save button
   // Reuse filename of existing item, if any
   if ( m_pListView->selectedItem() )
   {
-    KonqProfileMap::Iterator it = m_mapEntries.tqfind( m_pListView->selectedItem()->text(0) );
+    KonqProfileMap::Iterator it = m_mapEntries.find( m_pListView->selectedItem()->text(0) );
     if ( it != m_mapEntries.end() )
     {
       TQFileInfo info( it.data() );
@@ -180,7 +180,7 @@ void KonqProfileDlg::slotUser2() // Delete button
 {
     if(!m_pListView->selectedItem())
         return;
-  KonqProfileMap::Iterator it = m_mapEntries.tqfind( m_pListView->selectedItem()->text(0) );
+  KonqProfileMap::Iterator it = m_mapEntries.find( m_pListView->selectedItem()->text(0) );
 
   if ( it != m_mapEntries.end() && TQFile::remove( it.data() ) )
       loadAllProfiles();
@@ -206,7 +206,7 @@ void KonqProfileDlg::slotItemRenamed( TQListViewItem * item )
 
   if (!newName.isEmpty())
   {
-    KonqProfileMap::ConstIterator it = m_mapEntries.tqfind( oldName );
+    KonqProfileMap::ConstIterator it = m_mapEntries.find( oldName );
 
     if ( it != m_mapEntries.end() )
     {

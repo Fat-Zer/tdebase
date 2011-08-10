@@ -445,7 +445,7 @@ TQString KasTaskItem::expandMacros( const TQString &format, TQObject *data )
         if ( pos >= 0 ) {
 	    TQVariant val = data->property( TQString(re.cap(1)).latin1() );
 	    TQString v = val.asString();
-	    s.tqreplace( pos, re.matchedLength(), v );
+	    s.replace( pos, re.matchedLength(), v );
             pos = pos + v.length();
         }
     }

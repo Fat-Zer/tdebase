@@ -256,7 +256,7 @@ void KDMAppearanceWidget::loadLanguageList(KLanguageButton *combo)
 	it != langlist.end(); ++it )
   {
     TQString fpath = (*it).left((*it).length() - 14);
-    int index = fpath.tqfindRev('/');
+    int index = fpath.findRev('/');
     TQString nid = fpath.mid(index + 1);
 
     KSimpleConfig entry(*it);
@@ -280,7 +280,7 @@ void KDMAppearanceWidget::loadColorSchemes(KBackedComboBox *combo)
     if (!(str = config.readEntry("Name")).isEmpty() ||
 	!(str = config.readEntry("name")).isEmpty())
     {
-	TQString str2 = (*it).mid( (*it).tqfindRev( '/' ) + 1 ); // strip off path
+	TQString str2 = (*it).mid( (*it).findRev( '/' ) + 1 ); // strip off path
 	str2.setLength( str2.length() - 6 ); // strip off ".kcsrc
         combo->insertItem( str2, str );
     }

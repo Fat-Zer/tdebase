@@ -197,7 +197,7 @@ konsolePart::konsolePart(TQWidget *_parentWidget, const char *widgetName, TQObje
         KeyTrans* ktr = kt_map[*it];
         assert( ktr );
         TQString title=ktr->hdr();
-        m_keytab->insertItem(title.tqreplace('&',"&&"),ktr->numb());
+        m_keytab->insertItem(title.replace('&',"&&"),ktr->numb());
      }
   }
 
@@ -733,7 +733,7 @@ void konsolePart::updateSchemaMenu()
   for (int i = 0; i < (int) colors->count(); i++)  {
     ColorSchema* s = (ColorSchema*)colors->tqat(i);
     TQString title=s->title();
-    m_schema->insertItem(title.tqreplace('&',"&&"),s->numb(),0);
+    m_schema->insertItem(title.replace('&',"&&"),s->numb(),0);
   }
 
   if (te && se) {

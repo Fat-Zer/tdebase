@@ -146,7 +146,7 @@ KfindWindow::KfindWindow( TQWidget *parent, const char *name )
 
 TQString KfindWindow::reducedDir(const TQString& fullDir)
 {
-   if (fullDir.tqfind(m_baseDir)==0)
+   if (fullDir.find(m_baseDir)==0)
    {
       TQString tmp=fullDir.mid(m_baseDir.length());
       return tmp;

@@ -105,7 +105,7 @@ void KLocaleConfigNumber::save()
   str = ent.readEntry("ThousandsSeparator",
 		      TQString::tqfromLatin1(","));
   config->deleteEntry("ThousandsSeparator", false, true);
-  str.tqreplace(TQString::tqfromLatin1("$0"), TQString());
+  str.replace(TQString::tqfromLatin1("$0"), TQString());
   if (str != m_locale->thousandsSeparator())
     config->writeEntry("ThousandsSeparator",
 		       TQString::tqfromLatin1("$0%1$0")

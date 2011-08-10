@@ -241,9 +241,9 @@ static int directCommand(KCmdLineArgs *args)
 
         TQString text = TQString::fromLocal8Bit(args->getOption( option ));
         int pos;
-        while ((pos = text.tqfind( TQString::tqfromLatin1("\\n") )) >= 0)
+        while ((pos = text.find( TQString::tqfromLatin1("\\n") )) >= 0)
         {
-            text.tqreplace(pos, 2, TQString::tqfromLatin1("\n"));
+            text.replace(pos, 2, TQString::tqfromLatin1("\n"));
         }
 
         if ( type == KMessageBox::WarningContinueCancel ) {

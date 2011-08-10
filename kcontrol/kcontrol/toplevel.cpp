@@ -514,7 +514,7 @@ void TopLevel::aboutModule()
 
 TQString TopLevel::handleAmpersand( TQString modulename ) const
 {
-   if( modulename.tqcontains( '&' )) // double it
+   if( modulename.contains( '&' )) // double it
    {
       for( int i = modulename.length();
            i >= 0;

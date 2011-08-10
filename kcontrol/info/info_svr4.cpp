@@ -55,9 +55,9 @@ bool GetInfo_ReadfromFile( TQListView *lBox, char *Name, char splitchar  )
               }
           
           TQString s1 = TQString::fromLocal8Bit(buf);
-          TQString s2 = s1.mid(s1.tqfind(splitchar)+1);
+          TQString s2 = s1.mid(s1.find(splitchar)+1);
           
-          s1.truncate(s1.tqfind(splitchar));
+          s1.truncate(s1.find(splitchar));
           if(!(s1.isEmpty() || s2.isEmpty()))
               olditem = new TQListViewItem(lBox, olditem, s1, s2);
       }

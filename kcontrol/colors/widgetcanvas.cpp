@@ -64,7 +64,7 @@ void WidgetCanvas::paintEvent(TQPaintEvent *)
 void WidgetCanvas::mousePressEvent( TQMouseEvent *me )
 {
     for ( int i = 0; i < MAX_HOTSPOTS; i++ )
-	if ( hotspots[i].rect.tqcontains( me->pos() ) ) {
+	if ( hotspots[i].rect.contains( me->pos() ) ) {
 	    emit widgetSelected( hotspots[i].number );
 	    return;
 	}
@@ -73,7 +73,7 @@ void WidgetCanvas::mousePressEvent( TQMouseEvent *me )
 void WidgetCanvas::mouseMoveEvent( TQMouseEvent *me )
 {
     for ( int i = 0; i < MAX_HOTSPOTS; i++ )
-	if ( hotspots[i].rect.tqcontains( me->pos() ) ) {
+	if ( hotspots[i].rect.contains( me->pos() ) ) {
 	    if ( i != currentHotspot ) {
 		TQString tip = tips[hotspots[i].number];
 		TQToolTip::remove( this );
@@ -91,7 +91,7 @@ void WidgetCanvas::dropEvent( TQDropEvent *e)
     TQColor c;
     if (KColorDrag::decode( e, c)) {
 	for ( int i = 0; i < MAX_HOTSPOTS; i++ )
-	    if ( hotspots[i].rect.tqcontains( e->pos() ) ) {
+	    if ( hotspots[i].rect.contains( e->pos() ) ) {
 		emit colorDropped( hotspots[i].number, c);
 		return;
 	    }

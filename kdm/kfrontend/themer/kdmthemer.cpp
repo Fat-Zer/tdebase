@@ -223,7 +223,7 @@ KdmThemer::generateItems( KdmItem *parent, const TQDomNode &node )
 			TQString id = el.attribute("id");
 			if (id.startsWith("plugin-specific-")) {
 			        id = id.mid(strlen("plugin-specific-"));
-			        if (!_pluginsLogin.tqcontains(id))
+			        if (!_pluginsLogin.contains(id))
 			               continue;
 			}
 
@@ -281,7 +281,7 @@ bool KdmThemer::willDisplay( const TQDomNode &node )
 		TQStringList modeList = TQStringList::split( ",", modes );
 
 		// If current mode isn't in this list, do not display item
-		if (modeList.tqfind( m_currentMode ) == modeList.end())
+		if (modeList.find( m_currentMode ) == modeList.end())
 			return false;
 	}
 

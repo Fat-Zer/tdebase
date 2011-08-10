@@ -158,7 +158,7 @@ int PasswdProcess::ConversePasswd(const char *oldpass, const char *newpass,
 
 	case 2: 
 	    m_Error = "";
-	    if( line.tqcontains("again"))
+	    if( line.contains("again"))
 	    {
 		m_Error = line;
 		kill(m_Pid, SIGKILL);
@@ -278,7 +278,7 @@ bool PasswdProcess::isPrompt(TQCString line, const char *word)
 	return false;
     if (word == 0L)
 	return true;
-    return line.tqcontains(word, false);
+    return line.contains(word, false);
 }
 
 

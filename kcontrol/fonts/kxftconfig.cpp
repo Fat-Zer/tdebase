@@ -52,7 +52,7 @@ TQString KXftConfig::contractHome(TQString path)
             unsigned int len = home.length();
 
             if(path.length() == len || path[len] == '/')
-                return path.tqreplace(0, len, TQString::tqfromLatin1("~"));
+                return path.replace(0, len, TQString::tqfromLatin1("~"));
         }
     }
 
@@ -62,7 +62,7 @@ TQString KXftConfig::contractHome(TQString path)
 TQString KXftConfig::expandHome(TQString path)
 {
     if(!path.isEmpty() && '~'==path[0])
-        return 1==path.length() ? TQDir::homeDirPath() : path.tqreplace(0, 1, TQDir::homeDirPath());
+        return 1==path.length() ? TQDir::homeDirPath() : path.replace(0, 1, TQDir::homeDirPath());
 
     return path;
 }
@@ -88,9 +88,9 @@ static TQString dirSyntax(const TQString &d)
     {
         TQString ds(d);
 
-        ds.tqreplace("//", "/");
+        ds.replace("//", "/");
 
-        int slashPos=ds.tqfindRev('/');
+        int slashPos=ds.findRev('/');
 
         if(slashPos!=(((int)ds.length())-1))
             ds.append('/');
@@ -106,7 +106,7 @@ static TQString xDirSyntax(const TQString &d)
     if(!d.isNull())
     {
         TQString ds(d);
-        int     slashPos=ds.tqfindRev('/');
+        int     slashPos=ds.findRev('/');
  
         if(slashPos==(((int)ds.length())-1))
             ds.remove(slashPos, 1);
@@ -143,7 +143,7 @@ static TQString getDir(const TQString &f)
 {
     TQString d(f);
 
-    int slashPos=d.tqfindRev('/');
+    int slashPos=d.findRev('/');
 
     if(-1!=slashPos)
         d.remove(slashPos+1, d.length());
@@ -191,11 +191,11 @@ TQString getConfigFile(bool system)
 
         if(fExists(f))
         {
-            if(system || 0==fileSyntax(f).tqfind(home)) // For nonsystem, only consider file within $HOME
+            if(system || 0==fileSyntax(f).find(home)) // For nonsystem, only consider file within $HOME
                 files.append(f);
         }
 #if (FC_VERSION>=20300)
-        if(system && dExists(f) && (-1!=f.tqfind(TQRegExp("/conf\\.d/?$")) || -1!=f.tqfind(TQRegExp("/conf\\.d?$"))) )
+        if(system && dExists(f) && (-1!=f.find(TQRegExp("/conf\\.d/?$")) || -1!=f.find(TQRegExp("/conf\\.d?$"))) )
             return dirSyntax(f)+constKdeRootFcFile;   // This ones good enough for me!
 #endif
     }
@@ -208,7 +208,7 @@ TQString getConfigFile(bool system)
                               end(files.end());
 
         for(; it!=end; ++it)
-            if(-1!=(*it).tqfind(TQRegExp(system ? "/local\\.conf$" : "/\\.?fonts\\.conf$")))
+            if(-1!=(*it).find(TQRegExp(system ? "/local\\.conf$" : "/\\.?fonts\\.conf$")))
                 return *it;
         return files.front();  // Just return the 1st one...
     }
@@ -645,13 +645,13 @@ bool KXftConfig::apply()
                         TQString str(m_doc.toString());
                         int     idx;
     
-                        if(0!=str.tqfind("<?xml"))
+                        if(0!=str.find("<?xml"))
                             str.insert(0, xmlHeader);
-                        else if(0==str.tqfind(qtXmlHeader))
-                            str.tqreplace(0, strlen(qtXmlHeader), xmlHeader);
+                        else if(0==str.find(qtXmlHeader))
+                            str.replace(0, strlen(qtXmlHeader), xmlHeader);
     
-                        if(-1!=(idx=str.tqfind(qtDocTypeLine)))
-                            str.tqreplace(idx, strlen(qtDocTypeLine), docTypeLine);
+                        if(-1!=(idx=str.find(qtDocTypeLine)))
+                            str.replace(idx, strlen(qtDocTypeLine), docTypeLine);
     
                         //
                         // Write to file...
@@ -947,7 +947,7 @@ bool KXftConfig::hasDir(const TQString &d)
     ListItem *item;
 
     for(item=m_dirs.first(); item; item=m_dirs.next())
-        if(0==dir.tqfind(item->str))
+        if(0==dir.find(item->str))
             return true;
 
     return false;
@@ -1291,7 +1291,7 @@ void KXftConfig::applySubPixelType()
     if(m_subPixel.node.isNull())
         m_doc.documentElement().appendChild(matchNode);
     else
-        m_doc.documentElement().tqreplaceChild(matchNode, m_subPixel.node);
+        m_doc.documentElement().replaceChild(matchNode, m_subPixel.node);
     m_subPixel.node=matchNode;
 }
 
@@ -1323,7 +1323,7 @@ void KXftConfig::applyHintStyle()
         if(m_hint.node.isNull())
             m_doc.documentElement().appendChild(matchNode);
         else
-            m_doc.documentElement().tqreplaceChild(matchNode, m_hint.node);
+            m_doc.documentElement().replaceChild(matchNode, m_hint.node);
         m_hint.node=matchNode;
     }
 }
@@ -1344,7 +1344,7 @@ void KXftConfig::applyHinting()
     if(m_hinting.node.isNull())
         m_doc.documentElement().appendChild(matchNode);
     else
-        m_doc.documentElement().tqreplaceChild(matchNode, m_hinting.node);
+        m_doc.documentElement().replaceChild(matchNode, m_hinting.node);
     m_hinting.node=matchNode;
 }
 

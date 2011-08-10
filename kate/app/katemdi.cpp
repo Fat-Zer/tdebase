@@ -340,7 +340,7 @@ ToolView *Sidebar::addWidget (const TQPixmap &icon, const TQString &text, ToolVi
 
 bool Sidebar::removeWidget (ToolView *widget)
 {
-  if (!m_widgetToId.tqcontains(widget))
+  if (!m_widgetToId.contains(widget))
     return false;
 
   removeTab(m_widgetToId[widget]);
@@ -370,7 +370,7 @@ bool Sidebar::removeWidget (ToolView *widget)
 
 bool Sidebar::showWidget (ToolView *widget)
 {
-  if (!m_widgetToId.tqcontains(widget))
+  if (!m_widgetToId.contains(widget))
     return false;
 
   // hide other non-persistent views
@@ -395,7 +395,7 @@ bool Sidebar::showWidget (ToolView *widget)
 
 bool Sidebar::hideWidget (ToolView *widget)
 {
-  if (!m_widgetToId.tqcontains(widget))
+  if (!m_widgetToId.contains(widget))
     return false;
 
   bool anyVis = false;

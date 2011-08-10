@@ -282,7 +282,7 @@ public:
     //* @internal
     void removeTransient( WId w );
     //* @internal
-    bool hasTransient(WId w) const { return _transients.tqfind(w) != _transients.end(); }
+    bool hasTransient(WId w) const { return _transients.find(w) != _transients.end(); }
     //* @internal
     void updateDemandsAttentionState( WId w );
     //* @internal

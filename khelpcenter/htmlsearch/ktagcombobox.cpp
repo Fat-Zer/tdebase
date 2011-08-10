@@ -133,7 +133,7 @@ static inline void checkInsertPos(TQPopupMenu *popup, const TQString & str, int 
 
 static inline TQPopupMenu *checkInsertIndex(TQPopupMenu *popup, const TQStringList *tags, const TQString &submenu)
 {
-  int pos = tags->tqfindIndex(submenu);
+  int pos = tags->findIndex(submenu);
 
   TQPopupMenu *pi = 0;
   if (pos != -1)
@@ -206,7 +206,7 @@ void KTagComboBox::paintEvent( TQPaintEvent * ev)
 
 bool KTagComboBox::containsTag( const TQString &str ) const
 {
-  return tags-.tqcontains(str) > 0;
+  return tags-.contains(str) > 0;
 }
 
 TQString KTagComboBox::currentTag() const
@@ -238,7 +238,7 @@ void KTagComboBox::setCurrentItem(int i)
 
 void KTagComboBox::setCurrentItem(const TQString &code)
 {
-  int i = tags->tqfindIndex(code);
+  int i = tags->findIndex(code);
   if (code.isNull())
     i = 0;
   if (i != -1)

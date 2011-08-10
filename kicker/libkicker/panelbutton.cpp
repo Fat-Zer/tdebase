@@ -978,7 +978,7 @@ bool PanelPopupButton::eventFilter(TQObject *, TQEvent *e)
     if (e->type() == TQEvent::MouseMove)
     {
         TQMouseEvent *me = TQT_TQMOUSEEVENT(e);
-        if (TQT_TQRECT_OBJECT(rect()).tqcontains(mapFromGlobal(me->globalPos())) &&
+        if (TQT_TQRECT_OBJECT(rect()).contains(mapFromGlobal(me->globalPos())) &&
             ((me->state() & ControlButton) != 0 ||
              (me->state() & ShiftButton) != 0))
         {
@@ -990,7 +990,7 @@ bool PanelPopupButton::eventFilter(TQObject *, TQEvent *e)
              e->type() == TQEvent::MouseButtonDblClick)
     {
         TQMouseEvent *me = TQT_TQMOUSEEVENT(e);
-        if (TQT_TQRECT_OBJECT(rect()).tqcontains(mapFromGlobal(me->globalPos())))
+        if (TQT_TQRECT_OBJECT(rect()).contains(mapFromGlobal(me->globalPos())))
         {
             m_pressedDuringPopup = true;
             return true;
@@ -999,7 +999,7 @@ bool PanelPopupButton::eventFilter(TQObject *, TQEvent *e)
     else if (e->type() == TQEvent::MouseButtonRelease)
     {
         TQMouseEvent *me = TQT_TQMOUSEEVENT(e);
-        if (TQT_TQRECT_OBJECT(rect()).tqcontains(mapFromGlobal(me->globalPos())))
+        if (TQT_TQRECT_OBJECT(rect()).contains(mapFromGlobal(me->globalPos())))
         {
             if (m_pressedDuringPopup && m_popup)
             {

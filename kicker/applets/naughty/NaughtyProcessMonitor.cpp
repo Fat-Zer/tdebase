@@ -164,7 +164,7 @@ NaughtyProcessMonitor::slotTimeout()
   void
 NaughtyProcessMonitor::_process(ulong pid, uint load)
 {
-  if (!d->loadMap_.tqcontains(pid))
+  if (!d->loadMap_.contains(pid))
   {
     d->loadMap_.insert(pid, load);
     return;
@@ -172,12 +172,12 @@ NaughtyProcessMonitor::_process(ulong pid, uint load)
 
   uint oldLoad = d->loadMap_[pid];
   bool misbehaving = (load - oldLoad) > 40 * (d->interval_ / 1000);
-  bool wasMisbehaving = d->scoreMap_.tqcontains(pid);
+  bool wasMisbehaving = d->scoreMap_.contains(pid);
 
   if (misbehaving)
     if (wasMisbehaving)
     {
-      d->scoreMap_.tqreplace(pid, d->scoreMap_[pid] + 1);
+      d->scoreMap_.replace(pid, d->scoreMap_[pid] + 1);
       if (canKill(pid))
         emit(runawayProcess(pid, processName(pid)));
     }
@@ -187,7 +187,7 @@ NaughtyProcessMonitor::_process(ulong pid, uint load)
     if (wasMisbehaving)
       d->scoreMap_.remove(pid);
 
-  d->loadMap_.tqreplace(pid, load);
+  d->loadMap_.replace(pid, load);
 }
 
 // Here begins the set of system-specific methods.
@@ -221,7 +221,7 @@ NaughtyProcessMonitor::canKill(ulong pid) const
   return geteuid() == a;
 #elif defined(__OpenBSD__)
   // simply check if entry exists in the uid map and use it
-  if (!d->uidMap_.tqcontains(pid))
+  if (!d->uidMap_.contains(pid))
       return false ;
   
   return geteuid () == d->uidMap_[pid] ;
@@ -289,7 +289,7 @@ NaughtyProcessMonitor::processName(ulong pid) const
 
   TQString processName = parts[0] == "kdeinit:" ? parts[1] : parts[0];
 
-  int lastSlash = processName.tqfindRev('/');
+  int lastSlash = processName.findRev('/');
 
   // Get basename, if there's a path.
   if (-1 != lastSlash)
@@ -449,7 +449,7 @@ NaughtyProcessMonitor::getLoad(ulong pid, uint & load) const
   return true;
 #elif defined(__OpenBSD__)
   // use cache
-  if (!d->cacheLoadMap_.tqcontains(pid))
+  if (!d->cacheLoadMap_.contains(pid))
       return false ;
   
   load = d->cacheLoadMap_[pid] ;

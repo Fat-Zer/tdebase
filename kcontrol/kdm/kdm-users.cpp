@@ -381,7 +381,7 @@ void KDMUsersWidget::updateOptList( TQListViewItem *item, TQStringList &list )
     if ( !item )
         return;
     TQCheckListItem *itm = (TQCheckListItem *)item;
-    TQStringList::iterator it = list.tqfind( itm->text() );
+    TQStringList::iterator it = list.find( itm->text() );
     if (itm->isOn()) {
 	if (it == list.end())
 	    list.append( itm->text() );
@@ -415,9 +415,9 @@ void KDMUsersWidget::slotAddUsers(const TQMap<TQString,int> &users)
     for (it = users.begin(); it != users.end(); ++it) {
       const TQString *name = &it.key();
       (new TQCheckListItem(optinlv, *name, TQCheckListItem::CheckBox))->
-	      setOn(selectedUsers.tqfind(*name) != selectedUsers.end());
+	      setOn(selectedUsers.find(*name) != selectedUsers.end());
       (new TQCheckListItem(optoutlv, *name, TQCheckListItem::CheckBox))->
-	      setOn(hiddenUsers.tqfind(*name) != hiddenUsers.end());
+	      setOn(hiddenUsers.find(*name) != hiddenUsers.end());
       if ((*name)[0] != '@')
         usercombo->insertItem(*name);
     }
@@ -433,9 +433,9 @@ void KDMUsersWidget::slotDelUsers(const TQMap<TQString,int> &users)
     for (it = users.begin(); it != users.end(); ++it) {
         const TQString *name = &it.key();
         if (usercombo->listBox())
-            delete usercombo->listBox()->tqfindItem( *name, ExactMatch | CaseSensitive );
-        delete optinlv->tqfindItem( *name, 0 );
-        delete optoutlv->tqfindItem( *name, 0 );
+            delete usercombo->listBox()->findItem( *name, ExactMatch | CaseSensitive );
+        delete optinlv->findItem( *name, 0 );
+        delete optoutlv->findItem( *name, 0 );
     }
 }
 

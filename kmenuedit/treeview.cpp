@@ -278,7 +278,7 @@ void TreeView::readMenuFolderInfo(MenuFolderInfo *folderInfo, KServiceGroup::Ptr
     folderInfo->directoryFile = folder->directoryEntryPath();
     folderInfo->icon = folder->icon();
     TQString id = folder->relPath();
-    int i = id.tqfindRev('/', -2);
+    int i = id.findRev('/', -2);
     id = id.mid(i+1);
     folderInfo->id = id;
     folderInfo->fullId = prefix + id;
@@ -472,7 +472,7 @@ void TreeView::selectMenu(const TQString &menu)
    TreeItem *item = 0;
    do
    {
-      int i = restMenu.tqfind("/");
+      int i = restMenu.find("/");
       TQString subMenu = restMenu.left(i+1);
       restMenu = restMenu.mid(i+1);
    
@@ -592,7 +592,7 @@ TQStringList TreeView::fileList(const TQString& rPath)
     TQString relativePath = rPath;
 
     // truncate "/.directory"
-    int pos = relativePath.tqfindRev("/.directory");
+    int pos = relativePath.findRev("/.directory");
     if (pos > 0) relativePath.truncate(pos);
 
     TQStringList filelist;
@@ -611,7 +611,7 @@ TQStringList TreeView::fileList(const TQString& rPath)
         TQStringList files = dir.entryList();
         for (TQStringList::ConstIterator it = files.begin(); it != files.end(); ++it) {
             // does not work?!
-            //if (filelist.tqcontains(*it)) continue;
+            //if (filelist.contains(*it)) continue;
 
             if (relativePath.isEmpty()) {
                 filelist.remove(*it); // hack
@@ -631,7 +631,7 @@ TQStringList TreeView::dirList(const TQString& rPath)
     TQString relativePath = rPath;
 
     // truncate "/.directory"
-    int pos = relativePath.tqfindRev("/.directory");
+    int pos = relativePath.findRev("/.directory");
     if (pos > 0) relativePath.truncate(pos);
 
     TQStringList dirlist;
@@ -649,7 +649,7 @@ TQStringList TreeView::dirList(const TQString& rPath)
         for (TQStringList::ConstIterator it = subdirs.begin(); it != subdirs.end(); ++it) {
             if ((*it) == "." || (*it) == "..") continue;
             // does not work?!
-            // if (dirlist.tqcontains(*it)) continue;
+            // if (dirlist.contains(*it)) continue;
 
             if (relativePath.isEmpty()) {
                 dirlist.remove(*it); //hack
@@ -679,8 +679,8 @@ bool TreeView::acceptDrag(TQDropEvent* e) const
 
 static TQString createDesktopFile(const TQString &file, TQString *menuId, TQStringList *excludeList)
 {
-   TQString base = file.mid(file.tqfindRev('/')+1);
-   base = base.left(base.tqfindRev('.'));
+   TQString base = file.mid(file.findRev('/')+1);
+   base = base.left(base.findRev('.'));
 
    TQRegExp r("(.*)(?=-\\d+)");
    base = (r.search(base) > -1) ? r.cap(1) : base;
@@ -703,8 +703,8 @@ static KDesktopFile *copyDesktopFile(MenuEntryInfo *entryInfo, TQString *menuId,
 
 static TQString createDirectoryFile(const TQString &file, TQStringList *excludeList)
 {
-   TQString base = file.mid(file.tqfindRev('/')+1);
-   base = base.left(base.tqfindRev('.'));
+   TQString base = file.mid(file.findRev('/')+1);
+   base = base.left(base.findRev('.'));
 
    TQString result;
    int i = 1;
@@ -715,7 +715,7 @@ static TQString createDirectoryFile(const TQString &file, TQStringList *excludeL
       else
          result = base + TQString("-%1.directory").arg(i);
 
-      if (!excludeList->tqcontains(result))
+      if (!excludeList->contains(result))
       {
          if (locate("xdgdata-dirs", result).isEmpty())
             break;
@@ -997,7 +997,7 @@ void TreeView::newsubmenu()
    if (!ok) return;
 
    TQString file = caption;
-   file.tqreplace('/', '-');
+   file.replace('/', '-');
 
    file = createDirectoryFile(file, &m_newDirectoryList); // Create
 
@@ -1069,7 +1069,7 @@ void TreeView::newitem()
 
    TQString menuId;
    TQString file = caption;
-   file.tqreplace('/', '-');
+   file.replace('/', '-');
 
    file = createDesktopFile(file, &menuId, &m_newMenuIds); // Create
 

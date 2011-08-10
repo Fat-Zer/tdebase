@@ -100,7 +100,7 @@ TopLevel::TopLevel( const TQString &destDir, TQWidget *parent, const char *name 
   adjustSize();
 
   mDestDir = destDir;
-  mDestDir = mDestDir.tqreplace( TQRegExp( "^~/" ), TQDir::homeDirPath() + "/" );
+  mDestDir = mDestDir.replace( TQRegExp( "^~/" ), TQDir::homeDirPath() + "/" );
 	
   KStartupInfo::appStarted();
 
@@ -183,9 +183,9 @@ void TopLevel::slotScan()
     mProgress->setProgress( mProgress->progress() + 1 );
 
     TQString desktopName = *it;
-    int i = desktopName.tqfindRev('/');
+    int i = desktopName.findRev('/');
     desktopName = desktopName.mid(i+1);
-    i = desktopName.tqfindRev('.');
+    i = desktopName.findRev('.');
     if (i != -1)
        desktopName = desktopName.left(i);
 
@@ -207,9 +207,9 @@ void TopLevel::slotScan()
     // copy over the desktop file, if exists
     if ( scanDesktopFile( mAppCache, *it, mDestDir ) ) {
       TQString relPath = *it;
-      int pos = relPath.tqfind( "kappfinder/apps/" );
+      int pos = relPath.find( "kappfinder/apps/" );
       relPath = relPath.mid( pos + strlen( "kappfinder/apps/" ) );
-      relPath = relPath.left( relPath.tqfindRev( '/' ) + 1 );
+      relPath = relPath.left( relPath.findRev( '/' ) + 1 );
       TQStringList dirList = TQStringList::split( '/', relPath );
 
       TQListViewItem *dirItem = 0;

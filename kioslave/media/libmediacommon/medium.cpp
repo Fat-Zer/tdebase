@@ -109,7 +109,7 @@ Medium::MList Medium::createList(const TQStringList &properties)
 			l.append(m);
 
 			TQStringList::iterator first = props.begin();
-			TQStringList::iterator last = props.tqfind(SEPARATOR);
+			TQStringList::iterator last = props.find(SEPARATOR);
 			++last;
 			props.erase(first, last);
 		}

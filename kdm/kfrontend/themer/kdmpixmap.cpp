@@ -163,7 +163,7 @@ KdmPixmap::loadPixmap( PixmapStruct::PixmapClass *pClass )
   TQString fullpath = pClass->fullpath;
 
   kdDebug() << timestamp() << " load " << fullpath << endl;
-  int index = fullpath.tqfindRev('.');
+  int index = fullpath.findRev('.');
   TQString ext = fullpath.right(fullpath.length() - index);
   fullpath = fullpath.left(index);
   kdDebug() << timestamp() << " ext " << ext << " " << fullpath << endl;

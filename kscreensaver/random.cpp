@@ -148,7 +148,7 @@ int main(int argc, char *argv[])
         TQStringList defaults = type.readListEntry( "Defaults" );
         TQMap<TQString, int> def_numbers;
         for ( TQStringList::ConstIterator it = defaults.begin(); it != defaults.end(); ++it ) {
-            int index = ( *it ).tqfind( ':' );
+            int index = ( *it ).find( ':' );
             if ( index == -1 )
                 def_numbers[*it] = 1;
             else
@@ -160,7 +160,7 @@ int main(int argc, char *argv[])
                 int howoften = 1;
                 if ( defaults.count() != 0 ) {
                     TQFileInfo fi( tempSaverFileList[i] );
-                    if ( def_numbers.tqcontains( fi.fileName() ) )
+                    if ( def_numbers.contains( fi.fileName() ) )
                         howoften = def_numbers[fi.fileName()];
                     else
                         howoften = 0;

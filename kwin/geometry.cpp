@@ -726,7 +726,7 @@ void Client::keepInArea( TQRect area, bool partial )
         move( area.right() - width(), y() );
     if ( geometry().bottom() > area.bottom() && height() < area.height() )
         move( x(), area.bottom() - height() );
-    if( !area.tqcontains( geometry().topLeft() ))
+    if( !area.contains( geometry().topLeft() ))
         {
         int tx = x();
         int ty = y();
@@ -1346,10 +1346,10 @@ void Client::getWmNormalHints()
                 // try to keep the window in its xinerama screen if possible,
                 // if that fails at least keep it visible somewhere
                 TQRect area = workspace()->clientArea( MovementArea, this );
-                if( area.tqcontains( orig_geometry ))
+                if( area.contains( orig_geometry ))
                     keepInArea( area );
                 area = workspace()->clientArea( WorkArea, this );
-                if( area.tqcontains( orig_geometry ))
+                if( area.contains( orig_geometry ))
                     keepInArea( area );
                 }
             }
@@ -1500,7 +1500,7 @@ void Client::configureRequest( int value_mask, int rx, int ry, int rw, int rh, i
             updateFullScreenHack( TQRect( new_pos, TQSize( nw, nh )));
             TQRect area = workspace()->clientArea( WorkArea, this );
             if( !from_tool && ( !isSpecialWindow() || isToolbar()) && !isFullScreen()
-                && area.tqcontains( orig_geometry ))
+                && area.contains( orig_geometry ))
                 keepInArea( area );
 
             // this is part of the kicker-xinerama-hack... it should be
@@ -1537,10 +1537,10 @@ void Client::configureRequest( int value_mask, int rx, int ry, int rw, int rh, i
                 // try to keep the window in its xinerama screen if possible,
                 // if that fails at least keep it visible somewhere
                 TQRect area = workspace()->clientArea( MovementArea, this );
-                if( area.tqcontains( orig_geometry ))
+                if( area.contains( orig_geometry ))
                     keepInArea( area );
                 area = workspace()->clientArea( WorkArea, this );
-                if( area.tqcontains( orig_geometry ))
+                if( area.contains( orig_geometry ))
                     keepInArea( area );
                 }
             }

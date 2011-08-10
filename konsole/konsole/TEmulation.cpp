@@ -418,9 +418,9 @@ bool TEmulation::findTextNext( const TQString &str, bool forward, bool caseSensi
     for (int i = (m_findPos==-1?0:m_findPos+1); i<(scr->getHistLines()+scr->getLines()); i++) {
       string = scr->getHistoryLine(i);
       if (regExp)
-        pos = string.tqfind( TQRegExp(str,caseSensitive) );
+        pos = string.find( TQRegExp(str,caseSensitive) );
       else
-        pos = string.tqfind(str, 0, caseSensitive);
+        pos = string.find(str, 0, caseSensitive);
       if(pos!=-1) {
         m_findPos=i;
         if(i>scr->getHistLines())
@@ -436,9 +436,9 @@ bool TEmulation::findTextNext( const TQString &str, bool forward, bool caseSensi
     for(int i = (m_findPos==-1?(scr->getHistLines()+scr->getLines()):m_findPos-1); i>=0; i--) {
       string = scr->getHistoryLine(i);
       if (regExp)
-        pos = string.tqfind( TQRegExp(str,caseSensitive) );
+        pos = string.find( TQRegExp(str,caseSensitive) );
       else
-        pos = string.tqfind(str, 0, caseSensitive);
+        pos = string.find(str, 0, caseSensitive);
       if(pos!=-1) {
         m_findPos=i;
         if(i>scr->getHistLines())

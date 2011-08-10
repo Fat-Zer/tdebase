@@ -53,13 +53,13 @@ void MenuFolderInfo::add(MenuFolderInfo *info, bool initial)
 // Remove sub menu (without deleting it)
 void MenuFolderInfo::take(MenuFolderInfo *info)
 {
-   subFolders.take(subFolders.tqfindRef(info));
+   subFolders.take(subFolders.findRef(info));
 }
 
 // Remove sub menu (without deleting it)
 bool MenuFolderInfo::takeRecursive(MenuFolderInfo *info)
 {
-   int i = subFolders.tqfindRef(info);
+   int i = subFolders.findRef(info);
    if (i >= 0)
    {
       subFolders.take(i);
@@ -489,14 +489,14 @@ bool MenuEntryInfo::isShortcutAvailable(const KShortcut &_shortcut)
    {
       s_allShortcuts = new TQStringList(KHotKeys::allShortCuts());
    }
-   available = !s_allShortcuts->tqcontains(shortcutKey);
+   available = !s_allShortcuts->contains(shortcutKey);
    if (available && s_newShortcuts)
    {
-      available = !s_newShortcuts->tqcontains(shortcutKey);
+      available = !s_newShortcuts->contains(shortcutKey);
    }
    if (!available && s_freeShortcuts)
    {
-      available = s_freeShortcuts->tqcontains(shortcutKey);
+      available = s_freeShortcuts->contains(shortcutKey);
    }
    return available;
 }

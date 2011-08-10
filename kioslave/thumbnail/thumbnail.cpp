@@ -417,7 +417,7 @@ void ThumbnailProtocol::get(const KURL &url)
 
 const TQImage& ThumbnailProtocol::getIcon()
 {
-    TQImage* icon = m_iconDict.tqfind(m_mimeType);
+    TQImage* icon = m_iconDict.find(m_mimeType);
     if ( !icon ) // generate it!
     {
         icon = new TQImage( KMimeType::mimeType(m_mimeType)->pixmap( KIcon::Desktop, m_iconSize ).convertToImage() );

@@ -103,7 +103,7 @@ bool ArchiveProtocol::checkNewFile( const KURL & url, TQString & path, KIO::Erro
     kdDebug(7109) << "the full path is " << fullPath << endl;
     KDE_struct_stat statbuf;
     statbuf.st_mode = 0; // be sure to clear the directory bit
-    while ( (pos=fullPath.tqfind( '/', pos+1 )) != -1 )
+    while ( (pos=fullPath.find( '/', pos+1 )) != -1 )
     {
         TQString tryPath = fullPath.left( pos );
         kdDebug(7109) << fullPath << "  trying " << tryPath << endl;

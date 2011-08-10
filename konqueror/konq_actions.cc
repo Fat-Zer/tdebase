@@ -63,7 +63,7 @@ void KonqBidiHistoryAction::fillHistoryPopup( const TQPtrList<HistoryEntry> &his
   {
       TQString text = it.current()->title;
       text = KStringHandler::cEmSqueeze(text, popup->fontMetrics(), 30); //CT: squeeze
-      text.tqreplace( "&", "&&" );
+      text.replace( "&", "&&" );
       if ( checkCurrentItem && it.current() == current )
       {
           int id = popup->insertItem( text ); // no pixmap if checked

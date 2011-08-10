@@ -136,7 +136,7 @@ void advancedDialog::save()
 
         // is there a config group for this extension?
         if(!c.hasGroup(group) ||
-           group.tqcontains("Extension") < 1)
+           group.contains("Extension") < 1)
         {
             continue;
         }

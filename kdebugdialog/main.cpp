@@ -50,7 +50,7 @@ TQStringList readAreaList()
     while (!ts->eof()) {
       data = ts->readLine().simplifyWhiteSpace();
 
-      int pos = data.tqfind("#");
+      int pos = data.find("#");
       if ( pos != -1 )
         data.truncate( pos );
 

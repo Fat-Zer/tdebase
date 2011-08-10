@@ -167,7 +167,7 @@ bool KDecorationPlugins::loadPlugin( TQString nameStr )
 
     // For clients in kdeartwork    
     TQString catalogue = nameStr;
-    catalogue.tqreplace( "kwin3_", "kwin_" );
+    catalogue.replace( "kwin3_", "kwin_" );
     KGlobal::locale()->insertCatalogue( catalogue );
     // For KCommonDecoration based clients
     KGlobal::locale()->insertCatalogue( "kwin_lib" );

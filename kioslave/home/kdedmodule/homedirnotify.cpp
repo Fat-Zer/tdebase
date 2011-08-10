@@ -53,7 +53,7 @@ void HomeDirNotify::init()
 		for(; it!=users_end; ++it)
 		{
 			if ((*it).uid()>=MINIMUM_UID
-			 && !uid_list.tqcontains( (*it).uid() ) )
+			 && !uid_list.contains( (*it).uid() ) )
 			{
 				uid_list.append( (*it).uid() );
 				
@@ -147,7 +147,7 @@ inline void evil_hack(const KURL::List &list)
 	{
 		KURL url = (*it).upURL();
 
-		if (!notified.tqcontains(url))
+		if (!notified.contains(url))
 		{
 			notifier.FilesAdded(url);
 			notified.append(url);

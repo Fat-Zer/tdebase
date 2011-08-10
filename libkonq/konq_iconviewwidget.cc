@@ -346,7 +346,7 @@ void KonqIconViewWidget::slotOnItem( TQIconViewItem *_item )
 
     // ## shouldn't this be disabled during rectangular selection too ?
     if (d->bSoundPreviews && d->pSoundPlayer &&
-        d->pSoundPlayer->mimeTypes().tqcontains(
+        d->pSoundPlayer->mimeTypes().contains(
             item->item()->mimetype())
         && KGlobalSettings::showFilePreview(item->item()->url())
         && tqtopLevelWidget() == kapp->activeWindow())
@@ -692,7 +692,7 @@ bool KonqIconViewWidget::mimeTypeMatch( const TQString& mimeType, const TQString
             return true;
         // Support for *mt == "image/*"
         TQString tmp( mimeType );
-        if ( (*mt).endsWith("*") && tmp.tqreplace(TQRegExp("/.*"), "/*") == (*mt) )
+        if ( (*mt).endsWith("*") && tmp.replace(TQRegExp("/.*"), "/*") == (*mt) )
             return true;
         if ( (*mt) == "text/plain" )
         {
@@ -830,7 +830,7 @@ void KonqIconViewWidget::startImagePreview( const TQStringList &, bool force )
         return;
     }
 
-    if ((d->bSoundPreviews = d->previewSettings.tqcontains( "audio/" )) &&
+    if ((d->bSoundPreviews = d->previewSettings.contains( "audio/" )) &&
         !d->pSoundPlayer)
     {
       KLibFactory *factory = KLibLoader::self()->factory("konq_sound");
@@ -1030,7 +1030,7 @@ void KonqIconViewWidget::contentsDragMoveEvent( TQDragMoveEvent *e )
         return;
     }
 
-    TQIconViewItem *item = tqfindItem( e->pos() );
+    TQIconViewItem *item = findItem( e->pos() );
     if ( e->source() != viewport() &&
          !item && m_rootItem && !m_rootItem->isWritable() ) {
         emit dragMove( false );
@@ -1236,7 +1236,7 @@ void KonqIconViewWidget::contentsMouseMoveEvent( TQMouseEvent *e )
 
 void KonqIconViewWidget::contentsDropEvent( TQDropEvent * ev )
 {
-  TQIconViewItem *i = tqfindItem( ev->pos() );
+  TQIconViewItem *i = findItem( ev->pos() );
 
     if ( ev->source() != viewport() &&
          !i && m_rootItem && !m_rootItem->isWritable() ) {
@@ -1281,7 +1281,7 @@ void KonqIconViewWidget::doubleClickTimeout()
     if ( d->releaseMouseEvent )
     {
         TQMouseEvent e( TQEvent::MouseButtonPress,d->mousePos , 1, d->mouseState);
-        TQIconViewItem* item = tqfindItem( e.pos() );
+        TQIconViewItem* item = findItem( e.pos() );
         KURL url;
         if ( item )
         {
@@ -1290,7 +1290,7 @@ void KonqIconViewWidget::doubleClickTimeout()
             if ( url.isLocalFile() && (url.directory(false) == KGlobalSettings::trashPath() || url.path(1).startsWith(KGlobalSettings::trashPath())))
                 brenameTrash = true;
 
-            if ( url.isLocalFile() && !brenameTrash && d->renameItem && m_pSettings->renameIconDirectly() && e.button() == Qt::LeftButton && item->textRect( false ).tqcontains(e.pos()))
+            if ( url.isLocalFile() && !brenameTrash && d->renameItem && m_pSettings->renameIconDirectly() && e.button() == Qt::LeftButton && item->textRect( false ).contains(e.pos()))
             {
                 if( d->pActivateDoubleClick->isActive () )
                     d->pActivateDoubleClick->stop();
@@ -1359,7 +1359,7 @@ void KonqIconViewWidget::contentsMousePressEvent( TQMouseEvent *e )
 {
     if(d->pActivateDoubleClick && d->pActivateDoubleClick->isActive ())
         d->pActivateDoubleClick->stop();
-     TQIconViewItem* item = tqfindItem( e->pos() );
+     TQIconViewItem* item = findItem( e->pos() );
      m_mousePos = e->pos();
      KURL url;
      if ( item )
@@ -1368,7 +1368,7 @@ void KonqIconViewWidget::contentsMousePressEvent( TQMouseEvent *e )
          bool brenameTrash =false;
          if ( url.isLocalFile() && (url.directory(false) == KGlobalSettings::trashPath() || url.path(1).startsWith(KGlobalSettings::trashPath())))
              brenameTrash = true;
-         if ( !brenameTrash && !KGlobalSettings::singleClick() && m_pSettings->renameIconDirectly() && e->button() == Qt::LeftButton && item->textRect( false ).tqcontains(e->pos())&& !d->firstClick &&  url.isLocalFile() && (!url.protocol().tqfind("device", 0, false)==0))
+         if ( !brenameTrash && !KGlobalSettings::singleClick() && m_pSettings->renameIconDirectly() && e->button() == Qt::LeftButton && item->textRect( false ).contains(e->pos())&& !d->firstClick &&  url.isLocalFile() && (!url.protocol().find("device", 0, false)==0))
          {
              d->firstClick = true;
              d->mousePos = e->pos();
@@ -1916,7 +1916,7 @@ void KonqIconViewWidget::updatePreviewMimeTypes()
     KTrader::OfferList::ConstIterator it;
 
     for ( it = plugins.begin(); it != plugins.end(); ++it ) {
-        if ( d->previewSettings.tqcontains((*it)->desktopEntryName()) ) {
+        if ( d->previewSettings.contains((*it)->desktopEntryName()) ) {
             TQStringList mimeTypes = (*it)->property("MimeTypes").toStringList();
             for (TQStringList::ConstIterator mt = mimeTypes.begin(); mt != mimeTypes.end(); ++mt)
                 d->pPreviewMimeTypes->append(*mt);

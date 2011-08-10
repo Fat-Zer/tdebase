@@ -128,7 +128,7 @@ OtherCertItem::OtherCertItem( TQListView *view, const TQString& sub, const TQStr
     m_module = module;
 KSSLX509Map cert(sub);
     setText(0, cert.getValue("O"));
-    setText(1, cert.getValue("CN").tqreplace("\n", ", "));
+    setText(1, cert.getValue("CN").replace("\n", ", "));
 
     if (_exp.date().year() > 3000 || _exp.date().year() < 1900)
        _exp.setDate(TQDate(3000,1,1));
@@ -151,7 +151,7 @@ YourCertItem::YourCertItem( TQListView *view, TQString pkcs, TQString pass, TQSt
 {
     m_module = module;
 KSSLX509Map cert(name);
-    TQString tmp = cert.getValue("CN").tqreplace("\n", ", ");
+    TQString tmp = cert.getValue("CN").replace("\n", ", ");
     setText(0, tmp);
     setText(1, cert.getValue("Email"));
     _pkcs = pkcs;
@@ -180,10 +180,10 @@ KSSLX509Map mcert(name);
 TQString tmp;
     setText(0, mcert.getValue("O"));
     tmp = mcert.getValue("OU");
-    tmp.tqreplace("\n", ", ");
+    tmp.replace("\n", ", ");
     setText(1, tmp);
     tmp = mcert.getValue("CN");
-    tmp.tqreplace("\n", ", ");
+    tmp.replace("\n", ", ");
     setText(2, tmp);
     _name = name;
     _cert = cert;
@@ -1921,7 +1921,7 @@ void KCryptoConfig::slotCAImport() {
 		if (certStore) { KOSSL::self()->X509_STORE_free(certStore);
 				certStore = NULL; }
 
-		if (certtext.tqcontains("-----BEGIN CERTIFICATE-----")) {
+		if (certtext.contains("-----BEGIN CERTIFICATE-----")) {
 			qf.reset();
 			certtext = TQString();
 			while (!qf.atEnd()) {
@@ -1929,10 +1929,10 @@ void KCryptoConfig::slotCAImport() {
 				qf.readLine(xx, qf.size());
 				certtext += xx;
 			}
-			certtext = certtext.tqreplace("-----BEGIN CERTIFICATE-----", TQString());
-			certtext = certtext.tqreplace("-----END CERTIFICATE-----", TQString());
+			certtext = certtext.replace("-----BEGIN CERTIFICATE-----", TQString());
+			certtext = certtext.replace("-----END CERTIFICATE-----", TQString());
 			certtext = certtext.stripWhiteSpace();
-			certtext = certtext.tqreplace("\n", TQString());
+			certtext = certtext.replace("\n", TQString());
 		} else {
 			// Must [could?] be DER
 			qf.close();
@@ -2350,7 +2350,7 @@ SSL_CONST SSL_METHOD *meth;
       break;
     // Leak of sc*?
     TQString scn(sc->name);
-    if (scn.tqcontains("ADH-") || scn.tqcontains("NULL-") || scn.tqcontains("DES-CBC3-SHA") || scn.tqcontains("FZA-")) {
+    if (scn.contains("ADH-") || scn.contains("NULL-") || scn.contains("DES-CBC3-SHA") || scn.contains("FZA-")) {
       continue;
     }
     k = SSL_CIPHER_get_bits(sc, &j);
@@ -2378,7 +2378,7 @@ SSL_CONST SSL_METHOD *meth;
       break;
     // Leak of sc*?
     TQString scn(sc->name);
-    if (scn.tqcontains("ADH-") || scn.tqcontains("NULL-") || scn.tqcontains("DES-CBC3-SHA") || scn.tqcontains("FZA-")) {
+    if (scn.contains("ADH-") || scn.contains("NULL-") || scn.contains("DES-CBC3-SHA") || scn.contains("FZA-")) {
       continue;
     }
     k = SSL_CIPHER_get_bits(sc, &j);

@@ -306,15 +306,15 @@ void ButtonDropSite::clearRight()
 void ButtonDropSite::dragMoveEvent( TQDragMoveEvent* e )
 {
 	TQPoint p = e->pos();
-	if (leftDropArea().tqcontains(p) || rightDropArea().tqcontains(p) || buttonAt(p) ) {
+	if (leftDropArea().contains(p) || rightDropArea().contains(p) || buttonAt(p) ) {
 		e->accept();
 
 		// 2 pixel wide drop visualizer...
 		TQRect r = contentsRect();
 		int x = -1;
-		if (leftDropArea().tqcontains(p) ) {
+		if (leftDropArea().contains(p) ) {
 			x = leftDropArea().left();
-		} else if (rightDropArea().tqcontains(p) ) {
+		} else if (rightDropArea().contains(p) ) {
 			x = rightDropArea().right()+1;
 		} else {
 			ButtonDropSiteItem *item = buttonAt(p);
@@ -373,10 +373,10 @@ void ButtonDropSite::dropEvent( TQDropEvent* e )
 	ButtonList *buttonList = 0;
 	ButtonList::iterator buttonPosition;
 
-	if (leftDropArea().tqcontains(p) ) {
+	if (leftDropArea().contains(p) ) {
 		buttonList = &buttonsLeft;
 		buttonPosition = buttonsLeft.end();
-	} else if (rightDropArea().tqcontains(p) ) {
+	} else if (rightDropArea().contains(p) ) {
 		buttonList = &buttonsRight;
 		buttonPosition = buttonsRight.begin();
 	} else {
@@ -446,9 +446,9 @@ bool ButtonDropSite::getItemIterator(ButtonDropSiteItem *item, ButtonList* &list
 	if (!item)
 		return false;
 
-	ButtonList::iterator it = buttonsLeft.tqfind(item); // try the left list first...
+	ButtonList::iterator it = buttonsLeft.find(item); // try the left list first...
 	if (it == buttonsLeft.end() ) {
-		it = buttonsRight.tqfind(item); // try the right list...
+		it = buttonsRight.find(item); // try the right list...
 		if (it == buttonsRight.end() ) {
 			return false; // item hasn't been found in one of the list, return...
 		} else {
@@ -521,14 +521,14 @@ void ButtonDropSite::recalcItemGeometry()
 ButtonDropSiteItem *ButtonDropSite::buttonAt(TQPoint p) {
 	// try to find the item in the left button list
 	for (ButtonList::const_iterator it = buttonsLeft.begin(); it != buttonsLeft.end(); ++it) {
-		if ( (*it)->rect.tqcontains(p) ) {
+		if ( (*it)->rect.contains(p) ) {
 			return *it;
 		}
 	}
 
 	// try to find the item in the right button list
 	for (ButtonList::const_iterator it = buttonsRight.begin(); it != buttonsRight.end(); ++it) {
-		if ( (*it)->rect.tqcontains(p) ) {
+		if ( (*it)->rect.contains(p) ) {
 			return *it;
 		}
 	}
@@ -761,7 +761,7 @@ void ButtonPositionWidget::setDecorationFactory(KDecorationFactory *factory)
 		ButtonSourceItem *i = dynamic_cast<ButtonSourceItem*>(it.current() );
 		if (i) {
 			Button b = i->button();
-			b.supported = m_supportedButtons.tqcontains(b.type);
+			b.supported = m_supportedButtons.contains(b.type);
 			i->setButton(b);
 		}
 		++it;
@@ -777,47 +777,47 @@ Button ButtonPositionWidget::getButton(TQChar type, bool& success) {
 	if (type == 'R') {
 		TQBitmap bmp(resize_width, resize_height, resize_bits, true);
 		bmp.setMask(bmp);
-		return Button(i18n("Resize"), bmp, 'R', false, m_supportedButtons.tqcontains('R') );
+		return Button(i18n("Resize"), bmp, 'R', false, m_supportedButtons.contains('R') );
 	} else if (type == 'L') {
 		TQBitmap bmp(shade_width, shade_height, shade_bits, true);
 		bmp.setMask(bmp);
-		return Button(i18n("Shade"), bmp, 'L', false, m_supportedButtons.tqcontains('L') );
+		return Button(i18n("Shade"), bmp, 'L', false, m_supportedButtons.contains('L') );
 	} else if (type == 'B') {
 		TQBitmap bmp(keepbelowothers_width, keepbelowothers_height, keepbelowothers_bits, true);
 		bmp.setMask(bmp);
-		return Button(i18n("Keep Below Others"), bmp, 'B', false, m_supportedButtons.tqcontains('B') );
+		return Button(i18n("Keep Below Others"), bmp, 'B', false, m_supportedButtons.contains('B') );
 	} else if (type == 'F') {
 		TQBitmap bmp(keepaboveothers_width, keepaboveothers_height, keepaboveothers_bits, true);
 		bmp.setMask(bmp);
-		return Button(i18n("Keep Above Others"), bmp, 'F', false, m_supportedButtons.tqcontains('F') );
+		return Button(i18n("Keep Above Others"), bmp, 'F', false, m_supportedButtons.contains('F') );
 	} else if (type == 'X') {
 		TQBitmap bmp(close_width, close_height, close_bits, true);
 		bmp.setMask(bmp);
-		return Button(i18n("Close"), bmp, 'X', false,  m_supportedButtons.tqcontains('X') );
+		return Button(i18n("Close"), bmp, 'X', false,  m_supportedButtons.contains('X') );
 	} else if (type == 'A') {
 		TQBitmap bmp(maximize_width, maximize_height, maximize_bits, true);
 		bmp.setMask(bmp);
-		return Button(i18n("Maximize"), bmp, 'A', false, m_supportedButtons.tqcontains('A') );
+		return Button(i18n("Maximize"), bmp, 'A', false, m_supportedButtons.contains('A') );
 	} else if (type == 'I') {
 		TQBitmap bmp(minimize_width, minimize_height, minimize_bits, true);
 		bmp.setMask(bmp);
-		return Button(i18n("Minimize"), bmp, 'I', false, m_supportedButtons.tqcontains('I') );
+		return Button(i18n("Minimize"), bmp, 'I', false, m_supportedButtons.contains('I') );
 	} else if (type == 'H') {
 		TQBitmap bmp(help_width, help_height, help_bits, true);
 		bmp.setMask(bmp);
-		return Button(i18n("Help"), bmp, 'H', false, m_supportedButtons.tqcontains('H') );
+		return Button(i18n("Help"), bmp, 'H', false, m_supportedButtons.contains('H') );
 	} else if (type == 'S') {
 		TQBitmap bmp(onalldesktops_width, onalldesktops_height, onalldesktops_bits, true);
 		bmp.setMask(bmp);
-		return Button(i18n("On All Desktops"), bmp, 'S', false, m_supportedButtons.tqcontains('S') );
+		return Button(i18n("On All Desktops"), bmp, 'S', false, m_supportedButtons.contains('S') );
 	} else if (type == 'M') {
 		TQBitmap bmp(menu_width, menu_height, menu_bits, true);
 		bmp.setMask(bmp);
-		return Button(i18n("Menu"), bmp, 'M', false, m_supportedButtons.tqcontains('M') );
+		return Button(i18n("Menu"), bmp, 'M', false, m_supportedButtons.contains('M') );
 	} else if (type == '_') {
 		TQBitmap bmp(spacer_width, spacer_height, spacer_bits, true);
 		bmp.setMask(bmp);
-		return Button(i18n("--- spacer ---"), bmp, '_', true, m_supportedButtons.tqcontains('_') );
+		return Button(i18n("--- spacer ---"), bmp, '_', true, m_supportedButtons.contains('_') );
 	} else {
 		success = false;
 		return Button();

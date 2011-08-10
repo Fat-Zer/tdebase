@@ -537,9 +537,9 @@ void Workspace::addClient( Client* c, allowed_t )
         updateFocusChains( c, FocusChainUpdate ); // add to focus chain if not already there
         clients.append( c );
         }
-    if( !unconstrained_stacking_order.tqcontains( c ))
+    if( !unconstrained_stacking_order.contains( c ))
         unconstrained_stacking_order.append( c );
-    if( !stacking_order.tqcontains( c )) // it'll be updated later, and updateToolWindows() requires
+    if( !stacking_order.contains( c )) // it'll be updated later, and updateToolWindows() requires
         stacking_order.append( c );    // c to be in stacking_order
     if( c->isTopMenu())
         addTopMenu( c );
@@ -578,7 +578,7 @@ void Workspace::removeClient( Client* c, allowed_t )
     if( c->isNormalWindow())
         Notify::raise( Notify::Delete );
 
-    Q_ASSERT( clients.tqcontains( c ) || desktops.tqcontains( c ));
+    Q_ASSERT( clients.contains( c ) || desktops.contains( c ));
     clients.remove( c );
     desktops.remove( c );
     unconstrained_stacking_order.remove( c );
@@ -639,7 +639,7 @@ void Workspace::updateFocusChains( Client* c, FocusChainChange change )
                 else
                     focus_chain[ i ].prepend( c );
                 }
-            else if( !focus_chain[ i ].tqcontains( c ))
+            else if( !focus_chain[ i ].contains( c ))
                 { // add it after the active one
                 if( active_client != NULL && active_client != c
                     && !focus_chain[ i ].isEmpty() && focus_chain[ i ].last() == active_client )
@@ -665,7 +665,7 @@ void Workspace::updateFocusChains( Client* c, FocusChainChange change )
                     focus_chain[ i ].remove( c );
                     focus_chain[ i ].prepend( c );
                     }
-                else if( !focus_chain[ i ].tqcontains( c ))
+                else if( !focus_chain[ i ].contains( c ))
                     {
                     if( active_client != NULL && active_client != c
                         && !focus_chain[ i ].isEmpty() && focus_chain[ i ].last() == active_client )
@@ -688,7 +688,7 @@ void Workspace::updateFocusChains( Client* c, FocusChainChange change )
         global_focus_chain.remove( c );
         global_focus_chain.prepend( c );
         }
-    else if( !global_focus_chain.tqcontains( c ))
+    else if( !global_focus_chain.contains( c ))
         {
         if( active_client != NULL && active_client != c
             && !global_focus_chain.isEmpty() && global_focus_chain.last() == active_client )
@@ -1269,7 +1269,7 @@ bool Workspace::setCurrentDesktop( int new_desktop )
         {
         // Search in focus chain
         if ( movingClient != NULL && active_client == movingClient
-            && focus_chain[currentDesktop()].tqcontains( active_client )
+            && focus_chain[currentDesktop()].contains( active_client )
             && active_client->isShown( true ) && active_client->isOnCurrentDesktop())
             {
             c = active_client; // the requestFocus below will fail, as the client is already active
@@ -1312,8 +1312,8 @@ bool Workspace::setCurrentDesktop( int new_desktop )
     //  If input: chain = { 1, 2, 3, 4 } and current_desktop = 3,
     //   Output: chain = { 3, 1, 2, 4 }.
 //    kdDebug(1212) << TQString("Switching to desktop #%1, at focus_chain[currentDesktop()] index %2\n")
-//      .arg(currentDesktop()).arg(desktop_focus_chain.tqfind( currentDesktop() ));
-    for( int i = desktop_focus_chain.tqfind( currentDesktop() ); i > 0; i-- )
+//      .arg(currentDesktop()).arg(desktop_focus_chain.find( currentDesktop() ));
+    for( int i = desktop_focus_chain.find( currentDesktop() ); i > 0; i-- )
         desktop_focus_chain[i] = desktop_focus_chain[i-1];
     desktop_focus_chain[0] = currentDesktop();
 
@@ -1667,7 +1667,7 @@ void Workspace::calcDesktopLayout(int &x, int &y) const
  */
 bool Workspace::addSystemTrayWin( WId w )
     {
-    if ( systemTrayWins.tqcontains( w ) )
+    if ( systemTrayWins.contains( w ) )
         return TRUE;
 
     NETWinInfo ni( qt_xdisplay(), w, root, NET::WMKDESystemTrayWinFor );
@@ -1689,7 +1689,7 @@ bool Workspace::addSystemTrayWin( WId w )
  */
 bool Workspace::removeSystemTrayWin( WId w, bool check )
     {
-    if ( !systemTrayWins.tqcontains( w ) )
+    if ( !systemTrayWins.contains( w ) )
         return FALSE;
     if( check )
         {
@@ -1904,7 +1904,7 @@ unsigned int Workspace::sendFakedMouseEvent( TQPoint pos, WId w, MouseEmulation 
     {
     if ( !w )
         return state;
-    TQWidget* widget = TQWidget::tqfind( w );
+    TQWidget* widget = TQWidget::find( w );
     if ( (!widget ||  widget->inherits(TQTOOLBUTTON_OBJECT_NAME_STRING) ) && !findClient( WindowMatchPredicate( w )) ) 
         {
         int x, y;
@@ -2379,7 +2379,7 @@ void Workspace::raiseElectricBorders()
 void Workspace::addTopMenu( Client* c )
     {
     assert( c->isTopMenu());
-    assert( !topmenus.tqcontains( c ));
+    assert( !topmenus.contains( c ));
     topmenus.append( c );
     if( managingTopMenus())
         {
@@ -2400,7 +2400,7 @@ void Workspace::removeTopMenu( Client* c )
 //    if( c->isTopMenu())
 //        kdDebug() << "REMOVE TOPMENU:" << c << endl;
     assert( c->isTopMenu());
-    assert( topmenus.tqcontains( c ));
+    assert( topmenus.contains( c ));
     topmenus.remove( c );
     updateCurrentTopMenu();
     // TODO reduce topMenuHeight() if possible?
@@ -2650,20 +2650,20 @@ void Workspace::handleKompmgrOutput( KProcess* , char *buffer, int buflen)
 {
     TQString message;
     TQString output = TQString::fromLocal8Bit( buffer, buflen );
-    if (output.tqcontains("Started",false))
+    if (output.contains("Started",false))
         ; // don't do anything, just pass to the connection release
-    else if (output.tqcontains("Can't open display",false))
+    else if (output.contains("Can't open display",false))
         message = i18n("<qt><b>kompmgr failed to open the display</b><br>There is probably an invalid display entry in your ~/.xcompmgrrc.</qt>");
-    else if (output.tqcontains("No render extension",false))
+    else if (output.contains("No render extension",false))
         message = i18n("<qt><b>kompmgr cannot find the Xrender extension</b><br>You are using either an outdated or a crippled version of XOrg.<br>Get XOrg &ge; 6.8 from www.freedesktop.org.<br></qt>");
-    else if (output.tqcontains("No composite extension",false))
+    else if (output.contains("No composite extension",false))
         message = i18n("<qt><b>Composite extension not found</b><br>You <i>must</i> use XOrg &ge; 6.8 for translucency and shadows to work.<br>Additionally, you need to add a new section to your X config file:<br>"
         "<i>Section \"Extensions\"<br>"
         "Option \"Composite\" \"Enable\"<br>"
         "EndSection</i></qt>");
-    else if (output.tqcontains("No damage extension",false))
+    else if (output.contains("No damage extension",false))
         message = i18n("<qt><b>Damage extension not found</b><br>You <i>must</i> use XOrg &ge; 6.8 for translucency and shadows to work.</qt>");
-    else if (output.tqcontains("No XFixes extension",false))
+    else if (output.contains("No XFixes extension",false))
         message = i18n("<qt><b>XFixes extension not found</b><br>You <i>must</i> use XOrg &ge; 6.8 for translucency and shadows to work.</qt>");
     else return; //skip others
     // kompmgr startup failed or succeeded, release connection

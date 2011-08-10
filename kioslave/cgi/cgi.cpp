@@ -117,7 +117,7 @@ void CgiProtocol::get( const KURL& url )
 
   TQString file;
 
-  int pos = path.tqfindRev('/');
+  int pos = path.findRev('/');
   if ( pos >= 0 ) file = path.mid( pos + 1 );
   else file = path;
 
@@ -190,8 +190,8 @@ void CgiProtocol::get( const KURL& url )
       // Access the buffer in-place by using setRawData()
       output.setRawData( buffer, n );
 
-      int colon = output.tqfind( ':' );
-      int newline = output.tqfind( '\n' );
+      int colon = output.find( ':' );
+      int newline = output.find( '\n' );
       int semicolon = qByteArrayFindRev( output, ';', newline );
       int end;
       if ( semicolon < 0 ) end = newline;

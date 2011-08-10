@@ -121,7 +121,7 @@ public:
    void clear();
    KasItem *take( KasItem *i ) { return items.take( indexOf(i) ); }
    KasItem *itemAt( uint i ) { return items.tqat( i ); }
-   int indexOf( KasItem *i ) { return items.tqfind( i ); }
+   int indexOf( KasItem *i ) { return items.find( i ); }
 
    KasItemList *itemList() { return &items; }
 

@@ -75,7 +75,7 @@ void KKeyModule::init( bool isGlobal, bool _bSeriesOnly, bool bSeriesNone )
 	for( uint i = 0; i < actions.size(); i++ ) {
 		TQString sConfigKey = actions[i].m_sName;
 		//kdDebug(125) << "sConfigKey: " << sConfigKey << endl;
-		int iLastSpace = sConfigKey.tqfindRev( ' ' );
+		int iLastSpace = sConfigKey.findRev( ' ' );
 		bool bIsNum = false;
 		if( iLastSpace >= 0 )
 			sConfigKey.mid( iLastSpace+1 ).toInt( &bIsNum );
@@ -83,7 +83,7 @@ void KKeyModule::init( bool isGlobal, bool _bSeriesOnly, bool bSeriesNone )
 		kdDebug(125) << "sConfigKey: " << sConfigKey
 			<< " bIsNum: " << bIsNum
 			<< " bSeriesOnly: " << bSeriesOnly << endl;
-		if( ((bSeriesOnly && !bIsNum) || (bSeriesNone && bIsNum)) && !sConfigKey.tqcontains( ':' ) ) {
+		if( ((bSeriesOnly && !bIsNum) || (bSeriesNone && bIsNum)) && !sConfigKey.contains( ':' ) ) {
 			actions.removeAction( sConfigKey );
 			i--;
 		}
@@ -318,7 +318,7 @@ void KKeyModule::readScheme( int index )
 
         // parse the string for first white space
 
-        ind = sFile.tqfind(" ");
+        ind = sFile.find(" ");
         if (ind == -1) {
           ind = sFile.length();
           break;
@@ -332,7 +332,7 @@ void KKeyModule::readScheme( int index )
 
         TQString s = sFile.mid( ind, 1 );
         s = s.upper();
-        sFile.tqreplace( ind, 1, s );
+        sFile.replace( ind, 1, s );
 
       }
 
@@ -416,8 +416,8 @@ void KKeyModule::readScheme( int index )
   // Set various appropriate for the scheme
 
   if ( indx < nSysSchemes ||
-       (*sFileList->tqat(indx)).tqcontains( "/global-" ) ||
-       (*sFileList->tqat(indx)).tqcontains( "/app-" ) ) {
+       (*sFileList->tqat(indx)).contains( "/global-" ) ||
+       (*sFileList->tqat(indx)).contains( "/app-" ) ) {
     removeBt->setEnabled( FALSE );
   } else {
     removeBt->setEnabled( TRUE );

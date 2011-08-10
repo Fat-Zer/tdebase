@@ -300,7 +300,7 @@ void KonqHistoryManager::addToHistory( bool pending, const KURL& _url,
 
     // always remove from pending if available, otherwise the else branch leaks
     // if the map already contains an entry for this key.
-    TQMapIterator<TQString,KonqHistoryEntry*> it = m_pending.tqfind( u );
+    TQMapIterator<TQString,KonqHistoryEntry*> it = m_pending.find( u );
     if ( it != m_pending.end() ) {
         delete it.data();
         m_pending.remove( it );
@@ -368,7 +368,7 @@ void KonqHistoryManager::removePending( const KURL& url )
     if ( url.isLocalFile() )
 	return;
 
-    TQMapIterator<TQString,KonqHistoryEntry*> it = m_pending.tqfind( url.prettyURL() );
+    TQMapIterator<TQString,KonqHistoryEntry*> it = m_pending.find( url.prettyURL() );
     if ( it != m_pending.end() ) {
 	KonqHistoryEntry *oldEntry = it.data(); // the old entry, may be 0L
 	emitRemoveFromHistory( url ); // remove the current pending entry
@@ -627,7 +627,7 @@ KonqHistoryEntry * KonqHistoryManager::createFallbackEntry(const TQString& item)
     uint weight = 1;
 
     // find out the weighting of this item (appended to the string as ":num")
-    int index = item.tqfindRev(':');
+    int index = item.findRev(':');
     if ( index > 0 ) {
 	bool ok;
 	weight = item.mid( index + 1 ).toUInt( &ok );

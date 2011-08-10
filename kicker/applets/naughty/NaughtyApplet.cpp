@@ -105,7 +105,7 @@ NaughtyApplet::~NaughtyApplet()
   void
 NaughtyApplet::slotWarn(ulong pid, const TQString & name)
 {
-  if (ignoreList_.tqcontains(name))
+  if (ignoreList_.contains(name))
     return;
 
   TQString s = i18n("A program called '%1' is slowing down the others "

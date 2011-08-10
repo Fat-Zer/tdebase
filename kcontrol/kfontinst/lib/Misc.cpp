@@ -65,9 +65,9 @@ TQString dirSyntax(const TQString &d)
     {
         TQString ds(d);
 
-        ds.tqreplace("//", "/");
+        ds.replace("//", "/");
 
-        int slashPos=ds.tqfindRev('/');
+        int slashPos=ds.findRev('/');
 
         if(slashPos!=(((int)ds.length())-1))
             ds.append('/');
@@ -84,9 +84,9 @@ TQString xDirSyntax(const TQString &d)
     {
         TQString ds(d);
 
-        ds.tqreplace("//", "/");
+        ds.replace("//", "/");
 
-        int slashPos=ds.tqfindRev('/');
+        int slashPos=ds.findRev('/');
  
         if(slashPos==(((int)ds.length())-1))
             ds.remove(slashPos, 1);
@@ -100,7 +100,7 @@ TQString getDir(const TQString &f)
 {
     TQString d(f);
 
-    int slashPos=d.tqfindRev('/');
+    int slashPos=d.findRev('/');
  
     if(slashPos!=-1)
         d.remove(slashPos+1, d.length());
@@ -112,7 +112,7 @@ TQString getFile(const TQString &f)
 {
     TQString d(f);
 
-    int slashPos=d.tqfindRev('/');
+    int slashPos=d.findRev('/');
  
     if(slashPos!=-1)
         d.remove(0, slashPos+1);
@@ -152,7 +152,7 @@ bool doCmd(const TQString &cmd, const TQString &p1, const TQString &p2, const TQ
 TQString changeExt(const TQString &f, const TQString &newExt)
 {
     TQString newStr(f);
-    int     dotPos=newStr.tqfindRev('.');
+    int     dotPos=newStr.findRev('.');
 
     if(-1==dotPos)
         newStr+=TQChar('.')+newExt;

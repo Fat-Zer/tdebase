@@ -390,7 +390,7 @@ void TaskContainer::remove(Startup::Ptr startup)
     }
 }
 
-bool TaskContainer::tqcontains(Task::Ptr task)
+bool TaskContainer::contains(Task::Ptr task)
 {
     if (!task)
     {
@@ -408,12 +408,12 @@ bool TaskContainer::tqcontains(Task::Ptr task)
     return false;
 }
 
-bool TaskContainer::tqcontains(Startup::Ptr startup)
+bool TaskContainer::contains(Startup::Ptr startup)
 {
     return startup && (m_startup == startup);
 }
 
-bool TaskContainer::tqcontains(WId win)
+bool TaskContainer::contains(WId win)
 {
     Task::List::iterator itEnd = tasks.end();
     for (Task::List::iterator it = tasks.begin(); it != itEnd; ++it)
@@ -638,7 +638,7 @@ void TaskContainer::drawButton(TQPainter *p)
 
     // modified overlay
     static TQString modStr = "[" + i18n( "modified" ) + "]";
-    int modStrPos = text.tqfind( modStr );
+    int modStrPos = text.find( modStr );
     int textPos = ( taskBar->showIcon() && (!pixmap.isNull() || m_startup)) ? 2 + 16 + 2 : 0;
 
     if (modStrPos >= 0)
@@ -944,7 +944,7 @@ void TaskContainer::mouseReleaseEvent(TQMouseEvent *e)
 
     // This is to avoid the flicker caused by redrawing the
     // button as unpressed just before it's activated.
-    if (!TQT_TQRECT_OBJECT(rect()).tqcontains(e->pos()))
+    if (!TQT_TQRECT_OBJECT(rect()).contains(e->pos()))
     {
         TQToolButton::mouseReleaseEvent(e);
         return;
@@ -1623,7 +1623,7 @@ void TaskContainer::updateKickerTip(KickerTip::Data& data)
             details.append(i18n("Has unsaved changes"));
     
             static TQString modStr = "[" + i18n( "modified" ) + "]";
-            int modStrPos = name.tqfind(modStr);
+            int modStrPos = name.find(modStr);
     
             if (modStrPos >= 0)
             {

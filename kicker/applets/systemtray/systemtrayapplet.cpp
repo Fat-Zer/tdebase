@@ -260,7 +260,7 @@ void SystemTrayApplet::preferences()
     for (; it != itEnd; ++it)
     {
         TQString name = KWin::windowInfo((*it)->embeddedWinId()).name();
-        if(!shownListBox->tqfindItem(name, TQt::ExactMatch | TQt::CaseSensitive))
+        if(!shownListBox->findItem(name, TQt::ExactMatch | TQt::CaseSensitive))
         {
             shownListBox->insertItem(KWin::icon((*it)->embeddedWinId(), 22, 22, true), name);
         }
@@ -271,7 +271,7 @@ void SystemTrayApplet::preferences()
     for (; it != itEnd; ++it)
     {
         TQString name = KWin::windowInfo((*it)->embeddedWinId()).name();
-        if(!hiddenListBox->tqfindItem(name, TQt::ExactMatch | TQt::CaseSensitive))
+        if(!hiddenListBox->findItem(name, TQt::ExactMatch | TQt::CaseSensitive))
         {
             hiddenListBox->insertItem(KWin::icon((*it)->embeddedWinId(), 22, 22, true), name);
         }
@@ -322,7 +322,7 @@ void SystemTrayApplet::applySettings()
         item;
         item = item->next())
     {
-        if( windowNameToClass.tqcontains(item->text()))
+        if( windowNameToClass.contains(item->text()))
             m_sortOrderIconList.append(windowNameToClass[item->text()]);
         else
             m_sortOrderIconList.append(item->text());
@@ -335,7 +335,7 @@ void SystemTrayApplet::applySettings()
         item;
         item = item->next())
     {
-        if( windowNameToClass.tqcontains(item->text()))
+        if( windowNameToClass.contains(item->text()))
             m_hiddenIconList.append(windowNameToClass[item->text()]);
         else
             m_hiddenIconList.append(item->text());
@@ -388,7 +388,7 @@ void SystemTrayApplet::checkAutoRetract()
         return;
     }
 
-    if (!tqgeometry().tqcontains(mapFromGlobal(TQCursor::pos())))
+    if (!tqgeometry().contains(mapFromGlobal(TQCursor::pos())))
     {
         m_autoRetractTimer->stop();
         if (m_autoRetract)
@@ -590,8 +590,8 @@ bool SystemTrayApplet::isWinManaged(WId w)
 
 bool SystemTrayApplet::shouldHide(WId w)
 {
-    return m_hiddenIconList.tqfind(KWin::windowInfo(w).name()) != m_hiddenIconList.end()
-        || m_hiddenIconList.tqfind('!'+KWin::windowInfo(w,0,NET::WM2WindowClass).windowClassClass())
+    return m_hiddenIconList.find(KWin::windowInfo(w).name()) != m_hiddenIconList.end()
+        || m_hiddenIconList.find('!'+KWin::windowInfo(w,0,NET::WM2WindowClass).windowClassClass())
             != m_hiddenIconList.end();
 }
 
@@ -711,7 +711,7 @@ void SystemTrayApplet::updateTrayWindows()
         WId wid = (*emb)->embeddedWinId();
         if ((wid == 0) ||
             ((*emb)->kdeTray() &&
-             !kwin_module->systemTrayWindows().tqcontains(wid)))
+             !kwin_module->systemTrayWindows().contains(wid)))
         {
             (*emb)->deleteLater();
             emb = m_shownWins.erase(emb);
@@ -728,7 +728,7 @@ void SystemTrayApplet::updateTrayWindows()
         WId wid = (*emb)->embeddedWinId();
         if ((wid == 0) ||
             ((*emb)->kdeTray() &&
-             !kwin_module->systemTrayWindows().tqcontains(wid)))
+             !kwin_module->systemTrayWindows().contains(wid)))
         {
             (*emb)->deleteLater();
             emb = m_hiddenWins.erase(emb);

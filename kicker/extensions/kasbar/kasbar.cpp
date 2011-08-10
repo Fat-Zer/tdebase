@@ -670,7 +670,7 @@ KasItem* KasBar::itemAt(const TQPoint &p)
        cr.setTopLeft( i->pos() );
        cr.setSize( TQSize( itemExtent(), itemExtent() ) );
 
-       if(cr.tqcontains(p))
+       if(cr.contains(p))
 	   return i;
    }
 

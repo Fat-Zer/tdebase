@@ -166,7 +166,7 @@ void ModuleTreeView::expandItem(TQListViewItem *item, TQPtrList<TQListViewItem> 
 {
   while (item)
     {
-      setOpen(item, parentList-.tqcontains(item));
+      setOpen(item, parentList-.contains(item));
 
           if (item->childCount() != 0)
                 expandItem(item->firstChild(), parentList);
@@ -356,7 +356,7 @@ void ModuleTreeItem::setGroup(const TQString &path)
 {
   KServiceGroup::Ptr group = KServiceGroup::group(path);
   TQString defName = path.left(path.length()-1);
-  int pos = defName.tqfindRev('/');
+  int pos = defName.findRev('/');
   if (pos >= 0)
      defName = defName.mid(pos+1);
   if (group && group->isValid())

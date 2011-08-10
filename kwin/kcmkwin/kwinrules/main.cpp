@@ -248,7 +248,7 @@ static int edit( Window wid, bool whole_app )
         }
     else if( edited_rule != orig_rule )
         {
-        TQValueList< Rules* >::Iterator pos = rules.tqfind( orig_rule );
+        TQValueList< Rules* >::Iterator pos = rules.find( orig_rule );
         if( pos != rules.end())
             *pos = edited_rule;
         else

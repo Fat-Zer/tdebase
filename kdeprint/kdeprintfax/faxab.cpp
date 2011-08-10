@@ -163,7 +163,7 @@ bool FaxAB::getEntry(TQStringList& number, TQStringList& name, TQStringList& ent
 		/*
 		number = kab.m_fax->currentText();
 		name = kab.m_name->currentText();
-		if (kab.m_entries.tqcontains(name))
+		if (kab.m_entries.contains(name))
 		{
 			enterprise = kab.m_entries[name][0];
 		}

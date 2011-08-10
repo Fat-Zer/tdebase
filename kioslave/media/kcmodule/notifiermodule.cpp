@@ -212,7 +212,7 @@ void NotifierModule::slotToggleAuto()
 
 	int index = m_view->actionsList->index( action_item );
 	
-	if ( action->autoMimetypes().tqcontains( m_mimetype ) )
+	if ( action->autoMimetypes().contains( m_mimetype ) )
 	{
 		m_settings.resetAutoAction( m_mimetype );
 	}

@@ -90,7 +90,7 @@ TQString PluginLiveConnectExtension::evalJavaScript( const TQString & script )
     kdDebug(1432) << "PLUGIN:LiveConnect::evalJavaScript " << script << endl;
     ArgList args;
     TQString jscode;
-    jscode.sprintf("this.__nsplugin=eval(\"%s\")",  TQString(script).tqreplace('\\', "\\\\").tqreplace('"', "\\\"").latin1());
+    jscode.sprintf("this.__nsplugin=eval(\"%s\")",  TQString(script).replace('\\', "\\\\").replace('"', "\\\"").latin1());
     //kdDebug(1432) << "String is [" << jscode << "]" << endl;
     args.push_back(qMakePair(KParts::LiveConnectExtension::TypeString, jscode));
     TQString nsplugin("Undefined");
@@ -266,7 +266,7 @@ bool PluginPart::openURL(const KURL &url)
     TQStringList::Iterator it = _args.begin();
     for ( ; it != _args.end(); ) {
 
-        int equalPos = (*it).tqfind("=");
+        int equalPos = (*it).find("=");
         if (equalPos>0) {
 
             TQString name = (*it).left(equalPos).upper();

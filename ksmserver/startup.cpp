@@ -363,14 +363,14 @@ bool KSMServer::checkStartupSuspend()
 
 void KSMServer::suspendStartup( TQCString app )
 {
-    if( !startupSuspendCount.tqcontains( app ))
+    if( !startupSuspendCount.contains( app ))
         startupSuspendCount[ app ] = 0;
     ++startupSuspendCount[ app ];
 }
 
 void KSMServer::resumeStartup( TQCString app )
 {
-    if( !startupSuspendCount.tqcontains( app ))
+    if( !startupSuspendCount.contains( app ))
         return;
     if( --startupSuspendCount[ app ] == 0 ) {
         startupSuspendCount.remove( app );

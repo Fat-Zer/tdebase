@@ -69,7 +69,7 @@ bool HelpWidget::clicked(const TQString & _url)
     if ( _url.isNull() )
         return true;
 
-    if ( _url.tqfind('@') > -1 ) {
+    if ( _url.find('@') > -1 ) {
         kapp->invokeMailer(_url);
         return true;
     }

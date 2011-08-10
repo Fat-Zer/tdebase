@@ -113,10 +113,10 @@ KDEDConfig::KDEDConfig(TQWidget* parent, const char* name, const TQStringList &)
 void setModuleGroup(KConfig *config, const TQString &filename)
 {
 	TQString module = filename;
-	int i = module.tqfindRev('/');
+	int i = module.findRev('/');
 	if (i != -1)
 	   module = module.mid(i+1);
-	i = module.tqfindRev('.');
+	i = module.findRev('.');
 	if (i != -1)
 	   module = module.left(i);
 
@@ -201,7 +201,7 @@ void KDEDConfig::save() {
 
 			if (file.readBoolEntry("X-KDE-Kded-autoload")){
 
-				item = static_cast<TQCheckListItem *>(_lvStartup->tqfindItem(file.readEntry("X-KDE-Library"),4));
+				item = static_cast<TQCheckListItem *>(_lvStartup->findItem(file.readEntry("X-KDE-Library"),4));
 				if (item) {
 					// we found a match, now compare and see what changed
 					setAutoloadEnabled(&kdedrc, *it, item->isOn());
@@ -251,13 +251,13 @@ void KDEDConfig::getServiceStatus()
                 it.current()->setText(3, NOT_RUNNING);
 	for ( QCStringList::Iterator it = modules.begin(); it != modules.end(); ++it )
 	{
-		TQListViewItem *item = _lvLoD->tqfindItem(*it, 4);
+		TQListViewItem *item = _lvLoD->findItem(*it, 4);
 		if ( item )
 		{
 			item->setText(2, RUNNING);
 		}
 
-		item = _lvStartup->tqfindItem(*it, 4);
+		item = _lvStartup->findItem(*it, 4);
 		if ( item )
 		{
 			item->setText(3, RUNNING);
@@ -269,7 +269,7 @@ void KDEDConfig::slotReload()
 {
 	TQString current = _lvStartup->currentItem()->text(4);
 	load();
-	TQListViewItem *item = _lvStartup->tqfindItem(current, 4);
+	TQListViewItem *item = _lvStartup->findItem(current, 4);
 	if (item)
 		_lvStartup->setCurrentItem(item);
 }

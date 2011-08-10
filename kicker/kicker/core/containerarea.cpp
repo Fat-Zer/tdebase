@@ -314,7 +314,7 @@ void ContainerArea::loadContainers(const TQStringList& containers)
 
         BaseContainer* a = 0;
 
-        int sep = appletId.tqfindRev('_');
+        int sep = appletId.findRev('_');
         Q_ASSERT(sep != -1);
         TQString appletType = appletId.left(sep);
 
@@ -962,7 +962,7 @@ void ContainerArea::mouseMoveEvent(TQMouseEvent *ev)
         return;
     }
 
-    if (ev->state() == Qt::LeftButton && !TQT_TQRECT_OBJECT(rect()).tqcontains(ev->pos()))
+    if (ev->state() == Qt::LeftButton && !TQT_TQRECT_OBJECT(rect()).contains(ev->pos()))
     {
         // leaveEvent() doesn't work, while grabbing the mouse
         _autoScrollTimer.stop();
@@ -1542,7 +1542,7 @@ TQRect ContainerArea::availableSpaceFollowing(BaseContainer* a)
 
     if (a)
     {
-        BaseContainer::Iterator it = m_containers.tqfind(a);
+        BaseContainer::Iterator it = m_containers.find(a);
         if (it != m_containers.end() &&
             ++it != m_containers.end())
         {
@@ -1784,7 +1784,7 @@ void ContainerArea::updateContainersBackground()
     // properly, so just cache the geometry and update background only when
     // the geometry changes or when the background really changes (in which
     // case the cached is cleared).
-        if( !m_cachedGeometry.tqcontains( *it ))
+        if( !m_cachedGeometry.contains( *it ))
         {
             m_cachedGeometry[ *it ] = TQRect();
             connect( *it, TQT_SIGNAL( destroyed()), TQT_SLOT( destroyCachedGeometry()));

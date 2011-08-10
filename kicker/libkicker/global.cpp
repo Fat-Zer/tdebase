@@ -207,7 +207,7 @@ TQPopupMenu* reduceMenu(TQPopupMenu *menu)
        return menu;
     }
 
-    TQMenuItem *item = menu->tqfindItem(menu->idAt(0));
+    TQMenuItem *item = menu->findItem(menu->idAt(0));
 
     if (item->popup())
     {

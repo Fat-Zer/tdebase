@@ -142,7 +142,7 @@ KRemoteEncodingPlugin::updateMenu()
       int id = 1;
       TQStringList::Iterator it;
       for (it = m_encodingDescriptions.begin(); it != m_encodingDescriptions.end(); ++it, ++id)
-	if ((*it).tqfind(charset) != -1)
+	if ((*it).find(charset) != -1)
 	  break;
 
       kdDebug() << k_funcinfo << "URL=" << m_currentURL << " charset=" << charset << endl;

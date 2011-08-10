@@ -548,7 +548,7 @@ void Konsole::makeGUI()
    m_moveSessionRight->plug(m_view);
 
    m_view->insertSeparator();
-   KRadioAction *ra = session2action.tqfind(se);
+   KRadioAction *ra = session2action.find(se);
    if (ra!=0) ra->plug(m_view);
 
    //bookmarks menu
@@ -790,7 +790,7 @@ void Konsole::makeGUI()
       KeyTrans* ktr = kt_map[*it];
       assert( ktr );
       TQString title=ktr->hdr();
-      m_keytab->insertItem(title.tqreplace('&',"&&"),ktr->numb());
+      m_keytab->insertItem(title.replace('&',"&&"),ktr->numb());
    }
 
    applySettingsToGUI();
@@ -1317,7 +1317,7 @@ void Konsole::slotTabContextMenu(TQWidget* _te, const TQPoint & pos)
   int counter=0;
   for (TESession *ses = sessions.first(); ses; ses = sessions.next()) {
     TQString title=ses->Title();
-    m_tabPopupTabsMenu->insertItem(SmallIcon(ses->IconName()),title.tqreplace('&',"&&"),counter++);
+    m_tabPopupTabsMenu->insertItem(SmallIcon(ses->IconName()),title.replace('&',"&&"),counter++);
   }
 
   m_tabPopupMenu->popup( pos );
@@ -1383,7 +1383,7 @@ void Konsole::slotTabSetViewOptions(int mode)
     else
       title = sessions.tqat(i)->Title();
 
-    title=title.tqreplace('&',"&&");
+    title=title.replace('&',"&&");
     switch(mode) {
       case ShowIconAndText:
         tabwidget->changeTab(page, icon, title);
@@ -1875,7 +1875,7 @@ void Konsole::updateSchemaMenu()
      ColorSchema* s = (ColorSchema*)colors->tqat(i);
     assert( s );
     TQString title=s->title();
-    m_schema->insertItem(title.tqreplace('&',"&&"),s->numb(),0);
+    m_schema->insertItem(title.replace('&',"&&"),s->numb(),0);
   }
 
   if (te && se)
@@ -2219,13 +2219,13 @@ void Konsole::updateTitle(TESession* _se)
   }
   tabwidget->setTabIconSet(_se->widget(), iconSetForSession(_se));
   TQString icon = _se->IconName();
-  KRadioAction *ra = session2action.tqfind(_se);
+  KRadioAction *ra = session2action.find(_se);
   if (ra && (ra->icon() != icon))
     ra->setIcon(icon);
   if (m_tabViewMode == ShowIconOnly) 
     tabwidget->changeTab( _se->widget(), TQString::null );
   else if (b_matchTabWinTitle)
-    tabwidget->setTabLabel( _se->widget(), _se->fullTitle().tqreplace('&',"&&"));
+    tabwidget->setTabLabel( _se->widget(), _se->fullTitle().replace('&',"&&"));
 }
 
 void Konsole::initSessionFont(TQFont font) {
@@ -2363,7 +2363,7 @@ void Konsole::enterURL(const TQString& URL, const TQString&)
     KRun::shellQuote(newtext);
     te->emitText("cd "+newtext+"\r");
   }
-  else if (URL.tqcontains("://", true)) {
+  else if (URL.contains("://", true)) {
     KURL u(URL);
     newtext = u.protocol();
     bool isSSH = (newtext == "ssh");
@@ -2410,7 +2410,7 @@ void Konsole::sendSignal(int sn)
 
 void Konsole::runSession(TESession* s)
 {
-    KRadioAction *ra = session2action.tqfind(s);
+    KRadioAction *ra = session2action.find(s);
     ra->setChecked(true);
     activateSession(s);
 
@@ -2446,7 +2446,7 @@ void Konsole::addSession(TESession* s)
   s->setTitle(newTitle);
 
   // create an action for the session
-  KRadioAction *ra = new KRadioAction(newTitle.tqreplace('&',"&&"),
+  KRadioAction *ra = new KRadioAction(newTitle.replace('&',"&&"),
                                       s->IconName(),
                                       0,
                                       TQT_TQOBJECT(this),
@@ -2497,7 +2497,7 @@ void Konsole::listSessions()
   m_sessionList->setKeyboardShortcutsEnabled(true);
   for (TESession *ses = sessions.first(); ses; ses = sessions.next()) {
     TQString title=ses->Title();
-    m_sessionList->insertItem(SmallIcon(ses->IconName()),title.tqreplace('&',"&&"),counter++);
+    m_sessionList->insertItem(SmallIcon(ses->IconName()),title.replace('&',"&&"),counter++);
   }
   m_sessionList->adjustSize();
   m_sessionList->popup(mapToGlobal(TQPoint((width()/2)-(m_sessionList->width()/2),(height()/2)-(m_sessionList->height()/2))));
@@ -2562,7 +2562,7 @@ void Konsole::activateSession(TESession *s)
      se->setListenToKeyPress(true);
      notifySessionState(se,NOTIFYNORMAL);
      // Delete the session if isn't in the session list any longer.
-     if (sessions.tqfind(se) == -1)
+     if (sessions.find(se) == -1)
         delete se;
   }
   if (se != s)
@@ -2582,10 +2582,10 @@ void Konsole::activateSession(TESession *s)
 //  only 2 sessions opened, 2nd session viewable, right-click on 1st tab and 
 //  select 'Detach', close original Konsole window... crash
 //  s is not set properly on original Konsole window
-  KRadioAction *ra = session2action.tqfind(se);
+  KRadioAction *ra = session2action.find(se);
   if (!ra) {
     se=sessions.first();        // Get new/correct TESession
-    ra = session2action.tqfind(se);
+    ra = session2action.find(se);
   }
   ra->setChecked(true);
 
@@ -2617,7 +2617,7 @@ void Konsole::activateSession(TESession *s)
   if (monitorActivity) monitorActivity->setChecked( se->isMonitorActivity() );
   if (monitorSilence) monitorSilence->setChecked( se->isMonitorSilence() );
   masterMode->setChecked( se->isMasterMode() );
-  sessions.tqfind(se);
+  sessions.find(se);
   uint position=sessions.tqat();
   if (m_moveSessionLeft) m_moveSessionLeft->setEnabled(position>0);
   if (m_moveSessionRight) m_moveSessionRight->setEnabled(position<sessions.count()-1);
@@ -2758,7 +2758,7 @@ void Konsole::newSession(int i)
     return;
   }
 
-  KSimpleConfig* co = no2command.tqfind(i);
+  KSimpleConfig* co = no2command.find(i);
   if (co) {
     newSession(co);
     resetScreenSessions();
@@ -2781,7 +2781,7 @@ void Konsole::newSessionTabbar(int i)
     return;
   }
 
-  KSimpleConfig* co = no2command.tqfind(i);
+  KSimpleConfig* co = no2command.find(i);
   if (co) {
     newSession(co);
     resetScreenSessions();
@@ -3022,7 +3022,7 @@ void Konsole::doneSession(TESession* s)
   if (se_previous)
     activateSession(se_previous);
 
-  KRadioAction *ra = session2action.tqfind(s);
+  KRadioAction *ra = session2action.find(s);
   ra->unplug(m_view);
   tabwidget->removePage( s->widget() );
   if (rootxpms[s->widget()]) {
@@ -3034,7 +3034,7 @@ void Konsole::doneSession(TESession* s)
       m_removeSessionButton->setEnabled(tabwidget->count()>1);
   session2action.remove(s);
   action2session.remove(ra);
-  int sessionIndex = sessions.tqfindRef(s);
+  int sessionIndex = sessions.findRef(s);
   sessions.remove(s);
   delete ra; // will the toolbar die?
 
@@ -3051,7 +3051,7 @@ void Konsole::doneSession(TESession* s)
     {
       se = sessions.tqat(sessionIndex ? sessionIndex - 1 : 0);
 
-      session2action.tqfind(se)->setChecked(true);
+      session2action.find(se)->setChecked(true);
       //FIXME: this Timer stupidity originated from the connected
       //       design of Emulations. By this the newly activated
       //       session might get a Ctrl(D) if the session has be
@@ -3066,7 +3066,7 @@ void Konsole::doneSession(TESession* s)
       close();
   }
   else {
-    sessions.tqfind(se);
+    sessions.find(se);
     uint position=sessions.tqat();
     m_moveSessionLeft->setEnabled(position>0);
     m_moveSessionRight->setEnabled(position<sessions.count()-1);
@@ -3082,7 +3082,7 @@ void Konsole::doneSession(TESession* s)
 
 void Konsole::prevSession()
 {
-  sessions.tqfind(se); sessions.prev();
+  sessions.find(se); sessions.prev();
   if (!sessions.current()) sessions.last();
   if (sessions.current() && sessions.count() > 1)
     activateSession(sessions.current());
@@ -3092,7 +3092,7 @@ void Konsole::prevSession()
 
 void Konsole::nextSession()
 {
-  sessions.tqfind(se); sessions.next();
+  sessions.find(se); sessions.next();
   if (!sessions.current()) sessions.first();
   if (sessions.current() && sessions.count() > 1)
     activateSession(sessions.current());
@@ -3105,7 +3105,7 @@ void Konsole::slotMovedTab(int from, int to)
   sessions.remove(_se);
   sessions.insert(to,_se);
 
-  KRadioAction *ra = session2action.tqfind(_se);
+  KRadioAction *ra = session2action.find(_se);
   ra->unplug(m_view);
   ra->plug(m_view,(m_view->count()-sessions.count()+1)+to);
 
@@ -3120,7 +3120,7 @@ void Konsole::slotMovedTab(int from, int to)
 /* Move session forward in session list if possible */
 void Konsole::moveSessionLeft()
 {
-  sessions.tqfind(se);
+  sessions.find(se);
   uint position=sessions.tqat();
   if (position==0)
     return;
@@ -3128,7 +3128,7 @@ void Konsole::moveSessionLeft()
   sessions.remove(position);
   sessions.insert(position-1,se);
 
-  KRadioAction *ra = session2action.tqfind(se);
+  KRadioAction *ra = session2action.find(se);
   ra->unplug(m_view);
   ra->plug(m_view,(m_view->count()-sessions.count()+1)+position-1);
 
@@ -3139,7 +3139,7 @@ void Konsole::moveSessionLeft()
   tabwidget->blockSignals(false);
   TQString title = se->Title();
   createSessionTab(se->widget(), iconSetForSession(se), 
-                   title.tqreplace('&', "&&"), position-1);
+                   title.replace('&', "&&"), position-1);
   tabwidget->showPage(se->widget());
   tabwidget->setTabColor(se->widget(),oldcolor);
   
@@ -3152,7 +3152,7 @@ void Konsole::moveSessionLeft()
 /* Move session back in session list if possible */
 void Konsole::moveSessionRight()
 {
-  sessions.tqfind(se);
+  sessions.find(se);
   uint position=sessions.tqat();
 
   if (position==sessions.count()-1)
@@ -3161,7 +3161,7 @@ void Konsole::moveSessionRight()
   sessions.remove(position);
   sessions.insert(position+1,se);
 
-  KRadioAction *ra = session2action.tqfind(se);
+  KRadioAction *ra = session2action.find(se);
   ra->unplug(m_view);
   ra->plug(m_view,(m_view->count()-sessions.count()+1)+position+1);
 
@@ -3172,7 +3172,7 @@ void Konsole::moveSessionRight()
   tabwidget->blockSignals(false);
   TQString title = se->Title();
   createSessionTab(se->widget(), iconSetForSession(se), 
-                   title.tqreplace('&', "&&"), position+1);
+                   title.replace('&', "&&"), position+1);
   tabwidget->showPage(se->widget());
   tabwidget->setTabColor(se->widget(),oldcolor);
   
@@ -3384,7 +3384,7 @@ void Konsole::addSessionCommand(const TQString &path)
 
   TQString name = comment;
   name.prepend("SSC_");  // Allows easy searching for Session ShortCuts
-  name.tqreplace(" ", "_");
+  name.replace(" ", "_");
   sl_sessionShortCuts << name;
 
   // Is there already this shortcut?
@@ -3434,13 +3434,13 @@ void Konsole::createSessionMenus()
   TQString txt = cfg->readEntry("Name");
   TQString icon = cfg->readEntry("Icon", "konsole");
   insertItemSorted(m_tabbarSessionsCommands, SmallIconSet(icon),
-                   txt.tqreplace('&',"&&"), SESSION_NEW_SHELL_ID );
+                   txt.replace('&',"&&"), SESSION_NEW_SHELL_ID );
 
   TQString comment = cfg->readEntry("Comment");
   if (comment.isEmpty())
     comment=txt.prepend(i18n("New "));
   insertItemSorted(m_session, SmallIconSet(icon),
-                   comment.tqreplace('&',"&&"), SESSION_NEW_SHELL_ID);
+                   comment.replace('&',"&&"), SESSION_NEW_SHELL_ID);
   m_session->insertItem(SmallIconSet("window_new"),
                         i18n("New &Window"), SESSION_NEW_WINDOW_ID);
   m_tabbarSessionsCommands->insertItem(SmallIconSet("window_new"),
@@ -3456,12 +3456,12 @@ void Konsole::createSessionMenus()
     TQString txt = (*it).readEntry("Name");
     TQString icon = (*it).readEntry("Icon", "konsole");
     insertItemSorted(m_tabbarSessionsCommands, SmallIconSet(icon),
-                     txt.tqreplace('&',"&&"), it.currentKey() );
+                     txt.replace('&',"&&"), it.currentKey() );
     TQString comment = (*it).readEntry("Comment");
     if (comment.isEmpty())
       comment=txt.prepend(i18n("New "));
     insertItemSorted(m_session, SmallIconSet(icon),
-                     comment.tqreplace('&',"&&"), it.currentKey());
+                     comment.replace('&',"&&"), it.currentKey());
   }
 
   if (m_bookmarksSession)
@@ -3646,12 +3646,12 @@ void Konsole::slotDetachSession()
 void Konsole::detachSession(TESession* _se) {
   if (!_se) _se=se;
 
-  KRadioAction *ra = session2action.tqfind(_se);
+  KRadioAction *ra = session2action.find(_se);
   ra->unplug(m_view);
   TEWidget* se_widget = _se->widget();
   session2action.remove(_se);
   action2session.remove(ra);
-  int sessionIndex = sessions.tqfindRef(_se);
+  int sessionIndex = sessions.findRef(_se);
   sessions.remove(_se);
   delete ra;
 
@@ -3705,7 +3705,7 @@ void Konsole::detachSession(TESession* _se) {
       se = se_previous;
     else
       se = sessions.tqat(sessionIndex ? sessionIndex - 1 : 0);
-    session2action.tqfind(se)->setChecked(true);
+    session2action.find(se)->setChecked(true);
     TQTimer::singleShot(1,this,TQT_SLOT(activateSession()));
   }
 
@@ -3750,7 +3750,7 @@ void Konsole::attachSession(TESession* session)
   }
 
   TQString title=session->Title();
-  KRadioAction *ra = new KRadioAction(title.tqreplace('&',"&&"), session->IconName(),
+  KRadioAction *ra = new KRadioAction(title.replace('&',"&&"), session->IconName(),
                                       0, TQT_TQOBJECT(this), TQT_SLOT(activateSession()), m_shortcuts);
 
   ra->setExclusiveGroup("sessions");
@@ -3810,9 +3810,9 @@ void Konsole::slotRenameSession() {
 
 void Konsole::slotRenameSession(TESession* ses, const TQString &name)
 {
-  KRadioAction *ra = session2action.tqfind(ses);
+  KRadioAction *ra = session2action.find(ses);
   TQString title=name;
-  title=title.tqreplace('&',"&&");
+  title=title.replace('&',"&&");
   ra->setText(title);
   ra->setIcon( ses->IconName() ); // I don't know why it is needed here
   if (m_tabViewMode!=ShowIconOnly)

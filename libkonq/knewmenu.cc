@@ -162,7 +162,7 @@ void KNewMenu::parseFiles()
                         else
                         {
                             // A relative path, then (that's the default in the files we ship)
-                            TQString linkDir = filePath.left( filePath.tqfindRev( '/' ) + 1 /*keep / */ );
+                            TQString linkDir = filePath.left( filePath.findRev( '/' ) + 1 /*keep / */ );
                             //kdDebug(1203) << "linkDir=" << linkDir << endl;
                             templatePath = linkDir + templatePath;
                         }
@@ -419,7 +419,7 @@ void KNewMenu::slotNewFile()
                 //kdDebug(1203) << "second arg=" << (*it).url() << endl;
                 //kdDebug(1203) << "third arg=" << entry.text << endl;
                 TQString text = entry.text;
-                text.tqreplace( "...", TQString() ); // the ... is fine for the menu item but not for the default filename
+                text.replace( "...", TQString() ); // the ... is fine for the menu item but not for the default filename
                 
 		KURL defaultFile( *it );
 		defaultFile.addPath( KIO::encodeFileName( text ) );
@@ -439,7 +439,7 @@ void KNewMenu::slotNewFile()
         // Show the small dialog for getting the destination filename
         bool ok;
         TQString text = entry.text;
-        text.tqreplace( "...", TQString() ); // the ... is fine for the menu item but not for the default filename
+        text.replace( "...", TQString() ); // the ... is fine for the menu item but not for the default filename
         
 	KURL defaultFile( *(popupFiles.begin()) );
 	defaultFile.addPath( KIO::encodeFileName( text ) );

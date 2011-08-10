@@ -1156,7 +1156,7 @@ void KonqViewManager::loadViewProfile( KConfig &cfg, const TQString & filename,
       for ( it.toFirst(); it != 0L; ++it )
       {
           KonqView *view = it.current()->activeChildView();
-          if (view && view->part() && (view->part()->tqmetaObject()->tqfindProperty("modified") != -1)) {
+          if (view && view->part() && (view->part()->tqmetaObject()->findProperty("modified") != -1)) {
             TQVariant prop = view->part()->property("modified");
             if (prop.isValid() && prop.toBool()) {
                 showTab( view );
@@ -1175,7 +1175,7 @@ void KonqViewManager::loadViewProfile( KConfig &cfg, const TQString & filename,
   else
   {
       KonqView *view = m_pMainWindow->currentView();
-      if (view && view->part() && (view->part()->tqmetaObject()->tqfindProperty("modified") != -1)) {
+      if (view && view->part() && (view->part()->tqmetaObject()->findProperty("modified") != -1)) {
         TQVariant prop = view->part()->property("modified");
         if (prop.isValid() && prop.toBool())
             if ( KMessageBox::warningContinueCancel( 0,
@@ -1413,7 +1413,7 @@ TQSize KonqViewManager::readConfigSize( KConfig &cfg, TQWidget *widget )
 
     TQRect geom = KGlobalSettings::desktopGeometry(widget);
 
-    if ( widthStr.tqcontains( '%' ) == 1 )
+    if ( widthStr.contains( '%' ) == 1 )
     {
         widthStr.truncate( widthStr.length() - 1 );
         int relativeWidth = widthStr.toInt( &ok );
@@ -1428,7 +1428,7 @@ TQSize KonqViewManager::readConfigSize( KConfig &cfg, TQWidget *widget )
             width = -1;
     }
 
-    if ( heightStr.tqcontains( '%' ) == 1 )
+    if ( heightStr.contains( '%' ) == 1 )
     {
         heightStr.truncate( heightStr.length() - 1 );
         int relativeHeight = heightStr.toInt( &ok );

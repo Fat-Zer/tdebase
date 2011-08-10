@@ -241,7 +241,7 @@ void SchemaEditor::loadAllSchema(TQString currentFile)
 	TQString title = readSchemaTitle(name);
 
 	// Only insert new items so that local items override global
-	if (schemaList->tqfindItem(title, ExactMatch) == 0) {
+	if (schemaList->findItem(title, ExactMatch) == 0) {
 	    if (title.isNull() || title.isEmpty())
 		title=i18n("untitled");
 
@@ -594,7 +594,7 @@ void SchemaEditor::readSchema(int num)
 		    continue;
 
 		TQString qline(line);
-		backgndLine->setText(locate("wallpaper", qline.mid( qline.tqfind(" ",7)+1 ) ));
+		backgndLine->setText(locate("wallpaper", qline.mid( qline.find(" ",7)+1 ) ));
 		modeCombo->setCurrentItem(attr - 2);
 
 	    }

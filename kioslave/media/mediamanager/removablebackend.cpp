@@ -60,7 +60,7 @@ bool RemovableBackend::plug(const TQString &devNode, const TQString &label)
 	TQString name = generateName(devNode);
 	TQString id = generateId(devNode);
 
-	if (!m_removableIds.tqcontains(id))
+	if (!m_removableIds.contains(id))
 	{
 		Medium *medium = new Medium(id, name);
 		medium->mountableState(devNode, TQString::null,
@@ -95,7 +95,7 @@ bool RemovableBackend::plug(const TQString &devNode, const TQString &label)
 bool RemovableBackend::unplug(const TQString &devNode)
 {
 	TQString id = generateId(devNode);
-	if (m_removableIds.tqcontains(id))
+	if (m_removableIds.contains(id))
 	{
 		m_removableIds.remove(id);
 		return m_mediaList.removeMedium(id);
@@ -106,7 +106,7 @@ bool RemovableBackend::unplug(const TQString &devNode)
 bool RemovableBackend::camera(const TQString &devNode)
 {
 	TQString id = generateId(devNode);
-	if (m_removableIds.tqcontains(id))
+	if (m_removableIds.contains(id))
 	{
 		return m_mediaList.changeMediumState(id,
 			TQString("camera:/"), false, "media/gphoto2camera");
@@ -140,8 +140,8 @@ void RemovableBackend::handleMtabChange()
 		TQString id = generateId(dev);
 		new_mtabIds+=id;
 
-		if ( !m_mtabIds.tqcontains(id)
-		  && m_removableIds.tqcontains(id) )
+		if ( !m_mtabIds.contains(id)
+		  && m_removableIds.contains(id) )
 		{
 			m_mediaList.changeMediumState(id, dev, mp, fs, true,
 				false, "media/removable_mounted");
@@ -153,8 +153,8 @@ void RemovableBackend::handleMtabChange()
 
 	for (; it2!=end2; ++it2)
 	{
-		if ( !new_mtabIds.tqcontains(*it2)
-		  && m_removableIds.tqcontains(*it2) )
+		if ( !new_mtabIds.contains(*it2)
+		  && m_removableIds.contains(*it2) )
 		{
 			m_mediaList.changeMediumState(*it2, false,
 				false, "media/removable_unmounted");
@@ -169,7 +169,7 @@ TQString RemovableBackend::generateId(const TQString &devNode)
 	TQString dev = KStandardDirs::realFilePath(devNode);
 
 	return "/org/kde/mediamanager/removable/"
-	      +dev.tqreplace("/", "");
+	      +dev.replace("/", "");
 }
 
 TQString RemovableBackend::generateName(const TQString &devNode)

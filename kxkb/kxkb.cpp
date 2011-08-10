@@ -217,8 +217,8 @@ void KXKBApp::layoutApply()
 bool KXKBApp::setLayout(const TQString& layoutPair)
 {
 	const LayoutUnit layoutUnitKey(layoutPair);
-	if( kxkbConfig.m_layouts.tqcontains(layoutUnitKey) ) {
-		return setLayout( *kxkbConfig.m_layouts.tqfind(layoutUnitKey) );
+	if( kxkbConfig.m_layouts.contains(layoutUnitKey) ) {
+		return setLayout( *kxkbConfig.m_layouts.find(layoutUnitKey) );
 	}
 	return false;
 }

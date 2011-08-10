@@ -272,7 +272,7 @@ AppletContainer* PluginManager::createAppletContainer(
         return 0;
     }
 
-    bool untrusted = m_untrustedApplets.tqfind(desktopFile) != m_untrustedApplets.end();
+    bool untrusted = m_untrustedApplets.find(desktopFile) != m_untrustedApplets.end();
     if (isStartup && untrusted)
     {
         // don't load extensions that bombed on us previously!
@@ -325,7 +325,7 @@ ExtensionContainer* PluginManager::createExtensionContainer(const TQString& desk
 
     if (!internal)
     {
-        bool untrusted = m_untrustedExtensions.tqfind(desktopFile) != m_untrustedExtensions.end();
+        bool untrusted = m_untrustedExtensions.find(desktopFile) != m_untrustedExtensions.end();
         if (isStartup && untrusted)
         {
             // don't load extensions that bombed on us previously!

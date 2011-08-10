@@ -113,7 +113,7 @@ static TQString createX11PsName(const TQString &font)
     unsigned int  ch;
     bool          newWord=true;
 
-    newName.tqreplace(TQRegExp("\\-"), "_");
+    newName.replace(TQRegExp("\\-"), "_");
 
     for(ch=0; ch<newName.length(); ++ch)
     {
@@ -136,7 +136,7 @@ static TQString createX11PsName(const TQString &font)
         }
     }
 
-    newName.tqreplace(" ", TQString());
+    newName.replace(" ", TQString());
     return newName;
 }
 
@@ -180,7 +180,7 @@ static TQString getEntry(TQStringList &list, const TQString &name)
                           end(list.end());
 
     for( ; it!=end; ++it)
-        if(0==(*it).tqfind('/'+name+' '))
+        if(0==(*it).find('/'+name+' '))
             return *it;
 
     return TQString::null;
@@ -188,7 +188,7 @@ static TQString getEntry(TQStringList &list, const TQString &name)
 
 inline bool isAlias(const TQString &entry)
 {
-    return -1==entry.tqfindRev(TQRegExp(")\\s*;\\s*$"));
+    return -1==entry.findRev(TQRegExp(")\\s*;\\s*$"));
 }
 
 static void addEntry(TQStringList &list, const TQString &name, const TQString &file, const TQString &fmapDir)
@@ -209,7 +209,7 @@ static void addEntry(TQStringList &list, const TQString &name, const TQString &f
 
         str << '/' << name << " (";
 
-        if(0==file.tqfind(fmapDir))
+        if(0==file.find(fmapDir))
             str << file.mid(fmapDir.length());
         else
             str << file;
@@ -309,7 +309,7 @@ bool create(const TQString &dir, CFontEngine &fe)
         TQString fName(Misc::fileSyntax(CFcEngine::getFcString(fs->fonts[i], FC_FILE)));
         FcBool  scalable=FcFalse;
 
-        if(!fName.isEmpty() && (root || dir.isEmpty() || 0==fName.tqfind(dir)) &&
+        if(!fName.isEmpty() && (root || dir.isEmpty() || 0==fName.find(dir)) &&
            FcResultMatch==FcPatternGetBool(fs->fonts[i], FC_SCALABLE, 0, &scalable) && scalable)
         {
             const TQStringList *existing=old.getEntries(fName);
@@ -552,7 +552,7 @@ CFile::CFile(const TQString &dir)
 
 const TQStringList * CFile::getEntries(const TQString &fname)
 {
-    TEntry *entry=findEntry(0==fname.tqfind(itsDir) ? fname.mid(itsDir.length()) : fname, false);
+    TEntry *entry=findEntry(0==fname.find(itsDir) ? fname.mid(itsDir.length()) : fname, false);
 
     return entry ? &entry->entries : NULL;
 }

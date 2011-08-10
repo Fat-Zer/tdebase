@@ -55,7 +55,7 @@ public:
   }
   bool usingSSL() const { return usesSSL; }
   bool usingTLS() const { return usesTLS; }
-  bool haveCapability( const char * cap ) const { return caps.tqcontains( cap ); }
+  bool haveCapability( const char * cap ) const { return caps.contains( cap ); }
   void error( int id, const TQString & msg ) {
     lastErrorCode = id;
     lastErrorMessage = msg;

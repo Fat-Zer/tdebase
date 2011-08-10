@@ -123,7 +123,7 @@ TQDomElement MenuFile::findMenu(TQDomElement elem, const TQString &menuName, boo
 {
    TQString menuNodeName;
    TQString subMenuName; 
-   int i = menuName.tqfind('/');
+   int i = menuName.find('/');
    if (i >= 0)
    {
       menuNodeName = menuName.left(i);
@@ -200,7 +200,7 @@ static TQString entryToDirId(const TQString &path)
    if (local.isEmpty() || local.startsWith("/"))
    {
       // What now? Use filename only and hope for the best.
-      local = path.mid(path.tqfindRev('/')+1);
+      local = path.mid(path.findRev('/')+1);
    }
    return local;                                                                                           
 }
@@ -468,7 +468,7 @@ TQString MenuFile::uniqueMenuName(const TQString &menuName, const TQString &newM
    
    for(int n = 1; ++n; )
    {
-      if (findMenu(elem, result, false).isNull() && !excludeList.tqcontains(result))
+      if (findMenu(elem, result, false).isNull() && !excludeList.contains(result))
          return result;
          
       result.truncate(trunc);

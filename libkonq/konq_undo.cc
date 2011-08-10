@@ -135,7 +135,7 @@ void KonqCommandRecorder::slotCopyingDone( KIO::Job *job, const KURL &from, cons
       Q_ASSERT( from.isLocalFile() );
       Q_ASSERT( to.protocol() == "trash" );
       TQMap<TQString, TQString> metaData = job->metaData();
-      TQMap<TQString, TQString>::ConstIterator it = metaData.tqfind( "trashURL-" + from.path() );
+      TQMap<TQString, TQString>::ConstIterator it = metaData.find( "trashURL-" + from.path() );
       if ( it != metaData.end() ) {
           // Update URL
           op.m_dst = it.data();
@@ -317,7 +317,7 @@ void KonqUndoManager::undo()
     }
     else if ( (*it).m_link )
     {
-      if ( !d->m_fileCleanupStack.tqcontains( (*it).m_dst ) )
+      if ( !d->m_fileCleanupStack.contains( (*it).m_dst ) )
         d->m_fileCleanupStack.prepend( (*it).m_dst );
 
       if ( d->m_current.m_type != KonqCommand::MOVE )
@@ -339,7 +339,7 @@ void KonqUndoManager::undo()
     KURL::List::ConstIterator it = d->m_current.m_src.begin();
     KURL::List::ConstIterator end = d->m_current.m_src.end();
     for (; it != end; ++it )
-      if ( !d->m_dirStack.tqcontains( *it) )
+      if ( !d->m_dirStack.contains( *it) )
         d->m_dirStack.push( *it );
   }
   */
@@ -390,7 +390,7 @@ void KonqUndoManager::slotResult( KIO::Job *job )
 
 void KonqUndoManager::addDirToUpdate( const KURL& url )
 {
-  if ( d->m_dirsToUpdate.tqfind( url ) == d->m_dirsToUpdate.end() )
+  if ( d->m_dirsToUpdate.find( url ) == d->m_dirsToUpdate.end() )
     d->m_dirsToUpdate.prepend( url );
 }
 

@@ -1038,7 +1038,7 @@ void Workspace::discardUsedWindowRules( Client* c, bool withdrawn )
          it != rules.end();
          )
         {
-        if( c->rules()->tqcontains( *it ))
+        if( c->rules()->contains( *it ))
             {
             updated = true;
             (*it)->discardUsed( withdrawn );

@@ -118,8 +118,8 @@ bool lessAddress(TQString a, TQString b)
         if(bLast +1 == bEnd)
             return false;
 
-        uint aNext = a.tqfind("/", aLast + 1);
-        uint bNext = b.tqfind("/", bLast + 1);
+        uint aNext = a.find("/", aLast + 1);
+        uint bNext = b.find("/", bLast + 1);
 
         bool okay;
         uint aNum = a.mid(aLast + 1, aNext - aLast - 1).toUInt(&okay);
@@ -218,7 +218,7 @@ void ListView::selected(KEBListViewItem * item, bool s)
     if(s)
         mSelectedItems[item] = item;
     else
-        if((it = mSelectedItems.tqfind(item)) != mSelectedItems.end())
+        if((it = mSelectedItems.find(item)) != mSelectedItems.end())
             mSelectedItems.remove(it);
 
     KEBApp::self()->updateActions();
@@ -483,7 +483,7 @@ void ListView::fillWithGroup(KEBListView *lv, KBookmarkGroup group, KEBListViewI
         KEBListViewItem *tree = new KEBListViewItem(lv, group);
         fillWithGroup(lv, group, tree);
         tree->TQListViewItem::setOpen(true);
-        if (s_selected_addresses.tqcontains(tree->bookmark().address()))
+        if (s_selected_addresses.contains(tree->bookmark().address()))
             lv->setSelected(tree, true);
         if(!s_current_address.isNull() && s_current_address == tree->bookmark().address())
             lv->setCurrentItem(tree);
@@ -515,7 +515,7 @@ void ListView::fillWithGroup(KEBListView *lv, KBookmarkGroup group, KEBListViewI
                         : new KEBListViewItem(lv, bk));
             lastItem = item;
         }
-        if (s_selected_addresses.tqcontains(bk.address()))
+        if (s_selected_addresses.contains(bk.address()))
             lv->setSelected(item, true);
         if(!s_current_address.isNull() && s_current_address == bk.address())
             lv->setCurrentItem(item);

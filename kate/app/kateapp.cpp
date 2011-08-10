@@ -375,7 +375,7 @@ KateMainWindow *KateApp::activeMainWindow ()
   if (m_mainWindows.isEmpty())
     return 0;
 
-  int n = m_mainWindows.tqfindIndex ((KateMainWindow *)activeWindow());
+  int n = m_mainWindows.findIndex ((KateMainWindow *)activeWindow());
 
   if (n < 0)
     n=0;

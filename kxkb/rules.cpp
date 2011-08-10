@@ -74,7 +74,7 @@ void XkbRules::loadRules(TQString file, bool layoutsOnly)
 // 	};
 // 	
 // 	for(int i=0; fixedLayouts[i].layout != 0; i++ ) {
-// 		if( m_layouts.tqfind(fixedLayouts[i].locale) == 0 )
+// 		if( m_layouts.find(fixedLayouts[i].locale) == 0 )
 // 			m_layouts.insert(fixedLayouts[i].locale, fixedLayouts[i].layout);
 // 	}
 // }
@@ -82,8 +82,8 @@ void XkbRules::loadRules(TQString file, bool layoutsOnly)
 bool XkbRules::isSingleGroup(const TQString& layout)
 {
 	  return X11Helper::areSingleGroupsSupported()
-			  && !m_oldLayouts.tqcontains(layout)
-			  && !m_nonLatinLayouts.tqcontains(layout);
+			  && !m_oldLayouts.contains(layout)
+			  && !m_nonLatinLayouts.contains(layout);
 }
 
 
@@ -131,7 +131,7 @@ XkbRules::getDefaultGroup(const TQString& layout, const TQString& includeGroup)
 			return 0;
     }
     
-    TQMap<TQString, unsigned int>::iterator it = m_initialGroups.tqfind(layout);
+    TQMap<TQString, unsigned int>::iterator it = m_initialGroups.find(layout);
     return it == m_initialGroups.end() ? 0 : it.data();
 }
 
@@ -139,14 +139,14 @@ XkbRules::getDefaultGroup(const TQString& layout, const TQString& includeGroup)
 TQStringList
 XkbRules::getAvailableVariants(const TQString& layout)
 {
-    if( layout.isEmpty() || !layouts().tqfind(layout) )
+    if( layout.isEmpty() || !layouts().find(layout) )
 	return TQStringList();
 
     TQStringList* result1 = m_varLists[layout];
     if( result1 )
         return *result1;
 
-    bool oldLayouts = m_oldLayouts.tqcontains(layout);
+    bool oldLayouts = m_oldLayouts.contains(layout);
     TQStringList* result = X11Helper::getVariants(layout, X11_DIR, oldLayouts);
 
     m_varLists.insert(layout, result);

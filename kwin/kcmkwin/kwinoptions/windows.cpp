@@ -1114,7 +1114,7 @@ void KMovingConfig::load( void )
     //CT 13mar98 interactive placement
 //   if( key.left(11) == "interactive") {
 //     setPlacement(INTERACTIVE_PLACEMENT);
-//     int comma_pos = key.tqfind(',');
+//     int comma_pos = key.find(',');
 //     if (comma_pos < 0)
 //       interactiveTrigger->setValue(0);
 //     else

@@ -78,11 +78,11 @@ TQString KonqAboutPageFactory::loadFile( const TQString& file )
 
     // otherwise all embedded objects are referenced as about:/...
     TQString basehref = TQString::tqfromLatin1("<BASE HREF=\"file:") +
-		       file.left( file.tqfindRev( '/' )) +
+		       file.left( file.findRev( '/' )) +
 		       TQString::tqfromLatin1("/\">\n");
     TQRegExp reg("<head>");
     reg.setCaseSensitive(FALSE);
-    res.tqreplace(reg, "<head>\n\t" + basehref);
+    res.replace(reg, "<head>\n\t" + basehref);
     return res;
 }
 

@@ -124,7 +124,7 @@ void Command_url_action::execute()
         kapp->propagateSessionManager();
         sm_ready = true;
         }
-//    int space_pos = command_url().tqfind( ' ' );
+//    int space_pos = command_url().find( ' ' );
 //    if( command_url()[ 0 ] != '\'' && command_url()[ 0 ] != '"' && space_pos > -1
 //        && command_url()[ space_pos - 1 ] != '\\' )
 //        cmd = command_url().left( space_pos ); // get first 'word'
@@ -286,7 +286,7 @@ void Dcop_action::execute()
             // one word
             if( pos != 0 )
                 args_str = args_str.mid( pos );
-            int nxt_pos = args_str.tqfind( ' ' );
+            int nxt_pos = args_str.find( ' ' );
             args_list.append( args_str.left( nxt_pos )); // should be ok if nxt_pos is -1
             args_str = nxt_pos >= 0 ? args_str.mid( nxt_pos ) : "";
             }
@@ -372,7 +372,7 @@ void Keyboard_input_action::execute()
             w = InputFocus;
         }
     int last_index = -1, start = 0;
-    while(( last_index = input().tqfind( ':', last_index + 1 )) != -1 ) // find next ';'
+    while(( last_index = input().find( ':', last_index + 1 )) != -1 ) // find next ';'
 	{
         TQString key = input().mid( start, last_index - start ).stripWhiteSpace();
         if( key == "Enter" && KKey( key ).keyCodeQt() == 0 )
@@ -391,7 +391,7 @@ void Keyboard_input_action::execute()
 TQString Keyboard_input_action::description() const
     {
     TQString tmp = input();
-    tmp.tqreplace( '\n', ' ' );
+    tmp.replace( '\n', ' ' );
     tmp.truncate( 30 );
     return i18n( "Keyboard input : " ) + tmp;
     }

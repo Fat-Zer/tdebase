@@ -281,7 +281,7 @@ int KonqPopupMenu::insertServices(const ServiceList& list,
             TQCString name;
             name.setNum( id );
             name.prepend( isBuiltin ? "builtinservice_" : "userservice_" );
-            KAction * act = new KAction( TQString((*it).m_strName).tqreplace('&',"&&"), 0,
+            KAction * act = new KAction( TQString((*it).m_strName).replace('&',"&&"), 0,
                                          TQT_TQOBJECT(this), TQT_SLOT( slotRunService() ),
                                          &m_ownActions, name );
 
@@ -339,7 +339,7 @@ void KonqPopupMenu::setup(KonqPopupFlags kpf)
     bool sMoving        = sDeleting;
     bool sWriting       = sDeleting && m_lstItems.first()->isWritable();
     m_sMimeType         = m_lstItems.first()->mimetype();
-    TQString mimeGroup   = m_sMimeType.left(m_sMimeType.tqfind('/'));
+    TQString mimeGroup   = m_sMimeType.left(m_sMimeType.find('/'));
     mode_t mode         = m_lstItems.first()->mode();
     bool isDirectory    = S_ISDIR(mode);
     bool bTrashIncluded = false;
@@ -381,11 +381,11 @@ void KonqPopupMenu::setup(KonqPopupFlags kpf)
         {
             m_sMimeType = TQString::null; // mimetypes are different => null
 
-            if ( mimeGroup != (*it)->mimetype().left((*it)->mimetype().tqfind('/')))
+            if ( mimeGroup != (*it)->mimetype().left((*it)->mimetype().find('/')))
                 mimeGroup = TQString::null; // mimetype groups are different as well!
         }
 
-        if ( mimeTypeList.tqfindIndex( (*it)->mimetype() ) == -1 )
+        if ( mimeTypeList.findIndex( (*it)->mimetype() ) == -1 )
             mimeTypeList << (*it)->mimetype();
 
         if ( isReallyLocal && !url.isLocalFile() )
@@ -603,7 +603,7 @@ void KonqPopupMenu::setup(KonqPopupFlags kpf)
         TQString caption;
         if (currentDir)
         {
-           bool httpPage = (m_sViewURL.protocol().tqfind("http", 0, false) == 0);
+           bool httpPage = (m_sViewURL.protocol().find("http", 0, false) == 0);
            if (httpPage)
               caption = i18n("&Bookmark This Page");
            else
@@ -742,7 +742,7 @@ void KonqPopupMenu::setup(KonqPopupFlags kpf)
             else if ( cfg.hasKey( "X-KDE-Protocols" ) )
             {
                 TQStringList protocols = TQStringList::split( "," , cfg.readEntry( "X-KDE-Protocols" ) );
-                if ( !protocols.tqcontains( urlForServiceMenu.protocol() ) )
+                if ( !protocols.contains( urlForServiceMenu.protocol() ) )
                     continue;
             }
             else if ( urlForServiceMenu.protocol() == "trash" || urlForServiceMenu.url().startsWith( "system:/trash" ) )
@@ -756,7 +756,7 @@ void KonqPopupMenu::setup(KonqPopupFlags kpf)
             if ( cfg.hasKey( "X-KDE-Require" ) )
             {
                 const TQStringList capabilities = cfg.readListEntry( "X-KDE-Require" );
-                if ( capabilities.tqcontains( "Write" ) && !sWriting )
+                if ( capabilities.contains( "Write" ) && !sWriting )
                     continue;
             }
             if ( (cfg.hasKey( "Actions" ) || cfg.hasKey( "X-KDE-GetActionMenu") ) && cfg.hasKey( "ServiceTypes" ) )
@@ -792,7 +792,7 @@ void KonqPopupMenu::setup(KonqPopupFlags kpf)
                          *it == m_sMimeType) ||
                         (!mimeGroup.isEmpty() &&
                          ((*it).right(1) == "*" &&
-                          (*it).left((*it).tqfind('/')) == mimeGroup)))
+                          (*it).left((*it).find('/')) == mimeGroup)))
                     {
                         checkTheMimetypes = true;
                     }
@@ -802,7 +802,7 @@ void KonqPopupMenu::setup(KonqPopupFlags kpf)
                         ok = true;
                         for (TQStringList::ConstIterator itex = excludeTypes.begin(); itex != excludeTypes.end(); ++itex)
                         {
-                            if( ((*itex).right(1) == "*" && (*itex).left((*itex).tqfind('/')) == mimeGroup) ||
+                            if( ((*itex).right(1) == "*" && (*itex).left((*itex).find('/')) == mimeGroup) ||
                                 ((*itex) == m_sMimeType) )
                             {
                                 ok = false;
@@ -883,20 +883,20 @@ void KonqPopupMenu::setup(KonqPopupFlags kpf)
                     const TQString onlyShowIn = service->property("OnlyShowIn", TQVariant::String).toString();
                     if ( !onlyShowIn.isEmpty() ) {
                         const TQStringList aList = TQStringList::split(';', onlyShowIn);
-                        if (!aList.tqcontains("KDE"))
+                        if (!aList.contains("KDE"))
                             continue;
                     }
                     const TQString notShowIn = service->property("NotShowIn", TQVariant::String).toString();
                     if ( !notShowIn.isEmpty() ) {
                         const TQStringList aList = TQStringList::split(';', notShowIn);
-                        if (aList.tqcontains("KDE"))
+                        if (aList.contains("KDE"))
                             continue;
                     }
 
                     TQCString nam;
                     nam.setNum( id );
 
-                    TQString actionName( (*it)->name().tqreplace("&", "&&") );
+                    TQString actionName( (*it)->name().replace("&", "&&") );
                     if ( menu == m_menuElement ) // no submenu -> prefix single offer
                         actionName = i18n( "Open with %1" ).arg( actionName );
 
@@ -1074,10 +1074,10 @@ void KonqPopupMenu::slotPopupAddToBookmark()
 void KonqPopupMenu::slotRunService()
 {
   TQCString senderName = TQT_TQOBJECT_CONST(sender())->name();
-  int id = senderName.mid( senderName.tqfind( '_' ) + 1 ).toInt();
+  int id = senderName.mid( senderName.find( '_' ) + 1 ).toInt();
 
   // Is it a usual service (application)
-  TQMap<int,KService::Ptr>::Iterator it = m_mapPopup.tqfind( id );
+  TQMap<int,KService::Ptr>::Iterator it = m_mapPopup.find( id );
   if ( it != m_mapPopup.end() )
   {
     KRun::run( **it, m_lstPopupURLs );
@@ -1085,7 +1085,7 @@ void KonqPopupMenu::slotRunService()
   }
 
   // Is it a service specific to desktop entry files ?
-  TQMap<int,KDEDesktopMimeType::Service>::Iterator it2 = m_mapPopupServices.tqfind( id );
+  TQMap<int,KDEDesktopMimeType::Service>::Iterator it2 = m_mapPopupServices.find( id );
   if ( it2 != m_mapPopupServices.end() )
   {
       KDEDesktopMimeType::executeService( m_lstPopupURLs, it2.data() );

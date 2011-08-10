@@ -209,14 +209,14 @@ void LinuxCDPolling::slotMediumAdded(const TQString &id)
 {
 	kdDebug(1219) << "LinuxCDPolling::slotMediumAdded(" << id << ")" << endl;
 
-	if (m_threads.tqcontains(id)) return;
+	if (m_threads.contains(id)) return;
 
 	const Medium *medium = m_mediaList.findById(id);
 
 	TQString mime = medium->mimeType();
 	kdDebug(1219) << "mime == " << mime << endl;
 
-	if (mime.tqfind("dvd")==-1 && mime.tqfind("cd")==-1) return;
+	if (mime.find("dvd")==-1 && mime.find("cd")==-1) return;
 
 	if (!medium->isMounted())
 	{
@@ -234,7 +234,7 @@ void LinuxCDPolling::slotMediumRemoved(const TQString &id)
 {
 	kdDebug(1219) << "LinuxCDPolling::slotMediumRemoved(" << id << ")" << endl;
 
-	if (!m_threads.tqcontains(id)) return;
+	if (!m_threads.contains(id)) return;
 
 	PollingThread *thread = m_threads[id];
 	m_threads.remove(id);
@@ -255,9 +255,9 @@ void LinuxCDPolling::slotMediumStateChanged(const TQString &id)
 	TQString mime = medium->mimeType();
 	kdDebug(1219) << "mime == " << mime << endl;
 
-	if (mime.tqfind("dvd")==-1 && mime.tqfind("cd")==-1) return;
+	if (mime.find("dvd")==-1 && mime.find("cd")==-1) return;
 
-	if (!m_threads.tqcontains(id) && !medium->isMounted())
+	if (!m_threads.contains(id) && !medium->isMounted())
 	{
 		// It is just a mount state change, no need to notify
 		m_excludeNotification.append( id );
@@ -268,7 +268,7 @@ void LinuxCDPolling::slotMediumStateChanged(const TQString &id)
 		thread->start();
 		m_timer.start(500);
 	}
-	else if (m_threads.tqcontains(id) && medium->isMounted())
+	else if (m_threads.contains(id) && medium->isMounted())
 	{
 		PollingThread *thread = m_threads[id];
 		m_threads.remove(id);
@@ -319,7 +319,7 @@ static TQString baseType(const Medium *medium)
 	FstabBackend::guess(devNode, mountPoint, fsType, mounted,
 	                    mimeType, iconName, label);
 
-	if (devNode.tqfind("dvd")!=-1)
+	if (devNode.find("dvd")!=-1)
 	{
 		kdDebug(1219) << "=> dvd" << endl;
 		return "dvd";
@@ -360,7 +360,7 @@ void LinuxCDPolling::applyType(DiscType type, const Medium *medium)
 	TQString id = medium->id();
 	TQString dev = medium->deviceNode();
 	
-	bool notify = !m_excludeNotification.tqcontains(id);
+	bool notify = !m_excludeNotification.contains(id);
 	m_excludeNotification.remove(id);
 	
 	switch (type)

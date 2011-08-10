@@ -50,7 +50,7 @@ namespace KioSMTP {
     kdDebug(7112) << "Parsing request from query:\n" + query.join("\n" ) << endl;
 #endif
     for ( TQStringList::const_iterator it = query.begin() ; it != query.end() ; ++it ) {
-      int equalsPos = (*it).tqfind( '=' );
+      int equalsPos = (*it).find( '=' );
       if ( equalsPos <= 0 )
 	continue;
 
@@ -101,7 +101,7 @@ namespace KioSMTP {
 
   static inline bool isSpecial( char ch ) {
     static const TQCString specials = "()<>[]:;@\\,.\"";
-    return specials.tqfind( ch ) >= 0;
+    return specials.find( ch ) >= 0;
   }
 
 

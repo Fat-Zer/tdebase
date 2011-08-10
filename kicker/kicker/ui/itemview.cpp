@@ -385,7 +385,7 @@ void KMenuItemSeparator::setLink( const TQString &text, const TQString &url )
 
 bool KMenuItemSeparator::hitsLink( const TQPoint &pos )
 {
-    return m_link_rect.tqcontains( pos );
+    return m_link_rect.contains( pos );
 }
 
 void KMenuItemSeparator::preparePixmap( int width )
@@ -1162,7 +1162,7 @@ bool KMenuItemDrag::decode(const TQMimeSource* e, KMenuItemInfo& item)
                     item.m_title = item.m_path;
                     item.m_icon = KMimeType::iconForURL( url );
                     item.m_title = item.m_path.section( '/', -1, -1 );
-                    int last_slash = url.tqfindRev ('/', -1);
+                    int last_slash = url.findRev ('/', -1);
                     if (last_slash == 0)
                         item.m_description = i18n("Directory: /)");
                     else
@@ -1205,7 +1205,7 @@ bool FavoritesItemView::acceptDrag (TQDropEvent* event) const
         TQStringList favs = KickerSettings::favorites();
 
         if (item.m_s)
-            return favs.tqfind(item.m_s->storageId())==favs.end();
+            return favs.find(item.m_s->storageId())==favs.end();
         else {
             TQStringList::Iterator it;
 
@@ -1219,7 +1219,7 @@ bool FavoritesItemView::acceptDrag (TQDropEvent* event) const
             for (it = favs.begin(); it != favs.end(); ++it) {
                 if ((*it)[0]=='/') {
                     KDesktopFile df((*it),true);
-                    if (df.readURL().tqreplace("file://",TQString())==uri)
+                    if (df.readURL().replace("file://",TQString())==uri)
                         break;
                 }
             }
@@ -1233,15 +1233,15 @@ bool FavoritesItemView::acceptDrag (TQDropEvent* event) const
         TQStringList favs = KickerSettings::favorites();
 
         if (text.endsWith(".desktop")) {
-            KService::Ptr p = KService::serviceByDesktopPath(text.tqreplace("file://",TQString()));
-            return (p && favs.tqfind(p->storageId())==favs.end());
+            KService::Ptr p = KService::serviceByDesktopPath(text.replace("file://",TQString()));
+            return (p && favs.find(p->storageId())==favs.end());
         }
         else {
             TQStringList::Iterator it;
             for (it = favs.begin(); it != favs.end(); ++it) {
                 if ((*it)[0]=='/') {
                     KDesktopFile df((*it),true);
-                    if (df.readURL().tqreplace("file://",TQString())==text)
+                    if (df.readURL().replace("file://",TQString())==text)
                         break;
                 }
             }

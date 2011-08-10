@@ -942,7 +942,7 @@ TQStringList HALBackend::mountoptions(const TQString &name)
 
     result << TQString("automount=%1").arg(value ? "true" : "false");
 
-    if (valids.tqcontains("ro"))
+    if (valids.contains("ro"))
     {
         value = config.readBoolEntry("ro", false);
         tmp = TQString("ro=%1").arg(value ? "true" : "false");
@@ -950,7 +950,7 @@ TQStringList HALBackend::mountoptions(const TQString &name)
             result << tmp;
     }
 
-    if (valids.tqcontains("quiet"))
+    if (valids.contains("quiet"))
     {
         value = config.readBoolEntry("quiet", false);
         tmp = TQString("quiet=%1").arg(value ? "true" : "false");
@@ -958,28 +958,28 @@ TQStringList HALBackend::mountoptions(const TQString &name)
             result << tmp;
     }
 
-    if (valids.tqcontains("flush"))
+    if (valids.contains("flush"))
     {
         value = config.readBoolEntry("flush", fstype.endsWith("fat"));
         tmp = TQString("flush=%1").arg(value ? "true" : "false");
         result << tmp;
     }
 
-    if (valids.tqcontains("uid"))
+    if (valids.contains("uid"))
     {
         value = config.readBoolEntry("uid", true);
         tmp = TQString("uid=%1").arg(value ? "true" : "false");
         result << tmp;
     }
 
-    if (valids.tqcontains("utf8"))
+    if (valids.contains("utf8"))
     {
         value = config.readBoolEntry("utf8", true);
         tmp = TQString("utf8=%1").arg(value ? "true" : "false");
         result << tmp;
     }
 
-    if (valids.tqcontains("shortname"))
+    if (valids.contains("shortname"))
     {
         TQString svalue = config.readEntry("shortname", "lower").lower();
         if (svalue == "winnt")
@@ -993,7 +993,7 @@ TQStringList HALBackend::mountoptions(const TQString &name)
     }
 
     // pass our locale to the ntfs-3g driver so it can translate local characters
-    if (valids.tqcontains("locale") && fstype == "ntfs-3g")
+    if (valids.contains("locale") && fstype == "ntfs-3g")
     {
         // have to obtain LC_CTYPE as returned by the `locale` command
         // check in the same order as `locale` does
@@ -1003,15 +1003,15 @@ TQStringList HALBackend::mountoptions(const TQString &name)
         }
     }
 
-    if (valids.tqcontains("sync"))
+    if (valids.contains("sync"))
     {
-        value = config.readBoolEntry("sync", ( valids.tqcontains("flush") && !fstype.endsWith("fat") ) && removable);
+        value = config.readBoolEntry("sync", ( valids.contains("flush") && !fstype.endsWith("fat") ) && removable);
         tmp = TQString("sync=%1").arg(value ? "true" : "false");
         if (fstype != "iso9660") // makes no sense
             result << tmp;
     }
 
-    if (valids.tqcontains("noatime"))
+    if (valids.contains("noatime"))
     {
         value = config.readBoolEntry("atime", !fstype.endsWith("fat"));
         tmp = TQString("atime=%1").arg(value ? "true" : "false");
@@ -1031,7 +1031,7 @@ TQStringList HALBackend::mountoptions(const TQString &name)
     result << TQString("mountpoint=%1").arg(mount_point);
     result << TQString("filesystem=%1").arg(fstype);
 
-    if (valids.tqcontains("data"))
+    if (valids.contains("data"))
     {
         TQString svalue = config.readEntry("journaling").lower();
         if (svalue == "ordered")
@@ -1058,19 +1058,19 @@ bool HALBackend::setMountoptions(const TQString &name, const TQStringList &optio
 
     const char *names[] = { "ro", "quiet", "atime", "uid", "utf8", "flush", "sync", 0 };
     for (int index = 0; names[index]; ++index)
-        if (valids.tqcontains(names[index]))
+        if (valids.contains(names[index]))
             config.writeEntry(names[index], valids[names[index]] == "true");
 
-    if (valids.tqcontains("shortname"))
+    if (valids.contains("shortname"))
         config.writeEntry("shortname", valids["shortname"]);
 
-    if (valids.tqcontains("journaling"))
+    if (valids.contains("journaling"))
         config.writeEntry("journaling", valids["journaling"]);
 
-    if (!mountoptions(name).tqcontains(TQString("mountpoint=%1").arg(valids["mountpoint"])))
+    if (!mountoptions(name).contains(TQString("mountpoint=%1").arg(valids["mountpoint"])))
         config.writeEntry("mountpoint", valids["mountpoint"]);
 
-    if (valids.tqcontains("automount")) {
+    if (valids.contains("automount")) {
         TQString drive_udi = libhal_device_get_property_QString(m_halContext, name.latin1(), "block.storage_device");
         config.setGroup(drive_udi);
         config.writeEntry("automount", valids["automount"]);
@@ -1376,7 +1376,7 @@ TQString HALBackend::isInFstab(const Medium *medium)
         if ((*it)->mountedFrom() == medium->deviceNode() || ( !medium->deviceNode().isEmpty() && reald == medium->deviceNode() ) )
 	{
             TQStringList opts = (*it)->mountOptions();
-            if (opts.tqcontains("user") || opts.tqcontains("users"))
+            if (opts.contains("user") || opts.contains("users"))
                 return (*it)->mountPoint();
         }
     }
@@ -1451,17 +1451,17 @@ TQString HALBackend::mount(const Medium *medium)
     if (mount_point.startsWith("/media/"))
         mount_point = mount_point.mid(7);
 
-    if (valids.tqcontains("shortname"))
+    if (valids.contains("shortname"))
     {
         soptions << TQString("shortname=%1").arg(valids["shortname"]);
     }
 
-    if (valids.tqcontains("locale"))
+    if (valids.contains("locale"))
     {
         soptions << TQString("locale=%1").arg(valids["locale"]);
     }
 
-    if (valids.tqcontains("journaling"))
+    if (valids.contains("journaling"))
     {
         TQString option = valids["journaling"];
         if (option == "data")

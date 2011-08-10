@@ -62,9 +62,9 @@ TQStringList SearchHandler::documentTypes() const
 TQString SearchHandler::indexCommand( const TQString &identifier )
 {
   TQString cmd = mIndexCommand;
-  cmd.tqreplace( "%i", identifier );
-  cmd.tqreplace( "%d", Prefs::indexDirectory() );
-  cmd.tqreplace( "%l", mLang );
+  cmd.replace( "%i", identifier );
+  cmd.replace( "%d", Prefs::indexDirectory() );
+  cmd.replace( "%l", mLang );
   return cmd;
 }
 
@@ -83,7 +83,7 @@ bool SearchHandler::checkBinary( const TQString &cmd ) const
 {
   TQString binary;
 
-  int pos = cmd.tqfind( ' ' );
+  int pos = cmd.find( ' ' );
   if ( pos < 0 ) binary = cmd;
   else binary = cmd.left( pos );
 
@@ -166,7 +166,7 @@ void SearchHandler::searchStdout( KProcess *proc, char *buffer, int len )
   p = strncpy( p, buffer, len );
   p[len] = '\0';
 
-  TQMap<KProcess *, SearchJob *>::ConstIterator it = mProcessJobs.tqfind( proc );
+  TQMap<KProcess *, SearchJob *>::ConstIterator it = mProcessJobs.find( proc );
   if ( it != mProcessJobs.end() ) {
     (*it)->mResult += bufferStr.fromUtf8( p );
   }
@@ -179,7 +179,7 @@ void SearchHandler::searchStderr( KProcess *proc, char *buffer, int len )
   if ( !buffer || len == 0 )
     return;
 
-  TQMap<KProcess *, SearchJob *>::ConstIterator it = mProcessJobs.tqfind( proc );
+  TQMap<KProcess *, SearchJob *>::ConstIterator it = mProcessJobs.find( proc );
   if ( it != mProcessJobs.end() ) {
     (*it)->mError += TQString::fromUtf8( buffer, len );
   }
@@ -193,7 +193,7 @@ void SearchHandler::searchExited( KProcess *proc )
   TQString error;
   DocEntry *entry = 0;
 
-  TQMap<KProcess *, SearchJob *>::ConstIterator it = mProcessJobs.tqfind( proc );
+  TQMap<KProcess *, SearchJob *>::ConstIterator it = mProcessJobs.find( proc );
   if ( it != mProcessJobs.end() ) {
     SearchJob *j = *it;
     entry = j->mEntry;
@@ -218,7 +218,7 @@ void SearchHandler::slotJobResult( KIO::Job *job )
   TQString result;
   DocEntry *entry = 0;
 
-  TQMap<KIO::Job *, SearchJob *>::ConstIterator it = mKioJobs.tqfind( job );
+  TQMap<KIO::Job *, SearchJob *>::ConstIterator it = mKioJobs.find( job );
   if ( it != mKioJobs.end() ) {
     SearchJob *j = *it;
 
@@ -240,7 +240,7 @@ void SearchHandler::slotJobData( KIO::Job *job, const TQByteArray &data )
 {
 //  kdDebug() << "SearchHandler::slotJobData()" << endl;
 
-  TQMap<KIO::Job *, SearchJob *>::ConstIterator it = mKioJobs.tqfind( job );
+  TQMap<KIO::Job *, SearchJob *>::ConstIterator it = mKioJobs.find( job );
   if ( it != mKioJobs.end() ) {
     (*it)->mResult += data.data();
   }

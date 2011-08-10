@@ -100,7 +100,7 @@ void KeramikEmbedder::embed( const char *name )
 	TQString     codename( basename );
 	TQImage      image( name );
 	
-	codename = codename.tqreplace( TQRegExp("[^a-zA-Z0-9]"), "_" );
+	codename = codename.replace( TQRegExp("[^a-zA-Z0-9]"), "_" );
 	
 	stream << "\tstatic const QRgb " << codename << "_data[] = {" << endl << "\t\t";
 	stream.setf( TQTextStream::hex | TQTextStream::right );
@@ -200,7 +200,7 @@ void KeramikEmbedder::writeIndex()
 	stream << "\t\t\tm_inst = NULL;\n";
 	stream << "\t\t}\n\n";
 	stream << "\t\tTQImage *image( const TQString &name ) const {\n";
-	stream << "\t\t\treturn db->tqfind( name );\n";
+	stream << "\t\t\treturn db->find( name );\n";
 	stream << "\t\t}\n\n";
 	stream << "\t}; // class KeramikImageDb\n\n";
 	stream << "\tKeramikImageDb *KeramikImageDb::m_inst = NULL;\n\n";

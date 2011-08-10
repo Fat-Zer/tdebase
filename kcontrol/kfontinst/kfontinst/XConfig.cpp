@@ -748,9 +748,9 @@ CXConfig::TPath::EType CXConfig::TPath::getType(const TQString &d)
 {
     TQString str(d);
 
-    str.tqreplace(TQRegExp("\\s*"), "");
+    str.replace(TQRegExp("\\s*"), "");
 
-    return 0==str.tqfind("unix/:")
+    return 0==str.find("unix/:")
                ? FONT_SERVER
                : "fontconfig"==str
                    ? FONT_CONFIG

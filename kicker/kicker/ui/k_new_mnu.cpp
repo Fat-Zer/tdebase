@@ -141,12 +141,12 @@ static TQString workaroundStringFreeze(const TQString& str)
 {
     TQString s = str;
 
-    s.tqreplace("<u>","&");
+    s.replace("<u>","&");
     TQRegExp re("<[^>]+>");
     re.setMinimal(true);
     re.setCaseSensitive(false);
 
-    s.tqreplace(re, "");
+    s.replace(re, "");
     s = s.simplifyWhiteSpace();
 
     return s;
@@ -517,7 +517,7 @@ bool KMenu::eventFilter ( TQObject * receiver, TQEvent* e)
                 return false;
         }
 
-	if (m_sloppyRegion.tqcontains(p)) {
+	if (m_sloppyRegion.contains(p)) {
             if (e->type() ==  TQEvent::MouseButtonPress /*&& m_sloppyTimer.isActive()*/)
                 m_sloppySourceClicked = true;
 
@@ -682,9 +682,9 @@ bool KMenu::eventFilter ( TQObject * receiver, TQEvent* e)
 
 void KMenu::slotSloppyTimeout()
 {
-    if (m_sloppyRegion.tqcontains(TQCursor::pos()) && !m_sloppySource.isNull())
+    if (m_sloppyRegion.contains(TQCursor::pos()) && !m_sloppySource.isNull())
     {
-        if ( m_sloppySource.tqcontains(TQCursor::pos()))
+        if ( m_sloppySource.contains(TQCursor::pos()))
         {
             m_stacker->raiseWidget(m_sloppyWidget);
 
@@ -882,7 +882,7 @@ void KMenu::slotGoExitSubMenu(const TQString& url)
         m_exitView->rightView()->insertItem( "switchuser", i18n( "Start New Session" ),
                      i18n( "Start a parallel session" ), "kicker:/switchuser", nId++, index++ );
 
-        m_exitView->rightView()->insertItem( "lock", i18n( "Lock Current && Start New Session").tqreplace("&&","&"),
+        m_exitView->rightView()->insertItem( "lock", i18n( "Lock Current && Start New Session").replace("&&","&"),
                      i18n( "Lock screen and start a parallel session" ), "kicker:/switchuserafterlock", nId++, index++ );
 
        SessList sess;
@@ -918,7 +918,7 @@ void KMenu::goSubMenu(const TQString& relPath, bool keyboard)
         int index = rel.length() - 1;
         if ( rel.endsWith( "/" ) )
             index--;
-        index = rel.tqfindRev( '/', index );
+        index = rel.findRev( '/', index );
         kdDebug() << "goup, rel '" << rel << "' " << index << endl;
         TQString currel = rel;
         rel = rel.left( index + 1 );
@@ -1165,7 +1165,7 @@ void KMenu::fillMenu(KServiceGroup::Ptr&
             KService::Ptr s(static_cast<KService *>(e));
             if (_relPath.isEmpty()) {
                 TQStringList favs = KickerSettings::favorites();
-                if (favs.tqfind(s->storageId())!=favs.end())
+                if (favs.find(s->storageId())!=favs.end())
                   continue;
             }
 #ifdef KDELIBS_SUSE
@@ -1259,7 +1259,7 @@ void KMenu::initialize()
        if ((*it)[0]=='/') {
           KDesktopFile df((*it),true);
           TQString url = df.readURL();
-          if (!KURL(url).isLocalFile() || TQFile::exists(url.tqreplace("file://",TQString())))
+          if (!KURL(url).isLocalFile() || TQFile::exists(url.replace("file://",TQString())))
             m_favoriteView->insertItem(df.readIcon(),df.readName(),df.readGenericName(), url, nId++, index++);
        }
        else {
@@ -1314,7 +1314,7 @@ void KMenu::insertStaticExitItems()
         m_exitView->leftView()->insertItem( "exit", i18n( "Shutdown Computer" ),
                                    i18n( "Turn off computer" ), "kicker:/shutdown", nId++, index++ );
 
-        m_exitView->leftView()->insertItem( "reload", i18n( "&Restart Computer" ).tqreplace("&",""),
+        m_exitView->leftView()->insertItem( "reload", i18n( "&Restart Computer" ).replace("&",""),
                                             i18n( "Restart and boot the default system" ),
                                             "kicker:/restart", nId++, index++ );
 
@@ -1906,7 +1906,7 @@ bool KMenu::dontQueryNow (const TQString& str)
     if (str == current_query.get())
 	return true;
     int length = str.length ();
-    int last_whitespace = str.tqfindRev (' ', -1);
+    int last_whitespace = str.findRev (' ', -1);
     if (last_whitespace == length-1)
         return false; // if the user typed a space, search
     if (last_whitespace >= length-2)
@@ -1964,7 +1964,7 @@ void KMenu::createNewProgramList(TQString relPath)
 		} else if(e->isType(KST_KService)) {
 			KService::Ptr s(static_cast<KService *>(e));
 			if(s->type() == "Application" && !s->noDisplay() ) {
-                            TQString shortStorageId = s->storageId().tqreplace(".desktop",TQString());
+                            TQString shortStorageId = s->storageId().replace(".desktop",TQString());
                             TQStringList::Iterator it_find = m_seenPrograms.begin();
                             TQStringList::Iterator it_end = m_seenPrograms.end();
  			    bool found = false;
@@ -1979,7 +1979,7 @@ void KMenu::createNewProgramList(TQString relPath)
                                 m_seenProgramsChanged=true;
                                 m_seenPrograms+=shortStorageId;
                                 m_seenPrograms+=m_tqcurrentDate;
-                                if (m_newInstalledPrograms.tqfind(s->storageId())==m_newInstalledPrograms.end())
+                                if (m_newInstalledPrograms.find(s->storageId())==m_newInstalledPrograms.end())
                                   m_newInstalledPrograms+=s->storageId();
                             }
                             else {
@@ -1987,7 +1987,7 @@ void KMenu::createNewProgramList(TQString relPath)
                                 if (*(it_find)!="-") {
                                    TQDate date = TQDate::fromString(*(it_find),Qt::ISODate);
                                    if (date.daysTo(TQDate::currentDate())<3) {
-                                      if (m_newInstalledPrograms.tqfind(s->storageId())==m_newInstalledPrograms.end())
+                                      if (m_newInstalledPrograms.find(s->storageId())==m_newInstalledPrograms.end())
                                          m_newInstalledPrograms+=s->storageId();
                                    }
                                    else {
@@ -2033,24 +2033,24 @@ void KMenu::searchProgramList(TQString relPath)
 				int score = 0;
 				if (s->exec()==input)
 					score = 100;
-				else if (s->exec().tqfind(input)==0)
+				else if (s->exec().find(input)==0)
 					score = 50;
-				else if (s->exec().tqfind(input)!=-1)
+				else if (s->exec().find(input)!=-1)
 					score = 10;
 				else if (s->name().lower()==input)
 					score = 100;
 				else if (s->genericName().lower()==input)
 					score = 100;
-				else if (s->name().lower().tqfind(input)==0)
+				else if (s->name().lower().find(input)==0)
 					score = 50;
-				else if (s->genericName().lower().tqfind(input)==0)
+				else if (s->genericName().lower().find(input)==0)
 					score = 50;
-				else if (s->name().lower().tqfind(input)!=-1)
+				else if (s->name().lower().find(input)!=-1)
 					score = 10;
-				else if (s->genericName().lower().tqfind(input)!=-1)
+				else if (s->genericName().lower().find(input)!=-1)
 					score = 10;
 
-				if (s->exec().tqfind(' ')==-1)
+				if (s->exec().find(' ')==-1)
 					score+=1;
 
 				if (s->substituteUid())
@@ -2082,7 +2082,7 @@ void KMenu::searchProgramList(TQString relPath)
         			insertSearchResult(hit_item);
 
                                 TQString exe = s->exec();
-                                int pos = exe.tqfind(' ');
+                                int pos = exe.find(' ');
                                 if (pos>0)
                                   exe=exe.left(pos);
 				m_programsInMenu+=KGlobal::dirs()->findExe(exe);
@@ -2329,13 +2329,13 @@ void KMenu::doQuery (bool return_pressed)
             if (exe.endsWith("/bin/gimp")) {
                TQStringList::ConstIterator it = m_programsInMenu.begin();
                for (; it != m_programsInMenu.end(); ++it)
-                  if ((*it).tqfind("bin/gimp-remote-")!=-1) {
+                  if ((*it).find("bin/gimp-remote-")!=-1) {
                     gimp_hack = true;
                     break;
                   }
             }
 #endif
-            if (m_programsInMenu.tqfind(exe)!=m_programsInMenu.end()
+            if (m_programsInMenu.find(exe)!=m_programsInMenu.end()
 #ifdef KDELIBS_SUSE
                 || gimp_hack
 #endif
@@ -2540,7 +2540,7 @@ TQString KMenu::iconForHitMenuItem(HitMenuItem *hit_item)
 	    return favicon;
     }
 
-    if (mimetype_iconstore.tqcontains (hit_item->mimetype))
+    if (mimetype_iconstore.contains (hit_item->mimetype))
         return (mimetype_iconstore [hit_item->mimetype]);
     else {
         KMimeType::Ptr mimetype_ptr = KMimeType::mimeType (hit_item->mimetype);
@@ -2770,7 +2770,7 @@ void KMenu::slotContextMenuRequested( TQListViewItem * item, const TQPoint & pos
              i18n("Add to Favorites"), AddToFavorites);
 
          TQStringList favs = KickerSettings::favorites();
-         if (m_popupService && favs.tqfind(m_popupService->storageId())!=favs.end())
+         if (m_popupService && favs.find(m_popupService->storageId())!=favs.end())
             m_popupMenu->setItemEnabled(num, false);
          else {
             TQStringList::Iterator it;
@@ -2779,7 +2779,7 @@ void KMenu::slotContextMenuRequested( TQListViewItem * item, const TQPoint & pos
                 if ((*it)[0]=='/')
                 {
                     KDesktopFile df((*it),true);
-                    if (df.readURL().tqreplace("file://",TQString())==m_popupPath.path)
+                    if (df.readURL().replace("file://",TQString())==m_popupPath.path)
                         break;
                 }
             }
@@ -2971,7 +2971,7 @@ void KMenu::slotContextMenu(int selected)
 
         case AddToFavorites:
 	    if (m_popupService) {
-              if (favs.tqfind(m_popupService->storageId())==favs.end()) {
+              if (favs.find(m_popupService->storageId())==favs.end()) {
                 KService::Ptr p = KService::serviceByStorageId(m_popupService->storageId());
                 m_favoriteView->insertMenuItem(p, serviceMenuEndId()+favs.count()+1);
                 favs+=m_popupService->storageId();
@@ -2982,7 +2982,7 @@ void KMenu::slotContextMenu(int selected)
                for (it = favs.begin(); it != favs.end(); ++it) {
                   if ((*it)[0]=='/') {
                      KDesktopFile df((*it),true);
-                     if (df.readURL().tqreplace("file://",TQString())==m_popupPath.path)
+                     if (df.readURL().replace("file://",TQString())==m_popupPath.path)
                         break;
                   }
                }
@@ -3010,7 +3010,7 @@ void KMenu::slotContextMenu(int selected)
 
         case RemoveFromFavorites:
 	    if (m_popupService) {
-              favs.erase(favs.tqfind(m_popupService->storageId()));
+              favs.erase(favs.find(m_popupService->storageId()));
 
               for (TQListViewItemIterator it(m_favoriteView); it.current(); ++it) {
                  KMenuItem* kitem = static_cast<KMenuItem*>(it.current());
@@ -3024,7 +3024,7 @@ void KMenu::slotContextMenu(int selected)
                for (TQStringList::Iterator it = favs.begin(); it != favs.end(); ++it) {
                   if ((*it)[0]=='/') {
                      KDesktopFile df((*it),true);
-                     if (df.readURL().tqreplace("file://",TQString())==m_popupPath.path) {
+                     if (df.readURL().replace("file://",TQString())==m_popupPath.path) {
 			TQFile::remove((*it));
                         favs.erase(it);
                         break;
@@ -3277,7 +3277,7 @@ void KMenu::searchActionClicked(TQListViewItem* item)
 
      if( !KURIFilter::self()->filterURI(data, list) ) {
          KDesktopFile file("searchproviders/google.desktop", true, "services");
-         data.setData(file.readEntry("Query").tqreplace("\\{@}", m_kcommand->currentText()));
+         data.setData(file.readEntry("Query").replace("\\{@}", m_kcommand->currentText()));
      }
 
      (void) new KRun( data.uri(), parentWidget());
@@ -3320,7 +3320,7 @@ void KMenu::updateRecentlyUsedApps(KService::Ptr &service)
     TQString strItem(service->desktopEntryPath());
 
     // don't add an item from root kmenu level
-    if (!strItem.tqcontains('/'))
+    if (!strItem.contains('/'))
     {
         return;
     }
@@ -3377,7 +3377,7 @@ void KMenu::slotFavoritesMoved( TQListViewItem* item, TQListViewItem* /*afterFir
     // remove at old position
     if (kitem->service())
     {
-        favs.erase(favs.tqfind(kitem->service()->storageId()));
+        favs.erase(favs.find(kitem->service()->storageId()));
         addFav = kitem->service()->storageId();
     }
     else
@@ -3387,7 +3387,7 @@ void KMenu::slotFavoritesMoved( TQListViewItem* item, TQListViewItem* /*afterFir
             if ((*it)[0]=='/')
             {
                 KDesktopFile df((*it),true);
-                if (df.readURL().tqreplace("file://",TQString())==kitem->path())
+                if (df.readURL().replace("file://",TQString())==kitem->path())
                 {
                     addFav = *it;
                     favs.erase(it);
@@ -3412,7 +3412,7 @@ void KMenu::slotFavoritesMoved( TQListViewItem* item, TQListViewItem* /*afterFir
             if ((*it)[0]=='/' && !kafterNow->service())
             {
                 KDesktopFile df((*it),true);
-                if (df.readURL().tqreplace("file://",TQString())==kafterNow->path())
+                if (df.readURL().replace("file://",TQString())==kafterNow->path())
                 {
                     kdDebug() << "insert after " << kafterNow->path() << endl;
                     favs.insert(++it,addFav);
@@ -3549,7 +3549,7 @@ void KMenu::slotFavDropped(TQDropEvent * ev, TQListViewItem *after )
 
         if (item.m_s)
         {
-            if (favs.tqfind(item.m_s->storageId())==favs.end())
+            if (favs.find(item.m_s->storageId())==favs.end())
             {
                 newItem = m_favoriteView->insertMenuItem(item.m_s, serviceMenuEndId()+favs.count()+1);
                 favs += item.m_s->storageId();
@@ -3569,7 +3569,7 @@ void KMenu::slotFavDropped(TQDropEvent * ev, TQListViewItem *after )
                 if ((*it)[0]=='/')
                 {
                     KDesktopFile df((*it),true);
-                    if (df.readURL().tqreplace("file://",TQString())==uri)
+                    if (df.readURL().replace("file://",TQString())==uri)
                         break;
                 }
             }
@@ -3597,8 +3597,8 @@ void KMenu::slotFavDropped(TQDropEvent * ev, TQListViewItem *after )
 
         if (text.endsWith(".desktop"))
         {
-            KService::Ptr p = KService::serviceByDesktopPath(text.tqreplace("file://",TQString()));
-            if (p && favs.tqfind(p->storageId())==favs.end()) {
+            KService::Ptr p = KService::serviceByDesktopPath(text.replace("file://",TQString()));
+            if (p && favs.find(p->storageId())==favs.end()) {
                 newItem = m_favoriteView->insertMenuItem(p, serviceMenuEndId()+favs.count()+1);
                 favs+=p->storageId();
             }
@@ -3611,7 +3611,7 @@ void KMenu::slotFavDropped(TQDropEvent * ev, TQListViewItem *after )
                 if ((*it)[0]=='/')
                 {
                     KDesktopFile df((*it),true);
-                    if (df.readURL().tqreplace("file://",TQString())==text)
+                    if (df.readURL().replace("file://",TQString())==text)
                         break;
                 }
             }

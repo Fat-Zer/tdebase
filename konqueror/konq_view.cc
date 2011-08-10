@@ -1056,7 +1056,7 @@ KParts::BrowserHostExtension* KonqView::hostExtension( KParts::ReadOnlyPart *par
   if ( !ext )
     return 0;
 
-  if ( ext->frameNames().tqcontains( name ) )
+  if ( ext->frameNames().contains( name ) )
     return ext;
 
   const TQPtrList<KParts::ReadOnlyPart> children = ext->frames();
@@ -1077,7 +1077,7 @@ bool KonqView::callExtensionMethod( const char *methodName )
   if ( !obj ) // not all views have a browser extension !
     return false;
 
-  int id = obj->tqmetaObject()->tqfindSlot( methodName );
+  int id = obj->tqmetaObject()->findSlot( methodName );
   if ( id == -1 )
     return false;
   TQUObject o[ 1 ];
@@ -1092,7 +1092,7 @@ bool KonqView::callExtensionBoolMethod( const char *methodName, bool value )
   if ( !obj ) // not all views have a browser extension !
     return false;
 
-  int id = obj->tqmetaObject()->tqfindSlot( methodName );
+  int id = obj->tqmetaObject()->findSlot( methodName );
   if ( id == -1 )
     return false;
   TQUObject o[ 2 ];
@@ -1109,7 +1109,7 @@ bool KonqView::callExtensionStringMethod( const char *methodName, TQString value
   if ( !obj ) // not all views have a browser extension !
     return false;
 
-  int id = obj->tqmetaObject()->tqfindSlot( methodName );
+  int id = obj->tqmetaObject()->findSlot( methodName );
   if ( id == -1 )
     return false;
   TQUObject o[ 2 ];
@@ -1126,7 +1126,7 @@ bool KonqView::callExtensionURLMethod( const char *methodName, const KURL& value
   if ( !obj ) // not all views have a browser extension !
     return false;
 
-  int id = obj->tqmetaObject()->tqfindSlot( methodName );
+  int id = obj->tqmetaObject()->findSlot( methodName );
   if ( id == -1 )
     return false;
   TQUObject o[ 2 ];
@@ -1268,10 +1268,10 @@ bool KonqView::eventFilter( TQObject *obj, TQEvent *e )
             TQObjectList *children = m_pPart->widget()->queryList( TQWIDGET_OBJECT_NAME_STRING );
 
             if ( ok &&
-                 !lstDragURLs.first().url().tqcontains( "javascript:", false ) && // ### this looks like a hack to me
+                 !lstDragURLs.first().url().contains( "javascript:", false ) && // ### this looks like a hack to me
                  ev->source() != m_pPart->widget() &&
                  children &&
-                 children->tqfindRef( TQT_TQOBJECT(ev->source()) ) == -1 )
+                 children->findRef( TQT_TQOBJECT(ev->source()) ) == -1 )
                 ev->acceptAction();
 
             delete children;

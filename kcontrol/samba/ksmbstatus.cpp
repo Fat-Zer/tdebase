@@ -31,8 +31,8 @@
 #include "ksmbstatus.moc"
 
 
-#define Before(ttf,in) in.left(in.tqfind(ttf))
-#define After(ttf,in)  (in.tqcontains(ttf)?TQString(in.mid(in.tqfind(ttf)+TQString(ttf).length())):TQString(""))
+#define Before(ttf,in) in.left(in.find(ttf))
+#define After(ttf,in)  (in.contains(ttf)?TQString(in.mid(in.find(ttf)+TQString(ttf).length())):TQString(""))
 
 NetMon::NetMon( TQWidget * parent, KConfig *config, const char * name )
    : TQWidget(parent, name)
@@ -77,7 +77,7 @@ NetMon::NetMon( TQWidget * parent, KConfig *config, const char * name )
 void NetMon::processNFSLine(char *bufline, int)
 {
    TQCString line(bufline);
-   if (line.tqcontains(":/"))
+   if (line.contains(":/"))
       new TQListViewItem(list,"NFS",After(":",line),Before(":/",line));
 }
 
@@ -87,14 +87,14 @@ void NetMon::processSambaLine(char *bufline, int)
    rownumber++;
    if (rownumber == 2)
       version->setText(bufline); // second line = samba version
-   if ((readingpart==header) && line.tqcontains("Service"))
+   if ((readingpart==header) && line.contains("Service"))
    {
-      iUser=line.tqfind("uid");
-      iGroup=line.tqfind("gid");
-      iPid=line.tqfind("pid");
-      iMachine=line.tqfind("machine");
+      iUser=line.find("uid");
+      iGroup=line.find("gid");
+      iPid=line.find("pid");
+      iMachine=line.find("machine");
    }
-   else if ((readingpart==header) && (line.tqcontains("---")))
+   else if ((readingpart==header) && (line.contains("---")))
    {
       readingpart=connexions;
    }
@@ -111,7 +111,7 @@ void NetMon::processSambaLine(char *bufline, int)
    }
    else if (readingpart==connexions)
       readingpart=locked_files;
-   else if ((readingpart==locked_files) && (line.tqfind("No ")==0))
+   else if ((readingpart==locked_files) && (line.find("No ")==0))
       readingpart=finished;
    else if (readingpart==locked_files)
    {

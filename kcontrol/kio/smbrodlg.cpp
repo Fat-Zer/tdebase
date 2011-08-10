@@ -101,7 +101,7 @@ void SMBRoOptions::load()
 
 //   TQStringList _strList = KGlobal::charsets()->availableEncodingNames();
 //   TQString m_encoding = TQTextCodec::codecForLocale()->name();
-//   m_encodingList->setCurrentItem( _strList.tqfindIndex( cfg->readEntry( "Encoding", m_encoding.lower() ) ) );
+//   m_encodingList->setCurrentItem( _strList.findIndex( cfg->readEntry( "Encoding", m_encoding.lower() ) ) );
 
    // unscramble
    TQString scrambled = cfg->readEntry( "Password" );

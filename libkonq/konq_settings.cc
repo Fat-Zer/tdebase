@@ -142,11 +142,11 @@ bool KonqFMSettings::shouldEmbed( const TQString & serviceType ) const
             kdDebug(1203) << "No X-KDE-AutoEmbed, looking for group" << endl;
     }
     // 2 - in the configuration for the group if nothing was found in the mimetype
-    TQString serviceTypeGroup = serviceType.left(serviceType.tqfind("/"));
+    TQString serviceTypeGroup = serviceType.left(serviceType.find("/"));
     kdDebug(1203) << "KonqFMSettings::shouldEmbed : serviceTypeGroup=" << serviceTypeGroup << endl;
     if ( serviceTypeGroup == "inode" || serviceTypeGroup == "Browser" || serviceTypeGroup == "Konqueror" )
         return true; //always embed mimetype inode/*, Browser/* and Konqueror/*
-    TQMap<TQString, TQString>::ConstIterator it = m_embedMap.tqfind( TQString::tqfromLatin1("embed-")+serviceTypeGroup );
+    TQMap<TQString, TQString>::ConstIterator it = m_embedMap.find( TQString::tqfromLatin1("embed-")+serviceTypeGroup );
     if ( it != m_embedMap.end() ) {
         kdDebug(1203) << "KonqFMSettings::shouldEmbed: " << it.data() << endl;
         return it.data() == TQString::tqfromLatin1("true");

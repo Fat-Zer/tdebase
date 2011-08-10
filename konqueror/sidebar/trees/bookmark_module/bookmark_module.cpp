@@ -484,7 +484,7 @@ void KonqSidebarBookmarkModule::fillGroup( KonqSidebarTreeItem * parentItem, KBo
                 fillGroup( item, grp );
 
                 TQString address(grp.address());
-                if (m_folderOpenState.tqcontains(address))
+                if (m_folderOpenState.contains(address))
                     item->setOpen(m_folderOpenState[address]);
                 else
                     item->setOpen(false);

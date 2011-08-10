@@ -95,7 +95,7 @@ void ConfFilters::load()
 		while (!t.eof())
 		{
 			line = t.readLine().stripWhiteSpace();
-			if ((p=line.tqfind(TQRegExp("\\s"))) != -1)
+			if ((p=line.find(TQRegExp("\\s"))) != -1)
 			{
 				TQString	mime(line.left(p)), cmd(line.right(line.length()-p-1).stripWhiteSpace());
 				if (!mime.isEmpty() && !cmd.isEmpty())

@@ -215,7 +215,7 @@ void KateViewManager::slotCloseTab()
   if (m_viewSpaceContainerList.count() <= 1) return;
   if (!m_currentContainer) return;
 
-  int pos = m_viewSpaceContainerList.tqfind (m_currentContainer);
+  int pos = m_viewSpaceContainerList.find (m_currentContainer);
 
   if (pos == -1)
     return;

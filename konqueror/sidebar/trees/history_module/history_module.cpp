@@ -149,7 +149,7 @@ void KonqSidebarHistoryModule::slotCreateItems()
     TQStringList::Iterator it2 = openGroups.begin();
     KonqSidebarHistoryGroupItem *group;
     while ( it2 != openGroups.end() ) {
-	group = m_dict.tqfind( *it2 );
+	group = m_dict.find( *it2 );
 	if ( group )
 	    group->setOpen( true );
 
@@ -195,7 +195,7 @@ void KonqSidebarHistoryModule::slotEntryRemoved( const KonqHistoryEntry *entry )
 	return;
 
     TQString groupKey = groupForURL( entry->url );
-    KonqSidebarHistoryGroupItem *group = m_dict.tqfind( groupKey );
+    KonqSidebarHistoryGroupItem *group = m_dict.find( groupKey );
     if ( !group )
 	return;
 
@@ -324,7 +324,7 @@ void KonqSidebarHistoryModule::groupOpened( KonqSidebarHistoryGroupItem *item, b
 KonqSidebarHistoryGroupItem * KonqSidebarHistoryModule::getGroupItem( const KURL& url )
 {
     const TQString& groupKey = groupForURL( url );
-    KonqSidebarHistoryGroupItem *group = m_dict.tqfind( groupKey );
+    KonqSidebarHistoryGroupItem *group = m_dict.find( groupKey );
     if ( !group ) {
 	group = new KonqSidebarHistoryGroupItem( url, m_topLevelItem );
 

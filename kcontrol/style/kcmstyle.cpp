@@ -666,7 +666,7 @@ void KCMStyle::save()
 
 bool KCMStyle::findStyle( const TQString& str, int& combobox_item )
 {
-	StyleEntry* se   = styleEntries.tqfind(str.lower());
+	StyleEntry* se   = styleEntries.find(str.lower());
 
 	TQString     name = se ? se->name : str;
 
@@ -761,7 +761,7 @@ void KCMStyle::loadStyle( KConfig& config )
 	{
 		TQString id = (*it).lower();
 		// Find the entry.
-		if ( (entry = styleEntries.tqfind(id)) != 0 )
+		if ( (entry = styleEntries.find(id)) != 0 )
 		{
 			// Do not add hidden entries
 			if (entry->hidden)
@@ -802,9 +802,9 @@ void KCMStyle::loadStyle( KConfig& config )
 		item = i;
 		if ( id == cfgStyle )	// ExactMatch
 			break;
-		else if ( id.tqcontains( cfgStyle ) )
+		else if ( id.contains( cfgStyle ) )
 			break;
-		else if ( id.tqcontains( TQApplication::tqstyle().className() ) )
+		else if ( id.contains( TQApplication::tqstyle().className() ) )
 			break;
 		item = 0;
 	}
@@ -850,7 +850,7 @@ void KCMStyle::switchStyle(const TQString& styleName, bool force)
 	appliedStyle = style;
 
 	// Set the correct style description
-	StyleEntry* entry = styleEntries.tqfind( styleName );
+	StyleEntry* entry = styleEntries.find( styleName );
 	TQString desc;
 	desc = i18n("Description: %1").arg( entry ? entry->desc : i18n("No description available.") );
 	lblStyleDesc->setText( desc );

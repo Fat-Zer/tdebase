@@ -215,7 +215,7 @@ bool KNewButton::eventFilter(TQObject *o, TQEvent *e)
         e->type() == TQEvent::MouseButtonDblClick )
     {
         TQMouseEvent *me = TQT_TQMOUSEEVENT(e);
-        if (TQT_TQRECT_OBJECT(rect()).tqcontains(mapFromGlobal(me->globalPos())))
+        if (TQT_TQRECT_OBJECT(rect()).contains(mapFromGlobal(me->globalPos())))
         {
             if (m_pressedDuringPopup && m_popup && m_openTimer != -1
                     && (me->button() & Qt::LeftButton) )
@@ -355,9 +355,9 @@ void KNewButton::mouseMoveEvent(TQMouseEvent* e)
 {
     KButton::mouseMoveEvent(e);
 
-    m_mouseInside = m_sloppyRegion.tqcontains(e->pos());
+    m_mouseInside = m_sloppyRegion.contains(e->pos());
 
-    if ( m_sloppyRegion.tqcontains(e->pos())) 
+    if ( m_sloppyRegion.contains(e->pos())) 
     {
         if (m_hoverTimer == -1 && KickerSettings::openOnHover())
             m_hoverTimer = startTimer(kMax(200,TQApplication::doubleClickInterval()/2));

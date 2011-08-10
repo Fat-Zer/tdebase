@@ -347,24 +347,24 @@ bool GetInfo_Devices (TQListView *lbox)
 
 TQString GetController(const TQString &line)
 {
-		if ( ( (line.startsWith("ad")) || (line.startsWith("afd")) || (line.startsWith("acd")) ) && (line.tqfind(":") < 6) ) {
+		if ( ( (line.startsWith("ad")) || (line.startsWith("afd")) || (line.startsWith("acd")) ) && (line.find(":") < 6) ) {
 			TQString controller = line;
-			controller.remove(0, controller.tqfind(" at ")+4);
-			if (controller.tqfind("-slave") != -1) {
-				controller.remove(controller.tqfind("-slave"), controller.length());
-			} else if (controller.tqfind("-master") != -1) {
-				controller.remove(controller.tqfind("-master"), controller.length());
+			controller.remove(0, controller.find(" at ")+4);
+			if (controller.find("-slave") != -1) {
+				controller.remove(controller.find("-slave"), controller.length());
+			} else if (controller.find("-master") != -1) {
+				controller.remove(controller.find("-master"), controller.length());
 			} else
 				controller=TQString::null;
 			if (!controller.isNull())
 				return controller;
 		}
-		if (line.tqfind(" on ") != -1) {
+		if (line.find(" on ") != -1) {
 			TQString controller;
 			controller = line;
-			controller.remove(0, controller.tqfind(" on ")+4);
-			if (controller.tqfind(" ") != -1)
-				controller.remove(controller.tqfind(" "), controller.length());
+			controller.remove(0, controller.find(" on ")+4);
+			if (controller.find(" ") != -1)
+				controller.remove(controller.find(" "), controller.length());
 			return controller;
 		}
 			return TQString::null;
@@ -373,13 +373,13 @@ TQString GetController(const TQString &line)
 Device *GetDevice(const TQString &line)
 {
 	Device *dev;
-	int colon = line.tqfind(":");
+	int colon = line.find(":");
 	if (colon == -1)
 		return 0;
 	dev = new Device;
 	dev->name = line.mid(0, colon);
-	dev->description = line.mid(line.tqfind("<")+1, line.length());
-	dev->description.remove(dev->description.tqfind(">"), dev->description.length());
+	dev->description = line.mid(line.find("<")+1, line.length());
+	dev->description.remove(dev->description.find(">"), dev->description.length());
 	return dev;
 }
 

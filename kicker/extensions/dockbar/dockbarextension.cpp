@@ -335,7 +335,7 @@ int DockBarExtension::findContainerAtPoint(const TQPoint& p)
          it != containers.constEnd();
          ++it, ++i)
     {
-        if ((*it)->tqgeometry().tqcontains(p))
+        if ((*it)->tqgeometry().contains(p))
         {
             return i;
         }

@@ -56,7 +56,7 @@ static TQString defaultDomain;
 static void
 splitEntity( const TQString &ent, TQString &dom, TQString &usr )
 {
-	int pos = ent.tqfind( separator );
+	int pos = ent.find( separator );
 	if (pos < 0)
 		dom = "<local>", usr = ent;
 	else
@@ -228,7 +228,7 @@ KWinbindGreeter::slotChangedDomain( const TQString &dom )
 	TQStringList users;
 	if (dom == "<local>") {
 		for (TQStringList::ConstIterator it = allUsers.begin(); it != allUsers.end(); ++it)
-			if ((*it).tqfind( separator ) < 0)
+			if ((*it).find( separator ) < 0)
 				users << *it;
 	} else {
 		TQString st( dom + separator );
@@ -341,7 +341,7 @@ bool // virtual
 KWinbindGreeter::textMessage( const char *text, bool err )
 {
 	if (!err &&
-	    TQString( text ).tqfind( TQRegExp( "^Changing password for [^ ]+$" ) ) >= 0)
+	    TQString( text ).find( TQRegExp( "^Changing password for [^ ]+$" ) ) >= 0)
 		return true;
 	return false;
 }
@@ -356,15 +356,15 @@ KWinbindGreeter::textPrompt( const char *prompt, bool echo, bool nonBlocking )
 		exp = 1;
 	else {
 		TQString pr( prompt );
-		if (pr.tqfind( TQRegExp( "\\b(old|current)\\b", false ) ) >= 0) {
+		if (pr.find( TQRegExp( "\\b(old|current)\\b", false ) ) >= 0) {
 			handler->gplugReturnText( "",
 			                          KGreeterPluginHandler::IsOldPassword |
 			                          KGreeterPluginHandler::IsSecret );
 			return;
-		} else if (pr.tqfind( TQRegExp( "\\b(re-?(enter|type)|again|confirm|repeat)\\b",
+		} else if (pr.find( TQRegExp( "\\b(re-?(enter|type)|again|confirm|repeat)\\b",
 		                             false ) ) >= 0)
 			exp = 3;
-		else if (pr.tqfind( TQRegExp( "\\bnew\\b", false ) ) >= 0)
+		else if (pr.find( TQRegExp( "\\bnew\\b", false ) ) >= 0)
 			exp = 2;
 		else {
 			handler->gplugMsgBox( TQMessageBox::Critical,
@@ -594,7 +594,7 @@ KWinbindGreeter::slotEndDomainList()
     for (TQStringList::const_iterator it = mDomainListing.begin();
          it != mDomainListing.end(); ++it) {
 
-        if (!domainList.tqcontains(*it))
+        if (!domainList.contains(*it))
             domainList.append(*it);
     }
 
@@ -626,7 +626,7 @@ static bool init( const TQString &,
 {
 	echoMode = getConf( ctx, "EchoMode", TQVariant( -1 ) ).toInt();
 	staticDomains = TQStringList::split( ':', getConf( ctx, "winbind.Domains", TQVariant( "" ) ).toString() );
-	if (!staticDomains.tqcontains("<local>"))
+	if (!staticDomains.contains("<local>"))
 		staticDomains << "<local>";
 
 	defaultDomain = getConf( ctx, "winbind.DefaultDomain", TQVariant( staticDomains.first() ) ).toString();

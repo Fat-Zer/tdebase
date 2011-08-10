@@ -164,7 +164,7 @@ void SplashInstaller::addNewTheme(const KURL &srcURL)
   TQString dir = KGlobal::dirs()->saveLocation("ksplashthemes");
   KURL url;
   TQString filename = srcURL.fileName();
-  int i = filename.tqfindRev('.');
+  int i = filename.findRev('.');
   // Convert extension to lower case.
   if (i >= 0)
      filename = filename.left(i)+filename.mid(i).lower();
@@ -275,9 +275,9 @@ void SplashInstaller::save()
   if (cur < 0)
     return;
   TQString path = mThemesList->text(cur);
-  if ( mThemesList->text2path.tqcontains( path ) )
+  if ( mThemesList->text2path.contains( path ) )
     path = mThemesList->text2path[path];
-  cur = path.tqfindRev('/');
+  cur = path.findRev('/');
   cnf.writeEntry("Theme", path.mid(cur+1) );
   cnf.sync();
   emit changed( false );
@@ -331,7 +331,7 @@ void SplashInstaller::slotSetTheme(int id)
   {
     TQString error = i18n("(Could not load theme)");
     path = mThemesList->text(id);
-    if ( mThemesList->text2path.tqcontains( path ) )
+    if ( mThemesList->text2path.contains( path ) )
         path = mThemesList->text2path[path];
     enabled = false;
     KURL url;
@@ -339,7 +339,7 @@ void SplashInstaller::slotSetTheme(int id)
     if (!path.isEmpty())
     {
       // Make sure the correct plugin is installed.
-      int i = path.tqfindRev('/');
+      int i = path.findRev('/');
       if (i >= 0)
         themeName = path.mid(i+1);
       url.setPath( path + "/Theme.rc" );
@@ -459,7 +459,7 @@ void SplashInstaller::slotTest()
   if (i < 0)
     return;
   TQString themeName = mThemesList->text2path[mThemesList->text(i)];
-  int r = themeName.tqfindRev('/');
+  int r = themeName.findRev('/');
   if (r >= 0)
     themeName = themeName.mid(r+1);
 

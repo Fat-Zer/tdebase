@@ -88,7 +88,7 @@ void TOC::build( const TQString &file )
 		}
 	}
 
-	TQString cacheFile = fileName.tqreplace( TQDir::separator(), "__" );
+	TQString cacheFile = fileName.replace( TQDir::separator(), "__" );
 	m_cacheFile = locateLocal( "cache", "help/" + cacheFile );
 	m_sourceFile = file;
 

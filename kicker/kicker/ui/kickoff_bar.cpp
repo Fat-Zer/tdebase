@@ -56,7 +56,7 @@ void KickoffTabBar::paint(TQPainter* p, TQTab* t, bool selected) const
 //    else if(t == d->pressed)
 //        flags |= TQStyle::Style_Sunken;
     //selection flags
-    if(t->rect().tqcontains(mapFromGlobal(TQCursor::pos())))
+    if(t->rect().contains(mapFromGlobal(TQCursor::pos())))
         flags |= TQStyle::Style_MouseOver;
     tqstyle().tqdrawControl( TQStyle::CE_TabBarTab, p, this, t->rect(),
             tqcolorGroup(), flags, TQStyleOption(t) );
@@ -114,7 +114,7 @@ void KickoffTabBar::paintLabel(TQPainter* p, const TQRect& br, TQTab* t, bool ha
         flags |= TQStyle::Style_Selected;
  //   else if(t == d->pressed)
  //       flags |= TQStyle::Style_Sunken;
-    if(t->rect().tqcontains(mapFromGlobal(TQCursor::pos())))
+    if(t->rect().contains(mapFromGlobal(TQCursor::pos())))
         flags |= TQStyle::Style_MouseOver;
     tqstyle().tqdrawControl( TQStyle::CE_TabBarLabel, p, this, rt,
             t->isEnabled() ? tqcolorGroup(): tqpalette().disabled(),

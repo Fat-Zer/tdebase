@@ -64,7 +64,7 @@ bool performTransiencyCheck()
             kdDebug() << "TC: " << *it1 << " in not in a group" << endl;
             ret = false;
             }
-        else if( !(*it1)->in_group->members().tqcontains( *it1 ))
+        else if( !(*it1)->in_group->members().contains( *it1 ))
             {
             kdDebug() << "TC: " << *it1 << " has a group " << (*it1)->in_group << " but group does not contain it" << endl;
             ret = false;
@@ -85,15 +85,15 @@ bool performTransiencyCheck()
                  ++it2 )
                 {
                 if( transiencyCheckNonExistent
-                    && !Workspace::self()->clients.tqcontains( *it2 )
-                    && !Workspace::self()->desktops.tqcontains( *it2 ))
+                    && !Workspace::self()->clients.contains( *it2 )
+                    && !Workspace::self()->desktops.contains( *it2 ))
                     {
                     kdDebug() << "TC:" << *it1 << " has non-existent main client " << endl;
                     kdDebug() << "TC2:" << *it2 << endl; // this may crash
                     ret = false;
                     continue;
                     }
-                if( !(*it2)->transients_list.tqcontains( *it1 ))
+                if( !(*it2)->transients_list.contains( *it1 ))
                     {
                     kdDebug() << "TC:" << *it1 << " has main client " << *it2 << " but main client does not have it as a transient" << endl;
                     ret = false;
@@ -106,15 +106,15 @@ bool performTransiencyCheck()
              ++it2 )
             {
             if( transiencyCheckNonExistent
-                && !Workspace::self()->clients.tqcontains( *it2 )
-                && !Workspace::self()->desktops.tqcontains( *it2 ))
+                && !Workspace::self()->clients.contains( *it2 )
+                && !Workspace::self()->desktops.contains( *it2 ))
                 {
                 kdDebug() << "TC:" << *it1 << " has non-existent transient " << endl;
                 kdDebug() << "TC2:" << *it2 << endl; // this may crash
                 ret = false;
                 continue;
                 }
-            if( !(*it2)->mainClients().tqcontains( *it1 ))
+            if( !(*it2)->mainClients().contains( *it1 ))
                 {
                 kdDebug() << "TC:" << *it1 << " has transient " << *it2 << " but transient does not have it as a main client" << endl;
                 ret = false;
@@ -259,7 +259,7 @@ void Group::removeMember( Client* member_P )
     TRANSIENCY_CHECK( member_P );
 //    kdDebug() << "GROUPREMOVE:" << this << ":" << member_P << endl;
 //    kdDebug() << kdBacktrace() << endl;
-    Q_ASSERT( _members.tqcontains( member_P ));
+    Q_ASSERT( _members.contains( member_P ));
     _members.remove( member_P );
 // there are cases when automatic deleting of groups must be delayed,
 // e.g. when removing a member and doing some operation on the possibly
@@ -294,7 +294,7 @@ void Group::gotLeader( Client* leader_P )
 
 void Group::lostLeader()
     {
-    assert( !_members.tqcontains( leader_client ));
+    assert( !_members.contains( leader_client ));
     leader_client = NULL;
     if( _members.isEmpty())
         {
@@ -512,8 +512,8 @@ bool Client::sameAppWindowRoleMatch( const Client* c1, const Client* c2, bool ac
                 || c1->group()->leaderClient() == c1 || c2->group()->leaderClient() == c2;
 #endif
         }
-    int pos1 = c1->windowRole().tqfind( '#' );
-    int pos2 = c2->windowRole().tqfind( '#' );
+    int pos1 = c1->windowRole().find( '#' );
+    int pos2 = c2->windowRole().find( '#' );
     if(( pos1 >= 0 && pos2 >= 0 )
         ||
     // hacks here
@@ -835,7 +835,7 @@ Window Client::verifyTransientFor( Window new_transient_for, bool defined )
 void Client::addTransient( Client* cl )
     {
     TRANSIENCY_CHECK( this );
-    assert( !transients_list.tqcontains( cl ));
+    assert( !transients_list.contains( cl ));
 //    assert( !cl->hasTransient( this, true )); will be fixed in checkGroupTransients()
     assert( cl != this );
     transients_list.append( cl );
@@ -893,7 +893,7 @@ bool Client::hasTransientInternal( const Client* cl, bool indirect, ConstClientL
             return true;
         if( !indirect )
             return false;
-        if( set.tqcontains( cl ))
+        if( set.contains( cl ))
             return false;
         set.append( cl );
         return hasTransientInternal( cl->transientFor(), indirect, set );
@@ -903,11 +903,11 @@ bool Client::hasTransientInternal( const Client* cl, bool indirect, ConstClientL
     if( group() != cl->group())
         return false;
     // cl is group transient, search from top
-    if( transients().tqcontains( const_cast< Client* >( cl )))
+    if( transients().contains( const_cast< Client* >( cl )))
         return true;
     if( !indirect )
         return false;
-    if( set.tqcontains( this ))
+    if( set.contains( this ))
         return false;
     set.append( this );
     for( ClientList::ConstIterator it = transients().begin();

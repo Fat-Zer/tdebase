@@ -1022,7 +1022,7 @@ void NSPluginInstance::resizePlugin(TQ_INT32 w, TQ_INT32 h)
 
 
 void NSPluginInstance::javascriptResult(TQ_INT32 id, TQString result) {
-    TQMap<int, Request*>::iterator i = _jsrequests.tqfind( id );
+    TQMap<int, Request*>::iterator i = _jsrequests.find( id );
     if (i != _jsrequests.end()) {
         Request *req = i.data();
         _jsrequests.remove( i );

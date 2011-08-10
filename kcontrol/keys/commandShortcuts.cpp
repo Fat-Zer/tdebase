@@ -158,7 +158,7 @@ void CommandShortcutsModule::shortcutRadioToggled(bool remove)
     {
         m_shortcutButton->setShortcut(TQString(), false);
         item->setAccel(TQString());
-        if (m_changedItems.tqfindRef(item) == -1)
+        if (m_changedItems.findRef(item) == -1)
         {
             m_changedItems.append(item);
         }
@@ -186,7 +186,7 @@ void CommandShortcutsModule::shortcutChanged(const KShortcut& shortcut)
     m_shortcutButton->setShortcut(accel, false);
     item->setAccel(accel);
     m_noneRadio->blockSignals(false);
-    if (m_changedItems.tqfindRef(item) == -1)
+    if (m_changedItems.findRef(item) == -1)
     {
        m_changedItems.append(item);
     }

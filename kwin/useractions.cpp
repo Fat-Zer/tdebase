@@ -229,7 +229,7 @@ void Workspace::desktopPopupAboutToShow()
         id = desk_popup->insertItem(
                 basic_name
                     .arg(i)
-                    .arg( desktopName(i).tqreplace( '&', "&&" )),
+                    .arg( desktopName(i).replace( '&', "&&" )),
                 i );
         if ( active_popup_client &&
              !active_popup_client->isOnAllDesktops() && active_popup_client->desktop()  == i )
@@ -1093,7 +1093,7 @@ void Client::setShortcut( const TQString& _cut )
 // Format:
 // base+(abcdef)<space>base+(abcdef)
 // E.g. Alt+Ctrl+(ABCDEF) Win+X,Win+(ABCDEF)
-    if( !cut.tqcontains( '(' ) && !cut.tqcontains( ')' ) && !cut.tqcontains( ' ' ))
+    if( !cut.contains( '(' ) && !cut.contains( ')' ) && !cut.contains( ' ' ))
         {
         if( workspace()->shortcutAvailable( KShortcut( cut ), this ))
             setShortcutInternal( KShortcut( cut ));

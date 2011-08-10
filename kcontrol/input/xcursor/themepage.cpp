@@ -122,7 +122,7 @@ ThemePage::ThemePage( TQWidget* parent, const char* name )
 		( !icons.exists() && !TQFileInfo( TQDir::homeDirPath() ).isWritable() ) )
 		installButton->setEnabled( false );
 
-	if ( !themeDirs.tqcontains( path ) )
+	if ( !themeDirs.contains( path ) )
 		installButton->setEnabled( false );
 
 	selectionChanged( listview->currentItem() );
@@ -170,9 +170,9 @@ void ThemePage::load( bool useDefaults )
             currentTheme = "system";
 
 	// Find the theme in the listview and select it
-	TQListViewItem *item = listview->tqfindItem( currentTheme, DirColumn );
+	TQListViewItem *item = listview->findItem( currentTheme, DirColumn );
         if( !item )
-                item = listview->tqfindItem( "system", DirColumn );
+                item = listview->findItem( "system", DirColumn );
 	selectedTheme = item->text( DirColumn );
 	listview->setSelected( item, true );
 	listview->ensureItemVisible( item );
@@ -260,7 +260,7 @@ void ThemePage::removeClicked()
 	KIO::del( u );
 
 	// Remove the theme from the listview and from the themeinfo dict
-	delete listview->tqfindItem( selectedTheme, DirColumn );
+	delete listview->findItem( selectedTheme, DirColumn );
 	themeInfo.remove( selectedTheme );
 	listview->setSelected( listview->currentItem(), true );
 
@@ -371,7 +371,7 @@ void ThemePage::insertTheme( const TQString &path )
 	info->writable = true;
 
 	// If an item with the same name already exists, remove it
-	delete listview->tqfindItem( dirName, DirColumn );
+	delete listview->findItem( dirName, DirColumn );
 
 	// Create the listview item and insert it into the list.
 	KListViewItem *item = new KListViewItem( listview, name, desc, /*hidden*/ dirName );
@@ -395,7 +395,7 @@ const TQStringList ThemePage::getThemeBaseDirs() const
 	TQString path = XcursorLibraryPath();
 #endif
 	// Expand all occurences of ~ to the home dir
-	path.tqreplace( "~/", TQDir::homeDirPath() + '/' );
+	path.replace( "~/", TQDir::homeDirPath() + '/' );
 	return TQStringList::split( ':', path );
 }
 
@@ -414,7 +414,7 @@ bool ThemePage::isCursorTheme( const TQString &theme, const int depth ) const
 			continue;
 
 		const TQStringList subdirs( dir.entryList( TQDir::Dirs ) );
-		if ( subdirs.tqcontains( theme ) )
+		if ( subdirs.contains( theme ) )
 		{
 			const TQString path       = *it + '/' + theme;
 			const TQString indexfile  = path + "/index.theme";
@@ -471,7 +471,7 @@ void ThemePage::insertThemes()
 			// in the list. Xcursor will use the first theme it finds in that
 			// case, and since we use the same search order that should also be
 			// the theme we end up adding to the list.
-			if ( listview->tqfindItem( *it, DirColumn ) )
+			if ( listview->findItem( *it, DirColumn ) )
 				continue;
 
 			const TQString path       = dir.path() + '/' + *it;

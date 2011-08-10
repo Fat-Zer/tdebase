@@ -58,7 +58,7 @@ TQValueList< KDecorationDefines::BorderSize > KDecorationFactory::borderSizes() 
     
 bool KDecorationFactory::exists( const KDecoration* deco ) const
     {
-    return _decorations.tqcontains( const_cast< KDecoration* >( deco ));
+    return _decorations.contains( const_cast< KDecoration* >( deco ));
     }
     
 void KDecorationFactory::addDecoration( KDecoration* deco )

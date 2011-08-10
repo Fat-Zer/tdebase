@@ -121,7 +121,7 @@ void UAProviderDlg::setSiteName( const TQString& text )
 
 void UAProviderDlg::setIdentity( const TQString& text )
 {
-  int id = dlg->cbAlias->listBox()->index( dlg->cbAlias->listBox()->tqfindItem(text) );
+  int id = dlg->cbAlias->listBox()->index( dlg->cbAlias->listBox()->findItem(text) );
   dlg->cbAlias->setCurrentItem( id );
   slotActivated( dlg->cbAlias->currentText() );
   if ( !dlg->leSite->isEnabled() )

@@ -259,8 +259,8 @@ bool Workspace::windowRoleMatch( const TQCString& role1, const TQCString& role2 
     {
     if( role1.isEmpty() && role2.isEmpty())
         return true;
-    int pos1 = role1.tqfind( '#' );
-    int pos2 = role2.tqfind( '#' );
+    int pos1 = role1.find( '#' );
+    int pos2 = role2.find( '#' );
     bool ret;
     if( pos1 < 0 || pos2 < 0 || pos1 != pos2 )
         ret = role1 == role2;

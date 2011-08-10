@@ -435,7 +435,7 @@ void AddAppletDialog::addApplet(AppletWidget* applet)
 
             // reset the odd/even colouring from this item on down in the list
             bool odd = applet->odd();
-            AppletWidget::List::const_iterator it = m_appletWidgetList.tqfind(applet);
+            AppletWidget::List::const_iterator it = m_appletWidgetList.find(applet);
             for (; it != m_appletWidgetList.constEnd(); ++it)
             {
                 if ((*it)->isHidden())
@@ -484,8 +484,8 @@ bool AddAppletDialog::appletMatchesSearch(const AppletWidget* w,
 
     return (m_selectedType == AppletInfo::Undefined ||
             w->info().type() & m_selectedType) &&
-           (w->info().name().tqcontains(s, false) ||
-            w->info().comment().tqcontains(s, false));
+           (w->info().name().contains(s, false) ||
+            w->info().comment().contains(s, false));
 }
 
 void AddAppletDialog::delayedSearch()

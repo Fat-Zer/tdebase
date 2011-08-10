@@ -173,7 +173,7 @@ void Minicli::setCommand(const TQString& command)
 {
   m_dlg->cbCommand->lineEdit()->setText(command);
   m_dlg->cbCommand->lineEdit()->deselect();
-  int firstSpace = command.tqfind(' ');
+  int firstSpace = command.find(' ');
   if (firstSpace > 0) {
     m_dlg->cbCommand->lineEdit()->setSelection(firstSpace+1, command.length());
   }
@@ -389,7 +389,7 @@ TQString Minicli::terminalCommand (const TQString& cmd, const TQString& args)
   else
     terminal += TQString(" -e /bin/sh -c \"%1 %2\"").arg(cmd).arg(args);
 
-  if (!m_terminalAppList.tqcontains(cmd))
+  if (!m_terminalAppList.contains(cmd))
     m_terminalAppList << cmd;
 
   return terminal;
@@ -674,7 +674,7 @@ void Minicli::slotCmdChanged(const TQString& text)
     // Also use autocompletion if it appears that I am using some kind of ioslave, except the http:// ioslave
     m_urlCompletionStarted = true; // flag for slotMatch()
 
-    if ((text.startsWith( "/" ) || text.startsWith( "~" ) || (text.tqcontains("://", false) != 0)) && (text.tqcontains("http://", false) == 0)) {
+    if ((text.startsWith( "/" ) || text.startsWith( "~" ) || (text.contains("://", false) != 0)) && (text.contains("http://", false) == 0)) {
         TQString completion = m_pURLCompletion->makeCompletion( text );
     }
   }
@@ -763,7 +763,7 @@ void Minicli::parseLine( bool final )
     KURIFilter::self()->filterURI( *(m_filterData), m_middleFilters );
 
   bool isTerminalApp = ((m_filterData->uriType() == KURIFilterData::EXECUTABLE) &&
-                        m_terminalAppList.tqcontains(m_filterData->uri().url()));
+                        m_terminalAppList.contains(m_filterData->uri().url()));
 
   if( !isTerminalApp )
   {

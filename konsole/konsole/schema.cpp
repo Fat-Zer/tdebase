@@ -333,7 +333,7 @@ bool ColorSchema::rereadSchemaFile()
           continue;
 
         TQString qline(line);
-        m_imagePath = locate("wallpaper", qline.mid( qline.tqfind(" ",7)+1 ) );
+        m_imagePath = locate("wallpaper", qline.mid( qline.find(" ",7)+1 ) );
         m_tqalignment = attr;
       }
       if (!strncmp(line,"transparency",12))
@@ -537,7 +537,7 @@ bool ColorSchemaList::updateAllSchemaTimes(const TQDateTime& now)
   for (it=list.begin(); it!=list.end(); ++it)
   {
     TQString filename=*it;
-    int j=filename.tqfindRev('/');
+    int j=filename.findRev('/');
     if (j>-1)
       filename = filename.mid(8);
 

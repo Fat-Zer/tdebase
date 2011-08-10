@@ -865,7 +865,7 @@ void QuickLauncher::loadConfig()
     for (n=0; n<int(m_buttons->size()); ++n)
     {
         QuickButton* button = (*m_buttons)[n];
-        if (volatileButtons.tqcontains(button->menuId()) == false)
+        if (volatileButtons.contains(button->menuId()) == false)
         {
             button->setSticky(true);
         }

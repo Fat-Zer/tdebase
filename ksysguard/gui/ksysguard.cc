@@ -212,9 +212,9 @@ TQStringList TopLevel::listHosts()
 
 TQString TopLevel::readIntegerSensor( const TQString &sensorLocator )
 {
-  TQString host = sensorLocator.left( sensorLocator.tqfind( ':' ) );
+  TQString host = sensorLocator.left( sensorLocator.find( ':' ) );
   TQString sensor = sensorLocator.right( sensorLocator.length() -
-                                        sensorLocator.tqfind( ':' ) - 1 );
+                                        sensorLocator.find( ':' ) - 1 );
 
   DCOPClientTransaction *dcopTransaction = kapp->dcopClient()->beginTransaction();
   mDCopFIFO.prepend( dcopTransaction );
@@ -229,9 +229,9 @@ TQStringList TopLevel::readListSensor( const TQString& sensorLocator )
 {
   TQStringList retval;
 
-  TQString host = sensorLocator.left( sensorLocator.tqfind( ':' ) );
+  TQString host = sensorLocator.left( sensorLocator.find( ':' ) );
   TQString sensor = sensorLocator.right( sensorLocator.length() -
-                                        sensorLocator.tqfind( ':' ) - 1 );
+                                        sensorLocator.find( ':' ) - 1 );
 
   DCOPClientTransaction *dcopTransaction = kapp->dcopClient()->beginTransaction();
   mDCopFIFO.prepend( dcopTransaction );
