@@ -806,13 +806,13 @@ void Minicli::setIcon ()
     {
       int x = icon.width() - overlay.width();
       int y = icon.height() - overlay.height();
-      if ( icon.tqmask() )
+      if ( icon.mask() )
       {
-        TQBitmap mask = *icon.tqmask();
+        TQBitmap mask = *icon.mask();
         bitBlt( &mask, x, y,
-                overlay.tqmask() ? TQT_TQPIXMAP(const_cast<TQBitmap *>(overlay.tqmask())) : &overlay,
+                overlay.mask() ? TQT_TQPIXMAP(const_cast<TQBitmap *>(overlay.mask())) : &overlay,
                 0, 0, overlay.width(), overlay.height(),
-                overlay.tqmask() ? OrROP : SetROP );
+                overlay.mask() ? OrROP : SetROP );
         icon.setMask(mask);
       }
       bitBlt( &icon, x, y, &overlay );

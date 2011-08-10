@@ -322,7 +322,7 @@ void ThumbnailProtocol::get(const KURL &url)
         p.drawLine( 0, 0, 0, y2 );
         p.end();
 
-        const TQBitmap *mask = pix.tqmask();
+        const TQBitmap *mask = pix.mask();
         if ( mask ) // need to update it so we can see the frame
         {
             TQBitmap bitmap( *mask );

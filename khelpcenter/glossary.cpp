@@ -311,7 +311,7 @@ void Glossary::slotSelectGlossEntry( const TQString &id )
     if ( curItem != 0 ) {
         if ( curItem->id() == id )
             return;
-        curItem->tqparent()->setOpen( false );
+        curItem->parent()->setOpen( false );
     }
 
     setCurrentItem( newItem );

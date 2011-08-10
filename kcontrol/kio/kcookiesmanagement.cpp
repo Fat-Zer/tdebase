@@ -383,7 +383,7 @@ void KCookiesManagement::doPolicy()
 
     if( domain.isEmpty() )
     {
-      CookieListViewItem *parent = static_cast<CookieListViewItem*>( item->tqparent() );
+      CookieListViewItem *parent = static_cast<CookieListViewItem*>( item->parent() );
 
       if ( parent )
         domain = parent->domain ();
@@ -407,7 +407,7 @@ void KCookiesManagement::deleteCookie(TQListViewItem* deleteItem)
   CookieListViewItem *item = static_cast<CookieListViewItem*>( deleteItem );
   if( item->cookie() )
   {
-    CookieListViewItem *parent = static_cast<CookieListViewItem*>(item->tqparent());
+    CookieListViewItem *parent = static_cast<CookieListViewItem*>(item->parent());
     CookiePropList *list = deletedCookies.find(parent->domain());
     if(!list)
     {

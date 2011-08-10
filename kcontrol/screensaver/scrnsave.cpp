@@ -639,9 +639,9 @@ void KScreenSaver::slotScreenSaver(TQListViewItem *item)
 
     int i = 0, indx = -1;
     for (SaverConfig* saver = mSaverList.first(); saver != 0; saver = mSaverList.next()) {
-        if ( item->tqparent() )
+        if ( item->parent() )
         {
-            if (  item->tqparent()->text( 0 ) == saver->category() && saver->name() == item->text (0))
+            if (  item->parent()->text( 0 ) == saver->category() && saver->name() == item->text (0))
             {
                 indx = i;
                 break;

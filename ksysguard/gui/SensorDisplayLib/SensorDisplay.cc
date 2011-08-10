@@ -447,8 +447,8 @@ void SensorDisplay::setSensorOk( bool ok )
     mErrorIndicator = new TQWidget( mPlotterWdg );
     mErrorIndicator->setErasePixmap( errorIcon );
     mErrorIndicator->resize( errorIcon.size() );
-    if ( errorIcon.tqmask() )
-      mErrorIndicator->setMask( *errorIcon.tqmask() );
+    if ( errorIcon.mask() )
+      mErrorIndicator->setMask( *errorIcon.mask() );
     mErrorIndicator->move( 0, 0 );
     mErrorIndicator->show();
   }

@@ -1046,7 +1046,7 @@ TQObject *KonqMainWindow::lastFrame( KonqView *view )
   viewFrame = 0;
   while ( nextFrame != 0 && ! nextFrame->inherits( TQWIDGETSTACK_OBJECT_NAME_STRING ) ) {
     viewFrame = nextFrame;
-    nextFrame = nextFrame->tqparent();
+    nextFrame = nextFrame->parent();
   }
   return nextFrame ? viewFrame : 0L;
 }

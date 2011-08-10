@@ -182,12 +182,12 @@ TQPixmap KonqPixmapProvider::loadIcon( const TQString& url, const TQString& icon
 	int x = big.width()  - small.width();
 	int y = 0;
 
- 	if ( big.tqmask() ) {
- 	    TQBitmap mask = *big.tqmask();
+ 	if ( big.mask() ) {
+ 	    TQBitmap mask = *big.mask();
  	    bitBlt( &mask, x, y,
-            small.tqmask() ? TQT_TQPIXMAP(const_cast<TQBitmap *>(small.tqmask())) : &small, 0, 0,
+            small.mask() ? TQT_TQPIXMAP(const_cast<TQBitmap *>(small.mask())) : &small, 0, 0,
  		    small.width(), small.height(),
- 		    small.tqmask() ? OrROP : SetROP );
+ 		    small.mask() ? OrROP : SetROP );
  	    big.setMask( mask );
  	}
 

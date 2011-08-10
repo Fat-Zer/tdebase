@@ -53,10 +53,10 @@ WndIcon::WndIcon(
   TQLabel *w = new TQLabel( this );
   w->setFixedSize( pix.width(), pix.height() );
   w->setPixmap( pix );
-  if(pix.tqmask())
+  if(pix.mask())
   {
-    setMask(*pix.tqmask());
-    w->setMask(*pix.tqmask());
+    setMask(*pix.mask());
+    w->setMask(*pix.mask());
   }
 
   resize( pix.width(), pix.height() );

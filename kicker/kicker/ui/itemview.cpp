@@ -761,7 +761,7 @@ void ItemView::slotMoveContent()
     int item_height = 0;
     TQListViewItemIterator it( this );
     while ( it.current() ) {
-        if ( !dynamic_cast<KMenuSpacer*>( it.current() ) && !it.current()->tqparent() && it.current()->isVisible() )  {
+        if ( !dynamic_cast<KMenuSpacer*>( it.current() ) && !it.current()->parent() && it.current()->isVisible() )  {
             it.current()->invalidateHeight();
             item_height += it.current()->totalHeight();
         }
@@ -1022,14 +1022,14 @@ TQDragObject * ItemView::dragObject()
 
       TQBitmap mask;
 
-      if (pix.tqmask())
-          mask = *pix.tqmask();
+      if (pix.mask())
+          mask = *pix.mask();
       else {
 	  mask.resize(pix.size());
 	  mask.fill(Qt::color1);
       }
 
-      bitBlt( &mask, pix.width()-add.width(), pix.height()-add.height(), add.tqmask(), 0, 0, add.width(), add.height(), OrROP );
+      bitBlt( &mask, pix.width()-add.width(), pix.height()-add.height(), add.mask(), 0, 0, add.width(), add.height(), OrROP );
       pix.setMask( mask );
       o->setPixmap(pix);
 
@@ -1070,7 +1070,7 @@ int ItemView::goodHeight()
     int item_height = 0;
     TQListViewItemIterator it( this );
     while ( it.current() ) {
-        if ( !dynamic_cast<KMenuSpacer*>( it.current() ) && !it.current()->tqparent() && it.current()->isVisible() )  {
+        if ( !dynamic_cast<KMenuSpacer*>( it.current() ) && !it.current()->parent() && it.current()->isVisible() )  {
             item_height += it.current()->height();
         }
         ++it;

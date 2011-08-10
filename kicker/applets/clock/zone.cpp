@@ -151,7 +151,7 @@ void Zone::getSelectedZonelist(KListView *listView)
 		root = root->nextSibling();
 		continue;
 	}
-	root = root->tqparent();
+	root = root->parent();
 	if (root)
 		root = root->nextSibling();
      }

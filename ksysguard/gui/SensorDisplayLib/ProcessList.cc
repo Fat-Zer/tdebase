@@ -635,7 +635,7 @@ ProcessList::addProcess(KSGRD::SensorPSLine* p, ProcessLVI* pli)
 			icon.fill();
 			bitBlt(&icon, 4, 0, &pix, 0, 0, pix.width(), pix.height());
 			TQBitmap mask(24, 16, true);
-			bitBlt(&mask, 4, 0, pix.tqmask(), 0, 0, pix.width(), pix.height());
+			bitBlt(&mask, 4, 0, pix.mask(), 0, 0, pix.width(), pix.height());
 			icon.setMask(mask);
 			pix = icon;
 		}

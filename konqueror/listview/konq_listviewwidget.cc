@@ -989,13 +989,13 @@ void KonqBaseListViewWidget::slotReturnPressed( TQListViewItem *_item )
 
 	   // calculate nesting depth
 	   int nestingDepth = 0;
-	   for (TQListViewItem *currentItem = _item->tqparent();
+	   for (TQListViewItem *currentItem = _item->parent();
 	        currentItem != 0;
-	        currentItem = currentItem->tqparent())
+	        currentItem = currentItem->parent())
 	  	  nestingDepth++;
 	
 	   // no parent no indent
-	   if (_item->tqparent() == 0)
+	   if (_item->parent() == 0)
 		nestingDepth = 0;
 	
 	   // Root decoration means additional indent
@@ -1371,13 +1371,13 @@ KonqBaseListViewWidget::iterator& KonqBaseListViewWidget::iterator::operator++()
       m_p = i;
       return *this;
    }
-   m_p = (KonqBaseListViewItem *)m_p->tqparent();
+   m_p = (KonqBaseListViewItem *)m_p->parent();
 
    while ( m_p )
    {
       if ( m_p->nextSibling() )
          break;
-      m_p = (KonqBaseListViewItem *)m_p->tqparent();
+      m_p = (KonqBaseListViewItem *)m_p->parent();
    }
 
    if ( m_p )
@@ -1402,13 +1402,13 @@ KonqBaseListViewWidget::iterator KonqBaseListViewWidget::iterator::operator++(in
       m_p = i;
       return it;
    }
-   m_p = (KonqBaseListViewItem *)m_p->tqparent();
+   m_p = (KonqBaseListViewItem *)m_p->parent();
 
    while ( m_p )
    {
       if ( m_p->nextSibling() )
          break;
-      m_p = (KonqBaseListViewItem *)m_p->tqparent();
+      m_p = (KonqBaseListViewItem *)m_p->parent();
    }
 
    if ( m_p )

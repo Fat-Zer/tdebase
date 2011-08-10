@@ -1200,10 +1200,10 @@ void ContainerArea::dropEvent(TQDropEvent *ev)
             return;
         }
 
-        TQObject *parent = ev->source() ? ev->source()->tqparent() : 0;
+        TQObject *parent = ev->source() ? ev->source()->parent() : 0;
         while (parent && (TQT_BASE_OBJECT(parent) != TQT_BASE_OBJECT(this)))
         {
-            parent = parent->tqparent();
+            parent = parent->parent();
         }
 
         if (parent)

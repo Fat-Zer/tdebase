@@ -71,7 +71,7 @@ void BackTrace::start()
   TQString exec = m_krashconf->tryExec();
   if ( !exec.isEmpty() && KStandardDirs::findExe(exec).isEmpty() )
   {
-    TQObject * o = tqparent();
+    TQObject * o = parent();
 
     if (o && !o->inherits(TQWIDGET_OBJECT_NAME_STRING))
     {

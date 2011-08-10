@@ -376,7 +376,7 @@ KEBListViewItem* ListView::getItemAtAddress(const TQString &address) const {
 
 void ListView::setOpen(bool open) {
     for (TQListViewItemIterator it(m_listView); it.current() != 0; ++it)
-        if (it.current()->tqparent())
+        if (it.current()->parent())
             it.current()->setOpen(open);
 }
 
@@ -456,7 +456,7 @@ void ListView::updateListView()
     {
         KEBListViewItem * item = static_cast<KEBListViewItem*>(m_listView->currentItem());
         if(item->isEmptyFolderPadder())
-            s_current_address = static_cast<KEBListViewItem*>(item->tqparent())->bookmark().address();
+            s_current_address = static_cast<KEBListViewItem*>(item->parent())->bookmark().address();
         else
             s_current_address = item->bookmark().address();
     }
@@ -804,7 +804,7 @@ TQDragObject *KEBListView::dragObject() {
 bool KEBListViewItem::parentSelected(TQListViewItem * item)
 {
     TQListViewItem *root = item->listView()->firstChild();
-    for( TQListViewItem *parent = item->tqparent(); parent ; parent = parent->tqparent())
+    for( TQListViewItem *parent = item->parent(); parent ; parent = parent->parent())
         if (parent->isSelected() && parent != root)
             return true;
     return false;
@@ -814,7 +814,7 @@ void KEBListViewItem::setSelected(bool s)
 {
     if( isEmptyFolderPadder())
     {
-        tqparent()->setSelected(true);
+        parent()->setSelected(true);
         return;
     }
 
@@ -904,7 +904,7 @@ KEBListViewItem::KEBListViewItem(TQListView *parent, TQListViewItem *after, cons
 
 // DESIGN - move this into kbookmark or into a helper
 void KEBListViewItem::setOpen(bool open) {
-    if (!tqparent())
+    if (!parent())
         return;
     m_bookmark.internalElement().setAttribute("folded", open ? "no" : "yes");
     TQListViewItem::setOpen(open);

@@ -808,11 +808,11 @@ void TreeView::slotDropped (TQDropEvent * e, TQListViewItem *parent, TQListViewI
                   m_drag = 0;
                   return;
               }
-              tmpItem = static_cast<TreeItem*>(tmpItem->tqparent() );
+              tmpItem = static_cast<TreeItem*>(tmpItem->parent() );
           }
 
          // Remove MenuFolderInfo
-         TreeItem *oldParentItem = static_cast<TreeItem*>(m_dragItem->tqparent());
+         TreeItem *oldParentItem = static_cast<TreeItem*>(m_dragItem->parent());
          MenuFolderInfo *oldParentFolderInfo = oldParentItem ? oldParentItem->folderInfo() : m_rootFolder;
          oldParentFolderInfo->take(folderInfo);
 
@@ -1017,7 +1017,7 @@ void TreeView::newsubmenu()
    }
    else
    {
-      parentItem = static_cast<TreeItem*>(item->tqparent());
+      parentItem = static_cast<TreeItem*>(item->parent());
       folder = parentItem ? parentItem->directory() : TQString::null;
    }
 
@@ -1093,7 +1093,7 @@ void TreeView::newitem()
    }
    else
    {
-      parentItem = static_cast<TreeItem*>(item->tqparent());
+      parentItem = static_cast<TreeItem*>(item->parent());
       folder = parentItem ? parentItem->directory() : TQString::null;
    }
 
@@ -1139,7 +1139,7 @@ void TreeView::newsep()
    }
    else
    {
-      parentItem = static_cast<TreeItem*>(item->tqparent());
+      parentItem = static_cast<TreeItem*>(item->parent());
    }
 
    // create the TreeItem
@@ -1181,7 +1181,7 @@ void TreeView::copy( bool cutting )
     if (item == 0) return;
 
     if (cutting)
-       setLayoutDirty((TreeItem*)item->tqparent());
+       setLayoutDirty((TreeItem*)item->parent());
 
     // clean up old stuff
     cleanupClipboard();
@@ -1256,7 +1256,7 @@ void TreeView::paste()
    }
    else
    {
-      parentItem = static_cast<TreeItem*>(item->tqparent());
+      parentItem = static_cast<TreeItem*>(item->parent());
       folder = parentItem ? parentItem->directory() : TQString::null;
    }
 
@@ -1384,7 +1384,7 @@ void TreeView::del()
 
 void TreeView::del(TreeItem *item, bool deleteInfo)
 {
-    TreeItem *parentItem = static_cast<TreeItem*>(item->tqparent());
+    TreeItem *parentItem = static_cast<TreeItem*>(item->parent());
     // is file a .directory or a .desktop file
     if(item->isDirectory())
     {

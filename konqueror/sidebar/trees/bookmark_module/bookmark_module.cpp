@@ -161,10 +161,10 @@ void KonqSidebarBookmarkModule::slotMoved(TQListViewItem *i, TQListViewItem*, TQ
     KBookmarkGroup parentGroup;
     // try to get the parent group (assume that the TQListViewItem has been reparented by KListView)...
     // if anything goes wrong, use the root.
-    if (item->tqparent()) {
+    if (item->parent()) {
         bool error = false;
 
-        KonqSidebarBookmarkItem *parent = dynamic_cast<KonqSidebarBookmarkItem*>( (item->tqparent()) );
+        KonqSidebarBookmarkItem *parent = dynamic_cast<KonqSidebarBookmarkItem*>( (item->parent()) );
         if (!parent) {
             error = true;
         } else {

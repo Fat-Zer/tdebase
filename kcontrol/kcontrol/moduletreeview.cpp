@@ -312,7 +312,7 @@ void ModuleTreeItem::setPixmap(int column, const TQPixmap& pm)
 {
   if (!pm.isNull())
   {
-    ModuleTreeItem* p = dynamic_cast<ModuleTreeItem*>(tqparent());
+    ModuleTreeItem* p = dynamic_cast<ModuleTreeItem*>(parent());
     if (p)
       p->regChildIconWidth(pm.width());
   }
@@ -331,7 +331,7 @@ void ModuleTreeItem::paintCell( TQPainter * p, const TQColorGroup & cg, int colu
   if (!pixmap(0))
   {
     int offset = 0;
-    ModuleTreeItem* parentItem = dynamic_cast<ModuleTreeItem*>(tqparent());
+    ModuleTreeItem* parentItem = dynamic_cast<ModuleTreeItem*>(parent());
     if (parentItem)
     {
       offset = parentItem->maxChildIconWidth();

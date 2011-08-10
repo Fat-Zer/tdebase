@@ -29,7 +29,7 @@
 #include <kiconloader.h>
 
 #define MYMODULE static_cast<KonqSidebarHistoryModule*>(module())
-#define MYGROUP static_cast<KonqSidebarHistoryGroupItem*>(tqparent())
+#define MYGROUP static_cast<KonqSidebarHistoryGroupItem*>(parent())
 
 KonqSidebarHistorySettings * KonqSidebarHistoryItem::s_settings = 0L;
 

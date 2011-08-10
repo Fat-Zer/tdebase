@@ -331,14 +331,14 @@ void ActionWidget::slotContextMenu( KListView *, TQListViewItem *item,
     KPopupMenu *menu = new KPopupMenu;
     addCmd = menu->insertItem( i18n("Add Command") );
     rmCmd = menu->insertItem( i18n("Remove Command") );
-    if ( !item->tqparent() ) {// no "command" item
+    if ( !item->parent() ) {// no "command" item
         menu->setItemEnabled( rmCmd, false );
         item->setOpen( true );
     }
 
     int id = menu->exec( pos );
     if ( id == addCmd ) {
-        TQListViewItem *p = item->tqparent() ? item->tqparent() : item;
+        TQListViewItem *p = item->parent() ? item->parent() : item;
         TQListViewItem *cmdItem = new TQListViewItem( p, item,
                          i18n("Click here to set the command to be executed"),
                          i18n("<new command>") );
@@ -352,7 +352,7 @@ void ActionWidget::slotContextMenu( KListView *, TQListViewItem *item,
 
 void ActionWidget::slotItemChanged( TQListViewItem *item, const TQPoint&, int col )
 {
-    if ( !item->tqparent() || col != 0 )
+    if ( !item->parent() || col != 0 )
         return;
     ClipCommand command( item->text(0), item->text(1) );
         item->setPixmap( 0, SmallIcon( command.pixmap.isEmpty() ?
@@ -371,8 +371,8 @@ void ActionWidget::slotAddAction()
 void ActionWidget::slotDeleteAction()
 {
     TQListViewItem *item = listView->currentItem();
-    if ( item && item->tqparent() )
-        item = item->tqparent();
+    if ( item && item->parent() )
+        item = item->parent();
     delete item;
 }
 

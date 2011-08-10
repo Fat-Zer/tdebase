@@ -261,8 +261,8 @@ TOCSectionItem::TOCSectionItem( TOC *toc, TOCChapterItem *parent, TQListViewItem
 
 TQString TOCSectionItem::url()
 {
-	if ( static_cast<TOCSectionItem *>( tqparent()->firstChild() ) == this )
-		return static_cast<TOCChapterItem *>( tqparent() )->url() + "#" + m_name;
+	if ( static_cast<TOCSectionItem *>( parent()->firstChild() ) == this )
+		return static_cast<TOCChapterItem *>( parent() )->url() + "#" + m_name;
 	
 	return "help:" + toc()->application() + "/" + m_name + ".html";
 }

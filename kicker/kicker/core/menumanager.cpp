@@ -178,7 +178,7 @@ void MenuManager::kmenuAccelActivated()
 
         // let's unhide the panel while we're at it. traverse the widget
         // hierarchy until we find the panel, if any
-        TQObject* menuParent = button->tqparent();
+        TQObject* menuParent = button->parent();
         while (menuParent)
         {
             ExtensionContainer* ext = dynamic_cast<ExtensionContainer*>(menuParent);
@@ -192,7 +192,7 @@ void MenuManager::kmenuAccelActivated()
                 break;
             }
 
-            menuParent = menuParent->tqparent();
+            menuParent = menuParent->parent();
         }
         button->showMenu();
     }

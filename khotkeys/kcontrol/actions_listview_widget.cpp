@@ -92,7 +92,7 @@ void Actions_listview_widget::new_action( Action_data_base* data_P )
         if( dynamic_cast< Action_data_group* >( current_action()->data()) != NULL )
             parent = current_action();
         else
-            parent = current_action()->tqparent();
+            parent = current_action()->parent();
         }
     if( parent )
         parent->setOpen( true );
@@ -124,7 +124,7 @@ void Actions_listview_widget::delete_action()
 void Actions_listview_widget::item_moved( TQListViewItem* item_P, TQListViewItem*, TQListViewItem* )
     {
     Action_listview_item* item = static_cast< Action_listview_item* >( item_P );
-    Action_listview_item* parent = static_cast< Action_listview_item* >( item->tqparent());
+    Action_listview_item* parent = static_cast< Action_listview_item* >( item->parent());
     if( parent == NULL )
         item->data()->reparent( module->actions_root());
     else if( Action_data_group* group = dynamic_cast< Action_data_group* >( parent->data()))

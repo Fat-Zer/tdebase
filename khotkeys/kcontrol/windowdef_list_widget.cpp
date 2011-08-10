@@ -134,7 +134,7 @@ void Windowdef_list_widget::new_selected( int type_P )
 void Windowdef_list_widget::copy_pressed()
     {
     windows_listview->setSelected( create_listview_item( selected_item->window(),
-        selected_item->tqparent() ? NULL : windows_listview, selected_item->tqparent(),
+        selected_item->parent() ? NULL : windows_listview, selected_item->parent(),
         selected_item, true ), true );
     }
 

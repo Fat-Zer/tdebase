@@ -58,7 +58,7 @@ PanelAppletOpMenu::PanelAppletOpMenu(int actions, TQPopupMenu *opMenu, const TQP
         // this is part of the kiosk support in kicker, allowing
         // one to block users from adding new containers
         ContainerArea* area = 0;
-        TQObject* findTheArea = parent ? parent->tqparent() : 0;
+        TQObject* findTheArea = parent ? parent->parent() : 0;
         while (findTheArea)
         {
             area = dynamic_cast<ContainerArea*>(findTheArea);
@@ -68,7 +68,7 @@ PanelAppletOpMenu::PanelAppletOpMenu(int actions, TQPopupMenu *opMenu, const TQP
                 break;
             }
 
-            findTheArea = findTheArea->tqparent();
+            findTheArea = findTheArea->parent();
         }
 
         if  (!area || area->canAddContainers())

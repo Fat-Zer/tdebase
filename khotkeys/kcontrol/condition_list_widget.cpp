@@ -165,9 +165,9 @@ void Condition_list_widget::new_selected( int type_P )
                 parent = NULL;
             }
         }
-    if( parent == NULL && selected_item != NULL && selected_item->tqparent() != NULL )
+    if( parent == NULL && selected_item != NULL && selected_item->parent() != NULL )
         {
-        parent = static_cast< Condition_list_item* >( selected_item->tqparent());
+        parent = static_cast< Condition_list_item* >( selected_item->parent());
         after = selected_item;
         }
     Condition_list_base* parent_cond = parent
@@ -217,8 +217,8 @@ void Condition_list_widget::copy_pressed()
             return;
     conditions_listview->setSelected( create_listview_item(
         selected_item->condition()->copy( selected_item->condition()->parent()),
-        selected_item->tqparent() ? NULL : conditions_listview,
-        static_cast< Condition_list_item* >( selected_item->tqparent()),
+        selected_item->parent() ? NULL : conditions_listview,
+        static_cast< Condition_list_item* >( selected_item->parent()),
         selected_item, true ), true );
     }
 

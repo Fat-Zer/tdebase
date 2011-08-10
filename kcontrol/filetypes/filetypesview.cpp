@@ -301,10 +301,10 @@ void FileTypesView::removeType()
   if (!li)
       li = current->itemBelow();
   if (!li)
-      li = current->tqparent();
+      li = current->parent();
 
   removedList.append(current->name());
-  current->tqparent()->takeItem(current);
+  current->parent()->takeItem(current);
   m_itemList.removeRef( current );
   setDirty(true);
 

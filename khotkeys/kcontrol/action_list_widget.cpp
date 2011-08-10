@@ -151,7 +151,7 @@ void Action_list_widget::copy_pressed()
         if ( !selected_item )
             return;
     actions_listview->setSelected( create_listview_item( selected_item->action(),
-        selected_item->tqparent() ? NULL : actions_listview, selected_item->tqparent(),
+        selected_item->parent() ? NULL : actions_listview, selected_item->parent(),
         selected_item, true ), true );
     }
 
