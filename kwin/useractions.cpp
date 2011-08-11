@@ -79,7 +79,7 @@ TQPopupMenu* Workspace::clientPopup()
             TQVBox *transBox = new TQVBox(trans_popup);
             transButton = new TQPushButton(transBox, "transButton");
             TQToolTip::add(transButton, i18n("Reset opacity to default value"));
-            transSlider = new TQSlider(0, 100, 1, 100, Qt::Vertical, transBox, "transSlider");
+            transSlider = new TQSlider(0, 100, 1, 100, Qt::Horizontal, transBox, "transSlider");
             TQToolTip::add(transSlider, i18n("Slide this to set the window's opacity"));
             connect(transButton, TQT_SIGNAL(clicked()), TQT_SLOT(resetClientOpacity()));
             connect(transButton, TQT_SIGNAL(clicked()), trans_popup, TQT_SLOT(hide()));
@@ -122,13 +122,13 @@ void Workspace::setTransButtonText(int value)
     {
     value = 100 - value;
     if(value < 0)
-        transButton->setText("000 %");
+        transButton->setText("  0 %");
     else if (value >= 100 )
         transButton->setText("100 %");
     else if(value < 10)
-        transButton->setText("00"+TQString::number(value)+" %");
+        transButton->setText("  "+TQString::number(value)+" %");
     else if(value < 100)
-        transButton->setText("0"+TQString::number(value)+" %");
+        transButton->setText(" "+TQString::number(value)+" %");
     }
 
 void Workspace::resetClientOpacity()
