@@ -2564,9 +2564,24 @@ void Workspace::helperDialog( const TQString& message, const Client* c )
 
 
 // kompmgr stuff
-    
+
 void Workspace::startKompmgr()
 {
+    // See if the desktop is loaded yet
+    Atom type;
+    int format;
+    unsigned long length, after;
+    unsigned char* data_root;
+    Atom prop_root;
+    prop_root = XInternAtom(qt_xdisplay(), "_XROOTPMAP_ID", False);
+    if( XGetWindowProperty( qt_xdisplay(), qt_xrootwin(), prop_root, 0L, 1L, False, AnyPropertyType, &type, &format, &length, &after, &data_root) == Success && data_root != NULL ) {
+        // Root pixmap is available; OK to load...
+    }
+    else {
+        // Try again a bit later!
+        TQTimer::singleShot( 200, this, TQT_SLOT(startKompmgr()) );
+        return;
+    }
     if (!kompmgr || kompmgr->isRunning())
         return;
     if (!kompmgr->start(KProcess::OwnGroup, KProcess::Stderr))
