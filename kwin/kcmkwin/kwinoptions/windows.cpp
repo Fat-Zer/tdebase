@@ -1616,6 +1616,8 @@ void KTranslucencyConfig::save( void )
             kapp->dcopClient()->attach();
         kapp->dcopClient()->send("kwin*", "", "reconfigure()", TQString(""));
   }
+  if (useTranslucency->isChecked())
+    startKompmgr();
   emit KCModule::changed(false);
 }
 
@@ -1667,6 +1669,15 @@ bool KTranslucencyConfig::kompmgrAvailable()
     ret = proc.start(KProcess::DontCare, KProcess::AllOutput);
     proc.detach();
     return ret;
+}
+
+void KTranslucencyConfig::startKompmgr()
+{
+    bool ret;
+    KProcess proc;
+    proc << "kompmgr";
+    ret = proc.start(KProcess::DontCare, KProcess::AllOutput);
+    proc.detach();
 }
 
 void KTranslucencyConfig::showWarning(bool alphaActivated)

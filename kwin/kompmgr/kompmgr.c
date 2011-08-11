@@ -23,11 +23,21 @@
  */
 
 
-/* Modified by Matthew Hawn. I don't know what to say here so follow what it 
+/* Modified by Matthew Hawn. I don't know what to say here so follow what it
    says above. Not that I can really do anything about it
 */
 
 /* Modified by Dan Doel*/
+
+/* Modified by Timothy Pearson
+ *
+ * CHANGELOG:
+ * http://patchwork.freedesktop.org/patch/1049/	[Add default background color option]		08/11/2011
+ * http://patchwork.freedesktop.org/patch/1052/ [Prevent flicker on root pixmap change]		08/11/2011
+ *
+ * TODO:
+ * http://patchwork.freedesktop.org/patch/1053/ [Fix window mapping with re-used window ids]
+*/
 
 /*
 Version 2.x of xcompmgr, kompmgr changes by Thomas L�bking and Heiko Przybyl
@@ -54,7 +64,7 @@ check baghira.sf.net for more infos
 #define HAS_NAME_WINDOW_PIXMAP 1
 #endif
 
-#define CAN_DO_USABLE 0
+#define CAN_DO_USABLE 1
 
 #define _TOPHEIGHT_(x) ((x >> 24) & 0xff)
 #define _RIGHTWIDTH_(x) ((x >> 16) & 0xff)
@@ -141,6 +151,7 @@ Bool		clipChanged;
 #if HAS_NAME_WINDOW_PIXMAP
 Bool		hasNamePixmap;
 #endif
+XRenderColor	fill_color;
 int		root_height, root_width;
 ignore		*ignore_head, **ignore_tail = &ignore_head;
 int		xfixes_event, xfixes_error;
@@ -149,6 +160,7 @@ int		composite_event, composite_error;
 int		render_event, render_error;
 Bool		synchronize;
 int		composite_opcode;
+Bool		screen_damaged = False;
 Bool            disable_argb = False;
 
 int             tqshapeEvent;
@@ -176,8 +188,8 @@ Atom            winNormalAtom;
 #define SHADOW_PROP	"_KDE_WM_WINDOW_SHADOW"
 #define SHADE_PROP	"_KDE_WM_WINDOW_SHADE"
 #define SHAPABLE_PROP	"_KDE_WM_WINDOW_SHAPABLE"
-#define DECOHASH_PROP "_KDE_WM_WINDOW_DECOHASH"
-#define DIM_PROP "_KDE_WM_WINDOW_DIM"
+#define DECOHASH_PROP	"_KDE_WM_WINDOW_DECOHASH"
+#define DIM_PROP	"_KDE_WM_WINDOW_DIM"
 #define DESKCHANGE_PROP "_KDE_WM_DESKTOP_CHANGE"
 
 #define TRANSLUCENT	0xe0000000
@@ -825,7 +837,7 @@ static char *backgroundProps[] = {
 	0,
 };
 
-	static Picture
+static Picture
 root_tile (Display *dpy)
 {
 	Picture	    picture;
@@ -865,17 +877,13 @@ root_tile (Display *dpy)
 			CPRepeat, &pa);
 	if (fill)
 	{
-		XRenderColor    c;
-
-		c.red = c.green = c.blue = 0x8080;
-		c.alpha = 0xffff;
-		XRenderFillRectangle (dpy, PictOpSrc, picture, &c, 
+		XRenderFillRectangle (dpy, PictOpSrc, picture, &fill_color,
 				0, 0, 1, 1);
 	}
 	return picture;
 }
 
-	static void
+static void
 paint_root (Display *dpy)
 {
 	if (!rootTile)
@@ -886,7 +894,7 @@ paint_root (Display *dpy)
 			0, 0, 0, 0, 0, 0, root_width, root_height);
 }
 
-	static XserverRegion
+static XserverRegion
 win_extents (Display *dpy, win *w)
 {
 	XRectangle	    r;
@@ -1070,7 +1078,7 @@ paint_all (Display *dpy, XserverRegion region)
 			continue;
 #endif
 		/* never painted, ignore it */
-		if (!w->damaged)
+		if ((!screen_damaged) && (!w->damaged))
 			continue;
 
 		/* skip invisible windows */
@@ -1339,9 +1347,10 @@ paint_all (Display *dpy, XserverRegion region)
 		XRenderComposite (dpy, PictOpSrc, rootBuffer, None, rootPicture,
 				0, 0, 0, 0, 0, 0, root_width, root_height);
 	}
+	screen_damaged = False;
 }
 
-	static void
+static void
 add_damage (Display *dpy, XserverRegion damage)
 {
 	if (allDamage)
@@ -1353,7 +1362,7 @@ add_damage (Display *dpy, XserverRegion damage)
 		allDamage = damage;
 }
 
-	static void
+static void
 repair_win (Display *dpy, win *w)
 {
 	XserverRegion   parts;
@@ -1389,7 +1398,7 @@ repair_win (Display *dpy, win *w)
 static unsigned int
 get_opacity_prop(Display *dpy, win *w, unsigned int def);
 
-	static void
+static void
 map_win (Display *dpy, Window id, unsigned long sequence, Bool fade)
 {
 	win		*w = find_win (dpy, id);
@@ -1412,7 +1421,7 @@ map_win (Display *dpy, Window id, unsigned long sequence, Bool fade)
 		set_fade (dpy, w, 0, get_opacity_prop(dpy, w, OPAQUE)*1.0/OPAQUE, fade_in_step, 0, False, True, True, True);
 }
 
-	static void
+static void
 finish_unmap_win (Display *dpy, win *w)
 {
 	w->damaged = 0;
@@ -1480,14 +1489,14 @@ finish_unmap_win (Display *dpy, win *w)
 }
 
 #if HAS_NAME_WINDOW_PIXMAP
-	static void
+static void
 unmap_callback (Display *dpy, win *w, Bool gone)
 {
 	finish_unmap_win (dpy, w);
 }
 #endif
 
-	static void
+static void
 unmap_win (Display *dpy, Window id, Bool fade)
 {
 	win *w = find_win (dpy, id);
@@ -1499,7 +1508,7 @@ unmap_win (Display *dpy, Window id, Bool fade)
                     set_fade (dpy, w, w->opacity*1.0/OPAQUE, 0.0, fade_out_step, unmap_callback, False, False, True, True);
 	else
 #endif
-		finish_unmap_win (dpy, w);
+	finish_unmap_win (dpy, w);
 }
 
 /* Get the opacity prop from window
@@ -2155,7 +2164,23 @@ damage_win (Display *dpy, XDamageNotifyEvent *de)
 		repair_win (dpy, w);
 }
 
-	static int
+static void
+damage_screen (Display *dpy)
+{
+	XserverRegion region;
+	XRectangle r;
+
+	r.x = 0;
+	r.y = 0;
+	r.width = root_width;
+	r.height = root_height;
+
+	region = XFixesCreateRegion (dpy, &r, 1);
+	add_damage (dpy, region);
+	screen_damaged = True;
+}
+
+static int
 error (Display *dpy, XErrorEvent *ev)
 {
 	int	    o;
@@ -2478,6 +2503,7 @@ usage (char *program)
 	fprintf (stderr, "   -o opacity\n      Specifies the translucency for client-side shadows. (default .75)\n");
 	fprintf (stderr, "   -l left-offset\n      Specifies the left offset for client-side shadows. (default -15)\n");
 	fprintf (stderr, "   -t top-offset\n      Specifies the top offset for clinet-side shadows. (default -15)\n");
+	fprintf (stderr, "   -b color\n      Specifies the background color to use if no root pixmap is set. (default is a gray)\n");
 	fprintf (stderr, "   -I fade-in-step\n      Specifies the opacity change between steps while fading in. (default 0.028)\n");
 	fprintf (stderr, "   -O fade-out-step\n      Specifies the opacity change between steps while fading out. (default 0.03)\n");
 	fprintf (stderr, "   -D fade-delta-time\n      Specifies the time between steps in a fade in milliseconds. (default 10)\n");
@@ -2529,6 +2555,7 @@ main (int argc, char **argv)
 	int		    composite_major, composite_minor;
 
 	int		    o;
+	char		    *fill_color_name = NULL;
     char **res = NULL;
 
 	shadowColor.red = 0;
@@ -2537,7 +2564,7 @@ main (int argc, char **argv)
 
 	loadConfig(NULL); /*we do that before cmdline-parsing, so config-values can be overridden*/
 	/*used for shadow colors*/
-	while ((o = getopt (argc, argv, "D:I:O:d:r:o:l:t:scnfFCaSx:vh")) != -1)
+	while ((o = getopt (argc, argv, "D:I:O:d:r:o:l:t:b:scnfFCaSx:vh")) != -1)
 	{
 		switch (o) {
 			case 'd':
@@ -2593,6 +2620,9 @@ main (int argc, char **argv)
 				break;
 			case 't':
 				shadowOffsetY = atoi (optarg);
+				break;
+			case 'b':
+				fill_color_name = optarg;
 				break;
 			case 'x':
 				if( compMode != CompClientShadows ){
@@ -2679,10 +2709,35 @@ main (int argc, char **argv)
 		presum_gaussian (gaussianMap);
 	}
 
+	if (fill_color_name)
+	{
+		XColor c;
+		if (! XParseColor (dpy, DefaultColormap (dpy, scr),
+			   fill_color_name, &c))
+		{
+			fprintf (stderr, "Could not parse fill color.\n");
+			exit (1);
+		}
+		if (! XAllocColor (dpy, DefaultColormap (dpy, scr), &c))
+		{
+			fprintf (stderr, "Could not allocate color.\n");
+			exit (1);
+		}
+
+		fill_color.red = c.red;
+		fill_color.green = c.green;
+		fill_color.blue = c.blue;
+	}
+	else
+	{
+		fill_color.red = fill_color.green = fill_color.blue = 0x8080;
+	}
+	fill_color.alpha = 0xffff;
+
 	root_width = DisplayWidth (dpy, scr);
 	root_height = DisplayHeight (dpy, scr);
 
-	rootPicture = XRenderCreatePicture (dpy, root, 
+	rootPicture = XRenderCreatePicture (dpy, root,
 			sXRenderFindVisualFormat (dpy,
 				DefaultVisual (dpy, scr)),
 			CPSubwindowMode,
@@ -2699,7 +2754,7 @@ main (int argc, char **argv)
 	{
         int dummy;
 		XCompositeRedirectSubwindows (dpy, root, CompositeRedirectManual);
-		XSelectInput (dpy, root, 
+		XSelectInput (dpy, root,
 				SubstructureNotifyMask|
 				ExposureMask|
 				StructureNotifyMask|
@@ -2804,9 +2859,9 @@ main (int argc, char **argv)
 						{
 							if (rootTile)
 							{
-								XClearArea (dpy, root, 0, 0, 0, 0, True);
 								XRenderFreePicture (dpy, rootTile);
 								rootTile = None;
+								damage_screen (dpy);
 								break;
 							}
 						}
@@ -2976,10 +3031,10 @@ main (int argc, char **argv)
                                 XFixesDestroyRegion( dpy, w->extents );
                             w->extents = win_extents (dpy, w);
 			}
-#endif		
-                        /*this is hardly efficient, but a current workaraound 
+#endif
+                        /*this is hardly efficient, but a current workaraound
                         shaping support isn't that good so far (e.g. we lack tqshaped shadows)
-                        IDEA: use XRender to scale/shift a copy of the window and then blurr it*/
+                        IDEA: use XRender to scale/shift a copy of the window and then blur it*/
 #if 1
                         if (w->picture)
                         {
@@ -2994,12 +3049,13 @@ main (int argc, char **argv)
 	} while (QLength (dpy));
 	if (allDamage && !autoRedirect)
 	{
-            /*static int	paint;*/
 	    paint_all (dpy, allDamage);
-            /*paint++;*/
             XSync (dpy, False);
 	    allDamage = None;
 	    clipChanged = False;
 	}
     }
+
+    XClearArea (dpy, root, 0, 0, 0, 0, True);
+    XSync (dpy, False);
 }

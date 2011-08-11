@@ -283,6 +283,7 @@ private:
   bool alphaActivated;
   bool resetKompmgr_;
   bool kompmgrAvailable();
+  void startKompmgr();
   bool kompmgrAvailable_;
   KProcess *kompmgr;
   

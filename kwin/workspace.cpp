@@ -1239,22 +1239,45 @@ bool Workspace::setCurrentDesktop( int new_desktop )
 
         current_desktop = new_desktop; // change the desktop (so that Client::updateVisibility() works)
 
-        for ( ClientList::ConstIterator it = stacking_order.begin(); it != stacking_order.end(); ++it)
-            if ( !(*it)->isOnDesktop( new_desktop ) && (*it) != movingClient )
+        bool desktopHasCompositing = kapp->isCompositionManagerAvailable();	// Technically I should call isX11CompositionAvailable(), but it isn't initialized via my kapp constructir, and in this case it doesn't really matter anyway....
+        if (!desktopHasCompositing) {
+            // If composition is not in use then we can hide the old windows before showing the new ones
+            for ( ClientList::ConstIterator it = stacking_order.begin(); it != stacking_order.end(); ++it) {
+                if ( !(*it)->isOnDesktop( new_desktop ) && (*it) != movingClient )
                 {
-                if( (*it)->isShown( true ) && (*it)->isOnDesktop( old_desktop ))
-                    obs_wins.create( *it );
-                (*it)->updateVisibility();
+                    if( (*it)->isShown( true ) && (*it)->isOnDesktop( old_desktop )) {
+                        obs_wins.create( *it );
+                    }
+                    (*it)->updateVisibility();
                 }
+            }
+        }
 
         rootInfo->setCurrentDesktop( current_desktop ); // now propagate the change, after hiding, before showing
 
         if( movingClient && !movingClient->isOnDesktop( new_desktop ))
             movingClient->setDesktop( new_desktop );
 
-        for ( ClientList::ConstIterator it = stacking_order.fromLast(); it != stacking_order.end(); --it)
-            if ( (*it)->isOnDesktop( new_desktop ) )
+        for ( ClientList::ConstIterator it = stacking_order.fromLast(); it != stacking_order.end(); --it) {
+            if ( (*it)->isOnDesktop( new_desktop ) ) {
                 (*it)->updateVisibility();
+            }
+        }
+
+        if (desktopHasCompositing) {
+            // If composition is in use then we cannot hide the old windows before showing the new ones, 
+            // unless you happen to like the "flicker annoyingly to desktop" effect... :-P
+            XSync( qt_xdisplay(), false);	// Make absolutely certain all new windows are shown before hiding the old ones
+            for ( ClientList::ConstIterator it = stacking_order.begin(); it != stacking_order.end(); ++it) {
+                if ( !(*it)->isOnDesktop( new_desktop ) && (*it) != movingClient )
+                {
+                    if( (*it)->isShown( true ) && (*it)->isOnDesktop( old_desktop )) {
+                        obs_wins.create( *it );
+                    }
+                    (*it)->updateVisibility();
+                }
+            }
+        }
 
         --block_showing_desktop;
         if( showingDesktop()) // do this only after desktop change to avoid flicker
@@ -2547,16 +2570,16 @@ void Workspace::startKompmgr()
     if (!kompmgr || kompmgr->isRunning())
         return;
     if (!kompmgr->start(KProcess::OwnGroup, KProcess::Stderr))
-        {
+    {
         options->useTranslucency = FALSE;
         KProcess proc;
         proc << "kdialog" << "--error"
             << i18n("The Composite Manager could not be started.\\nMake sure you have \"kompmgr\" in a $PATH directory.")
             << "--title" << "Composite Manager Failure";
         proc.start(KProcess::DontCare);
-        }
+    }
     else
-        {
+    {
         delete kompmgr_selection;
         char selection_name[ 100 ];
         sprintf( selection_name, "_NET_WM_CM_S%d", DefaultScreen( qt_xdisplay()));
@@ -2571,8 +2594,8 @@ void Workspace::startKompmgr()
         TQDataStream arg(ba, IO_WriteOnly);
         arg << "";
         kapp->dcopClient()->emitDCOPSignal("default", "kompmgrStarted()", ba);
-        }
-        if (popup){ delete popup; popup = 0L; } // to add/remove opacity slider
+    }
+    if (popup){ delete popup; popup = 0L; } // to add/remove opacity slider
 }
 
 void Workspace::stopKompmgr()
@@ -2604,9 +2627,11 @@ void Workspace::unblockKompmgrRestart()
 void Workspace::restartKompmgr( KProcess *proc )
 // this is for inernal purpose (crashhandling) only, usually you want to use workspace->stopKompmgr(); TQTimer::singleShot(200, workspace, TQT_SLOT(startKompmgr()));
 {
-    if (proc->signalled()) {	// looks like kompmgr crashed
-       if (!allowKompmgrRestart)   // uh oh, it crashed recently already
-            {
+    if (proc->signalled()) {	// looks like kompmgr may have crashed
+      int exit_signal_number = proc->exitSignal();
+      if ( (exit_signal_number == SIGILL) || (exit_signal_number == SIGTRAP) || (exit_signal_number == SIGABRT) || (exit_signal_number == SIGSYS) || (exit_signal_number == SIGFPE) || (exit_signal_number == SIGBUS) || (exit_signal_number == SIGSEGV) ) {
+        if (!allowKompmgrRestart)   // uh oh, it crashed recently already
+        {
             delete kompmgr_selection;
             kompmgr_selection = NULL;
             options->useTranslucency = FALSE;
@@ -2616,8 +2641,9 @@ void Workspace::restartKompmgr( KProcess *proc )
                 << "--title" << i18n("Composite Manager Failure");
             proc.start(KProcess::DontCare);
             return;
-            }
-        if (!kompmgr)
+        }
+      }
+      if (!kompmgr)
             return;
 // this should be useless, i keep it for maybe future need
 //         if (!kcompmgr)
@@ -2628,7 +2654,7 @@ void Workspace::restartKompmgr( KProcess *proc )
 //             }
 // -------------------
         if (!kompmgr->start(KProcess::NotifyOnExit, KProcess::Stderr))
-            {
+        {
             delete kompmgr_selection;
             kompmgr_selection = NULL;
             options->useTranslucency = FALSE;
@@ -2637,12 +2663,12 @@ void Workspace::restartKompmgr( KProcess *proc )
                 << i18n("The Composite Manager could not be started.\\nMake sure you have \"kompmgr\" in a $PATH directory.")
                 << "--title" << i18n("Composite Manager Failure");
             proc.start(KProcess::DontCare);
-            }
+        }
         else
-            {
+        {
             allowKompmgrRestart = FALSE;
             TQTimer::singleShot( 60000, this, TQT_SLOT(unblockKompmgrRestart()) );
-            }
+        }
     }
 }
 
