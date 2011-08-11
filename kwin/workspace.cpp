@@ -521,7 +521,12 @@ void Workspace::addClient( Client* c, allowed_t )
             c->setOpacity(options->translucentDocks, options->dockOpacity);
             }
         }
-//------------------------------------------------        
+
+    if (c->isMenu() || c->isTopMenu())
+        {
+            c->setShadowSize(options->menuShadowSize);
+        }
+//------------------------------------------------
     Group* grp = findGroup( c->window());
     if( grp != NULL )
         grp->gotLeader( c );

@@ -238,6 +238,7 @@ double  fade_out_step = 0.03;
 int	fade_delta =	10;
 int	fade_time =	0;
 Bool	fadeWindows = False;
+Bool	fadeMenuWindows = False;
 Bool    excludeDockShadows = False;
 Bool	fadeTrans = False;
 
@@ -1417,7 +1418,7 @@ map_win (Display *dpy, Window id, unsigned long sequence, Bool fade)
 #endif
 	w->damaged = 0;
 
-	if (fade && fadeWindows)
+	if ((fade && fadeWindows) || (fade && fadeMenuWindows && w->windowType == winMenuAtom))
 		set_fade (dpy, w, 0, get_opacity_prop(dpy, w, OPAQUE)*1.0/OPAQUE, fade_in_step, 0, False, True, True, True);
 }
 
@@ -1504,7 +1505,7 @@ unmap_win (Display *dpy, Window id, Bool fade)
 		return;
 	w->a.map_state = IsUnmapped;
 #if HAS_NAME_WINDOW_PIXMAP
-	if (w->pixmap && fade && fadeWindows)
+	if ((w->pixmap && fade && fadeWindows) || (w->pixmap && fade && fadeMenuWindows && w->windowType == winMenuAtom))
                     set_fade (dpy, w, w->opacity*1.0/OPAQUE, 0.0, fade_out_step, unmap_callback, False, False, True, True);
 	else
 #endif
@@ -2065,19 +2066,19 @@ finish_destroy_win (Display *dpy, Window id, Bool gone)
 }
 
 #if HAS_NAME_WINDOW_PIXMAP
-	static void
+static void
 destroy_callback (Display *dpy, win *w, Bool gone)
 {
 	finish_destroy_win (dpy, w->id, gone);
 }
 #endif
 
-	static void
+static void
 destroy_win (Display *dpy, Window id, Bool gone, Bool fade)
 {
 	win *w = find_win (dpy, id);
 #if HAS_NAME_WINDOW_PIXMAP
-	if (w && w->pixmap && fade && fadeWindows)
+	if ((w && w->pixmap && fade && fadeWindows) || (w && w->pixmap && fade && fadeWindows && w->windowType == winMenuAtom))
 		set_fade (dpy, w, w->opacity*1.0/OPAQUE, 0.0, fade_out_step, destroy_callback, gone, False, True, True);
 	else
 #endif
@@ -2154,7 +2155,7 @@ damage_win (Display *dpy, XDamageNotifyEvent *de)
 				w->a.height <= w->damage_bounds.y + w->damage_bounds.height)
 		{
 			clipChanged = True;
-			if (fadeWindows)
+			if ((fadeWindows) || (fadeMenuWindows && w->windowType == winMenuAtom))
 				set_fade (dpy, w, 0, get_opacity_percent (dpy, w, 1.0), fade_in_step, 0, False, True, True, False);
 			w->usable = True;
 		}
@@ -2325,6 +2326,7 @@ typedef enum _option{
 	FadeInStep,
 	FadeDelta,
 	DisableARGB,
+	FadeMenuWindows,
 	NUMBEROFOPTIONS
 } Option;
 
@@ -2346,6 +2348,7 @@ options[NUMBEROFOPTIONS] = {
 	"FadeInStep",           /*13*/
 	"FadeDelta",            /*14*/
 	"DisableARGB",          /*15*/
+	"FadeMenuWindows",      /*16*/
 	/*put your thingy in here...*/    
 };
 
@@ -2394,6 +2397,9 @@ setValue(Option option, char *value ){
 			break;
 		case FadeWindows:
 			fadeWindows = ( strcasecmp(value, "true") == 0 );
+			break;
+		case FadeMenuWindows:
+			fadeMenuWindows = ( strcasecmp(value, "true") == 0 );
 			break;
 		case ExcludeDockShadows:
 			excludeDockShadows = ( strcasecmp(value, "true") == 0 );
@@ -2564,7 +2570,7 @@ main (int argc, char **argv)
 
 	loadConfig(NULL); /*we do that before cmdline-parsing, so config-values can be overridden*/
 	/*used for shadow colors*/
-	while ((o = getopt (argc, argv, "D:I:O:d:r:o:l:t:b:scnfFCaSx:vh")) != -1)
+	while ((o = getopt (argc, argv, "D:I:O:d:r:o:l:t:b:scnfFmCaSx:vh")) != -1)
 	{
 		switch (o) {
 			case 'd':
@@ -2599,6 +2605,9 @@ main (int argc, char **argv)
 				break;
 			case 'f':
 				fadeWindows = True;
+				break;
+			case 'm':
+				fadeMenuWindows = True;
 				break;
 			case 'F':
 				fadeTrans = True;

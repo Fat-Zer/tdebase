@@ -346,6 +346,7 @@ class Options : public KDecorationOptions
         uint activeWindowShadowSize;
         uint inactiveWindowShadowSize;
         uint dockShadowSize;
+        uint menuShadowSize;
         bool onlyDecoTranslucent;
         bool resetKompmgr;
         bool tabboxOutline;
@@ -378,6 +379,7 @@ class Options : public KDecorationOptions
         TQColor shadow_colour;
         TQColor shadow_inactive_colour;
         bool shadow_docks;
+        bool shadow_menus;
         bool shadow_overrides;
         bool shadow_topMenus;
         bool shadow_inactive_enabled;

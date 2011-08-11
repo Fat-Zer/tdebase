@@ -186,6 +186,7 @@ unsigned long Options::updateSettings()
     activeWindowShadowSize = config->readNumEntry("ActiveWindowShadowSize", 200);
     inactiveWindowShadowSize = config->readNumEntry("InactiveWindowShadowSize", 100);
     dockShadowSize = config->readNumEntry("DockShadowSize", 80);
+    menuShadowSize = config->readNumEntry("MenuShadowSize", 80);
     removeShadowsOnMove = config->readBoolEntry("RemoveShadowsOnMove", true);
     removeShadowsOnResize = config->readBoolEntry("RemoveShadowsOnResize", true);
     onlyDecoTranslucent = config->readBoolEntry("OnlyDecoTranslucent",false);
@@ -197,6 +198,7 @@ unsigned long Options::updateSettings()
     config->setGroup("Style");
     shadow_colour = config->readColorEntry("ShadowColour", &TQt::black);
     shadow_docks = config->readBoolEntry("ShadowDocks", false);
+    shadow_menus = config->readBoolEntry("ShadowMenus", false);
     shadow_overrides = config->readBoolEntry("ShadowOverrides", false);
     shadow_topMenus = config->readBoolEntry("ShadowTopMenus", false);
     shadow_inactive_colour = config->readColorEntry("InactiveShadowColour", &TQt::black);
@@ -321,6 +323,8 @@ bool Options::shadowWindowType(NET::WindowType t)
             break;
         case NET::Desktop:
         case NET::Menu:
+            retval = shadow_menus;
+            break;
         case NET::Toolbar:
             retval = false;
             break;

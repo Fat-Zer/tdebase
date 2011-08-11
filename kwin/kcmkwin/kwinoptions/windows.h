@@ -259,6 +259,7 @@ private:
   TQCheckBox *keepAboveAsActive;
   TQCheckBox *disableARGB;
   TQCheckBox *fadeInWindows;
+  TQCheckBox *fadeInMenuWindows;
   TQCheckBox *fadeOnOpacityChange;
   TQCheckBox *useShadows;
   TQCheckBox *removeShadowsOnResize;
@@ -271,6 +272,7 @@ private:
   KIntNumInput *movingWindowOpacity;
   KIntNumInput *dockWindowOpacity;
   KIntNumInput *dockWindowShadowSize;
+  KIntNumInput *menuWindowShadowSize;
   KIntNumInput *activeWindowShadowSize;
   KIntNumInput *inactiveWindowShadowSize;
   KIntNumInput *shadowTopOffset;

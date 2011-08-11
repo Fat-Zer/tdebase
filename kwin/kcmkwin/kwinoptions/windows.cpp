@@ -1345,7 +1345,7 @@ KTranslucencyConfig::KTranslucencyConfig (bool _standAlone, KConfig *_config, TQ
 //   sGroup->setCheckable(TRUE);
   TQVBoxLayout *vLay2 = new TQVBoxLayout (sGroup,11,6);
   vLay2->addSpacing(11); // to get the proper gb top offset
-  useShadows = new TQCheckBox(i18n("Use shadows"),sGroup);
+  useShadows = new TQCheckBox(i18n("Use shadows (requires standard effects to be disabled in the Styles module)"),sGroup);
   vLay2->addWidget(useShadows);
   
   vLay2->addSpacing(11);
@@ -1353,45 +1353,52 @@ KTranslucencyConfig::KTranslucencyConfig (bool _standAlone, KConfig *_config, TQ
   TQGridLayout *gLay2 = new TQGridLayout(vLay2,6,2);
   gLay2->setColStretch(1,1);
 
-  TQLabel *label1 = new TQLabel(i18n("Active window size:"),sGroup);
-  gLay2->addWidget(label1,0,0);
-  activeWindowShadowSize = new KIntNumInput(12,sGroup);
-  activeWindowShadowSize->setRange(0,32);
-//   activeWindowShadowSize->setSuffix("px");
-  gLay2->addWidget(activeWindowShadowSize,0,1);
-
-  TQLabel *label2 = new TQLabel(i18n("Inactive window size:"),sGroup);
-  gLay2->addWidget(label2,1,0);
+  TQLabel *label2 = new TQLabel(i18n("Base shadow size:"),sGroup);
+  gLay2->addWidget(label2,0,0);
   inactiveWindowShadowSize = new KIntNumInput(6,sGroup);
   inactiveWindowShadowSize->setRange(0,32);
 //   inactiveWindowShadowSize->setSuffix("px");
-  gLay2->addWidget(inactiveWindowShadowSize,1,1);
+  gLay2->addWidget(inactiveWindowShadowSize,0,1);
 
-  TQLabel *label3 = new TQLabel(i18n("Dock window size:"),sGroup);
+  TQLabel *label1 = new TQLabel(i18n("Active window shadow size multiplier:"),sGroup);
+  gLay2->addWidget(label1,1,0);
+  activeWindowShadowSize = new KIntNumInput(12,sGroup);
+  activeWindowShadowSize->setRange(0,32);
+//   activeWindowShadowSize->setSuffix("px");
+  gLay2->addWidget(activeWindowShadowSize,1,1);
+
+  TQLabel *label3 = new TQLabel(i18n("Dock shadow size multiplier:"),sGroup);
   gLay2->addWidget(label3,2,0);
   dockWindowShadowSize = new KIntNumInput(6,sGroup);
   dockWindowShadowSize->setRange(0,32);
 //   dockWindowShadowSize->setSuffix("px");
   gLay2->addWidget(dockWindowShadowSize,2,1);
 
+  TQLabel *label3a = new TQLabel(i18n("Menu shadow size multiplier:"),sGroup);
+  gLay2->addWidget(label3a,3,0);
+  menuWindowShadowSize = new KIntNumInput(6,sGroup);
+  menuWindowShadowSize->setRange(0,32);
+//   menuWindowShadowSize->setSuffix("px");
+  gLay2->addWidget(menuWindowShadowSize,3,1);
+
   TQLabel *label4 = new TQLabel(i18n("Vertical offset:"),sGroup);
-  gLay2->addWidget(label4,3,0);
+  gLay2->addWidget(label4,4,0);
   shadowTopOffset = new KIntNumInput(80,sGroup);
   shadowTopOffset->setSuffix("%");
   shadowTopOffset->setRange(-200,200);
-  gLay2->addWidget(shadowTopOffset,3,1);
+  gLay2->addWidget(shadowTopOffset,4,1);
 
   TQLabel *label5 = new TQLabel(i18n("Horizontal offset:"),sGroup);
-  gLay2->addWidget(label5,4,0);
+  gLay2->addWidget(label5,5,0);
   shadowLeftOffset = new KIntNumInput(0,sGroup);
   shadowLeftOffset->setSuffix("%");
   shadowLeftOffset->setRange(-200,200);
-  gLay2->addWidget(shadowLeftOffset,4,1);
+  gLay2->addWidget(shadowLeftOffset,5,1);
 
   TQLabel *label6 = new TQLabel(i18n("Shadow color:"),sGroup);
   gLay2->addWidget(label6,5,0);
   shadowColor = new KColorButton(Qt::black,sGroup);
-  gLay2->addWidget(shadowColor,5,1);
+  gLay2->addWidget(shadowColor,6,1);
   gLay2->setColStretch(1,1);
   vLay2->addSpacing(11);
   removeShadowsOnMove = new TQCheckBox(i18n("Remove shadows on move"),sGroup);
@@ -1405,6 +1412,7 @@ KTranslucencyConfig::KTranslucencyConfig (bool _standAlone, KConfig *_config, TQ
   TQVBoxLayout *vLay3 = new TQVBoxLayout (eGroup,11,6);
 
   fadeInWindows = new TQCheckBox(i18n("Fade-in windows (including popups)"),eGroup);
+  fadeInMenuWindows = new TQCheckBox(i18n("Fade-in menus (requires menu fade effect to be disabled in the Styles module)"),eGroup);
   fadeOnOpacityChange = new TQCheckBox(i18n("Fade between opacity changes"),eGroup);
   fadeInSpeed = new KIntNumInput(100, eGroup);
   fadeInSpeed->setRange(1,100);
@@ -1413,6 +1421,7 @@ KTranslucencyConfig::KTranslucencyConfig (bool _standAlone, KConfig *_config, TQ
   fadeOutSpeed->setRange(1,100);
   fadeOutSpeed->setLabel(i18n("Fade-out speed:"));
   vLay3->addWidget(fadeInWindows);
+  vLay3->addWidget(fadeInMenuWindows);
   vLay3->addWidget(fadeOnOpacityChange);
   vLay3->addWidget(fadeInSpeed);
   vLay3->addWidget(fadeOutSpeed);
@@ -1448,17 +1457,20 @@ KTranslucencyConfig::KTranslucencyConfig (bool _standAlone, KConfig *_config, TQ
   connect(movingWindowOpacity, TQT_SIGNAL(valueChanged(int)), TQT_SLOT(changed()));
   connect(dockWindowOpacity, TQT_SIGNAL(valueChanged(int)), TQT_SLOT(changed()));
   connect(dockWindowShadowSize, TQT_SIGNAL(valueChanged(int)), TQT_SLOT(changed()));
+  connect(menuWindowShadowSize, TQT_SIGNAL(valueChanged(int)), TQT_SLOT(changed()));
   connect(activeWindowShadowSize, TQT_SIGNAL(valueChanged(int)), TQT_SLOT(changed()));
   connect(inactiveWindowShadowSize, TQT_SIGNAL(valueChanged(int)), TQT_SLOT(changed()));
   connect(shadowTopOffset, TQT_SIGNAL(valueChanged(int)), TQT_SLOT(changed()));
   connect(shadowLeftOffset, TQT_SIGNAL(valueChanged(int)), TQT_SLOT(changed()));
   connect(shadowColor, TQT_SIGNAL(changed(const TQColor&)), TQT_SLOT(changed()));
   connect(fadeInWindows, TQT_SIGNAL(toggled(bool)), TQT_SLOT(changed()));
+  connect(fadeInMenuWindows, TQT_SIGNAL(toggled(bool)), TQT_SLOT(changed()));
   connect(fadeOnOpacityChange, TQT_SIGNAL(toggled(bool)), TQT_SLOT(changed()));
   connect(fadeInSpeed, TQT_SIGNAL(valueChanged(int)), TQT_SLOT(changed()));
   connect(fadeOutSpeed, TQT_SIGNAL(valueChanged(int)), TQT_SLOT(changed()));
 
   connect(useShadows, TQT_SIGNAL(toggled(bool)), dockWindowShadowSize, TQT_SLOT(setEnabled(bool)));
+  connect(useShadows, TQT_SIGNAL(toggled(bool)), menuWindowShadowSize, TQT_SLOT(setEnabled(bool)));
   connect(useShadows, TQT_SIGNAL(toggled(bool)), activeWindowShadowSize, TQT_SLOT(setEnabled(bool)));
   connect(useShadows, TQT_SIGNAL(toggled(bool)), inactiveWindowShadowSize, TQT_SLOT(setEnabled(bool)));
   connect(useShadows, TQT_SIGNAL(toggled(bool)), shadowTopOffset, TQT_SLOT(setEnabled(bool)));
@@ -1479,7 +1491,7 @@ KTranslucencyConfig::KTranslucencyConfig (bool _standAlone, KConfig *_config, TQ
   connect(shadowTopOffset, TQT_SIGNAL(valueChanged(int)), TQT_SLOT(resetKompmgr()));
   connect(shadowLeftOffset, TQT_SIGNAL(valueChanged(int)), TQT_SLOT(resetKompmgr()));
   connect(shadowColor, TQT_SIGNAL(changed(const TQColor&)), TQT_SLOT(resetKompmgr()));
-  connect(fadeInWindows, TQT_SIGNAL(toggled(bool)), TQT_SLOT(resetKompmgr()));
+  connect(fadeInMenuWindows, TQT_SIGNAL(toggled(bool)), TQT_SLOT(resetKompmgr()));
   connect(fadeOnOpacityChange, TQT_SIGNAL(toggled(bool)), TQT_SLOT(resetKompmgr()));
   connect(fadeInSpeed, TQT_SIGNAL(valueChanged(int)), TQT_SLOT(resetKompmgr()));
   connect(fadeOutSpeed, TQT_SIGNAL(valueChanged(int)), TQT_SLOT(resetKompmgr()));
@@ -1514,8 +1526,9 @@ void KTranslucencyConfig::load( void )
   movingWindowOpacity->setValue(config->readNumEntry("MovingWindowOpacity",25));
   dockWindowOpacity->setValue(config->readNumEntry("DockOpacity",80));
 
-  int ass, iss, dss;
+  int ass, iss, dss, mss;
   dss = config->readNumEntry("DockShadowSize", 33);
+  mss = config->readNumEntry("MenuShadowSize", 33);
   ass = config->readNumEntry("ActiveWindowShadowSize", 133);
   iss = config->readNumEntry("InactiveWindowShadowSize", 67);
 
@@ -1535,6 +1548,7 @@ void KTranslucencyConfig::load( void )
 
   int ss =  conf_.readNumEntry("ShadowRadius",6);
   dockWindowShadowSize->setValue((int)(dss*ss/100.0));
+  menuWindowShadowSize->setValue((int)(mss*ss/100.0));
   activeWindowShadowSize->setValue((int)(ass*ss/100.0));
   inactiveWindowShadowSize->setValue((int)(iss*ss/100.0));
 
@@ -1547,7 +1561,8 @@ void KTranslucencyConfig::load( void )
   else
     shadowColor->setColor(TQColor(r,g,b));
 
-  fadeInWindows->setChecked(conf_.readBoolEntry("FadeWindows",TRUE));
+  fadeInWindows->setChecked(conf_.readBoolEntry("FadeWindows",FALSE));
+  fadeInMenuWindows->setChecked(conf_.readBoolEntry("FadeMenuWindows",FALSE));
   fadeOnOpacityChange->setChecked(conf_.readBoolEntry("FadeTrans",FALSE));
   fadeInSpeed->setValue((int)(conf_.readDoubleNumEntry("FadeInStep",0.020)*1000.0));
   fadeOutSpeed->setValue((int)(conf_.readDoubleNumEntry("FadeOutStep",0.070)*1000.0));
@@ -1579,6 +1594,7 @@ void KTranslucencyConfig::save( void )
   // this way the user can set the three values without caring about the radius/multiplicator stuff
    // additionally we find a value between big and small values to have a more smooth appereance
    config->writeEntry("DockShadowSize",(int)(200.0 * dockWindowShadowSize->value() / (activeWindowShadowSize->value() + inactiveWindowShadowSize->value())));
+   config->writeEntry("MenuShadowSize",(int)(200.0 * menuWindowShadowSize->value() / (activeWindowShadowSize->value() + inactiveWindowShadowSize->value())));
    config->writeEntry("ActiveWindowShadowSize",(int)(200.0 * activeWindowShadowSize->value() / (activeWindowShadowSize->value() + inactiveWindowShadowSize->value())));
    config->writeEntry("InactiveWindowShadowSize",(int)(200.0 * inactiveWindowShadowSize->value() / (activeWindowShadowSize->value() + inactiveWindowShadowSize->value())));
 
@@ -1603,6 +1619,7 @@ void KTranslucencyConfig::save( void )
   conf_->writeEntry("ShadowColor",hex);
   conf_->writeEntry("ShadowRadius",(activeWindowShadowSize->value() + inactiveWindowShadowSize->value()) / 2);
   conf_->writeEntry("FadeWindows",fadeInWindows->isChecked());
+  conf_->writeEntry("FadeMenuWindows",fadeInMenuWindows->isChecked());
   conf_->writeEntry("FadeTrans",fadeOnOpacityChange->isChecked());
   conf_->writeEntry("FadeInStep",fadeInSpeed->value()/1000.0);
   conf_->writeEntry("FadeOutStep",fadeOutSpeed->value()/1000.0);
@@ -1628,9 +1645,9 @@ void KTranslucencyConfig::defaults()
   useTranslucency->setChecked(false);
   onlyDecoTranslucent->setChecked(false);
   activeWindowTransparency->setChecked(false);
-  inactiveWindowTransparency->setChecked(true);
+  inactiveWindowTransparency->setChecked(false);
   movingWindowTransparency->setChecked(false);
-  dockWindowTransparency->setChecked(true);
+  dockWindowTransparency->setChecked(false);
   keepAboveAsActive->setChecked(true);
   disableARGB->setChecked(false);
 
@@ -1640,20 +1657,22 @@ void KTranslucencyConfig::defaults()
   dockWindowOpacity->setValue(80);
 
   dockWindowShadowSize->setValue(6);
+  menuWindowShadowSize->setValue(6);
   activeWindowShadowSize->setValue(12);
   inactiveWindowShadowSize->setValue(6);
   shadowTopOffset->setValue(80);
   shadowLeftOffset->setValue(0);
 
   activeWindowOpacity->setEnabled(false);
-  inactiveWindowOpacity->setEnabled(true);
+  inactiveWindowOpacity->setEnabled(false);
   movingWindowOpacity->setEnabled(false);
-  dockWindowOpacity->setEnabled(true);
-  useShadows->setChecked(TRUE);
+  dockWindowOpacity->setEnabled(false);
+  useShadows->setChecked(FALSE);
   removeShadowsOnMove->setChecked(FALSE);
   removeShadowsOnResize->setChecked(FALSE);
   shadowColor->setColor(Qt::black);
-  fadeInWindows->setChecked(TRUE);
+  fadeInWindows->setChecked(FALSE);
+  fadeInMenuWindows->setChecked(FALSE);
   fadeOnOpacityChange->setChecked(FALSE);
   fadeInSpeed->setValue(70);
   fadeOutSpeed->setValue(20);
