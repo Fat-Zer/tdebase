@@ -30,6 +30,7 @@ Boston, MA 02110-1301, USA.
 #include "krootimage.h"
 
 #include <X11/Xlib.h>
+#include <X11/Xatom.h>
 
 #include <stdlib.h>
 
@@ -43,6 +44,8 @@ static KCmdLineOptions options[] = {
 	KCmdLineLastOption
 };
 
+static Atom prop_root;
+static bool properties_inited = false;
 
 MyApplication::MyApplication( const char *conf )
 	: KApplication(),
@@ -54,14 +57,28 @@ MyApplication::MyApplication( const char *conf )
 	renderer.changeWallpaper(); // cannot do it when we're killed, so do it now
 	timer.start( 60000 );
 	renderer.start();
+
+	if( !properties_inited ) {
+		prop_root = XInternAtom(qt_xdisplay(), "_XROOTPMAP_ID", False);
+		properties_inited = true;
+	}
 }
 
 
 void
 MyApplication::renderDone()
 {
-	TQT_TQWIDGET(desktop())->setBackgroundPixmap( renderer.pixmap() );
+	// Get the newly drawn pixmap...
+	TQPixmap pm = renderer.pixmap();
+
+	// ...set it to the desktop widget...
+	TQT_TQWIDGET(desktop())->setBackgroundPixmap( pm );
 	TQT_TQWIDGET(desktop())->tqrepaint( true );
+
+	// ...and export it via Esetroot-style so that composition managers can use it!
+	Pixmap bgPm = pm.handle(); // fetch the actual X handle to it
+	XChangeProperty(qt_xdisplay(), qt_xrootwin(), prop_root, XA_PIXMAP, 32, PropModeReplace, (unsigned char *) &bgPm, 1);
+
 	renderer.saveCacheFile();
 	renderer.cleanup();
 	for (unsigned i=0; i<renderer.numRenderers(); ++i)
@@ -69,10 +86,11 @@ MyApplication::renderDone()
 		KBackgroundRenderer * r = renderer.renderer(i);
 		if (r->backgroundMode() == KBackgroundSettings::Program ||
 		    (r->multiWallpaperMode() != KBackgroundSettings::NoMulti &&
-		     r->multiWallpaperMode() != KBackgroundSettings::NoMultiRandom))
+		     r->multiWallpaperMode() != KBackgroundSettings::NoMultiRandom)) {
 			return;
+		}
 	}
-	quit();
+
 }
 
 void

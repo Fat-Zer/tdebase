@@ -2527,7 +2527,7 @@ usage (char *program)
 	exit (1);
 }
 
-	static void
+static void
 give_me_a_name(void)
 {
   Window w;
@@ -2538,7 +2538,7 @@ give_me_a_name(void)
 		  NULL);
 }	
 
-	int
+int
 main (int argc, char **argv)
 {
 	XEvent	    ev;
@@ -2562,7 +2562,7 @@ main (int argc, char **argv)
 
 	int		    o;
 	char		    *fill_color_name = NULL;
-    char **res = NULL;
+	char **res = NULL;
 
 	shadowColor.red = 0;
 	shadowColor.green = 0;
