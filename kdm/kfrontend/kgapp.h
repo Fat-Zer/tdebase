@@ -34,6 +34,7 @@ class GreeterApp : public KApplication {
 
   public:
 	GreeterApp();
+	GreeterApp(Display *dpy);
 	virtual bool x11EventFilter( XEvent * );
 
   protected:

@@ -22,6 +22,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 */
 
+#include <config.h>
+
 #include "kdm_greet.h"
 #include "kdmshutdown.h"
 #include "kdmconfig.h"
@@ -52,6 +54,15 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include <X11/keysym.h>
 #include <X11/cursorfont.h>
 
+#ifdef HAVE_XCOMPOSITE
+#include <X11/extensions/Xrender.h>
+#include <X11/extensions/Xcomposite.h>
+#endif
+
+#include <pwd.h>
+
+bool argb_visual_available = false;
+
 static int
 ignoreXError( Display *dpy ATTR_UNUSED, XErrorEvent *event ATTR_UNUSED )
 {
@@ -69,6 +80,20 @@ sigAlarm( int )
 }
 
 GreeterApp::GreeterApp()
+{
+	pingInterval = _isLocal ? 0 : _pingInterval;
+	if (pingInterval) {
+		struct sigaction sa;
+		sigemptyset( &sa.sa_mask );
+		sa.sa_flags = 0;
+		sa.sa_handler = sigAlarm;
+		sigaction( SIGALRM, &sa, 0 );
+		alarm( pingInterval * 70 ); // sic! give the "proper" pinger enough time
+		startTimer( pingInterval * 60000 );
+	}
+}
+
+GreeterApp::GreeterApp(Display *dpy) : KApplication(dpy)
 {
 	pingInterval = _isLocal ? 0 : _pingInterval;
 	if (pingInterval) {
@@ -145,13 +170,65 @@ kg_main( const char *argv0 )
 	kde_have_kipc = false;
 	KApplication::disableAutoDcopRegistration();
 	KCrash::setSafer( true );
-	GreeterApp app;
+
+#ifdef HAVE_XCOMPOSITE
+	// Begin ARGB initialization
+	XSetErrorHandler( ignoreXError );
+	argb_visual_available = false;
+	char *display = 0;
+	
+	Display *dpyi = XOpenDisplay( display );
+	if ( !dpyi ) {
+		kdError() << "cannot connect to X server " << display << endl;
+		exit( 1 );
+	}
+	
+	int screen = DefaultScreen( dpyi );
+	Colormap colormap = 0;
+	Visual *visual = 0;
+	int event_base, error_base;
+	
+	if ( XRenderQueryExtension( dpyi, &event_base, &error_base ) ) {
+		int nvi;
+		XVisualInfo templ;
+		templ.screen  = screen;
+		templ.depth   = 32;
+		templ.c_class = TrueColor;
+		XVisualInfo *xvi = XGetVisualInfo( dpyi, VisualScreenMask | VisualDepthMask
+				| VisualClassMask, &templ, &nvi );
+		
+		for ( int i = 0; i < nvi; i++ ) {
+			XRenderPictFormat *format = XRenderFindVisualFormat( dpyi, xvi[i].visual );
+			if ( format->type == PictTypeDirect && format->direct.alphaMask ) {
+				visual = xvi[i].visual;
+				colormap = XCreateColormap( dpyi, RootWindow( dpyi, screen ), visual, AllocNone );
+				kdDebug() << "found visual with alpha support" << endl;
+				argb_visual_available = true;
+				break;
+			}
+		}
+	}
+	XSetErrorHandler( (XErrorHandler)0 );
+
+	GreeterApp *app;
+	if( argb_visual_available ) {
+		app = new GreeterApp(dpyi);
+	}
+	else {
+		app = new GreeterApp();
+	}
+	// End ARGB initialization
+#else
+	GreeterApp *app = new GreeterApp();
+#endif
+
 	XSetIOErrorHandler( xIOErr );
+	TQString login_user;
 
 	Display *dpy = qt_xdisplay();
 
 	if (!_GUIStyle.isEmpty())
-		app.setStyle( _GUIStyle );
+		app->setStyle( _GUIStyle );
 
 	// Load up the systemwide ICC profile
 	TQString iccConfigFile = TQString(KDE_CONFDIR);
@@ -168,14 +245,15 @@ kg_main( const char *argv0 )
 	if (!_colorScheme.isEmpty()) {
 		KSimpleConfig config( _colorScheme, true );
 		config.setGroup( "Color Scheme" );
-		app.setPalette( app.createApplicationPalette( &config, 7 ) );
+		app->setPalette( app->createApplicationPalette( &config, 7 ) );
 	}
 
-	app.setFont( _normalFont );
+	app->setFont( _normalFont );
 
 	setup_modifiers( dpy, _numLockStatus );
 	SecureDisplay( dpy );
 	KProcess *proc = 0;
+	KProcess *comp = 0;
 	if (!_grabServer) {
 		if (_useBackground) {
 			proc = new KProcess;
@@ -187,10 +265,16 @@ kg_main( const char *argv0 )
 		GRecvInt();
 	}
 
+	if (!_compositor.isEmpty()) {
+		comp = new KProcess;
+		*comp << TQCString( argv0, strrchr( argv0, '/' ) - argv0 + 2 ) + _compositor.ascii();
+		comp->start(KProcess::NotifyOnExit, KProcess::Stdin);
+	}
+
 	GSendInt( G_Ready );
 
 	kdDebug() << timestamp() << " main1" << endl;	
-	setCursor( dpy, app.desktop()->winId(), XC_left_ptr );
+	setCursor( dpy, app->desktop()->winId(), XC_left_ptr );
 
 	for (;;) {
 		int rslt, cmd = GRecvInt();
@@ -214,7 +298,7 @@ kg_main( const char *argv0 )
 		}
 
 		KProcess *proc2 = 0;
-		app.setOverrideCursor( Qt::WaitCursor );
+		app->setOverrideCursor( Qt::WaitCursor );
 		FDialog *dialog;
 #ifdef XDMCP
 		if (cmd == G_Choose) {
@@ -247,7 +331,7 @@ kg_main( const char *argv0 )
 				proc2->start();
 			}
 		}
-		app.restoreOverrideCursor();
+		app->restoreOverrideCursor();
 		Debug( "entering event loop\n" );
 		// Qt4 has a nasty habit of generating BadWindow errors in normal operation, so we simply ignore them
 		// This also prevents the user from being dropped to a console login if Xorg glitches or is buggy
@@ -255,6 +339,9 @@ kg_main( const char *argv0 )
 		rslt = dialog->exec();
 		XSetErrorHandler( (XErrorHandler)0 );
 		Debug( "left event loop\n" );
+
+		login_user = static_cast<KGreeter*>(dialog)->curUser;
+
 		delete dialog;
 		delete proc2;
 #ifdef XDMCP
@@ -274,11 +361,30 @@ kg_main( const char *argv0 )
 
 	KGVerify::done();
 
+	if (comp) {
+		if (_compositor == "kompmgr") {
+			// Change process UID
+			// Get user UID
+			passwd* userinfo = getpwnam(login_user.ascii());
+			TQString newuid = TQString("%1").arg(userinfo->pw_uid);
+			// kompmgr allows us to change its uid in this manner:
+			// 1.) Send SIGUSER1
+			// 2.) Send the new UID to it on the command line
+			comp->kill(SIGUSR1);
+			comp->writeStdin(newuid.ascii(), newuid.length());
+			usleep(50000);	// Give the above function some time to execute.  Note that on REALLY slow systems this could fail, leaving kompmgr running as root.  TODO: Look into ways to make this more robust.
+		}
+		comp->closeStdin();
+		comp->detach();
+		delete comp;
+	}
 	delete proc;
 	UnsecureDisplay( dpy );
 	restore_modifiers();
 
 	XSetInputFocus( qt_xdisplay(), PointerRoot, PointerRoot, CurrentTime );
+
+	delete app;
 }
 
 } // extern "C"

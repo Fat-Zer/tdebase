@@ -72,6 +72,9 @@ class KGreeter : public KGDialog, public KGVerifyHandler {
 	void slotSessionSelected( int );
 	void slotUserEntered();
 
+  public:
+	TQString curUser, dName;
+
   protected:
         void readFacesList();
 	void installUserList();
@@ -82,7 +85,6 @@ class KGreeter : public KGDialog, public KGVerifyHandler {
 	virtual void pluginSetup();
 	void setPrevWM( int );
 
-	TQString curUser, dName;
 	KSimpleConfig *stsFile;
 	UserListView *userView;
 	TQStringList *userList;

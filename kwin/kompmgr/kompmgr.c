@@ -34,6 +34,7 @@
  * CHANGELOG:
  * http://patchwork.freedesktop.org/patch/1049/	[Add default background color option]		08/11/2011
  * http://patchwork.freedesktop.org/patch/1052/ [Prevent flicker on root pixmap change]		08/11/2011
+ * Added SIGUSER1 handler to change process UID	[Prevent flicker on login]			08/12/2011
  *
  * TODO:
  * http://patchwork.freedesktop.org/patch/1053/ [Fix window mapping with re-used window ids]
@@ -50,6 +51,8 @@ check baghira.sf.net for more infos
 #include <math.h>
 #include <sys/poll.h>
 #include <sys/time.h>
+#include <sys/types.h>
+#include <signal.h>
 #include <time.h>
 #include <unistd.h>
 #include <X11/Xlib.h>
@@ -135,6 +138,9 @@ typedef struct _fade {
     Bool		gone;
 } fade;
 
+struct sigaction usr_action;
+sigset_t block_mask;
+
 win             *list;
 fade		*fades;
 Display		*dpy;
@@ -203,6 +209,7 @@ conv            *gaussianMap;
 
 #define TRANS_OPACITY	0.75
 
+#define NDEBUG 1
 #define DEBUG_REPAINT 0
 #define DEBUG_EVENTS 0
 #define MONITOR_REPAINT 0
@@ -218,7 +225,7 @@ typedef enum _compMode {
 
 static void
 determine_mode(Display *dpy, win *w);
-    
+
 static double
 get_opacity_percent(Display *dpy, win *w, double def);
 
@@ -267,11 +274,28 @@ get_time_in_milliseconds ()
     return tv.tv_sec * 1000 + tv.tv_usec / 1000;
 }
 
+void handle_siguser (int sig)
+{
+    char newuid[1024];
+#ifndef NDEBUG
+    printf("Enter the new user ID:\n\r"); fflush(stdout);
+#endif
+    char *eof;
+    newuid[0] = '\0';
+    newuid[sizeof(newuid)-1] = '\0';
+    eof = fgets(newuid, sizeof(newuid), stdin);
+    int uidnum = atoi(newuid);
+#ifndef NDEBUG
+    printf("Setting kompmgr process uid to %d...\n\r", uidnum); fflush(stdout);
+#endif
+    setuid(uidnum);
+}
+
 fade *
 find_fade (win *w)
 {
     fade    *f;
-    
+
     for (f = fades; f; f = f->next)
     {
 	if (f->w == w)
@@ -2509,7 +2533,7 @@ usage (char *program)
 	fprintf (stderr, "   -o opacity\n      Specifies the translucency for client-side shadows. (default .75)\n");
 	fprintf (stderr, "   -l left-offset\n      Specifies the left offset for client-side shadows. (default -15)\n");
 	fprintf (stderr, "   -t top-offset\n      Specifies the top offset for clinet-side shadows. (default -15)\n");
-	fprintf (stderr, "   -b color\n      Specifies the background color to use if no root pixmap is set. (default is a gray)\n");
+	fprintf (stderr, "   -b color\n      Specifies the background color to use if no root pixmap is set. (default is black)\n");
 	fprintf (stderr, "   -I fade-in-step\n      Specifies the opacity change between steps while fading in. (default 0.028)\n");
 	fprintf (stderr, "   -O fade-out-step\n      Specifies the opacity change between steps while fading out. (default 0.03)\n");
 	fprintf (stderr, "   -D fade-delta-time\n      Specifies the time between steps in a fade in milliseconds. (default 10)\n");
@@ -2567,6 +2591,13 @@ main (int argc, char **argv)
 	shadowColor.red = 0;
 	shadowColor.green = 0;
 	shadowColor.blue = 0;
+
+	// Initialize signal handlers
+	sigfillset(&block_mask);
+	usr_action.sa_handler = handle_siguser;
+	usr_action.sa_mask = block_mask;
+	usr_action.sa_flags = 0;
+	sigaction(SIGUSR1, &usr_action, NULL);
 
 	loadConfig(NULL); /*we do that before cmdline-parsing, so config-values can be overridden*/
 	/*used for shadow colors*/
@@ -2739,7 +2770,7 @@ main (int argc, char **argv)
 	}
 	else
 	{
-		fill_color.red = fill_color.green = fill_color.blue = 0x8080;
+		fill_color.red = fill_color.green = fill_color.blue = 0x0;
 	}
 	fill_color.alpha = 0xffff;
 

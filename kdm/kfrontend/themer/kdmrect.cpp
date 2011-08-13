@@ -21,6 +21,7 @@
 
 #include "kdmrect.h"
 #include "kdmthemer.h"
+#include "kdmconfig.h"
 
 #include <kimageeffect.h>
 #include <kdebug.h>
@@ -29,6 +30,8 @@
 #include <tqpainter.h>
 #include <tqwidget.h>
 #include <tqlayout.h>
+
+extern bool argb_visual_available;
 
 KdmRect::KdmRect( KdmItem *parent, const TQDomNode &node, const char *name )
     : KdmItem( parent, node, name )
@@ -103,14 +106,20 @@ KdmRect::drawContents( TQPainter *p, const TQRect &r )
 	if (rClass->alpha == 1)
 		p->fillRect( area, TQBrush( rClass->color ) );
 	else {
-		TQRect backRect = r;
-		backRect.moveBy( area.x(), area.y() );
-		TQPixmap backPixmap( backRect.size() );
-		bitBlt( &backPixmap, TQPoint( 0, 0 ), p->device(), backRect );
-		TQImage backImage = backPixmap.convertToImage();
-		KImageEffect::blend( rClass->color, backImage, rClass->alpha );
-		p->drawImage( backRect.x(), backRect.y(), backImage );
-		//  area.moveBy(1,1);
+// 		if ((_compositor.isEmpty()) || (!argb_visual_available)) {
+			// Software blend only (no compositing support)
+			TQRect backRect = r;
+			backRect.moveBy( area.x(), area.y() );
+			TQPixmap backPixmap( backRect.size() );
+			bitBlt( &backPixmap, TQPoint( 0, 0 ), p->device(), backRect );
+			TQImage backImage = backPixmap.convertToImage();
+			KImageEffect::blend( rClass->color, backImage, rClass->alpha );
+			p->drawImage( backRect.x(), backRect.y(), backImage );
+			//  area.moveBy(1,1);
+// 		}
+// 		else {
+// 			// We have compositing support!
+// 		}
 	}
 }
 

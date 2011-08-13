@@ -1986,6 +1986,16 @@ Description:
  Specify the widget style for the greeter. Empty means to use the
  built-in default which currently is <literal>Plastik</literal>.
 
+Key: Compositor
+Type: string
+Default: ""
+User: greeter
+Instance: #*/""
+Comment:
+ Compositor binary name, if compositing is desired. "" means no compositing support.
+Description:
+ Specify the Xorg compositing manager.  Currently only kompmgr is supported.
+
 Key: UseAdminSession
 Type: bool
 Default: false

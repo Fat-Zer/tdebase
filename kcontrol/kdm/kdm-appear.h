@@ -85,6 +85,7 @@ private:
 	TQRadioButton *logoRadio;
 	TQLineEdit    *xLineEdit;
 	TQLineEdit    *yLineEdit;
+	KBackedComboBox    *compositorcombo;
 	KBackedComboBox    *guicombo;
 	KBackedComboBox    *colcombo;
 	KBackedComboBox    *echocombo;

@@ -169,14 +169,25 @@ KDMAppearanceWidget::KDMAppearanceWidget(TQWidget *parent, const char *name)
   grid->addLayout(hglay, 3, 1);
   hglay->setColStretch(3, 1);
 
+  compositorcombo = new KBackedComboBox(group);
+  compositorcombo->insertItem( "", i18n("None") );
+  compositorcombo->insertItem( "kompmgr", i18n("Trinity compositor") );
+  label = new TQLabel(compositorcombo, i18n("Compositor:"), group);
+  connect(compositorcombo, TQT_SIGNAL(activated(int)), TQT_SLOT(changed()));
+  hglay->addWidget(label, 0, 0);
+  hglay->addWidget(compositorcombo, 0, 1);
+  wtstr = i18n("Choose a compositor to be used in KDM.  Note that the chosen compositor will continue to run after login.");
+  TQWhatsThis::add( label, wtstr );
+  TQWhatsThis::add( compositorcombo, wtstr );
+
   guicombo = new KBackedComboBox(group);
   guicombo->insertItem( "", i18n("<default>") );
   loadGuiStyles(guicombo);
   guicombo->listBox()->sort();
   label = new TQLabel(guicombo, i18n("GUI s&tyle:"), group);
   connect(guicombo, TQT_SIGNAL(activated(int)), TQT_SLOT(changed()));
-  hglay->addWidget(label, 0, 0);
-  hglay->addWidget(guicombo, 0, 1);
+  hglay->addWidget(label, 1, 0);
+  hglay->addWidget(guicombo, 1, 1);
   wtstr = i18n("You can choose a basic GUI style here that will be "
         "used by KDM only.");
   TQWhatsThis::add( label, wtstr );
@@ -188,8 +199,8 @@ KDMAppearanceWidget::KDMAppearanceWidget(TQWidget *parent, const char *name)
   colcombo->listBox()->sort();
   label = new TQLabel(colcombo, i18n("&Color scheme:"), group);
   connect(colcombo, TQT_SIGNAL(activated(int)), TQT_SLOT(changed()));
-  hglay->addWidget(label, 1, 0);
-  hglay->addWidget(colcombo, 1, 1);
+  hglay->addWidget(label, 2, 0);
+  hglay->addWidget(colcombo, 2, 1);
   wtstr = i18n("You can choose a basic Color Scheme here that will be "
         "used by KDM only.");
   TQWhatsThis::add( label, wtstr );
@@ -201,8 +212,8 @@ KDMAppearanceWidget::KDMAppearanceWidget(TQWidget *parent, const char *name)
   echocombo->insertItem("ThreeStars", i18n("Three Stars"));
   label = new TQLabel(echocombo, i18n("Echo &mode:"), group);
   connect(echocombo, TQT_SIGNAL(activated(int)), TQT_SLOT(changed()));
-  hglay->addWidget(label, 2, 0);
-  hglay->addWidget(echocombo, 2, 1);
+  hglay->addWidget(label, 3, 0);
+  hglay->addWidget(echocombo, 3, 1);
   wtstr = i18n("You can choose whether and how KDM shows your password when you type it.");
   TQWhatsThis::add( label, wtstr );
   TQWhatsThis::add( echocombo, wtstr );
@@ -241,6 +252,7 @@ void KDMAppearanceWidget::makeReadOnly()
     logoRadio->setEnabled(false);
     xLineEdit->setEnabled(false);
     yLineEdit->setEnabled(false);
+    compositorcombo->setEnabled(false);
     guicombo->setEnabled(false);
     colcombo->setEnabled(false);
     echocombo->setEnabled(false);
@@ -425,6 +437,8 @@ void KDMAppearanceWidget::save()
 
   config->writeEntry("LogoPixmap", KGlobal::iconLoader()->iconPath(logopath, KIcon::Desktop, true));
 
+  config->writeEntry("Compositor", compositorcombo->currentId());
+
   config->writeEntry("GUIStyle", guicombo->currentId());
 
   config->writeEntry("ColorScheme", colcombo->currentId());
@@ -460,6 +474,9 @@ void KDMAppearanceWidget::load()
   // See if we use alternate logo
   setLogo(config->readEntry("LogoPixmap"));
 
+  // Check the current compositor type
+  compositorcombo->setCurrentId(config->readEntry("Compositor"));
+
   // Check the GUI type
   guicombo->setCurrentId(config->readEntry("GUIStyle"));
 
@@ -489,6 +506,7 @@ void KDMAppearanceWidget::defaults()
   logoRadio->setChecked( true );
   slotAreaRadioClicked( KdmLogo );
   setLogo( "" );
+  compositorcombo->setCurrentId( "" );
   guicombo->setCurrentId( "" );
   colcombo->setCurrentId( "" );
   echocombo->setCurrentItem( "OneStar" );

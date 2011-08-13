@@ -37,6 +37,8 @@
 #include <tqpixmap.h>
 #include <tqimage.h>
 
+extern bool argb_visual_available;
+
 KdmPixmap::KdmPixmap( KdmItem *parent, const TQDomNode &node, const char *name )
     : KdmItem( parent, node, name )
 {
@@ -47,6 +49,7 @@ KdmPixmap::KdmPixmap( KdmItem *parent, const TQDomNode &node, const char *name )
 	pixmap.normal.alpha = 0.0;
 	pixmap.active.present = false;
 	pixmap.prelight.present = false;
+	bool true_transparency = false;
 
 	// Read PIXMAP ID
 	// it rarely happens that a pixmap can be a button too!
@@ -66,13 +69,20 @@ KdmPixmap::KdmPixmap( KdmItem *parent, const TQDomNode &node, const char *name )
 			pixmap.normal.alpha = el.attribute( "alpha", "1.0" ).toFloat();
 
 			if (el.attribute( "file", "" ) == "@@@KDMBACKGROUND@@@") {
-				// Use the preset KDM background...
-				KStandardDirs *m_pDirs = KGlobal::dirs();
-				KSimpleConfig *config = new KSimpleConfig( TQFile::decodeName( _backgroundCfg ) );
-				config->setGroup("Desktop0");
-				pixmap.normal.fullpath = m_pDirs->findResource("wallpaper", config->readPathEntry("Wallpaper"));
-				// TODO: Detect when there is no wallpaper and use the background settings instead
-				delete config;
+				if ((_compositor.isEmpty()) || (!argb_visual_available)) {
+					// Software blend only (no compositing support)
+					// Use the preset KDM background...
+					KStandardDirs *m_pDirs = KGlobal::dirs();
+					KSimpleConfig *config = new KSimpleConfig( TQFile::decodeName( _backgroundCfg ) );
+					config->setGroup("Desktop0");
+					pixmap.normal.fullpath = m_pDirs->findResource("wallpaper", config->readPathEntry("Wallpaper"));
+					// TODO: Detect when there is no wallpaper and use the background settings instead
+					delete config;
+				}
+				else {
+					true_transparency = true;
+					pixmap.normal.alpha = 0.0;
+				}
 			}
 
 		} else if (tagName == "active") {
@@ -189,7 +199,6 @@ KdmPixmap::drawContents( TQPainter *p, const TQRect &r )
 	kdDebug() << "draw " << id << " " << pClass->pixmap.isNull() << endl;
  
 	if (pClass->pixmap.isNull()) {
-	        
 	        if (pClass->fullpath.isEmpty())	// if neither is set, we're empty
 			return;
 		
@@ -246,7 +255,7 @@ KdmPixmap::drawContents( TQPainter *p, const TQRect &r )
 		  if (haveTint || haveAlpha)
                   {
 			scaledImage = pClass->pixmap.convertToImage();
-                        // enforce rgba values for the later
+                        // enforce rgba values for the latter
                         scaledImage = scaledImage.convertDepth( 32 );
                   }
 		  else
@@ -275,7 +284,31 @@ KdmPixmap::drawContents( TQPainter *p, const TQRect &r )
 					ls[x] = tqRgba( r, g, b, a );
 				}
 			}
+		}
+		if ((_compositor.isEmpty()) || (!argb_visual_available)) {
+			// Software blend only (no compositing support)
+		}
+		else {
+			// We have a compositor!
+			// Apply the alpha in the same manner as above, exept we are now
+			// using the hardware blending engine for all painting
+			scaledImage = pClass->readyPixmap;
+			scaledImage = scaledImage.convertDepth( 32 );
+			int w = scaledImage.width();
+			int h = scaledImage.height();
 
+			for (int y = 0; y < h; ++y) {
+				QRgb *ls = (QRgb *)scaledImage.scanLine( y );
+				for (int x = 0; x < w; ++x) {
+					QRgb l = ls[x];
+					float alpha_adjust = (tqAlpha( l )/256.0);
+					int r = int( tqRed( l ) * alpha_adjust );
+					int g = int( tqGreen( l ) * alpha_adjust );
+					int b = int( tqBlue( l ) * alpha_adjust );
+					int a = int( tqAlpha( l ) * 1 );
+					ls[x] = tqRgba( r, g, b, a );
+				}
+			}
 		}
 
 		if (!scaledImage.isNull()) {

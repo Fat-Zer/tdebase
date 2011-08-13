@@ -46,6 +46,8 @@
 
 #include <unistd.h>
 
+extern bool argb_visual_available;
+
 /*
  * KdmThemer. The main theming interface
  */
@@ -159,17 +161,35 @@ KdmThemer::widgetEvent( TQEvent *e )
 			TQRect paintRect = TQT_TQPAINTEVENT(e)->rect();
 			kdDebug() << timestamp() << " paint on: " << paintRect << endl;
 
-			if (!backBuffer)
-				backBuffer = new TQPixmap( widget()->size() );
-			if (backBuffer->size() != widget()->size())
-				backBuffer->resize( widget()->size() );
+			if ((_compositor.isEmpty()) || (!argb_visual_available)) {
+				// Software blend only (no compositing support)
+				if (!backBuffer)
+					backBuffer = new TQPixmap( widget()->size() );
+				if (backBuffer->size() != widget()->size())
+					backBuffer->resize( widget()->size() );
+	
+				TQPainter p;
+				p.begin( backBuffer );
+				rootItem->paint( &p, paintRect );
+				p.end();
+	
+				bitBlt( widget(), paintRect.topLeft(), backBuffer, paintRect );
+			}
+			else {
+				// We have compositing support!
+				TQRgb blend_color = tqRgba(0, 0, 0, 0);   // RGBA
+				float alpha = tqAlpha(blend_color) / 255.;
+				int pixel = tqAlpha(blend_color) << 24 |
+						int(tqRed(blend_color) * alpha) << 16 |
+						int(tqGreen(blend_color) * alpha) << 8  |
+						int(tqBlue(blend_color) * alpha);
+				TQPainter p1;
+				p1.begin( widget() );
+				p1.fillRect( paintRect, TQColor(blend_color, pixel) );
+				rootItem->paint( &p1, paintRect );
+				p1.end();
+			}
 
-			TQPainter p;
-			p.begin( backBuffer );
-			rootItem->paint( &p, paintRect );
-			p.end();
-
-			bitBlt( widget(), paintRect.topLeft(), backBuffer, paintRect );
 		}
 		break;
 	default:

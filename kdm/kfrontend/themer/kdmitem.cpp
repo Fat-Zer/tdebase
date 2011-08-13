@@ -38,6 +38,8 @@
 #include <tqimage.h>
 #include <tqpainter.h>
 
+extern bool argb_visual_available;
+
 KdmItem::KdmItem( KdmItem *parent, const TQDomNode &node, const char *name )
     : TQObject( parent, name )
     , boxManager( 0 )
@@ -289,11 +291,13 @@ KdmItem::paint( TQPainter *p, const TQRect &rect )
 
 	if (myWidget || (myLayoutItem && myLayoutItem->widget())) {
             // KListView because it's missing a Q_OBJECT'
-            // FIXME: This is a nice idea intheory, but in practice it is
+            // FIXME: This is a nice idea in theory, but in practice it is
             // very confusing for the user not to see the empty list box
             // delineated from the rest of the greeter.
             // Maybe set a darker version of the background instead of an exact copy?
             if ( myWidget && myWidget->isA( "KListView" ) ) {
+              if ((_compositor.isEmpty()) || (!argb_visual_available)) {
+                // Software blend only (no compositing support)
                 TQPixmap copy( myWidget->size() );
                 kdDebug() <<  myWidget->tqgeometry() << " " << area << " " << myWidget->size() << endl;
                 bitBlt( &copy, TQPoint( 0, 0), p->device(), myWidget->geometry(), TQt::CopyROP );
@@ -327,6 +331,30 @@ KdmItem::paint( TQPainter *p, const TQRect &rect )
                 copy = lightVersion;
                 // Set it
                 myWidget->setPaletteBackgroundPixmap( copy );
+              }
+              else {
+		// We have compositing support!
+		TQRgb blend_color = tqRgba(m_backgroundModifier, m_backgroundModifier, m_backgroundModifier, 0);   // RGBA overlay
+		float alpha = tqAlpha(blend_color) / 255.;
+		int pixel = tqAlpha(blend_color) << 24 |
+				int(tqRed(blend_color) * alpha) << 16 |
+				int(tqGreen(blend_color) * alpha) << 8  |
+				int(tqBlue(blend_color) * alpha);
+
+		TQImage img( myWidget->size(), 32 );
+		img = img.convertDepth(32);
+		img.setAlphaBuffer(true);
+		register uchar * rd = img.bits();
+		for( int y = 0; y < img.height(); ++y )
+		{
+			for( short int x = 0; x < img.width(); ++x )
+			{
+				*reinterpret_cast<TQRgb*>(rd) = blend_color;
+				rd += 4;
+			}
+		}
+		myWidget->setPaletteBackgroundPixmap( img );
+              }
             }
             return;
         }

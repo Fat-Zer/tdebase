@@ -24,6 +24,7 @@
 
 #include <tqobject.h>
 #include <tqdom.h>
+#include <tqimage.h>
 
 class KdmThemer;
 class KdmItem;
