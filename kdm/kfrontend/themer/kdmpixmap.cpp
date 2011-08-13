@@ -246,9 +246,14 @@ KdmPixmap::drawContents( TQPainter *p, const TQRect &r )
 				scaledImage = pClass->pixmap.convertToImage();
 			} else {
 				kdDebug() << timestamp() << " convertFromImage smoothscale\n";
-				TQImage tempImage = pClass->pixmap.convertToImage();
-				kdDebug() << timestamp() << " convertToImage done\n";
-				scaledImage = tempImage.smoothScale( area.width(), area.height() );
+				if (pClass->pixmap.isNull()) {
+					scaledImage = TQImage();
+				}
+				else {
+					TQImage tempImage = pClass->pixmap.convertToImage();
+					kdDebug() << timestamp() << " convertToImage done\n";
+					scaledImage = tempImage.smoothScale( area.width(), area.height() );
+				}
 				kdDebug() << timestamp() << " done\n";
 			}
 		} else {
@@ -256,7 +261,7 @@ KdmPixmap::drawContents( TQPainter *p, const TQRect &r )
                   {
 			scaledImage = pClass->pixmap.convertToImage();
                         // enforce rgba values for the latter
-                        scaledImage = scaledImage.convertDepth( 32 );
+                        if (!scaledImage.isNull()) scaledImage = scaledImage.convertDepth( 32 );
                   }
 		  else
 		    pClass->readyPixmap = pClass->pixmap;
@@ -265,7 +270,7 @@ KdmPixmap::drawContents( TQPainter *p, const TQRect &r )
 		if (haveTint || haveAlpha) {
 			// blend image(pix) with the given tint
 
-			scaledImage = scaledImage.convertDepth( 32 );
+			if (!scaledImage.isNull()) scaledImage = scaledImage.convertDepth( 32 );
 			int w = scaledImage.width();
 			int h = scaledImage.height();
 			float tint_red = float( pClass->tint.red() ) / 255;
@@ -293,7 +298,7 @@ KdmPixmap::drawContents( TQPainter *p, const TQRect &r )
 			// Apply the alpha in the same manner as above, exept we are now
 			// using the hardware blending engine for all painting
 			scaledImage = pClass->readyPixmap;
-			scaledImage = scaledImage.convertDepth( 32 );
+			if (!scaledImage.isNull()) scaledImage = scaledImage.convertDepth( 32 );
 			int w = scaledImage.width();
 			int h = scaledImage.height();
 

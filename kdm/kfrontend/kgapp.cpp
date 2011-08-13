@@ -176,18 +176,18 @@ kg_main( const char *argv0 )
 	XSetErrorHandler( ignoreXError );
 	argb_visual_available = false;
 	char *display = 0;
-	
+
 	Display *dpyi = XOpenDisplay( display );
 	if ( !dpyi ) {
 		kdError() << "cannot connect to X server " << display << endl;
 		exit( 1 );
 	}
-	
+
 	int screen = DefaultScreen( dpyi );
 	Colormap colormap = 0;
 	Visual *visual = 0;
 	int event_base, error_base;
-	
+
 	if ( XRenderQueryExtension( dpyi, &event_base, &error_base ) ) {
 		int nvi;
 		XVisualInfo templ;
@@ -196,7 +196,7 @@ kg_main( const char *argv0 )
 		templ.c_class = TrueColor;
 		XVisualInfo *xvi = XGetVisualInfo( dpyi, VisualScreenMask | VisualDepthMask
 				| VisualClassMask, &templ, &nvi );
-		
+
 		for ( int i = 0; i < nvi; i++ ) {
 			XRenderPictFormat *format = XRenderFindVisualFormat( dpyi, xvi[i].visual );
 			if ( format->type == PictTypeDirect && format->direct.alphaMask ) {
@@ -211,7 +211,7 @@ kg_main( const char *argv0 )
 	XSetErrorHandler( (XErrorHandler)0 );
 
 	GreeterApp *app;
-	if( argb_visual_available ) {
+	if ( (argb_visual_available == true) && (!_compositor.isEmpty()) ) {
 		app = new GreeterApp(dpyi);
 	}
 	else {
