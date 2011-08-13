@@ -189,7 +189,7 @@ extern "C" KDE_EXPORT int kdemain( int argc, char* argv[] )
     KCmdLineArgs::addCmdLineOptions( options );
 
     putenv((char*)"SESSION_MANAGER=");
-    KARGBApplication(a, false); // Disable styles until we need them.
+    KApplication a(KApplication::openX11RGBADisplay(), false); // Disable styles until we need them.
     fcntl(ConnectionNumber(qt_xdisplay()), F_SETFD, 1);
 
 
