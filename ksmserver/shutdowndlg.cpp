@@ -470,6 +470,13 @@ void KSMShutdownFeedback::slotPaintEffect()
 	        return;
 	    }
 
+	    if ( m_currentY == 0 ) {
+		KPixmap pixmap;
+		pixmap = TQPixmap(TQPixmap::grabWindow( qt_xrootwin(), 0, 0, width(), height() ));
+		bitBlt( this, 0, 0, &pixmap );
+		bitBlt( &m_root, 0, 0, &pixmap );
+	    }
+
 	    KPixmap pixmap;
 	    pixmap = TQPixmap(TQPixmap::grabWindow( qt_xrootwin(), 0, m_currentY, width(), 10 ));
 	    TQImage image = pixmap.convertToImage();
