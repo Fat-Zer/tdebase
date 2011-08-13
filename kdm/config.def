@@ -1990,7 +1990,7 @@ Key: Compositor
 Type: string
 Default: ""
 User: greeter
-Instance: */"kompmgr"
+Instance: #*/""
 Comment:
  Compositor binary name, if compositing is desired. "" means no compositing support.
 Description:
