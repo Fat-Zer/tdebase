@@ -45,6 +45,8 @@ License. See the file "COPYING" for the exact licensing terms.
 #include <X11/keysymdef.h>
 #include <X11/cursorfont.h>
 
+#include <pwd.h>
+
 namespace KWinInternal
 {
 
@@ -220,6 +222,57 @@ Workspace::Workspace( bool restore )
         connect(kompmgr, TQT_SIGNAL(receivedStderr(KProcess*, char*, int)), TQT_SLOT(handleKompmgrOutput(KProcess*, char*, int)));
         *kompmgr << "kompmgr";
         startKompmgr();
+        }
+    else
+        {
+        // If kompmgr is already running, send it SIGTERM
+        // Attempt to load the kompmgr pid file
+        const char *home;
+        struct passwd *p;
+        p = getpwuid(getuid());
+        if (p)
+            home = p->pw_dir;
+        else
+            home = getenv("HOME");
+        char *filename;
+        const char *configfile = "/.kompmgr.pid";
+        int n = strlen(home)+strlen(configfile)+1;
+        filename = (char*)malloc(n*sizeof(char));
+        memset(filename,0,n);
+        strcat(filename, home);
+        strcat(filename, configfile);
+
+        printf("reading '%s' as kompmgr pidfile\n\n", filename);
+
+        // Now that we did all that by way of introduction...read the file!
+        FILE *pFile;
+        char buffer[255];
+        pFile = fopen(filename, "r");
+        int kompmgrpid = 0;
+        if (pFile)
+            {
+            // obtain file size
+            fseek (pFile , 0 , SEEK_END);
+            unsigned long lSize = ftell (pFile);
+            if (lSize > 254)
+                lSize = 254;
+            rewind (pFile);
+            size_t result = fread (buffer, 1, lSize, pFile);
+            fclose(pFile);
+            kompmgrpid = atoi(buffer);
+            }
+
+        free(filename);
+        filename = NULL;
+
+        if (kompmgrpid)
+                {
+                kill(kompmgrpid, SIGTERM);
+                }
+            else
+                {
+                stopKompmgr();
+                }
         }
     }
 
@@ -1023,9 +1076,70 @@ void Workspace::slotReconfigure()
     if (options->resetKompmgr) // need restart
         {
         bool tmp = options->useTranslucency;
-        stopKompmgr();
+
+        // If kompmgr is already running, sending SIGUSR2 will force a reload of its settings
+        // Attempt to load the kompmgr pid file
+        const char *home;
+        struct passwd *p;
+        p = getpwuid(getuid());
+        if (p)
+            home = p->pw_dir;
+        else
+            home = getenv("HOME");
+        char *filename;
+        const char *configfile = "/.kompmgr.pid";
+        int n = strlen(home)+strlen(configfile)+1;
+        filename = (char*)malloc(n*sizeof(char));
+        memset(filename,0,n);
+        strcat(filename, home);
+        strcat(filename, configfile);
+
+        printf("reading '%s' as kompmgr pidfile\n\n", filename);
+
+        // Now that we did all that by way of introduction...read the file!
+        FILE *pFile;
+        char buffer[255];
+        pFile = fopen(filename, "r");
+        int kompmgrpid = 0;
+        if (pFile)
+            {
+            // obtain file size
+            fseek (pFile , 0 , SEEK_END);
+            unsigned long lSize = ftell (pFile);
+            if (lSize > 254)
+                lSize = 254;
+            rewind (pFile);
+            size_t result = fread (buffer, 1, lSize, pFile);
+            fclose(pFile);
+            kompmgrpid = atoi(buffer);
+            }
+
+        free(filename);
+        filename = NULL;
+
         if (tmp)
-            TQTimer::singleShot( 200, this, TQT_SLOT(startKompmgr()) ); // wait some time to ensure system's ready for restart
+            {
+            if (kompmgrpid)
+                {
+                kill(kompmgrpid, SIGUSR2);
+                }
+            else
+                {
+                stopKompmgr();
+                TQTimer::singleShot( 200, this, TQT_SLOT(startKompmgr()) ); // wait some time to ensure system's ready for restart
+                }
+            }
+        else
+            {
+            if (kompmgrpid)
+                {
+                kill(kompmgrpid, SIGTERM);
+                }
+            else
+                {
+                stopKompmgr();
+                }
+            }
         }
     }
 
@@ -2620,8 +2734,9 @@ void Workspace::startKompmgr()
 
 void Workspace::stopKompmgr()
 {
-    if (!kompmgr  || !kompmgr->isRunning())
+    if (!kompmgr || !kompmgr->isRunning()) {
         return;
+    }
     delete kompmgr_selection;
     kompmgr_selection = NULL;
     kompmgr->disconnect(this, TQT_SLOT(restartKompmgr()));
@@ -2647,21 +2762,28 @@ void Workspace::unblockKompmgrRestart()
 void Workspace::restartKompmgr( KProcess *proc )
 // this is for inernal purpose (crashhandling) only, usually you want to use workspace->stopKompmgr(); TQTimer::singleShot(200, workspace, TQT_SLOT(startKompmgr()));
 {
+    bool crashed;
     if (proc->signalled()) {	// looks like kompmgr may have crashed
       int exit_signal_number = proc->exitSignal();
       if ( (exit_signal_number == SIGILL) || (exit_signal_number == SIGTRAP) || (exit_signal_number == SIGABRT) || (exit_signal_number == SIGSYS) || (exit_signal_number == SIGFPE) || (exit_signal_number == SIGBUS) || (exit_signal_number == SIGSEGV) ) {
-        if (!allowKompmgrRestart)   // uh oh, it crashed recently already
-        {
-            delete kompmgr_selection;
-            kompmgr_selection = NULL;
-            options->useTranslucency = FALSE;
+        crashed = true;
+      }
+      else {
+        crashed = false;
+      }
+      if (!allowKompmgrRestart)   // uh oh, it exited recently already
+      {
+          delete kompmgr_selection;
+          kompmgr_selection = NULL;
+          options->useTranslucency = FALSE;
+          if (crashed) {
             KProcess proc;
             proc << "kdialog" << "--error"
                 << i18n( "The Composite Manager crashed twice within a minute and is therefore disabled for this session.")
                 << "--title" << i18n("Composite Manager Failure");
             proc.start(KProcess::DontCare);
-            return;
-        }
+          }
+          return;
       }
       if (!kompmgr)
             return;

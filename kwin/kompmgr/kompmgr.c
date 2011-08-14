@@ -34,8 +34,10 @@
  * CHANGELOG:
  * http://patchwork.freedesktop.org/patch/1049/	[Add default background color option]		08/11/2011
  * http://patchwork.freedesktop.org/patch/1052/ [Prevent flicker on root pixmap change]		08/11/2011
- * Added SIGUSER1 handler to change process UID	[Prevent flicker on login]			08/12/2011
+ * Added SIGUSR1 handler to change process UID	[Prevent flicker on login]			08/12/2011
  * Added ability to write PID of process to home directory					08/14/2011
+ * Added SIGUSR2 handler to reload settings     [Prevent flicker on settings change]		08/14/2011
+ * Added SIGTERM handler to clean up stale PID files on exit					08/14/2011
  *
  * TODO:
  * http://patchwork.freedesktop.org/patch/1053/ [Fix window mapping with re-used window ids]
@@ -76,7 +78,7 @@ check baghira.sf.net for more infos
 #define _LEFTWIDTH_(x) (x & 0xff)
 
 /* #define USE_ENV_HOME 1 */
-/* #define WRITE_PID_FILE 1 */
+#define WRITE_PID_FILE 1
 
 #ifndef USE_ENV_HOME
 #include <pwd.h>
@@ -297,7 +299,7 @@ void write_pid_file(pid_t pid)
         home = getenv("HOME");
 #endif
     const char *filename;
-    const char *configfile = "/.kompmgr.pid"; 
+    const char *configfile = "/.kompmgr.pid";
     int n = strlen(home)+strlen(configfile)+1;
     filename = (char*)malloc(n*sizeof(char));
     memset(filename,0,n);
@@ -311,8 +313,10 @@ void write_pid_file(pid_t pid)
     char buffer[255];
     sprintf(buffer, "%d", pid);
     pFile = fopen(filename, "w");
-    fwrite(buffer,1,strlen(buffer), pFile);
-    fclose(pFile);
+    if (pFile) {
+        fwrite(buffer,1,strlen(buffer), pFile);
+        fclose(pFile);
+    }
 
     free(filename);
     filename = NULL;
@@ -353,46 +357,59 @@ void delete_pid_file()
 
 void handle_siguser (int sig)
 {
-    char newuid[1024];
+    int uidnum;
+    if (sig == SIGTERM) {
+        delete_pid_file();
+        exit(0);
+        return;
+    }
+    if (sig == SIGUSR1) {
+        char newuid[1024];
 #ifndef NDEBUG
-    printf("Enter the new user ID:\n\r"); fflush(stdout);
+        printf("Enter the new user ID:\n\r"); fflush(stdout);
 #endif
-    char *eof;
-    newuid[0] = '\0';
-    newuid[sizeof(newuid)-1] = '\0';
-    eof = fgets(newuid, sizeof(newuid), stdin);
-    int uidnum = atoi(newuid);
+        char *eof;
+        newuid[0] = '\0';
+        newuid[sizeof(newuid)-1] = '\0';
+        eof = fgets(newuid, sizeof(newuid), stdin);
+        uidnum = atoi(newuid);
 #ifndef NDEBUG
-    printf("Setting kompmgr process uid to %d...\n\r", uidnum); fflush(stdout);
+        printf("Setting kompmgr process uid to %d...\n\r", uidnum); fflush(stdout);
 #endif
 
-    delete_pid_file();
-    setuid(uidnum);
-    write_pid_file(getpid());
+        delete_pid_file();
+        setuid(uidnum);
+        write_pid_file(getpid());
 
+    }
+    else {
+        uidnum = getuid();
+    }
+    if ((sig == SIGUSR1) || (sig == SIGUSR2)) {
 #ifdef USE_ENV_HOME
-    const char *home = getenv("HOME");
+        const char *home = getenv("HOME");
 #else
-    const char *home;
-    struct passwd *p;
-    p = getpwuid(uidnum);
-    if (p)
-        home = p->pw_dir;
-    else
-        home = getenv("HOME");
+        const char *home;
+        struct passwd *p;
+        p = getpwuid(uidnum);
+        if (p)
+            home = p->pw_dir;
+        else
+            home = getenv("HOME");
 #endif
-    const char *filename;
-    const char *configfile = "/.xcompmgrrc"; 
-    int n = strlen(home)+strlen(configfile)+1;
-    filename = (char*)malloc(n*sizeof(char));
-    memset(filename,0,n);
-    strcat(filename, home);
-    strcat(filename, configfile);
+        const char *filename;
+        const char *configfile = "/.xcompmgrrc";
+        int n = strlen(home)+strlen(configfile)+1;
+        filename = (char*)malloc(n*sizeof(char));
+        memset(filename,0,n);
+        strcat(filename, home);
+        strcat(filename, configfile);
 
-    loadConfig(filename); /* reload the configuration file */
+        loadConfig(filename); /* reload the configuration file */
 
-    free(filename);
-    filename = NULL;
+        free(filename);
+        filename = NULL;
+    }
 }
 
 fade *
@@ -2712,9 +2729,8 @@ main (int argc, char **argv)
 	usr_action.sa_mask = block_mask;
 	usr_action.sa_flags = 0;
 	sigaction(SIGUSR1, &usr_action, NULL);
-
-	// atexit(delete_pid_file);	// [FIXME] For some reason this gets confused and deletes the file early
-	write_pid_file(getpid());
+        sigaction(SIGUSR2, &usr_action, NULL);
+        sigaction(SIGTERM, &usr_action, NULL);
 
 	loadConfig(NULL); /*we do that before cmdline-parsing, so config-values can be overridden*/
 	/*used for shadow colors*/
@@ -2931,6 +2947,11 @@ main (int argc, char **argv)
 	ufd.events = POLLIN;
 	if (!autoRedirect)
 		paint_all (dpy, None);
+
+        /* Under no circumstances should these two lines EVER be moved earlier in main() than this point */
+        atexit(delete_pid_file);
+        write_pid_file(getpid());
+
 	for (;;)
 	{
 		/*	dump_wins (); */

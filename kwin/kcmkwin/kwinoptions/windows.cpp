@@ -1491,6 +1491,7 @@ KTranslucencyConfig::KTranslucencyConfig (bool _standAlone, KConfig *_config, TQ
   connect(shadowTopOffset, TQT_SIGNAL(valueChanged(int)), TQT_SLOT(resetKompmgr()));
   connect(shadowLeftOffset, TQT_SIGNAL(valueChanged(int)), TQT_SLOT(resetKompmgr()));
   connect(shadowColor, TQT_SIGNAL(changed(const TQColor&)), TQT_SLOT(resetKompmgr()));
+  connect(fadeInWindows, TQT_SIGNAL(toggled(bool)), TQT_SLOT(resetKompmgr()));
   connect(fadeInMenuWindows, TQT_SIGNAL(toggled(bool)), TQT_SLOT(resetKompmgr()));
   connect(fadeOnOpacityChange, TQT_SIGNAL(toggled(bool)), TQT_SLOT(resetKompmgr()));
   connect(fadeInSpeed, TQT_SIGNAL(valueChanged(int)), TQT_SLOT(resetKompmgr()));
@@ -1695,8 +1696,7 @@ void KTranslucencyConfig::startKompmgr()
     bool ret;
     KProcess proc;
     proc << "kompmgr";
-    ret = proc.start(KProcess::DontCare, KProcess::AllOutput);
-    proc.detach();
+    ret = proc.start(KProcess::DontCare);
 }
 
 void KTranslucencyConfig::showWarning(bool alphaActivated)
