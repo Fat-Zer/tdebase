@@ -1565,7 +1565,7 @@ void KTranslucencyConfig::load( void )
   fadeInWindows->setChecked(conf_.readBoolEntry("FadeWindows",FALSE));
   fadeInMenuWindows->setChecked(conf_.readBoolEntry("FadeMenuWindows",FALSE));
   fadeOnOpacityChange->setChecked(conf_.readBoolEntry("FadeTrans",FALSE));
-  fadeInSpeed->setValue((int)(conf_.readDoubleNumEntry("FadeInStep",0.020)*1000.0));
+  fadeInSpeed->setValue((int)(conf_.readDoubleNumEntry("FadeInStep",0.070)*1000.0));
   fadeOutSpeed->setValue((int)(conf_.readDoubleNumEntry("FadeOutStep",0.070)*1000.0));
 
   emit KCModule::changed(false);
@@ -1676,7 +1676,7 @@ void KTranslucencyConfig::defaults()
   fadeInMenuWindows->setChecked(FALSE);
   fadeOnOpacityChange->setChecked(FALSE);
   fadeInSpeed->setValue(70);
-  fadeOutSpeed->setValue(20);
+  fadeOutSpeed->setValue(70);
   emit KCModule::changed(true);
 }
 
