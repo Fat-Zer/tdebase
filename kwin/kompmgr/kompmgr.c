@@ -35,6 +35,7 @@
  * http://patchwork.freedesktop.org/patch/1049/	[Add default background color option]		08/11/2011
  * http://patchwork.freedesktop.org/patch/1052/ [Prevent flicker on root pixmap change]		08/11/2011
  * Added SIGUSER1 handler to change process UID	[Prevent flicker on login]			08/12/2011
+ * Added ability to write PID of process to home directory					08/14/2011
  *
  * TODO:
  * http://patchwork.freedesktop.org/patch/1053/ [Fix window mapping with re-used window ids]
@@ -74,7 +75,8 @@ check baghira.sf.net for more infos
 #define _BOTTOMHEIGHT_(x) ((x >> 8) & 0xff)
 #define _LEFTWIDTH_(x) (x & 0xff)
 
-/* #define USE_ENV_HOME */
+/* #define USE_ENV_HOME 1 */
+/* #define WRITE_PID_FILE 1 */
 
 #ifndef USE_ENV_HOME
 #include <pwd.h>
@@ -280,6 +282,75 @@ get_time_in_milliseconds ()
     return tv.tv_sec * 1000 + tv.tv_usec / 1000;
 }
 
+void write_pid_file(pid_t pid)
+{
+#ifdef WRITE_PID_FILE
+#ifdef USE_ENV_HOME
+    const char *home = getenv("HOME");
+#else
+    const char *home;
+    struct passwd *p;
+    p = getpwuid(getuid());
+    if (p)
+        home = p->pw_dir;
+    else
+        home = getenv("HOME");
+#endif
+    const char *filename;
+    const char *configfile = "/.kompmgr.pid"; 
+    int n = strlen(home)+strlen(configfile)+1;
+    filename = (char*)malloc(n*sizeof(char));
+    memset(filename,0,n);
+    strcat(filename, home);
+    strcat(filename, configfile);
+
+    printf("writing '%s' as pidfile\n\n", filename);
+
+    /* now that we did all that by way of introduction...write the file! */
+    FILE *pFile;
+    char buffer[255];
+    sprintf(buffer, "%d", pid);
+    pFile = fopen(filename, "w");
+    fwrite(buffer,1,strlen(buffer), pFile);
+    fclose(pFile);
+
+    free(filename);
+    filename = NULL;
+#endif
+}
+
+void delete_pid_file()
+{
+#ifdef WRITE_PID_FILE
+#ifdef USE_ENV_HOME
+    const char *home = getenv("HOME");
+#else
+    const char *home;
+    struct passwd *p;
+    p = getpwuid(getuid());
+    if (p)
+        home = p->pw_dir;
+    else
+        home = getenv("HOME");
+#endif
+    const char *filename;
+    const char *configfile = "/.kompmgr.pid"; 
+    int n = strlen(home)+strlen(configfile)+1;
+    filename = (char*)malloc(n*sizeof(char));
+    memset(filename,0,n);
+    strcat(filename, home);
+    strcat(filename, configfile);
+
+    printf("deleting '%s' as pidfile\n\n", filename);
+
+    /* now that we did all that by way of introduction...delete the file! */
+    unlink(filename);
+
+    free(filename);
+    filename = NULL;
+#endif
+}
+
 void handle_siguser (int sig)
 {
     char newuid[1024];
@@ -294,7 +365,10 @@ void handle_siguser (int sig)
 #ifndef NDEBUG
     printf("Setting kompmgr process uid to %d...\n\r", uidnum); fflush(stdout);
 #endif
+
+    delete_pid_file();
     setuid(uidnum);
+    write_pid_file(getpid());
 
 #ifdef USE_ENV_HOME
     const char *home = getenv("HOME");
@@ -2507,7 +2581,17 @@ loadConfig(char *filename){
 	Bool            section = False;
 
 	if( filename == NULL ){
+#ifdef USE_ENV_HOME
 		const char *home = getenv("HOME");
+#else
+		const char *home;
+		struct passwd *p;
+		p = getpwuid(getuid());
+		if (p)
+			home = p->pw_dir;
+		else
+			home = getenv("HOME");
+#endif
 		const char *configfile = "/.xcompmgrrc"; 
 		int n = strlen(home)+strlen(configfile)+1;
 		filename = (char*)malloc(n*sizeof(char));
@@ -2628,6 +2712,9 @@ main (int argc, char **argv)
 	usr_action.sa_mask = block_mask;
 	usr_action.sa_flags = 0;
 	sigaction(SIGUSR1, &usr_action, NULL);
+
+	// atexit(delete_pid_file);	// [FIXME] For some reason this gets confused and deletes the file early
+	write_pid_file(getpid());
 
 	loadConfig(NULL); /*we do that before cmdline-parsing, so config-values can be overridden*/
 	/*used for shadow colors*/
