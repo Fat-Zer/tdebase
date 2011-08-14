@@ -74,6 +74,12 @@ check baghira.sf.net for more infos
 #define _BOTTOMHEIGHT_(x) ((x >> 8) & 0xff)
 #define _LEFTWIDTH_(x) (x & 0xff)
 
+/* #define USE_ENV_HOME */
+
+#ifndef USE_ENV_HOME
+#include <pwd.h>
+#endif
+
 typedef struct _ignore {
     struct _ignore	*next;
     unsigned long	sequence;
@@ -289,6 +295,30 @@ void handle_siguser (int sig)
     printf("Setting kompmgr process uid to %d...\n\r", uidnum); fflush(stdout);
 #endif
     setuid(uidnum);
+
+#ifdef USE_ENV_HOME
+    const char *home = getenv("HOME");
+#else
+    const char *home;
+    struct passwd *p;
+    p = getpwuid(uidnum);
+    if (p)
+        home = p->pw_dir;
+    else
+        home = getenv("HOME");
+#endif
+    const char *filename;
+    const char *configfile = "/.xcompmgrrc"; 
+    int n = strlen(home)+strlen(configfile)+1;
+    filename = (char*)malloc(n*sizeof(char));
+    memset(filename,0,n);
+    strcat(filename, home);
+    strcat(filename, configfile);
+
+    loadConfig(filename); /* reload the configuration file */
+
+    free(filename);
+    filename = NULL;
 }
 
 fade *
