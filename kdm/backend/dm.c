@@ -133,7 +133,7 @@ main( int argc, char **argv )
 			memcpy( name, argv[0], len + 1 );
 			*--name = '/';
 			do {
-				if (!(pathe = (char*)strchr( path, ':' )))
+				if (!(pathe = strchr( path, ':' )))
 					pathe = path + strlen( path );
 				len = pathe - path;
 				if (!len || (len == 1 && *path == '.')) {

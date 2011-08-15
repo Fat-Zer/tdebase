@@ -111,7 +111,7 @@ const char *konsole_shell(TQStrList &args)
   if (shell == NULL || *shell == '\0') shell = "/bin/sh";
   if (login_shell)
   {
-    char* t = (char*)strrchr(shell,'/');
+    char* t = const_cast<char*>(strrchr(shell,'/'));
     if (t) // see sh(1)
     {
       t = strdup(t);
@@ -451,7 +451,7 @@ extern "C" int KDE_EXPORT kdemain(int argc, char* argv[])
   int c = 0, l = 0;
   if ( !sz.isEmpty() )
   {
-    char *ls = (char*)strchr( sz.data(), 'x' );
+    char *ls = strchr( sz.data(), 'x' );
     if ( ls != NULL )
     {
        *ls='\0';

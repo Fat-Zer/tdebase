@@ -376,7 +376,7 @@ doPAMAuth( const char *psrv, struct pam_data *pdata )
 		V_RET_FAIL( 0 );
 	}
 	if ((td->displayType & d_location) == dForeign) {
-		char *cp = (char*)strchr( td->name, ':' );
+		char *cp = strchr( td->name, ':' );
 		*cp = 0;
 		pretc = pam_set_item( pamh, PAM_RHOST, td->name );
 		*cp = ':';
@@ -566,7 +566,7 @@ Verify( GConvFunc gconv, int rootok )
 		char *tmpch;
 		strncpy( hostname, td->name, sizeof(hostname) - 1 );
 		hostname[sizeof(hostname)-1] = '\0';
-		if ((tmpch = (char*)strchr( hostname, ':' )))
+		if ((tmpch = strchr( hostname, ':' )))
 			*tmpch = '\0';
 	} else
 		hostname[0] = '\0';

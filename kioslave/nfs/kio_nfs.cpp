@@ -89,7 +89,7 @@ int x_getdomainname(char *name, size_t len)
       {
          if ((hent = gethostbyname(uts.nodename)) != 0L)
          {
-            char *p = (char*)strchr(hent->h_name, '.');
+            char *p = strchr(hent->h_name, '.');
             if (p != 0L)
             {
                ++p;

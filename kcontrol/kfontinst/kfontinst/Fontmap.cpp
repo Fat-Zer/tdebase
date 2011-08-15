@@ -65,13 +65,13 @@ static bool parseLine(const char *line, TQString &ps, TQString &fname, bool &isA
     char a[constMaxLen+1],
          b[constFileMaxLen+1];
 
-    char *slash1=(char*)strchr(line, '/'),
+    char *slash1=const_cast<char*>(strchr(line, '/')),
          *space1=slash1 ? (char*)findSpace(slash1) : NULL, //strchr(slash1, ' ') : NULL,
-         *ob=slash1 ? (char*)strchr(slash1, '(') : NULL,
-         *cb=ob ? (char*)strchr(ob, ')') : NULL,
-         *slash2=space1 && !ob && !cb ? (char*)strchr(space1, '/') : NULL,
+         *ob=slash1 ? strchr(slash1, '(') : NULL,
+         *cb=ob ? strchr(ob, ')') : NULL,
+         *slash2=space1 && !ob && !cb ? strchr(space1, '/') : NULL,
          *space2=slash2 ? (char*)findSpace(slash2) : NULL, // strchr(slash2, ' ') : NULL,
-         *semic=cb || space2 ? (char*)strchr(cb ? cb : space2, ';') : NULL;
+         *semic=cb || space2 ? strchr(cb ? cb : space2, ';') : NULL;
 
     if(semic && space1-slash1<constMaxLen)
     {

@@ -713,10 +713,10 @@ static void add_links(char *c)
     /* search for (section) */
     nr=0;
     idtest[0]=strstr(c+1,"://");
-    idtest[1]=(char*)strchr(c+1,'@');
+    idtest[1]=strchr(c+1,'@');
     idtest[2]=strstr(c,"www.");
     idtest[3]=strstr(c,"ftp.");
-    idtest[4]=(char*)strchr(c+1,'(');
+    idtest[4]=strchr(c+1,'(');
     idtest[5]=strstr(c+1,".h&gt;");
     for (i=0; i<numtests; ++i) nr += (idtest[i]!=NULL);
     while (nr) {
@@ -771,7 +771,7 @@ static void add_links(char *c)
 	case 4: /* manpage */
 	    f=idtest[j];
 	    /* check section */
-	    g=(char*)strchr(f,')');
+	    g=strchr(f,')');
             // The character before f must alphanumeric, the end of a HTML tag or the end of a &nbsp;
             if (g!=NULL && f>c && (g-f)<12 && (isalnum(f[-1]) || f[-1]=='>' || ( f[-1] == ';' ) ) &&
 		isdigit(f[1]) && f[1]!='0' && ((g-f)<=2 || isalpha(f[2])))
@@ -937,10 +937,10 @@ static void add_links(char *c)
 	}
 	nr=0;
 	if (idtest[0] && idtest[0]<=c) idtest[0]=strstr(c+1,"://");
-	if (idtest[1] && idtest[1]<=c) idtest[1]=(char*)strchr(c+1,'@');
+	if (idtest[1] && idtest[1]<=c) idtest[1]=strchr(c+1,'@');
 	if (idtest[2] && idtest[2]<c) idtest[2]=strstr(c,"www.");
 	if (idtest[3] && idtest[3]<c) idtest[3]=strstr(c,"ftp.");
-	if (idtest[4] && idtest[4]<=c) idtest[4]=(char*)strchr(c+1,'(');
+	if (idtest[4] && idtest[4]<=c) idtest[4]=strchr(c+1,'(');
 	if (idtest[5] && idtest[5]<=c) idtest[5]=strstr(c+1,".h&gt;");
         for (i=0; i<numtests; i++) nr += (idtest[i]!=NULL);
     }
@@ -3715,8 +3715,8 @@ static char *scan_request(char *c)
                     char* font[2] = { "B", "R" };
                     c+=j;
                     if (*c=='\n') c++;
-                    char *eol=(char*)strchr(c,'\n');
-                    char *semicolon=(char*)strchr(c,';');
+                    char *eol=strchr(c,'\n');
+                    char *semicolon=strchr(c,';');
                     if ((semicolon!=0) && (semicolon<eol)) *semicolon=' ';
         
                     sl=fill_words(c, wordlist, &words, true, &c);
@@ -4340,7 +4340,7 @@ static char *scan_request(char *c)
                 case REQ_Bl: // mdoc(7) "Begin List"
                 {
                     char list_options[NULL_TERMINATED(MED_STR_MAX)];
-                    char *nl = (char*)strchr(c,'\n');
+                    char *nl = strchr(c,'\n');
                     c=c+j;
                     if (dl_set[itemdepth])
                     /* These things can nest. */
@@ -4521,7 +4521,7 @@ static char *scan_request(char *c)
 	       case REQ_Bd:	/* mdoc(7) */
 	       {			/* Seems like a kind of example/literal mode */
                     char bd_options[NULL_TERMINATED(MED_STR_MAX)];
-                    char *nl = (char*)strchr(c,'\n');
+                    char *nl = strchr(c,'\n');
                     c=c+j;
                     if (nl)
                         strlimitcpy(bd_options, c, nl - c, MED_STR_MAX);
@@ -4879,8 +4879,8 @@ static char *scan_request(char *c)
                     }
                     else if (!mandoc_name_count)
                     {
-                        char *nextbreak = (char*)strchr(c, '\n');
-                        char *nextspace = (char*)strchr(c, ' ');
+                        char *nextbreak = strchr(c, '\n');
+                        char *nextspace = strchr(c, ' ');
                         if (nextspace < nextbreak)
                             nextbreak = nextspace;
 

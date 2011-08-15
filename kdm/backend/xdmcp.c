@@ -395,8 +395,8 @@ NetworkAddressToName( CARD16 connectionType, ARRAY8Ptr connectionAddress,
 						 * this is as useful, and will confuse more
 						 * people
 						 */
-						if ((localDot = (char*)strchr( localhost, '.' )) &&
-						    (remoteDot = (char*)strchr( hostname, '.' )))
+						if ((localDot = strchr( localhost, '.' )) &&
+						    (remoteDot = strchr( hostname, '.' )))
 						{
 							/* smash the name in place; it won't
 							 * be needed later.
@@ -1099,7 +1099,7 @@ NetworkAddressToHostname( CARD16 connectionType, ARRAY8Ptr connectionAddress )
 			  oki:
 				if (StrDup( &name, he->h_name ) &&
 				    !strchr( name, '.' ) &&
-				    (myDot = (char*)strchr( localHostname(), '.' )))
+				    (myDot = strchr( localHostname(), '.' )))
 				{
 					if (ASPrintf( &lname, "%s%s", name, myDot )) {
 #if defined(IPv6) && defined(AF_INET6)

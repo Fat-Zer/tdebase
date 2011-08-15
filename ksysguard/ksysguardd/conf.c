@@ -93,9 +93,9 @@ void parseConfigFile( const char *filename )
     if ( line[ strlen( line ) - 1 ] == '\n' )
       line[ strlen( line ) - 1 ] = '\0';
 
-    if ( !strncmp( line, "RegisterDomain",14) && (begin = (char*)strchr( line, '=' )) ) RegisterDomain=strdup(begin+1);
+    if ( !strncmp( line, "RegisterDomain",14) && (begin = strchr( line, '=' )) ) RegisterDomain=strdup(begin+1);
 
-    if ( !strncmp( line, "LogFiles", 8 ) && (begin = (char*)strchr( line, '=' )) ) {
+    if ( !strncmp( line, "LogFiles", 8 ) && (begin = strchr( line, '=' )) ) {
       begin++;
 
       for ( token = strtok( begin, "," ); token; token = strtok( NULL, "," ) ) {
@@ -104,7 +104,7 @@ void parseConfigFile( const char *filename )
           continue;
         }
         confLog->name = strdup( token );
-        tmp = (char*)strchr( confLog->name, ':' );
+        tmp = strchr( confLog->name, ':' );
         *tmp = '\0';
         confLog->path = tmp;
         confLog->path++;
@@ -113,7 +113,7 @@ void parseConfigFile( const char *filename )
       }
     }
 
-    if ( !strncmp( line, "Sensors", 7 ) && (begin = (char*)strchr( line, '=' )) ) {
+    if ( !strncmp( line, "Sensors", 7 ) && (begin = strchr( line, '=' )) ) {
       begin++;
 
       for ( token = strtok( begin, ","); token; token = strtok( NULL, "," ) )

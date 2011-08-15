@@ -413,7 +413,7 @@ putEnv( const char *string, char **env )
 	char *n;
 	char *b;
 
-	if (!(b = (char*)strchr( string, '=' )))
+	if (!(b = strchr( string, '=' )))
 		return NULL;
 	if (!StrNDup( &n, string, b - string ))
 		return NULL;

@@ -77,8 +77,8 @@ DM::DM() : fd( -1 )
 			}
 			GDMAuthenticate();
 		} else {
-			if ((ptr = (char*)strchr( dpy, ':' )))
-				ptr = (char*)strchr( ptr, '.' );
+			if ((ptr = const_cast<char*>(strchr( dpy, ':' ))))
+				ptr = strchr( ptr, '.' );
 			snprintf( sa.sun_path, sizeof(sa.sun_path),
 			          "%s/dmctl-%.*s/socket",
 			          ctl, ptr ? int(ptr - dpy) : 512, dpy );

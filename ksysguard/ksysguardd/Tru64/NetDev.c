@@ -435,9 +435,9 @@ void printIPackets( const char *cmd ) {
 	char	*name, *ptr;
 	int	i;
 
-	ptr = (char*)strchr( cmdcopy, (int) '/' );
+	ptr = strchr( cmdcopy, (int) '/' );
 	name = ++ptr;
-	ptr = (char*)strchr( name, (int) '/' );
+	ptr = strchr( name, (int) '/' );
 	*ptr = '\0';
 
 	for( i = 0; i < NetDevCount; i++ ) {
@@ -463,9 +463,9 @@ void printOPackets( const char *cmd ) {
 	char	*name, *ptr;
 	int	i;
 
-	ptr = (char*)strchr( cmdcopy, (int) '/' );
+	ptr = strchr( cmdcopy, (int) '/' );
 	name = ++ptr;
-	ptr = (char*)strchr( name, (int) '/' );
+	ptr = strchr( name, (int) '/' );
 	*ptr = '\0';
 
 	for( i = 0; i < NetDevCount; i++ ) {
@@ -491,9 +491,9 @@ void printIErrors( const char *cmd ) {
 	char	*name, *ptr;
 	int	i;
 
-	ptr = (char*)strchr( cmdcopy, (int) '/' );
+	ptr = strchr( cmdcopy, (int) '/' );
 	name = ++ptr;
-	ptr = (char*)strchr( name, (int) '/' );
+	ptr = strchr( name, (int) '/' );
 	*ptr = '\0';
 
 	for( i = 0; i < NetDevCount; i++ ) {
@@ -519,9 +519,9 @@ void printOErrors( const char *cmd ) {
 	char	*name, *ptr;
 	int	i;
 
-	ptr = (char*)strchr( cmdcopy, (int) '/' );
+	ptr = strchr( cmdcopy, (int) '/' );
 	name = ++ptr;
-	ptr = (char*)strchr( name, (int) '/' );
+	ptr = strchr( name, (int) '/' );
 	*ptr = '\0';
 
 	for( i = 0; i < NetDevCount; i++ ) {
@@ -547,9 +547,9 @@ void printCollisions( const char *cmd ) {
 	char	*name, *ptr;
 	int	i;
 
-	ptr = (char*)strchr( cmdcopy, (int) '/' );
+	ptr = strchr( cmdcopy, (int) '/' );
 	name = ++ptr;
-	ptr = (char*)strchr( name, (int) '/' );
+	ptr = strchr( name, (int) '/' );
 	*ptr = '\0';
 
 	for( i = 0; i < NetDevCount; i++ ) {
@@ -575,9 +575,9 @@ void printMultiXmits( const char *cmd ) {
 	char	*name, *ptr;
 	int	i;
 
-	ptr = (char*)strchr( cmdcopy, (int) '/' );
+	ptr = strchr( cmdcopy, (int) '/' );
 	name = ++ptr;
-	ptr = (char*)strchr( name, (int) '/' );
+	ptr = strchr( name, (int) '/' );
 	*ptr = '\0';
 
 	for( i = 0; i < NetDevCount; i++ ) {
@@ -603,9 +603,9 @@ void printMultiRecvs( const char *cmd ) {
 	char	*name, *ptr;
 	int	i;
 
-	ptr = (char*)strchr( cmdcopy, (int) '/' );
+	ptr = strchr( cmdcopy, (int) '/' );
 	name = ++ptr;
-	ptr = (char*)strchr( name, (int) '/' );
+	ptr = strchr( name, (int) '/' );
 	*ptr = '\0';
 
 	for( i = 0; i < NetDevCount; i++ ) {
@@ -631,9 +631,9 @@ void printBcastXmits( const char *cmd ) {
 	char	*name, *ptr;
 	int	i;
 
-	ptr = (char*)strchr( cmdcopy, (int) '/' );
+	ptr = strchr( cmdcopy, (int) '/' );
 	name = ++ptr;
-	ptr = (char*)strchr( name, (int) '/' );
+	ptr = strchr( name, (int) '/' );
 	*ptr = '\0';
 
 	for( i = 0; i < NetDevCount; i++ ) {
@@ -659,9 +659,9 @@ void printBcastRecvs( const char *cmd ) {
 	char	*name, *ptr;
 	int	i;
 
-	ptr = (char*)strchr( cmdcopy, (int) '/' );
+	ptr = strchr( cmdcopy, (int) '/' );
 	name = ++ptr;
-	ptr = (char*)strchr( name, (int) '/' );
+	ptr = strchr( name, (int) '/' );
 	*ptr = '\0';
 
 	for( i = 0; i < NetDevCount; i++ ) {

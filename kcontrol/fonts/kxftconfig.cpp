@@ -1147,7 +1147,7 @@ void KXftConfig::readContents()
             if(*ptr=='\"')
             {
                 ptr++;
-                if(NULL!=(eostr=(char*)strchr(ptr, '\"')) && eostr-ptr<constMaxDataLen)
+                if(NULL!=(eostr=strchr(ptr, '\"')) && eostr-ptr<constMaxDataLen)
                 {
                     memcpy(data, ptr, eostr-ptr);
                     data[eostr-ptr]='\0';
@@ -1183,7 +1183,7 @@ void KXftConfig::readContents()
                     if(*ptr=='\"')
                     {
                         ptr++;
-                        if(NULL!=(eostr=(char*)strchr(ptr, '\"')) && eostr-ptr<constMaxDataLen)
+                        if(NULL!=(eostr=strchr(ptr, '\"')) && eostr-ptr<constMaxDataLen)
                         {
                             memcpy(data, ptr, eostr-ptr);
                             data[eostr-ptr]='\0';

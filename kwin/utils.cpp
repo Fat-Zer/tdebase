@@ -317,7 +317,7 @@ bool isLocalMachine( const TQCString& host )
         hostnamebuf[sizeof(hostnamebuf)-1] = 0;
         if (host == hostnamebuf)
             return true;
-        if( char *dot = (char*)strchr(hostnamebuf, '.'))
+        if( char *dot = strchr(hostnamebuf, '.'))
             {
             *dot = '\0';
             if( host == hostnamebuf )

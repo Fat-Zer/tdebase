@@ -332,7 +332,7 @@ locate( const char *exe )
 	memcpy( name, exe, len + 1 );
 	*--name = '/';
 	do {
-		if (!(pathe = (char*)strchr( path, ':' )))
+		if (!(pathe = strchr( path, ':' )))
 			pathe = path + strlen( path );
 		len = pathe - path;
 		if (len && !(len == 1 && *path == '.')) {
@@ -1345,7 +1345,7 @@ mk_willing( Entry *ce, Section *cs ATTR_UNUSED )
 	if (!ce->active) /* there is only the Global one */
 		goto dflt;
 	else {
-		if (!(fname = (char*)strchr( ce->value, '/' )))
+		if (!(fname = strchr( ce->value, '/' )))
 			return; /* obviously in-line (or empty) */
 		if (old_scripts || inNewDir( fname ))
 			dlinkfile( fname );

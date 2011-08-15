@@ -134,7 +134,7 @@ sessreg( struct display *d, int pid, const char *user, int uid )
 	}
 	ut_ent.ut_time = time( 0 );
 
-	colon = (char*)strchr( d->name, ':' );
+	colon = strchr( d->name, ':' );
 	clen = strlen( colon );
 	if (clen > (int)(sizeof(ut_ent.ut_line) - UTL_OFF) - 2)
 		return; /* uhm, well ... */
@@ -175,7 +175,7 @@ sessreg( struct display *d, int pid, const char *user, int uid )
 			colon = d->name;
 			left = 0;
 		} else {
-			dot = (char*)strchr( d->name, '.' );
+			dot = strchr( d->name, '.' );
 			if (dot && dot - d->name < left) {
 				memcpy( ut_ent.ut_line + UTL_OFF, d->name, left - 1 );
 				ut_ent.ut_line[UTL_OFF + left - 1] = '~';

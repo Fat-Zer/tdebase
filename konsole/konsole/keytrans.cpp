@@ -143,7 +143,7 @@ bool KeyTrans::findEntry(int key, int bits, int* cmd, const char** txt, int* len
         char *c;
 	char mask = '1' + BITS(0, bits&(1<<BITS_Shift)) + BITS(1, bits&(1<<BITS_Alt)) + BITS(2, bits&(1<<BITS_Control));
         strcpy(buf, it.current()->txt.ascii());
-        c = (char*)strchr(buf, '*');
+        c = strchr(buf, '*');
         if (c) *c = mask;
         *txt = buf;
       }
