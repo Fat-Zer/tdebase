@@ -93,7 +93,7 @@ GreeterApp::GreeterApp()
 	}
 }
 
-GreeterApp::GreeterApp(Display *dpy) : KApplication(dpy)
+GreeterApp::GreeterApp(Display *dpy, Qt::HANDLE visual, Qt::HANDLE colormap) : KApplication(dpy, visual, colormap)
 {
 	pingInterval = _isLocal ? 0 : _pingInterval;
 	if (pingInterval) {
@@ -212,7 +212,7 @@ kg_main( const char *argv0 )
 
 	GreeterApp *app;
 	if ( (argb_visual_available == true) && (!_compositor.isEmpty()) ) {
-		app = new GreeterApp(dpyi);
+		app = new GreeterApp(dpyi, Qt::HANDLE( visual ), Qt::HANDLE( colormap ));
 	}
 	else {
 		app = new GreeterApp();

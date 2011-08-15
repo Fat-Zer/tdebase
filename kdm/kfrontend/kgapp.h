@@ -34,7 +34,7 @@ class GreeterApp : public KApplication {
 
   public:
 	GreeterApp();
-	GreeterApp(Display *dpy);
+	GreeterApp(Display *dpy, Qt::HANDLE visual, Qt::HANDLE colormap);
 	virtual bool x11EventFilter( XEvent * );
 
   protected:
