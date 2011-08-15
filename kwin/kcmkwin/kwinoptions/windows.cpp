@@ -1345,9 +1345,9 @@ KTranslucencyConfig::KTranslucencyConfig (bool _standAlone, KConfig *_config, TQ
 //   sGroup->setCheckable(TRUE);
   TQVBoxLayout *vLay2 = new TQVBoxLayout (sGroup,11,6);
   vLay2->addSpacing(11); // to get the proper gb top offset
-  useShadows = new TQCheckBox(i18n("Use shadows (requires standard effects to be disabled in the Styles module)"),sGroup);
+  useShadows = new TQCheckBox(i18n("Use shadows (standard effects should be disabled in the Styles module if this is checked)"),sGroup);
   vLay2->addWidget(useShadows);
-  
+
   vLay2->addSpacing(11);
 
   TQGridLayout *gLay2 = new TQGridLayout(vLay2,6,2);
@@ -1380,6 +1380,10 @@ KTranslucencyConfig::KTranslucencyConfig (bool _standAlone, KConfig *_config, TQ
   menuWindowShadowSize->setRange(0,32);
 //   menuWindowShadowSize->setSuffix("px");
   gLay2->addWidget(menuWindowShadowSize,3,1);
+
+  // Menu shadow settings don't work
+  label3a->hide();
+  menuWindowShadowSize->hide();
 
   TQLabel *label4 = new TQLabel(i18n("Vertical offset:"),sGroup);
   gLay2->addWidget(label4,4,0);
