@@ -1239,7 +1239,7 @@ locale.</para>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>$<envar>KDE_FULL_SESSION</envar></term><listitem><para>
+<varlistentry><term>$<envar>TDE_FULL_SESSION</envar></term><listitem><para>
 (Since &kde; 3.2)  Automatically set to true by &kde; startup, it is used
 by &eg; &konqueror; to know if it should consider remaining in memory
 for future re-use when being closed. If not set, &konqueror; will exit
