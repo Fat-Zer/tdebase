@@ -26,7 +26,7 @@ install( FILES
     Totally-New-Product-1.jpg Totally-New-Product-1.jpg.desktop
     triplegears.jpg triplegears.jpg.desktop
     Won-Ton-Soup-3.jpg Won-Ton-Soup-3.jpg.desktop
-    KDE34.png KDE34.png.desktop
+    Trinity4.png Trinity4.png.desktop
     aghi.jpg aghi.jpg.desktop
     andes-venezolanos.svgz andes-venezolanos.svgz.desktop
     aurora.svgz aurora.svgz.desktop
