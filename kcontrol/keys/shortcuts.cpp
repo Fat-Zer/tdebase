@@ -177,7 +177,7 @@ void ShortcutsModule::initGUI()
 	m_pTab->setMargin( KDialog::marginHint() );
 	pVLayout->addWidget( m_pTab );
 
-	// See if ~/.kde3/env/win-key.sh exists
+	// See if ~/.trinity/env/win-key.sh exists
 	TQFile f( kde_winkeys_env_dir + "win-key.sh" );
 	if ( f.exists() == false ) {
 		// No, it does not, so Win is a modifier
@@ -460,7 +460,7 @@ void ShortcutsModule::slotUseRmWinKeysClicked()
 {
 	TQString kde_winkeys_env_dir = KGlobal::dirs()->localkdedir() + "/env/";
 
-	// See if ~/.kde3/env/win-key.sh exists
+	// See if ~/.trinity/env/win-key.sh exists
 	TQFile f( kde_winkeys_env_dir + "win-key.sh" );
 	if ( f.exists() == false ) {
 		// No, it does not, so Win is currently a modifier

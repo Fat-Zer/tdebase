@@ -48,8 +48,8 @@
  - $KDEDIR/bin/khotkeys
  - $KDEDIR/lib/libkcm_khotkeys.la
  - $KDEDIR/lib/libkcm_khotkeys.so
- - $KDEDIR/lib/kde3/libkcm_khotkeys.la
- - $KDEDIR/lib/kde3/libkcm_khotkeys.so
+ - $KDEDIR/lib/trinity/libkcm_khotkeys.la
+ - $KDEDIR/lib/trinity/libkcm_khotkeys.so
  - $KDEDIR/lib/khotkeys.la
  - $KDEDIR/lib/khotkeys.so
  - $KDEDIR/lib/libkhotkeys.la

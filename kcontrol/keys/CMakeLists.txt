@@ -27,7 +27,7 @@ install( FILES kaccel.upd DESTINATION ${KCONF_UPDATE_INSTALL_DIR} )
 install( PROGRAMS convertShortcuts.pl DESTINATION ${KCONF_UPDATE_INSTALL_DIR} )
 
 install( FILES
-    wm3.kksrc kde3.kksrc kde4.kksrc win3.kksrc
+    wm3.kksrc trinity.kksrc kde4.kksrc win3.kksrc
     win4.kksrc mac4.kksrc unix3.kksrc
   DESTINATION ${DATA_INSTALL_DIR}/kcmkeys )
 

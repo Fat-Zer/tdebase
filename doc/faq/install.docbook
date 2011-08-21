@@ -413,7 +413,7 @@ should take care of all dependencies.</para>
 <para>If you compile the source code yourself, you should take more care.
 Instructions for running two different versions of &kde; on the same system are
 given at <ulink
-url="http://developer.kde.org/build/kde2-and-kde3.html">http://developer.kde.org/build/kde2-and-kde3.html</ulink>.
+url="http://developer.kde.org/build/kde2-and-trinity.html">http://developer.kde.org/build/kde2-and-trinity.html</ulink>.
 However, please note that running two different versions of &kde; from source
 can lead to problems if you are not careful. </para>
 </answer>

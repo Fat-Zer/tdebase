@@ -428,7 +428,7 @@ void KKeyModule::readScheme( int index )
 {
   TQStringList schemes = KGlobal::dirs()->findAllResources("data", "kcmkeys/" + KeyType + "/*.kksrc");
   //TQRegExp r( "-kde[34].kksrc$" );
-  TQRegExp r( "-kde3.kksrc$" );
+  TQRegExp r( "-trinity.kksrc$" );
 
   sList->clear();
   sFileList->clear();

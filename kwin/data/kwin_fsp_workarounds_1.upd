@@ -1,4 +1,4 @@
-Id=kde351
+Id=trinity51
 # the file is intentionally a dummy, as the binary will update kwinrulesrc,
 # file kwinrules_update will just remember it has been done
 File=kwinrules_update

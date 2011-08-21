@@ -1,10 +1,10 @@
-Id=kde3.0r1
+Id=trinity.0r1
 File=kwinrc
 Options=overwrite
 Script=pluginlibFix.pl,perl
 
 # Xinerama fixups
-Id=kde3.2Xinerama
+Id=trinity.2Xinerama
 File=kwinrc,kdeglobals
 Group=Windows
 Key=XineramaEnabled

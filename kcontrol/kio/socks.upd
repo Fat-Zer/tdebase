@@ -1,5 +1,5 @@
 # Hello world
-Id=kde3.0/r1
+Id=trinity.0/r1
 File=ksocksrc,kdeglobals
 Group=<default>,Socks
 Key=Custom Lib,SOCKS_lib

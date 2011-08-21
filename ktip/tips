@@ -631,7 +631,7 @@ You may specify print files and/or name a printer from the command line:
 kprinter -d infotec \
    /home/kurt/paragliding.jpg \
    ../kdeprint-handbook.pdf \
-   /opt/kde3/flyer.ps
+   /opt/trinity/flyer.ps
 </pre>
  This prints 3 different files (from different folders) to printer "infotec".
  </p>

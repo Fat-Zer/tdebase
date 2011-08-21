@@ -18,5 +18,5 @@ updatedir = $(kde_datadir)/kconf_update
 
 xdg_apps_DATA = keys.desktop
 
-scheme_DATA = wm3.kksrc kde3.kksrc kde4.kksrc win3.kksrc win4.kksrc mac4.kksrc unix3.kksrc
+scheme_DATA = wm3.kksrc trinity.kksrc kde4.kksrc win3.kksrc win4.kksrc mac4.kksrc unix3.kksrc
 schemedir = $(kde_datadir)/kcmkeys

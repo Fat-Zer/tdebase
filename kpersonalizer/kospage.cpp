@@ -171,7 +171,7 @@ void KOSPage::writeKDE(){
 	cklipper->setGroup("General");
 	cklipper->writeEntry("Synchronize", false);
 
-	writeKeyEntrys(locate("keys", "kde3.kksrc"));
+	writeKeyEntrys(locate("keys", "trinity.kksrc"));
 }
 
 
@@ -311,7 +311,7 @@ void KOSPage::writeKeyEntrys(TQString keyfile){
 	// load the given .kksrc - file
 	KSimpleConfig* scheme = new KSimpleConfig(keyfile, true);
 	// load the default .kksrc - file
-	KSimpleConfig* defScheme = new KSimpleConfig(locate("keys", "kde3.kksrc"), true);
+	KSimpleConfig* defScheme = new KSimpleConfig(locate("keys", "trinity.kksrc"), true);
 
 	// we need the entries from the default - file, so we can compare with them
 	TQMap<TQString, TQString> defMap = defScheme->entryMap("Global Shortcuts");
@@ -335,7 +335,7 @@ void KOSPage::writeKeyEntrys(TQString keyfile){
 	cglobal->setGroup("Shortcuts");
 	givenMap = scheme->entryMap("Shortcuts");
 	for ( TQMap<TQString, TQString>::Iterator it = givenMap.begin(); it != givenMap.end(); ++it ) {
-		// only write the entry, if it defers from kde3.kksrc
+		// only write the entry, if it defers from trinity.kksrc
 		if ( defMap[it.key()] != it.data() ) {
 			cglobal->writeEntry(it.key(), it.data(), true, true);
 		}

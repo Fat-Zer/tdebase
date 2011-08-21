@@ -1,5 +1,5 @@
 # This is comment
-Id=kde3
+Id=trinity
 File=kcmdisplayrc
 Group=X11
 Options=copy

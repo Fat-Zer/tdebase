@@ -48,11 +48,11 @@
 #endif
 
 #if defined(BSD) || defined(__linux__)
-# define DEF_USER_PATH "/usr/local/bin:/opt/kde3/bin:/usr/bin:/bin:/opt/kde3/games:/usr/games"
-# define DEF_SYSTEM_PATH "/usr/local/sbin:/usr/local/bin:/opt/kde3/sbin:/usr/sbin:/opt/kde3/bin:/usr/bin:/sbin:/bin"
+# define DEF_USER_PATH "/usr/local/bin:/opt/trinity/bin:/usr/bin:/bin:/opt/trinity/games:/usr/games"
+# define DEF_SYSTEM_PATH "/usr/local/sbin:/usr/local/bin:/opt/trinity/sbin:/usr/sbin:/opt/trinity/bin:/usr/bin:/sbin:/bin"
 #else
-# define DEF_USER_PATH "/usr/local/bin:/opt/kde3/bin:/usr/bin:/bin:/opt/kde3/games:/usr/games:/usr/ucb"
-# define DEF_SYSTEM_PATH "/usr/local/sbin:/usr/local/bin:/opt/kde3/sbin:/usr/sbin:/opt/kde3/bin:/usr/bin:/sbin:/bin:/etc:/usr/ucb"
+# define DEF_USER_PATH "/usr/local/bin:/opt/trinity/bin:/usr/bin:/bin:/opt/trinity/games:/usr/games:/usr/ucb"
+# define DEF_SYSTEM_PATH "/usr/local/sbin:/usr/local/bin:/opt/trinity/sbin:/usr/sbin:/opt/trinity/bin:/usr/bin:/sbin:/bin:/etc:/usr/ucb"
 #endif
 
 #if 0 /*def HASXDMAUTH*/

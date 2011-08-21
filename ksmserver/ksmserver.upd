@@ -1,5 +1,5 @@
 # Move session config files from $KDEHOME/share/config to $KDEHOME/share/config/session
-Id=kde3
+Id=trinity
 File=ksmserverrc
 Group=Session
 Options=overwrite

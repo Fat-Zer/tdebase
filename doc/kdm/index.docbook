@@ -298,7 +298,7 @@ system, and that you simply want to change its behavior in some way.</para>
 
 <para>When &kdm; starts up, it reads its configuration from the folder
 <filename class="directory">$KDEDIR/share/config/kdm/</filename> (this may
-be <filename class="directory">/etc/kde3/kdm/</filename> or something else
+be <filename class="directory">/etc/trinity/kdm/</filename> or something else
 on your system).</para>
 
 <para>The main configuration file is &kdmrc;; all other files are

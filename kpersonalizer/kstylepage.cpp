@@ -390,7 +390,7 @@ void KStylePage::getColors(colorSet *set, bool colorfile ){
 	set->windowForeground=config->readColorEntry( "windowForeground", &black );
 	set->windowBackground=config->readColorEntry( "windowBackground", &white );
 	set->selectForeground=config->readColorEntry( "selectForeground", &white );
-	set->selectBackground=config->readColorEntry( "selectBackground", &kde34Blue );
+	set->selectBackground=config->readColorEntry( "selectBackground", &trinity4Blue );
 	set->buttonForeground=config->readColorEntry( "buttonForeground", &black );
 	set->buttonBackground=config->readColorEntry( "buttonBackground", &button );
 	set->linkColor=config->readColorEntry( "linkColor", &link );
@@ -493,7 +493,7 @@ void KStylePage::getUserDefaults() {
 /** initialize KDE default color values */
 void KStylePage::initColors() {
 	widget.setRgb(239, 239, 239);
-	kde34Blue.setRgb(103,141,178);
+	trinity4Blue.setRgb(103,141,178);
         inactiveBackground.setRgb(157,170,186);
         activeBackground.setRgb(65,142,220);
         inactiveForeground.setRgb(221,221,221);

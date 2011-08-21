@@ -80,10 +80,10 @@ else
   if [ -d $HOME/.trinity ]; then
     # OK, this one is obvious.
     export KDEHOME=$HOME/.trinity
-  elif [ -d $HOME/.kde3 ]; then
+  elif [ -d $HOME/.trinity ]; then
     # Looks like the user had an old version of Trinity installed at last login
-    echo "[startkde] Migrating old ~/.kde3 directory to new ~/.trinity name." 1>&2
-    mv $HOME/.kde3 $HOME/.trinity
+    echo "[startkde] Migrating old ~/.trinity directory to new ~/.trinity name." 1>&2
+    mv $HOME/.trinity $HOME/.trinity
     export KDEHOME=$HOME/.trinity
   elif [ -f /usr/bin/kde4-config ]; then
     # Looks like KDE4 is installed.
@@ -117,11 +117,11 @@ if [ -z "$KDEROOTHOME" ] && [ "$UID" = "0" ]; then
 fi
 
 # Modify the following environment variables only as necessary.
-if [ -d /opt/kde3/games ]; then
-  export PATH=/opt/kde3/games:$PATH
+if [ -d /opt/trinity/games ]; then
+  export PATH=/opt/trinity/games:$PATH
 fi
-if [ -d /opt/kde3/bin ]; then
-  export PATH=/opt/kde3/bin:$PATH
+if [ -d /opt/trinity/bin ]; then
+  export PATH=/opt/trinity/bin:$PATH
 fi
 if [ -d /opt/trinity/games ]; then
   export PATH=/opt/trinity/games:$PATH
@@ -129,29 +129,29 @@ fi
 if [ -d /opt/trinity/bin ]; then
   export PATH=/opt/trinity/bin:$PATH
 fi
-if [ -d /opt/kde3/share ]; then
-  export XDG_DATA_DIRS=$XDG_DATA_DIRS:/opt/kde3/share/:/usr/share/
+if [ -d /opt/trinity/share ]; then
+  export XDG_DATA_DIRS=$XDG_DATA_DIRS:/opt/trinity/share/:/usr/share/
 fi
 if [ -d /opt/trinity/share ]; then
   export XDG_DATA_DIRS=$XDG_DATA_DIRS:/opt/trinity/share/:/usr/share/
 fi
-if [ -d /opt/kde3/etc/xdg ]; then
-  export XDG_CONFIG_DIRS=$XDG_CONFIG_DIRS:/opt/kde3/etc/xdg/:/etc/xdg/
+if [ -d /opt/trinity/etc/xdg ]; then
+  export XDG_CONFIG_DIRS=$XDG_CONFIG_DIRS:/opt/trinity/etc/xdg/:/etc/xdg/
 fi
 if [ -d /opt/trinity/etc/xdg ]; then
   export XDG_CONFIG_DIRS=$XDG_CONFIG_DIRS:/opt/trinity/etc/xdg/:/etc/xdg/
 fi
-if [ -d /opt/kde3/share/man ]; then
-  export MANPATH=/opt/kde3/share/man:$MANPATH
+if [ -d /opt/trinity/share/man ]; then
+  export MANPATH=/opt/trinity/share/man:$MANPATH
 fi
 if [ -d /opt/trinity/share/man ]; then
   export MANPATH=/opt/trinity/share/man:$MANPATH
 fi
-if [ -d /opt/kde3 ]; then
+if [ -d /opt/trinity ]; then
   if [ -n "$KDEDIRS" ]; then
-    export KDEDIRS=$KDEDIRS:/opt/kde3/:/usr/
+    export KDEDIRS=$KDEDIRS:/opt/trinity/:/usr/
   else
-    export KDEDIRS=/opt/kde3/:/usr/
+    export KDEDIRS=/opt/trinity/:/usr/
   fi
 fi
 if [ -d /opt/trinity ]; then

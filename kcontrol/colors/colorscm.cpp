@@ -737,7 +737,7 @@ void KColorScheme::readScheme( int index )
     KConfigBase* config;
 
     TQColor widget(239, 239, 239);
-    TQColor kde34Blue(103,141,178);
+    TQColor trinity4Blue(103,141,178);
     TQColor inactiveBackground(157,170,186);
     TQColor activeBackground(65,142,220);
     TQColor inactiveForeground(221,221,221);
@@ -761,7 +761,7 @@ void KColorScheme::readScheme( int index )
       sCurrentScheme  = "<default>";
       cs->txt         = black;
       cs->back        = widget;
-      cs->select      = kde34Blue;
+      cs->select      = trinity4Blue;
       cs->selectTxt   = white;
       cs->window      = white;
       cs->windowTxt   = black;
@@ -810,7 +810,7 @@ void KColorScheme::readScheme( int index )
     // note: defaults should be the same as the KDE default
     cs->txt = config->readColorEntry( "foreground", &black );
     cs->back = config->readColorEntry( "background", &widget );
-    cs->select = config->readColorEntry( "selectBackground", &kde34Blue );
+    cs->select = config->readColorEntry( "selectBackground", &trinity4Blue );
     cs->selectTxt = config->readColorEntry( "selectForeground", &white );
     cs->window = config->readColorEntry( "windowBackground", &white );
     cs->windowTxt = config->readColorEntry( "windowForeground", &black );

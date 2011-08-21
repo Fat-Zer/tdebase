@@ -71,7 +71,7 @@ private:
 	} usrColors, currentColors;
 	// first, the KDE 2 default color values
 	TQColor widget;
-	TQColor kde34Blue;
+	TQColor trinity4Blue;
         TQColor inactiveBackground;
         TQColor activeBackground;
 	TQColor button;

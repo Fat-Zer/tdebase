@@ -130,7 +130,7 @@ class="directory">/etc/fonts/local.conf</filename>.  This should be
 the first line after <quote>&lt;fontconfig&gt;</quote>.  For example:
 <programlisting>
 &lt;fontconfig&gt;
-&lt;dir&gt;/usr/kde3/share/fonts&lt;/dir&gt;
+&lt;dir&gt;/usr/trinity/share/fonts&lt;/dir&gt;
 &lt;/fontconfig&gt;
 </programlisting>
 After adding the directory, run (as root):

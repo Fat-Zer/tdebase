@@ -1,8 +1,8 @@
-Id=kde321
+Id=trinity21
 # the file is intentionally a dummy, as the binary will update khotkeysrc,
 # the khotkeys_update will just remember it has been done
 File=khotkeys_update
 Group=Dummy
 Options=overwrite
-ScriptArguments=--id konqueror_gestures_kde321
+ScriptArguments=--id konqueror_gestures_trinity21
 Script=khotkeys_update

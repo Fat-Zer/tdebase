@@ -1,4 +1,4 @@
-Id=kde3.4.99
+Id=trinity.4.99
 File=kdeglobals,kcminputrc
 Group=KDE,Mouse
 Options=overwrite

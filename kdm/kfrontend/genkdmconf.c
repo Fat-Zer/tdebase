@@ -594,12 +594,12 @@ static const char def_startup[] =
 "    xmessage -file /etc/nologin -geometry 640x480\n"
 "  fi\n"
 "  if [ \"$(id -u)\" != \"0\" ] && \\\n"
-"     ! grep -qs '^ignore-nologin' /etc/kde3/kdm/kdm.options; then\n"
+"     ! grep -qs '^ignore-nologin' /etc/trinity/kdm/kdm.options; then\n"
 "    exit 1\n"
 "  fi\n"
 "fi\n"
 "\n"
-"if grep -qs '^use-sessreg' /etc/kde3/kdm/kdm.options && \\\n"
+"if grep -qs '^use-sessreg' /etc/trinity/kdm/kdm.options && \\\n"
 "   which sessreg > /dev/null 2>&1; then\n"
 "      exec sessreg -a -l \"$DISPLAY\" -u /var/run/utmp \\\n"
 "                   -h \"`echo $DISPLAY | cut -d: -f1`\" \"$USER\"\n"
@@ -620,7 +620,7 @@ static const char def_reset[] =
 "#devname=`echo $DISPLAY | cut -c1-8`\n"
 "#exec sessreg -d -l xdm/$devname -h \"`echo $DISPLAY | cut -d: -f1`\""
 #else
-"if grep -qs '^use-sessreg' /etc/kde3/kdm/kdm.options && \\\n"
+"if grep -qs '^use-sessreg' /etc/trinity/kdm/kdm.options && \\\n"
 "   which sessreg > /dev/null 2>&1; then\n"
 "      exec sessreg -d -l \"$DISPLAY\" -u /var/run/utmp \\\n"
 "                   -h \"`echo $DISPLAY | cut -d: -f1`\" \"$USER\"\n"
@@ -2527,8 +2527,8 @@ fwrapprintf( FILE *f, const char *msg, ... )
 
 static const char *oldkdes[] = {
 	KDE_CONFDIR,
-	"/opt/kde3/share/config",
-	"/usr/local/kde3/share/config",
+	"/opt/trinity/share/config",
+	"/usr/local/trinity/share/config",
 
 	"/opt/kde/share/config",
 	"/usr/local/kde/share/config",
@@ -2581,7 +2581,7 @@ int main( int argc, char **argv )
 "  --old-kde /path/to/old/kde-config-dir\n"
 "    Where to look for the kdmrc of an older kdm.\n"
 "    Default is to scan " KDE_CONFDIR " and\n"
-"    {/usr,/usr/local,{/opt,/usr/local}/{kde3,kde,kde2,kde1}}/share/config.\n"
+"    {/usr,/usr/local,{/opt,/usr/local}/{trinity,kde,kde2,kde1}}/share/config.\n"
 "  --no-old\n"
 "    Don't look at older xdm/kdm configurations, just create default config.\n"
 "  --no-old-xdm\n"
