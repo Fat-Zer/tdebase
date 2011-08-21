@@ -1433,7 +1433,7 @@ KTranslucencyConfig::KTranslucencyConfig (bool _standAlone, KConfig *_config, TQ
 
   tabW->addTab(eGroup, i18n("Effects"));
 
-  useTranslucency = new TQCheckBox(i18n("Use translucency/shadows"),this);
+  useTranslucency = new TQCheckBox(i18n("Enable the Trinity window composition manager"),this);
   lay->addWidget(useTranslucency);
   lay->addWidget(tabW);
 
