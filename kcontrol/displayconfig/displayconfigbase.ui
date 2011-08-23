@@ -249,7 +249,15 @@
 						    <string>&amp;Extend my Trinity desktop onto this monitor.</string>
 					    </property>
 				    </widget>
-				    <widget class="KPushButton" row="8" column="3" colspan="4">
+				    <widget class="KPushButton" row="8" column="2" colspan="1">
+					    <property name="name">
+						    <cstring>previewConfiguration</cstring>
+					    </property>
+					    <property name="text">
+						    <string>&amp;Test Settings</string>
+					    </property>
+				    </widget>
+				    <widget class="KPushButton" row="8" column="3" colspan="1">
 					    <property name="name">
 						    <cstring>identifyMonitors</cstring>
 					    </property>
