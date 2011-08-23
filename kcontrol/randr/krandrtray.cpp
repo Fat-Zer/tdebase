@@ -640,8 +640,9 @@ void KRandRSystemTray::slotCycleDisplays()
 			// resize events when switching screens, so KDE gets stuck in the old resolution
 			// This only seems to happen with more than one screen, so check for that condition...
 			if (kapp->desktop()->numScreens() > 1) {
-				currentScreen()->proposeSize(GetHackResolutionParameter());
-				currentScreen()->applyProposed();
+// 				currentScreen()->proposeSize(GetHackResolutionParameter());
+// 				currentScreen()->applyProposed();
+				kapp->desktop()->emitResizedSignal(currentScreenIndex());
 			}
 
 			currentScreen()->proposeSize(GetDefaultResolutionParameter());

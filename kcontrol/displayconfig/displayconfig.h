@@ -52,14 +52,14 @@ public:
 	//KDisplayConfig(TQWidget *parent = 0L, const char *name = 0L);
 	KDisplayConfig(TQWidget *parent, const char *name, const TQStringList &);
 	virtual ~KDisplayConfig();
-	
+
 	DisplayConfigBase *base;
-	
+
 	void load();
 	void load( bool useDefaults);
 	void save();
 	void defaults();
-	
+
 	int buttons();
 	TQString quickHelp() const;
 
@@ -109,6 +109,7 @@ private slots:
 	void updateExtendedMonitorInformation (void);
 	void processLockoutControls (void);
 	void rotationInfoChanged (void);
+	void refreshInfoChanged (void);
 	void activatePreview (void);
 };
 
