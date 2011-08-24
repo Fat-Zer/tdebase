@@ -693,7 +693,10 @@ KDisplayConfig::KDisplayConfig(TQWidget *parent, const char *name, const TQStrin
 
 	connect(base->systemEnableSupport, TQT_SIGNAL(toggled(bool)), base->monitorDisplaySelectDD, TQT_SLOT(setEnabled(bool)));
 
+	connect(base->rescanHardware, TQT_SIGNAL(clicked()), TQT_SLOT(rescanHardware()));
+	connect(base->loadExistingProfile, TQT_SIGNAL(clicked()), TQT_SLOT(reloadProfile()));
 	connect(base->previewConfiguration, TQT_SIGNAL(clicked()), TQT_SLOT(activatePreview()));
+	connect(base->identifyMonitors, TQT_SIGNAL(clicked()), TQT_SLOT(identifyMonitors()));
 
 	load();
 
@@ -718,6 +721,59 @@ void KDisplayConfig::updateExtendedMonitorInformation () {
 	screendata->is_extended = base->isExtendedMonitorCB->isChecked();
 
 	refreshDisplayedInformation();
+}
+
+void KDisplayConfig::rescanHardware (void) {
+	m_randrsimple->destroyScreenInformationObject(m_screenInfoArray);
+	m_screenInfoArray = m_randrsimple->readCurrentDisplayConfiguration();
+	m_randrsimple->ensureMonitorDataConsistency(m_screenInfoArray);
+	numberOfScreens = m_screenInfoArray.count();
+	refreshDisplayedInformation();
+}
+
+void KDisplayConfig::reloadProfile (void) {
+	// FIXME
+	m_randrsimple->destroyScreenInformationObject(m_screenInfoArray);
+	m_screenInfoArray = m_randrsimple->loadSystemwideDisplayConfiguration("", KDE_CONFDIR);
+	m_randrsimple->ensureMonitorDataConsistency(m_screenInfoArray);
+	numberOfScreens = m_screenInfoArray.count();
+	refreshDisplayedInformation();
+}
+
+void KDisplayConfig::identifyMonitors () {
+	int i;
+
+	TQLabel* idWidget;
+	TQPtrList<TQWidget> widgetList;
+
+	Display *randr_display;
+	ScreenInfo *randr_screen_info;
+	XRROutputInfo *output_info;
+
+	randr_display = XOpenDisplay(NULL);
+	randr_screen_info = m_randrsimple->read_screen_info(randr_display);
+
+	for (i = 0; i < randr_screen_info->n_output; i++) {
+		output_info = randr_screen_info->outputs[i]->info;
+		// Look for ON outputs...
+		if (!randr_screen_info->outputs[i]->cur_crtc) {
+			continue;
+		}
+		SingleScreenData *screendata = m_screenInfoArray.at(i);
+		idWidget = new TQLabel(TQString("Screen\n%1").arg(i+1), (TQWidget*)0, "", Qt::WStyle_Customize | Qt::WStyle_NoBorder | Qt::WStyle_StaysOnTop | Qt::WX11BypassWM | Qt::WDestructiveClose);
+		widgetList.append(idWidget);
+		idWidget->resize(150, 100);
+		idWidget->setAlignment(Qt::AlignCenter);
+		TQFont font = idWidget->font();
+		font.setBold( true );
+		font.setPointSize(24);
+		idWidget->setFont( font );
+		idWidget->setPaletteForegroundColor(Qt::white);
+		idWidget->setPaletteBackgroundColor(Qt::black);
+		idWidget->show();
+		KDialog::centerOnScreen(idWidget, i);
+		TQTimer::singleShot(3000, idWidget, SLOT(close()));
+	}
 }
 
 void KDisplayConfig::deleteProfile () {
@@ -1038,6 +1094,9 @@ void KDisplayConfig::processLockoutControls() {
 			base->resolutionTab->setEnabled(false);
 		}
 	}
+
+	base->loadExistingProfile->setEnabled(false);	// Disable this until it works properly!
+	base->loadExistingProfile->hide();		// Same as above
 }
 
 void KDisplayConfig::addTab( const TQString name, const TQString label )

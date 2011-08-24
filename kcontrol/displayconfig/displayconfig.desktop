@@ -20,4 +20,4 @@ MimeType=
 Name=Monitor and Display
 Name[en_US]=Monitor and Display
 
-NoDisplay=true
+NoDisplay=false

@@ -249,6 +249,22 @@
 						    <string>&amp;Extend my Trinity desktop onto this monitor.</string>
 					    </property>
 				    </widget>
+				    <widget class="KPushButton" row="8" column="0" colspan="1">
+					    <property name="name">
+						    <cstring>rescanHardware</cstring>
+					    </property>
+					    <property name="text">
+						    <string>&amp;Rescan Displays</string>
+					    </property>
+				    </widget>
+				    <widget class="KPushButton" row="8" column="1" colspan="1">
+					    <property name="name">
+						    <cstring>loadExistingProfile</cstring>
+					    </property>
+					    <property name="text">
+						    <string>Load &amp;Existing Profile</string>
+					    </property>
+				    </widget>
 				    <widget class="KPushButton" row="8" column="2" colspan="1">
 					    <property name="name">
 						    <cstring>previewConfiguration</cstring>

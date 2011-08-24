@@ -64,7 +64,7 @@ tde_add_executable( kdm_greet AUTOMOC
     kfdialog.cpp kgdialog.cpp kchooser.cpp kgverify.cpp
     kdmshutdown.cpp kdmadmindialog.cpp kgreeter.cpp
     kgapp.cpp
-  LINK kdmthemer-static kdeui-shared Xtst
+  LINK kdmthemer-static kdeui-shared Xtst krandr-shared
   DESTINATION ${BIN_INSTALL_DIR}
 )
 

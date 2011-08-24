@@ -111,6 +111,9 @@ private slots:
 	void rotationInfoChanged (void);
 	void refreshInfoChanged (void);
 	void activatePreview (void);
+	void identifyMonitors (void);
+	void rescanHardware (void);
+	void reloadProfile (void);
 };
 
 #endif

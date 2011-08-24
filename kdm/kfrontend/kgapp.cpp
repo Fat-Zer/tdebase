@@ -40,6 +40,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include <ksimpleconfig.h>
 #include <klocale.h>
 #include <kdebug.h>
+#include <libkrandr/libkrandr.h>
 
 #include <tqtimer.h>
 #include <tqstring.h>
@@ -230,6 +231,11 @@ kg_main( const char *argv0 )
 	if (!_GUIStyle.isEmpty())
 		app->setStyle( _GUIStyle );
 
+	// Load up systemwide display settings
+	KRandrSimpleAPI *randrsimple = new KRandrSimpleAPI();
+	TQPoint primaryScreenPosition = randrsimple->applySystemwideDisplayConfiguration("", KDE_CONFDIR);
+	delete randrsimple;
+
 	// Load up the systemwide ICC profile
 	TQString iccConfigFile = TQString(KDE_CONFDIR);
 	iccConfigFile += "/kicc/kiccconfigrc";
@@ -273,7 +279,7 @@ kg_main( const char *argv0 )
 
 	GSendInt( G_Ready );
 
-	kdDebug() << timestamp() << " main1" << endl;	
+	kdDebug() << timestamp() << " main1" << endl;
 	setCursor( dpy, app->desktop()->winId(), XC_left_ptr );
 
 	for (;;) {
@@ -323,8 +329,12 @@ kg_main( const char *argv0 )
 					dialog = new KStdGreeter;
 				}
 				XSetErrorHandler( (XErrorHandler)0 );
-			} else
+			} else {
 				dialog = new KStdGreeter;
+			}
+			dialog->move(primaryScreenPosition.x(), primaryScreenPosition.y());
+			TQPoint oldCursorPos = TQCursor::pos();
+			TQCursor::setPos(oldCursorPos.x() + primaryScreenPosition.x(), oldCursorPos.y() + primaryScreenPosition.y());
 			if (*_preloader) {
 				proc2 = new KProcess;
 				*proc2 << _preloader;
