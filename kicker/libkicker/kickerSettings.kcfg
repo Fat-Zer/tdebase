@@ -43,6 +43,12 @@
       <default>false</default>
    </entry>
 
+<entry name="MenubarPanelBlurred" type="Bool" >
+      <label>Enable blurring for menubar panel</label>
+      <whatsthis>When this option is enabled, the panel containing the menubar will blur pseudo-transparent image</whatsthis>
+      <default>false</default>
+   </entry>
+
 <entry name="UseBackgroundTheme" type="Bool" >
       <label>Enable background image</label>
       <whatsthis>When this option is enabled, the panel will display a tiled image as its background</whatsthis>

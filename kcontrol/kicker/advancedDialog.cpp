@@ -63,6 +63,8 @@ advancedDialog::advancedDialog(TQWidget* parent, const char* name)
             this, TQT_SLOT(changed()));
     connect(m_advancedWidget->menubarPanelTransparent, TQT_SIGNAL(clicked()),
             this, TQT_SLOT(changed()));
+    connect(m_advancedWidget->menubarPanelBlurred, TQT_SIGNAL(clicked()),
+            this, TQT_SLOT(changed()));
     connect(m_advancedWidget->kickerResizeHandle, TQT_SIGNAL(clicked()),
             this, TQT_SLOT(changed()));
     connect(m_advancedWidget->kickerDeepButtons, TQT_SIGNAL(clicked()),
@@ -94,9 +96,11 @@ void advancedDialog::load()
     m_advancedWidget->tintColorB->setColor( color );
     int tintValue = c.readNumEntry( "TintValue", 33 );
     m_advancedWidget->tintSlider->setValue( tintValue );
-    
+
     bool transparentMenubarPanel = c.readBoolEntry("MenubarPanelTransparent", false);
     m_advancedWidget->menubarPanelTransparent->setChecked( transparentMenubarPanel );
+    bool blurredMenubarPanel = c.readBoolEntry("MenubarPanelBlurred", false);
+    m_advancedWidget->menubarPanelBlurred->setChecked( blurredMenubarPanel );
 
     bool useKickerResizeHandle = c.readBoolEntry("UseResizeHandle", false);
     m_advancedWidget->kickerResizeHandle->setChecked( useKickerResizeHandle );
@@ -123,6 +127,8 @@ void advancedDialog::save()
                  m_advancedWidget->tintSlider->value());
     c.writeEntry("MenubarPanelTransparent",
                  m_advancedWidget->menubarPanelTransparent->isChecked());
+    c.writeEntry("MenubarPanelBlurred",
+                 m_advancedWidget->menubarPanelBlurred->isChecked());
     c.writeEntry("UseResizeHandle",
                  m_advancedWidget->kickerResizeHandle->isChecked());
     c.writeEntry("ShowDeepButtons",
@@ -157,6 +163,8 @@ void advancedDialog::save()
                              m_advancedWidget->tintSlider->value());
         extConfig.writeEntry("MenubarPanelTransparent",
                              m_advancedWidget->menubarPanelTransparent->isChecked());
+        extConfig.writeEntry("MenubarPanelBlurred",
+                             m_advancedWidget->menubarPanelBlurred->isChecked());
         extConfig.writeEntry("UseResizeHandle",
                              m_advancedWidget->kickerResizeHandle->isChecked());
         extConfig.writeEntry("ShowDeepButtons",

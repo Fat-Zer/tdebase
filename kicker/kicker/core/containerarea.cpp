@@ -1446,6 +1446,12 @@ void ContainerArea::setBackground()
 
         double tint = double(KickerSettings::tintValue()) / 100;
         _rootPixmap->setFadeEffect(tint, KickerSettings::tintColor());
+        if (KickerSettings::menubarPanelBlurred()) {
+            _rootPixmap->setBlurEffect(0.0, 4.0);
+        }
+        else {
+            _rootPixmap->setBlurEffect(0.0, 0.0);
+        }
         _rootPixmap->start();
         _bgSet = true;
         return;
