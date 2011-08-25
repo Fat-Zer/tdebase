@@ -1,7 +1,3 @@
-**************** THIS IS NOT YET COMPLETE ****************
-AS SUCH IT SHOULD REMAIN DISABLED UNTIL IT IS COMPLETE
-**********************************************************
-
 NOTES:
-1.) This loads the monitor settings quite well and even lets the user play with them, but it cannot save. or even apply the settings to hardware yet.
+1.) Some control of the display power saving timeouts would be nice.
 2.) Profile support should probably be added.  Imagine having multiple display profiles--a portable device could plug into a docking station and be set up in seconds!  The same idea applies for presentations, etc.

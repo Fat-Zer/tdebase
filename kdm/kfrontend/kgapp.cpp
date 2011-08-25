@@ -332,7 +332,7 @@ kg_main( const char *argv0 )
 			} else {
 				dialog = new KStdGreeter;
 			}
-			dialog->move(primaryScreenPosition.x(), primaryScreenPosition.y());
+			dialog->move(dialog->x() + primaryScreenPosition.x(), dialog->y() + primaryScreenPosition.y());
 			TQPoint oldCursorPos = TQCursor::pos();
 			TQCursor::setPos(oldCursorPos.x() + primaryScreenPosition.x(), oldCursorPos.y() + primaryScreenPosition.y());
 			if (*_preloader) {
