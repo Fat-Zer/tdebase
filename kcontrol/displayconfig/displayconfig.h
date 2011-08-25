@@ -91,6 +91,10 @@ private:
 	bool applyMonitorLayoutRules(void);
 	bool applyMonitorLayoutRules(DraggableMonitor* primary_monitor);
 	void updateDraggableMonitorInformationInternal (int, bool);
+	TQTimer* m_gammaApplyTimer;
+	void gammaSetAverageAllSlider();
+	void setGammaLabels();
+	void generateSortedResolutions();
 
 private slots:
 	void selectProfile (int slotNumber);
@@ -114,6 +118,13 @@ private slots:
 	void identifyMonitors (void);
 	void rescanHardware (void);
 	void reloadProfile (void);
+	void gammaAllSliderChanged(int index);
+	void gammaRedSliderChanged(int index);
+	void gammaGreenSliderChanged(int index);
+	void gammaBlueSliderChanged(int index);
+	void applyGamma();
+	void gammaselectScreen (int slotNumber);
+	void gammaTargetChanged (int slotNumber);
 };
 
 #endif

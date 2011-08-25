@@ -43,6 +43,7 @@
 #include <kurlrequester.h>
 #include <kcmoduleloader.h>
 #include <kgenericfactory.h>
+#include <kstandarddirs.h>
 
 #include <unistd.h>
 #include <ksimpleconfig.h>
@@ -642,18 +643,84 @@ void KDisplayConfig::moveMonitor(DraggableMonitor* monitor, int realx, int realy
 		monitor->move(base->monitorPhyArrange->width(), base->monitorPhyArrange->height());
 }
 
+// int KDisplayConfig::realResolutionSliderValue() {
+// 	return base->resolutionSlider->maxValue() - base->resolutionSlider->value();
+// }
+//
+// void KDisplayConfig::setRealResolutionSliderValue(int index) {
+// 	base->resolutionSlider->setValue(base->resolutionSlider->maxValue() - index);
+// }
+
+TQStringList sortResolutions(TQStringList unsorted) {
+	int i;
+	int xres;
+	int largest;
+	TQStringList sorted;
+	TQStringList::Iterator it;
+	TQStringList::Iterator largestit;
+
+	while (unsorted.count()) {
+		largest = -1;
+		for ( it = unsorted.begin(); it != unsorted.end(); ++it ) {
+			TQString resolutionstring = *it;
+			int separator_pos = resolutionstring.find(" x ");
+			TQString x_res_string = resolutionstring.left(separator_pos);
+			TQString y_res_string = resolutionstring.right(resolutionstring.length()-separator_pos-3);
+			xres = x_res_string.toInt();
+			if (xres > largest) {
+				largest = xres;
+				largestit = it;
+			}
+		}
+		sorted.prepend(*largestit);
+		unsorted.remove(largestit);
+	}
+
+	return sorted;
+}
+
 int KDisplayConfig::realResolutionSliderValue() {
-	return base->resolutionSlider->maxValue() - base->resolutionSlider->value();
+	int i;
+	int j;
+	SingleScreenData *screendata;
+
+	screendata = m_screenInfoArray.at(base->monitorDisplaySelectDD->currentItem());
+	TQStringList sortedList = screendata->resolutions;
+	sortedList = sortResolutions(sortedList);
+
+	j=0;
+	for (i=0; i<screendata->resolutions.count(); i++) {
+		if ((*sortedList.at(base->resolutionSlider->value())) == (*screendata->resolutions.at(i))) {
+			j=i;
+		}
+	}
+
+	return j;
 }
 
 void KDisplayConfig::setRealResolutionSliderValue(int index) {
-	base->resolutionSlider->setValue(base->resolutionSlider->maxValue() - index);
+	int i;
+	int j;
+	SingleScreenData *screendata;
+
+	screendata = m_screenInfoArray.at(base->monitorDisplaySelectDD->currentItem());
+	TQStringList sortedList = screendata->resolutions;
+	sortedList = sortResolutions(sortedList);
+
+	j=0;
+	for (i=0; i<screendata->resolutions.count(); i++) {
+		if ((*sortedList.at(i)) == (*screendata->resolutions.at(index))) {
+			j=i;
+		}
+	}
+
+	base->resolutionSlider->setValue(j);
 }
 
 /**** KDisplayConfig ****/
 
 KDisplayConfig::KDisplayConfig(TQWidget *parent, const char *name, const TQStringList &)
-  : KCModule(KDisplayCFactory::instance(), parent, name), m_randrsimple(0)
+  : KCModule(KDisplayCFactory::instance(), parent, name), m_randrsimple(0), m_gammaApplyTimer(0)
 {
 
 	m_randrsimple = new KRandrSimpleAPI();
@@ -669,6 +736,9 @@ KDisplayConfig::KDisplayConfig(TQWidget *parent, const char *name, const TQStrin
 	about->addAuthor("Timothy Pearson", 0, "kb9vqf@pearsoncomputing.net");
 	setAboutData( about );
 
+	m_gammaApplyTimer = new TQTimer();
+	connect(m_gammaApplyTimer, SIGNAL(timeout()), this, SLOT(applyGamma()));
+
 	base = new DisplayConfigBase(this);
 	layout->add(base);
 
@@ -678,12 +748,19 @@ KDisplayConfig::KDisplayConfig(TQWidget *parent, const char *name, const TQStrin
 	connect(base->systemEnableSupport, TQT_SIGNAL(clicked()), TQT_SLOT(changed()));
 	connect(base->systemEnableSupport, TQT_SIGNAL(clicked()), TQT_SLOT(processLockoutControls()));
 	connect(base->monitorDisplaySelectDD, TQT_SIGNAL(activated(int)), TQT_SLOT(changed()));
+	connect(base->gammamonitorDisplaySelectDD, TQT_SIGNAL(activated(int)), TQT_SLOT(changed()));
+	connect(base->gammaTargetSelectDD, TQT_SIGNAL(activated(int)), TQT_SLOT(gammaTargetChanged(int)));
 	connect(base->rotationSelectDD, TQT_SIGNAL(activated(int)), TQT_SLOT(rotationInfoChanged()));
 	connect(base->refreshRateDD, TQT_SIGNAL(activated(int)), TQT_SLOT(refreshInfoChanged()));
 	connect(base->orientationHFlip, TQT_SIGNAL(clicked()), TQT_SLOT(rotationInfoChanged()));
 	connect(base->orientationVFlip, TQT_SIGNAL(clicked()), TQT_SLOT(rotationInfoChanged()));
 	connect(base->resolutionSlider, TQT_SIGNAL(valueChanged(int)), TQT_SLOT(resolutionSliderChanged(int)));
+	connect(base->gammaAllSlider, TQT_SIGNAL(valueChanged(int)), TQT_SLOT(gammaAllSliderChanged(int)));
+	connect(base->gammaRedSlider, TQT_SIGNAL(valueChanged(int)), TQT_SLOT(gammaRedSliderChanged(int)));
+	connect(base->gammaGreenSlider, TQT_SIGNAL(valueChanged(int)), TQT_SLOT(gammaGreenSliderChanged(int)));
+	connect(base->gammaBlueSlider, TQT_SIGNAL(valueChanged(int)), TQT_SLOT(gammaBlueSliderChanged(int)));
 	connect(base->monitorDisplaySelectDD, TQT_SIGNAL(activated(int)), TQT_SLOT(selectScreen(int)));
+	connect(base->gammamonitorDisplaySelectDD, TQT_SIGNAL(activated(int)), TQT_SLOT(gammaselectScreen(int)));
 	connect(base->monitorPhyArrange, TQT_SIGNAL(workspaceRelayoutNeeded()), this, TQT_SLOT(layoutDragDropDisplay()));
 
 	connect(base->isPrimaryMonitorCB, TQT_SIGNAL(clicked()), TQT_SLOT(changed()));
@@ -708,6 +785,10 @@ KDisplayConfig::KDisplayConfig(TQWidget *parent, const char *name, const TQStrin
 KDisplayConfig::~KDisplayConfig()
 {
 	delete systemconfig;
+	if (m_gammaApplyTimer) {
+		delete m_gammaApplyTimer;
+		m_gammaApplyTimer = 0;
+	}
 	if (m_randrsimple) {
 		delete m_randrsimple;
 		m_randrsimple = 0;
@@ -750,7 +831,7 @@ void KDisplayConfig::identifyMonitors () {
 	ScreenInfo *randr_screen_info;
 	XRROutputInfo *output_info;
 
-	randr_display = XOpenDisplay(NULL);
+	randr_display = qt_xdisplay();
 	randr_screen_info = m_randrsimple->read_screen_info(randr_display);
 
 	for (i = 0; i < randr_screen_info->n_output; i++) {
@@ -774,6 +855,8 @@ void KDisplayConfig::identifyMonitors () {
 		KDialog::centerOnScreen(idWidget, i);
 		TQTimer::singleShot(3000, idWidget, SLOT(close()));
 	}
+
+	m_randrsimple->freeScreenInfoStructure(randr_screen_info);
 }
 
 void KDisplayConfig::deleteProfile () {
@@ -803,6 +886,7 @@ void KDisplayConfig::selectProfile (int slotNumber) {
 
 void KDisplayConfig::selectScreen (int slotNumber) {
 	base->monitorDisplaySelectDD->setCurrentItem(slotNumber);
+	base->gammamonitorDisplaySelectDD->setCurrentItem(slotNumber);
 	updateDisplayedInformation();
 }
 
@@ -920,6 +1004,12 @@ void KDisplayConfig::refreshDisplayedInformation () {
 		base->monitorDisplaySelectDD->insertItem(screendata->screenFriendlyName, i);
 	}
 	base->monitorDisplaySelectDD->setCurrentItem(currentScreenIndex);
+	base->gammamonitorDisplaySelectDD->clear();
+	for (i=0;i<numberOfScreens;i++) {
+		screendata = m_screenInfoArray.at(i);
+		base->gammamonitorDisplaySelectDD->insertItem(screendata->screenFriendlyName, i);
+	}
+	base->gammamonitorDisplaySelectDD->setCurrentItem(currentScreenIndex);
 
 	updateDisplayedInformation();
 
@@ -956,7 +1046,7 @@ void KDisplayConfig::updateDragDropDisplay() {
 	for (j=0;j<2;j++) {
 		for (i=0;i<numberOfScreens;i++) {
 			screendata = m_screenInfoArray.at(i);
-			if (((j==0) && (screendata->is_primary==true)) || (j==1)) {	// This ensures that the primary monitor is always the first one created and placed on the configuration widget
+			if (((j==0) && (screendata->is_primary==true)) || ((j==1) && (screendata->is_primary==false))) {	// This ensures that the primary monitor is always the first one created and placed on the configuration widget
 				TQString rotationDesired = *screendata->rotations.at(screendata->current_rotation_index);
 				bool isvisiblyrotated = ((rotationDesired == "Rotate 90 degrees") || (rotationDesired == "Rotate 270 degrees"));
 				DraggableMonitor *m = new DraggableMonitor( base->monitorPhyArrange, 0, WStyle_Customize | WDestructiveClose | WStyle_NoBorder | WX11BypassWM );
@@ -1080,18 +1170,173 @@ int KDisplayConfig::findScreenIndex(TQString screenName) {
 
 }
 
+void KDisplayConfig::setGammaLabels() {
+	SingleScreenData *screendata;
+
+	screendata = m_screenInfoArray.at(base->gammamonitorDisplaySelectDD->currentItem());
+
+	// Round off the gammas to one decimal place
+	screendata->gamma_red = floorf(screendata->gamma_red * 10 + 0.5) / 10;
+	screendata->gamma_green = floorf(screendata->gamma_green * 10 + 0.5) / 10;
+	screendata->gamma_blue = floorf(screendata->gamma_blue * 10 + 0.5) / 10;
+
+	// Set the labels
+	base->gammaAllLabel->setText(TQString("%1").tqarg(((float)base->gammaAllSlider->value())/10.0, 0, 'f', 1));
+	base->gammaRedLabel->setText(TQString("%1").tqarg(((float)base->gammaRedSlider->value())/10.0, 0, 'f', 1));
+	base->gammaGreenLabel->setText(TQString("%1").tqarg(((float)base->gammaGreenSlider->value())/10.0, 0, 'f', 1));
+	base->gammaBlueLabel->setText(TQString("%1").tqarg(((float)base->gammaBlueSlider->value())/10.0, 0, 'f', 1));
+}
+
+void KDisplayConfig::gammaSetAverageAllSlider() {
+	float average_gamma;
+	SingleScreenData *screendata;
+
+	screendata = m_screenInfoArray.at(base->gammamonitorDisplaySelectDD->currentItem());
+	average_gamma = (screendata->gamma_red+screendata->gamma_green+screendata->gamma_blue)/3.0;
+	average_gamma = floorf(average_gamma* 10 + 0.5) / 10;	// Round off the gamma to one decimal place
+	base->gammaAllSlider->setValue(average_gamma*10.0);
+}
+
+void KDisplayConfig::gammaselectScreen (int slotNumber) {
+	SingleScreenData *screendata;
+
+	base->gammaAllSlider->blockSignals(true);
+	base->gammaRedSlider->blockSignals(true);
+	base->gammaGreenSlider->blockSignals(true);
+	base->gammaBlueSlider->blockSignals(true);
+
+	screendata = m_screenInfoArray.at(base->gammamonitorDisplaySelectDD->currentItem());
+	base->gammaRedSlider->setValue(screendata->gamma_red*10.0);
+	base->gammaGreenSlider->setValue(screendata->gamma_green*10.0);
+	base->gammaBlueSlider->setValue(screendata->gamma_blue*10.0);
+	gammaSetAverageAllSlider();
+	setGammaLabels();
+
+	base->gammaAllSlider->blockSignals(false);
+	base->gammaRedSlider->blockSignals(false);
+	base->gammaGreenSlider->blockSignals(false);
+	base->gammaBlueSlider->blockSignals(false);
+}
+
+void KDisplayConfig::gammaAllSliderChanged(int index) {
+	SingleScreenData *screendata;
+
+	base->gammaAllSlider->blockSignals(true);
+	base->gammaRedSlider->blockSignals(true);
+	base->gammaGreenSlider->blockSignals(true);
+	base->gammaBlueSlider->blockSignals(true);
+
+	screendata = m_screenInfoArray.at(base->gammamonitorDisplaySelectDD->currentItem());
+
+	base->gammaRedSlider->setValue(base->gammaAllSlider->value());
+	base->gammaGreenSlider->setValue(base->gammaAllSlider->value());
+	base->gammaBlueSlider->setValue(base->gammaAllSlider->value());
+	setGammaLabels();
+
+	screendata->gamma_red = ((float)base->gammaAllSlider->value())/10.0;
+	screendata->gamma_green = ((float)base->gammaAllSlider->value())/10.0;
+	screendata->gamma_blue = ((float)base->gammaAllSlider->value())/10.0;
+
+	m_gammaApplyTimer->start(10, TRUE);
+
+	base->gammaAllSlider->blockSignals(false);
+	base->gammaRedSlider->blockSignals(false);
+	base->gammaGreenSlider->blockSignals(false);
+	base->gammaBlueSlider->blockSignals(false);
+
+	changed();
+}
+
+void KDisplayConfig::gammaRedSliderChanged(int index) {
+	SingleScreenData *screendata;
+
+	base->gammaAllSlider->blockSignals(true);
+	base->gammaRedSlider->blockSignals(true);
+	base->gammaGreenSlider->blockSignals(true);
+	base->gammaBlueSlider->blockSignals(true);
+
+	screendata = m_screenInfoArray.at(base->gammamonitorDisplaySelectDD->currentItem());
+	screendata->gamma_red = ((float)index)/10.0;
+	gammaSetAverageAllSlider();
+	setGammaLabels();
+	m_gammaApplyTimer->start(10, TRUE);
+
+	base->gammaAllSlider->blockSignals(false);
+	base->gammaRedSlider->blockSignals(false);
+	base->gammaGreenSlider->blockSignals(false);
+	base->gammaBlueSlider->blockSignals(false);
+
+	changed();
+}
+
+void KDisplayConfig::gammaGreenSliderChanged(int index) {
+	SingleScreenData *screendata;
+
+	base->gammaAllSlider->blockSignals(true);
+	base->gammaRedSlider->blockSignals(true);
+	base->gammaGreenSlider->blockSignals(true);
+	base->gammaBlueSlider->blockSignals(true);
+
+	screendata = m_screenInfoArray.at(base->gammamonitorDisplaySelectDD->currentItem());
+	screendata->gamma_green = ((float)index)/10.0;
+	gammaSetAverageAllSlider();
+	setGammaLabels();
+	m_gammaApplyTimer->start(10, TRUE);
+
+	base->gammaAllSlider->blockSignals(false);
+	base->gammaRedSlider->blockSignals(false);
+	base->gammaGreenSlider->blockSignals(false);
+	base->gammaBlueSlider->blockSignals(false);
+
+	changed();
+}
+
+void KDisplayConfig::gammaBlueSliderChanged(int index) {
+	SingleScreenData *screendata;
+
+	base->gammaAllSlider->blockSignals(true);
+	base->gammaRedSlider->blockSignals(true);
+	base->gammaGreenSlider->blockSignals(true);
+	base->gammaBlueSlider->blockSignals(true);
+
+	screendata = m_screenInfoArray.at(base->gammamonitorDisplaySelectDD->currentItem());
+	screendata->gamma_blue = ((float)index)/10.0;
+	gammaSetAverageAllSlider();
+	setGammaLabels();
+	m_gammaApplyTimer->start(10, TRUE);
+
+	base->gammaAllSlider->blockSignals(false);
+	base->gammaRedSlider->blockSignals(false);
+	base->gammaGreenSlider->blockSignals(false);
+	base->gammaBlueSlider->blockSignals(false);
+
+	changed();
+}
+
+void KDisplayConfig::applyGamma() {
+	m_randrsimple->applySystemwideDisplayGamma(m_screenInfoArray);
+}
+
+void KDisplayConfig::gammaTargetChanged (int slotNumber) {
+	TQPixmap gammaPixmap( locate("data", TQString("kcontrol/pics/gamma%1.png").arg(base->gammaTargetSelectDD->text(slotNumber))) );
+	base->gammaTestImage->setBackgroundPixmap( gammaPixmap );
+}
+
 void KDisplayConfig::processLockoutControls() {
 	if (getuid() != 0 || !systemconfig->checkConfigFilesWritable( true )) {
 		base->globalTab->setEnabled(false);
 		base->resolutionTab->setEnabled(false);
+		base->gammaTab->setEnabled(false);
 	}
 	else {
 		base->globalTab->setEnabled(true);
 		if (base->systemEnableSupport->isChecked()) {
 			base->resolutionTab->setEnabled(true);
+			base->gammaTab->setEnabled(true);
 		}
 		else {
 			base->resolutionTab->setEnabled(false);
+			base->gammaTab->setEnabled(false);
 		}
 	}
 
@@ -1132,6 +1377,17 @@ void KDisplayConfig::load(bool useDefaults )
 	base->systemEnableSupport->setChecked(systemconfig->readBoolEntry("EnableDisplayControl", false));
 
 	refreshDisplayedInformation();
+
+	gammaselectScreen(base->gammamonitorDisplaySelectDD->currentItem());
+	base->gammaTargetSelectDD->clear();
+	base->gammaTargetSelectDD->insertItem("1.4", 0);
+	base->gammaTargetSelectDD->insertItem("1.6", 1);
+	base->gammaTargetSelectDD->insertItem("1.8", 2);
+	base->gammaTargetSelectDD->insertItem("2.0", 3);
+	base->gammaTargetSelectDD->insertItem("2.2", 4);
+	base->gammaTargetSelectDD->insertItem("2.4", 5);
+	base->gammaTargetSelectDD->setCurrentItem(4);
+	gammaTargetChanged(4);
 
 	emit changed(useDefaults);
 }

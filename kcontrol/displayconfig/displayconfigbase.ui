@@ -302,6 +302,296 @@
                     </spacer>
                 </grid>
             </widget>
+	    <widget class="TQWidget">
+		    <property name="name">
+			    <cstring>gammaTab</cstring>
+		    </property>
+		    <attribute name="title">
+			    <string>Brightness and Gamma</string>
+		    </attribute>
+		    <grid>
+			    <property name="name">
+				    <cstring>unnamed</cstring>
+			    </property>
+			    <grid>
+				    <property name="name">
+					    <cstring>unnamed</cstring>
+				    </property>
+				    <widget class="TQLabel" row="0" column="0" colspan="1">
+					    <property name="name">
+						    <cstring>textLabel7_4</cstring>
+					    </property>
+					    <property name="text">
+						    <string>Display:</string>
+					    </property>
+				    </widget>
+				    <widget class="KComboBox" row="1" column="0" colspan="1">
+					    <property name="name">
+						    <cstring>gammamonitorDisplaySelectDD</cstring>
+					    </property>
+				    </widget>
+				    <widget class="TQGroupBox" row="2" column="0">
+					    <property name="name">
+						    <cstring>groupGamma</cstring>
+					    </property>
+					    <property name="title">
+						    <string>Gamma</string>
+					    </property>
+					    <grid>
+						    <widget class="TQGroupBox" row="0" column="0" colspan="1">
+							    <property name="name">
+								    <cstring>groupGammaImages</cstring>
+							    </property>
+							    <property name="title">
+								    <string>Visual Calibration Aid</string>
+							    </property>
+							    <grid>
+								    <widget class="TQWidget" row="0" column="0" colspan="2">
+									    <property name="name">
+										<cstring>gammaTestImage</cstring>
+									</property>
+									<property name="maximumSize">
+										<size>
+										<width>305</width>
+										<height>105</height>
+									</size>
+									</property>
+									<property name="minimumSize">
+										<size>
+										<width>305</width>
+										<height>105</height>
+									</size>
+									</property>
+								    </widget>
+								    <widget class="TQLabel" row="1" column="0" colspan="1">
+										<property name="name">
+										<cstring>textLabel7_4</cstring>
+									</property>
+									<property name="text">
+										<string>Target gamma:</string>
+									</property>
+								    </widget>
+								    <widget class="KComboBox" row="1" column="1" colspan="1">
+									<property name="name">
+										<cstring>gammaTargetSelectDD</cstring>
+									</property>
+								    </widget>
+								    <spacer row="0" column="2">
+									    <property name="name" stdset="0">
+										<cstring>Spacer6</cstring>
+									</property>
+									<property name="orientation">
+										<enum>Horizontal</enum>
+									</property>
+									<property name="sizeType">
+										<enum>Expanding</enum>
+									</property>
+									<property name="tqsizeHint">
+										<size>
+										<width>20</width>
+										<height>20</height>
+									</size>
+								    </property>
+								    </spacer>
+								    <spacer row="1" column="2">
+									    <property name="name" stdset="0">
+										<cstring>Spacer7</cstring>
+									</property>
+									<property name="orientation">
+										<enum>Horizontal</enum>
+									</property>
+									<property name="sizeType">
+										<enum>Expanding</enum>
+									</property>
+									<property name="tqsizeHint">
+										<size>
+										<width>20</width>
+										<height>20</height>
+									</size>
+									</property>
+								    </spacer>
+							</grid>
+						    </widget>
+						    <widget class="TQGroupBox" row="1" column="0" colspan="1">
+							    <property name="name">
+								    <cstring>groupHardware</cstring>
+							    </property>
+							    <property name="title">
+								    <string>Hardware Gamma Control</string>
+							    </property>
+							    <grid>
+								    <widget class="TQLabel" row="0" column="0">
+									    <property name="name">
+										<cstring>textLabel7_0</cstring>
+									</property>
+									<property name="text">
+										<string>All</string>
+									</property>
+								</widget>
+								<widget class="TQSlider" row="0" column="1" colspan="1">
+									<property name="name">
+										<cstring>gammaAllSlider</cstring>
+									</property>
+									<property name="maxValue">
+										<number>30</number>
+									</property>
+									<property name="orientation">
+										<enum>Horizontal</enum>
+									</property>
+									<property name="tickmarks">
+										<enum>Below</enum>
+									</property>
+									<property name="tickInterval">
+										<number>1</number>
+									</property>
+								</widget>
+								<widget class="TQLabel" row="0" column="2">
+									<property name="name">
+										<cstring>gammaAllLabel</cstring>
+									</property>
+									<property name="text">
+										<string></string>
+									</property>
+								</widget>
+								<widget class="TQLabel" row="1" column="0">
+									<property name="name">
+										<cstring>textLabel7_1</cstring>
+									</property>
+									<property name="text">
+										<string>Red</string>
+									</property>
+								</widget>
+								<widget class="TQSlider" row="1" column="1" colspan="1">
+									<property name="name">
+										<cstring>gammaRedSlider</cstring>
+									</property>
+									<property name="maxValue">
+										<number>30</number>
+									</property>
+									<property name="orientation">
+										<enum>Horizontal</enum>
+									</property>
+									<property name="tickmarks">
+										<enum>Below</enum>
+									</property>
+									<property name="tickInterval">
+										<number>1</number>
+									</property>
+								</widget>
+								<widget class="TQLabel" row="1" column="2">
+									<property name="name">
+										<cstring>gammaRedLabel</cstring>
+									</property>
+									<property name="text">
+										<string></string>
+									</property>
+								</widget>
+								<widget class="TQLabel" row="2" column="0">
+									<property name="name">
+										<cstring>textLabel7_2</cstring>
+									</property>
+									<property name="text">
+										<string>Green</string>
+									</property>
+								</widget>
+								<widget class="TQSlider" row="2" column="1" colspan="1">
+									<property name="name">
+										<cstring>gammaGreenSlider</cstring>
+									</property>
+									<property name="maxValue">
+										<number>30</number>
+									</property>
+									<property name="orientation">
+										<enum>Horizontal</enum>
+									</property>
+									<property name="tickmarks">
+										<enum>Below</enum>
+									</property>
+									<property name="tickInterval">
+										<number>1</number>
+									</property>
+								</widget>
+								<widget class="TQLabel" row="2" column="2">
+									<property name="name">
+										<cstring>gammaGreenLabel</cstring>
+									</property>
+									<property name="text">
+										<string></string>
+									</property>
+								</widget>
+								<widget class="TQLabel" row="3" column="0">
+									<property name="name">
+										<cstring>textLabel7_3</cstring>
+									</property>
+									<property name="text">
+										<string>Blue</string>
+									</property>
+								</widget>
+								<widget class="TQSlider" row="3" column="1" colspan="1">
+									<property name="name">
+										<cstring>gammaBlueSlider</cstring>
+									</property>
+									<property name="maxValue">
+										<number>30</number>
+									</property>
+									<property name="orientation">
+										<enum>Horizontal</enum>
+									</property>
+									<property name="tickmarks">
+										<enum>Below</enum>
+									</property>
+									<property name="tickInterval">
+										<number>1</number>
+									</property>
+								</widget>
+								<widget class="TQLabel" row="3" column="2">
+									<property name="name">
+										<cstring>gammaBlueLabel</cstring>
+									</property>
+									<property name="text">
+										<string></string>
+									</property>
+								</widget>
+							</grid>
+						    </widget>
+						    <widget class="TQLabel" row="2" column="0" colspan="1">
+							    <property name="name">
+								    <cstring>gammaTipText</cstring>
+							    </property>
+							    <property name="text">
+								    <string>Adjust the gamma sliders to make the squares above fade into their backgrounds as much as possible.</string>
+							    </property>
+						    </widget>
+						    <widget class="TQLabel" row="3" column="0" colspan="1">
+							    <property name="name">
+								    <cstring>gammaTipText2</cstring>
+							    </property>
+							    <property name="text">
+								    <string>Tip: Most computer software expects a gamma of 2.2.</string>
+							    </property>
+						    </widget>
+						    <spacer row="4" column="0">
+							    <property name="name" stdset="0">
+								    <cstring>Spacer4</cstring>
+							    </property>
+							    <property name="orientation">
+								    <enum>Vertical</enum>
+							    </property>
+							    <property name="sizeType">
+								    <enum>Expanding</enum>
+							    </property>
+							    <property name="tqsizeHint">
+								    <size>
+									    <width>20</width>
+									    <height>20</height>
+								    </size>
+							    </property>
+						    </spacer>
+					    </grid>
+				    </widget>
+			    </grid>
+		    </grid>
+	    </widget>
         </widget>
     </grid>
 </widget>

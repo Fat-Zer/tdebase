@@ -9,6 +9,8 @@
 #
 #################################################
 
+add_subdirectory( pics )
+
 include_directories(
   ${CMAKE_CURRENT_BINARY_DIR}
   ${CMAKE_BINARY_DIR}
