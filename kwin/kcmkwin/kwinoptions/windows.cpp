@@ -1518,11 +1518,11 @@ void KTranslucencyConfig::load( void )
 
   config->setGroup( "Translucency" );
   activeWindowTransparency->setChecked(config->readBoolEntry("TranslucentActiveWindows",false));
-  inactiveWindowTransparency->setChecked(config->readBoolEntry("TranslucentInactiveWindows",true));
+  inactiveWindowTransparency->setChecked(config->readBoolEntry("TranslucentInactiveWindows",false));
   movingWindowTransparency->setChecked(config->readBoolEntry("TranslucentMovingWindows",false));
   removeShadowsOnMove->setChecked(config->readBoolEntry("RemoveShadowsOnMove",false));
   removeShadowsOnResize->setChecked(config->readBoolEntry("RemoveShadowsOnResize",false));
-  dockWindowTransparency->setChecked(config->readBoolEntry("TranslucentDocks",true));
+  dockWindowTransparency->setChecked(config->readBoolEntry("TranslucentDocks",false));
   keepAboveAsActive->setChecked(config->readBoolEntry("TreatKeepAboveAsActive",true));
   onlyDecoTranslucent->setChecked(config->readBoolEntry("OnlyDecoTranslucent",false));
 
@@ -1547,7 +1547,7 @@ void KTranslucencyConfig::load( void )
 
   disableARGB->setChecked(conf_.readBoolEntry("DisableARGB",FALSE));
 
-  useShadows->setChecked(conf_.readEntry("Compmode","CompClientShadows").compare("CompClientShadows") == 0);
+  useShadows->setChecked(conf_.readEntry("Compmode","").compare("CompClientShadows") == 0);
   shadowTopOffset->setValue(-1*(conf_.readNumEntry("ShadowOffsetY",-80)));
   shadowLeftOffset->setValue(-1*(conf_.readNumEntry("ShadowOffsetX",0)));
 

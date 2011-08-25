@@ -16,6 +16,7 @@ Copyright (C) 2000 Matthias Ettrich <ettrich@kde.org>
 #include <tqframe.h>
 #include <kguiitem.h>
 #include <tqtoolbutton.h>
+#include <ksharedpixmap.h>
 
 class TQPushButton;
 class TQVButtonGroup;
@@ -73,6 +74,34 @@ private:
 
 };
 
+// The (singleton) widget that shows either pretty pictures or a black screen during logout
+class KSMShutdownIPFeedback : public TQWidget
+{
+    Q_OBJECT
+
+public:
+    static void start() { s_pSelf = new KSMShutdownIPFeedback(); }
+    static void stop() { if ( s_pSelf != 0L ) s_pSelf->fadeBack(); delete s_pSelf; s_pSelf = 0L; }
+    static KSMShutdownIPFeedback * self() { return s_pSelf; }
+
+protected:
+    ~KSMShutdownIPFeedback();
+
+private slots:
+    void slotPaintEffect();
+    void slotDone(bool success);
+
+private:
+    static KSMShutdownIPFeedback * s_pSelf;
+    KSMShutdownIPFeedback();
+    int m_currentY;
+    TQPixmap m_root;
+    void fadeBack( void );
+    TQString pixmapName(int desk);
+    KSharedPixmap* m_sharedpixmap;
+    void enableExports();
+    int m_timeout;
+};
 
 // The confirmation dialog
 class KSMShutdownDlg : public TQDialog
@@ -102,6 +131,21 @@ private:
     LibHalContext* m_halCtx;
     DBusConnection *m_dbusConn;
     bool m_lockOnResume;
+};
+
+// The shutdown-in-progress dialog
+class KSMShutdownIPDlg : public TQDialog
+{
+    Q_OBJECT
+
+public:
+    static void showShutdownIP();
+
+protected:
+    ~KSMShutdownIPDlg();
+
+private:
+    KSMShutdownIPDlg( TQWidget* parent );
 };
 
 class KSMDelayedPushButton : public KPushButton

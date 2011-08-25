@@ -57,7 +57,7 @@ Copyright (C) 2000 Matthias Ettrich <ettrich@kde.org>
 #include <math.h>
 #include <dmctl.h>
 #include <kaction.h>
-
+#include <netwm.h>
 
 #include <X11/Xlib.h>
 
@@ -490,6 +490,94 @@ void KSMShutdownFeedback::slotPaintEffect()
         }
     }
 
+}
+
+//////
+
+KSMShutdownIPFeedback * KSMShutdownIPFeedback::s_pSelf = 0L;
+
+KSMShutdownIPFeedback::KSMShutdownIPFeedback()
+ : TQWidget( 0L, "feedbackipwidget", Qt::WType_Popup | Qt::WStyle_StaysOnTop | Qt::WX11BypassWM ), m_sharedpixmap(0), m_timeout(0)
+
+{
+	m_sharedpixmap = new KSharedPixmap();
+	resize(0, 0);
+	setShown(true);
+
+	// At least show SOMETHING while waiting for the root pixmap...
+	TQPixmap drawable = TQPixmap(TQPixmap::grabWindow(qt_xrootwin(), 0, 0, TQApplication::desktop()->width(), TQApplication::desktop()->height())).convertToImage();
+	bitBlt( this, 0, 0, &drawable );
+
+	// Try to get and show the root pixmap
+	enableExports();
+	TQTimer::singleShot( 100, this, SLOT(slotPaintEffect()) );
+}
+
+KSMShutdownIPFeedback::~KSMShutdownIPFeedback()
+{
+	if (m_sharedpixmap)
+		delete m_sharedpixmap;
+}
+
+void KSMShutdownIPFeedback::fadeBack( void )
+{
+
+}
+
+TQString KSMShutdownIPFeedback::pixmapName(int desk) {
+	TQString pattern = TQString("DESKTOP%1");
+	int screen_number = DefaultScreen(qt_xdisplay());
+	if (screen_number) {
+		pattern = TQString("SCREEN%1-DESKTOP").arg(screen_number) + "%1";
+	}
+	return pattern.arg( desk );
+}
+
+void KSMShutdownIPFeedback::slotPaintEffect()
+{
+	NETRootInfo rinfo( qt_xdisplay(), NET::CurrentDesktop );
+	rinfo.activate();
+	int current_desktop = rinfo.currentDesktop();
+
+	m_sharedpixmap->loadFromShared(pixmapName(current_desktop), TQRect(0, 0, width(), height()));
+}
+
+void KSMShutdownIPFeedback::slotDone(bool success)
+{
+	if (!success)
+	{
+		kdWarning(270) << k_lineinfo << "loading of desktop background failed.\n";
+		if (m_timeout < 50) {
+			TQTimer::singleShot( 100, this, SLOT(slotPaintEffect()) );
+			m_timeout++;
+			return;
+		}
+	}
+
+	TQImage image = m_sharedpixmap->convertToImage();
+	TQPixmap drawable;
+	drawable.convertFromImage( image );
+	bitBlt( this, 0, 0, &drawable );
+}
+
+void KSMShutdownIPFeedback::enableExports()
+{
+#ifdef Q_WS_X11
+	kdDebug(270) << k_lineinfo << "activating background exports.\n";
+	DCOPClient *client = kapp->dcopClient();
+	if (!client->isAttached())
+	client->attach();
+	TQByteArray data;
+	TQDataStream args( data, IO_WriteOnly );
+	args << 1;
+	
+	TQCString appname( "kdesktop" );
+	int screen_number = DefaultScreen(qt_xdisplay());
+	if ( screen_number )
+		appname.sprintf("kdesktop-screen-%d", screen_number );
+	
+	client->send( appname, "KBackgroundIface", "setExport(int)", data );
+#endif
 }
 
 //////
@@ -961,6 +1049,69 @@ bool KSMShutdownDlg::confirmShutdown( bool maysd, KApplication::ShutdownType& sd
 
     kapp->disableStyles();
     return result;
+}
+
+void KSMShutdownIPDlg::showShutdownIP()
+{
+    kapp->enableStyles();
+    KSMShutdownIPDlg* l = new KSMShutdownIPDlg( 0 );
+
+    // Show dialog (will save the background in showEvent)
+    TQSize sh = l->tqsizeHint();
+    TQRect rect = KGlobalSettings::desktopGeometry(TQCursor::pos());
+
+    l->move(rect.x() + (rect.width() - sh.width())/2,
+            rect.y() + (rect.height() - sh.height())/2);
+
+    TQTimer *timer = new TQTimer(l);
+    connect( timer, SIGNAL(timeout()), l, SLOT(exec()) );
+    timer->start( 0, TRUE );
+
+    kapp->disableStyles();
+}
+
+KSMShutdownIPDlg::KSMShutdownIPDlg(TQWidget* parent)
+  : TQDialog( 0, "", TRUE, Qt::WType_Popup | Qt::WDestructiveClose )
+
+{
+	TQVBoxLayout* vbox = new TQVBoxLayout( this );
+	
+	TQFrame* frame = new TQFrame( this );
+	frame->setFrameStyle( TQFrame::StyledPanel | TQFrame::Raised );
+	frame->setLineWidth( tqstyle().tqpixelMetric( TQStyle::PM_DefaultFrameWidth, frame ) );
+	// we need to set the minimum size for the window
+	frame->setMinimumWidth(400);
+	vbox->addWidget( frame );
+	TQGridLayout* gbox = new TQGridLayout( frame, 1, 1, 2 * KDialog::marginHint(), 2 * KDialog::spacingHint() );
+
+	TQWidget* ticon = new TQWidget( frame );
+	KIconLoader * ldr = KGlobal::iconLoader();
+	TQPixmap trinityPixmap = ldr->loadIcon("kmenu", KIcon::Panel, KIcon::SizeLarge, KIcon::DefaultState, 0L, true);
+	ticon->setBackgroundPixmap(trinityPixmap);
+	ticon->setMinimumSize(trinityPixmap.size());
+	ticon->setMaximumSize(trinityPixmap.size());
+	ticon->resize(trinityPixmap.size());
+// 	gbox->addMultiCellWidget( ticon, 0, 1, 0, 0, AlignCenter );
+	gbox->addWidget( ticon, 0, 0, AlignHCenter );
+
+	TQLabel* label = new TQLabel( i18n("Trinity is saving your settings, please wait..."), frame );
+	TQFont fnt = label->font();
+	fnt.setBold( true );
+	fnt.setPointSize( fnt.pointSize() * 1 );
+	label->setFont( fnt );
+	gbox->addWidget( label, 0, 1, AlignHCenter );
+
+// 	label = new TQLabel( i18n("Logging off"), frame );
+// 	fnt = label->font();
+// 	fnt.setBold( true );
+// 	fnt.setPointSize( fnt.pointSize() * 3 / 2 );
+// 	label->setFont( fnt );
+// 	gbox->addWidget( label, 0, 1, AlignHCenter );
+}
+
+KSMShutdownIPDlg::~KSMShutdownIPDlg()
+{
+
 }
 
 KSMDelayedPushButton::KSMDelayedPushButton( const KGuiItem &item,

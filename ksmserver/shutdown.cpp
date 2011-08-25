@@ -179,6 +179,14 @@ void KSMServer::shutdownInternal( KApplication::ShutdownConfirm confirm,
         // shall we save the session on logout?
         saveSession = ( config->readEntry( "loginMode", "restorePreviousLogout" ) == "restorePreviousLogout" );
 
+        // shall we show a nice fancy logout screen?
+        bool showFancyLogout = KConfigGroup(KGlobal::config(), "Logout").readBoolEntry("showFancyLogout", true);
+
+        if (showFancyLogout) {
+//             KSMShutdownIPFeedback::start(); // hide the UGLY logout process from the user
+            KSMShutdownIPDlg::showShutdownIP();
+        }
+
         if ( saveSession )
             sessionGroup = TQString("Session: ") + SESSION_PREVIOUS_LOGOUT;
 

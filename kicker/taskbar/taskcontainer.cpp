@@ -57,6 +57,10 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 TaskContainer::TaskContainer(Task::Ptr task, TaskBar* bar,
                              TQWidget *parent, const char *name)
     : TQToolButton(parent, name),
+      animationTimer(0, "TaskContainer::animationTimer"),
+      dragSwitchTimer(0, "TaskContainer::dragSwitchTimer"),
+      attentionTimer(0, "TaskContainer::attentionTimer"),
+      m_paintEventCompressionTimer(0, "TaskContainer::paintEventCompressionTimer"),
       currentFrame(0),
       attentionState(-1),
       lastActivated(0),
@@ -66,12 +70,7 @@ TaskContainer::TaskContainer(Task::Ptr task, TaskBar* bar,
       taskBar(bar),
       discardNextMouseEvent(false),
       aboutToActivate(false),
-      m_mouseOver(false),
-      animationTimer(0, "TaskContainer::animationTimer"),
-      dragSwitchTimer(0, "TaskContainer::dragSwitchTimer"),
-      attentionTimer(0, "TaskContainer::attentionTimer"),
-      m_paintEventCompression(false),
-      m_paintEventCompressionTimer(0, "TaskContainer::paintEventCompressionTimer")
+      m_paintEventCompression(false)
 {
     init();
     setAcceptDrops(true); // Always enabled to activate task during drag&drop.
@@ -88,6 +87,10 @@ TaskContainer::TaskContainer(Task::Ptr task, TaskBar* bar,
 TaskContainer::TaskContainer(Startup::Ptr startup, PixmapList& startupFrames,
                              TaskBar* bar, TQWidget *parent, const char *name)
     : TQToolButton(parent, name),
+      animationTimer(0, "TaskContainer::animationTimer"),
+      dragSwitchTimer(0, "TaskContainer::dragSwitchTimer"),
+      attentionTimer(0, "TaskContainer::attentionTimer"),
+      m_paintEventCompressionTimer(0, "TaskContainer::paintEventCompressionTimer"),
       currentFrame(0),
       frames(startupFrames),
       attentionState(-1),
@@ -99,11 +102,7 @@ TaskContainer::TaskContainer(Startup::Ptr startup, PixmapList& startupFrames,
       discardNextMouseEvent(false),
       aboutToActivate(false),
       m_mouseOver(false),
-      animationTimer(0, "TaskContainer::animationTimer"),
-      dragSwitchTimer(0, "TaskContainer::dragSwitchTimer"),
-      attentionTimer(0, "TaskContainer::attentionTimer"),
-      m_paintEventCompression(false),
-      m_paintEventCompressionTimer(0, "TaskContainer::paintEventCompressionTimer")
+      m_paintEventCompression(false)
 {
     init();
     setEnabled(false);
@@ -481,7 +480,10 @@ void TaskContainer::paintEvent( TQPaintEvent* )
     drawButton(&p);
     p.end();
 
-    bitBlt(this, 0, 0, pm);
+    TQPixmap iconPixmapToSet = *pm;
+    if (TQPaintDevice::x11AppDepth() == 32) iconPixmapToSet.convertFromImage(KImageEffect::convertToPremultipliedAlpha( iconPixmapToSet.convertToImage() ));
+
+    bitBlt(this, 0, 0, &iconPixmapToSet);
     delete pm;
 }
 
