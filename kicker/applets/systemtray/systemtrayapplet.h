@@ -134,6 +134,8 @@ public:
 private:
     bool kde_tray;
     TQWidget *m_scaledWidget;
+private slots:
+    void ensureBackgroundSet();
 };
 
 #endif

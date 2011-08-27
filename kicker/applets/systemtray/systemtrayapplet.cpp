@@ -1155,7 +1155,7 @@ void TrayEmbed::getIconSize(int defaultIconSize)
 void TrayEmbed::setBackground()
 {
     const TQPixmap *pbg = parentWidget()->backgroundPixmap();
-    
+
     if (pbg)
     {
         TQPixmap bg(width(), height());
@@ -1165,10 +1165,39 @@ void TrayEmbed::setBackground()
     }
     else
         unsetPalette();
-    
+
     if (!isHidden())
     {
         XClearArea(x11Display(), embeddedWinId(), 0, 0, 0, 0, True);
+
+	ensureBackgroundSet();
     }
 }
 
+void TrayEmbed::ensureBackgroundSet()
+{
+	// This is a nasty little hack to make sure that tray icons / applications which do not match our QXEmbed native depth are still displayed properly,
+	// i.e without irritating white/grey borders where the tray icon's transparency is supposed to be...
+
+	const TQPixmap *pbg = parentWidget()->backgroundPixmap();
+	
+	if (pbg)
+	{
+		TQPixmap bg(width(), height());
+		bg.fill(parentWidget(), pos());
+		setPaletteBackgroundPixmap(bg);
+	}
+
+	if (!isHidden())
+	{
+		XFlush(x11Display());
+		TQPixmap bg(width(), height(), 32);
+		TQRgb blend_color = tqRgba(0, 0, 0, 0);	// RGBA
+		float alpha = tqAlpha(blend_color) / 255.0;
+		int pixel = tqAlpha(blend_color) << 24 | int(tqRed(blend_color) * alpha) << 16 | int(tqGreen(blend_color) * alpha) << 8  | int(tqBlue(blend_color) * alpha);
+		bg.fill(TQColor(blend_color, pixel));
+		Pixmap bgPm = bg.handle();
+		XSetWindowBackgroundPixmap(x11Display(), embeddedWinId(), bgPm);
+		XClearArea(x11Display(), embeddedWinId(), 0, 0, 0, 0, True);
+	}
+}
