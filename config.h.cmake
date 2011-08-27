@@ -18,6 +18,13 @@
 // kdm, kioslave
 #cmakedefine HAVE_TERMIOS_H 1
 
+// kioslave/media
+#cmakedefine WITH_HAL 1
+#ifdef WITH_HAL
+#define COMPILE_HALBACKEND
+#define COMPILE_LINUXCDPOLLING
+#endif
+
 // kioslave/fish, kcontrol/info
 #cmakedefine HAVE_SYS_IOCTL_H 1
 

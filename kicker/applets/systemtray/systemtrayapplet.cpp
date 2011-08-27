@@ -1170,7 +1170,11 @@ void TrayEmbed::setBackground()
     {
         XClearArea(x11Display(), embeddedWinId(), 0, 0, 0, 0, True);
 
-	ensureBackgroundSet();
+        if (pbg)
+        {
+            ensureBackgroundSet();
+            TQTimer::singleShot( 250, this, SLOT(ensureBackgroundSet()) );
+        }
     }
 }
 

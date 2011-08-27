@@ -497,26 +497,24 @@ void KSMShutdownFeedback::slotPaintEffect()
 KSMShutdownIPFeedback * KSMShutdownIPFeedback::s_pSelf = 0L;
 
 KSMShutdownIPFeedback::KSMShutdownIPFeedback()
- : TQWidget( 0L, "feedbackipwidget", Qt::WType_Popup | Qt::WStyle_StaysOnTop | Qt::WX11BypassWM ), m_sharedpixmap(0), m_timeout(0)
+ : TQWidget( 0L, "feedbackipwidget", Qt::WType_Dialog | Qt::WStyle_StaysOnTop | Qt::WX11BypassWM ), m_timeout(0)
 
 {
-	m_sharedpixmap = new KSharedPixmap();
-	resize(0, 0);
-	setShown(true);
+	setShown(false);
 
-	// At least show SOMETHING while waiting for the root pixmap...
-	TQPixmap drawable = TQPixmap(TQPixmap::grabWindow(qt_xrootwin(), 0, 0, TQApplication::desktop()->width(), TQApplication::desktop()->height())).convertToImage();
-	bitBlt( this, 0, 0, &drawable );
+	// Try to get the root pixmap
+	system("krootbacking &");
+}
 
-	// Try to get and show the root pixmap
-	enableExports();
-	TQTimer::singleShot( 100, this, SLOT(slotPaintEffect()) );
+void KSMShutdownIPFeedback::showNow()
+{
+// 	slotPaintEffect();
+	TQTimer::singleShot( 0, this, SLOT(slotPaintEffect()) );
 }
 
 KSMShutdownIPFeedback::~KSMShutdownIPFeedback()
 {
-	if (m_sharedpixmap)
-		delete m_sharedpixmap;
+
 }
 
 void KSMShutdownIPFeedback::fadeBack( void )
@@ -535,29 +533,46 @@ TQString KSMShutdownIPFeedback::pixmapName(int desk) {
 
 void KSMShutdownIPFeedback::slotPaintEffect()
 {
-	NETRootInfo rinfo( qt_xdisplay(), NET::CurrentDesktop );
-	rinfo.activate();
-	int current_desktop = rinfo.currentDesktop();
-
-	m_sharedpixmap->loadFromShared(pixmapName(current_desktop), TQRect(0, 0, width(), height()));
-}
-
-void KSMShutdownIPFeedback::slotDone(bool success)
-{
-	if (!success)
-	{
-		kdWarning(270) << k_lineinfo << "loading of desktop background failed.\n";
-		if (m_timeout < 50) {
-			TQTimer::singleShot( 100, this, SLOT(slotPaintEffect()) );
-			m_timeout++;
-			return;
+	TQPixmap pm;
+	TQString filename = getenv("USER");
+	filename.prepend("/tmp/kde-");
+	filename.append("/krootbacking.png");
+	bool success = pm.load(filename, "PNG");
+	if (!success) {
+		sleep(1);
+		success = pm.load(filename, "PNG");
+		if (!success) {
+			pm = TQPixmap(kapp->desktop()->width(), kapp->desktop()->height());
+			pm.fill(Qt::black);
 		}
 	}
 
-	TQImage image = m_sharedpixmap->convertToImage();
-	TQPixmap drawable;
-	drawable.convertFromImage( image );
-	bitBlt( this, 0, 0, &drawable );
+	if (TQPaintDevice::x11AppDepth() == 32) {
+		// Remove the alpha components from the image
+		TQImage correctedImage = pm.convertToImage();
+		correctedImage = correctedImage.convertDepth(32);
+		correctedImage.setAlphaBuffer(true);
+		int w = correctedImage.width();
+		int h = correctedImage.height();
+		for (int y = 0; y < h; ++y) {
+			TQRgb *ls = (TQRgb *)correctedImage.scanLine( y );
+			for (int x = 0; x < w; ++x) {
+				TQRgb l = ls[x];
+				int r = int( tqRed( l ) );
+				int g = int( tqGreen( l ) );
+				int b = int( tqBlue( l ) );
+				int a = int( 255 );
+				ls[x] = tqRgba( r, g, b, a );
+			}
+		}
+		pm.convertFromImage(correctedImage);
+	}
+
+	resize(kapp->desktop()->width(), kapp->desktop()->height());
+	move(0,0);
+	setShown(true);
+
+	setBackgroundPixmap( pm );
 }
 
 void KSMShutdownIPFeedback::enableExports()
@@ -1071,7 +1086,8 @@ void KSMShutdownIPDlg::showShutdownIP()
 }
 
 KSMShutdownIPDlg::KSMShutdownIPDlg(TQWidget* parent)
-  : TQDialog( 0, "", TRUE, Qt::WType_Popup | Qt::WDestructiveClose )
+//   : TQDialog( 0, "", TRUE, Qt::WStyle_Customize | Qt::WType_Dialog | Qt::WStyle_NoBorder | Qt::WStyle_Title | Qt::WStyle_StaysOnTop | Qt::WDestructiveClose )
+  : TQDialog( 0, "", TRUE, Qt::WStyle_Customize | Qt::WType_Popup | Qt::WStyle_NoBorder | Qt::WStyle_Title | Qt::WStyle_StaysOnTop | Qt::WX11BypassWM | Qt::WDestructiveClose )
 
 {
 	TQVBoxLayout* vbox = new TQVBoxLayout( this );
@@ -1083,35 +1099,77 @@ KSMShutdownIPDlg::KSMShutdownIPDlg(TQWidget* parent)
 	frame->setMinimumWidth(400);
 	vbox->addWidget( frame );
 	TQGridLayout* gbox = new TQGridLayout( frame, 1, 1, 2 * KDialog::marginHint(), 2 * KDialog::spacingHint() );
+	TQHBoxLayout* centerbox = new TQHBoxLayout( gbox, KDialog::spacingHint() );
+	TQHBoxLayout* seperatorbox = new TQHBoxLayout( gbox, 0 );
 
 	TQWidget* ticon = new TQWidget( frame );
 	KIconLoader * ldr = KGlobal::iconLoader();
 	TQPixmap trinityPixmap = ldr->loadIcon("kmenu", KIcon::Panel, KIcon::SizeLarge, KIcon::DefaultState, 0L, true);
+	if (TQPaintDevice::x11AppDepth() == 32) {
+		// Manually draw the alpha portions onto the widget background color...
+		TQRgb backgroundRgb = ticon->paletteBackgroundColor().rgb();
+		TQImage correctedImage = trinityPixmap.convertToImage();
+		correctedImage = correctedImage.convertDepth(32);
+		correctedImage.setAlphaBuffer(true);
+		int w = correctedImage.width();
+		int h = correctedImage.height();
+		for (int y = 0; y < h; ++y) {
+			TQRgb *ls = (TQRgb *)correctedImage.scanLine( y );
+			for (int x = 0; x < w; ++x) {
+				TQRgb l = ls[x];
+				float alpha_adjust = tqAlpha( l )/255.0;
+				int r = int( (tqRed( l ) * alpha_adjust) + (tqRed( backgroundRgb ) * (1.0-alpha_adjust)) );
+				int g = int( (tqGreen( l ) * alpha_adjust) + (tqGreen( backgroundRgb ) * (1.0-alpha_adjust)) );
+				int b = int( (tqBlue( l ) * alpha_adjust) + (tqBlue( backgroundRgb ) * (1.0-alpha_adjust)) );
+				int a = int( 255 );
+				ls[x] = tqRgba( r, g, b, a );
+			}
+		}
+		trinityPixmap.convertFromImage(correctedImage);
+	}
 	ticon->setBackgroundPixmap(trinityPixmap);
 	ticon->setMinimumSize(trinityPixmap.size());
 	ticon->setMaximumSize(trinityPixmap.size());
 	ticon->resize(trinityPixmap.size());
-// 	gbox->addMultiCellWidget( ticon, 0, 1, 0, 0, AlignCenter );
-	gbox->addWidget( ticon, 0, 0, AlignHCenter );
+	centerbox->addWidget( ticon, AlignCenter );
 
-	TQLabel* label = new TQLabel( i18n("Trinity is saving your settings, please wait..."), frame );
+	TQWidget* swidget = new TQWidget( frame );
+	swidget->resize(2, frame->sizeHint().width());
+	swidget->setBackgroundColor(Qt::black);
+	seperatorbox->addWidget( swidget, AlignCenter );
+
+	TQLabel* label = new TQLabel( i18n("Trinity Desktop Environment"), frame );
 	TQFont fnt = label->font();
 	fnt.setBold( true );
+	fnt.setPointSize( fnt.pointSize() * 3 / 2 );
+	label->setFont( fnt );
+	centerbox->addWidget( label, AlignCenter );
+
+	label = new TQLabel( i18n("Saving your settings..."), frame );
+	fnt = label->font();
+	fnt.setBold( false );
 	fnt.setPointSize( fnt.pointSize() * 1 );
 	label->setFont( fnt );
-	gbox->addWidget( label, 0, 1, AlignHCenter );
+	gbox->addMultiCellWidget( label, 2, 2, 0, 0, AlignLeft | AlignVCenter );
 
-// 	label = new TQLabel( i18n("Logging off"), frame );
-// 	fnt = label->font();
-// 	fnt.setBold( true );
-// 	fnt.setPointSize( fnt.pointSize() * 3 / 2 );
-// 	label->setFont( fnt );
-// 	gbox->addWidget( label, 0, 1, AlignHCenter );
+	gbox->addLayout(centerbox, 0, 0);
+	gbox->addLayout(seperatorbox, 1, 0);
+
+	setFixedSize( sizeHint() );
+	setCaption( i18n("Please wait...") );
 }
 
 KSMShutdownIPDlg::~KSMShutdownIPDlg()
 {
 
+}
+
+void KSMShutdownIPDlg::closeEvent(TQCloseEvent *e)
+{
+	//---------------------------------------------
+	// Don't call the base function because
+	// we want to ignore the close event
+	//---------------------------------------------
 }
 
 KSMDelayedPushButton::KSMDelayedPushButton( const KGuiItem &item,

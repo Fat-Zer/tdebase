@@ -19,10 +19,12 @@ include_directories(
   ${CMAKE_BINARY_DIR}
   ${TDE_INCLUDE_DIR}
   ${TQT_INCLUDE_DIRS}
+  ${HAL_INCLUDE_DIRS}
 )
 
 link_directories(
   ${TQT_LIBRARY_DIRS}
+  ${DBUS_TQT_LIBRARY_DIRS}
 )
 
 
@@ -35,14 +37,29 @@ install( FILES mediamanager.desktop DESTINATION ${SERVICES_INSTALL_DIR}/kded )
 
 set( target kded_mediamanager )
 
-set( ${target}_SRCS
-  mediamanager.cpp mediamanager.skel medialist.cpp
-  backendbase.cpp fstabbackend.cpp removablebackend.cpp
-  mediadirnotify.cpp mediadirnotify.skel
-)
+if( WITH_HAL )
+  set( ${target}_SRCS
+    mediamanager.cpp mediamanager.skel medialist.cpp
+    backendbase.cpp fstabbackend.cpp removablebackend.cpp
+    mediadirnotify.cpp mediadirnotify.skel
+    halbackend.cpp linuxcdpolling.cpp
+  )
 
-tde_add_kpart( ${target} AUTOMOC
-  SOURCES ${${target}_SRCS}
-  LINK mediacommon-static kdeinit_kded-shared
-  DESTINATION ${PLUGIN_INSTALL_DIR}
-)
+  tde_add_kpart( ${target} AUTOMOC
+    SOURCES ${${target}_SRCS}
+    LINK mediacommon-static kdeinit_kded-shared ${HAL_LIBRARIES} -lhal-storage ${DBUS_TQT_LIBRARIES}
+    DESTINATION ${PLUGIN_INSTALL_DIR}
+  )
+else( )
+  set( ${target}_SRCS
+    mediamanager.cpp mediamanager.skel medialist.cpp
+    backendbase.cpp fstabbackend.cpp removablebackend.cpp
+    mediadirnotify.cpp mediadirnotify.skel
+  )
+
+  tde_add_kpart( ${target} AUTOMOC
+    SOURCES ${${target}_SRCS}
+    LINK mediacommon-static kdeinit_kded-shared
+    DESTINATION ${PLUGIN_INSTALL_DIR}
+  )
+endif( )

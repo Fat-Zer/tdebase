@@ -183,7 +183,7 @@ tde_conditional_add_subdirectory( BUILD_KSYSTRAYCMD ksystraycmd )
 tde_conditional_add_subdirectory( BUILD_NSPLUGINS nsplugins )
 tde_conditional_add_subdirectory( BUILD_KSYSGUARD ksysguard )
 tde_conditional_add_subdirectory( BUILD_KXKB kxkb )
-
+add_subdirectory( krootbacking )
 
 ##### install startkde & related stuff ##########
 

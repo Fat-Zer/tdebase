@@ -81,6 +81,7 @@ class KSMShutdownIPFeedback : public TQWidget
 
 public:
     static void start() { s_pSelf = new KSMShutdownIPFeedback(); }
+    static void showit() { if ( s_pSelf != 0L ) s_pSelf->showNow(); }
     static void stop() { if ( s_pSelf != 0L ) s_pSelf->fadeBack(); delete s_pSelf; s_pSelf = 0L; }
     static KSMShutdownIPFeedback * self() { return s_pSelf; }
 
@@ -89,7 +90,6 @@ protected:
 
 private slots:
     void slotPaintEffect();
-    void slotDone(bool success);
 
 private:
     static KSMShutdownIPFeedback * s_pSelf;
@@ -97,8 +97,8 @@ private:
     int m_currentY;
     TQPixmap m_root;
     void fadeBack( void );
+    void showNow( void );
     TQString pixmapName(int desk);
-    KSharedPixmap* m_sharedpixmap;
     void enableExports();
     int m_timeout;
 };
@@ -143,6 +143,9 @@ public:
 
 protected:
     ~KSMShutdownIPDlg();
+
+protected slots:
+    void closeEvent(TQCloseEvent *e);
 
 private:
     KSMShutdownIPDlg( TQWidget* parent );
