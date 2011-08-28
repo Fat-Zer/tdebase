@@ -144,6 +144,9 @@ Time to start a requirement list.
 #include <netwm.h>
 #include "printsettings.h"
 
+#include <X11/Xlib.h>
+#include <X11/Xatom.h>
+
 #define KONSOLEDEBUG    kdDebug(1211)
 
 #define POPUP_NEW_SESSION_ID 121
@@ -344,6 +347,11 @@ Konsole::Konsole(const char* name, int histon, bool menubaron, bool tabbaron, bo
 //  connect(kapp, TQT_SIGNAL(kdisplayFontChanged()), this, TQT_SLOT(slotFontChanged()));
 
   kapp->dcopClient()->setDefaultObject( "konsole" );
+
+  // Signal that we want to be transparent to the desktop, not to windows behind us...
+  Atom kde_wm_transparent_to_desktop;
+  kde_wm_transparent_to_desktop = XInternAtom(qt_xdisplay(), "_KDE_TRANSPARENT_TO_DESKTOP", False);
+  XChangeProperty(qt_xdisplay(), winId(), kde_wm_transparent_to_desktop, XA_INTEGER, 32, PropModeReplace, (unsigned char *) "TRUE", 1L);
 }
 
 

@@ -129,6 +129,9 @@ typedef struct _win {
     /* for drawing translucent windows */
     XserverRegion	borderClip;
     struct _win		*prev_trans;
+
+    /* setting whether a window will be transparent to the desktop or the windows below it */
+    Bool		show_root_tile;
 } win;
 
 typedef struct _conv {
@@ -198,6 +201,7 @@ Atom            winUtilAtom;
 Atom            winSplashAtom;
 Atom            winDialogAtom;
 Atom            winNormalAtom;
+Atom            winTDETTDAtom;
 
 /* opacity property name; sometime soon I'll write up an EWMH spec for it */
 #define OPACITY_PROP	"_KDE_WM_WINDOW_OPACITY"
@@ -1463,6 +1467,17 @@ paint_all (Display *dpy, XserverRegion region)
 			hei = w->a.height;
 #endif
 			set_ignore (dpy, NextRequest (dpy));
+			/* Here we redraw the background of the transparent window if we want
+			   to do anything special (i.e. anything other than showing the
+			   windows and desktop prestacked behind of the window).
+			   For example, if you want to blur the background or show another
+			   background pixmap entirely here is the place to do it; simply
+			   draw the new background onto rootBuffer before continuing! */
+			if (w->show_root_tile == True) {
+				XRenderComposite (dpy, PictOpSrc, rootTile, None, rootBuffer,
+						x, y, x, y, 
+						x, y, wid, hei);
+			}
 			XRenderComposite (dpy, PictOpOver, w->picture, w->alphaPict, rootBuffer,
 					0, 0, 0, 0, 
 					x, y, wid, hei);
@@ -1865,6 +1880,28 @@ damage_tqshape(Display *dpy, win *w, XRectangle *tqshape_damage)
 }
 #endif
 
+static Bool
+get_window_transparent_to_desktop(Display * dpy, Window w)
+{
+	Atom actual;
+	int format;
+	unsigned long n, left;
+
+	unsigned char *data;
+	int result = XGetWindowProperty (dpy, w, winTDETTDAtom, 0L, 1L, False,
+			XA_ATOM, &actual, &format,
+			&n, &left, &data);
+
+	if (result == Success && data != None && format == 32 )
+	{
+		Atom a;
+		a = *(long*)data;
+		XFree ( (void *) data);
+		return True;
+	}
+	return False;
+}
+
 /* determine mode for window all in one place.
    Future might check for menu flag and other cool things
    */
@@ -1940,6 +1977,40 @@ determine_mode(Display *dpy, win *w)
 		XFixesCopyRegion (dpy, damage, w->extents);
 		add_damage (dpy, damage);
 	}
+}
+
+static Bool
+determine_window_transparent_to_desktop (Display *dpy, Window w)
+{
+	Window       root_return, parent_return;
+	Window      *children = NULL;
+	unsigned int nchildren, i;
+	Bool         type;
+
+	type = get_window_transparent_to_desktop (dpy, w);
+	if (type == True)
+		return True;
+
+	if (!XQueryTree (dpy, w, &root_return, &parent_return, &children,
+				&nchildren))
+	{
+		/* XQueryTree failed. */
+		if (children)
+			XFree ((void *)children);
+		return winNormalAtom;
+	}
+
+	for (i = 0;i < nchildren;i++)
+	{
+		type = determine_window_transparent_to_desktop (dpy, children[i]);
+		if (type == True)
+			return True;
+	}
+
+	if (children)
+		XFree ((void *)children);
+
+	return False;
 }
 
 	static Atom
@@ -2031,6 +2102,7 @@ add_win (Display *dpy, Window id, Window prev)
 	new->opacity = OPAQUE;
 	new->shadowSize = 100;
 	new->decoHash = 0;
+	new->show_root_tile = determine_window_transparent_to_desktop(dpy, id);
 
 	new->borderClip = None;
 	new->prev_trans = 0;
@@ -2873,6 +2945,7 @@ main (int argc, char **argv)
 	winSplashAtom = XInternAtom (dpy, "_NET_WM_WINDOW_TYPE_SPLASH", False);
 	winDialogAtom = XInternAtom (dpy, "_NET_WM_WINDOW_TYPE_DIALOG", False);
 	winNormalAtom = XInternAtom (dpy, "_NET_WM_WINDOW_TYPE_NORMAL", False);
+	winTDETTDAtom = XInternAtom (dpy, "_KDE_TRANSPARENT_TO_DESKTOP", False);
 
 	pa.subwindow_mode = IncludeInferiors;
 

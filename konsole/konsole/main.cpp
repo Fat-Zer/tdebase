@@ -75,9 +75,6 @@ static KCmdLineOptions options[] =
    { "noframe",         I18N_NOOP("Do not display frame"), 0 },
    { "noscrollbar",     I18N_NOOP("Do not display scrollbar"), 0 },
    { "noxft",           I18N_NOOP("Do not use Xft (anti-aliasing)"), 0 },
-#ifdef COMPOSITE
-   { "real-transparency",  I18N_NOOP("Enable experimental support for real transparency"), 0 },
-#endif
    { "vt_sz CCxLL",     I18N_NOOP("Terminal size in columns x lines"), 0 },
    { "noresize",        I18N_NOOP("Terminal size is fixed"), 0 },
    { "type <type>",     I18N_NOOP("Start with given session type"), 0 },
@@ -252,58 +249,8 @@ extern "C" int KDE_EXPORT kdemain(int argc, char* argv[])
 
   KApplication* a = NULL;
 #ifdef COMPOSITE
-  if ( args->isSet("real-transparency")) {
-    char *display = 0;
-    if ( qtargs->isSet("display"))
-      display = qtargs->getOption( "display" ).data();
-
-    Display *dpy = XOpenDisplay( display );
-    if ( !dpy ) {
-      kdError() << "cannot connect to X server " << display << endl;
-      exit( 1 );
-    }
-
-    int screen = DefaultScreen( dpy );
-    Colormap colormap = 0;
-    Visual *visual = 0;
-    int event_base, error_base;
-
-    if ( XRenderQueryExtension( dpy, &event_base, &error_base ) ) {
-      int nvi;
-      XVisualInfo templ;
-      templ.screen  = screen;
-      templ.depth   = 32;
-      templ.c_class = TrueColor;
-      XVisualInfo *xvi = XGetVisualInfo( dpy, VisualScreenMask | VisualDepthMask
-		    | VisualClassMask, &templ, &nvi );
-
-      for ( int i = 0; i < nvi; i++ ) {
-        XRenderPictFormat *format = XRenderFindVisualFormat( dpy, xvi[i].visual );
-        if ( format->type == PictTypeDirect && format->direct.alphaMask ) {
-          visual = xvi[i].visual;
-          colormap = XCreateColormap( dpy, RootWindow( dpy, screen ), visual, AllocNone );
-          kdDebug() << "found visual with alpha support" << endl;
-          argb_visual = true;
-          break;
-        }
-      }
-    }
-    // The TQApplication ctor used is normally intended for applications not using Qt
-    // as the primary toolkit (e.g. Motif apps also using Qt), with some slightly
-    // unpleasant side effects (e.g. #83974). This code checks if qt-copy patch #0078
-    // is applied, which allows turning this off.
-    bool* qt_no_foreign_hack = static_cast< bool* >( dlsym( RTLD_DEFAULT, "qt_no_foreign_hack" ));
-    if( qt_no_foreign_hack )
-        *qt_no_foreign_hack = true;
-    // else argb_visual = false ... ? *shrug*
-
-    if( argb_visual )
-      a = new KApplication( dpy, Qt::HANDLE( visual ), Qt::HANDLE( colormap ) );
-    else
-      XCloseDisplay( dpy );
-  }
-  if( a == NULL )
-      a = new KApplication;
+  a = new KApplication(KApplication::openX11RGBADisplay());
+  argb_visual = a->isX11CompositionAvailable();
 #else
   KApplication* a = new KApplication;
 #endif
