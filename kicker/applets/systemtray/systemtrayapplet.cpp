@@ -1169,39 +1169,47 @@ void TrayEmbed::setBackground()
     if (!isHidden())
     {
         XClearArea(x11Display(), embeddedWinId(), 0, 0, 0, 0, True);
-
-        if (pbg)
-        {
-            ensureBackgroundSet();
-            TQTimer::singleShot( 250, this, SLOT(ensureBackgroundSet()) );
-        }
+        ensureBackgroundSet();
     }
 }
 
 void TrayEmbed::ensureBackgroundSet()
 {
-	// This is a nasty little hack to make sure that tray icons / applications which do not match our QXEmbed native depth are still displayed properly,
-	// i.e without irritating white/grey borders where the tray icon's transparency is supposed to be...
-
-	const TQPixmap *pbg = parentWidget()->backgroundPixmap();
+	XWindowAttributes winprops;
+	XGetWindowAttributes(x11Display(), embeddedWinId(), &winprops);
+	if (winprops.depth == 32) {
+		// This is a nasty little hack to make sure that tray icons / applications which do not match our QXEmbed native depth are still displayed properly,
+		// i.e without irritating white/grey borders where the tray icon's transparency is supposed to be...
+		// Essentially it converts a 24 bit Xlib Pixmap to a 32 bit Xlib Pixmap
 	
-	if (pbg)
-	{
 		TQPixmap bg(width(), height());
-		bg.fill(parentWidget(), pos());
-		setPaletteBackgroundPixmap(bg);
-	}
 
-	if (!isHidden())
-	{
-		XFlush(x11Display());
-		TQPixmap bg(width(), height(), 32);
-		TQRgb blend_color = tqRgba(0, 0, 0, 0);	// RGBA
-		float alpha = tqAlpha(blend_color) / 255.0;
-		int pixel = tqAlpha(blend_color) << 24 | int(tqRed(blend_color) * alpha) << 16 | int(tqGreen(blend_color) * alpha) << 8  | int(tqBlue(blend_color) * alpha);
-		bg.fill(TQColor(blend_color, pixel));
-		Pixmap bgPm = bg.handle();
-		XSetWindowBackgroundPixmap(x11Display(), embeddedWinId(), bgPm);
-		XClearArea(x11Display(), embeddedWinId(), 0, 0, 0, 0, True);
+		// Get the RGB background image
+		bg.fill(parentWidget(), pos());
+		TQImage bgImage = bg.convertToImage();
+		
+		// Create the ARGB pixmap
+		Pixmap argbpixmap = XCreatePixmap(x11Display(), embeddedWinId(), width(), height(), 32);
+		GC gc;
+		gc = XCreateGC(x11Display(), embeddedWinId(), 0, 0);
+		int w = bgImage.width();
+		int h = bgImage.height();
+		for (int y = 0; y < h; ++y) {
+			TQRgb *ls = (TQRgb *)bgImage.scanLine( y );
+			for (int x = 0; x < w; ++x) {
+				TQRgb l = ls[x];
+				int r = int( tqRed( l ) );
+				int g = int( tqGreen( l ) );
+				int b = int( tqBlue( l ) );
+				int a = int( tqAlpha( l ) );
+				ls[x] = tqRgba( r, g, b, a );
+				XSetForeground(x11Display(), gc, (r << 16) | (g << 8) | b );
+				XDrawPoint(x11Display(), argbpixmap, gc, x, y);
+			}
+		}
+		XFlush(x11Display()); 
+		XSetWindowBackgroundPixmap(x11Display(), embeddedWinId(), argbpixmap);
+		XFreePixmap(x11Display(), argbpixmap);
+		XFreeGC(x11Display(), gc);
 	}
 }
