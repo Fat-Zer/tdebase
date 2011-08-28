@@ -1098,9 +1098,9 @@ KSMShutdownIPDlg::KSMShutdownIPDlg(TQWidget* parent)
 	// we need to set the minimum size for the window
 	frame->setMinimumWidth(400);
 	vbox->addWidget( frame );
-	TQGridLayout* gbox = new TQGridLayout( frame, 1, 1, 2 * KDialog::marginHint(), 2 * KDialog::spacingHint() );
-	TQHBoxLayout* centerbox = new TQHBoxLayout( gbox, KDialog::spacingHint() );
-	TQHBoxLayout* seperatorbox = new TQHBoxLayout( gbox, 0 );
+	TQGridLayout* gbox = new TQGridLayout( frame, 1, 1, KDialog::marginHint(), KDialog::spacingHint() );
+	TQHBoxLayout* centerbox = new TQHBoxLayout( frame, 0, KDialog::spacingHint() );
+	TQHBoxLayout* seperatorbox = new TQHBoxLayout( frame, 0, 0 );
 
 	TQWidget* ticon = new TQWidget( frame );
 	KIconLoader * ldr = KGlobal::iconLoader();
@@ -1157,6 +1157,9 @@ KSMShutdownIPDlg::KSMShutdownIPDlg(TQWidget* parent)
 
 	setFixedSize( sizeHint() );
 	setCaption( i18n("Please wait...") );
+
+	show();
+	setActiveWindow();
 }
 
 KSMShutdownIPDlg::~KSMShutdownIPDlg()
