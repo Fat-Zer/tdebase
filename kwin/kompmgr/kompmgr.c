@@ -1473,10 +1473,12 @@ paint_all (Display *dpy, XserverRegion region)
 			   For example, if you want to blur the background or show another
 			   background pixmap entirely here is the place to do it; simply
 			   draw the new background onto rootBuffer before continuing! */
-			if (w->show_root_tile == True) {
-				XRenderComposite (dpy, PictOpSrc, rootTile, None, rootBuffer,
-						x, y, x, y, 
-						x, y, wid, hei);
+			if (w->isInFade == False) {
+				if (w->show_root_tile == True) {
+					XRenderComposite (dpy, PictOpSrc, rootTile, None, rootBuffer,
+							x, y, x, y, 
+							x, y, wid, hei);
+				}
 			}
 			XRenderComposite (dpy, PictOpOver, w->picture, w->alphaPict, rootBuffer,
 					0, 0, 0, 0, 
