@@ -1226,7 +1226,7 @@ static TQString mount_priv(const char *udi, const char *mount_point, const char 
         if ( !strcmp(error.name, "org.freedesktop.Hal.Device.Volume.UnknownFilesystemType"))
             qerror = i18n("Invalid filesystem type");
         else if ( !strcmp(error.name, "org.freedesktop.Hal.Device.Volume.PermissionDenied"))
-            qerror = i18n("Permissions denied");
+            qerror = i18n("Permissions denied<p>Please ensure that:<br>1. You have permission to access this device.<br>2. This device node is not listed in /etc/fstab.</p>");
         else if ( !strcmp(error.name, "org.freedesktop.Hal.Device.PermissionDeniedByPolicy"))
             qerror = privilegedMount(udi, mount_point, poptions, noptions);
         else if ( !strcmp(error.name, "org.freedesktop.Hal.Device.Volume.AlreadyMounted"))
@@ -1410,7 +1410,7 @@ TQString HALBackend::mount(const Medium *medium)
         return (data.error) ? data.errorMessage : TQString::null;
 
     } else if (medium->id().startsWith("/org/kde/") )
-	    return i18n("Permissions denied");
+	    return i18n("Permission denied");
 
     TQStringList soptions;
 
@@ -1643,7 +1643,7 @@ TQString HALBackend::unmount(const TQString &_udi)
             thisunmounthasfailed = 2;
         } else if (!strcmp(error.name, "org.freedesktop.Hal.Device.Volume.NotMounted")) {
             // this is faking. The error is that the device wasn't mounted by hal (but by the system)
-            reason = i18n("Permissions denied");
+            reason = i18n("Permission denied<p>Please ensure that:<br>1. You have permission to access this device.<br>2. This device was originally mounted using TDE.</p>");
         } else {
             reason = error.message;
         }
