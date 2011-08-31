@@ -38,7 +38,7 @@ wmclasscomplete=true
 wmclassmatch=3
 
 [2]
-Description=Allow focus stealing by the kdesktop run dialog
+Description=(Default) Allow focus stealing by the kdesktop run dialog
 fsplevel=0
 fsplevelrule=2
 title=Run Command
