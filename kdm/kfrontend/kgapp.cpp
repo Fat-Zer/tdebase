@@ -327,6 +327,9 @@ kg_main( const char *argv0 )
 				if (!tgrt->isOK()) {
 					delete tgrt;
 					dialog = new KStdGreeter;
+					dialog->move(dialog->x() + primaryScreenPosition.x(), dialog->y() + primaryScreenPosition.y());
+				}
+				else {
 					dialog->move(primaryScreenPosition.x(), primaryScreenPosition.y());
 				}
 				XSetErrorHandler( (XErrorHandler)0 );
