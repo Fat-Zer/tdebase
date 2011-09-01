@@ -122,7 +122,10 @@ typedef struct _win {
     unsigned int	shadowSize;
     Atom                windowType;
     unsigned long	damage_sequence;    /* sequence when damage was created */
-    Bool                shapable; /* this will allow window managers to exclude windows if just the deco is tqshaped*/
+    Bool                shapable; /* this will allow window managers to exclude windows if just the deco is shaped*/
+    Bool		shaped;
+    XRectangle		shape_bounds;
+    XRectangle		shape_bounds_prev;
     unsigned int                 decoHash;
     Picture             dimPicture;
 
@@ -177,12 +180,13 @@ int		xfixes_event, xfixes_error;
 int		damage_event, damage_error;
 int		composite_event, composite_error;
 int		render_event, render_error;
+int		xshape_event, xshape_error;
 Bool		synchronize;
 int		composite_opcode;
 Bool		screen_damaged = False;
 Bool            disable_argb = False;
 
-int             tqshapeEvent;
+int             shapeEvent;
 
 /* find these once and be done with it */
 Atom		opacityAtom;
@@ -1338,6 +1342,7 @@ paint_all (Display *dpy, XserverRegion region)
 		{
 			w->borderClip = XFixesCreateRegion (dpy, 0, 0);
 			XFixesCopyRegion (dpy, w->borderClip, region);
+			XFixesIntersectRegion(dpy, w->borderClip, w->borderClip, w->borderSize);
 		}
 		w->prev_trans = t;
 		t = w;
@@ -1851,10 +1856,10 @@ get_opacity_percent(Display *dpy, win *w, double def)
 }
 #if 0
 static void
-damage_tqshape(Display *dpy, win *w, XRectangle *tqshape_damage)
+damage_shape(Display *dpy, win *w, XRectangle *shape_damage)
 {
     set_ignore (dpy, NextRequest (dpy));
-    XserverRegion region = XFixesCreateRegion (dpy, tqshape_damage, 1);
+    XserverRegion region = XFixesCreateRegion (dpy, shape_damage, 1);
     set_ignore (dpy, NextRequest (dpy));
     XserverRegion tmpRegion;
     add_damage(dpy, region);
@@ -2073,6 +2078,12 @@ add_win (Display *dpy, Window id, Window prev)
 		free (new);
 		return;
 	}
+	new->shaped = False;
+	new->shape_bounds.x = new->a.x;
+	new->shape_bounds.y = new->a.y;
+	new->shape_bounds_prev = new->shape_bounds;
+	new->shape_bounds.width = new->a.width;
+	new->shape_bounds.height = new->a.height;
 	new->damaged = 0;
 #if CAN_DO_USABLE
 	new->usable = False;
@@ -2090,6 +2101,7 @@ add_win (Display *dpy, Window id, Window prev)
 	{
 		new->damage_sequence = NextRequest (dpy);
 		new->damage = XDamageCreate (dpy, id, XDamageReportNonEmpty);
+		XShapeSelectInput (dpy, id, ShapeNotifyMask);
 	}
 	new->isInFade = False;
 	new->alphaPict = None;
@@ -2186,6 +2198,8 @@ configure_win (Display *dpy, XConfigureEvent *ce)
 		if (w->extents != None)
                     XFixesCopyRegion (dpy, damage, w->extents);
 	}
+	w->shape_bounds.x -= w->a.x;
+	w->shape_bounds.y -= w->a.y;
 	w->a.x = ce->x;
 	w->a.y = ce->y;
 	if (w->a.width != ce->width || w->a.height != ce->height)
@@ -2220,6 +2234,14 @@ configure_win (Display *dpy, XConfigureEvent *ce)
                 XFixesDestroyRegion (dpy, extents);
 		add_damage (dpy, damage);
 	}
+	w->shape_bounds.x += w->a.x;
+	w->shape_bounds.y += w->a.y;
+	if (!w->shaped)
+	{
+		w->shape_bounds.width = w->a.width;
+		w->shape_bounds.height = w->a.height;
+	}
+
 	clipChanged = True;
 }
 
@@ -2384,6 +2406,83 @@ damage_win (Display *dpy, XDamageNotifyEvent *de)
 		repair_win (dpy, w);
 }
 
+static const char *
+shape_kind(int kind)
+{
+	static char	buf[128];
+	
+	switch(kind){
+		case ShapeBounding: 
+			return "ShapeBounding";
+		case ShapeClip:
+			return "ShapeClip";
+		case ShapeInput:
+			return "ShapeInput";
+		default:
+			sprintf (buf, "Shape %d", kind);
+		return buf;
+	}
+}
+
+static void
+shape_win (Display *dpy, XShapeEvent *se)
+{
+	win	*w = find_win (dpy, se->window);
+	
+	if (!w)
+		return;
+	
+	if (se->kind == ShapeClip || se->kind == ShapeBounding)
+	{
+		XserverRegion region0;
+		XserverRegion region1;
+
+#if 0
+      printf("win 0x%lx %s:%s %ux%u+%d+%d (@%d+%d)\n",
+	     (unsigned long) se->window,
+	     shape_kind(se->kind),
+	     (se->shaped == True) ? "true" : "false",
+	     se->width, se->height,
+	     se->x, se->y,
+	     w->a.x, w->a.y);
+      printf("\told %s %d+%d (@%d+%d)\n",
+	     (w->shaped == True) ? "true" : "false",
+	     w->shape_bounds_prev.width, w->shape_bounds_prev.height,
+	     w->shape_bounds_prev.x, w->shape_bounds_prev.y);
+#endif
+
+		clipChanged = True;
+		
+		region0 = XFixesCreateRegion (dpy, &w->shape_bounds_prev, 1);
+		
+		if (se->shaped == True)
+		{
+			w->shaped = True;
+			w->shape_bounds.x = w->a.x + se->x;
+			w->shape_bounds.y = w->a.y + se->y;
+			w->shape_bounds.width = se->width;
+			w->shape_bounds.height = se->height;
+		}
+		else
+		{
+			w->shaped = False;
+			w->shape_bounds.x = w->a.x;
+			w->shape_bounds.y = w->a.y;
+			w->shape_bounds.width = w->a.width;
+			w->shape_bounds.height = w->a.height;
+		}
+		
+		region1 = XFixesCreateRegion (dpy, &w->shape_bounds, 1);
+		XFixesUnionRegion (dpy, region0, region0, region1); 
+		XFixesDestroyRegion (dpy, region1);
+		
+		/* ask for repaint of the old and new region */
+		paint_all (dpy, region0);
+	}
+
+	w->shape_bounds_prev = w->shape_bounds;
+}
+
 static void
 damage_screen (Display *dpy)
 {
@@ -2479,8 +2578,13 @@ ev_name (XEvent *ev)
 		case CirculateNotify:
 			return "Circulate";
 		default:
-			if (ev->type == damage_event + XDamageNotify)
+			if (ev->type == damage_event + XDamageNotify) {
 				return "Damage";
+			}
+			else if (ev->type == xshape_event + ShapeNotify)
+			{
+				return "Shape";
+			}
 			sprintf (buf, "Event %d", ev->type);
 			return buf;
 	}
@@ -2501,9 +2605,14 @@ ev_window (XEvent *ev)
 		case CirculateNotify:
 			return ev->xcirculate.window;
 		default:
-			if (ev->type == damage_event + XDamageNotify){
-				fprintf(stderr, "%d", ev->type);
+			if (ev->type == damage_event + XDamageNotify) {
+// 				fprintf(stderr, "%d", ev->type);
 				return ((XDamageNotifyEvent *) ev)->drawable;
+			}
+			else if (ev->type == xshape_event + ShapeNotify)
+			{
+// 				fprintf(stderr, "%d", ev->type);
+				return ((XShapeEvent *) ev)->window;
 			}
 			return 0;
 	}
@@ -2925,6 +3034,11 @@ main (int argc, char **argv)
 		fprintf (stderr, "No XFixes extension\n");
 		exit (1);
 	}
+	if (!XShapeQueryExtension (dpy, &xshape_event, &xshape_error))
+	{
+		fprintf (stderr, "No XShape extension\n");
+		exit (1);
+	}
 
 	fprintf(stderr, "Started\n");
 
@@ -3010,8 +3124,9 @@ main (int argc, char **argv)
 				VisibilityChangeMask);
 
 		/*shaping stuff*/
-		XShapeQueryExtension(dpy, &tqshapeEvent, &dummy);
+		XShapeQueryExtension(dpy, &shapeEvent, &dummy);
 
+		XShapeSelectInput (dpy, root, ShapeNotifyMask);
 		XQueryTree (dpy, root, &root_return, &parent_return, &children, &nchildren);
 		for (i = 0; i < nchildren; i++)
 			add_win (dpy, children[i], i ? children[i-1] : None);
@@ -3255,7 +3370,11 @@ main (int argc, char **argv)
                     /*                     printf("damaging win: %u\n",ev.xany.window);*/
 		    damage_win (dpy, (XDamageNotifyEvent *) &ev);
                 }
-                else if (ev.type == tqshapeEvent)
+		if (ev.type == xshape_event + ShapeNotify)
+		{
+		    shape_win (dpy, (XShapeEvent *) &ev);
+		}
+                if (ev.type == shapeEvent)
                 {
                     win * w = find_win(dpy, ev.xany.window);
 #if 1
@@ -3271,7 +3390,7 @@ main (int argc, char **argv)
                         rect.y = ((XShapeEvent*)&ev)->y;
                         rect.width = ((XShapeEvent*)&ev)->width;
                         rect.height = ((XShapeEvent*)&ev)->height;
-                        damage_tqshape(dpy, w, &rect);
+                        damage_shape(dpy, w, &rect);
 #endif
 #if 0
 			if (w->shadowSize != 0)
@@ -3286,7 +3405,7 @@ main (int argc, char **argv)
 			}
 #endif
                         /*this is hardly efficient, but a current workaraound
-                        shaping support isn't that good so far (e.g. we lack tqshaped shadows)
+                        shaping support isn't that good so far (e.g. we lack shaped shadows)
                         IDEA: use XRender to scale/shift a copy of the window and then blur it*/
 #if 1
                         if (w->picture)

@@ -99,6 +99,8 @@
 
 extern bool argb_visual; // declared in main.cpp and konsole_part.cpp
 
+bool draw_translucent_background_colors = false;	// FIXME move to a GUI configuration setting
+
 // scroll increment used when dragging selection at top/bottom of window.
 
 // static
@@ -629,7 +631,7 @@ void TEWidget::drawAttrStr(TQPainter &paint, TQRect rect,
           attr->b == cacol(CO_DFT, colorsSwapped ? DEFAULT_FORE_COLOR : DEFAULT_BACK_COLOR) )
 
         // draw background colors with 75% opacity
-        if ( argb_visual && tqAlpha(blend_color) < 0xff ) {
+        if ( draw_translucent_background_colors && argb_visual && tqAlpha(blend_color) < 0xff ) {
           QRgb col = bColor.rgb();
 
           TQ_UINT8 salpha = 192;
