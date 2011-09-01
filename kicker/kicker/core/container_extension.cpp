@@ -1342,20 +1342,20 @@ int ExtensionContainer::setupBorderSpace()
     switch (position())
     {
         case KPanelExtension::Left:
-            _layout->setColSpacing(2, PANEL_BOTTOM_SPACING_W_RESIZE_HANDLE);
+            _layout->setColSpacing(2, (KickerSettings::useResizeHandle())?PANEL_BOTTOM_SPACING_W_RESIZE_HANDLE:1);
         break;
 
         case KPanelExtension::Right:
-            _layout->setColSpacing(0, PANEL_BOTTOM_SPACING_W_RESIZE_HANDLE);
+            _layout->setColSpacing(0, (KickerSettings::useResizeHandle())?PANEL_BOTTOM_SPACING_W_RESIZE_HANDLE:1);
         break;
 
         case KPanelExtension::Top:
-            _layout->setRowSpacing(2, PANEL_BOTTOM_SPACING_W_RESIZE_HANDLE);
+            _layout->setRowSpacing(2, (KickerSettings::useResizeHandle())?PANEL_BOTTOM_SPACING_W_RESIZE_HANDLE:1);
         break;
 
         case KPanelExtension::Bottom:
         default:
-            _layout->setRowSpacing(0, PANEL_BOTTOM_SPACING_W_RESIZE_HANDLE);
+            _layout->setRowSpacing(0, (KickerSettings::useResizeHandle())?PANEL_BOTTOM_SPACING_W_RESIZE_HANDLE:1);
         break;
     }
 

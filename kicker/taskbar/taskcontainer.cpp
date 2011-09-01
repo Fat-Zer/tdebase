@@ -70,6 +70,7 @@ TaskContainer::TaskContainer(Task::Ptr task, TaskBar* bar,
       taskBar(bar),
       discardNextMouseEvent(false),
       aboutToActivate(false),
+      m_mouseOver(false),
       m_paintEventCompression(false)
 {
     init();
