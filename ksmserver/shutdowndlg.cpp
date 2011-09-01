@@ -1105,28 +1105,28 @@ KSMShutdownIPDlg::KSMShutdownIPDlg(TQWidget* parent)
 	TQWidget* ticon = new TQWidget( frame );
 	KIconLoader * ldr = KGlobal::iconLoader();
 	TQPixmap trinityPixmap = ldr->loadIcon("kmenu", KIcon::Panel, KIcon::SizeLarge, KIcon::DefaultState, 0L, true);
-	if (TQPaintDevice::x11AppDepth() == 32) {
-		// Manually draw the alpha portions onto the widget background color...
-		TQRgb backgroundRgb = ticon->paletteBackgroundColor().rgb();
-		TQImage correctedImage = trinityPixmap.convertToImage();
-		correctedImage = correctedImage.convertDepth(32);
-		correctedImage.setAlphaBuffer(true);
-		int w = correctedImage.width();
-		int h = correctedImage.height();
-		for (int y = 0; y < h; ++y) {
-			TQRgb *ls = (TQRgb *)correctedImage.scanLine( y );
-			for (int x = 0; x < w; ++x) {
-				TQRgb l = ls[x];
-				float alpha_adjust = tqAlpha( l )/255.0;
-				int r = int( (tqRed( l ) * alpha_adjust) + (tqRed( backgroundRgb ) * (1.0-alpha_adjust)) );
-				int g = int( (tqGreen( l ) * alpha_adjust) + (tqGreen( backgroundRgb ) * (1.0-alpha_adjust)) );
-				int b = int( (tqBlue( l ) * alpha_adjust) + (tqBlue( backgroundRgb ) * (1.0-alpha_adjust)) );
-				int a = int( 255 );
-				ls[x] = tqRgba( r, g, b, a );
-			}
+
+	// Manually draw the alpha portions of the icon onto the widget background color...
+	TQRgb backgroundRgb = ticon->paletteBackgroundColor().rgb();
+	TQImage correctedImage = trinityPixmap.convertToImage();
+	correctedImage = correctedImage.convertDepth(32);
+	correctedImage.setAlphaBuffer(true);
+	int w = correctedImage.width();
+	int h = correctedImage.height();
+	for (int y = 0; y < h; ++y) {
+		TQRgb *ls = (TQRgb *)correctedImage.scanLine( y );
+		for (int x = 0; x < w; ++x) {
+			TQRgb l = ls[x];
+			float alpha_adjust = tqAlpha( l )/255.0;
+			int r = int( (tqRed( l ) * alpha_adjust) + (tqRed( backgroundRgb ) * (1.0-alpha_adjust)) );
+			int g = int( (tqGreen( l ) * alpha_adjust) + (tqGreen( backgroundRgb ) * (1.0-alpha_adjust)) );
+			int b = int( (tqBlue( l ) * alpha_adjust) + (tqBlue( backgroundRgb ) * (1.0-alpha_adjust)) );
+			int a = int( 255 );
+			ls[x] = tqRgba( r, g, b, a );
 		}
-		trinityPixmap.convertFromImage(correctedImage);
 	}
+	trinityPixmap.convertFromImage(correctedImage);
+
 	ticon->setBackgroundPixmap(trinityPixmap);
 	ticon->setMinimumSize(trinityPixmap.size());
 	ticon->setMaximumSize(trinityPixmap.size());

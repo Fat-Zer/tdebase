@@ -343,8 +343,12 @@ void QuickButton::updateKickerTip(KickerTip::Data &data)
     {
         data.subtext = data.message;
     }
-    data.icon = KMimeType::pixmapForURL(_qurl->kurl(), 0, 
-        KIcon::Panel, KIcon::SizeHuge, KIcon::DefaultState);
+    if (_qurl->url() == "SPECIAL_BUTTON__SHOW_DESKTOP") {
+        data.icon = KGlobal::iconLoader()->loadIcon("desktop", KIcon::Panel, KIcon::SizeHuge, KIcon::DefaultState);
+    }
+    else {
+        data.icon = KMimeType::pixmapForURL(_qurl->kurl(), 0, KIcon::Panel, KIcon::SizeHuge, KIcon::DefaultState);
+    }
 }
 
 void QuickButton::setPopupDirection(KPanelApplet::Direction d)
