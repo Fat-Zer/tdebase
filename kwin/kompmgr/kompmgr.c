@@ -87,6 +87,24 @@ check baghira.sf.net for more infos
 #include <pwd.h>
 #endif
 
+typedef enum {
+    WINTYPE_DESKTOP,
+    WINTYPE_DOCK,
+    WINTYPE_TOOLBAR,
+    WINTYPE_MENU,
+    WINTYPE_UTILITY,
+    WINTYPE_SPLASH,
+    WINTYPE_DIALOG,
+    WINTYPE_NORMAL,
+    WINTYPE_DROPDOWN_MENU,
+    WINTYPE_POPUP_MENU,
+    WINTYPE_TOOLTIP,
+    WINTYPE_NOTIFY,
+    WINTYPE_COMBO,
+    WINTYPE_DND,
+    NUM_WINTYPES
+} wintype;
+
 typedef struct _ignore {
     struct _ignore	*next;
     unsigned long	sequence;
@@ -123,7 +141,7 @@ typedef struct _win {
     int			shadow_height;
     unsigned int	opacity;
     unsigned int	shadowSize;
-    Atom                windowType;
+    wintype             windowType;
     unsigned long	damage_sequence;    /* sequence when damage was created */
     int                 destroyed;
     Bool                shapable; /* this will allow window managers to exclude windows if just the deco is shaped*/
@@ -201,15 +219,11 @@ Atom            decoHashAtom;
 Atom            dimAtom;
 Atom            deskChangeAtom;
 Atom            winTypeAtom;
-Atom            winDesktopAtom;
-Atom            winDockAtom;
-Atom            winToolbarAtom;
-Atom            winMenuAtom;
-Atom            winUtilAtom;
-Atom            winSplashAtom;
-Atom            winDialogAtom;
-Atom            winNormalAtom;
 Atom            winTDETTDAtom;
+Atom            winType[NUM_WINTYPES];
+double          winTypeOpacity[NUM_WINTYPES];
+Bool            winTypeShadow[NUM_WINTYPES];
+Bool            winTypeFade[NUM_WINTYPES];
 
 /* opacity property name; sometime soon I'll write up an EWMH spec for it */
 #define OPACITY_PROP	"_KDE_WM_WINDOW_OPACITY"
@@ -249,7 +263,7 @@ static void
 determine_mode(Display *dpy, win *w);
 
 static double
-get_opacity_percent(Display *dpy, win *w, double def);
+get_opacity_percent(Display *dpy, win *w);
 
 static XserverRegion
 win_extents (Display *dpy, win *w);
@@ -266,9 +280,6 @@ double  fade_in_step =  0.028;
 double  fade_out_step = 0.03;
 int	fade_delta =	10;
 int	fade_time =	0;
-Bool	fadeWindows = False;
-Bool	fadeMenuWindows = False;
-Bool    excludeDockShadows = False;
 Bool	fadeTrans = False;
 
 Bool	autoRedirect = False;
@@ -528,6 +539,12 @@ set_fade (Display *dpy, win *w, double start, double finish, double step,
                     XFixesDestroyRegion( dpy, w->extents );
 		w->extents = win_extents (dpy, w);
 	}
+
+	/* fading windows need to be drawn, mark them as damaged.
+	   when a window maps, if it tries to fade in but it already at the right
+	   opacity (map/unmap/map fast) then it will never get drawn without this
+	   until it repaints */
+	w->damaged = 1;
 }
 
 	int
@@ -597,10 +614,10 @@ run_fades (Display *dpy)
                             XFixesDestroyRegion( dpy, w->extents );
 			w->extents = win_extents(dpy, w);
 		}
-      determine_mode (dpy, w);
-      /* Must do this last as it might destroy f->w in callbacks */
-      if (need_dequeue)
-         dequeue_fade (dpy, f);
+		determine_mode (dpy, w);
+		/* Must do this last as it might destroy f->w in callbacks */
+		if (need_dequeue)
+			dequeue_fade (dpy, f);
 	}
 	fade_time = now + fade_delta;
 }
@@ -1061,7 +1078,7 @@ win_extents (Display *dpy, win *w)
 	r.y = w->a.y;
 	r.width = w->a.width + w->a.border_width * 2;
 	r.height = w->a.height + w->a.border_width * 2;
-	if (compMode != CompSimple && w->shadowSize > 0 && !(w->windowType == winDockAtom && excludeDockShadows))
+	if (winTypeShadow[w->windowType])
 	{
 		if (compMode == CompServerShadows || w->mode != WINDOW_ARGB)
 		{
@@ -1324,23 +1341,23 @@ paint_all (Display *dpy, XserverRegion region)
 				set_ignore (dpy, NextRequest (dpy));
 				XRenderComposite (dpy, PictOpSrc, w->picture, None, rootBuffer,
 						0, 0, 0, 0, x, y, wid, hei);
-            if (w->dimPicture)
-               XRenderComposite (dpy, PictOpOver, w->dimPicture, None, rootBuffer, 0, 0, 0, 0, x, y, wid, hei);
+				if (w->dimPicture)
+					XRenderComposite (dpy, PictOpOver, w->dimPicture, None, rootBuffer, 0, 0, 0, 0, x, y, wid, hei);
 			}
 			else
-         {
-            if (!w->contentRegion)
-               w->contentRegion = content_region (dpy, w);
-            XFixesSubtractRegion (dpy, region, region, w->contentRegion);
-            set_ignore (dpy, NextRequest (dpy));
-            /*solid part*/
-            XRenderComposite (dpy, PictOpSrc, w->picture, None, rootBuffer,
-                              _LEFTWIDTH_(w->decoHash), _TOPHEIGHT_(w->decoHash), 0, 0,
-                              x + _LEFTWIDTH_(w->decoHash),
-                              y + _TOPHEIGHT_(w->decoHash),
-                              wid - _LEFTWIDTH_(w->decoHash) - _RIGHTWIDTH_(w->decoHash),
-                              hei - _TOPHEIGHT_(w->decoHash) - _BOTTOMHEIGHT_(w->decoHash));
-         }
+			{
+				if (!w->contentRegion)
+					w->contentRegion = content_region (dpy, w);
+				XFixesSubtractRegion (dpy, region, region, w->contentRegion);
+				set_ignore (dpy, NextRequest (dpy));
+				/*solid part*/
+				XRenderComposite (dpy, PictOpSrc, w->picture, None, rootBuffer,
+						_LEFTWIDTH_(w->decoHash), _TOPHEIGHT_(w->decoHash), 0, 0,
+						x + _LEFTWIDTH_(w->decoHash),
+						y + _TOPHEIGHT_(w->decoHash),
+						wid - _LEFTWIDTH_(w->decoHash) - _RIGHTWIDTH_(w->decoHash),
+						hei - _TOPHEIGHT_(w->decoHash) - _BOTTOMHEIGHT_(w->decoHash));
+			}
 		}
 		if (!w->borderClip)
 		{
@@ -1359,18 +1376,12 @@ paint_all (Display *dpy, XserverRegion region)
 	paint_root (dpy);
 	for (w = t; w; w = w->prev_trans)
 	{
-		/*skip desktop */
-		if (w->windowType == winDesktopAtom)
-			continue;
-
 		if (w->shadowSize > 0){
+		    if (winTypeShadow[w->windowType]) {
 			switch (compMode) {
 				case CompSimple:
 					break;
 				case CompServerShadows:
-					/* dont' bother drawing shadows on desktop windows */
-					if (w->windowType == winDesktopAtom)
-					        break;
 					XFixesSetPictureClipRegion (dpy, rootBuffer, 0, 0, w->borderClip);
 					set_ignore (dpy, NextRequest (dpy));
 					if (w->opacity != OPAQUE && !w->shadowPict)
@@ -1386,7 +1397,7 @@ paint_all (Display *dpy, XserverRegion region)
 							w->shadow_width, w->shadow_height);
 					break;
 				case CompClientShadows:
-					if (w->shadow && w->windowType != winDesktopAtom)
+					if (w->shadow)
 					{
 						XFixesSetPictureClipRegion (dpy, rootBuffer, 0, 0, w->borderClip);
 						XRenderComposite (dpy, PictOpOver, blackPicture, w->shadow, rootBuffer,
@@ -1397,6 +1408,7 @@ paint_all (Display *dpy, XserverRegion region)
 					}
 					break;
 			}
+		    }
 		}
 		if (w->opacity != OPAQUE && !w->alphaPict)
 			w->alphaPict = solid_picture (dpy, False, 
@@ -1569,6 +1581,111 @@ repair_win (Display *dpy, win *w)
 	w->damaged = 1;
 }
 
+static const char*
+wintype_name(wintype type)
+{
+    const char *t;
+    switch (type) {
+    case WINTYPE_DESKTOP: t = "desktop"; break;
+    case WINTYPE_DOCK:    t = "dock"; break;
+    case WINTYPE_TOOLBAR: t = "toolbar"; break;
+    case WINTYPE_MENU:    t = "menu"; break;
+    case WINTYPE_UTILITY: t = "utility"; break;
+    case WINTYPE_SPLASH:  t = "slash"; break;
+    case WINTYPE_DIALOG:  t = "dialog"; break;
+    case WINTYPE_NORMAL:  t = "normal"; break;
+    case WINTYPE_DROPDOWN_MENU: t = "dropdown"; break;
+    case WINTYPE_POPUP_MENU: t = "popup"; break;
+    case WINTYPE_TOOLTIP: t = "tooltip"; break;
+    case WINTYPE_NOTIFY:  t = "notification"; break;
+    case WINTYPE_COMBO:   t = "combo"; break;
+    case WINTYPE_DND:     t = "dnd"; break;
+    default:              t = "unknown"; break;
+    }
+    return t;
+}
+
+static wintype
+get_wintype_prop(Display * dpy, Window w)
+{
+    Atom actual;
+    wintype ret;
+    int format;
+    unsigned long n, left, off;
+    unsigned char *data;
+
+    ret = (wintype)-1;
+    off = 0;
+
+    do {
+        set_ignore (dpy, NextRequest (dpy));
+        int result = XGetWindowProperty (dpy, w, winTypeAtom, off, 1L, False,
+                                         XA_ATOM, &actual, &format,
+                                         &n, &left, &data);
+
+        if (result != Success)
+            break;
+        if (data != None)
+        {
+            int i;
+
+            for (i = 0; i < NUM_WINTYPES; ++i) {
+                Atom a;
+                memcpy (&a, data, sizeof (Atom));
+                if (a == winType[i]) {
+                    /* known type */
+                    ret = i;
+                    break;
+                }
+            }
+
+            XFree ( (void *) data);
+        }
+
+        ++off;
+    } while (left >= 4 && ret == (wintype)-1);
+
+    return ret;
+}
+
+static wintype
+determine_wintype (Display *dpy, Window w, Window top)
+{
+    Window       root_return, parent_return;
+    Window      *children = NULL;
+    unsigned int nchildren, i;
+    wintype      type;
+
+    type = get_wintype_prop (dpy, w);
+    if (type != (wintype)-1)
+       return type;
+
+    set_ignore (dpy, NextRequest (dpy));
+    if (!XQueryTree (dpy, w, &root_return, &parent_return, &children,
+                           &nchildren))
+    {
+       /* XQueryTree failed. */
+       if (children)
+           XFree ((void *)children);
+       return (wintype)-1;
+    }
+
+    for (i = 0;i < nchildren;i++)
+    {
+       type = determine_wintype (dpy, children[i], top);
+       if (type != (wintype)-1)
+           return type;
+    }
+
+    if (children)
+       XFree ((void *)children);
+
+    if (w != top)
+        return (wintype)-1;
+    else
+        return WINTYPE_NORMAL;
+}
+
 static unsigned int
 get_opacity_prop(Display *dpy, win *w, unsigned int def);
 
@@ -1590,22 +1707,16 @@ map_win (Display *dpy, Window id, unsigned long sequence, Bool fade)
 	w->opacity = get_opacity_prop (dpy, w, OPAQUE);
 	determine_mode (dpy, w);
 
+	w->windowType = determine_wintype (dpy, w->id, w->id);
+#if 0
+	printf("window 0x%x type %s\n", w->id, wintype_name(w->windowType));
+#endif
+
 #if CAN_DO_USABLE
 	w->damage_bounds.x = w->damage_bounds.y = 0;
 	w->damage_bounds.width = w->damage_bounds.height = 0;
 #endif
 	w->damaged = 0;
-
-#if HAS_NAME_WINDOW_PIXMAP
-    /* If the window was previously mapped and its pixmap still exists, it
-       is out of date now, so force us to reacquire it.  (If the window
-       re-maps before the unmap fade-out finished) */
-    if (w->pixmap)
-    {
-        XFreePixmap (dpy, w->pixmap);
-        w->pixmap = None;
-    }
-#endif
 
 #if WORK_AROUND_FGLRX
 	XserverRegion extents = win_extents (dpy, w);
@@ -1619,7 +1730,7 @@ map_win (Display *dpy, Window id, unsigned long sequence, Bool fade)
 	XFixesDestroyRegion (dpy, extents);
 #endif
 
-	if ((fade && fadeWindows) || (fade && fadeMenuWindows && w->windowType == winMenuAtom))
+	if (fade && winTypeFade[w->windowType])
 		set_fade (dpy, w, 0, get_opacity_prop(dpy, w, OPAQUE)*1.0/OPAQUE, fade_in_step, 0, False, True, True, True);
 }
 
@@ -1706,11 +1817,12 @@ unmap_win (Display *dpy, Window id, Bool fade)
 		return;
 	w->a.map_state = IsUnmapped;
 #if HAS_NAME_WINDOW_PIXMAP
-	if ((w->pixmap && fade && fadeWindows) || (w->pixmap && fade && fadeMenuWindows && w->windowType == winMenuAtom))
-                    set_fade (dpy, w, w->opacity*1.0/OPAQUE, 0.0, fade_out_step, unmap_callback, False, False, True, True);
+	if (w->pixmap && fade && winTypeFade[w->windowType]) {
+		set_fade (dpy, w, w->opacity*1.0/OPAQUE, 0.0, fade_out_step, unmap_callback, False, False, True, True);
+	}
 	else
 #endif
-	finish_unmap_win (dpy, w);
+		    finish_unmap_win (dpy, w);
 }
 
 /* Get the opacity prop from window
@@ -1875,7 +1987,7 @@ get_deskchange_prop(Display *dpy, Window id)
 otherwise: the value
 */
 	static double
-get_opacity_percent(Display *dpy, win *w, double def)
+get_opacity_percent(Display *dpy, win *w)
 {
 	if (w && w->isInFade)
 	{
@@ -1884,6 +1996,7 @@ get_opacity_percent(Display *dpy, win *w, double def)
 	}
 	else
 	{
+		double def = winTypeOpacity[w->windowType];
 		unsigned int opacity = get_opacity_prop (dpy, w, (unsigned int)(OPAQUE*def));
 		return opacity*1.0/OPAQUE;
 	}
@@ -1941,32 +2054,6 @@ get_window_transparent_to_desktop(Display * dpy, Window w)
 		return True;
 	}
 	return False;
-}
-
-/* determine mode for window all in one place.
-   Future might check for menu flag and other cool things
-   */
-
-	static Atom
-get_wintype_prop(Display * dpy, Window w)
-{
-	Atom actual;
-	int format;
-	unsigned long n, left;
-
-	unsigned char *data;
-	int result = XGetWindowProperty (dpy, w, winTypeAtom, 0L, 1L, False,
-			XA_ATOM, &actual, &format,
-			&n, &left, &data);
-
-	if (result == Success && data != None && format == 32 )
-	{
-		Atom a;
-		a = *(long*)data;
-		XFree ( (void *) data);
-		return a;
-	}
-	return winNormalAtom;
 }
 
 	static void
@@ -2038,7 +2125,7 @@ determine_window_transparent_to_desktop (Display *dpy, Window w)
 		/* XQueryTree failed. */
 		if (children)
 			XFree ((void *)children);
-		return winNormalAtom;
+		return False;
 	}
 
 	for (i = 0;i < nchildren;i++)
@@ -2052,40 +2139,6 @@ determine_window_transparent_to_desktop (Display *dpy, Window w)
 		XFree ((void *)children);
 
 	return False;
-}
-
-	static Atom
-determine_wintype (Display *dpy, Window w)
-{
-	Window       root_return, parent_return;
-	Window      *children = NULL;
-	unsigned int nchildren, i;
-	Atom         type;
-
-	type = get_wintype_prop (dpy, w);
-	if (type != winNormalAtom)
-		return type;
-
-	if (!XQueryTree (dpy, w, &root_return, &parent_return, &children,
-				&nchildren))
-	{
-		/* XQueryTree failed. */
-		if (children)
-			XFree ((void *)children);
-		return winNormalAtom;
-	}
-
-	for (i = 0;i < nchildren;i++)
-	{
-		type = determine_wintype (dpy, children[i]);
-		if (type != winNormalAtom)
-			return type;
-	}
-
-	if (children)
-		XFree ((void *)children);
-
-	return winNormalAtom;
 }
 
 	static void
@@ -2163,7 +2216,6 @@ add_win (Display *dpy, Window id, Window prev)
 	new->decoHash = get_decoHash_prop(dpy, new);
 	tmp = get_dim_prop(dpy, new);
         new->dimPicture = (tmp < OPAQUE) ? solid_picture (dpy, True, (double)tmp/OPAQUE, 0.1, 0.1, 0.1) : None;
-	new->windowType = determine_wintype (dpy, new->id);
 
 	new->next = *p;
 	*p = new;
@@ -2306,7 +2358,7 @@ finish_destroy_win (Display *dpy, Window id, Bool gone)
 	for (prev = &list; (w = *prev); prev = &w->next)
 		if (w->id == id && w->destroyed)
 		{
-			if (!gone)
+			if (gone)
 				finish_unmap_win (dpy, w);
 			*prev = w->next;
 			if (w->picture)
@@ -2356,8 +2408,9 @@ destroy_win (Display *dpy, Window id, Bool gone, Bool fade)
 	win *w = find_win (dpy, id);
 	if (w) w->destroyed = True;
 #if HAS_NAME_WINDOW_PIXMAP
-	if ((w && w->pixmap && fade && fadeWindows) || (w && w->pixmap && fade && fadeWindows && w->windowType == winMenuAtom))
+	if (w && w->pixmap && fade && winTypeFade[w->windowType]) {
 		set_fade (dpy, w, w->opacity*1.0/OPAQUE, 0.0, fade_out_step, destroy_callback, gone, False, True, True);
+	}
 	else
 #endif
 	{
@@ -2440,8 +2493,9 @@ damage_win (Display *dpy, XDamageNotifyEvent *de)
 				w->a.height <= w->damage_bounds.y + w->damage_bounds.height)
 		{
 			clipChanged = True;
-			if ((fadeWindows) || (fadeMenuWindows && w->windowType == winMenuAtom))
-				set_fade (dpy, w, 0, get_opacity_percent (dpy, w, 1.0), fade_in_step, 0, False, True, True, False);
+			if (winTypeFade[w->windowType]) {
+				set_fade (dpy, w, 0, get_opacity_percent (dpy, w), fade_in_step, 0, False, True, True, False);
+			}
 			w->usable = True;
 		}
 	}
@@ -2474,6 +2528,12 @@ shape_win (Display *dpy, XShapeEvent *se)
 	win	*w = find_win (dpy, se->window);
 	
 	if (!w)
+		return;
+
+	if (w->a.map_state == IsUnmapped)
+		return;
+
+	if (w->isInFade)
 		return;
 	
 	if (se->kind == ShapeClip || se->kind == ShapeBounding)
@@ -2768,13 +2828,23 @@ setValue(Option option, char *value ){
 			fadeTrans = ( strcasecmp(value, "true") == 0 );
 			break;
 		case FadeWindows:
-			fadeWindows = ( strcasecmp(value, "true") == 0 );
+			if ( strcasecmp(value, "true") == 0 ) {
+				int i;
+				for (i = 0; i < NUM_WINTYPES; ++i) {
+					if (i != WINTYPE_POPUP_MENU)
+						winTypeFade[i] = True;
+				}
+			}
 			break;
 		case FadeMenuWindows:
-			fadeMenuWindows = ( strcasecmp(value, "true") == 0 );
+			if ( strcasecmp(value, "true") == 0 ) {
+				winTypeFade[WINTYPE_POPUP_MENU] = True;
+			}
 			break;
 		case ExcludeDockShadows:
-			excludeDockShadows = ( strcasecmp(value, "true") == 0 );
+			if ( strcasecmp(value, "true") == 0 ) {
+				winTypeShadow[WINTYPE_DOCK] = False;
+			}
 			break;
 		case Compmode:
 			if( strcasecmp(value, "CompClientShadows") == 0 ){
@@ -2980,6 +3050,13 @@ main (int argc, char **argv)
 	int		    now;
 	int		    p;
 	int		    composite_major, composite_minor;
+	Bool		    noDockShadow = False;
+
+	for (i = 0; i < NUM_WINTYPES; ++i) {
+		winTypeFade[i] = False;
+		winTypeShadow[i] = False;
+		winTypeOpacity[i] = 1.0;
+	}
 
 	int		    o;
 	char		    *fill_color_name = NULL;
@@ -3000,6 +3077,7 @@ main (int argc, char **argv)
 
 	loadConfig(NULL); /*we do that before cmdline-parsing, so config-values can be overridden*/
 	/*used for shadow colors*/
+
 	while ((o = getopt (argc, argv, "D:I:O:d:r:o:l:t:b:scnfFmCaSx:vh")) != -1)
 	{
 		switch (o) {
@@ -3023,21 +3101,30 @@ main (int argc, char **argv)
 				break;
 			case 's':
 				compMode = CompServerShadows;
+				for (i = 0; i < NUM_WINTYPES; ++i)
+					winTypeShadow[i] = True;
 				break;
 			case 'c':
 				compMode = CompClientShadows;
+				for (i = 0; i < NUM_WINTYPES; ++i)
+					winTypeShadow[i] = True;
 				break;
 			case 'C':
-				excludeDockShadows = True;
+				winTypeShadow[WINTYPE_DOCK] = False;
 				break;
 			case 'n':
 				compMode = CompSimple;
+				for (i = 0; i < NUM_WINTYPES; ++i)
+					winTypeShadow[i] = False;
 				break;
 			case 'f':
-				fadeWindows = True;
+				for (i = 0; i < NUM_WINTYPES; ++i) {
+					if (i != WINTYPE_POPUP_MENU)
+						winTypeFade[i] = True;
+				}
 				break;
 			case 'm':
-				fadeMenuWindows = True;
+				winTypeFade[WINTYPE_POPUP_MENU] = True;
 				break;
 			case 'F':
 				fadeTrans = True;
@@ -3077,6 +3164,11 @@ main (int argc, char **argv)
 				  break;
 		}
 	}
+
+	/* don't bother to do anything for the desktop */
+	winTypeOpacity[WINTYPE_DESKTOP] = 1.0;
+	winTypeShadow[WINTYPE_DESKTOP] = False;
+	winTypeFade[WINTYPE_DESKTOP] = False;
 
 	dpy = XOpenDisplay (display);
 	if (!dpy)
@@ -3140,15 +3232,21 @@ main (int argc, char **argv)
         dimAtom = XInternAtom (dpy, DIM_PROP, False);
         deskChangeAtom = XInternAtom (dpy, DESKCHANGE_PROP, False);
 	winTypeAtom = XInternAtom (dpy, "_NET_WM_WINDOW_TYPE", False);
-	winDesktopAtom = XInternAtom (dpy, "_NET_WM_WINDOW_TYPE_DESKTOP", False);
-	winDockAtom = XInternAtom (dpy, "_NET_WM_WINDOW_TYPE_DOCK", False);
-	winToolbarAtom = XInternAtom (dpy, "_NET_WM_WINDOW_TYPE_TOOLBAR", False);
-	winMenuAtom = XInternAtom (dpy, "_NET_WM_WINDOW_TYPE_MENU", False);
-	winUtilAtom = XInternAtom (dpy, "_NET_WM_WINDOW_TYPE_UTILITY", False);
-	winSplashAtom = XInternAtom (dpy, "_NET_WM_WINDOW_TYPE_SPLASH", False);
-	winDialogAtom = XInternAtom (dpy, "_NET_WM_WINDOW_TYPE_DIALOG", False);
-	winNormalAtom = XInternAtom (dpy, "_NET_WM_WINDOW_TYPE_NORMAL", False);
 	winTDETTDAtom = XInternAtom (dpy, "_KDE_TRANSPARENT_TO_DESKTOP", False);
+	winType[WINTYPE_DESKTOP] = XInternAtom (dpy, "_NET_WM_WINDOW_TYPE_DESKTOP", False);
+	winType[WINTYPE_DOCK] = XInternAtom (dpy, "_NET_WM_WINDOW_TYPE_DOCK", False);
+	winType[WINTYPE_TOOLBAR] = XInternAtom (dpy, "_NET_WM_WINDOW_TYPE_TOOLBAR", False);
+	winType[WINTYPE_MENU] = XInternAtom (dpy, "_NET_WM_WINDOW_TYPE_MENU", False);
+	winType[WINTYPE_UTILITY] = XInternAtom (dpy, "_NET_WM_WINDOW_TYPE_UTILITY", False);
+	winType[WINTYPE_SPLASH] = XInternAtom (dpy, "_NET_WM_WINDOW_TYPE_SPLASH", False);
+	winType[WINTYPE_DIALOG] = XInternAtom (dpy, "_NET_WM_WINDOW_TYPE_DIALOG", False);
+	winType[WINTYPE_NORMAL] = XInternAtom (dpy, "_NET_WM_WINDOW_TYPE_NORMAL", False);
+	winType[WINTYPE_DROPDOWN_MENU] = XInternAtom (dpy, "_NET_WM_WINDOW_TYPE_DROPDOWN_MENU", False);
+	winType[WINTYPE_POPUP_MENU] = XInternAtom (dpy, "_NET_WM_WINDOW_TYPE_POPUP_MENU", False);
+	winType[WINTYPE_TOOLTIP] = XInternAtom (dpy, "_NET_WM_WINDOW_TYPE_TOOLTIP", False);
+	winType[WINTYPE_NOTIFY] = XInternAtom (dpy, "_NET_WM_WINDOW_TYPE_NOTIFICATION", False);
+	winType[WINTYPE_COMBO] = XInternAtom (dpy, "_NET_WM_WINDOW_TYPE_COMBO", False);
+	winType[WINTYPE_DND] = XInternAtom (dpy, "_NET_WM_WINDOW_TYPE_DND", False);
 
 	pa.subwindow_mode = IncludeInferiors;
 
@@ -3325,24 +3423,24 @@ main (int argc, char **argv)
 					if (ev.xproperty.atom == shadeAtom)
 					{
 						win * w = find_win(dpy, ev.xproperty.window);
-    					if (w){
-    					           unsigned int tmp = get_shade_prop(dpy, w);
-						if (tmp)
-						{
-							if (tmp == 1)
+						if (w){
+							unsigned int tmp = get_shade_prop(dpy, w);
+							if (tmp)
 							{
-								w->preShadeOpacity = w->opacity;
-								w->opacity = w->opacity-1; /*assuming that no human being will ever be able to shade an invisable window ;) */
-								determine_mode(dpy, w);
+								if (tmp == 1)
+								{
+									w->preShadeOpacity = w->opacity;
+									w->opacity = w->opacity-1; /*assuming that no human being will ever be able to shade an invisable window ;) */
+									determine_mode(dpy, w);
+								}
+								else if (tmp == 2)
+								{
+									w->opacity = w->preShadeOpacity;
+									determine_mode(dpy, w);
+								}
 							}
-							else if (tmp == 2)
-							{
-								w->opacity = w->preShadeOpacity;
-								determine_mode(dpy, w);
-							}
+							break;
 						}
-						break;
-    					}
 					}
 					else if (ev.xproperty.atom == shapableAtom)
 					{
@@ -3365,23 +3463,23 @@ main (int argc, char **argv)
 						else
 							printf("arrrg, window not found\n");
 					}
-                                        else if (ev.xproperty.atom == dimAtom)
-                                        {
-                                                win * w = find_win(dpy, ev.xproperty.window);
-                                                if (w)
-                                                {
-                                                    unsigned int tmp = get_dim_prop(dpy, w);
-                                                    if (w->dimPicture)
-                                                    {
-                                                        XRenderFreePicture (dpy, w->dimPicture);
-                                                        w->dimPicture = None;
-                                                    }
-                                                    if (tmp < OPAQUE)
-                                                        w->dimPicture = solid_picture (dpy, True, (double)tmp/OPAQUE, 0.1, 0.1, 0.1);
-                                                }
-                                                else
-                                                printf("arrrg, window not found\n");
-                                        }
+					else if (ev.xproperty.atom == dimAtom)
+					{
+						win * w = find_win(dpy, ev.xproperty.window);
+						if (w)
+						{
+							unsigned int tmp = get_dim_prop(dpy, w);
+							if (w->dimPicture)
+							{
+							XRenderFreePicture (dpy, w->dimPicture);
+							w->dimPicture = None;
+							}
+							if (tmp < OPAQUE)
+							w->dimPicture = solid_picture (dpy, True, (double)tmp/OPAQUE, 0.1, 0.1, 0.1);
+						}
+						else
+						printf("arrrg, window not found\n");
+					}
 					/* check if Trans or Shadow property was changed */    
 					else if (ev.xproperty.atom == opacityAtom || ev.xproperty.atom == shadowAtom)
 					{
@@ -3394,8 +3492,8 @@ main (int argc, char **argv)
 							if (ev.xproperty.atom == opacityAtom)
 							{
 								tmp = get_opacity_prop(dpy, w, OPAQUE);
-   							/*THis will most probably happen if window is in fade - resulting in that the fade process isn't updated or broken -> we may have a wrong opacity in the future*/
-   							/*if (tmp == w->opacity)
+   								/*This will most probably happen if window is in fade - resulting in that the fade process isn't updated or broken -> we may have a wrong opacity in the future*/
+   								/*if (tmp == w->opacity)
 									break;*/ /*skip if opacity does not change*/
 								if (fadeTrans)
 								{
@@ -3408,41 +3506,42 @@ main (int argc, char **argv)
 									else
 										step = fade_in_step;
 									
-								    set_fade (dpy, w, start, finish, step, 0, False, True, True, False);
-                                    break;
-                                    }
-                                else
-                                    w->opacity = tmp;
-                                }
-                            else
-                                {
-                                tmp = get_shadow_prop(dpy, w);
-                                if (tmp == w->shadowSize)
-                                    break; /*skip if shadow does not change*/
-                                w->shadowSize = tmp;
-/*                                if (w->isInFade)
-                                    break;*/
-                                }
-                            if (w->shadow)
-                            {
-                                XRenderFreePicture (dpy, w->shadow);
-                                w->shadow = None;
-                            }
-                            if (oldShadowSize < w->shadowSize) /* this is important to catch size changes on cleanup with determine_mode*/
-                            {
-                                if( w->extents != None )
-                                    XFixesDestroyRegion( dpy, w->extents );
-                                w->extents = win_extents (dpy, w);
-                                determine_mode(dpy, w);
-                            }
-                            else
-                            {
-                                determine_mode(dpy, w);
-                                if( w->extents != None )
-                                    XFixesDestroyRegion( dpy, w->extents );
-                                w->extents = win_extents (dpy, w);
-                            }
-		    }
+									set_fade (dpy, w, start, finish, step, 0, False, True, True, False);
+								break;
+								}
+								else {
+									w->opacity = tmp;
+								}
+							}
+							else
+							{
+								tmp = get_shadow_prop(dpy, w);
+								if (tmp == w->shadowSize)
+									break; /*skip if shadow does not change*/
+								w->shadowSize = tmp;
+								/* if (w->isInFade)
+									break; */
+							}
+							if (w->shadow)
+							{
+								XRenderFreePicture (dpy, w->shadow);
+								w->shadow = None;
+							}
+							if (oldShadowSize < w->shadowSize) /* this is important to catch size changes on cleanup with determine_mode*/
+							{
+								if( w->extents != None )
+									XFixesDestroyRegion( dpy, w->extents );
+								w->extents = win_extents (dpy, w);
+								determine_mode(dpy, w);
+							}
+							else
+							{
+								determine_mode(dpy, w);
+								if( w->extents != None )
+									XFixesDestroyRegion( dpy, w->extents );
+								w->extents = win_extents (dpy, w);
+							}
+						}
 		}
                 else if (ev.xproperty.atom == deskChangeAtom)
                 {
