@@ -38,6 +38,7 @@
  * Added ability to write PID of process to home directory					08/14/2011
  * Added SIGUSR2 handler to reload settings     [Prevent flicker on settings change]		08/14/2011
  * Added SIGTERM handler to clean up stale PID files on exit					08/14/2011
+ * Added hack to work around ATI fglrx XDamage event generation bugs	[WORK_AROUND_FGLRX]	09/01/2011
  *
  * TODO:
  * http://patchwork.freedesktop.org/patch/1053/ [Fix window mapping with re-used window ids]
@@ -71,6 +72,8 @@ check baghira.sf.net for more infos
 #endif
 
 #define CAN_DO_USABLE 1
+
+#define WORK_AROUND_FGLRX 1
 
 #define _TOPHEIGHT_(x) ((x >> 24) & 0xff)
 #define _RIGHTWIDTH_(x) ((x >> 16) & 0xff)
@@ -122,6 +125,7 @@ typedef struct _win {
     unsigned int	shadowSize;
     Atom                windowType;
     unsigned long	damage_sequence;    /* sequence when damage was created */
+    int                 destroyed;
     Bool                shapable; /* this will allow window managers to exclude windows if just the deco is shaped*/
     Bool		shaped;
     XRectangle		shape_bounds;
@@ -980,7 +984,7 @@ find_win (Display *dpy, Window id)
 	win	*w;
 
 	for (w = list; w; w = w->next)
-		if (w->id == id)
+		if ((!w->destroyed) && (w->id == id))
 			return w;
 	return 0;
 }
@@ -1530,6 +1534,8 @@ add_damage (Display *dpy, XserverRegion damage)
 		allDamage = damage;
 }
 
+static void damage_win (Display *dpy, XDamageNotifyEvent *de);
+
 static void
 repair_win (Display *dpy, win *w)
 {
@@ -1574,16 +1580,44 @@ map_win (Display *dpy, Window id, unsigned long sequence, Bool fade)
 
 	if (!w)
 		return;
+
 	w->a.map_state = IsViewable;
 
 	/* This needs to be here or else we lose transparency messages */
 	XSelectInput (dpy, id, PropertyChangeMask);
+
+	/* This needs to be here since we don't get PropertyNotify when unmapped */
+	w->opacity = get_opacity_prop (dpy, w, OPAQUE);
+	determine_mode (dpy, w);
 
 #if CAN_DO_USABLE
 	w->damage_bounds.x = w->damage_bounds.y = 0;
 	w->damage_bounds.width = w->damage_bounds.height = 0;
 #endif
 	w->damaged = 0;
+
+#if HAS_NAME_WINDOW_PIXMAP
+    /* If the window was previously mapped and its pixmap still exists, it
+       is out of date now, so force us to reacquire it.  (If the window
+       re-maps before the unmap fade-out finished) */
+    if (w->pixmap)
+    {
+        XFreePixmap (dpy, w->pixmap);
+        w->pixmap = None;
+    }
+#endif
+
+#if WORK_AROUND_FGLRX
+	XserverRegion extents = win_extents (dpy, w);
+	XDamageNotifyEvent de;
+	de.drawable = w->id;
+	de.area.x = 0;
+	de.area.y = 0;
+	de.area.width = w->a.width + w->a.border_width * 2;
+	de.area.height = w->a.height + w->a.border_width * 2;
+	damage_win(dpy, &de);
+	XFixesDestroyRegion (dpy, extents);
+#endif
 
 	if ((fade && fadeWindows) || (fade && fadeMenuWindows && w->windowType == winMenuAtom))
 		set_fade (dpy, w, 0, get_opacity_prop(dpy, w, OPAQUE)*1.0/OPAQUE, fade_in_step, 0, False, True, True, True);
@@ -2066,7 +2100,7 @@ add_win (Display *dpy, Window id, Window prev)
 	if (prev)
 	{
 		for (p = &list; *p; p = &(*p)->next)
-			if ((*p)->id == prev)
+			if ((*p)->id == prev && !(*p)->destroyed)
 				break;
 	}
 	else
@@ -2114,6 +2148,7 @@ add_win (Display *dpy, Window id, Window prev)
 	new->shadow_width = 0;
 	new->shadow_height = 0;
 	new->opacity = OPAQUE;
+	new->destroyed = False;
 	new->shadowSize = 100;
 	new->decoHash = 0;
 	new->show_root_tile = determine_window_transparent_to_desktop(dpy, id);
@@ -2123,15 +2158,12 @@ add_win (Display *dpy, Window id, Window prev)
 
 	XShapeSelectInput( dpy, id, ShapeNotifyMask );
 
-	/* moved mode setting to one place */
-        new->opacity = get_opacity_prop (dpy, new, OPAQUE);
 	new->shadowSize = get_shadow_prop (dpy, new);
 	new->shapable = get_shapable_prop(dpy, new);
 	new->decoHash = get_decoHash_prop(dpy, new);
 	tmp = get_dim_prop(dpy, new);
         new->dimPicture = (tmp < OPAQUE) ? solid_picture (dpy, True, (double)tmp/OPAQUE, 0.1, 0.1, 0.1) : None;
 	new->windowType = determine_wintype (dpy, new->id);
-        determine_mode (dpy, new);
 
 	new->next = *p;
 	*p = new;
@@ -2161,7 +2193,7 @@ restack_win (Display *dpy, win *w, Window new_above)
 		/* rehook */
 		for (prev = &list; *prev; prev = &(*prev)->next)
 		{
-			if ((*prev)->id == new_above)
+			if ((!(*prev)->destroyed) && ((*prev)->id == new_above))
 				break;
 		}
 		w->next = *prev;
@@ -2190,6 +2222,7 @@ configure_win (Display *dpy, XConfigureEvent *ce)
 		}
 		return;
 	}
+
 #if CAN_DO_USABLE
 	if (w->usable)
 #endif
@@ -2202,7 +2235,9 @@ configure_win (Display *dpy, XConfigureEvent *ce)
 	w->shape_bounds.y -= w->a.y;
 	w->a.x = ce->x;
 	w->a.y = ce->y;
-	if (w->a.width != ce->width || w->a.height != ce->height)
+	/* Only destroy the pixmap if the window is mapped */
+	if (w->a.map_state != IsUnmapped &&
+		(w->a.width != ce->width || w->a.height != ce->height))
 	{
 #if HAS_NAME_WINDOW_PIXMAP
 		if (w->pixmap)
@@ -2227,7 +2262,7 @@ configure_win (Display *dpy, XConfigureEvent *ce)
 	w->a.border_width = ce->border_width;
 	w->a.override_redirect = ce->override_redirect;
         restack_win (dpy, w, ce->above);
-	if (damage)
+	if (w->a.map_state != IsUnmapped && damage)
 	{
 		XserverRegion	extents = win_extents (dpy, w);
                 XFixesUnionRegion (dpy, damage, damage, extents);
@@ -2242,7 +2277,8 @@ configure_win (Display *dpy, XConfigureEvent *ce)
 		w->shape_bounds.height = w->a.height;
 	}
 
-	clipChanged = True;
+	if (w->a.map_state != IsUnmapped)
+		clipChanged = True;
 }
 
 	static void
@@ -2268,7 +2304,7 @@ finish_destroy_win (Display *dpy, Window id, Bool gone)
 	win	**prev, *w;
 
 	for (prev = &list; (w = *prev); prev = &w->next)
-		if (w->id == id)
+		if (w->id == id && w->destroyed)
 		{
 			if (!gone)
 				finish_unmap_win (dpy, w);
@@ -2318,6 +2354,7 @@ static void
 destroy_win (Display *dpy, Window id, Bool gone, Bool fade)
 {
 	win *w = find_win (dpy, id);
+	if (w) w->destroyed = True;
 #if HAS_NAME_WINDOW_PIXMAP
 	if ((w && w->pixmap && fade && fadeWindows) || (w && w->pixmap && fade && fadeWindows && w->windowType == winMenuAtom))
 		set_fade (dpy, w, w->opacity*1.0/OPAQUE, 0.0, fade_out_step, destroy_callback, gone, False, True, True);
@@ -2351,10 +2388,16 @@ destroy_win (Display *dpy, Window id, Bool gone, Bool fade)
 	static void
 damage_win (Display *dpy, XDamageNotifyEvent *de)
 {
-	win	*w = find_win (dpy, de->drawable);
+	win *w = find_win (dpy, de->drawable);
 
 	if (!w)
 		return;
+
+#if WORK_AROUND_FGLRX
+	if (w->a.map_state != IsViewable)
+		return;
+#endif
+
 #if CAN_DO_USABLE
 	if (!w->usable)
 	{
@@ -2380,7 +2423,8 @@ damage_win (Display *dpy, XDamageNotifyEvent *de)
 				w->damage_bounds.height = de->area.y + de->area.height - w->damage_bounds.y;
 		}
 #if 0
-		printf ("unusable damage %d, %d: %d x %d bounds %d, %d: %d x %d\n",
+		printf ("unusable damage [%d] %d, %d: %d x %d bounds %d, %d: %d x %d\n",
+				de->drawable,
 				de->area.x,
 				de->area.y,
 				de->area.width,
@@ -2865,16 +2909,55 @@ usage (char *program)
 	exit (1);
 }
 
-static void
-give_me_a_name(void)
+static Bool
+register_cm (void)
 {
-  Window w;
+      Window w;
+      Atom a;
+      static char net_wm_cm[] = "_NET_WM_CM_Sxx";
 
-  w = XCreateSimpleWindow (dpy, RootWindow(dpy, 0), 0, 0, 1, 1, 0, None,
+      snprintf (net_wm_cm, sizeof (net_wm_cm), "_NET_WM_CM_S%d", scr);
+      a = XInternAtom (dpy, net_wm_cm, False);
+
+/*      w = XGetSelectionOwner (dpy, a);
+      if (w != None)
+      {
+          XTextProperty tp;
+          char **strs;
+          int count;
+          Atom winNameAtom = XInternAtom (dpy, "_NET_WM_NAME", False);
+
+          if (!XGetTextProperty (dpy, w, &tp, winNameAtom) &&
+          !XGetTextProperty (dpy, w, &tp, XA_WM_NAME))
+          {
+              fprintf (stderr,
+              "Another composite manager is already running (0x%lx)\n",
+              (unsigned long) w);
+              return False;
+          }
+          if (XmbTextPropertyToTextList (dpy, &tp, &strs, &count) == Success)
+          {
+              fprintf (stderr,
+               "Another composite manager is already running (%s)\n",
+               strs[0]);
+
+               XFreeStringList (strs);
+          }
+
+          XFree (tp.value);
+
+          return False;
+      }*/
+
+      w = XCreateSimpleWindow (dpy, RootWindow (dpy, scr), 0, 0, 1, 1, 0, None,
 		  None);
-  Xutf8SetWMProperties(dpy, w, "kcompmgr", "kcompmgr", NULL, 0, NULL, NULL,
+      Xutf8SetWMProperties(dpy, w, "kcompmgr", "kcompmgr", NULL, 0, NULL, NULL,
 		  NULL);
-}	
+
+      XSetSelectionOwner (dpy, a, w, 0);
+
+      return True;
+}
 
 int
 main (int argc, char **argv)
@@ -3042,7 +3125,11 @@ main (int argc, char **argv)
 
 	fprintf(stderr, "Started\n");
 
-	give_me_a_name();
+	register_cm();
+	if (!register_cm())
+	{
+		exit (1);
+	}
 
 	/* get atoms */
 	shadowAtom = XInternAtom (dpy, SHADOW_PROP, False);
