@@ -144,6 +144,9 @@ typedef struct _win {
     wintype             windowType;
     unsigned long	damage_sequence;    /* sequence when damage was created */
     int                 destroyed;
+    Bool		destruct_queued;
+    Bool		destruct_requested;
+    int			destruct_request_time;
     Bool                shapable; /* this will allow window managers to exclude windows if just the deco is shaped*/
     Bool		shaped;
     XRectangle		shape_bounds;
@@ -247,6 +250,7 @@ conv            *gaussianMap;
 
 #define NDEBUG 1
 #define DEBUG_REPAINT 0
+#define DEBUG_WINDOWS 0
 #define DEBUG_EVENTS 0
 #define MONITOR_REPAINT 0
 
@@ -1184,6 +1188,8 @@ deco_region (Display *dpy, win *w)
 	return title;
 }
 
+static void finish_destroy_win (Display *dpy, Window id, Bool gone);
+
 	static XserverRegion
 content_region (Display *dpy, win *w)
 {
@@ -1214,6 +1220,10 @@ paint_all (Display *dpy, XserverRegion region)
 {
 	win	*w;
 	win	*t = 0;
+
+#if DEBUG_WINDOWS
+	int window_count = 0;
+#endif
 
 	if (!region)
 	{
@@ -1246,12 +1256,36 @@ paint_all (Display *dpy, XserverRegion region)
 #if DEBUG_REPAINT
 	printf ("paint:");
 #endif
+
+	// Time delayed garbage collect
+	// It waits 10 seconds before destroying window data
+	// This allows the fade out to perform smoothly under all conditions
+	// Yes, this code is somewhat inefficient!
+	// But it shouldn't matter unless someone has tens of thousands of windows open...
+	// If the user can set a fade out that is longer than 10 seconds,
+	// then the value must be increased.  I am assuming that 10 seconds
+	// is far too long for any normal human being to wait... ;-)
 	for (w = list; w; w = w->next)
 	{
+		if (w->destruct_requested) {
+			int curtime = get_time_in_milliseconds();
+			if ((curtime - w->destruct_request_time) > 10000) {
+				finish_destroy_win (dpy, w->id, True);
+				w = list;
+			}
+		}
+	}
+
+	for (w = list; w; w = w->next)
+	{
+#if DEBUG_WINDOWS
+		window_count++;
+#endif
 #if CAN_DO_USABLE
 		if (!w->usable)
 			continue;
 #endif
+
 		/* never painted, ignore it */
 		if ((!screen_damaged) && (!w->damaged))
 			continue;
@@ -1368,6 +1402,9 @@ paint_all (Display *dpy, XserverRegion region)
 		w->prev_trans = t;
 		t = w;
 	}
+#if DEBUG_WINDOWS
+	printf("window count: %d\n\r", window_count);
+#endif
 #if DEBUG_REPAINT
 	printf ("\n");
 	fflush (stdout);
@@ -1815,14 +1852,17 @@ unmap_win (Display *dpy, Window id, Bool fade)
 	win *w = find_win (dpy, id);
 	if (!w)
 		return;
-	w->a.map_state = IsUnmapped;
+
+	if (w->a.map_state != IsUnmapped) {
+		w->a.map_state = IsUnmapped;
 #if HAS_NAME_WINDOW_PIXMAP
-	if (w->pixmap && fade && winTypeFade[w->windowType]) {
-		set_fade (dpy, w, w->opacity*1.0/OPAQUE, 0.0, fade_out_step, unmap_callback, False, False, True, True);
-	}
-	else
+		if (w->pixmap && fade && winTypeFade[w->windowType]) {
+			set_fade (dpy, w, w->opacity*1.0/OPAQUE, 0.0, fade_out_step, unmap_callback, False, False, True, True);
+		}
+		else
 #endif
-		    finish_unmap_win (dpy, w);
+			finish_unmap_win (dpy, w);
+	}
 }
 
 /* Get the opacity prop from window
@@ -2194,6 +2234,8 @@ add_win (Display *dpy, Window id, Window prev)
 	new->alphaPict = None;
 	new->shadowPict = None;
 	new->borderSize = None;
+	new->decoRegion = None;
+	new->contentRegion = None;
 	new->extents = None;
 	new->shadow = None;
 	new->shadow_dx = 0;
@@ -2202,6 +2244,9 @@ add_win (Display *dpy, Window id, Window prev)
 	new->shadow_height = 0;
 	new->opacity = OPAQUE;
 	new->destroyed = False;
+	new->destruct_queued = False;
+	new->destruct_requested = False;
+	new->destruct_request_time = 0;
 	new->shadowSize = 100;
 	new->decoHash = 0;
 	new->show_root_tile = determine_window_transparent_to_desktop(dpy, id);
@@ -2403,18 +2448,37 @@ destroy_callback (Display *dpy, win *w, Bool gone)
 #endif
 
 static void
-destroy_win (Display *dpy, Window id, Bool gone, Bool fade)
+destroy_win (Display *dpy, Window id, Bool gone, Bool fadeout)
 {
+	fade *f;
 	win *w = find_win (dpy, id);
-	if (w) w->destroyed = True;
+
+	if (w && w->destruct_queued == False) {
+		f = find_fade (w);
+		if (f) {
+			w->destruct_queued = True;
+			f->callback = destroy_callback;
+			w->destroyed = True;
+		}
+		else {
+			w->destroyed = True;
 #if HAS_NAME_WINDOW_PIXMAP
-	if (w && w->pixmap && fade && winTypeFade[w->windowType]) {
-		set_fade (dpy, w, w->opacity*1.0/OPAQUE, 0.0, fade_out_step, destroy_callback, gone, False, True, True);
-	}
-	else
+			if (w->pixmap && fadeout && winTypeFade[w->windowType]) {
+				set_fade (dpy, w, w->opacity*1.0/OPAQUE, 0.0, fade_out_step, destroy_callback, gone, False, True, True);
+			}
+			else
 #endif
-	{
-		finish_destroy_win (dpy, id, gone);
+			{
+				if (!gone) {
+					finish_destroy_win (dpy, id, gone);
+				}
+				else {
+					w->destruct_queued = True;
+					w->destruct_requested = True;
+					w->destruct_request_time = get_time_in_milliseconds();
+				}
+			}
+		}
 	}
 }
 
