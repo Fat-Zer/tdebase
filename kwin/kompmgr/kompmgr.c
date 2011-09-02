@@ -182,6 +182,8 @@ typedef struct _fade {
 struct sigaction usr_action;
 sigset_t block_mask;
 
+int		my_exit_code = 3;
+
 win             *list;
 fade		*fades;
 Display		*dpy;
@@ -380,6 +382,16 @@ void delete_pid_file()
     free(filename);
     filename = NULL;
 #endif
+
+#if WORK_AROUND_FGLRX
+    if (my_exit_code == 3) {
+        sleep(1);
+        char me[2048];
+        readlink("/proc/self/exe", me, sizeof(me));
+        me[2047] = 0;
+	execl(me, NULL);
+    }
+#endif
 }
 
 void handle_siguser (int sig)
@@ -387,6 +399,7 @@ void handle_siguser (int sig)
     int uidnum;
     if (sig == SIGTERM) {
         delete_pid_file();
+        my_exit_code=0;
         exit(0);
         return;
     }
@@ -404,7 +417,9 @@ void handle_siguser (int sig)
         printf("Setting kompmgr process uid to %d...\n\r", uidnum); fflush(stdout);
 #endif
 
+        my_exit_code=4;
         delete_pid_file();
+        my_exit_code=3;
         setuid(uidnum);
         write_pid_file(getpid());
 
@@ -2680,7 +2695,8 @@ error (Display *dpy, XErrorEvent *ev)
 			ev->minor_code == X_CompositeRedirectSubwindows)
 	{
 		fprintf (stderr, "Another composite manager is already running\n");
-		exit (1);
+		my_exit_code=2;
+		exit (2);
 	}
 
 	o = ev->error_code - xfixes_error;
@@ -3040,7 +3056,8 @@ usage (char *program)
 	fprintf (stderr, "   -x [0x]XXXXXX\n      Choose Custom Color in hex format\n");
 	fprintf (stderr, "   -v\n      Print version Number and exit\n");
 	fprintf (stderr, "   -h\n      Print this help\n");
-	exit (1);
+	my_exit_code=2;
+	exit (2);
 }
 
 static Bool
@@ -3221,7 +3238,7 @@ main (int argc, char **argv)
 				}
 				setShadowColor(optarg);
 				break;
-			case 'v': fprintf (stderr, "%s v%-3.2f\n", argv[0], _VERSION_); exit (0);
+			case 'v': fprintf (stderr, "%s v%-3.2f\n", argv[0], _VERSION_); my_exit_code=0; exit (0);
 			case 'h':
 			default:
 				  usage (argv[0]);
@@ -3238,7 +3255,8 @@ main (int argc, char **argv)
 	if (!dpy)
 	{
 		fprintf (stderr, "Can't open display\n");
-		exit (1);
+		my_exit_code=2;
+		exit (2);
 	}
 	XSetErrorHandler (error);
 	if (synchronize)
@@ -3249,13 +3267,15 @@ main (int argc, char **argv)
 	if (!XRenderQueryExtension (dpy, &render_event, &render_error))
 	{
 		fprintf (stderr, "No render extension\n");
-		exit (1);
+		my_exit_code=2;
+		exit (2);
 	}
 	if (!XQueryExtension (dpy, COMPOSITE_NAME, &composite_opcode,
 				&composite_event, &composite_error))
 	{
 		fprintf (stderr, "No composite extension\n");
-		exit (1);
+		my_exit_code=2;
+		exit (2);
 	}
 	XCompositeQueryVersion (dpy, &composite_major, &composite_minor);
 #if HAS_NAME_WINDOW_PIXMAP
@@ -3266,17 +3286,20 @@ main (int argc, char **argv)
 	if (!XDamageQueryExtension (dpy, &damage_event, &damage_error))
 	{
 		fprintf (stderr, "No damage extension\n");
-		exit (1);
+		my_exit_code=2;
+		exit (2);
 	}
 	if (!XFixesQueryExtension (dpy, &xfixes_event, &xfixes_error))
 	{
 		fprintf (stderr, "No XFixes extension\n");
-		exit (1);
+		my_exit_code=2;
+		exit (2);
 	}
 	if (!XShapeQueryExtension (dpy, &xshape_event, &xshape_error))
 	{
 		fprintf (stderr, "No XShape extension\n");
-		exit (1);
+		my_exit_code=2;
+		exit (2);
 	}
 
 	fprintf(stderr, "Started\n");
@@ -3284,7 +3307,8 @@ main (int argc, char **argv)
 	register_cm();
 	if (!register_cm())
 	{
-		exit (1);
+		my_exit_code=2;
+		exit (2);
 	}
 
 	/* get atoms */
@@ -3327,12 +3351,14 @@ main (int argc, char **argv)
 			   fill_color_name, &c))
 		{
 			fprintf (stderr, "Could not parse fill color.\n");
-			exit (1);
+			my_exit_code=2;
+			exit (2);
 		}
 		if (! XAllocColor (dpy, DefaultColormap (dpy, scr), &c))
 		{
 			fprintf (stderr, "Could not allocate color.\n");
-			exit (1);
+			my_exit_code=2;
+			exit (2);
 		}
 
 		fill_color.red = c.red;
