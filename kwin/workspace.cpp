@@ -2739,7 +2739,7 @@ void Workspace::stopKompmgr()
     }
     delete kompmgr_selection;
     kompmgr_selection = NULL;
-    kompmgr->disconnect(this, TQT_SLOT(restartKompmgr()));
+    kompmgr->disconnect(this, TQT_SLOT(restartKompmgr(KProcess*)));
     options->useTranslucency = FALSE;
     if (popup){ delete popup; popup = 0L; } // to add/remove opacity slider
     kompmgr->kill();

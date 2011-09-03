@@ -67,7 +67,7 @@ KSMShutdownFeedback * KSMShutdownFeedback::s_pSelf = 0L;
 
 KSMShutdownFeedback::KSMShutdownFeedback()
  : TQWidget( 0L, "feedbackwidget", WType_Popup ),
-   m_currentY( 0 ), 
+   m_currentY( 0 ),
    m_grayOpacity( 0.0f ),
    m_compensation( 0.0f ),
    m_fadeBackwards( FALSE ),
@@ -129,30 +129,40 @@ void KSMShutdownFeedback::slotPaintEffect()
 		if ( m_greyImageCreated == false )
 		{
 			m_greyImageCreated = true;
-			setBackgroundMode( TQWidget::NoBackground );
+
+			// eliminate nasty flicker on first show
+			m_root.resize( width(), height() );
+			TQImage blendedImage = m_grayImage;
+			TQPainter p;
+                        p.begin( &m_root );
+                        blendedImage.setAlphaBuffer(false);
+                        p.drawImage( 0, 0, blendedImage );
+                        p.end();
+
+			setBackgroundPixmap( m_root );
 			setGeometry( TQApplication::desktop()->geometry() );
-			m_root.resize( width(), height() ); // for the default logout
-	
+			setBackgroundMode( TQWidget::NoBackground );
+
 			m_unfadedImage = m_grayImage.copy();
-	
+
 			register uchar * r = m_grayImage.bits();
 			uchar * end = m_grayImage.bits() + m_grayImage.numBytes();
-		
+
 			while ( r != end ) {
 				*reinterpret_cast<TQRgb*>(r) = qRgba(0, 0, 0, 128);
 				r += 4;
 			}
-	
+
 			// start timer which is used for cpu-speed-independent fading
 			m_fadeTime.start();
 			m_rowsDone = 0;
 		}
-		
+
 		// return if fading is completely done...
 		if ( ( m_grayOpacity >= 1.0f && m_fadeBackwards == FALSE ) || ( m_grayOpacity <= 0.0f && m_fadeBackwards == TRUE ) )
 			return;
-		
-		
+
+
 		if ( m_fadeBackwards == FALSE )
 		{
 			m_grayOpacity = m_fadeTime.elapsed() / doFancyLogoutFadeTime;
@@ -165,21 +175,21 @@ void KSMShutdownFeedback::slotPaintEffect()
 			if ( m_grayOpacity < 0.0f )
 			m_grayOpacity = 0.0f;
 		}
-		
+
 		const int imgWidth = m_unfadedImage.width();
 		int imgHeight = m_unfadedImage.height();
 		int heightUnit = imgHeight / 3;
 		if( heightUnit < 1 )
 			heightUnit = 1;
-	
+
 		int y1 = static_cast<int>( imgHeight*m_grayOpacity - heightUnit + m_grayOpacity*heightUnit*2.0f );
 		if( y1 > imgHeight )
 			y1 = imgHeight;
-		
+
 		int y2 = y1+heightUnit;
 		if( y2 > imgHeight )
 			y2 = imgHeight;
-		
+
 		if( m_fadeBackwards == FALSE )
 		{
 			if( y1 > 0 && y1 < imgHeight && y1-m_rowsDone > 0 && m_rowsDone < imgHeight )
@@ -201,7 +211,7 @@ void KSMShutdownFeedback::slotPaintEffect()
 				m_rowsDone = y2;
 			}
 		}
-		
+
 		int start_y1 = y1;
 		if( start_y1 < 0 )
 			start_y1 = 0;
@@ -223,7 +233,7 @@ void KSMShutdownFeedback::slotPaintEffect()
 			}
 			bitBlt( this, 0, start_y1, &img );
 		}
-		
+
 		TQTimer::singleShot( 5, this, TQT_SLOT( slotPaintEffect() ) );
 	}
 	else {
@@ -233,24 +243,25 @@ void KSMShutdownFeedback::slotPaintEffect()
 		if ( m_greyImageCreated == false )
 		{
 			m_greyImageCreated = true;
+
 			setBackgroundMode( TQWidget::NoBackground );
 			setGeometry( TQApplication::desktop()->geometry() );
 			m_root.resize( width(), height() ); // for the default logout
-	
+
 			m_unfadedImage = m_grayImage.copy();
-	
+
 			register uchar * r = m_grayImage.bits();
 			register uchar * g = m_grayImage.bits() + 1;
 			register uchar * b = m_grayImage.bits() + 2;
 			uchar * end = m_grayImage.bits() + m_grayImage.numBytes();
-		
+
 			while ( r != end ) {
 				*r = *g = *b = (uchar) ( ( (*r)*11 + ((*g)<<4) + (*b)*5 ) * doFancyLogoutAdditionalDarkness / 32.0f );
 				r += 4;
 				g += 4;
 				b += 4;
 			}
-	
+
 			// start timer which is used for cpu-speed-independent fading
 			m_fadeTime.start();
 			m_rowsDone = 0;
@@ -349,7 +360,7 @@ void KSMShutdownFeedback::slotPaintEffect()
 			//bitBlt( this, 0, start_y1, &pm );
 			bitBlt( this, 0, start_y1, &img );
 		}
-		
+
 		TQTimer::singleShot( 5, this, TQT_SLOT( slotPaintEffect() ) );
 	}
 
@@ -365,20 +376,30 @@ void KSMShutdownFeedback::slotPaintEffect()
 		if ( m_greyImageCreated == false )
 		{
 			m_greyImageCreated = true;
-			setBackgroundMode( TQWidget::NoBackground );
+
+			// eliminate nasty flicker on first show
+			m_root.resize( width(), height() );
+			TQImage blendedImage = m_grayImage;
+			TQPainter p;
+			p.begin( &m_root );
+			blendedImage.setAlphaBuffer(false);
+			p.drawImage( 0, 0, blendedImage );
+			p.end();
+
+			setBackgroundPixmap( m_root );
 			setGeometry( TQApplication::desktop()->geometry() );
-			m_root.resize( width(), height() ); // for the default logout
-	
+			setBackgroundMode( TQWidget::NoBackground );
+
 			m_unfadedImage = m_grayImage.copy();
-	
+
 			register uchar * r = m_grayImage.bits();
 			uchar * end = m_grayImage.bits() + m_grayImage.numBytes();
-		
+
 			while ( r != end ) {
 				*reinterpret_cast<TQRgb*>(r) = qRgba(0, 0, 0, 107);
 				r += 4;
 			}
-	
+
 			// start timer which is used for cpu-speed-independent fading
 			m_fadeTime.start();
 			m_rowsDone = 0;
@@ -437,7 +458,7 @@ void KSMShutdownFeedback::slotPaintEffect()
 				m_rowsDone = y2;
 			}
 		}
-		
+
 		int start_y1 = y1;
 		if( start_y1 < 0 )
 			start_y1 = 0;
@@ -458,7 +479,7 @@ void KSMShutdownFeedback::slotPaintEffect()
 			}
 			bitBlt( this, 0, start_y1, &img );
 		}
-		
+
 		TQTimer::singleShot( 1, this, TQT_SLOT( slotPaintEffect() ) );
          }
          else {

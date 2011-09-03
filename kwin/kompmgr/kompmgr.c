@@ -385,6 +385,7 @@ void delete_pid_file()
 
 #if WORK_AROUND_FGLRX
     if (my_exit_code == 3) {
+        printf("kompmgr lost connection to X server, restarting...\n\r"); fflush(stdout);
         sleep(1);
         char me[2048];
         readlink("/proc/self/exe", me, sizeof(me));
