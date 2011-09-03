@@ -3106,7 +3106,8 @@ register_cm (void)
       Xutf8SetWMProperties(dpy, w, "kcompmgr", "kcompmgr", NULL, 0, NULL, NULL,
 		  NULL);
 
-      XSetSelectionOwner (dpy, a, w, 0);
+      /* setting this causes kompmgr to abort on TDE login */
+      /* XSetSelectionOwner (dpy, a, w, 0); */
 
       return True;
 }
@@ -3305,7 +3306,6 @@ main (int argc, char **argv)
 
 	fprintf(stderr, "Started\n");
 
-	register_cm();
 	if (!register_cm())
 	{
 		my_exit_code=2;
