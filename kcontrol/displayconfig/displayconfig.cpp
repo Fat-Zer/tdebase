@@ -761,6 +761,13 @@ KDisplayConfig::KDisplayConfig(TQWidget *parent, const char *name, const TQStrin
 	connect(base->gammaBlueSlider, TQT_SIGNAL(valueChanged(int)), TQT_SLOT(gammaBlueSliderChanged(int)));
 	connect(base->monitorDisplaySelectDD, TQT_SIGNAL(activated(int)), TQT_SLOT(selectScreen(int)));
 	connect(base->gammamonitorDisplaySelectDD, TQT_SIGNAL(activated(int)), TQT_SLOT(gammaselectScreen(int)));
+	connect(base->systemEnableDPMS, TQT_SIGNAL(clicked()), TQT_SLOT(dpmsChanged()));
+	connect(base->systemEnableDPMSStandby, TQT_SIGNAL(clicked()), TQT_SLOT(dpmsChanged()));
+	connect(base->systemEnableDPMSSuspend, TQT_SIGNAL(clicked()), TQT_SLOT(dpmsChanged()));
+	connect(base->systemEnableDPMSPowerDown, TQT_SIGNAL(clicked()), TQT_SLOT(dpmsChanged()));
+	connect(base->dpmsStandbyTimeout, TQT_SIGNAL(valueChanged(int)), TQT_SLOT(dpmsChanged()));
+	connect(base->dpmsSuspendTimeout, TQT_SIGNAL(valueChanged(int)), TQT_SLOT(dpmsChanged()));
+	connect(base->dpmsPowerDownTimeout, TQT_SIGNAL(valueChanged(int)), TQT_SLOT(dpmsChanged()));
 	connect(base->monitorPhyArrange, TQT_SIGNAL(workspaceRelayoutNeeded()), this, TQT_SLOT(layoutDragDropDisplay()));
 
 	connect(base->isPrimaryMonitorCB, TQT_SIGNAL(clicked()), TQT_SLOT(changed()));
@@ -1014,6 +1021,17 @@ void KDisplayConfig::refreshDisplayedInformation () {
 	updateDisplayedInformation();
 
 	updateDragDropDisplay();
+
+	screendata = m_screenInfoArray.at(0);
+	base->systemEnableDPMS->setEnabled(screendata->has_dpms);
+	base->systemEnableDPMS->setChecked(screendata->enable_dpms);
+	base->systemEnableDPMSStandby->setChecked(screendata->dpms_standby_delay!=0);
+	base->systemEnableDPMSSuspend->setChecked(screendata->dpms_suspend_delay!=0);
+	base->systemEnableDPMSPowerDown->setChecked(screendata->dpms_off_delay!=0);
+	base->dpmsStandbyTimeout->setValue(screendata->dpms_standby_delay/60);
+	base->dpmsSuspendTimeout->setValue(screendata->dpms_suspend_delay/60);
+	base->dpmsPowerDownTimeout->setValue(screendata->dpms_off_delay/60);
+	processDPMSControls();
 }
 
 void KDisplayConfig::updateDragDropDisplay() {
@@ -1322,21 +1340,63 @@ void KDisplayConfig::gammaTargetChanged (int slotNumber) {
 	base->gammaTestImage->setBackgroundPixmap( gammaPixmap );
 }
 
+void KDisplayConfig::dpmsChanged() {
+	SingleScreenData *screendata;
+	screendata = m_screenInfoArray.at(0);
+
+	processDPMSControls();
+
+	screendata->enable_dpms = base->systemEnableDPMS->isChecked();
+	screendata->dpms_standby_delay = (base->systemEnableDPMSStandby->isChecked())?base->dpmsStandbyTimeout->value()*60:0;
+	screendata->dpms_suspend_delay = (base->systemEnableDPMSSuspend->isChecked())?base->dpmsSuspendTimeout->value()*60:0;
+	screendata->dpms_off_delay = (base->systemEnableDPMSPowerDown->isChecked())?base->dpmsPowerDownTimeout->value()*60:0;
+
+	changed();
+}
+
+void KDisplayConfig::processDPMSControls() {
+	if (base->systemEnableDPMS->isChecked()) {
+		base->systemEnableDPMSStandby->setEnabled(true);
+		base->systemEnableDPMSSuspend->setEnabled(true);
+		base->systemEnableDPMSPowerDown->setEnabled(true);
+		base->dpmsStandbyTimeout->setEnabled(base->systemEnableDPMSStandby->isChecked());
+		base->dpmsSuspendTimeout->setEnabled(base->systemEnableDPMSSuspend->isChecked());
+		base->dpmsPowerDownTimeout->setEnabled(base->systemEnableDPMSPowerDown->isChecked());
+	}
+	else {
+		base->systemEnableDPMSStandby->setEnabled(false);
+		base->systemEnableDPMSSuspend->setEnabled(false);
+		base->systemEnableDPMSPowerDown->setEnabled(false);
+		base->dpmsStandbyTimeout->setEnabled(false);
+		base->dpmsSuspendTimeout->setEnabled(false);
+		base->dpmsPowerDownTimeout->setEnabled(false);
+	}
+
+	if (base->systemEnableDPMSStandby->isChecked()) base->dpmsSuspendTimeout->setMinValue(base->dpmsStandbyTimeout->value());
+	else base->dpmsSuspendTimeout->setMinValue(1);
+	if (base->systemEnableDPMSSuspend->isChecked()) base->dpmsPowerDownTimeout->setMinValue(base->dpmsSuspendTimeout->value());
+	else if (base->systemEnableDPMSStandby->isChecked()) base->dpmsPowerDownTimeout->setMinValue(base->dpmsStandbyTimeout->value());
+	else base->dpmsPowerDownTimeout->setMinValue(1);
+}
+
 void KDisplayConfig::processLockoutControls() {
 	if (getuid() != 0 || !systemconfig->checkConfigFilesWritable( true )) {
 		base->globalTab->setEnabled(false);
 		base->resolutionTab->setEnabled(false);
 		base->gammaTab->setEnabled(false);
+		base->powerTab->setEnabled(false);
 	}
 	else {
 		base->globalTab->setEnabled(true);
 		if (base->systemEnableSupport->isChecked()) {
 			base->resolutionTab->setEnabled(true);
 			base->gammaTab->setEnabled(true);
+			base->powerTab->setEnabled(true);
 		}
 		else {
 			base->resolutionTab->setEnabled(false);
 			base->gammaTab->setEnabled(false);
+			base->powerTab->setEnabled(false);
 		}
 	}
 

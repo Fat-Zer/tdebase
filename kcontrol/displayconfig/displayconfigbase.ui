@@ -55,6 +55,23 @@
 					    </widget>
 				    </grid>
 			    </widget>
+			    <spacer row="1" column="0">
+				    <property name="name" stdset="0">
+					    <cstring>Spacer4</cstring>
+				    </property>
+				    <property name="orientation">
+					    <enum>Vertical</enum>
+				    </property>
+				    <property name="sizeType">
+					    <enum>Expanding</enum>
+				    </property>
+				    <property name="tqsizeHint">
+					    <size>
+						    <width>20</width>
+						    <height>20</height>
+					    </size>
+				    </property>
+			    </spacer>
 		    </grid>
 	    </widget>
             <widget class="TQWidget">
@@ -590,6 +607,155 @@
 					    </grid>
 				    </widget>
 			    </grid>
+		    </grid>
+	    </widget>
+	    <widget class="TQWidget">
+		    <property name="name">
+			    <cstring>powerTab</cstring>
+		    </property>
+		    <attribute name="title">
+			    <string>Power Management</string>
+		    </attribute>
+		    <grid>
+			    <property name="name">
+				    <cstring>unnamed</cstring>
+			    </property>
+			    <widget class="TQGroupBox" row="0" column="0">
+				    <property name="name">
+					    <cstring>groupPowerManagement</cstring>
+				    </property>
+				    <property name="title">
+					    <string>Energy Star (DPMS)</string>
+				    </property>
+				    <grid>
+					    <property name="name">
+						    <cstring>unnamed</cstring>
+					    </property>
+					    <widget class="TQCheckBox" row="0" column="0" colspan="3">
+						    <property name="name">
+							    <cstring>systemEnableDPMS</cstring>
+						    </property>
+						    <property name="text">
+							    <string>&amp;Enable DPMS power save modes</string>
+						    </property>
+					    </widget>
+					    <spacer row="0" column="3">
+						    <property name="name" stdset="0">
+							    <cstring>Spacer4</cstring>
+						    </property>
+						    <property name="orientation">
+							    <enum>Horizontal</enum>
+						    </property>
+						    <property name="sizeType">
+							    <enum>Expanding</enum>
+						    </property>
+						    <property name="tqsizeHint">
+							    <size>
+								    <width>20</width>
+								    <height>20</height>
+							    </size>
+						    </property>
+					    </spacer>
+					    <widget class="TQCheckBox" row="1" column="0" colspan="1">
+						    <property name="name">
+							    <cstring>systemEnableDPMSStandby</cstring>
+						    </property>
+						    <property name="text">
+							    <string>Enable &amp;standby after</string>
+						    </property>
+					    </widget>
+					    <widget class="TQSpinBox" row="1" column="1" colspan="1">
+						    <property name="name">
+							    <cstring>dpmsStandbyTimeout</cstring>
+						    </property>
+						    <property name="minValue">
+							    <number>1</number>
+						    </property>
+						    <property name="maxValue">
+							    <number>360</number>
+						    </property>
+					    </widget>
+					    <widget class="TQLabel" row="1" column="2" colspan="1">
+						    <property name="name">
+							    <cstring>textLabel9_1</cstring>
+						    </property>
+						    <property name="text">
+							    <string>minutes.</string>
+						    </property>
+					    </widget>
+					    <widget class="TQCheckBox" row="2" column="0" colspan="1">
+						    <property name="name">
+							    <cstring>systemEnableDPMSSuspend</cstring>
+						    </property>
+						    <property name="text">
+							    <string>Enable &amp;suspend after</string>
+						    </property>
+					    </widget>
+					    <widget class="TQSpinBox" row="2" column="1" colspan="1">
+						    <property name="name">
+							    <cstring>dpmsSuspendTimeout</cstring>
+						    </property>
+						    <property name="minValue">
+							    <number>1</number>
+						    </property>
+						    <property name="maxValue">
+							    <number>360</number>
+						    </property>
+					    </widget>
+					    <widget class="TQLabel" row="2" column="2" colspan="1">
+						    <property name="name">
+							    <cstring>textLabel9_2</cstring>
+						    </property>
+						    <property name="text">
+							    <string>minutes.</string>
+						    </property>
+					    </widget>
+					    <widget class="TQCheckBox" row="3" column="0" colspan="1">
+						    <property name="name">
+							    <cstring>systemEnableDPMSPowerDown</cstring>
+						    </property>
+						    <property name="text">
+							    <string>Enable &amp;power down after</string>
+						    </property>
+					    </widget>
+					    <widget class="TQSpinBox" row="3" column="1" colspan="1">
+						    <property name="name">
+							    <cstring>dpmsPowerDownTimeout</cstring>
+						    </property>
+						    <property name="minValue">
+							    <number>1</number>
+						    </property>
+						    <property name="maxValue">
+							    <number>360</number>
+						    </property>
+					    </widget>
+					    <widget class="TQLabel" row="3" column="2" colspan="1">
+						    <property name="name">
+							    <cstring>textLabel9_3</cstring>
+						    </property>
+						    <property name="text">
+							    <string>minutes.</string>
+						    </property>
+					    </widget>
+				    </grid>
+			    </widget>
+			    <spacer row="1" column="0">
+				    <property name="name" stdset="0">
+					    <cstring>Spacer4</cstring>
+				    </property>
+				    <property name="orientation">
+					    <enum>Vertical</enum>
+				    </property>
+				    <property name="sizeType">
+					    <enum>Expanding</enum>
+				    </property>
+				    <property name="tqsizeHint">
+					    <size>
+						    <width>20</width>
+						    <height>20</height>
+					    </size>
+				    </property>
+			    </spacer>
 		    </grid>
 	    </widget>
         </widget>

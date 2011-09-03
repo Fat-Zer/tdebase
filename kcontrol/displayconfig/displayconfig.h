@@ -30,6 +30,7 @@
 #include <tqworkspace.h>
 #include <tqobjectlist.h>
 #include <tqwidgetlist.h>
+#include <tqspinbox.h>
 
 #include <dcopobject.h>
 
@@ -122,9 +123,11 @@ private slots:
 	void gammaRedSliderChanged(int index);
 	void gammaGreenSliderChanged(int index);
 	void gammaBlueSliderChanged(int index);
-	void applyGamma();
+	void applyGamma (void);
 	void gammaselectScreen (int slotNumber);
 	void gammaTargetChanged (int slotNumber);
+	void dpmsChanged (void);
+	void processDPMSControls (void);
 };
 
 #endif
