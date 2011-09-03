@@ -30,7 +30,7 @@ add_custom_command( OUTPUT config.ci
 set_property( SOURCE auth.c APPEND PROPERTY OBJECT_DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/config.ci )
 
 if( WITH_XDMCP )
-  set( XDMCP_LIBRARIES " -lXdmcp" )
+  set( XDMCP_LIBRARIES "Xdmcp" )
 else()
   set( XDMCP_LIBRARIES "" )
 endif()
