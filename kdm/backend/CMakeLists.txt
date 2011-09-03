@@ -29,6 +29,12 @@ add_custom_command( OUTPUT config.ci
 
 set_property( SOURCE auth.c APPEND PROPERTY OBJECT_DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/config.ci )
 
+if( WITH_XDMCP )
+  set( XDMCP_LIBRARIES " -lXdmcp" )
+else()
+  set( XDMCP_LIBRARIES "" )
+endif()
+
 tde_add_executable( kdm
   SOURCES
     access.c auth.c bootman.c choose.c client.c consolekit.c
@@ -37,6 +43,6 @@ tde_add_executable( kdm
     process.c protodpy.c reset.c resource.c rpcauth.c
     server.c session.c sessreg.c socket.c streams.c
     util.c xdmauth.c xdmcp.c
-  LINK X11 ${XAU_LIBRARIES} ${DBUS_TQT_LIBRARIES} ${PAM_LIBRARY}
+  LINK X11 ${XAU_LIBRARIES} ${DBUS_TQT_LIBRARIES} ${PAM_LIBRARY} ${XDMCP_LIBRARIES}
   DESTINATION ${BIN_INSTALL_DIR}
 )

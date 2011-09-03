@@ -21,6 +21,7 @@ include_directories(
   ${TDE_INCLUDE_DIR}
   ${TQT_INCLUDE_DIRS}
   ${ARTS_INCLUDE_DIRS}
+  ${TDE_INCLUDE_DIR}/arts/
 )
 
 link_directories(
