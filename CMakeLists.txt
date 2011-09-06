@@ -41,6 +41,17 @@ include( TDESetupPaths )
 tde_setup_paths( )
 
 
+##### add apidox targets ############
+
+add_custom_target(apidox
+  COMMAND "./generate_apidox" "${CMAKE_SOURCE_DIR}" "${CMAKE_BINARY_DIR}" "${HTML_INSTALL_DIR}" "/usr/share/qt3/doc/html"
+  WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}/cmake/")
+
+add_custom_target(install-apidox
+  COMMAND "./install_apidox" "${CMAKE_SOURCE_DIR}" "${CMAKE_BINARY_DIR}" "${HTML_INSTALL_DIR}" "${CMAKE_INSTALL_PREFIX}"
+  WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}/cmake/")
+
+
 ##### optional stuff ############################
 
 option( WITH_SASL "Enable SASL support" OFF )
