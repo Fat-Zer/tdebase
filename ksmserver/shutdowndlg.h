@@ -26,10 +26,11 @@ class TQPainter;
 class TQString;
 class KAction;
 
-
 #include "timed.h"
 #include <kapplication.h>
 #include <kpixmapio.h>
+
+#include <config.h>
 
 #ifndef NO_QT3_DBUS_SUPPORT
 /* We acknowledge the the dbus API is unstable */
@@ -37,7 +38,9 @@ class KAction;
 #include <dbus/connection.h>
 #endif // NO_QT3_DBUS_SUPPORT
 
+#ifdef COMPILE_HALBACKEND
 #include <hal/libhal.h>
+#endif
 
 // The (singleton) widget that makes/fades the desktop gray.
 class KSMShutdownFeedback : public TQWidget
@@ -128,8 +131,10 @@ private:
     TQString m_bootOption;
     TQPopupMenu *targets;
     TQStringList rebootOptions;
+#ifdef COMPILE_HALBACKEND
     LibHalContext* m_halCtx;
     DBusConnection *m_dbusConn;
+#endif
     bool m_lockOnResume;
 };
 

@@ -36,7 +36,7 @@ endif( )
 
 
 # hal (ksmserver, kioslaves)
-if( BUILD_KSMSERVER OR (WITH_HAL AND BUILD_KIOSLAVES))
+if( WITH_HAL )
   pkg_search_module( HAL hal )
   if( NOT HAL_FOUND )
     tde_message_fatal( "hal is required, but was not found on your system" )

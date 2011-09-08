@@ -5,8 +5,6 @@ Copyright (C) 2010 Timothy Pearson <kb9vqf@pearsoncomputing.net>
 Copyright (C) 2000 Matthias Ettrich <ettrich@kde.org>
 ******************************************************************/
 
-#include <config.h>
-
 #include "shutdowndlg.h"
 #include <tqapplication.h>
 #include <tqlayout.h>
@@ -708,8 +706,9 @@ KSMShutdownDlg::KSMShutdownDlg( TQWidget* parent,
 	}
 
 	
-
+#ifdef COMPILE_HALBACKEND
 	m_halCtx = NULL;
+#endif
 
 	if (maysd) 	{
 
@@ -723,6 +722,7 @@ KSMShutdownDlg::KSMShutdownDlg( TQWidget* parent,
 		bool canSuspend = false;
 		bool canHibernate = false;
 
+#ifdef COMPILE_HALBACKEND
 		// Query HAL for suspend/resume support
 		m_halCtx = libhal_ctx_new();
 
@@ -777,7 +777,7 @@ KSMShutdownDlg::KSMShutdownDlg( TQWidget* parent,
 				canHibernate = true;
 			}
 		}
-
+#endif
 
 		if(doUbuntuLogout) {
 
@@ -976,6 +976,7 @@ KSMShutdownDlg::KSMShutdownDlg( TQWidget* parent,
 
 KSMShutdownDlg::~KSMShutdownDlg()
 {
+#ifdef COMPILE_HALBACKEND
     if (m_halCtx)
     {
         DBusError error;
@@ -983,6 +984,7 @@ KSMShutdownDlg::~KSMShutdownDlg()
         libhal_ctx_shutdown(m_halCtx, &error);
         libhal_ctx_free(m_halCtx);
     }
+#endif
 }
 
 
@@ -1019,6 +1021,7 @@ void KSMShutdownDlg::slotHalt()
 
 void KSMShutdownDlg::slotSuspend()
 {
+#ifdef COMPILE_HALBACKEND
     if (m_lockOnResume) {
         DCOPRef("kdesktop", "KScreensaverIface").send("lock");
     }
@@ -1040,10 +1043,12 @@ void KSMShutdownDlg::slotSuspend()
     }
 
     reject(); // continue on resume
+#endif
 }
 
 void KSMShutdownDlg::slotHibernate()
 {
+#ifdef COMPILE_HALBACKEND
     if (m_lockOnResume) {
         DCOPRef("kdesktop", "KScreensaverIface").send("lock");
     }
@@ -1062,6 +1067,7 @@ void KSMShutdownDlg::slotHibernate()
     }
 
     reject(); // continue on resume
+#endif
 }
 
 bool KSMShutdownDlg::confirmShutdown( bool maysd, KApplication::ShutdownType& sdtype, TQString& bootOption )
