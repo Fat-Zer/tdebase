@@ -472,7 +472,7 @@ void KickerTip::enableTipping(bool tip)
         m_tippingEnabled--;
     }
 
-    assert(m_tippingEnabled >= -1);
+//    assert(m_tippingEnabled >= -1);
 
     if (m_tippingEnabled < 1 && m_self)
     {
