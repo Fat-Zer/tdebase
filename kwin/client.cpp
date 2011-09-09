@@ -499,6 +499,20 @@ void Client::setUserNoBorder( bool set )
     updateWindowRules();
     }
 
+bool Client::isModalSystemNotification() const
+    {
+    unsigned char *data = 0;
+    Atom actual;
+    int format, result;
+    unsigned long n, left;
+    result = XGetWindowProperty(qt_xdisplay(), window(), atoms->net_wm_system_modal_notification, 0L, 1L, False, XA_CARDINAL, &actual, &format, &n, &left, /*(unsigned char **)*/ &data);
+    if (result == Success && data != None && format == 32 )
+        {
+        return TRUE;
+        }
+    return FALSE;
+    }
+
 void Client::updateShape()
     {
     // workaround for #19644 - tqshaped windows shouldn't have decoration
@@ -602,6 +616,8 @@ void Client::hideClient( bool hide )
 bool Client::isMinimizable() const
     {
     if( isSpecialWindow())
+        return false;
+    if( isModalSystemNotification())
         return false;
     if( isTransient())
         { // #66868 - let other xmms windows be minimized when the mainwindow is minimized
@@ -798,6 +814,8 @@ bool Client::isShadeable() const
 void Client::setShade( ShadeMode mode )
     {
     if( !isShadeable())
+        return;
+    if( isModalSystemNotification())
         return;
     mode = rules()->checkShade( mode );
     if( shade_mode == mode )
@@ -1674,6 +1692,8 @@ void Client::sendClientMessage(Window w, Atom a, Atom protocol, long data1, long
  */
 bool Client::isCloseable() const
     {
+    if( isModalSystemNotification())
+        return false;
     return rules()->checkCloseable( motif_may_close && !isSpecialWindow());
     }
 

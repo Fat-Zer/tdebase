@@ -516,10 +516,11 @@ void KSMShutdownFeedback::slotPaintEffect()
 KSMShutdownIPFeedback * KSMShutdownIPFeedback::s_pSelf = 0L;
 
 KSMShutdownIPFeedback::KSMShutdownIPFeedback()
- : TQWidget( 0L, "feedbackipwidget", Qt::WType_Dialog | Qt::WStyle_StaysOnTop | Qt::WX11BypassWM ), m_timeout(0)
+ : TQWidget( 0L, "feedbackipwidget", Qt::WType_Dialog | Qt::WStyle_StaysOnTop ), m_timeout(0)
 
 {
 	setShown(false);
+	setWindowState(WindowFullScreen);
 
 	// Try to get the root pixmap
 	system("krootbacking &");
@@ -1093,7 +1094,7 @@ bool KSMShutdownDlg::confirmShutdown( bool maysd, KApplication::ShutdownType& sd
     return result;
 }
 
-void KSMShutdownIPDlg::showShutdownIP()
+TQWidget* KSMShutdownIPDlg::showShutdownIP()
 {
     kapp->enableStyles();
     KSMShutdownIPDlg* l = new KSMShutdownIPDlg( 0 );
@@ -1110,17 +1111,26 @@ void KSMShutdownIPDlg::showShutdownIP()
     timer->start( 0, TRUE );
 
     kapp->disableStyles();
+
+    return l;
 }
 
 KSMShutdownIPDlg::KSMShutdownIPDlg(TQWidget* parent)
-//   : TQDialog( 0, "", TRUE, Qt::WStyle_Customize | Qt::WType_Dialog | Qt::WStyle_NoBorder | Qt::WStyle_Title | Qt::WStyle_StaysOnTop | Qt::WDestructiveClose )
-  : TQDialog( 0, "", TRUE, Qt::WStyle_Customize | Qt::WType_Popup | Qt::WStyle_NoBorder | Qt::WStyle_Title | Qt::WStyle_StaysOnTop | Qt::WX11BypassWM | Qt::WDestructiveClose )
+  : TQDialog( 0, "", TRUE, Qt::WStyle_Customize | Qt::WType_Dialog | Qt::WStyle_Title | Qt::WDestructiveClose )
 
 {
+	// Signal that this window should stay on top of everything else
+	setModal(true);
+
+	// Signal that we do not want any window controls to be shown at all
+	Atom kde_wm_system_modal_notification;
+	kde_wm_system_modal_notification = XInternAtom(qt_xdisplay(), "_KDE_WM_MODAL_SYS_NOTIFICATION", False);
+	XChangeProperty(qt_xdisplay(), winId(), kde_wm_system_modal_notification, XA_INTEGER, 32, PropModeReplace, (unsigned char *) "TRUE", 1L);
+
 	TQVBoxLayout* vbox = new TQVBoxLayout( this );
 	
 	TQFrame* frame = new TQFrame( this );
-	frame->setFrameStyle( TQFrame::StyledPanel | TQFrame::Raised );
+	frame->setFrameStyle( TQFrame::NoFrame );
 	frame->setLineWidth( tqstyle().tqpixelMetric( TQStyle::PM_DefaultFrameWidth, frame ) );
 	// we need to set the minimum size for the window
 	frame->setMinimumWidth(400);

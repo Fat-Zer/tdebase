@@ -188,7 +188,7 @@ void KSMServer::shutdownInternal( KApplication::ShutdownConfirm confirm,
 
         if (showFancyLogout) {
             KSMShutdownIPFeedback::showit(); // hide the UGLY logout process from the user
-            KSMShutdownIPDlg::showShutdownIP();
+            shutdownNotifierIPDlg = KSMShutdownIPDlg::showShutdownIP();
         }
 
         if ( saveSession )
@@ -553,6 +553,10 @@ void KSMServer::killWM()
 {
     state = KillingWM;
     bool iswm = false;
+    if (shutdownNotifierIPDlg) {
+        shutdownNotifierIPDlg->close();
+        shutdownNotifierIPDlg=0;
+    }
     for ( KSMClient* c = clients.first(); c; c = clients.next() ) {
         if( isWM( c )) {
             iswm = true;

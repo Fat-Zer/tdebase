@@ -35,6 +35,9 @@
 #include <kdecorationfactory.h>
 #include <klocale.h>
 
+#include <X11/Xlib.h>
+#include <X11/Xatom.h>
+
 #include "kcommondecoration.h"
 #include "kcommondecoration.moc"
 
@@ -318,6 +321,22 @@ int KCommonDecoration::buttonContainerWidth(const ButtonContainer &btnContainer,
     return w;
 }
 
+bool KCommonDecoration::isModalSystemNotification()
+{
+    unsigned char *data = 0;
+    Atom actual;
+    int format, result;
+    unsigned long n, left;
+    Atom kde_wm_system_modal_notification;
+    kde_wm_system_modal_notification = XInternAtom(qt_xdisplay(), "_KDE_WM_MODAL_SYS_NOTIFICATION", False);
+    result = XGetWindowProperty(qt_xdisplay(), windowId(), kde_wm_system_modal_notification, 0L, 1L, False, XA_CARDINAL, &actual, &format, &n, &left, /*(unsigned char **)*/ &data);
+    if (result == Success && data != None && format == 32 )
+        {
+        return TRUE;
+        }
+    return FALSE;
+}
+
 void KCommonDecoration::addButtons(ButtonContainer &btnContainer, const TQString& s, bool isLeft)
 {
     if (s.length() > 0) {
@@ -325,28 +344,32 @@ void KCommonDecoration::addButtons(ButtonContainer &btnContainer, const TQString
             KCommonDecorationButton *btn = 0;
             switch (s[n]) {
               case 'M': // Menu button
-                  if (!m_button[MenuButton]){
-                      btn = createButton(MenuButton);
-                      if (!btn) break;
-                      btn->setTipText(i18n("Menu") );
-                      btn->setRealizeButtons(Qt::LeftButton|Qt::RightButton);
-                      connect(btn, TQT_SIGNAL(pressed()), TQT_SLOT(menuButtonPressed()));
-                      connect(btn, TQT_SIGNAL(released()), this, TQT_SLOT(menuButtonReleased()));
+                  if (!isModalSystemNotification()) {
+                      if (!m_button[MenuButton]){
+                          btn = createButton(MenuButton);
+                          if (!btn) break;
+                          btn->setTipText(i18n("Menu") );
+                          btn->setRealizeButtons(Qt::LeftButton|Qt::RightButton);
+                          connect(btn, TQT_SIGNAL(pressed()), TQT_SLOT(menuButtonPressed()));
+                          connect(btn, TQT_SIGNAL(released()), this, TQT_SLOT(menuButtonReleased()));
 
-                      m_button[MenuButton] = btn;
+                          m_button[MenuButton] = btn;
+                      }
                   }
                   break;
               case 'S': // OnAllDesktops button
-                  if (!m_button[OnAllDesktopsButton]){
-                      btn = createButton(OnAllDesktopsButton);
-                      if (!btn) break;
-                      const bool oad = isOnAllDesktops();
-                      btn->setTipText(oad?i18n("Not on all desktops"):i18n("On all desktops") );
-                      btn->setToggleButton(true);
-                      btn->setOn( oad );
-                      connect(btn, TQT_SIGNAL(clicked()), TQT_SLOT(toggleOnAllDesktops()));
+                  if (!isModalSystemNotification()) {
+                      if (!m_button[OnAllDesktopsButton]){
+                          btn = createButton(OnAllDesktopsButton);
+                          if (!btn) break;
+                          const bool oad = isOnAllDesktops();
+                          btn->setTipText(oad?i18n("Not on all desktops"):i18n("On all desktops") );
+                          btn->setToggleButton(true);
+                          btn->setOn( oad );
+                          connect(btn, TQT_SIGNAL(clicked()), TQT_SLOT(toggleOnAllDesktops()));
 
-                      m_button[OnAllDesktopsButton] = btn;
+                          m_button[OnAllDesktopsButton] = btn;
+                      }
                   }
                   break;
               case 'H': // Help button

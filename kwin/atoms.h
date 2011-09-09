@@ -42,6 +42,7 @@ class Atoms
         Atom net_wm_window_shade;
         Atom net_wm_window_shapable;
         Atom net_wm_window_decohash;
+        Atom net_wm_system_modal_notification;
         Atom xdnd_aware;
         Atom xdnd_position;
         Atom net_frame_extents;

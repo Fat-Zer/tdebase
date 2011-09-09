@@ -174,6 +174,8 @@ private:
     void saveCurrentSession();
     void saveCurrentSessionAs( TQString );
 
+    TQWidget* shutdownNotifierIPDlg;
+
  private:
     TQPtrList<KSMListener> listener;
     TQPtrList<KSMClient> clients;

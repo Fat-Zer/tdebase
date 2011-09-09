@@ -57,6 +57,7 @@ class Client : public TQObject, public KDecorationDefines
         const Client* transientFor() const;
         Client* transientFor();
         bool isTransient() const;
+        bool isModalSystemNotification() const;
         bool groupTransient() const;
         bool wasOriginallyGroupTransient() const;
         ClientList mainClients() const; // call once before loop , is not indirect

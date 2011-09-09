@@ -81,6 +81,9 @@ Atoms::Atoms()
     
     atoms[n] = &net_wm_window_decohash;
     names[n++] = (char*) "_KDE_WM_WINDOW_DECOHASH";
+    
+    atoms[n] = &net_wm_system_modal_notification;
+    names[n++] = (char*) "_KDE_WM_MODAL_SYS_NOTIFICATION";
         
     Atom fake;
     atoms[n] = &fake;

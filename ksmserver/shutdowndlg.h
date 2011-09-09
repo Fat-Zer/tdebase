@@ -144,7 +144,7 @@ class KSMShutdownIPDlg : public TQDialog
     Q_OBJECT
 
 public:
-    static void showShutdownIP();
+    static TQWidget* showShutdownIP();
 
 protected:
     ~KSMShutdownIPDlg();

@@ -266,6 +266,7 @@ class KWIN_EXPORT KCommonDecoration : public KDecoration
 
         typedef TQValueVector <KCommonDecorationButton*> ButtonContainer; ///< If the entry is 0, it's a spacer.
         int buttonContainerWidth(const ButtonContainer &btnContainer, bool countHidden = false) const;
+        bool isModalSystemNotification();
         void addButtons(ButtonContainer &btnContainer, const TQString& buttons, bool isLeft);
 
         KCommonDecorationButton *m_button[NumButtons];
