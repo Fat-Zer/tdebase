@@ -117,6 +117,7 @@ typedef struct _win {
     Pixmap		pixmap;
 #endif
     XWindowAttributes	a;
+    XWindowAttributes	a_prev;
 #if CAN_DO_USABLE
     Bool		usable;		    /* mapped and all damaged at one point */
     XRectangle		damage_bounds;	    /* bounds of damage */
@@ -1773,16 +1774,19 @@ map_win (Display *dpy, Window id, unsigned long sequence, Bool fade)
 	w->damaged = 0;
 
 #if WORK_AROUND_FGLRX
-	XserverRegion extents = win_extents (dpy, w);
-	XDamageNotifyEvent de;
-	de.drawable = w->id;
-	de.area.x = 0;
-	de.area.y = 0;
-	de.area.width = w->a.width + w->a.border_width * 2;
-	de.area.height = w->a.height + w->a.border_width * 2;
-	damage_win(dpy, &de);
-	XFixesDestroyRegion (dpy, extents);
+	if (w->a.x != 0) {
+		XserverRegion extents = win_extents (dpy, w);
+		XDamageNotifyEvent de;
+		de.drawable = w->id;
+		de.area.x = 0;
+		de.area.y = 0;
+		de.area.width = w->a.width + w->a.border_width * 2;
+		de.area.height = w->a.height + w->a.border_width * 2;
+		damage_win(dpy, &de);
+		XFixesDestroyRegion (dpy, extents);
+	}
 #endif
+	w->a_prev = w->a;
 
 	if (fade && winTypeFade[w->windowType])
 		set_fade (dpy, w, 0, get_opacity_prop(dpy, w, OPAQUE)*1.0/OPAQUE, fade_in_step, 0, False, True, True, True);
@@ -2228,6 +2232,7 @@ add_win (Display *dpy, Window id, Window prev)
 	new->shape_bounds_prev = new->shape_bounds;
 	new->shape_bounds.width = new->a.width;
 	new->shape_bounds.height = new->a.height;
+	new->a_prev = new->a;
 	new->damaged = 0;
 #if CAN_DO_USABLE
 	new->usable = False;
