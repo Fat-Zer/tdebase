@@ -1092,7 +1092,7 @@ paint_root (Display *dpy)
 static XserverRegion
 win_extents (Display *dpy, win *w)
 {
-	XRectangle	    r;
+	XRectangle r;
 
 	r.x = w->a.x;
 	r.y = w->a.y;
@@ -1761,6 +1761,7 @@ map_win (Display *dpy, Window id, unsigned long sequence, Bool fade)
 	determine_mode (dpy, w);
 
 	w->windowType = determine_wintype (dpy, w->id, w->id);
+	if ((w->windowType < 0) || (w->windowType > NUM_WINTYPES)) w->windowType = WINTYPE_NORMAL;
 #if 0
 	printf("window 0x%x type %s\n", w->id, wintype_name(w->windowType));
 #endif
@@ -2266,6 +2267,9 @@ add_win (Display *dpy, Window id, Window prev)
 	new->shadowSize = 100;
 	new->decoHash = 0;
 	new->show_root_tile = determine_window_transparent_to_desktop(dpy, id);
+
+	new->windowType = determine_wintype (dpy, new->id, new->id);
+	if ((new->windowType < 0) || (new->windowType > NUM_WINTYPES)) new->windowType = WINTYPE_NORMAL;
 
 	new->borderClip = None;
 	new->prev_trans = 0;
