@@ -145,6 +145,8 @@ private:
     
     bool isWM( const KSMClient* client ) const;
     bool isWM( const TQString& program ) const;
+    bool isCM( const KSMClient* client ) const;
+    bool isCM( const TQString& program ) const;
     bool defaultSession() const; // empty session
     void setupXIOErrorHandler();
 

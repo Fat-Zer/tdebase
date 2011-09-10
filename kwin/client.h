@@ -792,11 +792,6 @@ inline bool Client::skipPager() const
     return skip_pager;
     }
 
-inline bool Client::keepAbove() const
-    {
-    return keep_above;
-    }
-
 inline bool Client::keepBelow() const
     {
     return keep_below;

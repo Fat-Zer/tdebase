@@ -913,7 +913,18 @@ bool KSMServer::isWM( const TQString& program ) const
     // therefore make sure it's recognized even if ksmserver
     // was initially started with different WM, and kwin replaced
     // it later
-    return program == wm || program == "kwin";
+    return ((program == wm) || (program == "kwin"));
+}
+
+bool KSMServer::isCM( const KSMClient* client ) const
+{
+    return isCM( client->program());
+}
+
+bool KSMServer::isCM( const TQString& program ) const
+{
+    // Returns true if the program in question is a composition manager
+    return (program == "kompmgr");
 }
 
 bool KSMServer::defaultSession() const

@@ -610,7 +610,7 @@ void Client::hideClient( bool hide )
     updateVisibility();
     }
     
-/*
+/*!
   Returns whether the window is minimizable or not
  */
 bool Client::isMinimizable() const
@@ -641,6 +641,16 @@ bool Client::isMinimizable() const
     if( !wantsTabFocus()) // SELI - NET::Utility? why wantsTabFocus() - skiptaskbar? ?
         return false;
     return true;
+    }
+
+/*!
+  Returns whether the window is kept above or not
+ */
+bool Client::keepAbove() const
+    {
+    if( isModalSystemNotification())
+        return true;
+    return keep_above;
     }
 
 /*!

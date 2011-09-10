@@ -81,6 +81,8 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <kdebug.h>
 #include <knotifyclient.h>
 
+#include <libkrsync/krsync.h>
+
 #include "server.h"
 #include "global.h"
 #include "shutdowndlg.h"
@@ -182,6 +184,7 @@ void KSMServer::shutdownInternal( KApplication::ShutdownConfirm confirm,
 	shutdownType = sdtype;
 	shutdownMode = sdmode;
 	bootOption = bopt;
+	shutdownNotifierIPDlg = 0;
 
         // shall we save the session on logout?
         saveSession = ( config->readEntry( "loginMode", "restorePreviousLogout" ) == "restorePreviousLogout" );
@@ -189,6 +192,19 @@ void KSMServer::shutdownInternal( KApplication::ShutdownConfirm confirm,
         if (showFancyLogout) {
             KSMShutdownIPFeedback::showit(); // hide the UGLY logout process from the user
             shutdownNotifierIPDlg = KSMShutdownIPDlg::showShutdownIP();
+            while (!KSMShutdownIPFeedback::ispainted()) {
+                tqApp->processEvents();
+            }
+        }
+
+        // synchronize any folders that were requested for shutdown sync
+        if (shutdownNotifierIPDlg) {
+            static_cast<KSMShutdownIPDlg*>(shutdownNotifierIPDlg)->setStatusMessage(i18n("Synchronizing remote folders").append("..."));
+        }
+        KRsync krs(this, "");
+        krs.executeLogoutAutoSync();
+        if (shutdownNotifierIPDlg) {
+            static_cast<KSMShutdownIPDlg*>(shutdownNotifierIPDlg)->setStatusMessage("");
         }
 
         if ( saveSession )
@@ -196,7 +212,9 @@ void KSMServer::shutdownInternal( KApplication::ShutdownConfirm confirm,
 
         // Set the real desktop background to black so that exit looks
         // clean regardless of what was on "our" desktop.
-        TQT_TQWIDGET(kapp->desktop())->setBackgroundColor( Qt::black );
+        if (!showFancyLogout) {
+            TQT_TQWIDGET(kapp->desktop())->setBackgroundColor( Qt::black );
+        }
         state = Shutdown;
         wmPhase1WaitingCount = 0;
         saveType = saveSession?SmSaveBoth:SmSaveGlobal;
@@ -520,7 +538,7 @@ void KSMServer::startKilling()
     // kill all clients
     state = Killing;
     for ( KSMClient* c = clients.first(); c; c = clients.next() ) {
-        if( isWM( c )) // kill the WM as the last one in order to reduce flicker
+        if( isWM( c ) || isCM( c ) ) // kill the WM and CM as the last one in order to reduce flicker
             continue;
         kdDebug( 1218 ) << "completeShutdown: client " << c->program() << "(" << c->clientId() << ")" << endl;
         SmsDie( c->connection() );
@@ -539,7 +557,7 @@ void KSMServer::completeKilling()
     if( state == Killing ) {
         bool wait = false;
         for( KSMClient* c = clients.first(); c; c = clients.next()) {
-            if( isWM( c ))
+            if( isWM( c ) || isCM( c ) )
                 continue;
             wait = true; // still waiting for clients to go away
         }
@@ -561,6 +579,9 @@ void KSMServer::killWM()
         if( isWM( c )) {
             iswm = true;
             kdDebug( 1218 ) << "killWM: client " << c->program() << "(" << c->clientId() << ")" << endl;
+            SmsDie( c->connection() );
+        }
+        if( isCM( c )) {
             SmsDie( c->connection() );
         }
     }

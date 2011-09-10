@@ -87,11 +87,12 @@ public:
     static void showit() { if ( s_pSelf != 0L ) s_pSelf->showNow(); }
     static void stop() { if ( s_pSelf != 0L ) s_pSelf->fadeBack(); delete s_pSelf; s_pSelf = 0L; }
     static KSMShutdownIPFeedback * self() { return s_pSelf; }
+    static bool ispainted() { if ( s_pSelf != 0L ) return s_pSelf->m_isPainted; else return false; }
 
 protected:
     ~KSMShutdownIPFeedback();
 
-private slots:
+public slots:
     void slotPaintEffect();
 
 private:
@@ -104,6 +105,7 @@ private:
     TQString pixmapName(int desk);
     void enableExports();
     int m_timeout;
+    bool m_isPainted;
 };
 
 // The confirmation dialog
@@ -139,12 +141,13 @@ private:
 };
 
 // The shutdown-in-progress dialog
-class KSMShutdownIPDlg : public TQDialog
+class KSMShutdownIPDlg : public TQWidget
 {
     Q_OBJECT
 
 public:
     static TQWidget* showShutdownIP();
+    void setStatusMessage(TQString message);
 
 protected:
     ~KSMShutdownIPDlg();
@@ -154,6 +157,7 @@ protected slots:
 
 private:
     KSMShutdownIPDlg( TQWidget* parent );
+    TQLabel* m_statusLabel;
 };
 
 class KSMDelayedPushButton : public KPushButton

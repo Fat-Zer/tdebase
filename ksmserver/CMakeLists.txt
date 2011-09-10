@@ -43,5 +43,5 @@ tde_add_kdeinit_executable( ksmserver AUTOMOC
     main.cpp server.cpp shutdowndlg.cpp
     legacy.cpp startup.cpp shutdown.cpp client.cpp
     KSMServerInterface.skel server.skel timed.ui
-  LINK dmctl-static kdeui-shared ${HAL_LIBRARIES} ${DBUS_TQT_LIBRARIES}
+  LINK dmctl-static kdeui-shared krsync-shared ${HAL_LIBRARIES} ${DBUS_TQT_LIBRARIES}
 )

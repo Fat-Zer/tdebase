@@ -516,19 +516,18 @@ void KSMShutdownFeedback::slotPaintEffect()
 KSMShutdownIPFeedback * KSMShutdownIPFeedback::s_pSelf = 0L;
 
 KSMShutdownIPFeedback::KSMShutdownIPFeedback()
- : TQWidget( 0L, "feedbackipwidget", Qt::WType_Dialog | Qt::WStyle_StaysOnTop ), m_timeout(0)
+ : TQWidget( 0L, "feedbackipwidget", Qt::WStyle_Customize | Qt::WStyle_NoBorder | Qt::WStyle_StaysOnTop ), m_timeout(0), m_isPainted(false)
 
 {
-	setShown(false);
-	setWindowState(WindowFullScreen);
-
 	// Try to get the root pixmap
 	system("krootbacking &");
+
+	resize(0, 0);
+	setShown(true);
 }
 
 void KSMShutdownIPFeedback::showNow()
 {
-// 	slotPaintEffect();
 	TQTimer::singleShot( 0, this, SLOT(slotPaintEffect()) );
 }
 
@@ -588,11 +587,15 @@ void KSMShutdownIPFeedback::slotPaintEffect()
 		pm.convertFromImage(correctedImage);
 	}
 
-	resize(kapp->desktop()->width(), kapp->desktop()->height());
-	move(0,0);
-	setShown(true);
-
 	setBackgroundPixmap( pm );
+	move(0,0);
+	setWindowState(WindowFullScreen);
+	setGeometry( TQApplication::desktop()->geometry() );
+
+	repaint(true);
+	tqApp->flushX();
+
+	m_isPainted = true;
 }
 
 void KSMShutdownIPFeedback::enableExports()
@@ -1106,22 +1109,25 @@ TQWidget* KSMShutdownIPDlg::showShutdownIP()
     l->move(rect.x() + (rect.width() - sh.width())/2,
             rect.y() + (rect.height() - sh.height())/2);
 
-    TQTimer *timer = new TQTimer(l);
-    connect( timer, SIGNAL(timeout()), l, SLOT(exec()) );
-    timer->start( 0, TRUE );
-
     kapp->disableStyles();
 
     return l;
 }
 
+void KSMShutdownIPDlg::setStatusMessage(TQString message)
+{
+    if (message == "") {
+        m_statusLabel->setText(i18n("Saving your settings").append("..."));
+    }
+    else {
+        m_statusLabel->setText(message);
+    }
+}
+
 KSMShutdownIPDlg::KSMShutdownIPDlg(TQWidget* parent)
-  : TQDialog( 0, "", TRUE, Qt::WStyle_Customize | Qt::WType_Dialog | Qt::WStyle_Title | Qt::WDestructiveClose )
+  : TQWidget( 0, "", Qt::WStyle_Customize | Qt::WType_Dialog | Qt::WStyle_Title | Qt::WStyle_StaysOnTop | Qt::WDestructiveClose )
 
 {
-	// Signal that this window should stay on top of everything else
-	setModal(true);
-
 	// Signal that we do not want any window controls to be shown at all
 	Atom kde_wm_system_modal_notification;
 	kde_wm_system_modal_notification = XInternAtom(qt_xdisplay(), "_KDE_WM_MODAL_SYS_NOTIFICATION", False);
@@ -1182,12 +1188,12 @@ KSMShutdownIPDlg::KSMShutdownIPDlg(TQWidget* parent)
 	label->setFont( fnt );
 	centerbox->addWidget( label, AlignCenter );
 
-	label = new TQLabel( i18n("Saving your settings..."), frame );
-	fnt = label->font();
+	m_statusLabel = new TQLabel( i18n("Saving your settings..."), frame );
+	fnt = m_statusLabel->font();
 	fnt.setBold( false );
 	fnt.setPointSize( fnt.pointSize() * 1 );
-	label->setFont( fnt );
-	gbox->addMultiCellWidget( label, 2, 2, 0, 0, AlignLeft | AlignVCenter );
+	m_statusLabel->setFont( fnt );
+	gbox->addMultiCellWidget( m_statusLabel, 2, 2, 0, 0, AlignLeft | AlignVCenter );
 
 	gbox->addLayout(centerbox, 0, 0);
 	gbox->addLayout(seperatorbox, 1, 0);
