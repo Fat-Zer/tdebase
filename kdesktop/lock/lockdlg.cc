@@ -81,7 +81,7 @@ PasswordDlg::PasswordDlg(LockProcess *parent, GreeterPluginHandle *plugin)
         kde_wm_system_modal_notification = XInternAtom(qt_xdisplay(), "_KDE_WM_MODAL_SYS_NOTIFICATION", False);
         XChangeProperty(qt_xdisplay(), winId(), kde_wm_system_modal_notification, XA_INTEGER, 32, PropModeReplace, (unsigned char *) "TRUE", 1L);
     }
-    setCaption(i18n("Authentication Required"));
+    setCaption(i18n("Desktop Session Locked"));
 
     frame = new TQFrame( this );
     if (trinity_desktop_lock_use_system_modal_dialogs)

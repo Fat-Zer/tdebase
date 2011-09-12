@@ -34,9 +34,11 @@
 #include <X11/Xlib.h>
 #include <fixx11h.h>
 
-// [FIXME] These settings should be user configurable!
+// [FIXME] These two settings should be user configurable!
 bool trinity_desktop_lock_use_system_modal_dialogs = FALSE;
 bool trinity_desktop_lock_delay_screensaver_start = FALSE;
+
+bool trinity_desktop_lock_forced = FALSE;
 
 bool MyApp::x11EventFilter( XEvent *ev )
 {
@@ -70,6 +72,9 @@ int main( int argc, char **argv )
     KCmdLineArgs::init( argc, argv, "kdesktop_lock", I18N_NOOP("KDesktop Locker"), I18N_NOOP("Session Locker for KDesktop"), "2.0" );
     KCmdLineArgs::addCmdLineOptions( options );
     KCmdLineArgs *args = KCmdLineArgs::parsedArgs();
+
+    if (args->isSet( "forcelock" ))
+        trinity_desktop_lock_forced = TRUE;
 
     putenv(strdup("SESSION_MANAGER="));
 

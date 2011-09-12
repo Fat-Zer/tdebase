@@ -52,6 +52,7 @@
 #include <tqvaluevector.h>
 #include <tqtooltip.h>
 #include <tqimage.h>
+#include <tqregexp.h>
 
 #include <tqdatetime.h>
 
@@ -125,6 +126,7 @@ static void segv_handler(int)
 extern Atom qt_wm_state;
 extern bool trinity_desktop_lock_use_system_modal_dialogs;
 extern bool trinity_desktop_lock_delay_screensaver_start;
+extern bool trinity_desktop_lock_forced;
 
 bool trinity_desktop_lock_autohide_lockdlg = TRUE;
 
@@ -968,7 +970,7 @@ bool LockProcess::startSaver()
     raise();
     XSync(qt_xdisplay(), False);
     setVRoot( winId(), winId() );
-    if (!trinity_desktop_lock_delay_screensaver_start) {
+    if (!(trinity_desktop_lock_delay_screensaver_start && trinity_desktop_lock_forced)) {
         setBackgroundColor(black);
         erase();
     }
@@ -982,7 +984,7 @@ bool LockProcess::startSaver()
 	TQTimer::singleShot( 0, this, SLOT(slotPaintBackground()) );
     }
 
-    if (trinity_desktop_lock_delay_screensaver_start) {
+    if (trinity_desktop_lock_delay_screensaver_start && trinity_desktop_lock_forced) {
         ENABLE_CONTINUOUS_LOCKDLG_DISPLAY
         mHackDelayStartupTimer->start(mHackDelayStartupTimeout, TRUE);
     }
@@ -1122,7 +1124,7 @@ bool LockProcess::startHack()
 	if (!mForbidden)
 	{
 
-		if (trinity_desktop_lock_delay_screensaver_start) {
+		if (trinity_desktop_lock_delay_screensaver_start && trinity_desktop_lock_forced) {
 			// Make sure we have a nice clean display to start with!
 			setBackgroundColor(black);
 			erase();
@@ -1136,7 +1138,7 @@ bool LockProcess::startHack()
 #endif
  		        //bitBlt(this, 0, 0, &mOriginal);
  		        DISABLE_CONTINUOUS_LOCKDLG_DISPLAY
-			if (trinity_desktop_lock_delay_screensaver_start) {	
+			if (trinity_desktop_lock_delay_screensaver_start && trinity_desktop_lock_forced) {	
 				// Close any active dialogs
 				if (currentDialog != NULL) {
 					mForceReject = true;
@@ -1186,7 +1188,9 @@ void LockProcess::hackExited(KProcess *)
         if (!trinity_desktop_lock_use_system_modal_dialogs) setBackgroundColor(black);
         if (backingPixmap.isNull()) erase();
         else bitBlt(this, 0, 0, &backingPixmap);
-        ENABLE_CONTINUOUS_LOCKDLG_DISPLAY
+        if (!mSuspended) {
+            ENABLE_CONTINUOUS_LOCKDLG_DISPLAY
+        }
 }
 
 void LockProcess::displayLockDialogIfNeeded()
@@ -1209,9 +1213,34 @@ void LockProcess::suspend()
 {
     if(!mSuspended)
     {
-        mHackProc.kill(SIGSTOP);
-        TQApplication::syncX();
-        usleep(100);	// Let the stop signal get through
+        if (trinity_desktop_lock_use_system_modal_dialogs) {
+            mSuspended = true;
+            stopHack();
+            mSuspended = false;
+        }
+        else {
+            TQString hackStatus;
+            mHackProc.kill(SIGSTOP);
+#if 0
+            // wait for the stop signal to take effect
+            while (hackStatus != "T") {
+                char hackstat[8192];
+                FILE *fp = fopen(TQString("/proc/%1/stat").arg(mHackProc.pid()).ascii(),"r");
+                if (fp != NULL) {
+                    if (fgets (hackstat, 8192, fp) != NULL)
+                        puts(hackstat);
+                    fclose (fp);
+                }
+                hackstat[8191] = 0;
+                hackStatus = hackstat;
+                hackStatus = hackStatus.remove(TQRegExp("(*) ", TRUE, TRUE));
+                TQStringList hackStatusList = TQStringList::split(" ", hackStatus);
+                hackStatus = (*(hackStatusList.at(1)));
+            }
+#endif
+            TQApplication::syncX();
+            usleep(100000);		// Allow certain bad graphics drivers (*cough* fglrx *cough*) time to actually sync up the display
+        }
         TQApplication::syncX();
         mSavedScreen = TQPixmap::grabWindow( winId());
     }
@@ -1228,6 +1257,9 @@ void LockProcess::resume( bool force )
         bitBlt( this, 0, 0, &mSavedScreen );
         TQApplication::syncX();
         mHackProc.kill(SIGCONT);
+    }
+    else if (mSuspended && trinity_desktop_lock_use_system_modal_dialogs) {
+        startHack();
     }
     mSuspended = false;
 }
@@ -1371,7 +1403,7 @@ void LockProcess::slotPaintBackground()
 	}
 
 	backingPixmap = pm;
-	if (trinity_desktop_lock_delay_screensaver_start) erase();
+	if (trinity_desktop_lock_delay_screensaver_start && trinity_desktop_lock_forced) erase();
 }
 
 void LockProcess::preparePopup()
