@@ -10,7 +10,7 @@ Copyright (C) 2000 Matthias Ettrich <ettrich@kde.org>
 #include <tqpixmap.h>
 #include <tqimage.h>
 #include <tqdatetime.h>
-#include <tqdialog.h>
+#include <kdialog.h>
 #include <kpushbutton.h>
 #include <tqpushbutton.h>
 #include <tqframe.h>
@@ -141,23 +141,18 @@ private:
 };
 
 // The shutdown-in-progress dialog
-class KSMShutdownIPDlg : public TQWidget
+class KSMShutdownIPDlg : public KSMModalDialog
 {
     Q_OBJECT
 
 public:
     static TQWidget* showShutdownIP();
-    void setStatusMessage(TQString message);
 
 protected:
     ~KSMShutdownIPDlg();
 
-protected slots:
-    void closeEvent(TQCloseEvent *e);
-
 private:
     KSMShutdownIPDlg( TQWidget* parent );
-    TQLabel* m_statusLabel;
 };
 
 class KSMDelayedPushButton : public KPushButton

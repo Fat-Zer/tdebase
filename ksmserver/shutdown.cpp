@@ -204,7 +204,7 @@ void KSMServer::shutdownInternal( KApplication::ShutdownConfirm confirm,
         KRsync krs(this, "");
         krs.executeLogoutAutoSync();
         if (shutdownNotifierIPDlg) {
-            static_cast<KSMShutdownIPDlg*>(shutdownNotifierIPDlg)->setStatusMessage("");
+            static_cast<KSMShutdownIPDlg*>(shutdownNotifierIPDlg)->setStatusMessage(i18n("Saving your settings..."));
         }
 
         if ( saveSession )
@@ -572,7 +572,7 @@ void KSMServer::killWM()
     state = KillingWM;
     bool iswm = false;
     if (shutdownNotifierIPDlg) {
-        shutdownNotifierIPDlg->close();
+        static_cast<KSMShutdownIPDlg*>(shutdownNotifierIPDlg)->closeSMDialog();
         shutdownNotifierIPDlg=0;
     }
     for ( KSMClient* c = clients.first(); c; c = clients.next() ) {

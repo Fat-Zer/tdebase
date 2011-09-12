@@ -1106,104 +1106,16 @@ TQWidget* KSMShutdownIPDlg::showShutdownIP()
     kapp->enableStyles();
     KSMShutdownIPDlg* l = new KSMShutdownIPDlg( 0 );
 
-    // Show dialog (will save the background in showEvent)
-    TQSize sh = l->tqsizeHint();
-    TQRect rect = KGlobalSettings::desktopGeometry(TQCursor::pos());
-
-    l->move(rect.x() + (rect.width() - sh.width())/2,
-            rect.y() + (rect.height() - sh.height())/2);
-
     kapp->disableStyles();
 
     return l;
 }
 
-void KSMShutdownIPDlg::setStatusMessage(TQString message)
-{
-    if (message == "") {
-        m_statusLabel->setText(i18n("Saving your settings").append("..."));
-    }
-    else {
-        m_statusLabel->setText(message);
-    }
-}
-
 KSMShutdownIPDlg::KSMShutdownIPDlg(TQWidget* parent)
-  : TQWidget( 0, "", Qt::WStyle_Customize | Qt::WType_Dialog | Qt::WStyle_Title | Qt::WStyle_StaysOnTop | Qt::WDestructiveClose )
+  : KSMModalDialog( parent )
 
 {
-	// Signal that we do not want any window controls to be shown at all
-	Atom kde_wm_system_modal_notification;
-	kde_wm_system_modal_notification = XInternAtom(qt_xdisplay(), "_KDE_WM_MODAL_SYS_NOTIFICATION", False);
-	XChangeProperty(qt_xdisplay(), winId(), kde_wm_system_modal_notification, XA_INTEGER, 32, PropModeReplace, (unsigned char *) "TRUE", 1L);
-
-	TQVBoxLayout* vbox = new TQVBoxLayout( this );
-	
-	TQFrame* frame = new TQFrame( this );
-	frame->setFrameStyle( TQFrame::NoFrame );
-	frame->setLineWidth( tqstyle().tqpixelMetric( TQStyle::PM_DefaultFrameWidth, frame ) );
-	// we need to set the minimum size for the window
-	frame->setMinimumWidth(400);
-	vbox->addWidget( frame );
-	TQGridLayout* gbox = new TQGridLayout( frame, 1, 1, KDialog::marginHint(), KDialog::spacingHint() );
-	TQHBoxLayout* centerbox = new TQHBoxLayout( frame, 0, KDialog::spacingHint() );
-	TQHBoxLayout* seperatorbox = new TQHBoxLayout( frame, 0, 0 );
-
-	TQWidget* ticon = new TQWidget( frame );
-	KIconLoader * ldr = KGlobal::iconLoader();
-	TQPixmap trinityPixmap = ldr->loadIcon("kmenu", KIcon::Panel, KIcon::SizeLarge, KIcon::DefaultState, 0L, true);
-
-	// Manually draw the alpha portions of the icon onto the widget background color...
-	TQRgb backgroundRgb = ticon->paletteBackgroundColor().rgb();
-	TQImage correctedImage = trinityPixmap.convertToImage();
-	correctedImage = correctedImage.convertDepth(32);
-	correctedImage.setAlphaBuffer(true);
-	int w = correctedImage.width();
-	int h = correctedImage.height();
-	for (int y = 0; y < h; ++y) {
-		TQRgb *ls = (TQRgb *)correctedImage.scanLine( y );
-		for (int x = 0; x < w; ++x) {
-			TQRgb l = ls[x];
-			float alpha_adjust = tqAlpha( l )/255.0;
-			int r = int( (tqRed( l ) * alpha_adjust) + (tqRed( backgroundRgb ) * (1.0-alpha_adjust)) );
-			int g = int( (tqGreen( l ) * alpha_adjust) + (tqGreen( backgroundRgb ) * (1.0-alpha_adjust)) );
-			int b = int( (tqBlue( l ) * alpha_adjust) + (tqBlue( backgroundRgb ) * (1.0-alpha_adjust)) );
-			int a = int( 255 );
-			ls[x] = tqRgba( r, g, b, a );
-		}
-	}
-	trinityPixmap.convertFromImage(correctedImage);
-
-	ticon->setBackgroundPixmap(trinityPixmap);
-	ticon->setMinimumSize(trinityPixmap.size());
-	ticon->setMaximumSize(trinityPixmap.size());
-	ticon->resize(trinityPixmap.size());
-	centerbox->addWidget( ticon, AlignCenter );
-
-	TQWidget* swidget = new TQWidget( frame );
-	swidget->resize(2, frame->sizeHint().width());
-	swidget->setBackgroundColor(Qt::black);
-	seperatorbox->addWidget( swidget, AlignCenter );
-
-	TQLabel* label = new TQLabel( i18n("Trinity Desktop Environment"), frame );
-	TQFont fnt = label->font();
-	fnt.setBold( true );
-	fnt.setPointSize( fnt.pointSize() * 3 / 2 );
-	label->setFont( fnt );
-	centerbox->addWidget( label, AlignCenter );
-
-	m_statusLabel = new TQLabel( i18n("Saving your settings..."), frame );
-	fnt = m_statusLabel->font();
-	fnt.setBold( false );
-	fnt.setPointSize( fnt.pointSize() * 1 );
-	m_statusLabel->setFont( fnt );
-	gbox->addMultiCellWidget( m_statusLabel, 2, 2, 0, 0, AlignLeft | AlignVCenter );
-
-	gbox->addLayout(centerbox, 0, 0);
-	gbox->addLayout(seperatorbox, 1, 0);
-
-	setFixedSize( sizeHint() );
-	setCaption( i18n("Please wait...") );
+	setStatusMessage(i18n("Saving your settings..."));
 
 	show();
 	setActiveWindow();
@@ -1211,15 +1123,6 @@ KSMShutdownIPDlg::KSMShutdownIPDlg(TQWidget* parent)
 
 KSMShutdownIPDlg::~KSMShutdownIPDlg()
 {
-
-}
-
-void KSMShutdownIPDlg::closeEvent(TQCloseEvent *e)
-{
-	//---------------------------------------------
-	// Don't call the base function because
-	// we want to ignore the close event
-	//---------------------------------------------
 }
 
 KSMDelayedPushButton::KSMDelayedPushButton( const KGuiItem &item,
