@@ -1991,6 +1991,8 @@ void Client::takeFocus( allowed_t )
  */
 bool Client::providesContextHelp() const
     {
+    if (isModalSystemNotification())
+        return false;
     return Pcontexthelp;
     }
 

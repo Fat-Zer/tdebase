@@ -48,22 +48,36 @@
 
 #include <X11/Xutil.h>
 #include <X11/keysym.h>
+#include <X11/Xatom.h>
 #include <fixx11h.h>
 
 #ifndef AF_LOCAL
 # define AF_LOCAL	AF_UNIX
 #endif
 
+extern bool trinity_desktop_lock_use_system_modal_dialogs;
+
 //===========================================================================
 //
 // Simple dialog for displaying an unlock status or recurring error message
 //
 InfoDlg::InfoDlg(LockProcess *parent)
-    : TQDialog(parent, "information dialog", true, (WFlags)WX11BypassWM),
+    : TQDialog(parent, "information dialog", true, (trinity_desktop_lock_use_system_modal_dialogs?((WFlags)WStyle_StaysOnTop):((WFlags)WX11BypassWM))),
       mUnlockingFailed(false)
 {
+    if (trinity_desktop_lock_use_system_modal_dialogs) {
+        // Signal that we do not want any window controls to be shown at all
+        Atom kde_wm_system_modal_notification;
+        kde_wm_system_modal_notification = XInternAtom(qt_xdisplay(), "_KDE_WM_MODAL_SYS_NOTIFICATION", False);
+        XChangeProperty(qt_xdisplay(), winId(), kde_wm_system_modal_notification, XA_INTEGER, 32, PropModeReplace, (unsigned char *) "TRUE", 1L);
+    }
+    setCaption(i18n("Information"));
+
     frame = new TQFrame( this );
-    frame->setFrameStyle( TQFrame::Panel | TQFrame::Raised );
+    if (trinity_desktop_lock_use_system_modal_dialogs)
+        frame->setFrameStyle( TQFrame::NoFrame );
+    else
+        frame->setFrameStyle( TQFrame::Panel | TQFrame::Raised );
     frame->setLineWidth( 2 );
 
     mpixLabel = new TQLabel( frame, "pixlabel" );

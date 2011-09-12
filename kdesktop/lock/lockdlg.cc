@@ -52,26 +52,42 @@
 
 #include <X11/Xutil.h>
 #include <X11/keysym.h>
+#include <X11/Xatom.h>
 #include <fixx11h.h>
 
 #ifndef AF_LOCAL
 # define AF_LOCAL	AF_UNIX
 #endif
 
+// [FIXME] This interval should be taken from the screensaver start delay of kdesktop
 #define PASSDLG_HIDE_TIMEOUT 10000
+
+extern bool trinity_desktop_lock_autohide_lockdlg;
+extern bool trinity_desktop_lock_use_system_modal_dialogs;
 
 //===========================================================================
 //
 // Simple dialog for entering a password.
 //
 PasswordDlg::PasswordDlg(LockProcess *parent, GreeterPluginHandle *plugin)
-    : TQDialog(parent, "password dialog", true, (WFlags)WX11BypassWM),
+    : TQDialog(parent, "password dialog", true, (trinity_desktop_lock_use_system_modal_dialogs?((WFlags)WStyle_StaysOnTop):((WFlags)WX11BypassWM))),
       mPlugin( plugin ),
       mCapsLocked(-1),
       mUnlockingFailed(false)
 {
+    if (trinity_desktop_lock_use_system_modal_dialogs) {
+        // Signal that we do not want any window controls to be shown at all
+        Atom kde_wm_system_modal_notification;
+        kde_wm_system_modal_notification = XInternAtom(qt_xdisplay(), "_KDE_WM_MODAL_SYS_NOTIFICATION", False);
+        XChangeProperty(qt_xdisplay(), winId(), kde_wm_system_modal_notification, XA_INTEGER, 32, PropModeReplace, (unsigned char *) "TRUE", 1L);
+    }
+    setCaption(i18n("Authentication Required"));
+
     frame = new TQFrame( this );
-    frame->setFrameStyle( TQFrame::Panel | TQFrame::Raised );
+    if (trinity_desktop_lock_use_system_modal_dialogs)
+        frame->setFrameStyle( TQFrame::NoFrame );
+    else
+        frame->setFrameStyle( TQFrame::Panel | TQFrame::Raised );
     frame->setLineWidth( 2 );
 
     TQLabel *pixLabel = new TQLabel( frame, "pixlabel" );
@@ -93,6 +109,7 @@ PasswordDlg::PasswordDlg(LockProcess *parent, GreeterPluginHandle *plugin)
     mNewSessButton = new KPushButton( KGuiItem(i18n("Sw&itch User..."), "fork"), frame );
     ok = new KPushButton( i18n("Unl&ock"), frame );
     cancel = new KPushButton( KStdGuiItem::cancel(), frame );
+    if (!trinity_desktop_lock_autohide_lockdlg) cancel->setEnabled(false);
 
     greet = plugin->info->create( this, 0, this, mLayoutButton, TQString::null,
               KGreeterPlugin::Authenticate, KGreeterPlugin::ExUnlock );
@@ -164,6 +181,12 @@ PasswordDlg::~PasswordDlg()
     delete greet;
 }
 
+void PasswordDlg::reject()
+{
+    if (trinity_desktop_lock_autohide_lockdlg)
+        TQDialog::reject();
+}
+
 void PasswordDlg::layoutClicked()
 {
 
@@ -210,7 +233,12 @@ void PasswordDlg::timerEvent(TQTimerEvent *ev)
 {
     if (ev->timerId() == mTimeoutTimerId)
     {
-        reject();
+        if (trinity_desktop_lock_autohide_lockdlg) {
+            reject();
+        }
+        else {
+            slotActivity();
+        }
     }
     else if (ev->timerId() == mFailedTimerId)
     {
@@ -513,9 +541,21 @@ void PasswordDlg::slotStartNewSession()
     killTimer(mTimeoutTimerId);
     mTimeoutTimerId = 0;
 
-    TQDialog *dialog = new TQDialog( this, "warnbox", true, (WFlags)WX11BypassWM );
+    TQDialog *dialog = new TQDialog( this, "warnbox", true, (trinity_desktop_lock_use_system_modal_dialogs?((WFlags)WStyle_StaysOnTop):((WFlags)WX11BypassWM)));
+
+    if (trinity_desktop_lock_use_system_modal_dialogs) {
+        // Signal that we do not want any window controls to be shown at all
+        Atom kde_wm_system_modal_notification;
+        kde_wm_system_modal_notification = XInternAtom(qt_xdisplay(), "_KDE_WM_MODAL_SYS_NOTIFICATION", False);
+        XChangeProperty(qt_xdisplay(), dialog->winId(), kde_wm_system_modal_notification, XA_INTEGER, 32, PropModeReplace, (unsigned char *) "TRUE", 1L);
+    }
+    dialog->setCaption(i18n("New Session"));
+
     TQFrame *winFrame = new TQFrame( dialog );
-    winFrame->setFrameStyle( TQFrame::WinPanel | TQFrame::Raised );
+    if (trinity_desktop_lock_use_system_modal_dialogs)
+        winFrame->setFrameStyle( TQFrame::NoFrame );
+    else
+        winFrame->setFrameStyle( TQFrame::WinPanel | TQFrame::Raised );
     winFrame->setLineWidth( 2 );
     TQVBoxLayout *vbox = new TQVBoxLayout( dialog );
     vbox->addWidget( winFrame );
@@ -627,9 +667,21 @@ void PasswordDlg::slotSwitchUser()
     int p = 0;
     DM dm;
 
-    TQDialog dialog( this, "sessbox", true, (WFlags)WX11BypassWM );
+    TQDialog dialog( this, "sessbox", true, (trinity_desktop_lock_use_system_modal_dialogs?((WFlags)WStyle_StaysOnTop):((WFlags)WX11BypassWM)) );
+
+    if (trinity_desktop_lock_use_system_modal_dialogs) {
+        // Signal that we do not want any window controls to be shown at all
+        Atom kde_wm_system_modal_notification;
+        kde_wm_system_modal_notification = XInternAtom(qt_xdisplay(), "_KDE_WM_MODAL_SYS_NOTIFICATION", False);
+        XChangeProperty(qt_xdisplay(), dialog.winId(), kde_wm_system_modal_notification, XA_INTEGER, 32, PropModeReplace, (unsigned char *) "TRUE", 1L);
+    }
+    dialog.setCaption(i18n("Switch User"));
+
     TQFrame *winFrame = new TQFrame( &dialog );
-    winFrame->setFrameStyle( TQFrame::WinPanel | TQFrame::Raised );
+    if (trinity_desktop_lock_use_system_modal_dialogs)
+        winFrame->setFrameStyle( TQFrame::NoFrame );
+    else
+        winFrame->setFrameStyle( TQFrame::WinPanel | TQFrame::Raised );
     winFrame->setLineWidth( 2 );
     TQBoxLayout *vbox = new TQVBoxLayout( &dialog );
     vbox->addWidget( winFrame );

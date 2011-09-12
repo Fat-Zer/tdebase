@@ -51,6 +51,7 @@
 #include <tqsocketnotifier.h>
 #include <tqvaluevector.h>
 #include <tqtooltip.h>
+#include <tqimage.h>
 
 #include <tqdatetime.h>
 
@@ -122,6 +123,18 @@ static void segv_handler(int)
 }
 
 extern Atom qt_wm_state;
+extern bool trinity_desktop_lock_use_system_modal_dialogs;
+extern bool trinity_desktop_lock_delay_screensaver_start;
+
+bool trinity_desktop_lock_autohide_lockdlg = TRUE;
+
+#define ENABLE_CONTINUOUS_LOCKDLG_DISPLAY \
+mForceContinualLockDisplayTimer->start(100, FALSE); \
+trinity_desktop_lock_autohide_lockdlg = FALSE;
+
+#define DISABLE_CONTINUOUS_LOCKDLG_DISPLAY \
+mForceContinualLockDisplayTimer->stop(); \
+trinity_desktop_lock_autohide_lockdlg = TRUE;
 
 //===========================================================================
 //
@@ -129,7 +142,7 @@ extern Atom qt_wm_state;
 // starting screensaver hacks, and password entry.f
 //
 LockProcess::LockProcess(bool child, bool useBlankOnly)
-    : TQWidget(0L, "saver window", WX11BypassWM),
+    : TQWidget(0L, "saver window", (trinity_desktop_lock_use_system_modal_dialogs?((WFlags)(WStyle_StaysOnTop|WStyle_Customize | WStyle_NoBorder)):((WFlags)WX11BypassWM))),
       mOpenGLVisual(0),
       child_saver(child),
       mParent(0),
@@ -147,12 +160,25 @@ LockProcess::LockProcess(bool child, bool useBlankOnly)
       mForceReject(false),
       mDialogControlLock(false),
       currentDialog(NULL),
-      resizeTimer(NULL)
+      resizeTimer(NULL),
+      hackResumeTimer(NULL),
+      mForceContinualLockDisplayTimer(NULL),
+      mHackDelayStartupTimer(NULL),
+      mHackDelayStartupTimeout(0)
 {
     setupSignals();
     setupPipe();
 
     kapp->installX11EventFilter(this);
+
+    mForceContinualLockDisplayTimer = new TQTimer( this );
+    connect( mForceContinualLockDisplayTimer, TQT_SIGNAL(timeout()), this, TQT_SLOT(displayLockDialogIfNeeded()) );
+
+    mHackDelayStartupTimer = new TQTimer( this );
+    connect( mHackDelayStartupTimer, TQT_SIGNAL(timeout()), this, TQT_SLOT(startHack()) );
+
+    // [FIXME] This interval should be taken from the screensaver start delay of kdesktop
+    mHackDelayStartupTimeout = 10*1000;
 
     // Get root window size
     XWindowAttributes rootAttr;
@@ -232,6 +258,23 @@ LockProcess::LockProcess(bool child, bool useBlankOnly)
 //
 LockProcess::~LockProcess()
 {
+    if (resizeTimer != NULL) {
+        resizeTimer->stop();
+        delete resizeTimer;
+    }
+    if (hackResumeTimer != NULL) {
+        hackResumeTimer->stop();
+        delete hackResumeTimer;
+    }
+    if (mForceContinualLockDisplayTimer != NULL) {
+        mForceContinualLockDisplayTimer->stop();
+        delete mForceContinualLockDisplayTimer;
+    }
+    if (mHackDelayStartupTimer != NULL) {
+        mHackDelayStartupTimer->stop();
+        delete mHackDelayStartupTimer;
+    }
+
     if (greetPlugin.library) {
         if (greetPlugin.info->done)
             greetPlugin.info->done();
@@ -575,10 +618,19 @@ void LockProcess::readSaver()
 
 	kdDebug(1204) << "mForbidden: " << (mForbidden ? "true" : "false") << endl;
 
-        if (config.hasActionGroup("Root"))
-        {
-            config.setActionGroup("Root");
-            mSaverExec = config.readPathEntry("Exec");
+        if (trinity_desktop_lock_use_system_modal_dialogs) {
+            if (config.hasActionGroup("InWindow"))
+            {
+                config.setActionGroup("InWindow");
+                mSaverExec = config.readPathEntry("Exec");
+            }
+        }
+        else {
+            if (config.hasActionGroup("Root"))
+            {
+                config.setActionGroup("Root");
+                mSaverExec = config.readPathEntry("Exec");
+            }
         }
     }
 }
@@ -591,7 +643,7 @@ void LockProcess::createSaverWindow()
 {
     Visual* visual = CopyFromParent;
     XSetWindowAttributes attrs;
-    int flags = CWOverrideRedirect;
+    int flags = trinity_desktop_lock_use_system_modal_dialogs?0:CWOverrideRedirect;
 #ifdef HAVE_GLXCHOOSEVISUAL
     if( mOpenGLVisual )
     {
@@ -658,7 +710,8 @@ void LockProcess::createSaverWindow()
 
     // set NoBackground so that the saver can capture the current
     // screen state if necessary
-    setBackgroundMode(TQWidget::NoBackground);
+    // this is a security risk and has been deactivated--welcome to the 21st century folks!
+    // setBackgroundMode(TQWidget::NoBackground);
 
     setCursor( tqblankCursor );
     setGeometry(0, 0, mRootWidth, mRootHeight);
@@ -915,7 +968,27 @@ bool LockProcess::startSaver()
     raise();
     XSync(qt_xdisplay(), False);
     setVRoot( winId(), winId() );
-    startHack();
+    if (!trinity_desktop_lock_delay_screensaver_start) {
+        setBackgroundColor(black);
+        erase();
+    }
+    if (trinity_desktop_lock_use_system_modal_dialogs) {
+	// Try to get the root pixmap
+	TQString filename = getenv("USER");
+	filename.prepend("/tmp/kde-");
+	filename.append("/krootbacking.png");
+	remove(filename.ascii());
+	system("krootbacking &");
+	TQTimer::singleShot( 0, this, SLOT(slotPaintBackground()) );
+    }
+
+    if (trinity_desktop_lock_delay_screensaver_start) {
+        ENABLE_CONTINUOUS_LOCKDLG_DISPLAY
+        mHackDelayStartupTimer->start(mHackDelayStartupTimeout, TRUE);
+    }
+    else {
+        startHack();
+    }
     return true;
 }
 
@@ -926,8 +999,9 @@ bool LockProcess::startSaver()
 void LockProcess::stopSaver()
 {
     kdDebug(1204) << "LockProcess: stopping saver" << endl;
-    resume( true );
+    mHackProc.kill(SIGCONT);
     stopHack();
+    mSuspended = false;
     hideSaverWindow();
     mVisibility = false;
     if (!child_saver) {
@@ -1048,12 +1122,27 @@ bool LockProcess::startHack()
 	if (!mForbidden)
 	{
 
+		if (trinity_desktop_lock_delay_screensaver_start) {
+			// Make sure we have a nice clean display to start with!
+			setBackgroundColor(black);
+			erase();
+			mSuspended = false;
+		}
+
 		if (mHackProc.start() == true)
 		{
 #ifdef HAVE_SETPRIORITY
 			setpriority(PRIO_PROCESS, mHackProc.pid(), mPriority);
 #endif
  		        //bitBlt(this, 0, 0, &mOriginal);
+ 		        DISABLE_CONTINUOUS_LOCKDLG_DISPLAY
+			if (trinity_desktop_lock_delay_screensaver_start) {	
+				// Close any active dialogs
+				if (currentDialog != NULL) {
+					mForceReject = true;
+					currentDialog->close();
+				}
+			}
 	                return true;
 		}
 	}
@@ -1061,7 +1150,12 @@ bool LockProcess::startHack()
 	// we aren't allowed to start the specified screensaver either because it didn't run for some reason
 	// according to the kiosk restrictions forbid it
 	{
-		setBackgroundColor(black);
+		usleep(100);
+		TQApplication::syncX();
+		if (!trinity_desktop_lock_use_system_modal_dialogs) setBackgroundColor(black);
+		if (backingPixmap.isNull()) erase();
+		else bitBlt(this, 0, 0, &backingPixmap);
+		ENABLE_CONTINUOUS_LOCKDLG_DISPLAY
 	}
     }
     return false;
@@ -1087,7 +1181,28 @@ void LockProcess::hackExited(KProcess *)
 {
 	// Hack exited while we're supposed to be saving the screen.
 	// Make sure the saver window is black.
-        setBackgroundColor(black);
+	usleep(100);
+	TQApplication::syncX();
+        if (!trinity_desktop_lock_use_system_modal_dialogs) setBackgroundColor(black);
+        if (backingPixmap.isNull()) erase();
+        else bitBlt(this, 0, 0, &backingPixmap);
+        ENABLE_CONTINUOUS_LOCKDLG_DISPLAY
+}
+
+void LockProcess::displayLockDialogIfNeeded()
+{
+	if (trinity_desktop_lock_use_system_modal_dialogs) {
+		if (!mBusy) {
+			mBusy = true;
+			if (mLocked) {
+				if (checkPass()) {
+					stopSaver();
+					kapp->quit();
+				}
+			}
+			mBusy = false;
+		}
+	}
 }
 
 void LockProcess::suspend()
@@ -1095,6 +1210,8 @@ void LockProcess::suspend()
     if(!mSuspended)
     {
         mHackProc.kill(SIGSTOP);
+        TQApplication::syncX();
+        usleep(100);	// Let the stop signal get through
         TQApplication::syncX();
         mSavedScreen = TQPixmap::grabWindow( winId());
     }
@@ -1105,7 +1222,7 @@ void LockProcess::resume( bool force )
 {
     if( !force && (!mDialogs.isEmpty() || !mVisibility ))
         return; // no resuming with dialog visible or when not visible
-    if(mSuspended)
+    if ((mSuspended) && (mHackProc.isRunning()))
     {
         XForceScreenSaver(qt_xdisplay(), ScreenSaverReset );
         bitBlt( this, 0, 0, &mSavedScreen );
@@ -1169,6 +1286,11 @@ static void fakeFocusIn( WId window )
     XSendEvent( qt_xdisplay(), window, False, NoEventMask, &ev );
 }
 
+void LockProcess::resumeUnforced()
+{
+    resume( false );
+}
+
 int LockProcess::execDialog( TQDialog *dlg )
 {
     currentDialog=dlg;
@@ -1186,6 +1308,8 @@ int LockProcess::execDialog( TQDialog *dlg )
     }
     mDialogs.prepend( dlg );
     fakeFocusIn( dlg->winId());
+    if (backingPixmap.isNull() && trinity_desktop_lock_use_system_modal_dialogs) erase();
+    else bitBlt(this, 0, 0, &backingPixmap);
     int rt = dlg->exec();
     while (mDialogControlLock == true) sleep(1);
     currentDialog = NULL;
@@ -1193,10 +1317,61 @@ int LockProcess::execDialog( TQDialog *dlg )
     if( mDialogs.isEmpty() ) {
         XChangeActivePointerGrab( qt_xdisplay(), GRABEVENTS,
                 TQCursor(tqblankCursor).handle(), CurrentTime);
-        resume( false );
+        if (trinity_desktop_lock_use_system_modal_dialogs) {
+            // Slight delay before screensaver resume to allow the dialog window to fully disappear
+            if (hackResumeTimer == NULL) {
+                hackResumeTimer = new TQTimer( this );
+                connect( hackResumeTimer, TQT_SIGNAL(timeout()), this, TQT_SLOT(resumeUnforced()) );
+            }
+            hackResumeTimer->start( 10, TRUE );
+        }
+        else {
+            resume( false );
+        }
     } else
         fakeFocusIn( mDialogs.first()->winId());
     return rt;
+}
+
+void LockProcess::slotPaintBackground()
+{
+	TQPixmap pm;
+	TQString filename = getenv("USER");
+	filename.prepend("/tmp/kde-");
+	filename.append("/krootbacking.png");
+	bool success = pm.load(filename, "PNG");
+	if (!success) {
+		sleep(1);
+		success = pm.load(filename, "PNG");
+		if (!success) {
+			pm = TQPixmap(kapp->desktop()->width(), kapp->desktop()->height());
+			pm.fill(Qt::black);
+		}
+	}
+
+	if (TQPaintDevice::x11AppDepth() == 32) {
+		// Remove the alpha components from the image
+		TQImage correctedImage = pm.convertToImage();
+		correctedImage = correctedImage.convertDepth(32);
+		correctedImage.setAlphaBuffer(true);
+		int w = correctedImage.width();
+		int h = correctedImage.height();
+		for (int y = 0; y < h; ++y) {
+			TQRgb *ls = (TQRgb *)correctedImage.scanLine( y );
+			for (int x = 0; x < w; ++x) {
+				TQRgb l = ls[x];
+				int r = int( tqRed( l ) );
+				int g = int( tqGreen( l ) );
+				int b = int( tqBlue( l ) );
+				int a = int( 255 );
+				ls[x] = tqRgba( r, g, b, a );
+			}
+		}
+		pm.convertFromImage(correctedImage);
+	}
+
+	backingPixmap = pm;
+	if (trinity_desktop_lock_delay_screensaver_start) erase();
 }
 
 void LockProcess::preparePopup()
@@ -1266,6 +1441,8 @@ bool LockProcess::x11Event(XEvent *event)
                 return true; // filter out
             // fall through
         case KeyPress:
+            if ((mHackDelayStartupTimer) && ((trinity_desktop_lock_autohide_lockdlg == FALSE) && (mHackDelayStartupTimer->isActive())))
+                mHackDelayStartupTimer->start(mHackDelayStartupTimeout, TRUE);
             if (mBusy || !mDialogs.isEmpty())
                 break;
             mBusy = true;

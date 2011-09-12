@@ -1688,6 +1688,8 @@ bool Client::isResizable() const
  */
 bool Client::isMaximizable() const
     {
+    if( isModalSystemNotification())
+        return false;
         { // isMovable() and isResizable() may be false for maximized windows
           // with moving/resizing maximized windows disabled
         TemporaryAssign< MaximizeMode > tmp( max_mode, MaximizeRestore );

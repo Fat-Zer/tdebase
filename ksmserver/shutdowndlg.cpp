@@ -520,6 +520,10 @@ KSMShutdownIPFeedback::KSMShutdownIPFeedback()
 
 {
 	// Try to get the root pixmap
+	TQString filename = getenv("USER");
+	filename.prepend("/tmp/kde-");
+	filename.append("/krootbacking.png");
+	remove(filename.ascii());
 	system("krootbacking &");
 
 	resize(0, 0);

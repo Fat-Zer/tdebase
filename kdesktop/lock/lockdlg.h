@@ -58,6 +58,9 @@ private slots:
     void layoutClicked();
     void slotActivity();
 
+protected slots:
+    virtual void reject();
+
 private:
     void setLayoutText( const TQString &txt );
     void capsLocked();

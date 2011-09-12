@@ -34,6 +34,10 @@
 #include <X11/Xlib.h>
 #include <fixx11h.h>
 
+// [FIXME] These settings should be user configurable!
+bool trinity_desktop_lock_use_system_modal_dialogs = FALSE;
+bool trinity_desktop_lock_delay_screensaver_start = FALSE;
+
 bool MyApp::x11EventFilter( XEvent *ev )
 {
     if (ev->type == XKeyPress || ev->type == ButtonPress)

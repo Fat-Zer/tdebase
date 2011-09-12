@@ -68,6 +68,7 @@ public slots:
     void desktopResized();
     void doDesktopResizeFinish();
     void doFunctionKeyBroadcast();
+    void slotPaintBackground();
 
 protected:
     virtual bool x11Event(XEvent *);
@@ -81,6 +82,9 @@ private slots:
     void checkDPMSActive();
     void slotDeadTimePassed();
     void windowAdded( WId );
+    void resumeUnforced();
+    void displayLockDialogIfNeeded();
+    bool startHack();
 
 private:
     void configure();
@@ -97,7 +101,6 @@ private:
     void cantLock(const TQString &reason);
     bool startSaver();
     void stopSaver();
-    bool startHack();
     void stopHack();
     void setupSignals();
     void setupPipe();
@@ -146,6 +149,8 @@ private:
     TQTimer      *resizeTimer;
     unsigned int  mkeyCode;
 
+    TQTimer      *hackResumeTimer;
+
     KProcess*   mVkbdProcess;
     KWinModule* mKWinModule;
     struct VkbdWindow
@@ -162,9 +167,16 @@ private:
     int         mPipe_fd_out;
 
     bool        mInfoMessageDisplayed;
-    TQDialog     *currentDialog;
     bool        mDialogControlLock;
     bool        mForceReject;
+    TQDialog     *currentDialog;
+
+    TQTimer*    mForceContinualLockDisplayTimer;
+    TQTimer*    mHackDelayStartupTimer;
+
+    int         mHackDelayStartupTimeout;
+
+    TQPixmap    backingPixmap;
 };
 
 #endif
