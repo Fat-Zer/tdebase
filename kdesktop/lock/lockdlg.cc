@@ -248,7 +248,7 @@ void PasswordDlg::timerEvent(TQTimerEvent *ev)
         mUnlockingFailed = false;
         updateLabel();
         ok->setEnabled(true);
-        cancel->setEnabled(true);
+        if (trinity_desktop_lock_autohide_lockdlg) cancel->setEnabled(true);
         mNewSessButton->setEnabled( true );
         greet->revive();
         greet->start();
