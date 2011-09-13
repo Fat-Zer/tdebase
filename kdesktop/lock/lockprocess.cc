@@ -966,6 +966,12 @@ void LockProcess::ungrabInput()
 //
 bool LockProcess::startSaver()
 {
+	m_startupStatusDialog = new KSMModalDialog(this);
+	m_startupStatusDialog->setStatusMessage(i18n("Securing desktop session").append("..."));
+	m_startupStatusDialog->show();
+	m_startupStatusDialog->setActiveWindow();
+	tqApp->processEvents();
+
 	if (!child_saver && !grabInput())
 	{
 		kdWarning(1204) << "LockProcess::startSaver() grabInput() failed!!!!" << endl;
@@ -987,12 +993,6 @@ bool LockProcess::startSaver()
 	p.drawImage( 0, 0, m_grayImage );
 	p.end();
 	setBackgroundPixmap( m_root );
-
-	m_startupStatusDialog = new KSMModalDialog(this);
-	m_startupStatusDialog->setStatusMessage(i18n("Securing desktop session").append("..."));
-	m_startupStatusDialog->show();
-	m_startupStatusDialog->setActiveWindow();
-	tqApp->processEvents();
 
 	saveVRoot();
 
