@@ -84,7 +84,7 @@ private slots:
     void windowAdded( WId );
     void resumeUnforced();
     void displayLockDialogIfNeeded();
-    bool startHack();
+    void closeDialogAndStartHack();
 
 private:
     void configure();
@@ -101,6 +101,7 @@ private:
     void cantLock(const TQString &reason);
     bool startSaver();
     void stopSaver();
+    bool startHack();
     void stopHack();
     void setupSignals();
     void setupPipe();

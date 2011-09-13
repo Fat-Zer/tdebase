@@ -177,10 +177,9 @@ LockProcess::LockProcess(bool child, bool useBlankOnly)
     connect( mForceContinualLockDisplayTimer, TQT_SIGNAL(timeout()), this, TQT_SLOT(displayLockDialogIfNeeded()) );
 
     mHackDelayStartupTimer = new TQTimer( this );
-    connect( mHackDelayStartupTimer, TQT_SIGNAL(timeout()), this, TQT_SLOT(startHack()) );
+    connect( mHackDelayStartupTimer, TQT_SIGNAL(timeout()), this, TQT_SLOT(closeDialogAndStartHack()) );
 
-    // [FIXME] This interval should be taken from the screensaver start delay of kdesktop
-    mHackDelayStartupTimeout = 10*1000;
+    mHackDelayStartupTimeout = trinity_desktop_lock_delay_screensaver_start?KDesktopSettings::timeout()*1000:10*1000;
 
     // Get root window size
     XWindowAttributes rootAttr;
@@ -971,8 +970,11 @@ bool LockProcess::startSaver()
     XSync(qt_xdisplay(), False);
     setVRoot( winId(), winId() );
     if (!(trinity_desktop_lock_delay_screensaver_start && trinity_desktop_lock_forced)) {
-        setBackgroundColor(black);
-        erase();
+	if (backingPixmap.isNull())
+		setBackgroundColor(black);
+	else
+		setBackgroundPixmap(backingPixmap);
+	erase();
     }
     if (trinity_desktop_lock_use_system_modal_dialogs) {
 	// Try to get the root pixmap
@@ -984,7 +986,7 @@ bool LockProcess::startSaver()
 	TQTimer::singleShot( 0, this, SLOT(slotPaintBackground()) );
     }
 
-    if (trinity_desktop_lock_delay_screensaver_start && trinity_desktop_lock_forced) {
+    if (trinity_desktop_lock_delay_screensaver_start && trinity_desktop_lock_forced && trinity_desktop_lock_use_system_modal_dialogs) {
         ENABLE_CONTINUOUS_LOCKDLG_DISPLAY
         mHackDelayStartupTimer->start(mHackDelayStartupTimeout, TRUE);
     }
@@ -1085,9 +1087,24 @@ bool LockProcess::startLock()
 //---------------------------------------------------------------------------
 //
 
+void LockProcess::closeDialogAndStartHack()
+{
+    // Close any active dialogs
+    DISABLE_CONTINUOUS_LOCKDLG_DISPLAY
+    mSuspended = true;
+    if (currentDialog != NULL) {
+        mForceReject = true;
+        currentDialog->close();
+    }
+}
 
 bool LockProcess::startHack()
 {
+    if (currentDialog)
+    {
+        return false;
+    }
+
     if (mSaverExec.isEmpty())
     {
         return false;
@@ -1124,9 +1141,12 @@ bool LockProcess::startHack()
 	if (!mForbidden)
 	{
 
-		if (trinity_desktop_lock_delay_screensaver_start && trinity_desktop_lock_forced) {
+		if (trinity_desktop_lock_use_system_modal_dialogs) {
 			// Make sure we have a nice clean display to start with!
-			setBackgroundColor(black);
+			if (backingPixmap.isNull())
+				setBackgroundColor(black);
+			else
+				setBackgroundPixmap(backingPixmap);
 			erase();
 			mSuspended = false;
 		}
@@ -1154,10 +1174,17 @@ bool LockProcess::startHack()
 	{
 		usleep(100);
 		TQApplication::syncX();
-		if (!trinity_desktop_lock_use_system_modal_dialogs) setBackgroundColor(black);
+		if (!trinity_desktop_lock_use_system_modal_dialogs) {
+			if (backingPixmap.isNull())
+				setBackgroundColor(black);
+			else
+				setBackgroundPixmap(backingPixmap);
+		}
 		if (backingPixmap.isNull()) erase();
 		else bitBlt(this, 0, 0, &backingPixmap);
-		ENABLE_CONTINUOUS_LOCKDLG_DISPLAY
+		if (trinity_desktop_lock_use_system_modal_dialogs) {
+			ENABLE_CONTINUOUS_LOCKDLG_DISPLAY
+		}
 	}
     }
     return false;
@@ -1185,12 +1212,19 @@ void LockProcess::hackExited(KProcess *)
 	// Make sure the saver window is black.
 	usleep(100);
 	TQApplication::syncX();
-        if (!trinity_desktop_lock_use_system_modal_dialogs) setBackgroundColor(black);
-        if (backingPixmap.isNull()) erase();
-        else bitBlt(this, 0, 0, &backingPixmap);
-        if (!mSuspended) {
-            ENABLE_CONTINUOUS_LOCKDLG_DISPLAY
-        }
+	if (!trinity_desktop_lock_use_system_modal_dialogs) {
+		if (backingPixmap.isNull())
+			setBackgroundColor(black);
+		else
+			setBackgroundPixmap(backingPixmap);
+	}
+	if (backingPixmap.isNull()) erase();
+	else bitBlt(this, 0, 0, &backingPixmap);
+	if (!mSuspended) {
+		if (trinity_desktop_lock_use_system_modal_dialogs) {
+		ENABLE_CONTINUOUS_LOCKDLG_DISPLAY
+		}
+	}
 }
 
 void LockProcess::displayLockDialogIfNeeded()
@@ -1216,7 +1250,6 @@ void LockProcess::suspend()
         if (trinity_desktop_lock_use_system_modal_dialogs) {
             mSuspended = true;
             stopHack();
-            mSuspended = false;
         }
         else {
             TQString hackStatus;
@@ -1257,11 +1290,11 @@ void LockProcess::resume( bool force )
         bitBlt( this, 0, 0, &mSavedScreen );
         TQApplication::syncX();
         mHackProc.kill(SIGCONT);
+        mSuspended = false;
     }
     else if (mSuspended && trinity_desktop_lock_use_system_modal_dialogs) {
         startHack();
     }
-    mSuspended = false;
 }
 
 //---------------------------------------------------------------------------
@@ -1473,20 +1506,39 @@ bool LockProcess::x11Event(XEvent *event)
                 return true; // filter out
             // fall through
         case KeyPress:
-            if ((mHackDelayStartupTimer) && ((trinity_desktop_lock_autohide_lockdlg == FALSE) && (mHackDelayStartupTimer->isActive())))
+            if ((mHackDelayStartupTimer) && (mHackDelayStartupTimer->isActive())) {
                 mHackDelayStartupTimer->start(mHackDelayStartupTimeout, TRUE);
+            }
             if (mBusy || !mDialogs.isEmpty())
                 break;
             mBusy = true;
-            if (!mLocked || checkPass())
-            {
-                stopSaver();
-                kapp->quit();
+            if (trinity_desktop_lock_delay_screensaver_start) {
+                if (mLocked) {
+                    ENABLE_CONTINUOUS_LOCKDLG_DISPLAY
+                    mHackDelayStartupTimer->start(mHackDelayStartupTimeout, TRUE);
+                }
+                if (!mLocked)
+                {
+                    stopSaver();
+                    kapp->quit();
+                }
+                if (mAutoLogout) // we need to restart the auto logout countdown
+                {
+                    killTimer(mAutoLogoutTimerId);
+                    mAutoLogoutTimerId = startTimer(mAutoLogoutTimeout);
+                }
             }
-            else if (mAutoLogout) // we need to restart the auto logout countdown
-            {
-                killTimer(mAutoLogoutTimerId);
-                mAutoLogoutTimerId = startTimer(mAutoLogoutTimeout);
+            else {
+                if (!mLocked || checkPass())
+                {
+                    stopSaver();
+                    kapp->quit();
+                }
+                else if (mAutoLogout) // we need to restart the auto logout countdown
+                {
+                    killTimer(mAutoLogoutTimerId);
+                    mAutoLogoutTimerId = startTimer(mAutoLogoutTimeout);
+                }
             }
             mBusy = false;
             return true;

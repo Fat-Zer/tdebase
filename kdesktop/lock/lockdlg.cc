@@ -10,6 +10,7 @@
 
 #include "lockprocess.h"
 #include "lockdlg.h"
+#include "kdesktopsettings.h"
 
 #include <kcheckpass.h>
 #include <dmctl.h>
@@ -59,11 +60,13 @@
 # define AF_LOCAL	AF_UNIX
 #endif
 
-// [FIXME] This interval should be taken from the screensaver start delay of kdesktop
-#define PASSDLG_HIDE_TIMEOUT 10000
+#define PASSDLG_HIDE_TIMEOUT dialogHideTimeout
 
 extern bool trinity_desktop_lock_autohide_lockdlg;
+extern bool trinity_desktop_lock_delay_screensaver_start;
 extern bool trinity_desktop_lock_use_system_modal_dialogs;
+
+int dialogHideTimeout = 10*1000;
 
 //===========================================================================
 //
@@ -75,6 +78,8 @@ PasswordDlg::PasswordDlg(LockProcess *parent, GreeterPluginHandle *plugin)
       mCapsLocked(-1),
       mUnlockingFailed(false)
 {
+    dialogHideTimeout = trinity_desktop_lock_delay_screensaver_start?KDesktopSettings::timeout()*1000:10*1000;
+
     if (trinity_desktop_lock_use_system_modal_dialogs) {
         // Signal that we do not want any window controls to be shown at all
         Atom kde_wm_system_modal_notification;

@@ -304,6 +304,20 @@
       <!-- /home/paco/cvsroot/kdebase/kdesktop/lock/lockprocess.cc:336 -->
       <!--     mSaver = config.readEntry("Saver"); -->
     </entry>
+    <entry key="UseUnmanagedLockWindows" type="Bool">
+      <default>false</default>
+      <label></label>
+      <whatsthis></whatsthis>
+      <!-- /home/paco/cvsroot/kdebase/kdesktop/lock/lockprocess.cc:336 -->
+      <!--     mSaver = config.readEntry("UseUnmanagedLockWindows"); -->
+    </entry>
+    <entry key="DelaySaverStart" type="Bool">
+      <default>true</default>
+      <label></label>
+      <whatsthis></whatsthis>
+      <!-- /home/paco/cvsroot/kdebase/kdesktop/lock/lockprocess.cc:336 -->
+      <!--     mSaver = config.readEntry("UseUnmanagedLockWindows"); -->
+    </entry>
     <entry key="PluginsUnlock" type="StringList">
       <default></default>
       <label></label>

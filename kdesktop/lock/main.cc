@@ -34,7 +34,7 @@
 #include <X11/Xlib.h>
 #include <fixx11h.h>
 
-// [FIXME] These two settings should be user configurable!
+// [FIXME] Add GUI configuration checkboxes for these two settings (see kdesktoprc [ScreenSaver] UseUnmanagedLockWindows and DelaySaverStart)
 bool trinity_desktop_lock_use_system_modal_dialogs = FALSE;
 bool trinity_desktop_lock_delay_screensaver_start = FALSE;
 
@@ -150,6 +150,9 @@ int main( int argc, char **argv )
 
     // we need to read from the right rc file - possibly taking screen number in account
     KDesktopSettings::instance("kdesktoprc");
+
+    trinity_desktop_lock_use_system_modal_dialogs = !KDesktopSettings::useUnmanagedLockWindows();
+    trinity_desktop_lock_delay_screensaver_start = KDesktopSettings::delaySaverStart();
 
     LockProcess process(child, args->isSet( "blank" ));
     if (!child)
