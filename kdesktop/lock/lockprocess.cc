@@ -1140,6 +1140,12 @@ bool LockProcess::startHack()
 {
     if (currentDialog || (!mDialogs.isEmpty()))
     {
+        // no resuming with dialog visible or when not visible
+	if (backingPixmap.isNull())
+		setBackgroundColor(black);
+	else
+		setBackgroundPixmap(backingPixmap);
+	erase();
         return false;
     }
 
