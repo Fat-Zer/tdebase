@@ -1261,7 +1261,8 @@ void LockProcess::hackExited(KProcess *)
 	else bitBlt(this, 0, 0, &backingPixmap);
 	if (!mSuspended) {
 		if (trinity_desktop_lock_use_system_modal_dialogs) {
-		ENABLE_CONTINUOUS_LOCKDLG_DISPLAY
+			ENABLE_CONTINUOUS_LOCKDLG_DISPLAY
+			mHackDelayStartupTimer->start(mHackDelayStartupTimeout, TRUE);
 		}
 	}
 }
@@ -1291,6 +1292,7 @@ void LockProcess::suspend()
             mSuspended = true;
             stopHack();
             ENABLE_CONTINUOUS_LOCKDLG_DISPLAY
+            mHackDelayStartupTimer->start(mHackDelayStartupTimeout, TRUE);
         }
         else {
             TQString hackStatus;
