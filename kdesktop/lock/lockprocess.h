@@ -24,6 +24,7 @@
 
 class KLibrary;
 class KWinModule;
+class KSMModalDialog;
 
 struct GreeterPluginHandle {
     KLibrary *library;
@@ -85,6 +86,7 @@ private slots:
     void resumeUnforced();
     void displayLockDialogIfNeeded();
     void closeDialogAndStartHack();
+    bool closeCurrentWindow();
 
 private:
     void configure();
@@ -178,6 +180,8 @@ private:
     int         mHackDelayStartupTimeout;
 
     TQPixmap    backingPixmap;
+
+    KSMModalDialog* m_startupStatusDialog;
 };
 
 #endif

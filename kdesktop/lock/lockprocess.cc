@@ -41,6 +41,7 @@
 #include <kpixmap.h>
 #include <kwin.h>
 #include <kwinmodule.h>
+#include <kdialog.h>
 
 #include <tqframe.h>
 #include <tqlabel.h>
@@ -53,6 +54,7 @@
 #include <tqtooltip.h>
 #include <tqimage.h>
 #include <tqregexp.h>
+#include <tqpainter.h>
 
 #include <tqdatetime.h>
 
@@ -166,7 +168,8 @@ LockProcess::LockProcess(bool child, bool useBlankOnly)
       hackResumeTimer(NULL),
       mForceContinualLockDisplayTimer(NULL),
       mHackDelayStartupTimer(NULL),
-      mHackDelayStartupTimeout(0)
+      mHackDelayStartupTimeout(0),
+      m_startupStatusDialog(NULL)
 {
     setupSignals();
     setupPipe();
@@ -298,6 +301,21 @@ static void sighup_handler(int)
 {
     char tmp = 'H';
     ::write( signal_pipe[1], &tmp, 1);
+}
+
+bool LockProcess::closeCurrentWindow()
+{
+    if (currentDialog != NULL) {
+        mForceReject = true;
+        currentDialog->close();
+    }
+
+    if( mDialogs.isEmpty() ) {
+        return false;
+    }
+    else {
+        return true;
+    }
 }
 
 void LockProcess::timerEvent(TQTimerEvent *ev)
@@ -749,9 +767,9 @@ void LockProcess::doDesktopResizeFinish()
 
     while (mDialogControlLock == true) sleep(1);
     mDialogControlLock = true;
-    if (currentDialog != NULL) {
-        mForceReject = true;
-        currentDialog->close();
+    if (closeCurrentWindow()) {
+        TQTimer::singleShot( 0, this, SLOT(doDesktopResizeFinish()) );
+        mDialogControlLock = false;
     }
     mDialogControlLock = false;
 
@@ -948,52 +966,73 @@ void LockProcess::ungrabInput()
 //
 bool LockProcess::startSaver()
 {
-    if (!child_saver && !grabInput())
-    {
-        kdWarning(1204) << "LockProcess::startSaver() grabInput() failed!!!!" << endl;
-        return false;
-    }
-    mBusy = false;
+	if (!child_saver && !grabInput())
+	{
+		kdWarning(1204) << "LockProcess::startSaver() grabInput() failed!!!!" << endl;
+		return false;
+	}
+	mBusy = false;
 
-    saveVRoot();
+	// eliminate nasty flicker on first show
+	TQImage m_grayImage = TQImage( TQApplication::desktop()->width(), TQApplication::desktop()->height(), 32 );
+	m_grayImage = m_grayImage.convertDepth(32);
+	m_grayImage.setAlphaBuffer(false);
+	m_grayImage.fill(0);	// Set the alpha buffer to 0 (fully transparent)
+	m_grayImage.setAlphaBuffer(true);
+	TQPixmap m_root;
+	m_root.resize( TQApplication::desktop()->geometry().width(), TQApplication::desktop()->geometry().height() );
+	TQPainter p;
+	p.begin( &m_root );
+	m_grayImage.setAlphaBuffer(false);
+	p.drawImage( 0, 0, m_grayImage );
+	p.end();
+	setBackgroundPixmap( m_root );
 
-    if (mParent) {
-        TQSocketNotifier *notifier = new TQSocketNotifier(mParent, TQSocketNotifier::Read, TQT_TQOBJECT(this), "notifier");
-        connect(notifier, TQT_SIGNAL( activated (int)), TQT_SLOT( quitSaver()));
-    }
-    createSaverWindow();
-    move(0, 0);
-    show();
-    setCursor( tqblankCursor );
+	m_startupStatusDialog = new KSMModalDialog(this);
+	m_startupStatusDialog->setStatusMessage(i18n("Securing desktop session").append("..."));
+	m_startupStatusDialog->show();
+	m_startupStatusDialog->setActiveWindow();
+	tqApp->processEvents();
 
-    raise();
-    XSync(qt_xdisplay(), False);
-    setVRoot( winId(), winId() );
-    if (!(trinity_desktop_lock_delay_screensaver_start && trinity_desktop_lock_forced)) {
-	if (backingPixmap.isNull())
-		setBackgroundColor(black);
-	else
-		setBackgroundPixmap(backingPixmap);
-	erase();
-    }
-    if (trinity_desktop_lock_use_system_modal_dialogs) {
-	// Try to get the root pixmap
-	TQString filename = getenv("USER");
-	filename.prepend("/tmp/kde-");
-	filename.append("/krootbacking.png");
-	remove(filename.ascii());
-	system("krootbacking &");
-	TQTimer::singleShot( 0, this, SLOT(slotPaintBackground()) );
-    }
+	saveVRoot();
 
-    if (trinity_desktop_lock_delay_screensaver_start && trinity_desktop_lock_forced && trinity_desktop_lock_use_system_modal_dialogs) {
-        ENABLE_CONTINUOUS_LOCKDLG_DISPLAY
-        mHackDelayStartupTimer->start(mHackDelayStartupTimeout, TRUE);
-    }
-    else {
-        startHack();
-    }
-    return true;
+	if (mParent) {
+		TQSocketNotifier *notifier = new TQSocketNotifier(mParent, TQSocketNotifier::Read, TQT_TQOBJECT(this), "notifier");
+		connect(notifier, TQT_SIGNAL( activated (int)), TQT_SLOT( quitSaver()));
+	}
+	createSaverWindow();
+	move(0, 0);
+	show();
+	setCursor( tqblankCursor );
+
+	raise();
+	XSync(qt_xdisplay(), False);
+	setVRoot( winId(), winId() );
+	if (!(trinity_desktop_lock_delay_screensaver_start && trinity_desktop_lock_forced)) {
+		if (backingPixmap.isNull())
+			setBackgroundColor(black);
+		else
+			setBackgroundPixmap(backingPixmap);
+		erase();
+	}
+	if (trinity_desktop_lock_use_system_modal_dialogs) {
+		// Try to get the root pixmap
+		TQString filename = getenv("USER");
+		filename.prepend("/tmp/kde-");
+		filename.append("/krootbacking.png");
+		remove(filename.ascii());
+		system("krootbacking &");
+		TQTimer::singleShot( 0, this, SLOT(slotPaintBackground()) );
+	}
+
+	if (trinity_desktop_lock_delay_screensaver_start && trinity_desktop_lock_forced && trinity_desktop_lock_use_system_modal_dialogs) {
+		ENABLE_CONTINUOUS_LOCKDLG_DISPLAY
+		mHackDelayStartupTimer->start(mHackDelayStartupTimeout, TRUE);
+	}
+	else {
+		startHack();
+	}
+	return true;
 }
 
 //---------------------------------------------------------------------------
@@ -1092,15 +1131,14 @@ void LockProcess::closeDialogAndStartHack()
     // Close any active dialogs
     DISABLE_CONTINUOUS_LOCKDLG_DISPLAY
     mSuspended = true;
-    if (currentDialog != NULL) {
-        mForceReject = true;
-        currentDialog->close();
+    if (closeCurrentWindow()) {
+        TQTimer::singleShot( 0, this, SLOT(closeDialogAndStartHack()) );
     }
 }
 
 bool LockProcess::startHack()
 {
-    if (currentDialog)
+    if (currentDialog || (!mDialogs.isEmpty()))
     {
         return false;
     }
@@ -1160,11 +1198,11 @@ bool LockProcess::startHack()
  		        DISABLE_CONTINUOUS_LOCKDLG_DISPLAY
 			if (trinity_desktop_lock_delay_screensaver_start && trinity_desktop_lock_forced) {	
 				// Close any active dialogs
-				if (currentDialog != NULL) {
-					mForceReject = true;
-					currentDialog->close();
+				if (closeCurrentWindow()) {
+					TQTimer::singleShot( 0, this, SLOT(closeCurrentWindow()) );
 				}
 			}
+			if (m_startupStatusDialog) { m_startupStatusDialog->closeSMDialog(); m_startupStatusDialog=NULL; }
 	                return true;
 		}
 	}
@@ -1187,6 +1225,7 @@ bool LockProcess::startHack()
 		}
 	}
     }
+    if (m_startupStatusDialog) { m_startupStatusDialog->closeSMDialog(); m_startupStatusDialog=NULL; }
     return false;
 }
 
@@ -1229,6 +1268,7 @@ void LockProcess::hackExited(KProcess *)
 
 void LockProcess::displayLockDialogIfNeeded()
 {
+	if (m_startupStatusDialog) { m_startupStatusDialog->closeSMDialog(); m_startupStatusDialog=NULL; }
 	if (trinity_desktop_lock_use_system_modal_dialogs) {
 		if (!mBusy) {
 			mBusy = true;
@@ -1394,8 +1434,10 @@ int LockProcess::execDialog( TQDialog *dlg )
         else {
             resume( false );
         }
-    } else
+    } else {
         fakeFocusIn( mDialogs.first()->winId());
+        currentDialog = dynamic_cast<TQDialog*>(mDialogs.first());
+    }
     return rt;
 }
 
@@ -1437,7 +1479,10 @@ void LockProcess::slotPaintBackground()
 	}
 
 	backingPixmap = pm;
-	if (trinity_desktop_lock_delay_screensaver_start && trinity_desktop_lock_forced) erase();
+	if (trinity_desktop_lock_delay_screensaver_start && trinity_desktop_lock_forced) {
+		setBackgroundPixmap(backingPixmap);
+		erase();
+	}
 }
 
 void LockProcess::preparePopup()
@@ -1461,10 +1506,7 @@ void LockProcess::doFunctionKeyBroadcast() {
     if (mkeyCode == XKeysymToKeycode(qt_xdisplay(), XF86XK_Display)) {
         while (mDialogControlLock == true) sleep(1);
         mDialogControlLock = true;
-        if (currentDialog != NULL) {
-            mForceReject = true;
-            currentDialog->close();
-        }
+        closeCurrentWindow();
         mDialogControlLock = false;
     }
     setCursor( tqblankCursor );
