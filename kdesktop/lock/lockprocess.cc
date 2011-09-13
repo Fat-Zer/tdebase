@@ -503,22 +503,28 @@ void LockProcess::signalPipeSignal()
 //---------------------------------------------------------------------------
 bool LockProcess::lock()
 {
-    if (startSaver()) {
-        // In case of a forced lock we don't react to events during
-        // the dead-time to give the screensaver some time to activate.
-        // That way we don't accidentally show the password dialog before
-        // the screensaver kicks in because the user moved the mouse after
-        // selecting "lock screen", that looks really untidy.
-        mBusy = true;
-        if (startLock())
-        {
-            TQTimer::singleShot(1000, this, TQT_SLOT(slotDeadTimePassed()));
-            return true;
-        }
-        stopSaver();
-        mBusy = false;
-    }
-    return false;
+	m_startupStatusDialog = new KSMModalDialog(this);
+	m_startupStatusDialog->setStatusMessage(i18n("Securing desktop session").append("..."));
+	m_startupStatusDialog->show();
+	m_startupStatusDialog->setActiveWindow();
+	tqApp->processEvents();
+
+	if (startSaver()) {
+		// In case of a forced lock we don't react to events during
+		// the dead-time to give the screensaver some time to activate.
+		// That way we don't accidentally show the password dialog before
+		// the screensaver kicks in because the user moved the mouse after
+		// selecting "lock screen", that looks really untidy.
+		mBusy = true;
+		if (startLock())
+		{
+			TQTimer::singleShot(1000, this, TQT_SLOT(slotDeadTimePassed()));
+			return true;
+		}
+		stopSaver();
+		mBusy = false;
+	}
+	return false;
 }
 //---------------------------------------------------------------------------
 void LockProcess::slotDeadTimePassed()
@@ -966,12 +972,6 @@ void LockProcess::ungrabInput()
 //
 bool LockProcess::startSaver()
 {
-	m_startupStatusDialog = new KSMModalDialog(this);
-	m_startupStatusDialog->setStatusMessage(i18n("Securing desktop session").append("..."));
-	m_startupStatusDialog->show();
-	m_startupStatusDialog->setActiveWindow();
-	tqApp->processEvents();
-
 	if (!child_saver && !grabInput())
 	{
 		kdWarning(1204) << "LockProcess::startSaver() grabInput() failed!!!!" << endl;
