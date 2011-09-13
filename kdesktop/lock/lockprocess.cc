@@ -167,6 +167,7 @@ LockProcess::LockProcess(bool child, bool useBlankOnly)
       resizeTimer(NULL),
       hackResumeTimer(NULL),
       mForceContinualLockDisplayTimer(NULL),
+      mEnsureVRootWindowSecurityTimer(NULL),
       mHackDelayStartupTimer(NULL),
       mHackDelayStartupTimeout(0),
       m_startupStatusDialog(NULL)
@@ -182,6 +183,9 @@ LockProcess::LockProcess(bool child, bool useBlankOnly)
     mHackDelayStartupTimer = new TQTimer( this );
     connect( mHackDelayStartupTimer, TQT_SIGNAL(timeout()), this, TQT_SLOT(closeDialogAndStartHack()) );
 
+    mEnsureVRootWindowSecurityTimer = new TQTimer( this );
+    connect( mEnsureVRootWindowSecurityTimer, TQT_SIGNAL(timeout()), this, TQT_SLOT(repaintRootWindowIfNeeded()) );
+
     mHackDelayStartupTimeout = trinity_desktop_lock_delay_screensaver_start?KDesktopSettings::timeout()*1000:10*1000;
 
     // Get root window size
@@ -191,8 +195,8 @@ LockProcess::LockProcess(bool child, bool useBlankOnly)
     mRootWidth = rootAttr.width;
     mRootHeight = rootAttr.height;
     { // trigger creation of QToolTipManager, it does XSelectInput() on the root window
-    TQWidget w;
-    TQToolTip::add( &w, "foo" );
+        TQWidget w;
+        TQToolTip::add( &w, "foo" );
     }
     XSelectInput( qt_xdisplay(), qt_xrootwin(),
         SubstructureNotifyMask | rootAttr.your_event_mask );
@@ -277,6 +281,10 @@ LockProcess::~LockProcess()
     if (mHackDelayStartupTimer != NULL) {
         mHackDelayStartupTimer->stop();
         delete mHackDelayStartupTimer;
+    }
+    if (mEnsureVRootWindowSecurityTimer != NULL) {
+        mEnsureVRootWindowSecurityTimer->stop();
+        delete mEnsureVRootWindowSecurityTimer;
     }
 
     if (greetPlugin.library) {
@@ -1136,8 +1144,28 @@ void LockProcess::closeDialogAndStartHack()
     }
 }
 
+void LockProcess::repaintRootWindowIfNeeded()
+{
+	if (trinity_desktop_lock_use_system_modal_dialogs) {
+		if (!mHackProc.isRunning()) {
+			if (backingPixmap.isNull()) {
+				setBackgroundColor(black);
+				erase();
+			}
+			else {
+				bitBlt(this, 0, 0, &backingPixmap);
+			}
+		}
+		if (currentDialog == NULL) {
+			raise();
+		}
+	}
+}
+
 bool LockProcess::startHack()
 {
+    if ((mEnsureVRootWindowSecurityTimer) && (!mEnsureVRootWindowSecurityTimer->isActive())) mEnsureVRootWindowSecurityTimer->start(250, FALSE);
+
     if (currentDialog || (!mDialogs.isEmpty()))
     {
         // no resuming with dialog visible or when not visible

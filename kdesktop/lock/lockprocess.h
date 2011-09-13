@@ -87,6 +87,7 @@ private slots:
     void displayLockDialogIfNeeded();
     void closeDialogAndStartHack();
     bool closeCurrentWindow();
+    void repaintRootWindowIfNeeded();
 
 private:
     void configure();
@@ -175,6 +176,7 @@ private:
     TQDialog     *currentDialog;
 
     TQTimer*    mForceContinualLockDisplayTimer;
+    TQTimer*    mEnsureVRootWindowSecurityTimer;
     TQTimer*    mHackDelayStartupTimer;
 
     int         mHackDelayStartupTimeout;
