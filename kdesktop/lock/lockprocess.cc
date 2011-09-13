@@ -1325,8 +1325,15 @@ void LockProcess::suspend()
 
 void LockProcess::resume( bool force )
 {
-    if( !force && (!mDialogs.isEmpty() || !mVisibility ))
-        return; // no resuming with dialog visible or when not visible
+    if( !force && (!mDialogs.isEmpty() || !mVisibility )) {
+        // no resuming with dialog visible or when not visible
+	if (backingPixmap.isNull())
+		setBackgroundColor(black);
+	else
+		setBackgroundPixmap(backingPixmap);
+	erase();
+        return;
+    }
     if ((mSuspended) && (mHackProc.isRunning()))
     {
         XForceScreenSaver(qt_xdisplay(), ScreenSaverReset );
