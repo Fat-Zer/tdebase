@@ -131,7 +131,7 @@ extern bool trinity_desktop_lock_forced;
 bool trinity_desktop_lock_autohide_lockdlg = TRUE;
 
 #define ENABLE_CONTINUOUS_LOCKDLG_DISPLAY \
-mForceContinualLockDisplayTimer->start(100, FALSE); \
+if (!mForceContinualLockDisplayTimer->isActive()) mForceContinualLockDisplayTimer->start(100, FALSE); \
 trinity_desktop_lock_autohide_lockdlg = FALSE;
 
 #define DISABLE_CONTINUOUS_LOCKDLG_DISPLAY \
@@ -141,10 +141,10 @@ trinity_desktop_lock_autohide_lockdlg = TRUE;
 //===========================================================================
 //
 // Screen saver handling process.  Handles screensaver window,
-// starting screensaver hacks, and password entry.f
+// starting screensaver hacks, and password entry.
 //
 LockProcess::LockProcess(bool child, bool useBlankOnly)
-    : TQWidget(0L, "saver window", (trinity_desktop_lock_use_system_modal_dialogs?((WFlags)(WStyle_StaysOnTop|WStyle_Customize | WStyle_NoBorder)):((WFlags)WX11BypassWM))),
+    : TQWidget(0L, "saver window", (trinity_desktop_lock_use_system_modal_dialogs?((WFlags)(WStyle_StaysOnTop|WStyle_Customize|WStyle_NoBorder)):((WFlags)WX11BypassWM))),
       mOpenGLVisual(0),
       child_saver(child),
       mParent(0),
@@ -1250,6 +1250,7 @@ void LockProcess::suspend()
         if (trinity_desktop_lock_use_system_modal_dialogs) {
             mSuspended = true;
             stopHack();
+            ENABLE_CONTINUOUS_LOCKDLG_DISPLAY
         }
         else {
             TQString hackStatus;
