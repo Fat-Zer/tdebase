@@ -110,6 +110,7 @@ void KSplash::prepareIconList()
 
   mCurrentAction = mActionList.first();
   slotSetText( mCurrentAction->ItemText );
+  slotSetTextIndex( mActionList.find(mCurrentAction) );
   slotSetPixmap( mCurrentAction->ItemPixmap );
   emit progressChanged( mStep );
 
@@ -148,6 +149,7 @@ void KSplash::nextIcon()
   if( mCurrentAction )
   {
     slotSetText( mCurrentAction->ItemText );
+    slotSetTextIndex( mActionList.find(mCurrentAction) );
     slotSetPixmap( mCurrentAction->ItemPixmap );
     emit progressChanged( ++mStep );
   }
@@ -394,6 +396,12 @@ void KSplash::slotSetText( const TQString& s )
 {
   if( mThemeEngine )
     mThemeEngine->slotSetText( s );
+}
+
+void KSplash::slotSetTextIndex( const int i )
+{
+  if( mThemeEngine )
+    mThemeEngine->slotSetTextIndex( i );
 }
 
 void KSplash::slotSetPixmap( const TQString& px )

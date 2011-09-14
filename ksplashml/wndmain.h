@@ -90,6 +90,7 @@ private slots:
   void slotReadProperties( KConfig * );
 
   void slotSetText( const TQString& );
+  void slotSetTextIndex( const int );
   void slotSetPixmap( const TQString& );
 
   void loadTheme( const TQString& );

@@ -10,6 +10,7 @@
 #################################################
 
 add_subdirectory( default )
+add_subdirectory( unified )
 add_subdirectory( standard )
 add_subdirectory( redmond )
 add_subdirectory( simple )

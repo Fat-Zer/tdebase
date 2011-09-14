@@ -9,8 +9,6 @@
 #
 #################################################
 
-add_subdirectory( blue-bend )
-add_subdirectory( default )
-add_subdirectory( unified )
-add_subdirectory( none )
-add_subdirectory( simple )
+install( FILES
+    Theme.rc
+  DESTINATION ${DATA_INSTALL_DIR}/ksplash/Themes/Unified )

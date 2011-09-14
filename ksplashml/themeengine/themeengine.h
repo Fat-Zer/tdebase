@@ -62,6 +62,7 @@ public slots:
   virtual void slotUpdateProgress( int ) {}
   virtual void slotUpdateSteps( int ) {}
   virtual void slotSetText( const TQString& ) {}
+  virtual void slotSetTextIndex( const int ) {}
   virtual void slotSetPixmap( const TQString& ) {} // use DesktopIcon() to load this.
 
 protected:

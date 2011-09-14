@@ -98,7 +98,7 @@ void KSMServer::restoreSession( TQString sessionName )
     showFancyLogin = KConfigGroup(KGlobal::config(), "Login").readBoolEntry("showFancyLogin", true);
     KConfig ksplashcfg( "ksplashrc", true );
     ksplashcfg.setGroup( "KSplash" );
-    if ( ksplashcfg.readEntry( "Theme", "Default" ) != TQString("None") )
+    if ( ksplashcfg.readEntry( "Theme", "Default" ) != TQString("Unified") )
         showFancyLogin = false;
 
     if( state != Idle )
