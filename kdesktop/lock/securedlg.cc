@@ -182,7 +182,7 @@ void SecureDlg::closeDialogForced()
 
 void SecureDlg::reject()
 {
-
+    closeDialogForced();
 }
 
 void SecureDlg::show()
