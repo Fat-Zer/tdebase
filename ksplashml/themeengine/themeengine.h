@@ -78,6 +78,7 @@ private slots:
 private:
   class ThemeEnginePrivate;
   ThemeEnginePrivate *d;
+  bool mUseWM;
 };
 
 #endif

@@ -41,7 +41,7 @@ struct ThemeEngine::ThemeEnginePrivate
 };
 
 ThemeEngine::ThemeEngine( TQWidget *, const char *, const TQStringList& args )
-  : TQVBox( 0, "wndSplash", (WFlags)(WStyle_Customize|WX11BypassWM) ), d(0)
+  : TQVBox( 0, "wndSplash", (WFlags)(WStyle_Customize|WX11BypassWM) ), d(0), mUseWM(false)
 {
   d = new ThemeEnginePrivate;
   kapp->installX11EventFilter( this );
@@ -56,6 +56,9 @@ ThemeEngine::ThemeEngine( TQWidget *, const char *, const TQStringList& args )
     mTheme = new ObjKsTheme( "Default" );
   else
     mTheme = new ObjKsTheme( args.first() );
+  if (args.first() == "Unified") {
+    mUseWM = true;
+  }
   mTheme->loadCmdLineArgs( KCmdLineArgs::parsedArgs() );
 }
 
@@ -89,7 +92,7 @@ void ThemeEngine::addSplashWindow( TQWidget* w )
         return;
     if( d->mSplashWindows.contains( w->winId()))
         return;
-    if( !w->testWFlags( WX11BypassWM ))
+    if( !w->testWFlags( WX11BypassWM ) && (mUseWM == false))
     { // All toplevel widgets should be probably required to be WX11BypassWM
       // for KDE4 instead of this ugly hack.
         static_cast< HackWidget* >( w )->setWFlags( WX11BypassWM );
