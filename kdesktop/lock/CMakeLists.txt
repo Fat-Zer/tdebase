@@ -29,7 +29,7 @@ link_directories(
 set( target kdesktop_lock )
 
 set( ${target}_SRCS
-  lockprocess.cc lockdlg.cc infodlg.cc querydlg.cc
+  lockprocess.cc lockdlg.cc infodlg.cc querydlg.cc sakdlg.cc
   autologout.cc main.cc
 )
 

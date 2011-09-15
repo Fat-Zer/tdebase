@@ -65,6 +65,7 @@
 extern bool trinity_desktop_lock_autohide_lockdlg;
 extern bool trinity_desktop_lock_delay_screensaver_start;
 extern bool trinity_desktop_lock_use_system_modal_dialogs;
+extern bool trinity_desktop_lock_use_sak;
 
 int dialogHideTimeout = 10*1000;
 
@@ -114,7 +115,7 @@ PasswordDlg::PasswordDlg(LockProcess *parent, GreeterPluginHandle *plugin)
     mNewSessButton = new KPushButton( KGuiItem(i18n("Sw&itch User..."), "fork"), frame );
     ok = new KPushButton( i18n("Unl&ock"), frame );
     cancel = new KPushButton( KStdGuiItem::cancel(), frame );
-    if (!trinity_desktop_lock_autohide_lockdlg) cancel->setEnabled(false);
+    if (!trinity_desktop_lock_autohide_lockdlg && !trinity_desktop_lock_use_sak) cancel->setEnabled(false);
 
     greet = plugin->info->create( this, 0, this, mLayoutButton, TQString::null,
               KGreeterPlugin::Authenticate, KGreeterPlugin::ExUnlock );
@@ -188,7 +189,7 @@ PasswordDlg::~PasswordDlg()
 
 void PasswordDlg::reject()
 {
-    if (trinity_desktop_lock_autohide_lockdlg)
+    if (trinity_desktop_lock_autohide_lockdlg || trinity_desktop_lock_use_sak)
         TQDialog::reject();
 }
 
@@ -253,7 +254,7 @@ void PasswordDlg::timerEvent(TQTimerEvent *ev)
         mUnlockingFailed = false;
         updateLabel();
         ok->setEnabled(true);
-        if (trinity_desktop_lock_autohide_lockdlg) cancel->setEnabled(true);
+        if (trinity_desktop_lock_autohide_lockdlg || trinity_desktop_lock_use_sak) cancel->setEnabled(true);
         mNewSessButton->setEnabled( true );
         greet->revive();
         greet->start();

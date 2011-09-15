@@ -4,6 +4,7 @@
 //
 // Copyright (c) 1999 Martin R. Jones <mjones@kde.org>
 // Copyright (c) 2003 Oswald Buddenhagen <ossi@kde.org>
+// Copyright (c) 2010-2011 Timothy Pearson <kb9vqf@pearsoncomputing.net>
 //
 
 //kdesktop keeps running and checks user inactivity
@@ -21,6 +22,7 @@
 #include "lockdlg.h"
 #include "infodlg.h"
 #include "querydlg.h"
+#include "sakdlg.h"
 #include "autologout.h"
 #include "kdesktopsettings.h"
 
@@ -128,6 +130,7 @@ static void segv_handler(int)
 extern Atom qt_wm_state;
 extern bool trinity_desktop_lock_use_system_modal_dialogs;
 extern bool trinity_desktop_lock_delay_screensaver_start;
+extern bool trinity_desktop_lock_use_sak;
 extern bool trinity_desktop_lock_forced;
 
 bool trinity_desktop_lock_autohide_lockdlg = TRUE;
@@ -1359,6 +1362,9 @@ void LockProcess::suspend()
 
 void LockProcess::resume( bool force )
 {
+    if (trinity_desktop_lock_use_sak && mHackDelayStartupTimer->isActive()) {
+        return;
+    }
     if( !force && (!mDialogs.isEmpty() || !mVisibility )) {
         // no resuming with dialog visible or when not visible
 	if (backingPixmap.isNull())
@@ -1391,6 +1397,12 @@ bool LockProcess::checkPass()
     if (mInfoMessageDisplayed == false) {
         if (mAutoLogout)
             killTimer(mAutoLogoutTimerId);
+
+        if (trinity_desktop_lock_use_sak) {
+            // Wait for SAK press before continuing...
+            SAKDlg inDlg( this );
+            int ret = execDialog( &inDlg );
+        }
 
         showVkbd();
         PasswordDlg passDlg( this, &greetPlugin);

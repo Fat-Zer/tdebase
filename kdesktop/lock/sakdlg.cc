@@ -1,0 +1,171 @@
+//===========================================================================
+//
+// This file is part of the KDE project
+//
+// Copyright (c) 2010-2011 Timothy Pearson <kb9vqf@pearsoncomputing.net>
+
+#include <config.h>
+
+#include "sakdlg.h"
+
+#include <dmctl.h>
+
+#include <kapplication.h>
+#include <klocale.h>
+#include <kpushbutton.h>
+#include <kseparator.h>
+#include <kstandarddirs.h>
+#include <kglobalsettings.h>
+#include <kconfig.h>
+#include <kiconloader.h>
+#include <kdesu/defaults.h>
+#include <kpassdlg.h>
+#include <kdebug.h>
+#include <kuser.h>
+#include <dcopref.h>
+#include <kmessagebox.h>
+
+#include <tqlayout.h>
+#include <tqpushbutton.h>
+#include <tqmessagebox.h>
+#include <tqsimplerichtext.h>
+#include <tqlabel.h>
+#include <tqstringlist.h>
+#include <tqfontmetrics.h>
+#include <tqstyle.h>
+#include <tqapplication.h>
+#include <tqlistview.h>
+#include <tqheader.h>
+#include <tqcheckbox.h>
+
+#include <ctype.h>
+#include <unistd.h>
+#include <stdlib.h>
+#include <errno.h>
+#include <pwd.h>
+#include <sys/types.h>
+#include <sys/socket.h>
+
+#include <X11/Xutil.h>
+#include <X11/keysym.h>
+#include <X11/Xatom.h>
+#include <fixx11h.h>
+
+#ifndef AF_LOCAL
+# define AF_LOCAL	AF_UNIX
+#endif
+
+extern bool trinity_desktop_lock_use_system_modal_dialogs;
+extern bool trinity_desktop_lock_use_sak;
+
+//===========================================================================
+//
+// Simple dialog for displaying an unlock status or recurring error message
+//
+SAKDlg::SAKDlg(LockProcess *parent)
+    : TQDialog(parent, "information dialog", true, (trinity_desktop_lock_use_system_modal_dialogs?((WFlags)WStyle_StaysOnTop):((WFlags)WX11BypassWM))),
+      mUnlockingFailed(false)
+{
+    if (trinity_desktop_lock_use_system_modal_dialogs) {
+        // Signal that we do not want any window controls to be shown at all
+        Atom kde_wm_system_modal_notification;
+        kde_wm_system_modal_notification = XInternAtom(qt_xdisplay(), "_KDE_WM_MODAL_SYS_NOTIFICATION", False);
+        XChangeProperty(qt_xdisplay(), winId(), kde_wm_system_modal_notification, XA_INTEGER, 32, PropModeReplace, (unsigned char *) "TRUE", 1L);
+    }
+    setCaption(i18n("Desktop Session Locked"));
+
+    frame = new TQFrame( this );
+    if (trinity_desktop_lock_use_system_modal_dialogs)
+        frame->setFrameStyle( TQFrame::NoFrame );
+    else
+        frame->setFrameStyle( TQFrame::Panel | TQFrame::Raised );
+    frame->setLineWidth( 2 );
+
+    mpixLabel = new TQLabel( frame, "pixlabel" );
+    mpixLabel->setPixmap(DesktopIcon("unlock"));
+
+    KUser user;
+
+    mStatusLabel = new TQLabel( "<b> </b>", frame );
+    mStatusLabel->tqsetAlignment( TQLabel::AlignCenter );
+
+    TQVBoxLayout *unlockDialogLayout = new TQVBoxLayout( this );
+    unlockDialogLayout->addWidget( frame );
+
+    TQHBoxLayout *layStatus = new TQHBoxLayout( 0, 0, KDialog::spacingHint());
+    layStatus->addWidget( mStatusLabel );
+
+    frameLayout = new TQGridLayout( frame, 1, 1, KDialog::marginHint(), KDialog::spacingHint() );
+    frameLayout->addMultiCellWidget( mpixLabel, 0, 2, 0, 0, Qt::AlignTop );
+    frameLayout->addLayout( layStatus, 1, 1 );
+
+    setKDEIcon();
+    mStatusLabel->setText("<b>" + i18n("Press Ctrl+Alt+Del to begin.") + "</b>");
+
+    installEventFilter(this);
+
+    mSAKProcess = new KProcess;
+    *mSAKProcess << "kdmtsak";
+    connect(mSAKProcess, TQT_SIGNAL(processExited(KProcess*)), this, TQT_SLOT(slotSAKProcessExited()));
+    mSAKProcess->start();
+}
+
+void SAKDlg::slotSAKProcessExited()
+{
+    int retcode = mSAKProcess->exitStatus();
+    if (retcode != 0) trinity_desktop_lock_use_sak = false;
+    hide();
+}
+
+SAKDlg::~SAKDlg()
+{
+    if ((mSAKProcess) && (mSAKProcess->isRunning())) {
+        mSAKProcess->kill(SIGTERM);
+        delete mSAKProcess;
+    }
+    hide();
+}
+
+void SAKDlg::reject()
+{
+
+}
+
+void SAKDlg::updateLabel(TQString &txt)
+{
+    mStatusLabel->setPaletteForegroundColor(Qt::black);
+    mStatusLabel->setText("<b>" + txt + "</b>");
+}
+
+void SAKDlg::setUnlockIcon()
+{
+    mpixLabel->setPixmap(DesktopIcon("unlock"));
+}
+
+void SAKDlg::setKDEIcon()
+{
+    mpixLabel->setPixmap(DesktopIcon("about_kde"));
+}
+
+void SAKDlg::setInfoIcon()
+{
+    mpixLabel->setPixmap(DesktopIcon("messagebox_info"));
+}
+
+void SAKDlg::setWarningIcon()
+{
+    mpixLabel->setPixmap(DesktopIcon("messagebox_warning"));
+}
+
+void SAKDlg::setErrorIcon()
+{
+    mpixLabel->setPixmap(DesktopIcon("messagebox_critical"));
+}
+
+void SAKDlg::show()
+{
+    TQDialog::show();
+    TQApplication::flushX();
+}
+
+#include "sakdlg.moc"

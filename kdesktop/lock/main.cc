@@ -34,9 +34,10 @@
 #include <X11/Xlib.h>
 #include <fixx11h.h>
 
-// [FIXME] Add GUI configuration checkboxes for these two settings (see kdesktoprc [ScreenSaver] UseUnmanagedLockWindows and DelaySaverStart)
+// [FIXME] Add GUI configuration checkboxes for these three settings (see kdesktoprc [ScreenSaver] UseUnmanagedLockWindows, DelaySaverStart, and UseTDESAK)
 bool trinity_desktop_lock_use_system_modal_dialogs = FALSE;
 bool trinity_desktop_lock_delay_screensaver_start = FALSE;
+bool trinity_desktop_lock_use_sak = FALSE;
 
 bool trinity_desktop_lock_forced = FALSE;
 
@@ -153,6 +154,7 @@ int main( int argc, char **argv )
 
     trinity_desktop_lock_use_system_modal_dialogs = !KDesktopSettings::useUnmanagedLockWindows();
     trinity_desktop_lock_delay_screensaver_start = KDesktopSettings::delaySaverStart();
+    trinity_desktop_lock_use_sak = KDesktopSettings::useTDESAK();
 
     LockProcess process(child, args->isSet( "blank" ));
     if (!child)
