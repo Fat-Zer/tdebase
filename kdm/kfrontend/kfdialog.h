@@ -51,6 +51,7 @@ class FDialog : public TQDialog {
 
   private:
 	TQFrame *winFrame;
+	bool m_wmTitle;
 };
 
 class KFMsgBox : public FDialog {

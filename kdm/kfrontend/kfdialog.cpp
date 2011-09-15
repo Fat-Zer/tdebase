@@ -35,15 +35,37 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include <tqapplication.h>
 #include <tqcursor.h>
 
+#include <X11/Xlib.h>
+#include <X11/Xatom.h>
+
+extern bool has_kwin;
+extern bool is_themed;
+
 FDialog::FDialog( TQWidget *parent, bool framed )
-	: inherited( parent, 0, true/*, framed ? 0 : WStyle_NoBorder*/ )
+	: inherited( parent, 0, true, (framed&&has_kwin)?0:WX11BypassWM ), winFrame(NULL), m_wmTitle(has_kwin)
 {
 	if (framed) {
+		// Signal that we do not want any window controls to be shown at all
+		Atom kde_wm_system_modal_notification;
+		kde_wm_system_modal_notification = XInternAtom(qt_xdisplay(), "_KDE_WM_MODAL_SYS_NOTIFICATION", False);
+		XChangeProperty(qt_xdisplay(), winId(), kde_wm_system_modal_notification, XA_INTEGER, 32, PropModeReplace, (unsigned char *) "TRUE", 1L);
+	}
+
+	if (framed) {
 		winFrame = new TQFrame( this, 0, TQt::WNoAutoErase );
-		winFrame->setFrameStyle( TQFrame::WinPanel | TQFrame::Raised );
+		if (m_wmTitle)
+			winFrame->setFrameStyle( TQFrame::NoFrame );
+		else
+			winFrame->setFrameStyle( TQFrame::WinPanel | TQFrame::Raised );
 		winFrame->setLineWidth( 2 );
 	} else
 		winFrame = 0;
+
+	setCaption(i18n("Trinity Desktop Environment"));
+
+	if (framed) {
+		if (m_wmTitle) setFixedSize(sizeHint());
+	}
 }
 
 void
@@ -53,6 +75,7 @@ FDialog::resizeEvent( TQResizeEvent *e )
 	if (winFrame) {
 		winFrame->resize( size() );
 		winFrame->erase();
+		if (m_wmTitle) setFixedSize(sizeHint());
 	}
 }
 
@@ -133,8 +156,14 @@ FDialog::box( TQWidget *parent, TQMessageBox::Icon type, const TQString &text )
 }
 
 KFMsgBox::KFMsgBox( TQWidget *parent, TQMessageBox::Icon type, const TQString &text )
-	: inherited( parent )
+	: inherited( parent, !is_themed )
 {
+	if (type == TQMessageBox::NoIcon) setCaption(i18n("TDE"));
+	if (type == TQMessageBox::Question) setCaption(i18n("TDE") + " - " + i18n("Question"));
+	if (type == TQMessageBox::Information) setCaption(i18n("TDE") + " - " + i18n("Information"));
+	if (type == TQMessageBox::Warning) setCaption(i18n("TDE") + " - " + i18n("Warning"));
+	if (type == TQMessageBox::Critical) setCaption(i18n("TDE") + " - " + i18n("Error"));
+
 	TQLabel *label1 = new TQLabel( this );
 	label1->setPixmap( TQMessageBox::standardIcon( type ) );
 	TQLabel *label2 = new TQLabel( text, this );

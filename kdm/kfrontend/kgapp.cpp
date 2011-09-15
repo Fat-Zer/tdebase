@@ -63,6 +63,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include <pwd.h>
 
 bool argb_visual_available = false;
+bool has_kwin = false;
+bool is_themed = false;
 
 static int
 ignoreXError( Display *dpy ATTR_UNUSED, XErrorEvent *event ATTR_UNUSED )
@@ -260,6 +262,7 @@ kg_main( const char *argv0 )
 	SecureDisplay( dpy );
 	KProcess *proc = 0;
 	KProcess *comp = 0;
+	KProcess *kwin = 0;
 	if (!_grabServer) {
 		if (_useBackground) {
 			proc = new KProcess;
@@ -275,6 +278,13 @@ kg_main( const char *argv0 )
 		comp = new KProcess;
 		*comp << TQCString( argv0, strrchr( argv0, '/' ) - argv0 + 2 ) + _compositor.ascii();
 		comp->start(KProcess::NotifyOnExit, KProcess::Stdin);
+	}
+
+	if (!_windowManager.isEmpty()) {
+		kwin = new KProcess;
+		*kwin << TQCString( argv0, strrchr( argv0, '/' ) - argv0 + 2 ) + _windowManager.ascii();
+		kwin->start();
+		has_kwin = true;
 	}
 
 	GSendInt( G_Ready );
@@ -323,8 +333,10 @@ kg_main( const char *argv0 )
 				XSetErrorHandler( ignoreXError );
 				KThemedGreeter *tgrt;
 				dialog = tgrt = new KThemedGreeter;
+				is_themed = true;
 				kdDebug() << timestamp() << " themed" << endl;
 				if (!tgrt->isOK()) {
+					is_themed = false;
 					delete tgrt;
 					dialog = new KStdGreeter;
 					dialog->move(dialog->x() + primaryScreenPosition.x(), dialog->y() + primaryScreenPosition.y());
@@ -393,6 +405,11 @@ kg_main( const char *argv0 )
 		comp->closeStdin();
 		comp->detach();
 		delete comp;
+	}
+	if (kwin) {
+		kwin->closeStdin();
+		kwin->detach();
+		delete kwin;
 	}
 	delete proc;
 	UnsecureDisplay( dpy );

@@ -1031,7 +1031,8 @@ void Workspace::showWindowMenu( const TQRect &pos, Client* cl )
         return;
     if ( cl->isDesktop()
         || cl->isDock()
-        || cl->isTopMenu())
+        || cl->isTopMenu()
+        || cl->isModalSystemNotification())
         return;
 
     active_popup_client = cl;

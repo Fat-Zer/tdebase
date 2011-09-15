@@ -1996,6 +1996,16 @@ Comment:
 Description:
  Specify the Xorg compositing manager.  Currently only kompmgr is supported.
 
+Key: WindowManager
+Type: string
+Default: "kwin"
+User: greeter
+Instance: #*/""
+Comment:
+ Window manager binary name, if window decorations are desired. "" means no window manager support.
+Description:
+ Specify the Xorg window manager.  Currently only kwin is supported.
+
 Key: UseAdminSession
 Type: bool
 Default: false
