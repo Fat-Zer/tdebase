@@ -37,15 +37,10 @@
 
 #include "config.h"
 
-#define FIFO_FILE "/tmp/ksocket-global/tsak"
-
 // #define DEBUG
 
 inline int tde_sak_verify_calling_process()
 {
-	int mPipe_fd;
-	char readbuf[128];
-	int numread;
 	bool authorized = false;
 
 	pid_t parentproc = getppid();
@@ -134,33 +129,11 @@ inline int tde_sak_verify_calling_process()
 		}
 
 		if (authorized == true) {
-			// OK, the calling process is authorized to retrieve SAK data
-			// First, flush the buffer
-			mPipe_fd = open(FIFO_FILE, O_RDWR | O_NONBLOCK);
-			numread = 1;
-			while (numread > 0) {
-				numread = read(mPipe_fd, readbuf, 128);
-			}
-			// Now wait for SAK press
-			mPipe_fd = open(FIFO_FILE, O_RDWR);
-			if (mPipe_fd > -1) {
-				numread = read(mPipe_fd, readbuf, 128);
-				readbuf[numread] = 0;
-				readbuf[127] = 0;
-				close(mPipe_fd);
-				if (strcmp(readbuf, "SAK\n\r") == 0) {
-					return 0;
-				}
-				else {
-					return 1;
-				}
-			}
-			return 6;
+			return 0;
 		}
 	}
 
 	return 5;
 }
 
-#undef FIFO_FILE
 #undef DEBUG
