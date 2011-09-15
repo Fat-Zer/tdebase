@@ -100,8 +100,50 @@ Application::Application( )
 
     if( !owner.claim( args->isSet( "replace" ), true ))
         {
-        fputs(i18n("kwin: unable to claim manager selection, another wm running? (try using --replace)\n").local8Bit(), stderr);
-        ::exit(1);
+        Display* dpy = qt_xdisplay();
+        Window w;
+        Atom a;
+        static char net_wm_sm[] = "WM_Sxx";
+
+        snprintf (net_wm_sm, sizeof (net_wm_sm), "WM_S%d", screen_number);
+        a = XInternAtom (dpy, net_wm_sm, False);
+
+        w = XGetSelectionOwner (dpy, a);
+
+        if (w != None)
+            {
+            Atom actual;
+            int format;
+            unsigned long n, left;
+            unsigned char *data;
+            Atom kwinRunningAtom = XInternAtom (dpy, "_KDE_WM_IS_KWIN", True);
+
+            int result = XGetWindowProperty (dpy, w, kwinRunningAtom, 0L, 1L, False,
+                XA_ATOM, &actual, &format,
+                &n, &left, &data);
+
+            if (result == Success && data != None && format == 32 )
+                {
+                Atom a;
+                a = *(long*)data;
+                XFree ( (void *) data);
+                if( !owner.claim( true, true ))
+                    {
+                    fputs(i18n("kwin: unable to claim manager selection, another wm running? (try using --replace)\n").local8Bit(), stderr);
+                    ::exit(1);
+                    }
+                }
+            else
+                {
+                fputs(i18n("kwin: unable to claim manager selection, another wm running? (try using --replace)\n").local8Bit(), stderr);
+                ::exit(1);
+                }
+            }
+        else
+            {
+            fputs(i18n("kwin: unable to claim manager selection, another wm running? (try using --replace)\n").local8Bit(), stderr);
+            ::exit(1);
+            }
         }
     connect( &owner, TQT_SIGNAL( lostOwnership()), TQT_SLOT( lostSelection()));
     
@@ -119,6 +161,11 @@ Application::Application( )
 
     options = new Options;
     atoms = new Atoms;
+
+    // Signal that we are The KWin!
+    Atom kde_wm_system_modal_notification;
+    kde_wm_system_modal_notification = XInternAtom(qt_xdisplay(), "_KDE_WM_IS_KWIN", False);
+    XChangeProperty(qt_xdisplay(), owner.ownerWindow(), kde_wm_system_modal_notification, XA_INTEGER, 32, PropModeReplace, (unsigned char *) "TRUE", 1L);
 
     // create workspace.
     (void) new Workspace( isSessionRestored() );
