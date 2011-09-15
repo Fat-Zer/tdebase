@@ -389,7 +389,8 @@ void delete_pid_file()
         printf("kompmgr lost connection to X server, restarting...\n\r"); fflush(stdout);
         sleep(1);
         char me[2048];
-        readlink("/proc/self/exe", me, sizeof(me));
+        int chars = readlink("/proc/self/exe", me, sizeof(me));
+        me[chars] = 0;
         me[2047] = 0;
 	execl(me, NULL);
     }

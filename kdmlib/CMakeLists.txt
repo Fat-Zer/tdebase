@@ -12,6 +12,7 @@
 include_directories(
   ${CMAKE_CURRENT_BINARY_DIR}
   ${CMAKE_SOURCE_DIR}/kdm/kfrontend
+  ${CMAKE_BINARY_DIR}
   ${TDE_INCLUDE_DIR}
   ${TQT_INCLUDE_DIRS}
 )
@@ -69,3 +70,12 @@ if( BUILD_KICKER OR BUILD_KDESKTOP OR BUILD_KDM OR BUILD_KSMSERVER )
   )
 
 endif( )
+
+##### kompmgr (executable) #######################
+
+tde_add_executable( kdmtsak
+  SOURCES kdmtsak.cpp
+  LINK ${TQT_LIBRARIES}
+  DESTINATION ${BIN_INSTALL_DIR}
+  SETUID
+)
