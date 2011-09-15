@@ -16,6 +16,7 @@
 #include <kdebug.h>
 #include <klocale.h>
 #include <tqfile.h>
+#include <tqtimer.h>
 #include <dcopclient.h>
 #include <assert.h>
 
@@ -26,6 +27,7 @@
 #include "xautolock_c.h"
 extern xautolock_corner_t xautolock_corners[ 4 ];
 
+bool trinity_lockeng_sak_available = TRUE;
 
 //===========================================================================
 //
@@ -36,7 +38,8 @@ extern xautolock_corner_t xautolock_corners[ 4 ];
 SaverEngine::SaverEngine()
     : KScreensaverIface(),
       TQWidget(),
-      mBlankOnly(false)
+      mBlankOnly(false),
+      mSAKProcess(NULL)
 {
     // Save X screensaver parameters
     XGetScreenSaver(qt_xdisplay(), &mXTimeout, &mXInterval,
@@ -48,6 +51,12 @@ SaverEngine::SaverEngine()
 
     connect(&mLockProcess, TQT_SIGNAL(processExited(KProcess *)),
                         TQT_SLOT(lockProcessExited()));
+
+    mSAKProcess = new KProcess;
+    *mSAKProcess << "kdmtsak";
+    connect(mSAKProcess, TQT_SIGNAL(processExited(KProcess*)), this, TQT_SLOT(slotSAKProcessExited()));
+
+    TQTimer::singleShot( 0, this, TQT_SLOT(handleSecureDialog()) );
 
     configure();
 }
@@ -190,6 +199,36 @@ bool SaverEngine::isBlanked()
 }
 
 //---------------------------------------------------------------------------
+void SaverEngine::handleSecureDialog()
+{
+    // Wait for SAK press
+    mSAKProcess->start();
+}
+
+void SaverEngine::slotSAKProcessExited()
+{
+    int retcode = mSAKProcess->exitStatus();
+    if (retcode != 0) trinity_lockeng_sak_available = FALSE;
+
+    if (trinity_lockeng_sak_available == TRUE) {
+        bool ok = true;
+        if (mState == Waiting)
+        {
+            ok = startLockProcess( SecureDialog );
+            if( ok && mState != Saving )
+            {
+            }
+        }
+        else
+        {
+            mLockProcess.kill( SIGHUP );
+        }
+
+        TQTimer::singleShot( 0, this, TQT_SLOT(handleSecureDialog()) );
+    }
+}
+
+//---------------------------------------------------------------------------
 //
 // Read and apply configuration.
 //
@@ -262,6 +301,9 @@ bool SaverEngine::startLockProcess( LockType lock_type )
 	  break;
 	case DontLock:
 	    mLockProcess << TQString( "--dontlock" );
+	  break;
+	case SecureDialog:
+	    mLockProcess << TQString( "--securedialog" );
 	  break;
 	default:
 	  break;

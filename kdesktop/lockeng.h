@@ -82,8 +82,12 @@ protected slots:
     void idleTimeout();
     void lockProcessExited();
 
+private slots:
+    void handleSecureDialog();
+    void slotSAKProcessExited();
+
 protected:
-    enum LockType { DontLock, DefaultLock, ForceLock };
+    enum LockType { DontLock, DefaultLock, ForceLock, SecureDialog };
     bool startLockProcess( LockType lock_type );
     void stopLockProcess();
     bool handleKeyPress(XKeyEvent *xke);
@@ -107,6 +111,9 @@ protected:
 
     bool	mBlankOnly;  // only use the blanker, not the defined saver
     TQValueVector< DCOPClientTransaction* > mLockTransactions;
+
+private:
+    KProcess*   mSAKProcess;
 };
 
 #endif

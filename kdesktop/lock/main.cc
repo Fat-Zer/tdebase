@@ -29,6 +29,8 @@
 #include <kglobalsettings.h>
 #include <dcopref.h>
 
+#include <kdmtsak.h>
+
 #include <stdlib.h>
 
 #include <X11/Xlib.h>
@@ -60,6 +62,7 @@ static KCmdLineOptions options[] =
 {
    { "forcelock", I18N_NOOP("Force session locking"), 0 },
    { "dontlock", I18N_NOOP("Only start screensaver"), 0 },
+   { "securedialog", I18N_NOOP("Launch the secure dialog"), 0 },
    { "blank", I18N_NOOP("Only use the blank screensaver"), 0 },
    KCmdLineLastOption
 };
@@ -169,12 +172,24 @@ int main( int argc, char **argv )
         rt = process.lock();
         sig = true;
     }
-    else if( child || args->isSet( "dontlock" ))
+    else if( child || args->isSet( "dontlock" )) {
         rt = process.dontLock();
-    else
+    }
+    else if( child || args->isSet( "securedialog" )) {
+        int retcode = tde_sak_verify_calling_process();
+        if (retcode == 0) {
+            rt = process.runSecureDialog();
+        }
+        else {
+            return 1;
+        }
+    }
+    else {
         rt = process.defaultSave();
-    if (!rt)
+    }
+    if (!rt) {
         return 1;
+    }
 
     if( sig )
     {

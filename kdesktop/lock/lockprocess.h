@@ -55,6 +55,8 @@ public:
 
     bool dontLock();
 
+    bool runSecureDialog();
+
     void setChildren(TQValueList<int> children) { child_sockets = children; }
     void setParent(int fd) { mParent = fd; }
 
@@ -88,6 +90,7 @@ private slots:
     void closeDialogAndStartHack();
     bool closeCurrentWindow();
     void repaintRootWindowIfNeeded();
+    void startSecureDialog();
 
 private:
     void configure();
@@ -180,6 +183,7 @@ private:
     TQTimer*    mHackDelayStartupTimer;
 
     int         mHackDelayStartupTimeout;
+    bool        mHackStartupEnabled;
 
     TQPixmap    backingPixmap;
 

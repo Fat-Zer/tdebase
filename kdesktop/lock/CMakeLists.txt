@@ -30,7 +30,7 @@ set( target kdesktop_lock )
 
 set( ${target}_SRCS
   lockprocess.cc lockdlg.cc infodlg.cc querydlg.cc sakdlg.cc
-  autologout.cc main.cc
+  securedlg.cc autologout.cc main.cc
 )
 
 tde_add_executable( ${target} AUTOMOC
