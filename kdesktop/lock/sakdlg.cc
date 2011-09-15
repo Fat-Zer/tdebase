@@ -24,6 +24,7 @@
 #include <kuser.h>
 #include <dcopref.h>
 #include <kmessagebox.h>
+#include <kdialog.h>
 
 #include <tqlayout.h>
 #include <tqpushbutton.h>
@@ -81,13 +82,12 @@ SAKDlg::SAKDlg(LockProcess *parent)
         frame->setFrameStyle( TQFrame::Panel | TQFrame::Raised );
     frame->setLineWidth( 2 );
 
-    mpixLabel = new TQLabel( frame, "pixlabel" );
-    mpixLabel->setPixmap(DesktopIcon("unlock"));
+    KSMModalDialogHeader* theader = new KSMModalDialogHeader( frame );
 
     KUser user;
 
     mStatusLabel = new TQLabel( "<b> </b>", frame );
-    mStatusLabel->tqsetAlignment( TQLabel::AlignCenter );
+    mStatusLabel->tqsetAlignment( TQLabel::AlignVCenter );
 
     TQVBoxLayout *unlockDialogLayout = new TQVBoxLayout( this );
     unlockDialogLayout->addWidget( frame );
@@ -96,11 +96,10 @@ SAKDlg::SAKDlg(LockProcess *parent)
     layStatus->addWidget( mStatusLabel );
 
     frameLayout = new TQGridLayout( frame, 1, 1, KDialog::marginHint(), KDialog::spacingHint() );
-    frameLayout->addMultiCellWidget( mpixLabel, 0, 2, 0, 0, Qt::AlignTop );
-    frameLayout->addLayout( layStatus, 1, 1 );
+    frameLayout->addMultiCellWidget( theader, 0, 0, 0, 1, Qt::AlignTop | AlignHCenter );
+    frameLayout->addMultiCellLayout( layStatus, 1, 1, 0, 1, AlignHCenter | AlignVCenter);
 
-    setKDEIcon();
-    mStatusLabel->setText("<b>" + i18n("Press Ctrl+Alt+Del to begin.") + "</b>");
+    mStatusLabel->setText("<b>" + i18n("Press Ctrl+Alt+Del to begin.") + "</b><p>" + i18n("This process helps keep your password secure.") + "<br>" + i18n("It prevents unauthorized users from emulating the login screen."));
 
     installEventFilter(this);
 
@@ -126,6 +125,11 @@ SAKDlg::~SAKDlg()
     hide();
 }
 
+void SAKDlg::closeDialogForced()
+{
+    TQDialog::reject();
+}
+
 void SAKDlg::reject()
 {
 
@@ -135,31 +139,6 @@ void SAKDlg::updateLabel(TQString &txt)
 {
     mStatusLabel->setPaletteForegroundColor(Qt::black);
     mStatusLabel->setText("<b>" + txt + "</b>");
-}
-
-void SAKDlg::setUnlockIcon()
-{
-    mpixLabel->setPixmap(DesktopIcon("unlock"));
-}
-
-void SAKDlg::setKDEIcon()
-{
-    mpixLabel->setPixmap(DesktopIcon("about_kde"));
-}
-
-void SAKDlg::setInfoIcon()
-{
-    mpixLabel->setPixmap(DesktopIcon("messagebox_info"));
-}
-
-void SAKDlg::setWarningIcon()
-{
-    mpixLabel->setPixmap(DesktopIcon("messagebox_warning"));
-}
-
-void SAKDlg::setErrorIcon()
-{
-    mpixLabel->setPixmap(DesktopIcon("messagebox_critical"));
 }
 
 void SAKDlg::show()

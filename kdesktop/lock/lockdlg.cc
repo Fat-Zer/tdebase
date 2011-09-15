@@ -96,13 +96,24 @@ PasswordDlg::PasswordDlg(LockProcess *parent, GreeterPluginHandle *plugin)
         frame->setFrameStyle( TQFrame::Panel | TQFrame::Raised );
     frame->setLineWidth( 2 );
 
-    TQLabel *pixLabel = new TQLabel( frame, "pixlabel" );
-    pixLabel->setPixmap(DesktopIcon("lock"));
+    TQLabel *pixLabel;
+    if (!trinity_desktop_lock_use_system_modal_dialogs) {
+        pixLabel = new TQLabel( frame, "pixlabel" );
+        pixLabel->setPixmap(DesktopIcon("lock"));
+    }
 
     KUser user;
-    TQLabel *greetLabel = new TQLabel( user.fullName().isEmpty() ?
-            i18n("<nobr><b>The session is locked</b><br>") :
-            i18n("<nobr><b>The session was locked by %1</b><br>").arg( user.fullName() ), frame );
+    TQLabel *greetLabel;
+    if (trinity_desktop_lock_use_system_modal_dialogs) {
+        greetLabel = new TQLabel( user.fullName().isEmpty() ?
+                "<b>" + i18n("This computer is in use and has been locked.") + "</b>" :
+                "<b>" + i18n("This computer is in use and has been locked.") + "</b><br><nobr>" + i18n("Only '%1' may unlock this session.").arg( user.fullName() ), frame );
+    }
+    else {
+        greetLabel = new TQLabel( user.fullName().isEmpty() ?
+                i18n("<nobr><b>The session is locked</b><br>") :
+                i18n("<nobr><b>The session was locked by %1</b><br>").arg( user.fullName() ), frame );
+    }
 
     mStatusLabel = new TQLabel( "<b> </b>", frame );
     mStatusLabel->tqsetAlignment( TQLabel::AlignCenter );
@@ -134,13 +145,26 @@ PasswordDlg::PasswordDlg(LockProcess *parent, GreeterPluginHandle *plugin)
     layButtons->addWidget( ok );
     layButtons->addWidget( cancel );
 
-    frameLayout = new TQGridLayout( frame, 1, 1, KDialog::marginHint(), KDialog::spacingHint() );
-    frameLayout->addMultiCellWidget( pixLabel, 0, 2, 0, 0, Qt::AlignTop );
-    frameLayout->addWidget( greetLabel, 0, 1 );
-    frameLayout->addItem( greet->getLayoutItem(), 1, 1 );
-    frameLayout->addLayout( layStatus, 2, 1 );
-    frameLayout->addMultiCellWidget( sep, 3, 3, 0, 1 );
-    frameLayout->addMultiCellLayout( layButtons, 4, 4, 0, 1 );
+    if (trinity_desktop_lock_use_system_modal_dialogs) {
+        KSMModalDialogHeader* theader = new KSMModalDialogHeader( frame );
+
+        frameLayout = new TQGridLayout( frame, 1, 1, KDialog::marginHint(), KDialog::spacingHint() );
+        frameLayout->addMultiCellWidget( theader, 0, 0, 0, 2, Qt::AlignTop );
+        frameLayout->addWidget( greetLabel, 1, 1 );
+        frameLayout->addItem( greet->getLayoutItem(), 2, 1 );
+        frameLayout->addLayout( layStatus, 3, 1 );
+        frameLayout->addMultiCellWidget( sep, 4, 4, 0, 1 );
+        frameLayout->addMultiCellLayout( layButtons, 5, 5, 0, 1 );
+    }
+    else {
+        frameLayout = new TQGridLayout( frame, 1, 1, KDialog::marginHint(), KDialog::spacingHint() );
+        frameLayout->addMultiCellWidget( pixLabel, 0, 2, 0, 0, Qt::AlignTop );
+        frameLayout->addWidget( greetLabel, 0, 1 );
+        frameLayout->addItem( greet->getLayoutItem(), 1, 1 );
+        frameLayout->addLayout( layStatus, 2, 1 );
+        frameLayout->addMultiCellWidget( sep, 3, 3, 0, 1 );
+        frameLayout->addMultiCellLayout( layButtons, 4, 4, 0, 1 );
+    }
 
     setTabOrder( ok, cancel );
     setTabOrder( cancel, mNewSessButton );

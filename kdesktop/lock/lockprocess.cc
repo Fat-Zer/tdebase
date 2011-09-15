@@ -134,6 +134,7 @@ extern bool trinity_desktop_lock_use_sak;
 extern bool trinity_desktop_lock_forced;
 
 bool trinity_desktop_lock_autohide_lockdlg = TRUE;
+bool trinity_desktop_lock_closing_windows = FALSE;
 
 #define ENABLE_CONTINUOUS_LOCKDLG_DISPLAY \
 if (!mForceContinualLockDisplayTimer->isActive()) mForceContinualLockDisplayTimer->start(100, FALSE); \
@@ -316,15 +317,24 @@ static void sighup_handler(int)
 
 bool LockProcess::closeCurrentWindow()
 {
+    trinity_desktop_lock_closing_windows = TRUE;
     if (currentDialog != NULL) {
         mForceReject = true;
-        currentDialog->close();
+        if (dynamic_cast<SAKDlg*>(currentDialog)) {
+            dynamic_cast<SAKDlg*>(currentDialog)->closeDialogForced();
+        }
+        else {
+            currentDialog->close();
+        }
     }
 
     if( mDialogs.isEmpty() ) {
+        trinity_desktop_lock_closing_windows = FALSE;
+        mForceReject = false;
         return false;
     }
     else {
+        trinity_desktop_lock_closing_windows = TRUE;
         return true;
     }
 }
@@ -1402,6 +1412,8 @@ bool LockProcess::checkPass()
             // Wait for SAK press before continuing...
             SAKDlg inDlg( this );
             int ret = execDialog( &inDlg );
+            if (trinity_desktop_lock_closing_windows)
+                return 0;
         }
 
         showVkbd();

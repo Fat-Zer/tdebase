@@ -34,11 +34,7 @@ public:
     virtual void show();
 
     void updateLabel( TQString &txt );
-    void setUnlockIcon();
-    void setKDEIcon();
-    void setInfoIcon();
-    void setWarningIcon();
-    void setErrorIcon();
+    void closeDialogForced();
 
 private slots:
     void slotSAKProcessExited();
@@ -50,7 +46,6 @@ private:
     TQFrame      *frame;
     TQGridLayout *frameLayout;
     TQLabel      *mStatusLabel;
-    TQLabel      *mpixLabel;
     int         mCapsLocked;
     bool        mUnlockingFailed;
     TQStringList layoutsList;
