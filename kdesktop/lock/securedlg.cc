@@ -96,7 +96,6 @@ SecureDlg::SecureDlg(LockProcess *parent)
 
     mTaskButton = new TQPushButton( frame );
     mTaskButton->setText(i18n("Task Manager"));
-    mTaskButton->setEnabled(false); // FIXME
 
     mCancelButton = new TQPushButton( frame );
     mCancelButton->setText(i18n("Cancel"));

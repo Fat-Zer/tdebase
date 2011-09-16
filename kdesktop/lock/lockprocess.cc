@@ -619,6 +619,10 @@ void LockProcess::startSecureDialog()
 		stopSaver();
 		mBusy = false;
 	}
+	if (ret == 2) {
+		system("ksysguard &");
+		kapp->quit();
+	}
 	// FIXME
 	// Handle remaining two cases (task manager and logoff menu)
 	stopSaver();
