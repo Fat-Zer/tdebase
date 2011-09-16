@@ -184,97 +184,130 @@ int main (int argc, char *argv[])
 	bool ctrl_down = false;
 	bool alt_down = false;
 	bool hide_event = false;
+	bool established = false;
+	bool testrun = false;
+
+	if (argc == 2) {
+		if (strcmp(argv[1], "checkactive") == 0) {
+			testrun = true;
+		}
+	}
 
 	// Create the output pipe
 	PipeHandler controlpipe;
 
-	if ((getuid ()) != 0) {
-		printf ("You are not root! This WILL NOT WORK!\nDO NOT attempt to bypass security restrictions, e.g. by changing keyboard permissions or owner, if you want the SAK system to remain secure...\n");
-		return 5;
-	}
-
-	// Open Device
-	fd = find_keyboard();
-	if (fd == -1) {
-		printf ("Could not find your keyboard!\n");
-	}
-	
-	// Print Device Name
-	ioctl (fd, EVIOCGNAME (sizeof (name)), name);
-	printf ("Reading From : (%s)\n", name);
-
-	// Create filtered virtual output device
-	devout=open("/dev/misc/uinput",O_WRONLY|O_NONBLOCK);
-	if (devout<0) {
-		devout=open("/dev/uinput",O_WRONLY|O_NONBLOCK);
-		if (devout<0) {
-			fprintf(stderr,"Unable to open /dev/uinput or /dev/misc/uinput (char device 10:223).\nPossible causes: Device node inexistent or kernel not compiled with evdev user level driver support or permission denied.\n");
-			perror("open(\"/dev/misc/uinput\")");
-			return 3;
-		}
-	}
-	ioctl(fd, EVIOCGNAME(UINPUT_MAX_NAME_SIZE), devinfo.name);
-	strncat(devinfo.name, "+tsak", UINPUT_MAX_NAME_SIZE-1);
-	fprintf(stderr, "%s\n", devinfo.name);
-	ioctl(fd, EVIOCGID, &devinfo.id);
-	
-	copy_features(fd, devout);
-	write(devout,&devinfo,sizeof(devinfo));
-	if (ioctl(devout,UI_DEV_CREATE)<0) {
-		fprintf(stderr,"Unable to create input device with UI_DEV_CREATE\n");
-		return 2;
-	}
-	else {
-		fprintf(stderr,"Device created.\n");
-	}
-
-	if(ioctl(fd, EVIOCGRAB, 2) < 0) {
-		close(fd);
-		fprintf(stderr, "Failed to grab exclusive input device lock");
-		return 1;
-	}
-	
 	while (1) {
-
-		if ((rd = read (fd, ev, size * 2)) < size) {
-			fprintf(stderr,"Read failed.\n");
-			return 1;
+		if ((getuid ()) != 0) {
+			printf ("You are not root! This WILL NOT WORK!\nDO NOT attempt to bypass security restrictions, e.g. by changing keyboard permissions or owner, if you want the SAK system to remain secure...\n");
+			return 5;
 		}
+	
+		// Open Device
+		fd = find_keyboard();
+		if (fd == -1) {
+			printf ("Could not find your keyboard!\n");
+			if (established)
+				sleep(1);
+			else
+				return 4;
+		}
+		else {
+			// Print Device Name
+			ioctl (fd, EVIOCGNAME (sizeof (name)), name);
+			printf ("Reading From : (%s)\n", name);
 		
-		value = ev[0].value;
-		
-		if (value != ' ' && ev[1].value == 0 && ev[1].type == 1){ // Read the key release event
-			if (keycode[(ev[1].code)]) {
-				if (strcmp(keycode[(ev[1].code)], "<control>") == 0) ctrl_down = false;
-				if (strcmp(keycode[(ev[1].code)], "<alt>") == 0) alt_down = false;
+			// Create filtered virtual output device
+			devout=open("/dev/misc/uinput",O_WRONLY|O_NONBLOCK);
+			if (devout<0) {
+				devout=open("/dev/uinput",O_WRONLY|O_NONBLOCK);
 			}
-		}
-		if (value != ' ' && ev[1].value == 1 && ev[1].type == 1){ // Read the key press event
-			if (keycode[(ev[1].code)]) {
-				if (strcmp(keycode[(ev[1].code)], "<control>") == 0) ctrl_down = true;
-				if (strcmp(keycode[(ev[1].code)], "<alt>") == 0) alt_down = true;
+			if (devout<0) {
+				fprintf(stderr,"Unable to open /dev/uinput or /dev/misc/uinput (char device 10:223).\nPossible causes: Device node inexistent or kernel not compiled with evdev user level driver support or permission denied.\n");
+				perror("open(\"/dev/misc/uinput\")");
+				if (established)
+					sleep(1);
+				else
+					return 3;
 			}
-		}
+			else {
+				ioctl(fd, EVIOCGNAME(UINPUT_MAX_NAME_SIZE), devinfo.name);
+				strncat(devinfo.name, "+tsak", UINPUT_MAX_NAME_SIZE-1);
+				fprintf(stderr, "%s\n", devinfo.name);
+				ioctl(fd, EVIOCGID, &devinfo.id);
+				
+				copy_features(fd, devout);
+				write(devout,&devinfo,sizeof(devinfo));
+				if (ioctl(devout,UI_DEV_CREATE)<0) {
+					fprintf(stderr,"Unable to create input device with UI_DEV_CREATE\n");
+					if (established)
+						sleep(1);
+					else
+						return 2;
+				}
+				else {
+					fprintf(stderr,"Device created.\n");
+			
+					if(ioctl(fd, EVIOCGRAB, 2) < 0) {
+						close(fd);
+						fprintf(stderr, "Failed to grab exclusive input device lock");
+						if (established)
+							sleep(1);
+						else
+							return 1;
+					}
+					else {
 
-		hide_event = false;
-		if (keycode[(ev[1].code)]) {
-			if (alt_down && ctrl_down && (strcmp(keycode[(ev[1].code)], "<del>") == 0)) {
-				hide_event = true;
-			}
-		}
+						established = true;
 
-		if (hide_event == false) {
-			// Pass the event on...
-			event = ev[0];
-			write(devout, &event, sizeof event);
-			event = ev[1];
-			write(devout, &event, sizeof event);
-		}
-		if (hide_event == true) {
-			// Let anyone listening to our interface know that an SAK keypress was received
-                        write(mPipe_fd_out, "SAK\n\r", 6);
+						if (testrun == true) {
+							return 0;
+						}
+				
+						while (1) {
+							if ((rd = read (fd, ev, size * 2)) < size) {
+								fprintf(stderr,"Read failed.\n");
+								break;
+							}
+							
+							value = ev[0].value;
+							
+							if (value != ' ' && ev[1].value == 0 && ev[1].type == 1){ // Read the key release event
+								if (keycode[(ev[1].code)]) {
+									if (strcmp(keycode[(ev[1].code)], "<control>") == 0) ctrl_down = false;
+									if (strcmp(keycode[(ev[1].code)], "<alt>") == 0) alt_down = false;
+								}
+							}
+							if (value != ' ' && ev[1].value == 1 && ev[1].type == 1){ // Read the key press event
+								if (keycode[(ev[1].code)]) {
+									if (strcmp(keycode[(ev[1].code)], "<control>") == 0) ctrl_down = true;
+									if (strcmp(keycode[(ev[1].code)], "<alt>") == 0) alt_down = true;
+								}
+							}
+					
+							hide_event = false;
+							if (keycode[(ev[1].code)]) {
+								if (alt_down && ctrl_down && (strcmp(keycode[(ev[1].code)], "<del>") == 0)) {
+									hide_event = true;
+								}
+							}
+					
+							if (hide_event == false) {
+								// Pass the event on...
+								event = ev[0];
+								write(devout, &event, sizeof event);
+								event = ev[1];
+								write(devout, &event, sizeof event);
+							}
+							if (hide_event == true) {
+								// Let anyone listening to our interface know that an SAK keypress was received
+								write(mPipe_fd_out, "SAK\n\r", 6);
+							}
+						}
+					}
+				}
+			}
 		}
 	}
 
-	return 0;
+	return 6;
 }
