@@ -57,6 +57,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 #include <stdlib.h>
 
+extern bool has_kwin;
+
 int KDMShutdownBase::curPlugin = -1;
 PluginList KDMShutdownBase::pluginList;
 
@@ -242,6 +244,8 @@ doShutdown( int type, const char *os )
 KDMShutdown::KDMShutdown( int _uid, TQWidget *_parent )
 	: inherited( _uid, _parent )
 {
+	setCaption(i18n("Shutdown TDE"));
+
 	TQSizePolicy fp( TQSizePolicy::Fixed, TQSizePolicy::Fixed );
 
 	TQHBoxLayout *hlay = new TQHBoxLayout( box, KDsh );
@@ -466,20 +470,23 @@ KDMSlimShutdown::KDMSlimShutdown( TQWidget *_parent )
 	: inherited( _parent )
 	, targetList( 0 )
 {
+	setCaption(i18n("Shutdown TDE"));
 
 	bool doUbuntuLogout = KConfigGroup(KGlobal::config(), "Shutdown").readBoolEntry("doUbuntuLogout", false);
 
-	TQVBoxLayout* vbox = new TQVBoxLayout( this );
-	TQHBoxLayout *hbox = new TQHBoxLayout( this, KDmh, KDsh );
 	TQFrame* lfrm = new TQFrame( this );
 	TQHBoxLayout* hbuttonbox;
 
 	if(doUbuntuLogout)
-	{		
-		lfrm->setFrameStyle( TQFrame::StyledPanel | TQFrame::Raised );
+	{
+		TQVBoxLayout* vbox = new TQVBoxLayout( this );
+		if (has_kwin)
+			lfrm->setFrameStyle( TQFrame::NoFrame );
+		else
+			lfrm->setFrameStyle( TQFrame::StyledPanel | TQFrame::Raised );
 		lfrm->setLineWidth( tqstyle().tqpixelMetric( TQStyle::PM_DefaultFrameWidth, lfrm ) );
 		// we need to set the minimum size for the logout box, since it
-		// gets too small if there isn't all options available
+		// gets too small if there all options are not available
 		lfrm->setMinimumSize(300,120);
 		vbox->addWidget( lfrm );
 		vbox = new TQVBoxLayout( lfrm, 2 * KDialog::marginHint(),
@@ -536,14 +543,19 @@ KDMSlimShutdown::KDMSlimShutdown( TQWidget *_parent )
 		// Back to kdm
 		KSMPushButton* btnBack = new KSMPushButton( KStdGuiItem::cancel(), lfrm );
 		hbuttonbox2->addWidget( btnBack );
-		connect(btnBack, TQT_SIGNAL(clicked()), TQT_SLOT(reject()));	
-	
-	
+		connect(btnBack, TQT_SIGNAL(clicked()), TQT_SLOT(reject()));
 	}
 	else
 	{
-		lfrm->setFrameStyle( TQFrame::Panel | TQFrame::Sunken );
+		TQHBoxLayout *hbox = new TQHBoxLayout( this, KDmh, KDsh );
+		if (has_kwin)
+			lfrm->setFrameStyle( TQFrame::NoFrame );
+		else
+			lfrm->setFrameStyle( TQFrame::Panel | TQFrame::Sunken );
 		hbox->addWidget( lfrm, AlignCenter );
+		// we need to set the minimum size for the logout box, since it
+		// gets too small if there all options are not available
+		lfrm->setMinimumSize(300,120);
 		TQLabel *icon = new TQLabel( lfrm );
 		icon->setPixmap( TQPixmap( locate( "data", "kdm/pics/shutdown.jpg" ) ) );
 		TQVBoxLayout *iconlay = new TQVBoxLayout( lfrm );
@@ -603,9 +615,7 @@ KDMSlimShutdown::KDMSlimShutdown( TQWidget *_parent )
 		buttonlay->addWidget( btnBack );
 		connect( btnBack, TQT_SIGNAL(clicked()), TQT_SLOT(reject()) );
 	
-		buttonlay->addSpacing( KDialog::spacingHint() );
-	
-	
+		buttonlay->addSpacing( KDialog::spacingHint() );	
 	}
 
 }

@@ -40,18 +40,19 @@ int main (int argc, char *argv[])
 			}
 			// Now wait for SAK press
 			mPipe_fd = open(FIFO_FILE, O_RDONLY);
-			if (mPipe_fd > -1) {
+			while (mPipe_fd > -1) {
 				numread = read(mPipe_fd, readbuf, 6);
 				readbuf[numread] = 0;
 				readbuf[127] = 0;
-				close(mPipe_fd);
 				if (strcmp(readbuf, "SAK\n\r") == 0) {
+					close(mPipe_fd);
 					return 0;
 				}
 				else {
-					return 1;
+					usleep(100);
 				}
 			}
+			close(mPipe_fd);
 			return 6;
 	}
 	else {
