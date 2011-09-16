@@ -185,6 +185,11 @@ kg_main( const char *argv0 )
 	KApplication::disableAutoDcopRegistration();
 	KCrash::setSafer( true );
 
+	trinity_desktop_lock_use_sak = _useSAK;
+	if (trinity_desktop_lock_use_sak) {
+		system(TQString(TQCString( argv0, strrchr( argv0, '/' ) - argv0 + 2 ) + "tsak &").ascii());
+	}
+
 #ifdef HAVE_XCOMPOSITE
 	// Begin ARGB initialization
 	XSetErrorHandler( ignoreXError );
@@ -297,8 +302,6 @@ kg_main( const char *argv0 )
 		kwin->start();
 		has_kwin = true;
 	}
-
-	trinity_desktop_lock_use_sak = _useSAK;
 
 	GSendInt( G_Ready );
 
