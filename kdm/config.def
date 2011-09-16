@@ -2006,6 +2006,16 @@ Comment:
 Description:
  Specify the Xorg window manager.  Currently only kwin is supported.
 
+Key: UseSAK
+Type: bool
+Default: true
+User: greeter
+Instance: #*/!
+Comment:
+ SAK
+Description:
+ If true then the SAK anti-spoofing dialog will be utilized
+
 Key: UseAdminSession
 Type: bool
 Default: false

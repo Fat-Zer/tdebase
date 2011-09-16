@@ -32,6 +32,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #ifdef XDMCP
 # include "kchooser.h"
 #endif
+#include "sakdlg.h"
 
 #include <kprocess.h>
 #include <kcmdlineargs.h>
@@ -65,6 +66,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 bool argb_visual_available = false;
 bool has_kwin = false;
 bool is_themed = false;
+bool trinity_desktop_lock_use_sak = TRUE;
 
 static int
 ignoreXError( Display *dpy ATTR_UNUSED, XErrorEvent *event ATTR_UNUSED )
@@ -162,6 +164,15 @@ xIOErr( Display * )
 }
 
 //KSimpleConfig *iccconfig;
+
+void
+checkSAK(GreeterApp* app)
+{
+	app->restoreOverrideCursor();
+	SAKDlg sak(0);
+	sak.exec();
+	app->setOverrideCursor( Qt::WaitCursor );
+}
 
 void
 kg_main( const char *argv0 )
@@ -287,6 +298,8 @@ kg_main( const char *argv0 )
 		has_kwin = true;
 	}
 
+	trinity_desktop_lock_use_sak = _useSAK;
+
 	GSendInt( G_Ready );
 
 	kdDebug() << timestamp() << " main1" << endl;
@@ -338,6 +351,7 @@ kg_main( const char *argv0 )
 				if (!tgrt->isOK()) {
 					is_themed = false;
 					delete tgrt;
+					checkSAK(app);
 					dialog = new KStdGreeter;
 					dialog->move(dialog->x() + primaryScreenPosition.x(), dialog->y() + primaryScreenPosition.y());
 				}
@@ -346,6 +360,7 @@ kg_main( const char *argv0 )
 				}
 				XSetErrorHandler( (XErrorHandler)0 );
 			} else {
+				checkSAK(app);
 				dialog = new KStdGreeter;
 				dialog->move(dialog->x() + primaryScreenPosition.x(), dialog->y() + primaryScreenPosition.y());
 			}

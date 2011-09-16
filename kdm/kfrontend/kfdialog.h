@@ -22,6 +22,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 */
 
+#define KDM_LOGIN_SCREEN_BASE_TITLE i18n("Login to TDE")
 
 #ifndef FDIALOG_H
 #define FDIALOG_H

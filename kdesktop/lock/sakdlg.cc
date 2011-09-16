@@ -96,8 +96,8 @@ SAKDlg::SAKDlg(LockProcess *parent)
     layStatus->addWidget( mStatusLabel );
 
     frameLayout = new TQGridLayout( frame, 1, 1, KDialog::marginHint(), KDialog::spacingHint() );
-    frameLayout->addMultiCellWidget( theader, 0, 0, 0, 1, Qt::AlignTop | AlignHCenter );
-    frameLayout->addMultiCellLayout( layStatus, 1, 1, 0, 1, AlignHCenter | AlignVCenter);
+    frameLayout->addMultiCellWidget( theader, 0, 0, 0, 1, AlignTop | AlignLeft );
+    frameLayout->addMultiCellLayout( layStatus, 1, 1, 0, 1, AlignLeft | AlignVCenter);
 
     mStatusLabel->setText("<b>" + i18n("Press Ctrl+Alt+Del to begin.") + "</b><p>" + i18n("This process helps keep your password secure.") + "<br>" + i18n("It prevents unauthorized users from emulating the login screen."));
 

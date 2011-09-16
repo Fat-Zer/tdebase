@@ -61,7 +61,7 @@ FDialog::FDialog( TQWidget *parent, bool framed )
 	} else
 		winFrame = 0;
 
-	setCaption(i18n("Trinity Desktop Environment"));
+	setCaption(KDM_LOGIN_SCREEN_BASE_TITLE);
 
 	if (framed) {
 		if (m_wmTitle) setFixedSize(sizeHint());
@@ -158,11 +158,11 @@ FDialog::box( TQWidget *parent, TQMessageBox::Icon type, const TQString &text )
 KFMsgBox::KFMsgBox( TQWidget *parent, TQMessageBox::Icon type, const TQString &text )
 	: inherited( parent, !is_themed )
 {
-	if (type == TQMessageBox::NoIcon) setCaption(i18n("TDE"));
-	if (type == TQMessageBox::Question) setCaption(i18n("TDE") + " - " + i18n("Question"));
-	if (type == TQMessageBox::Information) setCaption(i18n("TDE") + " - " + i18n("Information"));
-	if (type == TQMessageBox::Warning) setCaption(i18n("TDE") + " - " + i18n("Warning"));
-	if (type == TQMessageBox::Critical) setCaption(i18n("TDE") + " - " + i18n("Error"));
+	if (type == TQMessageBox::NoIcon) setCaption(KDM_LOGIN_SCREEN_BASE_TITLE);
+	if (type == TQMessageBox::Question) setCaption(KDM_LOGIN_SCREEN_BASE_TITLE + " - " + i18n("Question"));
+	if (type == TQMessageBox::Information) setCaption(KDM_LOGIN_SCREEN_BASE_TITLE + " - " + i18n("Information"));
+	if (type == TQMessageBox::Warning) setCaption(KDM_LOGIN_SCREEN_BASE_TITLE + " - " + i18n("Warning"));
+	if (type == TQMessageBox::Critical) setCaption(KDM_LOGIN_SCREEN_BASE_TITLE + " - " + i18n("Error"));
 
 	TQLabel *label1 = new TQLabel( this );
 	label1->setPixmap( TQMessageBox::standardIcon( type ) );

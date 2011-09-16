@@ -6,7 +6,7 @@
 
 #include <config.h>
 
-#include "securedlg.h"
+#include "sakdlg.h"
 
 #include <dmctl.h>
 
@@ -52,20 +52,22 @@
 #include <X11/Xatom.h>
 #include <fixx11h.h>
 
+#include "kfdialog.h"
+
 #ifndef AF_LOCAL
 # define AF_LOCAL	AF_UNIX
 #endif
 
-extern bool trinity_desktop_lock_use_system_modal_dialogs;
+bool trinity_desktop_lock_use_system_modal_dialogs = TRUE;
 extern bool trinity_desktop_lock_use_sak;
 
 //===========================================================================
 //
 // Simple dialog for displaying an unlock status or recurring error message
 //
-SecureDlg::SecureDlg(LockProcess *parent)
+SAKDlg::SAKDlg(TQWidget *parent)
     : TQDialog(parent, "information dialog", true, (trinity_desktop_lock_use_system_modal_dialogs?((WFlags)WStyle_StaysOnTop):((WFlags)WX11BypassWM))),
-      mUnlockingFailed(false), retInt(NULL)
+      mUnlockingFailed(false)
 {
     if (trinity_desktop_lock_use_system_modal_dialogs) {
         // Signal that we do not want any window controls to be shown at all
@@ -73,7 +75,7 @@ SecureDlg::SecureDlg(LockProcess *parent)
         kde_wm_system_modal_notification = XInternAtom(qt_xdisplay(), "_KDE_WM_MODAL_SYS_NOTIFICATION", False);
         XChangeProperty(qt_xdisplay(), winId(), kde_wm_system_modal_notification, XA_INTEGER, 32, PropModeReplace, (unsigned char *) "TRUE", 1L);
     }
-    setCaption(i18n("Secure Desktop Area"));
+    setCaption(KDM_LOGIN_SCREEN_BASE_TITLE);
 
     frame = new TQFrame( this );
     if (trinity_desktop_lock_use_system_modal_dialogs)
@@ -86,109 +88,65 @@ SecureDlg::SecureDlg(LockProcess *parent)
 
     KUser user;
 
-    mLogonStatus = new TQLabel( frame );
-    mLogonStatus->setText(i18n("'%1' is currently logged on").arg( user.fullName() ));
-
-    KSeparator *sep = new KSeparator( KSeparator::HLine, frame );
-
-    mLockButton = new TQPushButton( frame );
-    mLockButton->setText(i18n("Lock Session"));
-
-    mTaskButton = new TQPushButton( frame );
-    mTaskButton->setText(i18n("Task Manager"));
-    mTaskButton->setEnabled(false); // FIXME
-
-    mCancelButton = new TQPushButton( frame );
-    mCancelButton->setText(i18n("Cancel"));
-
-    mShutdownButton = new TQPushButton( frame );
-    mShutdownButton->setText(i18n("Logoff Menu"));
-    mShutdownButton->setEnabled(false); // FIXME
+    mStatusLabel = new TQLabel( "<b> </b>", frame );
+    mStatusLabel->tqsetAlignment( TQLabel::AlignVCenter );
 
     TQVBoxLayout *unlockDialogLayout = new TQVBoxLayout( this );
     unlockDialogLayout->addWidget( frame );
 
     TQHBoxLayout *layStatus = new TQHBoxLayout( 0, 0, KDialog::spacingHint());
-    layStatus->addWidget( mLogonStatus );
-
-    TQHBoxLayout *layPBRow1 = new TQHBoxLayout( 0, 0, KDialog::spacingHint());
-    layPBRow1->addWidget( mLockButton );
-    layPBRow1->addWidget( mTaskButton );
-    layPBRow1->addWidget( mShutdownButton );
-    layPBRow1->addWidget( mCancelButton );
+    layStatus->addWidget( mStatusLabel );
 
     frameLayout = new TQGridLayout( frame, 1, 1, KDialog::marginHint(), KDialog::spacingHint() );
     frameLayout->addMultiCellWidget( theader, 0, 0, 0, 1, AlignTop | AlignLeft );
     frameLayout->addMultiCellLayout( layStatus, 1, 1, 0, 1, AlignLeft | AlignVCenter);
-    frameLayout->addMultiCellWidget( sep, 2, 2, 0, 1 );
-    frameLayout->addMultiCellLayout( layPBRow1, 3, 3, 0, 1, AlignLeft | AlignVCenter);
 
-    connect(mCancelButton, TQT_SIGNAL(clicked()), this, TQT_SLOT(slotBtnCancel()));
-    connect(mLockButton, TQT_SIGNAL(clicked()), this, TQT_SLOT(slotBtnLock()));
-    connect(mTaskButton, TQT_SIGNAL(clicked()), this, TQT_SLOT(slotBtnTask()));
-    connect(mShutdownButton, TQT_SIGNAL(clicked()), this, TQT_SLOT(slotBtnShutdown()));
-
-    TQSize dlgSz = sizeHint();
-    int btnSize = dlgSz.width();
-    btnSize = btnSize / 4;
-    btnSize = btnSize - (KDialog::spacingHint() / 2);
-    mLockButton->setFixedWidth(btnSize);
-    mTaskButton->setFixedWidth(btnSize);
-    mCancelButton->setFixedWidth(btnSize);
-    mShutdownButton->setFixedWidth(btnSize);
+    mStatusLabel->setText("<b>" + i18n("Press Ctrl+Alt+Del to begin.") + "</b><p>" + i18n("This process helps keep your password secure.") + "<br>" + i18n("It prevents unauthorized users from emulating the login screen."));
 
     installEventFilter(this);
+
+    mSAKProcess = new KProcess;
+    *mSAKProcess << "kdmtsak";
+    connect(mSAKProcess, TQT_SIGNAL(processExited(KProcess*)), this, TQT_SLOT(slotSAKProcessExited()));
+    mSAKProcess->start();
 }
 
-SecureDlg::~SecureDlg()
+void SAKDlg::slotSAKProcessExited()
 {
+    int retcode = mSAKProcess->exitStatus();
+    if (retcode != 0) trinity_desktop_lock_use_sak = false;
     hide();
 }
 
-void SecureDlg::slotBtnCancel()
+SAKDlg::~SAKDlg()
 {
-    if (retInt) *retInt = 0;
+    if ((mSAKProcess) && (mSAKProcess->isRunning())) {
+        mSAKProcess->kill(SIGTERM);
+        delete mSAKProcess;
+    }
     hide();
 }
 
-void SecureDlg::slotBtnLock()
+void SAKDlg::closeDialogForced()
 {
-    if (retInt) *retInt = 1;
-    hide();
-}
-
-void SecureDlg::slotBtnTask()
-{
-    if (retInt) *retInt = 2;
-    hide();
-}
-
-void SecureDlg::slotBtnShutdown()
-{
-    if (retInt) *retInt = 3;
-    hide();
-}
-
-void SecureDlg::setRetInt(int *i)
-{
-    retInt = i;
-}
-
-void SecureDlg::closeDialogForced()
-{
-    if (retInt) *retInt = 0;
     TQDialog::reject();
 }
 
-void SecureDlg::reject()
+void SAKDlg::reject()
 {
-    closeDialogForced();
+
 }
 
-void SecureDlg::show()
+void SAKDlg::updateLabel(TQString &txt)
+{
+    mStatusLabel->setPaletteForegroundColor(Qt::black);
+    mStatusLabel->setText("<b>" + txt + "</b>");
+}
+
+void SAKDlg::show()
 {
     TQDialog::show();
     TQApplication::flushX();
 }
 
-#include "securedlg.moc"
+#include "sakdlg.moc"

@@ -43,6 +43,11 @@ inline int tde_sak_verify_calling_process()
 {
 	bool authorized = false;
 
+	// Root always has access to everything...
+	if (getuid() == 0) {
+		return 0;
+	}
+
 	pid_t parentproc = getppid();
 #ifdef DEBUG
 	printf("Parent pid is: %d\n\r", parentproc);
