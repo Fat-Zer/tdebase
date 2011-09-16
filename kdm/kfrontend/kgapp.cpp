@@ -186,8 +186,11 @@ kg_main( const char *argv0 )
 	KCrash::setSafer( true );
 
 	trinity_desktop_lock_use_sak = _useSAK;
+	KProcess *tsak = 0;
 	if (trinity_desktop_lock_use_sak) {
-		system(TQString(TQCString( argv0, strrchr( argv0, '/' ) - argv0 + 2 ) + "tsak &").ascii());
+		tsak = new KProcess;
+		*tsak << TQCString( argv0, strrchr( argv0, '/' ) - argv0 + 2 ) + "tsak";
+		tsak->start();
 	}
 
 #ifdef HAVE_XCOMPOSITE
@@ -428,6 +431,11 @@ kg_main( const char *argv0 )
 		kwin->closeStdin();
 		kwin->detach();
 		delete kwin;
+	}
+	if (tsak) {
+		tsak->closeStdin();
+		tsak->detach();
+		delete tsak;
 	}
 	delete proc;
 	UnsecureDisplay( dpy );

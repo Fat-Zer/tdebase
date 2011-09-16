@@ -90,6 +90,7 @@ private:
 	KBackedComboBox    *colcombo;
 	KBackedComboBox    *echocombo;
 	KLanguageButton *langcombo;
+	TQCheckBox    *sakbox;
 
 };
 

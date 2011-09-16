@@ -30,6 +30,7 @@
 #include <tqwhatsthis.h>
 #include <tqvalidator.h>
 #include <tqstylefactory.h>
+#include <tqcheckbox.h>
 #include <tqstyle.h>
 
 #include <klocale.h>
@@ -237,6 +238,19 @@ KDMAppearanceWidget::KDMAppearanceWidget(TQWidget *parent, const char *name)
   TQWhatsThis::add( langcombo, wtstr );
 
 
+  // The SAK group box
+  group = new TQGroupBox(0, Qt::Vertical, i18n("Secure Attention Key"), this);
+  vbox->addWidget(group);
+
+  sakbox = new TQCheckBox( i18n("Enable Secure Attention Key"), group );
+  connect( sakbox, TQT_SIGNAL(toggled(bool)), TQT_SLOT(changed()) );
+  TQGridLayout *hbox2 = new TQGridLayout( group->tqlayout(), 2, 2, KDialog::spacingHint() );
+  hbox2->setColStretch(1, 1);
+  hbox2->addWidget(sakbox, 1, 0);
+  wtstr = i18n("Here you can enable or disable the Secure Attention Key [SAK] anti-spoofing measure.");
+  TQWhatsThis::add( sakbox, wtstr );
+
+
   vbox->addStretch(1);
 
 }
@@ -257,6 +271,7 @@ void KDMAppearanceWidget::makeReadOnly()
     colcombo->setEnabled(false);
     echocombo->setEnabled(false);
     langcombo->setEnabled(false);
+    sakbox->setEnabled(false);
 }
 
 void KDMAppearanceWidget::loadLanguageList(KLanguageButton *combo)
@@ -448,6 +463,8 @@ void KDMAppearanceWidget::save()
   config->writeEntry("GreeterPos", xLineEdit->text() + ',' + yLineEdit->text());
 
   config->writeEntry("Language", langcombo->current());
+
+  config->writeEntry("UseSAK", sakbox->isChecked());
 }
 
 
@@ -497,6 +514,9 @@ void KDMAppearanceWidget::load()
 
   // get the language
   langcombo->setCurrentItem(config->readEntry("Language", "C"));
+
+  // See if the SAK is enabled
+  sakbox->setChecked(config->readBoolEntry("UseSAK", true));
 }
 
 
