@@ -33,13 +33,13 @@ int main (int argc, char *argv[])
 	if (verifier_result == 0) {
 			// OK, the calling process is authorized to retrieve SAK data
 			// First, flush the buffer
-			mPipe_fd = open(FIFO_FILE, O_RDWR | O_NONBLOCK);
+			mPipe_fd = open(FIFO_FILE, O_RDONLY | O_NONBLOCK);
 			numread = 1;
 			while (numread > 0) {
 				numread = read(mPipe_fd, readbuf, 128);
 			}
 			// Now wait for SAK press
-			mPipe_fd = open(FIFO_FILE, O_RDWR);
+			mPipe_fd = open(FIFO_FILE, O_RDONLY);
 			if (mPipe_fd > -1) {
 				numread = read(mPipe_fd, readbuf, 128);
 				readbuf[numread] = 0;

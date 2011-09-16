@@ -43,8 +43,8 @@ License along with tsak. If not, see http://www.gnu.org/licenses/.
 
 typedef unsigned char byte;
 
-bool        mPipeOpen_out;
-int         mPipe_fd_out;
+bool        mPipeOpen_out = false;
+int         mPipe_fd_out = -1;
 
 struct sigaction usr_action;
 sigset_t block_mask;
@@ -137,9 +137,11 @@ int find_keyboard() {
 
 void tearDownPipe()
 {
-	mPipeOpen_out = false;
-	close(mPipe_fd_out);
-	unlink(FIFO_FILE_OUT);
+	if (mPipeOpen_out == true) {
+		mPipeOpen_out = false;
+		close(mPipe_fd_out);
+		unlink(FIFO_FILE_OUT);
+	}
 }
 
 void setupPipe()
@@ -151,10 +153,30 @@ void setupPipe()
 	mknod(FIFO_FILE_OUT, S_IFIFO|0600, 0);
 	chmod(FIFO_FILE_OUT, 0600);
 	
-	mPipe_fd_out = open(FIFO_FILE_OUT, O_RDWR | O_NONBLOCK);
+	mPipe_fd_out = open(FIFO_FILE_OUT, O_WRONLY | O_NONBLOCK);
 	if (mPipe_fd_out > -1) {
 		mPipeOpen_out = true;
 	}
+}
+
+bool checkLocks()
+{
+	int fdlock;
+	struct flock fl;
+	
+	fl.l_type = F_WRLCK;
+	fl.l_whence = SEEK_SET;
+	fl.l_start = 0;
+	fl.l_len = 1;
+
+	fdlock = open(FIFO_FILE_OUT, O_RDWR | O_NONBLOCK);
+	if (fdlock != -1) {
+		if(fcntl(fdlock, F_SETLK, &fl) == -1) {
+			return 0;
+		}
+	}
+
+	return 1;
 }
 
 class PipeHandler
@@ -166,7 +188,6 @@ public:
 
 PipeHandler::PipeHandler()
 {
-	setupPipe();
 }
 
 PipeHandler::~PipeHandler()
@@ -193,6 +214,11 @@ int main (int argc, char *argv[])
 		}
 	}
 
+	if (!checkLocks()) {
+		fprintf(stderr, "Another instance of this program is already running\n");
+		return 8;
+	}
+
 	// Create the output pipe
 	PipeHandler controlpipe;
 
@@ -214,7 +240,7 @@ int main (int argc, char *argv[])
 		else {
 			// Print Device Name
 			ioctl (fd, EVIOCGNAME (sizeof (name)), name);
-			printf ("Reading From : (%s)\n", name);
+			fprintf(stderr, "Reading From : (%s)\n", name);
 		
 			// Create filtered virtual output device
 			devout=open("/dev/misc/uinput",O_WRONLY|O_NONBLOCK);
@@ -230,32 +256,35 @@ int main (int argc, char *argv[])
 					return 3;
 			}
 			else {
-				ioctl(fd, EVIOCGNAME(UINPUT_MAX_NAME_SIZE), devinfo.name);
-				strncat(devinfo.name, "+tsak", UINPUT_MAX_NAME_SIZE-1);
-				fprintf(stderr, "%s\n", devinfo.name);
-				ioctl(fd, EVIOCGID, &devinfo.id);
-				
-				copy_features(fd, devout);
-				write(devout,&devinfo,sizeof(devinfo));
-				if (ioctl(devout,UI_DEV_CREATE)<0) {
-					fprintf(stderr,"Unable to create input device with UI_DEV_CREATE\n");
+				if(ioctl(fd, EVIOCGRAB, 2) < 0) {
+					close(fd);
+					fprintf(stderr, "Failed to grab exclusive input device lock");
 					if (established)
 						sleep(1);
 					else
-						return 2;
+						return 1;
 				}
 				else {
-					fprintf(stderr,"Device created.\n");
-			
-					if(ioctl(fd, EVIOCGRAB, 2) < 0) {
-						close(fd);
-						fprintf(stderr, "Failed to grab exclusive input device lock");
+					ioctl(fd, EVIOCGNAME(UINPUT_MAX_NAME_SIZE), devinfo.name);
+					strncat(devinfo.name, "+tsak", UINPUT_MAX_NAME_SIZE-1);
+					fprintf(stderr, "%s\n", devinfo.name);
+					ioctl(fd, EVIOCGID, &devinfo.id);
+					
+					copy_features(fd, devout);
+					write(devout,&devinfo,sizeof(devinfo));
+					if (ioctl(devout,UI_DEV_CREATE)<0) {
+						fprintf(stderr,"Unable to create input device with UI_DEV_CREATE\n");
 						if (established)
 							sleep(1);
 						else
-							return 1;
+							return 2;
 					}
 					else {
+						fprintf(stderr,"Device created.\n");
+
+						if (established == false) {
+							setupPipe();
+						}
 
 						established = true;
 
