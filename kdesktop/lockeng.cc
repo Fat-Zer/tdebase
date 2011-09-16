@@ -223,8 +223,6 @@ void SaverEngine::slotSAKProcessExited()
         {
             mLockProcess.kill( SIGHUP );
         }
-
-        TQTimer::singleShot( 0, this, TQT_SLOT(handleSecureDialog()) );
     }
 }
 
@@ -372,6 +370,9 @@ void SaverEngine::lockProcessExited()
     }
     processLockTransactions();
     mState = Waiting;
+    if (trinity_lockeng_sak_available == TRUE) {
+        handleSecureDialog();
+    }
 }
 
 //---------------------------------------------------------------------------

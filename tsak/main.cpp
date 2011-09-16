@@ -330,6 +330,8 @@ int main (int argc, char *argv[])
 							if (hide_event == true) {
 								// Let anyone listening to our interface know that an SAK keypress was received
 								write(mPipe_fd_out, "SAK\n\r", 6);
+								write(mPipe_fd_out, "SAK\n\r", 6);
+								write(mPipe_fd_out, "SAK\n\r", 6);
 							}
 						}
 					}

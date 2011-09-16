@@ -36,12 +36,12 @@ int main (int argc, char *argv[])
 			mPipe_fd = open(FIFO_FILE, O_RDONLY | O_NONBLOCK);
 			numread = 1;
 			while (numread > 0) {
-				numread = read(mPipe_fd, readbuf, 128);
+				numread = read(mPipe_fd, readbuf, 6);
 			}
 			// Now wait for SAK press
 			mPipe_fd = open(FIFO_FILE, O_RDONLY);
 			if (mPipe_fd > -1) {
-				numread = read(mPipe_fd, readbuf, 128);
+				numread = read(mPipe_fd, readbuf, 6);
 				readbuf[numread] = 0;
 				readbuf[127] = 0;
 				close(mPipe_fd);
