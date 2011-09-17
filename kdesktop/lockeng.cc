@@ -83,6 +83,7 @@ void SaverEngine::lock()
     bool ok = true;
     if (mState == Waiting)
     {
+        mSAKProcess->kill(SIGTERM);
         ok = startLockProcess( ForceLock );
 // It takes a while for kdesktop_lock to start and lock the screen.
 // Therefore delay the DCOP call until it tells kdesktop that the locking is in effect.
@@ -127,6 +128,7 @@ void SaverEngine::save()
 {
     if (mState == Waiting)
     {
+        mSAKProcess->kill(SIGTERM);
         startLockProcess( DefaultLock );
     }
 }
@@ -208,9 +210,9 @@ void SaverEngine::handleSecureDialog()
 void SaverEngine::slotSAKProcessExited()
 {
     int retcode = mSAKProcess->exitStatus();
-    if (retcode != 0) trinity_lockeng_sak_available = FALSE;
+    if ((retcode != 0) && (mSAKProcess->normalExit())) trinity_lockeng_sak_available = FALSE;
 
-    if (trinity_lockeng_sak_available == TRUE) {
+    if ((mSAKProcess->normalExit()) && (trinity_lockeng_sak_available == TRUE)) {
         bool ok = true;
         if (mState == Waiting)
         {
@@ -384,6 +386,7 @@ void SaverEngine::idleTimeout()
     // disable X screensaver
     XForceScreenSaver(qt_xdisplay(), ScreenSaverReset );
     XSetScreenSaver(qt_xdisplay(), 0, mXInterval, PreferBlanking, DontAllowExposures);
+    mSAKProcess->kill(SIGTERM);
     startLockProcess( DefaultLock );
 }
 
