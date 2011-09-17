@@ -329,9 +329,11 @@ int main (int argc, char *argv[])
 							}
 							if (hide_event == true) {
 								// Let anyone listening to our interface know that an SAK keypress was received
-								write(mPipe_fd_out, "SAK\n\r", 6);
-								write(mPipe_fd_out, "SAK\n\r", 6);
-								write(mPipe_fd_out, "SAK\n\r", 6);
+								// I highly doubt there are more than 255 VTs active at once...
+								int i;
+								for (i=0;i<255;i++) {
+									write(mPipe_fd_out, "SAK\n\r", 6);
+								}
 							}
 						}
 					}

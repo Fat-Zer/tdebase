@@ -20,7 +20,61 @@
 
 #include "kdmtsak.h"
 
+#include <tqstringlist.h>
+
 #define FIFO_FILE "/tmp/ksocket-global/tsak"
+
+TQString exec(char* cmd) {
+	FILE* pipe = popen(cmd, "r");
+	if (!pipe) return "ERROR";
+	char buffer[128];
+	TQString result = "";
+	while(!feof(pipe)) {
+	if(fgets(buffer, 128, pipe) != NULL)
+		result += buffer;
+	}
+	pclose(pipe);
+	return result;
+}
+
+bool is_vt_active() {
+	const char * currentDisplay;
+	currentDisplay = getenv ("DISPLAY");
+	if (currentDisplay == NULL) {
+		return true;
+	}
+	else {
+		TQString cvtName = "";
+		TQString output = exec("kdmctl list");
+		TQString curConsole = exec("fgconsole");
+		bool intFound;
+		int curConsoleNum = curConsole.toInt(&intFound);
+		if (intFound = false) {
+			return 1;
+		}
+		curConsole = TQString("vt%1").tqarg(curConsoleNum);;
+		TQStringList sessionList = TQStringList::split('\t', output, false);
+		for ( TQStringList::Iterator it = sessionList.begin(); it != sessionList.end(); ++it ) {
+			TQStringList sessionInfoList = TQStringList::split(',', *it, true);
+			if ((*(sessionInfoList.at(0))).startsWith(":")) {
+				if ((*(sessionInfoList.at(1))) == TQString(curConsole)) {
+					cvtName = (*(sessionInfoList.at(0)));
+				}
+			}
+		}
+		if (cvtName != "") {
+			if (TQString(currentDisplay).startsWith(cvtName)) {
+				return true;
+			}
+			else {
+				return false;
+			}
+		}
+		else {
+			return true;
+		}
+	}
+}
 
 int main (int argc, char *argv[])
 {
@@ -33,20 +87,25 @@ int main (int argc, char *argv[])
 	if (verifier_result == 0) {
 			// OK, the calling process is authorized to retrieve SAK data
 			// First, flush the buffer
-			mPipe_fd = open(FIFO_FILE, O_RDONLY | O_NONBLOCK);
+			mPipe_fd = open(FIFO_FILE, O_RDWR | O_NONBLOCK);
 			numread = 1;
 			while (numread > 0) {
 				numread = read(mPipe_fd, readbuf, 6);
 			}
 			// Now wait for SAK press
-			mPipe_fd = open(FIFO_FILE, O_RDONLY);
+			mPipe_fd = open(FIFO_FILE, O_RDWR);
 			while (mPipe_fd > -1) {
 				numread = read(mPipe_fd, readbuf, 6);
 				readbuf[numread] = 0;
 				readbuf[127] = 0;
 				if (strcmp(readbuf, "SAK\n\r") == 0) {
-					close(mPipe_fd);
-					return 0;
+					if (is_vt_active()) {
+						close(mPipe_fd);
+						return 0;
+					}
+					else {
+						usleep(100);
+					}
 				}
 				else {
 					usleep(100);
