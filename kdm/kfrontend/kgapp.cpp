@@ -185,12 +185,21 @@ kg_main( const char *argv0 )
 	KApplication::disableAutoDcopRegistration();
 	KCrash::setSafer( true );
 
-	trinity_desktop_lock_use_sak = _useSAK;
 	KProcess *tsak = 0;
+	KProcess *proc = 0;
+	KProcess *comp = 0;
+	KProcess *kwin = 0;
+
+	trinity_desktop_lock_use_sak = _useSAK;
 	if (trinity_desktop_lock_use_sak) {
 		tsak = new KProcess;
 		*tsak << TQCString( argv0, strrchr( argv0, '/' ) - argv0 + 2 ) + "tsak";
 		tsak->start();
+	}
+	if (tsak) {
+		tsak->closeStdin();
+		tsak->detach();
+		delete tsak;
 	}
 
 #ifdef HAVE_XCOMPOSITE
@@ -279,9 +288,6 @@ kg_main( const char *argv0 )
 
 	setup_modifiers( dpy, _numLockStatus );
 	SecureDisplay( dpy );
-	KProcess *proc = 0;
-	KProcess *comp = 0;
-	KProcess *kwin = 0;
 	if (!_grabServer) {
 		if (_useBackground) {
 			proc = new KProcess;
@@ -334,7 +340,7 @@ kg_main( const char *argv0 )
 
 		KProcess *proc2 = 0;
 		app->setOverrideCursor( Qt::WaitCursor );
-		FDialog *dialog;
+		FDialog *dialog = NULL;
 #ifdef XDMCP
 		if (cmd == G_Choose) {
 			dialog = new ChooserDlg;
@@ -389,7 +395,9 @@ kg_main( const char *argv0 )
 
 		login_user = static_cast<KGreeter*>(dialog)->curUser;
 
-		delete dialog;
+		if (rslt != ex_greet) {
+			delete dialog;
+		}
 		delete proc2;
 #ifdef XDMCP
 		switch (rslt) {
@@ -431,11 +439,6 @@ kg_main( const char *argv0 )
 		kwin->closeStdin();
 		kwin->detach();
 		delete kwin;
-	}
-	if (tsak) {
-		tsak->closeStdin();
-		tsak->detach();
-		delete tsak;
 	}
 	delete proc;
 	UnsecureDisplay( dpy );
