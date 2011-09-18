@@ -173,7 +173,13 @@ KDModule::KDModule(TQWidget *parent, const char *name, const TQStringList &)
     kdWarning() << "user(s) '" << tgmapci.data().join(",")
 	<< "' have unknown GID " << tgmapci.key() << endl;
 
-  config = new KSimpleConfig( TQString::tqfromLatin1( KDE_CONFDIR "/kdm/kdmrc" ));
+  struct stat st;
+  if( stat( KDE_CONFDIR "/kdm/kdmdistrc" ,&st ) == 0) {
+    config = new KSimpleConfig( TQString::tqfromLatin1( KDE_CONFDIR "/kdm/kdmdistrc" ));
+  }
+  else {
+    config = new KSimpleConfig( TQString::tqfromLatin1( KDE_CONFDIR "/kdm/kdmrc" ));
+  }
 
   TQVBoxLayout *top = new TQVBoxLayout(this);
   tab = new TQTabWidget(this);
