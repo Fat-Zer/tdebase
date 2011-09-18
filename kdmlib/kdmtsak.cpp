@@ -163,6 +163,7 @@ int main (int argc, char *argv[])
 						while (numread > 0) {
 							numread = read(mPipe_fd, readbuf, 6);
 						}
+						close(mPipe_fd);
 						mPipe_fd = open(FIFO_FILE, O_RDWR);
 					}
 				}
