@@ -71,6 +71,18 @@ bool is_vt_active() {
 			}
 		}
 		else {
+			// See if the current session is local
+			// If it is, then the VT is not currently active and the SAK must be requested later when it is active
+			for ( TQStringList::Iterator it = sessionList.begin(); it != sessionList.end(); ++it ) {
+				TQStringList sessionInfoList = TQStringList::split(',', *it, true);
+				if ((*(sessionInfoList.at(0))).startsWith(":")) {
+					if (TQString(currentDisplay).startsWith(*(sessionInfoList.at(0)))) {
+						return false;
+					}
+				}
+			}
+			// Hmm, not local
+			// Do not reject the SAK
 			return true;
 		}
 	}
@@ -92,6 +104,7 @@ int main (int argc, char *argv[])
 			while (numread > 0) {
 				numread = read(mPipe_fd, readbuf, 6);
 			}
+			close(mPipe_fd);
 			// Now wait for SAK press
 			mPipe_fd = open(FIFO_FILE, O_RDWR);
 			while (mPipe_fd > -1) {
@@ -99,12 +112,19 @@ int main (int argc, char *argv[])
 				readbuf[numread] = 0;
 				readbuf[127] = 0;
 				if (strcmp(readbuf, "SAK\n\r") == 0) {
+					close(mPipe_fd);
 					if (is_vt_active()) {
-						close(mPipe_fd);
 						return 0;
 					}
 					else {
 						usleep(100);
+						// Flush the buffer
+						mPipe_fd = open(FIFO_FILE, O_RDWR | O_NONBLOCK);
+						numread = 1;
+						while (numread > 0) {
+							numread = read(mPipe_fd, readbuf, 6);
+						}
+						mPipe_fd = open(FIFO_FILE, O_RDWR);
 					}
 				}
 				else {
