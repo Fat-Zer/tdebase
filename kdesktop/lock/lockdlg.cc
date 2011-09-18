@@ -728,7 +728,7 @@ void PasswordDlg::slotSwitchUser()
 
         lv = new TQListView( winFrame );
         connect( lv, TQT_SIGNAL(doubleClicked(TQListViewItem *, const TQPoint&, int)), TQT_SLOT(slotSessionActivated()) );
-        connect( lv, TQT_SIGNAL(doubleClicked(TQListViewItem *, const TQPoint&, int)), &dialog, TQT_SLOT(reject()) );
+        connect( lv, TQT_SIGNAL(doubleClicked(TQListViewItem *, const TQPoint&, int)), &dialog, TQT_SLOT(accept()) );
         lv->setAllColumnsShowFocus( true );
         lv->addColumn( i18n("Session") );
         lv->addColumn( i18n("Location") );
@@ -759,7 +759,7 @@ void PasswordDlg::slotSwitchUser()
 
         btn = new KPushButton( KGuiItem(i18n("session", "&Activate"), "fork"), winFrame );
         connect( btn, TQT_SIGNAL(clicked()), TQT_SLOT(slotSessionActivated()) );
-        connect( btn, TQT_SIGNAL(clicked()), &dialog, TQT_SLOT(reject()) );
+        connect( btn, TQT_SIGNAL(clicked()), &dialog, TQT_SLOT(accept()) );
         vbox2->addWidget( btn );
         vbox2->addStretch( 2 );
     }
@@ -768,7 +768,7 @@ void PasswordDlg::slotSwitchUser()
     {
         btn = new KPushButton( KGuiItem(i18n("Start &New Session"), "fork"), winFrame );
         connect( btn, TQT_SIGNAL(clicked()), TQT_SLOT(slotStartNewSession()) );
-        connect( btn, TQT_SIGNAL(clicked()), &dialog, TQT_SLOT(reject()) );
+        connect( btn, TQT_SIGNAL(clicked()), &dialog, TQT_SLOT(accept()) );
         if (!p)
             btn->setEnabled( false );
         vbox2->addWidget( btn );
@@ -779,7 +779,10 @@ void PasswordDlg::slotSwitchUser()
     connect( btn, TQT_SIGNAL(clicked()), &dialog, TQT_SLOT(reject()) );
     vbox2->addWidget( btn );
 
-    static_cast< LockProcess* >(parent())->execDialog( &dialog );
+    int ret = static_cast< LockProcess* >(parent())->execDialog( &dialog );
+    if (ret != TQDialog::Rejected) {
+        TQDialog::reject();
+    }
 }
 
 void PasswordDlg::slotSessionActivated()
