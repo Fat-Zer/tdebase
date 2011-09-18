@@ -382,6 +382,7 @@ PautoLoginX( Value *retval )
 CONF_READ_ENTRIES
 
 static const char *kdmrc = KDMCONF "/kdmrc";
+static const char *kdmrc_dist = KDMCONF "/kdmdistrc";
 
 static Section *rootsec;
 
@@ -402,9 +403,15 @@ ReadConf()
 		return;
 	confread = 1;
 
-	Debug( "reading config %s ...\n", kdmrc );
-	if (!readFile( &file, kdmrc, "master configuration" ))
-		return;
+	Debug( "reading config %s ...\n", kdmrc_dist );
+	if (!readFile( &file, kdmrc_dist, "master configuration" )) {
+		Debug( "reading config %s ...\n", kdmrc );
+		if (!readFile( &file, kdmrc, "master configuration" ))
+			return;
+	}
+	else {
+		kdmrc = kdmrc_dist;
+	}
 
 	for (s = file.buf, line = 0, cursec = 0, sectmoan = 1; s < file.eof; s++) {
 		line++;
@@ -1374,7 +1381,7 @@ int main( int argc ATTR_UNUSED, char **argv )
 
 /*	Debug ("parsing command line\n");*/
 	if (**++argv)
-		kdmrc = *argv;
+		kdmrc_dist = kdmrc = *argv;
 /*
 	while (*++argv) {
 	}
