@@ -13,6 +13,7 @@
 
 #include <kprocess.h>
 #include <kpixmap.h>
+#include <krootpixmap.h>
 
 #include <tqwidget.h>
 #include <tqtimer.h>
@@ -71,7 +72,7 @@ public slots:
     void desktopResized();
     void doDesktopResizeFinish();
     void doFunctionKeyBroadcast();
-    void slotPaintBackground();
+    void slotPaintBackground(const TQPixmap &pm);
 
 protected:
     virtual bool x11Event(XEvent *);
@@ -186,6 +187,8 @@ private:
     bool        mHackStartupEnabled;
 
     TQPixmap    backingPixmap;
+    KRootPixmap  *m_rootPixmap;
+    int         mBackingStartupDelayTimer;
 
     KSMModalDialog* m_startupStatusDialog;
 };

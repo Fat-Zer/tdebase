@@ -42,6 +42,7 @@ private slots:
     void slotBtnLock();
     void slotBtnTask();
     void slotBtnShutdown();
+    void slotBtnSwitchUser();
 
 protected slots:
     virtual void reject();
@@ -54,6 +55,7 @@ private:
     TQButton     *mLockButton;
     TQButton     *mTaskButton;
     TQButton     *mShutdownButton;
+    TQButton     *mSwitchButton;
     int         mCapsLocked;
     bool        mUnlockingFailed;
     TQStringList layoutsList;

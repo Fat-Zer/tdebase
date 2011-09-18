@@ -104,28 +104,34 @@ SecureDlg::SecureDlg(LockProcess *parent)
     mShutdownButton->setText(i18n("Logoff Menu"));
     mShutdownButton->setEnabled(false); // FIXME
 
+    mSwitchButton = new TQPushButton( frame );
+    mSwitchButton->setText(i18n("Switch User"));
+    mSwitchButton->setEnabled(false); // FIXME
+
     TQVBoxLayout *unlockDialogLayout = new TQVBoxLayout( this );
     unlockDialogLayout->addWidget( frame );
 
     TQHBoxLayout *layStatus = new TQHBoxLayout( 0, 0, KDialog::spacingHint());
     layStatus->addWidget( mLogonStatus );
 
-    TQHBoxLayout *layPBRow1 = new TQHBoxLayout( 0, 0, KDialog::spacingHint());
-    layPBRow1->addWidget( mLockButton );
-    layPBRow1->addWidget( mTaskButton );
-    layPBRow1->addWidget( mShutdownButton );
-    layPBRow1->addWidget( mCancelButton );
+    TQGridLayout *layPBGrid = new TQGridLayout( 0, 0, KDialog::spacingHint());
+    layPBGrid->addWidget( mLockButton, 0, 0 );
+    layPBGrid->addWidget( mTaskButton, 0, 1 );
+    layPBGrid->addWidget( mShutdownButton, 0, 2 );
+    layPBGrid->addWidget( mCancelButton, 0, 3 );
+    layPBGrid->addWidget( mSwitchButton, 1, 0 );
 
     frameLayout = new TQGridLayout( frame, 1, 1, KDialog::marginHint(), KDialog::spacingHint() );
     frameLayout->addMultiCellWidget( theader, 0, 0, 0, 1, AlignTop | AlignLeft );
     frameLayout->addMultiCellLayout( layStatus, 1, 1, 0, 1, AlignLeft | AlignVCenter);
     frameLayout->addMultiCellWidget( sep, 2, 2, 0, 1 );
-    frameLayout->addMultiCellLayout( layPBRow1, 3, 3, 0, 1, AlignLeft | AlignVCenter);
+    frameLayout->addMultiCellLayout( layPBGrid, 3, 3, 0, 1, AlignLeft | AlignVCenter);
 
     connect(mCancelButton, TQT_SIGNAL(clicked()), this, TQT_SLOT(slotBtnCancel()));
     connect(mLockButton, TQT_SIGNAL(clicked()), this, TQT_SLOT(slotBtnLock()));
     connect(mTaskButton, TQT_SIGNAL(clicked()), this, TQT_SLOT(slotBtnTask()));
     connect(mShutdownButton, TQT_SIGNAL(clicked()), this, TQT_SLOT(slotBtnShutdown()));
+    connect(mSwitchButton, TQT_SIGNAL(clicked()), this, TQT_SLOT(slotBtnSwitchUser()));
 
     TQSize dlgSz = sizeHint();
     int btnSize = dlgSz.width();
@@ -135,6 +141,7 @@ SecureDlg::SecureDlg(LockProcess *parent)
     mTaskButton->setFixedWidth(btnSize);
     mCancelButton->setFixedWidth(btnSize);
     mShutdownButton->setFixedWidth(btnSize);
+    mSwitchButton->setFixedWidth(btnSize);
 
     installEventFilter(this);
 }
@@ -165,6 +172,12 @@ void SecureDlg::slotBtnTask()
 void SecureDlg::slotBtnShutdown()
 {
     if (retInt) *retInt = 3;
+    hide();
+}
+
+void SecureDlg::slotBtnSwitchUser()
+{
+    if (retInt) *retInt = 4;
     hide();
 }
 

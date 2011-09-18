@@ -162,21 +162,23 @@ LockProcess::LockProcess(bool child, bool useBlankOnly)
       mRestoreXF86Lock(false),
       mForbidden(false),
       mAutoLogout(false),
+      resizeTimer(NULL),
+      hackResumeTimer(NULL),
       mVkbdProcess(NULL),
       mKWinModule(NULL),
       mPipeOpen(false),
       mPipeOpen_out(false),
       mInfoMessageDisplayed(false),
-      mForceReject(false),
       mDialogControlLock(false),
+      mForceReject(false),
       currentDialog(NULL),
-      resizeTimer(NULL),
-      hackResumeTimer(NULL),
       mForceContinualLockDisplayTimer(NULL),
       mEnsureVRootWindowSecurityTimer(NULL),
       mHackDelayStartupTimer(NULL),
       mHackDelayStartupTimeout(0),
       mHackStartupEnabled(true),
+      m_rootPixmap(NULL),
+      mBackingStartupDelayTimer(0),
       m_startupStatusDialog(NULL)
 {
     setupSignals();
@@ -301,6 +303,11 @@ LockProcess::~LockProcess()
         greetPlugin.library->unload();
     }
 
+    if (m_rootPixmap) {
+        m_rootPixmap->stop();
+        delete m_rootPixmap;
+    }
+
     mPipeOpen = false;
     mPipeOpen_out = false;
 }
@@ -310,13 +317,17 @@ static int signal_pipe[2];
 static void sigterm_handler(int)
 {
     char tmp = 'T';
-    ::write( signal_pipe[1], &tmp, 1);
+    if (::write( signal_pipe[1], &tmp, 1) == -1) {
+        // Error handler to shut up gcc warnings
+    }
 }
 
 static void sighup_handler(int)
 {
     char tmp = 'H';
-    ::write( signal_pipe[1], &tmp, 1);
+    if (::write( signal_pipe[1], &tmp, 1) == -1) {
+        // Error handler to shut up gcc warnings
+    }
 }
 
 bool LockProcess::closeCurrentWindow()
@@ -418,7 +429,7 @@ void LockProcess::checkPipe()
                 InfoDlg inDlg( this );
                 inDlg.updateLabel(to_display);
                 inDlg.setUnlockIcon();
-                int ret = execDialog( &inDlg );
+                execDialog( &inDlg );
                 mForceReject = false;
                 return;
             }
@@ -442,7 +453,7 @@ void LockProcess::checkPipe()
                 if (readbuf[0] == 'I') inDlg.setInfoIcon();
                 if (readbuf[0] == 'W') inDlg.setWarningIcon();
                 if (readbuf[0] == 'E') inDlg.setErrorIcon();
-                int ret = execDialog( &inDlg );
+                execDialog( &inDlg );
                 mForceReject = false;
                 return;
             }
@@ -464,13 +475,17 @@ void LockProcess::checkPipe()
                 qryDlg.updateLabel(to_display);
                 qryDlg.setUnlockIcon();
                 mForceReject = false;
-                int ret = execDialog( &qryDlg );
+                execDialog( &qryDlg );
                 if (mForceReject == false) {
                     pin_entry = qryDlg.getEntry();
                     mInfoMessageDisplayed=false;
                     if (mPipeOpen_out == true) {
-                        write(mPipe_fd_out, pin_entry, strlen(pin_entry)+1);
-                        write(mPipe_fd_out, "\n\r", 3);
+                        if (write(mPipe_fd_out, pin_entry, strlen(pin_entry)+1) == -1) {
+                            // Error handler to shut up gcc warnings
+                        }
+                        if (write(mPipe_fd_out, "\n\r", 3) == -1) {
+                            // Error handler to shut up gcc warnings
+                        }
                     }
                 }
                 mForceReject = false;
@@ -509,7 +524,9 @@ void LockProcess::setupSignals()
     act.sa_flags = 0;
     sigaction(SIGHUP, &act, 0L);
 
-    pipe(signal_pipe);
+    if (pipe(signal_pipe) == -1) {
+        // Error handler to shut up gcc warnings
+    }
     TQSocketNotifier* notif = new TQSocketNotifier(signal_pipe[0],
 	TQSocketNotifier::Read, TQT_TQOBJECT(this) );
     connect( notif, TQT_SIGNAL(activated(int)), TQT_SLOT(signalPipeSignal()));
@@ -519,7 +536,9 @@ void LockProcess::setupSignals()
 void LockProcess::signalPipeSignal()
 {
     char tmp;
-    ::read( signal_pipe[0], &tmp, 1);
+    if (::read( signal_pipe[0], &tmp, 1) == -1) {
+        // Error handler to shut up gcc warnings
+    }
     if( tmp == 'T' )
         quitSaver();
     else if( tmp == 'H' ) {
@@ -531,11 +550,13 @@ void LockProcess::signalPipeSignal()
 //---------------------------------------------------------------------------
 bool LockProcess::lock()
 {
+#ifdef USE_SECURING_DESKTOP_NOTIFICATION
 	m_startupStatusDialog = new KSMModalDialog(this);
 	m_startupStatusDialog->setStatusMessage(i18n("Securing desktop session").append("..."));
 	m_startupStatusDialog->show();
 	m_startupStatusDialog->setActiveWindow();
 	tqApp->processEvents();
+#endif
 
 	if (startSaver()) {
 		// In case of a forced lock we don't react to events during
@@ -589,6 +610,12 @@ void LockProcess::quitSaver()
 //---------------------------------------------------------------------------
 void LockProcess::startSecureDialog()
 {
+	if ((backingPixmap.isNull()) && (mBackingStartupDelayTimer < 100)) {
+		TQTimer::singleShot(10, this, TQT_SLOT(startSecureDialog()));
+		mBackingStartupDelayTimer++;
+		return;
+	}
+
 	int ret;
 	SecureDlg inDlg( this );
 	inDlg.setRetInt(&ret);
@@ -620,7 +647,9 @@ void LockProcess::startSecureDialog()
 		mBusy = false;
 	}
 	if (ret == 2) {
-		system("ksysguard &");
+		if (system("ksysguard &") == -1) {
+                    // Error handler to shut up gcc warnings
+                }
 		kapp->quit();
 	}
 	// FIXME
@@ -630,14 +659,17 @@ void LockProcess::startSecureDialog()
 
 bool LockProcess::runSecureDialog()
 {
+#ifdef USE_SECURING_DESKTOP_NOTIFICATION
 	m_startupStatusDialog = new KSMModalDialog(this);
 	m_startupStatusDialog->setStatusMessage(i18n("Securing desktop session").append("..."));
 	m_startupStatusDialog->show();
 	m_startupStatusDialog->setActiveWindow();
 	tqApp->processEvents();
+#endif
 
 	trinity_desktop_lock_in_sec_dlg = true;
 	if (startSaver()) {
+		mBackingStartupDelayTimer = 0;
 		TQTimer::singleShot(0, this, TQT_SLOT(startSecureDialog()));
 		return true;
 	}
@@ -1105,12 +1137,10 @@ bool LockProcess::startSaver()
 	}
 	if (trinity_desktop_lock_use_system_modal_dialogs) {
 		// Try to get the root pixmap
-		TQString filename = getenv("USER");
-		filename.prepend("/tmp/kde-");
-		filename.append("/krootbacking.png");
-		remove(filename.ascii());
-		system("krootbacking &");
-		TQTimer::singleShot( 0, this, SLOT(slotPaintBackground()) );
+		m_rootPixmap = new KRootPixmap(this);
+		m_rootPixmap->setCustomPainting(true);
+		connect(m_rootPixmap, TQT_SIGNAL(backgroundUpdated(const TQPixmap &)), this, TQT_SLOT(slotPaintBackground(const TQPixmap &)));
+		m_rootPixmap->start();
 	}
 
 	if (trinity_desktop_lock_in_sec_dlg == FALSE) {
@@ -1143,7 +1173,9 @@ void LockProcess::stopSaver()
         ungrabInput();
         const char *out = "GOAWAY!";
         for (TQValueList<int>::ConstIterator it = child_sockets.begin(); it != child_sockets.end(); ++it)
-            write(*it, out, sizeof(out));
+            if (write(*it, out, sizeof(out)) == -1) {
+                // Error handler to shut up gcc warnings
+            }
     }
 }
 
@@ -1479,7 +1511,7 @@ bool LockProcess::checkPass()
         if (trinity_desktop_lock_use_sak) {
             // Wait for SAK press before continuing...
             SAKDlg inDlg( this );
-            int ret = execDialog( &inDlg );
+            execDialog( &inDlg );
             if (trinity_desktop_lock_closing_windows)
                 return 0;
         }
@@ -1576,21 +1608,9 @@ int LockProcess::execDialog( TQDialog *dlg )
     return rt;
 }
 
-void LockProcess::slotPaintBackground()
+void LockProcess::slotPaintBackground(const TQPixmap &rpm)
 {
-	TQPixmap pm;
-	TQString filename = getenv("USER");
-	filename.prepend("/tmp/kde-");
-	filename.append("/krootbacking.png");
-	bool success = pm.load(filename, "PNG");
-	if (!success) {
-		sleep(1);
-		success = pm.load(filename, "PNG");
-		if (!success) {
-			pm = TQPixmap(kapp->desktop()->width(), kapp->desktop()->height());
-			pm.fill(Qt::black);
-		}
-	}
+	TQPixmap pm = rpm;
 
 	if (TQPaintDevice::x11AppDepth() == 32) {
 		// Remove the alpha components from the image
@@ -1695,7 +1715,7 @@ bool LockProcess::x11Event(XEvent *event)
                     ENABLE_CONTINUOUS_LOCKDLG_DISPLAY
                     if (mHackStartupEnabled) mHackDelayStartupTimer->start(mHackDelayStartupTimeout, TRUE);
                 }
-                if (!mLocked)
+                if ((!mLocked) && (!trinity_desktop_lock_in_sec_dlg))
                 {
                     stopSaver();
                     kapp->quit();
