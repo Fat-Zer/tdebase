@@ -24,7 +24,7 @@
 
 #define FIFO_FILE "/tmp/ksocket-global/tsak"
 
-TQString exec(char* cmd) {
+TQString exec(const char * cmd) {
 	FILE* pipe = popen(cmd, "r");
 	if (!pipe) return "ERROR";
 	char buffer[128];
@@ -35,6 +35,30 @@ TQString exec(char* cmd) {
 	}
 	pclose(pipe);
 	return result;
+}
+
+bool is_vt_local() {
+	const char * currentDisplay;
+	currentDisplay = getenv ("DISPLAY");
+	if (currentDisplay == NULL) {
+		return false;
+	}
+	else {
+		TQString cvtName = "";
+		TQString output = exec("kdmctl list");
+		TQStringList sessionList = TQStringList::split('\t', output, false);
+		// See if the current session is local
+		for ( TQStringList::Iterator it = sessionList.begin(); it != sessionList.end(); ++it ) {
+			TQStringList sessionInfoList = TQStringList::split(',', *it, true);
+			if ((*(sessionInfoList.at(0))).startsWith(":")) {
+				if (TQString(currentDisplay).startsWith(*(sessionInfoList.at(0)))) {
+					return true;
+				}
+			}
+		}
+		// Not local
+		return false;
+	}
 }
 
 bool is_vt_active() {
@@ -49,8 +73,8 @@ bool is_vt_active() {
 		TQString curConsole = exec("fgconsole");
 		bool intFound;
 		int curConsoleNum = curConsole.toInt(&intFound);
-		if (intFound = false) {
-			return 1;
+		if (intFound == false) {
+			return true;
 		}
 		curConsole = TQString("vt%1").tqarg(curConsoleNum);;
 		TQStringList sessionList = TQStringList::split('\t', output, false);
@@ -95,6 +119,21 @@ int main (int argc, char *argv[])
 	int numread;
 
 	int verifier_result = tde_sak_verify_calling_process();
+
+	bool isdm = false;
+	if (argc == 2) {
+		if (strcmp(argv[1], "dm") == 0) {
+			isdm = true;
+		}
+	}
+
+	if (!isdm) {
+		// Verify that the session is local
+		// Remote sessions cannot press the SAK for obvious reasons
+		if (!is_vt_local()) {
+			return 6;	// SAK not available
+		}
+	}
 
 	if (verifier_result == 0) {
 			// OK, the calling process is authorized to retrieve SAK data

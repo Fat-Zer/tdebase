@@ -106,7 +106,7 @@ SAKDlg::SAKDlg(TQWidget *parent)
     installEventFilter(this);
 
     mSAKProcess = new KProcess;
-    *mSAKProcess << "kdmtsak";
+    *mSAKProcess << "kdmtsak" << "dm";
     connect(mSAKProcess, TQT_SIGNAL(processExited(KProcess*)), this, TQT_SLOT(slotSAKProcessExited()));
     mSAKProcess->start();
 }
