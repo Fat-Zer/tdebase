@@ -33,6 +33,7 @@
 #include <tqlabel.h>
 
 #include <X11/Xlib.h>
+#include <X11/Xatom.h>
 
 #include "keramik.h"
 #include "keramik.moc"
@@ -1023,6 +1024,21 @@ void KeramikClient::reset( unsigned long )
 	}
 }
 
+bool KeramikClient::isModalSystemNotification()
+{
+    unsigned char *data = 0;
+    Atom actual;
+    int format, result;
+    unsigned long n, left;
+    Atom kde_wm_system_modal_notification;
+    kde_wm_system_modal_notification = XInternAtom(qt_xdisplay(), "_KDE_WM_MODAL_SYS_NOTIFICATION", False);
+    result = XGetWindowProperty(qt_xdisplay(), windowId(), kde_wm_system_modal_notification, 0L, 1L, False, XA_CARDINAL, &actual, &format, &n, &left, /*(unsigned char **)*/ &data);
+    if (result == Success && data != None && format == 32 )
+        {
+        return TRUE;
+        }
+    return FALSE;
+}
 
 void KeramikClient::addButtons( TQBoxLayout *layout, const TQString &s )
 {
@@ -1032,22 +1048,26 @@ void KeramikClient::addButtons( TQBoxLayout *layout, const TQString &s )
 		{
 			// Menu button
 			case 'M' :
-				if ( !button[MenuButton] ) {
-					button[MenuButton] = new KeramikButton( this, "menu", MenuButton, i18n("Menu"), Qt::LeftButton|Qt::RightButton );
-					connect( button[MenuButton], TQT_SIGNAL( pressed() ), TQT_SLOT( menuButtonPressed() ) );
-					layout->addWidget( button[MenuButton] );
+				if (!isModalSystemNotification()) {
+					if ( !button[MenuButton] ) {
+						button[MenuButton] = new KeramikButton( this, "menu", MenuButton, i18n("Menu"), Qt::LeftButton|Qt::RightButton );
+						connect( button[MenuButton], TQT_SIGNAL( pressed() ), TQT_SLOT( menuButtonPressed() ) );
+						layout->addWidget( button[MenuButton] );
+					}
 				}
 				break;
 
 			// OnAllDesktops button
 			case 'S' :
-				if ( !button[OnAllDesktopsButton] ) {
-					button[OnAllDesktopsButton] = new KeramikButton( this, "on_all_desktops",
-							OnAllDesktopsButton, isOnAllDesktops()?i18n("Not on all desktops"):i18n("On all desktops") );
-					if(isOnAllDesktops())
-						button[OnAllDesktopsButton]->toggle();
-					connect( button[OnAllDesktopsButton], TQT_SIGNAL( clicked() ), TQT_SLOT( toggleOnAllDesktops() ) );
-					layout->addWidget( button[OnAllDesktopsButton] );
+				if (!isModalSystemNotification()) {
+					if ( !button[OnAllDesktopsButton] ) {
+						button[OnAllDesktopsButton] = new KeramikButton( this, "on_all_desktops",
+								OnAllDesktopsButton, isOnAllDesktops()?i18n("Not on all desktops"):i18n("On all desktops") );
+						if(isOnAllDesktops())
+							button[OnAllDesktopsButton]->toggle();
+						connect( button[OnAllDesktopsButton], TQT_SIGNAL( clicked() ), TQT_SLOT( toggleOnAllDesktops() ) );
+						layout->addWidget( button[OnAllDesktopsButton] );
+					}
 				}
 				break;
 

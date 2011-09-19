@@ -174,6 +174,7 @@ namespace Keramik {
 			inline bool maximizedVertical() const {
 				return ( maximizeMode() & MaximizeVertical );
 			}
+			bool isModalSystemNotification();
 
 		private slots:
 			void menuButtonPressed();

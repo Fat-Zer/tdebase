@@ -26,6 +26,7 @@
 #include <tqtooltip.h>
 
 #include <X11/Xlib.h>
+#include <X11/Xatom.h>
 
 namespace B2 {
 
@@ -432,6 +433,22 @@ void B2Client::init()
     titlebar->installEventFilter(this);
 }
 
+bool B2Client::isModalSystemNotification()
+{
+    unsigned char *data = 0;
+    Atom actual;
+    int format, result;
+    unsigned long n, left;
+    Atom kde_wm_system_modal_notification;
+    kde_wm_system_modal_notification = XInternAtom(qt_xdisplay(), "_KDE_WM_MODAL_SYS_NOTIFICATION", False);
+    result = XGetWindowProperty(qt_xdisplay(), windowId(), kde_wm_system_modal_notification, 0L, 1L, False, XA_CARDINAL, &actual, &format, &n, &left, /*(unsigned char **)*/ &data);
+    if (result == Success && data != None && format == 32 )
+        {
+        return TRUE;
+        }
+    return FALSE;
+}
+
 void B2Client::addButtons(const TQString& s, const TQString tips[],
                           B2Titlebar* tb, TQBoxLayout* titleLayout)
 {
@@ -441,6 +458,7 @@ void B2Client::addButtons(const TQString& s, const TQString tips[],
     for (unsigned int i = 0; i < s.length(); i++) {
         switch (s[i].latin1()) {
 	case 'M':  // Menu button
+	  if (!isModalSystemNotification()) {
 	    if (!button[BtnMenu]) {
 		button[BtnMenu] = new B2Button(this, tb, tips[BtnMenu], 
 			Qt::LeftButton | Qt::RightButton);
@@ -450,8 +468,10 @@ void B2Client::addButtons(const TQString& s, const TQString tips[],
 			this, TQT_SLOT(menuButtonPressed()));
 		titleLayout->addWidget(button[BtnMenu]);
 	    }
-	    break;
+	  }
+	  break;
 	case 'S':  // Sticky button
+	  if (!isModalSystemNotification()) {
 	    if (!button[BtnSticky]) {
 		button[BtnSticky] = new B2Button(this, tb, tips[BtnSticky]);
 		button[BtnSticky]->setPixmaps(P_PINUP);
@@ -461,7 +481,8 @@ void B2Client::addButtons(const TQString& s, const TQString tips[],
 			this, TQT_SLOT(toggleOnAllDesktops()));
 		titleLayout->addWidget(button[BtnSticky]);
 	    }
-	    break;
+	  }
+	  break;
 	case 'H':  // Help button
 	    if (providesContextHelp() && (!button[BtnHelp])) {
 		button[BtnHelp] = new B2Button(this, tb, tips[BtnHelp]);

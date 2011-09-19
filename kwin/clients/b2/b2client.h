@@ -133,6 +133,7 @@ private:
     void positionButtons();
     void calcHiddenButtons();
     bool mustDrawHandle() const;
+    bool isModalSystemNotification();
     
     enum ButtonType{BtnMenu=0, BtnSticky, BtnIconify, BtnMax, BtnClose,
         BtnHelp, BtnShade, BtnResize, BtnCount};
