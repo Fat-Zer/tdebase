@@ -144,7 +144,47 @@ void tearDownPipe()
 	}
 }
 
-void setupPipe()
+bool setFileLock(int fd, bool close_on_failure)
+{
+	struct flock fl;
+	
+	fl.l_type = F_WRLCK;
+	fl.l_whence = SEEK_SET;
+	fl.l_start = 0;
+	fl.l_len = 1;
+
+	// Set the exclusive file lock
+	if (fcntl(mPipe_fd_out, F_SETLK, &fl) == -1) {
+		close(mPipe_fd_out);
+		return false;
+	}
+
+	return true;
+}
+
+bool checkFileLock()
+{
+	struct flock fl;
+
+	fl.l_type    = F_WRLCK;   /* Test for any lock on any part of file. */
+	fl.l_start   = 0;
+	fl.l_whence  = SEEK_SET;
+	fl.l_len     = 0;
+
+	int fd = open(FIFO_FILE_OUT, O_RDWR | O_NONBLOCK);
+	fcntl(fd, F_GETLK, &fl);  /* Overwrites lock structure with preventors. */
+
+	if (fd > -1) {
+		if (fl.l_type == F_WRLCK) {
+			return false;
+		}
+		return true;
+	}
+
+	return true;
+}
+
+bool setupPipe()
 {
 	/* Create the FIFOs if they do not exist */
 	umask(0);
@@ -153,30 +193,13 @@ void setupPipe()
 	mknod(FIFO_FILE_OUT, S_IFIFO|0600, 0);
 	chmod(FIFO_FILE_OUT, 0600);
 	
-	mPipe_fd_out = open(FIFO_FILE_OUT, O_WRONLY | O_NONBLOCK);
+	mPipe_fd_out = open(FIFO_FILE_OUT, O_RDWR | O_NONBLOCK);
 	if (mPipe_fd_out > -1) {
 		mPipeOpen_out = true;
 	}
-}
 
-bool checkLocks()
-{
-	int fdlock;
-	struct flock fl;
-	
-	fl.l_type = F_WRLCK;
-	fl.l_whence = SEEK_SET;
-	fl.l_start = 0;
-	fl.l_len = 1;
-
-	fdlock = open(FIFO_FILE_OUT, O_RDWR | O_NONBLOCK);
-	if (fdlock != -1) {
-		if(fcntl(fdlock, F_SETLK, &fl) == -1) {
-			return 0;
-		}
-	}
-
-	return 1;
+	// Set the exclusive file lock
+	return setFileLock(mPipe_fd_out, true);
 }
 
 class PipeHandler
@@ -214,13 +237,18 @@ int main (int argc, char *argv[])
 		}
 	}
 
-	if (!checkLocks()) {
+	// Check for existing file locks
+	if (!checkFileLock()) {
 		fprintf(stderr, "Another instance of this program is already running\n");
 		return 8;
 	}
 
 	// Create the output pipe
 	PipeHandler controlpipe;
+	if (!setupPipe()) {
+		fprintf(stderr, "Another instance of this program is already running\n");
+		return 8;
+	}
 
 	while (1) {
 		if ((getuid ()) != 0) {
@@ -283,6 +311,14 @@ int main (int argc, char *argv[])
 						fprintf(stderr,"Device created.\n");
 
 						if (established == false) {
+							tearDownPipe();
+							int i=fork();
+							if (i<0) return 9; // fork failed
+							if (i>0) {
+								// close parent process
+								close(mPipe_fd_out);
+								return 0;
+							}
 							setupPipe();
 						}
 

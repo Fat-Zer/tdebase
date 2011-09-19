@@ -194,7 +194,7 @@ kg_main( const char *argv0 )
 	if (trinity_desktop_lock_use_sak) {
 		tsak = new KProcess;
 		*tsak << TQCString( argv0, strrchr( argv0, '/' ) - argv0 + 2 ) + "tsak";
-		tsak->start();
+		tsak->start(KProcess::Block);
 	}
 	if (tsak) {
 		tsak->closeStdin();
