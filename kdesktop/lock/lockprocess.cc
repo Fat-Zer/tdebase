@@ -603,6 +603,10 @@ bool LockProcess::dontLock()
 //---------------------------------------------------------------------------
 void LockProcess::quitSaver()
 {
+    if (closeCurrentWindow()) {
+        TQTimer::singleShot( 0, this, SLOT(quitSaver()) );
+        return;
+    }
     stopSaver();
     kapp->quit();
 }
