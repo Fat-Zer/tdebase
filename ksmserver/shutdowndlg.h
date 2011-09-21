@@ -16,7 +16,7 @@ Copyright (C) 2000 Matthias Ettrich <ettrich@kde.org>
 #include <tqframe.h>
 #include <kguiitem.h>
 #include <tqtoolbutton.h>
-#include <ksharedpixmap.h>
+#include <krootpixmap.h>
 
 class TQPushButton;
 class TQVButtonGroup;
@@ -94,6 +94,7 @@ protected:
 
 public slots:
     void slotPaintEffect();
+    void slotSetBackgroundPixmap(const TQPixmap &);
 
 private:
     static KSMShutdownIPFeedback * s_pSelf;
@@ -102,10 +103,11 @@ private:
     TQPixmap m_root;
     void fadeBack( void );
     void showNow( void );
-    TQString pixmapName(int desk);
-    void enableExports();
     int m_timeout;
     bool m_isPainted;
+    KRootPixmap* m_sharedRootPixmap;
+    TQPixmap m_rootPixmap;
+    int mPixmapTimeout;
 };
 
 // The confirmation dialog

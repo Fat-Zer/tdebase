@@ -516,15 +516,12 @@ void KSMShutdownFeedback::slotPaintEffect()
 KSMShutdownIPFeedback * KSMShutdownIPFeedback::s_pSelf = 0L;
 
 KSMShutdownIPFeedback::KSMShutdownIPFeedback()
- : TQWidget( 0L, "feedbackipwidget", Qt::WStyle_Customize | Qt::WStyle_NoBorder | Qt::WStyle_StaysOnTop ), m_timeout(0), m_isPainted(false)
+ : TQWidget( 0L, "feedbackipwidget", Qt::WStyle_Customize | Qt::WStyle_NoBorder | Qt::WStyle_StaysOnTop ), m_timeout(0), m_isPainted(false), m_sharedRootPixmap(NULL), mPixmapTimeout(0)
 
 {
-	// Try to get the root pixmap
-	TQString filename = getenv("USER");
-	filename.prepend("/tmp/kde-");
-	filename.append("/krootbacking.png");
-	remove(filename.ascii());
-	system("krootbacking &");
+	m_sharedRootPixmap = new KRootPixmap(this);
+	m_sharedRootPixmap->setCustomPainting(true);
+	connect(m_sharedRootPixmap, TQT_SIGNAL(backgroundUpdated(const TQPixmap &)), this, TQT_SLOT(slotSetBackgroundPixmap(const TQPixmap &)));
 
 	resize(0, 0);
 	setShown(true);
@@ -537,7 +534,10 @@ void KSMShutdownIPFeedback::showNow()
 
 KSMShutdownIPFeedback::~KSMShutdownIPFeedback()
 {
-
+	if (m_sharedRootPixmap) {
+		m_sharedRootPixmap->stop();
+		delete m_sharedRootPixmap;
+	}
 }
 
 void KSMShutdownIPFeedback::fadeBack( void )
@@ -545,26 +545,37 @@ void KSMShutdownIPFeedback::fadeBack( void )
 
 }
 
-TQString KSMShutdownIPFeedback::pixmapName(int desk) {
-	TQString pattern = TQString("DESKTOP%1");
-	int screen_number = DefaultScreen(qt_xdisplay());
-	if (screen_number) {
-		pattern = TQString("SCREEN%1-DESKTOP").arg(screen_number) + "%1";
-	}
-	return pattern.arg( desk );
+void KSMShutdownIPFeedback::slotSetBackgroundPixmap(const TQPixmap &rpm) {
+	m_rootPixmap = rpm;
 }
 
 void KSMShutdownIPFeedback::slotPaintEffect()
 {
-	TQPixmap pm;
-	TQString filename = getenv("USER");
-	filename.prepend("/tmp/kde-");
-	filename.append("/krootbacking.png");
-	bool success = pm.load(filename, "PNG");
-	if (!success) {
-		sleep(1);
-		success = pm.load(filename, "PNG");
-		if (!success) {
+	TQPixmap pm = m_rootPixmap;
+	if (mPixmapTimeout == 0) {
+		// eliminate nasty flicker on first show
+		m_root.resize( kapp->desktop()->width(), kapp->desktop()->height() );
+		TQImage blendedImage = TQImage( kapp->desktop()->width(), kapp->desktop()->height(), 32 );
+		TQPainter p;
+		p.begin( &m_root );
+		blendedImage.setAlphaBuffer(false);
+		p.drawImage( 0, 0, blendedImage );
+		p.end();
+
+		setBackgroundPixmap( m_root );
+		setGeometry( TQApplication::desktop()->geometry() );
+		setBackgroundMode( TQWidget::NoBackground );
+
+		m_sharedRootPixmap->start();
+	}
+	if ((pm.isNull()) || (pm.width() != kapp->desktop()->width())) {
+		if (mPixmapTimeout < 10) {
+			TQTimer::singleShot( 100, this, SLOT(slotPaintEffect()) );
+			mPixmapTimeout++;
+			return;
+		}
+		else {
+			pm = m_rootPixmap;
 			pm = TQPixmap(kapp->desktop()->width(), kapp->desktop()->height());
 			pm.fill(Qt::black);
 		}
@@ -600,26 +611,6 @@ void KSMShutdownIPFeedback::slotPaintEffect()
 	tqApp->flushX();
 
 	m_isPainted = true;
-}
-
-void KSMShutdownIPFeedback::enableExports()
-{
-#ifdef Q_WS_X11
-	kdDebug(270) << k_lineinfo << "activating background exports.\n";
-	DCOPClient *client = kapp->dcopClient();
-	if (!client->isAttached())
-	client->attach();
-	TQByteArray data;
-	TQDataStream args( data, IO_WriteOnly );
-	args << 1;
-	
-	TQCString appname( "kdesktop" );
-	int screen_number = DefaultScreen(qt_xdisplay());
-	if ( screen_number )
-		appname.sprintf("kdesktop-screen-%d", screen_number );
-	
-	client->send( appname, "KBackgroundIface", "setExport(int)", data );
-#endif
 }
 
 //////
