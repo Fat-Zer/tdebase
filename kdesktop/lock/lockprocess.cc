@@ -316,9 +316,11 @@ static int signal_pipe[2];
 
 static void sigterm_handler(int)
 {
-    char tmp = 'T';
-    if (::write( signal_pipe[1], &tmp, 1) == -1) {
-        // Error handler to shut up gcc warnings
+    if (!trinity_desktop_lock_in_sec_dlg) {
+        char tmp = 'T';
+        if (::write( signal_pipe[1], &tmp, 1) == -1) {
+            // Error handler to shut up gcc warnings
+        }
     }
 }
 
@@ -657,7 +659,7 @@ void LockProcess::startSecureDialog()
 		kapp->quit();
 	}
 	// FIXME
-	// Handle remaining two cases (task manager and logoff menu)
+	// Handle remaining two cases (logoff menu and switch user)
 	stopSaver();
 }
 

@@ -523,6 +523,16 @@ KSMShutdownIPFeedback::KSMShutdownIPFeedback()
 	m_sharedRootPixmap->setCustomPainting(true);
 	connect(m_sharedRootPixmap, TQT_SIGNAL(backgroundUpdated(const TQPixmap &)), this, TQT_SLOT(slotSetBackgroundPixmap(const TQPixmap &)));
 
+	if (TQPaintDevice::x11AppDepth() == 32) {
+		// The shared pixmap is 24 bits, but we are 32 bits
+		// Therefore our only option is to use a 24-bit Xorg application to dump the shared pixmap in a common (png) format for loading later
+		TQString filename = getenv("USER");
+		filename.prepend("/tmp/kde-");
+		filename.append("/krootbacking.png");
+		remove(filename.ascii());
+		system("krootbacking &"); 
+	}
+
 	resize(0, 0);
 	setShown(true);
 }
@@ -566,16 +576,30 @@ void KSMShutdownIPFeedback::slotPaintEffect()
 		setGeometry( TQApplication::desktop()->geometry() );
 		setBackgroundMode( TQWidget::NoBackground );
 
-		m_sharedRootPixmap->start();
+		if (TQPaintDevice::x11AppDepth() != 32) {
+			m_sharedRootPixmap->start();
+		}
+
+		TQTimer::singleShot( 100, this, SLOT(slotPaintEffect()) );
+		mPixmapTimeout++;
+		return;
 	}
-	if ((pm.isNull()) || (pm.width() != kapp->desktop()->width())) {
+	if (TQPaintDevice::x11AppDepth() == 32) {
+		TQString filename = getenv("USER");
+		filename.prepend("/tmp/kde-");
+		filename.append("/krootbacking.png");
+		bool success = pm.load(filename, "PNG");
+		if (!success) {
+			pm = TQPixmap();
+		}
+	}
+	if ((pm.isNull()) || (pm.width() != kapp->desktop()->width()) || (pm.height() != kapp->desktop()->height())) {
 		if (mPixmapTimeout < 10) {
 			TQTimer::singleShot( 100, this, SLOT(slotPaintEffect()) );
 			mPixmapTimeout++;
 			return;
 		}
 		else {
-			pm = m_rootPixmap;
 			pm = TQPixmap(kapp->desktop()->width(), kapp->desktop()->height());
 			pm.fill(Qt::black);
 		}
