@@ -264,6 +264,13 @@ KPamGreeter::setUser( const TQString &user )
 }
 
 void // virtual
+KPamGreeter::setPassword( const TQString &pass )
+{
+	authEdit[0]->erase();
+	authEdit[0]->insert( pass );
+}
+
+void // virtual
 KPamGreeter::setEnabled(bool enable)
 {
 	// assert( !passwd1Label );

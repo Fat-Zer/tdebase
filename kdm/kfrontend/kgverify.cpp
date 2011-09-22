@@ -269,6 +269,13 @@ KGVerify::setUser( const TQString &user )
 }
 
 void
+KGVerify::setPassword( const TQString &pass )
+{
+	greet->setPassword( pass );
+	gplugActivity();
+}
+
+void
 KGVerify::start()
 {
 	authTok = (func == KGreeterPlugin::ChAuthTok);

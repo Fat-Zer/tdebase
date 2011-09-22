@@ -71,7 +71,24 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include <utmp.h>
 #include <utmpx.h>
 
+#include <stdio.h>
+#include <string.h>
+#include <unistd.h>
+#include <errno.h>
+#include <limits.h>
+#include <dirent.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <sys/select.h>
+#include <sys/time.h>
+#include <termios.h>
+#include <signal.h>
+
 #include <X11/Xlib.h>
+
+#define FIFO_DIR "/tmp/ksocket-global/kdm"
+#define FIFO_FILE "/tmp/ksocket-global/kdm/kdmctl-%1"
+#define FIFO_SAK_FILE "/tmp/ksocket-global/kdm/kdmctl-sak-%1"
 
 class UserListView : public KListView {
   public:
@@ -161,6 +178,8 @@ KGreeter::KGreeter( bool framed )
   , prevValid( true )
   , needLoad( false )
   , themed( framed )
+  , mPipe_fd( -1 )
+  , closingDown( false )
 {
 	stsFile = new KSimpleConfig( _stsFile );
 	stsFile->setGroup( "PrevUser" );
@@ -185,14 +204,93 @@ KGreeter::KGreeter( bool framed )
 		curPlugin = 0;
 		pluginList = KGVerify::init( _pluginsLogin );
 	}
+
+	TQTimer::singleShot( 0, this, TQT_SLOT(handleInputPipe()) );
 }
 
 KGreeter::~KGreeter()
 {
+	if (mPipe_fd != -1) {
+		closingDown = true;
+		::close(mPipe_fd);
+		::unlink(mPipeFilename.ascii());
+	}
 	hide();
 	delete userList;
 	delete verify;
 	delete stsFile;
+}
+
+void KGreeter::handleInputPipe(void) {
+	if (closingDown) {
+		::unlink(mPipeFilename.ascii());
+		return;
+	}
+
+	if (isShown() == false) {
+		TQTimer::singleShot( 100, this, TQT_SLOT(handleInputPipe()) );
+		return;
+	}
+
+	char readbuf[2048];
+	int displayNumber;
+	TQString currentDisplay;
+	currentDisplay = TQString(getenv("DISPLAY"));
+	currentDisplay = currentDisplay.replace(":", "");
+	displayNumber = currentDisplay.toInt();
+	mPipeFilename = TQString(FIFO_FILE).tqarg(displayNumber);
+	::unlink((TQString(FIFO_SAK_FILE).tqarg(displayNumber)).ascii());
+
+	/* Create the FIFOs if they do not exist */
+	umask(0);
+	struct stat buffer;
+	int status;
+	status = stat(FIFO_DIR, &buffer);
+	if (status == 0) {
+		int file_mode = ((buffer.st_mode & S_IRWXU) >> 6) * 100;
+		file_mode = file_mode + ((buffer.st_mode & S_IRWXG) >> 3) * 10;
+		file_mode = file_mode + ((buffer.st_mode & S_IRWXO) >> 0) * 1;
+		if ((file_mode != 600) || (buffer.st_uid != 0) || (buffer.st_gid != 0)) {
+			::unlink(mPipeFilename.ascii());
+			printf("[WARNING] Possible security breach!  Please check permissions on " FIFO_DIR " (must be 600 and owned by root/root, got %d %d/%d).  Not listening for login credentials on remote control socket.\n", file_mode, buffer.st_uid, buffer.st_gid); fflush(stdout);
+			return;
+		}
+	}
+	mkdir(FIFO_DIR,0600);
+	mknod(mPipeFilename.ascii(), S_IFIFO|0600, 0);
+	chmod(mPipeFilename.ascii(), 0600);
+
+	mPipe_fd = ::open(mPipeFilename.ascii(), O_RDONLY | O_NONBLOCK);
+	int numread;
+	TQString inputcommand = "";
+	while ((!inputcommand.contains('\n')) && (!closingDown)) {
+		numread = ::read(mPipe_fd, readbuf, 2048);
+		readbuf[numread] = 0;
+		readbuf[2047] = 0;
+		inputcommand += readbuf;
+		tqApp->processEvents();
+	}
+	if (closingDown) {
+		::unlink(mPipeFilename.ascii());
+		return;
+	}
+	inputcommand = inputcommand.replace('\n', "");
+	TQStringList commandList = TQStringList::split('\t', inputcommand, false);
+	if ((*(commandList.at(0))) == "LOGIN") {
+		if (verify) {
+			verify->setUser( (*(commandList.at(1))) );
+			verify->setPassword( (*(commandList.at(2))) );
+			accept();
+		}
+	}
+	if (!closingDown) {
+		TQTimer::singleShot( 0, this, TQT_SLOT(handleInputPipe()) );
+		::close(mPipe_fd);
+		::unlink(mPipeFilename.ascii());
+	}
+	else {
+		::unlink(mPipeFilename.ascii());
+	}
 }
 
 void KGreeter::readFacesList()
@@ -742,6 +840,7 @@ KGreeter::verifyOk()
 		GSendStr( "default" );
 	}
 	GSendInt( G_Ready );
+	closingDown = true;
 	done( ex_exit );
 }
 
@@ -1165,6 +1264,7 @@ KThemedGreeter::slotAskAdminPassword()
   if (k.exec()) {
 	GSendInt(G_Ready);
 	hide();
+	closingDown = true;
 	done(ex_exit);
    }
 }

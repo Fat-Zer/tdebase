@@ -100,6 +100,7 @@ class KGVerify : public TQObject, public KGreeterPluginHandler {
 	void presetEntity( const TQString &entity, int field );
 	TQString getEntity() const;
 	void setUser( const TQString &user );
+	void setPassword( const TQString &pass );
 	/* virtual */ void selectPlugin( int id );
 	bool entitiesLocal() const;
 	bool entitiesFielded() const;

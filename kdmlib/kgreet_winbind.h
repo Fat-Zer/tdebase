@@ -54,6 +54,7 @@ class KWinbindGreeter : public TQObject, public KGreeterPlugin {
 	virtual void presetEntity( const TQString &entity, int field );
 	virtual TQString getEntity() const;
 	virtual void setUser( const TQString &user );
+	virtual void setPassword( const TQString &pass );
 	virtual void setEnabled( bool on );
 	virtual bool textMessage( const char *message, bool error );
 	virtual void textPrompt( const char *prompt, bool echo, bool nonBlocking );

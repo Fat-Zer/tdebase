@@ -38,6 +38,7 @@ public:
 
 private slots:
     void slotSAKProcessExited();
+    void handleInputPipe();
 
 protected slots:
     virtual void reject();
@@ -52,6 +53,11 @@ private:
     TQStringList::iterator currLayout;
     int         sPid, sFd;
     KProcess*   mSAKProcess;
+    int         mPipe_fd;
+    TQString mPipeFilename;
+
+protected:
+    bool closingDown;
 };
 
 #endif

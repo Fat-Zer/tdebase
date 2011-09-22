@@ -298,6 +298,13 @@ KWinbindGreeter::setUser( const TQString &user )
 }
 
 void // virtual
+KWinbindGreeter::setPassword( const TQString &pass )
+{
+	passwdEdit->erase();
+	passwdEdit->insert( pass );
+}
+
+void // virtual
 KWinbindGreeter::setEnabled( bool enable )
 {
 	// assert( !passwd1Label );

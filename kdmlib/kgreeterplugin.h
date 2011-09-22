@@ -152,6 +152,12 @@ public:
     virtual void setUser( const TQString &user ) = 0;
 
     /**
+     * "Push" a password into the talker.
+     * @param pass the password to set.
+     */
+    virtual void setPassword( const TQString &pass ) = 0;
+
+    /**
      * En-/disable any widgets contained in the talker.
      * Will be called only when not running.
      * @param on the state to set

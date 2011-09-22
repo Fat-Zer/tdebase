@@ -71,6 +71,7 @@ class KGreeter : public KGDialog, public KGVerifyHandler {
 	void slotUserClicked( TQListViewItem * );
 	void slotSessionSelected( int );
 	void slotUserEntered();
+	void handleInputPipe();
 
   public:
 	TQString curUser, dName;
@@ -103,6 +104,13 @@ class KGreeter : public KGDialog, public KGVerifyHandler {
 
   private slots:
 	void slotLoadPrevWM();
+
+  private:
+	int mPipe_fd;
+	TQString mPipeFilename;
+
+  protected:
+	bool closingDown;
 
   public: // from KGVerifyHandler
 	virtual void verifyPluginChanged( int id );

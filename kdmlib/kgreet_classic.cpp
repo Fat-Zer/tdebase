@@ -218,6 +218,13 @@ KClassicGreeter::setUser( const TQString &user )
 }
 
 void // virtual
+KClassicGreeter::setPassword( const TQString &pass )
+{
+	passwdEdit->erase();
+	passwdEdit->insert( pass );
+}
+
+void // virtual
 KClassicGreeter::setEnabled( bool enable )
 {
 	// assert( !passwd1Label );

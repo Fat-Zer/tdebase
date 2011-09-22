@@ -605,6 +605,7 @@ bool LockProcess::dontLock()
 //---------------------------------------------------------------------------
 void LockProcess::quitSaver()
 {
+    DISABLE_CONTINUOUS_LOCKDLG_DISPLAY
     if (closeCurrentWindow()) {
         TQTimer::singleShot( 0, this, SLOT(quitSaver()) );
         return;
