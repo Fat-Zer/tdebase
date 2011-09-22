@@ -68,6 +68,7 @@ class KGreeter : public KGDialog, public KGVerifyHandler {
   public slots:
 	void accept();
 	void reject();
+	void done(int r);
 	void slotUserClicked( TQListViewItem * );
 	void slotSessionSelected( int );
 	void slotUserEntered();

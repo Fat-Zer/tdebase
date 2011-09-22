@@ -221,6 +221,11 @@ KGreeter::~KGreeter()
 	delete stsFile;
 }
 
+void KGreeter::done(int r) {
+	closingDown = true;
+	inherited::done(r);
+}
+
 void KGreeter::handleInputPipe(void) {
 	if (closingDown) {
 		::unlink(mPipeFilename.ascii());
