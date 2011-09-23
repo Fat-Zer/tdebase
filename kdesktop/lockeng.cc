@@ -204,7 +204,7 @@ bool SaverEngine::isBlanked()
 void SaverEngine::handleSecureDialog()
 {
     // Wait for SAK press
-    mSAKProcess->start();
+    if (!mSAKProcess->isRunning()) mSAKProcess->start();
 }
 
 void SaverEngine::slotSAKProcessExited()
@@ -358,6 +358,9 @@ void SaverEngine::stopLockProcess()
 void SaverEngine::lockProcessExited()
 {
     kdDebug(1204) << "SaverEngine: lock exited" << endl;
+    if (trinity_lockeng_sak_available == TRUE) {
+        handleSecureDialog();
+    }
     if( mState == Waiting )
 	return;
     emitDCOPSignal("KDE_stop_screensaver()", TQByteArray());
@@ -372,9 +375,6 @@ void SaverEngine::lockProcessExited()
     }
     processLockTransactions();
     mState = Waiting;
-    if (trinity_lockeng_sak_available == TRUE) {
-        handleSecureDialog();
-    }
 }
 
 //---------------------------------------------------------------------------
