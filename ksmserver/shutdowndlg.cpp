@@ -533,7 +533,19 @@ KSMShutdownIPFeedback::KSMShutdownIPFeedback()
 		system("krootbacking &"); 
 	}
 
-	resize(0, 0);
+	// eliminate nasty flicker on first show
+	m_root.resize( kapp->desktop()->width(), kapp->desktop()->height() );
+	TQImage blendedImage = TQImage( kapp->desktop()->width(), kapp->desktop()->height(), 32 );
+	TQPainter p;
+	p.begin( &m_root );
+	blendedImage.setAlphaBuffer(false);
+	p.drawImage( 0, 0, blendedImage );
+	p.end();
+
+	setBackgroundPixmap( m_root );
+	setGeometry( TQApplication::desktop()->geometry() );
+	setBackgroundMode( TQWidget::NoBackground );
+
 	setShown(true);
 }
 
@@ -563,19 +575,6 @@ void KSMShutdownIPFeedback::slotPaintEffect()
 {
 	TQPixmap pm = m_rootPixmap;
 	if (mPixmapTimeout == 0) {
-		// eliminate nasty flicker on first show
-		m_root.resize( kapp->desktop()->width(), kapp->desktop()->height() );
-		TQImage blendedImage = TQImage( kapp->desktop()->width(), kapp->desktop()->height(), 32 );
-		TQPainter p;
-		p.begin( &m_root );
-		blendedImage.setAlphaBuffer(false);
-		p.drawImage( 0, 0, blendedImage );
-		p.end();
-
-		setBackgroundPixmap( m_root );
-		setGeometry( TQApplication::desktop()->geometry() );
-		setBackgroundMode( TQWidget::NoBackground );
-
 		if (TQPaintDevice::x11AppDepth() != 32) {
 			m_sharedRootPixmap->start();
 		}
