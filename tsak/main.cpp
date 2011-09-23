@@ -273,11 +273,12 @@ int main (int argc, char *argv[])
 			// Create filtered virtual output device
 			devout=open("/dev/misc/uinput",O_WRONLY|O_NONBLOCK);
 			if (devout<0) {
+				perror("open(\"/dev/misc/uinput\")");
 				devout=open("/dev/uinput",O_WRONLY|O_NONBLOCK);
 			}
 			if (devout<0) {
-				fprintf(stderr,"Unable to open /dev/uinput or /dev/misc/uinput (char device 10:223).\nPossible causes: Device node inexistent or kernel not compiled with evdev user level driver support or permission denied.\n");
-				perror("open(\"/dev/misc/uinput\")");
+				fprintf(stderr,"Unable to open /dev/uinput or /dev/misc/uinput (char device 10:223).\nPossible causes:\n 1) Device node does not exist\n 2) Kernel not compiled with evdev [INPUT_EVDEV] and uinput [INPUT_UINPUT] user level driver support\n 3) Permission denied.\n");
+				perror("open(\"/dev/uinput\")");
 				if (established)
 					sleep(1);
 				else
