@@ -1674,6 +1674,7 @@ bool NSPluginStreamBase::create( const TQString& url, const TQString& mimeType, 
     _stream->pdata = 0;
     _stream->lastmodified = 0;
     _stream->notifyData = _notifyData;
+    _stream->headers = 0;
 
     _mimeType = mimeType;
 
@@ -1898,6 +1899,7 @@ bool NSPluginStream::get( const TQString& url, const TQString& mimeType,
         _job = KIO::get(KURL( url ), false, false);
         _job->addMetaData("errorPage", "false");
         _job->addMetaData("AllowCompressedPage", "false");
+        _job->addMetaData("PropagateHttpHeader", "true");
         if (reload) {
             _job->addMetaData("cache", "reload");
         }
@@ -1925,6 +1927,7 @@ bool NSPluginStream::post( const TQString& url, const TQByteArray& data,
         _job = KIO::http_post(KURL( url ), data, false);
         _job->addMetaData("content-type", args.contentType());
         _job->addMetaData("errorPage", "false");
+        _job->addMetaData("PropagateHttpHeader", "true");
         _job->addMetaData("AllowCompressedPage", "false");
         connect(_job, TQT_SIGNAL(data(KIO::Job *, const TQByteArray &)),
                 TQT_SLOT(data(KIO::Job *, const TQByteArray &)));
@@ -1964,12 +1967,12 @@ void NSPluginStream::totalSize(KIO::Job * job, KIO::filesize_t size)
 
 void NSPluginStream::mimetype(KIO::Job * job, const TQString &mimeType)
 {
-    kdDebug(1431) << "NSPluginStream::TQByteArray - job=" << (void*)job << " mimeType=" << mimeType << endl;
+    kdDebug(1431) << "NSPluginStream::mimetype - job=" << (void*)job << " mimeType=" << mimeType << endl;
     _mimeType = mimeType;
+    TQString tmp_headers = job->metaData()["HTTP-Headers"];
+    _headers.duplicate(tmp_headers.latin1(), tmp_headers.length());
+    _stream->headers = _headers.data();
 }
-
-
-
 
 void NSPluginStream::resume()
 {

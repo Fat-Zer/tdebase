@@ -95,6 +95,7 @@ protected:
   KURL _url;
   TQString _fileURL;
   TQString _mimeType;
+  TQByteArray _headers;
   TQByteArray _data;
   class KTempFile *_tempFile;
 

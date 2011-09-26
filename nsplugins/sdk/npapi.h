@@ -256,6 +256,16 @@ typedef struct _NPStream
   uint32 end;
   uint32 lastmodified;
   void*  notifyData;
+  const char* headers;  /* Response headers from host.
+			 * Exists only for >= NPVERS_HAS_RESPONSE_HEADERS.
+			 * Used for HTTP only; NULL for non-HTTP.
+			 * Available from NPP_NewStream onwards.
+			 * Plugin should copy this data before storing it.
+			 * Includes HTTP status line and all headers,
+			 * preferably verbatim as received from server,
+			 * headers formatted as in HTTP ("Header: Value"),
+			 * and newlines (\n, NOT \r\n) separating lines.
+			 * Terminated by \n\0 (NOT \n\n\0). */
 } NPStream;
 
 
@@ -602,6 +612,21 @@ enum NPEventType {
 #define NPVERS_68K_HAS_LIVECONNECT   11
 #define NPVERS_HAS_WINDOWLESS        11
 #define NPVERS_HAS_XPCONNECT_SCRIPTING 13
+// Trinity note: we claim 13 right now, though we do
+// have response_headers.
+#define NPVERS_HAS_NPRUNTIME_SCRIPTING      14
+#define NPVERS_HAS_FORM_VALUES              15
+#define NPVERS_HAS_POPUPS_ENABLED_STATE     16
+#define NPVERS_HAS_RESPONSE_HEADERS         17
+#define NPVERS_HAS_NPOBJECT_ENUM            18
+#define NPVERS_HAS_PLUGIN_THREAD_ASYNC_CALL 19
+#define NPVERS_HAS_ALL_NETWORK_STREAMS      20
+#define NPVERS_HAS_URL_AND_AUTH_INFO        21
+#define NPVERS_HAS_PRIVATE_MODE             22
+#define NPVERS_MACOSX_HAS_COCOA_EVENTS      23
+#define NPVERS_HAS_ADVANCED_KEY_HANDLING    25
+#define NPVERS_HAS_URL_REDIRECT_HANDLING    26
+#define NPVERS_HAS_CLEAR_SITE_DATA          27
 
 /*----------------------------------------------------------------------*/
 /*                        Function Prototypes                           */
