@@ -357,11 +357,14 @@ kg_main( const char *argv0 )
 				// This also prevents the user from being dropped to a console login if Xorg glitches or is buggy
 				XSetErrorHandler( ignoreXError );
 				KThemedGreeter *tgrt;
-				dialog = tgrt = new KThemedGreeter;
+				bool has_kwin_bkp = has_kwin;
 				is_themed = true;
+				has_kwin = false;	// [FIXME] The themed greeter is built on the assumption that there is no window manager available (i.e. it keeps stealing focus) and needs to be repaired.
+				dialog = tgrt = new KThemedGreeter;
 				kdDebug() << timestamp() << " themed" << endl;
 				if (!tgrt->isOK()) {
 					is_themed = false;
+					has_kwin = has_kwin_bkp;
 					delete tgrt;
 					checkSAK(app);
 					dialog = new KStdGreeter;

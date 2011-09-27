@@ -555,7 +555,6 @@ KDMSlimShutdown::KDMSlimShutdown( TQWidget *_parent )
 		hbox->addWidget( lfrm, AlignCenter );
 		// we need to set the minimum size for the logout box, since it
 		// gets too small if there all options are not available
-		lfrm->setMinimumSize(300,120);
 		TQLabel *icon = new TQLabel( lfrm );
 		icon->setPixmap( TQPixmap( locate( "data", "kdm/pics/shutdown.jpg" ) ) );
 		TQVBoxLayout *iconlay = new TQVBoxLayout( lfrm );
