@@ -465,13 +465,14 @@ void KDisplayConfig::updateDraggableMonitorInformationInternal (int monitor_id, 
 			j=i;
 	}
 	monitors = base->monitorPhyArrange->childrenListObject();
-	primary_monitor = 0;
+	primary_monitor = NULL;
 	if ( monitors.count() ) {
 		for ( i = 0; i < int(monitors.count()); ++i ) {
 			if (::tqqt_cast<DraggableMonitor*>(TQT_TQWIDGET(monitors.at( i )))) {
 				DraggableMonitor *monitor = static_cast<DraggableMonitor*>(TQT_TQWIDGET(monitors.at( i )));
-				if (monitor->screen_id == j)
+				if (monitor->screen_id == j) {
 					primary_monitor = monitor;
+				}
 			}
 		}
 	}
@@ -614,16 +615,21 @@ bool KDisplayConfig::applyMonitorLayoutRules(DraggableMonitor* monitor_to_move) 
 void KDisplayConfig::moveMonitor(DraggableMonitor* monitor, int realx, int realy) {
 	int i;
 	int j;
+	bool primary_found;
 	DraggableMonitor *primary_monitor;
 	SingleScreenData *screendata;
 
 	// Find the primary monitor
+	primary_found = false;
 	for (i=0;i<numberOfScreens;i++) {
 		screendata = m_screenInfoArray.at(i);
-		if (screendata->is_primary)
+		if (screendata->is_primary) {
 			j=i;
+			primary_found = true;
+		}
 	}
 	TQObjectList monitors = base->monitorPhyArrange->childrenListObject();
+	primary_monitor = NULL;
 	if ( monitors.count() ) {
 		for ( i = 0; i < int(monitors.count()); ++i ) {
 			if (::tqqt_cast<DraggableMonitor*>(TQT_TQWIDGET(monitors.at( i )))) {
@@ -634,13 +640,15 @@ void KDisplayConfig::moveMonitor(DraggableMonitor* monitor, int realx, int realy
 		}
 	}
 
-	int tx = realx * base->monitorPhyArrange->resize_factor;
-	int ty = realy * base->monitorPhyArrange->resize_factor;
-
-	if (!monitor->isHidden())
-		monitor->move((base->monitorPhyArrange->width()/2)-(primary_monitor->width()/2)+tx,(base->monitorPhyArrange->height()/2)-(primary_monitor->height()/2)+ty);
-	else
-		monitor->move(base->monitorPhyArrange->width(), base->monitorPhyArrange->height());
+	if (primary_found && primary_monitor) {
+		int tx = realx * base->monitorPhyArrange->resize_factor;
+		int ty = realy * base->monitorPhyArrange->resize_factor;
+	
+		if (!monitor->isHidden())
+			monitor->move((base->monitorPhyArrange->width()/2)-(primary_monitor->width()/2)+tx,(base->monitorPhyArrange->height()/2)-(primary_monitor->height()/2)+ty);
+		else
+			monitor->move(base->monitorPhyArrange->width(), base->monitorPhyArrange->height());
+	}
 }
 
 // int KDisplayConfig::realResolutionSliderValue() {
@@ -1057,6 +1065,8 @@ void KDisplayConfig::updateDragDropDisplay() {
 	}
 
 	int currentScreenIndex = base->monitorDisplaySelectDD->currentItem();
+
+	ensureMonitorDataConsistency();
 
 	// Add the screens to the workspace
 	// Set the scaling small to start with
