@@ -849,7 +849,7 @@ void KDisplayConfig::identifyMonitors () {
 	randr_display = qt_xdisplay();
 	randr_screen_info = m_randrsimple->read_screen_info(randr_display);
 
-	for (i = 0; i < randr_screen_info->n_output; i++) {
+	for (i = 0; i < m_screenInfoArray.count(); i++) {
 		output_info = randr_screen_info->outputs[i]->info;
 		// Look for ON outputs...
 		if (!randr_screen_info->outputs[i]->cur_crtc) {
