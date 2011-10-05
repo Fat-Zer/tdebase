@@ -735,6 +735,7 @@ KDisplayConfig::KDisplayConfig(TQWidget *parent, const char *name, const TQStrin
 
 	TQVBoxLayout *layout = new TQVBoxLayout(this, KDialog::marginHint(), KDialog::spacingHint());
 	systemconfig = new KSimpleConfig( TQString::tqfromLatin1( KDE_CONFDIR "/kdisplay/kdisplayconfigrc" ));
+	systemconfig->setFileWriteMode(0644);
 
 	KAboutData *about =
 		new KAboutData(I18N_NOOP("kcmdisplayconfig"), I18N_NOOP("TDE Display Profile Control Module"),
