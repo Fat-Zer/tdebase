@@ -48,5 +48,18 @@ wmclass=kdesktop
 wmclasscomplete=false
 wmclassmatch=1
 
+[3]
+Description=(Default) Allow focus stealing by the settings test dialog
+fsplevel=0
+fsplevelrule=2
+title=Confirm Display Settings - KDE Control Module
+titlematch=0
+types=32
+windowrole=mainktimerdialog
+windowrolematch=1
+wmclass=
+wmclasscomplete=false
+wmclassmatch=0
+
 [General]
-count=2
+count=3
