@@ -122,7 +122,8 @@ void DraggableMonitor::mouseMoveEvent(TQMouseEvent *event)
 	if (moveToX > maxX) moveToX = maxX;
 	if (moveToY > maxY) moveToY = maxY;
 
-	move(moveToX, moveToY);
+	if (!is_primary)
+		move(moveToX, moveToY);
 }
 
 void DraggableMonitor::mouseReleaseEvent(TQMouseEvent *event)

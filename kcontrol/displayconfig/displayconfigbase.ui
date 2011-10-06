@@ -584,7 +584,7 @@
 								    <cstring>gammaTipText2</cstring>
 							    </property>
 							    <property name="text">
-								    <string>Tip: Most computer software expects a gamma of 2.2.</string>
+								    <string>Tip: Most computer software expects a gamma of 2.2.\nAdditionally, any ICC settings for the selected screen will override the gamma controls available on this tab.</string>
 							    </property>
 						    </widget>
 						    <spacer row="4" column="0">

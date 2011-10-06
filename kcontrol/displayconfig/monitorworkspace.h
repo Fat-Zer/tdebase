@@ -69,6 +69,7 @@ signals:
 
 public:
 	int screen_id;
+	bool is_primary;
 
 private:
 	TQPoint lastMousePosition;

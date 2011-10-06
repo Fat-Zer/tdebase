@@ -69,6 +69,7 @@ k_dcop:
 private:
 
 	KConfig *config;
+	KCModule *iccTab;
 	bool _ok;
 	Display *randr_display;
 	ScreenInfo *randr_screen_info;
@@ -87,7 +88,7 @@ private:
 	TQPtrList<SingleScreenData> m_screenInfoArray;
 	int realResolutionSliderValue();
 	void setRealResolutionSliderValue(int index);
-	void addTab( const TQString name, const TQString label );
+	KCModule* addTab( const TQString name, const TQString label );
 	void moveMonitor(DraggableMonitor* monitor, int realx, int realy);
 	bool applyMonitorLayoutRules(void);
 	bool applyMonitorLayoutRules(DraggableMonitor* primary_monitor);

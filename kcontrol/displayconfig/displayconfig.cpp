@@ -471,7 +471,11 @@ void KDisplayConfig::updateDraggableMonitorInformationInternal (int monitor_id, 
 			if (::tqqt_cast<DraggableMonitor*>(TQT_TQWIDGET(monitors.at( i )))) {
 				DraggableMonitor *monitor = static_cast<DraggableMonitor*>(TQT_TQWIDGET(monitors.at( i )));
 				if (monitor->screen_id == j) {
+					monitor->is_primary = true;	// Prevent dragging of the primary monitor
 					primary_monitor = monitor;
+				}
+				else {
+					monitor->is_primary = false;
 				}
 			}
 		}
@@ -634,8 +638,13 @@ void KDisplayConfig::moveMonitor(DraggableMonitor* monitor, int realx, int realy
 		for ( i = 0; i < int(monitors.count()); ++i ) {
 			if (::tqqt_cast<DraggableMonitor*>(TQT_TQWIDGET(monitors.at( i )))) {
 				DraggableMonitor *monitor = static_cast<DraggableMonitor*>(TQT_TQWIDGET(monitors.at( i )));
-				if (monitor->screen_id == j)
+				if (monitor->screen_id == j) {
+					monitor->is_primary = true;	// Prevent dragging of the primary monitor
 					primary_monitor = monitor;
+				}
+				else {
+					monitor->is_primary = false;
+				}
 			}
 		}
 	}
@@ -728,7 +737,7 @@ void KDisplayConfig::setRealResolutionSliderValue(int index) {
 /**** KDisplayConfig ****/
 
 KDisplayConfig::KDisplayConfig(TQWidget *parent, const char *name, const TQStringList &)
-  : KCModule(KDisplayCFactory::instance(), parent, name), m_randrsimple(0), m_gammaApplyTimer(0)
+  : KCModule(KDisplayCFactory::instance(), parent, name), iccTab(0), m_randrsimple(0), m_gammaApplyTimer(0)
 {
 
 	m_randrsimple = new KRandrSimpleAPI();
@@ -793,7 +802,7 @@ KDisplayConfig::KDisplayConfig(TQWidget *parent, const char *name, const TQStrin
 
 	load();
 
-	addTab( "iccconfig", i18n( "Color Profiles" ) );	// [FIXME[ No way to save settings here yet
+	iccTab = addTab( "iccconfig", i18n( "Color Profiles" ) );	// [FIXME] No way to save settings here yet
 
 	processLockoutControls();
 }
@@ -1415,7 +1424,7 @@ void KDisplayConfig::processLockoutControls() {
 	base->loadExistingProfile->hide();		// Same as above
 }
 
-void KDisplayConfig::addTab( const TQString name, const TQString label )
+KCModule* KDisplayConfig::addTab( const TQString name, const TQString label )
 {
 	// [FIXME] This is incomplete...Apply may not work...
 	TQWidget *page = new TQWidget( base->mainTabContainerWidget, name.latin1() );
@@ -1430,9 +1439,11 @@ void KDisplayConfig::addTab( const TQString name, const TQString label )
 
 		connect( kcm, TQT_SIGNAL( changed(bool) ), this, TQT_SLOT( changed() ) );
 		//m_modules.insert(kcm, false);
+		return kcm;
 	}
 	else {
 		delete page;
+		return NULL;
 	}
 }
 
@@ -1473,6 +1484,10 @@ void KDisplayConfig::save()
 		systemconfig->writeEntry("EnableDisplayControl", base->systemEnableSupport->isChecked());
 
 		systemconfig->sync();
+		
+		if (iccTab) {
+			iccTab->save();
+		}
 
 		emit changed(false);
 	}
