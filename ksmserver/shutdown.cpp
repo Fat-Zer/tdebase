@@ -251,6 +251,11 @@ void KSMServer::shutdownInternal( KApplication::ShutdownConfirm confirm,
         if ( clients.isEmpty() )
             completeShutdownOrCheckpoint();
     }
+    else {
+        if (showFancyLogout) {
+            KSMShutdownIPFeedback::stop();
+        }
+    }
     dialogActive = false;
 }
 
