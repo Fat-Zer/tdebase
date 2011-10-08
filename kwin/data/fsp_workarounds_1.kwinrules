@@ -61,5 +61,20 @@ wmclass=
 wmclasscomplete=false
 wmclassmatch=0
 
+[4]
+Description=(Default) Hide system modal dialog class from taskbar
+fsplevel=0
+fsplevelrule=2
+skiptaskbar=true
+skiptaskbarrule=2
+title=
+titlematch=0
+types=32
+windowrole=systemmodaldialogclass
+windowrolematch=1
+wmclass=
+wmclasscomplete=false
+wmclassmatch=0
+
 [General]
-count=3
+count=4
