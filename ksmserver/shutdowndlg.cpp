@@ -516,8 +516,7 @@ void KSMShutdownFeedback::slotPaintEffect()
 KSMShutdownIPFeedback * KSMShutdownIPFeedback::s_pSelf = 0L;
 
 KSMShutdownIPFeedback::KSMShutdownIPFeedback()
-// : TQWidget( 0L, "feedbackipwidget", Qt::WStyle_Customize | Qt::WStyle_NoBorder | Qt::WStyle_StaysOnTop ), m_timeout(0), m_isPainted(false), m_sharedRootPixmap(NULL), mPixmapTimeout(0)
- : TQWidget( 0L, "feedbackipwidget", Qt::WStyle_Customize | Qt::WStyle_Dialog | Qt::WStyle_NoBorder | Qt::WStyle_StaysOnTop ), m_timeout(0), m_isPainted(false), m_sharedRootPixmap(NULL), mPixmapTimeout(0)
+: TQWidget( 0L, "feedbackipwidget", Qt::WStyle_Customize | Qt::WStyle_NoBorder | Qt::WStyle_StaysOnTop ), m_timeout(0), m_isPainted(false), m_sharedRootPixmap(NULL), mPixmapTimeout(0)
 
 {
 	m_sharedRootPixmap = new KRootPixmap(this);
