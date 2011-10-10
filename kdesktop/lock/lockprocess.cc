@@ -1515,6 +1515,11 @@ bool LockProcess::checkPass()
         if (mAutoLogout)
             killTimer(mAutoLogoutTimerId);
 
+        // Make sure we never launch the SAK or login dialog if windows are being closed down
+        // Otherwise we can get stuck in an irrecoverable state where any attempt to show the login screen is instantly aborted
+        if (trinity_desktop_lock_closing_windows)
+            return 0;
+
         if (trinity_desktop_lock_use_sak) {
             // Wait for SAK press before continuing...
             SAKDlg inDlg( this );
