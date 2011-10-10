@@ -20,6 +20,7 @@ include_directories(
 
 link_directories(
   ${TQT_LIBRARY_DIRS}
+  ${CMAKE_BINARY_DIR}/kicker/libkicker
 )
 
 
@@ -53,6 +54,6 @@ set( ${target}_SRCS
 tde_add_kpart( ${target} AUTOMOC
   SOURCES ${${target}_SRCS}
   DEPENDENCIES clock_panelapplet-static
-  LINK kickermain-shared clock_panelapplet-static
+  LINK kickermain-shared clock_panelapplet-static kickermain
   DESTINATION ${PLUGIN_INSTALL_DIR}
 )
