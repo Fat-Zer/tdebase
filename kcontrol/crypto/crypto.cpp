@@ -878,6 +878,10 @@ void KCryptoConfig::load( bool useDefaults )
 
   config->setGroup("SSLv2");
   mUseSSLv2->setChecked(config->readBoolEntry("Enabled", true));
+#ifdef OPENSSL_NO_SSL2
+  mUseSSLv2->setChecked(false);
+  mUseSSLv2->setEnabled(false);
+#endif
 
   config->setGroup("SSLv3");
   mUseSSLv3->setChecked(config->readBoolEntry("Enabled", true));
@@ -929,7 +933,11 @@ void KCryptoConfig::load( bool useDefaults )
       item = static_cast<CipherItem *>(item->nextSibling());
   }
 
+#ifdef OPENSSL_NO_SSL2
+  SSLv2Box->setEnabled( false );
+#else
   SSLv2Box->setEnabled( mUseSSLv2->isChecked() );
+#endif
   SSLv3Box->setEnabled( mUseSSLv3->isChecked() );
 
   TQStringList groups = policies->groupList();
@@ -1042,7 +1050,11 @@ void KCryptoConfig::save()
   config->writeEntry("Enabled", mUseTLS->isChecked());
 
   config->setGroup("SSLv2");
+#ifdef OPENSSL_NO_SSL2
+  config->writeEntry("Enabled", false);
+#else
   config->writeEntry("Enabled", mUseSSLv2->isChecked());
+#endif
 
   config->setGroup("SSLv3");
   config->writeEntry("Enabled", mUseSSLv3->isChecked());
@@ -1262,7 +1274,11 @@ void KCryptoConfig::cwCompatible() {
   }
 
   mUseTLS->setChecked(true);
+#ifdef OPENSSL_NO_SSL2
+  mUseSSLv2->setChecked(false);
+#else
   mUseSSLv2->setChecked(true);
+#endif
   mUseSSLv3->setChecked(true);
   configChanged();
   #endif
@@ -1319,7 +1335,11 @@ void KCryptoConfig::cwAll() {
   }
 
   mUseTLS->setChecked(true);
+#ifdef OPENSSL_NO_SSL2
+  mUseSSLv2->setChecked(false);
+#else
   mUseSSLv2->setChecked(true);
+#endif
   mUseSSLv3->setChecked(true);
   configChanged();
   #endif
@@ -2361,6 +2381,8 @@ SSL_CONST SSL_METHOD *meth;
 
   if (ctx) SSL_CTX_free(ctx);
   if (ssl) SSL_free(ssl);
+#else
+  CipherItem *item;
 #endif
 
   // We repeat for SSLv3
