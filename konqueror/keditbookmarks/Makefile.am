@@ -7,7 +7,7 @@ lib_LTLIBRARIES =
 kdeinit_LTLIBRARIES = keditbookmarks.la
 
 kbookmarkmerger_SOURCES = kbookmarkmerger.cpp
-kbookmarkmerger_LDFLAGS = $(all_libraries) $(KDE_RPATH)
+kbookmarkmerger_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_KDECORE) $(LIB_KDEUI) -lkdefx $(LIB_KIO) -lktexteditor
 kbookmarkmerger_LDADD = $(LIB_KIO)
 
 dcop_DCOPIDLNG = true

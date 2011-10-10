@@ -3,7 +3,7 @@ INCLUDES= $(all_includes)
 bin_PROGRAMS = kdeprintfax
 kdeprintfax_SOURCES = main.cpp kdeprintfax.cpp faxab.cpp faxctrl.cpp confgeneral.cpp configdlg.cpp \
 		      conffax.cpp confsystem.cpp conffilters.cpp filterdlg.cpp defcmds.cpp
-kdeprintfax_LDFLAGS = $(all_libraries) $(KDE_RPATH)
+kdeprintfax_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_KDECORE) $(LIB_KDEUI) -lkdefx $(LIB_KIO) -lktexteditor
 kdeprintfax_LDADD   = $(LIB_KDEUI) $(LIB_KIO) $(LIB_KDEPRINT) -lkabc
 kdeprintfax_METASOURCES = AUTO
 

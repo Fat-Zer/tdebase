@@ -46,7 +46,7 @@ konsole_la_LIBADD = $(LIB_KDEUI) $(LIB_KIO) $(LIB_KDEPRINT) $(LIBUTIL) $(XTESTLI
 
 # kcmkonsole_SOURCES = kcmkonsole.cpp schema.cpp
 # kcmkonsole_LDADD   = $(LIB_KDEUI)
-# kcmkonsole_LDFLAGS = $(all_libraries) $(KDE_RPATH)
+# kcmkonsole_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_KDECORE) $(LIB_KDEUI) -lkdefx $(LIB_KIO) -lktexteditor
 
 noinst_HEADERS = TEWidget.h TEPty.h TEmulation.h TEmuVt102.h \
 	TECommon.h TEScreen.h konsole.h schema.h session.h konsole_wcwidth.h \

@@ -17,7 +17,7 @@ AM_CPPFLAGS = -I$(srcdir)/../lib -I$(srcdir)/../../fonts $(all_includes) $(LIBFR
 METASOURCES = AUTO
 
 kfontview_LDADD = $(LIB_KPARTS)
-kfontview_LDFLAGS = $(all_libraries) $(KDE_RPATH)
+kfontview_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_KDECORE) $(LIB_KDEUI) -lkdefx $(LIB_KIO) -lktexteditor
 
 bin_PROGRAMS = kfontview
 xdg_apps_DATA = kfontview.desktop

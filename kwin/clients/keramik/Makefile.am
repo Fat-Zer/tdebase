@@ -8,7 +8,7 @@ noinst_HEADERS            = tiles.h
 
 embedtool_SOURCES         = embedtool.cpp
 embedtool_LDADD           = $(LIB_QT)
-embedtool_LDFLAGS         = $(all_libraries) $(KDE_RPATH)
+embedtool_LDFLAGS         = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_KDECORE) $(LIB_KDEUI) -lkdefx $(LIB_KIO) -lktexteditor
 
 kde_module_LTLIBRARIES    = kwin3_keramik.la
 

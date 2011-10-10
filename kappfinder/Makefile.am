@@ -3,12 +3,12 @@ SUBDIRS = apps
 bin_PROGRAMS = kappfinder
 kappfinder_SOURCES = main.cpp toplevel.cpp common.cpp
 kappfinder_LDADD = $(LIB_KDEUI) $(LIB_KIO)
-kappfinder_LDFLAGS = $(all_libraries) $(KDE_RPATH)
+kappfinder_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_KDECORE) $(LIB_KDEUI) -lkdefx $(LIB_KIO) -lktexteditor
 
 noinst_PROGRAMS = kappfinder_install
 kappfinder_install_SOURCES = main_install.cpp common.cpp
 kappfinder_install_LDADD = $(LIB_KDEUI)
-kappfinder_install_LDFLAGS = $(all_libraries) $(KDE_RPATH)
+kappfinder_install_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_KDECORE) $(LIB_KDEUI) -lkdefx $(LIB_KIO) -lktexteditor
 
 INCLUDES = $(all_includes)
 METASOURCES = AUTO

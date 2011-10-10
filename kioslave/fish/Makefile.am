@@ -1,7 +1,7 @@
 kde_module_LTLIBRARIES = kio_fish.la
 
 INCLUDES = $(all_includes)
-AM_LDFLAGS = $(all_libraries) $(KDE_RPATH)
+AM_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_KDECORE) $(LIB_KDEUI) -lkdefx $(LIB_KIO) -lktexteditor
 
 kio_fish_la_SOURCES = fish.cpp
 kio_fish_la_LIBADD = $(LIB_KSYCOCA) $(LIBUTIL) 

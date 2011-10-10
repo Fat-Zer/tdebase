@@ -6,7 +6,7 @@ METASOURCES = AUTO
 bin_PROGRAMS = khc_indexbuilder
 lib_LTLIBRARIES = 
 
-khc_indexbuilder_LDFLAGS = $(all_libraries) $(KDE_RPATH)
+khc_indexbuilder_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_KDECORE) $(LIB_KDEUI) -lkdefx $(LIB_KIO) -lktexteditor
 khc_indexbuilder_LDADD = $(LIB_KDECORE)
 khc_indexbuilder_SOURCES = khc_indexbuilder.cpp
 
@@ -34,7 +34,7 @@ khelpcenter_la_SOURCES = navigator.cpp \
 
 EXTRA_PROGRAMS = testmetainfo
 
-testmetainfo_LDFLAGS = $(all_libraries) $(KDE_RPATH)
+testmetainfo_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_KDECORE) $(LIB_KDEUI) -lkdefx $(LIB_KIO) -lktexteditor
 testmetainfo_LDADD = $(LIB_KDECORE) docentry.lo docmetainfo.lo \
                      docentrytraverser.lo htmlsearch.lo
 testmetainfo_SOURCES = testmetainfo.cpp

@@ -7,7 +7,7 @@ bin_PROGRAMS = 	kwebdesktop
 METASOURCES = AUTO
 
 kwebdesktop_SOURCES = kwebdesktop.cpp kwebdesktopsettings.kcfgc 
-kwebdesktop_LDFLAGS = $(all_libraries) $(KDE_RPATH)
+kwebdesktop_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_KDECORE) $(LIB_KDEUI) -lkdefx $(LIB_KIO) -lktexteditor
 
 kdesktop_kwebdesktop_data_DATA = kwebdesktop.desktop
 kdesktop_kwebdesktop_datadir = $(kde_datadir)/kdesktop/programs
