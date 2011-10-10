@@ -2333,6 +2333,7 @@ SSL_CONST SSL_METHOD *meth;
   SSLv2Box->clear();
   SSLv3Box->clear();
 
+#ifndef OPENSSL_NO_SSL2
   meth = SSLv2_client_method();
   SSLeay_add_ssl_algorithms();
   ctx = SSL_CTX_new(meth);
@@ -2360,6 +2361,7 @@ SSL_CONST SSL_METHOD *meth;
 
   if (ctx) SSL_CTX_free(ctx);
   if (ssl) SSL_free(ssl);
+#endif
 
   // We repeat for SSLv3
   meth = SSLv3_client_method();
