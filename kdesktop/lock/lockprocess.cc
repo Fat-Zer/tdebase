@@ -1668,13 +1668,16 @@ void LockProcess::cleanupPopup()
 
 void LockProcess::doFunctionKeyBroadcast() {
     // Provide a clean, pretty display switch by hiding the password dialog here
-    mBusy=true;
-    TQTimer::singleShot(1000, this, TQT_SLOT(slotDeadTimePassed()));
-    if (mkeyCode == XKeysymToKeycode(qt_xdisplay(), XF86XK_Display)) {
-        while (mDialogControlLock == true) sleep(1);
-        mDialogControlLock = true;
-        closeCurrentWindow();
-        mDialogControlLock = false;
+    // This does NOT work with the SAK or system modal dialogs!
+    if ((!trinity_desktop_lock_use_system_modal_dialogs) && (!trinity_desktop_lock_use_sak)) {
+        mBusy=true;
+        TQTimer::singleShot(1000, this, TQT_SLOT(slotDeadTimePassed()));
+        if (mkeyCode == XKeysymToKeycode(qt_xdisplay(), XF86XK_Display)) {
+            while (mDialogControlLock == true) sleep(1);
+            mDialogControlLock = true;
+            currentDialog->close();		// DO NOT use closeCurrentWindow() here!
+            mDialogControlLock = false;
+        }
     }
     setCursor( tqblankCursor );
 
