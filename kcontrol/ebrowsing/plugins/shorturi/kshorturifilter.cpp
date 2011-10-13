@@ -392,10 +392,32 @@ bool KShortURIFilter::filterURI( KURIFilterData& data ) const
     bool isDir = S_ISDIR( buff.st_mode );
     if( !isDir && access ( TQFile::encodeName(path).data(), X_OK) == 0 )
     {
-      //kdDebug() << "Abs path to EXECUTABLE" << endl;
-      setFilteredURI( data, u );
-      setURIType( data, KURIFilterData::EXECUTABLE );
-      return true;
+      // ::access() is not always correct, especially on network file systems
+      // Verify that we actually have at least one execute permission bit set before flagging the file as executable...
+      struct stat buffer;
+      int status;
+      status = stat(TQFile::encodeName(path).data(), &buffer);
+      if (status == 0) {
+          bool is_executable = false;
+          int file_mode = ((buffer.st_mode & S_IRWXU) >> 6);		// User
+          if (file_mode & 0x1) is_executable = true;
+          file_mode = file_mode + ((buffer.st_mode & S_IRWXG) >> 3);	// Group
+          if (file_mode & 0x1) is_executable = true;
+          file_mode = file_mode + ((buffer.st_mode & S_IRWXO) >> 0);	// Other
+          if (file_mode & 0x1) is_executable = true;
+          if (is_executable == true) {
+              //kdDebug() << "Abs path to EXECUTABLE" << endl;
+              setFilteredURI( data, u );
+              setURIType( data, KURIFilterData::EXECUTABLE );
+              return true;
+          }
+      }
+      else {
+          //kdDebug() << "Abs path to EXECUTABLE" << endl;
+          setFilteredURI( data, u );
+          setURIType( data, KURIFilterData::EXECUTABLE );
+          return true;
+      }
     }
 
     // Open "uri" as file:/xxx if it is a non-executable local resource.
