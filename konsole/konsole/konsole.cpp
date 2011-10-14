@@ -1634,9 +1634,15 @@ void Konsole::readProperties(KConfig* config, const TQString &schema, bool globa
       if (te) {
         if (sch->useTransparency())
         {
-           if (!rootxpms[te])
-             rootxpms.insert( te, new KRootPixmap(te) );
-           rootxpms[te]->setFadeEffect(sch->tr_x(), TQColor(sch->tr_r(), sch->tr_g(), sch->tr_b()));
+          if (!argb_visual) {
+             if (!rootxpms[te])
+               rootxpms.insert( te, new KRootPixmap(te) );
+             rootxpms[te]->setFadeEffect(sch->tr_x(), TQColor(sch->tr_r(), sch->tr_g(), sch->tr_b()));
+          }
+          else {
+            te->setBlendColor(tqRgba(sch->tr_r(), sch->tr_g(), sch->tr_b(), int(sch->tr_x() * 255)));
+            te->setErasePixmap( TQPixmap() ); // make sure any background pixmap is unset
+          }
         }
         else
         {

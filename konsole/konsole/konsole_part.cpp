@@ -586,11 +586,17 @@ void konsolePart::readProperties()
   te->setColorTable(sch->table()); //FIXME: set twice here to work around a bug
 
   if (sch->useTransparency()) {
-    if (!rootxpm)
-      rootxpm = new KRootPixmap(TQT_TQWIDGET(te));
-    rootxpm->setFadeEffect(sch->tr_x(), TQColor(sch->tr_r(), sch->tr_g(), sch->tr_b()));
-    rootxpm->start();
-    rootxpm->tqrepaint(true);
+    if (!argb_visual) {
+      if (!rootxpm)
+        rootxpm = new KRootPixmap(TQT_TQWIDGET(te));
+      rootxpm->setFadeEffect(sch->tr_x(), TQColor(sch->tr_r(), sch->tr_g(), sch->tr_b()));
+      rootxpm->start();
+      rootxpm->tqrepaint(true);
+    }
+    else {
+      te->setBlendColor(tqRgba(sch->tr_r(), sch->tr_g(), sch->tr_b(), int(sch->tr_x() * 255)));
+      te->setErasePixmap( TQPixmap() ); // make sure any background pixmap is unset
+    }
   }
   else {
     if (rootxpm) {
@@ -774,11 +780,17 @@ void konsolePart::setSchema(ColorSchema* s)
   te->setColorTable(s->table()); //FIXME: set twice here to work around a bug
 
   if (s->useTransparency()) {
-    if (!rootxpm)
-      rootxpm = new KRootPixmap(TQT_TQWIDGET(te));
-    rootxpm->setFadeEffect(s->tr_x(), TQColor(s->tr_r(), s->tr_g(), s->tr_b()));
-    rootxpm->start();
-    rootxpm->tqrepaint(true);
+    if (!argb_visual) {
+      if (!rootxpm)
+        rootxpm = new KRootPixmap(TQT_TQWIDGET(te));
+      rootxpm->setFadeEffect(s->tr_x(), TQColor(s->tr_r(), s->tr_g(), s->tr_b()));
+      rootxpm->start();
+      rootxpm->tqrepaint(true);
+    }
+    else {
+      te->setBlendColor(tqRgba(s->tr_r(), s->tr_g(), s->tr_b(), int(s->tr_x() * 255)));
+      te->setErasePixmap( TQPixmap() ); // make sure any background pixmap is unset
+    }
   }
   else {
     if (rootxpm) {

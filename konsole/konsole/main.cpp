@@ -252,7 +252,7 @@ extern "C" int KDE_EXPORT kdemain(int argc, char* argv[])
   a = new KApplication(KApplication::openX11RGBADisplay());
   argb_visual = a->isX11CompositionAvailable();
 #else
-  KApplication* a = new KApplication;
+  a = new KApplication;
 #endif
 
   TQString dataPathBase = KStandardDirs::kde_default("data").append("konsole/");
