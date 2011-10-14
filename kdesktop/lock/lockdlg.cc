@@ -79,6 +79,25 @@ PasswordDlg::PasswordDlg(LockProcess *parent, GreeterPluginHandle *plugin)
       mCapsLocked(-1),
       mUnlockingFailed(false)
 {
+    init(plugin);
+}
+
+//
+// Simple dialog for entering a password.
+// This version includes support for displaying the date and time the lock process was started
+//
+PasswordDlg::PasswordDlg(LockProcess *parent, GreeterPluginHandle *plugin, TQDateTime lockStartDateTime)
+    : TQDialog(parent, "password dialog", true, (trinity_desktop_lock_use_system_modal_dialogs?((WFlags)WStyle_StaysOnTop):((WFlags)WX11BypassWM))),
+      mPlugin( plugin ),
+      mCapsLocked(-1),
+      mUnlockingFailed(false)
+{
+    m_lockStartDT = lockStartDateTime;
+    init(plugin);
+}
+
+void PasswordDlg::init(GreeterPluginHandle *plugin)
+{
     dialogHideTimeout = trinity_desktop_lock_delay_screensaver_start?KDesktopSettings::timeout()*1000:10*1000;
 
     if (trinity_desktop_lock_use_system_modal_dialogs) {
@@ -115,6 +134,11 @@ PasswordDlg::PasswordDlg(LockProcess *parent, GreeterPluginHandle *plugin)
                 i18n("<nobr><b>The session was locked by %1</b><br>").arg( user.fullName() ), frame );
     }
 
+    TQLabel *lockDTLabel;
+    if ((trinity_desktop_lock_use_system_modal_dialogs) && (!m_lockStartDT.isNull())) {
+        lockDTLabel = new TQLabel(i18n("This session has been locked since %1").arg(m_lockStartDT.toString()), frame);
+    }
+
     mStatusLabel = new TQLabel( "<b> </b>", frame );
     mStatusLabel->tqsetAlignment( TQLabel::AlignCenter );
 
@@ -148,13 +172,25 @@ PasswordDlg::PasswordDlg(LockProcess *parent, GreeterPluginHandle *plugin)
     if (trinity_desktop_lock_use_system_modal_dialogs) {
         KSMModalDialogHeader* theader = new KSMModalDialogHeader( frame );
 
-        frameLayout = new TQGridLayout( frame, 1, 1, KDialog::marginHint(), KDialog::spacingHint() );
-        frameLayout->addMultiCellWidget( theader, 0, 0, 0, 2, Qt::AlignTop );
-        frameLayout->addWidget( greetLabel, 1, 1 );
-        frameLayout->addItem( greet->getLayoutItem(), 2, 1 );
-        frameLayout->addLayout( layStatus, 3, 1 );
-        frameLayout->addMultiCellWidget( sep, 4, 4, 0, 1 );
-        frameLayout->addMultiCellLayout( layButtons, 5, 5, 0, 1 );
+        if (!m_lockStartDT.isNull()) {
+            frameLayout = new TQGridLayout( frame, 1, 1, KDialog::marginHint(), KDialog::spacingHint() );
+            frameLayout->addMultiCellWidget( theader, 0, 0, 0, 2, Qt::AlignTop );
+            frameLayout->addWidget( greetLabel, 1, 1 );
+            frameLayout->addWidget( lockDTLabel, 2, 1 );
+            frameLayout->addItem( greet->getLayoutItem(), 3, 1 );
+            frameLayout->addLayout( layStatus, 4, 1 );
+            frameLayout->addMultiCellWidget( sep, 5, 5, 0, 1 );
+            frameLayout->addMultiCellLayout( layButtons, 6, 6, 0, 1 );
+        }
+        else {
+            frameLayout = new TQGridLayout( frame, 1, 1, KDialog::marginHint(), KDialog::spacingHint() );
+            frameLayout->addMultiCellWidget( theader, 0, 0, 0, 2, Qt::AlignTop );
+            frameLayout->addWidget( greetLabel, 1, 1 );
+            frameLayout->addItem( greet->getLayoutItem(), 2, 1 );
+            frameLayout->addLayout( layStatus, 3, 1 );
+            frameLayout->addMultiCellWidget( sep, 4, 4, 0, 1 );
+            frameLayout->addMultiCellLayout( layButtons, 5, 5, 0, 1 );
+        }
     }
     else {
         frameLayout = new TQGridLayout( frame, 1, 1, KDialog::marginHint(), KDialog::spacingHint() );
@@ -242,16 +278,19 @@ void PasswordDlg::updateLabel()
     {
         mStatusLabel->setPaletteForegroundColor(Qt::black);
         mStatusLabel->setText(i18n("<b>Unlocking failed</b>"));
+//         mStatusLabel->show();
     }
     else
     if (mCapsLocked)
     {
         mStatusLabel->setPaletteForegroundColor(Qt::red);
         mStatusLabel->setText(i18n("<b>Warning: Caps Lock on</b>"));
+//         mStatusLabel->show();
     }
     else
     {
         mStatusLabel->setText("<b> </b>");
+//         mStatusLabel->hide();
     }
 }
 

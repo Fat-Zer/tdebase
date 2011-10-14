@@ -318,6 +318,13 @@
       <!-- /home/paco/cvsroot/kdebase/kdesktop/lock/lockprocess.cc:336 -->
       <!--     mSaver = config.readEntry("UseTDESAK"); -->
     </entry>
+    <entry key="ShowLockDateTime" type="Bool">
+      <default>true</default>
+      <label></label>
+      <whatsthis>Set to true to enable display of the date and time of desktop lock as an additional intrusion detection measure</whatsthis>
+      <!-- /home/paco/cvsroot/kdebase/kdesktop/lock/lockprocess.cc:336 -->
+      <!--     mSaver = config.readEntry("ShowLockDateTime"); -->
+    </entry>
     <entry key="DelaySaverStart" type="Bool">
       <default>true</default>
       <label></label>

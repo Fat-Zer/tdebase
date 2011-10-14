@@ -157,6 +157,7 @@ LockProcess::LockProcess(bool child, bool useBlankOnly)
       child_saver(child),
       mParent(0),
       mUseBlankOnly(useBlankOnly),
+      mShowLockDateTime(false),
       mSuspended(false),
       mVisibility(false),
       mRestoreXF86Lock(false),
@@ -183,6 +184,8 @@ LockProcess::LockProcess(bool child, bool useBlankOnly)
 {
     setupSignals();
     setupPipe();
+
+    mShowLockDateTime = KDesktopSettings::showLockDateTime();
 
     kapp->installX11EventFilter(this);
 
@@ -1529,7 +1532,7 @@ bool LockProcess::checkPass()
         }
 
         showVkbd();
-        PasswordDlg passDlg( this, &greetPlugin);
+        PasswordDlg passDlg( this, &greetPlugin, (mShowLockDateTime)?TQDateTime::currentDateTime():TQDateTime());
         int ret = execDialog( &passDlg );
         hideVkbd();
 

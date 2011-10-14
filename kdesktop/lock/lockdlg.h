@@ -13,6 +13,7 @@
 
 #include <tqdialog.h>
 #include <tqstringlist.h>
+#include <tqdatetime.h>
 
 #include "lockprocess.h"
 
@@ -35,7 +36,9 @@ class PasswordDlg : public TQDialog, public KGreeterPluginHandler
 
 public:
     PasswordDlg(LockProcess *parent, GreeterPluginHandle *plugin);
+    PasswordDlg(LockProcess *parent, GreeterPluginHandle *plugin, TQDateTime lockStartDateTime);
     ~PasswordDlg();
+    void init(GreeterPluginHandle *plugin);
     virtual void show();
 
     // from KGreetPluginHandler
@@ -91,6 +94,7 @@ private:
     TQStringList::iterator currLayout;
     int         sPid, sFd;
     TQListView   *lv;
+    TQDateTime   m_lockStartDT;
 };
 
 #endif

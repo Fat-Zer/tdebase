@@ -138,6 +138,7 @@ private:
     TQValueList<int> child_sockets;
     int         mParent;
     bool        mUseBlankOnly;
+    bool        mShowLockDateTime;
     bool        mSuspended;
     TQTimer      mSuspendTimer;
     bool        mVisibility;
