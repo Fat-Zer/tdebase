@@ -291,6 +291,10 @@ Bool	fadeTrans = False;
 
 Bool	autoRedirect = False;
 
+#if WORK_AROUND_FGLRX
+Bool	restartOnSigterm = True;
+#endif
+
 /* For shadow precomputation */
 int            Gsize = -1;
 unsigned char *shadowCorner = NULL;
@@ -385,7 +389,7 @@ void delete_pid_file()
 #endif
 
 #if WORK_AROUND_FGLRX
-    if (my_exit_code == 3) {
+    if ((my_exit_code == 3) && (restartOnSigterm)) {
         printf("kompmgr lost connection to X server, restarting...\n\r"); fflush(stdout);
         sleep(1);
         char me[2048];
@@ -401,9 +405,7 @@ void handle_siguser (int sig)
 {
     int uidnum;
     if (sig == SIGTERM) {
-        delete_pid_file();
-        my_exit_code=0;
-        exit(0);
+        // Trap this signal and keep running...
         return;
     }
     if (sig == SIGUSR1) {
@@ -3171,7 +3173,7 @@ main (int argc, char **argv)
 	loadConfig(NULL); /*we do that before cmdline-parsing, so config-values can be overridden*/
 	/*used for shadow colors*/
 
-	while ((o = getopt (argc, argv, "D:I:O:d:r:o:l:t:b:scnfFmCaSx:vh")) != -1)
+	while ((o = getopt (argc, argv, "D:I:O:d:r:o:l:t:b:scnfFmCaSx:vhk")) != -1)
 	{
 		switch (o) {
 			case 'd':
@@ -3251,6 +3253,9 @@ main (int argc, char **argv)
 				setShadowColor(optarg);
 				break;
 			case 'v': fprintf (stderr, "%s v%-3.2f\n", argv[0], _VERSION_); my_exit_code=0; exit (0);
+			case 'k':
+				restartOnSigterm = False;
+				break;
 			case 'h':
 			default:
 				  usage (argv[0]);
