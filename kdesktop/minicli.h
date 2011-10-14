@@ -85,6 +85,7 @@ private slots:
   void slotChangeScheduler(bool);
   void slotCmdChanged(const TQString&);
   void slotMatch( const TQString&);
+  void slotEXEMatch( const TQString&);
 
 private:
   void setIcon();
@@ -118,8 +119,11 @@ private:
 
   // Autocomplete
   KURLCompletion *m_pURLCompletion;
+  KURLCompletion *m_pEXECompletion;
   bool m_filesystemAutocomplete;
+  bool m_systempathAutocomplete;
   bool m_histfilesystemAutocomplete;
   bool m_urlCompletionStarted;
+  bool m_exeCompletionStarted;
 };
 #endif

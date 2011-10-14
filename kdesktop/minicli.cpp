@@ -77,10 +77,8 @@
 
 Minicli::Minicli( TQWidget *parent, const char *name)
         :KDialog( parent, name, false, (WFlags)WType_TopLevel ),
-         m_autoCheckedRunInTerm(false)
+         m_autoCheckedRunInTerm(false), m_pURLCompletion(NULL), m_pEXECompletion(NULL)
 {
-  m_pURLCompletion = 0L;
-
   setPlainCaption( i18n("Run Command") );
   KWin::setIcons( winId(), DesktopIcon("run"), SmallIcon("run") );
 
@@ -129,9 +127,12 @@ Minicli::Minicli( TQWidget *parent, const char *name)
   // Autocomplete system
   m_filesystemAutocomplete = 0;
   m_histfilesystemAutocomplete = 0;
-  m_pURLCompletion = new KURLCompletion();
+  m_systempathAutocomplete = 1;
+  m_pURLCompletion = new KURLCompletion(KURLCompletion::FileCompletion);
+  m_pEXECompletion = new KURLCompletion(KURLCompletion::SystemExeCompletion);
   //m_pURLCompletion->setCompletionMode( KGlobalSettings::completionMode() );
   connect( m_pURLCompletion, TQT_SIGNAL( match(const TQString&) ), TQT_SLOT( slotMatch(const TQString&) ));
+  connect( m_pEXECompletion, TQT_SIGNAL( match(const TQString&) ), TQT_SLOT( slotEXEMatch(const TQString&) ));
 
   // Main widget buttons...
   connect( m_dlg->pbRun, TQT_SIGNAL(clicked()), this, TQT_SLOT(accept()) );
@@ -167,6 +168,7 @@ Minicli::~Minicli()
 {
   delete m_filterData;
   delete m_pURLCompletion;
+  delete m_pEXECompletion;
 }
 
 void Minicli::setCommand(const TQString& command)
@@ -220,6 +222,7 @@ void Minicli::loadConfig()
   m_dlg->cbAutohistory->setChecked( KDesktopSettings::miniCLIHistoryAndFilesystemAutoComplete() );
 
   m_filesystemAutocomplete = KDesktopSettings::miniCLIFilesystemAutoComplete();
+  m_systempathAutocomplete = KDesktopSettings::miniCLISystempathAutoComplete();
   m_histfilesystemAutocomplete = KDesktopSettings::miniCLIHistoryAndFilesystemAutoComplete();
 
   if (m_histfilesystemAutocomplete == true) {
@@ -275,6 +278,7 @@ void Minicli::saveConfig()
   //KDesktopSettings::setCompletionItems( m_dlg->cbCommand->completionObject()->items() );
   KDesktopSettings::setCompletionMode( m_dlg->cbCommand->completionMode() );
   KDesktopSettings::setMiniCLIFilesystemAutoComplete( m_filesystemAutocomplete );
+  KDesktopSettings::setMiniCLISystempathAutoComplete( m_systempathAutocomplete );
   KDesktopSettings::setMiniCLIHistoryAndFilesystemAutoComplete( m_histfilesystemAutocomplete );
   KDesktopSettings::writeConfig();
 }
@@ -678,6 +682,15 @@ void Minicli::slotCmdChanged(const TQString& text)
         TQString completion = m_pURLCompletion->makeCompletion( text );
     }
   }
+  if ((m_systempathAutocomplete == true) && ( m_pEXECompletion )) {
+    // Attempt to autocomplete the entered URL if it starts with the / character, meaning I am looking for something on the filesystem
+    // Also use autocompletion if it appears that I am using some kind of ioslave, except the http:// ioslave
+    m_exeCompletionStarted = true; // flag for slotEXEMatch()
+
+    if (!((text.startsWith( "/" ) || text.startsWith( "~" ) || (text.contains("://", false) != 0)) && (text.contains("http://", false) == 0))) {
+        TQString completion = m_pEXECompletion->makeCompletion( text );
+    }
+  }
 
   m_parseTimer->start(250, true);
 }
@@ -701,6 +714,45 @@ void Minicli::slotMatch( const TQString &match )
         bool block = m_dlg->cbCommand->signalsBlocked();
         m_dlg->cbCommand->blockSignals( true );
         TQStringList items = m_pURLCompletion->allMatches();
+        items.sort();
+        if (m_histfilesystemAutocomplete == true) {
+            // Add the history to the list
+            histList += items;
+            maxHistory += maxAutocompletion;
+        }
+        else {
+            histList = items;
+            maxHistory = maxAutocompletion;
+        }
+        current_text = m_dlg->cbCommand->currentText();
+        //histList.prepend ( current_text );	// Add the current text to the autocompletion list
+        m_dlg->cbCommand->setMaxCount( maxHistory );
+        m_dlg->cbCommand->completionObject()->setItems( histList );
+        m_dlg->cbCommand->setCurrentText( current_text );
+        m_dlg->cbCommand->blockSignals( block );
+    }
+  }
+}
+
+// Handle match() from m_pEXECompletion
+void Minicli::slotEXEMatch( const TQString &match )
+{
+  TQString current_text;
+  TQStringList histList = KDesktopSettings::history();
+  int maxHistory = KDesktopSettings::historyLength();
+  int maxAutocompletion = KDesktopSettings::miniCLIAutocompletionLength();
+
+  if ( match.isEmpty() ) // this case is handled directly
+    return;
+
+  // Check flag to avoid match() raised by rotation
+  if ( m_exeCompletionStarted ) {
+    m_exeCompletionStarted = false;
+
+    if (m_systempathAutocomplete == true) {
+        bool block = m_dlg->cbCommand->signalsBlocked();
+        m_dlg->cbCommand->blockSignals( true );
+        TQStringList items = m_pEXECompletion->allMatches();
         items.sort();
         if (m_histfilesystemAutocomplete == true) {
             // Add the history to the list
