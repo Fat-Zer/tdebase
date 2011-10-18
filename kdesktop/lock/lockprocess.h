@@ -20,6 +20,7 @@
 #include <tqvaluestack.h>
 #include <tqmessagebox.h>
 #include <tqpixmap.h>
+#include <tqdatetime.h>
 
 #include <X11/Xlib.h>
 
@@ -192,6 +193,8 @@ private:
     int         mBackingStartupDelayTimer;
 
     KSMModalDialog* m_startupStatusDialog;
+
+    TQDateTime mlockDateTime;
 };
 
 #endif
