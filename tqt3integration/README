@@ -1,0 +1,36 @@
+Qt/KDE UI integration. Makes Qt-only apps use several KDE dialogs without any modifications
+to these applications. Can be turned off by setting $QT_NO_KDE_INTEGRATION.
+
+Installation:
+Just plain make && make install.
+Additionally 'make generate' needs to be done in utils/, and Qt needs to be patched using the sources
+generated in utils/qt . Patch should be applied, the .cpp/.h files belong to src/kernel/ ,
+the .h file additionally should go to include/private .
+
+
+<l.lunak@suse.cz>
+
+
+=====
+
+- nastavovat WM_CLASS i vsem poddialogum tech, ktere se zobrazuji?
+
+v kded nesmi byt nic, co znovu vstupuje do event loop
+    - udelat na to test
+    - spravit kwallet
+
+blokovat uzivatelsky vstup, jako to dela kapp pro dcop
+
+obcas se dela demand-attention v taskbaru
+- navic je problem s focus stealing prevention, kdyz aplikace nejdriv zobrazi jen samotny dialog
+    - delat updateUserTimestamp?
+
+filedialogs
+    - pamatovat si working directory pro kazdou dcop konexi, a pouzit, kdyz neni dano?
+    - vraceni selectedFilter uplne nefunguje, protoze KFileDialog nevraci cely filter (*.cpp|C++ File), alen jen *.cpp
+
+getColor()
+    - KColorDialog neumi alpha channel - ale to mac taky ne
+
+getFont()
+    - zmenil jsem QFont* def na const QFont& def, tj. vzdy je k dispozici, neexistence se da null hodnotou

@@ -196,6 +196,7 @@ tde_conditional_add_subdirectory( BUILD_KSYSGUARD ksysguard )
 tde_conditional_add_subdirectory( BUILD_KXKB kxkb )
 add_subdirectory( tsak )
 add_subdirectory( krootbacking )
+add_subdirectory( tqt3integration )
 
 ##### install startkde & related stuff ##########
 

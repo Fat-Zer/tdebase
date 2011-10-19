@@ -1,0 +1,546 @@
+# bool initializeIntegration()
+#
+FUNCTION initializeIntegration
+    RETURN_TYPE bool
+    ARG hostname
+        TYPE QString
+        CONST_REF
+        CREATE getHostname
+    ENDARG
+ENDFUNCTION
+# QStringList getOpenFileNames( const QString &filter,
+#     QString* workingDirectory, QWidget *parent, const char* name,
+#     const QString& caption, QString* selectedFilter, bool multiple );
+#
+FUNCTION getOpenFileNames
+    RETURN_TYPE QStringList
+    DELAYED_RETURN
+    ADD_APPINFO
+    ARG filter
+        TYPE QString
+        CONST_REF
+        CONVERSION convertFileFilter
+    ENDARG
+    ARG workingDirectory
+        TYPE QString
+        NEEDS_DEREF
+        OUT_ARGUMENT
+    ENDARG
+    ARG parent
+        TYPE long
+        ORIG_TYPE QWidget*
+        ORIG_CONVERSION parentToWinId
+        PARENT
+    ENDARG
+    ARG name
+        TYPE QCString
+        CONST_REF
+        ORIG_TYPE const char*
+    ENDARG
+    ARG caption
+        TYPE QString
+        CONST_REF
+    ENDARG
+    ARG selectedFilter
+        TYPE QString
+        NEEDS_DEREF
+        OUT_ARGUMENT
+        CONVERSION convertFileFilter
+        BACK_CONVERSION convertBackFileFilter
+    ENDARG
+    ARG multiple
+        TYPE bool
+    ENDARG
+ENDFUNCTION
+
+# QString getSaveFileName( const QString &initialSelection,
+#     const QString &filter, QString* workingDirectory, QWidget *parent,
+#     const char* name, const QString& caption, QString* selectedFilter );
+#
+FUNCTION getSaveFileName
+    RETURN_TYPE QString
+    DELAYED_RETURN
+    ADD_APPINFO
+    ARG initialSelection
+        TYPE QString
+        CONST_REF
+    ENDARG
+    ARG filter
+        TYPE QString
+        CONST_REF
+        CONVERSION convertFileFilter
+    ENDARG
+    ARG workingDirectory
+        TYPE QString
+        NEEDS_DEREF
+        OUT_ARGUMENT
+    ENDARG
+    ARG parent
+        TYPE long
+        ORIG_TYPE QWidget*
+        ORIG_CONVERSION parentToWinId
+        PARENT
+    ENDARG
+    ARG name
+        TYPE QCString
+        CONST_REF
+        ORIG_TYPE const char*
+    ENDARG
+    ARG caption
+        TYPE QString
+        CONST_REF
+    ENDARG
+    ARG selectedFilter
+        TYPE QString
+        NEEDS_DEREF
+        OUT_ARGUMENT
+        CONVERSION convertFileFilter
+        BACK_CONVERSION convertBackFileFilter
+    ENDARG
+ENDFUNCTION
+
+# QString getExistingDirectory( const QString &initialDirectory,
+#     QWidget* parent, const char* name, const QString& caption );
+#
+FUNCTION getExistingDirectory
+    RETURN_TYPE QString
+    DELAYED_RETURN
+    ADD_APPINFO
+    ARG initialDirectory
+        TYPE QString
+        CONST_REF
+    ENDARG
+    ARG parent
+        TYPE long
+        ORIG_TYPE QWidget*
+        ORIG_CONVERSION parentToWinId
+        PARENT
+    ENDARG
+    ARG name
+        TYPE QCString
+        CONST_REF
+        ORIG_TYPE const char*
+    ENDARG
+    ARG caption
+        TYPE QString
+        CONST_REF
+    ENDARG
+ENDFUNCTION
+
+# QColor getColor( const QColor& color, QWidget* parent, const char* name );
+#
+FUNCTION getColor
+    RETURN_TYPE QColor
+    DELAYED_RETURN
+    ADD_APPINFO
+    ARG color
+        TYPE QColor
+        CONST_REF
+    ENDARG
+    ARG parent
+        TYPE long
+        ORIG_TYPE QWidget*
+        ORIG_CONVERSION parentToWinId
+        PARENT
+    ENDARG
+    ARG name
+        TYPE QCString
+        CONST_REF
+        ORIG_TYPE const char*
+    ENDARG
+ENDFUNCTION
+
+# QFont getFont( bool* ok, const QFont* def, QWidget *parent, const char* name);
+FUNCTION getFont
+    RETURN_TYPE QFont
+    DELAYED_RETURN
+    ADD_APPINFO
+    ARG ok
+        TYPE bool
+        NEEDS_DEREF
+        OUT_ARGUMENT
+    ENDARG
+    ARG def
+        TYPE QFont
+        ORIG_TYPE const QFont*
+        ORIG_CONVERSION fontPtrToFontRef
+        CONST_REF
+    ENDARG
+    ARG parent
+        TYPE long
+        ORIG_TYPE QWidget*
+        ORIG_CONVERSION parentToWinId
+        PARENT
+    ENDARG
+    ARG name
+        TYPE QCString
+        CONST_REF
+        ORIG_TYPE const char*
+    ENDARG
+ENDFUNCTION
+
+# int messageBox1( int type, QWidget *parent, const QString& caption, const QString& text,
+#     int button0, int button1, int button2 );
+FUNCTION messageBox1
+    RETURN_TYPE int
+    DELAYED_RETURN
+    ADD_APPINFO
+    ARG type
+        TYPE int
+    ENDARG
+    ARG parent
+        TYPE long
+        ORIG_TYPE QWidget*
+        ORIG_CONVERSION parentToWinId
+        PARENT
+    ENDARG
+    ARG caption
+        TYPE QString
+        CONST_REF
+    ENDARG
+    ARG text
+        TYPE QString
+        CONST_REF
+    ENDARG
+    ARG button0
+        TYPE int
+    ENDARG
+    ARG button1
+        TYPE int
+    ENDARG
+    ARG button2
+        TYPE int
+    ENDARG
+ENDFUNCTION
+
+# int information( QWidget *parent, const QString& caption, const QString& text,
+#     int button0, int button1, int button2 );
+FUNCTION information
+    RETURN_TYPE int
+    DELAYED_RETURN
+    ONLY_QT
+    ARG parent
+        TYPE long
+        ORIG_TYPE QWidget*
+        ORIG_CONVERSION parentToWinId
+        PARENT
+    ENDARG
+    ARG caption
+        TYPE QString
+        CONST_REF
+    ENDARG
+    ARG text
+        TYPE QString
+        CONST_REF
+    ENDARG
+    ARG button0
+        TYPE int
+    ENDARG
+    ARG button1
+        TYPE int
+    ENDARG
+    ARG button2
+        TYPE int
+    ENDARG
+ENDFUNCTION
+
+# int question( QWidget *parent, const QString& caption, const QString& text,
+#     int button0, int button1, int button2 );
+FUNCTION question
+    RETURN_TYPE int
+    DELAYED_RETURN
+    ONLY_QT
+    ARG parent
+        TYPE long
+        ORIG_TYPE QWidget*
+        ORIG_CONVERSION parentToWinId
+        PARENT
+    ENDARG
+    ARG caption
+        TYPE QString
+        CONST_REF
+    ENDARG
+    ARG text
+        TYPE QString
+        CONST_REF
+    ENDARG
+    ARG button0
+        TYPE int
+    ENDARG
+    ARG button1
+        TYPE int
+    ENDARG
+    ARG button2
+        TYPE int
+    ENDARG
+ENDFUNCTION
+
+# int warning( QWidget *parent, const QString& caption, const QString& text,
+#     int button0, int button1, int button2 );
+FUNCTION warning
+    RETURN_TYPE int
+    DELAYED_RETURN
+    ONLY_QT
+    ARG parent
+        TYPE long
+        ORIG_TYPE QWidget*
+        ORIG_CONVERSION parentToWinId
+        PARENT
+    ENDARG
+    ARG caption
+        TYPE QString
+        CONST_REF
+    ENDARG
+    ARG text
+        TYPE QString
+        CONST_REF
+    ENDARG
+    ARG button0
+        TYPE int
+    ENDARG
+    ARG button1
+        TYPE int
+    ENDARG
+    ARG button2
+        TYPE int
+    ENDARG
+ENDFUNCTION
+
+# int critical( QWidget *parent, const QString& caption, const QString& text,
+#     int button0, int button1, int button2 );
+FUNCTION critical
+    RETURN_TYPE int
+    DELAYED_RETURN
+    ONLY_QT
+    ARG parent
+        TYPE long
+        ORIG_TYPE QWidget*
+        ORIG_CONVERSION parentToWinId
+        PARENT
+    ENDARG
+    ARG caption
+        TYPE QString
+        CONST_REF
+    ENDARG
+    ARG text
+        TYPE QString
+        CONST_REF
+    ENDARG
+    ARG button0
+        TYPE int
+    ENDARG
+    ARG button1
+        TYPE int
+    ENDARG
+    ARG button2
+        TYPE int
+    ENDARG
+ENDFUNCTION
+
+# int messageBox2( int type, QWidget* parent, const QString& caption, const QString& text,
+#     const QString& button0Text, const QString& button1Text, const QString& button2Text,
+#     int defaultButton, int escapeButton );
+FUNCTION messageBox2
+    RETURN_TYPE int
+    DELAYED_RETURN
+    ADD_APPINFO
+    ARG type
+        TYPE int
+    ENDARG
+    ARG parent
+        TYPE long
+        ORIG_TYPE QWidget*
+        ORIG_CONVERSION parentToWinId
+        PARENT
+    ENDARG
+    ARG caption
+        TYPE QString
+        CONST_REF
+    ENDARG
+    ARG text
+        TYPE QString
+        CONST_REF
+    ENDARG
+    ARG button0Text
+        TYPE QString
+        CONST_REF
+    ENDARG
+    ARG button1Text
+        TYPE QString
+        CONST_REF
+    ENDARG
+    ARG button2Text
+        TYPE QString
+        CONST_REF
+    ENDARG
+    ARG defaultButton
+        TYPE int
+    ENDARG
+    ARG escapeButton
+        TYPE int
+    ENDARG
+ENDFUNCTION
+
+# int information( QWidget* parent, const QString& caption, const QString& text,
+#     const QString& button0Text, const QString& button1Text, const QString& button2Text,
+#     int defaultButton, int escapeButton );
+FUNCTION information
+    RETURN_TYPE int
+    DELAYED_RETURN
+    ONLY_QT
+    ARG parent
+        TYPE long
+        ORIG_TYPE QWidget*
+        ORIG_CONVERSION parentToWinId
+        PARENT
+    ENDARG
+    ARG caption
+        TYPE QString
+        CONST_REF
+    ENDARG
+    ARG text
+        TYPE QString
+        CONST_REF
+    ENDARG
+    ARG button0Text
+        TYPE QString
+        CONST_REF
+    ENDARG
+    ARG button1Text
+        TYPE QString
+        CONST_REF
+    ENDARG
+    ARG button2Text
+        TYPE QString
+        CONST_REF
+    ENDARG
+    ARG defaultButton
+        TYPE int
+    ENDARG
+    ARG escapeButton
+        TYPE int
+    ENDARG
+ENDFUNCTION
+
+# int question( QWidget* parent, const QString& caption, const QString& text,
+#     const QString& button0Text, const QString& button1Text, const QString& button2Text,
+#     int defaultButton, int escapeButton );
+FUNCTION question
+    RETURN_TYPE int
+    DELAYED_RETURN
+    ONLY_QT
+    ARG parent
+        TYPE long
+        ORIG_TYPE QWidget*
+        ORIG_CONVERSION parentToWinId
+        PARENT
+    ENDARG
+    ARG caption
+        TYPE QString
+        CONST_REF
+    ENDARG
+    ARG text
+        TYPE QString
+        CONST_REF
+    ENDARG
+    ARG button0Text
+        TYPE QString
+        CONST_REF
+    ENDARG
+    ARG button1Text
+        TYPE QString
+        CONST_REF
+    ENDARG
+    ARG button2Text
+        TYPE QString
+        CONST_REF
+    ENDARG
+    ARG defaultButton
+        TYPE int
+    ENDARG
+    ARG escapeButton
+        TYPE int
+    ENDARG
+ENDFUNCTION
+
+# int warning( QWidget* parent, const QString& caption, const QString& text,
+#     const QString& button0Text, const QString& button1Text, const QString& button2Text,
+#     int defaultButton, int escapeButton );
+FUNCTION warning
+    RETURN_TYPE int
+    DELAYED_RETURN
+    ONLY_QT
+    ARG parent
+        TYPE long
+        ORIG_TYPE QWidget*
+        ORIG_CONVERSION parentToWinId
+        PARENT
+    ENDARG
+    ARG caption
+        TYPE QString
+        CONST_REF
+    ENDARG
+    ARG text
+        TYPE QString
+        CONST_REF
+    ENDARG
+    ARG button0Text
+        TYPE QString
+        CONST_REF
+    ENDARG
+    ARG button1Text
+        TYPE QString
+        CONST_REF
+    ENDARG
+    ARG button2Text
+        TYPE QString
+        CONST_REF
+    ENDARG
+    ARG defaultButton
+        TYPE int
+    ENDARG
+    ARG escapeButton
+        TYPE int
+    ENDARG
+ENDFUNCTION
+
+# int critical( QWidget* parent, const QString& caption, const QString& text,
+#     const QString& button0Text, const QString& button1Text, const QString& button2Text,
+#     int defaultButton, int escapeButton );
+FUNCTION critical
+    RETURN_TYPE int
+    DELAYED_RETURN
+    ONLY_QT
+    ARG parent
+        TYPE long
+        ORIG_TYPE QWidget*
+        ORIG_CONVERSION parentToWinId
+        PARENT
+    ENDARG
+    ARG caption
+        TYPE QString
+        CONST_REF
+    ENDARG
+    ARG text
+        TYPE QString
+        CONST_REF
+    ENDARG
+    ARG button0Text
+        TYPE QString
+        CONST_REF
+    ENDARG
+    ARG button1Text
+        TYPE QString
+        CONST_REF
+    ENDARG
+    ARG button2Text
+        TYPE QString
+        CONST_REF
+    ENDARG
+    ARG defaultButton
+        TYPE int
+    ENDARG
+    ARG escapeButton
+        TYPE int
+    ENDARG
+ENDFUNCTION

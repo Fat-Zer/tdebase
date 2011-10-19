@@ -1,0 +1,1 @@
+SUBDIRS = libqtkde module utils
