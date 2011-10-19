@@ -9,6 +9,8 @@
 #
 #################################################
 
+project( kwin )
+
 add_subdirectory( lib )
 add_subdirectory( killer )
 add_subdirectory( kcmkwin )
@@ -60,3 +62,8 @@ tde_add_kdeinit_executable( ${target} AUTOMOC
   SOURCES ${${target}_SRCS}
   LINK kdecorations-shared kdeui-shared Xext
 )
+
+##### install import cmake modules ###############
+
+tde_install_export( )
+
