@@ -37,11 +37,12 @@ class Module
     : public KDEDModule
     {
     Q_OBJECT
+  TQ_OBJECT
     public:
-        Module( const QCString& obj );
+        Module( const TQCString& obj );
         // DCOP
-        virtual bool process(const QCString &fun, const QByteArray &data,
-            QCString &replyType, QByteArray &replyData);
+        virtual bool process(const TQCString &fun, const TQByteArray &data,
+            TQCString &replyType, TQByteArray &replyData);
         virtual QCStringList functions();
         virtual QCStringList interfaces();
     private slots:
@@ -61,7 +62,7 @@ class Module
                 MessageBox2
                 } type;
             };
-        QMap< void*, JobData > jobs;
+        TQMap< void*, JobData > jobs;
 #include "module_functions.h"
     };
 
@@ -69,9 +70,10 @@ class KFileDialog
     : public ::KFileDialog
     {
     Q_OBJECT
+  TQ_OBJECT
     public:
-        KFileDialog(const QString& startDir, const QString& filter,
-            QWidget *parent, const char *name, bool modal)
+        KFileDialog(const TQString& startDir, const TQString& filter,
+            TQWidget *parent, const char *name, bool modal)
             : ::KFileDialog( startDir, filter, parent, name, modal )
             {}
     signals:
@@ -85,9 +87,10 @@ class KDirSelectDialog
     : public ::KDirSelectDialog
     {
     Q_OBJECT
+  TQ_OBJECT
     public:
-        KDirSelectDialog(const QString& startDir, bool localOnly,
-            QWidget *parent, const char *name, bool modal)
+        KDirSelectDialog(const TQString& startDir, bool localOnly,
+            TQWidget *parent, const char *name, bool modal)
             : ::KDirSelectDialog( startDir, localOnly, parent, name, modal )
             {}
     signals:
@@ -101,8 +104,9 @@ class KColorDialog
     : public ::KColorDialog
     {
     Q_OBJECT
+  TQ_OBJECT
     public:
-        KColorDialog( QWidget *parent, const char *name, bool modal )
+        KColorDialog( TQWidget *parent, const char *name, bool modal )
             : ::KColorDialog( parent, name, modal )
             {}
     signals:
@@ -115,10 +119,11 @@ class KFontDialog
     : public ::KFontDialog
     {
     Q_OBJECT
+  TQ_OBJECT
     public:
-        KFontDialog( QWidget *parent, const char *name, bool onlyFixed, bool modal,
-            const QStringList &fontlist = QStringList(), bool makeFrame = true,
-            bool diff = false, QButton::ToggleState *sizeIsRelativeState = 0L )
+        KFontDialog( TQWidget *parent, const char *name, bool onlyFixed, bool modal,
+            const TQStringList &fontlist = TQStringList(), bool makeFrame = true,
+            bool diff = false, TQButton::ToggleState *sizeIsRelativeState = 0L )
             : ::KFontDialog( parent, name, onlyFixed, modal, fontlist, makeFrame, diff, sizeIsRelativeState )
             {}
     signals:
@@ -131,10 +136,11 @@ class KDialogBase
     : public ::KDialogBase
     {
     Q_OBJECT
+  TQ_OBJECT
     public:
-        KDialogBase( const QString &caption, int buttonMask=Yes|No|Cancel,
+        KDialogBase( const TQString &caption, int buttonMask=Yes|No|Cancel,
 		 ButtonCode defaultButton=Yes, ButtonCode escapeButton=Cancel,
-		 QWidget *parent=0, const char *name=0,
+		 TQWidget *parent=0, const char *name=0,
 		 bool modal=true, bool separator=false,
 		 const KGuiItem &yes = KStdGuiItem::yes(), // i18n("&Yes")
 		 const KGuiItem &no = KStdGuiItem::no(), // i18n("&No"),

@@ -3,46 +3,46 @@
 FUNCTION initializeIntegration
     RETURN_TYPE bool
     ARG hostname
-        TYPE QString
+        TYPE TQString
         CONST_REF
         CREATE getHostname
     ENDARG
 ENDFUNCTION
-# QStringList getOpenFileNames( const QString &filter,
-#     QString* workingDirectory, QWidget *parent, const char* name,
-#     const QString& caption, QString* selectedFilter, bool multiple );
+# TQStringList getOpenFileNames( const TQString &filter,
+#     TQString* workingDirectory, TQWidget *parent, const char* name,
+#     const TQString& caption, TQString* selectedFilter, bool multiple );
 #
 FUNCTION getOpenFileNames
-    RETURN_TYPE QStringList
+    RETURN_TYPE TQStringList
     DELAYED_RETURN
     ADD_APPINFO
     ARG filter
-        TYPE QString
+        TYPE TQString
         CONST_REF
         CONVERSION convertFileFilter
     ENDARG
     ARG workingDirectory
-        TYPE QString
+        TYPE TQString
         NEEDS_DEREF
         OUT_ARGUMENT
     ENDARG
     ARG parent
         TYPE long
-        ORIG_TYPE QWidget*
+        ORIG_TYPE TQWidget*
         ORIG_CONVERSION parentToWinId
         PARENT
     ENDARG
     ARG name
-        TYPE QCString
+        TYPE TQCString
         CONST_REF
         ORIG_TYPE const char*
     ENDARG
     ARG caption
-        TYPE QString
+        TYPE TQString
         CONST_REF
     ENDARG
     ARG selectedFilter
-        TYPE QString
+        TYPE TQString
         NEEDS_DEREF
         OUT_ARGUMENT
         CONVERSION convertFileFilter
@@ -53,45 +53,45 @@ FUNCTION getOpenFileNames
     ENDARG
 ENDFUNCTION
 
-# QString getSaveFileName( const QString &initialSelection,
-#     const QString &filter, QString* workingDirectory, QWidget *parent,
-#     const char* name, const QString& caption, QString* selectedFilter );
+# TQString getSaveFileName( const TQString &initialSelection,
+#     const TQString &filter, TQString* workingDirectory, TQWidget *parent,
+#     const char* name, const TQString& caption, TQString* selectedFilter );
 #
 FUNCTION getSaveFileName
-    RETURN_TYPE QString
+    RETURN_TYPE TQString
     DELAYED_RETURN
     ADD_APPINFO
     ARG initialSelection
-        TYPE QString
+        TYPE TQString
         CONST_REF
     ENDARG
     ARG filter
-        TYPE QString
+        TYPE TQString
         CONST_REF
         CONVERSION convertFileFilter
     ENDARG
     ARG workingDirectory
-        TYPE QString
+        TYPE TQString
         NEEDS_DEREF
         OUT_ARGUMENT
     ENDARG
     ARG parent
         TYPE long
-        ORIG_TYPE QWidget*
+        ORIG_TYPE TQWidget*
         ORIG_CONVERSION parentToWinId
         PARENT
     ENDARG
     ARG name
-        TYPE QCString
+        TYPE TQCString
         CONST_REF
         ORIG_TYPE const char*
     ENDARG
     ARG caption
-        TYPE QString
+        TYPE TQString
         CONST_REF
     ENDARG
     ARG selectedFilter
-        TYPE QString
+        TYPE TQString
         NEEDS_DEREF
         OUT_ARGUMENT
         CONVERSION convertFileFilter
@@ -99,60 +99,60 @@ FUNCTION getSaveFileName
     ENDARG
 ENDFUNCTION
 
-# QString getExistingDirectory( const QString &initialDirectory,
-#     QWidget* parent, const char* name, const QString& caption );
+# TQString getExistingDirectory( const TQString &initialDirectory,
+#     TQWidget* parent, const char* name, const TQString& caption );
 #
 FUNCTION getExistingDirectory
-    RETURN_TYPE QString
+    RETURN_TYPE TQString
     DELAYED_RETURN
     ADD_APPINFO
     ARG initialDirectory
-        TYPE QString
+        TYPE TQString
         CONST_REF
     ENDARG
     ARG parent
         TYPE long
-        ORIG_TYPE QWidget*
+        ORIG_TYPE TQWidget*
         ORIG_CONVERSION parentToWinId
         PARENT
     ENDARG
     ARG name
-        TYPE QCString
+        TYPE TQCString
         CONST_REF
         ORIG_TYPE const char*
     ENDARG
     ARG caption
-        TYPE QString
+        TYPE TQString
         CONST_REF
     ENDARG
 ENDFUNCTION
 
-# QColor getColor( const QColor& color, QWidget* parent, const char* name );
+# TQColor getColor( const TQColor& color, TQWidget* parent, const char* name );
 #
 FUNCTION getColor
-    RETURN_TYPE QColor
+    RETURN_TYPE TQColor
     DELAYED_RETURN
     ADD_APPINFO
     ARG color
-        TYPE QColor
+        TYPE TQColor
         CONST_REF
     ENDARG
     ARG parent
         TYPE long
-        ORIG_TYPE QWidget*
+        ORIG_TYPE TQWidget*
         ORIG_CONVERSION parentToWinId
         PARENT
     ENDARG
     ARG name
-        TYPE QCString
+        TYPE TQCString
         CONST_REF
         ORIG_TYPE const char*
     ENDARG
 ENDFUNCTION
 
-# QFont getFont( bool* ok, const QFont* def, QWidget *parent, const char* name);
+# TQFont getFont( bool* ok, const TQFont* def, TQWidget *parent, const char* name);
 FUNCTION getFont
-    RETURN_TYPE QFont
+    RETURN_TYPE TQFont
     DELAYED_RETURN
     ADD_APPINFO
     ARG ok
@@ -161,25 +161,25 @@ FUNCTION getFont
         OUT_ARGUMENT
     ENDARG
     ARG def
-        TYPE QFont
-        ORIG_TYPE const QFont*
+        TYPE TQFont
+        ORIG_TYPE const TQFont*
         ORIG_CONVERSION fontPtrToFontRef
         CONST_REF
     ENDARG
     ARG parent
         TYPE long
-        ORIG_TYPE QWidget*
+        ORIG_TYPE TQWidget*
         ORIG_CONVERSION parentToWinId
         PARENT
     ENDARG
     ARG name
-        TYPE QCString
+        TYPE TQCString
         CONST_REF
         ORIG_TYPE const char*
     ENDARG
 ENDFUNCTION
 
-# int messageBox1( int type, QWidget *parent, const QString& caption, const QString& text,
+# int messageBox1( int type, TQWidget *parent, const TQString& caption, const TQString& text,
 #     int button0, int button1, int button2 );
 FUNCTION messageBox1
     RETURN_TYPE int
@@ -190,16 +190,16 @@ FUNCTION messageBox1
     ENDARG
     ARG parent
         TYPE long
-        ORIG_TYPE QWidget*
+        ORIG_TYPE TQWidget*
         ORIG_CONVERSION parentToWinId
         PARENT
     ENDARG
     ARG caption
-        TYPE QString
+        TYPE TQString
         CONST_REF
     ENDARG
     ARG text
-        TYPE QString
+        TYPE TQString
         CONST_REF
     ENDARG
     ARG button0
@@ -213,7 +213,7 @@ FUNCTION messageBox1
     ENDARG
 ENDFUNCTION
 
-# int information( QWidget *parent, const QString& caption, const QString& text,
+# int information( TQWidget *parent, const TQString& caption, const TQString& text,
 #     int button0, int button1, int button2 );
 FUNCTION information
     RETURN_TYPE int
@@ -221,16 +221,16 @@ FUNCTION information
     ONLY_QT
     ARG parent
         TYPE long
-        ORIG_TYPE QWidget*
+        ORIG_TYPE TQWidget*
         ORIG_CONVERSION parentToWinId
         PARENT
     ENDARG
     ARG caption
-        TYPE QString
+        TYPE TQString
         CONST_REF
     ENDARG
     ARG text
-        TYPE QString
+        TYPE TQString
         CONST_REF
     ENDARG
     ARG button0
@@ -244,7 +244,7 @@ FUNCTION information
     ENDARG
 ENDFUNCTION
 
-# int question( QWidget *parent, const QString& caption, const QString& text,
+# int question( TQWidget *parent, const TQString& caption, const TQString& text,
 #     int button0, int button1, int button2 );
 FUNCTION question
     RETURN_TYPE int
@@ -252,16 +252,16 @@ FUNCTION question
     ONLY_QT
     ARG parent
         TYPE long
-        ORIG_TYPE QWidget*
+        ORIG_TYPE TQWidget*
         ORIG_CONVERSION parentToWinId
         PARENT
     ENDARG
     ARG caption
-        TYPE QString
+        TYPE TQString
         CONST_REF
     ENDARG
     ARG text
-        TYPE QString
+        TYPE TQString
         CONST_REF
     ENDARG
     ARG button0
@@ -275,7 +275,7 @@ FUNCTION question
     ENDARG
 ENDFUNCTION
 
-# int warning( QWidget *parent, const QString& caption, const QString& text,
+# int warning( TQWidget *parent, const TQString& caption, const TQString& text,
 #     int button0, int button1, int button2 );
 FUNCTION warning
     RETURN_TYPE int
@@ -283,16 +283,16 @@ FUNCTION warning
     ONLY_QT
     ARG parent
         TYPE long
-        ORIG_TYPE QWidget*
+        ORIG_TYPE TQWidget*
         ORIG_CONVERSION parentToWinId
         PARENT
     ENDARG
     ARG caption
-        TYPE QString
+        TYPE TQString
         CONST_REF
     ENDARG
     ARG text
-        TYPE QString
+        TYPE TQString
         CONST_REF
     ENDARG
     ARG button0
@@ -306,7 +306,7 @@ FUNCTION warning
     ENDARG
 ENDFUNCTION
 
-# int critical( QWidget *parent, const QString& caption, const QString& text,
+# int critical( TQWidget *parent, const TQString& caption, const TQString& text,
 #     int button0, int button1, int button2 );
 FUNCTION critical
     RETURN_TYPE int
@@ -314,16 +314,16 @@ FUNCTION critical
     ONLY_QT
     ARG parent
         TYPE long
-        ORIG_TYPE QWidget*
+        ORIG_TYPE TQWidget*
         ORIG_CONVERSION parentToWinId
         PARENT
     ENDARG
     ARG caption
-        TYPE QString
+        TYPE TQString
         CONST_REF
     ENDARG
     ARG text
-        TYPE QString
+        TYPE TQString
         CONST_REF
     ENDARG
     ARG button0
@@ -337,8 +337,8 @@ FUNCTION critical
     ENDARG
 ENDFUNCTION
 
-# int messageBox2( int type, QWidget* parent, const QString& caption, const QString& text,
-#     const QString& button0Text, const QString& button1Text, const QString& button2Text,
+# int messageBox2( int type, TQWidget* parent, const TQString& caption, const TQString& text,
+#     const TQString& button0Text, const TQString& button1Text, const TQString& button2Text,
 #     int defaultButton, int escapeButton );
 FUNCTION messageBox2
     RETURN_TYPE int
@@ -349,28 +349,28 @@ FUNCTION messageBox2
     ENDARG
     ARG parent
         TYPE long
-        ORIG_TYPE QWidget*
+        ORIG_TYPE TQWidget*
         ORIG_CONVERSION parentToWinId
         PARENT
     ENDARG
     ARG caption
-        TYPE QString
+        TYPE TQString
         CONST_REF
     ENDARG
     ARG text
-        TYPE QString
+        TYPE TQString
         CONST_REF
     ENDARG
     ARG button0Text
-        TYPE QString
+        TYPE TQString
         CONST_REF
     ENDARG
     ARG button1Text
-        TYPE QString
+        TYPE TQString
         CONST_REF
     ENDARG
     ARG button2Text
-        TYPE QString
+        TYPE TQString
         CONST_REF
     ENDARG
     ARG defaultButton
@@ -381,8 +381,8 @@ FUNCTION messageBox2
     ENDARG
 ENDFUNCTION
 
-# int information( QWidget* parent, const QString& caption, const QString& text,
-#     const QString& button0Text, const QString& button1Text, const QString& button2Text,
+# int information( TQWidget* parent, const TQString& caption, const TQString& text,
+#     const TQString& button0Text, const TQString& button1Text, const TQString& button2Text,
 #     int defaultButton, int escapeButton );
 FUNCTION information
     RETURN_TYPE int
@@ -390,28 +390,28 @@ FUNCTION information
     ONLY_QT
     ARG parent
         TYPE long
-        ORIG_TYPE QWidget*
+        ORIG_TYPE TQWidget*
         ORIG_CONVERSION parentToWinId
         PARENT
     ENDARG
     ARG caption
-        TYPE QString
+        TYPE TQString
         CONST_REF
     ENDARG
     ARG text
-        TYPE QString
+        TYPE TQString
         CONST_REF
     ENDARG
     ARG button0Text
-        TYPE QString
+        TYPE TQString
         CONST_REF
     ENDARG
     ARG button1Text
-        TYPE QString
+        TYPE TQString
         CONST_REF
     ENDARG
     ARG button2Text
-        TYPE QString
+        TYPE TQString
         CONST_REF
     ENDARG
     ARG defaultButton
@@ -422,8 +422,8 @@ FUNCTION information
     ENDARG
 ENDFUNCTION
 
-# int question( QWidget* parent, const QString& caption, const QString& text,
-#     const QString& button0Text, const QString& button1Text, const QString& button2Text,
+# int question( TQWidget* parent, const TQString& caption, const TQString& text,
+#     const TQString& button0Text, const TQString& button1Text, const TQString& button2Text,
 #     int defaultButton, int escapeButton );
 FUNCTION question
     RETURN_TYPE int
@@ -431,28 +431,28 @@ FUNCTION question
     ONLY_QT
     ARG parent
         TYPE long
-        ORIG_TYPE QWidget*
+        ORIG_TYPE TQWidget*
         ORIG_CONVERSION parentToWinId
         PARENT
     ENDARG
     ARG caption
-        TYPE QString
+        TYPE TQString
         CONST_REF
     ENDARG
     ARG text
-        TYPE QString
+        TYPE TQString
         CONST_REF
     ENDARG
     ARG button0Text
-        TYPE QString
+        TYPE TQString
         CONST_REF
     ENDARG
     ARG button1Text
-        TYPE QString
+        TYPE TQString
         CONST_REF
     ENDARG
     ARG button2Text
-        TYPE QString
+        TYPE TQString
         CONST_REF
     ENDARG
     ARG defaultButton
@@ -463,8 +463,8 @@ FUNCTION question
     ENDARG
 ENDFUNCTION
 
-# int warning( QWidget* parent, const QString& caption, const QString& text,
-#     const QString& button0Text, const QString& button1Text, const QString& button2Text,
+# int warning( TQWidget* parent, const TQString& caption, const TQString& text,
+#     const TQString& button0Text, const TQString& button1Text, const TQString& button2Text,
 #     int defaultButton, int escapeButton );
 FUNCTION warning
     RETURN_TYPE int
@@ -472,28 +472,28 @@ FUNCTION warning
     ONLY_QT
     ARG parent
         TYPE long
-        ORIG_TYPE QWidget*
+        ORIG_TYPE TQWidget*
         ORIG_CONVERSION parentToWinId
         PARENT
     ENDARG
     ARG caption
-        TYPE QString
+        TYPE TQString
         CONST_REF
     ENDARG
     ARG text
-        TYPE QString
+        TYPE TQString
         CONST_REF
     ENDARG
     ARG button0Text
-        TYPE QString
+        TYPE TQString
         CONST_REF
     ENDARG
     ARG button1Text
-        TYPE QString
+        TYPE TQString
         CONST_REF
     ENDARG
     ARG button2Text
-        TYPE QString
+        TYPE TQString
         CONST_REF
     ENDARG
     ARG defaultButton
@@ -504,8 +504,8 @@ FUNCTION warning
     ENDARG
 ENDFUNCTION
 
-# int critical( QWidget* parent, const QString& caption, const QString& text,
-#     const QString& button0Text, const QString& button1Text, const QString& button2Text,
+# int critical( TQWidget* parent, const TQString& caption, const TQString& text,
+#     const TQString& button0Text, const TQString& button1Text, const TQString& button2Text,
 #     int defaultButton, int escapeButton );
 FUNCTION critical
     RETURN_TYPE int
@@ -513,28 +513,28 @@ FUNCTION critical
     ONLY_QT
     ARG parent
         TYPE long
-        ORIG_TYPE QWidget*
+        ORIG_TYPE TQWidget*
         ORIG_CONVERSION parentToWinId
         PARENT
     ENDARG
     ARG caption
-        TYPE QString
+        TYPE TQString
         CONST_REF
     ENDARG
     ARG text
-        TYPE QString
+        TYPE TQString
         CONST_REF
     ENDARG
     ARG button0Text
-        TYPE QString
+        TYPE TQString
         CONST_REF
     ENDARG
     ARG button1Text
-        TYPE QString
+        TYPE TQString
         CONST_REF
     ENDARG
     ARG button2Text
-        TYPE QString
+        TYPE TQString
         CONST_REF
     ENDARG
     ARG defaultButton

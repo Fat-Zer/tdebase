@@ -29,7 +29,7 @@
 #include <klocale.h>
 #include <krecentdocument.h>
 #include <kwin.h>
-#include <qtimer.h>
+#include <tqtimer.h>
 #include <stdlib.h>
 #include <unistd.h>
 #include <kmessagebox.h>
@@ -38,7 +38,7 @@
 
 extern "C"
 { 
-    KDE_EXPORT KDEDModule *create_kdeintegration( const QCString& obj )
+    KDE_EXPORT KDEDModule *create_kdeintegration( const TQCString& obj )
         {
             return new KDEIntegration::Module( obj );
         }
@@ -47,7 +47,7 @@ extern "C"
 namespace KDEIntegration
 {
 
-static void prepareDialog( QWidget* w, long parent, const QCString& wmclass1, const QCString& wmclass2 )
+static void prepareDialog( TQWidget* w, long parent, const TQCString& wmclass1, const TQCString& wmclass2 )
     {
     XClassHint hints;
     hints.res_name = ( char* ) ( const char* ) wmclass1;
@@ -57,12 +57,12 @@ static void prepareDialog( QWidget* w, long parent, const QCString& wmclass1, co
     KWin::setState( w->winId(), NET::Modal );
     KWin::WindowInfo info = KWin::windowInfo( parent, (unsigned long)NET::WMGeometry );
     if( info.valid())
-        w->move( info.geometry().x() + ( info.geometry().width() - w->width())/2,
-            info.geometry().y() + ( info.geometry().height()- w->height())/2 );
+        w->move( info.tqgeometry().x() + ( info.tqgeometry().width() - w->width())/2,
+            info.tqgeometry().y() + ( info.tqgeometry().height()- w->height())/2 );
     }
     
 // duped in qtkde
-static QString getHostname()
+static TQString getHostname()
     {
     char hostname[ 256 ];
     if( gethostname( hostname, 255 ) == 0 )
@@ -73,7 +73,7 @@ static QString getHostname()
     return "";
     }
 
-bool Module::initializeIntegration( const QString& hostname )
+bool Module::initializeIntegration( const TQString& hostname )
     {
     if( hostname != getHostname())
         return false;
@@ -83,9 +83,9 @@ bool Module::initializeIntegration( const QString& hostname )
     return true;
     }
 
-void* Module::getOpenFileNames( const QString& filter, QString workingDirectory, long parent,
-    const QCString& name, const QString& caption, QString /*selectedFilter*/, bool multiple,
-    const QCString& wmclass1, const QCString& wmclass2 )
+void* Module::getOpenFileNames( const TQString& filter, TQString workingDirectory, long parent,
+    const TQCString& name, const TQString& caption, TQString /*selectedFilter*/, bool multiple,
+    const TQCString& wmclass1, const TQCString& wmclass2 )
     {
     KFileDialog* dlg = new KFileDialog( workingDirectory, filter, 0, name.isEmpty() ? "filedialog" : name, false);
     prepareDialog( dlg, parent, wmclass1, wmclass2 );
@@ -93,50 +93,50 @@ void* Module::getOpenFileNames( const QString& filter, QString workingDirectory,
     dlg->setMode(( multiple ? KFile::Files : KFile::File ) | KFile::LocalOnly );
     dlg->setPlainCaption( caption.isNull() ? i18n("Open") : caption );
 // TODO    dlg->ops->clearHistory();
-    connect( dlg, SIGNAL( dialogDone( int )), SLOT( dialogDone( int )));
+    connect( dlg, TQT_SIGNAL( dialogDone( int )), TQT_SLOT( dialogDone( int )));
     dlg->show();
     return dlg;
     }
 
-void* Module::getSaveFileName( const QString& initialSelection, const QString& filter,
-    QString workingDirectory, long parent, const QCString& name, const QString& caption, QString /*selectedFilter*/,
-    const QCString& wmclass1, const QCString& wmclass2 )
+void* Module::getSaveFileName( const TQString& initialSelection, const TQString& filter,
+    TQString workingDirectory, long parent, const TQCString& name, const TQString& caption, TQString /*selectedFilter*/,
+    const TQCString& wmclass1, const TQCString& wmclass2 )
     {
-    QString initial = workingDirectory;
+    TQString initial = workingDirectory;
     if( !initialSelection.isEmpty())
         {
-        if( initial.right( 1 ) != QChar( '/' ))
+        if( initial.right( 1 ) != TQChar( '/' ))
             initial += '/';
         initial += initialSelection;
         }
     bool specialDir = initial.at(0) == ':';
-    KFileDialog* dlg = new KFileDialog( specialDir ? initial : QString::null, filter, 0,
+    KFileDialog* dlg = new KFileDialog( specialDir ? initial : TQString(), filter, 0,
         name.isEmpty() ? "filedialog" : name, false);
     if ( !specialDir )
         dlg->setSelection( initial ); // may also be a filename
     prepareDialog( dlg, parent, wmclass1, wmclass2 );
     dlg->setOperationMode( KFileDialog::Saving );
     dlg->setPlainCaption( caption.isNull() ? i18n("Save As") : caption );
-    connect( dlg, SIGNAL( dialogDone( int )), SLOT( dialogDone( int )));
+    connect( dlg, TQT_SIGNAL( dialogDone( int )), TQT_SLOT( dialogDone( int )));
     dlg->show();
     return dlg;
     }
 
 
-void* Module::getExistingDirectory( const QString& initialDirectory, long parent,
-    const QCString& name, const QString& caption, const QCString& wmclass1, const QCString& wmclass2 )
+void* Module::getExistingDirectory( const TQString& initialDirectory, long parent,
+    const TQCString& name, const TQString& caption, const TQCString& wmclass1, const TQCString& wmclass2 )
     {
     KDirSelectDialog* dlg = new KDirSelectDialog( initialDirectory, true, 0,
         name.isEmpty() ? name : "kdirselect dialog", false );
     prepareDialog( dlg, parent, wmclass1, wmclass2 );
     dlg->setPlainCaption( caption.isNull() ? i18n( "Select Folder" ) : caption );
-    connect( dlg, SIGNAL( dialogDone( int )), SLOT( dialogDone( int )));
+    connect( dlg, TQT_SIGNAL( dialogDone( int )), TQT_SLOT( dialogDone( int )));
     dlg->show();
     return dlg;
     }
 
-void* Module::getColor( const QColor& color, long parent, const QCString& name,
-    const QCString& wmclass1, const QCString& wmclass2 )
+void* Module::getColor( const TQColor& color, long parent, const TQCString& name,
+    const TQCString& wmclass1, const TQCString& wmclass2 )
     {
     KColorDialog* dlg = new KColorDialog( NULL, name.isEmpty() ? name : "colordialog", true );
     dlg->setModal( false ); // KColorDialog creates its buttons depending on modality :(
@@ -144,19 +144,19 @@ void* Module::getColor( const QColor& color, long parent, const QCString& name,
         dlg->setColor( color );
     prepareDialog( dlg, parent, wmclass1, wmclass2 );
     dlg->setPlainCaption( i18n( "Select Color" ));
-    connect( dlg, SIGNAL( dialogDone( int )), SLOT( dialogDone( int )));
+    connect( dlg, TQT_SIGNAL( dialogDone( int )), TQT_SLOT( dialogDone( int )));
     dlg->show();
     return dlg;
     }
 
-void* Module::getFont( bool /*ok*/, const QFont& def, long parent, const QCString& name,
-    const QCString& wmclass1, const QCString& wmclass2 )
+void* Module::getFont( bool /*ok*/, const TQFont& def, long parent, const TQCString& name,
+    const TQCString& wmclass1, const TQCString& wmclass2 )
     {
     KFontDialog* dlg = new KFontDialog( NULL, name.isEmpty() ? name : "Font Selector", false, false );
     dlg->setFont( def, false );
     prepareDialog( dlg, parent, wmclass1, wmclass2 );
     dlg->setPlainCaption( i18n( "Select Font" ));
-    connect( dlg, SIGNAL( dialogDone( int )), SLOT( dialogDone( int )));
+    connect( dlg, TQT_SIGNAL( dialogDone( int )), TQT_SLOT( dialogDone( int )));
     dlg->show();
     return dlg;
     }
@@ -168,47 +168,47 @@ struct btns
     int buttons[ 3 ];
     };
 }
-static QMap< KDialogBase*, btns > msgbox1_buttons;
+static TQMap< KDialogBase*, btns > msgbox1_buttons;
 
-void* Module::messageBox1( int type, long parent, const QString& caption, const QString& text,
-    int button0, int button1, int button2, const QCString& wmclass1, const QCString& wmclass2 )
+void* Module::messageBox1( int type, long parent, const TQString& caption, const TQString& text,
+    int button0, int button1, int button2, const TQCString& wmclass1, const TQCString& wmclass2 )
     {
     static const char* const caps[ 4 ]
         = { I18N_NOOP( "Information" ), I18N_NOOP( "Question" ), I18N_NOOP( "Warning" ), I18N_NOOP( "Error" )};
-    int buttons[ 3 ] = { button0 & QMessageBox::ButtonMask,
-        button1 & QMessageBox::ButtonMask, button2 & QMessageBox::ButtonMask };
+    int buttons[ 3 ] = { button0 & TQMessageBox::ButtonMask,
+        button1 & TQMessageBox::ButtonMask, button2 & TQMessageBox::ButtonMask };
     KGuiItem buttonItems[ 3 ];
     for( int i = 0;
          i < 3;
          ++i )
         switch( buttons[ i ] )
             {
-            case QMessageBox::Ok:
+            case TQMessageBox::Ok:
                 buttonItems[ i ] = KStdGuiItem::ok();
               break;
-            case QMessageBox::Cancel:
+            case TQMessageBox::Cancel:
                 buttonItems[ i ] = KStdGuiItem::cancel();
               break;
-            case QMessageBox::Yes:
+            case TQMessageBox::Yes:
                 buttonItems[ i ] = KStdGuiItem::yes();
               break;
-            case QMessageBox::No:
+            case TQMessageBox::No:
                 buttonItems[ i ] = KStdGuiItem::no();
               break;
-            case QMessageBox::Abort:
+            case TQMessageBox::Abort:
                 buttonItems[ i ] = KGuiItem( i18n( "&Abort" ));
               break;
-            case QMessageBox::Retry:
+            case TQMessageBox::Retry:
                 buttonItems[ i ] = KGuiItem( "&Retry" );
               break;
-            case QMessageBox::Ignore:
+            case TQMessageBox::Ignore:
                 buttonItems[ i ] = KGuiItem( "&Ignore" );
               break;
-            case QMessageBox::YesAll:
+            case TQMessageBox::YesAll:
                 buttonItems[ i ] = KStdGuiItem::yes();
                 buttonItems[ i ].setText( i18n( "Yes to &All" ));
               break;
-            case QMessageBox::NoAll:
+            case TQMessageBox::NoAll:
                 buttonItems[ i ] = KStdGuiItem::no();
                 buttonItems[ i ].setText( i18n( "N&o to All" ));
               break;
@@ -216,36 +216,36 @@ void* Module::messageBox1( int type, long parent, const QString& caption, const 
               break;
             };
     KDialogBase::ButtonCode defaultButton = KDialogBase::NoDefault;
-    if( button0 & QMessageBox::Default )
+    if( button0 & TQMessageBox::Default )
         defaultButton = KDialogBase::Yes;
-    else if( button1 & QMessageBox::Default )
+    else if( button1 & TQMessageBox::Default )
         defaultButton = KDialogBase::No;
-    else if( button2 & QMessageBox::Default )
+    else if( button2 & TQMessageBox::Default )
         defaultButton = KDialogBase::Cancel;
     else // TODO KDialogBase's handling of NoDefault has strange focus effects
         defaultButton = KDialogBase::Yes;
     KDialogBase::ButtonCode escapeButton = KDialogBase::Cancel;
-    if( button0 & QMessageBox::Escape )
+    if( button0 & TQMessageBox::Escape )
         escapeButton = KDialogBase::Yes;
-    else if( button1 & QMessageBox::Escape )
+    else if( button1 & TQMessageBox::Escape )
         escapeButton = KDialogBase::No;
-    else if( button2 & QMessageBox::Escape )
+    else if( button2 & TQMessageBox::Escape )
         escapeButton = KDialogBase::Cancel;
     KDialogBase *dialog= new KDialogBase(
                        caption.isEmpty() ? i18n( caps[ type ] ) : caption,
                        KDialogBase::Yes
-                       | ( buttons[ 1 ] == QMessageBox::NoButton ? 0 : int( KDialogBase::No ))
-                       | ( buttons[ 2 ] == QMessageBox::NoButton ? 0 : int( KDialogBase::Cancel )),
+                       | ( buttons[ 1 ] == TQMessageBox::NoButton ? 0 : int( KDialogBase::No ))
+                       | ( buttons[ 2 ] == TQMessageBox::NoButton ? 0 : int( KDialogBase::Cancel )),
                        defaultButton, escapeButton,
                        NULL, "messageBox2", true, true,
                        buttonItems[ 0 ], buttonItems[ 1 ],buttonItems[ 2 ] );
     bool checkboxResult = false;
-    KMessageBox::createKMessageBox(dialog, static_cast< QMessageBox::Icon >( type ), text, QStringList(),
-                       QString::null,
+    KMessageBox::createKMessageBox(dialog, static_cast< TQMessageBox::Icon >( type ), text, TQStringList(),
+                       TQString(),
                        &checkboxResult, KMessageBox::Notify | KMessageBox::NoExec);
     prepareDialog( dialog, parent, wmclass1, wmclass2 );
     dialog->setPlainCaption( caption );
-    connect( dialog, SIGNAL( dialogDone( int )), SLOT( dialogDone( int )));
+    connect( dialog, TQT_SIGNAL( dialogDone( int )), TQT_SLOT( dialogDone( int )));
     btns b;
     b.buttons[ 0 ] = buttons[ 0 ];
     b.buttons[ 1 ] = buttons[ 1 ];
@@ -255,9 +255,9 @@ void* Module::messageBox1( int type, long parent, const QString& caption, const 
     return dialog;
     }
 
-void* Module::messageBox2( int type, long parent, const QString& caption, const QString& text, const QString& button0Text,
-    const QString& button1Text, const QString& button2Text, int defaultButton, int escapeButton,
-    const QCString& wmclass1, const QCString& wmclass2 )
+void* Module::messageBox2( int type, long parent, const TQString& caption, const TQString& text, const TQString& button0Text,
+    const TQString& button1Text, const TQString& button2Text, int defaultButton, int escapeButton,
+    const TQCString& wmclass1, const TQCString& wmclass2 )
     {
     static KDialogBase::ButtonCode map[ 4 ]
         = { KDialogBase::NoDefault, KDialogBase::Yes, KDialogBase::No, KDialogBase::Cancel };
@@ -272,12 +272,12 @@ void* Module::messageBox2( int type, long parent, const QString& caption, const 
                        NULL, "messageBox2", true, true,
                        button0Text.isEmpty() ? KStdGuiItem::ok() : KGuiItem( button0Text ), button1Text,button2Text);
     bool checkboxResult = false;
-    KMessageBox::createKMessageBox(dialog, static_cast< QMessageBox::Icon >( type ), text, QStringList(),
-                       QString::null,
+    KMessageBox::createKMessageBox(dialog, static_cast< TQMessageBox::Icon >( type ), text, TQStringList(),
+                       TQString(),
                        &checkboxResult, KMessageBox::Notify | KMessageBox::NoExec);
     prepareDialog( dialog, parent, wmclass1, wmclass2 );
     dialog->setPlainCaption( caption );
-    connect( dialog, SIGNAL( dialogDone( int )), SLOT( dialogDone( int )));
+    connect( dialog, TQT_SIGNAL( dialogDone( int )), TQT_SLOT( dialogDone( int )));
     dialog->show();
     return dialog;
     }
@@ -291,7 +291,7 @@ void Module::dialogDone( int result )
         case JobData::GetOpenFileNames:
             {
             KFileDialog* dlg = static_cast< KFileDialog* >( handle );
-            post_getOpenFileNames( dlg, result == QDialog::Accepted ? dlg->selectedFiles() : QStringList(),
+            post_getOpenFileNames( dlg, result == TQDialog::Accepted ? dlg->selectedFiles() : TQStringList(),
                 dlg->baseURL().path(), dlg->currentFilter());
             dlg->deleteLater();
           break;
@@ -299,7 +299,7 @@ void Module::dialogDone( int result )
         case JobData::GetSaveFileName:
             {
             KFileDialog* dlg = static_cast< KFileDialog* >( handle );
-            QString filename = result == QDialog::Accepted ? dlg->selectedFile() : QString();
+            TQString filename = result == TQDialog::Accepted ? dlg->selectedFile() : TQString();
             if (!filename.isEmpty())
                 KRecentDocument::add(filename);
             post_getSaveFileName( dlg, filename, dlg->baseURL().path(), dlg->currentFilter());
@@ -309,21 +309,21 @@ void Module::dialogDone( int result )
         case JobData::GetExistingDirectory:
             {
             KDirSelectDialog* dlg = static_cast< KDirSelectDialog* >( handle );
-            post_getExistingDirectory( dlg, result == QDialog::Accepted ? dlg->url().path() : QString());
+            post_getExistingDirectory( dlg, result == TQDialog::Accepted ? dlg->url().path() : TQString());
             dlg->deleteLater();
           break;
             }
         case JobData::GetColor:
             {
             KColorDialog* dlg = static_cast< KColorDialog* >( handle );
-            post_getColor( dlg, result == QDialog::Accepted ? dlg->color() : QColor());
+            post_getColor( dlg, result == TQDialog::Accepted ? dlg->color() : TQColor());
             dlg->deleteLater();
           break;
             }
         case JobData::GetFont:
             {
             KFontDialog* dlg = static_cast< KFontDialog* >( handle );
-            post_getFont( dlg, result == QDialog::Accepted ? dlg->font() : QFont(), result == QDialog::Accepted );
+            post_getFont( dlg, result == TQDialog::Accepted ? dlg->font() : TQFont(), result == TQDialog::Accepted );
             dlg->deleteLater();
           break;
             }
@@ -366,7 +366,7 @@ void Module::dialogDone( int result )
         }
     }
 
-Module::Module( const QCString& obj )
+Module::Module( const TQCString& obj )
     : KDEDModule( obj )
     {
     }

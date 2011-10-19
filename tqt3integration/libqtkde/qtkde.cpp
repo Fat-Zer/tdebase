@@ -23,26 +23,26 @@
 #include <assert.h>
 #include <dcopclient.h>
 #include <dcoptypes.h>
-#include <qapplication.h>
-#include <qregexp.h>
-#include <qstringlist.h>
-#include <qwidget.h>
+#include <tqapplication.h>
+#include <tqregexp.h>
+#include <tqstringlist.h>
+#include <tqwidget.h>
 #include <unistd.h>
 
 #include <X11/Xlib.h>
 
 extern Time qt_x_time;
 
-static QString convertFileFilter( const QString& filter )
+static TQString convertFileFilter( const TQString& filter )
     {
     if( filter.isEmpty())
         return filter;
-    QString f2 = filter;
-    f2.replace( '\n', ";;" ); // Qt says separator is ";;", but it also silently accepts newline
+    TQString f2 = filter;
+    f2.replace( '\n', ";;" ); // TQt says separator is ";;", but it also silently accepts newline
     f2.replace( '/', "\\/" ); // escape /'s for KFileDialog
-    QStringList items = QStringList::split( ";;", f2 );
-    QRegExp reg( "\\((.*)\\)" );
-    for( QStringList::Iterator it = items.begin();
+    TQStringList items = TQStringList::split( ";;", f2 );
+    TQRegExp reg( "\\((.*)\\)" );
+    for( TQStringList::Iterator it = items.begin();
          it != items.end();
          ++it )
         {
@@ -52,12 +52,12 @@ static QString convertFileFilter( const QString& filter )
     return items.join( "\n" );
     }
 
-static QString convertBackFileFilter( const QString& filter )
+static TQString convertBackFileFilter( const TQString& filter )
     {
     if( filter.isEmpty())
         return filter;
-    QStringList items = QStringList::split( "\n", filter );
-    for( QStringList::Iterator it = items.begin();
+    TQStringList items = TQStringList::split( "\n", filter );
+    for( TQStringList::Iterator it = items.begin();
          it != items.end();
          ++it )
         {
@@ -84,13 +84,13 @@ static DCOPClient* dcopClient()
     static bool prepared = false;
     if( !prepared )
         {
-        assert( qApp != NULL ); // TODO
+        assert( tqApp != NULL ); // TODO
         prepared = true;
         dcop->bindToApp();
-        if( !qApp->inherits( "KApplication" )) // KApp takes care of input blocking
+        if( !tqApp->inherits( "KApplication" )) // KApp takes care of input blocking
             {
             static qtkde_EventLoop* loop = new qtkde_EventLoop;
-            QObject::connect( dcop, SIGNAL( blockUserInput( bool )), loop, SLOT( block( bool )));
+            TQObject::connect( dcop, TQT_SIGNAL( blockUserInput( bool )), loop, TQT_SLOT( block( bool )));
             }
         }
     return dcop;
@@ -131,7 +131,7 @@ void qtkde_EventLoop::block( bool b )
     }
 
 // duped in kded module
-static QString getHostname()
+static TQString getHostname()
     {
     char hostname[ 256 ];
     if( gethostname( hostname, 255 ) == 0 )
@@ -142,6 +142,6 @@ static QString getHostname()
     return "";
     }
 
-#include "qtkde_functions.cpp"
+#include "tqtkde_functions.cpp"
 
 #include "qtkde.moc"

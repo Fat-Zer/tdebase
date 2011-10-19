@@ -18,17 +18,17 @@
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
-#ifndef QKDEINTEGRATION_H
-#define QKDEINTEGRATION_H
+#ifndef TQKDEINTEGRATION_H
+#define TQKDEINTEGRATION_H
 
-#include <qstringlist.h>
+#include <tqstringlist.h>
 
-class QLibrary;
-class QWidget;
-class QColor;
-class QFont;
+class TQLibrary;
+class TQWidget;
+class TQColor;
+class TQFont;
 
-class QKDEIntegration
+class TQKDEIntegration
     {
     public:
         static bool enabled();

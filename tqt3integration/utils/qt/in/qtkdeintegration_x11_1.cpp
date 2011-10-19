@@ -18,56 +18,56 @@
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
-#include "qtkdeintegration_x11_p.h"
+#include "tqtkdeintegration_x11_p.h"
 
-#include <qcolordialog.h>
-#include <qfiledialog.h>
-#include <qfontdialog.h>
-#include <qlibrary.h>
-#include <qregexp.h>
-#include <qmessagebox.h>
-#include <qapplication.h>
+#include <tqcolordialog.h>
+#include <tqfiledialog.h>
+#include <tqfontdialog.h>
+#include <tqlibrary.h>
+#include <tqregexp.h>
+#include <tqmessagebox.h>
+#include <tqapplication.h>
 #include <stdlib.h>
 
-bool QKDEIntegration::inited = false;
-bool QKDEIntegration::enable = false;
+bool TQKDEIntegration::inited = false;
+bool TQKDEIntegration::enable = false;
 
-bool QKDEIntegration::enabled()
+bool TQKDEIntegration::enabled()
     {
     if( !inited )
         initLibrary();
     return enable;
     }
 
-static QCString findLibrary()
+static TQCString findLibrary()
     {
     if( getenv( "KDE_FULL_SESSION" ) == NULL )
         return "";
     if( getenv( "KDE_FULL_SESSION" )[ 0 ] != 't' && getenv( "KDE_FULL_SESSION" )[ 0 ] != '1' )
         return "";
-    if( getenv( "QT_NO_KDE_INTEGRATION" ) == NULL
-        || getenv( "QT_NO_KDE_INTEGRATION" )[ 0 ] == '0' )
+    if( getenv( "TQT_NO_KDE_INTEGRATION" ) == NULL
+        || getenv( "TQT_NO_KDE_INTEGRATION" )[ 0 ] == '0' )
         {
-        return QCString( QTKDELIBDIR ) + "/libqtkde";
+        return TQCString( TQTKDELIBDIR ) + "/libqtkde";
         }
     return "";
     }
 
-static long parentToWinId( const QWidget* w )
+static long parentToWinId( const TQWidget* w )
     {
     if( w != NULL )
-        return w->topLevelWidget()->winId();
+        return w->tqtopLevelWidget()->winId();
     // try to find some usable parent
-    if( qApp->activeWindow() && w != qApp->activeWindow())
-        return qApp->activeWindow()->winId();
-    if( qApp->mainWidget() && w != qApp->mainWidget())
-        return qApp->mainWidget()->winId();
+    if( tqApp->activeWindow() && w != tqApp->activeWindow())
+        return tqApp->activeWindow()->winId();
+    if( tqApp->mainWidget() && w != tqApp->mainWidget())
+        return tqApp->mainWidget()->winId();
     return 0;
     }
 
-inline static QFont fontPtrToFontRef( const QFont* f )
+inline static TQFont fontPtrToFontRef( const TQFont* f )
     {
-    return f != NULL ? *f : QFont();
+    return f != NULL ? *f : TQFont();
     }
 
 // ---

@@ -1,1 +1,1 @@
-#define QTKDELIBDIR @PLUGIN_INSTALL_DIR@/plugins/integration
+#define TQTKDELIBDIR @PLUGIN_INSTALL_DIR@/plugins/integration

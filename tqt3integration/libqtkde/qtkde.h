@@ -18,15 +18,16 @@
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
-#ifndef _QTKDE_H
-#define _QTKDE_H
+#ifndef _TQTKDE_H
+#define _TQTKDE_H
 
-#include <qobject.h>
+#include <tqobject.h>
 
 class qtkde_EventLoop
-    : public QObject
+    : public TQObject
     {
     Q_OBJECT
+  TQ_OBJECT
     public slots:
         void block( bool );
     };

@@ -18,9 +18,9 @@
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
-#include <qfile.h>
-#include <qstring.h>
-#include <qvaluelist.h>
+#include <tqfile.h>
+#include <tqstring.h>
+#include <tqvaluelist.h>
 #include <stdlib.h>
 
 // TODO includes, forwards
@@ -36,7 +36,7 @@ FUNCTION <name>
  ADD_APPINFO - generate wmclass arguments
  ARG <name>
   TYPE <type>
-  ORIG_TYPE <type>          - for example when the function accepts QWidget*, but WId is really used
+  ORIG_TYPE <type>          - for example when the function accepts TQWidget*, but WId is really used
   ORIG_CONVERSION <conversion>
   IGNORE
   NEEDS_DEREF
@@ -44,7 +44,7 @@ FUNCTION <name>
   OUT_ARGUMENT
   CONVERSION <function>
   BACK_CONVERSION <function> - for out arguments
-  CREATE <function>  - doesn't exist in Qt, create in qtkde using function
+  CREATE <function>  - doesn't exist in TQt, create in qtkde using function
   PARENT - the argument is a parent window to be used for windows
  ENDARG
 ENDFUNCTION
@@ -54,38 +54,38 @@ ENDFUNCTION
 struct Arg
     {
     Arg() : ignore( false ), needs_deref( false ), const_ref( false ), out_argument( false ), parent( false ) {}
-    QString name;
-    QString type;
-    QString orig_type;
-    QString orig_conversion;
+    TQString name;
+    TQString type;
+    TQString orig_type;
+    TQString orig_conversion;
     bool ignore;
     bool needs_deref;
     bool const_ref;
     bool out_argument;
-    QString conversion;
-    QString back_conversion;
-    QString create;
+    TQString conversion;
+    TQString back_conversion;
+    TQString create;
     bool parent;
     };
 
 struct Function
     {
     Function() : delayed_return( false ), skip_qt( false ), only_qt( false ), add_appinfo( false ) {}
-    QString name;
-    QString return_type;
+    TQString name;
+    TQString return_type;
     bool delayed_return;
     bool skip_qt;
     bool only_qt;
     bool add_appinfo;
-    QValueList< Arg > args;
+    TQValueList< Arg > args;
     void stripNonOutArguments();
     void stripCreatedArguments();
     };
 
 void Function::stripNonOutArguments()
     {
-    QValueList< Arg > new_args;
-    for( QValueList< Arg >::ConstIterator it = args.begin();
+    TQValueList< Arg > new_args;
+    for( TQValueList< Arg >::ConstIterator it = args.begin();
          it != args.end();
          ++it )
         {
@@ -98,8 +98,8 @@ void Function::stripNonOutArguments()
 
 void Function::stripCreatedArguments()
     {
-    QValueList< Arg > new_args;
-    for( QValueList< Arg >::ConstIterator it = args.begin();
+    TQValueList< Arg > new_args;
+    for( TQValueList< Arg >::ConstIterator it = args.begin();
          it != args.end();
          ++it )
         {
@@ -110,11 +110,11 @@ void Function::stripCreatedArguments()
     args = new_args;
     }
 
-QValueList< Function > functions;
+TQValueList< Function > functions;
 
-QFile* input_file = NULL;
-QTextStream* input_stream = NULL;
-static QString last_line;
+TQFile* input_file = NULL;
+TQTextStream* input_stream = NULL;
+static TQString last_line;
 int last_lineno = 0;
 
 #define check( arg ) my_check( __FILE__, __LINE__, arg )
@@ -133,29 +133,29 @@ void my_check( const char* file, int line, bool arg )
         my_error( file, line );
     }
 
-void openInputFile( const QString& filename )
+void openInputFile( const TQString& filename )
     {
     check( input_file == NULL );
-    input_file = new QFile( filename );
+    input_file = new TQFile( filename );
     printf("[INFO] Reading bindings definitions from file %s\n\r", filename.ascii());
     if( !input_file->open( IO_ReadOnly ))
         error();
-    input_stream = new QTextStream( input_file );
+    input_stream = new TQTextStream( input_file );
     last_lineno = 0;
     }
 
-QString getInputLine()
+TQString getInputLine()
     {
     while( !input_stream->atEnd())
         {
-        QString line = input_stream->readLine().stripWhiteSpace();
+        TQString line = input_stream->readLine().stripWhiteSpace();
         ++last_lineno;
         last_line = line;
         if( line.isEmpty() || line[ 0 ] == '#' )
             continue;
         return line;
         }
-    return QString::null;
+    return TQString();
     }
 
 void closeInputFile()
@@ -166,11 +166,11 @@ void closeInputFile()
     input_file = NULL;
     }
 
-void parseArg( Function& function, const QString& details )
+void parseArg( Function& function, const TQString& details )
     {
     Arg arg;
     arg.name = details;
-    QString line = getInputLine();
+    TQString line = getInputLine();
     while( !line.isNull() )
         {
         if( line.startsWith( "ENDARG" ))
@@ -242,11 +242,11 @@ void parseArg( Function& function, const QString& details )
     error();
     }
 
-void parseFunction( const QString& details )
+void parseFunction( const TQString& details )
     {
     Function function;
     function.name = details;
-    QString line = getInputLine();
+    TQString line = getInputLine();
     while( !line.isNull() )
         {
         if( line.startsWith( "ENDFUNCTION" ))
@@ -255,7 +255,7 @@ void parseFunction( const QString& details )
                 {
                 Arg arg;
                 arg.name = "wmclass1";
-                arg.type = "QCString";
+                arg.type = "TQCString";
                 arg.const_ref = true;
                 arg.create = "qAppName";
                 function.args.append( arg );
@@ -294,7 +294,7 @@ void parseFunction( const QString& details )
 void parse(TQString filename)
     {
     openInputFile( filename );
-    QString line = getInputLine();
+    TQString line = getInputLine();
     while( !line.isNull() )
         {
         if( line.startsWith( "FUNCTION" ))
@@ -308,21 +308,21 @@ void parse(TQString filename)
     closeInputFile();
     }
 
-QString makeIndent( int indent )
+TQString makeIndent( int indent )
     {
-    return indent > 0 ? QString().fill( ' ', indent ) : "";
+    return indent > 0 ? TQString().fill( ' ', indent ) : "";
     }
 
-void generateFunction( QTextStream& stream, const Function& function, const QString name,
+void generateFunction( TQTextStream& stream, const Function& function, const TQString name,
     int indent, bool staticf, bool orig_type, bool ignore_deref, int ignore_level )
     {
-    QString line;
+    TQString line;
     line += makeIndent( indent );
     if( staticf )
         line += "static ";
     line += function.return_type + " " + name + "(";
     bool need_comma = false;
-    for( QValueList< Arg >::ConstIterator it = function.args.begin();
+    for( TQValueList< Arg >::ConstIterator it = function.args.begin();
          it != function.args.end();
          ++it )
         {
@@ -364,13 +364,13 @@ void generateFunction( QTextStream& stream, const Function& function, const QStr
     stream << line;
     }
 
-void generateQtH()
+void generateTQtH()
     {
-    QFile file( "qtkdeintegration_x11_p.h.gen" );
+    TQFile file( "qtkdeintegration_x11_p.h.gen" );
     if( !file.open( IO_WriteOnly ))
         error();
-    QTextStream stream( &file );
-    for( QValueList< Function >::ConstIterator it = functions.begin();
+    TQTextStream stream( &file );
+    for( TQValueList< Function >::ConstIterator it = functions.begin();
          it != functions.end();
          ++it )
         {
@@ -384,13 +384,13 @@ void generateQtH()
         }
     }
 
-void generateQtCpp()
+void generateTQtCpp()
     {
-    QFile file( "qtkdeintegration_x11.cpp.gen" );
+    TQFile file( "qtkdeintegration_x11.cpp.gen" );
     if( !file.open( IO_WriteOnly ))
         error();
-    QTextStream stream( &file );
-    for( QValueList< Function >::ConstIterator it = functions.begin();
+    TQTextStream stream( &file );
+    for( TQValueList< Function >::ConstIterator it = functions.begin();
          it != functions.end();
          ++it )
         {
@@ -404,20 +404,20 @@ void generateQtCpp()
         }
     stream <<
 "\n"
-"void QKDEIntegration::initLibrary()\n"
+"void TQKDEIntegration::initLibrary()\n"
 "    {\n"
 "    if( !inited )\n"
 "        {\n"
 "        enable = false;\n"
 "        inited = true;\n"
-"        QString libpath = findLibrary();\n"
+"        TQString libpath = findLibrary();\n"
 "        if( libpath.isEmpty())\n"
 "            return;\n"
-"        QLibrary lib( libpath );\n"
-"        if( !QFile::exists( lib.library())) // avoid stupid Qt warning\n"
+"        TQLibrary lib( libpath );\n"
+"        if( !TQFile::exists( lib.library())) // avoid stupid TQt warning\n"
 "            return;\n"
 "        lib.setAutoUnload( false );\n";
-    for( QValueList< Function >::ConstIterator it = functions.begin();
+    for( TQValueList< Function >::ConstIterator it = functions.begin();
          it != functions.end();
          ++it )
         {
@@ -438,7 +438,7 @@ void generateQtCpp()
 "        }\n"
 "    }\n"
 "\n";
-    for( QValueList< Function >::ConstIterator it1 = functions.begin();
+    for( TQValueList< Function >::ConstIterator it1 = functions.begin();
          it1 != functions.end();
          ++it1 )
         {
@@ -453,7 +453,7 @@ void generateQtCpp()
         stream << makeIndent( 4 ) + "return qtkde_" + function.name + "(\n";
         stream << makeIndent( 8 );
         bool need_comma = false;
-        for( QValueList< Arg >::ConstIterator it2 = function.args.begin();
+        for( TQValueList< Arg >::ConstIterator it2 = function.args.begin();
              it2 != function.args.end();
              ++it2 )
             {
@@ -473,19 +473,19 @@ void generateQtCpp()
         }
     }
 
-void generateQt()
+void generateTQt()
     {
-    generateQtH();
-    generateQtCpp();
+    generateTQtH();
+    generateTQtCpp();
     }
 
-void generateQtKde()
+void generateTQtKde()
     {
-    QFile file( "qtkde_functions.cpp" );
+    TQFile file( "tqtkde_functions.cpp" );
     if( !file.open( IO_WriteOnly ))
         error();
-    QTextStream stream( &file );
-    for( QValueList< Function >::ConstIterator it1 = functions.begin();
+    TQTextStream stream( &file );
+    for( TQValueList< Function >::ConstIterator it1 = functions.begin();
          it1 != functions.end();
          ++it1 )
         {
@@ -502,8 +502,8 @@ void generateQtKde()
 "    {\n"
 "    if( qt_xdisplay() != NULL )\n"
 "        XSync( qt_xdisplay(), False );\n";
-        QString parent_arg;
-        for( QValueList< Arg >::ConstIterator it2 = function.args.begin();
+        TQString parent_arg;
+        for( TQValueList< Arg >::ConstIterator it2 = function.args.begin();
              it2 != function.args.end();
              ++it2 )
             {
@@ -522,13 +522,13 @@ void generateQtKde()
             stream << "        DCOPRef( \"kded\", \"MainApplication-Interface\" ).call( \"updateUserTimestamp\", qt_x_time );\n";
             }
         stream <<
-"    QByteArray data, replyData;\n"
-"    QCString replyType;\n";
+"    TQByteArray data, replyData;\n"
+"    TQCString replyType;\n";
         if( !function.args.isEmpty())
             {
-            stream << "    QDataStream datastream( data, IO_WriteOnly );\n";
+            stream << "    TQDataStream datastream( data, IO_WriteOnly );\n";
             stream << "    datastream";
-            for( QValueList< Arg >::ConstIterator it2 = function.args.begin();
+            for( TQValueList< Arg >::ConstIterator it2 = function.args.begin();
                  it2 != function.args.end();
                  ++it2 )
                 {
@@ -554,7 +554,7 @@ void generateQtKde()
             }
         stream << "    if( !dcopClient()->call( \"kded\", \"kdeintegration\",\"" + function.name + "(";
         bool need_comma = false;
-        for( QValueList< Arg >::ConstIterator it2 = function.args.begin();
+        for( TQValueList< Arg >::ConstIterator it2 = function.args.begin();
              it2 != function.args.end();
              ++it2 )
             {
@@ -578,7 +578,7 @@ void generateQtKde()
             stream << "        return;\n";
         stream << "        }\n";
         bool return_data = false;
-        for( QValueList< Arg >::ConstIterator it2 = function.args.begin();
+        for( TQValueList< Arg >::ConstIterator it2 = function.args.begin();
              !return_data && it2 != function.args.end();
              ++it2 )
             {
@@ -586,7 +586,7 @@ void generateQtKde()
                 return_data = true;
             }
         if( return_data || function.return_type != "void" )
-            stream << "    QDataStream replystream( replyData, IO_ReadOnly );\n";
+            stream << "    TQDataStream replystream( replyData, IO_ReadOnly );\n";
         if( function.return_type != "void" )
             {
             stream << "    " + function.return_type << " ret;\n";
@@ -594,7 +594,7 @@ void generateQtKde()
             }
         if( return_data )
             {
-            for( QValueList< Arg >::ConstIterator it2 = function.args.begin();
+            for( TQValueList< Arg >::ConstIterator it2 = function.args.begin();
                  it2 != function.args.end();
                  ++it2 )
                 {
@@ -603,7 +603,7 @@ void generateQtKde()
                     stream << "    " << arg.type << " " << arg.name + "_dummy;\n";
                 }
             stream << "    replystream";
-            for( QValueList< Arg >::ConstIterator it2 = function.args.begin();
+            for( TQValueList< Arg >::ConstIterator it2 = function.args.begin();
                  it2 != function.args.end();
                  ++it2 )
                 {
@@ -623,7 +623,7 @@ void generateQtKde()
                     }
                 }
             stream << ";\n";
-            for( QValueList< Arg >::ConstIterator it2 = function.args.begin();
+            for( TQValueList< Arg >::ConstIterator it2 = function.args.begin();
                  it2 != function.args.end();
                  ++it2 )
                 {
@@ -640,13 +640,13 @@ void generateQtKde()
         }
     }
     
-void generateKdeDcop( QTextStream& stream )
+void generateKdeDcop( TQTextStream& stream )
     {
     stream <<
-"bool Module::process(const QCString &fun, const QByteArray &data,\n"
-"    QCString &replyType, QByteArray &replyData)\n"
+"bool Module::process(const TQCString &fun, const TQByteArray &data,\n"
+"    TQCString &replyType, TQByteArray &replyData)\n"
 "    {\n";
-    for( QValueList< Function >::ConstIterator it1 = functions.begin();
+    for( TQValueList< Function >::ConstIterator it1 = functions.begin();
          it1 != functions.end();
          ++it1 )
         {
@@ -655,7 +655,7 @@ void generateKdeDcop( QTextStream& stream )
             continue;
         stream << "    if( fun == \"" + function.name + "(";
         bool need_comma = false;
-        for( QValueList< Arg >::ConstIterator it2 = function.args.begin();
+        for( TQValueList< Arg >::ConstIterator it2 = function.args.begin();
              it2 != function.args.end();
              ++it2 )
             {
@@ -687,7 +687,7 @@ void generateKdeDcop( QTextStream& stream )
 "QCStringList Module::functions()\n"
 "    {\n"
 "    QCStringList funcs = KDEDModule::functions();\n";
-    for( QValueList< Function >::ConstIterator it1 = functions.begin();
+    for( TQValueList< Function >::ConstIterator it1 = functions.begin();
          it1 != functions.end();
          ++it1 )
         {
@@ -696,7 +696,7 @@ void generateKdeDcop( QTextStream& stream )
             continue;
         stream << "    funcs << \"" + function.name + "(";
         bool need_comma = false;
-        for( QValueList< Arg >::ConstIterator it2 = function.args.begin();
+        for( TQValueList< Arg >::ConstIterator it2 = function.args.begin();
              it2 != function.args.end();
              ++it2 )
             {
@@ -723,27 +723,27 @@ void generateKdeDcop( QTextStream& stream )
 "\n";
     }
 
-void generateKdePreStub( QTextStream& stream )
+void generateKdePreStub( TQTextStream& stream )
     {
-    for( QValueList< Function >::ConstIterator it1 = functions.begin();
+    for( TQValueList< Function >::ConstIterator it1 = functions.begin();
          it1 != functions.end();
          ++it1 )
         {
         const Function& function = *it1;
         if( function.only_qt )
             continue;
-        stream << "void Module::pre_" + function.name + "( const QByteArray& "
+        stream << "void Module::pre_" + function.name + "( const TQByteArray& "
             + ( function.args.isEmpty() ? "" : "data" )
-            + ( function.delayed_return ? "" : ", QByteArray& replyData" )
+            + ( function.delayed_return ? "" : ", TQByteArray& replyData" )
             + " )\n";
         stream << "    {\n";
         if( function.delayed_return )
             {
             stream << "    JobData job;\n";
             stream << "    job.transaction = kapp->dcopClient()->beginTransaction();\n";
-            stream << "    job.type = JobData::" + QString( function.name[ 0 ].upper()) + function.name.mid( 1 ) + ";\n";
+            stream << "    job.type = JobData::" + TQString( function.name[ 0 ].upper()) + function.name.mid( 1 ) + ";\n";
             }
-        for( QValueList< Arg >::ConstIterator it2 = function.args.begin();
+        for( TQValueList< Arg >::ConstIterator it2 = function.args.begin();
              it2 != function.args.end();
              ++it2 )
             {
@@ -754,9 +754,9 @@ void generateKdePreStub( QTextStream& stream )
             }
         if( !function.args.isEmpty())
             {
-            stream << "    QDataStream datastream( data, IO_ReadOnly );\n";
+            stream << "    TQDataStream datastream( data, IO_ReadOnly );\n";
             stream << "    datastream";
-            for( QValueList< Arg >::ConstIterator it2 = function.args.begin();
+            for( TQValueList< Arg >::ConstIterator it2 = function.args.begin();
                  it2 != function.args.end();
                  ++it2 )
                 {
@@ -772,7 +772,7 @@ void generateKdePreStub( QTextStream& stream )
         else
             stream << "    post_" + function.name + "( " + function.name + "( ";
         bool need_comma = false;
-        for( QValueList< Arg >::ConstIterator it2 = function.args.begin();
+        for( TQValueList< Arg >::ConstIterator it2 = function.args.begin();
              it2 != function.args.end();
              ++it2 )
             {
@@ -796,9 +796,9 @@ void generateKdePreStub( QTextStream& stream )
         }
     }
 
-void generateKdePostStub( QTextStream& stream )
+void generateKdePostStub( TQTextStream& stream )
     {
-    for( QValueList< Function >::ConstIterator it1 = functions.begin();
+    for( TQValueList< Function >::ConstIterator it1 = functions.begin();
          it1 != functions.end();
          ++it1 )
         {
@@ -819,7 +819,7 @@ void generateKdePostStub( QTextStream& stream )
             needs_comma = true;
             stream << function.return_type + " ret";
             }
-        for( QValueList< Arg >::ConstIterator it2 = function.args.begin();
+        for( TQValueList< Arg >::ConstIterator it2 = function.args.begin();
              it2 != function.args.end();
              ++it2 )
             {
@@ -833,7 +833,7 @@ void generateKdePostStub( QTextStream& stream )
                 }
             }
         if( !function.delayed_return )
-            stream << ( needs_comma ? "," : "" ) << " QByteArray& replyData";
+            stream << ( needs_comma ? "," : "" ) << " TQByteArray& replyData";
         stream << " )\n";
         stream << "    {\n";
         if( function.delayed_return )
@@ -841,11 +841,11 @@ void generateKdePostStub( QTextStream& stream )
             stream << "    assert( jobs.contains( handle ));\n";
             stream << "    JobData job = jobs[ handle ];\n";
             stream << "    jobs.remove( handle );\n";
-            stream << "    QByteArray replyData;\n";
-            stream << "    QCString replyType = \"qtkde\";\n";
+            stream << "    TQByteArray replyData;\n";
+            stream << "    TQCString replyType = \"qtkde\";\n";
             }
         bool return_data = false;
-        for( QValueList< Arg >::ConstIterator it2 = function.args.begin();
+        for( TQValueList< Arg >::ConstIterator it2 = function.args.begin();
              !return_data && it2 != function.args.end();
              ++it2 )
             {
@@ -853,13 +853,13 @@ void generateKdePostStub( QTextStream& stream )
                 return_data = true;
             }
         if( function.return_type != "void" || return_data )
-            stream << "    QDataStream replystream( replyData, IO_WriteOnly );\n";
+            stream << "    TQDataStream replystream( replyData, IO_WriteOnly );\n";
         if( function.return_type != "void" )
             stream << "    replystream << ret;\n";
         if( return_data )
             {
             stream << "    replystream";
-            for( QValueList< Arg >::ConstIterator it2 = function.args.begin();
+            for( TQValueList< Arg >::ConstIterator it2 = function.args.begin();
                  it2 != function.args.end();
                  ++it2 )
                 {
@@ -876,7 +876,7 @@ void generateKdePostStub( QTextStream& stream )
         }
     }
 
-void generateKdeStubs( QTextStream& stream )
+void generateKdeStubs( TQTextStream& stream )
     {
     generateKdePreStub( stream );
     generateKdePostStub( stream );
@@ -885,21 +885,21 @@ void generateKdeStubs( QTextStream& stream )
 
 void generateKdeCpp()
     {
-    QFile file( "module_functions.cpp" );
+    TQFile file( "module_functions.cpp" );
     if( !file.open( IO_WriteOnly ))
         error();
-    QTextStream stream( &file );
+    TQTextStream stream( &file );
     generateKdeDcop( stream );
     generateKdeStubs( stream );
     }
 
 void generateKdeH()
     {
-    QFile file( "module_functions.h" );
+    TQFile file( "module_functions.h" );
     if( !file.open( IO_WriteOnly ))
         error();
-    QTextStream stream( &file );
-    for( QValueList< Function >::ConstIterator it1 = functions.begin();
+    TQTextStream stream( &file );
+    for( TQValueList< Function >::ConstIterator it1 = functions.begin();
          it1 != functions.end();
          ++it1 )
         {
@@ -912,8 +912,8 @@ void generateKdeH()
         generateFunction( stream, real_function, real_function.name, 8,
             false /*static*/, false /*orig type*/, true /*ignore deref*/, 2 /*ignore level*/ );
         stream << ";\n";
-        stream << makeIndent( 8 ) + "void pre_" + function.name + "( const QByteArray& data"
-            + ( function.delayed_return ? "" : ", QByteArray& replyData" ) + " );\n";
+        stream << makeIndent( 8 ) + "void pre_" + function.name + "( const TQByteArray& data"
+            + ( function.delayed_return ? "" : ", TQByteArray& replyData" ) + " );\n";
         Function post_function = function;
         post_function.stripNonOutArguments();
         if( function.return_type != "void" )
@@ -934,7 +934,7 @@ void generateKdeH()
             {
             Arg handle_arg;
             handle_arg.name = "replyData";
-            handle_arg.type = "QByteArray&";
+            handle_arg.type = "TQByteArray&";
             post_function.args.append( handle_arg );
             }
         post_function.return_type = "void";
@@ -952,8 +952,8 @@ void generateKde()
 
 void generate()
     {
-    generateQt();
-    generateQtKde();
+    generateTQt();
+    generateTQtKde();
     generateKde();
     }
 
