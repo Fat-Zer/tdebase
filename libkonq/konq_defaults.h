@@ -24,6 +24,7 @@
 
 // appearance tab
 #define DEFAULT_UNDERLINELINKS false
+#define DEFAULT_SMOOTHSCROLL false
 #define DEFAULT_WORDWRAPTEXT true // kfm-like, sorry Reggie :-)
 #define DEFAULT_TEXTHEIGHT 2
 #define DEFAULT_TEXTWIDTH 0       // 0 = automatic (font depending)

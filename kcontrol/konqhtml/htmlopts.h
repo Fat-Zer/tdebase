@@ -20,6 +20,7 @@
 // Change cursor over links
 // Underline links
 // AutoLoad Images
+// Smooth Scrolling
 // ... there is room for others :))
 
 
@@ -51,6 +52,7 @@ private:
 
     TQComboBox* m_pUnderlineCombo;
     TQComboBox* m_pAnimationsCombo;
+    TQComboBox* m_pSmoothScrollingCombo;
     TQCheckBox* m_cbCursor;
     TQCheckBox* m_pAutoLoadImagesCheckBox;
     TQCheckBox* m_pUnfinishedImageFrameCheckBox;

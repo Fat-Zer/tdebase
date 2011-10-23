@@ -29,6 +29,7 @@
 
 enum UnderlineLinkType { UnderlineAlways=0, UnderlineNever=1, UnderlineHover=2 };
 enum AnimationsType { AnimationsAlways=0, AnimationsNever=1, AnimationsLoopOnce=2 };
+enum SmoothScrollingType { SmoothScrollingAlways=0, SmoothScrollingNever=1, SmoothScrollingWhenEfficient=2 };
 //-----------------------------------------------------------------------------
 
 KMiscHTMLOptions::KMiscHTMLOptions(KConfig *config, TQString group, TQWidget *parent, const char *)
@@ -187,10 +188,29 @@ KMiscHTMLOptions::KMiscHTMLOptions(KConfig *config, TQString group, TQWidget *pa
     whatsThis = i18n("Controls how Konqueror shows animated images:<br>"
 	    "<ul><li><b>Enabled</b>: Show all animations completely.</li>"
 	    "<li><b>Disabled</b>: Never show animations, show the start image only.</li>"
-	    "<li><b>Show only once</b>: Show all animations completely but do not repeat them.</li>");
+	    "<li><b>Show only once</b>: Show all animations completely but do not repeat them.</li></ul>");
     TQWhatsThis::add( label, whatsThis);
     TQWhatsThis::add( m_pAnimationsCombo, whatsThis);
     connect(m_pAnimationsCombo, TQT_SIGNAL(activated(int)), TQT_SLOT(slotChanged()));
+
+    label = new TQLabel( i18n("Sm&ooth scrolling"), this);
+    m_pSmoothScrollingCombo = new TQComboBox( false, this );
+    label->setBuddy(m_pSmoothScrollingCombo);
+    m_pSmoothScrollingCombo->insertItem(i18n("SmoothScrolling","Enabled"), SmoothScrollingAlways);
+    m_pSmoothScrollingCombo->insertItem(i18n("SmoothScrolling","Disabled"), SmoothScrollingNever);
+    // not implemented: m_pSmoothScrollingCombo->insertItem(i18n("SmoothScrolling","WhenEfficient"), SmoothScrollingWhenEfficient);
+    lay->addWidget(label, row, 0);
+    lay->addWidget(m_pSmoothScrollingCombo, row, 1);
+    row++;
+    whatsThis = i18n("Determines whether Konqueror should use smooth steps to scroll HTML pages, or whole steps:<br>"
+	    "<ul><li><b>Always</b>: Always use smooth steps when scrolling.</li>"
+	    "<li><b>Never</b>: Never use smooth scrolling, scroll with whole steps instead.</li>"
+	    // not implemented: "<li><b>When Efficient</b>: Only use smooth scrolling on pages where it can be achieved with moderate usage of system resources.</li>"
+	    "</ul>");
+    TQWhatsThis::add( label, whatsThis);
+    TQWhatsThis::add( m_pSmoothScrollingCombo, whatsThis);
+    connect(m_pSmoothScrollingCombo, TQT_SIGNAL(activated(int)), TQT_SLOT(slotChanged()));
+
 
     lay->setRowStretch(row, 1);
 
@@ -276,6 +296,15 @@ void KMiscHTMLOptions::load( bool useDefaults )
     m_pAdvancedAddBookmarkCheckBox->setChecked( config.readBoolEntry("AdvancedAddBookmarkDialog", false) );
     m_pOnlyMarkedBookmarksCheckBox->setChecked( config.readBoolEntry("FilteredToolbar", false) );
 
+    KConfig kdeglobals("kdeglobals", true, false);
+    kdeglobals.setReadDefaults( useDefaults );
+	 kdeglobals.setGroup("KDE");
+    bool smoothScrolling = kdeglobals.readBoolEntry("SmoothScroll", DEFAULT_SMOOTHSCROLL);
+    if (smoothScrolling)
+	m_pSmoothScrollingCombo->setCurrentItem( SmoothScrollingAlways );
+    else
+	m_pSmoothScrollingCombo->setCurrentItem( SmoothScrollingNever );
+
 	 emit changed( useDefaults );
 
 #undef READ_ENTRY
@@ -339,6 +368,22 @@ void KMiscHTMLOptions::save()
     config.writeEntry("AdvancedAddBookmarkDialog", m_pAdvancedAddBookmarkCheckBox->isChecked());
     config.writeEntry("FilteredToolbar", m_pOnlyMarkedBookmarksCheckBox->isChecked());
     config.sync();
+
+    KConfig kdeglobals("kdeglobals", false, false);
+    kdeglobals.setGroup("KDE");
+    switch(m_pSmoothScrollingCombo->currentItem())
+    {
+      case SmoothScrollingAlways:
+        kdeglobals.writeEntry( "SmoothScroll", true );
+        break;
+      case SmoothScrollingNever:
+        kdeglobals.writeEntry( "SmoothScroll", false );
+        break;
+      // case SmoothScrollingWhenEfficient:
+        // kdeglobals.writeEntry( "SmoothScroll", somethingelse );
+        // break;
+    }
+    kdeglobals.sync();
 
   TQByteArray data;
   if ( !kapp->dcopClient()->isAttached() )
