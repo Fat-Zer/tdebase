@@ -453,6 +453,7 @@ void PanelKMenu::slotLock()
 
 void PanelKMenu::slotLogout()
 {
+    hide();
     kapp->requestShutDown();
 }
 
