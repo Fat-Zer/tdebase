@@ -73,9 +73,11 @@ endif( )
 
 ##### kompmgr (executable) #######################
 
-tde_add_executable( kdmtsak
-  SOURCES kdmtsak.cpp
-  LINK ${TQT_LIBRARIES}
-  DESTINATION ${BIN_INSTALL_DIR}
-  SETUID
-)
+if( BUILD_TSAK )
+  tde_add_executable( kdmtsak
+    SOURCES kdmtsak.cpp
+    LINK ${TQT_LIBRARIES}
+    DESTINATION ${BIN_INSTALL_DIR}
+    SETUID
+  )
+endif( BUILD_TSAK )

@@ -124,6 +124,9 @@ option( BUILD_KSYSTRAYCMD "Build ksystraycmd" ${BUILD_ALL} )
 option( BUILD_NSPLUGINS "Build nsplugins"  ${BUILD_ALL} )
 option( BUILD_KSYSGUARD "Build ksysguard"  ${BUILD_ALL} )
 option( BUILD_KXKB "Build kxkb"  ${BUILD_ALL} )
+option( BUILD_TSAK "Build tsak"  ${BUILD_ALL} )
+option( BUILD_KROOTBACKING "Build krootbacking"  ${BUILD_ALL} )
+option( BUILD_TQT3INTEGRATION "Build tqt3integration"  ${BUILD_ALL} )
 
 
 ##### set PKG_CONFIG_PATH #######################
@@ -194,9 +197,9 @@ tde_conditional_add_subdirectory( BUILD_KSYSTRAYCMD ksystraycmd )
 tde_conditional_add_subdirectory( BUILD_NSPLUGINS nsplugins )
 tde_conditional_add_subdirectory( BUILD_KSYSGUARD ksysguard )
 tde_conditional_add_subdirectory( BUILD_KXKB kxkb )
-add_subdirectory( tsak )
-add_subdirectory( krootbacking )
-add_subdirectory( tqt3integration )
+tde_conditional_add_subdirectory( BUILD_TSAK tsak )
+tde_conditional_add_subdirectory( BUILD_KROOTBACKING krootbacking )
+tde_conditional_add_subdirectory( BUILD_TQT3INTEGRATION tqt3integration ) 
 
 ##### install startkde & related stuff ##########
 
