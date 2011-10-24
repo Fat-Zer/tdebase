@@ -39,6 +39,7 @@
  * Added SIGUSR2 handler to reload settings     [Prevent flicker on settings change]		08/14/2011
  * Added SIGTERM handler to clean up stale PID files on exit					08/14/2011
  * Added hack to work around ATI fglrx XDamage event generation bugs	[WORK_AROUND_FGLRX]	09/01/2011
+ * Redraw root window automatically when X damage events are detected (this fixes xsetroot)	10/23/2011
  *
  * TODO:
  * http://patchwork.freedesktop.org/patch/1053/ [Fix window mapping with re-used window ids]
@@ -1660,6 +1661,17 @@ wintype_name(wintype type)
     default:              t = "unknown"; break;
     }
     return t;
+}
+
+void repaint_root_overlay_window ()
+{
+    XRectangle  r;
+    r.x = 0;
+    r.y = 0;
+    r.width = root_width;
+    r.height = root_height;
+    XserverRegion  region = XFixesCreateRegion (dpy, &r, 1);
+    add_damage (dpy, region);
 }
 
 static wintype
@@ -3661,6 +3673,7 @@ main (int argc, char **argv)
                 {
                     /*                     printf("damaging win: %u\n",ev.xany.window);*/
 		    damage_win (dpy, (XDamageNotifyEvent *) &ev);
+		    repaint_root_overlay_window();
                 }
 		if (ev.type == xshape_event + ShapeNotify)
 		{
