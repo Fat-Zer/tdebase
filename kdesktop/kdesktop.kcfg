@@ -379,7 +379,7 @@
       <!--   m_dlg->cbAutocomplete->setChecked( KDesktopSettings::miniCLIFilesystemAutoComplete() ); -->
     </entry>
     <entry key="MiniCLISystempathAutoComplete" type="Bool">
-      <default>true</default>
+      <default>false</default>
       <label></label>
       <whatsthis></whatsthis>
       <!-- minicli.cpp:216 -->

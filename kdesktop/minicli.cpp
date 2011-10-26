@@ -127,7 +127,7 @@ Minicli::Minicli( TQWidget *parent, const char *name)
   // Autocomplete system
   m_filesystemAutocomplete = 0;
   m_histfilesystemAutocomplete = 0;
-  m_systempathAutocomplete = 1;
+  m_systempathAutocomplete = 0;
   m_pURLCompletion = new KURLCompletion(KURLCompletion::FileCompletion);
   m_pEXECompletion = new KURLCompletion(KURLCompletion::SystemExeCompletion);
   //m_pURLCompletion->setCompletionMode( KGlobalSettings::completionMode() );
@@ -153,6 +153,7 @@ Minicli::Minicli( TQWidget *parent, const char *name)
   connect(m_dlg->cbPriority, TQT_SIGNAL(toggled(bool)), TQT_SLOT(slotChangeScheduler(bool)));
   connect(m_dlg->slPriority, TQT_SIGNAL(valueChanged(int)), TQT_SLOT(slotPriority(int)));
   connect(m_dlg->cbRealtime, TQT_SIGNAL(toggled(bool)), TQT_SLOT(slotRealtime(bool)));
+  connect(m_dlg->cbAppcomplete, TQT_SIGNAL(toggled(bool)), TQT_SLOT(slotAppcompleteToggled(bool)));
   connect(m_dlg->cbAutocomplete, TQT_SIGNAL(toggled(bool)), TQT_SLOT(slotAutocompleteToggled(bool)));
   connect(m_dlg->cbAutohistory, TQT_SIGNAL(toggled(bool)), TQT_SLOT(slotAutohistoryToggled(bool)));
   connect(m_dlg->cbRunAsOther, TQT_SIGNAL(toggled(bool)), TQT_SLOT(slotChangeUid(bool)));
@@ -219,6 +220,7 @@ void Minicli::loadConfig()
   m_dlg->cbCommand->blockSignals( block );
 
   m_dlg->cbAutocomplete->setChecked( KDesktopSettings::miniCLIFilesystemAutoComplete() );
+  m_dlg->cbAppcomplete->setChecked( KDesktopSettings::miniCLISystempathAutoComplete() );
   m_dlg->cbAutohistory->setChecked( KDesktopSettings::miniCLIHistoryAndFilesystemAutoComplete() );
 
   m_filesystemAutocomplete = KDesktopSettings::miniCLIFilesystemAutoComplete();
@@ -1008,6 +1010,14 @@ void Minicli::slotAutocompleteToggled(bool enabled)
     // Enable history only autocompletion
     m_filesystemAutocomplete = false;
   }
+
+  TQString current_text = m_dlg->cbCommand->currentText();
+  m_dlg->cbCommand->setCurrentText( current_text );    // Force an update of the autocompletion list
+}
+
+void Minicli::slotAppcompleteToggled(bool enabled)
+{
+  m_systempathAutocomplete = enabled;
 
   TQString current_text = m_dlg->cbCommand->currentText();
   m_dlg->cbCommand->setCurrentText( current_text );    // Force an update of the autocompletion list

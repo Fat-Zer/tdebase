@@ -182,6 +182,18 @@
                         </widget>
 			<widget class="TQCheckBox" row="8" column="0" rowspan="1" colspan="4">
 				<property name="name">
+					<cstring>cbAppcomplete</cstring>
+				</property>
+				<property name="text">
+					<string>Autocomplete shows available &amp;applications</string>
+				</property>
+				<property name="whatsThis" stdset="0">
+					<string>&lt;qt&gt;When enabled, the system shows available applications in the autocompletion area.
+						&lt;/qt&gt;</string>
+				</property>
+                        </widget>
+			<widget class="TQCheckBox" row="9" column="0" rowspan="1" colspan="4">
+				<property name="name">
 					<cstring>cbAutocomplete</cstring>
 				</property>
 				<property name="text">
@@ -192,7 +204,7 @@
 						&lt;/qt&gt;</string>
 				</property>
                         </widget>
-			<widget class="TQCheckBox" row="9" column="0" rowspan="1" colspan="4">
+			<widget class="TQCheckBox" row="10" column="0" rowspan="1" colspan="4">
 				<property name="name">
 					<cstring>cbAutohistory</cstring>
 				</property>

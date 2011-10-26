@@ -78,6 +78,7 @@ private slots:
   void slotParseTimer();
   void slotPriority(int);
   void slotRealtime(bool);
+  void slotAppcompleteToggled(bool);
   void slotAutocompleteToggled(bool);
   void slotAutohistoryToggled(bool);
   void slotTerminal(bool);
