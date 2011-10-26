@@ -35,6 +35,6 @@ set( ${target}_SRCS
 
 tde_add_executable( ${target} AUTOMOC
   SOURCES ${${target}_SRCS}
-  LINK kdesktopsettings-static dmctl-static kio-shared ${GL_LIBRARY}
+  LINK kdesktopsettings-static dmctl-static kio-shared Xext ${GL_LIBRARY}
   DESTINATION ${BIN_INSTALL_DIR}
 )
