@@ -234,6 +234,8 @@ void KeyboardConfig::changed()
  Originally comes from NumLockX http://dforce.sh.cvut.cz/~seli/en/numlockx
 
  NumLockX
+ 
+ $Id$
 
  Copyright (C) 2000-2001 Lubos Lunak        <l.lunak@kde.org>
  Copyright (C) 2001      Oswald Buddenhagen <ossi@kde.org>
@@ -265,14 +267,14 @@ DEALINGS IN THE SOFTWARE.
 #endif
 
 #ifdef HAVE_XKB
-#define explicit myexplicit
 #include <X11/XKBlib.h>
-#undef explicit
 #endif
 
 #include <X11/keysym.h>
 
 #if defined(HAVE_XTEST) || defined(HAVE_XKB)
+
+Display* dpy = qt_xdisplay();
 
 /* the XKB stuff is based on code created by Oswald Buddenhagen <ossi@kde.org> */
 #ifdef HAVE_XKB
@@ -282,10 +284,10 @@ int xkb_init()
     int xkb_lmaj = XkbMajorVersion;
     int xkb_lmin = XkbMinorVersion;
     return XkbLibraryVersion( &xkb_lmaj, &xkb_lmin )
-        && XkbQueryExtension( qt_xdisplay(), &xkb_opcode, &xkb_event, &xkb_error,
+        && XkbQueryExtension( dpy, &xkb_opcode, &xkb_event, &xkb_error,
 			       &xkb_lmaj, &xkb_lmin );
     }
-
+    
 unsigned int xkb_mask_modifier( XkbDescPtr xkb, const char *name )
     {
     int i;
@@ -309,7 +311,7 @@ unsigned int xkb_mask_modifier( XkbDescPtr xkb, const char *name )
 unsigned int xkb_numlock_mask()
     {
     XkbDescPtr xkb;
-    if(( xkb = XkbGetKeyboard( qt_xdisplay(), XkbAllComponentsMask, XkbUseCoreKbd )) != NULL )
+    if(( xkb = XkbGetKeyboard( dpy, XkbAllComponentsMask, XkbUseCoreKbd )) != NULL )
 	{
         unsigned int mask = xkb_mask_modifier( xkb, "NumLock" );
         XkbFreeKeyboard( xkb, 0, True );
@@ -317,7 +319,7 @@ unsigned int xkb_numlock_mask()
         }
     return 0;
     }
-
+        
 int xkb_set_on()
     {
     unsigned int mask;
@@ -326,10 +328,10 @@ int xkb_set_on()
     mask = xkb_numlock_mask();
     if( mask == 0 )
         return 0;
-    XkbLockModifiers ( qt_xdisplay(), XkbUseCoreKbd, mask, mask);
+    XkbLockModifiers ( dpy, XkbUseCoreKbd, mask, mask);
     return 1;
     }
-
+    
 int xkb_set_off()
     {
     unsigned int mask;
@@ -338,9 +340,29 @@ int xkb_set_off()
     mask = xkb_numlock_mask();
     if( mask == 0 )
         return 0;
-    XkbLockModifiers ( qt_xdisplay(), XkbUseCoreKbd, mask, 0);
+    XkbLockModifiers ( dpy, XkbUseCoreKbd, mask, 0);
     return 1;
     }
+
+int xkb_toggle()
+    {
+    unsigned int mask;
+    unsigned int numlockState;
+    XkbStateRec xkbState;
+    if( !xkb_init())
+        return 0;
+    mask = xkb_numlock_mask();
+    if( mask == 0 )
+        return 0;
+    XkbGetState( dpy, XkbUseCoreKbd, &xkbState);
+    numlockState = xkbState.locked_mods & mask;
+    if (numlockState)
+        XkbLockModifiers ( dpy, XkbUseCoreKbd, mask, 0);
+    else
+        XkbLockModifiers ( dpy, XkbUseCoreKbd, mask, mask);
+    return 1;
+    }
+    
 #endif
 
 #ifdef HAVE_XTEST
@@ -351,10 +373,10 @@ int xtest_get_numlock_state()
     Window dummy1, dummy2;
     int dummy3, dummy4, dummy5, dummy6;
     unsigned int mask;
-    KeyCode numlock_keycode = XKeysymToKeycode( qt_xdisplay(), XK_Num_Lock );
+    XModifierKeymap* map = XGetModifierMapping( dpy );
+    KeyCode numlock_keycode = XKeysymToKeycode( dpy, XK_Num_Lock );
     if( numlock_keycode == NoSymbol )
         return 0;
-    XModifierKeymap* map = XGetModifierMapping( qt_xdisplay() );
     for( i = 0;
          i < 8;
          ++i )
@@ -362,7 +384,7 @@ int xtest_get_numlock_state()
 	if( map->modifiermap[ map->max_keypermod * i ] == numlock_keycode )
 		numlock_mask = 1 << i;
 	}
-    XQueryPointer( qt_xdisplay(), DefaultRootWindow( qt_xdisplay() ), &dummy1, &dummy2,
+    XQueryPointer( dpy, DefaultRootWindow( dpy ), &dummy1, &dummy2,
         &dummy3, &dummy4, &dummy5, &dummy6, &mask );
     XFreeModifiermap( map );
     return mask & numlock_mask;
@@ -370,8 +392,8 @@ int xtest_get_numlock_state()
 
 void xtest_change_numlock()
     {
-    XTestFakeKeyEvent( qt_xdisplay(), XKeysymToKeycode( qt_xdisplay(), XK_Num_Lock ), True, CurrentTime );
-    XTestFakeKeyEvent( qt_xdisplay(), XKeysymToKeycode( qt_xdisplay(), XK_Num_Lock ), False, CurrentTime );
+    XTestFakeKeyEvent( dpy, XKeysymToKeycode( dpy, XK_Num_Lock ), True, CurrentTime );
+    XTestFakeKeyEvent( dpy, XKeysymToKeycode( dpy, XK_Num_Lock ), False, CurrentTime );
     }
 
 void xtest_set_on()
@@ -384,6 +406,11 @@ void xtest_set_off()
     {
     if( xtest_get_numlock_state())
         xtest_change_numlock();
+    }
+
+void xtest_toggle()
+    {
+    xtest_change_numlock();
     }
 #endif
 
@@ -409,6 +436,18 @@ void numlock_set_off()
 #endif
     }
 
+void numlock_toggle()
+    {
+#ifdef HAVE_XKB
+    if( xkb_toggle())
+        return;
+#endif
+#ifdef HAVE_XTEST
+    xtest_toggle();
+#endif
+    }
+// This code is taken from xset utility from XFree 4.3 (http://www.xfree86.org/)
+
 void numlockx_change_numlock_state( bool set_P )
     {
     if( set_P )
@@ -419,9 +458,6 @@ void numlockx_change_numlock_state( bool set_P )
 #else
 void numlockx_change_numlock_state( bool ) {} // dummy
 #endif // defined(HAVE_XTEST) || defined(HAVE_XKB)
-
-
-// This code is taken from xset utility from XFree 4.3 (http://www.xfree86.org/)
 
 
 #if 0
