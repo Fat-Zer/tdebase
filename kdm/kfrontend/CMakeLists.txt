@@ -57,6 +57,9 @@ tde_add_executable( kdm_config
 
 
 ##### kdm_greet (executable) ####################
+if( WITH_XRANDR )
+  set( KDMGREET_OPTIONAL_LINK "krandr-shared" )
+endif ( )
 
 tde_add_executable( kdm_greet AUTOMOC
   SOURCES
@@ -64,7 +67,7 @@ tde_add_executable( kdm_greet AUTOMOC
     kfdialog.cpp kgdialog.cpp kchooser.cpp kgverify.cpp
     kdmshutdown.cpp kdmadmindialog.cpp kgreeter.cpp
     kgapp.cpp sakdlg.cc
-  LINK kdmthemer-static kdeui-shared Xtst krandr-shared
+  LINK kdmthemer-static kdeui-shared Xtst ${KDMGREET_OPTIONAL_LINK}
   DESTINATION ${BIN_INSTALL_DIR}
 )
 

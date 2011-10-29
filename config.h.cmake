@@ -158,3 +158,6 @@
 
 // kdm, kxkb
 #cmakedefine XLIBDIR "@XLIBDIR@"
+
+// kdm, kcontrol
+#cmakedefine WITH_XRANDR "@WITH_XRANDR@"

@@ -65,14 +65,14 @@ if( BUILD_KCONTROL )
   add_subdirectory( kthememanager )
   add_subdirectory( kfontinst )
   add_subdirectory( access )
-  add_subdirectory( displayconfig )
 
+  tde_conditional_add_subdirectory( WITH_XRANDR displayconfig )
   tde_conditional_add_subdirectory( WITH_SAMBA samba )
   tde_conditional_add_subdirectory( WITH_XRANDR randr )
   tde_conditional_add_subdirectory( WITH_LIBRAW1394 view1394 )
 
   if( ${CMAKE_SYSTEM_NAME} STREQUAL "Linux" )
-    add_subdirectory( iccconfig )
+    tde_conditional_add_subdirectory( WITH_XRANDR iccconfig )
     add_subdirectory( joystick )
   endif( )
 

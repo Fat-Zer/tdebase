@@ -41,7 +41,9 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include <ksimpleconfig.h>
 #include <klocale.h>
 #include <kdebug.h>
+#ifdef WITH_XRANDR
 #include <libkrandr/libkrandr.h>
+#endif
 
 #include <tqtimer.h>
 #include <tqstring.h>
@@ -262,9 +264,11 @@ kg_main( const char *argv0 )
 		app->setStyle( _GUIStyle );
 
 	// Load up systemwide display settings
+#ifdef WITH_XRANDR
 	KRandrSimpleAPI *randrsimple = new KRandrSimpleAPI();
 	TQPoint primaryScreenPosition = randrsimple->applySystemwideDisplayConfiguration("", KDE_CONFDIR);
 	delete randrsimple;
+#endif
 
 	// Load up the systemwide ICC profile
 	TQString iccConfigFile = TQString(KDE_CONFDIR);
@@ -368,19 +372,27 @@ kg_main( const char *argv0 )
 					delete tgrt;
 					checkSAK(app);
 					dialog = new KStdGreeter;
+#ifdef WITH_XRANDR
 					dialog->move(dialog->x() + primaryScreenPosition.x(), dialog->y() + primaryScreenPosition.y());
+#endif
 				}
 				else {
+#ifdef WITH_XRANDR
 					dialog->move(primaryScreenPosition.x(), primaryScreenPosition.y());
+#endif
 				}
 				XSetErrorHandler( (XErrorHandler)0 );
 			} else {
 				checkSAK(app);
 				dialog = new KStdGreeter;
+#ifdef WITH_XRANDR
 				dialog->move(dialog->x() + primaryScreenPosition.x(), dialog->y() + primaryScreenPosition.y());
+#endif
 			}
 			TQPoint oldCursorPos = TQCursor::pos();
+#ifdef WITH_XRANDR
 			TQCursor::setPos(oldCursorPos.x() + primaryScreenPosition.x(), oldCursorPos.y() + primaryScreenPosition.y());
+#endif
 			if (*_preloader) {
 				proc2 = new KProcess;
 				*proc2 << _preloader;
