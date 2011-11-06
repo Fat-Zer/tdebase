@@ -109,7 +109,7 @@ void KSMServer::startApplication( TQStringList command, const TQString& clientMa
             command.prepend( "--" );
             command.prepend( userId );
             command.prepend( "-u" );
-            command.prepend( "kdesu" );
+            command.prepend( "tdesu" );
         }
     }
     if ( !clientMachine.isEmpty() && clientMachine != "localhost" ) {
@@ -650,7 +650,7 @@ KSMServer::KSMServer( const TQString& windowManager, bool _only_local )
         fprintf(f, "%s\n%i\n", session_manager, getpid());
         fclose(f);
         setenv( "SESSION_MANAGER", session_manager, true  );
-       // Pass env. var to kdeinit.
+       // Pass env. var to tdeinit.
        DCOPRef( launcher ).send( "setLaunchEnv", "SESSION_MANAGER", (const char*) session_manager );
     }
 

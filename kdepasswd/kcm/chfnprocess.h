@@ -12,7 +12,7 @@
 #define CHFNPROC_H
 
 #include <tqcstring.h>
-#include <kdesu/process.h>
+#include <tdesu/process.h>
 
 class ChfnProcess : public PtyProcess
 {

@@ -124,7 +124,7 @@ void KLocaleConfig::slotInstallLanguage()
 {
   KProcess *proc = new KProcess;
 
-  *proc << "kdesu";
+  *proc << "tdesu";
   *proc << "qt-language-selector --mode install";
   TQApplication::connect(proc, TQT_SIGNAL(processExited(KProcess *)),
 			this, TQT_SLOT(slotLanguageSelectorExited(KProcess *)));
@@ -136,7 +136,7 @@ void KLocaleConfig::slotUninstallLanguage()
 {
   KProcess *proc = new KProcess;
 
-  *proc << "kdesu";
+  *proc << "tdesu";
   *proc << "qt-language-selector --mode uninstall";
   TQApplication::connect(proc, TQT_SIGNAL(processExited(KProcess *)),
 			this, TQT_SLOT(slotLanguageSelectorExited(KProcess *)));
@@ -148,7 +148,7 @@ void KLocaleConfig::slotSelectLanguage()
 {
   KProcess *proc = new KProcess;
 
-  *proc << "kdesu";
+  *proc << "tdesu";
   *proc << "qt-language-selector --mode select";
   TQApplication::connect(proc, TQT_SIGNAL(processExited(KProcess *)),
 			this, TQT_SLOT(slotLanguageSelectorExited(KProcess *)));

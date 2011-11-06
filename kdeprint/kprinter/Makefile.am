@@ -4,10 +4,10 @@ INCLUDES = $(all_includes)
 
 bin_PROGRAMS = 
 lib_LTLIBRARIES = 
-kdeinit_LTLIBRARIES = kprinter.la
+tdeinit_LTLIBRARIES = kprinter.la
 
 kprinter_la_SOURCES = main.cpp printwrapper.cpp
-kprinter_la_LIBADD = -lkdeprint
+kprinter_la_LIBADD = -ltdeprint
 kprinter_la_LDFLAGS = -module -avoid-version $(all_libraries) $(KDE_RPATH)
 kprinter_la_METASOURCES = AUTO
 

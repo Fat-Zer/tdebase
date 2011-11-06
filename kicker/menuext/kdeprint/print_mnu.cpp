@@ -27,10 +27,10 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <kglobal.h>
 #include <kapplication.h>
 #include <krun.h>
-#include <kdeprint/kmmanager.h>
+#include <tdeprint/kmmanager.h>
 #include <tqregexp.h>
 
-K_EXPORT_KICKER_MENUEXT(kdeprint, PrintMenu)
+K_EXPORT_KICKER_MENUEXT(tdeprint, PrintMenu)
 
 #define ADD_PRINTER_ID		0
 #define KDEPRINT_SETTINGS_ID	1
@@ -43,10 +43,10 @@ K_EXPORT_KICKER_MENUEXT(kdeprint, PrintMenu)
 PrintMenu::PrintMenu(TQWidget *parent, const char *name, const TQStringList & /*args*/)
 : KPanelMenu("", parent, name)
 {
-    static bool kdeprintIconsInitialized = false;
-    if ( !kdeprintIconsInitialized ) {
-        KGlobal::iconLoader()->addAppDir("kdeprint");
-        kdeprintIconsInitialized = true;
+    static bool tdeprintIconsInitialized = false;
+    if ( !tdeprintIconsInitialized ) {
+        KGlobal::iconLoader()->addAppDir("tdeprint");
+        tdeprintIconsInitialized = true;
     }
 }
 
@@ -65,9 +65,9 @@ void PrintMenu::initialize()
 
     if ((KMManager::self()->printerOperationMask() & KMManager::PrinterCreation) && KMManager::self()->hasManagement())
         insertItem(SmallIconSet("wizard"), i18n("Add Printer..."), ADD_PRINTER_ID);
-    insertItem(SmallIconSet("kdeprint_configmgr"), i18n("KDE Print Settings"), KDEPRINT_SETTINGS_ID);
+    insertItem(SmallIconSet("tdeprint_configmgr"), i18n("KDE Print Settings"), KDEPRINT_SETTINGS_ID);
     if (KMManager::self()->serverOperationMask() & KMManager::ServerConfigure)
-        insertItem(SmallIconSet("kdeprint_configsrv"), i18n("Configure Server"), CONFIG_SERVER_ID);
+        insertItem(SmallIconSet("tdeprint_configsrv"), i18n("Configure Server"), CONFIG_SERVER_ID);
     insertSeparator();
     insertItem(SmallIconSet("kcontrol"), i18n("Print Manager"), PRINT_MANAGER_ID);
     insertItem(SmallIconSet("konqueror"), i18n("Print Browser (Konqueror)"), PRINT_BROWSER_ID);
@@ -103,13 +103,13 @@ void PrintMenu::slotExec(int ID)
     switch (ID)
     {
         case ADD_PRINTER_ID:
-            kapp->kdeinitExec("kaddprinterwizard");
+            kapp->tdeinitExec("kaddprinterwizard");
             break;
         case KDEPRINT_SETTINGS_ID:
-	    kapp->kdeinitExec("kaddprinterwizard", TQStringList("--kdeconfig"));
+	    kapp->tdeinitExec("kaddprinterwizard", TQStringList("--kdeconfig"));
             break;
 	case CONFIG_SERVER_ID:
-	    kapp->kdeinitExec("kaddprinterwizard", TQStringList("--serverconfig"));
+	    kapp->tdeinitExec("kaddprinterwizard", TQStringList("--serverconfig"));
 	    break;
         case PRINT_MANAGER_ID:
             KRun::runCommand("kcmshell kde-printers.desktop");
@@ -118,14 +118,14 @@ void PrintMenu::slotExec(int ID)
             KRun::runCommand("kfmclient openProfile filemanagement print:/", "kfmclient", "konqueror");
             break;
 	case KPRINTER_ID:
-	    kapp->kdeinitExec("kprinter");
+	    kapp->tdeinitExec("kprinter");
 	    break;
         default:
             {
                 // start kjobviewer
                 TQStringList args;
                 args << "--show" << "-d" << text(ID).remove('&');
-                kapp->kdeinitExec("kjobviewer", args);
+                kapp->tdeinitExec("kjobviewer", args);
             }
             break;
     }

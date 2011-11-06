@@ -71,7 +71,7 @@
 using namespace KIO;
 using namespace std;
 
-//this is taken from kdelibs/kdecore/fakes.cpp
+//this is taken from kdelibs/tdecore/fakes.cpp
 //#if !defined(HAVE_GETDOMAINNAME)
 
 int x_getdomainname(char *name, size_t len)

@@ -32,6 +32,6 @@ install( PROGRAMS move_favicons.sh DESTINATION ${KCONF_UPDATE_INSTALL_DIR} )
 
 tde_add_kpart( kded_favicons AUTOMOC
   SOURCES favicons.cpp favicons.skel
-  LINK kdeinit_kded-shared
+  LINK tdeinit_kded-shared
   DESTINATION ${PLUGIN_INSTALL_DIR}
 )

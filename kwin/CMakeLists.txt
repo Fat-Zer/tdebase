@@ -45,7 +45,7 @@ install( FILES eventsrc DESTINATION ${DATA_INSTALL_DIR}/kwin )
 install( FILES kwin.kcfg DESTINATION ${KCFG_INSTALL_DIR} )
 
 
-##### kwin (kdeinit) ############################
+##### kwin (tdeinit) ############################
 
 set( target kwin )
 
@@ -58,9 +58,9 @@ set( ${target}_SRCS
   geometry.cpp rules.cpp
 )
 
-tde_add_kdeinit_executable( ${target} AUTOMOC
+tde_add_tdeinit_executable( ${target} AUTOMOC
   SOURCES ${${target}_SRCS}
-  LINK kdecorations-shared kdeui-shared Xext
+  LINK tdecorations-shared tdeui-shared Xext
 )
 
 ##### install import cmake modules ###############

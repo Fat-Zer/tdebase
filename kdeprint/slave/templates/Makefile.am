@@ -13,7 +13,7 @@ template_DATA = class.template \
 		box-top-right.png \
 		bar-bottom-right.png \
 		bottom-left.png \
-		box-centre-kdeprint.png \
+		box-centre-tdeprint.png \
 		top-left.png \
 		bar-middle-left.png \
 		bottom-middle.png \
@@ -22,10 +22,10 @@ template_DATA = class.template \
 		bar-middle-right.png \
 		bottom-right.png \
 		box-middle-right.png \
-		top-right-kdeprint.png \
+		top-right-tdeprint.png \
 		bar-top-left.png \
 		box-bottom-left.png \
 		box-top-left.png \
 		htmlstyles.css
 
-templatedir = $(kde_datadir)/kdeprint/template
+templatedir = $(kde_datadir)/tdeprint/template

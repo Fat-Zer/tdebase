@@ -862,7 +862,7 @@ easier.</para>
 <para><menuchoice><guimenu>Tools</guimenu><guimenuitem>Execute Shell Command...
 </guimenuitem></menuchoice> (<keycombo action="simul">&Ctrl;
 <keycap>E</keycap></keycombo>) opens a small command line dialog window where 
-you can enter a shell command such as <userinput>ps -ax | grep kdeinit
+you can enter a shell command such as <userinput>ps -ax | grep tdeinit
 </userinput>. Note that it does not support full featured terminal control 
 characters, so applications such as <userinput>top</userinput> and <userinput>
 less</userinput> will not work properly, but it is available immediately 

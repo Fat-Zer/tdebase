@@ -5,7 +5,7 @@
 "customization/dtd/kdex.dtd" [
 <!ENTITY % addindex "IGNORE">
 <!ENTITY % English "INCLUDE">
-<!ENTITY glossary-kdeprinting SYSTEM "kdeprintingglossary.docbook">
+<!ENTITY glossary-tdeprinting SYSTEM "tdeprintingglossary.docbook">
 
 ]>
 <glossary id="glossary">
@@ -170,7 +170,7 @@
                                 <glossseealso otherterm="gloss-authentication">Authentication</glossseealso>
                                 <glossseealso otherterm="gloss-bsdstyleprinting">BSD-style printing</glossseealso>
                                 <glossseealso otherterm="gloss-ipp">IPP</glossseealso>
-                                <glossseealso otherterm="gloss-kdeprint">KDEPrint</glossseealso>
+                                <glossseealso otherterm="gloss-tdeprint">KDEPrint</glossseealso>
                                 <glossseealso otherterm="gloss-lprlpd">LPR/LPD</glossseealso>
                                 <glossseealso otherterm="gloss-ppd">PPD</glossseealso>
                         </glossdef>
@@ -184,7 +184,7 @@
 				is a valuable resource to answer many questions that anyone new to 
 				&CUPS; printing might have at first.
 				</para>
-                                <glossseealso otherterm="gloss-kdeprinthandbook">KDEPrint Handbook</glossseealso>
+                                <glossseealso otherterm="gloss-tdeprinthandbook">KDEPrint Handbook</glossseealso>
                         </glossdef>
                 </glossentry>
 
@@ -715,7 +715,7 @@ now.
                         </glossdef>
                 </glossentry>
 
-                <glossentry id="gloss-kdeprint">
+                <glossentry id="gloss-tdeprint">
                         <glossterm><acronym>KDEPrint</acronym></glossterm>
                         <glossdef><para>The new printing functionality of &kde; since version 2.2
 				consists of several modules that translate the features and settings
@@ -736,16 +736,16 @@ now.
                                 <glossseealso otherterm="gloss-bsdstyleprinting">BSD-style printing</glossseealso>
                                 <glossseealso otherterm="gloss-cups">&CUPS;</glossseealso>
                                 <glossseealso otherterm="gloss-kprinter">kprinter</glossseealso>
-                                <glossseealso otherterm="gloss-kdeprinthandbook">KDEPrint Handbook</glossseealso>
+                                <glossseealso otherterm="gloss-tdeprinthandbook">KDEPrint Handbook</glossseealso>
                         </glossdef>
                 </glossentry>
 
 
-                <glossentry id="gloss-kdeprinthandbook">
+                <glossentry id="gloss-tdeprinthandbook">
                         <glossterm><acronym>KDEPrint Handbook...</acronym></glossterm>
                         <glossdef><para>...is the name of the reference document that describes KDEPrint
 				functions to users and administrators. You can load it into Konqueror by
-				typing "help:/kdeprint" into the address field. The <ulink
+				typing "help:/tdeprint" into the address field. The <ulink
 				url="http://printing.kde.org/">KDEPrint website</ulink>
 				is the resource for updates to this documentation, as well as PDF
 				versions suitable for printing it. It is authored and maintained by Kurt 
@@ -1260,7 +1260,7 @@ now.
 				has an "Add Printer Wizard" to make RLPR usage even easier.
 				The kprinter command allows switching to RLPR "on
 				the fly" at any time.</para>
-                                <glossseealso otherterm="gloss-kdeprint">KDEPrint</glossseealso>
+                                <glossseealso otherterm="gloss-tdeprint">KDEPrint</glossseealso>
                                 <glossseealso otherterm="gloss-kprinter">kprinter</glossseealso>
                                 <glossseealso otherterm="gloss-printcap">printcap</glossseealso>
                         </glossdef>

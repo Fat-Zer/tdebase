@@ -4,7 +4,7 @@ INCLUDES = -I$(top_srcdir)/kwin/lib
 
 bin_PROGRAMS =
 lib_LTLIBRARIES =
-kdeinit_LTLIBRARIES = kwin_rules_dialog.la
+tdeinit_LTLIBRARIES = kwin_rules_dialog.la
 kde_module_LTLIBRARIES = kcm_kwinrules.la 
 noinst_LTLIBRARIES = libkwinrules.la
 

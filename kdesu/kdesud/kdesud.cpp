@@ -1,12 +1,12 @@
 /* vi: ts=8 sts=4 sw=4
  *
- * This file is part of the KDE project, module kdesu.
+ * This file is part of the KDE project, module tdesu.
  * Copyright (C) 1999,2000 Geert Jansen <jansen@kde.org>
  * 
  *
- * kdesud.cpp: KDE su daemon. Offers "keep password" functionality to kde su.
+ * tdesud.cpp: KDE su daemon. Offers "keep password" functionality to kde su.
  *
- * The socket $KDEHOME/socket-$(HOSTNAME)/kdesud_$(display) is used for communication with
+ * The socket $KDEHOME/socket-$(HOSTNAME)/tdesud_$(display) is used for communication with
  * client programs.
  *
  * The protocol: Client initiates the connection. All commands and responses
@@ -67,8 +67,8 @@
 #include <kcmdlineargs.h>
 #include <kstandarddirs.h>
 #include <kaboutdata.h>
-#include <kdesu/client.h>
-#include <kdesu/defaults.h>
+#include <tdesu/client.h>
+#include <tdesu/defaults.h>
 #include <ksockaddr.h>
 
 #include "repo.h"
@@ -93,7 +93,7 @@ Display *x11Display;
 int pipeOfDeath[2];
 
 
-void kdesud_cleanup()
+void tdesud_cleanup()
 {
     unlink(sock);
 }
@@ -106,7 +106,7 @@ extern "C" int xio_errhandler(Display *);
 int xio_errhandler(Display *)
 {
     kdError(1205) << "Fatal IO error, exiting...\n";
-    kdesud_cleanup();
+    tdesud_cleanup();
     exit(1);
     return 1;  //silence compilers
 }
@@ -138,7 +138,7 @@ extern "C" {
 void signal_exit(int sig)
 {
     kdDebug(1205) << "Exiting on signal " << sig << "\n";
-    kdesud_cleanup();
+    tdesud_cleanup();
     exit(1);
 }
 
@@ -168,7 +168,7 @@ int create_socket()
     // strip the screen number from the display
     display.replace(TQRegExp("\\.[0-9]+$"), "");
 
-    sock = TQFile::encodeName(locateLocal("socket", TQString("kdesud_%1").arg(static_cast<const char *>(display))));
+    sock = TQFile::encodeName(locateLocal("socket", TQString("tdesud_%1").arg(static_cast<const char *>(display))));
     int stat_err=lstat(sock, &s);
     if(!stat_err && S_ISLNK(s.st_mode)) {
         kdWarning(1205) << "Someone is running a symlink attack on you\n";
@@ -191,7 +191,7 @@ int create_socket()
             }
         } else 
         {
-            kdWarning(1205) << "kdesud is already running\n";
+            kdWarning(1205) << "tdesud is already running\n";
             return -1;
         }
 
@@ -251,8 +251,8 @@ int main(int argc, char *argv[])
 {
     prctl(PR_SET_DUMPABLE, 0);
 
-    KAboutData aboutData("kdesud", I18N_NOOP("KDE su daemon"),
-            Version, I18N_NOOP("Daemon used by kdesu"),
+    KAboutData aboutData("tdesud", I18N_NOOP("KDE su daemon"),
+            Version, I18N_NOOP("Daemon used by tdesu"),
             KAboutData::License_Artistic,
             "Copyright (c) 1999,2000 Geert Jansen");
     aboutData.addAuthor("Geert Jansen", I18N_NOOP("Author"),
@@ -276,7 +276,7 @@ int main(int argc, char *argv[])
     if (listen(sockfd, 1) < 0) 
     {
         kdError(1205) << "listen(): " << ERR << "\n";
-        kdesud_cleanup();
+        tdesud_cleanup();
         exit(1);
     }
     int maxfd = sockfd;
@@ -286,7 +286,7 @@ int main(int argc, char *argv[])
     if (pid == -1) 
     {
         kdError(1205) << "fork():" << ERR << "\n";
-        kdesud_cleanup();
+        tdesud_cleanup();
         exit(1);
     }
     if (pid)

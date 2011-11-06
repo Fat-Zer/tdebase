@@ -30,6 +30,6 @@ install( FILES laptop.desktop DESTINATION ${DATA_INSTALL_DIR}/kwin )
 
 tde_add_kpart( kwin3_laptop AUTOMOC
   SOURCES laptopclient.cpp
-  LINK kdecorations-shared
+  LINK tdecorations-shared
   DESTINATION ${PLUGIN_INSTALL_DIR}
 )

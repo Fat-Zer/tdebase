@@ -24,4 +24,4 @@ messages: rc.cpp
 	$(XGETTEXT) *.cpp *.h -o $(podir)/quicklauncher.pot
 
 srcdoc:
-	kdoc -a -p -H -d $$HOME/web/src/quicklauncher quicklauncher *.h -lqt -lkdecore -lkdeui
+	kdoc -a -p -H -d $$HOME/web/src/quicklauncher quicklauncher *.h -lqt -ltdecore -ltdeui

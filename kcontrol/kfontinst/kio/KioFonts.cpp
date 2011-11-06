@@ -59,7 +59,7 @@
 #include <kinstance.h>
 #include <klargefile.h>
 #include <ktempfile.h>
-#include <kdesu/su.h>
+#include <tdesu/su.h>
 #include <kprocess.h>
 #include <kdebug.h>
 #include <ktar.h>

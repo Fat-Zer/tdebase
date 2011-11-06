@@ -30,6 +30,6 @@ install( FILES prefmenu.desktop DESTINATION ${DATA_INSTALL_DIR}/kicker/menuext )
 
 tde_add_kpart( kickermenu_prefmenu AUTOMOC
   SOURCES prefmenu.cpp
-  LINK kickermain-shared kdeui-shared
+  LINK kickermain-shared tdeui-shared
   DESTINATION ${PLUGIN_INSTALL_DIR}
 )

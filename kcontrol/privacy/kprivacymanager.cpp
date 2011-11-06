@@ -134,7 +134,7 @@ bool KPrivacyManager::clearWebHistory()
   if(!isApplicationRegistered("konqueror"))
   {
     kdDebug() << "couldn't find Konqueror instance, preloading." << endl;
-    kapp->kdeinitExec("konqueror", args, 0,0);
+    kapp->tdeinitExec("konqueror", args, 0,0);
   }
 
   return kapp->dcopClient()->send( "konqueror*", "KonqHistoryManager",

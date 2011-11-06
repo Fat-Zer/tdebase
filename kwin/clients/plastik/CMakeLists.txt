@@ -34,6 +34,6 @@ install( FILES plastik.desktop DESTINATION ${DATA_INSTALL_DIR}/kwin )
 
 tde_add_kpart( kwin3_plastik AUTOMOC
   SOURCES plastik.cpp plastikclient.cpp plastikbutton.cpp misc.cpp
-  LINK kdecorations-shared kdeui-shared
+  LINK tdecorations-shared tdeui-shared
   DESTINATION ${PLUGIN_INSTALL_DIR}
 )

@@ -44,12 +44,12 @@ tde_add_kpart( kcm_keyboard AUTOMOC
 )
 
 
-##### kxkb (kdeinit) ############################
+##### kxkb (tdeinit) ############################
 
-tde_add_kdeinit_executable( kxkb AUTOMOC
+tde_add_tdeinit_executable( kxkb AUTOMOC
   SOURCES
     extension.cpp x11helper.cpp rules.cpp kxkbconfig.cpp
     pixmap.cpp layoutmap.cpp kxkb.cpp kxkbtraywindow.cpp
     kxkb.skel
-  LINK kdeui-shared xkbfile
+  LINK tdeui-shared xkbfile
 )

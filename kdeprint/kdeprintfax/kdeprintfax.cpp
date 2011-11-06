@@ -1,5 +1,5 @@
 /*
- *   kdeprintfax - a small fax utility
+ *   tdeprintfax - a small fax utility
  *   Copyright (C) 2001  Michael Goffioul
  *
  *   This program is free software; you can redistribute it and/or modify
@@ -18,7 +18,7 @@
  *
  */
 
-#include "kdeprintfax.h"
+#include "tdeprintfax.h"
 #include "faxab.h"
 #include "faxctrl.h"
 #include "configdlg.h"
@@ -106,7 +106,7 @@ KdeprintFax::KdeprintFax(TQWidget *parent, const char *name)
 	connect( m_delbtn, TQT_SIGNAL( clicked() ), TQT_SLOT( slotFaxRemove() ) );
 	TQLabel	*m_commentlabel = new TQLabel(i18n("&Comment:"), mainw);
 	KSystemTray	*m_tray = new KSystemTray(this);
-	m_tray->setPixmap(SmallIcon("kdeprintfax"));
+	m_tray->setPixmap(SmallIcon("tdeprintfax"));
 	m_tray->show();
 	m_comment = new TQTextEdit(mainw);
 // I don't understand why anyone would want to turn off word wrap. It makes
@@ -604,4 +604,4 @@ bool KdeprintFax::manualFaxDialog( TQString& number, TQString& name, TQString& e
 			return false;
 }
 
-#include "kdeprintfax.moc"
+#include "tdeprintfax.moc"

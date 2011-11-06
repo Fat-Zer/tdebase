@@ -29,6 +29,6 @@ install( FILES kfind.desktop websearch.desktop DESTINATION ${DATA_INSTALL_DIR}/k
 
 tde_add_kpart( kickermenu_find AUTOMOC
   SOURCES findmenu.cpp
-  LINK kdeui-shared
+  LINK tdeui-shared
   DESTINATION ${PLUGIN_INSTALL_DIR}
 )

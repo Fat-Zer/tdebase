@@ -2073,7 +2073,7 @@ void Konsole::slotConfigure()
 {
   TQStringList args;
   args << "kcmkonsole";
-  KApplication::kdeinitExec( "kcmshell", args );
+  KApplication::tdeinitExec( "kcmshell", args );
 }
 
 void Konsole::reparseConfiguration()

@@ -1,6 +1,6 @@
 /* vi: ts=8 sts=4 sw=4
  *
- * This file is part of the KDE project, module kdesu.
+ * This file is part of the KDE project, module tdesu.
  * Copyright (C) 1999,2000 Geert Jansen <g.t.jansen@stud.tue.nl>
  */
 

@@ -21,17 +21,17 @@ link_directories(
 )
 
 
-##### kcminit (kdeinit) #########################
+##### kcminit (tdeinit) #########################
 
-tde_add_kdeinit_executable( kcminit AUTOMOC
+tde_add_tdeinit_executable( kcminit AUTOMOC
   SOURCES main.cpp main.skel
   LINK kutils-shared
 )
 
 
-##### kcminit_startup (kdeinit) #################
+##### kcminit_startup (tdeinit) #################
 
-tde_add_kdeinit_executable( kcminit_startup AUTOMOC
+tde_add_tdeinit_executable( kcminit_startup AUTOMOC
   SOURCES main.cpp main.skel
   LINK kutils-shared
 )

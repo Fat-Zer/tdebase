@@ -162,7 +162,7 @@ extern "C" KDE_EXPORT int kdemain( int argc, char **argv )
     if (!kateApp.isEmpty())
     {
       kdDebug () << "kate app: " << kateApp << endl;
-      // make kdeinit happy
+      // make tdeinit happy
       client.registerAs( "kate" );
 
       DCOPRef kRef (kateApp, "KateApplication");

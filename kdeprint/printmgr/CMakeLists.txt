@@ -32,6 +32,6 @@ install( FILES printers.desktop DESTINATION ${XDG_APPS_INSTALL_DIR} )
 
 tde_add_kpart( kcm_printmgr AUTOMOC
   SOURCES kcmprintmgr.cpp
-  LINK kdeprint_management-shared
+  LINK tdeprint_management-shared
   DESTINATION ${PLUGIN_INSTALL_DIR}
 )

@@ -2,7 +2,7 @@
 <!DOCTYPE glossary PUBLIC "-//KDE//DTD DocBook XML V4.2-Based Variant V1.1//EN" "dtd/kdex.dtd" [
 <!ENTITY % addindex "IGNORE">
 <!ENTITY % English "INCLUDE">
-<!ENTITY glossary-kdeprinting SYSTEM "kdeprintingglossary.docbook">
+<!ENTITY glossary-tdeprinting SYSTEM "tdeprintingglossary.docbook">
 
 
 ]>
@@ -10,7 +10,7 @@
 
 <glossary id="glossary">
 
-&glossary-kdeprinting;
+&glossary-tdeprinting;
 
 	<glossdiv id="glossdiv-technologies">
 		<title>Technologies</title>

@@ -15,7 +15,7 @@ configuration file for that daemon is normally located in
 <acronym>ASCII</acronym> file with a syntax similar to the configuration
 file of the <application>Apache</application> web server. It is a good
 idea to create a backup copy, just in case something goes wrong with the
-configuration through &kdeprint;/&CUPS; Server Configuration
+configuration through &tdeprint;/&CUPS; Server Configuration
 dialogs:</para>
 
 <screen><userinput><command>cp</command> <filename>/etc/cups/cupsd.conf</filename> <filename>/etc/cups/cupsd.conf.bak</filename></userinput></screen>
@@ -52,7 +52,7 @@ class="directory">/usr/share/doc/cups/</filename> or
 always refer to the original &CUPS; documentation.  &CUPS; is, much like
 &kde; in a rapid development process.  There are constantly new features
 being added. New features might for times be only configurable by
-directly editing the configuration files. The &kdeprint; &GUI; might not
+directly editing the configuration files. The &tdeprint; &GUI; might not
 have caught up with &CUPS; development.</para>
 
 <para>Just in case you want to look at the original configuration files
@@ -198,12 +198,12 @@ http://www.linuxprinting.org/newsportal/</ulink></term>
 </varlistentry>
 </variablelist>
 
-<para>And finally, there will be a WebSite for &kdeprint; and related
-documentation, at <ulink url="http://kdeprint.sourceforge.net/">
-http://kdeprint.sourceforge.net/</ulink></para>
+<para>And finally, there will be a WebSite for &tdeprint; and related
+documentation, at <ulink url="http://tdeprint.sourceforge.net/">
+http://tdeprint.sourceforge.net/</ulink></para>
 
 <para>In the next section I will step you through most of the
-configuration options of &kdeprint; with &CUPS;.</para>
+configuration options of &tdeprint; with &CUPS;.</para>
 
 </sect1>
 <sect1 id="explaining-different-gui-elements">
@@ -442,7 +442,7 @@ to.  By default &CUPS; will use <quote>root@hostname</quote>.</para>
 <note>
 <para>Contrary to what the quickhelp suggests, it is also legal to
 send an email full of praise and enthusiasm about &CUPS; and
-&kdeprint; to the server administrator.</para>
+&tdeprint; to the server administrator.</para>
 </note>
 </listitem>
 </varlistentry>

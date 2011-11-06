@@ -81,8 +81,8 @@ action="simul">&Ctrl;&Alt;<keycap>S</keycap></keycombo> and enter the new
 name.</para>
 
 <para>If you find the need to run any &kde; program with <systemitem
-class="username">root</systemitem> privileges,  you can use the &kdesu; command with the <option>-c</option> switch
-from the command line like this: <userinput><command>kdesu</command>
+class="username">root</systemitem> privileges,  you can use the &tdesu; command with the <option>-c</option> switch
+from the command line like this: <userinput><command>tdesu</command>
 <option>-c -n <replaceable>PROGRAM</replaceable></option></userinput>, using
 the <option>-n</option> switch will prevent &kde; from remembering your
 passwords.</para>

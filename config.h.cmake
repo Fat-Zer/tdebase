@@ -79,11 +79,11 @@
 // kcontrol/input
 #cmakedefine HAVE_LIBUSB 1
 
-// kdeprint
+// tdeprint
 #cmakedefine HAVE_SIGACTION 1
 #cmakedefine HAVE_SIGSET 1
 
-// kdesu
+// tdesu
 #cmakedefine HAVE_STRUCT_UCRED 1
 #cmakedefine HAVE_GETPEEREID 1
 #cmakedefine HAVE_SYS_SELECT_H 1

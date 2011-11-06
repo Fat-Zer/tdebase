@@ -42,16 +42,16 @@ install( PROGRAMS
 
 tde_add_executable( kicker-3.4-reverseLayout
   SOURCES kicker-3.4-reverseLayout.cpp
-  LINK kdecore-shared
+  LINK tdecore-shared
   DESTINATION ${LIB_INSTALL_DIR}/kconf_update_bin
 )
 
 
-##### kicker (kdeinit) ##########################
+##### kicker (tdeinit) ##########################
 
 configure_file( ${CMAKE_SOURCE_DIR}/cmake/modules/template_dummy_cpp.cmake dummy.cpp COPYONLY )
 
-tde_add_kdeinit_executable( kicker
+tde_add_tdeinit_executable( kicker
   SOURCES dummy.cpp
   EMBED kicker_core-static
   LINK kicker_buttons-static kicker_ui-static kickermain-shared kabc-shared kutils-shared

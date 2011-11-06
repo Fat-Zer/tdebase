@@ -6,7 +6,7 @@ kcm_crypto_la_SOURCES = crypto.cpp certexport.cpp kdatetimedlg.cpp
 AM_CXXFLAGS = $(CXXFLAGS) -DLIBDIR=$(libdir)
 
 kcm_crypto_la_LDFLAGS  = $(KDE_RPATH) $(all_libraries) $(SSL_LDFLAGS) -module -avoid-version -no-undefined
-kcm_crypto_la_LIBADD = -lkdeui $(LIB_KIO) $(LIBSSL)
+kcm_crypto_la_LIBADD = -ltdeui $(LIB_KIO) $(LIBSSL)
 
 METASOURCES = AUTO
 

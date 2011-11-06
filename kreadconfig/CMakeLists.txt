@@ -23,7 +23,7 @@ link_directories(
 
 tde_add_executable( kreadconfig
   SOURCES kreadconfig.cpp
-  LINK kdecore-shared
+  LINK tdecore-shared
   DESTINATION ${BIN_INSTALL_DIR}
 )
 
@@ -32,6 +32,6 @@ tde_add_executable( kreadconfig
 
 tde_add_executable( kwriteconfig
   SOURCES kwriteconfig.cpp
-  LINK kdecore-shared
+  LINK tdecore-shared
   DESTINATION ${BIN_INSTALL_DIR}
 )

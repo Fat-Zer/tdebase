@@ -833,22 +833,22 @@ are two very important lines in the <filename>startkde</filename>
 script:</para>
 
 <programlisting>
-LD_BIND_NOW=true kdeinit +kcminit +knotify and kwrapper
+LD_BIND_NOW=true tdeinit +kcminit +knotify and kwrapper
 ksmserver $KDEWM
 </programlisting>
 
-<para>The first line starts the <command>kdeinit</command> master process.
-The <command>kdeinit</command> master process is used to start all other
+<para>The first line starts the <command>tdeinit</command> master process.
+The <command>tdeinit</command> master process is used to start all other
 &kde; processes.  It show up in the output of <command>ps
-<option>aux</option></command> as <computeroutput>kdeinit:
-Running...</computeroutput>. The arguments after <command>kdeinit</command>
+<option>aux</option></command> as <computeroutput>tdeinit:
+Running...</computeroutput>. The arguments after <command>tdeinit</command>
 are the names of additional processes to be started.  The <token>+</token>
-indicates that <command>kdeinit</command> needs to wait till the process has
-finished.  <command>kdeinit</command> also starts
+indicates that <command>tdeinit</command> needs to wait till the process has
+finished.  <command>tdeinit</command> also starts
 <command>dcopserver</command>, <command>klauncher</command> and
 <command>kded</command>.</para>
 
-<para>The second of the two lines asks <command>kdeinit</command> to start
+<para>The second of the two lines asks <command>tdeinit</command> to start
 the <command>ksmserver</command> session manager process.  The session
 manager determines the lifetime of the session. When this process exits, the
 user is logged out.</para>
@@ -910,18 +910,18 @@ needed</para>
 
 </variablelist>
 
-<sect2 id="kdeinit">
-<title><command>kdeinit</command></title>
-<para><command>kdeinit</command> is used to start all other &kde;
-programs. <command>kdeinit</command> can start normal binary program files
-as well as <command>kdeinit</command> loadable modules
+<sect2 id="tdeinit">
+<title><command>tdeinit</command></title>
+<para><command>tdeinit</command> is used to start all other &kde;
+programs. <command>tdeinit</command> can start normal binary program files
+as well as <command>tdeinit</command> loadable modules
 (<acronym>KLM</acronym>s).  <acronym>KLM</acronym>s work just like binary
 program files but can be started more efficiently.  <acronym>KLM</acronym>s
 live in <filename
 class="directory">$<envar>KDEDIR</envar>/lib/trinity</filename></para>
 
 <para>The drawback is that programs started this way appear as
-<computeroutput><command>kdeinit</command></computeroutput> in the output of
+<computeroutput><command>tdeinit</command></computeroutput> in the output of
 <command>top</command> and <command>ps</command>. Use <command>top
 <option>-c</option></command> or <command>ps <option>aux</option></command>
 to see the actual program name:</para>
@@ -929,20 +929,20 @@ to see the actual program name:</para>
 <screen>
 <prompt>%</prompt><userinput><command>ps <option>aux</option></command></userinput>
 <computeroutput>
-waba     23184  0.2  2.1 23428 11124 ?	S    21:41   0:00 kdeinit: Running...
-waba     23187  0.1  2.1 23200 11124 ?	S    21:41   0:00 kdeinit: dcopserver --nosid
-waba     23189  0.2  2.4 25136 12496 ?	S    21:41   0:00 kdeinit: klauncher
-waba     23192  0.7  2.8 25596 14772 ?	S    21:41   0:00 kdeinit: kded
-waba     23203  0.8  3.4 31516 17892 ?	S    21:41   0:00 kdeinit:
+waba     23184  0.2  2.1 23428 11124 ?	S    21:41   0:00 tdeinit: Running...
+waba     23187  0.1  2.1 23200 11124 ?	S    21:41   0:00 tdeinit: dcopserver --nosid
+waba     23189  0.2  2.4 25136 12496 ?	S    21:41   0:00 tdeinit: klauncher
+waba     23192  0.7  2.8 25596 14772 ?	S    21:41   0:00 tdeinit: kded
+waba     23203  0.8  3.4 31516 17892 ?	S    21:41   0:00 tdeinit:
 knotify
 </computeroutput>
 </screen>
 
-<para><computeroutput>kdeinit: Running...</computeroutput> indicates the
-master <command>kdeinit</command> process. The other processes listed are
+<para><computeroutput>tdeinit: Running...</computeroutput> indicates the
+master <command>tdeinit</command> process. The other processes listed are
 programs started as <acronym>KLM</acronym>s.</para>
 
-<para>When <command>kdeinit</command> starts for the first time it will
+<para>When <command>tdeinit</command> starts for the first time it will
 launch <command>dcopserver</command>, <command>klauncher</command>, and
 <command>kded</command>, as well as any additional programs specified on its
 command line in the <command>startkde</command> script, normally
@@ -1019,7 +1019,7 @@ startup problems.</para>
 
 <para><command>klauncher</command> is a daemon which is responsible for
 service activation within &kde;. It operates in close connection with the
-<command>kdeinit</command> master process to start new processes. &kde;
+<command>tdeinit</command> master process to start new processes. &kde;
 applications communicate with <command>klauncher</command> over &DCOP; in
 order to start new applications or services.</para>
 
@@ -1029,7 +1029,7 @@ either indicates a serious problem with the <command>dcopserver</command> or
 that <command>klauncher</command> crashed.</para>
 
 <para><command>klauncher</command> can be restarted by restarting
-<command>kdeinit</command> from a console window. Make sure that
+<command>tdeinit</command> from a console window. Make sure that
 $<envar>HOME</envar>, $<envar>DISPLAY</envar> and the various
 $<envar>KDEDIR(S)</envar> are set correctly when doing so!</para>
 
@@ -1205,7 +1205,7 @@ on a multi-head system.</para>
 <listitem><para>(Since &kde; 3.2.3) Set this variable to spawn
 <acronym>KIO</acronym>-slaves directly from the application process
 itself. By default <acronym>KIO</acronym>-slaves are spawned using
-<command>klauncher</command>/<command>kdeinit</command>. This option is
+<command>klauncher</command>/<command>tdeinit</command>. This option is
 useful if the <acronym>KIO</acronym>-slave should run in the same
 environment as the application. This can be the case with
 <application>Clearcase</application>.</para>
@@ -1228,7 +1228,7 @@ lookups.</para>
 <varlistentry><term>$<envar>KDE_IS_PRELINKED</envar></term><listitem><para>
 (Since &kde; 3.2) - Set this variable to indicate that you have prelinked
 your &kde; binaries and libraries. This will turn off
-<command>kdeinit</command>.</para>
+<command>tdeinit</command>.</para>
 </listitem>
 </varlistentry>
 
@@ -1243,7 +1243,7 @@ locale.</para>
 (Since &kde; 3.2)  Automatically set to true by &kde; startup, it is used
 by &eg; &konqueror; to know if it should consider remaining in memory
 for future re-use when being closed. If not set, &konqueror; will exit
-after being closed (&eg; &kdesu; does that, it's also useful for
+after being closed (&eg; &tdesu; does that, it's also useful for
 debugging).</para>
 </listitem>
 </varlistentry>
@@ -1314,21 +1314,21 @@ $<envar>KDEDIRS</envar> and profiles as well. Used by <literal role="extension">
 
 </sect1>
 
-<sect1 id="the-kdeinit-mystery">
-<title>The kdeinit Mystery</title>
+<sect1 id="the-tdeinit-mystery">
+<title>The tdeinit Mystery</title>
 
 <!-- FIXME: Add more words. Fix markup -->
 
-<para><command>kdeinit</command> is used to start all other &kde;
-programs. <command>kdeinit</command> can start normal binary program f iles
-as well as <command>kdeinit</command> loadable modules
+<para><command>tdeinit</command> is used to start all other &kde;
+programs. <command>tdeinit</command> can start normal binary program f iles
+as well as <command>tdeinit</command> loadable modules
 (<acronym>KLM</acronym>s).  <acronym>KLM</acronym>s work just like binary
 program files but can be started more efficiently.  <acronym>KLM</acronym>s
 live in <filename
 class="directory">$<envar>KDEDIR</envar>/lib/trinity</filename></para>
 
 <para>The drawback is that programs started this way appear as
-<computeroutput><command>kdeinit</command></computeroutput> in the
+<computeroutput><command>tdeinit</command></computeroutput> in the
 output of <command>top</command> and <command>ps</command>. Use
 <command>top <option>-c</option></command> or <command>ps
 <option>aux</option></command> to see the actual program name:</para>
@@ -1336,14 +1336,14 @@ output of <command>top</command> and <command>ps</command>. Use
 <screen>
 <prompt>%</prompt> <userinput><command>ps aux | grep bastian</command></userinput>
 <computeroutput>
-bastian  26061  0.0  2.2 24284 11492 ?       S    21:27   0:00 kdeinit: Running...
-bastian  26064  0.0  2.2 24036 11524 ?       S    21:27   0:00 kdeinit: dcopserver
-bastian  26066  0.1  2.5 26056 12988 ?       S    21:27   0:00 kdeinit: klauncher
-bastian  26069  0.4  3.2 27356 16744 ?       S    21:27   0:00 kdeinit: kded
-bastian  26161  0.2  2.7 25344 14096 ?       S    21:27   0:00 kdeinit: ksmserver
-bastian  26179  1.1  3.4 29716 17812 ?       S    21:27   0:00 kdeinit: kicker
-bastian  26192  0.4  3.0 26776 15452 ?       S    21:27   0:00 kdeinit: klipper
-bastian  26195  1.0  3.5 29200 18368 ?       S    21:27   0:00 kdeinit: kdesktop
+bastian  26061  0.0  2.2 24284 11492 ?       S    21:27   0:00 tdeinit: Running...
+bastian  26064  0.0  2.2 24036 11524 ?       S    21:27   0:00 tdeinit: dcopserver
+bastian  26066  0.1  2.5 26056 12988 ?       S    21:27   0:00 tdeinit: klauncher
+bastian  26069  0.4  3.2 27356 16744 ?       S    21:27   0:00 tdeinit: kded
+bastian  26161  0.2  2.7 25344 14096 ?       S    21:27   0:00 tdeinit: ksmserver
+bastian  26179  1.1  3.4 29716 17812 ?       S    21:27   0:00 tdeinit: kicker
+bastian  26192  0.4  3.0 26776 15452 ?       S    21:27   0:00 tdeinit: klipper
+bastian  26195  1.0  3.5 29200 18368 ?       S    21:27   0:00 tdeinit: kdesktop
 </computeroutput>
 </screen>
 <para>As you might have noticed, this has another side effect, making it
@@ -1353,7 +1353,7 @@ difficult to kill a process that is causing trouble:</para>
 <computeroutput>kdesktop: no process killed</computeroutput></screen>
 
 <para>You might be tempted to try <userinput><command>killall
-kdeinit</command></userinput>, but killing all kdeinit processes will have
+tdeinit</command></userinput>, but killing all tdeinit processes will have
 the effect of shutting down all of &kde;. In effect, total
 destruction!</para>
 

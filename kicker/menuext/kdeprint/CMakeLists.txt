@@ -24,10 +24,10 @@ link_directories(
 install( FILES printmenu.desktop DESTINATION ${DATA_INSTALL_DIR}/kicker/menuext )
 
 
-##### kickermenu_kdeprint (module) ##############
+##### kickermenu_tdeprint (module) ##############
 
-tde_add_kpart( kickermenu_kdeprint AUTOMOC
+tde_add_kpart( kickermenu_tdeprint AUTOMOC
   SOURCES print_mnu.cpp
-  LINK kdeprint-shared
+  LINK tdeprint-shared
   DESTINATION ${PLUGIN_INSTALL_DIR}
 )

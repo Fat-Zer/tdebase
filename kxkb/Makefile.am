@@ -7,7 +7,7 @@ KDE_OPTIONS = nofinal
 
 bin_PROGRAMS = 
 lib_LTLIBRARIES = 
-kdeinit_LTLIBRARIES = kxkb.la
+tdeinit_LTLIBRARIES = kxkb.la
 kde_module_LTLIBRARIES = kcm_keyboard.la
 
 kcm_keyboard_la_SOURCES = extension.cpp x11helper.cpp rules.cpp kxkbconfig.cpp pixmap.cpp \

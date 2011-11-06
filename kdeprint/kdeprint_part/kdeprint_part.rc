@@ -1,5 +1,5 @@
 <!DOCTYPE kpartgui>
-<kpartgui name="kdeprint_part">
+<kpartgui name="tdeprint_part">
 <ToolBar name="Kdeprint-Toolbar" newline="false"><text>Print Manager Toolbar</text>
   <Action name="printer_add" />
   <Action name="printer_add_special" />

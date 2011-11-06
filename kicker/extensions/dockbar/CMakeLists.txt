@@ -35,6 +35,6 @@ set( ${target}_SRCS
 
 tde_add_kpart( ${target} AUTOMOC
   SOURCES ${${target}_SRCS}
-  LINK kdeui-shared
+  LINK tdeui-shared
   DESTINATION ${PLUGIN_INSTALL_DIR}
 )

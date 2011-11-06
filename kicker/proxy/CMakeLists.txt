@@ -25,17 +25,17 @@ link_directories(
 install( FILES  DESTINATION ${DATA_INSTALL_DIR}/kicker/menuext )
 
 
-##### appletproxy (kdeinit) #####################
+##### appletproxy (tdeinit) #####################
 
-tde_add_kdeinit_executable( appletproxy AUTOMOC
+tde_add_tdeinit_executable( appletproxy AUTOMOC
   SOURCES appletproxy.cpp
   LINK kickermain-shared
 )
 
 
-##### extensionproxy (kdeinit) ##################
+##### extensionproxy (tdeinit) ##################
 
-tde_add_kdeinit_executable( extensionproxy AUTOMOC
+tde_add_tdeinit_executable( extensionproxy AUTOMOC
   SOURCES extensionproxy.cpp
   LINK kickermain-shared
 )

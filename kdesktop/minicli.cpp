@@ -58,7 +58,7 @@
 #include <kpassdlg.h>
 #include <krun.h>
 #include <kwin.h>
-#include <kdesu/su.h>
+#include <tdesu/su.h>
 #include <kstandarddirs.h>
 #include <kconfig.h>
 #include <kiconloader.h>
@@ -544,7 +544,7 @@ int Minicli::runCommand()
     // through SuProcess without providing the user password
     if (m_iPriority < 50)
     {
-      // from kdesu_stub.c
+      // from tdesu_stub.c
       int val = 20 - (int) (((double) m_iPriority) * 40 / 100 + 0.5);
       cmd = "nice -n " + TQString::number( val ) + " " + cmd;
     }

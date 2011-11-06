@@ -3,7 +3,7 @@ kde_module_LTLIBRARIES = kcm_bell.la
 kcm_bell_la_SOURCES = bell.cpp
 
 kcm_bell_la_LDFLAGS = $(all_libraries) -module -avoid-version -no-undefined
-kcm_bell_la_LIBADD = -lkdeui
+kcm_bell_la_LIBADD = -ltdeui
 
 AM_CPPFLAGS= $(all_includes)
 

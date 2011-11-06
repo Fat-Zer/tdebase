@@ -51,21 +51,21 @@ tde_add_library( ${target} SHARED AUTOMOC
 )
 
 
-##### kate (kdeinit) ############################
+##### kate (tdeinit) ############################
 
 set( target kate )
 
-tde_add_kdeinit_executable( ${target}
+tde_add_tdeinit_executable( ${target}
   SOURCES katemain.cpp
   LINK kateinterfaces-shared
 )
 
 
-##### kwrite (kdeinit) ##########################
+##### kwrite (tdeinit) ##########################
 
 set( target kwrite )
 
-tde_add_kdeinit_executable( ${target} AUTOMOC
+tde_add_tdeinit_executable( ${target} AUTOMOC
   SOURCES kwritemain.cpp
   LINK kateinterfaces-shared katepartinterfaces-shared
 )

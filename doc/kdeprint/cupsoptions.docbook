@@ -2,14 +2,14 @@
 <title>&CUPS; options presently not available through &kcontrol;</title>
 
 <para>This chapter gives you some hints about further configuration
-possibilities which may not be available through the &kdeprint; &GUI;
+possibilities which may not be available through the &tdeprint; &GUI;
 interface to &CUPS;.</para>
 
 <sect1>
 <title>Overview of provided features</title>
 
 <para>All of the most often used features and functions &CUPS; provides
-are supported in &kdeprint;.</para>
+are supported in &tdeprint;.</para>
 
 <itemizedlist>
 <listitem>
@@ -38,13 +38,13 @@ a start. There you find a link to locally available &CUPS; documentation
 in <acronym>HTML</acronym> and <acronym>PDF</acronym> if you are new to
 &CUPS;.</para>
 
-<para>&CUPS; is accessible through other means than &kdeprint;:
+<para>&CUPS; is accessible through other means than &tdeprint;:
 commandline and browser are two native &CUPS; interfaces. The many
 commandline utilities add up to the most complete control you have on
 &CUPS;. The web interface is only a subset of all available
 configuration or control options. </para>
 
-<para>This is also true for &kdeprint;. Generally, as &CUPS; develops,
+<para>This is also true for &tdeprint;. Generally, as &CUPS; develops,
 most new features will first be implemented through the commandline. Be
 sure to check the latest versions of the man pages for &CUPS; to stay
 up-to-date with new features after you install a new version.</para>
@@ -103,7 +103,7 @@ filter (1)        - cups file conversion filter interfaces
 </sect1>
 
 <sect1 id="tips-and-tricks-for-cups">
-<title>Outside &kdeprint;: Hints &amp; Tips Tricks with &CUPS; on the
+<title>Outside &tdeprint;: Hints &amp; Tips Tricks with &CUPS; on the
 Commandline</title>
 
 <para>Here are a few examples of options that are presently only
@@ -288,9 +288,9 @@ handy.</para>
 
 </sect1>
 <sect1 id="troubleshooting-cups">
-<title>Troubleshooting &CUPS; in &kdeprint;</title>
+<title>Troubleshooting &CUPS; in &tdeprint;</title>
 
-<para>This section of the &kdeprint; Handbook will live from the
+<para>This section of the &tdeprint; Handbook will live from the
 readers' feedback. Here is just a small beginning.</para>
 
 <sect2>
@@ -587,7 +587,7 @@ with the name <systemitem class="resource">lp</systemitem>.  Maybe
 printers it sees on the network into a <quote>Class</quote> name lp. All
 jobs destined to lp are sent to this class and the first available
 member prints it. So if you had this nice fellow (who listened closely
-when you raved about &CUPS; and &kdeprint;) install &CUPS; and poke
+when you raved about &CUPS; and &tdeprint;) install &CUPS; and poke
 around the system...get the idea?</para>
 
 <para>Take my advice: choose a unique name for any network printer!

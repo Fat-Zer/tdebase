@@ -32,17 +32,17 @@ install( FILES kmenueditui.rc DESTINATION ${DATA_INSTALL_DIR}/kmenuedit )
 install( FILES kcontroleditui.rc DESTINATION ${DATA_INSTALL_DIR}/kcontroledit )
 
 
-##### kmenuedit (kdeinit) #######################
+##### kmenuedit (tdeinit) #######################
 
-tde_add_kdeinit_executable( kmenuedit AUTOMOC
+tde_add_tdeinit_executable( kmenuedit AUTOMOC
   SOURCES main.cpp
   LINK ${TQT_LIBRARIES} kmenueditcommon-static
 )
 
 
-##### kcontroledit (kdeinit) ####################
+##### kcontroledit (tdeinit) ####################
 
-tde_add_kdeinit_executable( kcontroledit AUTOMOC
+tde_add_tdeinit_executable( kcontroledit AUTOMOC
   SOURCES kcontrol_main.cpp
   LINK ${TQT_LIBRARIES} kmenueditcommon-static
 )

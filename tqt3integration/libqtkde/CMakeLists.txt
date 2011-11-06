@@ -27,7 +27,7 @@ link_directories(
 tde_add_library( qtkde SHARED AUTOMOC
   SOURCES qtkde.cpp
   VERSION 0.0.0
-  LINK kdeui-shared
+  LINK tdeui-shared
   DEPENDENCIES generate_tqt3_bindings
   DESTINATION "${PLUGIN_INSTALL_DIR}/plugins/integration/"
 )

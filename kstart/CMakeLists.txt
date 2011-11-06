@@ -24,6 +24,6 @@ link_directories(
 
 tde_add_executable( kstart AUTOMOC
   SOURCES kstart.cpp
-  LINK kdecore-shared
+  LINK tdecore-shared
   DESTINATION ${BIN_INSTALL_DIR}
 )

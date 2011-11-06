@@ -5,7 +5,7 @@ METASOURCES = AUTO
 bin_PROGRAMS =
 lib_LTLIBRARIES =
 kde_module_LTLIBRARIES = kcm_access.la
-kdeinit_LTLIBRARIES = kaccess.la
+tdeinit_LTLIBRARIES = kaccess.la
 
 kaccess_la_SOURCES = kaccess.cpp main.cpp
 kaccess_la_LDFLAGS = $(all_libraries) -module -avoid-version

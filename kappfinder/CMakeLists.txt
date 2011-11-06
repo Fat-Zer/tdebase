@@ -42,5 +42,5 @@ tde_add_executable( kappfinder AUTOMOC
 
 tde_add_executable( kappfinder_install AUTOMOC
   SOURCES main_install.cpp common.cpp
-  LINK kdeui-shared
+  LINK tdeui-shared
 )

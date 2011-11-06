@@ -40,7 +40,7 @@
 
 #define BUFSIZE 1024
 #define TAGSIZE 32
-#define KDEINITLEN strlen( "kdeinit: " )
+#define KDEINITLEN strlen( "tdeinit: " )
 
 static CONTAINER ProcessList = 0;
 
@@ -287,9 +287,9 @@ static int updateProcess( int pid )
   if ( fclose( fd ) )
     return -1;
 
-  /* Ugly hack to "fix" program name for kdeinit launched programs. */
-  if ( strcmp( ps->name, "kdeinit" ) == 0 &&
-       strncmp( ps->cmdline, "kdeinit: ", KDEINITLEN ) == 0 &&
+  /* Ugly hack to "fix" program name for tdeinit launched programs. */
+  if ( strcmp( ps->name, "tdeinit" ) == 0 &&
+       strncmp( ps->cmdline, "tdeinit: ", KDEINITLEN ) == 0 &&
        strcmp( ps->cmdline + KDEINITLEN, "Running..." ) != 0 ) {
     size_t len;
     char* end = strchr( ps->cmdline + KDEINITLEN, ' ' );

@@ -345,7 +345,7 @@ KDE3.1 -> KDE3.2
 
 0.8.2->0.8.3
 ============
-1. Modified 'kfontinst.kdelnk' so that kdesu is now used - so that a user will automatically be prompted
+1. Modified 'kfontinst.kdelnk' so that tdesu is now used - so that a user will automatically be prompted
    for the root password.
 2. Modified dialogs to use the KDE caption ("Font Installer") instead of the app name ("kfontinst")
 3. Corrected size of Configure dialog.

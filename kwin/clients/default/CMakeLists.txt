@@ -27,6 +27,6 @@ link_directories(
 
 tde_add_kpart( kwin3_default AUTOMOC
   SOURCES kdedefault.cpp
-  LINK kdecorations-shared kdecore-shared
+  LINK tdecorations-shared tdecore-shared
   DESTINATION ${PLUGIN_INSTALL_DIR}
 )

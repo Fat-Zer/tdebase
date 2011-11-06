@@ -116,7 +116,7 @@ extern "C"
 
         if ( scan || firstTime )
         {
-            KApplication::kdeinitExec("nspluginscan");
+            KApplication::tdeinitExec("nspluginscan");
         }
 
         if (firstTime) {

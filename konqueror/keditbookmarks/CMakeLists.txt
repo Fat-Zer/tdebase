@@ -42,7 +42,7 @@ tde_add_executable( ${target}
 )
 
 
-##### keditbookmarks (kdeinit) ##################
+##### keditbookmarks (tdeinit) ##################
 
 set( target keditbookmarks )
 
@@ -56,7 +56,7 @@ set( ${target}_SRCS AUTOMOC
 
 set( KDE3_DCOPIDL_EXECUTABLE ${KDE3_DCOPIDLNG_EXECUTABLE} )
 
-tde_add_kdeinit_executable( ${target} AUTOMOC
+tde_add_tdeinit_executable( ${target} AUTOMOC
   SOURCES ${${target}_SRCS}
   LINK konq-shared
 )

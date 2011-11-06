@@ -30,6 +30,6 @@ install( FILES redmond.desktop DESTINATION ${DATA_INSTALL_DIR}/kwin )
 
 tde_add_kpart( kwin3_redmond AUTOMOC
   SOURCES redmond.cpp
-  LINK kdecorations-shared kdecore-shared
+  LINK tdecorations-shared tdecore-shared
   DESTINATION ${PLUGIN_INSTALL_DIR}
 )

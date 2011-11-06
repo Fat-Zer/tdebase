@@ -2,7 +2,7 @@
  *
  * $Id$
  *
- * This file is part of the KDE project, module kdesu.
+ * This file is part of the KDE project, module tdesu.
  * Copyright (C) 2000 Geert Jansen <jansen@kde.org>
  */
 
@@ -10,7 +10,7 @@
 #define __Passwd_h_Included__
 
 #include <tqcstring.h>
-#include <kdesu/process.h>
+#include <tdesu/process.h>
 
 /**
  * A C++ API to passwd.

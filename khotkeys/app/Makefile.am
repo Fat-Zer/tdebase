@@ -1,6 +1,6 @@
 bin_PROGRAMS =
 lib_LTLIBRARIES =
-kdeinit_LTLIBRARIES = khotkeys.la
+tdeinit_LTLIBRARIES = khotkeys.la
 kde_module_LTLIBRARIES = kded_khotkeys.la
 
 khotkeys_la_SOURCES = app.cpp app.skel

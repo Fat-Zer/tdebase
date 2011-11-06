@@ -1,31 +1,31 @@
-## Makefile.am for kdesud
+## Makefile.am for tdesud
 
 INCLUDES = $(all_includes)
 
 KDE_CXXFLAGS = $(KDE_USE_FPIE)
 
-bin_PROGRAMS = kdesud
-kdesud_SOURCES = kdesud.cpp repo.cpp lexer.cpp handler.cpp secure.cpp 
-kdesud_LDFLAGS = $(KDE_USE_PIE) $(all_libraries) $(KDE_RPATH)
-kdesud_LDADD = $(LIB_KDECORE) -lkdesu $(LIBSOCKET)
+bin_PROGRAMS = tdesud
+tdesud_SOURCES = tdesud.cpp repo.cpp lexer.cpp handler.cpp secure.cpp 
+tdesud_LDFLAGS = $(KDE_USE_PIE) $(all_libraries) $(KDE_RPATH)
+tdesud_LDADD = $(LIB_KDECORE) -ltdesu $(LIBSOCKET)
 noinst_HEADERS = repo.h handler.h lexer.h secure.h
 
-## kdesud needs to be suid or sgid something
+## tdesud needs to be suid or sgid something
 install-data-local:
 	@echo "********************************************************"
 	@echo ""
-	@echo "For security reasons, kdesud is installed setgid nogroup."
+	@echo "For security reasons, tdesud is installed setgid nogroup."
 	@echo "Kdesud is the daemon that implements the password caching."
 	@echo ""
-	@echo "You should NOT use the password caching feature if kdesud is"
+	@echo "You should NOT use the password caching feature if tdesud is"
 	@echo "not installed setgid nogroup."
 	@echo ""
 	@echo "********************************************************"
 
 install-exec-hook: 
-	@(chown root:@nogroup@ $(DESTDIR)$(bindir)/kdesud && chmod 2755  $(DESTDIR)$(bindir)/kdesud) \
-	|| echo "Error: Could not install kdesud as setgid nogroup!!\n" \
+	@(chown root:@nogroup@ $(DESTDIR)$(bindir)/tdesud && chmod 2755  $(DESTDIR)$(bindir)/tdesud) \
+	|| echo "Error: Could not install tdesud as setgid nogroup!!\n" \
 	"The password caching feature is disabled."
 
 messages:
-	$(XGETTEXT) $(kdesud_SOURCES) -o $(podir)/kdesud.pot
+	$(XGETTEXT) $(tdesud_SOURCES) -o $(podir)/tdesud.pot

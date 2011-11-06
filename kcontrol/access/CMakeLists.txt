@@ -36,9 +36,9 @@ tde_add_kpart( kcm_access AUTOMOC
 )
 
 
-##### kaccess (kdeinit) #########################
+##### kaccess (tdeinit) #########################
 
-tde_add_kdeinit_executable( kaccess AUTOMOC
+tde_add_tdeinit_executable( kaccess AUTOMOC
   SOURCES kaccess.cpp main.cpp
-  LINK kdeui-shared
+  LINK tdeui-shared
 )

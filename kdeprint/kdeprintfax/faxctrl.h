@@ -1,5 +1,5 @@
 /*
- *   kdeprintfax - a small fax utility
+ *   tdeprintfax - a small fax utility
  *   Copyright (C) 2001  Michael Goffioul
  *
  *   This program is free software; you can redistribute it and/or modify
@@ -25,7 +25,7 @@
 #include <tqstring.h>
 #include <tqstringlist.h>
 
-#include "kdeprintfax.h"
+#include "tdeprintfax.h"
 
 class KProcess;
 class TQTextEdit;

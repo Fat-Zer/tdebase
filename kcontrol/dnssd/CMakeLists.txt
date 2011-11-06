@@ -31,6 +31,6 @@ set_source_files_properties( kcmdnssd.cpp PROPERTIES COMPILE_FLAGS -DKDE_CONFDIR
 
 tde_add_kpart( kcm_kdnssd AUTOMOC
   SOURCES configdialog.ui kcmdnssd.cpp
-  LINK kdnssd-shared kdeui-shared
+  LINK kdnssd-shared tdeui-shared
   DESTINATION ${PLUGIN_INSTALL_DIR}
 )

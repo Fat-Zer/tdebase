@@ -1,25 +1,25 @@
 <chapter id="technical-overview">
 <title>Technical Overview</title>
 
-<para>This chapter aims to give a technical overview of &kdeprint; which
+<para>This chapter aims to give a technical overview of &tdeprint; which
 non-programmers can comprehend.</para>
 
-<para>&kdeprint; is a new and revolutionary tool to give easy access to
+<para>&tdeprint; is a new and revolutionary tool to give easy access to
 printing services for both &kde; users and &kde; developers.</para>
 
 <sect1 id="brief-description">
-<title>A Brief Description of &kdeprint;</title>
+<title>A Brief Description of &tdeprint;</title>
 
-<para>You can access the functions of &kdeprint; in different ways:
+<para>You can access the functions of &tdeprint; in different ways:
 through the Printing Manger in the &kcontrol;, through the
 <command>kprinter</command> command or through the dialog that pops up
 if you want to print.</para>
 
-<sect2 id="what-kdeprint-is-not">
+<sect2 id="what-tdeprint-is-not">
 <title>What it is <emphasis>not</emphasis></title>
 
-<para>&kdeprint; is <emphasis>not</emphasis> a replacement for the
-printing subsystem itself.  &kdeprint; does <emphasis>not</emphasis>
+<para>&tdeprint; is <emphasis>not</emphasis> a replacement for the
+printing subsystem itself.  &tdeprint; does <emphasis>not</emphasis>
 therefore give provision for spooling, and it does
 <emphasis>not</emphasis> do the basic processing of &PostScript; or
 other print data.</para>
@@ -28,15 +28,15 @@ other print data.</para>
 
 <sect2 id="what-kde-print-is">
 <title>What it <emphasis>is</emphasis></title>
-<para>&kdeprint; is an intermediate layer between the spooling and the
+<para>&tdeprint; is an intermediate layer between the spooling and the
 data processing print subsystem (as installed), and the application that
-seeks to print.  &kdeprint; provides a common interface for &kde;
+seeks to print.  &tdeprint; provides a common interface for &kde;
 developers and &kde; users, to various supported print subsystems.  At
 the same time, it is customizable, and highly configurable.</para>
 
-<para>&kdeprint; is easy to use for both &kde; developers and end-users.
+<para>&tdeprint; is easy to use for both &kde; developers and end-users.
 Developers can port their applications, with minimal changes, to use
-&kdeprint; instead of the old &Qt; print <quote>system</quote>. Users
+&tdeprint; instead of the old &Qt; print <quote>system</quote>. Users
 can easily choose and configure their print subsystem.</para>
 
 <para>For a reference to new &kde; users: &Qt; is the basic library and
@@ -48,24 +48,24 @@ developed by TrollTech, a Norwegian software company.</para>
 </sect1>
 
 <sect1 id="different-users">
-<title>&kdeprint; -- Different Usage for Different People</title>
+<title>&tdeprint; -- Different Usage for Different People</title>
 
-<para>&kdeprint; has different faces for different people.</para>
+<para>&tdeprint; has different faces for different people.</para>
 
 <sect2 id="what-users-can-do">
-<title>What users and administrators can do with &kdeprint;</title>
+<title>What users and administrators can do with &tdeprint;</title>
 
-<para>&kdeprint; allows users and/or administrators, depending on their
+<para>&tdeprint; allows users and/or administrators, depending on their
 rights, access to printing subsystems (&CUPS;, <acronym>LPD</acronym>,
 <acronym>RLPR</acronym>, <application>LPRng</application>,
 <application>PDQ</application> &etc;) through a &kde; graphical user
-interface (&GUI;).  Using &kdeprint;, they can print, administer jobs,
+interface (&GUI;).  Using &tdeprint;, they can print, administer jobs,
 printers and the printing daemon, all in a comfortable manner.</para>
 
 <para>Experienced users will like the capability to plug any working
 filter for the print data between the output of their application and
 the input, into the chosen print subsystem. Some examples for this
-already ship with <quote>plain vanilla</quote> &kdeprint;. Read
+already ship with <quote>plain vanilla</quote> &tdeprint;. Read
 on.</para>
 
 </sect2>
@@ -80,34 +80,34 @@ service was provided by the <classname>QPrinter</classname> class, a
 library function of the &Qt; Toolkit. The
 <classname>QPrinter</classname> class relied on the out-moded
 <quote>Line Printer Daemon</quote> (<acronym>LPD</acronym>). The
-&kdeprint; library bases itself firmly on the more modern Common &UNIX;
+&tdeprint; library bases itself firmly on the more modern Common &UNIX;
 Printing System (&CUPS;), while at the same time keeping backward
 compatibility with <acronym>LPD</acronym> and other legacy, or less
 elaborate, print systems. It also <quote>leaves the door open</quote>
 for any new development that might occur.</para>
 
-<para>For &kde; developers to use the new &kdeprint; class in their
+<para>For &kde; developers to use the new &tdeprint; class in their
 applications, they require only minimal changes to their code: for every
 call of <classname>QPrinter</classname>, they just need to change this to
 <classname>KPrinter</classname>.  Replacing one (!) letter in a few
 spots, and automatically they are done; their application can then use
-all of the features of the new &kdeprint; library.</para>
+all of the features of the new &tdeprint; library.</para>
 
 <para>More ambitious developers, or ones with special requirements, can
-do more: despite &kdeprint;'s feature-rich framework, they are still able
+do more: despite &tdeprint;'s feature-rich framework, they are still able
 to customize the print dialog of their application
 by creating an additional <quote>Tab</quote>, where their
-extensions to the standard &kdeprint; will feel right at home.</para>
+extensions to the standard &tdeprint; will feel right at home.</para>
 
 
 <para>This last mentioned feature has not been used widely inside
-&kde; so far, as developers are not yet fully aware of &kdeprint;'s
+&kde; so far, as developers are not yet fully aware of &tdeprint;'s
 power. Expect more of this in the near future. One example I
 discovered is the &kcron; application. It lets you edit the crontab
 through a &GUI;. The developers have implemented a printing feature
 that lets you (or <systemitem class="username">root</systemitem>)
 choose if you want to print the whole of crontab (for all users) or
-just the part that is marked. You can see the effects on &kdeprint;
+just the part that is marked. You can see the effects on &tdeprint;
 in the following screenshots.</para>
 
 <para>This shot shows a sample from the &kcron; utility.
@@ -127,22 +127,22 @@ cron table or just the marked part of it.</phrase></textobject>
 
 <para>The dialog to configure &kcron;'s printing options: the
 additional tab titled <guilabel>Cron Options</guilabel> is from inside
-&kcron;, not &kdeprint;; it is a special extension added by the
+&kcron;, not &tdeprint;; it is a special extension added by the
 &kcron; developers for printing purposes, not originating from, but
-executed by &kdeprint;. Developers of other applications are free
+executed by &tdeprint;. Developers of other applications are free
 to implement their own goodies, if they feel need for it.</para>
 
 
 <screenshot>
-<screeninfo>&kcron;'s addition to the &kdeprint; dialog.</screeninfo>
+<screeninfo>&kcron;'s addition to the &tdeprint; dialog.</screeninfo>
 <mediaobject>
 <imageobject>
 <imagedata fileref="kprinter_with_kcron_developer_special.png"
 format="PNG"/></imageobject>
 <textobject>
-<phrase>&kcron;'s addition to the &kdeprint; dialog.</phrase></textobject>
+<phrase>&kcron;'s addition to the &tdeprint; dialog.</phrase></textobject>
 <caption>
-<para>&kcron;'s addition to the &kdeprint; dialog.</para>
+<para>&kcron;'s addition to the &tdeprint; dialog.</para>
 </caption>
 </mediaobject>
 </screenshot>
@@ -150,9 +150,9 @@ format="PNG"/></imageobject>
 </sect2>
 
 <sect2>
-<title>What &kdeprint; offers to everybody...</title>
+<title>What &tdeprint; offers to everybody...</title>
 
-<para>&kdeprint;'s easy-to-use interface for all supported print subsystems
+<para>&tdeprint;'s easy-to-use interface for all supported print subsystems
 of course does not eliminate basic traditional weaknesses of some of
 those systems. But it smooths some rough edges.  Different users may use
 different printing systems on the same box. A user is free to even
@@ -169,7 +169,7 @@ working remotely over any distance (like every TCP/IP based protocol),
 <acronym>LPD</acronym> lacks bi-directional communication,
 authentication, access control and encryption support.</para>
 
-<para>&kdeprint; can use &CUPS; to support:</para>
+<para>&tdeprint; can use &CUPS; to support:</para>
 
 <itemizedlist>
 <listitem>
@@ -188,14 +188,14 @@ eavesdropping, or at least make it much more difficult.</para>
 </listitem>
 </itemizedlist>
 
-<para>This makes &kdeprint; a much more robust and reliable solution
+<para>This makes &tdeprint; a much more robust and reliable solution
 than using the venerable <acronym>LPD</acronym>.</para>
 
 </sect2>
 <sect2>
-<title>How to access &kdeprint; </title>
+<title>How to access &tdeprint; </title>
 
-<para>You get access to &kdeprint;, or parts of it, in four different
+<para>You get access to &tdeprint;, or parts of it, in four different
 ways:</para>
 
 <itemizedlist>
@@ -214,14 +214,14 @@ window: this also opens the printing dialog.</para></listitem>
 fileref="kcontrol-icon.png" format="PNG"/></imageobject>
 </inlinemediaobject> button, starting &kcontrol;, and then go to
 <menuchoice><guilabel>System</guilabel><guilabel>Printing
-Manager</guilabel></menuchoice>. This opens the &kdeprint;
+Manager</guilabel></menuchoice>. This opens the &tdeprint;
 administration which is part of the &kcontrolcenter; and also lets
 you switch to other parts of the &kcontrol;</para></listitem>
 
 <listitem><para>from a command line (&konsole; or
 mini-<acronym>CLI</acronym>) type <userinput>
 <command>kcmshell</command> <option>printers</option></userinput>.
-This opens just the &kdeprint; part of &kcontrol; to change your settings
+This opens just the &tdeprint; part of &kcontrol; to change your settings
 </para></listitem>
 </itemizedlist>
 <screenshot>

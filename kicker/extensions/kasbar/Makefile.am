@@ -37,7 +37,7 @@ EXTRA_DIST = $(lnk_DATA)
 
 bin_PROGRAMS = kasbar
 kasbar_SOURCES = kasbarapp.cpp
-kasbar_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_KDECORE) $(LIB_KDEUI) -lkdefx $(LIB_KIO) -lktexteditor
+kasbar_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_KDECORE) $(LIB_KDEUI) -ltdefx $(LIB_KIO) -lktexteditor
 kasbar_LDADD = 	libkasbar.la \
 		$(LIB_QT) $(LIB_KDECORE) $(LIB_KDEUI)
 
@@ -46,7 +46,7 @@ messages:
 	$(XGETTEXT) *.cpp *.h -o $(podir)/kasbarextension.pot
 
 srcdoc:
-	$(kde_bindir)/kdoc -a -p -d classdocs -n 'Kasbar2' ../../taskmanager/*.h *.h -lqt -lkdecore -lkdeui
+	$(kde_bindir)/kdoc -a -p -d classdocs -n 'Kasbar2' ../../taskmanager/*.h *.h -lqt -ltdecore -ltdeui
 
 .PHONY:	changes
 changes:

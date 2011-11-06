@@ -9,4 +9,4 @@
 #
 #################################################
 
-tde_create_handbook( DESTINATION kdeprint )
+tde_create_handbook( DESTINATION tdeprint )

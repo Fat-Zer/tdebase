@@ -37,9 +37,9 @@ install( FILES
   DESTINATION ${DATA_INSTALL_DIR}/khelpcenter )
 
 
-##### khelpcenter (kdeinit) #####################
+##### khelpcenter (tdeinit) #####################
 
-tde_add_kdeinit_executable( khelpcenter AUTOMOC
+tde_add_tdeinit_executable( khelpcenter AUTOMOC
   SOURCES
     navigator.cpp navigatoritem.cpp navigatorappitem.cpp
     view.cpp searchwidget.cpp searchengine.cpp docmetainfo.cpp
@@ -58,6 +58,6 @@ tde_add_kdeinit_executable( khelpcenter AUTOMOC
 
 tde_add_executable( khc_indexbuilder AUTOMOC
   SOURCES khc_indexbuilder.cpp
-  LINK kdecore-shared
+  LINK tdecore-shared
   DESTINATION ${BIN_INSTALL_DIR}
 )

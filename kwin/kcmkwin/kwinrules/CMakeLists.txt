@@ -35,9 +35,9 @@ tde_add_kpart( kcm_kwinrules AUTOMOC
   DESTINATION ${PLUGIN_INSTALL_DIR} )
 
 
-##### kwin_rules_dialog (kdeinit) ###############
+##### kwin_rules_dialog (tdeinit) ###############
 
-tde_add_kdeinit_executable( kwin_rules_dialog
+tde_add_tdeinit_executable( kwin_rules_dialog
   SOURCES main.cpp
   LINK ${TQT_LIBRARIES} kwinrules-static )
 
@@ -53,4 +53,4 @@ set( ${target}_SRCS
 
 tde_add_library( ${target} STATIC_PIC AUTOMOC
   SOURCES ${${target}_SRCS}
-  LINK kdeui-shared )
+  LINK tdeui-shared )

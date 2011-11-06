@@ -4,7 +4,7 @@ Also, the API is documented in the .h header files.
 Makefile.am:
 - Change kwin_ to kwin3_ (in LDFLAGS, LIBADD, kde_module_LTLIBRARIES, SOURCES).
 - Make sure LDFLAGS contains $(KDE_PLUGIN) and -module .
-- Add -lkdecorations to LIBADD.
+- Add -ltdecorations to LIBADD.
 - Do NOT rename the directory where the .desktop file is installed ( $(kde_datadir)/kwin/ ).
 
 .desktop file:

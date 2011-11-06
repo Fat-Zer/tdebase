@@ -34,5 +34,5 @@ install( FILES kcmdisplayrc.upd DESTINATION ${DATA_INSTALL_DIR}/kconf_update )
 
 tde_add_library( krdb STATIC_PIC AUTOMOC
   SOURCES krdb.cpp
-  LINK kdecore-shared
+  LINK tdecore-shared
 )

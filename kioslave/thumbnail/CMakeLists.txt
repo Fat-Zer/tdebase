@@ -96,7 +96,7 @@ set( target djvuthumbnail )
 
 tde_add_kpart( ${target} AUTOMOC
   SOURCES djvucreator.cpp
-  LINK kdecore-shared
+  LINK tdecore-shared
   DESTINATION ${PLUGIN_INSTALL_DIR}
 )
 
@@ -109,7 +109,7 @@ if( WITH_XCURSOR )
 
   tde_add_kpart( ${target} AUTOMOC
     SOURCES cursorcreator.cpp
-    LINK kdecore-shared ${XCURSOR_LIBRARIES}
+    LINK tdecore-shared ${XCURSOR_LIBRARIES}
     DESTINATION ${PLUGIN_INSTALL_DIR}
   )
 
@@ -126,7 +126,7 @@ if( WITH_OPENEXR )
 
   tde_add_kpart( ${target} AUTOMOC
     SOURCES exrcreator.cpp
-    LINK kdecore-shared ${OPENEXR_LIBRARIES}
+    LINK tdecore-shared ${OPENEXR_LIBRARIES}
     DESTINATION ${PLUGIN_INSTALL_DIR}
   )
 

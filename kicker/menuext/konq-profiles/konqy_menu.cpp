@@ -39,10 +39,10 @@ K_EXPORT_KICKER_MENUEXT(konqueror, KonquerorProfilesMenu)
 KonquerorProfilesMenu::KonquerorProfilesMenu(TQWidget *parent, const char *name, const TQStringList & /*args*/)
 : KPanelMenu("", parent, name)
 {
-    static bool kdeprintIconsInitialized = false;
-    if ( !kdeprintIconsInitialized ) {
-        KGlobal::iconLoader()->addAppDir("kdeprint");
-        kdeprintIconsInitialized = true;
+    static bool tdeprintIconsInitialized = false;
+    if ( !tdeprintIconsInitialized ) {
+        KGlobal::iconLoader()->addAppDir("tdeprint");
+        tdeprintIconsInitialized = true;
     }
 }
 
@@ -83,7 +83,7 @@ void KonquerorProfilesMenu::slotExec(int id)
 {
    TQStringList args;
    args<<"--profile"<<m_profiles[id-1];
-   kapp->kdeinitExec("konqueror", args);
+   kapp->tdeinitExec("konqueror", args);
 }
 
 void KonquerorProfilesMenu::reload()

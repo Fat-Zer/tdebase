@@ -13,7 +13,7 @@
 </articleinfo>
 
 <para>The <acronym>print</acronym> KIOSlave gives quick access to browse
-different &kdeprint; sections via <quote>virtual folders</quote>.
+different &tdeprint; sections via <quote>virtual folders</quote>.
 These folders provide some information about and quick access to your print 
 subsystem.</para>
 
@@ -116,7 +116,7 @@ or <userinput>print:printers/printer_name </userinput> </term>
 <term><userinput>print:/manager </userinput> or
 <userinput>print:manager </userinput>
 </term> <listitem>
-<para>opens a page very similar to the &kdeprint;
+<para>opens a page very similar to the &tdeprint;
       Manager module inside the  &kde; Control Center.
       Switch to a different printing system here or do every
       other administrative task. </para>
@@ -157,9 +157,9 @@ or <userinput>print:printers/printer_name </userinput> </term>
  the <quote>Quick Command</quote> utility (started via
 <keycombo action="simul">&Alt;<keycap>F2</keycap></keycombo>)</para></tip>
 
-<para>You can learn more about printing and &kdeprint;'s powerful abilities
-by reading the <ulink url="help:/kdeprint/index.html">&kdeprint; Handbook
-locally</ulink> or at the <ulink url="http://printing.kde.org/">&kdeprint;
+<para>You can learn more about printing and &tdeprint;'s powerful abilities
+by reading the <ulink url="help:/tdeprint/index.html">&tdeprint; Handbook
+locally</ulink> or at the <ulink url="http://printing.kde.org/">&tdeprint;
 Website</ulink> where there are documents online (<acronym>HTML</acronym> and 
 <acronym>PDF</acronym>),containing
 <ulink 

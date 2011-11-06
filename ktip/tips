@@ -348,14 +348,14 @@ the remaining buttons.</P>
 <html>
 <p>
 Need comprehensive info about KDEPrinting?<br> </p>
-<p> Type <strong>help:/kdeprint/</strong> into a Konqueror address field
+<p> Type <strong>help:/tdeprint/</strong> into a Konqueror address field
 and get the
  <a href="http://printing.kde.org/documentation/handbook/">KDEPrint Handbook</a>
 displayed.</p> <p>This, plus more material (like a
  <a href="http://printing.kde.org/faq/">FAQ</a>, various
  <a href="http://printing.kde.org/documentation/tutorials/">Tutorials</a>,
 a "TipsNTricks" section and the
- <a href="http://mail.kde.org/mailman/listinfo/kde-print/">kdeprint mailing list</a>)
+ <a href="http://mail.kde.org/mailman/listinfo/kde-print/">tdeprint mailing list</a>)
  are available at
 <a href="http://printing.kde.org/">printing.kde.org</a>...
 </p>
@@ -534,7 +534,7 @@ and "dragging" it with the mouse.</p><br>
 <p> Then use <strong>'kprinter'</strong> as "print command".
 Works with Netscape, Mozilla, Galeon, gv, Acrobat Reader,
  StarOffice, OpenOffice.org, any GNOME application and many more...</p>
-<p>See <a href="http://printing.kde.org/faq/kdeprint.phtml#out">printing.kde.org</a>
+<p>See <a href="http://printing.kde.org/faq/tdeprint.phtml#out">printing.kde.org</a>
 for more detailed hints...
 </p>
 <center>
@@ -630,7 +630,7 @@ You may specify print files and/or name a printer from the command line:
 <pre>
 kprinter -d infotec \
    /home/kurt/paragliding.jpg \
-   ../kdeprint-handbook.pdf \
+   ../tdeprint-handbook.pdf \
    /opt/trinity/flyer.ps
 </pre>
  This prints 3 different files (from different folders) to printer "infotec".

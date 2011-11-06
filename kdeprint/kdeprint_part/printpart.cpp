@@ -1,6 +1,6 @@
 /*
  *  This file is part of the KDE libraries
- *  Copyright (c) 2001 Michael Goffioul <kdeprint@swing.be>
+ *  Copyright (c) 2001 Michael Goffioul <tdeprint@swing.be>
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Library General Public
@@ -19,8 +19,8 @@
 
 #include "printpart.h"
 
-#include <kdeprint/kmmainview.h>
-#include <kdeprint/kiconselectaction.h>
+#include <tdeprint/kmmainview.h>
+#include <tdeprint/kiconselectaction.h>
 #include <kaction.h>
 #include <klocale.h>
 #include <kinstance.h>
@@ -39,7 +39,7 @@ PrintPart::PrintPart(TQWidget *parentWidget, const char * /*widgetName*/ ,
 : KParts::ReadOnlyPart(parent, name)
 {
 	setInstance(PrintPartFactory::instance());
-    instance()->iconLoader()->addAppDir("kdeprint");
+    instance()->iconLoader()->addAppDir("tdeprint");
 	m_extension = new PrintPartExtension(this);
 
 	m_view = new KMMainView(parentWidget, "MainView", actionCollection());
@@ -56,7 +56,7 @@ PrintPart::~PrintPart()
 
 KAboutData *PrintPart::createAboutData()
 {
-	return new KAboutData(I18N_NOOP("kdeprint_part"), I18N_NOOP("A Konqueror Plugin for Print Management"), "0.1");
+	return new KAboutData(I18N_NOOP("tdeprint_part"), I18N_NOOP("A Konqueror Plugin for Print Management"), "0.1");
 }
 
 bool PrintPart::openFile()
@@ -66,7 +66,7 @@ bool PrintPart::openFile()
 
 void PrintPart::initActions()
 {
-	setXMLFile("kdeprint_part.rc");
+	setXMLFile("tdeprint_part.rc");
 }
 
 PrintPartExtension::PrintPartExtension(PrintPart *parent)

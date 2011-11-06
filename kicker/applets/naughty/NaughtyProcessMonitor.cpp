@@ -254,7 +254,7 @@ NaughtyProcessMonitor::processName(ulong pid) const
       s += char(c);
   }
 
- // Now strip 'kdeinit:' prefix.
+ // Now strip 'tdeinit:' prefix.
   TQString tqunicode(TQString::fromLocal8Bit(s));
 
 #elif defined(__OpenBSD__)
@@ -279,7 +279,7 @@ NaughtyProcessMonitor::processName(ulong pid) const
       return i18n("Unknown") ;
   }
   
- // Now strip 'kdeinit:' prefix.
+ // Now strip 'tdeinit:' prefix.
   TQString tqunicode(TQString::fromLocal8Bit(argv[0]));
 
   free (argv) ;
@@ -287,7 +287,7 @@ NaughtyProcessMonitor::processName(ulong pid) const
 
   TQStringList parts(TQStringList::split(' ', tqunicode));
 
-  TQString processName = parts[0] == "kdeinit:" ? parts[1] : parts[0];
+  TQString processName = parts[0] == "tdeinit:" ? parts[1] : parts[0];
 
   int lastSlash = processName.findRev('/');
 

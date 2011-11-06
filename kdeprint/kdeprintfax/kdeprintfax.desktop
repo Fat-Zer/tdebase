@@ -90,8 +90,8 @@ GenericName[zh_TW]=傳真工具
 GenericName[zu]=Isisebenzi se-Fax
 
 Type=Application
-Exec=kdeprintfax -caption "%c" %i %m %u
-Icon=kdeprintfax
+Exec=tdeprintfax -caption "%c" %i %m %u
+Icon=tdeprintfax
 Terminal=false
 X-DCOP-ServiceType=Multi
 Categories=Qt;KDE;Utility;X-KDE-Utilities-Peripherals;

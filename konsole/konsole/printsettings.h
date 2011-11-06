@@ -1,6 +1,6 @@
 /*
  *  This file is part of the KDE libraries
- *  Copyright (c) 2002 Michael Goffioul <kdeprint@swing.be>
+ *  Copyright (c) 2002 Michael Goffioul <tdeprint@swing.be>
  *  Copyright (c) 2003 Waldo Bastian <bastian@kde.org>
  *
  *  This library is free software; you can redistribute it and/or
@@ -21,7 +21,7 @@
 #ifndef PRINTSETTINGS_H
 #define PRINTSETTINGS_H
 
-#include <kdeprint/kprintdialogpage.h>
+#include <tdeprint/kprintdialogpage.h>
 
 class TQCheckBox;
 

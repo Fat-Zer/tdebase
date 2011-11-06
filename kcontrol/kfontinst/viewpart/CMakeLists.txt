@@ -51,5 +51,5 @@ tde_add_executable( kfontview AUTOMOC
 
 tde_add_library( kfontinstprint STATIC_PIC
   SOURCES KfiPrint.cpp
-  LINK kdeprint-shared
+  LINK tdeprint-shared
 )

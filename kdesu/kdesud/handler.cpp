@@ -1,8 +1,8 @@
 /*
- * This file is part of the KDE project, module kdesu.
+ * This file is part of the KDE project, module tdesu.
  * Copyright (C) 1999,2000 Geert Jansen <jansen@kde.org>
  *
- * handler.cpp: A connection handler for kdesud.
+ * handler.cpp: A connection handler for tdesud.
  */
 
 
@@ -21,8 +21,8 @@
 #include <tqcstring.h>
 
 #include <kdebug.h>
-#include <kdesu/su.h>
-#include <kdesu/ssh.h>
+#include <tdesu/su.h>
+#include <tdesu/ssh.h>
 
 #include "handler.h"
 #include "repo.h"
@@ -32,7 +32,7 @@
 
 // Global repository
 extern Repository *repo;
-void kdesud_cleanup();
+void tdesud_cleanup();
 
 ConnectionHandler::ConnectionHandler(int fd)
         : SocketSecurity(fd), m_exitCode(0), m_hasExitCode(false), m_needExitCode(false), m_pid(0)
@@ -490,7 +490,7 @@ int ConnectionHandler::doCommand(TQCString buf)
             goto parse_error;
         kdDebug(1205) << "Stopping by command" << endl;
         respond(Res_OK);
-        kdesud_cleanup();
+        tdesud_cleanup();
         exit(0);
 
     default:

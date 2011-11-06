@@ -128,7 +128,7 @@
 
 </sect1>
 
-<sect1 id="base-applications-kdepim">
+<sect1 id="base-applications-tdepim">
 <sect1info>
 <authorgroup>
 <author>
@@ -229,7 +229,7 @@
 
 <itemizedlist>
 <title>Related Information</title>
-	<listitem><para>See <ulink url="http://kontact.kde.org">http://kontact.kde.org</ulink> and <ulink url="http://kdepim.kde.org">http://kdepim.kde.org</ulink> for more information.</para></listitem>
+	<listitem><para>See <ulink url="http://kontact.kde.org">http://kontact.kde.org</ulink> and <ulink url="http://tdepim.kde.org">http://tdepim.kde.org</ulink> for more information.</para></listitem>
 	<listitem><para><ulink url="help:kontact">&kontact; Handbook</ulink></para></listitem>
 </itemizedlist>
 

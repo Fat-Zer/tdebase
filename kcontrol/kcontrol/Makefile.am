@@ -24,7 +24,7 @@ SUBDIRS = . about
 
 bin_PROGRAMS =
 lib_LTLIBRARIES =
-kdeinit_LTLIBRARIES = kcontrol.la
+tdeinit_LTLIBRARIES = kcontrol.la
 
 kcontrol_la_SOURCES = main.cpp toplevel.cpp indexwidget.cpp \
 	helpwidget.cpp dockcontainer.cpp aboutwidget.cpp \

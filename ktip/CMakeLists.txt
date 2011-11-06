@@ -35,6 +35,6 @@ install( FILES tips DESTINATION ${DATA_INSTALL_DIR}/kdewizard )
 
 tde_add_executable( ktip AUTOMOC
   SOURCES ktipwindow.cpp
-  LINK kdeui-shared
+  LINK tdeui-shared
   DESTINATION ${BIN_INSTALL_DIR}
 )

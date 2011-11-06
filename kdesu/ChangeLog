@@ -8,7 +8,7 @@ Wed, 26 Jan 00    Geert Jansen <g.t.jansen@stud.tue.nl>
 Sat, 18 Dec 99    Geert Jansen <g.t.jansen@stud.tue.nl>
 
     * Add DCOP authentication cookies.
-    * Fixed SMP install of kdesud.
+    * Fixed SMP install of tdesud.
 
 Sat, 23 Oct 99    Geert Jansen <g.t.jansen@stud.tue.nl>
 
@@ -17,14 +17,14 @@ Sat, 23 Oct 99    Geert Jansen <g.t.jansen@stud.tue.nl>
 
 Tue, 28 Sep 99    Geert Jansen <g.t.jansen@stud.tue.nl>
 
-    * Integrating kdesu into kdebase
+    * Integrating tdesu into kdebase
 
 Sat, 25 Sep 99    Geert Jansen <g.t.jansen@stud.tue.nl>
 
     * BIG change: su to other user than root. This required a different way
       to pass X cookies and stuff to the target process. See
-      common/kdesu_stub.c for more info.
-    * Fixed a bug in kdesud/lexer.cpp
+      common/tdesu_stub.c for more info.
+    * Fixed a bug in tdesud/lexer.cpp
 
 Thu, 23 Sep 99    Geert Jansen <g.t.jansen@stud.tue.nl>
 
@@ -32,7 +32,7 @@ Thu, 23 Sep 99    Geert Jansen <g.t.jansen@stud.tue.nl>
     * The execution of processes is more efficient now: 2 processess instead
       of 3 and 1 tempfile instead of 2. This way possible by setting the
       XAUTHORITY env. var. to $HOME/.Xauthority instead of making a new one.
-    * Fixed a subtle bug in kdesud. kdesud catches SIGCHLD to handle child
+    * Fixed a subtle bug in tdesud. tdesud catches SIGCHLD to handle child
       exits but this is incompatible with "class RootProcess", which does a
       waitpid() and depends on getting the exit code.
     * Only connect to daemon when necessary.
@@ -46,11 +46,11 @@ Wed, 22 Sep 99    Geert Jansen <g.t.jansen@stud.tue.nl>
 
 Wed, 8 Sep 99    Geert Jansen <g.t.jansen@stud.tue.nl>
 
-    * If started as root, kdesu does not ask for a password anymore.
+    * If started as root, tdesu does not ask for a password anymore.
 
 Wed, 1 Sep 99    Geert Jansen <g.t.jansen@stud.tue.nl>
 
-    * Deferred instantiation of kapp in kdesu.cpp.
+    * Deferred instantiation of kapp in tdesu.cpp.
     * Finished porting to KDE2.
 
 Sun, 29 Aug 99    Geert Jansen <g.t.jansen@stud.tue.nl>
@@ -114,7 +114,7 @@ Thu, 20 May 99    Geert Jansen <g.t.jansen@stud.tue.nl>
 
 Fri, 09 Apr 99    Geert Jansen <g.t.jansen@stud.tue.nl>
 
-    * Backport to KDE 1.1. Release as kdesu-0.9.tar.gz
+    * Backport to KDE 1.1. Release as tdesu-0.9.tar.gz
 
 Mon, 22 Mar 99    Geert Jansen <g.t.jansen@stud.tue.nl>
 

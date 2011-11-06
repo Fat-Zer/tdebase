@@ -28,6 +28,6 @@ install( FILES katesessionmenu.desktop DESTINATION ${DATA_INSTALL_DIR}/kicker/me
 
 tde_add_kpart( kickermenu_kate AUTOMOC
   SOURCES katesessionmenu.cpp
-  LINK kdeui-shared
+  LINK tdeui-shared
   DESTINATION ${PLUGIN_INSTALL_DIR}
 )

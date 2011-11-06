@@ -2,7 +2,7 @@ kde_module_LTLIBRARIES = kcm_taskbar.la
 
 kcm_taskbar_la_SOURCES = kcmtaskbarui.ui kcmtaskbar.cpp
 kcm_taskbar_la_LDFLAGS  = $(all_libraries) -module -avoid-version -no-undefined
-kcm_taskbar_la_LIBADD = $(top_builddir)/kicker/taskbar/libtaskbar.la -lkdeui
+kcm_taskbar_la_LIBADD = $(top_builddir)/kicker/taskbar/libtaskbar.la -ltdeui
 AM_CPPFLAGS = -I$(top_builddir)/kicker/taskbar $(all_includes) 
 
 METASOURCES = AUTO

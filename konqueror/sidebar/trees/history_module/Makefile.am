@@ -11,6 +11,6 @@ konq_sidebartree_history_la_LIBADD =  ../../libkonqsidebarplugin.la ../libkonq_s
 
 kcm_history_la_SOURCES = kcmhistory.cpp history_dlg.ui history_settings.cpp history_settings.skel
 kcm_history_la_LDFLAGS = $(all_libraries) -module -avoid-version -no-undefined
-kcm_history_la_LIBADD = -lkdeui $(top_builddir)/libkonq/libkonq.la
+kcm_history_la_LIBADD = -ltdeui $(top_builddir)/libkonq/libkonq.la
 
 xdg_apps_DATA = kcmhistory.desktop

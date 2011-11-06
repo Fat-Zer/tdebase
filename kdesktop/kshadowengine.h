@@ -80,7 +80,7 @@ class KShadowEngine
 		TQImage makeShadow(const TQPixmap& textPixmap, const TQColor &bgColor);
 
 	private:
-		// No static objects in libs, and no static deleters in kdefx...
+		// No static objects in libs, and no static deleters in tdefx...
 		//static KShadowSettings s_defaultShadowSettings;
 
 		KShadowSettings *m_shadowSettings;

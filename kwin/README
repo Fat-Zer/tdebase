@@ -116,7 +116,7 @@ was meant for the previously active window.
  The basic principle of focus stealing prevention is that the window with most
 recent user activity wins. Any window of an application will become active
 when being shown only if this application was the most recently used one.
-KWin itself, and some of the related kdecore classes should take care
+KWin itself, and some of the related tdecore classes should take care
 of the common cases, so usually there's no need for any special handling
 in applications. Qt/KDE applications, that is. Applications using other
 toolkits should in most cases work fine too. If they don't support

@@ -9,4 +9,4 @@
 #
 #################################################
 
-tde_create_handbook( DESTINATION kdesu )
+tde_create_handbook( DESTINATION tdesu )

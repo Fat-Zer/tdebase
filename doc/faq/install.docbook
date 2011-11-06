@@ -167,7 +167,7 @@ server.</para>
 </listitem>
 </varlistentry>
 <varlistentry>
-<term>kdegames</term>
+<term>tdegames</term>
 <listitem>
 <para>Optional</para>
 <para>Various games like &kmahjongg;, &ksnake;, &kasteroids;, and
@@ -206,7 +206,7 @@ download manager &kget;, and several other network-related programs.</para>
 </listitem>
 </varlistentry>
 <varlistentry>
-<term>kdepim</term>
+<term>tdepim</term>
 <listitem>
 <para>Optional</para>
 <para>Personal information management tools. Contains the email client &kmail;, the newsreader &knode; and other related programs.</para>

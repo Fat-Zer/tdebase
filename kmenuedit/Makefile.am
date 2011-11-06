@@ -2,7 +2,7 @@ INCLUDES = $(all_includes)
 
 bin_PROGRAMS =
 lib_LTLIBRARIES =
-kdeinit_LTLIBRARIES = kmenuedit.la kcontroledit.la
+tdeinit_LTLIBRARIES = kmenuedit.la kcontroledit.la
 
 noinst_LTLIBRARIES = libkmenueditcommon.la
 

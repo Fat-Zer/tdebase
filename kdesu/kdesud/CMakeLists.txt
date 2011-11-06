@@ -23,13 +23,13 @@ link_directories(
 )
 
 
-##### kdesud (executable) #######################
+##### tdesud (executable) #######################
 
-tde_add_executable( kdesud
-  SOURCES kdesud.cpp repo.cpp lexer.cpp handler.cpp secure.cpp
-  LINK kdesu-shared
+tde_add_executable( tdesud
+  SOURCES tdesud.cpp repo.cpp lexer.cpp handler.cpp secure.cpp
+  LINK tdesu-shared
   DESTINATION ${BIN_INSTALL_DIR}
 )
 
-install( CODE "execute_process( COMMAND chown root:${nogroup} \$ENV{DESTDIR}${_destination}/kdesud )" )
-install( CODE "execute_process( COMMAND chmod 2755 \$ENV{DESTDIR}${_destination}/kdesud )" )
+install( CODE "execute_process( COMMAND chown root:${nogroup} \$ENV{DESTDIR}${_destination}/tdesud )" )
+install( CODE "execute_process( COMMAND chmod 2755 \$ENV{DESTDIR}${_destination}/tdesud )" )

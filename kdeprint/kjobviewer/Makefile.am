@@ -4,11 +4,11 @@ INCLUDES = $(all_includes)
 
 bin_PROGRAMS=
 lib_LTLIBRARIES=
-kdeinit_LTLIBRARIES = kjobviewer.la
+tdeinit_LTLIBRARIES = kjobviewer.la
 
 kjobviewer_la_SOURCES = kjobviewer.cpp main.cpp
 kjobviewer_la_METASOURCES = AUTO
-kjobviewer_la_LIBADD = -lkdeprint_management $(LIB_KDEUI)
+kjobviewer_la_LIBADD = -ltdeprint_management $(LIB_KDEUI)
 kjobviewer_la_LDFLAGS = -module -avoid-version $(all_libraries) $(KDE_RPATH)
 
 noinst_HEADERS = kjobviewer.h

@@ -1,6 +1,6 @@
 /* vi: ts=8 sts=4 sw=4
  *
- * This file is part of the KDE project, module kdesu.
+ * This file is part of the KDE project, module tdesu.
  * Copyright (C) 1998 Pietro Iglio <iglio@fub.it>
  * Copyright (C) 1999,2000 Geert Jansen <jansen@kde.org>
  */
@@ -39,9 +39,9 @@
 #include <krun.h>
 #include <kuser.h>
 
-#include <kdesu/defaults.h>
-#include <kdesu/su.h>
-#include <kdesu/client.h>
+#include <tdesu/defaults.h>
+#include <tdesu/su.h>
+#include <tdesu/client.h>
 
 #include "sudlg.h"
 
@@ -96,7 +96,7 @@ int main(int argc, char *argv[])
     if (duser && duser[0])
         options[3].def = duser;
 
-    KAboutData aboutData("kdesu", I18N_NOOP("KDE su"),
+    KAboutData aboutData("tdesu", I18N_NOOP("KDE su"),
             Version, I18N_NOOP("Runs a program with elevated privileges."),
             KAboutData::License_Artistic,
             "Copyright (c) 1998-2000 Geert Jansen, Pietro Iglio");
@@ -108,7 +108,7 @@ int main(int argc, char *argv[])
     KCmdLineArgs::init(argc, argv, &aboutData);
     KCmdLineArgs::addCmdLineOptions(options);
     KApplication::disableAutoDcopRegistration();
-    // kdesu doesn't process SM events, so don't even connect to ksmserver
+    // tdesu doesn't process SM events, so don't even connect to ksmserver
     TQCString session_manager = getenv( "SESSION_MANAGER" );
     unsetenv( "SESSION_MANAGER" );
     KApplication app;
@@ -272,7 +272,7 @@ static int startApp()
         just_started = true;
     }
 
-    // Try to exec the command with kdesud.
+    // Try to exec the command with tdesud.
     bool keep = !args->isSet("n") && have_daemon;
     bool terminal = true;
     bool new_dcop = args->isSet("newdcop");

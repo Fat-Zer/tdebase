@@ -5,7 +5,7 @@ SUBDIRS = core interfaces ui buttons .
 
 bin_PROGRAMS =
 lib_LTLIBRARIES =
-kdeinit_LTLIBRARIES = kicker.la
+tdeinit_LTLIBRARIES = kicker.la
 
 CLEANFILES = dummy.cpp
 

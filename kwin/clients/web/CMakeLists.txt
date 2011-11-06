@@ -29,6 +29,6 @@ install( FILES web.desktop DESTINATION ${DATA_INSTALL_DIR}/kwin )
 
 tde_add_kpart( kwin3_web AUTOMOC
   SOURCES Web.cpp WebButton.cpp
-  LINK kdecorations-shared kdeui-shared
+  LINK tdecorations-shared tdeui-shared
   DESTINATION ${PLUGIN_INSTALL_DIR}
 )

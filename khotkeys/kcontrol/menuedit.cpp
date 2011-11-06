@@ -194,7 +194,7 @@ void khotkeys_send_reread_config()
     if( !kapp->dcopClient()->isApplicationRegistered( "khotkeys" ))
         {
         kdDebug( 1217 ) << "launching new khotkeys daemon" << endl;
-        KApplication::kdeinitExec( "khotkeys" );
+        KApplication::tdeinitExec( "khotkeys" );
         }
     else
         {

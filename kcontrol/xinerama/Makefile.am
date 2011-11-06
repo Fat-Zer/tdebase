@@ -5,7 +5,7 @@ kde_module_LTLIBRARIES = kcm_xinerama.la
 kcm_xinerama_la_SOURCES = kcmxinerama.cpp xineramawidget.ui
 
 kcm_xinerama_la_LDFLAGS  = $(all_libraries) -module -avoid-version -no-undefined
-kcm_xinerama_la_LIBADD = -lkdeui
+kcm_xinerama_la_LIBADD = -ltdeui
 
 METASOURCES = AUTO 
 

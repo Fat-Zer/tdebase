@@ -31,6 +31,6 @@ install( FILES modernsystem.desktop DESTINATION ${DATA_INSTALL_DIR}/kwin )
 
 tde_add_kpart( kwin3_modernsys
   SOURCES modernsys.cpp
-  LINK kdecorations-shared
+  LINK tdecorations-shared
   DESTINATION ${PLUGIN_INSTALL_DIR}
 )

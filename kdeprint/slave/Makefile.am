@@ -7,7 +7,7 @@ INCLUDES= $(all_includes)
 kde_module_LTLIBRARIES = kio_print.la
 
 kio_print_la_SOURCES = kio_print.cpp
-kio_print_la_LIBADD = $(LIB_KIO) -lkdeprint
+kio_print_la_LIBADD = $(LIB_KIO) -ltdeprint
 kio_print_la_LDFLAGS = $(all_libraries) -module $(KDE_PLUGIN)
 
 METASOURCES = AUTO

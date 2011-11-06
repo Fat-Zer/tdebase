@@ -38,6 +38,6 @@ tde_add_library( ksgrd SHARED AUTOMOC
     SensorShellAgent.cc SensorSocketAgent.cc StyleEngine.cc
     StyleSettings.cc TimerSettings.cc
   VERSION 1.2.0
-  LINK kdeui-shared
+  LINK tdeui-shared
   DESTINATION ${LIB_INSTALL_DIR}
 )

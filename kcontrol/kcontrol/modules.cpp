@@ -168,10 +168,10 @@ void ConfigModule::runAsRoot()
   // prepare the process to run the kcmshell
   TQString cmd = service()->exec().stripWhiteSpace();
   bool kdeshell = false;
-  if (cmd.left(5) == "kdesu")
+  if (cmd.left(5) == "tdesu")
     {
       cmd = TQString(cmd.remove(0,5)).stripWhiteSpace();
-      // remove all kdesu switches
+      // remove all tdesu switches
       while( cmd.length() > 1 && cmd[ 0 ] == '-' )
         {
           int pos = cmd.find( ' ' );
@@ -186,14 +186,14 @@ void ConfigModule::runAsRoot()
     }
 
   // run the process
-  TQString kdesu = KStandardDirs::findExe("kdesu");
-  if (!kdesu.isEmpty())
+  TQString tdesu = KStandardDirs::findExe("tdesu");
+  if (!tdesu.isEmpty())
     {
       _rootProcess = new KProcess;
-      *_rootProcess << kdesu;
+      *_rootProcess << tdesu;
       *_rootProcess << "--nonewdcop";
       // We have to disable the keep-password feature because
-      // in that case the modules is started through kdesud and kdesu
+      // in that case the modules is started through tdesud and tdesu
       // returns before the module is running and that doesn't work.
       // We also don't have a way to close the module in that case.
       *_rootProcess << "--n"; // Don't keep password.

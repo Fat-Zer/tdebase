@@ -324,7 +324,7 @@ void LayoutConfig::save()
 
 	m_kxkbConfig.save();
 	
-	kapp->kdeinitExec("kxkb");
+	kapp->tdeinitExec("kxkb");
 	emit KCModule::changed( false );
 }
 

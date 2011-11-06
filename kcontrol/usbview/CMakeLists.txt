@@ -37,6 +37,6 @@ endif( )
 tde_add_kpart( kcm_usb AUTOMOC
   SOURCES
     kcmusb.cpp usbdevices.cpp usbdb.cpp
-  LINK kdeui-shared
+  LINK tdeui-shared
   DESTINATION ${PLUGIN_INSTALL_DIR}
 )

@@ -39,7 +39,7 @@ mkinstalldirs	= $(SHELL) $(top_srcdir)/mkinstalldirs
 APPSDIR 	= $(kde_appsdir)/Utilities
 INCLUDES	= $(all_includes)
 TARGET		= khexdit
-LIBS		= -lkfm -lkdeui -lkdecore -lqt -lX11 -lXext $(LIBSOCKET)
+LIBS		= -lkfm -ltdeui -ltdecore -lqt -lX11 -lXext $(LIBSOCKET)
 LDFLAGS		+= $(all_libraries)
 
 # rules to make .o files

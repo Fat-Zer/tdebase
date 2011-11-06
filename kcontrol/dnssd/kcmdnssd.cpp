@@ -97,7 +97,7 @@ void KCMDnssd::save()
 
 	  KProcess *proc = new KProcess;
 
-	  *proc << "kdesu";
+	  *proc << "tdesu";
 
 	  if (enableZeroconf->isChecked()) {
 	    if (KMessageBox::warningYesNo( this, scaryMessage, i18n("Enable Zeroconf Network Browsing"), KGuiItem(i18n("Enable Browsing")), KGuiItem(i18n("Don't Enable Browsing")) ) == KMessageBox::Yes) {	    

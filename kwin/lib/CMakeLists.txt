@@ -21,9 +21,9 @@ link_directories(
 )
 
 
-##### kdecorations (shared) #####################
+##### tdecorations (shared) #####################
 
-set( target kdecorations )
+set( target tdecorations )
 
 set( ${target}_SRCS
   kdecoration.cpp kdecoration_p.cpp kdecoration_plugins_p.cpp
@@ -33,7 +33,7 @@ set( ${target}_SRCS
 tde_add_library( ${target} SHARED AUTOMOC
   SOURCES ${${target}_SRCS}
   VERSION 1.0.0
-  LINK kdecore-shared
+  LINK tdecore-shared
   DESTINATION ${LIB_INSTALL_DIR}
 )
 

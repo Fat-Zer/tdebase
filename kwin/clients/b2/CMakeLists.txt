@@ -32,6 +32,6 @@ install( FILES b2.desktop DESTINATION ${DATA_INSTALL_DIR}/kwin )
 
 tde_add_kpart( kwin3_b2 AUTOMOC
   SOURCES b2client.cpp
-  LINK kdecorations-shared
+  LINK tdecorations-shared
   DESTINATION ${PLUGIN_INSTALL_DIR}
 )

@@ -36,6 +36,6 @@ set( ${target}_SRCS
 
 tde_add_kpart( ${target} AUTOMOC
   SOURCES ${${target}_SRCS}
-  LINK kdeinit_kded-shared
+  LINK tdeinit_kded-shared
   DESTINATION ${PLUGIN_INSTALL_DIR}
 )

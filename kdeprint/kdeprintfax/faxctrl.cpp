@@ -1,5 +1,5 @@
 /*
- *   kdeprintfax - a small fax utility
+ *   tdeprintfax - a small fax utility
  *   Copyright (C) 2001  Michael Goffioul
  *
  *   This program is free software; you can redistribute it and/or modify
@@ -19,7 +19,7 @@
  */
 
 #include "faxctrl.h"
-#include "kdeprintfax.h"
+#include "tdeprintfax.h"
 #include "defcmds.h"
 
 #include <ktextedit.h>
@@ -486,11 +486,11 @@ void FaxCtrl::filter()
 		}
 		else
 		{
-			TQString	tmp = locateLocal("tmp","kdeprintfax_") + kapp->randomString(8);
+			TQString	tmp = locateLocal("tmp","tdeprintfax_") + kapp->randomString(8);
 			m_filteredfiles.prepend(tmp);
 			m_tempfiles.append(tmp);
 			m_process->clearArguments();
-			*m_process << locate("data","kdeprintfax/anytops") << "-m" << KProcess::quote(locate("data","kdeprintfax/faxfilters"))
+			*m_process << locate("data","tdeprintfax/anytops") << "-m" << KProcess::quote(locate("data","tdeprintfax/faxfilters"))
 				<< TQString::tqfromLatin1("--mime=%1").arg(mimeType)
 				<< "-p" << pageSize()
 				<<  KProcess::quote(m_files[0]) << KProcess::quote(tmp);

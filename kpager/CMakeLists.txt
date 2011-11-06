@@ -35,6 +35,6 @@ tde_add_executable( kpager AUTOMOC
   SOURCES
     desktop.cpp kpager.cpp config.cpp windowdrag.cpp
     kpagerIface.skel main.cpp
-  LINK kdeui-shared
+  LINK tdeui-shared
   DESTINATION ${BIN_INSTALL_DIR}
 )

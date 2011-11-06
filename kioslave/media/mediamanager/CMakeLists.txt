@@ -47,7 +47,7 @@ if( WITH_HAL )
 
   tde_add_kpart( ${target} AUTOMOC
     SOURCES ${${target}_SRCS}
-    LINK mediacommon-static kdeinit_kded-shared ${HAL_LIBRARIES} -lhal-storage ${DBUS_TQT_LIBRARIES}
+    LINK mediacommon-static tdeinit_kded-shared ${HAL_LIBRARIES} -lhal-storage ${DBUS_TQT_LIBRARIES}
     DESTINATION ${PLUGIN_INSTALL_DIR}
   )
 else( )
@@ -59,7 +59,7 @@ else( )
 
   tde_add_kpart( ${target} AUTOMOC
     SOURCES ${${target}_SRCS}
-    LINK mediacommon-static kdeinit_kded-shared
+    LINK mediacommon-static tdeinit_kded-shared
     DESTINATION ${PLUGIN_INSTALL_DIR}
   )
 endif( )

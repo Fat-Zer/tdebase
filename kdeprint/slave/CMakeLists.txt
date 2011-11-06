@@ -34,6 +34,6 @@ install( FILES print.protocol printdb.protocol DESTINATION ${SERVICES_INSTALL_DI
 
 tde_add_kpart( kio_print AUTOMOC
   SOURCES kio_print.cpp
-  LINK kdeprint-shared
+  LINK tdeprint-shared
   DESTINATION ${PLUGIN_INSTALL_DIR}
 )

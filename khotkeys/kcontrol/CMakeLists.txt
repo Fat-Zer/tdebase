@@ -53,6 +53,6 @@ tde_add_kpart( kcm_khotkeys AUTOMOC
 
 tde_add_kpart( kcm_khotkeys_init AUTOMOC
   SOURCES init.cpp
-  LINK kdecore-shared
+  LINK tdecore-shared
   DESTINATION ${PLUGIN_INSTALL_DIR}
 )

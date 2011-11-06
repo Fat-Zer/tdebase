@@ -143,7 +143,7 @@ void KateSessionMenu::slotExec( int id )
   else if ( id > 2 )
     args << m_sessions[ id-3 ];
 
-  kapp->kdeinitExec("kate", args);
+  kapp->tdeinitExec("kate", args);
 }
 
 

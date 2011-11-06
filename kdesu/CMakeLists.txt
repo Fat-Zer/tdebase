@@ -49,5 +49,5 @@ else()
   set( DEFAULT_SUPER_USER_COMMAND su CACHE INTERNAL "" FORCE )
 endif()
 
-add_subdirectory( kdesu )
-add_subdirectory( kdesud )
+add_subdirectory( tdesu )
+add_subdirectory( tdesud )

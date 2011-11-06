@@ -38,6 +38,6 @@ install( FILES ksplashplugins.desktop DESTINATION ${SERVICETYPES_INSTALL_DIR} )
 tde_add_library( ksplashthemes SHARED AUTOMOC
   SOURCES themeengine.cpp objkstheme.cpp
   VERSION 0.0.0
-  LINK kdeui-shared
+  LINK tdeui-shared
   DESTINATION ${LIB_INSTALL_DIR}
 )

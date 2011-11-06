@@ -17,7 +17,7 @@
 #  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 # 
 
-kdeinit_LTLIBRARIES = kcminit.la kcminit_startup.la
+tdeinit_LTLIBRARIES = kcminit.la kcminit_startup.la
 bin_PROGRAMS=
 lib_LTLIBRARIES=
 

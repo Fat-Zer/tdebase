@@ -10,5 +10,5 @@
 #################################################
 
 tde_create_handbook(
-  FILES checkxrefs index.docbook kdeprintingglossary.docbook
+  FILES checkxrefs index.docbook tdeprintingglossary.docbook
   DESTINATION khelpcenter/glossary )

@@ -31,7 +31,7 @@ install( FILES krandrtray-autostart.desktop DESTINATION ${AUTOSTART_INSTALL_DIR}
 
 tde_add_kpart( kcm_randr AUTOMOC
   SOURCES krandrmodule.cpp
-  LINK kdeui-shared krandr-shared
+  LINK tdeui-shared krandr-shared
   DESTINATION ${PLUGIN_INSTALL_DIR}
 )
 

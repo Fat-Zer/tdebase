@@ -21,10 +21,10 @@ link_directories(
 )
 
 
-##### kdesu (executable) ########################
+##### tdesu (executable) ########################
 
-tde_add_executable( kdesu AUTOMOC
-  SOURCES kdesu.cpp sudlg.cpp
-  LINK kdesu-shared kio-shared
+tde_add_executable( tdesu AUTOMOC
+  SOURCES tdesu.cpp sudlg.cpp
+  LINK tdesu-shared kio-shared
   DESTINATION ${BIN_INSTALL_DIR}
 )

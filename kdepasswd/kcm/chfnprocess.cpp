@@ -18,7 +18,7 @@
 
 #include <tqcstring.h>
 
-#include <kdesu/process.h>
+#include <tdesu/process.h>
 #include <kdebug.h>
 #include <kdebug.h>
 #include "chfnprocess.h"

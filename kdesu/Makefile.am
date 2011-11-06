@@ -1,1 +1,1 @@
-SUBDIRS = kdesu kdesud
+SUBDIRS = tdesu tdesud

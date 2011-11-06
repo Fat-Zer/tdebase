@@ -28,6 +28,6 @@ install( FILES  DESTINATION ${XDG_APPS_INSTALL_DIR} )
 
 tde_add_kpart( kwin_plastik_config AUTOMOC
   SOURCES config.cpp configdialog.ui
-  LINK kdeui-shared
+  LINK tdeui-shared
   DESTINATION ${PLUGIN_INSTALL_DIR}
 )

@@ -19,7 +19,7 @@ url="http://www.konqueror.org">http://www.konqueror.org</ulink> where a
 
 <qandaentry>
 <question><para>Can I run &konqueror; without running &kde;?</para></question>
-<answer><para>Yes. Just install &Qt;, kdelibs and kdebase, and from your favorite window manager just launch &konqueror;. It should work just fine, but if it doesn't (&kde; developers don't test that case often), report it to http://bugs.kde.org and try running "kdeinit" before running &konqueror;, it usually helps. 
+<answer><para>Yes. Just install &Qt;, kdelibs and kdebase, and from your favorite window manager just launch &konqueror;. It should work just fine, but if it doesn't (&kde; developers don't test that case often), report it to http://bugs.kde.org and try running "tdeinit" before running &konqueror;, it usually helps. 
 This is of course the same for any other &kde; application. </para>
 </answer>
 </qandaentry>

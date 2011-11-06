@@ -50,13 +50,13 @@ libraries. Here is an overview of the directories:
 * kdebugdialog
     Allows you to specify which debug messages you want to see.
 
-* kdeprint
+* tdeprint
     The KDE printing system.
 
 * kdesktop
     You guessed it: the desktop above the panel.
 
-* kdesu
+* tdesu
     A graphical front end to "su".
 
 * kdialog

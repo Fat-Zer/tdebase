@@ -1,5 +1,5 @@
 /*
- *   kdeprintfax - a small fax utility
+ *   tdeprintfax - a small fax utility
  *   Copyright (C) 2001  Michael Goffioul
  *
  *   This program is free software; you can redistribute it and/or modify
@@ -85,7 +85,7 @@ ConfFilters::ConfFilters(TQWidget *parent, const char *name)
 
 void ConfFilters::load()
 {
-	TQFile	f(locate("data","kdeprintfax/faxfilters"));
+	TQFile	f(locate("data","tdeprintfax/faxfilters"));
 	if (f.exists() && f.open(IO_ReadOnly))
 	{
 		TQTextStream	t(&f);
@@ -108,7 +108,7 @@ void ConfFilters::load()
 void ConfFilters::save()
 {
 	TQListViewItem	*item = m_filters->firstChild();
-	TQFile	f(locateLocal("data","kdeprintfax/faxfilters"));
+	TQFile	f(locateLocal("data","tdeprintfax/faxfilters"));
 	if (f.open(IO_WriteOnly))
 	{
 		TQTextStream	t(&f);

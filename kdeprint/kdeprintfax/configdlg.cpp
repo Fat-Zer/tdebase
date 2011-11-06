@@ -1,5 +1,5 @@
 /*
- *   kdeprintfax - a small fax utility
+ *   tdeprintfax - a small fax utility
  *   Copyright (C) 2001  Michael Goffioul
  *
  *   This program is free software; you can redistribute it and/or modify
@@ -37,7 +37,7 @@ ConfigDlg::ConfigDlg(TQWidget *parent, const char *name)
 	TQVBox	*page2 = addVBoxPage(i18n("Page setup"), i18n("Page Setup"), DesktopIcon("editcopy"));
 	m_fax = new ConfFax(page2, "Fax");
 
-	TQVBox	*page3 = addVBoxPage(i18n("System"), i18n("Fax System Selection"), DesktopIcon("kdeprintfax"));
+	TQVBox	*page3 = addVBoxPage(i18n("System"), i18n("Fax System Selection"), DesktopIcon("tdeprintfax"));
 	m_system = new ConfSystem(page3, "System");
 
 	TQVBox	*page4 = addVBoxPage(i18n("Filters"), i18n("Filters Configuration"), DesktopIcon("filter"));

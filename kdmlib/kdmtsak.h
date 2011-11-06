@@ -80,48 +80,48 @@ inline int tde_sak_verify_calling_process()
 		if ((procparent == "kdesktop") || (procparent == "kdesktop_lock") || (procparent == "kdm")) {
 			authorized = true;
 		}
-		else if (procparent == "kdeinit") {
-			printf("kdeinit detected\n\r");
+		else if (procparent == "tdeinit") {
+			printf("tdeinit detected\n\r");
 			// A bit more digging is needed to see if this is an authorized process or not
-			// Get the kdeinit command
-			char kdeinitcmdline[8192];
+			// Get the tdeinit command
+			char tdeinitcmdline[8192];
 			FILE *fp = fopen(TQString("/proc/%1/cmdline").arg(parentproc).ascii(),"r");
 			if (fp != NULL) {
-				if (fgets (kdeinitcmdline, 8192, fp) != NULL)
+				if (fgets (tdeinitcmdline, 8192, fp) != NULL)
 				fclose (fp);
 			}
-			kdeinitcmdline[8191] = 0;
-			TQString kdeinitCommand = kdeinitcmdline;
+			tdeinitcmdline[8191] = 0;
+			TQString tdeinitCommand = tdeinitcmdline;
 
 			// Also get the environment, specifically the path
-			TQString kdeinitEnvironment;
-			char kdeinitenviron[8192];
+			TQString tdeinitEnvironment;
+			char tdeinitenviron[8192];
 			fp = fopen(TQString("/proc/%1/environ").arg(parentproc).ascii(),"r");
 			if (fp != NULL) {
 				int c;
 				int pos = 0;
 				do {
 					c = fgetc(fp);
-					kdeinitenviron[pos] = c;
+					tdeinitenviron[pos] = c;
 					pos++;
 					if (c == 0) {
-						TQString curEnvLine = kdeinitenviron;
+						TQString curEnvLine = tdeinitenviron;
 						if (curEnvLine.startsWith("PATH=")) {
-							kdeinitEnvironment = curEnvLine.mid(5);
+							tdeinitEnvironment = curEnvLine.mid(5);
 						}
 						pos = 0;
 					}
 				} while ((c != EOF) && (pos < 8192));
 				fclose (fp);
 			}
-			kdeinitenviron[8191] = 0;
+			tdeinitenviron[8191] = 0;
 
 #ifdef DEBUG
-			printf("Called executable name is: %s\n\r", kdeinitCommand.ascii());
-			printf("Environment is: %s\n\r", kdeinitEnvironment.ascii());
+			printf("Called executable name is: %s\n\r", tdeinitCommand.ascii());
+			printf("Environment is: %s\n\r", tdeinitEnvironment.ascii());
 #endif
 
-			if ((kdeinitCommand == "kdesktop [kdeinit]") && (kdeinitEnvironment.startsWith(KDE_BINDIR))) {
+			if ((tdeinitCommand == "kdesktop [tdeinit]") && (tdeinitEnvironment.startsWith(KDE_BINDIR))) {
 				authorized = true;
 			}
 			else {

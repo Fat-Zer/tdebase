@@ -12,7 +12,7 @@ compliance with the spec. Some parts also involve the pager and clients which
 this document will cater for as well where applicable.
 
 If you modify the level of NetWM compliance (via modification of kwin/*,
-kdecore/netwm.* or kdecore/kwin.* etc.), or notice any new hints that
+tdecore/netwm.* or tdecore/kwin.* etc.), or notice any new hints that
 were added after version 1.2, please modify this document appropriately.
 Properties are ordered in the table in the order they are found in the 
 specification. To list any important notes regarding a property, just 
@@ -161,7 +161,7 @@ version 2.0
 / 1.2.6.
         Should be checked.
 + 1. (rest of the section)
-+ 2.8. kmanagerselection.* in kdecore
++ 2.8. kmanagerselection.* in tdecore
 + 2. (rest of the section)
         Not a KWin thing.
 *   - patch sent to TT to make TQClipboard sufficiently compliant

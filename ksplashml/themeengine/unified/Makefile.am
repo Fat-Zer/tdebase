@@ -3,7 +3,7 @@ INCLUDES =  -I$(srcdir)/.. -I$(srcdir)/../.. $(all_includes)
 
 noinst_LTLIBRARIES = libthemedefault.la
 libthemedefault_la_SOURCES = themelegacy.cpp
-libthemedefault_la_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_KDECORE) $(LIB_KDEUI) -lkdefx $(LIB_KIO) -lktexteditor
+libthemedefault_la_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_KDECORE) $(LIB_KDEUI) -ltdefx $(LIB_KIO) -lktexteditor
 libthemedefault_la_LIBADD = $(LIB_KDEUI) ../libksplashthemes.la
 
 kde_module_LTLIBRARIES = ksplashdefault.la

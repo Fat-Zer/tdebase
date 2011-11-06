@@ -1,9 +1,9 @@
 /* vi: ts=8 sts=4 sw=4
  *
- * This file is part of the KDE project, module kdesu.
+ * This file is part of the KDE project, module tdesu.
  * Copyright (C) 1999,2000 Geert Jansen <jansen@kde.org>
  * 
- * lexer.cpp: A lexer for the kdesud protocol. See kdesud.cpp for a
+ * lexer.cpp: A lexer for the tdesud protocol. See tdesud.cpp for a
  *            description of the protocol.
  */
 

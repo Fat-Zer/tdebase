@@ -179,7 +179,7 @@ KCMInit::KCMInit( KCmdLineArgs* args )
   config.setGroup("X11");
   bool multihead = !config.readBoolEntry( "disableMultihead", false) &&
                     (ScreenCount(qt_xdisplay()) > 1);
-  // Pass env. var to kdeinit.
+  // Pass env. var to tdeinit.
   TQCString name = "KDE_MULTIHEAD";
   TQCString value = multihead ? "true" : "false";
   TQByteArray params;
@@ -220,7 +220,7 @@ void KCMInit::runPhase2()
 
 extern "C" KDE_EXPORT int kdemain(int argc, char *argv[])
 {
-  // kdeinit waits for kcminit to finish, but during KDE startup
+  // tdeinit waits for kcminit to finish, but during KDE startup
   // only important kcm's are started very early in the login process,
   // the rest is delayed, so fork and make parent return after the initial phase
   pipe( ready );

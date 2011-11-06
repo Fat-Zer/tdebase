@@ -10,7 +10,7 @@ SUBDIRS = . lock pics patterns programs init kwebdesktop
 
 bin_PROGRAMS = kcheckrunning kxdglauncher
 lib_LTLIBRARIES =
-kdeinit_LTLIBRARIES = kdesktop.la
+tdeinit_LTLIBRARIES = kdesktop.la
 noinst_LTLIBRARIES = libkdesktopsettings.la
 
 libkdesktopsettings_la_LDFLAGS = $(all_libraries) -no-undefined

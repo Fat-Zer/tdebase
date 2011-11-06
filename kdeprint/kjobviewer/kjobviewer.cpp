@@ -1,6 +1,6 @@
 /*
  *  This file is part of the KDE libraries
- *  Copyright (c) 2001 Michael Goffioul <kdeprint@swing.be>
+ *  Copyright (c) 2001 Michael Goffioul <tdeprint@swing.be>
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Library General Public
@@ -18,9 +18,9 @@
  **/
 
 #include "kjobviewer.h"
-#include <kdeprint/kmjobviewer.h>
-#include <kdeprint/kmtimer.h>
-#include <kdeprint/kmmanager.h>
+#include <tdeprint/kmjobviewer.h>
+#include <tdeprint/kmtimer.h>
+#include <tdeprint/kmmanager.h>
 
 #include <stdlib.h>
 #include <tqpixmap.h>

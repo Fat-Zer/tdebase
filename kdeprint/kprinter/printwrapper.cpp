@@ -1,6 +1,6 @@
 /*
  *  This file is part of the KDE libraries
- *  Copyright (c) 2001 Michael Goffioul <kdeprint@swing.be>
+ *  Copyright (c) 2001 Michael Goffioul <tdeprint@swing.be>
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Library General Public
@@ -42,9 +42,9 @@
 #include <ktempfile.h>
 
 #include <kprinter.h>
-#include <kdeprint/kmmanager.h>
-#include <kdeprint/kmprinter.h>
-#include <kdeprint/kprintdialog.h>
+#include <tdeprint/kmmanager.h>
+#include <tdeprint/kmprinter.h>
+#include <tdeprint/kprintdialog.h>
 
 void signal_handler(int);
 TQString tempFile;

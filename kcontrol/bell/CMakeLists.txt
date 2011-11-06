@@ -28,6 +28,6 @@ install( FILES bell.desktop DESTINATION ${XDG_APPS_INSTALL_DIR} )
 
 tde_add_kpart( kcm_bell AUTOMOC
   SOURCES bell.cpp
-  LINK kdeui-shared
+  LINK tdeui-shared
   DESTINATION ${PLUGIN_INSTALL_DIR}
 )

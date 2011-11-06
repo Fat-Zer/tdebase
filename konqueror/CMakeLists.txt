@@ -92,7 +92,7 @@ tde_add_library( ${target} STATIC_PIC
 )
 
 
-##### konqueror (kdeinit) #######################
+##### konqueror (tdeinit) #######################
 
 set( target konqueror )
 
@@ -106,7 +106,7 @@ set( ${target}_SRCS
   delayedinitializer.cc konq_mainwindow.cc konq_extensionmanager.cc
 )
 
-tde_add_kdeinit_executable( ${target} AUTOMOC
+tde_add_tdeinit_executable( ${target} AUTOMOC
   SOURCES ${${target}_SRCS}
   LINK konqueror_intern-static konq-shared kutils-shared
 )

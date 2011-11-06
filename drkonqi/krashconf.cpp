@@ -63,7 +63,7 @@ void KrashConfig :: readConfig()
   KCmdLineArgs *args = KCmdLineArgs::parsedArgs();
   m_signalnum = args->getOption( "signal" ).toInt();
   m_pid = args->getOption( "pid" ).toInt();
-  m_startedByKdeinit = args->isSet("kdeinit");
+  m_startedByKdeinit = args->isSet("tdeinit");
   m_safeMode = args->isSet("safer");
   m_execname = args->getOption( "appname" );
   if ( !args->getOption( "apppath" ).isEmpty() )
@@ -150,7 +150,7 @@ void KrashConfig :: expandString(TQString &str, bool shell, const TQString &temp
 {
   TQMap<TQString,TQString> map;
   map[TQString::tqfromLatin1("appname")] = TQString::tqfromLatin1(appName());
-  map[TQString::tqfromLatin1("execname")] = startedByKdeinit() ? TQString::tqfromLatin1("kdeinit") : m_execname;
+  map[TQString::tqfromLatin1("execname")] = startedByKdeinit() ? TQString::tqfromLatin1("tdeinit") : m_execname;
   map[TQString::tqfromLatin1("signum")] = TQString::number(signalNumber());
   map[TQString::tqfromLatin1("signame")] = signalName();
   map[TQString::tqfromLatin1("progname")] = programName();

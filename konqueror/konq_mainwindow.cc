@@ -5945,7 +5945,7 @@ static int current_memory_usage( int* limit )
 // Check malloc() usage - very imprecise, but better than nothing.
     int usage_sum = 0;
 #if defined(KDE_MALLINFO_STDLIB) || defined(KDE_MALLINFO_MALLOC)
-    // ugly hack for kdecore/malloc
+    // ugly hack for tdecore/malloc
     extern int kde_malloc_is_used;
     free( calloc( 4, 4 )); // trigger setting kde_malloc_is_used
     if( kde_malloc_is_used )

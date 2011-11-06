@@ -29,9 +29,9 @@ install( FILES kjobviewer.desktop DESTINATION ${XDG_APPS_INSTALL_DIR} )
 install( FILES kjobviewerui.rc DESTINATION ${DATA_INSTALL_DIR}/kjobviewer )
 
 
-##### kjobviewer (kdeinit) ######################
+##### kjobviewer (tdeinit) ######################
 
-tde_add_kdeinit_executable( kjobviewer AUTOMOC
+tde_add_tdeinit_executable( kjobviewer AUTOMOC
   SOURCES kjobviewer.cpp main.cpp
-  LINK kdeprint_management-shared
+  LINK tdeprint_management-shared
 )

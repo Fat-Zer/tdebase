@@ -9,11 +9,11 @@ A: No program is 100% safe. However, KDE su is not setuid root and it
 
 Q: How safe is password keeping?
 A: Enabling password keeping is less secure that disabling it. However, the
-   scheme kdesu uses to keep passwords prevents everyone (including you, the
+   scheme tdesu uses to keep passwords prevents everyone (including you, the
    user) from accessing them. Please see the HTML documentation for a full
    description of this scheme.
 
-Q: Can I execute tty applications with kdesu?
+Q: Can I execute tty applications with tdesu?
 A: No. TTY application will probably never be supported. Use the Unix su for
    those.
    NOTE: As of version 0.94, tty _output_ _only_ is supported with the `-t'
@@ -32,7 +32,7 @@ A: KDE su needs to setup a pty/tty pair for communicating with `su'. This is
    that is not a tty.  Setting up a pty/tty pair is not completely portable.
 
 Q: A good debug tip?
-A: If kdesu doesn't fire up your application, use the '-t' switch.
+A: If tdesu doesn't fire up your application, use the '-t' switch.
    This way, you'll get terminal output. Maybe there is something wrong with 
    the program you're trying to run.
 

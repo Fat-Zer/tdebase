@@ -39,7 +39,7 @@ dirtree/*  : KonqDirTree, the directory tree
 Libs used by konqueror
 ======================
 
-kdecore, kdeui, kfile, khtml, kparts - usual stuff :)
+tdecore, tdeui, kfile, khtml, kparts - usual stuff :)
 libkio - I/O stuff, mimetypes, services
 libkonq - bookmarks, properties dialog, templates ("new") menu, icon view widget
 

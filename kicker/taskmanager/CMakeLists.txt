@@ -53,6 +53,6 @@ set( ${target}_SRCS
 tde_add_library( ${target} SHARED AUTOMOC
   SOURCES ${${target}_SRCS}
   VERSION 1.0.0
-  LINK kdecore-shared kickermain-shared ${XFIXES_LIBRARIES} ${XRENDER_LIBRARIES} ${XCOMPOSITE_LIBRARIES}
+  LINK tdecore-shared kickermain-shared ${XFIXES_LIBRARIES} ${XRENDER_LIBRARIES} ${XCOMPOSITE_LIBRARIES}
   DESTINATION ${LIB_INSTALL_DIR}
 )

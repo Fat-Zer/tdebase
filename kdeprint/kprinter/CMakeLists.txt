@@ -26,9 +26,9 @@ link_directories(
 )
 
 
-##### kprinter (kdeinit) ########################
+##### kprinter (tdeinit) ########################
 
-tde_add_kdeinit_executable( kprinter AUTOMOC
+tde_add_tdeinit_executable( kprinter AUTOMOC
   SOURCES main.cpp printwrapper.cpp
-  LINK kdeprint-shared
+  LINK tdeprint-shared
 )

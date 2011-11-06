@@ -30,7 +30,7 @@ install( FILES kinfocenterui.rc DESTINATION ${DATA_INSTALL_DIR}/kinfocenter )
 install( FILES  KControl.desktop kinfocenter.desktop DESTINATION ${XDG_APPS_INSTALL_DIR} )
 
 
-##### kcontrol (kdeinit) ########################
+##### kcontrol (tdeinit) ########################
 
 set( target kcontrol )
 
@@ -42,7 +42,7 @@ set( ${target}_SRCS
   searchwidget.cpp
 )
 
-tde_add_kdeinit_executable( ${target} AUTOMOC
+tde_add_tdeinit_executable( ${target} AUTOMOC
   SOURCES ${${target}_SRCS}
   LINK khtml-shared
 )

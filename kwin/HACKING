@@ -110,7 +110,7 @@ The rest of the files contain additional helper classes:
 - utils.* - various small utility functions/classes
 
 KWin also uses code from kdelibs, specifically files netwm.cpp, netwm.h, netwm_def.h and netwm_p.h
-from kdelibs/kdecore. These files implement support for the EWMH window manager specification,
+from kdelibs/tdecore. These files implement support for the EWMH window manager specification,
 originally called NETWM (hence the filenames).
 
 

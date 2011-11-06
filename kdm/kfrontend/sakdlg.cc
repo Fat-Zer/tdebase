@@ -18,7 +18,7 @@
 #include <kglobalsettings.h>
 #include <kconfig.h>
 #include <kiconloader.h>
-#include <kdesu/defaults.h>
+#include <tdesu/defaults.h>
 #include <kpassdlg.h>
 #include <kdebug.h>
 #include <kuser.h>

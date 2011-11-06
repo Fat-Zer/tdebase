@@ -36,6 +36,6 @@ install( FILES
 
 tde_add_kpart( kcm_info AUTOMOC
   SOURCES main.cpp memory.cpp opengl.cpp
-  LINK kdeui-shared
+  LINK tdeui-shared
   DESTINATION ${PLUGIN_INSTALL_DIR}
 )

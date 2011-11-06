@@ -1,7 +1,7 @@
 /* vi: ts=8 sts=4 sw=4
  *
  *
- * This file is part of the KDE project, module kdesu.
+ * This file is part of the KDE project, module tdesu.
  * Copyright (C) 1999,2000 Geert Jansen <jansen@kde.org>
  * 
  * This file contains code from TEShell.C of the KDE konsole. 
@@ -51,8 +51,8 @@
 #include <kstandarddirs.h>
 
 #include "process.h"
-#include <kdesu/kdesu_pty.h>
-#include <kdesu/kcookie.h>
+#include <tdesu/tdesu_pty.h>
+#include <tdesu/kcookie.h>
 
 
 MyPtyProcess::MyPtyProcess()

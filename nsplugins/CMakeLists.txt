@@ -45,7 +45,7 @@ tde_add_kpart( libnsplugin AUTOMOC
 
 tde_add_kpart( kcm_nsplugins AUTOMOC
   SOURCES kcm_nsplugins.cpp
-  LINK pluginpaths-static kdecore-shared
+  LINK pluginpaths-static tdecore-shared
   DESTINATION ${PLUGIN_INSTALL_DIR}
 )
 

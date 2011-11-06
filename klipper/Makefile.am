@@ -3,7 +3,7 @@ INCLUDES= $(all_includes)
 bin_PROGRAMS =
 lib_LTLIBRARIES =
 noinst_LTLIBRARIES = libklipper_common.la
-kdeinit_LTLIBRARIES = klipper.la
+tdeinit_LTLIBRARIES = klipper.la
 kde_module_LTLIBRARIES = klipper_panelapplet.la
 
 CLEANFILES = dummy.cpp

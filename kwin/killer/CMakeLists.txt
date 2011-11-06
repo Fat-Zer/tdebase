@@ -23,6 +23,6 @@ link_directories(
 
 tde_add_executable( kwin_killer_helper
   SOURCES killer.cpp
-  LINK kdeui-shared
+  LINK tdeui-shared
   DESTINATION ${BIN_INSTALL_DIR}
 )

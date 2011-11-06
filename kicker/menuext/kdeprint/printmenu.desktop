@@ -141,4 +141,4 @@ Comment[zh_CN]=打印系统菜单
 Comment[zh_TW]=用於列印系統的選單
 Icon=fileprint
 
-X-KDE-Library=kickermenu_kdeprint
+X-KDE-Library=kickermenu_tdeprint

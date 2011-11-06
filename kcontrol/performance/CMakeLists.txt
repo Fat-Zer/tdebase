@@ -29,6 +29,6 @@ install( FILES kcmkonqyperformance.desktop DESTINATION ${APPS_INSTALL_DIR}/.hidd
 
 tde_add_kpart( kcm_performance AUTOMOC
   SOURCES kcmperformance.cpp konqueror.cpp konqueror_ui.ui system.cpp system_ui.ui
-  LINK kdeui-shared
+  LINK tdeui-shared
   DESTINATION ${PLUGIN_INSTALL_DIR}
 )

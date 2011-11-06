@@ -44,7 +44,7 @@ install( FILES
 
 tde_add_executable( kwin_update_window_settings
   SOURCES update_window_settings.cpp
-  LINK kdecore-shared
+  LINK tdecore-shared
   DESTINATION ${LIB_INSTALL_DIR}/kconf_update_bin
 )
 
@@ -53,6 +53,6 @@ tde_add_executable( kwin_update_window_settings
 
 tde_add_executable( kwin_update_default_rules
   SOURCES update_default_rules.cpp
-  LINK kdecore-shared
+  LINK tdecore-shared
   DESTINATION ${LIB_INSTALL_DIR}/kconf_update_bin
 )

@@ -180,9 +180,9 @@ ProcessList::ProcessList(TQWidget *parent, const char* name)
 		aliases.insert("kcookiejar", new TQString("kdeapp"));
 		aliases.insert("kde", new TQString("kdeapp"));
 		aliases.insert("kded", new TQString("kdeapp"));
-		aliases.insert("kdeinit", new TQString("kdeapp"));
+		aliases.insert("tdeinit", new TQString("kdeapp"));
 		aliases.insert("kdesktop", new TQString("kdeapp"));
-		aliases.insert("kdesud", new TQString("kdeapp"));
+		aliases.insert("tdesud", new TQString("kdeapp"));
 		aliases.insert("kdm", new TQString("kdeapp"));
 		aliases.insert("khotkeys", new TQString("kdeapp"));
 		aliases.insert("kio_file", new TQString("kdeapp"));

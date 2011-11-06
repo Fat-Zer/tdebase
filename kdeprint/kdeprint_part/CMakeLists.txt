@@ -24,14 +24,14 @@ link_directories(
 
 ##### other data ################################
 
-install( FILES kdeprint_part.rc DESTINATION ${DATA_INSTALL_DIR}/kdeprint_part )
-install( FILES kdeprint_part.desktop DESTINATION ${SERVICES_INSTALL_DIR} )
+install( FILES tdeprint_part.rc DESTINATION ${DATA_INSTALL_DIR}/tdeprint_part )
+install( FILES tdeprint_part.desktop DESTINATION ${SERVICES_INSTALL_DIR} )
 
 
 ##### libtdeprint_part (module) #################
 
 tde_add_kpart( libtdeprint_part AUTOMOC
   SOURCES printpart.cpp
-  LINK kdeprint_management-shared kparts-shared
+  LINK tdeprint_management-shared kparts-shared
   DESTINATION ${PLUGIN_INSTALL_DIR}
 )

@@ -31,6 +31,6 @@ tde_add_kpart( kcm_joystick AUTOMOC
   SOURCES
     joystick.cpp joywidget.cpp poswidget.cpp
     joydevice.cpp caldialog.cpp
-  LINK kdeui-shared
+  LINK tdeui-shared
   DESTINATION ${PLUGIN_INSTALL_DIR}
 )

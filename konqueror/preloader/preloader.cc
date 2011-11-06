@@ -109,7 +109,7 @@ void KonqyPreloader::updateCount()
 	{
 	if( !check_always_preloaded_timer.isActive())
 	    {
-	    if( kapp->kdeinitExec( TQString::tqfromLatin1( "konqueror" ),
+	    if( kapp->tdeinitExec( TQString::tqfromLatin1( "konqueror" ),
 		TQStringList() << TQString::tqfromLatin1( "--preload" ), NULL, NULL, "0" ) == 0 )
 		{
 		kdDebug( 1202 ) << "Preloading Konqueror instance" << endl;

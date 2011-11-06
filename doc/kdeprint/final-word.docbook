@@ -72,7 +72,7 @@ community. Not least within the &kde; project... ;-)
 <listitem>
 <para>Jean-Eric Cuendet for starting <application>kups</application>
 and <application>qtcups</application>, the predecessors of
-&kdeprint;</para>
+&tdeprint;</para>
 </listitem>
 <listitem>
 <para>Michael Goffioul for doing all the hard work recently</para>
@@ -101,14 +101,14 @@ writing</quote></para>
 <sect1 id="caveats">
 <title>Caveats</title>
 
-<para>&kdeprint; has been developed on a system using &CUPS; 1.1.6.
-&kdeprint; has been tested on other versions of &CUPS; and so
+<para>&tdeprint; has been developed on a system using &CUPS; 1.1.6.
+&tdeprint; has been tested on other versions of &CUPS; and so
 far no incompatibilities are known. By the time of writing
 this Handbook, &CUPS; 1.1.9 is out with a few new features
-not yet supported by &kdeprint;. Of course you are able to
-access these features, but you will need to bypass &kdeprint;
+not yet supported by &tdeprint;. Of course you are able to
+access these features, but you will need to bypass &tdeprint;
 and use the &CUPS; command-line tools or edit configuration
-files manually. &kdeprint;'s development will go on and this
+files manually. &tdeprint;'s development will go on and this
 Handbook strives to always be the best available user documentation
 resource for it.</para>
 

@@ -110,9 +110,9 @@ TQString KonqAboutPageFactory::launch()
   TQString home_folder = TQDir::homeDirPath();
   TQString continue_icon_path = TQApplication::reverseLayout()?iconloader->iconPath("1leftarrow", KIcon::Small ):iconloader->iconPath("1rightarrow", KIcon::Small );
 
-  res = res.tqarg( locate( "data", "kdeui/about/kde_infopage.css" ) );
+  res = res.tqarg( locate( "data", "tdeui/about/kde_infopage.css" ) );
   if ( kapp->reverseLayout() )
-    res = res.tqarg( "@import \"%1\";" ).tqarg( locate( "data", "kdeui/about/kde_infopage_rtl.css" ) );
+    res = res.tqarg( "@import \"%1\";" ).tqarg( locate( "data", "tdeui/about/kde_infopage_rtl.css" ) );
   else
     res = res.tqarg( "" );
 
@@ -195,9 +195,9 @@ TQString KonqAboutPageFactory::intro()
     TQString gohome_icon_path = iconloader->iconPath("gohome", KIcon::Small );
     TQString continue_icon_path = TQApplication::reverseLayout()?iconloader->iconPath("1leftarrow", KIcon::Small ):iconloader->iconPath("1rightarrow", KIcon::Small );
 
-    res = res.tqarg( locate( "data", "kdeui/about/kde_infopage.css" ) );
+    res = res.tqarg( locate( "data", "tdeui/about/kde_infopage.css" ) );
     if ( kapp->reverseLayout() )
-	res = res.tqarg( "@import \"%1\";" ).tqarg( locate( "data", "kdeui/about/kde_infopage_rtl.css" ) );
+	res = res.tqarg( "@import \"%1\";" ).tqarg( locate( "data", "tdeui/about/kde_infopage_rtl.css" ) );
     else
 	res = res.tqarg( "" );
 
@@ -250,9 +250,9 @@ TQString KonqAboutPageFactory::specs()
     if ( res.isEmpty() )
 	return res;
 
-    res = res.tqarg( locate( "data", "kdeui/about/kde_infopage.css" ) );
+    res = res.tqarg( locate( "data", "tdeui/about/kde_infopage.css" ) );
     if ( kapp->reverseLayout() )
-	res = res.tqarg( "@import \"%1\";" ).tqarg( locate( "data", "kdeui/about/kde_infopage_rtl.css" ) );
+	res = res.tqarg( "@import \"%1\";" ).tqarg( locate( "data", "tdeui/about/kde_infopage_rtl.css" ) );
     else
 	res = res.tqarg( "" );
 
@@ -347,9 +347,9 @@ TQString KonqAboutPageFactory::tips()
 	    iconloader->iconPath("view_left_right", KIcon::Small );
     TQString continue_icon_path = TQApplication::reverseLayout()?iconloader->iconPath("1leftarrow", KIcon::Small ):iconloader->iconPath("1rightarrow", KIcon::Small );
 
-    res = res.tqarg( locate( "data", "kdeui/about/kde_infopage.css" ) );
+    res = res.tqarg( locate( "data", "tdeui/about/kde_infopage.css" ) );
     if ( kapp->reverseLayout() )
-	res = res.tqarg( "@import \"%1\";" ).tqarg( locate( "data", "kdeui/about/kde_infopage_rtl.css" ) );
+	res = res.tqarg( "@import \"%1\";" ).tqarg( locate( "data", "tdeui/about/kde_infopage_rtl.css" ) );
     else
 	res = res.tqarg( "" );
 
@@ -503,7 +503,7 @@ void KonqAboutPage::urlSelected( const TQString &url, int button, int state, con
         TQStringList args = TQStringList::split( TQChar( ' ' ), url.mid( 6 ) );
         TQString executable = args[ 0 ];
         args.remove( args.begin() );
-        KApplication::kdeinitExec( executable, args );
+        KApplication::tdeinitExec( executable, args );
         return;
     }
 

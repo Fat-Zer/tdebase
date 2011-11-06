@@ -29,6 +29,6 @@ install( FILES remotemenu.desktop DESTINATION ${DATA_INSTALL_DIR}/kicker/menuext
 
 tde_add_kpart( kickermenu_remotemenu AUTOMOC
   SOURCES remotemenu.cpp remotemenu.skel
-  LINK kickermain-shared kdeui-shared
+  LINK kickermain-shared tdeui-shared
   DESTINATION ${PLUGIN_INSTALL_DIR}
 )

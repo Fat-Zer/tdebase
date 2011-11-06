@@ -10,8 +10,8 @@ What is it?
 
 Usage:
 
-    $ kdesu -h
-    $ kdesu -c konsole
+    $ tdesu -h
+    $ tdesu -c konsole
 
 Please see the HTML documentation!
 

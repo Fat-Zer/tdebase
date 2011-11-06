@@ -27,7 +27,7 @@ wrapperdir = $(kde_datadir)/khelpcenter/
 wrapper_SCRIPTS = meinproc_wrapper
 
 khtmlindex_SOURCES = index.cpp
-khtmlindex_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_KDECORE) $(LIB_KDEUI) -lkdefx $(LIB_KIO) -lktexteditor
+khtmlindex_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_KDECORE) $(LIB_KDEUI) -ltdefx $(LIB_KIO) -lktexteditor
 khtmlindex_LDADD = libhtmlsearch.la $(LIB_KDEUI)
 
 xpm_DATA = unchecked.xpm checked.xpm

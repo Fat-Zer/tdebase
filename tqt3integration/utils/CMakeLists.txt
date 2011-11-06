@@ -28,7 +28,7 @@ link_directories(
 tde_add_executable( gen AUTOMOC
   SOURCES
     gen.cpp
-  LINK kdecore-shared
+  LINK tdecore-shared
 )
 
 ADD_CUSTOM_COMMAND(

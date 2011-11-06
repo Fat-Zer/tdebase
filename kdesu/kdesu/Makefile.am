@@ -1,15 +1,15 @@
-## Makefile.am for kdesu by Geert Jansen
+## Makefile.am for tdesu by Geert Jansen
 
 INCLUDES= $(all_includes)
 
-## kdesu
-bin_PROGRAMS = 	kdesu
-kdesu_SOURCES = kdesu.cpp sudlg.cpp
-kdesu_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_KDECORE) $(LIB_KDEUI) -lkdefx $(LIB_KIO) -lktexteditor
-kdesu_LDADD   = $(LIB_KIO) -lkdesu
-kdesu_METASOURCES =  AUTO
+## tdesu
+bin_PROGRAMS = 	tdesu
+tdesu_SOURCES = tdesu.cpp sudlg.cpp
+tdesu_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_KDECORE) $(LIB_KDEUI) -ltdefx $(LIB_KIO) -lktexteditor
+tdesu_LDADD   = $(LIB_KIO) -ltdesu
+tdesu_METASOURCES =  AUTO
 noinst_HEADERS = sudlg.h
 
 ## Messages
 messages:
-	$(XGETTEXT) $(kdesu_SOURCES) -o $(podir)/kdesu.pot
+	$(XGETTEXT) $(tdesu_SOURCES) -o $(podir)/tdesu.pot

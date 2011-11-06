@@ -1,6 +1,6 @@
 /*
  *  This file is part of the KDE libraries
- *  Copyright (c) 2001 Michael Goffioul <kdeprint@swing.be>
+ *  Copyright (c) 2001 Michael Goffioul <tdeprint@swing.be>
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Library General Public
@@ -36,7 +36,7 @@ static KCmdLineOptions options[] = {
 extern "C" int KDE_EXPORT kdemain(int argc, char *argv[])
 {
 	KAboutData	aboutData("kjobviewer",I18N_NOOP("KJobViewer"),"0.1",I18N_NOOP("A print job viewer"),KAboutData::License_GPL,"(c) 2001, Michael Goffioul", 0, "http://printing.kde.org");
-	aboutData.addAuthor("Michael Goffioul",0,"kdeprint@swing.be");
+	aboutData.addAuthor("Michael Goffioul",0,"tdeprint@swing.be");
 	KCmdLineArgs::init(argc,argv,&aboutData);
 	KCmdLineArgs::addCmdLineOptions(options);
 	KJobViewerApp::addCmdLineOptions();

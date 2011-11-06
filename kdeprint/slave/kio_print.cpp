@@ -1,6 +1,6 @@
 /*
  *  This file is part of the KDE libraries
- *  Copyright (c) 2001 Michael Goffioul <kdeprint@swing.be>
+ *  Copyright (c) 2001 Michael Goffioul <tdeprint@swing.be>
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Library General Public
@@ -18,11 +18,11 @@
  **/
 
 #include "kio_print.h"
-#include <kdeprint/kmprinter.h>
-#include <kdeprint/kmmanager.h>
-#include <kdeprint/kmjobmanager.h>
-#include <kdeprint/kmjob.h>
-#include <kdeprint/driver.h>
+#include <tdeprint/kmprinter.h>
+#include <tdeprint/kmmanager.h>
+#include <tdeprint/kmjobmanager.h>
+#include <tdeprint/kmjob.h>
+#include <tdeprint/driver.h>
 
 #include <tqfile.h>
 #include <tqtextstream.h>
@@ -755,7 +755,7 @@ void KIO_Print::showSpecialInfo(KMPrinter *printer)
 
 bool KIO_Print::loadTemplate(const TQString& filename, TQString& buffer)
 {
-	TQFile	f(locate("data", TQString::tqfromLatin1("kdeprint/template/")+filename));
+	TQFile	f(locate("data", TQString::tqfromLatin1("tdeprint/template/")+filename));
 	if (f.exists() && f.open(IO_ReadOnly))
 	{
 		TQTextStream	t(&f);
@@ -789,12 +789,12 @@ void KIO_Print::showData(const TQString& pathname)
 
 /**
  * Locate a data in this order:
- *	- $KDEDIR/share/apps/kdeprint/template/
+ *	- $KDEDIR/share/apps/tdeprint/template/
  *	- as a desktop icon
  */
 TQString KIO_Print::locateData(const TQString& item)
 {
-	TQString	path = locate("data", "kdeprint/template/"+item);
+	TQString	path = locate("data", "tdeprint/template/"+item);
 	if (path.isEmpty())
 		path = KGlobal::iconLoader()->iconPath(item, KIcon::Desktop, true);
 	return path;

@@ -27,7 +27,7 @@ install( FILES kfmclient_3_2.upd DESTINATION ${DATA_INSTALL_DIR}/kconf_update )
 install( PROGRAMS kfmclient_3_2_update.sh DESTINATION ${DATA_INSTALL_DIR}/kconf_update )
 
 
-##### kfmclient (kdeinit) #######################
+##### kfmclient (tdeinit) #######################
 
 set( target kfmclient )
 
@@ -37,7 +37,7 @@ set( ${target}_SRCS
   ${CMAKE_SOURCE_DIR}/kdesktop/KDesktopIface.stub
 )
 
-tde_add_kdeinit_executable( ${target} AUTOMOC
+tde_add_tdeinit_executable( ${target} AUTOMOC
   SOURCES ${${target}_SRCS}
   LINK kio-shared
 )

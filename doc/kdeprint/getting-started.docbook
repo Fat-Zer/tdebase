@@ -1,11 +1,11 @@
 <chapter id="getting-started">
 <title>Getting Started</title>
 
-<para>This chapter of the &kdeprint; Handbook will walk you through most
-of the configuration or selection options of &kdeprint;.  It will mainly
+<para>This chapter of the &tdeprint; Handbook will walk you through most
+of the configuration or selection options of &tdeprint;.  It will mainly
 deal with &CUPS; in this version, as the author is most familiar with
-it, and also because &kdeprint; started off with supporting &CUPS;
-best.  Later versions of the &kdeprint; software and editions of this
+it, and also because &tdeprint; started off with supporting &CUPS;
+best.  Later versions of the &tdeprint; software and editions of this
 handbook will support and explore other printing
 systems more closely.</para>
 
@@ -13,7 +13,7 @@ systems more closely.</para>
 <title>Selecting Your Print Subsystem</title>
 
 <para>You need to define your print subsystem, before you are able to
-install any printer with the &kdeprint; framework.  There are two areas
+install any printer with the &tdeprint; framework.  There are two areas
 where you can define this: either in &kcontrol; (The <guilabel>Printing
 Manager</guilabel> section), or directly and <quote>on the fly</quote>
 from the print dialog.</para>
@@ -51,7 +51,7 @@ your box prior to your selection, or before it takes effect.  <!-- The -->
 <!-- authors personal recommendation is &CUPS; -->
 </para>
 
-<para>On it's first startup, &kdeprint; will try an autodetection.  This
+<para>On it's first startup, &tdeprint; will try an autodetection.  This
 only works for:</para>
 
 <itemizedlist>
@@ -78,13 +78,13 @@ your selection.  The author's personal recommendation is
 subsystem will take effect for all &kde; applications.  Different
 users may have different print subsystems in use, if those do exist on
 the computer and are compliant with each other.  Their settings are
-stored in the <filename>kdeprintrc</filename>.  This file is unique to
+stored in the <filename>tdeprintrc</filename>.  This file is unique to
 every user, and is normally installed in
-<filename>$<envar>HOME</envar>/.kde/share/config/kdeprintrc</filename>.</para>
+<filename>$<envar>HOME</envar>/.kde/share/config/tdeprintrc</filename>.</para>
 
 <warning>
 <para>This file is not intended to be directly editable, and all
-available options can be set from the &kdeprint; &GUI;.</para>
+available options can be set from the &tdeprint; &GUI;.</para>
 </warning>
 
 <para>You may even select a different printer subsystem, on the fly, from
@@ -97,7 +97,7 @@ the &kprinter; dialog box.</para>
 
 <para>Once you have chosen your preferred and installed print subsystem,
 you are ready to investigate, configure administer and work with this
-system through the &kdeprint; framework.</para>
+system through the &tdeprint; framework.</para>
 
 <para>Navigate to <menuchoice><guimenu>K Menu</guimenu>
 <guisubmenu>Preferences</guisubmenu> <guisubmenu>System</guisubmenu>
@@ -131,10 +131,10 @@ choices at your fingertips than with any other printing
 system. &CUPS; is new to most Linux users (even the senior
 hackers amongst us), and it is quite easy to use. But it
 is at the same time very different from other printing systems.
-Therfor the &CUPS; part in the &kdeprint; Handbook is naturally
+Therfor the &CUPS; part in the &tdeprint; Handbook is naturally
 the most detailed.
 
-Future editions of the &kdeprint; handbook will describe in
+Future editions of the &tdeprint; handbook will describe in
 more detail the other systems.
 -->       
 

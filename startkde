@@ -50,14 +50,14 @@ fi
 
 # Boot sequence:
 #
-# kdeinit is used to fork off processes which improves memory usage
+# tdeinit is used to fork off processes which improves memory usage
 # and startup time.
 #
-# * kdeinit starts the dcopserver and klauncher first.
+# * tdeinit starts the dcopserver and klauncher first.
 # * Then kded is started. kded is responsible for keeping the sycoca
 #   database up to date. When an up to date database is present it goes
 #   into the background and the startup continues.
-# * Then kdeinit starts kcminit. kcminit performs initialisation of
+# * Then tdeinit starts kcminit. kcminit performs initialisation of
 #   certain devices according to the user's settings
 #
 # * Then ksmserver is started which takes control of the rest of the startup sequence
@@ -483,7 +483,7 @@ if test "$kpersonalizerrc_general_firstlogin" = "true"; then
   if [ ! -x $KDEDIR/bin/kpersonalizer ]; then
     echo "[startkde] kpersonalizer not found! Please install it in order to properly configure your user profile." 1>&2
   else
-    # start only dcopserver, don't start whole kdeinit (takes too long)
+    # start only dcopserver, don't start whole tdeinit (takes too long)
     echo "[startkde] Running kpersonalizer..." 1>&2
     dcopserver
     kwin --lock &
@@ -523,7 +523,7 @@ fi
 # Mark that full KDE session is running (e.g. Konqueror preloading works only
 # with full KDE running). The TDE_FULL_SESSION property can be detected by
 # any X client connected to the same X session, even if not launched
-# directly from the KDE session but e.g. using "ssh -X", kdesu. $TDE_FULL_SESSION
+# directly from the KDE session but e.g. using "ssh -X", tdesu. $TDE_FULL_SESSION
 # however guarantees that the application is launched in the same environment
 # like the KDE session and that e.g. KDE utilities/libraries are available.
 # TDE_FULL_SESSION property is also only available since KDE 3.5.5.
@@ -546,15 +546,15 @@ KDE_SESSION_UID=$UID
 export KDE_SESSION_UID
 echo "[startkde] KDE_SESSION_UID: $KDE_SESSION_UID" 1>&2
 
-# We set LD_BIND_NOW to increase the efficiency of kdeinit.
-# kdeinit unsets this variable before loading applications.
-LD_BIND_NOW=true start_kdeinit_wrapper --new-startup +kcminit_startup
+# We set LD_BIND_NOW to increase the efficiency of tdeinit.
+# tdeinit unsets this variable before loading applications.
+LD_BIND_NOW=true start_tdeinit_wrapper --new-startup +kcminit_startup
 if test $? -ne 0; then
   # Startup error
-  echo '[startkde] Could not start kdeinit. Check your installation.' 1>&2
-  xmessage -geometry 500x100 "Could not start kdeinit. Check your installation."
+  echo '[startkde] Could not start tdeinit. Check your installation.' 1>&2
+  xmessage -geometry 500x100 "Could not start tdeinit. Check your installation."
 fi
-echo "[startkde] kdeinit started successfully." 1>&2
+echo "[startkde] tdeinit started successfully." 1>&2
 
 # If the session should be locked from the start (locked autologin),
 # lock now and do the rest of the KDE startup underneath the locker.
@@ -591,12 +591,12 @@ done
 echo '[startkde] Shutting down Trinity...'  1>&2
 
 # Clean up
-kdeinit_shutdown
+tdeinit_shutdown
 dcopserver_shutdown --wait
 artsshell -q terminate
 # KDE4 support
-if [ -f /usr/bin/kdeinit4_shutdown ]; then
-  kde4 kdeinit4_shutdown 2>/dev/null
+if [ -f /usr/bin/tdeinit4_shutdown ]; then
+  kde4 tdeinit4_shutdown 2>/dev/null
 fi
 
 echo '[startkde] Running Trinity shutdown scripts...'  1>&2

@@ -21,7 +21,7 @@ libfiletypes_la_SOURCES = filetypesview.cpp filetypedetails.cpp filegroupdetails
 
 keditfiletype_SOURCES = keditfiletype.cpp
 keditfiletype_LDADD = libfiletypes.la $(LIB_KIO)
-keditfiletype_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_KDECORE) $(LIB_KDEUI) -lkdefx $(LIB_KIO) -lktexteditor
+keditfiletype_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_KDECORE) $(LIB_KDEUI) -ltdefx $(LIB_KIO) -lktexteditor
 
 messages:
 	$(XGETTEXT) *.cpp -o $(podir)/filetypes.pot

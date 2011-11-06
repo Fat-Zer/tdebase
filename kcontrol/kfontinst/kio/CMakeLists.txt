@@ -34,6 +34,6 @@ install( FILES folder.desktop system-folder.desktop package.desktop DESTINATION 
 
 tde_add_kpart( kio_fonts AUTOMOC
   SOURCES KioFonts.cpp
-  LINK kxftconfig-static kfontinst-shared kdesu-shared
+  LINK kxftconfig-static kfontinst-shared tdesu-shared
   DESTINATION ${PLUGIN_INSTALL_DIR}
 )

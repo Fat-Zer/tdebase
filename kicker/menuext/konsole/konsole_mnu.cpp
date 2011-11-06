@@ -258,7 +258,7 @@ void KonsoleMenu::slotExec(int id)
         args << "-r";
         args << screenList[id - sessionList.count()];
     }
-    KApplication::kdeinitExec("konsole", args);
+    KApplication::tdeinitExec("konsole", args);
     return;
 }
 
@@ -273,7 +273,7 @@ void KonsoleMenu::launchProfile(int id)
     // this is a session, not a bookmark, so execute that instead
    TQStringList args;
    args << "--profile" << m_profiles[id];
-   kapp->kdeinitExec("konsole", args);
+   kapp->tdeinitExec("konsole", args);
 }
 
 KURL KonsoleMenu::baseURL() const
@@ -292,7 +292,7 @@ void KonsoleMenu::newSession(const TQString& sURL, const TQString& title)
     {
         args << "-T" << title;
         args << "--workdir" << url.path();
-        KApplication::kdeinitExec("konsole", args);
+        KApplication::tdeinitExec("konsole", args);
         return;
     }
     else if ((!url.protocol().isEmpty()) && (url.hasHost()))
@@ -305,7 +305,7 @@ void KonsoleMenu::newSession(const TQString& sURL, const TQString& title)
             args << "-l" << url.user().latin1();
         }
         args << host.latin1();
-        KApplication::kdeinitExec("konsole", args);
+        KApplication::tdeinitExec("konsole", args);
         return;
     }
     /*

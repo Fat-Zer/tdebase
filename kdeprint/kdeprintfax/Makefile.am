@@ -1,23 +1,23 @@
 INCLUDES= $(all_includes)
 
-bin_PROGRAMS = kdeprintfax
-kdeprintfax_SOURCES = main.cpp kdeprintfax.cpp faxab.cpp faxctrl.cpp confgeneral.cpp configdlg.cpp \
+bin_PROGRAMS = tdeprintfax
+tdeprintfax_SOURCES = main.cpp tdeprintfax.cpp faxab.cpp faxctrl.cpp confgeneral.cpp configdlg.cpp \
 		      conffax.cpp confsystem.cpp conffilters.cpp filterdlg.cpp defcmds.cpp
-kdeprintfax_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_KDECORE) $(LIB_KDEUI) -lkdefx $(LIB_KIO) -lktexteditor
-kdeprintfax_LDADD   = $(LIB_KDEUI) $(LIB_KIO) $(LIB_KDEPRINT) -lkabc
-kdeprintfax_METASOURCES = AUTO
+tdeprintfax_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_KDECORE) $(LIB_KDEUI) -ltdefx $(LIB_KIO) -lktexteditor
+tdeprintfax_LDADD   = $(LIB_KDEUI) $(LIB_KIO) $(LIB_KDEPRINT) -lkabc
+tdeprintfax_METASOURCES = AUTO
 
-xdg_apps_DATA = kdeprintfax.desktop
+xdg_apps_DATA = tdeprintfax.desktop
 
-uidir = $(kde_datadir)/kdeprintfax
-ui_DATA = kdeprintfaxui.rc faxfilters
+uidir = $(kde_datadir)/tdeprintfax
+ui_DATA = tdeprintfaxui.rc faxfilters
 
 private_SCRIPTS = anytops
-privatedir = $(kde_datadir)/kdeprintfax
+privatedir = $(kde_datadir)/tdeprintfax
 
 messages: rc.cpp
-	$(XGETTEXT) `find . -name \*.h -o -name \*.cpp -o -name \*.cc` -o $(podir)/kdeprintfax.pot
+	$(XGETTEXT) `find . -name \*.h -o -name \*.cpp -o -name \*.cc` -o $(podir)/tdeprintfax.pot
 
-KDE_ICON = kdeprintfax
+KDE_ICON = tdeprintfax
 pic_ICON = abentry
-picdir = $(kde_datadir)/kdeprintfax/icons
+picdir = $(kde_datadir)/tdeprintfax/icons

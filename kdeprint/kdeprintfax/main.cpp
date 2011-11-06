@@ -1,5 +1,5 @@
 /*
- *   kdeprintfax - a interface to fax-packages
+ *   tdeprintfax - a interface to fax-packages
  *   Copyright (C) 2001  Michael Goffioul
  *
  *   This program is free software; you can redistribute it and/or modify
@@ -18,7 +18,7 @@
  *
  */
 
-#include "kdeprintfax.h"
+#include "tdeprintfax.h"
 
 #include <tqfile.h>
 #include <kcmdlineargs.h>
@@ -30,7 +30,7 @@ TQString debugFlag;
 int oneShotFlag = false;
 
 static const char description[] =
-	I18N_NOOP("A small fax utility to be used with kdeprint.");
+	I18N_NOOP("A small fax utility to be used with tdeprint.");
 // INSERT A DESCRIPTION FOR YOUR APPLICATION HERE
 
 
@@ -47,10 +47,10 @@ static KCmdLineOptions options[] =
 int main(int argc, char *argv[])
 {
 
-  KAboutData aboutData( "kdeprintfax", I18N_NOOP("KdeprintFax"),
+  KAboutData aboutData( "tdeprintfax", I18N_NOOP("KdeprintFax"),
     "1.0", description, KAboutData::License_GPL,
     "(c), 2001 Michael Goffioul", 0, "http://printing.kde.org");
-  aboutData.addAuthor("Michael Goffioul",0, "kdeprint@swing.be");
+  aboutData.addAuthor("Michael Goffioul",0, "tdeprint@swing.be");
   KCmdLineArgs::init( argc, argv, &aboutData );
   KCmdLineArgs::addCmdLineOptions( options ); // Add our own options.
   KApplication::addCmdLineOptions();

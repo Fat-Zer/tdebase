@@ -28,6 +28,6 @@ install( FILES menuapplet.desktop DESTINATION ${DATA_INSTALL_DIR}/kicker/applets
 
 tde_add_kpart( menu_panelapplet AUTOMOC
   SOURCES menuapplet.cpp menuapplet.skel
-  LINK kdeui-shared
+  LINK tdeui-shared
   DESTINATION ${PLUGIN_INSTALL_DIR}
 )

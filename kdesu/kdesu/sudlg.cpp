@@ -1,6 +1,6 @@
 /* vi: ts=8 sts=4 sw=4
  *
- * This file is part of the KDE project, module kdesu.
+ * This file is part of the KDE project, module tdesu.
  * Copyright (C) 2000 Geert Jansen <jansen@kde.org>
  */
 
@@ -11,7 +11,7 @@
 #include <klocale.h>
 #include <kmessagebox.h>
 
-#include <kdesu/su.h>
+#include <tdesu/su.h>
 #include "sudlg.h"
 
 KDEsuDialog::KDEsuDialog(TQCString user, TQCString auth_user, bool enableKeep,const TQString& icon, bool withIgnoreButton)

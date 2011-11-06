@@ -10,7 +10,7 @@
   - Write our own askpass program using kde
   - set env SSH_ASKPASS_PROGRAM before launching
     -how to do this? KProcess doesn't give us access to env variables.
-  - Our askpass program can probably talk to the kdesu daemon to implement caching.
+  - Our askpass program can probably talk to the tdesu daemon to implement caching.
 - chmod() succeeds, but konqueror always puts permissions to 0 afterwards. The properties
   dialog is right though.
   Nevermind - ftp ioslave does this too! Maybe a bug with konqueror.

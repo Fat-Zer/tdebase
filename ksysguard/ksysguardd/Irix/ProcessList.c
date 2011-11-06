@@ -44,7 +44,7 @@
 #include "ProcessList.h"
 
 #define BUFSIZE 1024
-#define KDEINITLEN strlen("kdeinit: ")
+#define KDEINITLEN strlen("tdeinit: ")
 
 typedef struct {
 	int	alive;		/*  for "garbage collection"	  	*/

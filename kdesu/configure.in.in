@@ -46,17 +46,17 @@ AC_MSG_RESULT($nogroup)
 AC_SUBST(nogroup)
 AC_CHECK_FUNCS(getpeereid)
 
-AC_ARG_WITH(sudo-kdesu-backend,
-	    AC_HELP_STRING([--with-sudo-kdesu-backend],
-			   [use sudo as backend for kdesu (default is su)]),
+AC_ARG_WITH(sudo-tdesu-backend,
+	    AC_HELP_STRING([--with-sudo-tdesu-backend],
+			   [use sudo as backend for tdesu (default is su)]),
 [
     if test x$withval = xyes; then
-        use_kdesu_backend="sudo"
+        use_tdesu_backend="sudo"
     else
-        use_kdesu_backend="su"
+        use_tdesu_backend="su"
     fi
 ],
-    use_kdesu_backend="su"
+    use_tdesu_backend="su"
 )
 
-AC_DEFINE_UNQUOTED(DEFAULT_SUPER_USER_COMMAND, "$use_kdesu_backend", [Use su or sudo])
+AC_DEFINE_UNQUOTED(DEFAULT_SUPER_USER_COMMAND, "$use_tdesu_backend", [Use su or sudo])

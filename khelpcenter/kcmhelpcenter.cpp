@@ -468,7 +468,7 @@ void KCMHelpCenter::startIndexProcess()
   mProcess = new KProcess;
 
   if ( mRunAsRoot ) {
-    *mProcess << "kdesu" << "--nonewdcop";
+    *mProcess << "tdesu" << "--nonewdcop";
     kdDebug() << "Run as root" << endl;
   }
 

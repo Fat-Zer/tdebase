@@ -33,14 +33,14 @@ extern "C"
     // kded modules in such case.
     TQCString multiHead = getenv("KDE_MULTIHEAD");
     if (multiHead.lower() == "true")
-        kapp->kdeinitExec( "khotkeys" );
+        kapp->tdeinitExec( "khotkeys" );
     else
         {
         DCOPRef ref( "kded", "kded" );
         if( !ref.call( "loadModule", TQCString( "khotkeys" )))
             {
             kdWarning( 1217 ) << "Loading of khotkeys module failed." << endl;
-            kapp->kdeinitExec( "khotkeys" );
+            kapp->tdeinitExec( "khotkeys" );
             }
         }
     }

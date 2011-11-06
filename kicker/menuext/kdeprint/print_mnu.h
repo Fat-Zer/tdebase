@@ -25,7 +25,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #define _print_mnu_h_
 
 #include <kpanelmenu.h>
-#include <kdeprint/kpreloadobject.h>
+#include <tdeprint/kpreloadobject.h>
 
 class PrintMenu : public KPanelMenu, public KPReloadObject
 {

@@ -18,7 +18,7 @@
 /*
 DEBUGGING
 We are pretty much left with kdDebug messages for debugging. We can't use a gdb
-as described in the ioslave DEBUG.howto because kdeinit has to run in a terminal.
+as described in the ioslave DEBUG.howto because tdeinit has to run in a terminal.
 Ssh will detect this terminal and ask for a password there, but will just get garbage.
 So we can't connect.
 */

@@ -40,7 +40,7 @@
 <!ENTITY kio-thumbnail SYSTEM "thumbnail.docbook">
 <!ENTITY kio-webdav SYSTEM "webdav.docbook">
 <!ENTITY kio-webdavs SYSTEM "webdavs.docbook">
-<!ENTITY kdeprint "<application>KDEPrint</application>">
+<!ENTITY tdeprint "<application>KDEPrint</application>">
 <!ENTITY Ferdinand.Gassauer '<personname><firstname>Ferdinand</firstname><surname>Gassauer</surname></personname>'>
 <!ENTITY Ferdinand.Gassauer.mail '<email>f.gassauer@aon.at</email>'>
 <!ENTITY % addindex "IGNORE">

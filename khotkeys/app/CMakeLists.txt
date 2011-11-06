@@ -31,14 +31,14 @@ install( FILES khotkeys.desktop DESTINATION ${SERVICES_INSTALL_DIR}/kded )
 
 tde_add_kpart( kded_khotkeys AUTOMOC
   SOURCES kded.cpp kded.skel
-  LINK khotkeys_shared-shared kdeinit_kded-shared
+  LINK khotkeys_shared-shared tdeinit_kded-shared
   DESTINATION ${PLUGIN_INSTALL_DIR}
 )
 
 
-##### khotkeys (kdeinit) ########################
+##### khotkeys (tdeinit) ########################
 
-tde_add_kdeinit_executable( khotkeys AUTOMOC
+tde_add_tdeinit_executable( khotkeys AUTOMOC
   SOURCES app.cpp app.skel
   LINK khotkeys_shared-shared
 )

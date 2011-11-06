@@ -33,7 +33,7 @@ install( FILES kgreeterplugin.h DESTINATION ${INCLUDE_INSTALL_DIR} )
 
 tde_add_kpart( kgreet_classic AUTOMOC
   SOURCES kgreet_classic.cpp
-  LINK kdeui-shared
+  LINK tdeui-shared
   DESTINATION ${PLUGIN_INSTALL_DIR}
 )
 
@@ -42,7 +42,7 @@ tde_add_kpart( kgreet_classic AUTOMOC
 
 tde_add_kpart( kgreet_pam AUTOMOC
   SOURCES kgreet_pam.cpp
-  LINK kdeui-shared
+  LINK tdeui-shared
   DESTINATION ${PLUGIN_INSTALL_DIR}
 )
 
@@ -51,7 +51,7 @@ tde_add_kpart( kgreet_pam AUTOMOC
 
 tde_add_kpart( kgreet_winbind AUTOMOC
   SOURCES kgreet_winbind.cpp
-  LINK kdeui-shared
+  LINK tdeui-shared
   DESTINATION ${PLUGIN_INSTALL_DIR}
 )
 

@@ -28,6 +28,6 @@ install( FILES xinerama.desktop DESTINATION ${APPS_INSTALL_DIR}/.hidden )
 
 tde_add_kpart( kcm_xinerama AUTOMOC
   SOURCES kcmxinerama.cpp xineramawidget.ui
-  LINK kdeui-shared
+  LINK tdeui-shared
   DESTINATION ${PLUGIN_INSTALL_DIR}
 )

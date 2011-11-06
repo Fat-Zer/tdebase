@@ -1515,7 +1515,7 @@ void ClockApplet::contextMenuActivated(int result)
             preferences();
             break;
         case 103:
-            proc << locate("exe", "kdesu");
+            proc << locate("exe", "tdesu");
             proc << "--nonewdcop";
             proc << TQString("%1 kde-clock.desktop --lang %2")
                 .arg(locate("exe", "kcmshell"))

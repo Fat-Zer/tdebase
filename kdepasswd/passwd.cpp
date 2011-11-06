@@ -2,7 +2,7 @@
  *
  * $Id$
  *
- * This file is part of the KDE project, module kdesu.
+ * This file is part of the KDE project, module tdesu.
  * Copyright (C) 1999,2000 Geert Jansen <jansen@kde.org>
  * 
  * passwd.cpp: Change a user's password.
@@ -28,7 +28,7 @@
 #include <kdebug.h>
 #include <kstandarddirs.h>
 
-#include <kdesu/process.h>
+#include <tdesu/process.h>
 #include "passwd.h"
 
 

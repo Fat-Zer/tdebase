@@ -2,7 +2,7 @@ AM_CPPFLAGS = -DQT_NO_CAST_ASCII
 
 bin_PROGRAMS= 
 lib_LTLIBRARIES = 
-kdeinit_LTLIBRARIES = kfmclient.la
+tdeinit_LTLIBRARIES = kfmclient.la
 
 INCLUDES= -I.. $(all_includes)
 kfmclient_la_LDFLAGS = $(all_libraries) -module -avoid-version

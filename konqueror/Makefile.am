@@ -6,7 +6,7 @@ SUBDIRS = . client iconview listview keditbookmarks shellcmdplugin about pics si
 
 bin_PROGRAMS =
 lib_LTLIBRARIES =
-kdeinit_LTLIBRARIES = konqueror.la
+tdeinit_LTLIBRARIES = konqueror.la
 
 noinst_LTLIBRARIES = libkonqueror_intern.la
 konqdatadir = $(kde_datadir)/konqueror

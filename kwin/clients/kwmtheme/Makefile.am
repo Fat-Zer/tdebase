@@ -5,7 +5,7 @@ kde_module_LTLIBRARIES = kwin3_kwmtheme.la
 
 kwin3_kwmtheme_la_SOURCES = kwmthemeclient.cpp
 kwin3_kwmtheme_la_LDFLAGS = $(all_libraries) $(KDE_PLUGIN) -module
-kwin3_kwmtheme_la_LIBADD  = -lkdecorations
+kwin3_kwmtheme_la_LIBADD  = -ltdecorations
 
 METASOURCES = AUTO
 noinst_HEADERS = kwmthemeclient.h

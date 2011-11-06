@@ -2,7 +2,7 @@ kde_module_LTLIBRARIES = kcm_performance.la
 
 kcm_performance_la_SOURCES = kcmperformance.cpp konqueror.cpp konqueror_ui.ui system.cpp system_ui.ui
 kcm_performance_la_LDFLAGS  = $(all_libraries) -module -avoid-version -no-undefined
-kcm_performance_la_LIBADD = -lkdeui
+kcm_performance_la_LIBADD = -ltdeui
 AM_CPPFLAGS= $(all_includes) 
 
 METASOURCES = AUTO

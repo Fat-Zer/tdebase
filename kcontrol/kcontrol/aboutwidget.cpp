@@ -111,9 +111,9 @@ void AboutWidget::updatePixmap()
     TQTextStream t(  &f );
     TQString res = t.read();
 
-    res = res.arg(  locate(  "data", "kdeui/about/kde_infopage.css" ) );
+    res = res.arg(  locate(  "data", "tdeui/about/kde_infopage.css" ) );
     if (  kapp->reverseLayout() )
-        res = res.arg(  "@import \"%1\";" ).arg(  locate(  "data", "kdeui/about/kde_infopage_rtl.css" ) );
+        res = res.arg(  "@import \"%1\";" ).arg(  locate(  "data", "tdeui/about/kde_infopage_rtl.css" ) );
     else
         res = res.arg(  "" );
 

@@ -35,7 +35,7 @@ set_source_files_properties( keramik.cpp
 
 tde_add_kpart( kwin3_keramik AUTOMOC
   SOURCES keramik.cpp
-  LINK kdecorations-shared kdeui-shared
+  LINK tdecorations-shared tdeui-shared
   DESTINATION ${PLUGIN_INSTALL_DIR}
 )
 

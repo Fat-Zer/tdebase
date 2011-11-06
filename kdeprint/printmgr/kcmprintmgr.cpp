@@ -1,6 +1,6 @@
 /*
  *  This file is part of the KDE libraries
- *  Copyright (c) 2001 Michael Goffioul <kdeprint@swing.be>
+ *  Copyright (c) 2001 Michael Goffioul <tdeprint@swing.be>
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Library General Public
@@ -18,7 +18,7 @@
  **/
 
 #include "kcmprintmgr.h"
-#include "kdeprint/kmmainview.h"
+#include "tdeprint/kmmainview.h"
 
 #include <tqlayout.h>
 
@@ -51,7 +51,7 @@ KCMPrintMgr::KCMPrintMgr(TQWidget *parent, const char *name, const TQStringList 
 	  new KAboutData(I18N_NOOP("kcmprintmgr"), I18N_NOOP("KDE Printing Management"),
                   0, 0, KAboutData::License_GPL,
                   I18N_NOOP("(c) 2000 - 2002 Michael Goffioul"));
-	about->addAuthor("Michael Goffioul", 0, "kdeprint@swing.be");
+	about->addAuthor("Michael Goffioul", 0, "tdeprint@swing.be");
 	setAboutData(about);
 }
 

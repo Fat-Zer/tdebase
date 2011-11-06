@@ -348,7 +348,7 @@ anything other than the originally supported &OS;s: &Microsoft; &Windows; and
 &MacOS;.  Through its brilliant move to fully support and utilize
 the existing &PPD; specification, &CUPS; now gives the power to use
 all features of modern printers to users of &Linux; and &Linux;-like
-systems.  &kdeprint; makes its usage even more comfortable than the
+systems.  &tdeprint; makes its usage even more comfortable than the
 &CUPS; developers ever dreamed of.</para>
 
 <para>&CUPS; can use original &Windows; &PPD;s, distributed by the
@@ -568,7 +568,7 @@ internet and printed.</para>
 
 <para>&CUPS; is the most advanced implementation of &IPP; on all &OS;
 platforms.  That makes &CUPS; a crucial ally to help "conquer the
-desktop" for projects like &kde;. &kdeprint; is the best utility to
+desktop" for projects like &kde;. &tdeprint; is the best utility to
 make &CUPS; core functionality available to &kde; Desktop
 users.</para>
 

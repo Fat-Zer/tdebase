@@ -36,12 +36,12 @@ install( FILES ksmserver.upd DESTINATION ${KCONF_UPDATE_INSTALL_DIR} )
 install( FILES move_session_config.sh DESTINATION ${KCONF_UPDATE_INSTALL_DIR} )
 
 
-##### ksmserver (kdeinit) #######################
+##### ksmserver (tdeinit) #######################
 
-tde_add_kdeinit_executable( ksmserver AUTOMOC
+tde_add_tdeinit_executable( ksmserver AUTOMOC
   SOURCES
     main.cpp server.cpp shutdowndlg.cpp startupdlg.cpp
     legacy.cpp startup.cpp shutdown.cpp client.cpp
     KSMServerInterface.skel server.skel timed.ui
-  LINK dmctl-static kdeui-shared krsync-shared ${HAL_LIBRARIES} ${DBUS_TQT_LIBRARIES}
+  LINK dmctl-static tdeui-shared krsync-shared ${HAL_LIBRARIES} ${DBUS_TQT_LIBRARIES}
 )

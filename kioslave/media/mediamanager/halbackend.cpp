@@ -1079,37 +1079,37 @@ bool HALBackend::setMountoptions(const TQString &name, const TQStringList &optio
     return true;
 }
 
-TQString startKdeSudoProcess(const TQString& kdesudoPath, const TQString& command,
+TQString startKdeSudoProcess(const TQString& tdesudoPath, const TQString& command,
         const TQString& dialogCaption, const TQString& dialogComment)
 {
-    KProcess kdesudoProcess;
+    KProcess tdesudoProcess;
 
-    kdesudoProcess << kdesudoPath
+    tdesudoProcess << tdesudoPath
 		<< "-d"
 		<< "--noignorebutton"
 		<< "--caption" << dialogCaption
 		<< "--comment" << dialogComment
 		<< "-c" << command;
 
-    // @todo handle kdesudo output
-    kdesudoProcess.start(KProcess::Block);
+    // @todo handle tdesudo output
+    tdesudoProcess.start(KProcess::Block);
 
     return TQString();
 }
 
-TQString startKdeSuProcess(const TQString& kdesuPath, const TQString& command,
+TQString startKdeSuProcess(const TQString& tdesuPath, const TQString& command,
         const TQString& dialogCaption)
 {
-    KProcess kdesuProcess;
+    KProcess tdesuProcess;
 
-    kdesuProcess << kdesuPath
+    tdesuProcess << tdesuPath
 		<< "-d"
 		<< "--noignorebutton"
 		<< "--caption" << dialogCaption
 		<< "-c" << command;
 
-    // @todo handle kdesu output
-    kdesuProcess.start(KProcess::Block);
+    // @todo handle tdesu output
+    tdesuProcess.start(KProcess::Block);
 
     return TQString();
 }
@@ -1118,15 +1118,15 @@ TQString startPrivilegedProcess(const TQString& command, const TQString& dialogC
 {
     TQString error;
 
-    TQString kdesudoPath = KStandardDirs::findExe("kdesudo");
+    TQString tdesudoPath = KStandardDirs::findExe("tdesudo");
 
-    if (!kdesudoPath.isEmpty())
-        error = startKdeSudoProcess(kdesudoPath, command, dialogCaption, dialogComment);
+    if (!tdesudoPath.isEmpty())
+        error = startKdeSudoProcess(tdesudoPath, command, dialogCaption, dialogComment);
     else {
-        TQString kdesuPath = KStandardDirs::findExe("kdesu");
+        TQString tdesuPath = KStandardDirs::findExe("tdesu");
 
-        if (!kdesuPath.isEmpty())
-            error = startKdeSuProcess(kdesuPath, command, dialogCaption);
+        if (!tdesuPath.isEmpty())
+            error = startKdeSuProcess(tdesuPath, command, dialogCaption);
     }
 
     return error;

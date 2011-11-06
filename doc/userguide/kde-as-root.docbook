@@ -19,14 +19,14 @@
 
 <para>Some &Linux; distributions have tried to stress this point so much that they have disabled the <systemitem class="username">root</systemitem> account altogether, and instead use the <command>sudo</command> model. Nevertheless, the basic security model in <command>sudo</command> is the same as <command>su</command>, and thus they share the same security strengths and weaknesses, essentially.</para>
 
-<para>If you should ever need to run a program with Super User privileges, then it is always recommend that you use &kdesu;. From &konsole; or from hitting <keycombo action="simul">&Alt;<keycap>F2</keycap></keycombo>, enter <userinput>kdesu <replaceable>application</replaceable></userinput>, and the application will be run with the appropriate Super User privileges. </para>
+<para>If you should ever need to run a program with Super User privileges, then it is always recommend that you use &tdesu;. From &konsole; or from hitting <keycombo action="simul">&Alt;<keycap>F2</keycap></keycombo>, enter <userinput>tdesu <replaceable>application</replaceable></userinput>, and the application will be run with the appropriate Super User privileges. </para>
 
-<para>Even if you have set up your system to use <command>sudo</command>, or you are on a distribution that uses <command>sudo</command>, such as &kubuntu;, you should still use &kdesu;. The program will be appropriately modified by the developers to use the correct settings. You should not, however, ever use <command>sudo <replaceable>application</replaceable></command> to run an application with <systemitem class="username">root</systemitem> permissions; it can derange permissions of certain configuration files for a program. Running a graphical applications as <systemitem class="username">root</systemitem> in general is not a good idea, but using &kdesu; will always be your safest bet with it.</para>
+<para>Even if you have set up your system to use <command>sudo</command>, or you are on a distribution that uses <command>sudo</command>, such as &kubuntu;, you should still use &tdesu;. The program will be appropriately modified by the developers to use the correct settings. You should not, however, ever use <command>sudo <replaceable>application</replaceable></command> to run an application with <systemitem class="username">root</systemitem> permissions; it can derange permissions of certain configuration files for a program. Running a graphical applications as <systemitem class="username">root</systemitem> in general is not a good idea, but using &tdesu; will always be your safest bet with it.</para>
 
 <!-- Add links to "further reading" here -->
 <itemizedlist>
 <title>Related Information</title>
-<listitem><para><ulink url="help:kdesu">&kdesu; Handbook</ulink></para>
+<listitem><para><ulink url="help:tdesu">&tdesu; Handbook</ulink></para>
 </listitem>
 </itemizedlist>
 

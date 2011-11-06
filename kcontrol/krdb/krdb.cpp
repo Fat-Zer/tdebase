@@ -88,7 +88,7 @@ static void applyGtkStyles(bool active, int version)
    if (!active)
       ::unlink(TQFile::encodeName(gtkkde));
 
-   // Pass env. var to kdeinit.
+   // Pass env. var to tdeinit.
    TQCString name = gtkEnvVar(version);
    TQCString value = TQFile::encodeName(list.join(":"));
    TQByteArray params;

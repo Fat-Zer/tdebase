@@ -12,18 +12,18 @@
 </refentryinfo>
 
 <refmeta>
-<refentrytitle><command>kdesu</command></refentrytitle>
+<refentrytitle><command>tdesu</command></refentrytitle>
 <manvolnum>1</manvolnum>
 </refmeta>
 
 <refnamediv>
-<refname><command>kdesu</command></refname>
+<refname><command>tdesu</command></refname>
 <refpurpose>Runs a program with elevated privileges</refpurpose>
 </refnamediv>
 
 <refsynopsisdiv>
 <cmdsynopsis>
-<command>kdesu</command>
+<command>tdesu</command>
 
 <group choice="opt"><option>-c</option></group>
 <group choice="opt"><option>-d</option></group>
@@ -43,7 +43,7 @@ user</replaceable></group>
           <arg rep="repeat"><replaceable></replaceable></arg></arg></group>
 </cmdsynopsis>
 <cmdsynopsis>
-<command>kdesu</command>
+<command>tdesu</command>
 <arg choice="opt">KDE Generic Options</arg>
 <arg choice="opt">Qt Generic Options</arg>
 </cmdsynopsis>
@@ -51,13 +51,13 @@ user</replaceable></group>
 
 <refsect1>
 <title>Description</title>
-<para>&kdesu; is a graphical front end for the
+<para>&tdesu; is a graphical front end for the
 &UNIX; <command>su</command> command for the K Desktop Environment.
 It allows you to run a program as different user by supplying the
-password for that user. &kdesu; is an unprivileged program; it uses
+password for that user. &tdesu; is an unprivileged program; it uses
 the system's <command>su</command>.</para>
 
-<para>&kdesu; has one additional feature: it can optionally remember passwords
+<para>&tdesu; has one additional feature: it can optionally remember passwords
 for you. If you are using this feature, you only need to enter the
 password once for each command.</para>
 
@@ -73,7 +73,7 @@ from <filename>.desktop</filename> files.</para>
 <term><option>-c <replaceable>program</replaceable></option></term>
 <listitem><para>This specifies the program to run as root. It has to be passed
 in one argument. So if, for example, you want to start a new file manager, you
-would enter at the prompt: <userinput><command>kdesu <option>-c <replaceable>kfm
+would enter at the prompt: <userinput><command>tdesu <option>-c <replaceable>kfm
 -sw</replaceable></option></command></userinput></para></listitem>
 </varlistentry>
 <varlistentry>
@@ -82,10 +82,10 @@ would enter at the prompt: <userinput><command>kdesu <option>-c <replaceable>kfm
 </varlistentry>
 <varlistentry>
 <term><option>-f <replaceable>file</replaceable></option></term>
-<listitem><para>This option allow efficient use of &kdesu; in
-<filename>.desktop</filename> files. It tells &kdesu; to examine the
+<listitem><para>This option allow efficient use of &tdesu; in
+<filename>.desktop</filename> files. It tells &tdesu; to examine the
 file specified by <parameter>file</parameter>. If this file is
-writable by the current user, &kdesu; will execute the command as the
+writable by the current user, &tdesu; will execute the command as the
 current user. If it is not writable, the command is executed as user
 <parameter>user</parameter> (defaults to root).</para>
 <para><parameter>file</parameter> is evaluated like this: if
@@ -93,7 +93,7 @@ current user. If it is not writable, the command is executed as user
 taken as an absolute filename. Otherwise, it is taken as the name of a
 global &kde; configuration file. For example: to configure the K display
 manager, <application>kdm</application>, you could issue
-<command>kdesu <option>-c kdmconfig -f
+<command>tdesu <option>-c kdmconfig -f
 kdmrc</option></command></para></listitem>
 </varlistentry>
 <varlistentry>
@@ -124,9 +124,9 @@ password</guilabel> checkbox in the password dialog.</para></listitem>
 
 <varlistentry>
 <term><option>-s</option></term>
-<listitem><para>Stop the kdesu daemon. This is the daemon that caches
+<listitem><para>Stop the tdesu daemon. This is the daemon that caches
 successful passwords in the background.  This feature may also be disabled with
-<option>-n</option> when &kdesu; is initially run.</para></listitem>
+<option>-n</option> when &tdesu; is initially run.</para></listitem>
 </varlistentry>
 <varlistentry>
 <term><option>-t</option></term>
@@ -136,7 +136,7 @@ standard <command>su</command> instead.</para> </listitem>
 </varlistentry>
 <varlistentry>
 <term><option>-u</option> <replaceable> user</replaceable></term>
-<listitem><para>While the most common use for &kdesu; is to run a command as
+<listitem><para>While the most common use for &tdesu; is to run a command as
 the superuser, you can supply any user name and the appropriate
 password.</para>
 </listitem>
@@ -151,10 +151,10 @@ password.</para>
 <para>su(1)</para>
 
 <para>More detailed user documentation is available from <ulink
-url="help:/kdesu">help:/kdesu</ulink>
+url="help:/tdesu">help:/tdesu</ulink>
 (either enter this <acronym>URL</acronym> into &konqueror;, or run
 <userinput><command>khelpcenter</command>
-<parameter>help:/kdesu</parameter></userinput>).</para>
+<parameter>help:/tdesu</parameter></userinput>).</para>
 
 </refsect1>
 
@@ -163,13 +163,13 @@ url="help:/kdesu">help:/kdesu</ulink>
 <para>Run <command>kfmclient</command> as user <systemitem
 class="username">jim</systemitem>, and show the &konqueror; icon in the
 password dialog:</para>
-<screen><userinput><command>kdesu</command> <option>-u jim</option> <option>-i konqueror</option> <command>kfmclient</command></userinput></screen>
+<screen><userinput><command>tdesu</command> <option>-u jim</option> <option>-i konqueror</option> <command>kfmclient</command></userinput></screen>
 
 </refsect1>
 
 <refsect1>
 <title>Authors</title>
-<para>&kdesu; was written by
+<para>&tdesu; was written by
 <personname><firstname>Geert</firstname><surname>Jansen</surname></personname> <email>jansen@kde.org</email>
 and <personname><firstname>Pietro</firstname><surname>Iglio</surname></personname>
 <email>iglio@fub.it</email>. 

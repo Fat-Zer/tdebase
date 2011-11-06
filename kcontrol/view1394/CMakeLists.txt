@@ -30,6 +30,6 @@ install( FILES oui.db DESTINATION ${DATA_INSTALL_DIR}/kcmview1394 )
 
 tde_add_kpart( kcm_view1394 AUTOMOC
   SOURCES view1394widget.ui view1394.cpp
-  LINK kdeui-shared ${LIBRAW1394_LIBRARIES}
+  LINK tdeui-shared ${LIBRAW1394_LIBRARIES}
   DESTINATION ${PLUGIN_INSTALL_DIR}
 )

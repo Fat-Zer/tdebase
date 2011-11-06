@@ -25,6 +25,6 @@ link_directories(
 tde_add_executable( krootbacking AUTOMOC
   SOURCES
     main.cpp krootbacking.cpp
-  LINK kdeui-shared
+  LINK tdeui-shared
   DESTINATION ${BIN_INSTALL_DIR}
 )

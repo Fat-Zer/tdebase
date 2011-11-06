@@ -54,12 +54,12 @@ set( ${target}_SRCS
 
 tde_add_kpart( ${target} AUTOMOC
   SOURCES ${${target}_SRCS}
-  LINK kdeinit_kded-shared
+  LINK tdeinit_kded-shared
   DESTINATION ${PLUGIN_INSTALL_DIR}
 )
 
 
-##### konsole (kdeinit) #########################
+##### konsole (tdeinit) #########################
 
 set( target konsole )
 
@@ -72,7 +72,7 @@ set( ${target}_SRCS
   zmodem_dialog.cpp printsettings.cpp
 )
 
-tde_add_kdeinit_executable( ${target} AUTOMOC
+tde_add_tdeinit_executable( ${target} AUTOMOC
   SOURCES ${${target}_SRCS}
-  LINK kdeprint-shared kio-shared ${XRENDER_LIBRARIES} dl
+  LINK tdeprint-shared kio-shared ${XRENDER_LIBRARIES} dl
 )

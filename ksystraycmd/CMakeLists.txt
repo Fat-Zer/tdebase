@@ -24,6 +24,6 @@ link_directories(
 
 tde_add_executable( ksystraycmd AUTOMOC
   SOURCES ksystraycmd.cpp main.cpp
-  LINK kdeui-shared
+  LINK tdeui-shared
   DESTINATION ${BIN_INSTALL_DIR}
 )

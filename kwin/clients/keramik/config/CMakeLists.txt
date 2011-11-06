@@ -24,6 +24,6 @@ link_directories(
 
 tde_add_kpart( kwin_keramik_config AUTOMOC
   SOURCES config.cpp keramikconfig.ui
-  LINK kdeui-shared
+  LINK tdeui-shared
   DESTINATION ${PLUGIN_INSTALL_DIR}
 )

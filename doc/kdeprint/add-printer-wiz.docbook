@@ -20,7 +20,7 @@ your box.</para>
 change a setting. </para>
 
 <screenshot>
-<screeninfo>The &kdeprint; wizard introduction screen</screeninfo>
+<screeninfo>The &tdeprint; wizard introduction screen</screeninfo>
 <mediaobject>
 <imageobject>
 <imagedata fileref="cupsaddprinterwizard1.png"
@@ -93,13 +93,13 @@ configure your network settings directly.</para>
 decide which setting could be useful. </para>
 
 <screenshot>
-<screeninfo>&kdeprint; wizard network scan</screeninfo>
+<screeninfo>&tdeprint; wizard network scan</screeninfo>
 <mediaobject>
 <imageobject>
 <imagedata fileref="cupsaddprinterwizard3_networkscan.png"
 format="PNG"/></imageobject>
 <textobject>
-<phrase>In the &kdeprint; wizard, you can enter network details
+<phrase>In the &tdeprint; wizard, you can enter network details
 directly, or you can scan the network
 automatically.</phrase></textobject>
 </mediaobject>
@@ -115,14 +115,14 @@ printer with &IPP;), you have an option for scanning the network. Be careful
 when applying this; in some environments network scanning is considered
 to be hostile and harmful!</para>
 
-<para>In the case of <acronym>SMB</acronym>, &kdeprint; will use the
+<para>In the case of <acronym>SMB</acronym>, &tdeprint; will use the
 Samba utilities <command>nmblookup</command> and
 <command>smbclient</command> (which need to be installed for this to
 work) to retrieve the information it presents in a tree
 structure.</para>
 
 <para>In the case of &IPP; (Port 631) and <acronym>TCP</acronym>
-Network/AppSocket (Port 9100) &kdeprint; will try to open the port and,
+Network/AppSocket (Port 9100) &tdeprint; will try to open the port and,
 if successful, send an <command>ipp-get-printer-attribute</command>
 request to the printer. For newer &HP; printers the latter usually
 works, because they support both AppSocket and &IPP;.</para>
@@ -137,13 +137,13 @@ timeout to use.</para>
 your network, if you use the scanning technique.</para>
 
 <screenshot>
-<screeninfo>&kdeprint; wizard network configuration dialog</screeninfo>
+<screeninfo>&tdeprint; wizard network configuration dialog</screeninfo>
 <mediaobject>
 <imageobject>
 <imagedata fileref="cupsaddprinterwizard4_networkscan_config.png"
 format="PNG"/></imageobject>
 <textobject>
-<phrase>In the &kdeprint; wizard, you can enter parameters to have the
+<phrase>In the &tdeprint; wizard, you can enter parameters to have the
 wizard scan parts of your network.</phrase></textobject>
 </mediaobject>
 </screenshot>
@@ -163,7 +163,7 @@ first, then the device model in the right part. This split window shows
 all &PPD;s found by &CUPS; in its standard repository of installable
 &PPD;s.  This repository normally is <filename
 class="directory">/usr/share/cups/model/</filename>. If you want your
-driver to be found automatically by &CUPS; and &kdeprint;, place it in
+driver to be found automatically by &CUPS; and &tdeprint;, place it in
 there.</para>
 
 <!-- Insert Screenshot here:  -->
@@ -215,7 +215,7 @@ url="http://www.linuxprinting.org">http://www.linuxprinting.org</ulink>
 <para>And ask for help. At a later stage, a document detailing the
 differences between the different driver and &PPD; models will appear at
 <ulink
-url="http://kdeprint.sourceforge.net">http://kdeprint.sourceforge.net/</ulink>
+url="http://tdeprint.sourceforge.net">http://tdeprint.sourceforge.net/</ulink>
 Watch out for this!</para>
 
 <para>Via the <guibutton>Other...</guibutton> button you are able to

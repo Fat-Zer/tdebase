@@ -1,7 +1,7 @@
 <?xml version="1.0" ?>
 <!DOCTYPE book PUBLIC "-//KDE//DTD DocBook XML V4.2-Based Variant V1.1//EN"
 "dtd/kdex.dtd" [
-  <!ENTITY kappname "&kdesu;">
+  <!ENTITY kappname "&tdesu;">
   <!ENTITY package "kdebase">
   <!ENTITY % addindex "IGNORE">
   <!ENTITY % English "INCLUDE" > <!-- change language only here -->
@@ -10,7 +10,7 @@
 <book lang="&language;">
 <bookinfo>
 
-<title>The &kdesu; handbook</title>
+<title>The &tdesu; handbook</title>
 
 <authorgroup>
 <author>&Geert.Jansen; &Geert.Jansen.mail;</author>
@@ -28,7 +28,7 @@
 <releaseinfo>1.00.00</releaseinfo>
 
 
-<abstract><para>&kdesu; is a graphical front end for the &UNIX;
+<abstract><para>&tdesu; is a graphical front end for the &UNIX;
 <command>su</command> command.</para></abstract>
 
 <keywordset>
@@ -43,13 +43,13 @@
 <chapter id="introduction">
 <title>Introduction</title>
 
-<para>Welcome to &kdesu;! &kdesu; is a graphical front end for the
+<para>Welcome to &tdesu;! &tdesu; is a graphical front end for the
 &UNIX; <command>su</command> command for the K Desktop Environment.
 It allows you to run a program as different user by supplying the
-password for that user. &kdesu; is an unprivileged program; it uses
+password for that user. &tdesu; is an unprivileged program; it uses
 the system's <command>su</command>.</para>
 
-<para>&kdesu; has one additional feature: it can remember passwords
+<para>&tdesu; has one additional feature: it can remember passwords
 for you. If you are using this feature, you only need to enter the
 password once for each command. See <xref
 linkend="sec-password-keeping"/> for more information on this and a
@@ -63,13 +63,13 @@ glue instead of a pure &GUI; program.</para>
 
 </chapter>
 
-<chapter id="using-kdesu">
-<title>Using &kdesu;</title>
+<chapter id="using-tdesu">
+<title>Using &tdesu;</title>
 
-<para>Usage of &kdesu; is easy. The syntax is like this:</para>
+<para>Usage of &tdesu; is easy. The syntax is like this:</para>
 
 <cmdsynopsis>
-<command>kdesu</command>
+<command>tdesu</command>
 
 <group choice="opt"><option>-c</option></group>
 <group choice="opt"><option>-d</option></group>
@@ -89,7 +89,7 @@ user</replaceable></group>
           <arg rep="repeat"><replaceable></replaceable></arg></arg></group>
 </cmdsynopsis>
 <cmdsynopsis>
-<command>kdesu</command>
+<command>tdesu</command>
 <arg choice="opt">&kde; Generic Options</arg>
 <arg choice="opt">Qt Generic Options</arg>
 </cmdsynopsis>
@@ -101,7 +101,7 @@ user</replaceable></group>
 <term><option>-c <replaceable>program</replaceable></option></term>
 <listitem><para>This specifies the program to run as root. It has to be passed
 in one argument. So if, for example, you want to start a new file manager, you
-would enter at the prompt: <userinput><command>kdesu <option>-c <replaceable>kfm
+would enter at the prompt: <userinput><command>tdesu <option>-c <replaceable>kfm
 -sw</replaceable></option></command></userinput></para></listitem>
 </varlistentry>
 <varlistentry>
@@ -110,10 +110,10 @@ would enter at the prompt: <userinput><command>kdesu <option>-c <replaceable>kfm
 </varlistentry>
 <varlistentry>
 <term><option>-f <replaceable>file</replaceable></option></term>
-<listitem><para>This option allow efficient use of &kdesu; in
-<filename>.desktop</filename> files. It tells &kdesu; to examine the
+<listitem><para>This option allow efficient use of &tdesu; in
+<filename>.desktop</filename> files. It tells &tdesu; to examine the
 file specified by <parameter>file</parameter>. If this file is
-writable by the current user, &kdesu; will execute the command as the
+writable by the current user, &tdesu; will execute the command as the
 current user. If it is not writable, the command is executed as user
 <parameter>user</parameter> (defaults to root).</para>
 <para><parameter>file</parameter> is evaluated like this: if
@@ -121,7 +121,7 @@ current user. If it is not writable, the command is executed as user
 taken as an absolute filename. Otherwise, it is taken as the name of a
 global &kde; configuration file. For example: to configure the K display
 manager, <application>kdm</application>, you could issue
-<command>kdesu <option>-c kdmconfig -f
+<command>tdesu <option>-c kdmconfig -f
 kdmrc</option></command></para></listitem>
 </varlistentry>
 <varlistentry>
@@ -130,7 +130,7 @@ kdmrc</option></command></para></listitem>
 just the name, without any extension.</para>
 <para>For instance to run <command>kfmclient</command> and show the
 &konqueror; icon in the password dialog:</para>
-<screen><userinput><command>kdesu</command>  <option>-i konqueror</option> <command>kfmclient</command></userinput></screen>
+<screen><userinput><command>tdesu</command>  <option>-i konqueror</option> <command>kfmclient</command></userinput></screen>
 </listitem>
 </varlistentry>
 
@@ -155,7 +155,7 @@ password</guilabel> checkbox in the password dialog.</para></listitem>
 
 <varlistentry>
 <term><option>-s</option></term>
-<listitem><para>Stop the kdesu daemon. See <xref
+<listitem><para>Stop the tdesu daemon. See <xref
 linkend="sec-password-keeping"/>.</para></listitem>
 </varlistentry>
 <varlistentry>
@@ -166,7 +166,7 @@ standard <command>su</command> instead.</para> </listitem>
 </varlistentry>
 <varlistentry>
 <term><option>-u</option> <replaceable> user</replaceable></term>
-<listitem><para>While the most common use for &kdesu; is to run a command as
+<listitem><para>While the most common use for &tdesu; is to run a command as
 the superuser, you can supply any user name and the appropriate
 password.</para>
 </listitem>
@@ -183,12 +183,12 @@ password.</para>
 <title>X authentication</title>
 
 <para>The program you execute will run under the root user id and will
-generally have no authority to access your X display. &kdesu; gets
+generally have no authority to access your X display. &tdesu; gets
 around this by adding an authentication cookie for your display to a
 temporary <filename>.Xauthority</filename> file. After the command
 exits, this file is removed. </para>
 
-<para>If you don't use X cookies, you are on your own. &kdesu; will
+<para>If you don't use X cookies, you are on your own. &tdesu; will
 detect this and will not add a cookie but you will have to make sure
 that root is allowed to access to your display.</para>
 
@@ -197,18 +197,18 @@ that root is allowed to access to your display.</para>
 <sect1 id="interface-to-su">
 <title>Interface to <command>su</command></title>
 
-<para>&kdesu; uses the sytem's <command>su</command> for acquiring
-priviliges. In this section, I explain the details of how &kdesu; does
+<para>&tdesu; uses the sytem's <command>su</command> for acquiring
+priviliges. In this section, I explain the details of how &tdesu; does
 this. </para>
 
 <para>Because some <command>su</command> implementations (&ie; the one
 from &RedHat;) don't want to read the password from
-<literal>stdin</literal>, &kdesu; creates a pty/tty pair and executes
+<literal>stdin</literal>, &tdesu; creates a pty/tty pair and executes
 <command>su</command> with it's standard filedescriptors connected to
 the tty.</para>
 
 <para>To execute the command the user selected, rather than an
-interactive shell, &kdesu; uses the <option>-c</option> argument with
+interactive shell, &tdesu; uses the <option>-c</option> argument with
 <command>su</command>. This argument is understood by every shell that
 I know of so it should work portably. <command>su</command> passes
 this <option>-c</option> argument to the target user's shell, and the
@@ -216,9 +216,9 @@ shell executes the program. Example command: <command>su <option>root
 -c <replaceable>the_program</replaceable></option></command>.</para>
 
 <para>Instead of executing the user command directly with
-<command>su</command>, &kdesu; executes a little stub program called
-<application>kdesu_stub</application>. This stub (running as the
-target user), requests some information from &kdesu; over the pty/tty
+<command>su</command>, &tdesu; executes a little stub program called
+<application>tdesu_stub</application>. This stub (running as the
+target user), requests some information from &tdesu; over the pty/tty
 channel (the stub's stdin and stdout) and then executes the user's
 program. The information passed over is: the X display, an X
 authentication cookie (if available), the <envar>PATH</envar> and the
@@ -231,7 +231,7 @@ command line.</para>
 <sect1 id="password-checking">
 <title>Password Checking</title>
 
-<para>&kdesu; will check the password you entered and gives an error
+<para>&tdesu; will check the password you entered and gives an error
 message if it is not correct. The checking is done by executing a test
 program: <filename>/bin/true</filename>. If this succeeds, the
 password is assumed to be correct.</para>
@@ -241,25 +241,25 @@ password is assumed to be correct.</para>
 <sect1 id="sec-password-keeping">
 <title>Password Keeping</title>
 
-<para>For your comfort, &kdesu; implements a <quote>keep
+<para>For your comfort, &tdesu; implements a <quote>keep
 password</quote> feature. If you are interested in security, you
 should read this paragraph.</para>
 
-<para>Allowing &kdesu; to remember passwords opens up a (small)
-security hole in your system. Obviously, &kdesu; does not allow
+<para>Allowing &tdesu; to remember passwords opens up a (small)
+security hole in your system. Obviously, &tdesu; does not allow
 anybody but your user id to use the passwords, but, if done without
 caution, this would lowers <systemitem
 class="username">root</systemitem>'s security level to that of a
 normal user (you). A hacker who breaks into your account, would get
-<systemitem class="username">root</systemitem> access. &kdesu; tries
+<systemitem class="username">root</systemitem> access. &tdesu; tries
 to prevent this. The security scheme it uses is, in my opinion at
 least, reasonably safe and is explained here.</para>
 
-<para>&kdesu; uses a daemon, called
-<application>kdesud</application>. The daemon listens to a &UNIX;
+<para>&tdesu; uses a daemon, called
+<application>tdesud</application>. The daemon listens to a &UNIX;
 socket in <filename>/tmp</filename> for commands. The mode of the
 socket is 0600 so that only your user id can connect to it. If
-password keeping is enabled, &kdesu; executes commands through this
+password keeping is enabled, &tdesu; executes commands through this
 daemon. It writes the command and <systemitem
 class="username">root</systemitem>'s password to the socket and the
 daemon executes the command using <command>su</command>, as describe
@@ -271,7 +271,7 @@ not have to supply the password. To keep hackers who broke into your
 account from stealing passwords from the daemon (for example, by
 attaching a debugger), the daemon is installed set-group-id
 nogroup. This should prevent all normal users (including you) from
-getting passwords from the <application>kdesud</application>
+getting passwords from the <application>tdesud</application>
 process. Also, the daemon sets the <envar>DISPLAY</envar> environment
 variable to the value it had when it was started. The only thing a
 hacker can do is execute an application on your display.</para>
@@ -292,12 +292,12 @@ yourself if you want to use it or not.</para>
 <chapter id="Author">
 <title>Author</title>
 
-<para>&kdesu;</para>
+<para>&tdesu;</para>
 
 <para>Copyright 2000 &Geert.Jansen;</para>
 
-<para>&kdesu; is written by &Geert.Jansen;. It is somewhat based on
-Pietro Iglio's &kdesu;, version 0.3. Pietro and I agreed that I will
+<para>&tdesu; is written by &Geert.Jansen;. It is somewhat based on
+Pietro Iglio's &tdesu;, version 0.3. Pietro and I agreed that I will
 maintain this program in the future.</para>
 
 <para>The author can be reached through email at &Geert.Jansen.mail;.

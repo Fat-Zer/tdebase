@@ -8,7 +8,7 @@ SUBDIRS = lib . killer kcmkwin pics clients oldheaders data $(KOMPMGR)
 
 bin_PROGRAMS = 
 lib_LTLIBRARIES =
-kdeinit_LTLIBRARIES = kwin.la
+tdeinit_LTLIBRARIES = kwin.la
 
 kwin_la_SOURCES = workspace.cpp client.cpp placement.cpp atoms.cpp \
 	utils.cpp layers.cpp main.cpp popupinfo.cpp tabbox.cpp \

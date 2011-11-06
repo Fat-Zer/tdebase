@@ -19,4 +19,4 @@ messages:
 	$(XGETTEXT) *.cpp *.h -o $(podir)/ktaskbarapplet.pot
 
 srcdoc:
-	kdoc -a -p -H -d $$HOME/web/src/ktaskbarapplet ktaskbarapplet *.h -lqt -lkdecore -lkdeui -lkfile
+	kdoc -a -p -H -d $$HOME/web/src/ktaskbarapplet ktaskbarapplet *.h -lqt -ltdecore -ltdeui -lkfile

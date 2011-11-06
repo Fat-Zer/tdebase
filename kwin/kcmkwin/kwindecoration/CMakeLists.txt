@@ -32,6 +32,6 @@ tde_add_kpart( kcm_kwindecoration AUTOMOC
   SOURCES
     kwindecoration.cpp buttons.cpp
     kwindecorationIface.skel preview.cpp
-  LINK kdecorations-shared kdeui-shared Xext
+  LINK tdecorations-shared tdeui-shared Xext
   DESTINATION ${PLUGIN_INSTALL_DIR}
 )

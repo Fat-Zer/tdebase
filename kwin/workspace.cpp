@@ -1219,7 +1219,7 @@ TQStringList Workspace::configModules(bool controlCenter)
 
 void Workspace::configureWM()
     {
-    KApplication::kdeinitExec( "kcmshell", configModules(false) );
+    KApplication::tdeinitExec( "kcmshell", configModules(false) );
     }
 
 /*!

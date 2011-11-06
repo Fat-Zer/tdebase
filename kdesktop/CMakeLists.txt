@@ -72,7 +72,7 @@ tde_add_executable( kxdglauncher
 )
 
 
-##### kdesktop (kdeinit) ########################
+##### kdesktop (tdeinit) ########################
 
 set( target kdesktop )
 
@@ -86,7 +86,7 @@ set( ${target}_SRCS
   kfileividesktop.cpp kdesktopapp.cpp
 )
 
-tde_add_kdeinit_executable( ${target} AUTOMOC
+tde_add_tdeinit_executable( ${target} AUTOMOC
   SOURCES ${${target}_SRCS}
   LINK
     kdesktopsettings-static bgnd-static dmctl-static

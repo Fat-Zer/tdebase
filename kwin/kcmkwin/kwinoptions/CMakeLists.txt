@@ -35,6 +35,6 @@ install( FILES
 
 tde_add_kpart( kcm_kwinoptions AUTOMOC
   SOURCES windows.cpp mouse.cpp main.cpp
-  LINK kdeui-shared
+  LINK tdeui-shared
   DESTINATION ${PLUGIN_INSTALL_DIR}
 )

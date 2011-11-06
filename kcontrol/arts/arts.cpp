@@ -74,7 +74,7 @@ static bool startArts()
 	delete config;
 
 	if (startServer)
-		kapp->kdeinitExec(startRealtime?"artswrapper":"artsd",
+		kapp->tdeinitExec(startRealtime?"artswrapper":"artsd",
 		                  TQStringList::split(" ",args));
 	return startServer;
 }

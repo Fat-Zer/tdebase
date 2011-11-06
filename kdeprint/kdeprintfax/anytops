@@ -29,8 +29,8 @@ while true; do
 			shift
 			;;
 		-v)
-			echo "Anytops v1.0: (c) 2001, Michael Goffioul <kdeprint@swing.be>";
-			echo "Small script to convert any file type into PS. Part of kdeprintfax."
+			echo "Anytops v1.0: (c) 2001, Michael Goffioul <tdeprint@swing.be>";
+			echo "Small script to convert any file type into PS. Part of tdeprintfax."
 			exit 0
 			;;
 		*)

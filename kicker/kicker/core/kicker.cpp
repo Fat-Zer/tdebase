@@ -270,7 +270,7 @@ void Kicker::slotRestart()
     char ** o_argv = new char*[2];
     o_argv[0] = strdup("kicker");
     o_argv[1] = 0L;
-    execv(TQFile::encodeName(locate("exe", "kdeinit_wrapper")), o_argv);
+    execv(TQFile::encodeName(locate("exe", "tdeinit_wrapper")), o_argv);
 
     exit(1);
 }

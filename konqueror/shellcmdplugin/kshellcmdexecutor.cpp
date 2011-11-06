@@ -28,7 +28,7 @@
 
 #include <kinputdialog.h>
 #include <kglobalsettings.h>
-#include <kdesu/process.h>
+#include <tdesu/process.h>
 #include <klocale.h>
 
 KShellCommandExecutor::KShellCommandExecutor(const TQString& command, TQWidget* parent)

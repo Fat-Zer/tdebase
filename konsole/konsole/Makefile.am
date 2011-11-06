@@ -8,7 +8,7 @@ INCLUDES = -I. $(all_includes)
 bin_PROGRAMS =
 noinst_PROGRAMS = fontembedder
 lib_LTLIBRARIES = 
-kdeinit_LTLIBRARIES = konsole.la
+tdeinit_LTLIBRARIES = konsole.la
 kde_module_LTLIBRARIES = libkonsolepart.la kded_kwrited.la
 
 libkonsolepart_la_SOURCES = TEPty.cpp BlockArray.cpp konsole_part.cpp \
@@ -36,7 +36,7 @@ kded_kwrited_la_SOURCES = kwrited.cpp TEPty.cpp kwrited.skel
 kded_kwrited_la_LIBADD  = $(LIB_KDECORE) 
 kded_kwrited_la_LDFLAGS = $(all_libraries) -module -avoid-version
 
-# konsole kdeinit module
+# konsole tdeinit module
 konsole_la_SOURCES = TEPty.cpp BlockArray.cpp main.cpp konsole.cpp schema.cpp session.cpp TEWidget.cpp TEmuVt102.cpp \
      TEScreen.cpp TEmulation.cpp TEHistory.cpp keytrans.cpp konsoleiface.skel sessioniface.skel \
      konsole_wcwidth.cpp konsolebookmarkhandler.cpp konsolebookmarkmenu.cpp \
@@ -46,7 +46,7 @@ konsole_la_LIBADD = $(LIB_KDEUI) $(LIB_KIO) $(LIB_KDEPRINT) $(LIBUTIL) $(XTESTLI
 
 # kcmkonsole_SOURCES = kcmkonsole.cpp schema.cpp
 # kcmkonsole_LDADD   = $(LIB_KDEUI)
-# kcmkonsole_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_KDECORE) $(LIB_KDEUI) -lkdefx $(LIB_KIO) -lktexteditor
+# kcmkonsole_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_KDECORE) $(LIB_KDEUI) -ltdefx $(LIB_KIO) -lktexteditor
 
 noinst_HEADERS = TEWidget.h TEPty.h TEmulation.h TEmuVt102.h \
 	TECommon.h TEScreen.h konsole.h schema.h session.h konsole_wcwidth.h \
