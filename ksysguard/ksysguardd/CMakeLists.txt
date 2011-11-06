@@ -38,6 +38,6 @@ include_directories(
 
 tde_add_executable( ksysguardd AUTOMOC
   SOURCES Command.c conf.c ksysguardd.c PWUIDCache.c
-  LINK ccont-static ksysguardd-static ${TDE_LIB_DIR}/libkdefakes_nonpic.a
+  LINK ccont-static ksysguardd-static ${TDE_LIB_DIR}/libtdefakes_nonpic.a
   DESTINATION ${BIN_INSTALL_DIR}
 )

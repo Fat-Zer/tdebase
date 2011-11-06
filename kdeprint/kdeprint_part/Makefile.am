@@ -1,10 +1,10 @@
 AM_CPPFLAGS = -D_KDEPRINT_COMPILE
 
-kde_module_LTLIBRARIES = libkdeprint_part.la
+kde_module_LTLIBRARIES = libtdeprint_part.la
 
-libkdeprint_part_la_SOURCES = printpart.cpp
-libkdeprint_part_la_LDFLAGS = $(all_libraries) -module -avoid-version -no-undefined
-libkdeprint_part_la_LIBADD = -lkdeprint_management $(LIB_KPARTS)
+libtdeprint_part_la_SOURCES = printpart.cpp
+libtdeprint_part_la_LDFLAGS = $(all_libraries) -module -avoid-version -no-undefined
+libtdeprint_part_la_LIBADD = -lkdeprint_management $(LIB_KPARTS)
 
 noinst_HEADERS = printpart.h
 

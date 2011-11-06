@@ -31,7 +31,7 @@
 #include <tqwidget.h>
 
 typedef KParts::GenericFactory<PrintPart> PrintPartFactory;
-K_EXPORT_COMPONENT_FACTORY( libkdeprint_part, PrintPartFactory )
+K_EXPORT_COMPONENT_FACTORY( libtdeprint_part, PrintPartFactory )
 
 PrintPart::PrintPart(TQWidget *parentWidget, const char * /*widgetName*/ ,
 	             TQObject *parent, const char *name,

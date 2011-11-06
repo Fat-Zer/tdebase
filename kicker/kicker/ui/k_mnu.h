@@ -32,7 +32,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include "service_mnu.h"
 
 namespace KPIM {
-    // Yes, ClickLineEdit was copied from libkdepim.
+    // Yes, ClickLineEdit was copied from libtdepim.
     // Can we have it in kdelibs please?
     class ClickLineEdit;
 }

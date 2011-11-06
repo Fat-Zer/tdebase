@@ -1,5 +1,5 @@
 /*
-    This file is part of libkdepim.
+    This file is part of libtdepim.
     Copyright (c) 2004 Daniel Molkentin <molkentin@kde.org>
     based on code by Cornelius Schumacher <schumacher@kde.org> 
 

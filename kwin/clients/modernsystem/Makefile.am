@@ -6,7 +6,7 @@ SUBDIRS = config
 kde_module_LTLIBRARIES = kwin3_modernsys.la
 
 kwin3_modernsys_la_SOURCES = modernsys.cpp
-kwin3_modernsys_la_LIBADD = ../../lib/libkdecorations.la
+kwin3_modernsys_la_LIBADD = ../../lib/libtdecorations.la
 kwin3_modernsys_la_LDFLAGS = $(all_libraries) $(KDE_PLUGIN) -module
 
 METASOURCES = AUTO

@@ -80,6 +80,6 @@ Name[zh_TW]=列印管理工具
 Name[zu]=Ithuluzi Lokuphathwa Koshicilelo
 MimeType=print/manager
 ServiceTypes=Browser/View,KParts/ReadOnlyPart
-X-KDE-Library=libkdeprint_part
+X-KDE-Library=libtdeprint_part
 Icon=printmgr
 InitialPreference=12

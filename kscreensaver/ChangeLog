@@ -69,7 +69,7 @@ Version 0.3.2
 Updated lines
 added About dialogs for all savers
 Shadow password support added by Martin Hartig
-Use libkdeui for colour dialog
+Use libtdeui for colour dialog
 
 
 Version 0.3.1
