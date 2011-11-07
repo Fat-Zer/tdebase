@@ -6,7 +6,7 @@ taskbar_panelapplet_la_SOURCES = taskbarapplet.cpp
 
 taskbar_panelapplet_la_METASOURCES = AUTO
 taskbar_panelapplet_la_LDFLAGS = -module $(KDE_PLUGIN) $(all_libraries)
-taskbar_panelapplet_la_LIBADD = $(LIB_KDEUI) ../../taskbar/libtaskbar.la ../../libkicker/libkickermain.la
+taskbar_panelapplet_la_LIBADD = $(LIB_TDEUI) ../../taskbar/libtaskbar.la ../../libkicker/libkickermain.la
 
 noinst_HEADERS = taskbarapplet.h
 

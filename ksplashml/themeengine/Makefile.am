@@ -6,7 +6,7 @@ lib_LTLIBRARIES = libksplashthemes.la
 
 libksplashthemes_la_SOURCES = themeengine.cpp objkstheme.cpp
 libksplashthemes_la_LDFLAGS = $(all_libraries) $(KDE_RPATH) -no-undefined
-libksplashthemes_la_LIBADD = $(LIB_KDEUI) $(LIB_XCURSOR)
+libksplashthemes_la_LIBADD = $(LIB_TDEUI) $(LIB_XCURSOR)
 METASOURCES = AUTO
 
 # install this header for theme developers.

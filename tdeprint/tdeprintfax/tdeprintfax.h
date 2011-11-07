@@ -18,8 +18,8 @@
  *
  */
 
-#ifndef KDEPRINTFAX_H
-#define KDEPRINTFAX_H
+#ifndef TDEPRINTFAX_H
+#define TDEPRINTFAX_H
 
 #include <kmainwindow.h>
 #include <kurl.h>

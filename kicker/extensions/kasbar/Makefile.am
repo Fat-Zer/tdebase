@@ -14,7 +14,7 @@ libkasbar_la_SOURCES =	kasbar.cpp kasitem.cpp \
 			kasloaditem.cpp
 
 libkasbar_la_LDFLAGS = $(all_libraries) -version-info 1:0:0 -no-undefined
-libkasbar_la_LIBADD = $(LIB_KDEUI) ../../taskmanager/libtaskmanager.la
+libkasbar_la_LIBADD = $(LIB_TDEUI) ../../taskmanager/libtaskmanager.la
 
 #
 # Panel Extension
@@ -37,9 +37,9 @@ EXTRA_DIST = $(lnk_DATA)
 
 bin_PROGRAMS = kasbar
 kasbar_SOURCES = kasbarapp.cpp
-kasbar_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_KDECORE) $(LIB_KDEUI) -ltdefx $(LIB_KIO) -lktexteditor
+kasbar_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_TDECORE) $(LIB_TDEUI) -ltdefx $(LIB_KIO) -lktexteditor
 kasbar_LDADD = 	libkasbar.la \
-		$(LIB_QT) $(LIB_KDECORE) $(LIB_KDEUI)
+		$(LIB_QT) $(LIB_TDECORE) $(LIB_TDEUI)
 
 
 messages:

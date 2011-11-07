@@ -1,6 +1,6 @@
 noinst_PROGRAMS = gen
 gen_SOURCES = gen.cpp
-gen_LDADD = $(LIB_KDECORE)
+gen_LDADD = $(LIB_TDECORE)
 gen_LDFLAGS = $(all_libraries)
 INCLUDES = $(all_includes)
 CLEANFILES = qtkde_functions.cpp module_functions.cpp module_functions.h generated

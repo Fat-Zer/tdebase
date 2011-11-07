@@ -10,7 +10,7 @@ libkicker_buttons_la_SOURCES = servicebutton.cpp bookmarksbutton.cpp \
 	windowlistbutton.cpp
 
 libkicker_buttons_la_LDFLAGS = $(all_libraries)
-libkicker_buttons_la_LIBADD = $(top_builddir)/libkonq/libkonq.la $(LIB_KDEUI) $(XTESTLIB)
+libkicker_buttons_la_LIBADD = $(top_builddir)/libkonq/libkonq.la $(LIB_TDEUI) $(XTESTLIB)
 libkicker_buttons_la_METASOURCES = AUTO
 
 desktopmenu_DATA = bookmarks.desktop browser.desktop desktop.desktop \

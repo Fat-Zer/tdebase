@@ -298,7 +298,7 @@ static int startApp()
     }
 
     KUser u;
-    env << (TQCString) ("KDESU_USER=" + u.loginName().local8Bit());
+    env << (TQCString) ("TDESU_USER=" + u.loginName().local8Bit());
     
     if (!new_dcop)
     {

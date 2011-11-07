@@ -5,7 +5,7 @@ kde_module_LTLIBRARIES = kcm_kwinoptions.la
 
 kcm_kwinoptions_la_SOURCES = windows.cpp mouse.cpp main.cpp
 kcm_kwinoptions_la_LDFLAGS = -module -avoid-version $(all_libraries) -no-undefined
-kcm_kwinoptions_la_LIBADD = $(LIB_KDEUI)
+kcm_kwinoptions_la_LIBADD = $(LIB_TDEUI)
 
 noinst_HEADERS = windows.h mouse.h 
 

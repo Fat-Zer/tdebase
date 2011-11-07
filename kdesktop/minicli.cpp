@@ -73,7 +73,7 @@
 #include "minicli_ui.h"
 #include "kdesktopsettings.h"
 
-#define KDESU_ERR strerror(errno)
+#define TDESU_ERR strerror(errno)
 
 Minicli::Minicli( TQWidget *parent, const char *name)
         :KDialog( parent, name, false, (WFlags)WType_TopLevel ),
@@ -495,7 +495,7 @@ int Minicli::runCommand()
 
     if (pid < 0)
     {
-      kdError(1207) << "fork(): " << KDESU_ERR << "\n";
+      kdError(1207) << "fork(): " << TDESU_ERR << "\n";
       return -1;
     }
 

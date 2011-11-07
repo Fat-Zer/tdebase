@@ -6,7 +6,7 @@ kde_module_LTLIBRARIES = kcm_energy.la
 
 kcm_energy_la_SOURCES = energy.cpp
 kcm_energy_la_LDFLAGS = -module -avoid-version $(all_libraries) -no-undefined
-kcm_energy_la_LIBADD = $(DPMSLIB) $(LIB_KDEUI) $(LIB_KIO)
+kcm_energy_la_LIBADD = $(DPMSLIB) $(LIB_TDEUI) $(LIB_KIO)
 METASOURCES = energy.moc
 
 noinst_HEADERS = energy.h

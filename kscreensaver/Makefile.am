@@ -4,15 +4,15 @@
 AM_CPPFLAGS = -UQT_NO_ASCII_CAST
 
 INCLUDES = $(GLINC) $(all_includes)
-AM_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_KDECORE) $(LIB_KDEUI) -ltdefx $(LIB_KIO) -lktexteditor
+AM_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_TDECORE) $(LIB_TDEUI) -ltdefx $(LIB_KIO) -lktexteditor
 
 bin_PROGRAMS = krandom.kss kblankscrn.kss
 
 krandom_kss_SOURCES = random.cpp
-krandom_kss_LDADD = $(LIB_KDEUI) $(GLLIB) -lm
+krandom_kss_LDADD = $(LIB_TDEUI) $(GLLIB) -lm
 
 kblankscrn_kss_SOURCES = blankscrn.cpp
-kblankscrn_kss_LDADD = $(LIB_KDEUI) -lkscreensaver -lm 
+kblankscrn_kss_LDADD = $(LIB_TDEUI) -lkscreensaver -lm 
 
 METASOURCES = AUTO
 

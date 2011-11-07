@@ -16,7 +16,7 @@ lnk_DATA = clockapplet.desktop
 EXTRA_DIST = $(lnk_DATA) $(pic_DATA)
 
 clock_panelapplet_la_LDFLAGS = -module $(KDE_PLUGIN) $(all_libraries)
-clock_panelapplet_la_LIBADD =  ../../libkicker/libkickermain.la $(LIB_KDEUI)
+clock_panelapplet_la_LIBADD =  ../../libkicker/libkickermain.la $(LIB_TDEUI)
 
 srcdoc:
 	kdoc -a -p -H -d $$HOME/web/src/clockapplet clockapplet *.h -lqt -ltdecore -ltdeui -lkfile

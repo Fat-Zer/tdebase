@@ -17,7 +17,7 @@ kwin_la_SOURCES = workspace.cpp client.cpp placement.cpp atoms.cpp \
 	manage.cpp notifications.cpp activation.cpp useractions.cpp \
 	geometry.cpp rules.cpp
 
-kwin_la_LIBADD = $(LIB_KDEUI) lib/libtdecorations.la
+kwin_la_LIBADD = $(LIB_TDEUI) lib/libtdecorations.la
 kwin_la_LDFLAGS = $(all_libraries) -module -avoid-version
 
 include_HEADERS = KWinInterface.h

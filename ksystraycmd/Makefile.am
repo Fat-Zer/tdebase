@@ -1,7 +1,7 @@
 ####### Fiddle here
 
 INCLUDES = $(all_includes)
-LDADD    = $(LIB_KDEUI)
+LDADD    = $(LIB_TDEUI)
 
 #######	Files
 
@@ -10,7 +10,7 @@ METASOURCES	= ksystraycmd.moc
 noinst_HEADERS  = ksystraycmd.h
 
 ksystraycmd_SOURCES = ksystraycmd.cpp main.cpp
-ksystraycmd_LDFLAGS  = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_KDECORE) $(LIB_KDEUI) -ltdefx $(LIB_KIO) -lktexteditor
+ksystraycmd_LDFLAGS  = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_TDECORE) $(LIB_TDEUI) -ltdefx $(LIB_KIO) -lktexteditor
 
 messages:
 	$(XGETTEXT) $(ksystraycmd_SOURCES) -o $(podir)/ksystraycmd.pot

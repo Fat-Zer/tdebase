@@ -4,7 +4,7 @@ kde_module_LTLIBRARIES = kickermenu_remotemenu.la
 
 kickermenu_remotemenu_la_SOURCES = remotemenu.cpp remotemenu.skel
 kickermenu_remotemenu_la_LDFLAGS = $(all_libraries) -module -avoid-version
-kickermenu_remotemenu_la_LIBADD = $(LIB_KDEUI) $(top_builddir)/kicker/libkicker/libkickermain.la
+kickermenu_remotemenu_la_LIBADD = $(LIB_TDEUI) $(top_builddir)/kicker/libkicker/libkickermain.la
 
 kickermenu_remotemenu_la_METASOURCES = AUTO
 

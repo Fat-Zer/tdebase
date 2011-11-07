@@ -9,7 +9,7 @@ tdeinit_LTLIBRARIES = kaccess.la
 
 kaccess_la_SOURCES = kaccess.cpp main.cpp
 kaccess_la_LDFLAGS = $(all_libraries) -module -avoid-version
-kaccess_la_LIBADD = $(LIB_KDEUI)
+kaccess_la_LIBADD = $(LIB_TDEUI)
 
 kcm_access_la_SOURCES = kcmaccess.cpp 
 kcm_access_la_LDFLAGS  = $(all_libraries) -module -avoid-version -no-undefined

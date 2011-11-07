@@ -9,7 +9,7 @@
 #
 #################################################
 
-add_definitions( -D_KDEPRINT_COMPILE )
+add_definitions( -D_TDEPRINT_COMPILE )
 
 include_directories(
   ${CMAKE_CURRENT_BINARY_DIR}

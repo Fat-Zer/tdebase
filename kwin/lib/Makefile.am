@@ -3,7 +3,7 @@ lib_LTLIBRARIES = libtdecorations.la
 
 libtdecorations_la_SOURCES = kdecoration.cpp kdecoration_p.cpp kdecoration_plugins_p.cpp \
         kdecorationfactory.cpp kcommondecoration.cpp
-libtdecorations_la_LIBADD = $(LIB_KDECORE)
+libtdecorations_la_LIBADD = $(LIB_TDECORE)
 libtdecorations_la_LDFLAGS = $(all_libraries) -version-info 1:0:0 -no-undefined
 
 # FRAME

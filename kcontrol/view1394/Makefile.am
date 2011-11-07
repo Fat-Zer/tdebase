@@ -3,7 +3,7 @@ kde_module_LTLIBRARIES = kcm_view1394.la
 kcm_view1394_la_SOURCES = view1394widget.ui view1394.cpp
 
 kcm_view1394_la_LDFLAGS  = $(all_libraries) -module -avoid-version -no-undefined
-kcm_view1394_la_LIBADD = $(LIB_KDEUI) -lraw1394
+kcm_view1394_la_LIBADD = $(LIB_TDEUI) -lraw1394
 
 AM_CPPFLAGS= $(all_includes) 
 

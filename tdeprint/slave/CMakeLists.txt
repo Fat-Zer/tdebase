@@ -9,7 +9,7 @@
 #
 #################################################
 
-add_definitions( -D_KDEPRINT_COMPILE )
+add_definitions( -D_TDEPRINT_COMPILE )
 
 add_subdirectory( mimetypes )
 add_subdirectory( templates )

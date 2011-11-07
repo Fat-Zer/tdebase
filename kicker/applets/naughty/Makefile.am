@@ -23,7 +23,7 @@ lnk_DATA = naughtyapplet.desktop
 EXTRA_DIST = $(lnk_DATA)
 
 naughty_panelapplet_la_LDFLAGS = -module $(KDE_PLUGIN) $(all_libraries)
-naughty_panelapplet_la_LIBADD = ../../libkicker/libkickermain.la $(LIB_KDEUI) $(LIB_KVM)
+naughty_panelapplet_la_LIBADD = ../../libkicker/libkickermain.la $(LIB_TDEUI) $(LIB_KVM)
 
 messages: rc.cpp
 	$(XGETTEXT) *.cpp *.h -o $(podir)/naughtyapplet.pot

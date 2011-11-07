@@ -14,7 +14,7 @@ lnk_DATA = menuapplet.desktop
 EXTRA_DIST = $(lnk_DATA)
 
 menu_panelapplet_la_LDFLAGS = -module $(KDE_PLUGIN) $(all_libraries)
-menu_panelapplet_la_LIBADD = $(LIB_KDEUI)
+menu_panelapplet_la_LIBADD = $(LIB_TDEUI)
 
 messages:
 	$(XGETTEXT) *.cpp *.h -o $(podir)/kmenuapplet.pot

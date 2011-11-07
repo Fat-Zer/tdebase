@@ -20,7 +20,7 @@ kcm_keyboard_la_LIBADD = -lxkbfile $(XTESTLIB) $(LIB_KIO)
 kxkb_la_SOURCES = extension.cpp x11helper.cpp rules.cpp kxkbconfig.cpp pixmap.cpp \
 	layoutmap.cpp kxkb.cpp kxkbtraywindow.cpp kxkb.skel
 kxkb_la_LDFLAGS = $(all_libraries) -module -avoid-version
-kxkb_la_LIBADD = -lxkbfile -lX11 -lXext $(LIB_KDEUI)
+kxkb_la_LIBADD = -lxkbfile -lX11 -lXext $(LIB_TDEUI)
 
 xdg_apps_DATA = keyboard.desktop keyboard_layout.desktop
 

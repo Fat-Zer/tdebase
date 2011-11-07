@@ -14,7 +14,7 @@ tdeinit_LTLIBRARIES = kdesktop.la
 noinst_LTLIBRARIES = libkdesktopsettings.la
 
 libkdesktopsettings_la_LDFLAGS = $(all_libraries) -no-undefined
-libkdesktopsettings_la_LIBADD = $(LIB_KDECORE)
+libkdesktopsettings_la_LIBADD = $(LIB_TDECORE)
 libkdesktopsettings_la_SOURCES = kdesktopsettings.kcfgc klaunchsettings.kcfgc 
 
 kdesktop_la_SOURCES = main.cc krootwm.cc xautolock.cc kdiconview.cc desktop.cc \

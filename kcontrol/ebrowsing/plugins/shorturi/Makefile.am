@@ -5,7 +5,7 @@ AM_CPPFLAGS   =  $(all_includes) -DQT_NO_CAST_ASCII
 kde_module_LTLIBRARIES = libkshorturifilter.la
 
 libkshorturifilter_la_LDFLAGS = $(all_libraries) -module $(KDE_PLUGIN)
-libkshorturifilter_la_LIBADD = $(LIB_KSYCOCA) $(LIB_KDEUI)
+libkshorturifilter_la_LIBADD = $(LIB_KSYCOCA) $(LIB_TDEUI)
 
 libkshorturifilter_la_SOURCES = kshorturifilter.cpp kshorturifilter.skel
 

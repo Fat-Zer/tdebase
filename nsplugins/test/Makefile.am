@@ -4,8 +4,8 @@ noinst_HEADERS = testnsplugin.h
 
 check_PROGRAMS = testnsplugin
 testnsplugin_SOURCES = testnsplugin.cpp
-testnsplugin_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_KDECORE) $(LIB_KDEUI) -ltdefx $(LIB_KIO) -lktexteditor
-testnsplugin_LDADD = $(LIB_KDEUI) ../libnsplugin.la
+testnsplugin_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_TDECORE) $(LIB_TDEUI) -ltdefx $(LIB_KIO) -lktexteditor
+testnsplugin_LDADD = $(LIB_TDEUI) ../libnsplugin.la
 
 $(srcdir)/testnsplugin.cpp: ../NSPluginClassIface_stub.h
 

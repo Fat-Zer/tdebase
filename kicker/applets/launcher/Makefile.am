@@ -16,7 +16,7 @@ EXTRA_DIST = $(lnk_DATA)
 launcher_panelapplet_la_LDFLAGS = -module $(KDE_RPATH) $(all_libraries) -avoid-version -no-undefined
 launcher_panelapplet_la_LIBADD = ../../kicker/core/libkicker_core.la  ../../kicker/buttons/libkicker_buttons.la \
 				../../kicker/ui/libkicker_ui.la ../../libkicker/libkickermain.la $(LIB_KIO) \
-				$(LIB_KSYCOCA) $(LIB_KDEUI) $(LIB_KUTILS)
+				$(LIB_KSYCOCA) $(LIB_TDEUI) $(LIB_KUTILS)
 
 kde_kcfg_DATA = launcherapplet.kcfg
 

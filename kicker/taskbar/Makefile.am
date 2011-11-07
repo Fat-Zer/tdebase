@@ -9,7 +9,7 @@ libtaskbar_la_SOURCES = taskbarsettings.kcfgc taskcontainer.cpp taskbar.cpp \
 libtaskbar_la_METASOURCES = AUTO
 
 libtaskbar_la_LDFLAGS = -version-info 3:0:2 $(all_libraries) -no-undefined
-libtaskbar_la_LIBADD = $(LIB_KDEUI) $(LIB_KUTILS) ../libkicker/libkickermain.la ../taskmanager/libtaskmanager.la
+libtaskbar_la_LIBADD = $(LIB_TDEUI) $(LIB_KUTILS) ../libkicker/libkickermain.la ../taskmanager/libtaskmanager.la
 
 messages: rc.cpp
 	$(XGETTEXT) *.cpp *.h -o $(podir)/libtaskbar.pot

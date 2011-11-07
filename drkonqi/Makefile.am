@@ -11,8 +11,8 @@ EXTRA_DIST = LICENSE
 bin_PROGRAMS = drkonqi
 
 # Libraries:
-AM_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_KDECORE) $(LIB_KDEUI) -ltdefx $(LIB_KIO) -lktexteditor
-LDADD  = $(LIB_KDEUI) $(LIB_KIO)
+AM_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_TDECORE) $(LIB_TDEUI) -ltdefx $(LIB_KIO) -lktexteditor
+LDADD  = $(LIB_TDEUI) $(LIB_KIO)
 
 # toplevel.cpp must be last in row due to X-headers being included. (--enable-final)
 # Did I mention already that X header files really suck?

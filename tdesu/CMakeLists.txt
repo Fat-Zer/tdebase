@@ -43,7 +43,7 @@ check_function_exists( getpeereid HAVE_GETPEEREID )
 check_include_file( "sys/select.h" HAVE_SYS_SELECT_H )
 check_include_file( "sys/wait.h" HAVE_SYS_WAIT_H )
 
-if( WITH_SUDO_KDESU_BACKEND )
+if( WITH_SUDO_TDESU_BACKEND )
   set( DEFAULT_SUPER_USER_COMMAND sudo CACHE INTERNAL "" FORCE )
 else()
   set( DEFAULT_SUPER_USER_COMMAND su CACHE INTERNAL "" FORCE )

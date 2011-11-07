@@ -11,7 +11,7 @@ noinst_LTLIBRARIES = libkwinrules.la
 libkwinrules_la_SOURCES = ruleswidget.cpp ruleslist.cpp kwinsrc.cpp detectwidget.cpp \
         ruleswidgetbase.ui ruleslistbase.ui detectwidgetbase.ui editshortcutbase.ui
 libkwinrules_la_LDFLAGS = $(all_libraries) -no-undefined
-libkwinrules_la_LIBADD = $(LIB_KDEUI)
+libkwinrules_la_LIBADD = $(LIB_TDEUI)
 
 kcm_kwinrules_la_SOURCES = kcm.cpp 
 kcm_kwinrules_la_LDFLAGS = -module -avoid-version $(all_libraries) -no-undefined

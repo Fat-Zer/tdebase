@@ -1,8 +1,8 @@
 AM_CPPFLAGS = -DQT_NO_CAST_ASCII 
 
 INCLUDES = $(all_includes)
-AM_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_KDECORE) $(LIB_KDEUI) -ltdefx $(LIB_KIO) -lktexteditor
-LDADD   =       $(LIB_KDECORE)
+AM_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_TDECORE) $(LIB_TDEUI) -ltdefx $(LIB_KIO) -lktexteditor
+LDADD   =       $(LIB_TDECORE)
 
 bin_PROGRAMS	= kreadconfig kwriteconfig
 kreadconfig_SOURCES	= kreadconfig.cpp

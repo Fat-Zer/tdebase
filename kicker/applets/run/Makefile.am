@@ -13,7 +13,7 @@ lnk_DATA = runapplet.desktop
 EXTRA_DIST = $(lnk_DATA)
 
 run_panelapplet_la_LDFLAGS = -module $(KDE_PLUGIN) $(all_libraries)
-run_panelapplet_la_LIBADD = $(LIB_KSYCOCA) $(LIB_KDEUI)
+run_panelapplet_la_LIBADD = $(LIB_KSYCOCA) $(LIB_TDEUI)
 
 messages:
 	$(XGETTEXT) *.cpp *.h -o $(podir)/krunapplet.pot

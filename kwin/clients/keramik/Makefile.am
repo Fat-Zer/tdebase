@@ -8,14 +8,14 @@ noinst_HEADERS            = tiles.h
 
 embedtool_SOURCES         = embedtool.cpp
 embedtool_LDADD           = $(LIB_QT)
-embedtool_LDFLAGS         = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_KDECORE) $(LIB_KDEUI) -ltdefx $(LIB_KIO) -lktexteditor
+embedtool_LDFLAGS         = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_TDECORE) $(LIB_TDEUI) -ltdefx $(LIB_KIO) -lktexteditor
 
 kde_module_LTLIBRARIES    = kwin3_keramik.la
 
 kwin3_keramik_la_SOURCES   = keramik.cpp
 kwin3_keramik_la_COMPILE_FIRST = tiles.h
 kwin3_keramik_la_LDFLAGS   = $(all_libraries) $(KDE_PLUGIN) -module
-kwin3_keramik_la_LIBADD    = $(LIB_KDEUI) ../../lib/libtdecorations.la
+kwin3_keramik_la_LIBADD    = $(LIB_TDEUI) ../../lib/libtdecorations.la
 #kwin3_keramik_la_LDFLAGS   = $(all_libraries) -avoid-version -module $(KDE_RPATH) $(KDE_MT_LDFLAGS)
 
 METASOURCES               = AUTO

@@ -4,7 +4,7 @@ kde_module_LTLIBRARIES = kickermenu_kate.la
 
 kickermenu_kate_la_SOURCES = katesessionmenu.cpp
 kickermenu_kate_la_LDFLAGS = $(all_libraries) -module -avoid-version
-kickermenu_kate_la_LIBADD = $(LIB_KDEUI)
+kickermenu_kate_la_LIBADD = $(LIB_TDEUI)
 
 kickermenu_kate_la_METASOURCES = AUTO
 

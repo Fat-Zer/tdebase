@@ -974,7 +974,7 @@ kde_module_LTLIBRARIES = ksplash2k.la
 
 ksplash2k_la_SOURCES = theme2k.cpp rotwidget.cpp
 ksplash2k_la_LDFLAGS = $(all_libraries) $(KDE_RPATH)
-ksplash2k_la_LIBADD = $(LIB_KDEUI) -lksplashthemes
+ksplash2k_la_LIBADD = $(LIB_TDEUI) -lksplashthemes
 
 METASOURCES = AUTO
 

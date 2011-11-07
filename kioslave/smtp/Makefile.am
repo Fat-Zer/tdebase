@@ -17,11 +17,11 @@ TESTS = test_headergeneration test_responseparser test_commands
 check_PROGRAMS = $(TESTS) interactivesmtpserver
 
 test_headergeneration_SOURCES = test_headergeneration.cc
-test_headergeneration_LDADD =  $(LIB_KDECORE)
+test_headergeneration_LDADD =  $(LIB_TDECORE)
 test_headergeneration_LDFLAGS = $(all_libraries)
 
 test_responseparser_SOURCES = test_responseparser.cc
-test_responseparser_LDADD =  $(LIB_KDECORE)
+test_responseparser_LDADD =  $(LIB_TDECORE)
 test_responseparser_LDFLAGS = $(all_libraries)
 
 test_commands_SOURCES = test_commands.cc

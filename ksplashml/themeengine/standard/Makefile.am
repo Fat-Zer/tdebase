@@ -4,14 +4,14 @@ INCLUDES =  -I$(top_srcdir)/ksplashml/themeengine $(all_includes)
 
 noinst_LTLIBRARIES = libthemestandard.la
 libthemestandard_la_SOURCES = themestandard.cpp wndicon.cpp wndstatus.cpp
-libthemestandard_la_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_KDECORE) $(LIB_KDEUI) -ltdefx $(LIB_KIO) -lktexteditor
-libthemestandard_la_LIBADD = $(LIB_KDEUI) ../libksplashthemes.la
+libthemestandard_la_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_TDECORE) $(LIB_TDEUI) -ltdefx $(LIB_KIO) -lktexteditor
+libthemestandard_la_LIBADD = $(LIB_TDEUI) ../libksplashthemes.la
 
 kde_module_LTLIBRARIES = ksplashstandard.la
 
 ksplashstandard_la_SOURCES = themestandardlib.cpp
 ksplashstandard_la_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(KDE_PLUGIN) -module
-ksplashstandard_la_LIBADD = $(LIB_KDEUI) ../libksplashthemes.la libthemestandard.la
+ksplashstandard_la_LIBADD = $(LIB_TDEUI) ../libksplashthemes.la libthemestandard.la
 METASOURCES = AUTO
 
 noinst_HEADERS = themestandard.h wndicon.h wndstatus.h

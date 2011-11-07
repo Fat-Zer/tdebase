@@ -14,7 +14,7 @@ lnk_DATA = minipagerapplet.desktop
 EXTRA_DIST = $(lnk_DATA) 
 
 minipager_panelapplet_la_LDFLAGS = -module $(KDE_PLUGIN) $(all_libraries)
-minipager_panelapplet_la_LIBADD = $(LIB_KDEUI) \
+minipager_panelapplet_la_LIBADD = $(LIB_TDEUI) \
 	../../taskmanager/libtaskmanager.la \
 	../../libkicker/libkickermain.la
 

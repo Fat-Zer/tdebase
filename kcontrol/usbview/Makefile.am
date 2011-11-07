@@ -3,7 +3,7 @@ kde_module_LTLIBRARIES = kcm_usb.la
 kcm_usb_la_SOURCES = kcmusb.cpp usbdevices.cpp usbdb.cpp
 
 kcm_usb_la_LDFLAGS  = $(all_libraries) -module -avoid-version -no-undefined
-kcm_usb_la_LIBADD = $(LIB_KDEUI)
+kcm_usb_la_LIBADD = $(LIB_TDEUI)
 
 AM_CPPFLAGS= $(all_includes) 
 

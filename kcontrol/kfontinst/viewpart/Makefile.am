@@ -1,7 +1,7 @@
 noinst_LTLIBRARIES = libkfontinstprint.la
 libkfontinstprint_la_SOURCES = KfiPrint.cpp
 libkfontinstprint_la_LDFLAGS = $(all_libraries)
-libkfontinstprint_la_LIBADD = $(LIB_KDEPRINT) ../lib/libkfontinst.la
+libkfontinstprint_la_LIBADD = $(LIB_TDEPRINT) ../lib/libkfontinst.la
 
 kde_module_LTLIBRARIES = libkfontviewpart.la
 
@@ -17,7 +17,7 @@ AM_CPPFLAGS = -I$(srcdir)/../lib -I$(srcdir)/../../fonts $(all_includes) $(LIBFR
 METASOURCES = AUTO
 
 kfontview_LDADD = $(LIB_KPARTS)
-kfontview_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_KDECORE) $(LIB_KDEUI) -ltdefx $(LIB_KIO) -lktexteditor
+kfontview_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_TDECORE) $(LIB_TDEUI) -ltdefx $(LIB_KIO) -lktexteditor
 
 bin_PROGRAMS = kfontview
 xdg_apps_DATA = kfontview.desktop

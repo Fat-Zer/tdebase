@@ -13,7 +13,7 @@ include( CheckFunctionExists )
 check_function_exists( sigset HAVE_SIGACTION )
 check_function_exists( sigaction HAVE_SIGSET )
 
-add_definitions( -D_KDEPRINT_COMPILE )
+add_definitions( -D_TDEPRINT_COMPILE )
 
 include_directories(
   ${CMAKE_CURRENT_BINARY_DIR}

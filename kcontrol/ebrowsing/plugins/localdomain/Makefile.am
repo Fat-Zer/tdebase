@@ -5,7 +5,7 @@ AM_CPPFLAGS   =  $(all_includes) -DQT_NO_CAST_ASCII
 kde_module_LTLIBRARIES = liblocaldomainurifilter.la
 
 liblocaldomainurifilter_la_LDFLAGS = $(all_libraries) -module $(KDE_PLUGIN)
-liblocaldomainurifilter_la_LIBADD = $(LIB_KIO) $(LIB_KDEUI) $(LIB_KDECORE)
+liblocaldomainurifilter_la_LIBADD = $(LIB_KIO) $(LIB_TDEUI) $(LIB_TDECORE)
 
 liblocaldomainurifilter_la_SOURCES = localdomainurifilter.cpp localdomainurifilter.skel
 

@@ -6,7 +6,7 @@ sidebar_panelextension_la_SOURCES = sidebarextension.cpp
 
 sidebar_panelextension_la_METASOURCES = AUTO
 sidebar_panelextension_la_LDFLAGS = -module $(KDE_PLUGIN) $(all_libraries)
-sidebar_panelextension_la_LIBADD =  $(LIB_KDEUI) $(LIB_KPARTS) ../../../libkonq/libkonq.la
+sidebar_panelextension_la_LIBADD =  $(LIB_TDEUI) $(LIB_KPARTS) ../../../libkonq/libkonq.la
 
 
 lnkdir = $(kde_datadir)/kicker/extensions

@@ -1,7 +1,7 @@
 ## Makefile.am of kdebase/kioslave/thumbnail
 
 INCLUDES = $(all_includes) $(EXR_FLAGS)
-AM_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_KDECORE) $(LIB_KDEUI) -ltdefx $(LIB_KIO) -lktexteditor
+AM_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_TDECORE) $(LIB_TDEUI) -ltdefx $(LIB_KIO) -lktexteditor
 METASOURCES = AUTO
 
 if have_xcursor
@@ -36,15 +36,15 @@ htmlthumbnail_la_LIBADD = $(LIB_KHTML)
 htmlthumbnail_la_LDFLAGS = $(all_libraries) -module $(KDE_PLUGIN)
 
 djvuthumbnail_la_SOURCES = djvucreator.cpp
-djvuthumbnail_la_LIBADD = $(LIB_KDECORE)
+djvuthumbnail_la_LIBADD = $(LIB_TDECORE)
 djvuthumbnail_la_LDFLAGS = $(all_libraries) -module $(KDE_PLUGIN)
 
 cursorthumbnail_la_SOURCES = cursorcreator.cpp
-cursorthumbnail_la_LIBADD = $(LIB_KDECORE) $(LIB_XCURSOR)
+cursorthumbnail_la_LIBADD = $(LIB_TDECORE) $(LIB_XCURSOR)
 cursorthumbnail_la_LDFLAGS = $(all_libraries) -module $(KDE_PLUGIN)
 
 exrthumbnail_la_SOURCES = exrcreator.cpp
-exrthumbnail_la_LIBADD = $(LIB_KDECORE) $(LIB_EXR)
+exrthumbnail_la_LIBADD = $(LIB_TDECORE) $(LIB_EXR)
 exrthumbnail_la_LDFLAGS = $(all_libraries) -module $(KDE_PLUGIN)
 
 noinst_HEADERS = thumbnail.h imagecreator.h textcreator.h htmlcreator.h \

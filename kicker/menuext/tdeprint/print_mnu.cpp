@@ -33,7 +33,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 K_EXPORT_KICKER_MENUEXT(tdeprint, PrintMenu)
 
 #define ADD_PRINTER_ID		0
-#define KDEPRINT_SETTINGS_ID	1
+#define TDEPRINT_SETTINGS_ID	1
 #define	CONFIG_SERVER_ID	2
 #define	PRINT_MANAGER_ID	3
 #define PRINT_BROWSER_ID	4
@@ -65,7 +65,7 @@ void PrintMenu::initialize()
 
     if ((KMManager::self()->printerOperationMask() & KMManager::PrinterCreation) && KMManager::self()->hasManagement())
         insertItem(SmallIconSet("wizard"), i18n("Add Printer..."), ADD_PRINTER_ID);
-    insertItem(SmallIconSet("tdeprint_configmgr"), i18n("KDE Print Settings"), KDEPRINT_SETTINGS_ID);
+    insertItem(SmallIconSet("tdeprint_configmgr"), i18n("KDE Print Settings"), TDEPRINT_SETTINGS_ID);
     if (KMManager::self()->serverOperationMask() & KMManager::ServerConfigure)
         insertItem(SmallIconSet("tdeprint_configsrv"), i18n("Configure Server"), CONFIG_SERVER_ID);
     insertSeparator();
@@ -105,7 +105,7 @@ void PrintMenu::slotExec(int ID)
         case ADD_PRINTER_ID:
             kapp->tdeinitExec("kaddprinterwizard");
             break;
-        case KDEPRINT_SETTINGS_ID:
+        case TDEPRINT_SETTINGS_ID:
 	    kapp->tdeinitExec("kaddprinterwizard", TQStringList("--kdeconfig"));
             break;
 	case CONFIG_SERVER_ID:

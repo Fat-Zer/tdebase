@@ -62,7 +62,7 @@ KCMDnssd::KCMDnssd(TQWidget *parent, const char *name, const TQStringList&)
 	setQuickHelp(i18n("Setup services browsing with ZeroConf"));
 	if (geteuid()!=0) tabs->removePage(tab_2); // normal user cannot change wide-area settings
 	// show only global things in 'administrator mode' to prevent confusion
-		else if (getenv("KDESU_USER")!=0) tabs->removePage(tab); 
+		else if (getenv("TDESU_USER")!=0) tabs->removePage(tab); 
 	addConfig(DNSSD::Configuration::self(),this);
 	// it is host-wide setting so it has to be in global config file
 	domain = new KSimpleConfig( TQString::tqfromLatin1( KDE_CONFDIR "/kdnssdrc" ));

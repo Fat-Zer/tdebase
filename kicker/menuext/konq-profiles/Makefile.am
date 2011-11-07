@@ -4,7 +4,7 @@ kde_module_LTLIBRARIES = kickermenu_konqueror.la
 
 kickermenu_konqueror_la_SOURCES = konqy_menu.cpp
 kickermenu_konqueror_la_LDFLAGS = $(all_libraries) -module -avoid-version
-kickermenu_konqueror_la_LIBADD = $(LIB_KDEUI) $(LIB_KIO)
+kickermenu_konqueror_la_LIBADD = $(LIB_TDEUI) $(LIB_KIO)
 
 kickermenu_konqueror_la_METASOURCES = AUTO
 

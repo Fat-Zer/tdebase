@@ -7,7 +7,7 @@ KDE_CXXFLAGS = $(KDE_USE_FPIE)
 bin_PROGRAMS = tdesud
 tdesud_SOURCES = tdesud.cpp repo.cpp lexer.cpp handler.cpp secure.cpp 
 tdesud_LDFLAGS = $(KDE_USE_PIE) $(all_libraries) $(KDE_RPATH)
-tdesud_LDADD = $(LIB_KDECORE) -ltdesu $(LIBSOCKET)
+tdesud_LDADD = $(LIB_TDECORE) -ltdesu $(LIBSOCKET)
 noinst_HEADERS = repo.h handler.h lexer.h secure.h
 
 ## tdesud needs to be suid or sgid something

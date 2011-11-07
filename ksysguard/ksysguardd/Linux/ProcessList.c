@@ -40,7 +40,7 @@
 
 #define BUFSIZE 1024
 #define TAGSIZE 32
-#define KDEINITLEN strlen( "tdeinit: " )
+#define TDEINITLEN strlen( "tdeinit: " )
 
 static CONTAINER ProcessList = 0;
 
@@ -289,18 +289,18 @@ static int updateProcess( int pid )
 
   /* Ugly hack to "fix" program name for tdeinit launched programs. */
   if ( strcmp( ps->name, "tdeinit" ) == 0 &&
-       strncmp( ps->cmdline, "tdeinit: ", KDEINITLEN ) == 0 &&
-       strcmp( ps->cmdline + KDEINITLEN, "Running..." ) != 0 ) {
+       strncmp( ps->cmdline, "tdeinit: ", TDEINITLEN ) == 0 &&
+       strcmp( ps->cmdline + TDEINITLEN, "Running..." ) != 0 ) {
     size_t len;
-    char* end = strchr( ps->cmdline + KDEINITLEN, ' ' );
+    char* end = strchr( ps->cmdline + TDEINITLEN, ' ' );
     if ( end )
-      len = ( end - ps->cmdline ) - KDEINITLEN;
+      len = ( end - ps->cmdline ) - TDEINITLEN;
     else
-      len = strlen( ps->cmdline + KDEINITLEN );
+      len = strlen( ps->cmdline + TDEINITLEN );
     if ( len > 0 ) {
       if ( len > sizeof( ps->name ) - 1 )
         len = sizeof( ps->name ) - 1;
-      strncpy( ps->name, ps->cmdline + KDEINITLEN, len );
+      strncpy( ps->name, ps->cmdline + TDEINITLEN, len );
       ps->name[ len ] = '\0';
     }
   }

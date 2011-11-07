@@ -33,4 +33,4 @@ kfind_SOURCES = kfwin.cpp kfinddlg.cpp main.cpp
 kfind_LDADD   =  libkfind_common.la $(LIB_KPARTS)
 
 # the library search path.
-kfind_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_KDECORE) $(LIB_KDEUI) -ltdefx $(LIB_KIO) -lktexteditor
+kfind_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_TDECORE) $(LIB_TDEUI) -ltdefx $(LIB_KIO) -lktexteditor

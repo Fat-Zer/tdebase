@@ -17,7 +17,7 @@ libkicker_core_la_SOURCES = extensionSettings.kcfgc \
 
 
 libkicker_core_la_LDFLAGS = $(all_libraries)
-libkicker_core_la_LIBADD = $(top_builddir)/libkonq/libkonq.la $(LIB_KDEUI)
+libkicker_core_la_LIBADD = $(top_builddir)/libkonq/libkonq.la $(LIB_TDEUI)
 libkicker_core_la_METASOURCES = AUTO
 libkicker_core_la_COMPILE_FIRST = ../../libkicker/kickerSettings.h
 

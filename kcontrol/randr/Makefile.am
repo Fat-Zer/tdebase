@@ -7,7 +7,7 @@ METASOURCES = AUTO
 
 kcm_randr_la_SOURCES = krandrmodule.cpp
 kcm_randr_la_LDFLAGS = -module -avoid-version $(all_libraries) -no-undefined
-kcm_randr_la_LIBADD = $(LIB_KDEUI) $(LIB_XRANDR)
+kcm_randr_la_LIBADD = $(LIB_TDEUI) $(LIB_XRANDR)
 
 noinst_HEADERS = krandrmodule.h krandrtray.h krandrapp.h \
     krandrpassivepopup.h configdialog.h

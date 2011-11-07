@@ -4,7 +4,7 @@ kde_module_LTLIBRARIES = kickermenu_tom.la
 
 kickermenu_tom_la_SOURCES = tom.cc
 kickermenu_tom_la_LDFLAGS = $(all_libraries) -module -avoid-version
-kickermenu_tom_la_LIBADD = $(LIB_KDEUI)
+kickermenu_tom_la_LIBADD = $(LIB_TDEUI)
 #$(top_builddir)/kicker/ui/libkicker_ui.la 
 
 kickermenu_tom_la_METASOURCES = AUTO
