@@ -27,7 +27,7 @@
 
 #include <tqwidget.h>
 #include <tqintdict.h>
-#include <kwin.h>
+#include <twin.h>
 
 class KSharedPixmap;
 class KPopupMenu;

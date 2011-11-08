@@ -58,7 +58,7 @@
 
 #include <kdebug.h>
 #include <kglobal.h>
-#include <kwin.h>
+#include <twin.h>
 #include <kiconloader.h>
 #include <kpixmap.h>
 #include <kpixmapeffect.h>

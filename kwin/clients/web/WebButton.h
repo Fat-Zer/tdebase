@@ -1,5 +1,5 @@
 /*
-  'Web' kwin client
+  'Web' twin client
 
   Copyright (C) 2001 Rik Hemsley (rikkus) <rik@kde.org>
 

@@ -34,7 +34,7 @@ static const KCmdLineOptions options[] =
    { "r", 0, 0 },
    { "restore", I18N_NOOP("Restores the saved user session if available"), 0},
    { "w", 0, 0 },
-   { "windowmanager <wm>", I18N_NOOP("Starts 'wm' in case no other window manager is \nparticipating in the session. Default is 'kwin'"), 0},
+   { "windowmanager <wm>", I18N_NOOP("Starts 'wm' in case no other window manager is \nparticipating in the session. Default is 'twin'"), 0},
    { "nolocal", I18N_NOOP("Also allow remote connections"), 0},
    KCmdLineLastOption
 };
@@ -204,7 +204,7 @@ extern "C" KDE_EXPORT int kdemain( int argc, char* argv[] )
 
     TQCString wm = args->getOption("windowmanager");
     if ( wm.isEmpty() )
-	wm = "kwin";
+	wm = "twin";
 
     bool only_local = args->isSet("local");
 #ifndef HAVE__ICETRANSNOLISTEN

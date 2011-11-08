@@ -356,7 +356,7 @@ void WidgetCanvas::drawSampleWidgets()
     KPixmap pmTitle;
     pmTitle.resize( width()-160, 20 );
 
-    // Switched to vertical gradient because those kwin styles that
+    // Switched to vertical gradient because those twin styles that
     // use the gradient have it vertical.
     KPixmapEffect::gradient(pmTitle, iaTitle, iaBlend,
                             KPixmapEffect::HorizontalGradient);
@@ -400,7 +400,7 @@ void WidgetCanvas::drawSampleWidgets()
     paint.setBrush( aTitle );paint.setPen( aTitle );
     paint.drawRect( 65, 30+5, width()-152, 20 );
 
-    // Switched to vertical gradient because those kwin styles that
+    // Switched to vertical gradient because those twin styles that
     // use the gradient have it vertical.
     pmTitle.resize( width()-152, 20 );
     KPixmapEffect::gradient(pmTitle, aTitle, aBlend,

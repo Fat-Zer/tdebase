@@ -32,7 +32,7 @@
 #include <kdebug.h>
 #include <kiconloader.h>
 #include <kpopupmenu.h>
-#include <kwin.h>
+#include <twin.h>
 #include <kstartupinfo.h>
 
 class JobTray : public KSystemTray

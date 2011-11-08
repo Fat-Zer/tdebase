@@ -61,7 +61,7 @@ void KKeyModule::init( bool isGlobal, bool _bSeriesOnly, bool bSeriesNone )
 // see also KKeyModule::init() below !!!
 #define NOSLOTS
 #define KShortcuts KAccelShortcuts
-#include "../../kwin/kwinbindings.cpp"
+#include "../../twin/twinbindings.cpp"
 #include "../../kicker/kicker/core/kickerbindings.cpp"
 #include "../../kicker/taskbar/taskbarbindings.cpp"
 #include "../../kdesktop/kdesktopbindings.cpp"
@@ -209,7 +209,7 @@ void KKeyModule::load()
     if ( !kapp->dcopClient()->isAttached() )
       kapp->dcopClient()->attach();
     // TODO: create a reconfigureKeys() method.
-    kapp->dcopClient()->send("kwin", "", "reconfigure()", "");
+    kapp->dcopClient()->send("twin", "", "reconfigure()", "");
     kapp->dcopClient()->send("kdesktop", "", "configure()", "");
     kapp->dcopClient()->send("kicker", "Panel", "configure()", "");
   }
@@ -485,7 +485,7 @@ void KKeyModule::init()
 #define NOSLOTS
 #define KShortcuts KAccelShortcuts
 #include "../../klipper/klipperbindings.cpp"
-#include "../../kwin/kwinbindings.cpp"
+#include "../../twin/twinbindings.cpp"
 #include "../../kicker/kicker/core/kickerbindings.cpp"
 #include "../../kicker/taskbar/taskbarbindings.cpp"
 #include "../../kdesktop/kdesktopbindings.cpp"

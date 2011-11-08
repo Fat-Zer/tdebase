@@ -28,7 +28,7 @@ DEALINGS IN THE SOFTWARE.
 #include <kprocess.h>
 #include <klocale.h>
 #include <unistd.h>
-#include <kwin.h>
+#include <twin.h>
 #include <X11/Xlib.h>
 
 static const KCmdLineOptions options[] =
@@ -45,8 +45,8 @@ static const KCmdLineOptions options[] =
 
 int main( int argc, char* argv[] )
     {
-    KLocale::setMainCatalogue( "kwin" ); // the messages are in kwin's .po file
-    KCmdLineArgs::init( argc, argv, "kwin_killer_helper", I18N_NOOP( "KWin" ),
+    KLocale::setMainCatalogue( "twin" ); // the messages are in twin's .po file
+    KCmdLineArgs::init( argc, argv, "twin_killer_helper", I18N_NOOP( "KWin" ),
 	I18N_NOOP( "KWin helper utility" ), "1.0" );
     KCmdLineArgs::addCmdLineOptions( options );
     KApplication app;

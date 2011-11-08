@@ -19,7 +19,7 @@
 #include <kdebug.h>
 #include <kdebug.h>
 #include <kglobalsettings.h>
-#include <kwin.h>
+#include <twin.h>
 
 #include <tqdesktopwidget.h>
 #include <tqhbox.h>

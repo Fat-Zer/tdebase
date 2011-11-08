@@ -252,7 +252,7 @@ mouse buttons.</para>
 <term><guilabel>Window Behavior</guilabel></term>
 <listitem>
 <para>This is where you would configure options related to the behavior of
-&kde;'s window manager, &kwin;. &kwin; is extremely configurable and has
+&kde;'s window manager, &twin;. &twin; is extremely configurable and has
 advanced features such as focus stealing prevention and different focus
 policies such as focus follows mouse. You can also configure what actions
 you would like to bind to certain keys and mouse events.</para>

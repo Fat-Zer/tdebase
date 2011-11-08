@@ -20,7 +20,7 @@
 #include <netwm.h>
 #include <kshortcut.h>
 #include <kkeynative.h>
-#include <kwin.h>
+#include <twin.h>
 
 #include <X11/XKBlib.h>
 #define XK_MISCELLANY

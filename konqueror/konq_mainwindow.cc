@@ -93,7 +93,7 @@
 #include <kurlrequesterdlg.h>
 #include <kurlrequester.h>
 #include <kuserprofile.h>
-#include <kwin.h>
+#include <twin.h>
 #include <kfiledialog.h>
 #include <klocale.h>
 #include <kiconloader.h>
@@ -5272,7 +5272,7 @@ void KonqMainWindow::updateBookmarkBar()
 void KonqMainWindow::closeEvent( TQCloseEvent *e )
 {
   kdDebug(1202) << "KonqMainWindow::closeEvent begin" << endl;
-  // This breaks session management (the window is withdrawn in kwin)
+  // This breaks session management (the window is withdrawn in twin)
   // so let's do this only when closed by the user.
   if ( static_cast<KonquerorApplication *>(kapp)->closedByUser() )
   {

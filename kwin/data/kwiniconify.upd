@@ -1,5 +1,5 @@
 Id=iconifyupd3.1
-File=kwin.eventsrc
+File=twin.eventsrc
 Group=iconify,minimize
 AllKeys
 Group=deiconify,unminimize

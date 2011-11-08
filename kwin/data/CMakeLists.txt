@@ -22,13 +22,13 @@ link_directories(
 ##### other data ################################
 
 install( FILES
-    kwin.upd kwinsticky.upd kwiniconify.upd kwin3_plugin.upd
-    kwin_focus1.upd kwinupdatewindowsettings.upd
-    kwin_focus2.upd kwin_fsp_workarounds_1.upd
+    twin.upd twinsticky.upd twiniconify.upd twin3_plugin.upd
+    twin_focus1.upd twinupdatewindowsettings.upd
+    twin_focus2.upd twin_fsp_workarounds_1.upd
   DESTINATION ${KCONF_UPDATE_INSTALL_DIR} )
 
 install( PROGRAMS
-    pluginlibFix.pl kwin3_plugin.pl kwin_focus1.sh kwin_focus2.sh
+    pluginlibFix.pl twin3_plugin.pl twin_focus1.sh twin_focus2.sh
   DESTINATION ${KCONF_UPDATE_INSTALL_DIR} )
 
 install( FILES
@@ -36,22 +36,22 @@ install( FILES
   DESTINATION ${SOUND_INSTALL_DIR} )
 
 install( FILES
-    fsp_workarounds_1.kwinrules
-  DESTINATION ${DATA_INSTALL_DIR}/kwin/default_rules )
+    fsp_workarounds_1.twinrules
+  DESTINATION ${DATA_INSTALL_DIR}/twin/default_rules )
 
 
-##### kwin_update_window_settings (executable) ##
+##### twin_update_window_settings (executable) ##
 
-tde_add_executable( kwin_update_window_settings
+tde_add_executable( twin_update_window_settings
   SOURCES update_window_settings.cpp
   LINK tdecore-shared
   DESTINATION ${LIB_INSTALL_DIR}/kconf_update_bin
 )
 
 
-##### kwin_update_default_rules (executable) ####
+##### twin_update_default_rules (executable) ####
 
-tde_add_executable( kwin_update_default_rules
+tde_add_executable( twin_update_default_rules
   SOURCES update_default_rules.cpp
   LINK tdecore-shared
   DESTINATION ${LIB_INSTALL_DIR}/kconf_update_bin

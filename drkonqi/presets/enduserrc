@@ -492,7 +492,7 @@ Comment[uz@cyrillic]=Дастурнинг иши SIGABRT сигнали била
 Comment[ven]==Apulikhesheni i fhela nga luswayo lwa SIGABRT musi i tshi sedzulusa mifhirifhiri ya nga mgomu yo vhangwaho nga baga kha mbekanyamushumo.
 Comment[vi]=Một chương trình bị dừng bởi một tín hiệu SIGABRT khi nó tìm ra một mâu thuẫn nội bộ gây ra bởi lỗi nào đó.
 Comment[wa]=On programe a fini avou on signå SIGABRT cwand il a trové ene divintrinne inconsistance a cåze d' on bug dins l' programe.
-Comment[xh]=Isicelo sicinywa ngophawu lwe SIGABRT xa sibona ukungahambisalani kwangaphakathi okwenziwa ligciwane kwinkqubo.
+Comment[xh]=Isicelo sicinywa ngophawu lwe SIGABRT xa sibona ukungahambisalani kwangaphakathi okwenziwa ligciwane twinkqubo.
 Comment[zh_CN]=程序在检测到缺陷引起的内部不一致时，以 SIGABRT 信号中止。
 Comment[zh_TW]=程式偵測發生到內部錯誤時，以 SIGABRT 信號中止。
 Comment[zu]=Umyaleli wekhompyutha unqamuka ngophawu lwe-SIGABRT uma ecosha ukungahambisani kwangaphakathi okubangwe igciwane elisohlelweni lwemisebenzi.

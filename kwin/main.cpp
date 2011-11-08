@@ -60,7 +60,7 @@ int x11ErrorHandler(Display *d, XErrorEvent *e)
          )
         && (e->error_code == BadAccess)) 
         {
-        fputs(i18n("kwin: it looks like there's already a window manager running. kwin not started.\n").local8Bit(), stderr);
+        fputs(i18n("twin: it looks like there's already a window manager running. twin not started.\n").local8Bit(), stderr);
         exit(1);
         }
 
@@ -71,11 +71,11 @@ int x11ErrorHandler(Display *d, XErrorEvent *e)
     sprintf(number, "%d", e->request_code);
     XGetErrorDatabaseText(d, "XRequest", number, "<unknown>", req, sizeof(req));
 
-    fprintf(stderr, "kwin: %s(0x%lx): %s\n", req, e->resourceid, msg);
+    fprintf(stderr, "twin: %s(0x%lx): %s\n", req, e->resourceid, msg);
 
     if (initting) 
         {
-        fputs(i18n("kwin: failure during initialization; aborting").local8Bit(), stderr);
+        fputs(i18n("twin: failure during initialization; aborting").local8Bit(), stderr);
         exit(1);
         }
     return 0;
@@ -116,9 +116,9 @@ Application::Application( )
             int format;
             unsigned long n, left;
             unsigned char *data;
-            Atom kwinRunningAtom = XInternAtom (dpy, "_KDE_WM_IS_KWIN", True);
+            Atom twinRunningAtom = XInternAtom (dpy, "_KDE_WM_IS_KWIN", True);
 
-            int result = XGetWindowProperty (dpy, w, kwinRunningAtom, 0L, 1L, False,
+            int result = XGetWindowProperty (dpy, w, twinRunningAtom, 0L, 1L, False,
                 XA_ATOM, &actual, &format,
                 &n, &left, &data);
 
@@ -129,25 +129,25 @@ Application::Application( )
                 XFree ( (void *) data);
                 if( !owner.claim( true, true ))
                     {
-                    fputs(i18n("kwin: unable to claim manager selection, another wm running? (try using --replace)\n").local8Bit(), stderr);
+                    fputs(i18n("twin: unable to claim manager selection, another wm running? (try using --replace)\n").local8Bit(), stderr);
                     ::exit(1);
                     }
                 }
             else
                 {
-                fputs(i18n("kwin: unable to claim manager selection, another wm running? (try using --replace)\n").local8Bit(), stderr);
+                fputs(i18n("twin: unable to claim manager selection, another wm running? (try using --replace)\n").local8Bit(), stderr);
                 ::exit(1);
                 }
             }
         else
             {
-            fputs(i18n("kwin: unable to claim manager selection, another wm running? (try using --replace)\n").local8Bit(), stderr);
+            fputs(i18n("twin: unable to claim manager selection, another wm running? (try using --replace)\n").local8Bit(), stderr);
             ::exit(1);
             }
         }
     connect( &owner, TQT_SIGNAL( lostOwnership()), TQT_SLOT( lostSelection()));
     
-    // if there was already kwin running, it saved its configuration after loosing the selection -> reread
+    // if there was already twin running, it saved its configuration after loosing the selection -> reread
     config()->reparseConfiguration();
 
     initting = TRUE; // startup....
@@ -253,7 +253,7 @@ KDE_EXPORT int kdemain( int argc, char * argv[] )
     if (! restored) 
         {
         // we only do the multihead fork if we are not restored by the session
-	// manager, since the session manager will register multiple kwins,
+	// manager, since the session manager will register multiple twins,
         // one for each screen...
         TQCString multiHead = getenv("KDE_MULTIHEAD");
         if (multiHead.lower() == "true") 
@@ -282,7 +282,7 @@ KDE_EXPORT int kdemain( int argc, char * argv[] )
                 {
                 for (int i = 0; i < number_of_screens; i++ ) 
                     {
-		    // if execution doesn't pass by here, then kwin
+		    // if execution doesn't pass by here, then twin
 		    // acts exactly as previously
                     if ( i != KWinInternal::screen_number && fork() == 0 ) 
                         {
@@ -307,9 +307,9 @@ KDE_EXPORT int kdemain( int argc, char * argv[] )
             }
         }
 
-    KGlobal::locale()->setMainCatalogue("kwin");
+    KGlobal::locale()->setMainCatalogue("twin");
 
-    KAboutData aboutData( "kwin", I18N_NOOP("KWin"),
+    KAboutData aboutData( "twin", I18N_NOOP("KWin"),
                           version, description, KAboutData::License_GPL,
                           I18N_NOOP("(c) 1999-2005, The KDE Developers"));
     aboutData.addAuthor("Matthias Ettrich",0, "ettrich@kde.org");
@@ -336,9 +336,9 @@ KDE_EXPORT int kdemain( int argc, char * argv[] )
 
     TQCString appname;
     if (KWinInternal::screen_number == 0)
-        appname = "kwin";
+        appname = "twin";
     else
-        appname.sprintf("kwin-screen-%d", KWinInternal::screen_number);
+        appname.sprintf("twin-screen-%d", KWinInternal::screen_number);
 
     DCOPClient* client = a.dcopClient();
     client->registerAs( appname.data(), false);

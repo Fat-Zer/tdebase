@@ -23,7 +23,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #include <tqtooltip.h>
 
-#include <kwindowlistmenu.h>
+#include <twindowlistmenu.h>
 #include <klocale.h>
 
 #include "windowlistbutton.h"

@@ -4,5 +4,5 @@ SUBDIRS = plastik b2 default keramik laptop modernsystem quartz redmond web
 
 messages: rc.cpp
 	$(EXTRACTRC) `find . -name \*.ui` >> rc.cpp
-	$(XGETTEXT) `find . -name \*.cpp` -o $(podir)/kwin_clients.pot
+	$(XGETTEXT) `find . -name \*.cpp` -o $(podir)/twin_clients.pot
 	-rm rc.cpp

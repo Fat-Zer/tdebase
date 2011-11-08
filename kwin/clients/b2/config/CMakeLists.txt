@@ -20,9 +20,9 @@ link_directories(
 )
 
 
-##### kwin_b2_config (module) ###################
+##### twin_b2_config (module) ###################
 
-tde_add_kpart( kwin_b2_config AUTOMOC
+tde_add_kpart( twin_b2_config AUTOMOC
   SOURCES config.cpp
   LINK tdeui-shared
   DESTINATION ${PLUGIN_INSTALL_DIR}

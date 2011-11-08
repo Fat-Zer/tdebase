@@ -44,15 +44,15 @@ Sample XML theme config file:
 </desktop>
 <icons name="crystalsvg" />
 <sounds>
-    <event object="global|kwin" name="eventname" url="theme:/sounds/file.wav" />
+    <event object="global|twin" name="eventname" url="theme:/sounds/file.wav" />
     ...
 </sounds>
 <colors contrast="7">
-    <alternateBackground rgb="#123456" object="global|kwin"/>
+    <alternateBackground rgb="#123456" object="global|twin"/>
     ...
 </colors>
 <cursors name="theme_name" />
-<wm type="builtin|custom" name="kwin_lib_name">
+<wm type="builtin|custom" name="twin_lib_name">
     <buttons left="M" right="HIAX" />
     <border size="number" />
 </wm>

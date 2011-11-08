@@ -23,17 +23,17 @@ link_directories(
 
 ##### other data ################################
 
-install( FILES kwinoptions.desktop DESTINATION ${XDG_APPS_INSTALL_DIR} )
+install( FILES twinoptions.desktop DESTINATION ${XDG_APPS_INSTALL_DIR} )
 
 install( FILES
-    kwinactions.desktop kwinadvanced.desktop kwinfocus.desktop
-    kwinmoving.desktop kwintranslucency.desktop
+    twinactions.desktop twinadvanced.desktop twinfocus.desktop
+    twinmoving.desktop twintranslucency.desktop
   DESTINATION ${APPS_INSTALL_DIR}/.hidden )
 
 
-##### kcm_kwinoptions (module) ##################
+##### kcm_twinoptions (module) ##################
 
-tde_add_kpart( kcm_kwinoptions AUTOMOC
+tde_add_kpart( kcm_twinoptions AUTOMOC
   SOURCES windows.cpp mouse.cpp main.cpp
   LINK tdeui-shared
   DESTINATION ${PLUGIN_INSTALL_DIR}

@@ -20,9 +20,9 @@ link_directories(
 )
 
 
-##### kwin_modernsys_config (module) ############
+##### twin_modernsys_config (module) ############
 
-tde_add_kpart( kwin_modernsys_config AUTOMOC
+tde_add_kpart( twin_modernsys_config AUTOMOC
   SOURCES config.cpp
   LINK tdeui-shared
   DESTINATION ${PLUGIN_INSTALL_DIR}

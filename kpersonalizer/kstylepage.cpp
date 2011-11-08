@@ -78,9 +78,9 @@ KStylePage::KStylePage(TQWidget *parent, const char *name ) : KStylePageDlg(pare
 	connect(klv_styles, TQT_SIGNAL(selectionChanged()),
 			this, TQT_SLOT(slotCurrentChanged()));
 
-	// Note: if the default is changed here it needs to be changed in kdebase/kwin/plugins.cpp
-	//       and kdebase/kwin/kcmkwin/kwindecoration/kwindecoration.cpp as well.
-	defaultKWinStyle = TQPixmap::defaultDepth() > 8 ? "kwin_plastik" : "kwin_quartz";
+	// Note: if the default is changed here it needs to be changed in kdebase/twin/plugins.cpp
+	//       and kdebase/twin/kcmtwin/twindecoration/twindecoration.cpp as well.
+	defaultKWinStyle = TQPixmap::defaultDepth() > 8 ? "twin_plastik" : "twin_quartz";
 	appliedStyle = NULL;
 
 	getAvailability();
@@ -89,7 +89,7 @@ KStylePage::KStylePage(TQWidget *parent, const char *name ) : KStylePageDlg(pare
 }
 
 KStylePage::~KStylePage(){
-	delete ckwin;
+	delete ctwin;
 	delete appliedStyle;
 }
 
@@ -115,39 +115,39 @@ void KStylePage::saveStyle(bool curSettings){
 
 /** save the KWin-style*/
 void KStylePage::saveKWin(bool curSettings){
-	TQString kwin = origKWinStyle;
+	TQString twin = origKWinStyle;
 	if(curSettings) {
 		KDesktopFile* kdf = 0L;
 		KStandardDirs* kstd = KGlobal::dirs();
-		if (cde->isSelected() && kwin_cde_exist)
-			kdf = new KDesktopFile(kstd->findResource("data", "kwin/cde.desktop"));
-		else if (win->isSelected() && kwin_win_exist)
-			kdf = new KDesktopFile(kstd->findResource("data", "kwin/redmond.desktop"));
-		else if (platinum->isSelected() && kwin_system_exist)
-			kdf = new KDesktopFile(kstd->findResource("data", "kwin/system.desktop"));
-		else if (keramik->isSelected() && kwin_keramik_exist)
-			kdf = new KDesktopFile(kstd->findResource("data", "kwin/keramik.desktop"));
+		if (cde->isSelected() && twin_cde_exist)
+			kdf = new KDesktopFile(kstd->findResource("data", "twin/cde.desktop"));
+		else if (win->isSelected() && twin_win_exist)
+			kdf = new KDesktopFile(kstd->findResource("data", "twin/redmond.desktop"));
+		else if (platinum->isSelected() && twin_system_exist)
+			kdf = new KDesktopFile(kstd->findResource("data", "twin/system.desktop"));
+		else if (keramik->isSelected() && twin_keramik_exist)
+			kdf = new KDesktopFile(kstd->findResource("data", "twin/keramik.desktop"));
 		else if (kde->isSelected()) {
-			if (kwin_plastik_exist && (TQColor::numBitPlanes() > 8))
-				kdf = new KDesktopFile(kstd->findResource("data", "kwin/plastik.desktop"));
-			else if (kwin_quartz_exist)
-				kdf = new KDesktopFile(kstd->findResource("data", "kwin/quartz.desktop"));
+			if (twin_plastik_exist && (TQColor::numBitPlanes() > 8))
+				kdf = new KDesktopFile(kstd->findResource("data", "twin/plastik.desktop"));
+			else if (twin_quartz_exist)
+				kdf = new KDesktopFile(kstd->findResource("data", "twin/quartz.desktop"));
 		}
 
 		if (kdf) {
 			kdf->setGroup("Desktop Entry");
-			kwin = kdf->readEntry("X-KDE-Library", defaultKWinStyle);
+			twin = kdf->readEntry("X-KDE-Library", defaultKWinStyle);
 			delete kdf;
 		}
 		else {
 			// if we get here classic is selected (there's no .desktop file for the
-			// kde2 kwin style),  or none of the other kwin styles were found.
-			kwin = "kwin_default";
+			// kde2 twin style),  or none of the other twin styles were found.
+			twin = "twin_default";
 		}
 	}
-	ckwin->writeEntry("PluginLib", kwin);
-	ckwin->sync();
-	kdDebug() << "KStylePage::saveKWin(): " << kwin << endl;
+	ctwin->writeEntry("PluginLib", twin);
+	ctwin->sync();
+	kdDebug() << "KStylePage::saveKWin(): " << twin << endl;
 }
 
 /** Save the color-scheme */
@@ -411,7 +411,7 @@ void KStylePage::getColors(colorSet *set, bool colorfile ){
             delete config;
 }
 
-/** Test widget- and kwin- styles for availability */
+/** Test widget- and twin- styles for availability */
 void KStylePage::getAvailability() {
 	// test, wich styles are available
 	kde_keramik_exist = kde_hc_exist = kde_def_exist = cde_exist
@@ -436,23 +436,23 @@ void KStylePage::getAvailability() {
 	if (!platinum_exist) platinum->tqsetVisible(false);
 
 	// test, wich KWin-styles are available
-	kwin_keramik_exist = kwin_system_exist = kwin_plastik_exist
-			= kwin_default_exist = kwin_win_exist
-			= kwin_cde_exist = kwin_quartz_exist = false;
+	twin_keramik_exist = twin_system_exist = twin_plastik_exist
+			= twin_default_exist = twin_win_exist
+			= twin_cde_exist = twin_quartz_exist = false;
 	KStandardDirs* kstd = KGlobal::dirs();
-	if (!kstd->findResource("data", "kwin/keramik.desktop").isNull())
-		kwin_keramik_exist = true;
-	if (!kstd->findResource("data", "kwin/plastik.desktop").isNull())
-		kwin_plastik_exist = true;
-	if (!kstd->findResource("data", "kwin/system.desktop").isNull())
-		kwin_system_exist = true;
-	if (!kstd->findResource("data", "kwin/redmond.desktop").isNull())
-		kwin_win_exist = true;
-	if (!kstd->findResource("data", "kwin/cde.desktop").isNull())
-		kwin_cde_exist = true;
-	if (!kstd->findResource("data", "kwin/quartz.desktop").isNull())
-		kwin_quartz_exist = true;
-	kwin_default_exist = true;	// we can't check for a .desktop-file for the old default because there is none
+	if (!kstd->findResource("data", "twin/keramik.desktop").isNull())
+		twin_keramik_exist = true;
+	if (!kstd->findResource("data", "twin/plastik.desktop").isNull())
+		twin_plastik_exist = true;
+	if (!kstd->findResource("data", "twin/system.desktop").isNull())
+		twin_system_exist = true;
+	if (!kstd->findResource("data", "twin/redmond.desktop").isNull())
+		twin_win_exist = true;
+	if (!kstd->findResource("data", "twin/cde.desktop").isNull())
+		twin_cde_exist = true;
+	if (!kstd->findResource("data", "twin/quartz.desktop").isNull())
+		twin_quartz_exist = true;
+	twin_default_exist = true;	// we can't check for a .desktop-file for the old default because there is none
 
 	// check, wich Icon-themes are available
 	icon_crystalsvg_exist = icon_kdeclassic_exist = icon_Locolor_exist = false;
@@ -473,9 +473,9 @@ void KStylePage::getUserDefaults() {
 	origStyle = KGlobal::config()->readEntry( "widgetStyle", KStyle::defaultStyle() );
 
 	// get the user's current KWin-style
-	ckwin = new KConfig("kwinrc");
-	ckwin->setGroup("Style");
-	origKWinStyle = ckwin->readEntry("PluginLib", defaultKWinStyle);
+	ctwin = new KConfig("twinrc");
+	ctwin->setGroup("Style");
+	origKWinStyle = ctwin->readEntry("PluginLib", defaultKWinStyle);
 
 	// get the users current colors
 	getColors(&usrColors, false);
@@ -521,8 +521,8 @@ void KStylePage::liveUpdate() {
 	KIPC::sendMessageAll(KIPC::StyleChanged);
 	// color palette changes
 	KIPC::sendMessageAll(KIPC::PaletteChanged);
-	// kwin-style
-	kapp->dcopClient()->send("kwin*", "", "reconfigure()", TQString(""));
+	// twin-style
+	kapp->dcopClient()->send("twin*", "", "reconfigure()", TQString(""));
 	// kdesktop-background
 	kapp->dcopClient()->send("kdesktop", "KBackgroundIface", "configure()", TQString(""));
 }

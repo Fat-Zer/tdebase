@@ -15,7 +15,7 @@
 // some shortcuts have Tarzan-speech like names, they need extra normal human descriptions with DEF2()
 // the others can use DEF()
 
-	keys->insert( "Program:kwin", i18n("System") );
+	keys->insert( "Program:twin", i18n("System") );
 
 	keys->insert( "Group:Navigation", i18n("Navigation") );
 	DEF( I18N_NOOP("Walk Through Windows"),                ALT+Qt::Key_Tab, ALT+Qt::Key_Tab, slotWalkThroughWindows() );

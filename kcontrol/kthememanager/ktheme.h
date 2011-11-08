@@ -171,7 +171,7 @@ private:
     /**
      * Creates a list of "event" elements based on:
      * @param events The list of events to work on
-     * @param object Specifier (currently "global" or "kwin")
+     * @param object Specifier (currently "global" or "twin")
      * @param parent Parent element to append to
      * @param cfg The KConfig object to work with
      */

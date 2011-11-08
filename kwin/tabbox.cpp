@@ -38,7 +38,7 @@ License. See the file "COPYING" for the exact licensing terms.
 namespace KWinInternal
 {
 
-extern TQPixmap* kwin_get_menu_pix_hack();
+extern TQPixmap* twin_get_menu_pix_hack();
 
 TabBox::TabBox( Workspace *ws, const char *name )
     : TQFrame( 0, name, TQt::WNoAutoErase ), current_client( NULL ), wspace(ws)
@@ -375,7 +375,7 @@ void TabBox::drawContents( TQPainter * )
     TQPainter p;
     p.tqbegin(&pix, this);
 
-    TQPixmap* menu_pix = kwin_get_menu_pix_hack();
+    TQPixmap* menu_pix = twin_get_menu_pix_hack();
 
     int iconWidth = showMiniIcon ? 16 : 32;
     int x = 0;

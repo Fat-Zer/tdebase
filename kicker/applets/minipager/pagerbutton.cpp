@@ -33,7 +33,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <netwm.h>
 #include <dcopclient.h>
 
-#include <kwinmodule.h>
+#include <twinmodule.h>
 #include <ksharedpixmap.h>
 #include <kpixmapio.h>
 #include <kpixmapeffect.h>
@@ -81,7 +81,7 @@ KMiniPagerButton::KMiniPagerButton(int desk, bool useViewPorts, const TQPoint& v
     setBackgroundOrigin(AncestorOrigin);
     installEventFilter(KickerTip::the());
 
-    m_desktopName = m_pager->kwin()->desktopName(m_desktop);
+    m_desktopName = m_pager->twin()->desktopName(m_desktop);
 
     connect(this, TQT_SIGNAL(clicked()), TQT_SLOT(slotClicked()));
     connect(this, TQT_SIGNAL(toggled(bool)), TQT_SLOT(slotToggled(bool)));
@@ -108,7 +108,7 @@ TQRect KMiniPagerButton::mapGeometryToViewport(const KWin::WindowInfo& info) con
 
     // ### fix vertically layouted viewports
     TQRect _r(info.frameGeometry());
-    TQPoint vx(m_pager->kwin()->currentViewport(m_pager->kwin()->currentDesktop()));
+    TQPoint vx(m_pager->twin()->currentViewport(m_pager->twin()->currentDesktop()));
 
     _r.moveBy( - (m_desktop - vx.x()) * TQApplication::desktop()->width(),
                0);
@@ -127,7 +127,7 @@ TQPoint KMiniPagerButton::mapPointToViewport(const TQPoint& _p) const
 {
     if (!m_useViewports) return _p;
 
-    TQPoint vx(m_pager->kwin()->currentViewport(m_pager->kwin()->currentDesktop()));
+    TQPoint vx(m_pager->twin()->currentViewport(m_pager->twin()->currentDesktop()));
 
     // ### fix vertically layouted viewports
     TQPoint p(_p);
@@ -443,12 +443,12 @@ void KMiniPagerButton::drawButton(TQPainter *bp)
     // window preview...
     if (m_pager->desktopPreview())
     {
-        KWinModule* kwin = m_pager->kwin();
+        KWinModule* twin = m_pager->twin();
         KWin::WindowInfo *info = 0;
         int dw = TQApplication::desktop()->width();
         int dh = TQApplication::desktop()->height();
 
-        TQValueList<WId> windows = kwin->stackingOrder();
+        TQValueList<WId> windows = twin->stackingOrder();
         TQValueList<WId>::const_iterator itEnd = windows.constEnd();
         for (TQValueList<WId>::ConstIterator it = windows.constBegin(); it != itEnd; ++it)
         {
@@ -460,7 +460,7 @@ void KMiniPagerButton::drawButton(TQPainter *bp)
                 r = TQRect(r.x() * width() / dw, 2 + r.y() * height() / dh,
                           r.width() * width() / dw, r.height() * height() / dh);
 
-                if (kwin->activeWindow() == info->win())
+                if (twin->activeWindow() == info->win())
                 {
                     TQBrush brush = tqcolorGroup().brush(TQColorGroup::Highlight);
                     qDrawShadeRect(bp, r, tqcolorGroup(), false, 1, 0, &brush);
@@ -704,7 +704,7 @@ void KMiniPagerButton::dragLeaveEvent( TQDragLeaveEvent* e )
 {
     m_dragSwitchTimer.stop();
 
-    if (m_pager->kwin()->currentDesktop() != m_desktop)
+    if (m_pager->twin()->currentDesktop() != m_desktop)
     {
         setDown(false);
     }
@@ -750,7 +750,7 @@ bool KMiniPagerButton::eventFilter( TQObject *o, TQEvent * e)
     if (o && TQT_BASE_OBJECT(o) == TQT_BASE_OBJECT(m_lineEdit) &&
         (e->type() == TQEvent::FocusOut || e->type() == TQEvent::Hide))
     {
-        m_pager->kwin()->setDesktopName( m_desktop, m_lineEdit->text() );
+        m_pager->twin()->setDesktopName( m_desktop, m_lineEdit->text() );
         m_desktopName = m_lineEdit->text();
         TQTimer::singleShot( 0, m_lineEdit, TQT_SLOT( deleteLater() ) );
         m_lineEdit = 0;

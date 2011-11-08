@@ -9,8 +9,8 @@
 #
 #################################################
 
-add_subdirectory( kwinoptions )
-add_subdirectory( kwindecoration )
-add_subdirectory( kwinrules )
+add_subdirectory( twinoptions )
+add_subdirectory( twindecoration )
+add_subdirectory( twinrules )
 
 install( FILES showdesktop.desktop DESTINATION ${XDG_APPS_INSTALL_DIR} )

@@ -61,7 +61,7 @@ protected:
     void mouseReleaseEvent(TQMouseEvent *);
     void mouseMoveEvent(TQMouseEvent *);
 private:
-    KWinModule* kwin_module;
+    KWinModule* twin_module;
     DockContainer::Vector containers;
 
     // handle the dragging of applets

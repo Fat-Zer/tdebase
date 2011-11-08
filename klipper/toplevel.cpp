@@ -46,7 +46,7 @@
 #include <kstringhandler.h>
 #include <ksystemtray.h>
 #include <kurldrag.h>
-#include <kwin.h>
+#include <twin.h>
 #include <kdebug.h>
 #include <kglobalsettings.h>
 #include <dcopclient.h>

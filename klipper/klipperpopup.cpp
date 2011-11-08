@@ -27,7 +27,7 @@
 #include <klocale.h>
 #include <kaction.h>
 #include <kglobalsettings.h>
-#include <kwin.h>
+#include <twin.h>
 #include <kapplication.h>
 #include <kglobalsettings.h>
 #include <kdebug.h>

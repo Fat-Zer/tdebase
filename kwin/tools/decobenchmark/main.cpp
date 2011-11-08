@@ -39,7 +39,7 @@
 
 static KCmdLineOptions options[] =
 {
-	{ "+decoration", "Decoration library to use, such as kwin3_plastik.", 0 },
+	{ "+decoration", "Decoration library to use, such as twin3_plastik.", 0 },
 	{ "+tests", "Which test should be executed ('all', 'tqrepaint', 'caption', 'resize', 'recreation')", 0 },
 	{ "+repetitions", "Number of test repetitions.", 0 },
 	{ 0, 0, 0 }
@@ -49,10 +49,10 @@ DecoBenchApplication::DecoBenchApplication(const TQString &library, Tests tests,
 		m_tests(tests),
 		m_count(count)
 {
-	KConfig kwinConfig("kwinrc");
-	kwinConfig.setGroup("Style");
+	KConfig twinConfig("twinrc");
+	twinConfig.setGroup("Style");
 
-	plugins = new KDecorationPreviewPlugins( &kwinConfig );
+	plugins = new KDecorationPreviewPlugins( &twinConfig );
 	preview = new KDecorationPreview( plugins, 0 );
 
 	if (plugins->loadPlugin(library) )
@@ -101,7 +101,7 @@ int main(int argc, char** argv)
 {
 	TQString style = "keramik";
 	// KApplication app(argc, argv);
-	KAboutData about("decobenchmark", "DecoBenchmark", "0.1", "kwin decoration performance tester...", KAboutData::License_LGPL, "(C) 2005 Sandro Giessl");
+	KAboutData about("decobenchmark", "DecoBenchmark", "0.1", "twin decoration performance tester...", KAboutData::License_LGPL, "(C) 2005 Sandro Giessl");
 	KCmdLineArgs::init(argc, argv, &about);
 	KCmdLineArgs::addCmdLineOptions( options );
 

@@ -20,7 +20,7 @@
   Boston, MA 02110-1301, USA.
  */
 
-// #include <kwin/options.h>
+// #include <twin/options.h>
 
 #include <tqbitmap.h>
 #include <tqpainter.h>

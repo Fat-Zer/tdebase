@@ -1,12 +1,12 @@
 [Desktop Entry]
 Icon=kcmkwm
 Type=Application
-Exec=kcmshell kwinactions
+Exec=kcmshell twinactions
 DocPath=kcontrol/windowmanagement/index.html#action-actions
 
 X-KDE-ModuleType=Library
-X-KDE-Library=kwinoptions
-X-KDE-FactoryName=kwinactions
+X-KDE-Library=twinoptions
+X-KDE-FactoryName=twinactions
 
 Name=Actions
 Name[af]=Aksies

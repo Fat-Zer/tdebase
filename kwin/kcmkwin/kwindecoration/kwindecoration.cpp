@@ -1,14 +1,14 @@
 /*
-	This is the new kwindecoration kcontrol module
+	This is the new twindecoration kcontrol module
 
 	Copyright (c) 2001
 		Karol Szwed <gallium@kde.org>
 		http://gallium.n3.net/
 
-	Supports new kwin configuration plugins, and titlebar button position
+	Supports new twin configuration plugins, and titlebar button position
 	modification via dnd interface.
 
-	Based on original "kwintheme" (Window Borders)
+	Based on original "twintheme" (Window Borders)
 	Copyright (C) 2001 Rik Hemsley (rikkus) <rik@kde.org>
 
     This program is free software; you can redistribute it and/or modify
@@ -56,7 +56,7 @@
 #include <kaboutdata.h>
 #include <dcopclient.h>
 
-#include "kwindecoration.h"
+#include "twindecoration.h"
 #include "preview.h"
 #include <kdecoration_plugins_p.h>
 #include <kdecorationfactory.h>
@@ -64,16 +64,16 @@
 // KCModule plugin interface
 // =========================
 typedef KGenericFactory<KWinDecorationModule, TQWidget> KWinDecoFactory;
-K_EXPORT_COMPONENT_FACTORY( kcm_kwindecoration, KWinDecoFactory("kcmkwindecoration") )
+K_EXPORT_COMPONENT_FACTORY( kcm_twindecoration, KWinDecoFactory("kcmtwindecoration") )
 
 KWinDecorationModule::KWinDecorationModule(TQWidget* parent, const char* name, const TQStringList &)
 	: DCOPObject("KWinClientDecoration"),
 	  KCModule(KWinDecoFactory::instance(), parent, name),
-          kwinConfig("kwinrc"),
+          twinConfig("twinrc"),
           pluginObject(0)
 {
-	kwinConfig.setGroup("Style");
-        plugins = new KDecorationPreviewPlugins( &kwinConfig );
+	twinConfig.setGroup("Style");
+        plugins = new KDecorationPreviewPlugins( &twinConfig );
 
 	TQVBoxLayout* layout = new TQVBoxLayout(this, 0, KDialog::spacingHint()); 
 
@@ -319,8 +319,8 @@ KWinDecorationModule::KWinDecorationModule(TQWidget* parent, const char* name, c
 	// Set up the decoration lists and other UI settings
 	findDecorations();
 	createDecorationList();
-	readConfig( &kwinConfig );
-	resetPlugin( &kwinConfig );
+	readConfig( &twinConfig );
+	resetPlugin( &twinConfig );
 
 	tabWidget->insertTab( pluginPage, i18n("&Window Decoration") );
 	tabWidget->insertTab( buttonPage, i18n("&Buttons") );
@@ -343,11 +343,11 @@ KWinDecorationModule::KWinDecorationModule(TQWidget* parent, const char* name, c
 	connect( cBorder, TQT_SIGNAL( activated( int )), TQT_SLOT( slotBorderChanged( int )));
 //	connect( cbUseMiniWindows, TQT_SIGNAL(clicked()), TQT_SLOT(slotSelectionChanged()) );
 
-	// Allow kwin dcop signal to update our selection list
-	connectDCOPSignal("kwin", 0, "dcopResetAllClients()", "dcopUpdateClientList()", false);
+	// Allow twin dcop signal to update our selection list
+	connectDCOPSignal("twin", 0, "dcopResetAllClients()", "dcopUpdateClientList()", false);
 	
 	KAboutData *about =
-		new KAboutData(I18N_NOOP("kcmkwindecoration"),
+		new KAboutData(I18N_NOOP("kcmtwindecoration"),
 				I18N_NOOP("Window Decoration Control Module"),
 				0, 0, KAboutData::License_GPL,
 				I18N_NOOP("(c) 2001 Karol Szwed"));
@@ -363,11 +363,11 @@ KWinDecorationModule::~KWinDecorationModule()
 }
 
 
-// Find all theme desktop files in all 'data' dirs owned by kwin.
+// Find all theme desktop files in all 'data' dirs owned by twin.
 // And insert these into a DecorationInfo structure
 void KWinDecorationModule::findDecorations()
 {
-	TQStringList dirList = KGlobal::dirs()->findDirs("data", "kwin");
+	TQStringList dirList = KGlobal::dirs()->findDirs("data", "twin");
 	TQStringList::ConstIterator it;
 
 	for (it = dirList.begin(); it != dirList.end(); it++)
@@ -382,7 +382,7 @@ void KWinDecorationModule::findDecorations()
 					KDesktopFile desktopFile(filename);
 					TQString libName = desktopFile.readEntry("X-KDE-Library");
 
-					if (!libName.isEmpty() && libName.startsWith( "kwin3_" ))
+					if (!libName.isEmpty() && libName.startsWith( "twin3_" ))
 					{
 						DecorationInfo di;
 						di.name = desktopFile.readName();
@@ -395,12 +395,12 @@ void KWinDecorationModule::findDecorations()
 }
 
 
-// Fills the decorationList with a list of available kwin decorations
+// Fills the decorationList with a list of available twin decorations
 void KWinDecorationModule::createDecorationList()
 {
 	TQValueList<DecorationInfo>::ConstIterator it;
 
-	// Sync with kwin hardcoded KDE2 style which has no desktop item
+	// Sync with twin hardcoded KDE2 style which has no desktop item
     TQStringList decorationNames;
 	decorationNames.append( i18n("KDE 2") );
 	for (it = decorations.begin(); it != decorations.end(); ++it)
@@ -415,11 +415,11 @@ void KWinDecorationModule::createDecorationList()
 // Reset the decoration plugin to what the user just selected
 void KWinDecorationModule::slotChangeDecoration( const TQString & text)
 {
-	KConfig kwinConfig("kwinrc");
-	kwinConfig.setGroup("Style");
+	KConfig twinConfig("twinrc");
+	twinConfig.setGroup("Style");
 
 	// Let the user see config options for the currently selected decoration
-	resetPlugin( &kwinConfig, text );
+	resetPlugin( &twinConfig, text );
 }
 
 
@@ -515,7 +515,7 @@ TQString KWinDecorationModule::decorationLibName( const TQString& name )
 		}
 
 	if (libName.isEmpty())
-		libName = "kwin_default";	// KDE 2
+		libName = "twin_default";	// KDE 2
 
 	return libName;
 }
@@ -525,8 +525,8 @@ TQString KWinDecorationModule::decorationLibName( const TQString& name )
 // pluginConfigWidget, allowing for dynamic configuration of decorations
 void KWinDecorationModule::resetPlugin( KConfig* conf, const TQString& currentDecoName )
 {
-	// Config names are "kwin_icewm_config"
-	// for "kwin3_icewm" kwin client
+	// Config names are "twin_icewm_config"
+	// for "twin3_icewm" twin client
 
 	TQString oldName = styleToConfigLib( oldLibraryName );
 
@@ -585,7 +585,7 @@ void KWinDecorationModule::resetPlugin( KConfig* conf, const TQString& currentDe
 }
 
 
-// Reads the kwin config settings, and sets all UI controls to those settings
+// Reads the twin config settings, and sets all UI controls to those settings
 // Updating the config plugin if required
 void KWinDecorationModule::readConfig( KConfig* conf )
 {
@@ -599,7 +599,7 @@ void KWinDecorationModule::readConfig( KConfig* conf )
 
 	oldLibraryName = currentLibraryName;
 	currentLibraryName = conf->readEntry("PluginLib",
-					((TQPixmap::defaultDepth() > 8) ? "kwin_plastik" : "kwin_quartz"));
+					((TQPixmap::defaultDepth() > 8) ? "twin_plastik" : "twin_quartz"));
 	TQString decoName = decorationName( currentLibraryName );
 
 	// If we are using the "default" kde client, use the "default" entry.
@@ -659,14 +659,14 @@ void KWinDecorationModule::readConfig( KConfig* conf )
 }
 
 
-// Writes the selected user configuration to the kwin config file
+// Writes the selected user configuration to the twin config file
 void KWinDecorationModule::writeConfig( KConfig* conf )
 {
 	TQString name = decorationList->currentText();
 	TQString libName = decorationLibName( name );
 
-	KConfig kwinConfig("kwinrc");
-	kwinConfig.setGroup("Style");
+	KConfig twinConfig("twinrc");
+	twinConfig.setGroup("Style");
 
 	// General settings
 	conf->writeEntry("PluginLib", libName);
@@ -712,35 +712,35 @@ void KWinDecorationModule::dcopUpdateClientList()
 {
 	// Changes the current active ListBox item, and
 	// Loads a new plugin configuration tab if required.
-	KConfig kwinConfig("kwinrc");
-	kwinConfig.setGroup("Style");
+	KConfig twinConfig("twinrc");
+	twinConfig.setGroup("Style");
 
-	readConfig( &kwinConfig );
-	resetPlugin( &kwinConfig );
+	readConfig( &twinConfig );
+	resetPlugin( &twinConfig );
 }
 
 
 // Virutal functions required by KCModule
 void KWinDecorationModule::load()
 {
-	KConfig kwinConfig("kwinrc");
-	kwinConfig.setGroup("Style");
+	KConfig twinConfig("twinrc");
+	twinConfig.setGroup("Style");
 
 	// Reset by re-reading the config
-	readConfig( &kwinConfig );
-        resetPlugin( &kwinConfig );
+	readConfig( &twinConfig );
+        resetPlugin( &twinConfig );
 }
 
 
 void KWinDecorationModule::save()
 {
-	KConfig kwinConfig("kwinrc");
-	kwinConfig.setGroup("Style");
+	KConfig twinConfig("twinrc");
+	twinConfig.setGroup("Style");
 
-	writeConfig( &kwinConfig );
-	emit pluginSave( &kwinConfig );
+	writeConfig( &twinConfig );
+	emit pluginSave( &twinConfig );
 
-	kwinConfig.sync();
+	twinConfig.sync();
 	resetKWin();
 	// resetPlugin() will get called via the above DCOP function
 }
@@ -807,8 +807,8 @@ void KWinDecorationModule::checkSupportedBorderSizes()
 
 TQString KWinDecorationModule::styleToConfigLib( TQString& styleLib )
 {
-        if( styleLib.startsWith( "kwin3_" ))
-            return "kwin_" + styleLib.mid( 6 ) + "_config";
+        if( styleLib.startsWith( "twin3_" ))
+            return "twin_" + styleLib.mid( 6 ) + "_config";
         else
             return styleLib + "_config";
 }
@@ -828,13 +828,13 @@ TQString KWinDecorationModule::quickHelp() const
 
 void KWinDecorationModule::resetKWin()
 {
-	bool ok = kapp->dcopClient()->send("kwin*", "KWinInterface",
+	bool ok = kapp->dcopClient()->send("twin*", "KWinInterface",
                         "reconfigure()", TQByteArray());
 	if (!ok)
-		kdDebug() << "kcmkwindecoration: Could not reconfigure kwin" << endl;
+		kdDebug() << "kcmtwindecoration: Could not reconfigure twin" << endl;
 }
 
-#include "kwindecoration.moc"
+#include "twindecoration.moc"
 // vim: ts=4
 // kate: space-indent off; tab-width 4;
 

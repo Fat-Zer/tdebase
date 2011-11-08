@@ -21,8 +21,8 @@
 
 #include <kconfig.h>
 #include <kdebug.h>
-#include <kwinmodule.h>
-#include <kwin.h>
+#include <twinmodule.h>
+#include <twin.h>
 #include <klocale.h>
 
 #include "khotkeysglobal.h"
@@ -39,15 +39,15 @@ namespace KHotKeys
 
 Windows::Windows( bool enable_signal_P, TQObject* parent_P )
     : TQObject( parent_P ), signals_enabled( enable_signal_P ),
-        kwin_module( new KWinModule( this )), _action_window( 0 )
+        twin_module( new KWinModule( this )), _action_window( 0 )
     {
     assert( windows_handler == NULL );
     windows_handler = this;
     if( signals_enabled )
         {
-        connect( kwin_module, TQT_SIGNAL( windowAdded( WId )), TQT_SLOT( window_added_slot( WId )));
-        connect( kwin_module, TQT_SIGNAL( windowRemoved( WId )), TQT_SLOT( window_removed_slot( WId )));
-        connect( kwin_module, TQT_SIGNAL( activeWindowChanged( WId )),
+        connect( twin_module, TQT_SIGNAL( windowAdded( WId )), TQT_SLOT( window_added_slot( WId )));
+        connect( twin_module, TQT_SIGNAL( windowRemoved( WId )), TQT_SLOT( window_removed_slot( WId )));
+        connect( twin_module, TQT_SIGNAL( activeWindowChanged( WId )),
             TQT_SLOT( active_window_changed_slot( WId )));
         }
     }
@@ -112,7 +112,7 @@ TQString Windows::get_window_class( WId id_P )
 
 WId Windows::active_window()
     {
-    return kwin_module->activeWindow();
+    return twin_module->activeWindow();
     }
 
 WId Windows::action_window()
@@ -127,8 +127,8 @@ void Windows::set_action_window( WId window_P )
 
 WId Windows::find_window( const Windowdef_list* window_P )
     {
-    for( TQValueList< WId >::ConstIterator it = kwin_module->windows().begin();
-         it != kwin_module->windows().end();
+    for( TQValueList< WId >::ConstIterator it = twin_module->windows().begin();
+         it != twin_module->windows().end();
          ++it )
         {
         Window_data tmp( *it );
@@ -185,13 +185,13 @@ void Windows::activate_window( WId id_P )
 Window_data::Window_data( WId id_P )
     : type( NET::Unknown )
     {
-    KWin::WindowInfo kwin_info = KWin::windowInfo( id_P, NET::WMName | NET::WMWindowType ); // TODO optimize
-    if( kwin_info.valid())
+    KWin::WindowInfo twin_info = KWin::windowInfo( id_P, NET::WMName | NET::WMWindowType ); // TODO optimize
+    if( twin_info.valid())
         {
-        title = kwin_info.name();
+        title = twin_info.name();
         role = windows_handler->get_window_role( id_P );
         wclass = windows_handler->get_window_class( id_P );
-        type = kwin_info.windowType( SUPPORTED_WINDOW_TYPES_MASK );
+        type = twin_info.windowType( SUPPORTED_WINDOW_TYPES_MASK );
         if( type == NET::Override ) // HACK consider non-NETWM fullscreens to be normal too
             type = NET::Normal;
         if( type == NET::Unknown )

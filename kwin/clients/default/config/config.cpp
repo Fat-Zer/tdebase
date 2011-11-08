@@ -24,15 +24,15 @@ extern "C"
 }
 
 // NOTE:
-// 'conf' is a pointer to the kwindecoration modules open kwin config,
+// 'conf' is a pointer to the twindecoration modules open twin config,
 //		  and is by default set to the "Style" group.
 // 'parent' is the parent of the TQObject, which is a VBox inside the
-//		  Configure tab in kwindecoration
+//		  Configure tab in twindecoration
 
 KDEDefaultConfig::KDEDefaultConfig( KConfig* conf, TQWidget* parent )
 	: TQObject( parent )
 {
-	KGlobal::locale()->insertCatalogue("kwin_clients");
+	KGlobal::locale()->insertCatalogue("twin_clients");
 	highcolor = TQPixmap::defaultDepth() > 8;
 	gb = new TQVBox( parent );
         gb->setSpacing( KDialog::spacingHint() );
@@ -69,7 +69,7 @@ KDEDefaultConfig::KDEDefaultConfig( KConfig* conf, TQWidget* parent )
 		connect( cbUseGradients, TQT_SIGNAL(clicked()), 
 				 this, TQT_SLOT(slotSelectionChanged()) );
 
-	// Make the widgets visible in kwindecoration
+	// Make the widgets visible in twindecoration
 	gb->show();
 }
 
@@ -86,8 +86,8 @@ void KDEDefaultConfig::slotSelectionChanged()
 }
 
 
-// Loads the configurable options from the kwinrc config file
-// It is passed the open config from kwindecoration to improve efficiency
+// Loads the configurable options from the twinrc config file
+// It is passed the open config from twindecoration to improve efficiency
 void KDEDefaultConfig::load( KConfig* conf )
 {
 	conf->setGroup("KDEDefault");
@@ -104,7 +104,7 @@ void KDEDefaultConfig::load( KConfig* conf )
 }
 
 
-// Saves the configurable options to the kwinrc config file
+// Saves the configurable options to the twinrc config file
 void KDEDefaultConfig::save( KConfig* conf )
 {
 	conf->setGroup("KDEDefault");
@@ -113,7 +113,7 @@ void KDEDefaultConfig::save( KConfig* conf )
 
 	if (highcolor)
 		conf->writeEntry( "UseGradients", cbUseGradients->isChecked() );
-	// No need to conf->sync() - kwindecoration will do it for us
+	// No need to conf->sync() - twindecoration will do it for us
 }
 
 

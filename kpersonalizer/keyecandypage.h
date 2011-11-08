@@ -179,8 +179,8 @@ private:
 	} st_UserSnd;
   // DEFAULT VALLUES SET BY USER (END)
 
-	KConfig* kwinconf;
-	KConfig* kwineventconf;
+	KConfig* twinconf;
+	KConfig* twineventconf;
 	KConfig* kickerconf;
 	KConfig* konquerorconf;
 	KConfig* konqiconconf;

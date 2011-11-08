@@ -9,4 +9,4 @@
 #
 #################################################
 
-tde_create_handbook( DESTINATION kcontrol/kwindecoration )
+tde_create_handbook( DESTINATION kcontrol/twindecoration )

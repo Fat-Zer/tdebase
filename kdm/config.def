@@ -1998,13 +1998,13 @@ Description:
 
 Key: WindowManager
 Type: string
-Default: "kwin"
+Default: "twin"
 User: greeter
 Instance: #*/""
 Comment:
  Window manager binary name, if window decorations are desired. "" means no window manager support.
 Description:
- Specify the Xorg window manager.  Currently only kwin is supported.
+ Specify the Xorg window manager.  Currently only twin is supported.
 
 Key: UseSAK
 Type: bool

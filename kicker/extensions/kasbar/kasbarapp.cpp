@@ -56,7 +56,7 @@
 #include <kconfig.h>
 #include <kdebug.h>
 #include <dcopclient.h>
-#include <kwin.h>
+#include <twin.h>
 #include <kglobal.h>
 #include <klocale.h>
 

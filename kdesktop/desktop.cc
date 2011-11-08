@@ -55,9 +55,9 @@
 #include <ktempfile.h>
 #include <kmessagebox.h>
 #include <kglobalaccel.h>
-#include <kwinmodule.h>
+#include <twinmodule.h>
 #include <krun.h>
-#include <kwin.h>
+#include <twin.h>
 #include <kglobalsettings.h>
 #include <kpopupmenu.h>
 #include <kapplication.h>
@@ -67,7 +67,7 @@
 //#include <kaccelbase.h>
 
 extern int kdesktop_screen_number;
-extern TQCString kdesktop_name, kicker_name, kwin_name;
+extern TQCString kdesktop_name, kicker_name, twin_name;
 
 KRootWidget::KRootWidget() : TQObject()
 {
@@ -168,7 +168,7 @@ KDesktop::KDesktop( bool x_root_hack, bool wait_for_kded ) :
   if ( x_root_hack )
   {
     // this is a ugly hack to make Dnd work
-    // Matthias told me that it won't be necessary with kwin
+    // Matthias told me that it won't be necessary with twin
     // actually my first try with ICCCM (Dirk) :-)
     unsigned long data[2];
     data[0] = (unsigned long) 1;
@@ -318,7 +318,7 @@ KDesktop::initRoot()
           }
           else  // we are not called from the ctor, so kicker should already run
           {
-            area = kwinModule()->workArea(kwinModule()->currentDesktop());
+            area = twinModule()->workArea(twinModule()->currentDesktop());
             m_pIconView->updateWorkArea(area);
           }
      }
@@ -346,7 +346,7 @@ void KDesktop::slotNoKicker()
     kdDebug(1204) << "KDesktop::slotNoKicker ... kicker did not respond" << endl;
     // up till now, we got no desktopIconsArea from kicker - probably
     // it's not running, so use the area from KWinModule
-    m_pIconView->updateWorkArea(kwinModule()->workArea(kwinModule()->currentDesktop()));
+    m_pIconView->updateWorkArea(twinModule()->workArea(twinModule()->currentDesktop()));
 }
 
 void
@@ -516,7 +516,7 @@ void KDesktop::popupExecuteCommand(const TQString& command)
 
   // Move minicli to the current desktop
   NETWinInfo info( qt_xdisplay(), m_miniCli->winId(), qt_xrootwin(), NET::WMDesktop );
-  int currentDesktop = kwinModule()->currentDesktop();
+  int currentDesktop = twinModule()->currentDesktop();
   if ( info.desktop() != currentDesktop )
       info.setDesktop( currentDesktop );
 
@@ -614,10 +614,10 @@ void KDesktop::setShowDesktop( bool b )
 
     if (b)
     {
-        m_activeWindow = kwinModule()->activeWindow();
+        m_activeWindow = twinModule()->activeWindow();
         m_iconifiedList.clear();
 
-        const TQValueList<WId> windows = kwinModule()->windows();
+        const TQValueList<WId> windows = twinModule()->windows();
         for (TQValueList<WId>::ConstIterator it = windows.begin();
              it != windows.end();
              ++it)
@@ -629,7 +629,7 @@ void KDesktop::setShowDesktop( bool b )
 
             if (info.mappingState() == NET::Visible &&
                 (info.desktop() == NETWinInfo::OnAllDesktops ||
-                 info.desktop() == (int)kwinModule()->currentDesktop()))
+                 info.desktop() == (int)twinModule()->currentDesktop()))
             {
                 m_iconifiedList.append( w );
             }
@@ -645,20 +645,20 @@ void KDesktop::setShowDesktop( bool b )
         }
 
         // on desktop changes or when a window is deiconified, we abort the show desktop mode
-        connect(kwinModule(), TQT_SIGNAL(currentDesktopChanged(int)),
+        connect(twinModule(), TQT_SIGNAL(currentDesktopChanged(int)),
                 TQT_SLOT(slotCurrentDesktopChanged(int)));
-        connect(kwinModule(), TQT_SIGNAL(windowChanged(WId,unsigned int)),
+        connect(twinModule(), TQT_SIGNAL(windowChanged(WId,unsigned int)),
                 TQT_SLOT(slotWindowChanged(WId,unsigned int)));
-        connect(kwinModule(), TQT_SIGNAL(windowAdded(WId)),
+        connect(twinModule(), TQT_SIGNAL(windowAdded(WId)),
                 TQT_SLOT(slotWindowAdded(WId)));
     }
     else
     {
-        disconnect(kwinModule(), TQT_SIGNAL(currentDesktopChanged(int)),
+        disconnect(twinModule(), TQT_SIGNAL(currentDesktopChanged(int)),
                    this, TQT_SLOT(slotCurrentDesktopChanged(int)));
-        disconnect(kwinModule(), TQT_SIGNAL(windowChanged(WId,unsigned int)),
+        disconnect(twinModule(), TQT_SIGNAL(windowChanged(WId,unsigned int)),
                    this, TQT_SLOT(slotWindowChanged(WId,unsigned int)));
-        disconnect(kwinModule(), TQT_SIGNAL(windowAdded(WId)),
+        disconnect(twinModule(), TQT_SIGNAL(windowAdded(WId)),
                    this, TQT_SLOT(slotWindowAdded(WId)));
 
         for (TQValueVector<WId>::ConstIterator it = m_iconifiedList.begin();
@@ -696,9 +696,9 @@ void KDesktop::slotWindowAdded(WId w)
     if ((windowType == NET::Normal || windowType == NET::Unknown) &&
         inf.mappingState() == NET::Visible)
     {
-        KConfig kwincfg( "kwinrc", true ); // see in kwin
-        kwincfg.setGroup( "Windows" );
-        if( kwincfg.readBoolEntry( "ShowDesktopIsMinimizeAll", false ))
+        KConfig twincfg( "twinrc", true ); // see in twin
+        twincfg.setGroup( "Windows" );
+        if( twincfg.readBoolEntry( "ShowDesktopIsMinimizeAll", false ))
         {
             m_iconifiedList.clear();
             m_showingDesktop = false;
@@ -740,7 +740,7 @@ void KDesktop::slotWindowChanged(WId w, unsigned int dirty)
 
 bool KDesktop::showDesktopState()
 {
-    return kwinModule()->showingDesktop();
+    return twinModule()->showingDesktop();
 }
 
 void KDesktop::toggleShowDesktop()
@@ -836,7 +836,7 @@ void KDesktop::refresh()
   m_bNeedRepaint |= 1;
   updateWorkArea();
 #endif
-  kapp->dcopClient()->send( kwin_name, "", "refresh()", TQString(""));
+  kapp->dcopClient()->send( twin_name, "", "refresh()", TQString(""));
   refreshIcons();
 }
 
@@ -1120,7 +1120,7 @@ void KDesktop::desktopResized()
             res >> area;
         }
         else
-            area = kwinModule()->workArea(kwinModule()->currentDesktop());
+            area = twinModule()->workArea(twinModule()->currentDesktop());
 
         m_pIconView->updateWorkArea(area);
         m_pIconView->startDirLister();

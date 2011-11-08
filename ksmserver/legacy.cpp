@@ -50,7 +50,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #include <kconfig.h>
 #include <kdebug.h>
-#include <kwinmodule.h>
+#include <twinmodule.h>
 
 #include <X11/Xlib.h>
 #include <X11/Xutil.h>
@@ -239,7 +239,7 @@ void KSMServer::restoreLegacySession( KConfig* config )
     if( config->hasGroup( "Legacy" + sessionGroup )) {
         KConfigGroupSaver saver( config, "Legacy" + sessionGroup );
         restoreLegacySessionInternal( config );
-    } else if( wm == "kwin" ) { // backwards comp. - get it from kwinrc
+    } else if( wm == "twin" ) { // backwards comp. - get it from twinrc
 	KConfigGroupSaver saver( config, sessionGroup );
 	int count =  config->readNumEntry( "count", 0 );
 	for ( int i = 1; i <= count; i++ ) {

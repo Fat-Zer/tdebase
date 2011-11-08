@@ -149,7 +149,7 @@ void Workspace::propagateClients( bool propagate_new_clients )
 
     // Stack all windows under the support window. The support window is
     // not used for anything (besides the NETWM property), and it's not shown,
-    // but it was lowered after kwin startup. Stacking all clients below
+    // but it was lowered after twin startup. Stacking all clients below
     // it ensures that no client will be ever shown above override-redirect
     // windows (e.g. popups).
 #if 0
@@ -717,7 +717,7 @@ bool Workspace::keepTransientAbove( const Client* mainwindow, const Client* tran
         return false;
     // This is rather a hack for #76026. Don't keep non-modal dialogs above
     // the mainwindow, but only if they're group transient (since only such dialogs
-    // have taskbar entry in Kicker). A proper way of doing this (both kwin and kicker)
+    // have taskbar entry in Kicker). A proper way of doing this (both twin and kicker)
     // needs to be found.
     if( transient->isDialog() && !transient->isModal() && transient->groupTransient())
         return false;

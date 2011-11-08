@@ -50,8 +50,8 @@
 #include <kconfig.h>
 #include <kdebug.h>
 #include <klocale.h>
-#include <kwin.h>
-#include <kwinmodule.h>
+#include <twin.h>
+#include <twinmodule.h>
 #include <netwm.h>
 #include "desktop.h"
 #include <tqpopupmenu.h>
@@ -495,7 +495,7 @@ void KPager::slotDesktopNamesChanged()
     for ( int i=1; i <= (int) m_desktops.count(); ++i)
     {
         TQToolTip::remove(m_desktops[i-1]);
-        TQToolTip::add(m_desktops[i-1], kwin()->desktopName(i));
+        TQToolTip::add(m_desktops[i-1], twin()->desktopName(i));
     }
 
     update();
@@ -530,7 +530,7 @@ void KPager::slotNumberOfDesktopsChanged(int ndesktops)
 
         for (unsigned int d=m_desktops.count()+1;d<=nDesktops; d++)
         {
-            Desktop *dsk=new Desktop(d,kwin()->desktopName(d-1),this);
+            Desktop *dsk=new Desktop(d,twin()->desktopName(d-1),this);
             m_desktops.append(dsk);
             dsk->show();
         }

@@ -53,7 +53,7 @@
 #include "windows.h"
 
 
-// kwin config keywords
+// twin config keywords
 #define KWIN_FOCUS                 "FocusPolicy"
 #define KWIN_PLACEMENT             "Placement"
 #define KWIN_MOVE                  "MoveMode"
@@ -535,7 +535,7 @@ void KFocusConfig::save( void )
         config->sync();
         if ( !kapp->dcopClient()->isAttached() )
             kapp->dcopClient()->attach();
-        kapp->dcopClient()->send("kwin*", "", "reconfigure()", TQString(""));
+        kapp->dcopClient()->send("twin*", "", "reconfigure()", TQString(""));
     }
     emit KCModule::changed(false);
 }
@@ -762,7 +762,7 @@ void KAdvancedConfig::save( void )
         config->sync();
         if ( !kapp->dcopClient()->isAttached() )
             kapp->dcopClient()->attach();
-        kapp->dcopClient()->send("kwin*", "", "reconfigure()", TQString(""));
+        kapp->dcopClient()->send("twin*", "", "reconfigure()", TQString(""));
     }
     emit KCModule::changed(false);
 }
@@ -907,7 +907,7 @@ KMovingConfig::KMovingConfig (bool _standAlone, KConfig *_config, TQWidget *pare
     placementCombo->insertItem(i18n("Random"), RANDOM_PLACEMENT);
     placementCombo->insertItem(i18n("Centered"), CENTERED_PLACEMENT);
     placementCombo->insertItem(i18n("Zero-Cornered"), ZEROCORNERED_PLACEMENT);
-    // CT: disabling is needed as long as functionality misses in kwin
+    // CT: disabling is needed as long as functionality misses in twin
     //placementCombo->insertItem(i18n("Interactive"), INTERACTIVE_PLACEMENT);
     //placementCombo->insertItem(i18n("Manual"), MANUAL_PLACEMENT);
     placementCombo->setCurrentItem(SMART_PLACEMENT);
@@ -1098,7 +1098,7 @@ void KMovingConfig::load( void )
     setMinimizeAnim( anim );
     setMinimizeAnimSpeed( animSpeed );
 
-    // DF: please keep the default consistent with kwin (options.cpp line 145)
+    // DF: please keep the default consistent with twin (options.cpp line 145)
     key = config->readEntry(KWIN_RESIZE_OPAQUE, "Opaque");
     if( key == "Opaque")
         setResizeOpaque(RESIZE_OPAQUE);
@@ -1219,7 +1219,7 @@ void KMovingConfig::save( void )
         config->sync();
         if ( !kapp->dcopClient()->isAttached() )
             kapp->dcopClient()->attach();
-        kapp->dcopClient()->send("kwin*", "", "reconfigure()", TQString(""));
+        kapp->dcopClient()->send("twin*", "", "reconfigure()", TQString(""));
     }
     emit KCModule::changed(false);
 }
@@ -1232,7 +1232,7 @@ void KMovingConfig::defaults()
     setPlacement(SMART_PLACEMENT);
     setMoveResizeMaximized(false);
 
-    //copied from kcontrol/konq/kwindesktop, aleXXX
+    //copied from kcontrol/konq/twindesktop, aleXXX
     setWindowSnapZone(KWM_WNDW_SNAP_ZONE_DEFAULT);
     setBorderSnapZone(KWM_BRDR_SNAP_ZONE_DEFAULT);
     OverlapSnap->setChecked(false);
@@ -1277,7 +1277,7 @@ KTranslucencyConfig::KTranslucencyConfig (bool _standAlone, KConfig *_config, TQ
   KActiveLabel *label = new KActiveLabel(i18n("<qt><b>It seems that alpha channel support is not available.</b><br><br>"
                                  "Please make sure you have "
                                  "<a href=\"http://www.freedesktop.org/\">Xorg &ge; 6.8</a>,"
-                                 " and installed the kompmgr that came with kwin.<br>"
+                                 " and installed the kompmgr that came with twin.<br>"
                                  "Also, make sure you have the following entries in your XConfig (e.g. /etc/X11/xorg.conf):<br><br>"
                                  "<i>Section \"Extensions\"<br>"
                                  "Option \"Composite\" \"Enable\"<br>"
@@ -1636,7 +1636,7 @@ void KTranslucencyConfig::save( void )
     config->sync();
         if ( !kapp->dcopClient()->isAttached() )
             kapp->dcopClient()->attach();
-        kapp->dcopClient()->send("kwin*", "", "reconfigure()", TQString(""));
+        kapp->dcopClient()->send("twin*", "", "reconfigure()", TQString(""));
   }
   if (useTranslucency->isChecked())
     startKompmgr();

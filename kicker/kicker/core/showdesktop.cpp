@@ -26,8 +26,8 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include "kicker.h"
 #include "kickerSettings.h"
 
-#include <kwin.h>
-#include <kwinmodule.h>
+#include <twin.h>
+#include <twinmodule.h>
 #include <netwm.h>
 
 #include "showdesktop.h"
@@ -49,9 +49,9 @@ ShowDesktop::ShowDesktop()
     m_wmSupport = i.isSupported( NET::WM2ShowingDesktop );
     if( m_wmSupport )
     {
-        connect( Kicker::the()->kwinModule(), TQT_SIGNAL( showingDesktopChanged( bool )),
+        connect( Kicker::the()->twinModule(), TQT_SIGNAL( showingDesktopChanged( bool )),
             TQT_SLOT( showingDesktopChanged( bool )));
-        showingDesktopChanged( m_showingDesktop = Kicker::the()->kwinModule()->showingDesktop());
+        showingDesktopChanged( m_showingDesktop = Kicker::the()->twinModule()->showingDesktop());
     }
 }
 
@@ -74,9 +74,9 @@ void ShowDesktop::slotWindowAdded(WId w)
     if ((windowType == NET::Normal || windowType == NET::Unknown) &&
         inf.mappingState() == NET::Visible)
     {
-        KConfig kwincfg( "kwinrc", true ); // see in kwin
-        kwincfg.setGroup( "Windows" );
-        if( kwincfg.readBoolEntry( "ShowDesktopIsMinimizeAll", false ))
+        KConfig twincfg( "twinrc", true ); // see in twin
+        twincfg.setGroup( "Windows" );
+        if( twincfg.readBoolEntry( "ShowDesktopIsMinimizeAll", false ))
         {
             m_iconifiedList.clear();
             m_showingDesktop = false;
@@ -130,10 +130,10 @@ void ShowDesktop::showDesktop( bool b )
 
     if (b)
     {
-        m_activeWindow = Kicker::the()->kwinModule()->activeWindow();
+        m_activeWindow = Kicker::the()->twinModule()->activeWindow();
         m_iconifiedList.clear();
 
-        const TQValueList<WId> windows = Kicker::the()->kwinModule()->windows();
+        const TQValueList<WId> windows = Kicker::the()->twinModule()->windows();
         for (TQValueList<WId>::ConstIterator it = windows.begin();
              it != windows.end();
              ++it)
@@ -145,7 +145,7 @@ void ShowDesktop::showDesktop( bool b )
 
             if (info.mappingState() == NET::Visible &&
                 (info.desktop() == NETWinInfo::OnAllDesktops ||
-                 info.desktop() == (int)Kicker::the()->kwinModule()->currentDesktop()))
+                 info.desktop() == (int)Kicker::the()->twinModule()->currentDesktop()))
             {
                 m_iconifiedList.append( w );
             }
@@ -161,20 +161,20 @@ void ShowDesktop::showDesktop( bool b )
         }
 
         // on desktop changes or when a window is deiconified, we abort the show desktop mode
-        connect(Kicker::the()->kwinModule(), TQT_SIGNAL(currentDesktopChanged(int)),
+        connect(Kicker::the()->twinModule(), TQT_SIGNAL(currentDesktopChanged(int)),
                 TQT_SLOT(slotCurrentDesktopChanged(int)));
-        connect(Kicker::the()->kwinModule(), TQT_SIGNAL(windowChanged(WId,unsigned int)),
+        connect(Kicker::the()->twinModule(), TQT_SIGNAL(windowChanged(WId,unsigned int)),
                 TQT_SLOT(slotWindowChanged(WId,unsigned int)));
-        connect(Kicker::the()->kwinModule(), TQT_SIGNAL(windowAdded(WId)),
+        connect(Kicker::the()->twinModule(), TQT_SIGNAL(windowAdded(WId)),
                 TQT_SLOT(slotWindowAdded(WId)));
     }
     else
     {
-        disconnect(Kicker::the()->kwinModule(), TQT_SIGNAL(currentDesktopChanged(int)),
+        disconnect(Kicker::the()->twinModule(), TQT_SIGNAL(currentDesktopChanged(int)),
                    this, TQT_SLOT(slotCurrentDesktopChanged(int)));
-        disconnect(Kicker::the()->kwinModule(), TQT_SIGNAL(windowChanged(WId,unsigned int)),
+        disconnect(Kicker::the()->twinModule(), TQT_SIGNAL(windowChanged(WId,unsigned int)),
                    this, TQT_SLOT(slotWindowChanged(WId,unsigned int)));
-        disconnect(Kicker::the()->kwinModule(), TQT_SIGNAL(windowAdded(WId)),
+        disconnect(Kicker::the()->twinModule(), TQT_SIGNAL(windowAdded(WId)),
                    this, TQT_SLOT(slotWindowAdded(WId)));
 
         for (TQValueVector<WId>::ConstIterator it = m_iconifiedList.begin();

@@ -59,7 +59,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <kmessagebox.h>
 #include <kstandarddirs.h>
 #include <kcombobox.h>
-#include <kwin.h>
+#include <twin.h>
 #include <kdebug.h>
 #include <kmimetype.h>
 #include <kmultipledrag.h>

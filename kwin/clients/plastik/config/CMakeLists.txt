@@ -24,9 +24,9 @@ link_directories(
 install( FILES  DESTINATION ${XDG_APPS_INSTALL_DIR} )
 
 
-##### kwin_plastik_config (module) ##############
+##### twin_plastik_config (module) ##############
 
-tde_add_kpart( kwin_plastik_config AUTOMOC
+tde_add_kpart( twin_plastik_config AUTOMOC
   SOURCES config.cpp configdialog.ui
   LINK tdeui-shared
   DESTINATION ${PLUGIN_INSTALL_DIR}

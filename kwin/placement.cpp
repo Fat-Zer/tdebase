@@ -132,7 +132,7 @@ void Placement::placeSmart(Client* c, const TQRect& area, Policy /*next*/ )
     {
     /*
      * SmartPlacement by Cristian Tibirna (tibirna@kde.org)
-     * adapted for kwm (16-19jan98) and for kwin (16Nov1999) using (with
+     * adapted for kwm (16-19jan98) and for twin (16Nov1999) using (with
      * permission) ideas from fvwm, authored by
      * Anthony Martin (amartin@engr.csulb.edu).
      * Xinerama supported added by Balaji Ramani (balaji@yablibli.com)
@@ -435,7 +435,7 @@ void Placement::placeZeroCornered(Client* c, const TQRect& area, Policy /*next*/
 
 void Placement::placeUtility(Client* c, TQRect& area, Policy /*next*/ )
     {
-// TODO kwin should try to place utility windows next to their mainwindow,
+// TODO twin should try to place utility windows next to their mainwindow,
 // preferably at the right edge, and going down if there are more of them
 // if there's not enough place outside the mainwindow, it should prefer
 // top-right corner

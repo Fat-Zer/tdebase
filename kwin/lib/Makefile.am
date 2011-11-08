@@ -1,4 +1,4 @@
-# FRAME libkwin???
+# FRAME libtwin???
 lib_LTLIBRARIES = libtdecorations.la
 
 libtdecorations_la_SOURCES = kdecoration.cpp kdecoration_p.cpp kdecoration_plugins_p.cpp \
@@ -16,5 +16,5 @@ METASOURCES = AUTO
 include ../../admin/Doxyfile.am
 
 messages: rc.cpp
-	$(XGETTEXT) `find . -name \*.cpp` -o $(podir)/kwin_lib.pot
+	$(XGETTEXT) `find . -name \*.cpp` -o $(podir)/twin_lib.pot
 	-rm rc.cpp

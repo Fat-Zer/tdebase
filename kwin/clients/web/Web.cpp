@@ -1,5 +1,5 @@
 /*
-  'Web' kwin client
+  'Web' twin client
 
   Copyright (C) 2005 Sandro Giessl <sandro@giessl.com>
   Copyright (C) 2001 Rik Hemsley (rikkus) <rik@kde.org>
@@ -183,7 +183,7 @@ WebClient::init()
   if (0 != titleHeight_ % 2)
     titleHeight_ += 1;
 
-  KConfig c("kwinwebrc");
+  KConfig c("twinwebrc");
   c.setGroup("General");
   tqshape_ = c.readBoolEntry("Shape", true);
 

@@ -22,7 +22,7 @@ License. See the file "COPYING" for the exact licensing terms.
 #include <kapplication.h>
 #include <kglobal.h>
 #include <tqpainter.h>
-#include <kwin.h>
+#include <twin.h>
 
 #include "placement.h"
 #include "notifications.h"
@@ -316,7 +316,7 @@ TQRect Workspace::clientArea( clientAreaOption opt, const Client* c ) const
 TQPoint Workspace::adjustClientPosition( Client* c, TQPoint pos )
     {
    //CT 16mar98, 27May98 - magics: BorderSnapZone, WindowSnapZone
-   //CT adapted for kwin on 25Nov1999
+   //CT adapted for twin on 25Nov1999
    //aleXXX 02Nov2000 added second snapping mode
     if (options->windowSnapZone || options->borderSnapZone )
         {
@@ -1470,7 +1470,7 @@ void Client::configureRequest( int value_mask, int rx, int ry, int rw, int rh, i
 
         // clever(?) workaround for applications like xv that want to set
         // the location to the current location but miscalculate the
-        // frame size due to kwin being a double-reparenting window
+        // frame size due to twin being a double-reparenting window
         // manager
         if ( new_pos.x() == x() + clientPos().x() && new_pos.y() == y() + clientPos().y()
             && gravity == NorthWestGravity && !from_tool )

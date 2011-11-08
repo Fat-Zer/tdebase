@@ -38,11 +38,11 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include <X11/Xlib.h>
 #include <X11/Xatom.h>
 
-extern bool has_kwin;
+extern bool has_twin;
 extern bool is_themed;
 
 FDialog::FDialog( TQWidget *parent, bool framed )
-	: inherited( parent, 0, true, (framed&&has_kwin)?0:WX11BypassWM ), winFrame(NULL), m_wmTitle(has_kwin)
+	: inherited( parent, 0, true, (framed&&has_twin)?0:WX11BypassWM ), winFrame(NULL), m_wmTitle(has_twin)
 {
 	if (framed) {
 		// Signal that we do not want any window controls to be shown at all

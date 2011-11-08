@@ -1140,7 +1140,7 @@ void TaskContainer::popupMenu(int action)
     }
     else if (action == TaskBarSettings::ShowOperationsMenu)
     {
-        if (!kapp->authorizeKAction("kwin_rmb"))
+        if (!kapp->authorizeKAction("twin_rmb"))
         {
             return;
         }

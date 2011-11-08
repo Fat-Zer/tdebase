@@ -28,7 +28,7 @@
 #include <tqwidget.h>
 #include <tqintdict.h>
 #include <kmainwindow.h>
-#include <kwin.h>
+#include <twin.h>
 #include "kpagerIface.h"
 
 class KPager;
@@ -67,7 +67,7 @@ public:
     KPager(KPagerMainWindow *parent=0, const char *name=0);
     ~KPager();
 
-    class KWinModule *kwin() const { return m_winmodule; };
+    class KWinModule *twin() const { return m_winmodule; };
     void updateLayout();
 
     void redrawDesktops();

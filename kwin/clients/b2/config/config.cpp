@@ -23,18 +23,18 @@ extern "C"
 
 
 /* NOTE:
- * 'conf' 	is a pointer to the kwindecoration modules open kwin config,
+ * 'conf' 	is a pointer to the twindecoration modules open twin config,
  *			and is by default set to the "Style" group.
  *
  * 'parent'	is the parent of the TQObject, which is a VBox inside the
- *			Configure tab in kwindecoration
+ *			Configure tab in twindecoration
  */
 
 B2Config::B2Config( KConfig* conf, TQWidget* parent )
 	: TQObject( parent )
 {
-	KGlobal::locale()->insertCatalogue("kwin_b2_config");
-	b2Config = new KConfig("kwinb2rc");
+	KGlobal::locale()->insertCatalogue("twin_b2_config");
+	b2Config = new KConfig("twinb2rc");
 	gb = new TQVBox(parent);
 
 	cbColorBorder = new TQCheckBox(
@@ -76,7 +76,7 @@ B2Config::B2Config( KConfig* conf, TQWidget* parent )
 		    this, TQT_SLOT(slotSelectionChanged()));
     connect(menuDblClickOp, TQT_SIGNAL(activated(int)),
 		    this, TQT_SLOT(slotSelectionChanged()));
-	// Make the widgets visible in kwindecoration
+	// Make the widgets visible in twindecoration
 	gb->show();
 }
 
@@ -94,8 +94,8 @@ void B2Config::slotSelectionChanged()
 }
 
 
-// Loads the configurable options from the kwinrc config file
-// It is passed the open config from kwindecoration to improve efficiency
+// Loads the configurable options from the twinrc config file
+// It is passed the open config from twindecoration to improve efficiency
 void B2Config::load(KConfig * /*conf*/)
 {
 	b2Config->setGroup("General");
@@ -140,7 +140,7 @@ static TQString opToString(int op)
 }
 
 
-// Saves the configurable options to the kwinrc config file
+// Saves the configurable options to the twinrc config file
 void B2Config::save(KConfig * /*conf*/)
 {
 	b2Config->setGroup("General");

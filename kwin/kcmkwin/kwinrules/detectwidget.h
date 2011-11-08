@@ -23,7 +23,7 @@
 #include "detectwidgetbase.h"
 
 #include <kdialogbase.h>
-#include <kwin.h>
+#include <twin.h>
 
 #include "../../rules.h"
 

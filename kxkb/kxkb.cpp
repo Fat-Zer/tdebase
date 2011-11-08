@@ -38,8 +38,8 @@ DESCRIPTION
 #include <kglobalaccel.h>
 #include <klocale.h>
 #include <kprocess.h>
-#include <kwinmodule.h>
-#include <kwin.h>
+#include <twinmodule.h>
+#include <twin.h>
 #include <ktempfile.h>
 #include <kstandarddirs.h>
 #include <kipc.h>

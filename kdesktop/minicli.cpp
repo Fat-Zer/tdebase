@@ -57,7 +57,7 @@
 #include <kdebug.h>
 #include <kpassdlg.h>
 #include <krun.h>
-#include <kwin.h>
+#include <twin.h>
 #include <tdesu/su.h>
 #include <kstandarddirs.h>
 #include <kconfig.h>

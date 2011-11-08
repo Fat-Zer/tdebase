@@ -410,7 +410,7 @@ void DesktopBehavior::save()
     // for the standalone menubar setting
     kapp->dcopClient()->send( "menuapplet*", "menuapplet", "configure()", data );
     kapp->dcopClient()->send( "kicker", "kicker", "configureMenubar()", data );
-    kapp->dcopClient()->send( "kwin*", "", "reconfigure()", data );
+    kapp->dcopClient()->send( "twin*", "", "reconfigure()", data );
 }
 
 void DesktopBehavior::enableChanged()

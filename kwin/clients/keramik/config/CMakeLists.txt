@@ -20,9 +20,9 @@ link_directories(
 )
 
 
-##### kwin_keramik_config (module) ##############
+##### twin_keramik_config (module) ##############
 
-tde_add_kpart( kwin_keramik_config AUTOMOC
+tde_add_kpart( twin_keramik_config AUTOMOC
   SOURCES config.cpp keramikconfig.ui
   LINK tdeui-shared
   DESTINATION ${PLUGIN_INSTALL_DIR}

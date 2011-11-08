@@ -28,7 +28,7 @@
 #include <kglobalsettings.h>
 #include <klocale.h>
 #include <krecentdocument.h>
-#include <kwin.h>
+#include <twin.h>
 #include <tqtimer.h>
 #include <stdlib.h>
 #include <unistd.h>

@@ -45,7 +45,7 @@ particular the &gcc; compiler.</para>
 </question>
 <answer>
 <para>No, &kde; is not a window manager.  While &kde; includes a very
-sophisticated window manager (&kwin;), &kde; is much more than that.
+sophisticated window manager (&twin;), &kde; is much more than that.
 It is a full-blown Integrated Desktop Environment.</para>
 <para>&kde; provides a complete desktop environment, including a web
 browser, a file manager, a window manager, a help system, a

@@ -44,7 +44,7 @@ if( WITH_HAL )
 endif( )
 
 
-# xrender (kdesktop, konsole, kcontrol, kicker, kwin)
+# xrender (kdesktop, konsole, kcontrol, kicker, twin)
 if( WITH_XRENDER OR BUILD_KDESKTOP OR BUILD_KONSOLE OR BUILD_KCONTROL OR BUILD_KICKER )
   pkg_search_module( XRENDER xrender )
   if( XRENDER_FOUND )
@@ -66,7 +66,7 @@ if( WITH_XCURSOR )
 endif( )
 
 
-# xcomposite (kicker, kwin)
+# xcomposite (kicker, twin)
 if( WITH_XCOMPOSITE )
   pkg_search_module( XCOMPOSITE xcomposite )
   if( XCOMPOSITE_FOUND )
@@ -88,7 +88,7 @@ if( WITH_XFIXES )
 endif( )
 
 
-# xdamage (kwin/kompmgr)
+# xdamage (twin/kompmgr)
 if( WITH_XDAMAGE )
   pkg_search_module( XDAMAGE xdamage )
   if( NOT XDAMAGE_FOUND )
@@ -97,7 +97,7 @@ if( WITH_XDAMAGE )
 endif( )
 
 
-# xext (kwin/kompmgr)
+# xext (twin/kompmgr)
 if( WITH_XEXT )
   pkg_search_module( XEXT xext )
   if( NOT XEXT_FOUND )

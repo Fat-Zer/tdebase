@@ -1,29 +1,29 @@
 METASOURCES = AUTO
 AM_CPPFLAGS = $(all_includes) -DKCMRULES
-INCLUDES = -I$(top_srcdir)/kwin/lib
+INCLUDES = -I$(top_srcdir)/twin/lib
 
 bin_PROGRAMS =
 lib_LTLIBRARIES =
-tdeinit_LTLIBRARIES = kwin_rules_dialog.la
-kde_module_LTLIBRARIES = kcm_kwinrules.la 
-noinst_LTLIBRARIES = libkwinrules.la
+tdeinit_LTLIBRARIES = twin_rules_dialog.la
+kde_module_LTLIBRARIES = kcm_twinrules.la 
+noinst_LTLIBRARIES = libtwinrules.la
 
-libkwinrules_la_SOURCES = ruleswidget.cpp ruleslist.cpp kwinsrc.cpp detectwidget.cpp \
+libtwinrules_la_SOURCES = ruleswidget.cpp ruleslist.cpp twinsrc.cpp detectwidget.cpp \
         ruleswidgetbase.ui ruleslistbase.ui detectwidgetbase.ui editshortcutbase.ui
-libkwinrules_la_LDFLAGS = $(all_libraries) -no-undefined
-libkwinrules_la_LIBADD = $(LIB_TDEUI)
+libtwinrules_la_LDFLAGS = $(all_libraries) -no-undefined
+libtwinrules_la_LIBADD = $(LIB_TDEUI)
 
-kcm_kwinrules_la_SOURCES = kcm.cpp 
-kcm_kwinrules_la_LDFLAGS = -module -avoid-version $(all_libraries) -no-undefined
-kcm_kwinrules_la_LIBADD = libkwinrules.la 
-kcm_kwinrules_la_COMPILE_FIRST = ruleslistbase.h ruleswidgetbase.h editshortcutbase.h
+kcm_twinrules_la_SOURCES = kcm.cpp 
+kcm_twinrules_la_LDFLAGS = -module -avoid-version $(all_libraries) -no-undefined
+kcm_twinrules_la_LIBADD = libtwinrules.la 
+kcm_twinrules_la_COMPILE_FIRST = ruleslistbase.h ruleswidgetbase.h editshortcutbase.h
 
-kwin_rules_dialog_la_SOURCES = main.cpp 
-kwin_rules_dialog_la_LDFLAGS = -module -avoid-version $(all_libraries) -no-undefined
-kwin_rules_dialog_la_LIBADD = libkwinrules.la 
-kwin_rules_dialog_la_COMPILE_FIRST = ruleslistbase.h ruleswidgetbase.h editshortcutbase.h
+twin_rules_dialog_la_SOURCES = main.cpp 
+twin_rules_dialog_la_LDFLAGS = -module -avoid-version $(all_libraries) -no-undefined
+twin_rules_dialog_la_LIBADD = libtwinrules.la 
+twin_rules_dialog_la_COMPILE_FIRST = ruleslistbase.h ruleswidgetbase.h editshortcutbase.h
 
 messages: rc.cpp
-	$(XGETTEXT) *.cpp -o $(podir)/kcmkwinrules.pot
+	$(XGETTEXT) *.cpp -o $(podir)/kcmtwinrules.pot
 
-xdg_apps_DATA = kwinrules.desktop
+xdg_apps_DATA = twinrules.desktop

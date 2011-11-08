@@ -27,7 +27,7 @@ class TQCheckBox;
 class KLineEdit;
 class KIntNumInput;
 
-// if you change this, update also the number of keyboard shortcuts in kwin/kwinbindings.cpp
+// if you change this, update also the number of keyboard shortcuts in twin/twinbindings.cpp
 static const int maxDesktops = 20;
 
 class KDesktopConfig : public KCModule

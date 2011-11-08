@@ -25,8 +25,8 @@
 #include <kapplication.h>
 #include <kimageeffect.h>
 #include <kpixmapio.h>
-#include <kwinmodule.h>
-#include <kwin.h>
+#include <twinmodule.h>
+#include <twin.h>
 #include <kdebug.h>
 #include <netwm.h>
 #include <dcopclient.h>
@@ -46,7 +46,7 @@ class KRootBackingData
 public:
     TQWidget *toplevel;
 #ifdef Q_WS_X11
-    KWinModule *kwin;
+    KWinModule *twin;
 #endif
 };
 
@@ -71,7 +71,7 @@ void KRootBacking::init()
 #ifdef Q_WS_X11
     connect(m_pPixmap, TQT_SIGNAL(done(bool)), TQT_SLOT(slotDone(bool)));
 
-    d->kwin = new KWinModule( this );
+    d->twin = new KWinModule( this );
 #endif
 
     m_bInit = true;

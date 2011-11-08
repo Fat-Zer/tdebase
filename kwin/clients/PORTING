@@ -2,16 +2,16 @@ It's suggested you check sources of some KDE CVS decoration if in doubts or in n
 Also, the API is documented in the .h header files.
 
 Makefile.am:
-- Change kwin_ to kwin3_ (in LDFLAGS, LIBADD, kde_module_LTLIBRARIES, SOURCES).
+- Change twin_ to twin3_ (in LDFLAGS, LIBADD, kde_module_LTLIBRARIES, SOURCES).
 - Make sure LDFLAGS contains $(KDE_PLUGIN) and -module .
 - Add -ltdecorations to LIBADD.
-- Do NOT rename the directory where the .desktop file is installed ( $(kde_datadir)/kwin/ ).
+- Do NOT rename the directory where the .desktop file is installed ( $(kde_datadir)/twin/ ).
 
 .desktop file:
-- Change kwin_ to kwin3_ in X-KDE-Library.
+- Change twin_ to twin3_ in X-KDE-Library.
 
 Sources:
-- There are no kwin/something.h includes, and don't use the KWinInternal namespace.
+- There are no twin/something.h includes, and don't use the KWinInternal namespace.
 - Use QToolTip instead of KWinToolTip.
 - Use QButton instead of KWinButton, QToolButton instead of KWinToolButton and QWidget
   instead of KWinWidgetButton.
@@ -154,6 +154,6 @@ extern "C"
 - Review mousePosition() if it's implemented. Position constants need 'Position' prepended,
   e.g. Top -> PositionTop.
 - Note that you cannot use "appdata" with KStandardDirs, as the decoration will be used
-  also in other applications than kwin.
+  also in other applications than twin.
 - Implement all missing pure virtual functions. For mousePosition(), you may call
   KDecoration::mousePosition() if it's sufficient.

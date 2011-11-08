@@ -29,7 +29,7 @@
 #include <kglobalsettings.h>
 #include <klocale.h>
 #include <kmessagebox.h>
-#include <kwin.h>
+#include <twin.h>
 
 #include <tqcheckbox.h>
 #include <tqlayout.h>
@@ -177,7 +177,7 @@ void KCMXinerama::save() {
 
 		if (!kapp->dcopClient()->isAttached())
 			kapp->dcopClient()->attach();
-		kapp->dcopClient()->send("kwin", "", "reconfigure()", TQString(""));
+		kapp->dcopClient()->send("twin", "", "reconfigure()", TQString(""));
 
 		ksplashrc->setGroup("Xinerama");
 		ksplashrc->writeEntry("KSplashScreen", xw->_enableXinerama->isChecked() ? xw->_ksplashDisplay->currentItem() : -2 /* ignore Xinerama */);

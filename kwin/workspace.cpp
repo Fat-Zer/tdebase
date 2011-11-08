@@ -193,8 +193,8 @@ Workspace::Workspace( bool restore )
     XChangeProperty(
       qt_xdisplay(),
       qt_xrootwin(),
-      atoms->kwin_running,
-      atoms->kwin_running,
+      atoms->twin_running,
+      atoms->twin_running,
       32,
       PropModeAppend,
       (unsigned char*) &data,
@@ -501,7 +501,7 @@ Workspace::~Workspace()
         delete kompmgr;
     blockStackingUpdates( true );
 // TODO    grabXServer();
-    // use stacking_order, so that kwin --replace keeps stacking order
+    // use stacking_order, so that twin --replace keeps stacking order
     for( ClientList::ConstIterator it = stacking_order.begin();
          it != stacking_order.end();
          ++it )
@@ -519,7 +519,7 @@ Workspace::~Workspace()
     delete popupinfo;
     delete popup;
     if ( root == qt_xrootwin() )
-        XDeleteProperty(qt_xdisplay(), qt_xrootwin(), atoms->kwin_running);
+        XDeleteProperty(qt_xdisplay(), qt_xrootwin(), atoms->twin_running);
 
     writeWindowRules();
     KGlobal::config()->sync();
@@ -1209,11 +1209,11 @@ void Workspace::saveDesktopSettings()
 TQStringList Workspace::configModules(bool controlCenter)
     {
     TQStringList args;
-    args <<  "kde-kwindecoration.desktop";
+    args <<  "kde-twindecoration.desktop";
     if (controlCenter)
-        args << "kde-kwinoptions.desktop";
-    else if (kapp->authorizeControlModule("kde-kwinoptions.desktop"))
-        args  << "kwinactions" << "kwinfocus" <<  "kwinmoving" << "kwinadvanced" << "kwinrules" << "kwintranslucency";
+        args << "kde-twinoptions.desktop";
+    else if (kapp->authorizeControlModule("kde-twinoptions.desktop"))
+        args  << "twinactions" << "twinfocus" <<  "twinmoving" << "twinadvanced" << "twinrules" << "twintranslucency";
     return args;
     }
 
@@ -2670,11 +2670,11 @@ void Workspace::helperDialog( const TQString& message, const Client* c )
     proc << "kdialog" << args;
     if( !type.isEmpty())
         {
-        KConfig cfg( "kwin_dialogsrc" );
+        KConfig cfg( "twin_dialogsrc" );
         cfg.setGroup( "Notification Messages" ); // this depends on KMessageBox
         if( !cfg.readBoolEntry( type, true )) // has don't show again checked
             return;                           // save launching kdialog
-        proc << "--dontagain" << "kwin_dialogsrc:" + type;
+        proc << "--dontagain" << "twin_dialogsrc:" + type;
         }
     if( c != NULL )
         proc << "--embed" << TQString::number( c->window());
@@ -2928,7 +2928,7 @@ void Workspace::setShowingDesktop( bool showing )
 // A new window resets the state and shows the windows again, with the new window
 // being active. Due to popular demand (#67406) by people who apparently
 // don't see a difference between "show desktop" and "minimize all", this is not
-// true if "showDesktopIsMinimizeAll" is set in kwinrc. In such case showing
+// true if "showDesktopIsMinimizeAll" is set in twinrc. In such case showing
 // a new window resets the state but doesn't show windows.
 void Workspace::resetShowingDesktop( bool keep_hidden )
     {
@@ -2974,14 +2974,14 @@ void Workspace::disableGlobalShortcutsForClient( bool disable )
         if( disable )
             pending_dfc = true;
         KIPC::sendMessageAll( KIPC::BlockShortcuts, disable );
-        // kwin will get the kipc message too
+        // twin will get the kipc message too
         }
     }
 
 void Workspace::disableGlobalShortcuts( bool disable )
     {
     KIPC::sendMessageAll( KIPC::BlockShortcuts, disable );
-    // kwin will get the kipc message too
+    // twin will get the kipc message too
     }
 
 void Workspace::kipcMessage( int id, int data )

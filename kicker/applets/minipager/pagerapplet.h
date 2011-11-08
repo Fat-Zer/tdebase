@@ -28,7 +28,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <tqintdict.h>
 
 #include <kpanelapplet.h>
-#include <kwin.h>
+#include <twin.h>
 
 #include "pagerbutton.h"
 #include "pagersettings.h"
@@ -58,7 +58,7 @@ public:
     int heightForWidth(int width) const;
 
     KWin::WindowInfo* info( WId win );
-    KWinModule* kwin() { return m_kwin; }
+    KWinModule* twin() { return m_twin; }
     KTextShadowEngine* shadowEngine();
 
     void setActive( WId active ) { m_activeWindow = active; }
@@ -128,7 +128,7 @@ private:
     int desktopLayoutY;
     KSelectionOwner* m_desktopLayoutOwner;
 
-    KWinModule *m_kwin;
+    KWinModule *m_twin;
     KTextShadowEngine* m_shadowEngine;
 
     TQPopupMenu *m_contextMenu;

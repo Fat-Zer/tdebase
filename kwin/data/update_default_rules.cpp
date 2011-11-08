@@ -8,7 +8,7 @@ You can Freely distribute this program under the GNU General Public
 License. See the file "COPYING" for the exact licensing terms.
 ******************************************************************/
 
-// read addtional window rules and add them to kwinrulesrc
+// read addtional window rules and add them to twinrulesrc
 
 #include <dcopclient.h>
 #include <kconfig.h>
@@ -20,15 +20,15 @@ int main( int argc, char* argv[] )
     {
     if( argc != 2 )
         return 1;
-    KInstance inst( "kwin_update_default_rules" );
-    TQString file = locate( "data", TQString( "kwin/default_rules/" ) + argv[ 1 ] );
+    KInstance inst( "twin_update_default_rules" );
+    TQString file = locate( "data", TQString( "twin/default_rules/" ) + argv[ 1 ] );
     if( file.isEmpty())
         {
         kdWarning() << "File " << argv[ 1 ] << " not found!" << endl;
         return 1;
         }
     KConfig src_cfg( file );
-    KConfig dest_cfg( "kwinrulesrc" );
+    KConfig dest_cfg( "twinrulesrc" );
     src_cfg.setGroup( "General" );
     dest_cfg.setGroup( "General" );
     int count = src_cfg.readNumEntry( "count", 0 );
@@ -52,5 +52,5 @@ int main( int argc, char* argv[] )
     dest_cfg.sync();
     DCOPClient client;
     client.attach();
-    client.send("kwin*", "", "reconfigure()", TQString(""));
+    client.send("twin*", "", "reconfigure()", TQString(""));
     }

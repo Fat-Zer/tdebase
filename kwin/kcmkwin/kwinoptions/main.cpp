@@ -36,48 +36,48 @@
 
 extern "C"
 {
-	KDE_EXPORT KCModule *create_kwinfocus(TQWidget *parent, const char *name)
+	KDE_EXPORT KCModule *create_twinfocus(TQWidget *parent, const char *name)
 	{
-		//CT there's need for decision: kwm or kwin?
+		//CT there's need for decision: kwm or twin?
 		KGlobal::locale()->insertCatalogue("kcmkwm");
-		KConfig *c = new KConfig("kwinrc", false, true);
+		KConfig *c = new KConfig("twinrc", false, true);
 		return new KFocusConfig(true, c, parent, name);
 	}
 
-	KDE_EXPORT KCModule *create_kwinactions(TQWidget *parent, const char *name)
+	KDE_EXPORT KCModule *create_twinactions(TQWidget *parent, const char *name)
 	{
-		//CT there's need for decision: kwm or kwin?
+		//CT there's need for decision: kwm or twin?
 		KGlobal::locale()->insertCatalogue("kcmkwm");
 		return new KActionsOptions( parent, name);
 	}
 
-	KDE_EXPORT KCModule *create_kwinmoving(TQWidget *parent, const char *name)
+	KDE_EXPORT KCModule *create_twinmoving(TQWidget *parent, const char *name)
 	{
-		//CT there's need for decision: kwm or kwin?
+		//CT there's need for decision: kwm or twin?
 		KGlobal::locale()->insertCatalogue("kcmkwm");
-		KConfig *c = new KConfig("kwinrc", false, true);
+		KConfig *c = new KConfig("twinrc", false, true);
 		return new KMovingConfig(true, c, parent, name);
 	}
 
-	KDE_EXPORT KCModule *create_kwinadvanced(TQWidget *parent, const char *name)
+	KDE_EXPORT KCModule *create_twinadvanced(TQWidget *parent, const char *name)
 	{
-		//CT there's need for decision: kwm or kwin?
+		//CT there's need for decision: kwm or twin?
 		KGlobal::locale()->insertCatalogue("kcmkwm");
-		KConfig *c = new KConfig("kwinrc", false, true);
+		KConfig *c = new KConfig("twinrc", false, true);
 		return new KAdvancedConfig(true, c, parent, name);
 	}
         
-	KDE_EXPORT KCModule *create_kwintranslucency(TQWidget *parent, const char *name)
+	KDE_EXPORT KCModule *create_twintranslucency(TQWidget *parent, const char *name)
 	{
-		//CT there's need for decision: kwm or kwin?
+		//CT there's need for decision: kwm or twin?
 		KGlobal::locale()->insertCatalogue("kcmkwm");
-		KConfig *c = new KConfig("kwinrc", false, true);
+		KConfig *c = new KConfig("twinrc", false, true);
 		return new KTranslucencyConfig(true, c, parent, name);
 	}
 
-	KDE_EXPORT KCModule *create_kwinoptions ( TQWidget *parent, const char* name)
+	KDE_EXPORT KCModule *create_twinoptions ( TQWidget *parent, const char* name)
 	{
-		//CT there's need for decision: kwm or kwin?
+		//CT there's need for decision: kwm or twin?
 		KGlobal::locale()->insertCatalogue("kcmkwm");
 		return new KWinOptions( parent, name);
 	}
@@ -86,7 +86,7 @@ extern "C"
 KWinOptions::KWinOptions(TQWidget *parent, const char *name)
   : KCModule(parent, name)
 {
-  mConfig = new KConfig("kwinrc", false, true);
+  mConfig = new KConfig("twinrc", false, true);
 
   TQVBoxLayout *layout = new TQVBoxLayout(this);
   tab = new TQTabWidget(this);
@@ -123,7 +123,7 @@ KWinOptions::KWinOptions(TQWidget *parent, const char *name)
   connect(mTranslucency, TQT_SIGNAL(changed(bool)), this, TQT_SLOT(moduleChanged(bool)));
     
   KAboutData *about =
-    new KAboutData(I18N_NOOP("kcmkwinoptions"), I18N_NOOP("Window Behavior Configuration Module"),
+    new KAboutData(I18N_NOOP("kcmtwinoptions"), I18N_NOOP("Window Behavior Configuration Module"),
                   0, 0, KAboutData::License_GPL,
                   I18N_NOOP("(c) 1997 - 2002 KWin and KControl Authors"));
 
@@ -167,11 +167,11 @@ void KWinOptions::save()
   mTranslucency->save();
 
   emit KCModule::changed( false );
-  // Send signal to kwin
+  // Send signal to twin
   mConfig->sync();
   if ( !kapp->dcopClient()->isAttached() )
       kapp->dcopClient()->attach();
-  kapp->dcopClient()->send("kwin*", "", "reconfigure()", TQString(""));
+  kapp->dcopClient()->send("twin*", "", "reconfigure()", TQString(""));
 }
 
 
@@ -204,7 +204,7 @@ void KWinOptions::moduleChanged(bool state)
 KActionsOptions::KActionsOptions(TQWidget *parent, const char *name)
   : KCModule(parent, name)
 {
-  mConfig = new KConfig("kwinrc", false, true);
+  mConfig = new KConfig("twinrc", false, true);
 
   TQVBoxLayout *layout = new TQVBoxLayout(this);
   tab = new TQTabWidget(this);
@@ -240,11 +240,11 @@ void KActionsOptions::save()
   mWindowActions->save();
 
   emit KCModule::changed( false );
-  // Send signal to kwin
+  // Send signal to twin
   mConfig->sync();
   if ( !kapp->dcopClient()->isAttached() )
       kapp->dcopClient()->attach();
-  kapp->dcopClient()->send("kwin*", "", "reconfigure()", TQString(""));
+  kapp->dcopClient()->send("twin*", "", "reconfigure()", TQString(""));
 }
 
 

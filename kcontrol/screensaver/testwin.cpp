@@ -1,4 +1,4 @@
-#include <kwin.h>
+#include <twin.h>
 #include "testwin.h"
 
 class QXEmbed;

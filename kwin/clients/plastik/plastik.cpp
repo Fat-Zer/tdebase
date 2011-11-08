@@ -162,7 +162,7 @@ bool PlastikHandler::supports( Ability ability )
 void PlastikHandler::readConfig()
 {
     // create a config object
-    KConfig config("kwinplastikrc");
+    KConfig config("twinplastikrc");
     config.setGroup("General");
 
     // grab settings

@@ -21,7 +21,7 @@
 #include <kapplication.h>
 #include <klocale.h>
 #include <kdebug.h>
-#include <kwin.h>
+#include <twin.h>
 #include <tqlabel.h>
 #include <tqradiobutton.h>
 #include <tqcheckbox.h>

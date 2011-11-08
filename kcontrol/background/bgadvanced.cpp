@@ -38,7 +38,7 @@
 #include <kmessagebox.h>
 #include <kpixmap.h>
 #include <kstandarddirs.h>
-#include <kwin.h>
+#include <twin.h>
 
 #include "bgrender.h"
 #include "bgadvanced.h"

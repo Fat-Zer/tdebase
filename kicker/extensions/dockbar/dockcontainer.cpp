@@ -23,7 +23,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #include <tqwidget.h>
 #include <tqtooltip.h>
-#include <kwin.h>
+#include <twin.h>
 #include <tqvalidator.h>
 #include <kinputdialog.h>
 #include <klocale.h>

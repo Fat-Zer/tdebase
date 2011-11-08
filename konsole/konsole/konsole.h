@@ -31,7 +31,7 @@
 #include <ksimpleconfig.h>
 #include <keditcl.h>
 
-#include <kwinmodule.h>
+#include <twinmodule.h>
 
 #include <tqstrlist.h>
 #include <tqintdict.h>

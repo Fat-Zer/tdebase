@@ -42,8 +42,8 @@
 #include <klocale.h>
 #include <kmessagebox.h>
 #include <kstandarddirs.h>
-#include <kwin.h>
-#include <kwinmodule.h>
+#include <twin.h>
+#include <twinmodule.h>
 
 #include "extensionmanager.h"
 #include "pluginmanager.h"
@@ -64,7 +64,7 @@ Kicker* Kicker::the() { return static_cast<Kicker*>(kapp); }
 Kicker::Kicker()
     : KUniqueApplication(),
       keys(0),
-      m_kwinModule(0),
+      m_twinModule(0),
       m_configDialog(0),
       m_canAddContainers(true)
 {
@@ -379,14 +379,14 @@ void Kicker::clearQuickStartMenu()
     MenuManager::the()->kmenu()->clearRecentMenuItems();
 }
 
-KWinModule* Kicker::kwinModule()
+KWinModule* Kicker::twinModule()
 {
-    if (!m_kwinModule)
+    if (!m_twinModule)
     {
-        m_kwinModule = new KWinModule();
+        m_twinModule = new KWinModule();
     }
 
-    return m_kwinModule;
+    return m_twinModule;
 }
 
 TQRect Kicker::desktopIconsArea(int screen) const

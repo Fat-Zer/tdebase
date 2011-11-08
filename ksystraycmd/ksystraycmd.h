@@ -4,7 +4,7 @@
 #define KSYSTRAYCMD_H
 
 #include <tqlabel.h>
-#include <kwin.h>
+#include <twin.h>
 
 class KShellProcess;
 class KWinModule;
@@ -77,7 +77,7 @@ private:
 
   WId win;
   KShellProcess *client;
-  KWinModule *kwinmodule;
+  KWinModule *twinmodule;
   TQString errStr;
 
   /** Memorized 'top' position of the window*/

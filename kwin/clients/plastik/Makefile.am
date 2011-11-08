@@ -6,14 +6,14 @@ KDE_CXXFLAGS = -DQT_PLUGIN
 
 INCLUDES = -I$(srcdir)/../../lib $(all_includes)
 
-kwindir = $(kde_datadir)/kwin/
-kwin_DATA = plastik.desktop
+twindir = $(kde_datadir)/twin/
+twin_DATA = plastik.desktop
 
-kde_module_LTLIBRARIES = kwin3_plastik.la
-kwin3_plastik_la_SOURCES = plastik.cpp plastikclient.cpp plastikbutton.cpp misc.cpp
-kwin3_plastik_la_LDFLAGS = $(all_libraries) $(KDE_PLUGIN) -module
-kwin3_plastik_la_LIBADD = $(LIB_TDEUI) ../../lib/libtdecorations.la
-kwin3_plastik_la_METASOURCES = AUTO
+kde_module_LTLIBRARIES = twin3_plastik.la
+twin3_plastik_la_SOURCES = plastik.cpp plastikclient.cpp plastikbutton.cpp misc.cpp
+twin3_plastik_la_LDFLAGS = $(all_libraries) $(KDE_PLUGIN) -module
+twin3_plastik_la_LIBADD = $(LIB_TDEUI) ../../lib/libtdecorations.la
+twin3_plastik_la_METASOURCES = AUTO
 
-DISTCLEANFILES = $(kwin3_plastik_la_METASOURCES)
+DISTCLEANFILES = $(twin3_plastik_la_METASOURCES)
 

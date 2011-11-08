@@ -52,8 +52,8 @@
 #include <kstandarddirs.h>
 #include <kstringhandler.h>
 #include <kurlrequester.h>
-#include <kwin.h>
-#include <kwinmodule.h>
+#include <twin.h>
+#include <twinmodule.h>
 #include <kimagefilepreview.h>
 #include <knewstuff/downloaddialog.h>
 
@@ -74,10 +74,10 @@ BGDialog::BGDialog(TQWidget* parent, KConfig* _config, bool _multidesktop)
    m_multidesktop = _multidesktop;
    m_previewUpdates = true;
    
-   KWinModule *m_kwin;
-   m_kwin = new KWinModule(TQT_TQOBJECT(this));
-   m_curDesk = m_kwin->currentDesktop();
-   TQSize s(m_kwin->numberOfViewports(m_kwin->currentDesktop()));
+   KWinModule *m_twin;
+   m_twin = new KWinModule(TQT_TQOBJECT(this));
+   m_curDesk = m_twin->currentDesktop();
+   TQSize s(m_twin->numberOfViewports(m_twin->currentDesktop()));
    m_useViewports = s.width() * s.height() > 1;
    
    m_numDesks = m_multidesktop ? KWin::numberOfDesktops() : 1;
@@ -90,12 +90,12 @@ BGDialog::BGDialog(TQWidget* parent, KConfig* _config, bool _multidesktop)
       m_numScreens = 1;
    }
    
-   TQPoint vx(m_kwin->currentViewport(m_kwin->currentDesktop()));
+   TQPoint vx(m_twin->currentViewport(m_twin->currentDesktop()));
    int t_eViewport = (vx.x() * vx.y());
    if (t_eViewport < 1) {
       t_eViewport = 1;
    }
-   delete m_kwin;
+   delete m_twin;
 
    m_desk = m_multidesktop ? KWin::currentDesktop() : 1;
    m_desk = m_multidesktop ? (m_useViewports ? (((m_desk - 1) * m_numViewports) + t_eViewport) : m_desk) : m_desk;

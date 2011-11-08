@@ -19,9 +19,9 @@ link_directories(
 )
 
 
-##### kwin_killer_helper (executable) ###########
+##### twin_killer_helper (executable) ###########
 
-tde_add_executable( kwin_killer_helper
+tde_add_executable( twin_killer_helper
   SOURCES killer.cpp
   LINK tdeui-shared
   DESTINATION ${BIN_INSTALL_DIR}

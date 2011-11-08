@@ -33,7 +33,7 @@
 #include <kcmdlineargs.h>
 #include <dcopclient.h>
 #include <kconfig.h>
-#include <kwin.h>
+#include <twin.h>
 #include <ktip.h>
 #include <kdebug.h>
 #include <klibloader.h>

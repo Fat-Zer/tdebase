@@ -141,30 +141,30 @@ void KDesktopConfig::load( bool useDefaults )
   else
      groupname.sprintf("Desktops-screen-%d", konq_screen_number);
 
-  KConfig * kwinconfig = new KConfig("kwinrc");
+  KConfig * twinconfig = new KConfig("twinrc");
 
-  kwinconfig->setReadDefaults( useDefaults );
+  twinconfig->setReadDefaults( useDefaults );
 
-  kwinconfig->setGroup("Desktops");
+  twinconfig->setGroup("Desktops");
   for(int i = 1; i <= maxDesktops; i++)
   {
     TQString key_name(TQString("Name_") + TQString::number(i));
     TQString name = TQString::fromUtf8(info.desktopName(i));
     if (name.isEmpty()) // Get name from configuration if none is set in the WM.
     {
-        name = kwinconfig->readEntry(key_name, i18n("Desktop %1").arg(i));
+        name = twinconfig->readEntry(key_name, i18n("Desktop %1").arg(i));
     }
     _nameInput[i-1]->setText(name);
 
     // Is this entry immutable or not in the range of configured desktops?
-    _labelImmutable[i - 1] = kwinconfig->entryIsImmutable(key_name);
+    _labelImmutable[i - 1] = twinconfig->entryIsImmutable(key_name);
     _nameInput[i-1]->setEnabled(i <= n && !_labelImmutable[i - 1]);
   }
 
-  _numInput->setEnabled(!kwinconfig->entryIsImmutable("Number"));
+  _numInput->setEnabled(!twinconfig->entryIsImmutable("Number"));
 
-  delete kwinconfig;
-  kwinconfig = 0;
+  delete twinconfig;
+  twinconfig = 0;
 
   TQString configfile;
   if (konq_screen_number == 0)

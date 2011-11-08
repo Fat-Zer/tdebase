@@ -258,7 +258,7 @@ void Workspace::initShortcuts()
     disable_shortcuts_keys = new KGlobalAccel( this );
     disable_shortcuts_keys->disableBlocking( true );
 #define IN_KWIN
-#include "kwinbindings.cpp"
+#include "twinbindings.cpp"
     readShortcuts();
     }
 
@@ -1023,7 +1023,7 @@ void Workspace::slotWindowOperations()
 
 void Workspace::showWindowMenu( const TQRect &pos, Client* cl )
     {
-    if (!kapp->authorizeKAction("kwin_rmb"))
+    if (!kapp->authorizeKAction("twin_rmb"))
         return;
     if( !cl )
         return;

@@ -661,7 +661,7 @@ bool Client::mapRequestEvent( XMapRequestEvent* e )
         return true; // no messing with frame etc.
         }
     if( isTopMenu() && workspace()->managingTopMenus())
-        return true; // kwin controls these
+        return true; // twin controls these
     switch ( mappingState() )
         {
         case WithdrawnState:
@@ -746,7 +746,7 @@ void Client::clientMessageEvent( XClientMessageEvent* e )
     if ( e->message_type == atoms->kde_wm_change_state )
         {
         if( isTopMenu() && workspace()->managingTopMenus())
-            return; // kwin controls these
+            return; // twin controls these
         if( e->data.l[ 1 ] )
             blockAnimation = true;
         if( e->data.l[ 0 ] == IconicState )
@@ -770,7 +770,7 @@ void Client::clientMessageEvent( XClientMessageEvent* e )
     else if ( e->message_type == atoms->wm_change_state)
         {
         if( isTopMenu() && workspace()->managingTopMenus())
-            return; // kwin controls these
+            return; // twin controls these
         if ( e->data.l[0] == IconicState )
             minimize();
         return;
@@ -825,7 +825,7 @@ void Client::configureRequestEvent( XConfigureRequestEvent* e )
     sendSyntheticConfigureNotify();
 
     // SELI TODO accept configure requests for isDesktop windows (because kdesktop
-    // may get XRANDR resize event before kwin), but check it's still at the bottom?
+    // may get XRANDR resize event before twin), but check it's still at the bottom?
     }
 
 

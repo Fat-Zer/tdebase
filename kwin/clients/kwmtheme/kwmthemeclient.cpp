@@ -90,7 +90,7 @@ static void create_pixmaps()
     for(int i=0; i < 8; ++i)
     {
         framePixmaps[i] = new TQPixmap(locate("data",
-                                      "kwin/pics/"+config->readEntry(keys[i], " ")));
+                                      "twin/pics/"+config->readEntry(keys[i], " ")));
         if(framePixmaps[i]->isNull())
             kdWarning() << "Unable to load frame pixmap for " << keys[i] << endl;
     }
@@ -111,33 +111,33 @@ static void create_pixmaps()
     maxExtent++;
 
     menuPix = new TQPixmap(locate("data",
-                                 "kwin/pics/"+config->readEntry("menu", " ")));
+                                 "twin/pics/"+config->readEntry("menu", " ")));
     iconifyPix = new TQPixmap(locate("data",
-                                    "kwin/pics/"+config->readEntry("iconify", " ")));
+                                    "twin/pics/"+config->readEntry("iconify", " ")));
     maxPix = new TQPixmap(locate("appdata",
                                 "pics/"+config->readEntry("maximize", " ")));
     minmaxPix = new TQPixmap(locate("data",
-                                   "kwin/pics/"+config->readEntry("maximizedown", " ")));
+                                   "twin/pics/"+config->readEntry("maximizedown", " ")));
     closePix = new TQPixmap(locate("data",
-                                  "kwin/pics/"+config->readEntry("close", " ")));
+                                  "twin/pics/"+config->readEntry("close", " ")));
     pinupPix = new TQPixmap(locate("data",
-                                  "kwin/pics/"+config->readEntry("pinup", " ")));
+                                  "twin/pics/"+config->readEntry("pinup", " ")));
     pindownPix = new TQPixmap(locate("data",
-                                    "kwin/pics/"+config->readEntry("pindown", " ")));
+                                    "twin/pics/"+config->readEntry("pindown", " ")));
     if(menuPix->isNull())                           
-        menuPix->load(locate("data", "kwin/pics/menu.png"));
+        menuPix->load(locate("data", "twin/pics/menu.png"));
     if(iconifyPix->isNull())
-        iconifyPix->load(locate("data", "kwin/pics/iconify.png"));
+        iconifyPix->load(locate("data", "twin/pics/iconify.png"));
     if(maxPix->isNull())
-        maxPix->load(locate("data", "kwin/pics/maximize.png"));
+        maxPix->load(locate("data", "twin/pics/maximize.png"));
     if(minmaxPix->isNull())
-        minmaxPix->load(locate("data", "kwin/pics/maximizedown.png"));
+        minmaxPix->load(locate("data", "twin/pics/maximizedown.png"));
     if(closePix->isNull())
-        closePix->load(locate("data", "kwin/pics/close.png"));
+        closePix->load(locate("data", "twin/pics/close.png"));
     if(pinupPix->isNull())
-        pinupPix->load(locate("data", "kwin/pics/pinup.png"));
+        pinupPix->load(locate("data", "twin/pics/pinup.png"));
     if(pindownPix->isNull())
-        pindownPix->load(locate("data", "kwin/pics/pindown.png"));
+        pindownPix->load(locate("data", "twin/pics/pindown.png"));
     
     tmpStr = config->readEntry("TitleAlignment");
     if(tmpStr == "right")
@@ -186,14 +186,14 @@ static void create_pixmaps()
         tmpStr = config->readEntry("TitlebarPixmapActive", "");
         if(!tmpStr.isEmpty()){
             aTitlePix = new KPixmap;
-            aTitlePix->load(locate("data", "kwin/pics/" + tmpStr));
+            aTitlePix->load(locate("data", "twin/pics/" + tmpStr));
         }
         else
             aTitlePix = NULL;
         tmpStr = config->readEntry("TitlebarPixmapInactive", "");
         if(!tmpStr.isEmpty()){
             iTitlePix = new KPixmap;
-            iTitlePix->load(locate("data", "kwin/pics/" + tmpStr));
+            iTitlePix->load(locate("data", "twin/pics/" + tmpStr));
         }
         else
             iTitlePix = NULL;

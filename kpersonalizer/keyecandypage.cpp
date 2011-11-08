@@ -49,8 +49,8 @@
 
 KEyeCandyPage::KEyeCandyPage(TQWidget *parent, const char *name ) : KEyeCandyPageDlg(parent,name) {
 
-	kwinconf = new KConfig("kwinrc", false, true);
-	kwineventconf = new KConfig("kwin.eventsrc", false, false);
+	twinconf = new KConfig("twinrc", false, true);
+	twineventconf = new KConfig("twin.eventsrc", false, false);
 	kickerconf =  new KConfig("kickerrc",false, false);
 	konquerorconf =  new KConfig("konquerorrc",false, false);
 	konqiconconf = new KConfig("konqiconviewrc",false,false);
@@ -131,8 +131,8 @@ KEyeCandyPage::KEyeCandyPage(TQWidget *parent, const char *name ) : KEyeCandyPag
 }
 
 KEyeCandyPage::~KEyeCandyPage(){
-	delete kwinconf;
-	delete kwineventconf;
+	delete twinconf;
+	delete twineventconf;
 	delete kickerconf;
 	delete konquerorconf;
 	delete konqiconconf;
@@ -305,17 +305,17 @@ void KEyeCandyPage::enableDesktopWindowEffects(bool enable,bool restore){
 // -Animate shade
 // -Enable Hover
 //-Enable move/resize on maximised windows
-	kwinconf->setGroup( "Windows" );
+	twinconf->setGroup( "Windows" );
 	if(!restore){
-		kwinconf->writeEntry("AnimateMinimize", enable );
-		kwinconf->writeEntry("AnimateShade", enable );
-		kwinconf->writeEntry("MoveResizeMaximizedWindows",enable);
-		kwinconf->writeEntry("ShadeHover", enable );
+		twinconf->writeEntry("AnimateMinimize", enable );
+		twinconf->writeEntry("AnimateShade", enable );
+		twinconf->writeEntry("MoveResizeMaximizedWindows",enable);
+		twinconf->writeEntry("ShadeHover", enable );
 	} else {
-		kwinconf->writeEntry("AnimateMinimize", b_AnimateMinimize );
-		kwinconf->writeEntry("AnimateShade", b_AnimateShade );
-		kwinconf->writeEntry("MoveResizeMaximizedWindows",b_MoveResizeMaximizedWindows);
-		kwinconf->writeEntry("ShadeHover", b_ShadeHover);
+		twinconf->writeEntry("AnimateMinimize", b_AnimateMinimize );
+		twinconf->writeEntry("AnimateShade", b_AnimateShade );
+		twinconf->writeEntry("MoveResizeMaximizedWindows",b_MoveResizeMaximizedWindows);
+		twinconf->writeEntry("ShadeHover", b_ShadeHover);
 	}
 }
 
@@ -326,20 +326,20 @@ void KEyeCandyPage::enableDesktopWindowMovingContents(bool enable, bool restore)
 // -Display content in resizing window
 // And KGlobalSettings::opaqueResize() for QSplitters
 
-	kwinconf->setGroup( "Windows" );
+	twinconf->setGroup( "Windows" );
 	KGlobal::config()->setGroup("KDE");
 	if (enable){
-		kwinconf->writeEntry("ResizeMode","Opaque");
-		kwinconf->writeEntry("MoveMode","Opaque");
+		twinconf->writeEntry("ResizeMode","Opaque");
+		twinconf->writeEntry("MoveMode","Opaque");
 		KGlobal::config()->writeEntry("OpaqueResize", true, true, true);
 	} else {
-		kwinconf->writeEntry("ResizeMode","Transparent");
-		kwinconf->writeEntry("MoveMode","Transparent");
+		twinconf->writeEntry("ResizeMode","Transparent");
+		twinconf->writeEntry("MoveMode","Transparent");
 		KGlobal::config()->writeEntry("OpaqueResize", false, true, true);
 	}
 	if(restore){
-		kwinconf->writeEntry("ResizeMode",s_ResizeMode);
-		kwinconf->writeEntry("MoveMode",s_MoveMode);
+		twinconf->writeEntry("ResizeMode",s_ResizeMode);
+		twinconf->writeEntry("MoveMode",s_MoveMode);
 		KGlobal::config()->writeEntry("OpaqueResize", b_OpaqueResize, true, true);
 	}
 }
@@ -547,49 +547,49 @@ void KEyeCandyPage::enablePreview(bool currSettings){
 //----------------------------OTHER STUFF-------------------------------------------------
 /** Enables the default KDE sound scheme in Level 3 */
 void KEyeCandyPage::enableSoundScheme(bool enable, bool user) {
-	kwineventconf->setGroup("desktop1");
-	kwineventconf->writeEntry("presentation", enable ? 1 : (user ? st_UserSnd.desktop1 : 0) );
-	kwineventconf->setGroup("desktop2");
-	kwineventconf->writeEntry("presentation", enable ? 1 : (user ? st_UserSnd.desktop2 : 0) );
-	kwineventconf->setGroup("desktop3");
-	kwineventconf->writeEntry("presentation", enable ? 1 : (user ? st_UserSnd.desktop3 : 0) );
-	kwineventconf->setGroup("desktop4");
-	kwineventconf->writeEntry("presentation", enable ? 1 : (user ? st_UserSnd.desktop4 : 0) );
-	kwineventconf->setGroup("desktop5");
-	kwineventconf->writeEntry("presentation", enable ? 1 : (user ? st_UserSnd.desktop5 : 0) );
-	kwineventconf->setGroup("desktop6");
-	kwineventconf->writeEntry("presentation", enable ? 1 : (user ? st_UserSnd.desktop6 : 0) );
-	kwineventconf->setGroup("desktop7");
-	kwineventconf->writeEntry("presentation", enable ? 1 : (user ? st_UserSnd.desktop7 : 0) );
-	kwineventconf->setGroup("desktop8");
-	kwineventconf->writeEntry("presentation", enable ? 1 : (user ? st_UserSnd.desktop8 : 0) );
+	twineventconf->setGroup("desktop1");
+	twineventconf->writeEntry("presentation", enable ? 1 : (user ? st_UserSnd.desktop1 : 0) );
+	twineventconf->setGroup("desktop2");
+	twineventconf->writeEntry("presentation", enable ? 1 : (user ? st_UserSnd.desktop2 : 0) );
+	twineventconf->setGroup("desktop3");
+	twineventconf->writeEntry("presentation", enable ? 1 : (user ? st_UserSnd.desktop3 : 0) );
+	twineventconf->setGroup("desktop4");
+	twineventconf->writeEntry("presentation", enable ? 1 : (user ? st_UserSnd.desktop4 : 0) );
+	twineventconf->setGroup("desktop5");
+	twineventconf->writeEntry("presentation", enable ? 1 : (user ? st_UserSnd.desktop5 : 0) );
+	twineventconf->setGroup("desktop6");
+	twineventconf->writeEntry("presentation", enable ? 1 : (user ? st_UserSnd.desktop6 : 0) );
+	twineventconf->setGroup("desktop7");
+	twineventconf->writeEntry("presentation", enable ? 1 : (user ? st_UserSnd.desktop7 : 0) );
+	twineventconf->setGroup("desktop8");
+	twineventconf->writeEntry("presentation", enable ? 1 : (user ? st_UserSnd.desktop8 : 0) );
 
-	kwineventconf->setGroup("new");
-	kwineventconf->writeEntry("presentation", enable ? 1 : (user ? st_UserSnd.notold : 0) );
-	kwineventconf->setGroup("close");
-	kwineventconf->writeEntry("presentation", enable ? 1 : (user ? st_UserSnd.close : 0) );
+	twineventconf->setGroup("new");
+	twineventconf->writeEntry("presentation", enable ? 1 : (user ? st_UserSnd.notold : 0) );
+	twineventconf->setGroup("close");
+	twineventconf->writeEntry("presentation", enable ? 1 : (user ? st_UserSnd.close : 0) );
 
-	kwineventconf->setGroup("transnew");
-	kwineventconf->writeEntry("presentation", enable ? 1 : (user ? st_UserSnd.transnew : 0) );
-	kwineventconf->setGroup("transdelete");
-	kwineventconf->writeEntry("presentation", enable ? 1 : (user ? st_UserSnd.transdelete : 0) );
+	twineventconf->setGroup("transnew");
+	twineventconf->writeEntry("presentation", enable ? 1 : (user ? st_UserSnd.transnew : 0) );
+	twineventconf->setGroup("transdelete");
+	twineventconf->writeEntry("presentation", enable ? 1 : (user ? st_UserSnd.transdelete : 0) );
 
-	kwineventconf->setGroup("iconify");
-	kwineventconf->writeEntry("presentation", enable ? 1 : (user ? st_UserSnd.iconify : 0) );
-	kwineventconf->setGroup("deiconify");
-	kwineventconf->writeEntry("presentation", enable ? 1 : (user ? st_UserSnd.deiconify : 0) );
-	kwineventconf->setGroup("maximize");
-	kwineventconf->writeEntry("presentation", enable ? 1 : (user ? st_UserSnd.maximize : 0) );
-	kwineventconf->setGroup("unmaximize");
-	kwineventconf->writeEntry("presentation", enable ? 1 : (user ? st_UserSnd.unmaximize : 0) );
-	kwineventconf->setGroup("shadeup");
-	kwineventconf->writeEntry("presentation", enable ? 1 : (user ? st_UserSnd.shadeup : 0) );
-	kwineventconf->setGroup("shadedown");
-	kwineventconf->writeEntry("presentation", enable ? 1 : (user ? st_UserSnd.shadedown : 0) );
-	kwineventconf->setGroup("sticky");
-	kwineventconf->writeEntry("presentation", enable ? 1 : (user ? st_UserSnd.sticky : 0) );
-	kwineventconf->setGroup("unsticky");
-	kwineventconf->writeEntry("presentation", enable ? 1 : (user ? st_UserSnd.unsticky : 0) );
+	twineventconf->setGroup("iconify");
+	twineventconf->writeEntry("presentation", enable ? 1 : (user ? st_UserSnd.iconify : 0) );
+	twineventconf->setGroup("deiconify");
+	twineventconf->writeEntry("presentation", enable ? 1 : (user ? st_UserSnd.deiconify : 0) );
+	twineventconf->setGroup("maximize");
+	twineventconf->writeEntry("presentation", enable ? 1 : (user ? st_UserSnd.maximize : 0) );
+	twineventconf->setGroup("unmaximize");
+	twineventconf->writeEntry("presentation", enable ? 1 : (user ? st_UserSnd.unmaximize : 0) );
+	twineventconf->setGroup("shadeup");
+	twineventconf->writeEntry("presentation", enable ? 1 : (user ? st_UserSnd.shadeup : 0) );
+	twineventconf->setGroup("shadedown");
+	twineventconf->writeEntry("presentation", enable ? 1 : (user ? st_UserSnd.shadedown : 0) );
+	twineventconf->setGroup("sticky");
+	twineventconf->writeEntry("presentation", enable ? 1 : (user ? st_UserSnd.sticky : 0) );
+	twineventconf->setGroup("unsticky");
+	twineventconf->writeEntry("presentation", enable ? 1 : (user ? st_UserSnd.unsticky : 0) );
 }
 
 /** Enable Antialiased fonts. Enable in Level 7. */
@@ -615,16 +615,16 @@ void KEyeCandyPage::save(bool currSettings){
 	// currSettings==true: save selections. currSettings==false: save user-def.
 	saveCheckState(currSettings);
 	// save all the KConfig-objects to their respective files
-	kwinconf->sync();
-	kwineventconf->sync();
+	twinconf->sync();
+	twineventconf->sync();
 	konquerorconf->sync();
 	konqiconconf->sync();
 	kickerconf->sync();
 	kdesktopconf->sync();
 	KGlobal::config()->sync();
-	// restart kwin  for window effects
+	// restart twin  for window effects
 	kapp->dcopClient()->send("knotify", "Notify", "reconfigure()", TQString(""));
-	kapp->dcopClient()->send("kwin*", "", "reconfigure()", TQString(""));
+	kapp->dcopClient()->send("twin*", "", "reconfigure()", TQString(""));
 	// set the display options (style effects)
 	KIPC::sendMessageAll(KIPC::SettingsChanged);
 	TQApplication::syncX();
@@ -730,63 +730,63 @@ void KEyeCandyPage::getUserDefaults(){
 	konq_dont_prev=konqiconconf->readListEntry("DontPreview");
 	b_konq_prev_sound=konqiconconf->readBoolEntry("EnableSoundPreviews", false);
 	b_konq_prev_enable=konqiconconf->readBoolEntry("PreviewsEnabled", true);
-	kwinconf->setGroup( "Windows" );
-	s_ResizeMode=kwinconf->readEntry("ResizeMode", "Transparent");
-	s_MoveMode=kwinconf->readEntry("MoveMode", "Opaque");
+	twinconf->setGroup( "Windows" );
+	s_ResizeMode=twinconf->readEntry("ResizeMode", "Transparent");
+	s_MoveMode=twinconf->readEntry("MoveMode", "Opaque");
 
-	b_AnimateMinimize=kwinconf->readBoolEntry("AnimateMinimize", true );
-	b_AnimateShade=kwinconf->readBoolEntry("AnimateShade", true );
-	b_MoveResizeMaximizedWindows=kwinconf->readBoolEntry("MoveResizeMaximizedWindows",true);
-	b_ShadeHover = kwinconf->readBoolEntry("ShadeHover", false);
+	b_AnimateMinimize=twinconf->readBoolEntry("AnimateMinimize", true );
+	b_AnimateShade=twinconf->readBoolEntry("AnimateShade", true );
+	b_MoveResizeMaximizedWindows=twinconf->readBoolEntry("MoveResizeMaximizedWindows",true);
+	b_ShadeHover = twinconf->readBoolEntry("ShadeHover", false);
 
 	getUserSoundScheme();
 }
 
 /** gets the users sound-settings */
 void KEyeCandyPage::getUserSoundScheme() {
-	kwineventconf->setGroup("desktop1");
-	st_UserSnd.desktop1 = kwineventconf->readNumEntry("presentation", 0);
-	kwineventconf->setGroup("desktop2");
-	st_UserSnd.desktop2 = kwineventconf->readNumEntry("presentation", 0);
-	kwineventconf->setGroup("desktop3");
-	st_UserSnd.desktop3	= kwineventconf->readNumEntry("presentation", 0);
-	kwineventconf->setGroup("desktop4");
-	st_UserSnd.desktop4 = kwineventconf->readNumEntry("presentation", 0);
-	kwineventconf->setGroup("desktop5");
-	st_UserSnd.desktop5	= kwineventconf->readNumEntry("presentation", 0);
-	kwineventconf->setGroup("desktop6");
-	st_UserSnd.desktop6 = kwineventconf->readNumEntry("presentation", 0);
-	kwineventconf->setGroup("desktop7");
-	st_UserSnd.desktop7	= kwineventconf->readNumEntry("presentation", 0);
-	kwineventconf->setGroup("desktop8");
-	st_UserSnd.desktop8 = kwineventconf->readNumEntry("presentation", 0);
+	twineventconf->setGroup("desktop1");
+	st_UserSnd.desktop1 = twineventconf->readNumEntry("presentation", 0);
+	twineventconf->setGroup("desktop2");
+	st_UserSnd.desktop2 = twineventconf->readNumEntry("presentation", 0);
+	twineventconf->setGroup("desktop3");
+	st_UserSnd.desktop3	= twineventconf->readNumEntry("presentation", 0);
+	twineventconf->setGroup("desktop4");
+	st_UserSnd.desktop4 = twineventconf->readNumEntry("presentation", 0);
+	twineventconf->setGroup("desktop5");
+	st_UserSnd.desktop5	= twineventconf->readNumEntry("presentation", 0);
+	twineventconf->setGroup("desktop6");
+	st_UserSnd.desktop6 = twineventconf->readNumEntry("presentation", 0);
+	twineventconf->setGroup("desktop7");
+	st_UserSnd.desktop7	= twineventconf->readNumEntry("presentation", 0);
+	twineventconf->setGroup("desktop8");
+	st_UserSnd.desktop8 = twineventconf->readNumEntry("presentation", 0);
 
-	kwineventconf->setGroup("new");
-	st_UserSnd.notold = kwineventconf->readNumEntry("presentation", 0);
-	kwineventconf->setGroup("close");
-	st_UserSnd.close = kwineventconf->readNumEntry("presentation", 0);
+	twineventconf->setGroup("new");
+	st_UserSnd.notold = twineventconf->readNumEntry("presentation", 0);
+	twineventconf->setGroup("close");
+	st_UserSnd.close = twineventconf->readNumEntry("presentation", 0);
 
-	kwineventconf->setGroup("transnew");
-	st_UserSnd.transnew = kwineventconf->readNumEntry("presentation", 0);
-	kwineventconf->setGroup("transdelete");
-	st_UserSnd.transdelete = kwineventconf->readNumEntry("presentation", 0);
+	twineventconf->setGroup("transnew");
+	st_UserSnd.transnew = twineventconf->readNumEntry("presentation", 0);
+	twineventconf->setGroup("transdelete");
+	st_UserSnd.transdelete = twineventconf->readNumEntry("presentation", 0);
 
-	kwineventconf->setGroup("iconify");
-	st_UserSnd.iconify = kwineventconf->readNumEntry("presentation", 0 );
-	kwineventconf->setGroup("deiconify");
-	st_UserSnd.deiconify = kwineventconf->readNumEntry("presentation", 0);
-	kwineventconf->setGroup("maximize");
-	st_UserSnd.maximize = kwineventconf->readNumEntry("presentation", 0);
-	kwineventconf->setGroup("unmaximize");
-	st_UserSnd.unmaximize = kwineventconf->readNumEntry("presentation", 0);
-	kwineventconf->setGroup("shadeup");
-	st_UserSnd.shadeup = kwineventconf->readNumEntry("presentation", 0);
-	kwineventconf->setGroup("shadedown");
-	st_UserSnd.shadedown = kwineventconf->readNumEntry("presentation", 0);
-	kwineventconf->setGroup("sticky");
-	st_UserSnd.sticky = kwineventconf->readNumEntry("presentation", 0);
-	kwineventconf->setGroup("unsticky");
-	st_UserSnd.unsticky = kwineventconf->readNumEntry("presentation", 0);
+	twineventconf->setGroup("iconify");
+	st_UserSnd.iconify = twineventconf->readNumEntry("presentation", 0 );
+	twineventconf->setGroup("deiconify");
+	st_UserSnd.deiconify = twineventconf->readNumEntry("presentation", 0);
+	twineventconf->setGroup("maximize");
+	st_UserSnd.maximize = twineventconf->readNumEntry("presentation", 0);
+	twineventconf->setGroup("unmaximize");
+	st_UserSnd.unmaximize = twineventconf->readNumEntry("presentation", 0);
+	twineventconf->setGroup("shadeup");
+	st_UserSnd.shadeup = twineventconf->readNumEntry("presentation", 0);
+	twineventconf->setGroup("shadedown");
+	st_UserSnd.shadedown = twineventconf->readNumEntry("presentation", 0);
+	twineventconf->setGroup("sticky");
+	st_UserSnd.sticky = twineventconf->readNumEntry("presentation", 0);
+	twineventconf->setGroup("unsticky");
+	st_UserSnd.unsticky = twineventconf->readNumEntry("presentation", 0);
 }
 
 /** calls all enable functions with the state of the checkboxes. This is needed for save() only,

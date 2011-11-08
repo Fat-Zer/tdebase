@@ -57,7 +57,7 @@ class KBackgroundManager
     TQ_OBJECT
 
 public:
-    KBackgroundManager(TQWidget *desktop, KWinModule* kwinModule);
+    KBackgroundManager(TQWidget *desktop, KWinModule* twinModule);
     ~KBackgroundManager();
 
     void configure();

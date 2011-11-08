@@ -28,10 +28,10 @@
 #include "ruleslist.h"
 
 extern "C"
-    KDE_EXPORT KCModule *create_kwinrules( TQWidget *parent, const char *name )
+    KDE_EXPORT KCModule *create_twinrules( TQWidget *parent, const char *name )
     {
-    //CT there's need for decision: kwm or kwin?
-    KGlobal::locale()->insertCatalogue( "kcmkwinrules" );
+    //CT there's need for decision: kwm or twin?
+    KGlobal::locale()->insertCatalogue( "kcmtwinrules" );
     return new KWinInternal::KCMRules( parent, name );
     }
 
@@ -40,13 +40,13 @@ namespace KWinInternal
 
 KCMRules::KCMRules( TQWidget *parent, const char *name )
 : KCModule( parent, name )
-, config( "kwinrulesrc" )
+, config( "twinrulesrc" )
     {
     TQVBoxLayout *layout = new TQVBoxLayout( this );
     widget = new KCMRulesList( this );
     layout->addWidget( TQT_TQWIDGET(widget) );
     connect( widget, TQT_SIGNAL( changed( bool )), TQT_SLOT( moduleChanged( bool )));
-    KAboutData *about = new KAboutData(I18N_NOOP( "kcmkwinrules" ),
+    KAboutData *about = new KAboutData(I18N_NOOP( "kcmtwinrules" ),
         I18N_NOOP( "Window-Specific Settings Configuration Module" ),
         0, 0, KAboutData::License_GPL, I18N_NOOP( "(c) 2004 KWin and KControl Authors" ));
     about->addAuthor("Lubos Lunak",0,"l.lunak@kde.org");
@@ -64,11 +64,11 @@ void KCMRules::save()
     {
     widget->save();
     emit KCModule::changed( false );
-    // Send signal to kwin
+    // Send signal to twin
     config.sync();
     if( !kapp->dcopClient()->isAttached())
         kapp->dcopClient()->attach();
-    kapp->dcopClient()->send("kwin*", "", "reconfigure()", TQString(""));
+    kapp->dcopClient()->send("twin*", "", "reconfigure()", TQString(""));
     }
 
 void KCMRules::defaults()

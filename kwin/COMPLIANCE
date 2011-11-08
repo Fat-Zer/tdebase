@@ -11,8 +11,8 @@ Listed below are all the NetWM (or EWM) hints decided upon on freedesktop.org
 compliance with the spec. Some parts also involve the pager and clients which
 this document will cater for as well where applicable.
 
-If you modify the level of NetWM compliance (via modification of kwin/*,
-tdecore/netwm.* or tdecore/kwin.* etc.), or notice any new hints that
+If you modify the level of NetWM compliance (via modification of twin/*,
+tdecore/netwm.* or tdecore/twin.* etc.), or notice any new hints that
 were added after version 1.2, please modify this document appropriately.
 Properties are ordered in the table in the order they are found in the 
 specification. To list any important notes regarding a property, just 
@@ -26,7 +26,7 @@ _NET_NUMBER_OF_DESKTOPS		root window property		done
 	+----------------------------------------------------------------+
 
 If you have any questions regarding the specification, feel free to ask on the KWin 
-mailing list <kwin@kde.org>, or on the Window Manager Spec list <wm-spec-list@gnome.org>.
+mailing list <twin@kde.org>, or on the Window Manager Spec list <wm-spec-list@gnome.org>.
   -- Karol <kszwed@kde.org>
 
 (

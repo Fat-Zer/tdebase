@@ -38,8 +38,8 @@ PlastikConfig::PlastikConfig(KConfig* config, TQWidget* parent)
     : TQObject(parent), m_config(0), m_dialog(0)
 {
     // create the configuration object
-    m_config = new KConfig("kwinplastikrc");
-    KGlobal::locale()->insertCatalogue("kwin_clients");
+    m_config = new KConfig("twinplastikrc");
+    KGlobal::locale()->insertCatalogue("twin_clients");
 
     // create and show the configuration dialog
     m_dialog = new ConfigDialog(parent);

@@ -1,15 +1,15 @@
 INCLUDES                  = -I$(top_srcdir) $(all_includes)
-kde_module_LTLIBRARIES    = kwin3_web.la
+kde_module_LTLIBRARIES    = twin3_web.la
 
-kwin3_web_la_SOURCES      = Web.cpp WebButton.cpp
+twin3_web_la_SOURCES      = Web.cpp WebButton.cpp
 
 noinst_HEADERS            = Web.h WebButton.h
 
-kwin3_web_la_LDFLAGS      = $(all_libraries) $(KDE_PLUGIN) -module
-kwin3_web_la_LIBADD       = $(LIB_TDEUI) ../../lib/libtdecorations.la
+twin3_web_la_LDFLAGS      = $(all_libraries) $(KDE_PLUGIN) -module
+twin3_web_la_LIBADD       = $(LIB_TDEUI) ../../lib/libtdecorations.la
 METASOURCES               = AUTO
 
-linkdir                   = $(kde_datadir)/kwin/
+linkdir                   = $(kde_datadir)/twin/
 link_DATA                 = web.desktop
 EXTRA_DIST                = $(link_DATA)
 

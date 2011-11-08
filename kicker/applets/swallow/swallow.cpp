@@ -31,8 +31,8 @@
 #include <kmessagebox.h>
 #include <kprocess.h>
 #include <kshell.h>
-#include <kwin.h>
-#include <kwinmodule.h>
+#include <twin.h>
+#include <twinmodule.h>
 
 #include <X11/Xlib.h>
 #include <X11/Xutil.h>

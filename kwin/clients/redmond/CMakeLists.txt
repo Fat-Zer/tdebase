@@ -11,7 +11,7 @@
 
 include_directories(
   ${CMAKE_CURRENT_BINARY_DIR}
-  ${CMAKE_SOURCE_DIR}/kwin/lib
+  ${CMAKE_SOURCE_DIR}/twin/lib
   ${TDE_INCLUDE_DIR}
   ${TQT_INCLUDE_DIRS}
 )
@@ -23,12 +23,12 @@ link_directories(
 
 ##### other data ################################
 
-install( FILES redmond.desktop DESTINATION ${DATA_INSTALL_DIR}/kwin )
+install( FILES redmond.desktop DESTINATION ${DATA_INSTALL_DIR}/twin )
 
 
-##### kwin3_redmond (module) ####################
+##### twin3_redmond (module) ####################
 
-tde_add_kpart( kwin3_redmond AUTOMOC
+tde_add_kpart( twin3_redmond AUTOMOC
   SOURCES redmond.cpp
   LINK tdecorations-shared tdecore-shared
   DESTINATION ${PLUGIN_INSTALL_DIR}

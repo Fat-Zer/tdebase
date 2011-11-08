@@ -30,7 +30,7 @@ namespace KWinInternal
 class Client;
 class Rules;
 
-#ifndef KCMRULES // only for kwin core
+#ifndef KCMRULES // only for twin core
 
 class WindowRules
     : public KDecorationDefines

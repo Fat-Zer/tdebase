@@ -1,2 +1,2 @@
 KDE_LANG = en
-KDE_DOCS = kcontrol/kwindecoration
+KDE_DOCS = kcontrol/twindecoration

@@ -28,11 +28,11 @@ The server is usually started from the 'startkde' script. It supports the follow
 
   -r, --restore             Restores the previous session if available
   -w, --windowmanager <wm>  Starts 'wm' in case no other window manager is
-                            participating in the session. Default is 'kwin'
+                            participating in the session. Default is 'twin'
 
 The default 'startkde' launches 'ksmserver --restore'.  The
 'windowmanager' option is useful for users that prefer a window
-manager other than kwin. Since the window manager has to participate
+manager other than twin. Since the window manager has to participate
 in the session (it has to remember window positions and states), it is
 usually restarted when the session is restored. To be *really* sure
 that this happens, even if the wm might have crashed during the

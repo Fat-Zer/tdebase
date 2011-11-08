@@ -1,7 +1,7 @@
 <?xml version="1.0" ?>
 <!DOCTYPE book PUBLIC "-//KDE//DTD DocBook XML V4.2-Based Variant V1.1//EN" "dtd/kdex.dtd" [
  <!ENTITY kappname "kompmgr">
- <!ENTITY package "kwin">
+ <!ENTITY package "twin">
  <!ENTITY % English "INCLUDE">
  <!ENTITY % addindex "IGNORE">
 ]>
@@ -30,7 +30,7 @@
 <releaseinfo>2.0.1</releaseinfo>
 
 <abstract>
-<para>&kappname; is a composite rendering engine to be used by &kwin;.</para>
+<para>&kappname; is a composite rendering engine to be used by &twin;.</para>
 <para>This document is rather a general explanation of what it does, 
 how it works and what the restrictions are than a documentation how to use
 it (as it works in the background automatically).</para> 
@@ -38,7 +38,7 @@ it (as it works in the background automatically).</para>
 
 <keywordset>
 <keyword>KDE</keyword>
-<keyword>kwin</keyword>
+<keyword>twin</keyword>
 <keyword>render engine</keyword>
 </keywordset>
 </bookinfo>

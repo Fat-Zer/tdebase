@@ -76,7 +76,7 @@ KDesktopApp *myApp = NULL;
 // -----------------------------------------------------------------------------
 
 int kdesktop_screen_number = 0;
-TQCString kdesktop_name, kicker_name, kwin_name;
+TQCString kdesktop_name, kicker_name, twin_name;
 
 static void crashHandler(int sigId)
 {
@@ -161,11 +161,11 @@ extern "C" KDE_EXPORT int kdemain( int argc, char **argv )
     if (kdesktop_screen_number == 0) {
         kdesktop_name = "kdesktop";
         kicker_name = "kicker";
-        kwin_name = "kwin";
+        twin_name = "twin";
     } else {
         kdesktop_name.sprintf("kdesktop-screen-%d", kdesktop_screen_number);
         kicker_name.sprintf("kicker-screen-%d", kdesktop_screen_number);
-        kwin_name.sprintf("kwin-screen-%d", kdesktop_screen_number);
+        twin_name.sprintf("twin-screen-%d", kdesktop_screen_number);
     }
 
     KAboutData aboutData( kdesktop_name, I18N_NOOP("KDesktop"),

@@ -12,7 +12,7 @@
 include_directories(
   ${CMAKE_CURRENT_BINARY_DIR}
   ${CMAKE_CURRENT_SOURCE_DIR}
-  ${CMAKE_SOURCE_DIR}/kwin/lib
+  ${CMAKE_SOURCE_DIR}/twin/lib
   ${TDE_INCLUDE_DIR}
   ${TQT_INCLUDE_DIRS}
 )
@@ -23,15 +23,15 @@ link_directories(
 
 ##### other data ################################
 
-install( FILES kwindecoration.desktop DESTINATION ${XDG_APPS_INSTALL_DIR} )
+install( FILES twindecoration.desktop DESTINATION ${XDG_APPS_INSTALL_DIR} )
 
 
-##### kcm_kwindecoration (module) ###############
+##### kcm_twindecoration (module) ###############
 
-tde_add_kpart( kcm_kwindecoration AUTOMOC
+tde_add_kpart( kcm_twindecoration AUTOMOC
   SOURCES
-    kwindecoration.cpp buttons.cpp
-    kwindecorationIface.skel preview.cpp
+    twindecoration.cpp buttons.cpp
+    twindecorationIface.skel preview.cpp
   LINK tdecorations-shared tdeui-shared Xext
   DESTINATION ${PLUGIN_INSTALL_DIR}
 )

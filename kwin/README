@@ -1,4 +1,4 @@
-- The mailing list for KWin is kwin@kde.org (https://mail.kde.org/mailman/listinfo/kwin).
+- The mailing list for KWin is twin@kde.org (https://mail.kde.org/mailman/listinfo/twin).
 
 - If you want to develop KWin, see file HACKING.
 
@@ -23,7 +23,7 @@ background knowledge (since sometimes it's difficult even for people who
 do have the knowledge), the mechanisms are first briefly explained, and
 then an example of fixing the various problems is given.
 
- For comments, questions, suggestions and whatever use the kwin@kde.org
+ For comments, questions, suggestions and whatever use the twin@kde.org
 mailing list.
 
 

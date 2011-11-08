@@ -50,7 +50,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <kmessagebox.h>
 #include <kstandarddirs.h>
 #include <ktoolbarbutton.h>
-#include <kwin.h>
+#include <twin.h>
 
 #include "client_mnu.h"
 #include "container_base.h"

@@ -19,7 +19,7 @@
 #include <kglobalaccel.h>
 #include <kconfig.h>
 #include <kdebug.h>
-#include <kwinmodule.h>
+#include <twinmodule.h>
 #include <klocale.h>
 #include <netwm_def.h>
 #include <kaccel.h>

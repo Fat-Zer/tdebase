@@ -649,7 +649,7 @@ void KCMStyle::save()
 
 	if (m_bEffectsDirty) {
 		KIPC::sendMessageAll(KIPC::SettingsChanged);
-		kapp->dcopClient()->send("kwin*", "", "reconfigure()", TQString(""));
+		kapp->dcopClient()->send("twin*", "", "reconfigure()", TQString(""));
 	}
         //update kicker to re-used tooltips kicker parameter otherwise, it overwritted
         //by style tooltips parameters.

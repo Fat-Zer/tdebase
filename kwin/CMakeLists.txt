@@ -9,11 +9,11 @@
 #
 #################################################
 
-project( kwin )
+project( twin )
 
 add_subdirectory( lib )
 add_subdirectory( killer )
-add_subdirectory( kcmkwin )
+add_subdirectory( kcmtwin )
 add_subdirectory( pics )
 add_subdirectory( clients )
 add_subdirectory( oldheaders )
@@ -40,14 +40,14 @@ install( FILES KWinInterface.h DESTINATION ${INCLUDE_INSTALL_DIR} )
 
 ##### other data ################################
 
-tde_install_icons( kwin )
-install( FILES eventsrc DESTINATION ${DATA_INSTALL_DIR}/kwin )
-install( FILES kwin.kcfg DESTINATION ${KCFG_INSTALL_DIR} )
+tde_install_icons( twin )
+install( FILES eventsrc DESTINATION ${DATA_INSTALL_DIR}/twin )
+install( FILES twin.kcfg DESTINATION ${KCFG_INSTALL_DIR} )
 
 
-##### kwin (tdeinit) ############################
+##### twin (tdeinit) ############################
 
-set( target kwin )
+set( target twin )
 
 set( ${target}_SRCS
   workspace.cpp client.cpp placement.cpp atoms.cpp

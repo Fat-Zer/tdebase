@@ -877,7 +877,7 @@ void Client::finishWindowRules()
     }
     
 void Client::checkAndSetInitialRuledOpacity()
-//apply kwin-rules for window-translucency upon hitting apply or starting to manage client
+//apply twin-rules for window-translucency upon hitting apply or starting to manage client
     {
     int tmp;
     
@@ -950,7 +950,7 @@ void Workspace::editWindowRules( Client* c, bool whole_app )
     args << "--wid" << TQString::number( c->window());
     if( whole_app )
         args << "--whole-app";
-    KApplication::tdeinitExec( "kwin_rules_dialog", args );
+    KApplication::tdeinitExec( "twin_rules_dialog", args );
     }
 
 void Workspace::loadWindowRules()
@@ -960,7 +960,7 @@ void Workspace::loadWindowRules()
         delete rules.front();
         rules.pop_front();
         }
-    KConfig cfg( "kwinrulesrc", true );
+    KConfig cfg( "twinrulesrc", true );
     cfg.setGroup( "General" );
     int count = cfg.readNumEntry( "count" );
     for( int i = 1;
@@ -976,7 +976,7 @@ void Workspace::loadWindowRules()
 void Workspace::writeWindowRules()
     {
     rulesUpdatedTimer.stop();
-    KConfig cfg( "kwinrulesrc" );
+    KConfig cfg( "twinrulesrc" );
     TQStringList groups = cfg.groupList();
     for( TQStringList::ConstIterator it = groups.begin();
          it != groups.end();

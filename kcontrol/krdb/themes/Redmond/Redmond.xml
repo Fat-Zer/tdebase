@@ -90,17 +90,17 @@
     <buttonForeground rgb="#000000" object="global" />
     <linkColor rgb="#0000c0" object="global" />
     <visitedLinkColor rgb="#800080" object="global" />
-    <activeForeground rgb="#ffffff" object="kwin" />
-    <inactiveBackground rgb="#dcdcdc" object="kwin" />
-    <inactiveBlend rgb="#dcdcdc" object="kwin" />
-    <activeBackground rgb="#002468" object="kwin" />
-    <activeBlend rgb="#a8ccf0" object="kwin" />
-    <inactiveForeground rgb="#000000" object="kwin" />
-    <activeTitleBtnBg rgb="#dcdcdc" object="kwin" />
-    <inactiveTitleBtnBg rgb="#dcdcdc" object="kwin" />
+    <activeForeground rgb="#ffffff" object="twin" />
+    <inactiveBackground rgb="#dcdcdc" object="twin" />
+    <inactiveBlend rgb="#dcdcdc" object="twin" />
+    <activeBackground rgb="#002468" object="twin" />
+    <activeBlend rgb="#a8ccf0" object="twin" />
+    <inactiveForeground rgb="#000000" object="twin" />
+    <activeTitleBtnBg rgb="#dcdcdc" object="twin" />
+    <inactiveTitleBtnBg rgb="#dcdcdc" object="twin" />
   </colors>
   <cursors name="" />
-  <wm type="builtin" name="kwin3_redmond" >
+  <wm type="builtin" name="twin3_redmond" >
     <border size="1" />
   </wm>
   <konqueror>

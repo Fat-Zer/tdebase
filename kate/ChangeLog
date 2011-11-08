@@ -279,7 +279,7 @@
   * kateconsole.* konsole/*     : add kateconsole widget
 
 2001-02-16 Anders Lund <anders@alweb.dk>
-  * katemainwindow.cpp  :fixing read/write options to use maindockwindow functions.
+  * katemainwindow.cpp  :fixing read/write options to use maindoctwindow functions.
 
 2001-02-15 Joseph Wenninger <jowenn@kde.org>
   * kateview.cpp    : Tab doesn't jump to next widget anymore, but inserts a tab into the text

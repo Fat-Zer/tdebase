@@ -35,7 +35,7 @@
 #include <kuniqueapplication.h>
 
 #include <kmessagebox.h>
-#include <kwin.h>
+#include <twin.h>
 
 #include <kbookmarkmanager.h>
 #include <kbookmarkexporter.h>

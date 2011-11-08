@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 foreach (<>) {
-    if(/^PluginLib=kwin_(.*)$/) {
-        print "PluginLib=kwin3_$1\n"; 
+    if(/^PluginLib=twin_(.*)$/) {
+        print "PluginLib=twin3_$1\n"; 
         next;
     }
     print $_;

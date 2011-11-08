@@ -36,35 +36,35 @@ To create such window-specific setting automatically without a need of doing
 it manually for every user (for example when doing a large deployment), follow
 these steps:
 
-- Back up your $KDEHOME/share/config/kwinrulesrc ($KDEHOME usually being $HOME/.kde)
+- Back up your $KDEHOME/share/config/twinrulesrc ($KDEHOME usually being $HOME/.kde)
  and remove it
-- Run 'dcop kwin default reconfigure'
+- Run 'dcop twin default reconfigure'
 - Create manually all window-specific settings that should be included (see above)
 - When done, check in Window-specific settings configuration module
  (Alt+F3/Configure window behavior/Window-specific settings) that all rules are
  included
-- Create a copy of $KDEHOME/share/config/kwinrulesrc and restore the original one
-- Rename the copy (i.e. the newly created kwinrulesrc) to have its unique name
+- Create a copy of $KDEHOME/share/config/twinrulesrc and restore the original one
+- Rename the copy (i.e. the newly created twinrulesrc) to have its unique name
  (e.g. foobar_fix_maxsize in this example case)
 - Be careful with manual modifications of the file, especially make sure the count=
  field in the [General] group is updated if needed
-- Create a file for kconfig_update like this (named kwin_foobar_fix_maxsize.upd
+- Create a file for kconfig_update like this (named twin_foobar_fix_maxsize.upd
  in this example):
 
-# kwin_foobar_fix_maxsize.upd start # 
+# twin_foobar_fix_maxsize.upd start # 
 Id=foobar_fix_maxsize
-File=kwinrules_update
+File=twinrules_update
 Group=Dummy
 Options=overwrite
 ScriptArguments=foobar_fix_maxsize
-Script=kwin_update_default_rules
+Script=twin_update_default_rules
 
-# kwin_foobar_fix_maxsize.upd end # 
+# twin_foobar_fix_maxsize.upd end # 
 
-- The kconfig_file (kwin_foobar_fix_maxsize.upd) is to be placed
+- The kconfig_file (twin_foobar_fix_maxsize.upd) is to be placed
  in $KDEDIR/share/apps/kconf_update/
 - The file with the window-specific settings (foobar_fix_maxsize) is to be placed
- in $KDEDIR/share/apps/kwin/default_rules/
+ in $KDEDIR/share/apps/twin/default_rules/
 
 
 All KDE user accounts should have these new window-specific settings added

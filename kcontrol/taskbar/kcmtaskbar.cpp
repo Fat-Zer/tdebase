@@ -29,7 +29,7 @@
 #include <kconfig.h>
 #include <kdialog.h>
 #include <kgenericfactory.h>
-#include <kwin.h>
+#include <twin.h>
 #include <kcolorbutton.h>
 #include <tqlabel.h>
 

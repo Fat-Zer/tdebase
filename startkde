@@ -486,13 +486,13 @@ if test "$kpersonalizerrc_general_firstlogin" = "true"; then
     # start only dcopserver, don't start whole tdeinit (takes too long)
     echo "[startkde] Running kpersonalizer..." 1>&2
     dcopserver
-    kwin --lock &
+    twin --lock &
     kpersonalizer --before-session
     # handle kpersonalizer restarts (language change)
     while test $? -eq 1; do
         kpersonalizer --r --before-session
     done
-    dcopquit kwin
+    dcopquit twin
     dcopserver_shutdown --wait
   fi
 fi
@@ -568,8 +568,8 @@ fi
 # Finally, give the session control to the session manager.
 # See kdebase/ksmserver for the description of the rest of the startup sequence.
 # If the KDEWM environment variable has been set, then it will be used as Trinity's
-# window manager instead of kwin.
-# If KDEWM is not set, ksmserver will ensure kwin is started.
+# window manager instead of twin.
+# If KDEWM is not set, ksmserver will ensure twin is started.
 # kwrapper is used to reduce startup time and memory usage
 # kwrapper does not return usefull error codes such as the exit code of ksmserver.
 # We only check for 255 which means that the ksmserver process could not be

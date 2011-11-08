@@ -1,8 +1,8 @@
 Id=trinity51
-# the file is intentionally a dummy, as the binary will update kwinrulesrc,
-# file kwinrules_update will just remember it has been done
-File=kwinrules_update
+# the file is intentionally a dummy, as the binary will update twinrulesrc,
+# file twinrules_update will just remember it has been done
+File=twinrules_update
 Group=Dummy
 Options=overwrite
-ScriptArguments=fsp_workarounds_1.kwinrules
-Script=kwin_update_default_rules
+ScriptArguments=fsp_workarounds_1.twinrules
+Script=twin_update_default_rules

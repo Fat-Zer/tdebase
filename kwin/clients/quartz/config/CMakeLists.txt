@@ -20,9 +20,9 @@ link_directories(
 )
 
 
-##### kwin_quartz_config (module) ###############
+##### twin_quartz_config (module) ###############
 
-tde_add_kpart( kwin_quartz_config AUTOMOC
+tde_add_kpart( twin_quartz_config AUTOMOC
   SOURCES config.cpp
   LINK tdeui-shared
   DESTINATION ${PLUGIN_INSTALL_DIR}

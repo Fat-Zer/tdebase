@@ -21,7 +21,7 @@
 #include <dcopclient.h>
 #include <kconfig.h>
 #include <klocale.h>
-#include <kwin.h>
+#include <twin.h>
 
 #include <X11/Xlib.h>
 #include <fixx11h.h>
@@ -34,7 +34,7 @@ namespace KWinInternal
 
 static void loadRules( TQValueList< Rules* >& rules )
     {
-    KConfig cfg( "kwinrulesrc", true );
+    KConfig cfg( "twinrulesrc", true );
     cfg.setGroup( "General" );
     int count = cfg.readNumEntry( "count" );
     for( int i = 1;
@@ -49,7 +49,7 @@ static void loadRules( TQValueList< Rules* >& rules )
 
 static void saveRules( const TQValueList< Rules* >& rules )
     {
-    KConfig cfg( "kwinrulesrc" );
+    KConfig cfg( "twinrulesrc" );
     TQStringList groups = cfg.groupList();
     for( TQStringList::ConstIterator it = groups.begin();
          it != groups.end();
@@ -258,7 +258,7 @@ static int edit( Window wid, bool whole_app )
     saveRules( rules );
     if( !kapp->dcopClient()->isAttached())
         kapp->dcopClient()->attach();
-    kapp->dcopClient()->send("kwin*", "", "reconfigure()", TQString(""));
+    kapp->dcopClient()->send("twin*", "", "reconfigure()", TQString(""));
     return 0;
     }
     
@@ -275,8 +275,8 @@ static const KCmdLineOptions options[] =
 extern "C"
 KDE_EXPORT int kdemain( int argc, char* argv[] )
     {
-    KLocale::setMainCatalogue( "kcmkwinrules" );
-    KCmdLineArgs::init( argc, argv, "kwin_rules_dialog", I18N_NOOP( "KWin" ),
+    KLocale::setMainCatalogue( "kcmtwinrules" );
+    KCmdLineArgs::init( argc, argv, "twin_rules_dialog", I18N_NOOP( "KWin" ),
 	I18N_NOOP( "KWin helper utility" ), "1.0" );
     KCmdLineArgs::addCmdLineOptions( options );
     KApplication app;

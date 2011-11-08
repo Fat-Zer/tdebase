@@ -200,7 +200,7 @@ public:
 private slots:
   void shadeHoverChanged(bool);
 
-  //copied from kcontrol/konq/kwindesktop, aleXXX
+  //copied from kcontrol/konq/twindesktop, aleXXX
   void setEBorders();
 
   void changed() { emit KCModule::changed(true); }

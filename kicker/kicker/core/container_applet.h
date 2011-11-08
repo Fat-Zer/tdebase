@@ -26,7 +26,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #include <kpanelapplet.h>
 #include <dcopobject.h>
-#include <kwin.h>
+#include <twin.h>
 
 #include "appletinfo.h"
 #include "container_base.h"

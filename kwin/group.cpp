@@ -777,7 +777,7 @@ Window Client::verifyTransientFor( Window new_transient_for, bool defined )
         new_property_value = new_transient_for = workspace()->rootWin();
         }
 //  The transient_for window may be embedded in another application,
-//  so kwin cannot see it. Try to find the managed client for the
+//  so twin cannot see it. Try to find the managed client for the
 //  window and fix the transient_for property if possible.
     WId before_search = new_transient_for;
     while( new_transient_for != None

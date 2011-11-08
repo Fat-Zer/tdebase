@@ -1,12 +1,12 @@
 Mailing list and bugzilla:
 ==========================
 
-The KWin mailing list is kwin@kde.org . It's rather low traffic.
+The KWin mailing list is twin@kde.org . It's rather low traffic.
 
-The bugs.kde.org product for KWin is 'kwin'. Currently the components are 'general' (KWin core),
+The bugs.kde.org product for KWin is 'twin'. Currently the components are 'general' (KWin core),
 'decorations' (decoration plugins), 'compatibility' (problems with non-KDE WMs/apps) and
 'eyecandy' (transparency and similar effects).
-There are also two kcontrol components 'kcmkwindecoration' and 'kcmkwinoptions' related
+There are also two kcontrol components 'kcmtwindecoration' and 'kcmtwinoptions' related
 to KWin's KControl modules.
 
 
@@ -14,20 +14,20 @@ KWin parts:
 ===========
 
 There are four parts of KWin:
-- The KWin core, located in kdebase/kwin/*, which implements the actual functionality.
-- The decoration plugins, located in kdebase/kwin/clients and kdeartwork/kwin-styles, which
+- The KWin core, located in kdebase/twin/*, which implements the actual functionality.
+- The decoration plugins, located in kdebase/twin/clients and kdeartwork/twin-styles, which
   are responsible for the visual representation of the windows.
-- The libkdecoration library, located in kdebase/kwin/lib/*, which is used for communication
+- The libkdecoration library, located in kdebase/twin/lib/*, which is used for communication
   between the core and the decoration, and also implements some shared functionality
   for the decorations.
-- KControl modules, located in kdebase/kwin/kcmkwin.
+- KControl modules, located in kdebase/twin/kcmtwin.
 
 
 KWin decorations:
 =================
 
 If you want to develop a decoration plugin for KWin, a HOWTO is available at
-http://www.usermode.org/docs/kwintheme.html . It is currently not possible to create
+http://www.usermode.org/docs/twintheme.html . It is currently not possible to create
 a new decoration without knowledge of C++, but it should be possible to write a themeable
 decoration (I'm not aware of any such decoration though).
 
@@ -36,7 +36,7 @@ Restarting KWin:
 ================
 
 Since KWin takes care of focus handling, first killing KWin and then launching new instance
-can cause focus trouble. Therefore it's possible to run 'kwin --replace', which will start
+can cause focus trouble. Therefore it's possible to run 'twin --replace', which will start
 new KWin instance and tell the old one to quit.
 
 
@@ -46,7 +46,7 @@ Handling the case when KWin crashes:
 Again, without KWin running there may be focus problems. The simplest way to solve them
 is to add the 'Run Command' applet to Kicker - it can receive focus even without KWin running.
 If you can't add the applet or can reach it for some reason, switch to text console, and run
-'DISPLAY=:0 kwin --replace' (and then you can run 'kwin --replace' again from X).
+'DISPLAY=:0 twin --replace' (and then you can run 'twin --replace' again from X).
 
 If KWin is temporarily unusable because of some change and e.g. crashes during startup, it
 is possible to run another window manager, for example Metacity, OpenBox or FVWM (the command
@@ -58,7 +58,7 @@ Debugging KWin:
 
 Focus problems once more. It is not possible to debug KWin in gdb in the X session that KWin is managing,
 because that'd block focus and window operations. It is necessary to switch to a text console
-and attach to the running KWin instance from there, or launch it as 'DISPLAY=:0 gdb kwin'.
+and attach to the running KWin instance from there, or launch it as 'DISPLAY=:0 gdb twin'.
 
 Since KWin is such an important component of KDE, it is usually better to start another X for development.
 Note that XNest is quite buggy and is therefore not recommended to use.
@@ -101,7 +101,7 @@ The rest of the files contain additional helper classes:
 - group.* - grouping related windows together (warning! This is currently really messy and scary code
   that should be rewritten).
 - killwindow.* - handling of the Ctrl+Esc feature
-- kwinbindings.cpp - KWin's keyboard shortcuts (used by kdebase/kcontrol/keys)
+- twinbindings.cpp - KWin's keyboard shortcuts (used by kdebase/kcontrol/keys)
 - notifications.* - for KNotify
 - options.* - all configuration options for KWin are stored in this class
 - plugins.* - loading of the right decoration plugin
@@ -123,7 +123,7 @@ code is wrapped in helper functions, and I can handle problems there ;) . Howeve
 features don't require touching X/Xlib directly, still X/Xlib may impose their semantics on the way
 things are done. When in doubt, simply ask.
 
-All patches for KWin core should be sent to kwin@kde.org for review first. Even seemingly harmless
+All patches for KWin core should be sent to twin@kde.org for review first. Even seemingly harmless
 changes may have extensive consequences.
 
 Various notes:
@@ -133,7 +133,7 @@ in class Client and it will print information about the window.
 
 - KWin itself cannot create any normal windows, because it would have trouble managing its own windows.
 For such cases (which should be rare) a small external helper application is needed (kdialog should often
-do, and for special cases such a utility needs to be written like kwin/killer).
+do, and for special cases such a utility needs to be written like twin/killer).
 
 
 X documentation:
@@ -171,4 +171,4 @@ right before sending the patch). I don't care where you do and don't put spaces 
 variables, as long as I can read it (trying to make it look like the rest of the code is bonus points though ;) ).
 
 
-kwin@kde.org
+twin@kde.org

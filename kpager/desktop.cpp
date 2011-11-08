@@ -30,8 +30,8 @@
 #include <kdatastream.h>
 #include <kapplication.h>
 #include <kglobalsettings.h>
-#include <kwinmodule.h>
-#include <kwin.h>
+#include <twinmodule.h>
+#include <twin.h>
 #include <kconfig.h>
 #include <kglobal.h>
 #include <kdebug.h>
@@ -129,7 +129,7 @@ void Desktop::mouseReleaseEvent( TQMouseEvent *ev )
 KWin::WindowInfo *Desktop::windowAtPosition(const TQPoint &p, TQPoint *internalpos)
 {
 	TQRect r;
-	const TQValueList<WId> &list(pager()->kwin()->stackingOrder());
+	const TQValueList<WId> &list(pager()->twin()->stackingOrder());
 	if (list.count() <= 0)
 		return 0L;
 
@@ -476,9 +476,9 @@ void Desktop::paintEvent( TQPaintEvent * )
 
 	// draw text
 	if ( sname && snumber )
-	    txt=TQString("%1. %2").arg(m_desk).arg(pager()->kwin()->desktopName( m_desk ));
+	    txt=TQString("%1. %2").arg(m_desk).arg(pager()->twin()->desktopName( m_desk ));
 	else if ( sname )
-	    txt=pager()->kwin()->desktopName( m_desk );
+	    txt=pager()->twin()->desktopName( m_desk );
 	else if ( snumber )
 	    txt=TQString::number( m_desk );
 	p.drawText(2, 0, width()-4, height(), AlignCenter, txt );
@@ -487,8 +487,8 @@ void Desktop::paintEvent( TQPaintEvent * )
     // paint windows
     if ( KPagerConfigDialog::m_showWindows ) {
 	TQValueList<WId>::ConstIterator it;
-	for ( it = pager()->kwin()->stackingOrder().begin();
-	      it != pager()->kwin()->stackingOrder().end(); ++it ) {
+	for ( it = pager()->twin()->stackingOrder().begin();
+	      it != pager()->twin()->stackingOrder().end(); ++it ) {
 
 	    KWin::WindowInfo* info = pager()->info( *it );
 
@@ -519,7 +519,7 @@ void Desktop::paintWindowPlain(TQPainter &p, const KWin::WindowInfo *info, bool 
     if ( !onDesktop )
 	r.moveTopLeft(TQPoint(0,0));
 
-  bool isActive=(pager()->kwin()->activeWindow() == info->win());
+  bool isActive=(pager()->twin()->activeWindow() == info->win());
 
   TQBrush brush;
 
@@ -638,7 +638,7 @@ KPager *Desktop::pager() const
 
 bool Desktop::isCurrent() const
 {
-  return pager()->kwin()->currentDesktop()==m_desk;
+  return pager()->twin()->currentDesktop()==m_desk;
 }
 
 void Desktop::backgroundLoaded(bool b)

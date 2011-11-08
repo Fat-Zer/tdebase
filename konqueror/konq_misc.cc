@@ -28,7 +28,7 @@
 #include <kurifilter.h>
 #include <klocale.h>
 #include <kstandarddirs.h>
-#include <kwin.h>
+#include <twin.h>
 #include <kprotocolinfo.h>
 #include <kurldrag.h>
 #include <kstartupinfo.h>

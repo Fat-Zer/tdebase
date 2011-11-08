@@ -582,7 +582,7 @@ class KWIN_EXPORT KDecoration
         // mustn't do any repaints, resizes or anything like that
 	virtual void borders( int& left, int& right, int& top, int& bottom ) const = 0;
 	/**
-	 * This method is called by kwin when the style should resize the decoration window.
+	 * This method is called by twin when the style should resize the decoration window.
 	 * The usual implementation is to resize the main widget of the decoration to the
 	 * given size.
 	 *

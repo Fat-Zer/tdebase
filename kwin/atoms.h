@@ -21,7 +21,7 @@ class Atoms
     public:
         Atoms();
 
-        Atom kwin_running;
+        Atom twin_running;
 
         Atom wm_protocols;
         Atom wm_delete_window;

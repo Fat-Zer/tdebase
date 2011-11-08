@@ -90,17 +90,17 @@
     <buttonForeground rgb="#000000" object="global" />
     <linkColor rgb="#0000c0" object="global" />
     <visitedLinkColor rgb="#800080" object="global" />
-    <activeForeground rgb="#ffffff" object="kwin" />
-    <inactiveBackground rgb="#afd6ff" object="kwin" />
-    <inactiveBlend rgb="#afd6ff" object="kwin" />
-    <activeBackground rgb="#3e91eb" object="kwin" />
-    <activeBlend rgb="#3e91eb" object="kwin" />
-    <inactiveForeground rgb="#ffffff" object="kwin" />
-    <activeTitleBtnBg rgb="#dcdcdc" object="kwin" />
-    <inactiveTitleBtnBg rgb="#dcdcdc" object="kwin" />
+    <activeForeground rgb="#ffffff" object="twin" />
+    <inactiveBackground rgb="#afd6ff" object="twin" />
+    <inactiveBlend rgb="#afd6ff" object="twin" />
+    <activeBackground rgb="#3e91eb" object="twin" />
+    <activeBlend rgb="#3e91eb" object="twin" />
+    <inactiveForeground rgb="#ffffff" object="twin" />
+    <activeTitleBtnBg rgb="#dcdcdc" object="twin" />
+    <inactiveTitleBtnBg rgb="#dcdcdc" object="twin" />
   </colors>
   <cursors name="" />
-  <wm type="builtin" name="kwin3_keramik" >
+  <wm type="builtin" name="twin3_keramik" >
     <border size="1" />
   </wm>
   <konqueror>

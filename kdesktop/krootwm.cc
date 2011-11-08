@@ -46,8 +46,8 @@
 #include <dcopref.h>
 #include <khelpmenu.h>
 #include <kdebug.h>
-#include <kwindowlistmenu.h>
-#include <kwin.h>
+#include <twindowlistmenu.h>
+#include <twin.h>
 #include <kmenubar.h>
 #include <kmessagebox.h>
 #include <kuser.h>
@@ -67,7 +67,7 @@
 
 KRootWm * KRootWm::s_rootWm = 0;
 
-extern TQCString kdesktop_name, kicker_name, kwin_name;
+extern TQCString kdesktop_name, kicker_name, twin_name;
 
 KRootWm::KRootWm(KDesktop* _desktop) : TQObject(_desktop), startup(FALSE)
 {
@@ -804,18 +804,18 @@ void KRootWm::slotToggleDesktopMenu()
     // for the standalone menubar setting
     kapp->dcopClient()->send( "menuapplet*", "menuapplet", "configure()", data );
     kapp->dcopClient()->send( kicker_name, kicker_name, "configureMenubar()", data );
-    kapp->dcopClient()->send( "kwin*", "", "reconfigure()", data );
+    kapp->dcopClient()->send( "twin*", "", "reconfigure()", data );
 }
 
 
 void KRootWm::slotUnclutterWindows()
 {
-    kapp->dcopClient()->send(kwin_name, "KWinInterface", "unclutterDesktop()", TQString(""));
+    kapp->dcopClient()->send(twin_name, "KWinInterface", "unclutterDesktop()", TQString(""));
 }
 
 
 void KRootWm::slotCascadeWindows() {
-    kapp->dcopClient()->send(kwin_name, "KWinInterface", "cascadeDesktop()", TQString(""));
+    kapp->dcopClient()->send(twin_name, "KWinInterface", "cascadeDesktop()", TQString(""));
 }
 
 

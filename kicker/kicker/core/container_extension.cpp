@@ -44,13 +44,13 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <kglobal.h>
 #include <kicker.h>
 #include <kstandarddirs.h>
-#include <kwin.h>
+#include <twin.h>
 #include <klocale.h>
 #include <kglobalsettings.h>
 #include <kapplication.h>
 #include <netwm.h>
 #include <fixx11h.h>
-#include <kwinmodule.h>
+#include <twinmodule.h>
 
 #include "container_base.h"
 #include "extensionmanager.h"
@@ -136,8 +136,8 @@ void ExtensionContainer::init()
     KWin::setState(winId(), NET::Sticky);
     KWin::setOnAllDesktops(winId(), true);
 
-    connect(Kicker::the()->kwinModule(), TQT_SIGNAL(strutChanged()), this, TQT_SLOT(strutChanged()));
-    connect(Kicker::the()->kwinModule(), TQT_SIGNAL(currentDesktopChanged(int)),
+    connect(Kicker::the()->twinModule(), TQT_SIGNAL(strutChanged()), this, TQT_SLOT(strutChanged()));
+    connect(Kicker::the()->twinModule(), TQT_SIGNAL(currentDesktopChanged(int)),
             this, TQT_SLOT( currentDesktopChanged(int)));
 
     setBackgroundOrigin(AncestorOrigin);

@@ -40,7 +40,7 @@
 
 /*STATE:
 
-  konsole/kwin session management, parts stuff, config, menues
+  konsole/twin session management, parts stuff, config, menues
   are all in bad need for a complete rewrite.
 
   While the emulation core (TEmulation, TEVt102, TEScreen, TEWidget)

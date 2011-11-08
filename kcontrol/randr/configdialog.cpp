@@ -29,7 +29,7 @@
 #include <kiconloader.h>
 #include <klocale.h>
 #include <kpopupmenu.h>
-#include <kwinmodule.h>
+#include <twinmodule.h>
 #include <kregexpeditorinterface.h>
 #include <kparts/componentfactory.h>
 

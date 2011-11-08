@@ -26,7 +26,7 @@ Atoms::Atoms()
     Atom atoms_return[max];
     int n = 0;
 
-    atoms[n] = &kwin_running;
+    atoms[n] = &twin_running;
     names[n++] = (char *) "KWIN_RUNNING";
 
     atoms[n] = &wm_protocols;

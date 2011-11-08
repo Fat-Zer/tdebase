@@ -16,7 +16,7 @@
 #include <kglobalsettings.h>
 #include <kiconloader.h>
 #include <kprogress.h>
-#include <kwin.h>
+#include <twin.h>
 
 #include <tqdesktopwidget.h>
 #include <tqhbox.h>

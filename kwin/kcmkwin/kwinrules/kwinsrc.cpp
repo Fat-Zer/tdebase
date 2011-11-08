@@ -1,4 +1,4 @@
-// Include some code from kwin core in order to avoid
+// Include some code from twin core in order to avoid
 // double implementation.
 
 #include "ruleslist.h"

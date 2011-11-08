@@ -42,11 +42,11 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <kdebug.h>
 #include <kglobal.h>
 #include <krun.h>
-#include <kwinmodule.h>
+#include <twinmodule.h>
 #include <kdialogbase.h>
 #include <kactionselector.h>
 #include <kiconloader.h>
-#include <kwin.h>
+#include <twin.h>
 
 #include "kickerSettings.h"
 
@@ -102,7 +102,7 @@ SystemTrayApplet::SystemTrayApplet(const TQString& configFile, Type type, int ac
 
     setBackgroundOrigin(AncestorOrigin);
 
-    kwin_module = new KWinModule(TQT_TQOBJECT(this));
+    twin_module = new KWinModule(TQT_TQOBJECT(this));
 
     // kApplication notifies us of settings changes. added to support
     // disabling of frame effect on mouse hover
@@ -121,7 +121,7 @@ void SystemTrayApplet::updateClockGeometry()
 void SystemTrayApplet::initialize()
 {
     // register existing tray windows
-    const TQValueList<WId> systemTrayWindows = kwin_module->systemTrayWindows();
+    const TQValueList<WId> systemTrayWindows = twin_module->systemTrayWindows();
     bool existing = false;
     for (TQValueList<WId>::ConstIterator it = systemTrayWindows.begin();
          it != systemTrayWindows.end(); ++it )
@@ -139,9 +139,9 @@ void SystemTrayApplet::initialize()
     }
 
     // the KWinModule notifies us when tray windows are added or removed
-    connect( kwin_module, TQT_SIGNAL( systemTrayWindowAdded(WId) ),
+    connect( twin_module, TQT_SIGNAL( systemTrayWindowAdded(WId) ),
              this, TQT_SLOT( systemTrayWindowAdded(WId) ) );
-    connect( kwin_module, TQT_SIGNAL( systemTrayWindowRemoved(WId) ),
+    connect( twin_module, TQT_SIGNAL( systemTrayWindowRemoved(WId) ),
              this, TQT_SLOT( updateTrayWindows() ) );
 
     TQCString screenstr;
@@ -711,7 +711,7 @@ void SystemTrayApplet::updateTrayWindows()
         WId wid = (*emb)->embeddedWinId();
         if ((wid == 0) ||
             ((*emb)->kdeTray() &&
-             !kwin_module->systemTrayWindows().contains(wid)))
+             !twin_module->systemTrayWindows().contains(wid)))
         {
             (*emb)->deleteLater();
             emb = m_shownWins.erase(emb);
@@ -728,7 +728,7 @@ void SystemTrayApplet::updateTrayWindows()
         WId wid = (*emb)->embeddedWinId();
         if ((wid == 0) ||
             ((*emb)->kdeTray() &&
-             !kwin_module->systemTrayWindows().contains(wid)))
+             !twin_module->systemTrayWindows().contains(wid)))
         {
             (*emb)->deleteLater();
             emb = m_hiddenWins.erase(emb);

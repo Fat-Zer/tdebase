@@ -104,7 +104,7 @@ private:
     TrayEmbedList m_hiddenWins;
     TQStringList m_hiddenIconList;
     TQStringList m_sortOrderIconList;
-    KWinModule *kwin_module;
+    KWinModule *twin_module;
     Atom net_system_tray_selection;
     Atom net_system_tray_opcode;
     bool m_showFrame;

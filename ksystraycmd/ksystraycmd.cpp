@@ -10,7 +10,7 @@
 #include <klocale.h>
 #include <kpopupmenu.h>
 #include <kprocess.h>
-#include <kwinmodule.h>
+#include <twinmodule.h>
 #include <kconfig.h>
 #include <ksystemtray.h>
 
@@ -23,10 +23,10 @@
 KSysTrayCmd::KSysTrayCmd()
   : TQLabel( 0, "systray_cmd" ),
     isVisible(true), lazyStart( false ), noquit( false ), quitOnHide( false ), onTop(false), ownIcon(false),
-    win(0), client(0), kwinmodule(0), top(0), left(0)
+    win(0), client(0), twinmodule(0), top(0), left(0)
 {
   tqsetAlignment( AlignCenter );
-  kwinmodule = new KWinModule( TQT_TQOBJECT(this) );
+  twinmodule = new KWinModule( TQT_TQOBJECT(this) );
   refresh();
 }
 
@@ -114,8 +114,8 @@ void KSysTrayCmd::setTargetWindow( WId w )
 
 void KSysTrayCmd::setTargetWindow( const KWin::WindowInfo &info )
 {
-  disconnect( kwinmodule, TQT_SIGNAL(windowAdded(WId)), this, TQT_SLOT(windowAdded(WId)) );
-  connect( kwinmodule, TQT_SIGNAL(windowChanged(WId)), TQT_SLOT(windowChanged(WId)) );
+  disconnect( twinmodule, TQT_SIGNAL(windowAdded(WId)), this, TQT_SLOT(windowAdded(WId)) );
+  connect( twinmodule, TQT_SIGNAL(windowChanged(WId)), TQT_SLOT(windowChanged(WId)) );
   win = info.win();
   KWin::setSystemTrayWindowFor( winId(), win );
   refresh();
@@ -179,7 +179,7 @@ bool KSysTrayCmd::startClient()
 {
   client = new KShellProcess();
   *client << command;
-  connect( kwinmodule, TQT_SIGNAL(windowAdded(WId)), TQT_SLOT(windowAdded(WId)) );
+  connect( twinmodule, TQT_SIGNAL(windowAdded(WId)), TQT_SLOT(windowAdded(WId)) );
   connect( client, TQT_SIGNAL( processExited(KProcess *) ),
 	   this, TQT_SLOT( clientExited() ) );
 
@@ -265,7 +265,7 @@ void KSysTrayCmd::execContextMenu( const TQPoint &pos )
 void KSysTrayCmd::checkExistingWindows()
 {
   TQValueList<WId>::ConstIterator it;
-  for ( it = kwinmodule->windows().begin(); it != kwinmodule->windows().end(); ++it ) {
+  for ( it = twinmodule->windows().begin(); it != twinmodule->windows().end(); ++it ) {
     windowAdded( *it );
     if ( win )
       break;

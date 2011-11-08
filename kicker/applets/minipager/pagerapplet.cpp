@@ -30,8 +30,8 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #include <dcopref.h>
 #include <kglobalsettings.h>
-#include <kwin.h>
-#include <kwinmodule.h>
+#include <twin.h>
+#include <twinmodule.h>
 #include <kapplication.h>
 #include <kglobal.h>
 #include <klocale.h>
@@ -114,11 +114,11 @@ KMiniPager::KMiniPager(const TQString& configFile, Type type, int actions,
 
     setFont( KGlobalSettings::taskbarFont() );
 
-    m_kwin = new KWinModule(TQT_TQOBJECT(this));
-    m_activeWindow = m_kwin->activeWindow();
-    m_curDesk = m_kwin->currentDesktop();
+    m_twin = new KWinModule(TQT_TQOBJECT(this));
+    m_activeWindow = m_twin->activeWindow();
+    m_curDesk = m_twin->currentDesktop();
 
-    if (m_curDesk == 0) // kwin not yet launched
+    if (m_curDesk == 0) // twin not yet launched
     {
         m_curDesk = 1;
     }
@@ -127,20 +127,20 @@ KMiniPager::KMiniPager(const TQString& configFile, Type type, int actions,
     desktopLayoutX = -1;
     desktopLayoutY = -1;
 
-    TQSize s(m_kwin->numberOfViewports(m_kwin->currentDesktop()));
+    TQSize s(m_twin->numberOfViewports(m_twin->currentDesktop()));
     m_useViewports = s.width() * s.height() > 1;
 
     drawButtons();
 
-    connect( m_kwin, TQT_SIGNAL( currentDesktopChanged(int)), TQT_SLOT( slotSetDesktop(int) ) );
-    connect( m_kwin, TQT_SIGNAL( currentDesktopViewportChanged(int, const TQPoint&)), TQT_SLOT(slotSetDesktopViewport(int, const TQPoint&)));
-    connect( m_kwin, TQT_SIGNAL( numberOfDesktopsChanged(int)), TQT_SLOT( slotSetDesktopCount(int) ) );
-    connect( m_kwin, TQT_SIGNAL( desktopGeometryChanged(int)), TQT_SLOT( slotRefreshViewportCount(int) ) );
-    connect( m_kwin, TQT_SIGNAL( activeWindowChanged(WId)), TQT_SLOT( slotActiveWindowChanged(WId) ) );
-    connect( m_kwin, TQT_SIGNAL( windowAdded(WId) ), this, TQT_SLOT( slotWindowAdded(WId) ) );
-    connect( m_kwin, TQT_SIGNAL( windowRemoved(WId) ), this, TQT_SLOT( slotWindowRemoved(WId) ) );
-    connect( m_kwin, TQT_SIGNAL( windowChanged(WId,unsigned int) ), this, TQT_SLOT( slotWindowChanged(WId,unsigned int) ) );
-    connect( m_kwin, TQT_SIGNAL( desktopNamesChanged() ), this, TQT_SLOT( slotDesktopNamesChanged() ) );
+    connect( m_twin, TQT_SIGNAL( currentDesktopChanged(int)), TQT_SLOT( slotSetDesktop(int) ) );
+    connect( m_twin, TQT_SIGNAL( currentDesktopViewportChanged(int, const TQPoint&)), TQT_SLOT(slotSetDesktopViewport(int, const TQPoint&)));
+    connect( m_twin, TQT_SIGNAL( numberOfDesktopsChanged(int)), TQT_SLOT( slotSetDesktopCount(int) ) );
+    connect( m_twin, TQT_SIGNAL( desktopGeometryChanged(int)), TQT_SLOT( slotRefreshViewportCount(int) ) );
+    connect( m_twin, TQT_SIGNAL( activeWindowChanged(WId)), TQT_SLOT( slotActiveWindowChanged(WId) ) );
+    connect( m_twin, TQT_SIGNAL( windowAdded(WId) ), this, TQT_SLOT( slotWindowAdded(WId) ) );
+    connect( m_twin, TQT_SIGNAL( windowRemoved(WId) ), this, TQT_SLOT( slotWindowRemoved(WId) ) );
+    connect( m_twin, TQT_SIGNAL( windowChanged(WId,unsigned int) ), this, TQT_SLOT( slotWindowChanged(WId,unsigned int) ) );
+    connect( m_twin, TQT_SIGNAL( desktopNamesChanged() ), this, TQT_SLOT( slotDesktopNamesChanged() ) );
     connect( kapp, TQT_SIGNAL(backgroundChanged(int)), TQT_SLOT(slotBackgroundChanged(int)) );
 
     if (kapp->authorizeKAction("kicker_rmb") && kapp->authorizeControlModule("kde-kcmtaskbar.desktop"))
@@ -152,8 +152,8 @@ KMiniPager::KMiniPager(const TQString& configFile, Type type, int actions,
     }
 
     TQValueList<WId>::ConstIterator it;
-    TQValueList<WId>::ConstIterator itEnd = m_kwin->windows().end();
-    for ( it = m_kwin->windows().begin(); it != itEnd; ++it)
+    TQValueList<WId>::ConstIterator itEnd = m_twin->windows().end();
+    for ( it = m_twin->windows().begin(); it != itEnd; ++it)
     {
         slotWindowAdded( (*it) );
     }
@@ -172,7 +172,7 @@ KMiniPager::~KMiniPager()
 
 void KMiniPager::slotBackgroundChanged(int desk)
 {
-    unsigned numDesktops = m_kwin->numberOfDesktops();
+    unsigned numDesktops = m_twin->numberOfDesktops();
     if (numDesktops != m_desktops.count())
     {
         slotSetDesktopCount(numDesktops);
@@ -189,9 +189,9 @@ void KMiniPager::slotBackgroundChanged(int desk)
 
 void KMiniPager::slotSetDesktop(int desktop)
 {
-    if (m_kwin->numberOfDesktops() > static_cast<int>(m_desktops.count()))
+    if (m_twin->numberOfDesktops() > static_cast<int>(m_desktops.count()))
     {
-        slotSetDesktopCount( m_kwin->numberOfDesktops() );
+        slotSetDesktopCount( m_twin->numberOfDesktops() );
     }
 
     if (!m_useViewports && (desktop != KWin::currentDesktop()))
@@ -200,8 +200,8 @@ void KMiniPager::slotSetDesktop(int desktop)
         // holds down the key combo to switch desktops, lets the
         // mouse go but keeps the key combo held. the desktop will switch
         // back to the desktop associated with the key combo and then it
-        // becomes a race condition between kwin's signal and the button's
-        // signal. usually kwin wins.
+        // becomes a race condition between twin's signal and the button's
+        // signal. usually twin wins.
         return;
     }
 
@@ -222,21 +222,21 @@ void KMiniPager::slotSetDesktopViewport(int desktop, const TQPoint& viewport)
 {
     // ###
     Q_UNUSED(desktop);
-    TQSize s(m_kwin->numberOfViewports(m_kwin->currentDesktop()));
+    TQSize s(m_twin->numberOfViewports(m_twin->currentDesktop()));
     slotSetDesktop((viewport.y()-1) * s.width() + viewport.x() );
 }
 
 void KMiniPager::slotButtonSelected( int desk )
 {
-    if (m_kwin->numberOfViewports(m_kwin->currentDesktop()).width() *
-        m_kwin->numberOfViewports(m_kwin->currentDesktop()).height() > 1)
+    if (m_twin->numberOfViewports(m_twin->currentDesktop()).width() *
+        m_twin->numberOfViewports(m_twin->currentDesktop()).height() > 1)
     {
         TQPoint p;
 
         p.setX( (desk-1) * TQApplication::desktop()->width());
         p.setY( 0 );
 
-        KWin::setCurrentDesktopViewport(m_kwin->currentDesktop(), p);
+        KWin::setCurrentDesktopViewport(m_twin->currentDesktop(), p);
     }
     else
         KWin::setCurrentDesktop( desk );
@@ -251,8 +251,8 @@ int KMiniPager::widthForHeight(int h) const
         return width();
     }
 
-    int deskNum = m_kwin->numberOfDesktops() * m_kwin->numberOfViewports(0).width()
-        * m_kwin->numberOfViewports(0).height();
+    int deskNum = m_twin->numberOfDesktops() * m_twin->numberOfViewports(0).width()
+        * m_twin->numberOfViewports(0).height();
 
     int rowNum = m_settings->numberOfRows();
     if (rowNum == 0)
@@ -286,7 +286,7 @@ int KMiniPager::widthForHeight(int h) const
         TQFontMetrics fm = fontMetrics();
         for (int i = 1; i <= deskNum; i++)
         {
-            int sw = fm.width( m_kwin->desktopName( i ) ) + 8;
+            int sw = fm.width( m_twin->desktopName( i ) ) + 8;
             if (sw > bw)
             {
                 bw = sw;
@@ -307,8 +307,8 @@ int KMiniPager::heightForWidth(int w) const
         return height();
     }
 
-    int deskNum = m_kwin->numberOfDesktops() * m_kwin->numberOfViewports(0).width()
-        * m_kwin->numberOfViewports(0).height();
+    int deskNum = m_twin->numberOfDesktops() * m_twin->numberOfViewports(0).width()
+        * m_twin->numberOfViewports(0).height();
     int rowNum = m_settings->numberOfRows(); // actually these are columns now... oh well.
     if (rowNum == 0)
     {
@@ -442,8 +442,8 @@ void KMiniPager::wheelEvent( TQWheelEvent* e )
 {
     int newDesk;
     int desktops = KWin::numberOfDesktops();
-    if (m_kwin->numberOfViewports(0).width() * m_kwin->numberOfViewports(0).height() > 1 )
-        desktops = m_kwin->numberOfViewports(0).width() * m_kwin->numberOfViewports(0).height();
+    if (m_twin->numberOfViewports(0).width() * m_twin->numberOfViewports(0).height() > 1 )
+        desktops = m_twin->numberOfViewports(0).width() * m_twin->numberOfViewports(0).height();
     if (e->delta() < 0)
     {
         newDesk = m_curDesk % desktops + 1;
@@ -458,17 +458,17 @@ void KMiniPager::wheelEvent( TQWheelEvent* e )
 
 void KMiniPager::drawButtons()
 {
-    int deskNum = m_kwin->numberOfDesktops();
+    int deskNum = m_twin->numberOfDesktops();
     KMiniPagerButton *desk;
 
     int count = 1;
     int i = 1;
     do
     {
-        TQSize viewportNum = m_kwin->numberOfViewports(i);
+        TQSize viewportNum = m_twin->numberOfViewports(i);
         for (int j = 1; j <= viewportNum.width() * viewportNum.height(); ++j)
         {
-            TQSize s(m_kwin->numberOfViewports(m_kwin->currentDesktop()));
+            TQSize s(m_twin->numberOfViewports(m_twin->currentDesktop()));
             TQPoint viewport( (j-1) % s.width(), (j-1) / s.width());
             desk = new KMiniPagerButton( count, m_useViewports, viewport, this );
             if ( m_settings->labelType() != PagerSettings::EnumLabelType::LabelName )
@@ -493,7 +493,7 @@ void KMiniPager::drawButtons()
 
 void KMiniPager::slotSetDesktopCount( int )
 {
-    TQSize s(m_kwin->numberOfViewports(m_kwin->currentDesktop()));
+    TQSize s(m_twin->numberOfViewports(m_twin->currentDesktop()));
     m_useViewports = s.width() * s.height() > 1;
 
     TQValueList<KMiniPagerButton*>::ConstIterator it;
@@ -506,7 +506,7 @@ void KMiniPager::slotSetDesktopCount( int )
 
     drawButtons();
 
-    m_curDesk = m_kwin->currentDesktop();
+    m_curDesk = m_twin->currentDesktop();
     if ( m_curDesk == 0 )
     {
         m_curDesk = 1;
@@ -518,7 +518,7 @@ void KMiniPager::slotSetDesktopCount( int )
 
 void KMiniPager::slotRefreshViewportCount( int )
 {
-    TQSize s(m_kwin->numberOfViewports(m_kwin->currentDesktop()));
+    TQSize s(m_twin->numberOfViewports(m_twin->currentDesktop()));
     m_useViewports = s.width() * s.height() > 1;
 
     TQValueList<KMiniPagerButton*>::ConstIterator it;
@@ -531,7 +531,7 @@ void KMiniPager::slotRefreshViewportCount( int )
 
     drawButtons();
 
-    m_curDesk = m_kwin->currentDesktop();
+    m_curDesk = m_twin->currentDesktop();
     if ( m_curDesk == 0 )
     {
         m_curDesk = 1;
@@ -709,7 +709,7 @@ void KMiniPager::aboutToShowContextMenu()
     m_contextMenu->insertSeparator();
 
     m_contextMenu->insertItem(i18n("&Rename Desktop \"%1\"")
-                                   .arg(kwin()->desktopName(m_rmbDesk)), RenameDesktop);
+                                   .arg(twin()->desktopName(m_rmbDesk)), RenameDesktop);
     m_contextMenu->insertSeparator();
 
     KPopupMenu* showMenu = new KPopupMenu(m_contextMenu);
@@ -863,7 +863,7 @@ void KMiniPager::slotDesktopNamesChanged()
 
     for (int i = 1; it != itEnd; ++it, ++i)
     {
-        TQString name = m_kwin->desktopName(i);
+        TQString name = m_twin->desktopName(i);
         (*it)->setDesktopName(name);
         (*it)->tqrepaint();
         TQToolTip::remove((*it));

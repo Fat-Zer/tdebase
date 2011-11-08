@@ -7,7 +7,7 @@
 
 
 #include <kuniqueapplication.h>
-#include <kwinmodule.h>
+#include <twinmodule.h>
 
 
 #include <X11/Xlib.h>

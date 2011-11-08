@@ -37,7 +37,7 @@ Copyright (C) 2000 Matthias Ettrich <ettrich@kde.org>
 #include <kguiitem.h>
 #include <kiconloader.h>
 #include <kglobalsettings.h>
-#include <kwin.h>
+#include <twin.h>
 #include <kuser.h>
 #include <kpixmap.h>
 #include <kimageeffect.h>

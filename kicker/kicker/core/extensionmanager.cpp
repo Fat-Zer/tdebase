@@ -35,7 +35,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <kmenubar.h>
 #include <kmessagebox.h>
 #include <kstandarddirs.h>
-#include <kwinmodule.h>
+#include <twinmodule.h>
 #include <dcopref.h>
 
 #include "container_extension.h"
@@ -625,7 +625,7 @@ TQRect ExtensionManager::workArea(int XineramaScreen, const ExtensionContainer* 
 {
     if (!extension)
     {
-        return Kicker::the()->kwinModule()->workArea(XineramaScreen);
+        return Kicker::the()->twinModule()->workArea(XineramaScreen);
     }
 
     TQValueList<WId> list;
@@ -676,11 +676,11 @@ TQRect ExtensionManager::workArea(int XineramaScreen, const ExtensionContainer* 
     if ((XineramaScreen == XineramaAllScreens) || (kapp->desktop()->numScreens() < 2))
     {
          /* special value for all screens */
-         workArea = Kicker::the()->kwinModule()->workArea(list);
+         workArea = Kicker::the()->twinModule()->workArea(list);
     }
     else
     {
-        workArea = Kicker::the()->kwinModule()->workArea(list, XineramaScreen)
+        workArea = Kicker::the()->twinModule()->workArea(list, XineramaScreen)
                    .intersect(TQApplication::desktop()->screenGeometry(XineramaScreen));
     }
 

@@ -76,7 +76,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <kprocess.h>
 #include <dcopclient.h>
 #include <dcopref.h>
-#include <kwinmodule.h>
+#include <twinmodule.h>
 #include <knotifyclient.h>
 
 #include "server.h"

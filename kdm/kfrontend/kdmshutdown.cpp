@@ -57,7 +57,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 #include <stdlib.h>
 
-extern bool has_kwin;
+extern bool has_twin;
 
 int KDMShutdownBase::curPlugin = -1;
 PluginList KDMShutdownBase::pluginList;
@@ -480,7 +480,7 @@ KDMSlimShutdown::KDMSlimShutdown( TQWidget *_parent )
 	if(doUbuntuLogout)
 	{
 		TQVBoxLayout* vbox = new TQVBoxLayout( this );
-		if (has_kwin)
+		if (has_twin)
 			lfrm->setFrameStyle( TQFrame::NoFrame );
 		else
 			lfrm->setFrameStyle( TQFrame::StyledPanel | TQFrame::Raised );
@@ -548,7 +548,7 @@ KDMSlimShutdown::KDMSlimShutdown( TQWidget *_parent )
 	else
 	{
 		TQHBoxLayout *hbox = new TQHBoxLayout( this, KDmh, KDsh );
-		if (has_kwin)
+		if (has_twin)
 			lfrm->setFrameStyle( TQFrame::NoFrame );
 		else
 			lfrm->setFrameStyle( TQFrame::Panel | TQFrame::Sunken );

@@ -29,7 +29,7 @@
 #include <kdcoppropertyproxy.h>
 #include <kdebug.h>
 #include <kstartupinfo.h>
-#include <kwin.h>
+#include <twin.h>
 
 KonqMainWindowIface::KonqMainWindowIface( KonqMainWindow * mainWindow )
     :

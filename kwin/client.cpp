@@ -21,7 +21,7 @@ License. See the file "COPYING" for the exact licensing terms.
 #include <unistd.h>
 #include <kstandarddirs.h>
 #include <tqwhatsthis.h>
-#include <kwin.h>
+#include <twin.h>
 #include <kiconloader.h>
 #include <stdlib.h>
 
@@ -1817,7 +1817,7 @@ void Client::killProcess( bool ask, Time timestamp )
     else
         { // SELI TODO handle the window created by handler specially (on top,urgent?)
         process_killer = new KProcess( this );
-        *process_killer << KStandardDirs::findExe( "kwin_killer_helper" )
+        *process_killer << KStandardDirs::findExe( "twin_killer_helper" )
             << "--pid" << TQCString().setNum( pid ) << "--hostname" << machine
             << "--windowname" << caption().utf8()
             << "--applicationname" << resourceClass()
@@ -2832,7 +2832,7 @@ kdbgstream& operator<<( kdbgstream& stream, const ConstClientList& list )
     }
 #endif
 
-TQPixmap * kwin_get_menu_pix_hack()
+TQPixmap * twin_get_menu_pix_hack()
     {
     static TQPixmap p;
     if ( p.isNull() )

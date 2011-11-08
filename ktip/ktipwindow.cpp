@@ -26,7 +26,7 @@
 #include <kstandarddirs.h>
 #include <ktip.h>
 #include <kuniqueapplication.h>
-#include <kwin.h>
+#include <twin.h>
 #include <stdlib.h>
 
 static const char description[] = I18N_NOOP("Useful tips");

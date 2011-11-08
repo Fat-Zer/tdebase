@@ -66,7 +66,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include <pwd.h>
 
 bool argb_visual_available = false;
-bool has_kwin = false;
+bool has_twin = false;
 bool is_themed = false;
 bool trinity_desktop_lock_use_sak = TRUE;
 
@@ -190,7 +190,7 @@ kg_main( const char *argv0 )
 	KProcess *tsak = 0;
 	KProcess *proc = 0;
 	KProcess *comp = 0;
-	KProcess *kwin = 0;
+	KProcess *twin = 0;
 
 	trinity_desktop_lock_use_sak = _useSAK;
 	if (trinity_desktop_lock_use_sak) {
@@ -310,10 +310,10 @@ kg_main( const char *argv0 )
 	}
 
 	if (!_windowManager.isEmpty()) {
-		kwin = new KProcess;
-		*kwin << TQCString( argv0, strrchr( argv0, '/' ) - argv0 + 2 ) + _windowManager.ascii();
-		kwin->start();
-		has_kwin = true;
+		twin = new KProcess;
+		*twin << TQCString( argv0, strrchr( argv0, '/' ) - argv0 + 2 ) + _windowManager.ascii();
+		twin->start();
+		has_twin = true;
 	}
 
 	GSendInt( G_Ready );
@@ -361,14 +361,14 @@ kg_main( const char *argv0 )
 				// This also prevents the user from being dropped to a console login if Xorg glitches or is buggy
 				XSetErrorHandler( ignoreXError );
 				KThemedGreeter *tgrt;
-				bool has_kwin_bkp = has_kwin;
+				bool has_twin_bkp = has_twin;
 				is_themed = true;
-				has_kwin = false;	// [FIXME] The themed greeter is built on the assumption that there is no window manager available (i.e. it keeps stealing focus) and needs to be repaired.
+				has_twin = false;	// [FIXME] The themed greeter is built on the assumption that there is no window manager available (i.e. it keeps stealing focus) and needs to be repaired.
 				dialog = tgrt = new KThemedGreeter;
 				kdDebug() << timestamp() << " themed" << endl;
 				if (!tgrt->isOK()) {
 					is_themed = false;
-					has_kwin = has_kwin_bkp;
+					has_twin = has_twin_bkp;
 					delete tgrt;
 					checkSAK(app);
 					dialog = new KStdGreeter;
@@ -450,10 +450,10 @@ kg_main( const char *argv0 )
 		comp->detach();
 		delete comp;
 	}
-	if (kwin) {
-		kwin->closeStdin();
-		kwin->detach();
-		delete kwin;
+	if (twin) {
+		twin->closeStdin();
+		twin->detach();
+		delete twin;
 	}
 	delete proc;
 	UnsecureDisplay( dpy );

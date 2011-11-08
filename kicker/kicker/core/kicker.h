@@ -69,7 +69,7 @@ k_dcop_signals:
 public:
     static Kicker* the();
     KDirWatch* fileWatcher();
-    KWinModule* kwinModule();
+    KWinModule* twinModule();
 
     bool isImmutable() const;
     bool isKioskImmutable() const;
@@ -122,7 +122,7 @@ private:
     static void crashHandler(int signal);
 
     KGlobalAccel*  keys;
-    KWinModule*    m_kwinModule;
+    KWinModule*    m_twinModule;
     KCMultiDialog* m_configDialog;
     bool           m_canAddContainers;
     TQPoint         m_insertionPoint;

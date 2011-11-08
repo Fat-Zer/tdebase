@@ -39,7 +39,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #include <ksharedptr.h>
 #include <kstartupinfo.h>
-#include <kwin.h>
+#include <twin.h>
 
 #include <config.h>
 

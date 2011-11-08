@@ -1,12 +1,12 @@
 [Desktop Entry]
 Icon=kcmkwm
 Type=Application
-Exec=kcmshell kwinoptions
+Exec=kcmshell twinoptions
 DocPath=kcontrol/windowmanagement/index.html
 
 X-KDE-ModuleType=Library
-X-KDE-Library=kwinoptions
-X-KDE-FactoryName=kwinoptions
+X-KDE-Library=twinoptions
+X-KDE-FactoryName=twinoptions
 
 Name=Window Behavior
 Name[af]=Venster Gedrag

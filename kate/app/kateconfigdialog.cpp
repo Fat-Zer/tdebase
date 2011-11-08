@@ -57,7 +57,7 @@
 #include <ksimpleconfig.h>
 #include <kstdaction.h>
 #include <kstandarddirs.h>
-#include <kwin.h>
+#include <twin.h>
 #include <kseparator.h>
 
 KateConfigDialog::KateConfigDialog ( KateMainWindow *parent, Kate::View *view )

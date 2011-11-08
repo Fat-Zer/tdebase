@@ -24,7 +24,7 @@
 #include <tqcheckbox.h>
 #include <kpushbutton.h>
 #include <tqlabel.h>
-#include <kwinmodule.h>
+#include <twinmodule.h>
 #include <klocale.h>
 #include <tqregexp.h>
 #include <tqwhatsthis.h>

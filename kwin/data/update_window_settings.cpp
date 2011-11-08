@@ -155,14 +155,14 @@ void writeRules( KConfig& cfg )
 
 int main()
     {
-    KInstance inst( "kwin_update_window_settings" );
-    KConfig src_cfg( "kwinrc" );
-    KConfig dest_cfg( "kwinrulesrc" );
+    KInstance inst( "twin_update_window_settings" );
+    KConfig src_cfg( "twinrc" );
+    KConfig dest_cfg( "twinrulesrc" );
     loadFakeSessionInfo( &src_cfg );
     writeRules( dest_cfg );
     src_cfg.sync();
     dest_cfg.sync();
     DCOPClient client;
     client.attach();
-    client.send("kwin*", "", "reconfigure()", TQString(""));
+    client.send("twin*", "", "reconfigure()", TQString(""));
     }

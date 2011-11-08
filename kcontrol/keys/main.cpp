@@ -132,7 +132,7 @@ extern "C"
   KDE_EXPORT KCModule *create_keys(TQWidget *parent, const char * /*name*/)
   {
 	// What does this do?  Why not insert klipper and kxkb, too? --ellis, 2002/01/15
-	KGlobal::locale()->insertCatalogue("kwin");
+	KGlobal::locale()->insertCatalogue("twin");
 	KGlobal::locale()->insertCatalogue("kdesktop");
 	KGlobal::locale()->insertCatalogue("kicker");
 	return new KeyModule(parent, "kcmkeys");
@@ -168,7 +168,7 @@ extern "C"
 #define CTRL Qt::CTRL
 #define ALT Qt::ALT
 #include "../../klipper/klipperbindings.cpp"
-#include "../../kwin/kwinbindings.cpp"
+#include "../../twin/twinbindings.cpp"
 #define KICKER_ALL_BINDINGS
 #include "../../kicker/kicker/core/kickerbindings.cpp"
 #include "../../kicker/taskbar/taskbarbindings.cpp"

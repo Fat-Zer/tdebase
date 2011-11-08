@@ -384,7 +384,7 @@
 
 2004-06-26 Saturday 00:28  rich
 
-	* - Fix test program for kwin changes.
+	* - Fix test program for twin changes.
 
 2004-06-26 Saturday 00:10  rich
 
@@ -698,7 +698,7 @@
 
 2001-11-29 Thursday 19:23  rich
 
-	* Switch to taskmanager task popup menu instead of kwin (avoids
+	* Switch to taskmanager task popup menu instead of twin (avoids
 	  some problems)
 
 2001-11-25 Sunday 02:03  rich

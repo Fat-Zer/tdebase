@@ -1,6 +1,6 @@
 #include <config.h>
 
-#include <kwin.h>
+#include <twin.h>
 #include "testwin.h"
 
 #ifdef HAVE_GLXCHOOSEVISUAL

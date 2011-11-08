@@ -1,11 +1,11 @@
 Id=trinity.0r1
-File=kwinrc
+File=twinrc
 Options=overwrite
 Script=pluginlibFix.pl,perl
 
 # Xinerama fixups
 Id=trinity.2Xinerama
-File=kwinrc,kdeglobals
+File=twinrc,kdeglobals
 Group=Windows
 Key=XineramaEnabled
 Key=XineramaMovementEnabled

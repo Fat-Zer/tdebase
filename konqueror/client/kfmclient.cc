@@ -44,7 +44,7 @@
 #include "kfmclient.h"
 #include "KonquerorIface_stub.h"
 #include "KDesktopIface_stub.h"
-#include "kwin.h"
+#include "twin.h"
 
 #include <X11/Xlib.h>
 

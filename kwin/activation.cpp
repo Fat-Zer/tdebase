@@ -609,7 +609,7 @@ bool Workspace::allowFullClientRaising( const Client* c, Time time )
 void Workspace::restoreFocus()
     {
     // this updateXTime() is necessary - as FocusIn events don't have
-    // a timestamp *sigh*, kwin's timestamp would be older than the timestamp
+    // a timestamp *sigh*, twin's timestamp would be older than the timestamp
     // that was used by whoever caused the focus change, and therefore
     // the attempt to restore the focus would fail due to old timestamp
     updateXTime();
@@ -663,7 +663,7 @@ void Workspace::unfakeActivity( Client* c )
 
 /*!
   Updates the user time (time of last action in the active window).
-  This is called inside  kwin for every action with the window
+  This is called inside  twin for every action with the window
   that qualifies for user interaction (clicking on it, activate it
   externally, etc.).
  */

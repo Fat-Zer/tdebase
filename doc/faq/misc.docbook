@@ -15,7 +15,7 @@
 <para>Does &kde; support transparency and other visual effects provided by the new composite extension to X.org?</para>
 </question>
 <answer>
-<para> Yes! An exciting new feature for &kde; 3.4 is support for the new X composite extension. This allows for effects such as translucency and drop shadows for all windows, easily configurable through &kwin;'s configuration dialog. This requires you to be using X.org version 6.8.0 or newer and have:
+<para> Yes! An exciting new feature for &kde; 3.4 is support for the new X composite extension. This allows for effects such as translucency and drop shadows for all windows, easily configurable through &twin;'s configuration dialog. This requires you to be using X.org version 6.8.0 or newer and have:
 
 <screen>
 Section "Extensions"

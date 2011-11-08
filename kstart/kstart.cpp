@@ -19,8 +19,8 @@
 #include <kdebug.h>
 #include <kprocess.h>
 #include <klocale.h>
-#include <kwin.h>
-#include <kwinmodule.h>
+#include <twin.h>
+#include <twinmodule.h>
 #include <kapplication.h>
 #include <kaboutdata.h>
 #include <kcmdlineargs.h>
@@ -43,7 +43,7 @@ static bool fullscreen = false;
 static unsigned long state = 0;
 static unsigned long mask = 0;
 static NET::WindowType windowtype = NET::Unknown;
-static KWinModule* kwinmodule;
+static KWinModule* twinmodule;
 
 KStart::KStart()
     :TQObject()
@@ -55,9 +55,9 @@ KStart::KStart()
         sendRule();
     else {
         // connect to window add to get the NEW windows
-        connect(kwinmodule, TQT_SIGNAL(windowAdded(WId)), TQT_SLOT(windowAdded(WId)));
+        connect(twinmodule, TQT_SIGNAL(windowAdded(WId)), TQT_SLOT(windowAdded(WId)));
         if (windowtitle != 0)
-    	    kwinmodule->doNotManage( windowtitle );
+    	    twinmodule->doNotManage( windowtitle );
     }
     // propagate the app startup notification info to the started app
     KStartupInfoId id;
@@ -97,7 +97,7 @@ void KStart::sendRule() {
         // accept only "normal" windows
         message += "types=" + TQCString().setNum( NET::NormalMask | NET::DialogMask ) + "\n";
     }
-    if ( ( desktop > 0 && desktop <= kwinmodule->numberOfDesktops() )
+    if ( ( desktop > 0 && desktop <= twinmodule->numberOfDesktops() )
          || desktop == NETWinInfo::OnAllDesktops ) {
 	message += "desktop=" + TQCString().setNum( desktop ) + "\ndesktoprule=3\n";
     }
@@ -206,7 +206,7 @@ void KStart::applyStyle(WId w ) {
 
     NETWinInfo info( qt_xdisplay(), w, qt_xrootwin(), NET::WMState );
 
-    if ( ( desktop > 0 && desktop <= kwinmodule->numberOfDesktops() )
+    if ( ( desktop > 0 && desktop <= twinmodule->numberOfDesktops() )
          || desktop == NETWinInfo::OnAllDesktops )
 	info.setDesktop( desktop );
 
@@ -312,13 +312,13 @@ int main( int argc, char *argv[] )
   for(int i=0; i < args->count(); i++)
     proc << args->arg(i);
 
-  kwinmodule = new KWinModule;
+  twinmodule = new KWinModule;
 
   desktop = args->getOption( "desktop" ).toInt();
   if ( args->isSet ( "alldesktops")  )
       desktop = NETWinInfo::OnAllDesktops;
   if ( args->isSet ( "currentdesktop")  )
-      desktop = kwinmodule->currentDesktop();
+      desktop = twinmodule->currentDesktop();
 
   windowtitle = args->getOption( "window" );
   windowclass = args->getOption( "windowclass" );

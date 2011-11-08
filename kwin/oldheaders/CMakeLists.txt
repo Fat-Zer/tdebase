@@ -10,5 +10,5 @@
 #################################################
 
 install( FILES
-    options.h client.h workspace.h kwinbutton.h
-  DESTINATION ${INCLUDE_INSTALL_DIR}/kwin )
+    options.h client.h workspace.h twinbutton.h
+  DESTINATION ${INCLUDE_INSTALL_DIR}/twin )

@@ -1,12 +1,12 @@
 [Desktop Entry]
 Icon=kcmkwm
 Type=Application
-Exec=kcmshell kwinfocus
+Exec=kcmshell twinfocus
 DocPath=kcontrol/windowmanagement/index.html#action-focus
 
 X-KDE-ModuleType=Library
-X-KDE-Library=kwinoptions
-X-KDE-FactoryName=kwinfocus
+X-KDE-Library=twinoptions
+X-KDE-FactoryName=twinfocus
 
 Name=Focus
 Name[af]=Fokus

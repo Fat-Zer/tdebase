@@ -3,7 +3,7 @@
  * Redmond KWin client
  *
  * Copyright 2001-2003
- *   Ported to kwin_iii by Chris Lee <clee@kde.org>
+ *   Ported to twin_iii by Chris Lee <clee@kde.org>
  *   Karol Szwed <gallium@kde.org>
  *   http://gallium.n3.net/
  *

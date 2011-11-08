@@ -23,12 +23,12 @@
 
 #include <kiconloader.h>
 #include <kconfig.h>
-#include <kwin.h>
+#include <twin.h>
 #include <kapplication.h>
 #include <kdebug.h>
 #include <kipc.h>
 #include <kpopupmenu.h>
-#include <kwinmodule.h>
+#include <twinmodule.h>
 #include <krootpixmap.h>
 
 #include <X11/X.h>
@@ -59,7 +59,7 @@ extern KDesktopApp *myApp;
 
 /**** KBackgroundManager ****/
 
-KBackgroundManager::KBackgroundManager(TQWidget *desktop, KWinModule* kwinModule)
+KBackgroundManager::KBackgroundManager(TQWidget *desktop, KWinModule* twinModule)
     : KBackgroundIface()
 {
     if( !properties_inited )
@@ -80,7 +80,7 @@ KBackgroundManager::KBackgroundManager(TQWidget *desktop, KWinModule* kwinModule
     m_Serial = 0; m_Hash = 0;
     m_pConfig = KGlobal::config();
     m_bExport = m_bCommon = m_bInit = false;
-    m_pKwinmodule = kwinModule;
+    m_pKwinmodule = twinModule;
     m_pPixmapServer = new KPixmapServer();
     m_xrootpmap = None;
 

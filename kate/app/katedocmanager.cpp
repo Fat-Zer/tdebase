@@ -40,7 +40,7 @@
 #include <kmessagebox.h>
 #include <kencodingfiledialog.h>
 #include <kio/job.h>
-#include <kwin.h>
+#include <twin.h>
 
 #include <tqdatetime.h>
 #include <tqtextcodec.h>

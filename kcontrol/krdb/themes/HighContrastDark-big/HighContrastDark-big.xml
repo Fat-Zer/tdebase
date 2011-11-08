@@ -121,21 +121,21 @@
     <linkColor rgb="#ffffff" object="global" />
     <visitedLinkColor rgb="#ffffff" object="global" />
     <alternateBackground rgb="#000028" object="global" />
-    <activeForeground rgb="#ffffff" object="kwin" />
-    <inactiveBackground rgb="#1e1e1e" object="kwin" />
-    <inactiveBlend rgb="#1e1e1e" object="kwin" />
-    <activeBackground rgb="#00005a" object="kwin" />
-    <activeBlend rgb="#00005a" object="kwin" />
-    <inactiveForeground rgb="#808080" object="kwin" />
-    <activeTitleBtnBg rgb="#ffffff" object="kwin" />
-    <inactiveTitleBtnBg rgb="#aaaaaa" object="kwin" />
-    <frame rgb="#000085" object="kwin" />
-    <inactiveFrame rgb="#1e1e1e" object="kwin" />
-    <handle rgb="#000085" object="kwin" />
-    <inactiveHandle rgb="#1e1e1e" object="kwin" />
+    <activeForeground rgb="#ffffff" object="twin" />
+    <inactiveBackground rgb="#1e1e1e" object="twin" />
+    <inactiveBlend rgb="#1e1e1e" object="twin" />
+    <activeBackground rgb="#00005a" object="twin" />
+    <activeBlend rgb="#00005a" object="twin" />
+    <inactiveForeground rgb="#808080" object="twin" />
+    <activeTitleBtnBg rgb="#ffffff" object="twin" />
+    <inactiveTitleBtnBg rgb="#aaaaaa" object="twin" />
+    <frame rgb="#000085" object="twin" />
+    <inactiveFrame rgb="#1e1e1e" object="twin" />
+    <handle rgb="#000085" object="twin" />
+    <inactiveHandle rgb="#1e1e1e" object="twin" />
   </colors>
   <cursors name="" />
-  <wm type="builtin" name="kwin3_plastik" >
+  <wm type="builtin" name="twin3_plastik" >
     <border size="3" />
   </wm>
   <konqueror>

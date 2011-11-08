@@ -19,16 +19,16 @@ extern "C"
 }
 
 
-// 'conf'	is a pointer to the kwindecoration modules open kwin config,
+// 'conf'	is a pointer to the twindecoration modules open twin config,
 //		and is by default set to the "Style" group.
 //
 // 'parent'	is the parent of the TQObject, which is a VBox inside the
-//		Configure tab in kwindecoration
+//		Configure tab in twindecoration
 
 ModernSysConfig::ModernSysConfig(KConfig* conf, TQWidget* parent) : TQObject(parent)
 {	
-	clientrc = new KConfig("kwinmodernsysrc");
-	KGlobal::locale()->insertCatalogue("kwin_clients");
+	clientrc = new KConfig("twinmodernsysrc");
+	KGlobal::locale()->insertCatalogue("twin_clients");
 	mainw = new TQWidget(parent);
 	vbox = new TQVBoxLayout(mainw);
 	vbox->setSpacing(6);

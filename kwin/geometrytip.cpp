@@ -14,7 +14,7 @@ namespace KWinInternal
 {
 
 GeometryTip::GeometryTip( const XSizeHints* xSizeHints, bool save_under ):
-    TQLabel(NULL, "kwingeometry" )
+    TQLabel(NULL, "twingeometry" )
     {
     setMargin(1);
     setIndent(0);

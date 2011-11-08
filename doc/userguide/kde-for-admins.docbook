@@ -1135,7 +1135,7 @@ at the time the session was saved.  Sessions are stored in the
 references to application-specific state information. The
 application-specific state information is saved in <filename
 class="directory">$<envar>KDEHOME</envar>/share/config/session</filename>.
-The state information of &kwin; contains the location of the application
+The state information of &twin; contains the location of the application
 windows of all the other applications in the session.
 </para>
 
@@ -1184,7 +1184,7 @@ class="username">root</systemitem>.</para>
 <varlistentry><term>$<envar>KDEWM</envar></term><listitem><para>If the
 <envar>KDEWM</envar> environment variable has been set, then it will
 be used as &kde;'s window manager within the
-<command>startkde</command> script instead of &kwin;.</para>
+<command>startkde</command> script instead of &twin;.</para>
 </listitem>
 </varlistentry>
 

@@ -21,7 +21,7 @@
 #include <kmessagebox.h>
 #include <kstandarddirs.h>
 #include <ktrader.h>
-#include <kwin.h>
+#include <twin.h>
 #include <dcopclient.h>
 
 #include <tqdir.h>

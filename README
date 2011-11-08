@@ -133,7 +133,7 @@ libraries. Here is an overview of the directories:
 * ktip
     Gives you tips how to use KDE.
 
-* kwin
+* twin
     The KDE window manager (moves, resizes and decorates windows).
 
 * kxkb

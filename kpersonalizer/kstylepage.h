@@ -44,7 +44,7 @@ private:
 	TQString origIcons;
 	TQString defaultKWinStyle;
 	TQString currentStyle;
-	KConfig* ckwin;
+	KConfig* ctwin;
 	struct colorSet {
 		TQString colorFile, bgMode;
 		int contrast;
@@ -96,9 +96,9 @@ private:
 	bool kde_hc_exist, kde_def_exist, kde_keramik_exist, kde_light_exist,
 		cde_exist, win_exist, platinum_exist, kde_plastik_exist;
 
-	// kwin-style-existence
-	bool kwin_keramik_exist, kwin_default_exist, kwin_system_exist,
-		kwin_win_exist, kwin_cde_exist, kwin_quartz_exist, kwin_plastik_exist;
+	// twin-style-existence
+	bool twin_keramik_exist, twin_default_exist, twin_system_exist,
+		twin_win_exist, twin_cde_exist, twin_quartz_exist, twin_plastik_exist;
 
 	// icon-theme-existence
 	bool icon_crystalsvg_exist, icon_kdeclassic_exist, icon_Locolor_exist;

@@ -43,7 +43,7 @@
 #include <kmimetype.h>
 #include <kstandarddirs.h>
 #include <kapplication.h>
-#include <kwin.h>
+#include <twin.h>
 #include <kemailsettings.h>
 #include <kdebug.h>
 #include <kstdguiitem.h>

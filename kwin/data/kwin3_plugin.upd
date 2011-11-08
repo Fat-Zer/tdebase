@@ -1,4 +1,4 @@
 Id=trinity.2
-File=kwinrc
+File=twinrc
 Options=overwrite
-Script=kwin3_plugin.pl,perl
+Script=twin3_plugin.pl,perl

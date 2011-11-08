@@ -43,7 +43,7 @@ KOSPage::KOSPage(TQWidget *parent, const char *name ) : KOSPageDlg(parent,name) 
 	// Set the configfiles
 	cglobal = new KConfig("kdeglobals");
 	claunch = new KConfig("klaunchrc", false, false);
-	cwin = new KConfig("kwinrc");
+	cwin = new KConfig("twinrc");
 	cdesktop = new KConfig("kdesktoprc");
 	ckcminput = new KConfig("kcminputrc");
 	ckcmdisplay = new KConfig("kcmdisplayrc");
@@ -92,8 +92,8 @@ void KOSPage::save(bool currSettings){
 	// Tell kdesktop about the new config file
 	kapp->dcopClient()->send("kdesktop", "KDesktopIface", "configure()", TQByteArray());
 	///////////////////////////////////////////
-	/// restart kwin  for window effects
-	kapp->dcopClient()->send("kwin*", "", "reconfigure()", TQString(""));
+	/// restart twin  for window effects
+	kapp->dcopClient()->send("twin*", "", "reconfigure()", TQString(""));
 	///////////////////////////////////////////
 	
 	// Make the kaccess daemon read the changed config file

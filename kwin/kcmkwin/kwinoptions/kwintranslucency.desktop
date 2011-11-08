@@ -1,12 +1,12 @@
 [Desktop Entry]
 Icon=kcmkwm
 Type=Application
-Exec=kcmshell kwintranslucency
+Exec=kcmshell twintranslucency
 DocPath=kcontrol/windowmanagement/index.html#action-translucency
 
 X-KDE-ModuleType=Library
-X-KDE-Library=kwinoptions
-X-KDE-FactoryName=kwintranslucency
+X-KDE-Library=twinoptions
+X-KDE-FactoryName=twintranslucency
 
 Name=Translucency
 Name[af]=Deursigtigheid

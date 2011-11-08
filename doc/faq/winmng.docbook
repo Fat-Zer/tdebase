@@ -10,14 +10,14 @@
 <title>The window manager</title>
 
 <para>The default window manager provided by &kde; is the K Window
-Manager (&kwin;).  Please read <quote>The
+Manager (&twin;).  Please read <quote>The
 K Window Manager Handbook</quote> (which should be accessible from the
 <application>&kde; Help Center</application>) for usage information.</para>
 
 <qandaset>
 <qandaentry>
 <question>
-<para>Are there keyboard shortcuts for &kwin; operations?</para>
+<para>Are there keyboard shortcuts for &twin; operations?</para>
 </question>
 <answer>
 <para>Yes.  Please refer to "The K Window Manager Handbook" for the
@@ -58,7 +58,7 @@ Iconified tasks will have their names displayed in gray.</para>
 </listitem>
 <listitem>
 <para>If you click the &MMB; on the root window (&ie;,
-the background of the desktop), &kwin; will give you a list
+the background of the desktop), &twin; will give you a list
 of all available tasks.</para>
 </listitem>
 </itemizedlist>

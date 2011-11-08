@@ -1,5 +1,5 @@
-Id=kwin_focus2
-File=kwinrc
+Id=twin_focus2
+File=twinrc
 Group=Windows
 Options=overwrite
-Script=kwin_focus2.sh,sh
+Script=twin_focus2.sh,sh

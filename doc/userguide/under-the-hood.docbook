@@ -381,13 +381,13 @@ the one with the <guiicon>Next Page</guiicon> picture on it.
 </step>
 <step>
 <para>In the <guilabel>Command/URL Settings</guilabel> tab, enter the
-command to run in the field: <userinput><command>dcop kwin default
+command to run in the field: <userinput><command>dcop twin default
 nextDesktop</command></userinput></para>
 </step>
 </procedure>
 
 <para>Repeat the above with the <keysym>Prev_Virtual_Screen</keysym> key and
-<userinput><command>dcop kwin default
+<userinput><command>dcop twin default
 previousDesktop</command></userinput>.</para>
 
 <para>Now pressing the <keysym>Prev_Virtual_Screen</keysym> or

@@ -565,7 +565,7 @@ void KTitleBarActionsConfig::save()
     config->sync();
     if ( !kapp->dcopClient()->isAttached() )
       kapp->dcopClient()->attach();
-    kapp->dcopClient()->send("kwin*", "", "reconfigure()", TQString(""));
+    kapp->dcopClient()->send("twin*", "", "reconfigure()", TQString(""));
   }
 }
 
@@ -839,7 +839,7 @@ void KWindowActionsConfig::save()
     config->sync();
     if ( !kapp->dcopClient()->isAttached() )
       kapp->dcopClient()->attach();
-    kapp->dcopClient()->send("kwin*", "", "reconfigure()", TQString(""));
+    kapp->dcopClient()->send("twin*", "", "reconfigure()", TQString(""));
   }
 }
 

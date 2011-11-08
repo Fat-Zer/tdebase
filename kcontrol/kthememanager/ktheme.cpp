@@ -127,9 +127,9 @@ TQString KTheme::createYourself( bool pack )
     // 2. Background theme
     KConfig * globalConf = KGlobal::config();
 
-    KConfig kwinConf( "kwinrc", true );
-    kwinConf.setGroup( "Desktops" );
-    uint numDesktops = kwinConf.readUnsignedNumEntry( "Number", 4 );
+    KConfig twinConf( "twinrc", true );
+    twinConf.setGroup( "Desktops" );
+    uint numDesktops = twinConf.readUnsignedNumEntry( "Number", 4 );
 
     KConfig desktopConf( "kdesktoprc", true );
     desktopConf.setGroup( "Background Common" );
@@ -205,9 +205,9 @@ TQString KTheme::createYourself( bool pack )
               << "messageboxQuestion";
 
     // 4.2 KWin sounds
-    KConfig * kwinSoundConf = new KConfig( "kwin.eventsrc", true );
-    TQStringList kwinEvents;
-    kwinEvents << "activate" << "close" << "delete" <<
+    KConfig * twinSoundConf = new KConfig( "twin.eventsrc", true );
+    TQStringList twinEvents;
+    twinEvents << "activate" << "close" << "delete" <<
         "desktop1" << "desktop2" << "desktop3" << "desktop4" <<
         "desktop5" << "desktop6" << "desktop7" << "desktop8" <<
         "maximize" << "minimize" << "moveend" << "movestart" <<
@@ -217,10 +217,10 @@ TQString KTheme::createYourself( bool pack )
 
     TQDomElement soundsElem = m_dom.createElement( "sounds" );
     createSoundList( stdEvents, "global", soundsElem, soundConf );
-    createSoundList( kwinEvents, "kwin", soundsElem, kwinSoundConf );
+    createSoundList( twinEvents, "twin", soundsElem, twinSoundConf );
     m_root.appendChild( soundsElem );
     delete soundConf;
-    delete kwinSoundConf;
+    delete twinSoundConf;
 
 
     // 5. Colors
@@ -236,13 +236,13 @@ TQString KTheme::createYourself( bool pack )
     for ( TQStringList::Iterator it = stdColors.begin(); it != stdColors.end(); ++it )
         createColorElem( ( *it ), "global", colorsElem, globalConf );
 
-    TQStringList kwinColors;
-    kwinColors << "activeForeground" << "inactiveBackground" << "inactiveBlend" << "activeBackground"
+    TQStringList twinColors;
+    twinColors << "activeForeground" << "inactiveBackground" << "inactiveBlend" << "activeBackground"
                << "activeBlend" << "inactiveForeground" << "activeTitleBtnBg" << "inactiveTitleBtnBg"
                << "frame" << "inactiveFrame" << "handle" << "inactiveHandle";
     globalConf->setGroup( "WM" );
-    for ( TQStringList::Iterator it = kwinColors.begin(); it != kwinColors.end(); ++it )
-        createColorElem( ( *it ), "kwin", colorsElem, globalConf );
+    for ( TQStringList::Iterator it = twinColors.begin(); it != twinColors.end(); ++it )
+        createColorElem( ( *it ), "twin", colorsElem, globalConf );
 
     m_root.appendChild( colorsElem );
 
@@ -256,19 +256,19 @@ TQString KTheme::createYourself( bool pack )
     // TODO copy the cursor theme?
 
     // 7. KWin
-    kwinConf.setGroup( "Style" );
+    twinConf.setGroup( "Style" );
     TQDomElement wmElem = m_dom.createElement( "wm" );
-    wmElem.setAttribute( "name", kwinConf.readEntry( "PluginLib" ) );
-    wmElem.setAttribute( "type", "builtin" );    // TODO support pixmap themes when the kwin client gets ported
-    if ( kwinConf.readBoolEntry( "CustomButtonPositions" )  )
+    wmElem.setAttribute( "name", twinConf.readEntry( "PluginLib" ) );
+    wmElem.setAttribute( "type", "builtin" );    // TODO support pixmap themes when the twin client gets ported
+    if ( twinConf.readBoolEntry( "CustomButtonPositions" )  )
     {
         TQDomElement buttonsElem = m_dom.createElement( "buttons" );
-        buttonsElem.setAttribute( "left", kwinConf.readEntry( "ButtonsOnLeft" ) );
-        buttonsElem.setAttribute( "right", kwinConf.readEntry( "ButtonsOnRight" ) );
+        buttonsElem.setAttribute( "left", twinConf.readEntry( "ButtonsOnLeft" ) );
+        buttonsElem.setAttribute( "right", twinConf.readEntry( "ButtonsOnRight" ) );
         wmElem.appendChild( buttonsElem );
     }
     TQDomElement borderElem = m_dom.createElement( "border" );
-    borderElem.setAttribute( "size", kwinConf.readNumEntry( "BorderSize", 1 ) );
+    borderElem.setAttribute( "size", twinConf.readNumEntry( "BorderSize", 1 ) );
     wmElem.appendChild( borderElem );
     m_root.appendChild( wmElem );
 
@@ -493,7 +493,7 @@ void KTheme::apply()
     if ( !soundsElem.isNull() )
     {
         KConfig soundConf( "knotify.eventsrc" );
-        KConfig kwinSoundConf( "kwin.eventsrc" );
+        KConfig twinSoundConf( "twin.eventsrc" );
         TQDomNodeList eventList = soundsElem.elementsByTagName( "event" );
         for ( uint i = 0; i < eventList.count(); i++ )
         {
@@ -506,18 +506,18 @@ void KTheme::apply()
                 soundConf.writeEntry( "soundfile", unprocessFilePath( "sounds", eventElem.attribute( "url" ) ) );
                 soundConf.writeEntry( "presentation", soundConf.readNumEntry( "presentation" ) | 1 );
             }
-            else if ( object == "kwin" )
+            else if ( object == "twin" )
             {
-                kwinSoundConf.setGroup( eventElem.attribute( "name" ) );
-                kwinSoundConf.writeEntry( "soundfile", unprocessFilePath( "sounds", eventElem.attribute( "url" ) ) );
-                kwinSoundConf.writeEntry( "presentation", soundConf.readNumEntry( "presentation" ) | 1 );
+                twinSoundConf.setGroup( eventElem.attribute( "name" ) );
+                twinSoundConf.writeEntry( "soundfile", unprocessFilePath( "sounds", eventElem.attribute( "url" ) ) );
+                twinSoundConf.writeEntry( "presentation", soundConf.readNumEntry( "presentation" ) | 1 );
             }
         }
 
         soundConf.sync();
-        kwinSoundConf.sync();
+        twinSoundConf.sync();
         client->send("knotify", "", "reconfigure()", TQString(""));
-        // TODO signal kwin sounds change?
+        // TODO signal twin sounds change?
     }
 
     // 5. Colors
@@ -538,7 +538,7 @@ void KTheme::apply()
             TQString object = colorElem.attribute( "object" );
             if ( object == "global" )
                 colorConf->setGroup( "General" );
-            else if ( object == "kwin" )
+            else if ( object == "twin" )
                 colorConf->setGroup( "WM" );
 
             TQString colName = colorElem.tagName();
@@ -573,27 +573,27 @@ void KTheme::apply()
 
     if ( !wmElem.isNull() )
     {
-        KConfig kwinConf( "kwinrc" );
-        kwinConf.setGroup( "Style" );
+        KConfig twinConf( "twinrc" );
+        twinConf.setGroup( "Style" );
         TQString type = wmElem.attribute( "type" );
         if ( type == "builtin" )
-            kwinConf.writeEntry( "PluginLib", wmElem.attribute( "name" ) );
+            twinConf.writeEntry( "PluginLib", wmElem.attribute( "name" ) );
         //else // TODO support custom themes
         TQDomNodeList buttons = wmElem.elementsByTagName ("buttons");
         if ( buttons.count() > 0 )
         {
-            kwinConf.writeEntry( "CustomButtonPositions", true );
-            kwinConf.writeEntry( "ButtonsOnLeft", getProperty( wmElem, "buttons", "left" ) );
-            kwinConf.writeEntry( "ButtonsOnRight", getProperty( wmElem, "buttons", "right" ) );
+            twinConf.writeEntry( "CustomButtonPositions", true );
+            twinConf.writeEntry( "ButtonsOnLeft", getProperty( wmElem, "buttons", "left" ) );
+            twinConf.writeEntry( "ButtonsOnRight", getProperty( wmElem, "buttons", "right" ) );
         }
         else
         {
-            kwinConf.writeEntry( "CustomButtonPositions", false );
+            twinConf.writeEntry( "CustomButtonPositions", false );
         }
-        kwinConf.writeEntry( "BorderSize", getProperty( wmElem, "border", "size" ) );
+        twinConf.writeEntry( "BorderSize", getProperty( wmElem, "border", "size" ) );
 
-        kwinConf.sync();
-        client->send( "kwin", "", "reconfigure()", TQString("") );
+        twinConf.sync();
+        client->send( "twin", "", "reconfigure()", TQString("") );
     }
 
     // 8. Konqueror

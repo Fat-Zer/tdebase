@@ -26,7 +26,7 @@
 #include <qprogressbar.h>
 #include <qlabel.h>
 
-#include <kwin.h>
+#include <twin.h>
 #include <kiconloader.h>
 
 #include <klocale.h>

@@ -57,10 +57,10 @@ int main(int argc, char **argv)
         return(2);
     }
 
-    TQStringList appDirs = KGlobal::dirs()->findDirs("data", "kwin");
+    TQStringList appDirs = KGlobal::dirs()->findDirs("data", "twin");
     TQString localDirStr = *(appDirs.end());
     if(localDirStr.isEmpty()){
-        localDirStr = KGlobal::dirs()->saveLocation("data", "kwin");
+        localDirStr = KGlobal::dirs()->saveLocation("data", "twin");
     }
     localDirStr += "/pics/";
     if(!TQFile::exists(localDirStr))

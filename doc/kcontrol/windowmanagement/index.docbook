@@ -32,7 +32,7 @@ some windows.</para>
 
 <note>
 <para>Please note that this configuration will not take effect if you
-do not use &kwin; as your window manager. If you do use a different
+do not use &twin; as your window manager. If you do use a different
 window manager, please refer to its documentation for how to customize
 window behavior.</para>
 </note>

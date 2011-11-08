@@ -27,7 +27,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <kdatepicker.h>
 #include <kiconloader.h>
 #include <klocale.h>
-#include <kwin.h>
+#include <twin.h>
 #include <netwm.h>
 
 DatePicker::DatePicker(TQWidget *parent, const TQDate& date, Prefs* _prefs)

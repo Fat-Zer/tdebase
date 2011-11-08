@@ -18,7 +18,7 @@
 #include <tqptrqueue.h>
 #include <tqmap.h>
 
-#include <kwinmodule.h>
+#include <twinmodule.h>
 #include <kdebug.h>
 
 #include "kxkbconfig.h"

@@ -28,7 +28,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <kapplication.h>
 #include <kdebug.h>
 #include <kiconloader.h>
-#include <kwindowlistmenu.h>
+#include <twindowlistmenu.h>
 
 #include <X11/X.h>
 #include <X11/Xlib.h>

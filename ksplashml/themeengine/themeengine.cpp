@@ -18,7 +18,7 @@
 #include <kconfig.h>
 #include <kdebug.h>
 #include <kglobal.h>
-#include <kwin.h>
+#include <twin.h>
 
 #include <tqevent.h>
 #include <tqfile.h>

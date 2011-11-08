@@ -23,12 +23,12 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #undef Bool // For enable-final
 #include <klocale.h>
-#include <kwinmodule.h>
+#include <twinmodule.h>
 #include <kdebug.h>
 #include <kconfig.h>
 #include <kprocess.h>
 #include <kshell.h>
-#include <kwin.h>
+#include <twin.h>
 #include <kstandarddirs.h>
 #include <kmessagebox.h>
 #include <kapplication.h>
@@ -57,8 +57,8 @@ DockBarExtension::DockBarExtension(const TQString& configFile, Type type,
   : KPanelExtension(configFile, type, actions, parent, name)
 {
     dragging_container = 0;
-    kwin_module = new KWinModule(TQT_TQOBJECT(this));
-    connect( kwin_module, TQT_SIGNAL( windowAdded(WId) ), TQT_SLOT( windowAdded(WId) ) );
+    twin_module = new KWinModule(TQT_TQOBJECT(this));
+    connect( twin_module, TQT_SIGNAL( windowAdded(WId) ), TQT_SLOT( windowAdded(WId) ) );
     setMinimumSize(DockContainer::sz(), DockContainer::sz());
     tqsetSizePolicy(TQSizePolicy::Expanding, TQSizePolicy::Expanding);
     loadContainerConfig();
@@ -154,8 +154,8 @@ void DockBarExtension::windowAdded(WId win)
         kdDebug() << "Could not read XClassHint of window " << win << endl;
         return;
     }
-    /* withdrawing the window prevents kwin from managing the window,
-       which causes the double-launch bug (one instance from the kwin 
+    /* withdrawing the window prevents twin from managing the window,
+       which causes the double-launch bug (one instance from the twin 
        session, and one from the dockbar) bug when kde is restarted */
     if (resIconwin != win) {
         XWithdrawWindow( qt_xdisplay(), win, qt_xscreen() );

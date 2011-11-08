@@ -58,7 +58,7 @@
 #include <kmessagebox.h>
 #include <kstandarddirs.h>
 #include <kcombobox.h>
-#include <kwin.h>
+#include <twin.h>
 #include <kdebug.h>
 #include <kuser.h>
 #include <kurllabel.h>

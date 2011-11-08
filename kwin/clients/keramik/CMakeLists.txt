@@ -13,7 +13,7 @@ add_subdirectory( config )
 
 include_directories(
   ${CMAKE_CURRENT_BINARY_DIR}
-  ${CMAKE_SOURCE_DIR}/kwin/lib
+  ${CMAKE_SOURCE_DIR}/twin/lib
   ${TDE_INCLUDE_DIR}
   ${TQT_INCLUDE_DIRS}
 )
@@ -25,15 +25,15 @@ link_directories(
 
 ##### other data ################################
 
-install( FILES keramik.desktop DESTINATION ${DATA_INSTALL_DIR}/kwin )
+install( FILES keramik.desktop DESTINATION ${DATA_INSTALL_DIR}/twin )
 
 
-##### kwin3_keramik (module) ####################
+##### twin3_keramik (module) ####################
 
 set_source_files_properties( keramik.cpp
   PROPERTIES OBJECT_DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/tiles.h )
 
-tde_add_kpart( kwin3_keramik AUTOMOC
+tde_add_kpart( twin3_keramik AUTOMOC
   SOURCES keramik.cpp
   LINK tdecorations-shared tdeui-shared
   DESTINATION ${PLUGIN_INSTALL_DIR}

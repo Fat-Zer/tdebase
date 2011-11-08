@@ -33,7 +33,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <klocale.h>
 // #include <kpixmapio.h>
 #include <kstaticdeleter.h>
-#include <kwinmodule.h>
+#include <twinmodule.h>
 #include <kxerrorhandler.h>
 #include <netwm.h>
 

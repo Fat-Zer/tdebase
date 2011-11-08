@@ -23,7 +23,7 @@ PluginMgr::PluginMgr()
     : KDecorationPlugins( KGlobal::config())
     {
     defaultPlugin = (TQPixmap::defaultDepth() > 8) ?
-            "kwin3_plastik" : "kwin3_quartz";
+            "twin3_plastik" : "twin3_quartz";
     loadPlugin( "" ); // load the plugin specified in cfg file
     }
 

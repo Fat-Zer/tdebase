@@ -13,7 +13,7 @@ add_definitions( -DKCMRULES )
 
 include_directories(
   ${CMAKE_CURRENT_BINARY_DIR}
-  ${CMAKE_SOURCE_DIR}/kwin/lib
+  ${CMAKE_SOURCE_DIR}/twin/lib
   ${TDE_INCLUDE_DIR}
   ${TQT_INCLUDE_DIRS}
 )
@@ -24,30 +24,30 @@ link_directories(
 
 ##### other data ################################
 
-install( FILES kwinrules.desktop DESTINATION ${XDG_APPS_INSTALL_DIR} )
+install( FILES twinrules.desktop DESTINATION ${XDG_APPS_INSTALL_DIR} )
 
 
-##### kcm_kwinrules (module) ####################
+##### kcm_twinrules (module) ####################
 
-tde_add_kpart( kcm_kwinrules AUTOMOC
+tde_add_kpart( kcm_twinrules AUTOMOC
   SOURCES kcm.cpp
-  LINK kwinrules-static
+  LINK twinrules-static
   DESTINATION ${PLUGIN_INSTALL_DIR} )
 
 
-##### kwin_rules_dialog (tdeinit) ###############
+##### twin_rules_dialog (tdeinit) ###############
 
-tde_add_tdeinit_executable( kwin_rules_dialog
+tde_add_tdeinit_executable( twin_rules_dialog
   SOURCES main.cpp
-  LINK ${TQT_LIBRARIES} kwinrules-static )
+  LINK ${TQT_LIBRARIES} twinrules-static )
 
 
-##### kwinrules (static) ########################
+##### twinrules (static) ########################
 
-set( target kwinrules )
+set( target twinrules )
 
 set( ${target}_SRCS
-  ruleswidget.cpp ruleslist.cpp kwinsrc.cpp detectwidget.cpp
+  ruleswidget.cpp ruleslist.cpp twinsrc.cpp detectwidget.cpp
   ruleswidgetbase.ui ruleslistbase.ui detectwidgetbase.ui
   editshortcutbase.ui )
 

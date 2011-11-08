@@ -59,7 +59,7 @@ class TopLevel : public KMainWindow, public KSGRD::SensorClient, public DCOPObje
   void initStatusBar();
 
   k_dcop:
-    // calling ksysguard with kwin/kicker hot-key
+    // calling ksysguard with twin/kicker hot-key
     ASYNC showProcesses();
     ASYNC showOnCurrentDesktop();
     ASYNC loadWorkSheet( const TQString &fileName );

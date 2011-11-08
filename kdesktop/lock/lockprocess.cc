@@ -42,8 +42,8 @@
 #include <kstdguiitem.h>
 #include <kpixmapeffect.h>
 #include <kpixmap.h>
-#include <kwin.h>
-#include <kwinmodule.h>
+#include <twin.h>
+#include <twinmodule.h>
 #include <kdialog.h>
 
 #include <tqframe.h>

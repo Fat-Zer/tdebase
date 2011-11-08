@@ -43,8 +43,8 @@
 #include <kstdaction.h>
 #include <kstandarddirs.h>
 #include <kurldrag.h>
-#include <kwin.h>
-#include <kwinmodule.h>
+#include <twin.h>
+#include <twinmodule.h>
 
 #include <fixx11h.h>
 

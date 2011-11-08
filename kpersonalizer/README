@@ -105,7 +105,7 @@ MacOS:
 - Mac- Keyboard-Scheme
 - use 2 clipboards for c&p (keyboard/mouse) (default)
 - Window-Behavior -> Focus on click
-- Titlebar doubleclick -> Shade (for now. MacOS X has Minimize but this isn't offered by kwin yet)
+- Titlebar doubleclick -> Shade (for now. MacOS X has Minimize but this isn't offered by twin yet)
 - Menubar on top
 - WindowList-menu on MMB
 - Walk trough windows mode: KDE

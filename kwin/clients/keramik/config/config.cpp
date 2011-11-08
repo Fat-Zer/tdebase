@@ -41,18 +41,18 @@ extern "C"
 
 
 /* NOTE: 
- * 'conf' 	is a pointer to the kwindecoration modules open kwin config,
+ * 'conf' 	is a pointer to the twindecoration modules open twin config,
  *			and is by default set to the "Style" group.
  *
  * 'parent'	is the parent of the TQObject, which is a VBox inside the
- *			Configure tab in kwindecoration
+ *			Configure tab in twindecoration
  */
 
 KeramikConfig::KeramikConfig( KConfig* conf, TQWidget* parent )
 	: TQObject( parent )
 {
-	KGlobal::locale()->insertCatalogue("kwin_clients");
-	c = new KConfig( "kwinkeramikrc" );
+	KGlobal::locale()->insertCatalogue("twin_clients");
+	c = new KConfig( "twinkeramikrc" );
 	
 	ui = new KeramikConfigUI( parent );
 	connect( ui->showAppIcons,    TQT_SIGNAL(clicked()), TQT_SIGNAL(changed()) );
@@ -72,8 +72,8 @@ KeramikConfig::~KeramikConfig()
 }
 
 
-// Loads the configurable options from the kwinrc config file
-// It is passed the open config from kwindecoration to improve efficiency
+// Loads the configurable options from the twinrc config file
+// It is passed the open config from twindecoration to improve efficiency
 void KeramikConfig::load( KConfig* )
 {
 	c->setGroup("General");
@@ -84,7 +84,7 @@ void KeramikConfig::load( KConfig* )
 }
 
 
-// Saves the configurable options to the kwinrc config file
+// Saves the configurable options to the twinrc config file
 void KeramikConfig::save( KConfig* )
 {
 	c->setGroup( "General" );

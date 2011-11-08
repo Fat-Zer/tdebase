@@ -911,9 +911,9 @@ bool KSMServer::isWM( const TQString& program ) const
 {
     // KWin relies on ksmserver's special treatment in phase1,
     // therefore make sure it's recognized even if ksmserver
-    // was initially started with different WM, and kwin replaced
+    // was initially started with different WM, and twin replaced
     // it later
-    return ((program == wm) || (program == "kwin"));
+    return ((program == wm) || (program == "twin"));
 }
 
 bool KSMServer::isCM( const KSMClient* client ) const

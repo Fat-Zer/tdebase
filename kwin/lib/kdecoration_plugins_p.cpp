@@ -42,7 +42,7 @@ KDecorationPlugins::KDecorationPlugins( KConfig* cfg )
         fact( NULL ),
         old_library( NULL ),
         old_fact( NULL ),
-        pluginStr( "kwin3_undefined " ),
+        pluginStr( "twin3_undefined " ),
         config( cfg )
     {
     }
@@ -98,9 +98,9 @@ bool KDecorationPlugins::loadPlugin( TQString nameStr )
         KConfigGroupSaver saver( config, "Style" );
         nameStr = config->readEntry("PluginLib", defaultPlugin );
         }
-    // make sure people can switch between HEAD and kwin_iii branch
-    if( nameStr.startsWith( "kwin_" ))
-	nameStr = "kwin3_" + nameStr.mid( 5 );
+    // make sure people can switch between HEAD and twin_iii branch
+    if( nameStr.startsWith( "twin_" ))
+	nameStr = "twin3_" + nameStr.mid( 5 );
 
     KLibrary *oldLibrary = library;
     KDecorationFactory* oldFactory = fact;
@@ -114,7 +114,7 @@ bool KDecorationPlugins::loadPlugin( TQString nameStr )
         path = KLibLoader::findLibrary(TQFile::encodeName(nameStr));
         }
 
-    // If no library was found, exit kwin with an error message
+    // If no library was found, exit twin with an error message
     if (path.isEmpty())
         {
         error( i18n("No window decoration plugin library was found." ));
@@ -167,14 +167,14 @@ bool KDecorationPlugins::loadPlugin( TQString nameStr )
 
     // For clients in kdeartwork    
     TQString catalogue = nameStr;
-    catalogue.replace( "kwin3_", "kwin_" );
+    catalogue.replace( "twin3_", "twin_" );
     KGlobal::locale()->insertCatalogue( catalogue );
     // For KCommonDecoration based clients
-    KGlobal::locale()->insertCatalogue( "kwin_lib" );
+    KGlobal::locale()->insertCatalogue( "twin_lib" );
     // For clients in kdebase
-    KGlobal::locale()->insertCatalogue( "kwin_clients" );
+    KGlobal::locale()->insertCatalogue( "twin_clients" );
     // For clients in kdeartwork
-    KGlobal::locale()->insertCatalogue( "kwin_art_clients" );
+    KGlobal::locale()->insertCatalogue( "twin_art_clients" );
 
     old_library = oldLibrary; // save for delayed destroying
     old_fact = oldFactory;

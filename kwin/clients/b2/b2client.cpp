@@ -103,7 +103,7 @@ static void read_config(B2ClientFactory *f)
     buttonSize = (TQFontMetrics(options()->font(true)).height() + 1) & 0x3e;
     if (buttonSize < 16) buttonSize = 16;
 
-    KConfig conf("kwinb2rc");
+    KConfig conf("twinb2rc");
     conf.setGroup("General");
     colored_frame = conf.readBoolEntry("UseTitleBarBorderColors", false);
     do_draw_handle = conf.readBoolEntry("DrawGrabHandle", true);
@@ -167,7 +167,7 @@ static void drawB2Rect(KPixmap *pix, const TQColor &primary, bool down)
 
 }
 
-TQPixmap* kwin_get_menu_pix_hack()
+TQPixmap* twin_get_menu_pix_hack()
 {
     //return menu_pix;  FIXME
     return PIXMAP_A(P_MENU);

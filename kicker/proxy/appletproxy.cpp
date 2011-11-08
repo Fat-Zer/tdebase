@@ -40,7 +40,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <kaboutdata.h>
 #include <tqfileinfo.h>
 #include <dcopclient.h>
-#include <kwin.h>
+#include <twin.h>
 
 #include "appletinfo.h"
 

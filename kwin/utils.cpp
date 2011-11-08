@@ -47,8 +47,8 @@ namespace KWinInternal
 // used to store the return values of
 // XShapeQueryExtension.
 // Necessary since tqshaped window are an extension to X
-int Shape::kwin_tqshape_version = 0;
-int Shape::kwin_tqshape_event = 0;
+int Shape::twin_tqshape_version = 0;
+int Shape::twin_tqshape_event = 0;
 
 // does the window w  need a tqshape combine mask around it?
 bool Shape::hasShape( WId w)
@@ -66,19 +66,19 @@ bool Shape::hasShape( WId w)
 
 int Shape::tqshapeEvent()
     {
-    return kwin_tqshape_event;
+    return twin_tqshape_event;
     }
 
 void Shape::init()
     {
-    kwin_tqshape_version = 0;
+    twin_tqshape_version = 0;
     int dummy;
-    if( !XShapeQueryExtension(qt_xdisplay(), &kwin_tqshape_event, &dummy))
+    if( !XShapeQueryExtension(qt_xdisplay(), &twin_tqshape_event, &dummy))
         return;
     int major, minor;
     if( !XShapeQueryVersion( qt_xdisplay(), &major, &minor ))
         return;
-    kwin_tqshape_version = major * 0x10 + minor;
+    twin_tqshape_version = major * 0x10 + minor;
     }
 
 void Motif::readFlags( WId w, bool& noborder, bool& resize, bool& move,
@@ -263,7 +263,7 @@ void updateXTime()
     if ( !w )
         w = new TQWidget;
     long data = 1;
-    XChangeProperty(qt_xdisplay(), w->winId(), atoms->kwin_running, atoms->kwin_running, 32,
+    XChangeProperty(qt_xdisplay(), w->winId(), atoms->twin_running, atoms->twin_running, 32,
                     PropModeAppend, (unsigned char*) &data, 1);
     next_x_time = CurrentTime;
     XEvent dummy;

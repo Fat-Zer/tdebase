@@ -13,7 +13,7 @@ add_subdirectory( config )
 
 include_directories(
   ${CMAKE_CURRENT_BINARY_DIR}
-  ${CMAKE_SOURCE_DIR}/kwin/lib
+  ${CMAKE_SOURCE_DIR}/twin/lib
   ${TDE_INCLUDE_DIR}
   ${TQT_INCLUDE_DIRS}
 )
@@ -25,12 +25,12 @@ link_directories(
 
 ##### other data ################################
 
-install( FILES quartz.desktop DESTINATION ${DATA_INSTALL_DIR}/kwin )
+install( FILES quartz.desktop DESTINATION ${DATA_INSTALL_DIR}/twin )
 
 
-##### kwin3_quartz (module) #####################
+##### twin3_quartz (module) #####################
 
-tde_add_kpart( kwin3_quartz AUTOMOC
+tde_add_kpart( twin3_quartz AUTOMOC
   SOURCES quartz.cpp
   LINK tdecorations-shared tdeui-shared
   DESTINATION ${PLUGIN_INSTALL_DIR}

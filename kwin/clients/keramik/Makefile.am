@@ -10,18 +10,18 @@ embedtool_SOURCES         = embedtool.cpp
 embedtool_LDADD           = $(LIB_QT)
 embedtool_LDFLAGS         = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_TDECORE) $(LIB_TDEUI) -ltdefx $(LIB_KIO) -lktexteditor
 
-kde_module_LTLIBRARIES    = kwin3_keramik.la
+kde_module_LTLIBRARIES    = twin3_keramik.la
 
-kwin3_keramik_la_SOURCES   = keramik.cpp
-kwin3_keramik_la_COMPILE_FIRST = tiles.h
-kwin3_keramik_la_LDFLAGS   = $(all_libraries) $(KDE_PLUGIN) -module
-kwin3_keramik_la_LIBADD    = $(LIB_TDEUI) ../../lib/libtdecorations.la
-#kwin3_keramik_la_LDFLAGS   = $(all_libraries) -avoid-version -module $(KDE_RPATH) $(KDE_MT_LDFLAGS)
+twin3_keramik_la_SOURCES   = keramik.cpp
+twin3_keramik_la_COMPILE_FIRST = tiles.h
+twin3_keramik_la_LDFLAGS   = $(all_libraries) $(KDE_PLUGIN) -module
+twin3_keramik_la_LIBADD    = $(LIB_TDEUI) ../../lib/libtdecorations.la
+#twin3_keramik_la_LDFLAGS   = $(all_libraries) -avoid-version -module $(KDE_RPATH) $(KDE_MT_LDFLAGS)
 
 METASOURCES               = AUTO
 noinst_headers        	  = keramik.h tiles.h
 
-lnkdir                    = $(kde_datadir)/kwin
+lnkdir                    = $(kde_datadir)/twin
 lnk_DATA                  = keramik.desktop
 
 EXTRA_DIST                = $(lnk_DATA)

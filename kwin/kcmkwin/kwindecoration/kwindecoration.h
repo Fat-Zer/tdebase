@@ -1,14 +1,14 @@
 /*
-	This is the new kwindecoration kcontrol module
+	This is the new twindecoration kcontrol module
 
 	Copyright (c) 2001
 		Karol Szwed <gallium@kde.org>
 		http://gallium.n3.net/
 
-	Supports new kwin configuration plugins, and titlebar button position
+	Supports new twin configuration plugins, and titlebar button position
 	modification via dnd interface.
 
-	Based on original "kwintheme" (Window Borders) 
+	Based on original "twintheme" (Window Borders) 
 	Copyright (C) 2001 Rik Hemsley (rikkus) <rik@kde.org>
 
     This program is free software; you can redistribute it and/or modify
@@ -38,7 +38,7 @@
 
 #include <kdecoration.h>
 
-#include "kwindecorationIface.h"
+#include "twindecorationIface.h"
 
 class KComboBox;
 class TQCheckBox;
@@ -109,7 +109,7 @@ class KWinDecorationModule : public KCModule, virtual public KWinDecorationIface
 
 		KDecorationPreview* preview;
 		KDecorationPlugins* plugins;
-		KConfig kwinConfig;
+		KConfig twinConfig;
 
 		TQCheckBox* cbUseCustomButtonPositions;
 	//	TQCheckBox* cbUseMiniWindows;

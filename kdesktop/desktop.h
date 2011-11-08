@@ -96,7 +96,7 @@ public:
 
   void logout( KApplication::ShutdownConfirm confirm, KApplication::ShutdownType sdtype );
 
-  KWinModule* kwinModule() const { return m_pKwinmodule; }
+  KWinModule* twinModule() const { return m_pKwinmodule; }
 
   // The action collection of the active widget
   KActionCollection *actionCollection();
@@ -153,7 +153,7 @@ private slots:
   /** Connected to KDIconView and KRootWidget  */
   void slotSwitchDesktops(int delta);
 
-  // when there seems to be no kicker, we have to get desktopIconsArea from kwinModule
+  // when there seems to be no kicker, we have to get desktopIconsArea from twinModule
   void slotNoKicker();
 
   /** Used for desktop show/hide functionality */
