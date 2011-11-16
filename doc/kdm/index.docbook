@@ -126,7 +126,7 @@ the next step</para>
 <filename>~/.xinitrc</filename> to start your preferred window manager
 or desktop environment.</para>
 <para>For &kde; you should enter:</para>
-<screen><userinput>startkde</userinput></screen>
+<screen><userinput>starttde</userinput></screen>
 <para>For other window managers or desktop environments, you should
 look in their documentation for the correct command.</para>
 </step>

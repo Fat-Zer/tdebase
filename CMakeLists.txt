@@ -107,7 +107,7 @@ option( BUILD_TDESU "Build tdesu" ${BUILD_ALL} )
 option( BUILD_KDM "Build kdm" ${BUILD_ALL} )
 option( BUILD_KSMSERVER "Build ksmserver" ${BUILD_ALL} )
 option( BUILD_KSPLASHML "Build ksplashml" ${BUILD_ALL} )
-option( BUILD_STARTKDE "Build startkde" ${BUILD_ALL} )
+option( BUILD_STARTKDE "Build starttde" ${BUILD_ALL} )
 option( BUILD_KFIND "Build kfind" ${BUILD_ALL} )
 option( BUILD_DRKONQI "Build drkonqi" ${BUILD_ALL} )
 option( BUILD_KDCOP "Build kdcop" ${BUILD_ALL} )
@@ -201,10 +201,10 @@ tde_conditional_add_subdirectory( BUILD_TSAK tsak )
 tde_conditional_add_subdirectory( BUILD_KROOTBACKING krootbacking )
 tde_conditional_add_subdirectory( BUILD_TQT3INTEGRATION tqt3integration ) 
 
-##### install startkde & related stuff ##########
+##### install starttde & related stuff ##########
 
 if( BUILD_STARTKDE )
-  install( PROGRAMS startkde DESTINATION ${BIN_INSTALL_DIR} )
+  install( PROGRAMS starttde DESTINATION ${BIN_INSTALL_DIR} )
 endif()
 
 

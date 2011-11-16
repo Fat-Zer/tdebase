@@ -1,8 +1,8 @@
 [Desktop Entry]
 Encoding=UTF-8
 Type=XSession
-Exec=@TDE_BINDIR@/startkde
-TryExec=@TDE_BINDIR@/startkde
+Exec=@TDE_BINDIR@/starttde
+TryExec=@TDE_BINDIR@/starttde
 Name=Trinity
 Name[hi]=केडीई
 Name[mn]=КДЭ

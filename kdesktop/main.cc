@@ -279,7 +279,7 @@ extern "C" KDE_EXPORT int kdemain( int argc, char **argv )
        myApp->config()->reparseConfiguration();
     }
 
-    // for the KDE-already-running check in startkde
+    // for the KDE-already-running check in starttde
     KSelectionOwner kde_running( "_KDE_RUNNING", 0 );
     kde_running.claim( false );
 

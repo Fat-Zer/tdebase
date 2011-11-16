@@ -231,7 +231,7 @@ extern "C" KDE_EXPORT int kdemain(int argc, char *argv[])
   }
   close( ready[ 0 ] );
 
-  startup = ( strcmp( argv[ 0 ], "kcminit_startup" ) == 0 ); // started from startkde?
+  startup = ( strcmp( argv[ 0 ], "kcminit_startup" ) == 0 ); // started from starttde?
 
   KLocale::setMainCatalogue("kcontrol");
   KAboutData aboutData( "kcminit", I18N_NOOP("KCMInit"),

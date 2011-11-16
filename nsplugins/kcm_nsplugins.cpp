@@ -90,7 +90,7 @@ extern "C"
     {
         KConfig *config = new KConfig("kcmnspluginrc", true /* readonly */, false /* no globals*/);
         config->setGroup("Misc");
-        bool scan = config->readBoolEntry( "startkdeScan", false );
+        bool scan = config->readBoolEntry( "starttdeScan", false );
         bool firstTime = config->readBoolEntry( "firstTime", true );
         
         if( !scan )

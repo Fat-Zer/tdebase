@@ -329,7 +329,7 @@ void KSMServer::autoStart2()
     DCOPRef( "kcminit", "kcminit" ).send( "runPhase2" );
     if( !defaultSession())
         restoreLegacySession( KGlobal::config());
-    KNotifyClient::event( 0, "startkde" ); // this is the time KDE is up, more or less
+    KNotifyClient::event( 0, "starttde" ); // this is the time KDE is up, more or less
 }
 
 void KSMServer::autoStart2Done()

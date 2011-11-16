@@ -195,7 +195,7 @@ void KPluginOptions::load( bool useDefaults )
   config->setReadDefaults( useDefaults );
 
   config->setGroup("Misc");
-  m_widget->scanAtStartup->setChecked( config->readBoolEntry( "startkdeScan", false ) );
+  m_widget->scanAtStartup->setChecked( config->readBoolEntry( "starttdeScan", false ) );
 
   m_widget->dirEdit->setURL("");
   m_widget->dirEdit->setEnabled( false );
@@ -242,7 +242,7 @@ void KPluginOptions::save()
     pluginSave( config );
 
     config->setGroup("Misc");
-    config->writeEntry( "startkdeScan", m_widget->scanAtStartup->isChecked() );
+    config->writeEntry( "starttdeScan", m_widget->scanAtStartup->isChecked() );
     config->writeEntry( "HTTP URLs Only", enableHTTPOnly->isChecked() );
     config->writeEntry( "demandLoad", enableUserDemand->isChecked() );
     config->writeEntry("Nice Level", (int)(100 - priority->value()) / 5);

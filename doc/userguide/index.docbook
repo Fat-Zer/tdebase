@@ -357,8 +357,8 @@ programs here (and not links to removable media, like CDs).</para>
 </sect1info>
 
 <title>Logging In and Logging Out</title>
-<para>Basic KDM &amp; startkde stuff.</para>
-<!-- Not sure what exactly to say about startkde and where to say it -->
+<para>Basic KDM &amp; starttde stuff.</para>
+<!-- Not sure what exactly to say about starttde and where to say it -->
 <!-- (Phil) -->
 <para>There are two ways to log into &kde;: graphically and via the
 command line. We'll look at them both briefly:</para>
@@ -382,12 +382,12 @@ it is done, &kde; will be ready to use.</para>
 
 <sect2 id="logging-in-via-cmdline">
 <title>Logging in via the Command Line</title>
-<indexterm><primary><command>startkde</command></primary></indexterm>
+<indexterm><primary><command>starttde</command></primary></indexterm>
 <indexterm><primary><command>startx</command></primary></indexterm>
 
 <para>If you prefer using the command line, you can log in to &kde;
 with the <command>startx</command> command. Add the line
-<userinput>exec startkde</userinput> to the
+<userinput>exec starttde</userinput> to the
 <filename>.xinitrc</filename> file in your home folder (create it
 if it does not exist), save the file, and then run
 <command>startx</command>. &kde; should start in the same way as if

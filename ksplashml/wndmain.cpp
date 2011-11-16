@@ -348,7 +348,7 @@ ThemeEngine *KSplash::_loadThemeEngine( const TQString& pluginName, const TQStri
 {
   // Since we may be called before the DCOP server is active, we cannot use the KTrader framework for obtaining plugins. In its
   // place, we use the following naive heuristic to locate plugins. If we are not in managed mode, and we are not in testing mode
-  // either, we assume that we have been called by startkde. In this case, we simply try to load the library whose name should
+  // either, we assume that we have been called by starttde. In this case, we simply try to load the library whose name should
   // conform to the following specification:
   //       TQString("ksplash") + pluginName.lower()
   // The object should be called as follows:

@@ -192,7 +192,7 @@ ProcessList::ProcessList(TQWidget *parent, const char* name)
 		aliases.insert("kwrapper", new TQString("kdeapp"));
 		aliases.insert("kwrited", new TQString("kdeapp"));
 		aliases.insert("kxmlrpcd", new TQString("kdeapp"));
-		aliases.insert("startkde", new TQString("kdeapp"));
+		aliases.insert("starttde", new TQString("kdeapp"));
 		/* other processes */
 		aliases.insert("bash", new TQString("shell"));
 		aliases.insert("cat", new TQString("tools"));

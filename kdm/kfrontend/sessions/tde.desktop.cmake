@@ -1,8 +1,8 @@
 [Desktop Entry]
 Encoding=UTF-8
 Type=XSession
-Exec=@TDE_BIN_DIR@/startkde
-TryExec=@TDE_BIN_DIR@/startkde
+Exec=@TDE_BIN_DIR@/starttde
+TryExec=@TDE_BIN_DIR@/starttde
 Name=TDE
 Name[hi]=केडीई
 Name[mn]=КДЭ

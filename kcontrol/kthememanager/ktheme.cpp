@@ -200,7 +200,7 @@ TQString KTheme::createYourself( bool pack )
     KConfig * soundConf = new KConfig( "knotify.eventsrc", true );
     TQStringList stdEvents;
     stdEvents << "cannotopenfile" << "catastrophe" << "exitkde" << "fatalerror"
-              << "notification" << "printerror" << "startkde" << "warning"
+              << "notification" << "printerror" << "starttde" << "warning"
               << "messageCritical" << "messageInformation" << "messageWarning"
               << "messageboxQuestion";
 
