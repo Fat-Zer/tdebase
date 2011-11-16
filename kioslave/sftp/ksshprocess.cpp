@@ -19,7 +19,7 @@
  * See the KSshProcess header for examples on use.
  *
  * This class uses a hacked version of the PTYProcess
- * class.  This was needed because the kdelibs PTYProcess does not provide 
+ * class.  This was needed because the tdelibs PTYProcess does not provide 
  * access to the pty file descriptor which we need, because ssh prints the
  * password prompt to the pty and reads the password from the pty.  I don't
  * feel I know enough about ptys to confidently modify the orignial

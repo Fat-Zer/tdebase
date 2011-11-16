@@ -49,7 +49,7 @@ be considered a security risk).</para>
 <sect1 id="konq-plugin">
 <title>&konqueror; Plugins</title>
 
-<para>The package kdeaddons contains several useful plugins that interact with
+<para>The package tdeaddons contains several useful plugins that interact with
 &konqueror; in various ways. These are explained briefly below, more detailed 
 information may be obtained by looking through the <guimenuitem>Konqueror 
 Plugins</guimenuitem> section in the &kde; Help Center.</para>

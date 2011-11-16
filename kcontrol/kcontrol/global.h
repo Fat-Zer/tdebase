@@ -39,7 +39,7 @@ public:
   static TQStringList types() { return _types; }
   static TQString userName() { return _uname; }
   static TQString hostName() { return _hname; }
-  static TQString kdeVersion() { return _kdeversion; }
+  static TQString kdeVersion() { return _tdeversion; }
   static TQString systemName() { return _isystem; }
   static TQString systemRelease() { return _irelease; }
   static TQString systemVersion() { return _iversion; }
@@ -53,7 +53,7 @@ public:
   static void setType(const TQCString& s);
   static void setUserName(const TQString& n){ _uname = n; }
   static void setHostName(const TQString& n){ _hname = n; }
-  static void setKDEVersion(const TQString& n){ _kdeversion = n; }
+  static void setKDEVersion(const TQString& n){ _tdeversion = n; }
   static void setSystemName(const TQString& n){ _isystem = n; }
   static void setSystemRelease(const TQString& n){ _irelease = n; }
   static void setSystemVersion(const TQString& n){ _iversion = n; }
@@ -67,7 +67,7 @@ private:
   static bool _root;
   static bool _infocenter;
   static TQStringList _types;
-  static TQString _uname, _hname, _isystem, _irelease, _iversion, _imachine, _kdeversion;
+  static TQString _uname, _hname, _isystem, _irelease, _iversion, _imachine, _tdeversion;
   static IndexViewMode _viewmode;
   static KIcon::StdSizes _iconsize;
   static TQString _baseGroup;

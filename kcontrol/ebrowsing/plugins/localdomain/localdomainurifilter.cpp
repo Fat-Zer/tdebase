@@ -33,7 +33,7 @@
 
 /**
  * IMPORTANT: If you change anything here, please run the regression test
- * kdelibs/kio/tests/kurifiltertest
+ * tdelibs/kio/tests/kurifiltertest
  */
  
 LocalDomainURIFilter::LocalDomainURIFilter( TQObject *parent, const char *name,

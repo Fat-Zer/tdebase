@@ -673,7 +673,7 @@ as sticky keys and slow keys.</para></listitem>
 
 <listitem><para>This module allows you to configure options that are
 specific to your location such as language, currency and date format. To
-make available more languages, install the kde-i18n packages for your
+make available more languages, install the tde-i18n packages for your
 distribution.</para></listitem>
 </varlistentry>
 

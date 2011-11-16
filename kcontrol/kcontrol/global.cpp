@@ -36,7 +36,7 @@ bool KCGlobal::_infocenter = false;
 TQStringList KCGlobal::_types;
 TQString KCGlobal::_uname = "";
 TQString KCGlobal::_hname = "";
-TQString KCGlobal::_kdeversion = "";
+TQString KCGlobal::_tdeversion = "";
 TQString KCGlobal::_isystem = "";
 TQString KCGlobal::_irelease = "";
 TQString KCGlobal::_iversion = "";

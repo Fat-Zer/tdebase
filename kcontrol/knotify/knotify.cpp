@@ -263,7 +263,7 @@ void PlayerSettingsDialog::load( bool useDefaults )
 
 void PlayerSettingsDialog::save()
 {
-    // see kdelibs/arts/knotify/knotify.cpp
+    // see tdelibs/arts/knotify/knotify.cpp
     KConfig config( "knotifyrc", false, false );
     config.setGroup( "Misc" );
 

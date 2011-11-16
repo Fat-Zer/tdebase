@@ -8,14 +8,14 @@ configure options that affect KDM
 ---------------------------------
 
 --with-pam[=service]
-  Compile KDM (and other parts of kdebase) with PAM support. The default
+  Compile KDM (and other parts of tdebase) with PAM support. The default
   service is "kde". PAM is automatically used if found.
 
 --with-kdm-pam=service
   Override the PAM service used specifically by KDM. Depends on --with-pam.
 
 --with-shadow
-  Compile KDM (and other parts of kdebase) with shadow password support.
+  Compile KDM (and other parts of tdebase) with shadow password support.
   Shadow passwords are automatically used if found. This affects KDM only
   if PAM is not used.
 
@@ -78,7 +78,7 @@ defaults if no previous installation is found.
 You can change the configuration from the KDE Control Center. You will
 find the "Login Manager" module in the "System Administration" group.
 
-Have a look at README.pam in the kdebase top level directory if your
+Have a look at README.pam in the tdebase top level directory if your
 system uses PAM.
 
 

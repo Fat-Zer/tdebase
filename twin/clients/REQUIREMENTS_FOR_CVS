@@ -3,7 +3,7 @@ follow the following requirements:
 
 A) You must follow the current color scheme for all decorations. *No* fixed
 pixmaps are allowed for the clients. If you wish to draw your decorations
-use as few shades as possible, then use kpixmap2bitmap in kdegraphics
+use as few shades as possible, then use kpixmap2bitmap in tdegraphics
 to convert them into individual bitmaps. Once this is done you can
 draw the bitmaps using a colorgroup with kColorBitmaps.
 

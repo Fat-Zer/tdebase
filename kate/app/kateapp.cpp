@@ -29,7 +29,7 @@
 
 #include "../interfaces/application.h"
 
-#include <kdeversion.h>
+#include <tdeversion.h>
 #include <kcmdlineargs.h>
 #include <dcopclient.h>
 #include <kconfig.h>

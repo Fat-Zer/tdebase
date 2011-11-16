@@ -48,7 +48,7 @@ icons will be used in: for example the desktop, toolbars &etc;
 <important><para>Please note that some of these settings may depend on
 your selected icon theme. &kde; comes with two icon themes by default,
 &kde;-Classic (HiColor) and Crystal SVG.  There is also a low color theme
-in the kdeartwork package, along with others.</para></important>
+in the tdeartwork package, along with others.</para></important>
 
 </sect2>
 
@@ -59,7 +59,7 @@ in the kdeartwork package, along with others.</para></important>
 in appearance depending on the icon theme you select. Most default
 installations will have only one icon theme available, the &kde; default
 Crystal SVG theme.  There are others contained separately in the
-kdeartwork package, and you can download more from the Internet.</para>
+tdeartwork package, and you can download more from the Internet.</para>
 
 <para>Use the <guibutton>Install New Theme...</guibutton> to browse to the
 location of newly downloaded themes, and they will then become available 

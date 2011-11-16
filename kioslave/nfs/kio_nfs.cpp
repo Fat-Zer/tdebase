@@ -71,7 +71,7 @@
 using namespace KIO;
 using namespace std;
 
-//this is taken from kdelibs/tdecore/fakes.cpp
+//this is taken from tdelibs/tdecore/fakes.cpp
 //#if !defined(HAVE_GETDOMAINNAME)
 
 int x_getdomainname(char *name, size_t len)
@@ -425,7 +425,7 @@ void NFSProtocol::openConnection()
       hostName=nameBuffer;
       // I have the same problem here as Stefan Westerfeld, that's why I use
       // the getdomainname() from fakes.cpp (renamed to x_getdomainname()), this one works
-      // taken from kdelibs/arts/mcopy/mcoputils.cc
+      // taken from tdelibs/arts/mcopy/mcoputils.cc
       nameBuffer[0] = '\0';
       if (x_getdomainname(nameBuffer, 1024)==0)
       {

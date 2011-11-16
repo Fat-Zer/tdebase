@@ -38,7 +38,7 @@ TQStringList getSearchPaths()
     // setup default paths
     if ( !config->hasKey("scanPaths") ) {
         TQStringList paths;
-        // keep sync with kdebase/kcontrol/konqhtml
+        // keep sync with tdebase/kcontrol/konqhtml
         paths.append("$HOME/.mozilla/plugins");
         paths.append("$HOME/.netscape/plugins");
 	paths.append("/usr/lib/iceweasel/plugins");

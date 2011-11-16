@@ -25,7 +25,7 @@ class KonqMainWindow;
 namespace KParts { class ReadOnlyPart; }
 
 /**
- * Extension Manager for Konqueror. See KPluginSelector in kdelibs for
+ * Extension Manager for Konqueror. See KPluginSelector in tdelibs for
  * documentation.
  *
  * @author Martijn Klingens <klingens@kde.org>

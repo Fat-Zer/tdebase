@@ -212,9 +212,9 @@ CXXFLAGS="$CXXFLAGS $KDE_DEFAULT_CXXFLAGS"
 
 KDE_INIT_DOXYGEN([KDE base API Reference], [Version $VERSION])
 
-dnl Ok, kdebase has _sooo_ many Makefiles, that the check for uniqueness
+dnl Ok, tdebase has _sooo_ many Makefiles, that the check for uniqueness
 dnl of those filenames in the list of the files (done by autoconf macros
-dnl itself) is taking more that nine minutes (!).  For kdebase only we take
+dnl itself) is taking more that nine minutes (!).  For tdebase only we take
 dnl out that test.  (matz@kde.org)
 m4_define([_AC_CONFIG_UNIQUE], [])dnl
 

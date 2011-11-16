@@ -52,7 +52,7 @@ documentation -->
 <!-- this smb-ioslave doesn't support showing a list
 of hosts (like e.g. smb:/), for this you need the lan or rlan-ioslave,
 very cool thing (TM) btw. If you want to write some documentation for
-this one too, have a look at kdenetwork/lanbrowsing/lisa/README and
+this one too, have a look at tdenetwork/lanbrowsing/lisa/README and
 contact me if you have questions. -->
 
 <note><para>For the <acronym>SMB</acronym> protocol to work, it is

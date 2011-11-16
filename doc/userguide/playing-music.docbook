@@ -39,7 +39,7 @@ feature sets, however, each is quite different in style. </para>
 configurable interface, including several styles of playlist manager, and
 many plugins to provide different &GUI;s, visualizations, and other
 features.</para>
-<para>&noatun; is part of the kdemultimedia package.</para>
+<para>&noatun; is part of the tdemultimedia package.</para>
 
 <para><mediaobject>
 <imageobject><imagedata fileref="noatun.png" format="PNG"/>
@@ -63,7 +63,7 @@ highly efficient way to manage all your music files, make and maintain
 playlists, and maintain the metadata tags in your music.</para>
 <para>It is equally useful as your primary music player, or managing
 playlists and files for use in another application.</para>
-<para>&juk; is part of the kdemultimedia package.</para>
+<para>&juk; is part of the tdemultimedia package.</para>
 
 <para><mediaobject>
 <imageobject><imagedata fileref="juk.png" format="PNG"/>
@@ -86,7 +86,7 @@ playlists and files for use in another application.</para>
 and stop.  &kaboodle; is useful for instance if you want to quickly listen
 to a single file without interupting your current playlist from another
 media player.</para>
-<para>&kaboodle; is part of the kdemultimedia package.</para>
+<para>&kaboodle; is part of the tdemultimedia package.</para>
 
 <para><mediaobject>
 <imageobject><imagedata fileref="kaboodle.png" format="PNG"/>

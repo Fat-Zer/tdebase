@@ -65,7 +65,7 @@
   trash link on desktop
   trashed file or directory
   application .desktop file
- Then the same after uninstalling kdeaddons/konq-plugins (kuick and arkplugin in particular)
+ Then the same after uninstalling tdeaddons/konq-plugins (kuick and arkplugin in particular)
 */
 
 class KonqPopupMenuGUIBuilder : public KXMLGUIBuilder

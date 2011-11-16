@@ -1,4 +1,4 @@
-## kdebase/Makefile.am
+## tdebase/Makefile.am
 ## (C) 1997 Stephan Kulow
 
 COMPILE_FIRST = libkonq
@@ -11,7 +11,7 @@ AUTOMAKE_OPTIONS = foreign 1.6.1
 
 bin_SCRIPTS = startkde trinity
 
-EXTRA_DIST = admin bsd-port debian kdebase.spec.in README.pam kde.pamd kscreensaver.pamd mkpamserv
+EXTRA_DIST = admin bsd-port debian tdebase.spec.in README.pam kde.pamd kscreensaver.pamd mkpamserv
 
 dist-hook:
 	cd $(top_distdir) && perl $(top_srcdir)/admin/am_edit -padmin

@@ -23,7 +23,7 @@
 
 #include <tqstring.h>
 
-// see kdebase/khotkeys/kcontrol for info on these
+// see tdebase/khotkeys/kcontrol for info on these
 
 class KHotKeys
 {

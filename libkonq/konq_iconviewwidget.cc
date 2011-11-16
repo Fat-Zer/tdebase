@@ -1413,7 +1413,7 @@ void KonqIconViewWidget::slotSaveIconPositions()
   // This code is currently not used but left in for compatibility reasons.
   // It can be removed in KDE 4.0
   // Saving of desktop icon positions is now done in KDIconView::saveIconPositions()
-  // in kdebase/kdesktop/kdiconview.cc
+  // in tdebase/kdesktop/kdiconview.cc
   // WARNING WARNING WARNING WARNING WARNING WARNING WARNING WARNING
 
   if ( m_dotDirectoryPath.isEmpty() )
@@ -1461,7 +1461,7 @@ void KonqIconViewWidget::slotSaveIconPositions()
   // This code is currently not used but left in for compatibility reasons.
   // It can be removed in KDE 4.0
   // Saving of desktop icon positions is now done in KDIconView::saveIconPositions()
-  // in kdebase/kdesktop/kdiconview.cc
+  // in tdebase/kdesktop/kdiconview.cc
   // WARNING WARNING WARNING WARNING WARNING WARNING WARNING WARNING
 }
 

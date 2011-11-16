@@ -14,13 +14,13 @@ KWin parts:
 ===========
 
 There are four parts of KWin:
-- The KWin core, located in kdebase/twin/*, which implements the actual functionality.
-- The decoration plugins, located in kdebase/twin/clients and kdeartwork/twin-styles, which
+- The KWin core, located in tdebase/twin/*, which implements the actual functionality.
+- The decoration plugins, located in tdebase/twin/clients and tdeartwork/twin-styles, which
   are responsible for the visual representation of the windows.
-- The libkdecoration library, located in kdebase/twin/lib/*, which is used for communication
+- The libkdecoration library, located in tdebase/twin/lib/*, which is used for communication
   between the core and the decoration, and also implements some shared functionality
   for the decorations.
-- KControl modules, located in kdebase/twin/kcmtwin.
+- KControl modules, located in tdebase/twin/kcmtwin.
 
 
 KWin decorations:
@@ -101,7 +101,7 @@ The rest of the files contain additional helper classes:
 - group.* - grouping related windows together (warning! This is currently really messy and scary code
   that should be rewritten).
 - killwindow.* - handling of the Ctrl+Esc feature
-- twinbindings.cpp - KWin's keyboard shortcuts (used by kdebase/kcontrol/keys)
+- twinbindings.cpp - KWin's keyboard shortcuts (used by tdebase/kcontrol/keys)
 - notifications.* - for KNotify
 - options.* - all configuration options for KWin are stored in this class
 - plugins.* - loading of the right decoration plugin
@@ -109,8 +109,8 @@ The rest of the files contain additional helper classes:
 - tabbox.* - the Alt+Tab dialog
 - utils.* - various small utility functions/classes
 
-KWin also uses code from kdelibs, specifically files netwm.cpp, netwm.h, netwm_def.h and netwm_p.h
-from kdelibs/tdecore. These files implement support for the EWMH window manager specification,
+KWin also uses code from tdelibs, specifically files netwm.cpp, netwm.h, netwm_def.h and netwm_p.h
+from tdelibs/tdecore. These files implement support for the EWMH window manager specification,
 originally called NETWM (hence the filenames).
 
 

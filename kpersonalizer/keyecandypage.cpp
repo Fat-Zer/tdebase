@@ -300,7 +300,7 @@ void KEyeCandyPage::enableDesktopWallpaper(bool enable, bool user){
 
 /** this function enables/disables the window effects for Shading, Minimize and Restore. The contents in moving/resized windows is set in enableWindowContens(bool ) */
 void KEyeCandyPage::enableDesktopWindowEffects(bool enable,bool restore){
-// see /kdebase/kcontrol/kwm module, KAdvancedConfig class. Used are:
+// see /tdebase/kcontrol/kwm module, KAdvancedConfig class. Used are:
 // -Animate minimize and restore
 // -Animate shade
 // -Enable Hover
@@ -321,7 +321,7 @@ void KEyeCandyPage::enableDesktopWindowEffects(bool enable,bool restore){
 
 /** enable/disable window moving with contents shown */
 void KEyeCandyPage::enableDesktopWindowMovingContents(bool enable, bool restore){
-// see /kdebase/kcontrol/kwm module, KAdvancedConfig class. Used are:
+// see /tdebase/kcontrol/kwm module, KAdvancedConfig class. Used are:
 // -Display content in moving window
 // -Display content in resizing window
 // And KGlobalSettings::opaqueResize() for QSplitters
@@ -370,7 +370,7 @@ void KEyeCandyPage::enableBackgroundsKonqueror(bool enable){
 
 /** Level 0-2 disable this, Level 3 and above enable this.  */
 void KEyeCandyPage::enableIconZoomingPanel(bool enable){
-	// Kicker Icon zooming feature. See /kdebase/kcontrol/kicker, LookAndFeelTab
+	// Kicker Icon zooming feature. See /tdebase/kcontrol/kicker, LookAndFeelTab
 	kickerconf->setGroup("buttons");
 	kickerconf->writeEntry("EnableIconZoom", enable);
 }

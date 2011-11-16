@@ -22,7 +22,7 @@
 #include <kglobalaccel.h>
 #include <kdebug.h>
 #include <kapplication.h>
-#include <kdeversion.h>
+#include <tdeversion.h>
 #include <tqtimer.h>
 #include <kkeynative.h>
 

@@ -9,7 +9,7 @@
 #include <tqvaluevector.h>
 #include <tqfont.h>
 #include <kurl.h>
-#include <kdeversion.h>
+#include <tdeversion.h>
 #include <fontconfig/fontconfig.h>
 
 #if (FC_VERSION<20200)

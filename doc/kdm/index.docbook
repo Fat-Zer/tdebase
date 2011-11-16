@@ -2,7 +2,7 @@
 <!DOCTYPE book PUBLIC "-//KDE//DTD DocBook XML V4.2-Based Variant V1.1//EN"
 "dtd/kdex.dtd" [
   <!ENTITY kappname "&kdm;">
-  <!ENTITY package "kdebase">
+  <!ENTITY package "tdebase">
   <!ENTITY kdmrc "<filename>kdmrc</filename>">
   <!ENTITY ksmserver "<application>ksmserver</application>">
   <!ENTITY kdesktop "<application>kdesktop</application>">

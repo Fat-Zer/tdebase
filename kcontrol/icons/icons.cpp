@@ -206,7 +206,7 @@ void KIconConfig::initDefaults()
     if ( group != -1 )
         mbAnimated[group] = true;
 
-    // This is the new default in KDE 2.2, in sync with the kiconeffect of kdelibs Nolden 2001/06/11
+    // This is the new default in KDE 2.2, in sync with the kiconeffect of tdelibs Nolden 2001/06/11
     int activeState = mStates.findIndex( "Active" );
     if ( activeState != -1 )
     {

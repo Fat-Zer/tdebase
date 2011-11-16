@@ -40,7 +40,7 @@ drives, does not shutdown printers, &etc; These settings only affect
 the behavior of your monitor.</para>
 
 <para>For information on shutting down components on a laptop, do not
-use this module.  Instead, install kdeutils, and refer to the module
+use this module.  Instead, install tdeutils, and refer to the module
 entitled <ulink url="help://kcontrol/powerctrl/index.html">Laptop
 Power Control Center</ulink>, for details.</para></tip>
 

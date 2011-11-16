@@ -20,7 +20,7 @@ linkend="configuring-kate-configdialog">configuration dialog</link>, which also
 provides access to additional configuration options for plug-ins that requires
 that.</para>
 
-<para>There are many plugins for various purposes available in the kdeaddons
+<para>There are many plugins for various purposes available in the tdeaddons
 module, and you can search the web for more. A few plugins are shipped with the
 editor component, for doing word completion, automatic bookmarks, insert files,
 thesaurus and word spell checking and incremental search.</para>

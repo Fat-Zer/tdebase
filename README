@@ -1,6 +1,6 @@
 In this file:
 
-* About kdebase
+* About tdebase
 * Thank you
 * Common Mistakes
 * Configuring
@@ -10,9 +10,9 @@ In this file:
 * More Info
 
 
-About kdebase
+About tdebase
 -------------
-kdebase is the second mandatory package (besides kdelibs) for the Trinity Desktop
+tdebase is the second mandatory package (besides tdelibs) for the Trinity Desktop
 Environment. Here we have various applications and infrastructure files and
 libraries. Here is an overview of the directories:
 
@@ -108,7 +108,7 @@ libraries. Here is an overview of the directories:
 
 * kscreensaver
     The KDE screensaver environment and some basic screensavers. More
-    of them are in the kdeartwork package.
+    of them are in the tdeartwork package.
 
 * ksmserver
     The KDE session manager (saves program status on login, restarts
@@ -187,7 +187,7 @@ comes along with it.
 
 Configuring
 -----------
-kdebase's configure script supports all the standard GNU autoconf options
+tdebase's configure script supports all the standard GNU autoconf options
 (you can have the various options listed for you by specifying the --help
 switch), plus the following options are also supported.  Note: the *non*
 default variation is listed, so if you see --enable-debug, the default is
@@ -232,7 +232,7 @@ default variation is listed, so if you see --enable-debug, the default is
      look for [extra] libraries in DIR too
 
 `--disable-path-check'
-     don't try to make sure that kdebase is installed into the same
+     don't try to make sure that tdebase is installed into the same
      base KDE directory as the rest of KDE
  
 `--with-install-root=DIR'
@@ -299,7 +299,7 @@ the README.pam file in this directory for more information about using KDE
 with PAM.
 
 Have a look at the individual subdirectories, if you would like to find out
-more about a specific application included in kdebase.
+more about a specific application included in tdebase.
 
 More FAQs on http://www.kde.org/info/faq.html
 

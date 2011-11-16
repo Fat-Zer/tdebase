@@ -1,7 +1,7 @@
 - make small programms to print the files and other data better
    - printing text
       - you can enable for example syntaxhighlighting
-   - printing pictures  (I think that can go than to the kdegraphics package)
+   - printing pictures  (I think that can go than to the tdegraphics package)
       - set the position of the picture on the site and something like that
    - printing html (homepges)
       - print the html code like for the textprinting

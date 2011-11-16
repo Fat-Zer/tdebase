@@ -16,7 +16,7 @@
     Boston, MA 02110-1301, USA.
 */
 
-// Born as kdelibs/kio/kfile/kfilebookmarkhandler.h
+// Born as tdelibs/kio/kfile/kfilebookmarkhandler.h
 
 #ifndef KONSOLEBOOKMARKHANDLER_H
 #define KONSOLEBOOKMARKHANDLER_H

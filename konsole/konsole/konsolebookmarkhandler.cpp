@@ -16,7 +16,7 @@
     Boston, MA 02110-1301, USA.
 */
 
-// Born as kdelibs/kio/kfile/kfilebookmarkhandler.cpp
+// Born as tdelibs/kio/kfile/kfilebookmarkhandler.cpp
 
 #include <kpopupmenu.h>
 #include <kstandarddirs.h>

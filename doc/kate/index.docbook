@@ -2,7 +2,7 @@
 <!DOCTYPE book PUBLIC "-//KDE//DTD DocBook XML V4.2-Based Variant V1.1//EN"
 "dtd/kdex.dtd" [
   <!ENTITY kappname "&kate;">
-  <!ENTITY package "kdebase">
+  <!ENTITY package "tdebase">
   <!ENTITY configuring-chapter SYSTEM "configuring.docbook">
   <!ENTITY highlighting-appendix SYSTEM "highlighting.docbook">
   <!ENTITY advanced-chapter SYSTEM "advanced.docbook">
@@ -54,7 +54,7 @@
 
 <keywordset>
 <keyword>KDE</keyword>
-<keyword>kdebase</keyword>
+<keyword>tdebase</keyword>
 <keyword>Kate</keyword>
 <keyword>text</keyword>
 <keyword>editor</keyword>

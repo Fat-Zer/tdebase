@@ -1,4 +1,4 @@
-// THIS FILE IS A COPY OF kdelibs/tdecore/kaccelaction.h AND MUST BE KEPT
+// THIS FILE IS A COPY OF tdelibs/tdecore/kaccelaction.h AND MUST BE KEPT
 //  IN SYNC WITH THAT FILE.
 
 /* This file is part of the KDE libraries

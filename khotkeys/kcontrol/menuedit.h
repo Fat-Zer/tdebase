@@ -16,7 +16,7 @@
 #include <kaccel.h>
 #include <kservice.h>
 
-// see also kdebase/kmenuedit/khotkeys.h
+// see also tdebase/kmenuedit/khotkeys.h
 extern "C"
     {
 // initializes khotkeys DSO - loads i18n catalogue

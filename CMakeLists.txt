@@ -12,9 +12,9 @@ cmake_minimum_required( VERSION 2.8 )
 
 ##### general package setup #####################
 
-project( kdebase )
+project( tdebase )
 
-set( PACKAGE kdebase )
+set( PACKAGE tdebase )
 set( VERSION "3.5.13" )
 
 
@@ -150,7 +150,7 @@ set( CMAKE_SHARED_LINKER_FLAGS "-Wl,--no-undefined" )
 set( CMAKE_MODULE_LINKER_FLAGS "-Wl,--no-undefined" )
 
 
-##### kdebase directories #######################
+##### tdebase directories #######################
 
 add_subdirectory( kdmlib )
 

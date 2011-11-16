@@ -540,7 +540,7 @@ PingServer( Display *dpy )
 }
 
 /*
- * Modifier changing code based on kdebase/kxkb/kcmmisc.cpp
+ * Modifier changing code based on tdebase/kxkb/kcmmisc.cpp
  *
  * XTest part: Copyright (C) 2000-2001 Lubos Lunak <l.lunak@kde.org>
  * XKB part:   Copyright (C) 2001-2002 Oswald Buddenhagen <ossi@kde.org>

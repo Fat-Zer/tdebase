@@ -11,7 +11,7 @@ KSWidget::KSWidget( TQWidget* parent, const char* name, int f )
     : QXEmbed( parent, name, (WFlags)f ), colormap( None )
 {
 // use visual with support for double-buffering, for opengl
-// this code is duplicated in kdebase/kdesktop/lock/
+// this code is duplicated in tdebase/kdesktop/lock/
 #ifdef HAVE_GLXCHOOSEVISUAL
     Visual* visual = CopyFromParent;
     XSetWindowAttributes attrs;

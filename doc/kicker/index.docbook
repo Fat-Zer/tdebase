@@ -1,6 +1,6 @@
 <?xml version="1.0" ?>
 <!DOCTYPE book PUBLIC "-//KDE//DTD DocBook XML V4.2-Based Variant V1.1//EN" "dtd/kdex.dtd" [
-  <!ENTITY package "kdebase">
+  <!ENTITY package "tdebase">
   <!ENTITY kappname "&kicker;">
   <!ENTITY % addindex "IGNORE">
   <!ENTITY % English "INCLUDE">
@@ -48,7 +48,7 @@ the desktop.
 <keywordset>
 <keyword>KDE</keyword>
 <keyword>Kicker</keyword>
-<keyword>kdebase</keyword>
+<keyword>tdebase</keyword>
 <keyword>panel</keyword>
 <keyword>application</keyword>
 <keyword>starter</keyword>

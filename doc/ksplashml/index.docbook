@@ -2,7 +2,7 @@
 <!DOCTYPE book PUBLIC "-//KDE//DTD DocBook XML V4.2-Based Variant V1.1//EN"
 "dtd/kdex.dtd" [
   <!ENTITY kappname "&ksplash;">
-  <!ENTITY package "kdebase">
+  <!ENTITY package "tdebase">
   <!ENTITY % addindex "IGNORE">
   <!ENTITY % English "INCLUDE">
 ]>
@@ -50,7 +50,7 @@ application that is loading.</para>
 
 <keywordset>
 <keyword>KDE</keyword>
-<keyword>kdebase</keyword>
+<keyword>tdebase</keyword>
 <keyword>ksplash</keyword>
 <keyword>ksplashml</keyword>
 <keyword>splashscreen</keyword>
@@ -710,7 +710,7 @@ should be derived from <literal>ThemeEngine</literal>.
 building the plugin
 and will provide us with platform independence without any work on our part. To
 do that,
-make sure you have the <filename>kdesdk</filename> package installed. Run the
+make sure you have the <filename>tdesdk</filename> package installed. Run the
 command
 <literal>kapptemplate</literal> to produce an application named "2k". It will
 create a

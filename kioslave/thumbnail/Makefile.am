@@ -1,4 +1,4 @@
-## Makefile.am of kdebase/kioslave/thumbnail
+## Makefile.am of tdebase/kioslave/thumbnail
 
 INCLUDES = $(all_includes) $(EXR_FLAGS)
 AM_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_TDECORE) $(LIB_TDEUI) -ltdefx $(LIB_KIO) -lktexteditor

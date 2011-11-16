@@ -566,7 +566,7 @@ if test -n "$dl"; then
 fi
 
 # Finally, give the session control to the session manager.
-# See kdebase/ksmserver for the description of the rest of the startup sequence.
+# See tdebase/ksmserver for the description of the rest of the startup sequence.
 # If the KDEWM environment variable has been set, then it will be used as Trinity's
 # window manager instead of twin.
 # If KDEWM is not set, ksmserver will ensure twin is started.

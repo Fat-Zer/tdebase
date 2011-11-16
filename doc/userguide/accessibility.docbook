@@ -17,10 +17,10 @@
 <para><acronym>KDEAP</acronym> (the &kde; Accessibility Project) aims to ensure that &kde;, as a desktop environment, is accessible to all users, including those of us with physical disabilities. In addition to the accessibility aids in the <link linkend="kcontrol-regional-and-accessibility">Control Center</link>, &kde; has several other accessibility tools, which are available in the &kde;-Accessibility package. This package may not be installed on your computer; if it is not, you can download it from here:</para>
 
 <para><itemizedlist>
-<listitem><para><ulink url="ftp://ftp.kde.org/pub/kde/stable/apps/KDE3.x/accessibility/kdeaccessibility-1.0.0.tar.gz">kdeaccessibility-1.0.0.tar.gz</ulink>, or 
-<ulink url="ftp://ftp.kde.org/pub/kde/stable/apps/KDE3.x/accessibility/kdeaccessibility-1.0.0.tar.bz2">kdeaccessibility-1.0.0.tar.bz2</ulink></para></listitem>
-<listitem><para><ulink url="ftp://ftp.kde.org/pub/kde/stable/apps/KDE3.x/accessibility/kdeaccessibility-1.0.0.md5">MD5</ulink></para></listitem>
-<listitem><para><ulink url="ftp://ftp.kde.org/pub/kde/stable/apps/KDE3.x/accessibility/kdeaccessibility-1.0.0.lsm">lsm file</ulink></para></listitem>
+<listitem><para><ulink url="ftp://ftp.kde.org/pub/kde/stable/apps/KDE3.x/accessibility/tdeaccessibility-1.0.0.tar.gz">tdeaccessibility-1.0.0.tar.gz</ulink>, or 
+<ulink url="ftp://ftp.kde.org/pub/kde/stable/apps/KDE3.x/accessibility/tdeaccessibility-1.0.0.tar.bz2">tdeaccessibility-1.0.0.tar.bz2</ulink></para></listitem>
+<listitem><para><ulink url="ftp://ftp.kde.org/pub/kde/stable/apps/KDE3.x/accessibility/tdeaccessibility-1.0.0.md5">MD5</ulink></para></listitem>
+<listitem><para><ulink url="ftp://ftp.kde.org/pub/kde/stable/apps/KDE3.x/accessibility/tdeaccessibility-1.0.0.lsm">lsm file</ulink></para></listitem>
 </itemizedlist></para>
 
 <para>For more information on the project, visit the <ulink url="http://accessibility.kde.org/">&kde; Accessibility Home Page</ulink>.</para>

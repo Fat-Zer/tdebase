@@ -1,4 +1,4 @@
-## Makefile.am of kdebase/kdesktop
+## Makefile.am of tdebase/kdesktop
 
 INCLUDES = -I$(top_srcdir)/kcontrol/background -I$(top_srcdir)/libkonq -I$(top_srcdir)/kdmlib $(all_includes)
 kdesktop_la_LDFLAGS  = $(all_libraries) -module $(KDE_PLUGIN)

@@ -1,4 +1,4 @@
-## Makefile.am of kdebase/kioslave/man
+## Makefile.am of tdebase/kioslave/man
 
 INCLUDES=$(all_includes)
 

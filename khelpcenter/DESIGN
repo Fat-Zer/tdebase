@@ -369,7 +369,7 @@ protocol == "help") by itself and otherwise use the plain URL.
 # that connect button. The thing is that this requires a lot of work on the
 # application side. The idea is very cool, but we'd have to think about
 # outsourceing parts of that functionality, either to KHelpCenter, or to
-# kdelibs.
+# tdelibs.
 
 ## And another idea: The WhatsThis help texts describe all widgets of an
 ## application (provided that the texts are set by the developers). Currently

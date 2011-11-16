@@ -777,7 +777,7 @@ or unmounting directories from file servers.</para>
 #     unless "DDefault: -" was specified.
 #     Each option entry generates an anchor named option-<lowercase(Key)>;
 #     it can be referenced in the main documentation.
-#     Do not forget to run "make ref" in kdebase/doc/kdm after changing
+#     Do not forget to run "make ref" in tdebase/doc/kdm after changing
 #     Descriptions.
 
 Section: General

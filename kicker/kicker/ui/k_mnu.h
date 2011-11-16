@@ -33,7 +33,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 namespace KPIM {
     // Yes, ClickLineEdit was copied from libtdepim.
-    // Can we have it in kdelibs please?
+    // Can we have it in tdelibs please?
     class ClickLineEdit;
 }
 

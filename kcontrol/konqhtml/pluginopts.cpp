@@ -373,7 +373,7 @@ void KPluginOptions::dirLoad( KConfig *config, bool useDefault )
     config->setGroup("Misc");
     if ( config->hasKey( "scanPaths" ) && !useDefault )
         paths = config->readListEntry( "scanPaths" );
-    else {//keep sync with kdebase/nsplugins
+    else {//keep sync with tdebase/nsplugins
         paths.append("$HOME/.mozilla/plugins");
         paths.append("$HOME/.netscape/plugins");
 	paths.append("/usr/lib/iceweasel/plugins");

@@ -411,7 +411,7 @@
 2004-02-24 Tuesday 11:30  englich
 
 	*
-	  Remove all CVS Id tags from kdebase, if I haven't missed one.
+	  Remove all CVS Id tags from tdebase, if I haven't missed one.
 
 	  Of course, this will multifold break compile as well as a dozen
 	  of people will now object that they actually wanted the Id tags.

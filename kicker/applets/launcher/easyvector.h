@@ -1,7 +1,7 @@
 /*  Copyright 2004, Daniel Woods Bullok <dan.devel@bullok.com>
     distributed under the terms of the
     GNU GENERAL PUBLIC LICENSE Version 2 -
-    See the file kdebase/COPYING for details
+    See the file tdebase/COPYING for details
 */
 
 #ifndef __easyvector_h__

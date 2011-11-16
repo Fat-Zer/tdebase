@@ -78,8 +78,8 @@ KStylePage::KStylePage(TQWidget *parent, const char *name ) : KStylePageDlg(pare
 	connect(klv_styles, TQT_SIGNAL(selectionChanged()),
 			this, TQT_SLOT(slotCurrentChanged()));
 
-	// Note: if the default is changed here it needs to be changed in kdebase/twin/plugins.cpp
-	//       and kdebase/twin/kcmtwin/twindecoration/twindecoration.cpp as well.
+	// Note: if the default is changed here it needs to be changed in tdebase/twin/plugins.cpp
+	//       and tdebase/twin/kcmtwin/twindecoration/twindecoration.cpp as well.
 	defaultKWinStyle = TQPixmap::defaultDepth() > 8 ? "twin_plastik" : "twin_quartz";
 	appliedStyle = NULL;
 

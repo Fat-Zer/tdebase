@@ -37,9 +37,9 @@ of this document.
 
 <para>
 &khelpcenter; is an integral part of the &kde; Base installation, and
-is installed with every copy of &kde;.  It can be found in the kdebase
+is installed with every copy of &kde;.  It can be found in the tdebase
 package, and is available from the &kde-ftp;, or will be found in your
-operating system kdebase package.
+operating system tdebase package.
 </para>
 
 </sect2>

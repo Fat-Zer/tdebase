@@ -522,7 +522,7 @@ KFonts::KFonts(TQWidget *parent, const char *name, const TQStringList &)
 
   TQValueList<TQFont> defaultFontList;
 
-  // Keep in sync with kdelibs/tdecore/kglobalsettings.cpp
+  // Keep in sync with tdelibs/tdecore/kglobalsettings.cpp
 
   TQFont f0("Sans Serif", 10);
   TQFont f1("Monospace", 10);

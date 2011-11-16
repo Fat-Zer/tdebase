@@ -1,4 +1,4 @@
-# Makefile.am for kdebase/ksplashml/kcmksplash
+# Makefile.am for tdebase/ksplashml/kcmksplash
 SUBDIRS=pics
 
 INCLUDES = $(all_includes)

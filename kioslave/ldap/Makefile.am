@@ -1,4 +1,4 @@
-## Makefile.am of kdebase/kioslave/ldap
+## Makefile.am of tdebase/kioslave/ldap
 
 INCLUDES   = $(all_includes) $(LDAP_INCS)
 AM_CXXFLAGS = -DLDAP_DEPRECATED

@@ -39,7 +39,7 @@
  so I don't know if it will work with them or not.
 
   During installation, the files will replace the ones that are part
- of the simple version in kdebase. Shortcuts assigned using KMenuEdit
+ of the simple version in tdebase. Shortcuts assigned using KMenuEdit
  should still work, and the config file will be converted to the new format.
  However, you should backup all files before removing them ( including
  the config file ), so you will be able to go back in case there will be

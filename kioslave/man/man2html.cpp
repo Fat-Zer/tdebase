@@ -146,7 +146,7 @@
 #else
 # include <tqtextcodec.h>
 # include <kdebug.h>
-# include <kdeversion.h>
+# include <tdeversion.h>
 #endif
 
 
@@ -319,8 +319,8 @@ static void InitStringDefinitions( void )
     // \*S "Change to default font size"
 #ifndef SIMPLE_MAN2HTML
     // Special KDE KIO man:
-    const TQCString kdeversion(TDE_VERSION_STRING);
-    s_stringDefinitionMap.insert( ".TDE_VERSION_STRING", StringDefinition( kdeversion.length(), kdeversion ) );
+    const TQCString tdeversion(TDE_VERSION_STRING);
+    s_stringDefinitionMap.insert( ".TDE_VERSION_STRING", StringDefinition( tdeversion.length(), tdeversion ) );
 #endif
 }
 

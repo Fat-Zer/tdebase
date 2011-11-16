@@ -164,7 +164,7 @@ set.</para>
 
 <para>To access the &DCOP; method from your favorite scripting
 language, you can either use &DCOP; bindings, if available in the
-kdebindings module, or call the <command>dcop</command> command-line
+tdebindings module, or call the <command>dcop</command> command-line
 application. For simple usage, calling the
 <command>dcop</command> command-line application is sufficient. To
 call a &DCOP; method on the command line, we need to specify the

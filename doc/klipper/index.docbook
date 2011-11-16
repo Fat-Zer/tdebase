@@ -2,7 +2,7 @@
 <!DOCTYPE book PUBLIC "-//KDE//DTD DocBook XML V4.2-Based Variant V1.1//EN" 
 "dtd/kdex.dtd" [
   <!ENTITY kappname "&klipper;">
-  <!ENTITY package "kdebase">
+  <!ENTITY package "tdebase">
   <!ENTITY % addindex "IGNORE">
   <!ENTITY % English "INCLUDE" > <!-- change language only here -->
 ]>
@@ -40,7 +40,7 @@
 <keywordset>
 <keyword>KDE</keyword>
 <keyword>Klipper</keyword>
-<keyword>kdebase</keyword>
+<keyword>tdebase</keyword>
 <keyword>clipboard</keyword>
 </keywordset>
 </bookinfo>
@@ -445,7 +445,7 @@ Documentation copyright 2000-2003, 2005 &Philip.Rodrigues;
 
 <sect1 id="compilation">
 <title>Compilation and Installation</title>
-<para>&klipper; should compile and install along with the kdebase
+<para>&klipper; should compile and install along with the tdebase
 package, and appear on your &kde; panel (&kicker;) when you run &kde;
 3. If it does not appear, you can start it by selecting
 <menuchoice><guimenu>Panel

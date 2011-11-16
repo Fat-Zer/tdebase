@@ -448,7 +448,7 @@ void KonqCombo::selectWord(TQKeyEvent *e)
     int pos_old = pos;
     int count = 0;  
 
-    // TODO: make these a parameter when in kdelibs/tdeui...
+    // TODO: make these a parameter when in tdelibs/tdeui...
     TQValueList<TQChar> chars;
     chars << TQChar('/') << TQChar('.') << TQChar('?') << TQChar('#') << TQChar(':');    
     bool allow_space_break = true;

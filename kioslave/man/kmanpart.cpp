@@ -26,7 +26,7 @@
 #include <klocale.h>
 #include <kstandarddirs.h>
 #include <kaboutdata.h>
-#include <kdeversion.h>
+#include <tdeversion.h>
 
 extern "C"
 {

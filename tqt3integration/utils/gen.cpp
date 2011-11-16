@@ -1,7 +1,7 @@
  /*
  *  This file is part of the Trinity Desktop Environment
  *
- *  Original file taken from the OpenSUSE kdebase builds
+ *  Original file taken from the OpenSUSE tdebase builds
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by

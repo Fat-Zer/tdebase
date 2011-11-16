@@ -1,4 +1,4 @@
-// Born as kdelibs/kio/kfile/kfilebookmarkhandler.cpp
+// Born as tdelibs/kio/kfile/kfilebookmarkhandler.cpp
 
 #include <stdio.h>
 #include <stdlib.h>

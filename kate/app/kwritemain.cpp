@@ -34,7 +34,7 @@
 
 #include <kio/netaccess.h>
 
-#include <kdeversion.h>
+#include <tdeversion.h>
 #include <dcopclient.h>
 #include <kurldrag.h>
 #include <kencodingfiledialog.h>

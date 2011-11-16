@@ -195,7 +195,7 @@ PanelAppletOpMenu::PanelAppletOpMenu(int actions, TQPopupMenu *opMenu, const TQP
         }
         needSeparator = false;
 
-        // NOTE: keditbookmarks is from konqueror. seeing as this is in kdebase
+        // NOTE: keditbookmarks is from konqueror. seeing as this is in tdebase
         //       as well this should be ok?
         insertItem(SmallIcon("keditbookmarks"), 
                    i18n("&Edit Bookmarks"),

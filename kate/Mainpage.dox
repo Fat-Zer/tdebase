@@ -4,6 +4,6 @@
 * the internal classes used to create Kate. It should not be
 * used as a public API.
 *
-* For a public API, see the text editor interface in kdelibs.
+* For a public API, see the text editor interface in tdelibs.
 *
 */

@@ -44,7 +44,7 @@
 
 2001-11-29 Joseph Wenninger <jowenn@kde.org>
   * KWrite/Kate use different font settings for printing and viewing now
-  * Fixed a small crash in my kdevelop->kate port of the codecompletion interface
+  * Fixed a small crash in my tdevelop->kate port of the codecompletion interface
 
 2001-11-26 Christoph Cullmann <cullmann@kde.org>
   * backspace bug fixed
@@ -109,21 +109,21 @@
   * myself back again ;)
   * now kate is clean (only qt3), no backports ;)
 
-2001-08-24  christian@kdevelop.org
+2001-08-24  christian@tdevelop.org
   * reimplement the commenting of selections on some languages
 
-2001-08-19  christian@kdevelop.org
+2001-08-19  christian@tdevelop.org
   * added back Sather highlighting support
   * improved Eiffel language syntax highlighting support
   * added Eiffel language comment directive in eiffel.xml
   * added Ada language comment directive in ada.xml
 
-2001-08-15  christian@kdevelop.org
+2001-08-15  christian@tdevelop.org
   * committed Eiffel language syntax highlighting support
 
 2001-08-08  rokrau@yahoo.com
   * committed changes to Kate's API necessary for integration of kate as
-    a kpart into kdevelop
+    a kpart into tdevelop
 
 2001-05-13 Christoph Cullmann <cullmann@kde.org>
   * after some time of learning for my "Abitur" now again some fixes ;):
@@ -256,7 +256,7 @@
     Soon to come
 
 2001-02-26 Christoph Cullmann <cullmann@kde.org>
-  * Kate is a part of kdebase :)
+  * Kate is a part of tdebase :)
     sourceforge.net CVS won't be used in the future
 
 2001-02-24 Phlip <phlip_cpp@my-deja.com>

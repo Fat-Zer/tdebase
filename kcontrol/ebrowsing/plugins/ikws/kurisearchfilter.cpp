@@ -32,7 +32,7 @@
 
 /**
  * IMPORTANT: If you change anything here, please run the regression test
- * kdelibs/kio/tests/kurifiltertest
+ * tdelibs/kio/tests/kurifiltertest
  */
 
 typedef KGenericFactory<KURISearchFilter> KURISearchFilterFactory;

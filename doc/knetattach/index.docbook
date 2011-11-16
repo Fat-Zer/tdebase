@@ -3,7 +3,7 @@
   <!-- Define an entity for your application if it is not part of KDE
        CVS -->
   <!ENTITY kappname "&knetattach;">
-  <!ENTITY package "kdebase"><!-- I think this came from kdebase... -->
+  <!ENTITY package "tdebase"><!-- I think this came from tdebase... -->
   <!ENTITY % addindex "IGNORE">
   <!ENTITY % English "INCLUDE"> 
 
@@ -49,7 +49,7 @@ Please at least include KDE, the KDE package it is in, the name
 
 <keywordset>
 <keyword>KDE</keyword>
-<keyword>kdebase</keyword>
+<keyword>tdebase</keyword>
 <keyword>knetattach</keyword>
 <keyword>Network Folders</keyword>
 <keyword>Network Folder Wizard</keyword>

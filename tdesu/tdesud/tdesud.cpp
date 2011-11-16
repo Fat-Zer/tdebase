@@ -99,7 +99,7 @@ void tdesud_cleanup()
 }
 
 
-// Borrowed from kdebase/kaudio/kaudioserver.cpp
+// Borrowed from tdebase/kaudio/kaudioserver.cpp
 
 extern "C" int xio_errhandler(Display *);
 

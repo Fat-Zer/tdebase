@@ -402,7 +402,7 @@ TQString BGDialog::quickHelp() const
 
 void BGDialog::slotIdentifyScreens()
 {
-   // Taken from PositionTab::showIdentify in kdebase/kcontrol/kicker/positiontab_impl.cpp
+   // Taken from PositionTab::showIdentify in tdebase/kcontrol/kicker/positiontab_impl.cpp
    for(unsigned s = 0; s < m_numScreens; s++)
    {
       TQLabel *screenLabel = new TQLabel(0,"Screen Identify", (WFlags)(WDestructiveClose | WStyle_Customize | WX11BypassWM));

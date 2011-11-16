@@ -659,7 +659,7 @@ void PositionTab::storeInfo()
         return;
     }
 
-    // Magic numbers stolen from kdebase/kicker/core/global.cpp
+    // Magic numbers stolen from tdebase/kicker/core/global.cpp
     // PGlobal::sizeValue()
     if (m_panelSize->currentItem() < KPanelExtension::SizeCustom)
     {

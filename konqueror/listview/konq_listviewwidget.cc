@@ -1283,7 +1283,7 @@ void KonqBaseListViewWidget::slotDeleteItem( KFileItem * _fileitem )
   list.append( _fileitem );
   emit m_pBrowserView->extension()->itemsRemoved( list );
 #else
-#error "Your kdelibs doesn't have KParts::BrowserExtension::itemsRemoved, please update it to at least 3.5.5"
+#error "Your tdelibs doesn't have KParts::BrowserExtension::itemsRemoved, please update it to at least 3.5.5"
 #endif
 
   iterator it = begin();

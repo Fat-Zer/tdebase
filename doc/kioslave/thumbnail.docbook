@@ -23,6 +23,6 @@ create file previews.</para>
 will find these at
 <filename>$<envar>KDEDIR</envar>/include/kio/thumbcreator.h</filename> or
 in the source folder <filename
-class="directory">kdebase/kioslave/thumbnail</filename></para>
+class="directory">tdebase/kioslave/thumbnail</filename></para>
 
 </article>

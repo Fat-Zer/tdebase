@@ -2,7 +2,7 @@
 <!DOCTYPE book PUBLIC "-//KDE//DTD DocBook XML V4.2-Based Variant V1.1//EN"
  "dtd/kdex.dtd" [
   <!ENTITY kappname "&konqueror;">
-  <!ENTITY package "kdebase">
+  <!ENTITY package "tdebase">
   <!ENTITY konqueror-introduction SYSTEM "introduction.docbook">
   <!ENTITY konqueror-basics SYSTEM "basics.docbook">
   <!ENTITY konqueror-filemanager SYSTEM "filemanager.docbook">
@@ -81,7 +81,7 @@
 <appendix id="installation">
 <title>Installation</title>
 
-<para>&konqueror; is part of the kdebase package which an essential part of
+<para>&konqueror; is part of the tdebase package which an essential part of
 &kde;.</para>
 
 <para>For instructions on acquiring &kde; please see <ulink

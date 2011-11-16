@@ -59,7 +59,7 @@
 #include <tqfile.h>
 #include <tqtextstream.h>
 
-#include <kdeversion.h>
+#include <tdeversion.h>
 #include <klocale.h>
 #include <kstandarddirs.h>
 #include <kglobal.h>

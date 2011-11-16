@@ -121,7 +121,7 @@ packages.  Some are required, while others are optional.  Each package
 is available in each of the aforementioned package formats.</para>
 <variablelist>
 <varlistentry>
-<term>kdelibs</term>
+<term>tdelibs</term>
 <listitem>
 <para>Required</para>
 <para>This package contains shared libraries that are needed by all
@@ -129,7 +129,7 @@ is available in each of the aforementioned package formats.</para>
 </listitem>
 </varlistentry>
 <varlistentry>
-<term>kdebase</term>
+<term>tdebase</term>
 <listitem>
 <para>Required</para>
 <para>This package contains the base applications that form the core
@@ -146,21 +146,21 @@ server.</para>
 </listitem>
 </varlistentry>
 <varlistentry>
-<term>kdeaddons</term>
+<term>tdeaddons</term>
 <listitem>
 <para>Optional</para>
 <para>Various plugins for &kate;, &kicker;, &knewsticker;, &konqueror; and &noatun; </para>
 </listitem>
 </varlistentry>
 <varlistentry>
-<term>kdeartwork</term>
+<term>tdeartwork</term>
 <listitem>
 <para>Optional</para>
 <para>Additional wallpapers, themes, styles, sounds ...</para>
 </listitem>
 </varlistentry>
 <varlistentry>
-<term>kdebindings</term>
+<term>tdebindings</term>
 <listitem>
 <para>Optional</para>
 <para>Various bindings for other languages, including &Java;, Perl, Python, ...</para>
@@ -175,7 +175,7 @@ server.</para>
 </listitem>
 </varlistentry>
 <varlistentry>
-<term>kdegraphics</term>
+<term>tdegraphics</term>
 <listitem>
 <para>Optional</para>
 <para>Various graphics-related programs like &PostScript; previewer,
@@ -183,7 +183,7 @@ server.</para>
 </listitem>
 </varlistentry>
 <varlistentry>
-<term>kdeutils</term>
+<term>tdeutils</term>
 <listitem>
 <para>Optional</para>
 <para>Various desktop tools like a calculator, an editor and other
@@ -191,14 +191,14 @@ nifty stuff.</para>
 </listitem>
 </varlistentry>
 <varlistentry>
-<term>kdemultimedia</term>
+<term>tdemultimedia</term>
 <listitem>
 <para>Optional</para>
 <para>Multimedia applications like a &CD; player and a mixer.</para>
 </listitem>
 </varlistentry>
 <varlistentry>
-<term>kdenetwork</term>
+<term>tdenetwork</term>
 <listitem>
 <para>Optional</para>
 <para>Network applications.  Currently contains the instant messaging client &kopete;, the
@@ -213,14 +213,14 @@ download manager &kget;, and several other network-related programs.</para>
 </listitem>
 </varlistentry>
 <varlistentry>
-<term>kdeadmin</term>
+<term>tdeadmin</term>
 <listitem>
 <para>Optional</para>
 <para>System administration programs.</para>
 </listitem>
 </varlistentry>
 <varlistentry>
-<term>kdeedu</term>
+<term>tdeedu</term>
 <listitem>
 <para>Optional</para>
 <para>
@@ -229,7 +229,7 @@ Educational and entertaining applications for &kde;'s younger users.
 </listitem>
 </varlistentry>
 <varlistentry>
-<term>kdeaccessibility</term>
+<term>tdeaccessibility</term>
 <listitem>
 <para>Optional</para>
 <para>
@@ -238,28 +238,28 @@ KDE accessibility programs such as a screen magnifier and speech synthesizer fro
 </listitem>
 </varlistentry>
 <varlistentry>
-<term>kdetoys</term>
+<term>tdetoys</term>
 <listitem>
 <para>Optional</para>
 <para>Toys!</para>
 </listitem>
 </varlistentry>
 <varlistentry>
-<term>kdevelop</term>
+<term>tdevelop</term>
 <listitem>
 <para>Optional</para>
 <para>A complete Integrated Development Environment for &kde; and Qt</para>
 </listitem>
 </varlistentry>
 <varlistentry>
-<term>kdewebdev</term>
+<term>tdewebdev</term>
 <listitem>
 <para>Optional</para>
 <para>Web development applications. Contains such applications as &quanta;, an integrated web development environment and other applications useful in web development</para>
 </listitem>
 </varlistentry>
 <varlistentry>
-<term>kdesdk</term>
+<term>tdesdk</term>
 <listitem>
 <para>Optional</para>
 <para>KDE Software Development Kit. Contains a collection of applications and tools used by KDE Developers.</para>
@@ -267,8 +267,8 @@ KDE accessibility programs such as a screen magnifier and speech synthesizer fro
 </varlistentry>
 </variablelist>
 	
-<para>&arts; and then kdelibs should be installed before everything
-else, and kdeaddons last. The other packages can be installed in any
+<para>&arts; and then tdelibs should be installed before everything
+else, and tdeaddons last. The other packages can be installed in any
 arbitrary order.</para>
 
 <para>Most package management tools will let you put all these
@@ -330,7 +330,7 @@ the <filename>configure</filename> script.</para>
 <step performance="required"><para>change folder to the package folder: <command>cd
 <replaceable>packagename</replaceable></command></para></step>
 <step performance="required"><para>configure the package: <command>./configure</command>
-<note><para>Some packages (notably kdebase) have special configuration
+<note><para>Some packages (notably tdebase) have special configuration
 options that might be applicable to your installation.  Type
 <command>./configure <option>--help</option></command> to see the
 available options.</para></note></para></step>
@@ -457,7 +457,7 @@ $<envar>KDEDIR</envar>/bin/*.kss</command></para></step>
 </procedure>
 <para>Alternatively, if you compile &kde; from source, you can use
 <command>./configure <option>with-shadow</option></command> to
-configure kdebase.  Then the suid bit is set automatically during
+configure tdebase.  Then the suid bit is set automatically during
 <command>make install</command>.</para>
 </answer>
 </qandaentry>
@@ -513,7 +513,7 @@ class="directory">/home/me</filename>.</para></step>
 <para><note>
 <para>Although &kde; will run from a user folder, there are some
 problems with programs that require suid root, &eg; the programs in
-the kdeadmin package.  But since they are not meant to be run by users
+the tdeadmin package.  But since they are not meant to be run by users
 in the first place, this is nothing to worry about.</para>
 <para>However, on systems using shadow passwords, the screensavers
 have to be suid root to enable password access for unlocking the
@@ -682,7 +682,7 @@ seconds off your &kde; startup time by doing so.</para>
 
 <qandaentry>
 <question>
-<para>Compiling kdebase gives me a <errorname>bin/sh: msgfmt: command
+<para>Compiling tdebase gives me a <errorname>bin/sh: msgfmt: command
 not found</errorname> error!</para>
 </question>
 <answer>

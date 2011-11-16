@@ -1,4 +1,4 @@
-## Makefile.am of kdebase/kcontrol/ebrowsing/plugins/ikws
+## Makefile.am of tdebase/kcontrol/ebrowsing/plugins/ikws
 
 SUBDIRS = searchproviders
 

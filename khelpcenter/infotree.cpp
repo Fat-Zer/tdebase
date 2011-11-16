@@ -98,7 +98,7 @@ void InfoTree::build( NavigatorItem *parent )
   KConfig *cfg = kapp->config();
   cfg->setGroup( "Info pages" );
   TQStringList infoDirFiles = cfg->readListEntry( "Search paths" );
-  // Default paths taken fron kdebase/kioslave/info/kde-info2html.conf
+  // Default paths taken fron tdebase/kioslave/info/kde-info2html.conf
   if ( infoDirFiles.isEmpty() ) { 
     infoDirFiles << "/usr/share/info";
     infoDirFiles << "/usr/info";

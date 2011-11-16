@@ -1,4 +1,4 @@
-## Makefile.am of kdebase/kcontrol/ebrowsing/plugins/shorturi
+## Makefile.am of tdebase/kcontrol/ebrowsing/plugins/shorturi
 
 AM_CPPFLAGS   =  $(all_includes) -DQT_NO_CAST_ASCII
 

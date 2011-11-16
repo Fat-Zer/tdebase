@@ -1,4 +1,4 @@
-// Born as kdelibs/kio/kfile/kfilebookmarkhandler.h
+// Born as tdelibs/kio/kfile/kfilebookmarkhandler.h
 
 #ifndef KONSOLEBOOKMARKHANDLER_H
 #define KONSOLEBOOKMARKHANDLER_H

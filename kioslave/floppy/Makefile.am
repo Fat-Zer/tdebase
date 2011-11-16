@@ -1,4 +1,4 @@
-## Makefile.am of kdebase/kioslave/floppy
+## Makefile.am of tdebase/kioslave/floppy
 
 INCLUDES= $(all_includes)
 AM_LDFLAGS = $(all_libraries)

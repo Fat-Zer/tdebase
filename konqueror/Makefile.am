@@ -54,8 +54,8 @@ konqueror_la_LIBADD = ../libkonq/libkonq.la libkonqueror_intern.la $(LIBMALLOC) 
 # Hmm, this experiment of a static konq failed, don't trust it...
 # (but feel free to fix it :)
 
-# Note that you need to --enable-debug in kdelibs and kdebase,
-# then make clean ; make install in kdelibs and libkonq,
+# Note that you need to --enable-debug in tdelibs and tdebase,
+# then make clean ; make install in tdelibs and libkonq,
 # and make clean ; make konqueror_static in here.
 #check_PROGRAMS = konqueror_static
 #

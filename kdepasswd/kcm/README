@@ -2,8 +2,8 @@
 Thu Jan 29 00:34:49 CET 2004
 Frans Englich <frans.englich@telia.com>
 
-KCM useraccount is a merge of the former kdebase/kcontrol/email 
-and kdeutils/kdepasswd/userinfo/. They existed in KDE 3.1, at least.
+KCM useraccount is a merge of the former tdebase/kcontrol/email 
+and tdeutils/kdepasswd/userinfo/. They existed in KDE 3.1, at least.
 
 As a bonus, on top of saving the stuff with KEMailSettings it tries 
 also to save the realname to /etc/passwd. This is done via chfn, wrapped 

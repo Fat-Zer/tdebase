@@ -1,4 +1,4 @@
-# Makefile.am of kdebase/kdesktop/pics
+# Makefile.am of tdebase/kdesktop/pics
 
 pics_DATA = ksslogo.png splash.png splash2.png kde2.xbm
 

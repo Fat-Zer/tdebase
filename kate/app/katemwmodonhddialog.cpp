@@ -196,7 +196,7 @@ void KateMwModOnHdDialog::slotSelectionChanged()
       KateDocManager::self()->documentInfo( ((KateDocItem*)lvDocuments->currentItem())->document )->modifiedOnDiscReason != 3 );
 }
 
-// ### the code below is slightly modified from kdelibs/kate/part/katedialogs,
+// ### the code below is slightly modified from tdelibs/kate/part/katedialogs,
 // class KateModOnHdPrompt.
 void KateMwModOnHdDialog::slotDiff()
 {

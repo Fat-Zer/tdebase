@@ -48,10 +48,10 @@
  /**
   * IMPORTANT:
   *  If you change anything here, please run the regression test
-  *  kdelibs/kio/tests/kurifiltertest.
+  *  tdelibs/kio/tests/kurifiltertest.
   *
   *  If you add anything here, make sure to add a corresponding
-  *  test code to kdelibs/kio/tests/kurifiltertest.
+  *  test code to tdelibs/kio/tests/kurifiltertest.
   */
 
 typedef TQMap<TQString,TQString> EntryMap;
