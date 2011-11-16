@@ -1,2 +1,2 @@
 #include <kapplication.h>
-#define KCONTROL_VERSION KDE_VERSION_STRING
+#define KCONTROL_VERSION TDE_VERSION_STRING

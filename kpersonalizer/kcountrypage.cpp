@@ -45,7 +45,7 @@ KCountryPage::KCountryPage(TQWidget *parent, const char *name ) : KCountryPageDl
 	b_startedLanguageChanged = false;
 
 	// set appropriate Trinity version (kapplication.h)
-	txt_welcome->setText(i18n("<h3>Welcome to Trinity %1</h3>").arg(KDE_VERSION_STRING));
+	txt_welcome->setText(i18n("<h3>Welcome to Trinity %1</h3>").arg(TDE_VERSION_STRING));
 
 	flang = new KFindLanguage();
 

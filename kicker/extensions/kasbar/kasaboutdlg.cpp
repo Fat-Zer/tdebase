@@ -157,7 +157,7 @@ void KasAboutDialog::addInfoPage()
 		     "<h2>Kasbar Version: %1</h2>"
 		     "<b>KDE Version:</b> %2"
 		     "</body></qt>" )
-	       .arg( VERSION_STRING ).arg( KDE_VERSION_STRING ),
+	       .arg( VERSION_STRING ).arg( TDE_VERSION_STRING ),
 	       aboutPage );
 
    KTextBrowser *text5 = new KTextBrowser( aboutPage );

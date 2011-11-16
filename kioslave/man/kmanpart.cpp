@@ -62,7 +62,7 @@ KInstance* KManPartFactory::instance()
    if( !s_instance )
    {
       s_about = new KAboutData( "kmanpart",
-                                I18N_NOOP( "KMan" ), KDE_VERSION_STRING );
+                                I18N_NOOP( "KMan" ), TDE_VERSION_STRING );
       s_instance = new KInstance( s_about );
    }
    return s_instance;

@@ -319,8 +319,8 @@ static void InitStringDefinitions( void )
     // \*S "Change to default font size"
 #ifndef SIMPLE_MAN2HTML
     // Special KDE KIO man:
-    const TQCString kdeversion(KDE_VERSION_STRING);
-    s_stringDefinitionMap.insert( ".KDE_VERSION_STRING", StringDefinition( kdeversion.length(), kdeversion ) );
+    const TQCString kdeversion(TDE_VERSION_STRING);
+    s_stringDefinitionMap.insert( ".TDE_VERSION_STRING", StringDefinition( kdeversion.length(), kdeversion ) );
 #endif
 }
 
@@ -1429,14 +1429,14 @@ static int read_only_number_register( const TQCString& name )
         return s_nroff;
 #ifndef SIMPLE_MAN2HTML
     // Special KDE KIO man:
-    else if ( name == ".KDE_VERSION_MAJOR" )
-        return KDE_VERSION_MAJOR;
-    else if ( name == ".KDE_VERSION_MINOR" )
-        return KDE_VERSION_MINOR;
-    else if ( name == ".KDE_VERSION_RELEASE" )
-        return KDE_VERSION_RELEASE;
-    else if ( name == ".KDE_VERSION" )
-        return KDE_VERSION;
+    else if ( name == ".TDE_VERSION_MAJOR" )
+        return TDE_VERSION_MAJOR;
+    else if ( name == ".TDE_VERSION_MINOR" )
+        return TDE_VERSION_MINOR;
+    else if ( name == ".TDE_VERSION_RELEASE" )
+        return TDE_VERSION_RELEASE;
+    else if ( name == ".TDE_VERSION" )
+        return TDE_VERSION;
 #endif
     // ### TODO: should .T be set to "html"? But we are not the HTML post-processor. :-(
 

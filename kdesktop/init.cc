@@ -165,17 +165,17 @@ static bool isNewRelease()
     int versionMinor = KDesktopSettings::kDEVersionMinor();
     int versionRelease = KDesktopSettings::kDEVersionRelease();
 
-    if( versionMajor < KDE_VERSION_MAJOR )
+    if( versionMajor < TDE_VERSION_MAJOR )
         bNewRelease = true;
-    else if( versionMinor < KDE_VERSION_MINOR )
+    else if( versionMinor < TDE_VERSION_MINOR )
         bNewRelease = true;
-    else if( versionRelease < KDE_VERSION_RELEASE )
+    else if( versionRelease < TDE_VERSION_RELEASE )
         bNewRelease = true;
 
     if( bNewRelease ) {
-      KDesktopSettings::setKDEVersionMajor( KDE_VERSION_MAJOR );
-      KDesktopSettings::setKDEVersionMinor( KDE_VERSION_MINOR );
-      KDesktopSettings::setKDEVersionRelease( KDE_VERSION_RELEASE );
+      KDesktopSettings::setKDEVersionMajor( TDE_VERSION_MAJOR );
+      KDesktopSettings::setKDEVersionMinor( TDE_VERSION_MINOR );
+      KDesktopSettings::setKDEVersionRelease( TDE_VERSION_RELEASE );
       KDesktopSettings::writeConfig();
     }
 
