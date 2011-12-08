@@ -104,7 +104,7 @@ TQString ShortcutsModule::quickHelp() const
 
 void ShortcutsModule::initGUI()
 {
-	TQString kde_winkeys_env_dir = KGlobal::dirs()->localkdedir() + "/env/";
+	TQString kde_winkeys_env_dir = KGlobal::dirs()->localtdedir() + "/env/";
 
 	kdDebug(125) << "A-----------" << endl;
 	KAccelActions* keys = &m_actionsGeneral;
@@ -458,7 +458,7 @@ void ShortcutsModule::slotRemoveScheme()
 
 void ShortcutsModule::slotUseRmWinKeysClicked()
 {
-	TQString kde_winkeys_env_dir = KGlobal::dirs()->localkdedir() + "/env/";
+	TQString kde_winkeys_env_dir = KGlobal::dirs()->localtdedir() + "/env/";
 
 	// See if ~/.trinity/env/win-key.sh exists
 	TQFile f( kde_winkeys_env_dir + "win-key.sh" );

@@ -5857,7 +5857,7 @@ bool KonqMainWindow::stayPreloaded()
     if( getenv( "TDE_FULL_SESSION" ) == NULL || getenv( "TDE_FULL_SESSION" )[ 0 ] == '\0' )
         return false;
     // not the same user like the one running the session (most likely we're run via sudo or something)
-    if( getenv( "KDE_SESSION_UID" ) != NULL && uid_t( atoi( getenv( "KDE_SESSION_UID" ))) != getuid())
+    if( getenv( "TDE_SESSION_UID" ) != NULL && uid_t( atoi( getenv( "TDE_SESSION_UID" ))) != getuid())
         return false;
     if( KonqSettings::maxPreloadCount() == 0 )
         return false;

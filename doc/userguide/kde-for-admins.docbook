@@ -64,7 +64,7 @@ class="directory">/etc/opt/trinity</filename>. (This was added by
 
 <para>If you have the KIOSK Admin tool v0.7 or later installed you can
 check which directory trees are used with the following command:
-<userinput><command>kiosktool-kdedirs</command>
+<userinput><command>kiosktool-tdedirs</command>
 <option>--check</option></userinput></para>
 </informalexample>
 
@@ -148,7 +148,7 @@ Position=10,10
 </seglistitem>
 
 <seglistitem>
-<seg><envar>KDEROOTHOME</envar></seg>
+<seg><envar>TDEROOTHOME</envar></seg>
 <seg><filename class="directory">/root/.kde</filename></seg>
 <seg>Different variable to prevent
 root writing to $TDEHOME of the user after running
@@ -184,7 +184,7 @@ colon. If not set, falls back to $<envar>TDEDIR</envar></seg>
 settings:</para>
 <programlisting>
 TDEHOME='~/.trinity'
-KDEROOTHOME='/root/.trinity'
+TDEROOTHOME='/root/.trinity'
 TDEDIRS='/opt/kde_staff:/opt/trinity'
 </programlisting>
 
@@ -1171,7 +1171,7 @@ the directory where personal data is stored.</para>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>$<envar>KDEROOTHOME</envar></term><listitem><para>If
+<varlistentry><term>$<envar>TDEROOTHOME</envar></term><listitem><para>If
 not set, &kde; uses <filename class="directory">~root/.kde</filename>
 as the directory for <systemitem class="username">root</systemitem>'s
 personal data. Was introduced to prevent &kde; from accidently
@@ -1195,7 +1195,7 @@ necessary files are installed.</para>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>$<envar>KDE_MULTIHEAD</envar></term><listitem><para>Set
+<varlistentry><term>$<envar>TDE_MULTIHEAD</envar></term><listitem><para>Set
 this variable to <literal>true</literal> to indicate that &kde; is running
 on a multi-head system.</para>
 </listitem>

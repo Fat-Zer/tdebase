@@ -96,7 +96,7 @@ int KDE_EXPORT kdemain( int argc, char** argv )
     {
         {
 	// multiheaded hotkeys
-        TQCString multiHead = getenv("KDE_MULTIHEAD");
+        TQCString multiHead = getenv("TDE_MULTIHEAD");
         if (multiHead.lower() == "true") {
 	    Display *dpy = XOpenDisplay(NULL);
 	    if (! dpy) {

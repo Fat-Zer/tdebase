@@ -255,7 +255,7 @@ KDE_EXPORT int kdemain( int argc, char * argv[] )
         // we only do the multihead fork if we are not restored by the session
 	// manager, since the session manager will register multiple twins,
         // one for each screen...
-        TQCString multiHead = getenv("KDE_MULTIHEAD");
+        TQCString multiHead = getenv("TDE_MULTIHEAD");
         if (multiHead.lower() == "true") 
             {
 

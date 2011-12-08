@@ -84,7 +84,7 @@ BGDialog::BGDialog(TQWidget* parent, KConfig* _config, bool _multidesktop)
    m_numViewports = s.width() * s.height();
    m_numScreens = TQApplication::desktop()->numScreens();
    
-   TQCString multiHead = getenv("KDE_MULTIHEAD");
+   TQCString multiHead = getenv("TDE_MULTIHEAD");
    if (multiHead.lower() == "true") 
    {
       m_numScreens = 1;

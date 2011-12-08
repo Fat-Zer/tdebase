@@ -285,10 +285,10 @@ static int startApp()
     if (pw->pw_uid)
     {
        // Only propagate TDEHOME for non-root users,
-       // root uses KDEROOTHOME
+       // root uses TDEROOTHOME
        
        // Translate the TDEHOME of this user to the new user.
-       TQString kdeHome = KGlobal::dirs()->relativeLocation("home", KGlobal::dirs()->localkdedir());
+       TQString kdeHome = KGlobal::dirs()->relativeLocation("home", KGlobal::dirs()->localtdedir());
        if (kdeHome[0] != '/')
           kdeHome.prepend("~/"); 
        else

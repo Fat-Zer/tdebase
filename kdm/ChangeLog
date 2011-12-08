@@ -527,7 +527,7 @@ if they affect the configuration.
 
 1998-03-26  Stephan Kulow <coolo@kde.org>
 
-	* Nuke -kdedir cmdline option and Kdedir resource
+	* Nuke -tdedir cmdline option and Kdedir resource
 
 1997-09-09  Steffen Hansen <hansen@kde.org>
 

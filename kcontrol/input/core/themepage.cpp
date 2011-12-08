@@ -173,8 +173,8 @@ void ThemePage::fixCursorFile()
 	// override dir.
 	//
 	// Next, if the user wants large cursors, copy the font
-	// cursor_large.pcf.gz to (localkdedir)/share/fonts/override/cursor.pcf.gz.
-	// Else remove the font cursor.pcf.gz from (localkdedir)/share/fonts/override.
+	// cursor_large.pcf.gz to (localtdedir)/share/fonts/override/cursor.pcf.gz.
+	// Else remove the font cursor.pcf.gz from (localtdedir)/share/fonts/override.
 	//
 	// Run mkfontdir to update fonts.dir in that dir.
 

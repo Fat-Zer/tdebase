@@ -180,7 +180,7 @@ KCMInit::KCMInit( KCmdLineArgs* args )
   bool multihead = !config.readBoolEntry( "disableMultihead", false) &&
                     (ScreenCount(qt_xdisplay()) > 1);
   // Pass env. var to tdeinit.
-  TQCString name = "KDE_MULTIHEAD";
+  TQCString name = "TDE_MULTIHEAD";
   TQCString value = multihead ? "true" : "false";
   TQByteArray params;
   TQDataStream stream(params, IO_WriteOnly);

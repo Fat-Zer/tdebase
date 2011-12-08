@@ -431,7 +431,7 @@ bool Workspace::workspaceEvent( XEvent * e )
                 return FALSE;
             break;
         case FocusIn:
-            if( e->xfocus.window == rootWin() && TQCString( getenv("KDE_MULTIHEAD")).lower() != "true"
+            if( e->xfocus.window == rootWin() && TQCString( getenv("TDE_MULTIHEAD")).lower() != "true"
                 && ( e->xfocus.detail == NotifyDetailNone || e->xfocus.detail == NotifyPointerRoot ))
                 {
                 updateXTime(); // focusToNull() uses qt_x_time, which is old now (FocusIn has no timestamp)

@@ -57,7 +57,7 @@ static void sighandler(int)
 extern "C" KDE_EXPORT int kdemain( int argc, char ** argv )
 {
     {
-        TQCString multiHead = getenv("KDE_MULTIHEAD");
+        TQCString multiHead = getenv("TDE_MULTIHEAD");
         if (multiHead.lower() == "true") {
 	    Display *dpy = XOpenDisplay(NULL);
 	    if (! dpy) {
