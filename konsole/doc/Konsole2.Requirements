@@ -22,7 +22,7 @@ This file is to collect requirements and ideas for this.
 
 - connection/disconnect session to/from individual windows
 
-- gui style configuration for $KDEDIR/share/apps/konsole/*
+- gui style configuration for $TDEDIR/share/apps/konsole/*
 
 - improved history algorithm
 

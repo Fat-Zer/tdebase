@@ -65,7 +65,7 @@ How to get debug output
 
 It is useful to redirect the debug output of your particular slave to a file 
 instead of stderr. E.g. I myself use the following lines in
-$KDEDIR/share/config/kdebugrc.
+$TDEDIR/share/config/kdebugrc.
 
        [7113]
        InfoOutput=0

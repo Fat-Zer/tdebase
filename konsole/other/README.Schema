@@ -2,7 +2,7 @@
 
 The schemata offered in the Options/Schema menu are
 taken from from configurations files with a *.schema
-pattern either located in $KDEDIR/share/apps/konsole
+pattern either located in $TDEDIR/share/apps/konsole
 or ~/.kde/share/apps/konsole.
 
 Schemata allow to configure the color set that konsole

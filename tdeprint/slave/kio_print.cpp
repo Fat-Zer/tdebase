@@ -789,7 +789,7 @@ void KIO_Print::showData(const TQString& pathname)
 
 /**
  * Locate a data in this order:
- *	- $KDEDIR/share/apps/tdeprint/template/
+ *	- $TDEDIR/share/apps/tdeprint/template/
  *	- as a desktop icon
  */
 TQString KIO_Print::locateData(const TQString& item)

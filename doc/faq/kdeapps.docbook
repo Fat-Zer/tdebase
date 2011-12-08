@@ -120,7 +120,7 @@ paste by clicking with the &MMB; (or both buttons if you are using a
 
 <para><application>FontConfig</application> must find the three fonts
 installed in: <filename
-class="directory">$<envar>KDEDIR</envar>/share/fonts</filename>. 
+class="directory">$<envar>TDEDIR</envar>/share/fonts</filename>. 
  If
 the &kde; install does not install these fonts in a directory that
 already exists (&eg; <filename

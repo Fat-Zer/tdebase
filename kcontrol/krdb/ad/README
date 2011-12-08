@@ -35,7 +35,7 @@ Their meaning should be obvious to anyone familiar with
 KDE's desktop wide resources. Install your application
 default file either in
 
-$(KDEDIR)/share/apps/kdisplay/app-defaults
+$(TDEDIR)/share/apps/kdisplay/app-defaults
 
 or
 

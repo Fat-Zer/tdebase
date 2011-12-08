@@ -417,7 +417,7 @@ Font Configuration
 
 ### Help pages already make heavy use of the cascading feature of CSS, we
 ### ought to be able to leverage that by writing to perhaps the
-### kde-localized.css file or a copy of it in $KDEHOME.  There is already
+### kde-localized.css file or a copy of it in $TDEHOME.  There is already
 ### code in KControl to create a user CSS stylesheet, and we probably only
 ### need to configure the size and the face for KHC.
 

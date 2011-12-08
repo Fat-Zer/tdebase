@@ -169,7 +169,7 @@ toothofthehoundthatbitcha, vegetative_fog, wavetron, woodcheck
 
 Common Mistakes
 ---------------
-IMPORTANT: most applications need KDEDIR as the directory where KDE is
+IMPORTANT: most applications need TDEDIR as the directory where KDE is
 installed.  Please set this in your login file.
 
 If XPM support wasn't configured, it may be that configure has no idea where
@@ -278,7 +278,7 @@ Removal/Uninstallation
 ----------------------
 You can use 'make uninstall' if you want to remove the kde from the dirs.
 This feature has not been tested completely, and is depreciated. On a system
-where KDEDIR is specific to KDE (i.e. not /usr), rm -rf $KDEDIR does it as
+where TDEDIR is specific to KDE (i.e. not /usr), rm -rf $TDEDIR does it as
 well.
 
 

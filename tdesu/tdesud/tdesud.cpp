@@ -6,7 +6,7 @@
  *
  * tdesud.cpp: KDE su daemon. Offers "keep password" functionality to kde su.
  *
- * The socket $KDEHOME/socket-$(HOSTNAME)/tdesud_$(display) is used for communication with
+ * The socket $TDEHOME/socket-$(HOSTNAME)/tdesud_$(display) is used for communication with
  * client programs.
  *
  * The protocol: Client initiates the connection. All commands and responses

@@ -54,7 +54,7 @@ KDE3.1 -> KDE3.2
 ================
 1.  Re-designed (yet again...) to be a kio slave. As a user, starting fonts:/ will display
 
-        Personal   Lists contents of $HOME/.fonts and $KDEHOME/share/fonts (where previous installer installed to)
+        Personal   Lists contents of $HOME/.fonts and $TDEHOME/share/fonts (where previous installer installed to)
                    Fonts are installed to $HOME/.fonts
 
         System     Lists contents of /usr/local/share/fonts, /usr/share/fonts, and /usr/X11R6/lib/X11/fonts
@@ -250,10 +250,10 @@ KDE3.1 -> KDE3.2
 8. Removed some memory leaks
 10. Default folders changed for non-root users. KFontinst will now (upon initial start-up) select the following:
 
-     X fonts dir:    $KDEHOME/share/fonts
-     XConfig file:   $KDEHOME/share/fonts/fontpaths
+     X fonts dir:    $TDEHOME/share/fonts
+     XConfig file:   $TDEHOME/share/fonts/fontpaths
      XftConfig file: $HOME/.xftconfig
-     Fontmap file:   $KDEHOME/share/fonts/Fontmap
+     Fontmap file:   $TDEHOME/share/fonts/Fontmap
 
    ...This should make it possible for users to install fonts without being root. However, problems may arrise when
    configuring StarOffice - as this requires some other files to be modified, which won't be possible if SO has been installed
@@ -262,7 +262,7 @@ KDE3.1 -> KDE3.2
    ...Also to accomplish this, some changes are needed to 'starttde' - see file README.starttde
 
 11. Because of the above, when started as non-root, KFontinst will create Type1 and TrueType sub-folders in
-    $KDEHOME/share/fonts - if they do not already exist.
+    $TDEHOME/share/fonts - if they do not already exist.
 12. Moved XftConfig stuff from a sub-page of settings tab into its own tab.
 13. Added question dialog if module is unloaded before system has been configured.
 14. Added ability to "touch" a X font folder - marking it as being modified, so that a re-configure of the that folder
@@ -403,7 +403,7 @@ KDE3.1 -> KDE3.2
 5. Removed kfontinst-cp1252.enc, kfontinst-cp1252.xpp -- these were hacks anyway, and seing as Qt2 is going to 
    support cp1252 by a hard-coded codec, there's no real point...
 6. Rearranged the Configure System dialog - so that Force AFM regeneration is grouped next to the Generate AFMs option.
-7. Encoding files now stored in <KDEDIR>/share/apps/kfontinst/Encodings
+7. Encoding files now stored in <TDEDIR>/share/apps/kfontinst/Encodings
 
 0.6.1->0.7
 ==========

@@ -21,7 +21,7 @@ class KConfig;
 /**
  * @short Theme reader.
  * A Theme is read in from the file
- * <KDEDIR>/share/apps/ksplash/Themes/<theme>/Theme.rc
+ * <TDEDIR>/share/apps/ksplash/Themes/<theme>/Theme.rc
  * This controls the behavior, graphics, and appearance
  * of KSplash completely, and offers a friendlier way
  * of installing custom splash screens.

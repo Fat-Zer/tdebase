@@ -472,7 +472,7 @@ small handle to the left of the &klipper; icon).</para>
 -->
 <!--
 <para>To disable this, simply remove the file 
-<filename>$<envar>KDEDIR</envar>/share/autostart/klipper.desktop</filename>
+<filename>$<envar>TDEDIR</envar>/share/autostart/klipper.desktop</filename>
 or create a file <filename>$<envar>HOME</envar>/share/autostart/klipper.desktop</filename>
 with the following contents:
 

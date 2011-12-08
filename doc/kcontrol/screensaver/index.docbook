@@ -121,7 +121,7 @@ directions</para></caution>
 
 <screen>
 <prompt>bash$</prompt> <command>cd 
-$KDEDIR/share/applnk/System/ScreenSavers</command>
+$TDEDIR/share/applnk/System/ScreenSavers</command>
 <prompt>bash$</prompt> <command>ls</command>
 </screen> 
 
@@ -134,7 +134,7 @@ file to a name which does not end in
 <para>Example:</para>
 <screen>
 <prompt>bash$</prompt> <command>cd 
-$KDEDIR/share/applnk/System/ScreenSavers</command>
+$TDEDIR/share/applnk/System/ScreenSavers</command>
 <prompt>bash$</prompt> <command>mv KSpace.desktop KSpace.backup</command>
 </screen> 
 
@@ -148,7 +148,7 @@ original name:</para>
 
 <screen>
 <prompt>bash$</prompt> <command>cd 
-$KDEDIR/share/applnk/System/ScreenSavers</command>
+$TDEDIR/share/applnk/System/ScreenSavers</command>
 <prompt>bash$</prompt> <command>mv KSpace.backup KSpace.desktop</command>
 </screen> 
 

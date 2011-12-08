@@ -63,57 +63,57 @@ fi
 # * Then ksmserver is started which takes control of the rest of the startup sequence
 
 # The user's personal KDE directory usually is $HOME/.kde or $HOME/.trinity.
-# This setting may be overridden by setting $KDEHOME.
+# This setting may be overridden by setting $TDEHOME.
 # Must be careful here because $HOME/.kde was used commonly in the pre-KDE4
 # days for the user's KDE3 profile, but now with KDE4 common on systems,
 # $HOME/.kde might point to KDE4 profile settings. Further, the existence
 # of KDE4 does not mean all people have KDE4 installed and might want to keep
 # $HOME/.kde as their preferred profile location for Trinity KDE.
 
-if [ -n "$KDEHOME" ]; then
-  echo "[starttde] KDEHOME is preset to $KDEHOME." 1>&2
-  export KDEHOME=$KDEHOME
+if [ -n "$TDEHOME" ]; then
+  echo "[starttde] TDEHOME is preset to $TDEHOME." 1>&2
+  export TDEHOME=$TDEHOME
 else
-  # $KDEHOME is NOT already preset in the environment. Try to help.
+  # $TDEHOME is NOT already preset in the environment. Try to help.
   # This might be overkill but does provide flexibility.
-  echo "[starttde] KDEHOME is not set." 1>&2
+  echo "[starttde] TDEHOME is not set." 1>&2
   if [ -d $HOME/.trinity ]; then
     # OK, this one is obvious.
-    export KDEHOME=$HOME/.trinity
+    export TDEHOME=$HOME/.trinity
   elif [ -d $HOME/.trinity ]; then
     # Looks like the user had an old version of Trinity installed at last login
     echo "[starttde] Migrating old ~/.trinity directory to new ~/.trinity name." 1>&2
     mv $HOME/.trinity $HOME/.trinity
-    export KDEHOME=$HOME/.trinity
+    export TDEHOME=$HOME/.trinity
   elif [ -f /usr/bin/kde4-config ]; then
     # Looks like KDE4 is installed.
     if [ -d $HOME/.kde ] && [ ! -d $HOME/.trinity ]; then
       # Presume $HOME/.kde is being used for KDE4 as it already exists.
-      export KDEHOME=$HOME/.trinity
+      export TDEHOME=$HOME/.trinity
     else
       # Presume $HOME/.kde is being used for KDE4 to be on the safe side.
-      export KDEHOME=$HOME/.trinity
+      export TDEHOME=$HOME/.trinity
     fi
   elif [ -f /opt/trinity/bin/kde-config ]; then
     # Looks like KDE3 or Trinity is installed and playing second fiddle to KDE4.
-    export KDEHOME=$HOME/.trinity
+    export TDEHOME=$HOME/.trinity
   elif [ -f /opt/trinity/bin/kde-config ]; then
     # Looks like KDE3 or Trinity is installed and playing second fiddle to KDE4.
-    export KDEHOME=$HOME/.trinity
+    export TDEHOME=$HOME/.trinity
   elif [ -f /usr/bin/kde-config ] && [ -d $HOME/.kde ]; then
     # Looks like KDE3 or Trinity is installed and not playing second fiddle to KDE4.
-    export KDEHOME=$HOME/.kde
+    export TDEHOME=$HOME/.kde
   else
     # Resort to this and hope for the best!
-    export KDEHOME=$HOME/.trinity
+    export TDEHOME=$HOME/.trinity
   fi
-  echo "[starttde] Set KDEHOME to $KDEHOME." 1>&2
+  echo "[starttde] Set TDEHOME to $TDEHOME." 1>&2
 fi
 
 # Run a quick test for root.
 if [ -z "$KDEROOTHOME" ] && [ "$UID" = "0" ]; then
-  echo "[starttde] User ID is $UID. Setting KDEROOTHOME to $KDEHOME."
-  export KDEROOTHOME=$KDEHOME
+  echo "[starttde] User ID is $UID. Setting KDEROOTHOME to $TDEHOME."
+  export KDEROOTHOME=$TDEHOME
 fi
 
 # Modify the following environment variables only as necessary.
@@ -148,21 +148,21 @@ if [ -d /opt/trinity/share/man ]; then
   export MANPATH=/opt/trinity/share/man:$MANPATH
 fi
 if [ -d /opt/trinity ]; then
-  if [ -n "$KDEDIRS" ]; then
-    export KDEDIRS=$KDEDIRS:/opt/trinity/:/usr/
+  if [ -n "$TDEDIRS" ]; then
+    export TDEDIRS=$TDEDIRS:/opt/trinity/:/usr/
   else
-    export KDEDIRS=/opt/trinity/:/usr/
+    export TDEDIRS=/opt/trinity/:/usr/
   fi
 fi
 if [ -d /opt/trinity ]; then
-  if [ -n "$KDEDIRS" ]; then
-    export KDEDIRS=$KDEDIRS:/opt/trinity/:/usr/
+  if [ -n "$TDEDIRS" ]; then
+    export TDEDIRS=$TDEDIRS:/opt/trinity/:/usr/
   else
-    export KDEDIRS=/opt/trinity/:/usr/
+    export TDEDIRS=/opt/trinity/:/usr/
   fi
 fi
 
-test -n "$KDEHOME" && kdehome=`echo "$KDEHOME" | sed "s,^~/,$HOME/,"`
+test -n "$TDEHOME" && kdehome=`echo "$TDEHOME" | sed "s,^~/,$HOME/,"`
 echo "[starttde] kdehome: $kdehome" 1>&2
 
 # Allow interested applications, such as the Plasma control wrapper,
@@ -292,15 +292,15 @@ fi
 
 # Configuration of the gtk_qt_engine if not already set.
 
-if test -n "$KDEDIRS"; then
-  kdedirs_first=`echo "$KDEDIRS" | sed -e 's/:.*//'`
+if test -n "$TDEDIRS"; then
+  kdedirs_first=`echo "$TDEDIRS" | sed -e 's/:.*//'`
   KGTK_RC_ENGINE=$kdedirs_first/share/kgtk/gtk-qt-engine.rc.sh
   KGTK_RC_KDE1=$kdedirs_first/share/kgtk/.gtkrc-2.0-kde4
   KGTK_RC_KDE2=$kdedirs_first/share/kgtk/.gtkrc-2.0-kde-kde4
 else
-  KGTK_RC_ENGINE=$KDEDIR/share/kgtk/gtk-qt-engine.rc.sh
-  KGTK_RC_KDE1=$KDEDIR/share/kgtk/.gtkrc-2.0-kde4
-  KGTK_RC_KDE2=$KDEDIR/share/kgtk/.gtkrc-2.0-kde-kde4
+  KGTK_RC_ENGINE=$TDEDIR/share/kgtk/gtk-qt-engine.rc.sh
+  KGTK_RC_KDE1=$TDEDIR/share/kgtk/.gtkrc-2.0-kde4
+  KGTK_RC_KDE2=$TDEDIR/share/kgtk/.gtkrc-2.0-kde-kde4
 fi
 
 if [ ! -e $kdehome/env/gtk-qt-engine.rc.sh ] && [ -e $KGTK_RC_ENGINE ]
@@ -321,7 +321,7 @@ then
 fi
 
 # Source scripts found in <localprefix>/env/*.sh and <prefixes>/env/*.sh
-# (where <localprefix> is $KDEHOME or ~/.trinity, and <prefixes> is where KDE is installed)
+# (where <localprefix> is $TDEHOME or ~/.trinity, and <prefixes> is where KDE is installed)
 #
 # This is where you can define environment variables that will be available to
 # all KDE programs, so this is where you can run agents using e.g. eval `ssh-agent`
@@ -383,32 +383,32 @@ if test -r "$kde_fontpaths" ; then
     IFS=$savifs
 fi
 
-if [ ! -n "$KDEDIR" ]; then
-  export KDEDIR=`echo "$KDEDIRS" | sed -e 's/:.*//'`
+if [ ! -n "$TDEDIR" ]; then
+  export TDEDIR=`echo "$TDEDIRS" | sed -e 's/:.*//'`
 fi
 
-echo "[starttde] KDEDIR: $KDEDIR" 1>&2
-echo "[starttde] KDEDIRS: $KDEDIRS" 1>&2
+echo "[starttde] TDEDIR: $TDEDIR" 1>&2
+echo "[starttde] TDEDIRS: $TDEDIRS" 1>&2
 
-if test -n "$KDEDIRS"; then
-  kdedirs_first=`echo "$KDEDIRS" | sed -e 's/:.*//'`
+if test -n "$TDEDIRS"; then
+  kdedirs_first=`echo "$TDEDIRS" | sed -e 's/:.*//'`
   sys_odir=$kdedirs_first/share/fonts/override
   sys_fdir=$kdedirs_first/share/fonts
 else
-  sys_odir=$KDEDIR/share/fonts/override
-  sys_fdir=$KDEDIR/share/fonts
+  sys_odir=$TDEDIR/share/fonts/override
+  sys_fdir=$TDEDIR/share/fonts
 fi
 
-if test -n "$KDEDIRS"; then
-  kdedirs_first=`echo "$KDEDIRS" | sed -e 's/:.*//'`
+if test -n "$TDEDIRS"; then
+  kdedirs_first=`echo "$TDEDIRS" | sed -e 's/:.*//'`
   echo "[starttde] kdedirs_first: $kdedirs_first"
   if [ -r $kdedirs_first/share/kgtk/preload ]; then
     echo "[starttde] Reading from $kdedirs_first/share/kgtk/preload"
     read -r KGTK_PRELOAD < $kdedirs_first/share/kgtk/preload
   fi
 else
-  if [ -r $KDEDIR/share/kgtk/preload ]; then
-    read -r KGTK_PRELOAD < $KDEDIR/share/kgtk/preload
+  if [ -r $TDEDIR/share/kgtk/preload ]; then
+    read -r KGTK_PRELOAD < $TDEDIR/share/kgtk/preload
   fi
 fi
 
@@ -457,9 +457,9 @@ fi
 
 # Link "tmp" "socket" and "cache" resources to directory in /tmp
 # Creates:
-# - a directory /tmp/kde-$USER and links $KDEHOME/tmp-$HOSTNAME to it.
-# - a directory /tmp/ksocket-$USER and links $KDEHOME/socket-$HOSTNAME to it.
-# - a directory /var/tmp/kdecache-$USER and links $KDEHOME/cache-$HOSTNAME to it.
+# - a directory /tmp/kde-$USER and links $TDEHOME/tmp-$HOSTNAME to it.
+# - a directory /tmp/ksocket-$USER and links $TDEHOME/socket-$HOSTNAME to it.
+# - a directory /var/tmp/kdecache-$USER and links $TDEHOME/cache-$HOSTNAME to it.
 # Note: temporary locations can be overriden through the KDETMP and KDEVARTMP
 # environment variables.
 for resource in tmp cache socket; do
@@ -476,11 +476,11 @@ dcopserver_shutdown
 echo '[starttde] Starting Trinity...'  1>&2
 
 # Detect any running Xorg composition managers
-$KDEDIR/bin/kdetcompmgr
+$TDEDIR/bin/kdetcompmgr
 
 # Run KPersonalizer before the session if this is the first login.
 if test "$kpersonalizerrc_general_firstlogin" = "true"; then
-  if [ ! -x $KDEDIR/bin/kpersonalizer ]; then
+  if [ ! -x $TDEDIR/bin/kpersonalizer ]; then
     echo "[starttde] kpersonalizer not found! Please install it in order to properly configure your user profile." 1>&2
   else
     # start only dcopserver, don't start whole tdeinit (takes too long)
@@ -601,7 +601,7 @@ fi
 
 echo '[starttde] Running Trinity shutdown scripts...'  1>&2
 
-# Run scripts found in $KDEDIRS/shutdown
+# Run scripts found in $TDEDIRS/shutdown
 for prefix in `echo "$exepath" | sed -n -e 's,/bin[^/]*/,/shutdown/,p'`; do
   for file in `ls "$prefix" 2> /dev/null | egrep -v '(~|\.bak)$'`; do
     if [ -x "${prefix}${file}" ]; then

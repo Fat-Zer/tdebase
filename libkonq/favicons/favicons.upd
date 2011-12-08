@@ -1,3 +1,3 @@
-# Move favicons from $KDEHOME/share/icons and $KDEHOME/share/cache to $KDEHOME/cache-$HOST
+# Move favicons from $TDEHOME/share/icons and $TDEHOME/share/cache to $TDEHOME/cache-$HOST
 Id=trinity_2
 Script=move_favicons.sh,sh

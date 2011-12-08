@@ -284,17 +284,17 @@ static int startApp()
     
     if (pw->pw_uid)
     {
-       // Only propagate KDEHOME for non-root users,
+       // Only propagate TDEHOME for non-root users,
        // root uses KDEROOTHOME
        
-       // Translate the KDEHOME of this user to the new user.
+       // Translate the TDEHOME of this user to the new user.
        TQString kdeHome = KGlobal::dirs()->relativeLocation("home", KGlobal::dirs()->localkdedir());
        if (kdeHome[0] != '/')
           kdeHome.prepend("~/"); 
        else
           kdeHome=TQString::null; // Use default
 
-       env << ("KDEHOME="+ TQFile::encodeName(kdeHome));
+       env << ("TDEHOME="+ TQFile::encodeName(kdeHome));
     }
 
     KUser u;

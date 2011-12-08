@@ -191,12 +191,12 @@ url="http://www.koffice.org/kword/euro.php">http://www.koffice.org/kword/euro.ph
 <answer><para>There are many ways to do that. If what you want to do
 is to run some scripts that would set some environment variables (for
 example, to start <command>gpg-agent</command>, <command>ssh-agent</command> and others), you can put
-these scripts into <filename class="directory">$<envar>KDEHOME</envar>/env/</filename> and make sure their names end in
-<literal role="extension">.sh</literal>. $<envar>KDEHOME</envar> is
+these scripts into <filename class="directory">$<envar>TDEHOME</envar>/env/</filename> and make sure their names end in
+<literal role="extension">.sh</literal>. $<envar>TDEHOME</envar> is
 usually a folder named <filename class="directory">.kde</filename>
 (note the period at the beginning) in your home
 folder. If you want scripts to be executed for all &kde; users, you can
-put them under <filename class="directory">$<envar>KDEDIR</envar>/env/</filename>, where $<envar>KDEDIR</envar> is the prefix &kde; was
+put them under <filename class="directory">$<envar>TDEDIR</envar>/env/</filename>, where $<envar>TDEDIR</envar> is the prefix &kde; was
 installed to (you can find this out using the command
 <userinput><command>kde-config</command> --prefix</userinput>).</para>
 <para>If you wish to start a program after &kde; has started, you may want to use the 

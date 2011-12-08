@@ -47,7 +47,7 @@ if [ -z "$INFILE" -o -z "$OUTFILE" -o ! -f "$INFILE" ]; then
 fi
 
 if [ -z "$MIMETYPE" ]; then
-	MAGIC=$KDEDIR
+	MAGIC=$TDEDIR
 	if [ -z "$MAGIC" ]; then
 		MAGIC=/usr
 	fi

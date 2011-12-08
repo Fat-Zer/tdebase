@@ -1,4 +1,4 @@
-# Move session config files from $KDEHOME/share/config to $KDEHOME/share/config/session
+# Move session config files from $TDEHOME/share/config to $TDEHOME/share/config/session
 Id=trinity
 File=ksmserverrc
 Group=Session

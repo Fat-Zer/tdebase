@@ -88,7 +88,7 @@ your tastes, you can learn how to customize the appearance of
 url="http://www.kde-look.org">KDE-Look</ulink>, extract them to
 <filename>~/.kde/share/apps/ksplash/Themes/</filename> for a single user, or
 to
-<filename>$<envar>KDEDIR</envar>/share/apps/ksplash/Themes/</filename>
+<filename>$<envar>TDEDIR</envar>/share/apps/ksplash/Themes/</filename>
 to make them available to all users of your system.</para>
 
 <para>You can also use the <guilabel>Splash Screen</guilabel> module under

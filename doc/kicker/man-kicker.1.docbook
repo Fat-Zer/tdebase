@@ -42,7 +42,7 @@ starters, applets, and a clock.</para>
 
 <variablelist>
 <varlistentry>
-<term><filename>$<envar>KDEHOME</envar>/share/apps/kickerrc</filename></term>
+<term><filename>$<envar>TDEHOME</envar>/share/apps/kickerrc</filename></term>
 <listitem>
 <para>User specific configuration file.  This file is not normally intended
 to be edited directly; Most configuration items can be controlled from

@@ -45,17 +45,17 @@
  the config file ), so you will be able to go back in case there will be
  a serious problem with this version. The files you should remove
  and backup before installing the new version are :
- - $KDEDIR/bin/khotkeys
- - $KDEDIR/lib/libkcm_khotkeys.la
- - $KDEDIR/lib/libkcm_khotkeys.so
- - $KDEDIR/lib/trinity/libkcm_khotkeys.la
- - $KDEDIR/lib/trinity/libkcm_khotkeys.so
- - $KDEDIR/lib/khotkeys.la
- - $KDEDIR/lib/khotkeys.so
- - $KDEDIR/lib/libkhotkeys.la
- - $KDEDIR/lib/libkhotkeys.so
- - $KDEDIR/share/autostart/khotkeys.desktop
- - $KDEHOME/share/config/khotkeysrc
+ - $TDEDIR/bin/khotkeys
+ - $TDEDIR/lib/libkcm_khotkeys.la
+ - $TDEDIR/lib/libkcm_khotkeys.so
+ - $TDEDIR/lib/trinity/libkcm_khotkeys.la
+ - $TDEDIR/lib/trinity/libkcm_khotkeys.so
+ - $TDEDIR/lib/khotkeys.la
+ - $TDEDIR/lib/khotkeys.so
+ - $TDEDIR/lib/libkhotkeys.la
+ - $TDEDIR/lib/libkhotkeys.so
+ - $TDEDIR/share/autostart/khotkeys.desktop
+ - $TDEHOME/share/config/khotkeysrc
  Not all these files exist, depending on your KDE and OS version. It's simply
  all files having 'khotkeys' in their name.
   Ok, now the standard install ( ./configure && make && make install ), and
@@ -121,7 +121,7 @@
  EXAMPLES :
  
   Ok, as I guess the things written above aren't that good explanation, I've
- included a sample configuration file. Put it in $KDEHOME/share/config/khotkeysrc.
+ included a sample configuration file. Put it in $TDEHOME/share/config/khotkeysrc.
  Every action is explained in its comment field. Note that all the actions are
  disabled, so you'll have to enable them in order to use them.
  

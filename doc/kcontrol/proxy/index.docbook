@@ -172,7 +172,7 @@ ask for a username or password if it needs to.</para>
 <para>The other option is <guilabel>Use automatic login</guilabel>.
 Select this option if you have already set up a login entry for your
 proxy server in the
-<filename>$<envar>KDEDIR</envar>/share/config/kionetrc</filename>
+<filename>$<envar>TDEDIR</envar>/share/config/kionetrc</filename>
 file.</para>
 
 </sect2>

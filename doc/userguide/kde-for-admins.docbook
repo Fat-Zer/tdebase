@@ -142,7 +142,7 @@ Position=10,10
 <segtitle>Comment</segtitle>
 
 <seglistitem>
-<seg><envar>KDEHOME</envar></seg>
+<seg><envar>TDEHOME</envar></seg>
 <seg><filename class="directory">~/.kde</filename></seg>
 <seg></seg>
 </seglistitem>
@@ -151,12 +151,12 @@ Position=10,10
 <seg><envar>KDEROOTHOME</envar></seg>
 <seg><filename class="directory">/root/.kde</filename></seg>
 <seg>Different variable to prevent
-root writing to $KDEHOME of the user after running
+root writing to $TDEHOME of the user after running
 <command>su</command>.</seg>
 </seglistitem>
 
 <seglistitem>
-<seg><envar>KDEDIR</envar></seg>
+<seg><envar>TDEDIR</envar></seg>
 <seg><filename class="directory">/opt/trinity</filename>, <filename
 class="directory">/usr</filename>, <filename
 class="directory">/usr/trinity</filename></seg>
@@ -165,27 +165,27 @@ compiled-in default.</seg>
 </seglistitem>
 
 <seglistitem>
-<seg><envar>KDEDIRS</envar></seg>
+<seg><envar>TDEDIRS</envar></seg>
 <seg><filename class="directory">/opt/trinity</filename>, <filename
 class="directory">/usr</filename>, <filename
 class="directory">/usr/trinity</filename></seg>
 <seg>New in &kde;3. Can list multiple locations separated by a
-colon. If not set, falls back to $<envar>KDEDIR</envar></seg>
+colon. If not set, falls back to $<envar>TDEDIR</envar></seg>
 </seglistitem>
 
 </segmentedlist>
 </para>
 <para>Don't <emphasis>need</emphasis> to be set, defaults work just fine.</para>
-<para>Running &kde;2 next to &kde;3? Point $<envar>KDEDIR</envar> to
-&kde; 2 and $<envar>KDEDIRS</envar> to &kde; 3.</para>
+<para>Running &kde;2 next to &kde;3? Point $<envar>TDEDIR</envar> to
+&kde; 2 and $<envar>TDEDIRS</envar> to &kde; 3.</para>
 
 <informalexample>
 <para>A staff member at a university could have the following
 settings:</para>
 <programlisting>
-KDEHOME='~/.trinity'
+TDEHOME='~/.trinity'
 KDEROOTHOME='/root/.trinity'
-KDEDIRS='/opt/kde_staff:/opt/trinity'
+TDEDIRS='/opt/kde_staff:/opt/trinity'
 </programlisting>
 
 </informalexample>
@@ -251,7 +251,7 @@ bastian=staff
 Directories that are not relevant for a certain tree, or simply not used can
 be left out though. For example, directories used for temporary files are
 usually only found under <filename
-class="directory">$<envar>KDEHOME</envar></filename> but not in any other
+class="directory">$<envar>TDEHOME</envar></filename> but not in any other
 directory tree.</para>
 
 </sect1>
@@ -323,7 +323,7 @@ This file is read by all &kde; applications.</para></listitem>
 class="directory">share/config/session</filename></term>
 <listitem><para>This directory is used by session management and is
 normally only available under <filename
-class="directory">$<envar>KDEHOME</envar></filename>. At the end of a
+class="directory">$<envar>TDEHOME</envar></filename>. At the end of a
 session &kde; applications store their state here. The file names
 consist of the name of the application followed by a number. The
 session manager <command>ksmserver</command> stores references to
@@ -418,7 +418,7 @@ the following symlinks and directories will be created using the
 <variablelist>
 
 <varlistentry>
-<term><filename>$<envar>KDEHOME</envar>/socket-$<envar>HOSTNAME</envar></filename></term>
+<term><filename>$<envar>TDEHOME</envar>/socket-$<envar>HOSTNAME</envar></filename></term>
 <listitem><para>Usually <filename
 class="directory">/tmp/ksocket-$<envar>USER</envar>/</filename>, this
 is used for various &UNIX; sockets.</para>
@@ -426,14 +426,14 @@ is used for various &UNIX; sockets.</para>
 </varlistentry>
 
 <varlistentry>
-<term><filename>$<envar>KDEHOME</envar>/tmp-$<envar>HOSTNAME</envar></filename></term>
+<term><filename>$<envar>TDEHOME</envar>/tmp-$<envar>HOSTNAME</envar></filename></term>
 <listitem><para>Usually	<filename
 class="directory">/tmp/kde-$<envar>USER</envar>/</filename>, this is used for temporary files.</para>
 </listitem>
 </varlistentry>
 
 <varlistentry>
-<term><filename>$<envar>KDEHOME</envar>/cache-$<envar>HOSTNAME</envar></filename></term>
+<term><filename>$<envar>TDEHOME</envar>/cache-$<envar>HOSTNAME</envar></filename></term>
 <listitem><para>Usually <filename
 class="directory">/var/tmp/kdecache-$<envar>USER</envar>/</filename>,
 this is used for cached files.</para>
@@ -538,7 +538,7 @@ configuration files is combined on a key-by-key basis.  If the same key
 within a certain group is defined in more than one place, the key value read
 from the directory tree with the highest precedence will be used.
 Configuration files under <filename
-class="directory">$<envar>KDEHOME</envar></filename> always have the highest
+class="directory">$<envar>TDEHOME</envar></filename> always have the highest
 precedence.  If a key in a certain group is defined multiple times in a
 single file, the value of the last entry is used.</para>
 
@@ -741,7 +741,7 @@ Caption[fr]=Ma L&eacute;gende
 <para>In general the entries that can appear in a configuration file are not
 documented.  With &kde; 3.2 a start has been made to change this. In
 <filename
-class="directory">$<envar>KDEDIR</envar>/share/config.kcfg</filename>, files
+class="directory">$<envar>TDEDIR</envar>/share/config.kcfg</filename>, files
 can be found that provide a formal description of the possible entries in a
 configuration file. These are used by the new &kde; Configuration Editor
 when available.</para>
@@ -785,7 +785,7 @@ Auto Save Interval=25
 <title>&kdm;</title>
 
 <para>Always runs as <systemitem class="username">root</systemitem>! Uses
-<filename>$<envar>KDEDIR</envar>/share/config/kdmrc</filename> and
+<filename>$<envar>TDEDIR</envar>/share/config/kdmrc</filename> and
 <filename>/etc/X11/xdm/Xservers</filename>. The latter contains entries
 like:</para>
 
@@ -918,7 +918,7 @@ as well as <command>tdeinit</command> loadable modules
 (<acronym>KLM</acronym>s).  <acronym>KLM</acronym>s work just like binary
 program files but can be started more efficiently.  <acronym>KLM</acronym>s
 live in <filename
-class="directory">$<envar>KDEDIR</envar>/lib/trinity</filename></para>
+class="directory">$<envar>TDEDIR</envar>/lib/trinity</filename></para>
 
 <para>The drawback is that programs started this way appear as
 <computeroutput><command>tdeinit</command></computeroutput> in the output of
@@ -1031,7 +1031,7 @@ that <command>klauncher</command> crashed.</para>
 <para><command>klauncher</command> can be restarted by restarting
 <command>tdeinit</command> from a console window. Make sure that
 $<envar>HOME</envar>, $<envar>DISPLAY</envar> and the various
-$<envar>KDEDIR(S)</envar> are set correctly when doing so!</para>
+$<envar>TDEDIR(S)</envar> are set correctly when doing so!</para>
 
 </sect2>
 
@@ -1055,7 +1055,7 @@ the session manager launches auto-start applications and restores
 applications from the previous session.  The applications to auto-start are
 indicated by <literal role="extension">.desktop</literal> files in the
 <filename
-class="directory">$<envar>KDEDIR</envar>/share/autostart</filename>
+class="directory">$<envar>TDEDIR</envar>/share/autostart</filename>
 directory.  Whether or not to auto-start an application can be made
 conditional upon some configuration entry determined by the
 <varname>X-KDE-autostart-condition</varname> entry in the <literal
@@ -1122,7 +1122,7 @@ are:</para>
 
 <para><command>kdesktop</command> in its turn automatically starts
 applications stored in <filename
-class="directory">$<envar>KDEHOME</envar>/Autostart</filename>. <command>kdesktop</command>
+class="directory">$<envar>TDEHOME</envar>/Autostart</filename>. <command>kdesktop</command>
 will automatically open any files stored in this directory including
 documents, binary files or applications in the form of <literal
 role="extension">.desktop</literal> files.</para>
@@ -1134,7 +1134,7 @@ at the time the session was saved.  Sessions are stored in the
 <filename>ksmserverrc</filename> configuration file which contains
 references to application-specific state information. The
 application-specific state information is saved in <filename
-class="directory">$<envar>KDEHOME</envar>/share/config/session</filename>.
+class="directory">$<envar>TDEHOME</envar>/share/config/session</filename>.
 The state information of &twin; contains the location of the application
 windows of all the other applications in the session.
 </para>
@@ -1149,23 +1149,23 @@ windows of all the other applications in the session.
 <variablelist>
 
 <varlistentry>
-<term>$<envar>KDEDIR</envar></term>
+<term>$<envar>TDEDIR</envar></term>
 <listitem><para>Has to be set if
-<envar>KDEDIRS</envar> is not set and has to point to the root of the
+<envar>TDEDIRS</envar> is not set and has to point to the root of the
 &kde; installation tree. Allows &kde; to find its data like icons,
 menus and libraries.</para>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>$<envar>KDEDIRS</envar></term>
-<listitem><para>Overrides <envar>KDEDIR</envar> and allows you to specify
+<varlistentry><term>$<envar>TDEDIRS</envar></term>
+<listitem><para>Overrides <envar>TDEDIR</envar> and allows you to specify
 multiple directories where &kde; searches for its data. Useful if you want
 or have to install some programs to a different prefix than the rest of
 &kde;.</para> 
 </listitem>
 </varlistentry>
 
-<varlistentry><term><envar>$KDEHOME</envar></term><listitem><para>If
+<varlistentry><term><envar>$TDEHOME</envar></term><listitem><para>If
 not set, &kde; uses <filename class="directory">~/.kde</filename> as
 the directory where personal data is stored.</para>
 </listitem>
@@ -1282,7 +1282,7 @@ class="directory">$<envar>XDG_DATA_HOME</envar></filename> base
 directory. Default is
 <literal>/usr/local/share/:/usr/share/</literal></para>
 
-<para>&kde; adds locations from $<envar>KDEDIRS</envar> and profiles
+<para>&kde; adds locations from $<envar>TDEDIRS</envar> and profiles
 as well.  Used for <literal role="extension">.desktop</literal> and
 <literal role="extension">.directory</literal> menu files. <literal
 role="extension">.desktop</literal> files under <filename
@@ -1305,7 +1305,7 @@ specific configuration files should be stored. Default is
 (&kde; 3.2) - Defines the preference-ordered set of base directories
 to search for configuration files in addition to the $<envar>XDG_CONFIG_HOME</envar>
 base directory. The default is <filename class="directory">/etc/xdg</filename> &kde; adds locations from
-$<envar>KDEDIRS</envar> and profiles as well. Used by <literal role="extension">.menu</literal> descriptions in
+$<envar>TDEDIRS</envar> and profiles as well. Used by <literal role="extension">.menu</literal> descriptions in
 <filename class="directory">$<envar>XDG_CONFIG_DIRS</envar>/menus</filename>.
 </para>
 </listitem>
@@ -1325,7 +1325,7 @@ as well as <command>tdeinit</command> loadable modules
 (<acronym>KLM</acronym>s).  <acronym>KLM</acronym>s work just like binary
 program files but can be started more efficiently.  <acronym>KLM</acronym>s
 live in <filename
-class="directory">$<envar>KDEDIR</envar>/lib/trinity</filename></para>
+class="directory">$<envar>TDEDIR</envar>/lib/trinity</filename></para>
 
 <para>The drawback is that programs started this way appear as
 <computeroutput><command>tdeinit</command></computeroutput> in the
@@ -1615,11 +1615,11 @@ copied from <filename
 class="directory">/etc/skel/Desktop</filename></para></listitem>
 
 <listitem><para><filename
-class="directory">$<envar>KDEDIR</envar>/apps/kdesktop/Desktop</filename>
+class="directory">$<envar>TDEDIR</envar>/apps/kdesktop/Desktop</filename>
 (merged)</para></listitem>
 
 <listitem><para><filename
-class="directory">$<envar>KDEDIR</envar>/apps/kdesktop/DesktopLinks</filename>
+class="directory">$<envar>TDEDIR</envar>/apps/kdesktop/DesktopLinks</filename>
 (copied)</para></listitem>
 
 <listitem><para>Device Icons (dynamically
@@ -1704,7 +1704,7 @@ Reader.desktop</filename></para></listitem>
 
 <para><literal role="extension">.menu</literal> files describing the
 menu structure. The files are stored in <filename
-class="directory">$<envar>KDEDIR</envar>/etc/xdg/menus</filename> and
+class="directory">$<envar>TDEDIR</envar>/etc/xdg/menus</filename> and
 <filename class="directory">/etc/xdg/menus</filename>. These store the
 system-wide menu structure and are controlled by
 $<envar>XDG_CONFIG_DIRS</envar>. <filename
@@ -1715,7 +1715,7 @@ url="http://www.freedesktop.org/Standards/basedir-spec">http://www.freedesktop.o
 
 <para><literal role="extension">.desktop</literal> files describe the
 applications and are stored in: <filename
-class="directory">$<envar>KDEDIR</envar>/share/applications</filename>,
+class="directory">$<envar>TDEDIR</envar>/share/applications</filename>,
 <filename class="directory">/usr/share/applications</filename>,
 <filename
 class="directory">/usr/local/share/applications</filename>. These are
@@ -1733,7 +1733,7 @@ url="http://www.freedesktop.org/Standards/basedir-spec">http://www.freedesktop.o
 
 <para><literal role="extension">.directory</literal> files describing
 the sub-menus are stored in: <filename
-class="directory">$<envar>KDEDIR</envar>/share/desktop-directories</filename>,
+class="directory">$<envar>TDEDIR</envar>/share/desktop-directories</filename>,
 <filename class="directory">/usr/share/desktop-directories</filename>, <filename
 class="directory">/usr/local/share/desktop-directories</filename>.
 These are the system-wide menu <literal
@@ -1795,7 +1795,7 @@ role="extension">.directory</literal> file</para>
 <title>Essential Menus</title>
 
 <para><filename
-class="directory">$<envar>KDEDIR</envar>/etc/xdg/menus/applications-merged/</filename>
+class="directory">$<envar>TDEDIR</envar>/etc/xdg/menus/applications-merged/</filename>
 contains <filename>kde-essential.menu</filename> which includes some
 essential menus that are normally not shown in the &kde; menu itself:
 <itemizedlist>
@@ -1813,7 +1813,7 @@ whose contents are defined by
 <filename>kde-screensavers.menu</filename> and whose icon and  name
 are defined by
 <filename>kde-system-screensavers.directory</filename>.
-<filename>$<envar>KDEDIR</envar>/share/desktop-directories/kde-system-screensavers.directory</filename>
+<filename>$<envar>TDEDIR</envar>/share/desktop-directories/kde-system-screensavers.directory</filename>
 contains:
 <programlisting>
 NoDisplay=true
@@ -1828,7 +1828,7 @@ NoDisplay=true
 
 <para>&kde; continues to support old-style menus that are defined by
 the directory structures in <filename
-class="directory">$<envar>KDEDIR</envar>/share/applnk</filename>
+class="directory">$<envar>TDEDIR</envar>/share/applnk</filename>
 (system wide) and <filename
 class="directory">$<envar>HOME</envar>/.kde/share/applnk</filename>
 (user specific). This is observed unless the <literal role="extension">.desktop</literal> file has a  <varname>Categories</varname>= line. In that case the categories determine the location in the menu.</para>
@@ -1854,7 +1854,7 @@ CheckSycoca=false
 </programlisting>
 </para>
 
-<para>To force regeneration, run <userinput><command>touch $<envar>KDEDIR</envar>/share/services/update_ksycoca</command></userinput>.</para>
+<para>To force regeneration, run <userinput><command>touch $<envar>TDEDIR</envar>/share/services/update_ksycoca</command></userinput>.</para>
 
 </sect2>
 
@@ -1918,7 +1918,7 @@ and the following special buttons:
 <para>File associations associate a file type with an application or
 applications. The type of a file is established by determining its
 &MIME; type. &MIME; types known by &kde; are stored in <filename
-class="directory">$<envar>KDEDIR</envar>/share/mimelnk</filename> and
+class="directory">$<envar>TDEDIR</envar>/share/mimelnk</filename> and
 each application's <literal role="extension">.desktop</literal> file
 contains a list of &MIME; types supported by that application.</para>
 
@@ -2046,7 +2046,7 @@ shell_access=false</screen>
 <para>Since this affects the &kde; menu and the available applications, we
 must force an update of the sycoca database:</para>
 
-<screen><userinput><command>touch</command> <filename>$<envar>KDEDIR</envar>/share/services/update_ksycoca</filename></userinput></screen>
+<screen><userinput><command>touch</command> <filename>$<envar>TDEDIR</envar>/share/services/update_ksycoca</filename></userinput></screen>
 
 <para>Now re-login to &kde; and check the following points:</para>
 
@@ -2263,12 +2263,12 @@ ftp</para></listitem>
 <para>Information about protocols is stored in <literal
 role="extension">*.protocol</literal> files stored in
 <filename
-class="directory">$<envar>KDEDIR</envar>/share/services</filename>.</para>
+class="directory">$<envar>TDEDIR</envar>/share/services</filename>.</para>
 
 <para>The <option>Class</option>= entry defines the group a protocol is part
 of:
 <userinput><command>grep</command> <option>Class=</option>
-<filename>$<envar>KDEDIR</envar>/share/services/*.protocol</filename></userinput></para>
+<filename>$<envar>TDEDIR</envar>/share/services/*.protocol</filename></userinput></para>
 
 <para>General rules:</para>
 
@@ -2317,7 +2317,7 @@ menu.</para>
 <listitem>
 <para>The modules that are visible in the Control Center normally
 have a <literal role="extension">.desktop</literal> file in <filename
-class="directory">$<envar>KDEDIR</envar>/share/applications/kde</filename>
+class="directory">$<envar>TDEDIR</envar>/share/applications/kde</filename>
 and are sorted under the hidden <guimenu>Settings-Modules</guimenu> menu by
 the <filename>kde-settings.menu</filename>, included from 
 <filename>kde-essential.menu</filename></para>
@@ -2325,7 +2325,7 @@ the <filename>kde-settings.menu</filename>, included from
 </listitem>
 <listitem>
 <para>Application specific modules normally have a <literal role="extension">.desktop</literal> file under
-<filename>$<envar>KDEDIR</envar>/share/applnk/.hidden</filename> which
+<filename>$<envar>TDEDIR</envar>/share/applnk/.hidden</filename> which
 corresponds to the hidden .hidden menu, included as a result of
 <markup>&lt;KDELegacyDirs/&gt;</markup></para>
 <screen><userinput><command>kbuildsycoca</command> <option>--menutest</option> 2&gt; /dev/null | <command>grep</command> .hidden</userinput></screen>
@@ -2356,7 +2356,7 @@ there.</para>
 <title>Making it Work</title>
 
 Making It Work
-KDE 3.2: Set $KDEDIRS from starttde script
+KDE 3.2: Set $TDEDIRS from starttde script
 Distribute profiles to all clients
 
 </para>
@@ -2604,7 +2604,7 @@ of &UNIX; shell scripting with the ease of use of &kde;.</para>
 <screen><userinput><command>kdialog</command> <option>--title 'New Mail'</option> <option>--msgbox 'You have new mail!'</option> <option>--dontagain myfile:mykey</option></userinput></screen>
 
 <para>Saves whether to show again in
-<filename>$<envar>KDEHOME</envar>/share/config/myfile</filename> (by writing
+<filename>$<envar>TDEHOME</envar>/share/config/myfile</filename> (by writing
 into this file the following lines:</para>
 
 <screen>[Notification Messages]

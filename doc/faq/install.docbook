@@ -360,7 +360,7 @@ necessary on systems that do not support rpath; on &Linux; &ELF;, it
 should work without).  This environment variable may be called
 differently on some systems, &eg; it is called
 <envar>SHLIB_PATH</envar> on &IRIX;.  Then set the environment variable
-<envar>KDEDIR</envar> to the base of your &kde; tree, &eg; <filename
+<envar>TDEDIR</envar> to the base of your &kde; tree, &eg; <filename
 class="directory">/usr/local/kde</filename>.
 <caution>
 <para>Please bear in mind that it is unwise to set
@@ -378,7 +378,7 @@ features if you use the &kde; window manager and its helper
 programs.</para>
 <para>In order to make it easy for you, we have provided a simple
 script called <filename>starttde</filename> which gets installed in <filename
-class="directory">$<envar>KDEDIR</envar>/bin</filename> and is therefore in your
+class="directory">$<envar>TDEDIR</envar>/bin</filename> and is therefore in your
 path.</para>
 <para>Edit the file <filename>.xinitrc</filename> in your home folder (make a backup
 copy first!), remove everything that looks like calling a window
@@ -451,9 +451,9 @@ machine until the password is entered.</para></caution></para>
 <title>Setting the suid bit on the screensavers</title>
 <step performance="required"><para>become root</para></step>
 <step performance="required"><para><command>chown root
-$<envar>KDEDIR</envar>/bin/*.kss</command></para></step>
+$<envar>TDEDIR</envar>/bin/*.kss</command></para></step>
 <step performance="required"><para><command>chmod u+s
-$<envar>KDEDIR</envar>/bin/*.kss</command></para></step>
+$<envar>TDEDIR</envar>/bin/*.kss</command></para></step>
 </procedure>
 <para>Alternatively, if you compile &kde; from source, you can use
 <command>./configure <option>with-shadow</option></command> to
@@ -480,12 +480,12 @@ is better to leave it out.</para>
 
 <para>For csh or tcsh:</para>
 <programlisting>
-setenv KDEDIR /home/me
+setenv TDEDIR /home/me
 
 if ( $?LD_LIBRARY_PATH ) then
-   setenv LD_LIBRARY_PATH $KDEDIR/lib:$LD_LIBRARY_PATH
+   setenv LD_LIBRARY_PATH $TDEDIR/lib:$LD_LIBRARY_PATH
 else
-   setenv LD_LIBRARY_PATH $KDEDIR/lib
+   setenv LD_LIBRARY_PATH $TDEDIR/lib
 endif
 
 if ( ! $?LIBRARY_PATH ) then
@@ -494,11 +494,11 @@ endif
 </programlisting>
 <para>For <application>bash</application>:</para>
 <programlisting>
-KDEDIR=/home/me
-PATH=$KDEDIR/bin:$PATH
-LD_LIBRARY_PATH=$KDEDIR/lib:$LD_LIBRARY_PATH
+TDEDIR=/home/me
+PATH=$TDEDIR/bin:$PATH
+LD_LIBRARY_PATH=$TDEDIR/lib:$LD_LIBRARY_PATH
 LIBRARY_PATH=$LD_LIBRARY_PATH
-export KDEDIR PATH LD_LIBRARY_PATH LIBRARY_PATH
+export TDEDIR PATH LD_LIBRARY_PATH LIBRARY_PATH
 </programlisting></step>
 </procedure>
 <procedure><title><acronym>RPM</acronym> packages</title>
@@ -641,7 +641,7 @@ removing the old <filename class="directory">.kde</filename> folder,
  without a hitch.</para>
 <para>You can override the use of <filename
 class="directory">$<envar>HOME</envar>/.kde</filename> by setting the
-$<envar>KDEHOME</envar> variable.</para> 
+$<envar>TDEHOME</envar> variable.</para> 
 </answer>
 </qandaentry>
 
@@ -703,7 +703,7 @@ source?</para>
 uninstall</command> in the folder where you did <command>make
 install</command>.  If you have already deleted that folder,
 then there is only one way, and it is not good: go to <filename
-class="directory">$<envar>KDEDIR</envar>/bin</filename> and start deleting files
+class="directory">$<envar>TDEDIR</envar>/bin</filename> and start deleting files
 one by one.</para>
 <para>If you expect to find yourself in this situation, you might want to
 consider a program such as &GNU; <application>stow</application>, found at

@@ -45,7 +45,7 @@ use the &RMB; on the desktop and choose <menuchoice><guimenuitem>Create New</gui
 </question>
 <answer>
 <para>The icons can be found only in <filename
-class="directory">$<envar>KDEDIRS</envar>/share/icons</filename> or <filename
+class="directory">$<envar>TDEDIRS</envar>/share/icons</filename> or <filename
 class="directory">$<envar>HOME</envar>/.kde/share/icons</filename> or
 <filename class="directory">$<envar>HOME</envar>/.kde2/share/icons</filename>.  To use icons
 stored in other locations, you must either copy them into one of the

@@ -297,7 +297,7 @@ main &kdm; dialog box. </para>
 system, and that you simply want to change its behavior in some way.</para>
 
 <para>When &kdm; starts up, it reads its configuration from the folder
-<filename class="directory">$KDEDIR/share/config/kdm/</filename> (this may
+<filename class="directory">$TDEDIR/share/config/kdm/</filename> (this may
 be <filename class="directory">/etc/trinity/kdm/</filename> or something else
 on your system).</para>
 
@@ -314,7 +314,7 @@ associated with any particular user. Therefore, it is not possible to have
 user-specific configuration files; all users share the common &kdmrc;.  It
 follows from this that the configuration of &kdm; can only be altered by
 those users that have write access to
-<filename>$<envar>KDEDIR</envar>/share/config/kdm/kdmrc</filename> (normally
+<filename>$<envar>TDEDIR</envar>/share/config/kdm/kdmrc</filename> (normally
 restricted to system administrators logged in as <systemitem
 class="username">root</systemitem>).</para>
 
@@ -414,7 +414,7 @@ dialog.</para>
 </itemizedlist>
 
 <para>If you do not specify a logo the default
-<filename>$<envar>KDEDIR</envar>/share/apps/kdm/pics/kdelogo.xpm</filename>
+<filename>$<envar>TDEDIR</envar>/share/apps/kdm/pics/kdelogo.xpm</filename>
 will be displayed.</para>
 
 <para>Normally the login box is centered on the screen.  Use the
@@ -870,13 +870,13 @@ libraries.</para>
 <para>For example:</para>
 
 <screen><command>export 
-<option>KDEDIR=<replaceable>/opt/kde</replaceable></option></command>
+<option>TDEDIR=<replaceable>/opt/kde</replaceable></option></command>
 <command>export 
 <option>QTDIR=<replaceable>/usr/lib/qt2</replaceable></option></command>
 <command>export 
-<option>PATH=<replaceable>$KDEDIR/bin:$QTDIR/bin:$PATH</replaceable></option></command>
+<option>PATH=<replaceable>$TDEDIR/bin:$QTDIR/bin:$PATH</replaceable></option></command>
 <command>export 
-<option>LD_LIBRARY_PATH=<replaceable>$KDEDIR/lib:$QTDIR/lib</replaceable></option></command>
+<option>LD_LIBRARY_PATH=<replaceable>$TDEDIR/lib:$QTDIR/lib</replaceable></option></command>
 </screen>
 
 <para>If you are still unsuccessful, try starting &xdm; instead, to
@@ -981,7 +981,7 @@ by &kdm;, you can quite simply add a new session.</para>
 
 <para>The sessions are defined in <firstterm>.desktop</firstterm> files in
 <filename
-class="directory">$<envar>KDEDIR</envar>/share/apps/kdm/sessions</filename>.
+class="directory">$<envar>TDEDIR</envar>/share/apps/kdm/sessions</filename>.
 You can simply add an appropriately named <literal
 role="extension">.desktop</literal> file in this directory. The fields
 are:</para>

@@ -308,7 +308,7 @@ void KNewMenu::slotFillTemplates()
                   this, TQT_SLOT ( slotFillTemplates() ) );
         connect ( s_pDirWatch, TQT_SIGNAL( deleted( const TQString & ) ),
                   this, TQT_SLOT ( slotFillTemplates() ) );
-        // Ok, this doesn't cope with new dirs in KDEDIRS, but that's another story
+        // Ok, this doesn't cope with new dirs in TDEDIRS, but that's another story
     }
     s_templatesVersion++;
     s_filesParsed = false;

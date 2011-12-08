@@ -446,7 +446,7 @@ just add a key line
 <screen><userinput>
 OverridenPorts=CommaSeparatedListOfAllowedPorts
 </userinput></screen>
-to <filename>$KDEDIR/share/config/kio_httprc
+to <filename>$TDEDIR/share/config/kio_httprc
 </filename> or 
 <filename>~/.kde/share/config/kio_httprc</filename>.</para>
 <para>For example

@@ -218,14 +218,14 @@ we're referring to:
 <term>&kde; prefix</term>
 <listitem><para>&kde; installs into its own folder tree, which you can find by
 running the command <userinput><command>kde-config</command> <option>--prefix</option></userinput>. This folder is referred to
-by the environment variables  $<envar>KDEDIRS</envar> and possibly
-$<envar>KDEDIR</envar>.</para>
+by the environment variables  $<envar>TDEDIRS</envar> and possibly
+$<envar>TDEDIR</envar>.</para>
 </listitem>
 </varlistentry>
 
 <varlistentry>
 <term>&kde; user-specific settings</term>
-<listitem><para>The environment variable $<envar>KDEHOME</envar>
+<listitem><para>The environment variable $<envar>TDEHOME</envar>
 points to the folder where &kde; should find user-specific settings.  If it is not
 set, the default value of <filename
 class="directory">~/.kde</filename> is used.</para>

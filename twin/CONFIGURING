@@ -36,14 +36,14 @@ To create such window-specific setting automatically without a need of doing
 it manually for every user (for example when doing a large deployment), follow
 these steps:
 
-- Back up your $KDEHOME/share/config/twinrulesrc ($KDEHOME usually being $HOME/.kde)
+- Back up your $TDEHOME/share/config/twinrulesrc ($TDEHOME usually being $HOME/.kde)
  and remove it
 - Run 'dcop twin default reconfigure'
 - Create manually all window-specific settings that should be included (see above)
 - When done, check in Window-specific settings configuration module
  (Alt+F3/Configure window behavior/Window-specific settings) that all rules are
  included
-- Create a copy of $KDEHOME/share/config/twinrulesrc and restore the original one
+- Create a copy of $TDEHOME/share/config/twinrulesrc and restore the original one
 - Rename the copy (i.e. the newly created twinrulesrc) to have its unique name
  (e.g. foobar_fix_maxsize in this example case)
 - Be careful with manual modifications of the file, especially make sure the count=
@@ -62,9 +62,9 @@ Script=twin_update_default_rules
 # twin_foobar_fix_maxsize.upd end # 
 
 - The kconfig_file (twin_foobar_fix_maxsize.upd) is to be placed
- in $KDEDIR/share/apps/kconf_update/
+ in $TDEDIR/share/apps/kconf_update/
 - The file with the window-specific settings (foobar_fix_maxsize) is to be placed
- in $KDEDIR/share/apps/twin/default_rules/
+ in $TDEDIR/share/apps/twin/default_rules/
 
 
 All KDE user accounts should have these new window-specific settings added

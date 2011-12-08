@@ -29,21 +29,21 @@ applications which should start each time you start &kde;; and
 <filename>.kde/share/apps/kabc</filename>, where your address book is
 stored.</para>
 </listitem>
-<!-- FIXME: Apparently KDEDIR and KDEDIRS are deprecated. I need to -->
+<!-- FIXME: Apparently TDEDIR and TDEDIRS are deprecated. I need to -->
 <!-- get the truth on this -->
-<listitem><para>The environment variables <envar>KDEDIR</envar> and
-<envar>KDEDIRS</envar> tell &kde; where its files are stored. You will
-usually only need to set <envar>KDEDIR</envar> to the directory in which
+<listitem><para>The environment variables <envar>TDEDIR</envar> and
+<envar>TDEDIRS</envar> tell &kde; where its files are stored. You will
+usually only need to set <envar>TDEDIR</envar> to the directory in which
 &kde; is installed, but sometimes you might have other &kde;
 programs installed elsewhere: in this case, you can use the
-<envar>KDEDIRS</envar> environment variable. Set
-<envar>KDEDIRS</envar> to a list of all the directories containing
+<envar>TDEDIRS</envar> environment variable. Set
+<envar>TDEDIRS</envar> to a list of all the directories containing
 &kde; programs, separated by commas. For example, if you have &kde;
 programs in both <filename>/usr/local/kde</filename> and
 <filename>/home/phil/kde</filename>, you can use <userinput>export
-KDEDIR=/usr/local/kde,/home/phil/kde</userinput> if you use
+TDEDIR=/usr/local/kde,/home/phil/kde</userinput> if you use
 <application>bash</application> or <userinput>setenv
-KDEDIR=/usr/local/kde,/home/phil/kde</userinput> if you use sh.
+TDEDIR=/usr/local/kde,/home/phil/kde</userinput> if you use sh.
 </para>
 </listitem>
 </itemizedlist>

@@ -40,7 +40,7 @@ you prefer from
 install it using the &kcontrolcenter;.</para>
 <para>In order to change only the &kmenu; icon you can overwrite the
 <filename>kmenu.png</filename> image for every size in an icon theme set.
-So, for &kde; default icons this would be <filename>$<envar>KDEDIR</envar>/share/icons/default.kde/<replaceable>size</replaceable>/apps/kmenu.png</filename>,
+So, for &kde; default icons this would be <filename>$<envar>TDEDIR</envar>/share/icons/default.kde/<replaceable>size</replaceable>/apps/kmenu.png</filename>,
 where <replaceable>size</replaceable> is one of the sizes included in the
 &kde; icon theme. 
 </para>
@@ -85,9 +85,9 @@ action="simul">&Alt;<keycap>F2</keycap> </keycombo> and entering
 
 <para>If the panel continues to disappear, you may wish to either
 remove or edit by hand your
-<filename>$<envar>KDEHOME</envar>/share/config/kickerrc</filename>
+<filename>$<envar>TDEHOME</envar>/share/config/kickerrc</filename>
 file, where <filename
-class="directory">$<envar>KDEHOME</envar></filename> is usually
+class="directory">$<envar>TDEHOME</envar></filename> is usually
 <filename class="directory">~/.kde</filename>. If you choose to edit
 it by hand, start by removing the applet entry groups.</para>
 

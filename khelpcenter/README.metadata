@@ -101,9 +101,9 @@ Meta File Location
 
 A list of directories given by the config entry "MetaInfoDirs" in the "General"
 group of the help center configuration file "khelpcenterrc" (at
-$KDEDIRS/share/config) is scanned for desktop files. They are merged to a common
+$TDEDIRS/share/config) is scanned for desktop files. They are merged to a common
 hierarchy. If the "MetaInfoDirs" entry is empty the directory at
-$KDEDIRS/share/apps/khelpcenter/plugins is used.
+$TDEDIRS/share/apps/khelpcenter/plugins is used.
 
 Document Hierarchy
 ------------------

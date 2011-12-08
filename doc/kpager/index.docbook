@@ -299,7 +299,7 @@ dialog</link></para>
 <para>Currently, you cannot turn that option off within the config dialog, but
 you can do it manually like this:</para>
 
-<para>Open the file <filename>$KDEHOME/share/config/kpagerrc</filename> with any
+<para>Open the file <filename>$TDEHOME/share/config/kpagerrc</filename> with any
 text editor like &kedit; or <application>vi</application>. If you have no
 rights to write that file, you may need to do it as root or contact your system
 administrator. In this file you will have to add a new key with the name

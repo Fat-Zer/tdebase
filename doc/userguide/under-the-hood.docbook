@@ -42,7 +42,7 @@ LastFile=/var/tmp/test.txt</programlisting>
 
 <para>The user-specific configuration files are stored in <filename
 class="directory">.kde/share/config</filename> (replace 
-<filename>.kde</filename> with your $<envar>KDEHOME</envar> setting) and
+<filename>.kde</filename> with your $<envar>TDEHOME</envar> setting) and
 the global ones are in the <filename
 class="directory">share/config</filename> sub-directory of &kde;'s
 installation path. (You can find this path by running the command
@@ -64,7 +64,7 @@ crash.</para></warning>
 <para>So the first rule is to make a backup of your file before modifying
 it. The backup is better stored outside any
 <filename class="directory">.kde</filename> subdirectory 
-(or the corresponding $<envar>KDEHOME</envar> directory). Backups are anyway
+(or the corresponding $<envar>TDEHOME</envar> directory). Backups are anyway
 a good idea in case of a major failure of &kde; that would
 destroy important configuration files (for example your &kmail;  settings,
 which are in in the file <filename>kmailrc</filename>).

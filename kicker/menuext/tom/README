@@ -35,8 +35,8 @@ Populate and track Recent Applications menu entries
     Recent Documents
 Writing out of config files to reflect runtime changes (deleted entries, etc)
   o This requires keeping track of the config files used in creating the menu
-KDEDIR merging
-  o KDEDIRS are already consulted for taskgroups, but groups of the same name
+TDEDIR merging
+  o TDEDIRS are already consulted for taskgroups, but groups of the same name
     should be merged
 Sane merging of menuext entries
   o "Recent" items should go into the recent section

@@ -87,7 +87,7 @@ dialog.</para>
 </itemizedlist>
 
 <para>If you do not specify a logo the default
-<filename>$<envar>KDEDIR</envar>/share/apps/kdm/pics/kdelogo.png</filename>
+<filename>$<envar>TDEDIR</envar>/share/apps/kdm/pics/kdelogo.png</filename>
 will be displayed.</para>
 
 <para>While &kde;'s style depends on the settings of the user logged in,
@@ -422,9 +422,9 @@ effect.</para></note>
 
 <para>Every user on the system can be represented by a image. The image
 for the user is kept in a file called
-<filename>$<envar>KDEDIR</envar>/share/apps/kdm/pics/users/$<envar>USER</envar>.xpm.</filename>
+<filename>$<envar>TDEDIR</envar>/share/apps/kdm/pics/users/$<envar>USER</envar>.xpm.</filename>
 If the user doesn't have such a file the file
-<filename>$<envar>KDEDIR</envar>/share/apps/kdm/pics/users/default.xpm</filename>
+<filename>$<envar>TDEDIR</envar>/share/apps/kdm/pics/users/default.xpm</filename>
 will be used instead.</para>
 
 <para>To assign a new image to a user just select the user in one of the

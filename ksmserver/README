@@ -75,7 +75,7 @@ modules kcminit returns and waits.
 When ksmserver is launched, the first thing it does is launching
 the window manager, as the WM is necessary before any windows are possibly
 shown. When the WM is ready, ksmserver tells klauncher to perform autostart
-phase 0 ($KDEHOME/share/autostart). There are 3 autostart phases, 0, 1 and 2,
+phase 0 ($TDEHOME/share/autostart). There are 3 autostart phases, 0, 1 and 2,
 defined by X-KDE-autostart-phase, defaulting to 2. Phase 0 is reserved only
 for the actual visible base components of KDE, i.e. KDesktop and Kicker,
 in order to make the startup appear visually faster. Both KDesktop and Kicker

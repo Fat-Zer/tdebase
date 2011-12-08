@@ -48,7 +48,7 @@ dnl check for arts for speech recognition
 dnl ---------------------------------------------------------------------------
 
 
-artsc_config_test_path=$prefix/bin:$exec_prefix/bin:$KDEDIR/bin:$PATH
+artsc_config_test_path=$prefix/bin:$exec_prefix/bin:$TDEDIR/bin:$PATH
 AC_PATH_PROG(ARTSCCONFIG, artsc-config, no, $artsc_config_test_path)
 
 if test "x$build_arts" = "xyes" && test "x$ARTSCCONFIG" != "xno" ; then

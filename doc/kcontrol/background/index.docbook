@@ -354,7 +354,7 @@ url="http://www.kde-look.org">KDE-Look</ulink> website.  You can of course
 select any image you have available to use as wallpaper, and it may be
 stored in any location on your hard drive.  To have a wallpaper show up in
 the list automatically for all users, you should save it to the <filename
-class="directory">$<envar>KDEDIR</envar>/share/wallpapers</filename>
+class="directory">$<envar>TDEDIR</envar>/share/wallpapers</filename>
 folder.</para>
 
 <para>A pattern is a picture file which &kde; uses as a template to
@@ -364,7 +364,7 @@ can add new patterns.</para>
 
 <para>To add a new pattern that is available to every user on your
 computer, simply place the file in <filename
-class="directory">$<envar>KDEDIR</envar>/share/apps/kdesktop/patterns/</filename>.</para>
+class="directory">$<envar>TDEDIR</envar>/share/apps/kdesktop/patterns/</filename>.</para>
 
 <para>Copy a <literal role="extension">.desktop</literal> file from
 this folder, and name it the same as your new pattern image file.
@@ -372,7 +372,7 @@ Modify the contents to suit your new pattern.</para>
 
 <para>To add a new pattern for a single user, add the files to
 <filename
-class="directory">$<envar>KDEHOME</envar>/share/apps/kdesktop/patterns/</filename>.</para>
+class="directory">$<envar>TDEHOME</envar>/share/apps/kdesktop/patterns/</filename>.</para>
 
 <para>For best results, the pattern should be a grayscale PNG file.</para>
 

@@ -941,11 +941,11 @@ combination of font, size and style.</para>
 <guimenuitem>Keyboard</guimenuitem></menuchoice></term>
 <listitem><para><action>Choose desired keymapping</action>.</para>
 <para>The list of these keymappings is taken from
-<filename>$KDEDIR/share/apps/konsole/*.keytab</filename>. The file
-<filename>$KDEDIR/share/apps/konsole/README.KeyTab</filename>
+<filename>$TDEDIR/share/apps/konsole/*.keytab</filename>. The file
+<filename>$TDEDIR/share/apps/konsole/README.KeyTab</filename>
 describes the <literal role="extension">*.keytab</literal> format in more detail. 
 Add to or modify these files to match your needs. The default keytab is taken from 
-<filename>$KDEDIR/share/apps/konsole/README.default.Keytab</filename>.</para>
+<filename>$TDEDIR/share/apps/konsole/README.default.Keytab</filename>.</para>
 </listitem>
 </varlistentry>
 
@@ -954,8 +954,8 @@ Add to or modify these files to match your needs. The default keytab is taken fr
 <guimenuitem>Schema</guimenuitem></menuchoice></term>
 <listitem><para><action>Set colors of text and background</action>.</para>
 <para>The list is taken from
-<filename>$KDEDIR/share/apps/konsole/*.schema</filename>. The file
-<filename>$KDEDIR/share/apps/konsole/README.Schema</filename>
+<filename>$TDEDIR/share/apps/konsole/*.schema</filename>. The file
+<filename>$TDEDIR/share/apps/konsole/README.Schema</filename>
 describes the <literal role="extension">*.schema</literal> format in more detail. 
 Add to or modify these files to match your needs.  You can also create custom 
 schemas through the preferences dialog at <menuchoice><guisubmenu>Settings</guisubmenu>
