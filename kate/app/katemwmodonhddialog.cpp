@@ -35,7 +35,7 @@
 
 #include <tqlabel.h>
 #include <tqlistview.h>
-#include <tqlayout.h>
+#include <layout.h>
 #include <tqpushbutton.h>
 #include <tqwhatsthis.h>
 #include <tqvbox.h>

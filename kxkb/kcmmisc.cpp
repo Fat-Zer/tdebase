@@ -32,7 +32,7 @@
 #include <tqfileinfo.h>
 #include <tqcheckbox.h>
 #include <tqstring.h>
-#include <tqlayout.h>
+#include <layout.h>
 #include <tqwhatsthis.h>
 #include <tqvbuttongroup.h>
 #include <tqradiobutton.h>

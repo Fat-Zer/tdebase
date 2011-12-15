@@ -3,7 +3,7 @@
 // First version of cookies configuration by Waldo Bastian <bastian@kde.org>
 // This dialog box created by David Faure <faure@kde.org>
 
-#include <tqlayout.h>
+#include <layout.h>
 #include <tqtabwidget.h>
 
 #include <klocale.h>

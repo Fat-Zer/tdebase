@@ -18,7 +18,7 @@
 */
 
 #include "notificationdialog.h"
-#include <tqlayout.h>
+#include <layout.h>
 
 #include <krun.h>
 #include <klocale.h>
@@ -53,7 +53,7 @@ NotificationDialog::NotificationDialog( KFileItem medium, NotifierSettings *sett
 
 	updateActionsListBox();
 
-	resize( TQSize(400,400).expandedTo( tqminimumSizeHint() ) );
+	resize( TQSize(400,400).expandedTo( minimumSizeHint() ) );
 
 
 	m_actionWatcher = new KDirWatch();

@@ -24,7 +24,7 @@
 
 #include <tqcheckbox.h>
 #include <tqlabel.h>
-#include <tqlayout.h>
+#include <layout.h>
 #include <tqwhatsthis.h>
 
 #include <kconfig.h>

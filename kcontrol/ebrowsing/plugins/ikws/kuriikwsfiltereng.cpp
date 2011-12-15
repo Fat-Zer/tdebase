@@ -27,7 +27,7 @@
 #include <unistd.h>
 
 #include <tqregexp.h>
-#include <tqtextcodec.h>
+#include <textcodec.h>
 
 #include <kurl.h>
 #include <kdebug.h>

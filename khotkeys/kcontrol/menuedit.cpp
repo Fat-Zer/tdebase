@@ -25,7 +25,7 @@
 #include <dcopclient.h>
 #include <tqlabel.h>
 #include <tqlineedit.h>
-#include <tqlayout.h>
+#include <layout.h>
 #include <kkeydialog.h>
 
 #include <settings.h>

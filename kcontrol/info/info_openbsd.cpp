@@ -38,7 +38,7 @@
 #include <tqfile.h>
 #include <tqfontmetrics.h>
 #include <tqstrlist.h>
-#include <tqtextstream.h>
+#include <textstream.h>
 
 #include <kdebug.h>
 

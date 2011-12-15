@@ -24,7 +24,7 @@
 
 #include <tqdir.h>
 #include <tqfile.h>
-#include <tqtextstream.h>
+#include <textstream.h>
 #include <tqdatastream.h>
 #include <tqcstring.h>
 #include <tqptrlist.h>
@@ -82,7 +82,7 @@ bool parseUrl(const TQString& _url, TQString &title, TQString &section)
     section = TQString::null;
 
     TQString url = _url;
-    if (url.tqat(0) == '/') {
+    if (url.at(0) == '/') {
         if (KStandardDirs::exists(url)) {
             title = url;
             return true;
@@ -93,7 +93,7 @@ bool parseUrl(const TQString& _url, TQString &title, TQString &section)
         }
     }
 
-    while (url.tqat(0) == '/')
+    while (url.at(0) == '/')
         url.remove(0,1);
 
     title = url;
@@ -259,7 +259,7 @@ TQStringList MANProtocol::findPages(const TQString &_section,
     TQStringList list;
 
     // kdDebug() << "findPages '" << section << "' '" << title << "'\n";
-    if (title.tqat(0) == '/') {
+    if (title.at(0) == '/') {
        list.append(title);
        return list;
     }
@@ -279,7 +279,7 @@ TQStringList MANProtocol::findPages(const TQString &_section,
         // Section given as argument
         //
         sect_list += section;
-        while (section.tqat(section.length() - 1).isLetter())  {
+        while (section.at(section.length() - 1).isLetter())  {
             section.truncate(section.length() - 1);
             sect_list += section;
         }
@@ -400,11 +400,11 @@ void MANProtocol::output(const char *insert)
     {
         m_outputBuffer.writeBlock(insert,strlen(insert));
     }
-    if (!insert || m_outputBuffer.tqat() >= 2048)
+    if (!insert || m_outputBuffer.at() >= 2048)
     {
         m_outputBuffer.close();
         data(m_outputBuffer.buffer());
-        m_outputBuffer.tqsetBufferFromCopy(TQByteArray());
+        m_outputBuffer.setBuffer(TQByteArray());
         m_outputBuffer.open(IO_WriteOnly);
     }
 }
@@ -505,7 +505,7 @@ void MANProtocol::get(const KURL& url )
 
        m_outputBuffer.close();
        data(m_outputBuffer.buffer());
-       m_outputBuffer.tqsetBufferFromCopy(TQByteArray());
+       m_outputBuffer.setBuffer(TQByteArray());
        // tell we are done
        data(TQByteArray());
     }

@@ -19,7 +19,7 @@
 
 #include <tqstring.h>
 #include <tqvbox.h>
-#include <tqlayout.h>
+#include <layout.h>
 #include <tqlabel.h>
 #include <tqtimer.h>
 

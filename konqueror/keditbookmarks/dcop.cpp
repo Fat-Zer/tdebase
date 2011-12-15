@@ -26,7 +26,7 @@
 
 #include <stdlib.h>
 
-#include <tqclipboard.h>
+#include <clipboard.h>
 #include <tqpopupmenu.h>
 #include <tqpainter.h>
 

@@ -13,7 +13,7 @@
  *                                                                         *
  ***************************************************************************/
 
-#include <tqlayout.h>
+#include <layout.h>
 
 #include <kaboutdata.h>
 #include <kglobal.h>

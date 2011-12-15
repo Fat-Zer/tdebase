@@ -1120,7 +1120,7 @@ TQSize Client::sizeForClientSize( const TQSize& wsize, Sizemode mode, bool nofra
     TQSize max_size = maxSize();
     if( decoration != NULL )
         {
-        TQSize decominsize = decoration->tqminimumSize();
+        TQSize decominsize = decoration->minimumSize();
         TQSize border_size( border_left + border_right, border_top + border_bottom );
         if( border_size.width() > decominsize.width()) // just in case
             decominsize.setWidth( border_size.width());
@@ -2637,7 +2637,7 @@ void Client::handleMoveResize( int x, int y, int x_root, int y_root )
             ( isResize() ? options->resizeMode : options->moveMode ) == Options::Transparent )
             {
             clearbound();  // it's necessary to move the geometry tip when there's no outline
-            positionGeometryTip(); // shown, otherwise it would cause tqrepaint problems in case
+            positionGeometryTip(); // shown, otherwise it would cause repaint problems in case
             drawbound( moveResizeGeom ); // they overlap; the paint event will come after this,
             }                               // so the geometry tip will be painted above the outline
         }

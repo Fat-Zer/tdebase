@@ -23,7 +23,7 @@
 #include <tqhbox.h>
 #include <tqpushbutton.h>
 #include <tqwhatsthis.h>
-#include <tqlayout.h>
+#include <layout.h>
 #include <tqstringlist.h>
 #include <tqucomextra_p.h>
 
@@ -169,7 +169,7 @@ static TQString findFileName(const TQString* tmpl,bool universal, const TQString
 
 void addBackEnd::activatedAddMenu(int id)
 {
-	kdDebug() << "activatedAddMenu: " << TQString("%1").tqarg(id) << endl;
+	kdDebug() << "activatedAddMenu: " << TQString("%1").arg(id) << endl;
 	if (((uint)id) == libNames.size())
 		doRollBack();
 	if(((uint)id) >= libNames.size())
@@ -178,13 +178,13 @@ void addBackEnd::activatedAddMenu(int id)
 	KLibLoader *loader = KLibLoader::self();
 
         // try to load the library
-	TQString libname = *libNames.tqat(id);
+	TQString libname = *libNames.at(id);
         KLibrary *lib = loader->library(TQFile::encodeName(libname));
         if (lib)
        	{
 		// get the create_ function
 		TQString factory("add_");
-		factory = factory+(*libNames.tqat(id));
+		factory = factory+(*libNames.at(id));
 		void *add = lib->symbol(TQFile::encodeName(factory));
 
 		if (add)
@@ -194,7 +194,7 @@ void addBackEnd::activatedAddMenu(int id)
 			TQMap<TQString,TQString> map;
 			func = (bool (*)(TQString*, TQString*, TQMap<TQString,TQString> *)) add;
 			TQString *tmp = new TQString("");
-			if (func(tmp,libParam.tqat(id),&map))
+			if (func(tmp,libParam.at(id),&map))
 			{
 				TQString myFile = findFileName(tmp,m_universal,m_currentProfile);
 
@@ -219,7 +219,7 @@ void addBackEnd::activatedAddMenu(int id)
 			delete tmp;
 		}
 	} else {
-		kdWarning() << "libname:" << libNames.tqat(id)
+		kdWarning() << "libname:" << libNames.at(id)
 			<< " doesn't specify a library!" << endl;
 	}
 }
@@ -252,7 +252,7 @@ Sidebar_Widget::Sidebar_Widget(TQWidget *parent, KParts::ReadOnlyPart *par, cons
 	m_buttons.setAutoDelete(true);
 	m_hasStoredUrl = false;
 	m_latestViewed = -1;
-	tqsetSizePolicy(TQSizePolicy(TQSizePolicy::Expanding, TQSizePolicy::Expanding));
+	setSizePolicy(TQSizePolicy(TQSizePolicy::Expanding, TQSizePolicy::Expanding));
 
 	TQSplitter *splitterWidget = splitter();
 	if (splitterWidget) {
@@ -262,7 +262,7 @@ Sidebar_Widget::Sidebar_Widget(TQWidget *parent, KParts::ReadOnlyPart *par, cons
 	}
 		
 	m_area = new KDockArea(this);
-	m_area->tqsetSizePolicy(TQSizePolicy(TQSizePolicy::Expanding, TQSizePolicy::Expanding));
+	m_area->setSizePolicy(TQSizePolicy(TQSizePolicy::Expanding, TQSizePolicy::Expanding));
 	m_mainDockWidget = m_area->createDockWidget("free", 0);
 	m_mainDockWidget->setWidget(new TQWidget(m_mainDockWidget));
 	m_area->setMainDockWidget(m_mainDockWidget);
@@ -574,7 +574,7 @@ void Sidebar_Widget::activatedMenu(int id)
 			{
 				int tmpViewID=m_latestViewed;
 				for (uint i=0; i<m_buttons.count(); i++) {
-					ButtonInfo *button = m_buttons.tqat(i);
+					ButtonInfo *button = m_buttons.at(i);
 					if ((int) i != tmpViewID)
 					{
 						if (button->dock && button->dock->isVisibleTo(this))
@@ -598,7 +598,7 @@ void Sidebar_Widget::activatedMenu(int id)
 					m_mainDockWidget->show();
 					if ((tmpLatestViewed>=0) && (tmpLatestViewed < (int) m_buttons.count()))
 					{
-						ButtonInfo *button = m_buttons.tqat(tmpLatestViewed);
+						ButtonInfo *button = m_buttons.at(tmpLatestViewed);
 						if (button && button->dock)
 						{
 							m_noUpdate=true;
@@ -675,7 +675,7 @@ void Sidebar_Widget::stdAction(const char *handlestd)
 
 	kdDebug() << "Try calling >active< module's (" << mod->module->className() << ") slot " << handlestd << endl;
 
-	int id = mod->module->tqmetaObject()->findSlot( handlestd );
+	int id = mod->module->metaObject()->findSlot( handlestd );
   	if ( id == -1 )
 		return;
 	kdDebug() << "Action slot was found, it will be called now" << endl;
@@ -694,7 +694,7 @@ void Sidebar_Widget::updateButtons()
 	{
 		for (uint i = 0; i < m_buttons.count(); i++)
 		{
-			ButtonInfo *button = m_buttons.tqat(i);
+			ButtonInfo *button = m_buttons.at(i);
 			if (button->dock)
 			{
 				m_noUpdate = true;
@@ -742,7 +742,7 @@ void Sidebar_Widget::createButtons()
 
 	for (uint i = 0; i < m_buttons.count(); i++)
 	{
-		ButtonInfo *button = m_buttons.tqat(i);
+		ButtonInfo *button = m_buttons.at(i);
 		if (m_openViews.contains(button->file))
 		{
 			m_buttonBar->setTab(i,true);
@@ -763,7 +763,7 @@ bool Sidebar_Widget::openURL(const class KURL &url)
 	if (url.protocol()=="sidebar")
 	{
 		for (unsigned int i=0;i<m_buttons.count();i++)
-			if (m_buttons.tqat(i)->file==url.path())
+			if (m_buttons.at(i)->file==url.path())
 			{
 				KMultiTabBarTab *tab = m_buttonBar->tab(i);
 				if (!tab->isOn())
@@ -778,7 +778,7 @@ bool Sidebar_Widget::openURL(const class KURL &url)
         bool ret = false;
 	for (unsigned int i=0;i<m_buttons.count();i++)
 	{
-		ButtonInfo *button = m_buttons.tqat(i);
+		ButtonInfo *button = m_buttons.at(i);
 		if (button->dock)
 		{
 			if ((button->dock->isVisibleTo(this)) && (button->module))
@@ -845,7 +845,7 @@ bool Sidebar_Widget::eventFilter(TQObject *obj, TQEvent *ev)
 			{
 				if (bt==m_buttonBar->tab(i))
 				{
-					m_currentButton = m_buttons.tqat(i);
+					m_currentButton = m_buttons.at(i);
 					break;
 				}
 			}
@@ -953,7 +953,7 @@ bool Sidebar_Widget::createView( ButtonInfo *data)
 
 void Sidebar_Widget::showHidePage(int page)
 {
-	ButtonInfo *info = m_buttons.tqat(page);
+	ButtonInfo *info = m_buttons.at(page);
 	if (!info->dock)
 	{
 		if (m_buttonBar->isTabRaised(page))
@@ -1049,7 +1049,7 @@ void Sidebar_Widget::collapseExpandSidebar()
 	if (m_visibleViews.count()==0)
 	{
 		m_somethingVisible = false;
-		parentWidget()->setMaximumWidth(tqminimumSizeHint().width());
+		parentWidget()->setMaximumWidth(minimumSizeHint().width());
 		updateGeometry();
 		emit panelHasBeenExpanded(false);
 	} else {
@@ -1060,11 +1060,11 @@ void Sidebar_Widget::collapseExpandSidebar()
 	}
 }
 
-TQSize Sidebar_Widget::tqsizeHint() const
+TQSize Sidebar_Widget::sizeHint() const
 {
         if (m_somethingVisible)
            return TQSize(m_savedWidth,200);
-        return tqminimumSizeHint();
+        return minimumSizeHint();
 }
 
 void Sidebar_Widget::dockWidgetHasUndocked(KDockWidget* wid)
@@ -1072,7 +1072,7 @@ void Sidebar_Widget::dockWidgetHasUndocked(KDockWidget* wid)
 	kdDebug()<<" Sidebar_Widget::dockWidgetHasUndocked(KDockWidget*)"<<endl;
 	for (unsigned int i=0;i<m_buttons.count();i++)
 	{
-		ButtonInfo *button = m_buttons.tqat(i);
+		ButtonInfo *button = m_buttons.at(i);
 		if (button->dock==wid)
 		{
 			if (m_buttonBar->isTabRaised(i))
@@ -1195,50 +1195,50 @@ void Sidebar_Widget::popupMenu( KXMLGUIClient *client,
 
 void Sidebar_Widget::connectModule(TQObject *mod)
 {
-	if (mod->tqmetaObject()->findSignal("started(KIO::Job*)") != -1) {
+	if (mod->metaObject()->findSignal("started(KIO::Job*)") != -1) {
 		connect(mod,TQT_SIGNAL(started(KIO::Job *)),this, TQT_SIGNAL(started(KIO::Job*)));
 	}
 
-	if (mod->tqmetaObject()->findSignal("completed()") != -1) {
+	if (mod->metaObject()->findSignal("completed()") != -1) {
 		connect(mod,TQT_SIGNAL(completed()),this,TQT_SIGNAL(completed()));
 	}
 
-	if (mod->tqmetaObject()->findSignal("popupMenu(const " TQPOINT_OBJECT_NAME_STRING "&,const KURL&,const " TQSTRING_OBJECT_NAME_STRING "&,mode_t)") != -1) {
+	if (mod->metaObject()->findSignal("popupMenu(const " TQPOINT_OBJECT_NAME_STRING "&,const KURL&,const " TQSTRING_OBJECT_NAME_STRING "&,mode_t)") != -1) {
 		connect(mod,TQT_SIGNAL(popupMenu( const TQPoint &, const KURL &,
 			const TQString &, mode_t)),this,TQT_SLOT(popupMenu( const
 			TQPoint &, const KURL&, const TQString &, mode_t)));
 	}
 
-	if (mod->tqmetaObject()->findSignal("popupMenu(KXMLGUIClient*,const " TQPOINT_OBJECT_NAME_STRING " &,const KURL&,const " TQSTRING_OBJECT_NAME_STRING "&,mode_t)") != -1) {
+	if (mod->metaObject()->findSignal("popupMenu(KXMLGUIClient*,const " TQPOINT_OBJECT_NAME_STRING " &,const KURL&,const " TQSTRING_OBJECT_NAME_STRING "&,mode_t)") != -1) {
 		connect(mod,TQT_SIGNAL(popupMenu( KXMLGUIClient *, const TQPoint &,
 			const KURL &,const TQString &, mode_t)),this,
 			TQT_SLOT(popupMenu( KXMLGUIClient *, const TQPoint &,
 			const KURL &,const TQString &, mode_t)));
 	}
 
-	if (mod->tqmetaObject()->findSignal("popupMenu(const " TQPOINT_OBJECT_NAME_STRING "&,const KFileItemList&)") != -1) {
+	if (mod->metaObject()->findSignal("popupMenu(const " TQPOINT_OBJECT_NAME_STRING "&,const KFileItemList&)") != -1) {
 		connect(mod,TQT_SIGNAL(popupMenu( const TQPoint &, const KFileItemList & )),
 			this,TQT_SLOT(popupMenu( const TQPoint &, const KFileItemList & )));
 	}
 
-	if (mod->tqmetaObject()->findSignal("openURLRequest(const KURL&,const KParts::URLArgs&)") != -1) {
+	if (mod->metaObject()->findSignal("openURLRequest(const KURL&,const KParts::URLArgs&)") != -1) {
 		connect(mod,TQT_SIGNAL(openURLRequest( const KURL &, const KParts::URLArgs &)),
 			this,TQT_SLOT(openURLRequest( const KURL &, const KParts::URLArgs &)));
 	}
 
-	if (mod->tqmetaObject()->findSignal("submitFormRequest(const char*,const " TQSTRING_OBJECT_NAME_STRING "&,const " TQBYTEARRAY_OBJECT_NAME_STRING "&,const " TQSTRING_OBJECT_NAME_STRING "&,const " TQSTRING_OBJECT_NAME_STRING "&,const " TQSTRING_OBJECT_NAME_STRING "&)") != -1) {
+	if (mod->metaObject()->findSignal("submitFormRequest(const char*,const " TQSTRING_OBJECT_NAME_STRING "&,const " TQBYTEARRAY_OBJECT_NAME_STRING "&,const " TQSTRING_OBJECT_NAME_STRING "&,const " TQSTRING_OBJECT_NAME_STRING "&,const " TQSTRING_OBJECT_NAME_STRING "&)") != -1) {
 		connect(mod,
 			TQT_SIGNAL(submitFormRequest(const char*,const TQString&,const TQByteArray&,const TQString&,const TQString&,const TQString&)),
 			this,
 			TQT_SLOT(submitFormRequest(const char*,const TQString&,const TQByteArray&,const TQString&,const TQString&,const TQString&)));
 	}
 
-	if (mod->tqmetaObject()->findSignal("enableAction(const char*,bool)") != -1) {
+	if (mod->metaObject()->findSignal("enableAction(const char*,bool)") != -1) {
 		connect(mod,TQT_SIGNAL(enableAction( const char *, bool)),
 			this,TQT_SLOT(enableAction(const char *, bool)));
 	}
 
-	if (mod->tqmetaObject()->findSignal("createNewWindow(const KURL&,const KParts::URLArgs&)") != -1) {
+	if (mod->metaObject()->findSignal("createNewWindow(const KURL&,const KParts::URLArgs&)") != -1) {
 		connect(mod,TQT_SIGNAL(createNewWindow( const KURL &, const KParts::URLArgs &)),
 			this,TQT_SLOT(createNewWindow( const KURL &, const KParts::URLArgs &)));
 	}
@@ -1255,7 +1255,7 @@ Sidebar_Widget::~Sidebar_Widget()
 	m_noUpdate = true;
 	for (uint i=0;i<m_buttons.count();i++)
 	{
-		ButtonInfo *button = m_buttons.tqat(i);
+		ButtonInfo *button = m_buttons.at(i);
 		if (button->dock)
 			button->dock->undock();
 	}

@@ -22,7 +22,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ******************************************************************/
 
 #include <tqfile.h>
-#include <tqlayout.h>
+#include <layout.h>
 #include <tqpushbutton.h>
 
 #include <kapplication.h>

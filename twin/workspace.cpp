@@ -23,7 +23,7 @@ License. See the file "COPYING" for the exact licensing terms.
 #include <tqregexp.h>
 #include <tqpainter.h>
 #include <tqbitmap.h>
-#include <tqclipboard.h>
+#include <clipboard.h>
 #include <kmenubar.h>
 #include <kprocess.h>
 #include <kglobalaccel.h>
@@ -1056,7 +1056,7 @@ void Workspace::slotReconfigure()
         topmenu_selection->release();
         lostTopMenuSelection();
         }
-    topmenu_height = 0; // tqinvalidate used menu height
+    topmenu_height = 0; // invalidate used menu height
     if( managingTopMenus())
         {
         updateTopMenuGeometry();
@@ -1938,7 +1938,7 @@ void Workspace::slotGrabWindow()
             int count, order;
             XRectangle* rects = XShapeGetRectangles( qt_xdisplay(), active_client->frameId(),
                                                      ShapeBounding, &count, &order);
-	    //The ShapeBounding region is the outermost tqshape of the window;
+	    //The ShapeBounding region is the outermost shape of the window;
 	    //ShapeBounding - ShapeClipping is defined to be the border.
 	    //Since the border area is part of the window, we use bounding
 	    // to limit our work region
@@ -1956,7 +1956,7 @@ void Workspace::slotGrabWindow()
 
 		//Get the masked away area.
                 TQRegion maskedAway = bbox - contents;
-                TQMemArray<TQRect> maskedAwayRects = maskedAway.tqrects();
+                TQMemArray<TQRect> maskedAwayRects = maskedAway.rects();
 
 		//Construct a bitmap mask from the rectangles
                 TQBitmap mask( snapshot.width(), snapshot.height());
@@ -1969,7 +1969,7 @@ void Workspace::slotGrabWindow()
                 }
             }
 
-        TQClipboard *cb = TQApplication::tqclipboard();
+        TQClipboard *cb = TQApplication::clipboard();
         cb->setPixmap( snapshot );
         }
     else
@@ -1982,7 +1982,7 @@ void Workspace::slotGrabWindow()
 void Workspace::slotGrabDesktop()
     {
     TQPixmap p = TQPixmap::grabWindow( qt_xrootwin() );
-    TQClipboard *cb = TQApplication::tqclipboard();
+    TQClipboard *cb = TQApplication::clipboard();
     cb->setPixmap( p );
     }
 
@@ -2606,7 +2606,7 @@ int Workspace::topMenuHeight() const
         { // simply create a dummy menubar and use its preffered height as the menu height
         KMenuBar tmpmenu;
         tmpmenu.insertItem( "dummy" );
-        topmenu_height = tmpmenu.tqsizeHint().height();
+        topmenu_height = tmpmenu.sizeHint().height();
         }
     return topmenu_height;
     }

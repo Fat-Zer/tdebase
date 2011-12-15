@@ -24,7 +24,7 @@
 
 #include <sys/param.h>		/* for BSD */
 
-#include <tqlayout.h>
+#include <layout.h>
 #include <tqpainter.h>
 #include <tqdrawutil.h>
 #include <tqtooltip.h>
@@ -163,7 +163,7 @@ KMemoryWidget::KMemoryWidget(TQWidget * parent, const char *name)
 	    break;
 	};
 	Widget = new TQLabel(title, this);
-	Widget->tqsetAlignment(AlignLeft);
+	Widget->setAlignment(AlignLeft);
 	vbox->addWidget(Widget, 1);
     }
 
@@ -174,7 +174,7 @@ KMemoryWidget::KMemoryWidget(TQWidget * parent, const char *name)
 	    if (i == SWAP_MEM)
 		vbox->addSpacing(SPACING);
 	    Widget = new TQLabel(this);
-	    Widget->tqsetAlignment(AlignRight);
+	    Widget->setAlignment(AlignRight);
 	    MemSizeLabel[i][j] = Widget;
 	    vbox->addWidget(Widget, 1);
 	}
@@ -228,7 +228,7 @@ KMemoryWidget::KMemoryWidget(TQWidget * parent, const char *name)
 	  hint = "<qt>" + hint + "</qt>";
 
 	Widget = new TQLabel("<b>" + title + "</b>", this);
-	Widget->tqsetAlignment(AlignCenter);
+	Widget->setAlignment(AlignCenter);
 	TQToolTip::add(Widget, hint);
 	vbox->addWidget(Widget);
 	vbox->addSpacing(SPACING / 2);
@@ -243,7 +243,7 @@ KMemoryWidget::KMemoryWidget(TQWidget * parent, const char *name)
 	vbox->addSpacing(SPACING / 2);
 
 	Widget = new TQLabel(this);	/* xx MB used. */
-	Widget->tqsetAlignment(AlignCenter);
+	Widget->setAlignment(AlignCenter);
 	TQToolTip::add(Widget, hint);
 	GraphLabel[i] = Widget;
 	vbox->addWidget(Widget);
@@ -288,7 +288,7 @@ bool KMemoryWidget::Display_Graph(int widgetindex,
     TQPixmap pm(width, height);
     TQPainter paint;
 
-    paint.tqbegin(&pm, this);
+    paint.begin(&pm, this);
 
     TQPen pen(TQColor(0, 0, 0));
 
@@ -342,7 +342,7 @@ bool KMemoryWidget::Display_Graph(int widgetindex,
     /* draw surrounding box */
     paint.setPen(pen);
     TQRect r = graph->rect();
-    qDrawShadePanel(&paint, r.x(), r.y(), r.width(), r.height(), tqpalette().active(), true, 1);
+    qDrawShadePanel(&paint, r.x(), r.y(), r.width(), r.height(), palette().active(), true, 1);
     paint.end();
     bitBlt(graph, 0, 0, &pm);
 

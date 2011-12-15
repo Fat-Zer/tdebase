@@ -32,9 +32,9 @@
 
 #include <stdlib.h>
 
-#include <tqclipboard.h>
+#include <clipboard.h>
 #include <tqsplitter.h>
-#include <tqlayout.h>
+#include <layout.h>
 #include <tqlabel.h>
 
 #include <klocale.h>
@@ -184,7 +184,7 @@ TQString CurrentMgr::makeTimeStr(int b)
 {
     TQDateTime dt;
     dt.setTime_t(b);
-    return (dt.daysTo(TQDateTime::tqcurrentDateTime()) > 31)
+    return (dt.daysTo(TQDateTime::currentDateTime()) > 31)
         ? KGlobal::locale()->formatDate(TQT_TQDATE_OBJECT(dt.date()), false)
         : KGlobal::locale()->formatDateTime(dt, false);
 }
@@ -233,11 +233,11 @@ KEBApp::KEBApp(
 
     vsplitter->setOrientation(Qt::Vertical);
     vsplitter->setSizes(TQValueList<int>() << h << 380
-                                          << m_bkinfo->tqsizeHint().height() );
+                                          << m_bkinfo->sizeHint().height() );
 
     setCentralWidget(vsplitter);
-    resize(ListView::self()->widget()->tqsizeHint().width(),
-           vsplitter->tqsizeHint().height());
+    resize(ListView::self()->widget()->sizeHint().width(),
+           vsplitter->sizeHint().height());
 
     createActions();
     if (m_browser)
@@ -247,7 +247,7 @@ KEBApp::KEBApp(
 
     m_dcopIface = new KBookmarkEditorIface();
 
-    connect(kapp->tqclipboard(), TQT_SIGNAL( dataChanged() ),
+    connect(kapp->clipboard(), TQT_SIGNAL( dataChanged() ),
                                TQT_SLOT( slotClipboardDataChanged() ));
 
     ListView::self()->connectSignals();
@@ -319,7 +319,7 @@ void KEBApp::slotClipboardDataChanged() {
     // kdDebug() << "KEBApp::slotClipboardDataChanged" << endl;
     if (!m_readOnly) {
         m_canPaste = KBookmarkDrag::canDecode(
-                        kapp->tqclipboard()->data(TQClipboard::Clipboard));
+                        kapp->clipboard()->data(TQClipboard::Clipboard));
         updateActions();
     }
 }

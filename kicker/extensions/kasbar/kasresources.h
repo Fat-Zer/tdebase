@@ -59,7 +59,7 @@
 
 #include <tqbitmap.h>
 #include <tqcolor.h>
-#include <tqbrush.h>
+#include <brush.h>
 #include <tqpen.h>
 #include <kpixmap.h>
 

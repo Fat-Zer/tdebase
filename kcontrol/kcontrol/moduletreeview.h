@@ -20,7 +20,7 @@
 #ifndef __moduletreeview_h__
 #define __moduletreeview_h__
 
-#include <tqpalette.h>
+#include <palette.h>
 #include <tqptrlist.h>
 #include <tqlistview.h>
 #include <klistview.h>
@@ -74,7 +74,7 @@ public:
   void makeSelected(ConfigModule* module);
   void makeVisible(ConfigModule *module);
   void fill();
-  TQSize tqsizeHint() const;
+  TQSize sizeHint() const;
 
 signals:
   void moduleSelected(ConfigModule*);

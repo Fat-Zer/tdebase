@@ -22,7 +22,7 @@
 #include <string.h>
 #include <time.h>
 
-#include <tqlayout.h>
+#include <layout.h>
 
 #include <klocale.h>
 #include <kdialog.h>

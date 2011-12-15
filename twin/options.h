@@ -14,7 +14,7 @@ License. See the file "COPYING" for the exact licensing terms.
 
 #include <tqobject.h>
 #include <tqfont.h>
-#include <tqpalette.h>
+#include <palette.h>
 #include <tqstringlist.h>
 #include <kdecoration_p.h>
 

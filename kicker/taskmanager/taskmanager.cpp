@@ -1356,7 +1356,7 @@ TQPixmap Task::thumbnail(int maxDimension)
     Picture picture = XRenderCreatePicture(dpy, m_windowPixmap, format,
                                            CPSubwindowMode, &picAttr);
 
-    // Get tqshaped windows handled correctly.
+    // Get shaped windows handled correctly.
     XserverRegion region = XFixesCreateRegionFromWindow(dpy, m_frameId,
                                                         WindowRegionBounding);
     XFixesSetPictureClipRegion(dpy, picture, 0, 0, region);
@@ -1375,7 +1375,7 @@ TQPixmap Task::thumbnail(int maxDimension)
     int thumbnailHeight = (int)(winAttr.height * factor);
 
     TQPixmap thumbnail(thumbnailWidth, thumbnailHeight);
-    thumbnail.fill(TQApplication::tqpalette().active().background());
+    thumbnail.fill(TQApplication::palette().active().background());
 
 #if 0 // TQImage::smoothScale() scaling
     TQPixmap full(winAttr.width, winAttr.height);
@@ -1499,7 +1499,7 @@ bool TaskDrag::canDecode(const TQMimeSource* e)
 
 Task::List TaskDrag::decode( const TQMimeSource* e )
 {
-    TQByteArray data(e->tqencodedData("taskbar/task"));
+    TQByteArray data(e->encodedData("taskbar/task"));
     Task::List tasks;
 
     if (data.size())

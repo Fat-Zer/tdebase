@@ -62,7 +62,7 @@
 #include <tqwidget.h>
 #include <tqpoint.h>
 #include <tqptrlist.h>
-#include <tqlayout.h>
+#include <layout.h>
 
 #include "kasresources.h"
 
@@ -120,7 +120,7 @@ public:
    void remove( KasItem *i );
    void clear();
    KasItem *take( KasItem *i ) { return items.take( indexOf(i) ); }
-   KasItem *itemAt( uint i ) { return items.tqat( i ); }
+   KasItem *itemAt( uint i ) { return items.at( i ); }
    int indexOf( KasItem *i ) { return items.find( i ); }
 
    KasItemList *itemList() { return &items; }
@@ -152,7 +152,7 @@ public:
 
    bool isDrag() const { return inDrag; }
 
-   TQSize tqsizeHint( Qt::Orientation,  TQSize max );
+   TQSize sizeHint( Qt::Orientation,  TQSize max );
 
    //
    // Look and feel options

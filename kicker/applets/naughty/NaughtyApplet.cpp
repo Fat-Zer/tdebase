@@ -24,7 +24,7 @@
 
 #include <tqmessagebox.h>
 #include <tqtoolbutton.h>
-#include <tqlayout.h>
+#include <layout.h>
 
 #include <kiconloader.h>
 #include <kglobal.h>

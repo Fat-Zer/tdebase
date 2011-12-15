@@ -4,7 +4,7 @@
  *
  **********************************************************************/
 
-#include <tqlayout.h>
+#include <layout.h>
 #include <tqpushbutton.h>
 
 #include <klocale.h>

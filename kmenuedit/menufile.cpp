@@ -17,7 +17,7 @@
  */
 
 #include <tqfile.h>
-#include <tqtextstream.h>
+#include <textstream.h>
 #include <tqregexp.h>
 
 #include <kdebug.h>

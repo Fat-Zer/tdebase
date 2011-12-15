@@ -29,7 +29,7 @@
 #include <kfiledialog.h>
 #include <tqradiobutton.h>
 #include <tqvbuttongroup.h>
-#include <tqlayout.h>
+#include <layout.h>
 #include <tqlabel.h>
 #include <klocale.h>
 #include <kdebug.h>

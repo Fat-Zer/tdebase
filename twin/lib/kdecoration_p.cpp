@@ -26,7 +26,7 @@ DEALINGS IN THE SOFTWARE.
 
 #include <kconfig.h>
 #include <kglobalsettings.h>
-#include <tqpalette.h>
+#include <palette.h>
 #include <tqapplication.h>
 #include <assert.h>
 

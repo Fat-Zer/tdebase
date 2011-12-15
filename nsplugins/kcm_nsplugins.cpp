@@ -21,7 +21,7 @@
 #include <unistd.h>
 
 #include <tqregexp.h>
-#include <tqlayout.h>
+#include <layout.h>
 #include <kstandarddirs.h>
 #include <klocale.h>
 #include <kiconloader.h>

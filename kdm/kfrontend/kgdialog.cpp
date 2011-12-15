@@ -32,7 +32,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include <kiconloader.h>
 
 #include <tqaccel.h>
-#include <tqlayout.h>
+#include <layout.h>
 #include <tqpushbutton.h>
 #include <tqpopupmenu.h>
 #include <tqapplication.h>
@@ -134,7 +134,7 @@ void
 KGDialog::slotActivateMenu( int id )
 {
 	TQPopupMenu *cmnu = optMenu->findItem( id )->popup();
-	TQSize sh( cmnu->tqsizeHint() / 2 );
+	TQSize sh( cmnu->sizeHint() / 2 );
 	cmnu->exec( geometry().center() - TQPoint( sh.width(), sh.height() ) );
 }
 

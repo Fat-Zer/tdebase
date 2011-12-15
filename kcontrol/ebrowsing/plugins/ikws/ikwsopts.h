@@ -20,7 +20,7 @@
 #ifndef __IKWSOPTS_H___
 #define __IKWSOPTS_H___
 
-#include <tqlayout.h>
+#include <layout.h>
 #include <tqtabwidget.h>
 
 #include <kcmodule.h>

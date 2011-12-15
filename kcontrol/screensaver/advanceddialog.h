@@ -5,7 +5,7 @@
 #include <tqwidget.h>
 #include <kconfig.h>
 #include <tqlabel.h>
-#include <tqlayout.h>
+#include <layout.h>
 #include <tqwhatsthis.h>
 #include <tqgroupbox.h>
 #include <tqobject.h>

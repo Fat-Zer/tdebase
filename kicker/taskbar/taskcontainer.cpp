@@ -32,7 +32,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <tqpainter.h>
 #include <tqpixmap.h>
 #include <tqstyle.h>
-#include <tqstylesheet.h>
+#include <stylesheet.h>
 #include <tqtooltip.h>
 
 #include <kapplication.h>
@@ -233,9 +233,9 @@ void TaskContainer::setLastActivated()
 
 void TaskContainer::animationTimerFired()
 {
-    if (!frames.isEmpty() && taskBar->showIcon() && frames.tqat(currentFrame) != frames.end())
+    if (!frames.isEmpty() && taskBar->showIcon() && frames.at(currentFrame) != frames.end())
     {
-        TQPixmap *pm = *frames.tqat(currentFrame);
+        TQPixmap *pm = *frames.at(currentFrame);
 
         // draw pixmap
         if ( pm && !pm->isNull() ) {
@@ -315,7 +315,7 @@ void TaskContainer::resizeEvent( TQResizeEvent * )
 {
     // calculate the icon rect
     TQRect br( tqstyle().subRect( TQStyle::SR_PushButtonContents, this ) );
-    iconRect = TQStyle::tqvisualRect( TQRect(br.x() + 2, (height() - 16) / 2, 16, 16), this );
+    iconRect = TQStyle::visualRect( TQRect(br.x() + 2, (height() - 16) / 2, 16, 16), this );
 }
 
 void TaskContainer::add(Task::Ptr task)
@@ -477,7 +477,7 @@ void TaskContainer::paintEvent( TQPaintEvent* )
     }
 
     TQPainter p;
-    p.tqbegin(pm ,this);
+    p.begin(pm ,this);
     drawButton(&p);
     p.end();
 
@@ -533,7 +533,7 @@ void TaskContainer::drawButton(TQPainter *p)
 
     font.setBold(active);
 
-    TQColorGroup colors = tqpalette().active();
+    TQColorGroup colors = palette().active();
     
     if (TaskBarSettings::useCustomColors())
     {
@@ -583,8 +583,8 @@ void TaskContainer::drawButton(TQPainter *p)
     bool sunken = isDown() || (alwaysDrawButtons && (active || aboutToActivate));
     bool reverse = TQApplication::reverseLayout();
     TQRect br(tqstyle().subRect(TQStyle::SR_PushButtonContents, this));
-    TQPoint shift = TQPoint(tqstyle().tqpixelMetric(TQStyle::PM_ButtonShiftHorizontal),
-                          tqstyle().tqpixelMetric(TQStyle::PM_ButtonShiftVertical));
+    TQPoint shift = TQPoint(tqstyle().pixelMetric(TQStyle::PM_ButtonShiftHorizontal),
+                          tqstyle().pixelMetric(TQStyle::PM_ButtonShiftVertical));
 
     // draw button background
     if (drawButton)
@@ -653,7 +653,7 @@ void TaskContainer::drawButton(TQPainter *p)
         // draw modified overlay
         if (!modPixmap.isNull())
         {
-            TQRect r = TQStyle::tqvisualRect(TQRect(br.x() + textPos,
+            TQRect r = TQStyle::visualRect(TQRect(br.x() + textPos,
                                                (height() - 16) / 2, 16, 16),
                                          this);
 
@@ -670,7 +670,7 @@ void TaskContainer::drawButton(TQPainter *p)
     // draw text
     if (!text.isEmpty())
     {
-        TQRect tr = TQStyle::tqvisualRect(TQRect(br.x() + textPos + 1, 0,
+        TQRect tr = TQStyle::visualRect(TQRect(br.x() + textPos + 1, 0,
                                             width() - textPos, height()),
                                       this);
         int textFlags = AlignVCenter | SingleLine;
@@ -736,7 +736,7 @@ void TaskContainer::drawButton(TQPainter *p)
             TQPaintDevice* opd = p->device();
             p->end();
             pm->convertFromImage(img);
-            p->tqbegin(opd ,this);
+            p->begin(opd ,this);
         }
         else
         {
@@ -754,9 +754,9 @@ void TaskContainer::drawButton(TQPainter *p)
         }
     }
 
-    if (!frames.isEmpty() && m_startup && frames.tqat(currentFrame) != frames.end())
+    if (!frames.isEmpty() && m_startup && frames.at(currentFrame) != frames.end())
     {
-        TQPixmap *anim = *frames.tqat(currentFrame);
+        TQPixmap *anim = *frames.at(currentFrame);
 
         if (anim && !anim->isNull())
         {
@@ -787,7 +787,7 @@ void TaskContainer::drawButton(TQPainter *p)
         }
 
         int flags = TQStyle::Style_Enabled;
-        TQRect ar = TQStyle::tqvisualRect(TQRect(br.x() + br.width() - 8 - 2,
+        TQRect ar = TQStyle::visualRect(TQRect(br.x() + br.width() - 8 - 2,
                                             br.y(), 8, br.height()), this);
         if (sunken)
         {
@@ -799,7 +799,7 @@ void TaskContainer::drawButton(TQPainter *p)
     
     // draw mouse over frame in transparent mode
     if (m_mouseOver && halo)
-        KickerLib::drawBlendedRect(p, TQRect(0, 0, width(), height()), tqcolorGroup().foreground());
+        KickerLib::drawBlendedRect(p, TQRect(0, 0, width(), height()), colorGroup().foreground());
 
     if (aboutToActivate)
     {
@@ -830,13 +830,13 @@ TQString TaskContainer::name()
         // in common, and then use everything UP TO that as the name in the button
         while (i < maxLength)
         {
-            TQChar check = match.tqat(i).lower();
+            TQChar check = match.at(i).lower();
             Task::List::iterator itEnd = m_filteredTasks.end();
             for (Task::List::iterator it = m_filteredTasks.begin(); it != itEnd; ++it)
             {
                 // we're doing a lot of Utf8 -> TQString conversions here
                 // by repeatedly calling visibleIconicName() =/
-                if (check != (*it)->visibleName().tqat(i).lower())
+                if (check != (*it)->visibleName().at(i).lower())
                 {
                     if (i > 0)
                     {
@@ -856,7 +856,7 @@ TQString TaskContainer::name()
         }
 
         // strip trailing crap
-        while (i > 0 && !match.tqat(i).isLetterOrNumber())
+        while (i > 0 && !match.at(i).isLetterOrNumber())
         {
             --i;
         }
@@ -1161,17 +1161,17 @@ void TaskContainer::popupMenu(int action)
             pos.setX(pos.x() + width());
             break;
         case LeftArrow:
-            pos.setX(pos.x() - m_menu->tqsizeHint().width());
+            pos.setX(pos.x() - m_menu->sizeHint().width());
             break;
         case DownArrow:
             if ( TQApplication::reverseLayout() )
-                pos.setX( pos.x() + width() - m_menu->tqsizeHint().width() );
+                pos.setX( pos.x() + width() - m_menu->sizeHint().width() );
             pos.setY( pos.y() + height() );
             break;
         case UpArrow:
             if ( TQApplication::reverseLayout() )
-                pos.setX( pos.x() + width() - m_menu->tqsizeHint().width() );
-            pos.setY(pos.y() - m_menu->tqsizeHint().height());
+                pos.setX( pos.x() + width() - m_menu->sizeHint().width() );
+            pos.setY(pos.y() - m_menu->sizeHint().height());
             break;
         default:
             break;

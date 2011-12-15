@@ -373,7 +373,7 @@ void TabBox::drawContents( TQPainter * )
     pix.fill(this, 0, 0);
 
     TQPainter p;
-    p.tqbegin(&pix, this);
+    p.begin(&pix, this);
 
     TQPixmap* menu_pix = twin_get_menu_pix_hack();
 
@@ -400,7 +400,7 @@ void TabBox::drawContents( TQPainter * )
                   {
                   // draw highlight background
                   if ( (*it) == current_client )
-                    p.fillRect(x, y, r.width(), lineHeight, tqcolorGroup().highlight());
+                    p.fillRect(x, y, r.width(), lineHeight, colorGroup().highlight());
 
                   // draw icon
                   TQPixmap icon;
@@ -437,11 +437,11 @@ void TabBox::drawContents( TQPainter * )
 
                   // draw text
                   if ( (*it) == current_client )
-                    p.setPen(tqcolorGroup().highlightedText());
+                    p.setPen(colorGroup().highlightedText());
                   else if( (*it)->isMinimized())
                     {
-                    TQColor c1 = tqcolorGroup().text();
-                    TQColor c2 = tqcolorGroup().background();
+                    TQColor c1 = colorGroup().text();
+                    TQColor c2 = colorGroup().background();
                     // from kicker's TaskContainer::blendColors()
                     int r1, g1, b1;
                     int r2, g2, b2;
@@ -456,7 +456,7 @@ void TabBox::drawContents( TQPainter * )
                     p.setPen(TQColor( r1, g1, b1 ));
                     }
                   else
-                    p.setPen(tqcolorGroup().text());
+                    p.setPen(colorGroup().text());
 
                   p.drawText(x+5 + iconWidth + 8, y, r.width() - 5 - iconWidth - 8, lineHeight,
                               Qt::AlignLeft | Qt::AlignVCenter | TQt::SingleLine, s);
@@ -494,13 +494,13 @@ void TabBox::drawContents( TQPainter * )
             {
             // draw highlight background
             if ( iDesktop == desk )  // current desktop
-              p.fillRect(x, y, r.width(), lineHeight, tqcolorGroup().highlight());
+              p.fillRect(x, y, r.width(), lineHeight, colorGroup().highlight());
 
             p.save();
 
             // draw "icon" (here: number of desktop)
-            p.fillRect(x+5, y+2, iconWidth, iconHeight, tqcolorGroup().base());
-            p.setPen(tqcolorGroup().text());
+            p.fillRect(x+5, y+2, iconWidth, iconHeight, colorGroup().base());
+            p.setPen(colorGroup().text());
             p.drawRect(x+5, y+2, iconWidth, iconHeight);
 
             // draw desktop-number
@@ -512,9 +512,9 @@ void TabBox::drawContents( TQPainter * )
 
             // draw desktop name text
             if ( iDesktop == desk )
-              p.setPen(tqcolorGroup().highlightedText());
+              p.setPen(colorGroup().highlightedText());
             else
-              p.setPen(tqcolorGroup().text());
+              p.setPen(colorGroup().text());
 
             p.drawText(x+5 + iconWidth + 8, y, r.width() - 5 - iconWidth - 8, lineHeight,
                        Qt::AlignLeft | Qt::AlignVCenter | TQt::SingleLine,
@@ -696,7 +696,7 @@ void TabBox::handleMouseEvent( XEvent* e )
     if( e->type != ButtonPress )
         return;
     TQPoint pos( e->xbutton.x_root, e->xbutton.y_root );
-    if( !tqgeometry().contains( pos ))
+    if( !geometry().contains( pos ))
         {
         workspace()->closeTabBox();  // click outside closes tab
         return;

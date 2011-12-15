@@ -16,7 +16,7 @@
  ***************************************************************************/
 
 #include <tqcheckbox.h>
-#include <tqlayout.h>
+#include <layout.h>
 #include <tqstringlist.h>
 #include <tqtabwidget.h>
 

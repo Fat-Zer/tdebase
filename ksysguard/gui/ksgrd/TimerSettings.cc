@@ -26,7 +26,7 @@
 
 #include <tqcheckbox.h>
 #include <tqlabel.h>
-#include <tqlayout.h>
+#include <layout.h>
 #include <tqspinbox.h>
 #include <tqwhatsthis.h>
 

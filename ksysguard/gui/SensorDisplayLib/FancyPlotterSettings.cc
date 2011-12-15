@@ -34,7 +34,7 @@
 #include <tqgroupbox.h>
 #include <tqimage.h>
 #include <tqlabel.h>
-#include <tqlayout.h>
+#include <layout.h>
 #include <tqpixmap.h>
 #include <tqpushbutton.h>
 #include <tqradiobutton.h>
@@ -79,7 +79,7 @@ FancyPlotterSettings::FancyPlotterSettings( TQWidget* parent, const char* name )
   pageLayout = new TQGridLayout( page, 2, 1, 0, spacingHint() );
 
   groupBox = new TQGroupBox( 0, Qt::Vertical, i18n( "Vertical Scale" ), page );
-  boxLayout = new TQGridLayout( groupBox->tqlayout(), 2, 5, spacingHint() );
+  boxLayout = new TQGridLayout( groupBox->layout(), 2, 5, spacingHint() );
   boxLayout->setColStretch( 2, 1 );
 
   mUseAutoRange = new TQCheckBox( i18n( "Automatic range detection" ), groupBox );
@@ -90,7 +90,7 @@ FancyPlotterSettings::FancyPlotterSettings( TQWidget* parent, const char* name )
   boxLayout->addWidget( label, 1, 0 );
 
   mMinValue = new KLineEdit( groupBox );
-  mMinValue->tqsetAlignment( AlignRight );
+  mMinValue->setAlignment( AlignRight );
   mMinValue->setEnabled( false );
   TQWhatsThis::add( mMinValue, i18n( "Enter the minimum value for the display here. If both values are 0, automatic range detection is enabled." ) );
   boxLayout->addWidget( mMinValue, 1, 1 );
@@ -100,7 +100,7 @@ FancyPlotterSettings::FancyPlotterSettings( TQWidget* parent, const char* name )
   boxLayout->addWidget( label, 1, 3 );
 
   mMaxValue = new KLineEdit( groupBox );
-  mMaxValue->tqsetAlignment( AlignRight );
+  mMaxValue->setAlignment( AlignRight );
   mMaxValue->setEnabled( false );
   TQWhatsThis::add( mMaxValue, i18n( "Enter the maximum value for the display here. If both values are 0, automatic range detection is enabled." ) );
   boxLayout->addWidget( mMaxValue, 1, 4 );
@@ -109,7 +109,7 @@ FancyPlotterSettings::FancyPlotterSettings( TQWidget* parent, const char* name )
   pageLayout->addWidget( groupBox, 0, 0 );
 
   groupBox = new TQGroupBox( 0, Qt::Vertical, i18n( "Horizontal Scale" ), page );
-  boxLayout = new TQGridLayout( groupBox->tqlayout(), 2, 2, spacingHint() );
+  boxLayout = new TQGridLayout( groupBox->layout(), 2, 2, spacingHint() );
   boxLayout->setRowStretch( 1, 1 );
 
   mHorizontalScale = new KIntNumInput( 1, groupBox );
@@ -127,7 +127,7 @@ FancyPlotterSettings::FancyPlotterSettings( TQWidget* parent, const char* name )
   pageLayout = new TQGridLayout( page, 3, 2, 0, spacingHint() );
 
   groupBox = new TQGroupBox( 0, Qt::Vertical, i18n( "Lines" ), page );
-  boxLayout = new TQGridLayout( groupBox->tqlayout(), 2, 5, spacingHint() );
+  boxLayout = new TQGridLayout( groupBox->layout(), 2, 5, spacingHint() );
   boxLayout->setColStretch( 1, 1 );
 
   mShowVerticalLines = new TQCheckBox( i18n( "Vertical lines" ), groupBox );
@@ -166,7 +166,7 @@ FancyPlotterSettings::FancyPlotterSettings( TQWidget* parent, const char* name )
   pageLayout->addMultiCellWidget( groupBox, 0, 0, 0, 1 );
 
   groupBox = new TQGroupBox( 0, Qt::Vertical, i18n( "Text" ), page );
-  boxLayout = new TQGridLayout( groupBox->tqlayout(), 3, 4, spacingHint() );
+  boxLayout = new TQGridLayout( groupBox->layout(), 3, 4, spacingHint() );
   boxLayout->setColStretch( 1, 1 );
 
   mShowLabels = new TQCheckBox( i18n( "Labels" ), groupBox );
@@ -191,7 +191,7 @@ FancyPlotterSettings::FancyPlotterSettings( TQWidget* parent, const char* name )
   pageLayout->addWidget( groupBox, 1, 0 );
 
   groupBox = new TQGroupBox( 0, Qt::Vertical, i18n( "Colors" ), page );
-  boxLayout = new TQGridLayout( groupBox->tqlayout(), 4, 2, spacingHint() );
+  boxLayout = new TQGridLayout( groupBox->layout(), 4, 2, spacingHint() );
 
   label = new TQLabel( i18n( "Vertical lines:" ), groupBox );
   boxLayout->addWidget( label, 0, 0 );

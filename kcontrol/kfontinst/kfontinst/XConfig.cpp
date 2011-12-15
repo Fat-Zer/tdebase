@@ -30,7 +30,7 @@
 #include "FontEngine.h"
 #include "kxftconfig.h"
 #include <ksavefile.h>
-#include <tqtextstream.h>
+#include <textstream.h>
 #include <fstream>
 #include <string.h>
 #include <tqdir.h>

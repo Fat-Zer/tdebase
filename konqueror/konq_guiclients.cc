@@ -191,7 +191,7 @@ ToggleViewGUIClient::ToggleViewGUIClient( KonqMainWindow *mainWindow )
     TQString name = (*cIt)->desktopEntryName();
     //kdDebug(1202) << "ToggleViewGUIClient: name=" << name << endl;
     KToggleAction *action = new KToggleAction( description, 0, mainWindow->actionCollection(), name.latin1() );
-    action->setCheckedState( i18n( "Hide %1" ).tqarg( (*cIt)->name() ) );
+    action->setCheckedState( i18n( "Hide %1" ).arg( (*cIt)->name() ) );
 
     // HACK
     if ( (*cIt)->icon() != "unknown" )
@@ -230,7 +230,7 @@ TQPtrList<KAction> ToggleViewGUIClient::actions() const
 
 void ToggleViewGUIClient::slotToggleView( bool toggle )
 {
-  TQString serviceName = TQString::tqfromLatin1( TQT_TQOBJECT_CONST(sender())->name() );
+  TQString serviceName = TQString::fromLatin1( TQT_TQOBJECT_CONST(sender())->name() );
 
   bool horizontal = m_mapOrientation[ serviceName ];
 
@@ -240,7 +240,7 @@ void ToggleViewGUIClient::slotToggleView( bool toggle )
   {
 
     KonqView *childView = viewManager->splitWindow( horizontal ? Qt::Vertical : Qt::Horizontal,
-                                                    TQString::tqfromLatin1( "Browser/View" ),
+                                                    TQString::fromLatin1( "Browser/View" ),
                                                     serviceName,
                                                     !horizontal /* vertical = make it first */);
 

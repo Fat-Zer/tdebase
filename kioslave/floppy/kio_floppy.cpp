@@ -36,7 +36,7 @@
 #include <sys/time.h>
 #include <sys/types.h>
 
-#include <tqtextstream.h>
+#include <textstream.h>
 #include <tqcstring.h>
 #include <tqfile.h>
 

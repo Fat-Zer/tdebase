@@ -57,11 +57,11 @@
 
 #include <tqapplication.h>
 #include <tqpainter.h>
-#include <tqclipboard.h>
+#include <clipboard.h>
 #include <tqstyle.h>
 #include <tqfile.h>
 #include <tqdragobject.h>
-#include <tqlayout.h>
+#include <layout.h>
 #include <tqregexp.h>
 
 #include <math.h>
@@ -193,10 +193,10 @@ void TEWidget::setColorTable(const ColorEntry table[])
    xterm fonts have these at 0x00..0x1f.
 
    QT's iso mapping leaves 0x00..0x7f without any changes. But the graphicals
-   come in here as proper tqunicode characters.
+   come in here as proper unicode characters.
 
    We treat non-iso10646 fonts as VT100 extended and do the requiered mapping
-   from tqunicode to 0x00..0x1f. The remaining translation is then left to the
+   from unicode to 0x00..0x1f. The remaining translation is then left to the
    QCodec.
 */
 
@@ -215,7 +215,7 @@ unsigned short vt100_graphics[32] =
 /*
 static TQChar vt100extended(TQChar c)
 {
-  switch (c.tqunicode())
+  switch (c.unicode())
   {
     case 0x25c6 : return  1;
     case 0x2592 : return  2;
@@ -391,7 +391,7 @@ TEWidget::TEWidget(TQWidget *parent, const char *name)
   // konsole in opaque mode.
   bY = bX = 1;
 
-  cb = TQApplication::tqclipboard();
+  cb = TQApplication::clipboard();
   TQObject::connect( (TQObject*)cb, TQT_SIGNAL(selectionChanged()),
                     this, TQT_SLOT(onClearSelection()) );
 
@@ -441,7 +441,7 @@ TEWidget::~TEWidget()
 /* ------------------------------------------------------------------------- */
 
 /**
- A table for emulating the simple (single width) tqunicode drawing chars.
+ A table for emulating the simple (single width) unicode drawing chars.
  It represents the 250x - 257x glyphs. If it's zero, we can't use it.
  if it's not, it's encoded as follows: imagine a 5x5 grid where the points are numbered
  0 to 24 left to top, top to bottom. Each point is represented by the corresponding bit.
@@ -564,7 +564,7 @@ void TEWidget::drawTextFixed(TQPainter &paint, int x, int y,
   int w;
   for(unsigned int i=0;i<str.length();i++)
   {
-    drawstr = str.tqat(i);
+    drawstr = str.at(i);
     // Add double of the width if next c is 0;
     if ((attr+nc+1)->c) // This may access image[image_size] See makeImage()
     {
@@ -578,7 +578,7 @@ void TEWidget::drawTextFixed(TQPainter &paint, int x, int y,
     }
 
     //Check for line-drawing char
-    if (isLineChar(drawstr[0].tqunicode()))
+    if (isLineChar(drawstr[0].unicode()))
     {
         uchar code = drawstr[0].cell();
         if (LineChars[code])
@@ -814,7 +814,7 @@ void TEWidget::setImage(const ca* const newimg, int lines, int columns)
   int y,x,len;
   const TQPixmap* pm = backgroundPixmap();
   TQPainter paint;
-  tqsetUpdatesEnabled(false);
+  setUpdatesEnabled(false);
   paint.begin( this );
 
   TQPoint tL  = contentsRect().topLeft();
@@ -926,7 +926,7 @@ void TEWidget::setImage(const ca* const newimg, int lines, int columns)
   }
   drawFrame( &paint );
   paint.end();
-  tqsetUpdatesEnabled(true);
+  setUpdatesEnabled(true);
   if ( hasBlinker && !blinkT->isActive()) blinkT->start(1000); // 1000 ms
   if (!hasBlinker && blinkT->isActive()) { blinkT->stop(); blinking = false; }
   free(dirtyMask);
@@ -954,7 +954,7 @@ void TEWidget::setImage(const ca* const newimg, int lines, int columns)
         mResizeLabel = new TQLabel(i18n("Size: XXX x XXX"), mResizeWidget);
         l->addWidget(mResizeLabel, 1, AlignCenter);
         mResizeWidget->setMinimumWidth(mResizeLabel->fontMetrics().width(i18n("Size: XXX x XXX"))+20);
-        mResizeWidget->setMinimumHeight(mResizeLabel->tqsizeHint().height()+20);
+        mResizeWidget->setMinimumHeight(mResizeLabel->sizeHint().height()+20);
         mResizeTimer = new TQTimer(this);
         connect(mResizeTimer, TQT_SIGNAL(timeout()), mResizeWidget, TQT_SLOT(hide()));
      }
@@ -993,7 +993,7 @@ void TEWidget::paintEvent( TQPaintEvent* pe )
 {
   const TQPixmap* pm = backgroundPixmap();
   TQPainter paint;
-  tqsetUpdatesEnabled(false);
+  setUpdatesEnabled(false);
   paint.begin( this );
   paint.setBackgroundMode( Qt::TransparentMode );
 
@@ -1051,7 +1051,7 @@ void TEWidget::paintEvent( TQPaintEvent* pe )
   erase( er );
 
   paint.end();
-  tqsetUpdatesEnabled(true);
+  setUpdatesEnabled(true);
 }
 
 void TEWidget::print(TQPainter &paint, bool friendly, bool exact)
@@ -1072,7 +1072,7 @@ void TEWidget::print(TQPainter &paint, bool friendly, bool exact)
      pm.fill();
 
      TQPainter pm_paint;
-     pm_paint.tqbegin(&pm, TQT_TQWIDGET(this));
+     pm_paint.begin(&pm, TQT_TQWIDGET(this));
      paintContents(pm_paint, contentsRect(), true);
      pm_paint.end();
      paint.drawPixmap(0, 0, pm);
@@ -1159,14 +1159,14 @@ void TEWidget::blinkEvent()
 {
   blinking = !blinking;
   isBlinkEvent = true;
-  tqrepaint(false);
+  repaint(false);
   isBlinkEvent = false;
 }
 
 void TEWidget::blinkCursorEvent()
 {
   cursorBlinking = !cursorBlinking;
-  tqrepaint(cursorRect, true);
+  repaint(cursorRect, true);
 }
 
 /* ------------------------------------------------------------------------- */
@@ -1185,9 +1185,9 @@ void TEWidget::propagateSize()
   if (isFixedSize)
   {
      setSize(columns, lines);
-     TQFrame::setFixedSize(tqsizeHint());
+     TQFrame::setFixedSize(sizeHint());
      parentWidget()->adjustSize();
-     parentWidget()->setFixedSize(parentWidget()->tqsizeHint());
+     parentWidget()->setFixedSize(parentWidget()->sizeHint());
      return;
   }
   if (image)
@@ -1742,14 +1742,14 @@ void TEWidget::mouseTripleClickEvent(TQMouseEvent* ev)
 
 void TEWidget::focusInEvent( TQFocusEvent * )
 {
-  tqrepaint(cursorRect, true);  // *do* erase area, to get rid of the
+  repaint(cursorRect, true);  // *do* erase area, to get rid of the
                               // hollow cursor rectangle.
 }
 
 
 void TEWidget::focusOutEvent( TQFocusEvent * )
 {
-  tqrepaint(cursorRect, true);  // don't erase area
+  repaint(cursorRect, true);  // don't erase area
 }
 
 bool TEWidget::focusNextPrevChild( bool next )
@@ -1803,8 +1803,8 @@ void TEWidget::emitText(TQString text)
 void TEWidget::emitSelection(bool useXselection,bool appendReturn)
 // Paste Clipboard by simulating keypress events
 {
-  TQApplication::tqclipboard()->setSelectionMode( useXselection );
-  TQString text = TQApplication::tqclipboard()->text();
+  TQApplication::clipboard()->setSelectionMode( useXselection );
+  TQString text = TQApplication::clipboard()->text();
   if(appendReturn)
     text.append("\r");
   if ( ! text.isEmpty() )
@@ -1814,13 +1814,13 @@ void TEWidget::emitSelection(bool useXselection,bool appendReturn)
     emit keyPressedSignal(&e); // expose as a big fat keypress event
     emit clearSelectionSignal();
   }
-  TQApplication::tqclipboard()->setSelectionMode( false );
+  TQApplication::clipboard()->setSelectionMode( false );
 }
 
 void TEWidget::setSelection(const TQString& t)
 {
   // Disconnect signal while WE set the clipboard
-  TQClipboard *cb = TQApplication::tqclipboard();
+  TQClipboard *cb = TQApplication::clipboard();
   TQObject::disconnect( cb, TQT_SIGNAL(selectionChanged()),
                      this, TQT_SLOT(onClearSelection()) );
 
@@ -1860,7 +1860,7 @@ void TEWidget::onClearSelection()
 
 //FIXME: an `eventFilter' has been installed instead of a `keyPressEvent'
 //       due to a bug in `QT' or the ignorance of the author to prevent
-//       tqrepaint events being emitted to the screen whenever one leaves
+//       repaint events being emitted to the screen whenever one leaves
 //       or reenters the screen to/from another application.
 //
 //   Troll says one needs to change focusInEvent() and focusOutEvent(),
@@ -1880,7 +1880,7 @@ void TEWidget::doScroll(int lines)
 bool TEWidget::eventFilter( TQObject *obj, TQEvent *e )
 {
   if ( (e->type() == TQEvent::Accel ||
-       e->type() == TQEvent::AccelAvailable ) && tqApp->tqfocusWidget() == this )
+       e->type() == TQEvent::AccelAvailable ) && tqApp->focusWidget() == this )
   {
       TQT_TQKEYEVENT( e )->ignore();
       return false;
@@ -1984,7 +1984,7 @@ void TEWidget::imEndEvent( TQIMEvent *e )
   m_imPreeditLength = 0;
 
   m_isIMEdit = m_isIMSel = false;
-  tqrepaint( repaintRect, true );
+  repaint( repaintRect, true );
 }
 
 // Override any Ctrl+<key> accelerator when pressed with the keyboard
@@ -2104,7 +2104,7 @@ void TEWidget::clearImage()
 
 void TEWidget::calcGeometry()
 {
-  scrollbar->resize(TQApplication::tqstyle().tqpixelMetric(TQStyle::PM_ScrollBarExtent),
+  scrollbar->resize(TQApplication::tqstyle().pixelMetric(TQStyle::PM_ScrollBarExtent),
                     contentsRect().height());
   switch(scrollLoc)
   {
@@ -2177,7 +2177,7 @@ void TEWidget::setFixedSize(int cols, int lins)
   TQFrame::setFixedSize(m_size);
 }
 
-TQSize TEWidget::tqsizeHint() const
+TQSize TEWidget::sizeHint() const
 {
   return m_size;
 }
@@ -2242,7 +2242,7 @@ void TEWidget::dropEvent(TQDropEvent* event)
         TQString tmp;
         if (url.isLocalFile()) {
           tmp = url.path(); // local URL : remove protocol. This helps "ln" & "cd" and doesn't harm the others
-        } else if ( url.protocol() == TQString::tqfromLatin1( "mailto" ) ) {
+        } else if ( url.protocol() == TQString::fromLatin1( "mailto" ) ) {
 	  justPaste = true;
 	  break;
 	} else {
@@ -2268,7 +2268,7 @@ void TEWidget::dropEvent(TQDropEvent* event)
 void TEWidget::doDrag()
 {
   dragInfo.state = diDragging;
-  dragInfo.dragObject = new TQTextDrag(TQApplication::tqclipboard()->text(TQClipboard::Selection), this);
+  dragInfo.dragObject = new TQTextDrag(TQApplication::clipboard()->text(TQClipboard::Selection), this);
   dragInfo.dragObject->dragCopy();
   // Don't delete the TQTextDrag object.  Qt will delete it when it's done with it.
 }

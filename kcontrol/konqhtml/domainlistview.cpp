@@ -19,7 +19,7 @@
 
 */
 
-#include <tqlayout.h>
+#include <layout.h>
 #include <tqpushbutton.h>
 #include <tqwhatsthis.h>
 
@@ -38,8 +38,8 @@ DomainListView::DomainListView(KConfig *config,const TQString &title,
   setColumnLayout(0, Qt::Vertical);
   layout()->setSpacing(0);
   layout()->setMargin(0);
-  TQGridLayout* thisLayout = new TQGridLayout(tqlayout());
-  thisLayout->tqsetAlignment(Qt::AlignTop);
+  TQGridLayout* thisLayout = new TQGridLayout(layout());
+  thisLayout->setAlignment(Qt::AlignTop);
   thisLayout->setSpacing(KDialog::spacingHint());
   thisLayout->setMargin(KDialog::marginHint());
 

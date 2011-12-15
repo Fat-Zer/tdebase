@@ -26,7 +26,7 @@
 #include <tqdatetime.h>
 #include <tqlabel.h>
 #include <tqwhatsthis.h>
-#include <tqlayout.h>
+#include <layout.h>
 #include <tqtimer.h>
 
 #include <stdio.h>
@@ -45,7 +45,7 @@ KLocaleSample::KLocaleSample(KLocale *locale,
   lay->setAutoAdd(TRUE);
 
   // Whatever the color scheme is, we want black text
-  TQColorGroup a = tqpalette().active();
+  TQColorGroup a = palette().active();
   a.setColor(TQColorGroup::Foreground, Qt::black);
   TQPalette pal(a, a, a);
 
@@ -88,7 +88,7 @@ KLocaleSample::~KLocaleSample()
 
 void KLocaleSample::slotUpdateTime()
 {
-  TQDateTime dt = TQDateTime::tqcurrentDateTime();
+  TQDateTime dt = TQDateTime::currentDateTime();
 
   m_dateSample->setText(m_locale->formatDate(TQT_TQDATE_OBJECT(dt.date()), false));
   m_dateShortSample->setText(m_locale->formatDate(TQT_TQDATE_OBJECT(dt.date()), true));
@@ -98,11 +98,11 @@ void KLocaleSample::slotUpdateTime()
 void KLocaleSample::slotLocaleChanged()
 {
   m_numberSample->setText(m_locale->formatNumber(1234567.89) +
-                          TQString::tqfromLatin1(" / ") +
+                          TQString::fromLatin1(" / ") +
                           m_locale->formatNumber(-1234567.89));
 
   m_moneySample->setText(m_locale->formatMoney(123456789.00) +
-                         TQString::tqfromLatin1(" / ") +
+                         TQString::fromLatin1(" / ") +
                          m_locale->formatMoney(-123456789.00));
 
   slotUpdateTime();

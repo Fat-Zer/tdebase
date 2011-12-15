@@ -20,7 +20,7 @@
 
 #include <stdlib.h>
 
-#include <tqlayout.h>
+#include <layout.h>
 #include <tqstringlist.h>
 
 #include <kapplication.h>

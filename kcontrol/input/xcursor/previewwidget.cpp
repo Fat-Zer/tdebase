@@ -286,7 +286,7 @@ PreviewWidget::~PreviewWidget()
 
 void PreviewWidget::setTheme( const TQString &theme )
 {
-	tqsetUpdatesEnabled( false );
+	setUpdatesEnabled( false );
 
 	int minHeight = previewSize + 20; // Minimum height of the preview widget
 	int maxHeight = height();         // Tallest cursor height
@@ -302,8 +302,8 @@ void PreviewWidget::setTheme( const TQString &theme )
 
 	current = -1;
 	setFixedSize( ( maxWidth + cursorSpacing ) * numCursors, kMax( maxHeight, minHeight ) );
-	tqsetUpdatesEnabled( true );
-	tqrepaint( false );
+	setUpdatesEnabled( true );
+	repaint( false );
 }
 
 
@@ -311,7 +311,7 @@ void PreviewWidget::paintEvent( TQPaintEvent * )
 {
 	TQPixmap buffer( size() );
 	TQPainter p( &buffer );
-	p.fillRect( rect(), tqcolorGroup().brush( TQColorGroup::Background ) );
+	p.fillRect( rect(), colorGroup().brush( TQColorGroup::Background ) );
 	Picture dest;
 
 	if ( !qt_has_xft || !qt_use_xrender ) {

@@ -38,7 +38,7 @@
 
 #include <tqintdict.h>
 #include <tqptrlist.h>
-#include <tqlayout.h>
+#include <layout.h>
 #include <tqtooltip.h>
 #include <tqtimer.h>
 
@@ -76,7 +76,7 @@ KPagerMainWindow::KPagerMainWindow(TQWidget *parent, const char *name)
     if (w > 0 && h > 0)
         resize(w,h);
     else
-        resize(m_pPager->tqsizeHint());
+        resize(m_pPager->sizeHint());
     //  resize(cfg->readNumEntry(lWidth(),200),cfg->readNumEntry(lHeight(),90));
 
     int xpos=cfg->readNumEntry("xPos",-1);
@@ -91,7 +91,7 @@ KPagerMainWindow::KPagerMainWindow(TQWidget *parent, const char *name)
 //	  rect.pos.y+rect.size.height-m_pPager->height());
 // antonio:The above lines don't work. I should look at them when I have
 // more time
-        move(kapp->desktop()->width()-m_pPager->tqsizeHint().width()-5,kapp->desktop()->height()-m_pPager->tqsizeHint().height()-25);
+        move(kapp->desktop()->width()-m_pPager->sizeHint().width()-5,kapp->desktop()->height()-m_pPager->sizeHint().height()-25);
     }
 
     // Set the wm flags to this window
@@ -374,7 +374,7 @@ void KPager::configureDialog()
 
         updateLayout();
         for( TQValueList <Desktop *>::Iterator it = m_desktops.begin(); it != m_desktops.end(); ++it )
-            (*it)->tqrepaint();
+            (*it)->repaint();
     }
 }
 
@@ -409,7 +409,7 @@ void KPager::slotActiveWindowChanged( WId win )
     {
         if ( (inf1 && inf1->isOnDesktop(i))
              || (inf2 && inf2->isOnDesktop(i) ) )
-            m_desktops[i-1]->tqrepaint(false);
+            m_desktops[i-1]->repaint(false);
     }
 }
 
@@ -422,7 +422,7 @@ void KPager::slotWindowAdded( WId win)
     for ( int i=1; i <= (int) m_desktops.count(); ++i)
     {
         if ( inf->isOnDesktop( i ))
-            m_desktops[i-1]->tqrepaint(false);
+            m_desktops[i-1]->repaint(false);
     }
 }
 
@@ -438,14 +438,14 @@ void KPager::slotWindowRemoved( WId win )
         for (int i = 1; i <= (int) m_desktops.count(); ++i)
         {
             if (onAllDesktops || desktop == i)
-                m_desktops[i-1]->tqrepaint(false);
+                m_desktops[i-1]->repaint(false);
         }
     }
 }
 
 void KPager::slotWindowChanged( WId win , unsigned int prop)
 {
-    bool tqrepaint=false;
+    bool repaint=false;
 
     KWin::WindowInfo* inf = m_windows[win];
     if (!inf)
@@ -453,7 +453,7 @@ void KPager::slotWindowChanged( WId win , unsigned int prop)
       inf=info(win);
       prop=0; // info already calls KWin::info, so there's no need
       // to update anything else.
-      tqrepaint=true;
+      repaint=true;
     };
 
     bool onAllDesktops = inf ? inf->onAllDesktops() : false;
@@ -466,15 +466,15 @@ void KPager::slotWindowChanged( WId win , unsigned int prop)
     }
     
     if((prop & ~( NET::WMName | NET::WMVisibleName )) != 0 )
-	tqrepaint = true;
+	repaint = true;
 
-    if (tqrepaint)
+    if (repaint)
     for ( int i=1; i <= (int) m_desktops.count(); ++i)
     {
       if ((inf && (inf->isOnDesktop(i)))
 	  || onAllDesktops || desktop == i )
         {
-            m_desktops[i-1]->tqrepaint(false);
+            m_desktops[i-1]->repaint(false);
         }
     }
 //	redrawDesktops();
@@ -485,9 +485,9 @@ void KPager::slotStackingOrderChanged()
     m_desktops[m_currentDesktop-1]->m_grabWindows=true;
     for ( int i=1; i <= (int) m_desktops.count(); ++i)
     {
-        m_desktops[i-1]->tqrepaint(false);
+        m_desktops[i-1]->repaint(false);
     }
-//    tqrepaint(true);
+//    repaint(true);
 }
 
 void KPager::slotDesktopNamesChanged()
@@ -547,8 +547,8 @@ void KPager::slotCurrentDesktopChanged(int desk)
     m_desktops[m_currentDesktop-1]->update();
     m_desktops[desk-1]->paintFrame( true );
     m_desktops[desk-1]->update();
-//    m_desktops[m_currentDesktop-1]->tqrepaint();
-//    m_desktops[desk-1]->tqrepaint();
+//    m_desktops[m_currentDesktop-1]->repaint();
+//    m_desktops[desk-1]->repaint();
 
     m_currentDesktop=desk;
 
@@ -643,21 +643,21 @@ void KPager::redrawDesktops()
 {
     TQValueList <Desktop *>::Iterator it;
     for( it = m_desktops.begin(); it != m_desktops.end(); ++it )
-        (*it)->tqrepaint();
+        (*it)->repaint();
 }
 
 void KPager::slotGrabWindows()
 {
     m_desktops[m_currentDesktop-1]->m_grabWindows=true;
-    m_desktops[m_currentDesktop-1]->tqrepaint();
+    m_desktops[m_currentDesktop-1]->repaint();
 }
 
-TQSize KPager::tqsizeHint() const
+TQSize KPager::sizeHint() const
 {
     int n=m_desktops.count();
     int w=-1,h=-1;
 
-    TQSize size=m_desktops[0]->tqsizeHint();
+    TQSize size=m_desktops[0]->sizeHint();
     int wDsk=size.width();
     int hDsk=size.height();
     switch (m_layoutType)

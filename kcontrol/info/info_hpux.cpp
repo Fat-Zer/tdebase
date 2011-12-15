@@ -27,7 +27,7 @@
 #include <stdlib.h>
 #include <tqfile.h>
 #include <tqfontmetrics.h>
-#include <tqtextstream.h>
+#include <textstream.h>
 
 
 #define INFO_CPU_AVAILABLE

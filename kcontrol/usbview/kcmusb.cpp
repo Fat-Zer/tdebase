@@ -10,10 +10,10 @@
 
 #include <tqgroupbox.h>
 #include <tqheader.h>
-#include <tqlayout.h>
+#include <layout.h>
 #include <tqlistview.h>
 #include <tqsplitter.h>
-#include <tqtextview.h>
+#include <textview.h>
 #include <tqtimer.h>
 
 #include <kaboutdata.h>
@@ -39,7 +39,7 @@ USBViewer::USBViewer(TQWidget *parent, const char *name, const TQStringList &)
   gbox->setColumnLayout( 0, Qt::Horizontal );
   vbox->addWidget(gbox);
 
-  TQVBoxLayout *vvbox = new TQVBoxLayout(gbox->tqlayout(), KDialog::spacingHint());
+  TQVBoxLayout *vvbox = new TQVBoxLayout(gbox->layout(), KDialog::spacingHint());
 
   TQSplitter *splitter = new TQSplitter(gbox);
   vvbox->addWidget(splitter);

@@ -88,7 +88,7 @@ void CFontPreview::paintEvent(TQPaintEvent *)
     {
         if(!itsCurrentUrl.isEmpty())
         {
-            paint.setPen(kapp->tqpalette().active().text());
+            paint.setPen(kapp->palette().active().text());
             paint.drawText(rect(), AlignCenter, i18n(" No preview available"));
         }
     }
@@ -103,12 +103,12 @@ void CFontPreview::paintEvent(TQPaintEvent *)
     }
 }
 
-TQSize CFontPreview::tqsizeHint() const
+TQSize CFontPreview::sizeHint() const
 {
     return TQSize(132, 132);
 }
 
-TQSize CFontPreview::tqminimumSizeHint() const
+TQSize CFontPreview::minimumSizeHint() const
 {
     return TQSize(32, 32);
 }

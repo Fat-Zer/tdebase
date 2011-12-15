@@ -22,7 +22,7 @@
 
 #include <tqfile.h>
 #include <tqlabel.h>
-#include <tqlayout.h>
+#include <layout.h>
 #include <tqtabwidget.h>
 
 #include <kcmoduleloader.h>

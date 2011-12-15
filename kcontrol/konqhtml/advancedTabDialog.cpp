@@ -19,7 +19,7 @@
 
 #include <tqbuttongroup.h>
 #include <tqcheckbox.h>
-#include <tqlayout.h>
+#include <layout.h>
 #include <tqpushbutton.h>
 #include <tqradiobutton.h>
 #include <tqslider.h>

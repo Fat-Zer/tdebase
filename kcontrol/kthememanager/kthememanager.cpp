@@ -17,7 +17,7 @@
 */
 
 #include <tqlabel.h>
-#include <tqlayout.h>
+#include <layout.h>
 #include <tqpixmap.h>
 #include <tqpushbutton.h>
 #include <tqtoolbutton.h>

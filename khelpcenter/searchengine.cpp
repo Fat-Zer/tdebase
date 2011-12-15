@@ -1,6 +1,6 @@
 #include "stdlib.h"
 
-#include <tqstylesheet.h>
+#include <stylesheet.h>
 #include <kapplication.h>
 #include <kconfig.h>
 #include <kdebug.h>

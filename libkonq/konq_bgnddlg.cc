@@ -20,7 +20,7 @@
 
 #include <tqbuttongroup.h>
 #include <tqlabel.h>
-#include <tqlayout.h>
+#include <layout.h>
 #include <tqradiobutton.h>
 
 #include <kcolorbutton.h>
@@ -48,10 +48,10 @@ KonqBgndDialog::KonqBgndDialog( TQWidget* parent,
 
     m_buttonGroup = new TQButtonGroup( i18n("Background"), page );
     m_buttonGroup->setColumnLayout( 0, Qt::Vertical );
-    m_buttonGroup->tqlayout()->setMargin( KDialog::marginHint() );
-    m_buttonGroup->tqlayout()->setSpacing( KDialog::spacingHint() );
-    TQGridLayout* groupLayout = new TQGridLayout( m_buttonGroup->tqlayout() );
-    groupLayout->tqsetAlignment( Qt::AlignTop );
+    m_buttonGroup->layout()->setMargin( KDialog::marginHint() );
+    m_buttonGroup->layout()->setSpacing( KDialog::spacingHint() );
+    TQGridLayout* groupLayout = new TQGridLayout( m_buttonGroup->layout() );
+    groupLayout->setAlignment( Qt::AlignTop );
     mainLayout->addWidget( m_buttonGroup );
 
     connect( m_buttonGroup, TQT_SIGNAL( clicked(int) ),
@@ -61,7 +61,7 @@ KonqBgndDialog::KonqBgndDialog( TQWidget* parent,
     m_radioColor = new TQRadioButton( i18n("Co&lor:"), m_buttonGroup );
     groupLayout->addWidget( m_radioColor, 0, 0 );
     m_buttonColor = new KColorButton( theColor, defaultColor, m_buttonGroup );
-    m_buttonColor->tqsetSizePolicy( TQSizePolicy::Preferred,
+    m_buttonColor->setSizePolicy( TQSizePolicy::Preferred,
                                 TQSizePolicy::Minimum );
     groupLayout->addWidget( m_buttonColor, 0, 1 );
 
@@ -90,14 +90,14 @@ KonqBgndDialog::KonqBgndDialog( TQWidget* parent,
     TQLabel* lbl = new TQLabel( i18n("Preview"), page );
     hlay->addWidget( lbl );
     TQFrame* frame = new TQFrame( page );
-    frame->tqsetSizePolicy( TQSizePolicy::Expanding, TQSizePolicy::Minimum );
+    frame->setSizePolicy( TQSizePolicy::Expanding, TQSizePolicy::Minimum );
     frame->setFrameShape( TQFrame::HLine );
     frame->setFrameShadow( TQFrame::Sunken );
     hlay->addWidget( frame );
 
     // preview frame
     m_preview = new TQFrame( page );
-    m_preview->tqsetSizePolicy( TQSizePolicy::Expanding, TQSizePolicy::Expanding );
+    m_preview->setSizePolicy( TQSizePolicy::Expanding, TQSizePolicy::Expanding );
     m_preview->setMinimumSize( 370, 180 );
     m_preview->setFrameShape( TQFrame::Panel );
     m_preview->setFrameShadow( TQFrame::Raised );
@@ -142,7 +142,7 @@ void KonqBgndDialog::initPictures()
         TQStringList::ConstIterator it;
         for ( it = list.begin(); it != list.end(); it++ )
             m_comboPicture->comboBox()->insertItem(
-                ( (*it).tqat(0) == '/' ) ?    // if absolute path
+                ( (*it).at(0) == '/' ) ?    // if absolute path
                 KURL( *it ).fileName() :  // then only fileName
                 *it );
     }

@@ -32,7 +32,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <tqpainter.h>
 #include <tqtimer.h>
 #include <tqtooltip.h>
-#include <tqclipboard.h>
+#include <clipboard.h>
 #include <tqtabwidget.h>
 #include <tqwidgetstack.h>
 #include <tqcombobox.h>

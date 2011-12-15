@@ -27,7 +27,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "PrintDialog.h"
-#include <tqlayout.h>
+#include <layout.h>
 #include <tqframe.h>
 #include <tqlabel.h>
 #include <klocale.h>

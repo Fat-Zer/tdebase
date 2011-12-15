@@ -20,7 +20,7 @@
 #include "newthemewidget.h"
 
 #include <tqlineedit.h>
-#include <tqtextedit.h>
+#include <textedit.h>
 
 #include <klocale.h>
 

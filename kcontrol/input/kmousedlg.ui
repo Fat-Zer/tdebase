@@ -57,7 +57,7 @@
                     <property name="sizeType">
                         <enum>Expanding</enum>
                     </property>
-                    <property name="tqsizeHint">
+                    <property name="sizeHint">
                         <size>
                             <width>20</width>
                             <height>20</height>
@@ -74,7 +74,7 @@
                     <property name="sizeType">
                         <enum>Expanding</enum>
                     </property>
-                    <property name="tqsizeHint">
+                    <property name="sizeHint">
                         <size>
                             <width>20</width>
                             <height>20</height>
@@ -112,7 +112,7 @@
                             <verstretch>0</verstretch>
                         </sizepolicy>
                     </property>
-                    <property name="tqmaximumSize">
+                    <property name="maximumSize">
                         <size>
                             <width>150</width>
                             <height>115</height>
@@ -181,10 +181,10 @@
                 </widget>
                 <widget class="TQCheckBox" row="2" column="1" rowspan="1" colspan="2">
                     <property name="name">
-                        <cstring>cb_pointertqshape</cstring>
+                        <cstring>cb_pointershape</cstring>
                     </property>
                     <property name="text">
-                        <string>Cha&amp;nge pointer tqshape over icons</string>
+                        <string>Cha&amp;nge pointer shape over icons</string>
                     </property>
                     <property name="checked">
                         <bool>true</bool>
@@ -208,7 +208,7 @@
                     <property name="sizeType">
                         <enum>Fixed</enum>
                     </property>
-                    <property name="tqsizeHint">
+                    <property name="sizeHint">
                         <size>
                             <width>20</width>
                             <height>60</height>
@@ -235,7 +235,7 @@
                             <property name="name">
                                 <cstring>slAutoSelect</cstring>
                             </property>
-                            <property name="tqminimumSize">
+                            <property name="minimumSize">
                                 <size>
                                     <width>250</width>
                                     <height>0</height>
@@ -258,7 +258,7 @@
                             <property name="sizeType">
                                 <enum>Expanding</enum>
                             </property>
-                            <property name="tqsizeHint">
+                            <property name="sizeHint">
                                 <size>
                                     <width>230</width>
                                     <height>20</height>
@@ -283,7 +283,7 @@
                             <property name="text">
                                 <string>Long</string>
                             </property>
-                            <property name="tqalignment">
+                            <property name="alignment">
                                 <set>AlignVCenter|AlignRight</set>
                             </property>
                             <property name="hAlign" stdset="0">
@@ -301,7 +301,7 @@
                     <property name="sizeType">
                         <enum>Fixed</enum>
                     </property>
-                    <property name="tqsizeHint">
+                    <property name="sizeHint">
                         <size>
                             <width>20</width>
                             <height>21</height>
@@ -331,7 +331,7 @@
             <property name="sizeType">
                 <enum>Expanding</enum>
             </property>
-            <property name="tqsizeHint">
+            <property name="sizeHint">
                 <size>
                     <width>20</width>
                     <height>16</height>
@@ -344,7 +344,7 @@
     <connection>
         <sender>singleClick</sender>
         <signal>toggled(bool)</signal>
-        <receiver>cb_pointertqshape</receiver>
+        <receiver>cb_pointershape</receiver>
         <slot>setEnabled(bool)</slot>
     </connection>
     <connection>
@@ -364,7 +364,7 @@
     <tabstop>rightHanded</tabstop>
     <tabstop>leftHanded</tabstop>
     <tabstop>singleClick</tabstop>
-    <tabstop>cb_pointertqshape</tabstop>
+    <tabstop>cb_pointershape</tabstop>
     <tabstop>cbAutoSelect</tabstop>
     <tabstop>slAutoSelect</tabstop>
     <tabstop>doubleClick</tabstop>

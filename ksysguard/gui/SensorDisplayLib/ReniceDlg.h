@@ -27,7 +27,7 @@
 
 #include <kdialogbase.h>
 #include <tqlabel.h>
-#include <tqlayout.h>
+#include <layout.h>
 #include <tqlcdnumber.h>
 #include <tqpushbutton.h>
 #include <tqslider.h>

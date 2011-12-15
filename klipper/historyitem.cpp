@@ -52,8 +52,8 @@ HistoryItem* HistoryItem::create( const TQMimeSource& aSource )
         TQMap<TQString,TQString> metaData;
         if( KURLDrag::decode( &aSource, urls, metaData )) {
             // this is from KonqDrag (libkonq)
-            TQByteArray a = aSource.tqencodedData( "application/x-kde-cutselection" );
-            bool cut = !a.isEmpty() && (a.tqat(0) == '1'); // true if 1
+            TQByteArray a = aSource.encodedData( "application/x-kde-cutselection" );
+            bool cut = !a.isEmpty() && (a.at(0) == '1'); // true if 1
             return new HistoryURLItem( urls, metaData, cut );
         }
     }

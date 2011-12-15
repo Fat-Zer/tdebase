@@ -23,7 +23,7 @@
 
 #include <tqcheckbox.h>
 #include <tqlabel.h>
-#include <tqlayout.h>
+#include <layout.h>
 #include <tqwhatsthis.h>
 #include <tqcombobox.h>
 #include <tqvaluevector.h>
@@ -150,7 +150,7 @@ TQString KLocaleConfigTime::userToStore(const TQValueList<StringPair> & list,
 
       if ( !bFound )
 	{
-	  TQChar c = userFormat.tqat( pos );
+	  TQChar c = userFormat.at( pos );
 	  if ( c == '%' )
 	    result += c;
 
@@ -169,7 +169,7 @@ TQString KLocaleConfigTime::storeToUser(const TQValueList<StringPair> & list,
   bool escaped = false;
   for ( uint pos = 0; pos < storeFormat.length(); ++pos )
     {
-      TQChar c = storeFormat.tqat(pos);
+      TQChar c = storeFormat.at(pos);
       if ( escaped )
 	{
 	  StringPair it = StringPair::find( list, c );
@@ -253,28 +253,28 @@ void KLocaleConfigTime::save()
   KConfigGroupSaver saver(config, "Locale");
 
   KSimpleConfig ent(locate("locale",
-			   TQString::tqfromLatin1("l10n/%1/entry.desktop")
+			   TQString::fromLatin1("l10n/%1/entry.desktop")
 			   .arg(m_locale->country())), true);
   ent.setGroup("KCM Locale");
 
   TQString str;
 
-  str = ent.readEntry("CalendarSystem", TQString::tqfromLatin1("gregorian"));
+  str = ent.readEntry("CalendarSystem", TQString::fromLatin1("gregorian"));
   config->deleteEntry("CalendarSystem", false, true);
   if (str != m_locale->calendarType())
     config->writeEntry("CalendarSystem", m_locale->calendarType(), true, true);
 
-  str = ent.readEntry("TimeFormat", TQString::tqfromLatin1("%H:%M:%S"));
+  str = ent.readEntry("TimeFormat", TQString::fromLatin1("%H:%M:%S"));
   config->deleteEntry("TimeFormat", false, true);
   if (str != m_locale->timeFormat())
     config->writeEntry("TimeFormat", m_locale->timeFormat(), true, true);
 
-  str = ent.readEntry("DateFormat", TQString::tqfromLatin1("%A %d %B %Y"));
+  str = ent.readEntry("DateFormat", TQString::fromLatin1("%A %d %B %Y"));
   config->deleteEntry("DateFormat", false, true);
   if (str != m_locale->dateFormat())
     config->writeEntry("DateFormat", m_locale->dateFormat(), true, true);
 
-  str = ent.readEntry("DateFormatShort", TQString::tqfromLatin1("%Y-%m-%d"));
+  str = ent.readEntry("DateFormatShort", TQString::fromLatin1("%Y-%m-%d"));
   config->deleteEntry("DateFormatShort", false, true);
   if (str != m_locale->dateFormatShort())
     config->writeEntry("DateFormatShort",
@@ -323,7 +323,7 @@ void KLocaleConfigTime::slotCalendarSystemChanged(int calendarSystem)
 
   TQString calendarType;
   bool ok;
-  calendarType = calendars.tqat(calendarSystem, &ok);
+  calendarType = calendars.at(calendarSystem, &ok);
   if ( !ok )
     calendarType = calendars.first();
 
@@ -371,7 +371,7 @@ calendarType);
   kdDebug(173) << storeToUser(timeMap(),
 			   m_locale->timeFormat()) << endl;
   kdDebug(173) << userToStore(timeMap(),
-			   TQString::tqfromLatin1("HH:MM:SS AMPM test")) << endl;
+			   TQString::fromLatin1("HH:MM:SS AMPM test")) << endl;
 
 }
 
@@ -416,7 +416,7 @@ void KLocaleConfigTime::slotTranslate()
 {
   TQString str;
 
-  TQString sep = TQString::tqfromLatin1("\n");
+  TQString sep = TQString::fromLatin1("\n");
 
   TQString old;
 

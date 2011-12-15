@@ -20,7 +20,7 @@
 #include "kcmprintmgr.h"
 #include "tdeprint/kmmainview.h"
 
-#include <tqlayout.h>
+#include <layout.h>
 
 #include <kgenericfactory.h>
 #include <kaboutdata.h>

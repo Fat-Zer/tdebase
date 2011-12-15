@@ -37,7 +37,7 @@
 #include <kmimetype.h>
 
 #include <tqapplication.h>
-#include <tqclipboard.h>
+#include <clipboard.h>
 #include <tqheader.h>
 #include <tqregexp.h>
 
@@ -144,7 +144,7 @@ void ListViewBrowserExtension::updateActions()
 void ListViewBrowserExtension::copySelection( bool move )
 {
   KonqDrag *urlData = new KonqDrag( m_listView->listViewWidget()->selectedUrls(false), m_listView->listViewWidget()->selectedUrls(true), move );
-  TQApplication::tqclipboard()->setData( urlData );
+  TQApplication::clipboard()->setData( urlData );
 }
 
 void ListViewBrowserExtension::paste()
@@ -169,7 +169,7 @@ void ListViewBrowserExtension::rename()
      const TQString txt = le->text();
      TQString pattern;
      KMimeType::diagnoseFileName( txt, pattern );
-     if (!pattern.isEmpty() && pattern.tqat(0)=='*' && pattern.find('*',1)==-1)
+     if (!pattern.isEmpty() && pattern.at(0)=='*' && pattern.find('*',1)==-1)
          le->setSelection(0, txt.length()-pattern.stripWhiteSpace().length()+1);
      else
      {

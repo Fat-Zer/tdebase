@@ -23,7 +23,7 @@
 
 #include <tqlabel.h>
 #include <tqlineedit.h>
-#include <tqlayout.h>
+#include <layout.h>
 #include <tqwhatsthis.h>
 #include <tqregexp.h>
 
@@ -89,34 +89,34 @@ void KLocaleConfigNumber::save()
   KConfigGroupSaver saver(config, "Locale");
 
   KSimpleConfig ent(locate("locale",
-			   TQString::tqfromLatin1("l10n/%1/entry.desktop")
+			   TQString::fromLatin1("l10n/%1/entry.desktop")
 			   .arg(m_locale->country())), true);
   ent.setGroup("KCM Locale");
 
   TQString str;
 
   str = ent.readEntry("DecimalSymbol",
-		      TQString::tqfromLatin1("."));
+		      TQString::fromLatin1("."));
   config->deleteEntry("DecimalSymbol", false, true);
   if (str != m_locale->decimalSymbol())
     config->writeEntry("DecimalSymbol",
 		       m_locale->decimalSymbol(), true, true);
 
   str = ent.readEntry("ThousandsSeparator",
-		      TQString::tqfromLatin1(","));
+		      TQString::fromLatin1(","));
   config->deleteEntry("ThousandsSeparator", false, true);
-  str.replace(TQString::tqfromLatin1("$0"), TQString());
+  str.replace(TQString::fromLatin1("$0"), TQString());
   if (str != m_locale->thousandsSeparator())
     config->writeEntry("ThousandsSeparator",
-		       TQString::tqfromLatin1("$0%1$0")
-		       .tqarg(m_locale->thousandsSeparator()), true, true);
+		       TQString::fromLatin1("$0%1$0")
+		       .arg(m_locale->thousandsSeparator()), true, true);
 
   str = ent.readEntry("PositiveSign");
   config->deleteEntry("PositiveSign", false, true);
   if (str != m_locale->positiveSign())
     config->writeEntry("PositiveSign", m_locale->positiveSign(), true, true);
 
-  str = ent.readEntry("NegativeSign", TQString::tqfromLatin1("-"));
+  str = ent.readEntry("NegativeSign", TQString::fromLatin1("-"));
   config->deleteEntry("NegativeSign", false, true);
   if (str != m_locale->negativeSign())
     config->writeEntry("NegativeSign", m_locale->negativeSign(), true, true);

@@ -19,7 +19,7 @@
 #include "messageview.h"
 #include "messageview.moc"
 
-#include <tqtextbrowser.h>
+#include <textbrowser.h>
 
 Kate::MessageView::MessageView( TQWidget *parent, const char *name )
   : Kate::DockViewBase( parent, name )

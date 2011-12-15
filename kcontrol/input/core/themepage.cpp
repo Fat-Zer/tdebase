@@ -31,7 +31,7 @@
 #include <klistview.h>
 #include <kdialog.h>
 
-#include <tqlayout.h>
+#include <layout.h>
 #include <tqdir.h>
 #include <tqpixmap.h>
 #include <tqimage.h>

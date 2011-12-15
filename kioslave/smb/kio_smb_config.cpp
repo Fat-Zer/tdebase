@@ -33,7 +33,7 @@
 #include "kio_smb_internal.h"
 #include <kconfig.h>
 
-#include <tqtextcodec.h>
+#include <textcodec.h>
 //===========================================================================
 void SMBSlave::reparseConfiguration()
 {

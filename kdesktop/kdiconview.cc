@@ -48,7 +48,7 @@
 
 #include <fixx11h.h>
 
-#include <tqclipboard.h>
+#include <clipboard.h>
 #include <tqdir.h>
 #include <tqevent.h>
 #include <tqregexp.h>
@@ -159,7 +159,7 @@ KDIconView::KDIconView( TQWidget *parent, const char* name )
     // Initialize media handler
     mMediaListView = new TQListView();
 
-    connect( TQApplication::tqclipboard(), TQT_SIGNAL(dataChanged()),
+    connect( TQApplication::clipboard(), TQT_SIGNAL(dataChanged()),
              this, TQT_SLOT(slotClipboardDataChanged()) );
 
     setURL( desktopURL() ); // sets m_url
@@ -296,7 +296,7 @@ void KDIconView::initConfig( bool init )
     m_bSortDirectoriesFirst = KDesktopSettings::directoriesFirst();
     m_itemsAlwaysFirst = KDesktopSettings::alwaysFirstItems(); // Distributor plug-in
 
-    if (KProtocolInfo::isKnownProtocol(TQString::tqfromLatin1("media")))
+    if (KProtocolInfo::isKnownProtocol(TQString::fromLatin1("media")))
         m_enableMedia=KDesktopSettings::mediaEnabled();
     else
         m_enableMedia=false;
@@ -960,20 +960,20 @@ bool KDIconView::isDesktopFile( KFileItem * _item ) const
     return false;
 
   // return true if desktop file
-  return ( (_item->mimetype() == TQString::tqfromLatin1("application/x-desktop"))
-       || (_item->mimetype() == TQString::tqfromLatin1("media/builtin-mydocuments"))
-       || (_item->mimetype() == TQString::tqfromLatin1("media/builtin-mycomputer"))
-       || (_item->mimetype() == TQString::tqfromLatin1("media/builtin-mynetworkplaces"))
-       || (_item->mimetype() == TQString::tqfromLatin1("media/builtin-printers"))
-       || (_item->mimetype() == TQString::tqfromLatin1("media/builtin-trash"))
-       || (_item->mimetype() == TQString::tqfromLatin1("media/builtin-webbrowser")) );
+  return ( (_item->mimetype() == TQString::fromLatin1("application/x-desktop"))
+       || (_item->mimetype() == TQString::fromLatin1("media/builtin-mydocuments"))
+       || (_item->mimetype() == TQString::fromLatin1("media/builtin-mycomputer"))
+       || (_item->mimetype() == TQString::fromLatin1("media/builtin-mynetworkplaces"))
+       || (_item->mimetype() == TQString::fromLatin1("media/builtin-printers"))
+       || (_item->mimetype() == TQString::fromLatin1("media/builtin-trash"))
+       || (_item->mimetype() == TQString::fromLatin1("media/builtin-webbrowser")) );
 }
 
 TQString KDIconView::stripDesktopExtension( const TQString & text )
 {
-    if (text.right(7) == TQString::tqfromLatin1(".kdelnk"))
+    if (text.right(7) == TQString::fromLatin1(".kdelnk"))
       return text.left(text.length() - 7);
-    else if (text.right(8) == TQString::tqfromLatin1(".desktop"))
+    else if (text.right(8) == TQString::fromLatin1(".desktop"))
       return text.left(text.length() - 8);
     return text;
 }
@@ -1047,7 +1047,7 @@ void KDIconView::slotNewItems( const KFileItemList & entries )
   bool firstRun = (count() == 0);  // no icons yet, this seems to be the initial loading
 
   // delay updates until all new items have been created
-  tqsetUpdatesEnabled( false );
+  setUpdatesEnabled( false );
   TQRect area = iconArea();
   setIconArea( TQRect(  0, 0, -1, -1 ) );
 
@@ -1055,7 +1055,7 @@ void KDIconView::slotNewItems( const KFileItemList & entries )
   KURL desktop_URL = desktopURL();
   if (desktop_URL.isLocalFile())
     desktopPath = desktop_URL.path();
-  // We have new items, so we'll need to tqrepaint in slotCompleted
+  // We have new items, so we'll need to repaint in slotCompleted
   m_bNeedRepaint = true;
   kdDebug(1214) << "KDIconView::slotNewItems count=" << entries.count() << endl;
   KFileItemListIterator it(entries);
@@ -1150,7 +1150,7 @@ void KDIconView::slotNewItems( const KFileItemList & entries )
   if ( m_autoAlign )
       lineupIcons();
 
-  tqsetUpdatesEnabled( true );
+  setUpdatesEnabled( true );
 }
 
 // -----------------------------------------------------------------------------
@@ -1198,7 +1198,7 @@ void KDIconView::slotRefreshItems( const KFileItemList & entries )
     }
     else
     {
-        // In case we replace a big icon with a small one, need to tqrepaint.
+        // In case we replace a big icon with a small one, need to repaint.
         updateContents();
         // Can't do that with m_bNeedRepaint since slotCompleted isn't called
         m_bNeedRepaint = false;
@@ -1305,7 +1305,7 @@ void KDIconView::slotCompleted()
     if (!m_hasExistingPos)
         rearrangeIcons();
 
-//    kdDebug(1204) << "KDIconView::slotCompleted save:" << m_bNeedSave << " tqrepaint:" << m_bNeedRepaint << endl;
+//    kdDebug(1204) << "KDIconView::slotCompleted save:" << m_bNeedSave << " repaint:" << m_bNeedRepaint << endl;
     if ( m_bNeedSave )
     {
         // Done here because we want to align icons only once initially, and each time new icons appear.
@@ -1317,7 +1317,7 @@ void KDIconView::slotCompleted()
     }
     if ( m_bNeedRepaint )
     {
-        viewport()->tqrepaint();
+        viewport()->repaint();
         m_bNeedRepaint = false;
     }
 }
@@ -1327,7 +1327,7 @@ void KDIconView::slotClipboardDataChanged()
     // This is very related to KonqDirPart::slotClipboardDataChanged
 
     KURL::List lst;
-    TQMimeSource *data = TQApplication::tqclipboard()->data();
+    TQMimeSource *data = TQApplication::clipboard()->data();
     if ( data->provides( "application/x-kde-cutselection" ) && data->provides( "text/uri-list" ) )
         if ( KonqDrag::decodeIsCutSelection( data ) )
             (void) KURLDrag::decode( data, lst );
@@ -1471,7 +1471,7 @@ void KDIconView::contentsDropEvent( TQDropEvent * e )
     bool isImmutable = KGlobal::config()->isImmutable();
 
     if ( (isColorDrag || isImageDrag) && !isUrlDrag ) {
-        // Hack to clear the drag tqshape
+        // Hack to clear the drag shape
         bool bMovable = itemsMovable();
         bool bSignals = signalsBlocked();
         setItemsMovable(false);
@@ -1519,7 +1519,7 @@ void KDIconView::contentsDropEvent( TQDropEvent * e )
     if( adjustedAnyItems )
     {
         // Make sure the viewport isn't unnecessarily resized by now,
-        // then schedule a tqrepaint to remove any garbage pixels.
+        // then schedule a repaint to remove any garbage pixels.
         resizeContents( width(), height() );
         viewport()->update();
     }
@@ -1541,7 +1541,7 @@ void KDIconView::updateWorkArea( const TQRect &wr )
 {
     m_gotIconsArea = true;  // now we have it!
 
-    if (( iconArea() == wr ) && (m_needDesktopAlign == false)) return;  // nothing changed; avoid tqrepaint/saveIconPosition ...
+    if (( iconArea() == wr ) && (m_needDesktopAlign == false)) return;  // nothing changed; avoid repaint/saveIconPosition ...
 
     TQRect oldArea = iconArea();
     setIconArea( wr );
@@ -1593,8 +1593,8 @@ void KDIconView::updateWorkArea( const TQRect &wr )
             }
         }
         if ( needRepaint ) {
-            viewport()->tqrepaint( FALSE );
-            tqrepaint( FALSE );
+            viewport()->repaint( FALSE );
+            repaint( FALSE );
             saveIconPositions();
         }
     }
@@ -1718,7 +1718,7 @@ void KDIconView::moveToFreePosition(TQIconViewItem *item )
     TQRect rect=item->rect();
     if (m_bVertAlign)
     {
-	kdDebug(1214)<<"moveToFreePosition for vertical tqalignment"<<endl;
+	kdDebug(1214)<<"moveToFreePosition for vertical alignment"<<endl;
 
 	rect.moveTopLeft(TQPoint(spacing(),spacing()));
       do

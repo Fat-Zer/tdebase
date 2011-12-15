@@ -22,7 +22,7 @@ DEALINGS IN THE SOFTWARE.
 */
 
 #include <tqcheckbox.h>
-#include <tqlayout.h>
+#include <layout.h>
 #include <tqsettings.h>
 #include <kdialog.h>
 #include <kglobal.h>

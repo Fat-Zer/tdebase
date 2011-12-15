@@ -21,7 +21,7 @@
 #include <tqdir.h>
 #include <tqtimer.h>
 #include <tqstring.h>
-#include <tqtextcodec.h>
+#include <textcodec.h>
 
 #include <krun.h>
 #include <klocale.h>

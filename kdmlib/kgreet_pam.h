@@ -28,7 +28,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "kgreeterplugin.h"
 
 #include <tqobject.h>
-#include <tqlayout.h>
+#include <layout.h>
 
 class KLineEdit;
 class KPasswordEdit;

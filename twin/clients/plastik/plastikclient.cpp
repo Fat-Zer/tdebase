@@ -27,7 +27,7 @@
 #include <tqfontmetrics.h>
 #include <tqimage.h>
 #include <tqlabel.h>
-#include <tqlayout.h>
+#include <layout.h>
 #include <tqpainter.h>
 #include <tqpixmap.h>
 #include <tqdesktopwidget.h>
@@ -435,7 +435,7 @@ void PlastikClient::reset( unsigned long changed )
 {
     if (changed & SettingColors)
     {
-        // tqrepaint the whole thing
+        // repaint the whole thing
         clearCaptionPixmaps();
         widget()->update();
         updateButtons();
@@ -445,7 +445,7 @@ void PlastikClient::reset( unsigned long changed )
 
         updateLayout();
 
-        // then tqrepaint
+        // then repaint
         clearCaptionPixmaps();
         widget()->update();
     }

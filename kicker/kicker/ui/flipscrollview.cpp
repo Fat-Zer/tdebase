@@ -57,7 +57,7 @@ void BackFrame::drawContents( TQPainter *p )
 {
     TQColor gray( 230, 230, 230 );
     if ( mouse_inside )
-        p->fillRect( 3, 3, width() - 6, height() - 6, tqcolorGroup().color( TQColorGroup::Highlight ) );
+        p->fillRect( 3, 3, width() - 6, height() - 6, colorGroup().color( TQColorGroup::Highlight ) );
     else
         p->fillRect( 3, 3, width() - 6, height() - 6, gray );
     p->setPen( gray.dark(110) );
@@ -270,7 +270,7 @@ void FlipScrollView::slotScrollTimer()
         if (!mSelectMenuPath.isEmpty()) {
             if (mSelectMenuPath=="kicker:/goup/") {
                 currentView()->setSelected(currentView()->firstChild(),true);
-                currentView()->firstChild()->tqrepaint();
+                currentView()->firstChild()->repaint();
             }
             else {
                 TQListViewItem * child = currentView()->firstChild();
@@ -278,8 +278,8 @@ void FlipScrollView::slotScrollTimer()
                     KMenuItem* kitem = dynamic_cast<KMenuItem*>(child);
                     if (kitem && kitem->menuPath()==mSelectMenuPath) {
                         currentView()->setSelected(child,true);
-                        kdDebug() << "child tqrepaint\n";
-                        child->tqrepaint();
+                        kdDebug() << "child repaint\n";
+                        child->repaint();
                         break;
                     }
                     child = child->nextSibling();

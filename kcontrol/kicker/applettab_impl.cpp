@@ -17,7 +17,7 @@
  *  along with this program; if not, write to the Free Software
  */
 
-#include <tqlayout.h>
+#include <layout.h>
 #include <tqgroupbox.h>
 #include <tqvbuttongroup.h>
 #include <tqwhatsthis.h>

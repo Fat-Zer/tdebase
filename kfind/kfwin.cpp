@@ -14,10 +14,10 @@
 #include <sys/stat.h>
 #include <time.h>
 
-#include <tqtextstream.h>
+#include <textstream.h>
 #include <tqfileinfo.h>
 #include <tqdir.h>
-#include <tqclipboard.h>
+#include <clipboard.h>
 #include <tqpixmap.h>
 #include <tqdragobject.h>
 
@@ -178,7 +178,7 @@ void KfindWindow::copySelection()
 
   if (drag_obj)
   {
-    TQClipboard *cb = kapp->tqclipboard();
+    TQClipboard *cb = kapp->clipboard();
     cb->setData(drag_obj);
   }
 }
@@ -222,7 +222,7 @@ void KfindWindow::saveResults()
     stream.setEncoding( TQTextStream::Locale );
 
     if ( mimeType->name() == "text/html") {
-      stream << TQString::tqfromLatin1("<HTML><HEAD>\n"
+      stream << TQString::fromLatin1("<HTML><HEAD>\n"
 				    "<!DOCTYPE %1>\n"
 				    "<TITLE>%2</TITLE></HEAD>\n"
 				    "<BODY><H1>%3</H1>"
@@ -236,13 +236,13 @@ void KfindWindow::saveResults()
 	{
 	  TQString path=((KfFileLVI*)item)->fileitem.url().url();
 	  TQString pretty=((KfFileLVI*)item)->fileitem.url().htmlURL();
-	  stream << TQString::tqfromLatin1("<DT><A HREF=\"") << path
-		 << TQString::tqfromLatin1("\">") << pretty
-		 << TQString::tqfromLatin1("</A>\n");
+	  stream << TQString::fromLatin1("<DT><A HREF=\"") << path
+		 << TQString::fromLatin1("\">") << pretty
+		 << TQString::fromLatin1("</A>\n");
 
 	  item = item->nextSibling();
 	}
-      stream << TQString::tqfromLatin1("</DL><P></BODY></HTML>\n");
+      stream << TQString::fromLatin1("</DL><P></BODY></HTML>\n");
     }
     else {
       item = firstChild();
@@ -293,7 +293,7 @@ void KfindWindow::deleteFiles()
   // Iterate on all selected elements
   TQPtrList<TQListViewItem> selected = selectedItems();
   for ( uint i = 0; i < selected.count(); i++ ) {
-    KfFileLVI *item = (KfFileLVI *) selected.tqat(i);
+    KfFileLVI *item = (KfFileLVI *) selected.at(i);
     KFileItem file = item->fileitem;
 
     KIO::NetAccess::del(file.url(), this);
@@ -335,7 +335,7 @@ void KfindWindow::resizeEvent(TQResizeEvent *e)
 {
   KListView::resizeEvent(e);
   resetColumns(false);
-  clipper()->tqrepaint();
+  clipper()->repaint();
 }
 
 TQDragObject * KfindWindow::dragObject()
@@ -346,7 +346,7 @@ TQDragObject * KfindWindow::dragObject()
   // create a list of URIs from selection
   for ( uint i = 0; i < selected.count(); i++ )
   {
-    KfFileLVI *item = (KfFileLVI *) selected.tqat( i );
+    KfFileLVI *item = (KfFileLVI *) selected.at( i );
     if (item)
     {
       uris.append( item->fileitem.url() );
@@ -372,7 +372,7 @@ void KfindWindow::resetColumns(bool init)
   {
     setColumnWidth(2, QMAX(fm.width(columnText(2)), fm.width("0000000")) + 15);
     TQString sampleDate =
-      KGlobal::locale()->formatDateTime(TQDateTime::tqcurrentDateTime());
+      KGlobal::locale()->formatDateTime(TQDateTime::currentDateTime());
     setColumnWidth(3, QMAX(fm.width(columnText(3)), fm.width(sampleDate)) + 15);
     setColumnWidth(4, QMAX(fm.width(columnText(4)), fm.width(i18n(perm[RO]))) + 15);
     setColumnWidth(5, QMAX(fm.width(columnText(5)), fm.width("some text")) + 15);

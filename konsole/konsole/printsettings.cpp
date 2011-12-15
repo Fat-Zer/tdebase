@@ -22,7 +22,7 @@
 
 #include <klocale.h>
 #include <tqcheckbox.h>
-#include <tqlayout.h>
+#include <layout.h>
 
 PrintSettings::PrintSettings(TQWidget *parent, const char *name)
 : KPrintDialogPage(parent, name)

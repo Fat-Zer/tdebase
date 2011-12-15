@@ -22,7 +22,7 @@
 #include <kaboutdata.h>
 #include <kfiledialog.h>
 
-#include <tqlayout.h>
+#include <layout.h>
 #include <tqlistbox.h>
 #include <tqpushbutton.h>
 #include <tqgroupbox.h>

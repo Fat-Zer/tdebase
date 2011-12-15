@@ -20,7 +20,7 @@
 #include "mediumbutton.h"
 
 #include <tqapplication.h>
-#include <tqclipboard.h>
+#include <clipboard.h>
 #include <tqpainter.h>
 #include <tqdrawutil.h>
 #include <tqpopupmenu.h>
@@ -145,7 +145,7 @@ void MediumButton::slotCopy()
 {
     KonqDrag * obj = KonqDrag::newDrag(mFileItem.url(), false);
     
-    TQApplication::tqclipboard()->setData( obj );
+    TQApplication::clipboard()->setData( obj );
 }
 
 void MediumButton::dragEnterEvent(TQDragEnterEvent* e)

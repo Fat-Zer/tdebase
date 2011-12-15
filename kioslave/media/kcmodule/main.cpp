@@ -20,7 +20,7 @@
 #include "main.h"
 
 #include <tqtabwidget.h>
-#include <tqlayout.h>
+#include <layout.h>
 
 #include <klocale.h>
 #include <kaboutdata.h>

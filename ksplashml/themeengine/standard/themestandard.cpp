@@ -20,7 +20,7 @@
 
 #include <tqdesktopwidget.h>
 #include <tqlabel.h>
-#include <tqpalette.h>
+#include <palette.h>
 #include <tqpixmap.h>
 #include <tqwidget.h>
 

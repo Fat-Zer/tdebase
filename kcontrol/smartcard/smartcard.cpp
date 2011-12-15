@@ -21,7 +21,7 @@
 
 #include <tqcheckbox.h>
 #include <tqlabel.h>
-#include <tqlayout.h>
+#include <layout.h>
 #include <tqlineedit.h>
 #include <tqpushbutton.h>
 

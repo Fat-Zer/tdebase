@@ -101,9 +101,9 @@ public slots:
     void removeContainers(BaseContainer::List containers);
     void takeContainer(BaseContainer* a);
     void setPosition(KPanelExtension::Position p);
-    void tqsetAlignment(KPanelExtension::Alignment a);
+    void setAlignment(KPanelExtension::Alignment a);
     void slotSaveContainerConfig();
-    void tqrepaint();
+    void repaint();
     void showAddAppletDialog();
     void addAppletDialogDone();
 

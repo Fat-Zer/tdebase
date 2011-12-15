@@ -22,7 +22,7 @@
 #include <tqgroupbox.h>
 #include <tqheader.h>
 #include <tqlabel.h>
-#include <tqlayout.h>
+#include <layout.h>
 #include <tqpushbutton.h>
 #include <tqvbox.h>
 #include <tqwhatsthis.h>

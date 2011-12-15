@@ -27,9 +27,9 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <tqdir.h>
 #include <tqframe.h>
 #include <tqlabel.h>
-#include <tqlayout.h>
+#include <layout.h>
 #include <tqlineedit.h>
-#include <tqpalette.h>
+#include <palette.h>
 #include <tqscrollview.h>
 #include <tqtimer.h>
 #include <tqsizepolicy.h>
@@ -291,7 +291,7 @@ void AddAppletDialog::resizeAppletView()
     {
         m_appletBox->layout()->activate();
         w = v->visibleWidth();
-        h = m_appletBox->tqlayout()->tqminimumSize().height();
+        h = m_appletBox->layout()->minimumSize().height();
         v->resizeContents(w, QMAX(h, v->visibleHeight()));
         if (w == m_appletBox->width() && h == m_appletBox->height())
         break;
@@ -456,7 +456,7 @@ void AddAppletDialog::addApplet(AppletWidget* applet)
     if (appletContainer)
     {
         ExtensionContainer* ec =
-           dynamic_cast<ExtensionContainer*>(m_containerArea->tqtopLevelWidget());
+           dynamic_cast<ExtensionContainer*>(m_containerArea->topLevelWidget());
 
         if (ec)
         {

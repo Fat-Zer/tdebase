@@ -21,10 +21,10 @@
 #ifndef KWRITED_H
 #define KWRITED_H
 
-#include <tqtextedit.h>
+#include <textedit.h>
 #include <kdedmodule.h>
 #include <tqpopupmenu.h>
-#include <tqtextedit.h>
+#include <textedit.h>
 
 class KPty;
 

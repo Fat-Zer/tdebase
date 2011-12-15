@@ -27,7 +27,7 @@
 #include <tqwidget.h>
 #include <tqvbox.h>
 #include <tqhbox.h>
-#include <tqlayout.h>
+#include <layout.h>
 
 #include <kdialogbase.h>
 #include <klocale.h>

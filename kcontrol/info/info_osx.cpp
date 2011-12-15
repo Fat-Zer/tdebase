@@ -50,7 +50,7 @@
 #include <tqfontmetrics.h>
 #include <tqptrlist.h>
 #include <tqstring.h>
-#include <tqtextstream.h>
+#include <textstream.h>
 
 #include <kdebug.h>
 

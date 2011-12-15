@@ -27,7 +27,7 @@
 #include <kurl.h>
 
 #include <tqfile.h>
-#include <tqtextstream.h>
+#include <textstream.h>
 #include <tqtimer.h>
 #include <tqptrlist.h>
 #include <tqtabwidget.h>

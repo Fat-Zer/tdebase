@@ -22,7 +22,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ******************************************************************/
 
 #include <tqlabel.h>
-#include <tqlayout.h>
+#include <layout.h>
 #include <tqvbox.h>
 
 #include <kglobal.h>

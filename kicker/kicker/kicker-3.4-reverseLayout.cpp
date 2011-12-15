@@ -2,7 +2,7 @@
 #include <tqmap.h>
 #include <tqregexp.h>
 #include <tqstring.h>
-#include <tqtextstream.h>
+#include <textstream.h>
 
 #include <kapplication.h>
 #include <kcmdlineargs.h>

@@ -11,7 +11,7 @@
 
 #include <tqstringlist.h>
 
-#include <tqlayout.h>
+#include <layout.h>
 
 class LockProcess;
 class TQFrame;

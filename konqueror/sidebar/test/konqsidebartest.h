@@ -18,7 +18,7 @@
 #define _konq_sidebar_test_h_
 #include <konqsidebarplugin.h>
 #include <tqlabel.h>
-#include <tqlayout.h>
+#include <layout.h>
 
 class SidebarTest : public KonqSidebarPlugin
 	{

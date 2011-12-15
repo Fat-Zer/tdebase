@@ -22,7 +22,7 @@
 #include "konq_tabs.h"
 
 #include <tqapplication.h>
-#include <tqclipboard.h>
+#include <clipboard.h>
 #include <tqptrlist.h>
 #include <tqpopupmenu.h>
 #include <tqtoolbutton.h>
@@ -196,16 +196,16 @@ void KonqFrameTabs::saveConfig( KConfig* config, const TQString &prefix, bool sa
   TQString newPrefix;
   for (KonqFrameBase* it = m_pChildFrameList->first(); it; it = m_pChildFrameList->next())
     {
-      newPrefix = TQString::tqfromLatin1( it->frameType() ) + "T" + TQString::number(i);
+      newPrefix = TQString::fromLatin1( it->frameType() ) + "T" + TQString::number(i);
       strlst.append( newPrefix );
       newPrefix.append( '_' );
       it->saveConfig( config, newPrefix, saveURLs, docContainer, id, depth + i );
       i++;
     }
 
-  config->writeEntry( TQString::tqfromLatin1( "Children" ).prepend( prefix ), strlst );
+  config->writeEntry( TQString::fromLatin1( "Children" ).prepend( prefix ), strlst );
 
-  config->writeEntry( TQString::tqfromLatin1( "activeChildIndex" ).prepend( prefix ),
+  config->writeEntry( TQString::fromLatin1( "activeChildIndex" ).prepend( prefix ),
                       currentPageIndex() );
 }
 
@@ -218,14 +218,14 @@ void KonqFrameTabs::copyHistory( KonqFrameBase *other )
 
   for (uint i = 0; i < m_pChildFrameList->count(); i++ )
     {
-      m_pChildFrameList->tqat(i)->copyHistory( static_cast<KonqFrameTabs *>( other )->m_pChildFrameList->tqat(i) );
+      m_pChildFrameList->at(i)->copyHistory( static_cast<KonqFrameTabs *>( other )->m_pChildFrameList->at(i) );
     }
 }
 
 void KonqFrameTabs::printFrameInfo( const TQString& spaces )
 {
   kdDebug(1202) << spaces << "KonqFrameTabs " << this << " visible="
-                << TQString("%1").tqarg(isVisible()) << " activeChild="
+                << TQString("%1").arg(isVisible()) << " activeChild="
                 << m_pActiveChild << endl;
 
   if (!m_pActiveChild)
@@ -234,7 +234,7 @@ void KonqFrameTabs::printFrameInfo( const TQString& spaces )
   KonqFrameBase* child;
   int childFrameCount = m_pChildFrameList->count();
   for (int i = 0 ; i < childFrameCount ; i++) {
-    child = m_pChildFrameList->tqat(i);
+    child = m_pChildFrameList->at(i);
     if (child != 0L)
       child->printFrameInfo(spaces + "  ");
     else
@@ -346,7 +346,7 @@ void KonqFrameTabs::moveTabForward( int index )
 
 void KonqFrameTabs::slotMovedTab( int from, int to )
 {
-  KonqFrameBase* fromFrame = m_pChildFrameList->tqat( from );
+  KonqFrameBase* fromFrame = m_pChildFrameList->at( from );
   m_pChildFrameList->remove( fromFrame );
   m_pChildFrameList->insert( to, fromFrame );
 
@@ -440,8 +440,8 @@ void KonqFrameTabs::slotSubPopupMenuTabActivated( int _id)
 
 void KonqFrameTabs::slotMouseMiddleClick()
 {
-  TQApplication::tqclipboard()->setSelectionMode( TQClipboard::Selection );
-  KURL filteredURL ( KonqMisc::konqFilteredURL( this, TQApplication::tqclipboard()->text() ) );
+  TQApplication::clipboard()->setSelectionMode( TQClipboard::Selection );
+  KURL filteredURL ( KonqMisc::konqFilteredURL( this, TQApplication::clipboard()->text() ) );
   if ( !filteredURL.isEmpty() ) {
     KonqView* newView = m_pViewManager->addTab(TQString::null, TQString::null, false, false);
     if (newView == 0L) return;
@@ -461,8 +461,8 @@ void KonqFrameTabs::slotMouseMiddleClick( TQWidget *w )
     }
   }
   else {
-  TQApplication::tqclipboard()->setSelectionMode( TQClipboard::Selection );
-  KURL filteredURL ( KonqMisc::konqFilteredURL( this, TQApplication::tqclipboard()->text() ) );
+  TQApplication::clipboard()->setSelectionMode( TQClipboard::Selection );
+  KURL filteredURL ( KonqMisc::konqFilteredURL( this, TQApplication::clipboard()->text() ) );
   if ( !filteredURL.isEmpty() ) {
     KonqFrameBase* frame = tqt_dynamic_cast<KonqFrameBase*>(w);
     if (frame) {

@@ -178,7 +178,7 @@ class KWIN_EXPORT KCommonDecoration : public KDecoration
         /**
          * This updates the window mask using the information provided by
          * cornerShape(). Edges which are aligned to screen corners are not
-         * tqshaped for better usability (remember to paint these areas in paintEvent(), too).
+         * shaped for better usability (remember to paint these areas in paintEvent(), too).
          * You normally don't want/need to reimplement updateWindowShape().
          * @see cornerShape()
          */
@@ -234,7 +234,7 @@ class KWIN_EXPORT KCommonDecoration : public KDecoration
         virtual void borders( int& left, int& right, int& top, int& bottom ) const;
         virtual void show();
         virtual void resize(const TQSize& s);
-        virtual TQSize tqminimumSize() const;
+        virtual TQSize minimumSize() const;
         virtual void maximizeChange();
         virtual void desktopChange();
         virtual void shadeChange();
@@ -348,7 +348,7 @@ class KWIN_EXPORT KCommonDecorationButton : public TQButton
          */
         ButtonState lastMousePress() const { return m_lastMouse; }
 
-        TQSize tqsizeHint() const;
+        TQSize sizeHint() const;
 
     protected:
         void setToggleButton(bool toggle);

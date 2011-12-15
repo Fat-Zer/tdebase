@@ -2,7 +2,7 @@
 #define _konq_sidebar_test_h_
 #include <konqsidebarplugin.h>
 #include <tqlabel.h>
-#include <tqlayout.h>
+#include <layout.h>
 #include <kparts/part.h>
 #include <kparts/factory.h>
 #include <kparts/browserextension.h>

@@ -31,7 +31,7 @@
 #include "kio_smb.h"
 #include "kio_smb_internal.h"
 
-#include <tqtextcodec.h>
+#include <textcodec.h>
 
 #include <kconfig.h>
 #include <kglobal.h>

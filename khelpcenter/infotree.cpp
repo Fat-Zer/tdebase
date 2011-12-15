@@ -33,7 +33,7 @@
 #include <kurl.h>
 
 #include <tqfile.h>
-#include <tqtextstream.h>
+#include <textstream.h>
 
 #include <stdlib.h>  // for getenv()
 

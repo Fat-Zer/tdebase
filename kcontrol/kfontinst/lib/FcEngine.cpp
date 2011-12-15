@@ -2,7 +2,7 @@
 #include <tqpixmap.h>
 #include <tqfontmetrics.h>
 #include <tqfile.h>
-#include <tqtextstream.h>
+#include <textstream.h>
 #include <kurl.h>
 #include <kconfig.h>
 #include <kglobalsettings.h>
@@ -439,7 +439,7 @@ static bool hasStr(XftFont *font, TQString &str)
                  ch;
 
     for(ch=0; ch<slen; ++ch)
-        if(!FcCharSetHasChar(font->charset, str[ch].tqunicode()))
+        if(!FcCharSetHasChar(font->charset, str[ch].unicode()))
             return false;
     return true;
 }

@@ -23,7 +23,7 @@
 
 #include <tqlineedit.h>
 #include <tqlabel.h>
-#include <tqlayout.h>
+#include <layout.h>
 
 #include <klocale.h>
 

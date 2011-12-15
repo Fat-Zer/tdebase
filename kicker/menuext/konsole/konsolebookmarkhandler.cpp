@@ -3,7 +3,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include <tqtextstream.h>
+#include <textstream.h>
 
 #include <kbookmarkimporter.h>
 #include <kmimetype.h>

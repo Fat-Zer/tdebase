@@ -1,4 +1,4 @@
-#include <tqlayout.h>
+#include <layout.h>
 #include <tqcheckbox.h>
 #include <tqwhatsthis.h>
 #include <tqvgroupbox.h>

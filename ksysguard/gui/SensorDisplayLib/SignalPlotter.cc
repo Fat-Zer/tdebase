@@ -50,7 +50,7 @@ SignalPlotter::SignalPlotter( TQWidget *parent, const char *name )
 
   // Anything smaller than this does not make sense.
   setMinimumSize( 16, 16 );
-  tqsetSizePolicy( TQSizePolicy( TQSizePolicy::Expanding,
+  setSizePolicy( TQSizePolicy( TQSizePolicy::Expanding,
                  TQSizePolicy::Expanding, false ) );
 
   mShowVerticalLines = true;
@@ -134,8 +134,8 @@ void SignalPlotter::reorderBeams( const TQValueList<int>& newOrder )
 
   for(uint i = 0; i < newOrder.count(); i++) {
     int newIndex = newOrder[i];
-    newBeamData.append(mBeamData.tqat(newIndex));
-    newBeamColor.append(*mBeamColor.tqat(newIndex));
+    newBeamData.append(mBeamData.at(newIndex));
+    newBeamColor.append(*mBeamColor.at(newIndex));
   }
   mBeamData = newBeamData;
   mBeamColor = newBeamColor;
@@ -159,7 +159,7 @@ TQValueList<TQColor> &SignalPlotter::beamColors()
 
 void SignalPlotter::removeBeam( uint pos )
 {
-  mBeamColor.remove( mBeamColor.tqat( pos ) );
+  mBeamColor.remove( mBeamColor.at( pos ) );
   double *p = mBeamData.take( pos );
   delete [] p;
 }
@@ -374,7 +374,7 @@ void SignalPlotter::updateDataBuffers()
       memset( nd, 0, sizeof( double ) * ( newSampleNum - overlap ) );
 
     // copy overlap from old buffer to new buffer
-    memcpy( nd + ( newSampleNum - overlap ), mBeamData.tqat( i ) +
+    memcpy( nd + ( newSampleNum - overlap ), mBeamData.at( i ) +
             ( mSamples - overlap ), overlap * sizeof( double ) );
 
     double *p = mBeamData.take( i );
@@ -396,12 +396,12 @@ void SignalPlotter::paintEvent( TQPaintEvent* )
 
   TQPixmap pm( w, h );
   TQPainter p;
-  p.tqbegin( &pm, this );
+  p.begin( &pm, this );
 
   pm.fill( mBackgroundColor );
   /* Draw white line along the bottom and the right side of the
    * widget to create a 3D like look. */
-  p.setPen( TQColor( tqcolorGroup().light() ) );
+  p.setPen( TQColor( colorGroup().light() ) );
   if(mShowThinFrame) {
     p.drawLine( 0, h - 1, w - 1, h - 1 );
     p.drawLine( w - 1, 0, w - 1, h - 1 );

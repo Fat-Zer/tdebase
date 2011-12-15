@@ -19,7 +19,7 @@
 */
 
 #include <tqlabel.h>
-#include <tqlayout.h>
+#include <layout.h>
 #include <tqsortedlist.h>
 #include <tqregexp.h>
 

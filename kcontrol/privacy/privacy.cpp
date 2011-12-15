@@ -19,7 +19,7 @@
   */
 
 #include <tqcheckbox.h>
-#include <tqlayout.h>
+#include <layout.h>
 #include <tqptrlist.h>
 #include <tqpushbutton.h>
 #include <tqtabwidget.h>

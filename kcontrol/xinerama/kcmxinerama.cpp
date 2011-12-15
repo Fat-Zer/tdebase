@@ -32,7 +32,7 @@
 #include <twin.h>
 
 #include <tqcheckbox.h>
-#include <tqlayout.h>
+#include <layout.h>
 #include <tqlabel.h>
 #include <tqcombobox.h>
 #include <tqtable.h>
@@ -223,10 +223,10 @@ TQWidget *KCMXinerama::indicator(int dpy) {
 	si->setFont(fnt);
 	si->setFrameStyle(TQFrame::Panel);
 	si->setFrameShadow(TQFrame::Plain);
-	si->tqsetAlignment(Qt::AlignCenter);
+	si->setAlignment(Qt::AlignCenter);
 
 	TQPoint screenCenter(TQApplication::desktop()->screenGeometry(dpy).center());
-	TQRect targetGeometry(TQPoint(0,0), si->tqsizeHint());
+	TQRect targetGeometry(TQPoint(0,0), si->sizeHint());
         targetGeometry.moveCenter(screenCenter);
 	si->setGeometry(targetGeometry);
 	si->show();

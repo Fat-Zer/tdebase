@@ -35,7 +35,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include <kprocio.h>
 
 #include <tqregexp.h>
-#include <tqlayout.h>
+#include <layout.h>
 #include <tqlabel.h>
 
 #include <stdlib.h>

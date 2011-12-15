@@ -20,7 +20,7 @@
  */
 
 #include <tqapplication.h>
-#include <tqlayout.h>
+#include <layout.h>
 #include <tqpushbutton.h>
 #include <tqgroupbox.h>
 #include <tqhbox.h>

@@ -51,7 +51,7 @@
 /*
 ** Bug reports and questions can be sent to kde-devel@kde.org
 */
-#include <tqlayout.h>
+#include <layout.h>
 
 #include <dcopclient.h>
 #include <kapplication.h>
@@ -141,7 +141,7 @@ void KasBarExtension::showEvent( TQShowEvent */*se*/ )
 {
     updateGeometry();
     resize( kasbar->size() );
-    tqrepaint( true );
+    repaint( true );
 }
 
 TQSize KasBarExtension::detachedSize()
@@ -153,7 +153,7 @@ TQSize KasBarExtension::detachedSize()
 
 }
 
-TQSize KasBarExtension::tqsizeHint(Position p, TQSize maxSize ) const
+TQSize KasBarExtension::sizeHint(Position p, TQSize maxSize ) const
 {
    Orientation o = Qt::Horizontal;
 
@@ -167,7 +167,7 @@ TQSize KasBarExtension::tqsizeHint(Position p, TQSize maxSize ) const
 	   return TQSize( 0, kasbar->itemExtent()/2 );
    }
 
-   return kasbar->tqsizeHint( o, maxSize );
+   return kasbar->sizeHint( o, maxSize );
 }
 
 void KasBarExtension::positionChange( Position /* position */)

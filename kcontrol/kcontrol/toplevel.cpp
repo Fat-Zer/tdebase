@@ -31,7 +31,7 @@
 #include <klineedit.h>
 
 #include <tqlabel.h>
-#include <tqlayout.h>
+#include <layout.h>
 #include <tqpushbutton.h>
 #include <tqtabwidget.h>
 #include <tqtooltip.h>
@@ -142,7 +142,7 @@ TopLevel::TopLevel(const char* name)
   // help widget
   _help = new HelpWidget(_dock);
 
-  _stack->tqsetSizePolicy( TQSizePolicy( TQSizePolicy::Expanding, TQSizePolicy::Expanding ) );
+  _stack->setSizePolicy( TQSizePolicy( TQSizePolicy::Expanding, TQSizePolicy::Expanding ) );
 
  // Restore sizes
   config->setGroup("General");

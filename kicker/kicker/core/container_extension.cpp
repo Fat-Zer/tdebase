@@ -26,7 +26,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #include <tqcursor.h>
 #include <tqfile.h>
-#include <tqlayout.h>
+#include <layout.h>
 #include <tqmovie.h>
 #include <tqpainter.h>
 #include <tqtimer.h>
@@ -224,7 +224,7 @@ ExtensionContainer::~ExtensionContainer()
 {
 }
 
-TQSize ExtensionContainer::tqsizeHint(KPanelExtension::Position p, const TQSize &maxSize) const
+TQSize ExtensionContainer::sizeHint(KPanelExtension::Position p, const TQSize &maxSize) const
 {
     int width = 0;
     int height = 0;
@@ -284,7 +284,7 @@ TQSize ExtensionContainer::tqsizeHint(KPanelExtension::Position p, const TQSize 
 
     if (m_extension)
     {
-        size = m_extension->tqsizeHint(p, maxSize - size) + size;
+        size = m_extension->sizeHint(p, maxSize - size) + size;
     }
 
     return size.boundedTo(maxSize);
@@ -315,7 +315,7 @@ void ExtensionContainer::readConfig()
     }
 
     positionChange(position());
-    alignmentChange(tqalignment());
+    alignmentChange(alignment());
     setSize(static_cast<KPanelExtension::Size>(m_settings.size()),
             m_settings.customSize());
 
@@ -510,7 +510,7 @@ void ExtensionContainer::moveMe()
                 // on other parameters this can lead to Bad Things(tm)
                 //
                 // we need to find a way to do this that doesn't result in
-                // tqsizeHint's getting called on the extension =/
+                // sizeHint's getting called on the extension =/
                 //
                 // or else we need to change the semantics for applets so that
                 // they don't get their "you're changing position" signals through
@@ -523,7 +523,7 @@ void ExtensionContainer::moveMe()
     }
 
     UserRectSel::PanelStrut newStrut = UserRectSel::select(rects, rect().center(), m_highlightColor);
-    arrange(newStrut.m_pos, newStrut.m_tqalignment, newStrut.m_screen);
+    arrange(newStrut.m_pos, newStrut.m_alignment, newStrut.m_screen);
 
     _is_lmb_down = false;
 
@@ -578,7 +578,7 @@ void ExtensionContainer::enableMouseOverEffects()
     KickerTip::enableTipping(true);
     TQPoint globalPos = TQCursor::pos();
     TQPoint localPos = mapFromGlobal(globalPos);
-    TQWidget* child = tqchildAt(localPos);
+    TQWidget* child = childAt(localPos);
 
     if (child)
     {
@@ -788,7 +788,7 @@ void ExtensionContainer::autoHide(bool hide)
     blockUserInput(true);
 
     TQPoint oldpos = pos();
-    TQRect newextent = initialGeometry( position(), tqalignment(), xineramaScreen(), hide, Unhidden );
+    TQRect newextent = initialGeometry( position(), alignment(), xineramaScreen(), hide, Unhidden );
     TQPoint newpos = newextent.topLeft();
 
     if (hide)
@@ -900,7 +900,7 @@ void ExtensionContainer::animatedHide(bool left)
     }
 
     TQPoint oldpos = pos();
-    TQRect newextent = initialGeometry(position(), tqalignment(), xineramaScreen(), false, newState);
+    TQRect newextent = initialGeometry(position(), alignment(), xineramaScreen(), false, newState);
     TQPoint newpos(newextent.topLeft());
 
     if (newState != Unhidden)
@@ -987,7 +987,7 @@ bool ExtensionContainer::reserveStrut() const
     return !m_extension || m_extension->reserveStrut();
 }
 
-KPanelExtension::Alignment ExtensionContainer::tqalignment() const
+KPanelExtension::Alignment ExtensionContainer::alignment() const
 {
     // KConfigXT really needs to get support for vars that are enums that
     // are defined in other classes
@@ -1005,7 +1005,7 @@ void ExtensionContainer::updateWindowManager()
         int w = 0;
         int h = 0;
 
-        TQRect geom = initialGeometry(position(), tqalignment(), xineramaScreen());
+        TQRect geom = initialGeometry(position(), alignment(), xineramaScreen());
         TQRect virtRect(TQApplication::desktop()->geometry());
         TQRect screenRect(TQApplication::desktop()->screenGeometry(xineramaScreen()));
 
@@ -1378,7 +1378,7 @@ void ExtensionContainer::updateHighlightColor()
 {
     KConfig *config = KGlobal::config();
     config->setGroup("WM");
-    TQColor color = TQApplication::tqpalette().active().highlight();
+    TQColor color = TQApplication::palette().active().highlight();
     m_highlightColor = config->readColorEntry("activeBackground", &color);
     update();
 }
@@ -1408,11 +1408,11 @@ void ExtensionContainer::paintEvent(TQPaintEvent *e)
         // KPanelExtension::Left/Right don't seem to draw the separators at all!
         if (position() == KPanelExtension::Left) {
             rect = TQRect(width()-2,0,PANEL_RESIZE_HANDLE_WIDTH,height());
-            tqstyle().tqdrawPrimitive( TQStyle::PE_Separator, &p, rect, tqcolorGroup(), TQStyle::Style_Horizontal );
+            tqstyle().tqdrawPrimitive( TQStyle::PE_Separator, &p, rect, colorGroup(), TQStyle::Style_Horizontal );
         }
         else if (position() == KPanelExtension::Right) {
             rect = TQRect(0,0,PANEL_RESIZE_HANDLE_WIDTH,height());
-            tqstyle().tqdrawPrimitive( TQStyle::PE_Separator, &p, rect, tqcolorGroup(), TQStyle::Style_Horizontal );
+            tqstyle().tqdrawPrimitive( TQStyle::PE_Separator, &p, rect, colorGroup(), TQStyle::Style_Horizontal );
         }
         else if (position() == KPanelExtension::Top) {
             // Nastiness to both vertically flip the PE_Separator
@@ -1420,14 +1420,14 @@ void ExtensionContainer::paintEvent(TQPaintEvent *e)
             TQPixmap inv_pm(width(),PANEL_RESIZE_HANDLE_WIDTH);
             TQPainter myp(TQT_TQPAINTDEVICE(&inv_pm));
             rect = TQRect(0,0,width(),PANEL_RESIZE_HANDLE_WIDTH);
-            TQColorGroup darkcg = tqcolorGroup();
-            darkcg.setColor(TQColorGroup::Light, tqcolorGroup().dark());
+            TQColorGroup darkcg = colorGroup();
+            darkcg.setColor(TQColorGroup::Light, colorGroup().dark());
             tqstyle().tqdrawPrimitive( TQStyle::PE_Separator, &myp, rect, darkcg, TQStyle::Style_Default );
             p.drawPixmap(0,height()-2,inv_pm);
         }
         else {
             rect = TQRect(0,0,width(),PANEL_RESIZE_HANDLE_WIDTH);
-            tqstyle().tqdrawPrimitive( TQStyle::PE_Separator, &p, rect, tqcolorGroup(), TQStyle::Style_Default );
+            tqstyle().tqdrawPrimitive( TQStyle::PE_Separator, &p, rect, colorGroup(), TQStyle::Style_Default );
         }
     }
 }
@@ -1444,7 +1444,7 @@ void ExtensionContainer::alignmentChange(KPanelExtension::Alignment a)
         return;
     }
 
-    m_extension->tqsetAlignment(a);
+    m_extension->setAlignment(a);
 }
 
 void ExtensionContainer::setSize(KPanelExtension::Size size, int custom)
@@ -1551,7 +1551,7 @@ void ExtensionContainer::arrange(KPanelExtension::Position p,
     if (a != m_settings.alignment())
     {
         m_settings.setAlignment(a);
-        tqsetAlignment(a);
+        setAlignment(a);
     }
 
     if (XineramaScreen != xineramaScreen())
@@ -1590,7 +1590,7 @@ KPanelExtension::Position ExtensionContainer::position() const
 
 void ExtensionContainer::resetLayout()
 {
-    TQRect g = initialGeometry(position(), tqalignment(), xineramaScreen(),
+    TQRect g = initialGeometry(position(), alignment(), xineramaScreen(),
                               autoHidden(), userHidden());
 
     // Disable the layout while we rearrange the panel.
@@ -1777,7 +1777,7 @@ TQSize ExtensionContainer::initialSize(KPanelExtension::Position p, TQRect workA
         ", " << workArea.topLeft().y() << ") to (" << workArea.bottomRight().x() <<
         ", " << workArea.bottomRight().y() << ")" << endl;*/
 
-    TQSize hint = tqsizeHint(p, workArea.size()).boundedTo(workArea.size());
+    TQSize hint = sizeHint(p, workArea.size()).boundedTo(workArea.size());
     int width = 0;
     int height = 0;
 
@@ -1997,12 +1997,12 @@ void ExtensionContainer::setXineramaScreen(int screen)
         return;
     }
 
-    arrange(position(),tqalignment(), screen);
+    arrange(position(),alignment(), screen);
 }
 
 TQRect ExtensionContainer::currentGeometry() const
 {
-    return initialGeometry(position(), tqalignment(), xineramaScreen(),
+    return initialGeometry(position(), alignment(), xineramaScreen(),
                            autoHidden(), userHidden());
 }
 

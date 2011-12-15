@@ -11,7 +11,7 @@
 // Big changes to accommodate per-domain settings
 // (c) Leo Savernik 2002-2003
 
-#include <tqlayout.h>
+#include <layout.h>
 #include <tqwhatsthis.h>
 #include <tqvgroupbox.h>
 #include <kconfig.h>

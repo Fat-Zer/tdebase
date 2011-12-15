@@ -38,7 +38,7 @@
 
 #include <tqdir.h>
 #include <tqlabel.h>
-#include <tqlayout.h>
+#include <layout.h>
 #include <tqvbox.h>
 #include <tqhbox.h>
 #include <tqcheckbox.h>

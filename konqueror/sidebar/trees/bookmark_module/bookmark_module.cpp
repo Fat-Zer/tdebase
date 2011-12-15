@@ -16,7 +16,7 @@
    Boston, MA 02110-1301, USA.
 */
 
-#include <tqclipboard.h>
+#include <clipboard.h>
 #include <tqcursor.h>
 #include <tqpopupmenu.h>
 
@@ -387,7 +387,7 @@ void KonqSidebarBookmarkModule::slotOpenTab()
     else
 	return;
 
-    DCOPRef ref(kapp->dcopClient()->appId(), tree()->tqtopLevelWidget()->name());
+    DCOPRef ref(kapp->dcopClient()->appId(), tree()->topLevelWidget()->name());
 
     if (bookmark.isGroup()) {
         KBookmarkGroup group = bookmark.toGroup();
@@ -412,9 +412,9 @@ void KonqSidebarBookmarkModule::slotCopyLocation()
 
     if ( !bookmark.isGroup() )
     {
-        kapp->tqclipboard()->setData( KBookmarkDrag::newDrag(bookmark, 0),
+        kapp->clipboard()->setData( KBookmarkDrag::newDrag(bookmark, 0),
                                     TQClipboard::Selection );
-        kapp->tqclipboard()->setData( KBookmarkDrag::newDrag(bookmark, 0),
+        kapp->clipboard()->setData( KBookmarkDrag::newDrag(bookmark, 0),
                                     TQClipboard::Clipboard );
     }
 }
@@ -490,7 +490,7 @@ void KonqSidebarBookmarkModule::fillGroup( KonqSidebarTreeItem * parentItem, KBo
                     item->setOpen(false);
             }
             else if ( bk.isSeparator() )
-                item->tqsetVisible( false );
+                item->setVisible( false );
             else
                 item->setExpandable( false );
     }

@@ -22,7 +22,7 @@
 #include "config.h"
 #endif
 
-#include <tqlayout.h>
+#include <layout.h>
 #include <tqlineedit.h>
 #include <tqcombobox.h>
 #include <tqlabel.h>
@@ -54,7 +54,7 @@ KDebugDialog::KDebugDialog( TQStringList areaList, TQWidget *parent, const char 
 
   // Build combo of debug areas
   pDebugAreas = new TQComboBox( false, this );
-  pDebugAreas->setFixedHeight( pDebugAreas->tqsizeHint().height() );
+  pDebugAreas->setFixedHeight( pDebugAreas->sizeHint().height() );
   pDebugAreas->insertStringList( areaList );
   topLayout->addWidget( pDebugAreas );
 

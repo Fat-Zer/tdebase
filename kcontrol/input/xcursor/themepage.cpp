@@ -33,7 +33,7 @@
 #include <kio/netaccess.h>
 #include <ktar.h>
 
-#include <tqlayout.h>
+#include <layout.h>
 #include <tqdir.h>
 #include <tqpixmap.h>
 #include <tqimage.h>

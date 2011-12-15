@@ -29,7 +29,7 @@
 #include <tqimage.h>
 #include <tqpainter.h>
 #include <tqwidget.h>
-#include <tqlayout.h>
+#include <layout.h>
 
 extern bool argb_visual_available;
 

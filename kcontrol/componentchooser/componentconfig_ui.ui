@@ -26,7 +26,7 @@
             <property name="text">
                 <string></string>
             </property>
-            <property name="tqalignment">
+            <property name="alignment">
                 <set>WordBreak|AlignVCenter</set>
             </property>
         </widget>
@@ -45,7 +45,7 @@
             <property name="sizeType">
                 <enum>Expanding</enum>
             </property>
-            <property name="tqsizeHint">
+            <property name="sizeHint">
                 <size>
                     <width>0</width>
                     <height>91</height>

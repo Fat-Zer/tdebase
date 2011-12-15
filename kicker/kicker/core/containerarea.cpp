@@ -29,7 +29,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <tqpainter.h>
 #include <tqpixmap.h>
 #include <tqstyle.h>
-#include <tqtextstream.h>
+#include <textstream.h>
 #include <tqtimer.h>
 #include <tqwmatrix.h>
 
@@ -1430,7 +1430,7 @@ void ContainerArea::setBackground()
 
     if (KickerSettings::transparent() &&
         (KickerSettings::menubarPanelTransparent() ||
-        !ExtensionManager::the()->isMenuBar(tqtopLevelWidget())))
+        !ExtensionManager::the()->isMenuBar(topLevelWidget())))
     {
         if (!_rootPixmap)
         {
@@ -1441,7 +1441,7 @@ void ContainerArea::setBackground()
         }
         else
         {
-            _rootPixmap->tqrepaint(true);
+            _rootPixmap->repaint(true);
         }
 
         double tint = double(KickerSettings::tintValue()) / 100;
@@ -1639,7 +1639,7 @@ void ContainerArea::moveDragIndicator(int pos)
 
 void ContainerArea::updateBackground( const TQPixmap& pm )
 {
-    TQBrush bgBrush(tqcolorGroup().background(), pm);
+    TQBrush bgBrush(colorGroup().background(), pm);
     TQPalette pal = kapp->palette();
     pal.setBrush(TQColorGroup::Background, bgBrush);
     setPalette(pal);
@@ -1725,16 +1725,16 @@ void ContainerArea::setPosition(KPanelExtension::Position p)
     setBackground();
 
     // container extension repaints for us!
-    //tqrepaint();
+    //repaint();
 }
 
-void ContainerArea::tqsetAlignment(KPanelExtension::Alignment a)
+void ContainerArea::setAlignment(KPanelExtension::Alignment a)
 {
     for (BaseContainer::ConstIterator it = m_containers.begin();
          it != m_containers.end();
          ++it)
     {
-        (*it)->tqsetAlignment(a);
+        (*it)->setAlignment(a);
     }
 }
 
@@ -1900,9 +1900,9 @@ TQStringList ContainerArea::listContainers() const
     return m_layout->listItems();
 }
 
-void ContainerArea::tqrepaint()
+void ContainerArea::repaint()
 {
-    Panner::tqrepaint();
+    Panner::repaint();
 }
 
 void ContainerArea::showAddAppletDialog()
@@ -1958,8 +1958,8 @@ void DragIndicator::paintEvent(TQPaintEvent*)
 {
     TQPainter painter(this);
     TQRect rect(0, 0, width(), height());
-    tqstyle().tqdrawPrimitive( TQStyle::PE_FocusRect, &painter, rect, tqcolorGroup(),
-                           TQStyle::Style_Default, tqcolorGroup().base() );
+    tqstyle().tqdrawPrimitive( TQStyle::PE_FocusRect, &painter, rect, colorGroup(),
+                           TQStyle::Style_Default, colorGroup().base() );
 }
 
 void DragIndicator::mousePressEvent(TQMouseEvent*)

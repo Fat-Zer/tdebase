@@ -388,14 +388,14 @@ const TQFont& KDecorationOptions::font(bool active, bool small) const
         return(active ? d->activeFont : d->inactiveFont);
 }
 
-const TQColorGroup& KDecorationOptions::tqcolorGroup(ColorType type, bool active) const
+const TQColorGroup& KDecorationOptions::colorGroup(ColorType type, bool active) const
 {
     int idx = type + (active ? 0 : NUM_COLORS);
     if(d->cg[idx])
         return(*d->cg[idx]);
     d->cg[idx] = new TQColorGroup(Qt::black, d->colors[idx], d->colors[idx].light(150),
                               d->colors[idx].dark(), d->colors[idx].dark(120),
-                              Qt::black, TQApplication::tqpalette().active().
+                              Qt::black, TQApplication::palette().active().
                               base());
     return(*d->cg[idx]);
 }

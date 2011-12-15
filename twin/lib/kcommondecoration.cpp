@@ -522,7 +522,7 @@ void KCommonDecoration::resize( const TQSize& s )
     widget()->resize( s );
 }
 
-TQSize KCommonDecoration::tqminimumSize() const
+TQSize KCommonDecoration::minimumSize() const
 {
     const int minWidth = QMAX(layoutMetric(LM_TitleEdgeLeft), layoutMetric(LM_BorderLeft))
             +QMAX(layoutMetric(LM_TitleEdgeRight), layoutMetric(LM_BorderRight))
@@ -684,7 +684,7 @@ void KCommonDecoration::resizeEvent(TQResizeEvent */*e*/)
 
     updateWindowShape();
     // FIXME: don't update() here! this would result in two paintEvent()s
-    // because there is already "something" else triggering the tqrepaint...
+    // because there is already "something" else triggering the repaint...
 //     widget()->update();
 }
 
@@ -946,7 +946,7 @@ void KCommonDecorationButton::setSize(const TQSize &s)
     }
 }
 
-TQSize KCommonDecorationButton::tqsizeHint() const
+TQSize KCommonDecorationButton::sizeHint() const
 {
     return m_size;
 }

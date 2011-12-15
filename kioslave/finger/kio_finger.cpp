@@ -21,7 +21,7 @@
 #include <sys/stat.h>
 #include <string.h>
 
-#include <tqtextstream.h>
+#include <textstream.h>
 #include <tqdict.h>
 #include <tqcstring.h>
 #include <tqfile.h>

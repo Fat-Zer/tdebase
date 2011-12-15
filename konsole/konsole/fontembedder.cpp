@@ -19,7 +19,7 @@
 */
 
 #include <tqfile.h>
-#include <tqtextstream.h>
+#include <textstream.h>
 #include <stdlib.h>
 #include <iostream>
 #include <iomanip>

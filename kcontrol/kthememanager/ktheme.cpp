@@ -23,7 +23,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 #include <tqimage.h>
 #include <tqpixmap.h>
 #include <tqregexp.h>
-#include <tqtextstream.h>
+#include <textstream.h>
 #include <tqdir.h>
 
 #include <dcopclient.h>
@@ -720,7 +720,7 @@ TQString KTheme::getProperty( TQDomElement parent, const TQString & tag,
     else
     {
         kdWarning() << TQString( "No such property found: %1->%2->%3" )
-            .tqarg( parent.tagName() ).tqarg( tag ).tqarg( attr ) << endl;
+            .arg( parent.tagName() ).arg( tag ).arg( attr ) << endl;
         return TQString::null;
     }
 }

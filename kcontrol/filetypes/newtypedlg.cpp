@@ -1,5 +1,5 @@
 
-#include <tqlayout.h>
+#include <layout.h>
 #include <tqlabel.h>
 #include <tqwhatsthis.h>
 #include <tqcombobox.h>

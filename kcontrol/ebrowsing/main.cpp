@@ -23,7 +23,7 @@
 
 #include <unistd.h>
 
-#include <tqlayout.h>
+#include <layout.h>
 #include <tqmap.h>
 #include <tqtabwidget.h>
 
