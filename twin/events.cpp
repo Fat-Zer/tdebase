@@ -626,9 +626,9 @@ bool Client::windowEvent( XEvent* e )
         default:
             if( e->xany.window == window())
             {
-            if( e->type == Shape::shapeEvent() )
+            if( e->type == Shape::tqshapeEvent() )
                 {
-                is_shape = Shape::hasShape( window()); // workaround for #19644
+                is_tqshape = Shape::hasShape( window()); // workaround for #19644
                 updateShape();
                 }
             }

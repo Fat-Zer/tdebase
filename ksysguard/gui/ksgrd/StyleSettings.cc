@@ -23,7 +23,7 @@
 
 #include <tqimage.h>
 #include <tqlabel.h>
-#include <layout.h>
+#include <tqlayout.h>
 #include <tqlistbox.h>
 #include <tqpixmap.h>
 #include <tqpushbutton.h>
@@ -162,7 +162,7 @@ void StyleSettings::setSensorColors( const TQValueList<TQColor> &list )
 
   for ( uint i = 0; i < list.count(); ++i ) {
     TQPixmap pm( 12, 12 );
-		pm.fill( *list.at( i ) );
+		pm.fill( *list.tqat( i ) );
     mColorListBox->insertItem( pm, i18n( "Color %1" ).arg( i ) );
 	}
 }

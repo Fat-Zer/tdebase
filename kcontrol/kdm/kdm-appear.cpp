@@ -25,7 +25,7 @@
 
 #include <tqbuttongroup.h>
 #include <tqlabel.h>
-#include <layout.h>
+#include <tqlayout.h>
 #include <tqradiobutton.h>
 #include <tqwhatsthis.h>
 #include <tqvalidator.h>
@@ -228,7 +228,7 @@ KDMAppearanceWidget::KDMAppearanceWidget(TQWidget *parent, const char *name)
   loadLanguageList(langcombo);
   connect(langcombo, TQT_SIGNAL(activated(const TQString &)), TQT_SLOT(changed()));
   label = new TQLabel(langcombo, i18n("Languag&e:"), group);
-  TQGridLayout *hbox = new TQGridLayout( group->layout(), 2, 2, KDialog::spacingHint() );
+  TQGridLayout *hbox = new TQGridLayout( group->tqlayout(), 2, 2, KDialog::spacingHint() );
   hbox->setColStretch(1, 1);
   hbox->addWidget(label, 1, 0);
   hbox->addWidget(langcombo, 1, 1);
@@ -244,7 +244,7 @@ KDMAppearanceWidget::KDMAppearanceWidget(TQWidget *parent, const char *name)
 
   sakbox = new TQCheckBox( i18n("Enable Secure Attention Key"), group );
   connect( sakbox, TQT_SIGNAL(toggled(bool)), TQT_SLOT(changed()) );
-  TQGridLayout *hbox2 = new TQGridLayout( group->layout(), 2, 2, KDialog::spacingHint() );
+  TQGridLayout *hbox2 = new TQGridLayout( group->tqlayout(), 2, 2, KDialog::spacingHint() );
   hbox2->setColStretch(1, 1);
   hbox2->addWidget(sakbox, 1, 0);
   wtstr = i18n("Here you can enable or disable the Secure Attention Key [SAK] anti-spoofing measure.");
@@ -277,7 +277,7 @@ void KDMAppearanceWidget::makeReadOnly()
 void KDMAppearanceWidget::loadLanguageList(KLanguageButton *combo)
 {
   TQStringList langlist = KGlobal::dirs()->findAllResources("locale",
-			TQString::fromLatin1("*/entry.desktop"));
+			TQString::tqfromLatin1("*/entry.desktop"));
   langlist.sort();
   for ( TQStringList::ConstIterator it = langlist.begin();
 	it != langlist.end(); ++it )
@@ -287,9 +287,9 @@ void KDMAppearanceWidget::loadLanguageList(KLanguageButton *combo)
     TQString nid = fpath.mid(index + 1);
 
     KSimpleConfig entry(*it);
-    entry.setGroup(TQString::fromLatin1("KCM Locale"));
-    TQString name = entry.readEntry(TQString::fromLatin1("Name"), i18n("without name"));
-    combo->insertLanguage(nid, name, TQString::fromLatin1("l10n/"), TQString::null);
+    entry.setGroup(TQString::tqfromLatin1("KCM Locale"));
+    TQString name = entry.readEntry(TQString::tqfromLatin1("Name"), i18n("without name"));
+    combo->insertLanguage(nid, name, TQString::tqfromLatin1("l10n/"), TQString::null);
   }
 }
 
@@ -343,7 +343,7 @@ void KDMAppearanceWidget::loadGuiStyles(KBackedComboBox *combo)
 bool KDMAppearanceWidget::setLogo(TQString logo)
 {
     TQString flogo = logo.isEmpty() ?
-                    locate("data", TQString::fromLatin1("kdm/pics/kdelogo.png") ) :
+                    locate("data", TQString::tqfromLatin1("kdm/pics/kdelogo.png") ) :
                     logo;
     TQImage p(flogo);
     if (p.isNull())
@@ -351,7 +351,7 @@ bool KDMAppearanceWidget::setLogo(TQString logo)
     if (p.width() > 100 || p.height() > 100)
         p = p.smoothScale(100, 100, TQ_ScaleMin);
     logobutton->setPixmap(p);
-    uint bd = tqstyle().pixelMetric( TQStyle::PM_ButtonMargin ) * 2;
+    uint bd = tqstyle().tqpixelMetric( TQStyle::PM_ButtonMargin ) * 2;
     logobutton->setFixedSize(p.width() + bd, p.height() + bd);
     logopath = logo;
     return true;
@@ -361,7 +361,7 @@ bool KDMAppearanceWidget::setLogo(TQString logo)
 void KDMAppearanceWidget::slotLogoButtonClicked()
 {
     KImageIO::registerFormats();
-    KFileDialog dialogue(locate("data", TQString::fromLatin1("kdm/pics/")),
+    KFileDialog dialogue(locate("data", TQString::tqfromLatin1("kdm/pics/")),
 			 KImageIO::pattern( KImageIO::Reading ),
 			 this, 0, true);
     dialogue.setOperationMode( KFileDialog::Opening );

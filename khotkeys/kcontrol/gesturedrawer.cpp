@@ -20,7 +20,7 @@ namespace KHotKeys
 GestureDrawer::GestureDrawer(TQWidget *parent, const char *name)
   : TQFrame(parent, name), _data(TQString::null)
     {
-    setBackgroundColor( colorGroup().base());
+    setBackgroundColor( tqcolorGroup().base());
     setFrameStyle(TQFrame::Panel | TQFrame::Sunken);
     setMinimumSize(30, 30);
     }
@@ -33,7 +33,7 @@ void GestureDrawer::setData(const TQString &data)
     {
     _data = data;
 
-    repaint();
+    tqrepaint();
     }
 
 void GestureDrawer::paintEvent(TQPaintEvent *ev)

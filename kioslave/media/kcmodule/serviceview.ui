@@ -20,7 +20,7 @@
             <verstretch>0</verstretch>
         </sizepolicy>
     </property>
-    <property name="minimumSize">
+    <property name="tqminimumSize">
         <size>
             <width>640</width>
             <height>480</height>
@@ -80,13 +80,13 @@
                                             <verstretch>0</verstretch>
                                         </sizepolicy>
                                     </property>
-                                    <property name="minimumSize">
+                                    <property name="tqminimumSize">
                                         <size>
                                             <width>40</width>
                                             <height>40</height>
                                         </size>
                                     </property>
-                                    <property name="maximumSize">
+                                    <property name="tqmaximumSize">
                                         <size>
                                             <width>40</width>
                                             <height>40</height>
@@ -117,7 +117,7 @@
                                             <property name="sizeType">
                                                 <enum>Minimum</enum>
                                             </property>
-                                            <property name="sizeHint">
+                                            <property name="tqsizeHint">
                                                 <size>
                                                     <width>20</width>
                                                     <height>20</height>
@@ -147,7 +147,7 @@
                                             <property name="sizeType">
                                                 <enum>Minimum</enum>
                                             </property>
-                                            <property name="sizeHint">
+                                            <property name="tqsizeHint">
                                                 <size>
                                                     <width>20</width>
                                                     <height>21</height>

@@ -20,7 +20,7 @@
 
 #include <tqbuttongroup.h>
 #include <tqlabel.h>
-#include <layout.h>
+#include <tqlayout.h>
 #include <tqradiobutton.h>
 #include <tqslider.h>
 #include <tqvbox.h>

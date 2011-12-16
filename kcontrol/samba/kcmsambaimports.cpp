@@ -23,7 +23,7 @@
 #include "kcmsambaimports.h"
 #include "kcmsambaimports.moc"
 
-#include <layout.h>
+#include <tqlayout.h>
 #include <tqwhatsthis.h>
 
 #include <klocale.h>

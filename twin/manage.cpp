@@ -264,7 +264,7 @@ bool Client::manage( Window w, bool isMapped )
         usePosition = true;
     if( !rules()->checkIgnoreGeometry( !usePosition ))
         {
-        bool ignorePPosition = ( options->ignorePositionClasses.contains(TQString::fromLatin1(resourceClass())));
+        bool ignorePPosition = ( options->ignorePositionClasses.contains(TQString::tqfromLatin1(resourceClass())));
 
         if ( ( (xSizeHint.flags & PPosition) && !ignorePPosition ) ||
              (xSizeHint.flags & USPosition) ) 
@@ -319,7 +319,7 @@ bool Client::manage( Window w, bool isMapped )
         keepInArea( area, partial_keep_in_area );
 
     XShapeSelectInput( qt_xdisplay(), window(), ShapeNotifyMask );
-    is_shape = Shape::hasShape( window());
+    is_tqshape = Shape::hasShape( window());
     updateShape();
 	
     //CT extra check for stupid jdk 1.3.1. But should make sense in general

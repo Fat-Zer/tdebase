@@ -226,9 +226,9 @@ TQString USBDevice::dump()
 		r += i18n("<tr><td><i>Power Consumption</i></td><td>%1 mA</td></tr>").arg(_power);
 	else
 		r += i18n("<tr><td><i>Power Consumption</i></td><td>self powered</td></tr>");
-	r += i18n("<tr><td><i>Attached Devicenodes</i></td><td>%1</td></tr>").arg(*_devnodes.at(0));
+	r += i18n("<tr><td><i>Attached Devicenodes</i></td><td>%1</td></tr>").arg(*_devnodes.tqat(0));
 	if ( _devnodes.count() > 1 )
-		for ( TQStringList::Iterator it = _devnodes.at(1); it != _devnodes.end(); ++it )
+		for ( TQStringList::Iterator it = _devnodes.tqat(1); it != _devnodes.end(); ++it )
 			r += "<tr><td></td><td>" + *it + "</td></tr>";
 #else  
   r += i18n("<tr><td><i>Max. Packet Size</i></td><td>%1</td></tr>").arg(_maxPacketSize);
@@ -332,10 +332,10 @@ void USBDevice::collectData( int fd, int level, usb_device_info &di, int parent)
 	
 	_bus          = di.udi_bus;
 	_device       = di.udi_addr;
-	_product      = TQString::fromLatin1(di.udi_product);
+	_product      = TQString::tqfromLatin1(di.udi_product);
 	if ( _device == 1 )
 		_product += " " + TQString::number( _bus );
-	_manufacturer = TQString::fromLatin1(di.udi_vendor);
+	_manufacturer = TQString::tqfromLatin1(di.udi_vendor);
 	_prodID       = di.udi_productNo;
 	_vendorID     = di.udi_vendorNo;
 	_class        = di.udi_class;

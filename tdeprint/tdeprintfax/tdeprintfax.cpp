@@ -26,9 +26,9 @@
 #include <tqcheckbox.h>
 #include <tqlineedit.h>
 #include <tqlabel.h>
-#include <layout.h>
+#include <tqlayout.h>
 #include <tqpushbutton.h>
-#include <textedit.h>
+#include <tqtextedit.h>
 #include <tqdatetimeedit.h>
 #include <tqcombobox.h>
 #include <tqtooltip.h>
@@ -429,14 +429,14 @@ void KdeprintFax::updateState()
 	if ( !m_cover->isEnabled() )
 		m_cover->setChecked(false);
 	m_comment->setEnabled(cmd.find("%comment") != -1 && m_cover->isChecked());
-	//m_comment->setPaper(m_comment->isEnabled() ? colorGroup().brush(TQColorGroup::Base) : colorGroup().brush(TQColorGroup::Background));
+	//m_comment->setPaper(m_comment->isEnabled() ? tqcolorGroup().brush(TQColorGroup::Base) : tqcolorGroup().brush(TQColorGroup::Background));
 	if (!m_comment->isEnabled())
 	{
 		m_comment->setText("");
-		m_comment->setPaper( colorGroup().background() );
+		m_comment->setPaper( tqcolorGroup().background() );
 	}
 	else
-		m_comment->setPaper( colorGroup().base() );
+		m_comment->setPaper( tqcolorGroup().base() );
 	/*
 	m_enterprise->setEnabled(cmd.find("%enterprise") != -1);
 	if (!m_enterprise->isEnabled())

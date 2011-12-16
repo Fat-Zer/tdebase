@@ -91,7 +91,7 @@ public:
 
    KasTasker *kasbar() const;
 
-   Task::Ptr task( uint i ) { return items.at( i ); }
+   Task::Ptr task( uint i ) { return items.tqat( i ); }
    int taskCount() const { return items.count(); }
 
    TQPixmap icon();

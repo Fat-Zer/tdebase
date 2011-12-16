@@ -12,7 +12,7 @@
 #include "config.h"
 #endif
 
-#include <layout.h>
+#include <tqlayout.h>
 #include <tqtabwidget.h>
 
 #include <kaboutdata.h>

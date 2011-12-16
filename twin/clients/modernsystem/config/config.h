@@ -3,7 +3,7 @@
 
 #include <tqcheckbox.h>
 #include <tqgroupbox.h>
-#include <layout.h>
+#include <tqlayout.h>
 #include <tqvbox.h>
 #include <tqslider.h>
 #include <tqlabel.h>

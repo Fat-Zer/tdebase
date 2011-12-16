@@ -26,7 +26,7 @@
 #include <tqgroupbox.h>
 #include <tqpushbutton.h>
 #include <tqpainter.h>
-#include <layout.h>
+#include <tqlayout.h>
 #include <tqlabel.h>
 #include <tqwhatsthis.h>
 #include <tqcheckbox.h>
@@ -89,7 +89,7 @@ Dtime::Dtime(TQWidget * parent, const char *name)
   TQVBoxLayout *l1 = new TQVBoxLayout( dateBox, KDialog::spacingHint() );
 
   cal = new KDatePicker( dateBox );
-  cal->setMinimumSize(cal->sizeHint());
+  cal->setMinimumSize(cal->tqsizeHint());
   l1->addWidget( cal );
   TQWhatsThis::add( cal, i18n("Here you can change the system date's day of the month, month and year.") );
 
@@ -120,7 +120,7 @@ Dtime::Dtime(TQWidget * parent, const char *name)
 
   TQLabel *dots1 = new TQLabel(":", timeBox);
   dots1->setMinimumWidth( 7 );
-  dots1->setAlignment( TQLabel::AlignCenter );
+  dots1->tqsetAlignment( TQLabel::AlignCenter );
   v3->addMultiCellWidget(dots1, 0, 1, 3, 3 );
 
   minute = new HMSTimeWidget( timeBox );
@@ -132,7 +132,7 @@ Dtime::Dtime(TQWidget * parent, const char *name)
 
   TQLabel *dots2 = new TQLabel(":", timeBox);
   dots2->setMinimumWidth( 7 );
-  dots2->setAlignment( TQLabel::AlignCenter );
+  dots2->tqsetAlignment( TQLabel::AlignCenter );
   v3->addMultiCellWidget(dots2, 0, 1, 5, 5 );
 
   second = new HMSTimeWidget( timeBox );
@@ -293,7 +293,7 @@ void Dtime::save()
     proc << ntpUtility << timeServer;
     proc.start( KProcess::Block );
     if( proc.exitStatus() != 0 ){
-      KMessageBox::error( this, i18n(TQString("Unable to contact time server: %1.").arg(timeServer).latin1()));
+      KMessageBox::error( this, i18n(TQString("Unable to contact time server: %1.").tqarg(timeServer).latin1()));
       setDateTimeAuto->setChecked( false );
     }
     else {
@@ -368,7 +368,7 @@ TQString Dtime::quickHelp() const
 void Kclock::setTime(const TQTime &time)
 {
   this->time = time;
-  repaint();
+  tqrepaint();
 }
 
 void Kclock::paintEvent( TQPaintEvent * )
@@ -382,8 +382,8 @@ void Kclock::paintEvent( TQPaintEvent * )
   TQPointArray pts;
   TQPoint cp = rect().center();
   int d = QMIN(width(),height());
-  TQColor hands =  colorGroup().dark();
-  TQColor shadow =  colorGroup().text();
+  TQColor hands =  tqcolorGroup().dark();
+  TQColor shadow =  tqcolorGroup().text();
   paint.setPen( shadow );
   paint.setBrush( shadow );
   paint.setViewport(4,4,width(),height());

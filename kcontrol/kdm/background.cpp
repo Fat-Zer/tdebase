@@ -24,7 +24,7 @@
 #include <sys/types.h>
 
 #include <tqgroupbox.h>
-#include <layout.h>
+#include <tqlayout.h>
 #include <tqwhatsthis.h>
 
 #include <kdebug.h>

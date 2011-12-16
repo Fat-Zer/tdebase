@@ -73,7 +73,7 @@ MyApplication::renderDone()
 
 	// ...set it to the desktop widget...
 	TQT_TQWIDGET(desktop())->setBackgroundPixmap( pm );
-	TQT_TQWIDGET(desktop())->repaint( true );
+	TQT_TQWIDGET(desktop())->tqrepaint( true );
 
 	// ...and export it via Esetroot-style so that composition managers can use it!
 	Pixmap bgPm = pm.handle(); // fetch the actual X handle to it

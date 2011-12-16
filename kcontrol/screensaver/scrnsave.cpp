@@ -21,7 +21,7 @@
 #include <tqcheckbox.h>
 #include <tqheader.h>
 #include <tqlabel.h>
-#include <layout.h>
+#include <tqlayout.h>
 #include <tqlistview.h>
 #include <tqpushbutton.h>
 #include <tqslider.h>
@@ -133,12 +133,12 @@ KScreenSaver::KScreenSaver(TQWidget *parent, const char *name, const TQStringLis
     mSaverGroup->setColumnLayout( 0, Qt::Horizontal );
     vLayout->addWidget(mSaverGroup);
     vLayout->setStretchFactor( mSaverGroup, 10 );
-    TQBoxLayout *groupLayout = new TQVBoxLayout( mSaverGroup->layout(),
+    TQBoxLayout *groupLayout = new TQVBoxLayout( mSaverGroup->tqlayout(),
         KDialog::spacingHint() );
 
     mSaverListView = new TQListView( mSaverGroup );
     mSaverListView->setMinimumHeight( 120 );
-    mSaverListView->setSizePolicy(TQSizePolicy::Preferred, TQSizePolicy::Expanding);
+    mSaverListView->tqsetSizePolicy(TQSizePolicy::Preferred, TQSizePolicy::Expanding);
     mSaverListView->addColumn("");
     mSaverListView->header()->hide();
     mSelected = -1;
@@ -162,7 +162,7 @@ KScreenSaver::KScreenSaver(TQWidget *parent, const char *name, const TQStringLis
     mSettingsGroup = new TQGroupBox( i18n("Settings"), this );
     mSettingsGroup->setColumnLayout( 0, Qt::Vertical );
     leftColumnLayout->addWidget( mSettingsGroup );
-    groupLayout = new TQVBoxLayout( mSettingsGroup->layout(),
+    groupLayout = new TQVBoxLayout( mSettingsGroup->tqlayout(),
         KDialog::spacingHint() );
 
     mEnabledCheckBox = new TQCheckBox(i18n(
@@ -221,14 +221,14 @@ KScreenSaver::KScreenSaver(TQWidget *parent, const char *name, const TQStringLis
     mWaitLockEdit->setSuffix(i18n(" sec"));
     mWaitLockEdit->setValue(mLockTimeout/1000);
     mWaitLockEdit->setEnabled(mEnabled && mLock);
-    if ( mWaitLockEdit->sizeHint().width() <
-         mWaitEdit->sizeHint().width() ) {
-        mWaitLockEdit->setFixedWidth( mWaitEdit->sizeHint().width() );
-        mWaitEdit->setFixedWidth( mWaitEdit->sizeHint().width() );
+    if ( mWaitLockEdit->tqsizeHint().width() <
+         mWaitEdit->tqsizeHint().width() ) {
+        mWaitLockEdit->setFixedWidth( mWaitEdit->tqsizeHint().width() );
+        mWaitEdit->setFixedWidth( mWaitEdit->tqsizeHint().width() );
     }
     else {
-        mWaitEdit->setFixedWidth( mWaitLockEdit->sizeHint().width() );
-        mWaitLockEdit->setFixedWidth( mWaitLockEdit->sizeHint().width() );
+        mWaitEdit->setFixedWidth( mWaitLockEdit->tqsizeHint().width() );
+        mWaitLockEdit->setFixedWidth( mWaitLockEdit->tqsizeHint().width() );
     }
     connect(mWaitLockEdit, TQT_SIGNAL(valueChanged(int)),
             this, TQT_SLOT(slotLockTimeoutChanged(int)));
@@ -246,7 +246,7 @@ KScreenSaver::KScreenSaver(TQWidget *parent, const char *name, const TQStringLis
         new TQVBoxLayout(topLayout, KDialog::spacingHint());
 
     mMonitorLabel = new TQLabel( this );
-    mMonitorLabel->setAlignment( AlignCenter );
+    mMonitorLabel->tqsetAlignment( AlignCenter );
     mMonitorLabel->setPixmap( TQPixmap(locate("data",
                          "kcontrol/pics/monitor.png")));
     rightColumnLayout->addWidget(mMonitorLabel, 0);
@@ -256,7 +256,7 @@ KScreenSaver::KScreenSaver(TQWidget *parent, const char *name, const TQStringLis
     advancedLayout->addWidget( new TQWidget( this ) );
     TQPushButton* advancedBt = new TQPushButton(
         i18n( "Advanced &Options" ), this, "advancedBtn" );
-    advancedBt->setSizePolicy( TQSizePolicy(
+    advancedBt->tqsetSizePolicy( TQSizePolicy(
         TQSizePolicy::Fixed, TQSizePolicy::Fixed) );
     connect( advancedBt, TQT_SIGNAL( clicked() ),
              this, TQT_SLOT( slotAdvanced() ) );
@@ -537,7 +537,7 @@ void KScreenSaver::findSavers()
             mSaverListView->setSelected(selectedItem, true);
             mSaverListView->setCurrentItem(selectedItem);
             mSaverListView->ensureItemVisible(selectedItem);
-            mSetupBt->setEnabled(!mSaverList.at(mSelected)->setup().isEmpty());
+            mSetupBt->setEnabled(!mSaverList.tqat(mSelected)->setup().isEmpty());
             mTestBt->setEnabled(true);
         }
 
@@ -587,7 +587,7 @@ void KScreenSaver::slotPreviewExited(KProcess *)
     if (mSelected >= 0) {
         mPreviewProc->clearArguments();
 
-        TQString saver = mSaverList.at(mSelected)->saver();
+        TQString saver = mSaverList.tqat(mSelected)->saver();
         TQTextStream ts(&saver, IO_ReadOnly);
 
         TQString word;
@@ -665,9 +665,9 @@ void KScreenSaver::slotScreenSaver(TQListViewItem *item)
     bool bChanged = (indx != mSelected);
 
     if (!mSetupProc->isRunning())
-        mSetupBt->setEnabled(!mSaverList.at(indx)->setup().isEmpty());
+        mSetupBt->setEnabled(!mSaverList.tqat(indx)->setup().isEmpty());
     mTestBt->setEnabled(true);
-    mSaver = mSaverList.at(indx)->file();
+    mSaver = mSaverList.tqat(indx)->file();
 
     mSelected = indx;
     setMonitor();
@@ -690,7 +690,7 @@ void KScreenSaver::slotSetup()
 
     mSetupProc->clearArguments();
 
-    TQString saver = mSaverList.at(mSelected)->setup();
+    TQString saver = mSaverList.tqat(mSelected)->setup();
     if( saver.isEmpty())
         return;
     TQTextStream ts(&saver, IO_ReadOnly);
@@ -708,7 +708,7 @@ void KScreenSaver::slotSetup()
         if (!kxsconfig) {
             word = "-caption";
             (*mSetupProc) << word;
-            word = mSaverList.at(mSelected)->name();
+            word = mSaverList.tqat(mSelected)->name();
             (*mSetupProc) << word;
             word = "-icon";
             (*mSetupProc) << word;
@@ -724,7 +724,7 @@ void KScreenSaver::slotSetup()
 
         // Pass translated name to kxsconfig
         if (kxsconfig) {
-          word = mSaverList.at(mSelected)->name();
+          word = mSaverList.tqat(mSelected)->name();
           (*mSetupProc) << word;
         }
 
@@ -739,7 +739,7 @@ void KScreenSaver::slotSetup()
 //
 void KScreenSaver::slotAdvanced()
 {
-   KScreenSaverAdvancedDialog dlg( topLevelWidget() );
+   KScreenSaverAdvancedDialog dlg( tqtopLevelWidget() );
    if ( dlg.exec() ) {
        mChanged = true;
        emit changed(true);
@@ -758,7 +758,7 @@ void KScreenSaver::slotTest()
     }
 
     mTestProc->clearArguments();
-    TQString saver = mSaverList.at(mSelected)->saver();
+    TQString saver = mSaverList.tqat(mSelected)->saver();
     TQTextStream ts(&saver, IO_ReadOnly);
 
     TQString word;

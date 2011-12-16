@@ -27,7 +27,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <tqvaluevector.h>
 #include <tqstringlist.h>
 #include <tqevent.h>
-#include <layout.h>
+#include <tqlayout.h>
 #include <tqcheckbox.h>
 #include <qxembed.h>
 

@@ -32,7 +32,7 @@
 
 #include <tqdir.h>
 #include <tqfileinfo.h>
-#include <layout.h>
+#include <tqlayout.h>
 #include <tqwhatsthis.h>
 #include <tqgroupbox.h>
 #include <tqcheckbox.h>
@@ -112,13 +112,13 @@ KWinDecorationModule::KWinDecorationModule(TQWidget* parent, const char* name, c
 	TQWhatsThis::add( cBorder, i18n( "Use this combobox to change the border size of the decoration." ));
 	lBorder->hide();
 	cBorder->hide();
-	TQHBoxLayout *borderSizeLayout = new TQHBoxLayout(pluginSettingsGrp->layout() );
+	TQHBoxLayout *borderSizeLayout = new TQHBoxLayout(pluginSettingsGrp->tqlayout() );
 	borderSizeLayout->addWidget(lBorder);
 	borderSizeLayout->addWidget(cBorder);
 	borderSizeLayout->addStretch();
 
 	pluginConfigWidget = new TQVBox(pluginSettingsGrp);
-	pluginSettingsGrp->layout()->add( pluginConfigWidget );
+	pluginSettingsGrp->tqlayout()->add( pluginConfigWidget );
 
 	// Page 2 (Button Selector)
 	TQWidget* buttonPage = new TQWidget( tabWidget );
@@ -154,8 +154,8 @@ KWinDecorationModule::KWinDecorationModule(TQWidget* parent, const char* name, c
 	preview = new KDecorationPreview( this );
 	previewLayout->addWidget(preview);
 
-	preview->setSizePolicy(TQSizePolicy::Expanding, TQSizePolicy::Expanding);
-	tabWidget->setSizePolicy(TQSizePolicy::Expanding, TQSizePolicy::Maximum);
+	preview->tqsetSizePolicy(TQSizePolicy::Expanding, TQSizePolicy::Expanding);
+	tabWidget->tqsetSizePolicy(TQSizePolicy::Expanding, TQSizePolicy::Maximum);
 
 	// Page 3 (Window Shadows)
 	TQHBox *inactiveShadowColourHBox, *shadowColourHBox;

@@ -13,7 +13,7 @@
 
 #include <tqlabel.h>
 #include <tqdir.h>
-#include <layout.h>
+#include <tqlayout.h>
 #include <tqwhatsthis.h>
 #include <tqcheckbox.h>
 #include <tqregexp.h>
@@ -170,7 +170,7 @@ void KKeyModule::init( bool isGlobal, bool _bSeriesOnly, bool bSeriesNone )
   topLayout->addRowSpacing(3, 15);
   topLayout->addMultiCellWidget(kc, 5, 5, 0, 1);
 
-  setMinimumSize(topLayout->sizeHint());
+  setMinimumSize(topLayout->tqsizeHint());
 }
 
 KKeyModule::~KKeyModule (){
@@ -238,7 +238,7 @@ void KKeyModule::defaults()
 
   uint ind = sList->currentItem();
 
-  if ( !d.remove( *sFileList->at( ind ) ) ) {
+  if ( !d.remove( *sFileList->tqat( ind ) ) ) {
     KMessageBox::sorry( 0,
                         i18n("This key scheme could not be removed.\n"
                              "Perhaps you do not have permission to alter the file "
@@ -247,7 +247,7 @@ void KKeyModule::defaults()
   }
 
   sList->removeItem( ind );
-  sFileList->remove( sFileList->at(ind) );
+  sFileList->remove( sFileList->tqat(ind) );
 }*/
 
 void KKeyModule::slotKeyChange()
@@ -258,7 +258,7 @@ void KKeyModule::slotKeyChange()
 
 /*void KKeyModule::slotSave( )
 {
-    KSimpleConfig config(*sFileList->at( sList->currentItem() ) );
+    KSimpleConfig config(*sFileList->tqat( sList->currentItem() ) );
     //  global=true is necessary in order to
     //  let both 'Global Shortcuts' and 'Shortcut Sequences' be
     //  written to the same scheme file.
@@ -281,7 +281,7 @@ void KKeyModule::readScheme( int index )
   else {
     KConfigBase* config = 0;
     if( index == 0 )	config = new KConfig( "kdeglobals" );
-    //else		config = new KSimpleConfig( *sFileList->at( index ), true );
+    //else		config = new KSimpleConfig( *sFileList->tqat( index ), true );
 
     actions.readActions( (index == 0) ? KeySet : KeyScheme, config );
     kc->listSync();
@@ -416,8 +416,8 @@ void KKeyModule::readScheme( int index )
   // Set various appropriate for the scheme
 
   if ( indx < nSysSchemes ||
-       (*sFileList->at(indx)).contains( "/global-" ) ||
-       (*sFileList->at(indx)).contains( "/app-" ) ) {
+       (*sFileList->tqat(indx)).contains( "/global-" ) ||
+       (*sFileList->tqat(indx)).contains( "/app-" ) ) {
     removeBt->setEnabled( FALSE );
   } else {
     removeBt->setEnabled( TRUE );

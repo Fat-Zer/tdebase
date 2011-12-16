@@ -79,13 +79,13 @@
                         <verstretch>0</verstretch>
                     </sizepolicy>
                 </property>
-                <property name="minimumSize">
+                <property name="tqminimumSize">
                     <size>
                         <width>0</width>
                         <height>50</height>
                     </size>
                 </property>
-                <property name="maximumSize">
+                <property name="tqmaximumSize">
                     <size>
                         <width>32767</width>
                         <height>200</height>
@@ -114,13 +114,13 @@
                     <property name="name">
                         <cstring>selectAllButton</cstring>
                     </property>
-                    <property name="minimumSize">
+                    <property name="tqminimumSize">
                         <size>
                             <width>80</width>
                             <height>0</height>
                         </size>
                     </property>
-                    <property name="maximumSize">
+                    <property name="tqmaximumSize">
                         <size>
                             <width>32767</width>
                             <height>32767</height>
@@ -134,13 +134,13 @@
                     <property name="name">
                         <cstring>selectNoneButton</cstring>
                     </property>
-                    <property name="minimumSize">
+                    <property name="tqminimumSize">
                         <size>
                             <width>80</width>
                             <height>0</height>
                         </size>
                     </property>
-                    <property name="maximumSize">
+                    <property name="tqmaximumSize">
                         <size>
                             <width>32767</width>
                             <height>32767</height>
@@ -160,7 +160,7 @@
                     <property name="sizeType">
                         <enum>Maximum</enum>
                     </property>
-                    <property name="sizeHint">
+                    <property name="tqsizeHint">
                         <size>
                             <width>80</width>
                             <height>20</height>
@@ -179,7 +179,7 @@
                             <verstretch>0</verstretch>
                         </sizepolicy>
                     </property>
-                    <property name="maximumSize">
+                    <property name="tqmaximumSize">
                         <size>
                             <width>32767</width>
                             <height>32767</height>

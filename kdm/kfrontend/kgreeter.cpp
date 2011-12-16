@@ -53,7 +53,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include <tqtimer.h>
 #include <tqheader.h>
 #include <tqstyle.h>
-#include <layout.h>
+#include <tqlayout.h>
 #include <tqlabel.h>
 #include <tqpushbutton.h>
 #include <tqtooltip.h>
@@ -96,7 +96,7 @@ class UserListView : public KListView {
 		: KListView( parent, name )
 		, themed(_them), cachedSizeHint( -1, 0 )
 	{
-		setSizePolicy( TQSizePolicy::Preferred, TQSizePolicy::Ignored );
+		tqsetSizePolicy( TQSizePolicy::Preferred, TQSizePolicy::Ignored );
 		header()->hide();
 		addColumn( TQString::null );
 		setColumnAlignment( 0, AlignVCenter );
@@ -122,10 +122,10 @@ class UserListView : public KListView {
         return sum;
     }
 public:
-	virtual TQSize sizeHint() const
+	virtual TQSize tqsizeHint() const
 	{
 	  if (themed)
-            return KListView::sizeHint();
+            return KListView::tqsizeHint();
 
 		if (!cachedSizeHint.isValid()) {
 			constPolish();
@@ -136,7 +136,7 @@ public:
 					maxw = thisw;
 			}
 			cachedSizeHint.setWidth(
-				tqstyle().pixelMetric( TQStyle::PM_ScrollBarExtent ) +
+				tqstyle().tqpixelMetric( TQStyle::PM_ScrollBarExtent ) +
 				frameWidth() * 2 + maxw );
 		}
 		return cachedSizeHint;
@@ -157,7 +157,7 @@ public:
         kdDebug() << "paintEmpty " << rect << endl;
         TQRect devRect = p->xForm( rect );
         kdDebug() << "paintEmpty2 " << devRect << endl;
-        p->drawPixmap(0, 0, *pm, devRect.left(), devRect.top() );
+        p->tqdrawPixmap(0, 0, *pm, devRect.left(), devRect.top() );
     }
 
     TQPixmap background;
@@ -243,8 +243,8 @@ void KGreeter::handleInputPipe(void) {
 	currentDisplay = TQString(getenv("DISPLAY"));
 	currentDisplay = currentDisplay.replace(":", "");
 	displayNumber = currentDisplay.toInt();
-	mPipeFilename = TQString(FIFO_FILE).arg(displayNumber);
-	::unlink((TQString(FIFO_SAK_FILE).arg(displayNumber)).ascii());
+	mPipeFilename = TQString(FIFO_FILE).tqarg(displayNumber);
+	::unlink((TQString(FIFO_SAK_FILE).tqarg(displayNumber)).ascii());
 
 	/* Create the FIFOs if they do not exist */
 	umask(0);
@@ -338,12 +338,12 @@ class UserListViewItem : public KListViewItem {
 		parent->cachedSizeHint.setWidth( -1 );
 	}
 
-        virtual void paintCell(TQPainter *p, const TQColorGroup &cg, int column, int width, int alignment)
+        virtual void paintCell(TQPainter *p, const TQColorGroup &cg, int column, int width, int tqalignment)
     {
       if (((UserListView*)listView())->themed)
-        TQListViewItem::paintCell(p, cg, column, width, alignment);
+        TQListViewItem::paintCell(p, cg, column, width, tqalignment);
       else
-	KListViewItem::paintCell(p, cg, column, width, alignment);
+	KListViewItem::paintCell(p, cg, column, width, tqalignment);
     }
 
 	TQString login;
@@ -422,7 +422,7 @@ KGreeter::insertUser( const TQImage &default_pix,
             if ( randomFace.isNull() ) {
                 TQStringList::size_type index = 0;
                 for ( size_t i = 0; i < username.length(); ++i )
-                    index += ( 0x7f - username.at( i ).latin1() ) % 37;
+                    index += ( 0x7f - username.tqat( i ).latin1() ) % 37;
                 randomFace = randomFaces[ index % randomFaces.count() ];
             }
             p.load( _faceDir + "/../pics/users/" + randomFace + ".png" );
@@ -890,14 +890,14 @@ KStdGreeter::KStdGreeter()
 		               i18n("This display requires no X authorization.\n"
 		                    "This means that anybody can connect to it,\n"
 		                    "open windows on it or intercept your input.") );
-		complainLabel->setAlignment( AlignCenter );
+		complainLabel->tqsetAlignment( AlignCenter );
 		complainLabel->setFont( _failFont );
 		complainLabel->setPaletteForegroundColor( Qt::red );
 		inner_box->addWidget( complainLabel );
 	}
 	if (!_greetString.isEmpty()) {
 		TQLabel *welcomeLabel = new TQLabel( _greetString, this );
-		welcomeLabel->setAlignment( AlignCenter );
+		welcomeLabel->tqsetAlignment( AlignCenter );
 		welcomeLabel->setFont( _greetFont );
 		inner_box->addWidget( welcomeLabel );
 	}

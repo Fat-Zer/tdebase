@@ -60,8 +60,8 @@
 #include <tqdropsite.h>
 #include <tqdragobject.h>
 #include <tqvbox.h>
-#include <textcodec.h>
-#include <layout.h>
+#include <tqtextcodec.h>
+#include <tqlayout.h>
 
 // StatusBar field IDs
 #define KWRITE_ID_GEN 1
@@ -112,7 +112,7 @@ KWrite::KWrite (KTextEditor::Document *doc)
 
   // init with more usefull size, stolen from konq :)
   if (!initialGeometrySet())
-    resize( TQSize(700, 480).expandedTo(minimumSizeHint()));
+    resize( TQSize(700, 480).expandedTo(tqminimumSizeHint()));
 
   // call it as last thing, must be sure everything is already set up ;)
   setAutoSaveSettings ();
@@ -474,7 +474,7 @@ void KWrite::saveGlobalProperties(KConfig *config) //save documents
      TQString buf = TQString("Document %1").arg(z);
      config->setGroup(buf);
 
-     KTextEditor::Document *doc = docList.at(z - 1);
+     KTextEditor::Document *doc = docList.tqat(z - 1);
 
      if (KTextEditor::configInterface(doc))
        KTextEditor::configInterface(doc)->writeSessionConfig(config);
@@ -485,7 +485,7 @@ void KWrite::saveGlobalProperties(KConfig *config) //save documents
      TQString buf = TQString("Window %1").arg(z);
      config->setGroup(buf);
 
-     config->writeEntry("DocumentNumber",docList.find(winList.at(z-1)->view()->document()) + 1);
+     config->writeEntry("DocumentNumber",docList.find(winList.tqat(z-1)->view()->document()) + 1);
   }
 }
 
@@ -521,7 +521,7 @@ void KWrite::restore()
   {
     buf = TQString("Window %1").arg(z);
     config->setGroup(buf);
-    t = new KWrite(docList.at(config->readNumEntry("DocumentNumber") - 1));
+    t = new KWrite(docList.tqat(config->readNumEntry("DocumentNumber") - 1));
     t->restore(config,z);
   }
 }

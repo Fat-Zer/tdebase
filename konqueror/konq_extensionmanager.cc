@@ -14,7 +14,7 @@
     *************************************************************************
 */
 
-#include <layout.h>
+#include <tqlayout.h>
 #include <tqtimer.h>
 
 #include <kconfig.h>

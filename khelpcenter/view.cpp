@@ -16,7 +16,7 @@
 #include <kstandarddirs.h>
 
 #include <tqfileinfo.h>
-#include <clipboard.h>
+#include <tqclipboard.h>
 
 using namespace KHC;
 
@@ -62,7 +62,7 @@ View::~View()
 
 void View::copySelectedText()
 {
-  kapp->clipboard()->setText( selectedText() );
+  kapp->tqclipboard()->setText( selectedText() );
 }
 
 bool View::openURL( const KURL &url )
@@ -276,7 +276,7 @@ void View::showMenu( const TQString& url, const TQPoint& pos)
 
 void View::slotCopyLink()
 {
-  TQApplication::clipboard()->setText(mCopyURL);
+  TQApplication::tqclipboard()->setText(mCopyURL);
 }
 
 bool View::prevPage(bool checkOnly)

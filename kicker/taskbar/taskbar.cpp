@@ -28,7 +28,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <tqapplication.h>
 #include <tqbitmap.h>
 #include <tqdesktopwidget.h>
-#include <layout.h>
+#include <tqlayout.h>
 #include <tqpainter.h>
 #include <tqstringlist.h>
 
@@ -66,7 +66,7 @@ TaskBar::TaskBar( TQWidget *parent, const char *name )
     blocklayout = true;
     
     // init
-    setSizePolicy( TQSizePolicy( TQSizePolicy::Expanding, TQSizePolicy::Expanding ) );
+    tqsetSizePolicy( TQSizePolicy( TQSizePolicy::Expanding, TQSizePolicy::Expanding ) );
 
     // setup animation frames
     for (int i = 1; i < 11; i++)
@@ -160,7 +160,7 @@ KTextShadowEngine *TaskBar::textShadowEngine()
 }
 
 
-TQSize TaskBar::sizeHint() const
+TQSize TaskBar::tqsizeHint() const
 {
     // get our minimum height based on the minimum button height or the
     // height of the font in use, which is largest
@@ -171,7 +171,7 @@ TQSize TaskBar::sizeHint() const
     return TQSize(BUTTON_MIN_WIDTH, minButtonHeight);
 }
 
-TQSize TaskBar::sizeHint( KPanelExtension::Position p, TQSize maxSize) const
+TQSize TaskBar::tqsizeHint( KPanelExtension::Position p, TQSize maxSize) const
 {
     // get our minimum height based on the minimum button height or the
     // height of the font in use, which is largest
@@ -898,9 +898,9 @@ void TaskBar::propagateMouseEvent( TQMouseEvent* e )
 {
     if ( !isTopLevel()  )
     {
-        TQMouseEvent me( e->type(), mapTo( topLevelWidget(), e->pos() ),
+        TQMouseEvent me( e->type(), mapTo( tqtopLevelWidget(), e->pos() ),
                         e->globalPos(), e->button(), e->state() );
-        TQApplication::sendEvent( topLevelWidget(), &me );
+        TQApplication::sendEvent( tqtopLevelWidget(), &me );
     }
 }
 
@@ -1074,7 +1074,7 @@ void TaskBar::activateNextTask(bool forward)
     TaskContainer::List::iterator it;
     for (int i = 0; i < numContainers; ++i)
     {
-        it = forward ? list.at(i) : list.at(numContainers - i - 1);
+        it = forward ? list.tqat(i) : list.tqat(numContainers - i - 1);
 
         if (it != list.end() && (*it)->activateNextTask(forward, forcenext))
         {
@@ -1087,7 +1087,7 @@ void TaskBar::activateNextTask(bool forward)
         // moving forward from the last, or backward from the first, loop around
         for (int i = 0; i < numContainers; ++i)
         {
-            it = forward ? list.at(i) : list.at(numContainers - i - 1);
+            it = forward ? list.tqat(i) : list.tqat(numContainers - i - 1);
 
             if (it != list.end() && (*it)->activateNextTask(forward, forcenext))
             {
@@ -1101,7 +1101,7 @@ void TaskBar::activateNextTask(bool forward)
     forcenext = true; // select first
     for (int i = 0; i < numContainers; ++i)
     {
-        it = forward ? list.at(i) : list.at(numContainers - i - 1);
+        it = forward ? list.tqat(i) : list.tqat(numContainers - i - 1);
 
         if (it == list.end())
         {

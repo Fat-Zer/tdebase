@@ -29,7 +29,7 @@
 #include "KFileFont.h"
 #include "KfiConstants.h"
 #include <tqfile.h>
-#include <textstream.h>
+#include <tqtextstream.h>
 #include <kgenericfactory.h>
 #include <kio/netaccess.h>
 

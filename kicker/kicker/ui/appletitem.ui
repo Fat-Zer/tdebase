@@ -20,13 +20,13 @@
             <verstretch>0</verstretch>
         </sizepolicy>
     </property>
-    <property name="minimumSize">
+    <property name="tqminimumSize">
         <size>
             <width>0</width>
             <height>0</height>
         </size>
     </property>
-    <property name="maximumSize">
+    <property name="tqmaximumSize">
         <size>
             <width>32767</width>
             <height>80</height>
@@ -65,7 +65,7 @@
                     <property name="textFormat">
                         <enum>RichText</enum>
                     </property>
-                    <property name="alignment">
+                    <property name="tqalignment">
                         <set>WordBreak|AlignTop</set>
                     </property>
                 </widget>
@@ -87,7 +87,7 @@
                     <property name="textFormat">
                         <enum>RichText</enum>
                     </property>
-                    <property name="alignment">
+                    <property name="tqalignment">
                         <set>WordBreak|AlignTop</set>
                     </property>
                 </widget>
@@ -105,7 +105,7 @@
                     <property name="name">
                         <cstring>itemPixmap</cstring>
                     </property>
-                    <property name="minimumSize">
+                    <property name="tqminimumSize">
                         <size>
                             <width>64</width>
                             <height>64</height>
@@ -117,7 +117,7 @@
                     <property name="text">
                         <string></string>
                     </property>
-                    <property name="alignment">
+                    <property name="tqalignment">
                         <set>AlignTop</set>
                     </property>
                 </widget>

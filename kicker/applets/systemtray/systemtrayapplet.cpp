@@ -388,7 +388,7 @@ void SystemTrayApplet::checkAutoRetract()
         return;
     }
 
-    if (!geometry().contains(mapFromGlobal(TQCursor::pos())))
+    if (!tqgeometry().contains(mapFromGlobal(TQCursor::pos())))
     {
         m_autoRetractTimer->stop();
         if (m_autoRetract)
@@ -427,12 +427,12 @@ void SystemTrayApplet::showExpandButton(bool show)
             if (orientation() == Qt::Vertical)
             {
                 m_expandButton->setFixedSize(width() - 4,
-                                             m_expandButton->sizeHint()
+                                             m_expandButton->tqsizeHint()
                                                             .height());
             }
             else
             {
-                m_expandButton->setFixedSize(m_expandButton->sizeHint()
+                m_expandButton->setFixedSize(m_expandButton->tqsizeHint()
                                                             .width(),
                                              height() - 4);
             }
@@ -869,7 +869,7 @@ int SystemTrayApplet::widthForHeight(int h) const
         me->setFixedHeight(h);
     }
 
-    return sizeHint().width(); 
+    return tqsizeHint().width(); 
 }
 
 int SystemTrayApplet::heightForWidth(int w) const
@@ -888,7 +888,7 @@ int SystemTrayApplet::heightForWidth(int w) const
         me->setFixedWidth(w);
     }
 
-    return sizeHint().height(); 
+    return tqsizeHint().height(); 
 }
 
 void SystemTrayApplet::moveEvent( TQMoveEvent* )
@@ -906,7 +906,7 @@ void SystemTrayApplet::resizeEvent( TQResizeEvent* )
 
 void SystemTrayApplet::layoutTray()
 {
-    setUpdatesEnabled(false);
+    tqsetUpdatesEnabled(false);
 
     int iconCount = m_shownWins.count();
 
@@ -927,11 +927,11 @@ void SystemTrayApplet::layoutTray()
     {
         if (orientation() == Qt::Vertical)
         {
-            m_expandButton->setFixedSize(width() - 4, m_expandButton->sizeHint().height());
+            m_expandButton->setFixedSize(width() - 4, m_expandButton->tqsizeHint().height());
         }
         else
         {
-            m_expandButton->setFixedSize(m_expandButton->sizeHint().width(), height() - 4);
+            m_expandButton->setFixedSize(m_expandButton->tqsizeHint().width(), height() - 4);
         }
     }
 
@@ -1102,7 +1102,7 @@ void SystemTrayApplet::layoutTray()
         }
     }
 
-    setUpdatesEnabled(true);
+    tqsetUpdatesEnabled(true);
     updateGeometry();
     setBackground();
 
@@ -1138,7 +1138,7 @@ TrayEmbed::TrayEmbed( bool kdeTray, TQWidget* parent )
 
 void TrayEmbed::getIconSize(int defaultIconSize)
 {
-    TQSize minSize = minimumSizeHint();
+    TQSize minSize = tqminimumSizeHint();
     
     int width = minSize.width();
     int height = minSize.height();

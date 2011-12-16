@@ -19,7 +19,7 @@
 #include "kcm.h"
 
 #include <kglobal.h>
-#include <layout.h>
+#include <tqlayout.h>
 #include <klocale.h>
 #include <kapplication.h>
 #include <dcopclient.h>

@@ -16,7 +16,7 @@
   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */                                                                            
 
-#include <layout.h>
+#include <tqlayout.h>
 #include <tqlabel.h>
 
 #include <klocale.h>
@@ -30,9 +30,9 @@ KCRootOnly::KCRootOnly(TQWidget *parent, const char *name)
    TQLabel *label = new TQLabel(i18n("<big>You need super user privileges to run this control module.</big><br>"
                                     "Click on the \"Administrator Mode\" button below."), this);
    layout->addWidget(label);
-   label->setAlignment(AlignCenter);
+   label->tqsetAlignment(AlignCenter);
    label->setTextFormat(RichText);
-   label->setMinimumSize(label->sizeHint());
+   label->setMinimumSize(label->tqsizeHint());
 }
 
 

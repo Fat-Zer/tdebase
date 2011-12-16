@@ -199,7 +199,7 @@ void Kicker::paletteChanged()
 {
     KConfigGroup c(KGlobal::config(), "General");
     KickerSettings::setTintColor(c.readColorEntry("TintColor",
-                                           &palette().active().mid()));
+                                           &tqpalette().active().mid()));
     KickerSettings::self()->writeConfig();
 }
 

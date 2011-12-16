@@ -18,7 +18,7 @@
 */
 
 #include <tqapplication.h>
-#include <layout.h>
+#include <tqlayout.h>
 #include <tqtabwidget.h>
 
 #include <kcmoduleloader.h>

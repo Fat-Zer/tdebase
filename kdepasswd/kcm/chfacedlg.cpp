@@ -26,7 +26,7 @@
  */
 
 #include <tqstring.h>
-#include <layout.h>
+#include <tqlayout.h>
 #include <tqlabel.h>
 #include <tqpixmap.h>
 #include <tqimage.h>

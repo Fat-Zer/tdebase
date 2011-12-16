@@ -25,7 +25,7 @@
 #include <tqradiobutton.h>
 #include <tqbuttongroup.h>
 #include <tqwidget.h>
-#include <layout.h>
+#include <tqlayout.h>
 #include <tqprogressbar.h>
 #include <tqtimer.h>
 

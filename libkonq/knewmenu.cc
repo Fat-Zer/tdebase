@@ -41,7 +41,7 @@
 #include <utime.h>
 
 // For KURLDesktopFileDlg
-#include <layout.h>
+#include <tqlayout.h>
 #include <tqhbox.h>
 #include <klineedit.h>
 #include <kurlrequester.h>
@@ -233,7 +233,7 @@ void KNewMenu::fillMenu()
 
             if ( !bSkip )
             {
-                Entry entry = *(s_templatesList->at( i-1 ));
+                Entry entry = *(s_templatesList->tqat( i-1 ));
 
                 // The best way to identify the "Create Directory", "Link to Location", "Link to Application" was the template
                 if ( (*templ).templatePath.endsWith( "emptydir" ) )
@@ -378,7 +378,7 @@ void KNewMenu::slotNewFile()
 
     emit activated(); // for KDIconView::slotNewMenuActivated()
 
-    Entry entry = *(s_templatesList->at( id - 1 ));
+    Entry entry = *(s_templatesList->tqat( id - 1 ));
     //kdDebug(1203) << TQString("sFile = %1").arg(sFile) << endl;
 
     if ( !TQFile::exists( entry.templatePath ) ) {
@@ -545,7 +545,7 @@ void KURLDesktopFileDlg::initDialog( const TQString& textFileName, const TQStrin
 
     TQLabel * label = new TQLabel( textFileName, fileNameBox );
     m_leFileName = new KLineEdit( fileNameBox, 0L );
-    m_leFileName->setMinimumWidth(m_leFileName->sizeHint().width() * 3);
+    m_leFileName->setMinimumWidth(m_leFileName->tqsizeHint().width() * 3);
     label->setBuddy(m_leFileName);  // please "scheck" style
     m_leFileName->setText( defaultName );
     m_leFileName->setSelection(0, m_leFileName->text().length()); // autoselect
@@ -559,7 +559,7 @@ void KURLDesktopFileDlg::initDialog( const TQString& textFileName, const TQStrin
     m_urlRequester = new KURLRequester( defaultUrl, urlBox, "urlRequester" );
     m_urlRequester->setMode( KFile::File | KFile::Directory );
 
-    m_urlRequester->setMinimumWidth( m_urlRequester->sizeHint().width() * 3 );
+    m_urlRequester->setMinimumWidth( m_urlRequester->tqsizeHint().width() * 3 );
     connect( m_urlRequester->lineEdit(), TQT_SIGNAL(textChanged(const TQString&)),
              TQT_SLOT(slotURLTextChanged(const TQString&)) );
     label->setBuddy(m_urlRequester);  // please "scheck" style

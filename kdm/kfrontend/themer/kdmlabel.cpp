@@ -116,7 +116,7 @@ KdmLabel::setTextInt( const TQString &txt)
 	if (cAccel != -1) {
 	  cText.remove('&');
 	  myAccel = new TQAccel(parentWidget());
-	  myAccel->insertItem(ALT + UNICODE_ACCEL + cText.at(cAccel).lower().unicode());
+	  myAccel->insertItem(ALT + UNICODE_ACCEL + cText.tqat(cAccel).lower().tqunicode());
 	  connect(myAccel, TQT_SIGNAL(activated(int)), TQT_SLOT(slotAccel()));
 	}
 }
@@ -138,7 +138,7 @@ KdmLabel::setText( const TQString &txt )
 }
 
 TQSize
-KdmLabel::sizeHint()
+KdmLabel::tqsizeHint()
 {
 	// choose the correct label class
 	struct LabelStruct::LabelClass *l = &label.normal;
@@ -177,8 +177,8 @@ KdmLabel::drawContents( TQPainter *p, const TQRect &/*r*/  )
 	  TQFont f(l->font);
 	  f.setUnderline(true);
 	  p->setFont ( f );
-	  p->drawText( tarea, AlignLeft | SingleLine, TQString(cText.at(cAccel)));
-	  tarea.rLeft() += fm.width(cText.at(cAccel));
+	  p->drawText( tarea, AlignLeft | SingleLine, TQString(cText.tqat(cAccel)));
+	  tarea.rLeft() += fm.width(cText.tqat(cAccel));
 	  p->setFont( l->font );
 	  p->drawText( tarea, AlignLeft | SingleLine, right);
         } else {
@@ -268,7 +268,7 @@ KdmLabel::lookupText( const TQString &t )
 	m['s'] = KThemedGreeter::timedUser;
 	// xgettext:no-c-format
 	KGlobal::locale()->setDateFormat( i18n("date format", "%a %d %B") );
-	m['c'] = KGlobal::locale()->formatDateTime( TQDateTime::currentDateTime(), false, false );
+	m['c'] = KGlobal::locale()->formatDateTime( TQDateTime::tqcurrentDateTime(), false, false );
 
 	return KMacroExpander::expandMacros( text, m );
 }

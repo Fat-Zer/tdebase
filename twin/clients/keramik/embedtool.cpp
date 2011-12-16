@@ -20,7 +20,7 @@
  */
 
 #include <tqimage.h>
-#include <textstream.h>
+#include <tqtextstream.h>
 #include <tqregexp.h>
 #include <tqfile.h>
 #include <tqfileinfo.h>
@@ -60,7 +60,7 @@ private:
 
 KeramikEmbedder::KeramikEmbedder()
 {
-	TQDateTime date( TQDateTime::currentDateTime() );
+	TQDateTime date( TQDateTime::tqcurrentDateTime() );
 	TQString datestring( date.toString() );
 	
 	file = new TQFile( "tiles.h" );

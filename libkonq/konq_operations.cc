@@ -16,7 +16,7 @@
     Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 
-#include <clipboard.h>
+#include <tqclipboard.h>
 #include "konq_operations.h"
 
 #include <kautomount.h>
@@ -76,7 +76,7 @@ KonqOperations::~KonqOperations()
 
 void KonqOperations::editMimeType( const TQString & mimeType )
 {
-  TQString keditfiletype = TQString::fromLatin1("keditfiletype");
+  TQString keditfiletype = TQString::tqfromLatin1("keditfiletype");
   KRun::runCommand( keditfiletype + " " + KProcess::quote(mimeType),
                     keditfiletype, keditfiletype /*unused*/);
 }
@@ -124,7 +124,7 @@ void KonqOperations::doPaste( TQWidget * parent, const KURL & destURL, const TQP
 {
     // move or not move ?
     bool move = false;
-    TQMimeSource *data = TQApplication::clipboard()->data();
+    TQMimeSource *data = TQApplication::tqclipboard()->data();
     if ( data->provides( "application/x-kde-cutselection" ) ) {
       move = KonqDrag::decodeIsCutSelection( data );
       kdDebug(1203) << "move (from clipboard data) = " << move << endl;

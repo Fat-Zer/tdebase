@@ -455,12 +455,12 @@ int MacProtocol::makeTime(TQString mday, TQString mon, TQString third) {
     // otherwise it only prints the year
     TQRegExp hourMin("(..):(..)");
     if (hourMin.exactMatch(third)) {
-        TQDate currentDate(TQDate::currentDate());
+        TQDate tqcurrentDate(TQDate::currentDate());
 
-        if (month > currentDate.month()) {
-            year = currentDate.year() - 1;
+        if (month > tqcurrentDate.month()) {
+            year = tqcurrentDate.year() - 1;
         } else {
-            year = currentDate.year();
+            year = tqcurrentDate.year();
         }
         TQString h(hourMin.cap(1));
         TQString m(hourMin.cap(2));

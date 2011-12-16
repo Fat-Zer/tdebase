@@ -26,7 +26,7 @@
 #include <kmessagebox.h>
 #include <kdialog.h>
 
-#include <layout.h>
+#include <tqlayout.h>
 #include <tqpushbutton.h>
 #include <tqmessagebox.h>
 #include <tqsimplerichtext.h>

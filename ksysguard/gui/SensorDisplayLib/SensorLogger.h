@@ -44,10 +44,10 @@ public:
 
 	void setTextColor(const TQColor& color) { textColor = color; }
 
-	void paintCell(TQPainter *p, const TQColorGroup &cg, int column, int width, int alignment) {
+	void paintCell(TQPainter *p, const TQColorGroup &cg, int column, int width, int tqalignment) {
 		TQColorGroup cgroup(cg);
 		cgroup.setColor(TQColorGroup::Text, textColor);
-		TQListViewItem::paintCell(p, cgroup, column, width, alignment);
+		TQListViewItem::paintCell(p, cgroup, column, width, tqalignment);
 	
 	}
 

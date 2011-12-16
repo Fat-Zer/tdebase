@@ -76,7 +76,7 @@ public:
 
     KWin::WindowInfo* info( WId win );
 
-    TQSize sizeHint() const;
+    TQSize tqsizeHint() const;
 
     enum LayoutTypes { Classical=0, Horizontal, Vertical };
 

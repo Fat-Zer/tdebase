@@ -24,7 +24,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ******************************************************************/
 
 
-#include <layout.h>
+#include <tqlayout.h>
 #include <tqpainter.h>
 #include <tqpixmap.h>
 #include <tqpopupmenu.h>
@@ -94,8 +94,8 @@ Lockout::Lockout( const TQString& configFile, TQWidget *parent, const char *name
     if (!kapp->authorize("logout"))
        logoutButton->hide();
 
-    lockButton->setSizePolicy(TQSizePolicy(TQSizePolicy::MinimumExpanding, TQSizePolicy::MinimumExpanding));
-    logoutButton->setSizePolicy(TQSizePolicy(TQSizePolicy::MinimumExpanding, TQSizePolicy::MinimumExpanding));
+    lockButton->tqsetSizePolicy(TQSizePolicy(TQSizePolicy::MinimumExpanding, TQSizePolicy::MinimumExpanding));
+    logoutButton->tqsetSizePolicy(TQSizePolicy(TQSizePolicy::MinimumExpanding, TQSizePolicy::MinimumExpanding));
 
     if ( !kapp->dcopClient()->isAttached() )
         kapp->dcopClient()->attach();
@@ -113,7 +113,7 @@ Lockout::~Lockout()
 // direction and wasting a lot of space.
 void Lockout::checkLayout( int height ) const
 {
-    TQSize s = minimumSizeHint();
+    TQSize s = tqminimumSizeHint();
     TQBoxLayout::Direction direction = layout->direction();
 
     if ( direction == TQBoxLayout::LeftToRight &&
@@ -131,13 +131,13 @@ void Lockout::checkLayout( int height ) const
 int Lockout::widthForHeight( int height ) const
 {
     checkLayout( height );
-    return sizeHint().width();
+    return tqsizeHint().width();
 }
 
 int Lockout::heightForWidth( int width ) const
 {
     checkLayout( width );
-    return sizeHint().height();
+    return tqsizeHint().height();
 }
 
 void Lockout::lock()
@@ -177,9 +177,9 @@ void Lockout::mouseMoveEvent(TQMouseEvent* e)
 void Lockout::propagateMouseEvent(TQMouseEvent* e)
 {
     if ( !isTopLevel()  ) {
-        TQMouseEvent me(e->type(), mapTo( topLevelWidget(), e->pos() ),
+        TQMouseEvent me(e->type(), mapTo( tqtopLevelWidget(), e->pos() ),
                        e->globalPos(), e->button(), e->state() );
-        TQApplication::sendEvent( topLevelWidget(), &me );
+        TQApplication::sendEvent( tqtopLevelWidget(), &me );
     }
 }
 

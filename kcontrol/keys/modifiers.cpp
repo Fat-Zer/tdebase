@@ -3,7 +3,7 @@
 #include <tqcheckbox.h>
 #include <tqgroupbox.h>
 #include <tqlabel.h>
-#include <layout.h>
+#include <tqlayout.h>
 #include <tqwhatsthis.h>
 
 #include <kapplication.h>

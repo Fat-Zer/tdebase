@@ -38,7 +38,7 @@ public:
     void setToggle(){setToggleType(Toggle);}
     void setActive(bool on){setOn(on);}
     void setUseMiniIcon(){useMiniIcon = true;}
-    TQSize sizeHint() const;
+    TQSize tqsizeHint() const;
     TQSizePolicy sizePolicy() const;
 protected:
     virtual void drawButton(TQPainter *p);
@@ -119,7 +119,7 @@ protected:
     Position mousePosition( const TQPoint& p ) const;
     void resize(const TQSize&);
     void borders(int &, int &, int &, int &) const;
-    TQSize minimumSize() const;
+    TQSize tqminimumSize() const;
     bool eventFilter(TQObject *, TQEvent *);
 private slots:
     void menuButtonPressed();

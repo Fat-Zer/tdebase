@@ -73,7 +73,7 @@ public:
 
     KPanelApplet::Direction popupDirection() const { return _dir; }
     KPanelExtension::Orientation orientation() const { return _orient; }
-    KPanelExtension::Alignment alignment() const { return _alignment; }
+    KPanelExtension::Alignment tqalignment() const { return _tqalignment; }
 
     virtual void setBackground() {}
 
@@ -97,7 +97,7 @@ public slots:
     virtual void setPopupDirection(KPanelApplet::Direction d) { _dir = d; }
     virtual void setOrientation(KPanelExtension::Orientation o) { _orient = o; }
 
-    void setAlignment(KPanelExtension::Alignment a);
+    void tqsetAlignment(KPanelExtension::Alignment a);
 
 signals:
     void removeme(BaseContainer*);
@@ -118,7 +118,7 @@ protected:
 
     KPanelApplet::Direction _dir;
     KPanelExtension::Orientation _orient;
-    KPanelExtension::Alignment _alignment;
+    KPanelExtension::Alignment _tqalignment;
     double             _fspace;
     TQPoint             _moveOffset;
     TQString            _aid;

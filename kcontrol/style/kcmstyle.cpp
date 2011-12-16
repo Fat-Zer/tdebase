@@ -29,7 +29,7 @@
 #include <tqlistbox.h>
 #include <tqgroupbox.h>
 #include <tqlabel.h>
-#include <layout.h>
+#include <tqlayout.h>
 #include <tqslider.h>
 #include <tqstylefactory.h>
 #include <tqtabwidget.h>
@@ -160,8 +160,8 @@ KCMStyle::KCMStyle( TQWidget* parent, const char* name )
 	gbWidgetStyle->layout()->setMargin( KDialog::marginHint() );
 	gbWidgetStyle->layout()->setSpacing( KDialog::spacingHint() );
 
-	gbWidgetStyleLayout = new TQVBoxLayout( gbWidgetStyle->layout() );
-	gbWidgetStyleLayout->setAlignment( Qt::AlignTop );
+	gbWidgetStyleLayout = new TQVBoxLayout( gbWidgetStyle->tqlayout() );
+	gbWidgetStyleLayout->tqsetAlignment( Qt::AlignTop );
 	hbLayout = new TQHBoxLayout( KDialog::spacingHint(), "hbLayout" );
 
 	cbStyle = new KComboBox( gbWidgetStyle, "cbStyle" );
@@ -169,7 +169,7 @@ KCMStyle::KCMStyle( TQWidget* parent, const char* name )
 	hbLayout->addWidget( cbStyle );
 
 	pbConfigStyle = new TQPushButton( i18n("Con&figure..."), gbWidgetStyle );
-	pbConfigStyle->setSizePolicy( TQSizePolicy::Maximum, TQSizePolicy::Minimum );
+	pbConfigStyle->tqsetSizePolicy( TQSizePolicy::Maximum, TQSizePolicy::Minimum );
 	pbConfigStyle->setEnabled( FALSE );
 	hbLayout->addWidget( pbConfigStyle );
 
@@ -195,7 +195,7 @@ KCMStyle::KCMStyle( TQWidget* parent, const char* name )
 	gbPreview->layout()->setSpacing( KDialog::spacingHint() );
 	gbPreview->setFlat( true );
 	stylePreview = new StylePreview( gbPreview );
-	gbPreview->layout()->add( stylePreview );
+	gbPreview->tqlayout()->add( stylePreview );
 
 	page1Layout->addWidget( gbWidgetStyle );
 	page1Layout->addWidget( gbPreview );
@@ -296,16 +296,16 @@ KCMStyle::KCMStyle( TQWidget* parent, const char* name )
 	box1->setSpacing( KDialog::spacingHint() );
 	box1->setMargin( 0 );
 	TQLabel* lbl = new TQLabel( i18n("0%"), box1 );
-	lbl->setAlignment( AlignLeft );
+	lbl->tqsetAlignment( AlignLeft );
 	lbl = new TQLabel( i18n("50%"), box1 );
-	lbl->setAlignment( AlignHCenter );
+	lbl->tqsetAlignment( AlignHCenter );
 	lbl = new TQLabel( i18n("100%"), box1 );
-	lbl->setAlignment( AlignRight );
+	lbl->tqsetAlignment( AlignRight );
 
 	lblMenuEffectType = new TQLabel( comboMenuEffectType, i18n("Menu trans&lucency type:"), menuContainer );
-	lblMenuEffectType->setAlignment( AlignBottom | AlignLeft );
+	lblMenuEffectType->tqsetAlignment( AlignBottom | AlignLeft );
 	lblMenuOpacity    = new TQLabel( slOpacity, i18n("Menu &opacity:"), menuContainer );
-	lblMenuOpacity->setAlignment( AlignBottom | AlignLeft );
+	lblMenuOpacity->tqsetAlignment( AlignBottom | AlignLeft );
 
 	menuContainerLayout->addWidget( lblMenuEffectType, 0, 0 );
 	menuContainerLayout->addWidget( comboMenuEffectType, 1, 0 );
@@ -844,7 +844,7 @@ void KCMStyle::switchStyle(const TQString& styleName, bool force)
 	setStyleRecursive( stylePreview, style );
 
 	// this flickers, but reliably draws the widgets correctly.
-	stylePreview->resize( stylePreview->sizeHint() );
+	stylePreview->resize( stylePreview->tqsizeHint() );
 
 	delete appliedStyle;
 	appliedStyle = style;

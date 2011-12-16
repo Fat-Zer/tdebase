@@ -93,7 +93,7 @@ void Decoration::resize( const TQSize& s )
     widget()->resize( s );
     }
     
-TQSize Decoration::minimumSize() const
+TQSize Decoration::tqminimumSize() const
     {
     return TQSize( 100, 50 );
     }

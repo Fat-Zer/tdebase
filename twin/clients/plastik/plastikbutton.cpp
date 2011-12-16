@@ -140,7 +140,7 @@ void PlastikButton::animate()
         }
     }
 
-    repaint(false);
+    tqrepaint(false);
 }
 
 void PlastikButton::enterEvent(TQEvent *e)

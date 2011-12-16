@@ -4,7 +4,7 @@
 #include <tqtimer.h>
 #include <tqpainter.h>
 #include <tqvbox.h>
-#include <layout.h>
+#include <tqlayout.h>
 #include <tqlabel.h>
 
 #include <kdialogbase.h>
@@ -585,7 +585,7 @@ void KAccessApp::createDialogContents() {
       TQVBoxLayout * vlay = new TQVBoxLayout(lay);
 
       featuresLabel = new TQLabel( "", contents );
-      featuresLabel->setAlignment( WordBreak|AlignVCenter );
+      featuresLabel->tqsetAlignment( WordBreak|AlignVCenter );
       vlay->addWidget( featuresLabel );
       vlay->addStretch();
 

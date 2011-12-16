@@ -28,7 +28,7 @@
 #include <kapplication.h>
 #include <dcopclient.h>
 #include <tqtabwidget.h>
-#include <layout.h>
+#include <tqlayout.h>
 
 #include "jsopts.h"
 #include "javaopts.h"

@@ -38,7 +38,7 @@ BaseContainer::BaseContainer( TQPopupMenu* appletOpMenu, TQWidget* parent, const
   : TQWidget( parent, name )
   , _dir(KPanelApplet::Up)
   , _orient(Qt::Horizontal)
-  , _alignment(KPanelExtension::LeftTop)
+  , _tqalignment(KPanelExtension::LeftTop)
   , _fspace(0)
   , _moveOffset(TQPoint(0,0))
   , _aid(TQString::null)
@@ -110,14 +110,14 @@ void BaseContainer::slotRemoved(KConfig* config)
     config->sync();
 }
 
-void BaseContainer::setAlignment(KPanelExtension::Alignment a)
+void BaseContainer::tqsetAlignment(KPanelExtension::Alignment a)
 {
-    if (_alignment == a)
+    if (_tqalignment == a)
     {
         return;
     }
 
-    _alignment = a;
+    _tqalignment = a;
     alignmentChange(a);
 }
 

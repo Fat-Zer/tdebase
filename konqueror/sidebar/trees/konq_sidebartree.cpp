@@ -20,7 +20,7 @@
 
 #include "konq_sidebartreemodule.h"
 
-#include <clipboard.h>
+#include <tqclipboard.h>
 #include <tqcursor.h>
 #include <tqdir.h>
 #include <tqheader.h>
@@ -516,7 +516,7 @@ void KonqSidebarTree::slotAutoOpenFolder()
         return;
 
     m_dropItem->setOpen( true );
-    m_dropItem->repaint();
+    m_dropItem->tqrepaint();
 }
 
 void KonqSidebarTree::rescanConfiguration()
@@ -606,7 +606,7 @@ void KonqSidebarTree::scanDir( KonqSidebarTreeItem *parent, const TQString &path
             // Version 5 includes the audiocd browser
             // Version 6 includes the printmanager and lan browser
             const int currentVersion = 6;
-            TQString key = TQString::fromLatin1("X-KDE-DirTreeVersionNumber");
+            TQString key = TQString::tqfromLatin1("X-KDE-DirTreeVersionNumber");
             KSimpleConfig versionCfg( path + "/.directory" );
             int versionNumber = versionCfg.readNumEntry( key, 1 );
             kdDebug(1201) << "KonqSidebarTree::scanDir found version " << versionNumber << endl;
@@ -813,7 +813,7 @@ void KonqSidebarTree::slotAnimation()
     for (; it != end; ++it )
     {
         uint & iconNumber = it.data().iconNumber;
-        TQString icon = TQString::fromLatin1( it.data().iconBaseName ).append( TQString::number( iconNumber ) );
+        TQString icon = TQString::tqfromLatin1( it.data().iconBaseName ).append( TQString::number( iconNumber ) );
         it.key()->setPixmap( 0, SmallIcon( icon));
 
         iconNumber++;
@@ -882,7 +882,7 @@ void KonqSidebarTree::enableActions( bool copy, bool cut, bool paste,
 bool KonqSidebarTree::tabSupport()
 {
     // see if the newTab() dcop function is available (i.e. the sidebar is embedded into konqueror)
-   DCOPRef ref(kapp->dcopClient()->appId(), topLevelWidget()->name());
+   DCOPRef ref(kapp->dcopClient()->appId(), tqtopLevelWidget()->name());
     DCOPReply reply = ref.call("functions()");
     if (reply.isValid()) {
         QCStringList funcs;
@@ -1023,7 +1023,7 @@ void KonqSidebarTree::slotOpenNewWindow()
 void KonqSidebarTree::slotOpenTab()
 {
     if (!m_currentTopLevelItem) return;
-    DCOPRef ref(kapp->dcopClient()->appId(), topLevelWidget()->name());
+    DCOPRef ref(kapp->dcopClient()->appId(), tqtopLevelWidget()->name());
     ref.call( "newTab(TQString)", m_currentTopLevelItem->externalURL().url() );
 }
 
@@ -1031,8 +1031,8 @@ void KonqSidebarTree::slotCopyLocation()
 {
     if (!m_currentTopLevelItem) return;
     KURL url = m_currentTopLevelItem->externalURL();
-    kapp->clipboard()->setData( new KURLDrag(url, 0), TQClipboard::Selection );
-    kapp->clipboard()->setData( new KURLDrag(url, 0), TQClipboard::Clipboard );
+    kapp->tqclipboard()->setData( new KURLDrag(url, 0), TQClipboard::Selection );
+    kapp->tqclipboard()->setData( new KURLDrag(url, 0), TQClipboard::Clipboard );
 }
 
 ///////////////////////////////////////////////////////////////////
@@ -1045,7 +1045,7 @@ void KonqSidebarTreeToolTip::maybeTip( const TQPoint &point )
     if ( item ) {
 	TQString text = static_cast<KonqSidebarTreeItem*>( item )->toolTipText();
 	if ( !text.isEmpty() )
-	    tip ( m_view->itemRect( item ), text );
+	    tip ( m_view->tqitemRect( item ), text );
     }
 }
 

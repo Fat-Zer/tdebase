@@ -57,7 +57,7 @@ public slots:
     if( mText != s )
     {
       mText = s;
-      repaint( false );
+      tqrepaint( false );
     }
   };
 

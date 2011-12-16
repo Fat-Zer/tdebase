@@ -31,7 +31,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <tqpainter.h>
 #include <tqstyle.h>
 #include <tqwidgetstack.h>
-#include <layout.h>
+#include <tqlayout.h>
 #include <tqlabel.h>
 #include <tqvbox.h>
 #include <tqheader.h>
@@ -41,7 +41,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <tqpaintdevicemetrics.h>
 #include <tqbuffer.h>
 #include <tqtooltip.h>
-#include <stylesheet.h>
+#include <tqstylesheet.h>
 #include <tqiconview.h>
 
 #include <dcopclient.h>
@@ -145,7 +145,7 @@ void KMenuItem::setIcon(const TQString& icon, int size)
 void KMenuItem::setHasChildren( bool flag )
 {
     m_has_children = flag;
-    repaint();
+    tqrepaint();
 }
 
 void KMenuItem::setup()
@@ -166,7 +166,7 @@ void KMenuItem::setup()
 void KMenuItem::paintCell(TQPainter* p, const TQColorGroup & cg, int column, int width, int align)
 {
     ItemView *listview = static_cast<ItemView*>( listView() );
-    int bottom = listView()->itemRect( this ).bottom();
+    int bottom = listView()->tqitemRect( this ).bottom();
     int diff = bottom - listView()->viewport()->height();
 
     KPixmap pm;
@@ -197,7 +197,7 @@ void KMenuItem::paintCell(TQPainter* p, const TQColorGroup & cg, int column, int
             else
                 listview->m_lastOne = static_cast<KMenuItem*>( itemBelow() );
             listview->m_old_contentY = -1;
-            repaint();
+            tqrepaint();
         }
     }
 }
@@ -350,7 +350,7 @@ void KMenuItem::paintCellInter(TQPainter* p, const TQColorGroup & cg, int column
     {
         // the listview caches paint events
         m_old_width = width;
-        repaint();
+        tqrepaint();
     }
 }
 
@@ -608,7 +608,7 @@ void ItemViewTip::maybeTip( const TQPoint &pos )
     if ( item->toolTip().isNull() )
         return;
 
-    TQRect r = view->itemRect( item );
+    TQRect r = view->tqitemRect( item );
     int headerPos = view->header()->sectionPos( 0 );
     r.setLeft( headerPos );
     r.setRight( headerPos + view->header()->sectionSize( 0 ) );
@@ -915,7 +915,7 @@ void ItemView::contentsMousePressEvent ( TQMouseEvent * e )
     KMenuItemSeparator *si = dynamic_cast<KMenuItemSeparator*>( itemAt( vp ) );
     if ( si )
     {
-        if ( si->hitsLink( vp - itemRect(si).topLeft() ) )
+        if ( si->hitsLink( vp - tqitemRect(si).topLeft() ) )
             emit startURL( si->linkUrl() );
     }
 }
@@ -928,7 +928,7 @@ void ItemView::contentsMouseMoveEvent(TQMouseEvent *e)
     bool link_cursor = false;
     KMenuItemSeparator *si = dynamic_cast<KMenuItemSeparator*>( i );
     if ( si )
-        link_cursor = si->hitsLink( vp - itemRect(si).topLeft() );
+        link_cursor = si->hitsLink( vp - tqitemRect(si).topLeft() );
 
     if (i && !i->isSelectable() && !link_cursor) {
       unsetCursor();
@@ -965,7 +965,7 @@ void ItemView::resizeEvent ( TQResizeEvent * e )
 {
     KListView::resizeEvent( e );
 //    if ( m_lastOne )
-//        int diff = itemRect( m_lastOne ).bottom() - viewport()->height();
+//        int diff = tqitemRect( m_lastOne ).bottom() - viewport()->height();
 }
 
 void ItemView::viewportPaintEvent ( TQPaintEvent * pe )
@@ -975,7 +975,7 @@ void ItemView::viewportPaintEvent ( TQPaintEvent * pe )
 
     if ( m_lastOne && m_old_contentY != contentsY() ) {
         m_old_contentY = contentsY();
-        m_lastOne->repaint();
+        m_lastOne->tqrepaint();
     }
 }
 
@@ -1052,7 +1052,7 @@ TQDragObject * ItemView::dragObject()
       else if(!kitem->path().isEmpty() && !kitem->path().startsWith("kicker:/") && !kitem->path().startsWith("kaddressbook:/")) {
          TQString uri = kitem->path();
 
-         if (uri.startsWith(locateLocal("data", TQString::fromLatin1("RecentDocuments/")))) {
+         if (uri.startsWith(locateLocal("data", TQString::tqfromLatin1("RecentDocuments/")))) {
              KDesktopFile df(uri,true);
              uri=df.readURL();
          }
@@ -1103,7 +1103,7 @@ const char * KMenuItemDrag::format(int i) const
     return 0;
 }
 
-TQByteArray KMenuItemDrag::encodedData(const char* mimeType) const
+TQByteArray KMenuItemDrag::tqencodedData(const char* mimeType) const
 {
     if (TQString("application/kmenuitem") == mimeType)
         return a;
@@ -1138,7 +1138,7 @@ bool ItemView::acceptDrag (TQDropEvent* event) const
 
 bool KMenuItemDrag::decode(const TQMimeSource* e, KMenuItemInfo& item)
 {
-    TQByteArray a = e->encodedData("application/kmenuitem");
+    TQByteArray a = e->tqencodedData("application/kmenuitem");
 
     if (a.isEmpty()) {
         TQStringList l;
@@ -1211,7 +1211,7 @@ bool FavoritesItemView::acceptDrag (TQDropEvent* event) const
 
             TQString uri = item.m_path;
 
-            if (uri.startsWith(locateLocal("data", TQString::fromLatin1("RecentDocuments/")))) {
+            if (uri.startsWith(locateLocal("data", TQString::tqfromLatin1("RecentDocuments/")))) {
                KDesktopFile df(uri,true);
                uri=df.readURL();
             }

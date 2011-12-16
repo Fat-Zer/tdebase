@@ -34,7 +34,7 @@
 
 #include <tqframe.h>
 #include <tqwidget.h>
-#include <layout.h>
+#include <tqlayout.h>
 #include <tqimage.h>
 #include <tqpainter.h>
 
@@ -280,7 +280,7 @@ KdmItem::setGeometry( const TQRect &newGeometry, bool force )
 	if (fixedManager && !fixedManager->isEmpty())
 		fixedManager->update( newGeometry, force );
 
-	// TODO send *selective* repaint signal
+	// TODO send *selective* tqrepaint signal
 }
 
 void
@@ -299,7 +299,7 @@ KdmItem::paint( TQPainter *p, const TQRect &rect )
               if ((_compositor.isEmpty()) || (!argb_visual_available)) {
                 // Software blend only (no compositing support)
                 TQPixmap copy( myWidget->size() );
-                kdDebug() <<  myWidget->geometry() << " " << area << " " << myWidget->size() << endl;
+                kdDebug() <<  myWidget->tqgeometry() << " " << area << " " << myWidget->size() << endl;
                 bitBlt( &copy, TQPoint( 0, 0), p->device(), myWidget->geometry(), TQt::CopyROP );
                 // Lighten it slightly
                 TQImage lightVersion;
@@ -443,12 +443,12 @@ KdmItem::statusChanged()
 // BEGIN protected inheritable
 
 TQSize
-KdmItem::sizeHint()
+KdmItem::tqsizeHint()
 {
 	if (myWidget)
 		return myWidget->size();
 	if (myLayoutItem)
-		return myLayoutItem->sizeHint();
+		return myLayoutItem->tqsizeHint();
 	int w = pos.wType == DTpixel ? kAbs( pos.width ) : -1,
 	    h = pos.hType == DTpixel ? kAbs( pos.height ) : -1;
 	return TQSize( w, h );
@@ -457,7 +457,7 @@ KdmItem::sizeHint()
 TQRect
 KdmItem::placementHint( const TQRect &parentRect )
 {
-	TQSize hintedSize = sizeHint();
+	TQSize hintedSize = tqsizeHint();
 	TQSize boxHint;
 
 	int x = parentRect.left(),
@@ -474,7 +474,7 @@ KdmItem::placementHint( const TQRect &parentRect )
 		else {
 			if (!boxManager)
 				return parentRect;
-			boxHint = boxManager->sizeHint();
+			boxHint = boxManager->tqsizeHint();
 		}
 		kdDebug() << timestamp() << " boxHint " << boxHint << endl;
 	}
@@ -592,7 +592,7 @@ KdmItem::parseAttribute( const TQString &s, int &val, enum DataType &dType )
 	} else {		// int value
 		dType = DTpixel;
 		TQString sCopy = s;
-		if (sCopy.at( 0 ) == '-') {
+		if (sCopy.tqat( 0 ) == '-') {
 			sCopy.remove( 0, 1 );
 			dType = DTnpixel;
 		}
@@ -616,7 +616,7 @@ KdmItem::parseFont( const TQString &s, TQFont &font )
 void
 KdmItem::parseColor( const TQString &s, TQColor &color )
 {
-	if (s.at( 0 ) != '#')
+	if (s.tqat( 0 ) != '#')
 		return;
 	bool ok;
 	TQString sCopy = s;

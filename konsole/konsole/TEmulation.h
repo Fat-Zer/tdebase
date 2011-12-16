@@ -25,7 +25,7 @@
 #include "TEScreen.h"
 #include <tqtimer.h>
 #include <stdio.h>
-#include <textcodec.h>
+#include <tqtextcodec.h>
 #include <tqguardedptr.h>
 #include <keytrans.h>
 

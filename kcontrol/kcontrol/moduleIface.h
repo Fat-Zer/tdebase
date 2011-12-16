@@ -23,7 +23,7 @@
 #include <dcopobject.h> 
 
 #include <tqfont.h>
-#include <palette.h>
+#include <tqpalette.h>
 #include <tqwidget.h>
 
 class ModuleIface : public TQObject, public DCOPObject {

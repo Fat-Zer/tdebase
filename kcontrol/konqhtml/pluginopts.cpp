@@ -7,7 +7,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-#include <layout.h>
+#include <tqlayout.h>
 #include <tqprogressdialog.h>
 #include <tqregexp.h>
 #include <tqslider.h>
@@ -72,14 +72,14 @@ KPluginOptions::KPluginOptions( KConfig* config, TQString group, TQWidget *paren
 
     TQFrame *hrule = new TQFrame(globalGB);
     hrule->setFrameStyle(TQFrame::HLine | TQFrame::Sunken);
-    hrule->setSizePolicy(TQSizePolicy::MinimumExpanding,TQSizePolicy::Fixed);
+    hrule->tqsetSizePolicy(TQSizePolicy::MinimumExpanding,TQSizePolicy::Fixed);
 
     /**************************************************************************
      ********************* Domain-specific Settings ***************************
      *************************************************************************/
     TQPushButton *domainSpecPB = new TQPushButton(i18n("Domain-Specific Settin&gs"),
     						globalGB);
-    domainSpecPB->setSizePolicy(TQSizePolicy::Fixed,TQSizePolicy::Fixed);
+    domainSpecPB->tqsetSizePolicy(TQSizePolicy::Fixed,TQSizePolicy::Fixed);
     connect(domainSpecPB,TQT_SIGNAL(clicked()),TQT_SLOT(slotShowDomainDlg()));
 
     domainSpecificDlg = new KDialogBase(KDialogBase::Swallow,

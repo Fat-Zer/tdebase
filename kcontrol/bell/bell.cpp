@@ -21,7 +21,7 @@
 
 #include <tqcheckbox.h>
 #include <tqgroupbox.h>
-#include <layout.h>
+#include <tqlayout.h>
 #include <tqpushbutton.h>
 #include <tqwhatsthis.h>
 
@@ -74,7 +74,7 @@ KBellConfig::KBellConfig(TQWidget *parent, const char *name):
   box->setColumnLayout( 0, Qt::Horizontal );
   layout->addWidget(box);
   layout->addStretch();
-  TQGridLayout *grid = new TQGridLayout(box->layout(), KDialog::spacingHint());
+  TQGridLayout *grid = new TQGridLayout(box->tqlayout(), KDialog::spacingHint());
   grid->setColStretch(0, 0);
   grid->setColStretch(1, 1);
   grid->addColSpacing(0, 30);

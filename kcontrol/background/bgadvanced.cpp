@@ -24,7 +24,7 @@
 #include <tqcheckbox.h>
 #include <tqheader.h>
 #include <tqlabel.h>
-#include <layout.h>
+#include <tqlayout.h>
 #include <tqlineedit.h>
 #include <tqcombobox.h>
 #include <tqpushbutton.h>
@@ -432,7 +432,7 @@ KProgramEditDialog::KProgramEditDialog(const TQString &program, TQWidget *parent
     m_RefreshEdit->setRange(5, 60);
     m_RefreshEdit->setSteps(5, 10);
     m_RefreshEdit->setSuffix(i18n(" min"));
-    m_RefreshEdit->setFixedSize(m_RefreshEdit->sizeHint());
+    m_RefreshEdit->setFixedSize(m_RefreshEdit->tqsizeHint());
     lbl->setBuddy(m_RefreshEdit);
     grid->addWidget(m_RefreshEdit, 5, 1, Qt::AlignLeft);
 

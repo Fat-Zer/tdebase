@@ -24,9 +24,9 @@
 #include <stdlib.h>
 
 #include <tqtimer.h>
-#include <clipboard.h>
+#include <tqclipboard.h>
 #include <tqsplitter.h>
-#include <layout.h>
+#include <tqlayout.h>
 #include <tqlabel.h>
 
 #include <klocale.h>

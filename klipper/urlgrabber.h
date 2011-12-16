@@ -132,7 +132,7 @@ public:
   inline bool matches( const TQString& string ) {
     int res = myRegExp.search( string ) ;
     if ( res != -1 ) {
-      myCapturedTexts = myRegExp.capturedTexts();
+      myCapturedTexts = myRegExp.tqcapturedTexts();
       return true;
     } 
     return false;

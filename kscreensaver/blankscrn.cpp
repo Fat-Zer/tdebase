@@ -9,7 +9,7 @@
 
 #include <stdlib.h>
 #include <tqlabel.h>
-#include <layout.h>
+#include <tqlayout.h>
 #include <kapplication.h>
 #include <klocale.h>
 #include <kconfig.h>
@@ -69,7 +69,7 @@ KBlankSetup::KBlankSetup( TQWidget *parent, const char *name )
 	grid->setRowStretch( 2, 10 );
 	grid->setRowStretch( 3, 20 );
 
-	setMinimumSize( sizeHint() );
+	setMinimumSize( tqsizeHint() );
 }
 
 // read settings from config file

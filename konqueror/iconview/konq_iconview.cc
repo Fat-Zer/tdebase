@@ -206,7 +206,7 @@ KonqKfmIconView::KonqKfmIconView( TQWidget *parentWidget, TQObject *parent, cons
 
     setXMLFile( "konq_iconview.rc" );
 
-    // Don't repaint on configuration changes during construction
+    // Don't tqrepaint on configuration changes during construction
     m_bInit = true;
 
     m_paDotFiles = new KToggleAction( i18n( "Show &Hidden Files" ), 0, this, TQT_SLOT( slotShowDot() ),
@@ -359,7 +359,7 @@ KonqKfmIconView::KonqKfmIconView( TQWidget *parentWidget, TQObject *parent, cons
     // Create the directory lister
     m_dirLister = new KDirLister( true );
     setDirLister( m_dirLister );
-    m_dirLister->setMainWindow(m_pIconView->topLevelWidget());
+    m_dirLister->setMainWindow(m_pIconView->tqtopLevelWidget());
 
     connect( m_dirLister, TQT_SIGNAL( started( const KURL & ) ),
              this, TQT_SLOT( slotStarted() ) );
@@ -686,7 +686,7 @@ void KonqKfmIconView::newIconSize( int size )
     // Stop a preview job that might be running
     m_pIconView->stopImagePreview();
 
-    // Set icons size, arrage items in grid and repaint the whole view
+    // Set icons size, arrage items in grid and tqrepaint the whole view
     m_pIconView->setIcons( size );
 
     // If previews are enabled start a new job
@@ -872,8 +872,8 @@ void KonqKfmIconView::slotCanceled( const KURL& url )
     // the completed() signal, so handle that case.
     if ( !m_pIconView->viewport()->isUpdatesEnabled() )
     {
-        m_pIconView->viewport()->setUpdatesEnabled( true );
-        m_pIconView->viewport()->repaint();
+        m_pIconView->viewport()->tqsetUpdatesEnabled( true );
+        m_pIconView->viewport()->tqrepaint();
     }
     if ( m_pEnsureVisible ){
         m_pIconView->ensureItemVisible( m_pEnsureVisible );
@@ -889,11 +889,11 @@ void KonqKfmIconView::slotCompleted()
         m_pTimeoutRefreshTimer->stop();
 
     // If updates to the viewport are still blocked (so slotNewItems() has
-    // not been called), a viewport repaint is forced.
+    // not been called), a viewport tqrepaint is forced.
     if ( !m_pIconView->viewport()->isUpdatesEnabled() )
     {
-        m_pIconView->viewport()->setUpdatesEnabled( true );
-        m_pIconView->viewport()->repaint();
+        m_pIconView->viewport()->tqsetUpdatesEnabled( true );
+        m_pIconView->viewport()->tqrepaint();
     }
 
     // Root item ? Store root item in konqiconviewwidget (whether 0L or not)
@@ -952,7 +952,7 @@ void KonqKfmIconView::slotNewItems( const KFileItemList& entries )
     // We need to disable graphics updates on the iconview when
     // inserting items, or else a blank paint operation will be
     // performed on the top-left corner for each inserted item!
-    m_pIconView->setUpdatesEnabled( false );
+    m_pIconView->tqsetUpdatesEnabled( false );
     for (KFileItemListIterator it(entries); it.current(); ++it)
     {
         //kdDebug(1202) << "KonqKfmIconView::slotNewItem(...)" << _fileitem->url().url() << endl;
@@ -1006,11 +1006,11 @@ void KonqKfmIconView::slotNewItems( const KFileItemList& entries )
         m_itemDict.insert( *it, item );
     }
     // After filtering out updates-on-insertions we can re-enable updates
-    m_pIconView->setUpdatesEnabled( true );
+    m_pIconView->tqsetUpdatesEnabled( true );
     // Locking the viewport has filtered out blanking and now, since we
     // have some items to draw, we can restore updating.
     if ( !m_pIconView->viewport()->isUpdatesEnabled() )
-        m_pIconView->viewport()->setUpdatesEnabled( true );
+        m_pIconView->viewport()->tqsetUpdatesEnabled( true );
     KonqDirPart::newItems( entries );
 }
 
@@ -1136,7 +1136,7 @@ void KonqKfmIconView::slotRefreshItems( const KFileItemList& entries )
     }
     else
     {
-        // In case we replace a big icon with a small one, need to repaint.
+        // In case we replace a big icon with a small one, need to tqrepaint.
         if ( bNeedRepaint )
             m_pIconView->updateContents();
     }
@@ -1150,7 +1150,7 @@ void KonqKfmIconView::slotClear()
     // meaningless paint operations (such as a clear() just before drawing
     // fresh contents) we disable updating the viewport until we'll
     // receive some data or a timeout timer expires.
-    m_pIconView->viewport()->setUpdatesEnabled( false );
+    m_pIconView->viewport()->tqsetUpdatesEnabled( false );
     if ( !m_pTimeoutRefreshTimer )
     {
         m_pTimeoutRefreshTimer = new TQTimer( this );
@@ -1247,9 +1247,9 @@ void KonqKfmIconView::slotRefreshViewport()
     kdDebug(1202) << "KonqKfmIconView::slotRefreshViewport()" << endl;
     TQWidget * vp = m_pIconView->viewport();
     bool prevState = vp->isUpdatesEnabled();
-    vp->setUpdatesEnabled( true );
-    vp->repaint();
-    vp->setUpdatesEnabled( prevState );
+    vp->tqsetUpdatesEnabled( true );
+    vp->tqrepaint();
+    vp->tqsetUpdatesEnabled( prevState );
 }
 
 bool KonqKfmIconView::doOpenURL( const KURL & url )

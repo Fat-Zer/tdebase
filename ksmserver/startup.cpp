@@ -57,7 +57,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #endif
 
 #include <tqfile.h>
-#include <textstream.h>
+#include <tqtextstream.h>
 #include <tqdatastream.h>
 #include <tqptrstack.h>
 #include <tqpushbutton.h>

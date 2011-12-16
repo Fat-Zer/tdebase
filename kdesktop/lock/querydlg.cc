@@ -25,7 +25,7 @@
 #include <dcopref.h>
 #include <kmessagebox.h>
 
-#include <layout.h>
+#include <tqlayout.h>
 #include <tqpushbutton.h>
 #include <tqmessagebox.h>
 #include <tqsimplerichtext.h>
@@ -86,8 +86,8 @@ QueryDlg::QueryDlg(LockProcess *parent)
     KUser user;
 
     mStatusLabel = new TQLabel( "<b> </b>", frame );
-    //mStatusLabel->setAlignment( TQLabel::AlignCenter );
-    mStatusLabel->setAlignment( TQLabel::AlignLeft );
+    //mStatusLabel->tqsetAlignment( TQLabel::AlignCenter );
+    mStatusLabel->tqsetAlignment( TQLabel::AlignLeft );
 
     KSeparator *sep = new KSeparator( KSeparator::HLine, frame );
 

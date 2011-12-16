@@ -20,7 +20,7 @@
 #include "dockviewbase.moc"
 
 #include <tqlabel.h>
-#include <layout.h>
+#include <tqlayout.h>
 
 //#include <kdebug.h>
 
@@ -87,7 +87,7 @@ void Kate::DockViewBase::init( const TQString &prefix, const TQString &title )
 {
   setSpacing( 4 );
   d->header = new TQWidget( this );
-  d->header->setSizePolicy( TQSizePolicy( TQSizePolicy::Expanding, TQSizePolicy::Fixed, true ) );
+  d->header->tqsetSizePolicy( TQSizePolicy( TQSizePolicy::Expanding, TQSizePolicy::Fixed, true ) );
   TQHBoxLayout *lo = new TQHBoxLayout( d->header );
   lo->setSpacing( 6 );
   lo->insertSpacing( 0, 6 ); 

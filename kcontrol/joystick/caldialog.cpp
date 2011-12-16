@@ -65,7 +65,7 @@ void CalDialog::calibrate()
 
   do
   {
-    tqApp->processEvents(2000);
+    tqApp->tqprocessEvents(2000);
   }
   while ( ti.isActive() && (result() != TQDialog::Rejected) );
 
@@ -165,7 +165,7 @@ void CalDialog::waitButton(int axis, bool press, int &lastVal)
   // loop until the user presses a button on the device or on the dialog
   do
   {
-    tqApp->processEvents(100);
+    tqApp->tqprocessEvents(100);
 
     if ( joydev->getEvent(type, number, value) )
     {

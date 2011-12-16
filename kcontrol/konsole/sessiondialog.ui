@@ -184,13 +184,13 @@
                             <property name="name">
                                 <cstring>previewIcon</cstring>
                             </property>
-                            <property name="minimumSize">
+                            <property name="tqminimumSize">
                                 <size>
                                     <width>100</width>
                                     <height>100</height>
                                 </size>
                             </property>
-                            <property name="maximumSize">
+                            <property name="tqmaximumSize">
                                 <size>
                                     <width>100</width>
                                     <height>100</height>
@@ -212,7 +212,7 @@
                                     <verstretch>0</verstretch>
                                 </sizepolicy>
                             </property>
-                            <property name="minimumSize">
+                            <property name="tqminimumSize">
                                 <size>
                                     <width>90</width>
                                     <height>100</height>
@@ -221,7 +221,7 @@
                             <property name="text">
                                 <string>&amp;Icon:</string>
                             </property>
-                            <property name="alignment">
+                            <property name="tqalignment">
                                 <set>AlignTop|AlignLeft</set>
                             </property>
                             <property name="buddy" stdset="0">
@@ -280,7 +280,7 @@
                                     <property name="sizeType">
                                         <enum>Expanding</enum>
                                     </property>
-                                    <property name="sizeHint">
+                                    <property name="tqsizeHint">
                                         <size>
                                             <width>20</width>
                                             <height>20</height>

@@ -18,7 +18,7 @@
 #include <tqlabel.h>
 #include <tqcheckbox.h>
 #include <tqradiobutton.h>
-#include <textview.h>
+#include <tqtextview.h>
 #include <tqmap.h>
 
 #include <ksimpleconfig.h>

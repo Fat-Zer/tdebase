@@ -23,7 +23,7 @@
 #include <kfiledialog.h>
 #include <dcopclient.h>
 
-#include <layout.h>
+#include <tqlayout.h>
 #include <tqlistbox.h>
 #include <tqpushbutton.h>
 #include <tqgroupbox.h>

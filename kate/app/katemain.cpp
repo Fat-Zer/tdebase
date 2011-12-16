@@ -31,7 +31,7 @@
 #include <dcopref.h>
 #include <kdebug.h>
 
-#include <textcodec.h>
+#include <tqtextcodec.h>
 
 #include <stdlib.h>
 

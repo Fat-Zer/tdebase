@@ -21,7 +21,7 @@
 #include "faxab.h"
 
 #include <tqlabel.h>
-#include <layout.h>
+#include <tqlayout.h>
 #include <kpushbutton.h>
 #include <klistview.h>
 #include <tqheader.h>

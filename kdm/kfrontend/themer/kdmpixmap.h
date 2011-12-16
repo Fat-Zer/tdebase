@@ -42,7 +42,7 @@ public:
 
 protected:
 	// reimplemented; returns the size of loaded pixmap
-	virtual TQSize sizeHint();
+	virtual TQSize tqsizeHint();
 
 	// draw the pixmap
 	virtual void drawContents( TQPainter *p, const TQRect &r );

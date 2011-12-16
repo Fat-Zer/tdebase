@@ -157,7 +157,7 @@ void AddAppletVisualFeedback::displayInternal()
     // draw background
     TQPainter bufferPainter(&m_pixmap);
     bufferPainter.setPen(Qt::black);
-    bufferPainter.setBrush(colorGroup().background());
+    bufferPainter.setBrush(tqcolorGroup().background());
     bufferPainter.drawRoundRect(0, 0, width, height,
                                 1600 / width, 1600 / height);
 
@@ -175,14 +175,14 @@ void AddAppletVisualFeedback::displayInternal()
         int textY = (height - textRect.height()) / 2;
 
         // draw text shadow
-        TQColorGroup cg = colorGroup();
+        TQColorGroup cg = tqcolorGroup();
         cg.setColor(TQColorGroup::Text, cg.background().dark(115));
         int shadowOffset = TQApplication::reverseLayout() ? -1 : 1;
         m_richText->draw(&bufferPainter, 5 + textX + shadowOffset,
                          textY + 1, TQRect(), cg);
 
         // draw text
-        cg = colorGroup();
+        cg = tqcolorGroup();
         m_richText->draw(&bufferPainter, 5 + textX, textY, rect(), cg);
     }
 }
@@ -225,7 +225,7 @@ void AddAppletVisualFeedback::swoopCloser()
 void AddAppletVisualFeedback::internalUpdate()
 {
     m_dirty = true;
-    repaint(false);
+    tqrepaint(false);
 }
 
 #include "addappletvisualfeedback.moc"

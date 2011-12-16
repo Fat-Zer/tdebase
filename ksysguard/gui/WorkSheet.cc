@@ -21,11 +21,11 @@
 
 */
 
-#include <clipboard.h>
+#include <tqclipboard.h>
 #include <tqcursor.h>
 #include <tqdragobject.h>
 #include <tqfile.h>
-#include <layout.h>
+#include <tqlayout.h>
 
 #include <kdebug.h>
 #include <klocale.h>
@@ -241,7 +241,7 @@ void WorkSheet::cut()
   if ( !currentDisplay() || currentDisplay()->isA( "DummyDisplay" ) )
     return;
 
-  TQClipboard* clip = TQApplication::clipboard();
+  TQClipboard* clip = TQApplication::tqclipboard();
 
   clip->setText( currentDisplayAsXML() );
 
@@ -253,7 +253,7 @@ void WorkSheet::copy()
   if ( !currentDisplay() || currentDisplay()->isA( "DummyDisplay" ) )
     return;
 
-  TQClipboard* clip = TQApplication::clipboard();
+  TQClipboard* clip = TQApplication::tqclipboard();
 
   clip->setText( currentDisplayAsXML() );
 }
@@ -264,7 +264,7 @@ void WorkSheet::paste()
   if ( !currentDisplay( &row, &column ) )
     return;
 
-  TQClipboard* clip = TQApplication::clipboard();
+  TQClipboard* clip = TQApplication::tqclipboard();
 
   TQDomDocument doc;
   /* Get text from clipboard and check for a valid XML header and
@@ -450,14 +450,14 @@ void WorkSheet::dropEvent( TQDropEvent *e )
      * event and replace or add sensor. */
     for ( uint r = 0; r < mRows; ++r )
       for ( uint c = 0; c < mColumns; ++c )
-        if ( mDisplayList[ r ][ c ]->geometry().contains( e->pos() ) ) {
+        if ( mDisplayList[ r ][ c ]->tqgeometry().contains( e->pos() ) ) {
           addDisplay( hostName, sensorName, sensorType, sensorDescr, r, c );
           return;
         }
   }
 }
 
-TQSize WorkSheet::sizeHint() const
+TQSize WorkSheet::tqsizeHint() const
 {
   return TQSize( 200,150 );
 }
@@ -531,7 +531,7 @@ void WorkSheet::replaceDisplay( uint row, uint column, KSGRD::SensorDisplay* new
     mDisplayList[ row ][ column ]->show();
   }
 
-  setMinimumSize(sizeHint());
+  setMinimumSize(tqsizeHint());
 
   setModified( true );
 }

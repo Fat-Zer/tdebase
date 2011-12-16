@@ -121,8 +121,8 @@ void KonqTreeViewWidget::slotCompleted( const KURL & _url )
 
     if ( !viewport()->isUpdatesEnabled() )
     {
-        viewport()->setUpdatesEnabled( true );
-        setUpdatesEnabled( true );
+        viewport()->tqsetUpdatesEnabled( true );
+        tqsetUpdatesEnabled( true );
         triggerUpdate();
     }
 }
@@ -268,8 +268,8 @@ void KonqTreeViewWidget::slotNewItems( const KFileItemList &entries )
 
     if ( !viewport()->isUpdatesEnabled() )
     {
-        viewport()->setUpdatesEnabled( true );
-        setUpdatesEnabled( true );
+        viewport()->tqsetUpdatesEnabled( true );
+        tqsetUpdatesEnabled( true );
         triggerUpdate();
     }
 

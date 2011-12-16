@@ -1,6 +1,6 @@
 
 #include <tqlabel.h>
-#include <layout.h>
+#include <tqlayout.h>
 #include <tqpushbutton.h>
 #include <tqtimer.h>
 #include <tqwhatsthis.h>
@@ -126,7 +126,7 @@ FileTypesView::FileTypesView(TQWidget *p, const char *name)
 
   // Widget shown on startup
   m_emptyWidget = new TQLabel( i18n("Select a file type by name or by extension"), m_widgetStack);
-  m_emptyWidget->setAlignment(AlignCenter);
+  m_emptyWidget->tqsetAlignment(AlignCenter);
 
   m_widgetStack->addWidget( m_emptyWidget, 3 /*id*/ );
 

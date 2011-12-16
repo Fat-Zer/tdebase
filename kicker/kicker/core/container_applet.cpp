@@ -24,7 +24,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <tqcursor.h>
 #include <qxembed.h>
 #include <tqframe.h>
-#include <layout.h>
+#include <tqlayout.h>
 #include <tqhbox.h>
 #include <tqfile.h>
 #include <tqtimer.h>
@@ -117,7 +117,7 @@ AppletContainer::AppletContainer(const AppletInfo& info,
     _valid = true;
 
     _applet->setPosition((KPanelApplet::Position)KickerLib::directionToPosition(popupDirection()));
-    _applet->setAlignment((KPanelApplet::Alignment)alignment());
+    _applet->tqsetAlignment((KPanelApplet::Alignment)tqalignment());
 
     _actions = _applet->actions();
     _type = _applet->type();
@@ -275,14 +275,14 @@ void AppletContainer::slotRemoved(KConfig* config)
 
 void AppletContainer::activateWindow()
 {
-    KWin::forceActiveWindow(topLevelWidget()->winId());
+    KWin::forceActiveWindow(tqtopLevelWidget()->winId());
 }
 
 void AppletContainer::focusRequested(bool focus)
 {
     if (focus)
     {
-        KWin::forceActiveWindow(topLevelWidget()->winId());
+        KWin::forceActiveWindow(tqtopLevelWidget()->winId());
     }
 
     emit maintainFocus(focus);
@@ -361,7 +361,7 @@ void AppletContainer::alignmentChange(KPanelExtension::Alignment a)
         return;
     }
 
-    _applet->setAlignment( (KPanelApplet::Alignment)a );
+    _applet->tqsetAlignment( (KPanelApplet::Alignment)a );
 }
 
 int AppletContainer::widthForHeight(int h) const

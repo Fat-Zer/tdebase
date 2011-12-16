@@ -32,7 +32,7 @@
 #include "FcEngine.h"
 #include "KfiConstants.h"
 #include <ksavefile.h>
-#include <textstream.h>
+#include <tqtextstream.h>
 #include <tqdir.h>
 #include <ctype.h>
 #include <stdio.h>

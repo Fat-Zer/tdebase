@@ -21,7 +21,7 @@
 #include <unistd.h>
 
 #include <tqpushbutton.h>
-#include <layout.h>
+#include <tqlayout.h>
 #include <tqwhatsthis.h>
 
 #include <kapplication.h>

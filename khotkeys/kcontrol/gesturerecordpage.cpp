@@ -43,7 +43,7 @@ GestureRecordPage::GestureRecordPage(const TQString &gesture,
                    "button below.\n\nDraw here:");
 
     TQLabel *label = new TQLabel(message, this, "label");
-    label->setAlignment(TQLabel::AlignLeft | TQLabel::WordBreak |
+    label->tqsetAlignment(TQLabel::AlignLeft | TQLabel::WordBreak |
                         TQLabel::AlignVCenter);
 
     _recorder = new GestureRecorder(this, "recorder");

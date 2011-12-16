@@ -45,7 +45,7 @@
 #include <tqfile.h>
 #include <tqtimer.h>
 #include <tqdir.h>
-#include <textcodec.h>
+#include <tqtextcodec.h>
 
 #include <stdlib.h>
 #include <unistd.h>

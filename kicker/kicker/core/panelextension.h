@@ -80,7 +80,7 @@ k_dcop:
     void configure(); // KDE4: remove, moved to Kikcker
 
 public:
-    TQSize sizeHint(Position, TQSize maxSize) const;
+    TQSize tqsizeHint(Position, TQSize maxSize) const;
     Position preferedPosition() const { return Bottom; }
     bool eventFilter( TQObject *, TQEvent * );
 

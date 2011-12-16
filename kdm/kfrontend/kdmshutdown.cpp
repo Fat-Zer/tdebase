@@ -40,7 +40,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include <tqcombobox.h>
 #include <tqvbuttongroup.h>
 #include <tqstyle.h>
-#include <layout.h>
+#include <tqlayout.h>
 #include <tqaccel.h>
 #include <tqpopupmenu.h>
 #include <tqcheckbox.h>
@@ -117,7 +117,7 @@ KDMShutdownBase::complete( TQWidget *prevWidget )
 	hlay->addStretch( 1 );
 	if (mayOk) {
 		okButton = new KPushButton( KStdGuiItem::ok(), this );
-		okButton->setSizePolicy( fp );
+		okButton->tqsetSizePolicy( fp );
 		okButton->setDefault( true );
 		hlay->addWidget( okButton );
 		hlay->addStretch( 1 );
@@ -126,13 +126,13 @@ KDMShutdownBase::complete( TQWidget *prevWidget )
 	if (maySched) {
 		KPushButton *schedButton =
 			new KPushButton( KGuiItem( i18n("&Schedule...") ), this );
-		schedButton->setSizePolicy( fp );
+		schedButton->tqsetSizePolicy( fp );
 		hlay->addWidget( schedButton );
 		hlay->addStretch( 1 );
 		connect( schedButton, TQT_SIGNAL(clicked()), TQT_SLOT(slotSched()) );
 	}
 	cancelButton = new KPushButton( KStdGuiItem::cancel(), this );
-	cancelButton->setSizePolicy( fp );
+	cancelButton->tqsetSizePolicy( fp );
 	if (!mayOk)
 		cancelButton->setDefault( true );
 	hlay->addWidget( cancelButton );
@@ -149,7 +149,7 @@ KDMShutdownBase::slotActivatePlugMenu()
 		TQPopupMenu *cmnu = verify->getPlugMenu();
 		if (!cmnu)
 			return;
-		TQSize sh( cmnu->sizeHint() / 2 );
+		TQSize sh( cmnu->tqsizeHint() / 2 );
 		cmnu->exec( geometry().center() - TQPoint( sh.width(), sh.height() ) );
 	}
 }
@@ -276,7 +276,7 @@ KDMShutdown::KDMShutdown( int _uid, TQWidget *_parent )
 		freeStrArr( tlist );
 		targets->setCurrentItem( oldTarget == -1 ? defaultTarget : oldTarget );
 		TQHBoxLayout *hb = new TQHBoxLayout( hlp, 0, KDsh );
-		int spc = kapp->tqstyle().pixelMetric( TQStyle::PM_ExclusiveIndicatorWidth )
+		int spc = kapp->tqstyle().tqpixelMetric( TQStyle::PM_ExclusiveIndicatorWidth )
 		          + howGroup->insideSpacing();
 		hb->addSpacing( spc );
 		hb->addWidget( targets );
@@ -284,7 +284,7 @@ KDMShutdown::KDMShutdown( int _uid, TQWidget *_parent )
 	}
 	GSet( 0 );
 
-	howGroup->setSizePolicy( fp );
+	howGroup->tqsetSizePolicy( fp );
 
 	schedGroup = new TQGroupBox( i18n("Scheduling"), this );
 	hlay->addWidget( schedGroup, 0, AlignTop );
@@ -310,7 +310,7 @@ KDMShutdown::KDMShutdown( int _uid, TQWidget *_parent )
 	grid->addWidget( le_timeout, 2, 1 );
 	grid->addMultiCellWidget( cb_force, 3,3, 0,1 );
 
-	schedGroup->setSizePolicy( fp );
+	schedGroup->tqsetSizePolicy( fp );
 
 	le_start->setText( "0" );
 	if (_defSdMode == SHUT_SCHEDULE)
@@ -484,7 +484,7 @@ KDMSlimShutdown::KDMSlimShutdown( TQWidget *_parent )
 			lfrm->setFrameStyle( TQFrame::NoFrame );
 		else
 			lfrm->setFrameStyle( TQFrame::StyledPanel | TQFrame::Raised );
-		lfrm->setLineWidth( tqstyle().pixelMetric( TQStyle::PM_DefaultFrameWidth, lfrm ) );
+		lfrm->setLineWidth( tqstyle().tqpixelMetric( TQStyle::PM_DefaultFrameWidth, lfrm ) );
 		// we need to set the minimum size for the logout box, since it
 		// gets too small if there all options are not available
 		lfrm->setMinimumSize(300,120);
@@ -494,7 +494,7 @@ KDMSlimShutdown::KDMSlimShutdown( TQWidget *_parent )
 
 		// first line of buttons
 		hbuttonbox = new TQHBoxLayout( vbox, 8 * KDialog::spacingHint() );
-		hbuttonbox->setAlignment( Qt::AlignHCenter );
+		hbuttonbox->tqsetAlignment( Qt::AlignHCenter );
 
 		// Reboot
 		FlatButton* btnReboot = new FlatButton( lfrm );
@@ -538,7 +538,7 @@ KDMSlimShutdown::KDMSlimShutdown( TQWidget *_parent )
 
 		// cancel buttonbox
 		TQHBoxLayout* hbuttonbox2 = new TQHBoxLayout( vbox, 8 * KDialog::spacingHint()  );
-		hbuttonbox2->setAlignment( Qt::AlignRight );
+		hbuttonbox2->tqsetAlignment( Qt::AlignRight );
 
 		// Back to kdm
 		KSMPushButton* btnBack = new KSMPushButton( KStdGuiItem::cancel(), lfrm );

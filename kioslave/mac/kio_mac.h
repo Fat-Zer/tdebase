@@ -24,7 +24,7 @@
 #include <tqstring.h>
 #include <tqcstring.h>
 #include <tqfile.h>
-#include <textstream.h>
+#include <tqtextstream.h>
 
 class MacProtocol : public TQObject, public KIO::SlaveBase
 {

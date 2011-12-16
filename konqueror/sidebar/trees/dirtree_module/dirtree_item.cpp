@@ -26,7 +26,7 @@
 #include <kglobalsettings.h>
 #include <kuserprofile.h>
 #include <tqapplication.h>
-#include <clipboard.h>
+#include <tqclipboard.h>
 #include <kio/paste.h>
 #include <tqfile.h>
 #include <tqpainter.h>
@@ -108,7 +108,7 @@ bool KonqSidebarDirTreeItem::hasStandardIcon()
     return m_fileItem->iconName() == "folder";
 }
 
-void KonqSidebarDirTreeItem::paintCell( TQPainter *_painter, const TQColorGroup & _cg, int _column, int _width, int _alignment )
+void KonqSidebarDirTreeItem::paintCell( TQPainter *_painter, const TQColorGroup & _cg, int _column, int _width, int _tqalignment )
 {
     if (m_fileItem->isLink())
     {
@@ -116,7 +116,7 @@ void KonqSidebarDirTreeItem::paintCell( TQPainter *_painter, const TQColorGroup 
         f.setItalic( TRUE );
         _painter->setFont( f );
     }
-    TQListViewItem::paintCell( _painter, _cg, _column, _width, _alignment );
+    TQListViewItem::paintCell( _painter, _cg, _column, _width, _tqalignment );
 }
 
 KURL KonqSidebarDirTreeItem::externalURL() const
@@ -162,8 +162,8 @@ void KonqSidebarDirTreeItem::itemSelected()
     if ( m_fileItem->url().directory(false) == KGlobalSettings::trashPath() )
         bInTrash = true;
 
-    TQMimeSource *data = TQApplication::clipboard()->data();
-    bool paste = ( data->encodedData( data->format() ).size() != 0 );
+    TQMimeSource *data = TQApplication::tqclipboard()->data();
+    bool paste = ( data->tqencodedData( data->format() ).size() != 0 );
 
     tree()->enableActions( true, true, paste, true && !bInTrash, true, true );
 }
@@ -197,7 +197,7 @@ void KonqSidebarDirTreeItem::paste()
 {
     // move or not move ?
     bool move = false;
-    TQMimeSource *data = TQApplication::clipboard()->data();
+    TQMimeSource *data = TQApplication::tqclipboard()->data();
     if ( data->provides( "application/x-kde-cutselection" ) ) {
         move = KonqDrag::decodeIsCutSelection( data );
         kdDebug(1201) << "move (from clipboard data) = " << move << endl;

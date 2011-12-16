@@ -8,7 +8,7 @@
 #include <kiconloader.h>
 #include <klistviewsearchline.h>
 
-#include <clipboard.h>
+#include <tqclipboard.h>
 #include <tqdragobject.h>
 #include <tqtoolbutton.h>
 #include <tqvbox.h>
@@ -76,14 +76,14 @@ void KonqSidebar_Tree::cut()
 {
     TQDragObject * drag = static_cast<KonqSidebarTreeItem*>(tree->selectedItem())->dragObject( 0L, true );
     if (drag)
-        TQApplication::clipboard()->setData( drag );
+        TQApplication::tqclipboard()->setData( drag );
 }
 
 void KonqSidebar_Tree::copy()
 {
     TQDragObject * drag = static_cast<KonqSidebarTreeItem*>(tree->selectedItem())->dragObject( 0L );
     if (drag)
-        TQApplication::clipboard()->setData( drag );
+        TQApplication::tqclipboard()->setData( drag );
 }
 
 void KonqSidebar_Tree::paste()
@@ -150,7 +150,7 @@ extern "C"
 		{
 			int id=names.findIndex( item );
 			if (id==-1) return false;
-			KSimpleConfig ksc2(*list.at(id));
+			KSimpleConfig ksc2(*list.tqat(id));
 			ksc2.setGroup("Desktop Entry");
 		        map->insert("Type","Link");
 			map->insert("Icon",ksc2.readEntry("Icon"));

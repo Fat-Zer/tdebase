@@ -36,7 +36,7 @@
 #include <tqfile.h>
 #include <tqfileinfo.h>
 #include <tqdir.h>
-#include <textstream.h>
+#include <tqtextstream.h>
 
 #include <unistd.h>
 #include <stdlib.h>

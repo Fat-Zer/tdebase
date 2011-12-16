@@ -23,7 +23,7 @@
 */
 
 #include <tqvbox.h>
-#include <layout.h>
+#include <tqlayout.h>
 #include <tqcheckbox.h>
 #include <tqlineedit.h>
 #include <tqtooltip.h>

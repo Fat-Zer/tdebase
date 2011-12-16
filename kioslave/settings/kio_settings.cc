@@ -20,7 +20,7 @@
 #include <kio/slavebase.h>
 #include <kinstance.h>
 #include <kdebug.h>
-#include <textstream.h>
+#include <tqtextstream.h>
 #include <klocale.h>
 #include <sys/stat.h>
 #include <dcopclient.h>
@@ -127,7 +127,7 @@ KServiceGroup::Ptr SettingsProtocol::findGroup(const TQString &relPath)
 
 	kdDebug() << "Trying harder to find group " << relPath << endl;
 	for (unsigned int i=0; i<rest.count(); i++)
-		kdDebug() << "Item (" << *rest.at(i) << ")" << endl;
+		kdDebug() << "Item (" << *rest.tqat(i) << ")" << endl;
 
 	while (!rest.isEmpty()) {
 		KServiceGroup::Ptr tmp = KServiceGroup::group(alreadyFound);
@@ -251,7 +251,7 @@ void SettingsProtocol::listDir(const KURL& url)
 			    continue;
 
 			// Ignore dotfiles.
-			if ((g->name().at(0) == '.'))
+			if ((g->name().tqat(0) == '.'))
 			    continue;
 
 			TQString relPath = g->relPath();

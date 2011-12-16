@@ -21,7 +21,7 @@
 #define SHELLCOMMANDEXECUTOR_H
 
 #include <tqstring.h>
-#include <textview.h>
+#include <tqtextview.h>
 
 class PtyProcess;
 class TQSocketNotifier;

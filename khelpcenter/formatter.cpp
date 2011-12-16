@@ -27,7 +27,7 @@
 #include <kstandarddirs.h>
 
 #include <tqfile.h>
-#include <textstream.h>
+#include <tqtextstream.h>
 
 using namespace KHC;
 

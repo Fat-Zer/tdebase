@@ -5,7 +5,7 @@
 // (c) David Faure 1998
 // (c) 2001 Waldo Bastian <bastian@kde.org>
 
-#include <layout.h>//CT - 12Nov1998
+#include <tqlayout.h>//CT - 12Nov1998
 #include <tqwhatsthis.h>
 #include <tqvgroupbox.h>
 #include <tqlabel.h>
@@ -82,7 +82,7 @@ KMiscHTMLOptions::KMiscHTMLOptions(KConfig *config, TQString group, TQWidget *pa
     // Tabbed Browsing
 
     TQGroupBox *bgTabbedBrowsing = new TQGroupBox( 0, Qt::Vertical, i18n("Tabbed Browsing"), this );
-    TQVBoxLayout *laygroup = new TQVBoxLayout(bgTabbedBrowsing->layout(), KDialog::spacingHint() );
+    TQVBoxLayout *laygroup = new TQVBoxLayout(bgTabbedBrowsing->tqlayout(), KDialog::spacingHint() );
 
     m_pShowMMBInTabs = new TQCheckBox( i18n( "Open &links in new tab instead of in new window" ), bgTabbedBrowsing );
     TQWhatsThis::add( m_pShowMMBInTabs, i18n("This will open a new tab instead of a new window in various situations, "
@@ -109,7 +109,7 @@ KMiscHTMLOptions::KMiscHTMLOptions(KConfig *config, TQString group, TQWidget *pa
     TQVGroupBox *bgMouse = new TQVGroupBox( i18n("Mouse Beha&vior"), this );
 
     m_cbCursor = new TQCheckBox(i18n("Chan&ge cursor over links"), bgMouse );
-    TQWhatsThis::add( m_cbCursor, i18n("If this option is set, the shape of the cursor will change "
+    TQWhatsThis::add( m_cbCursor, i18n("If this option is set, the tqshape of the cursor will change "
        "(usually to a hand) if it is moved over a hyperlink.") );
     connect(m_cbCursor, TQT_SIGNAL(clicked()), TQT_SLOT(slotChanged()));
 

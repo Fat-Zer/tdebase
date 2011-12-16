@@ -36,7 +36,7 @@
 #include <tqfile.h>
 #include <tqstring.h>
 #include <tqstringlist.h>
-#include <textstream.h>
+#include <tqtextstream.h>
 #include <tqdir.h>
 #include <tqtimer.h>
 #include <tqmap.h>
@@ -255,7 +255,7 @@ NaughtyProcessMonitor::processName(ulong pid) const
   }
 
  // Now strip 'tdeinit:' prefix.
-  TQString unicode(TQString::fromLocal8Bit(s));
+  TQString tqunicode(TQString::fromLocal8Bit(s));
 
 #elif defined(__OpenBSD__)
   int mib[4] ;
@@ -280,12 +280,12 @@ NaughtyProcessMonitor::processName(ulong pid) const
   }
   
  // Now strip 'tdeinit:' prefix.
-  TQString unicode(TQString::fromLocal8Bit(argv[0]));
+  TQString tqunicode(TQString::fromLocal8Bit(argv[0]));
 
   free (argv) ;
 #endif
 
-  TQStringList parts(TQStringList::split(' ', unicode));
+  TQStringList parts(TQStringList::split(' ', tqunicode));
 
   TQString processName = parts[0] == "tdeinit:" ? parts[1] : parts[0];
 

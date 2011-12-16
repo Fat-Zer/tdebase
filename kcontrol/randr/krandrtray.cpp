@@ -54,7 +54,7 @@ KRandRSystemTray::KRandRSystemTray(TQWidget* parent, const char *name)
 	, m_help(new KHelpMenu(this, KGlobal::instance()->aboutData(), false, actionCollection()))
 {
 	setPixmap(KSystemTray::loadSizedIcon("randr", width()));
-	setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
+	tqsetAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
 	connect(this, TQT_SIGNAL(quitSelected()), this, TQT_SLOT(_quit()));
 	TQToolTip::add(this, i18n("Screen resize & rotate"));
 	my_parent = parent;
@@ -205,7 +205,7 @@ void KRandRSystemTray::contextMenuAboutToShow(KPopupMenu* menu)
 				/*lastIndex = menu->insertItem(i18n("Screen %1").arg(s+1));
 				menu->setItemEnabled(lastIndex, false);*/
 			} else {
-				KPopupMenu* subMenu = new KPopupMenu(menu, TQString("screen%1").arg(s+1).latin1());
+				KPopupMenu* subMenu = new KPopupMenu(menu, TQString("screen%1").tqarg(s+1).latin1());
 				m_screenPopups.append(subMenu);
 				populateMenu(subMenu);
 				lastIndex = menu->insertItem(i18n("Screen %1").arg(s+1), subMenu);

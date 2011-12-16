@@ -21,7 +21,7 @@
    Boston, MA 02110-1301, USA.
 */
 
-#include <clipboard.h>
+#include <tqclipboard.h>
 #include <tqcursor.h>
 #include <tqdatetime.h>
 #include <tqfile.h>
@@ -142,7 +142,7 @@ KlipperWidget::KlipperWidget( TQWidget *parent, KConfig* config )
 
     updateTimestamp(); // read initial X user time
     setBackgroundMode( X11ParentRelative );
-    clip = kapp->clipboard();
+    clip = kapp->tqclipboard();
 
     connect( &m_overflowClearTimer, TQT_SIGNAL( timeout()), TQT_SLOT( slotClearOverflow()));
     m_overflowClearTimer.start( 1000 );
@@ -327,7 +327,7 @@ void KlipperWidget::showPopupMenu( TQPopupMenu *menu )
 {
     Q_ASSERT( menu != 0L );
 
-    TQSize size = menu->sizeHint(); // geometry is not valid until it's shown
+    TQSize size = menu->tqsizeHint(); // geometry is not valid until it's shown
     if (bPopupAtMouse) {
         TQPoint g = TQCursor::pos();
         if ( size.height() < g.y() )
@@ -1013,13 +1013,13 @@ TQString KlipperWidget::getClipboardHistoryItem(int i)
 //
 bool KlipperWidget::ignoreClipboardChanges() const
 {
-    TQWidget *focusWidget = tqApp->focusWidget();
-    if ( focusWidget )
+    TQWidget *tqfocusWidget = tqApp->tqfocusWidget();
+    if ( tqfocusWidget )
     {
-        if ( focusWidget->inherits( TQSPINBOX_OBJECT_NAME_STRING ) ||
-             (focusWidget->parentWidget() &&
-              focusWidget->inherits(TQLINEEDIT_OBJECT_NAME_STRING) &&
-              focusWidget->parentWidget()->inherits(TQSPINWIDGET_OBJECT_NAME_STRING)) )
+        if ( tqfocusWidget->inherits( TQSPINBOX_OBJECT_NAME_STRING ) ||
+             (tqfocusWidget->parentWidget() &&
+              tqfocusWidget->inherits(TQLINEEDIT_OBJECT_NAME_STRING) &&
+              tqfocusWidget->parentWidget()->inherits(TQSPINWIDGET_OBJECT_NAME_STRING)) )
         {
             return true;
         }

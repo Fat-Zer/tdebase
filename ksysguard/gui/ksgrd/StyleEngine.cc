@@ -122,7 +122,7 @@ const TQColor& StyleEngine::sensorColor( uint pos )
   static TQColor dummy;
 
   if ( pos < mSensorColors.count() )
-    return *mSensorColors.at( pos );
+    return *mSensorColors.tqat( pos );
   else
     return dummy;
 }

@@ -29,7 +29,7 @@
 #include "SettingsDialog.h"
 #include "KfiConstants.h"
 #include "Misc.h"
-#include <layout.h>
+#include <tqlayout.h>
 #include <tqcheckbox.h>
 #include <tqvbox.h>
 #include <tqwhatsthis.h>

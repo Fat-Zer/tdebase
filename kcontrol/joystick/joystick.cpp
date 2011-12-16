@@ -95,7 +95,7 @@ joystick::joystick(TQWidget *parent, const char *name, const TQStringList &)
 
   joyWidget = new JoyWidget(this);
 
-  setMinimumSize(joyWidget->minimumSize());
+  setMinimumSize(joyWidget->tqminimumSize());
 
   setButtons(KCModule::Default);
 }

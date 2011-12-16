@@ -31,7 +31,7 @@
             <property name="text">
                 <string>Please choose the way your computer should look by selecting one of the items below.</string>
             </property>
-            <property name="alignment">
+            <property name="tqalignment">
                 <set>WordBreak|AlignVCenter|AlignLeft</set>
             </property>
             <property name="wordwrap" stdset="0">
@@ -49,7 +49,7 @@
                     <verstretch>0</verstretch>
                 </sizepolicy>
             </property>
-            <property name="minimumSize">
+            <property name="tqminimumSize">
                 <size>
                     <width>170</width>
                     <height>430</height>

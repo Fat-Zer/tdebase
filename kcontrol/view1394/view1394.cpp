@@ -18,10 +18,10 @@
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
-#include <layout.h>
+#include <tqlayout.h>
 #include <tqpushbutton.h>
 #include <tqfile.h>
-#include <textstream.h>
+#include <tqtextstream.h>
 
 #include <kdialog.h>
 #include <kglobal.h>

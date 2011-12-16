@@ -7,7 +7,7 @@ Copyright (C) 2000 Matthias Ettrich <ettrich@kde.org>
 
 #include "startupdlg.h"
 #include <tqapplication.h>
-#include <layout.h>
+#include <tqlayout.h>
 #include <tqgroupbox.h>
 #include <tqvbuttongroup.h>
 #include <tqlabel.h>

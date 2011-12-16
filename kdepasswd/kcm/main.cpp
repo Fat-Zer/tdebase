@@ -20,7 +20,7 @@
  *
  */
 
-#include <layout.h>
+#include <tqlayout.h>
 #include <tqlabel.h>
 #include <tqlineedit.h>
 #include <tqbuttongroup.h>
@@ -28,7 +28,7 @@
 #include <tqpixmap.h>
 #include <tqcstring.h>
 #include <tqstringlist.h>
-#include <layout.h>
+#include <tqlayout.h>
 
 #include <kpushbutton.h>
 #include <kguiitem.h>
@@ -150,11 +150,11 @@ void KCMUserAccount::load()
 		KGlobal::dirs()->resourceDirs("data").last() + "kdm/faces/";
 
 	TQString fs = KCFGUserAccount::faceSource();
-	if (fs == TQString::fromLatin1("UserOnly"))
+	if (fs == TQString::tqfromLatin1("UserOnly"))
 		_facePerm = userOnly;
-	else if (fs == TQString::fromLatin1("PreferUser"))
+	else if (fs == TQString::tqfromLatin1("PreferUser"))
 		_facePerm = userFirst;
-	else if (fs == TQString::fromLatin1("PreferAdmin"))
+	else if (fs == TQString::tqfromLatin1("PreferAdmin"))
 		_facePerm = adminFirst;
 	else
 		_facePerm = adminOnly; // Admin Only

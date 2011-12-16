@@ -41,7 +41,7 @@
 #include <kmessagebox.h>
 #include <klistview.h>
 #include <klineedit.h>
-#include <layout.h>
+#include <tqlayout.h>
 #include <tqpushbutton.h>
 #include <tqdir.h>
 #include <tqtabwidget.h>
@@ -49,7 +49,7 @@
 #include <tqfile.h>
 #include <tqlabel.h>
 #include <tqvbox.h>
-#include <textedit.h>
+#include <tqtextedit.h>
 #include <tqregexp.h>
 
 #include <unistd.h>
@@ -101,7 +101,7 @@ IndexProgressDialog::IndexProgressDialog( TQWidget *parent )
   topLayout->setSpacing( spacingHint() );
 
   mLabel = new TQLabel( this );
-  mLabel->setAlignment( AlignHCenter );
+  mLabel->tqsetAlignment( AlignHCenter );
   topLayout->addWidget( mLabel );
 
   mProgressBar = new TQProgressBar( this );

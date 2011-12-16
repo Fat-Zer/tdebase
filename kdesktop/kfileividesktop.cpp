@@ -24,7 +24,7 @@
 #include <stdio.h>
 
 #include <tqcolor.h>
-#include <palette.h>
+#include <tqpalette.h>
 #include <tqstring.h>
 #include <tqpainter.h>
 #include <tqstyle.h>
@@ -73,15 +73,15 @@ void KFileIVIDesktop::calcRect( const TQString& _text )
 
     int spread = shadowThickness();
     TQRect itemTextRect = textRect();
-    TQRect itemRect = rect();
+    TQRect tqitemRect = rect();
 
     itemTextRect.setBottom( itemTextRect.bottom() + spread );
     itemTextRect.setRight( itemTextRect.right() + spread );
-    itemRect.setBottom( itemRect.bottom() + spread );
-    itemRect.setRight( itemRect.right() + spread );
+    tqitemRect.setBottom( tqitemRect.bottom() + spread );
+    tqitemRect.setRight( tqitemRect.right() + spread );
 
     setTextRect( itemTextRect );
-    setItemRect( itemRect );
+    setItemRect( tqitemRect );
 }
 
 void KFileIVIDesktop::paintItem( TQPainter *p, const TQColorGroup &cg)

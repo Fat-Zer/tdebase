@@ -171,8 +171,8 @@ public:
     void paintModified( TQPainter *p );
 
 public slots:
-    void repaint();
-    void repaint( bool erase );
+    void tqrepaint();
+    void tqrepaint( bool erase );
     void update();
 
     void setActive( bool yes );
@@ -218,7 +218,7 @@ protected:
     TQFontMetrics fontMetrics() const { return kas->fontMetrics(); }
 
     /** Gets the color group from the parent. */
-    const TQColorGroup &colorGroup() const { return kas->colorGroup(); }
+    const TQColorGroup &tqcolorGroup() const { return kas->tqcolorGroup(); }
 
     /** Factory method that creates a popup widget for the item. */
     virtual KasPopup *createPopup();

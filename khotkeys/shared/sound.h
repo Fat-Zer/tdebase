@@ -42,7 +42,7 @@ public:
 
 	inline float at(int pos) const
 	{
-		return (float)(data.at(pos))/max;
+		return (float)(data.tqat(pos))/max;
 	}
 
 	inline uint fs() const

@@ -17,7 +17,7 @@
  */
 
 #include <tqlabel.h>
-#include <layout.h>
+#include <tqlayout.h>
 #include <tqlistbox.h>
 #include <tqwhatsthis.h>
 #include <tqpushbutton.h>
@@ -47,7 +47,7 @@ void UALineEdit::keyPressEvent( TQKeyEvent* e )
   TQString keycode = e->text();
   if ( (key >= Qt::Key_Escape && key <= Qt::Key_Help) || key == Qt::Key_Period ||
        (cursorPosition() > 0 && key == Qt::Key_Minus) ||
-       (!keycode.isEmpty() && keycode.unicode()->isLetterOrNumber()) )
+       (!keycode.isEmpty() && keycode.tqunicode()->isLetterOrNumber()) )
   {
     KLineEdit::keyPressEvent(e);
     return;

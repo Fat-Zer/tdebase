@@ -20,7 +20,7 @@
 #include <tqpushbutton.h>
 #include <tqlineedit.h>
 #include <tqpopupmenu.h>
-#include <layout.h>
+#include <tqlayout.h>
 #include <tqlabel.h>
 #include <tqheader.h>
 
@@ -241,8 +241,8 @@ void Shortcut_trigger_widget::clear_data()
 
 void Shortcut_trigger_widget::capturedShortcut( const KShortcut& s_P )
     {
-    if( KKeyChooser::checkGlobalShortcutsConflict( s_P, true, topLevelWidget())
-        || KKeyChooser::checkStandardShortcutsConflict( s_P, true, topLevelWidget()))
+    if( KKeyChooser::checkGlobalShortcutsConflict( s_P, true, tqtopLevelWidget())
+        || KKeyChooser::checkStandardShortcutsConflict( s_P, true, tqtopLevelWidget()))
         return;
     // KHotKeys::Module::changed()
     module->changed();

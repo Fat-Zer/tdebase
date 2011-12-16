@@ -23,8 +23,8 @@
 #include "konq_sound.h"
 #include "konq_filetip.h"
 
-#include <clipboard.h>
-#include <layout.h>
+#include <tqclipboard.h>
+#include <tqlayout.h>
 #include <tqtimer.h>
 #include <tqpainter.h>
 #include <tqtooltip.h>
@@ -151,7 +151,7 @@ KonqIconViewWidget::KonqIconViewWidget( TQWidget * parent, const char * name, WF
     m_LineupMode = LineupBoth;
     // emit our signals
     slotSelectionChanged();
-    m_iconPositionGroupPrefix = TQString::fromLatin1( "IconPosition::" );
+    m_iconPositionGroupPrefix = TQString::tqfromLatin1( "IconPosition::" );
     KonqUndoManager::incRef();
 }
 
@@ -308,7 +308,7 @@ void KonqIconViewWidget::slotOnItem( TQIconViewItem *_item )
                         if (!hasPixmap && backgroundMode() != NoBackground)
                            d->m_movie->setBackgroundColor( viewport()->backgroundColor() );
                         d->m_movie->connectUpdate( this, TQT_SLOT( slotMovieUpdate(const TQRect &) ) );
-                        d->m_movie->connecStatus( TQT_TQOBJECT(this), TQT_SLOT( slotMovieStatus(int) ) );
+                        d->m_movie->connectqStatus( TQT_TQOBJECT(this), TQT_SLOT( slotMovieStatus(int) ) );
                         d->movieFileName = d->pActiveItem->mouseOverAnimation();
                         d->pActiveItem->setAnimated( true );
                     }
@@ -331,7 +331,7 @@ void KonqIconViewWidget::slotOnItem( TQIconViewItem *_item )
         else // No change in current item
         {
             // No effect. If we want to underline on hover, we should
-            // force the IVI to repaint here, though!
+            // force the IVI to tqrepaint here, though!
             d->pActiveItem = 0L;
             d->pFileTip->setItem( 0L );
         }
@@ -349,7 +349,7 @@ void KonqIconViewWidget::slotOnItem( TQIconViewItem *_item )
         d->pSoundPlayer->mimeTypes().contains(
             item->item()->mimetype())
         && KGlobalSettings::showFilePreview(item->item()->url())
-        && topLevelWidget() == kapp->activeWindow())
+        && tqtopLevelWidget() == kapp->activeWindow())
     {
         d->pSoundItem = item;
         d->bSoundItemClicked = false;
@@ -650,10 +650,10 @@ void KonqIconViewWidget::setIcons( int size, const TQStringList& stopImagePrevie
 
     // Disable repaints that can be triggered by ivi->setIcon(). Since icons are
     // resized in-place, if the icon size is increasing it can happens that the right
-    // or bottom icons exceed the size of the viewport.. here we prevent the repaint
+    // or bottom icons exceed the size of the viewport.. here we prevent the tqrepaint
     // event that will be triggered in that case.
     bool prevUpdatesState = viewport()->isUpdatesEnabled();
-    viewport()->setUpdatesEnabled( false );
+    viewport()->tqsetUpdatesEnabled( false );
 
     // Do this even if size didn't change, since this is used by refreshMimeTypes...
     for ( TQIconViewItem *it = firstItem(); it; it = it->nextItem() ) {
@@ -673,11 +673,11 @@ void KonqIconViewWidget::setIcons( int size, const TQStringList& stopImagePrevie
     }
 
     // Restore viewport update to previous state
-    viewport()->setUpdatesEnabled( prevUpdatesState );
+    viewport()->tqsetUpdatesEnabled( prevUpdatesState );
 
     if ( ( sizeChanged || previewSizeChanged || oldGridX != gridX() ||
          !stopImagePreviewFor.isEmpty() ) && autoArrange() )
-        arrangeItemsInGrid( true ); // take new grid into account and repaint
+        arrangeItemsInGrid( true ); // take new grid into account and tqrepaint
     else
         viewport()->update(); //Repaint later..
 }
@@ -995,7 +995,7 @@ void KonqIconViewWidget::contentsDragEnterEvent( TQDragEnterEvent *e )
 {
     if ( e->provides( "text/uri-list" ) )
     {
-        TQByteArray payload = e->encodedData( "text/uri-list" );
+        TQByteArray payload = e->tqencodedData( "text/uri-list" );
         if ( !payload.size() )
             kdError() << "Empty data !" << endl;
         // Cache the URLs, since we need them every time we move over a file
@@ -1147,14 +1147,14 @@ void KonqIconViewWidget::cutSelection()
     kdDebug(1203) << " -- KonqIconViewWidget::cutSelection() -- " << endl;
     KonqIconDrag * obj = konqDragObject( /* no parent ! */ );
     obj->setMoveSelection( true );
-    TQApplication::clipboard()->setData( obj );
+    TQApplication::tqclipboard()->setData( obj );
 }
 
 void KonqIconViewWidget::copySelection()
 {
     kdDebug(1203) << " -- KonqIconViewWidget::copySelection() -- " << endl;
     KonqIconDrag * obj = konqDragObject( /* no parent ! */ );
-    TQApplication::clipboard()->setData( obj );
+    TQApplication::tqclipboard()->setData( obj );
 }
 
 void KonqIconViewWidget::pasteSelection()
@@ -1221,7 +1221,7 @@ void KonqIconViewWidget::contentsMouseMoveEvent( TQMouseEvent *e )
         // The following call is SO expensive (the ::widgetAt call eats up to 80%
         // of the mouse move cpucycles!), so it's mandatory to place that function
         // under strict checks, such as d->pSoundPlayer->isPlaying()
-        if ( TQApplication::widgetAt( TQCursor::pos() ) != topLevelWidget() )
+        if ( TQApplication::widgetAt( TQCursor::pos() ) != tqtopLevelWidget() )
         {
             if (d->pSoundPlayer)
                 d->pSoundPlayer->stop();
@@ -1249,7 +1249,7 @@ void KonqIconViewWidget::contentsDropEvent( TQDropEvent * ev )
   if ( !i && (ev->action() == TQDropEvent::Copy || ev->action() == TQDropEvent::Link)
           && ev->source() && ev->source() == viewport())
   {
-    // First we need to call TQIconView though, to clear the drag shape
+    // First we need to call TQIconView though, to clear the drag tqshape
     bool bMovable = itemsMovable();
     setItemsMovable(false); // hack ? call it what you want :-)
     KIconView::contentsDropEvent( ev );
@@ -1488,7 +1488,7 @@ void KonqIconViewWidget::insertInGrid(TQIconViewItem *item)
         y = QMAX(y, i->y() + i->height());
     }
 
-    TQMemArray<TQRect> rects = r.rects();
+    TQMemArray<TQRect> rects = r.tqrects();
     TQMemArray<TQRect>::Iterator it = rects.begin();
     bool foundPlace = FALSE;
     for (; it != rects.end(); ++it)
@@ -1730,12 +1730,12 @@ void KonqIconViewWidget::lineupIcons()
         }
     }
 
-    // repaint
+    // tqrepaint
     if ( newItemWidth )
         updateContents();
     else {
         // Repaint only repaintRegion...
-        TQMemArray<TQRect> rects = repaintRegion.rects();
+        TQMemArray<TQRect> rects = repaintRegion.tqrects();
         for ( uint l = 0; l < rects.count(); l++ ) {
             kdDebug( 1203 ) << "Repainting (" << rects[l].x() << ","
                             << rects[l].y() << ")\n";
@@ -1794,7 +1794,7 @@ void KonqIconViewWidget::lineupIcons( TQIconView::Arrangement arrangement )
     }
 
     // Repaint only repaintRegion...
-    TQMemArray<TQRect> rects = repaintRegion.rects();
+    TQMemArray<TQRect> rects = repaintRegion.tqrects();
     for ( uint l = 0; l < rects.count(); l++ ) {
         kdDebug( 1203 ) << "Repainting (" << rects[l].x() << ","
                         << rects[l].y() << ")\n";

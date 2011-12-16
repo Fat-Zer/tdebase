@@ -57,7 +57,7 @@
 #include <tqvbox.h>
 #include <tqlabel.h>
 #include <tqfile.h>
-#include <textstream.h>
+#include <tqtextstream.h>
 
 #include <tdeversion.h>
 #include <klocale.h>

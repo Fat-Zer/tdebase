@@ -37,7 +37,7 @@
 #include <tqcombobox.h>
 #include <tqvbuttongroup.h>
 #include <tqstyle.h>
-#include <layout.h>
+#include <tqlayout.h>
 #include <tqaccel.h>
 #include <tqpopupmenu.h>
 
@@ -75,10 +75,10 @@ KDMAdmin::KDMAdmin( const TQString &user, TQWidget *_parent )
     box->addWidget( new KSeparator( KSeparator::HLine, this ) );
 
     okButton = new KPushButton( KStdGuiItem::ok(), this );
-    okButton->setSizePolicy( fp );
+    okButton->tqsetSizePolicy( fp );
     okButton->setDefault( true );
     cancelButton = new KPushButton( KStdGuiItem::cancel(), this );
-    cancelButton->setSizePolicy( fp );
+    cancelButton->tqsetSizePolicy( fp );
 
     hlay = new TQHBoxLayout( box );
     hlay->addStretch( 1 );
@@ -103,7 +103,7 @@ void
 KDMAdmin::slotActivatePlugMenu()
 {
     TQPopupMenu *cmnu = verify->getPlugMenu();
-    TQSize sh( cmnu->sizeHint() / 2 );
+    TQSize sh( cmnu->tqsizeHint() / 2 );
     cmnu->exec( geometry().center() - TQPoint( sh.width(), sh.height() ) );
 }
 

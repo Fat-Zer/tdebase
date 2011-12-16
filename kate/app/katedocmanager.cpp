@@ -43,7 +43,7 @@
 #include <twin.h>
 
 #include <tqdatetime.h>
-#include <textcodec.h>
+#include <tqtextcodec.h>
 #include <tqprogressdialog.h>
 
 KateDocManager::KateDocManager (TQObject *parent)
@@ -69,7 +69,7 @@ KateDocManager::~KateDocManager ()
 {
   // save config
   if (!m_docList.isEmpty())
-    m_docList.at(0)->writeConfig(KateApp::self()->config());
+    m_docList.tqat(0)->writeConfig(KateApp::self()->config());
 
   if (m_saveMetaInfos)
   {
@@ -86,7 +86,7 @@ KateDocManager::~KateDocManager ()
       {
         m_metaInfos->setGroup(*it);
         TQDateTime last = m_metaInfos->readDateTimeEntry("Time", def);
-        if (last.daysTo(TQDateTime::currentDateTime()) > m_daysMetaInfos)
+        if (last.daysTo(TQDateTime::tqcurrentDateTime()) > m_daysMetaInfos)
           m_metaInfos->deleteGroup(*it);
       }
       delete def;
@@ -150,7 +150,7 @@ void KateDocManager::deleteDoc (Kate::Document *doc)
 
 Kate::Document *KateDocManager::document (uint n)
 {
-  return m_docList.at(n);
+  return m_docList.tqat(n);
 }
 
 Kate::Document *KateDocManager::activeDocument ()
@@ -234,7 +234,7 @@ bool KateDocManager::isOpen(KURL url)
 Kate::Document *KateDocManager::openURL (const KURL& url,const TQString &encoding, uint *id, bool isTempFile)
 {
   // special handling if still only the first initial doc is there
-  if (!documentList().isEmpty() && (documentList().count() == 1) && (!documentList().at(0)->isModified() && documentList().at(0)->url().isEmpty()))
+  if (!documentList().isEmpty() && (documentList().count() == 1) && (!documentList().tqat(0)->isModified() && documentList().tqat(0)->url().isEmpty()))
   {
     Kate::Document* doc = documentList().getFirst();
 
@@ -354,7 +354,7 @@ bool KateDocManager::closeAllDocuments(bool closeURL)
   }
 
   while (!docs.isEmpty() && res)
-    if (! closeDocument(docs.at(0),closeURL) )
+    if (! closeDocument(docs.tqat(0),closeURL) )
       res = false;
     else
       docs.remove ((uint)0);
@@ -364,7 +364,7 @@ bool KateDocManager::closeAllDocuments(bool closeURL)
     KateApp::self()->mainWindow(i)->viewManager()->setViewActivationBlocked(false);
 
     for (uint s=0; s < KateApp::self()->mainWindow(i)->viewManager()->containers()->count(); s++)
-      KateApp::self()->mainWindow(i)->viewManager()->containers()->at(s)->activateView (m_docList.at(0)->documentNumber());
+      KateApp::self()->mainWindow(i)->viewManager()->containers()->tqat(s)->activateView (m_docList.tqat(0)->documentNumber());
   }
 
   return res;
@@ -583,7 +583,7 @@ void KateDocManager::saveMetaInfos(Kate::Document *doc)
     m_metaInfos->setGroup(doc->url().prettyURL());
     doc->writeSessionConfig(m_metaInfos);
     m_metaInfos->writeEntry("MD5", (const char *)md5);
-    m_metaInfos->writeEntry("Time", TQDateTime::currentDateTime());
+    m_metaInfos->writeEntry("Time", TQDateTime::tqcurrentDateTime());
     m_metaInfos->sync();
   }
 }

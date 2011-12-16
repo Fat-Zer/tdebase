@@ -53,7 +53,7 @@
 #include <tqfile.h>
 #include <tqptrlist.h>
 #include <tqstring.h>
-#include <textstream.h>
+#include <tqtextstream.h>
 
 class Device {
 public:

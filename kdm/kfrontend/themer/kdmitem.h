@@ -96,7 +96,7 @@ public:
 
 	/**
 	 * Fixup the geometry of an item and its children (even if fixed
-	 * or boxed ones). Note that this will generate repaint signals
+	 * or boxed ones). Note that this will generate tqrepaint signals
 	 * when needed. The default implementation should fit all needs.
 	 */
 	virtual void setGeometry( const TQRect &newGeometry, bool force );
@@ -109,7 +109,7 @@ public:
 	void paint( TQPainter *painter, const TQRect &boundaries );
 
 	/**
-	 * Update representation of contents and repaint.
+	 * Update representation of contents and tqrepaint.
 	 */
 	virtual void update();
 
@@ -120,7 +120,7 @@ public:
 	void mouseEvent( int x, int y, bool pressed = false, bool released = false );
 
 	/**
-	 * Similar to sizeHint(..), this returns the area of the item
+	 * Similar to tqsizeHint(..), this returns the area of the item
 	 * given the @p parentGeometry. The default implementation
 	 * takes into account geometric constraints and layoutings.
 	 * @param parentGeometry the geometry of the caller item or a
@@ -181,7 +181,7 @@ protected:
 	 * @return (-1,-1) if no size can be determined (so it should
 	 * default to parent's size).
 	 */
-	virtual TQSize sizeHint();
+	virtual TQSize tqsizeHint();
 
 	/**
 	 * Low level graphical function to paint the item.
@@ -195,7 +195,7 @@ protected:
 
 	/**
 	 * Called when item changes its 'state' variable. This must
-	 * handle item's repaint.
+	 * handle item's tqrepaint.
 	 */
 	virtual void statusChanged();
 

@@ -26,7 +26,7 @@
 #include <tqlabel.h>
 #include <tqpushbutton.h>
 #include <tqcombobox.h>
-#include <layout.h>
+#include <tqlayout.h>
 
 #include <ksimpleconfig.h>
 #include <kapplication.h>

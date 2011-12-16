@@ -14,8 +14,8 @@
 
 #include <tqdir.h>
 #include <tqlabel.h>
-#include <layout.h>
-#include <textedit.h>
+#include <tqlayout.h>
+#include <tqtextedit.h>
 
 #include "installer.h"
 
@@ -99,7 +99,7 @@ SplashInstaller::SplashInstaller (TQWidget *aParent, const char *aName, bool aIn
   hbox->setStretchFactor( leftbox, 1 );
 
   mThemesList = new ThemeListBox(this);
-  mThemesList->setSizePolicy( TQSizePolicy::Preferred, TQSizePolicy::Expanding );
+  mThemesList->tqsetSizePolicy( TQSizePolicy::Preferred, TQSizePolicy::Expanding );
   connect(mThemesList, TQT_SIGNAL(highlighted(int)), TQT_SLOT(slotSetTheme(int)));
   connect(mThemesList, TQT_SIGNAL(filesDropped(const KURL::List&)), TQT_SLOT(slotFilesDropped(const KURL::List&)));
   leftbox->addWidget(mThemesList);
@@ -120,16 +120,16 @@ SplashInstaller::SplashInstaller (TQWidget *aParent, const char *aName, bool aIn
   hbox->setStretchFactor( rightbox, 3 );
 
   mPreview = new TQLabel(this);
-  mPreview->setSizePolicy( TQSizePolicy::Expanding, TQSizePolicy::Expanding );
+  mPreview->tqsetSizePolicy( TQSizePolicy::Expanding, TQSizePolicy::Expanding );
   mPreview->setFrameStyle(TQFrame::Panel|TQFrame::Sunken);
   mPreview->setMinimumSize(TQSize(320,240));
-  mPreview->setAlignment(Qt::AlignHCenter|Qt::AlignVCenter);
+  mPreview->tqsetAlignment(Qt::AlignHCenter|Qt::AlignVCenter);
   rightbox->addWidget(mPreview);
   rightbox->setStretchFactor( mPreview, 3 );
 
   mText = new TQTextEdit(this);
-  mText->setSizePolicy( TQSizePolicy::Expanding, TQSizePolicy::Preferred );
-  mText->setMinimumSize(mText->sizeHint());
+  mText->tqsetSizePolicy( TQSizePolicy::Expanding, TQSizePolicy::Preferred );
+  mText->setMinimumSize(mText->tqsizeHint());
   mText->setReadOnly(true);
   rightbox->addWidget(mText);
   rightbox->setStretchFactor( mText, 1 );

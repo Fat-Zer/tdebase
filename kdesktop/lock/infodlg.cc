@@ -25,7 +25,7 @@
 #include <dcopref.h>
 #include <kmessagebox.h>
 
-#include <layout.h>
+#include <tqlayout.h>
 #include <tqpushbutton.h>
 #include <tqmessagebox.h>
 #include <tqsimplerichtext.h>
@@ -86,7 +86,7 @@ InfoDlg::InfoDlg(LockProcess *parent)
     KUser user;
 
     mStatusLabel = new TQLabel( "<b> </b>", frame );
-    mStatusLabel->setAlignment( TQLabel::AlignCenter );
+    mStatusLabel->tqsetAlignment( TQLabel::AlignCenter );
 
     TQVBoxLayout *unlockDialogLayout = new TQVBoxLayout( this );
     unlockDialogLayout->addWidget( frame );

@@ -19,7 +19,7 @@
 */
 
 #include <tqlabel.h>
-#include <layout.h>
+#include <tqlayout.h>
 #include <tqspinbox.h>
 
 #include <kaccelmanager.h>
@@ -65,7 +65,7 @@ KSGAppletSettings::KSGAppletSettings( TQWidget *parent, const char *name )
   topLayout->addWidget( mInterval, 2, 1 );
   label->setBuddy( mInterval );
 
-  resize( TQSize( 250, 130 ).expandedTo( minimumSizeHint() ) );
+  resize( TQSize( 250, 130 ).expandedTo( tqminimumSizeHint() ) );
 
   KAcceleratorManager::manage( page );
 }

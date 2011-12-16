@@ -56,7 +56,7 @@ JoyWidget::JoyWidget(TQWidget *parent, const char *name)
     TQLabel *icon = new TQLabel(messageBox);
     icon->setPixmap(KGlobal::iconLoader()->loadIcon("messagebox_warning", KIcon::NoGroup,
                                                     KIcon::SizeMedium, KIcon::DefaultState, 0, true));
-    icon->setFixedSize(icon->sizeHint());
+    icon->setFixedSize(icon->tqsizeHint());
     message = new TQLabel(messageBox);
     messageBox->hide();
   }
@@ -170,7 +170,7 @@ void JoyWidget::init()
 
     // we found one
 
-    device->insertItem(TQString("%1 (%2)").arg(joy->text()).arg(joy->device()));
+    device->insertItem(TQString("%1 (%2)").tqarg(joy->text()).tqarg(joy->device()));
 
     // display values for first device
     if ( first )

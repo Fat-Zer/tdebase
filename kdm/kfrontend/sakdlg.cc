@@ -26,7 +26,7 @@
 #include <kmessagebox.h>
 #include <kdialog.h>
 
-#include <layout.h>
+#include <tqlayout.h>
 #include <tqpushbutton.h>
 #include <tqmessagebox.h>
 #include <tqsimplerichtext.h>
@@ -108,7 +108,7 @@ SAKDlg::SAKDlg(TQWidget *parent)
     KUser user;
 
     mStatusLabel = new TQLabel( "<b> </b>", frame );
-    mStatusLabel->setAlignment( TQLabel::AlignVCenter );
+    mStatusLabel->tqsetAlignment( TQLabel::AlignVCenter );
 
     TQVBoxLayout *unlockDialogLayout = new TQVBoxLayout( this );
     unlockDialogLayout->addWidget( frame );
@@ -157,8 +157,8 @@ void SAKDlg::handleInputPipe(void) {
 	currentDisplay = TQString(getenv("DISPLAY"));
 	currentDisplay = currentDisplay.replace(":", "");
 	displayNumber = currentDisplay.toInt();
-	mPipeFilename = TQString(FIFO_SAK_FILE).arg(displayNumber);
-	::unlink((TQString(FIFO_FILE).arg(displayNumber)).ascii());
+	mPipeFilename = TQString(FIFO_SAK_FILE).tqarg(displayNumber);
+	::unlink((TQString(FIFO_FILE).tqarg(displayNumber)).ascii());
 
 	/* Create the FIFOs if they do not exist */
 	umask(0);

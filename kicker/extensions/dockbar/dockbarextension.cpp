@@ -60,7 +60,7 @@ DockBarExtension::DockBarExtension(const TQString& configFile, Type type,
     twin_module = new KWinModule(TQT_TQOBJECT(this));
     connect( twin_module, TQT_SIGNAL( windowAdded(WId) ), TQT_SLOT( windowAdded(WId) ) );
     setMinimumSize(DockContainer::sz(), DockContainer::sz());
-    setSizePolicy(TQSizePolicy::Expanding, TQSizePolicy::Expanding);
+    tqsetSizePolicy(TQSizePolicy::Expanding, TQSizePolicy::Expanding);
     loadContainerConfig();
 }
 
@@ -77,7 +77,7 @@ DockBarExtension::~DockBarExtension()
     if (dragging_container) delete dragging_container;
 }
 
-TQSize DockBarExtension::sizeHint(Position p, TQSize) const
+TQSize DockBarExtension::tqsizeHint(Position p, TQSize) const
 {
     if (p == Left || p == Right)
 	return TQSize(DockContainer::sz(), DockContainer::sz() * containers.count());
@@ -335,7 +335,7 @@ int DockBarExtension::findContainerAtPoint(const TQPoint& p)
          it != containers.constEnd();
          ++it, ++i)
     {
-        if ((*it)->geometry().contains(p))
+        if ((*it)->tqgeometry().contains(p))
         {
             return i;
         }
@@ -350,7 +350,7 @@ void DockBarExtension::mousePressEvent(TQMouseEvent *e ) {
         mclic_pos = e->pos();
     } else if (e->button() == Qt::RightButton) {
         int pos = findContainerAtPoint(e->pos());
-        if (pos != -1) containers.at(pos)->popupMenu(e->globalPos());
+        if (pos != -1) containers.tqat(pos)->popupMenu(e->globalPos());
     }
 }
 
@@ -374,7 +374,7 @@ void DockBarExtension::mouseMoveEvent(TQMouseEvent *e) {
             int pos = findContainerAtPoint(e->pos());
             original_container = 0;
             if (pos > -1) {
-                original_container = containers.at(pos);
+                original_container = containers.tqat(pos);
                 mclic_dock_pos = e->pos() - original_container->pos();
                 dragged_container_original_pos = pos;
                 dragging_container = new DockContainer(original_container->command(), 0, original_container->resName(), original_container->resClass(), true);

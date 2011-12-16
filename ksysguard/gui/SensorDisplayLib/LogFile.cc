@@ -51,7 +51,7 @@ LogFile::LogFile(TQWidget *parent, const char *name, const TQString& title)
 
 LogFile::~LogFile(void)
 {
-	sendRequest(sensors().at(0)->hostName(), TQString("logfile_unregister %1" ).arg(logFileID), 43);
+	sendRequest(sensors().tqat(0)->hostName(), TQString("logfile_unregister %1" ).arg(logFileID), 43);
 }
 
 bool
@@ -64,10 +64,10 @@ LogFile::addSensor(const TQString& hostName, const TQString& sensorName, const T
 
 	TQString sensorID = sensorName.right(sensorName.length() - (sensorName.findRev("/") + 1));
 
-	sendRequest(sensors().at(0)->hostName(), TQString("logfile_register %1" ).arg(sensorID), 42);
+	sendRequest(sensors().tqat(0)->hostName(), TQString("logfile_register %1" ).arg(sensorID), 42);
 
 	if (title.isEmpty())
-		setTitle(sensors().at(0)->hostName() + ":" + sensorID);
+		setTitle(sensors().tqat(0)->hostName() + ":" + sensorID);
 	else
 		setTitle(title);
 
@@ -79,7 +79,7 @@ LogFile::addSensor(const TQString& hostName, const TQString& sensorName, const T
 
 void LogFile::configureSettings(void)
 {
-	TQColorGroup cgroup = monitor->colorGroup();
+	TQColorGroup cgroup = monitor->tqcolorGroup();
 
 	lfs = new LogFileSettings(this);
 	Q_CHECK_PTR(lfs);
@@ -147,7 +147,7 @@ void LogFile::settingsRuleListSelected(int index)
 
 void LogFile::applySettings(void)
 {
-	TQColorGroup cgroup = monitor->colorGroup();
+	TQColorGroup cgroup = monitor->tqcolorGroup();
 
 	cgroup.setColor(TQColorGroup::Text, lfs->fgColor->color());
 	cgroup.setColor(TQColorGroup::Base, lfs->bgColor->color());
@@ -166,7 +166,7 @@ void LogFile::applySettings(void)
 void
 LogFile::applyStyle()
 {
-	TQColorGroup cgroup = monitor->colorGroup();
+	TQColorGroup cgroup = monitor->tqcolorGroup();
 
 	cgroup.setColor(TQColorGroup::Text, KSGRD::Style->firstForegroundColor());
 	cgroup.setColor(TQColorGroup::Base, KSGRD::Style->backgroundColor());
@@ -179,7 +179,7 @@ bool
 LogFile::restoreSettings(TQDomElement& element)
 {
 	TQFont font;
-	TQColorGroup cgroup = monitor->colorGroup();
+	TQColorGroup cgroup = monitor->tqcolorGroup();
 
 	cgroup.setColor(TQColorGroup::Text, restoreColor(element, "textColor", Qt::green));
 	cgroup.setColor(TQColorGroup::Base, restoreColor(element, "backgroundColor", Qt::black));
@@ -206,14 +206,14 @@ LogFile::restoreSettings(TQDomElement& element)
 bool
 LogFile::saveSettings(TQDomDocument& doc, TQDomElement& element, bool save)
 {
-	element.setAttribute("hostName", sensors().at(0)->hostName());
-	element.setAttribute("sensorName", sensors().at(0)->name());
-	element.setAttribute("sensorType", sensors().at(0)->type());
+	element.setAttribute("hostName", sensors().tqat(0)->hostName());
+	element.setAttribute("sensorName", sensors().tqat(0)->name());
+	element.setAttribute("sensorType", sensors().tqat(0)->type());
 
 	element.setAttribute("font", monitor->font().toString());
 
-	saveColor(element, "textColor", monitor->colorGroup().text());
-	saveColor(element, "backgroundColor", monitor->colorGroup().base());
+	saveColor(element, "textColor", monitor->tqcolorGroup().text());
+	saveColor(element, "backgroundColor", monitor->tqcolorGroup().base());
 
 	for (TQStringList::Iterator it = filterRules.begin();
 		 it != filterRules.end(); it++)
@@ -234,8 +234,8 @@ LogFile::saveSettings(TQDomDocument& doc, TQDomElement& element, bool save)
 void
 LogFile::updateMonitor()
 {
-	sendRequest(sensors().at(0)->hostName(),
-				TQString("%1 %2" ).arg(sensors().at(0)->name()).arg(logFileID), 19);
+	sendRequest(sensors().tqat(0)->hostName(),
+				TQString("%1 %2" ).arg(sensors().tqat(0)->name()).arg(logFileID), 19);
 }
 
 void

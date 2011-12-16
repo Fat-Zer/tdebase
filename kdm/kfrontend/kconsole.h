@@ -24,7 +24,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #ifndef KCONSOLE_H
 #define KCONSOLE_H
 
-#include <textedit.h>
+#include <tqtextedit.h>
 
 class TQSocketNotifier;
 class KPty;

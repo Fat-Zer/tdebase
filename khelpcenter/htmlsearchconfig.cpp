@@ -18,7 +18,7 @@
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
-#include <layout.h>
+#include <tqlayout.h>
 #include <tqwhatsthis.h>
 
 #include <kdebug.h>
@@ -51,15 +51,15 @@ HtmlSearchConfig::HtmlSearchConfig(TQWidget *parent, const char *name)
   TQLabel *l = new TQLabel(i18n("The fulltext search feature makes use of the "
                   "ht://dig HTML search engine. "
                   "You can get ht://dig at the"), gb);
-  l->setAlignment(TQLabel::WordBreak);
-  l->setMinimumSize(l->sizeHint());
+  l->tqsetAlignment(TQLabel::WordBreak);
+  l->setMinimumSize(l->tqsizeHint());
   grid->addMultiCellWidget(l, 1, 1, 0, 1);
   TQWhatsThis::add( gb, i18n( "Information about where to get the ht://dig package." ) );
 
   KURLLabel *url = new KURLLabel(gb);
   url->setURL("http://www.htdig.org");
   url->setText(i18n("ht://dig home page"));
-  url->setAlignment(TQLabel::AlignHCenter);
+  url->tqsetAlignment(TQLabel::AlignHCenter);
   grid->addMultiCellWidget(url, 2,2, 0, 1);
   connect(url, TQT_SIGNAL(leftClickedURL(const TQString&)),
       this, TQT_SLOT(urlClicked(const TQString&)));

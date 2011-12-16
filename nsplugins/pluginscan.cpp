@@ -34,7 +34,7 @@
 
 #include <tqdir.h>
 #include <tqfile.h>
-#include <textstream.h>
+#include <tqtextstream.h>
 #include <tqregexp.h>
 #include <tqbuffer.h>
 
@@ -251,14 +251,14 @@ int tryCheck(int write_fd, const TQString &absFile)
         NPError err = func_GetValue( 0, NPPVpluginNameString,
                                      (void*)&buf );
         if ( err==NPERR_NO_ERROR )
-            name = TQString::fromLatin1( buf );
+            name = TQString::tqfromLatin1( buf );
         kdDebug() << "name = " << name << endl;
 
         // get name
         NPError nperr = func_GetValue( 0, NPPVpluginDescriptionString,
                                      (void*)&buf );
         if ( nperr==NPERR_NO_ERROR )
-            description = TQString::fromLatin1( buf );
+            description = TQString::tqfromLatin1( buf );
         kdDebug() << "description = " << description << endl;
     }
     else
@@ -346,7 +346,7 @@ void scanDirectory( TQString dir, TQStringList &mimeInfoList,
         // open the library and ask for the mimetype
         kdDebug(1433) << " - opening " << absFile << endl;
 
-        cache.device()->flush();
+        cache.tqdevice()->flush();
         // fork, so that a crash in the plugin won't stop the scanning of other plugins
         int pipes[2];
         if (pipe(pipes) != 0) continue;

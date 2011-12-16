@@ -49,7 +49,7 @@ KDecorationPreview::KDecorationPreview( TQWidget* parent, const char* name )
                                    "Most probably there\n"
                                    "was a problem loading the plugin." ), this );
 
-    no_preview->setAlignment( AlignCenter );
+    no_preview->tqsetAlignment( AlignCenter );
 
     setMinimumSize( 100, 100 );
     no_preview->resize( size());
@@ -127,15 +127,15 @@ void KDecorationPreview::positionPreviews()
 
     // Resize the active window
     size = TQSize( width() - xoffset, height() - titleBarHeight )
-                .expandedTo( deco[Active]->minimumSize() );
+                .expandedTo( deco[Active]->tqminimumSize() );
     geometry = TQRect( TQPoint( 0, titleBarHeight ), size );
-    deco[Active]->widget()->setGeometry( TQStyle::visualRect( geometry, this ) );
+    deco[Active]->widget()->setGeometry( TQStyle::tqvisualRect( geometry, this ) );
 
     // Resize the inactive window
     size = TQSize( width() - xoffset, height() - titleBarHeight )
-                .expandedTo( deco[Inactive]->minimumSize() );
+                .expandedTo( deco[Inactive]->tqminimumSize() );
     geometry = TQRect( TQPoint( xoffset, 0 ), size );
-    deco[Inactive]->widget()->setGeometry( TQStyle::visualRect( geometry, this ) );
+    deco[Inactive]->widget()->setGeometry( TQStyle::tqvisualRect( geometry, this ) );
     }
 
 void KDecorationPreview::setPreviewMask( const TQRegion& reg, int mode, bool active )
@@ -150,7 +150,7 @@ void KDecorationPreview::setPreviewMask( const TQRegion& reg, int mode, bool act
         }
     else
         {
-        TQMemArray< TQRect > rects = reg.rects();
+        TQMemArray< TQRect > rects = reg.tqrects();
         XRectangle* xrects = new XRectangle[ rects.count() ];
         for( unsigned int i = 0;
              i < rects.count();
@@ -166,7 +166,7 @@ void KDecorationPreview::setPreviewMask( const TQRegion& reg, int mode, bool act
         delete[] xrects;
         }
     if( active )
-        mask = reg; // keep shape of the active window for unobscuredRegion()
+        mask = reg; // keep tqshape of the active window for unobscuredRegion()
     }
 
 TQRect KDecorationPreview::windowGeometry( bool active ) const

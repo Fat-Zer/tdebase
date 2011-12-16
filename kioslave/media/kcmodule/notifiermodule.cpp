@@ -21,7 +21,7 @@
 
 #include <klocale.h>
 
-#include <layout.h>
+#include <tqlayout.h>
 #include <kcombobox.h>
 #include <kpushbutton.h>
 #include <kstdguiitem.h>

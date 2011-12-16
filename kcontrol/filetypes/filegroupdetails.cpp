@@ -17,7 +17,7 @@
 */
 #include "filegroupdetails.h"
 #include "typeslistitem.h"
-#include <layout.h>
+#include <tqlayout.h>
 #include <tqvbuttongroup.h>
 #include <tqradiobutton.h>
 #include <tqwhatsthis.h>

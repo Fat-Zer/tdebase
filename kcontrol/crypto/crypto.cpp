@@ -39,7 +39,7 @@
 #include <tqhbuttongroup.h>
 #include <tqhgroupbox.h>
 #include <tqlabel.h>
-#include <layout.h>
+#include <tqlayout.h>
 #include <tqpushbutton.h>
 #include <tqradiobutton.h>
 #include <tqregexp.h>
@@ -842,7 +842,7 @@ TQString whatstr;
   tabs->addTab(tabSSLCOpts, i18n("Validation Options"));
 #endif
 
-  tabs->resize(tabs->sizeHint());
+  tabs->resize(tabs->tqsizeHint());
   load();
 }
 
@@ -1500,7 +1500,7 @@ TQString iss = TQString();
          TQPalette cspl;
          iss = cert->getIssuer();
          cspl = validFrom->palette();
-         if (TQDateTime::currentDateTime(Qt::UTC) < cert->getQDTNotBefore()) {
+         if (TQDateTime::tqcurrentDateTime(Qt::UTC) < cert->getQDTNotBefore()) {
             cspl.setColor(TQColorGroup::Foreground, TQColor(196,33,21));
          } else {
             cspl.setColor(TQColorGroup::Foreground, TQColor(42,153,59));
@@ -1508,7 +1508,7 @@ TQString iss = TQString();
          validFrom->setPalette(cspl);
 
          cspl = validUntil->palette();
-         if (TQDateTime::currentDateTime(Qt::UTC) > cert->getQDTNotAfter()) {
+         if (TQDateTime::tqcurrentDateTime(Qt::UTC) > cert->getQDTNotAfter()) {
             cspl.setColor(TQColorGroup::Foreground, TQColor(196,33,21));
          } else {
             cspl.setColor(TQColorGroup::Foreground, TQColor(42,153,59));
@@ -1518,7 +1518,7 @@ TQString iss = TQString();
          validFrom->setText(cert->getNotBefore());
          validUntil->setText(cert->getNotAfter());
          untilDate->setText(x ? KGlobal::locale()->formatDateTime(x->getExpires())
-                              : KGlobal::locale()->formatDateTime(TQDateTime::currentDateTime(Qt::UTC)));
+                              : KGlobal::locale()->formatDateTime(TQDateTime::tqcurrentDateTime(Qt::UTC)));
          untilDate->setEnabled(x && !x->isPermanent());
          pHash->setText(cert->getMD5DigestText());
          delete cert;
@@ -1738,7 +1738,7 @@ TQString iss;
    TQPalette cspl;
    KSSLCertificate *cert = pkcs->getCertificate();
    cspl = yValidFrom->palette();
-   if (TQDateTime::currentDateTime(Qt::UTC) < cert->getQDTNotBefore()) {
+   if (TQDateTime::tqcurrentDateTime(Qt::UTC) < cert->getQDTNotBefore()) {
 	   cspl.setColor(TQColorGroup::Foreground, TQColor(196,33,21));
    } else {
 	   cspl.setColor(TQColorGroup::Foreground, TQColor(42,153,59));
@@ -1746,7 +1746,7 @@ TQString iss;
    yValidFrom->setPalette(cspl);
 
    cspl = yValidUntil->palette();
-   if (TQDateTime::currentDateTime(Qt::UTC) > cert->getQDTNotAfter()) {
+   if (TQDateTime::tqcurrentDateTime(Qt::UTC) > cert->getQDTNotAfter()) {
 	   cspl.setColor(TQColorGroup::Foreground, TQColor(196,33,21));
    } else {
 	   cspl.setColor(TQColorGroup::Foreground, TQColor(42,153,59));
@@ -1778,7 +1778,7 @@ TQString iss;
          KSSLCertificate *cert = pkcs->getCertificate();
          iss = cert->getIssuer();
          cspl = yValidFrom->palette();
-         if (TQDateTime::currentDateTime(Qt::UTC) < cert->getQDTNotBefore()) {
+         if (TQDateTime::tqcurrentDateTime(Qt::UTC) < cert->getQDTNotBefore()) {
             cspl.setColor(TQColorGroup::Foreground, TQColor(196,33,21));
          } else {
             cspl.setColor(TQColorGroup::Foreground, TQColor(42,153,59));
@@ -1786,7 +1786,7 @@ TQString iss;
          yValidFrom->setPalette(cspl);
 
          cspl = yValidUntil->palette();
-         if (TQDateTime::currentDateTime(Qt::UTC) > cert->getQDTNotAfter()) {
+         if (TQDateTime::tqcurrentDateTime(Qt::UTC) > cert->getQDTNotAfter()) {
             cspl.setColor(TQColorGroup::Foreground, TQColor(196,33,21));
          } else {
             cspl.setColor(TQColorGroup::Foreground, TQColor(42,153,59));

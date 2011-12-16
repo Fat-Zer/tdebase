@@ -26,7 +26,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #include "menuapplet.h"
 
-#include <layout.h>
+#include <tqlayout.h>
 #include <tqtooltip.h>
 #include <tqvariant.h> // avoid X11 #define's
 
@@ -264,7 +264,7 @@ void Applet::positionChange( Position )
 // Kicker's frame).
 void Applet::updateTopEdgeOffset()
     {
-    TQPoint p = topLevelWidget()->mapToGlobal( TQPoint( 0, 0 ));
+    TQPoint p = tqtopLevelWidget()->mapToGlobal( TQPoint( 0, 0 ));
     if( p.y() <= 2 ) // 2 = work also when running in appletproxy
         topEdgeOffset = mapToGlobal( TQPoint( 0, 0 )).y() - p.y();
     else

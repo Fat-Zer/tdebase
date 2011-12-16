@@ -32,13 +32,13 @@
                     <verstretch>0</verstretch>
                 </sizepolicy>
             </property>
-            <property name="minimumSize">
+            <property name="tqminimumSize">
                 <size>
                     <width>74</width>
                     <height>74</height>
                 </size>
             </property>
-            <property name="maximumSize">
+            <property name="tqmaximumSize">
                 <size>
                     <width>74</width>
                     <height>74</height>
@@ -154,7 +154,7 @@
             <property name="sizeType">
                 <enum>Expanding</enum>
             </property>
-            <property name="sizeHint">
+            <property name="tqsizeHint">
                 <size>
                     <width>20</width>
                     <height>16</height>
@@ -182,7 +182,7 @@
                     <property name="text">
                         <string></string>
                     </property>
-                    <property name="alignment">
+                    <property name="tqalignment">
                         <set>AlignVCenter</set>
                     </property>
                 </widget>
@@ -193,7 +193,7 @@
                     <property name="text">
                         <string>&lt;i&gt;(Click the button to change your image)&lt;/i&gt;</string>
                     </property>
-                    <property name="alignment">
+                    <property name="tqalignment">
                         <set>AlignVCenter</set>
                     </property>
                 </widget>
@@ -217,7 +217,7 @@
             <property name="sizeType">
                 <enum>Expanding</enum>
             </property>
-            <property name="sizeHint">
+            <property name="tqsizeHint">
                 <size>
                     <width>111</width>
                     <height>20</height>

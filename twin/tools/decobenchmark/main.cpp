@@ -40,7 +40,7 @@
 static KCmdLineOptions options[] =
 {
 	{ "+decoration", "Decoration library to use, such as twin3_plastik.", 0 },
-	{ "+tests", "Which test should be executed ('all', 'repaint', 'caption', 'resize', 'recreation')", 0 },
+	{ "+tests", "Which test should be executed ('all', 'tqrepaint', 'caption', 'resize', 'recreation')", 0 },
 	{ "+repetitions", "Number of test repetitions.", 0 },
 	{ 0, 0, 0 }
 };
@@ -117,7 +117,7 @@ int main(int argc, char** argv)
 	Tests test;
 	if (t == "all")
 		test = AllTests;
-	else if (t == "repaint")
+	else if (t == "tqrepaint")
 		test = RepaintTest;
 	else if (t == "caption")
 		test = CaptionTest;

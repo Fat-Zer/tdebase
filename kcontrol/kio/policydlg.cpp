@@ -18,7 +18,7 @@
 
 #include <tqpushbutton.h>
 #include <tqwhatsthis.h>
-#include <layout.h>
+#include <tqlayout.h>
 #include <tqlabel.h>
 #include <tqvalidator.h>
 
@@ -70,7 +70,7 @@ PolicyDlg::PolicyDlg (const TQString& caption, TQWidget *parent,
   connect(m_dlgUI->leDomain, TQT_SIGNAL(textChanged(const TQString&)),
     TQT_SLOT(slotTextChanged(const TQString&)));
 
-  setFixedSize (sizeHint());
+  setFixedSize (tqsizeHint());
   m_dlgUI->leDomain->setFocus ();
 }
 

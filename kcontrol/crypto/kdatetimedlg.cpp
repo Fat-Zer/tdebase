@@ -23,7 +23,7 @@
 #endif
 
 #include "kdatetimedlg.h"
-#include <layout.h>
+#include <tqlayout.h>
 #include <tqlabel.h>
 #include <klocale.h>
 #include <kdebug.h>

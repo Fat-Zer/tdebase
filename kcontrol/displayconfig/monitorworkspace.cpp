@@ -20,7 +20,7 @@
 
 #include <tqcheckbox.h>
 #include <tqlabel.h>
-#include <layout.h>
+#include <tqlayout.h>
 #include <tqlineedit.h>
 #include <tqpushbutton.h>
 

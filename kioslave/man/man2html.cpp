@@ -144,7 +144,7 @@
 # define kdDebug(x) cerr
 # define kdWarning(x) cerr << "WARNING "
 #else
-# include <textcodec.h>
+# include <tqtextcodec.h>
 # include <kdebug.h>
 # include <tdeversion.h>
 #endif
@@ -1905,7 +1905,7 @@ public:
         return (index >= 0) && (index < (int)items.count());
     }
     TABLEITEM &at(int index) {
-        return *items.at(index);
+        return *items.tqat(index);
     }
 
     TABLEROW *copyLayout() const;

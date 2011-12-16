@@ -22,10 +22,10 @@
 #include "filterdlg.h"
 
 #include <tqpushbutton.h>
-#include <layout.h>
+#include <tqlayout.h>
 #include <tqtooltip.h>
 #include <tqfile.h>
-#include <textstream.h>
+#include <tqtextstream.h>
 #include <tqregexp.h>
 #include <tqheader.h>
 

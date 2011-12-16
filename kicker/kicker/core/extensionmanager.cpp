@@ -371,7 +371,7 @@ void ExtensionManager::updateMenubar()
     KMenuBar tmpmenu;
     tmpmenu.insertItem("KDE Rocks!");
     m_menubarPanel->setSize(KPanelExtension::SizeCustom,
-                            tmpmenu.sizeHint().height());
+                            tmpmenu.tqsizeHint().height());
     m_menubarPanel->writeConfig();
 
     emit desktopIconsAreaChanged(desktopIconsArea(m_menubarPanel->xineramaScreen()),
@@ -702,7 +702,7 @@ void ExtensionManager::reduceArea(TQRect &area, const ExtensionContainer *extens
         return;
     }
 
-    TQRect geom = extension->initialGeometry(extension->position(), extension->alignment(),
+    TQRect geom = extension->initialGeometry(extension->position(), extension->tqalignment(),
                                             extension->xineramaScreen());
 
     // reduce given area (TQRect) to the space not covered by the given extension

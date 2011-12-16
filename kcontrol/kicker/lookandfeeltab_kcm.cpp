@@ -15,7 +15,7 @@
  *  along with this program; if not, write to the Free Software
  */
 
-#include <layout.h>
+#include <tqlayout.h>
 
 
 #include <dcopclient.h>

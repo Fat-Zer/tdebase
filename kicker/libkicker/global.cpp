@@ -161,7 +161,7 @@ int maxButtonDim()
     int maxDim;
     //return (2 * KickerSettings::iconMargin()) + KIcon::SizeLarge;
 
-    KSimpleConfig *kickerconfig = new KSimpleConfig( TQString::fromLatin1( "kickerrc" ));
+    KSimpleConfig *kickerconfig = new KSimpleConfig( TQString::tqfromLatin1( "kickerrc" ));
     kickerconfig->setGroup("General");
     maxDim = (2 * KickerSettings::iconMargin()) + kickerconfig->readNumEntry("panelIconWidth", KIcon::SizeLarge);;
     delete kickerconfig;
@@ -236,13 +236,13 @@ TQPoint popupPosition(KPanelApplet::Direction d,
         {
             case KPanelApplet::Left:
             case KPanelApplet::Right:
-                r.setLeft( source->topLevelWidget()->x() );
-                r.setWidth( source->topLevelWidget()->width() );
+                r.setLeft( source->tqtopLevelWidget()->x() );
+                r.setWidth( source->tqtopLevelWidget()->width() );
                 break;
             case KPanelApplet::Up:
             case KPanelApplet::Down:
-                r.setTop( source->topLevelWidget()->y() );
-                r.setHeight( source->topLevelWidget()->height() );
+                r.setTop( source->tqtopLevelWidget()->y() );
+                r.setHeight( source->tqtopLevelWidget()->height() );
                 break;
         }
     }
@@ -328,7 +328,7 @@ void colorize(TQImage& image)
 {
     KConfig *config = KGlobal::config();
     config->setGroup("WM");
-    TQColor color = TQApplication::palette().active().highlight();
+    TQColor color = TQApplication::tqpalette().active().highlight();
     TQColor activeTitle = config->readColorEntry("activeBackground", &color);
     TQColor inactiveTitle = config->readColorEntry("inactiveBackground", &color);
 
@@ -336,7 +336,7 @@ void colorize(TQImage& image)
     int h1, s1, v1, h2, s2, v2, h3, s3, v3;
     activeTitle.hsv(&h1, &s1, &v1);
     inactiveTitle.hsv(&h2, &s2, &v2);
-    TQApplication::palette().active().background().hsv(&h3, &s3, &v3);
+    TQApplication::tqpalette().active().background().hsv(&h3, &s3, &v3);
 
     if ( (kAbs(h1-h3)+kAbs(s1-s3)+kAbs(v1-v3) < kAbs(h2-h3)+kAbs(s2-s3)+kAbs(v2-v3)) &&
             ((kAbs(h1-h3)+kAbs(s1-s3)+kAbs(v1-v3) < 32) || (s1 < 32)) && (s2 > s1))

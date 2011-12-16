@@ -18,7 +18,7 @@
 
 #include "zmodem_dialog.h"
 
-#include <textedit.h>
+#include <tqtextedit.h>
 
 #include <klocale.h>
 

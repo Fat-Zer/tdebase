@@ -96,7 +96,7 @@
                                 <verstretch>0</verstretch>
                             </sizepolicy>
                         </property>
-                        <property name="minimumSize">
+                        <property name="tqminimumSize">
                             <size>
                                 <width>250</width>
                                 <height>0</height>
@@ -131,7 +131,7 @@
                 <property name="sizeType">
                     <enum>Expanding</enum>
                 </property>
-                <property name="sizeHint">
+                <property name="tqsizeHint">
                     <size>
                         <width>31</width>
                         <height>16</height>
@@ -145,7 +145,7 @@
                 <property name="text">
                     <string>Select the type of network folder you wish to connect to and press the Next button.</string>
                 </property>
-                <property name="alignment">
+                <property name="tqalignment">
                     <set>WordBreak|AlignVCenter</set>
                 </property>
             </widget>
@@ -159,7 +159,7 @@
                 <property name="sizeType">
                     <enum>Fixed</enum>
                 </property>
-                <property name="sizeHint">
+                <property name="tqsizeHint">
                     <size>
                         <width>20</width>
                         <height>21</height>
@@ -186,7 +186,7 @@
                 <property name="text">
                     <string>Enter a name for this &lt;i&gt;%1&lt;/i&gt; as well as the server address, port and folder path to use and press the Next button.</string>
                 </property>
-                <property name="alignment">
+                <property name="tqalignment">
                     <set>WordBreak|AlignVCenter</set>
                 </property>
             </widget>
@@ -200,7 +200,7 @@
                 <property name="sizeType">
                     <enum>Fixed</enum>
                 </property>
-                <property name="sizeHint">
+                <property name="tqsizeHint">
                     <size>
                         <width>20</width>
                         <height>21</height>
@@ -327,7 +327,7 @@
                 <property name="sizeType">
                     <enum>Expanding</enum>
                 </property>
-                <property name="sizeHint">
+                <property name="tqsizeHint">
                     <size>
                         <width>560</width>
                         <height>16</height>

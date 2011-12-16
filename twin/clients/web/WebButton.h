@@ -41,7 +41,7 @@ namespace Web
         Left, Mid, Right
       };
 
-      WebButton(ButtonType type, WebClient *parent, const char *name, bool shape);
+      WebButton(ButtonType type, WebClient *parent, const char *name, bool tqshape);
 
       virtual ~WebButton();
 
@@ -59,7 +59,7 @@ namespace Web
 
       bool mouseOver_;
 
-      bool shape_;
+      bool tqshape_;
       WebClient* deco_;
   };
 }

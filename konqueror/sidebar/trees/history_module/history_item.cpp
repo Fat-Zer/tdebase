@@ -126,10 +126,10 @@ TQString KonqSidebarHistoryItem::toolTipText() const
 }
 
 void KonqSidebarHistoryItem::paintCell( TQPainter *p, const TQColorGroup & cg,
-				 int column, int width, int alignment )
+				 int column, int width, int tqalignment )
 {
     TQDateTime dt;
-    TQDateTime current = TQDateTime::currentDateTime();
+    TQDateTime current = TQDateTime::tqcurrentDateTime();
 
     if ( s_settings->m_metricYoungerThan == KonqSidebarHistorySettings::DAYS )
 	dt = TQT_TQDATETIME_OBJECT(current.addDays( - s_settings->m_valueYoungerThan ));
@@ -149,7 +149,7 @@ void KonqSidebarHistoryItem::paintCell( TQPainter *p, const TQColorGroup & cg,
 	    p->setFont( s_settings->m_fontOlderThan );
     }
 
-    KonqSidebarTreeItem::paintCell( p, cg, column, width, alignment );
+    KonqSidebarTreeItem::paintCell( p, cg, column, width, tqalignment );
 }
 
 ///////////////////////////////////////////////////////////////////

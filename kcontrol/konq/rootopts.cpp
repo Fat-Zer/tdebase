@@ -17,7 +17,7 @@
 #include <tqcheckbox.h>
 #include <tqcombobox.h>
 #include <tqlabel.h>
-#include <layout.h>
+#include <tqlayout.h>
 #include <tqvgroupbox.h>
 #include <tqwhatsthis.h>
 

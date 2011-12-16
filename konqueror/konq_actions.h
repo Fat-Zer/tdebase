@@ -62,7 +62,7 @@ signals:
 private:
     uint m_firstIndex; // first index in the Go menu
     int m_startPos;
-    int m_currentPos; // == history.at()
+    int m_currentPos; // == history.tqat()
     TQPopupMenu *m_goMenu; // hack
 };
 

@@ -29,7 +29,7 @@
 
 #include <stdlib.h>
 
-#include <clipboard.h>
+#include <tqclipboard.h>
 #include <tqpopupmenu.h>
 #include <tqpainter.h>
 #include <tqheader.h>
@@ -158,12 +158,12 @@ TQValueList<KBookmark> ListView::itemsToBookmarks(const TQValueVector<KEBListVie
     return bookmarks;
 }
 
-void ListView::invalidate(const TQString & address)
+void ListView::tqinvalidate(const TQString & address)
 {
-    invalidate(getItemAtAddress(address));
+    tqinvalidate(getItemAtAddress(address));
 }
 
-void ListView::invalidate(TQListViewItem * item)
+void ListView::tqinvalidate(TQListViewItem * item)
 {
     if(item->isSelected())
     {
@@ -181,7 +181,7 @@ void ListView::invalidate(TQListViewItem * item)
     TQListViewItem * child = item->firstChild();
     while(child)
     {
-        //invalidate(child);
+        //tqinvalidate(child);
         child = child->nextSibling();
     }
 }
@@ -277,7 +277,7 @@ void ListView::deselectAllChildren(KEBListViewItem *item)
             else
                 deselectAllChildren(child);
         }
-        child->repaint();
+        child->tqrepaint();
         child = static_cast<KEBListViewItem *>(child->nextSibling());
     }
 }

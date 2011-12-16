@@ -20,7 +20,7 @@
 */
 
 #include <tqlabel.h>
-#include <layout.h>
+#include <tqlayout.h>
 #include <tqspinbox.h>
 #include <tqcheckbox.h>
 #include <tqwhatsthis.h>
@@ -52,7 +52,7 @@ KManualProxyDlg::KManualProxyDlg( TQWidget* parent, const char* name )
     mDlg->pbCopyDown->setPixmap( BarIcon("down", KIcon::SizeSmall) );
     TQSizePolicy sizePolicy( TQSizePolicy::Fixed, TQSizePolicy::Fixed,
                             mDlg->pbCopyDown->sizePolicy().hasHeightForWidth() );
-    mDlg->pbCopyDown->setSizePolicy( sizePolicy );
+    mDlg->pbCopyDown->tqsetSizePolicy( sizePolicy );
 
     init();
 }

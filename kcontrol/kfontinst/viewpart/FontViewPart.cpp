@@ -32,7 +32,7 @@
 #include "KfiConstants.h"
 #include "KfiPrint.h"
 #include <klocale.h>
-#include <layout.h>
+#include <tqlayout.h>
 #include <tqpushbutton.h>
 #include <tqframe.h>
 #include <tqfile.h>
@@ -88,7 +88,7 @@ CFontViewPart::CFontViewPart(TQWidget *parent, const char *name)
     setInstance(new KInstance("kfontview"));
 
     itsPreview=new CFontPreview(previewFrame, "FontViewPart::Preview");
-    itsPreview->setSizePolicy(TQSizePolicy::MinimumExpanding, TQSizePolicy::MinimumExpanding);
+    itsPreview->tqsetSizePolicy(TQSizePolicy::MinimumExpanding, TQSizePolicy::MinimumExpanding);
     itsFaceLabel=new TQLabel(i18n("Face:"), itsToolsFrame);
     itsFaceSelector=new KIntNumInput(1, itsToolsFrame);
     itsInstallButton=new TQPushButton(i18n("Install..."), itsToolsFrame, "button");

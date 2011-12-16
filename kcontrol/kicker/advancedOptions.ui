@@ -71,7 +71,7 @@
                     <property name="sizeType">
                         <enum>Expanding</enum>
                     </property>
-                    <property name="sizeHint">
+                    <property name="tqsizeHint">
                         <size>
                             <width>101</width>
                             <height>20</height>
@@ -145,7 +145,7 @@
                     <property name="sizeType">
                         <enum>Expanding</enum>
                     </property>
-                    <property name="sizeHint">
+                    <property name="tqsizeHint">
                         <size>
                             <width>21</width>
                             <height>20</height>
@@ -194,7 +194,7 @@
                     <property name="sizeType">
                         <enum>Expanding</enum>
                     </property>
-                    <property name="sizeHint">
+                    <property name="tqsizeHint">
                         <size>
                             <width>20</width>
                             <height>21</height>
@@ -208,7 +208,7 @@
                     <property name="text">
                         <string>Min</string>
                     </property>
-                    <property name="alignment">
+                    <property name="tqalignment">
                         <set>AlignVCenter|AlignLeft</set>
                     </property>
                     <property name="whatsThis" stdset="0">
@@ -225,7 +225,7 @@
                     <property name="sizeType">
                         <enum>Expanding</enum>
                     </property>
-                    <property name="sizeHint">
+                    <property name="tqsizeHint">
                         <size>
                             <width>81</width>
                             <height>20</height>
@@ -250,7 +250,7 @@
                     <property name="text">
                         <string>Max</string>
                     </property>
-                    <property name="alignment">
+                    <property name="tqalignment">
                         <set>AlignVCenter|AlignRight</set>
                     </property>
                     <property name="whatsThis" stdset="0">

@@ -2,7 +2,7 @@
 // (C) 2002 Leo Savernik <l.savernik@aon.at>
 //	Generalizing the policy dialog
 
-#include <layout.h>
+#include <tqlayout.h>
 #include <tqlabel.h>
 #include <tqwhatsthis.h>
 #include <tqcombobox.h>

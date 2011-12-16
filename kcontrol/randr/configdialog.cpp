@@ -18,7 +18,7 @@
    Boston, MA 02110-1301, USA.
 */
 #include <tqlabel.h>
-#include <layout.h>
+#include <tqlayout.h>
 #include <tqlistview.h>
 #include <tqpushbutton.h>
 #include <tqtooltip.h>
@@ -60,7 +60,7 @@ void ConfigDialog::show()
 {
     if ( !isVisible() ) {
 	KWinModule module(0, KWinModule::INFO_DESKTOP);
-	TQSize s1 = sizeHint();
+	TQSize s1 = tqsizeHint();
 	TQSize s2 = module.workArea().size();
 	int w = s1.width();
 	int h = s1.height();

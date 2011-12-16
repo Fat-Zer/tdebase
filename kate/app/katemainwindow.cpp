@@ -77,7 +77,7 @@
 #include <ktip.h>
 #include <kmenubar.h>
 #include <kstringhandler.h>
-#include <layout.h>
+#include <tqlayout.h>
 #include <tqptrvector.h>
 
 #include <assert.h>
@@ -110,8 +110,8 @@ KateMainWindow::KateMainWindow (KConfig *sconfig, const TQString &sgroup)
     if (sconfig)
     {
       sconfig->setGroup (sgroup);
-      size.setWidth (sconfig->readNumEntry( TQString::fromLatin1("Width %1").arg(desk.width()), 0 ));
-      size.setHeight (sconfig->readNumEntry( TQString::fromLatin1("Height %1").arg(desk.height()), 0 ));
+      size.setWidth (sconfig->readNumEntry( TQString::tqfromLatin1("Width %1").arg(desk.width()), 0 ));
+      size.setHeight (sconfig->readNumEntry( TQString::tqfromLatin1("Height %1").arg(desk.height()), 0 ));
     }
 
     // if thats fails, try to reuse size
@@ -131,8 +131,8 @@ KateMainWindow::KateMainWindow (KConfig *sconfig, const TQString &sgroup)
       {
         // first try global app config
         KateApp::self()->config()->setGroup ("MainWindow");
-        size.setWidth (KateApp::self()->config()->readNumEntry( TQString::fromLatin1("Width %1").arg(desk.width()), 0 ));
-        size.setHeight (KateApp::self()->config()->readNumEntry( TQString::fromLatin1("Height %1").arg(desk.height()), 0 ));
+        size.setWidth (KateApp::self()->config()->readNumEntry( TQString::tqfromLatin1("Width %1").arg(desk.width()), 0 ));
+        size.setHeight (KateApp::self()->config()->readNumEntry( TQString::tqfromLatin1("Height %1").arg(desk.height()), 0 ));
 
         if (size.isEmpty())
           size = TQSize (kMin (700, desk.width()), kMin(480, desk.height()));
@@ -544,10 +544,10 @@ void KateMainWindow::editKeys()
   TQPtrList<Kate::Document>  l=KateDocManager::self()->documentList();
   for (uint i=0;i<l.count();i++) {
 //     kdDebug(13001)<<"reloading Keysettings for document "<<i<<endl;
-    l.at(i)->reloadXML();
-    TQPtrList<class KTextEditor::View> l1=l.at(i)->views ();//KTextEditor::Document
+    l.tqat(i)->reloadXML();
+    TQPtrList<class KTextEditor::View> l1=l.tqat(i)->views ();//KTextEditor::Document
     for (uint i1=0;i1<l1.count();i1++) {
-      l1.at(i1)->reloadXML();
+      l1.tqat(i1)->reloadXML();
 //       kdDebug(13001)<<"reloading Keysettings for view "<<i<<"/"<<i1<<endl;
     }
   }

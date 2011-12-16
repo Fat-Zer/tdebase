@@ -75,7 +75,7 @@ void TaskMenuItem::paint(TQPainter *p, const TQColorGroup &cg,
     p->drawText(x, y, w, h, AlignAuto|AlignVCenter|DontClip|ShowPrefix, m_text);
 }
 
-TQSize TaskMenuItem::sizeHint()
+TQSize TaskMenuItem::tqsizeHint()
 {
     TQFont font = TQFont();
     if (m_isActive)
@@ -213,7 +213,7 @@ void TaskLMBMenu::dragMoveEvent( TQDragMoveEvent* e )
 void TaskLMBMenu::dragSwitch()
 {
     bool ok = false;
-    Task::Ptr t = m_tasks.at(indexOf(m_lastDragId), &ok);
+    Task::Ptr t = m_tasks.tqat(indexOf(m_lastDragId), &ok);
     if (ok)
     {
         t->activate();
@@ -264,7 +264,7 @@ void TaskLMBMenu::mouseMoveEvent(TQMouseEvent* e)
         if (index != -1)
         {
             bool ok = false;
-            Task::Ptr task = m_tasks.at(index, &ok);
+            Task::Ptr task = m_tasks.tqat(index, &ok);
             if (ok)
             {
                 Task::List tasks;

@@ -1,5 +1,5 @@
 #include <tqtooltip.h>
-#include <textstream.h>
+#include <tqtextstream.h>
 #include <tqimage.h>
 #include <tqregexp.h>
 
@@ -25,7 +25,7 @@ KSysTrayCmd::KSysTrayCmd()
     isVisible(true), lazyStart( false ), noquit( false ), quitOnHide( false ), onTop(false), ownIcon(false),
     win(0), client(0), twinmodule(0), top(0), left(0)
 {
-  setAlignment( AlignCenter );
+  tqsetAlignment( AlignCenter );
   twinmodule = new KWinModule( TQT_TQOBJECT(this) );
   refresh();
 }

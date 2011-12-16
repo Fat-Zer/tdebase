@@ -15,7 +15,7 @@
  * License. See the file "COPYING" for the exact licensing terms.
  */
 
-#include <layout.h>
+#include <tqlayout.h>
 #include <kapplication.h>
 #include <kaboutdata.h>
 #include <kconfig.h>

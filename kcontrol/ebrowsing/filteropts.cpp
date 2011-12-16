@@ -21,7 +21,7 @@
 
 #include <unistd.h>
 
-#include <layout.h>
+#include <tqlayout.h>
 #include <tqlabel.h>
 
 #include <dcopclient.h>

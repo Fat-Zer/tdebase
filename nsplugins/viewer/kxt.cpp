@@ -567,7 +567,7 @@ bool KXtWidget::isActiveWindow() const
     TQWidget *w = find( (WId)win );
     if ( w ) {
         // We know that window
-        return w->topLevelWidget() == topLevelWidget();
+        return w->tqtopLevelWidget() == tqtopLevelWidget();
     } else {
         // Window still may be a parent (if top-level is foreign window)
         Window root, parent;

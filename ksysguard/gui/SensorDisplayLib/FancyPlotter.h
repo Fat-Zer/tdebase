@@ -66,7 +66,7 @@ class FancyPlotter : public KSGRD::SensorDisplay
 
     bool removeSensor( uint pos );
 
-    virtual TQSize sizeHint(void);
+    virtual TQSize tqsizeHint(void);
 
     virtual void answerReceived( int id, const TQString &answer );
 

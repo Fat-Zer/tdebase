@@ -26,7 +26,7 @@
 #include <tqstring.h>
 #include <tqwidget.h>
 #include <kmainwindow.h>
-#include <layout.h>
+#include <tqlayout.h>
 #include <tqptrlist.h>
 
 class NSPluginLoader;

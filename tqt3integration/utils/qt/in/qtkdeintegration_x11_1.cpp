@@ -56,7 +56,7 @@ static TQCString findLibrary()
 static long parentToWinId( const TQWidget* w )
     {
     if( w != NULL )
-        return w->topLevelWidget()->winId();
+        return w->tqtopLevelWidget()->winId();
     // try to find some usable parent
     if( tqApp->activeWindow() && w != tqApp->activeWindow())
         return tqApp->activeWindow()->winId();

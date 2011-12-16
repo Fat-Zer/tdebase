@@ -20,7 +20,7 @@
 #include <khtml_settings.h>
 #include <knuminput.h>
 
-#include <layout.h>
+#include <tqlayout.h>
 #include <tqwhatsthis.h>
 #include <tqvgroupbox.h>
 #include <tqlabel.h>

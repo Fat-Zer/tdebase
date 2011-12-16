@@ -22,7 +22,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ******************************************************************/
 
 #include <tqcursor.h>
-#include <layout.h>
+#include <tqlayout.h>
 #include <tqpainter.h>
 #include <tqstyle.h>
 #include <tqpixmapcache.h>
@@ -75,14 +75,14 @@ AppletHandle::AppletHandle(AppletContainer* parent)
 
 int AppletHandle::heightForWidth( int /* w */ ) const
 {
-    int size = tqstyle().pixelMetric(TQStyle::PM_DockWindowHandleExtent, this);
+    int size = tqstyle().tqpixelMetric(TQStyle::PM_DockWindowHandleExtent, this);
 
     return size;
 }
 
 int AppletHandle::widthForHeight( int /* h */ ) const
 {
-    int size = tqstyle().pixelMetric(TQStyle::PM_DockWindowHandleExtent, this);
+    int size = tqstyle().tqpixelMetric(TQStyle::PM_DockWindowHandleExtent, this);
 
     return size;
 }
@@ -269,7 +269,7 @@ void AppletHandle::checkHandleHover()
 {
     if (!m_handleHoverTimer ||
         (m_menuButton && m_menuButton->isOn()) ||
-        m_applet->geometry().contains(m_applet->mapToParent(
+        m_applet->tqgeometry().contains(m_applet->mapToParent(
                                       m_applet->mapFromGlobal(TQCursor::pos()))))
     {
         return;
@@ -282,7 +282,7 @@ void AppletHandle::checkHandleHover()
 
 bool AppletHandle::onMenuButton(const TQPoint& point) const
 {
-    return m_menuButton && (childAt(mapFromGlobal(point)) == m_menuButton);
+    return m_menuButton && (tqchildAt(mapFromGlobal(point)) == m_menuButton);
 }
 
 void AppletHandle::toggleMenuButtonOff()
@@ -308,9 +308,9 @@ AppletHandleDrag::AppletHandleDrag(AppletHandle* parent)
    setBackgroundOrigin( AncestorOrigin );
 }
 
-TQSize AppletHandleDrag::minimumSizeHint() const
+TQSize AppletHandleDrag::tqminimumSizeHint() const
 {
-    int wh = tqstyle().pixelMetric(TQStyle::PM_DockWindowHandleExtent, this);
+    int wh = tqstyle().tqpixelMetric(TQStyle::PM_DockWindowHandleExtent, this);
 
     if (m_parent->orientation() == Qt::Horizontal)
     {
@@ -368,7 +368,7 @@ void AppletHandleDrag::paintEvent(TQPaintEvent *)
         TQRect r = rect();
     
         tqstyle().tqdrawPrimitive(TQStyle::PE_DockWindowHandle, &p, r,
-                            colorGroup(), flags);
+                            tqcolorGroup(), flags);
     }
     else
     {
@@ -382,9 +382,9 @@ AppletHandleButton::AppletHandleButton(AppletHandle *parent)
 {
 }
 
-TQSize AppletHandleButton::minimumSizeHint() const
+TQSize AppletHandleButton::tqminimumSizeHint() const
 {
-    int height = tqstyle().pixelMetric(TQStyle::PM_DockWindowHandleExtent, this);
+    int height = tqstyle().tqpixelMetric(TQStyle::PM_DockWindowHandleExtent, this);
     int width = height;
 
     if (m_parent->orientation() == Qt::Horizontal)

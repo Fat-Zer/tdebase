@@ -40,7 +40,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 #include <tqregexp.h>
 #include <tqpopupmenu.h>
-#include <layout.h>
+#include <tqlayout.h>
 #include <tqfile.h>
 #include <tqlabel.h>
 
@@ -150,7 +150,7 @@ KGVerify::pluginName() const
 	TQString name( greetPlugins[pluginList[curPlugin]].library->fileName() );
 	uint st = name.findRev( '/' ) + 1;
 	uint en = name.find( '.', st );
-	if (en - st > 7 && TQConstString( name.unicode() + st, 7 ).string() == "kgreet_")
+	if (en - st > 7 && TQConstString( name.tqunicode() + st, 7 ).string() == "kgreet_")
 		st += 7;
 	return name.mid( st, en - st );
 }
@@ -163,7 +163,7 @@ showWidgets( TQLayoutItem *li )
 
 	if ((w = li->widget()))
 		w->show();
-	else if ((l = li->layout())) {
+	else if ((l = li->tqlayout())) {
 		TQLayoutIterator it = l->iterator();
 		for (TQLayoutItem *itm = it.current(); itm; itm = ++it)
 			 showWidgets( itm );
@@ -856,7 +856,7 @@ KGVerify::getConf( void *, const char *key, const TQVariant &dflt )
 	if (!qstrcmp( key, "EchoMode" ))
 		return TQVariant( _echoMode );
 	else {
-		TQString fkey = TQString::fromLatin1( key ) + '=';
+		TQString fkey = TQString::tqfromLatin1( key ) + '=';
 		for (TQStringList::ConstIterator it = _pluginOptions.begin();
 		     it != _pluginOptions.end(); ++it)
 			if ((*it).startsWith( fkey ))
@@ -930,7 +930,7 @@ KGStdVerify::KGStdVerify( KGVerifyHandler *_handler, TQWidget *_parent,
 	, failedLabelState( 0 )
 {
 	grid = new TQGridLayout;
-	grid->setAlignment( AlignCenter );
+	grid->tqsetAlignment( AlignCenter );
 
 	failedLabel = new TQLabel( parent );
 	failedLabel->setFont( _failFont );
@@ -959,7 +959,7 @@ KGStdVerify::slotPluginSelected( int id )
 		return;
 	if (id != curPlugin) {
 		plugMenu->setItemChecked( curPlugin, false );
-		parent->setUpdatesEnabled( false );
+		parent->tqsetUpdatesEnabled( false );
 		grid->removeItem( greet->getLayoutItem() );
 		Debug( "delete %s\n", pName.data() );
 		delete greet;
@@ -967,7 +967,7 @@ KGStdVerify::slotPluginSelected( int id )
 		handler->verifyPluginChanged( id );
 		if (running)
 			start();
-		parent->setUpdatesEnabled( true );
+		parent->tqsetUpdatesEnabled( true );
 	}
 }
 
@@ -1087,10 +1087,10 @@ KGChTok::KGChTok( TQWidget *_parent, const TQString &user,
 {
 	TQSizePolicy fp( TQSizePolicy::Fixed, TQSizePolicy::Fixed );
 	okButton = new KPushButton( KStdGuiItem::ok(), this );
-	okButton->setSizePolicy( fp );
+	okButton->tqsetSizePolicy( fp );
 	okButton->setDefault( true );
 	cancelButton = new KPushButton( KStdGuiItem::cancel(), this );
-	cancelButton->setSizePolicy( fp );
+	cancelButton->tqsetSizePolicy( fp );
 
 	verify = new KGStdVerify( this, this, cancelButton, user, pluginList, func, ctx );
 	verify->selectPlugin( curPlugin );

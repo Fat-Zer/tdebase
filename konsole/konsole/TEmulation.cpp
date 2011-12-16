@@ -76,7 +76,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <tqregexp.h>
-#include <clipboard.h>
+#include <tqclipboard.h>
 
 #include <assert.h>
 
@@ -251,7 +251,7 @@ int TEmulation::keymapNo()
 */
 
 void TEmulation::onRcvChar(int c)
-// process application unicode input to terminal
+// process application tqunicode input to terminal
 // this is a trivial scanner
 {
   c &= 0xff;
@@ -284,7 +284,7 @@ void TEmulation::onKeyPress( TQKeyEvent* ev )
     scr->setHistCursor(scr->getHistLines());
   if (!ev->text().isEmpty())
   { // A block of text
-    // Note that the text is proper unicode.
+    // Note that the text is proper tqunicode.
     // We should do a conversion here, but since this
     // routine will never be used, we simply emit plain ascii.
     emit sndBlock(TQString(ev->text()).ascii(),ev->text().length());
@@ -299,7 +299,7 @@ void TEmulation::onKeyPress( TQKeyEvent* ev )
 // Unblocking, Byte to Unicode translation --------------------------------- --
 
 /*
-   We are doing code conversion from locale to unicode first.
+   We are doing code conversion from locale to tqunicode first.
 */
 
 void TEmulation::onRcvBlock(const char *s, int len)
@@ -345,7 +345,7 @@ void TEmulation::onRcvBlock(const char *s, int len)
       if (r[j].category() == TQChar::Mark_NonSpacing)
          scr->compose(r.mid(j,1));
       else
-         onRcvChar(r[j].unicode());
+         onRcvChar(r[j].tqunicode());
     }
     i = l;
   }
@@ -392,7 +392,7 @@ void TEmulation::clearSelection() {
 void TEmulation::copySelection() {
   if (!connected) return;
   TQString t = scr->getSelText(true);
-  TQApplication::clipboard()->setText(t);
+  TQApplication::tqclipboard()->setText(t);
 }
 
 TQString TEmulation::getSelection() {

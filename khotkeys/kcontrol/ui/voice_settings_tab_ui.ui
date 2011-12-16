@@ -23,7 +23,7 @@
             <property name="text">
                 <string>In order to trigger a spoken action, you have to press the key (or combination of keys) configured below, speak the command and then press the same key again once you have finished speaking.</string>
             </property>
-            <property name="alignment">
+            <property name="tqalignment">
                 <set>WordBreak|AlignVCenter</set>
             </property>
         </widget>
@@ -61,7 +61,7 @@
                     <property name="sizeType">
                         <enum>Expanding</enum>
                     </property>
-                    <property name="sizeHint">
+                    <property name="tqsizeHint">
                         <size>
                             <width>241</width>
                             <height>21</height>
@@ -80,7 +80,7 @@
             <property name="sizeType">
                 <enum>Expanding</enum>
             </property>
-            <property name="sizeHint">
+            <property name="tqsizeHint">
                 <size>
                     <width>31</width>
                     <height>90</height>

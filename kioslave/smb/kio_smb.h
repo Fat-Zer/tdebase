@@ -42,7 +42,7 @@
 #include <tqstring.h>
 #include <tqptrlist.h>
 #include <tqstringlist.h>
-#include <textstream.h>
+#include <tqtextstream.h>
 #include <tqstrlist.h>
 
 //--------------

@@ -43,8 +43,8 @@
 #include <kdialogbase.h>
 
 #include <tqsplitter.h>
-#include <textedit.h>
-#include <layout.h>
+#include <tqtextedit.h>
+#include <tqlayout.h>
 
 #include <stdlib.h>
 #include <assert.h>
@@ -325,7 +325,7 @@ void MainWindow::viewUrl( const KURL &url, const KParts::URLArgs &args )
 
     mDoc->browserExtension()->setURLArgs( args );
 
-    if ( proto == TQString::fromLatin1("glossentry") ) {
+    if ( proto == TQString::tqfromLatin1("glossentry") ) {
         TQString decodedEntryId = KURL::decode_string( url.encodedPathAndQuery() );
         slotGlossSelected( mNavigator->glossEntry( decodedEntryId ) );
         mNavigator->slotSelectGlossEntry( decodedEntryId );

@@ -1,9 +1,9 @@
 
 #include <tqcheckbox.h>
 #include <tqcombobox.h>
-#include <layout.h>
+#include <tqlayout.h>
 #include <tqradiobutton.h>
-#include <textbrowser.h>
+#include <tqtextbrowser.h>
 
 #include <kapplication.h>
 #include <kcolorbutton.h>

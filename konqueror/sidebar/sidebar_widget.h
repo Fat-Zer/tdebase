@@ -107,7 +107,7 @@ public:
 	void stdAction(const char *handlestd);
 	//virtual KParts::ReadOnlyPart *getPart();
 	KParts::BrowserExtension *getExtension();
-        virtual TQSize sizeHint() const;	
+        virtual TQSize tqsizeHint() const;	
 
 public slots:
 	void addWebSideBar(const KURL& url, const TQString& name);

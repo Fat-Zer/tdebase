@@ -66,7 +66,7 @@ void KDecorationPreview::performRepaintTest(int n)
     deco->captionChange();
     positionPreviews(0);
     for (int i = 0; i < n; ++i) {
-        deco->widget()->repaint();
+        deco->widget()->tqrepaint();
         kapp->processEvents();
     }
 }
@@ -79,7 +79,7 @@ void KDecorationPreview::performCaptionTest(int n)
     for (int i = 0; i < n; ++i) {
         bridge->setCaption(caption.arg(i) );
         deco->captionChange();
-        deco->widget()->repaint();
+        deco->widget()->tqrepaint();
         kapp->processEvents();
     }
 }
@@ -127,7 +127,7 @@ void KDecorationPreview::positionPreviews(int shrink)
     if ( !deco )
         return;
 
-    TQSize size = TQSize(width()-2*10-shrink, height()-2*10-shrink)/*.expandedTo(deco->minimumSize()*/;
+    TQSize size = TQSize(width()-2*10-shrink, height()-2*10-shrink)/*.expandedTo(deco->tqminimumSize()*/;
 
     TQRect geometry(TQPoint(10, 10), size);
     deco->widget()->setGeometry(geometry);

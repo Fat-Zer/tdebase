@@ -20,7 +20,7 @@
 
 #include <tqcheckbox.h>
 #include <tqlabel.h>
-#include <layout.h>
+#include <tqlayout.h>
 #include <tqfileinfo.h>
 #include <tqgroupbox.h>
 #include <tqhbox.h>
@@ -468,8 +468,8 @@ void BasicTab::slotCapturedShortcut(const KShortcut& cut)
     if (signalsBlocked())
        return;
 
-    if( KKeyChooser::checkGlobalShortcutsConflict( cut, true, topLevelWidget())
-        || KKeyChooser::checkStandardShortcutsConflict( cut, true, topLevelWidget()))
+    if( KKeyChooser::checkGlobalShortcutsConflict( cut, true, tqtopLevelWidget())
+        || KKeyChooser::checkStandardShortcutsConflict( cut, true, tqtopLevelWidget()))
         return;
 
     if ( KHotKeys::present() )

@@ -14,8 +14,8 @@
 #include <time.h>
 #include <unistd.h>
 
-#include <textstream.h>
-#include <layout.h>
+#include <tqtextstream.h>
+#include <tqlayout.h>
 #include <tqframe.h>
 #include <tqcheckbox.h>
 #include <tqwidget.h>
@@ -41,7 +41,7 @@ static void usage(char *name)
 {
 	puts(i18n("Usage: %1 [-setup] [args]\n"
 				"Starts a random screen saver.\n"
-				"Any arguments (except -setup) are passed on to the screen saver.").arg( name ).local8Bit().data());
+				"Any arguments (except -setup) are passed on to the screen saver.").tqarg( name ).local8Bit().data());
 }
 
 static const char appName[] = "random";
@@ -201,7 +201,7 @@ int main(int argc, char *argv[])
 
 	KRandomSequence rnd;
 	int indx = rnd.getLong(saverFileList.count());
-	TQString filename = *(saverFileList.at(indx));
+	TQString filename = *(saverFileList.tqat(indx));
 
 	KDesktopFile config(filename, true);
 
@@ -271,7 +271,7 @@ KRandomSetup::KRandomSetup( TQWidget *parent, const char *name )
 	manipulateScreen = new TQCheckBox(i18n("Use screen savers that manipulate the screen"), main);
 	grid->addWidget(manipulateScreen, 1, 0);
 
-	setMinimumSize( sizeHint() );
+	setMinimumSize( tqsizeHint() );
 
 	KConfig config("krandom.kssrc");
 	config.setGroup("Settings");

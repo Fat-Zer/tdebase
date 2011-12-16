@@ -33,7 +33,7 @@
 #include <tqcolor.h>
 #include <tqcheckbox.h>
 #include <tqhbox.h>
-#include <layout.h>
+#include <tqlayout.h>
 #include <tqgroupbox.h>
 #include <tqlabel.h>
 #include <tqwhatsthis.h>
@@ -69,7 +69,7 @@ class ToolTip : public TQToolTip
       KateFileListItem *item = ((KateFileListItem*)i);
       if ( ! item ) return;
 
-      tip( m_listView->itemRect( i ), m_listView->tooltip( item, 0 ) );
+      tip( m_listView->tqitemRect( i ), m_listView->tooltip( item, 0 ) );
 
     }
 
@@ -272,8 +272,8 @@ void KateFileList::slotModChanged (Kate::Document *doc)
 
     for ( uint i=0; i <  m_editHistory.count(); i++ )
     {
-      m_editHistory.at( i )->setEditHistPos( i+1 );
-      repaintItem(  m_editHistory.at( i ) );
+      m_editHistory.tqat( i )->setEditHistPos( i+1 );
+      repaintItem(  m_editHistory.tqat( i ) );
     }
   }
   else
@@ -334,7 +334,7 @@ void KateFileList::slotViewChanged ()
 //   int p = 0;
 //   if (  m_viewHistory.count() )
 //   {
-//     int p =  m_viewHistory.findRef( item ); // only repaint items that needs it
+//     int p =  m_viewHistory.findRef( item ); // only tqrepaint items that needs it
 //   }
 
   m_viewHistory.removeRef( item );
@@ -342,8 +342,8 @@ void KateFileList::slotViewChanged ()
 
   for ( uint i=0; i <  m_viewHistory.count(); i++ )
   {
-    m_viewHistory.at( i )->setViewHistPos( i+1 );
-    repaintItem(  m_viewHistory.at( i ) );
+    m_viewHistory.tqat( i )->setViewHistPos( i+1 );
+    repaintItem(  m_viewHistory.tqat( i ) );
   }
 
 }
@@ -616,7 +616,7 @@ void KFLConfigPage::apply()
   m_filelist->m_editShade = kcbEditShade->color();
   m_filelist->m_enableBgShading = cbEnableShading->isChecked();
   m_filelist->setSortType( cmbSort->currentItem() );
-  // repaint the affected items
+  // tqrepaint the affected items
   m_filelist->triggerUpdate();
 }
 

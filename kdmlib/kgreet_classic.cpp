@@ -32,7 +32,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include <kuser.h>
 
 #include <tqregexp.h>
-#include <layout.h>
+#include <tqlayout.h>
 #include <tqlabel.h>
 
 class KDMPasswordEdit : public KPasswordEdit {

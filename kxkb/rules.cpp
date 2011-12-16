@@ -1,6 +1,6 @@
 #include <tqwindowdefs.h>
 #include <tqfile.h>
-#include <textstream.h>
+#include <tqtextstream.h>
 #include <tqregexp.h>
 #include <tqstringlist.h>
 #include <tqdir.h>

@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include <textstream.h>
+#include <tqtextstream.h>
 
 #include <kbookmarkimporter.h>
 #include <kmimetype.h>

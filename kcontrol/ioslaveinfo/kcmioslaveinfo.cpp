@@ -25,10 +25,10 @@
 #include <tqfile.h>
 #include <tqhbox.h>
 #include <tqlabel.h>
-#include <layout.h>
+#include <tqlayout.h>
 #include <tqspinbox.h>
 #include <tqtabwidget.h>
-#include <textcodec.h>
+#include <tqtextcodec.h>
 #include <tqvbox.h>
 #include <tqwhatsthis.h>
 

@@ -73,36 +73,36 @@ int main(int argc, char **argv)
     input.setGroup("Window Border");
     output->setGroup("General");
 
-    tmpStr = input.readEntry("shapePixmapTop");
+    tmpStr = input.readEntry("tqshapePixmapTop");
     if(!tmpStr.isEmpty()){
         copy(srcStr+tmpStr, localDirStr+tmpStr);
     }
     output->writeEntry("wm_top", tmpStr, true, true);
-    tmpStr = input.readEntry("shapePixmapBottom");
+    tmpStr = input.readEntry("tqshapePixmapBottom");
     if(!tmpStr.isEmpty())
         copy(srcStr+tmpStr, localDirStr+tmpStr);
     output->writeEntry("wm_bottom", tmpStr, true, true);
-    tmpStr = input.readEntry("shapePixmapLeft");
+    tmpStr = input.readEntry("tqshapePixmapLeft");
     if(!tmpStr.isEmpty())
         copy(srcStr+tmpStr, localDirStr+tmpStr);
     output->writeEntry("wm_left", tmpStr, true, true);
-    tmpStr = input.readEntry("shapePixmapRight");
+    tmpStr = input.readEntry("tqshapePixmapRight");
     if(!tmpStr.isEmpty())
         copy(srcStr+tmpStr, localDirStr+tmpStr);
     output->writeEntry("wm_right", tmpStr, true, true);
-    tmpStr = input.readEntry("shapePixmapTopLeft");
+    tmpStr = input.readEntry("tqshapePixmapTopLeft");
     if(!tmpStr.isEmpty())
         copy(srcStr+tmpStr, localDirStr+tmpStr);
     output->writeEntry("wm_topleft", tmpStr, true, true);
-    tmpStr = input.readEntry("shapePixmapTopRight");
+    tmpStr = input.readEntry("tqshapePixmapTopRight");
     if(!tmpStr.isEmpty())
         copy(srcStr+tmpStr, localDirStr+tmpStr);
     output->writeEntry("wm_topright", tmpStr, true, true);
-    tmpStr = input.readEntry("shapePixmapBottomLeft");
+    tmpStr = input.readEntry("tqshapePixmapBottomLeft");
     if(!tmpStr.isEmpty())
         copy(srcStr+tmpStr, localDirStr+tmpStr);
     output->writeEntry("wm_bottomleft", tmpStr, true, true);
-    tmpStr = input.readEntry("shapePixmapBottomRight");
+    tmpStr = input.readEntry("tqshapePixmapBottomRight");
     if(!tmpStr.isEmpty())
         copy(srcStr+tmpStr, localDirStr+tmpStr);
     output->writeEntry("wm_bottomright", tmpStr, true, true);

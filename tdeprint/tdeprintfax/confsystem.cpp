@@ -23,7 +23,7 @@
  
 #include <tqlineedit.h> 
 #include <tqlabel.h> 
-#include <layout.h> 
+#include <tqlayout.h> 
 #include <tqcombobox.h>
  
 #include <kglobal.h> 

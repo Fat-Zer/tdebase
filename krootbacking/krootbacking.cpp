@@ -67,7 +67,7 @@ void KRootBacking::init()
     m_bActive = false;
 
     connect(kapp, TQT_SIGNAL(backgroundChanged(int)), TQT_SLOT(slotBackgroundChanged(int)));
-    connect(m_pTimer, TQT_SIGNAL(timeout()), TQT_SLOT(repaint()));
+    connect(m_pTimer, TQT_SIGNAL(timeout()), TQT_SLOT(tqrepaint()));
 #ifdef Q_WS_X11
     connect(m_pPixmap, TQT_SIGNAL(done(bool)), TQT_SLOT(slotDone(bool)));
 
@@ -111,7 +111,7 @@ void KRootBacking::start()
 	}
     }
     if (m_bInit) {
-	repaint(true);
+	tqrepaint(true);
     }
 }
 
@@ -133,16 +133,16 @@ void KRootBacking::setFadeEffect(double fade, const TQColor &color)
 	m_Fade = fade;
     m_FadeColor = color;
 
-    if ( m_bActive && m_bInit ) repaint(true);
+    if ( m_bActive && m_bInit ) tqrepaint(true);
 }
 
-void KRootBacking::repaint()
+void KRootBacking::tqrepaint()
 {
-    repaint(false);
+    tqrepaint(false);
 }
 
 
-void KRootBacking::repaint(bool force)
+void KRootBacking::tqrepaint(bool force)
 {
     TQWidget* desktopWidget = KApplication::desktop();
     TQPoint p1 = desktopWidget->mapToGlobal(desktopWidget->rect().topLeft());
@@ -255,7 +255,7 @@ void KRootBacking::slotBackgroundChanged(int desk)
 	return;
 
     if (desk == m_Desk)
-	repaint(true);
+	tqrepaint(true);
 }
 
 #include "krootbacking.moc"

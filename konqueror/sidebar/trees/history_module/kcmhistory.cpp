@@ -22,7 +22,7 @@
 
 #include <tqcheckbox.h>
 #include <tqcombobox.h>
-#include <layout.h>
+#include <tqlayout.h>
 #include <tqpushbutton.h>
 #include <tqradiobutton.h>
 

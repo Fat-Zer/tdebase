@@ -117,7 +117,7 @@ KonqView::~KonqView()
      if (part_url.isNull())
         part_url = "";
      TQCString line;
-     line = ( TQString("close(%1):%2\n").arg(m_randID,0,16).arg(part_url) ).utf8();
+     line = ( TQString("close(%1):%2\n").tqarg(m_randID,0,16).tqarg(part_url) ).utf8();
      KonqMainWindow::s_crashlog_file->writeBlock(line, line.length());
      KonqMainWindow::s_crashlog_file->flush();
   }
@@ -155,9 +155,9 @@ void KonqView::openURL( const KURL &url, const TQString & locationBarURL,
 
      TQCString line;
 
-     line = ( TQString("closed(%1):%2\n").arg(m_randID,0,16).arg(part_url) ).utf8();
+     line = ( TQString("closed(%1):%2\n").tqarg(m_randID,0,16).tqarg(part_url) ).utf8();
      KonqMainWindow::s_crashlog_file->writeBlock(line,line.length());
-     line = ( TQString("opened(%3):%4\n").arg(m_randID,0,16).arg(url_url)  ).utf8();
+     line = ( TQString("opened(%3):%4\n").tqarg(m_randID,0,16).tqarg(url_url)  ).utf8();
      KonqMainWindow::s_crashlog_file->writeBlock(line,line.length());
      KonqMainWindow::s_crashlog_file->flush();
   }
@@ -227,7 +227,7 @@ void KonqView::openURL( const KURL &url, const TQString & locationBarURL,
   KonqHistoryManager::kself()->addPending( url, locationBarURL, TQString::null);
 
 #ifdef DEBUG_HISTORY
-  kdDebug(1202) << "Current position : " << m_lstHistory.at() << endl;
+  kdDebug(1202) << "Current position : " << m_lstHistory.tqat() << endl;
 #endif
 }
 
@@ -528,8 +528,8 @@ void KonqView::slotStarted( KIO::Job * job )
       // Manage passwords properly...
       if (m_pMainWindow)
       {
-        kdDebug(7035) << "slotStarted: Window ID = " << m_pMainWindow->topLevelWidget()->winId() << endl;
-        job->setWindow (m_pMainWindow->topLevelWidget ());
+        kdDebug(7035) << "slotStarted: Window ID = " << m_pMainWindow->tqtopLevelWidget()->winId() << endl;
+        job->setWindow (m_pMainWindow->tqtopLevelWidget ());
       }
 
       connect( job, TQT_SIGNAL( percent( KIO::Job *, unsigned long ) ), this, TQT_SLOT( slotPercent( KIO::Job *, unsigned long ) ) );
@@ -711,7 +711,7 @@ void KonqView::createHistoryEntry()
 #ifdef DEBUG_HISTORY
         kdDebug(1202) << "Truncating history" << endl;
 #endif
-        m_lstHistory.at( m_lstHistory.count() - 1 ); // go to last one
+        m_lstHistory.tqat( m_lstHistory.count() - 1 ); // go to last one
         for ( ; m_lstHistory.current() != current ; )
         {
             if ( !m_lstHistory.removeLast() ) // and remove from the end (faster and easier)
@@ -720,7 +720,7 @@ void KonqView::createHistoryEntry()
             // makes current() null if it's the last item. however in qt2
             // the behaviour was different than the documentation. this is
             // changed in qt3 to behave as documented ;-) (Simon)
-            m_lstHistory.at( m_lstHistory.count() - 1 );
+            m_lstHistory.tqat( m_lstHistory.count() - 1 );
         }
         // Now current is the current again.
     }
@@ -730,9 +730,9 @@ void KonqView::createHistoryEntry()
 #endif
     m_lstHistory.append( new HistoryEntry ); // made current
 #ifdef DEBUG_HISTORY
-    kdDebug(1202) << "at=" << m_lstHistory.at() << " count=" << m_lstHistory.count() << endl;
+    kdDebug(1202) << "at=" << m_lstHistory.tqat() << " count=" << m_lstHistory.count() << endl;
 #endif
-    assert( m_lstHistory.at() == (int) m_lstHistory.count() - 1 );
+    assert( m_lstHistory.tqat() == (int) m_lstHistory.count() - 1 );
 }
 
 void KonqView::updateHistoryEntry( bool saveLocationBarURL )
@@ -752,20 +752,20 @@ void KonqView::updateHistoryEntry( bool saveLocationBarURL )
   }
 
 #ifdef DEBUG_HISTORY
-  kdDebug(1202) << "Saving part URL : " << m_pPart->url() << " in history position " << m_lstHistory.at() << endl;
+  kdDebug(1202) << "Saving part URL : " << m_pPart->url() << " in history position " << m_lstHistory.tqat() << endl;
 #endif
   current->url = m_pPart->url();
 
   if (saveLocationBarURL)
   {
 #ifdef DEBUG_HISTORY
-    kdDebug(1202) << "Saving location bar URL : " << m_sLocationBarURL << " in history position " << m_lstHistory.at() << endl;
+    kdDebug(1202) << "Saving location bar URL : " << m_sLocationBarURL << " in history position " << m_lstHistory.tqat() << endl;
 #endif
     current->locationBarURL = m_sLocationBarURL;
     current->pageSecurity = m_pageSecurity;
   }
 #ifdef DEBUG_HISTORY
-  kdDebug(1202) << "Saving title : " << m_caption << " in history position " << m_lstHistory.at() << endl;
+  kdDebug(1202) << "Saving title : " << m_caption << " in history position " << m_lstHistory.tqat() << endl;
 #endif
   current->title = m_caption;
   current->strServiceType = m_serviceType;
@@ -800,7 +800,7 @@ void KonqView::go( int steps )
       return;
   }
 
-  int newPos = m_lstHistory.at() + steps;
+  int newPos = m_lstHistory.tqat() + steps;
 #ifdef DEBUG_HISTORY
   kdDebug(1202) << "go : steps=" << steps
                 << " newPos=" << newPos
@@ -813,13 +813,13 @@ void KonqView::go( int steps )
   stop();
 
   // Yay, we can move there without a loop !
-  HistoryEntry *currentHistoryEntry = m_lstHistory.at( newPos ); // sets current item
+  HistoryEntry *currentHistoryEntry = m_lstHistory.tqat( newPos ); // sets current item
 
   assert( currentHistoryEntry );
-  assert( newPos == m_lstHistory.at() ); // check we moved (i.e. if I understood the docu)
+  assert( newPos == m_lstHistory.tqat() ); // check we moved (i.e. if I understood the docu)
   assert( currentHistoryEntry == m_lstHistory.current() );
 #ifdef DEBUG_HISTORY
-  kdDebug(1202) << "New position " << m_lstHistory.at() << endl;
+  kdDebug(1202) << "New position " << m_lstHistory.tqat() << endl;
 #endif
 
   restoreHistory();
@@ -866,7 +866,7 @@ void KonqView::restoreHistory()
     m_pMainWindow->updateToolBarActions();
 
 #ifdef DEBUG_HISTORY
-  kdDebug(1202) << "New position (2) " << m_lstHistory.at() << endl;
+  kdDebug(1202) << "New position (2) " << m_lstHistory.tqat() << endl;
 #endif
 }
 
@@ -874,9 +874,9 @@ const HistoryEntry * KonqView::historyAt(const int pos)
 {
     if(pos<0 || pos>=(int)m_lstHistory.count())
 	return 0L;
-    int oldpos = m_lstHistory.at();
-    const HistoryEntry* h = m_lstHistory.at(pos);
-    m_lstHistory.at( oldpos );
+    int oldpos = m_lstHistory.tqat();
+    const HistoryEntry* h = m_lstHistory.tqat(pos);
+    m_lstHistory.tqat( oldpos );
     return h;
 }
 
@@ -887,7 +887,7 @@ void KonqView::copyHistory( KonqView *other )
     TQPtrListIterator<HistoryEntry> it( other->m_lstHistory );
     for (; it.current(); ++it )
         m_lstHistory.append( new HistoryEntry( *it.current() ) );
-    m_lstHistory.at(other->m_lstHistory.at());
+    m_lstHistory.tqat(other->m_lstHistory.tqat());
 }
 
 KURL KonqView::url() const
@@ -1077,7 +1077,7 @@ bool KonqView::callExtensionMethod( const char *methodName )
   if ( !obj ) // not all views have a browser extension !
     return false;
 
-  int id = obj->metaObject()->findSlot( methodName );
+  int id = obj->tqmetaObject()->findSlot( methodName );
   if ( id == -1 )
     return false;
   TQUObject o[ 1 ];
@@ -1092,7 +1092,7 @@ bool KonqView::callExtensionBoolMethod( const char *methodName, bool value )
   if ( !obj ) // not all views have a browser extension !
     return false;
 
-  int id = obj->metaObject()->findSlot( methodName );
+  int id = obj->tqmetaObject()->findSlot( methodName );
   if ( id == -1 )
     return false;
   TQUObject o[ 2 ];
@@ -1109,7 +1109,7 @@ bool KonqView::callExtensionStringMethod( const char *methodName, TQString value
   if ( !obj ) // not all views have a browser extension !
     return false;
 
-  int id = obj->metaObject()->findSlot( methodName );
+  int id = obj->tqmetaObject()->findSlot( methodName );
   if ( id == -1 )
     return false;
   TQUObject o[ 2 ];
@@ -1126,7 +1126,7 @@ bool KonqView::callExtensionURLMethod( const char *methodName, const KURL& value
   if ( !obj ) // not all views have a browser extension !
     return false;
 
-  int id = obj->metaObject()->findSlot( methodName );
+  int id = obj->tqmetaObject()->findSlot( methodName );
   if ( id == -1 )
     return false;
   TQUObject o[ 2 ];

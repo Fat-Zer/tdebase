@@ -1,7 +1,7 @@
 
 #include <tqfontdatabase.h>
 #include <tqlabel.h>
-#include <layout.h>
+#include <tqlayout.h>
 #include <tqvgroupbox.h>
 #include <tqwhatsthis.h>
 
@@ -231,7 +231,7 @@ KAppearanceOptions::KAppearanceOptions(KConfig *config, TQString group, TQWidget
 
   TQFontDatabase db;
 
-  m_families = db.families();
+  m_families = db.tqfamilies();
 
   m_pFonts[0]->setFonts( m_families );
   m_pFonts[1]->setFonts( m_families );

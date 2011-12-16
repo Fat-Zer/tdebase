@@ -36,11 +36,11 @@
 #include <kconfig.h>
 #include <dcopclient.h>
 #include <dcopstub.h>
-#include <layout.h>
+#include <tqlayout.h>
 #include <tqobject.h>
 #include <tqpushbutton.h>
 #include <qxembed.h>
-#include <textstream.h>
+#include <tqtextstream.h>
 #include <tqtimer.h>
 #include <tqregexp.h>
 
@@ -130,7 +130,7 @@ void NSPluginInstance::windowChanged(WId w)
     setBackgroundMode(w == 0 ? TQWidget::PaletteBackground : TQWidget::NoBackground);
     if (w == 0) {
         // FIXME: Put a notice here to tell the user that it crashed.
-        repaint();
+        tqrepaint();
     }
 }
 

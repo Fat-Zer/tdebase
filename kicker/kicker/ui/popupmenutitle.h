@@ -69,11 +69,11 @@ public:
         m_font.setBold(true);
     }
 
-    TQSize sizeHint()
+    TQSize tqsizeHint()
     {
       TQSize size = TQFontMetrics(m_font).size(AlignHCenter, m_desktopName);
       size.setHeight(size.height() +
-                     (kapp->tqstyle().pixelMetric(TQStyle::PM_DefaultFrameWidth) * 2 + 1));
+                     (kapp->tqstyle().tqpixelMetric(TQStyle::PM_DefaultFrameWidth) * 2 + 1));
       return size;
     }
 

@@ -30,7 +30,7 @@
 
 #include <tqgroupbox.h>
 #include <tqlabel.h>
-#include <layout.h>
+#include <tqlayout.h>
 #include <tqspinbox.h>
 
 using namespace KHC;

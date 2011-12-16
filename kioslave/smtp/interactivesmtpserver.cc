@@ -38,11 +38,11 @@
 #include <tqwidget.h>
 #include <tqapplication.h>
 #include <tqhostaddress.h>
-#include <textedit.h>
+#include <tqtextedit.h>
 #include <tqlineedit.h>
 #include <tqlabel.h>
 #include <tqstring.h>
-#include <layout.h>
+#include <tqlayout.h>
 #include <tqpushbutton.h>
 
 #include <cassert>

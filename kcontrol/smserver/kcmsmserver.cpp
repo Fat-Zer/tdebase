@@ -20,7 +20,7 @@
  */
 #include <tqbuttongroup.h>
 #include <tqcheckbox.h>
-#include <layout.h>
+#include <tqlayout.h>
 #include <tqradiobutton.h>
 
 #include <dcopclient.h>

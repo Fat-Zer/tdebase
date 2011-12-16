@@ -24,7 +24,7 @@
 #include <tqapplication.h>
 #include <tqcheckbox.h>
 #include <tqcombobox.h>
-#include <layout.h>
+#include <tqlayout.h>
 #include <tqlabel.h>
 #include <tqpushbutton.h>
 #include <tqwhatsthis.h>

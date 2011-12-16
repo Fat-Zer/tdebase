@@ -22,7 +22,7 @@
 
 
 #include <tqlabel.h>
-#include <layout.h>
+#include <tqlayout.h>
 #include <tqvbox.h>
 #include <kapplication.h>
 #include <kdebug.h>
@@ -147,7 +147,7 @@ void ConfigModule::runAsRoot()
   _embedFrame->setFrameStyle( TQFrame::Box | TQFrame::Raised );
   TQPalette pal( red );
   pal.setColor( TQColorGroup::Background,
-		_module->parentWidget()->colorGroup().background() );
+		_module->parentWidget()->tqcolorGroup().background() );
   _embedFrame->setPalette( pal );
   _embedFrame->setLineWidth( 2 );
   _embedFrame->setMidLineWidth( 2 );
@@ -158,7 +158,7 @@ void ConfigModule::runAsRoot()
   _module->hide();
   _embedFrame->show();
   TQLabel *_busy = new TQLabel(i18n("<big>Loading...</big>"), _embedStack);
-  _busy->setAlignment(AlignCenter);
+  _busy->tqsetAlignment(AlignCenter);
   _busy->setTextFormat(RichText);
   _busy->setGeometry(0,0, _module->width(), _module->height());
   _busy->show();

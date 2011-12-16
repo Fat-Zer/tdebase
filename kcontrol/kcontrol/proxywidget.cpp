@@ -20,7 +20,7 @@
 #include <unistd.h> // for getuid()
 
 #include <kpushbutton.h>
-#include <layout.h>
+#include <tqlayout.h>
 #include <klocale.h>
 #include <kapplication.h>
 #include <kcmodule.h>
@@ -120,7 +120,7 @@ public:
     ~ProxyContentWidget(){}
 
     // this should be really done by qscrollview in AutoOneFit mode!
-    TQSize sizeHint() const { return minimumSizeHint(); }
+    TQSize tqsizeHint() const { return tqminimumSizeHint(); }
 };
 
 
@@ -144,7 +144,7 @@ ProxyView::ProxyView(KCModule *_client, const TQString&, TQWidget *parent, bool 
   }
   client->reparent(contentWidget,0,TQPoint(0,0),true);
   vbox->addWidget( client );
-  vbox->activate(); // make sure we have a proper minimumSizeHint
+  vbox->activate(); // make sure we have a proper tqminimumSizeHint
   addChild(contentWidget);
 }
 
