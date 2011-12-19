@@ -25,7 +25,7 @@ KSysTrayCmd::KSysTrayCmd()
     isVisible(true), lazyStart( false ), noquit( false ), quitOnHide( false ), onTop(false), ownIcon(false),
     win(0), client(0), twinmodule(0), top(0), left(0)
 {
-  tqsetAlignment( AlignCenter );
+  setAlignment( AlignCenter );
   twinmodule = new KWinModule( TQT_TQOBJECT(this) );
   refresh();
 }
