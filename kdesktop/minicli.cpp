@@ -848,7 +848,19 @@ void Minicli::setIcon ()
   if( m_iconName.isEmpty() || m_iconName == "unknown" || m_iconName == "kde" )
     m_iconName = TQString::fromLatin1("kmenu");
 
-  TQPixmap icon = DesktopIcon( m_iconName );
+  TQPixmap icon;
+  if ((m_iconName == "exec") && (m_filterData->iconName() == "exec")) {
+    TQPixmap potentialIcon = m_filterData->customIconPixmap();
+    if (!potentialIcon.isNull()) {
+      icon = potentialIcon;
+    }
+    else {
+      icon = DesktopIcon( m_iconName );
+    }
+  }
+  else {
+    icon = DesktopIcon( m_iconName );
+  }
 
   if ( m_iconName == "www" )
   {
