@@ -71,7 +71,7 @@ if( BUILD_KICKER OR BUILD_KDESKTOP OR BUILD_KDM OR BUILD_KSMSERVER )
 
 endif( )
 
-##### kompmgr (executable) #######################
+##### kdmtsak (executable) #######################
 
 if( BUILD_TSAK )
   tde_add_executable( kdmtsak
@@ -79,5 +79,7 @@ if( BUILD_TSAK )
     LINK ${TQT_LIBRARIES}
     DESTINATION ${BIN_INSTALL_DIR}
     SETUID
+    DESCRIPTION "Secure Attention Key interface for KDM"
+    AUTHORS "Timothy Pearson"
   )
 endif( BUILD_TSAK )
