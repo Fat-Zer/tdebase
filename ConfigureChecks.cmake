@@ -44,6 +44,20 @@ if( WITH_HAL )
 endif( )
 
 
+##### check for gcc visibility support #########
+# FIXME
+# This should check for [T]Qt3 visibility support
+
+if( WITH_GCC_VISIBILITY )
+  if( NOT UNIX )
+    tde_message_fatal(FATAL_ERROR "\ngcc visibility support was requested, but your system is not *NIX" )
+  endif( NOT UNIX )
+  set( __KDE_HAVE_GCC_VISIBILITY 1 )
+  set( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fvisibility=hidden -fvisibility-inlines-hidden")
+  set( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fvisibility=hidden -fvisibility-inlines-hidden")
+endif( )
+
+
 # xrender (kdesktop, konsole, kcontrol, kicker, twin)
 if( WITH_XRENDER OR BUILD_KDESKTOP OR BUILD_KONSOLE OR BUILD_KCONTROL OR BUILD_KICKER )
   pkg_search_module( XRENDER xrender )

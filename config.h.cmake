@@ -1,5 +1,8 @@
 #define VERSION "@VERSION@"
 
+// Defined if you have fvisibility and fvisibility-inlines-hidden support.
+#cmakedefine __KDE_HAVE_GCC_VISIBILITY 1
+
 // konsole
 #cmakedefine HAVE_PROC_CWD 1
 

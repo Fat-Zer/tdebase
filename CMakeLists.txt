@@ -75,6 +75,7 @@ option( WITH_XINERAMA "Enable xinerama extension support" OFF )
 option( WITH_ARTS "Enable aRts support" OFF )
 option( WITH_I8K "Enable Dell laptop support (ksysguard)" OFF )
 option( WITH_HAL "Enable HAL support" OFF )
+option( WITH_GCC_VISIBILITY "Enable fvisibility and fvisibility-inlines-hidden" OFF )
 
 
 ##### user requested modules ####################
