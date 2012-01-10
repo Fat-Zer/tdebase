@@ -18,6 +18,9 @@
 // konsole, kdm, kxkb
 #cmakedefine HAVE_XKB 1
 
+// kxkb
+#cmakedefine HAVE_XTEST 1
+
 // kdm, kioslave
 #cmakedefine HAVE_TERMIOS_H 1
 
