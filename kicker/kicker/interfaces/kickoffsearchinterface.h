@@ -22,11 +22,13 @@
 
 #include <tqobject.h>
 
+#include <kdemacros.h>
+
 class HitMenuItem;
 
 namespace KickoffSearch
 {
-    class KickoffSearchInterface :public TQObject
+    class KDE_EXPORT KickoffSearchInterface :public TQObject
     {
         Q_OBJECT
 

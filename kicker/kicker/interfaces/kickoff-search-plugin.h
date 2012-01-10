@@ -26,6 +26,7 @@
 #include <tqobject.h>
 #include <kurl.h>
 #include <kservice.h>
+#include <kdemacros.h>
 
 typedef enum {
     ACTIONS = 0,
@@ -88,7 +89,7 @@ public:
 
 namespace KickoffSearch {
 
-    class Plugin : public TQObject
+    class KDE_EXPORT Plugin : public TQObject
     {
         Q_OBJECT
 
