@@ -2341,10 +2341,10 @@ everyone.</para></listitem>
 <para>Individual configuration modules can be disables by adding the
 following to <filename>kdeglobals</filename>:</para>
 
-<screen>[KDE Control Module Restrictions]
+<screen>[TDE Control Module Restrictions]
 <replaceable>module-id</replaceable>=false</screen>
 <para>For example, to disable the proxy module use</para>
-<screen>[KDE Control Module Restrictions]
+<screen>[TDE Control Module Restrictions]
 kde-proxy.desktop=false</screen>
 <para>Check the Control Center and the <guilabel>Configure
 Konqueror</guilabel> dialog if the proxy configuration is still
