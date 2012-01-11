@@ -108,6 +108,7 @@ private:
   void setTraverseAll(bool);
   void setRollOverDesktops(bool);
   void setShowPopupinfo(bool);
+  void setFocusStealing(int);
 
   TQButtonGroup *fcsBox;
   TQComboBox *focusCombo;
@@ -118,6 +119,7 @@ private:
   KIntNumInput *delayFocus;
   TQCheckBox *separateScreenFocus;
   TQCheckBox *activeMouseScreen;
+  TQComboBox* focusStealing;
 
   TQButtonGroup *kbdBox;
   TQCheckBox    *altTabPopup;
@@ -231,10 +233,8 @@ private:
   TQRadioButton *active_always;
   KIntNumInput *delays;
   
-  void setFocusStealing( int );
   void setHideUtilityWindowsForInactive( bool );
 
-  TQComboBox* focusStealing;
   TQCheckBox* hideUtilityWindowsForInactive;
 };
 

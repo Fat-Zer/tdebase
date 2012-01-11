@@ -188,13 +188,47 @@ KFocusConfig::KFocusConfig (bool _standAlone, KConfig *_config, TQWidget * paren
     delayFocus->setSuffix(i18n(" msec"));
     fLay->addWidget(delayFocus);
 
-    clickRaiseOn = new TQCheckBox(i18n("C&lick raise active window"), fcsBox);
+    clickRaiseOn = new TQCheckBox(i18n("Click &raises active window"), fcsBox);
     connect(clickRaiseOn,TQT_SIGNAL(toggled(bool)), this, TQT_SLOT(clickRaiseOnTog(bool)));
     fLay->addWidget(clickRaiseOn);
 
 //     fLay->addColSpacing(0,QMAX(autoRaiseOn->sizeHint().width(),
 //                                clickRaiseOn->sizeHint().width()) + 15);
 
+    TQHBoxLayout* focusStealingLayout = new TQHBoxLayout(lay,KDialog::spacingHint());
+    TQLabel* focusStealingLabel = new TQLabel( i18n( "Focus stealing prevention &level:" ), fcsBox);
+    cLay->addWidget(focusStealingLabel, 0);
+    focusStealing = new TQComboBox(false, fcsBox);
+    focusStealing->insertItem( i18n( "Focus Stealing Prevention Level", "None" ));
+    focusStealing->insertItem( i18n( "Focus Stealing Prevention Level", "Low" ));
+    focusStealing->insertItem( i18n( "Focus Stealing Prevention Level", "Normal" ));
+    focusStealing->insertItem( i18n( "Focus Stealing Prevention Level", "High" ));
+    focusStealing->insertItem( i18n( "Focus Stealing Prevention Level", "Extreme" ));
+    focusStealingLabel->setBuddy( focusStealing );
+    focusStealingLayout->addWidget( focusStealingLabel );
+    cLay->addWidget(focusStealing,2 ,Qt::AlignLeft);
+    wtstr = i18n( "<p>This option specifies how much KWin will try to prevent unwanted focus stealing "
+                  "caused by unexpected activation of new windows. (Note: This feature does not "
+                  "work with the Focus Under Mouse or Focus Strictly Under Mouse focus policies.)"
+                  "<ul>"
+                  "<li><em>None:</em> Prevention is turned off "
+                  "and new windows always become activated.</li>"
+                  "<li><em>Low:</em> Prevention is enabled; when some window does not have support "
+                  "for the underlying mechanism and KWin cannot reliably decide whether to "
+                  "activate the window or not, it will be activated. This setting may have both "
+                  "worse and better results than normal level, depending on the applications.</li>"
+                  "<li><em>Normal:</em> Prevention is enabled.</li>"
+                  "<li><em>High:</em> New windows get activated only if no window is currently active "
+                  "or if they belong to the currently active application. This setting is probably "
+                  "not really usable when not using mouse focus policy.</li>"
+                  "<li><em>Extreme:</em> All windows must be explicitly activated by the user.</li>"
+                  "</ul></p>"
+                  "<p>Windows that are prevented from stealing focus are marked as demanding attention, "
+                  "which by default means their taskbar entry will be highlighted. This can be changed "
+                  "in the Notifications control module.</p>" );
+    TQWhatsThis::add( focusStealing, wtstr );
+    TQWhatsThis::add( focusStealingLabel, wtstr );
+    
     TQWhatsThis::add( autoRaiseOn, i18n("When this option is enabled, a window in the background will automatically"
                                        " come to the front when the mouse pointer has been over it for some time.") );
     wtstr = i18n("This is the delay after which the window that the mouse pointer is over will automatically"
@@ -267,7 +301,7 @@ KFocusConfig::KFocusConfig (bool _standAlone, KConfig *_config, TQWidget * paren
                   " the edge of a desktop to take you to the opposite edge of the new desktop." );
     TQWhatsThis::add( rollOverDesktops, wtstr );
 
-    showPopupinfo = new TQCheckBox( i18n("Popup desktop name on desktop &switch"), kbdBox );
+    showPopupinfo = new TQCheckBox( i18n("Popup &desktop name on desktop switch"), kbdBox );
     kLay->addWidget(showPopupinfo);
 
     wtstr = i18n( "Enable this option if you wish to see the current desktop"
@@ -289,6 +323,7 @@ KFocusConfig::KFocusConfig (bool _standAlone, KConfig *_config, TQWidget * paren
     connect(traverseAll, TQT_SIGNAL(clicked()), TQT_SLOT(changed()));
     connect(rollOverDesktops, TQT_SIGNAL(clicked()), TQT_SLOT(changed()));
     connect(showPopupinfo, TQT_SIGNAL(clicked()), TQT_SLOT(changed()));
+    connect(focusStealing, TQT_SIGNAL(activated(int)), TQT_SLOT(changed()));
 
     load();
 }
@@ -423,6 +458,11 @@ void KFocusConfig::setShowPopupinfo(bool a) {
     showPopupinfo->setChecked(a);
 }
 
+void KFocusConfig::setFocusStealing(int l) {
+    l = KMAX( 0, KMIN( 4, l ));
+    focusStealing->setCurrentItem(l);
+}
+
 void KFocusConfig::load( void )
 {
     TQString key;
@@ -465,6 +505,10 @@ void KFocusConfig::load( void )
 
     config->setGroup( "PopupInfo" );
     setShowPopupinfo( config->readBoolEntry(KWIN_SHOW_POPUP, false ));
+
+    // setFocusStealing( config->readNumEntry(KWIN_FOCUS_STEALING, 2 ));
+    // TODO default to low for now
+    setFocusStealing( config->readNumEntry(KWIN_FOCUS_STEALING, 1 ));
 
     config->setGroup( "TabBox" );
     setTraverseAll( config->readBoolEntry(KWIN_TRAVERSE_ALL, false ));
@@ -525,6 +569,8 @@ void KFocusConfig::save( void )
     config->setGroup( "PopupInfo" );
     config->writeEntry( KWIN_SHOW_POPUP, showPopupinfo->isChecked());
 
+    config->writeEntry(KWIN_FOCUS_STEALING, focusStealing->currentItem());
+
     config->setGroup( "TabBox" );
     config->writeEntry( KWIN_TRAVERSE_ALL , traverseAll->isChecked());
 
@@ -555,6 +601,9 @@ void KFocusConfig::defaults()
     setTraverseAll( false );
     setRollOverDesktops(true);
     setShowPopupinfo(false);
+    // setFocusStealing(2);
+    // TODO default to low for now
+    setFocusStealing(1);
     emit KCModule::changed(true);
 }
 
@@ -639,40 +688,6 @@ KAdvancedConfig::KAdvancedConfig (bool _standAlone, KConfig *_config, TQWidget *
 
     lay->addWidget(electricBox);
 
-    TQHBoxLayout* focusStealingLayout = new TQHBoxLayout( lay,KDialog::spacingHint());
-    TQLabel* focusStealingLabel = new TQLabel( i18n( "Focus stealing prevention level:" ), this );
-    focusStealing = new TQComboBox( this );
-    focusStealing->insertItem( i18n( "Focus Stealing Prevention Level", "None" ));
-    focusStealing->insertItem( i18n( "Focus Stealing Prevention Level", "Low" ));
-    focusStealing->insertItem( i18n( "Focus Stealing Prevention Level", "Normal" ));
-    focusStealing->insertItem( i18n( "Focus Stealing Prevention Level", "High" ));
-    focusStealing->insertItem( i18n( "Focus Stealing Prevention Level", "Extreme" ));
-    focusStealingLabel->setBuddy( focusStealing );
-    focusStealingLayout->addWidget( focusStealingLabel );
-    focusStealingLayout->addWidget( focusStealing, AlignLeft );
-    wtstr = i18n( "<p>This option specifies how much KWin will try to prevent unwanted focus stealing "
-                  "caused by unexpected activation of new windows. (Note: This feature does not "
-                  "work with the Focus Under Mouse or Focus Strictly Under Mouse focus policies.)"
-                  "<ul>"
-                  "<li><em>None:</em> Prevention is turned off "
-                  "and new windows always become activated.</li>"
-                  "<li><em>Low:</em> Prevention is enabled; when some window does not have support "
-                  "for the underlying mechanism and KWin cannot reliably decide whether to "
-                  "activate the window or not, it will be activated. This setting may have both "
-                  "worse and better results than normal level, depending on the applications.</li>"
-                  "<li><em>Normal:</em> Prevention is enabled.</li>"
-                  "<li><em>High:</em> New windows get activated only if no window is currently active "
-                  "or if they belong to the currently active application. This setting is probably "
-                  "not really usable when not using mouse focus policy.</li>"
-                  "<li><em>Extreme:</em> All windows must be explicitly activated by the user.</li>"
-                  "</ul></p>"
-                  "<p>Windows that are prevented from stealing focus are marked as demanding attention, "
-                  "which by default means their taskbar entry will be highlighted. This can be changed "
-                  "in the Notifications control module.</p>" );
-    TQWhatsThis::add( focusStealing, wtstr );
-    TQWhatsThis::add( focusStealingLabel, wtstr );
-    connect(focusStealing, TQT_SIGNAL(activated(int)), TQT_SLOT(changed()));
-    
     hideUtilityWindowsForInactive = new TQCheckBox( i18n( "Hide utility windows for inactive applications" ), this );
     TQWhatsThis::add( hideUtilityWindowsForInactive,
         i18n( "When turned on, utility windows (tool windows, torn-off menus,...) of inactive applications will be"
@@ -682,6 +697,7 @@ KAdvancedConfig::KAdvancedConfig (bool _standAlone, KConfig *_config, TQWidget *
     lay->addWidget( hideUtilityWindowsForInactive );
 
     lay->addStretch();
+
     load();
 
 }
@@ -708,11 +724,6 @@ void KAdvancedConfig::setAnimateShade(bool a) {
     animateShade->setChecked(a);
 }
 
-void KAdvancedConfig::setFocusStealing(int l) {
-    l = KMAX( 0, KMIN( 4, l ));
-    focusStealing->setCurrentItem(l);
-}
-
 void KAdvancedConfig::setHideUtilityWindowsForInactive(bool s) {
     hideUtilityWindowsForInactive->setChecked( s );
 }
@@ -728,9 +739,6 @@ void KAdvancedConfig::load( void )
     setElectricBorders(config->readNumEntry(KWM_ELECTRIC_BORDER, 0));
     setElectricBorderDelay(config->readNumEntry(KWM_ELECTRIC_BORDER_DELAY, 150));
 
-//    setFocusStealing( config->readNumEntry(KWIN_FOCUS_STEALING, 2 ));
-    // TODO default to low for now
-    setFocusStealing( config->readNumEntry(KWIN_FOCUS_STEALING, 1 ));
     setHideUtilityWindowsForInactive( config->readBoolEntry( KWIN_HIDE_UTILITY, true ));
 
     emit KCModule::changed(false);
@@ -754,7 +762,6 @@ void KAdvancedConfig::save( void )
     config->writeEntry(KWM_ELECTRIC_BORDER, getElectricBorders());
     config->writeEntry(KWM_ELECTRIC_BORDER_DELAY,getElectricBorderDelay());
 
-    config->writeEntry(KWIN_FOCUS_STEALING, focusStealing->currentItem());
     config->writeEntry(KWIN_HIDE_UTILITY, hideUtilityWindowsForInactive->isChecked());
 
     if (standAlone)
@@ -774,9 +781,6 @@ void KAdvancedConfig::defaults()
     setShadeHoverInterval(250);
     setElectricBorders(0);
     setElectricBorderDelay(150);
-//    setFocusStealing(2);
-    // TODO default to low for now
-    setFocusStealing(1);
     setHideUtilityWindowsForInactive( true );
     emit KCModule::changed(true);
 }
