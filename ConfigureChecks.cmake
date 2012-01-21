@@ -44,6 +44,15 @@ if( WITH_HAL )
 endif( )
 
 
+# udev (tsak)
+if( BUILD_TSAK )
+  pkg_search_module( UDEV udev )
+  if( NOT UDEV_FOUND )
+    tde_message_fatal( "udev is required, but was not found on your system" )
+  endif( )
+endif( )
+
+
 ##### check for gcc visibility support #########
 # FIXME
 # This should check for [T]Qt3 visibility support
