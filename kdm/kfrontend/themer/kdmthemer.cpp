@@ -19,13 +19,13 @@
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
-#include "kdmthemer.h"
-#include "kdmitem.h"
-#include "kdmpixmap.h"
-#include "kdmrect.h"
-#include "kdmlabel.h"
+#include "tdmthemer.h"
+#include "tdmitem.h"
+#include "tdmpixmap.h"
+#include "tdmrect.h"
+#include "tdmlabel.h"
 
-#include <kdmconfig.h>
+#include <tdmconfig.h>
 #include <kfdialog.h>
 
 #include <kiconloader.h>
@@ -76,7 +76,7 @@ KdmThemer::KdmThemer( const TQString &_filename, const TQString &mode, TQWidget 
 		return;
 	}
 	// Set the root (screen) item
-	rootItem = new KdmRect( parent, TQDomNode(), "kdm root" );
+	rootItem = new KdmRect( parent, TQDomNode(), "tdm root" );
 
 	connect( rootItem, TQT_SIGNAL(needUpdate( int, int, int, int )),
 	         widget(), TQT_SLOT(update( int, int, int, int )) );
@@ -401,4 +401,4 @@ KdmThemer::slotPaintRoot()
   TQT_TQWIDGET(TQApplication::desktop()->screen())->erase();
 }
 
-#include "kdmthemer.moc"
+#include "tdmthemer.moc"

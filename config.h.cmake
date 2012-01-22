@@ -15,13 +15,13 @@
 // kdesktop, kcontrol, ksplashml
 #cmakedefine HAVE_XCURSOR 1
 
-// konsole, kdm, kxkb
+// konsole, tdm, kxkb
 #cmakedefine HAVE_XKB 1
 
 // kxkb
 #cmakedefine HAVE_XTEST 1
 
-// kdm, kioslave
+// tdm, kioslave
 #cmakedefine HAVE_TERMIOS_H 1
 
 // kioslave/media
@@ -37,7 +37,7 @@
 // kioslave/smtp, kioslave/pop3
 #cmakedefine HAVE_LIBSASL2 1
 
-// kdm, kcontrol
+// tdm, kcontrol
 #cmakedefine HAVE_GETIFADDRS 1
 
 // kio_fish
@@ -96,7 +96,7 @@
 #cmakedefine HAVE_SYS_WAIT_H 1
 #cmakedefine DEFAULT_SUPER_USER_COMMAND "@DEFAULT_SUPER_USER_COMMAND@"
 
-// kdm, kcheckpass, kdesktop
+// tdm, kcheckpass, kdesktop
 #cmakedefine HAVE_PAM 1
 
 // kcheckpass
@@ -105,7 +105,7 @@
 // kdesktop
 #cmakedefine KSCREENSAVER_PAM_SERVICE "@KSCREENSAVER_PAM_SERVICE@"
 
-// kdm
+// tdm
 #cmakedefine XBINDIR "@XBINDIR@"
 #define KDE_BINDIR "@TDE_BIN_DIR@"
 #define KDE_DATADIR "@TDE_DATA_DIR@"
@@ -145,7 +145,7 @@
 #cmakedefine DEV_RANDOM "@DEV_RANDOM@"
 
 #cmakedefine USE_PAM 1
-#cmakedefine KDM_PAM_SERVICE "@KDM_PAM_SERVICE@"
+#cmakedefine TDM_PAM_SERVICE "@TDM_PAM_SERVICE@"
 
 #define USESHADOW 1
 #define HAVE_SHADOW 1
@@ -163,8 +163,8 @@
 #cmakedefine HAVE_ARTS 1
 #cmakedefine COVARIANT_RETURN_BROKEN 1
 
-// kdm, kxkb
+// tdm, kxkb
 #cmakedefine XLIBDIR "@XLIBDIR@"
 
-// kdm, kcontrol
+// tdm, kcontrol
 #cmakedefine WITH_XRANDR "@WITH_XRANDR@"

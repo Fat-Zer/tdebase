@@ -1,19 +1,19 @@
-<!-- generated from ../../kdm/config.def - DO NOT EDIT! -->
+<!-- generated from ../../tdm/config.def - DO NOT EDIT! -->
 
-<chapter id="kdm-files">
-<title>The Files &kdm; Uses for Configuration</title>
+<chapter id="tdm-files">
+<title>The Files &tdm; Uses for Configuration</title>
 
-<para>This chapter documents the files that control &kdm;'s behavior.
+<para>This chapter documents the files that control &tdm;'s behavior.
 Some of this can be also controlled from the &kcontrol; module, but
 not all.</para>
 
-<sect1 id="kdmrc">
-<title>&kdmrc; - The &kdm; master configuration file</title>
+<sect1 id="tdmrc">
+<title>&tdmrc; - The &tdm; master configuration file</title>
 
 <para>The basic format of the file is <quote>INI-like</quote>.
 Options are key/value pairs, placed in sections.
 Everything in the file is case sensitive.
-Syntactic errors and unrecognized key/section identifiers cause &kdm; to
+Syntactic errors and unrecognized key/section identifiers cause &tdm; to
 issue non-fatal error messages.</para>
 
 <para>Lines beginning with <literal>#</literal> are comments; empty lines
@@ -124,13 +124,13 @@ have the usual meaning; the backslash quotes everything (not only special
 characters). Note that the backslashes need to be doubled because of the
 two levels of quoting.</para>
 
-<note><para>A pristine &kdmrc; is very thoroughly commented.
+<note><para>A pristine &tdmrc; is very thoroughly commented.
 All comments will be lost if you change this file with the
 kcontrol frontend.</para></note>
 
 
-<sect2 id="kdmrc-general">
-<title>The [General] section of &kdmrc;</title>
+<sect2 id="tdmrc-general">
+<title>The [General] section of &tdmrc;</title>
 
 <para>
 This section contains global options that do not fit into any specific section.
@@ -144,7 +144,7 @@ This section contains global options that do not fit into any specific section.
 <para>
 This option exists solely for the purpose of clean automatic upgrades.
 <emphasis>Do not</emphasis> change it, you may interfere with future
-upgrades and this could result in &kdm; failing to run.
+upgrades and this could result in &tdm; failing to run.
 </para>
 </listitem>
 </varlistentry>
@@ -153,12 +153,12 @@ upgrades and this could result in &kdm; failing to run.
 <term id="option-staticservers"><option>StaticServers</option></term>
 <listitem>
 <para>
-List of displays (&X-Server;s) permanently managed by &kdm;. Displays with a
+List of displays (&X-Server;s) permanently managed by &tdm;. Displays with a
 hostname are foreign displays which are expected to be already running,
-the others are local displays for which &kdm; starts an own &X-Server;;
+the others are local displays for which &tdm; starts an own &X-Server;;
 see <option>ServerCmd</option>. Each display may belong to a display class;
 append it to the display name separated by an underscore.
-See <xref linkend="kdmrc-xservers"/> for the details.
+See <xref linkend="tdmrc-xservers"/> for the details.
 </para>
 <para>The default is <quote>:0</quote>.</para>
 </listitem>
@@ -180,7 +180,7 @@ List of on-demand displays. See <option>StaticServers</option> for syntax.
 <para>
 List of Virtual Terminals to allocate to &X-Server;s. For negative numbers the
 absolute value is used, and the <acronym>VT</acronym> will be allocated only
-if the kernel says it is free. If &kdm; exhausts this list, it will allocate
+if the kernel says it is free. If &tdm; exhausts this list, it will allocate
 free <acronym>VT</acronym>s greater than the absolute value of the last entry
 in this list.
 Currently Linux only.
@@ -194,14 +194,14 @@ Currently Linux only.
 <listitem>
 <para>
 This option is for operating systems (<acronym>OS</acronym>s) with support
-for virtual terminals (<acronym>VT</acronym>s), by both &kdm; and the
+for virtual terminals (<acronym>VT</acronym>s), by both &tdm; and the
 <acronym>OS</acronym>s itself.
 Currently this applies only to Linux.
 </para><para>
-When &kdm; switches to console mode, it starts monitoring all
+When &tdm; switches to console mode, it starts monitoring all
 <acronym>TTY</acronym> lines listed here (without the leading
 <literal>/dev/</literal>).
-If none of them is active for some time, &kdm; switches back to the X login.
+If none of them is active for some time, &tdm; switches back to the X login.
 </para>
 <para>Empty by default.</para>
 </listitem>
@@ -212,7 +212,7 @@ If none of them is active for some time, &kdm; switches back to the X login.
 <listitem>
 <para>
 The filename specified will be created to contain an ASCII representation
-of the process ID of the main &kdm; process; the PID will not be stored
+of the process ID of the main &tdm; process; the PID will not be stored
 if the filename is empty.
 </para>
 <para>Empty by default.</para>
@@ -223,7 +223,7 @@ if the filename is empty.
 <term id="option-lockpidfile"><option>LockPidFile</option></term>
 <listitem>
 <para>
-This option controls whether &kdm; uses file locking to keep multiple
+This option controls whether &tdm; uses file locking to keep multiple
 display managers from running onto each other.
 </para>
 <para>The default is <quote>true</quote>.</para>
@@ -234,8 +234,8 @@ display managers from running onto each other.
 <term id="option-authdir"><option>AuthDir</option></term>
 <listitem>
 <para>
-This names a directory under which &kdm; stores &X-Server; authorization
-files while initializing the session. &kdm; expects the system to clean up
+This names a directory under which &tdm; stores &X-Server; authorization
+files while initializing the session. &tdm; expects the system to clean up
 this directory from stale files on reboot.
 </para><para>
 The authorization file to be used for a particular display can be
@@ -249,7 +249,7 @@ specified with the <option>AuthFile</option> option in [X-*-Core].
 <term id="option-autorescan"><option>AutoRescan</option></term>
 <listitem>
 <para>
-This boolean controls whether &kdm; automatically re-reads its
+This boolean controls whether &tdm; automatically re-reads its
 configuration files if it finds them to have changed.
 </para>
 <para>The default is <quote>true</quote>.</para>
@@ -260,7 +260,7 @@ configuration files if it finds them to have changed.
 <term id="option-exportlist"><option>ExportList</option></term>
 <listitem>
 <para>
-Additional environment variables &kdm; should pass on to all programs it runs.
+Additional environment variables &tdm; should pass on to all programs it runs.
 <envar>LD_LIBRARY_PATH</envar> and <envar>XCURSOR_THEME</envar> are good candidates;
 otherwise, it should not be necessary very often.
 </para>
@@ -275,7 +275,7 @@ otherwise, it should not be necessary very often.
 If the system has no native entropy source like /dev/urandom (see
 <option>RandomDevice</option>) and no entropy daemon like EGD (see
 <option>PrngdSocket</option> and <option>PrngdPort</option>) is running,
-&kdm; will fall back to its own pseudo-random number generator
+&tdm; will fall back to its own pseudo-random number generator
 that will, among other things, successively checksum parts of this file
 (which, obviously, should change frequently).
 </para><para>
@@ -313,7 +313,7 @@ Same as <option>PrngdSocket</option>, only use a TCP socket on localhost.
 <term id="option-randomdevice"><option>RandomDevice</option></term>
 <listitem>
 <para>
-The path to a character device which &kdm; should read random data from.
+The path to a character device which &tdm; should read random data from.
 Empty means to use the system's preferred entropy device if there is one.
 </para><para>
 This option does not exist on OpenBSD, as it uses the arc4_random
@@ -348,10 +348,10 @@ can be either a name or a numerical ID.
 <term id="option-datadir"><option>DataDir</option></term>
 <listitem>
 <para>
-The directory in which &kdm; should store persistent working data; such data
+The directory in which &tdm; should store persistent working data; such data
 is, for example, the previous user that logged in on a particular display.
 </para>
-<para>The default is <quote>/var/lib/kdm</quote>.</para>
+<para>The default is <quote>/var/lib/tdm</quote>.</para>
 </listitem>
 </varlistentry>
 
@@ -359,7 +359,7 @@ is, for example, the previous user that logged in on a particular display.
 <term id="option-dmrcdir"><option>DmrcDir</option></term>
 <listitem>
 <para>
-The directory in which &kdm; should store users' <filename>.dmrc</filename> files. This is only
+The directory in which &tdm; should store users' <filename>.dmrc</filename> files. This is only
 needed if the home directories are not readable before actually logging in
 (like with AFS).
 </para>
@@ -371,11 +371,11 @@ needed if the home directories are not readable before actually logging in
 </sect2>
 
 
-<sect2 id="kdmrc-xdmcp">
-<title>The [Xdmcp] section of &kdmrc;</title>
+<sect2 id="tdmrc-xdmcp">
+<title>The [Xdmcp] section of &tdmrc;</title>
 
 <para>
-This section contains options that control &kdm;'s handling of
+This section contains options that control &tdm;'s handling of
 &XDMCP; requests.
 </para>
 
@@ -385,7 +385,7 @@ This section contains options that control &kdm;'s handling of
 <term id="option-enable"><option>Enable</option></term>
 <listitem>
 <para>
-Whether &kdm; should listen to incoming &XDMCP; requests.
+Whether &tdm; should listen to incoming &XDMCP; requests.
 </para>
 <para>The default is <quote>true</quote>.</para>
 </listitem>
@@ -395,7 +395,7 @@ Whether &kdm; should listen to incoming &XDMCP; requests.
 <term id="option-port"><option>Port</option></term>
 <listitem>
 <para>
-This indicates the UDP port number which &kdm; uses to listen for incoming
+This indicates the UDP port number which &tdm; uses to listen for incoming
 &XDMCP; requests. Unless you need to debug the system, leave this with its
 default value.
 </para>
@@ -408,7 +408,7 @@ default value.
 <listitem>
 <para>
 XDM-AUTHENTICATION-1 style &XDMCP; authentication requires a private
-key to be shared between &kdm; and the terminal. This option specifies
+key to be shared between &tdm; and the terminal. This option specifies
 the file containing those values. Each entry in the file consists of a
 display name and the shared key.
 </para>
@@ -424,9 +424,9 @@ To prevent unauthorized &XDMCP; service and to allow forwarding of &XDMCP;
 IndirectQuery requests, this file contains a database of hostnames which
 are either allowed direct access to this machine, or have a list of hosts
 to which queries should be forwarded to. The format of this file is
-described in <xref linkend="kdmrc-xaccess"/>.
+described in <xref linkend="tdmrc-xaccess"/>.
 </para>
-<para>The default is <quote>${<envar>kde_confdir</envar>}/kdm/Xaccess</quote>.</para>
+<para>The default is <quote>${<envar>kde_confdir</envar>}/tdm/Xaccess</quote>.</para>
 </listitem>
 </varlistentry>
 
@@ -450,7 +450,7 @@ is offered again.
 <para>
 When computing the display name for &XDMCP; clients, the name resolver will
 typically create a fully qualified host name for the terminal. As this is
-sometimes confusing, &kdm; will remove the domain name portion of the host
+sometimes confusing, &tdm; will remove the domain name portion of the host
 name if it is the same as the domain name of the local host when this option
 is enabled.
 </para>
@@ -489,8 +489,8 @@ displayed in a chooser window. If no program is specified, the string
 </sect2>
 
 
-<sect2 id="kdmrc-shutdown">
-<title>The [Shutdown] section of &kdmrc;</title>
+<sect2 id="tdmrc-shutdown">
+<title>The [Shutdown] section of &tdmrc;</title>
 
 <para>
 This section contains global options concerning system shutdown.
@@ -504,7 +504,7 @@ This section contains global options concerning system shutdown.
 <para>
 The command (subject to word splitting) to run to halt/poweroff the system.
 </para><para>
-The default is something reasonable for the system on which &kdm; was built, like
+The default is something reasonable for the system on which &tdm; was built, like
 <command>/sbin/shutdown&nbsp;<option>-h</option>&nbsp;<parameter>now</parameter></command>.
 </para>
 </listitem>
@@ -516,7 +516,7 @@ The default is something reasonable for the system on which &kdm; was built, lik
 <para>
 The command (subject to word splitting) to run to reboot the system.
 </para><para>
-The default is something reasonable for the system &kdm; on which was built, like
+The default is something reasonable for the system &tdm; on which was built, like
 <command>/sbin/shutdown&nbsp;<option>-r</option>&nbsp;<parameter>now</parameter></command>.
 </para>
 </listitem>
@@ -549,7 +549,7 @@ This will have no effect unless <option>AllowFifo</option> is enabled.
 <term id="option-bootmanager"><option>BootManager</option></term>
 <listitem>
 <para>
-The boot manager &kdm; should use for offering boot options in the
+The boot manager &tdm; should use for offering boot options in the
 shutdown dialog.
 </para>
 <variablelist>
@@ -574,12 +574,12 @@ shutdown dialog.
 </sect2>
 
 
-<sect2 id="kdmrc-core">
-<title>The [X-*-Core] section class of &kdmrc;</title>
+<sect2 id="tdmrc-core">
+<title>The [X-*-Core] section class of &tdmrc;</title>
 
 <para>
 This section class contains options concerning the configuration
-of the &kdm; backend (core).
+of the &tdm; backend (core).
 </para>
 
 <variablelist>
@@ -608,7 +608,7 @@ See <option>OpenRepeat</option>.
 <term id="option-openrepeat"><option>OpenRepeat</option></term>
 <listitem>
 <para>
-These options control the behavior of &kdm; when attempting to open a
+These options control the behavior of &tdm; when attempting to open a
 connection to an &X-Server;. <option>OpenDelay</option> is the length
 of the pause (in seconds) between successive attempts,
 <option>OpenRepeat</option> is the number of attempts to make and
@@ -625,7 +625,7 @@ connection attempt, the start attempt is considered failed.
 <term id="option-startattempts"><option>StartAttempts</option></term>
 <listitem>
 <para>
-How many times &kdm; should attempt to start a <literal>foreign</literal>
+How many times &tdm; should attempt to start a <literal>foreign</literal>
 display listed in <option>StaticServers</option> before giving up
 and disabling it.
 Local displays are attempted only once, and &XDMCP; displays are retried
@@ -640,7 +640,7 @@ was given to the &X-Server;).
 <term id="option-serverattempts"><option>ServerAttempts</option></term>
 <listitem>
 <para>
-How many times &kdm; should attempt to start up a local &X-Server;.
+How many times &tdm; should attempt to start up a local &X-Server;.
 Starting up includes executing it and waiting for it to come up.
 </para>
 <para>The default is <quote>1</quote>.</para>
@@ -651,7 +651,7 @@ Starting up includes executing it and waiting for it to come up.
 <term id="option-servertimeout"><option>ServerTimeout</option></term>
 <listitem>
 <para>
-How many seconds &kdm; should wait for a local &X-Server; to come up.
+How many seconds &tdm; should wait for a local &X-Server; to come up.
 </para>
 <para>The default is <quote>15</quote>.</para>
 </listitem>
@@ -664,7 +664,7 @@ How many seconds &kdm; should wait for a local &X-Server; to come up.
 The command line to start the &X-Server;, without display number and VT spec.
 This string is subject to word splitting.
 </para><para>
-The default is something reasonable for the system on which &kdm; was built,
+The default is something reasonable for the system on which &tdm; was built,
 like <command>/usr/X11R6/bin/X</command>.
 </para>
 </listitem>
@@ -698,7 +698,7 @@ This string is subject to word splitting.
 <para>
 The VT the &X-Server; should run on.
 <option>ServerVTs</option> should be used instead of this option.
-Leave it zero to let &kdm; assign a <acronym>VT</acronym> automatically.
+Leave it zero to let &tdm; assign a <acronym>VT</acronym> automatically.
 Set it to <literal>-1</literal> to avoid assigning a <acronym>VT</acronym>
 alltogether - this is required for setups with multiple physical consoles.
 Currently Linux only.
@@ -711,13 +711,13 @@ Currently Linux only.
 <listitem>
 <para>
 This option is for <acronym>OS</acronym>s without support for
-<acronym>VT</acronym>s, either by &kdm; or the <acronym>OS</acronym> itself.
+<acronym>VT</acronym>s, either by &tdm; or the <acronym>OS</acronym> itself.
 Currently this applies to all <acronym>OS</acronym>s but Linux.
 </para><para>
-When &kdm; switches to console mode, it starts monitoring this
+When &tdm; switches to console mode, it starts monitoring this
 <acronym>TTY</acronym> line (specified without the leading
 <literal>/dev/</literal>) for activity. If the line is not used for some time,
-&kdm; switches back to the X login.
+&tdm; switches back to the X login.
 </para>
 <para>Empty by default.</para>
 </listitem>
@@ -737,7 +737,7 @@ See <option>PingTimeout</option>.
 <term id="option-pingtimeout"><option>PingTimeout</option></term>
 <listitem>
 <para>
-To discover when <emphasis>remote</emphasis> displays disappear, &kdm;
+To discover when <emphasis>remote</emphasis> displays disappear, &tdm;
 regularly pings them.
 <option>PingInterval</option> specifies the time (in minutes) between the
 pings and <option>PingTimeout</option> specifies the maximum amount of
@@ -757,7 +757,7 @@ accidentally disabled.
 <term id="option-terminateserver"><option>TerminateServer</option></term>
 <listitem>
 <para>
-Whether &kdm; should restart the local &X-Server; after session exit instead
+Whether &tdm; should restart the local &X-Server; after session exit instead
 of resetting it. Use this if the &X-Server; leaks memory or crashes the system
 on reset attempts.
 </para>
@@ -789,7 +789,7 @@ The signal number to use to terminate the local &X-Server;.
 <term id="option-authorize"><option>Authorize</option></term>
 <listitem>
 <para>
-Controls whether &kdm; generates and uses authorization for
+Controls whether &tdm; generates and uses authorization for
 <emphasis>local</emphasis> &X-Server; connections.
 For &XDMCP; displays the authorization requested by the display is used;
 foreign non-&XDMCP; displays do not support authorization at all.
@@ -817,9 +817,9 @@ depending on the build configuration.
 <para>
 Some <emphasis>old</emphasis> &X-Server;s re-read the authorization file
 at &X-Server; reset time, instead of when checking the initial connection.
-As &kdm; generates the authorization information just before connecting to
+As &tdm; generates the authorization information just before connecting to
 the display, an old &X-Server; would not get up-to-date authorization
-information. This option causes &kdm; to send SIGHUP to the &X-Server;
+information. This option causes &tdm; to send SIGHUP to the &X-Server;
 after setting up the file, causing an additional &X-Server; reset to occur,
 during which time the new authorization information will be read.
 </para>
@@ -831,7 +831,7 @@ during which time the new authorization information will be read.
 <term id="option-authfile"><option>AuthFile</option></term>
 <listitem>
 <para>
-This file is used to communicate the authorization data from &kdm; to
+This file is used to communicate the authorization data from &tdm; to
 the &X-Server;, using the <option>-auth</option> &X-Server; command line
 option. It should be kept in a directory which is not world-writable
 as it could easily be removed, disabling the authorization mechanism in
@@ -879,7 +879,7 @@ greeter window. This may be used to change the appearance of the screen
 around the greeter window or to put up other windows (e.g., you may want
 to run <command>xconsole</command> here).
 The conventional name for a program used here is <command>Xsetup</command>.
-See <xref linkend="kdmrc-xsetup"/>.
+See <xref linkend="tdmrc-xsetup"/>.
 </para>
 <para>Empty by default.</para>
 </listitem>
@@ -894,7 +894,7 @@ It specifies a program which is run (as
 <systemitem class="username">root</systemitem>) after the user
 authentication process succeeds.
 The conventional name for a program used here is <command>Xstartup</command>.
-See <xref linkend="kdmrc-xstartup"/>.
+See <xref linkend="tdmrc-xstartup"/>.
 </para>
 <para>Empty by default.</para>
 </listitem>
@@ -909,7 +909,7 @@ It specifies a program which is run (as
 <systemitem class="username">root</systemitem>) after the session
 terminates.
 The conventional name for a program used here is <command>Xreset</command>.
-See <xref linkend="kdmrc-xreset"/>.
+See <xref linkend="tdmrc-xreset"/>.
 </para>
 <para>Empty by default.</para>
 </listitem>
@@ -923,7 +923,7 @@ This string is subject to word splitting.
 It specifies the session program to be executed (as the user owning
 the session).
 The conventional name for a program used here is <command>Xsession</command>.
-See <xref linkend="kdmrc-xsession"/>.
+See <xref linkend="tdmrc-xsession"/>.
 </para>
 <para>The default is <quote>${<envar>x_bindir</envar>}/xterm -ls -T</quote>.</para>
 </listitem>
@@ -933,10 +933,10 @@ See <xref linkend="kdmrc-xsession"/>.
 <term id="option-failsafeclient"><option>FailsafeClient</option></term>
 <listitem>
 <para>
-If the <option>Session</option> program fails to execute, &kdm; will
+If the <option>Session</option> program fails to execute, &tdm; will
 fall back to this program. This program is executed with no arguments,
 but executes using the same environment variables as the session would
-have had (see <xref linkend="kdmrc-xsession"/>).
+have had (see <xref linkend="tdmrc-xsession"/>).
 </para>
 <para>The default is <quote>${<envar>x_bindir</envar>}/xterm</quote>.</para>
 </listitem>
@@ -949,7 +949,7 @@ have had (see <xref linkend="kdmrc-xsession"/>).
 The <envar>PATH</envar> environment variable for
 non-<systemitem class="username">root</systemitem> <option>Session</option>s.
 </para><para>
-The default depends on the system &kdm; was built on.
+The default depends on the system &tdm; was built on.
 </para>
 </listitem>
 </varlistentry>
@@ -963,7 +963,7 @@ non-<systemitem class="username">root</systemitem>
 <option>Session</option>s. Note that it is good practice not to include
 <literal>.</literal> (the current directory) into this entry.
 </para><para>
-The default depends on the system &kdm; was built on.
+The default depends on the system &tdm; was built on.
 </para>
 </listitem>
 </varlistentry>
@@ -983,7 +983,7 @@ The <envar>SHELL</envar> environment variable for all programs but the
 <term id="option-userauthdir"><option>UserAuthDir</option></term>
 <listitem>
 <para>
-When &kdm; is unable to write to the usual user authorization file
+When &tdm; is unable to write to the usual user authorization file
 ($<envar>HOME</envar>/.Xauthority), it creates a unique file name in this
 directory and points the environment variable <envar>XAUTHORITY</envar>
 at the created file.
@@ -996,7 +996,7 @@ at the created file.
 <term id="option-autorelogin"><option>AutoReLogin</option></term>
 <listitem>
 <para>
-If enabled, &kdm; will automatically restart a session after an &X-Server;
+If enabled, &tdm; will automatically restart a session after an &X-Server;
 crash (or if it is killed by Alt-Ctrl-BackSpace). Note that enabling this
 feature opens a security hole: a secured display lock can be circumvented
 (unless &kde;'s built-in screen locker is used).
@@ -1196,7 +1196,7 @@ The user to log in automatically. <emphasis>Never</emphasis> specify <systemitem
 <para>
 The password for the user to log in automatically. This is <emphasis>not</emphasis> required
 unless the user is logged into a <acronym>NIS</acronym> or Kerberos domain. If you use this
-option, you should <command>chmod&nbsp;<option>600</option>&nbsp;<filename>kdmrc</filename></command> for obvious reasons.
+option, you should <command>chmod&nbsp;<option>600</option>&nbsp;<filename>tdmrc</filename></command> for obvious reasons.
 </para>
 <para>Empty by default.</para>
 </listitem>
@@ -1219,7 +1219,7 @@ KDE sessions.
 <para>
 A list of directories containing session type definitions.
 </para>
-<para>The default is <quote>${<envar>kde_datadir</envar>}/kdm/sessions</quote>.</para>
+<para>The default is <quote>${<envar>kde_datadir</envar>}/tdm/sessions</quote>.</para>
 </listitem>
 </varlistentry>
 
@@ -1240,7 +1240,7 @@ literal <literal>%</literal>.
 <term id="option-usesessreg"><option>UseSessReg</option></term>
 <listitem>
 <para>
-Specify whether &kdm;'s built-in utmp/wtmp/lastlog registration should
+Specify whether &tdm;'s built-in utmp/wtmp/lastlog registration should
 be used. If it is not, the tool <command>sessreg</command> should be used
 in the <option>Startup</option> and <option>Reset</option> scripts, or,
 alternatively, the pam_lastlog module should be used on
@@ -1254,12 +1254,12 @@ alternatively, the pam_lastlog module should be used on
 </sect2>
 
 
-<sect2 id="kdmrc-greeter">
-<title>The [X-*-Greeter] section class of &kdmrc;</title>
+<sect2 id="tdmrc-greeter">
+<title>The [X-*-Greeter] section class of &tdmrc;</title>
 
 <para>
 This section class contains options concerning the configuration
-of the &kdm; frontend (greeter).
+of the &tdm; frontend (greeter).
 </para>
 
 <variablelist>
@@ -1329,7 +1329,7 @@ The image to show in the greeter if <option>LogoArea</option> is
 <listitem>
 <para>
 The relative coordinates (percentages of the screen size; X,Y) at which
-the center of the greeter is put. &kdm; aligns the greeter to the edges
+the center of the greeter is put. &tdm; aligns the greeter to the edges
 of the screen it would cross otherwise.
 </para>
 <para>The default is <quote>50,50</quote>.</para>
@@ -1563,7 +1563,7 @@ See <option>ShowUsers</option>.
 <term id="option-facesource"><option>FaceSource</option></term>
 <listitem>
 <para>
-If <option>UserList</option> is enabled, this specifies where &kdm; gets the
+If <option>UserList</option> is enabled, this specifies where &tdm; gets the
 images from:
 </para>
 <variablelist>
@@ -1587,7 +1587,7 @@ images from:
 
 <para>
 The images can be in any format Qt recognizes, but the filename
-must match &kdm;'s expectations: <literal>.face.icon</literal> should be a
+must match &tdm;'s expectations: <literal>.face.icon</literal> should be a
 48x48 icon, while <literal>.face</literal> should be a 300x300 image.
 Currently the big image is used only as a fallback and is scaled down,
 but in the future it might be displayed full-size in the logo area or a
@@ -1603,7 +1603,7 @@ tooltip.
 <para>
 See <option>FaceSource</option>.
 </para>
-<para>The default is <quote>${<envar>kde_datadir</envar>}/kdm/faces</quote>.</para>
+<para>The default is <quote>${<envar>kde_datadir</envar>}/tdm/faces</quote>.</para>
 </listitem>
 </varlistentry>
 
@@ -1692,7 +1692,7 @@ character</para></listitem>
 <term id="option-usebackground"><option>UseBackground</option></term>
 <listitem>
 <para>
-If enabled, &kdm; will automatically start the <command>krootimage</command>
+If enabled, &tdm; will automatically start the <command>krootimage</command>
 program to set up the background; otherwise, the <option>Setup</option>
 program is responsible for the background.
 </para>
@@ -1709,7 +1709,7 @@ It contains a section named <literal>[Desktop0]</literal> like
 <filename>kdesktoprc</filename> does. Its options are not described
 herein; guess their meanings or use the control center.
 </para>
-<para>The default is <quote>${<envar>kde_confdir</envar>}/kdm/backgroundrc</quote>.</para>
+<para>The default is <quote>${<envar>kde_confdir</envar>}/tdm/backgroundrc</quote>.</para>
 </listitem>
 </varlistentry>
 
@@ -1735,11 +1735,11 @@ grabbed until just before the session begins.
 <term id="option-grabtimeout"><option>GrabTimeout</option></term>
 <listitem>
 <para>
-This option specifies the maximum time &kdm; will wait for the grabs to
+This option specifies the maximum time &tdm; will wait for the grabs to
 succeed. A grab may fail if some other X-client has the &X-Server; or the
 keyboard grabbed, or possibly if the network latencies are very high. You
 should be cautious when raising the timeout, as a user can be spoofed by
-a look-alike window on the display. If a grab fails, &kdm; kills and
+a look-alike window on the display. If a grab fails, &tdm; kills and
 restarts the &X-Server; (if possible) and the session. 
 </para>
 <para>The default is <quote>3</quote>.</para>
@@ -1826,10 +1826,10 @@ login domain.
 <term id="option-showlog"><option>ShowLog</option></term>
 <listitem>
 <para>
-Enable &kdm;'s built-in <command>xconsole</command>.
+Enable &tdm;'s built-in <command>xconsole</command>.
 Note that this can be enabled for only one display at a time.
-This option is available only if &kdm; was <command>configure</command>d
-with <option>--enable-kdm-xconsole</option>.
+This option is available only if &tdm; was <command>configure</command>d
+with <option>--enable-tdm-xconsole</option>.
 </para>
 <para>The default is <quote>false</quote>.</para>
 </listitem>
@@ -1839,7 +1839,7 @@ with <option>--enable-kdm-xconsole</option>.
 <term id="option-logsource"><option>LogSource</option></term>
 <listitem>
 <para>
-The data source for &kdm;'s built-in <command>xconsole</command>.
+The data source for &tdm;'s built-in <command>xconsole</command>.
 If empty, a console log redirection is requested from
 <filename>/dev/console</filename>.
 Has no effect if <option>ShowLog</option> is disabled.
@@ -1950,13 +1950,13 @@ file.
 
 </sect1>
 
-<sect1 id="kdmrc-xservers">
+<sect1 id="tdmrc-xservers">
 <title>Specifying permanent &X-Server;s</title>
 
 <para>Each entry in the <option>StaticServers</option> list indicates a
 display which should constantly be
 managed and which is not using &XDMCP;. This method is typically used only for
-local &X-Server;s that are started by &kdm;, but &kdm; can manage externally
+local &X-Server;s that are started by &tdm;, but &tdm; can manage externally
 started (<quote>foreign</quote>) &X-Server;s as well, may they run on the 
 local machine or rather remotely.</para>
 
@@ -1975,7 +1975,7 @@ The display name of &XDMCP; displays is derived from the display's address by
 reverse host name resolution. For configuration purposes, the
 <literal>localhost</literal> prefix from locally running &XDMCP; displays is
 <emphasis>not</emphasis> stripped to make them distinguishable from local
-&X-Server;s started by &kdm;.</para>
+&X-Server;s started by &tdm;.</para>
 
 <para>The <replaceable>display class</replaceable> portion is also used in the
 display-specific sections. This is useful if you have a large collection of
@@ -1983,11 +1983,11 @@ similar displays (such as a corral of X terminals) and would like to set
 options for groups of them.
 When using &XDMCP;, the display is required to specify the display class,
 so the manual for your particular X terminal should document the display
-class string for your device. If it does not, you can run &kdm; in debug
+class string for your device. If it does not, you can run &tdm; in debug
 mode and <command>grep</command> the log for <quote>class</quote>.</para>
 
 <para>The displays specified in <option>ReserveServers</option> will not be
-started when &kdm; starts up, but when it is explicitly requested via
+started when &tdm; starts up, but when it is explicitly requested via
 the command socket (or <acronym>FiFo</acronym>).
 If reserve displays are specified, the &kde; menu will have a
 <guilabel>Start New Session</guilabel> item near the bottom; use that to
@@ -1995,26 +1995,26 @@ activate a reserve display with a new login session. The monitor will switch
 to the new display, and you will have a minute to login. If there are no more
 reserve displays available, the menu item will be disabled.</para>
 
-<para>When &kdm; starts a session, it sets up authorization data for the
-&X-Server;. For local servers, &kdm; passes
+<para>When &tdm; starts a session, it sets up authorization data for the
+&X-Server;. For local servers, &tdm; passes
 <command><option>-auth</option>&nbsp;<filename><replaceable>filename</replaceable></filename></command>
 on the &X-Server;'s command line to point it at its authorization data.
-For &XDMCP; displays, &kdm; passes the authorization data to the &X-Server;
+For &XDMCP; displays, &tdm; passes the authorization data to the &X-Server;
 via the <quote>Accept</quote> &XDMCP; message.</para>
 
 </sect1>
 
-<sect1 id="kdmrc-xaccess">
+<sect1 id="tdmrc-xaccess">
 <title>&XDMCP; access control</title>
 
 <para>The file specified by the <option>AccessFile</option> option provides
-information which &kdm; uses to control access from displays requesting service
+information which &tdm; uses to control access from displays requesting service
 via &XDMCP;.
 The file contains four types of entries: entries which control the response
 to <quote>Direct</quote> and <quote>Broadcast</quote> queries, entries which
 control the response to <quote>Indirect</quote> queries, macro definitions for
 <quote>Indirect</quote> entries, and entries which control on which network
-interfaces &kdm; listens for &XDMCP; queries.
+interfaces &tdm; listens for &XDMCP; queries.
 Blank lines are ignored, <literal>#</literal> is treated as a comment
 delimiter causing the rest of that line to be ignored, and <literal>\</literal>
 causes an immediately following newline to be ignored, allowing indirect host
@@ -2039,7 +2039,7 @@ Preceding the entry with a <literal>!</literal> character causes hosts which
 match that entry to be excluded.
 To only respond to <quote>Direct</quote> queries for a host or pattern,
 it can be followed by the optional <literal>NOBROADCAST</literal> keyword.
-This can be used to prevent a &kdm; server from appearing on menus based on
+This can be used to prevent a &tdm; server from appearing on menus based on
 <quote>Broadcast</quote> queries.</para>
 
 <para>An <quote>Indirect</quote> entry also contains a host name or pattern,
@@ -2057,7 +2057,7 @@ the hop count is used as the TTL.
 -->
 If the indirect host list contains the keyword <literal>CHOOSER</literal>,
 <quote>Indirect</quote> queries are not forwarded, but instead a host chooser
-dialog is displayed by &kdm;. The chooser will send a <quote>Direct</quote>
+dialog is displayed by &tdm;. The chooser will send a <quote>Direct</quote>
 query to each of the remaining host names in the list and offer a menu of
 all the hosts that respond. The host list may contain the keyword
 <literal>BROADCAST</literal>, to make the chooser send a
@@ -2079,21 +2079,21 @@ The formal syntax is
 <screen>
 <userinput>&nbsp;<literal>LISTEN</literal>&nbsp;[<replaceable>interface</replaceable>&nbsp;[<replaceable>multicast&nbsp;list</replaceable>]]</userinput>
 </screen>
-If one or more <literal>LISTEN</literal> lines are specified, &kdm; listens
+If one or more <literal>LISTEN</literal> lines are specified, &tdm; listens
 for &XDMCP; requests only on the specified interfaces.
 <replaceable>interface</replaceable> may be a hostname or IP address
 representing a network interface on this machine, or the wildcard
 <literal>*</literal> to represent all available network interfaces.
 If multicast group addresses are listed on a <literal>LISTEN</literal> line,
-&kdm; joins the multicast groups on the given interface. For IPv6 multicasts,
+&tdm; joins the multicast groups on the given interface. For IPv6 multicasts,
 the IANA has assigned ff0<replaceable>X</replaceable>:0:0:0:0:0:0:12b as the
 permanently assigned range of multicast addresses for &XDMCP;. The
 <replaceable>X</replaceable> in the prefix may be replaced by any valid scope
 identifier, such as 1 for Node-Local, 2 for Link-Local, 5 for Site-Local, and
 so on (see IETF RFC 2373 or its replacement for further details and scope
-definitions). &kdm; defaults to listening on the Link-Local scope address
+definitions). &tdm; defaults to listening on the Link-Local scope address
 ff02:0:0:0:0:0:0:12b to most closely match the IPv4 subnet broadcast behavior. 
-If no <literal>LISTEN</literal> lines are given, &kdm; listens on all
+If no <literal>LISTEN</literal> lines are given, &tdm; listens on all
 interfaces and joins the default &XDMCP; IPv6 multicast group (when
 compiled with IPv6 support).
 To disable listening for &XDMCP; requests altogether, a
@@ -2103,11 +2103,11 @@ the <literal>[Xdmcp]</literal> <option>Enable</option> option is preferred.
 
 </sect1>
 
-<sect1 id="kdm-scripts">
+<sect1 id="tdm-scripts">
 <title>Supplementary programs</title>
 
 <para>
-The following programs are run by &kdm; at various stages of a session.
+The following programs are run by &tdm; at various stages of a session.
 They typically are shell scripts.
 </para>
 
@@ -2119,7 +2119,7 @@ Their first argument is <literal>auto</literal> if the session results
 from an automatic login; otherwise, no arguments are passed to them.
 </para>
 
-<sect2 id="kdmrc-xsetup">
+<sect2 id="tdmrc-xsetup">
 <title>Setup program</title>
 
 <para>
@@ -2156,7 +2156,7 @@ the following environment variables are passed:</para>
  </varlistentry>
 </variablelist>
 
-<para> Note that since &kdm; grabs the keyboard, any other windows will not be
+<para> Note that since &tdm; grabs the keyboard, any other windows will not be
 able to receive keyboard input. They will be able to interact with the mouse,
 however; beware of potential security holes here. If <option>GrabServer</option>
 is set, <filename>Xsetup</filename> will not be able to connect to the display
@@ -2166,7 +2166,7 @@ at all. Resources for this program can be put into the file named by
 
 </sect2>
 
-<sect2 id="kdmrc-xstartup">
+<sect2 id="tdmrc-xstartup">
 <title>Startup program</title>
 
 <para>The <filename>Xstartup</filename> program is run as
@@ -2215,13 +2215,13 @@ the following environment variables are passed:</para>
  </varlistentry>
 </variablelist>
 
-<para>&kdm; waits until this program exits before starting the user session.
-If the exit value of this program is non-zero, &kdm; discontinues the session
+<para>&tdm; waits until this program exits before starting the user session.
+If the exit value of this program is non-zero, &tdm; discontinues the session
 and starts another authentication cycle.</para>
 
 </sect2>
 
-<sect2 id="kdmrc-xsession">
+<sect2 id="tdmrc-xsession">
 <title>Session program</title>
 
 <para>The <filename>Xsession</filename> program is the command which is run
@@ -2295,7 +2295,7 @@ the following environment variables are passed:</para>
 
 </sect2>
 
-<sect2 id="kdmrc-xreset">
+<sect2 id="tdmrc-xreset">
 <title>Reset program</title>
 
 <para>Symmetrical with <filename>Xstartup</filename>, the

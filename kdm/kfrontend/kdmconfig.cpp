@@ -1,6 +1,6 @@
 /*
 
-Config for kdm
+Config for tdm
 
 Copyright (C) 1997, 1998 Steffen Hansen <hansen@kde.org>
 Copyright (C) 2000-2003 Oswald Buddenhagen <ossi@kde.org>
@@ -22,8 +22,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 */
 
-#include "kdmconfig.h"
-#include "kdm_greet.h"
+#include "tdmconfig.h"
+#include "tdm_greet.h"
 
 #include <kapplication.h>
 #include <klocale.h>
@@ -110,7 +110,7 @@ void init_config( void )
 	_hasConsole = _hasConsole && _isLocal && GetCfgInt( C_hasConsole );
 	_authorized = GetCfgInt( C_isAuthorized );
 
-	_stsFile = _dataDir + "/kdmsts";
+	_stsFile = _dataDir + "/tdmsts";
 
 	// Greet String
 	char hostname[256], *ptr;
@@ -138,7 +138,7 @@ void init_config( void )
 			case 's': ptr = tuname.sysname; break;
 			case 'r': ptr = tuname.release; break;
 			case 'm': ptr = tuname.machine; break;
-			default: _greetString += i18n("[fix kdmrc!]"); continue;
+			default: _greetString += i18n("[fix tdmrc!]"); continue;
 			}
 			_greetString += TQString::fromLocal8Bit( ptr );
 		} else

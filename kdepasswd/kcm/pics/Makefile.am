@@ -1,4 +1,4 @@
-picsdir = $(kde_datadir)/kdm/pics/users
+picsdir = $(kde_datadir)/tdm/pics/users
 pics_DATA = Apple.png BeachBall.png Blowfish.png Bug.png \
 	Butterfly.png Car.png Cow.png Daemon.png Dog.png Elephant.png \
 	Flower.png Frog.png Ghost.png Guitar.png Heart.png Konqui.png \

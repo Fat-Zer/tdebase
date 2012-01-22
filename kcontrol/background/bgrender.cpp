@@ -312,7 +312,7 @@ wp_load:
 	}
 
         // _Don't_ use KMimeType, as it relies on ksycoca which we really
-        // don't want in krootimage (kdm context).
+        // don't want in krootimage (tdm context).
         //if ( KMimeType::findByPath( file )->is( "image/svg+xml" ) ) {
         if (file.endsWith(".svg") || file.endsWith(".svgz")) {
 #ifdef HAVE_LIBART
@@ -400,7 +400,7 @@ wp_load:
 
 	// HACK: Use KFileMetaInfo only when we're attached to DCOP.
 	// KFileMetaInfo needs ksycoca and so on, but this code is
-	// used also in krootimage (which in turn is used by kdm).
+	// used also in krootimage (which in turn is used by tdm).
 	if( kapp->dcopClient()->isAttached()) {
 	    KFileMetaInfo metaInfo(file);
 	    if (metaInfo.isValid() && metaInfo.item("Orientation").isValid()) {

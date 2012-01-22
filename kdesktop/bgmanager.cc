@@ -525,7 +525,7 @@ void KBackgroundManager::setPixmap(KPixmap *pm, int hash, int desk)
        m_pDesktop->repaint();
        static bool root_cleared = false;
        if( !root_cleared )
-       { // clear the root window pixmap set by kdm
+       { // clear the root window pixmap set by tdm
           root_cleared = true;
 	  TQTimer::singleShot( 0, this, TQT_SLOT( clearRoot()));
           // but make the pixmap visible until m_pDesktop is visible

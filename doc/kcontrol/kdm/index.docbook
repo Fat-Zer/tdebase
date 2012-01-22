@@ -21,7 +21,7 @@
 <keywordset>
 <keyword>KDE</keyword>
 <keyword>KControl</keyword>
-<keyword>KDM configuration</keyword>
+<keyword>TDM configuration</keyword>
 <keyword>login manager</keyword>
 <keyword>login</keyword>
 </keywordset>
@@ -31,20 +31,20 @@
 <title>Login Manager</title>
 
 <para>Using this module, you can configure the &kde; graphical login
-manager, &kdm;.  You can change how the login screen looks, who has
+manager, &tdm;.  You can change how the login screen looks, who has
 access using the login manager and who can shutdown the
 computer.</para>
 
 <para>In order to organize all of these options, this module is
 divided into six sections: <link
-linkend="kdmconfig-appearance"><guilabel>Appearance</guilabel></link>,
-<link linkend="kdmconfig-font"><guilabel>Font</guilabel></link>, <link
-linkend="kdmconfig-background"><guilabel>Background</guilabel></link>,
+linkend="tdmconfig-appearance"><guilabel>Appearance</guilabel></link>,
+<link linkend="tdmconfig-font"><guilabel>Font</guilabel></link>, <link
+linkend="tdmconfig-background"><guilabel>Background</guilabel></link>,
 <link
-linkend="kdmconfig-sessions"><guilabel>Sessions</guilabel></link>,
-<link linkend="kdmconfig-users"><guilabel>Users</guilabel></link> and
+linkend="tdmconfig-sessions"><guilabel>Sessions</guilabel></link>,
+<link linkend="tdmconfig-users"><guilabel>Users</guilabel></link> and
 <link
-linkend="kdmconfig-convenience"><guilabel>Convenience</guilabel></link>.</para>
+linkend="tdmconfig-convenience"><guilabel>Convenience</guilabel></link>.</para>
 
 <para>You can switch between the sections using the tabs at the top of
 the window.</para>
@@ -55,15 +55,15 @@ Button. You will then be asked for a superuser password.  Entering a
 correct password will allow you to modify the settings of this
 module.</para></note>
 
-<sect2 id="kdmconfig-appearance">
+<sect2 id="tdmconfig-appearance">
 <title>Appearance</title>
 
-<para>From this page you can change the visual appearance of &kdm;,
+<para>From this page you can change the visual appearance of &tdm;,
 &kde;'s graphical login manager.</para>
 
 <para>The greeting string is the title of the login screen. If the
 string contains the word <computeroutput>HOSTNAME</computeroutput> it
-will be translated to the domainless name of the machine &kdm; is
+will be translated to the domainless name of the machine &tdm; is
 installed on.</para>
 
 <para>You can then choose to show either the current system time, a logo
@@ -87,11 +87,11 @@ dialog.</para>
 </itemizedlist>
 
 <para>If you do not specify a logo the default
-<filename>$<envar>TDEDIR</envar>/share/apps/kdm/pics/kdelogo.png</filename>
+<filename>$<envar>TDEDIR</envar>/share/apps/tdm/pics/kdelogo.png</filename>
 will be displayed.</para>
 
 <para>While &kde;'s style depends on the settings of the user logged in,
-the style used by &kdm; can be configured using the <guilabel>GUI
+the style used by &tdm; can be configured using the <guilabel>GUI
 Style</guilabel> option.</para>
 
 <para>Below that, you have two dropdown boxes to choose the language and the
@@ -99,7 +99,7 @@ country for your login box.</para>
 
 </sect2>
 
-<sect2 id="kdmconfig-font">
+<sect2 id="tdmconfig-font">
 <title>Font</title>
 
 <para>From this section of the module you can change the fonts used in
@@ -130,7 +130,7 @@ login window.</para>
 
 </sect2>
 
-<sect2 id="kdmconfig-background">
+<sect2 id="tdmconfig-background">
 <title>Background</title>
 
 <para>Here you can change the desktop background which will be displayed
@@ -269,21 +269,21 @@ stretched to fit all four corners.</para> </listitem>
 
 </sect2>
 
-<sect2 id="kdmconfig-sessions">
+<sect2 id="tdmconfig-sessions">
 <title>Sessions</title>
 
 <para><guilabel>Allow to shutdown</guilabel></para>
 <para>Use this dropdown box to choose who is allowed to shut down:</para>
 <itemizedlist>
 <listitem>
-<para><guilabel>None</guilabel>: No one can shutdown the computer using &kdm;.
+<para><guilabel>None</guilabel>: No one can shutdown the computer using &tdm;.
 You must be logged in, and execute a command.</para>
 </listitem>
 <listitem>
 <para><guilabel>All</guilabel>:  Everyone can shutdown the computer using
-&kdm;.</para>
+&tdm;.</para>
 </listitem>
-<listitem><para><guilabel>Root only</guilabel>: &kdm; requires that the
+<listitem><para><guilabel>Root only</guilabel>: &tdm; requires that the
 <systemitem>root</systemitem> password be entered before shutting down the
 computer.</para></listitem> 
 <listitem><para><guilabel>Console only</guilabel>: The user must be at this
@@ -305,13 +305,13 @@ defaults to:</para>
 
 <para><command>/sbin/init <option>3</option></command></para>
 
-<para>When <guilabel>Show boot options</guilabel> is enabled, &kdm; will on reboot
+<para>When <guilabel>Show boot options</guilabel> is enabled, &tdm; will on reboot
 offer you options for the lilo boot manager. For this feature to work, you will
 need to supply the correct paths to your <command>lilo</command> command and to
 lilo's map file.</para>
 
 
-<sect3 id="kdmconfig-sess">
+<sect3 id="tdmconfig-sess">
 <title>Session types</title>
 
 <para>Define which session types should be accessible from the login
@@ -335,7 +335,7 @@ blank entitled <guilabel>New types</guilabel>, and click
 </sect2>
 
 
-<sect2 id="kdmconfig-users">
+<sect2 id="tdmconfig-users">
 <title>Users</title>
 
 <para>From here you can change the way users are represented in the
@@ -359,7 +359,7 @@ more traditional.  Users will need to type their username, and password
 to gain entrance.  This is the preferred way if you have many users on
 this terminal.</para>
 
-<sect3 id="kdmconfig-showusers">
+<sect3 id="tdmconfig-showusers">
 <title>To show (and sort) or not to show users</title>
 
 <para>Along the right edge of the window are two check boxes:</para>
@@ -376,7 +376,7 @@ effect.</para>
 
 </sect3>
 
-<sect3 id="kdmconfig-whichusers">
+<sect3 id="tdmconfig-whichusers">
 <title>How to determine which users to show and which users to hide</title>
 
 <para>Below the user image box, and above the <guilabel>Show
@@ -395,7 +395,7 @@ users</guilabel> is not checked, this has no effect.  </para></listitem>
 
 </sect3>
 
-<sect3 id="kdmconfig-select">
+<sect3 id="tdmconfig-select">
 <title>Select users</title>
 
 <para>This page contains three listboxes. The large listbox on the left
@@ -413,7 +413,7 @@ to the leftmost box.</para>
 
 </sect3>
 
-<sect3 id="kdmconfig-image">
+<sect3 id="tdmconfig-image">
 <title>Images</title>
 
 <note><para>This section of the manual only applies if <guilabel>Show
@@ -422,9 +422,9 @@ effect.</para></note>
 
 <para>Every user on the system can be represented by a image. The image
 for the user is kept in a file called
-<filename>$<envar>TDEDIR</envar>/share/apps/kdm/pics/users/$<envar>USER</envar>.xpm.</filename>
+<filename>$<envar>TDEDIR</envar>/share/apps/tdm/pics/users/$<envar>USER</envar>.xpm.</filename>
 If the user doesn't have such a file the file
-<filename>$<envar>TDEDIR</envar>/share/apps/kdm/pics/users/default.xpm</filename>
+<filename>$<envar>TDEDIR</envar>/share/apps/tdm/pics/users/default.xpm</filename>
 will be used instead.</para>
 
 <para>To assign a new image to a user just select the user in one of the
@@ -445,7 +445,7 @@ button.</para>
 </sect2>
 
 
-<sect2 id="kdmconfig-convenience">
+<sect2 id="tdmconfig-convenience">
 <title>Convenience</title>
 
 <para>In the <guilabel>convenience</guilabel> tab you can configure some
@@ -467,9 +467,9 @@ the option <guilabel>Enable auto-login</guilabel>.</para>
 
 <para>Automatic login comes in two flavors: <guilabel>truly automatic
 login</guilabel> acts like you would expect automatic login to, &ie;
-&kdm; will automatically login without expecting any input from the
+&tdm; will automatically login without expecting any input from the
 user. Enable this using the <guilabel>Truly automatic login</guilabel>
-option. If this option is not enabled, &kdm; will start normally,
+option. If this option is not enabled, &tdm; will start normally,
 enabling you to login as any user, and will only perform automatic login
 if you kill the X server, &eg; by pressing <keycombo
 action="simul">&Ctrl;&Alt;<keycap>Backspace</keycap></keycombo>.</para>
@@ -504,7 +504,7 @@ password-less login, &eg;
 option allows you to skip the authentication procedure when your X
 server accidentally crashed.  <guilabel>Show previous user</guilabel>
 will show the name of the last login already entered into the login
-field in &kdm;. Some site administrators would consider even this a
+field in &tdm;. Some site administrators would consider even this a
 possible security weakness, because potential attackers then know at
 least one valid login.</para>
 

@@ -19,10 +19,10 @@
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
-#ifndef KDMPIXMAP_H
-#define KDMPIXMAP_H
+#ifndef TDMPIXMAP_H
+#define TDMPIXMAP_H
 
-#include "kdmitem.h"
+#include "tdmitem.h"
 
 //#include <tqrect.h>
 #include <tqpixmap.h>

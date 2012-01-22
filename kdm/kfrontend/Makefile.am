@@ -1,31 +1,31 @@
-# use 'make GENKDMCONF_FLAGS=... install' to override
-GENKDMCONF_FLAGS = --no-old
+# use 'make GENTDMCONF_FLAGS=... install' to override
+GENTDMCONF_FLAGS = --no-old
 
 SUBDIRS = themer themes pics sessions
 
 AM_CPPFLAGS = -I$(srcdir)/../backend -I.. -I$(top_srcdir)/kcontrol/background \
-    -I$(top_srcdir)/kdmlib $(all_includes)
+    -I$(top_srcdir)/tdmlib $(all_includes)
 
-bin_PROGRAMS = kdm_config kdm_greet krootimage genkdmconf kdmctl
+bin_PROGRAMS = tdm_config tdm_greet krootimage gentdmconf tdmctl
 
-kdm_config_SOURCES = kdm_config.c
-kdm_config_LDADD = $(LIBRESOLV) $(LIBSOCKET) $(LIBPOSIX4)
+tdm_config_SOURCES = tdm_config.c
+tdm_config_LDADD = $(LIBRESOLV) $(LIBSOCKET) $(LIBPOSIX4)
 
-kdm_greet_SOURCES = \
-    kdm_greet.c \
-    kdmconfig.cpp \
-    kdmclock.cpp \
+tdm_greet_SOURCES = \
+    tdm_greet.c \
+    tdmconfig.cpp \
+    tdmclock.cpp \
     kconsole.cpp \
     kfdialog.cpp \
     kgdialog.cpp \
     kchooser.cpp \
     kgverify.cpp \
-    kdmshutdown.cpp \
-    kdmadmindialog.cpp \
+    tdmshutdown.cpp \
+    tdmadmindialog.cpp \
     kgreeter.cpp \
     kgapp.cpp
-kdm_greet_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_TDECORE) $(LIB_TDEUI) -ltdefx $(LIB_KIO) -lktexteditor
-kdm_greet_LDADD = themer/libkdmthemer.a $(LIB_TDEUI) $(XTESTLIB) $(LIBPOSIX4)
+tdm_greet_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_TDECORE) $(LIB_TDEUI) -ltdefx $(LIB_KIO) -lktexteditor
+tdm_greet_LDADD = themer/libtdmthemer.a $(LIB_TDEUI) $(XTESTLIB) $(LIBPOSIX4)
 
 krootimage_SOURCES = krootimage.cpp
 krootimage_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_TDECORE) $(LIB_TDEUI) -ltdefx $(LIB_KIO) -lktexteditor
@@ -33,35 +33,35 @@ krootimage_LDADD = $(top_builddir)/kcontrol/background/libbgnd.la $(LIB_KIO)
 
 METASOURCES = AUTO
 
-genkdmconf_SOURCES = genkdmconf.c
-genkdmconf_LDFLAGS = $(X_LDFLAGS) $(X_RPATH)
-genkdmconf_LDADD = $(LIB_X11)
+gentdmconf_SOURCES = gentdmconf.c
+gentdmconf_LDFLAGS = $(X_LDFLAGS) $(X_RPATH)
+gentdmconf_LDADD = $(LIB_X11)
 
-kdmctl_SOURCES = kdmctl.c
-kdmctl_LDADD = $(LIBSOCKET)
+tdmctl_SOURCES = tdmctl.c
+tdmctl_LDADD = $(LIBSOCKET)
 
-install-data-local: genkdmconf
-	./genkdmconf --in $(DESTDIR)$(kde_confdir)/kdm --no-in-notice --face-src $(srcdir)/pics $(GENKDMCONF_FLAGS)
+install-data-local: gentdmconf
+	./gentdmconf --in $(DESTDIR)$(kde_confdir)/tdm --no-in-notice --face-src $(srcdir)/pics $(GENTDMCONF_FLAGS)
 
 messages:
-	$(XGETTEXT) `find . -name "*.cpp"` -o $(podir)/kdmgreet.pot
+	$(XGETTEXT) `find . -name "*.cpp"` -o $(podir)/tdmgreet.pot
 
 noinst_HEADERS = \
-    kdm_greet.h \
-    kdmconfig.h \
-    kdmclock.h \
+    tdm_greet.h \
+    tdmconfig.h \
+    tdmclock.h \
     kconsole.h \
     kfdialog.h \
     kgdialog.h \
     kchooser.h \
     kgverify.h \
-    kdmshutdown.h \
+    tdmshutdown.h \
     kgreeter.h \
     kgapp.h \
     \
     krootimage.h 
 
-kdm_greet_COMPILE_FIRST = ../config.ci
-kdm_config_COMPILE_FIRST = ../config.ci
-genkdmconf_COMPILE_FIRST = ../config.ci
+tdm_greet_COMPILE_FIRST = ../config.ci
+tdm_config_COMPILE_FIRST = ../config.ci
+gentdmconf_COMPILE_FIRST = ../config.ci
 

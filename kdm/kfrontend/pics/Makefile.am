@@ -1,5 +1,5 @@
 
-picsdir = $(kde_datadir)/kdm/pics
+picsdir = $(kde_datadir)/tdm/pics
 pics_DATA = kdelogo.png kdelogo-crystal.png shutdown.jpg
 
 usersdir = $(picsdir)/users

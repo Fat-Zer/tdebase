@@ -1,4 +1,4 @@
-sessionsdir = $(kde_datadir)/kdm/sessions
+sessionsdir = $(kde_datadir)/tdm/sessions
 sessions_DATA = \
     admin.desktop tde.desktop gnome.desktop \
     9wm.desktop \

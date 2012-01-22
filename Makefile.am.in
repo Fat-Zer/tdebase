@@ -2,10 +2,10 @@
 ## (C) 1997 Stephan Kulow
 
 COMPILE_FIRST = libkonq
-COMPILE_AFTER_kdmlib = kdesktop kicker ksmserver
+COMPILE_AFTER_tdmlib = kdesktop kicker ksmserver
 COMPILE_BEFORE_konqueror = kate
 COMPILE_BEFORE_kcontrol = kicker
-COMPILE_AFTER_kcontrol = kdm kdesktop
+COMPILE_AFTER_kcontrol = tdm kdesktop
 
 AUTOMAKE_OPTIONS = foreign 1.6.1
 

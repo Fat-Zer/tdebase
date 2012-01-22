@@ -22,7 +22,7 @@
 #ifndef KDELABEL_H
 #define KDELABEL_H
 
-#include "kdmitem.h"
+#include "tdmitem.h"
 
 #include <tqcolor.h>
 #include <tqfont.h>

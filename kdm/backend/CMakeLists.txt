@@ -21,11 +21,11 @@ link_directories(
   ${DBUS_TQT_LIBRARY_DIRS}
 )
 
-##### kdm (executable) ##########################
+##### tdm (executable) ##########################
 
 add_custom_command( OUTPUT config.ci
-  COMMAND perl -w ${CMAKE_SOURCE_DIR}/kdm/confproc.pl ${CMAKE_SOURCE_DIR}/kdm/config.def config.ci
-  DEPENDS ${CMAKE_SOURCE_DIR}/kdm/confproc.pl ${CMAKE_SOURCE_DIR}/kdm/config.def )
+  COMMAND perl -w ${CMAKE_SOURCE_DIR}/tdm/confproc.pl ${CMAKE_SOURCE_DIR}/tdm/config.def config.ci
+  DEPENDS ${CMAKE_SOURCE_DIR}/tdm/confproc.pl ${CMAKE_SOURCE_DIR}/tdm/config.def )
 
 set_property( SOURCE auth.c APPEND PROPERTY OBJECT_DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/config.ci )
 
@@ -35,7 +35,7 @@ else()
   set( XDMCP_LIBRARIES "" )
 endif()
 
-tde_add_executable( kdm
+tde_add_executable( tdm
   SOURCES
     access.c auth.c bootman.c choose.c client.c consolekit.c
     ctrl.c daemon.c dm.c dpylist.c error.c genauth.c

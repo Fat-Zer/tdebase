@@ -104,7 +104,7 @@ SAKDlg::SAKDlg(LockProcess *parent)
     installEventFilter(this);
 
     mSAKProcess = new KProcess;
-    *mSAKProcess << "kdmtsak";
+    *mSAKProcess << "tdmtsak";
     connect(mSAKProcess, TQT_SIGNAL(processExited(KProcess*)), this, TQT_SLOT(slotSAKProcessExited()));
     mSAKProcess->start();
 }

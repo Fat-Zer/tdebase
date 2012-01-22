@@ -1,4 +1,4 @@
-This change log contains only changes relevant to the KDM configuration,
+This change log contains only changes relevant to the TDM configuration,
 startup and packaging. Bug fixes are not listed, and feature changes only
 if they affect the configuration.
 
@@ -28,7 +28,7 @@ if they affect the configuration.
 
 2005-01-09  Oswald Buddenhagen <ossi@kde.org>
 
-	* Merged sessreg into kdm. Option UseSessReg.
+	* Merged sessreg into tdm. Option UseSessReg.
 
 2004-08-14  Oswald Buddenhagen <ossi@kde.org>
 
@@ -38,7 +38,7 @@ if they affect the configuration.
 2004-07-28  Oswald Buddenhagen <ossi@kde.org>
 
 	* Added control sockets. Control FiFos are now obsolete.
-	  Added control socket command line client 'kdmctl'.
+	  Added control socket command line client 'tdmctl'.
 	* The Setup program is now run even for automatic logins.
 	  Setup, Startup and Reset have the arg "auto" for automatic logins.
 
@@ -80,7 +80,7 @@ if they affect the configuration.
 
 2004-03-16  Oswald Buddenhagen <ossi@kde.org>
 
-	* Changed AllowClose default to true; only the default kdmrc
+	* Changed AllowClose default to true; only the default tdmrc
 	  disables it for local display now.
 
 2004-03-11  Chris Cheney <ccheney@cheney.cx>
@@ -96,12 +96,12 @@ if they affect the configuration.
 
 2004-02-28  Oswald Buddenhagen <ossi@kde.org>
 
-	* The default Xsession no longer tries to merge kdm's PATH into the
+	* The default Xsession no longer tries to merge tdm's PATH into the
 	  one set up by the shell startup scripts. Instead, kde.desktop
 	  contains a full pathname and starttde fixes up PATH if necessary.
 	* The default Xsession will emulate the startup behaviour of more
 	  shells, in particular bash, zsh and csh/tcsh.
-	* Setting up the session log is now done by kdm, not the Session
+	* Setting up the session log is now done by tdm, not the Session
 	  script; option ClientLogFile.
 
 2004-01-25  Oswald Buddenhagen <ossi@kde.org>
@@ -128,15 +128,15 @@ if they affect the configuration.
 
 2003-10-27  Oswald Buddenhagen <ossi@kde.org>
 
-	* KDM now complies with the input model of PAM. The greeter has an 
+	* TDM now complies with the input model of PAM. The greeter has an 
 	  interface for conversation plugins, so alternative authentication
 	  mechanisms can be handled; options PluginsLogin & PluginsShutdown.
 	* Password-less and automatic logins now use a separate PAM service
-	  (${KDM_PAM_SERVICE}-np).
+	  (${TDM_PAM_SERVICE}-np).
 
 2003-10-17  Oswald Buddenhagen <ossi@kde.org>
 
-	* Add --with-kdm-xconsole configure switch. No need to patch
+	* Add --with-tdm-xconsole configure switch. No need to patch
 	  Makefile.am to enable the built-in xconsole anymore.
 
 2003-09-23  Oswald Buddenhagen <ossi@kde.org>
@@ -148,7 +148,7 @@ if they affect the configuration.
 	  - "custom" to ~/.xsession
 	* The previous session type choice is now saved in a different file
 	  (~/.dmrc) in a different format (ini-file); the SessSaveFile option
-	  is gone. Optionally KDM can be configured to store all .dmrc files
+	  is gone. Optionally TDM can be configured to store all .dmrc files
 	  in a common directory (option DmrcDir); this can be useful for AFS
 	  based installations.
 	* The location of the administratively set user faces is now specified
@@ -158,7 +158,7 @@ if they affect the configuration.
 	The spec for the above changes is shared with GDM, so packagers should
 	choose common directories.
 
-	* The kdmsts file moved to /var/lib/kdm by default; option DataDir.
+	* The tdmsts file moved to /var/lib/tdm by default; option DataDir.
 	* Nuked the AutoLoginSession option; i don't think it was useful at all
 	  and it can be emulated anyway.
 
@@ -192,7 +192,7 @@ if they affect the configuration.
 	  This code is not built by default; uncomment the first three lines
 	  in kfrontend/Makefile.am to enable it.
 	* The DaemonMode option is gone. The command line switches -daemon and
-	  -nodaemon still exist, but are mostly unnecessary, as KDM can decide
+	  -nodaemon still exist, but are mostly unnecessary, as TDM can decide
 	  what to do based on the parent process ID.
 	* The AutoLogin option and the -autolog/-noautolog switches are gone.
 	* The AutoLogin1st option is gone.
@@ -207,11 +207,11 @@ if they affect the configuration.
 
 2002-08-10  Oswald Buddenhagen <ossi@kde.org>
 
-	* Renamed kdmdesktop to krootimage, moved it back into the KDM source
+	* Renamed tdmdesktop to krootimage, moved it back into the TDM source
 	  tree, and changed its command line
 	* krootimage will be automatically invoked by the greeter by default;
 	  option UseBackground
-	* Chucked out the [Desktop0] section from kdmrc. Instead, the
+	* Chucked out the [Desktop0] section from tdmrc. Instead, the
 	  location of the config file containing such a section is specified
 	  with the BackgroundRc option.
 	* User images can now be optionally fetched from the users's home
@@ -231,7 +231,7 @@ if they affect the configuration.
 2002-03-10  Oswald Buddenhagen <ossi@kde.org>
 
 	* Added InteractiveSd option. This is not really implemented yet,
-	  so enabling it just makes KDM deny the existence of the shutdown
+	  so enabling it just makes TDM deny the existence of the shutdown
 	  condition/timing options.
 	* The Setup script is now executed synchronously. Long-lasting
 	  commands should be put in the background explicitly.
@@ -259,7 +259,7 @@ if they affect the configuration.
 
 	* The defaults of the options Xservers, Session, Setup, Startup, 
 	  Reset and PidFile are now back to the saner XDM defaults,
-	  so KDM works even without config files.
+	  so TDM works even without config files.
 	* Changed option ShowUsers: All -> NotHidden
 	* Renamed the option Users to SelectedUsers and NoUsers to HiddenUsers.
 	* The GUIStyle option now groks all installed widget styles.
@@ -288,9 +288,9 @@ if they affect the configuration.
 
 2001-07-10  Oswald Buddenhagen <ossi@kde.org>
 
-	* Added the tool 'genkdmconf'. It's supposed to create a suitable
-	  configuration for KDM during 'make install' by merging new defaults
-	  with a previous XDM/KDM config (if any is found).
+	* Added the tool 'gentdmconf'. It's supposed to create a suitable
+	  configuration for TDM during 'make install' by merging new defaults
+	  with a previous XDM/TDM config (if any is found).
 
 2001-07-03  Oswald Buddenhagen <ossi@kde.org>
 
@@ -318,26 +318,26 @@ if they affect the configuration.
 	  the DebugLevel resource is gone
 	* The ErrorLogFile resource is gone
 	* The greeter module libKdmGreet.so has been converted to an
-	  executable named kdm_greet; the external config parser is now
-	  named kdm_config. The resource GreeterLib and the command line
+	  executable named tdm_greet; the external config parser is now
+	  named tdm_config. The resource GreeterLib and the command line
 	  option -getcfg (and -cfg2get) are gone, as the locations of the
 	  config parser and greeter are derived from the location of the
-	  kdm executable
-	* The config files are all located in ${kde_confdir}/kdm now; the
+	  tdm executable
+	* The config files are all located in ${kde_confdir}/tdm now; the
 	  defaults for Setup & Session were adapted to this.
-	* The keys in kdmrc were reorganized:
-	  - [KDM]/ShutdownButton -> [X-<dpy>-Greeter]/(ShutdownButton & 
+	* The keys in tdmrc were reorganized:
+	  - [TDM]/ShutdownButton -> [X-<dpy>-Greeter]/(ShutdownButton & 
 			ShutdownNeedsRoot)
-	  - [KDM]/Shutdown -> [Shutdown]/HaltCmd
-	  - [KDM]/Restart -> [Shutdown]/RebootCmd
-	  - [KDM]/LogoArea -> [X-*-Greeter]/ {None,Logo,Clock}
-	  - remaining keys from [KDM] -> [X-*-Greeter]/
+	  - [TDM]/Shutdown -> [Shutdown]/HaltCmd
+	  - [TDM]/Restart -> [Shutdown]/RebootCmd
+	  - [TDM]/LogoArea -> [X-*-Greeter]/ {None,Logo,Clock}
+	  - remaining keys from [TDM] -> [X-*-Greeter]/
 	  - [Lilo]/Lilo -> [Shutdown]/UseLilo
 	  - [Lilo]/LiloCommand -> [Shutdown]/LiloCmd
 	  - [Lilo]/LiloMap -> [Shutdown]/
 	  - [Locale]/Language -> [X-*-Greeter]/ (Country key dropped)
-	* KDM will no longer use kdm-config; most of its resources were
-	  absorbed into kdmrc:
+	* TDM will no longer use tdm-config; most of its resources were
+	  absorbed into tdmrc:
 	  - Servers -> [General]/Xservers
 	  - RequestPort -> [Xdmcp]/(Port & Enable)
 	  - DaemonMode -> [General]/
@@ -366,11 +366,11 @@ if they affect the configuration.
 	* In GreetString the HOSTNAME substitution was replaced with the
 	  %%, %d, %h, %n, %s, %r & %m expandos
 	* EchoMode does not understand "NoStars" any more. Use "NoEcho".
-	* Defaults changed: AuthDir to /var/lib/kdm, KeyFile to
-	  $kdm_confdir/kdmkeys, Xservers to $kdm_confdir/Xservers, Xaccess to
-	  $kdm_confdir/Xaccess, Startup to $kdm_confdir/Xstartup, Reset to
-	  $kdm_confdir/Xreset, removed kde2 from SessionTypes
-	* The previous user is now saved in $kdm_confdir/kdmsts, not kdmrc
+	* Defaults changed: AuthDir to /var/lib/tdm, KeyFile to
+	  $tdm_confdir/tdmkeys, Xservers to $tdm_confdir/Xservers, Xaccess to
+	  $tdm_confdir/Xaccess, Startup to $tdm_confdir/Xstartup, Reset to
+	  $tdm_confdir/Xreset, removed kde2 from SessionTypes
+	* The previous user is now saved in $tdm_confdir/tdmsts, not tdmrc
 	* Added option SessSaveFile, defaulting to .wmrc
 	* Command line option changes:
 	  - -server, -udpPort, -resources, -session and -xrm are gone
@@ -386,11 +386,11 @@ if they affect the configuration.
 
 	* %DMNAME% and %DMPATH% are expanded in string resources;
 	  changed the defaults for PidFile and ConfigFile accordingly -
-	  the latter resulting in KDM now using kdm-config, NOT xdm-config
+	  the latter resulting in TDM now using tdm-config, NOT xdm-config
 	* Use external config parser to merge platform-specific (that is,
 	  KDE-like) configuration data into the XDM resources; command line
 	  options -getcfg (default %DMPATH%_getcfg) and -cfg2get (no default,
-	  meaning kdm_getcfg will use $kde_confdir/kdmrc).
+	  meaning tdm_getcfg will use $kde_confdir/tdmrc).
 	* Changed "kde" to "kde2" in the default SessionTypes
 	* Stolen idea for console mode handling from dtlogin; options
 	  ConsoleMode and AllowConsoleMode are gone; extension to Xservers
@@ -427,13 +427,13 @@ if they affect the configuration.
 	  resource NoPassUsers
 	* Added auto-re-login on XServer crash; resource & option AutoReLogin
 
-	The kdmrc options and xdm-config resources are "ORed", i.e., if
+	The tdmrc options and xdm-config resources are "ORed", i.e., if
 	either is enabled, the function is enabled.
 	The command line options -autolog/-noautolog and the resource AutoLogin
 	can be used to disable auto-login and password-less login at once.
 
 	* Added displaying the previously logged in user in the "Login"
-	  field; option ShowPrevious. The previous user is saved in kdmrc,
+	  field; option ShowPrevious. The previous user is saved in tdmrc,
 	  section [Previous].
 
 2000-12-07  Oswald Buddenhagen <ossi@kde.org>
@@ -454,8 +454,8 @@ if they affect the configuration.
 
 2000-10-10  Steffen Hansen <hansen@kde.org>
 
-	* Made kdmdesktop read the [Desktop0] section from kdmrc instead
-	  of kdmdesktoprc.
+	* Made tdmdesktop read the [Desktop0] section from tdmrc instead
+	  of tdmdesktoprc.
 
 2000-09-07  Waldo Bastian <bastian@kde.org>
 
@@ -483,8 +483,8 @@ if they affect the configuration.
 
 1999-11-15  Matthias Hoelzer-Kluepfel <hoelzer@kde.org>
 
-	* kdmdesktop replaced with ../kdesktop/kdmdesktop. Uses new config
-	  file (kdmdesktoprc) with new options (all in section [Desktop0]):
+	* tdmdesktop replaced with ../kdesktop/tdmdesktop. Uses new config
+	  file (tdmdesktoprc) with new options (all in section [Desktop0]):
 
 1999-07-01  Steffen Hansen <hansen@kde.org>
 
@@ -494,7 +494,7 @@ if they affect the configuration.
 
 	* Added next boot OS selection via LiLo; options [Lilo] Lilo,
 	  LiloCommand & LiloMap
-	* Added button to switch to console mode; option [KDM] ConsoleMode
+	* Added button to switch to console mode; option [TDM] ConsoleMode
 
 1999-03-01  Stephan Kulow <coolo@kde.org>
 
@@ -502,7 +502,7 @@ if they affect the configuration.
 
 1998-10-08  Thomas Tanghus <tanghus@earthling.net>
 
-	* [KDMDESKTOP] option changes:
+	* [TDMDESKTOP] option changes:
 	  - BackgroundPictureTile, BackgroundPictureCenter, FancyBackground ->
 	    BackgroundPictureMode {None,Tile,Center,Scale,
 	              TopLeft,TopRight,BottomLeft,BottomRight,Fancy}
@@ -513,7 +513,7 @@ if they affect the configuration.
 
 	* Change defaults:
 	  - Setup: "" -> XDMDIR/Xsetup
-	  - PidFile: "" -> FreeBSD: /var/run/kdm.pid, others: XDMDIR/kdm-pid
+	  - PidFile: "" -> FreeBSD: /var/run/tdm.pid, others: XDMDIR/tdm-pid
 	  - Session: "XBINDIR/xterm -ls" -> XDMDIR/Xsession
 	  - UserPath & SystemPath: no /usr/ucb for Linux & FreeBSD
 

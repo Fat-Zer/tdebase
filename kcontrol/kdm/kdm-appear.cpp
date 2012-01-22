@@ -44,13 +44,13 @@
 #include <kurldrag.h>
 #include <kimagefilepreview.h>
 
-#include "kdm-appear.h"
+#include "tdm-appear.h"
 #include "kbackedcombobox.h"
 
 extern KSimpleConfig *config;
 
 
-KDMAppearanceWidget::KDMAppearanceWidget(TQWidget *parent, const char *name)
+TDMAppearanceWidget::TDMAppearanceWidget(TQWidget *parent, const char *name)
   : TQWidget(parent, name)
 {
   TQString wtstr;
@@ -74,9 +74,9 @@ KDMAppearanceWidget::KDMAppearanceWidget(TQWidget *parent, const char *name)
   connect(greetstr_lined, TQT_SIGNAL(textChanged(const TQString&)),
       TQT_SLOT(changed()));
   hlay->addWidget(greetstr_lined);
-  wtstr = i18n("This is the \"headline\" for KDM's login window. You may want to "
+  wtstr = i18n("This is the \"headline\" for TDM's login window. You may want to "
            "put some nice greeting or information about the operating system here.<p>"
-           "KDM will substitute the following character pairs with the "
+           "TDM will substitute the following character pairs with the "
            "respective contents:<br><ul>"
            "<li>%d -> current display</li>"
            "<li>%h -> host name, possibly with domain name</li>"
@@ -127,7 +127,7 @@ KDMAppearanceWidget::KDMAppearanceWidget(TQWidget *parent, const char *name)
   hglay->addWidget(logoLabel, 1, 0);
   hglay->addWidget(logobutton, 1, 1, Qt::AlignCenter);
   hglay->addRowSpacing(1, 110);
-  wtstr = i18n("Click here to choose an image that KDM will display. "
+  wtstr = i18n("Click here to choose an image that TDM will display. "
 	       "You can also drag and drop an image onto this button "
 	       "(e.g. from Konqueror).");
   TQWhatsThis::add( logoLabel, wtstr );
@@ -177,7 +177,7 @@ KDMAppearanceWidget::KDMAppearanceWidget(TQWidget *parent, const char *name)
   connect(compositorcombo, TQT_SIGNAL(activated(int)), TQT_SLOT(changed()));
   hglay->addWidget(label, 0, 0);
   hglay->addWidget(compositorcombo, 0, 1);
-  wtstr = i18n("Choose a compositor to be used in KDM.  Note that the chosen compositor will continue to run after login.");
+  wtstr = i18n("Choose a compositor to be used in TDM.  Note that the chosen compositor will continue to run after login.");
   TQWhatsThis::add( label, wtstr );
   TQWhatsThis::add( compositorcombo, wtstr );
 
@@ -190,7 +190,7 @@ KDMAppearanceWidget::KDMAppearanceWidget(TQWidget *parent, const char *name)
   hglay->addWidget(label, 1, 0);
   hglay->addWidget(guicombo, 1, 1);
   wtstr = i18n("You can choose a basic GUI style here that will be "
-        "used by KDM only.");
+        "used by TDM only.");
   TQWhatsThis::add( label, wtstr );
   TQWhatsThis::add( guicombo, wtstr );
 
@@ -203,7 +203,7 @@ KDMAppearanceWidget::KDMAppearanceWidget(TQWidget *parent, const char *name)
   hglay->addWidget(label, 2, 0);
   hglay->addWidget(colcombo, 2, 1);
   wtstr = i18n("You can choose a basic Color Scheme here that will be "
-        "used by KDM only.");
+        "used by TDM only.");
   TQWhatsThis::add( label, wtstr );
   TQWhatsThis::add( colcombo, wtstr );
 
@@ -215,7 +215,7 @@ KDMAppearanceWidget::KDMAppearanceWidget(TQWidget *parent, const char *name)
   connect(echocombo, TQT_SIGNAL(activated(int)), TQT_SLOT(changed()));
   hglay->addWidget(label, 3, 0);
   hglay->addWidget(echocombo, 3, 1);
-  wtstr = i18n("You can choose whether and how KDM shows your password when you type it.");
+  wtstr = i18n("You can choose whether and how TDM shows your password when you type it.");
   TQWhatsThis::add( label, wtstr );
   TQWhatsThis::add( echocombo, wtstr );
 
@@ -232,7 +232,7 @@ KDMAppearanceWidget::KDMAppearanceWidget(TQWidget *parent, const char *name)
   hbox->setColStretch(1, 1);
   hbox->addWidget(label, 1, 0);
   hbox->addWidget(langcombo, 1, 1);
-  wtstr = i18n("Here you can choose the language used by KDM. This setting does not affect"
+  wtstr = i18n("Here you can choose the language used by TDM. This setting does not affect"
     " a user's personal settings; that will take effect after login.");
   TQWhatsThis::add( label, wtstr );
   TQWhatsThis::add( langcombo, wtstr );
@@ -255,7 +255,7 @@ KDMAppearanceWidget::KDMAppearanceWidget(TQWidget *parent, const char *name)
 
 }
 
-void KDMAppearanceWidget::makeReadOnly()
+void TDMAppearanceWidget::makeReadOnly()
 {
     disconnect( logobutton, TQT_SIGNAL(clicked()),
 		this, TQT_SLOT(slotLogoButtonClicked()) );
@@ -274,7 +274,7 @@ void KDMAppearanceWidget::makeReadOnly()
     sakbox->setEnabled(false);
 }
 
-void KDMAppearanceWidget::loadLanguageList(KLanguageButton *combo)
+void TDMAppearanceWidget::loadLanguageList(KLanguageButton *combo)
 {
   TQStringList langlist = KGlobal::dirs()->findAllResources("locale",
 			TQString::fromLatin1("*/entry.desktop"));
@@ -293,7 +293,7 @@ void KDMAppearanceWidget::loadLanguageList(KLanguageButton *combo)
   }
 }
 
-void KDMAppearanceWidget::loadColorSchemes(KBackedComboBox *combo)
+void TDMAppearanceWidget::loadColorSchemes(KBackedComboBox *combo)
 {
   // XXX: Global + local schemes
   TQStringList list = KGlobal::dirs()->
@@ -314,7 +314,7 @@ void KDMAppearanceWidget::loadColorSchemes(KBackedComboBox *combo)
   }
 }
 
-void KDMAppearanceWidget::loadGuiStyles(KBackedComboBox *combo)
+void TDMAppearanceWidget::loadGuiStyles(KBackedComboBox *combo)
 {
   // XXX: Global + local schemes
   TQStringList list = KGlobal::dirs()->
@@ -340,10 +340,10 @@ void KDMAppearanceWidget::loadGuiStyles(KBackedComboBox *combo)
   }
 }
 
-bool KDMAppearanceWidget::setLogo(TQString logo)
+bool TDMAppearanceWidget::setLogo(TQString logo)
 {
     TQString flogo = logo.isEmpty() ?
-                    locate("data", TQString::fromLatin1("kdm/pics/kdelogo.png") ) :
+                    locate("data", TQString::fromLatin1("tdm/pics/kdelogo.png") ) :
                     logo;
     TQImage p(flogo);
     if (p.isNull())
@@ -358,10 +358,10 @@ bool KDMAppearanceWidget::setLogo(TQString logo)
 }
 
 
-void KDMAppearanceWidget::slotLogoButtonClicked()
+void TDMAppearanceWidget::slotLogoButtonClicked()
 {
     KImageIO::registerFormats();
-    KFileDialog dialogue(locate("data", TQString::fromLatin1("kdm/pics/")),
+    KFileDialog dialogue(locate("data", TQString::fromLatin1("tdm/pics/")),
 			 KImageIO::pattern( KImageIO::Reading ),
 			 this, 0, true);
     dialogue.setOperationMode( KFileDialog::Opening );
@@ -377,14 +377,14 @@ void KDMAppearanceWidget::slotLogoButtonClicked()
 }
 
 
-void KDMAppearanceWidget::slotAreaRadioClicked(int id)
+void TDMAppearanceWidget::slotAreaRadioClicked(int id)
 {
     logobutton->setEnabled( id == KdmLogo );
     logoLabel->setEnabled( id == KdmLogo );
 }
 
 
-bool KDMAppearanceWidget::eventFilter(TQObject *, TQEvent *e)
+bool TDMAppearanceWidget::eventFilter(TQObject *, TQEvent *e)
 {
   if (e->type() == TQEvent::DragEnter) {
     iconLoaderDragEnterEvent((TQDragEnterEvent *) e);
@@ -399,7 +399,7 @@ bool KDMAppearanceWidget::eventFilter(TQObject *, TQEvent *e)
   return false;
 }
 
-void KDMAppearanceWidget::iconLoaderDragEnterEvent(TQDragEnterEvent *e)
+void TDMAppearanceWidget::iconLoaderDragEnterEvent(TQDragEnterEvent *e)
 {
   e->accept(KURLDrag::canDecode(e));
 }
@@ -407,7 +407,7 @@ void KDMAppearanceWidget::iconLoaderDragEnterEvent(TQDragEnterEvent *e)
 
 KURL *decodeImgDrop(TQDropEvent *e, TQWidget *wdg);
 
-void KDMAppearanceWidget::iconLoaderDropEvent(TQDropEvent *e)
+void TDMAppearanceWidget::iconLoaderDropEvent(TQDropEvent *e)
 {
     KURL pixurl;
     bool istmp;
@@ -418,7 +418,7 @@ void KDMAppearanceWidget::iconLoaderDropEvent(TQDropEvent *e)
 	// we gotta check if it is a non-local file and make a tmp copy at the hd.
 	if(!url->isLocalFile()) {
 	    pixurl.setPath(KGlobal::dirs()->resourceDirs("data").last() +
-		     "kdm/pics/" + url->fileName());
+		     "tdm/pics/" + url->fileName());
 	    KIO::NetAccess::copy(*url, pixurl, parentWidget());
 	    istmp = true;
 	} else {
@@ -441,7 +441,7 @@ void KDMAppearanceWidget::iconLoaderDropEvent(TQDropEvent *e)
 }
 
 
-void KDMAppearanceWidget::save()
+void TDMAppearanceWidget::save()
 {
   config->setGroup("X-*-Greeter");
 
@@ -468,7 +468,7 @@ void KDMAppearanceWidget::save()
 }
 
 
-void KDMAppearanceWidget::load()
+void TDMAppearanceWidget::load()
 {
   config->setGroup("X-*-Greeter");
 
@@ -520,7 +520,7 @@ void KDMAppearanceWidget::load()
 }
 
 
-void KDMAppearanceWidget::defaults()
+void TDMAppearanceWidget::defaults()
 {
   greetstr_lined->setText( i18n("Welcome to %n") );
   logoRadio->setChecked( true );
@@ -537,18 +537,18 @@ void KDMAppearanceWidget::defaults()
   langcombo->setCurrentItem( "en_US" );
 }
 
-TQString KDMAppearanceWidget::quickHelp() const
+TQString TDMAppearanceWidget::quickHelp() const
 {
-  return i18n("<h1>KDM - Appearance</h1> Here you can configure the basic appearance"
-    " of the KDM login manager, i.e. a greeting string, an icon etc.<p>"
-    " For further refinement of KDM's appearance, see the \"Font\" and \"Background\" "
+  return i18n("<h1>TDM - Appearance</h1> Here you can configure the basic appearance"
+    " of the TDM login manager, i.e. a greeting string, an icon etc.<p>"
+    " For further refinement of TDM's appearance, see the \"Font\" and \"Background\" "
     " tabs.");
 }
 
 
-void KDMAppearanceWidget::changed()
+void TDMAppearanceWidget::changed()
 {
   emit changed(true);
 }
 
-#include "kdm-appear.moc"
+#include "tdm-appear.moc"

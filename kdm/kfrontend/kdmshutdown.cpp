@@ -22,8 +22,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 */
 
-#include "kdmshutdown.h"
-#include "kdm_greet.h"
+#include "tdmshutdown.h"
+#include "tdm_greet.h"
 
 #include <kapplication.h>
 #include <kseparator.h>
@@ -59,10 +59,10 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 extern bool has_twin;
 
-int KDMShutdownBase::curPlugin = -1;
-PluginList KDMShutdownBase::pluginList;
+int TDMShutdownBase::curPlugin = -1;
+PluginList TDMShutdownBase::pluginList;
 
-KDMShutdownBase::KDMShutdownBase( int _uid, TQWidget *_parent )
+TDMShutdownBase::TDMShutdownBase( int _uid, TQWidget *_parent )
 	: inherited( _parent )
 	, box( new TQVBoxLayout( this, KDmh, KDsh ) )
 #ifdef HAVE_VTS
@@ -79,14 +79,14 @@ KDMShutdownBase::KDMShutdownBase( int _uid, TQWidget *_parent )
 {
 }
 
-KDMShutdownBase::~KDMShutdownBase()
+TDMShutdownBase::~TDMShutdownBase()
 {
 	hide();
 	delete verify;
 }
 
 void
-KDMShutdownBase::complete( TQWidget *prevWidget )
+TDMShutdownBase::complete( TQWidget *prevWidget )
 {
 	TQSizePolicy fp( TQSizePolicy::Fixed, TQSizePolicy::Fixed );
 
@@ -143,7 +143,7 @@ KDMShutdownBase::complete( TQWidget *prevWidget )
 }
 
 void
-KDMShutdownBase::slotActivatePlugMenu()
+TDMShutdownBase::slotActivatePlugMenu()
 {
 	if (needRoot) {
 		TQPopupMenu *cmnu = verify->getPlugMenu();
@@ -155,7 +155,7 @@ KDMShutdownBase::slotActivatePlugMenu()
 }
 
 void
-KDMShutdownBase::accept()
+TDMShutdownBase::accept()
 {
 	if (needRoot == 1)
 		verify->accept();
@@ -164,13 +164,13 @@ KDMShutdownBase::accept()
 }
 
 void
-KDMShutdownBase::slotSched()
+TDMShutdownBase::slotSched()
 {
 	done( Schedule );
 }
 
 void
-KDMShutdownBase::updateNeedRoot()
+TDMShutdownBase::updateNeedRoot()
 {
 	int nNeedRoot = uid &&
 		(((willShut && _allowShutdown == SHUT_ROOT) ||
@@ -187,40 +187,40 @@ KDMShutdownBase::updateNeedRoot()
 }
 
 void
-KDMShutdownBase::accepted()
+TDMShutdownBase::accepted()
 {
 	inherited::done( needRoot ? (int)Authed : (int)Accepted );
 }
 
 void
-KDMShutdownBase::verifyPluginChanged( int id )
+TDMShutdownBase::verifyPluginChanged( int id )
 {
 	curPlugin = id;
 	adjustSize();
 }
 
 void
-KDMShutdownBase::verifyOk()
+TDMShutdownBase::verifyOk()
 {
 	accepted();
 }
 
 void
-KDMShutdownBase::verifyFailed()
+TDMShutdownBase::verifyFailed()
 {
 	okButton->setEnabled( false );
 	cancelButton->setEnabled( false );
 }
 
 void
-KDMShutdownBase::verifyRetry()
+TDMShutdownBase::verifyRetry()
 {
 	okButton->setEnabled( true );
 	cancelButton->setEnabled( true );
 }
 
 void
-KDMShutdownBase::verifySetUser( const TQString & )
+TDMShutdownBase::verifySetUser( const TQString & )
 {
 }
 
@@ -241,7 +241,7 @@ doShutdown( int type, const char *os )
 
 
 
-KDMShutdown::KDMShutdown( int _uid, TQWidget *_parent )
+TDMShutdown::TDMShutdown( int _uid, TQWidget *_parent )
 	: inherited( _uid, _parent )
 {
 	setCaption(i18n("Shutdown TDE"));
@@ -254,11 +254,11 @@ KDMShutdown::KDMShutdown( int _uid, TQWidget *_parent )
 	hlay->addWidget( howGroup, 0, AlignTop );
 
 	TQRadioButton *rb;
-	rb = new KDMRadioButton( i18n("&Turn off computer"), howGroup );
+	rb = new TDMRadioButton( i18n("&Turn off computer"), howGroup );
 	rb->setChecked( true );
 	rb->setFocus();
 
-	restart_rb = new KDMRadioButton( i18n("&Restart computer"), howGroup );
+	restart_rb = new TDMRadioButton( i18n("&Restart computer"), howGroup );
 
 	connect( rb, TQT_SIGNAL(doubleClicked()), TQT_SLOT(accept()) );
 	connect( restart_rb, TQT_SIGNAL(doubleClicked()), TQT_SLOT(accept()) );
@@ -337,7 +337,7 @@ get_date( const char *str )
 }
 
 void
-KDMShutdown::accept()
+TDMShutdown::accept()
 {
 	if (le_start->text() == "0" || le_start->text() == "now")
 		sch_st = time( 0 );
@@ -362,20 +362,20 @@ KDMShutdown::accept()
 }
 
 void
-KDMShutdown::slotTargetChanged()
+TDMShutdown::slotTargetChanged()
 {
 	restart_rb->setChecked( true );
 }
 
 void
-KDMShutdown::slotWhenChanged()
+TDMShutdown::slotWhenChanged()
 {
 	doesNuke = cb_force->isChecked();
 	updateNeedRoot();
 }
 
 void
-KDMShutdown::accepted()
+TDMShutdown::accepted()
 {
 	GSet( 1 );
 	GSendInt( G_Shutdown );
@@ -392,7 +392,7 @@ KDMShutdown::accepted()
 }
 
 void
-KDMShutdown::scheduleShutdown( TQWidget *_parent )
+TDMShutdown::scheduleShutdown( TQWidget *_parent )
 {
 	GSet( 1 );
 	GSendInt( G_QueryShutdown );
@@ -405,7 +405,7 @@ KDMShutdown::scheduleShutdown( TQWidget *_parent )
 	GSet( 0 );
 	if (how) {
 		int ret =
-			KDMCancelShutdown( how, start, timeout, force, uid, os,
+			TDMCancelShutdown( how, start, timeout, force, uid, os,
 			                   _parent ).exec();
 		if (!ret)
 			return;
@@ -415,23 +415,23 @@ KDMShutdown::scheduleShutdown( TQWidget *_parent )
 		uid = -1;
 	if (os)
 		free( os );
-	KDMShutdown( uid, _parent ).exec();
+	TDMShutdown( uid, _parent ).exec();
 }
 
 
-KDMRadioButton::KDMRadioButton( const TQString &label, TQWidget *parent )
+TDMRadioButton::TDMRadioButton( const TQString &label, TQWidget *parent )
 	: inherited( label, parent )
 {
 }
 
 void
-KDMRadioButton::mouseDoubleClickEvent( TQMouseEvent * )
+TDMRadioButton::mouseDoubleClickEvent( TQMouseEvent * )
 {
 	emit doubleClicked();
 }
 
 
-KDMDelayedPushButton::KDMDelayedPushButton( const KGuiItem &item,
+TDMDelayedPushButton::TDMDelayedPushButton( const KGuiItem &item,
                                             TQWidget *parent, 
                                             const char *name )
 	: inherited( item, parent, name )
@@ -442,31 +442,31 @@ KDMDelayedPushButton::KDMDelayedPushButton( const KGuiItem &item,
 	connect( &popt, TQT_SIGNAL(timeout()), TQT_SLOT(slotTimeout()) );
 }
 
-void KDMDelayedPushButton::setPopup( TQPopupMenu *p )
+void TDMDelayedPushButton::setPopup( TQPopupMenu *p )
 {
 	pop = p;
 	setIsMenuButton( p != 0 );
 }
 
-void KDMDelayedPushButton::slotPressed()
+void TDMDelayedPushButton::slotPressed()
 {
 	if (pop)
 		popt.start( TQApplication::startDragTime() );
 }
 
-void KDMDelayedPushButton::slotReleased()
+void TDMDelayedPushButton::slotReleased()
 {
 	popt.stop();
 }
 
-void KDMDelayedPushButton::slotTimeout()
+void TDMDelayedPushButton::slotTimeout()
 {
 	popt.stop();
 	pop->popup( mapToGlobal( rect().bottomLeft() ) );
 	setDown( false );
 }
 
-KDMSlimShutdown::KDMSlimShutdown( TQWidget *_parent )
+TDMSlimShutdown::TDMSlimShutdown( TQWidget *_parent )
 	: inherited( _parent )
 	, targetList( 0 )
 {
@@ -540,7 +540,7 @@ KDMSlimShutdown::KDMSlimShutdown( TQWidget *_parent )
 		TQHBoxLayout* hbuttonbox2 = new TQHBoxLayout( vbox, 8 * KDialog::spacingHint()  );
 		hbuttonbox2->setAlignment( Qt::AlignRight );
 
-		// Back to kdm
+		// Back to tdm
 		KSMPushButton* btnBack = new KSMPushButton( KStdGuiItem::cancel(), lfrm );
 		hbuttonbox2->addWidget( btnBack );
 		connect(btnBack, TQT_SIGNAL(clicked()), TQT_SLOT(reject()));
@@ -556,7 +556,7 @@ KDMSlimShutdown::KDMSlimShutdown( TQWidget *_parent )
 		// we need to set the minimum size for the logout box, since it
 		// gets too small if there all options are not available
 		TQLabel *icon = new TQLabel( lfrm );
-		icon->setPixmap( TQPixmap( locate( "data", "kdm/pics/shutdown.jpg" ) ) );
+		icon->setPixmap( TQPixmap( locate( "data", "tdm/pics/shutdown.jpg" ) ) );
 		TQVBoxLayout *iconlay = new TQVBoxLayout( lfrm );
 		iconlay->addWidget( icon );
 	
@@ -571,8 +571,8 @@ KDMSlimShutdown::KDMSlimShutdown( TQWidget *_parent )
 	
 		buttonlay->addSpacing( KDialog::spacingHint() );
 	
-		KDMDelayedPushButton *btnReboot = new
-			KDMDelayedPushButton( KGuiItem( i18n("&Restart Computer"), "reload" ), this );
+		TDMDelayedPushButton *btnReboot = new
+			TDMDelayedPushButton( KGuiItem( i18n("&Restart Computer"), "reload" ), this );
 		buttonlay->addWidget( btnReboot );
 		connect( btnReboot, TQT_SIGNAL(clicked()), TQT_SLOT(slotReboot()) );
 	
@@ -619,63 +619,63 @@ KDMSlimShutdown::KDMSlimShutdown( TQWidget *_parent )
 
 }
 
-KDMSlimShutdown::~KDMSlimShutdown()
+TDMSlimShutdown::~TDMSlimShutdown()
 {
 	freeStrArr( targetList );
 }
 
 void
-KDMSlimShutdown::slotSched()
+TDMSlimShutdown::slotSched()
 {
 	reject();
-	KDMShutdown::scheduleShutdown();
+	TDMShutdown::scheduleShutdown();
 }
 
 void
-KDMSlimShutdown::slotHalt()
+TDMSlimShutdown::slotHalt()
 {
 	if (checkShutdown( SHUT_HALT, 0 ))
 		doShutdown( SHUT_HALT, 0 );
 }
 
 void
-KDMSlimShutdown::slotReboot()
+TDMSlimShutdown::slotReboot()
 {
 	if (checkShutdown( SHUT_REBOOT, 0 ))
 		doShutdown( SHUT_REBOOT, 0 );
 }
 
 void
-KDMSlimShutdown::slotReboot( int opt )
+TDMSlimShutdown::slotReboot( int opt )
 {
 	if (checkShutdown( SHUT_REBOOT, targetList[opt] ))
 		doShutdown( SHUT_REBOOT, targetList[opt] );
 }
 
 bool
-KDMSlimShutdown::checkShutdown( int type, const char *os )
+TDMSlimShutdown::checkShutdown( int type, const char *os )
 {
 	reject();
 	dpySpec *sess = fetchSessions( lstRemote | lstTTY );
 	if (!sess && _allowShutdown != SHUT_ROOT)
 		return true;
-	int ret = KDMConfShutdown( -1, sess, type, os ).exec();
+	int ret = TDMConfShutdown( -1, sess, type, os ).exec();
 	disposeSessions( sess );
 	if (ret == Schedule) {
-		KDMShutdown::scheduleShutdown();
+		TDMShutdown::scheduleShutdown();
 		return false;
 	}
 	return ret;
 }
 
 void
-KDMSlimShutdown::externShutdown( int type, const char *os, int uid )
+TDMSlimShutdown::externShutdown( int type, const char *os, int uid )
 {
 	dpySpec *sess = fetchSessions( lstRemote | lstTTY );
-	int ret = KDMConfShutdown( uid, sess, type, os ).exec();
+	int ret = TDMConfShutdown( uid, sess, type, os ).exec();
 	disposeSessions( sess );
 	if (ret == Schedule)
-		KDMShutdown( uid ).exec();
+		TDMShutdown( uid ).exec();
 	else if (ret)
 		doShutdown( type, os );
 }
@@ -804,7 +804,7 @@ void FlatButton::keyReleaseEvent( TQKeyEvent* e )
 
 
 
-KDMConfShutdown::KDMConfShutdown( int _uid, dpySpec *sess, int type, const char *os,
+TDMConfShutdown::TDMConfShutdown( int _uid, dpySpec *sess, int type, const char *os,
                                   TQWidget *_parent )
 	: inherited( _uid, _parent )
 {
@@ -863,7 +863,7 @@ KDMConfShutdown::KDMConfShutdown( int _uid, dpySpec *sess, int type, const char 
 }
 
 
-KDMCancelShutdown::KDMCancelShutdown( int how, int start, int timeout,
+TDMCancelShutdown::TDMCancelShutdown( int how, int start, int timeout,
                                       int force, int uid, const char *os,
                                       TQWidget *_parent )
 	: inherited( -1, _parent )
@@ -922,4 +922,4 @@ KDMCancelShutdown::KDMCancelShutdown( int how, int start, int timeout,
 	complete( 0 );
 }
 
-#include "kdmshutdown.moc"
+#include "tdmshutdown.moc"

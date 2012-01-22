@@ -1,4 +1,4 @@
-circlesdir = $(kde_datadir)/kdm/themes/circles
+circlesdir = $(kde_datadir)/tdm/themes/circles
 circles_DATA = \
 	GdmGreeterTheme.desktop \
 	circles.xml \

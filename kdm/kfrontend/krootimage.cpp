@@ -35,7 +35,7 @@ Boston, MA 02110-1301, USA.
 #include <stdlib.h>
 
 static const char description[] =
-	I18N_NOOP( "Fancy desktop background for kdm" );
+	I18N_NOOP( "Fancy desktop background for tdm" );
 
 static const char version[] = "v2.0";
 

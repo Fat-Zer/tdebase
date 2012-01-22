@@ -19,8 +19,8 @@
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
-#ifndef KDMITEM_H
-#define KDMITEM_H
+#ifndef TDMITEM_H
+#define TDMITEM_H
 
 #include <tqobject.h>
 #include <tqvaluelist.h>
@@ -35,7 +35,7 @@ class TQPainter;
 class TQLayoutItem;
 
 /** class KdmItem
- * @short Base class for every kdmthemes' element.
+ * @short Base class for every tdmthemes' element.
  *
  * This class provides methods for arranging it and its children to the
  * screen (see note below), painting the whole area or a sub-region using

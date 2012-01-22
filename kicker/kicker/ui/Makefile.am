@@ -1,6 +1,6 @@
 INCLUDES = -I$(srcdir)/../core -I../core -I$(srcdir)/../buttons \
 	-I../../libkicker -I$(srcdir)/../../libkicker \
-	-I$(top_srcdir)/libkonq -I$(top_srcdir)/kdmlib $(DBUS_INCS) $(all_includes)
+	-I$(top_srcdir)/libkonq -I$(top_srcdir)/tdmlib $(DBUS_INCS) $(all_includes)
 
 noinst_LTLIBRARIES = libkicker_ui.la
 
@@ -16,7 +16,7 @@ libkicker_ui_la_SOURCES = addbutton_mnu.cpp appletitem.ui appletview.ui addapple
         addappletvisualfeedback.cpp clicklineedit.cpp flipscrollview.cpp \
         media_watcher.cpp media_watcher.skel mykickoffsearchinterface.cpp query.cpp
 
-libkicker_ui_la_LIBADD = $(top_builddir)/libkonq/libkonq.la $(top_builddir)/kdmlib/libdmctl.la \
+libkicker_ui_la_LIBADD = $(top_builddir)/libkonq/libkonq.la $(top_builddir)/tdmlib/libdmctl.la \
 		$(LIB_KABC) ../interfaces/libkickoffsearch_interfaces.la
 
 libkicker_ui_la_METASOURCES = AUTO

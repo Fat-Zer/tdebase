@@ -81,7 +81,7 @@ public:
 
 /**
  * Abstract base class for conversation plugins ("talkers") to be used with
- * KDM, kdesktop_lock, etc.
+ * TDM, kdesktop_lock, etc.
  * The authentication method used by a particular instance of a plugin
  * may be configurable, but the instance must handle exactly one method,
  * i.e., info->method must be determined at the latest at init() time.
@@ -101,10 +101,10 @@ public:
 
     /**
      * Contexts the talker can be used in:
-     * - Login: kdm login dialog
-     * - Shutdown: kdm shutdown dialog
-     * - Unlock: kdm unlock dialog (TODO)
-     * - ChangeTok: kdm password change dialog (TODO)
+     * - Login: tdm login dialog
+     * - Shutdown: tdm shutdown dialog
+     * - Unlock: tdm unlock dialog (TODO)
+     * - ChangeTok: tdm password change dialog (TODO)
      * - ExUnlock: kdesktop_lock unlock dialog
      * - ExChangeTok: kdepasswd password change dialog (TODO)
      *
@@ -343,9 +343,9 @@ struct KDE_EXPORT kgreeterplugin_info {
      *  above, it can ignore this parameter.
      * @param getConf can be used to obtain configuration items from the
      *  greeter; you have to pass it the @p ctx pointer.
-     *   The only predefined key (in KDM) is "EchoMode", which is an int
+     *   The only predefined key (in TDM) is "EchoMode", which is an int
      *   (in fact, KPasswordEdit::EchoModes).
-     *   Other keys are obtained from the PluginOptions option; see kdmrc
+     *   Other keys are obtained from the PluginOptions option; see tdmrc
      *   for details.
      *   If the key is unknown, dflt is returned.
      * @param ctx context pointer for @p getConf

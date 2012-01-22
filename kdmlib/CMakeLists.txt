@@ -11,7 +11,7 @@
 
 include_directories(
   ${CMAKE_CURRENT_BINARY_DIR}
-  ${CMAKE_SOURCE_DIR}/kdm/kfrontend
+  ${CMAKE_SOURCE_DIR}/tdm/kfrontend
   ${CMAKE_BINARY_DIR}
   ${TDE_INCLUDE_DIR}
   ${TQT_INCLUDE_DIRS}
@@ -21,7 +21,7 @@ link_directories(
   ${TQT_LIBRARY_DIRS}
 )
 
-if( BUILD_KDM )
+if( BUILD_TDM )
 
 
 ##### headers ###################################
@@ -57,12 +57,12 @@ tde_add_kpart( kgreet_winbind AUTOMOC
 
 
 
-endif( BUILD_KDM )
+endif( BUILD_TDM )
 
 
 ##### dmctl (static) ############################
 
-if( BUILD_KICKER OR BUILD_KDESKTOP OR BUILD_KDM OR BUILD_KSMSERVER )
+if( BUILD_KICKER OR BUILD_KDESKTOP OR BUILD_TDM OR BUILD_KSMSERVER )
 
   tde_add_library( dmctl STATIC_PIC
     SOURCES dmctl.cpp
@@ -71,15 +71,15 @@ if( BUILD_KICKER OR BUILD_KDESKTOP OR BUILD_KDM OR BUILD_KSMSERVER )
 
 endif( )
 
-##### kdmtsak (executable) #######################
+##### tdmtsak (executable) #######################
 
 if( BUILD_TSAK )
-  tde_add_executable( kdmtsak
-    SOURCES kdmtsak.cpp
+  tde_add_executable( tdmtsak
+    SOURCES tdmtsak.cpp
     LINK ${TQT_LIBRARIES}
     DESTINATION ${BIN_INSTALL_DIR}
     SETUID
-    DESCRIPTION "Secure Attention Key interface for KDM"
+    DESCRIPTION "Secure Attention Key interface for TDM"
     AUTHORS "Timothy Pearson"
   )
 endif( BUILD_TSAK )

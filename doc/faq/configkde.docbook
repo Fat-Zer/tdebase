@@ -71,9 +71,9 @@ a line saying <userinput>id:3:initdefault:</userinput>.  Change it to
 comment out the following line:
 <literal>x:5:respawn:/usr/bin/X11/xdm -nodaemon</literal> and
 replace it with
-<userinput>x:5:respawn:<replaceable>/opt/kde/</replaceable>bin/kdm
+<userinput>x:5:respawn:<replaceable>/opt/kde/</replaceable>bin/tdm
 -nodaemon</userinput>.
-<note><para>The location of &kdm; may differ on your
+<note><para>The location of &tdm; may differ on your
 system.</para></note></para>
 <para>For changes to take effect immediately, type <command>init
 5</command> (for &RedHat; systems) at the shell prompt. 
@@ -86,7 +86,7 @@ be in for a hard time getting back....</para></caution></para>
 For FreeBSD, you should edit the file <filename>/etc/ttys</filename>
 and change one of the lines that look like
 <programlisting>ttyv8   "/usr/X11R6/bin/xdm -nodaemon"  xterm   off secure</programlisting>
-to instead say <userinput>ttyv8   "/usr/local/bin/kdm -nodaemon" xterm
+to instead say <userinput>ttyv8   "/usr/local/bin/tdm -nodaemon" xterm
 off secure</userinput>.</para>
 </answer>
 </qandaentry>
@@ -136,11 +136,11 @@ to whatever you want.</para>
 
 <qandaentry>
 <question>
-<para>&kde; (&kdm;) does not read my
+<para>&kde; (&tdm;) does not read my
 <filename>.bash_profile</filename>!</para>
 </question>
 <answer>
-<para>The login managers<application>xdm</application> and &kdm; do
+<para>The login managers<application>xdm</application> and &tdm; do
 not run a login shell, so <filename>.profile</filename>,
 <filename>.bash_profile</filename>, &etc; are not
 sourced.  When the user logs in, <application>xdm</application> runs
@@ -233,17 +233,17 @@ computer (sometimes referred to as <quote>fast user switching</quote>) you
 need to tell the program that logs you in that it can use more than one
 session (or, in &X-Window; terms, <quote>display</quote>) at a time.</para>
 
-<para>In &kde;, this program is called &kdm; which stands for <quote>&kde;
-Display Manager</quote>. If you are not using &kdm; as your login screen
+<para>In &kde;, this program is called &tdm; which stands for <quote>&kde;
+Display Manager</quote>. If you are not using &tdm; as your login screen
 then you will need to consult the documentation for the software you are using on how to
 accomplish multiple sessions.</para>
 
 <para>By default, this will be configured at installation time automatically
-if &kdm; supports virtual terminals on your system (currently Linux only).
-If it was not configured automatically, consult the &kdm; manual, section
-<ulink url="help:/kdm/kdmrc-xservers">Specifying permanent &X-Server;s</ulink>.
-After modifying kdmrc, you will have to let &kdm; know about it; just
-invoke <command>killall -HUP kdm</command>.</para>
+if &tdm; supports virtual terminals on your system (currently Linux only).
+If it was not configured automatically, consult the &tdm; manual, section
+<ulink url="help:/tdm/tdmrc-xservers">Specifying permanent &X-Server;s</ulink>.
+After modifying tdmrc, you will have to let &tdm; know about it; just
+invoke <command>killall -HUP tdm</command>.</para>
 </answer>
 </qandaentry>
 </qandaset>

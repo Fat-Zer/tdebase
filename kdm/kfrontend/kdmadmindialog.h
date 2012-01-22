@@ -23,8 +23,8 @@
     */
 
 
-#ifndef KDMADMIN_H
-#define KDMADMIN_H
+#ifndef TDMADMIN_H
+#define TDMADMIN_H
 
 #include "kgverify.h"
 
@@ -36,13 +36,13 @@ class KPushButton;
 class TQButtonGroup;
 class TQComboBox;
 
-class KDMAdmin : public FDialog, public KGVerifyHandler {
+class TDMAdmin : public FDialog, public KGVerifyHandler {
     Q_OBJECT
     typedef FDialog inherited;
 
 public:
-    KDMAdmin( const TQString &user, TQWidget *_parent = 0 );
-    ~KDMAdmin();
+    TDMAdmin( const TQString &user, TQWidget *_parent = 0 );
+    ~TDMAdmin();
 
 public slots:
     void accept();

@@ -29,7 +29,7 @@
 #include <kglobalsettings.h>
 #include <dcopref.h>
 
-#include <kdmtsak.h>
+#include <tdmtsak.h>
 
 #include <stdlib.h>
 

@@ -113,7 +113,7 @@ InitErrorLog( const char *errorLogFile )
 # endif
 # define WARNMSG \
   "********************************************************************************\n" \
-  "Note that your system uses syslog. All of kdm's internally generated messages\n" \
+  "Note that your system uses syslog. All of tdm's internally generated messages\n" \
   "(i.e., not from libraries and external programs/scripts it uses) go to the\n" \
   "daemon.* syslog facility; check your syslog configuration to find out to which\n" \
   "file(s) it is logged." PAMLOG "\n" \

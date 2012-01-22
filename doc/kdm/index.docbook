@@ -1,21 +1,21 @@
 <?xml version="1.0" ?>
 <!DOCTYPE book PUBLIC "-//KDE//DTD DocBook XML V4.2-Based Variant V1.1//EN"
 "dtd/kdex.dtd" [
-  <!ENTITY kappname "&kdm;">
+  <!ENTITY kappname "&tdm;">
   <!ENTITY package "tdebase">
-  <!ENTITY kdmrc "<filename>kdmrc</filename>">
+  <!ENTITY tdmrc "<filename>tdmrc</filename>">
   <!ENTITY ksmserver "<application>ksmserver</application>">
   <!ENTITY kdesktop "<application>kdesktop</application>">
   <!ENTITY XDMCP "<acronym>XDMCP</acronym>">
   <!ENTITY xdm "<application>xdm</application>">
-  <!ENTITY kdmrc-ref SYSTEM "kdmrc-ref.docbook">
+  <!ENTITY tdmrc-ref SYSTEM "tdmrc-ref.docbook">
   <!ENTITY % addindex "INCLUDE">
   <!ENTITY % English "INCLUDE" > <!-- change language only here -->
 ]>
 
 <book lang="&language;">
 <bookinfo>
-<title>The &kdm; Handbook</title>
+<title>The &tdm; Handbook</title>
 
 <authorgroup>
 <author>
@@ -53,13 +53,13 @@
 <releaseinfo>0.05.02</releaseinfo>
 
 <abstract>
-<para>This document describes &kdm; the &kde; Display Manager. &kdm;
+<para>This document describes &tdm; the &kde; Display Manager. &tdm;
 is also known as the <quote>Login Manager</quote>.</para>
 </abstract>
 
 <keywordset>
 <keyword>KDE</keyword>
-<keyword>kdm</keyword>
+<keyword>tdm</keyword>
 <keyword>xdm</keyword>
 <keyword>display manager</keyword>
 <keyword>login manager</keyword>
@@ -70,9 +70,9 @@ is also known as the <quote>Login Manager</quote>.</para>
 <chapter id="introduction">
 <title>Introduction</title>
 
-<para>&kdm; provides a graphical interface that allows you to log in to a
+<para>&tdm; provides a graphical interface that allows you to log in to a
 system. It prompts for login (username) and password, authenticates the user
-and starts a <quote>session</quote>.  &kdm; is superior to &xdm;, the X
+and starts a <quote>session</quote>.  &tdm; is superior to &xdm;, the X
 Display Manager, in a number of ways.</para>
 
 </chapter>
@@ -81,7 +81,7 @@ Display Manager, in a number of ways.</para>
 <!-- * Just enough config to get it to run and login to KDE 
      * Adding more session types (GNOME, etc)
      * Adding other customizations to XSession (ssh/gpg-agent, etc)
-     * Further customization to KDM (via the kcontrol module, and by 
+     * Further customization to TDM (via the kcontrol module, and by 
        hand)
      * XDMCP by query
      * XDMCP by broadcast
@@ -137,10 +137,10 @@ look in their documentation for the correct command.</para>
 
 <para>At this point, typing <userinput><command>startx</command></userinput>
 on the commandline should start X, with a &kde; session.  The next task is
-to try &kdm;.</para>
+to try &tdm;.</para>
 
 <para>As <systemitem class="username">root</systemitem>, type
-<userinput><command>kdm</command></userinput> at the prompt.</para>
+<userinput><command>tdm</command></userinput> at the prompt.</para>
 
 <para>You should see a login window, which is described more fully in <xref
 linkend="login" />.</para>
@@ -154,7 +154,7 @@ above for each of them.</para>
 
 <note>
 <para>This is a quick guide to getting up and running only.  You probably
-will want to customize &kdm; further, for example, to hide the names of the
+will want to customize &tdm; further, for example, to hide the names of the
 system accounts, to allow further sessions, and much more.  Please read
 through the rest of this manual to find out how to do these things.</para>
 </note>
@@ -164,7 +164,7 @@ through the rest of this manual to find out how to do these things.</para>
 <chapter id="login"> 
 <title>The Login Window</title> 
 
-<para> The user interface to &kdm; consists of two dialog boxes.  The main
+<para> The user interface to &tdm; consists of two dialog boxes.  The main
 dialog box has these controls:</para>
 
 <itemizedlist> 
@@ -186,7 +186,7 @@ imitation of the login box on &IRIX;).</para>
 </listitem>
 
 <listitem>
-<para>A <guilabel>Menu</guilabel> drop down box that allows &kdm; to be used
+<para>A <guilabel>Menu</guilabel> drop down box that allows &tdm; to be used
 to start sessions with various different window managers or desktop
 environments installed on the system.</para>
 </listitem>
@@ -233,7 +233,7 @@ and bring up the login dialog again.</para>
 <listitem>
 <para>(Optionally on local displays) A <guimenuitem>Console
 Mode</guimenuitem> item that terminates the currently running &X-Server; and
-leaves you alone with a console login. &kdm; will resume the graphical login
+leaves you alone with a console login. &tdm; will resume the graphical login
 if nobody is logged in at the console for some time.</para>
 </listitem>
 </itemizedlist>
@@ -285,56 +285,56 @@ software.</para>
 
 <para>Pressing the <guibutton>OK</guibutton> button initiates the selected
 action; pressing the <guibutton>Cancel</guibutton> button returns to the
-main &kdm; dialog box. </para>
+main &tdm; dialog box. </para>
 
 </chapter>
 
 <!-- *********************************************************************** -->
-<chapter id="configuring-kdm">
-<title>Configuring &kdm;</title>
+<chapter id="configuring-tdm">
+<title>Configuring &tdm;</title>
 
-<para>This chapter assumes that &kdm; is already up and running on your
+<para>This chapter assumes that &tdm; is already up and running on your
 system, and that you simply want to change its behavior in some way.</para>
 
-<para>When &kdm; starts up, it reads its configuration from the folder
-<filename class="directory">$TDEDIR/share/config/kdm/</filename> (this may
-be <filename class="directory">/etc/trinity/kdm/</filename> or something else
+<para>When &tdm; starts up, it reads its configuration from the folder
+<filename class="directory">$TDEDIR/share/config/tdm/</filename> (this may
+be <filename class="directory">/etc/trinity/tdm/</filename> or something else
 on your system).</para>
 
-<para>The main configuration file is &kdmrc;; all other files are
+<para>The main configuration file is &tdmrc;; all other files are
 referenced from there and could be stored under any name anywhere on
 the system - but usually that would not make much sense for obvious
 reasons (one particular exception is referencing configuration files
-of an already installed &xdm; - however when a new &kdm; is installed,
+of an already installed &xdm; - however when a new &tdm; is installed,
 it will import settings from those files if it finds an already installed
 &xdm;).</para>
 
-<para>Since &kdm; must run before any user is logged in, it is not
+<para>Since &tdm; must run before any user is logged in, it is not
 associated with any particular user. Therefore, it is not possible to have
-user-specific configuration files; all users share the common &kdmrc;.  It
-follows from this that the configuration of &kdm; can only be altered by
+user-specific configuration files; all users share the common &tdmrc;.  It
+follows from this that the configuration of &tdm; can only be altered by
 those users that have write access to
-<filename>$<envar>TDEDIR</envar>/share/config/kdm/kdmrc</filename> (normally
+<filename>$<envar>TDEDIR</envar>/share/config/tdm/tdmrc</filename> (normally
 restricted to system administrators logged in as <systemitem
 class="username">root</systemitem>).</para>
 
-<para>You can view the &kdmrc; file currently in use on your system, and you
-can configure &kdm; by editing this file. Alternatively, you can use the
+<para>You can view the &tdmrc; file currently in use on your system, and you
+can configure &tdm; by editing this file. Alternatively, you can use the
 graphical configuration tool provided by the &kcontrolcenter; (under
 <menuchoice><guisubmenu>System Administration</guisubmenu><guimenuitem>Login
 Manager</guimenuitem></menuchoice>), which is described in <ulink
 url="help:/kcontrol/login-manager.html">the &kcontrolcenter; help files</ulink>.
 </para>
 
-<para>The remainder of this chapter describes configuration of &kdm;
-via the &kcontrolcenter; module, and the <link linkend="kdm-files">next
-chapter</link> describes the options available in &kdmrc; itself. If
+<para>The remainder of this chapter describes configuration of &tdm;
+via the &kcontrolcenter; module, and the <link linkend="tdm-files">next
+chapter</link> describes the options available in &tdmrc; itself. If
 you only need to configure for local users, the &kcontrolcenter; module
 should be sufficient for your needs.  If you need to configure remote
-logins, or have multiple &kdm; sessions running, you will need to read
+logins, or have multiple &tdm; sessions running, you will need to read
 on.</para>
 
-<sect1 id="kdm-kcontrol-module">
+<sect1 id="tdm-kcontrol-module">
 <sect1info>
 <authorgroup>
 <author>&Thomas.Tanghus; &Thomas.Tanghus.mail;</author>
@@ -346,31 +346,31 @@ on.</para>
 <title>The Login Manager &kcontrolcenter; Module</title>
 
 <para>Using this module, you can configure the &kde; graphical login
-manager, &kdm;.  You can change how the login screen looks, who has
+manager, &tdm;.  You can change how the login screen looks, who has
 access using the login manager and who can shutdown the
 computer.</para>
 
 <note><para>All settings will be written to the configuration file
-&kdmrc;, which in its original state has many comments to help you
-configure &kdm;.  Using this &kcontrolcenter; module will strip these
-comments from the file.  All available options in &kdmrc; are covered
-in <xref linkend="kdm-files"/>.</para>
+&tdmrc;, which in its original state has many comments to help you
+configure &tdm;.  Using this &kcontrolcenter; module will strip these
+comments from the file.  All available options in &tdmrc; are covered
+in <xref linkend="tdm-files"/>.</para>
 
 <para>The options listed in this chapter are cross referenced with
-their equivalents in &kdmrc;. All options available in the &kcontrol;
-module are also available directly in &kdmrc; but the reverse is not
+their equivalents in &tdmrc;. All options available in the &kcontrol;
+module are also available directly in &tdmrc; but the reverse is not
 true.</para></note>
 
 <para>In order to organize all of these options, this module is
 divided into several sections: <link
-linkend="kdmconfig-appearance"><guilabel>Appearance</guilabel></link>,
-<link linkend="kdmconfig-font"><guilabel>Font</guilabel></link>, <link
-linkend="kdmconfig-background"><guilabel>Background</guilabel></link>,
+linkend="tdmconfig-appearance"><guilabel>Appearance</guilabel></link>,
+<link linkend="tdmconfig-font"><guilabel>Font</guilabel></link>, <link
+linkend="tdmconfig-background"><guilabel>Background</guilabel></link>,
 <link
-linkend="kdmconfig-shutdown"><guilabel>Shutdown</guilabel></link>,
-<link linkend="kdmconfig-users"><guilabel>Users</guilabel></link> and
+linkend="tdmconfig-shutdown"><guilabel>Shutdown</guilabel></link>,
+<link linkend="tdmconfig-users"><guilabel>Users</guilabel></link> and
 <link
-linkend="kdmconfig-convenience"><guilabel>Convenience</guilabel></link>.</para>
+linkend="tdmconfig-convenience"><guilabel>Convenience</guilabel></link>.</para>
 
 <para>You can switch between the sections using the tabs at the top of
 the window.</para>
@@ -381,10 +381,10 @@ Button. You will then be asked for a superuser password.  Entering a
 correct password will allow you to modify the settings of this
 module.</para></note>
 
-<sect2 id="kdmconfig-appearance">
+<sect2 id="tdmconfig-appearance">
 <title>Appearance</title>
 
-<para>From this page you can change the visual appearance of &kdm;,
+<para>From this page you can change the visual appearance of &tdm;,
 &kde;'s graphical login manager.</para>
 
 <para>The <guilabel>Greeting:</guilabel> is the title of the login
@@ -392,13 +392,13 @@ module.</para></note>
  may log in to.  You may use various placeholders, which are described
  along with the corresponding key
  <link linkend="option-greetstring"><option>GreetString</option></link>
- in &kdmrc;.
+ in &tdmrc;.
 </para>
 
 <para>You can then choose to show either the current system time, a logo or
 nothing special in the login box.  Make your choice in the radio buttons
 labeled <guilabel>Logo area:</guilabel>. This corresponds to <link
-linkend="option-logoarea"><option>LogoArea</option></link> in &kdmrc;</para>
+linkend="option-logoarea"><option>LogoArea</option></link> in &tdmrc;</para>
 
 <para>If you chose <guilabel>Show logo</guilabel> you can now choose a
 logo:</para>
@@ -414,7 +414,7 @@ dialog.</para>
 </itemizedlist>
 
 <para>If you do not specify a logo the default
-<filename>$<envar>TDEDIR</envar>/share/apps/kdm/pics/kdelogo.xpm</filename>
+<filename>$<envar>TDEDIR</envar>/share/apps/tdm/pics/kdelogo.xpm</filename>
 will be displayed.</para>
 
 <para>Normally the login box is centered on the screen.  Use the
@@ -425,23 +425,23 @@ relative to the top left of the display, in the fields labeled
 <guilabel>X:</guilabel> and <guilabel>Y:</guilabel> respectively.
 These correspond to the key
 <link linkend="option-greeterpos"><option>GreeterPos</option></link>
-in &kdmrc;.</para>
+in &tdmrc;.</para>
 
 <para>While &kde;'s style depends on the settings of the user logged
-in, the style used by &kdm; can be configured using the <guilabel>GUI
+in, the style used by &tdm; can be configured using the <guilabel>GUI
 Style:</guilabel> and <guilabel>Color Scheme:</guilabel> options.
 These correspond to the keys <link
 linkend="option-guistyle"><option>GUIStyle</option></link> and <link
 linkend="option-colorscheme"><option>ColorScheme</option></link> in
-&kdmrc; respectively.</para>
+&tdmrc; respectively.</para>
 
 <para>Below that, you have a drop down box to choose the language for
 your login box, corresponding to setting <option>Language</option> in
-&kdmrc;.</para>
+&tdmrc;.</para>
 
 </sect2>
 
-<sect2 id="kdmconfig-font">
+<sect2 id="tdmconfig-font">
 <title>Font</title>
 
 <para>From this section of the module you can change the fonts used in the
@@ -474,7 +474,7 @@ fonts</guilabel> if you want smoothed fonts in the login dialog.</para>
 
 </sect2>
 
-<sect2 id="kdmconfig-background">
+<sect2 id="tdmconfig-background">
 <title>Background</title>
 
 <para>Here you can change the desktop background which will be displayed
@@ -612,7 +612,7 @@ stretched to fit all four corners.</para> </listitem>
 
 </sect2>
 
-<sect2 id="kdmconfig-shutdown">
+<sect2 id="tdmconfig-shutdown">
 <title><guilabel>Shutdown</guilabel></title>
 
 <para><guilabel>Allow Shutdown</guilabel></para>
@@ -620,13 +620,13 @@ stretched to fit all four corners.</para> </listitem>
 <itemizedlist>
 <listitem>
 <para><guilabel>Nobody</guilabel>: No one can shutdown the computer using
-&kdm;.  You must be logged in, and execute a command.</para>
+&tdm;.  You must be logged in, and execute a command.</para>
 </listitem>
 <listitem>
 <para><guilabel>Everybody</guilabel>:  Everyone can shutdown the computer using
-&kdm;.</para>
+&tdm;.</para>
 </listitem>
-<listitem><para><guilabel>Only Root</guilabel>: &kdm; requires that the
+<listitem><para><guilabel>Only Root</guilabel>: &tdm; requires that the
 <systemitem>root</systemitem> password be entered before shutting down the
 computer.</para></listitem> 
 </itemizedlist>
@@ -638,12 +638,12 @@ shutdown command for the <guilabel>Local:</guilabel> and
 <para><emphasis>Commands</emphasis></para> <para>Use these text fields to
 define the exact shutdown command.</para> <para>The
 <guilabel>Halt:</guilabel> command defaults to <!-- Are these defaults still
-correct? they disagree with what's in --> <!-- kdmrc -->
+correct? they disagree with what's in --> <!-- tdmrc -->
 <command>/sbin/halt</command>.  The <guilabel>Restart:</guilabel> command
 defaults to
 <command>/sbin/reboot</command>.</para>
 
-<para>When <guilabel>Show boot options</guilabel> is enabled, &kdm;
+<para>When <guilabel>Show boot options</guilabel> is enabled, &tdm;
 will on reboot offer you options for the lilo boot manager. For this
 feature to work, you will need to supply the correct paths to your
 <command>lilo</command> command and to lilo's map file.  Note that this
@@ -651,13 +651,13 @@ option is not available on all operating systems.</para>
 
 </sect2>
 
-<sect2 id="kdmconfig-users">
+<sect2 id="tdmconfig-users">
 <title>Users</title>
 
 <para>From here you can change the way users are represented in the
 login window.</para>
 
-<para>You may disable the user list in &kdm; entirely in the
+<para>You may disable the user list in &tdm; entirely in the
 <guilabel>Show Users</guilabel> section.  You can choose from:</para>
 
 <variablelist>
@@ -692,7 +692,7 @@ over 65000, are not shown.</para>
 <para>You can also enable the <guilabel>Sort users</guilabel>
 checkbox, to have the user list sorted alphabetically.  If this is
 disabled, users will appear in the order they are listed in the
-password file.  &kdm; will also autocomplete user names if you enable the
+password file.  &tdm; will also autocomplete user names if you enable the
 <guilabel>Autocompletion</guilabel> option.</para>
 
 <para>If you choose to show users, then the login window will show
@@ -714,7 +714,7 @@ this terminal.</para>
 
 </sect2>
 
-<sect2 id="kdmconfig-convenience">
+<sect2 id="tdmconfig-convenience">
 <title>Convenience</title>
 
 <para>In the <guilabel>convenience</guilabel> tab you can configure
@@ -758,12 +758,12 @@ password-less login, &eg;
 <systemitem>guest</systemitem>.</para></important>
 
 <para>You can also choose which user is <quote>preselected</quote>
-when &kdm; starts. The default is <guilabel>None</guilabel>, but you
-can choose <guilabel>Previous</guilabel> to have &kdm; default to the
+when &tdm; starts. The default is <guilabel>None</guilabel>, but you
+can choose <guilabel>Previous</guilabel> to have &tdm; default to the
 last successfully logged in user, or you can
 <guilabel>Specify</guilabel> a particular user to always be selected
-from the list.  You can also have &kdm; set the focus to the password
-field, so that when you reach the &kdm; login screen, you can type the
+from the list.  You can also have &tdm; set the focus to the password
+field, so that when you reach the &tdm; login screen, you can type the
 password immediately.</para>
 
 <para>The <guilabel>Automatically login after X server crash</guilabel>
@@ -778,18 +778,18 @@ server accidentally crashed.</para>
 
 </chapter>
 
-&kdmrc-ref;
+&tdmrc-ref;
 
 <!-- ************************************************************ -->   
-<chapter id="configuring-your-system-for-kdm">
-<title>Configuring your system to use &kdm;</title>
+<chapter id="configuring-your-system-for-tdm">
+<title>Configuring your system to use &tdm;</title>
 
 <para>This chapter assumes that your system is already configured to
 run the &X-Window;, and that you only need to reconfigure it to
 allow graphical login.</para>
 
-<sect1 id="setting-up-kdm">
-<title>Setting up &kdm;</title>
+<sect1 id="setting-up-tdm">
+<title>Setting up &tdm;</title>
 
 <para>The fundamental thing that controls whether your computer boots to a
 terminal prompt (console mode) or a graphical login prompt is the default
@@ -829,11 +829,11 @@ distributions is:</para>
 </itemizedlist>
 
 <para>The first step in configuring your system is to ensure that you
-can start &kdm; from the command line. Once this is working, you can
-change your system configuration so that &kdm; starts automatically
+can start &tdm; from the command line. Once this is working, you can
+change your system configuration so that &tdm; starts automatically
 each time you reboot your system.</para>
 
-<para>To test &kdm;, you must first bring your system to a runlevel
+<para>To test &tdm;, you must first bring your system to a runlevel
 that does not run &xdm;. To do so, issue a command like this:</para>
 
 <screen><command>/sbin/init <option>3</option></command></screen>
@@ -847,23 +847,23 @@ systems, you should check that your <abbrev>PAM</abbrev> configuration permits
 login through the service named <literal>kde</literal>. If you previously used
 &xdm; successfully, you should not need to make any
 changes to your <abbrev>PAM</abbrev> configuration in order to use
-&kdm;. <filename>/etc/pam.conf</filename> or
+&tdm;. <filename>/etc/pam.conf</filename> or
 <filename>/etc/pam.d/kde</filename>. Information on configuring
 <abbrev>PAM</abbrev> is beyond the scope of this handbook, but
 <abbrev>PAM</abbrev> comes with comprehensive documentation (try looking in
 <filename>/usr/share/doc/*pam*/html/</filename>).</para>
 
-<para>Now it's time for you to test &kdm; by issuing the following
+<para>Now it's time for you to test &tdm; by issuing the following
 command:</para>
 
-<screen><command>kdm <option>-nodaemon</option></command>
+<screen><command>tdm <option>-nodaemon</option></command>
 </screen>
 
-<para>If you get a &kdm; login dialog and you are able to log in,
+<para>If you get a &tdm; login dialog and you are able to log in,
 things are going well.  The main thing that can go wrong here is that
 the run-time linker might not find the shared &Qt; or &kde; libraries.
 If you have a binary distribution of the &kde; libraries, make sure
-&kdm; is installed where the libraries believe &kde; is installed and
+&tdm; is installed where the libraries believe &kde; is installed and
 try setting some environment variables to point to your &kde; and &Qt;
 libraries.</para>
 
@@ -883,8 +883,8 @@ libraries.</para>
 make sure that you are not suffering from a more serious X
 configuration problem.</para>
 
-<para>When you are able to start &kdm; successfully, you can start to
-replace &xdm; by &kdm;. Again, this is distribution-dependent.</para>
+<para>When you are able to start &tdm; successfully, you can start to
+replace &xdm; by &tdm;. Again, this is distribution-dependent.</para>
 
 <itemizedlist>
 <listitem>
@@ -892,16 +892,16 @@ replace &xdm; by &kdm;. Again, this is distribution-dependent.</para>
  line:</para>
 <screen>x:5:respawn:/usr/X11/bin/xdm -nodaemon</screen>
 <para>and replace with:</para>
-<screen>x:5:respawn:/opt/kde/bin/kdm</screen>
-<para>This tells <command>init</command>(8) to respawn &kdm; when the
-system is in run level  5. Note that &kdm; does not need the
+<screen>x:5:respawn:/opt/kde/bin/tdm</screen>
+<para>This tells <command>init</command>(8) to respawn &tdm; when the
+system is in run level  5. Note that &tdm; does not need the
  <option>-nodaemon</option> option.</para>
 </listitem>
 <listitem>
 <para>For &Mandrake;, the X11 runlevel in
 <filename>/etc/inittab</filename> invokes the shell script
 <filename>/etc/X11/prefdm</filename>, which is set up to select from
-amongst several display managers, including &kdm;. Make sure that all
+amongst several display managers, including &tdm;. Make sure that all
 the paths are correct for your installation.</para> 
 </listitem>
 <listitem>
@@ -909,22 +909,22 @@ the paths are correct for your installation.</para>
 first line:</para>
 
 <screen>. /etc/rc.config
-DISPLAYMANAGER=kdm
+DISPLAYMANAGER=tdm
 export DISPLAYMANAGER</screen>
 </listitem>
 <listitem><para>For FreeBSD, edit <filename>/etc/ttys</filename> and find
 the line like this:</para>
 <screen>ttyv8   "/usr/X11R6/bin/xdm -nodaemon"  xterm   off secure</screen>
 <para>and edit it to this:</para>
-<screen>ttyv8   "/usr/local/bin/kdm"  xterm   on secure</screen>
+<screen>ttyv8   "/usr/local/bin/tdm"  xterm   on secure</screen>
 </listitem>
 
 <listitem><para>Most other distributions are a variation of one of
 these.</para></listitem>
 </itemizedlist>
 
-<para>At this stage, you can test &kdm; again by bringing your system
-to the runlevel that should now run &kdm;. To do so, issue a command
+<para>At this stage, you can test &tdm; again by bringing your system
+to the runlevel that should now run &tdm;. To do so, issue a command
 like this:</para>
 
 <screen><command>/sbin/init <option>5</option></command>
@@ -950,7 +950,7 @@ at your peril.</para></warning>
 <screen>id:5:initdefault:</screen>
 
 <para>When you reboot your system, you should end up with the
-graphical &kdm; login dialog.</para>
+graphical &tdm; login dialog.</para>
 
 <para>If this step is unsuccessful the most likely problem is that the
 environment used at boot time differs from the environment that you used for
@@ -964,24 +964,24 @@ some way.</para>
 
 </chapter>
 
-<chapter id="different-window-managers-with-kdm">
+<chapter id="different-window-managers-with-tdm">
 <title>Supporting multiple window managers</title>
 
-<para>&kdm; detects most available window manager and desktop environments when
+<para>&tdm; detects most available window manager and desktop environments when
 it is run.  Installing a new one should make it automatically available in
-the &kdm; main dialog <guilabel>Session Type:</guilabel>.</para>
+the &tdm; main dialog <guilabel>Session Type:</guilabel>.</para>
 
-<para>If you have a very new window manager, or something that &kdm; does
+<para>If you have a very new window manager, or something that &tdm; does
 not support, the first thing you should check is that the application to be
 run is in the <envar>PATH</envar> and has not been renamed during the
 install into something unexpected.</para>
 
 <para>If the case is that the application is too new and not yet supported
-by &kdm;, you can quite simply add a new session.</para>
+by &tdm;, you can quite simply add a new session.</para>
 
 <para>The sessions are defined in <firstterm>.desktop</firstterm> files in
 <filename
-class="directory">$<envar>TDEDIR</envar>/share/apps/kdm/sessions</filename>.
+class="directory">$<envar>TDEDIR</envar>/share/apps/tdm/sessions</filename>.
 You can simply add an appropriately named <literal
 role="extension">.desktop</literal> file in this directory. The fields
 are:</para>
@@ -995,7 +995,7 @@ Exec=<replaceable>executable name</replaceable> <lineannotation>Passed to
 <command>eval exec</command> in a Bourne shell</lineannotation>
 TryExec=<replaceable>executable name</replaceable> <lineannotation>Supported
 but not required</lineannotation>
-Name=<replaceable>name to show in the &kdm; session list</replaceable></programlisting>
+Name=<replaceable>name to show in the &tdm; session list</replaceable></programlisting>
 
 <para>There are also three <quote>magic</quote>:</para>
 
@@ -1004,7 +1004,7 @@ Name=<replaceable>name to show in the &kdm; session list</replaceable></programl
 <term>default</term>
 <listitem>
 <para>
-The default session for &kdm; is normally &kde; but can be configured by the
+The default session for &tdm; is normally &kde; but can be configured by the
 system administrator.
 </para>
 </listitem>
@@ -1032,14 +1032,14 @@ purposes.
 to the config dir and edit it at will. Removing the shipped session types
 can be accomplished by <quote>shadowing</quote> them with .desktop files
 containing Hidden=true.  For the magic session types no .desktop files exist
-by default, but &kdm; pretends they would, so you can override them like any
+by default, but &tdm; pretends they would, so you can override them like any
 other type.  I guess you already know how to add a new session type by
 now. ;-)</para>
 
 </chapter>
 
-<chapter id="xdmcp-with-kdm">
-<title>Using &kdm; for Remote Logins (&XDMCP;)</title>
+<chapter id="xdmcp-with-tdm">
+<title>Using &tdm; for Remote Logins (&XDMCP;)</title>
 
 <para>&XDMCP; is the Open Group standard, the <quote>X Display Manager
 Control Protocol</quote>.  This is used to set up connections between
@@ -1068,7 +1068,7 @@ this.</para>
 <sect1 id="command-sockets">
 <title>Command Sockets</title>
 
-<para>This is a feature you can use to remote-control &kdm;. It's mostly
+<para>This is a feature you can use to remote-control &tdm;. It's mostly
 intended for use by &ksmserver; and &kdesktop; from a running session, but
 other applications are possible as well.</para>
 
@@ -1149,9 +1149,9 @@ is attempted, but a scheduled "login" command will be executed.</para>
 
 <variablelist>
 <varlistentry>
-<term><returnvalue>&kdm;</returnvalue></term>
+<term><returnvalue>&tdm;</returnvalue></term>
 <listitem>
-<para>identifies &kdm;, in case some other DM implements this protocol,
+<para>identifies &tdm;, in case some other DM implements this protocol,
 too</para>
 </listitem>
 </varlistentry>
@@ -1280,7 +1280,7 @@ means immediately.</para>
 <para><parameter>end</parameter> is the latest time at which the shutdown
 should be performed if active sessions are still running.  If it starts with
 a plus-sign, the start time is added.  -1 means wait infinitely.  If end is
-through and active sessions are still running, &kdm; can do one of the
+through and active sessions are still running, &tdm; can do one of the
 following:</para>
 <itemizedlist>
 <listitem><para><parameter>cancel</parameter> - give up the
@@ -1346,21 +1346,21 @@ $<envar>DM_CONTROL</envar>; the name of per-display sockets can be derived
 from $<envar>DISPLAY</envar>.</para>
 </listitem>
 <listitem>
-<para>By using the <command>kdmctl</command> command (&eg; from within a
-shell script). Try <command>kdmctl</command> <option>-h</option> to find out
+<para>By using the <command>tdmctl</command> command (&eg; from within a
+shell script). Try <command>tdmctl</command> <option>-h</option> to find out
 more.</para>
 </listitem>
 </itemizedlist>
 
 <para>Here is an example bash script <quote>reboot into FreeBSD</quote>:</para>
 
-<programlisting>if kdmctl | grep -q shutdown; then
+<programlisting>if tdmctl | grep -q shutdown; then
   IFS=$'\t'
-  set -- `kdmctl listbootoptions`
+  set -- `tdmctl listbootoptions`
   if [ "$1" = ok ]; then
         fbsd=$(echo "$2" | tr ' ' '\n' | sed -ne 's,\\s, ,g;/freebsd/I{p;q}')
         if [ -n "$fbsd" ]; then
-      kdmctl shutdown reboot "=$fbsd" ask &gt; /dev/null
+      tdmctl shutdown reboot "=$fbsd" ask &gt; /dev/null
         else
           echo "FreeBSD boot unavailable."
         fi
@@ -1372,14 +1372,14 @@ else
 fi</programlisting>
 
 </sect1>
-<!-- Riddell: so there's no GUI you need to edit kdmrc to say UseTheme=true and Theme=/path/to/theme.xml
+<!-- Riddell: so there's no GUI you need to edit tdmrc to say UseTheme=true and Theme=/path/to/theme.xml
 [13:31] <Riddell> jriddell.org/programs has an example theme 
 
 <sect1 id="dm-themes">
 <title>Themes</title>
 
-&kdm; has limited support for desktop manager themes.  You may enable them
-by adding <userinput>UseTheme=true</userinput> to <filename>kdmrc</filename>
+&tdm; has limited support for desktop manager themes.  You may enable them
+by adding <userinput>UseTheme=true</userinput> to <filename>tdmrc</filename>
 and <userinput>Theme=/path/to/theme.xml</userinput>.  
 </sect1>
 -->
@@ -1388,12 +1388,12 @@ and <userinput>Theme=/path/to/theme.xml</userinput>.
 <chapter id="Other-Information">
 <title>Other sources of information</title>
 
-<para>Since &kdm; is descended from &xdm;, the <ulink
+<para>Since &tdm; is descended from &xdm;, the <ulink
 url="man:xdm">&xdm; man page</ulink> may provide useful background
 information. For X-related problems try the man pages <ulink
 url="man:X">X</ulink> and <ulink url="man:startx">startx</ulink>. If you have
-questions about &kdm; that are not answered by this handbook, take advantage of
-the fact the &kdm; is provided under the terms of the <abbrev>&GNU;</abbrev>
+questions about &tdm; that are not answered by this handbook, take advantage of
+the fact the &tdm; is provided under the terms of the <abbrev>&GNU;</abbrev>
 General Public License: look at the source code.
 </para>
 
@@ -1402,19 +1402,19 @@ General Public License: look at the source code.
 
 <chapter id="credits"><title>Credits and License</title>
 
-<para>&kdm; is derived from, and includes code from,
+<para>&tdm; is derived from, and includes code from,
 &xdm; (C) Keith Packard, MIT X Consortium.</para>
 
-<para>&kdm; 0.1 was written by &Matthias.Ettrich;.  Later versions till &kde;
+<para>&tdm; 0.1 was written by &Matthias.Ettrich;.  Later versions till &kde;
 2.0.x were written by &Steffen.Hansen;.  Some new features for &kde; 2.1.x and
 a major rewrite for &kde; 2.2.x made by &Oswald.Buddenhagen;.</para>
 
-<para>Other parts of the &kdm; code are copyright by the authors, and
+<para>Other parts of the &tdm; code are copyright by the authors, and
 licensed under the terms of the <ulink url="common/gpl-license.html">&GNU;
-GPL</ulink>. Anyone is allowed to change &kdm; and redistribute the result
+GPL</ulink>. Anyone is allowed to change &tdm; and redistribute the result
 as long as the names of the authors are mentioned.</para>
 
-<para>&kdm; requires the &Qt; library, which is copyright Troll Tech AS.</para>
+<para>&tdm; requires the &Qt; library, which is copyright Troll Tech AS.</para>
 
 <para>Documentation contributors:
 <itemizedlist>
@@ -1449,7 +1449,7 @@ man page, which is &copy; Keith Packard.</para>
 
 <glossentry id="gloss-greeter">
 <glossterm>greeter</glossterm>
-<glossdef><para>The greeter is the login dialog, &ie; the part of &kdm;
+<glossdef><para>The greeter is the login dialog, &ie; the part of &tdm;
 which the user sees.</para>
 </glossdef>
 </glossentry>

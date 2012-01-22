@@ -878,8 +878,8 @@ configuration files for a &Linux; kernel. This configurator is compatible with k
 </varlistentry>
 <varlistentry>
 <term><guilabel>Login Manager</guilabel></term>
-<listitem><para>This module allows you to configure the &kde; login manager, &kdm;. &kdm; is
-a powerful login manager with a large range of options. It supports user switching, remote graphical logins and has a fully customizable appearance. For more information, see the &kdm; handbook. </para></listitem>
+<listitem><para>This module allows you to configure the &kde; login manager, &tdm;. &tdm; is
+a powerful login manager with a large range of options. It supports user switching, remote graphical logins and has a fully customizable appearance. For more information, see the &tdm; handbook. </para></listitem>
 </varlistentry>
 <varlistentry>
 <term><guilabel>Paths</guilabel></term>

@@ -17,7 +17,7 @@ include_directories(
   ${CMAKE_SOURCE_DIR}/kicker/libkicker
   ${CMAKE_SOURCE_DIR}/kicker/kicker/core
   ${CMAKE_SOURCE_DIR}/kicker/kicker/buttons
-  ${CMAKE_SOURCE_DIR}/kdmlib
+  ${CMAKE_SOURCE_DIR}/tdmlib
   ${CMAKE_SOURCE_DIR}/libkonq
   ${TDE_INCLUDE_DIR}
   ${TQT_INCLUDE_DIRS}

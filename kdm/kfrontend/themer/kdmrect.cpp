@@ -19,9 +19,9 @@
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
-#include "kdmrect.h"
-#include "kdmthemer.h"
-#include "kdmconfig.h"
+#include "tdmrect.h"
+#include "tdmthemer.h"
+#include "tdmconfig.h"
 
 #include <kimageeffect.h>
 #include <kdebug.h>
@@ -178,4 +178,4 @@ KdmRect::setWidget( TQWidget *widget )
 	//setAttribs( widget );
 }
 
-#include "kdmrect.moc"
+#include "tdmrect.moc"

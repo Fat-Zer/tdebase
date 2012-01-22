@@ -73,9 +73,9 @@
 # define AF_LOCAL	AF_UNIX
 #endif
 
-#define FIFO_DIR "/tmp/ksocket-global/kdm"
-#define FIFO_FILE "/tmp/ksocket-global/kdm/kdmctl-%1"
-#define FIFO_SAK_FILE "/tmp/ksocket-global/kdm/kdmctl-sak-%1"
+#define FIFO_DIR "/tmp/ksocket-global/tdm"
+#define FIFO_FILE "/tmp/ksocket-global/tdm/tdmctl-%1"
+#define FIFO_SAK_FILE "/tmp/ksocket-global/tdm/tdmctl-sak-%1"
 
 bool trinity_desktop_lock_use_system_modal_dialogs = TRUE;
 extern bool trinity_desktop_lock_use_sak;
@@ -94,7 +94,7 @@ SAKDlg::SAKDlg(TQWidget *parent)
         kde_wm_system_modal_notification = XInternAtom(qt_xdisplay(), "_KDE_WM_MODAL_SYS_NOTIFICATION", False);
         XChangeProperty(qt_xdisplay(), winId(), kde_wm_system_modal_notification, XA_INTEGER, 32, PropModeReplace, (unsigned char *) "TRUE", 1L);
     }
-    setCaption(KDM_LOGIN_SCREEN_BASE_TITLE);
+    setCaption(TDM_LOGIN_SCREEN_BASE_TITLE);
 
     frame = new TQFrame( this );
     if (trinity_desktop_lock_use_system_modal_dialogs)
@@ -125,7 +125,7 @@ SAKDlg::SAKDlg(TQWidget *parent)
     installEventFilter(this);
 
     mSAKProcess = new KProcess;
-    *mSAKProcess << "kdmtsak" << "dm";
+    *mSAKProcess << "tdmtsak" << "dm";
     connect(mSAKProcess, TQT_SIGNAL(processExited(KProcess*)), this, TQT_SLOT(slotSAKProcessExited()));
     mSAKProcess->start();
 

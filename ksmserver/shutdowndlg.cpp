@@ -898,7 +898,7 @@ KSMShutdownDlg::KSMShutdownDlg( TQWidget* parent,
 			btnHalt->setFont( btnFont );
 			buttonlay->addWidget( btnHalt );
 			connect(btnHalt, TQT_SIGNAL(clicked()), TQT_SLOT(slotHalt()));
-        if ( sdtype == KApplication::ShutdownTypeHalt || getenv("KDM_AUTOLOGIN") ) 
+        if ( sdtype == KApplication::ShutdownTypeHalt || getenv("TDM_AUTOLOGIN") ) 
 				btnHalt->setFocus();
 	
 			// Reboot

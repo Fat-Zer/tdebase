@@ -1,6 +1,6 @@
 /*
 
-Read options from kdmrc
+Read options from tdmrc
 
 Copyright (C) 2001-2005 Oswald Buddenhagen <ossi@kde.org>
 
@@ -117,7 +117,7 @@ static void *Malloc( size_t size );
 static void *Realloc( void *ptr, size_t size );
 
 #define PRINT_QUOTES
-#define LOG_NAME "kdm_config"
+#define LOG_NAME "tdm_config"
 #define LOG_DEBUG_MASK DEBUG_CONFIG
 #define LOG_PANIC_EXIT 1
 #define STATIC static
@@ -381,8 +381,8 @@ PautoLoginX( Value *retval )
 
 CONF_READ_ENTRIES
 
-static const char *kdmrc = KDMCONF "/kdmrc";
-static const char *kdmrc_dist = KDMCONF "/kdmdistrc";
+static const char *tdmrc = TDMCONF "/tdmrc";
+static const char *tdmrc_dist = TDMCONF "/tdmdistrc";
 
 static Section *rootsec;
 
@@ -403,14 +403,14 @@ ReadConf()
 		return;
 	confread = 1;
 
-	Debug( "reading config %s ...\n", kdmrc_dist );
-	if (!readFile( &file, kdmrc_dist, "master configuration" )) {
-		Debug( "reading config %s ...\n", kdmrc );
-		if (!readFile( &file, kdmrc, "master configuration" ))
+	Debug( "reading config %s ...\n", tdmrc_dist );
+	if (!readFile( &file, tdmrc_dist, "master configuration" )) {
+		Debug( "reading config %s ...\n", tdmrc );
+		if (!readFile( &file, tdmrc, "master configuration" ))
 			return;
 	}
 	else {
-		kdmrc = kdmrc_dist;
+		tdmrc = tdmrc_dist;
 	}
 
 	for (s = file.buf, line = 0, cursec = 0, sectmoan = 1; s < file.eof; s++) {
@@ -436,7 +436,7 @@ ReadConf()
 				e--;
 			if (*e != ']') {
 				cursec = 0;
-				LogError( "Invalid section header at %s:%d\n", kdmrc, line );
+				LogError( "Invalid section header at %s:%d\n", tdmrc, line );
 				continue;
 			}
 			nstr = sl + 1;
@@ -446,7 +446,7 @@ ReadConf()
 				    !memcmp( nstr, cursec->name, nlen ))
 				{
 					LogInfo( "Multiple occurrences of section [%.*s] in %s. "
-					         "Consider merging them.\n", nlen, nstr, kdmrc );
+					         "Consider merging them.\n", nlen, nstr, tdmrc );
 					goto secfnd;
 				}
 			if (nstr[0] == 'X' && nstr[1] == '-') {
@@ -502,7 +502,7 @@ ReadConf()
 		  illsec:
 			cursec = 0;
 			LogError( "Unrecognized section name [%.*s] at %s:%d\n",
-			          nlen, nstr, kdmrc, line );
+			          nlen, nstr, tdmrc, line );
 			continue;
 		  newsec:
 			if (!(cursec = Malloc( sizeof(*cursec) )))
@@ -530,7 +530,7 @@ ReadConf()
 		if (!cursec) {
 			if (sectmoan) {
 				sectmoan = 0;
-				LogError( "Entry outside any section at %s:%d", kdmrc, line );
+				LogError( "Entry outside any section at %s:%d", tdmrc, line );
 			}
 			goto sktoeol;
 		}
@@ -538,13 +538,13 @@ ReadConf()
 		for (; (s < file.eof) && (*s != '\n'); s++)
 			if (*s == '=')
 				goto haveeq;
-		LogError( "Invalid entry (missing '=') at %s:%d\n", kdmrc, line );
+		LogError( "Invalid entry (missing '=') at %s:%d\n", tdmrc, line );
 		continue;
 
 	  haveeq:
 		for (ek = s - 1; ; ek--) {
 			if (ek < sl) {
-				LogError( "Invalid entry (empty key) at %s:%d\n", kdmrc, line );
+				LogError( "Invalid entry (empty key) at %s:%d\n", tdmrc, line );
 				goto sktoeol;
 			}
 			if (!isspace( *ek ))
@@ -558,7 +558,7 @@ ReadConf()
 			if (*s == '\\') {
 				s++;
 				if (s >= file.eof || *s == '\n') {
-					LogError( "Trailing backslash at %s:%d\n", kdmrc, line );
+					LogError( "Trailing backslash at %s:%d\n", tdmrc, line );
 					break;
 				}
 				switch (*s) {
@@ -587,14 +587,14 @@ ReadConf()
 				goto keyok;
 		}
 		LogError( "Unrecognized key '%.*s' in section [%.*s] at %s:%d\n",
-		          nlen, nstr, cursec->nlen, cursec->name, kdmrc, line );
+		          nlen, nstr, cursec->nlen, cursec->name, tdmrc, line );
 		continue;
 	  keyok:
 		for (curent = cursec->entries; curent; curent = curent->next)
 			if (ce == curent->ent) {
 				LogError( "Multiple occurrences of key '%s' in section [%.*s]"
 				          " of %s\n",
-				          ce->name, cursec->nlen, cursec->name, kdmrc );
+				          ce->name, cursec->nlen, cursec->name, tdmrc );
 				goto keyfnd;
 			}
 		if (!(curent = Malloc( sizeof(*curent) )))
@@ -796,7 +796,7 @@ GetValue( Ent *et, DSpec *dspec, Value *retval, char **eopts )
 		if (!(errs = CvtValue( et, retval, ent->vallen, ent->val, eopts )))
 			return;
 		LogError( "Invalid %s value '%.*s' at %s:%d\n",
-		          errs, ent->vallen, ent->val, kdmrc, ent->line );
+		          errs, ent->vallen, ent->val, tdmrc, ent->line );
 	}
 	Debug( "default: %s = %'s\n", et->name, et->def );
 	if ((errs = CvtValue( et, retval, strlen( et->def ), et->def, eopts )))
@@ -1368,7 +1368,7 @@ int main( int argc ATTR_UNUSED, char **argv )
 	int what;
 
 	if (!(ci = getenv( "CONINFO" ))) {
-		fprintf( stderr, "This program is part of kdm and should not be run manually.\n" );
+		fprintf( stderr, "This program is part of tdm and should not be run manually.\n" );
 		return 1;
 	}
 	if (sscanf( ci, "%d %d", &rfd, &wfd ) != 2)
@@ -1381,7 +1381,7 @@ int main( int argc ATTR_UNUSED, char **argv )
 
 /*	Debug ("parsing command line\n");*/
 	if (**++argv)
-		kdmrc_dist = kdmrc = *argv;
+		tdmrc_dist = tdmrc = *argv;
 /*
 	while (*++argv) {
 	}
@@ -1402,7 +1402,7 @@ int main( int argc ATTR_UNUSED, char **argv )
 #else
 			GSendInt( 1 );
 #endif
-			GSendStr( kdmrc );
+			GSendStr( tdmrc );
 				GSendInt( -1 );
 #ifdef XDMCP
 			GSendNStr( VXaccess.ptr, VXaccess.len - 1 );

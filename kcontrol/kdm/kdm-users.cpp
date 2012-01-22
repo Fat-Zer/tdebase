@@ -38,14 +38,14 @@
 #include <kmessagebox.h>
 #include <kurldrag.h>
 
-#include "kdm-users.h"
+#include "tdm-users.h"
 
 #include <sys/stat.h>
 
 
 extern KSimpleConfig *config;
 
-KDMUsersWidget::KDMUsersWidget(TQWidget *parent, const char *name)
+TDMUsersWidget::TDMUsersWidget(TQWidget *parent, const char *name)
     : TQWidget(parent, name)
 {
 #ifdef __linux__
@@ -71,10 +71,10 @@ KDMUsersWidget::KDMUsersWidget(TQWidget *parent, const char *name)
     defmaxuid = "65000";
 #endif
 
-    // We assume that $kde_datadir/kdm exists, but better check for pics/ and pics/users,
+    // We assume that $kde_datadir/tdm exists, but better check for pics/ and pics/users,
     // and create them if necessary.
     config->setGroup( "X-*-Greeter" );
-    m_userPixDir = config->readEntry( "FaceDir", KGlobal::dirs()->resourceDirs("data").last() + "kdm/faces" ) + '/';
+    m_userPixDir = config->readEntry( "FaceDir", KGlobal::dirs()->resourceDirs("data").last() + "tdm/faces" ) + '/';
     m_notFirst = false;
     TQDir testDir( m_userPixDir );
     if ( !testDir.exists() && !testDir.mkdir( testDir.absPath() ) && !geteuid() )
@@ -86,7 +86,7 @@ KDMUsersWidget::KDMUsersWidget(TQWidget *parent, const char *name)
     TQString wtstr;
 
     minGroup = new TQGroupBox( 2, Qt::Horizontal, i18n("System U&IDs"), this );
-    TQWhatsThis::add( minGroup, i18n("Users with a UID (numerical user identification) outside this range will not be listed by KDM and this setup dialog."
+    TQWhatsThis::add( minGroup, i18n("Users with a UID (numerical user identification) outside this range will not be listed by TDM and this setup dialog."
       " Note that users with the UID 0 (typically root) are not affected by this and must be"
       " explicitly hidden in \"Not hidden\" mode."));
     TQSizePolicy sp_ign_fix( TQSizePolicy::Ignored, TQSizePolicy::Fixed );
@@ -110,10 +110,10 @@ KDMUsersWidget::KDMUsersWidget(TQWidget *parent, const char *name)
     connect( usrGroup, TQT_SIGNAL(clicked( int )), TQT_SLOT(slotShowOpts()) );
     connect( usrGroup, TQT_SIGNAL(clicked( int )), TQT_SLOT(slotChanged()) );
     cbshowlist = new TQCheckBox( i18n("Show list"), usrGroup );
-    TQWhatsThis::add( cbshowlist, i18n("If this option is checked, KDM will show a list of users,"
+    TQWhatsThis::add( cbshowlist, i18n("If this option is checked, TDM will show a list of users,"
       " so users can click on their name or image rather than typing in their login.") );
     cbcomplete = new TQCheckBox( i18n("Autocompletion"), usrGroup );
-    TQWhatsThis::add( cbcomplete, i18n("If this option is checked, KDM will automatically complete"
+    TQWhatsThis::add( cbcomplete, i18n("If this option is checked, TDM will automatically complete"
       " user names while they are typed in the line edit.") );
     cbinverted = new TQCheckBox( i18n("Inverse selection"), usrGroup );
     TQWhatsThis::add( cbinverted, i18n("This option specifies how the users for \"Show list\" and \"Autocompletion\""
@@ -122,7 +122,7 @@ KDMUsersWidget::KDMUsersWidget(TQWidget *parent, const char *name)
       "If checked, select all non-system users, except the checked ones."));
     cbusrsrt = new TQCheckBox( i18n("Sor&t users"), usrGroup );
     connect( cbusrsrt, TQT_SIGNAL(toggled( bool )), TQT_SLOT(slotChanged()) );
-    TQWhatsThis::add( cbusrsrt, i18n("If this is checked, KDM will alphabetically sort the user list."
+    TQWhatsThis::add( cbusrsrt, i18n("If this is checked, TDM will alphabetically sort the user list."
       " Otherwise users are listed in the order they appear in the password file.") );
 
     wstack = new TQWidgetStack( this );
@@ -130,7 +130,7 @@ KDMUsersWidget::KDMUsersWidget(TQWidget *parent, const char *name)
     optinlv = new KListView( this );
     optinlv->addColumn( i18n("Selected Users") );
     optinlv->setResizeMode( TQListView::LastColumn );
-    TQWhatsThis::add( optinlv, i18n("KDM will show all checked users. Entries denoted with '@' are user groups. Checking a group is like checking all users in that group.") );
+    TQWhatsThis::add( optinlv, i18n("TDM will show all checked users. Entries denoted with '@' are user groups. Checking a group is like checking all users in that group.") );
     wstack->addWidget( optinlv );
     connect( optinlv, TQT_SIGNAL(clicked( TQListViewItem * )),
 	     TQT_SLOT(slotUpdateOptIn( TQListViewItem * )) );
@@ -139,7 +139,7 @@ KDMUsersWidget::KDMUsersWidget(TQWidget *parent, const char *name)
     optoutlv = new KListView( this );
     optoutlv->addColumn( i18n("Hidden Users") );
     optoutlv->setResizeMode( TQListView::LastColumn );
-    TQWhatsThis::add( optoutlv, i18n("KDM will show all non-checked non-system users. Entries denoted with '@' are user groups. Checking a group is like checking all users in that group.") );
+    TQWhatsThis::add( optoutlv, i18n("TDM will show all non-checked non-system users. Entries denoted with '@' are user groups. Checking a group is like checking all users in that group.") );
     wstack->addWidget( optoutlv );
     connect( optoutlv, TQT_SIGNAL(clicked( TQListViewItem * )),
 	     TQT_SLOT(slotUpdateOptOut( TQListViewItem * )) );
@@ -147,9 +147,9 @@ KDMUsersWidget::KDMUsersWidget(TQWidget *parent, const char *name)
 	     TQT_SLOT(slotChanged()) );
 
     faceGroup = new TQButtonGroup( 5, Qt::Vertical, i18n("User Image Source"), this );
-    TQWhatsThis::add( faceGroup, i18n("Here you can specify where KDM will obtain the images that represent users."
+    TQWhatsThis::add( faceGroup, i18n("Here you can specify where TDM will obtain the images that represent users."
       " \"Admin\" represents the global folder; these are the pictures you can set below."
-      " \"User\" means that KDM should read the user's $HOME/.face.icon file."
+      " \"User\" means that TDM should read the user's $HOME/.face.icon file."
       " The two selections in the middle define the order of preference if both sources are available.") );
     connect( faceGroup, TQT_SIGNAL(clicked( int )), TQT_SLOT(slotFaceOpts()) );
     connect( faceGroup, TQT_SIGNAL(clicked( int )), TQT_SLOT(slotChanged()) );
@@ -176,7 +176,7 @@ KDMUsersWidget::KDMUsersWidget(TQWidget *parent, const char *name)
     TQWhatsThis::add( userbutton, i18n("Here you can see the image assigned to the user selected in the combo box above. Click on the image button to select from a list"
       " of images or drag and drop your own image on to the button (e.g. from Konqueror).") );
     rstuserbutton = new TQPushButton( i18n("Unset"), hlpw );
-    TQWhatsThis::add( rstuserbutton, i18n("Click this button to make KDM use the default image for the selected user.") );
+    TQWhatsThis::add( rstuserbutton, i18n("Click this button to make TDM use the default image for the selected user.") );
     connect( rstuserbutton, TQT_SIGNAL(clicked()),
 	     TQT_SLOT(slotUnsetUserPix()) );
     TQGridLayout *hlpl = new TQGridLayout( hlpw, 3, 2, 0, KDialog::spacingHint() );
@@ -206,7 +206,7 @@ KDMUsersWidget::KDMUsersWidget(TQWidget *parent, const char *name)
 
 }
 
-void KDMUsersWidget::makeReadOnly()
+void TDMUsersWidget::makeReadOnly()
 {
     leminuid->setReadOnly(true);
     lemaxuid->setReadOnly(true);
@@ -224,7 +224,7 @@ void KDMUsersWidget::makeReadOnly()
     rstuserbutton->setEnabled(false);
 }
 
-void KDMUsersWidget::slotShowOpts()
+void TDMUsersWidget::slotShowOpts()
 {
     bool en = cbshowlist->isChecked() || cbcomplete->isChecked();
     cbinverted->setEnabled( en );
@@ -241,7 +241,7 @@ void KDMUsersWidget::slotShowOpts()
 	slotFaceOpts();
 }
 
-void KDMUsersWidget::slotFaceOpts()
+void TDMUsersWidget::slotFaceOpts()
 {
     bool en = !rbusronly->isChecked();
     usercombo->setEnabled( en );
@@ -252,7 +252,7 @@ void KDMUsersWidget::slotFaceOpts()
 	rstuserbutton->setEnabled( false );
 }
 
-void KDMUsersWidget::slotUserSelected()
+void TDMUsersWidget::slotUserSelected()
 {
     TQString user = usercombo->currentText();
     TQImage p;
@@ -267,7 +267,7 @@ void KDMUsersWidget::slotUserSelected()
 }
 
 
-void KDMUsersWidget::changeUserPix(const TQString &pix)
+void TDMUsersWidget::changeUserPix(const TQString &pix)
 {
     TQString user( usercombo->currentText() );
     if (user == m_defaultText)
@@ -298,10 +298,10 @@ void KDMUsersWidget::changeUserPix(const TQString &pix)
     slotUserSelected();
 }
 
-void KDMUsersWidget::slotUserButtonClicked()
+void TDMUsersWidget::slotUserButtonClicked()
 {
     KFileDialog dlg(m_notFirst ? TQString::null :
-	KGlobal::dirs()->resourceDirs("data").last() + "kdm/pics/users",
+	KGlobal::dirs()->resourceDirs("data").last() + "tdm/pics/users",
                     KImageIO::pattern( KImageIO::Reading ),
                     this, 0, true);
     dlg.setOperationMode( KFileDialog::Opening );
@@ -317,13 +317,13 @@ void KDMUsersWidget::slotUserButtonClicked()
     changeUserPix( dlg.selectedFile() );
 }
 
-void KDMUsersWidget::slotUnsetUserPix()
+void TDMUsersWidget::slotUnsetUserPix()
 {
     TQFile::remove( m_userPixDir + usercombo->currentText() + ".face.icon" );
     slotUserSelected();
 }
 
-bool KDMUsersWidget::eventFilter(TQObject *, TQEvent *e)
+bool TDMUsersWidget::eventFilter(TQObject *, TQEvent *e)
 {
     if (e->type() == TQEvent::DragEnter) {
 	TQDragEnterEvent *ee = (TQDragEnterEvent *) e;
@@ -341,7 +341,7 @@ bool KDMUsersWidget::eventFilter(TQObject *, TQEvent *e)
 
 KURL *decodeImgDrop(TQDropEvent *e, TQWidget *wdg);
 
-void KDMUsersWidget::userButtonDropEvent(TQDropEvent *e)
+void TDMUsersWidget::userButtonDropEvent(TQDropEvent *e)
 {
     KURL *url = decodeImgDrop(e, this);
     if (url) {
@@ -353,7 +353,7 @@ void KDMUsersWidget::userButtonDropEvent(TQDropEvent *e)
     }
 }
 
-void KDMUsersWidget::save()
+void TDMUsersWidget::save()
 {
     config->setGroup( "X-*-Greeter" );
 
@@ -376,7 +376,7 @@ void KDMUsersWidget::save()
 }
 
 
-void KDMUsersWidget::updateOptList( TQListViewItem *item, TQStringList &list )
+void TDMUsersWidget::updateOptList( TQListViewItem *item, TQStringList &list )
 {
     if ( !item )
         return;
@@ -391,17 +391,17 @@ void KDMUsersWidget::updateOptList( TQListViewItem *item, TQStringList &list )
     }
 }
 
-void KDMUsersWidget::slotUpdateOptIn( TQListViewItem *item )
+void TDMUsersWidget::slotUpdateOptIn( TQListViewItem *item )
 {
     updateOptList( item, selectedUsers );
 }
 
-void KDMUsersWidget::slotUpdateOptOut( TQListViewItem *item )
+void TDMUsersWidget::slotUpdateOptOut( TQListViewItem *item )
 {
     updateOptList( item, hiddenUsers );
 }
 
-void KDMUsersWidget::slotClearUsers()
+void TDMUsersWidget::slotClearUsers()
 {
     optinlv->clear();
     optoutlv->clear();
@@ -409,7 +409,7 @@ void KDMUsersWidget::slotClearUsers()
     usercombo->insertItem( m_defaultText );
 }
 
-void KDMUsersWidget::slotAddUsers(const TQMap<TQString,int> &users)
+void TDMUsersWidget::slotAddUsers(const TQMap<TQString,int> &users)
 {
     TQMapConstIterator<TQString,int> it;
     for (it = users.begin(); it != users.end(); ++it) {
@@ -427,7 +427,7 @@ void KDMUsersWidget::slotAddUsers(const TQMap<TQString,int> &users)
         usercombo->listBox()->sort();
 }
 
-void KDMUsersWidget::slotDelUsers(const TQMap<TQString,int> &users)
+void TDMUsersWidget::slotDelUsers(const TQMap<TQString,int> &users)
 {
     TQMapConstIterator<TQString,int> it;
     for (it = users.begin(); it != users.end(); ++it) {
@@ -439,7 +439,7 @@ void KDMUsersWidget::slotDelUsers(const TQMap<TQString,int> &users)
     }
 }
 
-void KDMUsersWidget::load()
+void TDMUsersWidget::load()
 {
     TQString str;
 
@@ -472,7 +472,7 @@ void KDMUsersWidget::load()
     slotFaceOpts();
 }
 
-void KDMUsersWidget::defaults()
+void TDMUsersWidget::defaults()
 {
     leminuid->setText( defminuid );
     lemaxuid->setText( defmaxuid );
@@ -487,14 +487,14 @@ void KDMUsersWidget::defaults()
     slotFaceOpts();
 }
 
-void KDMUsersWidget::slotMinMaxChanged()
+void TDMUsersWidget::slotMinMaxChanged()
 {
     emit setMinMaxUID( leminuid->text().toInt(), lemaxuid->text().toInt() );
 }
 
-void KDMUsersWidget::slotChanged()
+void TDMUsersWidget::slotChanged()
 {
   emit changed(true);
 }
 
-#include "kdm-users.moc"
+#include "tdm-users.moc"

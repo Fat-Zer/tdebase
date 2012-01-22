@@ -408,7 +408,7 @@ and permissions, as shown below:
 if [ "${ACTION}" = "add" ] && [ -f "${DEVICE}" ]
 then
 # New code, using lock files instead of copying /dev/console permissions
-# This also works with non-kdm logins (e.g. on a virtual terminal)
+# This also works with non-tdm logins (e.g. on a virtual terminal)
 # Idea and code from Nalin Dahyabhai <nalin@redhat.com>
     if [ -f /var/run/console.lock ]
     then

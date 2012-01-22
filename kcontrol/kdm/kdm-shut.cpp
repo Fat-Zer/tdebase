@@ -34,13 +34,13 @@
 #include <kdialog.h>
 #include <kurlrequester.h>
 
-#include "kdm-shut.h"
+#include "tdm-shut.h"
 #include "kbackedcombobox.h"
 
 extern KSimpleConfig *config;
 
 
-KDMSessionsWidget::KDMSessionsWidget(TQWidget *parent, const char *name)
+TDMSessionsWidget::TDMSessionsWidget(TQWidget *parent, const char *name)
   : TQWidget(parent, name)
 {
       TQString wtstr;
@@ -61,11 +61,11 @@ KDMSessionsWidget::KDMSessionsWidget(TQWidget *parent, const char *name)
       sdrcombo->insertItem(i18n("Nobody"), SdNone);
       connect(sdrcombo, TQT_SIGNAL(activated(int)), TQT_SLOT(changed()));
       TQWhatsThis::add( group0, i18n("Here you can select who is allowed to shutdown"
-        " the computer using KDM. You can specify different values for local (console) and remote displays. "
+        " the computer using TDM. You can specify different values for local (console) and remote displays. "
 	"Possible values are:<ul>"
-        " <li><em>Everybody:</em> everybody can shutdown the computer using KDM</li>"
-        " <li><em>Only root:</em> KDM will only allow shutdown after the user has entered the root password</li>"
-        " <li><em>Nobody:</em> nobody can shutdown the computer using KDM</li></ul>") );
+        " <li><em>Everybody:</em> everybody can shutdown the computer using TDM</li>"
+        " <li><em>Only root:</em> TDM will only allow shutdown after the user has entered the root password</li>"
+        " <li><em>Nobody:</em> nobody can shutdown the computer using TDM</li></ul>") );
 
 
       TQGroupBox *group1 = new TQGroupBox( i18n("Commands"), this );
@@ -138,7 +138,7 @@ KDMSessionsWidget::KDMSessionsWidget(TQWidget *parent, const char *name)
 
 }
 
-void KDMSessionsWidget::makeReadOnly()
+void TDMSessionsWidget::makeReadOnly()
 {
     sdlcombo->setEnabled(false);
     sdrcombo->setEnabled(false);
@@ -151,7 +151,7 @@ void KDMSessionsWidget::makeReadOnly()
     bm_combo->setEnabled(false);
 }
 
-void KDMSessionsWidget::writeSD(TQComboBox *combo)
+void TDMSessionsWidget::writeSD(TQComboBox *combo)
 {
     TQString what;
     switch (combo->currentItem()) {
@@ -162,7 +162,7 @@ void KDMSessionsWidget::writeSD(TQComboBox *combo)
     config->writeEntry( "AllowShutdown", what);
 }
 
-void KDMSessionsWidget::save()
+void TDMSessionsWidget::save()
 {
     config->setGroup("X-:*-Core");
     writeSD(sdlcombo);
@@ -177,7 +177,7 @@ void KDMSessionsWidget::save()
     config->writeEntry("BootManager", bm_combo->currentId());
 }
 
-void KDMSessionsWidget::readSD(TQComboBox *combo, TQString def)
+void TDMSessionsWidget::readSD(TQComboBox *combo, TQString def)
 {
   TQString str = config->readEntry("AllowShutdown", def);
   SdModes sdMode;
@@ -190,7 +190,7 @@ void KDMSessionsWidget::readSD(TQComboBox *combo, TQString def)
   combo->setCurrentItem(sdMode);
 }
 
-void KDMSessionsWidget::load()
+void TDMSessionsWidget::load()
 {
   config->setGroup("X-:*-Core");
   readSD(sdlcombo, "All");
@@ -207,7 +207,7 @@ void KDMSessionsWidget::load()
 
 
 
-void KDMSessionsWidget::defaults()
+void TDMSessionsWidget::defaults()
 {
   restart_lined->setURL("/sbin/reboot");
   shutdown_lined->setURL("/sbin/poweroff");
@@ -219,9 +219,9 @@ void KDMSessionsWidget::defaults()
 }
 
 
-void KDMSessionsWidget::changed()
+void TDMSessionsWidget::changed()
 {
   emit changed(true);
 }
 
-#include "kdm-shut.moc"
+#include "tdm-shut.moc"

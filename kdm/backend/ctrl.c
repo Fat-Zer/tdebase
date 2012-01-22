@@ -520,7 +520,7 @@ processCtrl( const char *string, int len, int fd, struct display *d )
 		if (fd >= 0 && !strcmp( ar[0], "caps" )) {
 			if (ar[1])
 				goto exce;
-			Reply( "ok\tkdm\tlist\t" );
+			Reply( "ok\ttdm\tlist\t" );
 			if (bootManager != BO_NONE)
 				Reply( "bootoptions\t" );
 			if (d) {

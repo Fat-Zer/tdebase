@@ -32,7 +32,7 @@ save documents) and let her or him log in.</para>
 you will find a <guisubmenu>Switch User</guisubmenu> submenu. It contains
 the command to lock the current and start a new session which means that
 your desktop will start the screensaver and after a few seconds can log in
-with KDM as always. The <guimenuitem>Start New Session</guimenuitem> entry
+with TDM as always. The <guimenuitem>Start New Session</guimenuitem> entry
 skips the activation of your screensaver.</para>
 
 <para>Once you have running more than one session you can either choose to
@@ -53,8 +53,8 @@ User...</guibutton> button and log into another session.</para>
 </varlistentry>
 
 <varlistentry>
-<term>Switch Session in &kdm;</term>
-<listitem><para>If you are in &kdm; and want to switch to another active
+<term>Switch Session in &tdm;</term>
+<listitem><para>If you are in &tdm; and want to switch to another active
 session you can press the <guibutton>Menu</guibutton> button and choose
 <guisubmenu>Switch User</guisubmenu> which is mainly the same as described
 above.</para>

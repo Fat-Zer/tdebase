@@ -5,11 +5,11 @@
                           http://www.kde.org/standards/kcfg/1.0/kcfg.xsd" >
 	<include>kglobal.h</include>
 	<include>kstandarddirs.h</include>
-	<kcfgfile name="kdm/kdmrc"/>
+	<kcfgfile name="tdm/tdmrc"/>
 	<group name="X-*-Greeter">
 		<entry name="faceDir" type="Path">
 			<default code="true">
-				KGlobal::dirs()->resourceDirs("data").last() + "kdm/faces"  + '/'
+				KGlobal::dirs()->resourceDirs("data").last() + "tdm/faces"  + '/'
 			</default>
 		</entry>
 		<entry name="UserFaceDir" type="Path">
@@ -18,7 +18,7 @@
 		<entry name="FaceSource" type="String">
 			<default>PreferAdmin</default>
 		</entry>
-		<!-- These entries doesn't "exist" or is used in kdmrc 
+		<!-- These entries doesn't "exist" or is used in tdmrc 
 		but this is a nifty way of handling default values ;-) -->
 		<entry name = "FaceSize" type="Int">
 			<label>The size of login images</label>

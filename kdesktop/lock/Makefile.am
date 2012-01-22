@@ -1,8 +1,8 @@
 ## Makefile.am of tdebase/kdesktop/lock
 
-INCLUDES = -I.. -I$(top_srcdir)/kcheckpass -I$(top_srcdir)/kdmlib $(GLINC) $(all_includes)
+INCLUDES = -I.. -I$(top_srcdir)/kcheckpass -I$(top_srcdir)/tdmlib $(GLINC) $(all_includes)
 kdesktop_lock_LDFLAGS  = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_TDECORE) $(LIB_TDEUI) -ltdefx $(LIB_KIO) -lktexteditor
-kdesktop_lock_LDADD    = ../libkdesktopsettings.la ../../kdmlib/libdmctl.la $(LIB_KIO) $(LIB_XF86MISC) $(GLLIB)
+kdesktop_lock_LDADD    = ../libkdesktopsettings.la ../../tdmlib/libdmctl.la $(LIB_KIO) $(LIB_XF86MISC) $(GLLIB)
 
 ####### Files
 

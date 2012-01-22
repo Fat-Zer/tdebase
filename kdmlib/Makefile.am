@@ -1,4 +1,4 @@
-AM_CPPFLAGS = -I$(top_srcdir)/kdm/kfrontend $(all_includes)
+AM_CPPFLAGS = -I$(top_srcdir)/tdm/kfrontend $(all_includes)
 
 kde_module_LTLIBRARIES = kgreet_classic.la kgreet_pam.la kgreet_winbind.la
 

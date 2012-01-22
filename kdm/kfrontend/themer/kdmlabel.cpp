@@ -20,8 +20,8 @@
  */
 
 #include <config.h>
-#include "kdmlabel.h"
-#include "kdmconfig.h"
+#include "tdmlabel.h"
+#include "tdmconfig.h"
 #include "../kgreeter.h"
 
 #include <kglobal.h>
@@ -273,4 +273,4 @@ KdmLabel::lookupText( const TQString &t )
 	return KMacroExpander::expandMacros( text, m );
 }
 
-#include "kdmlabel.moc"
+#include "tdmlabel.moc"

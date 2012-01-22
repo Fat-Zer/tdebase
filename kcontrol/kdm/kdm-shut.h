@@ -17,8 +17,8 @@
     Boston, MA 02110-1301, USA.
 */  
 
-#ifndef __KDMSESS_H__
-#define __KDMSESS_H__
+#ifndef __TDMSESS_H__
+#define __TDMSESS_H__
 
 
 #include <tqstring.h>
@@ -28,12 +28,12 @@ class TQCheckBox;
 class KURLRequester;
 class KBackedComboBox;
 
-class KDMSessionsWidget : public TQWidget
+class TDMSessionsWidget : public TQWidget
 {
 	Q_OBJECT
 
 public:
-	KDMSessionsWidget(TQWidget *parent=0, const char *name=0);
+	TDMSessionsWidget(TQWidget *parent=0, const char *name=0);
 
 	void load();
 	void save();

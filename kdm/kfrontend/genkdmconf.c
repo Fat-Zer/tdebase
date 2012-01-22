@@ -1,6 +1,6 @@
 /*
 
-Create a suitable configuration for kdm taking old xdm/kdm
+Create a suitable configuration for tdm taking old xdm/tdm
 installations into account
 
 Copyright (C) 2001-2005 Oswald Buddenhagen <ossi@kde.org>
@@ -69,7 +69,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 static int old_scripts, no_old_scripts, old_confs, no_old,
 	no_backup, no_in_notice, use_destdir, mixed_scripts;
-static const char *newdir = KDMCONF, *facesrc = KDMDATA "/pics/users",
+static const char *newdir = TDMCONF, *facesrc = TDMDATA "/pics/users",
 	*oldxdm, *oldkde;
 
 static int oldver;
@@ -350,7 +350,7 @@ locate( const char *exe )
 
 
 /*
- * target data to be written to kdmrc
+ * target data to be written to tdmrc
  */
 
 typedef struct Entry {
@@ -369,10 +369,10 @@ typedef struct Section {
 	Entry *ents;
 } Section;
 
-static Section *config; /* the kdmrc data to be written */
+static Section *config; /* the tdmrc data to be written */
 
 /*
- * Specification of the (currently possible) kdmrc entries
+ * Specification of the (currently possible) tdmrc entries
  */
 
 typedef struct Ent {
@@ -392,7 +392,7 @@ static Sect *findSect( const char *name );
 static Ent *findEnt( Sect *sect, const char *key );
 
 /*
- * Functions to manipulate the current kdmrc data
+ * Functions to manipulate the current tdmrc data
  */
 
 static const char *
@@ -594,12 +594,12 @@ static const char def_startup[] =
 "    xmessage -file /etc/nologin -geometry 640x480\n"
 "  fi\n"
 "  if [ \"$(id -u)\" != \"0\" ] && \\\n"
-"     ! grep -qs '^ignore-nologin' /etc/trinity/kdm/kdm.options; then\n"
+"     ! grep -qs '^ignore-nologin' /etc/trinity/tdm/tdm.options; then\n"
 "    exit 1\n"
 "  fi\n"
 "fi\n"
 "\n"
-"if grep -qs '^use-sessreg' /etc/trinity/kdm/kdm.options && \\\n"
+"if grep -qs '^use-sessreg' /etc/trinity/tdm/tdm.options && \\\n"
 "   which sessreg > /dev/null 2>&1; then\n"
 "      exec sessreg -a -l \"$DISPLAY\" -u /var/run/utmp \\\n"
 "                   -h \"`echo $DISPLAY | cut -d: -f1`\" \"$USER\"\n"
@@ -620,7 +620,7 @@ static const char def_reset[] =
 "#devname=`echo $DISPLAY | cut -c1-8`\n"
 "#exec sessreg -d -l xdm/$devname -h \"`echo $DISPLAY | cut -d: -f1`\""
 #else
-"if grep -qs '^use-sessreg' /etc/trinity/kdm/kdm.options && \\\n"
+"if grep -qs '^use-sessreg' /etc/trinity/tdm/tdm.options && \\\n"
 "   which sessreg > /dev/null 2>&1; then\n"
 "      exec sessreg -d -l \"$DISPLAY\" -u /var/run/utmp \\\n"
 "                   -h \"`echo $DISPLAY | cut -d: -f1`\" \"$USER\"\n"
@@ -765,7 +765,7 @@ resect( const char *sec, const char *name )
 static int
 inNewDir( const char *name )
 {
-	return !memcmp( name, KDMCONF "/", sizeof(KDMCONF) );
+	return !memcmp( name, TDMCONF "/", sizeof(TDMCONF) );
 }
 
 static int
@@ -839,7 +839,7 @@ copyfile( Entry *ce, const char *tname, int mode, int (*proc)( File * ) )
 		return 1;
 
 	tptr = strrchr( tname, '/' );
-	ASPrintf( &nname, KDMCONF "/%s", tptr ? tptr + 1 : tname );
+	ASPrintf( &nname, TDMCONF "/%s", tptr ? tptr + 1 : tname );
 	if (inList( cflist, ce->value ) ||
 	    inList( eflist, ce->value ) ||
 	    inList( lflist, ce->value ))
@@ -1322,7 +1322,7 @@ cp_keyfile( Entry *ce, Section *cs ATTR_UNUSED )
 	if (old_confs)
 		linkfile( ce );
 	else
-		if (!copyfile( ce, "kdmkeys", 0600, 0 ))
+		if (!copyfile( ce, "tdmkeys", 0600, 0 ))
 			ce->active = 0;
 }
 
@@ -1351,7 +1351,7 @@ mk_willing( Entry *ce, Section *cs ATTR_UNUSED )
 			dlinkfile( fname );
 		else {
 		  dflt:
-			ce->value = KDMCONF "/Xwilling";
+			ce->value = TDMCONF "/Xwilling";
 			ce->active = ce->written = 1;
 			writefile( ce->value, 0755, def_willing );
 		}
@@ -1459,18 +1459,18 @@ edit_setup( File *file )
 	int chg =
 		delstr( file, "\n"
 		        "(\n"
-		        "  PIDFILE=/var/run/kdmdesktop-$DISPLAY.pid\n"
-		        "  */kdmdesktop\t&\n"
+		        "  PIDFILE=/var/run/tdmdesktop-$DISPLAY.pid\n"
+		        "  */tdmdesktop\t&\n"
 		        "  echo $! >$PIDFILE\n"
 		        "  wait $!\n"
 		        "  rm $PIDFILE\n"
 		        ")\t&\n" ) |
 		delstr( file, "\n"
-		        "*/kdmdesktop\t&\n" ) |
+		        "*/tdmdesktop\t&\n" ) |
 		delstr( file, "\n"
-		        "kdmdesktop\t&\n" ) |
+		        "tdmdesktop\t&\n" ) |
 		delstr( file, "\n"
-		        "kdmdesktop\n" );
+		        "tdmdesktop\n" );
 	putval( "UseBackground", chg ? "true" : "false" );
 	return chg;
 }
@@ -1490,7 +1490,7 @@ mk_setup( Entry *ce, Section *cs )
 			else
 				linkfile( ce );
 		} else {
-			ce->value = KDMCONF "/Xsetup";
+			ce->value = TDMCONF "/Xsetup";
 			ce->active = ce->written = 1;
 			writefile( ce->value, 0755, def_setup );
 		}
@@ -1504,12 +1504,12 @@ edit_startup( File *file )
 
 	if (mod_usebg &&
 	    (delstr( file, "\n"
-	             "PIDFILE=/var/run/kdmdesktop-$DISPLAY.pid\n"
+	             "PIDFILE=/var/run/tdmdesktop-$DISPLAY.pid\n"
 	             "if [[] -f $PIDFILE ] ; then\n"
 	             "	   kill `cat $PIDFILE`\n"
 	             "fi\n" ) ||
 	     delstr( file, "\n"
-	             "PIDFILE=/var/run/kdmdesktop-$DISPLAY.pid\n"
+	             "PIDFILE=/var/run/tdmdesktop-$DISPLAY.pid\n"
 	             "test -f $PIDFILE && kill `cat $PIDFILE`\n" )))
 		chg1 = 1;
 	if (oldver < 0x0203) {
@@ -1571,7 +1571,7 @@ mk_startup( Entry *ce, Section *cs )
 			else
 				linkfile( ce );
 		} else {
-			ce->value = KDMCONF "/Xstartup";
+			ce->value = TDMCONF "/Xstartup";
 			ce->active = ce->written = 1;
 			writefile( ce->value, 0755, def_startup );
 		}
@@ -1616,7 +1616,7 @@ mk_reset( Entry *ce, Section *cs ATTR_UNUSED )
 			else
 				linkfile( ce );
 		} else {
-			ce->value = KDMCONF "/Xreset";
+			ce->value = TDMCONF "/Xreset";
 			ce->active = ce->written = 1;
 			writefile( ce->value, 0755, def_reset );
 		}
@@ -1639,7 +1639,7 @@ mk_session( Entry *ce, Section *cs ATTR_UNUSED )
 		               "`tempfile`" :
 		               "$HOME/.xsession-env-$DISPLAY";
 		ASPrintf( &def_session, "%s%s%s", def_session1, tmpf, def_session2 );
-		ce->value = KDMCONF "/Xsession";
+		ce->value = TDMCONF "/Xsession";
 		ce->active = ce->written = 1;
 		writefile( ce->value, 0755, def_session );
 	}
@@ -1770,8 +1770,8 @@ upd_datadir( Entry *ce, Section *cs ATTR_UNUSED )
 		return;
 	dir = ce->active ? ce->value : def_DataDir;
 	if (mkdirp( dir, 0755, "data", 0 ) && oldkde) {
-		ASPrintf( &oldsts, "%s/kdm/kdmsts", oldkde );
-		ASPrintf( &newsts, "%s/kdmsts", dir );
+		ASPrintf( &oldsts, "%s/tdm/tdmsts", oldkde );
+		ASPrintf( &newsts, "%s/tdmsts", dir );
 		rename( oldsts, newsts );
 	}
 }
@@ -1808,7 +1808,7 @@ upd_facedir( Entry *ce, Section *cs ATTR_UNUSED )
 			setpwent();
 			while ((pw = getpwent()))
 				if (strcmp( pw->pw_name, "root" )) {
-					ASPrintf( &oldpic, "%s/../apps/kdm/pics/users/%s.png",
+					ASPrintf( &oldpic, "%s/../apps/tdm/pics/users/%s.png",
 					          oldkde, pw->pw_name );
 					ASPrintf( &newpic, "%s/%s.face.icon", dir, pw->pw_name );
 					rename( oldpic, newpic );
@@ -1816,10 +1816,10 @@ upd_facedir( Entry *ce, Section *cs ATTR_UNUSED )
 					free( oldpic );
 				}
 			endpwent();
-			ASPrintf( &oldpic, "%s/../apps/kdm/pics/users/default.png", oldkde );
+			ASPrintf( &oldpic, "%s/../apps/tdm/pics/users/default.png", oldkde );
 			if (!rename( oldpic, defpic ))
 				defpic = 0;
-			ASPrintf( &oldpic, "%s/../apps/kdm/pics/users/root.png", oldkde );
+			ASPrintf( &oldpic, "%s/../apps/tdm/pics/users/root.png", oldkde );
 			if (!rename( oldpic, rootpic ))
 				rootpic = 0;
 		}
@@ -2051,12 +2051,12 @@ mergeKdmRcOld( const char *path )
 	char *p;
 	struct stat st;
 
-	ASPrintf( &p, "%s/kdmrc", path );
+	ASPrintf( &p, "%s/tdmrc", path );
 	if (stat( p, &st )) {
 		free( p );
 		return 0;
 	}
-	printf( "Information: ignoring old kdmrc %s from kde < 2.2\n", p );
+	printf( "Information: ignoring old tdmrc %s from kde < 2.2\n", p );
 	free( p );
 	return 1;
 }
@@ -2083,18 +2083,18 @@ applydefs( FDefs *chgdef, int ndefs, const char *path )
 }
 
 #ifdef XDMCP
-static FDefs kdmdefs_all[] = {
-{ "Xdmcp", "Xaccess", "%s/kdm/Xaccess", 0 },
+static FDefs tdmdefs_all[] = {
+{ "Xdmcp", "Xaccess", "%s/tdm/Xaccess", 0 },
 { "Xdmcp", "Willing", "", 0 },
 };
 #endif
 
-static FDefs kdmdefs_eq_22[] = {
+static FDefs tdmdefs_eq_22[] = {
 { "General", "PidFile", "/var/run/xdm.pid",  0 },
-{ "X-*-Core", "Setup", "%s/kdm/Xsetup",  0 },
-{ "X-*-Core", "Startup", "%s/kdm/Xstartup",  0 },
-{ "X-*-Core", "Reset", "%s/kdm/Xreset",  0 },
-{ "X-*-Core", "Session", "%s/kdm/Xsession",  0 },
+{ "X-*-Core", "Setup", "%s/tdm/Xsetup",  0 },
+{ "X-*-Core", "Startup", "%s/tdm/Xstartup",  0 },
+{ "X-*-Core", "Reset", "%s/tdm/Xreset",  0 },
+{ "X-*-Core", "Session", "%s/tdm/Xsession",  0 },
 };
 
 #ifdef XDMCP
@@ -2104,13 +2104,13 @@ if_xdmcp (void)
 	return isTrue( getfqval( "Xdmcp", "Enable", "true" ) );
 }
 
-static FDefs kdmdefs_le_30[] = {
-{ "Xdmcp", "KeyFile", "%s/kdm/kdmkeys", if_xdmcp },
+static FDefs tdmdefs_le_30[] = {
+{ "Xdmcp", "KeyFile", "%s/tdm/tdmkeys", if_xdmcp },
 };
 #endif
 
 /* HACK: misused by is22conf() below */
-static FDefs kdmdefs_ge_30[] = {
+static FDefs tdmdefs_ge_30[] = {
 { "X-*-Core", "Setup", "", 0 },
 { "X-*-Core", "Startup", "", 0 },
 { "X-*-Core", "Reset", "", 0 },
@@ -2123,8 +2123,8 @@ if_usebg (void)
 	return isTrue( getfqval( "X-*-Greeter", "UseBackground", "true" ) );
 }
 
-static FDefs kdmdefs_ge_31[] = {
-{ "X-*-Greeter","BackgroundCfg","%s/kdm/backgroundrc", if_usebg },
+static FDefs tdmdefs_ge_31[] = {
+{ "X-*-Greeter","BackgroundCfg","%s/tdm/backgroundrc", if_usebg },
 };
 
 static int
@@ -2134,10 +2134,10 @@ is22conf( const char *path )
 	const char *val;
 	int i, sl;
 
-	sl = ASPrintf( &p, "%s/kdm/", path );
+	sl = ASPrintf( &p, "%s/tdm/", path );
 	/* safe bet, i guess ... */
 	for (i = 0; i < 4; i++) {
-		val = getfqval( "X-*-Core", kdmdefs_ge_30[i].key, 0 );
+		val = getfqval( "X-*-Core", tdmdefs_ge_30[i].key, 0 );
 		if (val && !memcmp( val, p, sl )) {
 			free( p );
 			return 0;
@@ -2184,12 +2184,12 @@ mergeKdmRcNewer( const char *path )
 	int i, j;
 	static char sname[64];
 
-	ASPrintf( &p, "%s/kdm/kdmrc", path );
+	ASPrintf( &p, "%s/tdm/tdmrc", path );
 	if (!(rootsect = ReadConf( p ))) {
 		free( p );
 		return 0;
 	}
-	printf( "Information: reading current kdmrc %s (from kde >= 2.2.x)\n", p );
+	printf( "Information: reading current tdmrc %s (from kde >= 2.2.x)\n", p );
 	free( p );
 
 	for (cs = rootsect; cs; cs = cs->next) {
@@ -2241,29 +2241,29 @@ mergeKdmRcNewer( const char *path )
 	}
 
 #ifdef XDMCP
-	applydefs( kdmdefs_all, as(kdmdefs_all), path );
+	applydefs( tdmdefs_all, as(tdmdefs_all), path );
 #endif
 	if (!*(cp = getfqval( "General", "ConfigVersion", "" ))) { /* < 3.1 */
 		mod_usebg = 1;
 		if (is22conf( path )) {
 			/* work around 2.2.x defaults borkedness */
-			applydefs( kdmdefs_eq_22, as(kdmdefs_eq_22), path );
-			printf( "Information: current kdmrc is from kde 2.2\n" );
+			applydefs( tdmdefs_eq_22, as(tdmdefs_eq_22), path );
+			printf( "Information: current tdmrc is from kde 2.2\n" );
 		} else {
-			applydefs( kdmdefs_ge_30, as(kdmdefs_ge_30), path );
-			printf( "Information: current kdmrc is from kde 3.0\n" );
+			applydefs( tdmdefs_ge_30, as(tdmdefs_ge_30), path );
+			printf( "Information: current tdmrc is from kde 3.0\n" );
 		}
 #ifdef XDMCP
 		/* work around minor <= 3.0.x defaults borkedness */
-		applydefs( kdmdefs_le_30, as(kdmdefs_le_30), path );
+		applydefs( tdmdefs_le_30, as(tdmdefs_le_30), path );
 #endif
 	} else {
 		int ma, mi;
 		sscanf( cp, "%d.%d", &ma, &mi );
 		oldver = (ma << 8) | mi;
-		printf( "Information: current kdmrc is from kde >= 3.1 (config version %d.%d)\n", ma, mi );
-		applydefs( kdmdefs_ge_30, as(kdmdefs_ge_30), path );
-		applydefs( kdmdefs_ge_31, as(kdmdefs_ge_31), path );
+		printf( "Information: current tdmrc is from kde >= 3.1 (config version %d.%d)\n", ma, mi );
+		applydefs( tdmdefs_ge_30, as(tdmdefs_ge_30), path );
+		applydefs( tdmdefs_ge_31, as(tdmdefs_ge_31), path );
 	}
 
 	return 1;
@@ -2384,12 +2384,12 @@ P_requestPort( const char *sect, char **value )
 }
 #endif
 
-static int kdmrcmode = 0644;
+static int tdmrcmode = 0644;
 
 static void
 P_autoPass( const char *sect ATTR_UNUSED, char **value ATTR_UNUSED )
 {
-	kdmrcmode = 0600;
+	tdmrcmode = 0600;
 }
 
 CONF_GEN_XMERGE
@@ -2547,7 +2547,7 @@ static const char *oldxdms[] = {
 int main( int argc, char **argv )
 {
 	const char **where;
-	char *newkdmrc;
+	char *newtdmrc;
 	FILE *f;
 	StrList *fp;
 	Section *cs;
@@ -2560,41 +2560,41 @@ int main( int argc, char **argv )
 	for (ap = 1; ap < argc; ap++) {
 		if (!strcmp( argv[ap], "--help" )) {
 			printf(
-"genkdmconf - generate configuration files for kdm\n"
+"gentdmconf - generate configuration files for tdm\n"
 "\n"
-"If an older xdm/kdm configuration is found, its config files are \"absorbed\";\n"
+"If an older xdm/tdm configuration is found, its config files are \"absorbed\";\n"
 "if it lives in the new target directory, its scripts are reused (and possibly\n"
 "modified) as well, otherwise the scripts are ignored and default scripts are\n"
 "installed.\n"
 "\n"
 "options:\n"
-"  --in /path/to/new/kdm-config-dir\n"
+"  --in /path/to/new/tdm-config-dir\n"
 "    In which directory to put the new configuration. You can use this\n"
 "    to support a $(DESTDIR), but not to change the final location of\n"
 "    the installation - the paths inside the files are not affected.\n"
-"    Default is " KDMCONF ".\n"
+"    Default is " TDMCONF ".\n"
 "  --old-xdm /path/to/old/xdm-dir\n"
-"    Where to look for the config files of an xdm/older kdm.\n"
-"    Default is to scan /etc/X11/kdm, $XLIBDIR/kdm, /etc/X11/xdm,\n"
-"    $XLIBDIR/xdm; there in turn look for kdm-config and xdm-config.\n"
+"    Where to look for the config files of an xdm/older tdm.\n"
+"    Default is to scan /etc/X11/tdm, $XLIBDIR/tdm, /etc/X11/xdm,\n"
+"    $XLIBDIR/xdm; there in turn look for tdm-config and xdm-config.\n"
 "    Note that you possibly need to use --no-old-kde to make this take effect.\n"
 "  --old-kde /path/to/old/kde-config-dir\n"
-"    Where to look for the kdmrc of an older kdm.\n"
+"    Where to look for the tdmrc of an older tdm.\n"
 "    Default is to scan " KDE_CONFDIR " and\n"
 "    {/usr,/usr/local,{/opt,/usr/local}/{trinity,kde,kde2,kde1}}/share/config.\n"
 "  --no-old\n"
-"    Don't look at older xdm/kdm configurations, just create default config.\n"
+"    Don't look at older xdm/tdm configurations, just create default config.\n"
 "  --no-old-xdm\n"
 "    Don't look at older xdm configurations.\n"
 "  --no-old-kde\n"
-"    Don't look at older kdm configurations.\n"
+"    Don't look at older tdm configurations.\n"
 "  --old-scripts\n"
-"    Directly use all scripts from the older xdm/kdm configuration.\n"
+"    Directly use all scripts from the older xdm/tdm configuration.\n"
 "  --no-old-scripts\n"
-"    Don't use scripts from the older xdm/kdm configuration even if it lives\n"
+"    Don't use scripts from the older xdm/tdm configuration even if it lives\n"
 "    in the new target directory.\n"
 "  --old-confs\n"
-"    Directly use all ancillary config files from the older xdm/kdm\n"
+"    Directly use all ancillary config files from the older xdm/tdm\n"
 "    configuration. This is usually a bad idea.\n"
 "  --no-backup\n"
 "    Overwrite/delete old config files instead of backing them up.\n"
@@ -2654,7 +2654,7 @@ int main( int argc, char **argv )
 		}
 		*where = argv[++ap];
 	}
-	if (memcmp( newdir, KDMCONF, sizeof(KDMCONF) ))
+	if (memcmp( newdir, TDMCONF, sizeof(TDMCONF) ))
 		use_destdir = 1;
 
 	if (!mkdirp( newdir, 0755, "target", 1 ))
@@ -2685,7 +2685,7 @@ int main( int argc, char **argv )
 		if (oldkde) {
 			if (!(newer = mergeKdmRcNewer( oldkde )) && !mergeKdmRcOld( oldkde ))
 				fprintf( stderr,
-				         "Cannot read old kdmrc at specified location\n" );
+				         "Cannot read old tdmrc at specified location\n" );
 		} else if (!no_old_kde) {
 			for (i = 0; i < as(oldkdes); i++) {
 				if ((newer = mergeKdmRcNewer( oldkdes[i] )) ||
@@ -2701,7 +2701,7 @@ int main( int argc, char **argv )
 			if (oldxdm) {
 				if (!mergeXdmCfg( oldxdm ))
 					fprintf( stderr,
-					         "Cannot read old kdm-config/xdm-config at specified location\n" );
+					         "Cannot read old tdm-config/xdm-config at specified location\n" );
 			} else
 				for (i = 0; i < as(oldxdms); i++)
 					if (mergeXdmCfg( oldxdms[i] )) {
@@ -2791,8 +2791,8 @@ int main( int argc, char **argv )
 			for (ce = cs->ents; ce; ce = ce->next)
 				if (ce->spec->func && i == ce->spec->prio)
 					ce->spec->func( ce, cs );
-	ASPrintf( &newkdmrc, "%s/kdmrc", newdir );
-	f = Create( newkdmrc, kdmrcmode );
+	ASPrintf( &newtdmrc, "%s/tdmrc", newdir );
+	f = Create( newtdmrc, tdmrcmode );
 	wrconf( f );
 	fclose( f );
 
@@ -2800,12 +2800,12 @@ int main( int argc, char **argv )
 	f = Create( nname, 0644 );
 	fprintf( f,
 "This automatically generated configuration consists of the following files:\n" );
-	fprintf( f, "- " KDMCONF "/kdmrc\n" );
+	fprintf( f, "- " TDMCONF "/tdmrc\n" );
 	for (fp = aflist; fp; fp = fp->next)
 		fprintf( f, "- %s\n", fp->str );
 	if (use_destdir && !no_in_notice)
 		fwrapprintf( f,
-"All files destined for " KDMCONF " were actually saved in %s; "
+"All files destined for " TDMCONF " were actually saved in %s; "
 "this config won't be workable until moved in place.\n", newdir );
 	if (uflist || eflist || cflist || lflist) {
 		fprintf( f,
@@ -2841,7 +2841,7 @@ int main( int argc, char **argv )
 "Old files that would have been overwritten were renamed to <oldname>.bak.\n" );
 	}
 	fprintf( f,
-"\nTry 'genkdmconf --help' if you want to generate another configuration.\n"
+"\nTry 'gentdmconf --help' if you want to generate another configuration.\n"
 "\nYou may delete this README.\n" );
 	fclose( f );
 

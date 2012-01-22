@@ -9,4 +9,4 @@
 #
 #################################################
 
-tde_create_handbook( DESTINATION kcontrol/kdm )
+tde_create_handbook( DESTINATION kcontrol/tdm )

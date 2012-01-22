@@ -22,10 +22,10 @@
 
     */
 
-#include "kdmadmindialog.h"
-#include "kdmconfig.h"
+#include "tdmadmindialog.h"
+#include "tdmconfig.h"
 #include "kgdialog.h"
-#include "kdm_greet.h"
+#include "tdm_greet.h"
 #include <stdlib.h>
 
 #include <kapplication.h>
@@ -41,10 +41,10 @@
 #include <tqaccel.h>
 #include <tqpopupmenu.h>
 
-int KDMAdmin::curPlugin = -1;
-PluginList KDMAdmin::pluginList;
+int TDMAdmin::curPlugin = -1;
+PluginList TDMAdmin::pluginList;
 
-KDMAdmin::KDMAdmin( const TQString &user, TQWidget *_parent )
+TDMAdmin::TDMAdmin( const TQString &user, TQWidget *_parent )
     : inherited( _parent )
     , verify( 0 ), curUser(user)
 {
@@ -93,14 +93,14 @@ KDMAdmin::KDMAdmin( const TQString &user, TQWidget *_parent )
     slotWhenChanged();
 }
 
-KDMAdmin::~KDMAdmin()
+TDMAdmin::~TDMAdmin()
 {
     hide();
     delete verify;
 }
 
 void
-KDMAdmin::slotActivatePlugMenu()
+TDMAdmin::slotActivatePlugMenu()
 {
     TQPopupMenu *cmnu = verify->getPlugMenu();
     TQSize sh( cmnu->sizeHint() / 2 );
@@ -108,13 +108,13 @@ KDMAdmin::slotActivatePlugMenu()
 }
 
 void
-KDMAdmin::accept()
+TDMAdmin::accept()
 {
     verify->accept();
 }
 
 void
-KDMAdmin::slotWhenChanged()
+TDMAdmin::slotWhenChanged()
 {
     verify->abort();
     verify->setEnabled( 1 );
@@ -122,7 +122,7 @@ KDMAdmin::slotWhenChanged()
 }
 
 void
-KDMAdmin::bye_bye()
+TDMAdmin::bye_bye()
 {
   GSendInt( G_GetDmrc );
   GSendStr( "Session" );
@@ -141,36 +141,36 @@ KDMAdmin::bye_bye()
 }
 
 void
-KDMAdmin::verifyPluginChanged( int id )
+TDMAdmin::verifyPluginChanged( int id )
 {
     curPlugin = id;
     adjustSize();
 }
 
 void
-KDMAdmin::verifyOk()
+TDMAdmin::verifyOk()
 {
     bye_bye();
 }
 
 void
-KDMAdmin::verifyFailed()
+TDMAdmin::verifyFailed()
 {
     okButton->setEnabled( false );
     cancelButton->setEnabled( false );
 }
 
 void
-KDMAdmin::verifyRetry()
+TDMAdmin::verifyRetry()
 {
     okButton->setEnabled( true );
     cancelButton->setEnabled( true );
 }
 
 void
-KDMAdmin::verifySetUser( const TQString & )
+TDMAdmin::verifySetUser( const TQString & )
 {
 }
 
 
-#include "kdmadmindialog.moc"
+#include "tdmadmindialog.moc"

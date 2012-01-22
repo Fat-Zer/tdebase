@@ -44,7 +44,7 @@ start &X-Window; using <command>startx <option> -bpp
 <replaceable>number</replaceable></option></command> where
 <replaceable>number</replaceable> can be 8, 16, 24 or 32, depending on
 the depth you want. Alternatively, if you are using
-<application>xdm</application>/&kdm;, you
+<application>xdm</application>/&tdm;, you
 need to edit
 <filename>/etc/X11/xdm/Xservers</filename> (may vary) and enter
 <userinput>:0 local /usr/X11R6/bin/X -bpp 16</userinput> for 16 bit color

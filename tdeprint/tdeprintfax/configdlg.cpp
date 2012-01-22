@@ -31,7 +31,7 @@
 ConfigDlg::ConfigDlg(TQWidget *parent, const char *name)
 : KDialogBase(IconList, i18n("Configuration"), Ok|Cancel, Ok, parent, name, true)
 {
-	TQVBox	*page1 = addVBoxPage(i18n("Personal"), i18n("Personal Settings"), DesktopIcon("kdmconfig"));
+	TQVBox	*page1 = addVBoxPage(i18n("Personal"), i18n("Personal Settings"), DesktopIcon("tdmconfig"));
 	m_general = new ConfGeneral(page1, "Personal");
 
 	TQVBox	*page2 = addVBoxPage(i18n("Page setup"), i18n("Page Setup"), DesktopIcon("editcopy"));

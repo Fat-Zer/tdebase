@@ -23,7 +23,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 
 #include "kfdialog.h"
-#include "kdmconfig.h"
+#include "tdmconfig.h"
 
 #include <klocale.h>
 #include <kpushbutton.h>
@@ -61,7 +61,7 @@ FDialog::FDialog( TQWidget *parent, bool framed )
 	} else
 		winFrame = 0;
 
-	setCaption(KDM_LOGIN_SCREEN_BASE_TITLE);
+	setCaption(TDM_LOGIN_SCREEN_BASE_TITLE);
 
 	if (framed) {
 		if (m_wmTitle) setFixedSize(sizeHint());
@@ -158,11 +158,11 @@ FDialog::box( TQWidget *parent, TQMessageBox::Icon type, const TQString &text )
 KFMsgBox::KFMsgBox( TQWidget *parent, TQMessageBox::Icon type, const TQString &text )
 	: inherited( parent, !is_themed )
 {
-	if (type == TQMessageBox::NoIcon) setCaption(KDM_LOGIN_SCREEN_BASE_TITLE);
-	if (type == TQMessageBox::Question) setCaption(KDM_LOGIN_SCREEN_BASE_TITLE + " - " + i18n("Question"));
-	if (type == TQMessageBox::Information) setCaption(KDM_LOGIN_SCREEN_BASE_TITLE + " - " + i18n("Information"));
-	if (type == TQMessageBox::Warning) setCaption(KDM_LOGIN_SCREEN_BASE_TITLE + " - " + i18n("Warning"));
-	if (type == TQMessageBox::Critical) setCaption(KDM_LOGIN_SCREEN_BASE_TITLE + " - " + i18n("Error"));
+	if (type == TQMessageBox::NoIcon) setCaption(TDM_LOGIN_SCREEN_BASE_TITLE);
+	if (type == TQMessageBox::Question) setCaption(TDM_LOGIN_SCREEN_BASE_TITLE + " - " + i18n("Question"));
+	if (type == TQMessageBox::Information) setCaption(TDM_LOGIN_SCREEN_BASE_TITLE + " - " + i18n("Information"));
+	if (type == TQMessageBox::Warning) setCaption(TDM_LOGIN_SCREEN_BASE_TITLE + " - " + i18n("Warning"));
+	if (type == TQMessageBox::Critical) setCaption(TDM_LOGIN_SCREEN_BASE_TITLE + " - " + i18n("Error"));
 
 	TQLabel *label1 = new TQLabel( this );
 	label1->setPixmap( TQMessageBox::standardIcon( type ) );

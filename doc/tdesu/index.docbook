@@ -120,9 +120,9 @@ current user. If it is not writable, the command is executed as user
 <parameter>FILE</parameter> starts with a <literal>/</literal>, it is
 taken as an absolute filename. Otherwise, it is taken as the name of a
 global &kde; configuration file. For example: to configure the K display
-manager, <application>kdm</application>, you could issue
-<command>tdesu <option>-c kdmconfig -f
-kdmrc</option></command></para></listitem>
+manager, <application>tdm</application>, you could issue
+<command>tdesu <option>-c tdmconfig -f
+tdmrc</option></command></para></listitem>
 </varlistentry>
 <varlistentry>
 <term><option>-i</option> <replaceable>icon name</replaceable></term>

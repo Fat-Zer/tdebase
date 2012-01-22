@@ -357,7 +357,7 @@ programs here (and not links to removable media, like CDs).</para>
 </sect1info>
 
 <title>Logging In and Logging Out</title>
-<para>Basic KDM &amp; starttde stuff.</para>
+<para>Basic TDM &amp; starttde stuff.</para>
 <!-- Not sure what exactly to say about starttde and where to say it -->
 <!-- (Phil) -->
 <para>There are two ways to log into &kde;: graphically and via the
@@ -366,7 +366,7 @@ command line. We'll look at them both briefly:</para>
 <sect2 id="logging-in-graphically">
 <title>Logging in Graphically</title>
 <indexterm><primary>login</primary></indexterm>
-<indexterm><primary>&kdm;</primary></indexterm>
+<indexterm><primary>&tdm;</primary></indexterm>
 
 <para>If you see a screen a little bit like the one below when you
 start up your computer, then you are all set for logging in
@@ -410,9 +410,9 @@ for now, hit <guibutton>Cancel</guibutton>.</para>
 
 <itemizedlist>
 <title>Related Information</title>
-<listitem><para>The &kdm; Handbook has information about using and setting up
+<listitem><para>The &tdm; Handbook has information about using and setting up
 the &kde; graphical login manager. You can read it in &khelpcenter; or
-by entering <userinput>help:/kdm</userinput> in &konqueror;'s
+by entering <userinput>help:/tdm</userinput> in &konqueror;'s
 <guilabel>Location</guilabel> bar.</para>
 </listitem>
 </itemizedlist>

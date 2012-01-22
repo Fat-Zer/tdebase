@@ -1,6 +1,6 @@
 /*
 
-chooser widget for KDM
+chooser widget for TDM
 
 Copyright (C) 2002-2003 Oswald Buddenhagen <ossi@kde.org>
 based on the chooser (C) 1999 by Harald Hoyer <Harald.Hoyer@RedHat.de>

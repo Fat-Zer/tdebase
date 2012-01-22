@@ -19,8 +19,8 @@
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
-#ifndef KDMTHEMER_H
-#define KDMTHEMER_H
+#ifndef TDMTHEMER_H
+#define TDMTHEMER_H
 
 #include <tqobject.h>
 #include <tqdom.h>

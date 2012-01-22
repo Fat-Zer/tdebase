@@ -781,11 +781,11 @@ Auto Save Interval=25
 <sect1 id="kde-startup-sequence">
 <title>&kde; Startup Sequence</title>
 
-<sect2 id="kdm">
-<title>&kdm;</title>
+<sect2 id="tdm">
+<title>&tdm;</title>
 
 <para>Always runs as <systemitem class="username">root</systemitem>! Uses
-<filename>$<envar>TDEDIR</envar>/share/config/kdmrc</filename> and
+<filename>$<envar>TDEDIR</envar>/share/config/tdmrc</filename> and
 <filename>/etc/X11/xdm/Xservers</filename>. The latter contains entries
 like:</para>
 
@@ -796,7 +796,7 @@ like:</para>
 <para>Relevant startup files are also: </para>
 <simplelist>
 <member>
-[X-*-Core] section in <filename>kdmrc</filename>
+[X-*-Core] section in <filename>tdmrc</filename>
 </member>
 <member>
 Setup - <filename>/etc/X11/xdm/Xsetup</filename>
@@ -828,7 +828,7 @@ Reset - <filename>/etc/X11/xdm/Xreset</filename> - after session finished
 
 <para>The &kde; startup sequence starts with the
 <filename>starttde</filename> script. In most cases this script gets called
-from the display manager (&kdm;) once the user has been authenticated. Their
+from the display manager (&tdm;) once the user has been authenticated. Their
 are two very important lines in the <filename>starttde</filename>
 script:</para>
 
@@ -2107,7 +2107,7 @@ screen</para></listitem>
 <varlistentry>
 <term><option>start_new_session</option></term>
 <listitem><para>Whether the user may start a second X session (see also
-&kdm;)</para></listitem>
+&tdm;)</para></listitem>
 </varlistentry>
 <varlistentry>
 <term><option>opengl_screensavers</option></term>

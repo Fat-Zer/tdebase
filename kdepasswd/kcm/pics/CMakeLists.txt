@@ -16,4 +16,4 @@ install( FILES
     Heart.png Konqui.png Lion.png Monkey.png Penguin.png
     Pig.png Rabbit.png Ring.png Scream.png Shark.png
     Splash.png Star.png Teddybear.png Turtle.png
-  DESTINATION ${DATA_INSTALL_DIR}/kdm/pics/users )
+  DESTINATION ${DATA_INSTALL_DIR}/tdm/pics/users )

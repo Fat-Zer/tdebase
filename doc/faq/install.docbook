@@ -383,7 +383,7 @@ path.</para>
 <para>Edit the file <filename>.xinitrc</filename> in your home folder (make a backup
 copy first!), remove everything that looks like calling a window
 manager, and insert <command>starttde</command> instead.  Restart the &X-Server;.  If you use
-&kdm;/<application>xdm</application>, you will have to edit the file <filename>.xsession</filename> instead of
+&tdm;/<application>xdm</application>, you will have to edit the file <filename>.xsession</filename> instead of
 <filename>.xinitrc</filename>.  And if there is no <filename>.xinitrc</filename> or <filename>.xsession</filename> in your home
 folder, simply create a new one with just one line containing
 <command>starttde</command>.
@@ -428,7 +428,7 @@ can lead to problems if you are not careful. </para>
 <filename>starttde</filename> script.  Simply put the line
 <command>starttde</command> at the end of your <filename>.xsession</filename>
 file (or your <filename>.xinitrc</filename> or <filename>.Xclients</filename>
-file if you are not using &kdm; or <application>xdm</application>).  Please
+file if you are not using &tdm; or <application>xdm</application>).  Please
 also remove the lines that start your previous window manager.  If there is no
 <filename>.xsession</filename>, <filename>.xinitrc</filename>, or
 <filename>.Xclients</filename> in your home folder, simply create a new one

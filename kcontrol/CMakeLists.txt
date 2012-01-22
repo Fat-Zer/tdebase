@@ -11,7 +11,7 @@
 
 # FIXME smartcard is not ported
 
-if( BUILD_KCONTROL OR BUILD_KDESKTOP OR BUILD_KDM )
+if( BUILD_KCONTROL OR BUILD_KDESKTOP OR BUILD_TDM )
 
   add_subdirectory( background )
 
@@ -37,7 +37,7 @@ if( BUILD_KCONTROL )
   add_subdirectory( kded )
   add_subdirectory( launch )
   add_subdirectory( keys )
-  add_subdirectory( kdm )
+  add_subdirectory( tdm )
   add_subdirectory( kio )
   add_subdirectory( konq )
   add_subdirectory( style )

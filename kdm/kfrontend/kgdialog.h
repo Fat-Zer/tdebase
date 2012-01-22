@@ -1,6 +1,6 @@
 /*
 
-Base class for various kdm greeter dialogs
+Base class for various tdm greeter dialogs
 
 Copyright (C) 1997, 1998 Steffen Hansen <hansen@kde.org>
 Copyright (C) 2000-2004 Oswald Buddenhagen <ossi@kde.org>
@@ -26,9 +26,9 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #ifndef KGDIALOG_H
 #define KGDIALOG_H
 
-#include <config.h> // for WITH_KDM_XCONSOLE
+#include <config.h> // for WITH_TDM_XCONSOLE
 
-#include "kdmconfig.h"
+#include "tdmconfig.h"
 #include "kfdialog.h"
 
 class TQPopupMenu;
@@ -67,7 +67,7 @@ class KGDialog : public FDialog {
 	bool needSep;
 	TQPopupMenu *optMenu;
 	KGVerify *verify;
-#ifdef WITH_KDM_XCONSOLE
+#ifdef WITH_TDM_XCONSOLE
 	KConsole *consoleView;
 #endif
 

@@ -19,8 +19,8 @@
     Boston, MA 02110-1301, USA.
 */  
 
-#ifndef __KDMCONV_H__
-#define __KDMCONV_H__
+#ifndef __TDMCONV_H__
+#define __TDMCONV_H__
 
 #include <tqptrlist.h>
 #include <tqstring.h>
@@ -39,12 +39,12 @@
 #include <pwd.h>
 
 
-class KDMConvenienceWidget : public TQWidget
+class TDMConvenienceWidget : public TQWidget
 {
 	Q_OBJECT
 
 public:
-	KDMConvenienceWidget(TQWidget *parent=0, const char *name=0);
+	TDMConvenienceWidget(TQWidget *parent=0, const char *name=0);
 
         void load();
         void save();

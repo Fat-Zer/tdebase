@@ -1305,7 +1305,7 @@ StartClient()
 	env = setEnv( env, "SHELL", p->pw_shell );
 	env = setEnv( env, "HOME", p->pw_dir );
 	if (cursource == PWSRC_AUTOLOGIN)
-		env = setEnv (env, "KDM_AUTOLOGIN", curuser);
+		env = setEnv (env, "TDM_AUTOLOGIN", curuser);
 #if !defined(USE_PAM) && !defined(_AIX) && defined(KERBEROS)
 	if (krbtkfile[0] != '\0')
 		env = setEnv( env, "KRBTKFILE", krbtkfile );

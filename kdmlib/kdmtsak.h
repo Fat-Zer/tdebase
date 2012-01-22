@@ -77,7 +77,7 @@ inline int tde_sak_verify_calling_process()
 #ifdef DEBUG
 		printf("Parent executable name is: %s\n\r", procparent.ascii());
 #endif
-		if ((procparent == "kdesktop") || (procparent == "kdesktop_lock") || (procparent == "kdm")) {
+		if ((procparent == "kdesktop") || (procparent == "kdesktop_lock") || (procparent == "tdm")) {
 			authorized = true;
 		}
 		else if (procparent == "tdeinit") {

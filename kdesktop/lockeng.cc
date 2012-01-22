@@ -54,7 +54,7 @@ SaverEngine::SaverEngine()
                         TQT_SLOT(lockProcessExited()));
 
     mSAKProcess = new KProcess;
-    *mSAKProcess << "kdmtsak";
+    *mSAKProcess << "tdmtsak";
     connect(mSAKProcess, TQT_SIGNAL(processExited(KProcess*)), this, TQT_SLOT(slotSAKProcessExited()));
 
     TQTimer::singleShot( 0, this, TQT_SLOT(handleSecureDialog()) );

@@ -1,10 +1,10 @@
 /*
 
-Conversation widget for kdm greeter
+Conversation widget for tdm greeter
 
 Copyright (C) 2008 Dirk Mueller <mueller@kde.org>
 
-based on classic kdm greeter:
+based on classic tdm greeter:
 
   Copyright (C) 1997, 1998, 2000 Steffen Hansen <hansen@kde.org>
   Copyright (C) 2000-2003 Oswald Buddenhagen <ossi@kde.org>
@@ -27,8 +27,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 
 #include "kgreet_pam.h"
-#include "themer/kdmthemer.h"
-#include "themer/kdmlabel.h"
+#include "themer/tdmthemer.h"
+#include "themer/tdmlabel.h"
 
 #include <klocale.h>
 #include <klineedit.h>
@@ -47,10 +47,10 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 //#define PAM_GREETER_DEBUG
 
-class KDMPasswordEdit : public KPasswordEdit {
+class TDMPasswordEdit : public KPasswordEdit {
 public:
-	KDMPasswordEdit( TQWidget *parent ) : KPasswordEdit( parent, 0 ) {}
-	KDMPasswordEdit( KPasswordEdit::EchoModes echoMode, TQWidget *parent ) : KPasswordEdit( echoMode, parent, 0 ) {}
+	TDMPasswordEdit( TQWidget *parent ) : KPasswordEdit( parent, 0 ) {}
+	TDMPasswordEdit( KPasswordEdit::EchoModes echoMode, TQWidget *parent ) : KPasswordEdit( echoMode, parent, 0 ) {}
 protected:
 	virtual void contextMenuEvent( TQContextMenuEvent * ) {}
 };
@@ -148,9 +148,9 @@ KPamGreeter::KPamGreeter( KGreeterPluginHandler *_handler,
 		}
 #if 0
 		if (echoMode == -1)
-			passwdEdit = new KDMPasswordEdit( parent );
+			passwdEdit = new TDMPasswordEdit( parent );
 		else
-			passwdEdit = new KDMPasswordEdit( echoMode,
+			passwdEdit = new TDMPasswordEdit( echoMode,
 			                                  parent );
 		connect( passwdEdit, TQT_SIGNAL(textChanged( const TQString & )),
 		         TQT_SLOT(slotActivity()) );
@@ -177,11 +177,11 @@ KPamGreeter::KPamGreeter( KGreeterPluginHandler *_handler,
 	}
 	if (func != Authenticate) {
 		if (echoMode == -1) {
-                        authEdit << new KDMPasswordEdit( echoMode, parent );
-			authEdit << new KDMPasswordEdit( echoMode, parent );
+                        authEdit << new TDMPasswordEdit( echoMode, parent );
+			authEdit << new TDMPasswordEdit( echoMode, parent );
 		} else {
-			authEdit << new KDMPasswordEdit( parent );
-			authEdit << new KDMPasswordEdit( parent );
+			authEdit << new TDMPasswordEdit( parent );
+			authEdit << new TDMPasswordEdit( parent );
 		}
 		authLabel << new TQLabel( authEdit[0], i18n("&New password:"), parent );
 		authLabel << new TQLabel( authEdit[1], i18n("Con&firm password:"), parent );
@@ -338,11 +338,11 @@ KPamGreeter::textPrompt( const char *prompt, bool echo, bool nonBlocking )
         if (loginLabel)
 	    loginLabel->setText(TQString::fromUtf8(prompt));
         else if (m_themer) {
-            KdmLabel *kdmlabel = static_cast<KdmLabel*>(m_themer->findNode("user-label"));
-            if (kdmlabel) {
+            KdmLabel *tdmlabel = static_cast<KdmLabel*>(m_themer->findNode("user-label"));
+            if (tdmlabel) {
                 //userLabel->setText(TQString::fromUtf8(prompt));
-                kdmlabel->label.text = TQString::fromUtf8(prompt);
-                TQTimer::singleShot(0, kdmlabel, TQT_SLOT(update()));
+                tdmlabel->label.text = TQString::fromUtf8(prompt);
+                TQTimer::singleShot(0, tdmlabel, TQT_SLOT(update()));
             }
         }
     }
@@ -356,21 +356,21 @@ KPamGreeter::textPrompt( const char *prompt, bool echo, bool nonBlocking )
             kg_debug("themer found!");
 	    KdmItem *pw_label = 0;
 
-            KdmLabel *kdmlabel = static_cast<KdmLabel*>(m_themer->findNode("pw-label"));
-            if (kdmlabel) {
+            KdmLabel *tdmlabel = static_cast<KdmLabel*>(m_themer->findNode("pw-label"));
+            if (tdmlabel) {
                 //userLabel->setText(TQString::fromUtf8(prompt));
                 TQString str = TQString::fromUtf8(prompt);
-                kdmlabel->label.text = str;
-                TQTimer::singleShot(0, kdmlabel, TQT_SLOT(update()));
+                tdmlabel->label.text = str;
+                TQTimer::singleShot(0, tdmlabel, TQT_SLOT(update()));
             }
         }
 
-	KDMPasswordEdit* passwdEdit;
+	TDMPasswordEdit* passwdEdit;
 
 	if (echoMode == -1)
-	    passwdEdit = new KDMPasswordEdit( m_parentWidget );
+	    passwdEdit = new TDMPasswordEdit( m_parentWidget );
 	else
-	    passwdEdit = new KDMPasswordEdit( echoMode, m_parentWidget);
+	    passwdEdit = new TDMPasswordEdit( echoMode, m_parentWidget);
 	connect( passwdEdit, TQT_SIGNAL(textChanged( const TQString & )),
 		TQT_SLOT(slotActivity()) );
 	connect( passwdEdit, TQT_SIGNAL(lostFocus()), TQT_SLOT(slotActivity()) );
@@ -400,8 +400,8 @@ KPamGreeter::textPrompt( const char *prompt, bool echo, bool nonBlocking )
 
            if (0) {
                 //userLabel->setText(TQString::fromUtf8(prompt));
-                //kdmlabel->label.text = TQString::fromUtf8(prompt);
-                //TQTimer::singleShot(0, kdmlabel, TQT_SLOT(update()));
+                //tdmlabel->label.text = TQString::fromUtf8(prompt);
+                //TQTimer::singleShot(0, tdmlabel, TQT_SLOT(update()));
            }
        } 
        else

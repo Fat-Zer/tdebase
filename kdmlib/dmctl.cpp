@@ -37,7 +37,7 @@
 #include <fcntl.h>
 #include <errno.h>
 
-static enum { Dunno, NoDM, NewKDM, OldKDM, GDM } DMType = Dunno;
+static enum { Dunno, NoDM, NewTDM, OldTDM, GDM } DMType = Dunno;
 static const char *ctl, *dpy;
 
 DM::DM() : fd( -1 )
@@ -49,9 +49,9 @@ DM::DM() : fd( -1 )
 		if (!(dpy = ::getenv( "DISPLAY" )))
 			DMType = NoDM;
 		else if ((ctl = ::getenv( "DM_CONTROL" )))
-			DMType = NewKDM;
+			DMType = NewTDM;
 		else if ((ctl = ::getenv( "XDM_MANAGED" )) && ctl[0] == '/')
-			DMType = OldKDM;
+			DMType = OldTDM;
 		else if (::getenv( "GDMSESSION" ))
 			DMType = GDM;
 		else
@@ -60,7 +60,7 @@ DM::DM() : fd( -1 )
 	switch (DMType) {
 	default:
 		return;
-	case NewKDM:
+	case NewTDM:
 	case GDM:
 		if ((fd = ::socket( PF_UNIX, SOCK_STREAM, 0 )) < 0)
 			return;
@@ -88,7 +88,7 @@ DM::DM() : fd( -1 )
 			}
 		}
 		break;
-	case OldKDM:
+	case OldTDM:
 		{
 			TQString tf( ctl );
 			tf.truncate( tf.find( ',' ) );
@@ -113,16 +113,16 @@ DM::exec( const char *cmd )
 }
 
 /**
- * Execute a KDM/GDM remote control command.
+ * Execute a TDM/GDM remote control command.
  * @param cmd the command to execute. FIXME: undocumented yet.
  * @param buf the result buffer.
  * @return result:
  *  @li If true, the command was successfully executed.
  *   @p ret might contain addional results.
  *  @li If false and @p ret is empty, a communication error occurred
- *   (most probably KDM is not running).
+ *   (most probably TDM is not running).
  *  @li If false and @p ret is non-empty, it contains the error message
- *   from KDM.
+ *   from TDM.
  */
 bool
 DM::exec( const char *cmd, TQCString &buf )
@@ -143,7 +143,7 @@ DM::exec( const char *cmd, TQCString &buf )
 		buf.resize( 0 );
 		return false;
 	}
-	if (DMType == OldKDM) {
+	if (DMType == OldTDM) {
 		buf.resize( 0 );
 		return true;
 	}
@@ -172,7 +172,7 @@ DM::exec( const char *cmd, TQCString &buf )
 bool
 DM::canShutdown()
 {
-	if (DMType == OldKDM)
+	if (DMType == OldTDM)
 		return strstr( ctl, ",maysd" ) != 0;
 
 	TQCString re;
@@ -192,7 +192,7 @@ DM::shutdown( KApplication::ShutdownType shutdownType,
 		return;
 
 	bool cap_ask;
-	if (DMType == NewKDM) {
+	if (DMType == NewTDM) {
 		TQCString re;
 		cap_ask = exec( "caps\n", re ) && re.find( "\tshutdown ask" ) >= 0;
 	} else {
@@ -228,7 +228,7 @@ DM::shutdown( KApplication::ShutdownType shutdownType,
 bool
 DM::bootOptions( TQStringList &opts, int &defopt, int &current )
 {
-	if (DMType != NewKDM)
+	if (DMType != NewTDM)
 		return false;
 
 	TQCString re;
@@ -264,7 +264,7 @@ DM::setLock( bool on )
 bool
 DM::isSwitchable()
 {
-	if (DMType == OldKDM)
+	if (DMType == OldTDM)
 		return dpy[0] == ':';
 
 	if (DMType == GDM)
@@ -281,7 +281,7 @@ DM::numReserve()
 	if (DMType == GDM)
 		return 1; /* Bleh */
 
-	if (DMType == OldKDM)
+	if (DMType == OldTDM)
 		return strstr( ctl, ",rsvd" ) ? 1 : -1;
 
 	TQCString re;
@@ -304,7 +304,7 @@ DM::startReserve()
 bool
 DM::localSessions( SessList &list )
 {
-	if (DMType == OldKDM)
+	if (DMType == OldTDM)
 		return false;
 
 	TQCString re;

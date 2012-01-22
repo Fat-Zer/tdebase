@@ -26,4 +26,4 @@ install( FILES
     twm.desktop ude.desktop vtwm.desktop w9wm.desktop
     waimea.desktop wm2.desktop wmaker.desktop xfce.desktop
     xfce4.desktop
-  DESTINATION ${DATA_INSTALL_DIR}/kdm/sessions )
+  DESTINATION ${DATA_INSTALL_DIR}/tdm/sessions )

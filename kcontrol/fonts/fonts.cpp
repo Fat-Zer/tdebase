@@ -648,7 +648,7 @@ KFonts::KFonts(TQWidget *parent, const char *name, const TQStringList &)
        "<p>The use of this option is generally discouraged. For selecting proper DPI"
        " value a better option is explicitly configuring it for the whole X server if"
        " possible (e.g. DisplaySize in xorg.conf or adding <i>-dpi value</i> to"
-       " ServerLocalArgs= in $TDEDIR/share/config/kdm/kdmrc). When fonts do not render"
+       " ServerLocalArgs= in $TDEDIR/share/config/tdm/tdmrc). When fonts do not render"
        " properly with real DPI value better fonts should be used or configuration"
        " of font hinting should be checked.</p>" );
    TQWhatsThis::add(comboForceDpi, whatsthis);

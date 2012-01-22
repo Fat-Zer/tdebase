@@ -34,12 +34,12 @@
 #include <kfontrequester.h>
 #include <klocale.h>
 
-#include "kdm-font.h"
+#include "tdm-font.h"
 
 
 extern KSimpleConfig *config;
 
-KDMFontWidget::KDMFontWidget(TQWidget *parent, const char *name)
+TDMFontWidget::TDMFontWidget(TQWidget *parent, const char *name)
   : TQWidget(parent, name)
 {
   TQGridLayout *ml = new TQGridLayout(this, 5, 2, KDialog::marginHint(), KDialog::spacingHint());
@@ -75,7 +75,7 @@ KDMFontWidget::KDMFontWidget(TQWidget *parent, const char *name)
   ml->setRowStretch(5, 10);
 }
 
-void KDMFontWidget::makeReadOnly()
+void TDMFontWidget::makeReadOnly()
 {
   stdFontChooser->button()->setEnabled(false);
   failFontChooser->button()->setEnabled(false);
@@ -83,19 +83,19 @@ void KDMFontWidget::makeReadOnly()
   aacb->setEnabled(false);
 }
 
-void KDMFontWidget::configChanged()
+void TDMFontWidget::configChanged()
 {
     emit changed(true);
 }
 
-void KDMFontWidget::set_def()
+void TDMFontWidget::set_def()
 {
   stdFontChooser->setFont(TQFont("Sans Serif", 10));
   failFontChooser->setFont(TQFont("Sans Serif", 10, TQFont::Bold));
   greetingFontChooser->setFont(TQFont("Sans Serif", 22));
 }
 
-void KDMFontWidget::save()
+void TDMFontWidget::save()
 {
   config->setGroup("X-*-Greeter");
 
@@ -107,7 +107,7 @@ void KDMFontWidget::save()
 }
 
 
-void KDMFontWidget::load()
+void TDMFontWidget::load()
 {
   set_def();
 
@@ -125,10 +125,10 @@ void KDMFontWidget::load()
 }
 
 
-void KDMFontWidget::defaults()
+void TDMFontWidget::defaults()
 {
   set_def();
   aacb->setChecked(true);
 }
 
-#include "kdm-font.moc"
+#include "tdm-font.moc"

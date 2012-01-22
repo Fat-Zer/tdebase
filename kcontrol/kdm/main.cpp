@@ -31,11 +31,11 @@
 #include <kmessagebox.h>
 #include <kurldrag.h>
 
-#include "kdm-appear.h"
-#include "kdm-font.h"
-#include "kdm-users.h"
-#include "kdm-shut.h"
-#include "kdm-conv.h"
+#include "tdm-appear.h"
+#include "tdm-font.h"
+#include "tdm-users.h"
+#include "tdm-shut.h"
+#include "tdm-conv.h"
 
 #include "main.h"
 #include "background.h"
@@ -47,8 +47,8 @@
 #include <pwd.h>
 #include <grp.h>
 
-typedef KGenericFactory<KDModule, TQWidget> KDMFactory;
-K_EXPORT_COMPONENT_FACTORY( kcm_kdm, KDMFactory("kdmconfig") )
+typedef KGenericFactory<TDModule, TQWidget> TDMFactory;
+K_EXPORT_COMPONENT_FACTORY( kcm_tdm, TDMFactory("tdmconfig") )
 
 KURL *decodeImgDrop(TQDropEvent *e, TQWidget *wdg)
 {
@@ -78,16 +78,16 @@ KURL *decodeImgDrop(TQDropEvent *e, TQWidget *wdg)
 
 KSimpleConfig *config;
 
-KDModule::KDModule(TQWidget *parent, const char *name, const TQStringList &)
-  : KCModule(KDMFactory::instance(), parent, name)
+TDModule::TDModule(TQWidget *parent, const char *name, const TQStringList &)
+  : KCModule(TDMFactory::instance(), parent, name)
   , minshowuid(0)
   , maxshowuid(0)
   , updateOK(false)
 {
   KAboutData *about =
-    new KAboutData(I18N_NOOP("kcmkdm"), I18N_NOOP("KDE Login Manager Config Module"),
+    new KAboutData(I18N_NOOP("kcmtdm"), I18N_NOOP("KDE Login Manager Config Module"),
                 0, 0, KAboutData::License_GPL,
-                I18N_NOOP("(c) 1996 - 2005 The KDM Authors"));
+                I18N_NOOP("(c) 1996 - 2005 The TDM Authors"));
 
   about->addAuthor("Thomas Tanghus", I18N_NOOP("Original author"), "tanghus@earthling.net");
 	about->addAuthor("Steffen Hansen", 0, "hansen@kde.org");
@@ -174,11 +174,11 @@ KDModule::KDModule(TQWidget *parent, const char *name, const TQStringList &)
 	<< "' have unknown GID " << tgmapci.key() << endl;
 
   struct stat st;
-  if( stat( KDE_CONFDIR "/kdm/kdmdistrc" ,&st ) == 0) {
-    config = new KSimpleConfig( TQString::fromLatin1( KDE_CONFDIR "/kdm/kdmdistrc" ));
+  if( stat( KDE_CONFDIR "/tdm/tdmdistrc" ,&st ) == 0) {
+    config = new KSimpleConfig( TQString::fromLatin1( KDE_CONFDIR "/tdm/tdmdistrc" ));
   }
   else {
-    config = new KSimpleConfig( TQString::fromLatin1( KDE_CONFDIR "/kdm/kdmrc" ));
+    config = new KSimpleConfig( TQString::fromLatin1( KDE_CONFDIR "/tdm/tdmrc" ));
   }
 
   TQVBoxLayout *top = new TQVBoxLayout(this);
@@ -188,11 +188,11 @@ KDModule::KDModule(TQWidget *parent, const char *name, const TQStringList &)
   // _don't_ add a theme configurator until the theming engine is _really_ done!!
   // *****
 
-  appearance = new KDMAppearanceWidget(this);
+  appearance = new TDMAppearanceWidget(this);
   tab->addTab(appearance, i18n("A&ppearance"));
   connect(appearance, TQT_SIGNAL(changed(bool)), TQT_SIGNAL( changed(bool)));
 
-  font = new KDMFontWidget(this);
+  font = new TDMFontWidget(this);
   tab->addTab(font, i18n("&Font"));
   connect(font, TQT_SIGNAL(changed(bool)), TQT_SIGNAL(changed(bool)));
 
@@ -200,11 +200,11 @@ KDModule::KDModule(TQWidget *parent, const char *name, const TQStringList &)
   tab->addTab(background, i18n("&Background"));
   connect(background, TQT_SIGNAL(changed(bool)), TQT_SIGNAL(changed(bool)));
 
-  sessions = new KDMSessionsWidget(this);
+  sessions = new TDMSessionsWidget(this);
   tab->addTab(sessions, i18n("&Shutdown"));
   connect(sessions, TQT_SIGNAL(changed(bool)), TQT_SIGNAL(changed(bool)));
 
-  users = new KDMUsersWidget(this, 0);
+  users = new TDMUsersWidget(this, 0);
   tab->addTab(users, i18n("&Users"));
   connect(users, TQT_SIGNAL(changed(bool)), TQT_SIGNAL(changed(bool)));
   connect(users, TQT_SIGNAL(setMinMaxUID(int,int)), TQT_SLOT(slotMinMaxUID(int,int)));
@@ -212,7 +212,7 @@ KDModule::KDModule(TQWidget *parent, const char *name, const TQStringList &)
   connect(this, TQT_SIGNAL(delUsers(const TQMap<TQString,int> &)), users, TQT_SLOT(slotDelUsers(const TQMap<TQString,int> &)));
   connect(this, TQT_SIGNAL(clearUsers()), users, TQT_SLOT(slotClearUsers()));
 
-  convenience = new KDMConvenienceWidget(this, 0);
+  convenience = new TDMConvenienceWidget(this, 0);
   tab->addTab(convenience, i18n("Con&venience"));
   connect(convenience, TQT_SIGNAL(changed(bool)), TQT_SIGNAL(changed(bool)));
   connect(this, TQT_SIGNAL(addUsers(const TQMap<TQString,int> &)), convenience, TQT_SLOT(slotAddUsers(const TQMap<TQString,int> &)));
@@ -231,12 +231,12 @@ KDModule::KDModule(TQWidget *parent, const char *name, const TQStringList &)
   top->addWidget(tab);
 }
 
-KDModule::~KDModule()
+TDModule::~TDModule()
 {
   delete config;
 }
 
-void KDModule::load()
+void TDModule::load()
 {
   appearance->load();
   font->load();
@@ -248,7 +248,7 @@ void KDModule::load()
 }
 
 
-void KDModule::save()
+void TDModule::save()
 {
   appearance->save();
   font->save();
@@ -260,7 +260,7 @@ void KDModule::save()
 }
 
 
-void KDModule::defaults()
+void TDModule::defaults()
 {
     if ( getuid() == 0 )
     {
@@ -274,7 +274,7 @@ void KDModule::defaults()
     }
 }
 
-void KDModule::propagateUsers()
+void TDModule::propagateUsers()
 {
   groupmap.clear();
   emit clearUsers();
@@ -298,7 +298,7 @@ void KDModule::propagateUsers()
   updateOK = true;
 }
 
-void KDModule::slotMinMaxUID(int min, int max)
+void TDModule::slotMinMaxUID(int min, int max)
 {
   if (updateOK) {
     TQMap<TQString,int> alusers, dlusers;

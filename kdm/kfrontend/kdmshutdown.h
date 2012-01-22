@@ -23,10 +23,10 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 
 
-#ifndef KDMSHUTDOWN_H
-#define KDMSHUTDOWN_H
+#ifndef TDMSHUTDOWN_H
+#define TDMSHUTDOWN_H
 
-#include "kdmconfig.h" // for HAVE_VTS
+#include "tdmconfig.h" // for HAVE_VTS
 #include "kgverify.h"
 
 #include <kpushbutton.h>
@@ -45,13 +45,13 @@ class TQLineEdit;
 
 enum { Authed = TQDialog::Accepted + 1, Schedule };
 
-class KDMShutdownBase : public FDialog, public KGVerifyHandler {
+class TDMShutdownBase : public FDialog, public KGVerifyHandler {
 	Q_OBJECT
 	typedef FDialog inherited;
 
   public:
-	KDMShutdownBase( int _uid, TQWidget *_parent );
-	virtual ~KDMShutdownBase();
+	TDMShutdownBase( int _uid, TQWidget *_parent );
+	virtual ~TDMShutdownBase();
 
   protected slots:
 	virtual void accept();
@@ -93,12 +93,12 @@ class KDMShutdownBase : public FDialog, public KGVerifyHandler {
 };
 
 
-class KDMShutdown : public KDMShutdownBase {
+class TDMShutdown : public TDMShutdownBase {
 	Q_OBJECT
-	typedef KDMShutdownBase inherited;
+	typedef TDMShutdownBase inherited;
 
   public:
-	KDMShutdown( int _uid, TQWidget *_parent = 0 );
+	TDMShutdown( int _uid, TQWidget *_parent = 0 );
 	static void scheduleShutdown( TQWidget *_parent = 0 );
 
   protected slots:
@@ -123,12 +123,12 @@ class KDMShutdown : public KDMShutdownBase {
 
 };
 
-class KDMRadioButton : public TQRadioButton {
+class TDMRadioButton : public TQRadioButton {
 	Q_OBJECT
 	typedef TQRadioButton inherited;
 
   public:
-	KDMRadioButton( const TQString &label, TQWidget *parent );
+	TDMRadioButton( const TQString &label, TQWidget *parent );
 
   private:
 	virtual void mouseDoubleClickEvent( TQMouseEvent * );
@@ -138,12 +138,12 @@ class KDMRadioButton : public TQRadioButton {
 
 };
 
-class KDMDelayedPushButton : public KPushButton {
+class TDMDelayedPushButton : public KPushButton {
 	Q_OBJECT
 	typedef KPushButton inherited;
 
   public:
-	KDMDelayedPushButton( const KGuiItem &item, TQWidget *parent, const char *name = 0 );
+	TDMDelayedPushButton( const KGuiItem &item, TQWidget *parent, const char *name = 0 );
 	void setPopup( TQPopupMenu *pop );
 
   private slots:
@@ -156,13 +156,13 @@ class KDMDelayedPushButton : public KPushButton {
 	TQTimer popt;
 };
 
-class KDMSlimShutdown : public FDialog {
+class TDMSlimShutdown : public FDialog {
 	Q_OBJECT
 	typedef FDialog inherited;
 
   public:
-	KDMSlimShutdown( TQWidget *_parent = 0 );
-	~KDMSlimShutdown();
+	TDMSlimShutdown( TQWidget *_parent = 0 );
+	~TDMSlimShutdown();
 	static void externShutdown( int type, const char *os, int uid );
 
   private slots:
@@ -177,21 +177,21 @@ class KDMSlimShutdown : public FDialog {
 
 };
 
-class KDMConfShutdown : public KDMShutdownBase {
+class TDMConfShutdown : public TDMShutdownBase {
 	Q_OBJECT
-	typedef KDMShutdownBase inherited;
+	typedef TDMShutdownBase inherited;
 
   public:
-	KDMConfShutdown( int _uid, struct dpySpec *sess, int type, const char *os,
+	TDMConfShutdown( int _uid, struct dpySpec *sess, int type, const char *os,
 	                 TQWidget *_parent = 0 );
 };
 
-class KDMCancelShutdown : public KDMShutdownBase {
+class TDMCancelShutdown : public TDMShutdownBase {
 	Q_OBJECT
-	typedef KDMShutdownBase inherited;
+	typedef TDMShutdownBase inherited;
 
   public:
-	KDMCancelShutdown( int how, int start, int timeout, int force, int uid,
+	TDMCancelShutdown( int how, int start, int timeout, int force, int uid,
 	                   const char *os, TQWidget *_parent );
 };
 
@@ -237,4 +237,4 @@ class FlatButton : public TQToolButton
  
 };
 
-#endif /* KDMSHUTDOWN_H */
+#endif /* TDMSHUTDOWN_H */

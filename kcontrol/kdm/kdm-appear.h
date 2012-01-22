@@ -18,8 +18,8 @@
 */
 
 
-#ifndef __KDMAPPEAR_H__
-#define __KDMAPPEAR_H__
+#ifndef __TDMAPPEAR_H__
+#define __TDMAPPEAR_H__
 
 
 #include <tqdir.h>
@@ -42,12 +42,12 @@ class TQLineEdit;
 class KLineEdit;
 
 
-class KDMAppearanceWidget : public TQWidget
+class TDMAppearanceWidget : public TQWidget
 {
 	Q_OBJECT
 
 public:
-	KDMAppearanceWidget(TQWidget *parent, const char *name=0);
+	TDMAppearanceWidget(TQWidget *parent, const char *name=0);
 
 	void load();
 	void save();

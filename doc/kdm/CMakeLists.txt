@@ -9,4 +9,4 @@
 #
 #################################################
 
-tde_create_handbook( DESTINATION kdm )
+tde_create_handbook( DESTINATION tdm )

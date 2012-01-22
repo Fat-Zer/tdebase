@@ -1,6 +1,6 @@
 /*
 
-Shell for kdm conversation plugins
+Shell for tdm conversation plugins
 
 Copyright (C) 1997, 1998 Steffen Hansen <hansen@kde.org>
 Copyright (C) 2000-2004 Oswald Buddenhagen <ossi@kde.org>

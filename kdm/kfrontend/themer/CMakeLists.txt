@@ -12,8 +12,8 @@
 include_directories(
   ${CMAKE_CURRENT_BINARY_DIR}
   ${CMAKE_BINARY_DIR}
-  ${CMAKE_SOURCE_DIR}/kdm/kfrontend
-  ${CMAKE_SOURCE_DIR}/kdmlib
+  ${CMAKE_SOURCE_DIR}/tdm/kfrontend
+  ${CMAKE_SOURCE_DIR}/tdmlib
   ${TDE_INCLUDE_DIR}
   ${TQT_INCLUDE_DIRS}
 )
@@ -27,15 +27,15 @@ link_directories(
 ##### config.ci (generated) #####################
 
 add_custom_command( OUTPUT config.ci
-  COMMAND perl -w ${CMAKE_SOURCE_DIR}/kdm/confproc.pl ${CMAKE_SOURCE_DIR}/kdm/config.def config.ci
-  DEPENDS ${CMAKE_SOURCE_DIR}/kdm/confproc.pl ${CMAKE_SOURCE_DIR}/kdm/config.def )
-set_property( SOURCE kdmthemer.cpp APPEND PROPERTY OBJECT_DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/config.ci )
+  COMMAND perl -w ${CMAKE_SOURCE_DIR}/tdm/confproc.pl ${CMAKE_SOURCE_DIR}/tdm/config.def config.ci
+  DEPENDS ${CMAKE_SOURCE_DIR}/tdm/confproc.pl ${CMAKE_SOURCE_DIR}/tdm/config.def )
+set_property( SOURCE tdmthemer.cpp APPEND PROPERTY OBJECT_DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/config.ci )
 
 
-##### kdmthemer (static) ########################
+##### tdmthemer (static) ########################
 
-tde_add_library( kdmthemer STATIC_PIC AUTOMOC
+tde_add_library( tdmthemer STATIC_PIC AUTOMOC
   SOURCES
-    kdmthemer.cpp kdmitem.cpp kdmpixmap.cpp
-    kdmrect.cpp kdmlabel.cpp kdmlayout.cpp
+    tdmthemer.cpp tdmitem.cpp tdmpixmap.cpp
+    tdmrect.cpp tdmlabel.cpp tdmlayout.cpp
 )

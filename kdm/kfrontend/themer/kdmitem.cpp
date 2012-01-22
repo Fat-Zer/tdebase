@@ -25,9 +25,9 @@
 
 // #define DRAW_OUTLINE 1	// for debugging only
 
-#include "kdmitem.h"
-#include "kdmlayout.h"
-#include "kdmconfig.h"
+#include "tdmitem.h"
+#include "tdmlayout.h"
+#include "tdmconfig.h"
 
 #include <kglobal.h>
 #include <kdebug.h>
@@ -654,4 +654,4 @@ KdmItem::parentWidget() const
   return ((KdmItem*)parent())->parentWidget();
 }
 
-#include "kdmitem.moc"
+#include "tdmitem.moc"

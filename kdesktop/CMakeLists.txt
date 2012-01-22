@@ -27,7 +27,7 @@ include_directories(
   ${CMAKE_CURRENT_BINARY_DIR}
   ${CMAKE_CURRENT_SOURCE_DIR}
   ${CMAKE_BINARY_DIR}
-  ${CMAKE_SOURCE_DIR}/kdmlib
+  ${CMAKE_SOURCE_DIR}/tdmlib
   ${CMAKE_SOURCE_DIR}/kcontrol/background
   ${CMAKE_SOURCE_DIR}/libkonq
   ${TDE_INCLUDE_DIR}

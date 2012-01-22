@@ -1,6 +1,6 @@
 /*
 
-Base class for various kdm greeter dialogs
+Base class for various tdm greeter dialogs
 
 Copyright (C) 1997, 1998 Steffen Hansen <hansen@kde.org>
 Copyright (C) 2000-2004 Oswald Buddenhagen <ossi@kde.org>
@@ -25,8 +25,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "kgdialog.h"
 #include "kgverify.h"
 #include "kconsole.h"
-#include "kdmshutdown.h"
-#include "kdm_greet.h"
+#include "tdmshutdown.h"
+#include "tdm_greet.h"
 
 #include <klocale.h>
 #include <kiconloader.h>
@@ -41,7 +41,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 KGDialog::KGDialog( bool themed ) : inherited( 0, !themed )
 {
-#ifdef WITH_KDM_XCONSOLE
+#ifdef WITH_TDM_XCONSOLE
 	consoleView = _showLog ? new KConsole( this ) : 0;
 #endif
 
@@ -171,7 +171,7 @@ KGDialog::slotConsole()
 	if (sess) {
 		if (verify)
 			verify->suspend();
-		int ret = KDMConfShutdown( -1, sess, SHUT_CONSOLE, 0 ).exec();
+		int ret = TDMConfShutdown( -1, sess, SHUT_CONSOLE, 0 ).exec();
 		if (verify)
 			verify->resume();
 		disposeSessions( sess );
@@ -194,11 +194,11 @@ KGDialog::slotShutdown( int id )
 		verify->suspend();
 	if (id < 0) {
 		if (_scheduledSd == SHUT_ALWAYS)
-			KDMShutdown::scheduleShutdown( this );
+			TDMShutdown::scheduleShutdown( this );
 		else
-			KDMSlimShutdown( this ).exec();
+			TDMSlimShutdown( this ).exec();
 	} else
-		KDMSlimShutdown::externShutdown( id, 0, -1 );
+		TDMSlimShutdown::externShutdown( id, 0, -1 );
 	if (verify)
 		verify->resume();
 }

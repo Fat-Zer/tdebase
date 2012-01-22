@@ -25,8 +25,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 #include <config.h>
 
-#include "kdm_greet.h"
-#include "kdmconfig.h"
+#include "tdm_greet.h"
+#include "tdmconfig.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -71,7 +71,7 @@ Realloc( void *ptr, size_t size )
 
 #define PRINT_QUOTES
 #define PRINT_ARRAYS
-#define LOG_NAME "kdm_greet"
+#define LOG_NAME "tdm_greet"
 #define LOG_DEBUG_MASK DEBUG_GREET
 #define LOG_PANIC_EXIT 1
 #define STATIC
@@ -742,7 +742,7 @@ main( int argc ATTR_UNUSED, char **argv )
 	char qtrc[40];
 
 	if (!(ci = getenv( "CONINFO" ))) {
-		fprintf( stderr, "This program is part of kdm and should not be run manually.\n" );
+		fprintf( stderr, "This program is part of tdm and should not be run manually.\n" );
 		return 1;
 	}
 	if (sscanf( ci, "%d %d %d %d", &srfd, &swfd, &mrfd, &mwfd ) != 4)

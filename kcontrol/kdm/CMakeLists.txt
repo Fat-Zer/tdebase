@@ -23,18 +23,18 @@ link_directories(
 
 ##### other data ################################
 
-install( FILES kdm.desktop DESTINATION ${XDG_APPS_INSTALL_DIR} )
+install( FILES tdm.desktop DESTINATION ${XDG_APPS_INSTALL_DIR} )
 
 
-##### kcm_kdm (module) ##########################
+##### kcm_tdm (module) ##########################
 
 set_source_files_properties( background.cpp PROPERTIES COMPILE_FLAGS -DKDE_CONFDIR=\\"${TDE_CONFIG_DIR}\\" )
 set_source_files_properties( main.cpp PROPERTIES COMPILE_FLAGS -DKDE_CONFDIR=\\"${TDE_CONFIG_DIR}\\" )
 
-tde_add_kpart( kcm_kdm AUTOMOC
+tde_add_kpart( kcm_tdm AUTOMOC
   SOURCES
-    background.cpp kdm-appear.cpp kdm-font.cpp kdm-shut.cpp
-    kdm-users.cpp kdm-conv.cpp main.cpp kbackedcombobox.cpp
+    background.cpp tdm-appear.cpp tdm-font.cpp tdm-shut.cpp
+    tdm-users.cpp tdm-conv.cpp main.cpp kbackedcombobox.cpp
   LINK kcmbgnd-static bgnd-static knewstuff-shared
   DESTINATION ${PLUGIN_INSTALL_DIR}
 )

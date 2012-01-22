@@ -1,6 +1,6 @@
 /*
 
-Greeter widget for kdm
+Greeter widget for tdm
 
 Copyright (C) 1997, 1998, 2000 Steffen Hansen <hansen@kde.org>
 Copyright (C) 2000-2004 Oswald Buddenhagen <ossi@kde.org>
@@ -24,13 +24,13 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 #include "kgreeter.h"
 #include "kconsole.h"
-#include "kdmconfig.h"
-#include "kdmclock.h"
-#include "kdm_greet.h"
-#include "kdmadmindialog.h"
-#include "themer/kdmthemer.h"
-#include "themer/kdmitem.h"
-#include "themer/kdmlabel.h"
+#include "tdmconfig.h"
+#include "tdmclock.h"
+#include "tdm_greet.h"
+#include "tdmadmindialog.h"
+#include "themer/tdmthemer.h"
+#include "themer/tdmitem.h"
+#include "themer/tdmlabel.h"
 
 #include <kapplication.h>
 #include <klocale.h>
@@ -86,9 +86,9 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 #include <X11/Xlib.h>
 
-#define FIFO_DIR "/tmp/ksocket-global/kdm"
-#define FIFO_FILE "/tmp/ksocket-global/kdm/kdmctl-%1"
-#define FIFO_SAK_FILE "/tmp/ksocket-global/kdm/kdmctl-sak-%1"
+#define FIFO_DIR "/tmp/ksocket-global/tdm"
+#define FIFO_FILE "/tmp/ksocket-global/tdm/tdmctl-%1"
+#define FIFO_SAK_FILE "/tmp/ksocket-global/tdm/tdmctl-sak-%1"
 
 class UserListView : public KListView {
   public:
@@ -872,7 +872,7 @@ KStdGreeter::KStdGreeter()
   , pixLabel( 0 )
 {
 	TQBoxLayout *main_box;
-#ifdef WITH_KDM_XCONSOLE
+#ifdef WITH_TDM_XCONSOLE
 	if (consoleView) {
 		TQBoxLayout *ex_box = new TQVBoxLayout( this, 10, 10 );
 		main_box = new TQHBoxLayout( ex_box, 10 );
@@ -952,7 +952,7 @@ KStdGreeter::KStdGreeter()
 	TQWidget *prec;
 	if (userView)
 		prec = userView;
-#ifdef WITH_KDM_XCONSOLE
+#ifdef WITH_TDM_XCONSOLE
 	else if (consoleView)
 		prec = consoleView;
 #endif
@@ -1060,10 +1060,10 @@ KThemedGreeter::KThemedGreeter()
 	connect( themer, TQT_SIGNAL(activated( const TQString & )),
 	         TQT_SLOT(slotThemeActivated( const TQString & )) );
 
-	console_rect = themer->findNode( "xconsole" ); // kdm ext
+	console_rect = themer->findNode( "xconsole" ); // tdm ext
 	userlist_rect = themer->findNode( "userlist" );
 	caps_warning = themer->findNode( "caps-lock-warning" );
-	xauth_warning = themer->findNode( "xauth-warning" ); // kdm ext
+	xauth_warning = themer->findNode( "xauth-warning" ); // tdm ext
 	pam_error = themer->findNode( "pam-error" );
 	timed_label = themer->findNode( "timed-label" );
 	if (pam_error && pam_error->isA( "KdmLabel" ))
@@ -1075,7 +1075,7 @@ KThemedGreeter::KThemedGreeter()
 	if ((itm = themer->findNode( "language_button" ))) // not implemented yet
 		itm->hide( true );
 
-#ifdef WITH_KDM_XCONSOLE
+#ifdef WITH_TDM_XCONSOLE
 	if (console_rect) {
 		if (consoleView)
 			console_rect->setWidget( consoleView );
@@ -1097,7 +1097,7 @@ KThemedGreeter::KThemedGreeter()
 	TQWidget *prec;
 	if (userView)
 		prec = userView;
-#ifdef WITH_KDM_XCONSOLE
+#ifdef WITH_TDM_XCONSOLE
 	else if (consoleView)
 		prec = consoleView;
 #endif
@@ -1268,7 +1268,7 @@ KThemedGreeter::keyPressEvent( TQKeyEvent *e )
 void
 KThemedGreeter::slotAskAdminPassword()
 {
-  KDMAdmin k(curUser, this);
+  TDMAdmin k(curUser, this);
   if (k.exec()) {
 	GSendInt(G_Ready);
 	hide();

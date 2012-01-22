@@ -17,8 +17,8 @@
     Boston, MA 02110-1301, USA.
 */  
 
-#ifndef __KDMUSERS_H__
-#define __KDMUSERS_H__
+#ifndef __TDMUSERS_H__
+#define __TDMUSERS_H__
 
 #include <tqwidget.h>
 #include <tqptrlist.h>
@@ -37,12 +37,12 @@
 #include <pwd.h>
 
 
-class KDMUsersWidget : public TQWidget
+class TDMUsersWidget : public TQWidget
 {
 	Q_OBJECT
 
 public:
-	KDMUsersWidget( TQWidget *parent = 0, const char *name = 0 );
+	TDMUsersWidget( TQWidget *parent = 0, const char *name = 0 );
 
 	void load();
 	void save();

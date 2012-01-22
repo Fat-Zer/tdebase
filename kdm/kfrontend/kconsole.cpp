@@ -1,6 +1,6 @@
 /*
 
-xconsole widget for KDM
+xconsole widget for TDM
 
 Copyright (C) 2002-2003 Oswald Buddenhagen <ossi@kde.org>
 
@@ -23,7 +23,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 #include <config.h>
 
-#ifdef WITH_KDM_XCONSOLE
+#ifdef WITH_TDM_XCONSOLE
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -53,8 +53,8 @@ extern "C" {
 
 
 #include "kconsole.h"
-#include "kdmconfig.h"
-#include "kdm_greet.h"
+#include "tdmconfig.h"
+#include "tdm_greet.h"
 
 #include <klocale.h>
 #include <kpty.h>

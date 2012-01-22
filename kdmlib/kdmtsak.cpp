@@ -18,7 +18,7 @@
    Boston, MA 02110-1301, USA.
 */
 
-#include "kdmtsak.h"
+#include "tdmtsak.h"
 
 #include <tqstringlist.h>
 
@@ -45,7 +45,7 @@ bool is_vt_local() {
 	}
 	else {
 		TQString cvtName = "";
-		TQString output = exec("kdmctl list");
+		TQString output = exec("tdmctl list");
 		TQStringList sessionList = TQStringList::split('\t', output, false);
 		// See if the current session is local
 		for ( TQStringList::Iterator it = sessionList.begin(); it != sessionList.end(); ++it ) {
@@ -69,7 +69,7 @@ bool is_vt_active() {
 	}
 	else {
 		TQString cvtName = "";
-		TQString output = exec("kdmctl list");
+		TQString output = exec("tdmctl list");
 		TQString curConsole = exec("fgconsole");
 		bool intFound;
 		int curConsoleNum = curConsole.toInt(&intFound);

@@ -1,6 +1,6 @@
 /*
 
-Configuration for kdm
+Configuration for tdm
 
 Copyright (C) 1997, 1998, 2000 Steffen Hansen <hansen@kde.org>
 Copyright (C) 2000-2003 Oswald Buddenhagen <ossi@kde.org>
@@ -23,8 +23,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 
 
-#ifndef KDMCONFIG_H
-#define KDMCONFIG_H
+#ifndef TDMCONFIG_H
+#define TDMCONFIG_H
 
 #include <config.h>
 
@@ -66,4 +66,4 @@ void init_config( void );
 
 CONF_GREET_C_DECLS
 
-#endif /* KDMCONFIG_H */
+#endif /* TDMCONFIG_H */

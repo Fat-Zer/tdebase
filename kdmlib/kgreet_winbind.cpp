@@ -1,6 +1,6 @@
 /*
 
-Conversation widget for kdm greeter
+Conversation widget for tdm greeter
 
 Copyright (C) 1997, 1998, 2000 Steffen Hansen <hansen@kde.org>
 Copyright (C) 2000-2004 Oswald Buddenhagen <ossi@kde.org>
@@ -23,8 +23,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 
 #include "kgreet_winbind.h"
-#include "themer/kdmthemer.h"
-#include "themer/kdmitem.h"
+#include "themer/tdmthemer.h"
+#include "themer/tdmitem.h"
 
 #include <klocale.h>
 #include <kdebug.h>
@@ -40,10 +40,10 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 #include <stdlib.h>
 
-class KDMPasswordEdit : public KPasswordEdit {
+class TDMPasswordEdit : public KPasswordEdit {
 public:
-	KDMPasswordEdit( TQWidget *parent ) : KPasswordEdit( parent, 0 ) {}
-	KDMPasswordEdit( KPasswordEdit::EchoModes echoMode, TQWidget *parent ) : KPasswordEdit( echoMode, parent, 0 ) {}
+	TDMPasswordEdit( TQWidget *parent ) : KPasswordEdit( parent, 0 ) {}
+	TDMPasswordEdit( KPasswordEdit::EchoModes echoMode, TQWidget *parent ) : KPasswordEdit( echoMode, parent, 0 ) {}
 protected:
 	virtual void contextMenuEvent( TQContextMenuEvent * ) {}
 };
@@ -148,9 +148,9 @@ KWinbindGreeter::KWinbindGreeter( KGreeterPluginHandler *_handler,
 			grid->addWidget( new TQLabel( fixedUser, parent ), line++, 1 );
 		}
 		if (echoMode == -1)
-			passwdEdit = new KDMPasswordEdit( parent );
+			passwdEdit = new TDMPasswordEdit( parent );
 		else
-			passwdEdit = new KDMPasswordEdit( (KPasswordEdit::EchoModes)echoMode,
+			passwdEdit = new TDMPasswordEdit( (KPasswordEdit::EchoModes)echoMode,
 			                                  parent );
 		connect( passwdEdit, TQT_SIGNAL(textChanged( const TQString & )),
 		         TQT_SLOT(slotActivity()) );
@@ -180,11 +180,11 @@ KWinbindGreeter::KWinbindGreeter( KGreeterPluginHandler *_handler,
 	}
 	if (func != Authenticate) {
 		if (echoMode == -1) {
-			passwd1Edit = new KDMPasswordEdit( (KPasswordEdit::EchoModes)echoMode, parent );
-			passwd2Edit = new KDMPasswordEdit( (KPasswordEdit::EchoModes)echoMode, parent );
+			passwd1Edit = new TDMPasswordEdit( (KPasswordEdit::EchoModes)echoMode, parent );
+			passwd2Edit = new TDMPasswordEdit( (KPasswordEdit::EchoModes)echoMode, parent );
 		} else {
-			passwd1Edit = new KDMPasswordEdit( parent );
-			passwd2Edit = new KDMPasswordEdit( parent );
+			passwd1Edit = new TDMPasswordEdit( parent );
+			passwd2Edit = new TDMPasswordEdit( parent );
 		}
 		passwd1Label = new TQLabel( passwd1Edit, i18n("&New password:"), parent );
 		passwd2Label = new TQLabel( passwd2Edit, i18n("Con&firm password:"), parent );

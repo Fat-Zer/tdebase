@@ -13,7 +13,7 @@ include_directories(
   ${CMAKE_CURRENT_BINARY_DIR}
   ${CMAKE_BINARY_DIR}/kdesktop
   ${CMAKE_BINARY_DIR}
-  ${CMAKE_SOURCE_DIR}/kdmlib
+  ${CMAKE_SOURCE_DIR}/tdmlib
   ${CMAKE_SOURCE_DIR}/kcheckpass
   ${TDE_INCLUDE_DIR}
   ${TQT_INCLUDE_DIRS}

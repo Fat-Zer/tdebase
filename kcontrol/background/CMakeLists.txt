@@ -9,7 +9,7 @@
 #
 #################################################
 
-if( BUILD_KCONTROL OR BUILD_KDESKTOP OR BUILD_KDM )
+if( BUILD_KCONTROL OR BUILD_KDESKTOP OR BUILD_TDM )
 
   include_directories(
     ${CMAKE_CURRENT_BINARY_DIR}

@@ -1,6 +1,6 @@
 /*
 
-KDM remote control application
+TDM remote control application
 
 Copyright (C) 2004 Oswald Buddenhagen <ossi@kde.org>
 
@@ -59,7 +59,7 @@ readcfg( const char *cfg )
 
 	if (!(fp = fopen( cfg, "r" ))) {
 		fprintf( stderr,
-		         "Cannot open kdm config file '%s'.\n",
+		         "Cannot open tdm config file '%s'.\n",
 		         cfg );
 		return 0;
 	}
@@ -148,7 +148,7 @@ main( int argc, char **argv )
 {
 	char *dpy = getenv( "DISPLAY" );
 	const char *ctl = getenv( "DM_CONTROL" );
-	const char *cfg = KDE_CONFDIR "/kdm/kdmrc";
+	const char *cfg = KDE_CONFDIR "/tdm/tdmrc";
 	char *ptr;
 	int fd;
 
@@ -162,19 +162,19 @@ main( int argc, char **argv )
 			ptr++;
 		if (!strcmp( ptr, "h" ) || !strcmp( ptr, "help" )) {
 			puts(
-"Usage: kdmctl [options] [command [command arguments]]\n"
+"Usage: tdmctl [options] [command [command arguments]]\n"
 "\n"
 "Options are:\n"
 " -h -help     This help message.\n"
 " -g -global   Use global control socket even if $DISPLAY is set\n"
 " -d -display  Override $DISPLAY\n"
 " -s -sockets  Override $DM_CONTROL\n"
-" -c -config   Use alternative kdm config file\n"
+" -c -config   Use alternative tdm config file\n"
 "\n"
 "The directory in which the sockets are located is determined this way:\n"
 "- the -s option is examined\n"
 "- the $DM_CONTROL variable is examined\n"
-"- the kdm config file is searched for the FifoDir key\n"
+"- the tdm config file is searched for the FifoDir key\n"
 "- /var/run/xdmctl and /var/run are tried\n"
 "\n"
 "If $DISPLAY is set (or -d was specified) and -g was not specified, the\n"
@@ -184,7 +184,7 @@ main( int argc, char **argv )
 "Command arguments can be specified as separate command line parameters,\n"
 "in which case they are simply concatenated with tabs in between.\n"
 "\n"
-"If the command is '-', kdmctl reads commands from stdin.\n"
+"If the command is '-', tdmctl reads commands from stdin.\n"
 "The default command is 'caps'.\n"
 			);
 			return 0;

@@ -19,9 +19,9 @@
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
-#include "kdmlayout.h"
-#include "kdmconfig.h"
-#include "kdmitem.h"
+#include "tdmlayout.h"
+#include "tdmconfig.h"
+#include "tdmitem.h"
 
 #include <kdebug.h>
 

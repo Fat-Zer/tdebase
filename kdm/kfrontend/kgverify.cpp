@@ -1,6 +1,6 @@
 /*
 
-Shell for kdm conversation plugins
+Shell for tdm conversation plugins
 
 Copyright (C) 1997, 1998, 2000 Steffen Hansen <hansen@kde.org>
 Copyright (C) 2000-2004 Oswald Buddenhagen <ossi@kde.org>
@@ -25,11 +25,11 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include <config.h>
 
 #include "kgverify.h"
-#include "kdmconfig.h"
-#include "kdm_greet.h"
+#include "tdmconfig.h"
+#include "tdm_greet.h"
 
-#include "themer/kdmthemer.h"
-#include "themer/kdmitem.h"
+#include "themer/tdmthemer.h"
+#include "themer/tdmitem.h"
 
 #include <kapplication.h>
 #include <klocale.h>
@@ -461,7 +461,7 @@ KGVerify::VErrBox( TQWidget *parent, const TQString &user, const char *msg )
 
 	if (!msg) {
 		mesg = i18n("A critical error occurred.\n"
-		            "Please look at KDM's logfile(s) for more information\n"
+		            "Please look at TDM's logfile(s) for more information\n"
 		            "or contact your system administrator.");
 		icon = errorbox;
 	} else {

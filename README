@@ -62,7 +62,7 @@ libraries. Here is an overview of the directories:
 * kdialog
     Allows to display menu boxes from shell scripts.
 
-* kdm
+* tdm
     Replacement for XDM, for those people that like graphical logins.
 
 * kfind

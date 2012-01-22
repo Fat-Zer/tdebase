@@ -9,8 +9,8 @@
 #
 #################################################
 
-# termios.h (kdm, kioslave)
-if( BUILD_KDM OR BUILD_KIOSLAVES )
+# termios.h (tdm, kioslave)
+if( BUILD_TDM OR BUILD_KIOSLAVES )
   check_include_file( termios.h HAVE_TERMIOS_H )
 endif( )
 
@@ -22,7 +22,7 @@ endif( )
 
 
 # pam
-if( WITH_PAM AND (BUILD_KCHECKPASS OR BUILD_KDM) )
+if( WITH_PAM AND (BUILD_KCHECKPASS OR BUILD_TDM) )
   check_library_exists( pam pam_start "" HAVE_PAM )
   if( HAVE_PAM )
     check_include_file( "security/pam_appl.h" SECURITY_PAM_APPL_H )
@@ -166,26 +166,26 @@ if( BUILD_KIOSLAVES OR BUILD_KSYSGUARD )
 endif( )
 
 
-# getifaddrs (kcontrol, kdm)
-if( BUILD_KCONTROL OR BUILD_KDM )
+# getifaddrs (kcontrol, tdm)
+if( BUILD_KCONTROL OR BUILD_TDM )
   check_function_exists( getifaddrs HAVE_GETIFADDRS )
 endif( )
 
 
-# xkb (konsole, kdm, kxkb)
-if( BUILD_KONSOLE OR BUILD_KDM OR BUILD_KXKB )
+# xkb (konsole, tdm, kxkb)
+if( BUILD_KONSOLE OR BUILD_TDM OR BUILD_KXKB )
   check_include_file( X11/XKBlib.h HAVE_X11_XKBLIB_H )
   if( HAVE_X11_XKBLIB_H )
     check_library_exists( X11 XkbLockModifiers "" HAVE_XKB )
-    if( BUILD_KDM )
+    if( BUILD_TDM )
       check_library_exists( X11 XkbSetPerClientControls "" HAVE_XKBSETPERCLIENTCONTROLS )
     endif( )
   endif( )
 endif( )
 
 
-# XBINDIR, XLIBDIR (kdm, kxkb)
-if( BUILD_KDM OR BUILD_KXKB )
+# XBINDIR, XLIBDIR (tdm, kxkb)
+if( BUILD_TDM OR BUILD_KXKB )
   find_program( some_x_program NAMES iceauth xrdb xterm )
   if( NOT some_x_program )
     set( some_x_program /usr/bin/xrdb )
@@ -216,8 +216,8 @@ find_package( TDE )
 
 
 # dbus-tqt need Qt flags
-# dbus (kdm, ksmserver)
-if( BUILD_KDM OR BUILD_KSMSERVER )
+# dbus (tdm, ksmserver)
+if( BUILD_TDM OR BUILD_KSMSERVER )
 
   pkg_search_module( DBUS dbus-1 )
   if( NOT DBUS_FOUND )

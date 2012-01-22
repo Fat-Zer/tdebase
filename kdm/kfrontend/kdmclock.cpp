@@ -1,6 +1,6 @@
 /*
 
-clock module for kdm
+clock module for tdm
 
 Copyright (C) 2000 Espen Sand, espen@kde.org
   Based on work by NN(yet to be determined)
@@ -22,7 +22,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 */
 
-#include "kdmclock.h"
+#include "tdmclock.h"
 
 //#include <kapplication.h>
 //#include <kconfig.h>
@@ -173,4 +173,4 @@ void KdmClock::paintEvent( TQPaintEvent * )
 	bitBlt( this, contentsRect().topLeft(), &pm );
 }
 
-#include "kdmclock.moc"
+#include "tdmclock.moc"

@@ -35,11 +35,11 @@
 #include <ksimpleconfig.h>
 #include <klocale.h>
 
-#include "kdm-conv.h"
+#include "tdm-conv.h"
 
 extern KSimpleConfig *config;
 
-KDMConvenienceWidget::KDMConvenienceWidget(TQWidget *parent, const char *name)
+TDMConvenienceWidget::TDMConvenienceWidget(TQWidget *parent, const char *name)
     : TQWidget(parent, name)
 {
     TQString wtstr;
@@ -53,7 +53,7 @@ KDMConvenienceWidget::KDMConvenienceWidget(TQWidget *parent, const char *name)
     alGroup->setSizePolicy( vpref );
 
     TQWhatsThis::add( alGroup, i18n("Turn on the auto-login feature."
-	" This applies only to KDM's graphical login."
+	" This applies only to TDM's graphical login."
 	" Think twice before enabling this!") );
     connect(alGroup, TQT_SIGNAL(toggled(bool)), TQT_SLOT(slotChanged()));
 
@@ -82,7 +82,7 @@ KDMConvenienceWidget::KDMConvenienceWidget(TQWidget *parent, const char *name)
     againcb = new TQCheckBox( i18n("P&ersistent"), alGroup );
     connect( againcb, TQT_SIGNAL(toggled(bool)), TQT_SLOT(slotChanged()) );
     TQWhatsThis::add( againcb, i18n("Normally, automatic login is performed only "
-	"when KDM starts up. If this is checked, automatic login will kick in "
+	"when TDM starts up. If this is checked, automatic login will kick in "
 	"after finishing a session as well.") );
     autoLockCheck = new TQCheckBox( i18n("Loc&k session"), alGroup );
     connect( autoLockCheck, TQT_SIGNAL(toggled(bool)), TQT_SLOT(slotChanged()) );
@@ -117,7 +117,7 @@ KDMConvenienceWidget::KDMConvenienceWidget(TQWidget *parent, const char *name)
     hlpl->addWidget(puserlb);
     hlpl->addStretch( 1 );
     cbjumppw = new TQCheckBox(i18n("Focus pass&word"), puGroup);
-    TQWhatsThis::add( cbjumppw, i18n("When this option is on, KDM will place the cursor "
+    TQWhatsThis::add( cbjumppw, i18n("When this option is on, TDM will place the cursor "
 	"in the password field instead of the user field after preselecting a user. "
 	"Use this to save one key press per login, if the preselection usually does not need to "
 	"be changed.") );
@@ -128,7 +128,7 @@ KDMConvenienceWidget::KDMConvenienceWidget(TQWidget *parent, const char *name)
 
     TQWhatsThis::add( npGroup, i18n("When this option is checked, the checked users from"
 	" the list below will be allowed to log in without entering their"
-	" password. This applies only to KDM's graphical login."
+	" password. This applies only to TDM's graphical login."
 	" Think twice before enabling this!") );
 
     connect(npGroup, TQT_SIGNAL(toggled(bool)), TQT_SLOT(slotChanged()));
@@ -173,7 +173,7 @@ KDMConvenienceWidget::KDMConvenienceWidget(TQWidget *parent, const char *name)
 
 }
 
-void KDMConvenienceWidget::makeReadOnly()
+void TDMConvenienceWidget::makeReadOnly()
 {
     ((TQWidget*)alGroup->child("qt_groupbox_checkbox"))->setEnabled(false);
     userlb->setEnabled(false);
@@ -190,7 +190,7 @@ void KDMConvenienceWidget::makeReadOnly()
     cbjumppw->setEnabled(false);
 }
 
-void KDMConvenienceWidget::slotPresChanged()
+void TDMConvenienceWidget::slotPresChanged()
 {
     bool en = spRadio->isChecked();
     pu_label->setEnabled(en);
@@ -198,7 +198,7 @@ void KDMConvenienceWidget::slotPresChanged()
     cbjumppw->setEnabled(!npRadio->isChecked());
 }
 
-void KDMConvenienceWidget::save()
+void TDMConvenienceWidget::save()
 {
     config->setGroup("X-:0-Core");
     config->writeEntry( "AutoLoginEnable", alGroup->isChecked() );
@@ -223,7 +223,7 @@ void KDMConvenienceWidget::save()
 }
 
 
-void KDMConvenienceWidget::load()
+void TDMConvenienceWidget::load()
 {
     config->setGroup("X-:0-Core");
     bool alenable = config->readBoolEntry( "AutoLoginEnable", false);
@@ -257,7 +257,7 @@ void KDMConvenienceWidget::load()
 }
 
 
-void KDMConvenienceWidget::defaults()
+void TDMConvenienceWidget::defaults()
 {
     alGroup->setChecked(false);
     delaysb->setValue(0);
@@ -275,22 +275,22 @@ void KDMConvenienceWidget::defaults()
 }
 
 
-void KDMConvenienceWidget::slotChanged()
+void TDMConvenienceWidget::slotChanged()
 {
   emit changed(true);
 }
 
-void KDMConvenienceWidget::slotSetAutoUser( const TQString &user )
+void TDMConvenienceWidget::slotSetAutoUser( const TQString &user )
 {
     autoUser = user;
 }
 
-void KDMConvenienceWidget::slotSetPreselUser( const TQString &user )
+void TDMConvenienceWidget::slotSetPreselUser( const TQString &user )
 {
     preselUser = user;
 }
 
-void KDMConvenienceWidget::slotUpdateNoPassUser( TQListViewItem *item )
+void TDMConvenienceWidget::slotUpdateNoPassUser( TQListViewItem *item )
 {
     if ( !item )
         return;
@@ -305,7 +305,7 @@ void KDMConvenienceWidget::slotUpdateNoPassUser( TQListViewItem *item )
     }
 }
 
-void KDMConvenienceWidget::slotClearUsers()
+void TDMConvenienceWidget::slotClearUsers()
 {
     userlb->clear();
     puserlb->clear();
@@ -316,7 +316,7 @@ void KDMConvenienceWidget::slotClearUsers()
 	puserlb->insertItem(preselUser);
 }
 
-void KDMConvenienceWidget::slotAddUsers(const TQMap<TQString,int> &users)
+void TDMConvenienceWidget::slotAddUsers(const TQMap<TQString,int> &users)
 {
     TQMapConstIterator<TQString,int> it;
     for (it = users.begin(); it != users.end(); ++it) {
@@ -342,7 +342,7 @@ void KDMConvenienceWidget::slotAddUsers(const TQMap<TQString,int> &users)
     puserlb->setCurrentItem(preselUser);
 }
 
-void KDMConvenienceWidget::slotDelUsers(const TQMap<TQString,int> &users)
+void TDMConvenienceWidget::slotDelUsers(const TQMap<TQString,int> &users)
 {
     TQMapConstIterator<TQString,int> it;
     for (it = users.begin(); it != users.end(); ++it) {
@@ -359,4 +359,4 @@ void KDMConvenienceWidget::slotDelUsers(const TQMap<TQString,int> &users)
     }
 }
 
-#include "kdm-conv.moc"
+#include "tdm-conv.moc"

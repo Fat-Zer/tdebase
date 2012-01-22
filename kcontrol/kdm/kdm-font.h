@@ -17,20 +17,20 @@
     Boston, MA 02110-1301, USA.
 */
 
-#ifndef __KDMFONT_H__
-#define __KDMFONT_H__
+#ifndef __TDMFONT_H__
+#define __TDMFONT_H__
 
 #include <tqwidget.h>
 
 class KFontRequester;
 class TQCheckBox;
 
-class KDMFontWidget : public TQWidget
+class TDMFontWidget : public TQWidget
 {
 	Q_OBJECT
 
 public:
-	KDMFontWidget(TQWidget *parent=0, const char *name=0);
+	TDMFontWidget(TQWidget *parent=0, const char *name=0);
 
         void load();
         void save();

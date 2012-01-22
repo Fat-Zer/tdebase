@@ -41,14 +41,14 @@ theming (#37349):
 - add support for XRandR (#48602)
 save these options to .dmrc?
 
-- per-display sections in .dmrc. read-only, as far as kdm is concerned, as
+- per-display sections in .dmrc. read-only, as far as tdm is concerned, as
   otherwise the GUI would become insanely complex.
 
 - make config position independent
 - parse /etc/kderc?
-- merge multiple kdmrcs in the style of kconfig. how to set section priorities?
-- genkdmconf: treat backgroundrc as an ini file, not as a text blob
-- add proper quoting and dequoting to genkdmconf ini parser & writer
+- merge multiple tdmrcs in the style of kconfig. how to set section priorities?
+- gentdmconf: treat backgroundrc as an ini file, not as a text blob
+- add proper quoting and dequoting to gentdmconf ini parser & writer
 
 - write generic conversation plugin
 - write modern conv plugin. or maybe this should be a parallel vs. serial
@@ -113,7 +113,7 @@ and the session. .dmrc later affects only the session, not the greeter.
 - add a minimalistic window manager to the greeter (#17716, #51039)
 
 - write a separate configurator application, as kcontrol does not scale well
-  enough to cover all of kdm's options.
+  enough to cover all of tdm's options.
 
 - Different logos for each session type (see #74500)
 - User pictures in logo field
@@ -143,7 +143,7 @@ and the session. .dmrc later affects only the session, not the greeter.
 
 - lbxproxy integration (tell ghakko)
 
-- in kcm_kdm, detach backgroundrc change status from kdmrc change status.
+- in kcm_tdm, detach backgroundrc change status from tdmrc change status.
 
 - when a shutdown is scheduled, don't remove all login possibilities.
   instead, display a warning in the greeter. use SIGUSR1 to notify already
@@ -173,7 +173,7 @@ internal stuff:
 - implement auto-re-login by keeping the display subdaemon alive instead
   of starting a new one and feeding it the old auth data.
 - options for running the greeter and the core unprivileged. problem: xauth.
-- rethink the coupling of the kdm components, particularily the config reader.
+- rethink the coupling of the tdm components, particularily the config reader.
   options:
   - keep things basically as-is, make the Xaccess interface even more flexible,
     add capability flags.

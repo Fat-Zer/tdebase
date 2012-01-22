@@ -66,7 +66,7 @@ sub dedb($)
   $t =~ s,&nbsp;, ,g;
   $t =~ s,&lt;,<,g;
   $t =~ s,&gt;,>,g;
-  $t =~ s,&kdm;,KDM,g;
+  $t =~ s,&tdm;,TDM,g;
   $t =~ s,&XDMCP;,XDMCP,g;
   $t =~ s,&X-Server;,X-server,g;
   return $t;
@@ -241,10 +241,10 @@ while (<INFILE>) {
       last if (/^<\/code>\n$/);
       $raw_out .= $_;
     }
-  } elsif (/^<kdmrc>$/) {
+  } elsif (/^<tdmrc>$/) {
     my $comm = "";
     while (<INFILE>) {
-      last if (/^<\/kdmrc>\n$/);
+      last if (/^<\/tdmrc>\n$/);
       chop;
       if (/^\[(.*)\]$/) {
         defined($ex_sects{$1}) &&
@@ -294,7 +294,7 @@ while (<INFILE>) {
           my @oa = ([ "{ \"".$what."\", (char *)-1, 0, ".$proc." },", "XMO" ]);
           add_cond($kif, $what, \@oa, \%ov_xm_conds);
           $ov_xm[$dsp] .= $oa[0][0]." \\\n";
-        } elsif ($src =~ /^kdm:(.*)\/(.*)$/) {
+        } elsif ($src =~ /^tdm:(.*)\/(.*)$/) {
           my ($sec, $key) = ($1, $2);
           my @oa = ([ "{ \"".$key."\", (char *)-1, 0, ".$proc." },", "KMO".($mcnt++) ]);
           add_cond($kif, $key, \@oa, \%ov_km_conds);
@@ -528,7 +528,7 @@ while (<INFILE>) {
           );
           add_cond($kif, $key, \@oa, \%ov_xm_conds);
           $ov_xm[$sect =~ /^-/] .= $oa[0][0]." \\\n";
-        } elsif ($merge =~ /^kdm:([^\(]+)(\((.+)\))?$/) {
+        } elsif ($merge =~ /^tdm:([^\(]+)(\((.+)\))?$/) {
           my ($where, $func) = ($1, $3);
           my $sec = "";
           ($where =~ s/^([^\/]+)\///) && ($sec = $1);
@@ -594,8 +594,8 @@ while (<INFILE>) {
               $doc_ref .= "<para>Empty by default.</para>\n";
             } else {
               $ddflt =~ s/\"//g;
-              $ddflt =~ s,KDMCONF ,\${<envar>kde_confdir</envar>}/kdm,;
-              $ddflt =~ s,KDMDATA ,\${<envar>kde_datadir</envar>}/kdm,;
+              $ddflt =~ s,TDMCONF ,\${<envar>kde_confdir</envar>}/tdm,;
+              $ddflt =~ s,TDMDATA ,\${<envar>kde_datadir</envar>}/tdm,;
               $ddflt =~ s,XBINDIR ,\${<envar>x_bindir</envar>},;
               $doc_ref .= "<para>The default is <quote>".$ddflt."</quote>.</para>\n";
             }
@@ -654,8 +654,8 @@ while (<INFILE>) {
         $sna = "section";
       }
       $doc_ref .=
-        "\n<sect2 id=\"kdmrc-".$sref."\">\n".
-        "<title>The [".$stit."] ".$sna." of &kdmrc;</title>\n\n";
+        "\n<sect2 id=\"tdmrc-".$sref."\">\n".
+        "<title>The [".$stit."] ".$sna." of &tdmrc;</title>\n\n";
       if (/^Description:(( -)?)$/) {
         if ($1 ne " -") {
           my $desc = 0;

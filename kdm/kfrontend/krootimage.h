@@ -19,8 +19,8 @@ Boston, MA 02110-1301, USA.
 
 */
 
-#ifndef __KDMDESKTOP_H__
-#define __KDMDESKTOP_H__
+#ifndef __TDMDESKTOP_H__
+#define __TDMDESKTOP_H__
 
 
 #include <kapplication.h>

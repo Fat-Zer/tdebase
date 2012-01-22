@@ -1,11 +1,11 @@
 SUBDIRS = . backend kfrontend
 
-PAM = @KDM_PAM_SERVICE@
+PAM = @TDM_PAM_SERVICE@
 
 noinst_DATA=config.ci
 
-kdmdocdir = $(datadir)/doc/kdm
-kdmdoc_DATA = README
+tdmdocdir = $(datadir)/doc/tdm
+tdmdoc_DATA = README
 
 install-data-local:
 	-@test -n "$(DESTDIR)" || test -z "$(PAM)" || { $(top_srcdir)/mkpamserv $(PAM) && $(top_srcdir)/mkpamserv -P $(PAM)-np; }
@@ -15,6 +15,6 @@ config.ci: $(srcdir)/config.def $(srcdir)/confproc.pl
 
 CLEANFILES = config.ci
 
-### this is *only* for the kdm home page maintainer! ###
+### this is *only* for the tdm home page maintainer! ###
 hp:
-	scp README ChangeLog TODO devel-home:files/kdm
+	scp README ChangeLog TODO devel-home:files/tdm

@@ -185,7 +185,7 @@ void ThemeRedmond::_initUi()
     greetingString = kes.getSetting( KEMailSettings::RealName );
   }
 
-  // Try to load the user's KDM icon... TODO: Make this overridable by the Theme.
+  // Try to load the user's TDM icon... TODO: Make this overridable by the Theme.
   if( mUseKdmUserIcon )
   {
     const TQString defSys( ".default.face.icon" );  // The system-wide default image
@@ -195,10 +195,10 @@ void ThemeRedmond::_initUi()
     const int fUserOnly   = fUserFirst+1;
 
     int faceSource = fAdminOnly;
-    KConfig *kdmconfig = new KConfig("kdm/kdmrc", true);
-    kdmconfig->setGroup("X-*-Greeter");
-    TQString userPicsDir = kdmconfig->readEntry( "FaceDir", KGlobal::dirs()->resourceDirs("data").last() + "kdm/faces" ) + '/';
-    TQString fs = kdmconfig->readEntry( "FaceSource" );
+    KConfig *tdmconfig = new KConfig("tdm/tdmrc", true);
+    tdmconfig->setGroup("X-*-Greeter");
+    TQString userPicsDir = tdmconfig->readEntry( "FaceDir", KGlobal::dirs()->resourceDirs("data").last() + "tdm/faces" ) + '/';
+    TQString fs = tdmconfig->readEntry( "FaceSource" );
     if (fs == TQString::fromLatin1("UserOnly"))
       faceSource = fUserOnly;
     else if (fs == TQString::fromLatin1("PreferUser"))
@@ -207,7 +207,7 @@ void ThemeRedmond::_initUi()
       faceSource = fAdminFirst;
     else
       faceSource = fAdminOnly; // Admin Only
-    delete kdmconfig;
+    delete tdmconfig;
 
     TQPixmap userp;
     if ( faceSource == fAdminFirst )
@@ -341,7 +341,7 @@ void ThemeRedmond::_readSettings()
   mShowUsernameText      = cfg->readBoolEntry( "Show Username", true );
   mShowActionText        = cfg->readBoolEntry( "Show Action", true );
   mShowIcon              = cfg->readBoolEntry( "Show Icon", true );
-  mUseKdmUserIcon        = cfg->readBoolEntry( "Use KDM User Icon", true );
+  mUseKdmUserIcon        = cfg->readBoolEntry( "Use TDM User Icon", true );
 
   // Setup our fonts. There are only 3 elements which use 'em, so this is fairly
   // straightforward.

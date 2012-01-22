@@ -6,8 +6,8 @@ LDADD = $(LIB_X11) -lXau $(LIBXDMCP) $(PASSWDLIBS) $(LIBSHADOW) $(LIBGEN) \
     $(LIB_LIBS) $(KRB4_LIBS) $(KRB5_LIBS) $(DBUS_LIBS) $(LIBSOCKET) $(LIBRESOLV) \
     $(LIBUCB) $(LIBUTIL) $(LIBPOSIX4)
 
-bin_PROGRAMS = kdm
-kdm_SOURCES = \
+bin_PROGRAMS = tdm
+tdm_SOURCES = \
     access.c \
     auth.c \
     bootman.c \
@@ -44,4 +44,4 @@ EXTRA_DIST = printf.c
 noinst_HEADERS = dm.h dm_socket.h dm_error.h dm_auth.h greet.h
 
 # for unsermake (automake is handled by SUBDIRS in ../)
-kdm_COMPILE_FIRST = ../config.ci
+tdm_COMPILE_FIRST = ../config.ci

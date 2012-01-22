@@ -1,6 +1,6 @@
 /*
 
-chooser widget for KDM
+chooser widget for TDM
 
 Copyright (C) 2002-2003 Oswald Buddenhagen <ossi@kde.org>
 based on the chooser (C) 1999 by Harald Hoyer <Harald.Hoyer@RedHat.de>
@@ -27,8 +27,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 #include "kchooser.h"
 #include "kconsole.h"
-#include "kdmconfig.h"
-#include "kdm_greet.h"
+#include "tdmconfig.h"
+#include "tdm_greet.h"
 
 #include <klocale.h>
 
@@ -101,7 +101,7 @@ ChooserDlg::ChooserDlg()
 //	TQPushButton *helpButton = new TQPushButton( i18n("&Help"), this );
 //	hbox->addWidget( helpButton );
 
-#ifdef WITH_KDM_XCONSOLE
+#ifdef WITH_TDM_XCONSOLE
 	if (consoleView)
 		vbox->addWidget( consoleView );
 #endif

@@ -21,8 +21,8 @@
 
 #include <config.h>
 
-#include "kdmpixmap.h"
-#include <kdmconfig.h>
+#include "tdmpixmap.h"
+#include <tdmconfig.h>
 
 #include <kimageeffect.h>
 #ifdef HAVE_LIBART
@@ -68,10 +68,10 @@ KdmPixmap::KdmPixmap( KdmItem *parent, const TQDomNode &node, const char *name )
 			parseColor( el.attribute( "tint", "#ffffff" ), pixmap.normal.tint );
 			pixmap.normal.alpha = el.attribute( "alpha", "1.0" ).toFloat();
 
-			if (el.attribute( "file", "" ) == "@@@KDMBACKGROUND@@@") {
+			if (el.attribute( "file", "" ) == "@@@TDMBACKGROUND@@@") {
 				if ((_compositor.isEmpty()) || (!argb_visual_available)) {
 					// Software blend only (no compositing support)
-					// Use the preset KDM background...
+					// Use the preset TDM background...
 					KStandardDirs *m_pDirs = KGlobal::dirs();
 					KSimpleConfig *config = new KSimpleConfig( TQFile::decodeName( _backgroundCfg ) );
 					config->setGroup("Desktop0");
@@ -337,4 +337,4 @@ KdmPixmap::statusChanged()
 	needUpdate();
 }
 
-#include "kdmpixmap.moc"
+#include "tdmpixmap.moc"

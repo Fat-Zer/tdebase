@@ -80,20 +80,20 @@ done
 	])
 
 AC_CHECK_FUNC(vsyslog, [
-  AC_DEFINE(USE_SYSLOG, 1, [Define if kdm should be built with syslog support])])
+  AC_DEFINE(USE_SYSLOG, 1, [Define if tdm should be built with syslog support])])
 
-kdm_no_Xau=false
-kdm_no_Xdmcp=false
+tdm_no_Xau=false
+tdm_no_Xdmcp=false
 
 AC_CHECK_LIB(Xau, main, [:], 
 	[
-	  kdm_no_Xau=true
-	  DO_NOT_COMPILE="$DO_NOT_COMPILE kdm"
+	  tdm_no_Xau=true
+	  DO_NOT_COMPILE="$DO_NOT_COMPILE tdm"
 	], 
 	  $X_LDFLAGS -lX11 $LIBSOCKET)
 
 AC_ARG_WITH(xdmcp,
-        AC_HELP_STRING([--without-xdmcp],[build kdm without xdmcp support [default=with xdmcp]]), ,
+        AC_HELP_STRING([--without-xdmcp],[build tdm without xdmcp support [default=with xdmcp]]), ,
 	[with_xdmcp=yes])
 if test "x$with_xdmcp" = xyes; then
   AC_CHECK_LIB(Xdmcp, main, [LIBXDMCP="-lXdmcp"], , $X_LDFLAGS -lX11 $LIBSOCKET)
@@ -104,14 +104,14 @@ if test "x$with_xdmcp" = xyes; then
     CPPFLAGS=$cppflags_safe
   fi
   if test -z "$HAVE_X11_XDMCP_H"; then
-    kdm_no_Xdmcp=true
-    DO_NOT_COMPILE="$DO_NOT_COMPILE kdm"
+    tdm_no_Xdmcp=true
+    DO_NOT_COMPILE="$DO_NOT_COMPILE tdm"
   fi
-  AC_DEFINE(XDMCP, 1, [Define if kdm should be built with XDMCP support])
+  AC_DEFINE(XDMCP, 1, [Define if tdm should be built with XDMCP support])
   ac_save_libs=$LIBS
   LIBS="$LIBS $LIBXDMCP"
   AC_CHECK_FUNC(XdmcpWrap, [
-    AC_DEFINE(HASXDMAUTH, 1, [Define if kdm should be built with XDMAUTH support])
+    AC_DEFINE(HASXDMAUTH, 1, [Define if tdm should be built with XDMAUTH support])
   ])
   LIBS=$ac_save_libs
 fi
@@ -178,9 +178,9 @@ KRB5_INCS=
 KRB5_LIBS=
 KRB5_RPATH=
 
-AC_MSG_CHECKING([whether to use Kerberos5 for Xauth cookies in kdm])
+AC_MSG_CHECKING([whether to use Kerberos5 for Xauth cookies in tdm])
 AC_ARG_WITH(krb5auth,
-  AC_HELP_STRING([--with-krb5auth=PATH],[Use Kerberos5 for Xauth cookies in kdm]), ,
+  AC_HELP_STRING([--with-krb5auth=PATH],[Use Kerberos5 for Xauth cookies in tdm]), ,
   [ with_krb5auth=no ])
 if test "x$with_krb5auth" = xno; then
   AC_MSG_RESULT(no)
@@ -197,7 +197,7 @@ else
   keepcflags=$CFLAGS
   CFLAGS="$KRB5_INCS $CFLAGS"
   AC_CHECK_HEADER(krb5/krb5.h, 
-    [ AC_DEFINE(K5AUTH, 1, [Define if kdm should use Kerberos 5 for Xauth cookies.]) ],
+    [ AC_DEFINE(K5AUTH, 1, [Define if tdm should use Kerberos 5 for Xauth cookies.]) ],
     [ AC_MSG_ERROR([--with-krb5auth requires Kerberos5 header files.
 Due to a problem with X includes you probably have to run "ln -s . krb5"
 in the directory where the krb5.h include resides to make things actually work.])])
@@ -208,36 +208,36 @@ AC_SUBST(KRB5_INCS)
 AC_SUBST(KRB5_LIBS)
 AC_SUBST(KRB5_RPATH)
 
-AC_MSG_CHECKING([whether to use Sun's secure RPC for Xauth cookies in kdm])
+AC_MSG_CHECKING([whether to use Sun's secure RPC for Xauth cookies in tdm])
 AC_ARG_WITH(rpcauth,
-  AC_HELP_STRING([--with-rpcauth],[Use Sun's secure RPC for Xauth cookies in kdm.]), , 
+  AC_HELP_STRING([--with-rpcauth],[Use Sun's secure RPC for Xauth cookies in tdm.]), , 
   [ with_rpcauth=no ])
 if test "x$with_rpcauth" = xno; then
   AC_MSG_RESULT(no)
 else
   AC_MSG_RESULT(yes)
   AC_CHECK_HEADER(rpc/rpc.h, 
-    [ AC_DEFINE(SECURE_RPC, 1, [Define if kdm should use Sun's secure RPC for Xauth cookies.]) ],
+    [ AC_DEFINE(SECURE_RPC, 1, [Define if tdm should use Sun's secure RPC for Xauth cookies.]) ],
     [ AC_MSG_ERROR([--with-rpcauth requires Sun RPC header files.])])
 fi
 
 if test "x$use_pam" = xyes; then
-    AC_DEFINE(USE_PAM, 1, [Define if kdm should use PAM])
+    AC_DEFINE(USE_PAM, 1, [Define if tdm should use PAM])
 elif test "x$use_shadow" = xyes; then
-    AC_DEFINE(USESHADOW, 1, [Define if kdm should use shadow passwords])
+    AC_DEFINE(USESHADOW, 1, [Define if tdm should use shadow passwords])
 fi
 if test "x$with_krb4" != xno; then
-    AC_DEFINE(KERBEROS, 1, [Define if kdm should use Kerberos IV])
+    AC_DEFINE(KERBEROS, 1, [Define if tdm should use Kerberos IV])
     if test "x$with_afs" = xno; then
-        AC_DEFINE(NO_AFS, 1, [Define if kdm should not use AFS])
+        AC_DEFINE(NO_AFS, 1, [Define if tdm should not use AFS])
     fi
 fi
 
-AC_ARG_WITH(kdm-xconsole,
-	AC_HELP_STRING([--with-kdm-xconsole],[build kdm with built-in xconsole [default=no]]), ,
-	[with_kdm_xconsole=no])
-if test "x$with_kdm_xconsole" = xyes; then
-    AC_DEFINE(WITH_KDM_XCONSOLE, 1, [Build kdm with built-in xconsole])
+AC_ARG_WITH(tdm-xconsole,
+	AC_HELP_STRING([--with-tdm-xconsole],[build tdm with built-in xconsole [default=no]]), ,
+	[with_tdm_xconsole=no])
+if test "x$with_tdm_xconsole" = xyes; then
+    AC_DEFINE(WITH_TDM_XCONSOLE, 1, [Build tdm with built-in xconsole])
 fi
 
 ########### Check for DBus
@@ -334,7 +334,7 @@ fi
   AC_SUBST(DBUS_INCS)
   AC_SUBST(DBUS_LIBS)
 
-dnl AC_OUTPUT(kdm/kfrontend/sessions/kde.desktop)
+dnl AC_OUTPUT(tdm/kfrontend/sessions/kde.desktop)
 
 
 AC_ARG_WITH(libaudit,

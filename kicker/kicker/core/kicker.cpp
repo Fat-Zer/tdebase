@@ -108,7 +108,7 @@ Kicker::Kicker()
 
     KGlobal::iconLoader()->addExtraDesktopThemes();
 
-    KGlobal::locale()->insertCatalogue("kdmgreet");
+    KGlobal::locale()->insertCatalogue("tdmgreet");
     KGlobal::locale()->insertCatalogue("libkonq");
     KGlobal::locale()->insertCatalogue("libdmctl");
     KGlobal::locale()->insertCatalogue("libtaskbar");

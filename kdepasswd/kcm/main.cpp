@@ -147,7 +147,7 @@ void KCMUserAccount::load()
 	_mw->leSMTP->setText( _kes->getSetting( KEMailSettings::OutServer ));
 
 	TQString _userPicsDir = KCFGUserAccount::faceDir() +  
-		KGlobal::dirs()->resourceDirs("data").last() + "kdm/faces/";
+		KGlobal::dirs()->resourceDirs("data").last() + "tdm/faces/";
 
 	TQString fs = KCFGUserAccount::faceSource();
 	if (fs == TQString::fromLatin1("UserOnly"))
@@ -271,7 +271,7 @@ void KCMUserAccount::slotFaceButtonClicked()
   }
 
   ChFaceDlg* pDlg = new ChFaceDlg( KGlobal::dirs()->resourceDirs("data").last() +
-	"/kdm/pics/users/" );
+	"/tdm/pics/users/" );
 
   if ( pDlg->exec() == TQDialog::Accepted && !pDlg->getFaceImage().isNull() )
       changeFace( pDlg->getFaceImage() );

@@ -1,78 +1,78 @@
-This is the K Display Manager (KDM) for KDE 3.4,
+This is the K Display Manager (TDM) for KDE 3.4,
 the KDE replacement for the X Display Manager (XDM).
 
-Semi-official home page: http://devel-home.kde.org/~ossi/sw/kdm.html
+Semi-official home page: http://devel-home.kde.org/~ossi/sw/tdm.html
 
 
-configure options that affect KDM
+configure options that affect TDM
 ---------------------------------
 
 --with-pam[=service]
-  Compile KDM (and other parts of tdebase) with PAM support. The default
+  Compile TDM (and other parts of tdebase) with PAM support. The default
   service is "kde". PAM is automatically used if found.
 
---with-kdm-pam=service
-  Override the PAM service used specifically by KDM. Depends on --with-pam.
+--with-tdm-pam=service
+  Override the PAM service used specifically by TDM. Depends on --with-pam.
 
 --with-shadow
-  Compile KDM (and other parts of tdebase) with shadow password support.
-  Shadow passwords are automatically used if found. This affects KDM only
+  Compile TDM (and other parts of tdebase) with shadow password support.
+  Shadow passwords are automatically used if found. This affects TDM only
   if PAM is not used.
 
 --with-krb4[=path]
-  Compile KDM (and the LDAP KIO slave) with KTH Kerberos 4 support. Note
+  Compile TDM (and the LDAP KIO slave) with KTH Kerberos 4 support. Note
   that this does not work with the Kerberos 4 compatibility layer found in
-  MIT Kerberos 5. This affects KDM only if PAM is not used.
+  MIT Kerberos 5. This affects TDM only if PAM is not used.
 
 --with-afs
-  Compile KDM with AFS support. Depends on --with-krb4.
+  Compile TDM with AFS support. Depends on --with-krb4.
 
 --with-krb5auth[=path]
 --with-rpcauth
-  Compile KDM with Kerberos 5 resp. secure RPC support for X authorization
+  Compile TDM with Kerberos 5 resp. secure RPC support for X authorization
   cookies. It's pretty pointless to enable this if you don't use an X server
   that supports it.
   
-  If you want user authentication against a Kerberos realm, compile KDM with
+  If you want user authentication against a Kerberos realm, compile TDM with
   PAM support and use the appropriate module.
 
 --without-xdmcp
-  Compile KDM without XDMCP support.
+  Compile TDM without XDMCP support.
 
---with-kdm-xconsole
-  Compile KDM with a builtin "xconsole" replacement in the greeter. I don't
+--with-tdm-xconsole
+  Compile TDM with a builtin "xconsole" replacement in the greeter. I don't
   consider this too useful, but SuSE wanted it, so it's there. ;)
 
 
-KDM's file system layout
+TDM's file system layout
 ------------------------
 
 ${kde_confdir} is usually ${prefix}/share/config
 ${kde_datadir} is usually ${prefix}/share/apps
 The indented locations are envisioned for a configuration shared with GDM.
 
-${kde_confdir}/kdm/{kdmrc,Xservers,Xaccess,Xwilling,...}
-${kde_datadir}/kdm/sessions/*.desktop
+${kde_confdir}/tdm/{tdmrc,Xservers,Xaccess,Xwilling,...}
+${kde_datadir}/tdm/sessions/*.desktop
   /etc/X11/sessions/,/usr/share/xsessions/
-${kde_datadir}/kdm/pics/users/
-${kde_datadir}/kdm/pics/
-${kde_datadir}/kdm/faces/*.face{,.icon}
+${kde_datadir}/tdm/pics/users/
+${kde_datadir}/tdm/pics/
+${kde_datadir}/tdm/faces/*.face{,.icon}
   /usr/share/faces/
 /var/run/xauth/A*
 /var/run/xdmctl/xdmctl*
-/var/run/kdm.pid
-/var/lib/kdm/kdmsts
+/var/run/tdm.pid
+/var/lib/tdm/tdmsts
 <site-specific>/*.dmrc
 $HOME/.face{,.icon}
 $HOME/.dmrc
 
 
-How to setup KDM
+How to setup TDM
 ----------------
 
-KDM's config files are all located in ${kde_confdir}/kdm.
+TDM's config files are all located in ${kde_confdir}/tdm.
 "make install" will create a probably working configuration, either by
-deriving it from an already present KDM/XDM installation or by using
+deriving it from an already present TDM/XDM installation or by using
 defaults if no previous installation is found.
 
 You can change the configuration from the KDE Control Center. You will
@@ -101,29 +101,29 @@ that's what will be saved to ~/.dmrc and what DESKTOP_SESSION will be set to.
 For every magic Exec constant a session type of the same name exists.
 
 Unless your system is configured differently already, you should create a
-directory ${kde_confdir}/kdm/sessions and add this to kdmrc:
+directory ${kde_confdir}/tdm/sessions and add this to tdmrc:
 
 [X-*-Core]
-SessionsDirs=${kde_confdir}/kdm/sessions,${kde_datadir}/kdm/sessions
+SessionsDirs=${kde_confdir}/tdm/sessions,${kde_datadir}/tdm/sessions
 
 (Note that you must use actual paths instead of variables, see the section
-about KDM's file system layout.)
+about TDM's file system layout.)
 Do any changes only in the config directory - any changes in the data
 directory will be lost after the next KDE update.
 
 To override a session type, copy the .desktop file from the data dir to the
 config dir and edit it at will. Removing the shipped session types can be
 accomplished by "shadowing" them with .desktop files containing Hidden=true.
-For the magic session types no .desktop files exist by default, but KDM
+For the magic session types no .desktop files exist by default, but TDM
 pretends they would, so you can override them like any other type.
 I guess you already know how to add a new session type by now. ;-)
 
 
-Running KDM from init
+Running TDM from init
 ---------------------
 
 NOTE, that this description applies to RedHat 5.x and must be adapted for
-other distributions/systems. Generally I'd advise _against_ starting KDM
+other distributions/systems. Generally I'd advise _against_ starting TDM
 directly from init - better use a proper init script, possibly by slightly
 modifying the XDM init script shipped by your distribution.
 
@@ -135,13 +135,13 @@ modifying the XDM init script shipped by your distribution.
 
    Replace it with:
 
-       x:5:respawn:/opt/kde/bin/kdm
+       x:5:respawn:/opt/kde/bin/tdm
 
-   This tells init(8) to respawn KDM, the KDE display manager, when
+   This tells init(8) to respawn TDM, the KDE display manager, when
    the system is in run level 5.
-   Note that KDM does not need the -nodaemon option.
+   Note that TDM does not need the -nodaemon option.
 
-   To start KDM, either run (as root) /sbin/telinit 5 (to switch to
+   To start TDM, either run (as root) /sbin/telinit 5 (to switch to
    run level 5), or (this is risky! don't do it until you _know_ you
    want the system to boot into this every time!) edit /etc/inittab
    and change the line:
@@ -153,14 +153,14 @@ modifying the XDM init script shipped by your distribution.
        id:5:initdefault:
 
    If you do the latter step, then every time your system boots
-   successfully it will go into run level 5 and run KDM,
+   successfully it will go into run level 5 and run TDM,
    presenting you the exceedingly cute KDE login screen.
 
 
 The command sockets
 -------------------
 
-This is a feature you can use to remote-control KDM. It's mostly intended
+This is a feature you can use to remote-control TDM. It's mostly intended
 for use by ksmserver and kdesktop from a running session, but other
 applications are possible as well.
 
@@ -209,7 +209,7 @@ Commands for all sockets:
 
 "caps"
  - Returns a list this socket's capabilities:
-   "kdm" - identifies kdm, in case some other DM implements this protocol, too.
+   "tdm" - identifies tdm, in case some other DM implements this protocol, too.
    "list", "activate", "lock", "suicide", "login" - the respective command
      is supported.
    "bootoptions" - the "listbootoptions" command and the "=" option to
@@ -272,7 +272,7 @@ Commands for all sockets:
  - end is the latest time at which the shutdown should be performed if active
    sessions are still running. If it starts with a plus-sign, the start time
    is added. Minus one means wait infinitely. If end is through and active
-   sessions are still running, KDM can do one of the following:
+   sessions are still running, TDM can do one of the following:
    * "cancel" - give up the shutdown.
    * "force" - shut down nonetheless.
    * "forcemy" - shut down nonetheless if all active sessions belong to the
@@ -304,18 +304,18 @@ Commands for all sockets:
 There are two ways of using the sockets:
 - Connecting them directly. FifoDir is exported as $DM_CONTROL; the name
   of per-display sockets can be derived from $DISPLAY.
-- By using the kdmctl command (e.g., from within a shell script).
-  Try "kdmctl -h" to find out more.
+- By using the tdmctl command (e.g., from within a shell script).
+  Try "tdmctl -h" to find out more.
 
 Here is an example bash script "reboot into FreeBSD":
 
-if kdmctl | grep -q shutdown; then
+if tdmctl | grep -q shutdown; then
   IFS=$'\t'
-  set -- `kdmctl listbootoptions`
+  set -- `tdmctl listbootoptions`
   if [ "$1" = ok ]; then
     fbsd=$(echo "$2" | tr ' ' '\n' | sed -ne 's,\\s, ,g;/freebsd/I{p;q}')
     if [ -n "$fbsd" ]; then
-      kdmctl shutdown reboot "=$fbsd" ask > /dev/null
+      tdmctl shutdown reboot "=$fbsd" ask > /dev/null
     else
       echo "FreeBSD boot unavailable."
     fi
@@ -332,7 +332,7 @@ fi
 
 More input! ;-)
 
-KDM accepts two command line options related to logging:
+TDM accepts two command line options related to logging:
 
   -debug <n>
     <n> is a decimal or hexadecimal (prefix 0x) number.
@@ -363,10 +363,10 @@ KDM accepts two command line options related to logging:
 
   -logfile <file>
     <file> is the file to log various messages to. The default log file is
-    /var/log/kdm.log. For internal reasons there is no option in kdmrc to
-    permanently specify the log file location. If you redirect KDM's
-    standard error output to a file, KDM will log there.
-    If KDM is configured to use syslog (and it _very_ probably is on any
+    /var/log/tdm.log. For internal reasons there is no option in tdmrc to
+    permanently specify the log file location. If you redirect TDM's
+    standard error output to a file, TDM will log there.
+    If TDM is configured to use syslog (and it _very_ probably is on any
     modern system), all internally generated messages are logged to the
     "daemon" facility. The log usually can be found in /var/log/debug.log
     and /var/log/daemon.log; make sure that daemon.* is logged (look at
@@ -377,29 +377,29 @@ KDM accepts two command line options related to logging:
 
 Send me all the logs together with a detailed description of what you did
 and what happened. If your problem is related to a specific configuration,
-you should also attach a tar.gz archive of your KDM config directory.
+you should also attach a tar.gz archive of your TDM config directory.
 
-If I request a backtrace from you and KDM didn't create one yet via the
+If I request a backtrace from you and TDM didn't create one yet via the
 usual drkonqi procedure, you'll have to do that yourself. The keyphrase
 is "attaching gdb". How exactly this is done depends on the part that
 crashes:
 - master daemon. Actually you should never need to attach to it, as
   you can start it within the debugger already:
-  # gdb --args kdm -nodaemon -debug 7
+  # gdb --args tdm -nodaemon -debug 7
   (gdb) run
 - display subdaemon. Find (using ps) the process with a name like
   "-:0" (where :0 is actually the display this process is for). This
   process' PPID is the master daemon. Attach to it this way:
-  # gdb kdm <the PID you found>
+  # gdb tdm <the PID you found>
   (gdb) cont
   If the subdaemon crashes before you can attach, add 16 to the debug flags
-  when you start KDM.
+  when you start TDM.
 - config reader. You will have to add 32 to the debug flags almost certainly.
   The PPID will be the master daemon as well.
-  # gdb kdm_config $(pidof kdm_config)
+  # gdb tdm_config $(pidof tdm_config)
   (gdb) cont
 - greeter. If it's too fast, add 64 to -debug. The PPID will be the subdaemon.
-  # gdb kdm_greet $(pidof kdm_greet)
+  # gdb tdm_greet $(pidof tdm_greet)
   (gdb) cont
   The simplification with "pidof" works only if you have only one display,
   otherwise you have to find the PID manually (by using ps -fx).
@@ -426,7 +426,7 @@ configure flag if at all possible.
 Random rambings and license information
 ---------------------------------------
 
-Version 0.1 of KDM is copyright
+Version 0.1 of TDM is copyright
 	Matthias Ettrich <ettrich@trolltech.com>
 All later versions copyright:
 	(C) 1997-2000 Steffen Hansen <hansen@kde.org>
@@ -443,7 +443,7 @@ Duncan Haldane for investigation of PAM issues.
 Stephan Kulow for helping with the autoconf stuff.
 Martin Baehr for intensive testing and writing the sample Xsession scripts.
 Harald Hoyer <Harald.Hoyer@redhat.de> for the (now obsoleted) chooser.
-SuSE for employing me (ossi) for three months to work on kdm.
+SuSE for employing me (ossi) for three months to work on tdm.
 BasysKom for sponsoring my (ossi's) work on the conversation plugin stuff.
 ... and _many_ others ...
 

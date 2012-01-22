@@ -418,7 +418,7 @@ true.</entry>
 <entry>Indicates whether icon should be shown. Default is true</entry>
 </row>
 <row>
-<entry>Use KDM User Icon</entry>
+<entry>Use TDM User Icon</entry>
 <entry>[true/false]</entry>
 <entry>Show user's login icon. Default is true.</entry>
 </row>

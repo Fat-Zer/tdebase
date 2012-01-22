@@ -1,6 +1,6 @@
 /*
 
-Conversation widget for kdm greeter
+Conversation widget for tdm greeter
 
 Copyright (C) 1997, 1998 Steffen Hansen <hansen@kde.org>
 Copyright (C) 2000-2003 Oswald Buddenhagen <ossi@kde.org>

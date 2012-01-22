@@ -21,29 +21,29 @@
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
-#ifndef __kdm_main_h
-#define __kdm_main_h
+#ifndef __tdm_main_h
+#define __tdm_main_h
 
 #include <tqtabwidget.h>
 #include <tqmap.h>
 
 #include <kcmodule.h>
 
-class KDMAppearanceWidget;
-class KDMFontWidget;
-class KDMSessionsWidget;
-class KDMUsersWidget;
-class KDMConvenienceWidget;
+class TDMAppearanceWidget;
+class TDMFontWidget;
+class TDMSessionsWidget;
+class TDMUsersWidget;
+class TDMConvenienceWidget;
 class KBackground;
 
-class KDModule : public KCModule
+class TDModule : public KCModule
 {
   Q_OBJECT
 
 public:
 
-  KDModule(TQWidget *parent, const char *name, const TQStringList &);
-  ~KDModule();
+  TDModule(TQWidget *parent, const char *name, const TQStringList &);
+  ~TDModule();
 
   void load();
   void save();
@@ -63,12 +63,12 @@ private:
 
   TQTabWidget		*tab;
 
-  KDMAppearanceWidget	*appearance;
+  TDMAppearanceWidget	*appearance;
   KBackground		*background;
-  KDMFontWidget		*font;
-  KDMSessionsWidget	*sessions;
-  KDMUsersWidget	*users;
-  KDMConvenienceWidget	*convenience;
+  TDMFontWidget		*font;
+  TDMSessionsWidget	*sessions;
+  TDMUsersWidget	*users;
+  TDMConvenienceWidget	*convenience;
 
   TQMap<TQString, QPair<int,TQStringList> >	usermap;
   TQMap<TQString,int>	groupmap;

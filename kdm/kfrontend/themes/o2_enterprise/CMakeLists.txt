@@ -13,4 +13,4 @@ install( FILES
     Dialog.png enter_normal.png enter_over.png enter_pressed.png
     enterprise.xml GdmGreeterTheme.desktop preview.png
     system_normal.png  system_over.png system_pressed.png
-  DESTINATION ${DATA_INSTALL_DIR}/kdm/themes/o2_enterprise )
+  DESTINATION ${DATA_INSTALL_DIR}/tdm/themes/o2_enterprise )

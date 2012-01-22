@@ -1,6 +1,6 @@
 /*
 
-xconsole widget for KDM
+xconsole widget for TDM
 
 Copyright (C) 2002-2003 Oswald Buddenhagen <ossi@kde.org>
 

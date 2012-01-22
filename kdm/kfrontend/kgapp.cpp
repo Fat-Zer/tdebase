@@ -24,9 +24,9 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 #include <config.h>
 
-#include "kdm_greet.h"
-#include "kdmshutdown.h"
-#include "kdmconfig.h"
+#include "tdm_greet.h"
+#include "tdmshutdown.h"
+#include "tdmconfig.h"
 #include "kgapp.h"
 #include "kgreeter.h"
 #ifdef XDMCP
@@ -179,7 +179,7 @@ checkSAK(GreeterApp* app)
 void
 kg_main( const char *argv0 )
 {
-	static char *argv[] = { (char *)"kdmgreet", 0 };
+	static char *argv[] = { (char *)"tdmgreet", 0 };
 	KCmdLineArgs::init( 1, argv, *argv, 0, 0, 0, true );
 
 	kdDebug() << timestamp() << "start" << endl;
@@ -327,7 +327,7 @@ kg_main( const char *argv0 )
 		if (cmd == G_ConfShutdown) {
 			int how = GRecvInt(), uid = GRecvInt();
 			char *os = GRecvStr();
-			KDMSlimShutdown::externShutdown( how, os, uid );
+			TDMSlimShutdown::externShutdown( how, os, uid );
 			if (os)
 				free( os );
 			GSendInt( G_Ready );

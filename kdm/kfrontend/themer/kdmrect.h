@@ -19,10 +19,10 @@
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
-#ifndef KDMRECT_H
-#define KDMRECT_H
+#ifndef TDMRECT_H
+#define TDMRECT_H
 
-#include "kdmitem.h"
+#include "tdmitem.h"
 
 #include <tqcolor.h>
 #include <tqfont.h>
