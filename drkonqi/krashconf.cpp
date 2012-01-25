@@ -1,5 +1,5 @@
 /*****************************************************************
- * drkonqi - The KDE Crash Handler
+ * drkonqi - The TDE Crash Handler
  *
  * Copyright (C) 2000-2003 Hans Petter Bieker <bieker@kde.org>
  *

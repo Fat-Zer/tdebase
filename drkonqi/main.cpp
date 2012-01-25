@@ -1,5 +1,5 @@
 /*****************************************************************
- * drkonqi - The KDE Crash Handler
+ * drkonqi - The TDE Crash Handler
  *
  * Copyright (C) 2000-2003 Hans Petter Bieker <bieker@kde.org>
  *
@@ -40,7 +40,7 @@
 #include "toplevel.h"
 
 static const char version[] = "1.0";
-static const char description[] = I18N_NOOP( "KDE crash handler gives the user feedback if a program crashed" );
+static const char description[] = I18N_NOOP( "TDE crash handler gives the user feedback if a program crashed" );
 
 static const KCmdLineOptions options[] =
 {
@@ -69,11 +69,12 @@ int main( int argc, char* argv[] )
   unsetenv("SESSION_MANAGER");
 
   KAboutData aboutData( "drkonqi",
-                        I18N_NOOP("The KDE Crash Handler"),
+                        I18N_NOOP("The TDE Crash Handler"),
                         version,
                         description,
                         KAboutData::License_BSD,
-                        "(C) 2000-2003, Hans Petter Bieker");
+                        "(C) 2012, The Trinity Desktop Project");
+  aboutData.addAuthor("Timothy Pearson", 0, "kb9vqf@pearsoncomputing.net");
   aboutData.addAuthor("Hans Petter Bieker", 0, "bieker@kde.org");
 
   KCmdLineArgs::init(argc, argv, &aboutData);
