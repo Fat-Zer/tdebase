@@ -22,7 +22,7 @@
 
 #include <tqstringlist.h>
 
-#define FIFO_FILE "/tmp/ksocket-global/tsak"
+#define FIFO_FILE "/tmp/tdesocket-global/tsak"
 
 TQString exec(const char * cmd) {
 	FILE* pipe = popen(cmd, "r");

@@ -458,7 +458,7 @@ fi
 # Link "tmp" "socket" and "cache" resources to directory in /tmp
 # Creates:
 # - a directory /tmp/kde-$USER and links $TDEHOME/tmp-$HOSTNAME to it.
-# - a directory /tmp/ksocket-$USER and links $TDEHOME/socket-$HOSTNAME to it.
+# - a directory /tmp/tdesocket-$USER and links $TDEHOME/socket-$HOSTNAME to it.
 # - a directory /var/tmp/kdecache-$USER and links $TDEHOME/cache-$HOSTNAME to it.
 # Note: temporary locations can be overriden through the KDETMP and KDEVARTMP
 # environment variables.

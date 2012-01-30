@@ -73,9 +73,9 @@
 # define AF_LOCAL	AF_UNIX
 #endif
 
-#define FIFO_DIR "/tmp/ksocket-global/tdm"
-#define FIFO_FILE "/tmp/ksocket-global/tdm/tdmctl-%1"
-#define FIFO_SAK_FILE "/tmp/ksocket-global/tdm/tdmctl-sak-%1"
+#define FIFO_DIR "/tmp/tdesocket-global/tdm"
+#define FIFO_FILE "/tmp/tdesocket-global/tdm/tdmctl-%1"
+#define FIFO_SAK_FILE "/tmp/tdesocket-global/tdm/tdmctl-sak-%1"
 
 bool trinity_desktop_lock_use_system_modal_dialogs = TRUE;
 extern bool trinity_desktop_lock_use_sak;

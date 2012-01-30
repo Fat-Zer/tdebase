@@ -662,7 +662,7 @@ These are usually to be found in the following locations:</para>
 <listitem><para><filename>~/.kde/tmp-<replaceable>hostname</replaceable></filename> which is normally a symlink to the next file:</para></listitem>
 <listitem><para><filename>/tmp/tmp-kde-<replaceable>USER</replaceable></filename></para></listitem>
 <listitem><para><filename>~/.kde/socket-<replaceable>hostname</replaceable></filename> which is also normally a symlink to:</para></listitem>
-<listitem><para><filename>/tmp/ksocket-<replaceable>USER</replaceable></filename></para></listitem>
+<listitem><para><filename>/tmp/tdesocket-<replaceable>USER</replaceable></filename></para></listitem>
 </itemizedlist>
 
 <para>If the symlinks get broken, usually because a

@@ -86,9 +86,9 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 #include <X11/Xlib.h>
 
-#define FIFO_DIR "/tmp/ksocket-global/tdm"
-#define FIFO_FILE "/tmp/ksocket-global/tdm/tdmctl-%1"
-#define FIFO_SAK_FILE "/tmp/ksocket-global/tdm/tdmctl-sak-%1"
+#define FIFO_DIR "/tmp/tdesocket-global/tdm"
+#define FIFO_FILE "/tmp/tdesocket-global/tdm/tdmctl-%1"
+#define FIFO_SAK_FILE "/tmp/tdesocket-global/tdm/tdmctl-sak-%1"
 
 class UserListView : public KListView {
   public:

@@ -33,9 +33,9 @@ struct GreeterPluginHandle {
     kgreeterplugin_info *info;
 };
 
-#define FIFO_DIR "/tmp/ksocket-global"
-#define FIFO_FILE "/tmp/ksocket-global/kdesktoplockcontrol"
-#define FIFO_FILE_OUT "/tmp/ksocket-global/kdesktoplockcontrol_out"
+#define FIFO_DIR "/tmp/tdesocket-global"
+#define FIFO_FILE "/tmp/tdesocket-global/kdesktoplockcontrol"
+#define FIFO_FILE_OUT "/tmp/tdesocket-global/kdesktoplockcontrol_out"
 #define PIPE_CHECK_INTERVAL 50
 
 //===========================================================================

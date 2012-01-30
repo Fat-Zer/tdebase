@@ -38,9 +38,9 @@ License along with tsak. If not, see http://www.gnu.org/licenses/.
 #include <libudev.h>
 #include <libgen.h>
 
-#define FIFO_DIR "/tmp/ksocket-global"
-#define FIFO_FILE_OUT "/tmp/ksocket-global/tsak"
-#define FIFO_LOCKFILE_OUT "/tmp/ksocket-global/tsak.lock"
+#define FIFO_DIR "/tmp/tdesocket-global"
+#define FIFO_FILE_OUT "/tmp/tdesocket-global/tsak"
+#define FIFO_LOCKFILE_OUT "/tmp/tdesocket-global/tsak.lock"
 
 #define MAX_KEYBOARDS 64
 #define MAX_INPUT_NODE 128

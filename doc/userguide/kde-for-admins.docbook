@@ -420,7 +420,7 @@ the following symlinks and directories will be created using the
 <varlistentry>
 <term><filename>$<envar>TDEHOME</envar>/socket-$<envar>HOSTNAME</envar></filename></term>
 <listitem><para>Usually <filename
-class="directory">/tmp/ksocket-$<envar>USER</envar>/</filename>, this
+class="directory">/tmp/tdesocket-$<envar>USER</envar>/</filename>, this
 is used for various &UNIX; sockets.</para>
 </listitem>
 </varlistentry>
