@@ -122,7 +122,7 @@ void sanity_check( int argc, char* argv[] )
   }
   if (msg.isEmpty())
   {
-     path = getenv("KDETMP");
+     path = getenv("TDETMP");
      if (path.isEmpty())
         path = "/tmp";
      if (!writeTest(path))

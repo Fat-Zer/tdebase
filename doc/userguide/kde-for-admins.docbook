@@ -834,7 +834,7 @@ script:</para>
 
 <programlisting>
 LD_BIND_NOW=true tdeinit +kcminit +knotify and kwrapper
-ksmserver $KDEWM
+ksmserver $TDEWM
 </programlisting>
 
 <para>The first line starts the <command>tdeinit</command> master process.
@@ -1181,8 +1181,8 @@ class="username">root</systemitem>.</para>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>$<envar>KDEWM</envar></term><listitem><para>If the
-<envar>KDEWM</envar> environment variable has been set, then it will
+<varlistentry><term>$<envar>TDEWM</envar></term><listitem><para>If the
+<envar>TDEWM</envar> environment variable has been set, then it will
 be used as &kde;'s window manager within the
 <command>starttde</command> script instead of &twin;.</para>
 </listitem>
@@ -1254,14 +1254,14 @@ configuration cache file.</para>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>$<envar>KDETMP</envar></term><listitem><para>Allows
+<varlistentry><term>$<envar>TDETMP</envar></term><listitem><para>Allows
 to specify another path than <filename
 class="directory">/tmp</filename> where &kde; stores its temporary
 files.</para>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>$<envar>KDEVARTMP</envar></term><listitem><para>Allows
+<varlistentry><term>$<envar>TDEVARTMP</envar></term><listitem><para>Allows
 to specify another path than <filename
 class="directory">/var/tmp</filename> where &kde; stores its variable
 files.</para>
