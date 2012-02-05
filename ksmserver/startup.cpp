@@ -180,7 +180,15 @@ void KSMServer::startDefaultSession()
                        "autoStart1Done()", true);
     connectDCOPSignal( launcher, launcher, "autoStart2Done()",
                        "autoStart2Done()", true);
-    startApplication( wm );
+    if (!wmAddArgs.isEmpty()) {
+        TQStringList wmstartupcommand;
+        wmstartupcommand.split(" ", wmAddArgs);
+        wmstartupcommand.prepend(wm);
+        startApplication( wmstartupcommand );
+    }
+    else {
+        startApplication( wm );
+    }
     if ((showFancyLogin) && (!startupNotifierIPDlg)) {
         startupNotifierIPDlg = KSMStartupIPDlg::showStartupIP();
     }

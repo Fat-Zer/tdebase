@@ -58,7 +58,7 @@ k_dcop:
     void kcmPhase1Done();
     void kcmPhase2Done();
 public:
-    KSMServer( const TQString& windowManager, bool only_local );
+    KSMServer( const TQString& windowManager, const TQString& windowManagerAddArgs, bool only_local );
     ~KSMServer();
 
     static KSMServer* self();
@@ -203,6 +203,7 @@ private:
     bool clean;
     KSMClient* clientInteracting;
     TQString wm;
+    TQString wmAddArgs;
     TQString sessionGroup;
     TQString sessionName;
     TQCString launcher;

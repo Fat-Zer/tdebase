@@ -157,6 +157,7 @@ set( CMAKE_MODULE_LINKER_FLAGS "-Wl,--no-undefined" )
 ##### tdebase directories #######################
 
 add_subdirectory( tdmlib )
+add_subdirectory( tdeinit )
 
 tde_conditional_add_subdirectory( BUILD_L10N l10n )
 tde_conditional_add_subdirectory( BUILD_PICS pics )

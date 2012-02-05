@@ -35,6 +35,7 @@ static const KCmdLineOptions options[] =
    { "restore", I18N_NOOP("Restores the saved user session if available"), 0},
    { "w", 0, 0 },
    { "windowmanager <wm>", I18N_NOOP("Starts 'wm' in case no other window manager is \nparticipating in the session. Default is 'twin'"), 0},
+   { "windowmanageraddargs <wm>", I18N_NOOP("Pass additional arguments to the window manager. Default is ''"), 0},
    { "nolocal", I18N_NOOP("Also allow remote connections"), 0},
    KCmdLineLastOption
 };
@@ -203,6 +204,7 @@ extern "C" KDE_EXPORT int kdemain( int argc, char* argv[] )
     }
 
     TQCString wm = args->getOption("windowmanager");
+    TQCString wmaddargs = args->getOption("windowmanageraddargs");
     if ( wm.isEmpty() )
 	wm = "twin";
 
@@ -218,7 +220,7 @@ extern "C" KDE_EXPORT int kdemain( int argc, char* argv[] )
     only_local = false;
 #endif
 
-    KSMServer *server = new KSMServer( TQString::fromLatin1(wm), only_local);
+    KSMServer *server = new KSMServer( TQString::fromLatin1(wm), TQString::fromLatin1(wmaddargs), only_local);
     kapp->dcopClient()->setDefaultObject( server->objId() );
 
     IceSetIOErrorHandler( IoErrorHandler );

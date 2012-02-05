@@ -578,12 +578,13 @@ static Status KSMNewClientProc ( SmsConn conn, SmPointer manager_data,
 extern "C" int _IceTransNoListen(const char * protocol);
 #endif
 
-KSMServer::KSMServer( const TQString& windowManager, bool _only_local )
+KSMServer::KSMServer( const TQString& windowManager, const TQString& windowManagerAddArgs, bool _only_local )
   : DCOPObject("ksmserver"), sessionGroup( "" ), startupNotifierIPDlg(0), shutdownNotifierIPDlg(0)
 {
     the_server = this;
     clean = false;
     wm = windowManager;
+    wmAddArgs = windowManagerAddArgs;
 
     shutdownType = KApplication::ShutdownTypeNone;
 
