@@ -151,7 +151,7 @@ KWinDecorationModule::KWinDecorationModule(TQWidget* parent, const char* name, c
 	TQVBoxLayout* previewLayout = new TQVBoxLayout(layout, KDialog::spacingHint() );
 	previewLayout->setMargin( KDialog::marginHint() );
 
-	disabledNotice = new TQLabel("<b>" + i18n("NOTICE") + "</b><br>" + i18n("A third party Window Manager has been selected for use with TDE.") + "<br>" + i18n("As a result, the built-in Window Manager configuration system will not function and has been disabled."), this);
+	disabledNotice = new TQLabel("<b>" + i18n("NOTICE:") + "</b><br>" + i18n("A third party Window Manager has been selected for use with TDE.") + "<br>" + i18n("As a result, the built-in Window Manager configuration system will not function and has been disabled."), this);
 	previewLayout->addWidget(disabledNotice);
 	disabledNotice->hide();
 
@@ -756,7 +756,12 @@ void KWinDecorationModule::readConfig( KConfig* conf )
 			break;
 		}
 	}
-	thirdpartyWMList->setCurrentItem(swm);
+	if (found == FALSE) {
+		thirdpartyWMList->setCurrentItem(0);
+	}
+	else {
+		thirdpartyWMList->setCurrentItem(swm);
+	}
 	thirdpartyWMArguments->setText(wmArguments);
 
 	processEnabledDisabledTabs();
