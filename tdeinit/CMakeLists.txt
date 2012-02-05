@@ -23,6 +23,6 @@ link_directories(
 
 tde_add_executable( tdeinit_phase1
   SOURCES phase1.cpp
-  LINK udev
+  LINK tdecore-shared
   DESTINATION ${BIN_INSTALL_DIR}
 )

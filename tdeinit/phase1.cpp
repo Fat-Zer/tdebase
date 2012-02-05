@@ -24,6 +24,7 @@
 #include <kapplication.h>
 #include <kaboutdata.h>
 #include <kcmdlineargs.h>
+#include <kstandarddirs.h>
 #include <klocale.h>
 #include <kdebug.h>
 #include <kconfig.h>
