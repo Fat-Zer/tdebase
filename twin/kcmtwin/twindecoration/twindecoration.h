@@ -34,6 +34,7 @@
 #include <dcopobject.h>
 #include <buttons.h>
 #include <kconfig.h>
+#include <klineedit.h>
 #include <klibloader.h>
 
 #include <kdecoration.h>
@@ -91,7 +92,9 @@ class KWinDecorationModule : public KCModule, virtual public KWinDecorationIface
 		void writeConfig( KConfig* conf );
 		void findDecorations();
 		void createDecorationList();
+		void createThirdPartyWMList();
 		void updateSelection();
+		void processEnabledDisabledTabs();
 		TQString decorationLibName( const TQString& name );
 		TQString decorationName ( TQString& libName );
 		static TQString styleToConfigLib( TQString& styleLib );
@@ -103,9 +106,14 @@ class KWinDecorationModule : public KCModule, virtual public KWinDecorationIface
 
 		TQTabWidget* tabWidget;
 
+		TQWidget* pluginPage;
+		TQWidget* buttonPage;
+		TQWidget* windowmanagerPage;
+
 		// Page 1
 		KComboBox* decorationList;
 		TQValueList<DecorationInfo> decorations;
+		TQLabel* disabledNotice;
 
 		KDecorationPreview* preview;
 		KDecorationPlugins* plugins;
@@ -126,7 +134,6 @@ class KWinDecorationModule : public KCModule, virtual public KWinDecorationIface
 
 		// Page 2
 		ButtonPositionWidget *buttonPositionWidget;
-		TQVBox*	 buttonPage;
 
 		// Page 3
 		TQVBox *shadowPage;
@@ -140,6 +147,10 @@ class KWinDecorationModule : public KCModule, virtual public KWinDecorationIface
 		TQSpinBox *inactiveShadowXOffsetSpinBox, *shadowXOffsetSpinBox;
 		TQSpinBox *inactiveShadowYOffsetSpinBox, *shadowYOffsetSpinBox;
 		TQSpinBox *inactiveShadowThicknessSpinBox, *shadowThicknessSpinBox;
+
+		// Page 4
+		KComboBox* thirdpartyWMList;
+		KLineEdit* thirdpartyWMArguments;
 };
 
 

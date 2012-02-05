@@ -85,7 +85,7 @@ KWinDecorationModule::KWinDecorationModule(TQWidget* parent, const char* name, c
 	layout->addWidget( tabWidget );
 
 	// Page 1 (General Options)
-	TQWidget *pluginPage = new TQWidget( tabWidget );
+	pluginPage = new TQWidget( tabWidget );
 
 	TQVBoxLayout* pluginLayout = new TQVBoxLayout(pluginPage, KDialog::marginHint(), KDialog::spacingHint());
 
@@ -121,7 +121,7 @@ KWinDecorationModule::KWinDecorationModule(TQWidget* parent, const char* name, c
 	pluginSettingsGrp->layout()->add( pluginConfigWidget );
 
 	// Page 2 (Button Selector)
-	TQWidget* buttonPage = new TQWidget( tabWidget );
+	buttonPage = new TQWidget( tabWidget );
 	TQVBoxLayout* buttonLayout = new TQVBoxLayout(buttonPage, KDialog::marginHint(), KDialog::spacingHint());
 
 	cbShowToolTips = new TQCheckBox(
@@ -150,6 +150,10 @@ KWinDecorationModule::KWinDecorationModule(TQWidget* parent, const char* name, c
 	// preview
 	TQVBoxLayout* previewLayout = new TQVBoxLayout(layout, KDialog::spacingHint() );
 	previewLayout->setMargin( KDialog::marginHint() );
+
+	disabledNotice = new TQLabel("<b>" + i18n("NOTICE") + "</b><br>" + i18n("A third party Window Manager has been selected for use with TDE.") + "<br>" + i18n("As a result, the built-in Window Manager configuration system will not function and has been disabled."), this);
+	previewLayout->addWidget(disabledNotice);
+	disabledNotice->hide();
 
 	preview = new KDecorationPreview( this );
 	previewLayout->addWidget(preview);
@@ -315,16 +319,40 @@ KWinDecorationModule::KWinDecorationModule(TQWidget* parent, const char* name, c
 	connect(inactiveShadowThicknessSpinBox, TQT_SIGNAL(valueChanged(int)),
 			TQT_SLOT(slotSelectionChanged()));
 
+	// Page 4 (WM selector)
+	windowmanagerPage = new TQWidget( tabWidget );
+
+	TQVBoxLayout* windowmanagerLayout = new TQVBoxLayout(windowmanagerPage, KDialog::marginHint(), KDialog::spacingHint());
+
+	// WM chooser
+	thirdpartyWMList = new KComboBox( windowmanagerPage );
+	whatsThis = i18n("Select the window manager. Selecting a window manager "
+                             "other than \"twin\" will require you to use a third party program for configuration and may increase the risk of system crashes or security problems.");
+	TQWhatsThis::add(thirdpartyWMList, whatsThis);
+	TQLabel* thirdpartyWMLabel = new TQLabel(i18n("Window Manager to use in your TDE session:"), windowmanagerPage);
+	windowmanagerLayout->addWidget(thirdpartyWMLabel);
+	windowmanagerLayout->addWidget(thirdpartyWMList);
+	thirdpartyWMArguments = new KLineEdit( windowmanagerPage );
+	whatsThis = i18n("Specify any command line arguments to be passed to the selected WM on startup.  A common example is --replace");
+	TQWhatsThis::add(thirdpartyWMArguments, whatsThis);
+	TQLabel* thirdpartyWMArgumentsLabel = new TQLabel(i18n("Command line arguments to pass to the Window Manager (should remain blank unless needed):"), windowmanagerPage);
+	windowmanagerLayout->addWidget(thirdpartyWMArgumentsLabel);
+	windowmanagerLayout->addWidget(thirdpartyWMArguments);
+
+	windowmanagerLayout->addStretch();
+
 	// Load all installed decorations into memory
 	// Set up the decoration lists and other UI settings
 	findDecorations();
 	createDecorationList();
+	createThirdPartyWMList();
 	readConfig( &twinConfig );
 	resetPlugin( &twinConfig );
 
 	tabWidget->insertTab( pluginPage, i18n("&Window Decoration") );
 	tabWidget->insertTab( buttonPage, i18n("&Buttons") );
 	tabWidget->insertTab( shadowPage, i18n("&Shadows") );
+	tabWidget->insertTab( windowmanagerPage, i18n("&Window Manager") );
 
 	connect( buttonPositionWidget, TQT_SIGNAL(changed()), this, TQT_SLOT(slotButtonsChanged()) ); // update preview etc.
 	connect( buttonPositionWidget, TQT_SIGNAL(changed()), this, TQT_SLOT(slotSelectionChanged()) ); // emit changed()...
@@ -342,6 +370,9 @@ KWinDecorationModule::KWinDecorationModule(TQWidget* parent, const char* name, c
 	connect( cbWindowShadow, TQT_SIGNAL(clicked()), TQT_SLOT(slotSelectionChanged()) );
 	connect( cBorder, TQT_SIGNAL( activated( int )), TQT_SLOT( slotBorderChanged( int )));
 //	connect( cbUseMiniWindows, TQT_SIGNAL(clicked()), TQT_SLOT(slotSelectionChanged()) );
+
+	connect( thirdpartyWMList, TQT_SIGNAL(activated(const TQString&)), TQT_SLOT(slotSelectionChanged()) );
+	connect( thirdpartyWMArguments, TQT_SIGNAL(textChanged(const TQString&)), TQT_SLOT(slotSelectionChanged()) );
 
 	// Allow twin dcop signal to update our selection list
 	connectDCOPSignal("twin", 0, "dcopResetAllClients()", "dcopUpdateClientList()", false);
@@ -412,6 +443,36 @@ void KWinDecorationModule::createDecorationList()
 }
 
 
+// Fills the thirdpartyWMList with a list of available window managers
+void KWinDecorationModule::createThirdPartyWMList()
+{
+	TQStringList::Iterator it;
+
+	// FIXME
+	// This list SHOULD NOT be hard coded
+	// It should detect the available WMs through a standard mechanism of some sort
+	TQString wmExecutable;
+    TQStringList wmNames;
+    TQStringList wmAvailableNames;
+    wmNames << TQString("kwin ").append(i18n("(KDE4's window manager)")) << TQString("compiz ").append(i18n("(Compiz Effects Manager)")) << TQString("icewm ").append(i18n("(Simple, fast window manager)"));
+    wmNames.sort();
+	wmNames.prepend(TQString("twin ").append(i18n("(Default TDE window manager)")));
+	for (it = wmNames.begin(); it != wmNames.end(); ++it)
+	{
+		wmExecutable = *it;
+		int descStart = wmExecutable.find(" ");
+		if (descStart >= 0) {
+			wmExecutable.truncate(descStart);
+		}
+		if (KStandardDirs::findExe(wmExecutable) != TQString::null) {
+			wmAvailableNames.append(*it);
+		}
+	}
+
+    thirdpartyWMList->insertStringList(wmAvailableNames);
+}
+
+
 // Reset the decoration plugin to what the user just selected
 void KWinDecorationModule::slotChangeDecoration( const TQString & text)
 {
@@ -427,6 +488,32 @@ void KWinDecorationModule::slotChangeDecoration( const TQString & text)
 void KWinDecorationModule::slotSelectionChanged()
 {
 	emit KCModule::changed(true);
+
+	processEnabledDisabledTabs();
+}
+
+// Handle WM selection-related disable/enable of tabs
+void KWinDecorationModule::processEnabledDisabledTabs()
+{
+	TQString wmExecutableName = thirdpartyWMList->currentText();
+	int descStart = wmExecutableName.find(" ");
+	if (descStart >= 0) {
+		wmExecutableName.truncate(descStart);
+	}
+	if (wmExecutableName == "twin") {
+		pluginPage->setEnabled(true);
+		buttonPage->setEnabled(true);
+		shadowPage->setEnabled(true);
+		disabledNotice->hide();
+		preview->show();
+	}
+	else {
+		pluginPage->setEnabled(false);
+		buttonPage->setEnabled(false);
+		shadowPage->setEnabled(false);
+		disabledNotice->show();
+		preview->hide();
+	}
 }
 
 static const char* const border_names[ KDecorationDefines::BordersCount ] =
@@ -655,6 +742,25 @@ void KWinDecorationModule::readConfig( KConfig* conf )
  	inactiveShadowYOffsetSpinBox->setValue(conf->readNumEntry("InactiveShadowYOffset", 5));
  	inactiveShadowThicknessSpinBox->setValue(conf->readNumEntry("InactiveShadowThickness", 5));
 
+	// Third party WM
+	// ==============
+	conf->setGroup("ThirdPartyWM");
+	TQString selectedWM = conf->readEntry("WMExecutable", "twin");
+	TQString wmArguments = conf->readEntry("WMAdditionalArguments", "");
+
+	bool found;
+	int swm;
+	for ( swm = 0; swm < thirdpartyWMList->count(); ++swm ) {
+		if ( thirdpartyWMList->text( swm ).startsWith(selectedWM + " ") ) {
+			found = TRUE;
+			break;
+		}
+	}
+	thirdpartyWMList->setCurrentItem(swm);
+	thirdpartyWMArguments->setText(wmArguments);
+
+	processEnabledDisabledTabs();
+
 	emit KCModule::changed(false);
 }
 
@@ -699,6 +805,15 @@ void KWinDecorationModule::writeConfig( KConfig* conf )
 			inactiveShadowYOffsetSpinBox->value());
 	conf->writeEntry("InactiveShadowThickness",
 			inactiveShadowThicknessSpinBox->value());
+
+	conf->setGroup("ThirdPartyWM");
+	TQString wmExecutableName = thirdpartyWMList->currentText();
+	int descStart = wmExecutableName.find(" ");
+	if (descStart >= 0) {
+		wmExecutableName.truncate(descStart);
+	}
+	conf->writeEntry("WMExecutable", wmExecutableName);
+	conf->writeEntry("WMAdditionalArguments", thirdpartyWMArguments->text());
 
 	oldLibraryName = currentLibraryName;
 	currentLibraryName = libName;
