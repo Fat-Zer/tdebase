@@ -70,5 +70,5 @@ Comment[zh_CN]=字体包
 Comment[zh_TW]=字型套件
 
 [Property::X-KDE-LocalProtocol]
-Type=QString
+Type=TQString
 Value=tar

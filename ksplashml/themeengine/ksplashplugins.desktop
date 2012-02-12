@@ -3,10 +3,10 @@ Type=ServiceType
 X-KDE-ServiceType=KSplash/Plugin
 
 [PropertyDef::X-KSplash-PluginName]
-Type=QString
+Type=TQString
 
 [PropertyDef::X-KSplash-ObjectName]
-Type=QString
+Type=TQString
 
 [PropertyDef::X-KSplash-Default]
 Type=bool

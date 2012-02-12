@@ -77,7 +77,7 @@ Comment[zh_TW]=縮圖處理器
 Comment[zu]=Umphathi we-Thumbnail
 
 [PropertyDef::MimeTypes]
-Type=QStringList
+Type=TQStringList
 
 [PropertyDef::CacheThumbnail]
 Type=bool

@@ -83,7 +83,7 @@ Comment[zh_TW]=Kate 外掛程式
 Comment[zu]=I-Plugin ye-Kate
 
 [PropertyDef::X-Kate-Version]
-Type=QString
+Type=TQString
 
 [PropertyDef::X-Kate-PluginName]
-Type=QString
+Type=TQString

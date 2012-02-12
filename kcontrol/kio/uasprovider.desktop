@@ -77,22 +77,22 @@ Comment[zh_TW]=使用者代理字串設定
 Comment[zu]=Iqoqo lamagama lommeli womsebenzisi
 
 [PropertyDef::X-KDE-UA-TAG]
-Type=QString
+Type=TQString
 
 [PropertyDef::X-KDE-UA-FULL]
-Type=QString
+Type=TQString
 
 [PropertyDef::X-KDE-UA-NAME]
-Type=QString
+Type=TQString
 
 [PropertyDef::X-KDE-UA-VERSION]
-Type=QString
+Type=TQString
 
 [PropertyDef::X-KDE-UA-SYSNAME]
-Type=QString
+Type=TQString
 
 [PropertyDef::X-KDE-UA-SYSRELEASE]
-Type=QString
+Type=TQString
 
 [PropertyDef::X-KDE-UA-DYNAMIC-ENTRY]
 Type=bool
