@@ -1,6 +1,6 @@
 #################################################
 #
-#  (C) 2010-2011 Serghei Amelian
+#  (C) 2010-2012 Serghei Amelian
 #  serghei (DOT) amelian (AT) gmail.com
 #
 #  Improvements and feedback are welcome
@@ -15,7 +15,7 @@ cmake_minimum_required( VERSION 2.8 )
 project( tdebase )
 
 set( PACKAGE tdebase )
-set( VERSION "3.5.13" )
+set( VERSION "R14" )
 
 
 ##### include essential cmake modules ###########
@@ -83,6 +83,7 @@ option( WITH_GCC_VISIBILITY "Enable fvisibility and fvisibility-inlines-hidden" 
 ##### user requested modules ####################
 
 option( BUILD_ALL "Build all" OFF )
+option( BUILD_TDEINIT "Build tdeinit" ${BUILD_ALL} )
 option( BUILD_L10N "Build l10n" ${BUILD_ALL} )
 option( BUILD_PICS "Build pics" ${BUILD_ALL} )
 option( BUILD_APPLNK "Build applnk" ${BUILD_ALL} )
@@ -157,8 +158,8 @@ set( CMAKE_MODULE_LINKER_FLAGS "-Wl,--no-undefined" )
 ##### tdebase directories #######################
 
 add_subdirectory( tdmlib )
-add_subdirectory( tdeinit )
 
+tde_conditional_add_subdirectory( BUILD_TDEINIT tdeinit )
 tde_conditional_add_subdirectory( BUILD_L10N l10n )
 tde_conditional_add_subdirectory( BUILD_PICS pics )
 tde_conditional_add_subdirectory( BUILD_APPLNK applnk )
