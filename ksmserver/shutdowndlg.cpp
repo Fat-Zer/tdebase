@@ -1,11 +1,20 @@
 /*****************************************************************
 ksmserver - the KDE session management server
 
+Copyright (C) 2012 Serghei Amelian <serghei.amelian@gmail.com>
 Copyright (C) 2010 Timothy Pearson <kb9vqf@pearsoncomputing.net>
 Copyright (C) 2000 Matthias Ettrich <ettrich@kde.org>
 ******************************************************************/
 
 #include "shutdowndlg.h"
+
+#ifdef WITH_UPOWER
+	#include <tqdbusdata.h>
+	#include <tqdbusmessage.h>
+	#include <tqdbusproxy.h>
+	#include <tqdbusvariant.h>
+#endif
+
 #include <tqapplication.h>
 #include <tqlayout.h>
 #include <tqgroupbox.h>
@@ -76,42 +85,42 @@ KSMShutdownFeedback::KSMShutdownFeedback()
    m_greyImageCreated( FALSE )
 
 {
-    if (kapp->isX11CompositionAvailable()) {
-        m_grayImage = TQImage( TQApplication::desktop()->width(), TQApplication::desktop()->height(), 32 );
-        m_grayImage = m_grayImage.convertDepth(32);
-        m_grayImage.setAlphaBuffer(false);
-        m_grayImage.fill(0);	// Set the alpha buffer to 0 (fully transparent)
-        m_grayImage.setAlphaBuffer(true);
-    }
-    else {
-        // The hacks below aren't needed any more because Qt3 supports true transparency for the fading logout screen when composition is available
-        DCOPRef("kicker", "KMenu").call("hideMenu");	// Make sure the K Menu is completely removed from the screen before taking a snapshot...
-        m_grayImage = TQPixmap(TQPixmap::grabWindow(qt_xrootwin(), 0, 0, TQApplication::desktop()->width(), TQApplication::desktop()->height())).convertToImage();
-    }
-    m_unfadedImage = m_grayImage;
-    resize(0, 0);
-    setShown(true);
-    TQTimer::singleShot( 500, this, TQT_SLOT( slotPaintEffect() ) );
+	if (kapp->isX11CompositionAvailable()) {
+		m_grayImage = TQImage( TQApplication::desktop()->width(), TQApplication::desktop()->height(), 32 );
+		m_grayImage = m_grayImage.convertDepth(32);
+		m_grayImage.setAlphaBuffer(false);
+		m_grayImage.fill(0);	// Set the alpha buffer to 0 (fully transparent)
+		m_grayImage.setAlphaBuffer(true);
+	}
+	else {
+		// The hacks below aren't needed any more because Qt3 supports true transparency for the fading logout screen when composition is available
+		DCOPRef("kicker", "KMenu").call("hideMenu");	// Make sure the K Menu is completely removed from the screen before taking a snapshot...
+		m_grayImage = TQPixmap(TQPixmap::grabWindow(qt_xrootwin(), 0, 0, TQApplication::desktop()->width(), TQApplication::desktop()->height())).convertToImage();
+	}
+	m_unfadedImage = m_grayImage;
+	resize(0, 0);
+	setShown(true);
+	TQTimer::singleShot( 500, this, TQT_SLOT( slotPaintEffect() ) );
 }
 
 // called after stopping shutdown-feedback -> smooth fade-back to color-mode
 void KSMShutdownFeedback::fadeBack( void )
 {
-    m_fadeTime.restart();
-    m_fadeBackwards = TRUE;
-    // its possible that we have to fade back, before all is completely gray, so we cannot start
-    // with completely gray when fading back...
-    m_compensation = 1.0f - m_grayOpacity;
-    // wait until we're completely back in color-mode...
-    while ( m_grayOpacity > 0.0f )
-    	    slotPaintEffect();
+	m_fadeTime.restart();
+	m_fadeBackwards = TRUE;
+	// its possible that we have to fade back, before all is completely gray, so we cannot start
+	// with completely gray when fading back...
+	m_compensation = 1.0f - m_grayOpacity;
+	// wait until we're completely back in color-mode...
+	while ( m_grayOpacity > 0.0f )
+			slotPaintEffect();
 }
 
 void KSMShutdownFeedback::slotPaintEffect()
 {
-    // determine which fade to use
+	// determine which fade to use
    if (KConfigGroup(KGlobal::config(), "Logout").readBoolEntry("doFancyLogout", true))
-    {
+	{
 
 	float doFancyLogoutAdditionalDarkness  = (float)KConfigGroup(KGlobal::config(), "Logout").readDoubleNumEntry("doFancyLogoutAdditionalDarkness", 0.6);
 
@@ -132,10 +141,10 @@ void KSMShutdownFeedback::slotPaintEffect()
 			m_root.resize( width(), height() );
 			TQImage blendedImage = m_grayImage;
 			TQPainter p;
-                        p.begin( &m_root );
-                        blendedImage.setAlphaBuffer(false);
-                        p.drawImage( 0, 0, blendedImage );
-                        p.end();
+						p.begin( &m_root );
+						blendedImage.setAlphaBuffer(false);
+						p.drawImage( 0, 0, blendedImage );
+						p.end();
 
 			setBackgroundPixmap( m_root );
 			setGeometry( TQApplication::desktop()->geometry() );
@@ -264,12 +273,12 @@ void KSMShutdownFeedback::slotPaintEffect()
 			m_fadeTime.start();
 			m_rowsDone = 0;
 		}
-		
+
 		// return if fading is completely done...
 		if ( ( m_grayOpacity >= 1.0f && m_fadeBackwards == FALSE ) || ( m_grayOpacity <= 0.0f && m_fadeBackwards == TRUE ) )
 			return;
-		
-		
+
+
 		if ( m_fadeBackwards == FALSE )
 		{
 			m_grayOpacity = m_fadeTime.elapsed() / doFancyLogoutFadeTime;
@@ -282,21 +291,21 @@ void KSMShutdownFeedback::slotPaintEffect()
 			if ( m_grayOpacity < 0.0f )
 			m_grayOpacity = 0.0f;
 		}
-		
+
 		const int imgWidth = m_unfadedImage.width();
 		int imgHeight = m_unfadedImage.height();
 		int heightUnit = imgHeight / 3;
 		if( heightUnit < 1 )
 			heightUnit = 1;
-	
+
 		int y1 = static_cast<int>( imgHeight*m_grayOpacity - heightUnit + m_grayOpacity*heightUnit*2.0f );
 		if( y1 > imgHeight )
 			y1 = imgHeight;
-		
+
 		int y2 = y1+heightUnit;
 		if( y2 > imgHeight )
 			y2 = imgHeight;
-		
+
 		if( m_fadeBackwards == FALSE )
 		{
 			if( y1 > 0 && y1 < imgHeight && y1-m_rowsDone > 0 && m_rowsDone < imgHeight )
@@ -325,7 +334,7 @@ void KSMShutdownFeedback::slotPaintEffect()
 				m_rowsDone = y2;
 			}
 		}
-		
+
 		int start_y1 = y1;
 		if( start_y1 < 0 )
 			start_y1 = 0;
@@ -362,11 +371,11 @@ void KSMShutdownFeedback::slotPaintEffect()
 		TQTimer::singleShot( 5, this, TQT_SLOT( slotPaintEffect() ) );
 	}
 
-    }
-    // standard logout fade
-    else
-    {
-         if (kapp->isX11CompositionAvailable()) {
+	}
+	// standard logout fade
+	else
+	{
+		 if (kapp->isX11CompositionAvailable()) {
 		// We can do this in a different (simpler) manner because we have compositing support!
 		// The end effect will be very similar to the old style logout
 		float doFancyLogoutFadeTime = 1000;
@@ -402,12 +411,12 @@ void KSMShutdownFeedback::slotPaintEffect()
 			m_fadeTime.start();
 			m_rowsDone = 0;
 		}
-		
+
 		// return if fading is completely done...
 		if ( ( m_grayOpacity >= 1.0f && m_fadeBackwards == FALSE ) || ( m_grayOpacity <= 0.0f && m_fadeBackwards == TRUE ) )
 			return;
-		
-		
+
+
 		if ( m_fadeBackwards == FALSE )
 		{
 			m_grayOpacity = m_fadeTime.elapsed() / doFancyLogoutFadeTime;
@@ -420,21 +429,21 @@ void KSMShutdownFeedback::slotPaintEffect()
 			if ( m_grayOpacity < 0.0f )
 			m_grayOpacity = 0.0f;
 		}
-		
+
 		const int imgWidth = m_unfadedImage.width();
 		int imgHeight = m_unfadedImage.height();
 		int heightUnit = imgHeight / 3;
 		if( heightUnit < 1 )
 			heightUnit = 1;
-	
+
 		int y1 = static_cast<int>( imgHeight*m_grayOpacity - heightUnit + m_grayOpacity*heightUnit*2.0f );
 		if( y1 > imgHeight )
 			y1 = imgHeight;
-		
+
 		int y2 = y1+heightUnit;
 		if( y2 > imgHeight )
 			y2 = imgHeight;
-		
+
 		if( m_fadeBackwards == FALSE )
 		{
 			if( y1 > 0 && y1 < imgHeight && y1-m_rowsDone > 0 && m_rowsDone < imgHeight )
@@ -479,35 +488,35 @@ void KSMShutdownFeedback::slotPaintEffect()
 		}
 
 		TQTimer::singleShot( 1, this, TQT_SLOT( slotPaintEffect() ) );
-         }
-         else {
-	    if ( m_currentY >= height() ) {
-	        if ( backgroundMode() == TQWidget::NoBackground ) {
-	            setBackgroundMode( TQWidget::NoBackground );
-	            setBackgroundPixmap( m_root );
-	        }
-	        return;
-	    }
+		 }
+		 else {
+		if ( m_currentY >= height() ) {
+			if ( backgroundMode() == TQWidget::NoBackground ) {
+				setBackgroundMode( TQWidget::NoBackground );
+				setBackgroundPixmap( m_root );
+			}
+			return;
+		}
 
-	    if ( m_currentY == 0 ) {
+		if ( m_currentY == 0 ) {
 		KPixmap pixmap;
 		pixmap = TQPixmap(TQPixmap::grabWindow( qt_xrootwin(), 0, 0, width(), height() ));
 		bitBlt( this, 0, 0, &pixmap );
 		bitBlt( &m_root, 0, 0, &pixmap );
-	    }
+		}
 
-	    KPixmap pixmap;
-	    pixmap = TQPixmap(TQPixmap::grabWindow( qt_xrootwin(), 0, m_currentY, width(), 10 ));
-	    TQImage image = pixmap.convertToImage();
-	    KImageEffect::blend( Qt::black, image, 0.4 );
-	    KImageEffect::toGray( image, true );
-	    pixmap.convertFromImage( image );
-	    bitBlt( this, 0, m_currentY, &pixmap );
-	    bitBlt( &m_root, 0, m_currentY, &pixmap );
-	    m_currentY += 10;
-	    TQTimer::singleShot( 1, this, TQT_SLOT( slotPaintEffect() ) );
-        }
-    }
+		KPixmap pixmap;
+		pixmap = TQPixmap(TQPixmap::grabWindow( qt_xrootwin(), 0, m_currentY, width(), 10 ));
+		TQImage image = pixmap.convertToImage();
+		KImageEffect::blend( Qt::black, image, 0.4 );
+		KImageEffect::toGray( image, true );
+		pixmap.convertFromImage( image );
+		bitBlt( this, 0, m_currentY, &pixmap );
+		bitBlt( &m_root, 0, m_currentY, &pixmap );
+		m_currentY += 10;
+		TQTimer::singleShot( 1, this, TQT_SLOT( slotPaintEffect() ) );
+		}
+	}
 
 }
 
@@ -530,7 +539,7 @@ KSMShutdownIPFeedback::KSMShutdownIPFeedback()
 		filename.prepend("/tmp/kde-");
 		filename.append("/krootbacking.png");
 		remove(filename.ascii());
-		system("krootbacking &"); 
+		system("krootbacking &");
 	}
 
 	// eliminate nasty flicker on first show
@@ -639,33 +648,33 @@ void KSMShutdownIPFeedback::slotPaintEffect()
 //////
 
 KSMShutdownDlg::KSMShutdownDlg( TQWidget* parent,
-                                bool maysd, KApplication::ShutdownType sdtype )
+								bool maysd, KApplication::ShutdownType sdtype )
   : TQDialog( parent, 0, TRUE, (WFlags)WType_Popup ), targets(0)
-    // this is a WType_Popup on purpose. Do not change that! Not
-    // having a popup here has severe side effects.
+	// this is a WType_Popup on purpose. Do not change that! Not
+	// having a popup here has severe side effects.
 
 {
-    TQVBoxLayout* vbox = new TQVBoxLayout( this );
+	TQVBoxLayout* vbox = new TQVBoxLayout( this );
 
 
-    TQFrame* frame = new TQFrame( this );
-    frame->setFrameStyle( TQFrame::StyledPanel | TQFrame::Raised );
-    frame->setLineWidth( style().pixelMetric( TQStyle::PM_DefaultFrameWidth, frame ) );
+	TQFrame* frame = new TQFrame( this );
+	frame->setFrameStyle( TQFrame::StyledPanel | TQFrame::Raised );
+	frame->setLineWidth( style().pixelMetric( TQStyle::PM_DefaultFrameWidth, frame ) );
 	// we need to set the minimum size for the logout box, since it
 	// gets too small if there isn't all options available
 	frame->setMinimumWidth(400);
-    vbox->addWidget( frame );
-    vbox = new TQVBoxLayout( frame, 2 * KDialog::marginHint(),
-                            2 * KDialog::spacingHint() );
+	vbox->addWidget( frame );
+	vbox = new TQVBoxLayout( frame, 2 * KDialog::marginHint(),
+							2 * KDialog::spacingHint() );
 
 	// default factor
-	bool doUbuntuLogout = KConfigGroup(KGlobal::config(), "Logout").readBoolEntry("doUbuntuLogout", false);	
+	bool doUbuntuLogout = KConfigGroup(KGlobal::config(), "Logout").readBoolEntry("doUbuntuLogout", false);
 
-	// slighty more space for the new logout    
+	// slighty more space for the new logout
 	int factor = 2;
 
-	if(doUbuntuLogout) 
-	{ 	
+	if(doUbuntuLogout)
+	{
 		factor = 8;
 	}
 	else {
@@ -721,20 +730,21 @@ KSMShutdownDlg::KSMShutdownDlg( TQWidget* parent,
 		buttonlay->addStretch( 1 );
 		// End session
 		KPushButton* btnLogout = new KPushButton( KGuiItem( i18n("&End Current Session"), "undo"), frame );
-                TQToolTip::add( btnLogout, i18n( "<qt><h3>End Current Session</h3><p>Log out of the current session to login with a different user</p></qt>" ) );
+				TQToolTip::add( btnLogout, i18n( "<qt><h3>End Current Session</h3><p>Log out of the current session to login with a different user</p></qt>" ) );
 		btnFont = btnLogout->font();
 		buttonlay->addWidget( btnLogout );
 		connect(btnLogout, TQT_SIGNAL(clicked()), TQT_SLOT(slotLogout()));
 	}
 
-	
+#ifndef WITH_UPOWER
 #ifdef COMPILE_HALBACKEND
 	m_halCtx = NULL;
 #endif
+#endif // WITH_UPOWER
 
 	if (maysd) 	{
 
-		// respect lock on resume & disable suspend/hibernate settings 
+		// respect lock on resume & disable suspend/hibernate settings
 		// from power-manager
 		KConfig config("power-managerrc");
 		bool disableSuspend = config.readBoolEntry("disableSuspend", false);
@@ -744,6 +754,25 @@ KSMShutdownDlg::KSMShutdownDlg( TQWidget* parent,
 		bool canSuspend = false;
 		bool canHibernate = false;
 
+#ifdef WITH_UPOWER
+		m_dbusConn = TQT_DBusConnection::addConnection(TQT_DBusConnection::SystemBus);
+
+		TQT_DBusProxy upowerProperties("org.freedesktop.UPower", "/org/freedesktop/UPower", "org.freedesktop.DBus.Properties", m_dbusConn);
+
+		// can suspend?
+		TQValueList<TQT_DBusData> params;
+		params << TQT_DBusData::fromString(upowerProperties.interface()) << TQT_DBusData::fromString("CanSuspend");
+		TQT_DBusMessage reply = upowerProperties.sendWithReply("Get", params);
+		if(reply.type() == TQT_DBusMessage::ReplyMessage && reply.count() == 1)
+			canSuspend = reply[0].toVariant().value.toBool();
+
+		// can hibernate?
+		params.clear();
+		params << TQT_DBusData::fromString(upowerProperties.interface()) << TQT_DBusData::fromString("CanHibernate");
+		reply = upowerProperties.sendWithReply("Get", params);
+		if(reply.type() == TQT_DBusMessage::ReplyMessage && reply.count() == 1)
+			canHibernate = reply[0].toVariant().value.toBool();
+#else
 #ifdef COMPILE_HALBACKEND
 		// Query HAL for suspend/resume support
 		m_halCtx = libhal_ctx_new();
@@ -785,13 +814,13 @@ KSMShutdownDlg::KSMShutdownDlg( TQWidget* parent,
 		{
 			if (libhal_device_get_property_bool(m_halCtx,
 												"/org/freedesktop/Hal/devices/computer",
-												"power_management.can_suspend", 
+												"power_management.can_suspend",
 												NULL))
 			{
 				canSuspend = true;
 			}
 
-			if (libhal_device_get_property_bool(m_halCtx, 
+			if (libhal_device_get_property_bool(m_halCtx,
 												"/org/freedesktop/Hal/devices/computer",
 												"power_management.can_hibernate",
 												NULL))
@@ -800,6 +829,7 @@ KSMShutdownDlg::KSMShutdownDlg( TQWidget* parent,
 			}
 		}
 #endif
+#endif // WITH_UPOWER
 
 		if(doUbuntuLogout) {
 
@@ -809,21 +839,21 @@ KSMShutdownDlg::KSMShutdownDlg( TQWidget* parent,
 				FlatButton* btnSuspend = new FlatButton( frame );
 				btnSuspend->setTextLabel( i18n("&Suspend"), false );
 				btnSuspend->setPixmap( DesktopIcon( "suspend") );
-			    int i = btnSuspend->textLabel().find( TQRegExp("\\&"), 0 );    // i == 1
+				int i = btnSuspend->textLabel().find( TQRegExp("\\&"), 0 );    // i == 1
 				btnSuspend->setAccel( "ALT+" + btnSuspend->textLabel().lower()[i+1] ) ;
 				hbuttonbox->addWidget ( btnSuspend);
 				connect(btnSuspend, TQT_SIGNAL(clicked()), TQT_SLOT(slotSuspend()));
 			}
-		
+
 			if (canHibernate && !disableHibernate)
 			{
 				// Hibernate
 				FlatButton* btnHibernate = new FlatButton( frame );
-		    	btnHibernate->setTextLabel( i18n("&Hibernate"), false );
+				btnHibernate->setTextLabel( i18n("&Hibernate"), false );
 				btnHibernate->setPixmap( DesktopIcon( "hibernate") );
 				int i = btnHibernate->textLabel().find( TQRegExp("\\&"), 0 );    // i == 1
-				btnHibernate->setAccel( "ALT+" + btnHibernate->textLabel().lower()[i+1] ) ;		
-				hbuttonbox->addWidget ( btnHibernate);	
+				btnHibernate->setAccel( "ALT+" + btnHibernate->textLabel().lower()[i+1] ) ;
+				hbuttonbox->addWidget ( btnHibernate);
 				connect(btnHibernate, TQT_SIGNAL(clicked()), TQT_SLOT(slotHibernate()));
 			}
 
@@ -833,12 +863,12 @@ KSMShutdownDlg::KSMShutdownDlg( TQWidget* parent,
 			// bottom buttons
 			TQHBoxLayout* hbuttonbox2 = new TQHBoxLayout( vbox, factor * KDialog::spacingHint() );
 			hbuttonbox2->setAlignment( Qt::AlignHCenter );
-			
+
 			// Reboot
 			FlatButton* btnReboot = new FlatButton( frame );
 			btnReboot->setTextLabel( i18n("&Restart"), false );
 			btnReboot->setPixmap( DesktopIcon( "reload") );
-    		int i = btnReboot->textLabel().find( TQRegExp("\\&"), 0 );    // i == 1
+			int i = btnReboot->textLabel().find( TQRegExp("\\&"), 0 );    // i == 1
 			btnReboot->setAccel( "ALT+" + btnReboot->textLabel().lower()[i+1] ) ;
 			hbuttonbox2->addWidget ( btnReboot);
 			connect(btnReboot, TQT_SIGNAL(clicked()), TQT_SLOT(slotReboot()));
@@ -852,7 +882,7 @@ KSMShutdownDlg::KSMShutdownDlg( TQWidget* parent,
 			targets = new TQPopupMenu( frame );
 			if ( cur == -1 )
 				cur = def;
-		
+
 			int index = 0;
 			for (TQStringList::ConstIterator it = rebootOptions.begin(); it != rebootOptions.end(); ++it, ++index)
 				{
@@ -863,12 +893,12 @@ KSMShutdownDlg::KSMShutdownDlg( TQWidget* parent,
 				else
 				targets->insertItem( label, index );
 				}
-		
+
 			btnReboot->setPopup(targets);
 			connect( targets, TQT_SIGNAL(activated(int)), TQT_SLOT(slotReboot(int)) );
 			}
 			// BAD CARMA .. this code is copied line by line from standard konqy dialog [EOF]
- 		
+
 			// Shutdown
 			FlatButton* btnHalt = new FlatButton( frame );
 			btnHalt->setTextLabel( i18n("&Turn Off"), false );
@@ -888,36 +918,36 @@ KSMShutdownDlg::KSMShutdownDlg( TQWidget* parent,
 			KSMPushButton* btnBack = new KSMPushButton( KStdGuiItem::cancel(), frame );
 			hbuttonbox3->addWidget( btnBack );
 			connect(btnBack, TQT_SIGNAL(clicked()), TQT_SLOT(reject()));
-	
+
 		}
-		else 
+		else
 		{
 			// Shutdown
 			KPushButton* btnHalt = new KPushButton( KGuiItem( i18n("&Turn Off Computer"), "exit"), frame );
-        TQToolTip::add( btnHalt, i18n( "<qt><h3>Turn Off Computer</h3><p>Log out of the current session and turn off the computer</p></qt>" ) );
+		TQToolTip::add( btnHalt, i18n( "<qt><h3>Turn Off Computer</h3><p>Log out of the current session and turn off the computer</p></qt>" ) );
 			btnHalt->setFont( btnFont );
 			buttonlay->addWidget( btnHalt );
 			connect(btnHalt, TQT_SIGNAL(clicked()), TQT_SLOT(slotHalt()));
-        if ( sdtype == KApplication::ShutdownTypeHalt || getenv("TDM_AUTOLOGIN") ) 
+		if ( sdtype == KApplication::ShutdownTypeHalt || getenv("TDM_AUTOLOGIN") )
 				btnHalt->setFocus();
-	
+
 			// Reboot
 			KSMDelayedPushButton* btnReboot = new KSMDelayedPushButton( KGuiItem( i18n("&Restart Computer"), "reload"), frame );
-        TQToolTip::add( btnReboot, i18n( "<qt><h3>Restart Computer</h3><p>Log out of the current session and restart the computer</p><p>Hold the mouse button or the space bar for a short while to get a list of options what to boot</p></qt>" ) );
+		TQToolTip::add( btnReboot, i18n( "<qt><h3>Restart Computer</h3><p>Log out of the current session and restart the computer</p><p>Hold the mouse button or the space bar for a short while to get a list of options what to boot</p></qt>" ) );
 			btnReboot->setFont( btnFont );
 			buttonlay->addWidget( btnReboot );
-	
+
 			connect(btnReboot, TQT_SIGNAL(clicked()), TQT_SLOT(slotReboot()));
 			if ( sdtype == KApplication::ShutdownTypeReboot )
 				btnReboot->setFocus();
-	
+
 			// this section is copied as-is into ubuntulogout as well
 			int def, cur;
 			if ( DM().bootOptions( rebootOptions, def, cur ) ) {
 			targets = new TQPopupMenu( frame );
 			if ( cur == -1 )
 				cur = def;
-		
+
 			int index = 0;
 			for (TQStringList::ConstIterator it = rebootOptions.begin(); it != rebootOptions.end(); ++it, ++index)
 				{
@@ -928,12 +958,12 @@ KSMShutdownDlg::KSMShutdownDlg( TQWidget* parent,
 				else
 				targets->insertItem( label, index );
 				}
-		
+
 			btnReboot->setPopup(targets);
 			connect( targets, TQT_SIGNAL(activated(int)), TQT_SLOT(slotReboot(int)) );
 			}
-	
-	
+
+
 			if (canSuspend && !disableSuspend)
 			{
 				KPushButton* btnSuspend = new KPushButton( KGuiItem( i18n("&Suspend Computer"), "suspend"), frame );
@@ -941,7 +971,7 @@ KSMShutdownDlg::KSMShutdownDlg( TQWidget* parent,
 				buttonlay->addWidget( btnSuspend );
 				connect(btnSuspend, TQT_SIGNAL(clicked()), TQT_SLOT(slotSuspend()));
 			}
-	
+
 			if (canHibernate && !disableHibernate)
 			{
 				KPushButton* btnHibernate = new KPushButton( KGuiItem( i18n("&Hibernate Computer"), "hibernate"), frame );
@@ -951,7 +981,7 @@ KSMShutdownDlg::KSMShutdownDlg( TQWidget* parent,
 			}
 
 			buttonlay->addStretch( 1 );
-		
+
 			// Separator
 			buttonlay->addWidget( new KSeparator( frame ) );
 
@@ -977,7 +1007,7 @@ KSMShutdownDlg::KSMShutdownDlg( TQWidget* parent,
 
 			connect(btnBack, TQT_SIGNAL(clicked()), TQT_SLOT(reject()));
 		}
-		else 
+		else
 		{
 			// Separator
 			buttonlay->addWidget( new KSeparator( frame ) );
@@ -999,130 +1029,164 @@ KSMShutdownDlg::KSMShutdownDlg( TQWidget* parent,
 KSMShutdownDlg::~KSMShutdownDlg()
 {
 #ifdef COMPILE_HALBACKEND
-    if (m_halCtx)
-    {
-        DBusError error;
-        dbus_error_init(&error);
-        libhal_ctx_shutdown(m_halCtx, &error);
-        libhal_ctx_free(m_halCtx);
-    }
+	if (m_halCtx)
+	{
+		DBusError error;
+		dbus_error_init(&error);
+		libhal_ctx_shutdown(m_halCtx, &error);
+		libhal_ctx_free(m_halCtx);
+	}
 #endif
 }
 
 
 void KSMShutdownDlg::slotLogout()
 {
-    m_shutdownType = KApplication::ShutdownTypeNone;
-    accept();
+	m_shutdownType = KApplication::ShutdownTypeNone;
+	accept();
 }
 
 
 void KSMShutdownDlg::slotReboot()
 {
-    // no boot option selected -> current
-    m_bootOption = TQString::null;
-    m_shutdownType = KApplication::ShutdownTypeReboot;
-    accept();
+	// no boot option selected -> current
+	m_bootOption = TQString::null;
+	m_shutdownType = KApplication::ShutdownTypeReboot;
+	accept();
 }
 
 void KSMShutdownDlg::slotReboot(int opt)
 {
-    if (int(rebootOptions.size()) > opt)
-        m_bootOption = rebootOptions[opt];
-    m_shutdownType = KApplication::ShutdownTypeReboot;
-    accept();
+	if (int(rebootOptions.size()) > opt)
+		m_bootOption = rebootOptions[opt];
+	m_shutdownType = KApplication::ShutdownTypeReboot;
+	accept();
 }
 
 
 void KSMShutdownDlg::slotHalt()
 {
-    m_bootOption = TQString::null;
-    m_shutdownType = KApplication::ShutdownTypeHalt;
-    accept();
+	m_bootOption = TQString::null;
+	m_shutdownType = KApplication::ShutdownTypeHalt;
+	accept();
 }
 
 void KSMShutdownDlg::slotSuspend()
 {
+#ifdef WITH_UPOWER
+	if (m_lockOnResume) {
+		DCOPRef("kdesktop", "KScreensaverIface").send("lock");
+	}
+
+	if( m_dbusConn.isConnected() ) {
+		TQT_DBusMessage msg = TQT_DBusMessage::methodCall(
+					"org.freedesktop.UPower",
+					"/org/freedesktop/UPower",
+					"org.freedesktop.UPower",
+					"Suspend");
+		m_dbusConn.sendWithReply(msg);
+	}
+
+	reject(); // continue on resume
+#else
 #ifdef COMPILE_HALBACKEND
-    if (m_lockOnResume) {
-        DCOPRef("kdesktop", "KScreensaverIface").send("lock");
-    }
+	if (m_lockOnResume) {
+		DCOPRef("kdesktop", "KScreensaverIface").send("lock");
+	}
 
-    if (m_dbusConn) 
-    {
-        DBusMessage *msg = dbus_message_new_method_call(
-                              "org.freedesktop.Hal",
-                              "/org/freedesktop/Hal/devices/computer", 
-                              "org.freedesktop.Hal.Device.SystemPowerManagement", 
-                              "Suspend");
+	if (m_dbusConn)
+	{
+		DBusMessage *msg = dbus_message_new_method_call(
+							  "org.freedesktop.Hal",
+							  "/org/freedesktop/Hal/devices/computer",
+							  "org.freedesktop.Hal.Device.SystemPowerManagement",
+							  "Suspend");
 
-        int wakeup=0;
-	    dbus_message_append_args(msg, DBUS_TYPE_INT32, &wakeup, DBUS_TYPE_INVALID);
+		int wakeup=0;
+		dbus_message_append_args(msg, DBUS_TYPE_INT32, &wakeup, DBUS_TYPE_INVALID);
 
-        dbus_connection_send(m_dbusConn, msg, NULL);
+		dbus_connection_send(m_dbusConn, msg, NULL);
 
-        dbus_message_unref(msg);
-    }
+		dbus_message_unref(msg);
+	}
 
-    reject(); // continue on resume
+	reject(); // continue on resume
 #endif
+#endif // WITH_UPOWER
 }
 
 void KSMShutdownDlg::slotHibernate()
 {
+#ifdef WITH_UPOWER
+	if (m_lockOnResume) {
+		DCOPRef("kdesktop", "KScreensaverIface").send("lock");
+	}
+
+	if( m_dbusConn.isConnected() ) {
+		TQT_DBusMessage msg = TQT_DBusMessage::methodCall(
+					"org.freedesktop.UPower",
+					"/org/freedesktop/UPower",
+					"org.freedesktop.UPower",
+					"Hibernate");
+		m_dbusConn.sendWithReply(msg);
+	}
+
+	reject(); // continue on resume
+#else
 #ifdef COMPILE_HALBACKEND
-    if (m_lockOnResume) {
-        DCOPRef("kdesktop", "KScreensaverIface").send("lock");
-    }
+	if (m_lockOnResume) {
+		DCOPRef("kdesktop", "KScreensaverIface").send("lock");
+	}
 
-    if (m_dbusConn) 
-    {
-        DBusMessage *msg = dbus_message_new_method_call(
-                              "org.freedesktop.Hal",
-                              "/org/freedesktop/Hal/devices/computer", 
-                              "org.freedesktop.Hal.Device.SystemPowerManagement", 
-                              "Hibernate");
+	if (m_dbusConn)
+	{
+		DBusMessage *msg = dbus_message_new_method_call(
+							  "org.freedesktop.Hal",
+							  "/org/freedesktop/Hal/devices/computer",
+							  "org.freedesktop.Hal.Device.SystemPowerManagement",
+							  "Hibernate");
 
-        dbus_connection_send(m_dbusConn, msg, NULL);
+		dbus_connection_send(m_dbusConn, msg, NULL);
 
-        dbus_message_unref(msg);
-    }
+		dbus_message_unref(msg);
+	}
 
-    reject(); // continue on resume
+	reject(); // continue on resume
 #endif
+#endif // WITH_UPOWER
 }
 
 bool KSMShutdownDlg::confirmShutdown( bool maysd, KApplication::ShutdownType& sdtype, TQString& bootOption )
 {
-    kapp->enableStyles();
-    KSMShutdownDlg* l = new KSMShutdownDlg( 0,
-                                            //KSMShutdownFeedback::self(),
-                                            maysd, sdtype );
+	kapp->enableStyles();
+	KSMShutdownDlg* l = new KSMShutdownDlg( 0,
+											//KSMShutdownFeedback::self(),
+											maysd, sdtype );
 
-    // Show dialog (will save the background in showEvent)
-    TQSize sh = l->sizeHint();
-    TQRect rect = KGlobalSettings::desktopGeometry(TQCursor::pos());
+	// Show dialog (will save the background in showEvent)
+	TQSize sh = l->sizeHint();
+	TQRect rect = KGlobalSettings::desktopGeometry(TQCursor::pos());
 
-    l->move(rect.x() + (rect.width() - sh.width())/2,
-            rect.y() + (rect.height() - sh.height())/2);
-    bool result = l->exec();
-    sdtype = l->m_shutdownType;
-    bootOption = l->m_bootOption;
+	l->move(rect.x() + (rect.width() - sh.width())/2,
+			rect.y() + (rect.height() - sh.height())/2);
+	bool result = l->exec();
+	sdtype = l->m_shutdownType;
+	bootOption = l->m_bootOption;
 
-    delete l;
+	delete l;
 
-    kapp->disableStyles();
-    return result;
+	kapp->disableStyles();
+	return result;
 }
 
 TQWidget* KSMShutdownIPDlg::showShutdownIP()
 {
-    kapp->enableStyles();
-    KSMShutdownIPDlg* l = new KSMShutdownIPDlg( 0 );
+	kapp->enableStyles();
+	KSMShutdownIPDlg* l = new KSMShutdownIPDlg( 0 );
 
-    kapp->disableStyles();
+	kapp->disableStyles();
 
-    return l;
+	return l;
 }
 
 KSMShutdownIPDlg::KSMShutdownIPDlg(TQWidget* parent)
@@ -1140,8 +1204,8 @@ KSMShutdownIPDlg::~KSMShutdownIPDlg()
 }
 
 KSMDelayedPushButton::KSMDelayedPushButton( const KGuiItem &item,
-					    TQWidget *parent,
-					    const char *name)
+						TQWidget *parent,
+						const char *name)
   : KPushButton( item, parent, name), pop(0), popt(0)
 {
   connect(this, TQT_SIGNAL(pressed()), TQT_SLOT(slotPressed()));
@@ -1159,7 +1223,7 @@ void KSMDelayedPushButton::setPopup(TQPopupMenu *p)
 void KSMDelayedPushButton::slotPressed()
 {
   if (pop)
-    popt->start(TQApplication::startDragTime());
+	popt->start(TQApplication::startDragTime());
 }
 
 void KSMDelayedPushButton::slotReleased()
@@ -1178,97 +1242,97 @@ void KSMDelayedPushButton::slotTimeout()
 }
 
 KSMDelayedMessageBox::KSMDelayedMessageBox( KApplication::ShutdownType sdtype, const TQString &bootOption, int confirmDelay )
-    : TimedLogoutDlg( 0, 0, true, (WFlags)WType_Popup ), m_remaining(confirmDelay)
+	: TimedLogoutDlg( 0, 0, true, (WFlags)WType_Popup ), m_remaining(confirmDelay)
 {
-    if ( sdtype == KApplication::ShutdownTypeHalt )
-    {
-        m_title->setText( i18n( "Would you like to turn off your computer?" ) );
-        m_template = i18n( "This computer will turn off automatically\n"
-                           "after %1 seconds." );
-        m_logo->setPixmap( BarIcon( "exit", 48 ) );
-    } else if ( sdtype == KApplication::ShutdownTypeReboot )
-    {
-        if (bootOption.isEmpty())
-            m_title->setText( i18n( "Would you like to reboot your computer?" ) );
-        else
-            m_title->setText( i18n( "Would you like to reboot to \"%1\"?" ).arg(bootOption) );
-        m_template = i18n( "This computer will reboot automatically\n"
-                           "after %1 seconds." );
-        m_logo->setPixmap( BarIcon( "reload", 48 ) );
-    } else {
-        m_title->setText( i18n( "Would you like to end your current session?" ) );
-        m_template = i18n( "This session will end\n"
-                           "after %1 seconds automatically." );
-        m_logo->setPixmap( BarIcon( "previous", 48 ) );
-    }
+	if ( sdtype == KApplication::ShutdownTypeHalt )
+	{
+		m_title->setText( i18n( "Would you like to turn off your computer?" ) );
+		m_template = i18n( "This computer will turn off automatically\n"
+						   "after %1 seconds." );
+		m_logo->setPixmap( BarIcon( "exit", 48 ) );
+	} else if ( sdtype == KApplication::ShutdownTypeReboot )
+	{
+		if (bootOption.isEmpty())
+			m_title->setText( i18n( "Would you like to reboot your computer?" ) );
+		else
+			m_title->setText( i18n( "Would you like to reboot to \"%1\"?" ).arg(bootOption) );
+		m_template = i18n( "This computer will reboot automatically\n"
+						   "after %1 seconds." );
+		m_logo->setPixmap( BarIcon( "reload", 48 ) );
+	} else {
+		m_title->setText( i18n( "Would you like to end your current session?" ) );
+		m_template = i18n( "This session will end\n"
+						   "after %1 seconds automatically." );
+		m_logo->setPixmap( BarIcon( "previous", 48 ) );
+	}
 
-    updateText();
-    adjustSize();
-    if (  double( height() ) / width() < 0.25 )
-    {
-        setFixedHeight( tqRound( width() * 0.3 ) );
-        adjustSize();
-    }
-    TQTimer *timer = new TQTimer( this );
-    timer->start( 1000 );
-    connect( timer, TQT_SIGNAL( timeout() ), TQT_SLOT( updateText() ) );
-    KDialog::centerOnScreen(this);
+	updateText();
+	adjustSize();
+	if (  double( height() ) / width() < 0.25 )
+	{
+		setFixedHeight( tqRound( width() * 0.3 ) );
+		adjustSize();
+	}
+	TQTimer *timer = new TQTimer( this );
+	timer->start( 1000 );
+	connect( timer, TQT_SIGNAL( timeout() ), TQT_SLOT( updateText() ) );
+	KDialog::centerOnScreen(this);
 }
 
 void KSMDelayedMessageBox::updateText()
 {
-    m_remaining--;
-    if ( m_remaining == 0 )
-    {
-        accept();
-        return;
-    }
-    m_text->setText( m_template.arg( m_remaining ) );
+	m_remaining--;
+	if ( m_remaining == 0 )
+	{
+		accept();
+		return;
+	}
+	m_text->setText( m_template.arg( m_remaining ) );
 }
 
 bool KSMDelayedMessageBox::showTicker( KApplication::ShutdownType sdtype, const TQString &bootOption, int confirmDelay )
 {
-    kapp->enableStyles();
-    KSMDelayedMessageBox msg( sdtype, bootOption, confirmDelay );
-    TQSize sh = msg.sizeHint();
-    TQRect rect = KGlobalSettings::desktopGeometry(TQCursor::pos());
+	kapp->enableStyles();
+	KSMDelayedMessageBox msg( sdtype, bootOption, confirmDelay );
+	TQSize sh = msg.sizeHint();
+	TQRect rect = KGlobalSettings::desktopGeometry(TQCursor::pos());
 
-    msg.move(rect.x() + (rect.width() - sh.width())/2,
-            rect.y() + (rect.height() - sh.height())/2);
-    bool result = msg.exec();
+	msg.move(rect.x() + (rect.width() - sh.width())/2,
+			rect.y() + (rect.height() - sh.height())/2);
+	bool result = msg.exec();
 
-    kapp->disableStyles();
-    return result;
+	kapp->disableStyles();
+	return result;
 }
 
 KSMPushButton::KSMPushButton( const KGuiItem &item,
-					    TQWidget *parent,
-					    const char *name)
+						TQWidget *parent,
+						const char *name)
   : KPushButton( item, parent, name),
-    m_pressed(false)
+	m_pressed(false)
 {
 	setDefault( false );
-	setAutoDefault ( false );	
+	setAutoDefault ( false );
 }
 
 
 void KSMPushButton::keyPressEvent( TQKeyEvent* e )
 {
-switch ( e->key() ) 
+switch ( e->key() )
   {
-    case Key_Enter:
-    case Key_Return:
-    case Key_Space:
-      m_pressed = TRUE;
+	case Key_Enter:
+	case Key_Return:
+	case Key_Space:
+	  m_pressed = TRUE;
 	  setDown(true);
-      emit pressed();
-      break;
+	  emit pressed();
+	  break;
 	case Key_Escape:
 		e->ignore();
 	break;
-    default:
-      e->ignore();
-    }
+	default:
+	  e->ignore();
+	}
 
 	TQPushButton::keyPressEvent(e);
 }
@@ -1276,12 +1340,12 @@ switch ( e->key() )
 
 void KSMPushButton::keyReleaseEvent( TQKeyEvent* e )
 {
-	switch ( e->key() ) 
+	switch ( e->key() )
 	{
 		case Key_Space:
 		case Key_Enter:
 		case Key_Return:
-			if ( m_pressed ) 
+			if ( m_pressed )
 			{
 			setDown(false);
 			m_pressed = FALSE;
@@ -1303,7 +1367,7 @@ void KSMPushButton::keyReleaseEvent( TQKeyEvent* e )
 
 FlatButton::FlatButton( TQWidget *parent, const char *name )
   : TQToolButton( parent, name/*, TQt::WNoAutoErase*/ ),
-    m_pressed(false)
+	m_pressed(false)
 {
   init();
 }
@@ -1318,13 +1382,13 @@ void FlatButton::init()
 	setUsesBigPixmap(true);
 	setAutoRaise(true);
 	setTextPosition( TQToolButton::Under );
-	setFocusPolicy(TQ_StrongFocus);	
+	setFocusPolicy(TQ_StrongFocus);
  }
 
 
 void FlatButton::keyPressEvent( TQKeyEvent* e )
 {
-	switch ( e->key() ) 
+	switch ( e->key() )
 	{
 		case Key_Enter:
 		case Key_Return:
@@ -1346,12 +1410,12 @@ void FlatButton::keyPressEvent( TQKeyEvent* e )
 
 void FlatButton::keyReleaseEvent( TQKeyEvent* e )
 {
-	switch ( e->key() ) 
+	switch ( e->key() )
 	{
 		case Key_Space:
 		case Key_Enter:
 		case Key_Return:
-			if ( m_pressed ) 
+			if ( m_pressed )
 			{
 			setDown(false);
 			m_pressed = FALSE;

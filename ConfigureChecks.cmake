@@ -1,6 +1,6 @@
 #################################################
 #
-#  (C) 2010-2011 Serghei Amelian
+#  (C) 2010-2012 Serghei Amelian
 #  serghei (DOT) amelian (AT) gmail.com
 #
 #  Improvements and feedback are welcome
@@ -215,7 +215,7 @@ find_package( TQt )
 find_package( TDE )
 
 
-# dbus-tqt need Qt flags
+
 # dbus (tdm, ksmserver)
 if( BUILD_TDM OR BUILD_KSMSERVER )
 
@@ -224,19 +224,33 @@ if( BUILD_TDM OR BUILD_KSMSERVER )
     tde_message_fatal( "dbus-1 is required, but was not found on your system" )
   endif( )
 
-  # check for dbus-tqt
-  pkg_check_modules( DBUS_TQT REQUIRED dbus-tqt )
-  tde_save( CMAKE_REQUIRED_INCLUDES CMAKE_REQUIRED_LIBRARIES )
-  set( CMAKE_REQUIRED_INCLUDES ${DBUS_TQT_INCLUDE_DIRS} ${TQT_INCLUDE_DIRS} ${QT_INCLUDE_DIRS})
-  set( CMAKE_REQUIRED_LIBRARIES ${DBUS_TQT_LDFLAGS} ${TQT_LDFLAGS} ${QT_LDFLAGS} )
-  check_cxx_source_compiles("
-    #include <tqt.h>
-    #include <dbus/connection.h>
-    int main(int, char**) { return 0; } "
-    HAVE_DBUS_QT3_07 )
-  tde_restore( CMAKE_REQUIRED_INCLUDES CMAKE_REQUIRED_LIBRARIES )
-  if( NOT HAVE_DBUS_QT3_07 )
-    tde_message_fatal( "dbus-tqt is required, but was not found on your system" )
+endif( )
+
+
+# tqt-dbus (tdm, ksmserver)
+if( BUILD_TDM OR BUILD_KSMSERVER )
+
+  if( BUILD_KSMSERVER AND WITH_UPOWER )
+    pkg_check_modules( DBUS_1_TQT dbus-1-tqt )
+    if( NOT DBUS_1_TQT_FOUND )
+      tde_message_fatal( "dbus-tqt-1 is required, but was not found on your system" )
+    endif( )
+  else( )
+    # check for dbus-tqt
+    # dbus-tqt need Qt flags
+    pkg_check_modules( DBUS_TQT REQUIRED dbus-tqt )
+    tde_save( CMAKE_REQUIRED_INCLUDES CMAKE_REQUIRED_LIBRARIES )
+    set( CMAKE_REQUIRED_INCLUDES ${DBUS_TQT_INCLUDE_DIRS} ${TQT_INCLUDE_DIRS} ${QT_INCLUDE_DIRS})
+    set( CMAKE_REQUIRED_LIBRARIES ${DBUS_TQT_LDFLAGS} ${TQT_LDFLAGS} ${QT_LDFLAGS} )
+    check_cxx_source_compiles("
+      #include <tqt.h>
+      #include <dbus/connection.h>
+      int main(int, char**) { return 0; } "
+      HAVE_DBUS_QT3_07 )
+    tde_restore( CMAKE_REQUIRED_INCLUDES CMAKE_REQUIRED_LIBRARIES )
+    if( NOT HAVE_DBUS_QT3_07 )
+      tde_message_fatal( "dbus-tqt is required, but was not found on your system" )
+    endif( )
   endif( )
 
 endif( )

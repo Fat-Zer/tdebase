@@ -30,31 +30,20 @@ class KAction;
 #include <kapplication.h>
 #include <kpixmapio.h>
 
-#include <config.h>
-
-#ifndef NO_QT3_DBUS_SUPPORT
-/* We acknowledge the the dbus API is unstable */
-#define DBUS_API_SUBJECT_TO_CHANGE
-#include <dbus/connection.h>
-#endif // NO_QT3_DBUS_SUPPORT
-
-#ifdef COMPILE_HALBACKEND
-#include <hal/libhal.h>
-#endif
 
 // The startup-in-progress dialog
 class KSMStartupIPDlg : public KSMModalDialog
 {
-    Q_OBJECT
+	Q_OBJECT
 
 public:
-    static TQWidget* showStartupIP();
+	static TQWidget* showStartupIP();
 
 protected:
-    ~KSMStartupIPDlg();
+	~KSMStartupIPDlg();
 
 private:
-    KSMStartupIPDlg( TQWidget* parent );
+	KSMStartupIPDlg( TQWidget* parent );
 };
 
 #endif
