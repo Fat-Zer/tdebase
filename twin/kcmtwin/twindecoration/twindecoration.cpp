@@ -54,6 +54,7 @@
 #include <kdialog.h>
 #include <kgenericfactory.h>
 #include <kaboutdata.h>
+#include <kprocess.h>
 #include <dcopclient.h>
 
 #include "twindecoration.h"
@@ -333,7 +334,7 @@ KWinDecorationModule::KWinDecorationModule(TQWidget* parent, const char* name, c
 	windowmanagerLayout->addWidget(thirdpartyWMLabel);
 	windowmanagerLayout->addWidget(thirdpartyWMList);
 	thirdpartyWMArguments = new KLineEdit( windowmanagerPage );
-	whatsThis = i18n("Specify any command line arguments to be passed to the selected WM on startup.  A common example is --replace");
+	whatsThis = i18n("Specify any command line arguments to be passed to the selected WM on startup, separated with whitespace.  A common example is replace");
 	TQWhatsThis::add(thirdpartyWMArguments, whatsThis);
 	TQLabel* thirdpartyWMArgumentsLabel = new TQLabel(i18n("Command line arguments to pass to the Window Manager (should remain blank unless needed):"), windowmanagerPage);
 	windowmanagerLayout->addWidget(thirdpartyWMArgumentsLabel);
@@ -452,10 +453,10 @@ void KWinDecorationModule::createThirdPartyWMList()
 	// This list SHOULD NOT be hard coded
 	// It should detect the available WMs through a standard mechanism of some sort
 	TQString wmExecutable;
-    TQStringList wmNames;
-    TQStringList wmAvailableNames;
-    wmNames << TQString("kwin ").append(i18n("(KDE4's window manager)")) << TQString("compiz ").append(i18n("(Compiz Effects Manager)")) << TQString("icewm ").append(i18n("(Simple, fast window manager)"));
-    wmNames.sort();
+	TQStringList wmNames;
+	TQStringList wmAvailableNames;
+	wmNames << TQString("kwin ").append(i18n("(KDE4's window manager)")) << TQString("compiz ").append(i18n("(Compiz Effects Manager)")) << TQString("icewm ").append(i18n("(Simple, fast window manager)"));
+	wmNames.sort();
 	wmNames.prepend(TQString("twin ").append(i18n("(Default TDE window manager)")));
 	for (it = wmNames.begin(); it != wmNames.end(); ++it)
 	{
@@ -469,7 +470,7 @@ void KWinDecorationModule::createThirdPartyWMList()
 		}
 	}
 
-    thirdpartyWMList->insertStringList(wmAvailableNames);
+	thirdpartyWMList->insertStringList(wmAvailableNames);
 }
 
 
@@ -816,6 +817,15 @@ void KWinDecorationModule::writeConfig( KConfig* conf )
 	int descStart = wmExecutableName.find(" ");
 	if (descStart >= 0) {
 		wmExecutableName.truncate(descStart);
+	}
+	if (conf->readEntry("WMExecutable", "twin") != wmExecutableName) {
+		KProcess newWMProc;
+		TQStringList wmstartupcommand;
+		wmstartupcommand.split(" ", thirdpartyWMArguments->text());
+		wmstartupcommand.prepend(wmExecutableName);
+		newWMProc << wmstartupcommand;
+		newWMProc.start(KProcess::DontCare, NoCommunication);
+		newWMProc.detach();
 	}
 	conf->writeEntry("WMExecutable", wmExecutableName);
 	conf->writeEntry("WMAdditionalArguments", thirdpartyWMArguments->text());
