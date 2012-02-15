@@ -45,7 +45,7 @@ int main(int argc, char *argv[])
 	KUniqueApplication app;
 
 	KTipDialog *tipDialog = new KTipDialog(new KTipDatabase(locate("data", TQString("kdewizard/tips"))));
-	Q_CHECK_PTR(tipDialog);
+	TQ_CHECK_PTR(tipDialog);
 #ifdef Q_WS_X11
 	KWin::setState(tipDialog->winId(), NET::StaysOnTop);
 #endif

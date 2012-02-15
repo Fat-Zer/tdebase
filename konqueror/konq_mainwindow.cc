@@ -3649,7 +3649,7 @@ void KonqMainWindow::slotUpdateFullScreen( bool set )
   }
   else
   {
-#if QT_VERSION >= 0x030300
+#if TQT_VERSION >= 0x030300
     setWindowState( windowState() & ~WindowFullScreen );
 #else
     if( isMaximized())

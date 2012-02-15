@@ -202,7 +202,7 @@ KDesktop::KDesktop( bool x_root_hack, bool wait_for_kded ) :
 
   TQTimer::singleShot(0, this, TQT_SLOT( slotStart() ));
 
-#if (QT_VERSION-0 >= 0x030200) // XRANDR support
+#if (TQT_VERSION-0 >= 0x030200) // XRANDR support
   connect( kapp->desktop(), TQT_SIGNAL( resized( int )), TQT_SLOT( desktopResized()));
 #endif
 }
@@ -547,7 +547,7 @@ void KDesktop::slotShowTaskManager()
 {
     //kdDebug(1204) << "Launching KSysGuard..." << endl;
     KProcess* p = new KProcess;
-    Q_CHECK_PTR(p);
+    TQ_CHECK_PTR(p);
 
     *p << "ksysguard";
     *p << "--showprocesses";

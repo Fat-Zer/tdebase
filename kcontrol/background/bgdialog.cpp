@@ -256,7 +256,7 @@ BGDialog::BGDialog(TQWidget* parent, KConfig* _config, bool _multidesktop)
    initUI();
    updateUI();
 
-#if (QT_VERSION-0 >= 0x030200)
+#if (TQT_VERSION-0 >= 0x030200)
    connect( tqApp->desktop(), TQT_SIGNAL( resized( int )), TQT_SLOT( desktopResized())); // RANDR support
 #endif
 }

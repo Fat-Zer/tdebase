@@ -755,7 +755,7 @@ void KRootWm::slotOpenTerminal()
 {
     // kdDebug() << "KRootWm::slotOpenTerminal" << endl;
     KProcess* p = new KProcess;
-    Q_CHECK_PTR(p);
+    TQ_CHECK_PTR(p);
 
     KConfigGroupSaver gs(KGlobal::config(), "General");
     TQString terminal = KGlobal::config()->readPathEntry("TerminalApplication", "konsole");

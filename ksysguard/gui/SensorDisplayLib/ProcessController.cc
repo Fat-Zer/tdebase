@@ -67,16 +67,16 @@ ProcessController::ProcessController(TQWidget* parent, const char* name, const T
 
 	// Setup the geometry management.
 	gm = new TQVBoxLayout(this, 10);
-	Q_CHECK_PTR(gm);
+	TQ_CHECK_PTR(gm);
 	gm->addSpacing(15);
 
 	gmSearch = new TQHBoxLayout();
-	Q_CHECK_PTR(gmSearch);
+	TQ_CHECK_PTR(gmSearch);
 	gm->addLayout(gmSearch, 0);
 
 	// Create the table that lists the processes.
 	pList = new ProcessList(this, "pList");
-	Q_CHECK_PTR(pList);
+	TQ_CHECK_PTR(pList);
 	pList->setShowSortIndicator(true);
 	pListSearchLine = new KListViewSearchLineWidget(pList, this, "process_list_search_line");
 	gmSearch->addWidget(pListSearchLine, 1);
@@ -92,7 +92,7 @@ ProcessController::ProcessController(TQWidget* parent, const char* name, const T
 	 * cbFilter must be created prior to constructing pList as the
 	 * pList constructor sets cbFilter to its start value. */
 	cbFilter = new TQComboBox(this, "pList_cbFilter");
-	Q_CHECK_PTR(cbFilter);
+	TQ_CHECK_PTR(cbFilter);
 	gmSearch->addWidget(cbFilter,0);
 	cbFilter->insertItem(i18n("All Processes"), 0);
 	cbFilter->insertItem(i18n("System Processes"), 1);
@@ -101,7 +101,7 @@ ProcessController::ProcessController(TQWidget* parent, const char* name, const T
 	cbFilter->setMinimumSize(cbFilter->sizeHint());
 	// Create the check box to switch between tree view and list view.
 	xbTreeView = new TQCheckBox(i18n("&Tree"), this, "xbTreeView");
-	Q_CHECK_PTR(xbTreeView);
+	TQ_CHECK_PTR(xbTreeView);
 	xbTreeView->setMinimumSize(xbTreeView->sizeHint());
 	connect(xbTreeView, TQT_SIGNAL(toggled(bool)),
 			this, TQT_SLOT(setTreeView(bool)));
@@ -115,13 +115,13 @@ ProcessController::ProcessController(TQWidget* parent, const char* name, const T
 	// Create the 'Refresh' button.
 	bRefresh = new KPushButton( KGuiItem(  i18n( "&Refresh" ), "reload" ),
             this, "bRefresh" );
-	Q_CHECK_PTR(bRefresh);
+	TQ_CHECK_PTR(bRefresh);
 	bRefresh->setMinimumSize(bRefresh->sizeHint());
 	connect(bRefresh, TQT_SIGNAL(clicked()), this, TQT_SLOT(updateList()));
 
 	// Create the 'Kill' button.
 	bKill = new KPushButton(i18n("&Kill"), this, "bKill");
-	Q_CHECK_PTR(bKill);
+	TQ_CHECK_PTR(bKill);
 	bKill->setMinimumSize(bKill->sizeHint());
 	connect(bKill, TQT_SIGNAL(clicked()), this, TQT_SLOT(killProcess()));
 	/* Disable the kill button until we know that the daemon supports the
@@ -132,7 +132,7 @@ ProcessController::ProcessController(TQWidget* parent, const char* name, const T
 	gm->addWidget(pList, 1);
 
 	gm1 = new TQHBoxLayout();
-	Q_CHECK_PTR(gm1);
+	TQ_CHECK_PTR(gm1);
 	gm->addLayout(gm1, 0);
 	gm1->addStretch();
 	gm1->addWidget(xbTreeView);

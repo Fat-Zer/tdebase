@@ -47,7 +47,7 @@
 #define KXT_H
 
 #include <tqglobal.h>
-#if QT_VERSION < 0x030100
+#if TQT_VERSION < 0x030100
 
 #include <kapplication.h>
 #include <tqwidget.h>

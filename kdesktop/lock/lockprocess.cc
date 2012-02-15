@@ -281,7 +281,7 @@ LockProcess::LockProcess(bool child, bool useBlankOnly)
     }
 #endif
 
-#if (QT_VERSION-0 >= 0x030200) // XRANDR support
+#if (TQT_VERSION-0 >= 0x030200) // XRANDR support
     connect( kapp->desktop(), TQT_SIGNAL( resized( int )), TQT_SLOT( desktopResized()));
 #endif
 

@@ -116,7 +116,7 @@ KBackgroundManager::KBackgroundManager(TQWidget *desktop, KWinModule* twinModule
             TQT_SLOT(slotChangeViewport(int, const TQPoint&)));
 
 
-#if (QT_VERSION-0 >= 0x030200)
+#if (TQT_VERSION-0 >= 0x030200)
     connect( kapp->desktop(), TQT_SIGNAL( resized( int )), TQT_SLOT( desktopResized())); // RANDR support
 #endif
 

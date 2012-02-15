@@ -50,7 +50,7 @@ MultiMeter::MultiMeter(TQWidget* parent, const char* name,
 		lcd = new TQLCDNumber(this, "meterLCD");
 	else
 		lcd = new TQLCDNumber(frame(), "meterLCD");
-	Q_CHECK_PTR(lcd);
+	TQ_CHECK_PTR(lcd);
 	lcd->setSegmentStyle(TQLCDNumber::Filled);
 	setDigitColor(KSGRD::Style->backgroundColor());
 	lcd->setSizePolicy(TQSizePolicy(TQSizePolicy::Expanding,
@@ -191,7 +191,7 @@ void
 MultiMeter::configureSettings()
 {
 	mms = new MultiMeterSettings(this, "MultiMeterSettings");
-	Q_CHECK_PTR(mms);
+	TQ_CHECK_PTR(mms);
 	mms->setTitle(title());
 	mms->setShowUnit(showUnit());
 	mms->setLowerLimitActive(lowerLimitActive);

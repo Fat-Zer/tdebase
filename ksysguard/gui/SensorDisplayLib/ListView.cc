@@ -207,7 +207,7 @@ ListView::ListView(TQWidget* parent, const char* name, const TQString& title, in
 	setBackgroundColor(KSGRD::Style->backgroundColor());
 
 	monitor = new PrivateListView( frame() );
-	Q_CHECK_PTR(monitor);
+	TQ_CHECK_PTR(monitor);
 	monitor->setSelectionMode(TQListView::NoSelection);
 	monitor->setItemMargin(2);
 
@@ -328,7 +328,7 @@ void
 ListView::configureSettings()
 {
 	lvs = new ListViewSettings(this, "ListViewSettings");
-	Q_CHECK_PTR(lvs);
+	TQ_CHECK_PTR(lvs);
 	connect(lvs, TQT_SIGNAL(applyClicked()), TQT_SLOT(applySettings()));
 
 	TQColorGroup colorGroup = monitor->colorGroup();

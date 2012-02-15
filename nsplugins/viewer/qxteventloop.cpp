@@ -37,7 +37,7 @@
 
 #include "qxteventloop.h"
 
-#if QT_VERSION >= 0x030100
+#if TQT_VERSION >= 0x030100
 
 #include <tqapplication.h>
 #include <tqwidgetintdict.h>

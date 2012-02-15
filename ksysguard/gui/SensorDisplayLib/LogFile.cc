@@ -40,7 +40,7 @@ LogFile::LogFile(TQWidget *parent, const char *name, const TQString& title)
 	: KSGRD::SensorDisplay(parent, name, title)
 {
 	monitor = new TQListBox(this);
-	Q_CHECK_PTR(monitor);
+	TQ_CHECK_PTR(monitor);
 
 	setMinimumSize(50, 25);
 
@@ -82,7 +82,7 @@ void LogFile::configureSettings(void)
 	TQColorGroup cgroup = monitor->colorGroup();
 
 	lfs = new LogFileSettings(this);
-	Q_CHECK_PTR(lfs);
+	TQ_CHECK_PTR(lfs);
 
 	lfs->fgColor->setColor(cgroup.text());
 	lfs->fgColor->setText(i18n("Foreground color:"));

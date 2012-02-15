@@ -46,7 +46,7 @@
 #endif
 #include <kconfig.h>
 
-#if QT_VERSION < 0x030100
+#if TQT_VERSION < 0x030100
 #include "kxt.h"
 #include <X11/Intrinsic.h>
 #include <X11/Shell.h>
@@ -103,7 +103,7 @@ void parseCommandLine(int argc, char *argv[])
    }
 }
 
-#if QT_VERSION < 0x030100
+#if TQT_VERSION < 0x030100
 
 static XtAppContext g_appcon;
 static bool g_quit = false;
@@ -227,7 +227,7 @@ int main(int argc, char** argv)
    kdDebug(1430) << "2 - parseCommandLine" << endl;
    parseCommandLine(argc, argv);
 
-#if QT_VERSION < 0x030100
+#if TQT_VERSION < 0x030100
    // Create application
    kdDebug(1430) << "3 - XtToolkitInitialize" << endl;
    XtToolkitInitialize();
@@ -298,7 +298,7 @@ int main(int argc, char** argv)
    NSPluginViewer *viewer = new NSPluginViewer( "viewer", 0 );
 
    // start main loop
-#if QT_VERSION < 0x030100
+#if TQT_VERSION < 0x030100
    kdDebug(1430) << "8 - XtAppProcessEvent" << endl;
    while (!g_quit)
      XtAppProcessEvent( g_appcon, XtIMAll);

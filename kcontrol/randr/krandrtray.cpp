@@ -70,7 +70,7 @@ KRandRSystemTray::KRandRSystemTray(TQWidget* parent, const char *name)
 
 	connect(kapp, TQT_SIGNAL(settingsChanged(int)), TQT_SLOT(slotSettingsChanged(int)));
 
-#if (QT_VERSION-0 >= 0x030200) // XRANDR support
+#if (TQT_VERSION-0 >= 0x030200) // XRANDR support
 //	connect(this, TQT_SIGNAL(screenSizeChanged(int, int)), kapp->desktop(), TQT_SLOT( desktopResized()));
 #endif
 

@@ -39,12 +39,12 @@ LogSensor::LogSensor(TQListView *parent)
 	: timerID( NONE ), lowerLimitActive( 0 ), upperLimitActive( 0 ),
 	  lowerLimit( 0 ), upperLimit( 0 )
 {
-	Q_CHECK_PTR(parent);
+	TQ_CHECK_PTR(parent);
 
 	monitor = parent;
 
 	lvi = new SLListViewItem(monitor);
-	Q_CHECK_PTR(lvi);
+	TQ_CHECK_PTR(lvi);
 
 	pixmap_running = UserIcon( "running" );
 	pixmap_waiting = UserIcon( "waiting" );
@@ -131,7 +131,7 @@ SensorLogger::SensorLogger(TQWidget *parent, const char *name, const TQString& t
 	: KSGRD::SensorDisplay(parent, name, title)
 {
 	monitor = new TQListView(this, "monitor");
-	Q_CHECK_PTR(monitor);
+	TQ_CHECK_PTR(monitor);
 
 	monitor->addColumn(i18n("Logging"));
 	monitor->addColumn(i18n("Timer Interval"));
@@ -169,12 +169,12 @@ SensorLogger::addSensor(const TQString& hostName, const TQString& sensorName, co
 		return (false);
 
 	sld = new SensorLoggerDlg(this, "SensorLoggerDlg");
-	Q_CHECK_PTR(sld);
+	TQ_CHECK_PTR(sld);
 
 	if (sld->exec()) {
 		if (!sld->fileName().isEmpty()) {
 			LogSensor *sensor = new LogSensor(monitor);
-			Q_CHECK_PTR(sensor);
+			TQ_CHECK_PTR(sensor);
 
 			sensor->setHostName(hostName);
 			sensor->setSensorName(sensorName);
@@ -201,7 +201,7 @@ bool
 SensorLogger::editSensor(LogSensor* sensor)
 {
 	sld = new SensorLoggerDlg(this, "SensorLoggerDlg");
-	Q_CHECK_PTR(sld);
+	TQ_CHECK_PTR(sld);
 
 	sld->setFileName(sensor->getFileName());
 	sld->setTimerInterval(sensor->getTimerInterval());
@@ -235,7 +235,7 @@ SensorLogger::configureSettings()
 	TQColorGroup cgroup = monitor->colorGroup();
 
 	sls = new SensorLoggerSettings(this, "SensorLoggerSettings");
-	Q_CHECK_PTR(sls);
+	TQ_CHECK_PTR(sls);
 
 	connect( sls, TQT_SIGNAL( applyClicked() ), TQT_SLOT( applySettings() ) );
 
@@ -295,7 +295,7 @@ SensorLogger::restoreSettings(TQDomElement& element)
 	for (uint i = 0; i < dnList.count(); i++) {
 		TQDomElement element = dnList.item(i).toElement();
 		LogSensor* sensor = new LogSensor(monitor);
-		Q_CHECK_PTR(sensor);
+		TQ_CHECK_PTR(sensor);
 
 		sensor->setHostName(element.attribute("hostName"));
 		sensor->setSensorName(element.attribute("sensorName"));

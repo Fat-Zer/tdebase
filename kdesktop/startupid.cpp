@@ -159,7 +159,7 @@ void StartupId::stop_startupid()
 
 static TQPixmap scalePixmap( const TQPixmap& pm, int w, int h )
 {
-#if QT_VERSION >= 0x030200
+#if TQT_VERSION >= 0x030200
 	TQPixmap result( 20, 20, pm.depth() );
 	result.setMask( TQBitmap( 20, 20, true ) );
 	TQPixmap scaled( pm.convertToImage().smoothScale( w, h ) );
