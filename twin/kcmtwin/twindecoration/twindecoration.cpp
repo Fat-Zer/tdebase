@@ -334,7 +334,7 @@ KWinDecorationModule::KWinDecorationModule(TQWidget* parent, const char* name, c
 	windowmanagerLayout->addWidget(thirdpartyWMLabel);
 	windowmanagerLayout->addWidget(thirdpartyWMList);
 	thirdpartyWMArguments = new KLineEdit( windowmanagerPage );
-	whatsThis = i18n("Specify any command line arguments to be passed to the selected WM on startup, separated with whitespace.  A common example is replace");
+	whatsThis = i18n("Specify any command line arguments to be passed to the selected WM on startup, separated with whitespace.  A common example is --replace");
 	TQWhatsThis::add(thirdpartyWMArguments, whatsThis);
 	TQLabel* thirdpartyWMArgumentsLabel = new TQLabel(i18n("Command line arguments to pass to the Window Manager (should remain blank unless needed):"), windowmanagerPage);
 	windowmanagerLayout->addWidget(thirdpartyWMArgumentsLabel);
@@ -823,6 +823,7 @@ void KWinDecorationModule::writeConfig( KConfig* conf )
 		TQStringList wmstartupcommand;
 		wmstartupcommand.split(" ", thirdpartyWMArguments->text());
 		wmstartupcommand.prepend(wmExecutableName);
+		wmstartupcommand.append("--replace");
 		newWMProc << wmstartupcommand;
 		newWMProc.start(KProcess::DontCare, NoCommunication);
 		newWMProc.detach();
