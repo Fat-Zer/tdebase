@@ -77,6 +77,7 @@ option( WITH_XINERAMA "Enable xinerama extension support" ${WITH_ALL_OPTIONS} )
 option( WITH_ARTS "Enable aRts support" ${WITH_ALL_OPTIONS} )
 option( WITH_I8K "Enable Dell laptop support (ksysguard)" ${WITH_ALL_OPTIONS} )
 option( WITH_HAL "Enable HAL support" ${WITH_ALL_OPTIONS} )
+option( WITH_UPOWER "Enable UPOWER support" ${WITH_ALL_OPTIONS} )
 option( WITH_GCC_VISIBILITY "Enable fvisibility and fvisibility-inlines-hidden" ${WITH_ALL_OPTIONS} )
 
 
@@ -205,7 +206,7 @@ tde_conditional_add_subdirectory( BUILD_KSYSGUARD ksysguard )
 tde_conditional_add_subdirectory( BUILD_KXKB kxkb )
 tde_conditional_add_subdirectory( BUILD_TSAK tsak )
 tde_conditional_add_subdirectory( BUILD_KROOTBACKING krootbacking )
-tde_conditional_add_subdirectory( BUILD_TQT3INTEGRATION tqt3integration ) 
+tde_conditional_add_subdirectory( BUILD_TQT3INTEGRATION tqt3integration )
 
 ##### install starttde & related stuff ##########
 

@@ -1,6 +1,7 @@
 /*****************************************************************
 ksmserver - the KDE session management server
 
+Copyright (C) 2012 Serghei Amelian <serghei.amelian@gmail.com>
 Copyright (C) 2000 Matthias Ettrich <ettrich@kde.org>
 ******************************************************************/
 
@@ -32,129 +33,138 @@ class KAction;
 
 #include <config.h>
 
-#ifndef NO_QT3_DBUS_SUPPORT
-/* We acknowledge the the dbus API is unstable */
-#define DBUS_API_SUBJECT_TO_CHANGE
-#include <dbus/connection.h>
-#endif // NO_QT3_DBUS_SUPPORT
+#ifdef WITH_UPOWER
+	#include <tqdbusconnection.h>
+#else
+	#warning test
+	#ifndef NO_QT3_DBUS_SUPPORT
+	/* We acknowledge the the dbus API is unstable */
+	#define DBUS_API_SUBJECT_TO_CHANGE
+	#include <dbus/connection.h>
+	#endif // NO_QT3_DBUS_SUPPORT
 
-#ifdef COMPILE_HALBACKEND
-#include <hal/libhal.h>
-#endif
+	#ifdef COMPILE_HALBACKEND
+	#include <hal/libhal.h>
+	#endif
+#endif // WITH_UPOWER
 
 // The (singleton) widget that makes/fades the desktop gray.
 class KSMShutdownFeedback : public TQWidget
 {
-    Q_OBJECT
+	Q_OBJECT
 
 public:
-    static void start() { s_pSelf = new KSMShutdownFeedback(); }
-    static void stop() { if ( s_pSelf != 0L ) s_pSelf->fadeBack(); delete s_pSelf; s_pSelf = 0L; }
-    static KSMShutdownFeedback * self() { return s_pSelf; }
+	static void start() { s_pSelf = new KSMShutdownFeedback(); }
+	static void stop() { if ( s_pSelf != 0L ) s_pSelf->fadeBack(); delete s_pSelf; s_pSelf = 0L; }
+	static KSMShutdownFeedback * self() { return s_pSelf; }
 
 protected:
-    ~KSMShutdownFeedback() {}
+	~KSMShutdownFeedback() {}
 
 private slots:
-    void slotPaintEffect();
+	void slotPaintEffect();
 
 private:
-    static KSMShutdownFeedback * s_pSelf;
-    KSMShutdownFeedback();
-    int m_currentY;
-    TQPixmap m_root;
-    void fadeBack( void );
-    float  m_grayOpacity;
-    float  m_compensation;
-    bool   m_fadeBackwards;
-    bool   m_readDelayComplete;
-    TQImage m_unfadedImage;
-    TQImage m_grayImage;
-    TQTime  m_fadeTime;
-    int    m_rowsDone;
-    KPixmapIO m_pmio;
-    bool m_greyImageCreated;
+	static KSMShutdownFeedback * s_pSelf;
+	KSMShutdownFeedback();
+	int m_currentY;
+	TQPixmap m_root;
+	void fadeBack( void );
+	float  m_grayOpacity;
+	float  m_compensation;
+	bool   m_fadeBackwards;
+	bool   m_readDelayComplete;
+	TQImage m_unfadedImage;
+	TQImage m_grayImage;
+	TQTime  m_fadeTime;
+	int    m_rowsDone;
+	KPixmapIO m_pmio;
+	bool m_greyImageCreated;
 
 };
 
 // The (singleton) widget that shows either pretty pictures or a black screen during logout
 class KSMShutdownIPFeedback : public TQWidget
 {
-    Q_OBJECT
+	Q_OBJECT
 
 public:
-    static void start() { s_pSelf = new KSMShutdownIPFeedback(); }
-    static void showit() { if ( s_pSelf != 0L ) s_pSelf->showNow(); }
-    static void stop() { if ( s_pSelf != 0L ) s_pSelf->fadeBack(); delete s_pSelf; s_pSelf = 0L; }
-    static KSMShutdownIPFeedback * self() { return s_pSelf; }
-    static bool ispainted() { if ( s_pSelf != 0L ) return s_pSelf->m_isPainted; else return false; }
+	static void start() { s_pSelf = new KSMShutdownIPFeedback(); }
+	static void showit() { if ( s_pSelf != 0L ) s_pSelf->showNow(); }
+	static void stop() { if ( s_pSelf != 0L ) s_pSelf->fadeBack(); delete s_pSelf; s_pSelf = 0L; }
+	static KSMShutdownIPFeedback * self() { return s_pSelf; }
+	static bool ispainted() { if ( s_pSelf != 0L ) return s_pSelf->m_isPainted; else return false; }
 
 protected:
-    ~KSMShutdownIPFeedback();
+	~KSMShutdownIPFeedback();
 
 public slots:
-    void slotPaintEffect();
-    void slotSetBackgroundPixmap(const TQPixmap &);
+	void slotPaintEffect();
+	void slotSetBackgroundPixmap(const TQPixmap &);
 
 private:
-    static KSMShutdownIPFeedback * s_pSelf;
-    KSMShutdownIPFeedback();
-    int m_currentY;
-    TQPixmap m_root;
-    void fadeBack( void );
-    void showNow( void );
-    int m_timeout;
-    bool m_isPainted;
-    KRootPixmap* m_sharedRootPixmap;
-    TQPixmap m_rootPixmap;
-    int mPixmapTimeout;
+	static KSMShutdownIPFeedback * s_pSelf;
+	KSMShutdownIPFeedback();
+	int m_currentY;
+	TQPixmap m_root;
+	void fadeBack( void );
+	void showNow( void );
+	int m_timeout;
+	bool m_isPainted;
+	KRootPixmap* m_sharedRootPixmap;
+	TQPixmap m_rootPixmap;
+	int mPixmapTimeout;
 };
 
 // The confirmation dialog
 class KSMShutdownDlg : public TQDialog
 {
-    Q_OBJECT
+	Q_OBJECT
 
 public:
-    static bool confirmShutdown( bool maysd, KApplication::ShutdownType& sdtype, TQString& bopt );
+	static bool confirmShutdown( bool maysd, KApplication::ShutdownType& sdtype, TQString& bopt );
 
 public slots:
-    void slotLogout();
-    void slotHalt();
-    void slotReboot();
-    void slotReboot(int);
-    void slotSuspend();
-    void slotHibernate();
+	void slotLogout();
+	void slotHalt();
+	void slotReboot();
+	void slotReboot(int);
+	void slotSuspend();
+	void slotHibernate();
 
 protected:
-    ~KSMShutdownDlg();
+	~KSMShutdownDlg();
 
 private:
-    KSMShutdownDlg( TQWidget* parent, bool maysd, KApplication::ShutdownType sdtype );
-    KApplication::ShutdownType m_shutdownType;
-    TQString m_bootOption;
-    TQPopupMenu *targets;
-    TQStringList rebootOptions;
+	KSMShutdownDlg( TQWidget* parent, bool maysd, KApplication::ShutdownType sdtype );
+	KApplication::ShutdownType m_shutdownType;
+	TQString m_bootOption;
+	TQPopupMenu *targets;
+	TQStringList rebootOptions;
+#ifdef WITH_UPOWER
+	TQT_DBusConnection m_dbusConn;
+#else
 #ifdef COMPILE_HALBACKEND
-    LibHalContext* m_halCtx;
-    DBusConnection *m_dbusConn;
+	LibHalContext* m_halCtx;
+	DBusConnection *m_dbusConn;
 #endif
-    bool m_lockOnResume;
+#endif // WITH_UPOWER
+	bool m_lockOnResume;
 };
 
 // The shutdown-in-progress dialog
 class KSMShutdownIPDlg : public KSMModalDialog
 {
-    Q_OBJECT
+	Q_OBJECT
 
 public:
-    static TQWidget* showShutdownIP();
+	static TQWidget* showShutdownIP();
 
 protected:
-    ~KSMShutdownIPDlg();
+	~KSMShutdownIPDlg();
 
 private:
-    KSMShutdownIPDlg( TQWidget* parent );
+	KSMShutdownIPDlg( TQWidget* parent );
 };
 
 class KSMDelayedPushButton : public KPushButton
@@ -210,14 +220,14 @@ class FlatButton : public TQToolButton
   virtual void keyReleaseEvent(TQKeyEvent*e);
 
  private slots:
-  
+
  private:
   void init();
-  
+
   bool m_pressed;
   TQString m_text;
   TQPixmap m_pixmap;
- 
+
 };
 
 
@@ -227,18 +237,18 @@ class TQLabel;
 
 class  KSMDelayedMessageBox : public TimedLogoutDlg
 {
-    Q_OBJECT
+	Q_OBJECT
 
 public:
-    KSMDelayedMessageBox( KApplication::ShutdownType sdtype, const TQString &bootOption, int confirmDelay );
-    static bool showTicker( KApplication::ShutdownType sdtype, const TQString &bootOption, int confirmDelay );
+	KSMDelayedMessageBox( KApplication::ShutdownType sdtype, const TQString &bootOption, int confirmDelay );
+	static bool showTicker( KApplication::ShutdownType sdtype, const TQString &bootOption, int confirmDelay );
 
 protected slots:
-    void updateText();
+	void updateText();
 
 private:
-    TQString m_template;
-    int m_remaining;
+	TQString m_template;
+	int m_remaining;
 };
 
 #endif

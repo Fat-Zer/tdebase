@@ -13,18 +13,24 @@ if( NOT DBUS_SYSTEM_BUS )
   set( DBUS_SYSTEM_BUS "unix:path=/var/run/dbus/system_bus_socket" CACHE INTERNAL "" FORCE )
 endif()
 
+if( WITH_UPOWER )
+  add_definitions( -DWITH_UPOWER )
+endif( )
+
 include_directories(
   ${CMAKE_CURRENT_BINARY_DIR}
   ${CMAKE_BINARY_DIR}
   ${CMAKE_SOURCE_DIR}/tdmlib
   ${TDE_INCLUDE_DIR}
   ${TQT_INCLUDE_DIRS}
+  ${DBUS_1_TQT_INCLUDE_DIRS}
   ${DBUS_TQT_INCLUDE_DIRS}
   ${HAL_INCLUDE_DIRS}
 )
 
 link_directories(
   ${TQT_LIBRARY_DIRS}
+  ${DBUS_1_TQT_LIBRARY_DIRS}
   ${DBUS_TQT_LIBRARY_DIRS}
 )
 
@@ -43,5 +49,5 @@ tde_add_tdeinit_executable( ksmserver AUTOMOC
     main.cpp server.cpp shutdowndlg.cpp startupdlg.cpp
     legacy.cpp startup.cpp shutdown.cpp client.cpp
     KSMServerInterface.skel server.skel timed.ui
-  LINK dmctl-static tdeui-shared krsync-shared ${HAL_LIBRARIES} ${DBUS_TQT_LIBRARIES}
+  LINK dmctl-static tdeui-shared krsync-shared ${HAL_LIBRARIES} ${DBUS_1_TQT_LIBRARIES} ${DBUS_TQT_LIBRARIES}
 )
