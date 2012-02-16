@@ -825,7 +825,7 @@ void KWinDecorationModule::writeConfig( KConfig* conf )
 		wmstartupcommand.prepend(wmExecutableName);
 		wmstartupcommand.append("--replace");
 		newWMProc << wmstartupcommand;
-		newWMProc.start(KProcess::DontCare, NoCommunication);
+		newWMProc.start(KProcess::DontCare, KProcess::NoCommunication);
 		newWMProc.detach();
 	}
 	conf->writeEntry("WMExecutable", wmExecutableName);
