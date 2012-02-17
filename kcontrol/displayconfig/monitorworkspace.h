@@ -51,7 +51,7 @@ private:
 class DraggableMonitor: public TQLabel
 {
 	Q_OBJECT
-	TQ_OBJECT
+	
 public:
 	DraggableMonitor( TQWidget* parent, const char* name, int wflags );
 	~DraggableMonitor();
@@ -78,7 +78,7 @@ private:
 class MonitorWorkspace : public TQWorkspace
 {
 	Q_OBJECT
-	TQ_OBJECT
+	
 public:
 	MonitorWorkspace( TQWidget* parent, const char* name );
 	~MonitorWorkspace();

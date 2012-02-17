@@ -39,7 +39,7 @@ class KConfig;
 class KSplash: public TQWidget, virtual public KSplashIface
 {
   Q_OBJECT
-  TQ_OBJECT
+  
 
 public:
   KSplash(const char *name = "ksplash");

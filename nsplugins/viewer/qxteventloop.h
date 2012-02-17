@@ -50,7 +50,7 @@ class QXtEventLoopPrivate;
 class QXtEventLoop : public TQEventLoop
 {
     Q_OBJECT
-    TQ_OBJECT
+    
 
 public:
     QXtEventLoop( const char *applicationClass, XtAppContext context = NULL, XrmOptionDescRec *options = 0, int numOptions = 0);

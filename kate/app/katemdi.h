@@ -41,7 +41,7 @@ namespace KateMDI {
 class Splitter : public TQSplitter
 {
   Q_OBJECT
-  TQ_OBJECT
+  
 
   public:
     Splitter(Orientation o, TQWidget* parent=0, const char* name=0);
@@ -61,7 +61,7 @@ class Splitter : public TQSplitter
 class ToggleToolViewAction : public KToggleAction
 {
   Q_OBJECT
-  TQ_OBJECT
+  
 
   public:
     ToggleToolViewAction ( const TQString& text, const KShortcut& cut,
@@ -80,7 +80,7 @@ class ToggleToolViewAction : public KToggleAction
 class GUIClient : public TQObject, public KXMLGUIClient
 {
   Q_OBJECT
-  TQ_OBJECT
+  
 
   public:
     GUIClient ( class MainWindow *mw );
@@ -105,7 +105,7 @@ class GUIClient : public TQObject, public KXMLGUIClient
 class ToolView : public TQVBox
 {
   Q_OBJECT
-  TQ_OBJECT
+  
 
   friend class Sidebar;
   friend class MainWindow;
@@ -180,7 +180,7 @@ class ToolView : public TQVBox
 class Sidebar : public KMultiTabBar
 {
   Q_OBJECT
-  TQ_OBJECT
+  
 
   public:
     Sidebar (KMultiTabBar::KMultiTabBarPosition pos, class MainWindow *mainwin, TQWidget *parent);
@@ -253,7 +253,7 @@ class Sidebar : public KMultiTabBar
 class MainWindow : public KParts::MainWindow
 {
   Q_OBJECT
-  TQ_OBJECT
+  
 
   friend class ToolView;
 

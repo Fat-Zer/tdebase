@@ -38,7 +38,7 @@ class KRecentFilesAction;
 class KWrite : public KParts::MainWindow
 {
   Q_OBJECT
-  TQ_OBJECT
+  
 
   public:
     KWrite(KTextEditor::Document * = 0L);
@@ -123,7 +123,7 @@ class KWrite : public KParts::MainWindow
 class KWriteEditorChooser: public KDialogBase
 {
   Q_OBJECT
-  TQ_OBJECT
+  
 
   public:
     KWriteEditorChooser(TQWidget *parent);

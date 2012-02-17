@@ -54,7 +54,7 @@ class KBackgroundManager
       public KBackgroundIface
 {
     Q_OBJECT
-    TQ_OBJECT
+    
 
 public:
     KBackgroundManager(TQWidget *desktop, KWinModule* twinModule);

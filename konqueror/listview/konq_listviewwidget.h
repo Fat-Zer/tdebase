@@ -80,7 +80,7 @@ class KonqBaseListViewWidget : public KListView
    friend class ListViewBrowserExtension;
 
    Q_OBJECT
-   TQ_OBJECT
+   
 public:
    KonqBaseListViewWidget( KonqListView *parent, TQWidget *parentWidget );
    virtual ~KonqBaseListViewWidget();

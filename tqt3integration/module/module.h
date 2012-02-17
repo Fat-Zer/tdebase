@@ -37,7 +37,7 @@ class Module
     : public KDEDModule
     {
     Q_OBJECT
-  TQ_OBJECT
+  
     public:
         Module( const TQCString& obj );
         // DCOP
@@ -70,7 +70,7 @@ class KFileDialog
     : public ::KFileDialog
     {
     Q_OBJECT
-  TQ_OBJECT
+  
     public:
         KFileDialog(const TQString& startDir, const TQString& filter,
             TQWidget *parent, const char *name, bool modal)
@@ -87,7 +87,7 @@ class KDirSelectDialog
     : public ::KDirSelectDialog
     {
     Q_OBJECT
-  TQ_OBJECT
+  
     public:
         KDirSelectDialog(const TQString& startDir, bool localOnly,
             TQWidget *parent, const char *name, bool modal)
@@ -104,7 +104,7 @@ class KColorDialog
     : public ::KColorDialog
     {
     Q_OBJECT
-  TQ_OBJECT
+  
     public:
         KColorDialog( TQWidget *parent, const char *name, bool modal )
             : ::KColorDialog( parent, name, modal )
@@ -119,7 +119,7 @@ class KFontDialog
     : public ::KFontDialog
     {
     Q_OBJECT
-  TQ_OBJECT
+  
     public:
         KFontDialog( TQWidget *parent, const char *name, bool onlyFixed, bool modal,
             const TQStringList &fontlist = TQStringList(), bool makeFrame = true,
@@ -136,7 +136,7 @@ class KDialogBase
     : public ::KDialogBase
     {
     Q_OBJECT
-  TQ_OBJECT
+  
     public:
         KDialogBase( const TQString &caption, int buttonMask=Yes|No|Cancel,
 		 ButtonCode defaultButton=Yes, ButtonCode escapeButton=Cancel,
