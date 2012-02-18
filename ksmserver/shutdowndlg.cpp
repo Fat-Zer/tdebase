@@ -1028,6 +1028,9 @@ KSMShutdownDlg::KSMShutdownDlg( TQWidget* parent,
 
 KSMShutdownDlg::~KSMShutdownDlg()
 {
+#ifdef WITH_UPOWER
+#else // WITH_UPOWER
+
 #ifdef COMPILE_HALBACKEND
 	if (m_halCtx)
 	{
@@ -1037,6 +1040,8 @@ KSMShutdownDlg::~KSMShutdownDlg()
 		libhal_ctx_free(m_halCtx);
 	}
 #endif
+
+#endif // WITH_UPOWER
 }
 
 
