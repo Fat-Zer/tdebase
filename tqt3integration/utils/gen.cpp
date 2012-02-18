@@ -257,7 +257,7 @@ void parseFunction( const TQString& details )
                 arg.name = "wmclass1";
                 arg.type = "TQCString";
                 arg.const_ref = true;
-                arg.create = "qAppName";
+                arg.create = "tqAppName";
                 function.args.append( arg );
                 arg.name = "wmclass2";
                 arg.create = "qAppClass";
