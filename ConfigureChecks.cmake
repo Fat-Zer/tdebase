@@ -235,7 +235,8 @@ if( BUILD_TDM OR BUILD_KSMSERVER )
     if( NOT DBUS_1_TQT_FOUND )
       tde_message_fatal( "dbus-tqt-1 is required, but was not found on your system" )
     endif( )
-  else( )
+  endif( )
+  if( WITH_HAL )
     # check for dbus-tqt
     # dbus-tqt need Qt flags
     pkg_check_modules( DBUS_TQT REQUIRED dbus-tqt )
