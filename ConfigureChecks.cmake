@@ -9,6 +9,8 @@
 #
 #################################################
 
+tde_setup_architecture_flags( )
+
 # termios.h (tdm, kioslave)
 if( BUILD_TDM OR BUILD_KIOSLAVES )
   check_include_file( termios.h HAVE_TERMIOS_H )
