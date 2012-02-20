@@ -23,6 +23,7 @@ License. See the file "COPYING" for the exact licensing terms.
 #include <tqwhatsthis.h>
 #include <twin.h>
 #include <kiconloader.h>
+#include <klocale.h>
 #include <stdlib.h>
 
 #include "bridge.h"
@@ -102,6 +103,7 @@ Client::Client( Workspace *ws )
         in_layer( UnknownLayer ),
         ping_timer( NULL ),
         process_killer( NULL ),
+        process_resumer( NULL ),
         user_time( CurrentTime ), // not known yet
         allowed_actions( 0 ),
         postpone_geometry_updates( 0 ),
@@ -174,7 +176,7 @@ Client::Client( Workspace *ws )
     frame_geometry = TQRect( 0, 0, 100, 100 ); // so that decorations don't start with size being (0,0)
     client_size = TQSize( 100, 100 );
     custom_opacity = false;
-    rule_opacity_active = 0;; //translucency rules
+    rule_opacity_active = 0; //translucency rules
     rule_opacity_inactive = 0; //dito.
 
     // SELI initialize xsizehints??
@@ -678,6 +680,9 @@ void Client::minimize( bool avoid_animation )
 
 void Client::unminimize( bool avoid_animation )
     {
+    if (!queryUserSuspendedResume())
+        return;
+
     if( !isMinimized())
         return;
 
@@ -1840,7 +1845,7 @@ bool Client::isSuspendable() const
     pid_t pid = info->pid();
     if( pid <= 0 || machine.isEmpty()) // needed properties missing
         return false;
-    kdDebug( 1212 ) << "Suspend process:" << pid << "(" << machine << ")" << endl;
+    kdDebug( 1212 ) << "Check suspendable process:" << pid << "(" << machine << ")" << endl;
     if( machine != "localhost" )
         {
         return false;
@@ -1884,7 +1889,7 @@ bool Client::isResumeable() const
     pid_t pid = info->pid();
     if( pid <= 0 || machine.isEmpty()) // needed properties missing
         return false;
-    kdDebug( 1212 ) << "Suspend process:" << pid << "(" << machine << ")" << endl;
+    kdDebug( 1212 ) << "Check resumeable process:" << pid << "(" << machine << ")" << endl;
     if( machine != "localhost" )
         {
         return false;
@@ -1922,6 +1927,36 @@ bool Client::isResumeable() const
         }
     }
 
+bool Client::queryUserSuspendedResume()
+    {
+        if (isResumeable())
+            {
+            if (process_resumer != NULL)
+                {
+                return false;
+                }
+            process_resumer = new KProcess( this );
+            *process_resumer << KStandardDirs::findExe( "twin_resumer_helper" )
+                << "--pid" << TQCString().setNum( info->pid() ) << "--hostname" << wmClientMachine( true )
+                << "--windowname" << caption().utf8()
+                << "--applicationname" << resourceClass()
+                << "--wid" << TQCString().setNum( window());
+            connect( process_resumer, TQT_SIGNAL( processExited( KProcess* )),
+                TQT_SLOT( processResumerExited()));
+            if( !process_resumer->start( KProcess::NotifyOnExit ))
+                {
+                delete process_resumer;
+                process_resumer = NULL;
+                return true;
+                }
+            return false;
+            }
+        else
+            {
+            return true;
+            }
+    }
+
 void Client::suspendWindow()
     {
     TQCString machine = wmClientMachine( true );
@@ -1934,7 +1969,26 @@ void Client::suspendWindow()
         return;
         }
     else
+        {
+        for ( ClientList::ConstIterator it = workspace()->clients.begin(); it != workspace()->clients.end(); ++it)
+            {
+            Client* nextclient = *it;
+            pid_t nextpid = nextclient->info->pid();
+            TQCString nextmachine = nextclient->wmClientMachine( true );
+            if( nextpid > 0 && (!nextmachine.isEmpty()))
+                {
+                if( ( nextmachine == "localhost" ) && ( pid == nextpid ) )
+                    {
+                    TQString newCaption = TQString(readName()).append(" <").append(i18n("Suspended")).append(">");
+                    nextclient->info->setVisibleName(newCaption.utf8());
+                    nextclient->info->setVisibleIconName(newCaption.utf8());
+                    nextclient->minimized_before_suspend = nextclient->isMinimized();
+                    nextclient->minimize(true);
+                    }
+                }
+            }
         ::kill( pid, SIGSTOP );
+        }
     }
 
 void Client::resumeWindow()
@@ -1949,7 +2003,26 @@ void Client::resumeWindow()
         return;
         }
     else
+        {
         ::kill( pid, SIGCONT );
+        for ( ClientList::ConstIterator it = workspace()->clients.begin(); it != workspace()->clients.end(); ++it)
+            {
+            Client* nextclient = *it;
+            pid_t nextpid = nextclient->info->pid();
+            TQCString nextmachine = nextclient->wmClientMachine( true );
+            if( nextpid > 0 && (!nextmachine.isEmpty()))
+                {
+                if( ( nextmachine == "localhost" ) && ( pid == nextpid ) )
+                    {
+                        if (!nextclient->minimized_before_suspend)
+                        {
+                        nextclient->unminimize(true);
+                        }
+                    nextclient->updateCaption();
+                    }
+                }
+            }
+        }
     }
 
 void Client::processKillerExited()
@@ -1957,6 +2030,18 @@ void Client::processKillerExited()
     kdDebug( 1212 ) << "Killer exited" << endl;
     delete process_killer;
     process_killer = NULL;
+    }
+
+void Client::processResumerExited()
+    {
+    kdDebug( 1212 ) << "Resumer exited" << endl;
+    if (process_resumer->exitStatus() == 0)
+        {
+        resumeWindow();
+        takeFocus( Allowed );
+        }
+    delete process_resumer;
+    process_resumer = NULL;
     }
 
 void Client::setSkipTaskbar( bool b, bool from_outside )
@@ -2178,7 +2263,7 @@ void Client::setCaption( const TQString& s, bool force )
             info->setVisibleName( caption().utf8() );
             reset_name = false;
             }
-        if(( was_suffix && cap_suffix.isEmpty()
+        if(( (was_suffix && cap_suffix.isEmpty())
             || reset_name )) // if it was new window, it may have old value still set, if the window is reused
             {
             info->setVisibleName( "" ); // remove
@@ -2270,10 +2355,12 @@ void Client::readIcons( Window win, TQPixmap* icon, TQPixmap* miniicon )
     if( icon != NULL )
         *icon = KWin::icon( win, 32, 32, TRUE, KWin::NETWM | KWin::WMHints );
     if( miniicon != NULL )
+        {
         if( icon == NULL || !icon->isNull())
             *miniicon = KWin::icon( win, 16, 16, TRUE, KWin::NETWM | KWin::WMHints );
         else
             *miniicon = TQPixmap();
+        }
     }
 
 void Client::getIcons()
@@ -2745,10 +2832,12 @@ void Client::updateOpacity()
             {
             for( ClientList::ConstIterator it = group()->members().begin(); it != group()->members().end(); it++ )
                 if ((*it)->isDialog() || (*it)->isUtility())
+                    {
                     if( (*it)->ruleOpacityActive() )
                         (*it)->setOpacity((*it)->ruleOpacityActive() < 0xFFFFFFFF, (*it)->ruleOpacityActive());
                     else
                         (*it)->setOpacity(options->translucentActiveWindows, options->activeWindowOpacity);
+                    }
             }
         }
     else
@@ -2819,10 +2908,12 @@ void Client::updateOpacity()
             {
             for( ClientList::ConstIterator it = group()->members().begin(); it != group()->members().end(); it++ )
                 if ((*it)->isUtility()) //don't deactivate dialogs...
+                    {
                     if( (*it)->ruleOpacityInactive() )
                         (*it)->setOpacity((*it)->ruleOpacityInactive() < 0xFFFFFFFF, (*it)->ruleOpacityInactive());
                     else
                         (*it)->setOpacity(options->translucentInactiveWindows && !((*it)->keepAbove() && options->keepAboveAsActive), options->inactiveWindowOpacity);
+                    }
             }
         }
     }

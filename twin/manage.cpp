@@ -538,6 +538,12 @@ bool Client::manage( Window w, bool isMapped )
     workspace()->discardUsedWindowRules( this, false ); // remove ApplyNow rules
     updateWindowRules(); // was blocked while !isManaged()
 
+// Handle suspended processes
+    if (isResumeable())
+        {
+        suspendWindow();	// It won't hurt to stop the process again, and this will update the displayed captions
+        }
+
 // TODO there's a small problem here - isManaged() depends on the mapping state,
 // but this client is not yet in Workspace's client list at this point, will
 // be only done in addClient()

@@ -13,6 +13,7 @@ project( twin )
 
 add_subdirectory( lib )
 add_subdirectory( killer )
+add_subdirectory( resumer )
 add_subdirectory( kcmtwin )
 add_subdirectory( pics )
 add_subdirectory( clients )

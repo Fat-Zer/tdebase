@@ -302,6 +302,7 @@ class Client : public TQObject, public KDecorationDefines
         void killWindow();
         void suspendWindow();
         void resumeWindow();
+        bool queryUserSuspendedResume();
         void maximize( MaximizeMode );
         void toggleShade();
         void showContextHelp();
@@ -383,6 +384,7 @@ class Client : public TQObject, public KDecorationDefines
     private slots:
         void pingTimeout();
         void processKillerExited();
+        void processResumerExited();
         void demandAttentionKNotify();
 	void drawShadow();
 	void drawShadowAfter(Client *after);
@@ -560,6 +562,7 @@ class Client : public TQObject, public KDecorationDefines
         Layer in_layer;
         TQTimer* ping_timer;
         KProcess* process_killer;
+        KProcess* process_resumer;
         Time ping_timestamp;
         Time user_time;
         unsigned long allowed_actions;
@@ -598,6 +601,7 @@ class Client : public TQObject, public KDecorationDefines
         TQTimer* demandAttentionKNotifyTimer;
 
         friend bool performTransiencyCheck();
+        bool minimized_before_suspend;
     };
 
 // helper for Client::postponeGeometryUpdates() being called in pairs (true/false)

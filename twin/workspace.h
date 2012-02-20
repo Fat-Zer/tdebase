@@ -647,6 +647,7 @@ class Workspace : public TQObject, public KWinInterface, public KDecorationDefin
         Window null_focus_window;
         bool forced_global_mouse_grab;
         friend class StackingUpdatesBlocker;
+        friend class Client;
         
         //kompmgr
         TQSlider *transSlider;
