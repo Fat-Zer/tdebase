@@ -68,6 +68,10 @@ TQPopupMenu* Workspace::clientPopup()
 	advanced_popup->insertItem( i18n("Shad&ow"), Options::ShadowOp );
         advanced_popup->insertItem( SmallIconSet("key_bindings"),
             i18n("Window &Shortcut...")+'\t'+keys->shortcut("Setup Window Shortcut").seq(0).toString(), Options::SetupWindowShortcutOp );
+// FIXME
+// Uncomment these actions when twin can handle suspended applications in a user friendly manner
+//        advanced_popup->insertItem( SmallIconSet( "suspend" ), i18n("&Suspend Application"), Options::SuspendWindowOp );
+//        advanced_popup->insertItem( SmallIconSet( "exec" ), i18n("&Resume Application"), Options::ResumeWindowOp );
         advanced_popup->insertItem( SmallIconSet( "wizard" ), i18n("&Special Window Settings..."), Options::WindowRulesOp );
         advanced_popup->insertItem( SmallIconSet( "wizard" ), i18n("&Special Application Settings..."), Options::ApplicationRulesOp );
 
@@ -171,6 +175,8 @@ void Workspace::clientPopupAboutToShow()
     advanced_popup->setItemChecked( Options::KeepBelowOp, active_popup_client->keepBelow() );
     advanced_popup->setItemChecked( Options::FullScreenOp, active_popup_client->isFullScreen() );
     advanced_popup->setItemEnabled( Options::FullScreenOp, active_popup_client->userCanSetFullScreen() );
+    advanced_popup->setItemEnabled( Options::SuspendWindowOp, active_popup_client->isSuspendable() );
+    advanced_popup->setItemEnabled( Options::ResumeWindowOp, active_popup_client->isResumeable() );
     advanced_popup->setItemChecked( Options::NoBorderOp, active_popup_client->noBorder() );
     advanced_popup->setItemEnabled( Options::NoBorderOp, active_popup_client->userCanSetNoBorder() );
     
@@ -435,6 +441,12 @@ void Workspace::performWindowOperation( Client* c, Options::WindowOperation op )
             }
         case Options::OperationsOp:
             c->performMouseCommand( Options::MouseShade, TQCursor::pos());
+            break;
+        case Options::SuspendWindowOp:
+            c->suspendWindow();
+            break;
+        case Options::ResumeWindowOp:
+            c->resumeWindow();
             break;
         case Options::WindowRulesOp:
             editWindowRules( c, false );
@@ -989,6 +1001,22 @@ void Workspace::slotKillWindow()
     {
     KillWindow kill( this );
     kill.start();
+    }
+
+/*!
+  Suspend Window feature
+ */
+void Workspace::slotSuspendWindow()
+    {
+    active_popup_client->suspendWindow();
+    }
+
+/*!
+  Resume Window feature
+ */
+void Workspace::slotResumeWindow()
+    {
+    active_popup_client->resumeWindow();
     }
 
 /*!

@@ -1834,6 +1834,124 @@ void Client::killProcess( bool ask, Time timestamp )
         }
     }
 
+bool Client::isSuspendable() const
+    {
+    TQCString machine = wmClientMachine( true );
+    pid_t pid = info->pid();
+    if( pid <= 0 || machine.isEmpty()) // needed properties missing
+        return false;
+    kdDebug( 1212 ) << "Suspend process:" << pid << "(" << machine << ")" << endl;
+    if( machine != "localhost" )
+        {
+        return false;
+        }
+    else
+        {
+        FILE *procfile;
+        if(chdir(TQString("/proc/%1").arg(pid).ascii()) == 0)
+            {
+            procfile = fopen("stat", "r");
+            }
+        if(!procfile)
+            {
+            return false;
+            }
+        else
+            {
+            long long int procpid;
+            char tcomm[PATH_MAX];
+            char state;
+            fscanf(procfile, "%lld ", &procpid);
+            fscanf(procfile, "%s ", tcomm);
+            fscanf(procfile, "%c ", &state);
+            if( state != 'T' )
+                {
+                fclose(procfile);
+                return true;
+                }
+            else
+                {
+                fclose(procfile);
+                return false;
+                }
+            }
+        }
+    }
+
+bool Client::isResumeable() const
+    {
+    TQCString machine = wmClientMachine( true );
+    pid_t pid = info->pid();
+    if( pid <= 0 || machine.isEmpty()) // needed properties missing
+        return false;
+    kdDebug( 1212 ) << "Suspend process:" << pid << "(" << machine << ")" << endl;
+    if( machine != "localhost" )
+        {
+        return false;
+        }
+    else
+        {
+        FILE *procfile;
+        if(chdir(TQString("/proc/%1").arg(pid).ascii()) == 0)
+            {
+            procfile = fopen("stat", "r");
+            }
+        if(!procfile)
+            {
+            return false;
+            }
+        else
+            {
+            long long int procpid;
+            char tcomm[PATH_MAX];
+            char state;
+            fscanf(procfile, "%lld ", &procpid);
+            fscanf(procfile, "%s ", tcomm);
+            fscanf(procfile, "%c ", &state);
+            if( state == 'T' )
+                {
+                fclose(procfile);
+                return true;
+                }
+            else
+                {
+                fclose(procfile);
+                return false;
+                }
+            }
+        }
+    }
+
+void Client::suspendWindow()
+    {
+    TQCString machine = wmClientMachine( true );
+    pid_t pid = info->pid();
+    if( pid <= 0 || machine.isEmpty()) // needed properties missing
+        return;
+    kdDebug( 1212 ) << "Suspend process:" << pid << "(" << machine << ")" << endl;
+    if( machine != "localhost" )
+        {
+        return;
+        }
+    else
+        ::kill( pid, SIGSTOP );
+    }
+
+void Client::resumeWindow()
+    {
+    TQCString machine = wmClientMachine( true );
+    pid_t pid = info->pid();
+    if( pid <= 0 || machine.isEmpty()) // needed properties missing
+        return;
+    kdDebug( 1212 ) << "Resume process:" << pid << "(" << machine << ")" << endl;
+    if( machine != "localhost" )
+        {
+        return;
+        }
+    else
+        ::kill( pid, SIGCONT );
+    }
+
 void Client::processKillerExited()
     {
     kdDebug( 1212 ) << "Killer exited" << endl;

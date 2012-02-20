@@ -1909,6 +1909,60 @@ void Workspace::killWindowId( Window window_to_kill )
         XKillClient( qt_xdisplay(), window_to_kill );
     }
 
+void Workspace::suspendWindowId( Window window_to_suspend )
+    {
+    if( window_to_suspend == None )
+        return;
+    Window window = window_to_suspend;
+    Client* client = NULL;
+    for(;;)
+        {
+        client = findClient( FrameIdMatchPredicate( window ));
+        if( client != NULL ) // found the client
+            break;
+        Window parent, root;
+        Window* children;
+        unsigned int children_count;
+        XQueryTree( qt_xdisplay(), window, &root, &parent, &children, &children_count );
+        if( children != NULL )
+            XFree( children );
+        if( window == root ) // we didn't find the client, probably an override-redirect window
+            break;
+        window = parent; // go up
+        }
+    if( client != NULL )
+        client->suspendWindow();
+    else
+        return;
+    }
+
+void Workspace::resumeWindowId( Window window_to_resume )
+    {
+    if( window_to_resume == None )
+        return;
+    Window window = window_to_resume;
+    Client* client = NULL;
+    for(;;)
+        {
+        client = findClient( FrameIdMatchPredicate( window ));
+        if( client != NULL ) // found the client
+            break;
+        Window parent, root;
+        Window* children;
+        unsigned int children_count;
+        XQueryTree( qt_xdisplay(), window, &root, &parent, &children, &children_count );
+        if( children != NULL )
+            XFree( children );
+        if( window == root ) // we didn't find the client, probably an override-redirect window
+            break;
+        window = parent; // go up
+        }
+    if( client != NULL )
+        client->resumeWindow();
+    else
+        return;
+    }
+
 
 void Workspace::sendPingToWindow( Window window, Time timestamp )
     {

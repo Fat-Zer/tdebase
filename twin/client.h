@@ -113,6 +113,9 @@ class Client : public TQObject, public KDecorationDefines
         bool isActive() const;
         void setActive( bool, bool updateOpacity = true );
 
+        bool isSuspendable() const;
+        bool isResumeable() const;
+
         int desktop() const;
         void setDesktop( int );
         bool isOnDesktop( int d ) const;
@@ -297,6 +300,8 @@ class Client : public TQObject, public KDecorationDefines
         void unminimize( bool avoid_animation = false );
         void closeWindow();
         void killWindow();
+        void suspendWindow();
+        void resumeWindow();
         void maximize( MaximizeMode );
         void toggleShade();
         void showContextHelp();

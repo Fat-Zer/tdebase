@@ -97,8 +97,12 @@ class Workspace : public TQObject, public KWinInterface, public KDecorationDefin
          * @internal
          */
         void killWindowId( Window window);
+        void suspendWindowId( Window window);
+        void resumeWindowId( Window window);
 
         void killWindow() { slotKillWindow(); }
+        void suspendWindow() { slotSuspendWindow(); }
+        void resumeWindow() { slotResumeWindow(); }
 
         WId rootWin() const;
 
@@ -369,6 +373,8 @@ class Workspace : public TQObject, public KWinInterface, public KDecorationDefin
         void slotReconfigure();
 
         void slotKillWindow();
+        void slotSuspendWindow();
+        void slotResumeWindow();
 
         void slotGrabWindow();
         void slotGrabDesktop();

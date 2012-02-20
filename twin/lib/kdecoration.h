@@ -100,7 +100,9 @@ public:
         NoOp,
         SetupWindowShortcutOp,
         ApplicationRulesOp,    ///< @since 3.5
-        ShadowOp               ///< @since 3.5.12
+        ShadowOp,              ///< @since 3.5.12
+        SuspendWindowOp,       ///< @since R14.0
+        ResumeWindowOp         ///< @since R14.0
         };
     /**
      * Basic color types that should be recognized by all decoration styles.
