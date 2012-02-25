@@ -4,7 +4,7 @@
   <!ENTITY contact SYSTEM "contact.docbook">
   <!ENTITY help SYSTEM "help.docbook">
   <!ENTITY support SYSTEM "support.docbook">
-  <!ENTITY whatiskde SYSTEM "whatistde.docbook">
+  <!ENTITY whatistde SYSTEM "whatistde.docbook">
   <!ENTITY welcome SYSTEM "welcome.docbook">
   <!ENTITY quickstart SYSTEM "quickstart/index.docbook" NDATA SGML>
   <!ENTITY userguide SYSTEM "userguide/index.docbook" NDATA SGML>
@@ -64,7 +64,7 @@ the &UNIX; operating system.</para>
 
 &welcome;
 &help;
-&whatiskde;
+&whatistde;
 &contact;
 &support;
 
