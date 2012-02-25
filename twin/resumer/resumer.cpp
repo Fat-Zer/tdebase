@@ -59,9 +59,9 @@ int main( int argc, char* argv[] )
     Window id = args->getOption( "wid" ).toULong( &id_ok );
     args->clear();
     if( !pid_ok || pid == 0 || !id_ok || id == None
-	|| hostname.isEmpty() || caption.isEmpty() || appname.isEmpty())
+	|| hostname.isEmpty() || caption.isEmpty())
         {
-	KCmdLineArgs::usage( i18n( "This helper utility is not supposed to be called directly." ));
+        printf("%s\n", i18n( "This helper utility is not supposed to be called directly." ).ascii());
 	return 2;
         }
     TQString question = i18n(

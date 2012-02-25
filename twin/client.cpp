@@ -1841,6 +1841,9 @@ void Client::killProcess( bool ask, Time timestamp )
 
 bool Client::isSuspendable() const
     {
+    bool cansuspend = true;
+    if( skipTaskbar() || skipPager() )
+        return false;
     TQCString machine = wmClientMachine( true );
     pid_t pid = info->pid();
     if( pid <= 0 || machine.isEmpty()) // needed properties missing
@@ -1872,7 +1875,30 @@ bool Client::isSuspendable() const
             if( state != 'T' )
                 {
                 fclose(procfile);
-                return true;
+                // Make sure no windows of this process are special
+                for ( ClientList::ConstIterator it = workspace()->clients.begin(); it != workspace()->clients.end(); ++it)
+                    {
+                    Client* nextclient = *it;
+                    pid_t nextpid = nextclient->info->pid();
+                    TQCString nextmachine = nextclient->wmClientMachine( true );
+                    if( nextpid > 0 && (!nextmachine.isEmpty()))
+                        {
+                        if( ( nextmachine == "localhost" ) && ( pid == nextpid ) )
+                            {
+                            if( nextclient->skipTaskbar() || nextclient->skipPager() )
+                                cansuspend = false;
+                            }
+                        }
+                    }
+                // Process exception list
+                TQString execname(tcomm);
+                execname.truncate(execname.length()-1);
+                execname = execname.remove(0,1);
+                // FIXME This list should not be hardcoded
+                if( (execname == "kdesktop") || (execname == "kicker") )
+                    return false;
+                else
+                    return cansuspend;
                 }
             else
                 {
@@ -1935,6 +1961,7 @@ bool Client::queryUserSuspendedResume()
                 {
                 return false;
                 }
+            // FIXME We should display a busy cursor until twin_resumer_helper loads
             process_resumer = new KProcess( this );
             *process_resumer << KStandardDirs::findExe( "twin_resumer_helper" )
                 << "--pid" << TQCString().setNum( info->pid() ) << "--hostname" << wmClientMachine( true )
@@ -2035,7 +2062,8 @@ void Client::processKillerExited()
 void Client::processResumerExited()
     {
     kdDebug( 1212 ) << "Resumer exited" << endl;
-    if (process_resumer->exitStatus() == 0)
+    // 0 means the user clicked Resume; 2 means that the resumer dialog failed to launch somehow
+    if ((process_resumer->exitStatus() == 0) || (process_resumer->exitStatus() == 2))
         {
         resumeWindow();
         takeFocus( Allowed );
@@ -2672,6 +2700,7 @@ void Client::setCursor( Position m )
     }
 
 // TODO mit nejake checkCursor(), ktere se zavola v manage() a pri vecech, kdy by se kurzor mohl zmenit?
+// TRANSLATION: TODO: have a checkCursor() function, which is called both in manage() and in cases where the cursor might change
 void Client::setCursor( const TQCursor& c )
     {
     if( c.handle() == cursor.handle())
