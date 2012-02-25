@@ -21,14 +21,14 @@
 
 <para>For my small office, I was looking for a long time for a
 <acronym>PIM</acronym> solution that let me share data, so my secretary and
-I can share contacts, appointments and so on. Being a &kde; user, I've heard
+I can share contacts, appointments and so on. Being a &tde; user, I've heard
 about the Kroupware project and wait its completion. But when I saw how
 complicated is the architecture and setup of the
 <application>Kolab</application> server 1.0 (the server side of the
 project), I gave up, waiting for an easier to deploy
 <application>Kolab</application> 2.0. In any case, the
 <application>Kolab</application> stuff was clearly too much for my
-needs. Fortunately in the &kde; wiki I've found some piece of
+needs. Fortunately in the &tde; wiki I've found some piece of
 <acronym>IRC</acronym> conversation where they were talking about sharing
 data without the <application>Kolab</application> infrastructure... mmm so
 interesting!</para>
@@ -38,12 +38,12 @@ without the need of installing the <application>Kolab</application> server
 or another groupware backend. It can work with just an
 <acronym>IMAP</acronym> server, that can be easily set up.</para>
 
-<para>My scenario is a server with Debian unstable and &kde; 3.4. I access
+<para>My scenario is a server with Debian unstable and &tde; 3.4. I access
 &kontact; and other fabulous GNU/Linux apps from windows using Cygwin/X,
 while waiting Wine project to be able to run the last Windows programs I
 need (and that are not available under GNU/Linux). I want to share contacts,
 events, todo, notes with my secretary.</para>
-  
+
 </sect1>
 
 <sect1 id="kontact-imap-whatis">
@@ -57,27 +57,27 @@ than on a local computer. Through IMAP the user can create, delete, or
 rename mailboxes; get new messages; delete messages; and perform search
 functions on mail. A separate protocol is required for sending mail. Also
 called Internet Mail Access Protocol.</para></blockquote> </para>
-  
+
 <para>So it can be considered a data storage. To use it you you need an
 <acronym>IMAP</acronym> server, such as <application>Cyrus</application>,
 <application>Courier</application> or <application>UW</application>.</para>
-  
+
 </sect1>
 
 <sect1 id="kontact-kolab-or-imap">
 <title><application>Kolab</application> or <acronym>IMAP</acronym>?</title>
-  
+
 <para><application>Kolab</application> brings the ability to share data
 between different clients. It makes possible for your secretary to use
 <application>Outlook</application> and you use &kontact;, for
 instance.</para>
-  
+
 <para>You will have a configuration interface which does user management, mail
 account setup, a central <acronym>LDAP</acronym> config data and addressbook
 server, spam and virus filtering, vacation scripts, free busy list handling,
 resource handling (rooms, cars), groups, distribution lists, automatic
 invitation handling, &etc;</para>
-  
+
 <para>But that can cause initial setup troubles. For a newbie like me it
 means: a long long frustrating nightmare, and too much complexity to manage
 once working. So no, thanks, I'll go to simple
@@ -87,15 +87,15 @@ once working. So no, thanks, I'll go to simple
 
 <sect1 id="kontact-imap-cyrus">
 <title>How to set up <acronym>IMAP</acronym> server <application>Cyrus</application></title>
-   
+
 <para>My choice is <application>Cyrus</application>, that is part of the
 <application>Kolab</application> set of software, so if l will go for
 <application>Kolab</application> in the future, at least I'm acquainted with
 it.</para> <para>Let's start the installation and the setup!</para>
-  
+
 <para>Become <systemitem class="username">root</systemitem>.</para>
 
-<screen># <userinput><command>apt-get</command> <command>install</command> cyrus21-imapd cyrus21-common cyrus21-admin cyrus21-client sasl-bin sasl2-bin</userinput> 
+<screen># <userinput><command>apt-get</command> <command>install</command> cyrus21-imapd cyrus21-common cyrus21-admin cyrus21-client sasl-bin sasl2-bin</userinput>
 <computeroutput>Installing cyrus21-imapd...</computeroutput><lineannotation>The installer asks something I've not understood about an search address... I just pressed <keycap>Enter</keycap></lineannotation>.</screen>
 
 <para>The installer also created the user <systemitem
@@ -222,7 +222,7 @@ structure.</para></note>
 
 <sect1 id="kontact-imap-clients">
 <title>How to setup &kontact; clients</title>
-  
+
 <para>I connect to my GNU/Linux office server PC (a sort of "black box"
 without monitor and keyboard) from 2 &Windows; 2000 PC with
 <application>Cygwin/X</application>, using them as a X-Window server (in the
@@ -230,7 +230,7 @@ near future I hope to replace both with 2 mini-itx thin clients using the
 LTSP). With this setup every user runs &kontact; on the same machine where
 <application>Cyrus</application> is installed and running
 (localhost).</para>
-  
+
 <para>To have &kontact; work with <acronym>IMAP</acronym>, there are these
 steps to complete:</para>
 
@@ -254,8 +254,8 @@ already)</para></step>
 <application>Cyrus</application> IMAP</para></step>
 
 </procedure>
-  
-<para>So login to &kde; with the first <quote>real user</quote> account you
+
+<para>So login to &tde; with the first <quote>real user</quote> account you
 want to provide groupware functionality to.</para>
 
 <para>Let's create the IMAP account in &kmail;.</para>
@@ -275,7 +275,7 @@ enter the following data:</para>
 <listitem>
 <para>A name that will be used for the <quote>local</quote> folder that
 points to this <acronym>IMAP</acronym> account.</para>
-</listitem> 
+</listitem>
 </varlistentry>
 <varlistentry>
 <term><guilabel>Login:</guilabel> <userinput>groupware</userinput></term>
@@ -304,12 +304,12 @@ computer as the <acronym>IMAP</acronym> server</para>
 </listitem>
 </varlistentry>
 </variablelist>
-  
+
 <para>Check <guilabel>store IMAP password</guilabel>
 so you will not be asked for it next time you run &kontact;. Check the
 <guilabel>Enable interval mail checking</guilabel> and set a value in
 minutes.</para>
-  
+
 <para>Note that we have checked the <guilabel>disconnected IMAP</guilabel>
 type account. This has the effect that a copy of the groupware data is
 stored <quote>locally</quote> to the client (under the home folder), and it
@@ -320,7 +320,7 @@ things run fast, because at every connection &kontact; has to fetch all data
 and have &korganizer; and &kaddressbook; interpret it. If you use
 <quote>disconnected IMAP</quote> data is cached locally, and only the
 <quote>delta</quote> (&ie; the data that has changed) is sent.</para>
-  
+
 <para>On the other end, if your users run &korganizer; on the same PC that
 runs the <acronym>IMAP</acronym> server, it seems reasonable to use
 <acronym>IMAP</acronym> (that is called <quote>online IMAP</quote>) to save
@@ -332,7 +332,7 @@ are not updated when someone adds events (you must manually switch to
 folder). In addition, at start up when it does read
 <guilabel>Calendar</guilabel> folders, you may see a tremendous flicker and
 slow data updates.</para>
-  
+
 <para>Now we have to tell &kontact; to use <acronym>IMAP</acronym> as the
 data source for it's various components. From the &kmenu;, choose
 <guimenuitem>Run command</guimenuitem>, run <userinput><command>kcmshell
@@ -341,7 +341,7 @@ kresources</command></userinput>. In the combo box select
 button, and choose <guilabel>Addressbook on IMAP Server via KMail</guilabel>. Then select that new line and
 press <guibutton>Use as Standard</guibutton> button. Do the same for
 <guilabel>Calendar</guilabel> and <guilabel>Notes</guilabel>.</para>
-  
+
 <para>Now we have to enable the &kmail; (and as a consequence, the whole
 &kontact;) groupware functionality:</para>
 
@@ -369,7 +369,7 @@ so we can see that happens. You can return here and check it once everything
 is clear.</para>
 </step>
 <step>
-<para>When you press OK you are prompted with: 
+<para>When you press OK you are prompted with:
 <computeroutput>&kmail; will now create the required folders for the IMAP
 resource as subfolders of Inbox</computeroutput> </para>
 <para>If you do not want this, press <guibutton>No</guibutton>, and the
@@ -411,7 +411,7 @@ are paths to local home files. Instead, the <guilabel>Contacts</guilabel>
 application does not show subitems below the <guilabel>Imap
 resource</guilabel>.</para>
 
-<para>You can now login to &kde; with a different username and set up
+<para>You can now login to &tde; with a different username and set up
 his/her &kontact; client in a very similar manner:</para>
 
 <procedure>
@@ -446,7 +446,7 @@ users.</para>
 <acronym>IMAP</acronym> implementation in &kontact; prior to version 1.01 is
 broken, so this setup will not work for them, so you want to use them, you
 need to use the previous setup.</para></note>
-    
+
 <para>In the previous setup, we have the same <quote>fake</quote> user, named
 <systemitem class="username">groupware</systemitem>, that is used by all the
 <quote>real</quote> &kontact; users (&ie; <systemitem
@@ -458,10 +458,10 @@ every real user has the same read/write permissions of the others, since
 everyone connects as the user <systemitem
 class="username">groupware</systemitem> to the <acronym>IMAP</acronym>
 server.</para>
-    
+
 <para>To limit access to some users (typically, providing read-only access),
 we can use the <acronym>ACL</acronym> (Access Control Lists).</para>
-    
+
 <para>Select in &kmail; a subfolder of <guilabel>office_gwdata</guilabel>
 inbox, for instance <guilabel>Calendar</guilabel>, and right click the
 mouse. Select <guilabel>Properties</guilabel><guilabel>Access
@@ -503,7 +503,7 @@ folders are subfolders of</guilabel> put the
 folders are subfolders of</guilabel> put the
 <guimenuitem>inbox</guimenuitem> that is subfolder of
 <guisubmenu>office_gwdata</guisubmenu>.</para>
-  
+
 <para>Now you have two branches of folder under
 <quote>office_gwdata</quote>:</para>
 
@@ -544,7 +544,7 @@ channels for their competence, patience and helpfulness.</para>
 <title>Special thanks to:</title>
 <listitem>
 <para>For the <application>Cyrus</application> <acronym>IMAP</acronym> part
-in #cyrus channel:</para> 
+in #cyrus channel:</para>
 <itemizedlist>
 <listitem>
 <para>[protagonist] Andy Morgan <email>morgan@orst.edu</email></para>
@@ -582,10 +582,10 @@ in #cyrus channel:</para>
 
 <itemizedlist>
 <title>Reference</title>
-<listitem><para>KDE: <ulink url="http://www.kde.org">http://www.kde.org</ulink></para></listitem>
+<listitem><para>TDE: <ulink url="http://www.kde.org">http://www.kde.org</ulink></para></listitem>
 <listitem><para>&kontact; website: <ulink url="http://www.kontact.org">http://www.kontact.org</ulink></para></listitem>
 <listitem><para>Kroupware project: <ulink url="http://www.kroupware.org">http://www.kroupware.org</ulink></para></listitem>
-<listitem><para>&kde; Community Wiki: <ulink url="http://wiki.kde.org">http://wiki.kde.org</ulink></para></listitem>
+<listitem><para>&tde; Community Wiki: <ulink url="http://wiki.kde.org">http://wiki.kde.org</ulink></para></listitem>
 <listitem><para>Wine project: <ulink url="http://www.winehq.org">http://www.winehq.org</ulink></para></listitem>
 <listitem><para>Cygwin/X project <ulink url="http://x.cygwin.com">http://x.cygwin.com</ulink></para></listitem>
 <listitem><para>LTSP project: <ulink url="http://www.ltsp.org">http://www.ltsp.org</ulink></para></listitem>

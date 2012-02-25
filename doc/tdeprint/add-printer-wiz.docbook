@@ -1,7 +1,7 @@
 <chapter id="add-printer-wizard-2">
 <title>The <quote>Add Printer Wizard</quote> for &CUPS;</title>
 
-<para>Clicking on the leftmost icon on the toolbar
+<para>Clicking on the left-most icon on the toolbar
 <inlinemediaobject><imageobject> <imagedata
 fileref="cr32-action-wizard.png" format="PNG"/></imageobject>
 </inlinemediaobject> in the upper part of the window starts the

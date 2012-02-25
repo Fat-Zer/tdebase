@@ -1,15 +1,14 @@
 <sect1 id="credits">
 <title>Credits</title>
 <para>
-&kde; is written by and copyright The &kde; Team.
+The &tde; Team thanks and acknowledges the original &kde; contributors of this guide.
 </para>
 
-<para>This document is copyright 2006 The &kde; Documentation
-Team. Individual credits are as follows:
+<para>Individual credits:
 <variablelist>
 
 <varlistentry>
-<term>Tom Albers <email>tomalbers@kde.nl</email></term>
+<term>Tom Albers</term>
 <listitem>
 
 <itemizedlist>
@@ -21,7 +20,7 @@ Team. Individual credits are as follows:
 </varlistentry>
 
 <varlistentry>
-<term>Waldo Bastian <email>bastian@kde.org</email></term>
+<term>Waldo Bastian</term>
 <listitem>
 
 <itemizedlist>
@@ -33,7 +32,7 @@ Team. Individual credits are as follows:
 </varlistentry>
 
 <varlistentry>
-<term>Gardner Bell <email>gbell72@rogers.com</email></term>
+<term>Gardner Bell</term>
 <listitem>
 
 <itemizedlist>
@@ -47,7 +46,7 @@ Team. Individual credits are as follows:
 </varlistentry>
 
 <varlistentry>
-<term>Gary Cramblitt <email>garycramblitt@comcast.net</email></term>
+<term>Gary Cramblitt</term>
 <listitem>
 
 <itemizedlist>
@@ -59,7 +58,7 @@ Team. Individual credits are as follows:
 </varlistentry>
 
 <varlistentry>
-<term>David Faure <email>faure@kde.org</email></term>
+<term>David Faure</term>
 <listitem>
 
 <itemizedlist>
@@ -71,7 +70,7 @@ Team. Individual credits are as follows:
 </varlistentry>
 
 <varlistentry>
-<term>Nicolas Goutte <email>goutte@kde.org</email></term>
+<term>Nicolas Goutte</term>
 <listitem>
 
 <itemizedlist>
@@ -83,7 +82,7 @@ Team. Individual credits are as follows:
 </varlistentry>
 
 <varlistentry>
-<term>&Francis.Giannaros; &Francis.Giannaros.mail;</term>
+<term>&Francis.Giannaros;</term>
 <listitem>
 
 <itemizedlist>
@@ -100,7 +99,7 @@ Team. Individual credits are as follows:
 </varlistentry>
 
 <varlistentry>
-<term>Adriaan de Groot <email>groot@kde.org</email></term>
+<term>Adriaan de Groot</term>
 <listitem>
 
 <itemizedlist>
@@ -114,7 +113,7 @@ Team. Individual credits are as follows:
 </varlistentry>
 
 <varlistentry>
-<term>J Hall <email>jes.hall@kdemail.net</email></term>
+<term>J Hall</term>
 <listitem>
 
 <itemizedlist>
@@ -140,7 +139,7 @@ Team. Individual credits are as follows:
 </varlistentry>
 
 <varlistentry>
-<term>&Anne-Marie.Mahfouf; &Anne-Marie.Mahfouf.mail;</term>
+<term>&Anne-Marie.Mahfouf;</term>
 <listitem>
 
 <itemizedlist>
@@ -151,7 +150,7 @@ Team. Individual credits are as follows:
 </varlistentry>
 
 <varlistentry>
-<term>&Richard.J.Moore; &Richard.J.Moore.mail;</term>
+<term>&Richard.J.Moore;</term>
 <listitem>
 
 <itemizedlist>
@@ -165,7 +164,7 @@ Team. Individual credits are as follows:
 </varlistentry>
 
 <varlistentry>
-<term>Peter Nuttall <email>p.s.nuttall@dur.ac.uk</email></term>
+<term>Peter Nuttall</term>
 <listitem>
 
 <itemizedlist>
@@ -177,7 +176,7 @@ Team. Individual credits are as follows:
 </varlistentry>
 
 <varlistentry>
-<term>Steven Robson <email>s.a.robson@sms.ed.ac.uk</email></term>
+<term>Steven Robson</term>
 <listitem>
 
 <itemizedlist>
@@ -190,24 +189,25 @@ linkend="file-manager"/> and <xref linkend="accessibility"/>.</para>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>&Philip.Rodrigues; &Philip.Rodrigues.mail;</term>
+<varlistentry><term>&Philip.Rodrigues;</term>
 <listitem>
 
 <itemizedlist>
 <listitem><para>Reviewing and proofreading.</para>
 </listitem>
-<listitem><para>Wrote <xref linkend="logging-in"
-/>.</para>
+<listitem><para>Wrote <xref linkend="windows-how-to-work"/>.</para>
 </listitem>
-<listitem><para>Wrote <xref linkend="using-the-clipboard" />.</para>
+<listitem><para>Wrote <xref linkend="panel-and-desktop"/>.</para>
 </listitem>
-<listitem><para>Wrote <xref
-linkend="configuring-programs" />.</para>
+<listitem><para>Wrote <xref linkend="logging-in"/>.</para>
 </listitem>
-<listitem><para>Wrote <xref linkend="menus" />.</para>
+<listitem><para>Wrote <xref linkend="using-the-clipboard"/>.</para>
 </listitem>
-<listitem><para>Marked up parts of <xref
-linkend="kde-for-administrators"/>.</para>
+<listitem><para>Wrote <xref linkend="configuring-programs"/>.</para>
+</listitem>
+<listitem><para>Wrote <xref linkend="menus"/>.</para>
+</listitem>
+<listitem><para>Marked up parts of <xref linkend="kde-for-administrators"/>.</para>
 </listitem>
 </itemizedlist>
 
@@ -215,7 +215,7 @@ linkend="kde-for-administrators"/>.</para>
 </varlistentry>
 
 <varlistentry>
-<term>Deepak Sarda <email>antrix@gmail.com</email></term>
+<term>Deepak Sarda</term>
 <listitem>
 
 <itemizedlist>
@@ -227,7 +227,7 @@ linkend="kde-for-administrators"/>.</para>
 </varlistentry>
 
 <varlistentry>
-<term>Robert Stoffers <email>robert_angie@ozemail.com.au</email></term>
+<term>Robert Stoffers</term>
 <listitem>
 
 <itemizedlist>
@@ -239,7 +239,7 @@ linkend="kde-for-administrators"/>.</para>
 </varlistentry>
 
 <varlistentry>
-<term>Juan Carlos Torres <email>carlosdgtorres@gmail.com</email></term>
+<term>Juan Carlos Torres</term>
 <listitem>
 
 <itemizedlist>
@@ -251,7 +251,7 @@ linkend="kde-for-administrators"/>.</para>
 </varlistentry>
 
 <varlistentry>
-<term>Simon Vermeersch <email>titeuf@ph34rus.org</email></term>
+<term>Simon Vermeersch</term>
 <listitem>
 
 <itemizedlist>
@@ -262,7 +262,7 @@ linkend="kde-for-administrators"/>.</para>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>&Lauri.Watts; &Lauri.Watts.mail;</term>
+<varlistentry><term>&Lauri.Watts;</term>
 <listitem>
 
 <itemizedlist>
@@ -278,8 +278,7 @@ linkend="kde-for-administrators"/>.</para>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>Christian Weickhmann
-<email>christian.weickhmann@gmx.de</email></term>
+<varlistentry><term>Christian Weickhmann</term>
 <listitem>
 
 <itemizedlist>

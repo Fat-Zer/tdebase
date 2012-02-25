@@ -12,13 +12,13 @@
 
 <!-- FIXME: The text is immensely repetitive. Fix that. -->
 
-<para>One of the main ways that you'll control programs in &kde; is
+<para>One of the main ways that you'll control programs in &tde; is
 via the program's menus. They provide access to nearly everything
 you'll need to do with that program. So that you can more easily
 remember where things are in the menus, and to help you learn new
 programs more easily, the menus have a standard layout. This means
 that once you know how to open a file in one program, you know how to
-open a file in any &kde; program. Let's take a look at the standard
+open a file in any &tde; program. Let's take a look at the standard
 menus:</para> <!-- TODO: Note that programs have other menu entries as well-->
 
 <!-- Probably a good place for a screenie, but we'd need one showing
@@ -33,7 +33,7 @@ menus:</para> <!-- TODO: Note that programs have other menu entries as well-->
 </menuchoice></term>
 <listitem><para>This entry will start a new, blank document that's
 appropriate to the program you're using. For example, in &kate; (the
-&kde; Advanced Text Editor) this entry creates a new text file.</para>
+&tde; Advanced Text Editor) this entry creates a new text file.</para>
 </listitem>
 </varlistentry>
 
@@ -43,10 +43,10 @@ appropriate to the program you're using. For example, in &kate; (the
 </shortcut><guimenuitem>Open...</guimenuitem>
 </menuchoice></term>
 <listitem><para>The <guimenuitem>Open...</guimenuitem> menu entry
-displays the &kde; <quote>Open File</quote> dialog box, where you can
+displays the &tde; <quote>Open File</quote> dialog box, where you can
 choose a file to open in the program you're using. The <quote>Open
 File</quote> dialog is also standardized, so it's the same for all
-&kde; programs. You can find out more about using this dialog
+&tde; programs. You can find out more about using this dialog
 somewhere else in this guide <!-- FIXME: real link -->.</para>
 <para>You probably noticed that this menu entry had an ellipsis (...)
 after the name of the entry. This means that clicking on the entry
@@ -65,7 +65,7 @@ any changes you made, and close the dialog, by clicking on the
 </menuchoice></term>
 <listitem><para>This menu entry will save any changes you've made to
 the file that you are currently working on. If this is the first time
-that you've saved the file, the &kde; <quote>Save File</quote> dialog
+that you've saved the file, the &tde; <quote>Save File</quote> dialog
 will appear, and ask you for a name and location for the file. <!-- TODO: Point to another section for more info --></para>
 </listitem>
 </varlistentry>
@@ -116,7 +116,7 @@ World!</quote>.
 </keycombo>
 </shortcut><guimenuitem>Print...</guimenuitem>
 </menuchoice></term>
-<listitem><para>This menu entry displays the &kde;
+<listitem><para>This menu entry displays the &tde;
 <quote>Print</quote> dialog, read to print the current
 document. Youcan find more information about the options available in
 this dialog in <xref linkend="printing-from-apps"/>.</para>

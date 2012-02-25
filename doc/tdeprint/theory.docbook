@@ -564,12 +564,12 @@ internet and printed.</para>
 
 <!--
 <sect2>
-<title>&CUPS;, &IPP; and &kde;</title>
+<title>&CUPS;, &IPP; and &tde;</title>
 
 <para>&CUPS; is the most advanced implementation of &IPP; on all &OS;
 platforms.  That makes &CUPS; a crucial ally to help "conquer the
-desktop" for projects like &kde;. &tdeprint; is the best utility to
-make &CUPS; core functionality available to &kde; Desktop
+desktop" for projects like &tde;. &tdeprint; is the best utility to
+make &CUPS; core functionality available to &tde; Desktop
 users.</para>
 
 </sect2> -->
@@ -582,10 +582,10 @@ the network?  You must have been quite impressed if you didn't know in
 advance what to expect.</para>
 
 <para>Imagine you as the administrator of a <quote>LAN</quote>.  For
-testing purposes you fully installed one &kde;/&CUPS; box on your net,
+testing purposes you fully installed one &tde;/&CUPS; box on your net,
 complete with a dozen printers configured and functional:
 &PostScript;, LaserJets, InkJets and BubbleJets, and so on.  Your
-&kde; users on that box are very happy, they can print like never
+&tde; users on that box are very happy, they can print like never
 before, <quote>ringing all the bells and whistles</quote> of every
 printer.  It took you 2 hours to make everything run perfectly... and
 now all the other 100 users on the network want the same.  Two hours

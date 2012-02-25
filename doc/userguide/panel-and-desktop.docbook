@@ -1,18 +1,9 @@
 <chapter id="panel-and-desktop">
 
-<chapterinfo>
-<authorgroup>
-<author>
-&Philip.Rodrigues;
-</author>
-</authorgroup>
-</chapterinfo>
-
-
 <title>The Panel and the Desktop</title>
 
 <sect1 id="kicker-panel">
-<title>&kicker;, the &kde; Panel</title>
+<title>&kicker;, the &tde; Panel</title>
 
 <indexterm
 significance="preferred"><primary>Panel</primary></indexterm>
@@ -23,7 +14,7 @@ significance="preferred"><primary>&kicker;</primary></indexterm>
 Environment.  By default, it appears along the bottom of the screen,
 and takes up the whole of the width of the screen, but this is
 configurable. &kicker; is something of a one-stop shop for (almost!)
-everything that you might want quick access to. Besides the &kicon;
+everything that you might want quick access to. Besides the &ticon;
 Menu, where you can start applications, &kicker; is also capable of
 running docked applets like the pager, the taskbar or the clock, and
 extensions, such as child panels. With all these options, you will
@@ -40,7 +31,7 @@ next section describes some common ways to customize the panel.</para>
 <sect2 id="customize-panel-icons">
 <title>Customizing the icons on the panel</title>
 
-<para>When you first start &kde;, kicker displays some icons next to
+<para>When you first start &tde;, kicker displays some icons next to
 the <guimenu>K</guimenu> menu. These can be used to start the
 applications that they represent. To see which application is launched
  by each icon, hold the mouse cursor over the icon until a tooltip (a
@@ -54,7 +45,7 @@ name</replaceable> Button</guilabel> in the popup menu that
 appears. To add a new icon, &RMB;-click on an empty space on the
 panel, and follow the menu entry <guisubmenu>Add Application to Panel
 </guisubmenu>. This leads you to a copy of the
-<guimenu>K</guimenu> menu, where you can find all of the &kde;
+<guimenu>K</guimenu> menu, where you can find all of the &tde;
 applications. For example, to add an icon for the &juk; music player,
 follow through the menus to <menuchoice><guisubmenu>Add Application
 to Panel</guisubmenu><guisubmenu>Multimedia</guisubmenu><guimenuitem>&juk; (Music
@@ -275,14 +266,14 @@ more information.</para>
 <title>Related Information</title> 
 
 <listitem><para>You can find more information about &kicker;, the
-&kde; Panel, in &khelpcenter; or by entering
+&tde; Panel, in &khelpcenter; or by entering
 <userinput>help:/kicker</userinput> in &konqueror;'s
 <guilabel>Location</guilabel> bar.</para>
 </listitem>
 
 <listitem><para>The &klipper;
 Handbook has information about the advanced clipboard management
-features in &kde;. You can read it in &khelpcenter; or by entering
+features in &tde;. You can read it in &khelpcenter; or by entering
 <userinput>help:/klipper</userinput> in &konqueror;'s
 <guilabel>Location</guilabel> bar.</para>
 </listitem>

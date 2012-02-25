@@ -252,7 +252,7 @@ this feature.</para>
 <para>In this module you can specify which <quote>protocols</quote>
 you wish the previews to be available for.  Creating the previews
 requires that &konqueror; download at least part of the file, in order
-to create the preview.  &konqueror;, like the rest of &kde; is
+to create the preview.  &konqueror;, like the rest of &tde; is
 entirely network transparent, and will treat a remote &FTP; folder
 just as if it was on your local hard drive.  This can result in a
 delay, especially if you are viewing, for example, a folder full of

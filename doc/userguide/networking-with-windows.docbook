@@ -14,7 +14,7 @@
 <para> This section is borrowed and modified from Alexander Neundorf's
 README file on LISa.</para>
 
-<para>&kde; features two powerful servers called the Lan Information
+<para>&tde; features two powerful servers called the Lan Information
 Server (<application>LISa</application>) and Restricted Lan
 Information Server (<application>resLISa</application>) which are used
 to identify CIFS and other servers on your local network providing a

@@ -9,7 +9,7 @@
 <title>KDE User's Manual</title>
 <author>&Lauri.Watts;&Lauri.Watts.mail;</author>
 <date>February 27, 2005</date>
-<productname>K Desktop Environment</productname>
+<productname>Trinity Desktop Environment</productname>
 </refentryinfo>
 
 <refmeta>
@@ -19,7 +19,7 @@
 
 <refnamediv>
 <refname><command>kicker</command></refname>
-<refpurpose>&kicker; is the &kde; panel</refpurpose>
+<refpurpose>&kicker; is the &tde; panel</refpurpose>
 </refnamediv>
 
 <refsynopsisdiv>
@@ -32,7 +32,7 @@
 
 <refsect1>
 <title>Description</title>
-<para>&kicker; is the &kde; panel. It normally contains application
+<para>&kicker; is the &tde; panel. It normally contains application
 starters, applets, and a clock.</para> 
 <!-- FIXME: Well that's a pretty lame description. -->
 </refsect1>
@@ -80,7 +80,7 @@ url="help:/kicker">help:/kicker</ulink>
 <para>&kappname; was written by &Matthias.Elter; and &Matthias.Ettrich; and
 is maintained by &Aaron.J.Seigo; &Aaron.J.Seigo.mail;</para>
 
-<para>This man page was written for &kde; 3.4 by &Lauri.Watts;
+<para>This man page was written for &tde; 3.4 by &Lauri.Watts;
 &Lauri.Watts.mail;</para>
 
 </refsect1>

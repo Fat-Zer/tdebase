@@ -10,30 +10,29 @@
 <qandaset>
 <qandaentry>
 <question>
-<para>What is &kde;?</para>
+<para>What is &tde;?</para>
 </question>
 <answer>
-<para>&kde; is the K Desktop Environment.  It is a project initiated
+<para>&tde; is the Trinity Desktop Environment.  The project was initiated
 by <ulink url="mailto:ettrich@kde.org">Matthias Ettrich</ulink> in
-1996.  The aim of the &kde; project is to connect the
+1996 and originally called the K Desktop Environment.  The aim of the &tde; project is to connect the
 power of the &UNIX; operating systems with the comfort of a modern user
 interface.</para>
-<para>In short, &kde; will bring &UNIX; to the desktop!</para>
-<para>If you want further information about &kde;, have a look at
-<ulink url="http://www.kde.org/whatiskde">What is
-&kde;?</ulink></para>
+<para>In short, &tde; will bring &UNIX; to the desktop!</para>
+<para>If you want further information about &tde;, have a look at
+<ulink url="http://www.trinitydesktop.org/about.php">About Trinity</ulink></para>
 </answer>
 </qandaentry>
 
 <qandaentry>
 <question id="platform">
-<para>On which platforms can I expect &kde; to work?</para>
+<para>On which platforms can I expect &tde; to work?</para>
 </question>
 <answer>
-<para>&kde; is a Desktop Environment for all flavors of &UNIX;.  While
-it is true that most &kde; developers use &Linux;, &kde; runs smoothly
+<para>&tde; is a Desktop Environment for all flavors of &UNIX;.  While
+it is true that most &tde; developers use &Linux;, &tde; runs smoothly
 on a wide range of systems.  You may, however, need to tweak the
-source code a bit to get &kde; to compile on a not-so-popular variant
+source code a bit to get &tde; to compile on a not-so-popular variant
 of &UNIX;, or if you are not using the &GNU; development tools, in
 particular the &gcc; compiler.</para>
 </answer>
@@ -41,13 +40,13 @@ particular the &gcc; compiler.</para>
 
 <qandaentry>
 <question>
-<para>Is &kde; a window manager?</para>
+<para>Is &tde; a window manager?</para>
 </question>
 <answer>
-<para>No, &kde; is not a window manager.  While &kde; includes a very
-sophisticated window manager (&twin;), &kde; is much more than that.
+<para>No, &tde; is not a window manager.  While &tde; includes a very
+sophisticated window manager (&twin;), &tde; is much more than that.
 It is a full-blown Integrated Desktop Environment.</para>
-<para>&kde; provides a complete desktop environment, including a web
+<para>&tde; provides a complete desktop environment, including a web
 browser, a file manager, a window manager, a help system, a
 configuration system, uncountable tools and utilities, and an ever
 increasing number of applications, including but not limited to mail
@@ -58,32 +57,32 @@ and so forth.</para>
 
 <qandaentry>
 <question>
-<para>Is &kde; a <acronym>CDE</acronym>, &Windows; or &Mac;
+<para>Is &tde; a <acronym>CDE</acronym>, &Windows; or &Mac;
 <acronym>OS</acronym> clone?</para>
 </question>
 <answer>
-<para>No, &kde; is not a clone. Specifically &kde; is not a
-<acronym>CDE</acronym> or &Windows;  clone. While the &kde; developers
+<para>No, &tde; is not a clone. Specifically &tde; is not a
+<acronym>CDE</acronym> or &Windows;  clone. While the &tde; developers
 have and will continue to glean the best features from all existing
-desktop environments, &kde; is a truly unique environment that has and
+desktop environments, &tde; is a truly unique environment that has and
 will continue to go its own way.</para>
 </answer>
 </qandaentry>
 
 <qandaentry>
 <question>
-<para>Is &kde; free software?</para>
+<para>Is &tde; free software?</para>
 </question>
 <answer>
-<para>Yes, &kde; is free software according to the &GNU; General
-Public License.  All &kde; libraries are available under the
+<para>Yes, &tde; is free software according to the &GNU; General
+Public License.  All &tde; libraries are available under the
 <acronym>LGPL</acronym> making commercial software development for the
-&kde; desktop possible, but all &kde; applications are licensed under
+&tde; desktop possible, but all &tde; applications are licensed under
 the <acronym>GPL</acronym>.</para>
-<para>&kde; uses the <link linkend="qt">&Qt; C++ crossplatform
+<para>&tde; uses the <link linkend="qt">&Qt; C++ crossplatform
 toolkit</link>, which is also released (since version 2.2) under the
 <acronym>GPL</acronym>.</para>
-<para>It is absolutely legal to make &kde; and &Qt; available on
+<para>It is absolutely legal to make &tde; and &Qt; available on
 &CD-ROM; free of charge.  No runtime fees of any kind are
 incurred.</para>
 </answer>

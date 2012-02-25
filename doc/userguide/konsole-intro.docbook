@@ -35,7 +35,7 @@ work.</para>
 <para>On &Linux; and &UNIX;-based systems every process runs independently in its own memory
 space so it can't accidentally overwrite any other processes memory, unless
 of course it has <systemitem class="username">root</systemitem> privileges. 
-If a process in &kde; crashes due to a bug one should not need to worry
+If a process in &tde; crashes due to a bug one should not need to worry
 about it accessing any other active process.</para>
 
 <para>To keep track of all system processes use the <command>top</command>
@@ -63,14 +63,14 @@ name for your new session.  This will now become your default session when
 you start &konsole;.</para>
 
 <para>When &konsole; is invoked <application>bash</application> specific
-commands and &kde; specific variables are read and executed from
+commands and &tde; specific variables are read and executed from
 <filename>~/.bashrc</filename> or <filename>~/.bash_profile</filename>. 
 The preferred configuration file for user environments is
 <filename>~/.bash_profile</filename>, the commands
 <command>printenv</command> or <command>env</command> can be used to
 display all currently set variables.  To set a variable in the shell use 
 <command>VARNAME=<replaceable>value</replaceable></command>.  For a full
-list of variables that can be set in &kde; see the <ulink
+list of variables that can be set in &tde; see the <ulink
 url="http://wiki.kde.org/tiki-index.php?page=Environment+Variables">wiki
 </ulink>.</para>
 
@@ -80,11 +80,11 @@ url="http://wiki.kde.org/tiki-index.php?page=Environment+Variables">wiki
 action="simul">&Ctrl;&Alt;<keycap>S</keycap></keycombo> and enter the new
 name.</para>
 
-<para>If you find the need to run any &kde; program with <systemitem
+<para>If you find the need to run any &tde; program with <systemitem
 class="username">root</systemitem> privileges,  you can use the &tdesu; command with the <option>-c</option> switch
 from the command line like this: <userinput><command>tdesu</command>
 <option>-c -n <replaceable>PROGRAM</replaceable></option></userinput>, using
-the <option>-n</option> switch will prevent &kde; from remembering your
+the <option>-n</option> switch will prevent &tde; from remembering your
 passwords.</para>
 
 <!-- Add links to "further reading" here -->

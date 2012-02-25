@@ -8,12 +8,12 @@
 </authorgroup>
 </chapterinfo>
 
-<title>Customizing the Appearance of your &kde; Desktop</title>
+<title>Customizing the Appearance of your &tde; Desktop</title>
 
-<para>Changing the appearance of your &kde; desktop can be done quite easily and
+<para>Changing the appearance of your &tde; desktop can be done quite easily and
 flexibly by either individually controlling different parts of the visual
 appearance or by using a predefined theme. This guide explains the various
-customizable parts of &kde; and how to control their appearance.</para>
+customizable parts of &tde; and how to control their appearance.</para>
 
 <sect1 id="background">
 <title>Background</title>
@@ -22,7 +22,7 @@ to display certain images on your desktop. The settings for the background are
 found in the &kcontrolcenter;, or by <mousebutton>right</mousebutton>-clicking
 on the desktop and selecting <guilabel>Configure Desktop...</guilabel>.</para>
 
-<para>In &kde;, you have the option to use no picture, a single picture, or a
+<para>In &tde;, you have the option to use no picture, a single picture, or a
 slideshow of images. If <guilabel>No picture</guilabel> is chosen to be the
 desktop background, the <guilabel>Colors</guilabel> options are used instead.
 You can also choose whether to use a single
@@ -86,12 +86,12 @@ subsection</ulink> of kde-look.org.</para>
 <imageobject>
 <imagedata fileref="splash-screen.png" format="PNG" />
 </imageobject>
-<textobject><phrase>The default &kde; splash screen</phrase></textobject>
-<caption><para>The default &kde; splash screen</para></caption>
+<textobject><phrase>The default &tde; splash screen</phrase></textobject>
+<caption><para>The default &tde; splash screen</para></caption>
 </mediaobject>
 
 <para>The splash screen is the animated image or screen that is displayed while
-&kde; loads after you log in. Each user can have a different splash screen.
+&tde; loads after you log in. Each user can have a different splash screen.
 Changing the splash screen for the current user can be done in the Splash
 Screen module of the &kcontrolcenter;. Select the splash screen you want to
 use and click on <guibutton>Apply</guibutton>. You can also test what a splash
@@ -113,12 +113,12 @@ engine to be installed.</para>
 <sect1 id="win-deco">
 <title>Window Decorations</title>
 <para>You can change the appearance of window borders, titlebars and buttons in
-&kde; using window decorations. Some window decorations even have the capability
+&tde; using window decorations. Some window decorations even have the capability
 to apply effects such as translucency. Window decorations must be able to do all
 these without sacrificing speed and performance. This is the reason why window
 decorations come in source code that must be compiled, or as binary packages
 that must be installed. Basically, Window decorations are plugins or small
-programs that instruct &twin;, &kde;'s Window Manager,
+programs that instruct &twin;, &tde;'s Window Manager,
 how to display window frames.</para>
 
 <para>In order to add a new window decoration, you need to compile it from
@@ -141,7 +141,7 @@ rearrange them.</para>
 
 <para>While all window decorations need to be compiled from source code, some
 window decorations can load pixmap-based theme files that do not need to be
-compiled. &kde; ships with a pixmap-based window decoration called the IceWM
+compiled. &tde; ships with a pixmap-based window decoration called the IceWM
 window decoration. Another pixmap-based window decoration is <ulink
 url="http://www.kde-look.org/content/show.php?content=31447">deKorator</ulink>,
 which can be found on kde-look.org. Please refer to your distribution's
@@ -151,7 +151,7 @@ images and editing a configuration file. The tradeoff is a slight loss of perfor
 while this may be unnoticeable on very fast systems.</para>
 
 <para>To add an IceWM theme, select IceWM as the window decoration and click on
-the <guilabel>Open &kde;'s IceWM theme folder</guilabel> link in the window
+the <guilabel>Open &tde;'s IceWM theme folder</guilabel> link in the window
 decoration description area. This will open a &konqueror; window
 to <filename>$<envar>TDEHOME</envar>/share/apps/twin/icewm-themes</filename>.
 Extract your IceWM theme to this folder. The theme will then be added to
@@ -169,9 +169,9 @@ take effect.</para>
 
 <para>Some more window decorations are available at kde-look.org under <ulink
 url="http://www.kde-look.org/index.php?xcontentmode=17">the
-Native &kde; 3.x</ulink> and <ulink
+Native &tde; 3.x</ulink> and <ulink
 url="http://www.kde-look.org/index.php?xcontentmode=20">the
-Native &kde; 3.2+</ulink> subsections. Themes for the <ulink
+Native &tde; 3.2+</ulink> subsections. Themes for the <ulink
 url="http://www.kde-look.org/index.php?xcontentmode=18">IceWM</ulink> and
 <ulink
 url="http://www.kde-look.org/index.php?xcontentmode=21">deKorator</ulink> window
@@ -183,7 +183,7 @@ category.</para>
 <title>Style</title>
 <para>Widgets are the basic elements of a graphical user interface, such as
 buttons, scrollbars, tabs, and menus. A widget style is a plugin or a small
-program that instructs &kde; how widgets are displayed. Since widgets are the
+program that instructs &tde; how widgets are displayed. Since widgets are the
 very basic parts of an interface, they are frequently accessed and must be able
 to respond very quickly. This is why widget styles must come as source code to
 be compiled or as binary packages to be installed, just like window decorations.
@@ -202,29 +202,29 @@ The <guilabel>Toolbar</guilabel> tab gives some options on the general appearanc
 
 <para>Additional widget styles can be found in <ulink
 url="http://www.kde-look.org/index.php?xcontentmode=
-8x9x10x11x12x13x14x15x16">the different &kde; subsections of the
+8x9x10x11x12x13x14x15x16">the different &tde; subsections of the
 Themes/Styles</ulink> of kde-look.org. Take note that styles come in source
-code or binary package forms. They are not &kde; theme files.</para>
+code or binary package forms. They are not &tde; theme files.</para>
 </sect1>
 
 <sect1 id="kde-theme">
-<title>&kde; Theme</title>
-<para>&kde; allows you to save the different changes you made to your desktop's
+<title>&tde; Theme</title>
+<para>&tde; allows you to save the different changes you made to your desktop's
 appearance in one file, using the Theme Manager in &kcontrolcenter;. Once you
 have set up your desktop the way you want, click on <guibutton>Create New
 Theme...</guibutton>. Enter the details you want to give your theme, such as theme
 name, author, version, &etc;, then click <guibutton>OK</guibutton> when done.
 This will add your theme to the list of available themes and save your settings
-in a &kde; theme. A &kde; theme (<literal role="extension">.kth</literal> file)
-instructs &kde; on what window decoration, style, or color scheme to use for
-that particular theme. To add a &kde; theme from an outside source, click on
-<guibutton>Install New Theme...</guibutton> and locate the &kde; theme file.
+in a &tde; theme. A &tde; theme (<literal role="extension">.kth</literal> file)
+instructs &tde; on what window decoration, style, or color scheme to use for
+that particular theme. To add a &tde; theme from an outside source, click on
+<guibutton>Install New Theme...</guibutton> and locate the &tde; theme file.
 Removing a theme is easily done by clicking on <guibutton>Remove
 Theme</guibutton>. If you made changes to your theme, you have to either create
 a new theme name for it, or remove the previous version first to be able to use
 the same theme name.</para>
 
-<para>The following are the settings that are saved and indicated in a &kde;
+<para>The following are the settings that are saved and indicated in a &tde;
 Theme:</para>
 
 <itemizedlist>
@@ -273,14 +273,14 @@ Fonts</para>
 </listitem>
 </itemizedlist>
 
-<para>One very important thing to consider when using or installing a &kde;
-Theme is that it only indicates what settings to use for the above. A &kde;
+<para>One very important thing to consider when using or installing a &tde;
+Theme is that it only indicates what settings to use for the above. A &tde;
 Theme includes only system notifications, desktop background, panel background,
 &konqueror; background, and  the color scheme in its package. The other
 components must be installed separately if they do not already come with
-&kde;.</para>
+&tde;.</para>
 
-<para>&kde; Themes can be downloaded from the <ulink
+<para>&tde; Themes can be downloaded from the <ulink
 url="http://www.kde-look.org/index.php?xcontentmode=8">Theme-Manager
 subsection</ulink> of
 kde-look.org, under the Themes/Styles section.</para>
@@ -311,7 +311,7 @@ devices, &etc;</para></glossdef>
 
 <glossentry id="gloss-splash-screen">
 <glossterm>Splash Screen</glossterm>
-<glossdef><para>Animated image or screen that displays while &kde;
+<glossdef><para>Animated image or screen that displays while &tde;
 loads after logging in</para></glossdef>
 </glossentry>
 
@@ -323,12 +323,12 @@ manager how to display window frames</para></glossdef>
 
 <glossentry id="gloss-style">
 <glossterm>Style</glossterm>
-<glossdef><para>Plugin or a small program that instructs &kde;
+<glossdef><para>Plugin or a small program that instructs &tde;
 how widgets are displayed</para></glossdef>
 </glossentry>
 
 <glossentry id="gloss-kde-theme">
-<glossterm>&kde; Theme</glossterm>
+<glossterm>&tde; Theme</glossterm>
 <glossdef><para>(<literal role="extension">.kth</literal>)
 A file that contains instructions on what settings to use for
 different GUI components</para></glossdef>

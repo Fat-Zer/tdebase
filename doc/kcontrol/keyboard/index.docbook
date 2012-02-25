@@ -29,7 +29,7 @@
 
 <para>The actual effect of setting these options depends upon the
 features provided by your keyboard hardware and the X server on which
-&kde; is running.  As an example, you may find that changing the key
+&tde; is running.  As an example, you may find that changing the key
 click volume has no effect because that feature is not available on your
 system. </para>
 
@@ -54,8 +54,8 @@ easier. </para></tip>
 <term><guilabel>NumLock on KDE Startup</guilabel></term>
 <listitem>
 <para>You can choose to either always <guilabel>Turn on</guilabel> or
-<guilabel>Turn off</guilabel> the NumLock when &kde; starts, or you can
-choose to have &kde; leave NumLock at whatever it was set to before KDE
+<guilabel>Turn off</guilabel> the NumLock when &tde; starts, or you can
+choose to have &tde; leave NumLock at whatever it was set to before KDE
 started up.</para>
 </listitem>
 </varlistentry>

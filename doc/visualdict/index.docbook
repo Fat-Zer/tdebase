@@ -1,20 +1,20 @@
 <?xml version="1.0" ?>
-<!DOCTYPE book PUBLIC "-//KDE//DTD DocBook XML V4.2-Based Variant V1.1//EN" 
+<!DOCTYPE book PUBLIC "-//KDE//DTD DocBook XML V4.2-Based Variant V1.1//EN"
 "dtd/kdex.dtd" [
-  <!ENTITY kappname "Visual Guide to &kde;">
+  <!ENTITY kappname "Visual Guide to &tde;">
   <!ENTITY % addindex "IGNORE">
   <!ENTITY % English "INCLUDE" > <!-- change language only here -->
-  
-  
+
+
 ]>
 
 <book lang="&language;">
-  
+
 <bookinfo>
-<title>The &kde; Visual Guide</title>
+<title>The &tde; Visual Guide</title>
 <authorgroup>
 <corpauthor>
-The &kde; Team
+The &tde; Team
 </corpauthor>
 <!-- TRANS:ROLES_OF_TRANSLATORS -->
 </authorgroup>
@@ -26,13 +26,17 @@ The &kde; Team
 <year>2000</year><year>2006</year>
 <holder>The &kde; Team</holder>
 </copyright>
+<copyright>
+<year>2012</year>
+<holder>The &tde; Team</holder>
+</copyright>
 
 <legalnotice>&FDLNotice;</legalnotice>
 
-<abstract><para>A visual guide to &kde;'s interface.  This is a very early 
+<abstract><para>A visual guide to &tde;'s interface.  This is a very early
 version
-of the document.  Eventually, this will be a graphical tour of 
-&kde;.</para></abstract>
+of the document.  Eventually, this will be a graphical tour of
+&tde;.</para></abstract>
 
 <keywordset>
 <keyword>KDE</keyword>
@@ -49,14 +53,14 @@ of the document.  Eventually, this will be a graphical tour of
 <!-- dictionary on the i18n website, please make sure the translations here -->
 <!-- match that file exactly. -->
 
-<title>&kde; Visual Dictionary of terms</title>
+<title>&tde; Visual Dictionary of terms</title>
 
-<para>This project was started to help unify the vocabulary used in &kde;
+<para>This project was started to help unify the vocabulary used in &tde;
 documentation.</para>
 
-<para>We provide this for you here as an aid to learning your way around the 
-&kde;
-Graphical User Interface.  These names have been standardized within &kde;
+<para>We provide this for you here as an aid to learning your way around the
+&tde;
+Graphical User Interface.  These names have been standardized within &tde;
 documentation, so that you will always find interface items referred to in the
 same way.</para>
 
@@ -67,17 +71,17 @@ similar manner each time it is used, but the effect that the widget has depends 
 its place within the program.</para></tip>
 
 <!-- TODO:
-Widgets to add: combo buttons (eg, the 'back' button in konq), popup 
+Widgets to add: combo buttons (eg, the 'back' button in konq), popup
 menus/context menus, passive popups, navigation panel buttons?
 
 Perhaps list deprecated names, for search/replace purposes?
 -->
 <sect1 id="widget-table">
-<title>Listing of Common &kde; Widgets</title>
+<title>Listing of Common &tde; Widgets</title>
 <para>Currently, this guide consists of a table of the names of the graphical
-elements often found in &kde; documentation, and an example of each one. </para>
+elements often found in &tde; documentation, and an example of each one. </para>
 <para>Our hope, eventually, is to make this a much more complete document,
-which will take you on a visual tour of &kde;.</para>
+which will take you on a visual tour of &tde;.</para>
 
 <informaltable>
 <tgroup cols="2">
@@ -340,7 +344,7 @@ which will take you on a visual tour of &kde;.</para>
 <title>Credits and Licenses</title>
 <para>&kappname;</para>
 
-<para>Documentation by the &kde; Documentation Team.</para>
+<para>Documentation by the &tde; Documentation Team.</para>
 
 &underFDL;
 </chapter>

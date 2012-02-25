@@ -19,7 +19,7 @@ chapter will explain all of that, and even more.</para>
 <title>The Main Window</title>
 
 <para><indexterm><primary>Main window</primary></indexterm>
-The &kate; Main Window is a standard &kde; application window,
+The &kate; Main Window is a standard &tde; application window,
 with the addition of side bars containing tool views. It has a
 Menubar with all the common menus, and some more, and a toolbar
 providing access to commonly used commands.</para>
@@ -202,7 +202,7 @@ entry.</para></tip>
 
 <varlistentry>
 <term>A Folder View</term>
-<listitem><para>This is a standard &kde; folder view.</para></listitem>
+<listitem><para>This is a standard &tde; folder view.</para></listitem>
 </varlistentry>
 
 <varlistentry>
@@ -229,7 +229,7 @@ and select the desired filter string.</para>
 <title>The Built in Terminal Emulator</title>
 
 <para><indexterm><primary>Terminal emulator</primary></indexterm>
-The built in Terminal Emulator is a copy of the &kde; &konsole;
+The built in Terminal Emulator is a copy of the &tde; &konsole;
 terminal application, for your convenience. It is available from the
 <menuchoice><guimenu>Settings</guimenu><guimenuitem>Show Terminal
 Emulator</guimenuitem></menuchoice> menu item or by pressing the <keycombo

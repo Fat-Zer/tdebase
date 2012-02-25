@@ -28,7 +28,7 @@ manager?</para></question>
 
 <answer><para>Just install &Qt;, tdelibs and tdebase, and from your favorite
 window manager, launch &konqueror;. It should work just fine, but if it
-doesn't (&kde; developers don't test that case often), report it to <ulink
+doesn't (&tde; developers don't test that case often), report it to <ulink
 url="http://bugs.kde.org">http://bugs.kde.org</ulink> and try running
 <application>tdeinit</application> before running &konqueror;; it usually
 helps.</para></answer>
@@ -38,7 +38,7 @@ helps.</para></answer>
 <question><para>Where does &konqueror; keep all its configuration
 data?</para></question>
 <answer><para>Generally in the <filename>~/.kde</filename> folder (this may 
-be <filename>~/.trinity</filename> on your system, depending on how &kde; 3 
+be <filename>~/.trinity</filename> on your system, depending on how &tde; 3 
 was installed). Don't alter these files unless you really know what you are 
 doing.</para>
 

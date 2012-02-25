@@ -30,7 +30,7 @@
 <sect1 id="login-manager">
 <title>Login Manager</title>
 
-<para>Using this module, you can configure the &kde; graphical login
+<para>Using this module, you can configure the &tde; graphical login
 manager, &tdm;.  You can change how the login screen looks, who has
 access using the login manager and who can shutdown the
 computer.</para>
@@ -59,7 +59,7 @@ module.</para></note>
 <title>Appearance</title>
 
 <para>From this page you can change the visual appearance of &tdm;,
-&kde;'s graphical login manager.</para>
+&tde;'s graphical login manager.</para>
 
 <para>The greeting string is the title of the login screen. If the
 string contains the word <computeroutput>HOSTNAME</computeroutput> it
@@ -90,7 +90,7 @@ dialog.</para>
 <filename>$<envar>TDEDIR</envar>/share/apps/tdm/pics/kdelogo.png</filename>
 will be displayed.</para>
 
-<para>While &kde;'s style depends on the settings of the user logged in,
+<para>While &tde;'s style depends on the settings of the user logged in,
 the style used by &tdm; can be configured using the <guilabel>GUI
 Style</guilabel> option.</para>
 
@@ -165,14 +165,14 @@ covered with this one color.</para></listitem>
 buttons). </para> <para>You then select a pattern by clicking
 <guilabel>Setup</guilabel>.  This opens a new dialog window, which gives you
 the opportunity to select a pattern.  Simply click once on the pattern of your
-choice, then click on <guilabel>OK</guilabel>, and &kde; will render the pattern
+choice, then click on <guilabel>OK</guilabel>, and &tde; will render the pattern
 you selected using the two colors you selected.  For more on patterns, see the
 section <ulink url="help:/kcontrol/background/index.html#bkgnd-patterns">Background: Adding, Removing and Modifying
 Patterns</ulink>.</para></listitem>
 </varlistentry>
 <varlistentry>
 <term>Background Program</term>
-<listitem><para>By selecting this option, you can have &kde; use an external
+<listitem><para>By selecting this option, you can have &tde; use an external
 program to determine the background.  This can be any program of your choosing.
 For more information on this option, see the section entitled <ulink
 url="help:/kcontrol/background/index.html#bkgnd-programs">Background: Using an external program</ulink>.</para></listitem>
@@ -180,7 +180,7 @@ url="help:/kcontrol/background/index.html#bkgnd-programs">Background: Using an e
 <varlistentry>
 <term>Horizontal Gradient</term>
 <listitem><para>By choosing this mode, you select two colors (using both color
-buttons).  &kde; will then start with the color selected by <guilabel>Color
+buttons).  &tde; will then start with the color selected by <guilabel>Color
 1</guilabel> on the left edge of the screen, and slowly transform into the
 color selected by <guilabel>Color 2</guilabel> by the time it gets to the
 right edge of the screen.</para></listitem>
@@ -188,7 +188,7 @@ right edge of the screen.</para></listitem>
 <varlistentry>
 <term>Vertical Gradient</term>
 <listitem><para>By choosing this mode, you select two colors (using both color
-buttons).  &kde; will then start with the color selected by <guilabel>Color
+buttons).  &tde; will then start with the color selected by <guilabel>Color
 1</guilabel> on the top edge of the screen, and slowly transform into the color
 selected by <guilabel>Color 2</guilabel> as it moves to the bottom of the
 screen.</para></listitem>
@@ -196,7 +196,7 @@ screen.</para></listitem>
 <varlistentry>
 <term>Pyramid Gradient</term>
 <listitem><para>By choosing this mode, you select two colors (using both color
-buttons).  &kde; will then start with the color selected by <guilabel>Color
+buttons).  &tde; will then start with the color selected by <guilabel>Color
 1</guilabel> in each corner of the screen, and slowly transform into the color
 selected by <guilabel>Color 2</guilabel> as it moves to the center of the
 screen.</para></listitem> 
@@ -204,7 +204,7 @@ screen.</para></listitem>
 <varlistentry>
 <term>Pipecross Gradient</term>
 <listitem><para>By choosing this mode, you select two colors (using both color
-buttons).  &kde; will then start with the color selected by <guilabel>Color
+buttons).  &tde; will then start with the color selected by <guilabel>Color
 1</guilabel> in each corner of the screen, and slowly transform into the color
 selected by <guilabel>Color 2</guilabel> as it moves to the center of the
 screen. The <quote>shape</quote> of this gradient is  different then the pyramid
@@ -213,7 +213,7 @@ gradient.</para></listitem>
 <varlistentry>
 <term>Elliptic Gradient</term>
 <listitem><para>By choosing this mode, you select two colors (using both color
-buttons).  &kde; will then start with the color selected by <guilabel>Color
+buttons).  &tde; will then start with the color selected by <guilabel>Color
 2</guilabel> in the center of the screen, and slowly transform into the color
 selected by <guilabel>Color 1</guilabel> as it moves to the edges, in an
 elliptical pattern.</para></listitem> 
@@ -401,15 +401,15 @@ users</guilabel> is not checked, this has no effect.  </para></listitem>
 <para>This page contains three listboxes. The large listbox on the left
 shows all the users on the system which might be a genuine user.</para>
 
-<para>The top rightmost listbox shows the selected users and the bottom
-rightmost listbox shows the users we don't want displayed in the login
+<para>The top right-most listbox shows the selected users and the bottom
+right-most listbox shows the users we don't want displayed in the login
 window.</para>
 
 <para>To move a user from one listbox to another you click on the
 username in the listbox and click <guibutton>&gt;&gt;</guibutton> to
-move the user from the leftmost box the the rightmost box or
-<guibutton>&lt;&lt;</guibutton> to move the user from the rightmost box
-to the leftmost box.</para>
+move the user from the left-most box the the right-most box or
+<guibutton>&lt;&lt;</guibutton> to move the user from the right-most box
+to the left-most box.</para>
 
 </sect3>
 

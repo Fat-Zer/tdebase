@@ -29,7 +29,7 @@
 
 <title>Spell Checker</title>
 
-<para>The configuration options available here are used by all &kde;
+<para>The configuration options available here are used by all &tde;
 applications that use &kspell;, which is a front end to
 <command>ispell</command> or <command>aspell</command>.</para>
 

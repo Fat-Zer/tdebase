@@ -44,7 +44,7 @@
 <title>Introduction</title>
 
 <para>Welcome to &tdesu;! &tdesu; is a graphical front end for the
-&UNIX; <command>su</command> command for the K Desktop Environment.
+&UNIX; <command>su</command> command for the Trinity Desktop Environment.
 It allows you to run a program as different user by supplying the
 password for that user. &tdesu; is an unprivileged program; it uses
 the system's <command>su</command>.</para>
@@ -90,7 +90,7 @@ user</replaceable></group>
 </cmdsynopsis>
 <cmdsynopsis>
 <command>tdesu</command>
-<arg choice="opt">&kde; Generic Options</arg>
+<arg choice="opt">&tde; Generic Options</arg>
 <arg choice="opt">Qt Generic Options</arg>
 </cmdsynopsis>
 
@@ -119,7 +119,7 @@ current user. If it is not writable, the command is executed as user
 <para><parameter>file</parameter> is evaluated like this: if
 <parameter>FILE</parameter> starts with a <literal>/</literal>, it is
 taken as an absolute filename. Otherwise, it is taken as the name of a
-global &kde; configuration file. For example: to configure the K display
+global &tde; configuration file. For example: to configure the K display
 manager, <application>tdm</application>, you could issue
 <command>tdesu <option>-c tdmconfig -f
 tdmrc</option></command></para></listitem>

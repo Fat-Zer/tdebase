@@ -29,18 +29,18 @@
 <sect2 id="sessions-use">
 <title>Use</title>
 
-<para>In this control module you can configure &kde;'s session
+<para>In this control module you can configure &tde;'s session
 manager.</para>
 
-<para>Session management refers to &kde;'s ability to save the state
-of applications and windows when you log out of &kde; and restore them
+<para>Session management refers to &tde;'s ability to save the state
+of applications and windows when you log out of &tde; and restore them
 when you log back in.</para>
 
 <variablelist>
 <varlistentry>
 <term><guilabel>Confirm logout</guilabel></term>
 <listitem>
-<para>If this option is checked, when logging out, &kde; will display a
+<para>If this option is checked, when logging out, &tde; will display a
 dialog asking for confirmation. In this dialog you can also choose
 whether you want to restore your current session when you login the next
 time.</para>
@@ -49,7 +49,7 @@ time.</para>
 <varlistentry>
 <term><guilabel>Offer shutdown options</guilabel></term>
 <listitem>
-<para>If this option is checked, &kde; will offer a choice of actions during
+<para>If this option is checked, &tde; will offer a choice of actions during
 logout.  These include simply ending the current session (the
 action performed if shutdown options are not enabled) turning off the
 computer, or restarting the computer.</para>
@@ -58,20 +58,20 @@ computer, or restarting the computer.</para>
 </variablelist>
 
 <para>You may choose one of three options on what should happen when
-you log into &kde;:</para>
+you log into &tde;:</para>
 
 <variablelist>
 <varlistentry>
 <term><guilabel>Restore previous session</guilabel></term>
-<listitem><para>If this option is checked, &kde; will save your current
-session's state when you logout.  &kde; will restore your session on the
+<listitem><para>If this option is checked, &tde; will save your current
+session's state when you logout.  &tde; will restore your session on the
 next login, so you can continue to work with a desktop just like you
 left it.</para>
 </listitem>
 </varlistentry>
 <varlistentry>
 <term><guilabel>Restore manually saved session</guilabel></term>
-<listitem><para>Instead of restoring &kde; to the state it was when
+<listitem><para>Instead of restoring &tde; to the state it was when
 you logged out last, it will be restored to a specific state that you
 have saved manually. <!-- FIXME: How do you *save* the session in the
 first place? --></para></listitem>
@@ -79,13 +79,13 @@ first place? --></para></listitem>
 <varlistentry>
 <term><guilabel>Start with an empty session</guilabel></term>
 <listitem>
-<para>If you choose this option, &kde; will never restore sessions that it has saved.</para>
+<para>If you choose this option, &tde; will never restore sessions that it has saved.</para>
 </listitem>
 </varlistentry>
 </variablelist>
 
 <para>You can configure what should happen by default when you log out of
-&kde;.  These options are not possible on all operating systems, and some of
+&tde;.  These options are not possible on all operating systems, and some of
 them may not appear unless you are using &tdm; as your login manager.</para>
 
 <para>The options available are self explanatory, if you are in doubt,

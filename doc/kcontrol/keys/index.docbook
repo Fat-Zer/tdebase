@@ -32,7 +32,7 @@
 <sect2 id="key-bindings-intro"> 
 <title>Introduction</title> 
 
-<para>While most of the functionality offered by &kde; can be accessed
+<para>While most of the functionality offered by &tde; can be accessed
 using a simple <quote>point and click</quote> interface, many people
 prefer using the keyboard for some tasks.  Pressing something like
 <keycombo action="simul"> &Ctrl;<keycap>F</keycap></keycombo> is often
@@ -41,7 +41,7 @@ opening the <guimenu>Edit</guimenu> menu and selecting
 <guimenuitem>Find</guimenuitem>.</para>
 
 <para> As different people have different preferences about keyboard
-shortcuts, &kde; offers full customization of <quote>key
+shortcuts, &tde; offers full customization of <quote>key
 bindings.</quote> A key binding or shortcut is a combination of an
 action with a key or a combination of keys.</para>
 
@@ -102,8 +102,8 @@ action.  </para>
 be associated with any key.</para></listitem>
 
 <listitem><para><guilabel>Default key</guilabel>: the selected action
-will be associated with &kde;'s default value. This is a good choice
-for most actions, as &kde; comes with reasonable key bindings we have
+will be associated with &tde;'s default value. This is a good choice
+for most actions, as &tde; comes with reasonable key bindings we have
 thought about.  </para></listitem>
 
 <listitem><para><guilabel>Custom key</guilabel>: if this option is
@@ -125,14 +125,14 @@ discard all changes.</para>
 <title>Configuring Schemes</title>
 
 <para>A key binding scheme is a set of key bindings that you can
-select by name. &kde; comes with several pre-defined key binding
+select by name. &tde; comes with several pre-defined key binding
 schemes. In addition to these bundled schemes, you will always see a scheme named
 <guilabel>Current scheme</guilabel> that represents the set of key
 bindings you are using right now (&ie; not the current settings you
 are playing with, but what you've been using up to now). </para>
 
 <para>When you are playing with the key bindings for the first time
-you don't have to be afraid of changing the default bindings: &kde;
+you don't have to be afraid of changing the default bindings: &tde;
 won't let you overwrite the defaults, so you can always switch back to
 the factory presets. By choosing <guilabel>Current scheme</guilabel>
 you can return to the set of key bindings you've been using up to
@@ -172,7 +172,7 @@ available modifier keys for the current keyboard are.</para>
 of modifiers will change.</para>
 
 <para>If you have enabled the &Mac; keyboard, you can further enable
-<guilabel>MacOS-style modifier usage</guilabel>, to make &kde; behave
+<guilabel>MacOS-style modifier usage</guilabel>, to make &tde; behave
 more like &MacOS;.</para><!-- FIXME: well, that's rather non-explanatory, more here would be good -->
 
 <para>Finally, you can change what a keypress sends to the &X-Server;

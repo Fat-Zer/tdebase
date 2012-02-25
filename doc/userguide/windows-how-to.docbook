@@ -1,12 +1,4 @@
 <sect1 id="windows-how-to-work">
-<sect1info>
-<authorgroup>
-<author>
-&Philip.Rodrigues;
-</author>
-</authorgroup>
-</sect1info>
-
 
 <title>Windows, How To Work Them</title>
 
@@ -14,10 +6,12 @@
 <title>Basic Window Management</title>
 <indexterm><primary>Window Management</primary></indexterm>
 
-<para>Each application running in &kde; has its own window, and some
-applications may use more than one window. You can manipulate these
-windows in many ways to make your desktop work for you. Here is a
-normal window:
+<para>In computer terminology, a window is a rectangular area containing information
+that can be moved around the desktop.
+Each application running in &tde; uses at least one window and some
+applications use more than one window. These windows are manipulated or controlled
+in many ways to make the desktop useful. Here is a
+typical window:
 <screenshot>
 <mediaobject>
 <imageobject>
@@ -30,39 +24,43 @@ normal window:
 </para>
 
 <sect3 id="switching-between-windows">
-<title>Switching Between Windows</title> 
+<title>Switching Between Windows</title>
 <indexterm><primary>Focus (windows)</primary></indexterm>
 
-<para>If you want to use a window, it must be active. A window
-automatically becomes active when you open it, so that the application
-you opened is immediately ready to use. Only one window can be active
-at a time. The active window is the one into which you can type, and can
-be distinguished from the others because it has a different colored
-titlebar. (With the &kde; default theme, the active window has a
+<para>A window must be active or receive the focus to be used. When first starting
+an application the main window immediately receives the focus and is ready to use.
+Only one window can be active at a time. The active window is the one that responds
+to user actions and can be distinguished from other windows by the different colored
+titlebar.</para>
+
+<para>The titlebar is the top bar of a window that displays the name and description
+of the window. The default titlebar also contains the Minimize, Maximize, and Close buttons
+on the far right side.</para>
+
+<para>With the &tde; default theme, the active window has a
 <replaceable>light blue</replaceable> titlebar, and the inactive
-windows have <replaceable>gray</replaceable> titlebars.)</para>
+windows have <replaceable>gray</replaceable> titlebars.</para>
 
 <para>
 <indexterm><primary>Raising Windows</primary></indexterm>
-When you want to work in a different window, you need to make
-it active. There are two ways to do this:
+To work in a different window requires activating that window.
+There are two ways to do this:
 <itemizedlist>
 
 <listitem>
-<para>&LMB;-click on the window that you want to make active. The
-window will become active and will be raised above other windows if it
-overlaps them.</para>
+<para>Use the mouse pointer to select a window. When selected the window receives the focus
+and becomes active and will be raised to the foreground above other windows.</para>
 </listitem>
 
 <listitem>
 <para><indexterm><primary><keycombo
 action="simul">&Alt;&Tab;</keycombo></primary></indexterm>
-Hold down &Alt; and press &Tab; (do not release the &Alt;
-key). A popup dialog appears with a list of available windows, one of
-which is highlighted. You can select a different window by pressing
-&Tab; again to move through the list, all the time holding down
-&Alt;. When you release the &Alt; key, the window which was highlighted
-is made active.</para>
+With the keyboard, press and hold either &Alt; key and press the &Tab; key.
+A popup dialog appears with a list of available windows. The currently active window that
+has the focus will be selected automatically in the list. While pressing the &Alt; key,
+select a different window by again pressing the &Tab; key to scroll through the list.
+Release the &Alt; key and the window that is selected in the list receives the focus
+and becomes the active window.</para>
 </listitem>
 </itemizedlist>
 </para>
@@ -73,27 +71,21 @@ is made active.</para>
 <title>Moving Windows</title>
 <indexterm><primary>Moving Windows</primary></indexterm>
 
-<para>The first way to organize the windows on your desktop is to move
-them around. You can move windows so that they overlap other windows,
-or so that you can see the whole window. There are three ways to move
-a window:
+<para>One way to organize the windows on a desktop is to move
+them. There are three ways to move a window:
 <itemizedlist>
 <listitem>
-<para>Click the &LMB; on the window titlebar and hold it down. Move
-the mouse cursor and the window moves with it. Release the mouse
-button, and the window remains where you left it.</para>
+<para>Select the window titlebar using the &LMB; and continue holding the &LMB;. When
+selected in this manner, moving the mouse pointer moves the window. Release the mouse
+button and the window remains at that position.</para>
 </listitem>
 
-<!-- FIXME:  OK, so the screenie sucks, but it shows the idea --> 
-<!-- In fact, maybe it's not even necessary: just mention the previous -->
-<!-- screenshot (having callouts on it would be nice) -->
-
 <listitem>
-<para>Open the window menu using the leftmost button on the window
-titlebar (as displayed below), and select <guimenuitem>Move</guimenuitem>. The mouse cursor
-moves to the center of the current window and by moving the mouse
-around, you can move the window. Once you have moved the window to the
-position you want, click the &LMB; to release it.</para>
+<para>Select the window titlebar using the &RMB;, which causes a popup menu to appear
+as displayed in the following image. From the popup menu select <guimenuitem>Move</guimenuitem>.
+The mouse pointer moves to the center of the window. Move the mouse pointer
+to move the window. After moving the window to the desired
+position, use the &LMB; to release the window.</para>
 <indexterm><primary>Window Menu</primary></indexterm>
 
 <screenshot>
@@ -110,12 +102,12 @@ position you want, click the &LMB; to release it.</para>
 </listitem>
 
 <listitem>
-<para>Hold down &Alt; and the &LMB; when the mouse cursor is
-above the window you want to move. The mouse cursor changes to a
-compass, and by moving the mouse, you can move the window. Just
-release the mouse button to release the window. This method is
-particularly useful if the window titlebar has been moved off the
-screen, so you cannot use the other methods.</para>
+<para>Place the mouse pointer over the window to move. Press and hold either &Alt; key
+and the &LMB;. The mouse pointer changes to a
+compass. Moving the mouse then moves the window. Release the mouse
+button to release the window. This method is
+useful when the window titlebar has moved off the
+screen and the previous methods cannot be used.</para>
 </listitem>
 </itemizedlist>
 </para>
@@ -127,49 +119,43 @@ screen, so you cannot use the other methods.</para>
 
 <indexterm><primary>Resizing Windows</primary></indexterm>
 
-<para>You can make windows bigger or smaller, wider, or taller in
-one of two ways. Just use whichever you are most comfortable with:
+<para>The window size can be changed: bigger, smaller, wider, or taller. There
+are two ways to resize a window.
+Use either method:
 <itemizedlist>
 <listitem>
-<para>Move the mouse cursor over the border of the window (it is light
-blue in the screenshot above). The pointer will turn into a
-double-headed arrow. Click and drag, and the edge of the window
-follows the mouse cursor, making the window bigger or smaller. If you
-click on the borders on the top or bottom of the window, you can
-adjust the height on its own. If you click on the borders on the left
-or right of the window, you can adjust the width. To change both at
-the same time, move the mouse cursor over the corner of the
-window. When the pointer becomes a diagonal double-headed arrow, click
+<para>Move the mouse pointer over one of the side borders of the window. The mouse pointer changes
+into a horizontal double-headed arrow. Press and hold the &LMB; and drag the window border,
+making the window bigger or smaller. Similarly, selecting the top or bottom
+borders of the window will change the height of the window.
+To concurrently change both width and height of a window,
+move the mouse pointer over the corner of the
+window. When the pointer becomes a diagonal double-headed arrow, select the border corner
 and drag.</para>
 </listitem>
 <listitem>
-<para>Use the leftmost button on the window titlebar to display the
+<para>Use the left-most button on the window titlebar to display the
 window menu. Choose the <guimenuitem>Resize</guimenuitem> entry, and
 the mouse pointer will become a double-headed arrow. Move the mouse
-cursor around to resize, and click the &LMB; when you are done 
-to release the window.</para>
+pointer around to resize, and use the &LMB; to release the window.</para>
 </listitem>
 <listitem>
-<para>If you cannot see the window border or the button for the window
-menu, you can use &Alt; and the &RMB;: Hold down &Alt; and drag with
-the &RMB;. The window will resize. You just release the &RMB; when
-you are done. </para>
+<para>When the window border or the button for the window menu are not visible,
+usethe  &Alt; key and &RMB;: Press and hold the &Alt; key and drag with
+the &RMB;. The window will resize. Release the &RMB; when finsihed resizing.</para>
 </listitem>
 </itemizedlist>
 </para>
 
-<para>If you just want to make a window as big as possible, so it
-takes up the whole screen, use the
+<para>Windows may be maximized in size to use the entire screen. Use the
 <guibutton>Maximize<indexterm><primary>Maximizing
-Windows</primary></indexterm></guibutton> button, which is the second
-button from the right on the window titlebar. Clicking with the &LMB;
-on this button will make the window as big as possible in both
-directions; while clicking with the &MMB;<indexterm><primary>Maximizing
+Windows</primary></indexterm></guibutton> button, which is located on the window titlebar,
+the second button from the right. Selecting that button with the mouse
+will force the window to resize as large as the screen allows in both
+directions. Alternately, selecting that button with the &MMB;<indexterm><primary>Maximizing
 Windows</primary><secondary>Vertically</secondary></indexterm> or the
 &RMB;<indexterm><primary>Maximizing Windows</primary><secondary>Horizontally</secondary></indexterm>
-will increase the window's size in only the vertical or horizontal
-direction, respectively.</para>
-
+will increase the window's size in only the vertical or horizontal direction, respectively.</para>
 
 </sect3>
 
@@ -180,36 +166,35 @@ direction, respectively.</para>
 <!-- TODO: Screenshot of the minimize button -->
 <para>
 <indexterm><primary>Minimize</primary></indexterm>
-When you need to keep a program open, but you do not want it to
-take up space on your desktop, you can minimize it or shade it. To
-minimize a window, click the <guibutton>Minimize</guibutton> button,
-which is third from the right on the window titlebar. The window will
-not be displayed, but the program is still running, and an entry for
-it appears in the taskbar on the panel. To display the window again,
-click on its entry in the taskbar. You can also use <keycombo
+A window can be made to shrink out of view without closing the application.
+There are two ways to shrink a window: minimizing and shading. To
+minimize a window, select the <guibutton>Minimize</guibutton> button,
+which is located on the window titlebar, third button from the right. The window will
+not be displayed, but the application remains running as can be seen
+in the taskbar on the panel. To display the window again,
+use the mouse to select the respective rectangular button in the taskbar or use the <keycombo
 action="simul">&Alt;&Tab;</keycombo><indexterm><primary><keycombo
-action="simul">&Alt;&Tab;</keycombo></primary></indexterm>: see <xref
+action="simul">&Alt;&Tab;</keycombo></primary></indexterm> as described in <xref
 linkend="switching-between-windows" />.</para>
 
 <para>
 <indexterm><primary>Shade</primary></indexterm>
-Shading windows is very similar to minimizing them, but this
-time, only the titlebar of the window is shown. To shade a window,
-double-click on the titlebar. To restore the window, just double-click
-on the titlebar again.</para>
+Shading windows is similar to minimizing, but the titlebar of the window
+remains on the screen. To shade a window, use the mouse to "double-click"
+on the titlebar. To restore the window, again "double-click" on the titlebar.</para>
 </sect3>
 
 <sect3 id="cascade-windows">
 <title>Cascading Windows</title>
 
-<para>Sometimes you might have a whole lot of windows open and all over the place. By selecting to cascade windows &kde; will automatically line them up as a succession from the top-left of your screen. To use this option use your &MMB; on the desktop, and then select <guimenuitem>Cascade Windows</guimenuitem>.</para>
+<para>Sometimes you might have a whole lot of windows open and all over the place. By selecting to cascade windows &tde; will automatically line them up as a succession from the top-left of your screen. To use this option use your &MMB; on the desktop, and then select <guimenuitem>Cascade Windows</guimenuitem>.</para>
 
 </sect3>
 
 <sect3 id="unclutter-windows">
 <title>Uncluttering Windows</title>
 
-<para>By selecting to unclutter your opened windows &kde; will attempt to use the maximum available space of the desktop in order to display as much of each window as possible. For example, should you have four windows open and you request that they be uncluttered, they will each be placed in a corner of the desktop, regardless of where they were originally. To use this option once again use your &MMB; on the desktop and then select <guimenuitem>Unclutter Windows</guimenuitem>.</para>
+<para>By selecting to unclutter your opened windows &tde; will attempt to use the maximum available space of the desktop in order to display as much of each window as possible. For example, should you have four windows open and you request that they be uncluttered, they will each be placed in a corner of the desktop, regardless of where they were originally. To use this option once again use your &MMB; on the desktop and then select <guimenuitem>Unclutter Windows</guimenuitem>.</para>
 
 </sect3>
 
@@ -223,7 +208,7 @@ the application and close its window.  Once again, you have the choice
 of a few options:
 <itemizedlist>
 <listitem>
-<para>Click on the rightmost button on the window titlebar.<!-- TODO: -->
+<para>Click on the right-most button on the window titlebar.<!-- TODO: -->
 <!-- Screenie --> If you are editing a document with that application,
 you will be asked whether you want to <guibutton>Save</guibutton> your
 changes, <guibutton>Discard</guibutton> them, or
@@ -238,7 +223,7 @@ same choice of <guibutton>Save</guibutton>,
 </listitem>
 
 <listitem>
-<para> <mousebutton>Right</mousebutton>-click on the respective window in &kicker;, the &kde; panel, and then select <guimenuitem>Close</guimenuitem>. You will be prompted with an option to save any documents that were being edited.</para>
+<para> <mousebutton>Right</mousebutton>-click on the respective window in &kicker;, the &tde; panel, and then select <guimenuitem>Close</guimenuitem>. You will be prompted with an option to save any documents that were being edited.</para>
 </listitem>
 
 <listitem>
@@ -266,7 +251,7 @@ closer look:
 </mediaobject>
 </screenshot>
 <note><para>This screenshot shows the titlebar which appears in the
-default &kde; configuration. The exact appearance on your system may
+default &tde; configuration. The exact appearance on your system may
 be slightly different, but the functions are similar.</para>
 </note>
 -->
@@ -281,20 +266,15 @@ vertical/horizontal maximization. Or is this advanced? -->
 
 <para>kstart</para>
 <sect3 id="kstart">
-<sect3info>
-<author>
-&Richard.J.Moore;
-&Richard.J.Moore.mail;
-</author>
-</sect3info>
-<title>&kstart;</title> 
+
+<title>&kstart;</title>
 
 <para>The simplest way to access the advanced window management
-facilities in &kde; is to use a little known
-utility called  &kstart;, which is included in &kde; since version 2.1 &kstart; lets you control the way an application interacts with
+facilities in &tde; is to use a little known
+utility called  &kstart;, which is included in &tde; since version 2.1 &kstart; lets you control the way an application interacts with
 the window manager. The command is usually
 used to define special behavior for commonly-used applications, but
-it can also be useful for integrating non-&kde; applications into your
+it can also be useful for integrating non-&tde; applications into your
 desktop.</para>
 
 <para>Using &kstart; is easy: you simply put
@@ -310,7 +290,7 @@ before a command. To begin, let's look at how we might use
 should be fairly obvious - the kcalc window will stay on top of all
 the others and be visible on every virtual desktop. A feature that is
 less obvious is that this command will work with any NET compliant
-environment, not just &kde;.</para>
+environment, not just &tde;.</para>
 
 <para>We can pass arguments to programs we invoke with &kstart; as normal, for
 example:
@@ -325,25 +305,19 @@ example:
 World</computeroutput> with <application>xmessage</application> and
 ensures that the window will be shown on the first virtual desktop and
 will be omitted from the taskbar. The fact that this program is
-written using the Xt toolkit rather than being a native &kde;
+written using the Xt toolkit rather than being a native &tde;
 application does not cause any problem for
 &kstart;, hopefully this illustrates how
 &kstart; can be used to integrate foreign
-applications into your &kde; desktop.</para>
+applications into your &tde; desktop.</para>
 </sect3>
 
 <sect3 id="special-window-settings">
 <title>Other Special Window Settings</title>
-<para>While you can use &kstart; to assign particular window settings, &kde; also allows you to alter these -- as well as other similar settings -- from the program window itself. Simply select the leftmost button in the window titlebar (or just hit <keycombo action="simul">&Alt;<keycap>F3</keycap></keycombo> once the window is focued), and then go to <menuchoice><guisubmenu>Advanced</guisubmenu><guimenuitem>Special Window Settings...</guimenuitem></menuchoice>. As you can see, from here you change various things from its geometry upon startup, to whether it should have a border or not.</para>
+<para>While you can use &kstart; to assign particular window settings, &tde; also allows you to alter these -- as well as other similar settings -- from the program window itself. Simply select the left-most button in the window titlebar (or just hit <keycombo action="simul">&Alt;<keycap>F3</keycap></keycombo> once the window is focued), and then go to <menuchoice><guisubmenu>Advanced</guisubmenu><guimenuitem>Special Window Settings...</guimenuitem></menuchoice>. As you can see, from here you change various things from its geometry upon startup, to whether it should have a border or not.</para>
 </sect3>
 
 <sect3 id="system-tray">
-<sect3info>
-<author>
-&Richard.J.Moore;
-&Richard.J.Moore.mail;
-</author>
-</sect3info>
 
 <title>The System Tray</title>
 
@@ -355,7 +329,7 @@ quick access to commands. A window that has an item in the system tray
 usually disappears from the task manager when minimised with the tray
 icon providing a replacement. Normally tray icons are specifically
 developed as part of an application, but as with window decorations,
-&kde; provides a tool for changing this:
+&tde; provides a tool for changing this:
 <application>ksystraycmd</application>.</para>
 
 <para>To begin with, we'll take the standard application &kcalc; and turn
@@ -368,7 +342,7 @@ command:
 <para>The icon shown in the tray is the one specified in the window
 hints and will be updated if the icon changes.  The window title is
 shown as a tooltip if you hold the mouse over the icon.
-<application>ksystraycmd</application> follows standard &kde;
+<application>ksystraycmd</application> follows standard &tde;
 behaviour so the target window can be shown and hidden by clicking the
 tray icon, and a standard context menu is available. </para>
 
@@ -378,12 +352,6 @@ fileref="kcalc-systray.png"></imagedata></imageobject>
 </sect3>
 
 <sect3 id="more-complex-uses-of-ksystraycmd">
-<sect3info>
-<author>
-&Richard.J.Moore;
-&Richard.J.Moore.mail;
-</author>
-</sect3info>
 
 <title>More Complex Uses of
 <application>ksystraycmd</application></title>
@@ -394,27 +362,27 @@ fileref="kcalc-systray.png"></imagedata></imageobject>
 happening on your desktop).  To begin with, we'll simply look at how
 we can view this:
 <screen><prompt>%</prompt> <userinput><command>konsole</command> <option>--icon</option>
-log <option>--caption</option> 'X Log' \ 
+log <option>--caption</option> 'X Log' \
 <option>--nomenubar</option> <option>--notabbar</option>
-<option>--noframe</option> \ 
+<option>--noframe</option> \
 <option>-e</option> tail -f ~/.xsession-errors</userinput></screen>
 </para>
 
  <para>The <option>--caption</option> and <option>--icon</option>
-arguments are provided as standard by &kde; applications. You can get
+arguments are provided as standard by &tde; applications. You can get
 a full list of these global options by running an application with the
 <option>--help-kde</option> and <option>--help-qt</option>
 parameters. Here we give our &konsole; window the title 'X Log' and
-the icon <quote>log</quote>. You can use these options with any &kde; application and
+the icon <quote>log</quote>. You can use these options with any &tde; application and
 as  mentioned above, <application>ksystraycmd</application> takes account of these when creating
 the tray icon. The <option>-e</option> argument is specific to &konsole; and tells it
 to run the <command>less</command> command. Despite its complexity, we can easily move
-this window into the tray with <application>ksystraycmd</application>: 
+this window into the tray with <application>ksystraycmd</application>:
 
 <screen><prompt>%</prompt> <userinput><command>ksystraycmd</command>
 <option>--hidden</option> <option>--title</option> 'X Log' \
-konsole --icon log --caption 'XLog' \ 
---nomenubar --notabbar --noframe \ 
+konsole --icon log --caption 'XLog' \
+--nomenubar --notabbar --noframe \
 -e tail -f .xsession-errors</userinput></screen>
 </para>
 
@@ -426,7 +394,7 @@ to the log file, but we can do things a little more efficiently if we
 only run the konsole process when it is visible. The command we use
 is
 <screen><prompt>%</prompt> <userinput><command>ksystraycmd</command> <option>--startonshow</option> \
- --<option>icon</option> log <option>--tooltip</option> 'X Log' \ 
+ --<option>icon</option> log <option>--tooltip</option> 'X Log' \
 konsole --icon log --caption 'X Log' \
 --nomenubar --notabbar --noframe \
 -e tail -f ~/.xsession-errors</userinput></screen>
@@ -447,12 +415,6 @@ too.</para>
 </sect3>
 
 <sect3 id="improving-reliability">
-<sect3info>
-<author>
-&Richard.J.Moore;
-&Richard.J.Moore.mail;
-</author>
-</sect3info>
 
 <title>Improving Reliability</title>
 
@@ -480,7 +442,7 @@ the best way to use &kstart; and <application>ksystraycmd</application>. The <op
 supported by both &kstart; and <option>ksystraycmd</option> and can be regular expression
 (&eg; <quote>window[0-9]</quote>) as well as a particular title. (Regular
 expressions are a powerful pattern matching tool you'll find used
-throughout &kde;.) </para>
+throughout &tde;.) </para>
 
 </sect3>
 
@@ -495,10 +457,10 @@ throughout &kde;.) </para>
 <para>Sometimes, one screen's worth is just not enough space. If you
 use many applications at the same time, and find yourself drowning in
 different windows, virtual desktops offer the solution. By default,
-&kde; has four virtual desktops, each one of which is like a separate
+&tde; has four virtual desktops, each one of which is like a separate
 screen: you can open windows, move windows around, and set backgrounds and
 icons on each of the desktops. If you are familiar with the concept of
-virtual terminals, you will have no trouble with &kde;'s virtual
+virtual terminals, you will have no trouble with &tde;'s virtual
 desktops.</para>
 
 <sect3 id="switching-virtual-desktops">
@@ -507,7 +469,7 @@ desktops.</para>
 </keycombo> in the same way as you would use <keycombo action="simul">&Alt;&Tab;
 </keycombo> to switch between windows (see <xref linkend="switching-between-windows"/>): Hold down &Ctrl; and then press
 &Tab;. A small popup window appears, showing the virtual desktops,
-with one highlighted. If you release &Ctrl;, &kde; will switch to the
+with one highlighted. If you release &Ctrl;, &tde; will switch to the
 highlighted virtual desktop. To select a different desktop, press
 &Tab; repeatedly, while holding down &Ctrl;. The selection moves
 through the available desktops. When the desktop you want to switch to
@@ -526,7 +488,7 @@ window appear on all desktops with the <guimenuitem>All
 Desktops</guimenuitem><indexterm><primary>Sticky
 Windows</primary></indexterm> item.</para>
 
-<!-- Add links to "further reading" here 
+<!-- Add links to "further reading" here
 <itemizedlist>
 <title>Related Information</title>
 <listitem><para></para>

@@ -19,7 +19,7 @@
 various topics: almost any subject you like (and many you don't!) can
 be found there. Although usenet has become less popular than it once
 was, because of the increasing use of web forums, &etc;, it is still a
-useful tool. &kde; provides a powerful usenet news reader called &knode;.</para>
+useful tool. &tde; provides a powerful usenet news reader called &knode;.</para>
 
 <para>You can find &knode; in the <guimenu>K</guimenu> Menu under the
 <guisubmenu>Internet</guisubmenu> entry: the menu entry
@@ -218,11 +218,11 @@ class="systemname">mail.server.com</systemitem></userinput></para>
 <itemizedlist>
 <title>Related Information</title>
 <listitem><para>The comp.windows.x.kde newsgroup is the main user
-support group for &kde; on usenet. You can find other resources for
-getting help with &kde; in <xref linkend="getting-help"/>.</para>
+support group for &tde; on usenet. You can find other resources for
+getting help with &tde; in <xref linkend="getting-help"/>.</para>
 </listitem>
 <listitem><para><ulink url="http://gmane.org">Gmane</ulink> provides a
-usenet frontend to many mailing lists, including most of the &kde;
+usenet frontend to many mailing lists, including most of the &tde;
 lists, so you can read them with &knode;.</para>
 </listitem>
 </itemizedlist>

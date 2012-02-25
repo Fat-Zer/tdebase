@@ -30,11 +30,11 @@ class="directory">$<envar>HOME</envar>/.netscape/plugins</filename>.
 However, &konqueror; will not automatically use the installed plugins:
 it first has to scan a list of folders.  You can initiate the scan
 by clicking <guibutton>Scan for new plugins</guibutton>.  Alternatively,
-you can enable <guilabel>Scan for new plugins at &kde; startup</guilabel>
-so &konqueror; will scan the appropriate folders every time &kde; 
+you can enable <guilabel>Scan for new plugins at &tde; startup</guilabel>
+so &konqueror; will scan the appropriate folders every time &tde; 
 starts up, to see whether new plugins have been installed.</para>
 
-<note><para>Enabling <guilabel>Scan for new plugins at &kde;
+<note><para>Enabling <guilabel>Scan for new plugins at &tde;
 startup</guilabel> can considerably slow down the startup procedure,
 and is known to give difficulty on certain installations.  Turn this
 option off if you experience problems.</para></note>

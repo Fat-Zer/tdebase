@@ -14,7 +14,7 @@
 
 <indexterm><primary>Accessibility</primary></indexterm>
 
-<para><acronym>KDEAP</acronym> (the &kde; Accessibility Project) aims to ensure that &kde;, as a desktop environment, is accessible to all users, including those of us with physical disabilities. In addition to the accessibility aids in the <link linkend="kcontrol-regional-and-accessibility">Control Center</link>, &kde; has several other accessibility tools, which are available in the &kde;-Accessibility package. This package may not be installed on your computer; if it is not, you can download it from here:</para>
+<para><acronym>KDEAP</acronym> (the &tde; Accessibility Project) aims to ensure that &tde;, as a desktop environment, is accessible to all users, including those of us with physical disabilities. In addition to the accessibility aids in the <link linkend="kcontrol-regional-and-accessibility">Control Center</link>, &tde; has several other accessibility tools, which are available in the &tde;-Accessibility package. This package may not be installed on your computer; if it is not, you can download it from here:</para>
 
 <para><itemizedlist>
 <listitem><para><ulink url="ftp://ftp.kde.org/pub/kde/stable/apps/KDE3.x/accessibility/tdeaccessibility-1.0.0.tar.gz">tdeaccessibility-1.0.0.tar.gz</ulink>, or 
@@ -23,7 +23,7 @@
 <listitem><para><ulink url="ftp://ftp.kde.org/pub/kde/stable/apps/KDE3.x/accessibility/tdeaccessibility-1.0.0.lsm">lsm file</ulink></para></listitem>
 </itemizedlist></para>
 
-<para>For more information on the project, visit the <ulink url="http://accessibility.kde.org/">&kde; Accessibility Home Page</ulink>.</para>
+<para>For more information on the project, visit the <ulink url="http://accessibility.kde.org/">&tde; Accessibility Home Page</ulink>.</para>
 
 <sect1 id="kmousetool">
 <title><application>KMouseTool</application></title>
@@ -32,7 +32,7 @@
 automatically</secondary></indexterm>
 
 <para>
-  <application>KMouseTool</application> is a   &kde; program, which clicks the mouse for you, so you
+  <application>KMouseTool</application> is a   &tde; program, which clicks the mouse for you, so you
   do not have to. <application>KMouseTool</application> works with any mouse or pointing device.
 </para>
 <para>
@@ -87,7 +87,7 @@ automatically</secondary></indexterm>
 
 <indexterm><primary>Speech</primary></indexterm>
 
-<para><application>KMouth</application> is a KDE program which enables people who cannot speak to let their
+<para><application>KMouth</application> is a TDE program which enables people who cannot speak to let their
  computer speak, &eg; mutal people or people who have lost their voice.
  It has a text-input field and speaks the sentences that you enter. It also has
  support for user-defined phrasebooks.
@@ -134,9 +134,9 @@ automatically</secondary></indexterm>
 <sect1 id="ktts">
 <title><application>KTTS</application> - Text-to-Speech</title>
 
-<para><application>KTTS</application> is a &kde; application for the conversion of text into audible speech. Currently, since &kde; 3.4, you can use <application>KTTS</application> to speak any text from the &klipper;, the &kde; clipboard, any text from a plain text file (using &kate; or otherwise), speak any portion of text from a &HTML; page in &konqueror;, and much more.</para>
+<para><application>KTTS</application> is a &tde; application for the conversion of text into audible speech. Currently, since &kde; 3.4, you can use <application>KTTS</application> to speak any text from the &klipper;, the &tde; clipboard, any text from a plain text file (using &kate; or otherwise), speak any portion of text from a &HTML; page in &konqueror;, and much more.</para>
 
-<para>To get <application>KTTS</application> up-and-running you will need to start by running <command>kttsmgr</command>, the &kde; Text-to-Speech manager.</para>
+<para>To get <application>KTTS</application> up-and-running you will need to start by running <command>kttsmgr</command>, the &tde; Text-to-Speech manager.</para>
 
 <!-- Insert Screeny here -->
 

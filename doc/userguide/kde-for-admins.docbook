@@ -1,24 +1,9 @@
 <part id="kde-for-administrators">
-<partinfo>
-<authorgroup>
-<author>
-<personname>
-<firstname>Waldo</firstname>
-<surname>Bastian</surname>
-</personname>
-<email>bastian@kde.org</email>
-</author>
-<othercredit role="reviewer">
-&Philip.Rodrigues;
-&Philip.Rodrigues.mail;
-</othercredit>
-</authorgroup>
-</partinfo>
 
-<title>&kde; for Administrators</title>
+<title>&tde; for Administrators</title>
 
 <chapter id="kde-internals">
-<title>&kde; Internals</title>
+<title>&tde; Internals</title>
 
 <sect1 id="kde-for-admins-overview">
 <title>Overview</title>
@@ -28,12 +13,12 @@
 <sect1 id="directory-layout">
 <title>Directory Layout</title>
 
-<para>&kde; defines a filesystem hierarchy which is used by the &kde;
-environment itself as well as all &kde; applications. In general &kde;
+<para>&tde; defines a filesystem hierarchy which is used by the &tde;
+environment itself as well as all &tde; applications. In general &tde;
 stores all its files in a directory tree with a fixed structure.
 </para>
 
-<para>By default &kde; uses two directory trees:</para>
+<para>By default &tde; uses two directory trees:</para>
 
 <itemizedlist>
 <listitem><para>One at the system level (for example <filename
@@ -68,8 +53,8 @@ check which directory trees are used with the following command:
 <option>--check</option></userinput></para>
 </informalexample>
 
-<para>&kde; and &kde; applications look up files by scanning all the
-&kde; directory trees.  The directory trees are checked in order of
+<para>&tde; and &tde; applications look up files by scanning all the
+&tde; directory trees.  The directory trees are checked in order of
 precedence. When a file is present in multiple directory trees, the
 file from the last tree takes precedence.  Normally, the tree
 located in the user's home directory has the highest precedence. This
@@ -160,7 +145,7 @@ root writing to $TDEHOME of the user after running
 <seg><filename class="directory">/opt/trinity</filename>, <filename
 class="directory">/usr</filename>, <filename
 class="directory">/usr/trinity</filename></seg>
-<seg>Vendor dependent. Used by &kde; 2. If not set, falls back to
+<seg>Vendor dependent. Used by &tde; 2. If not set, falls back to
 compiled-in default.</seg>
 </seglistitem>
 
@@ -169,15 +154,15 @@ compiled-in default.</seg>
 <seg><filename class="directory">/opt/trinity</filename>, <filename
 class="directory">/usr</filename>, <filename
 class="directory">/usr/trinity</filename></seg>
-<seg>New in &kde;3. Can list multiple locations separated by a
+<seg>New in &tde;3. Can list multiple locations separated by a
 colon. If not set, falls back to $<envar>TDEDIR</envar></seg>
 </seglistitem>
 
 </segmentedlist>
 </para>
 <para>Don't <emphasis>need</emphasis> to be set, defaults work just fine.</para>
-<para>Running &kde;2 next to &kde;3? Point $<envar>TDEDIR</envar> to
-&kde; 2 and $<envar>TDEDIRS</envar> to &kde; 3.</para>
+<para>Running &tde;2 next to &tde;3? Point $<envar>TDEDIR</envar> to
+&tde; 2 and $<envar>TDEDIRS</envar> to &tde; 3.</para>
 
 <informalexample>
 <para>A staff member at a university could have the following
@@ -222,7 +207,7 @@ userProfileMapFile=/etc/kde-user-profile
 </programlisting>
 
 <para>It is now possible to assign a profile based on either the user name
-or based on the &UNIX; group the user is part of.</para> 
+or based on the &UNIX; group the user is part of.</para>
 
 <para>To assign the staff profile to all users that are a member of the
 &UNIX; group staff_members add the following to
@@ -247,7 +232,7 @@ bastian=staff
 <sect1 id="directory-layout-revisited">
 <title>Directory Layout Revisited</title>
 
-<para>Each directory tree used by &kde; has a fixed directory structure.
+<para>Each directory tree used by &tde; has a fixed directory structure.
 Directories that are not relevant for a certain tree, or simply not used can
 be left out though. For example, directories used for temporary files are
 usually only found under <filename
@@ -264,20 +249,20 @@ directory tree.</para>
 <variablelist>
 <varlistentry>
 <term><filename class="directory">bin</filename></term>
-<listitem><para>Used for &kde; executables.</para></listitem>
+<listitem><para>Used for &tde; executables.</para></listitem>
 </varlistentry>
 
 <varlistentry>
 <term><filename class="directory">lib</filename></term>
-<listitem><para>Used for &kde; libraries.</para>
+<listitem><para>Used for &tde; libraries.</para>
 </listitem>
 </varlistentry>
 
 <varlistentry>
 <term><filename class="directory">lib/trinity</filename></term>
 <listitem><para>This directory contains components, plugins, and other
-runtime loadable objects for use by &kde; 3.<replaceable>x</replaceable>
-applications.</para></listitem> 
+runtime loadable objects for use by &tde; 3.<replaceable>x</replaceable>
+applications.</para></listitem>
 </varlistentry>
 </variablelist>
 
@@ -293,13 +278,13 @@ archs.</para>
 <varlistentry>
 <term><filename class="directory">share/applnk</filename></term>
 <listitem><para><literal role="extension">.desktop</literal> files for
-&kde;-menu (old)</para></listitem>
+&tde;-menu (old)</para></listitem>
 </varlistentry>
 
 <varlistentry>
 <term><filename class="directory">share/applications</filename></term>
 <listitem><para><literal role="extension">.desktop</literal> files for
-&kde;-menu (since &kde; 3.2)</para>
+&tde;-menu (since &kde; 3.2)</para>
 </listitem>
 </varlistentry>
 
@@ -314,8 +299,8 @@ files.</para></listitem>
 <term><filename class="directory">share/config</filename></term>
 <listitem><para>Configuration files. Configuration files are normally
 named after the application they belong to plus the letters
-<quote>rc</quote>. A special case is <filename>kdeglobals</filename>. 
-This file is read by all &kde; applications.</para></listitem>
+<quote>rc</quote>. A special case is <filename>kdeglobals</filename>.
+This file is read by all &tde; applications.</para></listitem>
 </varlistentry>
 
 <varlistentry>
@@ -324,7 +309,7 @@ class="directory">share/config/session</filename></term>
 <listitem><para>This directory is used by session management and is
 normally only available under <filename
 class="directory">$<envar>TDEHOME</envar></filename>. At the end of a
-session &kde; applications store their state here. The file names
+session &tde; applications store their state here. The file names
 consist of the name of the application followed by a number. The
 session manager <command>ksmserver</command> stores references to
 these numbers when saving a session in
@@ -333,7 +318,7 @@ these numbers when saving a session in
 
 <varlistentry>
 <term><filename class="directory">share/doc/HTML</filename></term>
-<listitem><para>This directory contains documentation for &kde;
+<listitem><para>This directory contains documentation for &tde;
 applications. Documentation is categorized by language and the
 application it belongs to. Normally at least two files can be found in
 a directory: <filename>index.docbook</filename>, which contains the
@@ -356,7 +341,7 @@ categorized by theme, dimension and usage category.</para></listitem>
 <term><filename class="directory">share/mimelnk</filename></term>
 <listitem><para>In this directory,<literal
 role="extension">.desktop</literal> files that describe &MIME; types
-are stored. &kde; uses &MIME; types to identify the type of a
+are stored. &tde; uses &MIME; types to identify the type of a
 file.</para>
 </listitem>
 </varlistentry>
@@ -366,7 +351,7 @@ file.</para>
 <listitem><para>This directory contains <literal
 role="extension">.desktop</literal> files that describe services. Services
 are like applications but are usually launched by other applications instead
-of the user. Services do not appear in the &kde; menu.</para>
+of the user. Services do not appear in the &tde; menu.</para>
 </listitem>
 </varlistentry>
 
@@ -408,7 +393,7 @@ background picture</para></listitem>
 </sect1>
 
 <sect1 id="host-specific-directories">
-<title>Host-specific Directories</title> 
+<title>Host-specific Directories</title>
 
 <para>There are three host-specific directories that are usually
 symlinked to other locations. If the directories do not already exist,
@@ -451,9 +436,9 @@ an alternative name and link to that instead.</para>
 </sect1>
 
 <sect1 id="configuration-files">
-<title>Configuration Files</title> <para>&kde; uses a simple
+<title>Configuration Files</title> <para>&tde; uses a simple
 text-based file format for all its configuration files. It consists of
-key-value pairs that are placed in groups.  All &kde; configuration
+key-value pairs that are placed in groups.  All &tde; configuration
 files use <acronym>UTF</acronym>-8 encoding for text outside the
 <acronym>ASCII</acronym> range.</para>
 
@@ -471,7 +456,7 @@ second group contains the keys <varname>Show hidden files</varname>
 and <varname>Sort by</varname>:</para>
 
 <programlisting>
-[KDE]
+[TDE]
 LargeCursor=false
 SingleClick=true
 </programlisting>
@@ -527,13 +512,13 @@ Description=This is\na very long\ndescription.
 
 <para>Empty lines in configuration files are ignored, as are lines that
 start with a hash mark (<quote>#</quote>). The hash mark can be used to add
-comments to configuration files. It should be noted that when a &kde;
+comments to configuration files. It should be noted that when a &tde;
 application updates a configuration file the comments are
 <emphasis>not</emphasis> preserved.</para>
 
 <para>There can be multiple configuration files with the same name in the
 <filename class="directory">share/config</filename> sub-directory of the
-various &kde; directory trees. In this case the information of all these
+various &tde; directory trees. In this case the information of all these
 configuration files is combined on a key-by-key basis.  If the same key
 within a certain group is defined in more than one place, the key value read
 from the directory tree with the highest precedence will be used.
@@ -698,7 +683,7 @@ result in a value equal to <literal>joe@joes_host</literal>. The setting is
 not locked down.</para>
 
 <programlisting>
-[Mail Settings] 
+[Mail Settings]
 Host[$ie]=$(hostname)
 Email[$e]=${USER}@${HOST}
 </programlisting>
@@ -739,11 +724,11 @@ Caption[fr]=Ma L&eacute;gende
 </informalexample>
 
 <para>In general the entries that can appear in a configuration file are not
-documented.  With &kde; 3.2 a start has been made to change this. In
+documented.  With &tde; 3.2 a start has been made to change this. In
 <filename
 class="directory">$<envar>TDEDIR</envar>/share/config.kcfg</filename>, files
 can be found that provide a formal description of the possible entries in a
-configuration file. These are used by the new &kde; Configuration Editor
+configuration file. These are used by the new &tde; Configuration Editor
 when available.</para>
 
 <informalexample>
@@ -779,7 +764,7 @@ Auto Save Interval=25
 </sect1>
 
 <sect1 id="kde-startup-sequence">
-<title>&kde; Startup Sequence</title>
+<title>&tde; Startup Sequence</title>
 
 <sect2 id="tdm">
 <title>&tdm;</title>
@@ -811,7 +796,7 @@ Startup - <filename>/etc/X11/xdm/Xstartup</filename> - prepare as root
 Session - <filename>/etc/X11/xdm/Xsession</filename> - starts session as user
 </member>
 <member>
-= For a KDE session: <command>kde</command> or <command>starttde</command>
+= For a TDE session: <command>kde</command> or <command>starttde</command>
 </member>
 <member>
 = If present <filename>~/.xsession</filename> or <filename>~/.xinitrc</filename>
@@ -824,9 +809,9 @@ Reset - <filename>/etc/X11/xdm/Xreset</filename> - after session finished
 </sect2>
 
 <sect2 id="starttde">
-<title>The &kde; Startup Script: <command>starttde</command></title>
+<title>The &tde; Startup Script: <command>starttde</command></title>
 
-<para>The &kde; startup sequence starts with the
+<para>The &tde; startup sequence starts with the
 <filename>starttde</filename> script. In most cases this script gets called
 from the display manager (&tdm;) once the user has been authenticated. Their
 are two very important lines in the <filename>starttde</filename>
@@ -839,7 +824,7 @@ ksmserver $TDEWM
 
 <para>The first line starts the <command>tdeinit</command> master process.
 The <command>tdeinit</command> master process is used to start all other
-&kde; processes.  It show up in the output of <command>ps
+&tde; processes.  It show up in the output of <command>ps
 <option>aux</option></command> as <computeroutput>tdeinit:
 Running...</computeroutput>. The arguments after <command>tdeinit</command>
 are the names of additional processes to be started.  The <token>+</token>
@@ -859,7 +844,7 @@ user is logged out.</para>
 <sect1 id="background-processes">
 <title>Background Processes</title>
 
-<para>All &kde; background services are user-specific: unlike system daemons
+<para>All &tde; background services are user-specific: unlike system daemons
 they are not shared between users. As well as being unique per user they are
 also unique per X-server display. The processes are:</para>
 
@@ -912,7 +897,7 @@ needed</para>
 
 <sect2 id="tdeinit">
 <title><command>tdeinit</command></title>
-<para><command>tdeinit</command> is used to start all other &kde;
+<para><command>tdeinit</command> is used to start all other &tde;
 programs. <command>tdeinit</command> can start normal binary program files
 as well as <command>tdeinit</command> loadable modules
 (<acronym>KLM</acronym>s).  <acronym>KLM</acronym>s work just like binary
@@ -954,9 +939,9 @@ command line in the <command>starttde</command> script, normally
 <title><command>dcopserver</command></title>
 
 <para><command>dcopserver</command> is a daemon which provides inter-process
-communication (&DCOP;) facilities to all &kde; applications. The &DCOP;
+communication (&DCOP;) facilities to all &tde; applications. The &DCOP;
 facilities are accessible from the command shell via the
-<command>dcop</command> command line tool. &DCOP; is essential for all &kde;
+<command>dcop</command> command line tool. &DCOP; is essential for all &tde;
 applications.</para>
 
 <para>Some related files:</para>
@@ -1018,8 +1003,8 @@ startup problems.</para>
 <title><command>klauncher</command></title>
 
 <para><command>klauncher</command> is a daemon which is responsible for
-service activation within &kde;. It operates in close connection with the
-<command>tdeinit</command> master process to start new processes. &kde;
+service activation within &tde;. It operates in close connection with the
+<command>tdeinit</command> master process to start new processes. &tde;
 applications communicate with <command>klauncher</command> over &DCOP; in
 order to start new applications or services.</para>
 
@@ -1050,7 +1035,7 @@ methods.</para>
 <sect1 id="ksmserver">
 <title>KSMServer</title>
 
-<para><command>ksmserver</command> is &kde;'s session manager. On startup
+<para><command>ksmserver</command> is &tde;'s session manager. On startup
 the session manager launches auto-start applications and restores
 applications from the previous session.  The applications to auto-start are
 indicated by <literal role="extension">.desktop</literal> files in the
@@ -1084,13 +1069,13 @@ are:</para>
 
 <varlistentry>
 <term><command>kdesktop</command></term>
-<listitem><para>The &kde; desktop</para>
+<listitem><para>The &tde; desktop</para>
 </listitem>
 </varlistentry>
 
 <varlistentry>
 <term><command>&kicker;</command></term>
-<listitem><para>The &kde; panel</para>
+<listitem><para>The &tde; panel</para>
 </listitem>
 </varlistentry>
 
@@ -1127,7 +1112,7 @@ will automatically open any files stored in this directory including
 documents, binary files or applications in the form of <literal
 role="extension">.desktop</literal> files.</para>
 
-<para>The &kde; session manager also restores one of the previous
+<para>The &tde; session manager also restores one of the previous
 sessions. A session contains a collection of applications as well as
 application-specific information that reflects the state of the applications
 at the time the session was saved.  Sessions are stored in the
@@ -1144,7 +1129,7 @@ windows of all the other applications in the session.
 <sect1 id="environment-variables">
 <title>Environment variables</title>
 
-<para>Some important environment variables used by &kde;:</para>
+<para>Some important environment variables used by &tde;:</para>
 
 <variablelist>
 
@@ -1152,30 +1137,30 @@ windows of all the other applications in the session.
 <term>$<envar>TDEDIR</envar></term>
 <listitem><para>Has to be set if
 <envar>TDEDIRS</envar> is not set and has to point to the root of the
-&kde; installation tree. Allows &kde; to find its data like icons,
+&tde; installation tree. Allows &tde; to find its data like icons,
 menus and libraries.</para>
 </listitem>
 </varlistentry>
 
 <varlistentry><term>$<envar>TDEDIRS</envar></term>
 <listitem><para>Overrides <envar>TDEDIR</envar> and allows you to specify
-multiple directories where &kde; searches for its data. Useful if you want
+multiple directories where &tde; searches for its data. Useful if you want
 or have to install some programs to a different prefix than the rest of
-&kde;.</para> 
+&tde;.</para>
 </listitem>
 </varlistentry>
 
 <varlistentry><term><envar>$TDEHOME</envar></term><listitem><para>If
-not set, &kde; uses <filename class="directory">~/.kde</filename> as
+not set, &tde; uses <filename class="directory">~/.kde</filename> as
 the directory where personal data is stored.</para>
 </listitem>
 </varlistentry>
 
 <varlistentry><term>$<envar>TDEROOTHOME</envar></term><listitem><para>If
-not set, &kde; uses <filename class="directory">~root/.kde</filename>
+not set, &tde; uses <filename class="directory">~root/.kde</filename>
 as the directory for <systemitem class="username">root</systemitem>'s
-personal data. Was introduced to prevent &kde; from accidently
-overwriting user data with root permissions when the user runs a &kde;
+personal data. Was introduced to prevent &tde; from accidently
+overwriting user data with root permissions when the user runs a &tde;
 program after switching with <command>su</command> to <systemitem
 class="username">root</systemitem>.</para>
 </listitem>
@@ -1183,25 +1168,25 @@ class="username">root</systemitem>.</para>
 
 <varlistentry><term>$<envar>TDEWM</envar></term><listitem><para>If the
 <envar>TDEWM</envar> environment variable has been set, then it will
-be used as &kde;'s window manager within the
+be used as &tde;'s window manager within the
 <command>starttde</command> script instead of &twin;.</para>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>$<envar>KDE_LANG</envar></term><listitem><para>Overrides
-the &kde; language configuration, &eg; <userinput>KDE_LANG=fr kprogram
+<varlistentry><term>$<envar>TDE_LANG</envar></term><listitem><para>Overrides
+the &tde; language configuration, &eg; <userinput>TDE_LANG=fr kprogram
 &amp;</userinput> starts a program with French translation if the
 necessary files are installed.</para>
 </listitem>
 </varlistentry>
 
 <varlistentry><term>$<envar>TDE_MULTIHEAD</envar></term><listitem><para>Set
-this variable to <literal>true</literal> to indicate that &kde; is running
+this variable to <literal>true</literal> to indicate that &tde; is running
 on a multi-head system.</para>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>$<envar>KDE_FORK_SLAVES</envar></term>
+<varlistentry><term>$<envar>TDE_FORK_SLAVES</envar></term>
 <listitem><para>(Since &kde; 3.2.3) Set this variable to spawn
 <acronym>KIO</acronym>-slaves directly from the application process
 itself. By default <acronym>KIO</acronym>-slaves are spawned using
@@ -1212,35 +1197,35 @@ environment as the application. This can be the case with
 </listitem>
 </varlistentry>
 
-<varlistentry><term>$<envar>KDE_HOME_READONLY</envar></term>
+<varlistentry><term>$<envar>TDE_HOME_READONLY</envar></term>
 <listitem><para>Set this variable to indicate that your home directory is
 mounted as read-only.</para>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>$<envar>KDE_NO_IPV6</envar></term><listitem><para>
+<varlistentry><term>$<envar>TDE_NO_IPV6</envar></term><listitem><para>
 (Since &kde; 3.2.3) - Set this variable to disable <acronym>IPv6</acronym>
 support and <acronym>IPv6</acronym> <acronym>DNS</acronym>
 lookups.</para>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>$<envar>KDE_IS_PRELINKED</envar></term><listitem><para>
+<varlistentry><term>$<envar>TDE_IS_PRELINKED</envar></term><listitem><para>
 (Since &kde; 3.2) - Set this variable to indicate that you have prelinked
-your &kde; binaries and libraries. This will turn off
+your &tde; binaries and libraries. This will turn off
 <command>tdeinit</command>.</para>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>$<envar>KDE_UTF8_FILENAMES</envar></term><listitem><para>If
-this environment variable is set, &kde; assumes all filenames are in
+<varlistentry><term>$<envar>TDE_UTF8_FILENAMES</envar></term><listitem><para>If
+this environment variable is set, &tde; assumes all filenames are in
 <acronym>UTF-8</acronym> encoding regardless of the current C
 locale.</para>
 </listitem>
 </varlistentry>
 
 <varlistentry><term>$<envar>TDE_FULL_SESSION</envar></term><listitem><para>
-(Since &kde; 3.2)  Automatically set to true by &kde; startup, it is used
+(Since &kde; 3.2)  Automatically set to true by &tde; startup, it is used
 by &eg; &konqueror; to know if it should consider remaining in memory
 for future re-use when being closed. If not set, &konqueror; will exit
 after being closed (&eg; &tdesu; does that, it's also useful for
@@ -1248,22 +1233,22 @@ debugging).</para>
 </listitem>
 </varlistentry>
 
-<varlistentry><term>$<envar>KDESYCOCA</envar></term><listitem><para>Allows
-you to specify the path and the name of the generated &kde; system
+<varlistentry><term>$<envar>TDESYCOCA</envar></term><listitem><para>Allows
+you to specify the path and the name of the generated &tde; system
 configuration cache file.</para>
 </listitem>
 </varlistentry>
 
 <varlistentry><term>$<envar>TDETMP</envar></term><listitem><para>Allows
 to specify another path than <filename
-class="directory">/tmp</filename> where &kde; stores its temporary
+class="directory">/tmp</filename> where &tde; stores its temporary
 files.</para>
 </listitem>
 </varlistentry>
 
 <varlistentry><term>$<envar>TDEVARTMP</envar></term><listitem><para>Allows
 to specify another path than <filename
-class="directory">/var/tmp</filename> where &kde; stores its variable
+class="directory">/var/tmp</filename> where &tde; stores its variable
 files.</para>
 </listitem>
 </varlistentry>
@@ -1282,11 +1267,11 @@ class="directory">$<envar>XDG_DATA_HOME</envar></filename> base
 directory. Default is
 <literal>/usr/local/share/:/usr/share/</literal></para>
 
-<para>&kde; adds locations from $<envar>TDEDIRS</envar> and profiles
+<para>&tde; adds locations from $<envar>TDEDIRS</envar> and profiles
 as well.  Used for <literal role="extension">.desktop</literal> and
 <literal role="extension">.directory</literal> menu files. <literal
 role="extension">.desktop</literal> files under <filename
-class="directory">$<envar>XDG_DATA_DIRS</envar>/applications</filename>. 
+class="directory">$<envar>XDG_DATA_DIRS</envar>/applications</filename>.
 <literal
 role="extension">.directory</literal> files under
 $XDG_DATA_DIRS/desktop-directories
@@ -1295,16 +1280,16 @@ $XDG_DATA_DIRS/desktop-directories
 </varlistentry>
 
 <varlistentry><term>$<envar>XDG_CONFIG_HOME</envar></term><listitem><para>
-(&kde; 3.2) - Defines the base directory relative to which user
+(&tde; 3.2) - Defines the base directory relative to which user
 specific configuration files should be stored. Default is
 <filename class="directory">$<envar>HOME</envar>/.config</filename>.</para>
 </listitem>
 </varlistentry>
 
 <varlistentry><term>$<envar>XDG_CONFIG_DIRS</envar></term><listitem><para>
-(&kde; 3.2) - Defines the preference-ordered set of base directories
+(&tde; 3.2) - Defines the preference-ordered set of base directories
 to search for configuration files in addition to the $<envar>XDG_CONFIG_HOME</envar>
-base directory. The default is <filename class="directory">/etc/xdg</filename> &kde; adds locations from
+base directory. The default is <filename class="directory">/etc/xdg</filename> &tde; adds locations from
 $<envar>TDEDIRS</envar> and profiles as well. Used by <literal role="extension">.menu</literal> descriptions in
 <filename class="directory">$<envar>XDG_CONFIG_DIRS</envar>/menus</filename>.
 </para>
@@ -1319,7 +1304,7 @@ $<envar>TDEDIRS</envar> and profiles as well. Used by <literal role="extension">
 
 <!-- FIXME: Add more words. Fix markup -->
 
-<para><command>tdeinit</command> is used to start all other &kde;
+<para><command>tdeinit</command> is used to start all other &tde;
 programs. <command>tdeinit</command> can start normal binary program f iles
 as well as <command>tdeinit</command> loadable modules
 (<acronym>KLM</acronym>s).  <acronym>KLM</acronym>s work just like binary
@@ -1354,7 +1339,7 @@ difficult to kill a process that is causing trouble:</para>
 
 <para>You might be tempted to try <userinput><command>killall
 tdeinit</command></userinput>, but killing all tdeinit processes will have
-the effect of shutting down all of &kde;. In effect, total
+the effect of shutting down all of &tde;. In effect, total
 destruction!</para>
 
 <para>There are two simple solutions to this:</para>
@@ -1362,7 +1347,7 @@ destruction!</para>
 <screen><prompt>%</prompt> <userinput><command>kdekillall kdesktop</command></userinput>
 or good old
 <prompt>%</prompt> <userinput><command>kill 26195</command></userinput></screen>
-<para><command>kdekillall</command> is part of the &kde; <acronym>SDK</acronym>
+<para><command>kdekillall</command> is part of the &tde; <acronym>SDK</acronym>
 package.</para>
 
 </sect1>
@@ -1370,13 +1355,13 @@ package.</para>
 </chapter>
 
 <chapter id="customizing-kde">
-<title>Customizing &kde;</title>
+<title>Customizing &tde;</title>
 
 
 <sect1 id="desktop-icons">
 <title>Desktop Icons</title>
 
-<para>&kde; uses several types of icons:</para>
+<para>&tde; uses several types of icons:</para>
 <itemizedlist>
 <listitem><para>Documents</para>
 </listitem>
@@ -1423,7 +1408,7 @@ URL=http://www.kde.org/
 role="extension">.desktop</literal> file: <menuchoice><guimenu>Create
 New</guimenu><guisubmenu>File</guisubmenu><guimenuitem>Link to
 Application</guimenuitem></menuchoice>. You must provide details
-yourself. Drag from &kde; Menu: Either copy or link (creates symlink),
+yourself. Drag from &tde; Menu: Either copy or link (creates symlink),
 much easier</para>
 
 <!-- Perhaps legacy and translated should be the other way around, but -->
@@ -1496,7 +1481,7 @@ disable if it doesn't work.</para>
 <callout arearefs="co-x-dcop-servicetype"><para>Has app started ok?
 Remove if it doesn't work</para>
 </callout>
-<callout arearefs="co-categories"><para>Categories for &kde; Menu, not
+<callout arearefs="co-categories"><para>Categories for &tde; Menu, not
 used on desktop</para>
 </callout>
 </calloutlist>
@@ -1528,7 +1513,7 @@ open several local files at once.</para>
 <varlistentry>
 <term>%u</term>
 <listitem><para>A single &URL;: if the app can
-handle &eg; &FTP; or &HTTP; &URL;s itself, otherwise &kde;.</para>
+handle &eg; &FTP; or &HTTP; &URL;s itself, otherwise &tde;.</para>
 </listitem>
 </varlistentry>
 
@@ -1554,8 +1539,8 @@ have file in current working directory.</para>
 </varlistentry>
 
 <varlistentry>
-<term>%i</term> 
-<listitem><para>The icon; <option>--icon</option> option; &kde; app
+<term>%i</term>
+<listitem><para>The icon; <option>--icon</option> option; &tde; app
 will use icon from <varname>Icon</varname>= line in taskbar.</para>
 </listitem>
 </varlistentry>
@@ -1567,8 +1552,8 @@ will use icon from <varname>Icon</varname>= line in taskbar.</para>
 </varlistentry>
 
 <varlistentry>
-<term>%c</term> 
-<listitem><para>The caption; <option>--caption</option> option; &kde;
+<term>%c</term>
+<listitem><para>The caption; <option>--caption</option> option; &tde;
 app will use name from <varname>Name</varname>= line in
 taskbar.</para>
 </listitem>
@@ -1635,15 +1620,15 @@ class="directory">/opt/trinity/share/config/SuSE/default/</filename></para></lis
 </sect1>
 
 <sect1 id="kde-menu">
-<title>&kde; Menu</title>
+<title>&tde; Menu</title>
 
 <sect2 id="how-it-works">
 <title>How it Works</title>
 
-<para>In &kde; 3.2 a common menu format is introduced at
+<para>In &tde; 3.2 a common menu format is introduced at
 <ulink
 url="http://freedesktop.org/Standards/menu-spec/">http://freedesktop.org/Standards/menu-spec/</ulink></para>
-<para>Before &kde; 3.2:
+<para>Before &tde; 3.2:
 <itemizedlist>
 
 <listitem><para>Directory structure under <filename
@@ -1658,12 +1643,12 @@ represents a single application</para></listitem>
 </itemizedlist>
 </para>
 
-<para>It was difficult to rearrange the structure in &kde; 3.2 so the
+<para>It was difficult to rearrange the structure in &tde; 3.2 so the
 new menu format:
 <itemizedlist>
 <listitem><para>Defines structure in a single .menu file</para></listitem>
 <listitem><para>Is based on categories</para></listitem>
-<listitem><para>is shared between <acronym>GNOME</acronym> and &kde;</para></listitem>
+<listitem><para>is shared between <acronym>GNOME</acronym> and &tde;</para></listitem>
 <listitem><para>Supports applnk style menus as well</para></listitem>
 </itemizedlist>
 </para>
@@ -1781,10 +1766,10 @@ Icon=kcmsystem
 
 <para>Applications <emphasis>not</emphasis> in the menu do
 <emphasis>not</emphasis> exist with regard to other applications or
-file associations: If you remove an application from the menu, &kde; assumes you don't want to use it.</para>
+file associations: If you remove an application from the menu, &tde; assumes you don't want to use it.</para>
 
 <para>When applications are unwanted in the menu, either place them in
-<filename>.hidden</filename> menu or a dedicated menu with 
+<filename>.hidden</filename> menu or a dedicated menu with
 <programlisting>
 NoDisplay=true
 </programlisting> in the <literal
@@ -1797,7 +1782,7 @@ role="extension">.directory</literal> file</para>
 <para><filename
 class="directory">$<envar>TDEDIR</envar>/etc/xdg/menus/applications-merged/</filename>
 contains <filename>kde-essential.menu</filename> which includes some
-essential menus that are normally not shown in the &kde; menu itself:
+essential menus that are normally not shown in the &tde; menu itself:
 <itemizedlist>
 <listitem><para>Control Center has a hidden Settings menu whose
 contents are defined by <filename>kde-settings.menu</filename> and
@@ -1826,7 +1811,7 @@ NoDisplay=true
 <sect2 id="old-style-menus">
 <title>Old-Style Menus</title>
 
-<para>&kde; continues to support old-style menus that are defined by
+<para>&tde; continues to support old-style menus that are defined by
 the directory structures in <filename
 class="directory">$<envar>TDEDIR</envar>/share/applnk</filename>
 (system wide) and <filename
@@ -1843,7 +1828,7 @@ database with
 which is built lives in <filename
 class="directory">/var/tmp/kdecache-${<envar>USER</envar>}/ksycoca</filename>.
 It is automatically updated by <application>KDED</application>,
-checked during &kde; login, and <application>KDED</application>
+checked during &tde; login, and <application>KDED</application>
 watches for changes while logged in.</para>
 
 <para>To disable watching for changes (since it may hurt over NFS) add
@@ -1878,9 +1863,9 @@ profile- or system-wide locations.
 
 <!-- This section might be redundant. If it isn't, it needs some screenies -->
 <sect1 id="kde-panel">
-<title>&kde; Panel</title>
+<title>&tde; Panel</title>
 
-<para>The &kde; panel is also known as &kicker;. It is modular and
+<para>The &tde; panel is also known as &kicker;. It is modular and
 consists of the following components:
 <itemizedlist>
 <listitem><para>Applets</para></listitem>
@@ -1898,7 +1883,7 @@ consists of the following components:
 </itemizedlist>
 and the following special buttons:
 <itemizedlist>
-<listitem><para>&kde; menu</para></listitem>
+<listitem><para>&tde; menu</para></listitem>
 <listitem><para>Desktop Button</para></listitem>
 </itemizedlist>
 </para>
@@ -1917,7 +1902,7 @@ and the following special buttons:
 
 <para>File associations associate a file type with an application or
 applications. The type of a file is established by determining its
-&MIME; type. &MIME; types known by &kde; are stored in <filename
+&MIME; type. &MIME; types known by &tde; are stored in <filename
 class="directory">$<envar>TDEDIR</envar>/share/mimelnk</filename> and
 each application's <literal role="extension">.desktop</literal> file
 contains a list of &MIME; types supported by that application.</para>
@@ -1962,7 +1947,7 @@ role="extension">.gif</literal> files.
 &kcontrolcenter;. These changes are stored in
 <filename>$<envar>HOME</envar>/.kde/share/config/profilerc</filename>.
 To use the same settings for multiple users, store these settings in
-user profile directory or the global &kde; config directory to use as
+user profile directory or the global &tde; config directory to use as
 default for multiple users.</para>
 
 </informalexample>
@@ -1972,12 +1957,12 @@ default for multiple users.</para>
 </chapter>
 
 <chapter id="locking-down-kde">
-<title>Locking Down &kde;</title>
+<title>Locking Down &tde;</title>
 
 <sect1 id="how-it-works-the-basics">
 <title>How It Works - The Basics</title>
 
-<para>&kde;'s lock down features are centered around the following
+<para>&tde;'s lock down features are centered around the following
 options:</para>
 
 <itemizedlist>
@@ -1995,7 +1980,7 @@ certain configuration modules</link></para></listitem>
 
 <sect1 id="immutable-configuration-options">
 <title>Immutable Configuration Options</title>
-<subtitle>Locking Down &kde;</subtitle>
+<subtitle>Locking Down &tde;</subtitle>
 
 <para>Immutable options allow system administrator to provide default
 settings that can not be changed by the user.</para>
@@ -2020,7 +2005,7 @@ presented with an user interface option to make such change.</para></note>
 <sect1 id="action-restrictions">
 <title>Action Restrictions</title>
 
-<para>&kde; applications are built around the action-concept. Actions can be
+<para>&tde; applications are built around the action-concept. Actions can be
 activated in various ways, typically via the menu-bar, one of the toolbars
 or a keyboard shortcut. <action>Save Document</action> is an example of an
 action.  If you know the internal action name it is possible to restrict an
@@ -2038,17 +2023,17 @@ functionality that would offer the user access to a &UNIX; shell.</para>
 <para>In order to prevent the user access to a command shell we can restrict
 the <option>shell_access</option> action by adding the following to
 <filename>kdeglobals</filename>:
-</para> 
+</para>
 
-<screen>[KDE Action Restrictions]
+<screen>[TDE Action Restrictions]
 shell_access=false</screen>
 
-<para>Since this affects the &kde; menu and the available applications, we
+<para>Since this affects the &tde; menu and the available applications, we
 must force an update of the sycoca database:</para>
 
 <screen><userinput><command>touch</command> <filename>$<envar>TDEDIR</envar>/share/services/update_ksycoca</filename></userinput></screen>
 
-<para>Now re-login to &kde; and check the following points:</para>
+<para>Now re-login to &tde; and check the following points:</para>
 
 <itemizedlist>
 <listitem><para>The &kmenu;</para></listitem>
@@ -2159,7 +2144,7 @@ accessed.</para>
 <area id="url_rule1" coords="3"/>
 <area id="url_rule2" coords="4"/>
 </areaspec>
-<screen>[KDE URL Restrictions]
+<screen>[TDE URL Restrictions]
 rule_count=2
 rule_1=open,,,,http,,,false
 rule_2=open,,,,http,*.ourcompany.com,,true</screen></screenco>
@@ -2168,7 +2153,7 @@ rule_2=open,,,,http,*.ourcompany.com,,true</screen></screenco>
 <callout arearefs="url_commas">
 <para>The first four commas skip over the selection criteria with respect to
 the originating &URL;. This part is only needed with redirect type
-rules.</para> 
+rules.</para>
 </callout>
 <callout arearefs="url_rule1"><para><option>rule_1</option> forbids the
 opening of any http or https &URL;</para></callout>
@@ -2186,7 +2171,7 @@ $<envar>HOME</envar> directory:</para>
 <area id="home_rule1" coords="3"/>
 <area id="home_rule2" coords="4"/>
 </areaspec>
-<screen>[KDE URL Restrictions]
+<screen>[TDE URL Restrictions]
 rule_count=2
 rule_1=list,,,,file,,,false
 rule_2=list,,,,file,,$HOME,true</screen></screenco>
@@ -2200,7 +2185,7 @@ directory.</para></callout>
 </calloutlist>
 
 <para>$<envar>HOME</envar> and $<envar>TMP</envar> are special values to
-indicate the users home directory and the &kde; temporary directory of the
+indicate the users home directory and the &tde; temporary directory of the
 user, &eg; <filename class="directory">/tmp/kde-bastian</filename></para>
 
 <para>The following rules makes that the user can no longer open local files
@@ -2211,7 +2196,7 @@ that are outside his $<envar>HOME</envar> directory:</para>
 <area id="local_rule2" coords="4"/>
 <area id="local_rule3" coords="5"/>
 </areaspec>
-<screen>[KDE URL Restrictions]
+<screen>[TDE URL Restrictions]
 rule_count=3
 rule_1=open,,,,file,,,false
 rule_2=open,,,,file,,$HOME,true
@@ -2223,8 +2208,8 @@ opening of any local file</para></callout>
 <callout arearefs="local_rule2"><para><option>rule_2</option> allows opening
 files under the users own $<envar>HOME</envar> directory.</para></callout>
 <callout arearefs="local_rule3"><para><option>rule_3</option> allows opening
-files in the &kde; temporary directory of the user.  This is needed by
-certain &kde; applications that first download a file or document to the
+files in the &tde; temporary directory of the user.  This is needed by
+certain &tde; applications that first download a file or document to the
 temporary directory and then open it in an application.</para></callout>
 </calloutlist>
 
@@ -2239,7 +2224,7 @@ refer to locally stored documents.</para>
 class="systemname">www.mycompany.com</systemitem> the possibility to refer
 to local files we could add the following rule:</para>
 
-<screen>[KDE URL Restrictions]
+<screen>[TDE URL Restrictions]
 rule_count=1
 rule_1=redirect,http,www.mycompany.com,,file,,,true</screen>
 
@@ -2286,8 +2271,8 @@ example.</para></listitem>
 <sect1 id="configuration-modules">
 <title>Configuration Modules</title>
 
-<para>&kde; has configuration modules to configure various aspects of the
-&kde; environment. Configuration modules appear in the Control Center, in the
+<para>&tde; has configuration modules to configure various aspects of the
+&tde; environment. Configuration modules appear in the Control Center, in the
 Configuration dialog of an application or in both.</para>
 
 <informalexample>
@@ -2310,7 +2295,7 @@ configuration dialog is an integral part of the application
 itself.</para></note></para>
 </informalexample>
 
-<para>All configuration modules are strictly speaking part of the &kde;
+<para>All configuration modules are strictly speaking part of the &tde;
 menu.</para>
 
 <itemizedlist>
@@ -2319,7 +2304,7 @@ menu.</para>
 have a <literal role="extension">.desktop</literal> file in <filename
 class="directory">$<envar>TDEDIR</envar>/share/applications/kde</filename>
 and are sorted under the hidden <guimenu>Settings-Modules</guimenu> menu by
-the <filename>kde-settings.menu</filename>, included from 
+the <filename>kde-settings.menu</filename>, included from
 <filename>kde-essential.menu</filename></para>
 <screen><userinput><command>kbuildsycoca</command> <option>--menutest</option> 2&gt; /dev/null | <command>grep</command> Settings-Modules</userinput></screen>
 </listitem>
@@ -2330,12 +2315,12 @@ corresponds to the hidden .hidden menu, included as a result of
 <markup>&lt;KDELegacyDirs/&gt;</markup></para>
 <screen><userinput><command>kbuildsycoca</command> <option>--menutest</option> 2&gt; /dev/null | <command>grep</command> .hidden</userinput></screen>
 </listitem>
-<listitem><para>In &kde; 3.3 it is possible to edit the Control Center with
+<listitem><para>In &tde; 3.3 it is possible to edit the Control Center with
 <application>kcontroledit</application>.
 <application>kcontroledit</application> works just like
 <application>kmenuedit</application>, changes for current user only. Use
 <application>kiosktool</application> to make changes for
-everyone.</para></listitem> 
+everyone.</para></listitem>
 </itemizedlist>
 
 <para>Individual configuration modules can be disables by adding the
@@ -2351,12 +2336,12 @@ Konqueror</guilabel> dialog if the proxy configuration is still
 there.</para>
 
 </sect1>
-<!-- 
+<!--
 <sect1 id="making-it-work">
 <title>Making it Work</title>
 
 Making It Work
-KDE 3.2: Set $TDEDIRS from starttde script
+TDE 3.2: Set $TDEDIRS from starttde script
 Distribute profiles to all clients
 
 </para>
@@ -2380,13 +2365,13 @@ Distribute profiles to all clients
 The Lazy Admin
 Overview
 Deployment
-	How to get &kde; available on many clients
+	How to get &tde; available on many clients
 Remote Desktop Sharing
 Take a look at someone else desktop
 DCOP
-	The DCOP command line tool makes it possible to control &kde; applications from the command line
+	The DCOP command line tool makes it possible to control &tde; applications from the command line
 KDialog
-	A versatile tool to use standard &kde; dialogs in your own scripts
+	A versatile tool to use standard &tde; dialogs in your own scripts
 
 
 
@@ -2418,8 +2403,8 @@ invitation. This is ideal for tech support teams or administrators to gain
 access to users desktops in order to troubleshoot or remedy a problem or
 guide a user through a procedure.</para>
 
-<para>Remote desktop sharing involves two applications: &krfb; (&kde; remote
-frame buffer, a VNC server) and &krdc; (&kde; remote desktop connection; a
+<para>Remote desktop sharing involves two applications: &krfb; (&tde; remote
+frame buffer, a VNC server) and &krdc; (&tde; remote desktop connection; a
 VNC client.)</para>
 
 <para>&krfb; can be used by any user to create and manage invitations.
@@ -2438,16 +2423,16 @@ appear to ask for confirmation by the current user.</para>
 </sect1>
 
 <sect1 id="kde-diy">
-<title>&kde; DIY - Building Your Own Tools</title>
+<title>&tde; DIY - Building Your Own Tools</title>
 
 <sect2 id="dcop">
 <title>DCOP</title>
 
 <para>
-Desktop COmmunication Protocol, <acronym>DCOP</acronym>, is a lightweight mechanism for inter-process communication.  
+Desktop COmmunication Protocol, <acronym>DCOP</acronym>, is a lightweight mechanism for inter-process communication.
 <acronym>DCOP</acronym> allows the user to interact with programs that are currently running.
-&kde; supplies two programs to utilitize <acronym>DCOP</acronym>: 
-<application>dcop</application>, a command-line program, and 
+&tde; supplies two programs to utilitize <acronym>DCOP</acronym>:
+<application>dcop</application>, a command-line program, and
 <application>kdcop</application>, a <acronym>GUI</acronym> program.
 </para>
 <para>
@@ -2463,7 +2448,7 @@ A few notes about using <command>dcop</command>:
 </listitem>
 <listitem>
 <para>
-Applications that can open more than one window at a time will be listed as 
+Applications that can open more than one window at a time will be listed as
 &lt;application&gt;-<acronym>PID</acronym>
 </para>
 </listitem>
@@ -2589,10 +2574,10 @@ dcop $konsole $session sendSession 'cd /my/work/directory'
 
 <sect2 id="kdialog">
 <title>KDialog</title>
-<subtitle>&kde; DIY - Building Your Own Tools</subtitle>
+<subtitle>&tde; DIY - Building Your Own Tools</subtitle>
 
-<para>You can use &kde; dialogs from your own scripts, to combine the power
-of &UNIX; shell scripting with the ease of use of &kde;.</para>
+<para>You can use &tde; dialogs from your own scripts, to combine the power
+of &UNIX; shell scripting with the ease of use of &tde;.</para>
 
 <screen><userinput><command>kdialog</command> <option>--msgbox 'You have new mail!'</option></userinput></screen>
 

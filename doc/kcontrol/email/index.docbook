@@ -35,8 +35,8 @@
 
 <para>The email module of the &kcontrol; allows you to enter and save some
 basic email information. This information is used when performing functions
-related to email within &kde;, for example, when sending bug reports from the
-&kde; crash handler application.</para>
+related to email within &tde;, for example, when sending bug reports from the
+&tde; crash handler application.</para>
 
 <para>Programs such as &kmail;, which are used for reading and sending
 email, may offer many more options for customizing the way in which
@@ -55,7 +55,7 @@ you.</para>
 <sect2 id="email-use">
 <title>Use</title>
 
-<para>&kde; automatically establishes some of the information for this control module 
+<para>&tde; automatically establishes some of the information for this control module 
 using the
 login information on the system. You will need to enter the remaining information.</para>
 <para>Looking at the page from top to

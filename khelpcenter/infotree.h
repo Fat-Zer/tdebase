@@ -1,5 +1,5 @@
 /*
- *  infotree.h - part of the KDE Help Center
+ *  infotree.h - part of the TDE Help Center
  *
  *  Copyright (C) 2002 Frerich Raabe (raabe@kde.org)
  *

@@ -1,5 +1,5 @@
 /*
-  This file is part of the KDE Help Center
+  This file is part of the TDE Help Center
  
   Copyright (c) 2003 Cornelius Schumacher <schumacher@kde.org>
  
@@ -173,7 +173,7 @@ int main( int argc, char **argv )
   KAboutData aboutData( "khc_indexbuilder",
                         I18N_NOOP("KHelpCenter Index Builder"),
                         HELPCENTER_VERSION,
-                        I18N_NOOP("The KDE Help Center"),
+                        I18N_NOOP("The TDE Help Center"),
                         KAboutData::License_GPL,
                         I18N_NOOP("(c) 2003, The KHelpCenter developers") );
 

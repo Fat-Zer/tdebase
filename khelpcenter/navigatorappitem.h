@@ -1,5 +1,5 @@
 /*
- *  navigatorappitem.h - part of the KDE Help Center
+ *  navigatorappitem.h - part of the TDE Help Center
  *
  *  Copyright (C) 2001 Waldo Bastian <bastian@kde.org>
  *

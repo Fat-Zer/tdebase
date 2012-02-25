@@ -6,7 +6,7 @@
 <!-- TRANS:ROLES_OF_TRANSLATORS -->
 </authorgroup>
 </articleinfo>
-<para>The thumbnail kioslave is used by &kde; for network transparent
+<para>The thumbnail kioslave is used by &tde; for network transparent
 and persistent generation of thumbnails.</para>
 
 <para>The thumbnail kioslave uses plugins to generate the actual

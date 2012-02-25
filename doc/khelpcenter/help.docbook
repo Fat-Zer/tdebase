@@ -3,19 +3,19 @@
 <date>2002-02-03</date>
 <releaseinfo>0.08.00</releaseinfo>
 </chapterinfo>
-<title>&kde; Help System User Manual</title>
+<title>&tde; Help System User Manual</title>
 <anchor id="help"/>
 
 <sect1 id="help-introduction">
-<title>&kde; Help System</title>
+<title>&tde; Help System</title>
 	
-<para>The &kde; help system is designed to make accessing the common
+<para>The &tde; help system is designed to make accessing the common
 &UNIX; help systems (<application>man</application> and
-<application>info</application>) simple, as well as the native &kde;
+<application>info</application>) simple, as well as the native &tde;
 documentation (&XML;). 
 </para>
 	
-<para> All base &kde; applications come fully documented, thanks to
+<para> All base &tde; applications come fully documented, thanks to
 the efforts of the Documentation team.  If you would like to help,
 please write to the Documentation coordinator, Lauri Watts, at
 <email>lauri@kde.org</email> for information.  No experience is
@@ -23,7 +23,7 @@ required, just enthusiasm and patience.
 </para>
 
 <para>
-If you would like to help translating &kde; documentation to your native
+If you would like to help translating &tde; documentation to your native
 language, the Translation coordinator is Thomas Diehl,
 <email>thd@kde.org</email>, and he would also welcome the help.  More
 information, including the coordinators for each language team, can be
@@ -36,8 +36,8 @@ of this document.
 <title>Installation</title>
 
 <para>
-&khelpcenter; is an integral part of the &kde; Base installation, and
-is installed with every copy of &kde;.  It can be found in the tdebase
+&khelpcenter; is an integral part of the &tde; Base installation, and
+is installed with every copy of &tde;.  It can be found in the tdebase
 package, and is available from the &kde-ftp;, or will be found in your
 operating system tdebase package.
 </para>
@@ -198,7 +198,7 @@ contents of either pane.
 The <guilabel>Contents</guilabel> pane is further divided into two
 tabs, one containing a <link linkend="contents-menu">menu</link>
 showing all the help information &khelpcenter; is aware of, and the
-other contains the &kde; <link linkend="kde-glossary">glossary</link>
+other contains the &tde; <link linkend="kde-glossary">glossary</link>
 of terms.
 </para>
 
@@ -213,25 +213,25 @@ entries:
 <variablelist>
 <varlistentry>
 <term><guilabel>Introduction</guilabel></term>
-<listitem><para>Welcome to &kde; - an introduction to the K Desktop
+<listitem><para>Welcome to &tde; - an introduction to the K Desktop
 Environment.</para></listitem>
 </varlistentry>
 
 <varlistentry>
-<term><guilabel>Introduction to &kde;</guilabel></term>
+<term><guilabel>Introduction to &tde;</guilabel></term>
 <listitem>
 <para>
-The &kde; Quickstart guide.  Contains a tour of the &kde;
-Interface and specific help and tips on how to work smarter with &kde;.
+The &tde; Quickstart guide.  Contains a tour of the &tde;
+Interface and specific help and tips on how to work smarter with &tde;.
 </para>
 </listitem>
 </varlistentry>
 
 <varlistentry>
-<term><guilabel>&kde; User's manual</guilabel></term>
+<term><guilabel>&tde; User's manual</guilabel></term>
 <listitem>
 <para>
-The &kde; User's manual is an in-depth exploration of &kde;, including
+The &tde; User's manual is an in-depth exploration of &tde;, including
 installation, configuration and customization, and use.
 </para>
 </listitem> 
@@ -241,10 +241,10 @@ installation, configuration and customization, and use.
 <term><guilabel>Application manuals</guilabel></term>
 <listitem>
 <para>
-Native &kde; application documentation. All &kde; applications have
+Native &tde; application documentation. All &tde; applications have
 documentation in &XML; format, which are converted to
 <acronym>HTML</acronym> when you view them. This section lists all the
-&kde; applications with a brief description and a link to the full
+&tde; applications with a brief description and a link to the full
 application documentation. 
 </para>
 <para>
@@ -288,19 +288,19 @@ Short, task based or informational tutorials.
 </varlistentry>
 
 <varlistentry>
-<term><guilabel>The &kde; FAQ</guilabel></term>
+<term><guilabel>The &tde; FAQ</guilabel></term>
 <listitem>
 <para>
-Frequently asked questions about &kde;, and their answers.
+Frequently asked questions about &tde;, and their answers.
 </para>
 </listitem>
 </varlistentry>
 
 <varlistentry>
-<term><guilabel>&kde; on the web</guilabel></term>
+<term><guilabel>&tde; on the web</guilabel></term>
 <listitem>
 <para>
-Links to &kde; on the web, both the official &kde; website, and other
+Links to &tde; on the web, both the official &tde; website, and other
 useful sites.
 </para>
 </listitem>
@@ -310,14 +310,14 @@ useful sites.
 <term><guilabel>Contact Information</guilabel></term>
 <listitem>
 <para>
-Information on how to contact &kde; developers, and how to join the
-&kde; mailing lists.
+Information on how to contact &tde; developers, and how to join the
+&tde; mailing lists.
 </para>
 </listitem>
 </varlistentry>
 
 <varlistentry>
-<term><guilabel>Supporting &kde;</guilabel></term>
+<term><guilabel>Supporting &tde;</guilabel></term>
 <listitem>
 <para>
 How to help, and how to get involved.
@@ -483,12 +483,12 @@ one page long.</para>
 </sect2>
 
 <sect2 id="kde-glossary">
-<title>The &kde; glossary</title>
+<title>The &tde; glossary</title>
 
 <para>
 The glossary provides a quick reference point, where you can look up
 the definitions of words that may be unfamiliar to you.  These range
-from &kde; specific applications and technologies, through to general
+from &tde; specific applications and technologies, through to general
 &UNIX; computing terms.
 </para>
 

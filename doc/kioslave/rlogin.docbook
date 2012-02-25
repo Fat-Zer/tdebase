@@ -17,7 +17,7 @@ session with a server hosting the rlogin service.</para>
 session, prompting you for your password.</para>
 
 <para>The <command>rlogin</command> kioslave uses the username of the
-account you are currently using in &kde;.</para>
+account you are currently using in &tde;.</para>
 
 <para>After you have successfully entered your password, you can begin
 your remote session.</para>

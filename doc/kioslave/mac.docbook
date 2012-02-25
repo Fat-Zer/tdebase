@@ -9,7 +9,7 @@
 </articleinfo>
 
 <para>The mac ioslave lets you read an HFS+ partition from &konqueror;
-or any other &kde; file dialog. It uses <ulink
+or any other &tde; file dialog. It uses <ulink
 url="http://www.google.com/search?hl=en&amp;q=hfsplus+utils"> hfsplus
 tools</ulink>, so you will need these installed for it to work.</para>
 

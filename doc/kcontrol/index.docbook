@@ -21,7 +21,7 @@
 <releaseinfo>3.4.0</releaseinfo>
 
 <abstract>
-<para>This documentation describes &kde;'s control center.</para>
+<para>This documentation describes &tde;'s control center.</para>
 </abstract>
 
 <keywordset>
@@ -40,7 +40,7 @@
 <para>
 The &kcontrolcenter; (from now on referred to simply as <quote>the
 control center</quote>) provides you with a centralized and convenient
-way to configure all of your &kde; settings.
+way to configure all of your &tde; settings.
 </para>
 
 <para>
@@ -87,7 +87,7 @@ Center Modules</link>
 <listitem>
 <para>
 By selecting <menuchoice><guimenu>K Button</guimenu><guimenuitem>Control
-Center</guimenuitem></menuchoice> from the &kde; Panel.
+Center</guimenuitem></menuchoice> from the &tde; Panel.
 </para>
 </listitem>
 <listitem>
@@ -131,7 +131,7 @@ which can be divided into 3 functional parts.
 </imageobject>
 <textobject> <phrase>Screenshot</phrase> </textobject>
 <caption>
-<para>The &kde; Control Center Screen</para>
+<para>The &tde; Control Center Screen</para>
 </caption>
 </mediaobject>
 </screenshot> 
@@ -139,7 +139,7 @@ which can be divided into 3 functional parts.
 <para>
 Across the top is a menubar.  The menubar will provide you with quick
 access to most of &kcontrolcenter;'s features.  The menus are detailed in
-<link linkend="control-center-menus">The &kde; Control Center
+<link linkend="control-center-menus">The &tde; Control Center
 Menus</link>.
 </para>
 
@@ -153,7 +153,7 @@ The main panel shows you some system information.
 </para>
 
 <para>
-In this example, we are running &kde; 3.4.0, we started &kcontrolcenter;
+In this example, we are running &tde; 3.4.0, we started &kcontrolcenter;
 as user <systemitem class="username">newkde</systemitem>, the computer is
 named <systemitem class="systemname">turtle</systemitem>, it is a
 &Linux; system running the 2.6 kernel, on a i686 processor.
@@ -274,7 +274,7 @@ other menu options.
 </sect1>
 
 <sect1 id="control-center-exiting">
-<title>Exiting The &kde; Control Center</title>
+<title>Exiting The &tde; Control Center</title>
 
 <para>
 You can exit the control center one of three ways:
@@ -359,7 +359,7 @@ click <guibutton>OK</guibutton> to save the options.
 <term><guibutton>Apply</guibutton></term>
 <listitem>
 <para>
-Clicking this button will save all changes to &kde;.  If you have
+Clicking this button will save all changes to &tde;.  If you have
 changed anything, clicking <guibutton>Apply</guibutton> will cause the
 changes to take effect.
 </para>

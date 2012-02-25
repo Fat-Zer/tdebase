@@ -27,14 +27,14 @@
 <sect1 id="panel">
 <title>Panel</title>
 
-<para> The &kde; panel (often referred to as &kicker;) is the bar that
-you'll usually find at the bottom of the screen when you start up &kde;
+<para> The &tde; panel (often referred to as &kicker;) is the bar that
+you'll usually find at the bottom of the screen when you start up &tde;
 for the first time. For detailed help on &kicker;'s usage you can type
  <ulink url="help:/kicker">help:/kicker</ulink> in &konqueror; to read
 the user manual.</para>
 
 <para>The panel gives you quick access to applications and makes it
-easier for you to organize your desktop. Using the &kde; panel you
+easier for you to organize your desktop. Using the &tde; panel you
 can:</para>
 
 <itemizedlist>
@@ -215,7 +215,7 @@ terminal programs (command line interfaces).</para>
 <listitem><para><guilabel>Show side image</guilabel> will add a small
 image to the side of the menu.  This is purely decorative.</para></listitem>
 
-<listitem><para>The <guibutton>Edit K Menu</guibutton> button launches the &kde; 
+<listitem><para>The <guibutton>Edit K Menu</guibutton> button launches the &tde; 
 menu editor.</para></listitem>
 </itemizedlist>
 

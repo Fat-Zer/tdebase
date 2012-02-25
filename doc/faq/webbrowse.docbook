@@ -4,7 +4,7 @@
 
 <chapter id="webbrowser">
 <title>Webbrowsing with &konqueror;</title>
-<para>&konqueror; is &kde;'s open source, standards compliant webbrowser.
+<para>&konqueror; is &tde;'s open source, standards compliant webbrowser.
 It's home page is
 <ulink
 url="http://www.konqueror.org">http://www.konqueror.org</ulink> where a
@@ -14,13 +14,13 @@ url="http://www.konqueror.org">http://www.konqueror.org</ulink> where a
 
 <qandaentry>
 <question><para>Where does the name &konqueror; come from?</para></question>
-<answer><para>It's a word play on the other browsers' names. After the Navigator and the Explorer comes the Conqueror; it's spelled with a K to show that it's part of &kde;. The name change also moves away from <quote>kfm</quote> (the &kde; file manager, &konqueror;'s predecessor) which represented only file management.</para></answer>
+<answer><para>It's a word play on the other browsers' names. After the Navigator and the Explorer comes the Conqueror; it's spelled with a K to show that it's part of &tde;. The name change also moves away from <quote>kfm</quote> (the &tde; file manager, &konqueror;'s predecessor) which represented only file management.</para></answer>
 </qandaentry>
 
 <qandaentry>
-<question><para>Can I run &konqueror; without running &kde;?</para></question>
-<answer><para>Yes. Just install &Qt;, tdelibs and tdebase, and from your favorite window manager just launch &konqueror;. It should work just fine, but if it doesn't (&kde; developers don't test that case often), report it to http://bugs.kde.org and try running "tdeinit" before running &konqueror;, it usually helps. 
-This is of course the same for any other &kde; application. </para>
+<question><para>Can I run &konqueror; without running &tde;?</para></question>
+<answer><para>Yes. Just install &Qt;, tdelibs and tdebase, and from your favorite window manager just launch &konqueror;. It should work just fine, but if it doesn't (&tde; developers don't test that case often), report it to http://bugs.kde.org and try running "tdeinit" before running &konqueror;, it usually helps. 
+This is of course the same for any other &tde; application. </para>
 </answer>
 </qandaentry>
 
@@ -88,11 +88,11 @@ could cause this?</para></question>
 support.  Adding the following to <filename>/etc/profile</filename> or any
 other script that is sourced on login should solve this problem:
 <screen>
-export KDE_NO_IPV6=true
+export TDE_NO_IPV6=true
 </screen>
 for bourne compatible shells, and for C-style shells:
 <screen>
-setenv KDE_NO_IPV6 true
+setenv TDE_NO_IPV6 true
 </screen>
 </para>
 </answer>

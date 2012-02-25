@@ -94,14 +94,14 @@ change.</para>
 <sect3 id="kcmdisplay-color-schemes">
 <title><guilabel>Color Scheme</guilabel></title>
 
-<para>Various color schemes are supplied with &kde;, and you are free to 
+<para>Various color schemes are supplied with &tde;, and you are free to 
 define your own.</para> 
 
 <para>The three major color components of each scheme are shown beside
 the name in the list. To preview a scheme in the larger preview area,
 click on its name in the list box. </para>
 
-<para>You can use the &kde;-supplied Color Schemes as a starting point
+<para>You can use the &tde;-supplied Color Schemes as a starting point
 to devise your own Scheme. Click on the <guibutton>Save
 Scheme...</guibutton> button to store the color scheme under a new name,
 then modify it. </para>
@@ -111,7 +111,7 @@ then modify it. </para>
 Scheme...</guibutton> button; it can also be deleted with the
 <guibutton>Remove Scheme</guibutton> button.</para>
 
-<note><para>The &kde;-supplied Schemes themselves cannot be changed or
+<note><para>The &tde;-supplied Schemes themselves cannot be changed or
 deleted.</para></note>
 
 <para>You can use the <guibutton>Import Scheme...</guibutton> button to
@@ -119,8 +119,8 @@ add new entries to the list.  This might be color schemes that you
 have created on another computer and saved, or color schemes you have
 downloaded from a website.</para>
 
-<para>You can choose if you want &kde; to apply the color scheme even
-to non-&kde; applications by enabling the <guilabel>Apply colors to
+<para>You can choose if you want &tde; to apply the color scheme even
+to non-&tde; applications by enabling the <guilabel>Apply colors to
 non-KDE applications</guilabel>.  Not all applications will allow
 this, but most do.</para>
 

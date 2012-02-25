@@ -29,7 +29,7 @@
 <title>&konsole;</title>
 
 <para>In this module, you can configure basic settings for &konsole;,
-the &kde; terminal.  You can also easily create new schemata (appearance
+the &tde; terminal.  You can also easily create new schemata (appearance
 files) for &konsole;.</para>
 
 <para>This module contains several tab pages:
@@ -48,7 +48,7 @@ functions.  It contains the following options:</para>
 <term><guilabel>Use Konsole as default terminal
 application</guilabel></term>
 <listitem>
-<para>If you wish to have &kde; use another terminal application by
+<para>If you wish to have &tde; use another terminal application by
 default, uncheck this box and enter the preferred application
 (<application>wterm</application>, <application>rxvt</application>,
 &etc;) in the text field below.</para>

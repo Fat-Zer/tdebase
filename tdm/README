@@ -361,7 +361,7 @@ TDM accepts two command line options related to logging:
 
     Logs from "-debug 7" are usually a good start.
 
-  -logfile <file>
+  -error <file>, -logfile <file>
     <file> is the file to log various messages to. The default log file is
     /var/log/tdm.log. For internal reasons there is no option in tdmrc to
     permanently specify the log file location. If you redirect TDM's

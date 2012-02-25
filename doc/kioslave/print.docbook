@@ -18,7 +18,7 @@ These folders provide some information about and quick access to your print
 subsystem.</para>
 
 <para><command>print:/</command> represents one more of those useful 
-KIOSlaves implemented by &kde;. To access it, just type  <userinput>print:/
+KIOSlaves implemented by &tde;. To access it, just type  <userinput>print:/
  </userinput> into the address field of &konqueror;. <userinput>print:/
  </userinput>  doesn't purely provide <quote>read-only</quote> access to
  your print subsystem, but it also allows you to change settings
@@ -37,8 +37,8 @@ not allowed a view or an operation as a normal user.</para>
 
 <para>Note, that some of the views and actions offered do heavily
  depend on the print subsystem that is installed on your box and presently
-activated for  &kde;. Pages showing printer information display only
-those parts that are valid for the &kde; selected print subsystem.
+activated for  &tde;. Pages showing printer information display only
+those parts that are valid for the &tde; selected print subsystem.
 (So if you normally run <acronym>CUPS</acronym>, but switched temporarily to 
 
 
@@ -117,7 +117,7 @@ or <userinput>print:printers/printer_name </userinput> </term>
 <userinput>print:manager </userinput>
 </term> <listitem>
 <para>opens a page very similar to the &tdeprint;
-      Manager module inside the  &kde; Control Center.
+      Manager module inside the  &tde; Control Center.
       Switch to a different printing system here or do every
       other administrative task. </para>
 <para>This is the most important of access points to your printing

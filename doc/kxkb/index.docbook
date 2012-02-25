@@ -55,7 +55,7 @@ utility based on X11 xkb extension.</para></abstract>
 <chapter id="introduction">
 <title>Introduction</title>
 
-<para>&kxkb; is the &kde; keyboard layout switching utility.
+<para>&kxkb; is the &tde; keyboard layout switching utility.
 It is based on X11 xkb extension and allows to use different keyboard 
 layouts for inputing text. &kxkb; features keyboard layout indicator.
 </para>

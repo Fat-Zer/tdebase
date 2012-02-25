@@ -8,7 +8,7 @@
 <title>KDE User's Manual</title>
 <author>&Lauri.Watts; &Lauri.Watts.mail;</author>
 <date>June 07, 2005</date>
-<productname>K Desktop Environment</productname>
+<productname>Trinity Desktop Environment</productname>
 </refentryinfo>
 
 <refmeta>
@@ -18,7 +18,7 @@
 
 <refnamediv>
 <refname><command>kfind</command></refname>
-<refpurpose>file find utility for &kde;</refpurpose>
+<refpurpose>file find utility for &tde;</refpurpose>
 </refnamediv>
 
 <refsynopsisdiv>

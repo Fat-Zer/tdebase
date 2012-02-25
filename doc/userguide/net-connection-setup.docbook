@@ -13,14 +13,14 @@
 <!-- Contents shamelessly stolen from the KPPP manual, written by -->
 <!-- Lauri -->
 
-<para>&kde; offers a complete Internet experience, with all the
+<para>&tde; offers a complete Internet experience, with all the
 programs you'll need to make the most of the Web, email, Usenet and
-many other Internet technologies. But before you can enjoy &kde;'s
+many other Internet technologies. But before you can enjoy &tde;'s
 advanced features, you'll need to get online. Here's how:</para>
 
 <para>If you're using <quote>dialup</quote> (that is, connecting to
 the Internet with a modem connected to a telephone line), you'll want
-to set up the &kde; dialing program, &kppp;. If that sounds
+to set up the &tde; dialing program, &kppp;. If that sounds
 complicated, don't worry: &kppp; has an advanced configuration wizard,
 which will usually take the pain out of setting up your dialup
 connection. Take a look at the next two sections for more
@@ -28,8 +28,8 @@ details.</para>
 
 <para>If you're using a broadband connection, or connecting via a
 local network, things are easier (from the point of view of
-&kde;). Once you've set up the connection with the tools provided by
-your &Linux; or &UNIX; distribution, &kde; will use the connection
+&tde;). Once you've set up the connection with the tools provided by
+your &Linux; or &UNIX; distribution, &tde; will use the connection
 automatically.</para>
 
 <sect1 id="getting-online">
@@ -198,7 +198,7 @@ back and forth through the dialogs.  When you're done with your settings, click 
 <guibutton>Finish</guibutton> button, and you're all done.</para>
 
 <para>If you need more details, you can read the full &kppp;
-manual in the &kde; Help Center, or by typing
+manual in the &tde; Help Center, or by typing
 <userinput>help:/kppp</userinput> in the <guilabel>Location</guilabel>
 bar in &konqueror;.</para>
 

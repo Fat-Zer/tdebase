@@ -47,7 +47,7 @@
 <date>2002-09-22</date>
 <releaseinfo>3.1</releaseinfo>
 
-<abstract><para>&konqueror; is &kde;'s advanced File Manager, Web Browser and
+<abstract><para>&konqueror; is &tde;'s advanced File Manager, Web Browser and
  Universal Viewing Application.</para>
 </abstract>
 
@@ -82,9 +82,9 @@
 <title>Installation</title>
 
 <para>&konqueror; is part of the tdebase package which an essential part of
-&kde;.</para>
+&tde;.</para>
 
-<para>For instructions on acquiring &kde; please see <ulink
+<para>For instructions on acquiring &tde; please see <ulink
 url="http://www.kde.org">http://www.kde.org</ulink>.</para>
 
 <para>For further information about &konqueror; you might like to visit 

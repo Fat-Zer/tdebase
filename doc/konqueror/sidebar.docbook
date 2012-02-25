@@ -118,7 +118,7 @@ view.  A mounted device or partition can be unmounted by <mousebutton>right
 <para>The <guilabel>LAN Browser</guilabel> allows you to browse other 
 machines connected to your Local Area Network.</para>
 <para>The <guilabel>Print System Browser</guilabel> tree gives you quick 
-access to &kde;'s print manager <application>Kprinter</application>.</para>
+access to &tde;'s print manager <application>Kprinter</application>.</para>
 </listitem>
 </varlistentry>
 </variablelist>

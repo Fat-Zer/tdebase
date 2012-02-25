@@ -20,7 +20,7 @@
 <title>Introduction to messaging</title>
 
 
-<para>The default way to send instant messages in &kde; is to use the <acronym>IM</acronym>
+<para>The default way to send instant messages in &tde; is to use the <acronym>IM</acronym>
 client, &kopete;. This is a multi-protocol <acronym>IM</acronym> client, meaning that it
 handles several different protocols including <acronym>MSN</acronym>,
 Jabber, <acronym>AOL</acronym> and <acronym>IRC</acronym>. It also has
@@ -28,15 +28,15 @@ useful features including support for &kaddressbook;, meta-contacts,
 encryption support and lots more.</para>
 
 <screenshot> 
-<screeninfo>&kopete;, the &kde; IM client.</screeninfo> 
+<screeninfo>&kopete;, the &tde; IM client.</screeninfo> 
 <mediaobject> 
 <imageobject> 
 <imagedata fileref="kopete.png" format="PNG"/> </imageobject> 
 <textobject> 
-<phrase>&kopete;, the &kde; IM client.</phrase> 
+<phrase>&kopete;, the &tde; IM client.</phrase> 
 </textobject> 
 <caption> 
-<para>&kopete;, the &kde; IM client.</para> 
+<para>&kopete;, the &tde; IM client.</para> 
 </caption> 
 </mediaobject> 
 </screenshot> 
@@ -87,7 +87,7 @@ linkend="integrated-messaging"/></para>
 <para>Internet Relay Chat (<acronym>IRC</acronym>) has been around far longer than most <acronym>IM</acronym>
 systems, and is still widely used. It is mainly designed for group (many-to-many) communication in discussion forums called channels, but also allows one-to-one communication.</para>
 
-<para>The #kde channel is under Freenode, the <acronym>IRC</acronym> server, which provides an interactive environment for coordination and support of peer-directed projects, including -- and placing particular stress upon -- those relating to free software and open source projects, such as &kde;.</para>
+<para>The #kde channel is under Freenode, the <acronym>IRC</acronym> server, which provides an interactive environment for coordination and support of peer-directed projects, including -- and placing particular stress upon -- those relating to free software and open source projects, such as &tde;.</para>
 
 
 <para>While &kopete; has a <acronym>IRC</acronym> plugin, and handles both channels and nicks well,
@@ -110,7 +110,7 @@ power-<acronym>IRC</acronym> client before, you should have no trouble using
 you would like to do is to give a reaction on it, but not by
 email. So you switch to your instant messaging client and/or IRC
 client and look if that person is online via MSN, Jabber or IRC. Well
-&kde; 3.3 has made that a lot easier. A step-by-step manual:</para>
+&tde; 3.3 has made that a lot easier. A step-by-step manual:</para>
 
 <para>The requirements are &kmail;, &kaddressbook; and &kopete;
 (<application>Konversation</application> should do as well). Make sure &kmail; is configured and
@@ -126,7 +126,7 @@ Book</guibutton>.</para>
 go to &kopete;.  Go to
 <menuchoice><guimenu>File</guimenu><guimenuitem>Add
 contact</guimenuitem> </menuchoice>. In the wizard, select the
-checkbox at the bottom called <guilabel>Use the KDE address book for
+checkbox at the bottom called <guilabel>Use the TDE address book for
 this contact</guilabel> and choose <guibutton>Next</guibutton>. Select
 the right Address Book entry for that contact and press
 <guibutton>Next</guibutton>. Now you can set the display name and the

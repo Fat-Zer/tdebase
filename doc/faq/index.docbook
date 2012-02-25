@@ -1,7 +1,7 @@
 <?xml version="1.0" ?>
 <!DOCTYPE book PUBLIC "-//KDE//DTD DocBook XML V4.2-Based Variant V1.1//EN"
  "dtd/kdex.dtd" [
-  <!ENTITY kappname "&kde; Frequently Asked Questions">
+  <!ENTITY kappname "&tde; Frequently Asked Questions">
   <!ENTITY % addindex "IGNORE">
   <!ENTITY % English "INCLUDE" > <!-- change language only here -->
   <!ENTITY faq-about SYSTEM "about.docbook">
@@ -31,11 +31,11 @@
 <book lang="&language;">
 
 <bookinfo>
-<title>&kde; Frequently Asked Questions</title>
+<title>&tde; Frequently Asked Questions</title>
 
 <authorgroup>
 <author>
-<surname>The &kde; Team</surname>
+<surname>The &tde; Team</surname>
 </author>
 <!-- TRANS:ROLES_OF_TRANSLATORS -->
 
@@ -50,7 +50,7 @@
 <year>2003</year>
 <year>2004</year>
 <year>2005</year>
-<holder>The &kde; Team</holder>
+<holder>The &tde; Team</holder>
 </copyright>
 
 <legalnotice>&FDLNotice;</legalnotice>
@@ -59,10 +59,10 @@
 <releaseinfo>3.4</releaseinfo>
 
 <abstract> <para>This is a compilation of the most frequently asked
-questions about the K Desktop Environment.  Please report any bugs,
+questions about the Trinity Desktop Environment.  Please report any bugs,
 inconsistencies, or omissions you find in this &FAQ; to
-<email>kde-doc-english@kde.org</email>.  Please do not mail your questions
-to this list. Post them to the &kde; mailing lists and newsgroups
+<email>trinity-devel@lists.pearsoncomputing.net</email>.  Please do not mail your questions
+to this list. Post them to the &tde; mailing lists and newsgroups
 instead. They are monitored for this &FAQ;.</para> </abstract>
 
 <keywordset>
@@ -104,7 +104,7 @@ instead. They are monitored for this &FAQ;.</para> </abstract>
 </itemizedlist>
 
 <para>Many of the answers in this &FAQ; are taken
-from the various &kde; mailing lists and newsgroups. Here is a
+from the various &tde; mailing lists and newsgroups. Here is a
 <emphasis>big</emphasis> thank you to all of you who have contributed
 answers that eventually appear in this &FAQ;.</para>
 

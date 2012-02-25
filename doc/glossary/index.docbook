@@ -16,34 +16,34 @@
 		<title>Technologies</title>
 		<glossentry id="gloss-ioslave">
 			<glossterm><acronym>IO</acronym> Slave</glossterm>
-			<glossdef><para><acronym>IO</acronym> Slaves enable &kde; applications to
+			<glossdef><para><acronym>IO</acronym> Slaves enable &tde; applications to
 				access remote resources as easily as local resources (making them
 				<quote>network transparent</quote>). Remote resources (&eg; files) might
 				be stored on <acronym>SMB</acronym> shares or similar.</para>
 				<glossseealso otherterm="gloss-smb"><acronym>SMB</acronym></glossseealso>
-				<glossseealso otherterm="gloss-kde">&kde;</glossseealso>
+				<glossseealso otherterm="gloss-kde">&tde;</glossseealso>
 			</glossdef>
 		</glossentry>
 		<glossentry id="gloss-kio">
 			<glossterm><acronym>KIO</acronym></glossterm>
-			<glossdef><para>The &kde; Input/Output system which makes use of so-called
+			<glossdef><para>The &tde; Input/Output system which makes use of so-called
 				<quote><acronym>IO</acronym> Slaves</quote>.</para>
 				<glossseealso otherterm="gloss-ioslave"><acronym>IO</acronym> 
 Slave</glossseealso>
-				<glossseealso otherterm="gloss-kde">&kde;</glossseealso>
+				<glossseealso otherterm="gloss-kde">&tde;</glossseealso>
 			</glossdef>
 		</glossentry>
 		<glossentry id="gloss-kparts">
 			<glossterm>KParts</glossterm>
-			<glossdef><para>KParts is an embedding technology which allows &kde;
-				applications to embed other &kde; applications. For example, the text
+			<glossdef><para>KParts is an embedding technology which allows &tde;
+				applications to embed other &tde; applications. For example, the text
 				view used by &konqueror; is a KPart.</para>
 				<glossseealso otherterm="gloss-konqueror">&konqueror;</glossseealso>
 			</glossdef>
 		</glossentry>
 		<glossentry id="gloss-ksycoca">
 			<glossterm><acronym>KSycoca</acronym></glossterm>
-			<glossdef><para><acronym>KSycoca</acronym> (&kde; <emphasis>Sy</emphasis>stem
+			<glossdef><para><acronym>KSycoca</acronym> (&tde; <emphasis>Sy</emphasis>stem
 				<emphasis>Co</emphasis>nfiguration <emphasis>Ca</emphasis>che) is a
 				configuration cache which, for example, guarantees fast access to the menu
 				entries.</para>
@@ -57,22 +57,22 @@ otherterm="gloss-kbuildsycoca"><application>KBuildSycoca</application></glosssee
 		<title>XFree86</title>
 		<glossentry id="gloss-antialiasing">
 			<glossterm>Antialiasing</glossterm>
-			<glossdef><para>If mentioned in context with &kde;, antialiasing often means
+			<glossdef><para>If mentioned in context with &tde;, antialiasing often means
 				the smoothing of the fonts visible on the screen. &Qt; version 2.3.0
-				or higher used together with XFree86 4.x makes this possible under &kde;
+				or higher used together with XFree86 4.x makes this possible under &tde;
 				as well.</para>
-				<glossseealso otherterm="gloss-kde">&kde;</glossseealso>
+				<glossseealso otherterm="gloss-kde">&tde;</glossseealso>
 				<glossseealso otherterm="gloss-qt">&Qt;</glossseealso>
 			</glossdef>
 		</glossentry>
 		<glossentry id="gloss-xserver">
 			<glossterm>&X-Server;</glossterm>
 			<glossdef><para>The &X-Server; represents a basic layer upon which the
-				various &GUI;s like &kde; are built. It manages the
+				various &GUI;s like &tde; are built. It manages the
 				basic mouse and keyboard input (from the local host as well as from
 				remote hosts) and provides elementary graphic routines to draw
 				rectangles and other primitives.</para>
-				<glossseealso otherterm="gloss-kde">&kde;</glossseealso>
+				<glossseealso otherterm="gloss-kde">&tde;</glossseealso>
 				<glossseealso otherterm="gloss-gui">&GUI;</glossseealso>
 			</glossdef>
 		</glossentry>
@@ -94,33 +94,33 @@ otherterm="gloss-ksycoca"><acronym>KSycoca</acronym></glossseealso>
 		</glossentry>
 		<glossentry id="gloss-kcontrol">
 			<glossterm>&kcontrol;</glossterm>
-			<glossdef><para>This is the project and filename of the &kde; control
+			<glossdef><para>This is the project and filename of the &tde; control
 				center. &kcontrol; allows you to customize virtually
-				every configuration option of &kde;.</para>
-				<glossseealso otherterm="gloss-kde">&kde;</glossseealso>
+				every configuration option of &tde;.</para>
+				<glossseealso otherterm="gloss-kde">&tde;</glossseealso>
 			</glossdef>
 		</glossentry>
 		<glossentry id="gloss-kicker">
 			<glossterm>&kicker;</glossterm>
 			<glossdef><para>&kicker; is the nickname as well as project name of the
-				&kde; panel.</para>
-				<glossseealso otherterm="gloss-kde">&kde;</glossseealso>
+				&tde; panel.</para>
+				<glossseealso otherterm="gloss-kde">&tde;</glossseealso>
 				<glossseealso otherterm="gloss-panel">Panel</glossseealso>
 			</glossdef>
 		</glossentry>
 		<glossentry id="gloss-konqueror">
 			<glossterm>&konqueror;</glossterm>
 			<glossdef><para>&konqueror; is a filemanager, web browser, picture viewer
-				and more, and a core part of the &kde; project. You can
+				and more, and a core part of the &tde; project. You can
 				find more information about &konqueror; at <ulink
 				url="http://www.konqueror.org">www.konqueror.org</ulink>.</para>
-				<glossseealso otherterm="gloss-kde">&kde;</glossseealso>
+				<glossseealso otherterm="gloss-kde">&tde;</glossseealso>
 			</glossdef>
 		</glossentry>
 		<glossentry id="gloss-ksirc">
 			<glossterm>&ksirc;</glossterm>
 			<glossdef><para>&ksirc; is the default <acronym>IRC</acronym> client,
-				which is shipped with &kde;. You can use &ksirc; to chat with anyone on
+				which is shipped with &tde;. You can use &ksirc; to chat with anyone on
 				an <acronym>IRC</acronym> network.</para>
 				<glossseealso otherterm="gloss-irc"><acronym>IRC</acronym></glossseealso>
 			</glossdef>
@@ -143,15 +143,15 @@ otherterm="gloss-ksycoca"><acronym>KSycoca</acronym></glossseealso>
 			<glossterm>&GUI;</glossterm>
 			<glossdef><para>Abbreviation for <emphasis>G</emphasis>raphical
 				<emphasis>U</emphasis>ser <emphasis>I</emphasis>nterface. Every desktop
-				environment (like &kde;) is a &GUI;. Most
+				environment (like &tde;) is a &GUI;. Most
 				&GUI;s feature mouse support and/or windows to manage
 				the programs.</para>
-				<glossseealso otherterm="gloss-kde">&kde;</glossseealso>
+				<glossseealso otherterm="gloss-kde">&tde;</glossseealso>
 			</glossdef>
 		</glossentry>
 		<glossentry id="gloss-kde">
-			<glossterm>&kde;</glossterm>
-			<glossdef><para>Abbreviation for <quote>K Desktop Environment</quote>, a
+			<glossterm>&tde;</glossterm>
+			<glossdef><para>Abbreviation for <quote>Trinity Desktop Environment</quote>, a
 				leading &GUI; for &UNIX;-based systems. You can find more
 				detailled information at <ulink
 				url="http://www.kde.org">www.kde.org</ulink>.</para>
@@ -172,7 +172,7 @@ otherterm="gloss-ksycoca"><acronym>KSycoca</acronym></glossseealso>
 			<glossdef><para>Refers to the panel (also known as
 				<quote>&kicker;</quote>) which often resides at the bottom of the
 				screen.</para>
-				<glossseealso otherterm="gloss-kde">&kde;</glossseealso>
+				<glossseealso otherterm="gloss-kde">&tde;</glossseealso>
 				<glossseealso otherterm="gloss-kicker">&kicker;</glossseealso>
 			</glossdef>
 		</glossentry>
@@ -185,28 +185,28 @@ otherterm="gloss-ksycoca"><acronym>KSycoca</acronym></glossseealso>
 	</glossdiv>
 	
 	<glossdiv id="kde-development">
-		<title>&kde; Development</title>
+		<title>&tde; Development</title>
 		<glossentry id="gloss-qt">
 			<glossterm>&Qt;</glossterm>
-			<glossdef><para>The &GUI; of &kde; is built on top of
+			<glossdef><para>The &GUI; of &tde; is built on top of
 				the &Qt; toolkit, which provides many graphical elements (so-called
 				<quote>Widgets</quote>) which are used to construct the desktop. You
 				can find more information about &Qt; at <ulink
 				url="http://www.trolltech.com">www.trolltech.com</ulink>.</para>
-				<glossseealso otherterm="gloss-kde">&kde;</glossseealso>
+				<glossseealso otherterm="gloss-kde">&tde;</glossseealso>
 				<glossseealso otherterm="gloss-gui">&GUI;</glossseealso>
 				<glossseealso otherterm="gloss-widget">Widget</glossseealso>
 			</glossdef>
 		</glossentry>
 		<glossentry id="gloss-i18n">
 			<glossterm>i18n</glossterm>
-			<glossdef><para>Abbreviation for <quote>internationalization</quote>. &kde;
+			<glossdef><para>Abbreviation for <quote>internationalization</quote>. &tde;
 				supports many different languages, and several i18n techniques make it
 				easy to translate the &GUI; as well as the accompanying
-				documents of &kde; into all these languages. More information about the
+				documents of &tde; into all these languages. More information about the
 				i18n process is available at <ulink
 				url="http://i18n.kde.org">i18n.kde.org</ulink>.</para>
-				<glossseealso otherterm="gloss-kde">&kde;</glossseealso>
+				<glossseealso otherterm="gloss-kde">&tde;</glossseealso>
 				<glossseealso otherterm="gloss-gui">&GUI;</glossseealso>
 			</glossdef>
 		</glossentry>
@@ -221,9 +221,9 @@ otherterm="gloss-ksycoca"><acronym>KSycoca</acronym></glossseealso>
 		<glossentry id="gloss-widget">
 			<glossterm>Widget</glossterm>
 			<glossdef><para>Graphical elements like scrollbars, buttons or input
-				fields which are used by &kde; to construct the &GUI;.
+				fields which are used by &tde; to construct the &GUI;.
 				</para>
-				<glossseealso otherterm="gloss-kde">&kde;</glossseealso>
+				<glossseealso otherterm="gloss-kde">&tde;</glossseealso>
 				<glossseealso otherterm="gloss-gui">&GUI;</glossseealso>
 			</glossdef>
 		</glossentry>
@@ -236,7 +236,7 @@ otherterm="gloss-ksycoca"><acronym>KSycoca</acronym></glossseealso>
 versions that allow more than one developer
 	    to easily work on the same project. You can find a description of how to 
 get the latest (developer) version of the
-	    &kde; sources via anonymous <acronym>CVS</acronym> on
+	    &tde; sources via anonymous <acronym>CVS</acronym> on
             <ulink 
 url="http://www.kde.org/anoncvs.html">http://www.kde.org/anoncvs.html</ulink>.
             More about <acronym>CVS</acronym> is available at <ulink 

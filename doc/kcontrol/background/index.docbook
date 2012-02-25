@@ -102,7 +102,7 @@ below.</para>
 <varlistentry>
 <term><guilabel>Slide show</guilabel></term>
 <listitem>
-<para>&kde; allows you to have an automatic slide show of wallpaper
+<para>&tde; allows you to have an automatic slide show of wallpaper
 images. To enable this option, press the <guibutton>Setup...</guibutton>
 button.  In the resulting dialog you may choose any
 image or folder of images available on your computer, using the
@@ -214,7 +214,7 @@ color.</para></listitem>
 <varlistentry>
 <term><guilabel>Horizontal Gradient</guilabel></term>
 <listitem><para>By choosing this mode, you select two colors (using both color
-buttons).  &kde; will then start with the color selected by <guilabel>Primary
+buttons).  &tde; will then start with the color selected by <guilabel>Primary
 Color</guilabel> on the left edge of the screen, and slowly transform into the
 color selected by <guilabel>Blend Color</guilabel> by the time it gets to the
 right edge of the screen.</para></listitem>
@@ -222,7 +222,7 @@ right edge of the screen.</para></listitem>
 <varlistentry>
 <term><guilabel>Vertical Gradient</guilabel></term>
 <listitem><para>By choosing this mode, you select two colors (using both color
-buttons).  &kde; will then start with the color selected by <guilabel>Primary
+buttons).  &tde; will then start with the color selected by <guilabel>Primary
 Color</guilabel> on the top edge of the screen, and slowly transform into the
 color selected by <guilabel>Blend Color</guilabel> as it moves to the bottom of
 the screen.</para></listitem>
@@ -230,7 +230,7 @@ the screen.</para></listitem>
 <varlistentry>
 <term><guilabel>Pyramid Gradient</guilabel></term>
 <listitem><para>By choosing this mode, you select two colors (using both color
-buttons).  &kde; will then start with the color selected by
+buttons).  &tde; will then start with the color selected by
 <guilabel>Primary Color</guilabel> in each
 corner of the screen, and slowly transform into the color selected by
 <guilabel>Blend Color</guilabel> as it moves to the center of the
@@ -239,7 +239,7 @@ screen.</para></listitem>
 <varlistentry>
 <term><guilabel>Pipecross Gradient</guilabel></term>
 <listitem><para>By choosing this mode, you select two colors (using both color
-buttons).  &kde; will then start with the color selected by
+buttons).  &tde; will then start with the color selected by
 <guilabel>Primary Color</guilabel> in each corner of the screen, and slowly
 transform into the color selected by <guilabel>Blend Color</guilabel>
 as it moves to the center of the screen. The shape of
@@ -248,7 +248,7 @@ this gradient is different than the pyramid gradient.</para></listitem>
 <varlistentry>
 <term><guilabel>Elliptic Gradient</guilabel></term>
 <listitem><para>By choosing this mode, you select two colors (using both color
-buttons).  &kde; will then start with the color selected by
+buttons).  &tde; will then start with the color selected by
 <guilabel>Blend Color</guilabel> in the center of the screen, and slowly
 transform into the color selected by <guilabel>Primary Color</guilabel>
 as it moves to the edges, in an elliptical pattern.</para></listitem>
@@ -260,7 +260,7 @@ as it moves to the edges, in an elliptical pattern.</para></listitem>
 <para>The rest of the list are the names of various patterns
 or textures you can choose.</para>
 <para>Click on
-<guibutton>OK</guibutton>, and &kde; will render the pattern you
+<guibutton>OK</guibutton>, and &tde; will render the pattern you
 selected using the two colors you selected.  For more on patterns, see
 the section <link linkend="bkgnd-patterns">Adding, Removing and
 Modifying Patterns</link>.</para>
@@ -310,8 +310,8 @@ blending.</para>
 <guibutton>Advanced Options</guibutton>.</para>
 
 <para>To use an external program to determine and change the
-background of &kde;, simply select <guilabel>Use the following program
-for drawing the background</guilabel>.  Available &kde; programs are
+background of &tde;, simply select <guilabel>Use the following program
+for drawing the background</guilabel>.  Available &tde; programs are
 listed, select one to enable it.  To modify your choice, for example
 to change the refresh times, you may press the
 <guibutton>Modify...</guibutton> button.</para>
@@ -357,9 +357,9 @@ the list automatically for all users, you should save it to the <filename
 class="directory">$<envar>TDEDIR</envar>/share/wallpapers</filename>
 folder.</para>
 
-<para>A pattern is a picture file which &kde; uses as a template to
-draw your background.  The picture file provides the shapes, but &kde;
-provides the colors.  &kde; is packaged with several patterns, and you also
+<para>A pattern is a picture file which &tde; uses as a template to
+draw your background.  The picture file provides the shapes, but &tde;
+provides the colors.  &tde; is packaged with several patterns, and you also
 can add new patterns.</para>
 
 <para>To add a new pattern that is available to every user on your

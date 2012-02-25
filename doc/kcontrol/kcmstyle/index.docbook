@@ -29,7 +29,7 @@
 <title>Introduction</title>
 
 <para>This module is used to configure how the individual widgets are
-drawn by &kde;.</para>
+drawn by &tde;.</para>
 
 <note><para>A <emphasis>Widget</emphasis> is a commonly-used
 programmer's term for referring to User Interface elements such as
@@ -131,18 +131,18 @@ is selected, then the menu list appears instantly.</para></listitem>
 <listitem><para>If this option is set to <guilabel>Disable</guilabel>, then no menus can be separated 
 from the application. If <guilabel>Application Level</guilabel> is selected, then it is left up 
 to each individual application to determine which menus can be torn separated from the application.</para>
-<note><para>Many applications do not have tear off menus.  You cannot tell &kde; to force an 
+<note><para>Many applications do not have tear off menus.  You cannot tell &tde; to force an 
 application to allow tear off menus.  This is determined by the authors of the application.</para></note></listitem>
 </varlistentry>
 </variablelist>
 
 <para>The next checkbox, labeled <guilabel>Menu drop shadow</guilabel> is used to toggle the drop shadow behind all 
-&kde; menus.  A drop shadow is a dark, soft line on the bottom and right sides of the menu, which give the menus the 
+&tde; menus.  A drop shadow is a dark, soft line on the bottom and right sides of the menu, which give the menus the 
 appearance that the menu is lifted off the application, and the menu is creating a shadow on the application.</para>
 
 <para>The next section only applies if the combobox labeled <guilabel>Menu Effect</guilabel> is set to 
 <guilabel>Make Transparent</guilabel>.  You can use the combo box labeled <guilabel>Menu transparency type:</guilabel> 
-to select the method &kde; uses to generate the transparency.  You can use the slider to determine the level of 
+to select the method &tde; uses to generate the transparency.  You can use the slider to determine the level of 
 transparency in menus.  A preview is visible on the right side of this section.</para>
 
 </sect3>

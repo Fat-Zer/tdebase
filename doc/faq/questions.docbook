@@ -17,9 +17,9 @@ your question will be ignored</para>
 <question><para>What do I do before I ask?</para></question>
 
 <answer><para>Read the documentation and &FAQ; for the application. There is
-a wealth of &kde; documentation availible both in the help center and
+a wealth of &tde; documentation availible both in the help center and
 online. A lot of time and effort has gone into this documentation, and
-quite often the answer to your question is here. The general &kde; userguide
+quite often the answer to your question is here. The general &tde; userguide
 can be found by typing
 <userinput><command>help:/userguide</command></userinput> into your
 &konqueror; addressbar.</para>
@@ -45,9 +45,9 @@ your helpers as much time as you can, they're busy people.</para> </answer>
 
 <answer><para>Usually the best place to ask a question is on the
 <acronym>IRC</acronym> channels and mailing lists devoted to user
-questions. Don't post simple questions about using &kde; to the devel
+questions. Don't post simple questions about using &tde; to the devel
 channels and mailing lists, these are for technical discussions. Some good
-places are #kde on irc.freenode.net, and the &kde; mailing
+places are #kde on irc.freenode.net, and the &tde; mailing
 lists.</para></answer> </qandaentry>
 
 <qandaentry>
@@ -57,13 +57,13 @@ lists.</para></answer> </qandaentry>
 information possible and is polite and courteous. Don't ask to ask, just
 ask!</para>
 
-<para>Q: &kde; sucks, it's being slow</para>
+<para>Q: &tde; sucks, it's being slow</para>
 
 <para>Is not a question that is likely to get you a useful answer. It does
 not give any useful information about troubleshooting the problem, and it
 starts out attacking the software in a way that isn't productive.</para>
 
-<para>Q: Since upgrading &kde; on Slackware &Linux; from version 3.2.3 to
+<para>Q: Since upgrading &tde; on Slackware &Linux; from version 3.2.3 to
 3.3.2 using sources, I have noticed it's being really slow &mdash; sometimes
 applications take up to 20 seconts to launch. I am using the same user
 configuration as I had with the previous version, and I have tried as a new
@@ -75,13 +75,13 @@ troubleshoot the problem and shows your helpers what avenues you have
 already tried.</para>
 
 <para>Don't assume automatically that the problem is the fault of
-&kde;. Proceed as though this is your error, otherwise you will quickly
+&tde;. Proceed as though this is your error, otherwise you will quickly
 annoy people if it does indeed turn out to be your problem and not
-&kde;.</para>
+&tde;.</para>
 
 <para>Use clear language with correct spelling. Watch out for any
 ambiguities and make sure you think about what you say before you write
-it. If you are asked for clarification, give it as best you can. &kde; is a
+it. If you are asked for clarification, give it as best you can. &tde; is a
 project where many of the users and developers are not native english
 speakers and if you don't use correct english, misunderstandings may
 ensue. Use the language appropriate to the channel or mailing list you are
@@ -91,7 +91,7 @@ ignore your message because it is not in a language they understand.</para>
 <para>Include all information that could be relevant, even if you're not
 sure. Have you upgraded other software or hardware on your system,
 particularly system libraries or a new kernel? These things could affect how
-&kde; performs. Even if you cannot see a link, someone else might.</para>
+&tde; performs. Even if you cannot see a link, someone else might.</para>
 
 <para>Don't paraphrase error messages. Paste in the exact error, and if it's
 more than a line or two don't paste them directly into an
@@ -120,7 +120,7 @@ the incentive for your helper to put in the time and effort to help you?  If
 you're told to go use google, take it graciously and do so.</para> </answer>
 </qandaentry> </qandaset>
 
-<para>Above all, use common courtesy. &kde; users and developers are usually
+<para>Above all, use common courtesy. &tde; users and developers are usually
 volunteering their time out of an already very busy schedule, and like to
 know that you are appreciating that they are helping you for free. Be
 polite, say please and thank you and try to be pleasant and
@@ -129,13 +129,13 @@ friendly. </para>
 <para> Does this seem like a lot of trouble to ask a question? If you want
 to be able to feel that people owe you an answer or support, then you're
 quite welcome to pay for commercial support from companies that support
-&kde; on &UNIX; platforms. If you don't want to pay money, then pay the
+&tde; on &UNIX; platforms. If you don't want to pay money, then pay the
 people who do this for free with your politeness and appreciation :)</para>
 
 
 <para>If you think the answer to your question should be included in the
-&kde; &FAQ; please feel free to submit any patches or suggestions to the
-&kde; &FAQ; Maintainer, at <email>faq@kde.org</email></para>
+&tde; &FAQ; please feel free to submit any patches or suggestions to the
+&tde; &FAQ; Maintainer, at <email>faq@kde.org</email></para>
 
 
 

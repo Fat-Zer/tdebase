@@ -9,10 +9,10 @@
 </author>
 </sect1info>
 
-<title>Audio CD Ripping in &kde;</title>
+<title>Audio CD Ripping in &tde;</title>
 
 <para>The conventional way of ripping Audio CDs to MP3 or Ogg files is to
-use a standalone program such as <trademark class="registered"><application>iTunes</application></trademark>, Winamp or &kde;'s own
+use a standalone program such as <trademark class="registered"><application>iTunes</application></trademark>, Winamp or &tde;'s own
 <application>KAudioCreator</application>. But if we stick to conventions,
 where's the fun?! So in this article, I am going to show you how to feel
 elite by ripping your CDs in the, umm.. elite way. ;-) </para>
@@ -20,7 +20,7 @@ elite by ripping your CDs in the, umm.. elite way. ;-) </para>
 <sect2 id="audio-cd-ingredients">
 <title>Ingredients</title>
 
-<para>What do we need to be cool? Vanilla &kde;, without any extra
+<para>What do we need to be cool? Vanilla &tde;, without any extra
 ingredients, will be able to rip your CDs. But to encode them, you'll need
 to install the relevant codecs. At the moment, Ogg Vorbis, MP3 and FLAC formats
 are supported. To enable encoding to these formats, you'll have to install
@@ -36,7 +36,7 @@ look so you at least know what's on offer. Again, take a look at
 Retrieval</guimenuitem></menuchoice> and change anything that's not to your
 liking. <acronym>CDDB</acronym>, in case you didn't know, stands for CD DataBase (or Compact
 Disc DataBase in it's more free flowing form). This functionality enables
-&kde; to retrieve the Artist/Album/Track information about your CDs from the
+&tde; to retrieve the Artist/Album/Track information about your CDs from the
 Internet. This metadata is also used to write tags to the MP3 or Ogg files
 that you'll be encoding your CDs to anytime now. </para>
 
@@ -96,7 +96,7 @@ various formats. </para>
 
 <para>So how do we rip and encode the CD? I think you can guess the answer
 by now. Just decide which format you wish to rip to, open that folder, and
-copy and paste those files in your target folder. That's it! &kde; will start
+copy and paste those files in your target folder. That's it! &tde; will start
 ripping and encoding the files on the fly! If you copy any of the files in
 the <guilabel>Full CD</guilabel> folder, you'll be ripping the entire CD as
 one continuous stream. </para>

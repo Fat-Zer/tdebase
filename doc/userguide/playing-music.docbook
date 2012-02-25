@@ -21,7 +21,7 @@
 <sect2 id="music-media-players">
 <title>Music Players</title>
 
-<para>There are several &kde; music players with somewhat overlapping
+<para>There are several &tde; music players with somewhat overlapping
 feature sets, however, each is quite different in style. </para>
 
 <variablelist>
@@ -35,7 +35,7 @@ feature sets, however, each is quite different in style. </para>
 <indexterm><primary>&noatun;</primary></indexterm>
 </term>
 <listitem>
-<para>Noatun is the default &kde; music player.  It features a highly
+<para>Noatun is the default &tde; music player.  It features a highly
 configurable interface, including several styles of playlist manager, and
 many plugins to provide different &GUI;s, visualizations, and other
 features.</para>
@@ -116,7 +116,7 @@ find packages from your normal distribution source.</para>
 </varlistentry>
 </variablelist>
 
-<para>Most of the &kde; based movie players such as
+<para>Most of the &tde; based movie players such as
 <application>Kaffeine</application> and <application>kmplayer</application>
 also make useful music players.</para>
 

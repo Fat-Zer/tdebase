@@ -39,7 +39,7 @@
 
 <abstract>
 <para>
-&kicker; is the &kde; application starter panel and is also capable of
+&kicker; is the &tde; application starter panel and is also capable of
 some useful applets and extensions. It usually resides on the bottom of
 the desktop.
 </para>
@@ -61,7 +61,7 @@ the desktop.
 
 
 <para>
-&kicker; is the application launcher panel of the K Desktop Environment.
+&kicker; is the application launcher panel of the Trinity Desktop Environment.
 Besides the <guimenu>K</guimenu> Menu, where you can start applications,
 &kicker; is also capable of running docked applets like the pager, the
 taskbar or the clock, and extensions, such as child panels.
@@ -70,7 +70,7 @@ taskbar or the clock, and extensions, such as child panels.
 <para>
 &kicker; usually resides on the bottom of the desktop, but it can also
 be moved to any other border.  Please report any problems or feature
-requests to the &kde; mailing lists.
+requests to the &tde; mailing lists.
 </para>
 
 </chapter>
@@ -79,7 +79,7 @@ requests to the &kde; mailing lists.
 <title>Using &kicker;</title>
 
 <para>
-This is what you see on a freshly installed &kde;, assuming that you
+This is what you see on a freshly installed &tde;, assuming that you
 skipped <application>KPersonalizer</application>. If you are using
 lower resolution, some of the icons may not appear immediately. To
 cater for those smaller resolutions, the screenshot below is divided
@@ -124,7 +124,7 @@ screen. There are many more configurations available.
 </para>
 
 <sect1 id="newbie">
-<title>A quick tour for new &kde; users</title>
+<title>A quick tour for new &tde; users</title>
 
 <para>
 If you are experienced with this kind of application launcher, you can
@@ -283,7 +283,7 @@ context menu.
 </varlistentry>
 
 <varlistentry>
-<term>Using the context menu to add a &kde; application</term>
+<term>Using the context menu to add a &tde; application</term>
 <listitem>
 <para>
 Click the &RMB; on any free space
@@ -296,10 +296,10 @@ which will then be added to &kicker;.
 
 <varlistentry>
 <term>Using the context menu to add a
-non-&kde;-application</term>
+non-&tde;-application</term>
 <listitem>
 <para>
-Non-&kde;-applications &eg;
+Non-&tde;-applications &eg;
 <application>xosview</application> or <application>xemacs</application>.
 </para>
 
@@ -395,7 +395,7 @@ removed.
 <para>
 File manager &URL;s can also be configured from the
 context menu, just like any other folder anywhere in
-&kde;.
+&tde;.
 </para>
 
 </sect2>
@@ -515,16 +515,16 @@ about quick browsers.
 </varlistentry>
 
 <varlistentry>
-<term>The <guilabel>Non-&kde; Application Launcher</guilabel></term>
+<term>The <guilabel>Non-&tde; Application Launcher</guilabel></term>
 <listitem>
 <para>
 <!-- <guiicon><inlinemediaobject><imageobject><imagedata -->
 <!-- fileref="nonkdeapp_icon.png" format="PNG"/></imageobject> -->
 <!-- </inlinemediaobject></guiicon> -->
-The <guilabel>Non-&kde; Application Launcher</guilabel> lets you add an
+The <guilabel>Non-&tde; Application Launcher</guilabel> lets you add an
 application which doesn't appear in the <guimenu>K</guimenu> menu to &kicker;.
 Refer to <link linkend="adding-apps">Adding Applications</link> for more
-information about Non-&kde; Applications.
+information about Non-&tde; Applications.
 </para>
 </listitem>
 </varlistentry>
@@ -550,18 +550,18 @@ when you click and hold its <guiicon>New Session</guiicon> button.
 <guiicon><inlinemediaobject><imageobject><imagedata
 fileref="printsys_icon.png"
 format="PNG"/></imageobject></inlinemediaobject></guiicon>This icon gives
-direct access to &kde;'s printing system. &kde; is able to utilize various printing
+direct access to &tde;'s printing system. &tde; is able to utilize various printing
 systems according to users' wishes. The options shown below will vary depending
 on the printing system in use. Clicking the &LMB; on the icon opens
 a menu which gives the following options:
 
 <itemizedlist>
 <listitem><para>
-<guimenuitem>Add Printer...</guimenuitem> This will start &kde;'s Add Printer
+<guimenuitem>Add Printer...</guimenuitem> This will start &tde;'s Add Printer
 Wizard which allows you to simply add a new printer to your system.</para>
 </listitem>
 <listitem><para>
-<guimenuitem>&kde; Print Settings</guimenuitem> This item will open the &kde; Print
+<guimenuitem>&tde; Print Settings</guimenuitem> This item will open the &tde; Print
 Configuration dialog.</para>
 </listitem>
 
@@ -574,7 +574,7 @@ to you before allowing any changes.
 
 <listitem><para>
 <guimenuitem>Print Manager</guimenuitem> This item starts the Printing Manager,
-&kde;'s main printing control center.</para>
+&tde;'s main printing control center.</para>
 </listitem>
 
 <listitem><para>
@@ -951,7 +951,7 @@ be adjust its settings rather than that of the Main Panel.
 
 <para>
 In the <guilabel>Arrangement</guilabel> tab you can configure some basic
-functionality of the &kde; panel (&ie; functionality you'd find in other
+functionality of the &tde; panel (&ie; functionality you'd find in other
 panel applications as well; later we'll come to the more interesting
 features).
 </para>
@@ -1044,7 +1044,7 @@ The <guilabel>K Menu</guilabel> frame offers you some options to
 configure the <guimenu>K</guimenu> menu's functionality. The
 <guilabel>Bookmarks</guilabel> and <guilabel>Recent Documents</guilabel> options
 will enable submenus showing your <application>konqueror</application>
-bookmarks and the last documents you've opened using &kde; applications
+bookmarks and the last documents you've opened using &tde; applications
 respectively. The <guilabel>Quick Browser</guilabel> option will enable a browser menu.
 Enabling the <guilabel>Show side image</guilabel> check box will display a neat
 image on the left side of the <guimenu>K</guimenu> menu.
@@ -1103,7 +1103,7 @@ effects</guilabel> is enabled.
 </para>
 
 <para>
-The &kde; panel supports so-called <quote>tiled buttons</quote>. This
+The &tde; panel supports so-called <quote>tiled buttons</quote>. This
 means that the buttons shown on the panel will be drawn using
 configurable images/colors.
 </para>
@@ -1194,7 +1194,7 @@ picture on the right.
 <title>Applets</title>
 
 <para>
-Applets are small plugins that extend the panel's functionality. &kde;
+Applets are small plugins that extend the panel's functionality. &tde;
 comes with some applets but they may be provided by third parties as
 well.</para>
 
@@ -1220,7 +1220,7 @@ wrapper application.
 <listitem>
 <para>
 <guilabel>Load startup config applets internal</guilabel>: The applets
-shown on &kde; startup will be loaded internally, others will be loaded
+shown on &tde; startup will be loaded internally, others will be loaded
 using an external wrapper application.</para></listitem>
 <listitem><para><guilabel>Load all applets internal</guilabel>: will
 load all applets internally, regardless of whether they are trusted or
@@ -1232,7 +1232,7 @@ not.
 <para>
 For stability and security reasons, we recommend using one of the first
 two options and that you mark only those applets as 'trusted' that come
-with the &kde; base packages.
+with the &tde; base packages.
 </para>
 
 <para>
@@ -1437,10 +1437,10 @@ be described now from bottom to top.
 </para>
 
 <sect1 id="kde-group">
-<title>The &kde; Group</title>
+<title>The &tde; Group</title>
 
 <para>
-This group is for the common &kde; things in the <guimenu>K</guimenu>
+This group is for the common &tde; things in the <guimenu>K</guimenu>
 Menu.
 </para>
 
@@ -1449,7 +1449,7 @@ Menu.
 <term><guimenuitem>Log Out...</guimenuitem></term>
 <listitem>
 <para>
-This entry is used to finish the &kde; session. It also shuts down the
+This entry is used to finish the &tde; session. It also shuts down the
 &X-Window; session.
 </para>
 </listitem>
@@ -1588,7 +1588,7 @@ home, root, and system configuration.
 <term><guisubmenu>Recent Documents</guisubmenu></term>
 <listitem>
 <para>
-This menu shows the most recently used documents (works only with &kde;
+This menu shows the most recently used documents (works only with &tde;
 applications for the moment). Clicking the element <guimenuitem>Clear
 History</guimenuitem> will remove those entries, what may be useful for
 privacy reasons.
@@ -1945,7 +1945,7 @@ date, which is shown when activated for the specific clock type.
 <listitem>
 <para>In the <guilabel>Display</guilabel> section you can check if you
 want to have the date and/or the seconds shown. In
-<guilabel>Time</guilabel> you can choose if you want the common &kde;
+<guilabel>Time</guilabel> you can choose if you want the common &tde;
 look or your own custom colors and font.
 </para>
 </listitem>
@@ -2032,8 +2032,8 @@ applet.
 <para>
 This little applet contains two buttons.
 The <guibutton>Lock the session</guibutton> is used to lock the session if you
-ever want to leave your &kde; unattended and don't want anybody to access it.
-The <guibutton>Log out</guibutton> is used to close your &kde; session.
+ever want to leave your &tde; unattended and don't want anybody to access it.
+The <guibutton>Log out</guibutton> is used to close your &tde; session.
 </para>
 </sect1>
 
@@ -2197,7 +2197,7 @@ for more about that.
 <qandaentry>
 <question>
 <para>
-Can I have an external Taskbar just like in &kde; 1?
+Can I have an external Taskbar just like in &tde; 1?
 </para>
 </question>
 <answer>
@@ -2366,7 +2366,7 @@ Your menu entries may be mixed up for some reason. Simply run
 </para>
 
 <para>
-Program copyright 1999-2000 The &kde; Team <ulink
+Program copyright 1999-2000 The &tde; Team <ulink
 url="http://www.kde.org"> (www.kde.org)</ulink>.
 </para>
 

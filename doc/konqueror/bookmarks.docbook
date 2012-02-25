@@ -47,7 +47,7 @@ the <guimenuitem>Add Bookmark</guimenuitem> item in that folder.</para>
 Bookmarks</guimenuitem> </menuchoice> option opens the <guilabel>Bookmark
 Editor</guilabel>.</para>
 <para>This shows a tree view of your bookmarks and bookmark subfolders. 
-As is usual for tree views in &kde;, subfolders are shown with a small square 
+As is usual for tree views in &tde;, subfolders are shown with a small square 
 at the left of the folder name; if the square contains a <keycap>+</keycap> 
 sign <mousebutton>left</mousebutton> clicking on it will expand the view to 
 show the contents of that subfolder and the <keycap>+</keycap> sign will 

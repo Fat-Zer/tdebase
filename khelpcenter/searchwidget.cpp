@@ -1,5 +1,5 @@
 /*
- *  searchwidget.cpp - part of the KDE Help Center
+ *  searchwidget.cpp - part of the TDE Help Center
  *
  *  Copyright (C) 1999 Matthias Elter (me@kde.org)
  *            (C) 2000 Matthias Hoelzer-Kluepfel (hoelzer@kde.org)

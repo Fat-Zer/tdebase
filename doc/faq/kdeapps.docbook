@@ -5,7 +5,7 @@
 -->
 
 <chapter id="applications">
-<title>&kde; applications</title>
+<title>&tde; applications</title>
 
 <qandaset>
 <qandaentry>
@@ -14,7 +14,7 @@
 </question>
 <answer>
 
-<para>Many &kde; users report problems using &kppp;.  But before you
+<para>Many &tde; users report problems using &kppp;.  But before you
 complain about &kppp;, make sure you have already checked the
 following:</para>
 
@@ -26,7 +26,7 @@ least three times and followed its instructions and trouble-shooting
 suggestions?</para></listitem>
 </itemizedlist>
 <para>The &kppp; documentation can be accessed through the 
-<application>&kde; Help Center</application>.
+<application>&tde; Help Center</application>.
  Last, but not least, the &kppp; homepage is at <ulink
  url="http://ktown.kde.org/~kppp/">http://ktown.kde.org/~kppp/</ulink>.</para>
 <para>Now, if you still encounter problems, here's what might help you
@@ -115,14 +115,14 @@ paste by clicking with the &MMB; (or both buttons if you are using a
 
 <varlistentry>
 <term>Why can't &konsole; find the <quote>9x15</quote> and the 2
-<quote>console</quote> bitmap fonts installed with &kde;?</term>
+<quote>console</quote> bitmap fonts installed with &tde;?</term>
 <listitem>
 
 <para><application>FontConfig</application> must find the three fonts
 installed in: <filename
 class="directory">$<envar>TDEDIR</envar>/share/fonts</filename>. 
  If
-the &kde; install does not install these fonts in a directory that
+the &tde; install does not install these fonts in a directory that
 already exists (&eg; <filename
 class="directory">/usr/share/fonts</filename>) then you must add this
 directory to the configuration file <filename

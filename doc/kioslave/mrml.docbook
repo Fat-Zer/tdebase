@@ -17,7 +17,7 @@ protocol to provide standardized access to Multimedia retrieval software.
 See <ulink url="http://www.mrml.net">http://www.mrml.net</ulink> for more information.
 </para>
 
-<para>kio_mrml is used for the Image Finding feature in &kde;</para>
+<para>kio_mrml is used for the Image Finding feature in &tde;</para>
 
 <para>&eg; type <userinput>mrml:/</userinput> or <userinput>mrml:/some.other.server</userinput> in &konqueror; to start searching for
 images.

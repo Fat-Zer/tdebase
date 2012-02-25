@@ -1,14 +1,5 @@
 <sect1 id="file-manager">
 
-<sect1info>
-<authorgroup>
-<author>
-<firstname>Christian</firstname>
-<surname>Weickhmann</surname>
-</author>
-</authorgroup>
-</sect1info>
-
 <title>The File Manager</title>
 <indexterm><primary>&konqueror;</primary><secondary>File
 Management</secondary></indexterm>
@@ -24,7 +15,7 @@ Management</secondary></indexterm>
 <sect2 id="filemanager-intro">
 <title>Introduction</title>
 
-<para>&kde; includes a versatile and powerful file manager called
+<para>&tde; includes a versatile and powerful file manager called
 &konqueror; which allows you to do everything you want with the files
 stored on your computer, your network, and even the Internet. There
 are too many features of &konqueror; to describe here, so we will just
@@ -47,7 +38,7 @@ hold the mouse cursor over the name of the file for about a second: a
 popup window will appear, showing the contents of the file and other some
 useful information, like file's size and which user owns the file.</para>
 
-<para>You can open any item by clicking (just once &ndash; &kde;
+<para>You can open any item by clicking (just once &ndash; &tde;
 does not use double-clicking in its default settings) on the icon for the
 file.  Folders will be opened in the same window; files will either be
 opened in the appropriate program, or the file manager will ask you
@@ -153,7 +144,7 @@ on the sidebar. The file will immediately be played.</para>
 <listitem>
 <para>Newsticker will display a customisable list of news sources. Right-click 
 either on the <guilabel>Configure button</guilabel> or on one of the 
-newssource buttons (e.g. KDE News, which is usually predefined) to add a new 
+newssource buttons (e.g. TDE News, which is usually predefined) to add a new 
 newsticker source.</para>
 </listitem>
 </varlistentry>
@@ -244,7 +235,7 @@ regularly, you can easily group them in a folder and create links in it.
 <indexterm><primary>Trash</primary></indexterm>
 <indexterm><primary><quote>Recycle Bin</quote></primary></indexterm>
 
-<para>Before a file is deleted in the &kde; file manager it will be
+<para>Before a file is deleted in the &tde; file manager it will be
 moved to the <filename>Trash</filename> folder to give you the
 possibility of getting it back if you deleted it by accident.  The
 trash bin will show all deleted items. You can select the one to be

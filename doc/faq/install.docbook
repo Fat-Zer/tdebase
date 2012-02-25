@@ -11,8 +11,8 @@ Desktop Environment.  Please complement your reading with the
 <filename>README</filename>s and <filename>INSTALL</filename>s that
 come along with the package.  Please read them carefully and try to
 help yourself out if anything goes wrong.  If you need further
-assistance, consider joining the &kde; mailing lists
-(see our web site instructions for joining the &kde;
+assistance, consider joining the &tde; mailing lists
+(see our web site instructions for joining the &tde;
 <ulink url="http://www.kde.org/mailinglists/">mailing
 lists</ulink>) or newsgroups.</para>
 
@@ -27,26 +27,26 @@ lists</ulink>) or newsgroups.</para>
 <answer>
 
 <para>So you have heard the rumors. Or you have seen the screenshots.
-And you are dying to get hold of &kde;.  But you know next to nothing
+And you are dying to get hold of &tde;.  But you know next to nothing
 about this whole <quote>alternative OS</quote> business.  Don't worry!
 You only need to do some (well, maybe not some) reading, that's
 all!</para>
 
-<para>&kde; does not run on any version of &Microsoft; &Windows; or OS/2 (yet).  To run
-&kde;, you need to have a &UNIX; system. Please refer to <xref
+<para>&tde; does not run on any version of &Microsoft; &Windows; or OS/2 (yet).  To run
+&tde;, you need to have a &UNIX; system. Please refer to <xref
 linkend="platform"/> for more details.</para>
 
 <para>Decide on a platform and set it up for your system. This
-<acronym>FAQ</acronym> can not help you with this, since &kde;<ulink
+<acronym>FAQ</acronym> can not help you with this, since &tde;<ulink
 url="http://www.kde.org"> runs on many &UNIX;</ulink> platforms. </para>
 
 <!-- Taken out because we can not help with all platforms and KDEisnotLINUX -->
 
-<para>Finally, you are ready to commence the &kde; installation.
-Please start reading from the next section.  To get &kde;, please
+<para>Finally, you are ready to commence the &tde; installation.
+Please start reading from the next section.  To get &tde;, please
 refer to <xref linkend="where-to-get-kde"/>.  Last but not least, if
-you encounter any problems while installing &kde;, please do not
-hesitate to make use of the &kde; <link 
+you encounter any problems while installing &tde;, please do not
+hesitate to make use of the &tde; <link 
 linkend="mailing-lists">mailing lists</link> and <link
 linkend="newsgroups">newsgroups</link>.  But do bear this in mind: no
 question is too silly to ask, but some are too silly to answer,
@@ -58,10 +58,10 @@ especially when they are already answered in this <acronym>FAQ</acronym>.</para>
 
 <qandaentry>
 <question>
-<para>What kind of hardware do I need to run &kde; ?</para>
+<para>What kind of hardware do I need to run &tde; ?</para>
 </question>
 <answer>
-<para>To run &kde; it is recommended that you have at least a pentium II processor, 64MB of memory and 500MB of free disk space for a basic installation. While &kde; may run on slower configurations than this, performance can be severely impaired. Generally, if your computer runs an &X-Server; already with other desktop environments or window managers it's probably fast enough to run &kde;.</para>
+<para>To run &tde; it is recommended that you have at least a pentium II processor, 64MB of memory and 500MB of free disk space for a basic installation. While &tde; may run on slower configurations than this, performance can be severely impaired. Generally, if your computer runs an &X-Server; already with other desktop environments or window managers it's probably fast enough to run &tde;.</para>
 </answer>
 </qandaentry>
 
@@ -74,16 +74,16 @@ especially when they are already answered in this <acronym>FAQ</acronym>.</para>
 
 <para>You can find several kinds of binary and source packages for
 different distributions and operating systems on the &kde-ftp;.  The
-binary packages are not made by the &kde; Team, but by the
+binary packages are not made by the &tde; Team, but by the
 distributors themselves, or some dedicated individuals. Please refer to
-<ulink url="http://dot.kde.org/986933826/">&kde; Package Policy
-Explained</ulink> for information about the &kde; Package Policy. The
+<ulink url="http://dot.kde.org/986933826/">&tde; Package Policy
+Explained</ulink> for information about the &tde; Package Policy. The
 only <quote>official</quote> release is the source tar.bz2
 packages. Please refer to the <filename>README</filename>s and
 <filename>INSTALL</filename>s in the several binaries folders. For
 a list of the available packages for a release, refer to the relevant
 info page. For the latest release this is the <ulink
-url="http://www.kde.org/info/3.4.1.php">&kde; 3.4.1 Info
+url="http://www.kde.org/info/3.4.1.php">&tde; 3.4.1 Info
 Page</ulink>.</para>
 
 </answer>
@@ -97,12 +97,12 @@ Page</ulink>.</para>
 
 <!-- rewrite to make it more general, pointing to the according webpages? -->
 
-<para>For &kde; 3.4.1, you need the &Qt; library version 3.3 or greater.  
+<para>For &tde; 3.4.1, you need the &Qt; library version 3.3 or greater.  
 Please make sure you download the correct &Qt;.  You will
-also need the header files, if you want to compile &kde;
+also need the header files, if you want to compile &tde;
 yourself.  They are all available, at no cost, from <ulink
 url="http://www.trolltech.com/products/download">http://www.trolltech.com/download</ulink>.
-In addition, there are optional libraries that might improve &kde; if
+In addition, there are optional libraries that might improve &tde; if
 installed on your system.  An example is OpenSSL which will enable
 &konqueror; to browse web pages securely and is needed in a version
 >=0.9.6.  These should be provided by your distributor; if not, ask
@@ -125,7 +125,7 @@ is available in each of the aforementioned package formats.</para>
 <listitem>
 <para>Required</para>
 <para>This package contains shared libraries that are needed by all
-&kde; applications.</para>
+&tde; applications.</para>
 </listitem>
 </varlistentry>
 <varlistentry>
@@ -133,7 +133,7 @@ is available in each of the aforementioned package formats.</para>
 <listitem>
 <para>Required</para>
 <para>This package contains the base applications that form the core
-of the K Desktop Environment like the window manager, the terminal
+of the Trinity Desktop Environment like the window manager, the terminal
 emulator, the control center, the file manager, and the panel.</para>
 </listitem>
 </varlistentry>
@@ -224,7 +224,7 @@ download manager &kget;, and several other network-related programs.</para>
 <listitem>
 <para>Optional</para>
 <para>
-Educational and entertaining applications for &kde;'s younger users.
+Educational and entertaining applications for &tde;'s younger users.
 </para>
 </listitem>
 </varlistentry>
@@ -248,7 +248,7 @@ KDE accessibility programs such as a screen magnifier and speech synthesizer fro
 <term>tdevelop</term>
 <listitem>
 <para>Optional</para>
-<para>A complete Integrated Development Environment for &kde; and Qt</para>
+<para>A complete Integrated Development Environment for &tde; and Qt</para>
 </listitem>
 </varlistentry>
 <varlistentry>
@@ -315,7 +315,7 @@ every package you want to install.</para></step>
 <varlistentry>
 <term>Installation of the source <filename>.tar.bz2</filename> files</term>
 <listitem>
-<para>Since there are always changes and updates to the way &kde; is compiled, please
+<para>Since there are always changes and updates to the way &tde; is compiled, please
 refer to <ulink url="http://developer.kde.org/build/index.html">Download and Install from Source</ulink> for the most up to date installation instructions for the source packages. 
 </para>
 <para>The general approach should work in most cases though.
@@ -351,16 +351,16 @@ already are, just type <command>make
 <para>Post-installation procedures</para>
 </question>
 <answer>
-<para>First of all, please make sure that you have added &kde;'s binary
+<para>First of all, please make sure that you have added &tde;'s binary
 installation folder (&eg; <filename
 class="directory">/usr/local/kde/bin</filename>) to your <envar>PATH</envar>
-and &kde;'s 
+and &tde;'s 
 library installation folder to your <envar>LD_LIBRARY_PATH</envar> (only
 necessary on systems that do not support rpath; on &Linux; &ELF;, it 
 should work without).  This environment variable may be called
 differently on some systems, &eg; it is called
 <envar>SHLIB_PATH</envar> on &IRIX;.  Then set the environment variable
-<envar>TDEDIR</envar> to the base of your &kde; tree, &eg; <filename
+<envar>TDEDIR</envar> to the base of your &tde; tree, &eg; <filename
 class="directory">/usr/local/kde</filename>.
 <caution>
 <para>Please bear in mind that it is unwise to set
@@ -372,9 +372,9 @@ found at <ulink
 url="http://www.cis.ohio-state.edu/~barr/ldpath.html">http://www.cis.ohio-state.edu/~barr/ldpath.html</ulink>.</para>
 </caution>
 </para>
-<para>Even though you can use most of the &kde; applications simply by
-calling them, you can only benefit fully from &kde;'s advanced
-features if you use the &kde; window manager and its helper
+<para>Even though you can use most of the &tde; applications simply by
+calling them, you can only benefit fully from &tde;'s advanced
+features if you use the &tde; window manager and its helper
 programs.</para>
 <para>In order to make it easy for you, we have provided a simple
 script called <filename>starttde</filename> which gets installed in <filename
@@ -391,8 +391,8 @@ folder, simply create a new one with just one line containing
 <para>Some systems (notably &RedHat; &Linux;) use <filename>.Xclients</filename>
 instead.</para>
 </note></para>
-<para>This should present you with a new shining &kde; desktop.  You
-can now start to explore the wonderful world of &kde;.  In case you
+<para>This should present you with a new shining &tde; desktop.  You
+can now start to explore the wonderful world of &tde;.  In case you
 want to read some documentation first, there is a highly recommended 
 <ulink
 url="http://www.kde.org/documentation/quickstart/index.html">Quick Start
@@ -411,20 +411,20 @@ one?</para>
 <para>In principle, this is not necessary.  <acronym>RPM</acronym> and Debian packages
 should take care of all dependencies.</para>
 <para>If you compile the source code yourself, you should take more care.
-Instructions for running two different versions of &kde; on the same system are
+Instructions for running two different versions of &tde; on the same system are
 given at <ulink
 url="http://developer.kde.org/build/kde2-and-trinity.html">http://developer.kde.org/build/kde2-and-trinity.html</ulink>.
-However, please note that running two different versions of &kde; from source
+However, please note that running two different versions of &tde; from source
 can lead to problems if you are not careful. </para>
 </answer>
 </qandaentry>
 
 <qandaentry>
 <question id="starttde">
-<para>How do I start &kde;?</para>
+<para>How do I start &tde;?</para>
 </question>
 <answer>
-<para>The most comfortable method to start &kde; is to use the
+<para>The most comfortable method to start &tde; is to use the
 <filename>starttde</filename> script.  Simply put the line
 <command>starttde</command> at the end of your <filename>.xsession</filename>
 file (or your <filename>.xinitrc</filename> or <filename>.Xclients</filename>
@@ -438,7 +438,7 @@ that contains just one line: <command>starttde</command>.</para>
 <!-- Still needed?
 <qandaentry>
 <question>
-<para>Whenever I start &kde;, it complains about "shadow passwords".
+<para>Whenever I start &tde;, it complains about "shadow passwords".
 Why?</para>
 </question>
 <answer>
@@ -455,7 +455,7 @@ $<envar>TDEDIR</envar>/bin/*.kss</command></para></step>
 <step performance="required"><para><command>chmod u+s
 $<envar>TDEDIR</envar>/bin/*.kss</command></para></step>
 </procedure>
-<para>Alternatively, if you compile &kde; from source, you can use
+<para>Alternatively, if you compile &tde; from source, you can use
 <command>./configure <option>with-shadow</option></command> to
 configure tdebase.  Then the suid bit is set automatically during
 <command>make install</command>.</para>
@@ -464,10 +464,10 @@ configure tdebase.  Then the suid bit is set automatically during
 -->
 <qandaentry>
 <question>
-<para>Is it possible to install &kde; in my home directory?</para>
+<para>Is it possible to install &tde; in my home directory?</para>
 </question>
 <answer>
-<para>Yes, you can install &kde; in any folder you want.  What you
+<para>Yes, you can install &tde; in any folder you want.  What you
 have to do depends on the kind of packages you want to install:</para>
 <procedure><title>Source packages</title>
 <step performance="required"><para>Configure and install the package using <command>configure
@@ -511,7 +511,7 @@ to <filename
 class="directory">/home/me</filename>.</para></step>
 </procedure>
 <para><note>
-<para>Although &kde; will run from a user folder, there are some
+<para>Although &tde; will run from a user folder, there are some
 problems with programs that require suid root, &eg; the programs in
 the tdeadmin package.  But since they are not meant to be run by users
 in the first place, this is nothing to worry about.</para>
@@ -533,24 +533,24 @@ server is started with <command>startx</command>.
 <command>starttde</command> is the 
 script that should be run from your <filename>.xinitrc</filename>, <filename>.xsession</filename>, or
 <filename>.Xclients</filename> to activate the window manager and the necessary server
-daemons for &kde;.  See also <xref linkend="starttde"/>.</para>
+daemons for &tde;.  See also <xref linkend="starttde"/>.</para>
 </answer>
 </qandaentry>
 
 <qandaentry>
 <question>
-<para>&kde; on &AIX;?</para>
+<para>&tde; on &AIX;?</para>
 </question>
 <answer>
 <para>
 <!--
-<para>If you have trouble building &kde; on
+<para>If you have trouble building &tde; on
 &AIX; check out Stefan Westerfeld's <ulink
-url="http://space.twc.de/~stefan/kde/aix.html">Running &kde; on
-Aix</ulink> page for lots of help on building &kde; on this
+url="http://space.twc.de/~stefan/kde/aix.html">Running &tde; on
+Aix</ulink> page for lots of help on building &tde; on this
 exceptional &UNIX; variant.</para>
 -->
-<acronym>IBM</acronym> now officially support &kde; on &AIX;. You can find
+<acronym>IBM</acronym> now officially support &tde; on &AIX;. You can find
 details at <ulink
 url="http://www.ibm.com/servers/aix/products/aixos/linux/index.html">http://www.ibm.com/servers/aix/products/aixos/linux/index.html</ulink>.
 There is also some older information at <ulink url="http://space.twc.de/~stefan/kde/aix.html">http://space.twc.de/~stefan/kde/aix.html</ulink>.</para>
@@ -559,11 +559,11 @@ There is also some older information at <ulink url="http://space.twc.de/~stefan/
 
 <qandaentry>
 <question>
-<para>&kde; on a laptop?</para>
+<para>&tde; on a laptop?</para>
 </question>
 <answer>
 <para>If you can get &X-Window; to run on your laptop, you should not have any problem
-getting &kde; to run on it.  In addition, you might find the following
+getting &tde; to run on it.  In addition, you might find the following
 links helpful:</para>
 <itemizedlist>
 <listitem>
@@ -578,7 +578,7 @@ links helpful:</para>
 
 <qandaentry>
 <question>
-<para>I do not like the default &kde; folder after installation.  How
+<para>I do not like the default &tde; folder after installation.  How
 do I move it without breaking anything?</para>
 </question>
 <answer>
@@ -592,7 +592,7 @@ you have to do:</para>
 <step performance="required"><para><command>ln -s /usr/local/kde
 /opt/kde</command></para></step>
 </procedure>
-<para>This will put all your &kde; files in <filename
+<para>This will put all your &tde; files in <filename
 class="directory">/usr/local/kde</filename> but everything is
 still accessible from <filename
 class="directory">/opt/kde</filename>.</para>
@@ -601,7 +601,7 @@ class="directory">/opt/kde</filename>.</para>
 
 <qandaentry>
 <question>
-<para>What files can I delete from my &kde; install folder?  Can all the
+<para>What files can I delete from my &tde; install folder?  Can all the
 <filename>*.h</filename>, <filename>*.c</filename> and <filename>*.o</filename>
 files be safely removed?</para>
 </question>
@@ -609,7 +609,7 @@ files be safely removed?</para>
 <para>There should not be any need to keep the <filename>.c</filename> and
 <filename>.o</filename> files, but you might want to keep the
 <filename>.h</filename> files, as they are used by includes if you ever want to
-compile your own &kde; programs.  But if you wish to add patches to the source
+compile your own &tde; programs.  But if you wish to add patches to the source
 programs as they become available (rather than downloading everything again),
 then they should stay.</para> 
 </answer>
@@ -617,17 +617,17 @@ then they should stay.</para>
 
 <qandaentry>
 <question>
-<para>Will I lose my current settings when I upgrade &kde;?</para>
+<para>Will I lose my current settings when I upgrade &tde;?</para>
 </question>
 <answer>
 
-<para>No. In most cases &kde; will be able to transport your settings
+<para>No. In most cases &tde; will be able to transport your settings
 intact.  You may need to reenter passwords in some applications (such
 as &kmail; or &knode;) but most other settings will be safe.</para>
 
 <para>There were mixed reports of results between some previous
-versions of &kde;.  To be safe, you may like to back up your entire
-&kde; configuration. </para>
+versions of &tde;.  To be safe, you may like to back up your entire
+&tde; configuration. </para>
 
 <para>Settings are kept in the <filename
 class="directory">$<envar>HOME</envar>/.kde</filename> or <filename
@@ -635,7 +635,7 @@ class="directory">$<envar>HOME</envar>/.kde2</filename> subfolder in your home
 folder.  Copy your
 old <filename class="directory">.kde</filename>/<filename
 class="directory">.kde2</filename> folder to a backup location,
-install &kde; 3.2, and then copy back any necessary mail and news
+install &tde; 3.2, and then copy back any necessary mail and news
 settings. That said, most people can make a direct upgrade, without
 removing the old <filename class="directory">.kde</filename> folder,
  without a hitch.</para>
@@ -647,14 +647,14 @@ $<envar>TDEHOME</envar> variable.</para>
 
 <qandaentry id="greyscreen">
 <question>
-<para>I upgraded &kde; and it seemed to go fine, but when I start it,
+<para>I upgraded &tde; and it seemed to go fine, but when I start it,
 I get a blank gray screen, and nothing happens.  There are errors in
 the console about DCOPserver.  What's going on?</para>
 </question>
 
 <answer>
 <para>
-&kde; uses several temporary files during its operation.
+&tde; uses several temporary files during its operation.
 These are usually to be found in the following locations:</para>
 <itemizedlist>
 <listitem><para><filename>~/.DCOPserver-*</filename> (there are usually two of these; one is a symlink to the other)</para></listitem>
@@ -669,14 +669,14 @@ These are usually to be found in the following locations:</para>
 <command>cron</command> or shutdown script is emptying out the
 <filename class="directory">/tmp</filename> folder, then strange
 things will happen.  These files, and the symlinks, will all be
-created automatically at the start of &kde; so you can safely remove
-them <emphasis>while &kde; is not running</emphasis>.</para>
+created automatically at the start of &tde; so you can safely remove
+them <emphasis>while &tde; is not running</emphasis>.</para>
 
-<para>If you are only getting a gray screen when you start &kde;, or if you get an error message telling you to <errorname>Check your installation</errorname>, then shut down X and delete all the files listed above, then try to restart X.</para>
+<para>If you are only getting a gray screen when you start &tde;, or if you get an error message telling you to <errorname>Check your installation</errorname>, then shut down X and delete all the files listed above, then try to restart X.</para>
 
-<para>Normally (&ie; when not upgrading between &kde; versions) it's
+<para>Normally (&ie; when not upgrading between &tde; versions) it's
 quite safe to leave these files intact, and you may shave a few
-seconds off your &kde; startup time by doing so.</para>
+seconds off your &tde; startup time by doing so.</para>
 </answer>
 </qandaentry>
 
@@ -695,7 +695,7 @@ You should be able to download it from any
 
 <qandaentry>
 <question>
-<para>How do I uninstall &kde; applications compiled from
+<para>How do I uninstall &tde; applications compiled from
 source?</para>
 </question>
 <answer>

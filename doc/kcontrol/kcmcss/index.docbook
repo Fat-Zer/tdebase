@@ -37,15 +37,15 @@ appear.  <acronym>CSS</acronym> stands for
 <emphasis>C</emphasis>ascading <emphasis>S</emphasis>tyle
 <emphasis>S</emphasis>heets.</para>
 
-<para>&kde; can use its own stylesheet, based on simple defaults and
-the color scheme you are using for your desktop.  &kde; can also use a
+<para>&tde; can use its own stylesheet, based on simple defaults and
+the color scheme you are using for your desktop.  &tde; can also use a
 stylesheet that you have written yourself.  Finally, you can specify a
 stylesheet in this module.  The options presented in this module are
 tuned for accessibility purposes, especially for people with reduced
 vision.</para>
 
-<para>Your choices here affect every &kde; application that renders HTML
-with &kde;'s own renderer, which is called khtml.  These include
+<para>Your choices here affect every &tde; application that renders HTML
+with &tde;'s own renderer, which is called khtml.  These include
 &kmail;, &khelpcenter; and of course &konqueror;.  Choices here do not
 affect other browsers such as &Netscape;.</para>
 
@@ -64,7 +64,7 @@ where you can design an accessibility stylesheet.</para>
 <varlistentry>
 <term><guilabel>Use default stylesheet</guilabel></term>
 <listitem>
-<para>&kde; will use the default stylesheet.  Some of the colors will
+<para>&tde; will use the default stylesheet.  Some of the colors will
 default to those defined in your chosen color scheme.  Most settings are
 easily overridden by the page you are viewing.</para>
 </listitem>
@@ -73,7 +73,7 @@ easily overridden by the page you are viewing.</para>
 <varlistentry>
 <term><guilabel>Use user-defined stylesheet</guilabel></term>
 <listitem>
-<para>&kde; will use a stylesheet that you have written yourself. You
+<para>&tde; will use a stylesheet that you have written yourself. You
 can use the browse button to locate the stylesheet on your system.
 <acronym>CSS</acronym> files traditionally have a <literal
 role="extension">.css</literal> extension, but this is not
@@ -100,7 +100,7 @@ tab.  Enabling this option will enable the options on the
 <para>Here you can set up a user stylesheet.  The options available are
 only a subset of the instructions you can add in a stylesheet, and they
 are geared towards people with reduced vision, to allow users to create
-a stylesheet that makes web pages and the &kde; help files more
+a stylesheet that makes web pages and the &tde; help files more
 readable.</para>
 
 <para>The options on this page are disabled unless you chose
@@ -203,7 +203,7 @@ the <guilabel>Background</guilabel> and the
 <listitem>
 <para>Many web sites use a different, often contrasting color for
 headings or other flourishes.  If this interferes with your ability to
-read the content, you can enable this checkbox to have &kde; use the
+read the content, you can enable this checkbox to have &tde; use the
 colors you have set above for all text.</para>
 </listitem>
 </varlistentry>

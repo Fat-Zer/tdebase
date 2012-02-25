@@ -1,7 +1,7 @@
 <?xml version="1.0" ?>
 <!DOCTYPE book PUBLIC "-//KDE//DTD DocBook XML V4.2-Based Variant V1.1//EN" 
 "dtd/kdex.dtd" [
-  <!ENTITY kappname "&kde; Quick Start Guide">
+  <!ENTITY kappname "&tde; Quick Start Guide">
   <!ENTITY package "tdebase">
   <!ENTITY % addindex "IGNORE">
   <!ENTITY % English "INCLUDE" > <!-- change language only here -->
@@ -10,12 +10,12 @@
 <book lang="&language;">
 <bookinfo>
 	
-<title>An Introduction to &kde;</title>
+<title>An Introduction to &tde;</title>
 
 <authorgroup>
 
 <author>
-<surname>The &kde; Team</surname>
+<surname>The &tde; Team</surname>
 </author>
 <!-- TRANS:ROLES_OF_TRANSLATORS -->
 </authorgroup>
@@ -25,14 +25,14 @@
 
 <copyright>
 <year>1999</year><year>2000</year><year>2001</year><year>2002</year>
-<holder>The &kde; Team</holder>
+<holder>The &tde; Team</holder>
 </copyright>
 
 <legalnotice>&FDLNotice;</legalnotice>
 
 <abstract>
-<para>An introduction to the K Desktop Environment</para>
-<para>Quick Start Guide to &kde;</para></abstract>
+<para>An introduction to the Trinity Desktop Environment</para>
+<para>Quick Start Guide to &tde;</para></abstract>
 
 <keywordset>
 <keyword>KDE</keyword>
@@ -45,8 +45,8 @@
 <title>Introduction</title>
 
 <para>
-This document is a brief introduction to the K Desktop Environment. It
-will familiarize you with some of the basic features of &kde;.
+This document is a brief introduction to the Trinity Desktop Environment. It
+will familiarize you with some of the basic features of &tde;.
 </para>
 
 <para>
@@ -67,7 +67,7 @@ concentrate on hopefully more interesting things.
 </chapter>
 
 <chapter id="an-overview-of-kde">
-<title>An Overview of &kde;</title>
+<title>An Overview of &tde;</title>
 
 <para>
 This section is for users who prefer to learn by exploring and want
@@ -80,21 +80,21 @@ guide as needed.
 
 <note>
 <para>
-&kde; provides a highly configurable desktop environment. This
+&tde; provides a highly configurable desktop environment. This
 overview assumes that you are using the default environment.
 </para>
 </note>
 
 <sect1 id="the-kde-desktop">
-<title>The &kde; Desktop</title>
+<title>The &tde; Desktop</title>
 
-<para>A typical &kde; desktop consists of several parts:</para>
+<para>A typical &tde; desktop consists of several parts:</para>
 
 <itemizedlist>
 <listitem>
 <para>A <interface>panel</interface> at the bottom of the screen, used
 to start applications and switch between desktops. Among other things, it
-contains the &kmenu;, a large &kicon;
+contains the &kmenu;, a large &ticon;
 which displays a menu of applications to start when clicked. 
 </para>
 </listitem>
@@ -110,7 +110,7 @@ application on the taskbar to switch to the application.
 <listitem>
 <para>
 The <interface>desktop</interface> itself, on which frequently used
-files and folders may be placed. &kde; provides multiple desktops,
+files and folders may be placed. &tde; provides multiple desktops,
 each of which has its own windows. Click on the numbered buttons on
 the panel to switch between desktops.
 </para>
@@ -127,7 +127,7 @@ the panel to switch between desktops.
 <itemizedlist>
 <listitem>
 <para>
-To start an application, click on the &kicon; button on
+To start an application, click on the &ticon; button on
 the panel (called the <link linkend="starter">&kmenu;</link>)
 and choose an item from the menu.
 </para>
@@ -136,7 +136,7 @@ and choose an item from the menu.
 <para>
 Click the icon that looks like a picture of a house on
 the panel to access the files in your home folder using
-&konqueror;, &kde;'s File Manager utility.
+&konqueror;, &tde;'s File Manager utility.
 </para>
 </listitem>
 <listitem>
@@ -153,7 +153,7 @@ execute a single command.
 <para>
 Choose the <menuchoice><guimenuitem>Control Center</guimenuitem>
 </menuchoice>item on the &kmenu;
-to configure &kde;.
+to configure &tde;.
 </para>
 </listitem> 
 
@@ -169,7 +169,7 @@ desktops using the keyboard.
 <listitem>
 <para>
 Use the &RMB; mouse button to access context menus for the panel,
-desktop, and most &kde; applications.
+desktop, and most &tde; applications.
 </para>
 </listitem> 
 </itemizedlist>
@@ -186,13 +186,13 @@ desktop, and most &kde; applications.
 <para>
 At the bottom of the screen you will find the desktop panel, which is called
 &kicker;.  You use the panel to launch applications. Have a look at the
-button on the left with a large &kicon;.
+button on the left with a large &ticon;.
 </para>
 
 <para> 
 This button is called the &kmenu;. It has
 a small arrow on the top to indicate that it will pop up a menu if you
-click on it. Just do it! The popup offers you easy access to all &kde;
+click on it. Just do it! The popup offers you easy access to all &tde;
 applications installed on your computer system.
 </para>
 
@@ -213,7 +213,7 @@ the panel.</para>
 
 	
 <para>
-You can add an entire menu this way, or one of the &kicon;
+You can add an entire menu this way, or one of the &ticon;
 button sub-menus.  For example, if you have &koffice; installed and
 want quick access to all the &koffice; applications, without having to
 navigate through the &kmenu;, then instead of choosing an
@@ -285,8 +285,8 @@ the <guibutton>Use Defaults</guibutton> button.
 </para>
 
 <para>
-By the way, if you are not sure what a certain button does in &kde;,
-just move the mouse pointer over it and wait for a short while: &kde;
+By the way, if you are not sure what a certain button does in &tde;,
+just move the mouse pointer over it and wait for a short while: &tde;
 has a built-in mini context help, called <quote>tool tips</quote>, which
 explains the functionality of such controls in a few words.  
 </para>
@@ -299,15 +299,15 @@ explains the functionality of such controls in a few words.
 <title>But I want my command line back!</title>
 
 <para>
-Just calm down, there is nothing to fear. &kde; does not want to take your
+Just calm down, there is nothing to fear. &tde; does not want to take your
 beloved (and sometimes very effective) command line away from you. You can move
 your files with the desktop, but you can also use the &UNIX; commands you are
-accustomed to. In fact,&kde; puts command line power at your fingertips,
+accustomed to. In fact,&tde; puts command line power at your fingertips,
 in perhaps some surprising places.
 </para>
 
 <para>
-&kde; provides a very sophisticated command line window called
+&tde; provides a very sophisticated command line window called
 &konsole;.  Choose <menuchoice><guimenu>K menu</guimenu> 
 <guisubmenu>System</guisubmenu>
 <guimenuitem>Konsole</guimenuitem></menuchoice> to start it. This may
@@ -378,7 +378,7 @@ directly into your panel, complete with command history.</para>
 
 <para>
 So, in conclusion, the command line is never far from view when you're
-using &kde;.
+using &tde;.
 </para>
 
 </sect1>
@@ -464,7 +464,7 @@ techniques.
 <title>Titlebar buttons</title>
 
 <para>
-&kde; windows have some pretty standard buttons on their titlebars which
+&tde; windows have some pretty standard buttons on their titlebars which
 give you fast access to some common operations. The default button
 layout looks like this:
 </para>
@@ -513,20 +513,20 @@ action="simul">&Alt;<keycap>F4</keycap></keycombo>.
 Now that we know how to deal with windows, we encourage you to open
 some other windows using the panel, since we will now discuss how to
 switch between different windows. Since this is such a common
-activity, &kde; offers several ways to do it; pick your favorite!
+activity, &tde; offers several ways to do it; pick your favorite!
 </para>
 
 <para>
 Many window systems require you to click the mouse in another window
-to begin using it. This is &kde;'s default behavior, termed
+to begin using it. This is &tde;'s default behavior, termed
 <quote>Click To Focus</quote> focus policy. But you can also configure
 your desktop in a way that moving the mouse pointer on to a window will
 activate it. This is called <quote>Focus Follows Mouse</quote>. If you
-select this policy using the <link linkend="configure">&kde; Control
+select this policy using the <link linkend="configure">&tde; Control
 Center</link>, the window under the mouse pointer is always the active
 one. It does not necessarily come to the front automatically, but you
 can still click on to the titlebar or the border of a window or, a
-&kde; special, you can use the &Alt; key and click the &MMB;
+&tde; special, you can use the &Alt; key and click the &MMB;
 anywhere on the window to raise it.
 </para>
 
@@ -567,7 +567,7 @@ Use the taskbar (see below).
 
 <para>
 The <interface>taskbar</interface> displays a list of small icons, one
-for each window on the desktop. In the default &kde; setup the taskbar
+for each window on the desktop. In the default &tde; setup the taskbar
 is located inside the panel, but it can also be located at the top or
 the bottom of the screen.  </para>
 
@@ -643,7 +643,7 @@ physical memory: Use virtual memory, in this case virtual desktops.
 </orderedlist>
 
 <para>
-The third option is the way to go! &kde; can handle several different desktops,
+The third option is the way to go! &tde; can handle several different desktops,
 each with its own windows. The default configuration provides four
 desktops.  You can switch between the virtual desktops easily with a
 click on one of the desktop buttons on the panel. Also <keycombo
@@ -683,7 +683,7 @@ option on the window operations menu.
 <para>
 A common metaphor of graphical desktops is the use of folders to
 represent folders on your hard disk. Folders contain files and
-other folders. A &kde; application called &konqueror;, the K File
+other folders. A &tde; application called &konqueror;, the K File
 Manager, uses this metaphor to help you manage your files.
 </para>
 
@@ -691,7 +691,7 @@ Manager, uses this metaphor to help you manage your files.
 <title>Using &konqueror;</title>
 
 <para>
-The first time you start &kde;, a window with lots of icons in it
+The first time you start &tde;, a window with lots of icons in it
 appears. This is a &konqueror; window displaying the files in your
 home folder (the area where your personal files are stored). The
 pathname of the folder is displayed under the window's tool bar. If
@@ -712,7 +712,7 @@ displayed under the toolbar to get to a specific folder quickly.
 <title>Opening Files</title>
 
 <para>
-&kde; comes with a set of applications to view and edit files of many
+&tde; comes with a set of applications to view and edit files of many
 common types, and when you click a file containing, say, a document
 or image, &konqueror; will start the appropriate application to
 display the file. If it does not know what application to start to open
@@ -742,14 +742,14 @@ move, or create a link to the file.
 
 <note>
 <para>
-Note that if you choose to create a link, &kde; creates a &UNIX;
+Note that if you choose to create a link, &tde; creates a &UNIX;
 symbolic link (not a hard link), so if you move or delete the original
 file, the link will be broken.
 </para>
 </note>
 
 <para>
-Most &kde; applications also support drag and drop operations: you can
+Most &tde; applications also support drag and drop operations: you can
 drag an icon on to a window of a running application, or on to an icon of
 an application that is not started, to have the application open the
 file. Try it!
@@ -778,7 +778,7 @@ Internet. Not any more!
 </para>
 
 <para>
-&kde; supports a technology called <quote>Network Transparent
+&tde; supports a technology called <quote>Network Transparent
 Access</quote> (<acronym>NTA</acronym>) which allows you to work with
 files on the other side of the world as easily as those on your local
 hard disk.</para>
@@ -790,7 +790,7 @@ Location</guimenuitem></menuchoice> from a &konqueror; menu, and enter
 the <acronym>URL</acronym> of an &FTP; server.  You can drag and drop
 files to and from the folders on the server just as if they were on
 your local disk. You'll even be able to open files on the &FTP; server
-without having to manually copy them to your local disk (&kde; does it for you
+without having to manually copy them to your local disk (&tde; does it for you
 when necessary).
 </para>
 
@@ -812,7 +812,7 @@ succeeds, you will have full access to your files on the server.
 <para>
 If you are used to the
 <trademark><application>WinZip</application></trademark> utility on
-&Microsoft; &Windows;, then you will be happy to hear that &kde; can
+&Microsoft; &Windows;, then you will be happy to hear that &tde; can
 look into tar archives, too. It treats such archives just like a
 normal folder, and you can browse into the archive, open files, &etc; In
 general, accessing files on the Internet and in archives should look
@@ -825,9 +825,9 @@ delays imposed by the network and extracting the archive.
 <title>Using Templates to access Applications and Devices</title>
 
 <para>
-In &kde; it's easy to put icons on the panel or the desktop to access
+In &tde; it's easy to put icons on the panel or the desktop to access
 your applications.  It's just as easy to add icons to access other
-items of interest.  &kde; has templates for shortcuts to:
+items of interest.  &tde; has templates for shortcuts to:
 </para>
 
 <itemizedlist>
@@ -854,7 +854,7 @@ folders)
 </listitem>
 <listitem>
 <para>
-Documents for some of &kde;'s &koffice; applications.
+Documents for some of &tde;'s &koffice; applications.
 </para>
 </listitem>
 </itemizedlist>
@@ -916,7 +916,7 @@ printed on your default printer.</para>
 <para>
 &UNIX; provides access to storage devices other than the primary
 <hardware>hard disk</hardware> through a process called
-<emphasis>mounting</emphasis>. &kde; uses <literal
+<emphasis>mounting</emphasis>. &tde; uses <literal
 role="extension">.desktop</literal> files to allow you to easily
 mount, unmount, and access files on secondary storage devices such as
 <hardware>floppy</hardware> drives and &cdrom; drives.
@@ -982,7 +982,7 @@ and you are finished!
 
 <para>
 Now, place a properly formatted floppy in the drive and click the
-<guiicon>Floppy</guiicon> icon to have &kde; mount the floppy drive and display
+<guiicon>Floppy</guiicon> icon to have &tde; mount the floppy drive and display
 the files on the disk. Before removing the disk from the drive, &RMB;
 click the <guiicon>Floppy</guiicon> icon and choose
 <guimenuitem>Unmount</guimenuitem> from the menu.
@@ -997,7 +997,7 @@ click the <guiicon>Floppy</guiicon> icon and choose
 
 <para>
 If you do not like something about the way the desktop looks or
-operates, you can probably change it. &kde; is very configurable and you
+operates, you can probably change it. &tde; is very configurable and you
 can change almost every aspect of the appearance and the behavior of
 your desktop. Unlike many other &UNIX; desktop environments, you do not
 have to edit cryptic configuration files either (but you can if you
@@ -1006,7 +1006,7 @@ configuring your desktop.
 </para>
 
 <sect1 id="using-kde-control">
-<title>Using the <application>&kde; Control Center</application></title>
+<title>Using the <application>&tde; Control Center</application></title>
 
 <para>
 Launch the &kcontrolcenter; from the <link linkend="starter">&kmenu;</link>.
@@ -1044,7 +1044,7 @@ longer manual for the module in question.
 <listitem>
 <para>
 Sets all the options in the current module back to the default at the
-time &kde; was installed.
+time &tde; was installed.
 </para>
 </listitem>
 </varlistentry>
@@ -1088,7 +1088,7 @@ first.
 <title>Logging out</title>
 
 <para>
-We sincerely hope that using &kde; gives you so much fun and
+We sincerely hope that using &tde; gives you so much fun and
 pleasure that you never want to log out. But if you do, simply choose
 <menuchoice><guimenu>K menu</guimenu>
 <guimenuitem>Logout</guimenuitem></menuchoice>.
@@ -1104,16 +1104,16 @@ small power button.  Or you can press <keycombo action="simul">&Ctrl;
 <title>Session Management</title>
 
 <para>
-When you log out, &kde; can remember which applications you had open, as
+When you log out, &tde; can remember which applications you had open, as
 well as where all the windows were located, so that it can open them
 for you the next time you log in. This feature is termed
-<emphasis>Session Management</emphasis>. &kde;-aware applications will
+<emphasis>Session Management</emphasis>. &tde;-aware applications will
 restore themselves to the state they were in when you logged out.  For
 example, &kate; remembers which files you were editing.  </para>
 
 <para>
-Non-&kde; applications do not memorize their state on logout, and
-&kde; will warn you to make sure that you have saved any important
+Non-&tde; applications do not memorize their state on logout, and
+&tde; will warn you to make sure that you have saved any important
 data in them when you start to log out.
 </para>
 
@@ -1135,7 +1135,7 @@ on if you choose <guimenuitem>Save</guimenuitem> from the
 </chapter>
 
 <chapter id="kde-an-exciting-journey">
-<title>&kde;, an exciting Journey</title>
+<title>&tde;, an exciting Journey</title>
 
 <para>
 We hope you enjoyed this brief tour of the K Desktop environment and
@@ -1144,20 +1144,20 @@ faster and more comfortably than ever.
 </para>
 
 <para>
-Please remember that the &kde; project is not a commercial venture,
+Please remember that the &tde; project is not a commercial venture,
 but rather a project run by volunteers from all over the world. We
-would like to invite you to join the &kde; project and become part of
+would like to invite you to join the &tde; project and become part of
 this unique network of people. If you are a programmer you might
-consider helping us write &kde; applications. If you are an artist or
+consider helping us write &tde; applications. If you are an artist or
 have experience with graphic design, consider creating icons sets,
-color schemes, sound schemes and logos for &kde;.  If you enjoy
+color schemes, sound schemes and logos for &tde;.  If you enjoy
 writing we would love for you to join our documentation project.
 </para>
 
 <para>
 As you can see there are many ways in which you can help. You are
 cordially invited to join this world-wide network of people dedicated
-to making &kde; the best desktop environment for any computer. Please
+to making &tde; the best desktop environment for any computer. Please
 visit <ulink url="http://www.kde.org">www.kde.org</ulink> for more
 information.
 </para>
@@ -1166,7 +1166,7 @@ information.
 <emphasis>Welcome aboard on this exciting journey, </emphasis>
 </para>
 <para>
-<literal>Your &kde; Team</literal>
+<literal>Your &tde; Team</literal>
 </para>
 </chapter>
 
@@ -1181,7 +1181,7 @@ getting out-of-date if it is (Phil)
 <title>&MIME; Types</title>
 
 <para>
-&kde; comes with a number of &MIME; types predefined, but you can add
+&tde; comes with a number of &MIME; types predefined, but you can add
 your own &MIME; types by choosing
 <menuchoice><guimenu>Settings</guimenu>
 <guisubmenu>Configure Konqueror...</guisubmenu>
@@ -1190,7 +1190,7 @@ Associations</guilabel> in a &konqueror; window.
 </para>
 
 <para>
-&kde;'s handling of &MIME; types is very powerful, and very
+&tde;'s handling of &MIME; types is very powerful, and very
 configurable.  On the one hand, you can set a default action to be
 performed when you click on a file in &konqueror;.  Just as usefully,
 you can add many more actions, which are then available with a &RMB;

@@ -12,17 +12,17 @@
 
 <title>&konqueror; Basics</title>
 
-<important><para>Like all &kde; applications, &konqueror; is highly
+<important><para>Like all &tde; applications, &konqueror; is highly
  configurable. This document describes how &konqueror; behaves with the normal,
  default settings.</para>
 <para> A three button mouse can be useful when you are running
-&konqueror; or any other &kde; application. If your mouse only has two buttons
+&konqueror; or any other &tde; application. If your mouse only has two buttons
 then you should be able to set your system up so that you can simulate a &MMB;
 by pressing both buttons at the same time.</para>
 <para>You can read more about mouse usage in <xref
 linkend="lmb-mmb"/></para>
 <para>If you are used to having to double-click to perform an action,
-then take care, because in common with the rest of &kde;, &konqueror; defaults
+then take care, because in common with the rest of &tde;, &konqueror; defaults
 to single-clicking.</para></important>
 
 <sect1 id="konq-start">
@@ -80,7 +80,7 @@ folder, such as a hard disk drive or the <guiicon>Trash</guiicon> icon.
 </mediaobject>
 
 <para>The <interface>Titlebar</interface> is the strip across the top of
-&konqueror;'s window, and operates in the same way as for other &kde;
+&konqueror;'s window, and operates in the same way as for other &tde;
 applications. <mousebutton>Right</mousebutton> click on the central portion to
 bring up the neat Titlebar menu.</para>
 
@@ -168,7 +168,7 @@ this entire document if you take advantage of <guilabel>Tooltips</guilabel> and
  the 
 <guimenuitem>What's This?</guimenuitem> feature.</para>
 
-<para>If <guilabel>Tooltips</guilabel> have been enabled in &kde; (K menu
+<para>If <guilabel>Tooltips</guilabel> have been enabled in &tde; (K menu
  <menuchoice><guimenu>Control Center</guimenu><guisubmenu>Appearance &amp;
  Themes</guisubmenu><guisubmenu>Style</guisubmenu></menuchoice>,
  <guilabel>Style</guilabel> dialog) then when you hover the mouse pointer
@@ -276,7 +276,7 @@ down.</para></note>
 <term>On the Titlebar</term>
 <listitem><para><mousebutton>Right</mousebutton> clicking on any free area of
 the Titlebar brings up the Titlebar Menu, allowing you to control the position
-of &konqueror;'s window as well as the decoration applied to all &kde; program
+of &konqueror;'s window as well as the decoration applied to all &tde; program
 windows. </para></listitem>
 </varlistentry>
 
@@ -341,11 +341,11 @@ window.</para></listitem>
 <sect1 id="man-info">
 <title>Viewing Help, Man and Info Pages</title>
 
-<para>You can view &kde; Help and &UNIX; Man and Info pages directly in 
+<para>You can view &tde; Help and &UNIX; Man and Info pages directly in 
 &konqueror;, without having to start up <application>KHelpCenter</application>.
 </para>
 
-<para>To view a &kde; Help page, enter
+<para>To view a &tde; Help page, enter
 <userinput>help:/<replaceable>application name</replaceable></userinput> (for
 example <userinput>help:/kmail</userinput> to view the &kmail; documentation.)
 into &konqueror;'s Location Toolbar window.
@@ -363,7 +363,7 @@ it's just a matter of clicking on the right links to find the page you
 want. Alternatively, use <userinput>info:/<replaceable>command
 name</replaceable></userinput> to go straight to the Info page you want.</para>
 
-<note><para>Unfortunately, &kde; Help pages are stored in such a way that they 
+<note><para>Unfortunately, &tde; Help pages are stored in such a way that they 
 cannot be viewed in other browsers. If you really need to do this your only 
 recourse is to go online and visit <ulink url="http://docs.kde.org">
 http://docs.kde.org</ulink>.</para></note>

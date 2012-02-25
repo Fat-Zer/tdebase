@@ -18,7 +18,7 @@
 <releaseinfo>3.03.00</releaseinfo>
 
 <abstract>
-<para>This is the documentation for the &kde; &kcontrol; module that configures mice and other pointing devices.
+<para>This is the documentation for the &tde; &kcontrol; module that configures mice and other pointing devices.
 </para>
 </abstract>
 
@@ -87,7 +87,7 @@ operating systems.</para>
 <varlistentry>
 <term><guilabel>Single-click to open files and folders</guilabel></term>
 <listitem>
-<para>This is the default setting for &kde;. Clicking once on an icon
+<para>This is the default setting for &tde;. Clicking once on an icon
 will open it.  To select you can drag around the icon(s) or <keycombo
 action="simul">&Ctrl;<mousebutton>Right</mousebutton></keycombo> click,
 or simply click and hold to drag it. You can also enable automatic selection of icons using the <guilabel>Automatically select icons</guilabel> checkbox, discussed below.</para>
@@ -121,7 +121,7 @@ action="simul">&Ctrl;<mousebutton>Right</mousebutton></keycombo> click. If you r
 <term><guilabel>Visual feedback on activation</guilabel></term>
 <listitem>
 <para>When this option is
-checked, &kde; gives you visual feedback whenever you click on something and activate it.</para></listitem>
+checked, &tde; gives you visual feedback whenever you click on something and activate it.</para></listitem>
 </varlistentry>
 
 </variablelist>
@@ -198,11 +198,11 @@ better for 3x.</para></tip>
 <varlistentry>
 <term><guilabel>Double click interval</guilabel></term>
 <listitem>
-<para>This is the maximum amount of time between clicks for &kde; to
+<para>This is the maximum amount of time between clicks for &tde; to
 register a double click.  If you click twice, and the time between those
-two clicks is less than this number, &kde; recognizes that as a double
+two clicks is less than this number, &tde; recognizes that as a double
 click.  If the time between these two clicks is greater than this
-number, &kde; recognizes those as two <emphasis>separate</emphasis>
+number, &tde; recognizes those as two <emphasis>separate</emphasis>
 single clicks.</para>
 </listitem>
 </varlistentry>
@@ -222,7 +222,7 @@ pixels) specified in <guilabel>Drag start distance</guilabel></para>
 </listitem>
 </itemizedlist>
 
-&kde; will drag the selected item.</para>
+&tde; will drag the selected item.</para>
 </listitem>
 </varlistentry>
 

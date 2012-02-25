@@ -42,7 +42,7 @@ you the current settings.</para></note>
 <para>When you first start, you are in display mode only.  To modify
 your settings, click on <guibutton>Administrator Mode</guibutton>.  If
 you are logged in as <systemitem class="username">root</systemitem>,
-you will go straight to the change dialog.  If not, &kde; will ask for
+you will go straight to the change dialog.  If not, &tde; will ask for
 a superuser password.</para>
 
 <sect2 id="date-change">

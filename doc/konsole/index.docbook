@@ -49,7 +49,7 @@
 
 <abstract><para>This document is the user handbook for the &konsole;
  application.</para>
-<para>&konsole; is an X terminal emulator for &kde;.</para></abstract>
+<para>&konsole; is an X terminal emulator for &tde;.</para></abstract>
 
 <keywordset>
 <keyword>KDE</keyword>
@@ -69,7 +69,7 @@
 <para>&UNIX; operating systems were
 originally designed as text-only systems, controlled by keyboard
 commands -- what is known as a command-line interface
-(<acronym>CLI</acronym>). The &X-Window; and &kde; and other projects
+(<acronym>CLI</acronym>). The &X-Window; and &tde; and other projects
 have since added the graphical interface you are now using. However,
 the underlying <acronym>CLI</acronym> system is still there, and is
 frequently the easiest, fastest and most powerful way to perform many
@@ -88,7 +88,7 @@ power and ease of use than does <acronym>DOS</acronym>!)</para>
 beyond the scope of this document, as it would require a lengthy
 book. Fortunately, many such books are available in every language in
 any good bookstore or library. There are also tutorials available on
-the Internet. Enjoy &kde;, but don't be shy about learning to use the
+the Internet. Enjoy &tde;, but don't be shy about learning to use the
 command-line! You will find that even learning just the basics will
 make your computer use much more efficient and enjoyable.</para>
 </sect1>
@@ -244,7 +244,7 @@ history.</para></note>
 <title>Sessions</title>
 <para>If you often have to log into remote machines, or always run a similar set of
 terminal applications, you can use &konsole;'s <quote>Session</quote> feature
-along with &kde;'s session management to automate a lot of this for you.
+along with &tde;'s session management to automate a lot of this for you.
 Let's take the following example:
 You often have open an <application>ssh</application> session to the machine
 <replaceable>administration</replaceable> ready for generic administration
@@ -302,10 +302,10 @@ session where the command is <userinput><command>tail</command> <option>-f</opti
 running application will close the shell session as well.</para>
 
 <para>One really nice use of this feature is if you find you always have the
-same set of open sessions, &kde; can open them all for you automatically
-when you start a new &kde; session.  Simply have them open as you like
-when you exit &kde;, and they will be saved with your &kde; session, and
-restored just like any other application when you restart &kde;.</para>
+same set of open sessions, &tde; can open them all for you automatically
+when you start a new &tde; session.  Simply have them open as you like
+when you exit &tde;, and they will be saved with your &tde; session, and
+restored just like any other application when you restart &tde;.</para>
 
 <note><para>You can assign 
 <link linkend="settings-menu">shortcuts</link> 
@@ -340,7 +340,7 @@ text is displayed reversed for visual feedback. Select <guimenuitem>Copy</guimen
 from the <guimenu>Edit</guimenu> menu to copy the marked text to the clipboard for further use
 within &konsole; or another application. The selected text can also be
 dragged and dropped into compatible applications. Click on the selected
-text and drag it to the desired location. Depending on your &kde; settings,
+text and drag it to the desired location. Depending on your &tde; settings,
 you may need to hold the &Ctrl; key while dragging.</para>
 
 <para>Normally, new-line characters are inserted at the end of each
@@ -695,7 +695,7 @@ signal</option></userinput>.</para></listitem>
 in History...</guimenuitem></menuchoice></term>
 <listitem><para><action>Find a word or string of text</action> in the current
 history. Options allow case sensitive or backwards searches, and the use of regular
-expressions in searches. Press the <guibutton>Edit</guibutton> button to use the &kde;
+expressions in searches. Press the <guibutton>Edit</guibutton> button to use the &tde;
 graphical editor to create a regular expression.</para></listitem>
 </varlistentry>
 
@@ -1062,7 +1062,7 @@ author</para></listitem>
 <varlistentry>
 <term><menuchoice><guimenu>Help</guimenu><guimenuitem>About
 KDE</guimenuitem></menuchoice></term>
-<listitem><para><action>Information about the &kde;
+<listitem><para><action>Information about the &tde;
 project</action></para></listitem>
 </varlistentry>
 </variablelist>
@@ -1327,7 +1327,7 @@ echo $*</programlisting>
 </para>
 </informalexample>
 
-<para>&konsole; also accepts generic &Qt; and &kde; options:</para>
+<para>&konsole; also accepts generic &Qt; and &tde; options:</para>
 
 <variablelist>
 <varlistentry>
@@ -1372,7 +1372,7 @@ echo $*</programlisting>
 <variablelist>
 <varlistentry>
 <term><option>--help-kde</option></term>
-<listitem><para><action>List &kde;-specific options</action></para></listitem>
+<listitem><para><action>List &tde;-specific options</action></para></listitem>
 </varlistentry>
 <varlistentry>
 <term><option>--help-all</option></term>
@@ -1409,7 +1409,7 @@ echo $*</programlisting>
 <chapter id="credits">
 <title>Credits and Copyright</title>
 
-<para>As of &kde; 3.4, &konsole; is maintained by &Kurt.Hindenburg; &Kurt.Hindenburg.mail;</para>
+<para>As of &tde; 3.4, &konsole; is maintained by &Kurt.Hindenburg; &Kurt.Hindenburg.mail;</para>
 
 <para>Previously, &konsole; was maintained by &Waldo.Bastian; &Waldo.Bastian.mail;</para>
 
@@ -1419,7 +1419,7 @@ echo $*</programlisting>
 <para>This document was written by &Jonathan.Singer;
 &Jonathan.Singer.mail;</para>
 
-<para>This document was updated for &kde; 3.4 by
+<para>This document was updated for &tde; 3.4 by
 &Kurt.Hindenburg; &Kurt.Hindenburg.mail;</para>
 
 <para>Originally converted to DocBook <acronym>SGML</acronym> by
@@ -1442,9 +1442,9 @@ platforms (Tru64, &Solaris;, OpenBSD) and requests volunteers from other
 
 <para>For more infomation please visit these websites:</para>
 <itemizedlist>
-<listitem><para><ulink url="http://freebsd.kde.org/">&kde; on 
+<listitem><para><ulink url="http://freebsd.kde.org/">&tde; on 
 FreeBSD</ulink></para></listitem>
-<listitem><para><ulink url="http://solaris.kde.org/">&kde; on &Solaris;</ulink></para></listitem>
+<listitem><para><ulink url="http://solaris.kde.org/">&tde; on &Solaris;</ulink></para></listitem>
 </itemizedlist>
 
 </appendix>

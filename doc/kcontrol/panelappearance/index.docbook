@@ -44,7 +44,7 @@ option.</para>
 <sect2 id="button-backgrounds">
 <title>Button Backgrounds</title>
 
-<para>The &kde; panel supports so-called <guilabel>Button
+<para>The &tde; panel supports so-called <guilabel>Button
 Backgrounds</guilabel>. This means that the buttons shown on the panel
 will be drawn using configurable images. To enable button backgrounds,
 simply choose the button type from the list, and change the drop down

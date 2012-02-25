@@ -117,24 +117,24 @@ void View::showAboutPage()
           .arg( langLookup( "khelpcenter/khelpcenter.png" ) )
           .arg( i18n("Help Center") )
           .arg( langLookup( "khelpcenter/lines.png" ) )
-          .arg( i18n( "Welcome to the K Desktop Environment" ) )
-          .arg( i18n( "The KDE team welcomes you to user-friendly UNIX computing" ) )
-          .arg( i18n( "KDE is a powerful graphical desktop environment for UNIX workstations. A\n"
-                      "KDE desktop combines ease of use, contemporary functionality and outstanding\n"
-                      "graphical design with the technological superiority of the UNIX operating\n"
-                      "system." ) )
-          .arg( i18n( "What is the K Desktop Environment?" ) )
-          .arg( i18n( "Contacting the KDE Project" ) )
-          .arg( i18n( "Supporting the KDE Project" ) )
+          .arg( i18n( "Welcome to the Trinity Desktop Environment" ) )
+          .arg( i18n( "The TDE team welcomes you to user-friendly UNIX computing" ) )
+          .arg( i18n( "TDE is a graphical desktop environment for UNIX workstations. The\n"
+                      "Trinity Desktop Environment combines ease of use, contemporary functionality, and\n"
+                      "professional graphical design along with the technical advantages of\n"
+                      "the UNIX operating system." ) )
+          .arg( i18n( "What is the Trinity Desktop Environment?" ) )
+          .arg( i18n( "Contacting the TDE Project Members" ) )
+          .arg( i18n( "Supporting the TDE Project" ) )
           .arg( i18n( "Useful links" ) )
-          .arg( i18n( "Getting the most out of KDE" ) )
+          .arg( i18n( "Getting the most out of TDE" ) )
           .arg( i18n( "General Documentation" ) )
           .arg( i18n( "A Quick Start Guide to the Desktop" ) )
-          .arg( i18n( "KDE Users' guide" ) )
-          .arg( i18n( "Frequently asked questions" ) )
+          .arg( i18n( "TDE Users' guide" ) )
+          .arg( i18n( "Frequently Asked Questions" ) )
           .arg( i18n( "Basic Applications" ) )
           .arg( i18n( "The Kicker Desktop Panel" ) )
-          .arg( i18n( "The KDE Control Center" ) )
+          .arg( i18n( "The TDE Control Center" ) )
           .arg( i18n( "The Konqueror File manager and Web Browser" ) )
           .arg( langLookup( "khelpcenter/kdelogo2.png" ) );
     begin( KURL( "about:khelpcenter" ) );

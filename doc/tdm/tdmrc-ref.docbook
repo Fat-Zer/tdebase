@@ -999,7 +999,7 @@ at the created file.
 If enabled, &tdm; will automatically restart a session after an &X-Server;
 crash (or if it is killed by Alt-Ctrl-BackSpace). Note that enabling this
 feature opens a security hole: a secured display lock can be circumvented
-(unless &kde;'s built-in screen locker is used).
+(unless &tde;'s built-in screen locker is used).
 </para>
 <para>The default is <quote>false</quote>.</para>
 </listitem>
@@ -1860,7 +1860,7 @@ or as a full pathname.
 </para><para>
 Conversation plugins are modules for the greeter which obtain authentication
 data from the user. Currently only the <literal>classic</literal> plugin is
-shipped with &kde;; it presents the well-known username and password form.
+shipped with &tde;; it presents the well-known username and password form.
 </para>
 <para>The default is <quote>classic</quote>.</para>
 </listitem>
@@ -1989,7 +1989,7 @@ mode and <command>grep</command> the log for <quote>class</quote>.</para>
 <para>The displays specified in <option>ReserveServers</option> will not be
 started when &tdm; starts up, but when it is explicitly requested via
 the command socket (or <acronym>FiFo</acronym>).
-If reserve displays are specified, the &kde; menu will have a
+If reserve displays are specified, the &tde; menu will have a
 <guilabel>Start New Session</guilabel> item near the bottom; use that to
 activate a reserve display with a new login session. The monitor will switch
 to the new display, and you will have a minute to login. If there are no more

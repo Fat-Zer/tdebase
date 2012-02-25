@@ -31,7 +31,7 @@
 
 <abstract>
 <para>
-&kfind; is &kde;'s file find utility.
+&kfind; is &tde;'s file find utility.
 </para>
 </abstract>
 
@@ -48,7 +48,7 @@
 <title>Introduction</title>
 
 <para>
-&kfind; is the &kde; file find utility.
+&kfind; is the &tde; file find utility.
 </para>
 
 <sect1 id="starting">
@@ -197,7 +197,7 @@ conditions graphically, and then generates the expression for
 you.</para>
 
 <para>&kregexpeditor; is a very useful tool, and can be used from within
-many &kde; applications other than &kfind;.  You can find more
+many &tde; applications other than &kfind;.  You can find more
 information from within its own help file.</para>
 </listitem>
 </varlistentry>
@@ -332,7 +332,7 @@ Documentation copyright 2001 &Dirk.Doerflinger;
 <title>Requirements</title>
 
 <para>
-In order to successfully use &kfind;, you need &kde; 3.x.
+In order to successfully use &kfind;, you need &tde; 3.x.
 </para>
 
 </sect1>

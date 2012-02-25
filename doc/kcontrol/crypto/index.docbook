@@ -32,7 +32,7 @@
 
 <sect2 id="crypto-intro">
 <title>Introduction</title>
-<para>Many applications within &kde; are capable of exchanging information using
+<para>Many applications within &tde; are capable of exchanging information using
 encrypted files and/or network transmissions.</para>
 </sect2>
 
@@ -49,7 +49,7 @@ groups:</para>
 
 <para>Two options along the bottom of the module, <guilabel>Warn on
 entering SSL Mode</guilabel> and <guilabel>Warn on leaving SSL
-mode</guilabel>, allow you to determine if &kde; should inform you when
+mode</guilabel>, allow you to determine if &tde; should inform you when
 you enter or leave SSL encryption.</para> 
 
 <para>The remainder of the options are about determining which
@@ -169,7 +169,7 @@ data via a web browser.</para>
 <title>The <guilabel>OpenSSL</guilabel> Tab</title>
 
 <para>Here you can test if your <application>OpenSSL</application>
-libraries have been detected correctly by &kde;, with the
+libraries have been detected correctly by &tde;, with the
 <guibutton>Test</guibutton> button.</para>
 
 <para>If the test is unsuccessful, you can specify a path to the
@@ -181,7 +181,7 @@ Libraries</guilabel>.</para>
 <sect2 id="your-certificates">
 <title>The <guilabel>Your Certificates</guilabel> Tab</title>
 
-<para>The list shows which certificates of yours &kde; knows about.
+<para>The list shows which certificates of yours &tde; knows about.
 You can easily manage them from here.</para>
 
 </sect2>
@@ -195,7 +195,7 @@ You can easily manage them from here.</para>
 <sect2 id="peer-ssl-certificates">
 <title>The <guilabel>Peer SSL Certificates</guilabel> Tab</title>
 
-<para>The list box shows which site and personal certificates &kde;
+<para>The list box shows which site and personal certificates &tde;
 knows about.  You can easily manage them from here.</para>
 
 </sect2>

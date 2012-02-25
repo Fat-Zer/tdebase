@@ -962,7 +962,7 @@ pointer, clicking on a window item such as the
 <guimenu>Help</guimenu>
 <guimenuitem>About KDE...</guimenuitem>
 </menuchoice></term>
-<listitem><para>Show some information about the version of &kde; that
+<listitem><para>Show some information about the version of &tde; that
 you are running.</para></listitem>
 </varlistentry>
 

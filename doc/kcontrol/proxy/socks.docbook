@@ -14,7 +14,7 @@ found in corporate settings, as opposed to home users.  For more
 information about SOCKS, see the <ulink
 url="http://www.socks.nec.com">NEC</ulink> website</para>
 
-<para>With this module you can enable most of the network aware &kde;
+<para>With this module you can enable most of the network aware &tde;
 applications to transparently use SOCKS.</para>
 
 <para>Setting up of a SOCKS client is outside the scope of this
@@ -28,7 +28,7 @@ the <guilabel>Enable SOCKS support</guilabel> checkbox.</para>
 to you.</para>
 
 <para>First, you should select which of the various SOCKS clients you
-have installed on your computer.  &kde; will attempt to find this out by
+have installed on your computer.  &tde; will attempt to find this out by
 itself, if you choose <guilabel>Auto detect</guilabel>.  If you know the
 client you have, you could choose either <guilabel>NEC
 Socks</guilabel> or <guilabel>Dante</guilabel>.  If you have a
@@ -36,14 +36,14 @@ custom built SOCKS library to use, you can select <guilabel>Use custom
 library</guilabel> and then enter the path to it in the
 <guilabel>Path</guilabel> field.</para>
 
-<para>If you want &kde; to auto detect the SOCKS library in use, but you
+<para>If you want &tde; to auto detect the SOCKS library in use, but you
 suspect it isn't looking in the right places or you have installed it in
 a non-standard location, then you can add further paths to be searched in
 the bottom of this panel.  Use the <guibutton>Add</guibutton> and
 <guibutton>Remove</guibutton> to add or remove paths.</para>
 
 <para>At any time while filling in this module, you can press the
-<guibutton>Test</guibutton> button, and &kde; will report immediately
+<guibutton>Test</guibutton> button, and &tde; will report immediately
 with a message box to tell you if it could find and initialize SOCKS or
 not.</para>
 

@@ -36,7 +36,7 @@ stylesheet defined in "Customize" tab</guilabel>, then go to the
 <guilabel>Customize</guilabel> tab, and choose the settings you prefer.</para>
 </listitem>
 <listitem><para>Close all &konqueror; windows (you may need to restart
-&kde; to be sure) and when you re-open them, your settings should be applied.</para>
+&tde; to be sure) and when you re-open them, your settings should be applied.</para>
 </listitem>
 </orderedlist>
 

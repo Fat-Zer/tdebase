@@ -8,7 +8,7 @@
 <title>KDE User's Manual</title>
 <author>&Lauri.Watts; &Lauri.Watts.mail;</author>
 <date>June 07, 2005</date>
-<productname>K Desktop Environment</productname>
+<productname>Trinity Desktop Environment</productname>
 </refentryinfo>
 
 <refmeta>
@@ -18,7 +18,7 @@
 
 <refnamediv>
 <refname><command>kate</command></refname>
-<refpurpose>Advanced text editor for &kde;</refpurpose>
+<refpurpose>Advanced text editor for &tde;</refpurpose>
 </refnamediv>
 
 <refsynopsisdiv>
@@ -43,7 +43,7 @@ line</replaceable></group>
 
 <refsect1>
 <title>Description</title>
-<para>&kate; is the &kde; Advanced Text Editor. </para> 
+<para>&kate; is the &tde; Advanced Text Editor. </para> 
 <para>&kate; also provides the editor part for various applications, under
 the name &kwrite;.</para>
 <para>Some of &kate;'s many features include configurable syntax
@@ -131,7 +131,7 @@ line 25, in an existing &kate; window, you could use:</para>
 25</option> <option>-u</option> <filename>source.cpp</filename></userinput> </screen>
 
 <para>If you have an active internet connection, you can take advantage of
-&kde;'s network transparency to open a file from an ftp site. If you do not
+&tde;'s network transparency to open a file from an ftp site. If you do not
 have write permission on the remote server, the file will be opened read
 only and you will be prompted for a local filename to save to if you make
 changes.  If you do have write permission, changes will be saved

@@ -1,37 +1,14 @@
 <chapter id="tinkering-under-the-hood">
-<!-- Uncomment the <*info> below and add your name to be -->
-<!-- credited for writing this section. -->
 
-<!--
-<chapterinfo>
-<authorgroup>
-<author>
-<firstname>Your First Name here</firstname>
-<surname>Your Surname here </surname>
-</author>
-</authorgroup>
-</chapterinfo>
--->
-
-<title>Tinkering Under the Hood of &kde;</title>
+<title>Tinkering Under the Hood of &tde;</title>
 
 <sect1 id="hand-editing-config-files">
-
-<sect1info>
-<author>
-<personname>
-<firstname>Nicolas</firstname>
-<surname>Goutte</surname>
-</personname>
-<email>goutte@kde.org</email>
-</author>
-</sect1info>
 
 <title>Hand-Editing Configuration Files</title>
 
 <sect2 id="hand-editing-intro">
 <title>Introduction</title>
-<para>In &kde;, the configuration files are easy to edit with a simple
+<para>In &tde;, the configuration files are easy to edit with a simple
 editor like &kate; as the configuration files are text files.</para>
 
 <para>An example of a text file:</para>
@@ -44,14 +21,14 @@ LastFile=/var/tmp/test.txt</programlisting>
 class="directory">.kde/share/config</filename> (replace 
 <filename>.kde</filename> with your $<envar>TDEHOME</envar> setting) and
 the global ones are in the <filename
-class="directory">share/config</filename> sub-directory of &kde;'s
+class="directory">share/config</filename> sub-directory of &tde;'s
 installation path. (You can find this path by running the command
 <command>kde-config --prefix</command>.) Their filenames typically
 end in rc (without an initial period), for example <filename>kopeterc</filename>.</para>
 
 <warning><para>
 Editing configuration files by hand can risk the stability of your
-&kde; installation. Applications usually do  not check what they read from the
+&tde; installation. Applications usually do  not check what they read from the
 configuration files. This means that they can be disturbed by what they
 get as configuration and might even
 crash.</para></warning>
@@ -65,7 +42,7 @@ crash.</para></warning>
 it. The backup is better stored outside any
 <filename class="directory">.kde</filename> subdirectory 
 (or the corresponding $<envar>TDEHOME</envar> directory). Backups are anyway
-a good idea in case of a major failure of &kde; that would
+a good idea in case of a major failure of &tde; that would
 destroy important configuration files (for example your &kmail;  settings,
 which are in in the file <filename>kmailrc</filename>).
 (Such a major failure should not happen but it still can happen.)</para>
@@ -79,14 +56,14 @@ when you want to enforce the KIOSK mode. Perhaps a developer has asked you
 to add an entry to help him to solve a problem with the application. Perhaps you want to recover from
 a problem without having to remove all the <filename
 class="directory">.kde</filename> directory. Perhaps you want to learn more
-about the depths of &kde;.</para>
+about the depths of &tde;.</para>
 
 <para>Anyway, whatever your reason, you want to modify by hand a
 configuration file.</para>
 
 <para>When planning to edit such a file, make sure that the application
 using it is not running. If it is one of the basic configuration files,
-consider editing the file while &kde; is not running at all.</para>
+consider editing the file while &tde; is not running at all.</para>
 
 <para>Ready? So make a backup of the file (Did I tell you this already?),
 start you favorite editor (let us assume it is &kate;), load the file
@@ -112,7 +89,7 @@ configuration file.</para>
 
 
 <listitem><para><xref linkend="kde-for-administrators"/> has more
-information about &kde;'s directory structure, to help you find the
+information about &tde;'s directory structure, to help you find the
 file you need to edit.</para>
 </listitem>
 
@@ -125,15 +102,15 @@ file you need to edit.</para>
 <sect1 id="scripting-the-desktop">
 <title>Scripting the Desktop</title>
 
-<para>&kde; provides a powerful interprocess communication system in
+<para>&tde; provides a powerful interprocess communication system in
 &DCOP;, the Desktop COmmunication Protocol. Using &DCOP;, you can
-control a wide range of functions in &kde; from the command line or
+control a wide range of functions in &tde; from the command line or
 from a script written in your favorite scripting language. You can
-also get information out of &kde; applications: for example, several
-&kde; media players provide methods to query the player for
+also get information out of &tde; applications: for example, several
+&tde; media players provide methods to query the player for
 information about the currently-playing track.</para>
 
-<para>Broadly speaking, each &kde; application provides one or more
+<para>Broadly speaking, each &tde; application provides one or more
 &DCOP; <firstterm>interfaces</firstterm>, which in turn provide
 methods (or, if you prefer, functions) that another application can
 call. So, the first step in using &DCOP; is to find the appropriate
@@ -212,7 +189,7 @@ hexadecimal RGB value, as used in &HTML;. Note that it is enclosed in
 single quotes to protect the <token>#</token> from the shell.</para>
 
 <para>To find the hexadecimal RGB value of a color, open any
-color chooser dialog in a &kde; application (for example, in
+color chooser dialog in a &tde; application (for example, in
 &kcontrolcenter;, <menuchoice><guimenu>Appearance &amp; Themes</guimenu><guimenuitem>Colors</guimenuitem>
 </menuchoice>), select the color you want, and use the value given in
 the <guilabel>HTML</guilabel> text box.</para>
@@ -296,7 +273,7 @@ wallpaper.</para>
 
 
 <sect1 id="adding-extra-keys">
-<title>Adding Extra Keybindings to &kde;</title>
+<title>Adding Extra Keybindings to &tde;</title>
 
 <para>Many modern keyboards contain extra keys that are not by default
 assigned to any action.</para>
@@ -409,19 +386,8 @@ window.</para></listitem>
 </sect1>
 
 <sect1 id="kdebugdialog">
-<sect1info>
-<authorgroup>
-<author>
-<personname>
-<firstname>Adriaan</firstname>
-<surname>de Groot</surname>
-</personname>
-<email>groot@kde.org</email>
-</author>
-</authorgroup>
-</sect1info>
 
-<title>&kdebugdialog;  - Controlling &kde;'s Debugging Output</title>
+<title>&kdebugdialog;  - Controlling &tde;'s Debugging Output</title>
 
 <sect2 id="kdebugdialog-basic-usage">
 <title>Basic Usage</title>
@@ -432,7 +398,7 @@ the command <userinput><command>kdebugdialog</command></userinput>.
 &kdebugdialog; pops up a window with a long list of debugging areas. Each
 area has a checkbox that you can check or uncheck <!-- perhaps
 select/deselect --> in order to enable or disable debugging output for
-that part of &kde;.</para>
+that part of &tde;.</para>
 
 <para>The list of debugging areas is sorted numerically, not alphabetically,
 so kio (127) comes before artskde (400). The numbers go up to 200000 or so,
@@ -446,7 +412,7 @@ all, but entering <userinput>kont</userinput> <!-- that's "butt" in dutch,
 haha --> will show you just the &kontact; debugging areas. As an even
 quicker way of enabling or disabling debugging output, there are also
 <guibutton>select all</guibutton> and <guibutton>deselect all</guibutton>
-buttons which will cause &kde; to produce a mountain of debugging output, or
+buttons which will cause &tde; to produce a mountain of debugging output, or
 very little.</para>
 </sect2>
 

@@ -394,7 +394,7 @@ type the &URL;</para>
 </screen>
 
 <para>into the Location Toolbar and press &Enter;. As long as 
-you are connected to the Internet, and as long as the &kde;'s &FTP; site is 
+you are connected to the Internet, and as long as the &tde;'s &FTP; site is 
 not too busy, you should end up seeing the <filename
 class="directory">/pub/kde</filename> folder at &kde-ftp;</para>
 

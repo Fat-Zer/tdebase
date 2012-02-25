@@ -24,7 +24,7 @@ once you get used to them, you'll wonder how you ever lived without them.</para>
 <userinput>gg:kde</userinput> in the <guilabel>Location</guilabel>
 bar.</para>
 
-<para>You will go to Google, searching for &kde;.</para> 
+<para>You will go to Google, searching for &tde;.</para> 
 
 <para>They are many such shortcuts like <userinput>ggl:</userinput> (Google
 I'm feeling lucky), <userinput>bug:</userinput> (bugs.kde.org) and so
@@ -37,7 +37,7 @@ disable web shortcuts if you don't like them. If you set the <guilabel>Default
 search engine</guilabel>, you don't have to type the shortcut anymore. For
 instance if you set it to Google, you can just type
 <userinput>kde</userinput> in the <guilabel>Location</guilabel> bar,
-and it will search Google for <quote>&kde;</quote>.</para>
+and it will search Google for <quote>&tde;</quote>.</para>
 
 <para>In <guilabel>Keyword delimiter</guilabel> you can choose if you want
 to separate a shortcut with a colon (<userinput>gg: kde</userinput>) or a
@@ -48,7 +48,7 @@ space (<userinput>gg kde</userinput>).</para>
 or with <keycombo action="simul">&Alt;<keycap>F2</keycap></keycombo>) and
 type your shortcut, &eg; <userinput>gg: kde</userinput>, and press
 &Enter;. It will automatically open &konqueror; with a Google
-search for &kde;.</para>
+search for &tde;.</para>
 
 <!-- Add links to "further reading" here -->
 <!-- <itemizedlist>

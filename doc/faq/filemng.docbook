@@ -5,7 +5,7 @@
 <chapter id="filemanager">
 <title>The File Manager</title>
 
-<para>&kde;'s file manager is &konqueror;.  The
+<para>&tde;'s file manager is &konqueror;.  The
 &konqueror; home page is located at <ulink
 url="http://www.konqueror.org">http://www.konqueror.org</ulink> where a
 &konqueror; specific <acronym>FAQ</acronym> can be found.</para>
@@ -76,7 +76,7 @@ folder you would like &konqueror; to start in.</para>
 <para>Where did the delete entry from my right-click context menu go?</para>
 </question>
 <answer>
-<para>In &kde; 3.4 the delete context menu entries that bypass the
+<para>In &tde; 3.4 the delete context menu entries that bypass the
 trashcan are no longer displayed by default. To enable them, go to 
 <menuchoice><guimenu>Settings</guimenu><guimenuitem>Configure
 &konqueror;</guimenuitem></menuchoice > and select
@@ -137,14 +137,14 @@ of <guilabel>Services Preference Order.</guilabel></para></listitem>
 
 <qandaentry> <question> <para>What are <option>%i</option> and
 <option>%m</option> in the Execute line?</para> </question> <answer>
-<para>They are used by all &kde; applications (since they are implemented in
-<classname>KApplication</classname> and all good &kde; programs create a
+<para>They are used by all &tde; applications (since they are implemented in
+<classname>KApplication</classname> and all good &tde; programs create a
 <classname>KApplication</classname> object before they even look at the
-command line arguments).</para> <para>A standard line for a &kde;
+command line arguments).</para> <para>A standard line for a &tde;
 application looks like this: <userinput><command>foo</command>
 <option>... %i %m -caption \"%c\"</option></userinput>.  Pretty confusing,
 -but it has been designed in that way so that it can integrate legacy,
-non-&kde; applications as smoothly as possible.  &konqueror;, when executing
+non-&tde; applications as smoothly as possible.  &konqueror;, when executing
 the line above, will extend the command to
 <userinput><command><replaceable>foo</replaceable></command> <option>-icon
 something.png -miniicon something_mini.png -caption \"The

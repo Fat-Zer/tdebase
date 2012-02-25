@@ -48,7 +48,7 @@ default is 30 seconds.</para>
 a <guilabel>Blinking Cursor</guilabel>, a <guilabel>Bouncing Cursor</guilabel> 
 or a <guilabel>Passive Busy Cursor</guilabel> icon with no animation.</para>
 
-<para>Traditional &kde; launch notification has taken another form,
+<para>Traditional &tde; launch notification has taken another form,
 which you can also enable and disable here.  Normally when you start an
 application, it gets an immediate entry in the taskbar, with the icon
 replaced by a spinning hourglass to let you know something is
@@ -59,7 +59,7 @@ enabled, you can set a time in the <guilabel>Startup indication timeout
 
 <para>Not all applications that you start will eventually show a
 window, or an entry in the taskbar.  Some of them, for example, are
-docked into the &kde; system tray. Alternatively, it might be that you
+docked into the &tde; system tray. Alternatively, it might be that you
 sent it off to a different virtual desktop, and <guilabel>Show windows
 from all desktops</guilabel> is unchecked in the &kcontrolcenter; module
 <guimenuitem>Taskbar</guimenuitem>.  Setting a timeout ensures that,

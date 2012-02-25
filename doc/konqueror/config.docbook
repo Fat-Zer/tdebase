@@ -13,14 +13,14 @@
 
 <title>Configuring &konqueror;</title>
 
-<para>In common with the rest of &kde;, &konqueror; is highly configurable, so
+<para>In common with the rest of &tde;, &konqueror; is highly configurable, so
 you can really get the look and feel that best fits your needs and
 wishes.</para>
 
 <sect1 id="configure-bars">
 <title>Toolbars</title>
 
-<para>When &kde; is newly installed, &konqueror;'s window contains a Menubar, 
+<para>When &tde; is newly installed, &konqueror;'s window contains a Menubar, 
 Main and Location Toolbars and possibly a Bookmark Toolbar.</para>
 
 <para>Maybe you don't need all these toolbars. To hide one of them, go into 

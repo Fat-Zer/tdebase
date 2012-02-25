@@ -66,7 +66,7 @@ Desktop.</para></listitem>
 <sect2 id="desktop-number">
 <title><guilabel>Multiple Desktops</guilabel></title>
 
-<para>&kde; offers you the possibility to have several virtual
+<para>&tde; offers you the possibility to have several virtual
 desktops. In this tab you can configure the number of desktops as well
 as their names. Just use the slider to adjust the number of
 desktops. You can assign names to the desktops by entering text into the

@@ -5,27 +5,27 @@
 -->
 
 <chapter id="getting-kde">
-<title>Getting &kde;</title>
+<title>Getting &tde;</title>
 
 <qandaset>
 <qandaentry>
 <question id="where-to-get-kde">
-<para>Where do I get &kde;?</para>
+<para>Where do I get &tde;?</para>
 </question>
 <answer>
 <!-- This needs a rewrite including informations about the latest version (link to the info page?)-->
-<para>The easiest way to get &kde; is to install a &Linux; distribution or another UNIX-like OS that ships with &kde;.
+<para>The easiest way to get &tde; is to install a &Linux; distribution or another UNIX-like OS that ships with &tde;.
 You can find an up-to-date list of distributions that ship
-with &kde; <ulink url="http://www.kde.org/download/distributions.php">here</ulink>. For alternative methods of 
-trying &kde; that do not require you to be running &Linux;, please see 
-<ulink url="http://kde.org/try_kde">Try &kde;</ulink></para>
+with &tde; <ulink url="http://www.kde.org/download/distributions.php">here</ulink>. For alternative methods of 
+trying &tde; that do not require you to be running &Linux;, please see 
+<ulink url="http://kde.org/try_kde">Try &tde;</ulink></para>
 
-<para>The main distribution site for &kde; is 
+<para>The main distribution site for &tde; is 
 <ulink url="ftp://ftp.kde.org/">ftp.kde.org</ulink>. However, this site is
 often under heavy load, so you might prefer to use 
 <ulink url="http://download.kde.org/">download.kde.org</ulink> which automatically
 redirects you to the mirror nearest to you.
-You can also have a look at the list of <ulink url="http://www.kde.org/ftpmirrors.html"> &kde; mirror sites</ulink>.</para>
+You can also have a look at the list of <ulink url="http://www.kde.org/ftpmirrors.html"> &tde; mirror sites</ulink>.</para>
 </answer>
 </qandaentry>
 
@@ -37,7 +37,7 @@ You can also have a look at the list of <ulink url="http://www.kde.org/ftpmirror
 
 <para>Currently, the latest stable version is 3.5.5</para>
 
-<para>The <ulink url="http://www.kde.org/info/3.5.5.php">&kde; 3.5.5 Info
+<para>The <ulink url="http://www.kde.org/info/3.5.5.php">&tde; 3.5.5 Info
 Page</ulink> contains a lot of information specific to this
 release.</para>
 </answer>
@@ -45,14 +45,14 @@ release.</para>
 
 <qandaentry>
 <question>
-<para>Where do I find &kde; snapshots?</para>
+<para>Where do I find &tde; snapshots?</para>
 </question>
 <answer>
 <para>You can get the latest snapshots from <ulink
 url="ftp://ftp.kde.org/pub/kde/unstable/snapshots">ftp://ftp.kde.org/pub/kde/unstable/snapshots</ulink>.
 You might also want to consider setting up your own <acronym>SVN</acronym> client in order to
 maintain the latest snapshot at all times.  Please refer to <ulink
-url="http://developer.kde.org/source/anonsvn.html">Anonymous <acronym>SVN</acronym> and &kde;</ulink> for further
+url="http://developer.kde.org/source/anonsvn.html">Anonymous <acronym>SVN</acronym> and &tde;</ulink> for further
 information.
 </para>
 

@@ -1,5 +1,5 @@
 /*
- *  This file is part of the KDE Help Center
+ *  This file is part of the TDE Help Center
  *
  *  Copyright (C) 2003 Frerich Raabe <raabe@kde.org>
  *

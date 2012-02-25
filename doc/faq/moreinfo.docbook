@@ -10,10 +10,10 @@
 <qandaset>
 <qandaentry>
 <question>
-<para>Where is the &kde; homepage?</para>
+<para>Where is the &tde; homepage?</para>
 </question>
 <answer>
-<para>The &kde; homepage is located at <ulink
+<para>The &tde; homepage is located at <ulink
 url="http://www.kde.org">http://www.kde.org</ulink>.  If you prefer a
 local mirror, there are several to choose from.  For a current list of
 web site mirrors sorted by location, please visit <ulink
@@ -23,20 +23,20 @@ url="http://www.kde.org/mirrors/web.php">http://www.kde.org/mirrors/web.php</uli
 
 <qandaentry>
 <question id="mailing-lists">
-<para>Is there a &kde; mailing list?</para>
+<para>Is there a &tde; mailing list?</para>
 </question>
 <answer>
-<para>There are several &kde; mailing lists.  Each focuses on a different
-aspect of &kde;.  Some are for developers, so they are not
+<para>There are several &tde; mailing lists.  Each focuses on a different
+aspect of &tde;.  Some are for developers, so they are not
 discussed in detail.  Some of the more important lists that users
 might be interested in are:</para>
 <variablelist>
 <varlistentry><term>kde</term>
-<listitem><para>This is the main &kde; mailing list for general
+<listitem><para>This is the main &tde; mailing list for general
 discussions.</para></listitem>
 </varlistentry>
 <varlistentry><term>kde-announce</term>
-<listitem><para>This list is used to announce new versions of &kde; as
+<listitem><para>This list is used to announce new versions of &tde; as
 well as new tools and applications.</para></listitem>
 </varlistentry>
 <varlistentry><term>kde-look</term>
@@ -79,7 +79,7 @@ subject.
 <important><para>Never send subscribe/unsubscribe request to the
 mailing lists directly! Use the list-request
 instead.</para></important></para>
-<para>There is also a complete list of all &kde;-related mailing
+<para>There is also a complete list of all &tde;-related mailing
 lists, and a web interface for subscribing and unsubscribing located
 at <ulink url="http://master.kde.org/mailman/listinfo">http://master.kde.org/mailman/listinfo</ulink>.</para>
 </answer>
@@ -110,7 +110,7 @@ should probably search the <quote>kde</quote>, <quote>kde-linux</quote>, and <qu
 
 <qandaentry>
 <question id="newsgroups">
-<para>Is there a newsgroup about &kde;?</para>
+<para>Is there a newsgroup about &tde;?</para>
 </question>
 <answer>
 <para>Yes, there is!  It is at <literal>comp.windows.x.kde</literal>.
@@ -123,14 +123,14 @@ idea to ask questions which are already answered in this
 
 <qandaentry>
 <question>
-<para>Are there any other &kde;-related
+<para>Are there any other &tde;-related
 &FAQ;s?</para>
 </question>
 <answer>
 <para>Yes.  Here is a list of them:</para>
 <itemizedlist>
 <listitem><para><ulink
-url="http://www.kde.org/info/faq.php">&kde; &FAQ;</ulink></para></listitem>
+url="http://www.kde.org/info/faq.php">&tde; &FAQ;</ulink></para></listitem>
 <listitem><para><ulink
 url="http://konqueror.org/faq/">&konqueror;
 &FAQ;</ulink></para></listitem>

@@ -39,7 +39,7 @@ as Authors, publish date, the abstract, and Keywords -->
 <abstract>
 <para>
 &knetattach; is an application which makes it easier to integrate your 
-network resources with your &kde; Desktop.
+network resources with your &tde; Desktop.
 </para>
 </abstract>
 
@@ -64,8 +64,8 @@ Please at least include KDE, the KDE package it is in, the name
 <para>
 The &knetattach; program, affectionately and hereafter known as the 
 Network Folder Wizard, allows easy addition and integration of various 
-network folders with your &kde; desktop. Please report any problems or 
-feature requests for it to the &kde; bugs website.
+network folders with your &tde; desktop. Please report any problems or 
+feature requests for it to the &tde; bugs website.
 </para>
 </chapter>
 

@@ -43,7 +43,7 @@ is named <emphasis>Untitled</emphasis>.
 </menuchoice>
 </term>
 <listitem>
-<para>Launches &kde;'s open file dialog box to let you open one or more files.
+<para>Launches &tde;'s open file dialog box to let you open one or more files.
 </para>
 
 </listitem>
@@ -931,7 +931,7 @@ spellcheck dialog.  They are:</para>
 <variablelist>
 <varlistentry>
 <term><guibutton>Help</guibutton></term>
-<listitem><para> This invokes the &kde; help system starting at the &kate; help
+<listitem><para> This invokes the &tde; help system starting at the &kate; help
 pages (this document).</para></listitem>
 </varlistentry>
 
@@ -1213,7 +1213,7 @@ version of &kate;</para></note>
 </menuchoice>
 </term>
 <listitem>
-<para>Display the familiar &kde; Keyboard Shortcut Configuration
+<para>Display the familiar &tde; Keyboard Shortcut Configuration
 Dialog.</para>
 </listitem>
 </varlistentry>
@@ -1228,7 +1228,7 @@ Dialog.</para>
 </menuchoice>
 </term>
 <listitem>
-<para>Display the familiar &kde; Toolbar Configuration Dialog.</para>
+<para>Display the familiar &tde; Toolbar Configuration Dialog.</para>
 </listitem>
 </varlistentry>
 
@@ -1427,7 +1427,7 @@ change to the directory of the active document, if it is a local file.</para>
 
 <title>The <guimenu>Help</guimenu> Menu</title>
 
-<para>Apart from standard &kde; <guimenu>Help</guimenu> menu items
+<para>Apart from standard &tde; <guimenu>Help</guimenu> menu items
 described below you will have menu entries to show the
 Plugins User Manuals for installed plugins.</para>
 

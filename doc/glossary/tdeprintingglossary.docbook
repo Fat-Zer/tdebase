@@ -164,7 +164,7 @@
 				&CUPS; is able to control any &PostScript; printer by
 				utilizing the vendor-supplied PPD (PostScript Printer
 				Description file), targeted originally for &Microsoft; Windows NT
-				printing only. &kde; Printing is most powerful if based on
+				printing only. &tde; Printing is most powerful if based on
 				&CUPS;.</para>
                                 <glossseealso otherterm="gloss-acl">ACLs</glossseealso>
                                 <glossseealso otherterm="gloss-authentication">Authentication</glossseealso>
@@ -717,10 +717,10 @@ now.
 
                 <glossentry id="gloss-tdeprint">
                         <glossterm><acronym>KDEPrint</acronym></glossterm>
-                        <glossdef><para>The new printing functionality of &kde; since version 2.2
+                        <glossdef><para>The new printing functionality of &tde; since version 2.2
 				consists of several modules that translate the features and settings
 				of different available print subsystems (&CUPS;, BSD-style LPR/LPD, RLPR...)
-				into nice &kde; desktop &GUI; windows and dialogs to ease their
+				into nice &tde; desktop &GUI; windows and dialogs to ease their
 				usage.
 <!--
 				</para>
@@ -758,7 +758,7 @@ now.
                 <glossentry id="gloss-kprinter">
                         <glossterm>kprinter</glossterm>
                         <glossdef><para><emphasis>kprinter</emphasis> is the new powerful
-				print utility that is natively used by all &kde; applications.
+				print utility that is natively used by all &tde; applications.
 <!--
 				</para>
 				<para>
@@ -783,7 +783,7 @@ now.
 -->
 
 				MOST IMPORTANT: you can use <emphasis>kprinter</emphasis>
-				with all its features in all non-&kde; applications that allow
+				with all its features in all non-&tde; applications that allow
 				a customized print command, like gv, Acrobat Reader, Netscape,
 				Mozilla, Galeon, StarOffice, OpenOffice and all GNOME programs.
 <!--
@@ -1131,7 +1131,7 @@ now.
                         <glossterm>print:/ KIO Slave</glossterm>
                         <glossdef><para>You can use a syntax of "print:/..." to get quick access
 				to KDEPrint resources. Typing "print:/manager" as a Konqueror URL
-				address gives administrative access to KDEPrint. Konqueror uses &kde;'s
+				address gives administrative access to KDEPrint. Konqueror uses &tde;'s
 				famous "KParts" technology to achieve that. </para>
                                 <glossseealso otherterm="gloss-ioslave">IO Slave</glossseealso>
                                 <glossseealso otherterm="gloss-kparts">KParts</glossseealso>
@@ -1354,7 +1354,7 @@ now.
 				<emphasis>P</emphasis>rinting <emphasis>P</emphasis>anel;
 				<acronym>XPP</acronym> was the first Free
 				graphical print command for &CUPS;, written by Till Kamppeter,
-				and in some ways a model for the "kprinter" utility in &kde;.</para>
+				and in some ways a model for the "kprinter" utility in &tde;.</para>
                         </glossdef>
                 </glossentry>
 <!--

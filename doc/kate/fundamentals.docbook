@@ -26,7 +26,7 @@ command line.
 <sect2 id="starting-from-the-menu">
 <title>From the Menu</title>
 <para>
-Open the &kde; program menu by clicking on the
+Open the &tde; program menu by clicking on the
 <guiicon>big K</guiicon> icon on the toolbar at the bottom left of your
 screen. This will raise the <guimenu>program menu</guimenu>. Move your
 cursor up the menu to the <menuchoice><guimenu>Utilities</guimenu>
@@ -60,7 +60,7 @@ file.
 
 <para>
 If you have an active connection, and permission, you can take advantage
-of &kde;'s network transparency to open files on the internet.
+of &tde;'s network transparency to open files on the internet.
 </para>
 
 <informalexample>
@@ -99,7 +99,7 @@ with &Qt;.
 <listitem>
 <para>
 This lists the options available for changing the way &kate; interacts
-with &kde;.
+with &tde;.
 </para>
 </listitem>
 </varlistentry>
@@ -177,7 +177,7 @@ programs, and allows you to pipe command output into &kate;.</para></listitem>
 <varlistentry>
 <term><userinput><command>kate</command>
 <option>--tempfile</option></userinput></term>
-<listitem><para>Since &kate; 2.5.1 this standard &kde; option is supported.
+<listitem><para>Since &kate; 2.5.1 this standard &tde; option is supported.
 When used, the specified files are treated as temporary files and
 deleted (if they are local files and you have sufficient permissions) when
 closed, unless they are modified since they were opened.</para></listitem>
@@ -208,7 +208,7 @@ Lists &kate;'s authors in the terminal window.
 <option>-v</option> <option>--version</option></userinput></term>
 <listitem>
 <para>
-Lists version information for &Qt;, &kde;, and &kate;.
+Lists version information for &Qt;, &tde;, and &kate;.
 </para>
 </listitem>
 </varlistentry>
@@ -229,7 +229,7 @@ Shows license information.
 <sect2 id="drag-and-drop">
 <title>Drag and Drop</title>
 <para>
-&kate; uses the &kde; Drag and Drop protocol. Files may be dragged and
+&kate; uses the &tde; Drag and Drop protocol. Files may be dragged and
 dropped onto &kate; from the Desktop, &konqueror; or some remote ftp
 site opened in one of &konqueror;'s windows.
 </para>

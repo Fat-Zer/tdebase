@@ -4,16 +4,9 @@
 
 <sect1 id="programs-launching">
 
-<sect1info>
-<author>
-<firstname>Robert</firstname>
-<surname>Stoffers</surname>
-</author>
-</sect1info>
-
 <title>Launching Programs</title>
 
-<para>&kde; offers a varying number of ways to launch programs. You may:</para>
+<para>&tde; offers a varying number of ways to launch programs. You may:</para>
 	<itemizedlist>
 	<listitem>
 		<para>Simply select the relevant item in the &kmenu;.</para>
@@ -73,7 +66,7 @@ launch. If it finds more then one matching program, a list of
  program from the list and press <keycap>Enter</keycap> to launch.</para>
 
 <para>Whichever way you choose, launching a program is a simple affair with
-&kde;. From the &kmenu;, to &konsole;, all your programs are just a few
+&tde;. From the &kmenu;, to &konsole;, all your programs are just a few
 clicks or key-presses away.</para>
 
 <!-- Add links to "further reading" here -->
@@ -91,24 +84,13 @@ clicks or key-presses away.</para>
 
 <sect1 id="programs-save-open">
 
-<sect1info>
-<author>
-<personname>
-<firstname>Christian</firstname>
-<surname>Weickhmann</surname>
-</personname>
-<email>christian.weickhmann@gmx.de</email>
-</author>
-</sect1info>
-
-
 <title>Opening and Saving Files</title>
 <!-- TODO: Convert this whole thing to an image with callouts. It -->
 <!-- should be much nicer that way. -->
 
 
-<para>&kde; provides a unified way to open or save files via the file
-dialog. In almost every &kde; program you will find a
+<para>&tde; provides a unified way to open or save files via the file
+dialog. In almost every &tde; program you will find a
 <menuchoice><guimenu>File</guimenu><guimenuitem>Open</guimenuitem>
 </menuchoice> and <menuchoice><guimenu>File</guimenu>
 <guimenuitem>Save</guimenuitem></menuchoice> (and/or <guimenuitem>Save
@@ -118,19 +100,19 @@ As...</guimenuitem>) entry.</para>
 <title>The File Dialog</title>
 
 <!--
-<screenshot> 
-<screeninfo>The &kde; <quote>Open File</quote> dialog</screeninfo> 
-<mediaobject> 
-<imageobject> 
-<imagedata fileref="open-file-dialog.png" format="PNG"/> </imageobject> 
-<textobject> 
-<phrase>The &kde; <quote>Open File</quote> dialog</phrase> 
-</textobject> 
-<caption> 
-<para>The &kde; <quote>Open File</quote> dialog</para> 
-</caption> 
-</mediaobject> 
-</screenshot> 
+<screenshot>
+<screeninfo>The &tde; <quote>Open File</quote> dialog</screeninfo>
+<mediaobject>
+<imageobject>
+<imagedata fileref="open-file-dialog.png" format="PNG"/> </imageobject>
+<textobject>
+<phrase>The &tde; <quote>Open File</quote> dialog</phrase>
+</textobject>
+<caption>
+<para>The &tde; <quote>Open File</quote> dialog</para>
+</caption>
+</mediaobject>
+</screenshot>
 -->
 <screenshot>
 <mediaobjectco>
@@ -149,7 +131,7 @@ As...</guimenuitem>) entry.</para>
 </mediaobjectco>
 </screenshot>
 
-<!-- ====================================================================== 
+<!-- ======================================================================
 
 <calloutlist>
 
@@ -244,7 +226,7 @@ previewed.</para>
 (&eg; scaled down if they are large images). You can disable automatic
 previews by unselecting <guilabel>Automatic Preview</guilabel> below the
 preview. You can still preview individual files: just click <guibutton>Preview</guibutton>. You can also disable previews for files above a certain
-size. Go to &kcontrolcenter;,  choose <menuchoice><guilabel>KDE
+size. Go to &kcontrolcenter;,  choose <menuchoice><guilabel>TDE
 components</guilabel><guilabel>File manager</guilabel></menuchoice>, go to
 the <guilabel>Preview and Metafiles</guilabel> tab and change the
 <guilabel>Maximum Filesize</guilabel> value.</para></note>
@@ -266,13 +248,6 @@ the <guilabel>Preview and Metafiles</guilabel> tab and change the
 </sect1>
 
 <sect1 id="configuring-programs">
-<sect1info>
-<authorgroup>
-<author>
-&Philip.Rodrigues;
-</author>
-</authorgroup>
-</sect1info>
 
 <title>Configuring Programs</title>
 
@@ -282,15 +257,15 @@ the <guilabel>Preview and Metafiles</guilabel> tab and change the
 <indexterm><primary>Configuration</primary></indexterm>
 <indexterm><primary>Customization</primary></indexterm>
 
-<para>&kde; applications are intended to be as useful and usable as
+<para>&tde; applications are intended to be as useful and usable as
 possible <quote>out of the box</quote>, but they also offer a wide
-range of options which you can change to make &kde; work for you. As
-well as the settings which affect the whole of &kde; (see <xref
+range of options which you can change to make &tde; work for you. As
+well as the settings which affect the whole of &tde; (see <xref
 linkend="control-center"/>), each application has a set of
 configuration options, which you can access using the menu option
 <menuchoice><guimenu>Settings</guimenu><guimenuitem>Configure
 <replaceable>Application</replaceable></guimenuitem>
-</menuchoice>. This is the same for all &kde; applications, which
+</menuchoice>. This is the same for all &tde; applications, which
 makes it easy to find the configuration dialog for an
 application.</para>
 
@@ -321,10 +296,10 @@ without saving your changes.</para>
 <indexterm><primary>Shortcuts</primary></indexterm>
 <indexterm><primary>Keybindings</primary></indexterm>
 
-<para>Most &kde; applications offer keyboard shortcuts for the main
+<para>Most &tde; applications offer keyboard shortcuts for the main
 actions in the application. If you find that you don't like the
 default keyboard shortcuts, or that they conflict with the shortcuts
-of another application (maybe one that's not part of &kde;), you can
+of another application (maybe one that's not part of &tde;), you can
 change them with the
 <menuchoice><guimenu>Settings</guimenu><guimenuitem>Configure
 Shortcuts...</guimenuitem>
@@ -385,7 +360,7 @@ key combination for the shortcut you want.</para>
 </sect2info>
 <title>Configuring Toolbars</title>
 
-<para>Nearly every &kde; application has one or more toolbars at the top of
+<para>Nearly every &tde; application has one or more toolbars at the top of
 the application window, underneath the menu. The toolbar contains icons
 (toolbar buttons) that represent commonly used actions and configuration
 settings. The &kmail; window, for instance, has a toolbar that contains

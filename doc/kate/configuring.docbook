@@ -587,7 +587,7 @@ the dominant color on the editor area.</para></listitem>
 <varlistentry id="config-dialog-editor-colors-selected-text">
 <term><guilabel>Selected Text</guilabel></term>
 <listitem><para>This is the background for selected text. The default is
-the global selection color, as set in your &kde; color preferences.
+the global selection color, as set in your &tde; color preferences.
 </para></listitem>
 </varlistentry>
 

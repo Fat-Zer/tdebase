@@ -49,7 +49,7 @@ as never before on any &Linux;-like system.</para>
 <title>Full Print Job Control</title>
 
 <para>The Print Job Viewer is automatically started by &kprinter;.  It
-may be docked into the &kde; panel (in the system tray).  The Print Job
+may be docked into the &tde; panel (in the system tray).  The Print Job
 Viewer allows full job management, if supported by the print
 subsystem.</para>
 
@@ -142,9 +142,9 @@ Modules for other print subsystems, such as <acronym>PLP</acronym>,
 <acronym>PPR</acronym> and <acronym>PDQ</acronym> may be available
 later.</para>
 
-<para>&tdeprint; makes &kde; much more flexible.  It gives freedom of
-choice to &kde; 2.2 users.  To use different available print subsystems,
-these must, of course, be installed independently from &kde;.  In
+<para>&tdeprint; makes &tde; much more flexible.  It gives freedom of
+choice to &tde; 2.2 users.  To use different available print subsystems,
+these must, of course, be installed independently from &tde;.  In
 former versions, users were stuck with the old <acronym>LPD</acronym>
 style print subsystems.  Now they can even use &CUPS;. In the future,
 there will be easy integration of new subsystems, as they
@@ -159,7 +159,7 @@ appear on the scene.</para>
 <para>Some specific features of &tdeprint; depend on the chosen print
 subsystem.  This dependency might exist because those features are only
 implemented there; remember, &tdeprint; is an intermediate layer between
-&kde; applications, and the print subsystem, but it's no replacement for
+&tde; applications, and the print subsystem, but it's no replacement for
 any print subsystem by itself.  Such dependency may exist for another
 reason: that &tdeprint; has not yet implemented an interface to all the
 features of all the subsystems.</para>
@@ -327,11 +327,11 @@ Protocol, the newly emerging standard for the future of network
 printing. &CUPS; is clearly the print system of choice for Michael
 Goffioul, the principal &tdeprint; developer.</para>
 
-<para>Experienced &kde; users may already be familiar with Michael's
+<para>Experienced &tde; users may already be familiar with Michael's
 utilities <application>qtcups</application> and
 <application>kups</application> (co-developed with Jean-Eric Cuendet).
 These were, up until now, the graphical
-&GUI; front ends for &CUPS; with a strong relation to &kde;.</para>
+&GUI; front ends for &CUPS; with a strong relation to &tde;.</para>
 
 <sect2>
 <title><application>qtcups</application> and
@@ -364,7 +364,7 @@ restart it.</para>
 
 <para>The &CUPS; Module in &tdeprint; now contains all (and more)
 functions that were provided by <application>qtcups</application> and
-<application>kups</application> in former &kde; versions.</para>
+<application>kups</application> in former &tde; versions.</para>
 
 <para>Instead of <command>qtcups</command> you can now use the
 <command>kprinter</command> command.  And in place of
@@ -389,10 +389,10 @@ different default setting of print options.</para>
 print command</quote>, like <application>qtcups</application> did
 before.</para>
 
-<para>Use &kprinter; in any application, even a non-&kde;
+<para>Use &kprinter; in any application, even a non-&tde;
 application, that lets you configure your print command.  Examples of
 these are &Netscape; and <application>StarOffice</application>, but
-<emphasis>not</emphasis> most pre-&kde; 2.2 programs.</para>
+<emphasis>not</emphasis> most pre-&tde; 2.2 programs.</para>
 
 <para>A screenshot how to use the new <command>kprinter</command>
 print command instead of the old-fashioned <command>lpr</command>...

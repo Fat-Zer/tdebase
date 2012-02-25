@@ -56,7 +56,7 @@ application, with the additional functionality of
 <chapter id="introduction">
 <title>Introduction</title>
 
-<para>&ksysguard; is the &kde; Task Manager and Performance Monitor. It features 
+<para>&ksysguard; is the &tde; Task Manager and Performance Monitor. It features 
 
 a
 client/server architecture that allows monitoring of local as well as remote
@@ -141,7 +141,7 @@ Unfortunately the ssh does not source your <filename>.profile</filename> file,
 so your regular <envar>PATH</envar> setting will not be available.
 Instead it uses a default <envar>PATH</envar> like
 <parameter>/bin:/usr/bin</parameter>.
-Since it is very likely that &kde; is not installed in these folders you need
+Since it is very likely that &tde; is not installed in these folders you need
 to create or update a file in your home folder. The file is called
 <filename>environment</filename> and needs to be in a hidden folder called
 <filename>.ssh</filename>. See the manual page for
@@ -168,7 +168,7 @@ and everything is in order.</para></tip>
 
 <note><para>For experts: <application>ksysguardd</application> is a
 very small program that is only linked against the libc. So it can
-also be used on machines that do not have a full blown &kde;
+also be used on machines that do not have a full blown &tde;
 installed, such as servers. If you choose the custom command option in
 the host connector you need to specify the complete command to start
 <application>ksysguardd</application>.</para></note>
@@ -427,7 +427,7 @@ table.</para>
 <chapter id="multiple-platforms">
 <title>Configuring <application>ksysguardd</application></title>
 
-<para>The graphical front-end is available on any platform that &kde; runs
+<para>The graphical front-end is available on any platform that &tde; runs
 on. The back-end is at the moment available on the following flavors of
 &UNIX;:</para>
 

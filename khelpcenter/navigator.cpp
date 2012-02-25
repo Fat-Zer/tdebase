@@ -1,5 +1,5 @@
 /*
- *  This file is part of the KDE Help Center
+ *  This file is part of the TDE Help Center
  *
  *  Copyright (C) 1999 Matthias Elter (me@kde.org)
  *
@@ -469,7 +469,7 @@ void Navigator::showOverview( NavigatorItem *item, const KURL &url )
     childCount = item->childCount();
   } else {
     title = i18n("Start Page");
-    name = i18n("KDE Help Center");
+    name = i18n("The Trinity Help Center");
 
     childCount = mContentsTree->childCount();
   }

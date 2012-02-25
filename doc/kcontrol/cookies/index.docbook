@@ -58,7 +58,7 @@ as &Netscape;.</para></warning>
 <title>Policy</title>
 
 <para>Using the <guilabel>Policy</guilabel> tab, you can configure the
-&kde; applications that will handle cookies. You can do this by specifying a
+&tde; applications that will handle cookies. You can do this by specifying a
 general cookie policy as well as special cookie policies for certain
 domains or hosts.</para>
 

@@ -64,7 +64,7 @@ application that is loading.</para>
 
 <para>&ksplash; is a nice splash screen that shows the progress of an
 application that is loading. Please report any problems or feature
-requests to the &kde; mailing lists. The principal features of
+requests to the &tde; mailing lists. The principal features of
 &ksplash;:
 </para>
 <simplelist>
@@ -92,7 +92,7 @@ to
 to make them available to all users of your system.</para>
 
 <para>You can also use the <guilabel>Splash Screen</guilabel> module under
-<guilabel>Appearance</guilabel> in the &kde; control center to do this
+<guilabel>Appearance</guilabel> in the &tde; control center to do this
 automatically.</para>
 
 <sect1 id="using-kcontrol-module">
@@ -573,18 +573,18 @@ Color.</entry>
 <title>Using &ksplash; From Within Your Own Application</title>
 
 <para> In this chapter, we describe a simple method for using
-&ksplash; as the splash screen for your &kde; application. If you do
-not develop applications for &kde;, you can skip this chapter.</para>
+&ksplash; as the splash screen for your &tde; application. If you do
+not develop applications for &tde;, you can skip this chapter.</para>
 
 <sect1 id="basic-other-reqs">
 <title>Basic Requirements</title>
 
-<para> Your &kde; application must be &DCOP;-aware. &DCOP; is the &kde;
+<para> Your &tde; application must be &DCOP;-aware. &DCOP; is the &tde;
 technology used to communicate between applications. If you use the
-standard <ulink url="http://developer.kde.org">&kde; application
+standard <ulink url="http://developer.kde.org">&tde; application
 framework</ulink>, this is taken care of automatically. For
-information about &DCOP; and related &kde; technologies, please visit
-the <ulink url="http://developer.kde.org">&kde; developers'
+information about &DCOP; and related &tde; technologies, please visit
+the <ulink url="http://developer.kde.org">&tde; developers'
 corner</ulink>.</para>
 </sect1>
 
@@ -619,7 +619,7 @@ documentation for further details.</para>
 <title>Showing messages</title>
 
 <para>Before you show any messages, you need to set up the number of
-steps you will show. For example, the &kde; startup procedure uses 7
+steps you will show. For example, the &tde; startup procedure uses 7
 steps.</para>
 
 <programlisting>
@@ -706,7 +706,7 @@ should be derived from <literal>ThemeEngine</literal>.
 </sect1>
 <sect1 id="skeleton">
 <title>Building the skeleton framework</title>
-<para>We will use the &kde; application framework which will take care of
+<para>We will use the &tde; application framework which will take care of
 building the plugin
 and will provide us with platform independence without any work on our part. To
 do that,
@@ -962,7 +962,7 @@ appendix for details.
 </sect1>
 <sect1 id="compilingfile">
 <title>Compiling the plugin</title>
-<para>Since we decided to use the &kde; framework for compiling the plugin, we
+<para>Since we decided to use the &tde; framework for compiling the plugin, we
 need to create a
 <filename>Makefile.am</filename>. It should look like this:</para>
 <example>
@@ -988,8 +988,8 @@ theme_DATA = Theme.rc Preview.png
 </programlisting>
 </example>
 <para>For more information on writing <filename>Makefile.am</filename> files for
-&kde;, please see
-the &kde; developers' <ulink
+&tde;, please see
+the &tde; developers' <ulink
 url="http://developer.kde.org/documentation/other/makefile_am_howto.html">
 website</ulink>.
 The only thing of note is that we provide a default theme based on this plugin,
@@ -1061,7 +1061,7 @@ linkend="themes">How to make themes for &ksplash;</link>.
 <sect1 id="requirements">
 <title>Requirements</title>
 
-<para>In order to successfully use &ksplash;, you need &kde; version 3.2 or
+<para>In order to successfully use &ksplash;, you need &tde; version 3.2 or
 higher. Some themes may require specific plugins. If a theme does not
 work, please contact the theme author to find out where to obtain the
 appropriate plugin.</para>

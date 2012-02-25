@@ -30,7 +30,7 @@
 
 <para>The &konqueror; Browser module of &kcontrol; allows you to select
 various options for the appearance and behavior of &konqueror;, the
-integrated web browser of &kde;.</para>
+integrated web browser of &tde;.</para>
 
 <sect2 id="kbrowse-html">
 
@@ -226,7 +226,7 @@ applications will not require such a console, it could be helpful in
 diagnosing problems with &Java; applications.</para>
 
 <para><guilabel>Use KIO</guilabel> will cause the
-<acronym>JVM</acronym>to use &kde;'s own <acronym>KIO</acronym>
+<acronym>JVM</acronym>to use &tde;'s own <acronym>KIO</acronym>
 transports for network connections.</para>
 
 <para><guilabel>Use security

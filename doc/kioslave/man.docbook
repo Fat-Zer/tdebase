@@ -73,9 +73,9 @@ or adjust the environment variables
 </para>
 
 <para>
-As with any other &kde; ioslave, it is possible to enter a &URL;, like
+As with any other &tde; ioslave, it is possible to enter a &URL;, like
 <userinput><command>man:socket</command></userinput> in <emphasis>any</emphasis>
-&kde; application.  Try it in &kwrite; and you will see the man page in
+&tde; application.  Try it in &kwrite; and you will see the man page in
 &HTML; format.
 </para>
 

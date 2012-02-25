@@ -44,7 +44,7 @@
 <releaseinfo>4.5.0</releaseinfo>
 
 <abstract>
-<para>&kwrite; is a text editor for &kde;</para>
+<para>&kwrite; is a text editor for &tde;</para>
 </abstract>
 
 <keywordset>
@@ -60,7 +60,7 @@
 <title>Introduction</title>
 
 <para>
-&kwrite; is more than a text editor for the &kde; Desktop. It is meant
+&kwrite; is more than a text editor for the &tde; Desktop. It is meant
 to be a programmer's editor, and could be considered as at least a
 partial alternative to more powerful editors.  It may be best used in
 conjunction with &konqueror; for source file browsing for different
@@ -84,7 +84,7 @@ should have no problems.
 <title>Drag and Drop</title>
 
 <para>
-&kwrite; uses the &kde; Drag and Drop protocol. Files may be dragged and
+&kwrite; uses the &tde; Drag and Drop protocol. Files may be dragged and
 dropped onto &kwrite; from the Desktop, &konqueror; or some remote &FTP;
 site opened in one of &konqueror;'s windows.
 </para>
@@ -94,7 +94,7 @@ site opened in one of &konqueror;'s windows.
 <title>Command Line Options</title>
 
 <para>
-Though &kwrite; may most often be started from the &kde; program menu, or
+Though &kwrite; may most often be started from the &tde; program menu, or
 a desktop icon, it can also be opened at the command line prompt of a
 terminal window.  There are a few useful options that are available when
 doing this.
@@ -152,7 +152,7 @@ line.</para></listitem>
 <term><userinput><command>kwrite</command>
 <option>--help-kde</option></userinput></term>
 <listitem><para>This lists the options available for changing the way
-&kwrite; interacts with &kde;.</para></listitem>
+&kwrite; interacts with &tde;.</para></listitem>
 </varlistentry>
 <varlistentry>
 <term><userinput><command>kwrite</command>
@@ -168,7 +168,7 @@ window</para></listitem>
 <varlistentry>
 <term><userinput><command>kwrite</command>
 <option>--version</option></userinput></term>
-<listitem><para>Lists version information for &Qt;, &kde;, and &kwrite;. Also
+<listitem><para>Lists version information for &Qt;, &tde;, and &kwrite;. Also
 available through <userinput><command>kwrite</command>
 <option>-v</option></userinput> </para></listitem>
 </varlistentry>
@@ -579,11 +579,11 @@ even change some basic settings for the dialog box, and finally there is
 dropdown box with a list of some commonly frequented folders.
 </para>
 -->
-<para>Displays a standard &kde; <guilabel>Open File</guilabel>
+<para>Displays a standard &tde; <guilabel>Open File</guilabel>
 dialog. Use the file view to select the file you want to open, and
 click on <guibutton>Open</guibutton> to open it. You can find more
-information about the &kde; <guilabel>Open File</guilabel> dialog in
-the &kde; User Guide.</para>
+information about the &tde; <guilabel>Open File</guilabel> dialog in
+the &tde; User Guide.</para>
 
 </listitem>
 </varlistentry>
@@ -774,7 +774,7 @@ action="simul">&Ctrl;<keycap>X</keycap></keycombo></shortcut>
 <listitem>
 <para>This command deletes the current selection and places it on the
 clipboard.
-The  clipboard is a feature of &kde; that works invisibly to provide a way to
+The  clipboard is a feature of &tde; that works invisibly to provide a way to
 transfer data between applications.</para>
 </listitem>
 </varlistentry>
@@ -786,7 +786,7 @@ action="simul">&Ctrl;<keycap>C</keycap></keycombo></shortcut>
 <guimenu>Edit</guimenu><guimenuitem>Copy</guimenuitem></menuchoice></term>
 <listitem>
 <para>This copies the currently selected text to the clipboard so that it may
-be pasted elsewhere.  The clipboard is a feature of &kde; that works invisibly
+be pasted elsewhere.  The clipboard is a feature of &tde; that works invisibly
 to provide a way to transfer data between applications.</para>
 </listitem>
 </varlistentry>
@@ -807,7 +807,7 @@ action="simul">&Ctrl;<keycap>V</keycap></keycombo></shortcut>
 <guimenu>Edit</guimenu><guimenuitem>Paste</guimenuitem></menuchoice></term>
 <listitem>
 <para>This will insert the contents of the clipboard at the cursor position.
-The clipboard is feature of &kde; that works invisibly to provide a way to
+The clipboard is feature of &tde; that works invisibly to provide a way to
 transfer data between applications.</para>
 </listitem>
 </varlistentry>
@@ -1408,7 +1408,7 @@ spellcheck dialog.  They are:</para>
 <variablelist>
 <varlistentry>
 <term><guibutton>Help</guibutton></term>
-<listitem><para> This invokes the &kde; help system starting at the &kwrite; help
+<listitem><para> This invokes the &tde; help system starting at the &kwrite; help
 pages (this document).</para></listitem>
 </varlistentry>
 
@@ -1679,12 +1679,12 @@ the Default Key selection  is only available for those commands that actually
 have a 'default' shortcut.)  Selecting the Custom Key option activates the three
 check boxes and key button at the bottom of the dialog. The user may then select
 a key combination for the command in question by means of the check boxes and
-key button. For example, with the About &kde; command selected in the display
+key button. For example, with the About &tde; command selected in the display
 window, the user could select &Ctrl; and <keycap>Alt</keycap>, click on  the key
 button, and then press the <keycap>K</keycap> key on the keyboard.  This would
 mean that anytime he or she held down the &Ctrl; and  <keycap>Alt</keycap>
 buttons and pressed <keycap>K</keycap> (while using
-&kwrite;) the About &kde; display box would be called. </para>
+&kwrite;) the About &tde; display box would be called. </para>
 </listitem>
 </varlistentry>
 
@@ -1963,7 +1963,7 @@ the dominant color on the editor area.</para></listitem>
 <varlistentry id="pref-colors-selected-text">
 <term><guilabel>Selected Text</guilabel></term>
 <listitem><para>This is the background for selected text. The default is
-the global selection color, as set in your &kde; color preferences.
+the global selection color, as set in your &tde; color preferences.
 </para></listitem>
 </varlistentry>
 

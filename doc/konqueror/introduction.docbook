@@ -13,7 +13,7 @@
 
 <para><emphasis>&konqueror;</emphasis> is an advanced  
 <link linkend="filemanager">file manager</link> for the 
-K Desktop Environment, providing file management functions ranging from simple 
+Trinity Desktop Environment, providing file management functions ranging from simple 
 cut/copy and paste operations to advanced local and remote network file 
 browsing. Folder contents can be displayed in a variety of text and icon 
 <link linkend="viewmode">view modes</link>, which can include thumbnail 
@@ -35,7 +35,7 @@ the ability to import bookmarks from other browsers and tabbed browsing.
 
 <para><emphasis>&konqueror;</emphasis> is a universal viewing application, 
 capable of displaying images and documents without having to launch another 
-application. It does this by embedding components (&kde; Parts) provided by 
+application. It does this by embedding components (&tde; Parts) provided by 
 other applications; from &kview; for image viewing, &kdvi; for 
 <acronym>DVI</acronym> viewing, &kghostview; for &PostScript; documents and 
 from the various &koffice; applications for their document types.

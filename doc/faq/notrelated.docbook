@@ -7,7 +7,7 @@
 -->
 
 <chapter id="not-kde">
-<title>Not really &kde;-related, but frequently asked nevertheless.</title>
+<title>Not really &tde;-related, but frequently asked nevertheless.</title>
 
 <qandaset>
 <qandaentry>
@@ -130,7 +130,7 @@ ext2.</para>
 
 <qandaentry>
 <question>
-<para>How do I start &kde; with the <keycap>Num Lock</keycap> on?</para>
+<para>How do I start &tde; with the <keycap>Num Lock</keycap> on?</para>
 </question>
 <answer>
 <para>Have you tried <command>man setleds</command>?  In addition, you
@@ -189,9 +189,9 @@ url="http://dforce.sh.cvut.cz/~seli/en/numlockx">http://dforce.sh.cvut.cz/~seli/
 <para>Yes, and there are a lot of them out there, including
 <application>StarOffice</application>, <application>&Netscape; Composer</application>, and
 <application>XEmacs</application>.
-There are also many &kde; applications.  To find the most current
+There are also many &tde; applications.  To find the most current
 list, go to <ulink url="http://kde-apps.org">kde-apps.org: The
-Latest in &kde; Applications</ulink> and search for <emphasis>web
+Latest in &tde; Applications</ulink> and search for <emphasis>web
 development</emphasis>.  Try as many as possible and choose the one
 most suitable to your needs.</para>
 </answer>

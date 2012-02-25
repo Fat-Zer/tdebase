@@ -9,10 +9,10 @@
 <chapter id="windowmanager">
 <title>The window manager</title>
 
-<para>The default window manager provided by &kde; is the K Window
+<para>The default window manager provided by &tde; is the K Window
 Manager (&twin;).  Please read <quote>The
 K Window Manager Handbook</quote> (which should be accessible from the
-<application>&kde; Help Center</application>) for usage information.</para>
+<application>&tde; Help Center</application>) for usage information.</para>
 
 <qandaset>
 <qandaentry>
@@ -31,7 +31,7 @@ list of shortcuts available.</para>
 </question>
 <answer>
 <para>Yes.  Launch the
-<application>&kde; Control Center</application> and select
+<application>&tde; Control Center</application> and select
 <menuchoice><guimenu>Regional &amp; Accessibility</guimenu><guimenuitem>Keyboard Shortcuts</guimenuitem></menuchoice> to
 configure window manager bindings like maximizing windows, &etc;. 
 </para>
@@ -46,7 +46,7 @@ go?</para>
 <answer>
 <para>With many &X-Window; &GUI;s, the minimize button (a little dot) will
 erase the window that the program is running in and create, instead,
-an icon on the desktop.  &kde; does not do this.  Instead, when a
+an icon on the desktop.  &tde; does not do this.  Instead, when a
 window is iconified it is simply hidden (but the program is still
 running).</para>
 <para>There are a few ways to access <quote>disappeared</quote> windows:</para>
@@ -106,8 +106,8 @@ see a full list of <command>kstart</command> options with
 <option>--help-all</option></userinput>.</para>
 
 <warning><para>If you're using <command>kstart</command> to start
-applications at &kde; startup, you should use the
-<option>--window</option> option. See the &kde; User Guide, section
+applications at &tde; startup, you should use the
+<option>--window</option> option. See the &tde; User Guide, section
 <quote>Advanced Window Management</quote> for more information about
 this feature.</para>
 </warning>
@@ -122,7 +122,7 @@ this feature.</para>
 placement of windows?</para>
 </question>
 <answer>
-<para>Yes.  Run <application>&kde; Control Center</application> and select <guimenu>Look and Feel</guimenu>
+<para>Yes.  Run <application>&tde; Control Center</application> and select <guimenu>Look and Feel</guimenu>
 followed by <guisubmenu>Window Behavior</guisubmenu> and finally
 <guimenuitem>Advanced</guimenuitem>.  There is a dialog option that
 allows you to set the placement policy you want.</para>

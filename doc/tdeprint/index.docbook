@@ -73,8 +73,8 @@
 
 <abstract>
 <para>This handbook describes &tdeprint;. &tdeprint; is not a standalone
-program. It is the new printing framework for &kde; 2.2. &tdeprint;
-is an intermediate layer between &kde; (or other) applications and the selected
+program. It is the new printing framework for &tde; 2.2. &tdeprint;
+is an intermediate layer between &tde; (or other) applications and the selected
 (and installed) print subsystem of your OS (&OS;).</para>
 </abstract>
 
@@ -94,8 +94,8 @@ is an intermediate layer between &kde; (or other) applications and the selected
 <title>Introduction</title>
 
 <para>This handbook describes &tdeprint;. &tdeprint; is not a standalone
-program. It is the new printing framework for &kde; 2.2. &tdeprint;
-is an intermediate layer between &kde; (or other) applications and the selected
+program. It is the new printing framework for &tde; 2.2. &tdeprint;
+is an intermediate layer between &tde; (or other) applications and the selected
 (and installed) print subsystem of your OS (&OS;).</para>
 
 <para>It should be noted that both the developer of this application,
@@ -113,7 +113,7 @@ Manager</guilabel> module in &kcontrol;, and you will find its
 operation to hopefully be fairly self evident, no matter what printing
 subsystem you use.</para>
 
-<para>Lauri Watts, &kde; documentation team</para>
+<para>Lauri Watts, &tde; documentation team</para>
 
 <!-- Insert here screenshot : <steinbruch_scaled.png> -->
 

@@ -29,10 +29,10 @@
 <sect2 id="icons-intro">
 <title>Introduction</title>
 
-<para>&kde; comes with a full set of icons in several sizes. These icons
-are being used all over &kde;: the desktop, the panel, the &konqueror; file
-manager, in every toolbar of every &kde; application, etc. The icons
-control module offers you very flexible ways of customizing the way &kde;
+<para>&tde; comes with a full set of icons in several sizes. These icons
+are being used all over &tde;: the desktop, the panel, the &konqueror; file
+manager, in every toolbar of every &tde; application, etc. The icons
+control module offers you very flexible ways of customizing the way &tde;
 handles icons. You can:</para>
 
 <itemizedlist>
@@ -46,8 +46,8 @@ icons will be used in: for example the desktop, toolbars &etc;
 </itemizedlist>
 
 <important><para>Please note that some of these settings may depend on
-your selected icon theme. &kde; comes with two icon themes by default,
-&kde;-Classic (HiColor) and Crystal SVG.  There is also a low color theme
+your selected icon theme. &tde; comes with two icon themes by default,
+&tde;-Classic (HiColor) and Crystal SVG.  There is also a low color theme
 in the tdeartwork package, along with others.</para></important>
 
 </sect2>
@@ -57,7 +57,7 @@ in the tdeartwork package, along with others.</para></important>
 
 <para>Starting at the top, you can see some example icons.  These change
 in appearance depending on the icon theme you select. Most default
-installations will have only one icon theme available, the &kde; default
+installations will have only one icon theme available, the &tde; default
 Crystal SVG theme.  There are others contained separately in the
 tdeartwork package, and you can download more from the Internet.</para>
 
@@ -101,7 +101,7 @@ changes in effect.</para>
 <title>Icon Size</title>
 
 <para>You have two options relating to icon sizes. First, you can choose
-from a list of icon sizes. Second, you can tell &kde; to draw all icons
+from a list of icon sizes. Second, you can tell &tde; to draw all icons
 using double sized pixels. The largest icon sizes are especially useful
 for visually impaired people.</para>
 
@@ -110,7 +110,7 @@ the icon theme you have selected in the icon themes control module. For
 example, the low color icon theme only offers the sizes 16 and 32 for
 desktop icons and 16, 22 and 32 for toolbar icons. The HiColor theme
 offers icon sizes 16, 32 and 48 as well as sizes from 64 to 128.
-However, as &kde; can not have all these icon sizes in store, icons
+However, as &tde; can not have all these icon sizes in store, icons
 using size 64 to 128 will be automatically generated which may result in
 a loss of quality.</para>
 
@@ -121,7 +121,7 @@ double sized pixels, &ie; a 2x2 block instead of normal pixels. While
 this makes it possible to achieve very large icon sizes, the quality is
 poor: icons will look <quote>blocky</quote>, an effect you may remember
 if you've grown up using a Sinclair ZX Spectrum or similar. If this is
-an option for you, using the large sizes offered by &kde;'s HiColor
+an option for you, using the large sizes offered by &tde;'s HiColor
 icon theme will always result in a much better quality than using the
 low color icon theme with double sized pixels.</para> 
 <!-- 

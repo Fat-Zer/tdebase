@@ -9,9 +9,9 @@
 </authorgroup>
 </chapterinfo>
 
-<title>The Base &kde; Applications</title>
+<title>The Base &tde; Applications</title>
 
-<para>What follows is a brief description of a few of the base &kde; applications. For more information on any of the applications you should check the links recommended with each respective entry. </para>
+<para>What follows is a brief description of a few of the base &tde; applications. For more information on any of the applications you should check the links recommended with each respective entry. </para>
 
 <!-- What are they?? (Phil) -->
 <!-- Included a few here; may be a good idea to add to this in future -->
@@ -23,7 +23,7 @@
 <variablelist>
 <varlistentry>
 <term>&konqueror;</term>
-	<listitem><para>&kde;'s file manager, web browser, <acronym>FTP</acronym> client and much more. &konqueror; is the canvas for all the latest &kde; technology, from KIO slaves (which provide mechanisms for file access) to component embedding, allowing it to be a universal viewing application, capable of displaying various image files as well as documents.</para>
+	<listitem><para>&tde;'s file manager, web browser, <acronym>FTP</acronym> client and much more. &konqueror; is the canvas for all the latest &tde; technology, from KIO slaves (which provide mechanisms for file access) to component embedding, allowing it to be a universal viewing application, capable of displaying various image files as well as documents.</para>
 	
 		<itemizedlist>
 			<listitem><para>Website: <ulink url="http://konqueror.org">http://konqueror.org</ulink></para></listitem>
@@ -35,7 +35,7 @@
 
 <varlistentry>
 <term>&kate;</term>
-	<listitem><para>&kde;'s advanced multi-view text editor. &kate; is excellent for things such as viewing the &HTML; source of a webpage to handling advanced coding in <acronym>C++</acronym>, <acronym>PHP</acronym> and <acronym>XML</acronym> with its powerful syntax highlighting engine and code folding capabilities. &kate; is a very speedy application, being capable of opening huge text files in a matter of seconds, as well as allowing you to view a hefty amount of multiple views in order to see more instances of the same document and/or more documents at any particular time.</para>
+	<listitem><para>&tde;'s advanced multi-view text editor. &kate; is excellent for things such as viewing the &HTML; source of a webpage to handling advanced coding in <acronym>C++</acronym>, <acronym>PHP</acronym> and <acronym>XML</acronym> with its powerful syntax highlighting engine and code folding capabilities. &kate; is a very speedy application, being capable of opening huge text files in a matter of seconds, as well as allowing you to view a hefty amount of multiple views in order to see more instances of the same document and/or more documents at any particular time.</para>
 	
 		<itemizedlist>
 			<listitem><para>Website: <ulink url="http://kate.kde.org">http://kate.kde.org</ulink></para></listitem>
@@ -51,7 +51,7 @@
 
 <varlistentry>
 <term>&konsole;</term>
-	<listitem><para>The X terminal emulator for &kde;. &konsole;, like many &kde; applications, is extremely customizable; while you can create your own user sessions, you can also of course open &Linux; console sessions, shell sessions, as well as standard <systemitem class="username">root</systemitem> and sudo sessions.</para>
+	<listitem><para>The X terminal emulator for &tde;. &konsole;, like many &tde; applications, is extremely customizable; while you can create your own user sessions, you can also of course open &Linux; console sessions, shell sessions, as well as standard <systemitem class="username">root</systemitem> and sudo sessions.</para>
 	
 		<itemizedlist>
 			<listitem><para>Website: <ulink url="http://konsole.kde.org">http://konsole.kde.org</ulink></para></listitem>
@@ -66,7 +66,7 @@
 
 <varlistentry>
 <term>&kicker;</term>
-	<listitem><para>The &kde; Panel, used for handling your currently running applications, a pager allowing you to switch between desktops, quick launch buttons to act as application launchers and much more.</para>
+	<listitem><para>The &tde; Panel, used for handling your currently running applications, a pager allowing you to switch between desktops, quick launch buttons to act as application launchers and much more.</para>
 	
 		<itemizedlist>
 			<listitem><para>See <xref linkend="panel-and-desktop"/> for altering some of its settings.</para></listitem>
@@ -80,7 +80,7 @@
 <varlistentry>
 <term><application>kdcop</application></term>
 <!-- Mainly mentioned to raise awareness, for DCOP -->
-	<listitem><para>A <acronym>GUI</acronym> front-end to the powerful &DCOP; (Desktop COmmunications Protocol). &DCOP; provides a comprehensive protocol for interprocess communication between &kde; applications. While this is increasingly useful to &kde; programmers, it is also beneficial to the ordinary user who would want to create a script, or, say, a <application>SuperKaramba</application> theme.</para>
+	<listitem><para>A <acronym>GUI</acronym> front-end to the powerful &DCOP; (Desktop COmmunications Protocol). &DCOP; provides a comprehensive protocol for interprocess communication between &tde; applications. While this is increasingly useful to &tde; programmers, it is also beneficial to the ordinary user who would want to create a script, or, say, a <application>SuperKaramba</application> theme.</para>
 	
 		<itemizedlist>
 			<listitem><para>In the User Guide <xref linkend="scripting-the-desktop"/> and <xref linkend="kdialog"/></para></listitem>
@@ -93,7 +93,7 @@
 
 <varlistentry>
 <term>&kcontrol;</term>
-	<listitem><para>The control center for the K Desktop Environment. You can alter a myriad of different things, ranging from themes, fonts and screensavers, to Internet, security and system administration.</para>
+	<listitem><para>The control center for the Trinity Desktop Environment. You can alter a myriad of different things, ranging from themes, fonts and screensavers, to Internet, security and system administration.</para>
 	
 		<itemizedlist>
 			<listitem><para>See <xref linkend="control-center"/>.</para></listitem>
@@ -106,12 +106,12 @@
 
 <varlistentry>
 <term>&khelpcenter;</term>
-	<listitem><para>The &kde; help system is used to provide access to the base &UNIX; help pages (man or info) as well as the native &kde; documentation provided by the &kde; documentation team or the application authors. You should be able to access all of the &kde; application handbooks from here.</para>
+	<listitem><para>The &tde; help system is used to provide access to the base &UNIX; help pages (man or info) as well as the native &tde; documentation provided by the &tde; documentation team or the application authors. You should be able to access all of the &tde; application handbooks from here.</para>
 
 		<itemizedlist>
 			<listitem><para><ulink
 	url="help:/khelpcenter">&khelpcenter; Handbook</ulink></para></listitem>
-			<listitem><para>For information on the &kde; Documentation team, how to possibly join and help &kde;, see: <ulink url="http://kde.org/documentation">http://kde.org/documentation</ulink></para></listitem>
+			<listitem><para>For information on the &tde; Documentation team, how to possibly join and help &tde;, see: <ulink url="http://kde.org/documentation">http://kde.org/documentation</ulink></para></listitem>
 		</itemizedlist>
 	
 	</listitem>
@@ -121,9 +121,9 @@
 
 <itemizedlist>
 <title>Related Information</title>
-	<listitem><para><ulink url="http://kde-apps.org">http://kde-apps.org</ulink> -- The largest directory of third-party &kde; applications.</para></listitem>
+	<listitem><para><ulink url="http://kde-apps.org">http://kde-apps.org</ulink> -- The largest directory of third-party &tde; applications.</para></listitem>
 	<listitem><para>As you may have noticed, a wealth of information is accessible from the respective handbooks themselves, which can be accessed either by using the help KIO slave in &konqueror; (that is, type <userinput>help:/<replaceable>application</replaceable></userinput> in the Location toolbar), or by selecting it in the &khelpcenter;.</para></listitem>
-	<listitem><para>You can also likely find out quite a bit of information from the &kde; website, itself, at <ulink url="http://kde.org">http://kde.org</ulink>.</para></listitem>
+	<listitem><para>You can also likely find out quite a bit of information from the &tde; website, itself, at <ulink url="http://kde.org">http://kde.org</ulink>.</para></listitem>
 </itemizedlist>
 
 </sect1>
@@ -140,12 +140,12 @@
 
 <title>Personal Information Management</title>
 
-<para>&kde; <acronym>PIM</acronym> (Personal Information Manager) is a sub-project of &kde;, and it aims to provide an application suite to manage personal information. It has several components, but these can all be brought under one application -- &kontact;, which is the personal information manager. Below is an overview of a few of its popular components; that is, a few of the applications that integrate into it.</para>
+<para>&tde; <acronym>PIM</acronym> (Personal Information Manager) is a sub-project of &tde;, and it aims to provide an application suite to manage personal information. It has several components, but these can all be brought under one application -- &kontact;, which is the personal information manager. Below is an overview of a few of its popular components; that is, a few of the applications that integrate into it.</para>
 
 <variablelist>
 <varlistentry>
 <term>&kontact;</term>
-	<listitem><para>This serves as the medium by which the rest of the applications in &kde; <acronym>PIM</acronym> can integrate with one another. All of the applications in &kde; <acronym>PIM</acronym> can be displayed inside here, and you can easily choose which ones to display. It also contains a Summary page by which you can get a brief overview of events and information in the other components.</para>
+	<listitem><para>This serves as the medium by which the rest of the applications in &tde; <acronym>PIM</acronym> can integrate with one another. All of the applications in &tde; <acronym>PIM</acronym> can be displayed inside here, and you can easily choose which ones to display. It also contains a Summary page by which you can get a brief overview of events and information in the other components.</para>
 	
 		<itemizedlist>
 			<listitem><para>Website: <ulink url="http://kontact.kde.org">http://kontact.kde.org</ulink></para></listitem>
@@ -181,7 +181,7 @@
 
 <varlistentry>
 <term>&kaddressbook;</term>
-	<listitem><para>The contacts component. &kaddressbook; enables you to manage your contacts efficiently and comfortably; contacts can be easily exported and imported from a plethora of different address book standards, and it can be efficiently integrated with &kopete;, &kde;'s multi-protocol instant messenger. Other features include support for all international character sets and advanced search functions.</para>
+	<listitem><para>The contacts component. &kaddressbook; enables you to manage your contacts efficiently and comfortably; contacts can be easily exported and imported from a plethora of different address book standards, and it can be efficiently integrated with &kopete;, &tde;'s multi-protocol instant messenger. Other features include support for all international character sets and advanced search functions.</para>
 	
 		<itemizedlist>
 			<listitem><para>Website: <ulink url="http://pim.kde.org/components/kaddressbook.php">http://pim.kde.org/components/kaddressbook.php</ulink></para></listitem>
@@ -239,7 +239,7 @@
 
 <title>Network</title>
 
-<para>There are several network-related applications in &kde;. Below is a description of a few of these.</para>
+<para>There are several network-related applications in &tde;. Below is a description of a few of these.</para>
 
 <variablelist>
 <varlistentry>
@@ -277,7 +277,7 @@
 
 <itemizedlist>
 <title>Related Information</title>
-	<listitem><para>Several more &kde; network applications can be found in the &kde; Extragear; see <xref linkend="extragear-network"/>, under <xref linkend="extragear-components"/>.</para></listitem>
+	<listitem><para>Several more &tde; network applications can be found in the &tde; Extragear; see <xref linkend="extragear-network"/>, under <xref linkend="extragear-components"/>.</para></listitem>
 </itemizedlist>
 
 </sect1>
@@ -294,7 +294,7 @@
 
 <title>Graphics</title>
 
-<para>&kde; has several graphics-related applications, ranging from <acronym>PDF</acronym> viewers to applications enabling you to take screenshots. Below is a delineation, as well as some related links, for a few of them.</para>
+<para>&tde; has several graphics-related applications, ranging from <acronym>PDF</acronym> viewers to applications enabling you to take screenshots. Below is a delineation, as well as some related links, for a few of them.</para>
 
 <variablelist>
 
@@ -310,7 +310,7 @@
 
 <varlistentry>
 <term><application>KPDF</application></term>
-	<listitem><para>An advanced <acronym>PDF</acronym> viewer, based on <application>xpdf</application>, for &kde;. <application>KPDF</application> contains a number of ways to search through the document (standard find dialog, thumbnail filter, etc.) and has other features such as hands-free reading.</para>
+	<listitem><para>An advanced <acronym>PDF</acronym> viewer, based on <application>xpdf</application>, for &tde;. <application>KPDF</application> contains a number of ways to search through the document (standard find dialog, thumbnail filter, etc.) and has other features such as hands-free reading.</para>
 	
 		<itemizedlist>
 			<listitem><para>Website: <ulink url="http://kpdf.kde.org">http://kpdf.kde.org</ulink></para></listitem>
@@ -321,7 +321,7 @@
 
 <varlistentry>
 <term><application>KView</application></term>
-	<listitem><para>An image viewer program which supports a number of different image filetypes including <acronym>JPEG</acronym>, <acronym>GIF</acronym>, <acronym>PNG</acronym>, <acronym>TIFF</acronym> and many others. <application>Kview</application> has full integration with &kde; and it can be embedded into &konqueror; for viewing image files on your diskdrive as well as your <acronym>FTP</acronym> site or webserver, using its &URL; open support. Other features include a few image manipulations such as zoom, rotate, grayscale and flip. </para>
+	<listitem><para>An image viewer program which supports a number of different image filetypes including <acronym>JPEG</acronym>, <acronym>GIF</acronym>, <acronym>PNG</acronym>, <acronym>TIFF</acronym> and many others. <application>Kview</application> has full integration with &tde; and it can be embedded into &konqueror; for viewing image files on your diskdrive as well as your <acronym>FTP</acronym> site or webserver, using its &URL; open support. Other features include a few image manipulations such as zoom, rotate, grayscale and flip. </para>
 	
 		<itemizedlist>
 			<listitem><para>Website: <ulink url="http://www.ph.unimelb.edu.au/~ssk/kde/kview/">http://www.ph.unimelb.edu.au/~ssk/kde/kview/</ulink></para></listitem>
@@ -368,7 +368,7 @@
 
 <itemizedlist>
 <title>Related Information</title>
-	<listitem><para>Several more advanced &kde; graphics applications can be found in the &kde; Extragear; under the <xref linkend="extragear-components"/>, see <xref linkend="extragear-graphics"/> for a list of a few of them.</para></listitem>
+	<listitem><para>Several more advanced &tde; graphics applications can be found in the &tde; Extragear; under the <xref linkend="extragear-components"/>, see <xref linkend="extragear-graphics"/> for a list of a few of them.</para></listitem>
 </itemizedlist>
 
 </sect1>
@@ -381,7 +381,7 @@
 <variablelist>
 <varlistentry>
 <term>&juk;</term>
-	<listitem><para>An easy-to-use music player for &kde;. &juk; is playlist and meta-data focused, allowing you to quickly search through the dynamic playlist provided. Some of the features include &CD; cover-art fetching from <trademark class="registered">Google</trademark> images, <application>MusicBrainz</application> integration for file identification over the Internet, and multiple audio backends, including &arts;, <application>GStreamer</application> and <application>aKode</application>.  </para>
+	<listitem><para>An easy-to-use music player for &tde;. &juk; is playlist and meta-data focused, allowing you to quickly search through the dynamic playlist provided. Some of the features include &CD; cover-art fetching from <trademark class="registered">Google</trademark> images, <application>MusicBrainz</application> integration for file identification over the Internet, and multiple audio backends, including &arts;, <application>GStreamer</application> and <application>aKode</application>.  </para>
 	
 		<itemizedlist>
 			<listitem><para>Website: <ulink url="http://developer.kde.org/~wheeler/juk.html">http://developer.kde.org/~wheeler/juk.html</ulink></para></listitem>
@@ -415,7 +415,7 @@
 
 <itemizedlist>
 <title>Related Information</title>
-	<listitem><para>Several more advanced &kde; multimedia applications can be found in the &kde; Extragear; under the <xref linkend="extragear-components"/>, see <xref linkend="extragear-multimedia"/> for a list of a few of them.</para></listitem>
+	<listitem><para>Several more advanced &tde; multimedia applications can be found in the &tde; Extragear; under the <xref linkend="extragear-components"/>, see <xref linkend="extragear-multimedia"/> for a list of a few of them.</para></listitem>
 </itemizedlist>
 
 </sect1>

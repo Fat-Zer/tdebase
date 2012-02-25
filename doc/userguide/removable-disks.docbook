@@ -12,14 +12,14 @@
 
 <title>Removable Disks</title>
 
-<para>For &kde; to use any device, removable or not, the device must
-first be mounted. When a device is mounted, &kde; gets all the needed
+<para>For &tde; to use any device, removable or not, the device must
+first be mounted. When a device is mounted, &tde; gets all the needed
 information about the device: how to read it, how to write information to
 it, and much more.</para>
 
 <para>The use of a device is controlled by the operating
 system and it is important your operating system has tools for managing
-these devices. &kde; can also auto mount devices, working with
+these devices. &tde; can also auto mount devices, working with
 <acronym>HAL</acronym> (Hardware Abstraction Layer). Your distribution
 should have set up <acronym>HAL</acronym> automatically; if not,
 consult the documentation provided by your distribution.</para>
@@ -54,13 +54,13 @@ Media</guilabel>.</para>
 
 <para>The <guilabel>Storage Media</guilabel> location (also known as
 the media:/ protocol) will show all devices which are recognized by
-&kde;, including the hard drive and &CD; and <acronym>DVD</acronym>
+&tde;, including the hard drive and &CD; and <acronym>DVD</acronym>
 drives, as well as <acronym>USB</acronym> and Firewire devices,
-provided that your distribution is set up correctly to tell &kde;
+provided that your distribution is set up correctly to tell &tde;
 about them.</para>
 
 
- <para>You can also setup &kde; to display a device icon
+ <para>You can also setup &tde; to display a device icon
 on the desktop. To start or configure this feature in the &kcontrolcenter; go
 to
 <menuchoice><guilabel>Desktop</guilabel><guilabel>Behavior</guilabel></menuchoice>
@@ -72,8 +72,8 @@ configured), by not checking the unmounted boxes.</para>
 <sect2 id="automounting">
 <title>Automount</title>
 
-<para>With &kde; 3.5 and newer, devices can be automounted, meaning one only
-has to insert the removable disk. &kde; will then open an automount prompt
+<para>With &tde; 3.5 and newer, devices can be automounted, meaning one only
+has to insert the removable disk. &tde; will then open an automount prompt
 asking the user <quote>What do you want to do?</quote> with the media. To
 configure the list of options prompted for devices open the &kcontrolcenter; and
 navigate to <menuchoice><guilabel>Peripherals</guilabel><guilabel>Storage
@@ -86,13 +86,13 @@ list of devices.</para>
 configured. To find out if they are running on your system check the
 <guilabel>Process Table</guilabel> in &ksysguard; for:
 <command>hald</command>, <command>dbus-deamon</command>, and
-<command>udevd</command>. &kde; does not provide any of these
+<command>udevd</command>. &tde; does not provide any of these
 components. You must check with you distribution.</para>
 
 <itemizedlist>
 <title>Related Information</title>
-<listitem><para><ulink url="http://wiki.kde.org/tiki-index.php?page=DBUS">HOWTO: setting up D-BUS and HAL with KDE's media ioslave
-edit</ulink> (A community maintained HOWTO on the &kde; wiki)</para></listitem>
+<listitem><para><ulink url="http://wiki.kde.org/tiki-index.php?page=DBUS">HOWTO: setting up D-BUS and HAL with TDE's media ioslave
+edit</ulink> (A community maintained HOWTO on the &tde; wiki)</para></listitem>
 <listitem><para><ulink url="http://www.freedesktop.org/wiki/Software/dbus">The DBus page</ulink></para></listitem>
 <listitem><para><ulink url="http://www.freedesktop.org/wiki/Software/hal"></ulink>HAL - Hardware Abstraction Layer</para></listitem>
 </itemizedlist>
@@ -102,17 +102,17 @@ edit</ulink> (A community maintained HOWTO on the &kde; wiki)</para></listitem>
 <sect2 id="mounting-removable-disks">
 <title>Mounting</title>
 
-<para>If your system does not automount, &kde; is configured to mount and
+<para>If your system does not automount, &tde; is configured to mount and
 unmount devices which the current user has permission to mount. If a device
 is mounted as the root partition (&ie; <literal>/</literal>), and you log in
-to &kde; as a user, &kde; can not mount or unmount it without being given a
+to &tde; as a user, &tde; can not mount or unmount it without being given a
 higher permission. To check a devices mount permission see the
 <filename>/etc/fstab</filename> file.</para>
 
-<para>To mount and unmount devices manually in &kde; one only has to &RMB;
+<para>To mount and unmount devices manually in &tde; one only has to &RMB;
 click the device icon in media:/ or on the desktop and select
 <guimenuitem>Mount</guimenuitem> or <guimenuitem>Unmount</guimenuitem>, for
-removable devices one can also unmount with <guimenuitem>Safely Remove</guimenuitem>. &kde; still requires the device to be setup in
+removable devices one can also unmount with <guimenuitem>Safely Remove</guimenuitem>. &tde; still requires the device to be setup in
 /etc/fstab.</para>
 </sect2>
 

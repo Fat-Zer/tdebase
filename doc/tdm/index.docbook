@@ -53,7 +53,7 @@
 <releaseinfo>0.05.02</releaseinfo>
 
 <abstract>
-<para>This document describes &tdm; the &kde; Display Manager. &tdm;
+<para>This document describes &tdm; the &tde; Display Manager. &tdm;
 is also known as the <quote>Login Manager</quote>.</para>
 </abstract>
 
@@ -125,7 +125,7 @@ the next step</para>
 <para>If one does not already exist, add a line to the
 <filename>~/.xinitrc</filename> to start your preferred window manager
 or desktop environment.</para>
-<para>For &kde; you should enter:</para>
+<para>For &tde; you should enter:</para>
 <screen><userinput>starttde</userinput></screen>
 <para>For other window managers or desktop environments, you should
 look in their documentation for the correct command.</para>
@@ -136,7 +136,7 @@ look in their documentation for the correct command.</para>
 </procedure>
 
 <para>At this point, typing <userinput><command>startx</command></userinput>
-on the commandline should start X, with a &kde; session.  The next task is
+on the commandline should start X, with a &tde; session.  The next task is
 to try &tdm;.</para>
 
 <para>As <systemitem class="username">root</systemitem>, type
@@ -147,7 +147,7 @@ linkend="login" />.</para>
 
 <para>Typing your normal username and password in the fields provided, and
 leaving <option>default</option> selected as the session type should now
-open a &kde; session for your user.</para>
+open a &tde; session for your user.</para>
 
 <para>If you have other users to configure, you should repeat the procedure
 above for each of them.</para>
@@ -345,7 +345,7 @@ on.</para>
 
 <title>The Login Manager &kcontrolcenter; Module</title>
 
-<para>Using this module, you can configure the &kde; graphical login
+<para>Using this module, you can configure the &tde; graphical login
 manager, &tdm;.  You can change how the login screen looks, who has
 access using the login manager and who can shutdown the
 computer.</para>
@@ -385,7 +385,7 @@ module.</para></note>
 <title>Appearance</title>
 
 <para>From this page you can change the visual appearance of &tdm;,
-&kde;'s graphical login manager.</para>
+&tde;'s graphical login manager.</para>
 
 <para>The <guilabel>Greeting:</guilabel> is the title of the login
  screen.  Setting this is especially useful if you have many servers users
@@ -427,7 +427,7 @@ These correspond to the key
 <link linkend="option-greeterpos"><option>GreeterPos</option></link>
 in &tdmrc;.</para>
 
-<para>While &kde;'s style depends on the settings of the user logged
+<para>While &tde;'s style depends on the settings of the user logged
 in, the style used by &tdm; can be configured using the <guilabel>GUI
 Style:</guilabel> and <guilabel>Color Scheme:</guilabel> options.
 These correspond to the keys <link
@@ -509,14 +509,14 @@ covered with this one color.</para></listitem>
 buttons). </para> <para>You then select a pattern by clicking
 <guilabel>Setup</guilabel>.  This opens a new dialog window, which gives you
 the opportunity to select a pattern.  Simply click once on the pattern of your
-choice, then click on <guilabel>OK</guilabel>, and &kde; will render the pattern
+choice, then click on <guilabel>OK</guilabel>, and &tde; will render the pattern
 you selected using the two colors you selected.  For more on patterns, see the
 section <ulink url="help:/kcontrol/background/index.html#bkgnd-patterns">Background: Adding, Removing and Modifying
 Patterns</ulink>.</para></listitem>
 </varlistentry>
 <varlistentry>
 <term>Background Program</term>
-<listitem><para>By selecting this option, you can have &kde; use an external
+<listitem><para>By selecting this option, you can have &tde; use an external
 program to determine the background.  This can be any program of your choosing.
 For more information on this option, see the section entitled <ulink
 url="help:/kcontrol/background/index.html#bkgnd-programs">Background: Using an external program</ulink>.</para></listitem>
@@ -524,7 +524,7 @@ url="help:/kcontrol/background/index.html#bkgnd-programs">Background: Using an e
 <varlistentry>
 <term>Horizontal Gradient</term>
 <listitem><para>By choosing this mode, you select two colors (using both color
-buttons).  &kde; will then start with the color selected by <guilabel>Color
+buttons).  &tde; will then start with the color selected by <guilabel>Color
 1</guilabel> on the left edge of the screen, and slowly transform into the
 color selected by <guilabel>Color 2</guilabel> by the time it gets to the
 right edge of the screen.</para></listitem>
@@ -532,7 +532,7 @@ right edge of the screen.</para></listitem>
 <varlistentry>
 <term>Vertical Gradient</term>
 <listitem><para>By choosing this mode, you select two colors (using both color
-buttons).  &kde; will then start with the color selected by <guilabel>Color
+buttons).  &tde; will then start with the color selected by <guilabel>Color
 1</guilabel> on the top edge of the screen, and slowly transform into the color
 selected by <guilabel>Color 2</guilabel> as it moves to the bottom of the
 screen.</para></listitem>
@@ -540,7 +540,7 @@ screen.</para></listitem>
 <varlistentry>
 <term>Pyramid Gradient</term>
 <listitem><para>By choosing this mode, you select two colors (using both color
-buttons).  &kde; will then start with the color selected by <guilabel>Color
+buttons).  &tde; will then start with the color selected by <guilabel>Color
 1</guilabel> in each corner of the screen, and slowly transform into the color
 selected by <guilabel>Color 2</guilabel> as it moves to the center of the
 screen.</para></listitem> 
@@ -548,7 +548,7 @@ screen.</para></listitem>
 <varlistentry>
 <term>Pipecross Gradient</term>
 <listitem><para>By choosing this mode, you select two colors (using both color
-buttons).  &kde; will then start with the color selected by <guilabel>Color
+buttons).  &tde; will then start with the color selected by <guilabel>Color
 1</guilabel> in each corner of the screen, and slowly transform into the color
 selected by <guilabel>Color 2</guilabel> as it moves to the center of the
 screen. The <quote>shape</quote> of this gradient is  different then the pyramid
@@ -557,7 +557,7 @@ gradient.</para></listitem>
 <varlistentry>
 <term>Elliptic Gradient</term>
 <listitem><para>By choosing this mode, you select two colors (using both color
-buttons).  &kde; will then start with the color selected by <guilabel>Color
+buttons).  &tde; will then start with the color selected by <guilabel>Color
 2</guilabel> in the center of the screen, and slowly transform into the color
 selected by <guilabel>Color 1</guilabel> as it moves to the edges, in an
 elliptical pattern.</para></listitem> 
@@ -861,10 +861,10 @@ command:</para>
 
 <para>If you get a &tdm; login dialog and you are able to log in,
 things are going well.  The main thing that can go wrong here is that
-the run-time linker might not find the shared &Qt; or &kde; libraries.
-If you have a binary distribution of the &kde; libraries, make sure
-&tdm; is installed where the libraries believe &kde; is installed and
-try setting some environment variables to point to your &kde; and &Qt;
+the run-time linker might not find the shared &Qt; or &tde; libraries.
+If you have a binary distribution of the &tde; libraries, make sure
+&tdm; is installed where the libraries believe &tde; is installed and
+try setting some environment variables to point to your &tde; and &Qt;
 libraries.</para>
 
 <para>For example:</para>
@@ -954,7 +954,7 @@ graphical &tdm; login dialog.</para>
 
 <para>If this step is unsuccessful the most likely problem is that the
 environment used at boot time differs from the environment that you used for
-testing at the command line.  If you are trying to get two versions of &kde;
+testing at the command line.  If you are trying to get two versions of &tde;
 to co-exist, be particularly careful that the settings you use for your
 <envar>PATH</envar> and <envar>LD_LIBRARY_PATH</envar> environment variables
 are consistent, and that the startup scripts are not over-riding them in
@@ -1004,7 +1004,7 @@ Name=<replaceable>name to show in the &tdm; session list</replaceable></programl
 <term>default</term>
 <listitem>
 <para>
-The default session for &tdm; is normally &kde; but can be configured by the
+The default session for &tdm; is normally &tde; but can be configured by the
 system administrator.
 </para>
 </listitem>
@@ -1050,8 +1050,8 @@ with workstations and a more powerful server that can provide the
 resources to run multiple X sessions.  For example, &XDMCP; is a good
 way to reuse old computers - a Pentium or even 486 computer with 16 Mb
 RAM is sufficient to run X itself, and using &XDMCP; such a computer can
-run a full modern &kde; session from a server.  For the server part,
-once a single &kde; (or other environment) session is running, running
+run a full modern &tde; session from a server.  For the server part,
+once a single &tde; (or other environment) session is running, running
 another one requires very few extra resources.</para>
 
 <para>However, allowing another method of login to your machine
@@ -1405,9 +1405,9 @@ General Public License: look at the source code.
 <para>&tdm; is derived from, and includes code from,
 &xdm; (C) Keith Packard, MIT X Consortium.</para>
 
-<para>&tdm; 0.1 was written by &Matthias.Ettrich;.  Later versions till &kde;
-2.0.x were written by &Steffen.Hansen;.  Some new features for &kde; 2.1.x and
-a major rewrite for &kde; 2.2.x made by &Oswald.Buddenhagen;.</para>
+<para>&tdm; 0.1 was written by &Matthias.Ettrich;.  Later versions till &tde;
+2.0.x were written by &Steffen.Hansen;.  Some new features for &tde; 2.1.x and
+a major rewrite for &tde; 2.2.x made by &Oswald.Buddenhagen;.</para>
 
 <para>Other parts of the &tdm; code are copyright by the authors, and
 licensed under the terms of the <ulink url="common/gpl-license.html">&GNU;
@@ -1426,9 +1426,9 @@ as long as the names of the authors are mentioned.</para>
 Zumstein<email>zumstein@ssd.ethz.ch</email>. Last update August 9,
 1998</para></listitem>
 
-<listitem><para>Documentation revised for &kde; 2 by &Neal.Crook; &Neal.Crook.mail;. Last update August 6, 2000</para></listitem>
+<listitem><para>Documentation revised for &tde; 2 by &Neal.Crook; &Neal.Crook.mail;. Last update August 6, 2000</para></listitem>
 
-<listitem><para>Documentation extended and revised for &kde; 2.2 by &Oswald.Buddenhagen; &Oswald.Buddenhagen.mail;.  Last update August,
+<listitem><para>Documentation extended and revised for &tde; 2.2 by &Oswald.Buddenhagen; &Oswald.Buddenhagen.mail;.  Last update August,
 2001</para></listitem>
 
 </itemizedlist></para>

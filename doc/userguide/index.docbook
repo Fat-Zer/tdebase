@@ -2,7 +2,7 @@
   <!DOCTYPE book PUBLIC "-//KDE//DTD DocBook XML V4.2-Based Variant V1.1//EN" "dtd/kdex.dtd" [
   <!ENTITY kappname "<replaceable>KApp</replaceable>">
   <!ENTITY % addindex "INCLUDE">
- <!ENTITY % imageobjectco.module "INCLUDE">
+  <!ENTITY % imageobjectco.module "INCLUDE">
   <!ENTITY getting-help SYSTEM "getting-help.docbook">
   <!ENTITY programs-controlling SYSTEM "programs-controlling.docbook">
   <!ENTITY troubleshooting-no-open SYSTEM "troubleshooting-no-open.docbook">
@@ -56,11 +56,11 @@
 
 <book lang="&language;">
 <bookinfo>
-<title>The &kde; User Guide</title>
+<title>The &tde; (Trinity Desktop Environment) User Guide</title>
 
 <authorgroup>
 <corpauthor>
-The &kde; Documentation Team
+The &tde; Documentation Team
 </corpauthor>
 
 <!-- TRANS:ROLES_OF_TRANSLATORS -->
@@ -70,23 +70,28 @@ The &kde; Documentation Team
 <year>2004</year><year>2005</year>
 <holder>The &kde; Documentation Team</holder>
 </copyright>
+<copyright>
+<year>2012</year>
+<holder>The &tde; Documentation Team</holder>
+</copyright>
 
 <legalnotice>&FDLNotice;</legalnotice>
 
-<date>2004-06-16</date>
-<releaseinfo>0.0.1</releaseinfo>
+<date>2012-02-01</date>
+<releaseinfo>0.2</releaseinfo>
 
 <abstract>
-<para>A general user guide to &kde;
+<para>A general user guide to the Trinity Desktop Environment.
 </para>
 
-<para>Please report any problems with this document to
-<email>kde-doc-english@kde.org</email>.
+<para>Please report problems with this document to
+<email>trinity-devel@lists.pearsoncomputing.net</email>.
 </para>
 </abstract>
 
 <keywordset>
 <keyword>KDE</keyword>
+<keyword>TDE</keyword>
 <keyword>desktop</keyword>
 <keyword>handbook</keyword>
 <keyword>tutorial</keyword>
@@ -98,58 +103,53 @@ The &kde; Documentation Team
 <title>Introduction</title>
 
 <chapter id="welcome">
-<title>Welcome to the &kde; User Guide</title>
+<title>Welcome to the &tde; User Guide</title>
 
-<para>This User Guide aims to provide an overview of the entire &kde; experience.  We
-assume here that you have a standard, working installation of a complete &kde;
-desktop environment, and the accompanying packages.  This book should be
-your first point of reference for any simple &kde; configuration question, or
-to find out how to perform a common task.</para>
+<para>This User Guide provides an overview of &tde;. Use this
+guide after installing &tde; and accompanying packages. This guide should be
+a first point of reference for basic &tde; configuration questions, or
+to learn to perform common tasks.</para>
 
 <sect1 id="what-the-ug-is">
-<title>What this book aims to be</title>
+<title>What this guide aims to be</title>
 
-<para>The first place to look and a one stop shop for all questions you have
-regarding your &kde; experience.</para>
+<para>The first place to look and a one-stop location for questions
+regarding &tde;.</para>
 
-<para>A Quick Start Guide to commonly performed tasks - In most cases, you do not
-need to know the details of how to configure every option in an application,
-in order to get down to work.  You will find step-by-step guides which
-will work in most common situations, along with links to sources of
-further information in case you have any problems.</para>
+<para>A quick guide to commonly performed tasks. In most cases, learning
+basic functions does not require configuring every option in an application.
+Provided in this guide is information that works
+for most common situations, along with links to sources of
+further information.</para>
 
-<para>There are also some tips and tricks showing you the most useful and
-impressive features of &kde;, and ways to save you time and effort.</para>
+<para>There are also some tips and tricks showing useful features
+of &tde; and ways to save time and effort.</para>
 
 </sect1>
 
 <sect1 id="what-the-ug-is-not">
 <title>What this book is not</title>
 
-<para>The User Guide is not intended to be a replacement for the application
-manuals.  You should turn to the handbook for help with specific program
-configuration and troubleshooting issues not covered in this book. If the
-answer is outside the scope of this book, we will tell you here precisely
-where to look for further help.</para>
+<para>This guide is not intended to replace the individual application
+handbook help manuals. Use the appropriate handbook to help with specific program
+configuration and troubleshooting issues not covered in this guide. Where to find
+additional information is provided when answers are outside the scope of this guide.</para>
 
-<para>You may also have a variety of third party packages, and some of these
-applications are mentioned briefly here, but we normally cover only the
-applications provided as part of a &kde; release.  This is not a judgment on
-the value of third party applications, and in fact many of them are
-excellent.</para>
+<para>Several applications provided outside the main &tde; suite
+are mentioned in this guide, but mostly this guide covers only the
+applications provided as part of the main suite.</para>
 
-<para>The User Guide is not specific to a distribution, and covers a default &kde;
-installation.  Your local installation may be customized by your
-distribution provider, or by yourself, and so our advice here is
-generic. You may have to adjust paths in order to locate the files that are
-discussed.</para>
+<para>The user guide is not specific to a distribution and covers a default &tde;
+installation. Local installations might be customized by
+distribution providers, or end-users. Therefore advice provided in this guide is
+generic. For example, file paths used to run files might be different than
+described in this guide.</para>
 </sect1>
 
 <sect1 id="typographic-conventions">
 <title>Conventions used in this book</title>
 
-<para>We'll use the following formatting conventions to make it clear what
-we're referring to:
+<para>The following formatting conventions are used:
 <informaltable>
 <tgroup cols="3">
 
@@ -191,7 +191,7 @@ we're referring to:
 <row>
 <entry>Text you should enter</entry>
 <entry>Bold, fixed width font</entry>
-<entry><userinput>ls -al kde/</userinput></entry>
+<entry><userinput>ls -al tde/</userinput></entry>
 </row>
 
 <row>
@@ -205,30 +205,39 @@ we're referring to:
 </informaltable>
 </para>
 
+<para>Mouse buttons often are referred to as the left mouse button and right mouse button.
+Traditionally, the left mouse button is used the primary button to select items and the right
+mouse button is used as the secondary button to open popup context menus. Within that context,
+terms such as "left-click" and "right-click" have become common. Unfortunately, that terminology
+describes the buttons from a right-handed perspective. For people using a mouse configured
+for left-handed use, the roles of the buttons are reversed. That is, the right mouse button
+becomes the primary button and the left mouse button becomes the secondary button. To avoid
+confusion in this guide, that traditional terminology will be used as little as possible.
+Although this guide is revised periodically, those traditional terms might still be used.</para>
+
 </sect1>
 
 <sect1 id="system-locations">
 <title>System Locations</title>
 
-<para>You may need to know the following system locations:
+<para>The following system location information might be useful:
 
 <variablelist>
 
 <varlistentry>
-<term>&kde; prefix</term>
-<listitem><para>&kde; installs into its own folder tree, which you can find by
+<term>&tde; prefix</term>
+<listitem><para>&tde; installs into its own folder tree, which is found by
 running the command <userinput><command>kde-config</command> <option>--prefix</option></userinput>. This folder is referred to
-by the environment variables  $<envar>TDEDIRS</envar> and possibly
-$<envar>TDEDIR</envar>.</para>
+by the environment variable $<envar>TDEDIR</envar> and possibly
+$<envar>TDEDIRS</envar>.</para>
 </listitem>
 </varlistentry>
 
 <varlistentry>
-<term>&kde; user-specific settings</term>
+<term>&tde; user-specific settings</term>
 <listitem><para>The environment variable $<envar>TDEHOME</envar>
-points to the folder where &kde; should find user-specific settings.  If it is not
-set, the default value of <filename
-class="directory">~/.kde</filename> is used.</para>
+points to the folder where &tde; should find user-specific settings.
+The default location is <filename class="directory">$HOME/.trinity</filename>.</para>
 </listitem>
 </varlistentry>
 
@@ -243,36 +252,34 @@ class="directory">~/.kde</filename> is used.</para>
 <para>Here's an overview of what's in the User Guide:</para>
 
 <para><xref linkend="desktop"/> contains an introduction to the basic
-use of &kde;, such as <xref linkend="windows-how-to-work"/>,  and the tools
-that you'll be using in all &kde; applications, like <xref
-linkend="programs-save-open" />. If you're new to &kde; or even
-computers in general, you will probably find this section
-helpful.</para>
+use of &tde;, such as <xref linkend="windows-how-to-work"/>, and the tools
+used in all &tde; applications, like <xref
+linkend="programs-save-open" />. Those users new to &tde; or
+computers in general, will find this section helpful.</para>
 
 <para><xref linkend="components"/> explains some important components
-of a &kde; installation and how they fit together: &kde;'s multimedia
-and networking capabilities are extensive, and not covered thoroughly
+of a &tde; installation and how they fit together. &tde;'s multimedia
+and networking capabilities are extensive and not covered thoroughly
 here, but there's a taster of both of them in this part of the User
-Guide. At the end of this part, you'll find a guide to tweaking &kde;
-just that little bit more, in <xref
-linkend="tinkering-under-the-hood"/>.</para>
+Guide. At the end of this part are suggestions for tweaking &tde;
+in <xref linkend="tinkering-under-the-hood"/>.</para>
 
-<para><xref linkend="kde-online"/> highlights &kde;'s suite of
-Internet applications. &kde; includes a powerful web browser,
+<para><xref linkend="kde-online"/> highlights &tde;'s suite of
+Internet applications. &tde; includes a powerful web browser,
 &konqueror;, a full-featured email client, &kmail;, a news reader,
-&knode;, and many more applications to make your Internet experience
-easier and more productive. This part of the User Guide contains
-information about setting up these applications.</para>
+&knode;, and many more applications to use the Internet.
+This part of the User Guide contains
+information about configuring these applications.</para>
 
 <para><xref linkend="kde-for-administrators"/> is a reference guide to
-some &kde; features which will be useful to administrators setting up
-multi-user systems. This part also has information that may be useful
-to &kde; users with single-user systems: where configuration files are
-stored, what environment variables affect &kde;, and so on. The KIOSK
-framework is the &kde; system which allows administrators to limit
-what users can do in &kde;. It is potentially useful in many
+some &tde; features that are useful to administrators configuring
+multi-user systems. This part also has information that might be useful
+to &tde; users with single-user systems: where configuration files are
+stored, what environment variables affect &tde;, and so on. The KIOSK
+framework is the &tde; system which allows administrators to limit
+what users can do in &tde;. That framework is potentially useful in many
 situations, but especially for running single-function kiosks with,
-for example, just a web browser, hence the name.</para>
+for example, only a web browser, hence the name.</para>
 
 </sect1>
 </chapter>
@@ -284,11 +291,9 @@ for example, just a web browser, hence the name.</para>
 <chapter id="basics">
 <title>The Basics</title>
 <para>The <quote>desktop</quote><indexterm><primary>Desktop</primary>
-</indexterm> is just the name for the layout of
-the screen when you start &kde;. It looks something like this (on your
-own system, it might look slightly different, but the main features
-should be the
-same):</para>
+</indexterm> is the name for the layout of
+the screen when starting &tde;. The desktop might look slightly different,
+but the main features should be the same as the following image.</para>
 
 <screenshot>
 <mediaobject>
@@ -300,118 +305,118 @@ same):</para>
 </mediaobject>
 </screenshot>
 
-<para>Let us look at the most important parts: 
+<para>Let us look at the most important parts:
 <itemizedlist>
 <listitem><para>Most of the screen is
-taken up by the background<indexterm><primary>Background</primary></indexterm>. At the moment, there is a picture making up
-the background. This picture is usually referred to as the
-<quote>wallpaper,</quote><indexterm><primary>Wallpaper</primary></indexterm> and you can change it to make &kde; suit your
-taste.</para>
+occupied by the background<indexterm><primary>Background</primary></indexterm>. With some distributions,
+there might be a picture for the background. This picture is referred to as the
+<quote>wallpaper,</quote><indexterm><primary>Wallpaper</primary></indexterm> and can be changed by every user.</para>
 </listitem>
 
-<listitem><para>In the top left-hand corner are two icons:
-<guiicon>Trash</guiicon> and <guiicon>Home</guiicon>. Clicking on
-these will open your <filename>Trash</filename> folder and Home
-folder, respectively. You can add more icons to the desktop so that
-you can open your favorite programs, or access removable media, with
-just one click.</para>
+<listitem><para>In the left-hand side are two icons:
+<guiicon>Trash</guiicon> and <guiicon>Home</guiicon>. Selecting
+these will open the <filename>Trash</filename> folder and Home
+folder, respectively. Add more icons to the desktop as desired
+to open favorite programs, or access removable media.</para>
 </listitem>
 
-<listitem><para>At the bottom is the &kde; Panel<indexterm><primary>Panel</primary></indexterm>, also known as
+<listitem><para>At the bottom is the &tde; Panel<indexterm><primary>Panel</primary></indexterm>, also known as
 <quote>&kicker;</quote>. The Panel contains several useful ways of
-interacting with &kde;. It houses the &kmenu;, from where you can open
-any &kde; application installed on your computer, it shows all the
-programs that are currently running, as well as the time, and more.  
-Take a look at  <xref linkend="panel-and-desktop"/> for more
-information about the &kde; Panel.</para>
+interacting with &tde;. The Panel houses the &kmenu; button, from where
+any &tde; application can be started. The Panel can be configured to show all the
+programs that are running, as well as the date and time, and more.
+Read <xref linkend="panel-and-desktop"/> for more
+information about the &tde; Panel.</para>
 </listitem>
 </itemizedlist></para>
 
 <!-- Put this somewhere else
 At the far left is the &kmenu;
-button. Clicking on this button will open the main &kde; menu, which
-has links to all the installed &kde; applications, and some useful
+button. Selecting this button will open the main &tde; menu, which
+has links to all the installed &tde; applications, and some useful
 commands, like <guilabel>Find Files</guilabel> and <guilabel>Log
-Out</guilabel>. You can start an application by finding it in the
-&kmenu; and clicking on its name. Like the other things on the
-desktop, the &kmenu; can be changed to fit your needs.</para>
+Out</guilabel>. Start an application from the
+&kmenu;. Like the other things on the desktop,
+the &kmenu; can be changed.</para>
 </listitem>
 -->
 
 <!-- Put this in the Panel section
 <listitem><para>Next to the &kmenu; button are icons which will
-start some commonly-used &kde; applications. icons are similar
-to the ones on the desktop background, but you can only put links to
-programs here (and not links to removable media, like CDs).</para>
+start some commonly-used &tde; applications. These icons are similar
+to the ones on the desktop, but only links to programs
+(and not links to removable media, like CDs).</para>
 </listitem>
 
 -->
 
 <sect1 id="logging-in">
-<sect1info>
-<authorgroup>
-<author>
-&Philip.Rodrigues;
-</author>
-</authorgroup>
-</sect1info>
 
 <title>Logging In and Logging Out</title>
-<para>Basic TDM &amp; starttde stuff.</para>
-<!-- Not sure what exactly to say about starttde and where to say it -->
-<!-- (Phil) -->
-<para>There are two ways to log into &kde;: graphically and via the
-command line. We'll look at them both briefly:</para>
+<para>There are two ways to log into &tde;: graphically and via the
+command line.</para>
 
 <sect2 id="logging-in-graphically">
 <title>Logging in Graphically</title>
 <indexterm><primary>login</primary></indexterm>
 <indexterm><primary>&tdm;</primary></indexterm>
 
-<para>If you see a screen a little bit like the one below when you
-start up your computer, then you are all set for logging in
-graphically. Just enter your username in the
-<guilabel>Login</guilabel> text box and your password in the
-<guilabel>Password</guilabel> text box. Your password will not be shown
-as you type it; it will probably be shown as asterisks. When you have
-entered that information, click on the <guibutton>Login</guibutton>
-button, and &kde; will start up. The &kde; splash screen will appear,
-and keep you informed about the progress of &kde; startup, and when
-it is done, &kde; will be ready to use.</para>
+<para>A screen similar to the one shown below means
+the computer is ready for logging in graphically.</para>
+
+<screenshot>
+<mediaobject>
+<imageobject>
+<imagedata fileref="tdm.png" format="PNG"/>
+</imageobject>
+<textobject><phrase>A typical TDM display</phrase>
+</textobject>
+</mediaobject>
+</screenshot>
+
+<para> Enter a username in the
+<guilabel>Username</guilabel> text box and password in the
+<guilabel>Password</guilabel> text box. The password will not be shown
+while typing; instead displaying as asterisks or dots. When finished,
+select the <guibutton>Login</guibutton> button, or press the Enter key,
+and &tde; will start. A &tde; splash image will appear,
+and provide &tde; startup information. When done
+&tde; will be ready to use.</para>
 </sect2>
 
 <sect2 id="logging-in-via-cmdline">
-<title>Logging in via the Command Line</title>
+<title>Logging in at the Command Line</title>
 <indexterm><primary><command>starttde</command></primary></indexterm>
 <indexterm><primary><command>startx</command></primary></indexterm>
 
-<para>If you prefer using the command line, you can log in to &kde;
-with the <command>startx</command> command. Add the line
-<userinput>exec starttde</userinput> to the
-<filename>.xinitrc</filename> file in your home folder (create it
-if it does not exist), save the file, and then run
-<command>startx</command>. &kde; should start in the same way as if
-you had logged in graphically.</para>
+<para>For those preferring the command line, log in to &tde;
+with the <command>startx</command> command. If necessary then in the
+system or user <filename>.xinitrc</filename> file, add the line
+<userinput>exec starttde</userinput>. &tde; should start the same way as
+when logging in graphically.</para>
 </sect2>
 
 <sect2 id="logging-out">
 <title>Logging Out</title>
 <indexterm><primary>logout</primary></indexterm>
 
-<para>Once you have finished using &kde; for the moment, you will
-want to log out until next time. The easiest way to do this is to
-click on the &kmenu; at the bottom left of your screen, and then
-select the <guimenuitem>Log Out...</guimenuitem> item. A dialog with the
-text <guilabel>End session for
-<replaceable>username</replaceable></guilabel> will appear. To confirm
-that you want to log out, click on the <guibutton>End Current Session</guibutton>
-button. If you change your mind, and decide to carry on using &kde;
-for now, hit <guibutton>Cancel</guibutton>.</para>
+<para>When finished using &tde; for the moment, then
+log out until next time. The easiest way to do this is to
+select the &kmenu; button
+<guiicon>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="../common/kmenu.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</guiicon>
+at the bottom left of the screen, and then
+select the <guimenuitem>Log Out...</guimenuitem> item.</para>
 
 <itemizedlist>
 <title>Related Information</title>
-<listitem><para>The &tdm; Handbook has information about using and setting up
-the &kde; graphical login manager. You can read it in &khelpcenter; or
+<listitem><para>The &tdm; Handbook has information about using and configuring
+the &tde; graphical login manager. Read more in &khelpcenter; or
 by entering <userinput>help:/tdm</userinput> in &konqueror;'s
 <guilabel>Location</guilabel> bar.</para>
 </listitem>
@@ -435,7 +440,7 @@ by entering <userinput>help:/tdm</userinput> in &konqueror;'s
 </part>
 
 <part id="components">
-<title>&kde; Components</title>
+<title>&tde; Components</title>
 
 &control-center;
 
@@ -444,7 +449,7 @@ by entering <userinput>help:/tdm</userinput> in &konqueror;'s
 &extragear-applications;
 
 <chapter id="multimedia">
-<title>Multimedia With &kde;</title>
+<title>Multimedia With &tde;</title>
 
 &removable-disks;
 
@@ -457,7 +462,7 @@ by entering <userinput>help:/tdm</userinput> in &konqueror;'s
 </chapter>
 
 <chapter id="multiuser-kde">
-<title>&kde; the Multiuser Desktop</title>
+<title>&tde; the Multiuser Desktop</title>
 
 &your-kde-account;
 
@@ -467,7 +472,7 @@ by entering <userinput>help:/tdm</userinput> in &konqueror;'s
 </chapter>
 
 <chapter id="networking">
-<title>Networking with &kde;</title>
+<title>Networking with &tde;</title>
 
 &file-sharing;
 
@@ -502,7 +507,7 @@ by entering <userinput>help:/tdm</userinput> in &konqueror;'s
 </part>
 
 <part id="kde-online">
-<title>&kde; and the Internet</title>
+<title>&tde; and the Internet</title>
 
 &net-connection-setup;
 
@@ -561,10 +566,10 @@ by entering <userinput>help:/tdm</userinput> in &konqueror;'s
 </chapter>
 
 <chapter id="contributing">
-<title>Contributing to &kde;</title>
+<title>Contributing to &tde;</title>
 
 <para>Some basic information to get encourage people to contribute to
-&kde;, information about what's available, and how to get
+&tde;, information about what's available, and how to get
 started.</para>
 
 </chapter>

@@ -28,7 +28,7 @@ put them in as soon as possible.</para>
 <para>Last but not least, please make full use of this
 <acronym>FAQ</acronym>.  Read this <acronym>FAQ</acronym> (and other
 relevant documentation) well before asking questions on the various
-&kde; mailing lists or newsgroups.</para>
+&tde; mailing lists or newsgroups.</para>
 
 <note><para> You might also want to consider becoming a
 <acronym>FAQ</acronym> maintainer. Please refer to <xref
@@ -45,7 +45,7 @@ linkend="FAQ-maintainer-HOWTO"/> for more details.  </para></note>
 <answer>
 <para>Actually, it is very easy to become an <acronym>FAQ</acronym>
 maintainer, and we are always in need of fresh blood. :-)  Just send
-us an email at <email>kde-doc-english@kde.org</email>.
+us an email at <email>trinity-devel@lists.pearsoncomputing.net</email>.
 </para>
 </answer>
 </qandaentry>

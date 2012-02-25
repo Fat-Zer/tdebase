@@ -50,7 +50,7 @@ open, water (or in our case, data) comes out, without any interaction.
 If something stops this flow of data, the application will wait for
 more to come.  This could be a very long time, but you can configure a
 maximum time for an application to wait with this option.</para>
-<para>This setting will only apply to &kde; applications, of course.</para>
+<para>This setting will only apply to &tde; applications, of course.</para>
 </listitem>
 </varlistentry>
 

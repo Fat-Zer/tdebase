@@ -37,7 +37,7 @@
 <para>&konqueror; offers some features to enhance your browsing
 experience. One such feature is <emphasis>Web Shortcuts</emphasis>.</para>
 
-<para>You may already have noticed that &kde; is very Internet friendly.
+<para>You may already have noticed that &tde; is very Internet friendly.
 For example, you can click on the <guimenuitem>Run</guimenuitem> menu
 item or type the keyboard shortcut assigned to that command (<keycombo
 action="simul"><keycap>Alt</keycap><keycap>F2</keycap></keycombo>,
@@ -85,7 +85,7 @@ for Internet Keywords and one for web shortcuts.</para>
 <title>Web Shortcuts</title>
 
 <para>The descriptive names of defined web shortcuts are shown in a
-listbox. As with other lists in &kde;, you can click on a column
+listbox. As with other lists in &tde;, you can click on a column
 heading to toggle the sort order between ascending and
 descending, and you can resize the columns.</para>
 
@@ -93,7 +93,7 @@ descending, and you can resize the columns.</para>
 search providers, the details for that entry are shown in a popup
 dialog.  In addition to the descriptive name for the item, you can
 also see the <acronym>URI</acronym> which is used, as well as the
-associated shortcuts which you can type anywhere in &kde; where
+associated shortcuts which you can type anywhere in &tde; where
 <acronym>URI</acronym>s are expected. A given search provider can have
 multiple shortcuts, each separated by a comma.</para>
 
@@ -145,7 +145,7 @@ are called web shortcuts, they really are shortcuts to parameterized
 <acronym>URI</acronym>s, which can point not only to web sites like
 search engines but also to anything else that can be pointed to by a
 <acronym>URI</acronym>. Web shortcuts are a very powerful feature of
-navigation in &kde;.</para>
+navigation in &tde;.</para>
 
 </sect3>
 

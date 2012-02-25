@@ -22,7 +22,7 @@ from the print dialog.</para>
 <guisubmenu>Preferences</guisubmenu> <guisubmenu>System</guisubmenu>
 <guimenuitem>Printing Manager</guimenuitem></menuchoice>.  At the bottom
 you can see a button that lets you select which printing subsystem you
-want to use.  In &kde; 2.2 you can choose from the following
+want to use.  In &tde; 2.2 you can choose from the following
 alternatives:</para>
 
 <itemizedlist>
@@ -75,7 +75,7 @@ your selection.  The author's personal recommendation is
 &CUPS;.</para>
 
 <para>Once autodetected, chosen, or changed, the active print
-subsystem will take effect for all &kde; applications.  Different
+subsystem will take effect for all &tde; applications.  Different
 users may have different print subsystems in use, if those do exist on
 the computer and are compliant with each other.  Their settings are
 stored in the <filename>tdeprintrc</filename>.  This file is unique to

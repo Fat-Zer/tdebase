@@ -10,7 +10,7 @@
 <qandaset>
 <qandaentry>
 <question>
-<para>Reading documentation in &kde;</para>
+<para>Reading documentation in &tde;</para>
 </question>
 <answer>
 <para>Pop up the <guilabel>Run Command</guilabel> window (<keycombo
@@ -28,7 +28,7 @@ pages.</para>
 </listitem>
 
 <listitem>
-<para><command>help:<replaceable>kdeappname</replaceable></command> for &kde;
+<para><command>help:<replaceable>kdeappname</replaceable></command> for &tde;
 application help pages.</para>
 </listitem>
 
@@ -37,9 +37,9 @@ application help pages.</para>
 
 <para>You can also enter any of these in the <guilabel>Location</guilabel> text
 box in &konqueror;.</para>
-<para>Or you can use the <application>&kde; Help Center</application> if you are using &kde;
-2.  Simply start the <application>&kde; Help Center</application> by clicking on the icon (the blue
-book with the yellow key) on the toolbar.  Once the <application>&kde; Help Center</application> has
+<para>Or you can use the <application>&tde; Help Center</application> if you are using &tde;
+2.  Simply start the <application>&tde; Help Center</application> by clicking on the icon (the blue
+book with the yellow key) on the toolbar.  Once the <application>&tde; Help Center</application> has
 loaded, the window on the left will contain an entry called
 <guilabel>Unix manual pages</guilabel>.  Click once on this entry, and
 you can browse through all the installed manual pages on your
@@ -58,21 +58,21 @@ button.  <keycombo
 action="simul">&Alt;<mousebutton>right</mousebutton></keycombo> mouse
 button will resize the window.  Last but not least, <keycombo
 action="simul">&Alt;<mousebutton>middle</mousebutton></keycombo> mouse button
-raises/lowers the window. The <application>&kde; Control Center</application>
+raises/lowers the window. The <application>&tde; Control Center</application>
 allows you to change these mouse bindings.</para>
 </answer>
 </qandaentry>
 
 <qandaentry>
 <question>
-<para>Killing windows in &kde;</para>
+<para>Killing windows in &tde;</para>
 </question>
 <answer>
 <para>There is a standard keybinding (<keycombo
 action="simul">&Ctrl;&Alt;&Esc;</keycombo>) 
 that gives you a skull &amp; crossbones cursor.  Click that cursor on a
 window to kill it.  The keybindings are viewable/changeable from the
-<application>&kde; Control Center</application>.
+<application>&tde; Control Center</application>.
 
 <caution><para>Using this option kills the program forcibly. Data may be lost,
 and some processes related to the program may remain active. Use only as a
@@ -122,7 +122,7 @@ with, &kicker;, &klipper; and &kdesktop;.</para>
 <!-- fixme: how to do in KDE2.x
 <qandaentry>
 <question>
-<para>Switching window managers on the fly in &kde; 1.x</para>
+<para>Switching window managers on the fly in &tde; 1.x</para>
 </question>
 <answer>
 <para>If you want to switch your window manager on the fly, type the

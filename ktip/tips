@@ -1,16 +1,8 @@
-<tip category="KDE|General">
+<tip category="TDE|General">
 <html>
 <P>
-There is a lot of information about KDE on the
-<A HREF="http://www.kde.org/">KDE web site</A>. There are
-also useful sites for major applications like
-<A HREF="http://www.konqueror.org/">Konqueror</A>,
-<A HREF="http://www.koffice.org/">KOffice</A> and
-<A HREF="http://www.tdevelop.org/">KDevelop</A>, or important
-KDE utilities like
-<A HREF="http://printing.kde.org/">KDEPrint</A>,
-which can be put to its full usage even outside KDE...
-</P>
+There is a lot of information about TDE on the
+<A HREF="http://www.trinitydesktop.org/">TDE web site</A>.</P>
 <br>
 <center>
 <img src="crystalsvg/48x48/filesystems/desktop.png">
@@ -21,15 +13,10 @@ which can be put to its full usage even outside KDE...
 <tip category="General|I18N">
 <html>
 <p>
-KDE is translated into many languages. You can change the country and
+TDE is translated into many languages. You can change the country and
 language with the Control Center in "Regional &amp; Accessibility"
 ->."Country/Region &amp; Language".
 </p>
-
-<p>For more information about KDE translations and translators, see <a
-href="http://i18n.kde.org/">http://i18n.kde.org</a>.
-</p>
-<br>
 <center>
 <img src="crystalsvg/48x48/apps/locale.png">
 <p align="right"><em>Contributed by Andrea Rizzi</em></p>
@@ -37,7 +24,7 @@ href="http://i18n.kde.org/">http://i18n.kde.org</a>.
 </tip>
 
 
-<tip category="KDE2">
+<tip category="TDE2">
 <html>
 <p>
 You can minimize all your windows on the current desktop at once and
@@ -52,7 +39,7 @@ panel.</p>
 </html>
 </tip>
 
-<tip category="KDE|Win2Unix">
+<tip category="TDE|Win2Unix">
 <html>
 <p>
 If you temporarily need more screen real-estate, you can <strong>"fold
@@ -61,14 +48,14 @@ the panel. Alternatively, make it hide automatically by changing the
 settings in the Control Center (Desktop->Panels, Hiding tab).
 </p>
 
-<p>For more information about Kicker, the KDE Panel, see <a
+<p>For more information about Kicker, the TDE Panel, see <a
 href="help:/kicker">the Kicker Handbook</a>.
 </p>
 </html>
 </tip>
 
 
-<tip category="KDE|Win2Unix">
+<tip category="TDE|Win2Unix">
 <html>
 <p>
 The program Klipper, which is started by default and resides in the
@@ -85,7 +72,7 @@ href="help:/klipper">the Klipper Handbook</a></p>
 </html>
 </tip>
 
-<tip category="KDE|Win2Unix">
+<tip category="TDE|Win2Unix">
 <html>
 <p>
 The window list, which is accessible via an icon on the panel, provides a
@@ -109,7 +96,7 @@ displayed in Konqueror).</p>
 
 <tip category="General">
 <html>
-<p>For quick access to KDEPrint Manager type
+<p>For quick access to TDEPrint Manager type
 <strong>"print:/manager"</strong>... --  <em>"Type where?"</em>,
  you may ask. Type it...</p>
 <ul>
@@ -124,7 +111,7 @@ displayed in Konqueror).</p>
 </html>
 </tip>
 
-<tip category="KDE2|Desktop">
+<tip category="TDE2|Desktop">
 <html>
 <p>
 Double-clicking on the titlebar of any window "shades" it, which means
@@ -132,8 +119,8 @@ that only the titlebar stays visible. Double-clicking the titlebar a
 second time will make the window visible again.<br>
 Of course, you can change this behavior within the Control Center.
 </p>
-<p>For more information about ways to manipulate windows in KDE, take
-a look at <a href="help:/khelpcenter/userguide/windows-how-to-work.html">the KDE User Guide</a>.</p>
+<p>For more information about ways to manipulate windows in TDE, take
+a look at <a href="help:/khelpcenter/userguide/windows-how-to-work.html">the TDE User Guide</a>.</p>
 </html>
 </tip>
 
@@ -145,7 +132,7 @@ Alt key and pressing Tab or Shift+Tab.</p><br>
 <center><img src="crystalsvg/48x48/apps/kcmkwm.png"></center></p>
 
 <p>For more information, see <a
-href="help:/khelpcenter/userguide/windows-how-to-work.html">the KDE
+href="help:/khelpcenter/userguide/windows-how-to-work.html">the TDE
 User Guide</a>.</p>
 </html>
 </tip>
@@ -154,14 +141,14 @@ User Guide</a>.</p>
 <html>
 <p>
 You can assign <b>keyboard shortcuts</b> to your favorite applications in the
-KDE menu editor (K-menu->Settings->Menu Editor). Select the application
+TDE menu editor (K-menu->Settings->Menu Editor). Select the application
 (e.g. Konsole), then click on the image next to "Current shortcut
 key:". Press the key combination you want (say, Ctrl+Alt+K).
 <p>That is it: now you can fire up Konsoles with Ctrl+Alt+K.</p>
 </html>
 </tip>
 
-<tip category="KDE2|Win2Unix">
+<tip category="TDE2|Win2Unix">
 <html>
 <p>
 You can configure the number of virtual desktops by adjusting the "Number
@@ -170,28 +157,29 @@ of desktops" slider in the Control Center (Desktop->Multiple Desktops).
 
 <p>For more information about using virtual desktops, look at <a
 href="help:/khelpcenter/userguide/windows-how-to-work.html#using-multiple-desktops">the
-KDE User Guide</a>.</p>
+TDE User Guide</a>.</p>
 </html>
 </tip>
 
-<tip category="KDE|General">
+<tip category="TDE|General">
 <html>
-<p>The KDE project was founded in October 1996 and had its first release,
-1.0, on July 12, 1998.</p>
-<p>You can <em>support the KDE project</em> with work (programming, designing,
+<p>The Trinity Desktop Environment is a fork of the K Desktop Environment
+version 3.5, which was originally written by the KDE Team, a world-wide
+network of software engineers committed to Free Software development. TDE
+was first released in April 2010.</p>
+<p>The KDE project was founded in October 1996 and was first released
+on July 12, 1998.</p>
+<p>You can <em>support the TDE project</em> with work (programming, designing,
 documenting, proof-reading, translating, etc.) and financial or
-hardware donations. Please contact <a
- href="mailto:kde-ev@kde.org">kde-ev@kde.org</a>
-if you are interested in donating, or <a
-href="mailto:kde-quality@kde.org">kde-quality@kde.org</a> if you would
-like to contribute in other ways.</p>
+hardware donations. Please contact the TDE team if you are interested in
+donating, or if you would like to contribute in other ways.</p>
 </html>
 </tip>
 
 
-<tip category="KDE|Win2Unix">
+<tip category="TDE|Win2Unix">
 <html>
-<p>KDE provides some shortcuts to change the size of a window:</p>
+<p>TDE provides some shortcuts to change the size of a window:</p>
 <table><tr>
 <th>To maximize a window...</th>	<th>click the maximize button...</th>
 </tr><tr>
@@ -206,9 +194,9 @@ like to contribute in other ways.</p>
 
 <tip category="General">
 <html>
-<p>You can stay up to date with new developments in KDE and releases
+<p>You can stay up to date with new developments in TDE and releases
 by regularly checking the web site <A
- HREF="http://www.kde.org">http://www.kde.org</A>.</p>
+ HREF="http://www.trinitydesktop.org/">http://www.trinitydesktop.org/</A>.</p>
 <BR>
 <center><img src="hicolor/48x48/apps/konqueror.png"></center></p>
 </html>
@@ -216,8 +204,8 @@ by regularly checking the web site <A
 
 <tip category="General">
 <html>
-<p align="center"><strong>KDEPrinting (I)</strong></p>
-<p><strong>kprinter</strong>, KDE's new printing utility supports
+<p align="center"><strong>TDEPrinting (I)</strong></p>
+<p><strong>kprinter</strong>, TDE's new printing utility supports
 different print subsystems. These subsystems differ very much
 in their abilities.</p>
 <p>Among the supported systems are:
@@ -234,12 +222,11 @@ use network printers);</li>
 
 <tip category="General">
 <html>
-<p align="center"><strong>KDEPrinting (II)</strong></p>
+<p align="center"><strong>TDEPrinting (II)</strong></p>
 
 <p>Not all print subsystems provide equal abilities
-for KDEPrint to build on.</p>
-<p>The <A HREF="http://printing.kde.org/">KDEPrinting Team</A>
-recommends installing a <A
+for TDEPrint to build on.</p>
+<p>The TDE developers recommend installing a <A
 HREF="http://www.cups.org/"><strong>CUPS-based</strong></A>
 software as the underlying print subsystem.</p>
 <p> CUPS provides easy usage, powerful features, broad printer
@@ -255,11 +242,9 @@ as well as for large networks.
 <tip category="General">
 <html>
 <p>
-KDE is based on a well-designed C++ foundation. C++ is a programming
-language well suited to desktop development. The KDE object model
-extends the power of C++ even further. See
- <a href="http://developer.kde.org/">http://developer.kde.org/</a>
-for details.</p><br>
+TDE is based on a well-designed C++ foundation. C++ is a programming
+language well suited to desktop development. The TDE object model
+extends the power of C++ even further.
 <center><img src="hicolor/48x48/apps/konqueror.png"></center>
 </html>
 </tip>
@@ -280,7 +265,7 @@ You can cycle through the virtual desktops by holding the Ctrl key and
 pressing Tab or Shift+Tab.</p>
 <p>For more information about using virtual desktops, look at <a
 href="help:/khelpcenter/userguide/windows-how-to-work.html#using-multiple-desktops">the
-KDE User Guide</a>.</p>
+TDE User Guide</a>.</p>
 </html>
 </tip>
 
@@ -315,10 +300,10 @@ print subsystem "on the fly" (and you do not need to be root to do it.)
 <tip category="General|Help">
 <html>
 <P>
-KDE's help system can display not only KDE's own HTML-based help, but
+TDE's help system can display not only TDE's own HTML-based help, but
 also info and man pages.</P>
 <p>For more ways of getting help, see <a
-href="help:/khelpcenter/userguide/getting-help.html">the KDE User
+href="help:/khelpcenter/userguide/getting-help.html">the TDE User
 Guide</a>.</p>
 
 <br>
@@ -331,7 +316,7 @@ Guide</a>.</p>
 <P>Clicking with the right mouse button on panel icons or applets opens a
 popup menu that allows you to move or remove the item, or add a new
 one.</P>
-<p>For more information about customizing Kicker, the KDE Panel, see
+<p>For more information about customizing Kicker, the TDE Panel, see
 <a href="help:/kicker">the Kicker Handbook</a>.</p>
 </html>
 </tip>
@@ -347,18 +332,10 @@ the remaining buttons.</P>
 <tip category="General">
 <html>
 <p>
-Need comprehensive info about KDEPrinting?<br> </p>
+Need comprehensive info about TDEPrinting?<br> </p>
 <p> Type <strong>help:/tdeprint/</strong> into a Konqueror address field
-and get the
- <a href="http://printing.kde.org/documentation/handbook/">KDEPrint Handbook</a>
-displayed.</p> <p>This, plus more material (like a
- <a href="http://printing.kde.org/faq/">FAQ</a>, various
- <a href="http://printing.kde.org/documentation/tutorials/">Tutorials</a>,
-a "TipsNTricks" section and the
- <a href="http://mail.kde.org/mailman/listinfo/kde-print/">tdeprint mailing list</a>)
- are available at
-<a href="http://printing.kde.org/">printing.kde.org</a>...
-</p>
+and get the TDEPrint Handbook</a>
+displayed.</p>
 <center>
 <img src="crystalsvg/48x48/devices/printer1.png">
 </html>
@@ -367,9 +344,9 @@ a "TipsNTricks" section and the
 
 <tip category="General">
 <html>
-<P>You can run non-KDE applications without problems on a KDE
+<P>You can run non-TDE applications without problems on a TDE
 desktop. It is even possible to integrate them into the menu system.
-The KDE program "KAppfinder" will look for known programs to integrate
+The TDE program "KAppfinder" will look for known programs to integrate
 them into the menu.</P>
 </html>
 </tip>
@@ -378,7 +355,7 @@ them into the menu.</P>
 <html>
 <p>You can quickly move the panel to another screen edge by "grabbing" it with
 the left mouse button and moving it to where you want it.</p>
-<p>For more information about personalizing Kicker, the KDE Panel,
+<p>For more information about personalizing Kicker, the TDE Panel,
 take a look at <a href="help:/kicker">the Kicker Handbook</a>.</p>
 </html>
 </tip>
@@ -386,7 +363,7 @@ take a look at <a href="help:/kicker">the Kicker Handbook</a>.</p>
 <tip category="General">
 <html>
 <p>
-If you need to kill some time, KDE comes with an extensive collection
+If you need to kill some time, TDE comes with an extensive collection
 of games.</p><br>
 <center>
 <img src="crystalsvg/48x48/apps/package_games.png">
@@ -434,7 +411,7 @@ Menu->Add->Applet from the K menu.
 You can add a little command line to your panel by selecting Panel
 Menu->Add to Panel->Applet->Run Command from the K menu.
 </p>
-<p>For information about other applets available for the KDE Panel,
+<p>For information about other applets available for the TDE Panel,
 take a look at <a href="help:/kicker">the Kicker Handbook</a>.</p>
 </html>
 </tip>
@@ -530,13 +507,10 @@ and "dragging" it with the mouse.</p><br>
 
 <tip category="General">
 <html>
-<p> Want KDE's printing power in non-KDE apps?  </p>
+<p> Want TDE's printing power in non-TDE apps?  </p>
 <p> Then use <strong>'kprinter'</strong> as "print command".
 Works with Netscape, Mozilla, Galeon, gv, Acrobat Reader,
  StarOffice, OpenOffice.org, any GNOME application and many more...</p>
-<p>See <a href="http://printing.kde.org/faq/tdeprint.phtml#out">printing.kde.org</a>
-for more detailed hints...
-</p>
 <center>
 <img src="crystalsvg/48x48/devices/printer1.png">
 <p align="right"><em>Contributed by Kurt Pfeifle</em></p>
@@ -555,7 +529,7 @@ right-clicking anywhere into the window and moving the mouse.</p>
 <tip category="General">
 <html>
 <p>
-KDE's mail client (KMail) provides seamless <strong>PGP/GnuPG
+TDE's mail client (KMail) provides seamless <strong>PGP/GnuPG
  integration</strong>
 for encrypting and signing your email messages.</p>
 <p>See <a href="help:/kmail/pgp.html">the KMail Handbook</a> for
@@ -566,18 +540,7 @@ instructions on setting up encryption.</p>
 <tip category="General">
 <html>
 <p>
-You can find KDE developers all over the world, e.g., in Germany,
-Sweden, France, Canada, USA, Australia, Namibia, Argentina, and even in
-Norway!</p>
-<p>
-To see where KDE developers can be found, take a look at <a href="http://worldwide.kde.org">worldwide.kde.org</a>.</p>
-</html>
-</tip>
-
-<tip category="General">
-<html>
-<p>
-KDE's CD player, KsCD, accesses the Internet CD database freedb to provide you
+TDE's CD player, KsCD, accesses the Internet CD database freedb to provide you
 with title/track information.
 </p>
 <p>Full details of KsCD's functions are available in <a
@@ -610,10 +573,10 @@ color example in the <em>Appearance & Themes</em> module within the Control Cent
 
 <tip category="General">
 <html>
-<p align="center"><strong>KDE Command Line Printing (I)</strong></p>
-<p> Want to print from command line, without missing KDE's printing power?</p>
+<p align="center"><strong>TDE Command Line Printing (I)</strong></p>
+<p> Want to print from command line, without missing TDE's printing power?</p>
 <p> Type <strong>'kprinter'</strong>. Up pops the
-KDEPrint dialog. Select printer, print options and
+TDEPrint dialog. Select printer, print options and
 print files (note that you may select <em>different</em>
 files of <em>different</em> types for <em>one</em> print job...). </p>
 <p>This works from Konsole, any x-Terminal, or "Run Command"
@@ -624,7 +587,7 @@ files of <em>different</em> types for <em>one</em> print job...). </p>
 
 <tip category="General">
 <html>
-<p align="center"><strong>KDE Command Line Printing (II)</strong></p>
+<p align="center"><strong>TDE Command Line Printing (II)</strong></p>
 <p>
 You may specify print files and/or name a printer from the command line:
 <pre>
@@ -653,21 +616,10 @@ Control Center and might implement different features.</p>
 <tip category="General">
 <html>
 <p>
-The K in KDE does not stand for anything. It is the character that comes
+The K in TDE does not stand for anything. It is the character that comes
 before L in the Latin alphabet, which stands for Linux. It was chosen
-because KDE runs on many types of UNIX (and perfectly well on FreeBSD).
+because TDE runs on many types of UNIX (and perfectly well on FreeBSD).
 </p>
-</html>
-</tip>
-
-<tip category="General">
-<html>
-<p>If you want to know when <b>the next release</b> of KDE is planned,
-look for the release schedule on <a
- href="http://developer.kde.org/">http://developer.kde.org</a>. If you only
-find old release schedules, there will probably be some weeks/months of
-intensive development left before the next release.</p><br>
-<center><img src="hicolor/48x48/apps/konqueror.png"></center>
 </html>
 </tip>
 
@@ -706,10 +658,9 @@ so on.)</p>
 
 <tip category="General">
 <html>
-<p>If you want to contribute your own "tip of the day", please send it to
-<a href="mailto:kde-doc-english@kde.org">kde-doc-english@kde.org</a>, and we will be happy to
- include
-it in the next release.</p>
+<p>If you want to contribute your own "tip of the day", please send the tip to
+<a href="trinity-devel@lists.pearsoncomputing.net">trinity-devel@lists.pearsoncomputing.net</a>,
+and we will consider the tip for the next release.</p>
 </html>
 </tip>
 
@@ -772,7 +723,7 @@ by entering the <b>cd</b> command without any parameters.
 You might wonder why there are very few (if any) files whose
 names end in <code>.exe</code> or <code>.bat</code> on UNIX
 systems. This is because filenames on UNIX do not need an
-extension. Executable files in KDE are represented by the gear icon
+extension. Executable files in TDE are represented by the gear icon
 in Konqueror. In the Konsole window, they are often colored red
 (depending on your settings).
 </p>
@@ -780,7 +731,7 @@ in Konqueror. In the Konsole window, they are often colored red
 </html>
 </tip>
 
-<tip category="KDE|Win2Unix|General">
+<tip category="TDE|Win2Unix|General">
 <html>
 <p>
 If you want to make your desktop look more interesting, you can find
@@ -790,7 +741,7 @@ tons of themes, widget styles window decorations and more at <a href="http://kde
 </html>
 </tip>
 
-<tip category="KDE|Win2Unix">
+<tip category="TDE|Win2Unix">
 <html>
 <p>
 Did you know that you can use the middle mouse button to paste
@@ -827,7 +778,7 @@ If you need to calculate a distance on the screen, the program
 <em>kruler</em> can be of great help.</p>
 <p>
 Furthermore, if you need to look closely at the ruler to count single
-pixels, <em>kmag</em> may be very useful. (It is not part of the KDE base
+pixels, <em>kmag</em> may be very useful. (It is not part of the TDE base
 installation but needs to be installed separately. It might already be
 available on your distribution.) <em>kmag</em> works
 just like <em>xmag</em>, with the difference that it magnifies on the fly.
@@ -840,7 +791,7 @@ just like <em>xmag</em>, with the difference that it magnifies on the fly.
 <tip category="Multimedia">
 <html>
 <p>
-Sound in KDE is coordinated by the <b>artsd</b> sound server. You can
+Sound in TDE is coordinated by the <b>artsd</b> sound server. You can
 configure the sound server from the Control Center by selecting
 Sound &amp; Multimedia->Sound Server.
 </p>
@@ -851,7 +802,7 @@ Sound &amp; Multimedia->Sound Server.
 <tip category="Multimedia">
 <html>
 <p>
-You can associate sounds, pop up windows, and more with KDE events. This can be configured
+You can associate sounds, pop up windows, and more with TDE events. This can be configured
 from the Control Center by selecting Sound &amp; Multimedia->System Notifications.
 </p>
 <p align="right"><em>Contributed by Jeff Tranter</em></p><br>
@@ -862,7 +813,7 @@ from the Control Center by selecting Sound &amp; Multimedia->System Notification
 <tip category="Multimedia">
 <html>
 <p>
-Most non-KDE sound applications that do not know about the sound server can be
+Most non-TDE sound applications that do not know about the sound server can be
 run using the <b>artsdsp</b> command. When the application is run, accesses to
 the audio device will be redirected to the <b>artsd</b> sound server.
 </p>
@@ -889,8 +840,8 @@ other containers.
 <tip category="General">
 <html>
 <p>
-KDE's 'kioslaves' do not just work in Konqueror: you can use network
-URLs in any KDE application. For example, you can enter a URL like
+TDE's 'kioslaves' do not just work in Konqueror: you can use network
+URLs in any TDE application. For example, you can enter a URL like
 ftp://www.server.com/myfile in the Kate Open dialog, and Kate will
 open the file and save changes back to the FTP server when you click
 on 'Save.'
@@ -906,7 +857,7 @@ ssh access to. Just enter fish://<em>username</em>@<em>hostname</em> in
 Konqueror's location bar.
 </p>
 <p>
-In fact, all KDE applications support fish:// URLs - try entering one
+In fact, all TDE applications support fish:// URLs - try entering one
 in the Open dialog of Kate, for instance
 </p>
 </html>
@@ -915,7 +866,7 @@ in the Open dialog of Kate, for instance
 <tip category="KMail">
 <html>
 <p>
-KMail, the KDE email client, has built-in support for several popular
+KMail, the TDE email client, has built-in support for several popular
 spam filtering apps. To set up automatic spam filtering in KMail,
 configure your favorite spam filter as you like it, then go to
 Tools->Anti-spam wizard in KMail.
@@ -939,7 +890,7 @@ You can make a window go below other windows by middle-clicking on its titlebar.
 <tip category="General">
 <html>
 <p>
-KDE applications offer short "What's This?" help texts for many
+TDE applications offer short "What's This?" help texts for many
 features. Just click on the question mark on the window titlebar, and
 then click on the item you need help on. (In some themes, the button
 is a lowercase "i" instead of a question mark).
@@ -950,7 +901,7 @@ is a lowercase "i" instead of a question mark).
 <tip category="KWin">
 <html>
 <p>
-KDE supports several different window focus modes: take a look in the
+TDE supports several different window focus modes: take a look in the
 Control Center, under Desktop->Window Behavior. For example, if you
 use the mouse a lot, you might prefer the "Focus follows mouse" setting.
 </p>
@@ -972,18 +923,18 @@ increase the speed, or any other key to stop the scrolling.
 <p>You can use Konqueror's help:/ kioslave to have quick and easy
 access to an application's handbook by typing <b>help:/</b>, directly
 followed by the application name, in the Location bar. So, for example
-to view the handbook for kwrite simply type help:/kwrite.</p> 
+to view the handbook for kwrite simply type help:/kwrite.</p>
 </html>
 </tip>
 
 <tip category="LookNFeel">
 <html>
 <p>Thanks to the <a href="http://svg.kde.org" title="ksvg">KSVG
-project</a>, KDE now has full support for the Scalable Vector Graphics
+project</a>, TDE has full support for the Scalable Vector Graphics
 (SVG) image filetypes. You can view these images in Konqueror and even
 set an SVG image as a background for your desktop.</p>
 
-<p>There is also a great bunch of <a
+<p>There is a great bunch of <a
 href="http://kdelook.org/index.php?xcontentmode=7" title="kdelook
 SVG">SVG wallpapers</a> for your desktop background available at <a
 href="http://kdelook.org" title="kdelook">kde-look.org</a>.</p>
@@ -1006,16 +957,16 @@ Shortcuts icon.</p>
 
 <tip category="accessbility">
 <html>
-<p>KDE is always looking to improve its accessibility, and with the
-launch of KTTS (KDE Text-to-Speech) you now have the power to convert
+<p>TDE is always looking to improve its accessibility, and with the
+launch of KTTS (TDE Text-to-Speech) you now have the power to convert
 strings of text into audible speech. </p>
 
 <p>KTTS is constantly improving, and currently provides support to
 speak all or any portion of plain text files (as viewed in Kate), HTML
-pages in Konqueror, text in the KDE clipboard, as well as speech of
-KDE notifications (KNotify).</p>
+pages in Konqueror, text in the TDE clipboard, as well as speech of
+TDE notifications (KNotify).</p>
 
-<p>To start the KTTS system, you can either select KTTS in the KDE
+<p>To start the KTTS system, you can either select KTTS in the TDE
 menu, or hit Alt+F2 to run a command and then type <b>kttsmgr</b>. For
 more information on KTTS, check the <a href="help:/kttsd" title="KTTSD
 Handbook">KTTSD Handbook</a>.</p>
@@ -1025,7 +976,7 @@ Handbook">KTTSD Handbook</a>.</p>
 
 <tip category="General">
 <html>
-<p>Though KDE is a very stable desktop environment, programs may
+<p>Though TDE is a very stable desktop environment, programs may
 occasionally freeze or crash, particularly if you are running the
 development version of a program, or a program made by a
 third-party. In this case, you can forcibly kill the program if need
@@ -1042,7 +993,7 @@ used as a last resort.</p>
 
 <tip category="Kontact">
 <html>
-<p>KMail is KDE's email client, but did you know that you can
+<p>KMail is TDE's email client, but did you know that you can
 integrate it -- along with other programs -- to bring them all under
 one roof? Kontact was made to be a Personal Information Management
 suite, and it integrates all components under it seamlessly.</p>
@@ -1057,12 +1008,12 @@ comprehensive calender).</p>
 <tip category="General">
 <html>
 <p>You can use the mouse wheel to quickly perform a number of tasks;
-here are a few you might not have known of: 
+here are a few you might not have known of:
 
 <ul><li>Ctrl+Mouse-Wheel in the Konqueror web browser to change the font-size,
 or in Konqueror file manager to change icon size.</li>
 
-<li>Shift+Mouse-Wheel for fast scrolling in all KDE applications.</li>
+<li>Shift+Mouse-Wheel for fast scrolling in all TDE applications.</li>
 
 <li>Mouse-Wheel over the taskbar in Kicker to quickly alternate between
 different windows.</li>
@@ -1082,8 +1033,8 @@ location.</p>
 
 <tip category="General">
 <html>
-<p>Although KDE will automatically restore your KDE programs that were
-left open after you logged out, you can specifically tell KDE to start
+<p>Although TDE will automatically restore your TDE programs that were
+left open after you logged out, you can specifically tell TDE to start
 particular applications on start up; see the <a
 href="help:/khelpcenter/faq/configure.html#id2574142" title="Autostart
 FAQ">FAQ entry</a> for more information.</p>
@@ -1092,12 +1043,12 @@ FAQ">FAQ entry</a> for more information.</p>
 
 <tip category="Kontact">
 <html>
-<p>You can integrate Kontact, KDE's Personal Information Management
-suit, with Kopete, KDE's Instant Messenger client, so that you can
+<p>You can integrate Kontact, TDE's Personal Information Management
+suit, with Kopete, TDE's Instant Messenger client, so that you can
 view contacts' online status, as well as respond to them easily from
 KMail itself. For a step-by-step guide, check <a
 href="help:/khelpcenter/userguide/integrated-messaging.html"
-title="Integrated Messaging">the KDE User Guide</a>.</p>
+title="Integrated Messaging">the TDE User Guide</a>.</p>
 </html>
 </tip>
 
@@ -1118,8 +1069,8 @@ application that can save and manage all of your passwords in strongly
 encrypted files, and permit access to them with the use of one master
 password.</p>
 
-<p>KWallet can be accessed from kcontrol, KDE's Control Center; from
-there, simply go to Security &amp; Privacy->KDE Wallet. For more
+<p>KWallet can be accessed from kcontrol, TDE's Control Center; from
+there, simply go to Security &amp; Privacy->TDE Wallet. For more
 information on KWallet and on how to use it, check <a
 href="help:/kwallet" title="kwallet">the handbook</a>.</p>
 
@@ -1138,7 +1089,7 @@ brief list of all the windows on each desktop. From here you can also
 <html>
 <p>Different virtual desktops can be customized individually, to a
 certain extent. For example, you can specify a particular background
-for a given desktop: Take a look in KDE's Control Center, under
+for a given desktop: Take a look in TDE's Control Center, under
 Appearance &amp; Themes->Background, or right-click on the desktop and
 select Configure Desktop.</p>
 </html>
@@ -1161,7 +1112,7 @@ some of the tabs where you might think it is useful.</p>
 <tip category="Keyboard">
 <html>
 <p>
-You can let KDE turn the <b>NumLock</b> ON or OFF at startup.
+You can let TDE turn the <b>NumLock</b> ON or OFF at startup.
 </p>
 <p>
 Open the Control Center, select Peripherals->Keyboard and make your

@@ -28,7 +28,7 @@
 <title>Fonts</title>
 
 <para>This module is designed to allow you to easily select different
-fonts for different parts of the &kde; Desktop.</para>
+fonts for different parts of the &tde; Desktop.</para>
 
 <para>The panel consists of different font groups to give you a lot of
 flexibility in configuring your fonts: </para>
@@ -41,12 +41,12 @@ groups don't apply</para></listitem>
 non-proportional font is specified</para></listitem>
 
 <!-- <listitem><para><guilabel>File Manager</guilabel> (Font to use in the
-&kde; file manager)</para></listitem> -->
+&tde; file manager)</para></listitem> -->
 
-<listitem><para><guilabel>Toolbar:</guilabel> Font used in &kde; application
+<listitem><para><guilabel>Toolbar:</guilabel> Font used in &tde; application
 toolbars</para></listitem>
 
-<listitem><para><guilabel>Menu:</guilabel> Font used in &kde; application
+<listitem><para><guilabel>Menu:</guilabel> Font used in &tde; application
 menus</para></listitem>
 
 <listitem><para><guilabel>Window title:</guilabel> Font used in the window
@@ -70,7 +70,7 @@ between the font group name and the <guibutton>Choose...</guibutton>
 button.</para>
 
 <para>When you are done, simply click <guibutton>OK</guibutton>, and
-all necessary components of &kde; will be restarted so your changes
+all necessary components of &tde; will be restarted so your changes
 can take affect immediately.</para>
 
 <para>The <guibutton>Adjust All Fonts...</guibutton> button allows you to
@@ -98,7 +98,7 @@ faces and styles.</para>
 fonts will <emphasis>not</emphasis> be anti-aliased.  This range is specified 
 with the two combo boxes on the same line.</para>
 
-<para>You can also choose the method that &kde; uses to create an anti-alias
+<para>You can also choose the method that &tde; uses to create an anti-alias
 look to your fonts, and how strongly it should be applied. If you are not
 familiar with the individual methods, you should leave this option
 alone.</para>
@@ -111,7 +111,7 @@ The ability to use anti-aliased fonts and icons requires that you have
 support in both X and the &Qt; toolkit, that you have suitable fonts
 installed, and that you are using the built-in font serving capabilities
 of the X server.  If you still are having problems, please contact the
-appropriate &kde; mailing list, or check the
+appropriate &tde; mailing list, or check the
 <acronym>FAQ</acronym>.</para></note>
 
 </sect2>

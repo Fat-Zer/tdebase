@@ -49,16 +49,16 @@ class="directory">$<envar>TDEDIRS</envar>/share/icons</filename> or <filename
 class="directory">$<envar>HOME</envar>/.kde/share/icons</filename> or
 <filename class="directory">$<envar>HOME</envar>/.kde2/share/icons</filename>.  To use icons
 stored in other locations, you must either copy them into one of the
-above-mentioned fixed &kde; locations or make symlinks.</para>
+above-mentioned fixed &tde; locations or make symlinks.</para>
 </answer>
 </qandaentry>
 
 <qandaentry>
 <question>
-<para>How do I use the mouse scroll wheel in &kde;?</para>
+<para>How do I use the mouse scroll wheel in &tde;?</para>
 </question>
 <answer>
-<para>Mouse wheel support comes with &Qt; 2.0 and above, so &kde; based on
+<para>Mouse wheel support comes with &Qt; 2.0 and above, so &tde; based on
 that will automatically support the use of the mouse scroll wheel if your system is configured correctly. Check your &X-Server; settings support the use of a scrollwheel if it is not working.</para>
 </answer>
 </qandaentry>
@@ -68,7 +68,7 @@ that will automatically support the use of the mouse scroll wheel if your system
 <para>How do I launch applications in a particular desktop?</para>
 </question>
 <answer>
-<para>&kde; comes with a program called &kstart;.
+<para>&tde; comes with a program called &kstart;.
 To start an <application>xterm</application> on the second desktop and then activate it use:
 
 <userinput><command>kstart</command> <option>--desktop 

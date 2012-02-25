@@ -8,7 +8,7 @@
 <title>KDE User's Manual</title>
 <author>&Lauri.Watts; &Lauri.Watts.mail;</author>
 <date>Jun 7, 2005</date>
-<productname>K Desktop Environment</productname>
+<productname>Trinity Desktop Environment</productname>
 </refentryinfo>
 
 <refmeta>
@@ -52,7 +52,7 @@ user</replaceable></group>
 <refsect1>
 <title>Description</title>
 <para>&tdesu; is a graphical front end for the
-&UNIX; <command>su</command> command for the K Desktop Environment.
+&UNIX; <command>su</command> command for the Trinity Desktop Environment.
 It allows you to run a program as different user by supplying the
 password for that user. &tdesu; is an unprivileged program; it uses
 the system's <command>su</command>.</para>
@@ -91,7 +91,7 @@ current user. If it is not writable, the command is executed as user
 <para><parameter>file</parameter> is evaluated like this: if
 <parameter>file</parameter> starts with a <literal>/</literal>, it is
 taken as an absolute filename. Otherwise, it is taken as the name of a
-global &kde; configuration file. For example: to configure the K display
+global &tde; configuration file. For example: to configure the K display
 manager, <application>tdm</application>, you could issue
 <command>tdesu <option>-c tdmconfig -f
 tdmrc</option></command></para></listitem>

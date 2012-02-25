@@ -22,7 +22,7 @@
 <releaseinfo>3.10.00</releaseinfo>
 
 <abstract>
-<para>This documentation describes &kde;'s information center.</para>
+<para>This documentation describes &tde;'s information center.</para>
 </abstract>
 
 <keywordset>
@@ -41,7 +41,7 @@
 <para>
 The &infocenter; (from now on referred to simply as <quote>the
 information center</quote>) provides you with a centralized and convenient
-overview of your &kde; and system settings.
+overview of your &tde; and system settings.
 </para>
 
 <para>
@@ -73,7 +73,7 @@ The &infocenter; can be started 3 ways:
 <para>
 By selecting <menuchoice><guimenu>K
 Button</guimenu><guisubmenu>System</guisubmenu><guimenuitem>Info
-Center</guimenuitem></menuchoice> from the &kde; Panel.
+Center</guimenuitem></menuchoice> from the &tde; Panel.
 
 </para>
 </listitem>
@@ -114,7 +114,7 @@ which can be divided into 3 functional parts.
 <para>
 Across the top is a menubar.  The menubar will provide you with quick
 access to most of &infocenter;'s features.  The menus are detailed in
-<link linkend="info-center-menus">The &kde; Info Center
+<link linkend="info-center-menus">The &tde; Info Center
 Menus</link>.
 </para>
 
@@ -131,7 +131,7 @@ The main panel shows you some system information.
 
 <!-- 
 <para>
-In this example, we are running &kde; 2.99, we started &infocenter;
+In this example, we are running &tde; 2.99, we started &infocenter;
 as user <systemitem class="username">adridg</systemitem>, the computer is
 named <systemitem class="systemname">aramis</systemitem>, it is a
 FreeBSD system, Version 4.4-RELEASE, on a Pentium.
@@ -184,7 +184,7 @@ The <guimenu>File</guimenu> menu has a single entry.
 </sect1>
 
 <sect1 id="info-center-exiting">
-<title>Exiting The &kde; Information Center</title>
+<title>Exiting The &tde; Information Center</title>
 
 <para>
 You can exit the info center one of three ways:
@@ -227,7 +227,7 @@ the info center.
 <para>
 This is a list of the <emphasis>standard</emphasis> configuration
 modules (sorted by category) provided by the <application
-role="package">&kde; base</application> package. Please note that there
+role="package">&tde; base</application> package. Please note that there
 may be many more modules on your system if you have installed additional
 software.
 </para>

@@ -642,7 +642,7 @@ available from this page.</para>
 
 <para>To make the application icon appear on your desktop, create the link in
 your <filename class="directory">~/Desktop</filename> folder (this may be 
-called something slightly different depending on how &kde; was installed on 
+called something slightly different depending on how &tde; was installed on 
 your system) or get to the
 <guisubmenu>Create New...</guisubmenu> sub menu by
 <mousebutton>right</mousebutton> clicking on a free area of the desktop 
@@ -829,7 +829,7 @@ seriously increases your vulnerability to malicious hacking.</para></warning>
 
 <!-- TODO: The content should probably be here too, but this'll do for -->
 <!-- now. -->
-<para>&kde; provides many applications which can open many different
+<para>&tde; provides many applications which can open many different
 types of file. Most of the time, the defaults will work with no
 problems, but &konqueror; provides a powerful system to allow you to
 change the applications used to open each file type. For more details,

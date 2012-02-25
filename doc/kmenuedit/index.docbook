@@ -31,9 +31,9 @@
 <legalnotice>&FDLNotice;</legalnotice>
 
 <date>2006-11-23</date>
-<releaseinfo>0.7 (&kde; 3.5.5)</releaseinfo>
+<releaseinfo>0.7 (&tde; 3.5.5)</releaseinfo>
 
-<abstract><para>&kmenuedit; allows editing of the &kde; &kmenu;. 
+<abstract><para>&kmenuedit; allows editing of the &tde; &kmenu;. 
 </para></abstract>
 
 <keywordset>
@@ -52,7 +52,7 @@
 <chapter id="introduction">
 <title>Introduction</title>
 
-<para>&kmenuedit; allows editing of &kde; &kmenu;.</para>
+<para>&kmenuedit; allows editing of &tde; &kmenu;.</para>
 
 <para>&kmenuedit; can be started either by &RMB; clicking the
 &kmenu; button on the panel and choosing
@@ -426,7 +426,7 @@ Author</para>
 
 <para>Documentation copyright &copy; 2000 &Milos.Prudek;</para>
 
-<para>Updated for &kde; 3.0 by &Lauri.Watts; &Lauri.Watts.mail;
+<para>Updated for &tde; 3.0 by &Lauri.Watts; &Lauri.Watts.mail;
 2002</para>
 
 <!-- TRANS:CREDIT_FOR_TRANSLATORS -->
@@ -464,16 +464,16 @@ in real-time.</para> </glossdef>
 <glossterm>Legacy Application</glossterm>
 <glossdef>
 
-<para>An X-window application which was not written with &kde; in
-mind. Such applications run fine in &kde;. However, they are not
-warned automatically when you shut down your &kde; session. You
+<para>An X-window application which was not written with &tde; in
+mind. Such applications run fine in &tde;. However, they are not
+warned automatically when you shut down your &tde; session. You
 therefore must not forget to save documents open in these applications
-before you log out from &kde;. </para> <para>Additionally, many of
+before you log out from &tde;. </para> <para>Additionally, many of
 these applications do not support copying and pasting from
-&kde; compliant applications. &Netscape; 4.x browser is a prominent
+&tde; compliant applications. &Netscape; 4.x browser is a prominent
 example of such application <footnote><para>Some <ulink
 url="http://www.gnome.org">GNOME</ulink> applications may provide
-limited interoperability with the &kde;.</para></footnote>.</para>
+limited interoperability with the &tde;.</para></footnote>.</para>
 </glossdef>
 </glossentry>
 
@@ -482,18 +482,18 @@ limited interoperability with the &kde;.</para></footnote>.</para>
 <glossdef>
 
 <para>Application originally written for non-graphic, text oriented
-environment. Such applications run fine in &kde;. They must run within
+environment. Such applications run fine in &tde;. They must run within
 console emulator, like &konsole;. They are not warned automatically
-when you shut down your &kde; session. You therefore must not forget
+when you shut down your &tde; session. You therefore must not forget
 to save documents open in these applications before you log out from
-the &kde;.</para>
+the &tde;.</para>
 
 <para>Console applications support copying and pasting from
-&kde;-compliant applications.Simply mark the text in the console
-application with your mouse, switch to the &kde;-compliant application
+&tde;-compliant applications.Simply mark the text in the console
+application with your mouse, switch to the &tde;-compliant application
 and press <keycombo action="simul">&Ctrl;
 <keycap>V</keycap></keycombo> to paste the text. If you want to copy
-from &kde; application to a console application, first mark the text
+from &tde; application to a console application, first mark the text
 with your mouse, press <keycombo action="simul">&Ctrl;
 <keycap>C</keycap></keycombo>, switch to the console application and
 press the middle button on your mouse<footnote><para>If your mouse

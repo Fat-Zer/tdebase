@@ -64,7 +64,7 @@ to find the exact file.
 
 <para>
 For those users who have difficulty hearing the System bell, or those
-users who have a silent computer, &kde; offers the <emphasis>visible bell</emphasis>.  This
+users who have a silent computer, &tde; offers the <emphasis>visible bell</emphasis>.  This
 provides a visual signal (inverting the screen or flashing a color
 across it) when the system bell would normally sound.
 </para>

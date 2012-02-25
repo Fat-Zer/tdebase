@@ -12,10 +12,10 @@
 
 <qandaentry>
 <question>
-<para>Does &kde; support transparency and other visual effects provided by the new composite extension to X.org?</para>
+<para>Does &tde; support transparency and other visual effects provided by the new composite extension to X.org?</para>
 </question>
 <answer>
-<para> Yes! An exciting new feature for &kde; 3.4 is support for the new X composite extension. This allows for effects such as translucency and drop shadows for all windows, easily configurable through &twin;'s configuration dialog. This requires you to be using X.org version 6.8.0 or newer and have:
+<para> Yes! An exciting new feature for &tde; 3.4 is support for the new X composite extension. This allows for effects such as translucency and drop shadows for all windows, easily configurable through &twin;'s configuration dialog. This requires you to be using X.org version 6.8.0 or newer and have:
 
 <screen>
 Section "Extensions"
@@ -38,7 +38,7 @@ Once you have configured X.org correctly, transparency and other effects can be 
 
 <qandaentry>
 <question>
-<para>What about &kde; programs that do not have icons? How do I get
+<para>What about &tde; programs that do not have icons? How do I get
 them into the menu?</para>
 </question>
 <answer>
@@ -49,7 +49,7 @@ them into the menu?</para>
 
 <qandaentry>
 <question>
-<para>Does &kde; have a graphical &FTP; client?</para>
+<para>Does &tde; have a graphical &FTP; client?</para>
 </question>
 <answer>
 <para>Yes, and it is none other than your favorite file
@@ -60,7 +60,7 @@ folders.</para>
 
 <qandaentry>
 <question>
-<para>How do I exit &kde;?</para>
+<para>How do I exit &tde;?</para>
 </question>
 <answer>
 <para>Simply click on the <guibutton>K</guibutton> button and select
@@ -101,7 +101,7 @@ new versions also sometimes fix security problems.</para>
 
 <qandaentry>
 <question>
-<para>How do I copy and paste in &kde;?</para>
+<para>How do I copy and paste in &tde;?</para>
 </question>
 <answer>
 <para>The simplest method is to use your mouse:</para>
@@ -116,7 +116,7 @@ button mouse and are emulating a three button mouse, push both buttons
 simultaneously.</para></step>
 </procedure>
 
-<para>For more information about using the clipboard in &kde; please see the &klipper; hand book, accessed by typing <userinput><command>help:/klipper</command></userinput>
+<para>For more information about using the clipboard in &tde; please see the &klipper; hand book, accessed by typing <userinput><command>help:/klipper</command></userinput>
 into the &konqueror; address bar. </para>
 
 </answer>
@@ -148,17 +148,17 @@ allows people remote access over the Net to pick up the latest source
 code and even to check in new files if they have permission.  It is
 also open source (you pay for support if you want it), and since it is
 free it is the system of choice for people writing more free products,
-such as &kde;.</para>
+such as &tde;.</para>
 </answer>
 </qandaentry>
 
 <qandaentry>
 <question>
-<para>Does &kde; support dual screen (Xinerama)?</para>
+<para>Does &tde; support dual screen (Xinerama)?</para>
 </question>
 <answer>
 <para>Yes, you need to have a multi-headed X server
-(&eg; MetroX or XFree86 4.0 and above) and a &kde; >= 2.2.1
+(&eg; MetroX or XFree86 4.0 and above) and a &tde; >= 2.2.1
 </para>
 </answer>
 </qandaentry>
@@ -175,12 +175,12 @@ such as &kde;.</para>
 
 <qandaentry>
 <question>
-<para>How do I check which version of &kde; I am using?</para>
+<para>How do I check which version of &tde; I am using?</para>
 </question>
 <answer>
-<para>Fire up your <application>&kde; Control
-Center</application>.  It comes up with an Info Screen including the version of &kde;
-The &kde; version is also included in the application's 
+<para>Fire up your <application>&tde; Control
+Center</application>.  It comes up with an Info Screen including the version of &tde;
+The &tde; version is also included in the application's 
 <guimenuitem>About</guimenuitem> dialog.
 </para>
 </answer>
@@ -195,7 +195,7 @@ The &kde; version is also included in the application's
 <answer>
 <para>Go see <ulink
 url="http://artist.kde.org">http://artist.kde.org</ulink>.
-There is also a more informal community of &kde; related artists and
+There is also a more informal community of &tde; related artists and
 artwork at <ulink url="http://kde-look.org">http://kde-look.org</ulink>.
 </para>
 </answer>
@@ -207,9 +207,9 @@ artwork at <ulink url="http://kde-look.org">http://kde-look.org</ulink>.
 <para>How can I get to know about development updates?</para>
 </question>
 <answer>
-<para>You might want to subscribe to the various &kde; mailing lists
+<para>You might want to subscribe to the various &tde; mailing lists
 available, especially kde-cvs, which lists all commits done to the
-&kde; <acronym>CVS</acronym> repository.  Check <ulink
+&tde; <acronym>CVS</acronym> repository.  Check <ulink
 url="http://lists.kde.org">http://lists.kde.org</ulink> if you want to
 read without subscribing.</para>
 </answer>

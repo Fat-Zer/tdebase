@@ -12,7 +12,7 @@
 <qandaset>
 <qandaentry>
 <question>
-<para>How do I add applications to the &kde; panel (&kicker;)?</para>
+<para>How do I add applications to the &tde; panel (&kicker;)?</para>
 </question>
 <answer>
 <para>There are several ways to add an application to the panel, of
@@ -40,9 +40,9 @@ you prefer from
 install it using the &kcontrolcenter;.</para>
 <para>In order to change only the &kmenu; icon you can overwrite the
 <filename>kmenu.png</filename> image for every size in an icon theme set.
-So, for &kde; default icons this would be <filename>$<envar>TDEDIR</envar>/share/icons/default.kde/<replaceable>size</replaceable>/apps/kmenu.png</filename>,
+So, for &tde; default icons this would be <filename>$<envar>TDEDIR</envar>/share/icons/default.kde/<replaceable>size</replaceable>/apps/kmenu.png</filename>,
 where <replaceable>size</replaceable> is one of the sizes included in the
-&kde; icon theme. 
+&tde; icon theme. 
 </para>
 </answer>
 </qandaentry>
@@ -55,7 +55,7 @@ After an upgrade my &kmenu; appears to be empty! How can I get my menu back?
 </question>
 <answer>
 <para>
-In &kde; 3.2 and later local modifications to the &kmenu; are stored
+In &tde; 3.2 and later local modifications to the &kmenu; are stored
 in
 <filename>$<envar>HOME</envar>/.config/menus/applications-kmenuedit.menu
 </filename>. Try moving this file out of the way and then issuing the
@@ -75,7 +75,7 @@ back?</para>
 
 <para>The panel disappearing is usually due to it crashing. This is
 most often caused by loading an applet that has a fatal bug or due to
-a bad installation of &kde; and/or the panel.</para>
+a bad installation of &tde; and/or the panel.</para>
 
 <para>The easiest way to get the panel back is to launch the
 <guilabel>Run Command</guilabel> window by pressing <keycombo
@@ -98,7 +98,7 @@ it by hand, start by removing the applet entry groups.</para>
 <para>Where did the Icon Zooming option that used to be in &kicker; go?
 </para></question>
 <answer><para>
-Icon zooming was not actively maintained and had caused severe bugs and usability issues. It was replaced in &kde; 3.4 by the new mouse over effects, which combine esthetics with useful information.
+Icon zooming was not actively maintained and had caused severe bugs and usability issues. It was replaced in &tde; 3.4 by the new mouse over effects, which combine esthetics with useful information.
 </para></answer>
 
 </qandaentry>
@@ -112,7 +112,7 @@ tray?</para>
 in the system tray, run <userinput><command>ksystraycmd </command>
 <option>--hidden</option> <command>konsole</command></userinput>. For
 more information about <command>ksystraycmd</command>, see the section
-<quote>Advanced Window Management</quote> in the &kde;
+<quote>Advanced Window Management</quote> in the &tde;
 User Guide.</para>
 </answer>
 </qandaentry>
@@ -121,13 +121,13 @@ User Guide.</para>
 <question><para>How do I use the &Windows; key to open the &kmenu;?</para>
 </question>
 
-<answer><para>Previous versions of &kde; provided a trick to allow you to
+<answer><para>Previous versions of &tde; provided a trick to allow you to
 use the &Windows; key both as a modifier (so you could have shortcuts
 like <keycombo action="simul"><keysym>Win</keysym><keycap>R</keycap>
 </keycombo>), and as a regular key (so that pressing
 <keysym>Win</keysym> on its own could open the &kmenu;). This feature
 was removed for reasons of usability and accessibility, as well as
-keeping the code clean. For current versions of &kde;, you have two
+keeping the code clean. For current versions of &tde;, you have two
 options: either use a different shortcut to open the &kmenu; (the
 default is <keycombo action="simul">&Alt;<keycap>F1</keycap>
 </keycombo>), or remap the <keysym>Win</keysym> key to be a regular
@@ -164,7 +164,7 @@ able to popup the &kmenu; by pressing the <keysym>Win</keysym> key.</para>
 settings: Create a file <filename>~/.kde/env/win-key.sh</filename>
 (create the directory if it doesn't exist), and add the
 <command>xmodmap</command> command you used previously to it. The
-change should now be applied every time you start &kde;.</para>
+change should now be applied every time you start &tde;.</para>
 </listitem>
 </orderedlist>
 </para>

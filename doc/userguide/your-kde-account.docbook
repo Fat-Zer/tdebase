@@ -13,32 +13,32 @@
 </sect1info>
 -->
 
-<title>About Your &kde; Account</title>
+<title>About Your &tde; Account</title>
 
-<para>&kde; stores information about your personal settings in a few
+<para>&tde; stores information about your personal settings in a few
 different places:
 
 <itemizedlist>
 <listitem><para>The hidden directory <filename>.kde</filename> (note the
 period at the beginning), located in your home directory, contains a
-large number of files that store &kde; settings. Some subdirectories
+large number of files that store &tde; settings. Some subdirectories
 you may find useful are:<filename>.kde/share/config</filename>, which
 contains configuration files for individual applications;
 <filename>.kde/Autostart</filename>, which contains links to
-applications which should start each time you start &kde;; and
+applications which should start each time you start &tde;; and
 <filename>.kde/share/apps/kabc</filename>, where your address book is
 stored.</para>
 </listitem>
 <!-- FIXME: Apparently TDEDIR and TDEDIRS are deprecated. I need to -->
 <!-- get the truth on this -->
 <listitem><para>The environment variables <envar>TDEDIR</envar> and
-<envar>TDEDIRS</envar> tell &kde; where its files are stored. You will
+<envar>TDEDIRS</envar> tell &tde; where its files are stored. You will
 usually only need to set <envar>TDEDIR</envar> to the directory in which
-&kde; is installed, but sometimes you might have other &kde;
+&tde; is installed, but sometimes you might have other &tde;
 programs installed elsewhere: in this case, you can use the
 <envar>TDEDIRS</envar> environment variable. Set
 <envar>TDEDIRS</envar> to a list of all the directories containing
-&kde; programs, separated by commas. For example, if you have &kde;
+&tde; programs, separated by commas. For example, if you have &tde;
 programs in both <filename>/usr/local/kde</filename> and
 <filename>/home/phil/kde</filename>, you can use <userinput>export
 TDEDIR=/usr/local/kde,/home/phil/kde</userinput> if you use
@@ -53,7 +53,7 @@ TDEDIR=/usr/local/kde,/home/phil/kde</userinput> if you use sh.
 <itemizedlist>
 <title>Related Information</title>
 <listitem><para><xref linkend="kde-for-administrators" /> contains
-more information about the directories that &kde; uses.</para>
+more information about the directories that &tde; uses.</para>
 </listitem>
 </itemizedlist>
 

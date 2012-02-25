@@ -12,7 +12,7 @@
 </personname>
 &Lauri.Watts.mail;</author>
 <date>Feb 25, 2005</date>
-<productname>K Desktop Environment</productname>
+<productname>Trinity Desktop Environment</productname>
 </refentryinfo>
 
 <refmeta>
@@ -22,7 +22,7 @@
 
 <refnamediv>
 <refname><command>appletproxy</command></refname>
-<refpurpose>&kde; panel applet proxy</refpurpose>
+<refpurpose>&tde; panel applet proxy</refpurpose>
 </refnamediv>
 
 <refsynopsisdiv>
@@ -39,7 +39,7 @@
 <refsect1>
 <title>Description</title>
 <para><application>appletproxy</application> is a small application that
-allows you to run a &kicker; (&kde; panel) applet outside of &kicker;
+allows you to run a &kicker; (&tde; panel) applet outside of &kicker;
 itself.  The applet will appear in it's own window, making this a convenient
 way to debug panel applets.</para>
 </refsect1>
@@ -94,7 +94,7 @@ way to debug panel applets.</para>
 <para>&kappname; was written by &Matthias.Elter; and &Matthias.Ettrich; and
 is maintained by &Aaron.J.Seigo; &Aaron.J.Seigo.mail;</para>
 
-<para>This man page was written for &kde; 3.4 by &Lauri.Watts;
+<para>This man page was written for &tde; 3.4 by &Lauri.Watts;
 &Lauri.Watts.mail;</para>
 </refsect1>
 

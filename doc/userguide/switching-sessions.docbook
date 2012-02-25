@@ -1,19 +1,8 @@
 <sect1 id="switching-sessions">
 
-<sect1info>
-<author>
-<personname>
-<firstname>Christian</firstname>
-<surname>Weickhmann</surname>
-</personname>
-<email>christian.weickhmann@gmx.de</email>
-</author>
-</sect1info>
-
-
 <title>Switching Sessions</title>
 
-<para>From version 3.3 onwards, &kde; provides a session management
+<para>From version 3.3 onwards, &tde; provides a session management
 system which allows you to switch between different user account on
 one computer. You can stay logged in and &eg; let your sister,
 brother, wife, neigbour or whoever read her or his emails just for a

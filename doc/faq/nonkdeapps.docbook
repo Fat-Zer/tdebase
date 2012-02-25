@@ -5,7 +5,7 @@
 -->
 
 <chapter id="non-kde-apps">
-<title>&kde; with non-&kde; applications</title>
+<title>&tde; with non-&tde; applications</title>
 
 <!-- FIXME: This seems to be obsolete. The only similar option is "Apply
 *colors* to -->
@@ -14,12 +14,12 @@
 <qandaset>
 <qandaentry>
 <question>
-<para>My non-&kde; applications like &Emacs; and
+<para>My non-&tde; applications like &Emacs; and
 <application>kterm</application> are running amok with strange
 colors!</para>
 </question>
 <answer>
-<para>Start the <application>&kde; Control Center</application> and in
+<para>Start the <application>&tde; Control Center</application> and in
 <menuchoice><guimenu>Appearance &amp; Themes</guimenu><guimenuitem>
 Colors</guimenuitem></menuchoice> uncheck the <guilabel>Apply colors to
 non-KDE applications</guilabel> checkbox and click
@@ -31,7 +31,7 @@ non-KDE applications</guilabel> checkbox and click
 <question><para>How can I set my default web browser to be something other
 than &konqueror;?</para></question>
 <answer>
-<para>If you are using &kde; 3.3 or later, open up the &kcontrolcenter; and
+<para>If you are using &tde; 3.3 or later, open up the &kcontrolcenter; and
 navigate to the <menuchoice><guimenu>KDE
 Components</guimenu><guimenuitem>Component
 Chooser</guimenuitem></menuchoice> panel. Select <guilabel>Web
@@ -46,7 +46,7 @@ in the textbox.</para>
 <qandaentry>
 <question>
 <para>How can I configure the style and fonts of <acronym>GTK</acronym>
-applications within &kde; ?
+applications within &tde; ?
 </para>
 </question>
 <answer>
@@ -55,7 +55,7 @@ The simplest way to achieve this is to download and compile the
 <acronym>gtk-qt</acronym> theme engine from <ulink
 url="http://www.freedesktop.org/Software/gtk-qt">
 http://www.freedesktop.org/Software/gtk-qt</ulink>. This theme engine makes
-your <acronym>GTK</acronym> applications look like your &kde; widget style
+your <acronym>GTK</acronym> applications look like your &tde; widget style
 by calling functions from &Qt; instead of drawing the styles itself. Once
 the theme engine has been installed, there will be a &kcontrolcenter; module
 under <menuchoice><guimenu>Appearance &amp; Themes</guimenu><guimenuitem>GTK

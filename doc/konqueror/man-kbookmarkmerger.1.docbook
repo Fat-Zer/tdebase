@@ -13,7 +13,7 @@
 		&Frerich.Raabe.mail;
 	</author>
 	<date>February 1st, 2005</date>
-	<productname>K Desktop Environment</productname>
+	<productname>Trinity Desktop Environment</productname>
 </refentryinfo>
 
 <refmeta>
@@ -43,8 +43,8 @@ the user's set of bookmarks; if the user doesn't have any bookmarks created
 yet, a new bookmark list is created and the given bookmarks are inserted into
 it. While doing this, &kbookmarkmerger; keeps track of which files were
 merged in a previous run already, so no bookmark will get installed to the
-user's bookmarks more than once. In case &kde; is running while
-&kbookmarkmerger; is executed, the &kde; bookmark subsystem will be informed
+user's bookmarks more than once. In case &tde; is running while
+&kbookmarkmerger; is executed, the &tde; bookmark subsystem will be informed
 of any changes to the user's bookmarks, so that all applications accessing
 that information (&ie; &konqueror;) will pick the changes up instantly.</para>
 

@@ -32,7 +32,7 @@
 <title>Sound System</title>
 
 <para>This control module is used to configure the settings for the
-&arts; sound server (the &kde; sound server).</para>
+&arts; sound server (the &tde; sound server).</para>
 
 <sect2 id="sndserver-general">
 <title>&arts;</title>
@@ -80,7 +80,7 @@ cause problems.</para></note></listitem>
 computer's resources.  The faster the response time, the higher the
 <acronym>CPU</acronym> load will be.</para>
 <tip><para>I would recommend that you start with the sound server set at
-250 ms, and use &kde; for a while.  If you notice that the sound does
+250 ms, and use &tde; for a while.  If you notice that the sound does
 not work correctly, increase the responsiveness one step at a time until
 the problems disappear.</para></tip>
 </listitem>

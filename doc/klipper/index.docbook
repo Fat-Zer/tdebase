@@ -34,7 +34,7 @@
 <releaseinfo>2.92.00</releaseinfo>
 
 <abstract>
-<para>&klipper; is the &kde; clipboard cut &amp; paste utility.</para>
+<para>&klipper; is the &tde; clipboard cut &amp; paste utility.</para>
 </abstract>
 
 <keywordset>
@@ -47,7 +47,7 @@
  
 <chapter id="introduction">
 <title>Introduction</title>
-<para>&klipper; is the &kde; clipboard utility. It stores clipboard
+<para>&klipper; is the &tde; clipboard utility. It stores clipboard
 history, and allows you to link clipboard contents to application
 actions. Please report any problems or feature requests to Esben Mose
 Hansen (see <ulink
@@ -74,11 +74,11 @@ for contact details).</para>
 </screenshot>
 
 <para>To display the clipboard history, click on the &klipper; icon in
- the &kde; panel, or press <keycombo
+ the &tde; panel, or press <keycombo
  action="simul">&Ctrl;&Alt;<keycap>V</keycap> </keycombo>. Previous
  clipboard entries are shown at the top of the pop-up menu which
  appears. Selecting one of these copies it to the clipboard, from
- where it can be pasted into any &kde; or X application as
+ where it can be pasted into any &tde; or X application as
  usual.</para>
 
 <para>You can search through the clipboard history by opening it
@@ -141,7 +141,7 @@ menu to repeat the last action which &klipper; performed.</para>
 <title>General</title>
 <para>
 &klipper; can be used to set the behavior of the clipboard and selection in
-&kde;. 
+&tde;. 
 </para>
 
 <note><para>The &X-Window; uses two separate clipboard buffers: the
@@ -157,7 +157,7 @@ clipboard buffer is pasted using <keycombo>&Ctrl;<keycap>V</keycap>
 </menuchoice>.</para>
 </note>
 
-<!-- &klipper; can be used to set the clipboard mode for the whole of &kde;. The
+<!-- &klipper; can be used to set the clipboard mode for the whole of &tde;. The
 first mode will be familiar to &Microsoft; &Windows; and &Mac; users: Text is
 inserted into the clipboard using an application's cut/copy (or generally
 <keycombo>&Ctrl;<keycap>X</keycap></keycombo> and
@@ -228,7 +228,7 @@ below.</para>
 <varlistentry>
 <term><guilabel>Popup menu at mouse-cursor position</guilabel></term>
 <listitem><para>Make the &klipper; pop-up menus appear at the position of
-the mouse cursor, instead of their default position (in the &kde; Panel).
+the mouse cursor, instead of their default position (in the &tde; Panel).
 Useful if you use the mouse more than the keyboard.</para></listitem>
 </varlistentry>
 
@@ -399,7 +399,7 @@ shortcuts referred to in this manual.</para></listitem>
 <listitem><para>The selected action is assigned to the keys you choose.</para>
 <para>To choose a custom key for the action you have selected, click on the
 representation of a key in the lower right of the screen to activate it, and
-type the desired key combination on your keyboard, as in any &kde; application. 
+type the desired key combination on your keyboard, as in any &tde; application. 
 </para> </listitem>
 </varlistentry>
 </variablelist>
@@ -446,12 +446,12 @@ Documentation copyright 2000-2003, 2005 &Philip.Rodrigues;
 <sect1 id="compilation">
 <title>Compilation and Installation</title>
 <para>&klipper; should compile and install along with the tdebase
-package, and appear on your &kde; panel (&kicker;) when you run &kde;
+package, and appear on your &tde; panel (&kicker;) when you run &tde;
 3. If it does not appear, you can start it by selecting
 <menuchoice><guimenu>Panel
 Menu</guimenu><guisubmenu>Add</guisubmenu><guisubmenu>Applet</guisubmenu><guimenuitem>Klipper</guimenuitem>
 </menuchoice>
-in any context menu in &kicker;, the &kde; Panel.</para> 
+in any context menu in &kicker;, the &tde; Panel.</para> 
 
 <screenshot>
 <screeninfo>&klipper; icon</screeninfo>

@@ -40,7 +40,7 @@ KHC::ContentsTab object and a KHC::SearchTab object.
 # predict changes which justify doing so.
 
 1.) KHC::ContentsTab provides the following entires:
-	- Welcome to KDE
+	- Welcome to TDE
 	- KDE user's manual
 	- KDE FAQ
 	- Contact information

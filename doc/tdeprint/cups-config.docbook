@@ -50,7 +50,7 @@ class="directory">/usr/share/doc/cups/</filename> or
 
 <para>For the best, most detailed and most recent information you should
 always refer to the original &CUPS; documentation.  &CUPS; is, much like
-&kde; in a rapid development process.  There are constantly new features
+&tde; in a rapid development process.  There are constantly new features
 being added. New features might for times be only configurable by
 directly editing the configuration files. The &tdeprint; &GUI; might not
 have caught up with &CUPS; development.</para>
