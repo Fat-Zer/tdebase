@@ -227,7 +227,7 @@ Although this guide is revised periodically, those traditional terms might still
 <varlistentry>
 <term>&tde; prefix</term>
 <listitem><para>&tde; installs into its own folder tree, which is found by
-running the command <userinput><command>kde-config</command> <option>--prefix</option></userinput>. This folder is referred to
+running the command <userinput><command>tde-config</command> <option>--prefix</option></userinput>. This folder is referred to
 by the environment variable $<envar>TDEDIR</envar> and possibly
 $<envar>TDEDIRS</envar>.</para>
 </listitem>

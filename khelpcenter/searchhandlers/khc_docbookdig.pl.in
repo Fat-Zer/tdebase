@@ -29,7 +29,7 @@ use Getopt::Long;
 my $htdigdata = "/etc/htdig";
 my $htdigbin = "/usr/bin";
 my $kdeprefix = "@prefix@";
-my $kdehtmldir = `kde-config --expandvars --install html`;
+my $kdehtmldir = `tde-config --expandvars --install html`;
 chomp $kdeprefix;
 chomp $kdehtmldir;
 

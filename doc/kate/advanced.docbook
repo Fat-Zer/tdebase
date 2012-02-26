@@ -653,7 +653,7 @@ only. The requirements is that the script is placed in a folder where &kate;
 can find it, along with an optional .desktop file that defines the related
 properties. The valid folder are named <filename>katepart/scripts</filename>
 in the &tde; data folders. You can find the data folders by running the command
-<command>kde-config <option>--path</option> <parameter>data</parameter></command>
+<command>tde-config <option>--path</option> <parameter>data</parameter></command>
 You will usually have at least a system and a personal data folder. Of course
 scripts in the system data folder are available to all users on the system,
 while those in the personal folder are available for you only.</para>

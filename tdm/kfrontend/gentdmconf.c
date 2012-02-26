@@ -2578,7 +2578,7 @@ int main( int argc, char **argv )
 "    Default is to scan /etc/X11/tdm, $XLIBDIR/tdm, /etc/X11/xdm,\n"
 "    $XLIBDIR/xdm; there in turn look for tdm-config and xdm-config.\n"
 "    Note that you possibly need to use --no-old-kde to make this take effect.\n"
-"  --old-kde /path/to/old/kde-config-dir\n"
+"  --old-kde /path/to/old/tde-config-dir\n"
 "    Where to look for the tdmrc of an older tdm.\n"
 "    Default is to scan " KDE_CONFDIR " and\n"
 "    {/usr,/usr/local,{/opt,/usr/local}/{trinity,kde,kde2,kde1}}/share/config.\n"

@@ -5,7 +5,7 @@ use warnings;
 
 sub getKDEDocDir() 
 {
-    my $prefix = `kde-config --prefix`;
+    my $prefix = `tde-config --prefix`;
     chomp $prefix;
 
     $prefix = "/opt/kde" if (not defined($prefix));

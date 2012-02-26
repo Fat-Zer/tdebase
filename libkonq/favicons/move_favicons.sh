@@ -1,9 +1,9 @@
 #!/bin/sh
 
-prefix=$(kde-config --localprefix)
+prefix=$(tde-config --localprefix)
 source1="$prefix/share/icons/favicons"
 source2="$prefix/share/cache/favicons"
-dest="$(kde-config --path cache)/favicons"
+dest="$(tde-config --path cache)/favicons"
 
 if [ -n "$prefix" -a -d "$source1" ]; then
 	while [ ! -d "$dest" ]; do

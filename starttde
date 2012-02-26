@@ -26,7 +26,7 @@ echo "[starttde] This script is $0" 1>&2
 # the existence of $TDEDIR. That environment variable might not be
 # defined or defined to point to KDE4 binaries.
 BIN_DIR="`dirname $0`"
-# Do not use kde-config to determine the version. That command creates a
+# Do not use tde-config to determine the version. That command creates a
 # profile directory in the root of the file system. Refer to Bug Report 293.
 if [ -x $BIN_DIR/konqueror ]; then
   TDE_VERSION="`$BIN_DIR/konqueror --version | grep TDE | awk '{print $2}'`"
@@ -127,10 +127,10 @@ else
       # Presume $HOME/.kde is being used for KDE4 to be on the safe side.
       export TDEHOME=$HOME/.trinity
     fi
-  elif [ -f /opt/trinity/bin/kde-config ]; then
+  elif [ -f /opt/trinity/bin/tde-config ]; then
     # Looks like Trinity is installed.
     export TDEHOME=$HOME/.trinity
-  elif [ -f /usr/bin/kde-config ] && [ -d $HOME/.kde ]; then
+  elif [ -f /usr/bin/tde-config ] && [ -d $HOME/.kde ]; then
     # Looks like Trinity is installed and not playing second fiddle to KDE4.
     export TDEHOME=$HOME/.kde
   else
@@ -366,7 +366,7 @@ fi
 # For anything else (that doesn't set env vars, or that needs a window manager),
 # better use the Autostart folder.
 
-exepath=`kde-config --path exe | tr : '\n'`
+exepath=`tde-config --path exe | tr : '\n'`
 
 for prefix in `echo "$exepath" | sed -n -e 's,/bin[^/]*/,/env/,p'`; do
   for file in "$prefix"*.sh; do

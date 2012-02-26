@@ -198,7 +198,7 @@ usually a folder named <filename class="directory">.kde</filename>
 folder. If you want scripts to be executed for all &tde; users, you can
 put them under <filename class="directory">$<envar>TDEDIR</envar>/env/</filename>, where $<envar>TDEDIR</envar> is the prefix &tde; was
 installed to (you can find this out using the command
-<userinput><command>kde-config</command> --prefix</userinput>).</para>
+<userinput><command>tde-config</command> --prefix</userinput>).</para>
 <para>If you wish to start a program after &tde; has started, you may want to use the 
 <filename class="directory">Autostart</filename> folder. To add
 entries to the <filename class="directory">Autostart</filename> folder:

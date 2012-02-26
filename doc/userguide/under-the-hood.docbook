@@ -23,7 +23,7 @@ class="directory">.kde/share/config</filename> (replace
 the global ones are in the <filename
 class="directory">share/config</filename> sub-directory of &tde;'s
 installation path. (You can find this path by running the command
-<command>kde-config --prefix</command>.) Their filenames typically
+<command>tde-config --prefix</command>.) Their filenames typically
 end in rc (without an initial period), for example <filename>kopeterc</filename>.</para>
 
 <warning><para>

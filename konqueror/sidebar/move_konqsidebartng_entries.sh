@@ -1,6 +1,6 @@
 #!/bin/sh
 
-prefix=$(kde-config --localprefix)
+prefix=$(tde-config --localprefix)
 source="$prefix/share/apps/konqsidebartng"
 
 [ -d "$source/entries" ] || exit 0

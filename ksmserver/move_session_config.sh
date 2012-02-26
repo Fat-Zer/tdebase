@@ -1,6 +1,6 @@
 #!/bin/sh
 
-prefix=`kde-config --localprefix`
+prefix=`tde-config --localprefix`
 source="${prefix}/share/config"
 dest="${prefix}/share/config/session"
 
