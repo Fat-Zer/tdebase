@@ -21,7 +21,7 @@
 +	return QKDEIntegration::getOpenFileNames( filter, workingDirectory, parent, name,
 +				    caption, selectedFilter, false ).first();
 +#elif defined(Q_WS_WIN)
-     if ( qt_use_native_dialogs && qApp->style().styleHint( QStyle::SH_GUIStyle ) == WindowsStyle )
+     if ( qt_use_native_dialogs && tqApp->style().styleHint( QStyle::SH_GUIStyle ) == WindowsStyle )
  	return winGetOpenFileName( initialSelection, filter, workingDirectory,
  				   parent, name, caption, selectedFilter );
 @@ -3546,7 +3554,11 @@ QString QFileDialog::getSaveFileName( co
@@ -34,7 +34,7 @@
 +	return QKDEIntegration::getSaveFileName( initialSelection, filter, workingDirectory,
 +				   parent, name, caption, selectedFilter );
 +#elif defined(Q_WS_WIN)
-     if ( qt_use_native_dialogs && qApp->style().styleHint( QStyle::SH_GUIStyle ) == WindowsStyle )
+     if ( qt_use_native_dialogs && tqApp->style().styleHint( QStyle::SH_GUIStyle ) == WindowsStyle )
  	return winGetSaveFileName( initialSelection, filter, workingDirectory,
  				   parent, name, caption, selectedFilter );
 @@ -4433,7 +4445,17 @@ QString QFileDialog::getExistingDirector
@@ -65,7 +65,7 @@
 +    if ( qt_use_native_dialogs && QKDEIntegration::enabled())
 +	return QKDEIntegration::getOpenFileNames( filter, workingDirectory, parent, name, caption, selectedFilter, true );
 +#elif defined(Q_WS_WIN)
-     if ( qt_use_native_dialogs && qApp->style().styleHint( QStyle::SH_GUIStyle ) == WindowsStyle )
+     if ( qt_use_native_dialogs && tqApp->style().styleHint( QStyle::SH_GUIStyle ) == WindowsStyle )
  	return winGetOpenFileNames( filter, workingDirectory, parent, name, caption, selectedFilter );
  #elif defined(Q_WS_MAC)
 --- src/dialogs/qmessagebox.cpp.sav	2003-12-22 12:24:32.000000000 +0100

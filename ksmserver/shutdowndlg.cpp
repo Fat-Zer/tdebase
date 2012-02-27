@@ -156,7 +156,7 @@ void KSMShutdownFeedback::slotPaintEffect()
 			uchar * end = m_grayImage.bits() + m_grayImage.numBytes();
 
 			while ( r != end ) {
-				*reinterpret_cast<TQRgb*>(r) = qRgba(0, 0, 0, 128);
+				*reinterpret_cast<TQRgb*>(r) = tqRgba(0, 0, 0, 128);
 				r += 4;
 			}
 
@@ -234,7 +234,7 @@ void KSMShutdownFeedback::slotPaintEffect()
 				short int opac = static_cast<short int>( 128 - cosf( M_PI*(y-y1)/heightUnit )*128.0f );
 				for( short int x = 0; x < imgWidth; ++x )
 				{
-					*reinterpret_cast<TQRgb*>(rd) = qRgba(0, 0, 0, ((255.0-opac)/(255.0/127.0)));
+					*reinterpret_cast<TQRgb*>(rd) = tqRgba(0, 0, 0, ((255.0-opac)/(255.0/127.0)));
 					rs += 4; rd += 4;
 				}
 			}
@@ -403,7 +403,7 @@ void KSMShutdownFeedback::slotPaintEffect()
 			uchar * end = m_grayImage.bits() + m_grayImage.numBytes();
 
 			while ( r != end ) {
-				*reinterpret_cast<TQRgb*>(r) = qRgba(0, 0, 0, 107);
+				*reinterpret_cast<TQRgb*>(r) = tqRgba(0, 0, 0, 107);
 				r += 4;
 			}
 
@@ -480,7 +480,7 @@ void KSMShutdownFeedback::slotPaintEffect()
 			// linear gradients look bad, so use cos-function
 				for( short int x = 0; x < imgWidth; ++x )
 				{
-					*reinterpret_cast<TQRgb*>(rd) = qRgba(0, 0, 0, 107);
+					*reinterpret_cast<TQRgb*>(rd) = tqRgba(0, 0, 0, 107);
 					rs += 4; rd += 4;
 				}
 			}
