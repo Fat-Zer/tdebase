@@ -260,7 +260,7 @@ void parseFunction( const TQString& details )
                 arg.create = "tqAppName";
                 function.args.append( arg );
                 arg.name = "wmclass2";
-                arg.create = "qAppClass";
+                arg.create = "tqAppClass";
                 function.args.append( arg );
                 }
             check( !function.return_type.isEmpty());
