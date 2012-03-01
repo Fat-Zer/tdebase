@@ -235,7 +235,7 @@ static int directCommand(KCmdLineArgs *args)
             dontagain = values[ 1 ];
           }
           else
-            qDebug( "Incorrect --dontagain!" );
+            tqDebug( "Incorrect --dontagain!" );
         }
         int ret;
 

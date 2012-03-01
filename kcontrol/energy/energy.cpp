@@ -344,7 +344,7 @@ void KEnergy::applySettings(bool enable, int standby, int suspend, int off)
         } else
             DPMSDisable(dpy);
     } else
-        qWarning("Server has no DPMS extension");
+        tqWarning("Server has no DPMS extension");
 
     XFlush(dpy);
     XSetErrorHandler(defaultHandler);

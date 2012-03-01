@@ -173,7 +173,7 @@ static void applyQtSettings( KConfig& kglobals, TQSettings& settings )
     // users. So we need to know whether a path being added is from KApp, and in this case
     // end it with.. So keep a TQMap to bool, specifying whether the path is KDE-specified..
 
-  TQString qversion = qVersion();
+  TQString qversion = tqVersion();
   if ( qversion.contains( '.' ) > 1 )
      qversion.truncate( qversion.findRev( '.' ) );
   if ( qversion.contains( '-' ) )

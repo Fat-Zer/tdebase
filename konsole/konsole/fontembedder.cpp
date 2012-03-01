@@ -61,13 +61,13 @@ int main(int argc, char **argv)
 {
     if (argc < 1)
     {
-        qWarning("usage: fontembedder font.src > font.h");
+        tqWarning("usage: fontembedder font.src > font.h");
         exit(1);
     }
     TQFile inFile(argv[1]);
     if (!inFile.open(IO_ReadOnly))
     {
-        qFatal("Can not open %s", argv[1]);
+        tqFatal("Can not open %s", argv[1]);
     }
 
     TQTextStream input(&inFile);
@@ -88,7 +88,7 @@ int main(int argc, char **argv)
         //Must be a glyph ID.
         int glyph = line.toInt(0, 16);
         if ((glyph < 0x2500) || (glyph > 0x257f))
-            qFatal("Invalid glyph number");
+            tqFatal("Invalid glyph number");
 
         glyph = glyph - 0x2500;
 

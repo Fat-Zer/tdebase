@@ -227,7 +227,7 @@ void URLGrabber::slotItemSelected( int id )
         ClipCommand *command = myCommandMapper.find( id );
         TQStringList *backrefs = myGroupingMapper.find( id );
         if ( !command || !backrefs )
-            qWarning("Klipper: can't find associated action");
+            tqWarning("Klipper: can't find associated action");
         else
             execute( command, backrefs );
     }
@@ -259,7 +259,7 @@ void URLGrabber::execute( const struct ClipCommand *command,
         proc << cmdLine.stripWhiteSpace();
 
         if ( !proc.start(KProcess::DontCare, KProcess::NoCommunication ))
-            qWarning("Klipper: Couldn't start process!");
+            tqWarning("Klipper: Couldn't start process!");
     }
 }
 

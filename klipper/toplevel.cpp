@@ -853,7 +853,7 @@ void KlipperWidget::checkClipData( bool selectionMode )
     int i = 0;
     while ( (format = clip->data()->format( i++ )) )
     {
-        qDebug( "    format: %s", format);
+        tqDebug( "    format: %s", format);
     }
 #endif
     TQMimeSource* data = clip->data( selectionMode ? TQClipboard::Selection : TQClipboard::Clipboard );
@@ -1075,8 +1075,8 @@ static Bool update_x_time_predicate( Display*, XEvent* event, XPointer )
 
 void KlipperWidget::updateTimestamp()
 { // Qt3.3.0 and 3.3.1 use qt_x_user_time for clipboard operations
-    Time time = ( strcmp( qVersion(), "3.3.1" ) == 0
-                || strcmp( qVersion(), "3.3.0" ) == 0 )
+    Time time = ( strcmp( tqVersion(), "3.3.1" ) == 0
+                || strcmp( tqVersion(), "3.3.0" ) == 0 )
                 ? GET_QT_X_USER_TIME() : GET_QT_X_TIME();
     static TQWidget* w = 0;
     if ( !w )

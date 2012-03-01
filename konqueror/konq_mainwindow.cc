@@ -2047,7 +2047,7 @@ void KonqMainWindow::slotUndoAvailable( bool avail )
 
   if ( avail && m_currentView && m_currentView->part() )
   {
-    // Avoid qWarning from TQObject::property if it doesn't exist
+    // Avoid tqWarning from TQObject::property if it doesn't exist
     if ( m_currentView->part()->metaObject()->findProperty( "supportsUndo" ) != -1 )
     {
       TQVariant prop = m_currentView->part()->property( "supportsUndo" );

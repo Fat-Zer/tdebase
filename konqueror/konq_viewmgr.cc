@@ -1804,7 +1804,7 @@ void KonqViewManager::printSizeInfo( KonqFrameBase* frame,
 {
   TQRect r;
   r = frame->widget()->geometry();
-  qDebug("Child size %s : x: %d, y: %d, w: %d, h: %d", msg, r.x(),r.y(),r.width(),r.height() );
+  tqDebug("Child size %s : x: %d, y: %d, w: %d, h: %d", msg, r.x(),r.y(),r.width(),r.height() );
 
   if ( parent->frameType() == "Container" )
   {

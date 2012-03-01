@@ -1124,7 +1124,7 @@ int compare_man_index(const void *s1, const void *s2)
     // this is a bit tricky
     if ( m1->manpage_len > m2->manpage_len)
     {
-	i = qstrnicmp( m1->manpage_begin,
+	i = tqstrnicmp( m1->manpage_begin,
 		      m2->manpage_begin,
 		      m2->manpage_len);
 	if (!i)
@@ -1134,7 +1134,7 @@ int compare_man_index(const void *s1, const void *s2)
 
     if ( m1->manpage_len < m2->manpage_len)
     {
-	i = qstrnicmp( m1->manpage_begin,
+	i = tqstrnicmp( m1->manpage_begin,
 		      m2->manpage_begin,
 		      m1->manpage_len);
 	if (!i)
@@ -1142,7 +1142,7 @@ int compare_man_index(const void *s1, const void *s2)
 	return i;
     }
 
-    return qstrnicmp( m1->manpage_begin,
+    return tqstrnicmp( m1->manpage_begin,
 		     m2->manpage_begin,
 		     m1->manpage_len);
 }
@@ -1167,7 +1167,7 @@ private:
 	    // with the shorter length
 	    if (m1->manpage_len > m2->manpage_len)
 	    {
-		i = qstrnicmp(m1->manpage_begin,
+		i = tqstrnicmp(m1->manpage_begin,
 			     m2->manpage_begin,
 			     m2->manpage_len);
 		if (!i)
@@ -1178,7 +1178,7 @@ private:
 	    if (m1->manpage_len > m2->manpage_len)
 	    {
 
-		i = qstrnicmp(m1->manpage_begin,
+		i = tqstrnicmp(m1->manpage_begin,
 			     m2->manpage_begin,
 			     m1->manpage_len);
 		if (!i)
@@ -1186,7 +1186,7 @@ private:
 		return i;
 	    }
 
-	    return qstrnicmp(m1->manpage_begin,
+	    return tqstrnicmp(m1->manpage_begin,
 			    m2->manpage_begin,
 			    m1->manpage_len);
 	}

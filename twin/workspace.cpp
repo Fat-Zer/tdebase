@@ -561,7 +561,7 @@ Client* Workspace::createClient( Window w, bool is_mapped )
 void Workspace::addClient( Client* c, allowed_t )
     {
     // waited with trans settings until window figured out if active or not ;)
-//     qWarning("%s", (const char*)(c->resourceClass()));
+//     tqWarning("%s", (const char*)(c->resourceClass()));
     c->setBMP(c->resourceName() == "beep-media-player" || c->decorationId() == None);
     // first check if the window has it's own opinion of it's translucency ;)
     c->getWindowOpacity();

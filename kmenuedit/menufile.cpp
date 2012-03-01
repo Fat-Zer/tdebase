@@ -513,7 +513,7 @@ void MenuFile::popAction(ActionAtom *atom)
 {
    if (m_actionList.getLast() != atom)
    {
-      qWarning("MenuFile::popAction Error, action not last in list.");
+      tqWarning("MenuFile::popAction Error, action not last in list.");
       return;
    }
    m_actionList.removeLast();

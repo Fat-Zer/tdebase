@@ -226,7 +226,7 @@ static TQString replaceTags( const TQString& s, const TQString& tags, KdeprintFa
 			if (!stack.isEmpty())
 				isdoublequote = stack.pop();
 			else
-				qWarning("Parse error.");
+				tqWarning("Parse error.");
 			i++;
 		}
 		else if (cmd[i]=='\'')

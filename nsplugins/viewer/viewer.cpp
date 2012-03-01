@@ -156,7 +156,7 @@ bool qt_set_socket_handler( int sockfd, int type, TQObject *obj, bool enable )
 {
   if ( sockfd < 0 || type < 0 || type > 2 || obj == 0 ) {
 #if defined(CHECK_RANGE)
-      qWarning( "TQSocketNotifier: Internal error" );
+      tqWarning( "TQSocketNotifier: Internal error" );
 #endif
       return FALSE;
   }
@@ -185,7 +185,7 @@ bool qt_set_socket_handler( int sockfd, int type, TQObject *obj, bool enable )
 #if defined(CHECK_STATE)
           if ( p && p->fd==sockfd ) {
               static const char *t[] = { "read", "write", "exception" };
-              qWarning( "TQSocketNotifier: Multiple socket notifiers for "
+              tqWarning( "TQSocketNotifier: Multiple socket notifiers for "
                         "same socket %d and type %s", sockfd, t[type] );
           }
 #endif

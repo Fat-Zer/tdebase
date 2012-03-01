@@ -410,7 +410,7 @@ void ShortcutsModule::slotSaveSchemeAs()
 
 	TQDir dir( kksPath );
 	if( !dir.exists() && !dir.mkdir( kksPath ) ) {
-		qWarning("KShortcutsModule: Could not make directory to store user info.");
+		tqWarning("KShortcutsModule: Could not make directory to store user info.");
 		return;
 	}
 

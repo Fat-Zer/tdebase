@@ -1172,7 +1172,7 @@ void KDesktop::addIcon(const TQString & _url, const TQString & _dest, int x, int
     KIO::copy( i.uSource, i.uDest, false ); }
 
 //    m_pIconView->addFuturePosition(filename, x, y);
-    // qDebug("addIcon %s %s %d %d", _url.latin1(), _dest.latin1(), x, y);
+    // tqDebug("addIcon %s %s %d %d", _url.latin1(), _dest.latin1(), x, y);
 //    system(TQString("cp \"%1\" \"%2/%3\"").arg(KURL(_url).path()).arg(KURL(_dest).path()).arg(filename).latin1());
 //    m_pIconView->update( _dest );
 }
@@ -1180,7 +1180,7 @@ void KDesktop::addIcon(const TQString & _url, const TQString & _dest, int x, int
 void KDesktop::removeIcon(const TQString &_url)
 {
 	if (_url.at(0) != '/') {
-		qDebug("removeIcon with relative path not supported for now");
+		tqDebug("removeIcon with relative path not supported for now");
 		return;
 	}
 	unlink(KURL(_url).path().latin1());

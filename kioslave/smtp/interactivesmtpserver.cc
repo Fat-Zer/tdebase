@@ -82,8 +82,8 @@ int main( int argc, char * argv[] ) {
 
   InteractiveSMTPServer server;
 
-  qDebug( "Server should now listen on localhost:2525" );
-  qDebug( "Hit CTRL-C to quit." );
+  tqDebug( "Server should now listen on localhost:2525" );
+  tqDebug( "Hit CTRL-C to quit." );
   return app.exec();
 };
 

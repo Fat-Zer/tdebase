@@ -273,7 +273,7 @@ QXtEventLoop::QXtEventLoop( const char *applicationClass, XtAppContext context, 
 {
 #if defined(QT_CHECK_STATE)
     if ( static_d )
-	qWarning( "QXtEventLoop: should only have one QXtEventLoop instance!" );
+	tqWarning( "QXtEventLoop: should only have one QXtEventLoop instance!" );
 #endif
 
     d = static_d = new QXtEventLoopPrivate;
@@ -377,7 +377,7 @@ void QXtEventLoop::registerSocketNotifier( TQSocketNotifier *notifier )
 	break;
 
     default:
-	qWarning( "QXtEventLoopEventLoop: socket notifier has invalid type" );
+	tqWarning( "QXtEventLoopEventLoop: socket notifier has invalid type" );
 	return;
     }
 
@@ -398,7 +398,7 @@ void QXtEventLoop::unregisterSocketNotifier( TQSocketNotifier *notifier )
 	++it;
     if ( ! it.current() ) {
 	// this shouldn't happen
-	qWarning( "QXtEventLoopEventLoop: failed to unregister socket notifier" );
+	tqWarning( "QXtEventLoopEventLoop: failed to unregister socket notifier" );
 	return;
     }
 

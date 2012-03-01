@@ -120,7 +120,7 @@ X11Helper::loadRules(const TQString& file, bool layoutsOnly)
 
 	for (int i = 0; i < xkbRules->layouts.num_desc; ++i) {
 		TQString layoutName(xkbRules->layouts.desc[i].name);
-		rulesInfo->layouts.replace( layoutName, qstrdup( xkbRules->layouts.desc[i].desc ) );
+		rulesInfo->layouts.replace( layoutName, tqstrdup( xkbRules->layouts.desc[i].desc ) );
 
 		if( m_layoutsClean == true
 				  && layoutName.find( NON_CLEAN_LAYOUT_REGEXP ) != -1 
@@ -136,9 +136,9 @@ X11Helper::loadRules(const TQString& file, bool layoutsOnly)
 	}
   
   for (int i = 0; i < xkbRules->models.num_desc; ++i)
-      rulesInfo->models.replace(xkbRules->models.desc[i].name, qstrdup( xkbRules->models.desc[i].desc ) );
+      rulesInfo->models.replace(xkbRules->models.desc[i].name, tqstrdup( xkbRules->models.desc[i].desc ) );
   for (int i = 0; i < xkbRules->options.num_desc; ++i)
-      rulesInfo->options.replace(xkbRules->options.desc[i].name, qstrdup( xkbRules->options.desc[i].desc ) );
+      rulesInfo->options.replace(xkbRules->options.desc[i].name, tqstrdup( xkbRules->options.desc[i].desc ) );
 
   XkbRF_Free(xkbRules, true);
 

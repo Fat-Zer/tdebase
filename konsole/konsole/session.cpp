@@ -657,18 +657,18 @@ void TESession::startZModem(const TQString &zmodem, const TQString &dir, const T
 void TESession::zmodemSendBlock(KProcess *, char *data, int len)
 {
   sh->send_bytes(data, len);
-//  qWarning("<-- %d bytes", len);
+//  tqWarning("<-- %d bytes", len);
   if (sh->buffer_full())
   {
     zmodemProc->suspend();
-//    qWarning("ZModem suspend");
+//    tqWarning("ZModem suspend");
   }
 }
 
 void TESession::zmodemContinue()
 {
   zmodemProc->resume();
-//  qWarning("ZModem resume");
+//  tqWarning("ZModem resume");
 }
 
 void TESession::zmodemStatus(KProcess *, char *data, int len)
@@ -703,7 +703,7 @@ void TESession::zmodemRcvBlock(const char *data, int len)
   TQByteArray ba;
   ba.duplicate(data, len);
   zmodemProc->writeStdin(ba);
-//  qWarning("--> %d bytes", len);
+//  tqWarning("--> %d bytes", len);
 }
 
 void TESession::zmodemDone()

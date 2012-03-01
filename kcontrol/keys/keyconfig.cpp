@@ -365,7 +365,7 @@ void KKeyModule::readScheme( int index )
   TQDir d( kksPath );
   if ( !d.exists() )
     if ( !d.mkdir( kksPath ) ) {
-      qWarning("KKeyModule: Could not make directory to store user info.");
+      tqWarning("KKeyModule: Could not make directory to store user info.");
       return;
     }
 
@@ -375,7 +375,7 @@ void KKeyModule::readScheme( int index )
   d.setPath( kksPath );
   if ( !d.exists() )
     if ( !d.mkdir( kksPath ) ) {
-      qWarning("KKeyModule: Could not make directory to store user info.");
+      tqWarning("KKeyModule: Could not make directory to store user info.");
       return;
     }
 

@@ -92,7 +92,7 @@ static char * safeSmsGenerateClientID( SmsConn /*c*/ )
     if (!ret) {
         static TQString *my_addr = 0;
        if (!my_addr) {
-//           qWarning("Can't get own host name. Your system is severely misconfigured\n");
+//           tqWarning("Can't get own host name. Your system is severely misconfigured\n");
            smy_addr.setObject(my_addr,new TQString);
 
            /* Faking our IP address, the 0 below is "unknown" address format

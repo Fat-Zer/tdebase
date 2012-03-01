@@ -203,7 +203,7 @@ static char *stralloc(int len)
 static char *strlimitcpy(char *to, char *from, int n, int limit)
 {                               /* Assumes space for limit plus a null */
   const int len = n > limit ? limit : n;
-  qstrncpy(to, from, len + 1);
+  tqstrncpy(to, from, len + 1);
   to[len] = '\0';
   return to;
 }
@@ -956,7 +956,7 @@ static void out_html(const char *c)
   if (!c) return;
 
   // Added, probably due to the const?
-  char *c2 = qstrdup(c);
+  char *c2 = tqstrdup(c);
   char *c3 = c2;
 
   static int obp=0;
@@ -1848,7 +1848,7 @@ public:
     }
     void setContents(const char *_contents) {
         delete [] contents;
-        contents = qstrdup(_contents);
+        contents = tqstrdup(_contents);
     }
     const char *getContents() const { return contents; }
 
@@ -2788,7 +2788,7 @@ static void request_while( char*& c, int j, bool mdoc )
     while ( result )
     {
         // Unlike for a normal macro, we have the condition at start, so we do not need to prepend extra bytes
-        char* liveloop = qstrdup( macro.data() );
+        char* liveloop = tqstrdup( macro.data() );
         kdDebug(7107) << "Scanning .while condition" << endl;
         kdDebug(7101) << "Loop macro " << liveloop << endl;
         char* end_expression = scan_expression( liveloop, &result );
@@ -3165,7 +3165,7 @@ static char *scan_request(char *c)
                     scan_troff_mandoc(wordlist[i],1,&h);
                 else
                     scan_troff(wordlist[i],1,&h);
-                wordlist[i] = qstrdup(h);
+                wordlist[i] = tqstrdup(h);
                 delete [] h;
             }
             for ( i=words; i<max_wordlist; i++ ) wordlist[i]=NULL;
@@ -3175,7 +3175,7 @@ static char *scan_request(char *c)
                 const unsigned int length = (*it).m_output.length();
                 char* work = new char [length+2];
                 work[0] = '\n'; // The macro must start after an end of line to allow a request on first line
-                qstrncpy(work+1,(*it).m_output.data(),length+1);
+                tqstrncpy(work+1,(*it).m_output.data(),length+1);
                 const TQValueList<char*> oldArgumentList( s_argumentList );
                 s_argumentList.clear();
                 for ( i = 0 ; i < max_wordlist; i++ )

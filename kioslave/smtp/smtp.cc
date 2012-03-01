@@ -109,7 +109,7 @@ int kdemain(int argc, char **argv)
     exit(-1);
   }
 #endif
-  SMTPProtocol slave( argv[2], argv[3], qstricmp( argv[1], "smtps" ) == 0 );
+  SMTPProtocol slave( argv[2], argv[3], tqstricmp( argv[1], "smtps" ) == 0 );
   slave.dispatchLoop();
 #ifdef HAVE_LIBSASL2
   sasl_done();

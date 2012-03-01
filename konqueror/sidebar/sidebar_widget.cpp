@@ -534,7 +534,7 @@ void Sidebar_Widget::buttonPopupActivate(int id)
 			{
 				TQFile f(m_path+m_currentButton->file);
 				if (!f.remove())
-					qDebug("Error, file not deleted");
+					tqDebug("Error, file not deleted");
 				TQTimer::singleShot(0,this,TQT_SLOT(updateButtons()));
 			}
 			break;

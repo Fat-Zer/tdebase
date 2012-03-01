@@ -115,12 +115,12 @@ void TEPty::setErase(char erase)
   
   if(tcgetattr(fd, &tios))
   {
-    qWarning("Uh oh.. can't get terminal attributes..");
+    tqWarning("Uh oh.. can't get terminal attributes..");
     return;
   }
   tios.c_cc[VERASE] = erase;
   if(tcsetattr(fd, TCSANOW, &tios))
-    qWarning("Uh oh.. can't set terminal attributes..");
+    tqWarning("Uh oh.. can't set terminal attributes..");
 }
 
 /*!
@@ -217,7 +217,7 @@ void TEPty::doSendJobs() {
   SendJob& job = pendingSendJobs.first();
   if (!writeStdin(job.buffer.data(), job.length))
   {
-    qWarning("Uh oh.. can't write data..");
+    tqWarning("Uh oh.. can't write data..");
     return;
   }
   m_bufferFull = true;

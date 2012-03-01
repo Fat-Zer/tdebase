@@ -476,7 +476,7 @@ static int tbl_txt_lookup( const char* const arr[], const char* txt )
          arr[ i ][ 0 ] != '\0';
          ++i )
     {
-        if( qstricmp( txt, arr[ i ] ) == 0 )
+        if( tqstricmp( txt, arr[ i ] ) == 0 )
             return pos;
         ++pos;
     }

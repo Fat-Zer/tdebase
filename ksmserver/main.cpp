@@ -199,7 +199,7 @@ extern "C" KDE_EXPORT int kdemain( int argc, char* argv[] )
     kapp->dcopClient()->registerAs("ksmserver", false);
     if (!kapp->dcopClient()->isRegistered())
     {
-       qWarning("Could not register with DCOPServer. Aborting.");
+       tqWarning("Could not register with DCOPServer. Aborting.");
        return 1;
     }
 
@@ -215,7 +215,7 @@ extern "C" KDE_EXPORT int kdemain( int argc, char* argv[] )
      * does nothing on this platform, as here the default is reversed)
      */
     if (!only_local) {
-        qWarning("--[no]local is not supported on your platform. Sorry.");
+        tqWarning("--[no]local is not supported on your platform. Sorry.");
     }
     only_local = false;
 #endif
