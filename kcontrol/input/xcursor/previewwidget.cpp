@@ -34,8 +34,8 @@
 #include "previewwidget.h"
 
 
-extern bool qt_has_xft;
-extern bool qt_use_xrender;
+extern bool tqt_has_xft;
+extern bool tqt_use_xrender;
 
 
 namespace {
@@ -314,7 +314,7 @@ void PreviewWidget::paintEvent( TQPaintEvent * )
 	p.fillRect( rect(), colorGroup().brush( TQColorGroup::Background ) );
 	Picture dest;
 
-	if ( !qt_has_xft || !qt_use_xrender ) {
+	if ( !tqt_has_xft || !tqt_use_xrender ) {
 		XRenderPictFormat *fmt = XRenderFindVisualFormat( x11Display(), (Visual*)buffer.x11Visual() );
 		dest = XRenderCreatePicture( x11Display(), buffer.handle(), fmt, 0, NULL );
 	} else
@@ -334,7 +334,7 @@ void PreviewWidget::paintEvent( TQPaintEvent * )
 
 	bitBlt( this, 0, 0, &buffer );
 
-	if ( !qt_has_xft || !qt_use_xrender )
+	if ( !tqt_has_xft || !tqt_use_xrender )
 		XRenderFreePicture( x11Display(), dest );
 }
 

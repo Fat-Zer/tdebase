@@ -263,7 +263,7 @@ Task::Ptr TaskManager::findTask(int desktop, const TQPoint& p)
 
 void TaskManager::windowAdded(WId w )
 {
-    NETWinInfo info(qt_xdisplay(),  w, qt_xrootwin(),
+    NETWinInfo info(tqt_xdisplay(),  w, tqt_xrootwin(),
                     NET::WMWindowType | NET::WMPid | NET::WMState);
 
     // ignore NET::Tool and other special window types
@@ -290,7 +290,7 @@ void TaskManager::windowAdded(WId w )
     }
 
     Window transient_for_tmp;
-    if (XGetTransientForHint( qt_xdisplay(), (Window) w, &transient_for_tmp ))
+    if (XGetTransientForHint( tqt_xdisplay(), (Window) w, &transient_for_tmp ))
     {
         WId transient_for = (WId) transient_for_tmp;
 
@@ -299,7 +299,7 @@ void TaskManager::windowAdded(WId w )
             return;
 
         // lets see if this is a transient for an existing task
-        if( transient_for != qt_xrootwin()
+        if( transient_for != tqt_xrootwin()
             && transient_for != 0
             && wType != NET::Utility )
         {
@@ -358,7 +358,7 @@ void TaskManager::windowChanged(WId w, unsigned int dirty)
 {
     if (dirty & NET::WMState)
     {
-        NETWinInfo info (qt_xdisplay(),  w, qt_xrootwin(),
+        NETWinInfo info (tqt_xdisplay(),  w, tqt_xrootwin(),
                          NET::WMState | NET::XAWMState);
         if (info.state() & NET::SkipTaskbar)
         {
@@ -828,7 +828,7 @@ void Task::updateDemandsAttentionState( WId w )
     if (window() != w)
     {
         // 'w' is a transient for this task
-        NETWinInfo i( qt_xdisplay(), w, qt_xrootwin(), NET::WMState );
+        NETWinInfo i( tqt_xdisplay(), w, tqt_xrootwin(), NET::WMState );
         if(i.state() & NET::DemandsAttention)
         {
             if (!_transients_demanding_attention.contains(w))
@@ -862,7 +862,7 @@ void Task::removeTransient(WId w)
 TQString Task::className()
 {
     XClassHint hint;
-    if(XGetClassHint(qt_xdisplay(), _win, &hint)) {
+    if(XGetClassHint(tqt_xdisplay(), _win, &hint)) {
         TQString nh( hint.res_name );
         XFree( hint.res_name );
         XFree( hint.res_class );
@@ -874,7 +874,7 @@ TQString Task::className()
 TQString Task::classClass()
 {
     XClassHint hint;
-    if(XGetClassHint(qt_xdisplay(), _win, &hint)) {
+    if(XGetClassHint(tqt_xdisplay(), _win, &hint)) {
         TQString ch( hint.res_class );
         XFree( hint.res_name );
         XFree( hint.res_class );
@@ -1012,7 +1012,7 @@ void Task::move()
     TQRect geom = _info.geometry();
     TQCursor::setPos(geom.center());
 
-    NETRootInfo ri(qt_xdisplay(), NET::WMMoveResize);
+    NETRootInfo ri(tqt_xdisplay(), NET::WMMoveResize);
     ri.moveResizeRequest(_win, geom.center().x(),
                          geom.center().y(), NET::Move);
 }
@@ -1035,7 +1035,7 @@ void Task::resize()
     TQRect geom = _info.geometry();
     TQCursor::setPos(geom.bottomRight());
 
-    NETRootInfo ri(qt_xdisplay(), NET::WMMoveResize);
+    NETRootInfo ri(tqt_xdisplay(), NET::WMMoveResize);
     ri.moveResizeRequest(_win, geom.bottomRight().x(),
                          geom.bottomRight().y(), NET::BottomRight);
 }
@@ -1055,7 +1055,7 @@ void Task::setMaximized(bool maximize)
         KWin::deIconifyWindow(_win);
     }
 
-    NETWinInfo ni(qt_xdisplay(), _win, qt_xrootwin(), NET::WMState);
+    NETWinInfo ni(tqt_xdisplay(), _win, tqt_xrootwin(), NET::WMState);
 
     if (maximize)
     {
@@ -1092,7 +1092,7 @@ void Task::restore()
         KWin::deIconifyWindow(_win);
     }
 
-    NETWinInfo ni(qt_xdisplay(), _win, qt_xrootwin(), NET::WMState);
+    NETWinInfo ni(tqt_xdisplay(), _win, tqt_xrootwin(), NET::WMState);
     ni.setState(0, NET::Max);
 
     if (!on_current)
@@ -1133,7 +1133,7 @@ void Task::toggleIconified()
 
 void Task::close()
 {
-    NETRootInfo ri( qt_xdisplay(),  NET::CloseWindow );
+    NETRootInfo ri( tqt_xdisplay(),  NET::CloseWindow );
     ri.closeWindowRequest( _win );
 }
 
@@ -1178,7 +1178,7 @@ void Task::activateRaiseOrIconify()
 
 void Task::toDesktop(int desk)
 {
-    NETWinInfo ni(qt_xdisplay(), _win, qt_xrootwin(), NET::WMDesktop);
+    NETWinInfo ni(tqt_xdisplay(), _win, tqt_xrootwin(), NET::WMDesktop);
     if (desk == 0)
     {
         if (_info.valid() && _info.onAllDesktops())
@@ -1205,7 +1205,7 @@ void Task::toCurrentDesktop()
 
 void Task::setAlwaysOnTop(bool stay)
 {
-    NETWinInfo ni( qt_xdisplay(),  _win, qt_xrootwin(), NET::WMState);
+    NETWinInfo ni( tqt_xdisplay(),  _win, tqt_xrootwin(), NET::WMState);
     if(stay)
         ni.setState( NET::StaysOnTop, NET::StaysOnTop );
     else
@@ -1219,7 +1219,7 @@ void Task::toggleAlwaysOnTop()
 
 void Task::setKeptBelowOthers(bool below)
 {
-    NETWinInfo ni(qt_xdisplay(), _win, qt_xrootwin(), NET::WMState);
+    NETWinInfo ni(tqt_xdisplay(), _win, tqt_xrootwin(), NET::WMState);
 
     if (below)
     {
@@ -1238,7 +1238,7 @@ void Task::toggleKeptBelowOthers()
 
 void Task::setFullScreen(bool fullscreen)
 {
-    NETWinInfo ni(qt_xdisplay(), _win, qt_xrootwin(), NET::WMState);
+    NETWinInfo ni(tqt_xdisplay(), _win, tqt_xrootwin(), NET::WMState);
 
     if (fullscreen)
     {
@@ -1257,7 +1257,7 @@ void Task::toggleFullScreen()
 
 void Task::setShaded(bool shade)
 {
-    NETWinInfo ni( qt_xdisplay(),  _win, qt_xrootwin(), NET::WMState);
+    NETWinInfo ni( tqt_xdisplay(),  _win, tqt_xrootwin(), NET::WMState);
     if(shade)
         ni.setState( NET::Shaded, NET::Shaded );
     else
@@ -1277,7 +1277,7 @@ void Task::publishIconGeometry(TQRect rect)
     }
 
     m_iconGeometry = rect;
-    NETWinInfo ni(qt_xdisplay(), _win, qt_xrootwin(), 0);
+    NETWinInfo ni(tqt_xdisplay(), _win, tqt_xrootwin(), 0);
     NETRect r;
 
     if (rect.isValid())

@@ -4,6 +4,6 @@ void KMenuBase::init()
 {
     XSetWindowAttributes attrs;
     attrs.override_redirect = True;
-    XChangeWindowAttributes( qt_xdisplay(), winId(), CWOverrideRedirect, &attrs );
+    XChangeWindowAttributes( tqt_xdisplay(), winId(), CWOverrideRedirect, &attrs );
     setWFlags( (WFlags)TQt::WType_Popup );
 }

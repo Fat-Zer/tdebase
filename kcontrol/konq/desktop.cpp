@@ -128,12 +128,12 @@ void KDesktopConfig::load()
 void KDesktopConfig::load( bool useDefaults )
 {
   // get number of desktops
-  NETRootInfo info( qt_xdisplay(), NET::NumberOfDesktops | NET::DesktopNames );
+  NETRootInfo info( tqt_xdisplay(), NET::NumberOfDesktops | NET::DesktopNames );
   int n = info.numberOfDesktops();
 
   int konq_screen_number = 0;
-  if (qt_xdisplay())
-     konq_screen_number = DefaultScreen(qt_xdisplay());
+  if (tqt_xdisplay())
+     konq_screen_number = DefaultScreen(tqt_xdisplay());
 
   TQCString groupname;
   if (konq_screen_number == 0)
@@ -193,7 +193,7 @@ void KDesktopConfig::load( bool useDefaults )
 
 void KDesktopConfig::save()
 {
-  NETRootInfo info( qt_xdisplay(), NET::NumberOfDesktops | NET::DesktopNames );
+  NETRootInfo info( tqt_xdisplay(), NET::NumberOfDesktops | NET::DesktopNames );
   // set desktop names
   for(int i = 1; i <= maxDesktops; i++)
   {
@@ -204,11 +204,11 @@ void KDesktopConfig::save()
   info.setNumberOfDesktops(_numInput->value());
   info.activate();
 
-  XSync(qt_xdisplay(), FALSE);
+  XSync(tqt_xdisplay(), FALSE);
 
   int konq_screen_number = 0;
-  if (qt_xdisplay())
-     konq_screen_number = DefaultScreen(qt_xdisplay());
+  if (tqt_xdisplay())
+     konq_screen_number = DefaultScreen(tqt_xdisplay());
 
   TQCString appname;
   if (konq_screen_number == 0)

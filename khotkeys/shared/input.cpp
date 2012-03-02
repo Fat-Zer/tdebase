@@ -169,7 +169,7 @@ static bool xtest()
     xtest_inited = true;
     int dummy1, dummy2, dummy3, dummy4;
     xtest_available =
-        ( XTestQueryExtension( qt_xdisplay(), &dummy1, &dummy2, &dummy3, &dummy4 ) == True );
+        ( XTestQueryExtension( tqt_xdisplay(), &dummy1, &dummy2, &dummy3, &dummy4 ) == True );
     return xtest_available;
     }
 #endif
@@ -178,7 +178,7 @@ static bool xtest()
 bool Kbd::send_macro_key( const KKey& key, Window window_P )
     {
     unsigned int keysym = KKeyNative( key ).sym();
-    KeyCode x_keycode = XKeysymToKeycode( qt_xdisplay(), keysym );
+    KeyCode x_keycode = XKeysymToKeycode( tqt_xdisplay(), keysym );
     if( x_keycode == NoSymbol )
 	return false;
     unsigned int x_mod = KKeyNative( key ).mod();
@@ -186,8 +186,8 @@ bool Kbd::send_macro_key( const KKey& key, Window window_P )
     if( xtest() && window_P == None )
         {
         // CHECKME tohle jeste potrebuje modifikatory
-        bool ret = XTestFakeKeyEvent( qt_xdisplay(), x_keycode, True, CurrentTime );
-        ret = ret && XTestFakeKeyEvent( qt_xdisplay(), x_keycode, False, CurrentTime );
+        bool ret = XTestFakeKeyEvent( tqt_xdisplay(), x_keycode, True, CurrentTime );
+        ret = ret && XTestFakeKeyEvent( tqt_xdisplay(), x_keycode, False, CurrentTime );
         return ret;
         }
 #endif
@@ -197,9 +197,9 @@ bool Kbd::send_macro_key( const KKey& key, Window window_P )
         window_P = InputFocus;
     XEvent ev;
     ev.type = KeyPress;
-    ev.xkey.display = qt_xdisplay();
+    ev.xkey.display = tqt_xdisplay();
     ev.xkey.window = window_P;
-    ev.xkey.root = qt_xrootwin();   // I don't know whether these have to be set
+    ev.xkey.root = tqt_xrootwin();   // I don't know whether these have to be set
     ev.xkey.subwindow = None;       // to these values, but it seems to work, hmm
     ev.xkey.time = CurrentTime;
     ev.xkey.x = 0;
@@ -209,12 +209,12 @@ bool Kbd::send_macro_key( const KKey& key, Window window_P )
     ev.xkey.keycode = x_keycode;
     ev.xkey.state = x_mod;
     ev.xkey.same_screen = True;
-    bool ret = XSendEvent( qt_xdisplay(), window_P, True, KeyPressMask, &ev );
+    bool ret = XSendEvent( tqt_xdisplay(), window_P, True, KeyPressMask, &ev );
 #if 1
     ev.type = KeyRelease;  // is this actually really needed ??
-    ev.xkey.display = qt_xdisplay();
+    ev.xkey.display = tqt_xdisplay();
     ev.xkey.window = window_P;
-    ev.xkey.root = qt_xrootwin();
+    ev.xkey.root = tqt_xrootwin();
     ev.xkey.subwindow = None;
     ev.xkey.time = CurrentTime;
     ev.xkey.x = 0;
@@ -224,11 +224,11 @@ bool Kbd::send_macro_key( const KKey& key, Window window_P )
     ev.xkey.state = x_mod;
     ev.xkey.keycode = x_keycode;
     ev.xkey.same_screen = True;
-    ret = ret && XSendEvent( qt_xdisplay(), window_P, True, KeyReleaseMask, &ev );
+    ret = ret && XSendEvent( tqt_xdisplay(), window_P, True, KeyReleaseMask, &ev );
 #endif
     // Qt's autorepeat compression is broken and can create "aab" from "aba"
     // XSync() should create delay longer than Qt's max autorepeat interval
-    XSync( qt_xdisplay(), False );
+    XSync( tqt_xdisplay(), False );
     return ret;
     }
 
@@ -239,9 +239,9 @@ bool Mouse::send_mouse_button( int button_P, bool release_P )
         {
         // CHECKME tohle jeste potrebuje modifikatory
         // a asi i spravnou timestamp misto CurrentTime
-        bool ret = XTestFakeButtonEvent( qt_xdisplay(), button_P, True, CurrentTime );
+        bool ret = XTestFakeButtonEvent( tqt_xdisplay(), button_P, True, CurrentTime );
         if( release_P )
-            ret = ret && XTestFakeButtonEvent( qt_xdisplay(), button_P, False, CurrentTime );
+            ret = ret && XTestFakeButtonEvent( tqt_xdisplay(), button_P, False, CurrentTime );
         return ret;
         }
 #endif

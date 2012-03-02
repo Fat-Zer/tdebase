@@ -97,12 +97,12 @@ extern "C"
         TQDataStream d(properties, IO_WriteOnly);
         d.setVersion( 3 );      // Qt2 apps need this.
         d << kapp->palette() << KGlobalSettings::generalFont();
-        Atom a = XInternAtom(qt_xdisplay(), "_QT_DESKTOP_PROPERTIES", false);
+        Atom a = XInternAtom(tqt_xdisplay(), "_QT_DESKTOP_PROPERTIES", false);
 
         // do it for all root windows - multihead support
-        int screen_count = ScreenCount(qt_xdisplay());
+        int screen_count = ScreenCount(tqt_xdisplay());
         for (int i = 0; i < screen_count; i++)
-            XChangeProperty(qt_xdisplay(),  RootWindow(qt_xdisplay(), i),
+            XChangeProperty(tqt_xdisplay(),  RootWindow(tqt_xdisplay(), i),
                             a, a, 8, PropModeReplace,
                             (unsigned char*) properties.data(), properties.size());
 #endif

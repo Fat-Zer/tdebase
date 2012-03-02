@@ -307,7 +307,7 @@ void SwallowApp::windowAdded(WId win)
 {
     // determine title of newly mapped window
     XTextProperty nameProp;
-    XGetWMName(qt_xdisplay(), win, &nameProp);
+    XGetWMName(tqt_xdisplay(), win, &nameProp);
     char **names;
     int count;
     XTextPropertyToStringList(&nameProp, &names, &count);
@@ -328,7 +328,7 @@ void SwallowApp::windowAdded(WId win)
 	resize( r.width(), r.height() );
 
 	embed(win);
-	XReparentWindow(qt_xdisplay(), win, winId(), 0, 0);
+	XReparentWindow(tqt_xdisplay(), win, winId(), 0, 0);
 
 	disconnect(SwallowApplet::winModule(), TQT_SIGNAL(windowAdded(WId)),
 		   this, TQT_SLOT(windowAdded(WId)));

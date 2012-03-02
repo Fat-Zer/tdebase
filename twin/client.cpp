@@ -38,9 +38,9 @@ License. See the file "COPYING" for the exact licensing terms.
 // put all externs before the namespace statement to allow the linker
 // to resolve them properly
 
-extern Atom qt_wm_state;
-extern Atom qt_window_role;
-extern Atom qt_sm_client_id;
+extern Atom tqt_wm_state;
+extern Atom tqt_window_role;
+extern Atom tqt_sm_client_id;
 
 // wait 200 ms before drawing shadow after move/resize
 static const int SHADOW_DELAY = 200;
@@ -227,7 +227,7 @@ void Client::releaseWindow( bool on_shutdown )
     hidden = true; // so that it's not considered visible anymore (can't use hideClient(), it would set flags)
     if( !on_shutdown )
         workspace()->clientHidden( this );
-    XUnmapWindow( qt_xdisplay(), frameId()); // destroying decoration would cause ugly visual effect
+    XUnmapWindow( tqt_xdisplay(), frameId()); // destroying decoration would cause ugly visual effect
     destroyDecoration();
     cleanGrouping();
     if( !on_shutdown )
@@ -239,27 +239,27 @@ void Client::releaseWindow( bool on_shutdown )
         desk = 0;
         info->setState( 0, info->state()); // reset all state flags
         }
-    XDeleteProperty( qt_xdisplay(), client, atoms->kde_net_wm_user_creation_time);
-    XDeleteProperty( qt_xdisplay(), client, atoms->net_frame_extents );
-    XDeleteProperty( qt_xdisplay(), client, atoms->kde_net_wm_frame_strut );
-    XReparentWindow( qt_xdisplay(), client, workspace()->rootWin(), x(), y());
-    XRemoveFromSaveSet( qt_xdisplay(), client );
-    XSelectInput( qt_xdisplay(), client, NoEventMask );
+    XDeleteProperty( tqt_xdisplay(), client, atoms->kde_net_wm_user_creation_time);
+    XDeleteProperty( tqt_xdisplay(), client, atoms->net_frame_extents );
+    XDeleteProperty( tqt_xdisplay(), client, atoms->kde_net_wm_frame_strut );
+    XReparentWindow( tqt_xdisplay(), client, workspace()->rootWin(), x(), y());
+    XRemoveFromSaveSet( tqt_xdisplay(), client );
+    XSelectInput( tqt_xdisplay(), client, NoEventMask );
     if( on_shutdown )
         { // map the window, so it can be found after another WM is started
-        XMapWindow( qt_xdisplay(), client );
+        XMapWindow( tqt_xdisplay(), client );
 	// TODO preserve minimized, shaded etc. state?
         }
     else
         {
         // Make sure it's not mapped if the app unmapped it (#65279). The app
         // may do map+unmap before we initially map the window by calling rawShow() from manage().
-        XUnmapWindow( qt_xdisplay(), client ); 
+        XUnmapWindow( tqt_xdisplay(), client ); 
         }
     client = None;
-    XDestroyWindow( qt_xdisplay(), wrapper );
+    XDestroyWindow( tqt_xdisplay(), wrapper );
     wrapper = None;
-    XDestroyWindow( qt_xdisplay(), frame );
+    XDestroyWindow( tqt_xdisplay(), frame );
     frame = None;
     --postpone_geometry_updates; // don't use GeometryUpdatesBlocker, it would now set the geometry
     checkNonExistentClients();
@@ -288,9 +288,9 @@ void Client::destroyClient()
     cleanGrouping();
     workspace()->removeClient( this, Allowed );
     client = None; // invalidate
-    XDestroyWindow( qt_xdisplay(), wrapper );
+    XDestroyWindow( tqt_xdisplay(), wrapper );
     wrapper = None;
-    XDestroyWindow( qt_xdisplay(), frame );
+    XDestroyWindow( tqt_xdisplay(), frame );
     frame = None;
     --postpone_geometry_updates; // don't use GeometryUpdatesBlocker, it would now set the geometry
     checkNonExistentClients();
@@ -313,7 +313,7 @@ void Client::updateDecoration( bool check_workspace_pos, bool force )
         // TODO check decoration's minimum size?
         decoration->init();
         decoration->widget()->installEventFilter( this );
-        XReparentWindow( qt_xdisplay(), decoration->widget()->winId(), frameId(), 0, 0 );
+        XReparentWindow( tqt_xdisplay(), decoration->widget()->winId(), frameId(), 0, 0 );
         decoration->widget()->lower();
         decoration->borders( border_left, border_right, border_top, border_bottom );
         options->onlyDecoTranslucent ?
@@ -507,7 +507,7 @@ bool Client::isModalSystemNotification() const
     Atom actual;
     int format, result;
     unsigned long n, left;
-    result = XGetWindowProperty(qt_xdisplay(), window(), atoms->net_wm_system_modal_notification, 0L, 1L, False, XA_CARDINAL, &actual, &format, &n, &left, /*(unsigned char **)*/ &data);
+    result = XGetWindowProperty(tqt_xdisplay(), window(), atoms->net_wm_system_modal_notification, 0L, 1L, False, XA_CARDINAL, &actual, &format, &n, &left, /*(unsigned char **)*/ &data);
     if (result == Success && data != None && format == 32 )
         {
         return TRUE;
@@ -526,7 +526,7 @@ void Client::updateShape()
     updateOpacityCache();
     if ( shape() )
         {
-        XShapeCombineShape(qt_xdisplay(), frameId(), ShapeBounding,
+        XShapeCombineShape(tqt_xdisplay(), frameId(), ShapeBounding,
                            clientPos().x(), clientPos().y(),
                            window(), ShapeBounding, ShapeSet);
         setShapable(TRUE);
@@ -546,18 +546,18 @@ void Client::updateShape()
           // the window lose focus (which is a problem with mouse focus policies)
         static Window helper_window = None;
         if( helper_window == None )
-            helper_window = XCreateSimpleWindow( qt_xdisplay(), qt_xrootwin(),
+            helper_window = XCreateSimpleWindow( tqt_xdisplay(), tqt_xrootwin(),
                 0, 0, 1, 1, 0, 0, 0 );
-        XResizeWindow( qt_xdisplay(), helper_window, width(), height());
-        XShapeCombineShape( qt_xdisplay(), helper_window, ShapeInput, 0, 0,
+        XResizeWindow( tqt_xdisplay(), helper_window, width(), height());
+        XShapeCombineShape( tqt_xdisplay(), helper_window, ShapeInput, 0, 0,
                            frameId(), ShapeBounding, ShapeSet );
-        XShapeCombineShape( qt_xdisplay(), helper_window, ShapeInput,
+        XShapeCombineShape( tqt_xdisplay(), helper_window, ShapeInput,
                            clientPos().x(), clientPos().y(),
                            window(), ShapeBounding, ShapeSubtract );
-        XShapeCombineShape( qt_xdisplay(), helper_window, ShapeInput,
+        XShapeCombineShape( tqt_xdisplay(), helper_window, ShapeInput,
                            clientPos().x(), clientPos().y(),
                            window(), ShapeInput, ShapeUnion );
-        XShapeCombineShape( qt_xdisplay(), frameId(), ShapeInput, 0, 0,
+        XShapeCombineShape( tqt_xdisplay(), frameId(), ShapeInput, 0, 0,
                            helper_window, ShapeInput, ShapeSet );
         }
     }
@@ -566,10 +566,10 @@ void Client::setMask( const TQRegion& reg, int mode )
     {
     _mask = reg;
     if( reg.isNull())
-        XShapeCombineMask( qt_xdisplay(), frameId(), ShapeBounding, 0, 0,
+        XShapeCombineMask( tqt_xdisplay(), frameId(), ShapeBounding, 0, 0,
             None, ShapeSet );
     else if( mode == X::Unsorted )
-        XShapeCombineRegion( qt_xdisplay(), frameId(), ShapeBounding, 0, 0,
+        XShapeCombineRegion( tqt_xdisplay(), frameId(), ShapeBounding, 0, 0,
             reg.handle(), ShapeSet );
     else
         {
@@ -584,7 +584,7 @@ void Client::setMask( const TQRegion& reg, int mode )
             xrects[ i ].width = rects[ i ].width();
             xrects[ i ].height = rects[ i ].height();
             }
-        XShapeCombineRectangles( qt_xdisplay(), frameId(), ShapeBounding, 0, 0,
+        XShapeCombineRectangles( tqt_xdisplay(), frameId(), ShapeBounding, 0, 0,
             xrects, rects.count(), ShapeSet, mode );
         delete[] xrects;
         }
@@ -601,7 +601,7 @@ TQRegion Client::mask() const
 void Client::setShapable(bool b)
     {
     long tmp = b?1:0;
-    XChangeProperty(qt_xdisplay(), frameId(), atoms->net_wm_window_shapable, XA_CARDINAL, 32, PropModeReplace, (unsigned char *) &tmp, 1L);
+    XChangeProperty(tqt_xdisplay(), frameId(), atoms->net_wm_window_shapable, XA_CARDINAL, 32, PropModeReplace, (unsigned char *) &tmp, 1L);
     }
 
 void Client::hideClient( bool hide )
@@ -767,7 +767,7 @@ void Client::animateMinimizeOrUnminimize( bool minimize )
         if (area2 != area)
             {
             pm = animationPixmap( area.width() );
-            pm2 = TQPixmap::grabWindow( qt_xrootwin(), area.x(), area.y(), area.width(), area.height() );
+            pm2 = TQPixmap::grabWindow( tqt_xrootwin(), area.x(), area.y(), area.width(), area.height() );
             p.drawPixmap( area.x(), area.y(), pm );
             if ( need_to_clear ) 
                 {
@@ -776,8 +776,8 @@ void Client::animateMinimizeOrUnminimize( bool minimize )
                 }
             area2 = area;
             }
-        XFlush(qt_xdisplay());
-        XSync( qt_xdisplay(), FALSE );
+        XFlush(tqt_xdisplay());
+        XSync( tqt_xdisplay(), FALSE );
         diff = t.elapsed();
         if (diff > step)
             diff = step;
@@ -867,16 +867,16 @@ void Client::setShade( ShadeMode mode )
         { // shade_mode == ShadeNormal
         // we're about to shade, texx xcompmgr to prepare
         long _shade = 1;
-        XChangeProperty(qt_xdisplay(), frameId(), atoms->net_wm_window_shade, XA_CARDINAL, 32, PropModeReplace, (unsigned char *) &_shade, 1L);
+        XChangeProperty(tqt_xdisplay(), frameId(), atoms->net_wm_window_shade, XA_CARDINAL, 32, PropModeReplace, (unsigned char *) &_shade, 1L);
         // shade
         int h = height();
         shade_geometry_change = true;
         TQSize s( sizeForClientSize( TQSize( clientSize())));
         s.setHeight( border_top + border_bottom );
-        XSelectInput( qt_xdisplay(), wrapper, ClientWinMask ); // avoid getting UnmapNotify
-        XUnmapWindow( qt_xdisplay(), wrapper );
-        XUnmapWindow( qt_xdisplay(), client );
-        XSelectInput( qt_xdisplay(), wrapper, ClientWinMask | SubstructureNotifyMask );
+        XSelectInput( tqt_xdisplay(), wrapper, ClientWinMask ); // avoid getting UnmapNotify
+        XUnmapWindow( tqt_xdisplay(), wrapper );
+        XUnmapWindow( tqt_xdisplay(), client );
+        XSelectInput( tqt_xdisplay(), wrapper, ClientWinMask | SubstructureNotifyMask );
         //as we hid the unmap event, xcompmgr didn't recognize the client wid has vanished, so we'll extra inform it        
         //done xcompmgr workaround
 // FRAME       repaint( FALSE );
@@ -886,7 +886,7 @@ void Client::setShade( ShadeMode mode )
         do 
             {
             h -= step;
-            XResizeWindow( qt_xdisplay(), frameId(), s.width(), h );
+            XResizeWindow( tqt_xdisplay(), frameId(), s.width(), h );
             resizeDecoration( TQSize( s.width(), h ));
             TQApplication::syncX();
             } while ( h > s.height() + step );
@@ -903,7 +903,7 @@ void Client::setShade( ShadeMode mode )
             }
         // tell xcompmgr shade's done
         _shade = 2;
-        XChangeProperty(qt_xdisplay(), frameId(), atoms->net_wm_window_shade, XA_CARDINAL, 32, PropModeReplace, (unsigned char *) &_shade, 1L);    
+        XChangeProperty(tqt_xdisplay(), frameId(), atoms->net_wm_window_shade, XA_CARDINAL, 32, PropModeReplace, (unsigned char *) &_shade, 1L);    
         }
     else 
         {
@@ -916,7 +916,7 @@ void Client::setShade( ShadeMode mode )
         do 
             {
             h += step;
-            XResizeWindow( qt_xdisplay(), frameId(), s.width(), h );
+            XResizeWindow( tqt_xdisplay(), frameId(), s.width(), h );
             resizeDecoration( TQSize( s.width(), h ));
             // assume a border
             // we do not have time to wait for X to send us paint events
@@ -929,9 +929,9 @@ void Client::setShade( ShadeMode mode )
         plainResize( s );
         if( shade_mode == ShadeHover || shade_mode == ShadeActivated )
             setActive( TRUE );
-        XMapWindow( qt_xdisplay(), wrapperId());
-        XMapWindow( qt_xdisplay(), window());
-        XDeleteProperty (qt_xdisplay(), client, atoms->net_wm_window_shade);
+        XMapWindow( tqt_xdisplay(), wrapperId());
+        XMapWindow( tqt_xdisplay(), window());
+        XDeleteProperty (tqt_xdisplay(), client, atoms->net_wm_window_shade);
 	if (options->shadowEnabled(false))
         {
     	    for (ClientList::ConstIterator it = transients().begin();
@@ -1211,7 +1211,7 @@ void Client::drawShadow()
      * this type of window. Otherwise, drawIntersectingShadows() won't update
      * properly when this window is moved/resized/hidden/closed.
      */
-    shapes = XShapeGetRectangles(qt_xdisplay(), frameId(), ShapeBounding,
+    shapes = XShapeGetRectangles(tqt_xdisplay(), frameId(), ShapeBounding,
             &count, &ordering);
     if (!shapes)
         // XShape extension not supported
@@ -1265,7 +1265,7 @@ void Client::drawShadow()
     // Create a fake drop-down shadow effect via blended Xwindows
     shadowWidget = new TQWidget(0, 0, (WFlags)(WStyle_Customize | WX11BypassWM));
     shadowWidget->setGeometry(shadow);
-    XSelectInput(qt_xdisplay(), shadowWidget->winId(),
+    XSelectInput(tqt_xdisplay(), shadowWidget->winId(),
             ButtonPressMask | ButtonReleaseMask | StructureNotifyMask);
     shadowWidget->installEventFilter(this);
 
@@ -1309,7 +1309,7 @@ void Client::drawShadow()
             shadowShapes[i].height = (*it).height();
             i++;
         }
-        XShapeCombineRectangles(qt_xdisplay(), shadowWidget->winId(),
+        XShapeCombineRectangles(tqt_xdisplay(), shadowWidget->winId(),
                 ShapeBounding, -x() + thickness - xOffset,
                 -y() + thickness - yOffset, shadowShapes, i, ShapeSet,
                 Unsorted);
@@ -1347,11 +1347,11 @@ void Client::drawShadow()
             shadows[1] = shadowWidget->winId();
     }
 
-    XRestackWindows(qt_xdisplay(), shadows, 2);
+    XRestackWindows(tqt_xdisplay(), shadows, 2);
 
     // Don't use TQWidget::show() so we don't confuse QEffects, thus causing
     // broken focus.
-    XMapWindow(qt_xdisplay(), shadowWidget->winId());
+    XMapWindow(tqt_xdisplay(), shadowWidget->winId());
 
     // Tell whatever Clients are listening that this Client's shadow has been drawn.
     emit shadowDrawn();
@@ -1431,7 +1431,7 @@ void Client::imposeCachedShadow(TQPixmap &pixmap, TQRegion exposed)
     int thickness, windowX, windowY, xOffset, yOffset;
 
     rectangles = exposed.rects();
-    rootWindow = qt_xrootwin();
+    rootWindow = tqt_xrootwin();
     thickness = options->shadowThickness(isActive());
     windowX = this->x();
     windowY = this->y();
@@ -1491,7 +1491,7 @@ void Client::imposeRegionShadow(TQPixmap &pixmap, TQRegion occluded,
     int windowX, windowY, xOffset, yOffset;
 
     rectangles = exposed.rects();
-    rootWindow = qt_xrootwin();
+    rootWindow = tqt_xrootwin();
     windowX = this->x();
     windowY = this->y();
     xOffset = options->shadowXOffset(isActive());
@@ -1623,7 +1623,7 @@ void Client::setMappingState(int s)
     mapping_state = s;
     if( mapping_state == WithdrawnState )
         {
-        XDeleteProperty( qt_xdisplay(), window(), qt_wm_state );
+        XDeleteProperty( tqt_xdisplay(), window(), tqt_wm_state );
         return;
         }
     assert( s == NormalState || s == IconicState );
@@ -1631,7 +1631,7 @@ void Client::setMappingState(int s)
     unsigned long data[2];
     data[0] = (unsigned long) s;
     data[1] = (unsigned long) None;
-    XChangeProperty(qt_xdisplay(), window(), qt_wm_state, qt_wm_state, 32,
+    XChangeProperty(tqt_xdisplay(), window(), tqt_wm_state, tqt_wm_state, 32,
         PropModeReplace, (unsigned char *)data, 2);
 
     if( was_unmanaged ) // manage() did postpone_geometry_updates = 1, now it's ok to finally set the geometry
@@ -1646,11 +1646,11 @@ void Client::rawShow()
     {
     if( decoration != NULL )
         decoration->widget()->show(); // not really necessary, but let it know the state
-    XMapWindow( qt_xdisplay(), frame );
+    XMapWindow( tqt_xdisplay(), frame );
     if( !isShade())
         {
-        XMapWindow( qt_xdisplay(), wrapper );
-        XMapWindow( qt_xdisplay(), client );
+        XMapWindow( tqt_xdisplay(), wrapper );
+        XMapWindow( tqt_xdisplay(), client );
         }
     if (options->shadowEnabled(isActive()))
         drawDelayedShadow();
@@ -1671,11 +1671,11 @@ void Client::rawHide()
 // here.
     removeShadow();
     drawIntersectingShadows();
-    XSelectInput( qt_xdisplay(), wrapper, ClientWinMask ); // avoid getting UnmapNotify
-    XUnmapWindow( qt_xdisplay(), frame );
-    XUnmapWindow( qt_xdisplay(), wrapper );
-    XUnmapWindow( qt_xdisplay(), client );
-    XSelectInput( qt_xdisplay(), wrapper, ClientWinMask | SubstructureNotifyMask );
+    XSelectInput( tqt_xdisplay(), wrapper, ClientWinMask ); // avoid getting UnmapNotify
+    XUnmapWindow( tqt_xdisplay(), frame );
+    XUnmapWindow( tqt_xdisplay(), wrapper );
+    XUnmapWindow( tqt_xdisplay(), client );
+    XSelectInput( tqt_xdisplay(), wrapper, ClientWinMask | SubstructureNotifyMask );
     if( decoration != NULL )
         decoration->widget()->hide(); // not really necessary, but let it know the state
     workspace()->clientHidden( this );
@@ -1697,9 +1697,9 @@ void Client::sendClientMessage(Window w, Atom a, Atom protocol, long data1, long
     ev.xclient.data.l[3] = data2;
     ev.xclient.data.l[4] = data3;
     mask = 0L;
-    if (w == qt_xrootwin())
+    if (w == tqt_xrootwin())
       mask = SubstructureRedirectMask;        /* magic! */
-    XSendEvent(qt_xdisplay(), w, False, mask, &ev);
+    XSendEvent(tqt_xdisplay(), w, False, mask, &ev);
     }
 
 /*
@@ -1753,7 +1753,7 @@ void Client::killWindow()
         Notify::raise( Notify::Delete );
     killProcess( false );
     // always kill this client at the server
-    XKillClient(qt_xdisplay(), window() );
+    XKillClient(tqt_xdisplay(), window() );
     destroyClient();
     }
 
@@ -2206,7 +2206,7 @@ void Client::takeFocus( allowed_t )
 #endif
     if ( rules()->checkAcceptFocus( input ))
         {
-        XSetInputFocus( qt_xdisplay(), window(), RevertToPointerRoot, GET_QT_X_TIME() );
+        XSetInputFocus( tqt_xdisplay(), window(), RevertToPointerRoot, GET_QT_X_TIME() );
         }
     if ( Ptakefocus )
         sendClientMessage(window(), atoms->wm_protocols, atoms->wm_take_focus);
@@ -2340,7 +2340,7 @@ TQString Client::caption( bool full ) const
 
 void Client::getWMHints()
     {
-    XWMHints *hints = XGetWMHints(qt_xdisplay(), window() );
+    XWMHints *hints = XGetWMHints(tqt_xdisplay(), window() );
     input = true;
     window_group = None;
     urgency = false;
@@ -2431,7 +2431,7 @@ void Client::getWindowProtocols()
     Pcontexthelp = 0;
     Pping = 0;
 
-    if (XGetWMProtocols(qt_xdisplay(), window(), &p, &n))
+    if (XGetWMProtocols(tqt_xdisplay(), window(), &p, &n))
         {
         for (i = 0; i < n; i++)
             if (p[i] == atoms->wm_delete_window)
@@ -2459,7 +2459,7 @@ static int nullErrorHandler(Display *, XErrorEvent *)
  */
 TQCString Client::staticWindowRole(WId w)
     {
-    return getStringProperty(w, qt_window_role).lower();
+    return getStringProperty(w, tqt_window_role).lower();
     }
 
 /*!
@@ -2467,7 +2467,7 @@ TQCString Client::staticWindowRole(WId w)
  */
 TQCString Client::staticSessionId(WId w)
     {
-    return getStringProperty(w, qt_sm_client_id);
+    return getStringProperty(w, tqt_sm_client_id);
     }
 
 /*!
@@ -2490,7 +2490,7 @@ Window Client::staticWmClientLeader(WId w)
     unsigned char *data = 0;
     Window result = w;
     XErrorHandler oldHandler = XSetErrorHandler(nullErrorHandler);
-    status = XGetWindowProperty( qt_xdisplay(), w, atoms->wm_client_leader, 0, 10000,
+    status = XGetWindowProperty( tqt_xdisplay(), w, atoms->wm_client_leader, 0, 10000,
                                  FALSE, XA_WINDOW, &type, &format,
                                  &nitems, &extra, &data );
     XSetErrorHandler(oldHandler);
@@ -2708,7 +2708,7 @@ void Client::setCursor( const TQCursor& c )
     cursor = c;
     if( decoration != NULL )
         decoration->widget()->setCursor( cursor );
-    XDefineCursor( qt_xdisplay(), frameId(), cursor.handle());
+    XDefineCursor( tqt_xdisplay(), frameId(), cursor.handle());
     }
 
 Client::Position Client::mousePosition( const TQPoint& p ) const
@@ -2763,21 +2763,21 @@ void Client::setOpacity(bool translucent, uint opacity)
     {
     if (isDesktop())
         return; // xcompmgr does not like non solid desktops and the user could set it accidently by mouse scrolling
-//     tqWarning("setting opacity for %d",qt_xdisplay());
+//     tqWarning("setting opacity for %d",tqt_xdisplay());
     //rule out activated translulcency with 100% opacity
     if (!translucent || opacity ==  0xFFFFFFFF)
         {
         opacity_ = 0xFFFFFFFF;
-        XDeleteProperty (qt_xdisplay(), frameId(), atoms->net_wm_window_opacity);
-        XDeleteProperty (qt_xdisplay(), window(), atoms->net_wm_window_opacity); // ??? frameId() is necessary for visible changes, window() is the winId() that would be set by apps - we set both to be sure the app knows what's currently displayd
+        XDeleteProperty (tqt_xdisplay(), frameId(), atoms->net_wm_window_opacity);
+        XDeleteProperty (tqt_xdisplay(), window(), atoms->net_wm_window_opacity); // ??? frameId() is necessary for visible changes, window() is the winId() that would be set by apps - we set both to be sure the app knows what's currently displayd
         }
     else{
         if(opacity == opacity_)
             return;
         opacity_ = opacity;
         long data = opacity; // 32bit XChangeProperty needs long
-        XChangeProperty(qt_xdisplay(), frameId(), atoms->net_wm_window_opacity, XA_CARDINAL, 32, PropModeReplace, (unsigned char *) &data, 1L);
-        XChangeProperty(qt_xdisplay(), window(), atoms->net_wm_window_opacity, XA_CARDINAL, 32, PropModeReplace, (unsigned char *) &data, 1L);
+        XChangeProperty(tqt_xdisplay(), frameId(), atoms->net_wm_window_opacity, XA_CARDINAL, 32, PropModeReplace, (unsigned char *) &data, 1L);
+        XChangeProperty(tqt_xdisplay(), window(), atoms->net_wm_window_opacity, XA_CARDINAL, 32, PropModeReplace, (unsigned char *) &data, 1L);
         }
     }
     
@@ -2786,7 +2786,7 @@ void Client::setShadowSize(uint shadowSize)
     // ignoring all individual settings - if we control a window, we control it's shadow
     // TODO somehow handle individual settings for docks (besides custom sizes)
     long data = shadowSize;
-    XChangeProperty(qt_xdisplay(), frameId(), atoms->net_wm_window_shadow, XA_CARDINAL, 32, PropModeReplace, (unsigned char *) &data, 1L);
+    XChangeProperty(tqt_xdisplay(), frameId(), atoms->net_wm_window_shadow, XA_CARDINAL, 32, PropModeReplace, (unsigned char *) &data, 1L);
     }
         
 void Client::updateOpacity()
@@ -2974,7 +2974,7 @@ bool Client::getWindowOpacity() //query translucency settings from X, returns tr
     Atom actual;
     int format, result;
     unsigned long n, left;
-    result = XGetWindowProperty(qt_xdisplay(), window(), atoms->net_wm_window_opacity, 0L, 1L, False, XA_CARDINAL, &actual, &format, &n, &left, /*(unsigned char **)*/ &data);
+    result = XGetWindowProperty(tqt_xdisplay(), window(), atoms->net_wm_window_opacity, 0L, 1L, False, XA_CARDINAL, &actual, &format, &n, &left, /*(unsigned char **)*/ &data);
     if (result == Success && data != None && format == 32 )
         {
         opacity_ = *reinterpret_cast< long* >( data );
@@ -3021,12 +3021,12 @@ void Client::setDecoHashProperty(uint topHeight, uint rightWidth, uint bottomHei
                (rightWidth < 255 ? rightWidth : 255) << 16 |
                (bottomHeight < 255 ? bottomHeight : 255) << 8 |
                (leftWidth < 255 ? leftWidth : 255);
-    XChangeProperty(qt_xdisplay(), frameId(), atoms->net_wm_window_decohash, XA_CARDINAL, 32, PropModeReplace, (unsigned char *) &data, 1L);
+    XChangeProperty(tqt_xdisplay(), frameId(), atoms->net_wm_window_decohash, XA_CARDINAL, 32, PropModeReplace, (unsigned char *) &data, 1L);
 }
 
 void Client::unsetDecoHashProperty()
 {
-   XDeleteProperty( qt_xdisplay(), frameId(), atoms->net_wm_window_decohash);
+   XDeleteProperty( tqt_xdisplay(), frameId(), atoms->net_wm_window_decohash);
 }
     
 #ifndef NDEBUG

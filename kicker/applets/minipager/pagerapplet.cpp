@@ -364,7 +364,7 @@ void KMiniPager::updateDesktopLayout(int o, int x, int y)
         y = 0;
     if( m_desktopLayoutOwner == NULL )
     { // must own manager selection before setting global desktop layout
-        int screen = DefaultScreen( qt_xdisplay());
+        int screen = DefaultScreen( tqt_xdisplay());
         m_desktopLayoutOwner = new KSelectionOwner( TQString( "_NET_DESKTOP_LAYOUT_S%1" ).arg( screen ).latin1(),
             screen, TQT_TQOBJECT(this) );
         if( !m_desktopLayoutOwner->claim( false ))
@@ -375,7 +375,7 @@ void KMiniPager::updateDesktopLayout(int o, int x, int y)
         }
     }
     NET::Orientation orient = o == Qt::Horizontal ? NET::OrientationHorizontal : NET::OrientationVertical;
-    NETRootInfo i( qt_xdisplay(), 0 );
+    NETRootInfo i( tqt_xdisplay(), 0 );
     i.setDesktopLayout( orient, x, y, NET::DesktopLayoutCornerTopLeft );
 }
 

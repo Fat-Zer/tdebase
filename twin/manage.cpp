@@ -36,7 +36,7 @@ namespace KWinInternal
 bool Client::manage( Window w, bool isMapped )
     {
     XWindowAttributes attr;
-    if( !XGetWindowAttributes(qt_xdisplay(), w, &attr))
+    if( !XGetWindowAttributes(tqt_xdisplay(), w, &attr))
         return false;
 
     grabXServer();
@@ -50,7 +50,7 @@ bool Client::manage( Window w, bool isMapped )
     // SELI order all these things in some sane manner
 
     bool init_minimize = false;
-    XWMHints * hints = XGetWMHints(qt_xdisplay(), w );
+    XWMHints * hints = XGetWMHints(tqt_xdisplay(), w );
     if (hints && (hints->flags & StateHint) && hints->initial_state == IconicState)
         init_minimize = true;
     if (hints)
@@ -76,12 +76,12 @@ bool Client::manage( Window w, bool isMapped )
         NET::WM2ExtendedStrut |
         0;
 
-    info = new WinInfo( this, qt_xdisplay(), client, qt_xrootwin(), properties, 2 );
+    info = new WinInfo( this, tqt_xdisplay(), client, tqt_xrootwin(), properties, 2 );
 
     cmap = attr.colormap;
 
     XClassHint classHint;
-    if ( XGetClassHint( qt_xdisplay(), client, &classHint ) ) 
+    if ( XGetClassHint( tqt_xdisplay(), client, &classHint ) ) 
         {
         // Qt3.2 and older had this all lowercase, Qt3.3 capitalized resource class
         // force lowercase, so that workarounds listing resource classes still work
@@ -318,7 +318,7 @@ bool Client::manage( Window w, bool isMapped )
     if(( !isSpecialWindow() || isToolbar()) && isMovable())
         keepInArea( area, partial_keep_in_area );
 
-    XShapeSelectInput( qt_xdisplay(), window(), ShapeNotifyMask );
+    XShapeSelectInput( tqt_xdisplay(), window(), ShapeNotifyMask );
     is_shape = Shape::hasShape( window());
     updateShape();
 	
@@ -444,7 +444,7 @@ bool Client::manage( Window w, bool isMapped )
     // TODO this should avoid flicker, because real restacking is done
     // only after manage() finishes, but the window is shown sooner
     // - keep it?
-    XLowerWindow( qt_xdisplay(), frameId());
+    XLowerWindow( tqt_xdisplay(), frameId());
 
     // set initial user time directly
     user_time = readUserTimeMapTimestamp( asn_valid ? &asn_id : NULL, asn_valid ? &asn_data : NULL, session );
@@ -558,30 +558,30 @@ void Client::embedClient( Window w, const XWindowAttributes &attr )
     assert( wrapper == None );
     client = w;
     // we don't want the window to be destroyed when we are destroyed
-    XAddToSaveSet( qt_xdisplay(), client );
-    XSelectInput( qt_xdisplay(), client, NoEventMask );
-    XUnmapWindow( qt_xdisplay(), client );
+    XAddToSaveSet( tqt_xdisplay(), client );
+    XSelectInput( tqt_xdisplay(), client, NoEventMask );
+    XUnmapWindow( tqt_xdisplay(), client );
     XWindowChanges wc;     // set the border width to 0
     wc.border_width = 0; // TODO possibly save this, and also use it for initial configuring of the window
-    XConfigureWindow( qt_xdisplay(), client, CWBorderWidth, &wc );
+    XConfigureWindow( tqt_xdisplay(), client, CWBorderWidth, &wc );
 
     XSetWindowAttributes swa;
     swa.colormap = attr.colormap;
     swa.background_pixmap = None;
     swa.border_pixel = 0;
 
-    frame = XCreateWindow( qt_xdisplay(), qt_xrootwin(), 0, 0, 1, 1, 0,
+    frame = XCreateWindow( tqt_xdisplay(), tqt_xrootwin(), 0, 0, 1, 1, 0,
 		    attr.depth, InputOutput, attr.visual,
 		    CWColormap | CWBackPixmap | CWBorderPixel, &swa );
-    wrapper = XCreateWindow( qt_xdisplay(), frame, 0, 0, 1, 1, 0,
+    wrapper = XCreateWindow( tqt_xdisplay(), frame, 0, 0, 1, 1, 0,
 		    attr.depth, InputOutput, attr.visual,
 		    CWColormap | CWBackPixmap | CWBorderPixel, &swa );
 
-    XDefineCursor( qt_xdisplay(), frame, tqarrowCursor.handle());
+    XDefineCursor( tqt_xdisplay(), frame, tqarrowCursor.handle());
     // some apps are stupid and don't define their own cursor - set the arrow one for them
-    XDefineCursor( qt_xdisplay(), wrapper, tqarrowCursor.handle());
-    XReparentWindow( qt_xdisplay(), client, wrapper, 0, 0 );
-    XSelectInput( qt_xdisplay(), frame,
+    XDefineCursor( tqt_xdisplay(), wrapper, tqarrowCursor.handle());
+    XReparentWindow( tqt_xdisplay(), client, wrapper, 0, 0 );
+    XSelectInput( tqt_xdisplay(), frame,
             KeyPressMask | KeyReleaseMask |
             ButtonPressMask | ButtonReleaseMask |
             KeymapStateMask |
@@ -592,8 +592,8 @@ void Client::embedClient( Window w, const XWindowAttributes &attr )
             ExposureMask |
             PropertyChangeMask |
             StructureNotifyMask | SubstructureRedirectMask );
-    XSelectInput( qt_xdisplay(), wrapper, ClientWinMask | SubstructureNotifyMask );
-    XSelectInput( qt_xdisplay(), client,
+    XSelectInput( tqt_xdisplay(), wrapper, ClientWinMask | SubstructureNotifyMask );
+    XSelectInput( tqt_xdisplay(), client,
                   FocusChangeMask |
                   PropertyChangeMask |
                   ColormapChangeMask |

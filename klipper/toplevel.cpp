@@ -118,7 +118,7 @@ private:
     KlipperWidget* klipper;
 };
 
-extern bool qt_qclipboard_bailout_hack;
+extern bool tqt_qclipboard_bailout_hack;
 #if KDE_IS_VERSION( 15, 0, 0 )
 #error Check status of #80072 with Qt4.
 #endif
@@ -135,7 +135,7 @@ KlipperWidget::KlipperWidget( TQWidget *parent, KConfig* config )
     , m_pendingContentsCheck( false )
     , session_managed( new KlipperSessionManaged( this ))
 {
-    qt_qclipboard_bailout_hack = true;
+    tqt_qclipboard_bailout_hack = true;
 
     // We don't use the clipboardsynchronizer anymore, and it confuses Klipper
     ensureGlobalSyncOff(m_config);
@@ -240,7 +240,7 @@ KlipperWidget::~KlipperWidget()
     delete myURLGrabber;
     if( m_config != kapp->config())
         delete m_config;
-    qt_qclipboard_bailout_hack = false;
+    tqt_qclipboard_bailout_hack = false;
 }
 
 void KlipperWidget::adjustSize()
@@ -1028,11 +1028,11 @@ bool KlipperWidget::ignoreClipboardChanges() const
     return false;
 }
 
-// TQClipboard uses qt_x_time as the timestamp for selection operations.
+// TQClipboard uses tqt_x_time as the timestamp for selection operations.
 // It is updated mainly from user actions, but Klipper polls the clipboard
-// without any user action triggering it, so qt_x_time may be old,
+// without any user action triggering it, so tqt_x_time may be old,
 // which could possibly lead to TQClipboard reporting empty clipboard.
-// Therefore, qt_x_time needs to be updated to current X server timestamp.
+// Therefore, tqt_x_time needs to be updated to current X server timestamp.
 
 // Call KApplication::updateUserTime() only from functions that are
 // called from outside (DCOP), or from TQTimer timeout !
@@ -1074,7 +1074,7 @@ static Bool update_x_time_predicate( Display*, XEvent* event, XPointer )
 }
 
 void KlipperWidget::updateTimestamp()
-{ // Qt3.3.0 and 3.3.1 use qt_x_user_time for clipboard operations
+{ // Qt3.3.0 and 3.3.1 use tqt_x_user_time for clipboard operations
     Time time = ( strcmp( tqVersion(), "3.3.1" ) == 0
                 || strcmp( tqVersion(), "3.3.0" ) == 0 )
                 ? GET_QT_X_USER_TIME() : GET_QT_X_TIME();
@@ -1082,19 +1082,19 @@ void KlipperWidget::updateTimestamp()
     if ( !w )
         w = new TQWidget;
     unsigned char data[ 1 ];
-    XChangeProperty( qt_xdisplay(), w->winId(), XA_ATOM, XA_ATOM, 8, PropModeAppend, data, 1 );
+    XChangeProperty( tqt_xdisplay(), w->winId(), XA_ATOM, XA_ATOM, 8, PropModeAppend, data, 1 );
     next_x_time = CurrentTime;
     XEvent dummy;
-    XCheckIfEvent( qt_xdisplay(), &dummy, update_x_time_predicate, NULL );
+    XCheckIfEvent( tqt_xdisplay(), &dummy, update_x_time_predicate, NULL );
     if( next_x_time == CurrentTime )
         {
-        XSync( qt_xdisplay(), False );
-        XCheckIfEvent( qt_xdisplay(), &dummy, update_x_time_predicate, NULL );
+        XSync( tqt_xdisplay(), False );
+        XCheckIfEvent( tqt_xdisplay(), &dummy, update_x_time_predicate, NULL );
         }
     Q_ASSERT( next_x_time != CurrentTime );
     time = next_x_time;
     XEvent ev; // remove the PropertyNotify event from the events queue
-    XWindowEvent( qt_xdisplay(), w->winId(), PropertyChangeMask, &ev );
+    XWindowEvent( tqt_xdisplay(), w->winId(), PropertyChangeMask, &ev );
 }
 
 static const char * const description =

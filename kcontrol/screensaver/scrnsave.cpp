@@ -582,7 +582,7 @@ void KScreenSaver::slotPreviewExited(KProcess *)
                           (mMonitorLabel->height()-186)/2+14, 151, 115);
     mMonitor->show();
     // So that hacks can XSelectInput ButtonPressMask
-    XSelectInput(qt_xdisplay(), mMonitor->winId(), widgetEventMask );
+    XSelectInput(tqt_xdisplay(), mMonitor->winId(), widgetEventMask );
 
     if (mSelected >= 0) {
         mPreviewProc->clearArguments();
@@ -781,7 +781,7 @@ void KScreenSaver::slotTest()
         mTestWin->raise();
         mTestWin->setFocus();
 	// So that hacks can XSelectInput ButtonPressMask
-	XSelectInput(qt_xdisplay(), mTestWin->winId(), widgetEventMask );
+	XSelectInput(tqt_xdisplay(), mTestWin->winId(), widgetEventMask );
 
 	grabMouse();
 	grabKeyboard();

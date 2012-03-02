@@ -50,10 +50,10 @@ StartupId::StartupId( TQWidget* parent, const char* name )
     hide(); // is TQWidget only because of x11Event()
     if( kde_startup_status == StartupPre )
         {
-        kde_splash_progress = XInternAtom( qt_xdisplay(), "_KDE_SPLASH_PROGRESS", False );
+        kde_splash_progress = XInternAtom( tqt_xdisplay(), "_KDE_SPLASH_PROGRESS", False );
         XWindowAttributes attrs;
-        XGetWindowAttributes( qt_xdisplay(), qt_xrootwin(), &attrs);
-        XSelectInput( qt_xdisplay(), qt_xrootwin(), attrs.your_event_mask | SubstructureNotifyMask);
+        XGetWindowAttributes( tqt_xdisplay(), tqt_xrootwin(), &attrs);
+        XSelectInput( tqt_xdisplay(), tqt_xrootwin(), attrs.your_event_mask | SubstructureNotifyMask);
         kapp->installX11EventFilter( this );
         }
     connect( &update_timer, TQT_SIGNAL( timeout()), TQT_SLOT( update_startupid()));
@@ -119,7 +119,7 @@ void StartupId::gotRemoveStartup( const KStartupInfoId& id_P )
 
 bool StartupId::x11Event( XEvent* e )
     {
-    if( e->type == ClientMessage && e->xclient.window == qt_xrootwin()
+    if( e->type == ClientMessage && e->xclient.window == tqt_xrootwin()
         && e->xclient.message_type == kde_splash_progress )
         {
         const char* s = e->xclient.data.b;
@@ -188,7 +188,7 @@ void StartupId::start_startupid( const TQString& icon_P )
         startup_widget = new TQWidget( NULL, NULL, WX11BypassWM );
         XSetWindowAttributes attr;
         attr.save_under = True; // useful saveunder if possible to avoid redrawing
-        XChangeWindowAttributes( qt_xdisplay(), startup_widget->winId(), CWSaveUnder, &attr );
+        XChangeWindowAttributes( tqt_xdisplay(), startup_widget->winId(), CWSaveUnder, &attr );
         }
     startup_widget->resize( icon_pixmap.width(), icon_pixmap.height());
     if( blinking )
@@ -268,7 +268,7 @@ void StartupId::update_startupid()
     int x, y;
     int dummy3, dummy4;
     unsigned int dummy5;
-    if( !XQueryPointer( qt_xdisplay(), qt_xrootwin(), &dummy1, &dummy2, &x, &y, &dummy3, &dummy4, &dummy5 ))
+    if( !XQueryPointer( tqt_xdisplay(), tqt_xrootwin(), &dummy1, &dummy2, &x, &y, &dummy3, &dummy4, &dummy5 ))
         {
         startup_widget->hide();
         update_timer.start( 100, true );
@@ -277,7 +277,7 @@ void StartupId::update_startupid()
     TQPoint c_pos( x, y );
     int cursor_size = 0;
 #ifdef HAVE_XCURSOR
-    cursor_size = XcursorGetDefaultSize( qt_xdisplay());
+    cursor_size = XcursorGetDefaultSize( tqt_xdisplay());
 #endif
     int X_DIFF;
     if( cursor_size <= 16 )
@@ -293,7 +293,7 @@ void StartupId::update_startupid()
         || startup_widget->y() != c_pos.y() + Y_DIFF + yoffset )
         startup_widget->move( c_pos.x() + X_DIFF, c_pos.y() + Y_DIFF + yoffset );
     startup_widget->show();
-    XRaiseWindow( qt_xdisplay(), startup_widget->winId());
+    XRaiseWindow( tqt_xdisplay(), startup_widget->winId());
     update_timer.start( bouncing ? 30 : 100, true );
     TQApplication::flushX();
     }

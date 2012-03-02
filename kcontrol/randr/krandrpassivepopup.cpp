@@ -45,7 +45,7 @@ KRandrPassivePopup* KRandrPassivePopup::message( const TQString &caption, const 
 
 void KRandrPassivePopup::startWatchingWidget( TQWidget* widget_P )
     {
-    static Atom wm_state = XInternAtom( qt_xdisplay() , "WM_STATE", False );
+    static Atom wm_state = XInternAtom( tqt_xdisplay() , "WM_STATE", False );
     Window win = widget_P->winId();
     bool x11_events = false;
     for(;;)
@@ -53,7 +53,7 @@ void KRandrPassivePopup::startWatchingWidget( TQWidget* widget_P )
 	Window root, parent;
 	Window* children;
 	unsigned int nchildren;
-	XQueryTree( qt_xdisplay(), win, &root, &parent, &children, &nchildren );
+	XQueryTree( tqt_xdisplay(), win, &root, &parent, &children, &nchildren );
 	if( children != NULL )
 	    XFree( children );
 	if( win == root ) // huh?
@@ -69,8 +69,8 @@ void KRandrPassivePopup::startWatchingWidget( TQWidget* widget_P )
 	else
 	    {
 	    XWindowAttributes attrs;
-	    XGetWindowAttributes( qt_xdisplay(), win, &attrs );
-	    XSelectInput( qt_xdisplay(), win, attrs.your_event_mask | StructureNotifyMask );
+	    XGetWindowAttributes( tqt_xdisplay(), win, &attrs );
+	    XSelectInput( tqt_xdisplay(), win, attrs.your_event_mask | StructureNotifyMask );
 	    watched_windows.append( win );
 	    x11_events = true;
 	    }
@@ -78,7 +78,7 @@ void KRandrPassivePopup::startWatchingWidget( TQWidget* widget_P )
 	int format;
 	unsigned long nitems, after;
 	unsigned char* data;
-	if( XGetWindowProperty( qt_xdisplay(), win, wm_state, 0, 0, False, AnyPropertyType,
+	if( XGetWindowProperty( tqt_xdisplay(), win, wm_state, 0, 0, False, AnyPropertyType,
 	    &type, &format, &nitems, &after, &data ) == Success )
 	    {
 	    if( data != NULL )

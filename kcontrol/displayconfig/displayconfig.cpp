@@ -856,7 +856,7 @@ void KDisplayConfig::identifyMonitors () {
 	ScreenInfo *randr_screen_info;
 	XRROutputInfo *output_info;
 
-	randr_display = qt_xdisplay();
+	randr_display = tqt_xdisplay();
 	randr_screen_info = m_randrsimple->read_screen_info(randr_display);
 
 	for (i = 0; i < m_screenInfoArray.count(); i++) {

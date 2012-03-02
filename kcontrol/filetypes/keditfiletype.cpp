@@ -164,7 +164,7 @@ int main(int argc, char ** argv)
     bool ok;
     long id = args->getOption("parent").toLong(&ok);
     if (ok)
-      XSetTransientForHint( qt_xdisplay(), dlg.winId(), id );
+      XSetTransientForHint( tqt_xdisplay(), dlg.winId(), id );
   }
 #endif
   args->clear();

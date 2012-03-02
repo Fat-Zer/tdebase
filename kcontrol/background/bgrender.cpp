@@ -192,7 +192,7 @@ int KBackgroundRenderer::doBackground(bool quit)
     // some dithering may be needed even with bpb==15/16, so don't use tileWidth==1
     // for them
     // with tileWidth>2, repainting the desktop causes nasty effect (XFree86 4.1.0 )
-        if( XQueryBestTile( qt_xdisplay(), qt_xrootwin(), tile_val, tile_val,
+        if( XQueryBestTile( tqt_xdisplay(), tqt_xrootwin(), tile_val, tile_val,
             &tileWidth, &tileHeight ) != Success )
             tileWidth = tileHeight = tile_val; // some defaults
     }
@@ -549,12 +549,12 @@ bool KBackgroundRenderer::canTile() const
     return m_TilingEnabled && optimize();
 }
 
-extern bool qt_use_xrender; // in Qt ( qapplication_x11.cpp )
+extern bool tqt_use_xrender; // in Qt ( qapplication_x11.cpp )
 
 void KBackgroundRenderer::wallpaperBlend()
 {
     if( !enabled() || wallpaperMode() == NoWallpaper
-        || (blendMode() == NoBlending && ( qt_use_xrender || !m_Wallpaper.hasAlphaBuffer()))) {
+        || (blendMode() == NoBlending && ( tqt_use_xrender || !m_Wallpaper.hasAlphaBuffer()))) {
         fastWallpaperBlend();
     }
     else {
@@ -1030,8 +1030,8 @@ KVirtualBGRenderer::KVirtualBGRenderer( int desk, KConfig *config )
     // The following code is borrowed from KBackgroundSettings::KBackgroundSettings
     if (!config) {
         int screen_number = 0;
-        if (qt_xdisplay())
-            screen_number = DefaultScreen(qt_xdisplay());
+        if (tqt_xdisplay())
+            screen_number = DefaultScreen(tqt_xdisplay());
         TQCString configname;
         if (screen_number == 0)
             configname = "kdesktoprc";

@@ -85,7 +85,7 @@ KPagerMainWindow::KPagerMainWindow(TQWidget *parent, const char *name)
       move(xpos,ypos);
     else
     {
-//      NETRootInfo ri( qt_xdisplay(), NET::WorkArea );
+//      NETRootInfo ri( tqt_xdisplay(), NET::WorkArea );
 //      NETRect rect=ri.workArea(1);
 //      move(rect.pos.x+rect.size.width-m_pPager->width(),
 //	  rect.pos.y+rect.size.height-m_pPager->height());
@@ -609,10 +609,10 @@ void KPager::clientPopupActivated( int id )
     switch ( id ) {
 	case MaximizeOp:
 	    if ( (m_winfo.state() & NET::Max)  == 0 ) {
-		NETWinInfo ni( qt_xdisplay(),  m_winfo.win(), qt_xrootwin(), 0);
+		NETWinInfo ni( tqt_xdisplay(),  m_winfo.win(), tqt_xrootwin(), 0);
 		ni.setState( NET::Max, NET::Max );
 	    } else {
-		NETWinInfo ni( qt_xdisplay(),  m_winfo.win(), qt_xrootwin(), 0);
+		NETWinInfo ni( tqt_xdisplay(),  m_winfo.win(), tqt_xrootwin(), 0);
 		ni.setState( 0, NET::Max );
 	    }
 	    break;
@@ -631,7 +631,7 @@ void KPager::clientPopupActivated( int id )
 	    }
 	    break;
 	case CloseOp: {
-	    NETRootInfo ri( qt_xdisplay(),  0 );
+	    NETRootInfo ri( tqt_xdisplay(),  0 );
 	    ri.closeWindowRequest( m_winfo.win() );
 	} break;
 	default:

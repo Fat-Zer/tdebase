@@ -30,7 +30,7 @@
 #include <X11/Xlib.h>
 #include <X11/Xutil.h>
 
-extern Atom qt_window_role;
+extern Atom tqt_window_role;
 
 namespace KHotKeys
 {
@@ -94,13 +94,13 @@ void Windows::window_changed_slot( WId window_P, unsigned int flags_P )
 TQString Windows::get_window_role( WId id_P )
     {
     // TODO this is probably just a hack
-    return KWin::readNameProperty( id_P, qt_window_role );
+    return KWin::readNameProperty( id_P, tqt_window_role );
     }
 
 TQString Windows::get_window_class( WId id_P )
     {
     XClassHint hints_ret;
-    if( XGetClassHint( qt_xdisplay(), id_P, &hints_ret ) == 0 ) // 0 means error
+    if( XGetClassHint( tqt_xdisplay(), id_P, &hints_ret ) == 0 ) // 0 means error
 	return "";
     TQString ret( hints_ret.res_name );
     ret += ' ';
@@ -141,19 +141,19 @@ WId Windows::find_window( const Windowdef_list* window_P )
 WId Windows::window_at_position( int x, int y )
     {
     Window child, dummy;
-    Window parent = qt_xrootwin();
-    Atom wm_state = XInternAtom( qt_xdisplay(), "WM_STATE", False );
+    Window parent = tqt_xrootwin();
+    Atom wm_state = XInternAtom( tqt_xdisplay(), "WM_STATE", False );
     for( int i = 0;
          i < 10;
          ++i )
         {
         int destx, desty;
         // find child at that position
-        if( !XTranslateCoordinates( qt_xdisplay(), parent, parent, x, y, &destx, &desty, &child )
+        if( !XTranslateCoordinates( tqt_xdisplay(), parent, parent, x, y, &destx, &desty, &child )
             || child == None )
             return 0;
         // and now transform coordinates to the child
-        if( !XTranslateCoordinates( qt_xdisplay(), parent, child, x, y, &destx, &desty, &dummy ))
+        if( !XTranslateCoordinates( tqt_xdisplay(), parent, child, x, y, &destx, &desty, &dummy ))
             return 0;
         x = destx;
         y = desty;
@@ -161,7 +161,7 @@ WId Windows::window_at_position( int x, int y )
         int format;
         unsigned long nitems, after;
         unsigned char* prop;
-        if( XGetWindowProperty( qt_xdisplay(), child, wm_state, 0, 0, False, AnyPropertyType,
+        if( XGetWindowProperty( tqt_xdisplay(), child, wm_state, 0, 0, False, AnyPropertyType,
 	    &type, &format, &nitems, &after, &prop ) == Success )
             {
 	    if( prop != NULL )

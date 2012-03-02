@@ -164,10 +164,10 @@ NPError g_NPN_GetValue(NPP /*instance*/, NPNVariable variable, void *value)
    switch (variable)
    {
       case NPNVxDisplay:
-         *(void**)value = qt_xdisplay();
+         *(void**)value = tqt_xdisplay();
          return NPERR_NO_ERROR;
       case NPNVxtAppContext:
-         *(void**)value = XtDisplayToApplicationContext(qt_xdisplay());
+         *(void**)value = XtDisplayToApplicationContext(tqt_xdisplay());
          return NPERR_NO_ERROR;
       case NPNVjavascriptEnabledBool:
          *(bool*)value = true;
@@ -638,10 +638,10 @@ NSPluginInstance::NSPluginInstance(NPP privateData, NPPluginFuncs *pluginFuncs,
       XtSetArg(args[nargs], XtNborderWidth, 0); nargs++;
 
       String n, c;
-      XtGetApplicationNameAndClass(qt_xdisplay(), &n, &c);
+      XtGetApplicationNameAndClass(tqt_xdisplay(), &n, &c);
 
       _toplevel = XtAppCreateShell("drawingArea", c, applicationShellWidgetClass,
-                                   qt_xdisplay(), args, nargs);
+                                   tqt_xdisplay(), args, nargs);
 
       // What exactly does widget mapping mean? Without this call the widget isn't
       // embedded correctly. With it the viewer doesn't show anything in standalone mode.
@@ -655,13 +655,13 @@ NSPluginInstance::NSPluginInstance(NPP privateData, NPPluginFuncs *pluginFuncs,
       XtSetArg(args[nargs], XtNdepth, TQPaintDevice::x11AppDepth()); nargs++;
       XtSetArg(args[nargs], XtNcolormap, TQPaintDevice::x11AppColormap()); nargs++;
       XtSetValues(_form, args, nargs);
-      XSync(qt_xdisplay(), false);
+      XSync(tqt_xdisplay(), false);
 
       // From mozilla - not sure if it's needed yet, nor what to use for embedder
 #if 0
       /* this little trick seems to finish initializing the widget */
 #if XlibSpecificationRelease >= 6
-      XtRegisterDrawable(qt_xdisplay(), embedderid, _toplevel);
+      XtRegisterDrawable(tqt_xdisplay(), embedderid, _toplevel);
 #else
       _XtRegisterWindow(embedderid, _toplevel);
 #endif
@@ -674,7 +674,7 @@ NSPluginInstance::NSPluginInstance(NPP privateData, NPPluginFuncs *pluginFuncs,
                         False, forwarder, (XtPointer)this );
       XtAddEventHandler(_form, (KeyPressMask|KeyReleaseMask), 
                         False, forwarder, (XtPointer)this );
-      XSync(qt_xdisplay(), false);
+      XSync(tqt_xdisplay(), false);
    }
 }
 
@@ -942,10 +942,10 @@ int NSPluginInstance::setWindow(TQ_INT8 remove)
    if( _xembed_window ) {
       _win.window = (void*) _xembed_window;
       _win_info.type = NP_SETWINDOW;
-      _win_info.display = qt_xdisplay();
-      _win_info.visual = DefaultVisualOfScreen(DefaultScreenOfDisplay(qt_xdisplay()));
-      _win_info.colormap = DefaultColormapOfScreen(DefaultScreenOfDisplay(qt_xdisplay()));
-      _win_info.depth = DefaultDepthOfScreen(DefaultScreenOfDisplay(qt_xdisplay()));
+      _win_info.display = tqt_xdisplay();
+      _win_info.visual = DefaultVisualOfScreen(DefaultScreenOfDisplay(tqt_xdisplay()));
+      _win_info.colormap = DefaultColormapOfScreen(DefaultScreenOfDisplay(tqt_xdisplay()));
+      _win_info.depth = DefaultDepthOfScreen(DefaultScreenOfDisplay(tqt_xdisplay()));
    } else {
       _win.window = (void*) XtWindow(_form);
 
@@ -971,9 +971,9 @@ static void resizeWidgets(Window w, int width, int height) {
    Window rroot, parent, *children;
    unsigned int nchildren = 0;
 
-   if (XQueryTree(qt_xdisplay(), w, &rroot, &parent, &children, &nchildren)) {
+   if (XQueryTree(tqt_xdisplay(), w, &rroot, &parent, &children, &nchildren)) {
       for (unsigned int i = 0; i < nchildren; i++) {
-         XResizeWindow(qt_xdisplay(), children[i], width, height);
+         XResizeWindow(tqt_xdisplay(), children[i], width, height);
       }
       XFree(children);
    }
@@ -991,8 +991,8 @@ void NSPluginInstance::resizePlugin(TQ_INT32 w, TQ_INT32 h)
    _height = h;
 
    if( _form != 0 ) {
-      XResizeWindow(qt_xdisplay(), XtWindow(_form), w, h);
-      XResizeWindow(qt_xdisplay(), XtWindow(_toplevel), w, h);
+      XResizeWindow(tqt_xdisplay(), XtWindow(_form), w, h);
+      XResizeWindow(tqt_xdisplay(), XtWindow(_toplevel), w, h);
 
       Arg args[7];
       Cardinal nargs = 0;

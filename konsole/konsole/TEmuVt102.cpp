@@ -1321,7 +1321,7 @@ static int xkb_init()
     int xkb_lmaj = XkbMajorVersion;
     int xkb_lmin = XkbMinorVersion;
     return XkbLibraryVersion( &xkb_lmaj, &xkb_lmin )
-        && XkbQueryExtension( qt_xdisplay(), &xkb_opcode, &xkb_event, &xkb_error,
+        && XkbQueryExtension( tqt_xdisplay(), &xkb_opcode, &xkb_event, &xkb_error,
 			       &xkb_lmaj, &xkb_lmin );
 }
     
@@ -1355,7 +1355,7 @@ static unsigned int xkb_mask_modifier( XkbDescPtr xkb, const char *name )
 static unsigned int xkb_scrolllock_mask()
 {
     XkbDescPtr xkb;
-    if(( xkb = XkbGetKeyboard( qt_xdisplay(), XkbAllComponentsMask, XkbUseCoreKbd )) != NULL )
+    if(( xkb = XkbGetKeyboard( tqt_xdisplay(), XkbAllComponentsMask, XkbUseCoreKbd )) != NULL )
     {
         unsigned int mask = xkb_mask_modifier( xkb, "ScrollLock" );
         XkbFreeKeyboard( xkb, 0, True );
@@ -1368,8 +1368,8 @@ static unsigned int xkb_scrolllock_mask()
 static unsigned int xkb_scrolllock_mask()
 {
     int scrolllock_mask = 0;
-    XModifierKeymap* map = XGetModifierMapping( qt_xdisplay() );
-    KeyCode scrolllock_keycode = XKeysymToKeycode( qt_xdisplay(), XK_Scroll_Lock );
+    XModifierKeymap* map = XGetModifierMapping( tqt_xdisplay() );
+    KeyCode scrolllock_keycode = XKeysymToKeycode( tqt_xdisplay(), XK_Scroll_Lock );
     if( scrolllock_keycode == NoSymbol ) {
         XFreeModifiermap(map);
         return 0;
@@ -1400,7 +1400,7 @@ static int xkb_set_on()
        if( scrolllock_mask == 0 )
           return 0;
     }
-    XkbLockModifiers ( qt_xdisplay(), XkbUseCoreKbd, scrolllock_mask, scrolllock_mask);
+    XkbLockModifiers ( tqt_xdisplay(), XkbUseCoreKbd, scrolllock_mask, scrolllock_mask);
     return 1;
 }
     
@@ -1414,7 +1414,7 @@ static int xkb_set_off()
        if( scrolllock_mask == 0 )
           return 0;
     }
-    XkbLockModifiers ( qt_xdisplay(), XkbUseCoreKbd, scrolllock_mask, 0);
+    XkbLockModifiers ( tqt_xdisplay(), XkbUseCoreKbd, scrolllock_mask, 0);
     return 1;
 }
 

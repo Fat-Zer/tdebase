@@ -140,7 +140,7 @@ void KDecorationPreview::setPreviewMask( const TQRegion& reg, int mode )
     // FRAME duped from client.cpp
     if( mode == Unsorted )
         {
-        XShapeCombineRegion( qt_xdisplay(), widget->winId(), ShapeBounding, 0, 0,
+        XShapeCombineRegion( tqt_xdisplay(), widget->winId(), ShapeBounding, 0, 0,
             reg.handle(), ShapeSet );
         }
     else
@@ -156,7 +156,7 @@ void KDecorationPreview::setPreviewMask( const TQRegion& reg, int mode )
             xrects[ i ].width = rects[ i ].width();
             xrects[ i ].height = rects[ i ].height();
             }
-        XShapeCombineRectangles( qt_xdisplay(), widget->winId(), ShapeBounding, 0, 0,
+        XShapeCombineRectangles( tqt_xdisplay(), widget->winId(), ShapeBounding, 0, 0,
 	    xrects, rects.count(), ShapeSet, mode );
         delete[] xrects;
         }

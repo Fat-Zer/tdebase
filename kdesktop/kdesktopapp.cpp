@@ -45,11 +45,11 @@ void KDesktopApp::initCmBackground()
 
     m_bgSupported = false;
     m_cmBackground =
-            XInternAtom (qt_xdisplay(), "_COMPIZ_WALLPAPER_SUPPORTED", false);
+            XInternAtom (tqt_xdisplay(), "_COMPIZ_WALLPAPER_SUPPORTED", false);
 
-    XSelectInput (qt_xdisplay(), qt_xrootwin(), PropertyChangeMask);
+    XSelectInput (tqt_xdisplay(), tqt_xrootwin(), PropertyChangeMask);
 
-    if (XGetWindowProperty (qt_xdisplay(), qt_xrootwin(), m_cmBackground,
+    if (XGetWindowProperty (tqt_xdisplay(), tqt_xrootwin(), m_cmBackground,
                             0, 1, FALSE,  XA_CARDINAL, &type, &format, &num,
                             &rest, &data) == Success && num)
     {
@@ -62,7 +62,7 @@ void KDesktopApp::initCmBackground()
 bool KDesktopApp::x11EventFilter (XEvent * xevent)
 {
     if (xevent->type == PropertyNotify &&
-        xevent->xproperty.window == qt_xrootwin() &&
+        xevent->xproperty.window == tqt_xrootwin() &&
         xevent->xproperty.atom == m_cmBackground)
     {
         Atom type;
@@ -72,7 +72,7 @@ bool KDesktopApp::x11EventFilter (XEvent * xevent)
     
         Bool supported = false;
         
-        if (XGetWindowProperty (qt_xdisplay(), qt_xrootwin(), m_cmBackground,
+        if (XGetWindowProperty (tqt_xdisplay(), tqt_xrootwin(), m_cmBackground,
                             0, 1, FALSE,  XA_CARDINAL, &type, &format, &num,
                             &rest, &data) == Success && num)
         {

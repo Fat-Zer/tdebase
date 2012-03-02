@@ -232,8 +232,8 @@ static bool startNewKonqueror( TQString url, TQString mimetype, const TQString& 
 
 static int currentScreen()
 {
-    if( qt_xdisplay() != NULL )
-        return qt_xscreen();
+    if( tqt_xdisplay() != NULL )
+        return tqt_xscreen();
     // case when there's no KApplication instance
     const char* env = getenv( "DISPLAY" );
     if( env == NULL )
@@ -286,12 +286,12 @@ void clientApp::sendASNChange()
     KStartupInfoData data;
     data.addPid( 0 );   // say there's another process for this ASN with unknown PID
     data.setHostname(); // ( no need to bother to get this konqy's PID )
-    Display* dpy = qt_xdisplay();
+    Display* dpy = tqt_xdisplay();
     if( dpy == NULL ) // we may be running without TQApplication here
         dpy = XOpenDisplay( NULL );
     if( dpy != NULL )
         KStartupInfo::sendChangeX( dpy, id, data );
-    if( dpy != NULL && dpy != qt_xdisplay())
+    if( dpy != NULL && dpy != tqt_xdisplay())
         XCloseDisplay( dpy );
 }
 

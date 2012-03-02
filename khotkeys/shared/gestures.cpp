@@ -154,8 +154,8 @@ bool Gesture::x11Event( XEvent* ev_P )
         if( gesture.isEmpty())
             {
             kdDebug( 1217 ) << "GESTURE: replay" << endl;
-            XAllowEvents( qt_xdisplay(), AsyncPointer, CurrentTime );
-            XUngrabPointer( qt_xdisplay(), CurrentTime );
+            XAllowEvents( tqt_xdisplay(), AsyncPointer, CurrentTime );
+            XUngrabPointer( tqt_xdisplay(), CurrentTime );
             mouse_replay( true );
             return true;
             }
@@ -178,8 +178,8 @@ bool Gesture::x11Event( XEvent* ev_P )
 void Gesture::stroke_timeout()
     {
     kdDebug( 1217 ) << "GESTURE: timeout" << endl;
-    XAllowEvents( qt_xdisplay(), AsyncPointer, CurrentTime );
-    XUngrabPointer( qt_xdisplay(), CurrentTime );
+    XAllowEvents( tqt_xdisplay(), AsyncPointer, CurrentTime );
+    XUngrabPointer( tqt_xdisplay(), CurrentTime );
     mouse_replay( false );
     recording = false;
     }
@@ -215,7 +215,7 @@ void Gesture::grab_mouse( bool grab_P )
         for( int i = 0;
              i < 8;
              ++i )
-            XGrabButton( qt_xdisplay(), button, mods[ i ], qt_xrootwin(), False,
+            XGrabButton( tqt_xdisplay(), button, mods[ i ], tqt_xrootwin(), False,
                 ButtonPressMask | ButtonReleaseMask | mask[ button ], GrabModeAsync, GrabModeAsync,
                 None, None );
         bool err = handler.error( true );
@@ -224,7 +224,7 @@ void Gesture::grab_mouse( bool grab_P )
     else
         {
         kdDebug( 1217 ) << "Gesture ungrab" << endl;
-        XUngrabButton( qt_xdisplay(), button, AnyModifier, qt_xrootwin());
+        XUngrabButton( tqt_xdisplay(), button, AnyModifier, tqt_xrootwin());
         }
     }
 

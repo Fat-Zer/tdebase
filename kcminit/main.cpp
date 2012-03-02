@@ -178,7 +178,7 @@ KCMInit::KCMInit( KCmdLineArgs* args )
   KConfig config("kcmdisplayrc", true );
   config.setGroup("X11");
   bool multihead = !config.readBoolEntry( "disableMultihead", false) &&
-                    (ScreenCount(qt_xdisplay()) > 1);
+                    (ScreenCount(tqt_xdisplay()) > 1);
   // Pass env. var to tdeinit.
   TQCString name = "TDE_MULTIHEAD";
   TQCString value = multihead ? "true" : "false";

@@ -143,7 +143,7 @@ int Lockout::heightForWidth( int width ) const
 void Lockout::lock()
 {
     TQCString appname( "kdesktop" );
-    int kicker_screen_number = qt_xscreen();
+    int kicker_screen_number = tqt_xscreen();
     if ( kicker_screen_number )
         appname.sprintf("kdesktop-screen-%d", kicker_screen_number);
     kapp->dcopClient()->send(appname, "KScreensaverIface", "lock()", TQString(""));

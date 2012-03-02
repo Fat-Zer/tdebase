@@ -26,7 +26,7 @@ XkbRules::XkbRules(bool layoutsOnly):
 		return;
    	}
 
-	TQString rulesFile = X11Helper::findXkbRulesFile(X11_DIR, qt_xdisplay());
+	TQString rulesFile = X11Helper::findXkbRulesFile(X11_DIR, tqt_xdisplay());
 	
 	if( rulesFile.isEmpty() ) {
   		kdError() << "Cannot find rules file in " << X11_DIR << endl;

@@ -680,10 +680,10 @@ void Workspace::updateTopMenuGeometry( Client* c )
     if( c != NULL )
         {
         XEvent ev;
-        ev.xclient.display = qt_xdisplay();
+        ev.xclient.display = tqt_xdisplay();
         ev.xclient.type = ClientMessage;
         ev.xclient.window = c->window();
-        static Atom msg_type_atom = XInternAtom( qt_xdisplay(), "_KDE_TOPMENU_MINSIZE", False );
+        static Atom msg_type_atom = XInternAtom( tqt_xdisplay(), "_KDE_TOPMENU_MINSIZE", False );
         ev.xclient.message_type = msg_type_atom;
         ev.xclient.format = 32;
         ev.xclient.data.l[0] = GET_QT_X_TIME();
@@ -691,7 +691,7 @@ void Workspace::updateTopMenuGeometry( Client* c )
         ev.xclient.data.l[2] = topmenu_space->height();
         ev.xclient.data.l[3] = 0;
         ev.xclient.data.l[4] = 0;
-        XSendEvent( qt_xdisplay(), c->window(), False, NoEventMask, &ev );
+        XSendEvent( tqt_xdisplay(), c->window(), False, NoEventMask, &ev );
         KWin::setStrut( c->window(), 0, 0, topmenu_height, 0 ); // so that kicker etc. know
         c->checkWorkspacePosition();
         return;
@@ -859,25 +859,25 @@ NETExtendedStrut Client::strut() const
             {
             ext.left_width = str.left;
             ext.left_start = 0;
-            ext.left_end = XDisplayHeight( qt_xdisplay(), DefaultScreen( qt_xdisplay()));
+            ext.left_end = XDisplayHeight( tqt_xdisplay(), DefaultScreen( tqt_xdisplay()));
             }
         if( str.right != 0 )
             {
             ext.right_width = str.right;
             ext.right_start = 0;
-            ext.right_end = XDisplayHeight( qt_xdisplay(), DefaultScreen( qt_xdisplay()));
+            ext.right_end = XDisplayHeight( tqt_xdisplay(), DefaultScreen( tqt_xdisplay()));
             }
         if( str.top != 0 )
             {
             ext.top_width = str.top;
             ext.top_start = 0;
-            ext.top_end = XDisplayWidth( qt_xdisplay(), DefaultScreen( qt_xdisplay()));
+            ext.top_end = XDisplayWidth( tqt_xdisplay(), DefaultScreen( tqt_xdisplay()));
             }
         if( str.bottom != 0 )
             {
             ext.bottom_width = str.bottom;
             ext.bottom_start = 0;
-            ext.bottom_end = XDisplayWidth( qt_xdisplay(), DefaultScreen( qt_xdisplay()));
+            ext.bottom_end = XDisplayWidth( tqt_xdisplay(), DefaultScreen( tqt_xdisplay()));
             }
         }
     return ext;
@@ -1284,7 +1284,7 @@ TQSize Client::sizeForClientSize( const TQSize& wsize, Sizemode mode, bool nofra
 void Client::getWmNormalHints()
     {
     long msize;
-    if (XGetWMNormalHints(qt_xdisplay(), window(), &xSizeHint, &msize) == 0 )
+    if (XGetWMNormalHints(tqt_xdisplay(), window(), &xSizeHint, &msize) == 0 )
         xSizeHint.flags = 0;
     // set defined values for the fields, even if they're not in flags
 
@@ -1386,7 +1386,7 @@ void Client::sendSyntheticConfigureNotify()
     c.border_width = 0;
     c.above = None;
     c.override_redirect = 0;
-    XSendEvent( qt_xdisplay(), c.event, TRUE, StructureNotifyMask, (XEvent*)&c );
+    XSendEvent( tqt_xdisplay(), c.event, TRUE, StructureNotifyMask, (XEvent*)&c );
     }
 
 const TQPoint Client::calculateGravitation( bool invert, int gravity ) const
@@ -1758,14 +1758,14 @@ void Client::setGeometry( int x, int y, int w, int h, ForceGeometry_t force )
         return;
         }
     resizeDecoration( TQSize( w, h ));
-    XMoveResizeWindow( qt_xdisplay(), frameId(), x, y, w, h );
+    XMoveResizeWindow( tqt_xdisplay(), frameId(), x, y, w, h );
 //     resizeDecoration( TQSize( w, h ));
     if( !isShade())
         {
         TQSize cs = clientSize();
-        XMoveResizeWindow( qt_xdisplay(), wrapperId(), clientPos().x(), clientPos().y(),
+        XMoveResizeWindow( tqt_xdisplay(), wrapperId(), clientPos().x(), clientPos().y(),
             cs.width(), cs.height());
-        XMoveResizeWindow( qt_xdisplay(), window(), 0, 0, cs.width(), cs.height());
+        XMoveResizeWindow( tqt_xdisplay(), window(), 0, 0, cs.width(), cs.height());
         }
     updateShape();
     // SELI TODO won't this be too expensive?
@@ -1813,14 +1813,14 @@ void Client::plainResize( int w, int h, ForceGeometry_t force )
         return;
         }
     resizeDecoration( TQSize( w, h ));
-    XResizeWindow( qt_xdisplay(), frameId(), w, h );
+    XResizeWindow( tqt_xdisplay(), frameId(), w, h );
 //     resizeDecoration( TQSize( w, h ));
     if( !isShade())
         {
         TQSize cs = clientSize();
-        XMoveResizeWindow( qt_xdisplay(), wrapperId(), clientPos().x(), clientPos().y(),
+        XMoveResizeWindow( tqt_xdisplay(), wrapperId(), clientPos().x(), clientPos().y(),
             cs.width(), cs.height());
-        XMoveResizeWindow( qt_xdisplay(), window(), 0, 0, cs.width(), cs.height());
+        XMoveResizeWindow( tqt_xdisplay(), window(), 0, 0, cs.width(), cs.height());
         }
     updateShape();
     updateWorkareaDiffs();
@@ -1844,7 +1844,7 @@ void Client::move( int x, int y, ForceGeometry_t force )
         pending_geometry_update = true;
         return;
         }
-    XMoveWindow( qt_xdisplay(), frameId(), x, y );
+    XMoveWindow( tqt_xdisplay(), frameId(), x, y );
     sendSyntheticConfigureNotify();
     updateWindowRules();
     checkMaximizeGeometry();
@@ -2314,18 +2314,18 @@ bool Client::startMoveResize()
     // (http://lists.kde.org/?t=107302193400001&r=1&w=2)
     XSetWindowAttributes attrs;
     TQRect r = workspace()->clientArea( FullArea, this );
-    move_resize_grab_window = XCreateWindow( qt_xdisplay(), workspace()->rootWin(), r.x(), r.y(),
+    move_resize_grab_window = XCreateWindow( tqt_xdisplay(), workspace()->rootWin(), r.x(), r.y(),
         r.width(), r.height(), 0, CopyFromParent, InputOnly, CopyFromParent, 0, &attrs );
-    XMapRaised( qt_xdisplay(), move_resize_grab_window );
-    if( XGrabPointer( qt_xdisplay(), move_resize_grab_window, False,
+    XMapRaised( tqt_xdisplay(), move_resize_grab_window );
+    if( XGrabPointer( tqt_xdisplay(), move_resize_grab_window, False,
         ButtonPressMask | ButtonReleaseMask | PointerMotionMask | EnterWindowMask | LeaveWindowMask,
         GrabModeAsync, GrabModeAsync, move_resize_grab_window, cursor.handle(), GET_QT_X_TIME() ) == Success )
         has_grab = true;
-    if( XGrabKeyboard( qt_xdisplay(), frameId(), False, GrabModeAsync, GrabModeAsync, GET_QT_X_TIME() ) == Success )
+    if( XGrabKeyboard( tqt_xdisplay(), frameId(), False, GrabModeAsync, GrabModeAsync, GET_QT_X_TIME() ) == Success )
         has_grab = true;
     if( !has_grab ) // at least one grab is necessary in order to be able to finish move/resize
         {
-        XDestroyWindow( qt_xdisplay(), move_resize_grab_window );
+        XDestroyWindow( tqt_xdisplay(), move_resize_grab_window );
         move_resize_grab_window = None;
         return false;
         }
@@ -2389,9 +2389,9 @@ void Client::leaveMoveResize()
     if ( ( isMove() && rules()->checkMoveResizeMode( options->moveMode ) != Options::Opaque )
       || ( isResize() && rules()->checkMoveResizeMode( options->resizeMode ) != Options::Opaque ) )
         ungrabXServer();
-    XUngrabKeyboard( qt_xdisplay(), GET_QT_X_TIME() );
-    XUngrabPointer( qt_xdisplay(), GET_QT_X_TIME() );
-    XDestroyWindow( qt_xdisplay(), move_resize_grab_window );
+    XUngrabKeyboard( tqt_xdisplay(), GET_QT_X_TIME() );
+    XUngrabPointer( tqt_xdisplay(), GET_QT_X_TIME() );
+    XDestroyWindow( tqt_xdisplay(), move_resize_grab_window );
     move_resize_grab_window = None;
     workspace()->setClientIsMoving(0);
     if( move_faked_activity )

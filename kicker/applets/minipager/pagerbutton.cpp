@@ -220,7 +220,7 @@ void KMiniPagerButton::loadBgPixmap()
     }
 
     TQCString kdesktop_name;
-    int screen_number = DefaultScreen(qt_xdisplay());
+    int screen_number = DefaultScreen(tqt_xdisplay());
     if (screen_number == 0)
         kdesktop_name = "kdesktop";
     else

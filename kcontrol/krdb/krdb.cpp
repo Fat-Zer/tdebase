@@ -596,13 +596,13 @@ void runRdb( uint flags )
     if (!qt_settings_timestamp) {
 	 TQString atomname("_QT_SETTINGS_TIMESTAMP_");
 	 atomname += XDisplayName( 0 ); // Use the $DISPLAY envvar.
-	 qt_settings_timestamp = XInternAtom( qt_xdisplay(), atomname.latin1(), False);
+	 qt_settings_timestamp = XInternAtom( tqt_xdisplay(), atomname.latin1(), False);
     }
 
     TQBuffer stamp;
     TQDataStream s(stamp.buffer(), IO_WriteOnly);
     s << settingsstamp;
-    XChangeProperty( qt_xdisplay(), qt_xrootwin(), qt_settings_timestamp,
+    XChangeProperty( tqt_xdisplay(), tqt_xrootwin(), qt_settings_timestamp,
 		     qt_settings_timestamp, 8, PropModeReplace,
 		     (unsigned char*) stamp.buffer().data(),
 		     stamp.buffer().size() );

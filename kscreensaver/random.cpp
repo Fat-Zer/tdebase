@@ -125,7 +125,7 @@ int main(int argc, char *argv[])
 
 	if (args->isSet("root"))
 	{
-		windowId = RootWindow(qt_xdisplay(), qt_xscreen());
+		windowId = RootWindow(tqt_xdisplay(), tqt_xscreen());
 	}
 
 	KGlobal::dirs()->addResourceType("scrsav",
@@ -250,10 +250,10 @@ int main(int argc, char *argv[])
 
 	// If we end up here then we couldn't start a saver.
 	// If we have been supplied a window id or root window then blank it.
-	Window win = windowId ? windowId : RootWindow(qt_xdisplay(), qt_xscreen());
-	XSetWindowBackground(qt_xdisplay(), win,
-			BlackPixel(qt_xdisplay(), qt_xscreen()));
-	XClearWindow(qt_xdisplay(), win);
+	Window win = windowId ? windowId : RootWindow(tqt_xdisplay(), tqt_xscreen());
+	XSetWindowBackground(tqt_xdisplay(), win,
+			BlackPixel(tqt_xdisplay(), tqt_xscreen()));
+	XClearWindow(tqt_xdisplay(), win);
 }
 
 

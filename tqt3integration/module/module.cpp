@@ -52,7 +52,7 @@ static void prepareDialog( TQWidget* w, long parent, const TQCString& wmclass1, 
     XClassHint hints;
     hints.res_name = ( char* ) ( const char* ) wmclass1;
     hints.res_class = ( char* ) ( const char* ) wmclass2;
-    XSetClassHint( qt_xdisplay(), w->winId(), &hints );
+    XSetClassHint( tqt_xdisplay(), w->winId(), &hints );
     KWin::setMainWindow( w, parent );
     KWin::setState( w->winId(), NET::Modal );
     KWin::WindowInfo info = KWin::windowInfo( parent, (unsigned long)NET::WMGeometry );

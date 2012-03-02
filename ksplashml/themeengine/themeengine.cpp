@@ -48,9 +48,9 @@ ThemeEngine::ThemeEngine( TQWidget *, const char *, const TQStringList& args )
   kapp->installEventFilter( this );
   (void)kapp->desktop();
   XWindowAttributes rootAttr;
-  XGetWindowAttributes(qt_xdisplay(), RootWindow(qt_xdisplay(),
-                        qt_xscreen()), &rootAttr);
-  XSelectInput( qt_xdisplay(), qt_xrootwin(),
+  XGetWindowAttributes(tqt_xdisplay(), RootWindow(tqt_xdisplay(),
+                        tqt_xscreen()), &rootAttr);
+  XSelectInput( tqt_xdisplay(), tqt_xrootwin(),
         SubstructureNotifyMask | rootAttr.your_event_mask );
   if (args.isEmpty())
     mTheme = new ObjKsTheme( "Default" );
@@ -98,7 +98,7 @@ void ThemeEngine::addSplashWindow( TQWidget* w )
         static_cast< HackWidget* >( w )->setWFlags( WX11BypassWM );
         XSetWindowAttributes attrs;
         attrs.override_redirect = True;
-        XChangeWindowAttributes( qt_xdisplay(), w->winId(), CWOverrideRedirect, &attrs );
+        XChangeWindowAttributes( tqt_xdisplay(), w->winId(), CWOverrideRedirect, &attrs );
     }
     d->mSplashWindows.prepend( w->winId());
     connect( w, TQT_SIGNAL( destroyed( TQObject* )), TQT_SLOT( splashWindowDestroyed( TQObject* )));
@@ -114,9 +114,9 @@ bool ThemeEngine::x11Event( XEvent* e )
 {
     if( e->type != ConfigureNotify && e->type != MapNotify )
         return false;
-    if( e->type == ConfigureNotify && e->xconfigure.event != qt_xrootwin())
+    if( e->type == ConfigureNotify && e->xconfigure.event != tqt_xrootwin())
         return false;
-    if( e->type == MapNotify && e->xmap.event != qt_xrootwin())
+    if( e->type == MapNotify && e->xmap.event != tqt_xrootwin())
         return false;
     if( d->mSplashWindows.count() == 0 )
         return false;
@@ -125,7 +125,7 @@ bool ThemeEngine::x11Event( XEvent* e )
     // all restacking operations will be no-op,
     // and no ConfigureNotify will be generated,
     // thus avoiding possible infinite loops
-    XRaiseWindow( qt_xdisplay(), d->mSplashWindows.first()); // raise topmost
+    XRaiseWindow( tqt_xdisplay(), d->mSplashWindows.first()); // raise topmost
     // and stack others below it
     Window* stack = new Window[ d->mSplashWindows.count() ];
     int count = 0;

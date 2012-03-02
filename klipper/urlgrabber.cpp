@@ -334,7 +334,7 @@ void URLGrabber::writeConfiguration( KConfig *kc )
 // digged a little bit in netwm.cpp
 bool URLGrabber::isAvoidedWindow() const
 {
-    Display *d = qt_xdisplay();
+    Display *d = tqt_xdisplay();
     static Atom wm_class = XInternAtom( d, "WM_CLASS", true );
     static Atom active_window = XInternAtom( d, "_NET_ACTIVE_WINDOW", true );
     Atom type_ret;

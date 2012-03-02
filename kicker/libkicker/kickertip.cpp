@@ -105,8 +105,8 @@ void KickerTip::display()
 
     {
         // prevent tips from showing when the active window is fullscreened
-        NETRootInfo ri(qt_xdisplay(), NET::ActiveWindow);
-        NETWinInfo wi(qt_xdisplay(), ri.activeWindow(), ri.rootWindow(), NET::WMState);
+        NETRootInfo ri(tqt_xdisplay(), NET::ActiveWindow);
+        NETWinInfo wi(tqt_xdisplay(), ri.activeWindow(), ri.rootWindow(), NET::WMState);
         if (wi.state() & NET::FullScreen)
         {
             return;

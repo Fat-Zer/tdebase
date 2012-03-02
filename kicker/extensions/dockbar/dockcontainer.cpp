@@ -49,7 +49,7 @@ DockContainer::DockContainer( TQString command, TQWidget *parent,
       _resName(resname),
       _resClass(resclass)
 {
-    XSelectInput( qt_xdisplay(), winId(),
+    XSelectInput( tqt_xdisplay(), winId(),
 		  KeyPressMask | KeyReleaseMask |
 		  ButtonPressMask | ButtonReleaseMask |
 		  KeymapStateMask |
@@ -79,21 +79,21 @@ void DockContainer::embed( WId id )
     TQRect geom = KWin::windowInfo(id,NET::WMKDEFrameStrut).frameGeometry();
 
     // does the same as KWM::prepareForSwallowing()
-    XWithdrawWindow( qt_xdisplay(), id, qt_xscreen() );
+    XWithdrawWindow( tqt_xdisplay(), id, tqt_xscreen() );
     while( KWin::windowInfo(id, NET::XAWMState).mappingState() != NET::Withdrawn );
 
-    XReparentWindow( qt_xdisplay(), id, winId(), 0, 0 );
+    XReparentWindow( tqt_xdisplay(), id, winId(), 0, 0 );
 
     // resize if window is bigger than frame
     if( (geom.width() > width()) ||
         (geom.height() > height()) )
-        XResizeWindow( qt_xdisplay(), id, width(), height() );
+        XResizeWindow( tqt_xdisplay(), id, width(), height() );
     else
-        XMoveWindow(qt_xdisplay(), id,
+        XMoveWindow(tqt_xdisplay(), id,
                     (sz() -  geom.width())/2 - border(),
                     (sz() - geom.height())/2 - border());
-    XMapWindow( qt_xdisplay(), id );
-    XUngrabButton( qt_xdisplay(), AnyButton, AnyModifier, winId() );
+    XMapWindow( tqt_xdisplay(), id );
+    XUngrabButton( tqt_xdisplay(), AnyButton, AnyModifier, winId() );
 
     _embeddedWinId = id;
 }
@@ -101,13 +101,13 @@ void DockContainer::embed( WId id )
 void DockContainer::unembed()
 {
     if( _embeddedWinId )
-        XReparentWindow( qt_xdisplay(), _embeddedWinId, qt_xrootwin(), 0, 0 );
+        XReparentWindow( tqt_xdisplay(), _embeddedWinId, tqt_xrootwin(), 0, 0 );
 }
 
 void DockContainer::kill()
 {
     if ( _embeddedWinId ) {
-        XKillClient( qt_xdisplay(), _embeddedWinId );
+        XKillClient( tqt_xdisplay(), _embeddedWinId );
         _embeddedWinId = 0; // in case the window does not exist anymore..
     }
     else emit embeddedWindowDestroyed(this); /* enable killing of empty windows.. */

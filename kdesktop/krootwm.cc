@@ -579,8 +579,8 @@ void KRootWm::activateMenu( menuChoice choice, const TQPoint& global )
     case APPMENU:
     {
       // This allows the menu to disappear when clicking on the background another time
-      XUngrabPointer(qt_xdisplay(), CurrentTime);
-      XSync(qt_xdisplay(), False);
+      XUngrabPointer(tqt_xdisplay(), CurrentTime);
+      XSync(tqt_xdisplay(), False);
 
       // Ask kicker to showup the menu
       DCOPRef( kicker_name, kicker_name ).send( "popupKMenu", global );

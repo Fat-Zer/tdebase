@@ -81,9 +81,9 @@ void KSysTrayCmd::showWindow()
   isVisible = true;
   if ( !win )
     return;
-  XMapWindow( qt_xdisplay(), win );
+  XMapWindow( tqt_xdisplay(), win );
   // We move the window to the memorized position
-  XMoveWindow( qt_xdisplay(), win, left, top);  
+  XMoveWindow( tqt_xdisplay(), win, left, top);  
   
   // Window always on top
   if (onTop)
@@ -104,7 +104,7 @@ void KSysTrayCmd::hideWindow()
   left = KWin::windowInfo(win).frameGeometry().left();
   top=KWin::windowInfo(win).frameGeometry().top();
 
-  XUnmapWindow( qt_xdisplay(), win );
+  XUnmapWindow( tqt_xdisplay(), win );
 }
 
 void KSysTrayCmd::setTargetWindow( WId w )
@@ -202,8 +202,8 @@ void KSysTrayCmd::quitClient()
 {
   if ( win ) {
     // Before sending the close request we have to show the window
-    XMapWindow( qt_xdisplay(), win );
-    NETRootInfo ri( qt_xdisplay(), NET::CloseWindow );
+    XMapWindow( tqt_xdisplay(), win );
+    NETRootInfo ri( tqt_xdisplay(), NET::CloseWindow );
     ri.closeWindowRequest( win );
     win=0;
     noquit = false;
@@ -251,7 +251,7 @@ void KSysTrayCmd::execContextMenu( const TQPoint &pos )
       }
       else if ( quitOnHide && ( hasRunningClient() ) && isVisible )
       {
-        NETRootInfo ri( qt_xdisplay(), NET::CloseWindow );
+        NETRootInfo ri( tqt_xdisplay(), NET::CloseWindow );
         ri.closeWindowRequest( win );
         isVisible=false;
       }
@@ -301,7 +301,7 @@ void KSysTrayCmd::mousePressEvent( TQMouseEvent *e )
   }
   else if ( quitOnHide && ( hasRunningClient() ) && isVisible )
   {
-    NETRootInfo ri( qt_xdisplay(), NET::CloseWindow );
+    NETRootInfo ri( tqt_xdisplay(), NET::CloseWindow );
     ri.closeWindowRequest( win );
     isVisible=false;
   }
@@ -313,12 +313,12 @@ WId KSysTrayCmd::findRealWindow( WId w, int depth )
 {
     if( depth > 5 )
 	return None;
-    static Atom wm_state = XInternAtom( qt_xdisplay(), "WM_STATE", False );
+    static Atom wm_state = XInternAtom( tqt_xdisplay(), "WM_STATE", False );
     Atom type;
     int format;
     unsigned long nitems, after;
     unsigned char* prop;
-    if( XGetWindowProperty( qt_xdisplay(), w, wm_state, 0, 0, False, AnyPropertyType,
+    if( XGetWindowProperty( tqt_xdisplay(), w, wm_state, 0, 0, False, AnyPropertyType,
 	&type, &format, &nitems, &after, &prop ) == Success ) {
 	if( prop != NULL )
 	    XFree( prop );
@@ -329,7 +329,7 @@ WId KSysTrayCmd::findRealWindow( WId w, int depth )
     Window* children;
     unsigned int nchildren;
     Window ret = None;
-    if( XQueryTree( qt_xdisplay(), w, &root, &parent, &children, &nchildren ) != 0 ) {
+    if( XQueryTree( tqt_xdisplay(), w, &root, &parent, &children, &nchildren ) != 0 ) {
 	for( unsigned int i = 0;
 	     i < nchildren && ret == None;
 	     ++i )

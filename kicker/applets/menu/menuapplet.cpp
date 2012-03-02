@@ -107,7 +107,7 @@ Applet::~Applet()
 
 void Applet::windowAdded( WId w_P )
     {
-    NETWinInfo info( qt_xdisplay(), w_P, qt_xrootwin(), NET::WMWindowType );
+    NETWinInfo info( tqt_xdisplay(), w_P, tqt_xrootwin(), NET::WMWindowType );
     if( info.windowType( SUPPORTED_WINDOW_TYPES ) != NET::TopMenu )
 	return;
 //    kdDebug() << "embedding:" << w_P << endl;
@@ -115,7 +115,7 @@ void Applet::windowAdded( WId w_P )
     if( transient_for == None )
 	return;
     MenuEmbed* embed;
-    if( transient_for == qt_xrootwin())
+    if( transient_for == tqt_xrootwin())
     {
         embed = new MenuEmbed( transient_for, true, this );
     }
@@ -224,7 +224,7 @@ WId Applet::tryTransientFor( WId w_P )
     if( info.state() & NET::Modal )
 	return None;
     WId ret = KWin::transientFor( w_P );
-    if( ret == qt_xrootwin())
+    if( ret == tqt_xrootwin())
         ret = None;
     return ret;
     }
@@ -292,7 +292,7 @@ void Applet::setBackground()
 void Applet::claimSelection()
     {
     assert( selection == NULL );
-    selection = new KSelectionOwner( makeSelectionAtom(), DefaultScreen( qt_xdisplay()));
+    selection = new KSelectionOwner( makeSelectionAtom(), DefaultScreen( tqt_xdisplay()));
 // force taking the selection, but don't kill previous owner
     if( selection->claim( true, false ))
 	{
@@ -327,7 +327,7 @@ void Applet::lostSelection()
     active_menu = NULL;
     if( selection_watcher == NULL )
         {
-        selection_watcher = new KSelectionWatcher( makeSelectionAtom(), DefaultScreen( qt_xdisplay()));
+        selection_watcher = new KSelectionWatcher( makeSelectionAtom(), DefaultScreen( tqt_xdisplay()));
         connect( selection_watcher, TQT_SIGNAL( lostOwner()), this, TQT_SLOT( claimSelection()));
         }
     delete module;
@@ -378,11 +378,11 @@ static
 void initAtoms()
     {
     char nm[ 100 ];
-    sprintf( nm, "_KDE_TOPMENU_OWNER_S%d", DefaultScreen( qt_xdisplay()));
+    sprintf( nm, "_KDE_TOPMENU_OWNER_S%d", DefaultScreen( tqt_xdisplay()));
     char nm2[] = "_KDE_TOPMENU_MINSIZE";
     char* names[ 2 ] = { nm, nm2 };
     Atom atoms[ 2 ];
-    XInternAtoms( qt_xdisplay(), names, 2, False, atoms );
+    XInternAtoms( tqt_xdisplay(), names, 2, False, atoms );
     selection_atom = atoms[ 0 ];
     msg_type_atom = atoms[ 1 ];
     }
@@ -432,7 +432,7 @@ bool MenuEmbed::x11Event( XEvent* ev_P )
 //        int x, y;
 //        unsigned int w, h, d, b;
 //        Window root;
-//        XGetGeometry( qt_xdisplay(), embeddedWinId(), &root, &x, &y, &w, &h, &b, &d );
+//        XGetGeometry( tqt_xdisplay(), embeddedWinId(), &root, &x, &y, &w, &h, &b, &d );
 //        kdDebug() << "RES3:" << width() << ":" << height() << ":" << w << ":" << h << endl;
 	return true;
 	}
@@ -446,7 +446,7 @@ void MenuEmbed::sendSyntheticConfigureNotifyEvent()
         XConfigureEvent c;
         memset(&c, 0, sizeof(c));
         c.type = ConfigureNotify;
-        c.display = qt_xdisplay();
+        c.display = tqt_xdisplay();
         c.send_event = True;
         c.event = embeddedWinId();
         c.window = winId();
@@ -457,7 +457,7 @@ void MenuEmbed::sendSyntheticConfigureNotifyEvent()
         c.border_width = 0;
         c.above = None;
         c.override_redirect = 0;
-        XSendEvent(qt_xdisplay(), c.event, true, StructureNotifyMask, (XEvent*)&c);
+        XSendEvent(tqt_xdisplay(), c.event, true, StructureNotifyMask, (XEvent*)&c);
     }
 }
 
@@ -470,7 +470,7 @@ void MenuEmbed::setMinimumSize( int w, int h )
         {
 //        kdDebug() << "RES2:" << width() << ":" << height() << ":" << minimumWidth() << ":" << minimumHeight() << endl;
         XEvent ev;
-        ev.xclient.display = qt_xdisplay();
+        ev.xclient.display = tqt_xdisplay();
         ev.xclient.type = ClientMessage;
         ev.xclient.window = embeddedWinId();
         assert( msg_type_atom != None );
@@ -481,7 +481,7 @@ void MenuEmbed::setMinimumSize( int w, int h )
         ev.xclient.data.l[2] = minimumHeight();
         ev.xclient.data.l[3] = 0;
         ev.xclient.data.l[4] = 0;
-        XSendEvent( qt_xdisplay(), embeddedWinId(), False, NoEventMask, &ev );
+        XSendEvent( tqt_xdisplay(), embeddedWinId(), False, NoEventMask, &ev );
         }
 }
 

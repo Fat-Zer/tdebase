@@ -26,7 +26,7 @@ GeometryTip::GeometryTip( const XSizeHints* xSizeHints, bool save_under ):
         {
         XSetWindowAttributes attr;
         attr.save_under = True; // use saveunder if possible to avoid weird effects in transparent mode
-        XChangeWindowAttributes( qt_xdisplay(), winId(), CWSaveUnder, &attr );
+        XChangeWindowAttributes( tqt_xdisplay(), winId(), CWSaveUnder, &attr );
         }
     }
 

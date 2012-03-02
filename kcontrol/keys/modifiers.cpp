@@ -139,10 +139,10 @@ void ModifiersModule::setupMacModifierKeys()
 	//const int CODE_Alt_L  = 0x40, CODE_Alt_R  = 0x71;
 	int keyCodeMin, keyCodeMax, nKeyCodes, nSymsPerCode;
 
-	XDisplayKeycodes( qt_xdisplay(), &keyCodeMin, &keyCodeMax );
+	XDisplayKeycodes( tqt_xdisplay(), &keyCodeMin, &keyCodeMax );
 	nKeyCodes = keyCodeMax - keyCodeMin + 1;
-	KeySym* rgKeySyms = XGetKeyboardMapping( qt_xdisplay(), keyCodeMin, nKeyCodes, &nSymsPerCode );
-	XModifierKeymap* xmk = XGetModifierMapping( qt_xdisplay() );
+	KeySym* rgKeySyms = XGetKeyboardMapping( tqt_xdisplay(), keyCodeMin, nKeyCodes, &nSymsPerCode );
+	XModifierKeymap* xmk = XGetModifierMapping( tqt_xdisplay() );
 
 	SET_CODE_SYM( CODE_Ctrl_L, XK_Super_L )
 	SET_CODE_SYM( CODE_Ctrl_R, XK_Super_R )
@@ -159,8 +159,8 @@ void ModifiersModule::setupMacModifierKeys()
 	//SET_MOD_CODE( Mod1MapIndex,    CODE_Win_L, CODE_Win_R );
 	//SET_MOD_CODE( Mod4MapIndex,    CODE_Ctrl_L, CODE_Ctrl_R );
 
-	XSetModifierMapping( qt_xdisplay(), xmk );
-	XChangeKeyboardMapping( qt_xdisplay(), keyCodeMin, nSymsPerCode, rgKeySyms, nKeyCodes );
+	XSetModifierMapping( tqt_xdisplay(), xmk );
+	XChangeKeyboardMapping( tqt_xdisplay(), keyCodeMin, nSymsPerCode, rgKeySyms, nKeyCodes );
 	XFree( rgKeySyms );
 	XFreeModifiermap( xmk );
 }
@@ -291,7 +291,7 @@ void ModifiersModule::updateWidgets()
 		m_pchkMacSwap->setEnabled( false );
 	}
 
-	XModifierKeymap* xmk = XGetModifierMapping( qt_xdisplay() );
+	XModifierKeymap* xmk = XGetModifierMapping( tqt_xdisplay() );
 
 	for( int iKey = m_plstXMods->columns()-1; iKey < xmk->max_keypermod; iKey++ )
 		m_plstXMods->addColumn( i18n("Key %1").arg(iKey+1) );
@@ -300,7 +300,7 @@ void ModifiersModule::updateWidgets()
 	for( int iMod = 0; iMod < 8; iMod++ ) {
 		// Find the default modifier index for the Win key.
 		/*if( iMod > Mod2Index ) {
-			uint symX = XKeycodeToKeysym( qt_xdisplay(), xmk->modifiermap[xmk->max_keypermod * iMod], 0 );
+			uint symX = XKeycodeToKeysym( tqt_xdisplay(), xmk->modifiermap[xmk->max_keypermod * iMod], 0 );
 			if( symX == XK_Super_L || symX == XK_Super_R )
 				iModWinDef = iMod;
 			else if( iModWinDef == -1 && (symX == XK_Meta_L || symX == XK_Meta_R) )
@@ -309,7 +309,7 @@ void ModifiersModule::updateWidgets()
 
 		// Insert items into X modifier map list
 		for( int iKey = 0; iKey < xmk->max_keypermod; iKey++ ) {
-			uint symX = XKeycodeToKeysym( qt_xdisplay(), xmk->modifiermap[xmk->max_keypermod * iMod + iKey], 0 );
+			uint symX = XKeycodeToKeysym( tqt_xdisplay(), xmk->modifiermap[xmk->max_keypermod * iMod + iKey], 0 );
 			m_plstXMods->itemAtIndex( iMod )->setText( 1 + iKey, XKeysymToString( symX ) );
 		}
 	}

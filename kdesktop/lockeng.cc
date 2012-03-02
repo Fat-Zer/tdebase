@@ -62,7 +62,7 @@ SaverEngine::SaverEngine()
     sigaction(SIGUSR1, &act, 0L);
 
     // Save X screensaver parameters
-    XGetScreenSaver(qt_xdisplay(), &mXTimeout, &mXInterval,
+    XGetScreenSaver(tqt_xdisplay(), &mXTimeout, &mXInterval,
                     &mXBlanking, &mXExposures);
 
     mState = Waiting;
@@ -108,7 +108,7 @@ SaverEngine::~SaverEngine()
     delete mXAutoLock;
 
     // Restore X screensaver parameters
-    XSetScreenSaver(qt_xdisplay(), mXTimeout, mXInterval, mXBlanking,
+    XSetScreenSaver(tqt_xdisplay(), mXTimeout, mXInterval, mXBlanking,
                     mXExposures);
 }
 
@@ -208,7 +208,7 @@ bool SaverEngine::enable( bool e )
 	//mXAutoLock->changeCornerLockStatus( mLockCornerTopLeft, mLockCornerTopRight, mLockCornerBottomLeft, mLockCornerBottomRight);
 
         // We'll handle blanking
-        XSetScreenSaver(qt_xdisplay(), mTimeout + 10, mXInterval, PreferBlanking, mXExposures);
+        XSetScreenSaver(tqt_xdisplay(), mTimeout + 10, mXInterval, PreferBlanking, mXExposures);
         kdDebug() << "XSetScreenSaver " << mTimeout + 10 << endl;
 
         mXAutoLock->start();
@@ -223,8 +223,8 @@ bool SaverEngine::enable( bool e )
 	    mXAutoLock = 0;
 	}
 
-        XForceScreenSaver(qt_xdisplay(), ScreenSaverReset );
-        XSetScreenSaver(qt_xdisplay(), 0, mXInterval,  PreferBlanking, DontAllowExposures);
+        XForceScreenSaver(tqt_xdisplay(), ScreenSaverReset );
+        XSetScreenSaver(tqt_xdisplay(), 0, mXInterval,  PreferBlanking, DontAllowExposures);
         kdDebug(1204) << "Saver Engine disabled" << endl;
     }
 
@@ -355,7 +355,7 @@ bool SaverEngine::startLockProcess( LockType lock_type )
     }
 
     mLockProcess.kill(SIGTTOU);			// Start lock
-    XSetScreenSaver(qt_xdisplay(), 0, mXInterval,  PreferBlanking, mXExposures);
+    XSetScreenSaver(tqt_xdisplay(), 0, mXInterval,  PreferBlanking, mXExposures);
 
     mState = Preparing;
     if (mXAutoLock)
@@ -388,8 +388,8 @@ void SaverEngine::stopLockProcess()
         {
             mXAutoLock->start();
         }
-        XForceScreenSaver(qt_xdisplay(), ScreenSaverReset );
-        XSetScreenSaver(qt_xdisplay(), mTimeout + 10, mXInterval, PreferBlanking, mXExposures);
+        XForceScreenSaver(tqt_xdisplay(), ScreenSaverReset );
+        XSetScreenSaver(tqt_xdisplay(), mTimeout + 10, mXInterval, PreferBlanking, mXExposures);
     }
     processLockTransactions();
     mState = Waiting;
@@ -457,8 +457,8 @@ void SaverEngine::lockProcessWaiting()
         {
             mXAutoLock->start();
         }
-        XForceScreenSaver(qt_xdisplay(), ScreenSaverReset );
-        XSetScreenSaver(qt_xdisplay(), mTimeout + 10, mXInterval, PreferBlanking, mXExposures);
+        XForceScreenSaver(tqt_xdisplay(), ScreenSaverReset );
+        XSetScreenSaver(tqt_xdisplay(), mTimeout + 10, mXInterval, PreferBlanking, mXExposures);
     }
     processLockTransactions();
     mState = Waiting;
@@ -471,8 +471,8 @@ void SaverEngine::lockProcessWaiting()
 void SaverEngine::idleTimeout()
 {
     // disable X screensaver
-    XForceScreenSaver(qt_xdisplay(), ScreenSaverReset );
-    XSetScreenSaver(qt_xdisplay(), 0, mXInterval, PreferBlanking, DontAllowExposures);
+    XForceScreenSaver(tqt_xdisplay(), ScreenSaverReset );
+    XSetScreenSaver(tqt_xdisplay(), 0, mXInterval, PreferBlanking, DontAllowExposures);
     mSAKProcess->kill(SIGTERM);
     startLockProcess( DefaultLock );
 }

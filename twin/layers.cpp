@@ -211,10 +211,10 @@ void Workspace::propagateClients( bool propagate_new_clients )
     assert( new_stack[ 0 ] = supportWindow->winId());
 #endif
 #if 0
-    XRestackWindows(qt_xdisplay(), new_stack, pos);
+    XRestackWindows(tqt_xdisplay(), new_stack, pos);
     delete [] new_stack;
 #endif
-    XRestackWindows(qt_xdisplay(), window_stack, pos);
+    XRestackWindows(tqt_xdisplay(), window_stack, pos);
     delete [] dock_shadow_stack;
     delete [] window_stack;
 

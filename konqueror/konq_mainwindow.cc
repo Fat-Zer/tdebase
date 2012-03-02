@@ -1295,7 +1295,7 @@ void KonqMainWindow::slotCreateNewWindow( const KURL &url, const KParts::URLArgs
     Time saved_last_input_time = GET_QT_X_USER_TIME();
     if ( windowArgs.lowerWindow )
     {
-        NETRootInfo wm_info( qt_xdisplay(), NET::Supported );
+        NETRootInfo wm_info( tqt_xdisplay(), NET::Supported );
         wm_usertime_support = wm_info.isSupported( NET::WM2UserTime );
         if( wm_usertime_support )
         {
@@ -5803,28 +5803,28 @@ void KonqMainWindow::resetWindow()
     char data[ 1 ];
     // empty append to get current X timestamp
     TQWidget tmp_widget;
-    XChangeProperty( qt_xdisplay(), tmp_widget.winId(), XA_WM_CLASS, XA_STRING, 8,
+    XChangeProperty( tqt_xdisplay(), tmp_widget.winId(), XA_WM_CLASS, XA_STRING, 8,
 		    PropModeAppend, (unsigned char*) &data, 0 );
     XEvent ev;
-    XWindowEvent( qt_xdisplay(), tmp_widget.winId(), PropertyChangeMask, &ev );
+    XWindowEvent( tqt_xdisplay(), tmp_widget.winId(), PropertyChangeMask, &ev );
     long x_time = ev.xproperty.time;
     // bad hack - without updating the _KDE_NET_WM_USER_CREATION_TIME property,
     // KWin will apply don't_steal_focus to this window, and will not make it active
     // (shows mainly with 'konqueror --preload')
-    static Atom atom = XInternAtom( qt_xdisplay(), "_KDE_NET_WM_USER_CREATION_TIME", False );
-    XChangeProperty( qt_xdisplay(), winId(), atom, XA_CARDINAL, 32,
+    static Atom atom = XInternAtom( tqt_xdisplay(), "_KDE_NET_WM_USER_CREATION_TIME", False );
+    XChangeProperty( tqt_xdisplay(), winId(), atom, XA_CARDINAL, 32,
 		     PropModeReplace, (unsigned char *) &x_time, 1);
     SET_QT_X_USER_TIME(CurrentTime); // won't have _NET_WM_USER_TIME set
 #if !KDE_IS_VERSION( 3, 2, 90 ) // _KDE_NET_USER_TIME is obsolete
-    static Atom atom2 = XInternAtom( qt_xdisplay(), "_KDE_NET_USER_TIME", False );
+    static Atom atom2 = XInternAtom( tqt_xdisplay(), "_KDE_NET_USER_TIME", False );
     timeval tv;
     gettimeofday( &tv, NULL );
     unsigned long now = tv.tv_sec * 10 + tv.tv_usec / 100000;
-    XChangeProperty(qt_xdisplay(), winId(), atom2, XA_CARDINAL,
+    XChangeProperty(tqt_xdisplay(), winId(), atom2, XA_CARDINAL,
                     32, PropModeReplace, (unsigned char *)&now, 1);
 #endif
-    static Atom atom3 = XInternAtom( qt_xdisplay(), "_NET_WM_USER_TIME", False );
-    XDeleteProperty( qt_xdisplay(), winId(), atom3 );
+    static Atom atom3 = XInternAtom( tqt_xdisplay(), "_NET_WM_USER_TIME", False );
+    XDeleteProperty( tqt_xdisplay(), winId(), atom3 );
 // Qt remembers the iconic state if the window was withdrawn while on another virtual desktop
     clearWState( WState_Minimized );
     ignoreInitialGeometry();
@@ -5866,7 +5866,7 @@ bool KonqMainWindow::stayPreloaded()
         return false;
     DCOPRef ref( "kded", "konqy_preloader" );
     if( !ref.callExt( "registerPreloadedKonqy", DCOPRef::NoEventLoop, 5000,
-        kapp->dcopClient()->appId(), qt_xscreen()))
+        kapp->dcopClient()->appId(), tqt_xscreen()))
     {
         return false;
     }

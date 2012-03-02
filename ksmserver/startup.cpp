@@ -467,13 +467,13 @@ void KSMServer::upAndRunning( const TQString& msg )
     DCOPRef( "ksplash" ).send( "upAndRunning", msg );
     XEvent e;
     e.xclient.type = ClientMessage;
-    e.xclient.message_type = XInternAtom( qt_xdisplay(), "_KDE_SPLASH_PROGRESS", False );
-    e.xclient.display = qt_xdisplay();
-    e.xclient.window = qt_xrootwin();
+    e.xclient.message_type = XInternAtom( tqt_xdisplay(), "_KDE_SPLASH_PROGRESS", False );
+    e.xclient.display = tqt_xdisplay();
+    e.xclient.window = tqt_xrootwin();
     e.xclient.format = 8;
     assert( strlen( msg.latin1()) < 20 );
     strcpy( e.xclient.data.b, msg.latin1());
-    XSendEvent( qt_xdisplay(), qt_xrootwin(), False, SubstructureNotifyMask, &e );
+    XSendEvent( tqt_xdisplay(), tqt_xrootwin(), False, SubstructureNotifyMask, &e );
 }
 
 // these two are in the DCOP interface but I have no idea what uses them

@@ -220,8 +220,8 @@ void ExtensionProxy::dock(const TQCString& callbackID)
 	// we use "call" to know whether it was sucessful
 
 	int screen_number = 0;
-	if (qt_xdisplay())
-	    screen_number = DefaultScreen(qt_xdisplay());
+	if (tqt_xdisplay())
+	    screen_number = DefaultScreen(tqt_xdisplay());
 	TQCString appname;
 	if (screen_number == 0)
 	    appname = "kicker";
@@ -372,8 +372,8 @@ void ExtensionProxy::slotUpdateLayout()
 
     TQByteArray data;
     int screen_number = 0;
-    if (qt_xdisplay())
-	screen_number = DefaultScreen(qt_xdisplay());
+    if (tqt_xdisplay())
+	screen_number = DefaultScreen(tqt_xdisplay());
     TQCString appname;
     if (screen_number == 0)
 	appname = "kicker";
@@ -386,8 +386,8 @@ void ExtensionProxy::slotUpdateLayout()
 void ExtensionProxy::slotApplicationRemoved(const TQCString& appId)
 {
     int screen_number = 0;
-    if (qt_xdisplay())
-	screen_number = DefaultScreen(qt_xdisplay());
+    if (tqt_xdisplay())
+	screen_number = DefaultScreen(tqt_xdisplay());
     TQCString appname;
     if (screen_number == 0)
 	appname = "kicker";

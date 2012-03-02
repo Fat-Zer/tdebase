@@ -56,7 +56,7 @@ extern "C"
 	KDE_EXPORT bool test_randr()
 	{
 	        int eventBase, errorBase;
-		if( XRRQueryExtension(qt_xdisplay(), &eventBase, &errorBase ) )
+		if( XRRQueryExtension(tqt_xdisplay(), &eventBase, &errorBase ) )
 			return true;
 		return false;
 	}

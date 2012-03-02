@@ -64,7 +64,7 @@ KBackgroundManager::KBackgroundManager(TQWidget *desktop, KWinModule* twinModule
 {
     if( !properties_inited )
     {
-        prop_root = XInternAtom(qt_xdisplay(), "_XROOTPMAP_ID", False);
+        prop_root = XInternAtom(tqt_xdisplay(), "_XROOTPMAP_ID", False);
         properties_inited = true;
     }
     m_bBgInitDone = false;
@@ -146,7 +146,7 @@ KBackgroundManager::~KBackgroundManager()
     int format;
     unsigned long length, after;
     unsigned char* data_root;
-    if( XGetWindowProperty( qt_xdisplay(), qt_xrootwin(), prop_root, 0L, 1L, False, AnyPropertyType,
+    if( XGetWindowProperty( tqt_xdisplay(), tqt_xrootwin(), prop_root, 0L, 1L, False, AnyPropertyType,
 	&type, &format, &length, &after, &data_root) == Success && data_root != NULL )
     {
 	if (type == XA_PIXMAP)
@@ -155,7 +155,7 @@ KBackgroundManager::~KBackgroundManager()
     }
     // only if it's our pixmap
     if( pm == m_xrootpmap )
-	XDeleteProperty(qt_xdisplay(), qt_xrootwin(), prop_root);
+	XDeleteProperty(tqt_xdisplay(), tqt_xrootwin(), prop_root);
     m_xrootpmap = None;
 
     if (m_bExport)
@@ -488,7 +488,7 @@ void KBackgroundManager::setPixmap(KPixmap *pm, int hash, int desk)
             && !myApp->cmBackground())
         {
             XRenderPictFormat *format;
-            format = XRenderFindStandardFormat (qt_xdisplay(), PictStandardARGB32);
+            format = XRenderFindStandardFormat (tqt_xdisplay(), PictStandardARGB32);
 
             XRenderColor fillColor;
 
@@ -498,18 +498,18 @@ void KBackgroundManager::setPixmap(KPixmap *pm, int hash, int desk)
             fillColor.blue = color;
             fillColor.alpha = color;
 
-            Picture fill = XRenderCreateSolidFill (qt_xdisplay(), &fillColor);
-            Picture src = XRenderCreatePicture(qt_xdisplay(), pm->handle(),
+            Picture fill = XRenderCreateSolidFill (tqt_xdisplay(), &fillColor);
+            Picture src = XRenderCreatePicture(tqt_xdisplay(), pm->handle(),
                                                format, 0, NULL);
-            Picture dst = XRenderCreatePicture(qt_xdisplay(), ep->handle(),
+            Picture dst = XRenderCreatePicture(tqt_xdisplay(), ep->handle(),
                                                format, 0, NULL);
 
-            XRenderComposite (qt_xdisplay(), PictOpSrc, src, fill, dst, 0, 0, 0,
+            XRenderComposite (tqt_xdisplay(), PictOpSrc, src, fill, dst, 0, 0, 0,
                               0, 0, 0, pm->width(), pm->height());
 
-            XRenderFreePicture (qt_xdisplay(), fill);
-            XRenderFreePicture (qt_xdisplay(), src);
-            XRenderFreePicture (qt_xdisplay(), dst);
+            XRenderFreePicture (tqt_xdisplay(), fill);
+            XRenderFreePicture (tqt_xdisplay(), src);
+            XRenderFreePicture (tqt_xdisplay(), dst);
         }
     }
 #endif
@@ -546,7 +546,7 @@ void KBackgroundManager::setPixmap(KPixmap *pm, int hash, int desk)
     // don't set the ESETROOT_PMAP_ID property - that would result in possible XKillClient()
     // done on kdesktop
 
-    XChangeProperty(qt_xdisplay(), qt_xrootwin(), prop_root, XA_PIXMAP, 32, PropModeReplace,
+    XChangeProperty(tqt_xdisplay(), tqt_xrootwin(), prop_root, XA_PIXMAP, 32, PropModeReplace,
                     (unsigned char *) &bgPm, 1);
     m_xrootpmap = bgPm;
 

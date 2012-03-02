@@ -42,7 +42,7 @@ void LayoutMap::setCurrentWindow(WId winId)
 {
 	m_currentWinId = winId;
 	if( m_kxkbConfig.m_switchingPolicy == SWITCH_POLICY_WIN_CLASS )
-		m_currentWinClass = X11Helper::getWindowClass(winId, qt_xdisplay());
+		m_currentWinClass = X11Helper::getWindowClass(winId, tqt_xdisplay());
 }
 
 // private
@@ -54,7 +54,7 @@ TQPtrQueue<LayoutState>& LayoutMap::getCurrentLayoutQueueInternal(WId winId)
 	
 	switch( m_kxkbConfig.m_switchingPolicy ) {
 		case SWITCH_POLICY_WIN_CLASS: {
-//			TQString winClass = X11Helper::getWindowClass(winId, qt_xdisplay());
+//			TQString winClass = X11Helper::getWindowClass(winId, tqt_xdisplay());
 			return m_appLayouts[ m_currentWinClass ];
 		}
 		case SWITCH_POLICY_WINDOW:

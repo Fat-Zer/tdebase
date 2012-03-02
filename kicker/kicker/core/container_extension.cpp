@@ -292,7 +292,7 @@ TQSize ExtensionContainer::sizeHint(KPanelExtension::Position p, const TQSize &m
 
 static bool isnetwm12_below()
 {
-  NETRootInfo info( qt_xdisplay(), NET::Supported );
+  NETRootInfo info( tqt_xdisplay(), NET::Supported );
   return info.supportedProperties()[ NETRootInfo::STATES ] & NET::KeepBelow;
 }
 

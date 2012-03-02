@@ -95,7 +95,7 @@ KSMShutdownFeedback::KSMShutdownFeedback()
 	else {
 		// The hacks below aren't needed any more because Qt3 supports true transparency for the fading logout screen when composition is available
 		DCOPRef("kicker", "KMenu").call("hideMenu");	// Make sure the K Menu is completely removed from the screen before taking a snapshot...
-		m_grayImage = TQPixmap(TQPixmap::grabWindow(qt_xrootwin(), 0, 0, TQApplication::desktop()->width(), TQApplication::desktop()->height())).convertToImage();
+		m_grayImage = TQPixmap(TQPixmap::grabWindow(tqt_xrootwin(), 0, 0, TQApplication::desktop()->width(), TQApplication::desktop()->height())).convertToImage();
 	}
 	m_unfadedImage = m_grayImage;
 	resize(0, 0);
@@ -500,13 +500,13 @@ void KSMShutdownFeedback::slotPaintEffect()
 
 		if ( m_currentY == 0 ) {
 		KPixmap pixmap;
-		pixmap = TQPixmap(TQPixmap::grabWindow( qt_xrootwin(), 0, 0, width(), height() ));
+		pixmap = TQPixmap(TQPixmap::grabWindow( tqt_xrootwin(), 0, 0, width(), height() ));
 		bitBlt( this, 0, 0, &pixmap );
 		bitBlt( &m_root, 0, 0, &pixmap );
 		}
 
 		KPixmap pixmap;
-		pixmap = TQPixmap(TQPixmap::grabWindow( qt_xrootwin(), 0, m_currentY, width(), 10 ));
+		pixmap = TQPixmap(TQPixmap::grabWindow( tqt_xrootwin(), 0, m_currentY, width(), 10 ));
 		TQImage image = pixmap.convertToImage();
 		KImageEffect::blend( Qt::black, image, 0.4 );
 		KImageEffect::toGray( image, true );

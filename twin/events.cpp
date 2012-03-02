@@ -30,7 +30,7 @@ License. See the file "COPYING" for the exact licensing terms.
 #include <X11/Xatom.h>
 #include <stdlib.h>
 
-extern Atom qt_window_role;
+extern Atom tqt_window_role;
 
 namespace KWinInternal
 {
@@ -197,7 +197,7 @@ bool Workspace::workspaceEvent( XEvent * e )
     if ( mouse_emulation && (e->type == ButtonPress || e->type == ButtonRelease ) ) 
         {
         mouse_emulation = FALSE;
-        XUngrabKeyboard( qt_xdisplay(), GET_QT_X_TIME() );
+        XUngrabKeyboard( tqt_xdisplay(), GET_QT_X_TIME() );
         }
 
     if( e->type == PropertyNotify || e->type == ClientMessage )
@@ -293,7 +293,7 @@ bool Workspace::workspaceEvent( XEvent * e )
             {
         // see comments for allowClientActivation()
             Time my_qtx_time = GET_QT_X_TIME();
-            XChangeProperty(qt_xdisplay(), e->xcreatewindow.window,
+            XChangeProperty(tqt_xdisplay(), e->xcreatewindow.window,
                             atoms->kde_net_wm_user_creation_time, XA_CARDINAL,
                             32, PropModeReplace, (unsigned char *)&my_qtx_time, 1);
             SET_QT_X_TIME(my_qtx_time);
@@ -314,12 +314,12 @@ bool Workspace::workspaceEvent( XEvent * e )
 	    // window.
                 XEvent ev;
                 WId w = e->xunmap.window;
-                if ( XCheckTypedWindowEvent (qt_xdisplay(), w,
+                if ( XCheckTypedWindowEvent (tqt_xdisplay(), w,
                                              ReparentNotify, &ev) )
                     {
                     if ( ev.xreparent.parent != root ) 
                         {
-                        XReparentWindow( qt_xdisplay(), w, root, 0, 0 );
+                        XReparentWindow( tqt_xdisplay(), w, root, 0, 0 );
                         addSystemTrayWin( w );
                         }
                     }
@@ -364,13 +364,13 @@ bool Workspace::workspaceEvent( XEvent * e )
                 if ( addSystemTrayWin( e->xmaprequest.window ) )
                     return TRUE;
                 c = createClient( e->xmaprequest.window, false );
-                if ( c != NULL && root != qt_xrootwin() ) 
+                if ( c != NULL && root != tqt_xrootwin() ) 
                     { // TODO what is this?
                     // TODO may use TQWidget::create
-                    XReparentWindow( qt_xdisplay(), c->frameId(), root, 0, 0 );
+                    XReparentWindow( tqt_xdisplay(), c->frameId(), root, 0, 0 );
                     }
                 if( c == NULL ) // refused to manage, simply map it (most probably override redirect)
-                    XMapRaised( qt_xdisplay(), e->xmaprequest.window );
+                    XMapRaised( tqt_xdisplay(), e->xmaprequest.window );
                 return true;
                 }
             if( c )
@@ -417,7 +417,7 @@ bool Workspace::workspaceEvent( XEvent * e )
                 wc.stack_mode = Above;
                 unsigned int value_mask = e->xconfigurerequest.value_mask
                     & ( CWX | CWY | CWWidth | CWHeight | CWBorderWidth );
-                XConfigureWindow( qt_xdisplay(), e->xconfigurerequest.window, value_mask, &wc );
+                XConfigureWindow( tqt_xdisplay(), e->xconfigurerequest.window, value_mask, &wc );
                 return true;
                 }
             break;
@@ -434,10 +434,10 @@ bool Workspace::workspaceEvent( XEvent * e )
             if( e->xfocus.window == rootWin() && TQCString( getenv("TDE_MULTIHEAD")).lower() != "true"
                 && ( e->xfocus.detail == NotifyDetailNone || e->xfocus.detail == NotifyPointerRoot ))
                 {
-                updateXTime(); // focusToNull() uses qt_x_time, which is old now (FocusIn has no timestamp)
+                updateXTime(); // focusToNull() uses tqt_x_time, which is old now (FocusIn has no timestamp)
                 Window focus;
                 int revert;
-                XGetInputFocus( qt_xdisplay(), &focus, &revert );
+                XGetInputFocus( tqt_xdisplay(), &focus, &revert );
                 if( focus == None || focus == PointerRoot )
                     {
                     //kdWarning( 1212 ) << "X focus set to None/PointerRoot, reseting focus" << endl;
@@ -712,7 +712,7 @@ void Client::unmapNotifyEvent( XUnmapEvent* e )
         case NormalState:
             // maybe we will be destroyed soon. Check this first.
             XEvent ev;
-            if( XCheckTypedWindowEvent (qt_xdisplay(), window(),
+            if( XCheckTypedWindowEvent (tqt_xdisplay(), window(),
                 DestroyNotify, &ev) ) // TODO I don't like this much
                 {
                 destroyClient(); // deletes this
@@ -808,7 +808,7 @@ void Client::configureRequestEvent( XConfigureRequestEvent* e )
 
         wc.border_width = 0;
         value_mask = CWBorderWidth;
-        XConfigureWindow( qt_xdisplay(), window(), value_mask, & wc );
+        XConfigureWindow( tqt_xdisplay(), window(), value_mask, & wc );
         }
 
     if( e->value_mask & ( CWX | CWY | CWHeight | CWWidth ))
@@ -859,7 +859,7 @@ void Client::propertyNotifyEvent( XPropertyEvent* e )
                 getWindowProtocols();
             else if (e->atom == atoms->wm_client_leader )
                 getWmClientLeader();
-            else if( e->atom == qt_window_role )
+            else if( e->atom == tqt_window_role )
                 window_role = staticWindowRole( window());
             else if( e->atom == atoms->motif_wm_hints )
                 getMotifHints();
@@ -939,7 +939,7 @@ void Client::leaveNotifyEvent( XCrossingEvent* e )
             int d1, d2, d3, d4;
             unsigned int d5;
             Window w, child;
-            if( XQueryPointer( qt_xdisplay(), frameId(), &w, &child, &d1, &d2, &d3, &d4, &d5 ) == False
+            if( XQueryPointer( tqt_xdisplay(), frameId(), &w, &child, &d1, &d2, &d3, &d4, &d5 ) == False
                 || child == None )
                 lostMouse = true; // really lost the mouse
             }
@@ -972,7 +972,7 @@ void Client::grabButton( int modifier )
     for( int i = 0;
          i < 8;
          ++i )
-        XGrabButton( qt_xdisplay(), AnyButton,
+        XGrabButton( tqt_xdisplay(), AnyButton,
             modifier | mods[ i ],
             wrapperId(),  FALSE, ButtonPressMask,
             GrabModeSync, GrabModeAsync, None, None );
@@ -989,7 +989,7 @@ void Client::ungrabButton( int modifier )
     for( int i = 0;
          i < 8;
          ++i )
-        XUngrabButton( qt_xdisplay(), AnyButton,
+        XUngrabButton( tqt_xdisplay(), AnyButton,
             modifier | mods[ i ], wrapperId());
     }
 #undef XCapL
@@ -1006,7 +1006,7 @@ void Client::updateMouseGrab()
     {
     if( workspace()->globalShortcutsDisabled())
         {
-        XUngrabButton( qt_xdisplay(), AnyButton, AnyModifier, wrapperId());
+        XUngrabButton( tqt_xdisplay(), AnyButton, AnyModifier, wrapperId());
         // keep grab for the simple click without modifiers if needed (see below)
         bool not_obscured = workspace()->topClientOnDesktop( workspace()->currentDesktop(), true, false ) == this;
         if( !( !options->clickRaise || not_obscured ))
@@ -1016,7 +1016,7 @@ void Client::updateMouseGrab()
     if( isActive() && !workspace()->forcedGlobalMouseGrab()) // see Workspace::establishTabBoxGrab()
         {
         // first grab all modifier combinations
-        XGrabButton(qt_xdisplay(), AnyButton, AnyModifier, wrapperId(), FALSE,
+        XGrabButton(tqt_xdisplay(), AnyButton, AnyModifier, wrapperId(), FALSE,
             ButtonPressMask,
             GrabModeSync, GrabModeAsync,
             None, None );
@@ -1035,9 +1035,9 @@ void Client::updateMouseGrab()
         }
     else
         {
-        XUngrabButton( qt_xdisplay(), AnyButton, AnyModifier, wrapperId());
+        XUngrabButton( tqt_xdisplay(), AnyButton, AnyModifier, wrapperId());
         // simply grab all modifier combinations
-        XGrabButton(qt_xdisplay(), AnyButton, AnyModifier, wrapperId(), FALSE,
+        XGrabButton(tqt_xdisplay(), AnyButton, AnyModifier, wrapperId(), FALSE,
             ButtonPressMask,
             GrabModeSync, GrabModeAsync,
             None, None );
@@ -1108,8 +1108,8 @@ bool Client::eventFilter( TQObject* o, TQEvent* e )
 
             // find the window under the cursor that should receive the
             // simulated events
-            root_window = qt_xrootwin();
-            XQueryPointer(qt_xdisplay(), root_window, &root_window,
+            root_window = tqt_xrootwin();
+            XQueryPointer(tqt_xdisplay(), root_window, &root_window,
                     &pointer_window, &x_root, &y_root, &x, &y, &mask);
 
             if (pointer_window != None)
@@ -1119,7 +1119,7 @@ bool Client::eventFilter( TQObject* o, TQEvent* e )
                 // the immediate descendant of a window's window decoration,
                 // which causes KWin to refocus windows properly
                 parent_window = pointer_window;
-                XQueryPointer(qt_xdisplay(), parent_window, &root_window,
+                XQueryPointer(tqt_xdisplay(), parent_window, &root_window,
                         &pointer_window, &x_root, &y_root, &x, &y, &mask);
                 inner_window = pointer_window;
 
@@ -1130,7 +1130,7 @@ bool Client::eventFilter( TQObject* o, TQEvent* e )
                     // the subsequent query. When no child window is left, we've
                     // found the child that will receive the simulated event
                     parent_window = pointer_window;
-                    XQueryPointer(qt_xdisplay(), parent_window, &root_window,
+                    XQueryPointer(tqt_xdisplay(), parent_window, &root_window,
                             &pointer_window, &x_root, &y_root, &x, &y, &mask);
                     }
                 pointer_window = parent_window;
@@ -1140,8 +1140,8 @@ bool Client::eventFilter( TQObject* o, TQEvent* e )
 
             // simulate a mouse button press
             xe.type = ButtonPress;
-            xe.display = qt_xdisplay();
-            xe.root = qt_xrootwin();
+            xe.display = tqt_xdisplay();
+            xe.root = tqt_xrootwin();
             xe.subwindow = None;
             xe.time = CurrentTime;
             xe.x = x;
@@ -1154,17 +1154,17 @@ bool Client::eventFilter( TQObject* o, TQEvent* e )
             if (inner_window != None && inner_window != pointer_window)
                 {
                 xe.window = inner_window;
-                XSendEvent(qt_xdisplay(), inner_window, True, ButtonPressMask,
+                XSendEvent(tqt_xdisplay(), inner_window, True, ButtonPressMask,
                         (XEvent *)&xe);
                 }
             xe.window = pointer_window;
-            XSendEvent(qt_xdisplay(), pointer_window, True, ButtonPressMask,
+            XSendEvent(tqt_xdisplay(), pointer_window, True, ButtonPressMask,
                     (XEvent *)&xe);
 
             // simulate a mouse button release
             xe.type = ButtonRelease;
-            xe.display = qt_xdisplay();
-            xe.root = qt_xrootwin();
+            xe.display = tqt_xdisplay();
+            xe.root = tqt_xrootwin();
             xe.subwindow = None;
             xe.time = CurrentTime;
             xe.x = x;
@@ -1177,11 +1177,11 @@ bool Client::eventFilter( TQObject* o, TQEvent* e )
             if (inner_window != None && inner_window != pointer_window)
                 {
                 xe.window = inner_window;
-                XSendEvent(qt_xdisplay(), inner_window, True, ButtonReleaseMask,
+                XSendEvent(tqt_xdisplay(), inner_window, True, ButtonReleaseMask,
                         (XEvent *)&xe);
                 }
             xe.window = pointer_window;
-            XSendEvent(qt_xdisplay(), pointer_window, True, ButtonReleaseMask,
+            XSendEvent(tqt_xdisplay(), pointer_window, True, ButtonReleaseMask,
                     (XEvent *)&xe);
 
             drawDelayedShadow();
@@ -1206,8 +1206,8 @@ bool Client::eventFilter( TQObject* o, TQEvent* e )
 
             // find the window under the cursor that should receive the
             // simulated events
-            root_window = qt_xrootwin();
-            XQueryPointer(qt_xdisplay(), root_window, &root_window,
+            root_window = tqt_xrootwin();
+            XQueryPointer(tqt_xdisplay(), root_window, &root_window,
                     &pointer_window, &x_root, &y_root, &x, &y, &mask);
 
             if (pointer_window != None)
@@ -1217,7 +1217,7 @@ bool Client::eventFilter( TQObject* o, TQEvent* e )
                 // the immediate descendant of a window's window decoration,
                 // which causes KWin to refocus windows properly
                 parent_window = pointer_window;
-                XQueryPointer(qt_xdisplay(), parent_window, &root_window,
+                XQueryPointer(tqt_xdisplay(), parent_window, &root_window,
                         &pointer_window, &x_root, &y_root, &x, &y, &mask);
                 inner_window = pointer_window;
 
@@ -1228,7 +1228,7 @@ bool Client::eventFilter( TQObject* o, TQEvent* e )
                     // the subsequent query. When no child window is left, we've
                     // found the child that will receive the simulated event
                     parent_window = pointer_window;
-                    XQueryPointer(qt_xdisplay(), parent_window, &root_window,
+                    XQueryPointer(tqt_xdisplay(), parent_window, &root_window,
                             &pointer_window, &x_root, &y_root, &x, &y, &mask);
                     }
                 pointer_window = parent_window;
@@ -1238,8 +1238,8 @@ bool Client::eventFilter( TQObject* o, TQEvent* e )
 
             // simulate a mouse button press
             xe.type = ButtonPress;
-            xe.display = qt_xdisplay();
-            xe.root = qt_xrootwin();
+            xe.display = tqt_xdisplay();
+            xe.root = tqt_xrootwin();
             xe.subwindow = None;
             xe.time = CurrentTime;
             xe.x = x;
@@ -1252,18 +1252,18 @@ bool Client::eventFilter( TQObject* o, TQEvent* e )
                 {
                 xe.button = buttonPressed;
                 xe.window = inner_window;
-                XSendEvent(qt_xdisplay(), inner_window, True, ButtonPressMask,
+                XSendEvent(tqt_xdisplay(), inner_window, True, ButtonPressMask,
                         (XEvent *)&xe);
                 }
             xe.button = buttonPressed;
             xe.window = pointer_window;
-            XSendEvent(qt_xdisplay(), pointer_window, True, ButtonPressMask,
+            XSendEvent(tqt_xdisplay(), pointer_window, True, ButtonPressMask,
                     (XEvent *)&xe);
 
             // simulate a mouse button release
             xe.type = ButtonRelease;
-            xe.display = qt_xdisplay();
-            xe.root = qt_xrootwin();
+            xe.display = tqt_xdisplay();
+            xe.root = tqt_xrootwin();
             xe.subwindow = None;
             xe.time = CurrentTime;
             xe.x = x;
@@ -1276,13 +1276,13 @@ bool Client::eventFilter( TQObject* o, TQEvent* e )
                 xe.window = inner_window;
                 xe.state = buttonMask;
                 xe.button = buttonPressed;
-                XSendEvent(qt_xdisplay(), inner_window, True, ButtonReleaseMask,
+                XSendEvent(tqt_xdisplay(), inner_window, True, ButtonReleaseMask,
                         (XEvent *)&xe);
                 }
             xe.state = buttonMask;
             xe.button = buttonPressed;
             xe.window = pointer_window;
-            XSendEvent(qt_xdisplay(), pointer_window, True, ButtonReleaseMask,
+            XSendEvent(tqt_xdisplay(), pointer_window, True, ButtonReleaseMask,
                     (XEvent *)&xe);
 
             drawDelayedShadow();
@@ -1339,7 +1339,7 @@ bool Client::buttonPressEvent( Window w, int button, int state, int x, int y, in
     if (buttonDown)
         {
         if( w == wrapperId())
-            XAllowEvents(qt_xdisplay(), SyncPointer, CurrentTime ); //qt_x_time);
+            XAllowEvents(tqt_xdisplay(), SyncPointer, CurrentTime ); //tqt_x_time);
         return true;
         }
 
@@ -1358,7 +1358,7 @@ bool Client::buttonPressEvent( Window w, int button, int state, int x, int y, in
             { // hide splashwindow if the user clicks on it
             hideClient( true );
             if( w == wrapperId())
-                    XAllowEvents(qt_xdisplay(), SyncPointer, CurrentTime ); //qt_x_time);
+                    XAllowEvents(tqt_xdisplay(), SyncPointer, CurrentTime ); //tqt_x_time);
             return true;
             }
 
@@ -1423,14 +1423,14 @@ bool Client::buttonPressEvent( Window w, int button, int state, int x, int y, in
                 replay = TRUE;
 
             if( w == wrapperId()) // these can come only from a grab
-                XAllowEvents(qt_xdisplay(), replay? ReplayPointer : SyncPointer, CurrentTime ); //qt_x_time);
+                XAllowEvents(tqt_xdisplay(), replay? ReplayPointer : SyncPointer, CurrentTime ); //tqt_x_time);
             return true;
             }
         }
 
     if( w == wrapperId()) // these can come only from a grab
         {
-        XAllowEvents(qt_xdisplay(), ReplayPointer, CurrentTime ); //qt_x_time);
+        XAllowEvents(tqt_xdisplay(), ReplayPointer, CurrentTime ); //tqt_x_time);
         return true;
         }
     if( w == decorationId())
@@ -1503,7 +1503,7 @@ bool Client::buttonReleaseEvent( Window w, int /*button*/, int state, int x, int
         return false;
     if( w == wrapperId())
         {
-        XAllowEvents(qt_xdisplay(), SyncPointer, CurrentTime ); //qt_x_time);
+        XAllowEvents(tqt_xdisplay(), SyncPointer, CurrentTime ); //tqt_x_time);
         return true;
         }
     if( w != frameId() && w != decorationId() && w != moveResizeGrabWindow())
@@ -1553,9 +1553,9 @@ static bool waitingMotionEvent()
         && timestampCompare( GET_QT_X_TIME(), next_motion_time ) < 0 )
         return true;
     was_motion = false;
-    XSync( qt_xdisplay(), False ); // this helps to discard more MotionNotify events
+    XSync( tqt_xdisplay(), False ); // this helps to discard more MotionNotify events
     XEvent dummy;
-    XCheckIfEvent( qt_xdisplay(), &dummy, motion_predicate, NULL );
+    XCheckIfEvent( tqt_xdisplay(), &dummy, motion_predicate, NULL );
     return was_motion;
     }
 
@@ -1648,7 +1648,7 @@ static bool check_follows_focusin( Client* c )
     // XCheckIfEvent() is used to make the search non-blocking, the predicate
     // always returns False, so nothing is removed from the events queue.
     // XPeekIfEvent() would block.
-    XCheckIfEvent( qt_xdisplay(), &dummy, predicate_follows_focusin, (XPointer)c );
+    XCheckIfEvent( tqt_xdisplay(), &dummy, predicate_follows_focusin, (XPointer)c );
     return follows_focusin;
     }
 

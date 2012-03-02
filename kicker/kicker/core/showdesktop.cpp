@@ -45,7 +45,7 @@ ShowDesktop::ShowDesktop()
 {
     // This feature is implemented in KWin. Keep old code in Kicker for the case
     // KDE is running with another WM without the feature.
-    NETRootInfo i( qt_xdisplay(), NET::Supported );
+    NETRootInfo i( tqt_xdisplay(), NET::Supported );
     m_wmSupport = i.isSupported( NET::WM2ShowingDesktop );
     if( m_wmSupport )
     {
@@ -67,7 +67,7 @@ void ShowDesktop::slotWindowAdded(WId w)
         return;
     }
 
-    NETWinInfo inf(qt_xdisplay(), w, qt_xrootwin(),
+    NETWinInfo inf(tqt_xdisplay(), w, tqt_xrootwin(),
                    NET::XAWMState | NET::WMWindowType);
     NET::WindowType windowType = inf.windowType(NET::AllTypesMask);
 
@@ -99,7 +99,7 @@ void ShowDesktop::slotWindowChanged(WId w, unsigned int dirty)
 
     if (dirty & NET::XAWMState)
     {
-        NETWinInfo inf(qt_xdisplay(), w, qt_xrootwin(),
+        NETWinInfo inf(tqt_xdisplay(), w, tqt_xrootwin(),
                        NET::XAWMState | NET::WMWindowType);
         NET::WindowType windowType = inf.windowType(NET::AllTypesMask);
 
@@ -123,7 +123,7 @@ void ShowDesktop::showDesktop( bool b )
     
     if( m_wmSupport )
     {
-        NETRootInfo i( qt_xdisplay(), 0 );
+        NETRootInfo i( tqt_xdisplay(), 0 );
         i.setShowingDesktop( b );
         return;
     }
@@ -140,7 +140,7 @@ void ShowDesktop::showDesktop( bool b )
         {
             WId w = *it;
 
-            NETWinInfo info( qt_xdisplay(), w, qt_xrootwin(),
+            NETWinInfo info( tqt_xdisplay(), w, tqt_xrootwin(),
                              NET::XAWMState | NET::WMDesktop );
 
             if (info.mappingState() == NET::Visible &&

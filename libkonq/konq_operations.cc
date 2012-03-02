@@ -351,7 +351,7 @@ void KonqOperations::doDrop( const KFileItem * destItem, const KURL & dest, TQDr
         Window child;
         int root_x, root_y, win_x, win_y;
         uint keybstate;
-        XQueryPointer( qt_xdisplay(), qt_xrootwin(), &root, &child,
+        XQueryPointer( tqt_xdisplay(), tqt_xrootwin(), &root, &child,
                        &root_x, &root_y, &win_x, &win_y, &keybstate );
 
         TQDropEvent::Action action = ev->action();

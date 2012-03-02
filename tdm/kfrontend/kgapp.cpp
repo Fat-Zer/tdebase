@@ -118,7 +118,7 @@ void
 GreeterApp::timerEvent( TQTimerEvent * )
 {
 	alarm( 0 );
-	if (!PingServer( qt_xdisplay() ))
+	if (!PingServer( tqt_xdisplay() ))
 		::exit( EX_RESERVER_DPY );
 	alarm( pingInterval * 70 ); // sic! give the "proper" pinger enough time
 }
@@ -259,7 +259,7 @@ kg_main( const char *argv0 )
 	TQString login_user;
 	TQString login_session_wm;
 
-	Display *dpy = qt_xdisplay();
+	Display *dpy = tqt_xdisplay();
 
 	if (!_GUIStyle.isEmpty())
 		app->setStyle( _GUIStyle );
@@ -466,7 +466,7 @@ kg_main( const char *argv0 )
 	UnsecureDisplay( dpy );
 	restore_modifiers();
 
-	XSetInputFocus( qt_xdisplay(), PointerRoot, PointerRoot, CurrentTime );
+	XSetInputFocus( tqt_xdisplay(), PointerRoot, PointerRoot, CurrentTime );
 
 	delete app;
 }

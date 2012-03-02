@@ -31,7 +31,7 @@
 
 #include <X11/Xlib.h>
 
-extern Time qt_x_time;
+extern Time tqt_x_time;
 
 static TQString convertFileFilter( const TQString& filter )
     {
@@ -98,7 +98,7 @@ static DCOPClient* dcopClient()
 
 // defined in qapplication_x11.cpp
 typedef int (*QX11EventFilter) (XEvent*);
-extern QX11EventFilter qt_set_x11_event_filter (QX11EventFilter filter);
+extern QX11EventFilter tqt_set_x11_event_filter (QX11EventFilter filter);
 
 static QX11EventFilter old_filter;
 
@@ -125,9 +125,9 @@ static int input_filter( XEvent* e )
 void qtkde_EventLoop::block( bool b )
     {
     if( b )
-        old_filter = qt_set_x11_event_filter( input_filter );
+        old_filter = tqt_set_x11_event_filter( input_filter );
     else
-        qt_set_x11_event_filter( old_filter );
+        tqt_set_x11_event_filter( old_filter );
     }
 
 // duped in kded module

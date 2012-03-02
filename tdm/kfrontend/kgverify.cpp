@@ -834,7 +834,7 @@ KGVerify::updateLockStatus()
 	unsigned int lmask;
 	Window dummy1, dummy2;
 	int dummy3, dummy4, dummy5, dummy6;
-	XQueryPointer( qt_xdisplay(), DefaultRootWindow( qt_xdisplay() ),
+	XQueryPointer( tqt_xdisplay(), DefaultRootWindow( tqt_xdisplay() ),
 	               &dummy1, &dummy2, &dummy3, &dummy4, &dummy5, &dummy6,
 	               &lmask );
 	capsLocked = lmask & LockMask;

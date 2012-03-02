@@ -38,7 +38,7 @@ TQString XKBExtension::getPrecompiledLayoutFilename(const TQString& layoutKey)
 XKBExtension::XKBExtension(Display *d)
 {
 	if ( d == NULL )
-		d = qt_xdisplay();
+		d = tqt_xdisplay();
 	m_dpy = d;
 	
 //	TQStringList dirs = KGlobal::dirs()->findDirs ( "tmp", "" );

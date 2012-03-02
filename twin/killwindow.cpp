@@ -35,16 +35,16 @@ void KillWindow::start()
     {
     static Cursor kill_cursor = 0;
     if (!kill_cursor)
-        kill_cursor = XCreateFontCursor(qt_xdisplay(), XC_pirate);
+        kill_cursor = XCreateFontCursor(tqt_xdisplay(), XC_pirate);
 
-    if (XGrabPointer(qt_xdisplay(), qt_xrootwin(), False,
+    if (XGrabPointer(tqt_xdisplay(), tqt_xrootwin(), False,
                      ButtonPressMask | ButtonReleaseMask |
                      PointerMotionMask |
                      EnterWindowMask | LeaveWindowMask,
                      GrabModeAsync, GrabModeAsync, None,
                      kill_cursor, CurrentTime) == GrabSuccess) 
         {
-        XGrabKeyboard(qt_xdisplay(), qt_xrootwin(), False,
+        XGrabKeyboard(tqt_xdisplay(), tqt_xrootwin(), False,
                       GrabModeAsync, GrabModeAsync, CurrentTime);
 
         XEvent ev;
@@ -56,12 +56,12 @@ void KillWindow::start()
 
         while (!return_pressed && !escape_pressed && !button_released) 
             {
-            XMaskEvent(qt_xdisplay(), KeyPressMask | ButtonPressMask |
+            XMaskEvent(tqt_xdisplay(), KeyPressMask | ButtonPressMask |
                        ButtonReleaseMask | PointerMotionMask, &ev);
 
             if (ev.type == KeyPress)    
                 {
-                int kc = XKeycodeToKeysym(qt_xdisplay(), ev.xkey.keycode, 0);
+                int kc = XKeycodeToKeysym(tqt_xdisplay(), ev.xkey.keycode, 0);
                 int mx = 0;
                 int my = 0;
                 return_pressed = (kc == XK_Return) || (kc == XK_space);
@@ -96,7 +96,7 @@ void KillWindow::start()
             Window root, child;
             int dummy1, dummy2, dummy3, dummy4;
             unsigned int dummy5;
-            if( XQueryPointer( qt_xdisplay(), qt_xrootwin(), &root, &child,
+            if( XQueryPointer( tqt_xdisplay(), tqt_xrootwin(), &root, &child,
                 &dummy1, &dummy2, &dummy3, &dummy4, &dummy5 ) == true
                 && child != None )
                 workspace->killWindowId( child );
@@ -104,8 +104,8 @@ void KillWindow::start()
 
         ungrabXServer();
 
-        XUngrabKeyboard(qt_xdisplay(), CurrentTime);
-        XUngrabPointer(qt_xdisplay(), CurrentTime);
+        XUngrabKeyboard(tqt_xdisplay(), CurrentTime);
+        XUngrabPointer(tqt_xdisplay(), CurrentTime);
         }
     }
 

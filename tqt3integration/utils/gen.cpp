@@ -500,8 +500,8 @@ void generateTQtKde()
         stream << "\n";
         stream <<
 "    {\n"
-"    if( qt_xdisplay() != NULL )\n"
-"        XSync( qt_xdisplay(), False );\n";
+"    if( tqt_xdisplay() != NULL )\n"
+"        XSync( tqt_xdisplay(), False );\n";
         TQString parent_arg;
         for( TQValueList< Arg >::ConstIterator it2 = function.args.begin();
              it2 != function.args.end();
@@ -519,7 +519,7 @@ void generateTQtKde()
         if( !parent_arg.isEmpty())
             {
             stream << "    if( " << parent_arg << " == 0 )\n";
-            stream << "        DCOPRef( \"kded\", \"MainApplication-Interface\" ).call( \"updateUserTimestamp\", qt_x_time );\n";
+            stream << "        DCOPRef( \"kded\", \"MainApplication-Interface\" ).call( \"updateUserTimestamp\", tqt_x_time );\n";
             }
         stream <<
 "    TQByteArray data, replyData;\n"

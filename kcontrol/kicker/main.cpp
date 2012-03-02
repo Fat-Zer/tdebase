@@ -57,7 +57,7 @@ KickerConfig::KickerConfig(TQWidget *parent, const char *name)
     configFileWatch(new KDirWatch(this)),
     m_currentPanelIndex(0)
 {
-    m_screenNumber = qt_xdisplay() ? DefaultScreen(qt_xdisplay()) : 0;
+    m_screenNumber = tqt_xdisplay() ? DefaultScreen(tqt_xdisplay()) : 0;
 
     KickerSettings::instance(configName().latin1());
 

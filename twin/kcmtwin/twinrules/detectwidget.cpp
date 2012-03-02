@@ -191,13 +191,13 @@ WId DetectDialog::findWindow()
     Window child;
     uint mask;
     int rootX, rootY, x, y;
-    Window parent = qt_xrootwin();
-    Atom wm_state = XInternAtom( qt_xdisplay(), "WM_STATE", False );
+    Window parent = tqt_xrootwin();
+    Atom wm_state = XInternAtom( tqt_xdisplay(), "WM_STATE", False );
     for( int i = 0;
          i < 10;
          ++i )
         {
-        XQueryPointer( qt_xdisplay(), parent, &root, &child,
+        XQueryPointer( tqt_xdisplay(), parent, &root, &child,
             &rootX, &rootY, &x, &y, &mask );
         if( child == None )
             return 0;
@@ -205,7 +205,7 @@ WId DetectDialog::findWindow()
         int format;
         unsigned long nitems, after;
         unsigned char* prop;
-        if( XGetWindowProperty( qt_xdisplay(), child, wm_state, 0, 0, False, AnyPropertyType,
+        if( XGetWindowProperty( tqt_xdisplay(), child, wm_state, 0, 0, False, AnyPropertyType,
 	    &type, &format, &nitems, &after, &prop ) == Success )
             {
 	    if( prop != NULL )

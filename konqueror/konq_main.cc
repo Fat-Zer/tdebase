@@ -133,7 +133,7 @@ extern "C" KDE_EXPORT int kdemain( int argc, char **argv )
                  {
                      DCOPRef ref( "kded", "konqy_preloader" );
                      if( !ref.callExt( "registerPreloadedKonqy", DCOPRef::NoEventLoop, 5000,
-                         app.dcopClient()->appId(), qt_xscreen()))
+                         app.dcopClient()->appId(), tqt_xscreen()))
                          return 0; // too many preloaded or failed
 		     KonqMainWindow* win = new KonqMainWindow( KURL(), false ); // prepare an empty window too
 		     // KonqMainWindow ctor sets always the preloaded flag to false, so create the window before this

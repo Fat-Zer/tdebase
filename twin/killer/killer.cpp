@@ -83,6 +83,6 @@ int main( int argc, char* argv[] )
 	    }
 	else
 	    ::kill( pid, SIGKILL );
-	XKillClient( qt_xdisplay(), id );
+	XKillClient( tqt_xdisplay(), id );
         }
     }

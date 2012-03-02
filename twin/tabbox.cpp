@@ -57,22 +57,22 @@ TabBox::TabBox( Workspace *ws, const char *name )
     
     XSetWindowAttributes attr;
     attr.override_redirect = 1;
-    outline_left = XCreateWindow( qt_xdisplay(), qt_xrootwin(), 0, 0, 1, 1, 0,
+    outline_left = XCreateWindow( tqt_xdisplay(), tqt_xrootwin(), 0, 0, 1, 1, 0,
         CopyFromParent, CopyFromParent, CopyFromParent, CWOverrideRedirect, &attr );
-    outline_right = XCreateWindow( qt_xdisplay(), qt_xrootwin(), 0, 0, 1, 1, 0,
+    outline_right = XCreateWindow( tqt_xdisplay(), tqt_xrootwin(), 0, 0, 1, 1, 0,
         CopyFromParent, CopyFromParent, CopyFromParent, CWOverrideRedirect, &attr );
-    outline_top = XCreateWindow( qt_xdisplay(), qt_xrootwin(), 0, 0, 1, 1, 0,
+    outline_top = XCreateWindow( tqt_xdisplay(), tqt_xrootwin(), 0, 0, 1, 1, 0,
         CopyFromParent, CopyFromParent, CopyFromParent, CWOverrideRedirect, &attr );
-    outline_bottom = XCreateWindow( qt_xdisplay(), qt_xrootwin(), 0, 0, 1, 1, 0,
+    outline_bottom = XCreateWindow( tqt_xdisplay(), tqt_xrootwin(), 0, 0, 1, 1, 0,
         CopyFromParent, CopyFromParent, CopyFromParent, CWOverrideRedirect, &attr );
     }
 
 TabBox::~TabBox()
     {
-    XDestroyWindow( qt_xdisplay(), outline_left );
-    XDestroyWindow( qt_xdisplay(), outline_right );
-    XDestroyWindow( qt_xdisplay(), outline_top );
-    XDestroyWindow( qt_xdisplay(), outline_bottom );
+    XDestroyWindow( tqt_xdisplay(), outline_left );
+    XDestroyWindow( tqt_xdisplay(), outline_right );
+    XDestroyWindow( tqt_xdisplay(), outline_top );
+    XDestroyWindow( tqt_xdisplay(), outline_bottom );
     }
 
 
@@ -344,10 +344,10 @@ int TabBox::currentDesktop()
 void TabBox::showEvent( TQShowEvent* )
     {
     updateOutline();
-    XRaiseWindow( qt_xdisplay(), outline_left );
-    XRaiseWindow( qt_xdisplay(), outline_right );
-    XRaiseWindow( qt_xdisplay(), outline_top );
-    XRaiseWindow( qt_xdisplay(), outline_bottom );
+    XRaiseWindow( tqt_xdisplay(), outline_left );
+    XRaiseWindow( tqt_xdisplay(), outline_right );
+    XRaiseWindow( tqt_xdisplay(), outline_top );
+    XRaiseWindow( tqt_xdisplay(), outline_bottom );
     raise();
     }
 
@@ -357,10 +357,10 @@ void TabBox::showEvent( TQShowEvent* )
  */
 void TabBox::hideEvent( TQHideEvent* )
     {
-    XUnmapWindow( qt_xdisplay(), outline_left );
-    XUnmapWindow( qt_xdisplay(), outline_right );
-    XUnmapWindow( qt_xdisplay(), outline_top );
-    XUnmapWindow( qt_xdisplay(), outline_bottom );
+    XUnmapWindow( tqt_xdisplay(), outline_left );
+    XUnmapWindow( tqt_xdisplay(), outline_right );
+    XUnmapWindow( tqt_xdisplay(), outline_top );
+    XUnmapWindow( tqt_xdisplay(), outline_bottom );
     }
 
 /*!
@@ -557,17 +557,17 @@ void TabBox::updateOutline()
     Client* c = currentClient();
     if( !options->tabboxOutline || c == NULL || this->isHidden() || !c->isShown( true ) || !c->isOnCurrentDesktop())
         {
-        XUnmapWindow( qt_xdisplay(), outline_left );
-        XUnmapWindow( qt_xdisplay(), outline_right );
-        XUnmapWindow( qt_xdisplay(), outline_top );
-        XUnmapWindow( qt_xdisplay(), outline_bottom );
+        XUnmapWindow( tqt_xdisplay(), outline_left );
+        XUnmapWindow( tqt_xdisplay(), outline_right );
+        XUnmapWindow( tqt_xdisplay(), outline_top );
+        XUnmapWindow( tqt_xdisplay(), outline_bottom );
         return;
         }
     // left/right parts are between top/bottom, they don't reach as far as the corners
-    XMoveResizeWindow( qt_xdisplay(), outline_left, c->x(), c->y() + 5, 5, c->height() - 10 );
-    XMoveResizeWindow( qt_xdisplay(), outline_right, c->x() + c->width() - 5, c->y() + 5, 5, c->height() - 10 );
-    XMoveResizeWindow( qt_xdisplay(), outline_top, c->x(), c->y(), c->width(), 5 );
-    XMoveResizeWindow( qt_xdisplay(), outline_bottom, c->x(), c->y() + c->height() - 5, c->width(), 5 );
+    XMoveResizeWindow( tqt_xdisplay(), outline_left, c->x(), c->y() + 5, 5, c->height() - 10 );
+    XMoveResizeWindow( tqt_xdisplay(), outline_right, c->x() + c->width() - 5, c->y() + 5, 5, c->height() - 10 );
+    XMoveResizeWindow( tqt_xdisplay(), outline_top, c->x(), c->y(), c->width(), 5 );
+    XMoveResizeWindow( tqt_xdisplay(), outline_bottom, c->x(), c->y() + c->height() - 5, c->width(), 5 );
     {
     TQPixmap pix( 5, c->height() - 10 );
     TQPainter p( &pix );
@@ -580,8 +580,8 @@ void TabBox::updateOutline()
     p.setPen( black );
     p.drawLine( 2, 0, 2, pix.height() - 1 );
     p.end();
-    XSetWindowBackgroundPixmap( qt_xdisplay(), outline_left, pix.handle());
-    XSetWindowBackgroundPixmap( qt_xdisplay(), outline_right, pix.handle());
+    XSetWindowBackgroundPixmap( tqt_xdisplay(), outline_left, pix.handle());
+    XSetWindowBackgroundPixmap( tqt_xdisplay(), outline_right, pix.handle());
     }
     {
     TQPixmap pix( c->width(), 5 );
@@ -603,7 +603,7 @@ void TabBox::updateOutline()
     p.drawLine( 2, 2, 2, 4 );
     p.drawLine( pix.width() - 1 - 2, 2, pix.width() - 1 - 2, 4 );
     p.end();
-    XSetWindowBackgroundPixmap( qt_xdisplay(), outline_top, pix.handle());
+    XSetWindowBackgroundPixmap( tqt_xdisplay(), outline_top, pix.handle());
     }
     {
     TQPixmap pix( c->width(), 5 );
@@ -625,16 +625,16 @@ void TabBox::updateOutline()
     p.drawLine( 2, 0, 2, 2 );
     p.drawLine( pix.width() - 1 - 2, 0, pix.width() - 1 - 2, 2 );
     p.end();
-    XSetWindowBackgroundPixmap( qt_xdisplay(), outline_bottom, pix.handle());
+    XSetWindowBackgroundPixmap( tqt_xdisplay(), outline_bottom, pix.handle());
     }
-    XClearWindow( qt_xdisplay(), outline_left );
-    XClearWindow( qt_xdisplay(), outline_right );
-    XClearWindow( qt_xdisplay(), outline_top );
-    XClearWindow( qt_xdisplay(), outline_bottom );
-    XMapWindow( qt_xdisplay(), outline_left );
-    XMapWindow( qt_xdisplay(), outline_right );
-    XMapWindow( qt_xdisplay(), outline_top );
-    XMapWindow( qt_xdisplay(), outline_bottom );
+    XClearWindow( tqt_xdisplay(), outline_left );
+    XClearWindow( tqt_xdisplay(), outline_right );
+    XClearWindow( tqt_xdisplay(), outline_top );
+    XClearWindow( tqt_xdisplay(), outline_bottom );
+    XMapWindow( tqt_xdisplay(), outline_left );
+    XMapWindow( tqt_xdisplay(), outline_right );
+    XMapWindow( tqt_xdisplay(), outline_top );
+    XMapWindow( tqt_xdisplay(), outline_bottom );
     }
 
 void TabBox::hide()
@@ -643,7 +643,7 @@ void TabBox::hide()
     TQWidget::hide();
     TQApplication::syncX();
     XEvent otherEvent;
-    while (XCheckTypedEvent (qt_xdisplay(), EnterNotify, &otherEvent ) )
+    while (XCheckTypedEvent (tqt_xdisplay(), EnterNotify, &otherEvent ) )
         ;
     }
 
@@ -692,7 +692,7 @@ void TabBox::delayedShow()
 
 void TabBox::handleMouseEvent( XEvent* e )
     {
-    XAllowEvents( qt_xdisplay(), AsyncPointer, GET_QT_X_TIME() );
+    XAllowEvents( tqt_xdisplay(), AsyncPointer, GET_QT_X_TIME() );
     if( e->type != ButtonPress )
         return;
     TQPoint pos( e->xbutton.x_root, e->xbutton.y_root );
@@ -757,12 +757,12 @@ bool areKeySymXsDepressed( bool bAll, const uint keySyms[], int nKeySyms )
 
     kdDebug(125) << "areKeySymXsDepressed: " << (bAll ? "all of " : "any of ") << nKeySyms << endl;
 
-    XQueryKeymap( qt_xdisplay(), keymap );
+    XQueryKeymap( tqt_xdisplay(), keymap );
 
     for( int iKeySym = 0; iKeySym < nKeySyms; iKeySym++ )
         {
         uint keySymX = keySyms[ iKeySym ];
-        uchar keyCodeX = XKeysymToKeycode( qt_xdisplay(), keySymX );
+        uchar keyCodeX = XKeysymToKeycode( tqt_xdisplay(), keySymX );
         int i = keyCodeX / 8;
         char mask = 1 << (keyCodeX - (i * 8));
 
@@ -844,13 +844,13 @@ static bool areModKeysDepressed( const KShortcut& cut )
 
 void Workspace::slotWalkThroughWindows()
     {
-    if ( root != qt_xrootwin() )
+    if ( root != tqt_xrootwin() )
         return;
     if ( tab_grab || control_grab )
         return;
     if ( options->altTabStyle == Options::CDE || !options->focusPolicyIsReasonable())
         {
-        //XUngrabKeyboard(qt_xdisplay(), GET_QT_X_TIME()); // need that because of accelerator raw mode
+        //XUngrabKeyboard(tqt_xdisplay(), GET_QT_X_TIME()); // need that because of accelerator raw mode
         // CDE style raise / lower
         CDEWalkThroughWindows( true );
         }
@@ -870,7 +870,7 @@ void Workspace::slotWalkThroughWindows()
 
 void Workspace::slotWalkBackThroughWindows()
     {
-    if ( root != qt_xrootwin() )
+    if ( root != tqt_xrootwin() )
         return;
     if( tab_grab || control_grab )
         return;
@@ -895,7 +895,7 @@ void Workspace::slotWalkBackThroughWindows()
 
 void Workspace::slotWalkThroughDesktops()
     {
-    if ( root != qt_xrootwin() )
+    if ( root != tqt_xrootwin() )
         return;
     if( tab_grab || control_grab )
         return;
@@ -912,7 +912,7 @@ void Workspace::slotWalkThroughDesktops()
 
 void Workspace::slotWalkBackThroughDesktops()
     {
-    if ( root != qt_xrootwin() )
+    if ( root != tqt_xrootwin() )
         return;
     if( tab_grab || control_grab )
         return;
@@ -929,7 +929,7 @@ void Workspace::slotWalkBackThroughDesktops()
 
 void Workspace::slotWalkThroughDesktopList()
     {
-    if ( root != qt_xrootwin() )
+    if ( root != tqt_xrootwin() )
         return;
     if( tab_grab || control_grab )
         return;
@@ -946,7 +946,7 @@ void Workspace::slotWalkThroughDesktopList()
 
 void Workspace::slotWalkBackThroughDesktopList()
     {
-    if ( root != qt_xrootwin() )
+    if ( root != tqt_xrootwin() )
         return;
     if( tab_grab || control_grab )
         return;
@@ -1185,7 +1185,7 @@ void Workspace::tabBoxKeyRelease( const XKeyEvent& ev )
         release = true;
     else
         {
-        XModifierKeymap* xmk = XGetModifierMapping(qt_xdisplay());
+        XModifierKeymap* xmk = XGetModifierMapping(tqt_xdisplay());
         for (int i=0; i<xmk->max_keypermod; i++)
             if (xmk->modifiermap[xmk->max_keypermod * mod_index + i]
                 == ev.keycode)
@@ -1316,7 +1316,7 @@ Client* Workspace::previousStaticClient( Client* c ) const
 
 bool Workspace::establishTabBoxGrab()
     {
-    if( XGrabKeyboard( qt_xdisplay(), root, FALSE,
+    if( XGrabKeyboard( tqt_xdisplay(), root, FALSE,
         GrabModeAsync, GrabModeAsync, GET_QT_X_TIME()) != GrabSuccess )
         return false;
     // Don't try to establish a global mouse grab using XGrabPointer, as that would prevent
@@ -1333,7 +1333,7 @@ bool Workspace::establishTabBoxGrab()
 
 void Workspace::removeTabBoxGrab()
     {
-    XUngrabKeyboard(qt_xdisplay(), GET_QT_X_TIME());
+    XUngrabKeyboard(tqt_xdisplay(), GET_QT_X_TIME());
     assert( forced_global_mouse_grab );
     forced_global_mouse_grab = false;
     if( active_client != NULL )

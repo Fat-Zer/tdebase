@@ -40,7 +40,7 @@ KPixmapServer::KPixmapServer()
     : TQWidget(0L, "shpixmap comm window")
 {
     kapp->installX11EventFilter(this);
-    pixmap = XInternAtom(qt_xdisplay(), "PIXMAP", false);
+    pixmap = XInternAtom(tqt_xdisplay(), "PIXMAP", false);
 }
 
 
@@ -48,7 +48,7 @@ KPixmapServer::~KPixmapServer()
 {
     SelectionIterator it;
     for (it=m_Selections.begin(); it!=m_Selections.end(); it++)
-	XSetSelectionOwner(qt_xdisplay(), it.key(), None, CurrentTime);
+	XSetSelectionOwner(tqt_xdisplay(), it.key(), None, CurrentTime);
 
     DataIterator it2;
     for (it2=m_Data.begin(); it2!=m_Data.end(); it2++)
@@ -66,7 +66,7 @@ void KPixmapServer::add(TQString name, TQPixmap *pm, bool overwrite)
     }
 	
     TQString str = TQString("KDESHPIXMAP:%1").arg(name);
-    Atom sel = XInternAtom(qt_xdisplay(), str.latin1(), false);
+    Atom sel = XInternAtom(tqt_xdisplay(), str.latin1(), false);
     KPixmapInode pi;
     pi.handle = pm->handle();
     pi.selection = sel;
@@ -88,7 +88,7 @@ void KPixmapServer::add(TQString name, TQPixmap *pm, bool overwrite)
     } else
 	it.data().refcount++;
 
-    XSetSelectionOwner(qt_xdisplay(), sel, winId(), CurrentTime);
+    XSetSelectionOwner(tqt_xdisplay(), sel, winId(), CurrentTime);
 }
 
 
@@ -105,7 +105,7 @@ void KPixmapServer::remove(TQString name)
     SelectionIterator it2 = m_Selections.find(pi.selection);
     assert(it2 != m_Selections.end());
     m_Selections.remove(it2);
-    XSetSelectionOwner(qt_xdisplay(), pi.selection, None, CurrentTime);
+    XSetSelectionOwner(tqt_xdisplay(), pi.selection, None, CurrentTime);
 
     // Decrease refcount on data
     DataIterator it3 = m_Data.find(pi.handle);
@@ -135,7 +135,7 @@ void KPixmapServer::setOwner(TQString name)
     if (it == m_Names.end())
 	return;
 
-    XSetSelectionOwner(qt_xdisplay(), it.data().selection, winId(), CurrentTime);
+    XSetSelectionOwner(tqt_xdisplay(), it.data().selection, winId(), CurrentTime);
 }
 
 
@@ -151,7 +151,7 @@ bool KPixmapServer::x11Event(XEvent *event)
 	// Build negative reply
 	XEvent reply;
 	reply.type = SelectionNotify;
-	reply.xselection.display = qt_xdisplay();
+	reply.xselection.display = tqt_xdisplay();
 	reply.xselection.requestor = ev->requestor;
 	reply.xselection.selection = ev->selection;
 	reply.xselection.target = pixmap;
@@ -169,7 +169,7 @@ bool KPixmapServer::x11Event(XEvent *event)
 	if (ev->target != pixmap) 
 	{
 	    kdDebug(1204) << ID << "illegal target\n";
-	    XSendEvent(qt_xdisplay(), ev->requestor, false, 0, &reply);
+	    XSendEvent(tqt_xdisplay(), ev->requestor, false, 0, &reply);
 	    return true;
 	}
 
@@ -177,7 +177,7 @@ bool KPixmapServer::x11Event(XEvent *event)
 	if (m_Active.contains(ev->property)) 
 	{
 	    kdDebug(1204) << ID << "selection is busy.\n";
-	    XSendEvent(qt_xdisplay(), ev->requestor, false, 0, &reply);
+	    XSendEvent(tqt_xdisplay(), ev->requestor, false, 0, &reply);
 	    return true;
 	}
 
@@ -186,25 +186,25 @@ bool KPixmapServer::x11Event(XEvent *event)
 	if (it2 == m_Data.end()) 
 	{
 	    kdDebug(1204) << ID << "selection has been deleted.\n";
-	    XSendEvent(qt_xdisplay(), ev->requestor, false, 0, &reply);
+	    XSendEvent(tqt_xdisplay(), ev->requestor, false, 0, &reply);
 	    return true;
 	}
 
 	kdDebug(1204) << ID << "request for " << si.name << "\n";
 
 	// All OK: pass the pixmap handle.
-	XChangeProperty(qt_xdisplay(), ev->requestor, ev->property, pixmap,
+	XChangeProperty(tqt_xdisplay(), ev->requestor, ev->property, pixmap,
 		32, PropModeReplace, (unsigned char *) &si.handle, 1);
 	it2.data().usecount++;
 	m_Active[ev->property] = si.handle;
 
 	// Request PropertyNotify events for the target window
 	// XXX: The target window better not be handled by us!
-	XSelectInput(qt_xdisplay(), ev->requestor, PropertyChangeMask);
+	XSelectInput(tqt_xdisplay(), ev->requestor, PropertyChangeMask);
 
 	// Acknowledge to the client and return
 	reply.xselection.property = ev->property;
-	XSendEvent(qt_xdisplay(), ev->requestor, false, 0, &reply);
+	XSendEvent(tqt_xdisplay(), ev->requestor, false, 0, &reply);
 	return true;
     }
 

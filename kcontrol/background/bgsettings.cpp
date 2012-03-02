@@ -493,8 +493,8 @@ KBackgroundSettings::KBackgroundSettings(int desk, int screen, bool drawBackgrou
 
     if (!config) {
         int screen_number = 0;
-        if (qt_xdisplay())
-            screen_number = DefaultScreen(qt_xdisplay());
+        if (tqt_xdisplay())
+            screen_number = DefaultScreen(tqt_xdisplay());
         TQCString configname;
         if (screen_number == 0)
             configname = "kdesktoprc";
@@ -1215,7 +1215,7 @@ void KGlobalBackgroundSettings::readSettings()
     m_CacheSize = m_pConfig->readNumEntry("CacheSize", _defCacheSize);
     
     m_Names.clear();
-    NETRootInfo info( qt_xdisplay(), NET::DesktopNames | NET::NumberOfDesktops );
+    NETRootInfo info( tqt_xdisplay(), NET::DesktopNames | NET::NumberOfDesktops );
     m_bDrawBackgroundPerScreen.resize(info.numberOfDesktops());
     for ( int i = 0 ; i < info.numberOfDesktops() ; ++i )
         m_bDrawBackgroundPerScreen[i] = m_pConfig->readBoolEntry( TQString("DrawBackgroundPerScreen_%1").arg(i), _defDrawBackgroundPerScreen );

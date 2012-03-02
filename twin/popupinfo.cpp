@@ -109,7 +109,7 @@ void PopupInfo::hide()
     TQWidget::hide();
     TQApplication::syncX();
     XEvent otherEvent;
-    while (XCheckTypedEvent (qt_xdisplay(), EnterNotify, &otherEvent ) )
+    while (XCheckTypedEvent (tqt_xdisplay(), EnterNotify, &otherEvent ) )
         ;
     m_shown = false;
     }

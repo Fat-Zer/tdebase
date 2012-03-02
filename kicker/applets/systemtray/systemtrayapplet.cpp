@@ -145,10 +145,10 @@ void SystemTrayApplet::initialize()
              this, TQT_SLOT( updateTrayWindows() ) );
 
     TQCString screenstr;
-    screenstr.setNum(qt_xscreen());
+    screenstr.setNum(tqt_xscreen());
     TQCString trayatom = "_NET_SYSTEM_TRAY_S" + screenstr;
 
-    Display *display = qt_xdisplay();
+    Display *display = tqt_xdisplay();
 
     net_system_tray_selection = XInternAtom(display, trayatom, false);
     net_system_tray_opcode = XInternAtom(display, "_NET_SYSTEM_TRAY_OPCODE", false);
@@ -159,7 +159,7 @@ void SystemTrayApplet::initialize()
                        winId(),
                        CurrentTime);
 
-    WId root = qt_xrootwin();
+    WId root = tqt_xrootwin();
 
     if (XGetSelectionOwner (display, net_system_tray_selection) == winId())
     {
@@ -531,10 +531,10 @@ void SystemTrayApplet::embedWindow( WId w, bool kde_tray )
 
     if (kde_tray)
     {
-        static Atom hack_atom = XInternAtom( qt_xdisplay(), "_KDE_SYSTEM_TRAY_EMBEDDING", False );
-        XChangeProperty( qt_xdisplay(), w, hack_atom, hack_atom, 32, PropModeReplace, NULL, 0 );
+        static Atom hack_atom = XInternAtom( tqt_xdisplay(), "_KDE_SYSTEM_TRAY_EMBEDDING", False );
+        XChangeProperty( tqt_xdisplay(), w, hack_atom, hack_atom, 32, PropModeReplace, NULL, 0 );
         emb->embed(w);
-        XDeleteProperty( qt_xdisplay(), w, hack_atom );
+        XDeleteProperty( tqt_xdisplay(), w, hack_atom );
     }
     else
     {

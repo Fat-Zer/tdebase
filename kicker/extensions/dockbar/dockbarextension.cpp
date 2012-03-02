@@ -97,14 +97,14 @@ void DockBarExtension::windowAdded(WId win)
     int argc;
     char **argv;
     TQString command;
-    if (XGetCommand(qt_xdisplay(), win, &argv, &argc)) {
+    if (XGetCommand(tqt_xdisplay(), win, &argv, &argc)) {
 	command = KShell::joinArgs(argv, argc);
 	XFreeStringList(argv);
     }
 
     // try to read wm hints
     WId resIconwin = 0;
-    XWMHints *wmhints = XGetWMHints(qt_xdisplay(), win);
+    XWMHints *wmhints = XGetWMHints(tqt_xdisplay(), win);
     if (0 != wmhints) { // we managed to read wm hints
 	// read IconWindowHint
         bool is_valid = false;
@@ -146,7 +146,7 @@ void DockBarExtension::windowAdded(WId win)
     // try to read class hint
     XClassHint hint;
     TQString resClass, resName;
-    if (XGetClassHint(qt_xdisplay(), win, &hint)) {
+    if (XGetClassHint(tqt_xdisplay(), win, &hint)) {
         resName =  hint.res_name;
         resClass = hint.res_class;
     }
@@ -158,7 +158,7 @@ void DockBarExtension::windowAdded(WId win)
        which causes the double-launch bug (one instance from the twin 
        session, and one from the dockbar) bug when kde is restarted */
     if (resIconwin != win) {
-        XWithdrawWindow( qt_xdisplay(), win, qt_xscreen() );
+        XWithdrawWindow( tqt_xdisplay(), win, tqt_xscreen() );
         while( KWin::windowInfo(win, NET::XAWMState).mappingState() != NET::Withdrawn );
     }
 

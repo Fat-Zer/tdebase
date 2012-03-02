@@ -62,23 +62,23 @@ extern "C"
 
     // use a default value for theme only if it's not configured at all, not even in X resources
     if( theme.isEmpty()
-        && TQCString( XGetDefault( qt_xdisplay(), "Xcursor", "theme" )).isEmpty()
-        && TQCString( XcursorGetTheme( qt_xdisplay())).isEmpty())
+        && TQCString( XGetDefault( tqt_xdisplay(), "Xcursor", "theme" )).isEmpty()
+        && TQCString( XcursorGetTheme( tqt_xdisplay())).isEmpty())
     {
         theme = "default";
     }
 
      // Apply the KDE cursor theme to ourselves
     if( !theme.isEmpty())
-        XcursorSetTheme(qt_xdisplay(), theme.data());
+        XcursorSetTheme(tqt_xdisplay(), theme.data());
 
     if (!size.isEmpty())
-    	XcursorSetDefaultSize(qt_xdisplay(), size.toUInt());
+    	XcursorSetDefaultSize(tqt_xdisplay(), size.toUInt());
 
     // Load the default cursor from the theme and apply it to the root window.
-    Cursor handle = XcursorLibraryLoadCursor(qt_xdisplay(), "left_ptr");
-    XDefineCursor(qt_xdisplay(), qt_xrootwin(), handle);
-    XFreeCursor(qt_xdisplay(), handle); // Don't leak the cursor
+    Cursor handle = XcursorLibraryLoadCursor(tqt_xdisplay(), "left_ptr");
+    XDefineCursor(tqt_xdisplay(), tqt_xrootwin(), handle);
+    XFreeCursor(tqt_xdisplay(), handle); // Don't leak the cursor
 
     // Tell klauncher to set the XCURSOR_THEME and XCURSOR_SIZE environment
     // variables when launching applications.

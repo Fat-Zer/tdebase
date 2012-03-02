@@ -57,12 +57,12 @@ WId WindowSelector::findRealWindow( WId w, int depth )
     {
     if( depth > 5 )
 	return None;
-    static Atom wm_state = XInternAtom( qt_xdisplay(), "WM_STATE", False );
+    static Atom wm_state = XInternAtom( tqt_xdisplay(), "WM_STATE", False );
     Atom type;
     int format;
     unsigned long nitems, after;
     unsigned char* prop;
-    if( XGetWindowProperty( qt_xdisplay(), w, wm_state, 0, 0, False, AnyPropertyType,
+    if( XGetWindowProperty( tqt_xdisplay(), w, wm_state, 0, 0, False, AnyPropertyType,
 	&type, &format, &nitems, &after, &prop ) == Success )
         {
 	if( prop != NULL )
@@ -74,7 +74,7 @@ WId WindowSelector::findRealWindow( WId w, int depth )
     Window* children;
     unsigned int nchildren;
     Window ret = None;
-    if( XQueryTree( qt_xdisplay(), w, &root, &parent, &children, &nchildren ) != 0 )
+    if( XQueryTree( tqt_xdisplay(), w, &root, &parent, &children, &nchildren ) != 0 )
         {
 	for( unsigned int i = 0;
 	     i < nchildren && ret == None;

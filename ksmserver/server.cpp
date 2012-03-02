@@ -885,7 +885,7 @@ void KSMServer::storeSession()
     config->writeEntry( "count", count );
 
     config->setGroup("General");
-    config->writeEntry( "screenCount", ScreenCount(qt_xdisplay()));
+    config->writeEntry( "screenCount", ScreenCount(tqt_xdisplay()));
 
     storeLegacySession( config );
     config->sync();

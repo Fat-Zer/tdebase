@@ -687,7 +687,7 @@ Time Client::readUserCreationTime() const
     unsigned long extra = 0;
     unsigned char *data = 0;
     KXErrorHandler handler; // ignore errors?
-    status = XGetWindowProperty( qt_xdisplay(), window(),
+    status = XGetWindowProperty( tqt_xdisplay(), window(),
         atoms->kde_net_wm_user_creation_time, 0, 10000, FALSE, XA_CARDINAL,
         &type, &format, &nitems, &extra, &data );
     if (status  == Success )

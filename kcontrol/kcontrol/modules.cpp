@@ -90,7 +90,7 @@ ProxyWidget *ConfigModule::module()
 void ConfigModule::deleteClient()
 {
   if (_embedWidget)
-    XKillClient(qt_xdisplay(), _embedWidget->embeddedWinId());
+    XKillClient(tqt_xdisplay(), _embedWidget->embeddedWinId());
 
   delete _rootProcess;
   _rootProcess = 0;
@@ -229,7 +229,7 @@ void ConfigModule::runAsRoot()
 void ConfigModule::rootExited(KProcess *)
 {
   if (_embedWidget->embeddedWinId())
-    XDestroyWindow(qt_xdisplay(), _embedWidget->embeddedWinId());
+    XDestroyWindow(tqt_xdisplay(), _embedWidget->embeddedWinId());
 
   delete _embedWidget;
   _embedWidget = 0;

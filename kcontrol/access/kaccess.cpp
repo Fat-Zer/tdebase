@@ -107,7 +107,7 @@ KAccessApp::KAccessApp(bool allowStyles, bool GUIenabled)
 
   initMasks();
   XkbStateRec state_return;
-  XkbGetState (qt_xdisplay(), XkbUseCoreKbd, &state_return);
+  XkbGetState (tqt_xdisplay(), XkbUseCoreKbd, &state_return);
   unsigned char latched = XkbStateMods (&state_return);
   unsigned char locked  = XkbModLocks  (&state_return);
   state = ((int)locked)<<8 | latched;
@@ -138,23 +138,23 @@ void KAccessApp::readSettings()
 
   // select bell events if we need them
   int state = (_artsBell || _visibleBell) ? XkbBellNotifyMask : 0;
-  XkbSelectEvents(qt_xdisplay(), XkbUseCoreKbd, XkbBellNotifyMask, state);
+  XkbSelectEvents(tqt_xdisplay(), XkbUseCoreKbd, XkbBellNotifyMask, state);
 
   // deactivate system bell if not needed
   if (!_systemBell)
-    XkbChangeEnabledControls(qt_xdisplay(), XkbUseCoreKbd, XkbAudibleBellMask, 0);
+    XkbChangeEnabledControls(tqt_xdisplay(), XkbUseCoreKbd, XkbAudibleBellMask, 0);
   else
-    XkbChangeEnabledControls(qt_xdisplay(), XkbUseCoreKbd, XkbAudibleBellMask, XkbAudibleBellMask);
+    XkbChangeEnabledControls(tqt_xdisplay(), XkbUseCoreKbd, XkbAudibleBellMask, XkbAudibleBellMask);
 
   // keyboard -------------------------------------------------------------
 
   config->setGroup("Keyboard");
 
   // get keyboard state
-  XkbDescPtr xkb = XkbGetMap(qt_xdisplay(), 0, XkbUseCoreKbd);
+  XkbDescPtr xkb = XkbGetMap(tqt_xdisplay(), 0, XkbUseCoreKbd);
   if (!xkb)
     return;
-  if (XkbGetControls(qt_xdisplay(), XkbAllControlsMask, xkb) != Success)
+  if (XkbGetControls(tqt_xdisplay(), XkbAllControlsMask, xkb) != Success)
     return;
 
   // sticky keys
@@ -279,10 +279,10 @@ void KAccessApp::readSettings()
    if (dialog == 0)
       requestedFeatures = features;
   // set state
-  XkbSetControls(qt_xdisplay(), XkbControlsEnabledMask | XkbMouseKeysAccelMask | XkbStickyKeysMask | XkbSlowKeysMask | XkbBounceKeysMask | XkbAccessXKeysMask | XkbAccessXTimeoutMask, xkb);
+  XkbSetControls(tqt_xdisplay(), XkbControlsEnabledMask | XkbMouseKeysAccelMask | XkbStickyKeysMask | XkbSlowKeysMask | XkbBounceKeysMask | XkbAccessXKeysMask | XkbAccessXTimeoutMask, xkb);
 
   // select AccessX events
-  XkbSelectEvents(qt_xdisplay(), XkbUseCoreKbd, XkbAllEventsMask, XkbAllEventsMask);
+  XkbSelectEvents(tqt_xdisplay(), XkbUseCoreKbd, XkbAllEventsMask, XkbAllEventsMask);
 
   if (!_artsBell && !_visibleBell && !_gestureConfirmation
       && !_kNotifyModifiers && !_kNotifyAccessX) {
@@ -290,13 +290,13 @@ void KAccessApp::readSettings()
      // We will exit, but the features need to stay configured
      uint ctrls = XkbStickyKeysMask | XkbSlowKeysMask | XkbBounceKeysMask | XkbMouseKeysMask | XkbAudibleBellMask | XkbControlsNotifyMask;
      uint values = xkb->ctrls->enabled_ctrls & ctrls;
-     XkbSetAutoResetControls(qt_xdisplay(), ctrls, &ctrls, &values);
+     XkbSetAutoResetControls(tqt_xdisplay(), ctrls, &ctrls, &values);
      exit(0);
   } else {
      // reset them after program exit
      uint ctrls = XkbStickyKeysMask | XkbSlowKeysMask | XkbBounceKeysMask | XkbMouseKeysMask | XkbAudibleBellMask | XkbControlsNotifyMask;
      uint values = XkbAudibleBellMask;
-     XkbSetAutoResetControls(qt_xdisplay(), ctrls, &ctrls, &values);
+     XkbSetAutoResetControls(tqt_xdisplay(), ctrls, &ctrls, &values);
   }
 
   delete overlay;
@@ -319,14 +319,14 @@ void KAccessApp::initMasks() {
       int mask = modifierKeys[i].mask;
       if (mask == 0)
          if (modifierKeys[i].keysym != 0)
-            mask = XkbKeysymToModifiers (qt_xdisplay(), modifierKeys[i].keysym);
+            mask = XkbKeysymToModifiers (tqt_xdisplay(), modifierKeys[i].keysym);
          else if (!strcmp(modifierKeys[i].name, "Win"))
             mask = KKeyNative::modX(KKey::WIN);
          else
-            mask = XkbKeysymToModifiers (qt_xdisplay(), XK_Mode_switch)
-                 | XkbKeysymToModifiers (qt_xdisplay(), XK_ISO_Level3_Shift)
-                 | XkbKeysymToModifiers (qt_xdisplay(), XK_ISO_Level3_Latch)
-                 | XkbKeysymToModifiers (qt_xdisplay(), XK_ISO_Level3_Lock);
+            mask = XkbKeysymToModifiers (tqt_xdisplay(), XK_Mode_switch)
+                 | XkbKeysymToModifiers (tqt_xdisplay(), XK_ISO_Level3_Shift)
+                 | XkbKeysymToModifiers (tqt_xdisplay(), XK_ISO_Level3_Latch)
+                 | XkbKeysymToModifiers (tqt_xdisplay(), XK_ISO_Level3_Lock);
 
       int bit = maskToBit (mask);
       if (bit != -1 && keys[bit] == -1)
@@ -376,7 +376,7 @@ void KAccessApp::activeWindowChanged(WId wid)
 
 void KAccessApp::xkbStateNotify () {
    XkbStateRec state_return;
-   XkbGetState (qt_xdisplay(), XkbUseCoreKbd, &state_return);
+   XkbGetState (tqt_xdisplay(), XkbUseCoreKbd, &state_return);
    unsigned char latched = XkbStateMods (&state_return);
    unsigned char locked  = XkbModLocks  (&state_return);
    int mods = ((int)locked)<<8 | latched;
@@ -430,7 +430,7 @@ void KAccessApp::xkbBellNotify(XkbBellNotifyEvent *event)
       WId id = _activeWindow;
 
       NETRect frame, window;
-      NETWinInfo net(qt_xdisplay(), id, desktop()->winId(), 0);
+      NETWinInfo net(tqt_xdisplay(), id, desktop()->winId(), 0);
 
       net.kdeGeometry(frame, window);
 
@@ -733,7 +733,7 @@ void KAccessApp::xkbControlsNotify(XkbControlsNotifyEvent *event)
               else if ((enabled | disabled) == XkbStickyKeysMask)
                  explanation = i18n("You pressed the Shift key 5 consecutive times or an application has requested to change this setting.");
               else if ((enabled | disabled) == XkbMouseKeysMask) {
-                 TQString shortcut = mouseKeysShortcut(qt_xdisplay());
+                 TQString shortcut = mouseKeysShortcut(tqt_xdisplay());
                  if (!shortcut.isEmpty() && !shortcut.isNull())
                     explanation = i18n("You pressed %1 or an application has requested to change this setting.").arg(shortcut);
               }

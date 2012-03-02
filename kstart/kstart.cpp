@@ -48,7 +48,7 @@ static KWinModule* twinmodule;
 KStart::KStart()
     :TQObject()
 {
-    NETRootInfo i( qt_xdisplay(), NET::Supported );
+    NETRootInfo i( tqt_xdisplay(), NET::Supported );
     bool useRule = !toSysTray && i.isSupported( NET::WM2KDETemporaryRules );
 
     if( useRule )
@@ -151,7 +151,7 @@ void KStart::windowAdded(WId w){
     }
     if ( windowclass != 0 ) {
         XClassHint hint;
-        if( !XGetClassHint( qt_xdisplay(), w, &hint ))
+        if( !XGetClassHint( tqt_xdisplay(), w, &hint ))
             return;
         TQCString cls = windowclass.contains( ' ' )
             ? TQCString( hint.res_name ) + ' ' + hint.res_class : TQCString( hint.res_class );
@@ -173,14 +173,14 @@ void KStart::windowAdded(WId w){
 }
 
 
-extern Atom qt_wm_state; // defined in qapplication_x11.cpp
+extern Atom tqt_wm_state; // defined in qapplication_x11.cpp
 static bool wstate_withdrawn( WId winid )
 {
     Atom type;
     int format;
     unsigned long length, after;
     unsigned char *data;
-    int r = XGetWindowProperty( qt_xdisplay(), winid, qt_wm_state, 0, 2,
+    int r = XGetWindowProperty( tqt_xdisplay(), winid, tqt_wm_state, 0, 2,
 				FALSE, AnyPropertyType, &type, &format,
 				&length, &after, &data );
     bool withdrawn = TRUE;
@@ -197,25 +197,25 @@ void KStart::applyStyle(WId w ) {
 
     if ( toSysTray || state || iconify || windowtype != NET::Unknown || desktop >= 1 ) {
 
-	XWithdrawWindow(qt_xdisplay(), w, qt_xscreen());
+	XWithdrawWindow(tqt_xdisplay(), w, tqt_xscreen());
 	TQApplication::flushX();
 
 	while ( !wstate_withdrawn(w) )
 	    ;
     }
 
-    NETWinInfo info( qt_xdisplay(), w, qt_xrootwin(), NET::WMState );
+    NETWinInfo info( tqt_xdisplay(), w, tqt_xrootwin(), NET::WMState );
 
     if ( ( desktop > 0 && desktop <= twinmodule->numberOfDesktops() )
          || desktop == NETWinInfo::OnAllDesktops )
 	info.setDesktop( desktop );
 
     if (iconify) {
-	XWMHints * hints = XGetWMHints(qt_xdisplay(), w );
+	XWMHints * hints = XGetWMHints(tqt_xdisplay(), w );
 	if (hints ) {
 	    hints->flags |= StateHint;
 	    hints->initial_state = IconicState;
-	    XSetWMHints( qt_xdisplay(), w, hints );
+	    XSetWMHints( tqt_xdisplay(), w, hints );
 	    XFree(hints);
 	}
     }
@@ -229,19 +229,19 @@ void KStart::applyStyle(WId w ) {
 
     if ( toSysTray ) {
 	TQApplication::beep();
-	KWin::setSystemTrayWindowFor( w,  qt_xrootwin() );
+	KWin::setSystemTrayWindowFor( w,  tqt_xrootwin() );
     }
 
     if ( fullscreen ) {
 	TQRect r = TQApplication::desktop()->geometry();
-	XMoveResizeWindow( qt_xdisplay(), w, r.x(), r.y(), r.width(), r.height() );
+	XMoveResizeWindow( tqt_xdisplay(), w, r.x(), r.y(), r.width(), r.height() );
     }
 
 
-    XSync(qt_xdisplay(), False);
+    XSync(tqt_xdisplay(), False);
 
-    XMapWindow(qt_xdisplay(), w );
-    XSync(qt_xdisplay(), False);
+    XMapWindow(tqt_xdisplay(), w );
+    XSync(tqt_xdisplay(), False);
 
     if (activate)
       KWin::forceActiveWindow( w );
@@ -385,7 +385,7 @@ int main( int argc, char *argv[] )
   iconify = args->isSet("iconify");
   toSysTray = args->isSet("tosystray");
   if ( args->isSet("fullscreen") ) {
-      NETRootInfo i( qt_xdisplay(), NET::Supported );
+      NETRootInfo i( tqt_xdisplay(), NET::Supported );
       if( i.isSupported( NET::FullScreen )) {
           state |= NET::FullScreen;
           mask |= NET::FullScreen;
@@ -395,7 +395,7 @@ int main( int argc, char *argv[] )
       }
   }
 
-  fcntl(ConnectionNumber(qt_xdisplay()), F_SETFD, 1);
+  fcntl(ConnectionNumber(tqt_xdisplay()), F_SETFD, 1);
   args->clear();
 
   KStart start;

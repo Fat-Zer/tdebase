@@ -140,7 +140,7 @@ KDesktop::KDesktop( bool x_root_hack, bool wait_for_kded ) :
     // those two WStyle_ break kdesktop when the root-hack isn't used (no Dnd)
    startup_id( NULL ), m_waitForKicker(0)
 {
-  NETRootInfo i( qt_xdisplay(), NET::Supported );
+  NETRootInfo i( tqt_xdisplay(), NET::Supported );
   m_wmSupport = i.isSupported( NET::WM2ShowingDesktop );
 
   m_bWaitForKded = wait_for_kded;
@@ -173,8 +173,8 @@ KDesktop::KDesktop( bool x_root_hack, bool wait_for_kded ) :
     unsigned long data[2];
     data[0] = (unsigned long) 1;
     data[1] = (unsigned long) 0; // None; (Werner)
-    Atom wm_state = XInternAtom(qt_xdisplay(), "WM_STATE", False);
-    XChangeProperty(qt_xdisplay(), winId(), wm_state, wm_state, 32,
+    Atom wm_state = XInternAtom(tqt_xdisplay(), "WM_STATE", False);
+    XChangeProperty(tqt_xdisplay(), winId(), wm_state, wm_state, 32,
                     PropModeReplace, (unsigned char *)data, 2);
 
   }
@@ -210,7 +210,7 @@ KDesktop::KDesktop( bool x_root_hack, bool wait_for_kded ) :
 void
 KDesktop::initRoot()
 {
-  Display *dpy = qt_xdisplay();
+  Display *dpy = tqt_xdisplay();
   Window root = RootWindow(dpy, kdesktop_screen_number);
   XDefineCursor(dpy, root, cursor().handle());
   
@@ -515,7 +515,7 @@ void KDesktop::popupExecuteCommand(const TQString& command)
       m_miniCli->setCommand(command);
 
   // Move minicli to the current desktop
-  NETWinInfo info( qt_xdisplay(), m_miniCli->winId(), qt_xrootwin(), NET::WMDesktop );
+  NETWinInfo info( tqt_xdisplay(), m_miniCli->winId(), tqt_xrootwin(), NET::WMDesktop );
   int currentDesktop = twinModule()->currentDesktop();
   if ( info.desktop() != currentDesktop )
       info.setDesktop( currentDesktop );
@@ -523,7 +523,7 @@ void KDesktop::popupExecuteCommand(const TQString& command)
   if ( m_miniCli->isVisible() ) {
       KWin::forceActiveWindow( m_miniCli->winId() );
   } else {
-      NETRootInfo i( qt_xdisplay(), NET::Supported );
+      NETRootInfo i( tqt_xdisplay(), NET::Supported );
       if( !i.isSupported( NET::WM2FullPlacement )) {
           TQRect rect = KGlobalSettings::desktopGeometry(TQCursor::pos());
           m_miniCli->move(rect.x() + (rect.width() - m_miniCli->width())/2,
@@ -607,7 +607,7 @@ void KDesktop::setShowDesktop( bool b )
 
     if( m_wmSupport )
     {
-        NETRootInfo i( qt_xdisplay(), 0 );
+        NETRootInfo i( tqt_xdisplay(), 0 );
         i.setShowingDesktop( b );
         return;
     }
@@ -624,7 +624,7 @@ void KDesktop::setShowDesktop( bool b )
         {
             WId w = *it;
 
-            NETWinInfo info( qt_xdisplay(), w, qt_xrootwin(),
+            NETWinInfo info( tqt_xdisplay(), w, tqt_xrootwin(),
                              NET::XAWMState | NET::WMDesktop );
 
             if (info.mappingState() == NET::Visible &&
@@ -689,7 +689,7 @@ void KDesktop::slotWindowAdded(WId w)
         return;
     }
 
-    NETWinInfo inf(qt_xdisplay(), w, qt_xrootwin(),
+    NETWinInfo inf(tqt_xdisplay(), w, tqt_xrootwin(),
                    NET::XAWMState | NET::WMWindowType);
     NET::WindowType windowType = inf.windowType(NET::AllTypesMask);
 
@@ -723,7 +723,7 @@ void KDesktop::slotWindowChanged(WId w, unsigned int dirty)
 
     if (dirty & NET::XAWMState)
     {
-        NETWinInfo inf(qt_xdisplay(), w, qt_xrootwin(),
+        NETWinInfo inf(tqt_xdisplay(), w, tqt_xrootwin(),
                        NET::XAWMState | NET::WMWindowType);
         NET::WindowType windowType = inf.windowType(NET::AllTypesMask);
 
@@ -852,15 +852,15 @@ void KDesktop::slotSetVRoot()
         return;
     }
 
-    unsigned long rw = RootWindowOfScreen(ScreenOfDisplay(qt_xdisplay(), qt_xscreen()));
+    unsigned long rw = RootWindowOfScreen(ScreenOfDisplay(tqt_xdisplay(), tqt_xscreen()));
     unsigned long vroot_data[1] = { m_pIconView->viewport()->winId() };
-    static Atom vroot = XInternAtom(qt_xdisplay(), "__SWM_VROOT", False);
+    static Atom vroot = XInternAtom(tqt_xdisplay(), "__SWM_VROOT", False);
 
     Window rootReturn, parentReturn, *children;
     unsigned int numChildren;
     Window top = winId();
     while (1) {
-        /*int ret = */XQueryTree(qt_xdisplay(), top , &rootReturn, &parentReturn,
+        /*int ret = */XQueryTree(tqt_xdisplay(), top , &rootReturn, &parentReturn,
                                  &children, &numChildren);
         if (children)
             XFree((char *)children);
@@ -870,10 +870,10 @@ void KDesktop::slotSetVRoot()
             top = parentReturn;
     }
     if ( set_vroot )
-        XChangeProperty(qt_xdisplay(), top, vroot, XA_WINDOW, 32,
+        XChangeProperty(tqt_xdisplay(), top, vroot, XA_WINDOW, 32,
                         PropModeReplace, (unsigned char *)vroot_data, 1);
     else
-        XDeleteProperty (qt_xdisplay(), top, vroot);
+        XDeleteProperty (tqt_xdisplay(), top, vroot);
 }
 
 // -----------------------------------------------------------------------------

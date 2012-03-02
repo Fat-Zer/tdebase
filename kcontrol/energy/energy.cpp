@@ -94,7 +94,7 @@ extern "C" {
         KConfig *cfg = new KConfig("kcmdisplayrc", true /*readonly*/, false /*no globals*/);
         cfg->setGroup("DisplayEnergy");
 
-	Display *dpy = qt_xdisplay();
+	Display *dpy = tqt_xdisplay();
 	CARD16 pre_configured_status;
 	BOOL pre_configured_enabled;
 	CARD16 pre_configured_standby;
@@ -153,7 +153,7 @@ KEnergy::KEnergy(TQWidget *parent, const char *name)
 
 #ifdef HAVE_DPMS
     int dummy;
-    m_bDPMS = DPMSQueryExtension(qt_xdisplay(), &dummy, &dummy);
+    m_bDPMS = DPMSQueryExtension(tqt_xdisplay(), &dummy, &dummy);
 #endif
 
     TQVBoxLayout *top = new TQVBoxLayout(this, 0, KDialog::spacingHint());
@@ -333,7 +333,7 @@ void KEnergy::applySettings(bool enable, int standby, int suspend, int off)
     XErrFunc defaultHandler;
     defaultHandler = XSetErrorHandler(dropError);
 
-    Display *dpy = qt_xdisplay();
+    Display *dpy = tqt_xdisplay();
 
     int dummy;
     bool hasDPMS = DPMSQueryExtension(dpy, &dummy, &dummy);

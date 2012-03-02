@@ -869,7 +869,7 @@ void KTheme::addPreview()
 {
     TQString file = m_kgd->saveLocation( "themes", m_name + "/" ) + m_name + ".preview.png";
     kdDebug() << "Adding preview: " << file << endl;
-    TQPixmap snapshot = TQPixmap::grabWindow( qt_xrootwin() );
+    TQPixmap snapshot = TQPixmap::grabWindow( tqt_xrootwin() );
     snapshot.save( file, "PNG" );
 }
 

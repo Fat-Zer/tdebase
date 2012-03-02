@@ -51,8 +51,8 @@
 static TQCString desktopConfigname()
 {
     int desktop=0;
-    if (qt_xdisplay())
-        desktop = DefaultScreen(qt_xdisplay());
+    if (tqt_xdisplay())
+        desktop = DefaultScreen(tqt_xdisplay());
     TQCString name;
     if (desktop == 0)
         name = "kdesktoprc";

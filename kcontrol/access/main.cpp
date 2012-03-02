@@ -27,7 +27,7 @@ extern "C" KDE_EXPORT int kdemain(int argc, char * argv[] )
     }
   kdDebug() << "Xlib XKB extension major=" << major << " minor=" << minor << endl;
 
-  // we need an application object for qt_xdisplay()
+  // we need an application object for tqt_xdisplay()
   KAccessApp app;
 
   // verify the X server has matching XKB extension
@@ -35,7 +35,7 @@ extern "C" KDE_EXPORT int kdemain(int argc, char * argv[] )
   int opcode_rtrn;
   int error_rtrn;
   int xkb_opcode;
-  if (!XkbQueryExtension(qt_xdisplay(), &opcode_rtrn, &xkb_opcode, &error_rtrn,
+  if (!XkbQueryExtension(tqt_xdisplay(), &opcode_rtrn, &xkb_opcode, &error_rtrn,
 			 &major, &minor))
     {
       kdError() << "X server has not matching XKB extension" << endl;

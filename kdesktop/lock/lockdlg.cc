@@ -103,8 +103,8 @@ void PasswordDlg::init(GreeterPluginHandle *plugin)
     if (trinity_desktop_lock_use_system_modal_dialogs) {
         // Signal that we do not want any window controls to be shown at all
         Atom kde_wm_system_modal_notification;
-        kde_wm_system_modal_notification = XInternAtom(qt_xdisplay(), "_KDE_WM_MODAL_SYS_NOTIFICATION", False);
-        XChangeProperty(qt_xdisplay(), winId(), kde_wm_system_modal_notification, XA_INTEGER, 32, PropModeReplace, (unsigned char *) "TRUE", 1L);
+        kde_wm_system_modal_notification = XInternAtom(tqt_xdisplay(), "_KDE_WM_MODAL_SYS_NOTIFICATION", False);
+        XChangeProperty(tqt_xdisplay(), winId(), kde_wm_system_modal_notification, XA_INTEGER, 32, PropModeReplace, (unsigned char *) "TRUE", 1L);
     }
     setCaption(i18n("Desktop Session Locked"));
 
@@ -617,8 +617,8 @@ void PasswordDlg::slotStartNewSession()
     if (trinity_desktop_lock_use_system_modal_dialogs) {
         // Signal that we do not want any window controls to be shown at all
         Atom kde_wm_system_modal_notification;
-        kde_wm_system_modal_notification = XInternAtom(qt_xdisplay(), "_KDE_WM_MODAL_SYS_NOTIFICATION", False);
-        XChangeProperty(qt_xdisplay(), dialog->winId(), kde_wm_system_modal_notification, XA_INTEGER, 32, PropModeReplace, (unsigned char *) "TRUE", 1L);
+        kde_wm_system_modal_notification = XInternAtom(tqt_xdisplay(), "_KDE_WM_MODAL_SYS_NOTIFICATION", False);
+        XChangeProperty(tqt_xdisplay(), dialog->winId(), kde_wm_system_modal_notification, XA_INTEGER, 32, PropModeReplace, (unsigned char *) "TRUE", 1L);
     }
     dialog->setCaption(i18n("New Session"));
 
@@ -743,8 +743,8 @@ void PasswordDlg::slotSwitchUser()
     if (trinity_desktop_lock_use_system_modal_dialogs) {
         // Signal that we do not want any window controls to be shown at all
         Atom kde_wm_system_modal_notification;
-        kde_wm_system_modal_notification = XInternAtom(qt_xdisplay(), "_KDE_WM_MODAL_SYS_NOTIFICATION", False);
-        XChangeProperty(qt_xdisplay(), dialog.winId(), kde_wm_system_modal_notification, XA_INTEGER, 32, PropModeReplace, (unsigned char *) "TRUE", 1L);
+        kde_wm_system_modal_notification = XInternAtom(tqt_xdisplay(), "_KDE_WM_MODAL_SYS_NOTIFICATION", False);
+        XChangeProperty(tqt_xdisplay(), dialog.winId(), kde_wm_system_modal_notification, XA_INTEGER, 32, PropModeReplace, (unsigned char *) "TRUE", 1L);
     }
     dialog.setCaption(i18n("Switch User"));
 
@@ -840,7 +840,7 @@ void PasswordDlg::capsLocked()
     unsigned int lmask;
     Window dummy1, dummy2;
     int dummy3, dummy4, dummy5, dummy6;
-    XQueryPointer(qt_xdisplay(), DefaultRootWindow( qt_xdisplay() ), &dummy1, &dummy2, &dummy3, &dummy4, &dummy5, &dummy6, &lmask);
+    XQueryPointer(tqt_xdisplay(), DefaultRootWindow( tqt_xdisplay() ), &dummy1, &dummy2, &dummy3, &dummy4, &dummy5, &dummy6, &lmask);
     mCapsLocked = lmask & LockMask;
     updateLabel();
 }

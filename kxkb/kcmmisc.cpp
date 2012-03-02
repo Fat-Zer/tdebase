@@ -274,7 +274,7 @@ DEALINGS IN THE SOFTWARE.
 
 #if defined(HAVE_XTEST) || defined(HAVE_XKB)
 
-Display* dpy = qt_xdisplay();
+Display* dpy = tqt_xdisplay();
 
 /* the XKB stuff is based on code created by Oswald Buddenhagen <ossi@kde.org> */
 #ifdef HAVE_XKB
@@ -487,7 +487,7 @@ void numlockx_change_numlock_state( bool ) {} // dummy
 #include <X11/extensions/xf86misc.h>
 void set_repeatrate(int delay, double rate)
 {
-  Display* dpy = qt_xdisplay();
+  Display* dpy = tqt_xdisplay();
   XF86MiscKbdSettings values;
 
   XF86MiscGetKbdSettings(dpy, &values);
@@ -500,7 +500,7 @@ void set_repeatrate(int delay, double rate)
 void set_repeatrate(int delay, double rate)
 {
 #if HAVE_XKB
-  Display* dpy = qt_xdisplay();
+  Display* dpy = tqt_xdisplay();
   int xkbmajor = XkbMajorVersion, xkbminor = XkbMinorVersion;
   int xkbopcode, xkbevent, xkberror;
 

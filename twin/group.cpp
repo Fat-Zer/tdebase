@@ -209,7 +209,7 @@ Group::Group( Window leader_P, Workspace* workspace_P )
         {
         leader_client = workspace_P->findClient( WindowMatchPredicate( leader_P ));
         unsigned long properties[ 2 ] = { 0, NET::WM2StartupId };
-        leader_info = new NETWinInfo( qt_xdisplay(), leader_P, workspace()->rootWin(),
+        leader_info = new NETWinInfo( tqt_xdisplay(), leader_P, workspace()->rootWin(),
             properties, 2 );
         }
     workspace()->addGroup( this, Allowed );
@@ -580,7 +580,7 @@ void Client::readTransient()
     {
     TRANSIENCY_CHECK( this );
     Window new_transient_for_id;
-    if( XGetTransientForHint( qt_xdisplay(), window(), &new_transient_for_id ))
+    if( XGetTransientForHint( tqt_xdisplay(), window(), &new_transient_for_id ))
         {
         original_transient_for_id = new_transient_for_id;
         new_transient_for_id = verifyTransientFor( new_transient_for_id, true );
@@ -787,7 +787,7 @@ Window Client::verifyTransientFor( Window new_transient_for, bool defined )
         Window root_return, parent_return;
         Window* wins = NULL;
         unsigned int nwins;
-        int r = XQueryTree(qt_xdisplay(), new_transient_for, &root_return, &parent_return,  &wins, &nwins);
+        int r = XQueryTree(tqt_xdisplay(), new_transient_for, &root_return, &parent_return,  &wins, &nwins);
         if ( wins )
             XFree((void *) wins);
         if ( r == 0)
@@ -828,7 +828,7 @@ Window Client::verifyTransientFor( Window new_transient_for, bool defined )
         new_transient_for = workspace()->rootWin();
         }
     if( new_property_value != original_transient_for_id )
-        XSetTransientForHint( qt_xdisplay(), window(), new_property_value );
+        XSetTransientForHint( tqt_xdisplay(), window(), new_property_value );
     return new_transient_for;
     }
 

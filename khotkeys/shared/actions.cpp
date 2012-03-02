@@ -385,7 +385,7 @@ void Keyboard_input_action::execute()
     if( key == "Enter" && KKey( key ).keyCodeQt() == 0 )
         key = "Return";
     keyboard_handler->send_macro_key( KKey( key ), w ); // the rest
-    XFlush( qt_xdisplay());
+    XFlush( tqt_xdisplay());
     }
     
 TQString Keyboard_input_action::description() const

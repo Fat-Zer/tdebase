@@ -191,7 +191,7 @@ extern "C" KDE_EXPORT int kdemain( int argc, char* argv[] )
 
     putenv((char*)"SESSION_MANAGER=");
     KApplication a(KApplication::openX11RGBADisplay(), false); // Disable styles until we need them.
-    fcntl(ConnectionNumber(qt_xdisplay()), F_SETFD, 1);
+    fcntl(ConnectionNumber(tqt_xdisplay()), F_SETFD, 1);
 
 
     KCmdLineArgs *args = KCmdLineArgs::parsedArgs();
@@ -228,7 +228,7 @@ extern "C" KDE_EXPORT int kdemain( int argc, char* argv[] )
     KConfig *config = KGlobal::config();
     config->setGroup( "General" );
 
-    int realScreenCount = ScreenCount( qt_xdisplay() );
+    int realScreenCount = ScreenCount( tqt_xdisplay() );
     bool screenCountChanged =
          ( config->readNumEntry( "screenCount", realScreenCount ) != realScreenCount );
 

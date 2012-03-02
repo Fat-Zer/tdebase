@@ -36,8 +36,8 @@ AutoLogout::AutoLogout(LockProcess *parent) : TQDialog(parent, "password dialog"
     if (trinity_desktop_lock_use_system_modal_dialogs) {
         // Signal that we do not want any window controls to be shown at all
         Atom kde_wm_system_modal_notification;
-        kde_wm_system_modal_notification = XInternAtom(qt_xdisplay(), "_KDE_WM_MODAL_SYS_NOTIFICATION", False);
-        XChangeProperty(qt_xdisplay(), winId(), kde_wm_system_modal_notification, XA_INTEGER, 32, PropModeReplace, (unsigned char *) "TRUE", 1L);
+        kde_wm_system_modal_notification = XInternAtom(tqt_xdisplay(), "_KDE_WM_MODAL_SYS_NOTIFICATION", False);
+        XChangeProperty(tqt_xdisplay(), winId(), kde_wm_system_modal_notification, XA_INTEGER, 32, PropModeReplace, (unsigned char *) "TRUE", 1L);
     }
     setCaption(i18n("Automatic Logout Notification"));
 

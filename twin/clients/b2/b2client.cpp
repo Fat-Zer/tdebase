@@ -440,8 +440,8 @@ bool B2Client::isModalSystemNotification()
     int format, result;
     unsigned long n, left;
     Atom kde_wm_system_modal_notification;
-    kde_wm_system_modal_notification = XInternAtom(qt_xdisplay(), "_KDE_WM_MODAL_SYS_NOTIFICATION", False);
-    result = XGetWindowProperty(qt_xdisplay(), windowId(), kde_wm_system_modal_notification, 0L, 1L, False, XA_CARDINAL, &actual, &format, &n, &left, /*(unsigned char **)*/ &data);
+    kde_wm_system_modal_notification = XInternAtom(tqt_xdisplay(), "_KDE_WM_MODAL_SYS_NOTIFICATION", False);
+    result = XGetWindowProperty(tqt_xdisplay(), windowId(), kde_wm_system_modal_notification, 0L, 1L, False, XA_CARDINAL, &actual, &format, &n, &left, /*(unsigned char **)*/ &data);
     if (result == Success && data != None && format == 32 )
         {
         return TRUE;
@@ -1324,7 +1324,7 @@ bool B2Titlebar::x11Event(XEvent *e)
 {
     if (!set_x11mask) {
 	set_x11mask = true;
-	XSelectInput(qt_xdisplay(), winId(),
+	XSelectInput(tqt_xdisplay(), winId(),
 	    KeyPressMask | KeyReleaseMask |
 	    ButtonPressMask | ButtonReleaseMask |
 	    KeymapStateMask |

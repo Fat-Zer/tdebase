@@ -96,11 +96,11 @@ Application::Application( )
         }
 
     if (screen_number == -1)
-        screen_number = DefaultScreen(qt_xdisplay());
+        screen_number = DefaultScreen(tqt_xdisplay());
 
     if( !owner.claim( args->isSet( "replace" ), true ))
         {
-        Display* dpy = qt_xdisplay();
+        Display* dpy = tqt_xdisplay();
         Window w;
         Atom a;
         static char net_wm_sm[] = "WM_Sxx";
@@ -156,7 +156,7 @@ Application::Application( )
     XSetErrorHandler( x11ErrorHandler );
 
     // check  whether another windowmanager is running
-    XSelectInput(qt_xdisplay(), qt_xrootwin(), SubstructureRedirectMask  );
+    XSelectInput(tqt_xdisplay(), tqt_xrootwin(), SubstructureRedirectMask  );
     syncX(); // trigger error now
 
     options = new Options;
@@ -164,8 +164,8 @@ Application::Application( )
 
     // Signal that we are The KWin!
     Atom kde_wm_system_modal_notification;
-    kde_wm_system_modal_notification = XInternAtom(qt_xdisplay(), "_KDE_WM_IS_KWIN", False);
-    XChangeProperty(qt_xdisplay(), owner.ownerWindow(), kde_wm_system_modal_notification, XA_INTEGER, 32, PropModeReplace, (unsigned char *) "TRUE", 1L);
+    kde_wm_system_modal_notification = XInternAtom(tqt_xdisplay(), "_KDE_WM_IS_KWIN", False);
+    XChangeProperty(tqt_xdisplay(), owner.ownerWindow(), kde_wm_system_modal_notification, XA_INTEGER, 32, PropModeReplace, (unsigned char *) "TRUE", 1L);
 
     // create workspace.
     (void) new Workspace( isSessionRestored() );
@@ -180,12 +180,12 @@ Application::Application( )
     dcopClient()->send( "ksplash", "", "upAndRunning(TQString)", TQString("wm started"));
     XEvent e;
     e.xclient.type = ClientMessage;
-    e.xclient.message_type = XInternAtom( qt_xdisplay(), "_KDE_SPLASH_PROGRESS", False );
-    e.xclient.display = qt_xdisplay();
-    e.xclient.window = qt_xrootwin();
+    e.xclient.message_type = XInternAtom( tqt_xdisplay(), "_KDE_SPLASH_PROGRESS", False );
+    e.xclient.display = tqt_xdisplay();
+    e.xclient.window = tqt_xrootwin();
     e.xclient.format = 8;
     strcpy( e.xclient.data.b, "wm started" );
-    XSendEvent( qt_xdisplay(), qt_xrootwin(), False, SubstructureNotifyMask, &e );
+    XSendEvent( tqt_xdisplay(), tqt_xrootwin(), False, SubstructureNotifyMask, &e );
     }
 
 Application::~Application()
@@ -193,7 +193,7 @@ Application::~Application()
     delete Workspace::self();
     if( owner.ownerWindow() != None ) // if there was no --replace (no new WM)
         {
-        XSetInputFocus( qt_xdisplay(), PointerRoot, RevertToPointerRoot, GET_QT_X_TIME() );
+        XSetInputFocus( tqt_xdisplay(), PointerRoot, RevertToPointerRoot, GET_QT_X_TIME() );
         DCOPRef ref( "kded", "kded" );
         if( !ref.send( "loadModule", TQCString( "kdetrayproxy" )))
             kdWarning( 176 ) << "Loading of kdetrayproxy failed." << endl;
@@ -205,7 +205,7 @@ void Application::lostSelection()
     {
     delete Workspace::self();
     // remove windowmanager privileges
-    XSelectInput(qt_xdisplay(), qt_xrootwin(), PropertyChangeMask );
+    XSelectInput(tqt_xdisplay(), tqt_xrootwin(), PropertyChangeMask );
     DCOPRef ref( "kded", "kded" );
     if( !ref.send( "loadModule", TQCString( "kdetrayproxy" )))
         kdWarning( 176 ) << "Loading of kdetrayproxy failed." << endl;
@@ -332,7 +332,7 @@ KDE_EXPORT int kdemain( int argc, char * argv[] )
     KWinInternal::SessionManaged weAreIndeed;
     KWinInternal::SessionSaveDoneHelper helper;
 
-    fcntl(ConnectionNumber(qt_xdisplay()), F_SETFD, 1);
+    fcntl(ConnectionNumber(tqt_xdisplay()), F_SETFD, 1);
 
     TQCString appname;
     if (KWinInternal::screen_number == 0)

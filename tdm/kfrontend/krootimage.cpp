@@ -59,7 +59,7 @@ MyApplication::MyApplication( const char *conf )
 	renderer.start();
 
 	if( !properties_inited ) {
-		prop_root = XInternAtom(qt_xdisplay(), "_XROOTPMAP_ID", False);
+		prop_root = XInternAtom(tqt_xdisplay(), "_XROOTPMAP_ID", False);
 		properties_inited = true;
 	}
 }
@@ -77,7 +77,7 @@ MyApplication::renderDone()
 
 	// ...and export it via Esetroot-style so that composition managers can use it!
 	Pixmap bgPm = pm.handle(); // fetch the actual X handle to it
-	XChangeProperty(qt_xdisplay(), qt_xrootwin(), prop_root, XA_PIXMAP, 32, PropModeReplace, (unsigned char *) &bgPm, 1);
+	XChangeProperty(tqt_xdisplay(), tqt_xrootwin(), prop_root, XA_PIXMAP, 32, PropModeReplace, (unsigned char *) &bgPm, 1);
 
 	renderer.saveCacheFile();
 	renderer.cleanup();
@@ -132,7 +132,7 @@ main( int argc, char *argv[] )
 	app.flushX();
 
 	// Keep color resources after termination
-	XSetCloseDownMode( qt_xdisplay(), RetainTemporary );
+	XSetCloseDownMode( tqt_xdisplay(), RetainTemporary );
 
 	return 0;
 }

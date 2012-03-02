@@ -399,7 +399,7 @@ void KColorScheme::save()
 #if defined Q_WS_X11 && !defined K_WS_QTONLY
         // Undo the property xrdb has placed on the root window (if any),
         // i.e. remove all entries, including ours
-        XDeleteProperty( qt_xdisplay(), qt_xrootwin(), XA_RESOURCE_MANAGER );
+        XDeleteProperty( tqt_xdisplay(), tqt_xrootwin(), XA_RESOURCE_MANAGER );
 #endif
     }
     runRdb( flags );	// Save the palette to qtrc for KStyles

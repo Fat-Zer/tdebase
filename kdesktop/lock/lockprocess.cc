@@ -132,7 +132,7 @@ static void segv_handler(int)
 	sleep(1);
 }
 
-extern Atom qt_wm_state;
+extern Atom tqt_wm_state;
 extern bool trinity_desktop_lock_use_system_modal_dialogs;
 extern bool trinity_desktop_lock_delay_screensaver_start;
 extern bool trinity_desktop_lock_use_sak;
@@ -220,15 +220,15 @@ LockProcess::LockProcess(bool child, bool useBlankOnly)
 
     // Get root window size
     XWindowAttributes rootAttr;
-    XGetWindowAttributes(qt_xdisplay(), RootWindow(qt_xdisplay(),
-                        qt_xscreen()), &rootAttr);
+    XGetWindowAttributes(tqt_xdisplay(), RootWindow(tqt_xdisplay(),
+                        tqt_xscreen()), &rootAttr);
     mRootWidth = rootAttr.width;
     mRootHeight = rootAttr.height;
     { // trigger creation of QToolTipManager, it does XSelectInput() on the root window
         TQWidget w;
         TQToolTip::add( &w, "foo" );
     }
-    XSelectInput( qt_xdisplay(), qt_xrootwin(),
+    XSelectInput( tqt_xdisplay(), tqt_xrootwin(),
         SubstructureNotifyMask | rootAttr.your_event_mask );
 
     // Add non-KDE path
@@ -249,8 +249,8 @@ LockProcess::LockProcess(bool child, bool useBlankOnly)
                                      relPath);
 
     // virtual root property
-    gXA_VROOT = XInternAtom (qt_xdisplay(), "__SWM_VROOT", False);
-    gXA_SCREENSAVER_VERSION = XInternAtom (qt_xdisplay(), "_SCREENSAVER_VERSION", False);
+    gXA_VROOT = XInternAtom (tqt_xdisplay(), "__SWM_VROOT", False);
+    gXA_SCREENSAVER_VERSION = XInternAtom (tqt_xdisplay(), "_SCREENSAVER_VERSION", False);
 
     connect(&mHackProc, TQT_SIGNAL(processExited(KProcess *)),
                         TQT_SLOT(hackExited(KProcess *)));
@@ -270,7 +270,7 @@ LockProcess::LockProcess(bool child, bool useBlankOnly)
     if (mDPMSDepend) {
         BOOL on;
         CARD16 state;
-        DPMSInfo(qt_xdisplay(), &state, &on);
+        DPMSInfo(tqt_xdisplay(), &state, &on);
         if (on)
         {
             connect(&mCheckDPMS, TQT_SIGNAL(timeout()), TQT_SLOT(checkDPMSActive()));
@@ -876,14 +876,14 @@ void LockProcess::createSaverWindow()
 
     // Some xscreensaver hacks check for this property
     const char *version = "KDE 2.0";
-    XChangeProperty (qt_xdisplay(), winId(),
+    XChangeProperty (tqt_xdisplay(), winId(),
                      gXA_SCREENSAVER_VERSION, XA_STRING, 8, PropModeReplace,
                      (unsigned char *) version, strlen(version));
 
     XSetWindowAttributes attr;
     attr.event_mask = KeyPressMask | ButtonPressMask | PointerMotionMask |
                         VisibilityChangeMask | ExposureMask;
-    XChangeWindowAttributes(qt_xdisplay(), winId(),
+    XChangeWindowAttributes(tqt_xdisplay(), winId(),
                             CWEventMask, &attr);
 
     // erase();
@@ -905,7 +905,7 @@ void LockProcess::desktopResized()
 
     // Get root window size
     XWindowAttributes rootAttr;
-    XGetWindowAttributes(qt_xdisplay(), RootWindow(qt_xdisplay(), qt_xscreen()), &rootAttr);
+    XGetWindowAttributes(tqt_xdisplay(), RootWindow(tqt_xdisplay(), tqt_xscreen()), &rootAttr);
     mRootWidth = rootAttr.width;
     mRootHeight = rootAttr.height;
 
@@ -958,14 +958,14 @@ void LockProcess::hideSaverWindow()
   hide();
   lower();
   removeVRoot(winId());
-  XDeleteProperty(qt_xdisplay(), winId(), gXA_SCREENSAVER_VERSION);
+  XDeleteProperty(tqt_xdisplay(), winId(), gXA_SCREENSAVER_VERSION);
   if ( gVRoot ) {
       unsigned long vroot_data[1] = { gVRootData };
-      XChangeProperty(qt_xdisplay(), gVRoot, gXA_VROOT, XA_WINDOW, 32,
+      XChangeProperty(tqt_xdisplay(), gVRoot, gXA_VROOT, XA_WINDOW, 32,
                       PropModeReplace, (unsigned char *)vroot_data, 1);
       gVRoot = 0;
   }
-  XSync(qt_xdisplay(), False);
+  XSync(tqt_xdisplay(), False);
 }
 
 //---------------------------------------------------------------------------
@@ -982,7 +982,7 @@ void LockProcess::saveVRoot()
 {
   Window rootReturn, parentReturn, *children;
   unsigned int numChildren;
-  Window root = RootWindowOfScreen(ScreenOfDisplay(qt_xdisplay(), qt_xscreen()));
+  Window root = RootWindowOfScreen(ScreenOfDisplay(tqt_xdisplay(), tqt_xscreen()));
 
   gVRoot = 0;
   gVRootData = 0;
@@ -990,7 +990,7 @@ void LockProcess::saveVRoot()
   int (*oldHandler)(Display *, XErrorEvent *);
   oldHandler = XSetErrorHandler(ignoreXError);
 
-  if (XQueryTree(qt_xdisplay(), root, &rootReturn, &parentReturn,
+  if (XQueryTree(tqt_xdisplay(), root, &rootReturn, &parentReturn,
       &children, &numChildren))
   {
     for (unsigned int i = 0; i < numChildren; i++)
@@ -1000,7 +1000,7 @@ void LockProcess::saveVRoot()
       unsigned long nitems, bytesafter;
       unsigned char *newRoot = 0;
 
-      if ((XGetWindowProperty(qt_xdisplay(), children[i], gXA_VROOT, 0, 1,
+      if ((XGetWindowProperty(tqt_xdisplay(), children[i], gXA_VROOT, 0, 1,
           False, XA_WINDOW, &actual_type, &actual_format, &nitems, &bytesafter,
           &newRoot) == Success) && newRoot)
       {
@@ -1029,14 +1029,14 @@ void LockProcess::setVRoot(Window win, Window vr)
     if (gVRoot)
         removeVRoot(gVRoot);
 
-    unsigned long rw = RootWindowOfScreen(ScreenOfDisplay(qt_xdisplay(), qt_xscreen()));
+    unsigned long rw = RootWindowOfScreen(ScreenOfDisplay(tqt_xdisplay(), tqt_xscreen()));
     unsigned long vroot_data[1] = { vr };
 
     Window rootReturn, parentReturn, *children;
     unsigned int numChildren;
     Window top = win;
     while (1) {
-        XQueryTree(qt_xdisplay(), top , &rootReturn, &parentReturn,
+        XQueryTree(tqt_xdisplay(), top , &rootReturn, &parentReturn,
                                  &children, &numChildren);
         if (children)
             XFree((char *)children);
@@ -1046,7 +1046,7 @@ void LockProcess::setVRoot(Window win, Window vr)
             top = parentReturn;
     }
 
-    XChangeProperty(qt_xdisplay(), top, gXA_VROOT, XA_WINDOW, 32,
+    XChangeProperty(tqt_xdisplay(), top, gXA_VROOT, XA_WINDOW, 32,
                      PropModeReplace, (unsigned char *)vroot_data, 1);
 }
 
@@ -1056,7 +1056,7 @@ void LockProcess::setVRoot(Window win, Window vr)
 //
 void LockProcess::removeVRoot(Window win)
 {
-    XDeleteProperty (qt_xdisplay(), win, gXA_VROOT);
+    XDeleteProperty (tqt_xdisplay(), win, gXA_VROOT);
 }
 
 //---------------------------------------------------------------------------
@@ -1065,7 +1065,7 @@ void LockProcess::removeVRoot(Window win)
 //
 bool LockProcess::grabKeyboard()
 {
-    int rv = XGrabKeyboard( qt_xdisplay(), TQApplication::desktop()->winId(),
+    int rv = XGrabKeyboard( tqt_xdisplay(), TQApplication::desktop()->winId(),
         True, GrabModeAsync, GrabModeAsync, CurrentTime );
 
     return (rv == GrabSuccess);
@@ -1080,7 +1080,7 @@ bool LockProcess::grabKeyboard()
 //
 bool LockProcess::grabMouse()
 {
-    int rv = XGrabPointer( qt_xdisplay(), TQApplication::desktop()->winId(),
+    int rv = XGrabPointer( tqt_xdisplay(), TQApplication::desktop()->winId(),
             True, GRABEVENTS, GrabModeAsync, GrabModeAsync, None,
             TQCursor(tqbusyCursor).handle(), CurrentTime );
 
@@ -1093,7 +1093,7 @@ bool LockProcess::grabMouse()
 //
 bool LockProcess::grabInput()
 {
-    XSync(qt_xdisplay(), False);
+    XSync(tqt_xdisplay(), False);
 
     if (!grabKeyboard())
     {
@@ -1110,7 +1110,7 @@ bool LockProcess::grabInput()
         usleep(100000);
         if (!grabMouse())
         {
-            XUngrabKeyboard(qt_xdisplay(), CurrentTime);
+            XUngrabKeyboard(tqt_xdisplay(), CurrentTime);
             return false;
         }
     }
@@ -1127,8 +1127,8 @@ bool LockProcess::grabInput()
 //
 void LockProcess::ungrabInput()
 {
-    XUngrabKeyboard(qt_xdisplay(), CurrentTime);
-    XUngrabPointer(qt_xdisplay(), CurrentTime);
+    XUngrabKeyboard(tqt_xdisplay(), CurrentTime);
+    XUngrabPointer(tqt_xdisplay(), CurrentTime);
     unlockXF86();
 }
 
@@ -1171,7 +1171,7 @@ bool LockProcess::startSaver()
 	show();
 
 	raise();
-	XSync(qt_xdisplay(), False);
+	XSync(tqt_xdisplay(), False);
 	setVRoot( winId(), winId() );
 	if (!(trinity_desktop_lock_delay_screensaver_start && (trinity_desktop_lock_forced || trinity_desktop_lock_in_sec_dlg))) {
 		if (backingPixmap.isNull())
@@ -1551,7 +1551,7 @@ void LockProcess::resume( bool force )
     }
     if ((mSuspended) && (mHackProc.isRunning()))
     {
-        XForceScreenSaver(qt_xdisplay(), ScreenSaverReset );
+        XForceScreenSaver(tqt_xdisplay(), ScreenSaverReset );
         bitBlt( this, 0, 0, &mSavedScreen );
         TQApplication::syncX();
         mHackProc.kill(SIGCONT);
@@ -1597,12 +1597,12 @@ bool LockProcess::checkPass()
         mForceReject = false;
 
         XWindowAttributes rootAttr;
-        XGetWindowAttributes(qt_xdisplay(), RootWindow(qt_xdisplay(),
-                        qt_xscreen()), &rootAttr);
+        XGetWindowAttributes(tqt_xdisplay(), RootWindow(tqt_xdisplay(),
+                        tqt_xscreen()), &rootAttr);
         if(( rootAttr.your_event_mask & SubstructureNotifyMask ) == 0 )
         {
             kdWarning() << "ERROR: Something removed SubstructureNotifyMask from the root window!!!" << endl;
-            XSelectInput( qt_xdisplay(), qt_xrootwin(),
+            XSelectInput( tqt_xdisplay(), tqt_xrootwin(),
                 SubstructureNotifyMask | rootAttr.your_event_mask );
         }
 
@@ -1621,12 +1621,12 @@ static void fakeFocusIn( WId window )
     // window, so that it will correctly show cursor in the dialog.
     XEvent ev;
     memset(&ev, 0, sizeof(ev));
-    ev.xfocus.display = qt_xdisplay();
+    ev.xfocus.display = tqt_xdisplay();
     ev.xfocus.type = FocusIn;
     ev.xfocus.window = window;
     ev.xfocus.mode = NotifyNormal;
     ev.xfocus.detail = NotifyAncestor;
-    XSendEvent( qt_xdisplay(), window, False, NoEventMask, &ev );
+    XSendEvent( tqt_xdisplay(), window, False, NoEventMask, &ev );
 }
 
 void LockProcess::resumeUnforced()
@@ -1646,7 +1646,7 @@ int LockProcess::execDialog( TQDialog *dlg )
     if (mDialogs.isEmpty())
     {
         suspend();
-        XChangeActivePointerGrab( qt_xdisplay(), GRABEVENTS,
+        XChangeActivePointerGrab( tqt_xdisplay(), GRABEVENTS,
                 TQCursor(tqarrowCursor).handle(), CurrentTime);
     }
     mDialogs.prepend( dlg );
@@ -1661,7 +1661,7 @@ int LockProcess::execDialog( TQDialog *dlg )
     currentDialog = NULL;
     mDialogs.remove( dlg );
     if( mDialogs.isEmpty() ) {
-        XChangeActivePointerGrab( qt_xdisplay(), GRABEVENTS,
+        XChangeActivePointerGrab( tqt_xdisplay(), GRABEVENTS,
                 TQCursor(tqbusyCursor).handle(), CurrentTime);
         if (trinity_desktop_lock_use_system_modal_dialogs) {
             // Slight delay before screensaver resume to allow the dialog window to fully disappear
@@ -1744,7 +1744,7 @@ void LockProcess::doFunctionKeyBroadcast() {
     if ((!trinity_desktop_lock_use_system_modal_dialogs) && (!trinity_desktop_lock_use_sak)) {
         mBusy=true;
         TQTimer::singleShot(1000, this, TQT_SLOT(slotDeadTimePassed()));
-        if (mkeyCode == XKeysymToKeycode(qt_xdisplay(), XF86XK_Display)) {
+        if (mkeyCode == XKeysymToKeycode(tqt_xdisplay(), XF86XK_Display)) {
             while (mDialogControlLock == true) usleep(100000);
             mDialogControlLock = true;
             currentDialog->close();		// DO NOT use closeCurrentWindow() here!
@@ -1845,7 +1845,7 @@ bool LockProcess::x11Event(XEvent *event)
             break;
 
         case ConfigureNotify: // from SubstructureNotifyMask on the root window
-            if(event->xconfigure.event == qt_xrootwin())
+            if(event->xconfigure.event == tqt_xrootwin())
                 stayOnTop();
             for( TQValueList< VkbdWindow >::Iterator it = mVkbdWindows.begin();
                  it != mVkbdWindows.end();
@@ -1859,7 +1859,7 @@ bool LockProcess::x11Event(XEvent *event)
             break;
         case MapNotify: // from SubstructureNotifyMask on the root window
             windowAdded( event->xmap.window, false );
-            if( event->xmap.event == qt_xrootwin())
+            if( event->xmap.event == tqt_xrootwin())
                 stayOnTop();
             break;
         case DestroyNotify:
@@ -1903,9 +1903,9 @@ void LockProcess::stayOnTop()
         // and no ConfigureNotify will be generated,
         // thus avoiding possible infinite loops
         if( !mVkbdWindows.isEmpty())
-            XRaiseWindow( qt_xdisplay(), mVkbdWindows.first().id );
+            XRaiseWindow( tqt_xdisplay(), mVkbdWindows.first().id );
         else
-            XRaiseWindow( qt_xdisplay(), mDialogs.first()->winId()); // raise topmost
+            XRaiseWindow( tqt_xdisplay(), mDialogs.first()->winId()); // raise topmost
         // and stack others below it
         Window* stack = new Window[ mDialogs.count() + mVkbdWindows.count() + 1 ];
         int count = 0;
@@ -1922,7 +1922,7 @@ void LockProcess::stayOnTop()
         delete[] stack;
     }
     else
-        XRaiseWindow(qt_xdisplay(), winId());
+        XRaiseWindow(tqt_xdisplay(), winId());
 }
 
 void LockProcess::checkDPMSActive()
@@ -1930,7 +1930,7 @@ void LockProcess::checkDPMSActive()
 #ifdef HAVE_DPMS
     BOOL on;
     CARD16 state;
-    DPMSInfo(qt_xdisplay(), &state, &on);
+    DPMSInfo(tqt_xdisplay(), &state, &on);
     //kdDebug() << "checkDPMSActive " << on << " " << state << endl;
     if (state == DPMSModeStandby || state == DPMSModeSuspend || state == DPMSModeOff)
     {
@@ -1952,7 +1952,7 @@ void LockProcess::lockXF86()
     if( can_do_xf86_lock == Unknown )
     {
         int major, minor;
-        if( XF86MiscQueryVersion( qt_xdisplay(), &major, &minor )
+        if( XF86MiscQueryVersion( tqt_xdisplay(), &major, &minor )
             && major >= 0 && minor >= 5 )
             can_do_xf86_lock = Yes;
         else
@@ -1962,7 +1962,7 @@ void LockProcess::lockXF86()
         return;
     if( mRestoreXF86Lock )
         return;
-    if( XF86MiscSetGrabKeysState( qt_xdisplay(), False ) != MiscExtGrabStateSuccess )
+    if( XF86MiscSetGrabKeysState( tqt_xdisplay(), False ) != MiscExtGrabStateSuccess )
         return;
     // success
     mRestoreXF86Lock = true;
@@ -1974,7 +1974,7 @@ void LockProcess::unlockXF86()
         return;
     if( !mRestoreXF86Lock )
         return;
-    XF86MiscSetGrabKeysState( qt_xdisplay(), True );
+    XF86MiscSetGrabKeysState( tqt_xdisplay(), True );
     mRestoreXF86Lock = false;
 }
 #else
@@ -2059,13 +2059,13 @@ void LockProcess::windowAdded( WId w, bool managed )
     if( managed ) {
         // withdraw the window, wait for it to be withdrawn, reparent it directly
         // to root at the right position
-        XWithdrawWindow( qt_xdisplay(), w, qt_xscreen());
+        XWithdrawWindow( tqt_xdisplay(), w, tqt_xscreen());
         for(;;) {
             Atom type;
             int format;
             unsigned long length, after;
             unsigned char *data;
-            int r = XGetWindowProperty( qt_xdisplay(), w, qt_wm_state, 0, 2,
+            int r = XGetWindowProperty( tqt_xdisplay(), w, tqt_wm_state, 0, 2,
                                         false, AnyPropertyType, &type, &format,
                                         &length, &after, &data );
             bool withdrawn = true;
@@ -2078,18 +2078,18 @@ void LockProcess::windowAdded( WId w, bool managed )
                 break;
         }
     }
-    XSelectInput( qt_xdisplay(), w, StructureNotifyMask );
+    XSelectInput( tqt_xdisplay(), w, StructureNotifyMask );
     XWindowAttributes attr_geom;
-    if( !XGetWindowAttributes( qt_xdisplay(), w, &attr_geom ))
+    if( !XGetWindowAttributes( tqt_xdisplay(), w, &attr_geom ))
         return;
-    int x = XDisplayWidth( qt_xdisplay(), qt_xscreen()) - attr_geom.width;
-    int y = XDisplayHeight( qt_xdisplay(), qt_xscreen()) - attr_geom.height;
+    int x = XDisplayWidth( tqt_xdisplay(), tqt_xscreen()) - attr_geom.width;
+    int y = XDisplayHeight( tqt_xdisplay(), tqt_xscreen()) - attr_geom.height;
     if( managed ) {
         XSetWindowAttributes attr;
         attr.override_redirect = True;
-        XChangeWindowAttributes( qt_xdisplay(), w, CWOverrideRedirect, &attr );
-        XReparentWindow( qt_xdisplay(), w, qt_xrootwin(), x, y );
-        XMapWindow( qt_xdisplay(), w );
+        XChangeWindowAttributes( tqt_xdisplay(), w, CWOverrideRedirect, &attr );
+        XReparentWindow( tqt_xdisplay(), w, tqt_xrootwin(), x, y );
+        XMapWindow( tqt_xdisplay(), w );
     }
     VkbdWindow data;
     data.id = w;
@@ -2129,7 +2129,7 @@ bool LockProcess::forwardVkbdEvent( XEvent* event )
             int root_x, root_y, x, y;
             unsigned int mask;
             for(;;) {
-                if( !XQueryPointer( qt_xdisplay(), window, &root, &child, &root_x, &root_y, &x, &y, &mask ))
+                if( !XQueryPointer( tqt_xdisplay(), window, &root, &child, &root_x, &root_y, &x, &y, &mask ))
                     return false;
                 if( child == None )
                     break;
@@ -2151,7 +2151,7 @@ bool LockProcess::forwardVkbdEvent( XEvent* event )
             }
             event->xany.window = window;
             sendVkbdFocusInOut( window, time );
-            XSendEvent( qt_xdisplay(), window, False, 0, event );
+            XSendEvent( tqt_xdisplay(), window, False, 0, event );
             return true;
         }
     }
@@ -2169,9 +2169,9 @@ void LockProcess::sendVkbdFocusInOut( WId window, Time t )
     if( mVkbdLastEventWindow != None ) {
         XEvent e;
         e.xcrossing.type = LeaveNotify;
-        e.xcrossing.display = qt_xdisplay();
+        e.xcrossing.display = tqt_xdisplay();
         e.xcrossing.window = mVkbdLastEventWindow;
-        e.xcrossing.root = qt_xrootwin();
+        e.xcrossing.root = tqt_xrootwin();
         e.xcrossing.subwindow = None;
         e.xcrossing.time = t;
         e.xcrossing.x = 0;
@@ -2183,15 +2183,15 @@ void LockProcess::sendVkbdFocusInOut( WId window, Time t )
         e.xcrossing.same_screen = True;
         e.xcrossing.focus = False;
         e.xcrossing.state = 0;
-        XSendEvent( qt_xdisplay(), mVkbdLastEventWindow, False, 0, &e );
+        XSendEvent( tqt_xdisplay(), mVkbdLastEventWindow, False, 0, &e );
     }
     mVkbdLastEventWindow = window;
     if( mVkbdLastEventWindow != None ) {
         XEvent e;
         e.xcrossing.type = EnterNotify;
-        e.xcrossing.display = qt_xdisplay();
+        e.xcrossing.display = tqt_xdisplay();
         e.xcrossing.window = mVkbdLastEventWindow;
-        e.xcrossing.root = qt_xrootwin();
+        e.xcrossing.root = tqt_xrootwin();
         e.xcrossing.subwindow = None;
         e.xcrossing.time = t;
         e.xcrossing.x = 0;
@@ -2203,7 +2203,7 @@ void LockProcess::sendVkbdFocusInOut( WId window, Time t )
         e.xcrossing.same_screen = True;
         e.xcrossing.focus = False;
         e.xcrossing.state = 0;
-        XSendEvent( qt_xdisplay(), mVkbdLastEventWindow, False, 0, &e );
+        XSendEvent( tqt_xdisplay(), mVkbdLastEventWindow, False, 0, &e );
     }
 }
 
@@ -2228,10 +2228,10 @@ void LockProcess::slotMouseActivity(XEvent *event)
 		// Clicked inside dialog; set focus
 		if (inFrame == TRUE) {
 			WId window = mDialogs.first()->winId();
-			XSetInputFocus(qt_xdisplay(), window, RevertToParent, CurrentTime);
+			XSetInputFocus(tqt_xdisplay(), window, RevertToParent, CurrentTime);
 			fakeFocusIn(window);
 			// Why this needs to be repeated I have no idea...
-			XSetInputFocus(qt_xdisplay(), window, RevertToParent, CurrentTime);
+			XSetInputFocus(tqt_xdisplay(), window, RevertToParent, CurrentTime);
 			fakeFocusIn(window);
 		}
 
@@ -2243,7 +2243,7 @@ void LockProcess::slotMouseActivity(XEvent *event)
 			m_dialogPrevY = oldPoint.y();
 			m_mousePrevX = be->x_root;
 			m_mousePrevY = be->y_root;
-			XChangeActivePointerGrab( qt_xdisplay(), GRABEVENTS, TQCursor(tqsizeAllCursor).handle(), CurrentTime);
+			XChangeActivePointerGrab( tqt_xdisplay(), GRABEVENTS, TQCursor(tqsizeAllCursor).handle(), CurrentTime);
 		}
 	}
 
@@ -2263,7 +2263,7 @@ void LockProcess::slotMouseActivity(XEvent *event)
 
 	if (event->type == ButtonRelease) {
 		m_mouseDown = 0;
-		XChangeActivePointerGrab( qt_xdisplay(), GRABEVENTS, TQCursor(tqarrowCursor).handle(), CurrentTime);
+		XChangeActivePointerGrab( tqt_xdisplay(), GRABEVENTS, TQCursor(tqarrowCursor).handle(), CurrentTime);
 	}
 }
 

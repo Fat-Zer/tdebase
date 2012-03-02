@@ -135,7 +135,7 @@ int main( int argc, char *argv[] )
       return 1;
   }
 
-  fcntl(ConnectionNumber(qt_xdisplay()), F_SETFD, 1);
+  fcntl(ConnectionNumber(tqt_xdisplay()), F_SETFD, 1);
   args->clear();
 
   return app.exec();

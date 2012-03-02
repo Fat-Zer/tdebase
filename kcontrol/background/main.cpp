@@ -45,8 +45,8 @@ KBackground::KBackground(TQWidget *parent, const char *name, const TQStringList 
     : KCModule(KBackGndFactory::instance(), parent, name)
 {
     int screen_number = 0;
-    if (qt_xdisplay())
-	screen_number = DefaultScreen(qt_xdisplay());
+    if (tqt_xdisplay())
+	screen_number = DefaultScreen(tqt_xdisplay());
     TQCString configname;
     if (screen_number == 0)
 	configname = "kdesktoprc";
@@ -105,8 +105,8 @@ void KBackground::save()
 	client->attach();
 
     int screen_number = 0;
-    if (qt_xdisplay())
-	screen_number = DefaultScreen(qt_xdisplay());
+    if (tqt_xdisplay())
+	screen_number = DefaultScreen(tqt_xdisplay());
     TQCString appname;
     if (screen_number == 0)
 	appname = "kdesktop";

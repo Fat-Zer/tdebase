@@ -92,7 +92,7 @@ void KSMServer::performLegacySessionSave()
 	Atom atoms[ 3 ];
 	const char* const names[]
 	    = { "WM_SAVE_YOURSELF", "WM_PROTOCOLS", "WM_CLIENT_LEADER" };
-	XInternAtoms( qt_xdisplay(), const_cast< char** >( names ), 3,
+	XInternAtoms( tqt_xdisplay(), const_cast< char** >( names ), 3,
 	    False, atoms );
 	wm_save_yourself = atoms[ 0 ];
 	wm_protocols = atoms[ 1 ];
@@ -105,7 +105,7 @@ void KSMServer::performLegacySessionSave()
             SMType wtype = SM_WMCOMMAND;
             int nprotocols = 0;
             Atom *protocols = 0;
-            if( XGetWMProtocols(qt_xdisplay(), leader, &protocols, &nprotocols)) {
+            if( XGetWMProtocols(tqt_xdisplay(), leader, &protocols, &nprotocols)) {
                 for (int i=0; i<nprotocols; i++)
                     if (protocols[i] == wm_save_yourself) {
                         wtype = SM_WMSAVEYOURSELF;
@@ -116,7 +116,7 @@ void KSMServer::performLegacySessionSave()
 	    SMData data;
 	    data.type = wtype;
             XClassHint classHint;
-            if( XGetClassHint( qt_xdisplay(), leader, &classHint ) ) {
+            if( XGetClassHint( tqt_xdisplay(), leader, &classHint ) ) {
                 data.wmclass1 = classHint.res_name;
                 data.wmclass2 = classHint.res_class;
                 XFree( classHint.res_name );
@@ -126,8 +126,8 @@ void KSMServer::performLegacySessionSave()
         }
     }
     // Open fresh display for sending WM_SAVE_YOURSELF
-    XSync(qt_xdisplay(), False);
-    Display *newdisplay = XOpenDisplay(DisplayString(qt_xdisplay()));
+    XSync(tqt_xdisplay(), False);
+    Display *newdisplay = XOpenDisplay(DisplayString(tqt_xdisplay()));
     if (!newdisplay) {
 	windowMapPtr = NULL;
 	XSetErrorHandler(oldHandler);
@@ -194,7 +194,7 @@ void KSMServer::performLegacySessionSave()
     XSync(newdisplay, False);
     XCloseDisplay(newdisplay);
     // Restore old error handler
-    XSync(qt_xdisplay(), False);
+    XSync(tqt_xdisplay(), False);
     XSetErrorHandler(oldHandler);
     for (WindowMap::Iterator it = legacyWindows.begin(); it != legacyWindows.end(); ++it) {
         if ( (*it).type != SM_ERROR) {
@@ -288,7 +288,7 @@ static TQCString getQCStringProperty(WId w, Atom prop)
     unsigned long extra = 0;
     unsigned char *data = 0;
     TQCString result = "";
-    status = XGetWindowProperty( qt_xdisplay(), w, prop, 0, 10000,
+    status = XGetWindowProperty( tqt_xdisplay(), w, prop, 0, 10000,
                                  FALSE, XA_STRING, &type, &format,
                                  &nitems, &extra, &data );
     if ( status == Success) {
@@ -308,7 +308,7 @@ static TQStringList getQStringListProperty(WId w, Atom prop)
     unsigned char *data = 0;
     TQStringList result;
 
-    status = XGetWindowProperty( qt_xdisplay(), w, prop, 0, 10000,
+    status = XGetWindowProperty( tqt_xdisplay(), w, prop, 0, 10000,
                                  FALSE, XA_STRING, &type, &format,
                                  &nitems, &extra, &data );
     if ( status == Success) {
@@ -374,7 +374,7 @@ WId KSMServer::windowWmClientLeader(WId w)
     unsigned long extra = 0;
     unsigned char *data = 0;
     Window result = w;
-    status = XGetWindowProperty( qt_xdisplay(), w, wm_client_leader, 0, 10000,
+    status = XGetWindowProperty( tqt_xdisplay(), w, wm_client_leader, 0, 10000,
                                  FALSE, XA_WINDOW, &type, &format,
                                  &nitems, &extra, &data );
     if (status  == Success ) {
@@ -390,11 +390,11 @@ WId KSMServer::windowWmClientLeader(WId w)
   Returns sessionId for this client,
   taken either from its window or from the leader window.
  */
-extern Atom qt_sm_client_id;
+extern Atom tqt_sm_client_id;
 TQCString KSMServer::windowSessionId(WId w, WId leader)
 {
-    TQCString result = getQCStringProperty(w, qt_sm_client_id);
+    TQCString result = getQCStringProperty(w, tqt_sm_client_id);
     if (result.isEmpty() && leader != (WId)None && leader != w)
-	result = getQCStringProperty(leader, qt_sm_client_id);
+	result = getQCStringProperty(leader, tqt_sm_client_id);
     return result;
 }

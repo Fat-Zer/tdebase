@@ -348,7 +348,7 @@ void Desktop::dropEvent(TQDropEvent *ev)
   convertCoordP2S(x,y);
 
 //  kdDebug() << "moving window " << win << "d from " << origdesk << " to " << m_desk << endl;
-//  NETWinInfo NETinfo( qt_xdisplay(),  win, qt_xrootwin(), NET::Client | NET::WMDesktop);
+//  NETWinInfo NETinfo( tqt_xdisplay(),  win, tqt_xrootwin(), NET::Client | NET::WMDesktop);
 
   if (m_desk==0)
   {
