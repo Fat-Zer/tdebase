@@ -25,7 +25,7 @@ echo "[starttde] This script is $0" 1>&2
 # To determine that location use the following method rather than presuming
 # the existence of $TDEDIR. That environment variable might not be
 # defined or defined to point to KDE4 binaries.
-BIN_DIR="`dirname $0`"
+BIN_DIR="`dirname \`readlink -f $0\``"
 # Do not use tde-config to determine the version. That command creates a
 # profile directory in the root of the file system. Refer to Bug Report 293.
 if [ -x $BIN_DIR/konqueror ]; then
@@ -77,7 +77,7 @@ if [ -z $TDE_IS_PRELINKED ]; then
 fi
 
 # In case we have been started with full pathname spec without being in PATH.
-bindir=`echo "$0" | sed -n 's,^\(/.*\)/[^/][^/]*$,\1,p'`
+bindir=`readlink -f "$0" | sed -n 's,^\(/.*\)/[^/][^/]*$,\1,p'`
 if [ -n "$bindir" ]; then
   case $PATH in
     $bindir|$bindir:*|*:$bindir|*:$bindir:*) ;;
