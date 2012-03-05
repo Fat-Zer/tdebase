@@ -33,7 +33,6 @@ if [ -x $BIN_DIR/konqueror ]; then
   echo "[starttde] TDE version is $TDE_VERSION" 1>&2
   TDEDIR=`echo $BIN_DIR | sed 's|/bin||'`
   echo "[starttde] TDE base directory is $TDEDIR" 1>&2
-  echo
 else
   echo "[starttde] Unable to determine TDE base directory."
   echo "[starttde] This script should be installed in the same directory."
@@ -67,22 +66,13 @@ unset DYLD_FORCE_FLAT_NAMESPACE
 # Check whether prelinking is enabled. If so, exporting TDE_IS_PRELINKED improves
 # loading TDE. The $TDE_IS_PRELINKED variable might already be set on some systems
 # through /etc/profile.d, so first check whether the variable exists.
-if [ -z $TDE_IS_PRELINKED ]; then
+if [ $TDE_IS_PRELINKED = "" ]; then
   if [ -r /etc/default/prelink ]; then
     . /etc/default/prelink
     if [ "$PRELINKING" == "yes" ]; then
       export TDE_IS_PRELINKED=1
     fi
   fi
-fi
-
-# In case we have been started with full pathname spec without being in PATH.
-bindir=`readlink -f "$0" | sed -n 's,^\(/.*\)/[^/][^/]*$,\1,p'`
-if [ -n "$bindir" ]; then
-  case $PATH in
-    $bindir|$bindir:*|*:$bindir|*:$bindir:*) ;;
-    *) PATH=$bindir:$PATH; export PATH;;
-  esac
 fi
 
 # Boot sequence:
@@ -106,7 +96,7 @@ fi
 # $HOME/.kde might point to KDE4 profile settings. The existence of KDE4
 # does not mean all people are using KDE4.
 
-if [ -n "$TDEHOME" ]; then
+if [ "$TDEHOME" != "" ]; then
   echo "[starttde] TDEHOME is preset to $TDEHOME." 1>&2
   export TDEHOME=$TDEHOME
 else
@@ -152,44 +142,90 @@ fi
 # kdesu needs something to find root's TDE profile. Set the TDEROOTHOME variable
 # here as last resort. /root/.trinity is a safe presumption. If an admin wants
 # a different location then set the TDEROOTHOME variable elsewhere.
-if [ -z "$TDEROOTHOME" ]; then
+if [ "$TDEROOTHOME" = "" ]; then
   export TDEROOTHOME=/root/.trinity
   echo "[starttde] Setting TDEROOTHOME to $TDEROOTHOME."
 fi
 
 # Modify the following environment variables only as necessary.
 if [ -d $TDEDIR/games ]; then
-  if [ -z "`echo $PATH | grep \"$TDEDIR/games\"`" ]; then
+  if [ "`echo $PATH | grep \"$TDEDIR/games\"`" = "" ]; then
     export PATH=$TDEDIR/games:$PATH
   fi
 fi
 if [ -d $TDEDIR/bin ]; then
-  if [ -z "`echo $PATH | grep \"$TDEDIR/bin\"`" ]; then
-    export PATH=$TDEDIR/bin:$PATH
-  fi
-fi
-if [ -d $TDEDIR/share ]; then
-  if [ -z "`echo $XDG_DATA_DIRS | grep \"$TDEDIR/share\"`" ]; then
-    if [ "$XDG_DATA_DIRS" = "" ]; then
-      XDG_DATA_DIRS=$TDEDIR/share
+  if [ "`echo $PATH | grep \"$TDEDIR/bin\"`" = "" ]; then
+    # Respect the traditional path order. Don't blindly place $TDEDIR/bin
+    # first in the path. Only place $TDEDIR/bin before /usr/bin. This order is
+    # consistent with tdelibs/tdesu/stub.cpp. If packagers are adding $TDEDIR/bin
+    # elsewhere, then they need to ensure the traditional search patch is respected.
+    # Is there a way we can check that $TDEDIR/bin is always placed only just before
+    # /usr/bin in the search path?
+    if [ "`echo $PATH | grep \"^/usr/bin:\"`" != "" ]; then
+      export PATH="`echo $PATH | sed \"s|^/usr/bin:|$TDEDIR/bin:/usr/bin:|\"`"
+    elif [ "`echo $PATH | grep \":/usr/bin$\"`" != "" ]; then
+      export PATH="`echo $PATH | sed \"s|:/usr/bin$|:$TDEDIR/bin:/usr/bin|\"`"
+    elif [ "`echo $PATH | grep \":/usr/bin:\"`" != "" ]; then
+      export PATH="`echo $PATH | sed \"s|:/usr/bin:|:$TDEDIR/bin:/usr/bin:|\"`"
     else
-      XDG_DATA_DIRS=$XDG_DATA_DIRS:$TDEDIR/share
+      export PATH=$TDEDIR/bin:$PATH
     fi
-    export XDG_DATA_DIRS
   fi
 fi
-if [ -d $TDEDIR/etc/xdg ]; then
-  if [ -z "`echo $XDG_CONFIG_DIRS | grep \"$TDEDIR/etc/xdg\"`" ]; then
+
+if [ "$XDG_CONFIG_DIRS" = "" ]; then
+  if [ -d /etc/xdg ]; then
+    XDG_CONFIG_DIRS=/etc/xdg
+  fi
+fi
+if [ -d /etc/trinity/xdg ]; then
+  TDE_XDG_DIR="/etc/trinity/xdg"
+elif [ -d /etc/tde/xdg ]; then
+  TDE_XDG_DIR="/etc/tde/xdg"
+elif [ -d $TDEDIR/xdg ]; then
+  TDE_XDG_DIR="$TDEDIR/xdg"
+elif [ -d $TDEDIR/etc/xdg ]; then
+  TDE_XDG_DIR="$TDEDIR/etc/xdg"
+elif [ -d $TDEDIR/etc/trinity/xdg ]; then
+  TDE_XDG_DIR="$TDEDIR/etc/trinity/xdg"
+elif [ -d $TDEDIR/etc/tde/xdg ]; then
+  TDE_XDG_DIR="$TDEDIR/etc/tde/xdg"
+elif [ -d $TDEDIR/trinity/xdg ]; then
+  TDE_XDG_DIR="$TDEDIR/trinity/xdg"
+elif [ -d $TDEDIR/tde/xdg ]; then
+  TDE_XDG_DIR="$TDEDIR/tde/xdg"
+fi
+if [ -d $TDE_XDG_DIR ]; then
+  if [ "`echo $XDG_CONFIG_DIRS | grep \"$TDE_XDG_DIR\"`" = "" ]; then
     if [ "$XDG_CONFIG_DIRS" = "" ]; then
-      XDG_CONFIG_DIRS=$TDEDIR/etc/xdg
+      XDG_CONFIG_DIRS=$TDE_XDG_DIR
     else
-      XDG_CONFIG_DIRS=$XDG_CONFIG_DIRS:$TDEDIR/etc/xdg
+      XDG_CONFIG_DIRS=$XDG_CONFIG_DIRS:$TDE_XDG_DIR
     fi
-    export XDG_CONFIG_DIRS
   fi
+fi
+if [ "$XDG_CONFIG_DIRS" != "" ]; then
+  export XDG_CONFIG_DIRS
+fi
+
+# Explicitly set $XDG_DATA_DIRS only when Trinity is not installed in /usr.
+# Explicitly declaring $XDG_DATA_DIRS will override the default search path of /usr/share.
+if [ "$TDEDIR" != "/usr" ] && [ -d $TDEDIR/share ]; then
+  if [ "$XDG_DATA_DIRS" = "" ]; then
+    # Ensure the standard location of /usr/share is included.
+    XDG_DATA_DIRS=/usr/share
+  else
+    if [ "`echo $XDG_DATA_DIRS | grep \"/usr/share\"`" = "" ]; then
+      XDG_DATA_DIRS=/usr/share:$XDG_DATA_DIRS
+    fi
+  fi
+  if [ "`echo $XDG_DATA_DIRS | grep \"$TDEDIR/share\"`" = "" ]; then
+    XDG_DATA_DIRS=$XDG_DATA_DIRS:$TDEDIR/share
+  fi
+  export XDG_DATA_DIRS
 fi
 if [ -d $TDEDIR/share/man ]; then
-  if [ -z "`echo $MANPATH | grep \"$TDEDIR/share/man\"`" ]; then
+  if [ "`echo $MANPATH | grep \"$TDEDIR/share/man\"`" = "" ]; then
     export MANPATH=$TDEDIR/share/man:$MANPATH
   fi
 fi
@@ -417,7 +453,7 @@ if test -r "$tde_fontpaths" ; then
   IFS=$savifs
 fi
 
-if [ ! -n "$TDEDIR" ]; then
+if [ "$TDEDIR" = "" ]; then
   export TDEDIR=`echo "$TDEDIRS" | sed -e 's/:.*//'`
 fi
 
@@ -446,9 +482,11 @@ else
   fi
 fi
 
-if [ -n $TGTK_PRELOAD ]; then
-  if [ -e /usr/lib/libnspr4.so ]; then
-    KGTK_NSPR_PRELOAD="/usr/lib/libnspr4.so:"
+if [ "$TGTK_PRELOAD" != "" ]; then
+  if [ -e /usr/lib64/libnspr4.so ]; then
+    TGTK_NSPR_PRELOAD="/usr/lib64/libnspr4.so:"
+  elif [ -e /usr/lib/libnspr4.so ]; then
+    TGTK_NSPR_PRELOAD="/usr/libnspr4.so:"
   fi
   export LD_PRELOAD=$TGTK_PRELOAD:$KGTK_NSPR_PRELOAD$LD_PRELOAD
 fi
