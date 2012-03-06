@@ -72,4 +72,4 @@ Name[zh_TW]=啟動 KDE 時預先載入 Konqueror
 X-KDE-autostart-condition=konquerorrc:Reusing:PreloadOnStartup:false
 X-KDE-StartupNotify=false
 X-KDE-autostart-phase=2
-OnlyShowIn=KDE;
+OnlyShowIn=TDE;

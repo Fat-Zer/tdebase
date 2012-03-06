@@ -75,5 +75,5 @@ Name[wa]=Trover des fitchîs/ridants
 Name[zh_CN]=查找文件/文件夹
 Name[zh_TW]=尋找檔案/資料夾
 X-KDE-StartupNotify=true
-OnlyShowIn=KDE;
+OnlyShowIn=TDE;
 Categories=Qt;KDE;Core;

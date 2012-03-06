@@ -83,4 +83,4 @@ Name[zh_CN]=帮助
 Name[zh_TW]=求助
 Name[zu]=Usizo
 Categories=Qt;KDE;Core;
-OnlyShowIn=KDE;
+OnlyShowIn=TDE;

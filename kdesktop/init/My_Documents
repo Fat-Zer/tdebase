@@ -66,3 +66,4 @@ TerminalOptions=
 X-DCOP-ServiceType=
 X-KDE-SubstituteUID=false
 X-KDE-Username=
+OnlyShowIn=TDE;

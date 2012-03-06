@@ -85,4 +85,4 @@ X-KDE-autostart-after=kdesktop
 X-KDE-autostart-condition=kpersonalizerrc:General:FirstLogin:true
 X-DCOP-ServiceType=Multi
 Categories=Qt;KDE;Settings;
-OnlyShowIn=KDE;
+OnlyShowIn=TDE;

@@ -81,5 +81,5 @@ Name[zh_TW]=KDE 桌面
 Name[zu]=I-Desktop ye-KDE
 Type=Service
 X-KDE-StartupNotify=false
-OnlyShowIn=KDE;
+OnlyShowIn=TDE;
 X-KDE-autostart-phase=0

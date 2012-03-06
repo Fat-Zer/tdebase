@@ -137,5 +137,5 @@ Comment[zh_TW]=調整大小及旋轉 X 螢幕。
 Exec=krandrtray
 Icon=randr
 Type=Application
-OnlyShowIn=KDE;
+OnlyShowIn=TDE;
 Categories=Qt;KDE;System;

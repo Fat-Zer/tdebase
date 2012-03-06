@@ -163,4 +163,4 @@ GenericName[zu]=Amafayela Omuntu siqu
 URL=$HOME
 Icon=kfm_home
 Type=Link
-OnlyShowIn=KDE;
+OnlyShowIn=TDE;

@@ -4,7 +4,7 @@ Icon=kappfinder
 Type=Application
 Terminal=false
 X-KDE-StartupNotify=true
-OnlyShowIn=KDE;
+OnlyShowIn=TDE;
 
 Name=Menu Updating Tool
 Name[af]=Kieslys opdateer program

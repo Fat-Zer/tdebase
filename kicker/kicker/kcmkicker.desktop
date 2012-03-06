@@ -76,5 +76,5 @@ Name[wa]=Apontyî li scriftôr
 Name[zh_CN]=配置面板
 Name[zh_TW]=設定面板
 X-KDE-StartupNotify=true
-OnlyShowIn=KDE;
+OnlyShowIn=TDE;
 Categories=Qt;KDE;Settings;

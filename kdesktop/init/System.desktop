@@ -146,4 +146,4 @@ GenericName[zh_TW]=系統位置
 URL=system:/
 Icon=system
 Type=Link
-OnlyShowIn=KDE;
+OnlyShowIn=TDE;
