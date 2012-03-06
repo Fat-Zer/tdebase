@@ -156,12 +156,8 @@ if [ -d $TDEDIR/games ]; then
     # search patch is respected.
     # Is there a way we can check that $TDEDIR/games is always placed only just before
     # /usr/games in the search path?
-    if [ "`echo $PATH | grep \"^/usr/games:\"`" != "" ]; then
-      export PATH="`echo $PATH | sed \"s|^/usr/games:|$TDEDIR/games:/usr/games:|\"`"
-    elif [ "`echo $PATH | grep \":/usr/games$\"`" != "" ]; then
-      export PATH="`echo $PATH | sed \"s|:/usr/games$|:$TDEDIR/games:/usr/games|\"`"
-    elif [ "`echo $PATH | grep \":/usr/games:\"`" != "" ]; then
-      export PATH="`echo $PATH | sed \"s|:/usr/games:|:$TDEDIR/games:/usr/games:|\"`"
+    if [ "`echo $PATH | grep \"^\\(.*:\\)\\?/usr/games\\(:.*\\)\\?$\"`" != "" ]; then
+      export PATH="`echo $PATH | sed \"s|^\\(.*:\\)\\?/usr/games\\(:.*\\)\\?$|\\1$TDEDIR/games:/usr/games\\2|\"`"
     else
       export PATH=$TDEDIR/games:$PATH
     fi
@@ -175,12 +171,8 @@ if [ -d $TDEDIR/bin ]; then
     # elsewhere, then they need to ensure the traditional search patch is respected.
     # Is there a way we can check that $TDEDIR/bin is always placed only just before
     # /usr/bin in the search path?
-    if [ "`echo $PATH | grep \"^/usr/bin:\"`" != "" ]; then
-      export PATH="`echo $PATH | sed \"s|^/usr/bin:|$TDEDIR/bin:/usr/bin:|\"`"
-    elif [ "`echo $PATH | grep \":/usr/bin$\"`" != "" ]; then
-      export PATH="`echo $PATH | sed \"s|:/usr/bin$|:$TDEDIR/bin:/usr/bin|\"`"
-    elif [ "`echo $PATH | grep \":/usr/bin:\"`" != "" ]; then
-      export PATH="`echo $PATH | sed \"s|:/usr/bin:|:$TDEDIR/bin:/usr/bin:|\"`"
+    if [ "`echo $PATH | grep \"^\\(.*:\\)\\?/usr/bin\\(:.*\\)\\?$\"`" != "" ]; then
+      export PATH="`echo $PATH | sed \"s|^\\(.*:\\)\\?/usr/bin\\(:.*\\)\\?$|\\1$TDEDIR/bin:/usr/bin\\2|\"`"
     else
       export PATH=$TDEDIR/bin:$PATH
     fi
