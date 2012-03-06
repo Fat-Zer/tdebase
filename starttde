@@ -139,7 +139,7 @@ fi
 #   sh $TDEDIR/migratekde3
 # fi
 
-# kdesu needs something to find root's TDE profile. Set the TDEROOTHOME variable
+# tdesu needs something to find root's TDE profile. Set the TDEROOTHOME variable
 # here as last resort. /root/.trinity is a safe presumption. If an admin wants
 # a different location then set the TDEROOTHOME variable elsewhere.
 if [ "$TDEROOTHOME" = "" ]; then
@@ -150,7 +150,21 @@ fi
 # Modify the following environment variables only as necessary.
 if [ -d $TDEDIR/games ]; then
   if [ "`echo $PATH | grep \"$TDEDIR/games\"`" = "" ]; then
-    export PATH=$TDEDIR/games:$PATH
+    # Respect the traditional path order. Don't blindly place $TDEDIR/games
+    # first in the path. Only place $TDEDIR/games before /usr/games. If packagers
+    # are adding $TDEDIR/games elsewhere, then they need to ensure the traditional
+    # search patch is respected.
+    # Is there a way we can check that $TDEDIR/games is always placed only just before
+    # /usr/games in the search path?
+    if [ "`echo $PATH | grep \"^/usr/games:\"`" != "" ]; then
+      export PATH="`echo $PATH | sed \"s|^/usr/games:|$TDEDIR/games:/usr/games:|\"`"
+    elif [ "`echo $PATH | grep \":/usr/games$\"`" != "" ]; then
+      export PATH="`echo $PATH | sed \"s|:/usr/games$|:$TDEDIR/games:/usr/games|\"`"
+    elif [ "`echo $PATH | grep \":/usr/games:\"`" != "" ]; then
+      export PATH="`echo $PATH | sed \"s|:/usr/games:|:$TDEDIR/games:/usr/games:|\"`"
+    else
+      export PATH=$TDEDIR/games:$PATH
+    fi
   fi
 fi
 if [ -d $TDEDIR/bin ]; then
@@ -595,7 +609,7 @@ fi
 # Mark that full TDE session is running (e.g. Konqueror preloading works only
 # with full TDE running). The TDE_FULL_SESSION property can be detected by
 # any X client connected to the same X session, even if not launched
-# directly from the TDE session but e.g. using "ssh -X", kdesu. $TDE_FULL_SESSION
+# directly from the TDE session but e.g. using "ssh -X", tdesu. $TDE_FULL_SESSION
 # however guarantees that the application is launched in the same environment
 # like the TDE session and that e.g. TDE utilities/libraries are available.
 # The matching tests are:
