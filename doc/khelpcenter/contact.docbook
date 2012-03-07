@@ -3,8 +3,10 @@
 <date>2012-02-01</date>
 <releaseinfo>R14.0.0</releaseinfo>
 </chapterinfo>
-<title>Contact the &tde; team</title>
+<title>Contact the &tde; Team</title>
 <anchor id="contact"/>
+
+<para>The Trinity team invites you to contact members.</para>
 
 <sect1 id="contact-mailinglists">
 <title>Mailing lists</title>
@@ -36,10 +38,11 @@ url="http://www.trinitydesktop.org/mailinglist.php">mailing list archive</ulink>
 
 <sect1 id="contact-developers">
 <title>Contacting the &tde; developers</title>
+<anchor id="links" />
 
-<para>On this page, you can find links to &tde; related web sites.</para>
+<para>On this page are links to &tde; related web sites.</para>
 
-<para>The Trinity Desktop Environment is developed by a large group of people
+<para>The Trinity Desktop Environment is developed by many people
 around the world. Our main communication channel is the Internet. For
 general questions, you will be best served by asking on the mailing
 lists mentioned in the <link linkend="contact-mailinglists">previous
@@ -48,7 +51,7 @@ found in the documentation of their individual application.</para>
 
 <para>More information about &tde; is available at &tde-http;.</para>
 
-<para><anchor id="links" />Other &tde; websites include:</para>
+<para>Other &tde; websites include:</para>
 
 <variablelist>
 <varlistentry>
