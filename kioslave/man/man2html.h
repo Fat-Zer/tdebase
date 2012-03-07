@@ -12,10 +12,10 @@
 void scan_man_page(const char *man_page);
 
 /**
- * Set the paths to KDE resources
+ * Set the paths to TDE resources
  *
- * \param htmlPath Path to the KDE resources, encoded for HTML
- * \param cssPath Path to the KDE resources, encoded for CSS
+ * \param htmlPath Path to the TDE resources, encoded for HTML
+ * \param cssPath Path to the TDE resources, encoded for CSS
  * \since 3.5
  *
  */
