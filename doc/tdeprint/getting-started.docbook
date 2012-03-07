@@ -18,7 +18,7 @@ where you can define this: either in &kcontrol; (The <guilabel>Printing
 Manager</guilabel> section), or directly and <quote>on the fly</quote>
 from the print dialog.</para>
 
-<para>Navigate to <menuchoice><guimenu>K Menu</guimenu>
+<para>Navigate to <menuchoice><guimenu>TDE Menu</guimenu>
 <guisubmenu>Preferences</guisubmenu> <guisubmenu>System</guisubmenu>
 <guimenuitem>Printing Manager</guimenuitem></menuchoice>.  At the bottom
 you can see a button that lets you select which printing subsystem you
@@ -99,7 +99,7 @@ the &kprinter; dialog box.</para>
 you are ready to investigate, configure administer and work with this
 system through the &tdeprint; framework.</para>
 
-<para>Navigate to <menuchoice><guimenu>K Menu</guimenu>
+<para>Navigate to <menuchoice><guimenu>TDE Menu</guimenu>
 <guisubmenu>Preferences</guisubmenu> <guisubmenu>System</guisubmenu>
 <guimenuitem>Printing Manager</guimenuitem></menuchoice>.  In the right
 part of the window you will see at least 4 printers predefined.  These

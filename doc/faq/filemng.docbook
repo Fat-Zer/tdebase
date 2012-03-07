@@ -22,7 +22,7 @@ url="http://www.konqueror.org">http://www.konqueror.org</ulink> where a
 <para>Right-click the folder, select <guimenuitem>Properties</guimenuitem>,
 click on the large icon in the dialog which appears, and choose another
 icon.</para> <para>To change the icon displayed for entries in the
-<guimenu>K Menu</guimenu>, use the <application>Menu Editor</application>,
+<guimenu>TDE Menu</guimenu>, use the <application>Menu Editor</application>,
 located at <menuchoice><guisubmenu>Settings</guisubmenu><guimenuitem>Menu
 Editor</guimenuitem></menuchoice>.
 </para>

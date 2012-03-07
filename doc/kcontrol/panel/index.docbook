@@ -175,7 +175,7 @@ menu's behavior. This affects the K menu you will often use to launch
 applications, the browser menus you can use to access folders and other
 menus like the recent documents menu.</para>
 
-<para>The <guilabel>K Menu</guilabel> frame offers you some options to
+<para>The <guilabel>TDE Menu</guilabel> frame offers you some options to
 configure the <guimenu>K</guimenu> menu's functionality. This frame consists 
 of 4 items:</para>
 
@@ -215,7 +215,7 @@ terminal programs (command line interfaces).</para>
 <listitem><para><guilabel>Show side image</guilabel> will add a small
 image to the side of the menu.  This is purely decorative.</para></listitem>
 
-<listitem><para>The <guibutton>Edit K Menu</guibutton> button launches the &tde; 
+<listitem><para>The <guibutton>Edit TDE Menu</guibutton> button launches the &tde; 
 menu editor.</para></listitem>
 </itemizedlist>
 
