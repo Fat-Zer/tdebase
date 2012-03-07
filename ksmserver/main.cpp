@@ -70,7 +70,7 @@ void sanity_check( int argc, char* argv[] )
 {
   TQCString msg;
   TQCString path = getenv("HOME");
-  TQCString readOnly = getenv("KDE_HOME_READONLY");
+  TQCString readOnly = getenv("TDE_HOME_READONLY");
   if (path.isEmpty())
   {
      msg = "$HOME not set!";

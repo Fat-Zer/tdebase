@@ -65,7 +65,7 @@ int main( int argc, char* argv[] )
      exit (255);
 
   // Make sure that DrKonqi doesn't start DrKonqi when it crashes :-]
-  setenv("KDE_DEBUG", "true", 1);
+  setenv("TDE_DEBUG", "true", 1);
   unsetenv("SESSION_MANAGER");
 
   KAboutData aboutData( "drkonqi",

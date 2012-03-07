@@ -358,10 +358,10 @@ main(int argc, char **argv)
 
 #ifdef ACCEPT_ENV
 # ifdef HAVE_PAM
-  if ((p = getenv("KDE_PAM_ACTION")))
+  if ((p = getenv("TDE_PAM_ACTION")))
     caller = p;
 # endif
-  if ((p = getenv("KCHECKPASS_USER")))
+  if ((p = getenv("TCHECKPASS_USER")))
     username = p;
 #endif  
 

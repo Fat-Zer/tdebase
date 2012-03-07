@@ -73,14 +73,14 @@ int main(int argc, char *argv[])
     // However this assume your $HOME doesn't use characters from other locales...
     setenv( "LC_ALL", "en_GB.ISO-8859-1", 1 );
 #ifdef UTF8TEST
-    setenv( "KDE_UTF8_FILENAMES", "true", 1 );
+    setenv( "TDE_UTF8_FILENAMES", "true", 1 );
 #else
-    unsetenv( "KDE_UTF8_FILENAMES" );
+    unsetenv( "TDE_UTF8_FILENAMES" );
 #endif
 
     // Use another directory than the real one, just to keep things clean
     setenv( "XDG_DATA_HOME", TQFile::encodeName( TQDir::homeDirPath() + "/.local-testtrash" ), true );
-    setenv( "KDE_FORK_SLAVES", "yes", true );
+    setenv( "TDE_FORK_SLAVES", "yes", true );
 
     KApplication::disableAutoDcopRegistration();
     KCmdLineArgs::init(argc,argv,"testtrash", 0, 0, 0, 0);

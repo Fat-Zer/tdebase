@@ -18,7 +18,7 @@ that slaves for a certain protocol are started in debug mode.
 
 E.g. to start all 'http' slaves in debug mode, you type:
 
-	KDE_SLAVE_DEBUG_WAIT=http tdeinit
+	TDE_SLAVE_DEBUG_WAIT=http tdeinit
 
 This will restart 'tdeinit' and 'klauncher'.
 
@@ -51,13 +51,13 @@ Debugging io-slaves with valgrind
 KLauncher can be told to run certain io-slaves through valgrind. The following
 command can be used to let klauncher run all https io-slaves via valgrind:
 
-	KDE_SLAVE_VALGRIND=https tdeinit
+	TDE_SLAVE_VALGRIND=https tdeinit
 
 The valgrind output will appear as the stderr output of the tdeinit process.
 The $VALGRIND_OPTS environment variable can be used to pass options to valgrind.
 If you want to use a different skin:
 
-	KDE_SLAVE_VALGRIND_SKIN=calltree      ( for example )
+	TDE_SLAVE_VALGRIND_SKIN=calltree      ( for example )
 
 
 How to get debug output
