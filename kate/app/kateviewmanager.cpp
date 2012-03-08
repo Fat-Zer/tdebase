@@ -168,7 +168,7 @@ void KateViewManager::updateViewSpaceActions ()
 }
 
 void KateViewManager::tabChanged(TQWidget* widget) {
-  KateViewSpaceContainer *container=static_cast<KateViewSpaceContainer*>(widget->qt_cast("KateViewSpaceContainer"));
+  KateViewSpaceContainer *container=static_cast<KateViewSpaceContainer*>(widget->tqt_cast("KateViewSpaceContainer"));
   Q_ASSERT(container);
   m_currentContainer=container;
 

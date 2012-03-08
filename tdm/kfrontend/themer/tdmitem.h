@@ -147,7 +147,7 @@ public:
 	TQString baseDir() const
 	{
 		if (basedir.isEmpty() && parent())
-			return static_cast<KdmItem *>( parent()->qt_cast( "KdmItem" ) )->baseDir();
+			return static_cast<KdmItem *>( parent()->tqt_cast( "KdmItem" ) )->baseDir();
 		return basedir;
 	}
 

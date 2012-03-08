@@ -148,7 +148,7 @@ void QXtEventLoopPrivate::unhook()
     appContext = ownContext = 0;
 }
 
-extern bool qt_try_modal( TQWidget *, XEvent * ); // defined in qapplication_x11.cpp
+extern bool tqt_try_modal( TQWidget *, XEvent * ); // defined in qapplication_x11.cpp
 Boolean qmotif_event_dispatcher( XEvent *event )
 {
     TQApplication::sendPostedEvents();
@@ -206,7 +206,7 @@ Boolean qmotif_event_dispatcher( XEvent *event )
 	return True;
 
     if ( qMotif && TQApplication::activeModalWidget() ) {
-	if ( !qt_try_modal(qMotif, event) )
+	if ( !tqt_try_modal(qMotif, event) )
 	    return True;
 
     }

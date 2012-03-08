@@ -115,7 +115,7 @@ void KateConsole::sendInput( const TQString& text )
 
   if (!m_part) return;
 
-  TerminalInterface *t = static_cast<TerminalInterface*>( m_part->qt_cast( "TerminalInterface" ) );
+  TerminalInterface *t = static_cast<TerminalInterface*>( m_part->tqt_cast( "TerminalInterface" ) );
 
   if (!t) return;
 

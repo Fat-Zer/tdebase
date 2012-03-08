@@ -38,7 +38,7 @@ KonqSidebarDirTreeModule::KonqSidebarDirTreeModule( KonqSidebarTree * parentTree
     KonqSidebarPlugin * plugin = parentTree->part();
     // KonqSidebarPlugin::universalMode() is protected :-|
     if ( plugin->parent() ) {
-        KonqSidebarIface * ksi = static_cast<KonqSidebarIface*>( plugin->parent()->qt_cast( "KonqSidebarIface" ) );
+        KonqSidebarIface * ksi = static_cast<KonqSidebarIface*>( plugin->parent()->tqt_cast( "KonqSidebarIface" ) );
         universalMode = ksi ? ksi->universalMode() : false;
     } */
 

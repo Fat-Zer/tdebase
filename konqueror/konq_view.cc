@@ -1082,7 +1082,7 @@ bool KonqView::callExtensionMethod( const char *methodName )
     return false;
   TQUObject o[ 1 ];
 
-  obj->qt_invoke( id, o );
+  obj->tqt_invoke( id, o );
   return true;
 }
 
@@ -1099,7 +1099,7 @@ bool KonqView::callExtensionBoolMethod( const char *methodName, bool value )
 
   static_TQUType_bool.set( o + 1, value );
 
-  obj->qt_invoke( id, o );
+  obj->tqt_invoke( id, o );
   return true;
 }
 
@@ -1116,7 +1116,7 @@ bool KonqView::callExtensionStringMethod( const char *methodName, TQString value
 
   static_TQUType_TQString.set( o + 1, value );
 
-  obj->qt_invoke( id, o );
+  obj->tqt_invoke( id, o );
   return true;
 }
 
@@ -1133,7 +1133,7 @@ bool KonqView::callExtensionURLMethod( const char *methodName, const KURL& value
 
   static_TQUType_ptr.set( o + 1, &value );
 
-  obj->qt_invoke( id, o );
+  obj->tqt_invoke( id, o );
   return true;
 }
 

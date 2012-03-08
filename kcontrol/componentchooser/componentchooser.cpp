@@ -417,7 +417,7 @@ void ComponentChooser::slotServiceSelected(TQListBoxItem* it) {
 	TQWidget *newConfigWidget = 0;
 	if (cfgType.isEmpty() || (cfgType=="component"))
 	{
-		if (!(configWidget && configWidget->qt_cast("CfgComponent")))
+		if (!(configWidget && configWidget->tqt_cast("CfgComponent")))
 		{
 			CfgComponent* cfgcomp = new CfgComponent(configContainer);
                         cfgcomp->ChooserDocu->setText(i18n("Choose from the list below which component should be used by default for the %1 service.").arg(it->text()));
@@ -430,7 +430,7 @@ void ComponentChooser::slotServiceSelected(TQListBoxItem* it) {
 	}
 	else if (cfgType=="internal_email")
 	{
-		if (!(configWidget && configWidget->qt_cast("CfgEmailClient")))
+		if (!(configWidget && configWidget->tqt_cast("CfgEmailClient")))
 		{
 			newConfigWidget = new CfgEmailClient(configContainer);
 		}
@@ -438,7 +438,7 @@ void ComponentChooser::slotServiceSelected(TQListBoxItem* it) {
 	}
 	else if (cfgType=="internal_terminal")
 	{
-		if (!(configWidget && configWidget->qt_cast("CfgTerminalEmulator")))
+		if (!(configWidget && configWidget->tqt_cast("CfgTerminalEmulator")))
 		{
 			newConfigWidget = new CfgTerminalEmulator(configContainer);
 		}
@@ -446,7 +446,7 @@ void ComponentChooser::slotServiceSelected(TQListBoxItem* it) {
 	}
 	else if (cfgType=="internal_browser")
 	{
-		if (!(configWidget && configWidget->qt_cast("CfgBrowser")))
+		if (!(configWidget && configWidget->tqt_cast("CfgBrowser")))
 		{
 			newConfigWidget = new CfgBrowser(configContainer);
 		}
@@ -465,7 +465,7 @@ void ComponentChooser::slotServiceSelected(TQListBoxItem* it) {
 	}
 	
 	if (configWidget)
-		static_cast<CfgPlugin*>(configWidget->qt_cast("CfgPlugin"))->load(&cfg);
+		static_cast<CfgPlugin*>(configWidget->tqt_cast("CfgPlugin"))->load(&cfg);
 	
 	emitChanged(false);
 	latestEditedService=static_cast<MyListBoxItem*>(it)->File;
@@ -487,7 +487,7 @@ void ComponentChooser::load() {
 	if( configWidget )
 	{
 		CfgPlugin * plugin = static_cast<CfgPlugin*>(
-				configWidget->qt_cast( "CfgPlugin" ) );
+				configWidget->tqt_cast( "CfgPlugin" ) );
 		if( plugin )
 		{
 			KSimpleConfig cfg(latestEditedService);
@@ -500,7 +500,7 @@ void ComponentChooser::save() {
 	if( configWidget )
 	{
 		CfgPlugin * plugin = static_cast<CfgPlugin*>(
-				configWidget->qt_cast( "CfgPlugin" ) );
+				configWidget->tqt_cast( "CfgPlugin" ) );
 		if( plugin )
 		{
 			KSimpleConfig cfg(latestEditedService);
@@ -512,7 +512,7 @@ void ComponentChooser::save() {
 void ComponentChooser::restoreDefault() {
     if (configWidget)
     {
-        static_cast<CfgPlugin*>(configWidget->qt_cast("CfgPlugin"))->defaults();
+        static_cast<CfgPlugin*>(configWidget->tqt_cast("CfgPlugin"))->defaults();
         emitChanged(true);
     }
 

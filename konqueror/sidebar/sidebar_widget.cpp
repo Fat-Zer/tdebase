@@ -680,7 +680,7 @@ void Sidebar_Widget::stdAction(const char *handlestd)
 		return;
 	kdDebug() << "Action slot was found, it will be called now" << endl;
   	TQUObject o[ 1 ];
-	mod->module->qt_invoke( id, o );
+	mod->module->tqt_invoke( id, o );
   	return;
 }
 
