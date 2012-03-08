@@ -81,7 +81,7 @@ KScreenSaver::KScreenSaver(TQWidget *parent, const char *name, const TQStringLis
     mMonitor = 0;
     mTesting = false;
 
-    // Add non-KDE path
+    // Add non-TDE path
     KGlobal::dirs()->addResourceType("scrsav",
                                      KGlobal::dirs()->kde_default("apps") +
                                      "apps/ScreenSavers/");

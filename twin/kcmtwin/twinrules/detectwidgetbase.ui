@@ -198,7 +198,7 @@
                         <string>Use &amp;whole window class (specific window)</string>
                     </property>
                     <property name="whatsThis" stdset="0">
-                        <string>With some (non-KDE) applications whole window class can be sufficient for selecting a specific window in an application, as they set whole window class to contain both application and window role.</string>
+                        <string>With some (non-TDE) applications whole window class can be sufficient for selecting a specific window in an application, as they set whole window class to contain both application and window role.</string>
                     </property>
                 </widget>
                 <widget class="TQCheckBox">

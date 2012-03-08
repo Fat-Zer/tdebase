@@ -306,7 +306,7 @@ Non-&tde;-applications &eg;
 <para>
 Click the &RMB; on any free space
 in &kicker; and choose <guisubmenu>Add Application to
-Panel</guisubmenu> and then <guimenuitem>Add Non-KDE
+Panel</guisubmenu> and then <guimenuitem>Add Non-TDE
 Application</guimenuitem>. In the newly appearing window, enter <guilabel>Button title</guilabel> 
 and a <guilabel>Description</guilabel> of the application in the first two text boxes. Then fill 
 in the command of the application you
@@ -331,7 +331,7 @@ and then choosing <menuchoice><guimenu>Remove from Panel</guimenu>
 removed.
 </para>
 
-<!-- NOTE: Lauri: I'd say it would confuse users if I'd mention Non-KDE-Apps -->
+<!-- NOTE: Lauri: I'd say it would confuse users if I'd mention Non-TDE-Apps -->
 <!-- explicitly here. Please add them if you think there's a need. -->
 
 </sect2>

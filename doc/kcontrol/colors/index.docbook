@@ -121,7 +121,7 @@ downloaded from a website.</para>
 
 <para>You can choose if you want &tde; to apply the color scheme even
 to non-&tde; applications by enabling the <guilabel>Apply colors to
-non-KDE applications</guilabel>.  Not all applications will allow
+non-TDE applications</guilabel>.  Not all applications will allow
 this, but most do.</para>
 
 </sect3>

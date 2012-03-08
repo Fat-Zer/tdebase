@@ -49,7 +49,7 @@ The krdb utility works by putting your current KDE color
 and font scheme into preprocessor statements, concatenating
 the specially written application default files and using
 xrdb -merge to write to RESOURCE_MANAGER. Thus it gives a
-simple way to make non-KDE applications fit in with the
+simple way to make non-TDE applications fit in with the
 desktop.
 
 krdb now comes with a set of general purpose configuration

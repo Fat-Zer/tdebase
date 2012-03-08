@@ -3,7 +3,7 @@
 **
 ** KRDB - puts current KDE color scheme into preprocessor statements
 ** cats specially written application default files and uses xrdb -merge to
-** write to RESOURCE_MANAGER. Thus it gives a  simple way to make non-KDE
+** write to RESOURCE_MANAGER. Thus it gives a  simple way to make non-TDE
 ** applications fit in with the desktop
 **
 ** Copyright (C) 1998 by Mark Donohoe
@@ -345,7 +345,7 @@ static void createGtkrc( bool exportColors, const TQColorGroup& cg, int version 
             "#\n"
             "# If you do not want KDE to override your GTK settings, select\n"
             "# Appearance & Themes -> Colors in the Control Center and disable the checkbox\n"
-            "# \"Apply colors to non-KDE applications\"\n"
+            "# \"Apply colors to non-TDE applications\"\n"
             "#\n"
             "#\n").arg(TQDateTime::currentDateTime().toString());
 

@@ -177,7 +177,7 @@ public:
                              TQPopupMenu* opMenu, TQWidget* parent = 0);
     TQString appletType() const { return "ExecButton"; }
     virtual TQString icon() const { return "exec"; }
-    virtual TQString visibleName() const { return i18n("Non-KDE Application"); }
+    virtual TQString visibleName() const { return i18n("Non-TDE Application"); }
 };
 
 class ExtensionButtonContainer : public ButtonContainer

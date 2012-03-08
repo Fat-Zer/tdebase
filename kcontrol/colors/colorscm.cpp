@@ -107,7 +107,7 @@ KColorScheme::KColorScheme(TQWidget *parent, const char *name, const TQStringLis
        " which can also be modified or deleted. KDE comes with several"
        " predefined color schemes on which you can base your own.<p>"
        " All KDE applications will obey the selected color scheme."
-       " Non-KDE applications may also obey some or all of the color"
+       " Non-TDE applications may also obey some or all of the color"
        " settings, if this option is enabled."));
 
     KConfig *cfg = new KConfig("kcmdisplayrc");
@@ -270,12 +270,12 @@ KColorScheme::KColorScheme(TQWidget *parent, const char *name, const TQStringLis
     label->setText(i18n("High Contrast", "High"));
     groupLayout->addWidget( label );
 
-    cbExportColors = new TQCheckBox(i18n("Apply colors to &non-KDE applications"), this);
+    cbExportColors = new TQCheckBox(i18n("Apply colors to &non-TDE applications"), this);
     topLayout->addMultiCellWidget( cbExportColors, 2, 2, 0, 1 );
     connect(cbExportColors, TQT_SIGNAL(toggled(bool)), this, TQT_SLOT(changed()));
 
     TQWhatsThis::add(cbExportColors, i18n("Check this box to apply the"
-       " current color scheme to non-KDE applications."));
+       " current color scheme to non-TDE applications."));
 
     load();
 

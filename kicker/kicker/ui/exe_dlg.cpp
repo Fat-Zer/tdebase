@@ -49,11 +49,11 @@ PanelExeDialog::PanelExeDialog(const TQString& title, const TQString& descriptio
                                const TQString &path, const TQString &icon,
                                const TQString &cmd, bool inTerm,
                                TQWidget *parent, const char *name)
-    : KDialogBase(parent, name, false, i18n("Non-KDE Application Configuration"), Ok|Cancel, Ok, true),
+    : KDialogBase(parent, name, false, i18n("Non-TDE Application Configuration"), Ok|Cancel, Ok, true),
       m_icon(icon.isEmpty() ? "exec" : icon),
       m_iconChanged(false)
 {
-    setCaption(i18n("Non-KDE Application Configuration"));
+    setCaption(i18n("Non-TDE Application Configuration"));
     TQFileInfo fi(path);
 
     ui = new NonKDEButtonSettings(makeVBoxMainWidget());
