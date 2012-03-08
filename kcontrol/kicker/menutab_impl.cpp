@@ -273,7 +273,7 @@ void MenuTab::launchMenuEditor()
                                                   true /*nowait*/ ) != 0 )
     {
         KMessageBox::error(this,
-                           i18n("The KDE menu editor (kmenuedit) could not be launched.\n"
+                           i18n("The TDE menu editor (kmenuedit) could not be launched.\n"
                            "Perhaps it is not installed or not in your path."),
                            i18n("Application Missing"));
     }

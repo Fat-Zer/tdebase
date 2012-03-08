@@ -28,7 +28,7 @@
 #include "kmenuedit.h"
 #include "khotkeys.h"
 
-static const char description[] = I18N_NOOP("KDE menu editor");
+static const char description[] = I18N_NOOP("TDE menu editor");
 static const char version[] = "0.7";
 
 static const KCmdLineOptions options[] =
@@ -64,7 +64,7 @@ public:
 
 extern "C" int KDE_EXPORT kdemain( int argc, char **argv )
 {
-    KAboutData aboutData("kmenuedit", I18N_NOOP("KDE Menu Editor"),
+    KAboutData aboutData("kmenuedit", I18N_NOOP("TDE Menu Editor"),
 			 version, description, KAboutData::License_GPL,
 			 "(C) 2000-2003, Waldo Bastian, Raffaele Sandrini, Matthias Elter");
     aboutData.addAuthor("Waldo Bastian", I18N_NOOP("Maintainer"), "bastian@kde.org");

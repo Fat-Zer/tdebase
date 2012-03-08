@@ -50,9 +50,9 @@ TopLevel::TopLevel( const TQString &destDir, TQWidget *parent, const char *name 
   setCaption( i18n( "KAppfinder" ) );
   TQVBoxLayout *layout = new TQVBoxLayout( this, marginHint() );
 
-  TQLabel *label = new TQLabel( i18n( "The application finder looks for non-KDE "
+  TQLabel *label = new TQLabel( i18n( "The application finder looks for non-TDE "
                                     "applications on your system and adds "
-                                    "them to the KDE menu system. "
+                                    "them to the TDE menu system. "
                                     "Click 'Scan' to begin, select the desired applications and then click 'Apply'."), this);
   label->setAlignment( AlignAuto | WordBreak );
   layout->addWidget( label );
@@ -284,8 +284,8 @@ void TopLevel::slotCreate()
 
   KService::rebuildKSycoca(this);
 
-  TQString message( i18n( "%n application was added to the KDE menu system.",
-                         "%n applications were added to the KDE menu system.", mAdded ) );
+  TQString message( i18n( "%n application was added to the TDE menu system.",
+                         "%n applications were added to the TDE menu system.", mAdded ) );
   KMessageBox::information( this, message, TQString::null, "ShowInformation" );
 }
 
