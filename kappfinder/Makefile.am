@@ -16,7 +16,7 @@ METASOURCES = AUTO
 install-data-local: runkappfinder_$(RUN_KAPPFINDER)
 
 runkappfinder_yes:
-	echo "Installing non-KDE applications"
+	echo "Installing non-TDE applications"
 	pwd=`pwd`; \
 	(cd $(srcdir) && $$pwd/kappfinder_install "$(DESTDIR)$(kde_appsdir)")
 

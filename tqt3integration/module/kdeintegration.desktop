@@ -10,4 +10,4 @@ X-KDE-Kded-autoload=false
 X-KDE-Kded-load-on-demand=true
 
 Name=KDE Integration Module
-Comment=Module for integrating UI of non-KDE applications
+Comment=Module for integrating UI of non-TDE applications

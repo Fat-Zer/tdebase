@@ -85,7 +85,7 @@ with &tde; or you can supply your own.</para>
 There are a variety of color schemes installed with &tde; by default, and
 you can find others at kde-look.org. You can also create your own. Here you
 can also modify the contrast and choose whether you want your &tde; colors
-to be applied to non-kde applications, for a more consistant overall
+to be applied to non-TDE applications, for a more consistant overall
 appearance.</para>
 </listitem>
 </varlistentry>

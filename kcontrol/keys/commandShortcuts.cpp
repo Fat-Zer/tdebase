@@ -82,7 +82,7 @@ void CommandShortcutsModule::initGUI()
     KActiveLabel* label = new KActiveLabel(this);
     label->setText(i18n("<qt>Below is a list of known commands which you may assign keyboard shortcuts to. "
                         "To edit, add or remove entries from this list use the "
-                        "<a href=\"launchMenuEditor\">KDE menu editor</a>.</qt>"));
+                        "<a href=\"launchMenuEditor\">TDE menu editor</a>.</qt>"));
     label->setSizePolicy(TQSizePolicy::Preferred, TQSizePolicy::Minimum);
     disconnect(label, TQT_SIGNAL(linkClicked(const TQString &)), label, TQT_SLOT(openLink(const TQString &)));
     connect(label, TQT_SIGNAL(linkClicked(const TQString &)), this, TQT_SLOT(launchMenuEditor()));
@@ -139,7 +139,7 @@ void CommandShortcutsModule::launchMenuEditor()
                                                   true /*nowait*/ ) != 0 )
     {
         KMessageBox::error(this,
-                           i18n("The KDE menu editor (kmenuedit) could not be launched.\n"
+                           i18n("The TDE menu editor (kmenuedit) could not be launched.\n"
                            "Perhaps it is not installed or not in your path."),
                            i18n("Application Missing"));
     }

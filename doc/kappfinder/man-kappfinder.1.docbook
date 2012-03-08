@@ -24,7 +24,7 @@
 <cmdsynopsis>
 <command>kappfinder</command>
 <group><option>--dir</option> <replaceable> directory</replaceable></group>
-<group><option>KDE Generic Options</option></group>
+<group><option>TDE Generic Options</option></group>
 <group><option>Qt Generic Options</option></group>
 
 </cmdsynopsis>
@@ -33,9 +33,9 @@
 <refsect1>
 <title>Description</title>
 
-<para>The KDE application findern (&kappfinder;) looks for legacy and
+<para>The TDE application finder (&kappfinder;) looks for legacy and
 third party applications that are installed on your system and adds
-them to the KDE menu system. </para>
+them to the TDE menu system. </para>
 
 </refsect1>
 

@@ -31,7 +31,7 @@ libraries. Here is an overview of the directories:
     the bug.
 
 * kappfinder
-    Searches for non-KDE applications, e.g. Acrobat Reader (tm) and installs
+    Searches for non-TDE applications, e.g. Acrobat Reader (tm) and installs
     those apps under the K start button.
 
 * kate

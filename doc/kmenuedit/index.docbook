@@ -1,5 +1,5 @@
 <?xml version="1.0" ?>
-<!DOCTYPE book PUBLIC "-//KDE//DTD DocBook XML V4.2-Based Variant V1.1//EN" 
+<!DOCTYPE book PUBLIC "-//KDE//DTD DocBook XML V4.2-Based Variant V1.1//EN"
 "dtd/kdex.dtd" [
   <!ENTITY package "tdebase">
   <!ENTITY firefox "<application>Firefox</application>">
@@ -33,12 +33,12 @@
 <date>2006-11-23</date>
 <releaseinfo>0.7 (&tde; 3.5.5)</releaseinfo>
 
-<abstract><para>&kmenuedit; allows editing of the &tde; &kmenu;. 
+<abstract><para>&kmenuedit; allows editing of the &tde; &kmenu;.
 </para></abstract>
 
 <keywordset>
-<keyword>KDE</keyword>
-<keyword>KDE Menu Editor</keyword>
+<keyword>TDE</keyword>
+<keyword>TDE Menu Editor</keyword>
 <keyword>kmenuedit</keyword>
 <keyword>application</keyword>
 <keyword>program</keyword>
@@ -80,7 +80,7 @@ and <guimenuitem>Paste</guimenuitem> menu items</para></listitem>
 <title>A Quick Start Guide to Adding an Entry to the &kmenu;</title>
 
   <para>In this example, we will add &firefox; to the <guisubmenu>Internet</guisubmenu> submenu. <note><para>Most applications can be added with &kappfinder;, &firefox; can usually be added that way, but was used for lack of a better example.</para></note></para>
-  <para>To start off, we need to open &kmenuedit;, so &RMB; on the &kmenu;, click <guimenuitem>Menu Editor</guimenuitem> to start &kmenuedit;. After &kmenuedit; has started, select <guisubmenu>Internet</guisubmenu> as shown in picture below. 
+  <para>To start off, we need to open &kmenuedit;, so &RMB; on the &kmenu;, click <guimenuitem>Menu Editor</guimenuitem> to start &kmenuedit;. After &kmenuedit; has started, select <guisubmenu>Internet</guisubmenu> as shown in picture below.
 <screenshot>
 <screeninfo>Select <guisubmenu>Internet</guisubmenu></screeninfo>
 <mediaobject>
@@ -93,7 +93,7 @@ and <guimenuitem>Paste</guimenuitem> menu items</para></listitem>
 </mediaobject>
 </screenshot></para>
   <para>
-    Once you have selected <guisubmenu>Internet</guisubmenu>, click on <menuchoice><guimenu>File</guimenu><guimenuitem>New Item...</guimenuitem></menuchoice>, opening the <guilabel>New Item</guilabel> dialog, as shown below. Type the name of the program you want to add, in this case, type <userinput>firefox</userinput>. 
+    Once you have selected <guisubmenu>Internet</guisubmenu>, click on <menuchoice><guimenu>File</guimenu><guimenuitem>New Item...</guimenuitem></menuchoice>, opening the <guilabel>New Item</guilabel> dialog, as shown below. Type the name of the program you want to add, in this case, type <userinput>firefox</userinput>.
 <screenshot>
 <screeninfo><guilabel>New Item</guilabel> dialog</screeninfo>
 <mediaobject>
@@ -119,7 +119,7 @@ Press return, and you should see something like the picture below in the main wi
 </textobject>
 </mediaobject>
 </screenshot></para>
-  
+
 <para>
     Now lets fill in the <guilabel>Description:</guilabel>, in this case type <userinput>Web Browser</userinput>. <note><para>The description and name will be displayed on the &kmenu; as <quote>Web Browser (Firefox)</quote>.</para></note> We will need to fill in the executable name in the <guilabel>Command:</guilabel> field, in this instance we will type <userinput><command>firefox</command></userinput>.</para>
 <note><para>Following the command, you can have several place holders which will be replaced with actual values when the program is run:
@@ -148,7 +148,7 @@ Press return, and you should see something like the picture below in the main wi
 </mediaobject>
 </screenshot></para>
 
-  <para>We choose the firefox icon from the list, and press return. Your finished screen should probably look something like the screenshot below. 
+  <para>We choose the firefox icon from the list, and press return. Your finished screen should probably look something like the screenshot below.
 <screenshot>
 <screeninfo>Done screenshot</screeninfo>
 <mediaobject>
@@ -229,7 +229,7 @@ executable location.</para></listitem>
 <term><guilabel>Run in terminal</guilabel></term>
 <listitem><para>You must check this if your program requires terminal emulator
 in order to run. This mainly applies to <link
-linkend="gloss-console-application">console 
+linkend="gloss-console-application">console
 applications</link>.</para></listitem>
 </varlistentry>
 <varlistentry>
@@ -264,7 +264,7 @@ want to assign a shortcut that uses more than one key.</para>
 <para>The dialog will close when you have selected a keybinding.
 </para>
 
-</sect1> 
+</sect1>
 
 </chapter>
 
@@ -273,7 +273,7 @@ want to assign a shortcut that uses more than one key.</para>
 
 <variablelist>
 <varlistentry id="file-new-item">
-<term><menuchoice> 
+<term><menuchoice>
 <shortcut><keycombo
 action="simul">&Ctrl;<keycap>N</keycap></keycombo></shortcut>
 <guimenu>File</guimenu> <guimenuitem>New Item...</guimenuitem>
@@ -331,7 +331,7 @@ Edit</guimenu> <guimenuitem>Cut</guimenuitem>
 you want to move menu item, you should first cut it to the clipboard, move to
 the destination place using the left panel, and use the
 <guimenuitem>Paste</guimenuitem> function to paste the menu item from the
-clipboard.</para></listitem> 
+clipboard.</para></listitem>
 </varlistentry>
 
 <varlistentry id="edit-copy">
@@ -414,7 +414,7 @@ Toolbars...</guimenuitem></menuchoice></term>
 <para>Contributors:</para>
 <itemizedlist>
 <listitem><para>&Matthias.Elter; &Matthias.Elter.mail; - Original
-Author</para> 
+Author</para>
 </listitem>
 <listitem><para>&Matthias.Ettrich; &Matthias.Ettrich.mail;</para>
 </listitem>
@@ -437,7 +437,7 @@ Author</para>
 </chapter>
 
 <glossary id="glossary">
-<title>Glossary</title> 
+<title>Glossary</title>
 
 <glossentry id="gloss-terminal-emulator">
 <glossterm>Terminal emulator</glossterm>
@@ -457,7 +457,7 @@ information or provides a control shortcut. For instance the
 <application>Clock</application> applet shows current time and date
 (and even a month diary if you click it), and <application>System
 Monitor</application> applet shows how busy your machine currently is
-in real-time.</para> </glossdef> 
+in real-time.</para> </glossdef>
 </glossentry>
 
 <glossentry id="gloss-legacy-application">
@@ -508,7 +508,7 @@ work.</para></footnote>.</para>
 
 </glossary>
 
-&documentation.index; 
+&documentation.index;
 
 </book>
 <!--

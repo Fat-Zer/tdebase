@@ -375,7 +375,7 @@ void PanelServiceMenu::doInitialize()
 
         if (relPath_ == "")
         {
-            insertItem(KickerLib::menuIconSet("exec"), i18n("Add Non-KDE Application"),
+            insertItem(KickerLib::menuIconSet("exec"), i18n("Add Non-TDE Application"),
                        this, TQT_SLOT(addNonKDEApp()));
         }
 

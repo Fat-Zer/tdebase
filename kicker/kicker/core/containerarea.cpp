@@ -1332,7 +1332,7 @@ void ContainerArea::dropEvent(TQDropEvent *ev)
             }
             else if (fi.isExecutable())
             {
-                // non-KDE executable
+                // non-TDE executable
                 TQString pixmapFile;
                 KMimeType::pixmapForURL(url, 0, KIcon::Panel, 0,
                                         KIcon::DefaultState, &pixmapFile);

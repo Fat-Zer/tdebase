@@ -17,7 +17,7 @@
 <indexterm><primary>Fonts</primary></indexterm>
 
 <para>Fonts are really easy to configure in &tde;. Open up the Control
-Center (with <menuchoice><guimenu>K-Menu</guimenu><guimenuitem>Control
+Center (with <menuchoice><guimenu>TDE Menu</guimenu><guimenuitem>Control
 Center</guimenuitem></menuchoice>) and choose
 <guilabel>Font Installer</guilabel> in <guilabel>System
 Administration</guilabel>in the tree view.</para>

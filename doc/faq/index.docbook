@@ -12,7 +12,7 @@
   <!ENTITY faq-desktop SYSTEM "desktop.docbook">
   <!ENTITY faq-winmng SYSTEM "winmng.docbook">
   <!ENTITY faq-filemng SYSTEM "filemng.docbook">
-  <!ENTITY faq-webbrowse SYSTEM "webbrowse.docbook"> 
+  <!ENTITY faq-webbrowse SYSTEM "webbrowse.docbook">
   <!ENTITY faq-configkde SYSTEM "configkde.docbook">
   <!ENTITY faq-kdeapps SYSTEM "kdeapps.docbook">
   <!ENTITY faq-nonkdeapps SYSTEM "nonkdeapps.docbook">
@@ -50,6 +50,10 @@
 <year>2003</year>
 <year>2004</year>
 <year>2005</year>
+<holder>The &kde; Team</holder>
+</copyright>
+<copyright>
+<year>2012</year>
 <holder>The &tde; Team</holder>
 </copyright>
 

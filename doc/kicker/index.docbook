@@ -306,7 +306,7 @@ Non-&tde;-applications &eg;
 <para>
 Click the &RMB; on any free space
 in &kicker; and choose <guisubmenu>Add Application to
-Panel</guisubmenu> and then <guimenuitem>Add Non-KDE
+Panel</guisubmenu> and then <guimenuitem>Add Non-TDE
 Application</guimenuitem>. In the newly appearing window, enter <guilabel>Button title</guilabel> 
 and a <guilabel>Description</guilabel> of the application in the first two text boxes. Then fill 
 in the command of the application you
@@ -331,7 +331,7 @@ and then choosing <menuchoice><guimenu>Remove from Panel</guimenu>
 removed.
 </para>
 
-<!-- NOTE: Lauri: I'd say it would confuse users if I'd mention Non-KDE-Apps -->
+<!-- NOTE: Lauri: I'd say it would confuse users if I'd mention Non-TDE-Apps -->
 <!-- explicitly here. Please add them if you think there's a need. -->
 
 </sect2>
@@ -412,13 +412,13 @@ then <guilabel>Special Buttons</guilabel> on the right top of the
 
 <variablelist>
 <varlistentry>
-<term>The <guilabel>K Menu</guilabel> Icon</term>
+<term>The <guilabel>TDE Menu</guilabel> Icon</term>
 <listitem>
 <para>
 <guiicon><inlinemediaobject><imageobject><imagedata
 fileref="k_menu_icon.png"
 format="PNG"/></imageobject></inlinemediaobject></guiicon> The
-<guiicon>K Menu icon</guiicon> is one of the most necessary icons in
+<guiicon>TDE Menu icon</guiicon> is one of the most necessary icons in
 &kicker;. As you might guess, it opens the <guimenu>K</guimenu> Menu,
 which you can learn more about in <link linkend="k-menu">The K
 Menu</link>.
@@ -1040,7 +1040,7 @@ folders and other menus like the recent documents menu.
 </para>
 
 <para>
-The <guilabel>K Menu</guilabel> frame offers you some options to
+The <guilabel>TDE Menu</guilabel> frame offers you some options to
 configure the <guimenu>K</guimenu> menu's functionality. The
 <guilabel>Bookmarks</guilabel> and <guilabel>Recent Documents</guilabel> options
 will enable submenus showing your <application>konqueror</application>
@@ -1121,10 +1121,10 @@ The different kinds of buttons are:
 
 <variablelist>
 <varlistentry>
-<term><guilabel>K Menu</guilabel> tiles</term>
+<term><guilabel>TDE Menu</guilabel> tiles</term>
 <listitem>
 <para>
-The icon for the <guiicon>K Menu</guiicon> will be displayed as a tile
+The icon for the <guiicon>TDE Menu</guiicon> will be displayed as a tile
 </para>
 </listitem>
 </varlistentry>

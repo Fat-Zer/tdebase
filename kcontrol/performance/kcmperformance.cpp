@@ -45,8 +45,8 @@ namespace KCMPerformance
 Config::Config( TQWidget* parent_P, const char* )
     : KCModule( parent_P, "kcmperformance" )
     {
-    setQuickHelp( i18n( "<h1>KDE Performance</h1>"
-        " You can configure settings that improve KDE performance here." ));
+    setQuickHelp( i18n( "<h1>TDE Performance</h1>"
+        " You can configure settings that improve TDE performance here." ));
     
     TQVBoxLayout *topLayout = new TQVBoxLayout( this );
     TQTabWidget* tabs = new TQTabWidget( this );

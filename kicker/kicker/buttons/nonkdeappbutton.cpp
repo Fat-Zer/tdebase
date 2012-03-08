@@ -45,7 +45,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include "nonkdeappbutton.moc"
 
 // this is one of the two constructors. gets called when creating a new button
-// e.g. via the "non-KDE Application" dialog, not one that was saved and then
+// e.g. via the "non-TDE Application" dialog, not one that was saved and then
 // restored.
 NonKDEAppButton::NonKDEAppButton(const TQString& name,
                                  const TQString& description,
@@ -242,7 +242,7 @@ void NonKDEAppButton::runCommand(const TQString& execStr)
     if (!result)
     {
         // something went wrong, so let's show an error msg to the user
-        KMessageBox::error(this, i18n("Cannot execute non-KDE application."),
+        KMessageBox::error(this, i18n("Cannot execute non-TDE application."),
                            i18n("Kicker Error"));
         return;
     }

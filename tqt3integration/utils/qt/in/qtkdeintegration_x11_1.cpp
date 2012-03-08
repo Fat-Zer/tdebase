@@ -41,9 +41,9 @@ bool TQKDEIntegration::enabled()
 
 static TQCString findLibrary()
     {
-    if( getenv( "KDE_FULL_SESSION" ) == NULL )
+    if( getenv( "TDE_FULL_SESSION" ) == NULL )
         return "";
-    if( getenv( "KDE_FULL_SESSION" )[ 0 ] != 't' && getenv( "KDE_FULL_SESSION" )[ 0 ] != '1' )
+    if( getenv( "TDE_FULL_SESSION" )[ 0 ] != 't' && getenv( "TDE_FULL_SESSION" )[ 0 ] != '1' )
         return "";
     if( getenv( "TQT_NO_KDE_INTEGRATION" ) == NULL
         || getenv( "TQT_NO_KDE_INTEGRATION" )[ 0 ] == '0' )

@@ -231,7 +231,7 @@ LockProcess::LockProcess(bool child, bool useBlankOnly)
     XSelectInput( tqt_xdisplay(), tqt_xrootwin(),
         SubstructureNotifyMask | rootAttr.your_event_mask );
 
-    // Add non-KDE path
+    // Add non-TDE path
     KGlobal::dirs()->addResourceType("scrsav",
                                     KGlobal::dirs()->kde_default("apps") +
                                     "System/ScreenSavers/");

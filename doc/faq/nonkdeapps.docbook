@@ -4,13 +4,13 @@
  "dtd/kdex.dtd">
 -->
 
-<chapter id="non-kde-apps">
+<chapter id="non-tde-apps">
 <title>&tde; with non-&tde; applications</title>
 
 <!-- FIXME: This seems to be obsolete. The only similar option is "Apply
 *colors* to -->
 
-<!-- non-kde apps" -->
+<!-- non-tde apps" -->
 <qandaset>
 <qandaentry>
 <question>
@@ -22,7 +22,7 @@ colors!</para>
 <para>Start the <application>&tde; Control Center</application> and in
 <menuchoice><guimenu>Appearance &amp; Themes</guimenu><guimenuitem>
 Colors</guimenuitem></menuchoice> uncheck the <guilabel>Apply colors to
-non-KDE applications</guilabel> checkbox and click
+non-TDE applications</guilabel> checkbox and click
 <guibutton>Apply</guibutton>.</para>
 </answer>
 </qandaentry>

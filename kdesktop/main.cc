@@ -101,7 +101,7 @@ static void signalHandler(int sigId)
 void KDesktop::slotUpAndRunning()
 {
     // Activate crash recovery
-    if (getenv("KDE_DEBUG") == NULL)
+    if (getenv("TDE_DEBUG") == NULL)
         KCrash::setEmergencySaveFunction(crashHandler); // Try to restart on crash
 }
 

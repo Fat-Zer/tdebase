@@ -90,8 +90,8 @@ private:
     TQString mySgml2RoffPath;
     void getProgramPath();
 
-    TQCString m_htmlPath; ///< Path to KDE resources, encoded for HTML
-    TQCString m_cssPath; ///< Path to KDE resources, encoded for CSS
+    TQCString m_htmlPath; ///< Path to TDE resources, encoded for HTML
+    TQCString m_cssPath; ///< Path to TDE resources, encoded for CSS
     TQBuffer m_outputBuffer; ///< Buffer for the output
     TQString m_manCSSFile; ///< Path to kio_man.css
 };
