@@ -226,7 +226,7 @@ KAccessConfig::KAccessConfig(TQWidget *parent, const char *)
 {
 
   KAboutData *about =
-  new KAboutData(I18N_NOOP("kaccess"), I18N_NOOP("KDE Accessibility Tool"),
+  new KAboutData(I18N_NOOP("kaccess"), I18N_NOOP("TDE Accessibility Tool"),
                  0, 0, KAboutData::License_GPL,
                  I18N_NOOP("(c) 2000, Matthias Hoelzer-Kluepfel"));
 
@@ -382,7 +382,7 @@ KAccessConfig::KAccessConfig(TQWidget *parent, const char *)
   toggleKeysBeep = new TQCheckBox(i18n("Use system bell whenever a locking key gets activated or deactivated"), grp);
   vvbox->addWidget(toggleKeysBeep);
 
-  kNotifyModifiers = new TQCheckBox(i18n("Use KDE's system notification mechanism whenever a modifier or locking key changes its state"), grp);
+  kNotifyModifiers = new TQCheckBox(i18n("Use TDE's system notification mechanism whenever a modifier or locking key changes its state"), grp);
   vvbox->addWidget(kNotifyModifiers);
 
   hbox = new TQHBoxLayout(vvbox, KDialog::spacingHint());
@@ -528,9 +528,9 @@ KAccessConfig::KAccessConfig(TQWidget *parent, const char *)
 
   gestureConfirmation = new TQCheckBox(i18n("Show a confirmation dialog whenever a keyboard accessibility feature is turned on or off"), grp);
   vvbox->addWidget(gestureConfirmation);
-  TQWhatsThis::add (gestureConfirmation, i18n("If this option is checked, KDE will show a confirmation dialog whenever a keyboard accessibility feature is turned on or off.\nBe sure you know what you are doing if you uncheck it, as the keyboard accessibility settings will then always be applied without confirmation.") );
+  TQWhatsThis::add (gestureConfirmation, i18n("If this option is checked, TDE will show a confirmation dialog whenever a keyboard accessibility feature is turned on or off.\nBe sure you know what you are doing if you uncheck it, as the keyboard accessibility settings will then always be applied without confirmation.") );
 
-  kNotifyAccessX = new TQCheckBox(i18n("Use KDE's system notification mechanism whenever a keyboard accessibility feature is turned on or off"), grp);
+  kNotifyAccessX = new TQCheckBox(i18n("Use TDE's system notification mechanism whenever a keyboard accessibility feature is turned on or off"), grp);
   vvbox->addWidget(kNotifyAccessX);
 
   hbox = new TQHBoxLayout(vvbox, KDialog::spacingHint());
@@ -564,7 +564,7 @@ KAccessConfig::~KAccessConfig()
 void KAccessConfig::configureKNotify()
 {
 	KAboutData about(I18N_NOOP("kaccess"),
-						  I18N_NOOP("KDE Accessibility Tool"),
+						  I18N_NOOP("TDE Accessibility Tool"),
 						  0);
 	KNotifyDialog::configure (this, 0, &about);
 }

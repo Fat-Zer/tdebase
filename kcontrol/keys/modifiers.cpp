@@ -171,7 +171,7 @@ void ModifiersModule::initGUI()
 	TQGridLayout* pLayoutTop = new TQGridLayout( this, 6, 2, KDialog::marginHint() );
 	pLayoutTop->setColStretch( 1, 1 );
 
-	TQGroupBox* pGroup = new TQGroupBox( 2, Qt::Horizontal, i18n("KDE Modifiers"), this );
+	TQGroupBox* pGroup = new TQGroupBox( 2, Qt::Horizontal, i18n("TDE Modifiers"), this );
 	pLayoutTop->addWidget( pGroup, 0, 0 );
 
 	TQLabel* plbl = new TQLabel( i18n("Modifier"), pGroup );

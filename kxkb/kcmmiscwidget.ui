@@ -30,10 +30,10 @@
                 <enum>Sunken</enum>
             </property>
             <property name="title">
-                <string>NumLock on KDE Startup</string>
+                <string>NumLock on TDE Startup</string>
             </property>
             <property name="whatsThis" stdset="0">
-                <string>If supported, this option allows you to setup the state of NumLock after KDE startup.&lt;p&gt;You can configure NumLock to be turned on or off, or configure KDE not to set NumLock state.</string>
+                <string>If supported, this option allows you to setup the state of NumLock after TDE startup.&lt;p&gt;You can configure NumLock to be turned on or off, or configure TDE not to set NumLock state.</string>
             </property>
             <grid>
                 <property name="name">

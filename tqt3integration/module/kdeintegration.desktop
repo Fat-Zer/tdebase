@@ -9,5 +9,5 @@ X-KDE-Factory=kdeintegration
 X-KDE-Kded-autoload=false
 X-KDE-Kded-load-on-demand=true
 
-Name=KDE Integration Module
+Name=TDE Integration Module
 Comment=Module for integrating UI of non-TDE applications
