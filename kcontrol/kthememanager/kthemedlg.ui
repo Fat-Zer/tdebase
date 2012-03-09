@@ -47,7 +47,7 @@
                         <enum>Plain</enum>
                     </property>
                     <property name="text">
-                        <string>Choose your visual KDE theme:</string>
+                        <string>Choose your visual TDE theme:</string>
                     </property>
                 </widget>
                 <spacer>
@@ -78,7 +78,7 @@
                         <string>http://themes.kde.org</string>
                     </property>
                     <property name="tipText">
-                        <string>Go to the KDE themes website</string>
+                        <string>Go to the TDE themes website</string>
                     </property>
                     <property name="useTips">
                         <bool>true</bool>
