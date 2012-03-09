@@ -40,13 +40,13 @@
 Privacy::Privacy(TQWidget *parent, const char *name)
     : KCModule(parent, name)
 {
-  setQuickHelp( i18n("The privacy module allows a user to erase traces which KDE leaves on "
+  setQuickHelp( i18n("The privacy module allows a user to erase traces which TDE leaves on "
               "the system, such as command histories or browser caches."));
 
   setButtons( KCModule::Default|KCModule::Apply|KCModule::Help );
 
   KAboutData *about =
-    new KAboutData(I18N_NOOP("kcm_privacy"), I18N_NOOP("KDE Privacy Control Module"),
+    new KAboutData(I18N_NOOP("kcm_privacy"), I18N_NOOP("TDE Privacy Control Module"),
                   0, 0, KAboutData::License_GPL,
                   I18N_NOOP("(c) 2003 Ralf Hoelzer"));
 
@@ -119,7 +119,7 @@ Privacy::Privacy(TQWidget *parent, const char *name)
   clearSavedClipboardContents->setText(1, i18n("Clears the clipboard contents stored by Klipper"));
   clearWebCache->setText(1, i18n("Clears the temporary cache of websites visited"));
   clearFormCompletion->setText(1, i18n("Clears values which were entered into forms on websites"));
-  clearRecentDocuments->setText(1, i18n("Clears the list of recently used documents from the KDE applications menu"));
+  clearRecentDocuments->setText(1, i18n("Clears the list of recently used documents from the TDE applications menu"));
   clearQuickStartMenu->setText(1, i18n("Clears the entries from the list of recently started applications"));
   clearFavIcons->setText(1, i18n("Clears the FavIcons cached from visited websites"));
 

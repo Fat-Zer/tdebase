@@ -115,7 +115,7 @@
                         <cstring>cb_preload_on_startup</cstring>
                     </property>
                     <property name="text">
-                        <string>Preload an instance after KDE startup</string>
+                        <string>Preload an instance after TDE startup</string>
                     </property>
                 </widget>
                 <widget class="TQCheckBox">

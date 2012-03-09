@@ -126,16 +126,16 @@ KRandRModule::KRandRModule(TQWidget *parent, const char *name, const TQStringLis
 	m_rotationGroup->setRadioButtonExclusive(true);
 	TQWhatsThis::add(m_rotationGroup, i18n("The options in this section allow you to change the rotation of your screen."));
 
-	m_applyOnStartup = new TQCheckBox(i18n("Apply settings on KDE startup"), this);
+	m_applyOnStartup = new TQCheckBox(i18n("Apply settings on TDE startup"), this);
 	topLayout->addWidget(m_applyOnStartup);
-	TQWhatsThis::add(m_applyOnStartup, i18n("If this option is enabled the size and orientation settings will be used when KDE starts."));
+	TQWhatsThis::add(m_applyOnStartup, i18n("If this option is enabled the size and orientation settings will be used when TDE starts."));
 	connect(m_applyOnStartup, TQT_SIGNAL(clicked()), TQT_SLOT(setChanged()));
 
 	TQHBox* syncBox = new TQHBox(this);
 	syncBox->layout()->addItem(new TQSpacerItem(20, 1, TQSizePolicy::Maximum));
 	m_syncTrayApp = new TQCheckBox(i18n("Allow tray application to change startup settings"), syncBox);
 	topLayout->addWidget(syncBox);
-	TQWhatsThis::add(m_syncTrayApp, i18n("If this option is enabled, options set by the system tray applet will be saved and loaded when KDE starts instead of being temporary."));
+	TQWhatsThis::add(m_syncTrayApp, i18n("If this option is enabled, options set by the system tray applet will be saved and loaded when TDE starts instead of being temporary."));
 	connect(m_syncTrayApp, TQT_SIGNAL(clicked()), TQT_SLOT(setChanged()));
 
 	topLayout->addStretch(1);
@@ -269,7 +269,7 @@ void KRandRModule::load( bool useDefaults )
 		return;
 
 	// Don't load screen configurations:
-	// It will be correct already if they wanted to retain their settings over KDE restarts,
+	// It will be correct already if they wanted to retain their settings over TDE restarts,
 	// and if it isn't correct they have changed a) their X configuration, b) the screen
 	// with another program, or c) their hardware.
 	KConfig config("kcmrandrrc", true);

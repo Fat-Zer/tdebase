@@ -38,7 +38,7 @@
                 <bool>true</bool>
             </property>
             <property name="whatsThis" stdset="0">
-                <string>If this option is enabled, the sound system will be loaded on KDE startup.
+                <string>If this option is enabled, the sound system will be loaded on TDE startup.
 Recommended if you want sound.</string>
             </property>
         </widget>
@@ -181,7 +181,7 @@ Recommended if you want sound.</string>
                         <cstring>textLabel5_2</cstring>
                     </property>
                     <property name="text">
-                        <string>&lt;i&gt;The KDE sound system takes exclusive control over your audio hardware, blocking programs that may wish to use it directly. If the KDE sound system sits idle it can give up this exclusive control.&lt;/i&gt;</string>
+                        <string>&lt;i&gt;The TDE sound system takes exclusive control over your audio hardware, blocking programs that may wish to use it directly. If the TDE sound system sits idle it can give up this exclusive control.&lt;/i&gt;</string>
                     </property>
                 </widget>
                 <widget class="TQLayoutWidget">

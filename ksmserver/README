@@ -1,22 +1,22 @@
-KDE session manager  (ksmserver)
+TDE session manager  (ksmserver)
 --------------------------------
 
 Matthias Ettrich <ettrich@kde.org>
 Lubos Lunak <l.lunak@kde.org>
 
-ksmserver is KDE's new session management server. It talks the
+ksmserver is TDE's new session management server. It talks the
 standard X11R6 session management protocol (XSMP).  Thus, in theory,
 it should be compatible with all session managment compliant X11R6
 applications. Unfortunately, there aren't that many of them. To be
 precise, I have never seen a single commercial application that
 supports it and even within the official X11R6 distribution, 'xclock'
 is the only exception. Nevertheless we've chosen to support XSMP
-despites the complexity of the protocol in order to provide KDE users
+despites the complexity of the protocol in order to provide TDE users
 more interoperability with applications that were not explicitely
-written with KDE in mind. XSMP, as an official X standard, promised to
+written with TDE in mind. XSMP, as an official X standard, promised to
 be more likely to be supported by third parties than even a superior
-KDE-specific protocol. Let's see whether we were right and more
-applications will actually talk XSMP. At least all KDE applications do
+TDE-specific protocol. Let's see whether we were right and more
+applications will actually talk XSMP. At least all TDE applications do
 now.
 
 Here's a short overview on how session management works.
@@ -43,10 +43,10 @@ the specified one. As a special feature, ksmserver always starts the
 specified window manager first, which results in a much nicer startup
 sequence (less flashy).
 
-KDE startup sequence
+TDE startup sequence
 --------------------
 
-Ksmserver controls the second part of the KDE startup sequence,
+Ksmserver controls the second part of the TDE startup sequence,
 after it gets control from the starttde script, which controls
 the first part of the startup sequence. All code related to startup
 should be in startup.cpp and going down in that source file should
@@ -54,14 +54,14 @@ follow the startup order (but note that this is just a documentation
 which may get outdated, so in case of doubts the source wins ;) ).
 
 The starttde scripts already launches tdeinit, which in turns launches
-KDE daemons like dcopserver, klauncher and kded. Kded loads autoloaded
+TDE daemons like dcopserver, klauncher and kded. Kded loads autoloaded
 kded modules, i.e. those that have X-KDE-Kded-autoload=true in .desktop
 files. The exact way autoloading works is controlled by X-KDE-Kded-phase=,
 which may be 0, 1 or 2 (the default). Kded phase 0 means the module is
-always loaded by kded, even outside of KDE session. It should used only
+always loaded by kded, even outside of TDE session. It should used only
 by kded modules which must be always running. Kded phase 1 modules are
-loaded right after kded startup, but only during KDE startup, i.e. it is
-for modules that are always needed by the KDE session. Phase 2 modules
+loaded right after kded startup, but only during TDE startup, i.e. it is
+for modules that are always needed by the TDE session. Phase 2 modules
 will be loaded later.
 
 Startkde also launches kcminit, which performs initialization done by kcontrol
@@ -77,20 +77,20 @@ the window manager, as the WM is necessary before any windows are possibly
 shown. When the WM is ready, ksmserver tells klauncher to perform autostart
 phase 0 ($TDEHOME/share/autostart). There are 3 autostart phases, 0, 1 and 2,
 defined by X-KDE-autostart-phase, defaulting to 2. Phase 0 is reserved only
-for the actual visible base components of KDE, i.e. KDesktop and Kicker,
+for the actual visible base components of TDE, i.e. KDesktop and Kicker,
 in order to make the startup appear visually faster. Both KDesktop and Kicker
 use DCOP calls suspendStartup() and resumeStartup() to make ksmserver stay
 waiting for autostart phase 0 until both KDesktop and Kicker are ready.
 
 Next step is telling the waiting kcminit to perform phase 1 - all kcminit
-modules that should be executed before KDE startup is considered done.
+modules that should be executed before TDE startup is considered done.
 After that ksmserver tells klauncher to perform autostart phase 1,
-i.e. launching normal components of KDE that should be available right
-after KDE startup, and after this session restore is performed,
+i.e. launching normal components of TDE that should be available right
+after TDE startup, and after this session restore is performed,
 i.e. launching all applications that were running during last session
 saving (usually logout).
 
-By this time KDE session is considered to be more or less ready and
+By this time TDE session is considered to be more or less ready and
 ksmserver does the knotify starttde event (i.e. plays the login sound).
 It also tells klauncher to perform autostart phase 2, kded to load all
 remaining autoload (i.e. kded phase 2) modules, kcminit to execute
@@ -100,9 +100,9 @@ like launching daemons) and kdesktop to execute the user Autostart folder.
 Technical note: There's a reason why kded modules and items in autostart
 default to the latest phase. Before you explicitly use a different phase,
 read and understand what's above. You should also consider whether something
-really needs to be launched during KDE startup and can't be loaded on-demand
+really needs to be launched during TDE startup and can't be loaded on-demand
 when really needed. Abusing the phases will result in public spanking
-for making KDE startup slower.
+for making TDE startup slower.
 
 
 Establishing the connection
@@ -111,7 +111,7 @@ Establishing the connection
 As required by the XSMP specification, the session management server
 propagates its network address in the SESSION_MANAGER environment
 variable. Probably not the best way to do it, but it's the way it
-is. All KDE (and plain Qt) applications simply read this variable and
+is. All TDE (and plain Qt) applications simply read this variable and
 try to establish a connection to an XSMP server at this address. If
 the variable is undefined, nothing happens.
 
@@ -145,9 +145,9 @@ Requesting a shutdown
 ---------------------
 
 If an application wants to request a shutdown (i.e. a logout), it does
-this via an SmcRequestSaveYourself message to the server. In KDE, a
+this via an SmcRequestSaveYourself message to the server. In TDE, a
 utility function KApplication::requestShutDown() does exactly
-this. It's for example called by KDE's panel or by the context menu of
+this. It's for example called by TDE's panel or by the context menu of
 the desktop.
 
 
@@ -155,12 +155,12 @@ User Interface
 --------------
 
 ksmserver has a very straight-forward user interface.  It mainly asks
-the question "Shutdown KDE Session?" and provides two obvious command
+the question "Shutdown TDE Session?" and provides two obvious command
 buttons "Yes" and "Cancel". The interesting bit is the additonal
 checkbox that says "Restore session when logging in next time". The
 checkbox remembers state within session, so simply use whatever you
 prefer.  For those who remember, this was one of the main questions
-with KDE-1.x ("How to get rid of session managment?"). With KDE-2.x,
+with TDE-1.x ("How to get rid of session managment?"). With TDE-2.x,
 most users will probably prepare a session once, store it with the
 checkbox enabled and keep the checkbox disabled in the future. This
 way you get a proper and clean 'homesession' each time.

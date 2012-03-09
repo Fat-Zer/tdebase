@@ -17,7 +17,7 @@
 <releaseinfo>3.00.00</releaseinfo>
 
 <keywordset>
-<keyword>KDE</keyword>
+<keyword>TDE</keyword>
 <keyword>KControl</keyword>
 <keyword>keyboard</keyword>
 </keywordset>
@@ -51,11 +51,11 @@ easier. </para></tip>
 </varlistentry>
 
 <varlistentry>
-<term><guilabel>NumLock on KDE Startup</guilabel></term>
+<term><guilabel>NumLock on TDE Startup</guilabel></term>
 <listitem>
 <para>You can choose to either always <guilabel>Turn on</guilabel> or
 <guilabel>Turn off</guilabel> the NumLock when &tde; starts, or you can
-choose to have &tde; leave NumLock at whatever it was set to before KDE
+choose to have &tde; leave NumLock at whatever it was set to before TDE
 started up.</para>
 </listitem>
 </varlistentry>
