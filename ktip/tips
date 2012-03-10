@@ -141,7 +141,7 @@ User Guide</a>.</p>
 <html>
 <p>
 You can assign <b>keyboard shortcuts</b> to your favorite applications in the
-TDE menu editor (K-menu->Settings->Menu Editor). Select the application
+TDE menu editor (TDE Menu->Settings->Menu Editor). Select the application
 (e.g. Konsole), then click on the image next to "Current shortcut
 key:". Press the key combination you want (say, Ctrl+Alt+K).
 <p>That is it: now you can fire up Konsoles with Ctrl+Alt+K.</p>
@@ -164,7 +164,7 @@ TDE User Guide</a>.</p>
 <tip category="TDE|General">
 <html>
 <p>The Trinity Desktop Environment is a fork of the K Desktop Environment
-version 3.5, which was originally written by the KDE Team, a world-wide
+version 3.5, which originally was written by the KDE Team, a world-wide
 network of software engineers committed to Free Software development. TDE
 was first released in April 2010.</p>
 <p>The KDE project was founded in October 1996 and was first released
@@ -205,7 +205,7 @@ by regularly checking the web site <A
 <tip category="General">
 <html>
 <p align="center"><strong>TDEPrinting (I)</strong></p>
-<p><strong>kprinter</strong>, TDE's new printing utility supports
+<p><strong>kprinter</strong>, TDE's printing utility supports
 different print subsystems. These subsystems differ very much
 in their abilities.</p>
 <p>Among the supported systems are:
@@ -300,7 +300,7 @@ print subsystem "on the fly" (and you do not need to be root to do it.)
 <tip category="General|Help">
 <html>
 <P>
-TDE's help system can display not only TDE's own HTML-based help, but
+TDE's help system can display TDE's HTML-based help, but
 also info and man pages.</P>
 <p>For more ways of getting help, see <a
 href="help:/khelpcenter/userguide/getting-help.html">the TDE User
@@ -363,7 +363,7 @@ take a look at <a href="help:/kicker">the Kicker Handbook</a>.</p>
 <tip category="General">
 <html>
 <p>
-If you need to kill some time, TDE comes with an extensive collection
+If you want to kill some time, TDE comes with an extensive collection
 of games.</p><br>
 <center>
 <img src="crystalsvg/48x48/apps/package_games.png">
@@ -509,8 +509,8 @@ and "dragging" it with the mouse.</p><br>
 <html>
 <p> Want TDE's printing power in non-TDE apps?  </p>
 <p> Then use <strong>'kprinter'</strong> as "print command".
-Works with Netscape, Mozilla, Galeon, gv, Acrobat Reader,
- StarOffice, OpenOffice.org, any GNOME application and many more...</p>
+Works with Firefox, Seamonkey, Epiphany, gv, Acrobat Reader,
+LibreOffice, OpenOffice, any GNOME application and many more...</p>
 <center>
 <img src="crystalsvg/48x48/devices/printer1.png">
 <p align="right"><em>Contributed by Kurt Pfeifle</em></p>
@@ -616,10 +616,14 @@ Control Center and might implement different features.</p>
 <tip category="General">
 <html>
 <p>
-The K in TDE does not stand for anything. It is the character that comes
-before L in the Latin alphabet, which stands for Linux. It was chosen
-because TDE runs on many types of UNIX (and perfectly well on FreeBSD).
-</p>
+The K in KDE did not stand for anything special. The K was the
+character that came before L in the Latin alphabet, which stands for Linux.
+The K was chosen because KDE ran on many types of UNIX and FreeBSD.
+
+The T in TDE does stand for something special. The T stands for Trinity
+which means three because Trinity is a continuation of the KDE 3.5 code base.
+The T also represents the name of the Trinity project that brought you this
+desktop environment. TDE also runs on many types of UNIX and FreeBSD.</p>
 </html>
 </tip>
 
@@ -778,8 +782,8 @@ If you need to calculate a distance on the screen, the program
 <em>kruler</em> can be of great help.</p>
 <p>
 Furthermore, if you need to look closely at the ruler to count single
-pixels, <em>kmag</em> may be very useful. (It is not part of the TDE base
-installation but needs to be installed separately. It might already be
+pixels, <em>kmag</em> may be very useful. (<em>kmag</em> is part of the TDE
+Accessibility package. It might already be
 available on your distribution.) <em>kmag</em> works
 just like <em>xmag</em>, with the difference that it magnifies on the fly.
 </p>
@@ -840,7 +844,7 @@ other containers.
 <tip category="General">
 <html>
 <p>
-TDE's 'kioslaves' do not just work in Konqueror: you can use network
+TDE's 'kio slaves' do not just work in Konqueror: you can use network
 URLs in any TDE application. For example, you can enter a URL like
 ftp://www.server.com/myfile in the Kate Open dialog, and Kate will
 open the file and save changes back to the FTP server when you click
@@ -957,8 +961,8 @@ Shortcuts icon.</p>
 
 <tip category="accessbility">
 <html>
-<p>TDE is always looking to improve its accessibility, and with the
-launch of KTTS (TDE Text-to-Speech) you now have the power to convert
+<p>TDE developers are always looking to improve accessibility, and with the
+launch of KTTS (TDE Text-to-Speech) you have the power to convert
 strings of text into audible speech. </p>
 
 <p>KTTS is constantly improving, and currently provides support to
@@ -967,7 +971,7 @@ pages in Konqueror, text in the TDE clipboard, as well as speech of
 TDE notifications (KNotify).</p>
 
 <p>To start the KTTS system, you can either select KTTS in the TDE
-menu, or hit Alt+F2 to run a command and then type <b>kttsmgr</b>. For
+menu, or press Alt+F2 to run a command and then type <b>kttsmgr</b>. For
 more information on KTTS, check the <a href="help:/kttsd" title="KTTSD
 Handbook">KTTSD Handbook</a>.</p>
 
