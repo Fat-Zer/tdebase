@@ -358,7 +358,7 @@ void KEyeCandyPage::enableBackgroundsKonqueror(bool enable){
 	konquerorconf->setGroup("Settings");
 	if(enable){
 		if(konqbgimage.isEmpty())
-			konqbgimage="kde4ever.png";
+			konqbgimage="noise.png";
 		konquerorconf->writePathEntry("BgImage", konqbgimage);
 	} else
 		konquerorconf->writePathEntry("BgImage", TQString::null);

@@ -104,7 +104,7 @@
     <border size="1" />
   </wm>
   <konqueror>
-    <wallpaper url="kde4ever.png" />
+    <wallpaper url="noise.png" />
     <bgcolor rgb="#000000" />
   </konqueror>
   <panel>
