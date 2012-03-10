@@ -1,4 +1,4 @@
-/* This file is part of the KDE project
+/* This file is part of the TDE project
    Copyright (C) 1998, 1999 Torben Weis <weis@kde.org>
    Copyright (C) 2000, 2001 David Faure <faure@kde.org>
 
@@ -835,12 +835,12 @@ bool KDIconView::deleteGlobalDesktopFiles()
 
         // Ignore these special files
         // Name			URL					Type		OnlyShowIn
-        // My Documents		kxdglauncher --xdgname DOCUMENTS	Application	KDE;
-        // My Computer		media:/					Link		KDE;
-        // My Network Places	remote:/				Link		KDE;
-        // Printers		[exec] kjobviewer --all --show %i %m	Application	KDE;
-        // Trash		trash:/					Link		KDE;
-        // Web Browser		kfmclient openBrowser %u		Application	KDE;
+        // My Documents		kxdglauncher --xdgname DOCUMENTS	Application	TDE;
+        // My Computer		media:/					Link		TDE;
+        // My Network Places	remote:/				Link		TDE;
+        // Printers		[exec] kjobviewer --all --show %i %m	Application	TDE;
+        // Trash		trash:/					Link		TDE;
+        // Web Browser		kfmclient openBrowser %u		Application	TDE;
 
         if ( isDesktopFile(fItem) ) {
             KSimpleConfig cfg( fItem->url().path(), true );
@@ -1009,12 +1009,12 @@ bool KDIconView::makeFriendlyText( KFileIVI *fileIVI )
         TQStringList tmpList;
         if (cfg.hasKey("OnlyShowIn"))
         {
-            if (!cfg.readListEntry("OnlyShowIn", ';').contains("KDE"))
+            if (!cfg.readListEntry("OnlyShowIn", ';').contains("TDE"))
                 return false;
         }
         if (cfg.hasKey("NotShowIn"))
         {
-            if (cfg.readListEntry("NotShowIn", ';').contains("KDE"))
+            if (cfg.readListEntry("NotShowIn", ';').contains("TDE"))
                 return false;
         }
         if (cfg.hasKey("TryExec"))
