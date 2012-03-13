@@ -12,5 +12,5 @@
 tde_install_icons( error )
 
 install( FILES
-    ksslogo.png splash.png splash2.png kde2.xbm
+    ksslogo.png splash.png
   DESTINATION ${DATA_INSTALL_DIR}/kdesktop/pics )
