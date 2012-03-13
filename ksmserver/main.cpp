@@ -27,7 +27,7 @@ Copyright (C) 2000 Matthias Ettrich <ettrich@kde.org>
 
 
 static const char version[] = "0.4";
-static const char description[] = I18N_NOOP( "The reliable KDE session manager that talks the standard X11R6 \nsession management protocol (XSMP)." );
+static const char description[] = I18N_NOOP( "The reliable TDE session manager that talks the standard X11R6 \nsession management protocol (XSMP)." );
 
 static const KCmdLineOptions options[] =
 {
@@ -159,9 +159,9 @@ void sanity_check( int argc, char* argv[] )
   {
     const char *msg_pre =
              "The following installation problem was detected\n"
-             "while trying to start KDE:"
+             "while trying to start TDE:"
              "\n\n    ";
-    const char *msg_post = "\n\nKDE is unable to start.\n";
+    const char *msg_post = "\n\nTDE is unable to start.\n";
     fputs(msg_pre, stderr);
     fprintf(stderr, msg.data(), path.data());
     fputs(msg_post, stderr);
@@ -170,7 +170,7 @@ void sanity_check( int argc, char* argv[] )
     TQCString qmsg(256+path.length());
     qmsg.sprintf(msg.data(), path.data());
     qmsg = msg_pre+qmsg+msg_post;
-    TQMessageBox::critical(0, "KDE Installation Problem!",
+    TQMessageBox::critical(0, "TDE Installation Problem!",
         TQString::fromLatin1(qmsg.data()));
     exit(255);
   }
@@ -180,7 +180,7 @@ extern "C" KDE_EXPORT int kdemain( int argc, char* argv[] )
 {
     sanity_check(argc, argv);
 
-    KAboutData aboutData( "ksmserver", I18N_NOOP("The KDE Session Manager"),
+    KAboutData aboutData( "ksmserver", I18N_NOOP("The TDE Session Manager"),
        version, description, KAboutData::License_BSD,
        "(C) 2000, The KDE Developers");
     aboutData.addAuthor("Matthias Ettrich",0, "ettrich@kde.org");
@@ -199,7 +199,7 @@ extern "C" KDE_EXPORT int kdemain( int argc, char* argv[] )
     kapp->dcopClient()->registerAs("ksmserver", false);
     if (!kapp->dcopClient()->isRegistered())
     {
-       tqWarning("Could not register with DCOPServer. Aborting.");
+       tqWarning("[KSMServer] Could not register with DCOPServer. Aborting.");
        return 1;
     }
 
@@ -215,7 +215,7 @@ extern "C" KDE_EXPORT int kdemain( int argc, char* argv[] )
      * does nothing on this platform, as here the default is reversed)
      */
     if (!only_local) {
-        tqWarning("--[no]local is not supported on your platform. Sorry.");
+        tqWarning("[KSMServer] --[no]local is not supported on your platform. Sorry.");
     }
     only_local = false;
 #endif

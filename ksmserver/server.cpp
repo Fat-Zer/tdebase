@@ -435,7 +435,7 @@ Status SetAuthentication (int count, IceListenObj *listenObjs,
     TQString iceAuth = KGlobal::dirs()->findExe("iceauth");
     if (iceAuth.isEmpty())
     {
-        tqWarning("KSMServer: could not find iceauth");
+        tqWarning("[KSMServer] could not find iceauth");
         return 0;
     }
 
@@ -465,7 +465,7 @@ void FreeAuthenticationData(int count, IceAuthDataEntry *authDataEntries)
     TQString iceAuth = KGlobal::dirs()->findExe("iceauth");
     if (iceAuth.isEmpty())
     {
-        tqWarning("KSMServer: could not find iceauth");
+        tqWarning("[KSMServer] could not find iceauth");
         return;
     }
     
@@ -479,7 +479,7 @@ void FreeAuthenticationData(int count, IceAuthDataEntry *authDataEntries)
 
 static int Xio_ErrorHandler( Display * )
 {
-    tqWarning("ksmserver: Fatal IO error: client killed");
+    tqWarning("[KSMServer] Fatal IO error: client killed");
 
     // Don't do anything that might require the X connection
     if (the_server)
@@ -617,14 +617,14 @@ KSMServer::KSMServer( const TQString& windowManager, const TQString& windowManag
                          (SmPointer) this,
                          HostBasedAuthProc, 256, errormsg ) ) {
 
-        tqWarning("KSMServer: could not register XSM protocol");
+        tqWarning("[KSMServer] could not register XSM protocol");
     }
 
     if (!IceListenForConnections (&numTransports, &listenObjs,
                                   256, errormsg))
     {
-        tqWarning("KSMServer: Error listening for connections: %s", errormsg);
-        tqWarning("KSMServer: Aborting.");
+        tqWarning("[KSMServer] Error listening for connections: %s", errormsg);
+        tqWarning("[KSMServer] Aborting.");
         exit(1);
     }
 
@@ -643,8 +643,8 @@ KSMServer::KSMServer( const TQString& windowManager, const TQString& windowManag
         f = ::fopen(fName.data(), "w+");
         if (!f)
         {
-            tqWarning("KSMServer: can't open %s: %s", fName.data(), strerror(errno));
-            tqWarning("KSMServer: Aborting.");
+            tqWarning("[KSMServer] can't open %s: %s", fName.data(), strerror(errno));
+            tqWarning("[KSMServer] Aborting.");
             exit(1);
         }
         char* session_manager = IceComposeNetworkIdList(numTransports, listenObjs);
@@ -657,10 +657,10 @@ KSMServer::KSMServer( const TQString& windowManager, const TQString& windowManag
 
     if (only_local) {
         if (!SetAuthentication_local(numTransports, listenObjs))
-            tqFatal("KSMSERVER: authentication setup failed.");
+            tqFatal("[KSMServer] authentication setup failed.");
     } else {
         if (!SetAuthentication(numTransports, listenObjs, &authDataEntries))
-            tqFatal("KSMSERVER: authentication setup failed.");
+            tqFatal("[KSMServer] authentication setup failed.");
     }
 
     IceAddConnectionWatch (KSMWatchProc, (IcePointer) this);
