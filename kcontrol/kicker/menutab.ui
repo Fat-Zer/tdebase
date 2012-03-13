@@ -537,7 +537,7 @@
 								<number>10</number>
 							</property>
 							<property name="minValue">
-								<number>10</number>
+								<number>0</number>
 							</property>
 							<property name="maxValue">
 								<number>100</number>
