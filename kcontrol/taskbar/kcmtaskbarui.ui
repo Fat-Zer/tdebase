@@ -337,6 +337,17 @@ By default, this option is selected and all windows are shown.</string>
                         <bool>true</bool>
                     </property>
                 </widget>
+                <widget class="TQCheckBox" row="3" column="0" rowspan="1" colspan="3">
+                  <property name="name">
+                    <cstring>kcfg_CycleWheel</cstring>
+                  </property>
+                  <property name="text">
+                    <string>Cycle through windows with mouse wheel</string>
+                  </property>
+                  <property name="checked">
+                    <bool>true</bool>
+                  </property>
+                </widget>
             </grid>
         </widget>
         <widget class="TQGroupBox">

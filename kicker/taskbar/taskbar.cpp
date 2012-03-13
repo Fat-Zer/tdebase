@@ -56,6 +56,7 @@ TaskBar::TaskBar( TQWidget *parent, const char *name )
       m_currentScreen(-1),
       m_showOnlyCurrentScreen(false),
       m_sortByDesktop(false),
+      m_cycleWheel(false),
       m_showIcon(false),
       m_showOnlyIconified(false),
       m_textShadowEngine(0),
@@ -233,6 +234,7 @@ void TaskBar::configure()
 {
     bool wasShowWindows = m_showAllWindows;
     bool wasSortByDesktop = m_sortByDesktop;
+    bool wasCycleWheel = m_cycleWheel;
     bool wasShowIcon = m_showIcon;
     bool wasShowOnlyIconified = m_showOnlyIconified;
 
@@ -240,6 +242,7 @@ void TaskBar::configure()
     m_sortByDesktop = m_showAllWindows && TaskBarSettings::sortByDesktop();
     m_showIcon = TaskBarSettings::showIcon();
     m_showOnlyIconified = TaskBarSettings::showOnlyIconified();
+    m_cycleWheel = TaskBarSettings::cycleWheel();
 
     m_currentScreen = -1;    // Show all screens or re-get our screen
     m_showOnlyCurrentScreen = (TaskBarSettings::showCurrentScreenOnly() &&
@@ -262,6 +265,7 @@ void TaskBar::configure()
     if (wasShowWindows != m_showAllWindows ||
         wasSortByDesktop != m_sortByDesktop ||
         wasShowIcon != m_showIcon ||
+        wasCycleWheel != m_cycleWheel ||
         wasShowOnlyIconified != m_showOnlyIconified)
     {
         // relevant settings changed, update our task containers
@@ -1127,15 +1131,19 @@ void TaskBar::activateNextTask(bool forward)
 
 void TaskBar::wheelEvent(TQWheelEvent* e)
 {
-    if (e->delta() > 0)
-    {
-        // scroll away from user, previous task
-        activateNextTask(false);
-    }
-    else
-    {
-        // scroll towards user, next task
-        activateNextTask(true);
+
+    if(TaskBarSettings::cycleWheel()) {
+
+        if (e->delta() > 0)
+        {
+            // scroll away from user, previous task
+            activateNextTask(false);
+        }
+        else
+        {
+            // scroll towards user, next task
+            activateNextTask(true);
+        }
     }
 }
 

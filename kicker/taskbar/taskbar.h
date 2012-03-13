@@ -110,6 +110,7 @@ private:
 
     bool			blocklayout;
     bool			m_showAllWindows;
+    bool      m_cycleWheel;
     // The screen to show, -1 for all screens
     int 			m_currentScreen;
     bool			m_showOnlyCurrentScreen;
