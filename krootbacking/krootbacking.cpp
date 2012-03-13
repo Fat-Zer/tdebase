@@ -241,7 +241,7 @@ void KRootBacking::updateBackground( KSharedPixmap *spm )
     }
 
     TQString filename = getenv("USER");
-    filename.prepend("/tmp/kde-");
+    filename.prepend("/tmp/tde-");
     filename.append("/krootbacking.png");
     pm.save(filename, "PNG");
     printf("%s\n\r", filename.ascii()); fflush(stdout);
