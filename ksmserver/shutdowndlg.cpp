@@ -536,7 +536,7 @@ KSMShutdownIPFeedback::KSMShutdownIPFeedback()
 		// The shared pixmap is 24 bits, but we are 32 bits
 		// Therefore our only option is to use a 24-bit Xorg application to dump the shared pixmap in a common (png) format for loading later
 		TQString filename = getenv("USER");
-		filename.prepend("/tmp/kde-");
+		filename.prepend("/tmp/tde-");
 		filename.append("/krootbacking.png");
 		remove(filename.ascii());
 		system("krootbacking &");
@@ -594,7 +594,7 @@ void KSMShutdownIPFeedback::slotPaintEffect()
 	}
 	if (TQPaintDevice::x11AppDepth() == 32) {
 		TQString filename = getenv("USER");
-		filename.prepend("/tmp/kde-");
+		filename.prepend("/tmp/tde-");
 		filename.append("/krootbacking.png");
 		bool success = pm.load(filename, "PNG");
 		if (!success) {

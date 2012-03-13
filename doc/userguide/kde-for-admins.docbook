@@ -420,7 +420,7 @@ class="directory">/tmp/kde-$<envar>USER</envar>/</filename>, this is used for te
 <varlistentry>
 <term><filename>$<envar>TDEHOME</envar>/cache-$<envar>HOSTNAME</envar></filename></term>
 <listitem><para>Usually <filename
-class="directory">/var/tmp/kdecache-$<envar>USER</envar>/</filename>,
+class="directory">/var/tmp/tdecache-$<envar>USER</envar>/</filename>,
 this is used for cached files.</para>
 </listitem>
 </varlistentry>
@@ -1826,7 +1826,7 @@ information about all available applications. You can rebuild the
 database with
 <userinput><command>kbuildsycoca</command></userinput>. The database
 which is built lives in <filename
-class="directory">/var/tmp/kdecache-${<envar>USER</envar>}/ksycoca</filename>.
+class="directory">/var/tmp/tdecache-${<envar>USER</envar>}/ksycoca</filename>.
 It is automatically updated by <application>KDED</application>,
 checked during &tde; login, and <application>KDED</application>
 watches for changes while logged in.</para>
