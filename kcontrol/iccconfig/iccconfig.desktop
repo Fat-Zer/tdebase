@@ -1,6 +1,6 @@
 [Desktop Entry]
 Exec=kcmshell iccconfig
-Icon=kcoloredit
+Icon=background
 Type=Application
 DocPath=kcontrol/iccconfig/index.html
 
