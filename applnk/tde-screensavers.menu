@@ -3,7 +3,7 @@
 
 <Menu>
 	<Name>ScreenSavers</Name>
-	<Directory>kde-system-screensavers.directory</Directory>
+	<Directory>tde-system-screensavers.directory</Directory>
 	<Include>
 		<Category>X-KDE-ScreenSaver</Category>
 	</Include>

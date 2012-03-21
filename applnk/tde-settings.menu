@@ -5,41 +5,41 @@
 	<Name>Settings</Name>
 	<Menu>
 		<Name>Accessibility</Name>
-		<Directory>kde-settings-accessibility.directory</Directory>
+		<Directory>tde-settings-accessibility.directory</Directory>
 		<Include>
 			<Category>X-KDE-settings-accessibility</Category>
 		</Include>
 	</Menu>
 	<Menu>
 		<Name>Components</Name>
-		<Directory>kde-settings-components.directory</Directory>
+		<Directory>tde-settings-components.directory</Directory>
 		<Include>
 			<Category>X-KDE-settings-components</Category>
 		</Include>
 	</Menu>
 	<Menu>
 		<Name>Desktop</Name>
-		<Directory>kde-settings-desktop.directory</Directory>
+		<Directory>tde-settings-desktop.directory</Directory>
 		<Include>
 			<Category>X-KDE-settings-desktop</Category>
 		</Include>
 	</Menu>
 	<Menu>
 		<Name>LookNFeel</Name>
-		<Directory>kde-settings-looknfeel.directory</Directory>
+		<Directory>tde-settings-looknfeel.directory</Directory>
 		<Include>
 			<Category>X-KDE-settings-looknfeel</Category>
 		</Include>
 	</Menu>
 	<Menu>
 		<Name>Network</Name>
-		<Directory>kde-settings-network.directory</Directory>
+		<Directory>tde-settings-network.directory</Directory>
 		<Include>
 			<Category>X-KDE-settings-network</Category>
 		</Include>
 		<Menu>
 			<Name>WebBrowsing</Name>
-			<Directory>kde-settings-webbrowsing.directory</Directory>
+			<Directory>tde-settings-webbrowsing.directory</Directory>
 			<Include>
 				<Category>X-KDE-settings-webbrowsing</Category>
 			</Include>
@@ -47,14 +47,14 @@
 	</Menu>
 	<Menu>
 		<Name>Hardware</Name>
-		<Directory>kde-settings-hardware.directory</Directory>
+		<Directory>tde-settings-hardware.directory</Directory>
 		<Include>
 			<Category>X-KDE-settings-peripherals</Category>
 			<Category>X-KDE-settings-hardware</Category>
 		</Include>
 		<Menu>
 			<Name>Information</Name>
-			<Directory>kde-settings-information.directory</Directory>
+			<Directory>tde-settings-information.directory</Directory>
 			<Include>
 				<Category>X-KDE-settings-information</Category>
 			</Include>
@@ -62,28 +62,28 @@
 	</Menu>
 	<Menu>
 		<Name>PowerControl</Name>
-		<Directory>kde-settings-power.directory</Directory>
+		<Directory>tde-settings-power.directory</Directory>
 		<Include>
 			<Category>X-KDE-settings-power</Category>
 		</Include>
 	</Menu>
 	<Menu>
 		<Name>Security</Name>
-		<Directory>kde-settings-security.directory</Directory>
+		<Directory>tde-settings-security.directory</Directory>
 		<Include>
 			<Category>X-KDE-settings-security</Category>
 		</Include>
 	</Menu>
 	<Menu>
 		<Name>Sound</Name>
-		<Directory>kde-settings-sound.directory</Directory>
+		<Directory>tde-settings-sound.directory</Directory>
 		<Include>
 			<Category>X-KDE-settings-sound</Category>
 		</Include>
 	</Menu>
 	<Menu>
 		<Name>System</Name>
-		<Directory>kde-settings-system.directory</Directory>
+		<Directory>tde-settings-system.directory</Directory>
 		<Include>
 			<Category>X-KDE-settings-system</Category>
 		</Include>

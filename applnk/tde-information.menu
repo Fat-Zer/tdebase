@@ -3,7 +3,7 @@
 
 <Menu>
 	<Name>Information</Name>
-	<Directory>kde-information.directory</Directory>
+	<Directory>tde-information.directory</Directory>
 	<Include>
 		<Category>X-KDE-information</Category>
 	</Include>
