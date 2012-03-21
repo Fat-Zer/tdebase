@@ -45,7 +45,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 // MenuManager gets created before the ExtensionManager
 // So using KStaticDeleter results in MenuManager getting
 // deleted before ExtensionManager, which means also the panels
-// which means also the K Menu buttons. K Menu buttons call
+// which means also the TDE Menu buttons. TDE Menu buttons call
 // MenuManager in their dtor, so if MenuManager is already gone
 // then every KButton will cause it to be reconstructed.
 // So we rely on Kicker to delete MenuManager on the way out
@@ -65,7 +65,7 @@ MenuManager* MenuManager::the()
 MenuManager::MenuManager(TQObject *parent)
     : TQObject(parent, "MenuManager"), DCOPObject("MenuManager")
 {
-    if (KickerSettings::legacyKMenu()) 
+    if (KickerSettings::legacyKMenu())
 	m_kmenu = new KMenuStub(new PanelKMenu);
     else
 	m_kmenu = new KMenuStub(new KMenu);

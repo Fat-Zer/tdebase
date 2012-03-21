@@ -30,22 +30,22 @@ namespace KCMPerformance
 SystemWidget::SystemWidget( TQWidget* parent_P )
     : System_ui( parent_P )
     {
-    TQString tmp = 
-        i18n( "<p>During startup KDE needs to perform a check of its system configuration"
+    TQString tmp =
+        i18n( "<p>During startup TDE needs to perform a check of its system configuration"
               " (mimetypes, installed applications, etc.), and in case the configuration"
               " has changed since the last time, the system configuration cache (KSyCoCa)"
               " needs to be updated.</p>"
               "<p>This option delays the check, which avoid scanning all directories containing"
-              " files describing the system during KDE startup, thus"
-              " making KDE startup faster. However, in the rare case the system configuration"
+              " files describing the system during TDE startup, thus"
+              " making TDE startup faster. However, in the rare case the system configuration"
               " has changed since the last time, and the change is needed before this"
               " delayed check takes place, this option may lead to various problems"
-              " (missing applications in the K Menu, reports from applications about missing"
+              " (missing applications in the TDE Menu, reports from applications about missing"
               " required mimetypes, etc.).</p>"
               "<p>Changes of system configuration mostly happen by (un)installing applications."
               " It is therefore recommended to turn this option temporarily off while"
               " (un)installing applications.</p>"
-              "<p>For this reason, usage of this option is not recommended. The KDE crash"
+              "<p>For this reason, usage of this option is not recommended. The TDE crash"
               " handler will refuse to provide backtrace for the bugreport with this option"
               " turned on (you will need to reproduce it again with this option turned off,"
               " or turn on the developer mode for the crash handler).</p>" );

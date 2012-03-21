@@ -43,7 +43,7 @@ KButton::KButton( TQWidget* parent )
     : PanelPopupButton( parent, "KButton", KickerSettings::showDeepButtons() )
 {
     TQToolTip::add(this, i18n("Applications, tasks and desktop sessions"));
-    setTitle(i18n("K Menu"));
+    setTitle(i18n("TDE Menu"));
 
     setPopup(MenuManager::the()->kmenu()->widget());
     MenuManager::the()->registerKButton(this);

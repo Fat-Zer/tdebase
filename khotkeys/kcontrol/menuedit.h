@@ -1,11 +1,11 @@
 /****************************************************************************
 
  KHotKeys
- 
+
  Copyright (C) 1999-2001 Lubos Lunak <l.lunak@kde.org>
 
  Distributed under the terms of the GNU General Public License version 2.
- 
+
 ****************************************************************************/
 
 #ifndef _MENUEDIT_H_
@@ -31,10 +31,10 @@ KDE_EXPORT TQString khotkeys_get_menu_entry_shortcut( const TQString& entry_P );
 // changes assigned shortcut to menu entry a updates config file
 KDE_EXPORT TQString khotkeys_change_menu_entry_shortcut( const TQString& entry_P,
     const TQString& shortcut_P );
-// menu entry was moved in K Menu
+// menu entry was moved in TDE Menu
 KDE_EXPORT bool khotkeys_menu_entry_moved( const TQString& new_P, const TQString& old_P );
 // menu entry was removed
-KDE_EXPORT void khotkeys_menu_entry_deleted( const TQString& entry_P );    
+KDE_EXPORT void khotkeys_menu_entry_deleted( const TQString& entry_P );
 // List of all hotkeys in use
 KDE_EXPORT TQStringList khotkeys_get_all_shortcuts( );
 // Find menu entry that uses shortcut

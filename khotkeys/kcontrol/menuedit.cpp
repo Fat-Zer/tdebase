@@ -1,11 +1,11 @@
 /****************************************************************************
 
  KHotKeys
- 
+
  Copyright (C) 1999-2001 Lubos Lunak <l.lunak@kde.org>
 
  Distributed under the terms of the GNU General Public License version 2.
- 
+
 ****************************************************************************/
 
 // BEWARE ! unbelievably messy code
@@ -52,7 +52,7 @@ void khotkeys_cleanup()
     owner = NULL;
     }
 
-Menuentry_shortcut_action_data* khotkeys_get_menu_entry_internal2( 
+Menuentry_shortcut_action_data* khotkeys_get_menu_entry_internal2(
     const Action_data_group* data_P, const TQString& entry_P )
     {
     if( !data_P->enabled( false ))
@@ -80,7 +80,7 @@ Menuentry_shortcut_action_data* khotkeys_get_menu_entry_internal2(
         }
     return NULL;
     }
-    
+
 Action_data_group* khotkeys_get_menu_root( Action_data_group* data_P )
     {
     for( Action_data_group::Iterator it = data_P->first_child();
@@ -90,7 +90,7 @@ Action_data_group* khotkeys_get_menu_root( Action_data_group* data_P )
             {
             if( group->system_group() == Action_data_group::SYSTEM_MENUENTRIES )
                 return group;
-            }    
+            }
     return new Action_data_group( data_P, i18n( MENU_EDITOR_ENTRIES_GROUP_NAME ),
         i18n( "These entries were created using Menu Editor." ), new Condition_list( "", NULL ), // CHECKME tenhle condition list
         Action_data_group::SYSTEM_MENUENTRIES, true );
@@ -140,7 +140,7 @@ TQStringList khotkeys_get_all_shortcuts( )
     settings.read_settings( true );
 
     khotkeys_get_all_shortcuts_internal(settings.actions, result);
-    
+
     return result;
     }
 
@@ -158,7 +158,7 @@ KService::Ptr khotkeys_find_menu_entry_internal(const Action_data_group* data_P,
         if( Menuentry_shortcut_action_data* entry
             = dynamic_cast< Menuentry_shortcut_action_data* >( *it ))
             {
-               if (entry->trigger() && 
+               if (entry->trigger() &&
                    entry->trigger()->shortcut().toString() == shortcut_P)
                {
                   if (entry->action())
@@ -185,7 +185,7 @@ KService::Ptr khotkeys_find_menu_entry( const TQString& shortcut_P )
     return khotkeys_find_menu_entry_internal(settings.actions, shortcut_P);
     }
 
-        
+
 void khotkeys_send_reread_config()
     {
     TQByteArray data;
@@ -218,8 +218,8 @@ TQString khotkeys_get_menu_entry_shortcut( const TQString& entry_P )
     TQString shortcut = khotkeys_get_menu_shortcut( entry );
     delete settings.actions;
     return shortcut;
-    }    
-    
+    }
+
 bool khotkeys_menu_entry_moved( const TQString& new_P, const TQString& old_P )
     {
     Settings settings;
@@ -233,8 +233,8 @@ bool khotkeys_menu_entry_moved( const TQString& new_P, const TQString& old_P )
         }
     Action_data_group* parent = entry->parent();
     TQString new_name = new_P;
-    if( entry->name().startsWith( i18n( "K Menu - " )))
-        new_name = i18n( "K Menu - " ) + new_P;
+    if( entry->name().startsWith( i18n( "TDE Menu - " )))
+        new_name = i18n( "TDE Menu - " ) + new_P;
     Menuentry_shortcut_action_data* new_entry = new Menuentry_shortcut_action_data( parent,
         new_name, entry->comment(), entry->enabled( true ));
     new_entry->set_trigger( entry->trigger()->copy( new_entry ));
@@ -273,7 +273,7 @@ TQString khotkeys_change_menu_entry_shortcut( const TQString& entry_P,
     bool new_entry = ( entry == NULL );
     if( new_entry )
         {
-        entry = new Menuentry_shortcut_action_data( NULL, i18n( "K Menu - " ) + entry_P,
+        entry = new Menuentry_shortcut_action_data( NULL, i18n( "TDE Menu - " ) + entry_P,
             "" );
         entry->set_action( new Menuentry_action( entry, entry_P ));
         }
@@ -293,7 +293,7 @@ TQString khotkeys_change_menu_entry_shortcut( const TQString& entry_P,
         entry->set_trigger( new Shortcut_trigger( entry, KShortcut( shortcut )));
     if( shortcut.isEmpty())
         {
-        delete entry;            
+        delete entry;
         if( !new_entry ) // remove from config file
             {
             settings.write_settings();
@@ -321,12 +321,12 @@ void khotkeys_init()
     {
     KHotKeys::khotkeys_init();
     }
-    
+
 void khotkeys_cleanup()
     {
     KHotKeys::khotkeys_cleanup();
     }
-    
+
 TQString khotkeys_get_menu_entry_shortcut( const TQString& entry_P )
     {
     return KHotKeys::khotkeys_get_menu_entry_shortcut( entry_P );
@@ -341,7 +341,7 @@ void khotkeys_menu_entry_deleted( const TQString& entry_P )
     {
     KHotKeys::khotkeys_menu_entry_deleted( entry_P );
     }
-    
+
 TQString khotkeys_change_menu_entry_shortcut( const TQString& entry_P,
     const TQString& shortcut_P )
     {

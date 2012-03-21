@@ -98,7 +98,7 @@ static void createDirEntry(KIO::UDSEntry& entry, const TQString& name, const TQS
 
 SettingsProtocol::SettingsProtocol( const TQCString &protocol, const TQCString &pool, const TQCString &app): SlaveBase( protocol, pool, app )
 {
-	// Adjusts which part of the K Menu to virtualize.
+	// Adjusts which part of the TDE Menu to virtualize.
 	if ( protocol == "programs" )
 		m_runMode = ProgramsMode;
 	else

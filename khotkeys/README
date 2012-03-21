@@ -63,7 +63,7 @@
  
  CONFIGURATION :
  
-  The configuration module is started using K-Menu/Settings/System/KHotKeys .
+  The configuration module is started using TDE Menu/Settings/System/KHotKeys .
  If you have used the 1.x version ( you have, haven't you ? ), it will look
  familiar. On the left, there's a list of all actions, they may be put
  in groups. On the right, there are several tabs with details for
@@ -93,8 +93,8 @@
  or suggest better names ).
   - Command/URL tab settings - enter the command or URL to execute ( no,
     the 'Browse' doesn't do anything useful yet ).
-  - K-Menu entry tab settings - just like the Command/URL tab, only enter
-    a .desktop file from the K-Menu to execute (e.g. 'System/konsole.desktop')
+  - TDE Menu entry tab settings - just like the Command/URL tab, only enter
+    a .desktop file from the TDE Menu to execute (e.g. 'System/konsole.desktop')
   - DCOP call tab settings - enter the application, object, DCOP method and
     arguments (e.g. 'kdesktop', 'KBackgroundIface',
     'setWallpaper(QString,int)' and '"/some/pic.jpg" 1')

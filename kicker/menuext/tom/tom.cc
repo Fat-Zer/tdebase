@@ -340,13 +340,13 @@ int TOM::appendTaskGroup(KConfig& config, bool inSubMenu)
             }
             else
             {
-       
+
 		TQIconSet iconset = BarIconSet(icon, 22);
 		if (iconset.isNull())
 		    taskGroup->insertItem(name, m_maxIndex);
 		else
 		    taskGroup->insertItem(iconset, name, m_maxIndex);
-	
+
             }
 
             m_tasks.insert(m_maxIndex, pService);
@@ -619,7 +619,7 @@ void TOM::removeTask()
     }
 }
 
-// TODO: should we have a side graphic like the K Menu? personally, i don't
+// TODO: should we have a side graphic like the TDE Menu? personally, i don't
 // think it helps usability. it's nice for branding, but that's it. perhaps a
 // top image, or something blended with the actual menu background? deffinitely
 // a job for a graphic artist.

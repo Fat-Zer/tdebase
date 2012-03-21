@@ -121,7 +121,7 @@
    </entry>
 
 <entry name="LegacyKMenu" type="Bool" >
-      <label>When this option is enabled, the classic K Menu is used.</label>
+      <label>When this option is enabled, the classic TDE Menu is used.</label>
       <default>true</default>
    </entry>
 
@@ -365,27 +365,27 @@
    </entry>
 
 <entry name="SidePixmapName" key="SideName" type="String" >
-      <label>The name of the file to use as the side image in the K Menu</label>
+      <label>The name of the file to use as the side image in the TDE Menu</label>
       <default>kside.png</default>
    </entry>
 
 <entry name="SideTileName" key="SideTileName" type="String" >
-      <label>The name of the file used as a tile to fill the height of K Menu that SidePixmapName does not cover</label>
+      <label>The name of the file used as a tile to fill the height of TDE Menu that SidePixmapName does not cover</label>
       <default>kside_tile.png</default>
    </entry>
 
 <entry name="ShowKMenuText" key="ShowText" type="Bool" >
-      <label>Show text on the K Menu button</label>
+      <label>Show text on the TDE Menu button</label>
       <default>false</default>
    </entry>
 
 <entry name="KMenuText" key="Text" type="String" >
-      <label>Text to be shown on K Menu Button</label>
+      <label>Text to be shown on TDE Menu Button</label>
       <default code="true">i18n("Applications")</default>
    </entry>
 
 <entry name="CustomKMenuIcon" key="CustomIcon" type="Path" >
-      <label>Custom K Menu Button Icon</label>
+      <label>Custom TDE Menu Button Icon</label>
       <default code="true">QString("kmenu")</default>
    </entry>
 
@@ -451,7 +451,7 @@
 
 </group>
 
-  <group name="SearchField"> 
+  <group name="SearchField">
     <entry key="History" type="PathList">
       <default></default>
       <label></label>

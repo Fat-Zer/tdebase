@@ -55,18 +55,18 @@ KNewButton::KNewButton( TQWidget* parent )
     : KButton( parent ),
       m_oldPos(0,0)
 {
-	
-	setTitle(i18n("K Menu"));
+
+	setTitle(i18n("TDE Menu"));
     Q_ASSERT( !m_self );
     m_self = this;
     m_openTimer = -1;
     m_hoverTimer = -1;
     m_mouseInside = false;
     m_drag = false;
-    
+
     setIcon("kmenu");
     setIcon(KickerSettings::customKMenuIcon());
-    
+
     TQApplication::desktop()->screen()->installEventFilter(this);
 
   if (KickerSettings::showKMenuText())
@@ -74,8 +74,8 @@ KNewButton::KNewButton( TQWidget* parent )
         setButtonText(KickerSettings::kMenuText());
         setFont(KickerSettings::buttonFont());
         setTextColor(KickerSettings::buttonTextColor());
-    }    
-    
+    }
+
     repaint();
 }
 
@@ -182,12 +182,12 @@ void KNewButton::mouseMoveEvent(TQMouseEvent* e)
 
     m_mouseInside = m_sloppyRegion.contains(e->pos());
 
-    if ( m_sloppyRegion.contains(e->pos())) 
+    if ( m_sloppyRegion.contains(e->pos()))
     {
         if (m_hoverTimer == -1 && KickerSettings::openOnHover())
             m_hoverTimer = startTimer(kMax(200,TQApplication::doubleClickInterval()/2));
     }
-    else if (m_hoverTimer != -1) 
+    else if (m_hoverTimer != -1)
     {
         killTimer(m_hoverTimer);
         m_hoverTimer = -1;

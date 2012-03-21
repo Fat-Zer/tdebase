@@ -86,7 +86,7 @@ public:
     KMenuButtonContainer(TQPopupMenu* opMenu, TQWidget* parent = 0);
     virtual TQString appletType() const { return "KMenuButton"; }
     virtual TQString icon() const { return "kmenu"; }
-    virtual TQString visibleName() const { return i18n("K Menu"); }
+    virtual TQString visibleName() const { return i18n("TDE Menu"); }
 
     virtual int heightForWidth( int width )  const;
     bool isAMenu() const { return true; }

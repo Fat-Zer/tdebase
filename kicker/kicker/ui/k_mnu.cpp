@@ -84,7 +84,7 @@ PanelKMenu::PanelKMenu()
     // Don't automatically clear the main menu.
     disableAutoClear();
     actionCollection = new KActionCollection(this);
-    setCaption(i18n("K Menu"));
+    setCaption(i18n("TDE Menu"));
     connect(Kicker::the(), TQT_SIGNAL(configurationChanged()),
             this, TQT_SLOT(configChanged()));
     DCOPClient *dcopClient = KApplication::dcopClient();
@@ -135,7 +135,7 @@ void PanelKMenu::hideMenu()
         kapp->eventLoop()->processEvents(TQEventLoop::ExcludeUserInput, 1000);
 
     // HACK
-    // The K Menu takes an unknown amount of time to disappear, and redrawing
+    // The TDE Menu takes an unknown amount of time to disappear, and redrawing
     // the underlying window(s) also takes time.  This should allow both of those
     // events to occur (unless you're on a 200MHz Pentium 1 or similar ;-))
     // thereby removing a bad shutdown screen artifact while still providing
@@ -217,9 +217,9 @@ void PanelKMenu::paletteChanged()
 
 /* A MenuHBox is supposed to be inserted into a menu.
  * You can set a special widget in the hbox which will
- * get the focus if the user moves up or down with the 
+ * get the focus if the user moves up or down with the
  * cursor keys
- */ 
+ */
 class MenuHBox : public TQHBox {
 public:
     MenuHBox(PanelKMenu* parent) : TQHBox(parent)
@@ -269,7 +269,7 @@ void PanelKMenu::initialize()
         hbox->setFocusProxy(searchEdit);
         hbox->setSpacing( 3 );
         connect(clearButton, TQT_SIGNAL(clicked()), searchEdit, TQT_SLOT(clear()));
-        connect(this, TQT_SIGNAL(aboutToHide()), this, TQT_SLOT(slotClearSearch())); 
+        connect(this, TQT_SIGNAL(aboutToHide()), this, TQT_SLOT(slotClearSearch()));
         connect(searchEdit, TQT_SIGNAL(textChanged(const TQString&)),
             this, TQT_SLOT( slotUpdateSearch( const TQString&)));
         insertItem(hbox, searchLineID, 0);
@@ -717,7 +717,7 @@ void PanelKMenu::keyPressEvent(TQKeyEvent* e)
     else if (e->key() == TQt::Key_Escape && searchEdit->text().isEmpty() == false) {
         searchEdit->clear();
     }
-    else if (e->key() == TQt::Key_Delete && !searchEdit->hasFocus() && 
+    else if (e->key() == TQt::Key_Delete && !searchEdit->hasFocus() &&
         searchEdit->text().isEmpty() == false)
     {
         searchEdit->clear();

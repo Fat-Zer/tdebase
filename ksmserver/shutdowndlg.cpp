@@ -94,7 +94,7 @@ KSMShutdownFeedback::KSMShutdownFeedback()
 	}
 	else {
 		// The hacks below aren't needed any more because Qt3 supports true transparency for the fading logout screen when composition is available
-		DCOPRef("kicker", "KMenu").call("hideMenu");	// Make sure the K Menu is completely removed from the screen before taking a snapshot...
+		DCOPRef("kicker", "KMenu").call("hideMenu");	// Make sure the TDE Menu is completely removed from the screen before taking a snapshot...
 		m_grayImage = TQPixmap(TQPixmap::grabWindow(tqt_xrootwin(), 0, 0, TQApplication::desktop()->width(), TQApplication::desktop()->height())).convertToImage();
 	}
 	m_unfadedImage = m_grayImage;

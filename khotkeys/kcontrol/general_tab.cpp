@@ -50,7 +50,7 @@ General_tab::General_tab( TQWidget* parent_P, const char* name_P )
               break;
             case Tab_widget::TYPE_MENUENTRY_SHORTCUT:
                 action_type_combo->insertItem(
-                    i18n( "K-Menu Entry (simple)" ), i );
+                    i18n( "TDE Menu Entry (simple)" ), i );
               break;
             case Tab_widget::TYPE_DCOP_SHORTCUT:
                 action_type_combo->insertItem(
