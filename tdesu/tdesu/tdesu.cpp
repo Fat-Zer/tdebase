@@ -96,7 +96,7 @@ int main(int argc, char *argv[])
     if (duser && duser[0])
         options[3].def = duser;
 
-    KAboutData aboutData("tdesu", I18N_NOOP("KDE su"),
+    KAboutData aboutData("tdesu", I18N_NOOP("TDE su"),
             Version, I18N_NOOP("Runs a program with elevated privileges."),
             KAboutData::License_Artistic,
             "Copyright (c) 1998-2000 Geert Jansen, Pietro Iglio");

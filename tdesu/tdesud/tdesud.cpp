@@ -4,7 +4,7 @@
  * Copyright (C) 1999,2000 Geert Jansen <jansen@kde.org>
  * 
  *
- * tdesud.cpp: KDE su daemon. Offers "keep password" functionality to kde su.
+ * tdesud.cpp: TDE su daemon. Offers "keep password" functionality to TDE su.
  *
  * The socket $TDEHOME/socket-$(HOSTNAME)/tdesud_$(display) is used for communication with
  * client programs.
@@ -251,7 +251,7 @@ int main(int argc, char *argv[])
 {
     prctl(PR_SET_DUMPABLE, 0);
 
-    KAboutData aboutData("tdesud", I18N_NOOP("KDE su daemon"),
+    KAboutData aboutData("tdesud", I18N_NOOP("TDE su daemon"),
             Version, I18N_NOOP("Daemon used by tdesu"),
             KAboutData::License_Artistic,
             "Copyright (c) 1999,2000 Geert Jansen");
