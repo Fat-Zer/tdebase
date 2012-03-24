@@ -1,7 +1,7 @@
 /***************************************************************************
  *   Copyright (C) 2003 by Martin Koller                                   *
  *   m.koller@surfeu.at                                                    *
- *   This file is part of the KDE Control Center Module for Joysticks      *
+ *   This file is part of the TDE Control Center Module for Joysticks      *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -70,7 +70,7 @@ joystick::joystick(TQWidget *parent, const char *name, const TQStringList &)
   : KCModule(JoystickFactory::instance(), parent, name)
 {
   setAboutData( new KAboutData("kcmjoystick", I18N_NOOP("KDE Joystick Control Module"), "1.0",
-                               I18N_NOOP("KDE Control Center Module to test Joysticks"),
+                               I18N_NOOP("TDE Control Center Module to test Joysticks"),
                                KAboutData::License_GPL, "(c) 2004, Martin Koller",
                                0, "m.koller@surfeu.at"));
 

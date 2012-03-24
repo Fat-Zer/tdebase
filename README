@@ -42,7 +42,7 @@ libraries. Here is an overview of the directories:
     programs.
 
 * kcontrol
-    The KDE Control Center allows you to tweak the KDE settings.
+    The TDE Control Center allows you to tweak the KDE settings.
 
 * kdcop
     GUI app to browse for DCOP interfaces, can also execute them.

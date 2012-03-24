@@ -35,7 +35,7 @@ static const char version[] = "1.0";
 extern "C" int KDE_EXPORT kdemain( int argc, char **argv )
 {
     KLocale::setMainCatalogue("kmenuedit");
-    KAboutData aboutData("kcontroledit", I18N_NOOP("KDE Control Center Editor"),
+    KAboutData aboutData("kcontroledit", I18N_NOOP("TDE Control Center Editor"),
 			 version, description, KAboutData::License_GPL,
 			 "(C) 2000-2004, Waldo Bastian, Raffaele Sandrini, Matthias Elter");
     aboutData.addAuthor("Waldo Bastian", I18N_NOOP("Maintainer"), "bastian@kde.org");

@@ -4028,7 +4028,7 @@ void KonqMainWindow::initActions()
 
   m_paHome->setWhatsThis( i18n( "Navigate to your 'Home Location'<p>"
                                 "You can configure the location this button takes you to in the "
-                                "<b>KDE Control Center</b>, under <b>File Manager</b>/<b>Behavior</b>." ) );
+                                "<b>TDE Control Center</b>, under <b>File Manager</b>/<b>Behavior</b>." ) );
   m_paHome->setToolTip( i18n( "Navigate to your 'Home Location'" ) );
 
   m_paReload->setWhatsThis( i18n( "Reload the currently displayed document<p>"

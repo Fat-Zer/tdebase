@@ -11,7 +11,7 @@ browser plugins in KDE applications.
 
  - sdk/     - headers from the Netscape(R) browser plugin SDK.
 
- - control/ - KDE Control Center applet for managing plugins
+ - control/ - TDE Control Center applet for managing plugins
 
  - test/    - simple applications to test nsplugin
 
@@ -132,7 +132,7 @@ with .so extension. A forking mechanism is implemented to prevent
 faulty .so's from crashing the scanning process.
 	
 This utility is usually not invoked standalone, but used by the
-KDE Control Center applet which invokes it on:
+TDE Control Center applet which invokes it on:
 - explicit request (ie. pressing "Scan for new plugins" button)
 - KDE startup (in the applet's initialization code)
 - first time the applet is ran
@@ -203,7 +203,7 @@ The Control Center applet allows the user to:
 - See which plugins "pluginscan" found (by reading the plugin cache). 
 - Force a "pluginscan" rescan.
 
-The KDE Control Center API is well documented in the KDE SDK.
+The TDE Control Center API is well documented in the KDE SDK.
 
 Compatibility notes
 ===================
