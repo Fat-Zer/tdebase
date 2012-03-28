@@ -74,6 +74,9 @@ int main(int argc, char **argv)
 	if (wmToLaunch == "") {
 		return_code = system("kwrapper ksmserver");
 	}
+	else if (wmArguments == "") {
+		return_code = system((TQString("kwrapper ksmserver --windowmanager %1").arg(wmToLaunch)).ascii());
+	}
 	else {
 		return_code = system((TQString("kwrapper ksmserver --windowmanager %1 --windowmanageraddargs %2").arg(wmToLaunch).arg(wmArguments)).ascii());
 	}
