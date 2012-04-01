@@ -34,6 +34,8 @@
 
 #include "medium.h"
 
+#include <config.h>
+
 MediaImpl::MediaImpl() : TQObject(), DCOPObject("mediaimpl"), mp_mounting(0L)
 {
 
@@ -226,13 +228,15 @@ bool MediaImpl::ensureMediumMounted(Medium &medium)
 		m_lastErrorMessage = i18n("No such medium.");
 		return false;
 	}
-	
+
+#ifdef COMPILE_HALBACKEND
 	if ( medium.isEncrypted() && medium.clearDeviceUdi().isEmpty() )
 	{
 		m_lastErrorCode = KIO::ERR_COULD_NOT_MOUNT;
 		m_lastErrorMessage = i18n("The drive is encrypted.");
 		return false;
 	}
+#endif // COMPILE_HALBACKEND
 
 	if ( medium.needMounting() )
 	{

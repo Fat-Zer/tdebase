@@ -31,6 +31,14 @@
 #define COMPILE_LINUXCDPOLLING
 #endif
 
+// kioslave/media
+#cmakedefine WITH_TDEHWLIB 1
+#ifdef WITH_TDEHWLIB
+// forcibly deactivate HAL support and substitute TDE hardware library support
+#undef COMPILE_HALBACKEND
+#define COMPILE_TDEHARDWAREBACKEND
+#endif
+
 // kioslave/fish, kcontrol/info
 #cmakedefine HAVE_SYS_IOCTL_H 1
 

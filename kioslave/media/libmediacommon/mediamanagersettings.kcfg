@@ -9,6 +9,11 @@
       <whatsthis>When HAL (Hardware Abstraction Layer) support is enabled, TDE will use it to gather information on the storage media available in your system.</whatsthis>
       <default>true</default>
     </entry>
+    <entry name="TdeHardwareBackendEnabled" type="Bool">
+      <label>Enable TDE hardware library backend</label>
+      <whatsthis>When TDE hardware library support is enabled, TDE will use it to gather information on the storage media available in your system.</whatsthis>
+      <default>true</default>
+    </entry>
     <entry name="CdPollingEnabled" type="Bool">
       <label>Enable CD polling</label>
       <whatsthis>Allows TDE to poll CD-Rom or DVD-Rom drives itself in order to detect medium insert.</whatsthis>

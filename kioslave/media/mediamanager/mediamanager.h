@@ -1,5 +1,5 @@
 /* This file is part of the KDE Project
-   Copyright (c) 2004 Kévin Ottens <ervin ipsquad net>
+   Copyright (c) 2004 Kï¿½vin Ottens <ervin ipsquad net>
 
    This library is free software; you can redistribute it and/or
    modify it under the terms of the GNU Library General Public
@@ -29,6 +29,7 @@
 #include "mediadirnotify.h"
 
 class HALBackend;
+class TDEBackend;
 class FstabBackend;
 
 class MediaManager : public KDEDModule
@@ -85,6 +86,7 @@ private:
 	TQValueList<BackendBase*> m_backends;
 	RemovableBackend *mp_removableBackend;
 	HALBackend *m_halbackend;
+	TDEBackend *m_tdebackend;
 	MediaDirNotify m_dirNotify;
 	FstabBackend *m_fstabbackend;
 };

@@ -9,9 +9,6 @@
 #
 #################################################
 
-# FIXME there is no support for HAL and linuxcdpolling yet
-
-
 include_directories(
   ${CMAKE_CURRENT_BINARY_DIR}
   ${CMAKE_BINARY_DIR}/kioslave/media/libmediacommon
@@ -43,7 +40,8 @@ if( WITH_HAL )
     mediamanager.cpp mediamanager.skel medialist.cpp
     backendbase.cpp fstabbackend.cpp removablebackend.cpp
     mediadirnotify.cpp mediadirnotify.skel
-    halbackend.cpp linuxcdpolling.cpp
+    decryptdialog.ui dialog.cpp
+    halbackend.cpp linuxcdpolling.cpp tdehardwarebackend.cpp
   )
 
   tde_add_kpart( ${target} AUTOMOC
@@ -55,7 +53,8 @@ else( )
   set( ${target}_SRCS
     mediamanager.cpp mediamanager.skel medialist.cpp
     backendbase.cpp fstabbackend.cpp removablebackend.cpp
-    mediadirnotify.cpp mediadirnotify.skel
+    decryptdialog.ui dialog.cpp
+    mediadirnotify.cpp mediadirnotify.skel tdehardwarebackend.cpp
   )
 
   tde_add_kpart( ${target} AUTOMOC

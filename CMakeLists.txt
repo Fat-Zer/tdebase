@@ -77,6 +77,7 @@ option( WITH_XINERAMA "Enable xinerama extension support" ${WITH_ALL_OPTIONS} )
 option( WITH_ARTS "Enable aRts support" ${WITH_ALL_OPTIONS} )
 option( WITH_I8K "Enable Dell laptop support (ksysguard)" ${WITH_ALL_OPTIONS} )
 option( WITH_HAL "Enable HAL support" ${WITH_ALL_OPTIONS} )
+option( WITH_TDEHWLIB "Enable TDE hardware library support" ${WITH_ALL_OPTIONS} )
 option( WITH_UPOWER "Enable UPOWER support" ${WITH_ALL_OPTIONS} )
 option( WITH_GCC_VISIBILITY "Enable fvisibility and fvisibility-inlines-hidden" ${WITH_ALL_OPTIONS} )
 

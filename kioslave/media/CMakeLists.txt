@@ -23,6 +23,7 @@ tde_conditional_add_subdirectory( WITH_HAL propsdlgplugin )
 include_directories(
   ${CMAKE_CURRENT_BINARY_DIR}
   ${CMAKE_CURRENT_SOURCE_DIR}/libmediacommon
+  ${CMAKE_BINARY_DIR}
   ${TDE_INCLUDE_DIR}
   ${TQT_INCLUDE_DIRS}
 )
