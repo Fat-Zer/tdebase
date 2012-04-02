@@ -127,7 +127,7 @@ private:
 
 	void setVolumeProperties(Medium* medium);
 	bool setFloppyProperties(Medium* medium);
-// 	void setFloppyMountState( Medium* medium );
+	void setFloppyMountState( Medium* medium );
 // 	bool setFstabProperties(Medium* medium);
 	void setCameraProperties(Medium* medium);
 	TQString generateName(const TQString &devNode);

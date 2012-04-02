@@ -549,6 +549,11 @@ bool TDEBackend::setFloppyProperties(Medium* medium)
 	}
 
 	if (sdevice->isDiskOfType(TDEDiskDeviceType::Floppy)) {
+		setFloppyMountState(medium);
+
+		// We don't use the routine above as floppy disks are extremely slow (we don't want them accessed at all during media listing)
+		medium->mountableState(sdevice->deviceNode(), sdevice->mountPath(), sdevice->fileSystemName(), !sdevice->mountPath().isNull());
+
 		if (sdevice->mountPath().isNull()) {
 			medium->setMimeType("media/floppy_unmounted");
 		}
@@ -612,6 +617,24 @@ void TDEBackend::setCameraProperties(Medium* medium)
 	}
 	else {
 		medium->setLabel(i18n("Camera"));
+	}
+}
+
+void TDEBackend::setFloppyMountState( Medium *medium )
+{
+	KMountPoint::List mtab = KMountPoint::currentMountPoints();
+	KMountPoint::List::iterator it = mtab.begin();
+	KMountPoint::List::iterator end = mtab.end();
+	
+	TQString fstype;
+	TQString mountpoint;
+	for (; it!=end; ++it) {
+		if ((*it)->mountedFrom() == medium->deviceNode() ) {
+			fstype = (*it)->mountType().isNull() ? (*it)->mountType() : "auto";
+			mountpoint = (*it)->mountPoint();
+			medium->mountableState( medium->deviceNode(), mountpoint, fstype, true );
+			return;
+		}
 	}
 }
 
