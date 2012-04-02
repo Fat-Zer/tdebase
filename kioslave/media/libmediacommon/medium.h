@@ -1,5 +1,5 @@
 /* This file is part of the KDE Project
-   Copyright (c) 2004 Kévin Ottens <ervin ipsquad net>
+   Copyright (c) 2004 Kï¿½vin Ottens <ervin ipsquad net>
 
    This library is free software; you can redistribute it and/or
    modify it under the terms of the GNU Library General Public
@@ -43,7 +43,8 @@ public:
 	static const uint ICON_NAME = 11;
 	static const uint ENCRYPTED = 12;
 	static const uint CLEAR_DEVICE_UDI = 13;
-	static const uint PROPERTIES_COUNT = 14;
+	static const uint HIDDEN = 14;
+	static const uint PROPERTIES_COUNT = 15;
 	static const TQString SEPARATOR;
 
 	Medium(const TQString &id, const TQString &name);
@@ -66,6 +67,7 @@ public:
 	TQString iconName() const { return m_properties[ICON_NAME]; }
  	bool isEncrypted() const { return m_properties[ENCRYPTED]=="true"; };
  	TQString clearDeviceUdi() const { return m_properties[CLEAR_DEVICE_UDI]; };
+ 	bool hidden() const { return m_properties[HIDDEN]=="true"; };
 
 	bool needMounting() const;
  	bool needDecryption() const;
@@ -76,6 +78,7 @@ public:
 	void setLabel(const TQString &label);
 	void setUserLabel(const TQString &label);
  	void setEncrypted(bool state);
+ 	void setHidden(bool state);
 
 	bool mountableState(bool mounted);
 	void mountableState(const TQString &deviceNode,

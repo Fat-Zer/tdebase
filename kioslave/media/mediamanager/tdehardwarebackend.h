@@ -115,8 +115,10 @@ private:
 	* Reset properties for the given medium
 	*
 	*  @param sdevice             A pointer to a TDEStorageDevice objec
+	*  @param allowNotification   Indicates if this event will be notified to the user
+	*  @param overrideIgnoreList  If true, override event ignore requests for the current device node
 	*/
-	void ResetProperties(TDEStorageDevice * sdevice, bool allowNotification=false);
+	void ResetProperties(TDEStorageDevice * sdevice, bool allowNotification=false, bool overrideIgnoreList=false);
 
 	/**
 	* Find the medium that is concerned with device udi
@@ -160,6 +162,8 @@ private:
 	};
 
 	TQMap<KIO::Job *, struct mount_job_data*> mount_jobs;
+
+	TQStringList m_ignoreDeviceChangeEvents;
 };
 
 #endif /* _TDEBACKEND_H_ */

@@ -151,11 +151,13 @@ bool MediaImpl::listMedia(TQValueList<KIO::UDSEntry> &list)
 
 	for(; it!=end; ++it)
 	{
-		entry.clear();
+		if (!(*it).hidden()) {
+			entry.clear();
 
-		createMediumEntry(entry, *it);
+			createMediumEntry(entry, *it);
 
-		list.append(entry);
+			list.append(entry);
+		}
 	}
 
 	return true;

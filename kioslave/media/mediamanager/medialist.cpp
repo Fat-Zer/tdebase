@@ -162,6 +162,8 @@ bool MediaList::changeMediumState(const Medium &medium, bool allowNotification)
 		m->setLabel( medium.label() );
 	}
 
+	m->setHidden(medium.hidden());
+
 	emit mediumStateChanged(m->id(), m->name(), !m->needMounting(), allowNotification);
 	return true;
 }

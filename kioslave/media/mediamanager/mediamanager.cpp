@@ -199,10 +199,12 @@ TQStringList MediaManager::properties(const TQString &name)
         }
     }
 
-    if (m)
+    if (m) {
         return m->properties();
-    else
+    }
+    else {
         return TQStringList();
+    }
 }
 
 TQStringList MediaManager::mountoptions(const TQString &name)

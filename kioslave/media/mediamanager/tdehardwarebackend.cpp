@@ -19,6 +19,7 @@
 #include "tdehardwarebackend.h"
 
 #include <tqfile.h>
+#include <tqfileinfo.h>
 #include <tqeventloop.h>
 #include <tqstylesheet.h>
 
@@ -140,16 +141,19 @@ void TDEBackend::AddDevice(TDEStorageDevice * sdevice, bool allowNotification)
 			// 
 		}
 		else {
-			// Do not list the LUKS backend device if it has been unlocked elsewhere
-			if (sdevice->isDiskOfType(TDEDiskDeviceType::LUKS)) {
-				if (sdevice->slaveDevices().count() > 0) {
-					return;
-				}
-			}
-	
 			// Create medium
 			Medium* medium = new Medium(sdevice->uniqueID(), "");
 			setVolumeProperties(medium);
+
+			// Do not list the LUKS backend device if it has been unlocked elsewhere
+			if (sdevice->isDiskOfType(TDEDiskDeviceType::LUKS)) {
+				if (sdevice->holdingDevices().count() > 0) {
+					medium->setHidden(true);
+				}
+				else {
+					medium->setHidden(false);
+				}
+			}
 			
 			// Insert medium into list
 			m_mediaList.addMedium(medium, allowNotification);
@@ -186,14 +190,38 @@ void TDEBackend::AddDevice(TDEStorageDevice * sdevice, bool allowNotification)
 		if ((sdevice->checkDiskStatus(TDEDiskDeviceStatus::Removable)) && (!(sdevice->checkDiskStatus(TDEDiskDeviceStatus::Inserted)))) {
 			allowNotification = false;
 		}
-		// Create medium
-		Medium* medium = new Medium(sdevice->uniqueID(), "");
-		// If the storage has a volume, we ignore it
-		if ( setFloppyProperties(medium) )
-			 m_mediaList.addMedium(medium, allowNotification);
-		else
-			delete medium;
-		return;
+
+		/* We only list volumes that...
+		*  - are encrypted with LUKS or
+		*  - have a filesystem or
+		*  - are a floppy disk
+		*/
+		if (!(sdevice->isDiskOfType(TDEDiskDeviceType::LUKS))
+			&& !(sdevice->checkDiskStatus(TDEDiskDeviceStatus::ContainsFilesystem))
+			&& !(sdevice->isDiskOfType(TDEDiskDeviceType::Floppy))
+			&& !(sdevice->checkDiskStatus(TDEDiskDeviceStatus::Blank))
+			) {
+			// 
+		}
+		else {
+			// Create medium
+			Medium* medium = new Medium(sdevice->uniqueID(), "");
+
+			setFloppyProperties(medium);
+
+			// Do not list the LUKS backend device if it has been unlocked elsewhere
+			if (sdevice->isDiskOfType(TDEDiskDeviceType::LUKS)) {
+				if (sdevice->holdingDevices().count() > 0) {
+					medium->setHidden(true);
+				}
+				else {
+					medium->setHidden(false);
+				}
+			}
+
+			m_mediaList.addMedium(medium, allowNotification);
+			return;
+		}
 	}
 
 	// PTP camera
@@ -213,26 +241,37 @@ void TDEBackend::AddDevice(TDEStorageDevice * sdevice, bool allowNotification)
 
 void TDEBackend::RemoveDevice(TDEStorageDevice * sdevice)
 {
-	const Medium *medium = m_mediaList.findByClearUdi(sdevice->uniqueID());
-	if (medium) {
-		ResetProperties(sdevice);
+	if (!m_mediaList.findById(sdevice->uniqueID())) {
+		return;
 	}
-	else {
-		m_mediaList.removeMedium(sdevice->uniqueID(), true);
-	}
+
+	m_mediaList.removeMedium(sdevice->uniqueID(), true);
 }
 
 void TDEBackend::ModifyDevice(TDEStorageDevice * sdevice)
 {
 	bool allowNotification = true;
-	if (!sdevice->checkDiskStatus(TDEDiskDeviceStatus::Removable)) {	// TODO Is this the only condition under which we would not want notification?
-		allowNotification = false;
-	}
+// 	if (!sdevice->checkDiskStatus(TDEDiskDeviceStatus::Removable)) {	// FIXME Under which conditions would we not want notification?
+// 		allowNotification = false;
+// 	}
 	ResetProperties(sdevice, allowNotification);
 }
 
-void TDEBackend::ResetProperties(TDEStorageDevice * sdevice, bool allowNotification)
+void TDEBackend::ResetProperties(TDEStorageDevice * sdevice, bool allowNotification, bool overrideIgnoreList)
 {
+	if (!m_mediaList.findById(sdevice->uniqueID())) {
+		// This device is not currently in the device list, so add it and exit
+		AddDevice(sdevice, allowNotification);
+		return;
+	}
+
+	// If we should ignore device change events for this device, do so
+	if (overrideIgnoreList == false) {
+		if (m_ignoreDeviceChangeEvents.contains(sdevice->uniqueID())) {
+			return;
+		}
+	}
+
 	Medium* m = new Medium(sdevice->uniqueID(), "");
 
 	// Keep these conditions in sync with ::AddDevice above, OR ELSE!!!
@@ -245,11 +284,13 @@ void TDEBackend::ResetProperties(TDEStorageDevice * sdevice, bool allowNotificat
 		) {
 	}
 	else {
+		// Do not list the LUKS backend device if it has been unlocked elsewhere
 		if (sdevice->isDiskOfType(TDEDiskDeviceType::LUKS)) {
-			if (sdevice->slaveDevices().count() > 0) {
-				// Do not list the LUKS backend device if it has been unlocked elsewhere
-				RemoveDevice(sdevice);
-				return;
+			if (sdevice->holdingDevices().count() > 0) {
+				m->setHidden(true);
+			}
+			else {
+				m->setHidden(false);
 			}
 		}
 		setVolumeProperties(m);
@@ -275,7 +316,27 @@ void TDEBackend::ResetProperties(TDEStorageDevice * sdevice, bool allowNotificat
 		(sdevice->isDiskOfType(TDEDiskDeviceType::Zip)) ||
 		(sdevice->isDiskOfType(TDEDiskDeviceType::Jaz))
 		) {
-		setFloppyProperties(m);
+
+		if (!(sdevice->isDiskOfType(TDEDiskDeviceType::LUKS))
+			&& !(sdevice->checkDiskStatus(TDEDiskDeviceStatus::ContainsFilesystem))
+			&& !(sdevice->isDiskOfType(TDEDiskDeviceType::Floppy))
+			&& !(sdevice->checkDiskStatus(TDEDiskDeviceStatus::Blank))
+			) {
+			// 
+		}
+		else {
+			// Do not list the LUKS backend device if it has been unlocked elsewhere
+			if (sdevice->isDiskOfType(TDEDiskDeviceType::LUKS)) {
+				if (sdevice->holdingDevices().count() > 0) {
+					m->setHidden(true);
+				}
+				else {
+					m->setHidden(false);
+				}
+			}
+
+			setFloppyProperties(m);
+		}
 	}
 
 	if (sdevice->isDiskOfType(TDEDiskDeviceType::Camera)) {
@@ -446,6 +507,15 @@ void TDEBackend::setVolumeProperties(Medium* medium)
 		}
 	}
 
+	if (!medium->needMounting()) {
+		if (sdevice->isDiskOfType(TDEDiskDeviceType::LUKS)) {
+			if (sdevice->checkDiskStatus(TDEDiskDeviceStatus::UsedByDevice)) {
+				// Encrypted base devices must be set to this mimetype or they won't open when the base device node is passed to the kioslave
+				mimeType = "media/removable_mounted";
+			}
+		}
+	}
+
 	medium->setMimeType(mimeType);
 }
 
@@ -461,6 +531,22 @@ bool TDEBackend::setFloppyProperties(Medium* medium)
 
 	medium->setName(generateName(sdevice->deviceNode()));
 	medium->setLabel(i18n("Unknown Drive"));
+
+	// Certain disks have a lot in common with hard drives
+	// FIXME
+	// Any more?
+	if ((sdevice->isDiskOfType(TDEDiskDeviceType::Zip)) || (sdevice->isDiskOfType(TDEDiskDeviceType::Jaz))) {
+		medium->setName(generateName(sdevice->deviceNode()));
+		if ((sdevice->isDiskOfType(TDEDiskDeviceType::LUKS)) || (sdevice->isDiskOfType(TDEDiskDeviceType::UnlockedCrypt))) {
+			medium->setEncrypted(true);
+		}
+		else {
+			medium->setEncrypted(false);
+		}
+	
+		// USAGE: mountableState(Device node, Mount point, Filesystem type, Mounted ?)
+		medium->mountableState(sdevice->deviceNode(), sdevice->mountPath(), sdevice->fileSystemName(), !sdevice->mountPath().isNull());
+	}
 
 	if (sdevice->isDiskOfType(TDEDiskDeviceType::Floppy)) {
 		if (sdevice->mountPath().isNull()) {
@@ -479,7 +565,13 @@ bool TDEBackend::setFloppyProperties(Medium* medium)
 		else {
 			medium->setMimeType("media/zip_mounted" );
 		}
-		medium->setLabel(i18n("Zip Drive"));
+
+		// Set label
+		TQString diskLabel = sdevice->diskLabel();
+		if (diskLabel.isNull()) {
+			diskLabel = i18n("%1 Zip Disk").arg(sdevice->deviceFriendlySize());
+		}
+		medium->setLabel(diskLabel);
 	}
 	
 	/** @todo Mimetype for JAZ drives ? */
@@ -662,18 +754,41 @@ TQString TDEBackend::mount(const Medium *medium)
 			while (m_decryptPasswordValid == false) {
 				tqApp->processEvents();
 			}
-	
+
 			m_decryptDialog->setEnabled(false);
-	
+			tqApp->processEvents();
+
 			if (m_decryptionPassword.isNull()) {
 				delete m_decryptDialog;
 				return TQString("Decryption aborted");
 			}
 			else {
+				// Just for some added fun, if udev emits a medium change event, which I then forward, with mounted==0, it stops the MediaProtocol::listDir method dead in its tracks,
+				// and therefore the media:/ kioslave won't refresh after the encrypted device mount
+				// Therefore, I need to ignore all change events on this device during the mount process and hope nothing bad happens as a result!
+				if (!m_ignoreDeviceChangeEvents.contains(sdevice->uniqueID())) {
+					m_ignoreDeviceChangeEvents.append(sdevice->uniqueID());
+				}
+
 				// mount encrypted volume with password
 				int mountRetcode;
 				TQString mountMessages;
 				TQString mountedPath = sdevice->mountEncryptedDevice(m_decryptionPassword, diskLabel, optionString, &mountMessages, &mountRetcode);
+				if (mountedPath.isNull()) {
+					if (mountRetcode == 0) {
+						// Mounting was successful
+						// Because the TDE hardware backend is event driven it might take a little while for the new unencrypted mapped device to show up
+						// Wait up to 30 seconds for it to appear...
+						for (int i=0;i<300;i++) {
+							mountedPath = sdevice->mountPath();
+							if (!mountedPath.isNull()) {
+								break;
+							}
+							tqApp->processEvents(50);
+							usleep(50000);
+						}
+					}
+				}
 				if (mountedPath.isNull()) {
 					if (mountRetcode == 25600) {
 						// Probable LUKS failure
@@ -700,29 +815,16 @@ TQString TDEBackend::mount(const Medium *medium)
 		}
 	}
 
-	// FIXME
-	// Handle encrypted devices
-
-//     	qerror = mount_priv(medium->id().latin1(), mount_point.utf8(), options, noptions, dbus_connection);
-//     } else {
-//         // see if we have a clear volume
-//         LibHalVolume* halVolume = libhal_volume_from_udi(m_halContext, medium->id().latin1());
-//         if (halVolume) {
-//             char* clearUdi = libhal_volume_crypto_get_clear_volume_udi(m_halContext, halVolume);
-//             if (clearUdi != NULL) {
-//                 qerror = mount_priv(clearUdi, mount_point.utf8(), options, noptions, dbus_connection);
-//                 libhal_free_string(clearUdi);
-//             }
-//             libhal_volume_free(halVolume);
-//         }
-//     }
-
 	if (!qerror.isEmpty()) {
 		return qerror;
 	}
 
-	ResetProperties(sdevice);
-	
+	ResetProperties(sdevice, false, true);
+
+	if (m_ignoreDeviceChangeEvents.contains(sdevice->uniqueID())) {
+		m_ignoreDeviceChangeEvents.remove(sdevice->uniqueID());
+	}
+
 	return TQString();
 }
 
@@ -776,6 +878,10 @@ TQString TDEBackend::unmount(const TQString &_udi)
 	TQString qerror;
 	TQString origqerror;
 
+	// Save these for later
+	TQString uid = sdevice->uniqueID();
+	TQString node = sdevice->deviceNode();
+
 	TQString unmountMessages;
 	int unmountRetcode = 0;
 	if (!sdevice->unmountDevice(&unmountMessages, &unmountRetcode)) {
@@ -815,7 +921,30 @@ TQString TDEBackend::unmount(const TQString &_udi)
 		return qerror;
 	}
 
-	ResetProperties(sdevice);
+	// There is a possibility that the storage device was unceremoniously removed from the system immediately after it was unmounted
+	// There is no reliable way to know if this happened either!
+	// For now, see if the device node still exists
+	TQFileInfo checkDN(node);
+	if (!checkDN.exists()) {
+		m_mediaList.removeMedium(uid, true);
+	}
+	else {
+		TQString mountedPath = sdevice->mountPath();
+		if (!mountedPath.isNull()) {
+			// Because the TDE hardware backend is event driven it might take a little while for the device to show up as unmounted
+			// Wait up to 30 seconds for the mount to disappear...
+			for (int i=0;i<300;i++) {
+				mountedPath = sdevice->mountPath();
+				if (mountedPath.isNull()) {
+					break;
+				}
+				tqApp->processEvents(50);
+				usleep(50000);
+			}
+		}
+
+		ResetProperties(sdevice, false);
+	}
 
 	return TQString();
 }

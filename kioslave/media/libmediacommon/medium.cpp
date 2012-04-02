@@ -40,6 +40,7 @@ Medium::Medium(const TQString &id, const TQString &name)
 	m_properties+= TQString::null; /* ICON_NAME */
 	m_properties+= "false"; /* ENCRYPTED */
 	m_properties+= TQString::null; /* CLEAR_DEVICE_UDI */
+	m_properties+= "false"; /* HIDDEN */
 
 	loadUserLabel();
 
@@ -63,6 +64,7 @@ Medium::Medium()
 	m_properties+= TQString::null; /* ICON_NAME */
 	m_properties+= TQString::null; /* ENCRYPTED */
 	m_properties+= TQString::null; /* CLEAR_DEVICE_UDI */
+	m_properties+= "false";        /* HIDDEN */
 	
 	m_halmounted = false;
 }
@@ -88,6 +90,7 @@ const Medium Medium::create(const TQStringList &properties)
 		m.m_properties[ICON_NAME] = properties[ICON_NAME];
 		m.m_properties[ENCRYPTED] = properties[ENCRYPTED];
 		m.m_properties[CLEAR_DEVICE_UDI] = properties[CLEAR_DEVICE_UDI];
+		m.m_properties[HIDDEN] = properties[HIDDEN];
 	}
 
 	return m;
@@ -132,6 +135,11 @@ void Medium::setLabel(const TQString &label)
 void Medium::setEncrypted(bool state)
 {
 	m_properties[ENCRYPTED] = ( state ? "true" : "false" );
+}
+
+void Medium::setHidden(bool state)
+{
+	m_properties[HIDDEN] = ( state ? "true" : "false" );
 }
 
 void Medium::setUserLabel(const TQString &label)
