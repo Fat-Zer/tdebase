@@ -285,7 +285,7 @@ KDCOPWindow::KDCOPWindow(TQWidget *parent, const char * name)
   dcopClient = kapp->dcopClient();
   dcopClient->attach();
   resize( 377, 480 );
-  statusBar()->message(i18n("Welcome to the KDE DCOP browser"));
+  statusBar()->message(i18n("Welcome to the TDE DCOP browser"));
 
 	mainView = new kdcopview(this, "KDCOP");
         mainView->kListViewSearchLine1->setListView( mainView->lv );
