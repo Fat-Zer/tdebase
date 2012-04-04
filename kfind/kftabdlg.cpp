@@ -549,7 +549,7 @@ bool KfindTabWidget::isDateValid()
   {
     if (timeBox->value() > 0 ) return TRUE;
 
-    KMessageBox::sorry(this, i18n("Unable to search within a period which is less than a minute."));
+    KMessageBox::sorry(this, i18n("Unable to search within a period that is less than a minute."));
     return FALSE;
   }
 
