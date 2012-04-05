@@ -24,7 +24,7 @@
 	action into a toolbar make sure to align the button right.
 	Otherwise the toolbar layout completely fucks up and QToolBar
 	starts flickering like mad, when the window width is getting
-	small than the lenght of the url in the combobox.
+	small than the length of the url in the combobox.
 	
 	* konq_mainwindow.cc (initActions): use KonqGoURLAction
 
