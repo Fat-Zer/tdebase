@@ -3,9 +3,9 @@
 #  DEFAULT TRINITY STARTUP SCRIPT
 #
 
-# This block may not be appropriate for all systems.
+# This block might not be appropriate for all systems.
 # It should work for command line logins but graphical
-# login managers may source these files already.
+# login managers might already source these files.
 # Multiple sourcing is not a problem when the files are only
 # containers for environment variables and such.
 if [ -r /etc/xprofile ]; then
@@ -60,12 +60,12 @@ if test -z "$XDM_MANAGED" || echo "$XDM_MANAGED" | grep ",auto" > /dev/null; the
   xsetroot -solid "#618DCC" # sky blue
 fi
 
-# Unset this for Darwin since it will screw up TDE's dynamic-loading
+# Unset this for Darwin since it will screw up TDE's dynamic-loading.
 unset DYLD_FORCE_FLAT_NAMESPACE
 
-# Check whether prelinking is enabled. If so, exporting TDE_IS_PRELINKED improves
+# Check whether prelinking is enabled. If yes, then exporting TDE_IS_PRELINKED improves
 # loading TDE. The $TDE_IS_PRELINKED variable might already be set on some systems
-# through /etc/profile.d, so first check whether the variable exists.
+# through /etc/profile.d. Therefore first check whether the variable exists.
 if [ "$TDE_IS_PRELINKED" = "" ]; then
   if [ -r /etc/default/prelink ]; then
     . /etc/default/prelink
@@ -87,7 +87,7 @@ fi
 # * Then tdeinit starts kcminit. kcminit performs initialisation of
 #   certain devices according to the user's settings
 #
-# * Then ksmserver is started which takes control of the rest of the startup sequence
+# * Then ksmserver is started which takes control of the rest of the startup sequence.
 
 # The user's personal TDE directory usually is $HOME/.trinity.
 # This setting may be overridden by setting $TDEHOME. When migrating profiles
@@ -129,15 +129,6 @@ else
   fi
   echo "[starttde] Set TDEHOME to $TDEHOME." 1>&2
 fi
-
-# Do we want to run this script from here in such an automated manner?
-# Or leave the script to be run only at the user's discretion?
-# The migratekde3 script as written (in draft) requires user intervention,
-# which to succeed in TDE needs something like KDialog. Refer to the
-# commentary in migratekde3 for more details.
-# if [ -x $TDEDIR/migratekde3 ]; then
-#   sh $TDEDIR/migratekde3
-# fi
 
 # tdesu needs something to find root's TDE profile. Set the TDEROOTHOME variable
 # here as last resort. /root/.trinity is a safe presumption. If an admin wants
@@ -296,7 +287,7 @@ if test -n "$kcminputrc_mouse_cursortheme" -o -n "$kcminputrc_mouse_cursorsize" 
 fi
 
 if test "$kcmrandrrc_display_applyonstartup" = "true"; then
-  # 4 screens is hopefully enough
+  # 4 screens is hopefully enough.
   for scrn in 0 1 2 3; do
     args=
     width="\$kcmrandrrc_screen${scrn}_width" ; eval "width=$width"
@@ -400,11 +391,10 @@ fi
 # (where <localprefix> is $TDEHOME or ~/.trinity, and <prefixes> is where TDE is installed)
 #
 # This is where you can define environment variables that will be available to
-# all TDE programs, so this is where you can run agents using e.g. eval `ssh-agent`
+# all TDE programs. That is where to run agents using for example, eval `ssh-agent`
 # or eval `gpg-agent --daemon`.
-# Note: if you do that, you should also put "ssh-agent -k" as a shutdown script
-#
-# (see end of this file).
+# Note: if you do that, you should also put "ssh-agent -k" as a shutdown script.
+# (Read the end of this script for running shutdown scripts).
 # For anything else (that doesn't set env vars, or that needs a window manager),
 # better use the Autostart folder.
 
@@ -428,15 +418,15 @@ done
 # preference to any other.
 #
 # The preference order looks like this:
-# user override, system override, X, user, system
+# user override, system override, X, user, system.
 #
-# Where X is the original font database that was set up before this script
-# runs.
+# Where X is the original font database that was set up before this
+# script runs.
 
 usr_odir=$HOME/.fonts/kde-override
 usr_fdir=$HOME/.fonts
 
-# Add any user-installed font directories to the X font path
+# Add any user-installed font directories to the X font path.
 tde_fontpaths=$usr_fdir/fontpaths
 do_usr_fdir=1
 do_usr_odir=1
@@ -502,7 +492,7 @@ fi
 # add the user's dirs to the font path, as they might simply have been made
 # read-only by the administrator, for whatever reason.
 
-# Only do usr_fdir and usr_odir if they are *not* listed in fontpaths
+# Only do usr_fdir and usr_odir if they are *not* listed in fontpaths.
 if [ -e $sys_odir/fonts.dir ]
 then
   xset +fp "$sys_odir"
@@ -524,7 +514,7 @@ xset fp rehash
 #
 xsetroot -cursor_name left_ptr
 
-# Get Ghostscript to look into user's TDE fonts dir for additional Fontmap
+# Get Ghostscript to look into user's TDE fonts dir for additional Fontmap.
 if test -n "$GS_LIB" ; then
   GS_LIB=$usr_fdir:$GS_LIB
   export GS_LIB
@@ -533,7 +523,7 @@ else
   export GS_LIB
 fi
 
-# Link "tmp" "socket" and "cache" resources to directory in $TMP
+# Link "tmp" "socket" and "cache" resources to directory in $TMP.
 # Creates:
 # - a directory $TMP/tde-$USER and is linked from $TDEHOME/tmp-$HOSTNAME to it.
 # - a directory $TMP/tdesocket-$USER and is linked from $TDEHOME/socket-$HOSTNAME to it.
@@ -551,9 +541,9 @@ done
 # In case of dcop sockets left by a previous session, cleanup.
 $TDEDIR/bin/dcopserver_shutdown
 
-echo '[starttde] Starting Trinity...'  1>&2
+echo "[starttde] Starting Trinity..." 1>&2
 
-# Detect any running Xorg composition managers
+# Detect any running Xorg composition managers.
 $TDEDIR/bin/kdetcompmgr
 
 # Run KPersonalizer before the session if this is the first login.
@@ -561,12 +551,12 @@ if test "$kpersonalizerrc_general_firstlogin" = "true"; then
   if [ ! -x $TDEDIR/bin/kpersonalizer ]; then
     echo "[starttde] kpersonalizer not found! Please install in order to properly configure your user profile." 1>&2
   else
-    # start only dcopserver, don't start whole tdeinit (takes too long)
+    # Start only dcopserver, don't start whole tdeinit (takes too long).
     echo "[starttde] Running kpersonalizer..." 1>&2
     $TDEDIR/bin/dcopserver
     $TDEDIR/bin/twin --lock &
     $TDEDIR/bin/kpersonalizer --before-session
-    # handle kpersonalizer restarts (language change)
+    # Handle kpersonalizer restarts (language change).
     while test $? -eq 1; do
       $TDEDIR/bin/kpersonalizer --r --before-session
     done
@@ -583,14 +573,14 @@ if [ -d $tdehome/share/apps/ksplash/cache/Moodin/kubuntu ]; then
 fi
 
 if test -z "$dl"; then
-  # the splashscreen and progress indicator
+  # The splashscreen and progress indicator.
   case "$ksplashrc_ksplash_theme" in
     None)
-      ;; # nothing
+      ;; # Nothing.
     Simple)
       if test "$kpersonalizerrc_general_firstlogin" = "true"; then
         $TDEDIR/bin/ksplashsimple
-      fi # otherwise started earlier
+      fi # Otherwise started earlier.
       ;;
     *)
       $TDEDIR/bin/ksplash --nodcop
@@ -598,12 +588,12 @@ if test -z "$dl"; then
   esac
 fi
 
-# Mark that full TDE session is running (e.g. Konqueror preloading works only
+# Mark that full TDE session is running (for example, Konqueror preloading works only
 # with full TDE running). The TDE_FULL_SESSION property can be detected by
 # any X client connected to the same X session, even if not launched
-# directly from the TDE session but e.g. using "ssh -X", tdesu. $TDE_FULL_SESSION
+# directly from the TDE session but for example, using "ssh -X", tdesu. $TDE_FULL_SESSION
 # however guarantees that the application is launched in the same environment
-# like the TDE session and that e.g. TDE utilities/libraries are available.
+# like the TDE session and that for example, TDE utilities/libraries are available.
 # The matching tests are:
 #   For $TDE_FULL_SESSION:
 #     if test -n "$TDE_FULL_SESSION"; then ... whatever
@@ -628,7 +618,7 @@ echo "[starttde] TDE_SESSION_UID: $TDE_SESSION_UID" 1>&2
 LD_BIND_NOW=true $TDEDIR/bin/start_tdeinit_wrapper --new-startup +kcminit_startup
 if test $? -ne 0; then
   # Startup error
-  echo '[starttde] Could not start tdeinit. Check your installation.' 1>&2
+  echo "[starttde] Could not start tdeinit. Check your installation." 1>&2
   xmessage -center -geometry 500x100 "Could not start tdeinit. Check your installation."
 fi
 echo "[starttde] tdeinit started successfully." 1>&2
@@ -647,40 +637,52 @@ fi
 
 # Finally, give the session control to the session manager.
 # See tdebase/ksmserver for the description of the rest of the startup sequence.
-# If the TDEWM environment variable has been set, then it will be used as Trinity's
+# When set, the TDEWM environment variable will be used as Trinity's
 # window manager instead of twin.
-# If TDEWM is not set, ksmserver will ensure twin is started.
-# kwrapper is used to reduce startup time and memory usage
-# kwrapper does not return usefull error codes such as the exit code of ksmserver.
-# We only check for 255 which means that the ksmserver process could not be
-# started, any problems thereafter, e.g. ksmserver failing to initialize,
+# When TDEWM is not set, ksmserver will ensure twin is started.
+# kwrapper is used to reduce startup time and memory usage.
+# kwrapper does not return useful error codes such as the exit code of ksmserver.
+# We only check for 255, which means the ksmserver process could not be
+# started. Any problems thereafter, for example, ksmserver failing to initialize,
 # will remain undetected.
+# tdeinit_phase1 is still experimental.
 $TDEDIR/bin/tdeinit_phase1
-if test $? -eq 255; then
+EXIT_CODE="$?"
+# If tdeinit_phase1 should cause problems, here is the old way:
+# test -n "$TDEWM" && TDEWM="--windowmanager $TDEWM"
+# $TDEDIR/bin/kwrapper $TDEDIR/bin/ksmserver $TDEWM
+# EXIT_CODE="$?"
+if test $EXIT_CODE -eq 255; then
   # Startup error
-  echo '[starttde] An error was detected while attempting to load the session manager via tdeinit_phase1. Please check your installation for problems.' 1>&2
-  xmessage -center -geometry 500x100 "An error was detected while attempting to load the session manager via tdeinit_phase1. Please check your installation for problems."
+  echo "[starttde] An error was detected while attempting to load the session manager. Please check your installation for problems." 1>&2
+  xmessage -center -geometry 500x100 "An error was detected while attempting to load the session manager. Please check your installation for problems."
 fi
 
-# wait if there's any crashhandler shown
+# Wait if there's any crashhandler shown.
 while $TDEDIR/bin/dcop | grep -q ^drkonqi- ; do
   sleep 5
 done
 
-echo '[starttde] Shutting down Trinity...'  1>&2
+echo "[starttde] Shutting down Trinity..." 1>&2
 
-# Clean up
+# Clean up.
 $TDEDIR/bin/tdeinit_shutdown
 $TDEDIR/bin/dcopserver_shutdown --wait
 $TDEDIR/bin/artsshell -q terminate
-# KDE4 support
+# KDE4 support.
 if [ -f /usr/bin/kdeinit4_shutdown ]; then
   /usr/bin/kde4 kdeinit4_shutdown 2>/dev/null
 fi
 
-echo '[starttde] Running Trinity shutdown scripts...'  1>&2
+echo "[starttde] Running Trinity shutdown scripts..." 1>&2
 
-# Run scripts found in $TDEDIRS/shutdown
+# Run scripts found in shutdown directories. Those locations are:
+# * $TDEHOME/shutdown
+# * $PREFIX/shutdown
+# * $TDEDIRS/shutdown ($TDEDIRS, not $TDEDIR)
+# Presumed is $TDEDIRS/bin exists. Create $TDEDIRS/bin even when
+# only using the shutdown directory or this snippet will fail to find
+# that shutdown directory.
 for prefix in `echo "$exepath" | sed -n -e 's,/bin[^/]*/,/shutdown/,p'`; do
   for file in `ls "$prefix" 2> /dev/null | egrep -v '(~|\.bak)$'`; do
     if [ -x "${prefix}${file}" ]; then
@@ -694,5 +696,4 @@ unset TDE_FULL_SESSION
 xprop -root -remove TDE_FULL_SESSION
 unset TDE_SESSION_UID
 
-# Initialize_Status_Header
 echo "[starttde] Trinity shutdown complete." 1>&2
