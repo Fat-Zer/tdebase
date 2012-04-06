@@ -40,8 +40,8 @@ a way round it. (FF) -->
 <corpauthor>The &tde; Team</corpauthor>
 <!-- TRANS:ROLES_OF_TRANSLATORS -->
 </authorgroup>
-<date>2002-01-18</date>
-<releaseinfo>3.00.00</releaseinfo>
+<date>&tde-release-date;</date>
+<releaseinfo>&tde-release-version;</releaseinfo>
 
 <abstract>
 <para>&tde; is a graphical desktop environment for &UNIX; workstations. The

@@ -71,14 +71,14 @@ The &tde; Documentation Team
 <holder>The &kde; Documentation Team</holder>
 </copyright>
 <copyright>
-<year>2012</year>
+<year>&tde-copyright-date;</year>
 <holder>The &tde; Documentation Team</holder>
 </copyright>
 
 <legalnotice>&FDLNotice;</legalnotice>
 
-<date>2012-02-01</date>
-<releaseinfo>0.2</releaseinfo>
+<date>&tde-release-version;</date>
+<releaseinfo>&tde-release-date;</releaseinfo>
 
 <abstract>
 <para>A general user guide to the Trinity Desktop Environment.

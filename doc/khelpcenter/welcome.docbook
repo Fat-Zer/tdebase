@@ -1,7 +1,7 @@
 <chapter id="welcome-to-tde">
 <chapterinfo>
-<date>2012-02-01</date>
-<releaseinfo>R14.0.0</releaseinfo>
+<date>&tde-release-date;</date>
+<releaseinfo>&tde-release-version;</releaseinfo>
 </chapterinfo>
 <title>Welcome to the Trinity Desktop Environment (&tde;)</title>
 <anchor id="welcome"/>
