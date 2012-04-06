@@ -875,7 +875,7 @@ void PanelButton::loadIcons()
                                                KIcon::DisabledState;
     if (nm=="kmenu-suse")
     {
-        TQString pth = locate( "data", "kicker/pics/kmenu_basic.mng" );
+        TQString pth = locate( "data", "kicker/data/kickoff/kmenu_basic.mng" );
         if (!pth.isEmpty())
         {
             m_icon = TQImage(pth);
