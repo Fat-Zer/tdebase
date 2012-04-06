@@ -36,9 +36,6 @@ SystemDirNotify::SystemDirNotify()
 void SystemDirNotify::init()
 {
 	if( mInited )
-		// FIXME Work around a race condition by inserting kdDebug delay before following
-		// code is executed -- the root cause of the race should be investigated and fixed.
-		kdDebug() << "SystemDirNotify::init(" << mInited << ")" << endl;
 		return;
 	mInited = true;
 	KGlobal::dirs()->addResourceType("system_entries",
