@@ -47,8 +47,6 @@ public:
 	TDEHWManager(TQWidget *parent, const char *name, const TQStringList &);
 	virtual ~TDEHWManager();
 	
-	TDEHWManagerBase *base;
-	
 	void load();
 	void load( bool useDefaults);
 	void save();
@@ -61,9 +59,11 @@ k_dcop:
 
 private slots:
 	void populateTreeView();
-	void populateTreeViewLeaf(DeviceIconItem *parent, bool show_by_connection);
+	void populateTreeViewLeaf(DeviceIconItem *parent, bool show_by_connection, TQString selected_syspath);
 
 private:
+	TDEHWManagerBase *base;
+
 	KConfig *config;
 };
 

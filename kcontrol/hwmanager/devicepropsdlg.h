@@ -19,11 +19,11 @@
 #ifndef __devicepropsdlg_h__
 #define __devicepropsdlg_h__
 
-// #include <tqt.h>
-
 #include <kdialogbase.h>
 
 #include <tdehardwaredevices.h>
+
+#include "devicepropsdlgbase.h"
 
 /**
  *
@@ -49,6 +49,7 @@ protected:
 
 private:
 	TDEGenericDevice* m_device;
+	DevicePropertiesDialogBase* base;
 
 	class DevicePropertiesDialogPrivate;
 	DevicePropertiesDialogPrivate* d;

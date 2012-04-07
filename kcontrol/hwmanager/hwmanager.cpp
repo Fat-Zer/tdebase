@@ -125,6 +125,15 @@ void TDEHWManager::populateTreeView()
 {
 	bool show_by_connection = base->showByConnection->isChecked();
 
+	// Figure out which device, if any, was selected
+	TQString selected_syspath;
+	DeviceIconItem* selItem = dynamic_cast<DeviceIconItem*>(base->deviceTree->selectedItem());
+	if (selItem) {
+		if (selItem->device()) {
+			selected_syspath = selItem->device()->systemPath();
+		}
+	}
+
 	base->deviceTree->clear();
 
 	if (show_by_connection) {
@@ -135,25 +144,37 @@ void TDEHWManager::populateTreeView()
 		TDEGenericDevice *hwdevice;
 		for ( hwdevice = hwlist.first(); hwdevice; hwdevice = hwlist.next() ) {
 			DeviceIconItem* item = new DeviceIconItem(rootitem, hwdevice->friendlyName(), hwdevice->icon(base->deviceTree->iconSize()), hwdevice);
-			populateTreeViewLeaf(item, show_by_connection);
+			if ((!selected_syspath.isNull()) && (hwdevice->systemPath() == selected_syspath)) {
+				base->deviceTree->ensureItemVisible(item);
+				base->deviceTree->setSelected(item, true);
+			}
+			populateTreeViewLeaf(item, show_by_connection, selected_syspath);
 		}
 	}
 	else {
 		TDEHardwareDevices *hwdevices = KGlobal::hardwareDevices();
 		for (int i=0;i<=TDEGenericDeviceType::Last;i++) {
 			if (i != TDEGenericDeviceType::Root) {
-				DeviceIconItem* item = new DeviceIconItem(base->deviceTree, hwdevices->getFriendlyDeviceTypeStringFromType((TDEGenericDeviceType::TDEGenericDeviceType)i), hwdevices->getDeviceTypeIconFromType((TDEGenericDeviceType::TDEGenericDeviceType)i, base->deviceTree->iconSize()), 0);
+				DeviceIconItem* rootitem = new DeviceIconItem(base->deviceTree, hwdevices->getFriendlyDeviceTypeStringFromType((TDEGenericDeviceType::TDEGenericDeviceType)i), hwdevices->getDeviceTypeIconFromType((TDEGenericDeviceType::TDEGenericDeviceType)i, base->deviceTree->iconSize()), 0);
 				TDEGenericDevice *hwdevice;
 				TDEGenericHardwareList hwlist = hwdevices->listByDeviceClass((TDEGenericDeviceType::TDEGenericDeviceType)i);
 				for ( hwdevice = hwlist.first(); hwdevice; hwdevice = hwlist.next() ) {
-					new DeviceIconItem(item, hwdevice->friendlyName(), hwdevice->icon(base->deviceTree->iconSize()), hwdevice);
+					DeviceIconItem* item = new DeviceIconItem(rootitem, hwdevice->friendlyName(), hwdevice->icon(base->deviceTree->iconSize()), hwdevice);
+					if ((!selected_syspath.isNull()) && (hwdevice->systemPath() == selected_syspath)) {
+						base->deviceTree->ensureItemVisible(item);
+						base->deviceTree->setSelected(item, true);
+					}
 				}
 			}
 		}
 	}
+
+	if (!selected_syspath.isNull()) {
+		
+	}
 }
 
-void TDEHWManager::populateTreeViewLeaf(DeviceIconItem *parent, bool show_by_connection) {
+void TDEHWManager::populateTreeViewLeaf(DeviceIconItem *parent, bool show_by_connection, TQString selected_syspath) {
 	if (show_by_connection) {
 		TDEHardwareDevices *hwdevices = KGlobal::hardwareDevices();
 		TDEGenericHardwareList hwlist = hwdevices->listAllPhysicalDevices();
@@ -161,7 +182,11 @@ void TDEHWManager::populateTreeViewLeaf(DeviceIconItem *parent, bool show_by_con
 		for ( hwdevice = hwlist.first(); hwdevice; hwdevice = hwlist.next() ) {
 			if (hwdevice->parentDevice() == parent->device()) {
 				DeviceIconItem* item = new DeviceIconItem(parent, hwdevice->friendlyName(), hwdevices->getDeviceTypeIconFromType(hwdevice->type(), base->deviceTree->iconSize()), hwdevice);
-				populateTreeViewLeaf(item, show_by_connection);
+				if ((!selected_syspath.isNull()) && (hwdevice->systemPath() == selected_syspath)) {
+					base->deviceTree->ensureItemVisible(item);
+					base->deviceTree->setSelected(item, true);
+				}
+				populateTreeViewLeaf(item, show_by_connection, selected_syspath);
 			}
 		}
 	}

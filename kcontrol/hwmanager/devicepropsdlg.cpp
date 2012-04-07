@@ -42,62 +42,28 @@ DevicePropertiesDialog::DevicePropertiesDialog(TDEGenericDevice* device, TQWidge
 	enableButtonOK( false );
 
 	if (m_device) {
+		base = new DevicePropertiesDialogBase(plainPage());
+
 		TQGridLayout *mainGrid = new TQGridLayout(plainPage(), 1, 1, 0, spacingHint());
 		mainGrid->setRowStretch(1, 1);
 		mainGrid->setRowStretch(1, 1);
-	
-		TQTabWidget *mainTabs = new TQTabWidget(plainPage());
-	
-		TQWidget *genericPropertiesTab = new TQWidget(this);
-	
-		TQGridLayout *generalTabLayout = new TQGridLayout(genericPropertiesTab, 4, 2, 0, spacingHint() );
+		mainGrid->addWidget(base, 0, 0);
 
-		int row = 0;
-		TQLabel *label;
-		label = new TQLabel(i18n("Device Name:"), genericPropertiesTab);
-		generalTabLayout->addWidget(label, row, 0);
-		label = new TQLabel(m_device->friendlyName(), genericPropertiesTab);
-		generalTabLayout->addWidget(label, row, 1);
-		row++;
-		label = new TQLabel(i18n("Device Node:"), genericPropertiesTab);
-		generalTabLayout->addWidget(label, row, 0);
-		label = new TQLabel(m_device->deviceNode(), genericPropertiesTab);
-		generalTabLayout->addWidget(label, row, 1);
-		row++;
-		label = new TQLabel(i18n("System Path:"), genericPropertiesTab);
-		generalTabLayout->addWidget(label, row, 0);
-		label = new TQLabel(m_device->systemPath(), genericPropertiesTab);
-		generalTabLayout->addWidget(label, row, 1);
-		row++;
-		label = new TQLabel(i18n("Subsystem Type:"), genericPropertiesTab);
-		generalTabLayout->addWidget(label, row, 0);
-		label = new TQLabel(m_device->subsystem(), genericPropertiesTab);
-		generalTabLayout->addWidget(label, row, 1);
-		row++;
-		label = new TQLabel(i18n("Device Driver:"), genericPropertiesTab);
-		generalTabLayout->addWidget(label, row, 0);
-		label = new TQLabel((m_device->deviceDriver().isNull())?i18n("<none>"):m_device->deviceDriver(), genericPropertiesTab);
-		generalTabLayout->addWidget(label, row, 1);
-		row++;
-		label = new TQLabel(i18n("Device Class:"), genericPropertiesTab);
-		generalTabLayout->addWidget(label, row, 0);
-		label = new TQLabel((m_device->PCIClass().isNull())?i18n("<n/a>"):m_device->PCIClass(), genericPropertiesTab);
-		generalTabLayout->addWidget(label, row, 1);
-		row++;
+		base->labelDeviceType->setText(m_device->friendlyDeviceType());
+		base->iconDeviceType->setPixmap(m_device->icon(KIcon::SizeSmall));
+		base->labelDeviceName->setText(m_device->friendlyName());
+		base->labelDeviceNode->setText((m_device->deviceNode().isNull())?i18n("<none>"):m_device->deviceNode());
+		base->labelSystemPath->setText(m_device->systemPath());
+		base->labelSubsytemType->setText(m_device->subsystem());
+		base->labelDeviceDriver->setText((m_device->deviceDriver().isNull())?i18n("<none>"):m_device->deviceDriver());
+		base->labelDeviceClass->setText((m_device->PCIClass().isNull())?i18n("<n/a>"):m_device->PCIClass());
 		if (m_device->subsystem() == "pci") {
-			TQString busid = m_device->systemPath();
-			busid = busid.remove(0, busid.findRev("/")+1);
-			busid = busid.remove(0, busid.find(":")+1);
-			label = new TQLabel(i18n("Bus ID:"), genericPropertiesTab);
-			generalTabLayout->addWidget(label, row, 0);
-			label = new TQLabel(busid, genericPropertiesTab);
-			generalTabLayout->addWidget(label, row, 1);
-			row++;
+			base->labelBusID->setText(m_device->busID());
 		}
-	
-		mainTabs->addTab(genericPropertiesTab, i18n("&General"));
-	
-		mainGrid->addWidget(mainTabs, 0, 0);
+		else {
+			base->labelBusID->hide();
+			base->stocklabelBusID->hide();
+		}
 	}
 }
 

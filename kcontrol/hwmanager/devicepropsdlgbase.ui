@@ -1,0 +1,209 @@
+<!DOCTYPE UI><UI version="3.0" stdsetdef="1">
+<class>DevicePropertiesDialogBase</class>
+<widget class="TQWidget">
+    <property name="name">
+	    <cstring>DevicePropertiesDialogBase</cstring>
+    </property>
+    <property name="geometry">
+        <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>519</width>
+            <height>356</height>
+        </rect>
+    </property>
+    <grid>
+        <property name="name">
+            <cstring>unnamed</cstring>
+        </property>
+        <widget class="TQTabWidget" row="0" column="0">
+            <property name="name">
+                <cstring>TabWidget2</cstring>
+            </property>
+            <property name="enabled">
+                <bool>true</bool>
+            </property>
+            <widget class="TQWidget">
+                <property name="name">
+                    <cstring>tab</cstring>
+                </property>
+                <attribute name="title">
+                    <string>General</string>
+                </attribute>
+                <grid>
+                    <property name="name">
+                        <cstring>unnamed</cstring>
+                    </property>
+		    <widget class="TQGroupBox" row="0" column="0">
+			    <property name="name">
+				    <cstring>groupProps</cstring>
+			    </property>
+			    <property name="title">
+				    <string>Properties</string>
+			    </property>
+			    <grid>
+				<property name="name">
+					    <cstring>unnamed</cstring>
+				</property>
+				<widget class="TQLabel" row="0" column="0" colspan="1">
+					<property name="name">
+						<cstring>unnamed</cstring>
+					</property>
+					<property name="text">
+						<string>Device Type:</string>
+					</property>
+                    		</widget>
+				<widget class="TQLabel" row="0" column="1" colspan="1">
+					<property name="name">
+						<cstring>iconDeviceType</cstring>
+					</property>
+                    		</widget>
+				<widget class="TQLabel" row="0" column="2" colspan="1">
+					<property name="name">
+						<cstring>labelDeviceType</cstring>
+					</property>
+                    		</widget>
+				<spacer row="0" column="3">
+					<property name="name" stdset="0">
+						<cstring>Spacer1</cstring>
+					</property>
+					<property name="orientation">
+						<enum>Horizontal</enum>
+					</property>
+					<property name="sizeType">
+						<enum>Expanding</enum>
+					</property>
+					<property name="sizeHint">
+						<size>
+							<width>20</width>
+							<height>1</height>
+						</size>
+					</property>
+				</spacer>
+				<widget class="TQLabel" row="1" column="0" colspan="1">
+					<property name="name">
+						<cstring>unnamed</cstring>
+					</property>
+					<property name="text">
+						<string>Device Name:</string>
+					</property>
+				</widget>
+				<widget class="TQLabel" row="1" column="1" colspan="3">
+					<property name="name">
+						<cstring>labelDeviceName</cstring>
+					</property>
+                    		</widget>
+				<widget class="TQLabel" row="2" column="0" colspan="1">
+					<property name="name">
+						<cstring>unnamed</cstring>
+					</property>
+					<property name="text">
+						<string>Device Node:</string>
+					</property>
+				</widget>
+				<widget class="TQLabel" row="2" column="1" colspan="3">
+					<property name="name">
+						<cstring>labelDeviceNode</cstring>
+					</property>
+                    		</widget>
+				<widget class="TQLabel" row="3" column="0" colspan="1">
+					<property name="name">
+						<cstring>unnamed</cstring>
+					</property>
+					<property name="text">
+						<string>System Path:</string>
+					</property>
+				</widget>
+				<widget class="TQLabel" row="3" column="1" colspan="3">
+					<property name="name">
+						<cstring>labelSystemPath</cstring>
+					</property>
+                    		</widget>
+				<widget class="TQLabel" row="4" column="0" colspan="1">
+					<property name="name">
+						<cstring>unnamed</cstring>
+					</property>
+					<property name="text">
+						<string>Subsystem Type:</string>
+					</property>
+				</widget>
+				<widget class="TQLabel" row="4" column="1" colspan="3">
+					<property name="name">
+						<cstring>labelSubsytemType</cstring>
+					</property>
+                    		</widget>
+				<widget class="TQLabel" row="5" column="0" colspan="1">
+					<property name="name">
+						<cstring>unnamed</cstring>
+					</property>
+					<property name="text">
+						<string>Device Driver:</string>
+					</property>
+				</widget>
+				<widget class="TQLabel" row="5" column="1" colspan="3">
+					<property name="name">
+						<cstring>labelDeviceDriver</cstring>
+					</property>
+                    		</widget>
+				<widget class="TQLabel" row="6" column="0" colspan="1">
+					<property name="name">
+						<cstring>unnamed</cstring>
+					</property>
+					<property name="text">
+						<string>Device Class:</string>
+					</property>
+				</widget>
+				<widget class="TQLabel" row="6" column="1" colspan="3">
+					<property name="name">
+						<cstring>labelDeviceClass</cstring>
+					</property>
+                    		</widget>
+				<widget class="TQLabel" row="7" column="0" colspan="1">
+					<property name="name">
+						<cstring>stocklabelBusID</cstring>
+					</property>
+					<property name="text">
+						<string>Bus ID:</string>
+					</property>
+				</widget>
+				<widget class="TQLabel" row="7" column="1" colspan="3">
+					<property name="name">
+						<cstring>labelBusID</cstring>
+					</property>
+                    		</widget>
+			    </grid>
+		    </widget>
+		    <spacer row="8" column="0">
+			    <property name="name" stdset="0">
+				    <cstring>Spacer4</cstring>
+			    </property>
+			    <property name="orientation">
+				    <enum>Vertical</enum>
+			    </property>
+			    <property name="sizeType">
+				    <enum>Expanding</enum>
+			    </property>
+			    <property name="sizeHint">
+				    <size>
+					    <width>20</width>
+					    <height>20</height>
+				    </size>
+			    </property>
+                    </spacer>
+                </grid>
+            </widget>
+        </widget>
+    </grid>
+</widget>
+<includes>
+	<include location="local" impldecl="in implementation">DevicePropertiesDialogBase.ui.h</include>
+</includes>
+<Q_SLOTS>
+    <slot>enableSupport_toggled(bool)</slot>
+</Q_SLOTS>
+<includes>
+    <include location="local" impldecl="in implementation">kdialog.h</include>
+</includes>
+<layoutdefaults spacing="3" margin="6"/>
+<layoutfunctions spacing="KDialog::spacingHint" margin="KDialog::marginHint"/>
+</UI>

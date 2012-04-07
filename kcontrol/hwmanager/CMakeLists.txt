@@ -33,7 +33,7 @@ set_source_files_properties( hwmanager.cpp PROPERTIES COMPILE_FLAGS -DKDE_CONFDI
 
 tde_add_kpart( kcm_hwmanager AUTOMOC
   SOURCES
-    hwmanager.cpp deviceiconview.cpp devicepropsdlg.cpp hwmanagerbase.ui hwmanager.skel
+    hwmanager.cpp deviceiconview.cpp devicepropsdlg.cpp devicepropsdlgbase.ui hwmanagerbase.ui hwmanager.skel
   LINK kio-shared
   DESTINATION ${PLUGIN_INSTALL_DIR}
 )
