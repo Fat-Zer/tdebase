@@ -44,6 +44,11 @@ DevicePropertiesDialog::DevicePropertiesDialog(TDEGenericDevice* device, TQWidge
 	if (m_device) {
 		base = new DevicePropertiesDialogBase(plainPage());
 
+		// Remove all non-applicable tabs
+		if (m_device->type() != TDEGenericDeviceType::Disk) {
+			base->tabBarWidget->removePage(base->tabDisk);
+		}
+
 		TQGridLayout *mainGrid = new TQGridLayout(plainPage(), 1, 1, 0, spacingHint());
 		mainGrid->setRowStretch(1, 1);
 		mainGrid->setRowStretch(1, 1);
@@ -63,6 +68,41 @@ DevicePropertiesDialog::DevicePropertiesDialog(TDEGenericDevice* device, TQWidge
 		else {
 			base->labelBusID->hide();
 			base->stocklabelBusID->hide();
+		}
+
+		if (m_device->type() == TDEGenericDeviceType::Disk) {
+			TDEStorageDevice* sdevice = static_cast<TDEStorageDevice*>(m_device);
+			base->tabDisk->show();
+			base->labelDiskMountpoint->setText(sdevice->mountPath());
+
+			// Show status
+			TQString status_text = "<qt>";
+			if (sdevice->checkDiskStatus(TDEDiskDeviceStatus::Mountable)) {
+				status_text += "Mountable<br>";
+			}
+			if (sdevice->checkDiskStatus(TDEDiskDeviceStatus::Removable)) {
+				status_text += "Removable<br>";
+			}
+			if (sdevice->checkDiskStatus(TDEDiskDeviceStatus::Inserted)) {
+				status_text += "Inserted<br>";
+			}
+			if (sdevice->checkDiskStatus(TDEDiskDeviceStatus::UsedByDevice)) {
+				status_text += "In use<br>";
+			}
+			if (sdevice->checkDiskStatus(TDEDiskDeviceStatus::UsesDevice)) {
+				status_text += "Uses other device<br>";
+			}
+			if (sdevice->checkDiskStatus(TDEDiskDeviceStatus::ContainsFilesystem)) {
+				status_text += "Contains a filesystem<br>";
+			}
+			if (status_text == "<qt>") {
+				status_text += "<i>Unavailable</i>";
+			}
+			status_text += "</qt>";
+			base->labelDiskStatus->setText(status_text);
+
+			// TODO
+			// Add mount/unmount buttons
 		}
 	}
 }
