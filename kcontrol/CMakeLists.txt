@@ -65,6 +65,7 @@ if( BUILD_KCONTROL )
   add_subdirectory( kthememanager )
   add_subdirectory( kfontinst )
   add_subdirectory( access )
+  add_subdirectory( hwmanager )
 
   tde_conditional_add_subdirectory( WITH_XRANDR displayconfig )
   tde_conditional_add_subdirectory( WITH_SAMBA samba )

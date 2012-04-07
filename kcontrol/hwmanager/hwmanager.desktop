@@ -1,0 +1,23 @@
+[Desktop Entry]
+Exec=kcmshell kwmanager
+Icon=background
+Type=Application
+DocPath=kcontrol/hwmanager/index.html
+
+X-KDE-Library=hwmanager
+X-KDE-ParentApp=kcontrol
+X-KDE-RootOnly=true
+X-KDE-SubstituteUID=true
+
+Categories=Qt;KDE;X-KDE-settings-hardware;
+Comment=Configure hardware devices
+Comment[en_US]=Configure hardware devices
+DocPath=kcontrol/hwmanager.html
+GenericName=
+GenericName[en_US]=
+Keywords=hardware
+MimeType=
+Name=Hardware Device Manager
+Name[en_US]=Hardware Device Manager
+
+NoDisplay=false
