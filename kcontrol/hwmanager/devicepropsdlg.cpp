@@ -48,11 +48,6 @@ DevicePropertiesDialog::DevicePropertiesDialog(TDEGenericDevice* device, TQWidge
 		if (m_device->type() != TDEGenericDeviceType::Disk) {
 			base->tabBarWidget->removePage(base->tabDisk);
 		}
-
-		// Remove all non-applicable tabs
-		if (m_device->type() != TDEGenericDeviceType::Disk) {
-			base->tabBarWidget->removePage(base->tabDisk);
-		}
 		if (m_device->type() != TDEGenericDeviceType::CPU) {
 			base->tabBarWidget->removePage(base->tabCPU);
 		}
@@ -99,6 +94,8 @@ void DevicePropertiesDialog::populateDeviceInformation() {
 		base->labelDeviceClass->setText((m_device->PCIClass().isNull())?i18n("<n/a>"):m_device->PCIClass());
 		if (m_device->subsystem() == "pci") {
 			base->labelBusID->setText(m_device->busID());
+			base->labelBusID->show();
+			base->stocklabelBusID->show();
 		}
 		else {
 			base->labelBusID->hide();
@@ -107,7 +104,6 @@ void DevicePropertiesDialog::populateDeviceInformation() {
 
 		if (m_device->type() == TDEGenericDeviceType::Disk) {
 			TDEStorageDevice* sdevice = static_cast<TDEStorageDevice*>(m_device);
-			base->tabDisk->show();
 			base->labelDiskMountpoint->setText(sdevice->mountPath());
 
 			// Show status
@@ -130,6 +126,9 @@ void DevicePropertiesDialog::populateDeviceInformation() {
 			if (sdevice->checkDiskStatus(TDEDiskDeviceStatus::ContainsFilesystem)) {
 				status_text += "Contains a filesystem<br>";
 			}
+			if (sdevice->checkDiskStatus(TDEDiskDeviceStatus::Hotpluggable)) {
+				status_text += "Hotpluggable<br>";
+			}
 			if (status_text == "<qt>") {
 				status_text += "<i>Unavailable</i>";
 			}
@@ -139,11 +138,45 @@ void DevicePropertiesDialog::populateDeviceInformation() {
 			// TODO
 			// Add mount/unmount buttons
 		}
-	}
-}
 
-DevicePropertiesDialog::~DevicePropertiesDialog()
-{
+		if (m_device->type() == TDEGenericDeviceType::CPU) {
+			TDECPUDevice* cdevice = static_cast<TDECPUDevice*>(m_device);
+
+			// Show information
+			base->labelCPUVendor->setText(cdevice->vendorEncoded());
+			base->labelCPUFrequency->setText((cdevice->frequency()<0)?i18n("<unsupported>"):TQString("%1 MHz").arg(cdevice->frequency()));
+			base->labelMinCPUFrequency->setText((cdevice->minFrequency()<0)?i18n("<unknown>"):TQString("%1 MHz").arg(cdevice->minFrequency()));
+			base->labelMaxCPUFrequency->setText((cdevice->maxFrequency()<0)?i18n("<unsupported>"):TQString("%1 MHz").arg(cdevice->maxFrequency()));
+			base->labelScalingDriver->setText((cdevice->scalingDriver().isNull())?i18n("<none>"):cdevice->scalingDriver());
+			TQStringList scalingfreqs = cdevice->availableFrequencies();
+			if (scalingfreqs.count() > 0) {
+				TQString scalingfreqsstring = "<qt>";
+				for ( TQStringList::Iterator it = scalingfreqs.begin(); it != scalingfreqs.end(); ++it ) {
+					TQString freq = (*it);
+					scalingfreqsstring.append(TQString("%1 MHz<br>").arg(freq.toDouble()/1000));
+				}
+				scalingfreqsstring.append("</qt>");
+				base->labelScalingFrequencies->setText(scalingfreqsstring);
+			}
+			else {
+				base->labelScalingFrequencies->setText(i18n("<none>"));
+			}
+			TQStringList dependentcpus = cdevice->dependentProcessors();
+			if (dependentcpus.count() > 0) {
+				TQString dependentcpusstring = "<qt>";
+				for ( TQStringList::Iterator it = dependentcpus.begin(); it != dependentcpus.end(); ++it ) {
+					TQString proc = (*it);
+					dependentcpusstring.append(TQString("CPU %1<br>").arg(proc));
+				}
+				dependentcpusstring.append("</qt>");
+				base->labelDependentCPUs->setText(dependentcpusstring);
+			}
+			else {
+				base->labelDependentCPUs->setText(i18n("<none>"));
+			}
+
+		}
+	}
 }
 
 void DevicePropertiesDialog::virtual_hook( int id, void* data )
