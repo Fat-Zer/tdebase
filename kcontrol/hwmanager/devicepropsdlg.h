@@ -47,6 +47,11 @@ public:
 protected:
 	virtual void virtual_hook( int id, void* data );
 
+private slots:
+	void processHardwareRemoved(TDEGenericDevice*);
+	void processHardwareUpdated(TDEGenericDevice*);
+	void populateDeviceInformation();
+
 private:
 	TDEGenericDevice* m_device;
 	DevicePropertiesDialogBase* base;

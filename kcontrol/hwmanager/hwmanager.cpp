@@ -78,6 +78,8 @@ TDEHWManager::TDEHWManager(TQWidget *parent, const char *name, const TQStringLis
 	base = new TDEHWManagerBase(this);
 	layout->add(base);
 
+	base->deviceFilter->setListView(base->deviceTree);
+
 	setRootOnlyMsg(i18n("<b>Hardware settings are system wide, and requires administrator access</b><br>To alter the system's hardware settings, click on the \"Administrator Mode\" button below."));
 	setUseRootOnlyMsg(true);
 
@@ -88,7 +90,7 @@ TDEHWManager::TDEHWManager(TQWidget *parent, const char *name, const TQStringLis
 
 	connect(hwdevices, TQT_SIGNAL(hardwareAdded(TDEGenericDevice*)), this, TQT_SLOT(populateTreeView()));
 	connect(hwdevices, TQT_SIGNAL(hardwareRemoved(TDEGenericDevice*)), this, TQT_SLOT(populateTreeView()));
-	connect(hwdevices, TQT_SIGNAL(hardwareUpdated(TDEGenericDevice*)), this, TQT_SLOT(populateTreeView()));
+// 	connect(hwdevices, TQT_SIGNAL(hardwareUpdated(TDEGenericDevice*)), this, TQT_SLOT(populateTreeView()));
 
 	load();
 

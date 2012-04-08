@@ -264,6 +264,218 @@
 			    </spacer>
 		    </grid>
             </widget>
+	    <widget class="TQWidget">
+		    <property name="name">
+			    <cstring>tabDisk</cstring>
+		    </property>
+		    <attribute name="title">
+			    <string>Disk</string>
+		    </attribute>
+		    <grid>
+			    <property name="name">
+				    <cstring>unnamed</cstring>
+			    </property>
+			    <widget class="TQGroupBox" row="0" column="0">
+				    <property name="name">
+					    <cstring>groupProps</cstring>
+				    </property>
+				    <property name="title">
+					    <string>Volume Information</string>
+				    </property>
+				    <grid>
+					    <property name="name">
+						    <cstring>unnamed</cstring>
+					    </property>
+					    <widget class="TQLabel" row="0" column="0" colspan="1">
+						    <property name="name">
+							    <cstring>unnamed</cstring>
+						    </property>
+						    <property name="text">
+							    <string>Mountpoint:</string>
+						    </property>
+					    </widget>
+					    <widget class="TQLabel" row="0" column="1" colspan="1">
+						    <property name="name">
+							    <cstring>labelDiskMountpoint</cstring>
+						    </property>
+					    </widget>
+					    <widget class="TQLabel" row="1" column="0" colspan="1">
+						    <property name="name">
+							    <cstring>unnamed</cstring>
+						    </property>
+						    <property name="text">
+							    <string>Status:</string>
+						    </property>
+						    <property name="alignment">
+							    <set>AlignTop|AlignLeft</set>
+						    </property>
+					    </widget>
+					    <widget class="TQLabel" row="1" column="1" colspan="1">
+						    <property name="name">
+							    <cstring>labelDiskStatus</cstring>
+						    </property>
+					    </widget>
+				    </grid>
+			    </widget>
+			    <spacer row="8" column="0">
+				    <property name="name" stdset="0">
+					    <cstring>Spacer4</cstring>
+				    </property>
+				    <property name="orientation">
+					    <enum>Vertical</enum>
+				    </property>
+				    <property name="sizeType">
+					    <enum>Expanding</enum>
+				    </property>
+				    <property name="sizeHint">
+					    <size>
+						    <width>20</width>
+						    <height>20</height>
+					    </size>
+				    </property>
+			    </spacer>
+		    </grid>
+            </widget>
+	    <widget class="TQWidget">
+		    <property name="name">
+			    <cstring>tabCPU</cstring>
+		    </property>
+		    <attribute name="title">
+			    <string>Processor</string>
+		    </attribute>
+		    <grid>
+			    <property name="name">
+				    <cstring>unnamed</cstring>
+			    </property>
+			    <widget class="TQGroupBox" row="0" column="0">
+				    <property name="name">
+					    <cstring>groupProps</cstring>
+				    </property>
+				    <property name="title">
+					    <string>Processor Information</string>
+				    </property>
+				    <grid>
+					    <property name="name">
+						    <cstring>unnamed</cstring>
+					    </property>
+					    <widget class="TQLabel" row="0" column="0" colspan="1">
+						    <property name="name">
+							    <cstring>unnamed</cstring>
+						    </property>
+						    <property name="text">
+							    <string>Vendor ID:</string>
+						    </property>
+					    </widget>
+					    <widget class="TQLabel" row="0" column="1" colspan="1">
+						    <property name="name">
+							    <cstring>labelCPUVendor</cstring>
+						    </property>
+					    </widget>
+					    <widget class="TQLabel" row="1" column="0" colspan="1">
+						    <property name="name">
+							    <cstring>unnamed</cstring>
+						    </property>
+						    <property name="text">
+							    <string>Minimum Frequency:</string>
+						    </property>
+					    </widget>
+					    <widget class="TQLabel" row="1" column="1" colspan="1">
+						    <property name="name">
+							    <cstring>labelMinCPUFrequency</cstring>
+						    </property>
+					    </widget>
+					    <widget class="TQLabel" row="2" column="0" colspan="1">
+						    <property name="name">
+							    <cstring>unnamed</cstring>
+						    </property>
+						    <property name="text">
+							    <string>Current Frequency:</string>
+						    </property>
+					    </widget>
+					    <widget class="TQLabel" row="2" column="1" colspan="1">
+						    <property name="name">
+							    <cstring>labelCPUFrequency</cstring>
+						    </property>
+					    </widget>
+					    <widget class="TQLabel" row="3" column="0" colspan="1">
+						    <property name="name">
+							    <cstring>unnamed</cstring>
+						    </property>
+						    <property name="text">
+							    <string>Maximum Frequency:</string>
+						    </property>
+					    </widget>
+					    <widget class="TQLabel" row="3" column="1" colspan="1">
+						    <property name="name">
+							    <cstring>labelMaxCPUFrequency</cstring>
+						    </property>
+					    </widget>
+					    <widget class="TQLabel" row="4" column="0" colspan="1">
+						    <property name="name">
+							    <cstring>unnamed</cstring>
+						    </property>
+						    <property name="text">
+							    <string>Scaling Driver:</string>
+						    </property>
+					    </widget>
+					    <widget class="TQLabel" row="4" column="1" colspan="1">
+						    <property name="name">
+							    <cstring>labelScalingDriver</cstring>
+						    </property>
+					    </widget>
+					    <widget class="TQLabel" row="5" column="0" colspan="1">
+						    <property name="name">
+							    <cstring>unnamed</cstring>
+						    </property>
+						    <property name="text">
+							    <string>Available Frequencies:</string>
+						    </property>
+						    <property name="alignment">
+							    <set>AlignTop|AlignLeft</set>
+						    </property>
+					    </widget>
+					    <widget class="TQLabel" row="5" column="1" colspan="1">
+						    <property name="name">
+							    <cstring>labelScalingFrequencies</cstring>
+						    </property>
+					    </widget>
+					    <widget class="TQLabel" row="6" column="0" colspan="1">
+						    <property name="name">
+							    <cstring>unnamed</cstring>
+						    </property>
+						    <property name="text">
+							    <string>Frequency Locked Processor(s):</string>
+						    </property>
+						    <property name="alignment">
+							    <set>AlignTop|AlignLeft</set>
+						    </property>
+					    </widget>
+					    <widget class="TQLabel" row="6" column="1" colspan="1">
+						    <property name="name">
+							    <cstring>labelDependentCPUs</cstring>
+						    </property>
+					    </widget>
+				    </grid>
+			    </widget>
+			    <spacer row="8" column="0">
+				    <property name="name" stdset="0">
+					    <cstring>Spacer4</cstring>
+				    </property>
+				    <property name="orientation">
+					    <enum>Vertical</enum>
+				    </property>
+				    <property name="sizeType">
+					    <enum>Expanding</enum>
+				    </property>
+				    <property name="sizeHint">
+					    <size>
+						    <width>20</width>
+						    <height>20</height>
+					    </size>
+				    </property>
+			    </spacer>
+		    </grid>
+            </widget>
         </widget>
     </grid>
 </widget>

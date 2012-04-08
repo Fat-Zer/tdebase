@@ -49,11 +49,46 @@ DevicePropertiesDialog::DevicePropertiesDialog(TDEGenericDevice* device, TQWidge
 			base->tabBarWidget->removePage(base->tabDisk);
 		}
 
+		// Remove all non-applicable tabs
+		if (m_device->type() != TDEGenericDeviceType::Disk) {
+			base->tabBarWidget->removePage(base->tabDisk);
+		}
+		if (m_device->type() != TDEGenericDeviceType::CPU) {
+			base->tabBarWidget->removePage(base->tabCPU);
+		}
+
 		TQGridLayout *mainGrid = new TQGridLayout(plainPage(), 1, 1, 0, spacingHint());
 		mainGrid->setRowStretch(1, 1);
 		mainGrid->setRowStretch(1, 1);
 		mainGrid->addWidget(base, 0, 0);
+	}
 
+	TDEHardwareDevices *hwdevices = KGlobal::hardwareDevices();
+
+	connect(hwdevices, TQT_SIGNAL(hardwareRemoved(TDEGenericDevice*)), this, TQT_SLOT(processHardwareRemoved(TDEGenericDevice*)));
+	connect(hwdevices, TQT_SIGNAL(hardwareUpdated(TDEGenericDevice*)), this, TQT_SLOT(processHardwareUpdated(TDEGenericDevice*)));
+
+	populateDeviceInformation();
+}
+
+DevicePropertiesDialog::~DevicePropertiesDialog()
+{
+}
+
+void DevicePropertiesDialog::processHardwareRemoved(TDEGenericDevice* dev) {
+	if (dev == m_device) {
+		close();
+	}
+}
+
+void DevicePropertiesDialog::processHardwareUpdated(TDEGenericDevice* dev) {
+	if (dev == m_device) {
+		populateDeviceInformation();
+	}
+}
+
+void DevicePropertiesDialog::populateDeviceInformation() {
+	if (m_device) {
 		base->labelDeviceType->setText(m_device->friendlyDeviceType());
 		base->iconDeviceType->setPixmap(m_device->icon(KIcon::SizeSmall));
 		base->labelDeviceName->setText(m_device->friendlyName());

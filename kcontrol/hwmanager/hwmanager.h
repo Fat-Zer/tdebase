@@ -26,6 +26,7 @@
 #endif
 
 #include <kcmodule.h>
+#include <klistviewsearchline.h>
 
 #include <dcopobject.h>
 
