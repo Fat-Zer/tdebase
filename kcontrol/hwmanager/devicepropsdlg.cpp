@@ -51,6 +51,9 @@ DevicePropertiesDialog::DevicePropertiesDialog(TDEGenericDevice* device, TQWidge
 		if (m_device->type() != TDEGenericDeviceType::CPU) {
 			base->tabBarWidget->removePage(base->tabCPU);
 		}
+		if ((m_device->type() != TDEGenericDeviceType::OtherSensor) && (m_device->type() != TDEGenericDeviceType::ThermalSensor)) {
+			base->tabBarWidget->removePage(base->tabSensor);
+		}
 
 		TQGridLayout *mainGrid = new TQGridLayout(plainPage(), 1, 1, 0, spacingHint());
 		mainGrid->setRowStretch(1, 1);
@@ -92,6 +95,7 @@ void DevicePropertiesDialog::populateDeviceInformation() {
 		base->labelSubsytemType->setText(m_device->subsystem());
 		base->labelDeviceDriver->setText((m_device->deviceDriver().isNull())?i18n("<none>"):m_device->deviceDriver());
 		base->labelDeviceClass->setText((m_device->PCIClass().isNull())?i18n("<n/a>"):m_device->PCIClass());
+		base->labelModalias->setText((m_device->moduleAlias().isNull())?i18n("<none>"):m_device->moduleAlias());
 		if (m_device->subsystem() == "pci") {
 			base->labelBusID->setText(m_device->busID());
 			base->labelBusID->show();
@@ -174,7 +178,56 @@ void DevicePropertiesDialog::populateDeviceInformation() {
 			else {
 				base->labelDependentCPUs->setText(i18n("<none>"));
 			}
+		}
 
+		if ((m_device->type() == TDEGenericDeviceType::OtherSensor) || (m_device->type() == TDEGenericDeviceType::ThermalSensor)) {
+			TDESensorDevice* sdevice = static_cast<TDESensorDevice*>(m_device);
+
+			// FIXME
+			// This is rather ugly
+			// It should be handled via dynamic addition/update of new TQLabel objects, but that is somewhat complex
+			TQString sensorLabels = "<qt>";
+			TQString sensorDataPoints = "<qt>";
+			TDESensorClusterMap map = sdevice->values();
+			TDESensorClusterMap::Iterator it;
+			for ( it = map.begin(); it != map.end(); ++it ) {
+				TQString sensorlabel = it.key();
+				TQString sensordatastring;
+				TDESensorCluster values = it.data();
+
+				if (!values.label.isNull()) {
+					sensorlabel = values.label;
+				}
+				if (sensorlabel.isNull()) {
+					sensorlabel = i18n("<unnamed>");
+				}
+
+				if (values.minimum > 0) {
+					sensordatastring += TQString("Minimum Value: %1, ").arg(values.minimum);
+				}
+				sensordatastring += TQString("Current Value: %1, ").arg(values.current);
+				if (values.maximum > 0) {
+					sensordatastring += TQString("Maximum Value: %1, ").arg(values.maximum);
+				}
+				if (values.warning > 0) {
+					sensordatastring += TQString("Warning Value: %1, ").arg(values.warning);
+				}
+				if (values.critical > 0) {
+					sensordatastring += TQString("Critical Value: %1, ").arg(values.critical);
+				}
+
+				if (sensordatastring.endsWith(", ")) {
+					sensordatastring.truncate(sensordatastring.length()-2);
+				}
+
+				sensorLabels += sensorlabel + "<br>";
+				sensorDataPoints += sensordatastring + "<br>";
+			}
+			sensorLabels += "</qt>";
+			sensorDataPoints += "</qt>";
+
+			base->labelSensorNames->setText(sensorLabels);
+			base->labelSensorValues->setText(sensorDataPoints);
 		}
 	}
 }
