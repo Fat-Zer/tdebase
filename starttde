@@ -170,8 +170,10 @@ if [ -d $TDEDIR/bin ]; then
   fi
 fi
 if [ -d $TDEDIR/share/man ]; then
-  if [ "$MANPATH" = "" ]; then
-    export MANPATH=$TDEDIR/share/man
+  if [ -x /usr/bin/manpath ]; then
+    if [ "`manpath -q | grep \"$TDEDIR/share/man\"`" = "" ]; then
+      export MANPATH=$TDEDIR/share/man:$MANPATH
+    fi
   else
     if [ "`echo $MANPATH | grep \"$TDEDIR/share/man\"`" = "" ]; then
       export MANPATH=$TDEDIR/share/man:$MANPATH
