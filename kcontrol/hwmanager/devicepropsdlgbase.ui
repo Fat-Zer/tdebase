@@ -160,18 +160,57 @@
                     		</widget>
 				<widget class="TQLabel" row="7" column="0" colspan="1">
 					<property name="name">
+						<cstring>stocklabelVendorName</cstring>
+					</property>
+					<property name="text">
+						<string>Manufacturer:</string>
+					</property>
+				</widget>
+				<widget class="TQLabel" row="7" column="1" colspan="3">
+					<property name="name">
+						<cstring>labelVendorName</cstring>
+					</property>
+                    		</widget>
+				<widget class="TQLabel" row="8" column="0" colspan="1">
+					<property name="name">
+						<cstring>stocklabelVendorModel</cstring>
+					</property>
+					<property name="text">
+						<string>Model:</string>
+					</property>
+				</widget>
+				<widget class="TQLabel" row="8" column="1" colspan="3">
+					<property name="name">
+						<cstring>labelVendorModel</cstring>
+					</property>
+                    		</widget>
+				<widget class="TQLabel" row="9" column="0" colspan="1">
+					<property name="name">
+						<cstring>stocklabelSerialNumber</cstring>
+					</property>
+					<property name="text">
+						<string>Serial Number:</string>
+					</property>
+				</widget>
+				<widget class="TQLabel" row="9" column="1" colspan="3">
+					<property name="name">
+						<cstring>labelSerialNumber</cstring>
+					</property>
+                    		</widget>
+				<widget class="TQLabel" row="10" column="0" colspan="1">
+					<property name="name">
 						<cstring>stocklabelBusID</cstring>
 					</property>
 					<property name="text">
 						<string>Bus ID:</string>
 					</property>
 				</widget>
-				<widget class="TQLabel" row="7" column="1" colspan="3">
+				<widget class="TQLabel" row="10" column="1" colspan="3">
 					<property name="name">
 						<cstring>labelBusID</cstring>
 					</property>
                     		</widget>
-				<widget class="TQLabel" row="8" column="0" colspan="1">
+				<widget class="TQLabel" row="11" column="0" colspan="1">
 					<property name="name">
 						<cstring>unnamed</cstring>
 					</property>
@@ -179,7 +218,7 @@
 						<string>Technical Details:</string>
 					</property>
 				</widget>
-				<widget class="TQLabel" row="8" column="1" colspan="3">
+				<widget class="TQLabel" row="11" column="1" colspan="3">
 					<property name="name">
 						<cstring>labelModalias</cstring>
 					</property>
@@ -435,21 +474,509 @@
 				    <property name="title">
 					    <string>Sensor Readings</string>
 				    </property>
+			    </widget>
+			    <spacer row="8" column="0">
+				    <property name="name" stdset="0">
+					    <cstring>Spacer4</cstring>
+				    </property>
+				    <property name="orientation">
+					    <enum>Vertical</enum>
+				    </property>
+				    <property name="sizeType">
+					    <enum>Expanding</enum>
+				    </property>
+				    <property name="sizeHint">
+					    <size>
+						    <width>20</width>
+						    <height>20</height>
+					    </size>
+				    </property>
+			    </spacer>
+		    </grid>
+            </widget>
+	    <widget class="TQWidget">
+		    <property name="name">
+			    <cstring>tabBattery</cstring>
+		    </property>
+		    <attribute name="title">
+			    <string>Battery</string>
+		    </attribute>
+		    <grid>
+			    <property name="name">
+				    <cstring>unnamed</cstring>
+			    </property>
+			    <widget class="TQGroupBox" row="0" column="0">
+				    <property name="name">
+					    <cstring>groupBattery</cstring>
+				    </property>
+				    <property name="title">
+					    <string>Battery Status</string>
+				    </property>
 				    <grid>
 					    <property name="name">
 						    <cstring>unnamed</cstring>
 					    </property>
 					    <widget class="TQLabel" row="0" column="0" colspan="1">
 						    <property name="name">
-							    <cstring>labelSensorNames</cstring>
+							    <cstring>unnamed</cstring>
 						    </property>
 						    <property name="text">
-							    <string></string>
+							    <string>Current Energy</string>
 						    </property>
 					    </widget>
 					    <widget class="TQLabel" row="0" column="1" colspan="1">
 						    <property name="name">
-							    <cstring>labelSensorValues</cstring>
+							    <cstring>labelCurrentBatteryEnergy</cstring>
+						    </property>
+					    </widget>
+					    <widget class="TQLabel" row="1" column="0" colspan="1">
+						    <property name="name">
+							    <cstring>unnamed</cstring>
+						    </property>
+						    <property name="text">
+							    <string>Maximum Energy</string>
+						    </property>
+					    </widget>
+					    <widget class="TQLabel" row="1" column="1" colspan="1">
+						    <property name="name">
+							    <cstring>labelMaximumBatteryEnergy</cstring>
+						    </property>
+					    </widget>
+					    <widget class="TQLabel" row="2" column="0" colspan="1">
+						    <property name="name">
+							    <cstring>unnamed</cstring>
+						    </property>
+						    <property name="text">
+							    <string>Maximum Design Energy</string>
+						    </property>
+					    </widget>
+					    <widget class="TQLabel" row="2" column="1" colspan="1">
+						    <property name="name">
+							    <cstring>labelMaximumBatteryDesignEnergy</cstring>
+						    </property>
+					    </widget>
+					    <widget class="TQLabel" row="3" column="0" colspan="1">
+						    <property name="name">
+							    <cstring>unnamed</cstring>
+						    </property>
+						    <property name="text">
+							    <string>Minimum Voltage</string>
+						    </property>
+					    </widget>
+					    <widget class="TQLabel" row="3" column="1" colspan="1">
+						    <property name="name">
+							    <cstring>labelMinimumBatteryVoltage</cstring>
+						    </property>
+					    </widget>
+					    <widget class="TQLabel" row="4" column="0" colspan="1">
+						    <property name="name">
+							    <cstring>unnamed</cstring>
+						    </property>
+						    <property name="text">
+							    <string>Current Voltage</string>
+						    </property>
+					    </widget>
+					    <widget class="TQLabel" row="4" column="1" colspan="1">
+						    <property name="name">
+							    <cstring>labelCurrentBatteryVoltage</cstring>
+						    </property>
+					    </widget>
+					    <widget class="TQLabel" row="5" column="0" colspan="1">
+						    <property name="name">
+							    <cstring>unnamed</cstring>
+						    </property>
+						    <property name="text">
+							    <string>Current Discharge Rate</string>
+						    </property>
+					    </widget>
+					    <widget class="TQLabel" row="5" column="1" colspan="1">
+						    <property name="name">
+							    <cstring>labelCurrentBatteryDischargeRate</cstring>
+						    </property>
+					    </widget>
+					    <widget class="TQLabel" row="6" column="0" colspan="1">
+						    <property name="name">
+							    <cstring>unnamed</cstring>
+						    </property>
+						    <property name="text">
+							    <string>Status</string>
+						    </property>
+					    </widget>
+					    <widget class="TQLabel" row="6" column="1" colspan="1">
+						    <property name="name">
+							    <cstring>labelCurrentBatteryStatus</cstring>
+						    </property>
+					    </widget>
+					    <widget class="TQLabel" row="7" column="0" colspan="1">
+						    <property name="name">
+							    <cstring>unnamed</cstring>
+						    </property>
+						    <property name="text">
+							    <string>Technology</string>
+						    </property>
+					    </widget>
+					    <widget class="TQLabel" row="7" column="1" colspan="1">
+						    <property name="name">
+							    <cstring>labelBatteryTechnology</cstring>
+						    </property>
+					    </widget>
+					    <widget class="TQLabel" row="8" column="0" colspan="1">
+						    <property name="name">
+							    <cstring>unnamed</cstring>
+						    </property>
+						    <property name="text">
+							    <string>Installed</string>
+						    </property>
+					    </widget>
+					    <widget class="TQLabel" row="8" column="1" colspan="1">
+						    <property name="name">
+							    <cstring>labelBatteryInstalled</cstring>
+						    </property>
+					    </widget>
+					    <widget class="TQLabel" row="9" column="0" colspan="1">
+						    <property name="name">
+							    <cstring>unnamed</cstring>
+						    </property>
+						    <property name="text">
+							    <string>Current Charge</string>
+						    </property>
+					    </widget>
+					    <widget class="TQLabel" row="9" column="1" colspan="1">
+						    <property name="name">
+							    <cstring>labelBatteryCharge</cstring>
+						    </property>
+					    </widget>
+				    </grid>
+			    </widget>
+			    <spacer row="8" column="0">
+				    <property name="name" stdset="0">
+					    <cstring>Spacer4</cstring>
+				    </property>
+				    <property name="orientation">
+					    <enum>Vertical</enum>
+				    </property>
+				    <property name="sizeType">
+					    <enum>Expanding</enum>
+				    </property>
+				    <property name="sizeHint">
+					    <size>
+						    <width>20</width>
+						    <height>20</height>
+					    </size>
+				    </property>
+			    </spacer>
+		    </grid>
+            </widget>
+	    <widget class="TQWidget">
+		    <property name="name">
+			    <cstring>tabPowerSupply</cstring>
+		    </property>
+		    <attribute name="title">
+			    <string>Power Supply</string>
+		    </attribute>
+		    <grid>
+			    <property name="name">
+				    <cstring>unnamed</cstring>
+			    </property>
+			    <widget class="TQGroupBox" row="0" column="0">
+				    <property name="name">
+					    <cstring>groupPowerSupply</cstring>
+				    </property>
+				    <property name="title">
+					    <string>Power Supply Status</string>
+				    </property>
+				    <grid>
+					    <property name="name">
+						    <cstring>unnamed</cstring>
+					    </property>
+					    <widget class="TQLabel" row="0" column="0" colspan="1">
+						    <property name="name">
+							    <cstring>unnamed</cstring>
+						    </property>
+						    <property name="text">
+							    <string>Online</string>
+						    </property>
+					    </widget>
+					    <widget class="TQLabel" row="0" column="1" colspan="1">
+						    <property name="name">
+							    <cstring>labelPowerSupplyOnline</cstring>
+						    </property>
+					    </widget>
+				    </grid>
+			    </widget>
+			    <spacer row="8" column="0">
+				    <property name="name" stdset="0">
+					    <cstring>Spacer4</cstring>
+				    </property>
+				    <property name="orientation">
+					    <enum>Vertical</enum>
+				    </property>
+				    <property name="sizeType">
+					    <enum>Expanding</enum>
+				    </property>
+				    <property name="sizeHint">
+					    <size>
+						    <width>20</width>
+						    <height>20</height>
+					    </size>
+				    </property>
+			    </spacer>
+		    </grid>
+            </widget>
+	    <widget class="TQWidget">
+		    <property name="name">
+			    <cstring>tabNetwork</cstring>
+		    </property>
+		    <attribute name="title">
+			    <string>Network</string>
+		    </attribute>
+		    <grid>
+			    <property name="name">
+				    <cstring>unnamed</cstring>
+			    </property>
+			    <widget class="TQGroupBox" row="0" column="0">
+				    <property name="name">
+					    <cstring>groupNetwork</cstring>
+				    </property>
+				    <property name="title">
+					    <string>Network Device Information</string>
+				    </property>
+				    <grid>
+					    <property name="name">
+						    <cstring>unnamed</cstring>
+					    </property>
+					    <widget class="TQLabel" row="0" column="0" colspan="1">
+						    <property name="name">
+							    <cstring>unnamed</cstring>
+						    </property>
+						    <property name="text">
+							    <string>MAC Address</string>
+						    </property>
+					    </widget>
+					    <widget class="TQLabel" row="0" column="1" colspan="1">
+						    <property name="name">
+							    <cstring>labelNetworkMAC</cstring>
+						    </property>
+					    </widget>
+					    <widget class="TQLabel" row="1" column="0" colspan="1">
+						    <property name="name">
+							    <cstring>unnamed</cstring>
+						    </property>
+						    <property name="text">
+							    <string>Link State</string>
+						    </property>
+					    </widget>
+					    <widget class="TQLabel" row="1" column="1" colspan="1">
+						    <property name="name">
+							    <cstring>labelNetworkState</cstring>
+						    </property>
+					    </widget>
+					    <widget class="TQLabel" row="2" column="0" colspan="1">
+						    <property name="name">
+							    <cstring>unnamed</cstring>
+						    </property>
+						    <property name="text">
+							    <string>Carrier Detected</string>
+						    </property>
+					    </widget>
+					    <widget class="TQLabel" row="2" column="1" colspan="1">
+						    <property name="name">
+							    <cstring>labelNetworkCarrierPresent</cstring>
+						    </property>
+					    </widget>
+					    <widget class="TQLabel" row="3" column="0" colspan="1">
+						    <property name="name">
+							    <cstring>unnamed</cstring>
+						    </property>
+						    <property name="text">
+							    <string>Dormant</string>
+						    </property>
+					    </widget>
+					    <widget class="TQLabel" row="3" column="1" colspan="1">
+						    <property name="name">
+							    <cstring>labelNetworkDormant</cstring>
+						    </property>
+					    </widget>
+				    </grid>
+			    </widget>
+			    <widget class="TQGroupBox" row="1" column="0">
+				    <property name="name">
+					    <cstring>groupNetworkAddresses</cstring>
+				    </property>
+				    <property name="title">
+					    <string>Network Addresses</string>
+				    </property>
+				    <grid>
+					    <property name="name">
+						    <cstring>unnamed</cstring>
+					    </property>
+					    <widget class="TQLabel" row="0" column="0" colspan="1">
+						    <property name="name">
+							    <cstring>unnamed</cstring>
+						    </property>
+						    <property name="text">
+							    <string>IPv4 Address</string>
+						    </property>
+					    </widget>
+					    <widget class="TQLabel" row="0" column="1" colspan="1">
+						    <property name="name">
+							    <cstring>labelNetworkIPV4Address</cstring>
+						    </property>
+					    </widget>
+					    <widget class="TQLabel" row="1" column="0" colspan="1">
+						    <property name="name">
+							    <cstring>unnamed</cstring>
+						    </property>
+						    <property name="text">
+							    <string>IPv4 Netmask</string>
+						    </property>
+					    </widget>
+					    <widget class="TQLabel" row="1" column="1" colspan="1">
+						    <property name="name">
+							    <cstring>labelNetworkIPV4Netmask</cstring>
+						    </property>
+					    </widget>
+					    <widget class="TQLabel" row="2" column="0" colspan="1">
+						    <property name="name">
+							    <cstring>unnamed</cstring>
+						    </property>
+						    <property name="text">
+							    <string>IPv4 Broadcast</string>
+						    </property>
+					    </widget>
+					    <widget class="TQLabel" row="2" column="1" colspan="1">
+						    <property name="name">
+							    <cstring>labelNetworkIPV4Broadcast</cstring>
+						    </property>
+					    </widget>
+					    <widget class="TQLabel" row="3" column="0" colspan="1">
+						    <property name="name">
+							    <cstring>unnamed</cstring>
+						    </property>
+						    <property name="text">
+							    <string>IPv4 Destination</string>
+						    </property>
+					    </widget>
+					    <widget class="TQLabel" row="3" column="1" colspan="1">
+						    <property name="name">
+							    <cstring>labelNetworkIPV4Destination</cstring>
+						    </property>
+					    </widget>
+					    <widget class="TQLabel" row="4" column="0" colspan="1">
+						    <property name="name">
+							    <cstring>unnamed</cstring>
+						    </property>
+						    <property name="text">
+							    <string>IPv6 Address</string>
+						    </property>
+					    </widget>
+					    <widget class="TQLabel" row="4" column="1" colspan="1">
+						    <property name="name">
+							    <cstring>labelNetworkIPV6Address</cstring>
+						    </property>
+					    </widget>
+					    <widget class="TQLabel" row="5" column="0" colspan="1">
+						    <property name="name">
+							    <cstring>unnamed</cstring>
+						    </property>
+						    <property name="text">
+							    <string>IPv6 Netmask</string>
+						    </property>
+					    </widget>
+					    <widget class="TQLabel" row="5" column="1" colspan="1">
+						    <property name="name">
+							    <cstring>labelNetworkIPV6Netmask</cstring>
+						    </property>
+					    </widget>
+					    <widget class="TQLabel" row="6" column="0" colspan="1">
+						    <property name="name">
+							    <cstring>unnamed</cstring>
+						    </property>
+						    <property name="text">
+							    <string>IPv6 Broadcast</string>
+						    </property>
+					    </widget>
+					    <widget class="TQLabel" row="6" column="1" colspan="1">
+						    <property name="name">
+							    <cstring>labelNetworkIPV6Broadcast</cstring>
+						    </property>
+					    </widget>
+					    <widget class="TQLabel" row="7" column="0" colspan="1">
+						    <property name="name">
+							    <cstring>unnamed</cstring>
+						    </property>
+						    <property name="text">
+							    <string>IPv6 Destination</string>
+						    </property>
+					    </widget>
+					    <widget class="TQLabel" row="7" column="1" colspan="1">
+						    <property name="name">
+							    <cstring>labelNetworkIPV6Destination</cstring>
+						    </property>
+					    </widget>
+				    </grid>
+			    </widget>
+			    <widget class="TQGroupBox" row="3" column="0">
+				    <property name="name">
+					    <cstring>groupNetworkStatistics</cstring>
+				    </property>
+				    <property name="title">
+					    <string>Network Statistics</string>
+				    </property>
+				    <grid>
+					    <property name="name">
+						    <cstring>unnamed</cstring>
+					    </property>
+					    <widget class="TQLabel" row="0" column="0" colspan="1">
+						    <property name="name">
+							    <cstring>unnamed</cstring>
+						    </property>
+						    <property name="text">
+							    <string>Received Bytes</string>
+						    </property>
+					    </widget>
+					    <widget class="TQLabel" row="0" column="1" colspan="1">
+						    <property name="name">
+							    <cstring>labelNetworkRXBytes</cstring>
+						    </property>
+					    </widget>
+					    <widget class="TQLabel" row="1" column="0" colspan="1">
+						    <property name="name">
+							    <cstring>unnamed</cstring>
+						    </property>
+						    <property name="text">
+							    <string>Transmitted Bytes</string>
+						    </property>
+					    </widget>
+					    <widget class="TQLabel" row="1" column="1" colspan="1">
+						    <property name="name">
+							    <cstring>labelNetworkTXBytes</cstring>
+						    </property>
+					    </widget>
+					    <widget class="TQLabel" row="2" column="0" colspan="1">
+						    <property name="name">
+							    <cstring>unnamed</cstring>
+						    </property>
+						    <property name="text">
+							    <string>Received Packets</string>
+						    </property>
+					    </widget>
+					    <widget class="TQLabel" row="2" column="1" colspan="1">
+						    <property name="name">
+							    <cstring>labelNetworkRXPackets</cstring>
+						    </property>
+					    </widget>
+					    <widget class="TQLabel" row="3" column="0" colspan="1">
+						    <property name="name">
+							    <cstring>unnamed</cstring>
+						    </property>
+						    <property name="text">
+							    <string>Transmitted Packets</string>
+						    </property>
+					    </widget>
+					    <widget class="TQLabel" row="3" column="1" colspan="1">
+						    <property name="name">
+							    <cstring>labelNetworkTXPackets</cstring>
 						    </property>
 					    </widget>
 				    </grid>
