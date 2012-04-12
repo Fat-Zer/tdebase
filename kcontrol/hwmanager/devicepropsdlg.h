@@ -27,6 +27,44 @@
 
 /**
  *
+ * Simple sensor name and value display widget
+ *
+ * @version 0.1
+ * @author Timothy Pearson <kb9vqf@pearsoncomputing.net>
+ */
+
+class TDEUI_EXPORT SensorDisplayWidget : public TQWidget
+{
+	Q_OBJECT
+public:
+	/**
+	* Create a simple sensor name and value display widget
+	* @param parent     Parent widget for the display widget
+	*/
+	SensorDisplayWidget(TQWidget* parent);
+	virtual ~SensorDisplayWidget();
+
+	/**
+	* Set sensor name
+	* @param name A TQString with the name of the sensor
+	*/
+	void setSensorName(TQString name);
+
+	/**
+	* Set sensor value
+	* @param value A TQString with the value of the sensor
+	*/
+	void setSensorValue(TQString value);
+
+private:
+	TQLabel* m_nameLabel;
+	TQLabel* m_valueLabel;
+};
+
+typedef TQPtrList<SensorDisplayWidget> SensorDisplayWidgetList;
+
+/**
+ *
  * Dialog to view and edit hardware device properties
  *
  * @version 0.1
@@ -39,7 +77,7 @@ class TDEUI_EXPORT DevicePropertiesDialog : public KDialogBase
 public:
 	/**
 	* Create a dialog that allows a user to view and edit hardware device properties
-	* @param parent     Parent widget for the line edit dialog
+	* @param parent     Parent widget
 	*/
 	DevicePropertiesDialog(TDEGenericDevice* device, TQWidget *parent);
 	virtual ~DevicePropertiesDialog();
@@ -58,6 +96,9 @@ private:
 
 	class DevicePropertiesDialogPrivate;
 	DevicePropertiesDialogPrivate* d;
+
+	TQGridLayout* m_sensorDataGrid;
+	SensorDisplayWidgetList m_sensorDataGridWidgets;
 };
 
 #endif
