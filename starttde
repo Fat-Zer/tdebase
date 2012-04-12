@@ -238,7 +238,7 @@ if [ "$TDEDIR" != "/usr" ] && [ -d $TDEDIR/share ]; then
     XDG_DATA_DIRS=$TDEDIR/share:$XDG_DATA_DIRS
   fi
   if [ "$TDEDIRS" != "" ]; then
-    for ((i=`echo $TDEDIRS | awk -F : '{print NF}'`;i>=1;i--)); do
+    for i in `seq \`echo $TDEDIRS | awk -F : '{print NF}'\` -1 1`; do
       if [ "`echo $XDG_DATA_DIRS | grep \"\`echo $TDEDIRS | cut -d: -f${i}\`\"`" = "" ]; then
         XDG_DATA_DIRS=`echo $TDEDIRS | cut -d: -f${i}`/share:$XDG_DATA_DIRS
       fi
