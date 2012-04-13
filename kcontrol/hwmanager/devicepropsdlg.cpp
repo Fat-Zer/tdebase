@@ -33,6 +33,7 @@
 #include <tqfiledialog.h>
 
 #include <kbuttonbox.h>
+#include <kcombobox.h>
 #include <klocale.h>
 #include <kapplication.h>
 #include <klineedit.h>
@@ -276,6 +277,9 @@ DevicePropertiesDialog::DevicePropertiesDialog(TDEGenericDevice* device, TQWidge
 			base->tabBarWidget->removePage(base->tabMonitor);
 		}
 
+		if (m_device->type() == TDEGenericDeviceType::CPU) {
+			connect(base->comboCPUGovernor, TQT_SIGNAL(activated(const TQString &)), this, TQT_SLOT(setCPUGovernor(const TQString &)));
+		}
 		if ((m_device->type() == TDEGenericDeviceType::OtherSensor) || (m_device->type() == TDEGenericDeviceType::ThermalSensor)) {
 			base->groupSensors->setColumnLayout(0, TQt::Vertical );
 			base->groupSensors->layout()->setSpacing( KDialog::spacingHint() );
@@ -423,6 +427,17 @@ void DevicePropertiesDialog::populateDeviceInformation() {
 			else {
 				base->labelDependentCPUs->setText(i18n("<none>"));
 			}
+			base->comboCPUGovernor->setEnabled(cdevice->canSetGovernor());
+			TQStringList governorPolicies = cdevice->availableGovernors();
+			if ((uint)governorPolicies.count() != (uint)base->comboCPUGovernor->count()) {
+				base->comboCPUGovernor->clear();
+				int i=0;
+				for (TQStringList::Iterator it = governorPolicies.begin(); it != governorPolicies.end(); ++it) {
+					base->comboCPUGovernor->insertItem(*it, i);
+					i++;
+				}
+			}
+			base->comboCPUGovernor->setCurrentItem(cdevice->governor(), false);
 		}
 
 		if ((m_device->type() == TDEGenericDeviceType::OtherSensor) || (m_device->type() == TDEGenericDeviceType::ThermalSensor)) {
@@ -520,9 +535,7 @@ void DevicePropertiesDialog::populateDeviceInformation() {
 			base->sliderBacklightBrightness->setMinValue(0);
 			base->sliderBacklightBrightness->setMaxValue(bdevice->brightnessSteps()-1);
 			base->sliderBacklightBrightness->setValue(bdevice->rawBrightness());
-			if (!bdevice->canSetBrightness()) {
-				base->sliderBacklightBrightness->setEnabled(false);
-			}
+			base->sliderBacklightBrightness->setEnabled(bdevice->canSetBrightness());
 		}
 
 		if (m_device->type() == TDEGenericDeviceType::Monitor) {
@@ -562,8 +575,18 @@ void DevicePropertiesDialog::populateDeviceInformation() {
 			else {
 				base->labelDisplayResolutions->setText(i18n("<unknown>"));
 			}
+
+			// RandR warning
+			base->labelRandrWarning->setText("<qt><b>NOTE: Any further integration of displays into TDE <i>REQUIRES</i> multi GPU support and other features slated for RandR 2.0.</b><p>Development on such features has been sorely lacking for well over a year as of 2012; if you want to see Linux come up to Windows and Macintosh standards in this area <i>please tell the Xorg developers</i> at http://www.x.org/wiki/XorgMailingLists<p>The TDE project badly needs these features before it can proceed with graphical monitor configuration tools:<br> * GPU object support<br> * The ability to query the active driver name for any Xorg output<p><b>To recap, this is <i>not a TDE shortcoming</i>, but rather is the result of a lack of fundamental Linux support for graphics configuration!</b></qt>");
 		}
 	}
+}
+
+void DevicePropertiesDialog::setCPUGovernor(const TQString &governor) {
+	TDECPUDevice* cdevice = static_cast<TDECPUDevice*>(m_device);
+
+	cdevice->setGovernor(governor);
+	populateDeviceInformation();
 }
 
 void DevicePropertiesDialog::setBacklightBrightness(int value) {

@@ -183,6 +183,7 @@ private slots:
 	void processHardwareUpdated(TDEGenericDevice*);
 	void populateDeviceInformation();
 
+	void setCPUGovernor(const TQString &);
 	void setBacklightBrightness(int);
 
 private:
