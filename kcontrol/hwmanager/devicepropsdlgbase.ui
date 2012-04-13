@@ -1000,6 +1000,199 @@
 			    </spacer>
 		    </grid>
             </widget>
+	    <widget class="TQWidget">
+		    <property name="name">
+			    <cstring>tabBacklight</cstring>
+		    </property>
+		    <attribute name="title">
+			    <string>Backlight</string>
+		    </attribute>
+		    <grid>
+			    <property name="name">
+				    <cstring>unnamed</cstring>
+			    </property>
+			    <widget class="TQGroupBox" row="0" column="0">
+				    <property name="name">
+					    <cstring>groupBacklight</cstring>
+				    </property>
+				    <property name="title">
+					    <string>Backlight Status</string>
+				    </property>
+				    <grid>
+					    <property name="name">
+						    <cstring>unnamed</cstring>
+					    </property>
+					    <widget class="TQLabel" row="0" column="0" colspan="1">
+						    <property name="name">
+							    <cstring>unnamed</cstring>
+						    </property>
+						    <property name="text">
+							    <string>Status</string>
+						    </property>
+					    </widget>
+					    <widget class="TQLabel" row="0" column="1" colspan="1">
+						    <property name="name">
+							    <cstring>labelBacklightStatus</cstring>
+						    </property>
+					    </widget>
+					    <widget class="TQLabel" row="1" column="0" colspan="1">
+						    <property name="name">
+							    <cstring>unnamed</cstring>
+						    </property>
+						    <property name="text">
+							    <string>Brightness</string>
+						    </property>
+					    </widget>
+					    <widget class="TQSlider" row="1" column="1" colspan="1">
+						    <property name="name">
+							    <cstring>sliderBacklightBrightness</cstring>
+						    </property>
+						    <property name="sizePolicy">
+							    <sizepolicy>
+								    <hsizetype>0</hsizetype>
+								    <vsizetype>0</vsizetype>
+								    <horstretch>0</horstretch>
+								    <verstretch>0</verstretch>
+							    </sizepolicy>
+						    </property>
+					    </widget>
+					    <widget class="TQLabel" row="1" column="2" colspan="1">
+						    <property name="name">
+							    <cstring>labelBacklightBrightness</cstring>
+						    </property>
+					    </widget>
+				    </grid>
+			    </widget>
+			    <spacer row="8" column="0">
+				    <property name="name" stdset="0">
+					    <cstring>Spacer4</cstring>
+				    </property>
+				    <property name="orientation">
+					    <enum>Vertical</enum>
+				    </property>
+				    <property name="sizeType">
+					    <enum>Expanding</enum>
+				    </property>
+				    <property name="sizeHint">
+					    <size>
+						    <width>20</width>
+						    <height>20</height>
+					    </size>
+				    </property>
+			    </spacer>
+		    </grid>
+            </widget>
+	    <widget class="TQWidget">
+		    <property name="name">
+			    <cstring>tabMonitor</cstring>
+		    </property>
+		    <attribute name="title">
+			    <string>Display</string>
+		    </attribute>
+		    <grid>
+			    <property name="name">
+				    <cstring>unnamed</cstring>
+			    </property>
+			    <widget class="TQGroupBox" row="0" column="0">
+				    <property name="name">
+					    <cstring>groupMonitor</cstring>
+				    </property>
+				    <property name="title">
+					    <string>Display Status</string>
+				    </property>
+				    <grid>
+					    <property name="name">
+						    <cstring>unnamed</cstring>
+					    </property>
+					    <widget class="TQLabel" row="0" column="0" colspan="1">
+						    <property name="name">
+							    <cstring>unnamed</cstring>
+						    </property>
+						    <property name="text">
+							    <string>Port Type</string>
+						    </property>
+					    </widget>
+					    <widget class="TQLabel" row="0" column="1" colspan="1">
+						    <property name="name">
+							    <cstring>labelDisplayPortType</cstring>
+						    </property>
+					    </widget>
+					    <widget class="TQLabel" row="1" column="0" colspan="1">
+						    <property name="name">
+							    <cstring>unnamed</cstring>
+						    </property>
+						    <property name="text">
+							    <string>Connected</string>
+						    </property>
+					    </widget>
+					    <widget class="TQLabel" row="1" column="1" colspan="1">
+						    <property name="name">
+							    <cstring>labelDisplayConnected</cstring>
+						    </property>
+					    </widget>
+					    <widget class="TQLabel" row="2" column="0" colspan="1">
+						    <property name="name">
+							    <cstring>unnamed</cstring>
+						    </property>
+						    <property name="text">
+							    <string>Enabled</string>
+						    </property>
+					    </widget>
+					    <widget class="TQLabel" row="2" column="1" colspan="1">
+						    <property name="name">
+							    <cstring>labelDisplayEnabled</cstring>
+						    </property>
+					    </widget>
+					    <widget class="TQLabel" row="3" column="0" colspan="1">
+						    <property name="name">
+							    <cstring>unnamed</cstring>
+						    </property>
+						    <property name="text">
+							    <string>DPMS Status</string>
+						    </property>
+					    </widget>
+					    <widget class="TQLabel" row="3" column="1" colspan="1">
+						    <property name="name">
+							    <cstring>labelDisplayDPMS</cstring>
+						    </property>
+					    </widget>
+					    <widget class="TQLabel" row="4" column="0" colspan="1">
+						    <property name="name">
+							    <cstring>unnamed</cstring>
+						    </property>
+						    <property name="text">
+							    <string>Supported Resolutions</string>
+						    </property>
+						    <property name="alignment">
+							    <set>AlignTop|AlignLeft</set>
+						    </property>
+					    </widget>
+					    <widget class="TQLabel" row="4" column="1" colspan="1">
+						    <property name="name">
+							    <cstring>labelDisplayResolutions</cstring>
+						    </property>
+					    </widget>
+				    </grid>
+			    </widget>
+			    <spacer row="8" column="0">
+				    <property name="name" stdset="0">
+					    <cstring>Spacer4</cstring>
+				    </property>
+				    <property name="orientation">
+					    <enum>Vertical</enum>
+				    </property>
+				    <property name="sizeType">
+					    <enum>Expanding</enum>
+				    </property>
+				    <property name="sizeHint">
+					    <size>
+						    <width>20</width>
+						    <height>20</height>
+					    </size>
+				    </property>
+			    </spacer>
+		    </grid>
+            </widget>
         </widget>
     </grid>
 </widget>

@@ -25,6 +25,10 @@
 #include <tqtabwidget.h>
 #include <tqgroupbox.h>
 #include <tqlayout.h>
+#include <tqslider.h>
+#include <tqpainter.h>
+#include <tqstyle.h>
+#include <tqinternal_p.h>
 #undef Unsorted // Required for --enable-final (tqdir.h)
 #include <tqfiledialog.h>
 
@@ -36,7 +40,7 @@
 
 #include "devicepropsdlg.h"
 
-SensorDisplayWidget::SensorDisplayWidget(TQWidget *parent)
+SensorDisplayLabelsWidget::SensorDisplayLabelsWidget(TQWidget *parent)
 	: TQWidget(parent)
 {
 	m_nameLabel = new TQLabel(this);
@@ -48,6 +52,120 @@ SensorDisplayWidget::SensorDisplayWidget(TQWidget *parent)
 	mainGrid->addWidget(m_valueLabel, 0, 1);
 }
 
+SensorDisplayLabelsWidget::~SensorDisplayLabelsWidget()
+{
+}
+
+void SensorDisplayLabelsWidget::setSensorName(TQString name) {
+	m_nameLabel->setText(name);
+}
+
+void SensorDisplayLabelsWidget::setSensorValue(TQString value) {
+	m_valueLabel->setText(value);
+}
+
+bool SensorBar::setIndicator(TQString & progress_str, int progress, int totalSteps) {
+	Q_UNUSED(progress);
+	Q_UNUSED(totalSteps);
+
+	if (progress_str != m_currentValueString) {
+		progress_str = m_currentValueString;
+		return true;
+	}
+	else {
+		return false;
+	}
+}
+
+void SensorBar::drawContents(TQPainter *p) {
+	// Draw warn/crit/value bars
+
+	TQRect bar = contentsRect();
+	TQSharedDoubleBuffer buffer( p, bar.x(), bar.y(), bar.width(), bar.height() );
+	buffer.painter()->fillRect(bar, TQt::white);
+
+	TQStyle::SFlags flags = TQStyle::Style_Default;
+	if (isEnabled()) {
+		flags |= TQStyle::Style_Enabled;
+	}
+	if (hasFocus()) {
+		flags |= TQStyle::Style_HasFocus;
+	}
+	style().drawControl(TQStyle::CE_ProgressBarGroove, buffer.painter(), this, TQStyle::visualRect(style().subRect(TQStyle::SR_ProgressBarGroove, this), this ), colorGroup(), flags);
+
+	if (m_warningLocation > 0) {
+		bar = contentsRect();
+		bar.setX((bar.width()*((m_warningLocation*1.0)/totalSteps()))-2);
+		bar.setWidth(5);
+		bar.setHeight(3);
+		buffer.painter()->fillRect(bar, TQt::yellow);
+		bar = contentsRect();
+		bar.setX((bar.width()*((m_warningLocation*1.0)/totalSteps()))-2);
+		bar.setWidth(5);
+		bar.setY(bar.height()-3);
+		bar.setHeight(3);
+		buffer.painter()->fillRect(bar, TQt::yellow);
+		bar = contentsRect();
+		bar.setX((bar.width()*((m_warningLocation*1.0)/totalSteps()))-0);
+		bar.setWidth(1);
+		buffer.painter()->fillRect(bar, TQt::yellow);
+	}
+
+	if (m_criticalLocation > 0) {
+		bar = contentsRect();
+		bar.setX((bar.width()*((m_criticalLocation*1.0)/totalSteps()))-2);
+		bar.setWidth(5);
+		bar.setHeight(3);
+		buffer.painter()->fillRect(bar, TQt::red);
+		bar = contentsRect();
+		bar.setX((bar.width()*((m_criticalLocation*1.0)/totalSteps()))-2);
+		bar.setWidth(5);
+		bar.setY(bar.height()-3);
+		bar.setHeight(3);
+		buffer.painter()->fillRect(bar, TQt::red);
+		bar = contentsRect();
+		bar.setX((bar.width()*((m_criticalLocation*1.0)/totalSteps()))-0);
+		bar.setWidth(1);
+		buffer.painter()->fillRect(bar, TQt::red);
+	}
+
+	if (m_currentLocation > 0) {
+		bar = contentsRect();
+		bar.setX((bar.width()*((m_currentLocation*1.0)/totalSteps()))-2);
+		bar.setWidth(5);
+		bar.setHeight(3);
+		buffer.painter()->fillRect(bar, TQt::green);
+		bar = contentsRect();
+		bar.setX((bar.width()*((m_currentLocation*1.0)/totalSteps()))-2);
+		bar.setWidth(5);
+		bar.setY(bar.height()-3);
+		bar.setHeight(3);
+		buffer.painter()->fillRect(bar, TQt::green);
+		bar = contentsRect();
+		bar.setX((bar.width()*((m_currentLocation*1.0)/totalSteps()))-0);
+		bar.setWidth(1);
+		buffer.painter()->fillRect(bar, TQt::green);
+	}
+
+	bar = contentsRect();
+	buffer.painter()->setPen(TQt::black);
+	buffer.painter()->drawText(bar.x(), bar.y(), bar.width()/3, bar.height(), TQt::AlignVCenter | TQt::AlignLeft, m_minimumValueString);
+	buffer.painter()->drawText(bar.x()+(bar.width()/3), bar.y(), bar.width()/3, bar.height(), TQt::AlignVCenter | TQt::AlignHCenter, m_currentValueString);
+	buffer.painter()->drawText(bar.x()+((bar.width()/3)*2), bar.y(), bar.width()/3, bar.height(), TQt::AlignVCenter | TQt::AlignRight, m_maximumValueString);
+}
+
+SensorDisplayWidget::SensorDisplayWidget(TQWidget *parent)
+	: TQWidget(parent)
+{
+	m_nameLabel = new TQLabel(this);
+	m_progressBar = new SensorBar(this);
+
+	TQGridLayout *mainGrid = new TQGridLayout(this, 1, 2, 0, 1);
+	mainGrid->setRowStretch(1, 0);
+	mainGrid->addWidget(m_nameLabel, 0, 0);
+	mainGrid->addWidget(m_progressBar, 0, 1);
+}
+
 SensorDisplayWidget::~SensorDisplayWidget()
 {
 }
@@ -56,8 +174,71 @@ void SensorDisplayWidget::setSensorName(TQString name) {
 	m_nameLabel->setText(name);
 }
 
-void SensorDisplayWidget::setSensorValue(TQString value) {
-	m_valueLabel->setText(value);
+void SensorDisplayWidget::setSensorCurrentValue(double value) {
+	m_current = value;
+}
+
+void SensorDisplayWidget::setSensorMinimumValue(double value) {
+	m_minimum = value;
+}
+
+void SensorDisplayWidget::setSensorMaximumValue(double value) {
+	m_maximum = value;
+}
+
+void SensorDisplayWidget::setSensorWarningValue(double value) {
+	m_warning = value;
+}
+
+void SensorDisplayWidget::setSensorCriticalValue(double value) {
+	m_critical = value;
+}
+
+void SensorDisplayWidget::updateDisplay() {
+	double minimum = m_minimum;
+	double maximum = m_maximum;
+	double current = m_current;
+	double warning = m_warning;
+	double critical = m_critical;
+
+	if (minimum < 0) {
+		minimum = 0;
+	}
+	if (maximum < 0) {
+		if (critical < 0) {
+			maximum = warning;
+		}
+		else {
+			maximum = critical;
+		}
+	}
+	if (warning > maximum) {
+		maximum = warning;
+	}
+	if (critical > maximum) {
+		maximum = critical;
+	}
+
+	m_progressBar->setTotalSteps(maximum);
+	m_progressBar->m_currentLocation = current - minimum;
+	m_progressBar->setProgress(0);
+
+	if (warning < 0) {
+		m_progressBar->m_warningLocation = -1;
+	}
+	else {
+		m_progressBar->m_warningLocation = warning - minimum;
+	}
+	if (critical < 0) {
+		m_progressBar->m_criticalLocation = -1;
+	}
+	else {
+		m_progressBar->m_criticalLocation = critical - minimum;
+	}
+
+	m_progressBar->m_minimumValueString = (TQString("%1").arg(minimum));
+	m_progressBar->m_maximumValueString = (TQString("%1").arg(maximum));
+	m_progressBar->m_currentValueString = TQString("%1").arg(current);
 }
 
 DevicePropertiesDialog::DevicePropertiesDialog(TDEGenericDevice* device, TQWidget *parent)
@@ -88,6 +269,12 @@ DevicePropertiesDialog::DevicePropertiesDialog(TDEGenericDevice* device, TQWidge
 		if (m_device->type() != TDEGenericDeviceType::Network) {
 			base->tabBarWidget->removePage(base->tabNetwork);
 		}
+		if (m_device->type() != TDEGenericDeviceType::Backlight) {
+			base->tabBarWidget->removePage(base->tabBacklight);
+		}
+		if (m_device->type() != TDEGenericDeviceType::Monitor) {
+			base->tabBarWidget->removePage(base->tabMonitor);
+		}
 
 		if ((m_device->type() == TDEGenericDeviceType::OtherSensor) || (m_device->type() == TDEGenericDeviceType::ThermalSensor)) {
 			base->groupSensors->setColumnLayout(0, TQt::Vertical );
@@ -96,6 +283,9 @@ DevicePropertiesDialog::DevicePropertiesDialog(TDEGenericDevice* device, TQWidge
 			m_sensorDataGrid = new TQGridLayout( base->groupSensors->layout() );
 			m_sensorDataGrid->setAlignment( TQt::AlignTop );
 			m_sensorDataGridWidgets.setAutoDelete(true);
+		}
+		if (m_device->type() == TDEGenericDeviceType::Backlight) {
+			connect(base->sliderBacklightBrightness, TQT_SIGNAL(valueChanged(int)), this, TQT_SLOT(setBacklightBrightness(int)));
 		}
 
 		TQGridLayout *mainGrid = new TQGridLayout(plainPage(), 1, 1, 0, spacingHint());
@@ -264,26 +454,13 @@ void DevicePropertiesDialog::populateDeviceInformation() {
 					sensorlabel = i18n("<unnamed>");
 				}
 
-				if (values.minimum > 0) {
-					sensordatastring += TQString("Minimum Value: %1, ").arg(values.minimum);
-				}
-				sensordatastring += TQString("Current Value: %1, ").arg(values.current);
-				if (values.maximum > 0) {
-					sensordatastring += TQString("Maximum Value: %1, ").arg(values.maximum);
-				}
-				if (values.warning > 0) {
-					sensordatastring += TQString("Warning Value: %1, ").arg(values.warning);
-				}
-				if (values.critical > 0) {
-					sensordatastring += TQString("Critical Value: %1, ").arg(values.critical);
-				}
-
-				if (sensordatastring.endsWith(", ")) {
-					sensordatastring.truncate(sensordatastring.length()-2);
-				}
-
 				m_sensorDataGridWidgets.at(i)->setSensorName(sensorlabel);
-				m_sensorDataGridWidgets.at(i)->setSensorValue(sensordatastring);
+				m_sensorDataGridWidgets.at(i)->setSensorCurrentValue(values.current);
+				m_sensorDataGridWidgets.at(i)->setSensorMinimumValue(values.minimum);
+				m_sensorDataGridWidgets.at(i)->setSensorMaximumValue(values.maximum);
+				m_sensorDataGridWidgets.at(i)->setSensorWarningValue(values.warning);
+				m_sensorDataGridWidgets.at(i)->setSensorCriticalValue(values.critical);
+				m_sensorDataGridWidgets.at(i)->updateDisplay();
 
 				i++;
 			}
@@ -333,7 +510,66 @@ void DevicePropertiesDialog::populateDeviceInformation() {
 			base->labelNetworkRXPackets->setText((ndevice->rxPackets()<0)?i18n("<unknown>"):TQString("%1").arg(ndevice->rxPackets()));
 			base->labelNetworkTXPackets->setText((ndevice->txPackets()<0)?i18n("<unknown>"):TQString("%1").arg(ndevice->txPackets()));
 		}
+
+		if (m_device->type() == TDEGenericDeviceType::Backlight) {
+			TDEBacklightDevice* bdevice = static_cast<TDEBacklightDevice*>(m_device);
+
+			base->labelBacklightStatus->setText((bdevice->powerLevel()==TDEDisplayPowerLevel::On)?i18n("On"):i18n("Off"));
+			base->labelBacklightBrightness->setText((bdevice->brightnessPercent()<0)?i18n("<unknown>"):TQString("%1 %").arg(bdevice->brightnessPercent()));
+			base->sliderBacklightBrightness->setOrientation(TQt::Horizontal);
+			base->sliderBacklightBrightness->setMinValue(0);
+			base->sliderBacklightBrightness->setMaxValue(bdevice->brightnessSteps()-1);
+			base->sliderBacklightBrightness->setValue(bdevice->rawBrightness());
+			if (!bdevice->canSetBrightness()) {
+				base->sliderBacklightBrightness->setEnabled(false);
+			}
+		}
+
+		if (m_device->type() == TDEGenericDeviceType::Monitor) {
+			TDEMonitorDevice* mdevice = static_cast<TDEMonitorDevice*>(m_device);
+
+			base->labelDisplayPortType->setText((mdevice->portType().isNull())?i18n("<unknown>"):mdevice->portType());
+			base->labelDisplayConnected->setText((mdevice->connected())?i18n("Yes"):i18n("No"));
+			base->labelDisplayEnabled->setText((mdevice->enabled())?i18n("Yes"):i18n("No"));
+
+			TQString dpmsLevel;
+			TDEDisplayPowerLevel::TDEDisplayPowerLevel dpms = TDEDisplayPowerLevel::On;
+			if (dpms == TDEDisplayPowerLevel::On) {
+				dpmsLevel = i18n("On");
+			}
+			else if (dpms == TDEDisplayPowerLevel::Standby) {
+				dpmsLevel = i18n("Standby");
+			}
+			else if (dpms == TDEDisplayPowerLevel::Suspend) {
+				dpmsLevel = i18n("Suspend");
+			}
+			else if (dpms == TDEDisplayPowerLevel::Off) {
+				dpmsLevel = i18n("Off");
+			}
+			base->labelDisplayDPMS->setText(dpmsLevel);
+
+			TDEResolutionList resolutionList = mdevice->resolutions();
+			if (resolutionList.count() > 0) {
+				TQString resolutionsstring = "<qt>";
+				TDEResolutionList::iterator it;
+				for (it = resolutionList.begin(); it != resolutionList.end(); ++it) {
+					TDEResolutionPair res = *it;
+					resolutionsstring += TQString("%1x%2<br>").arg(res.first).arg(res.second);
+				}
+				resolutionsstring += "</qt>";
+				base->labelDisplayResolutions->setText(resolutionsstring);
+			}
+			else {
+				base->labelDisplayResolutions->setText(i18n("<unknown>"));
+			}
+		}
 	}
+}
+
+void DevicePropertiesDialog::setBacklightBrightness(int value) {
+	TDEBacklightDevice* bdevice = static_cast<TDEBacklightDevice*>(m_device);
+
+	bdevice->setRawBrightness(value);
 }
 
 void DevicePropertiesDialog::virtual_hook( int id, void* data )
