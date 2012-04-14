@@ -276,6 +276,9 @@ DevicePropertiesDialog::DevicePropertiesDialog(TDEGenericDevice* device, TQWidge
 		if (m_device->type() != TDEGenericDeviceType::Monitor) {
 			base->tabBarWidget->removePage(base->tabMonitor);
 		}
+		if (m_device->type() != TDEGenericDeviceType::RootSystem) {
+			base->tabBarWidget->removePage(base->tabRootSystem);
+		}
 
 		if (m_device->type() == TDEGenericDeviceType::CPU) {
 			connect(base->comboCPUGovernor, TQT_SIGNAL(activated(const TQString &)), this, TQT_SLOT(setCPUGovernor(const TQString &)));
@@ -290,6 +293,9 @@ DevicePropertiesDialog::DevicePropertiesDialog(TDEGenericDevice* device, TQWidge
 		}
 		if (m_device->type() == TDEGenericDeviceType::Backlight) {
 			connect(base->sliderBacklightBrightness, TQT_SIGNAL(valueChanged(int)), this, TQT_SLOT(setBacklightBrightness(int)));
+		}
+		if (m_device->type() == TDEGenericDeviceType::RootSystem) {
+			connect(base->comboSystemHibernationMethod, TQT_SIGNAL(activated(int)), this, TQT_SLOT(setHibernationMethod(int)));
 		}
 
 		TQGridLayout *mainGrid = new TQGridLayout(plainPage(), 1, 1, 0, spacingHint());
@@ -579,6 +585,95 @@ void DevicePropertiesDialog::populateDeviceInformation() {
 			// RandR warning
 			base->labelRandrWarning->setText("<qt><b>NOTE: Any further integration of displays into TDE <i>REQUIRES</i> multi GPU support and other features slated for RandR 2.0.</b><p>Development on such features has been sorely lacking for well over a year as of 2012; if you want to see Linux come up to Windows and Macintosh standards in this area <i>please tell the Xorg developers</i> at http://www.x.org/wiki/XorgMailingLists<p>The TDE project badly needs these features before it can proceed with graphical monitor configuration tools:<br> * GPU object support<br> * The ability to query the active driver name for any Xorg output<p><b>To recap, this is <i>not a TDE shortcoming</i>, but rather is the result of a lack of fundamental Linux support for graphics configuration!</b></qt>");
 		}
+
+		if (m_device->type() == TDEGenericDeviceType::RootSystem) {
+			TDERootSystemDevice* rdevice = static_cast<TDERootSystemDevice*>(m_device);
+
+			TQString formFactorString;
+			TDESystemFormFactor::TDESystemFormFactor formFactor = rdevice->formFactor();
+			if (formFactor == TDESystemFormFactor::Unclassified) {
+				formFactorString = i18n("Unknown");
+			}
+			else if (formFactor == TDESystemFormFactor::Desktop) {
+				formFactorString = i18n("Desktop");
+			}
+			else if (formFactor == TDESystemFormFactor::Laptop) {
+				formFactorString = i18n("Laptop");
+			}
+			else if (formFactor == TDESystemFormFactor::Server) {
+				formFactorString = i18n("Server");
+			}
+			base->labelSystemFormFactor->setText(formFactorString);
+
+			TQString powerStatesString;
+			TDESystemPowerStateList powerStates = rdevice->powerStates();
+			if (powerStates.count() > 0) {
+				powerStatesString = "<qt>";
+				TDESystemPowerStateList::iterator it;
+				for (it = powerStates.begin(); it != powerStates.end(); ++it) {
+					if ((*it) == TDESystemPowerState::Active) {
+						powerStatesString += i18n("Active<br>");
+					}
+					if ((*it) == TDESystemPowerState::Standby) {
+						powerStatesString += i18n("Standby<br>");
+					}
+					if ((*it) == TDESystemPowerState::Suspend) {
+						powerStatesString += i18n("Suspend<br>");
+					}
+					if ((*it) == TDESystemPowerState::Hibernate) {
+						powerStatesString += i18n("Hibernate<br>");
+					}
+					if ((*it) == TDESystemPowerState::PowerOff) {
+						powerStatesString += i18n("Power Off<br>");
+					}
+				}
+				powerStatesString += "</qt>";
+			}
+			else {
+				powerStatesString += i18n("<unknown>");
+			}
+			base->labelSystemPowerStates->setText(powerStatesString);
+
+			base->comboSystemHibernationMethod->setEnabled(rdevice->canSetHibernationMethod());
+			TDESystemHibernationMethodList hibernationMethods = rdevice->hibernationMethods();
+			if ((uint)hibernationMethods.count() != (uint)base->comboSystemHibernationMethod->count()) {
+				base->comboSystemHibernationMethod->clear();
+				m_hibernationComboMap.clear();
+				int i=0;
+				TQString label;
+				for (TDESystemHibernationMethodList::Iterator it = hibernationMethods.begin(); it != hibernationMethods.end(); ++it) {
+					if ((*it) == TDESystemHibernationMethod::None) {
+						label = i18n("<none>");
+					}
+					if ((*it) == TDESystemHibernationMethod::Platform) {
+						label = i18n("Platform");
+					}
+					if ((*it) == TDESystemHibernationMethod::Shutdown) {
+						label = i18n("Shutdown");
+					}
+					if ((*it) == TDESystemHibernationMethod::Reboot) {
+						label = i18n("Reboot");
+					}
+					if ((*it) == TDESystemHibernationMethod::TestProc) {
+						label = i18n("Test Procedure");
+					}
+					if ((*it) == TDESystemHibernationMethod::Test) {
+						label = i18n("Test");
+					}
+					base->comboSystemHibernationMethod->insertItem(label, i);
+					m_hibernationComboMap[*it] = i;
+					i++;
+				}
+			}
+			base->comboSystemHibernationMethod->setCurrentItem(m_hibernationComboMap[rdevice->hibernationMethod()]);
+
+			base->labelSystemUserCanStandby->setText((rdevice->canStandby())?i18n("Yes"):i18n("No"));
+			base->labelSystemUserCanSuspend->setText((rdevice->canSuspend())?i18n("Yes"):i18n("No"));
+			base->labelSystemUserCanHibernate->setText((rdevice->canHibernate())?i18n("Yes"):i18n("No"));
+			base->labelSystemUserCanPowerOff->setText((rdevice->canPowerOff())?i18n("Yes"):i18n("No"));
+
+			base->labelSystemHibernationSpace->setText((rdevice->diskSpaceNeededForHibernation()<0)?i18n("<unknown>"):TDEHardwareDevices::bytesToFriendlySizeString(rdevice->diskSpaceNeededForHibernation()));
+		}
 	}
 }
 
@@ -593,6 +688,13 @@ void DevicePropertiesDialog::setBacklightBrightness(int value) {
 	TDEBacklightDevice* bdevice = static_cast<TDEBacklightDevice*>(m_device);
 
 	bdevice->setRawBrightness(value);
+}
+
+void DevicePropertiesDialog::setHibernationMethod(int value) {
+	TDERootSystemDevice* rdevice = static_cast<TDERootSystemDevice*>(m_device);
+
+	rdevice->setHibernationMethod(m_hibernationComboMap.keys()[value]);
+	populateDeviceInformation();
 }
 
 void DevicePropertiesDialog::virtual_hook( int id, void* data )

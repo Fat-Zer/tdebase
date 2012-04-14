@@ -155,6 +155,7 @@ private:
 };
 
 typedef TQPtrList<SensorDisplayWidget> SensorDisplayWidgetList;
+typedef TQMap<TDESystemHibernationMethod::TDESystemHibernationMethod, int> HibernationComboMap;
 
 /**
  *
@@ -185,6 +186,7 @@ private slots:
 
 	void setCPUGovernor(const TQString &);
 	void setBacklightBrightness(int);
+	void setHibernationMethod(int);
 
 private:
 	TDEGenericDevice* m_device;
@@ -195,6 +197,8 @@ private:
 
 	TQGridLayout* m_sensorDataGrid;
 	SensorDisplayWidgetList m_sensorDataGridWidgets;
+
+	HibernationComboMap m_hibernationComboMap;
 };
 
 #endif

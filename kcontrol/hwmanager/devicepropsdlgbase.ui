@@ -1217,6 +1217,169 @@
 			    </spacer>
 		    </grid>
             </widget>
+	    <widget class="TQWidget">
+		    <property name="name">
+			    <cstring>tabRootSystem</cstring>
+		    </property>
+		    <attribute name="title">
+			    <string>System</string>
+		    </attribute>
+		    <grid>
+			    <property name="name">
+				    <cstring>unnamed</cstring>
+			    </property>
+			    <widget class="TQGroupBox" row="0" column="0">
+				    <property name="name">
+					    <cstring>groupSysinfo</cstring>
+				    </property>
+				    <property name="title">
+					    <string>System Information</string>
+				    </property>
+				    <grid>
+					    <property name="name">
+						    <cstring>unnamed</cstring>
+					    </property>
+					    <widget class="TQLabel" row="0" column="0" colspan="1">
+						    <property name="name">
+							    <cstring>unnamed</cstring>
+						    </property>
+						    <property name="text">
+							    <string>Form Factor</string>
+						    </property>
+					    </widget>
+					    <widget class="TQLabel" row="0" column="1" colspan="1">
+						    <property name="name">
+							    <cstring>labelSystemFormFactor</cstring>
+						    </property>
+					    </widget>
+				    </grid>
+			    </widget>
+			    <widget class="TQGroupBox" row="1" column="0">
+				    <property name="name">
+					    <cstring>groupSystemPower</cstring>
+				    </property>
+				    <property name="title">
+					    <string>Power Management</string>
+				    </property>
+				    <grid>
+					    <widget class="TQLabel" row="0" column="0" colspan="1">
+						    <property name="name">
+							    <cstring>unnamed</cstring>
+						    </property>
+						    <property name="text">
+							    <string>Available Power States</string>
+						    </property>
+						    <property name="alignment">
+							    <set>AlignTop|AlignLeft</set>
+						    </property>
+					    </widget>
+					    <widget class="TQLabel" row="0" column="1" colspan="1">
+						    <property name="name">
+							    <cstring>labelSystemPowerStates</cstring>
+						    </property>
+					    </widget>
+					    <widget class="TQLabel" row="1" column="0" colspan="1">
+						    <property name="name">
+							    <cstring>unnamed</cstring>
+						    </property>
+						    <property name="text">
+							    <string>Hibernation Method</string>
+						    </property>
+						    <property name="alignment">
+							    <set>AlignTop|AlignLeft</set>
+						    </property>
+					    </widget>
+					    <widget class="KComboBox" row="1" column="1" colspan="1">
+						    <property name="name">
+							    <cstring>comboSystemHibernationMethod</cstring>
+						    </property>
+					    </widget>
+					    <widget class="TQLabel" row="2" column="0" colspan="1">
+						    <property name="name">
+							    <cstring>unnamed</cstring>
+						    </property>
+						    <property name="text">
+							    <string>Disk Space Needed to Hibernate</string>
+						    </property>
+					    </widget>
+					    <widget class="TQLabel" row="2" column="1" colspan="1">
+						    <property name="name">
+							    <cstring>labelSystemHibernationSpace</cstring>
+						    </property>
+					    </widget>
+					    <widget class="TQLabel" row="3" column="0" colspan="1">
+						    <property name="name">
+							    <cstring>unnamed</cstring>
+						    </property>
+						    <property name="text">
+							    <string>User Can Request Standby</string>
+						    </property>
+					    </widget>
+					    <widget class="TQLabel" row="3" column="1" colspan="1">
+						    <property name="name">
+							    <cstring>labelSystemUserCanStandby</cstring>
+						    </property>
+					    </widget>
+					    <widget class="TQLabel" row="4" column="0" colspan="1">
+						    <property name="name">
+							    <cstring>unnamed</cstring>
+						    </property>
+						    <property name="text">
+							    <string>User Can Request Suspend</string>
+						    </property>
+					    </widget>
+					    <widget class="TQLabel" row="4" column="1" colspan="1">
+						    <property name="name">
+							    <cstring>labelSystemUserCanSuspend</cstring>
+						    </property>
+					    </widget>
+					    <widget class="TQLabel" row="5" column="0" colspan="1">
+						    <property name="name">
+							    <cstring>unnamed</cstring>
+						    </property>
+						    <property name="text">
+							    <string>User Can Request Hibernation</string>
+						    </property>
+					    </widget>
+					    <widget class="TQLabel" row="5" column="1" colspan="1">
+						    <property name="name">
+							    <cstring>labelSystemUserCanHibernate</cstring>
+						    </property>
+					    </widget>
+					    <widget class="TQLabel" row="6" column="0" colspan="1">
+						    <property name="name">
+							    <cstring>unnamed</cstring>
+						    </property>
+						    <property name="text">
+							    <string>User Can Request Shutdown</string>
+						    </property>
+					    </widget>
+					    <widget class="TQLabel" row="6" column="1" colspan="1">
+						    <property name="name">
+							    <cstring>labelSystemUserCanPowerOff</cstring>
+						    </property>
+					    </widget>
+				    </grid>
+			    </widget>
+			    <spacer row="8" column="0">
+				    <property name="name" stdset="0">
+					    <cstring>Spacer4</cstring>
+				    </property>
+				    <property name="orientation">
+					    <enum>Vertical</enum>
+				    </property>
+				    <property name="sizeType">
+					    <enum>Expanding</enum>
+				    </property>
+				    <property name="sizeHint">
+					    <size>
+						    <width>20</width>
+						    <height>20</height>
+					    </size>
+				    </property>
+			    </spacer>
+		    </grid>
+            </widget>
         </widget>
     </grid>
 </widget>

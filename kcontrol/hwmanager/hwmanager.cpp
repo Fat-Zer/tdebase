@@ -139,13 +139,11 @@ void TDEHWManager::populateTreeView()
 	base->deviceTree->clear();
 
 	if (show_by_connection) {
-		DeviceIconItem* rootitem = new DeviceIconItem(base->deviceTree, "Linux System", DesktopIcon("misc", base->deviceTree->iconSize()), 0);
-
 		TDEHardwareDevices *hwdevices = KGlobal::hardwareDevices();
-		TDEGenericHardwareList hwlist = hwdevices->listByDeviceClass(TDEGenericDeviceType::Root);
+		TDEGenericHardwareList hwlist = hwdevices->listByDeviceClass(TDEGenericDeviceType::RootSystem);
 		TDEGenericDevice *hwdevice;
 		for ( hwdevice = hwlist.first(); hwdevice; hwdevice = hwlist.next() ) {
-			DeviceIconItem* item = new DeviceIconItem(rootitem, hwdevice->friendlyName(), hwdevice->icon(base->deviceTree->iconSize()), hwdevice);
+			DeviceIconItem* item = new DeviceIconItem(base->deviceTree, hwdevice->friendlyName(), hwdevice->icon(base->deviceTree->iconSize()), hwdevice);
 			if ((!selected_syspath.isNull()) && (hwdevice->systemPath() == selected_syspath)) {
 				base->deviceTree->ensureItemVisible(item);
 				base->deviceTree->setSelected(item, true);
