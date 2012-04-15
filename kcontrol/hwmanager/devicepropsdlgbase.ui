@@ -662,6 +662,19 @@
 							    <cstring>labelBatteryCharge</cstring>
 						    </property>
 					    </widget>
+					    <widget class="TQLabel" row="10" column="0" colspan="1">
+						    <property name="name">
+							    <cstring>unnamed</cstring>
+						    </property>
+						    <property name="text">
+							    <string>Time To Charge / Discharge</string>
+						    </property>
+					    </widget>
+					    <widget class="TQLabel" row="10" column="1" colspan="1">
+						    <property name="name">
+							    <cstring>labelBatteryTimeRemaining</cstring>
+						    </property>
+					    </widget>
 				    </grid>
 			    </widget>
 			    <spacer row="8" column="0">

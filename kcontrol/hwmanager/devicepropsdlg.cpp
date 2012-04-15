@@ -503,10 +503,22 @@ void DevicePropertiesDialog::populateDeviceInformation() {
 			base->labelMinimumBatteryVoltage->setText((bdevice->minimumVoltage()<0)?i18n("<unknown>"):TQString("%1 V").arg(bdevice->minimumVoltage()));
 			base->labelCurrentBatteryVoltage->setText((bdevice->voltage()<0)?i18n("<unknown>"):TQString("%1 V").arg(bdevice->voltage()));
 			base->labelCurrentBatteryDischargeRate->setText((bdevice->dischargeRate()<0)?i18n("<unknown>"):TQString("%1 Vh").arg(bdevice->dischargeRate()));
-			base->labelCurrentBatteryStatus->setText((bdevice->status().isNull())?i18n("<unknown>"):bdevice->status());
+			TQString batteryStatusString = i18n("Unknown");
+			TDEBatteryStatus::TDEBatteryStatus batteryStatus = bdevice->status();
+			if (batteryStatus == TDEBatteryStatus::Charging) {
+				batteryStatusString = i18n("Charging");
+			}
+			if (batteryStatus == TDEBatteryStatus::Discharging) {
+				batteryStatusString = i18n("Discharging");
+			}
+			if (batteryStatus == TDEBatteryStatus::Full) {
+				batteryStatusString = i18n("Full");
+			}
+			base->labelCurrentBatteryStatus->setText(batteryStatusString);
 			base->labelBatteryTechnology->setText((bdevice->technology().isNull())?i18n("<unknown>"):bdevice->technology());
 			base->labelBatteryInstalled->setText((bdevice->installed()==0)?i18n("No"):i18n("Yes"));
 			base->labelBatteryCharge->setText((bdevice->chargePercent()<0)?i18n("<unknown>"):TQString("%1 %").arg(bdevice->chargePercent()));
+			base->labelBatteryTimeRemaining->setText((bdevice->timeRemaining()<0)?i18n("<unknown>"):TQString("%1 seconds").arg(bdevice->timeRemaining()));
 		}
 
 		if (m_device->type() == TDEGenericDeviceType::PowerSupply) {
