@@ -73,23 +73,6 @@
 				</widget>
 			    </grid>
 		    </widget>
-                    <spacer row="4" column="0">
-                        <property name="name" stdset="0">
-                            <cstring>Spacer4</cstring>
-                        </property>
-                        <property name="orientation">
-                            <enum>Vertical</enum>
-                        </property>
-                        <property name="sizeType">
-                            <enum>Expanding</enum>
-                        </property>
-                        <property name="sizeHint">
-                            <size>
-                                <width>20</width>
-                                <height>20</height>
-                            </size>
-                        </property>
-                    </spacer>
                 </grid>
             </widget>
         </widget>

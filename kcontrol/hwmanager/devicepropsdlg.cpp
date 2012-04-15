@@ -502,7 +502,7 @@ void DevicePropertiesDialog::populateDeviceInformation() {
 			base->labelMaximumBatteryDesignEnergy->setText((bdevice->maximumDesignEnergy()<0)?i18n("<unknown>"):TQString("%1 Wh").arg(bdevice->maximumDesignEnergy()));
 			base->labelMinimumBatteryVoltage->setText((bdevice->minimumVoltage()<0)?i18n("<unknown>"):TQString("%1 V").arg(bdevice->minimumVoltage()));
 			base->labelCurrentBatteryVoltage->setText((bdevice->voltage()<0)?i18n("<unknown>"):TQString("%1 V").arg(bdevice->voltage()));
-			base->labelCurrentBatteryDischargeRate->setText((bdevice->dischargeRate()<0)?i18n("<unknown>"):TQString("%1 Vh").arg(bdevice->dischargeRate()));
+			base->labelCurrentBatteryDischargeRate->setText((bdevice->dischargeRate()<0)?i18n("<unknown>"):TQString("%1 Wh").arg(bdevice->dischargeRate()));
 			TQString batteryStatusString = i18n("Unknown");
 			TDEBatteryStatus::TDEBatteryStatus batteryStatus = bdevice->status();
 			if (batteryStatus == TDEBatteryStatus::Charging) {
