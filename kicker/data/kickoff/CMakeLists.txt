@@ -18,7 +18,7 @@ install( FILES
     search-gradient.png menu_separator.png search-tab-center.png
     search-tab-left.png search-tab-right.png search-tab-top-center.png
     search-tab-top-left.png left_triangle.png right_triangle.png
-    kmenu_basic.mng
+    kmenu_basic.png
     search-tab-top-right.png search-gradient-topdown.png
     search-running.mng
   DESTINATION ${DATA_INSTALL_DIR}/kicker/pics )
