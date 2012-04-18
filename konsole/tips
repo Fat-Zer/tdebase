@@ -178,23 +178,41 @@ text while pressing the Shift key?
 <tip category="Konsole">
 <html>
 <p>...that you can let Konsole set the current directory as the window title?
-For Bash, put 'export PS1=$PS1"\[\e]0;\H:\w\a\]"' in your ~/.bashrc .
+For Bash, put 'export PS1=$PS1"\[\e[0m\H:\w\a\]"' in your ~/.bashrc .
 </html>
 </tip>
 
 <tip category="Konsole">
 <html>
 <p>...that you can let Konsole set the current directory as the session name?
-For Bash, put 'export PS1=$PS1"\[\e]30;\H:\w\a\]"' in your ~/.bashrc .
+For Bash, put 'export PS1=$PS1"\[\e[30m\H:\w\a\]"' in your ~/.bashrc .
 </html>
 </tip>
 
 <tip category="Konsole">
 <html>
 <p>...that if you let your shell pass the current directory to Konsole within the prompt
-variable, e.g. for Bash with 'export PS1=$PS1"\[\e]31;\w\a\]"' in your ~/.bashrc, then
+variable, e.g. for Bash with 'export PS1=$PS1"\[\e[31m\w\a\]"' in your ~/.bashrc, then
 Konsole can bookmark it, and session management will remember your current working directory
 on non-Linux systems too?
+</html>
+</tip>
+
+<tip category="Konsole">
+<html>
+<p>...that working with remote hosts in Konsole can be made much easier by setting the
+prompt to correctly show your hostname and present path? Try setting your prompt in our
+~/.bashrc with: "export PS1='\[\e[0m\h:\w> '" You can then just select your prompt and
+press middle-mouse to paste it as the source or destination on the command line.
+</html>
+</tip>
+
+<tip category="Konsole">
+<html>
+<p>...that you can temporarily set the prompt for Konsole by setting the 'PS1=' variable
+without having to edit your ~/.bashrc. Try entering the following on the command line to
+set your prompt. It will also include the current time before the path:
+PS1='\[\e[0;37m\]\A\[\e[1;34m\] \[\e[1;34m\]\h:\w> \[\e[0m\]'
 </html>
 </tip>
 
