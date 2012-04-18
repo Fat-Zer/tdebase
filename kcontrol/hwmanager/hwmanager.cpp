@@ -168,10 +168,6 @@ void TDEHWManager::populateTreeView()
 			}
 		}
 	}
-
-	if (!selected_syspath.isNull()) {
-		
-	}
 }
 
 void TDEHWManager::populateTreeViewLeaf(DeviceIconItem *parent, bool show_by_connection, TQString selected_syspath) {
@@ -181,7 +177,7 @@ void TDEHWManager::populateTreeViewLeaf(DeviceIconItem *parent, bool show_by_con
 		TDEGenericDevice *hwdevice;
 		for ( hwdevice = hwlist.first(); hwdevice; hwdevice = hwlist.next() ) {
 			if (hwdevice->parentDevice() == parent->device()) {
-				DeviceIconItem* item = new DeviceIconItem(parent, hwdevice->friendlyName(), hwdevices->getDeviceTypeIconFromType(hwdevice->type(), base->deviceTree->iconSize()), hwdevice);
+				DeviceIconItem* item = new DeviceIconItem(parent, hwdevice->friendlyName(), hwdevice->icon(base->deviceTree->iconSize()), hwdevice);
 				if ((!selected_syspath.isNull()) && (hwdevice->systemPath() == selected_syspath)) {
 					base->deviceTree->ensureItemVisible(item);
 					base->deviceTree->setSelected(item, true);
