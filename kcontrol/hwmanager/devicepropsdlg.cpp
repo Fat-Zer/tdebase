@@ -279,6 +279,9 @@ DevicePropertiesDialog::DevicePropertiesDialog(TDEGenericDevice* device, TQWidge
 		if (m_device->type() != TDEGenericDeviceType::RootSystem) {
 			base->tabBarWidget->removePage(base->tabRootSystem);
 		}
+		if (m_device->type() != TDEGenericDeviceType::Event) {
+			base->tabBarWidget->removePage(base->tabEvent);
+		}
 
 		if (m_device->type() == TDEGenericDeviceType::CPU) {
 			connect(base->comboCPUGovernor, TQT_SIGNAL(activated(const TQString &)), this, TQT_SLOT(setCPUGovernor(const TQString &)));
@@ -325,6 +328,10 @@ void DevicePropertiesDialog::processHardwareUpdated(TDEGenericDevice* dev) {
 	if (dev == m_device) {
 		populateDeviceInformation();
 	}
+}
+
+TQString assembleSwitchList(TDESwitchType::TDESwitchType switches) {
+	return (TDEEventDevice::friendlySwitchList(switches).join("<br>"));
 }
 
 void DevicePropertiesDialog::populateDeviceInformation() {
@@ -495,11 +502,23 @@ void DevicePropertiesDialog::populateDeviceInformation() {
 			base->labelMaximumBatteryDesignEnergy->setText((bdevice->maximumDesignEnergy()<0)?i18n("<unknown>"):TQString("%1 Wh").arg(bdevice->maximumDesignEnergy()));
 			base->labelMinimumBatteryVoltage->setText((bdevice->minimumVoltage()<0)?i18n("<unknown>"):TQString("%1 V").arg(bdevice->minimumVoltage()));
 			base->labelCurrentBatteryVoltage->setText((bdevice->voltage()<0)?i18n("<unknown>"):TQString("%1 V").arg(bdevice->voltage()));
-			base->labelCurrentBatteryDischargeRate->setText((bdevice->dischargeRate()<0)?i18n("<unknown>"):TQString("%1 Vh").arg(bdevice->dischargeRate()));
-			base->labelCurrentBatteryStatus->setText((bdevice->status().isNull())?i18n("<unknown>"):bdevice->status());
+			base->labelCurrentBatteryDischargeRate->setText((bdevice->dischargeRate()<0)?i18n("<unknown>"):TQString("%1 Wh").arg(bdevice->dischargeRate()));
+			TQString batteryStatusString = i18n("Unknown");
+			TDEBatteryStatus::TDEBatteryStatus batteryStatus = bdevice->status();
+			if (batteryStatus == TDEBatteryStatus::Charging) {
+				batteryStatusString = i18n("Charging");
+			}
+			if (batteryStatus == TDEBatteryStatus::Discharging) {
+				batteryStatusString = i18n("Discharging");
+			}
+			if (batteryStatus == TDEBatteryStatus::Full) {
+				batteryStatusString = i18n("Full");
+			}
+			base->labelCurrentBatteryStatus->setText(batteryStatusString);
 			base->labelBatteryTechnology->setText((bdevice->technology().isNull())?i18n("<unknown>"):bdevice->technology());
 			base->labelBatteryInstalled->setText((bdevice->installed()==0)?i18n("No"):i18n("Yes"));
 			base->labelBatteryCharge->setText((bdevice->chargePercent()<0)?i18n("<unknown>"):TQString("%1 %").arg(bdevice->chargePercent()));
+			base->labelBatteryTimeRemaining->setText((bdevice->timeRemaining()<0)?i18n("<unknown>"):TQString("%1 seconds").arg(bdevice->timeRemaining()));
 		}
 
 		if (m_device->type() == TDEGenericDeviceType::PowerSupply) {
@@ -642,7 +661,7 @@ void DevicePropertiesDialog::populateDeviceInformation() {
 				int i=0;
 				TQString label;
 				for (TDESystemHibernationMethodList::Iterator it = hibernationMethods.begin(); it != hibernationMethods.end(); ++it) {
-					if ((*it) == TDESystemHibernationMethod::None) {
+					if ((*it) == TDESystemHibernationMethod::Unsupported) {
 						label = i18n("<none>");
 					}
 					if ((*it) == TDESystemHibernationMethod::Platform) {
@@ -673,6 +692,32 @@ void DevicePropertiesDialog::populateDeviceInformation() {
 			base->labelSystemUserCanPowerOff->setText((rdevice->canPowerOff())?i18n("Yes"):i18n("No"));
 
 			base->labelSystemHibernationSpace->setText((rdevice->diskSpaceNeededForHibernation()<0)?i18n("<unknown>"):TDEHardwareDevices::bytesToFriendlySizeString(rdevice->diskSpaceNeededForHibernation()));
+		}
+
+		if (m_device->type() == TDEGenericDeviceType::Event) {
+			TDEEventDevice* edevice = static_cast<TDEEventDevice*>(m_device);
+
+			TQString availableSwitches;
+			if (edevice->providedSwitches() == TDESwitchType::Null) {
+				availableSwitches = i18n("<none>");
+			}
+			else {
+				availableSwitches = "<qt>";
+				availableSwitches += assembleSwitchList(edevice->providedSwitches());
+				availableSwitches += "</qt>";
+			}
+			base->labelEventSwitchTypes->setText(availableSwitches);
+
+			TQString activeSwitches;
+			if (edevice->activeSwitches() == TDESwitchType::Null) {
+				activeSwitches = i18n("<none>");
+			}
+			else {
+				activeSwitches = "<qt>";
+				activeSwitches += assembleSwitchList(edevice->activeSwitches());
+				activeSwitches += "</qt>";
+			}
+			base->labelEventSwitchActive->setText(activeSwitches);
 		}
 	}
 }
