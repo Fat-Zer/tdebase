@@ -490,7 +490,7 @@ only a few accounts in a controlled environment, such as with a home computer,
 Trinity SAK will not provide tangible benefits over the standard login
 methods.</para>
 
-<note><para>Trinity SAK requires udev to be running and the Linux uinput kernel
+<note><para>Trinity SAK requires evdev to be running and the Linux uinput kernel
 module to be loaded.</para></note>
 
 </sect2>
