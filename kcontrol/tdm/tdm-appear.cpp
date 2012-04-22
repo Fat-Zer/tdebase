@@ -545,7 +545,7 @@ void TDMAppearanceWidget::load()
   langcombo->setCurrentItem(config->readEntry("Language", "C"));
 
   // See if the SAK is enabled
-  if (sakwarning) {
+  if (!sakwarning) {
     sakbox->setChecked(config->readBoolEntry("UseSAK", true));
   }
   else {
