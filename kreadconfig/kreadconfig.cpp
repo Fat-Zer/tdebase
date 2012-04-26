@@ -11,7 +11,7 @@
  * If --type is not set, the value of the key is simply printed to stdout.
  *
  * Usage examples:
- *	if kreadconfig --group KDE --key macStyle --type bool; then
+ *	if kreadconfig --group TDE --key macStyle --type bool; then
  *		echo "We're using Mac-Style menus."
  *	else
  *		echo "We're using normal menus."
@@ -35,7 +35,7 @@
 static KCmdLineOptions options[] =
 {
 	{ "file <file>", I18N_NOOP("Use <file> instead of global config"), 0 },
-	{ "group <group>", I18N_NOOP("Group to look in"), "KDE" },
+	{ "group <group>", I18N_NOOP("Group to look in"), "TDE" },
         { "key <key>", I18N_NOOP("Key to look for"), 0 },
         { "default <default>", I18N_NOOP("Default value"), 0 },
 	{ "type <type>", I18N_NOOP("Type of variable"), 0 },
