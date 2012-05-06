@@ -31,7 +31,7 @@ BIN_DIR="`dirname \`readlink -f $0\``"
 if [ -x $BIN_DIR/konqueror ]; then
   TDE_VERSION="`$BIN_DIR/konqueror --version | grep TDE | awk '{print $2}'`"
   echo "[starttde] TDE version is $TDE_VERSION" 1>&2
-  TDEDIR=`echo $BIN_DIR | sed 's|/bin||'`
+  export TDEDIR=${BIN_DIR%/bin}
   echo "[starttde] TDE base directory is $TDEDIR" 1>&2
 else
   echo "[starttde] Unable to determine TDE base directory."
@@ -467,10 +467,6 @@ if test -r "$tde_fontpaths" ; then
     fi
   done
   IFS=$savifs
-fi
-
-if [ "$TDEDIR" = "" ]; then
-  export TDEDIR=`echo "$TDEDIRS" | sed -e 's/:.*//'`
 fi
 
 echo "[starttde] TDEDIR: $TDEDIR" 1>&2
