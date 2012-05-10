@@ -14,7 +14,7 @@ viable alternative to the current KMenu. Its goals include:
    o Obeys Kicker and KDE Kiosk settings
    o By making the TOM group of kickerrc immutable all config is removed
    o By making a task group's rc file immutable, config options are removed
- o Not require any modifications to the KDE menu system (applnk, etc)
+ o Not require any modifications to the TDE menu system (applnk, etc)
 
 
 What is a "Task Oriented Menu"?

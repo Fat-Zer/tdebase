@@ -174,7 +174,7 @@ imply that buttons can't be added either, loss of flexibility)
 How: Use "kde-panel.desktop" control module restriction.
 
 * Menu editing can be restricted. Kicker offers several menu items in the
-KDE menu beyond the applications menu itself. See "Configure Panel -> Menus"
+TDE menu beyond the applications menu itself. See "Configure Panel -> Menus"
 How: Restrict action/menuedit (??? Are their cases where you would want to
 restrict editing of the applications menu but not the other elements in
-the KDE menu?
+the TDE menu?
