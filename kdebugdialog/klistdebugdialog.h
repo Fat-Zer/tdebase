@@ -29,7 +29,7 @@ class TQVBox;
 class KLineEdit;
 
 /**
- * Control debug output of KDE applications
+ * Control debug output of TDE applications
  * This dialog offers a reduced functionality compared to the full KDebugDialog
  * class, but allows to set debug output on or off to several areas much more easily.
  *

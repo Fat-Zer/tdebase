@@ -31,9 +31,9 @@ class TQPushButton;
 class KConfig;
 
 /**
- * Control debug/warning/error/fatal output of KDE applications
+ * Control debug/warning/error/fatal output of TDE applications
  *
- * This dialog allows control of debugging output for all KDE apps.
+ * This dialog allows control of debugging output for all TDE apps.
  *
  * @author Kalle Dalheimer (kalle@kde.org)
  */

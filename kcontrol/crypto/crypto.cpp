@@ -224,7 +224,7 @@ TQBoxLayout *top = new TQVBoxLayout(this);
 TQString whatstr;
 
   setQuickHelp( i18n("<h1>Crypto</h1> This module allows you to configure SSL for"
-     " use with most KDE applications, as well as manage your personal"
+     " use with most TDE applications, as well as manage your personal"
      " certificates and the known certificate authorities."));
 
   ___lehack = false;

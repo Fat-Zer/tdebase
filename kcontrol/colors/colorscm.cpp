@@ -98,15 +98,15 @@ KColorScheme::KColorScheme(TQWidget *parent, const char *name, const TQStringLis
     nSysSchemes = 2;
 
     setQuickHelp( i18n("<h1>Colors</h1> This module allows you to choose"
-       " the color scheme used for the KDE desktop. The different"
+       " the color scheme used for the Trinity desktop. The different"
        " elements of the desktop, such as title bars, menu text, etc.,"
        " are called \"widgets\". You can choose the widget whose"
        " color you want to change by selecting it from a list, or by"
        " clicking on a graphical representation of the desktop.<p>"
        " You can save color settings as complete color schemes,"
-       " which can also be modified or deleted. KDE comes with several"
+       " which can also be modified or deleted. TDE comes with several"
        " predefined color schemes on which you can base your own.<p>"
-       " All KDE applications will obey the selected color scheme."
+       " All TDE applications will obey the selected color scheme."
        " Non-TDE applications may also obey some or all of the color"
        " settings, if this option is enabled."));
 
@@ -404,7 +404,7 @@ void KColorScheme::save()
     }
     runRdb( flags );	// Save the palette to qtrc for KStyles
 
-    // Notify all KDE applications
+    // Notify all TDE applications
     KIPC::sendMessageAll(KIPC::PaletteChanged);
 
     // Update the "Current Scheme"

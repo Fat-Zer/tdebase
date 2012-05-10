@@ -1087,7 +1087,7 @@ void KCMStyle::addWhatsThis()
 							"Text is aligned alongside the icon.</p>"
 							"<b>Text under icons: </b> Shows icons and text on toolbar buttons. "
 							"Text is aligned below the icon.") );
-	TQWhatsThis::add( cbIconsOnButtons, i18n( "If you enable this option, KDE Applications will "
+	TQWhatsThis::add( cbIconsOnButtons, i18n( "If you enable this option, TDE Applications will "
 							"show small icons alongside some important buttons.") );
 	TQWhatsThis::add( cbScrollablePopupMenus, i18n( "If you enable this option, pop-up menus will scroll if vertical space is exhausted." ) );
 	TQWhatsThis::add( cbTearOffHandles, i18n( "If you enable this option some pop-up menus will "

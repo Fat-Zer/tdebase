@@ -34,7 +34,7 @@
                 <string>&amp;Enable SOCKS support</string>
             </property>
             <property name="whatsThis" stdset="0">
-                <string>Check this to enable SOCKS4 and SOCKS5 support in KDE applications and I/O subsystems.</string>
+                <string>Check this to enable SOCKS4 and SOCKS5 support in TDE applications and I/O subsystems.</string>
             </property>
         </widget>
         <widget class="TQButtonGroup">

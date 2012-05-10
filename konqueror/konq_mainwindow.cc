@@ -4049,18 +4049,18 @@ void KonqMainWindow::initActions()
   m_paCut->setWhatsThis( i18n( "Cut the currently selected text or item(s) and move it "
                                "to the system clipboard<p> "
                                "This makes it available to the <b>Paste</b> command in Konqueror "
-                               "and other KDE applications." ) );
+                               "and other TDE applications." ) );
   m_paCut->setToolTip( i18n( "Move the selected text or item(s) to the clipboard" ) );
 
   m_paCopy->setWhatsThis( i18n( "Copy the currently selected text or item(s) to the "
                                 "system clipboard<p>"
                                 "This makes it available to the <b>Paste</b> command in Konqueror "
-                                "and other KDE applications." ) );
+                                "and other TDE applications." ) );
   m_paCopy->setToolTip( i18n( "Copy the selected text or item(s) to the clipboard" ) );
 
   m_paPaste->setWhatsThis( i18n( "Paste the previously cut or copied clipboard "
                                  "contents<p>"
-                                 "This also works for text copied or cut from other KDE applications." ) );
+                                 "This also works for text copied or cut from other TDE applications." ) );
   m_paPaste->setToolTip( i18n( "Paste the clipboard contents" ) );
 
   m_paPrint->setWhatsThis( i18n( "Print the currently displayed document<p>"

@@ -81,7 +81,7 @@ void KCookiesMain::defaults()
 TQString KCookiesMain::quickHelp() const
 {
   return i18n("<h1>Cookies</h1> Cookies contain information that Konqueror"
-    " (or other KDE applications using the HTTP protocol) stores on your"
+    " (or other TDE applications using the HTTP protocol) stores on your"
     " computer, initiated by a remote Internet server. This means that"
     " a web server can store information about you and your browsing activities"
     " on your machine for later use. You might consider this an invasion of"
