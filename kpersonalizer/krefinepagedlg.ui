@@ -78,7 +78,7 @@
                         </sizepolicy>
                     </property>
                     <property name="text">
-                        <string>You can refine the settings you made by starting the Trinity Control Center by choosing the entry &lt;b&gt;Control Center&lt;/b&gt; in the K menu.</string>
+                        <string>You can refine the settings you made by starting the Trinity Control Center by choosing the entry &lt;b&gt;Control Center&lt;/b&gt; in the TDE menu.</string>
                     </property>
                     <property name="alignment">
                         <set>WordBreak|AlignTop|AlignLeft</set>

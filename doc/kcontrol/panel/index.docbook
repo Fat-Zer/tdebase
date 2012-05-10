@@ -171,7 +171,7 @@ is a mark in the check box, then the panel appears to slide off the edge of the 
 <title>Menus</title>
 
 <para>In the <guilabel>Menus</guilabel> tab you can configure the panel
-menu's behavior. This affects the K menu you will often use to launch
+menu's behavior. This affects the TDE menu you will often use to launch
 applications, the browser menus you can use to access folders and other
 menus like the recent documents menu.</para>
 
@@ -198,7 +198,7 @@ launch &konqueror; with any of your configured profiles.</para>
 &konqueror; file manager window displaying any of your configured
 network folders.</para>
 <para>The <guilabel>Preferences</guilabel> menu allows you to launch each &kcontrol; module 
-directly from the K menu.</para>
+directly from the TDE menu.</para>
 <para>The <guilabel>Print System</guilabel> menu provides several menu entries to help manage 
 the printer(s) attached to your system.</para>
 <para>The <guilabel>Quick Browser</guilabel> menu gives you quick links to locations on your hard drive.</para>
@@ -227,7 +227,7 @@ latter option may be especially useful if you have a rather small screen
 resolution, as then the browser menus will quickly fill up your screen
 when you browse folders containing many files.</para>
 
-<para>The quick start section in the K menu offers quick access to
+<para>The quick start section in the TDE menu offers quick access to
 programs you have used often or recently. In the <guilabel>Quick Start Menu Items</guilabel> 
 frame you can choose whether
 this section will show the most recently or the most frequently used

@@ -304,7 +304,7 @@ void ToggleViewGUIClient::slotToggleView( bool toggle )
 void ToggleViewGUIClient::saveConfig( bool add, const TQString &serviceName )
 {
   // This is used on konqueror's startup....... so it's never used, since
-  // the K menu only contains calls to kfmclient......
+  // the TDE menu only contains calls to kfmclient......
   // Well, it could be useful again in the future.
   // Currently, the profiles save this info.
   TQStringList toggableViewsShown = KonqSettings::toggableViewsShown();

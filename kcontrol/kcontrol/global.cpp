@@ -90,12 +90,12 @@ TQString KCGlobal::baseGroup()
     {
       if (_infocenter)
       {
-        kdWarning() << "No K menu group with X-KDE-BaseGroup=info found ! Defaulting to Settings/Information/" << endl;
+        kdWarning() << "No TDE menu group with X-KDE-BaseGroup=info found ! Defaulting to Settings/Information/" << endl;
         _baseGroup = TQString::fromLatin1("Settings/Information/");
       }
       else
       {
-        kdWarning() << "No K menu group with X-KDE-BaseGroup=settings found ! Defaulting to Settings/" << endl;
+        kdWarning() << "No TDE menu group with X-KDE-BaseGroup=settings found ! Defaulting to Settings/" << endl;
         _baseGroup = TQString::fromLatin1("Settings/");
       }
     }

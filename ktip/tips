@@ -400,7 +400,7 @@ right-click the panel (Panel Menu) and select Add to Panel->Application->whateve
 <html>
 <p>
 You can add more applets to your panel by selecting Panel
-Menu->Add->Applet from the K menu.
+Menu->Add->Applet from the TDE menu.
 </p>
 </html>
 </tip>
@@ -409,7 +409,7 @@ Menu->Add->Applet from the K menu.
 <html>
 <p>
 You can add a little command line to your panel by selecting Panel
-Menu->Add to Panel->Applet->Run Command from the K menu.
+Menu->Add to Panel->Applet->Run Command from the TDE menu.
 </p>
 <p>For information about other applets available for the TDE Panel,
 take a look at <a href="help:/kicker">the Kicker Handbook</a>.</p>

@@ -140,7 +140,7 @@ the panel to access the files in your home folder using
 </para>
 </listitem>
 <listitem>
-<para>Choose <menuchoice><guimenu>K menu</guimenu>
+<para>Choose <menuchoice><guimenu>TDE menu</guimenu>
 <guisubmenu>System</guisubmenu>
 <guimenuitem>Konsole</guimenuitem></menuchoice> to get a &UNIX;
 command prompt, or press <keycombo action="simul">&Alt;
@@ -199,7 +199,7 @@ applications installed on your computer system.
 <sect2>
 <title>Customizing &kicker;</title>
 
-<!-- FIXME: To add a button, use the little arrows on kicker, not the K menu 
+<!-- FIXME: To add a button, use the little arrows on kicker, not the TDE menu 
 I am not sure I agree - some distributions fade or hide the applet handles by default, but
 I haven't found one yet that hides the kmenu. (JLH) --> 
 
@@ -308,7 +308,7 @@ in perhaps some surprising places.
 
 <para>
 &tde; provides a very sophisticated command line window called
-&konsole;.  Choose <menuchoice><guimenu>K menu</guimenu> 
+&konsole;.  Choose <menuchoice><guimenu>TDE menu</guimenu> 
 <guisubmenu>System</guisubmenu>
 <guimenuitem>Konsole</guimenuitem></menuchoice> to start it. This may
 be something you want on your panel: luckily it's already there in the
@@ -1090,7 +1090,7 @@ first.
 <para>
 We sincerely hope that using &tde; gives you so much fun and
 pleasure that you never want to log out. But if you do, simply choose
-<menuchoice><guimenu>K menu</guimenu>
+<menuchoice><guimenu>TDE menu</guimenu>
 <guimenuitem>Logout</guimenuitem></menuchoice>.
 </para>
 
@@ -1119,7 +1119,7 @@ data in them when you start to log out.
 
 <para>
 To illustrate session management, choose <menuchoice>
-<guimenu>K menu</guimenu><guisubmenu>Editors</guisubmenu>
+<guimenu>TDE menu</guimenu><guisubmenu>Editors</guisubmenu>
 <guimenuitem>Kate</guimenuitem> </menuchoice> to start &kate;. Open
 a text document to edit. Now log out and back in. You will observe
 that &kate; will be restored to the exact same position on the screen,

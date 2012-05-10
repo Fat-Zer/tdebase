@@ -17,7 +17,7 @@ Environment. Here we have various applications and infrastructure files and
 libraries. Here is an overview of the directories:
 
 * applnk
-    Files to create the icons for the K menu button
+    Files to create the icons for the TDE menu button
 
 * debian
     Needed to create a Debian package.

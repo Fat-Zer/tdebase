@@ -168,7 +168,7 @@ this entire document if you take advantage of <guilabel>Tooltips</guilabel> and
  the 
 <guimenuitem>What's This?</guimenuitem> feature.</para>
 
-<para>If <guilabel>Tooltips</guilabel> have been enabled in &tde; (K menu
+<para>If <guilabel>Tooltips</guilabel> have been enabled in &tde; (TDE menu
  <menuchoice><guimenu>Control Center</guimenu><guisubmenu>Appearance &amp;
  Themes</guisubmenu><guisubmenu>Style</guisubmenu></menuchoice>,
  <guilabel>Style</guilabel> dialog) then when you hover the mouse pointer

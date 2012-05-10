@@ -132,7 +132,7 @@ application.</para></listitem>
 <term>Custom Menu 2</term>
 <listitem>
 <para>You may also configure up to two custom menus.  If you choose either of these, the <guibutton>Edit...</guibutton> becomes available, allowing you to edit the contents of the custom menus.</para>
-<!-- FIXME: Need to find out what else can be added here (for instance, it lets me type 'emacsclient' which isn't available in the K menu) -->
+<!-- FIXME: Need to find out what else can be added here (for instance, it lets me type 'emacsclient' which isn't available in the TDE menu) -->
 </listitem>
 </varlistentry>
 </variablelist>
