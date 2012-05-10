@@ -48,7 +48,7 @@ KCMPrintMgr::KCMPrintMgr(TQWidget *parent, const char *name, const TQStringList 
 	main_->activate();
 	
 	KAboutData *about =
-	  new KAboutData(I18N_NOOP("kcmprintmgr"), I18N_NOOP("KDE Printing Management"),
+	  new KAboutData(I18N_NOOP("kcmprintmgr"), I18N_NOOP("TDE Printing Management"),
                   0, 0, KAboutData::License_GPL,
                   I18N_NOOP("(c) 2000 - 2002 Michael Goffioul"));
 	about->addAuthor("Michael Goffioul", 0, "tdeprint@swing.be");
@@ -57,14 +57,14 @@ KCMPrintMgr::KCMPrintMgr(TQWidget *parent, const char *name, const TQStringList 
 
 TQString KCMPrintMgr::quickHelp() const
 {
-	return i18n("<h1>Printers</h1>The KDE printing manager is part of KDEPrint which "
+	return i18n("<h1>Printers</h1>The TDE printing manager is part of TDEPrint which "
                "is the interface to the real print subsystem of your Operating System (OS). "
                "Although it does add some additional functionality of its own to those subsystems, "
-               "KDEPrint depends on them for its functionality. Spooling and filtering tasks, especially, "
+               "TDEPrint depends on them for its functionality. Spooling and filtering tasks, especially, "
                "are still done by your print subsystem, or the administrative tasks (adding or "
                "modifying printers, setting access rights, etc.)<br/> "
-               "What print features KDEPrint supports is therefore heavily dependent on your chosen print "
-               "subsystem. For the best support in modern printing, the KDE Printing Team recommends "
+               "What print features TDEPrint supports is therefore heavily dependent on your chosen print "
+               "subsystem. For the best support in modern printing, the TDE Printing Team recommends "
                "a CUPS based printing system.");
 }
 

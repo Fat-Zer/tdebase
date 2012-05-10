@@ -4067,7 +4067,7 @@ void KonqMainWindow::initActions()
                                  "You will be presented with a dialog where you can set various "
                                  "options, such as the number of copies to print and which printer "
                                  "to use.<p>"
-                                 "This dialog also provides access to special KDE printing "
+                                 "This dialog also provides access to special TDE printing "
                                  "services such as creating a PDF file from the current document." ) );
   m_paPrint->setToolTip( i18n( "Print the current document" ) );
 

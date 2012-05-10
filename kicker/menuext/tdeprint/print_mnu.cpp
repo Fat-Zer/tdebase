@@ -65,7 +65,7 @@ void PrintMenu::initialize()
 
     if ((KMManager::self()->printerOperationMask() & KMManager::PrinterCreation) && KMManager::self()->hasManagement())
         insertItem(SmallIconSet("wizard"), i18n("Add Printer..."), ADD_PRINTER_ID);
-    insertItem(SmallIconSet("tdeprint_configmgr"), i18n("KDE Print Settings"), TDEPRINT_SETTINGS_ID);
+    insertItem(SmallIconSet("tdeprint_configmgr"), i18n("TDE Print Settings"), TDEPRINT_SETTINGS_ID);
     if (KMManager::self()->serverOperationMask() & KMManager::ServerConfigure)
         insertItem(SmallIconSet("tdeprint_configsrv"), i18n("Configure Server"), CONFIG_SERVER_ID);
     insertSeparator();

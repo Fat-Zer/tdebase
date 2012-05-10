@@ -51,7 +51,7 @@ libraries. Here is an overview of the directories:
     Allows you to specify which debug messages you want to see.
 
 * tdeprint
-    The KDE printing system.
+    The TDE printing system.
 
 * kdesktop
     You guessed it: the desktop above the panel.

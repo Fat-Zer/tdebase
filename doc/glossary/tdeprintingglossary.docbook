@@ -170,7 +170,7 @@
                                 <glossseealso otherterm="gloss-authentication">Authentication</glossseealso>
                                 <glossseealso otherterm="gloss-bsdstyleprinting">BSD-style printing</glossseealso>
                                 <glossseealso otherterm="gloss-ipp">IPP</glossseealso>
-                                <glossseealso otherterm="gloss-tdeprint">KDEPrint</glossseealso>
+                                <glossseealso otherterm="gloss-tdeprint">TDEPrint</glossseealso>
                                 <glossseealso otherterm="gloss-lprlpd">LPR/LPD</glossseealso>
                                 <glossseealso otherterm="gloss-ppd">PPD</glossseealso>
                         </glossdef>
@@ -184,7 +184,7 @@
 				is a valuable resource to answer many questions that anyone new to 
 				&CUPS; printing might have at first.
 				</para>
-                                <glossseealso otherterm="gloss-tdeprinthandbook">KDEPrint Handbook</glossseealso>
+                                <glossseealso otherterm="gloss-tdeprinthandbook">TDEPrint Handbook</glossseealso>
                         </glossdef>
                 </glossentry>
 
@@ -513,7 +513,7 @@
 				More recently, Foomatic gravitated towards becoming a "meta-spooling"
 				system, that allows configuration of the underlying print subsystem
 				through a unified set of commands (however, this is much more
-				complicated than KDEPrint's &GUI; interface, which performs a similar
+				complicated than TDEPrint's &GUI; interface, which performs a similar
 				task with regards to different print subsystems). </para>
                                 <glossseealso otherterm="gloss-cups-o-matic">&CUPS;-O-Matic</glossseealso>
                                 <glossseealso otherterm="gloss-PPD-O-Matic">PPD-O-Matic</glossseealso>
@@ -716,7 +716,7 @@ now.
                 </glossentry>
 
                 <glossentry id="gloss-tdeprint">
-                        <glossterm><acronym>KDEPrint</acronym></glossterm>
+                        <glossterm><acronym>TDEPrint</acronym></glossterm>
                         <glossdef><para>The new printing functionality of &tde; since version 2.2
 				consists of several modules that translate the features and settings
 				of different available print subsystems (&CUPS;, BSD-style LPR/LPD, RLPR...)
@@ -727,7 +727,7 @@ now.
 				<para>
 -->
 				Most important for day-to-day usage is "kprinter", the new
-				&GUI; print command. -- Note: KDEPrint does <emphasis>not</emphasis> implement its own
+				&GUI; print command. -- Note: TDEPrint does <emphasis>not</emphasis> implement its own
 				spooling mechanism or its own &PostScript; processing; for this it
 				relies on the selected <emphasis>print subsystem</emphasis>
 				-- however it does add some functionality of its own on top of this
@@ -736,17 +736,17 @@ now.
                                 <glossseealso otherterm="gloss-bsdstyleprinting">BSD-style printing</glossseealso>
                                 <glossseealso otherterm="gloss-cups">&CUPS;</glossseealso>
                                 <glossseealso otherterm="gloss-kprinter">kprinter</glossseealso>
-                                <glossseealso otherterm="gloss-tdeprinthandbook">KDEPrint Handbook</glossseealso>
+                                <glossseealso otherterm="gloss-tdeprinthandbook">TDEPrint Handbook</glossseealso>
                         </glossdef>
                 </glossentry>
 
 
                 <glossentry id="gloss-tdeprinthandbook">
-                        <glossterm><acronym>KDEPrint Handbook...</acronym></glossterm>
-                        <glossdef><para>...is the name of the reference document that describes KDEPrint
+                        <glossterm><acronym>TDEPrint Handbook...</acronym></glossterm>
+                        <glossdef><para>...is the name of the reference document that describes TDEPrint
 				functions to users and administrators. You can load it into Konqueror by
 				typing "help:/tdeprint" into the address field. The <ulink
-				url="http://printing.kde.org/">KDEPrint website</ulink>
+				url="http://printing.kde.org/">TDEPrint website</ulink>
 				is the resource for updates to this documentation, as well as PDF
 				versions suitable for printing it. It is authored and maintained by Kurt 
 				Pfeifle.
@@ -1019,8 +1019,8 @@ now.
 -->
 
 				PPDs for &PostScript; printers are provided by the printer
-				vendors. They can be used with &CUPS; and KDEPrint to have access
-				to the full features of any &PostScript; printer. The KDEPrint Team
+				vendors. They can be used with &CUPS; and TDEPrint to have access
+				to the full features of any &PostScript; printer. The TDEPrint Team
 				recommends using a PPD originally intended for use with
 				&Microsoft; Windows NT.
 <!--
@@ -1057,7 +1057,7 @@ now.
 				<para>
 -->
 
-				These PPDs can be hooked up to &CUPS;/KDEPrint, as well as
+				These PPDs can be hooked up to &CUPS;/TDEPrint, as well as
 				used inside PPD-aware applications like StarOffice to determine all different 
 				parameters of your printjobs. It is now recommended, in most cases, to 
 				use "PPD-O-Matic" instead of the older &CUPS;-O-Matic.
@@ -1130,8 +1130,8 @@ now.
                 <glossentry id="gloss-printkioslave">
                         <glossterm>print:/ KIO Slave</glossterm>
                         <glossdef><para>You can use a syntax of "print:/..." to get quick access
-				to KDEPrint resources. Typing "print:/manager" as a Konqueror URL
-				address gives administrative access to KDEPrint. Konqueror uses &tde;'s
+				to TDEPrint resources. Typing "print:/manager" as a Konqueror URL
+				address gives administrative access to TDEPrint. Konqueror uses &tde;'s
 				famous "KParts" technology to achieve that. </para>
                                 <glossseealso otherterm="gloss-ioslave">IO Slave</glossseealso>
                                 <glossseealso otherterm="gloss-kparts">KParts</glossseealso>
@@ -1148,13 +1148,13 @@ now.
 
                 <glossentry id="gloss-qtcups">
                         <glossterm><acronym>Qt&CUPS;</acronym></glossterm>
-                        <glossdef><para>Qt&CUPS; and KUPS were the predecessors of KDEPrint; they are now 
+                        <glossdef><para>Qt&CUPS; and KUPS were the predecessors of TDEPrint; they are now 
 				deprecated and no longer maintained. What was good in qtcups is all inherited
-				by "kprinter", the new KDE print dialog (which is much improved over qtcups);
-				what you liked about kups is now all in the KDEPrint Manager (accessible 
+				by "kprinter", the new TDE print dialog (which is much improved over qtcups);
+				what you liked about kups is now all in the TDEPrint Manager (accessible 
 				via the TDE Control Center or via the URL "print:/manager" from Konqueror) --
 				with more functionality and less bugs... Its former developer, Michael Goffioul, is now
-				the developer of KDEPrint -- a very nice and productive guy and quick bug fixer...
+				the developer of TDEPrint -- a very nice and productive guy and quick bug fixer...
 				 </para>
                                 <glossseealso otherterm="gloss-kprinter">kprinter</glossseealso>
                         </glossdef>
@@ -1256,11 +1256,11 @@ now.
 				<para>
 -->
 
-				KDEPrint
+				TDEPrint
 				has an "Add Printer Wizard" to make RLPR usage even easier.
 				The kprinter command allows switching to RLPR "on
 				the fly" at any time.</para>
-                                <glossseealso otherterm="gloss-tdeprint">KDEPrint</glossseealso>
+                                <glossseealso otherterm="gloss-tdeprint">TDEPrint</glossseealso>
                                 <glossseealso otherterm="gloss-kprinter">kprinter</glossseealso>
                                 <glossseealso otherterm="gloss-printcap">printcap</glossseealso>
                         </glossdef>

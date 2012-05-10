@@ -785,7 +785,7 @@ D [04/Aug/2001:23:15:12 +0100] StartJob(214, 08426fe0)
 D [04/Aug/2001:23:15:12 +0100] StartJob() id = 214, file = 0/1 
 D [04/Aug/2001:23:15:12 +0100] job-sheets=none,none 
 D [04/Aug/2001:23:15:12 +0100] banner_page = 0 
-D [04/Aug/2001:23:15:12 +0100] StartJob: argv = "DANKA_P450","214","root","KDE Print Test",
+D [04/Aug/2001:23:15:12 +0100] StartJob: argv = "DANKA_P450","214","root","TDE Print Test",
 [....]  
 D [04/Aug/2001:23:15:12 +0100] StartJob: envp = "PATH=/usr/lib/cups/filter:/bin:/usr/bin", [....]  
 D [04/Aug/2001:23:15:12 +0100] StartJob: statusfds = 5, 6 
