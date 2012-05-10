@@ -626,7 +626,7 @@ void FaxCtrl::slotPrintLog()
 			TQString txt = m_log;
 
 			txt.replace( '\n', "<br>" );
-			txt.prepend( "<h2>" + i18n( "KDEPrint Fax Tool Log" ) + "</h2>" );
+			txt.prepend( "<h2>" + i18n( "TDEPrint Fax Tool Log" ) + "</h2>" );
 
 			kdDebug() << "Log: " << txt << endl;
 			TQSimpleRichText richText( txt, m_logview->font() );
@@ -656,7 +656,7 @@ void FaxCtrl::slotSaveLog()
 			if ( f.open( IO_WriteOnly ) )
 			{
 				TQTextStream t( &f );
-				t << i18n( "KDEPrint Fax Tool Log" ) << endl;
+				t << i18n( "TDEPrint Fax Tool Log" ) << endl;
 				t << m_logview->text() << endl;
 				f.close();
 			}
