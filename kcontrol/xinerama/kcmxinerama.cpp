@@ -46,7 +46,7 @@ KCMXinerama::KCMXinerama(TQWidget *parent, const char *name)
 
 	KAboutData *about =
 	new KAboutData(I18N_NOOP("kcmxinerama"),
-			I18N_NOOP("KDE Multiple Monitor Configurator"),
+			I18N_NOOP("TDE Multiple Monitor Configurator"),
 			0, 0, KAboutData::License_GPL,
 			I18N_NOOP("(c) 2002-2003 George Staikos"));
  

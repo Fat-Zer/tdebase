@@ -44,7 +44,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 int kicker_screen_number = 0;
 
 static const char description[] =
-        I18N_NOOP("The KDE panel");
+        I18N_NOOP("The TDE panel");
 
 static const char version[] = VERSION;
 
@@ -107,7 +107,7 @@ extern "C" KDE_EXPORT int kdemain( int argc, char ** argv )
     else
 	appname.sprintf("kicker-screen-%d", kicker_screen_number);
 
-    KAboutData aboutData( appname.data(), I18N_NOOP("KDE Panel"),
+    KAboutData aboutData( appname.data(), I18N_NOOP("TDE Panel"),
                           version, description, KAboutData::License_GPL_V2,
                           I18N_NOOP("(c) 1999-2010, The KDE Team") );
 

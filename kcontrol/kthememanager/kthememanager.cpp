@@ -46,7 +46,7 @@ kthememanager::kthememanager( TQWidget *parent, const char *name )
     : KCModule( parent, name ), m_theme( 0 ), m_origTheme( 0 )
 {
 
-    KAboutData *about = new KAboutData("kthememanager", I18N_NOOP("KDE Theme Manager"),
+    KAboutData *about = new KAboutData("kthememanager", I18N_NOOP("TDE Theme Manager"),
                                        "0.4", I18N_NOOP("This control module handles installing, removing and "
                                                         "creating visual KDE themes."),
                                        KAboutData::License_GPL, "(c) 2003, 2004, 2006 Lukáš Tinkl", 0,

@@ -40,7 +40,7 @@ int main(int argc, char *argv[])
     KApplication::disableAutoDcopRegistration();
     KCmdLineArgs::init( argc, argv, "ktrash",
                         I18N_NOOP( "ktrash" ),
-                        I18N_NOOP( "Helper program to handle the KDE trash can\n"
+                        I18N_NOOP( "Helper program to handle the TDE trash can\n"
 				   "Note: to move files to the trash, do not use ktrash, but \"kfmclient move 'url' trash:/\"" ),
                         TDE_VERSION_STRING );
     KCmdLineArgs::addCmdLineOptions( options );

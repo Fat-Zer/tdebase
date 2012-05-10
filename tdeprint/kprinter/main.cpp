@@ -44,7 +44,7 @@ static KCmdLineOptions options[] =
 
 extern "C" int KDE_EXPORT kdemain(int argc, char *argv[])
 {
-	KCmdLineArgs::init(argc,argv,"kprinter",I18N_NOOP("KPrinter"),I18N_NOOP("A printer tool for KDE" ),"0.0.1");
+	KCmdLineArgs::init(argc,argv,"kprinter",I18N_NOOP("KPrinter"),I18N_NOOP("A printer tool for TDE" ),"0.0.1");
 	KCmdLineArgs::addCmdLineOptions(options);
 	KApplication	app;
 	PrintWrapper	*wrap = new PrintWrapper;

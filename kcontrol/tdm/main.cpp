@@ -85,7 +85,7 @@ TDModule::TDModule(TQWidget *parent, const char *name, const TQStringList &)
   , updateOK(false)
 {
   KAboutData *about =
-    new KAboutData(I18N_NOOP("kcmtdm"), I18N_NOOP("KDE Login Manager Config Module"),
+    new KAboutData(I18N_NOOP("kcmtdm"), I18N_NOOP("TDE Login Manager Config Module"),
                 0, 0, KAboutData::License_GPL,
                 I18N_NOOP("(c) 1996 - 2005 The TDM Authors"));
 

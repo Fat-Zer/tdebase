@@ -85,7 +85,7 @@ CKCmFontInst::CKCmFontInst(TQWidget *parent, const char *, const TQStringList&)
     KGlobal::locale()->insertCatalogue(KFI_CATALOGUE);
 
     KAboutData* about = new KAboutData("kcmfontinst",
-         I18N_NOOP("KDE Font Installer"),
+         I18N_NOOP("TDE Font Installer"),
          0, 0,
          KAboutData::License_GPL,
          I18N_NOOP("GUI front end to the fonts:/ ioslave.\n"

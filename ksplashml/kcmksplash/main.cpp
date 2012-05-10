@@ -61,14 +61,14 @@ KSplashThemeMgr::KSplashThemeMgr( TQWidget *parent, const char *name, const TQSt
 #endif
   connect( mInstaller, TQT_SIGNAL(changed(bool)), TQT_SIGNAL(changed(bool)) );
   KAboutData *about = new KAboutData( "kcmksplash"
-                                      ,I18N_NOOP("KDE splash screen theme manager")
+                                      ,I18N_NOOP("TDE splash screen theme manager")
                                       ,"0.1"
                                       ,0
                                       ,KAboutData::License_GPL
                                       ,I18N_NOOP("(c) 2003 KDE developers") );
   about->addAuthor("Ravikiran Rajagopal", 0, "ravi@ee.eng.ohio-state.edu");
   about->addCredit("Brian Ledbetter", I18N_NOOP("Original KSplash/ML author"), "brian@shadowcom.net");
-  about->addCredit(I18N_NOOP("KDE Theme Manager authors" ), I18N_NOOP("Original installer code") );
+  about->addCredit(I18N_NOOP("TDE Theme Manager authors" ), I18N_NOOP("Original installer code") );
   // Once string freeze is over, replace second argument with "Icon"
   about->addCredit("Hans Karlsson", 0, "karlsson.h@home.se" );
   setAboutData(about);

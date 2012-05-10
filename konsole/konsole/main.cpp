@@ -58,7 +58,7 @@
 #endif
 
 static const char description[] =
-  I18N_NOOP("X terminal for use with KDE.");
+  I18N_NOOP("X terminal for use with TDE.");
 
 //   { "T <title>",       0, 0 },
 static KCmdLineOptions options[] =

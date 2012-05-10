@@ -24,7 +24,7 @@
 
 #include "toplevel.h"
 
-static const char description[] = I18N_NOOP( "KDE's application finder" );
+static const char description[] = I18N_NOOP( "TDE's application finder" );
 
 static KCmdLineOptions options[] = {
   { "dir <dir>", I18N_NOOP( "Install .desktop files into directory <dir>" ), 0 },

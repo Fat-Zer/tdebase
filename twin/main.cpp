@@ -228,7 +228,7 @@ static void sighandler(int)
 } // namespace
 
 static const char version[] = "3.0";
-static const char description[] = I18N_NOOP( "KDE window manager" );
+static const char description[] = I18N_NOOP( "TDE window manager" );
 
 static KCmdLineOptions args[] =
     {

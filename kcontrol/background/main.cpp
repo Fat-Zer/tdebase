@@ -68,7 +68,7 @@ KBackground::KBackground(TQWidget *parent, const char *name, const TQStringList 
     connect(m_base, TQT_SIGNAL(changed(bool)), TQT_SIGNAL(changed(bool)));
 
     KAboutData *about =
-    new KAboutData(I18N_NOOP("kcmbackground"), I18N_NOOP("KDE Background Control Module"),
+    new KAboutData(I18N_NOOP("kcmbackground"), I18N_NOOP("TDE Background Control Module"),
                   0, 0, KAboutData::License_GPL,
                   I18N_NOOP("(c) 2009,2010 Timothy Pearson"));
 

@@ -51,7 +51,7 @@
 static const char appName[] = "kfmclient";
 static const char programName[] = I18N_NOOP("kfmclient");
 
-static const char description[] = I18N_NOOP("KDE tool for opening URLs from the command line");
+static const char description[] = I18N_NOOP("TDE tool for opening URLs from the command line");
 
 static const char version[] = "2.0";
 

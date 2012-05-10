@@ -6,7 +6,7 @@
 
 extern "C" KDE_EXPORT int kdemain(int argc, char * argv[] )
 {
-  KAboutData about(I18N_NOOP("kaccess"), I18N_NOOP("KDE Accessibility Tool"),
+  KAboutData about(I18N_NOOP("kaccess"), I18N_NOOP("TDE Accessibility Tool"),
                   0, 0, KAboutData::License_GPL,
                   I18N_NOOP("(c) 2000, Matthias Hoelzer-Kluepfel"));
 

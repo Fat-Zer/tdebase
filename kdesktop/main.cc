@@ -55,7 +55,7 @@
 #endif
 
 static const char description[] =
-        I18N_NOOP("The KDE desktop");
+        I18N_NOOP("The TDE desktop");
 
 static const char version[] = VERSION;
 

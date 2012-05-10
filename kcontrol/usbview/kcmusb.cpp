@@ -68,7 +68,7 @@ USBViewer::USBViewer(TQWidget *parent, const char *name, const TQStringList &)
 	  this, TQT_SLOT(selectionChanged(TQListViewItem*)));
 
   KAboutData *about =
-  new KAboutData(I18N_NOOP("kcmusb"), I18N_NOOP("KDE USB Viewer"),
+  new KAboutData(I18N_NOOP("kcmusb"), I18N_NOOP("TDE USB Viewer"),
                 0, 0, KAboutData::License_GPL,
                 I18N_NOOP("(c) 2001 Matthias Hoelzer-Kluepfel"));
 

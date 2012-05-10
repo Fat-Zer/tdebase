@@ -356,7 +356,7 @@ KAboutData *KickerConfig::aboutData()
     // the KAboutDatas are deleted by the KCModules
     KAboutData *about
           = new KAboutData(I18N_NOOP("kcmkicker"),
-                           I18N_NOOP("KDE Panel Control Module"),
+                           I18N_NOOP("TDE Panel Control Module"),
                            0, 0, KAboutData::License_GPL,
                            I18N_NOOP("(c) 2009 - 2010 Timothy Pearson\n"
                                      "(c) 1999 - 2001 Matthias Elter\n"

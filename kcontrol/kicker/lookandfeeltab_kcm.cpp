@@ -33,7 +33,7 @@ LookAndFeelConfig::LookAndFeelConfig(TQWidget *parent, const char *name)
 {
 
     KAboutData *about =
-    new KAboutData(I18N_NOOP("kcmkicker"), I18N_NOOP("KDE Panel Control Module"),
+    new KAboutData(I18N_NOOP("kcmkicker"), I18N_NOOP("TDE Panel Control Module"),
                   0, 0, KAboutData::License_GPL,
                   I18N_NOOP("(c) 1999 - 2001 Matthias Elter\n(c) 2002 Aaron J. Seigo"));
 

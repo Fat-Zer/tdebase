@@ -57,7 +57,7 @@ AccessibilityConfig::AccessibilityConfig(TQWidget *parent, const char *name, con
   : AccessibilityConfigWidget( parent, name){
 
    KAboutData *about =
-   new KAboutData(I18N_NOOP("kcmaccessiblity"), I18N_NOOP("KDE Accessibility Tool"),
+   new KAboutData(I18N_NOOP("kcmaccessiblity"), I18N_NOOP("TDE Accessibility Tool"),
                   0, 0, KAboutData::License_GPL,
                   I18N_NOOP("(c) 2000, Matthias Hoelzer-Kluepfel"));
 

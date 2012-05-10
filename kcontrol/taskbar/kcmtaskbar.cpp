@@ -174,7 +174,7 @@ TaskbarConfig::TaskbarConfig(TQWidget *parent, const char* name, const TQStringL
     connect( m_widget->showAllScreens, TQT_SIGNAL( stateChanged( int )), TQT_SLOT( changed()));
 
     KAboutData *about = new KAboutData(I18N_NOOP("kcmtaskbar"),
-                                       I18N_NOOP("KDE Taskbar Control Module"),
+                                       I18N_NOOP("TDE Taskbar Control Module"),
                                        0, 0, KAboutData::License_GPL,
                                        I18N_NOOP("(c) 2000 - 2001 Matthias Elter"));
 

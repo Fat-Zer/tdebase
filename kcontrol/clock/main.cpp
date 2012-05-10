@@ -43,7 +43,7 @@ KclockModule::KclockModule(TQWidget *parent, const char *name, const TQStringLis
   : KCModule(KlockModuleFactory::instance(), parent, name)
 {
   KAboutData *about =
-  new KAboutData(I18N_NOOP("kcmclock"), I18N_NOOP("KDE Clock Control Module"),
+  new KAboutData(I18N_NOOP("kcmclock"), I18N_NOOP("TDE Clock Control Module"),
                   0, 0, KAboutData::License_GPL,
                   "(c) 1996 - 2001 Luca Montecchiani");
 

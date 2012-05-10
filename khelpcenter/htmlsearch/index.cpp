@@ -17,7 +17,7 @@ int main(int argc, char *argv[])
 {
   KAboutData aboutData( "khtmlindex", I18N_NOOP("KHtmlIndex"),
 	"",
-	I18N_NOOP("KDE Index generator for help files."));
+	I18N_NOOP("TDE Index generator for help files."));
 
   KCmdLineArgs::init(argc, argv, &aboutData);
   KCmdLineArgs::addCmdLineOptions( options );

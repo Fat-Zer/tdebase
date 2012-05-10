@@ -46,7 +46,7 @@ static void usage(char *name)
 
 static const char appName[] = "random";
 
-static const char description[] = I18N_NOOP("Start a random KDE screen saver");
+static const char description[] = I18N_NOOP("Start a random TDE screen saver");
 
 static const char version[] = "2.0.0";
 

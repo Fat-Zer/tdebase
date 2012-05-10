@@ -86,7 +86,7 @@ void KWebDesktopRun::slotFinished( KIO::Job * job )
 
 int main( int argc, char **argv )
 {
-    KAboutData data( "kwebdesktop", I18N_NOOP("KDE Web Desktop"),
+    KAboutData data( "kwebdesktop", I18N_NOOP("TDE Web Desktop"),
                      VERSION,
                      I18N_NOOP("Displays an HTML page as the background of the desktop"),
                      KAboutData::License_GPL,

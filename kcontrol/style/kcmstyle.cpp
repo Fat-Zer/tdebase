@@ -132,7 +132,7 @@ KCMStyle::KCMStyle( TQWidget* parent, const char* name )
 
 	KAboutData *about =
 		new KAboutData( I18N_NOOP("kcmstyle"),
-						I18N_NOOP("KDE Style Module"),
+						I18N_NOOP("TDE Style Module"),
 						0, 0, KAboutData::License_GPL,
 						I18N_NOOP("(c) 2002 Karol Szwed, Daniel Molkentin"));
 
