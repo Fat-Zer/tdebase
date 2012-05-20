@@ -674,14 +674,17 @@ void KSMShutdownIPFeedback::slotPaintEffect()
 //////
 
 KSMShutdownDlg::KSMShutdownDlg( TQWidget* parent,
-								bool maysd, KApplication::ShutdownType sdtype )
-  : TQDialog( parent, 0, TRUE, (WFlags)WType_Popup ), targets(0)
+								bool maysd, KApplication::ShutdownType sdtype, int* selection )
+  : TQDialog( parent, 0, TRUE, (WFlags)WType_Popup ), targets(0), m_selection(selection)
 	// this is a WType_Popup on purpose. Do not change that! Not
 	// having a popup here has severe side effects.
 
 {
 	TQVBoxLayout* vbox = new TQVBoxLayout( this );
 
+	if (m_selection) {
+		*m_selection = 0;
+	}
 
 	TQFrame* frame = new TQFrame( this );
 	frame->setFrameStyle( TQFrame::StyledPanel | TQFrame::Raised );
@@ -1104,27 +1107,12 @@ void KSMShutdownDlg::slotHalt()
 
 void KSMShutdownDlg::slotSuspend()
 {
+	*m_selection = 1;	// Suspend
+
 #ifdef WITH_UPOWER
-	if (m_lockOnResume) {
-		DCOPRef("kdesktop", "KScreensaverIface").send("lock");
-	}
-
-	if( m_dbusConn.isConnected() ) {
-		TQT_DBusMessage msg = TQT_DBusMessage::methodCall(
-					"org.freedesktop.UPower",
-					"/org/freedesktop/UPower",
-					"org.freedesktop.UPower",
-					"Suspend");
-		m_dbusConn.sendWithReply(msg);
-	}
-
-	reject(); // continue on resume
+	// Handled in shutdown.cpp
 #else
 #ifdef COMPILE_HALBACKEND
-	if (m_lockOnResume) {
-		DCOPRef("kdesktop", "KScreensaverIface").send("lock");
-	}
-
 	if (m_dbusConn)
 	{
 		DBusMessage *msg = dbus_message_new_method_call(
@@ -1140,35 +1128,19 @@ void KSMShutdownDlg::slotSuspend()
 
 		dbus_message_unref(msg);
 	}
-
-	reject(); // continue on resume
 #endif
 #endif // WITH_UPOWER
+	reject(); // continue on resume
 }
 
 void KSMShutdownDlg::slotHibernate()
 {
+	*m_selection = 2;	// Hibernate
+
 #ifdef WITH_UPOWER
-	if (m_lockOnResume) {
-		DCOPRef("kdesktop", "KScreensaverIface").send("lock");
-	}
-
-	if( m_dbusConn.isConnected() ) {
-		TQT_DBusMessage msg = TQT_DBusMessage::methodCall(
-					"org.freedesktop.UPower",
-					"/org/freedesktop/UPower",
-					"org.freedesktop.UPower",
-					"Hibernate");
-		m_dbusConn.sendWithReply(msg);
-	}
-
-	reject(); // continue on resume
+	// Handled in shutdown.cpp
 #else
 #ifdef COMPILE_HALBACKEND
-	if (m_lockOnResume) {
-		DCOPRef("kdesktop", "KScreensaverIface").send("lock");
-	}
-
 	if (m_dbusConn)
 	{
 		DBusMessage *msg = dbus_message_new_method_call(
@@ -1181,18 +1153,17 @@ void KSMShutdownDlg::slotHibernate()
 
 		dbus_message_unref(msg);
 	}
-
-	reject(); // continue on resume
 #endif
 #endif // WITH_UPOWER
+	reject(); // continue on resume
 }
 
-bool KSMShutdownDlg::confirmShutdown( bool maysd, KApplication::ShutdownType& sdtype, TQString& bootOption )
+bool KSMShutdownDlg::confirmShutdown( bool maysd, KApplication::ShutdownType& sdtype, TQString& bootOption, int* selection )
 {
 	kapp->enableStyles();
 	KSMShutdownDlg* l = new KSMShutdownDlg( 0,
 											//KSMShutdownFeedback::self(),
-											maysd, sdtype );
+											maysd, sdtype, selection );
 
 	// Show dialog (will save the background in showEvent)
 	TQSize sh = l->sizeHint();

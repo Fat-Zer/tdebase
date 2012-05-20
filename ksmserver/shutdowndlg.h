@@ -129,7 +129,7 @@ class KSMShutdownDlg : public TQDialog
 	Q_OBJECT
 
 public:
-	static bool confirmShutdown( bool maysd, KApplication::ShutdownType& sdtype, TQString& bopt );
+	static bool confirmShutdown( bool maysd, KApplication::ShutdownType& sdtype, TQString& bopt, int* selection=0 );
 
 public slots:
 	void slotLogout();
@@ -143,7 +143,7 @@ protected:
 	~KSMShutdownDlg();
 
 private:
-	KSMShutdownDlg( TQWidget* parent, bool maysd, KApplication::ShutdownType sdtype );
+	KSMShutdownDlg( TQWidget* parent, bool maysd, KApplication::ShutdownType sdtype, int* selection=0 );
 	KApplication::ShutdownType m_shutdownType;
 	TQString m_bootOption;
 	TQPopupMenu *targets;
@@ -157,6 +157,7 @@ private:
 #endif
 #endif // WITH_UPOWER
 	bool m_lockOnResume;
+	int* m_selection;
 };
 
 // The shutdown-in-progress dialog
