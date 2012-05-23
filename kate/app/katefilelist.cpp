@@ -107,6 +107,8 @@ KateFileList::KateFileList (KateMainWindow *main,
 
   setupActions ();
 
+  connect(this,TQT_SIGNAL(moved()),this,TQT_SLOT(updateFileListLocations()));
+
   for (uint i = 0; i < KateDocManager::self()->documents(); i++)
   {
     slotDocumentCreated (KateDocManager::self()->document(i));
@@ -228,6 +230,7 @@ void KateFileList::slotDocumentCreated (Kate::Document *doc)
   connect(doc,TQT_SIGNAL(modifiedOnDisc(Kate::Document *, bool, unsigned char)),this,TQT_SLOT(slotModifiedOnDisc(Kate::Document *, bool, unsigned char)));
 
   sort();
+  updateFileListLocations();
   updateActions ();
 }
 
@@ -247,6 +250,7 @@ void KateFileList::slotDocumentDeleted (uint documentNumber)
     item = item->nextSibling();
   }
 
+  updateFileListLocations();
   updateActions ();
 }
 
@@ -352,6 +356,23 @@ void KateFileList::slotViewChanged ()
     repaintItem(  m_viewHistory.at( i ) );
   }
 
+  updateFileListLocations();
+}
+
+void KateFileList::updateFileListLocations()
+{
+  TQListViewItem* item = firstChild();
+  int i=0;
+  while (item) {
+    if (m_sort == KateFileList::sortManual) {
+      ((KateFileListItem *)item)->document()->setDocumentListPosition(i);
+    }
+    else {
+      ((KateFileListItem *)item)->document()->setDocumentListPosition(-1);
+    }
+    item = item->itemBelow();
+    i++;
+  }
 }
 
 void KateFileList::slotMenu ( TQListViewItem *item, const TQPoint &p, int /*col*/ )
@@ -437,6 +458,7 @@ void KateFileList::moveFileUp()
       }
     }
   }
+  updateFileListLocations();
 }
 
 void KateFileList::moveFileDown()
@@ -449,11 +471,13 @@ void KateFileList::moveFileDown()
       m_clickedMenuItem->moveItem(nitemabove);
     }
   }
+  updateFileListLocations();
 }
 
 void KateFileList::updateSort ()
 {
   sort ();
+  updateFileListLocations();
 }
 
 void KateFileList::readConfig( KConfig *config, const TQString &group )

@@ -244,7 +244,7 @@ void KateViewSpace::saveConfig ( KConfig* config, int myIndex ,const TQString& v
   if (currentView())
     config->writeEntry( "Active View", currentView()->getDoc()->url().prettyURL() );
 
-  // Save file list, includeing cursor position in this instance.
+  // Save file list, including cursor position in this instance.
   TQPtrListIterator<Kate::View> it(mViewList);
 
   int idx = 0;
@@ -252,8 +252,9 @@ void KateViewSpace::saveConfig ( KConfig* config, int myIndex ,const TQString& v
   {
     if ( !it.current()->getDoc()->url().isEmpty() )
     {
+      long docListPos = it.current()->getDoc()->documentListPosition();
       config->setGroup( group );
-      config->writeEntry( TQString("View %1").arg( idx ), it.current()->getDoc()->url().prettyURL() );
+      config->writeEntry( TQString("View %1").arg( (docListPos<0)?idx:docListPos ), it.current()->getDoc()->url().prettyURL() );
 
       // view config, group: "ViewSpace <n> url"
       TQString vgroup = TQString("%1 %2").arg(group).arg(it.current()->getDoc()->url().prettyURL());

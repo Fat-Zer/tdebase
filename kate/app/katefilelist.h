@@ -126,6 +126,7 @@ class KateFileList : public KListView
     void slotNameChanged (Kate::Document *doc);
     void slotViewChanged ();
     void slotMenu ( TQListViewItem *item, const TQPoint &p, int col );
+    void updateFileListLocations();
 
   protected:
     virtual void keyPressEvent( TQKeyEvent *e );

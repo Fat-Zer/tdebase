@@ -455,7 +455,8 @@ void KateDocManager::saveDocumentList (KConfig* config)
   int i=0;
   for ( Kate::Document *doc = m_docList.first(); doc; doc = m_docList.next() )
   {
-    config->setGroup(TQString("Document %1").arg(i));
+    long docListPos = doc->documentListPosition();
+    config->setGroup(TQString("Document %1").arg((docListPos<0)?i:docListPos));
     doc->writeSessionConfig(config);
     config->setGroup(grp);
 
