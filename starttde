@@ -69,7 +69,7 @@ unset DYLD_FORCE_FLAT_NAMESPACE
 if [ "$TDE_IS_PRELINKED" = "" ]; then
   if [ -r /etc/default/prelink ]; then
     . /etc/default/prelink
-    if [ "$PRELINKING" == "yes" ]; then
+    if [ "$PRELINKING" = "yes" ]; then
       export TDE_IS_PRELINKED=1
     fi
   fi
@@ -380,7 +380,7 @@ fi
 # Configuration of the gtk_qt_engine if not already set.
 
 if test -n "$TDEDIRS"; then
-  tdedirs_first=`echo "$TDEDIRS" | sed -e 's/:.*//'`
+  tdedirs_first=${TDEDIRS%%:*}
   TGTK_RC_ENGINE=$tdedirs_first/share/kgtk/gtk-qt-engine.rc.sh
   TGTK_RC_TDE1=$tdedirs_first/share/kgtk/.gtkrc-2.0-kde4
   TGTK_RC_TDE2=$tdedirs_first/share/kgtk/.gtkrc-2.0-kde-kde4
@@ -473,7 +473,7 @@ echo "[starttde] TDEDIR: $TDEDIR" 1>&2
 echo "[starttde] TDEDIRS: $TDEDIRS" 1>&2
 
 if test -n "$TDEDIRS"; then
-  tdedirs_first=`echo "$TDEDIRS" | sed -e 's/:.*//'`
+  tdedirs_first=${TDEDIRS%%:*}
   sys_odir=$tdedirs_first/share/fonts/override
   sys_fdir=$tdedirs_first/share/fonts
 else
@@ -482,7 +482,7 @@ else
 fi
 
 if test -n "$TDEDIRS"; then
-  tdedirs_first=`echo "$TDEDIRS" | sed -e 's/:.*//'`
+  tdedirs_first=${TDEDIRS%%:*}
   echo "[starttde] tdedirs_first: $tdedirs_first"
   if [ -r $tdedirs_first/share/kgtk/preload ]; then
     echo "[starttde] Reading from $tdedirs_first/share/kgtk/preload"
@@ -498,7 +498,7 @@ if [ "$TGTK_PRELOAD" != "" ]; then
   if [ -e /usr/lib64/libnspr4.so ]; then
     TGTK_NSPR_PRELOAD="/usr/lib64/libnspr4.so:"
   elif [ -e /usr/lib/libnspr4.so ]; then
-    TGTK_NSPR_PRELOAD="/usr/libnspr4.so:"
+    TGTK_NSPR_PRELOAD="/usr/lib/libnspr4.so:"
   fi
   export LD_PRELOAD=$TGTK_PRELOAD:$KGTK_NSPR_PRELOAD$LD_PRELOAD
 fi
@@ -625,7 +625,7 @@ TDE_FULL_SESSION=true
 export TDE_FULL_SESSION
 xprop -root -f TDE_FULL_SESSION 8t -set TDE_FULL_SESSION true
 echo "[starttde] TDE_FULL_SESSION: $TDE_FULL_SESSION" 1>&2
-TDE_SESSION_UID=$UID
+TDE_SESSION_UID=`id -u`
 export TDE_SESSION_UID
 echo "[starttde] TDE_SESSION_UID: $TDE_SESSION_UID" 1>&2
 
