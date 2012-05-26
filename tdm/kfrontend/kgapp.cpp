@@ -452,33 +452,37 @@ kg_main( const char *argv0 )
 	KGVerify::done();
 
 	if (comp) {
-		if (_compositor == "kompmgr") {
-			// Change process UID
-			// Get user UID
-			passwd* userinfo = getpwnam(login_user.ascii());
-			if (userinfo) {
-				TQString newuid = TQString("%1").arg(userinfo->pw_uid);
-				// kompmgr allows us to change its uid in this manner:
-				// 1.) Send SIGUSER1
-				// 2.) Send the new UID to it on the command line
-				comp->kill(SIGUSR1);
-				comp->writeStdin(newuid.ascii(), newuid.length());
-				usleep(50000);	// Give the above function some time to execute.  Note that on REALLY slow systems this could fail, leaving kompmgr running as root.  TODO: Look into ways to make this more robust.
+		if (comp->isRunning()) {
+			if (_compositor == "kompmgr") {
+				// Change process UID
+				// Get user UID
+				passwd* userinfo = getpwnam(login_user.ascii());
+				if (userinfo) {
+					TQString newuid = TQString("%1").arg(userinfo->pw_uid);
+					// kompmgr allows us to change its uid in this manner:
+					// 1.) Send SIGUSER1
+					// 2.) Send the new UID to it on the command line
+					comp->kill(SIGUSR1);
+					comp->writeStdin(newuid.ascii(), newuid.length());
+					usleep(50000);	// Give the above function some time to execute.  Note that on REALLY slow systems this could fail, leaving kompmgr running as root.  TODO: Look into ways to make this more robust.
+				}
 			}
+			comp->closeStdin();
+			comp->detach();
 		}
-		comp->closeStdin();
-		comp->detach();
 		delete comp;
 	}
 	if (twin) {
-		if (login_session_wm.endsWith("/starttde") || (login_session_wm == "failsafe")) {
-			twin->closeStdin();
-			twin->detach();
-			dcop->detach();
-		}
-		else {
-			twin->kill();
-			dcop->kill();
+		if (twin->isRunning()) {
+			if (login_session_wm.endsWith("/starttde") || (login_session_wm == "failsafe")) {
+				twin->closeStdin();
+				twin->detach();
+				dcop->detach();
+			}
+			else {
+				twin->kill();
+				dcop->kill();
+			}
 		}
 		delete twin;
 		delete dcop;
