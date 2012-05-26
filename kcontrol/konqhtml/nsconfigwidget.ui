@@ -86,10 +86,10 @@
                             <cstring>scanAtStartup</cstring>
                         </property>
                         <property name="text">
-                            <string>Scan for new plugins at &amp;KDE startup</string>
+                            <string>Scan for new plugins at &amp;TDE startup</string>
                         </property>
                         <property name="whatsThis" stdset="0">
-                            <string>If this option is enabled, KDE will look for new Netscape plugins every time it starts up. This makes it easier for you if you often install new plugins, but it may also slow down KDE startup. You might want to disable this option, especially if you seldom install plugins.</string>
+                            <string>If this option is enabled, TDE will look for new Netscape plugins every time it starts up. This makes it easier for you if you often install new plugins, but it may also slow down TDE startup. You might want to disable this option, especially if you seldom install plugins.</string>
                         </property>
                     </widget>
                     <widget class="TQGroupBox">
@@ -236,7 +236,7 @@
                             <bool>true</bool>
                         </property>
                         <property name="whatsThis" stdset="0">
-                            <string>Here you can see a list of the Netscape plugins KDE has found.</string>
+                            <string>Here you can see a list of the Netscape plugins TDE has found.</string>
                         </property>
                     </widget>
                     <widget class="TQCheckBox" row="0" column="0">

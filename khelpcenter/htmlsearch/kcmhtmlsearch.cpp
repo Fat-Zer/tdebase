@@ -103,12 +103,12 @@ KHTMLSearchConfig::KHTMLSearchConfig(TQWidget *parent, const char *name)
 
   gb = new TQGroupBox(i18n("Scope"), this);
   hbox->addWidget(gb);
-  TQWhatsThis::add( gb, i18n( "Here you can select which parts of the documentation should be included in the fulltext search index. Available options are the KDE Help pages, the installed man pages, and the installed info pages. You can select any number of these." ) );
+  TQWhatsThis::add( gb, i18n( "Here you can select which parts of the documentation should be included in the fulltext search index. Available options are the TDE Help pages, the installed man pages, and the installed info pages. You can select any number of these." ) );
 
   TQVBoxLayout *vvbox = new TQVBoxLayout(gb, 6,2);
   vvbox->addSpacing(gb->fontMetrics().lineSpacing());
 
-  indexKDE = new TQCheckBox(i18n("&KDE help"), gb);
+  indexKDE = new TQCheckBox(i18n("&TDE help"), gb);
   vvbox->addWidget(indexKDE);
   connect(indexKDE, TQT_SIGNAL(clicked()), this, TQT_SLOT(configChanged()));
 
@@ -200,7 +200,7 @@ void KHTMLSearchConfig::loadLanguages()
 
 TQString KHTMLSearchConfig::quickHelp() const
 {
-    return i18n( "<h1>Help Index</h1> This configuration module lets you configure the ht://dig engine which can be used for fulltext search in the KDE documentation as well as other system documentation like man and info pages." );
+    return i18n( "<h1>Help Index</h1> This configuration module lets you configure the ht://dig engine which can be used for fulltext search in the TDE documentation as well as other system documentation like man and info pages." );
 }
 
 

@@ -29,7 +29,7 @@
     <entry key="CacheSize" type="Int">
       <default>2048</default>
       <label>Background cache size</label>
-      <whatsthis>Here you can enter how much memory KDE should use for caching the background(s). If you have different backgrounds for the different desktops caching can make switching desktops smoother at the expense of higher memory use.</whatsthis>
+      <whatsthis>Here you can enter how much memory TDE should use for caching the background(s). If you have different backgrounds for the different desktops caching can make switching desktops smoother at the expense of higher memory use.</whatsthis>
     </entry>
     <entry key="BackgroundOpacity" type="Int">
       <default>100</default>

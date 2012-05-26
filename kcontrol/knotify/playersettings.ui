@@ -217,7 +217,7 @@
                         <cstring>cbArts</cstring>
                     </property>
                     <property name="text">
-                        <string>Use the &amp;KDE sound system</string>
+                        <string>Use the &amp;TDE sound system</string>
                     </property>
                     <property name="checked">
                         <bool>true</bool>
