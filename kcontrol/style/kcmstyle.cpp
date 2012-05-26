@@ -73,21 +73,21 @@
 // Danimo: Why do we use the old interface?!
 extern "C"
 {
-    KDE_EXPORT KCModule *create_style(TQWidget *parent, const char*)
+    _EXPORT KCModule *create_style(TQWidget *parent, const char*)
     {
         KGlobal::locale()->insertCatalogue("kcmstyle");
         return new KCMStyle(parent, "kcmstyle");
     }
 
-    KDE_EXPORT void init_style()
+    _EXPORT void init_style()
     {
         uint flags = KRdbExportQtSettings | KRdbExportQtColors | KRdbExportXftSettings;
         KConfig config("kcmdisplayrc", true /*readonly*/, false /*don't read kdeglobals etc.*/);
         config.setGroup("X11");
 
         // This key is written by the "colors" module.
-        bool exportKDEColors = config.readBoolEntry("exportKDEColors", true);
-        if (exportKDEColors)
+        bool exportColors = config.readBoolEntry("exportColors", true);
+        if (exportColors)
             flags |= KRdbExportColors;
         runRdb( flags );
 
@@ -469,7 +469,7 @@ void KCMStyle::styleSpecificConfig()
 		// Force re-rendering of the preview, to apply settings
 		switchStyle(currentStyle(), true);
 
-		//For now, ask all KDE apps to recreate their styles to apply the setitngs
+		//For now, ask all  apps to recreate their styles to apply the setitngs
 		KIPC::sendMessageAll(KIPC::StyleChanged);
 
 		// We call setStyleDirty here to make sure we force style re-creation
@@ -560,7 +560,7 @@ void KCMStyle::save()
 
 	// Save effects.
 	KConfig config( "kdeglobals" );
-	config.setGroup("KDE");
+	config.setGroup("");
 
 	config.writeEntry( "EffectsEnabled", cbEnableEffects->isChecked());
 	int item = comboComboEffect->currentItem();
@@ -632,13 +632,13 @@ void KCMStyle::save()
 		uint flags = KRdbExportQtSettings;
 		KConfig kconfig("kcmdisplayrc", true /*readonly*/, false /*no globals*/);
 		kconfig.setGroup("X11");
-		bool exportKDEColors = kconfig.readBoolEntry("exportKDEColors", true);
-		if (exportKDEColors)
+		bool exportColors = kconfig.readBoolEntry("exportColors", true);
+		if (exportColors)
 			flags |= KRdbExportColors;
 		runRdb( flags );
 	}
 
-	// Now allow KDE apps to reconfigure themselves.
+	// Now allow  apps to reconfigure themselves.
 	if ( m_bStyleDirty )
 		KIPC::sendMessageAll(KIPC::StyleChanged);
 
@@ -727,10 +727,10 @@ void KCMStyle::loadStyle( KConfig& config )
 	for (TQStringList::iterator it = list.begin(); it != list.end(); ++it)
 	{
 		KSimpleConfig config( *it, true );
-		if ( !(config.hasGroup("KDE") && config.hasGroup("Misc")) )
+		if ( !(config.hasGroup("") && config.hasGroup("Misc")) )
 			continue;
 
-		config.setGroup("KDE");
+		config.setGroup("");
 
 		strWidgetStyle = config.readEntry("WidgetStyle");
 		if (strWidgetStyle.isNull())
@@ -893,7 +893,7 @@ void KCMStyle::setStyleRecursive(TQWidget* w, TQStyle* s)
 void KCMStyle::loadEffects( KConfig& config )
 {
 	// Load effects.
-	config.setGroup("KDE");
+	config.setGroup("");
 
 	cbEnableEffects->setChecked( config.readBoolEntry( "EffectsEnabled", false) );
 
@@ -1009,7 +1009,7 @@ void KCMStyle::menuEffectChanged( bool enabled )
 
 void KCMStyle::loadMisc( KConfig& config )
 {
-	// KDE's Part via KConfig
+	// 's Part via KConfig
 	config.setGroup("Toolbar style");
 	cbHoverButtons->setChecked(config.readBoolEntry("Highlighting", true));
 	cbTransparentToolbars->setChecked(config.readBoolEntry("TransparentMoving", true));
@@ -1024,7 +1024,7 @@ void KCMStyle::loadMisc( KConfig& config )
 	else
 		comboToolbarIcons->setCurrentItem(0);
 
-	config.setGroup("KDE");
+	config.setGroup("");
 	cbIconsOnButtons->setChecked(config.readBoolEntry("ShowIconsOnPushButtons", false));
 	cbEnableTooltips->setChecked(!config.readBoolEntry("EffectNoTooltip", false));
 	cbTearOffHandles->setChecked(config.readBoolEntry("InsertTearOffHandle", false));
@@ -1060,9 +1060,9 @@ void KCMStyle::addWhatsThis()
 	TQWhatsThis::add( comboMenuEffect, i18n( "<p><b>Disable: </b>do not use any menu effects.</p>\n"
 							"<p><b>Animate: </b>Do some animation.</p>\n"
 							"<p><b>Fade: </b>Fade in menus using alpha-blending.</p>\n"
-							"<b>Make Translucent: </b>Alpha-blend menus for a see-through effect. (KDE styles only)") );
+							"<b>Make Translucent: </b>Alpha-blend menus for a see-through effect. ( styles only)") );
 	TQWhatsThis::add( cbMenuShadow, i18n( "When enabled, all popup menus will have a drop-shadow, otherwise "
-							"drop-shadows will not be displayed. At present, only KDE styles can have this "
+							"drop-shadows will not be displayed. At present, only  styles can have this "
 							"effect enabled.") );
 	TQWhatsThis::add( comboMenuEffectType, i18n( "<p><b>Software Tint: </b>Alpha-blend using a flat color.</p>\n"
 							"<p><b>Software Blend: </b>Alpha-blend using an image.</p>\n"
@@ -1078,7 +1078,7 @@ void KCMStyle::addWhatsThis()
 							"their color when the mouse cursor is moved over them." ) );
 	TQWhatsThis::add( cbTransparentToolbars, i18n("If you check this box, the toolbars will be "
 							"transparent when moving them around.") );
-	TQWhatsThis::add( cbEnableTooltips, i18n( "If you check this option, the KDE application "
+	TQWhatsThis::add( cbEnableTooltips, i18n( "If you check this option, the TDE application "
 							"will offer tooltips when the cursor remains over items in the toolbar." ) );
 	TQWhatsThis::add( comboToolbarIcons, i18n( "<p><b>Icons only:</b> Shows only icons on toolbar buttons. "
 							"Best option for low resolutions.</p>"

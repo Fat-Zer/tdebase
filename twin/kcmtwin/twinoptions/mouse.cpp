@@ -673,7 +673,7 @@ KWindowActionsConfig::KWindowActionsConfig (bool _standAlone, KConfig *_config, 
   box->layout()->setMargin(KDialog::marginHint());
   box->layout()->setSpacing(KDialog::spacingHint());
   layout->addWidget(box);
-  TQWhatsThis::add( box, i18n("Here you can customize KDE's behavior when clicking somewhere into"
+  TQWhatsThis::add( box, i18n("Here you can customize TDE's behavior when clicking somewhere into"
                              " a window while pressing a modifier key."));
 
   grid = new TQGrid(5, Qt::Vertical, box);
@@ -704,7 +704,7 @@ KWindowActionsConfig::KWindowActionsConfig (bool _standAlone, KConfig *_config, 
   TQWhatsThis::add( label, strAll1);
 
   label = new TQLabel(i18n("Modifier key + middle button:"), grid);
-  strAll2 = i18n("Here you can customize KDE's behavior when middle clicking into a window"
+  strAll2 = i18n("Here you can customize TDE's behavior when middle clicking into a window"
                  " while pressing the modifier key.");
   TQWhatsThis::add( label, strAll2 );
 
@@ -712,7 +712,7 @@ KWindowActionsConfig::KWindowActionsConfig (bool _standAlone, KConfig *_config, 
   TQWhatsThis::add( label, strAll3);
 
   label = new TQLabel(i18n("Modifier key + mouse wheel:"), grid);
-  strAllW = i18n("Here you can customize KDE's behavior when scrolling with the mouse wheel"
+  strAllW = i18n("Here you can customize TDE's behavior when scrolling with the mouse wheel"
       "  in a window while pressing the modifier key.");
   TQWhatsThis::add( label, strAllW);
 

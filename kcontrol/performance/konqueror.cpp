@@ -66,13 +66,13 @@ Konqueror::Konqueror( TQWidget* parent_P )
     TQWhatsThis::add( sb_preload_count, tmp );
     TQWhatsThis::add( lb_preload_count, tmp );
     TQWhatsThis::add( cb_preload_on_startup,
-        i18n( "If enabled, an instance of Konqueror will be preloaded after the ordinary KDE "
+        i18n( "If enabled, an instance of Konqueror will be preloaded after the ordinary TDE "
               "startup sequence."
               "<p>This will make the first Konqueror window open faster, but "
-              "at the expense of longer KDE startup times (but you will be able to work "
+              "at the expense of longer TDE startup times (but you will be able to work "
               "while it is loading, so you may not even notice that it is taking longer)." ));
     TQWhatsThis::add( cb_always_have_preloaded,
-        i18n( "If enabled, KDE will always try to have one preloaded Konqueror instance ready; "
+        i18n( "If enabled, TDE will always try to have one preloaded Konqueror instance ready; "
               "preloading a new instance in the background whenever there is not one available, "
               "so that windows will always open quickly."
               "<p><b>Warning:</b> In some cases, it is actually possible that this will "

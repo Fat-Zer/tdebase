@@ -624,7 +624,7 @@ KFonts::KFonts(TQWidget *parent, const char *name, const TQStringList &)
    cbAA->insertItem( i18n( "Enabled" )); // change AASetting type if order changes
    cbAA->insertItem( i18n( "System settings" ));
    cbAA->insertItem( i18n( "Disabled" ));
-   TQWhatsThis::add(cbAA, i18n("If this option is selected, KDE will smooth the edges of curves in "
+   TQWhatsThis::add(cbAA, i18n("If this option is selected, TDE will smooth the edges of curves in "
                               "fonts."));
    aaSettingsButton = new TQPushButton( i18n( "Configure..." ), this);
    connect(aaSettingsButton, TQT_SIGNAL(clicked()), TQT_SLOT(slotCfgAa()));

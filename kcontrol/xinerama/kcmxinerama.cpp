@@ -53,7 +53,7 @@ KCMXinerama::KCMXinerama(TQWidget *parent, const char *name)
 	about->addAuthor("George Staikos", 0, "staikos@kde.org");
 	setAboutData( about );
 
-	setQuickHelp( i18n("<h1>Multiple Monitors</h1> This module allows you to configure KDE support"
+	setQuickHelp( i18n("<h1>Multiple Monitors</h1> This module allows you to configure TDE support"
      " for multiple monitors."));
 
 	config = new KConfig("kdeglobals", false, false);
@@ -184,7 +184,7 @@ void KCMXinerama::save() {
 		ksplashrc->sync();
 	}
 
-	KMessageBox::information(this, i18n("Your settings will only affect newly started applications."), i18n("KDE Multiple Monitors"), "nomorexineramaplease");
+	KMessageBox::information(this, i18n("Your settings will only affect newly started applications."), i18n("TDE Multiple Monitors"), "nomorexineramaplease");
 
 	emit changed(false);
 }

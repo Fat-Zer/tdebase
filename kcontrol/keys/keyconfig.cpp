@@ -131,7 +131,7 @@ void KKeyModule::init( bool isGlobal, bool _bSeriesOnly, bool bSeriesNone )
   removeBt->setEnabled(FALSE);
   connect( removeBt, TQT_SIGNAL( clicked() ), TQT_SLOT( slotRemove() ) );
   TQWhatsThis::add( removeBt, i18n("Click here to remove the selected key bindings scheme. You can not"
-    " remove the standard system wide schemes, 'Current scheme' and 'KDE default'.") );
+    " remove the standard system wide schemes, 'Current scheme' and 'TDE default'.") );
 
   // Hack to get this setting only displayed once.  It belongs in main.cpp instead.
   // That move will take a lot of UI redesigning, though, so i'll do it once CVS
@@ -145,7 +145,7 @@ void KKeyModule::init( bool isGlobal, bool _bSeriesOnly, bool bSeriesNone )
 	preferMetaBt->setChecked( KKeySequence::useFourModifierKeys() );
 	connect( preferMetaBt, TQT_SIGNAL(clicked()), TQT_SLOT(slotPreferMeta()) );
 	TQWhatsThis::add( preferMetaBt, i18n("If your keyboard has a Meta key, but you would "
-		"like KDE to prefer the 3-modifier configuration defaults, then this option "
+		"like TDE to prefer the 3-modifier configuration defaults, then this option "
 		"should be unchecked.") );
   } else
 	preferMetaBt = 0;
@@ -434,18 +434,18 @@ void KKeyModule::readScheme( int index )
   sFileList->clear();
   sList->insertItem( i18n("Current Scheme"), 0 );
   sFileList->append( "Not a kcsrc file" );
-  sList->insertItem( i18n("KDE Traditional"), 1 );
+  sList->insertItem( i18n("TDE Traditional"), 1 );
   sFileList->append( "Not a kcsrc file" );
-  //sList->insertItem( i18n("KDE Extended (With 'Win' Key)"), 2 );
-  //sList->insertItem( i18n("KDE Default for 4 Modifiers (Meta/Alt/Ctrl/Shift)"), 2 );
+  //sList->insertItem( i18n("TDE Extended (With 'Win' Key)"), 2 );
+  //sList->insertItem( i18n("TDE Default for 4 Modifiers (Meta/Alt/Ctrl/Shift)"), 2 );
   //sFileList->append( "Not a kcsrc file" );
   nSysSchemes = 2;
 
   // This for system files
   for ( TQStringList::ConstIterator it = schemes.begin(); it != schemes.end(); ++it) {
     // KPersonalizer relies on .kksrc files containing all the keyboard shortcut
-    //  schemes for various setups.  It also requires the KDE defaults to be in
-    //  a .kksrc file.  The KDE defaults shouldn't be listed here.
+    //  schemes for various setups.  It also requires the TDE defaults to be in
+    //  a .kksrc file.  The TDE defaults shouldn't be listed here.
     //if( r.search( *it ) != -1 )
     //   continue;
 

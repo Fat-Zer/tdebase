@@ -95,9 +95,9 @@ TQString ShortcutsModule::quickHelp() const
 {
   return i18n("<h1>Key Bindings</h1> Using key bindings you can configure certain actions to be"
     " triggered when you press a key or a combination of keys, e.g. Ctrl+C is normally bound to"
-    " 'Copy'. KDE allows you to store more than one 'scheme' of key bindings, so you might want"
+    " 'Copy'. TDE allows you to store more than one 'scheme' of key bindings, so you might want"
     " to experiment a little setting up your own scheme while you can still change back to the"
-    " KDE defaults.<p> In the tab 'Global Shortcuts' you can configure non-application specific"
+    " TDE defaults.<p> In the tab 'Global Shortcuts' you can configure non-application specific"
     " bindings like how to switch desktops or maximize a window. In the tab 'Application Shortcuts'"
     " you will find bindings typically used in applications, such as copy and paste.");
 }
@@ -155,7 +155,7 @@ void ShortcutsModule::initGUI()
 	m_pbtnRemove->setEnabled( false );
 	connect( m_pbtnRemove, TQT_SIGNAL(clicked()), TQT_SLOT(slotRemoveScheme()) );
 	TQWhatsThis::add( m_pbtnRemove, i18n("Click here to remove the selected key bindings scheme. You cannot"
-		" remove the standard system-wide schemes 'Current scheme' and 'KDE default'.") );
+		" remove the standard system-wide schemes 'Current scheme' and 'TDE default'.") );
 	pHLayout->addWidget( m_pbtnRemove );
 
 	pHLayout->addSpacing( KDialog::marginHint() * 3 );
@@ -276,8 +276,8 @@ void ShortcutsModule::readSchemeNames()
 	// This for system files
 	for ( TQStringList::ConstIterator it = schemes.begin(); it != schemes.end(); ++it) {
 	// KPersonalizer relies on .kksrc files containing all the keyboard shortcut
-	//  schemes for various setups.  It also requires the KDE defaults to be in
-	//  a .kksrc file.  The KDE defaults shouldn't be listed here.
+	//  schemes for various setups.  It also requires the TDE defaults to be in
+	//  a .kksrc file.  The TDE defaults shouldn't be listed here.
 		//if( r.search( *it ) != -1 )
 		//   continue;
 
