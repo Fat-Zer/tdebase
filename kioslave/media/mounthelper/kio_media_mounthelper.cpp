@@ -208,7 +208,7 @@ void MountHelper::ejectFinished(KProcess* proc)
 			else
 				m_errorStr = i18n("The device was successfully unmounted, but could not be ejected");
 		}
-//X Comment this because the error is useless as long as the unmount is successfull. 
+//X Comment this because the error is useless as long as the unmount is successful.
 //X 		TQTimer::singleShot(0, this, TQT_SLOT(error()));
       ::exit(0);
 	}
@@ -216,7 +216,13 @@ void MountHelper::ejectFinished(KProcess* proc)
 
 void MountHelper::error()
 {
-	KMessageBox::error(0, m_errorStr);
+	TQString prettyErrorString = m_errorStr;
+	if (m_errorStr.contains("<") && m_errorStr.contains(">")) {
+		if (!m_errorStr.contains("<qt>")) {
+			prettyErrorString = TQString("<qt>%1</qt>").arg(m_errorStr);
+		}
+	}
+	KMessageBox::error(0, prettyErrorString);
 	::exit(1);
 }
 
