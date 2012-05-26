@@ -10,7 +10,7 @@ significance="preferred"><primary>Panel</primary></indexterm>
 <indexterm
 significance="preferred"><primary>&kicker;</primary></indexterm>
 
-<para>&kicker; is the application launcher panel of the K Desktop
+<para>&kicker; is the application launcher panel of the Trinity Desktop
 Environment.  By default, it appears along the bottom of the screen,
 and takes up the whole of the width of the screen, but this is
 configurable. &kicker; is something of a one-stop shop for (almost!)

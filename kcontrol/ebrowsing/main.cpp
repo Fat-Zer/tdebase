@@ -47,14 +47,14 @@ KURIFilterModule::KURIFilterModule(TQWidget *parent, const char *name, const TQS
     filter = KURIFilter::self();
 
     setQuickHelp( i18n("<h1>Enhanced Browsing</h1> In this module you can configure some enhanced browsing"
-      " features of KDE. <h2>Internet Keywords</h2>Internet Keywords let you"
+      " features of TDE. <h2>Internet Keywords</h2>Internet Keywords let you"
       " type in the name of a brand, a project, a celebrity, etc... and go to the"
       " relevant location. For example you can just type"
-      " \"KDE\" or \"K Desktop Environment\" in Konqueror to go to KDE's homepage."
+      " \"TDE\" or \"Trinity Desktop Environment\" in Konqueror to go to TDE's homepage."
       "<h2>Web Shortcuts</h2>Web Shortcuts are a quick way of using Web search engines. For example, type \"altavista:frobozz\""
       " or \"av:frobozz\" and Konqueror will do a search on AltaVista for \"frobozz\"."
       " Even easier: just press Alt+F2 (if you have not"
-      " changed this shortcut) and enter the shortcut in the KDE Run Command dialog."));
+      " changed this shortcut) and enter the shortcut in the TDE Run Command dialog."));
 
     TQVBoxLayout *layout = new TQVBoxLayout(this);
 
