@@ -71,7 +71,7 @@ TopLevel* topLevel;
 TopLevel::TopLevel( const char *name )
   : KMainWindow( 0, name ), DCOPObject( "KSysGuardIface" )
 {
-  setPlainCaption( i18n( "KDE System Guard" ) );
+  setPlainCaption( i18n( "TDE System Guard" ) );
   mDontSaveSession = false;
   mTimerId = -1;
 

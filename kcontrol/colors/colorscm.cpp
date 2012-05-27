@@ -225,7 +225,7 @@ KColorScheme::KColorScheme(TQWidget *parent, const char *name, const TQStringLis
     groupLayout->addWidget(wcCombo);
 
     TQWhatsThis::add( wcCombo, i18n("Click here to select an element of"
-       " the KDE desktop whose color you want to change. You may either"
+       " the TDE desktop whose color you want to change. You may either"
        " choose the \"widget\" here, or click on the corresponding part"
        " of the preview image above.") );
 
@@ -856,7 +856,7 @@ void KColorScheme::readSchemeNames()
     sList->clear();
     // Always a current and a default scheme
     sList->insertItem( i18n("Current Scheme"), 0 );
-    sList->insertItem( i18n("KDE Default"), 1 );
+    sList->insertItem( i18n("TDE Default"), 1 );
     nSysSchemes = 2;
 
     // Global + local schemes

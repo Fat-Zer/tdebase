@@ -85,7 +85,7 @@ bool MediaImpl::statMedium(const TQString &name, KIO::UDSEntry &entry)
 	if ( !reply.isValid() )
 	{
 		m_lastErrorCode = KIO::ERR_SLAVE_DEFINED;
-		m_lastErrorMessage = i18n("The KDE mediamanager is not running.");
+		m_lastErrorMessage = i18n("The TDE mediamanager is not running.");
 		return false;
 	}
 
@@ -112,7 +112,7 @@ bool MediaImpl::statMediumByLabel(const TQString &label, KIO::UDSEntry &entry)
 	if ( !reply.isValid() )
 	{
 		m_lastErrorCode = KIO::ERR_SLAVE_DEFINED;
-		m_lastErrorMessage = i18n("The KDE mediamanager is not running.");
+		m_lastErrorMessage = i18n("The TDE mediamanager is not running.");
 		return false;
 	}
 
@@ -138,7 +138,7 @@ bool MediaImpl::listMedia(TQValueList<KIO::UDSEntry> &list)
 	if ( !reply.isValid() )
 	{
 		m_lastErrorCode = KIO::ERR_SLAVE_DEFINED;
-		m_lastErrorMessage = i18n("The KDE mediamanager is not running.");
+		m_lastErrorMessage = i18n("The TDE mediamanager is not running.");
 		return false;
 	}
 
@@ -174,7 +174,7 @@ bool MediaImpl::setUserLabel(const TQString &name, const TQString &label)
 	if ( !reply.isValid() )
 	{
 		m_lastErrorCode = KIO::ERR_SLAVE_DEFINED;
-		m_lastErrorMessage = i18n("The KDE mediamanager is not running.");
+		m_lastErrorMessage = i18n("The TDE mediamanager is not running.");
 		return false;
 	}
 	else
@@ -194,7 +194,7 @@ bool MediaImpl::setUserLabel(const TQString &name, const TQString &label)
 	if ( !reply.isValid() )
 	{
 		m_lastErrorCode = KIO::ERR_SLAVE_DEFINED;
-		m_lastErrorMessage = i18n("The KDE mediamanager is not running.");
+		m_lastErrorMessage = i18n("The TDE mediamanager is not running.");
 		return false;
 	}
 	else
@@ -215,7 +215,7 @@ const Medium MediaImpl::findMediumByName(const TQString &name, bool &ok)
 	else
 	{
 		m_lastErrorCode = KIO::ERR_SLAVE_DEFINED;
-		m_lastErrorMessage = i18n("The KDE mediamanager is not running.");
+		m_lastErrorMessage = i18n("The TDE mediamanager is not running.");
 		ok = false;
 	}
 

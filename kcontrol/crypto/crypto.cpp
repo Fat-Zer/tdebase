@@ -448,7 +448,7 @@ TQString whatstr;
 
   yourSSLBox = new TQListView(tabYourSSLCert);
   yourSSLBox->setAllColumnsShowFocus(true);
-  whatstr = i18n("This list box shows which certificates of yours KDE"
+  whatstr = i18n("This list box shows which certificates of yours TDE"
                 " knows about. You can easily manage them from here.");
   TQWhatsThis::add(yourSSLBox, whatstr);
   grid->addMultiCellWidget(yourSSLBox, 0, 5, 0, 4);
@@ -608,7 +608,7 @@ TQString whatstr;
   otherSSLBox = new TQListView(tabOtherSSLCert);
   otherSSLBox->setAllColumnsShowFocus(true);
   connect(otherSSLBox, TQT_SIGNAL(selectionChanged()), TQT_SLOT(slotOtherCertSelect()));
-  whatstr = i18n("This list box shows which site and person certificates KDE"
+  whatstr = i18n("This list box shows which site and person certificates TDE"
                 " knows about. You can easily manage them from here.");
   TQWhatsThis::add(otherSSLBox, whatstr);
   otherSSLBox->addColumn(i18n("Organization"));
@@ -722,7 +722,7 @@ TQString whatstr;
 
   caList = new TQListView(tabSSLCA);
   caList->setAllColumnsShowFocus(true);
-  whatstr = i18n("This list box shows which certificate authorities KDE"
+  whatstr = i18n("This list box shows which certificate authorities TDE"
                  " knows about. You can easily manage them from here.");
   TQWhatsThis::add(caList, whatstr);
   grid->addMultiCellWidget(caList, 0, 3, 0, 6);
@@ -2047,7 +2047,7 @@ CAItem *x = static_cast<CAItem *>(caList->selectedItem());
 
 void KCryptoConfig::slotCARestore() {
 
- int rc = KMessageBox::warningContinueCancel(this, i18n("This will revert your certificate signers database to the KDE default.\nThis operation cannot be undone.\nAre you sure you wish to continue?"), i18n("SSL"),i18n("Revert"));
+ int rc = KMessageBox::warningContinueCancel(this, i18n("This will revert your certificate signers database to the TDE default.\nThis operation cannot be undone.\nAre you sure you wish to continue?"), i18n("SSL"),i18n("Revert"));
       if (rc == KMessageBox::Cancel) {
           return;
       }

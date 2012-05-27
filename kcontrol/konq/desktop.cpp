@@ -74,7 +74,7 @@ KDesktopConfig::KDesktopConfig(TQWidget *parent, const char * /*name*/)
   connect(_numInput, TQT_SIGNAL(valueChanged(int)), TQT_SLOT(slotValueChanged(int)));
   connect(_numInput, TQT_SIGNAL(valueChanged(int)),  TQT_SLOT( changed() ));
   label->setBuddy( _numInput );
-  TQString wtstr = i18n( "Here you can set how many virtual desktops you want on your KDE desktop. Move the slider to change the value." );
+  TQString wtstr = i18n( "Here you can set how many virtual desktops you want on your TDE desktop. Move the slider to change the value." );
   TQWhatsThis::add( label, wtstr );
   TQWhatsThis::add( _numInput, wtstr );
 

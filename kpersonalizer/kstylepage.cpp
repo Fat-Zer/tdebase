@@ -53,7 +53,7 @@ KStylePage::KStylePage(TQWidget *parent, const char *name ) : KStylePageDlg(pare
 
 	kde = new TQListViewItem( klv_styles);
 	kde->setText( 0, TQPixmap::defaultDepth() > 8 ? i18n( "Plastik" ) : i18n( "Light" ) );
-	kde->setText( 1, i18n( "KDE default style" ) );
+	kde->setText( 1, i18n( "TDE default style" ) );
 
 	classic = new TQListViewItem( klv_styles);
 	classic->setText( 0, i18n( "KDE Classic" ) );

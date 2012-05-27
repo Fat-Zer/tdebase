@@ -79,7 +79,7 @@ public:
 //---------------------------------------------------------------------------------------------------------
 	/** Enable fading tooltips in Level 7 */
 	void enableFadingToolTips(bool enable);
-	/** enables/disables fading menus which are off by default in KDE. Enable this in Level 9 */
+	/** enables/disables fading menus which are off by default in TDE. Enable this in Level 9 */
 	void enableFadingMenus(bool enable);
 	/** Enable animated combo boxes, see styles kcontrol module. Enable in Level 4 (disabled by default anyway, so doesn't need to be
 		disabled in levels below 4) */
@@ -94,7 +94,7 @@ public:
 	/** Enable Antialiased fonts. Maybe a check if the chard can do this with xdpyinfo | grep RENDER here would bring up if
 		the user can do this or not. Enable in Level 7. */
 	void enableAntialiasingFonts(bool enable, bool reset);
-	/** Enables the default KDE sound scheme in Level 3 */
+	/** Enables the default TDE sound scheme in Level 3 */
 	void enableSoundScheme(bool enable, bool user);
 //---------------------------------------------------------------------------------------------------------
 
@@ -102,7 +102,7 @@ public:
 	/** save function to enable/disable the according settings that are made in the QCheckListItems of the
 		Eyecandy page by default. If currSettings is false, the user's default settings will be restored*/
 	void save(bool currSettings=true);
-	/** sets the slider to the default value of Level 4 (KDE Default) and the checklistboxes on
+	/** sets the slider to the default value of Level 4 (TDE Default) and the checklistboxes on
 		that belong to this level */
 	void setDefaults();
 	/** as the preview entries in the rc files (konqiconviewrc and kdesktoprc) are a string list and
@@ -113,7 +113,7 @@ public:
 		as in case the user quits, we have to set these states again in saveUserDefaults to what they were
 		prior to running kpersonalizer */
 	void saveCheckState(bool currSettings);
-	/** retrieves the user's local values. In case he doesn't have these set, use the default values of KDE, level 4. */
+	/** retrieves the user's local values. In case he doesn't have these set, use the default values of TDE, level 4. */
 	void getUserDefaults();
 	void getUserSoundScheme();
 

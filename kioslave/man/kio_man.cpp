@@ -602,7 +602,7 @@ void MANProtocol::outputError(const TQString& errmsg)
     if ( !m_manCSSFile.isEmpty() )
         os << "<link href=\"file:///" << m_manCSSFile << "\" type=\"text/css\" rel=\"stylesheet\">" << endl;
     os << "</head>" << endl;
-    os << i18n("<body><h1>KDE Man Viewer Error</h1>") << errmsg << "</body>" << endl;
+    os << i18n("<body><h1>TDE Man Viewer Error</h1>") << errmsg << "</body>" << endl;
     os << "</html>" << endl;
 
     data(array);
@@ -1527,7 +1527,7 @@ void MANProtocol::getProgramPath()
     return;
 
   /* Cannot find sgml2roff programm: */
-  outputError(i18n("Could not find the sgml2roff program on your system. Please install it, if necessary, and extend the search path by adjusting the environment variable PATH before starting KDE."));
+  outputError(i18n("Could not find the sgml2roff program on your system. Please install it, if necessary, and extend the search path by adjusting the environment variable PATH before starting TDE."));
   finished();
   exit();
 }

@@ -76,7 +76,7 @@ struct ThemeInfo {
 static TQString defaultThemeDescription( const TQString& theme )
 {
     if( theme == "redglass" || theme == "whiteglass" || theme == "pseudocore" || theme == "handhelds" )
-        return i18n( "XFree theme %1 - incomplete for KDE" ).arg( theme );
+        return i18n( "XFree theme %1 - incomplete for TDE" ).arg( theme );
     return i18n( "No description available" );;
 }
 
@@ -143,7 +143,7 @@ void ThemePage::save()
 	c.setGroup( "Mouse" );
 	c.writeEntry( "cursorTheme", selectedTheme != "system" ? selectedTheme : TQString::null );
 
-	KMessageBox::information( this, i18n("You have to restart KDE for these "
+	KMessageBox::information( this, i18n("You have to restart TDE for these "
 				"changes to take effect."), i18n("Cursor Settings Changed"),
 				"CursorSettingsChanged" );
 
@@ -161,7 +161,7 @@ void ThemePage::load( bool useDefaults )
 	const char *theme = XcursorGetTheme( x11Display() );
 	currentTheme = theme;
 
-	// Get the name of the theme KDE is configured to use
+	// Get the name of the theme TDE is configured to use
 	KConfig c( "kcminputrc" );
 	c.setReadDefaults( useDefaults );
 	c.setGroup( "Mouse" );

@@ -44,7 +44,7 @@ const Medium MountHelper::findMedium(const KURL &url)
 	// Try filename first
 	DCOPReply reply = mediamanager.call( "properties", url.fileName() );
 	if ( !reply.isValid() ) {
-		m_errorStr = i18n("The KDE mediamanager is not running.")+"\n";
+		m_errorStr = i18n("The TDE mediamanager is not running.")+"\n";
 		return Medium(TQString::null, TQString::null);
 	}
 	const Medium& medium = Medium::create(reply);
@@ -232,7 +232,7 @@ void MountHelper::slotSendPassword()
 
 	DCOPReply reply = mediamanager.call( "decrypt", m_mediumId, dialog->getPassword() );
 	if (!reply.isValid()) {
-		m_errorStr = i18n("The KDE mediamanager is not running.");
+		m_errorStr = i18n("The TDE mediamanager is not running.");
 		error();
 	} else {
 		TQString errorMsg = reply;

@@ -485,7 +485,7 @@ void KSysGuardApplet::addEmptyDisplay( TQWidget **dock, uint pos )
   dock[ pos ] = new TQFrame( this );
   ((TQFrame*)dock[ pos ])->setFrameStyle( TQFrame::WinPanel | TQFrame::Sunken );
   TQToolTip::add( dock[ pos ],
-                 i18n( "Drag sensors from the KDE System Guard into this cell." ) );
+                 i18n( "Drag sensors from the TDE System Guard into this cell." ) );
 
   layout();
   if ( isVisible() )

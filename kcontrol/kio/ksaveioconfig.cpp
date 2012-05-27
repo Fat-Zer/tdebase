@@ -251,7 +251,7 @@ void KSaveIOConfig::updateProxyScout( TQWidget * parent )
   if (!DCOPRef("kded", "proxyscout").send("reset"))
   {
     TQString caption = i18n("Update Failed");
-    TQString message = i18n("You have to restart KDE "
+    TQString message = i18n("You have to restart TDE "
                            "for these changes to take effect.");
     KMessageBox::information (parent, message, caption);
     return;
