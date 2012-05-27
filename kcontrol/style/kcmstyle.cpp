@@ -73,21 +73,21 @@
 // Danimo: Why do we use the old interface?!
 extern "C"
 {
-    TDE_EXPORT KCModule *create_style(TQWidget *parent, const char*)
+    KDE_EXPORT KCModule *create_style(TQWidget *parent, const char*)
     {
         KGlobal::locale()->insertCatalogue("kcmstyle");
         return new KCMStyle(parent, "kcmstyle");
     }
 
-    TDE_EXPORT void init_style()
+    KDE_EXPORT void init_style()
     {
         uint flags = KRdbExportQtSettings | KRdbExportQtColors | KRdbExportXftSettings;
         KConfig config("kcmdisplayrc", true /*readonly*/, false /*don't read kdeglobals etc.*/);
         config.setGroup("X11");
 
         // This key is written by the "colors" module.
-        bool exportTDEColors = config.readBoolEntry("exportTDEColors", true);
-        if (exportTDEColors)
+        bool exportKDEColors = config.readBoolEntry("exportKDEColors", true);
+        if (exportKDEColors)
             flags |= KRdbExportColors;
         runRdb( flags );
 
@@ -560,7 +560,7 @@ void KCMStyle::save()
 
 	// Save effects.
 	KConfig config( "kdeglobals" );
-	config.setGroup("TDE");
+	config.setGroup("KDE");
 
 	config.writeEntry( "EffectsEnabled", cbEnableEffects->isChecked());
 	int item = comboComboEffect->currentItem();
@@ -632,8 +632,8 @@ void KCMStyle::save()
 		uint flags = KRdbExportQtSettings;
 		KConfig kconfig("kcmdisplayrc", true /*readonly*/, false /*no globals*/);
 		kconfig.setGroup("X11");
-		bool exportTDEColors = kconfig.readBoolEntry("exportTDEColors", true);
-		if (exportTDEColors)
+		bool exportKDEColors = kconfig.readBoolEntry("exportKDEColors", true);
+		if (exportKDEColors)
 			flags |= KRdbExportColors;
 		runRdb( flags );
 	}
@@ -727,10 +727,10 @@ void KCMStyle::loadStyle( KConfig& config )
 	for (TQStringList::iterator it = list.begin(); it != list.end(); ++it)
 	{
 		KSimpleConfig config( *it, true );
-		if ( !(config.hasGroup("TDE") && config.hasGroup("Misc")) )
+		if ( !(config.hasGroup("KDE") && config.hasGroup("Misc")) )
 			continue;
 
-		config.setGroup("TDE");
+		config.setGroup("KDE");
 
 		strWidgetStyle = config.readEntry("WidgetStyle");
 		if (strWidgetStyle.isNull())
@@ -893,7 +893,7 @@ void KCMStyle::setStyleRecursive(TQWidget* w, TQStyle* s)
 void KCMStyle::loadEffects( KConfig& config )
 {
 	// Load effects.
-	config.setGroup("TDE");
+	config.setGroup("KDE");
 
 	cbEnableEffects->setChecked( config.readBoolEntry( "EffectsEnabled", false) );
 
@@ -1024,7 +1024,7 @@ void KCMStyle::loadMisc( KConfig& config )
 	else
 		comboToolbarIcons->setCurrentItem(0);
 
-	config.setGroup("TDE");
+	config.setGroup("KDE");
 	cbIconsOnButtons->setChecked(config.readBoolEntry("ShowIconsOnPushButtons", false));
 	cbEnableTooltips->setChecked(!config.readBoolEntry("EffectNoTooltip", false));
 	cbTearOffHandles->setChecked(config.readBoolEntry("InsertTearOffHandle", false));
