@@ -1,4 +1,4 @@
-[KDE Desktop Program]
+[TDE Desktop Program]
 Command=xplanet --geometry %xx%y --num_times 1 --output %f.jpg && mv %f.jpg %f
 Comment=XPlanet by Hari Nair
 Comment[af]=XPlaneet deur Hari Nair
