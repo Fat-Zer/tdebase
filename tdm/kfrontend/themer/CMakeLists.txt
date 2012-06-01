@@ -16,6 +16,7 @@ include_directories(
   ${CMAKE_SOURCE_DIR}/tdmlib
   ${TDE_INCLUDE_DIR}
   ${TQT_INCLUDE_DIRS}
+  ${LIBART_INCLUDE_DIRS}
 )
 
 link_directories(
@@ -38,4 +39,5 @@ tde_add_library( tdmthemer STATIC_PIC AUTOMOC
   SOURCES
     tdmthemer.cpp tdmitem.cpp tdmpixmap.cpp
     tdmrect.cpp tdmlabel.cpp tdmlayout.cpp
+  LINK ${LIBART_LIBRARIES}
 )
