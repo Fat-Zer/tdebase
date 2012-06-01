@@ -21,6 +21,9 @@
 // kxkb
 #cmakedefine HAVE_XTEST 1
 
+// libart
+#cmakedefine HAVE_LIBART 1
+
 // tdm, kioslave
 #cmakedefine HAVE_TERMIOS_H 1
 

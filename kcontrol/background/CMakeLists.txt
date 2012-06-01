@@ -18,6 +18,7 @@ if( BUILD_KCONTROL OR BUILD_KDESKTOP OR BUILD_TDM )
     ${CMAKE_SOURCE_DIR}/libkonq
     ${TDE_INCLUDE_DIR}
     ${TQT_INCLUDE_DIRS}
+    ${LIBART_INCLUDE_DIRS}
   )
 
   link_directories(
@@ -28,6 +29,7 @@ if( BUILD_KCONTROL OR BUILD_KDESKTOP OR BUILD_TDM )
 
   tde_add_library( bgnd STATIC_PIC AUTOMOC
     SOURCES bgrender.cpp bgsettings.cpp
+    LINK ${LIBART_LIBRARIES}
   )
 
 endif( )
