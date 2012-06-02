@@ -284,7 +284,7 @@ archs.</para>
 <varlistentry>
 <term><filename class="directory">share/applications</filename></term>
 <listitem><para><literal role="extension">.desktop</literal> files for
-&tde;-menu (since &kde; 3.2)</para>
+&tde;-menu</para>
 </listitem>
 </varlistentry>
 
@@ -1187,7 +1187,7 @@ on a multi-head system.</para>
 </varlistentry>
 
 <varlistentry><term>$<envar>TDE_FORK_SLAVES</envar></term>
-<listitem><para>(Since &kde; 3.2.3) Set this variable to spawn
+<listitem><para>Set this variable to spawn
 <acronym>KIO</acronym>-slaves directly from the application process
 itself. By default <acronym>KIO</acronym>-slaves are spawned using
 <command>klauncher</command>/<command>tdeinit</command>. This option is
@@ -1204,14 +1204,14 @@ mounted as read-only.</para>
 </varlistentry>
 
 <varlistentry><term>$<envar>TDE_NO_IPV6</envar></term><listitem><para>
-(Since &kde; 3.2.3) - Set this variable to disable <acronym>IPv6</acronym>
+Set this variable to disable <acronym>IPv6</acronym>
 support and <acronym>IPv6</acronym> <acronym>DNS</acronym>
 lookups.</para>
 </listitem>
 </varlistentry>
 
 <varlistentry><term>$<envar>TDE_IS_PRELINKED</envar></term><listitem><para>
-(Since &kde; 3.2) - Set this variable to indicate that you have prelinked
+Set this variable to indicate that you have prelinked
 your &tde; binaries and libraries. This will turn off
 <command>tdeinit</command>.</para>
 </listitem>
@@ -1225,7 +1225,7 @@ locale.</para>
 </varlistentry>
 
 <varlistentry><term>$<envar>TDE_FULL_SESSION</envar></term><listitem><para>
-(Since &kde; 3.2)  Automatically set to true by &tde; startup, it is used
+Automatically set to true by &tde; startup, it is used
 by &eg; &konqueror; to know if it should consider remaining in memory
 for future re-use when being closed. If not set, &konqueror; will exit
 after being closed (&eg; &tdesu; does that, it's also useful for
@@ -1254,14 +1254,14 @@ files.</para>
 </varlistentry>
 
 <varlistentry><term>$<envar>XDG_DATA_HOME</envar></term><listitem><para>
-(Since &kde; 3.2) Defines the base directory relative to which user-specific
+Defines the base directory relative to which user-specific
 data files should be stored. Default is <filename
 class="directory">$<envar>HOME</envar>/.local/share</filename></para>
 </listitem>
 </varlistentry>
 
 <varlistentry><term>$<envar>XDG_DATA_DIRS</envar></term><listitem><para>
-(Since &kde; 3.2) Defines the preference-ordered set of base directories to
+Defines the preference-ordered set of base directories to
 search for data files in addition to the <filename
 class="directory">$<envar>XDG_DATA_HOME</envar></filename> base
 directory. Default is
