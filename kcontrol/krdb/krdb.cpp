@@ -341,9 +341,9 @@ static void createGtkrc( bool exportColors, const TQColorGroup& cg, int version 
     t.setEncoding( TQTextStream::Locale );
 
     t << i18n(
-            "# created by KDE, %1\n"
+            "# created by TDE, %1\n"
             "#\n"
-            "# If you do not want KDE to override your GTK settings, select\n"
+            "# If you do not want TDE to override your GTK settings, select\n"
             "# Appearance & Themes -> Colors in the Control Center and disable the checkbox\n"
             "# \"Apply colors to non-TDE applications\"\n"
             "#\n"
