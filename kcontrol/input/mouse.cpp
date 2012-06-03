@@ -113,7 +113,7 @@ MouseConfig::MouseConfig (TQWidget * parent, const char *name)
 
     connect(tab1->doubleClick, TQT_SIGNAL(clicked()), TQT_SLOT(changed()));
 
-    wtstr = i18n("The default behavior in KDE is to select and activate"
+    wtstr = i18n("The default behavior in TDE is to select and activate"
          " icons with a single click of the left button on your pointing"
          " device. This behavior is consistent with what you would expect"
          " when you click links in most web browsers. If you would prefer"

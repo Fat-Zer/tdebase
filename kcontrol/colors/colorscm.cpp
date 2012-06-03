@@ -390,7 +390,7 @@ void KColorScheme::save()
     cfg2.sync();
     TQApplication::syncX();
 
-    // Notify all qt-only apps of the KDE palette changes
+    // Notify all qt-only apps of the TDE palette changes
     uint flags = KRdbExportQtColors;
     if ( exportColors )
         flags |= KRdbExportColors;

@@ -102,7 +102,7 @@ LogView::LogView(TQWidget *parent,KConfig *config, const char *name)
    TQWhatsThis::add( &viewHistory, i18n("This list shows details of the events"
      " logged by samba. Note that events at the file level are not logged"
      " unless you have configured the log level for samba to 2 or greater.<p>"
-     " As with many other lists in KDE, you can click on a column heading"
+     " As with many other lists in TDE, you can click on a column heading"
      " to sort on that column. Click again to change the sorting direction"
      " from ascending to descending or vice versa.<p>"
      " If the list is empty, try clicking the \"Update\" button. The samba"

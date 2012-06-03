@@ -57,11 +57,11 @@ KDEDConfig::KDEDConfig(TQWidget* parent, const char* name, const TQStringList &)
 	setAboutData( about );
 
 	setQuickHelp( i18n("<h1>Service Manager</h1><p>This module allows you to have an overview of all plugins of the "
-			"KDE Daemon, also referred to as KDE Services. Generally, there are two types of service:</p>"
+			"KDE Daemon (KDED), also referred to as TDE Services. Generally, there are two types of service:</p>"
 			"<ul><li>Services invoked at startup</li><li>Services called on demand</li></ul>"
 			"<p>The latter are only listed for convenience. The startup services can be started and stopped. "
 			"In Administrator mode, you can also define whether services should be loaded at startup.</p>"
-			"<p><b> Use this with care: some services are vital for KDE; do not deactivate services if you"
+			"<p><b> Use this with care: some services are vital for TDE; do not deactivate services if you"
 			" do not know what you are doing.</b></p>"));
 
 	RUNNING = i18n("Running")+" ";
@@ -70,7 +70,7 @@ KDEDConfig::KDEDConfig(TQWidget* parent, const char* name, const TQStringList &)
 	TQVBoxLayout *lay = new TQVBoxLayout( this, 0, KDialog::spacingHint() );
 
 	TQGroupBox *gb = new TQVGroupBox(i18n("Load-on-Demand Services"), this );
-	TQWhatsThis::add(gb, i18n("This is a list of available KDE services which will "
+	TQWhatsThis::add(gb, i18n("This is a list of available TDE services which will "
 			"be started on demand. They are only listed for convenience, as you "
 			"cannot manipulate these services."));
 	lay->addWidget( gb );
@@ -83,8 +83,8 @@ KDEDConfig::KDEDConfig(TQWidget* parent, const char* name, const TQStringList &)
 	_lvLoD->header()->setStretchEnabled(true, 1);
 
  	gb = new TQVGroupBox(i18n("Startup Services"), this );
-	TQWhatsThis::add(gb, i18n("This shows all KDE services that can be loaded "
-				"on KDE startup. Checked services will be invoked on next startup. "
+	TQWhatsThis::add(gb, i18n("This shows all TDE services that can be loaded "
+				"on TDE startup. Checked services will be invoked on next startup. "
 				"Be careful with deactivation of unknown services."));
 	lay->addWidget( gb );
 

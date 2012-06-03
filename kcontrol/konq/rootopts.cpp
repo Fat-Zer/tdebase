@@ -95,7 +95,7 @@ DesktopPathConfig::DesktopPathConfig(TQWidget *parent, const char * )
   connect(urAutostart, TQT_SIGNAL(textChanged(const TQString &)), this, TQT_SLOT(changed()));
   wtstr = i18n("This folder contains applications or"
                " links to applications (shortcuts) that you want to have started"
-               " automatically whenever KDE starts. You can change the location of this"
+               " automatically whenever TDE starts. You can change the location of this"
                " folder if you want to, and the contents will move automatically"
                " to the new location as well.");
   TQWhatsThis::add( tmpLabel, wtstr );

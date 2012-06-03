@@ -87,7 +87,7 @@ TDMConvenienceWidget::TDMConvenienceWidget(TQWidget *parent, const char *name)
     autoLockCheck = new TQCheckBox( i18n("Loc&k session"), alGroup );
     connect( autoLockCheck, TQT_SIGNAL(toggled(bool)), TQT_SLOT(slotChanged()) );
     TQWhatsThis::add( autoLockCheck, i18n("If checked, the automatically started session "
-	"will be locked immediately (provided it is a KDE session). This can "
+	"will be locked immediately (provided it is a TDE session). This can "
 	"be used to obtain a super-fast login restricted to one user.") );
 
 
@@ -150,7 +150,7 @@ TDMConvenienceWidget::TDMConvenienceWidget(TQWidget *parent, const char *name)
     TQWhatsThis::add( cbarlen, i18n("When this option is on, a user will be"
 	" logged in again automatically when their session is interrupted by an"
 	" X server crash; note that this can open a security hole: if you use"
-	" a screen locker than KDE's integrated one, this will make"
+	" a screen locker than TDE's integrated one, this will make"
 	" circumventing a password-secured screen lock possible.") );
     connect(cbarlen, TQT_SIGNAL(toggled(bool)), TQT_SLOT(slotChanged()));
 

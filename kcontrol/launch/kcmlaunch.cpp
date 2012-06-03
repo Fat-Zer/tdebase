@@ -49,7 +49,7 @@ LaunchConfig::LaunchConfig(TQWidget * parent, const char * name, const TQStringL
     GroupBox1->setTitle( i18n( "Bus&y Cursor" ) );
     TQWhatsThis::add(GroupBox1, i18n(
      "<h1>Busy Cursor</h1>\n"
-     "KDE offers a busy cursor for application startup notification.\n"
+     "TDE offers a busy cursor for application startup notification.\n"
      "To enable the busy cursor, select one kind of visual feedback\n"
      "from the combobox.\n"
      "It may occur, that some applications are not aware of this startup\n"

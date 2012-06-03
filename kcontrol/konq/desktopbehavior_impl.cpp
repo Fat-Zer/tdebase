@@ -164,8 +164,8 @@ DesktopBehavior::DesktopBehavior(KConfig *config, TQWidget *parent, const char *
                        " in parentheses.</li>"
                        " <li><em>Desktop menu:</em> a context menu for the desktop pops up."
                        " Among other things, this menu has options for configuring the display,"
-                       " locking the screen, and logging out of KDE.</li>"
-                       " <li><em>Application menu:</em> the \"K\" menu pops up. This might be"
+                       " locking the screen, and logging out of TDE.</li>"
+                       " <li><em>Application menu:</em> the \"TDE\" menu pops up. This might be"
                        " useful for quickly accessing applications if you like to keep the"
                        " panel (also known as \"Kicker\") hidden from view.</li></ul>");
   TQWhatsThis::add( leftLabel, wtstr );
@@ -187,8 +187,8 @@ DesktopBehavior::DesktopBehavior(KConfig *config, TQWidget *parent, const char *
                " in parentheses.</li>"
                " <li><em>Desktop menu:</em> a context menu for the desktop pops up."
                " Among other things, this menu has options for configuring the display,"
-               " locking the screen, and logging out of KDE.</li>"
-               " <li><em>Application menu:</em> the \"K\" menu pops up. This might be"
+               " locking the screen, and logging out of TDE.</li>"
+               " <li><em>Application menu:</em> the \"TDE\" menu pops up. This might be"
                " useful for quickly accessing applications if you like to keep the"
                " panel (also known as \"Kicker\") hidden from view.</li></ul>");
   TQWhatsThis::add( middleLabel, wtstr );
@@ -210,8 +210,8 @@ DesktopBehavior::DesktopBehavior(KConfig *config, TQWidget *parent, const char *
                " in parentheses.</li>"
                " <li><em>Desktop menu:</em> a context menu for the desktop pops up."
                " Among other things, this menu has options for configuring the display,"
-               " locking the screen, and logging out of KDE.</li>"
-               " <li><em>Application menu:</em> the \"K\" menu pops up. This might be"
+               " locking the screen, and logging out of TDE.</li>"
+               " <li><em>Application menu:</em> the \"TDE\" menu pops up. This might be"
                " useful for quickly accessing applications if you like to keep the"
                " panel (also known as \"Kicker\") hidden from view.</li></ul>");
   TQWhatsThis::add( rightLabel, wtstr );

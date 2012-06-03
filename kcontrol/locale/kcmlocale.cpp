@@ -462,7 +462,7 @@ void KLocaleConfig::slotTranslate()
   kdDebug() << "slotTranslate()" << endl;
 
   TQToolTip::add(m_comboCountry, m_locale->translate
-        ( "This is where you live. KDE will use the defaults for "
+        ( "This is where you live. TDE will use the defaults for "
           "this country or region.") );
   TQToolTip::add(m_addLanguage, m_locale->translate
         ( "This will add a language to the list. If the language is already "
@@ -472,7 +472,7 @@ void KLocaleConfig::slotTranslate()
         ( "This will remove the highlighted language from the list." ) );
 
   TQToolTip::add(m_languages, m_locale->translate
-        ( "KDE programs will be displayed in the first available language in "
+        ( "TDE programs will be displayed in the first available language in "
           "this list.\nIf none of the languages are available, US English "
           "will be used.") );
 
@@ -486,11 +486,11 @@ void KLocaleConfig::slotTranslate()
   TQWhatsThis::add( m_comboCountry, str );
 
   str = m_locale->translate
-    ( "Here you can choose the languages that will be used by KDE. If the "
+    ( "Here you can choose the languages that will be used by TDE. If the "
       "first language in the list is not available, the second will be used, "
       "etc. If only US English is available, no translations "
       "have been installed. You can get translation packages for many "
-      "languages from the place you got KDE from.<p>"
+      "languages from the place you got TDE from.<p>"
       "Note that some applications may not be translated to your languages; "
       "in this case, they will automatically fall back to US English." );
   TQWhatsThis::add( m_labLang, str );

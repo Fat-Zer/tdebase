@@ -63,7 +63,7 @@ AppletTab::AppletTab( TQWidget *parent, const char* name )
     " Kicker to treat trusted applets differently to untrusted ones; your options are:"
     " <ul><li><em>Load only trusted applets internally:</em> All applets but the ones marked 'trusted'"
     " will be loaded using an external wrapper application.</li>"
-    " <li><em>Load startup config applets internally:</em> The applets shown on KDE startup"
+    " <li><em>Load startup config applets internally:</em> The applets shown on TDE startup"
     " will be loaded internally, others will be loaded using an external wrapper application.</li>"
     " <li><em>Load all applets internally</em></li></ul>") );
 

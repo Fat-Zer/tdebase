@@ -610,11 +610,11 @@ KFSConfigPage::KFSConfigPage( TQWidget *parent, const char *name, KateFileSelect
   TQWhatsThis::add( cbSesLocation, i18n(
         "<p>If this option is enabled (default), the location will be restored "
         "when you start Kate.<p><strong>Note</strong> that if the session is "
-        "handled by the KDE session manager, the location is always restored.") );
+        "handled by the TDE session manager, the location is always restored.") );
   TQWhatsThis::add( cbSesFilter, i18n(
         "<p>If this option is enabled (default), the current filter will be "
         "restored when you start Kate.<p><strong>Note</strong> that if the "
-        "session is handled by the KDE session manager, the filter is always "
+        "session is handled by the TDE session manager, the filter is always "
         "restored."
         "<p><strong>Note</strong> that some of the autosync settings may "
         "override the restored location if on.") );
