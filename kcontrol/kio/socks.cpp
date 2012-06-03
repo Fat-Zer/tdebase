@@ -267,7 +267,7 @@ void KSocksConfig::defaults()
 
 TQString KSocksConfig::quickHelp() const
 {
-  return i18n("<h1>SOCKS</h1><p>This module allows you to configure KDE support"
+  return i18n("<h1>SOCKS</h1><p>This module allows you to configure TDE support"
      " for a SOCKS server or proxy.</p><p>SOCKS is a protocol to traverse firewalls"
      " as described in <a href=\"http://rfc.net/rfc1928.html\">RFC 1928</a>."
      " <p>If you have no idea what this is and if your system administrator does not"

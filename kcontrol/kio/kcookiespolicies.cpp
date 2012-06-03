@@ -447,7 +447,7 @@ void KCookiesPolicies::splitDomainAdvice (const TQString& cfg, TQString &domain,
 TQString KCookiesPolicies::quickHelp() const
 {
   return i18n("<h1>Cookies</h1> Cookies contain information that Konqueror"
-              " (or any other KDE application using the HTTP protocol) stores"
+              " (or any other TDE application using the HTTP protocol) stores"
               " on your computer from a remote Internet server. This means"
               " that a web server can store information about you and your"
               " browsing activities on your machine for later use. You might"
@@ -456,9 +456,9 @@ TQString KCookiesPolicies::quickHelp() const
               " by Internet shops, so you can 'put things into a shopping"
               " basket'. Some sites require you have a browser that supports"
               " cookies.<p>Because most people want a compromise between privacy"
-              " and the benefits cookies offer, KDE offers you the ability to"
+              " and the benefits cookies offer, TDE offers you the ability to"
               " customize the way it handles cookies. You might, for example"
-              " want to set KDE's default policy to ask you whenever a server"
+              " want to set TDE's default policy to ask you whenever a server"
               " wants to set a cookie or simply reject or accept everything."
               " For example, you might choose to accept all cookies from your"
               " favorite shopping web site. For this all you have to do is"
@@ -467,7 +467,7 @@ TQString KCookiesPolicies::quickHelp() const
               " the 'apply to' tab and choose accept or simply specify the name"
               " of the site in the <i> Domain Specific Policy </i> tab and set"
               " it to accept. This enables you to receive cookies from trusted"
-              " web sites without being asked every time KDE receives a cookie."
+              " web sites without being asked every time TDE receives a cookie."
              );
 }
 

@@ -365,7 +365,7 @@ void KSmartcardConfig::defaults()
 
 TQString KSmartcardConfig::quickHelp() const
 {
-  return i18n("<h1>smartcard</h1> This module allows you to configure KDE support"
+  return i18n("<h1>smartcard</h1> This module allows you to configure TDE support"
      " for smartcards. These can be used for various tasks such as storing"
      " SSL certificates and logging in to the system.");
 }

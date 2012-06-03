@@ -403,7 +403,7 @@ void KICCConfig::defaults()
 
 TQString KICCConfig::quickHelp() const
 {
-  return i18n("<h1>ICC Profile Configuration</h1> This module allows you to configure KDE support"
+  return i18n("<h1>ICC Profile Configuration</h1> This module allows you to configure TDE support"
      " for ICC profiles. This allows you to easily color correct your monitor"
      " for a more lifelike and vibrant image.");
 }

@@ -383,7 +383,7 @@ void BGDialog::defaults()
 TQString BGDialog::quickHelp() const
 {
    return i18n("<h1>Background</h1> This module allows you to control the"
-      " appearance of the virtual desktops. KDE offers a variety of options"
+      " appearance of the virtual desktops. TDE offers a variety of options"
       " for customization, including the ability to specify different settings"
       " for each virtual desktop, or a common background for all of them.<p>"
       " The appearance of the desktop results from the combination of its"
@@ -394,9 +394,9 @@ TQString BGDialog::quickHelp() const
       " customizable, with options for tiling and stretching images. The"
       " wallpaper can be overlaid opaquely, or blended in different ways with"
       " the background colors and patterns.<p>"
-      " KDE allows you to have the wallpaper change automatically at specified"
+      " TDE allows you to have the wallpaper change automatically at specified"
       " intervals of time. You can also replace the background with a program"
-      " that updates the desktop dynamically. For example, the \"kdeworld\""
+      " that updates the desktop dynamically. For example, the \"kworldclock\""
       " program shows a day/night map of the world which is updated periodically.");
 }
 
