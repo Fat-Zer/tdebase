@@ -650,7 +650,7 @@ void PasswordDlg::slotStartNewSession()
                "F%2 to the second session and so on. "
                "You can switch between sessions by pressing "
                "Ctrl, Alt and the appropriate F-key at the same time. "
-               "Additionally, the KDE Panel and Desktop menus have "
+               "Additionally, the TDE Panel and Desktop menus have "
                "actions for switching between sessions.")
             .arg(7).arg(8);
     TQLabel *label2 = new TQLabel( qt_text, winFrame );

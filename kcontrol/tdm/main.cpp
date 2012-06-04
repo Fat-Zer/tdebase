@@ -94,10 +94,10 @@ TDModule::TDModule(TQWidget *parent, const char *name, const TQStringList &)
 	about->addAuthor("Oswald Buddenhagen", I18N_NOOP("Current maintainer"), "ossi@kde.org");
 
   setQuickHelp( i18n(    "<h1>Login Manager</h1> In this module you can configure the "
-                    "various aspects of the KDE Login Manager. This includes "
+                    "various aspects of the TDE Login Manager. This includes "
                     "the look and feel as well as the users that can be "
                     "selected for login. Note that you can only make changes "
-                    "if you run the module with superuser rights. If you have not started the KDE "
+                    "if you run the module with superuser rights. If you have not started the TDE "
                     "Control Center with superuser rights (which is absolutely the right thing to "
                     "do, by the way), click on the <em>Modify</em> button to acquire "
                     "superuser rights. You will be asked for the superuser password."

@@ -88,7 +88,7 @@ int TrashImpl::testDir( const TQString &_name ) const
     bool ok = ::mkdir( path, S_IRWXU ) == 0;
     if ( !ok && errno == EEXIST ) {
 #if 0 // this would require to use SlaveBase's method to ask the question
-        //int ret = KMessageBox::warningYesNo( 0, i18n("%1 is a file, but KDE needs it to be a directory. Move it to %2.orig and create directory?").arg(name).arg(name) );
+        //int ret = KMessageBox::warningYesNo( 0, i18n("%1 is a file, but TDE needs it to be a directory. Move it to %2.orig and create directory?").arg(name).arg(name) );
         //if ( ret == KMessageBox::Yes ) {
 #endif
             if ( ::rename( path, path + ".orig" ) == 0 ) {

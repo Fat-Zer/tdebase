@@ -216,7 +216,7 @@ TQString KLocaleApplication::quickHelp() const
   return m_locale->translate("<h1>Country/Region & Language</h1>\n"
           "<p>From here you can configure language, numeric, and time \n"
           "settings for your particular region. In most cases it will be \n"
-          "sufficient to choose the country you live in. For instance KDE \n"
+          "sufficient to choose the country you live in. For instance TDE \n"
           "will automatically choose \"German\" as language if you choose \n"
           "\"Germany\" from the list. It will also change the time format \n"
           "to use 24 hours and and use comma as decimal separator.</p>\n");

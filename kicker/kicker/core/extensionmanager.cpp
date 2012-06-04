@@ -114,7 +114,7 @@ void ExtensionManager::initialize()
 
     if (!m_mainPanel)
     {
-        KMessageBox::error(0, i18n("The KDE panel (kicker) could not load the main panel "
+        KMessageBox::error(0, i18n("The TDE panel (kicker) could not load the main panel "
                                    "due to a problem with your installation. "),
                            i18n("Fatal Error!"));
         exit(1);
@@ -369,7 +369,7 @@ void ExtensionManager::updateMenubar()
     // we need to make sure the panel is tall enough to accomodate the
     // menubar! an easy way to find out the height of a menu: make one ;)
     KMenuBar tmpmenu;
-    tmpmenu.insertItem("KDE Rocks!");
+    tmpmenu.insertItem("TDE Rocks!");
     m_menubarPanel->setSize(KPanelExtension::SizeCustom,
                             tmpmenu.sizeHint().height());
     m_menubarPanel->writeConfig();

@@ -608,7 +608,7 @@ void KateMainWindow::mSlotFixOpenWithMenu()
     if ((*it)->name() == "Kate") continue;
     documentOpenWith->popupMenu()->insertItem( SmallIcon( (*it)->icon() ), (*it)->name() );
   }
-  // append "Other..." to call the KDE "open with" dialog.
+  // append "Other..." to call the TDE "open with" dialog.
   documentOpenWith->popupMenu()->insertItem(i18n("&Other..."));
 }
 

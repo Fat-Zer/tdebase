@@ -279,7 +279,7 @@ void KRootWm::buildMenus()
     {
 //        kdDebug() << "showMenuBar" << endl;
         menuBar = new KMenuBar;
-        menuBar->setCaption("KDE Desktop");
+        menuBar->setCaption("TDE Desktop");
     }
 
     // create Arrange menu
@@ -887,7 +887,7 @@ void KRootWm::doNewSession( bool lock )
                "F%2 to the second session and so on. "
                "You can switch between sessions by pressing "
                "Ctrl, Alt and the appropriate F-key at the same time. "
-               "Additionally, the KDE Panel and Desktop menus have "
+               "Additionally, the TDE Panel and Desktop menus have "
                "actions for switching between sessions.</p>")
                            .arg(7).arg(8),
         i18n("Warning - New Session"),

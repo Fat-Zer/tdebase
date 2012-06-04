@@ -179,7 +179,7 @@ void KrashDebugger :: startDebugger()
         i18n( "The following options are enabled:\n\n" )
         + msg
         + i18n( "\nAs the usage of these options is not recommended -"
-                " because they can, in rare cases, be responsible for KDE problems - a backtrace"
+                " because they can, in rare cases, be responsible for TDE problems - a backtrace"
                 " will not be generated.\n"
                 "You need to turn these options off and reproduce"
                 " the problem again in order to get a backtrace.\n" ));

@@ -102,7 +102,7 @@ void ThemePage::save()
 
 	fixCursorFile();
 
-	KMessageBox::information( this, i18n("You have to restart KDE for these "
+	KMessageBox::information( this, i18n("You have to restart TDE for these "
 				"changes to take effect."), i18n("Cursor Settings Changed"),
 				"CursorSettingsChanged" );
 }

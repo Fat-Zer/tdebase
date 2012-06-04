@@ -65,7 +65,7 @@ static bool testDir( const TQString &_name )
 
     bool ok = ::mkdir( path, S_IRWXU ) == 0;
     if ( !ok && errno == EEXIST ) {
-        int ret = KMessageBox::warningYesNo( 0, i18n("%1 is a file, but KDE needs it to be a directory; move it to %2.orig and create directory?").arg(m).arg(m), TQString::null, i18n("Move It"), i18n("Do Not Move") );
+        int ret = KMessageBox::warningYesNo( 0, i18n("%1 is a file, but TDE needs it to be a directory; move it to %2.orig and create directory?").arg(m).arg(m), TQString::null, i18n("Move It"), i18n("Do Not Move") );
         if ( ret == KMessageBox::Yes ) {
             if ( ::rename( path, path + ".orig" ) == 0 ) {
                 ok = ::mkdir( path, S_IRWXU ) == 0;

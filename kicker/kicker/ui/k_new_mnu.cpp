@@ -1463,7 +1463,7 @@ void KMenu::doNewSession( bool lock )
                "F%2 to the second session and so on. "
                "You can switch between sessions by pressing "
                "Ctrl, Alt and the appropriate F-key at the same time. "
-               "Additionally, the KDE Panel and Desktop menus have "
+               "Additionally, the TDE Panel and Desktop menus have "
                "actions for switching between sessions.</p>")
                            .arg(7).arg(8),
         i18n("Warning - New Session"),
@@ -2371,7 +2371,7 @@ void KMenu::doQuery (bool return_pressed)
     if (query_str.length()>=3)
       searchBookmarks(bookmarkManager->root());
 
-    // search KDE addressbook
+    // search TDE addressbook
     if (query_str.length()>=3)
       searchAddressbook();
 
