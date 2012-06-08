@@ -130,4 +130,4 @@ Terminal=false
 Exec=khelpcenter %u
 SwallowExec=
 SwallowTitle=
-X-KDE-StartupNotify=true
+X-TDE-StartupNotify=true

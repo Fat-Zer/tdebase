@@ -147,5 +147,5 @@ Comment[wa]=Ene analodjike ou didjitåle ôrlodje.
 Comment[zh_CN]=模拟和数字时钟面板小程序
 Comment[zh_TW]=一個小的類比或數字時鐘
 
-X-KDE-Library=clock_panelapplet
-X-KDE-UniqueApplet=false
+X-TDE-Library=clock_panelapplet
+X-TDE-UniqueApplet=false

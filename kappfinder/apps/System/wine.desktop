@@ -94,4 +94,4 @@ GenericName[zu]=Sebenzisa izinhlelo zemisebenzi zama-WIndow
 Icon=wine
 Type=Application
 MimeType=application/x-msdos-program
-X-KDE-StartupNotify=false
+X-TDE-StartupNotify=false

@@ -130,4 +130,4 @@ Comment[zh_CN]=网络文件夹菜单
 Comment[zh_TW]=網路資料夾選單
 Icon=network
 
-X-KDE-Library=kickermenu_remotemenu
+X-TDE-Library=kickermenu_remotemenu

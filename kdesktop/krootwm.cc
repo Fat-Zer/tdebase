@@ -746,8 +746,8 @@ void KRootWm::slotRefreshDesktop() {
 
 TQStringList KRootWm::configModules() {
   TQStringList args;
-  args << "kde-background.desktop" << "kde-desktopbehavior.desktop"  << "kde-desktop.desktop"
-	  << "kde-screensaver.desktop" << "kde-display.desktop";
+  args << "tde-background.desktop" << "tde-desktopbehavior.desktop"  << "tde-desktop.desktop"
+	  << "tde-screensaver.desktop" << "tde-display.desktop";
   return args;
 }
 

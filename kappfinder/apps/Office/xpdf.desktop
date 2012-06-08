@@ -97,4 +97,4 @@ Icon=gv
 Path=
 Type=Application
 Terminal=false
-X-KDE-StartupNotify=false
+X-TDE-StartupNotify=false

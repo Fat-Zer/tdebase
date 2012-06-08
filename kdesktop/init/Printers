@@ -82,5 +82,5 @@ Type=Application
 Exec=kjobviewer --all --show %i %m
 OnlyShowIn=TDE;
 X-DCOP-ServiceType=Unique
-X-KDE-StartupNotify=true
+X-TDE-StartupNotify=true
 X-Trinity-BuiltIn=true

@@ -70,5 +70,5 @@ Name[wa]=Sopoirts di wårdaedje
 Name[zh_CN]=存储介质
 Name[zh_TW]=儲存媒體
 Open=false
-X-KDE-TreeModule=Directory
-X-KDE-KonqSidebarModule=konqsidebar_tree
+X-TDE-TreeModule=Directory
+X-TDE-KonqSidebarModule=konqsidebar_tree

@@ -761,7 +761,7 @@ bool KonqMainWindow::openView( TQString serviceType, const KURL &_url, KonqView 
     KServiceType::Ptr ptr = KServiceType::serviceType( serviceType );
     if ( ptr )
     {
-      const TQString protocol = ptr->property("X-KDE-LocalProtocol").toString();
+      const TQString protocol = ptr->property("X-TDE-LocalProtocol").toString();
       if ( !protocol.isEmpty() && KonqFMSettings::settings()->shouldEmbed( serviceType ) )
       {
         url.setProtocol( protocol );
@@ -1637,8 +1637,8 @@ void KonqMainWindow::slotViewModeToggle( bool toggle )
 
           if ( serviceKey == currentServiceKey )
           {
-              TQVariant modeProp = service->property( "X-KDE-BrowserView-ModeProperty" );
-              TQVariant modePropValue = service->property( "X-KDE-BrowserView-ModePropertyValue" );
+              TQVariant modeProp = service->property( "X-TDE-BrowserView-ModeProperty" );
+              TQVariant modePropValue = service->property( "X-TDE-BrowserView-ModePropertyValue" );
               if ( !modeProp.isValid() || !modePropValue.isValid() )
                   break;
 
@@ -3874,14 +3874,14 @@ void KonqMainWindow::initActions()
 
 
   m_configureModules << "kde-filebehavior.desktop" << "kde-fileappearance.desktop" <<
-      "kde-filepreviews.desktop" << "kde-filetypes.desktop" <<
-      "kde-khtml_behavior.desktop" << "kde-khtml_java_js.desktop" <<
-      "kde-khtml_filter.desktop" <<
-      "kde-khtml_fonts.desktop" << "kde-ebrowsing.desktop" <<
-      "kde-kcmhistory.desktop" << "kde-cookies.desktop" <<
-      "kde-cache.desktop" << "kde-proxy.desktop" << "kde-kcmcss.desktop" <<
-      "kde-crypto.desktop" << "kde-useragent.desktop" <<
-      "kde-khtml_plugins.desktop" << "kde-kcmkonqyperformance.desktop";
+      "kde-filepreviews.desktop" << "tde-filetypes.desktop" <<
+      "tde-khtml_behavior.desktop" << "tde-khtml_java_js.desktop" <<
+      "tde-khtml_filter.desktop" <<
+      "tde-khtml_fonts.desktop" << "tde-ebrowsing.desktop" <<
+      "tde-kcmhistory.desktop" << "tde-cookies.desktop" <<
+      "tde-cache.desktop" << "tde-proxy.desktop" << "tde-kcmcss.desktop" <<
+      "tde-crypto.desktop" << "tde-useragent.desktop" <<
+      "tde-khtml_plugins.desktop" << "kde-kcmkonqyperformance.desktop";
 
 
   if (!kapp->authorizeControlModules(configModules()).isEmpty())
@@ -4730,7 +4730,7 @@ void KonqMainWindow::slotPopupMenu( KXMLGUIClient *client, const TQPoint &_globa
           "KParts/ReadOnlyPart",
           // Obey "HideFromMenus". It defaults to false so we want "absent or true"
           // (wow, testing for 'true' if absent doesn't work, so order matters)
-          "(not exist [X-KDE-BrowserView-HideFromMenus] or not [X-KDE-BrowserView-HideFromMenus]) "
+          "(not exist [X-TDE-BrowserView-HideFromMenus] or not [X-TDE-BrowserView-HideFromMenus]) "
           "and DesktopEntryName != '"+currentServiceName+"' "
           // I had an old local dirtree.desktop without lib, no need for invalid entries
           "and exist [Library]",
@@ -5056,7 +5056,7 @@ TQString KonqMainWindow::viewModeActionKey( KService::Ptr service )
 {
     TQString library = service->library();
     // Group all non-builtin views together
-    TQVariant builtIntoProp = service->property( "X-KDE-BrowserView-Built-Into" );
+    TQVariant builtIntoProp = service->property( "X-TDE-BrowserView-Built-Into" );
     if ( !builtIntoProp.isValid() || builtIntoProp.toString() != "konqueror" )
         library = "external";
     return library;
@@ -5114,7 +5114,7 @@ void KonqMainWindow::updateViewModeActions()
   KTrader::OfferList::ConstIterator end = services.end();
   for (; it != end; ++it )
   {
-      TQVariant prop = (*it)->property( "X-KDE-BrowserView-Toggable" );
+      TQVariant prop = (*it)->property( "X-TDE-BrowserView-Toggable" );
       if ( prop.isValid() && prop.toBool() ) // No toggable views in view mode
           continue;
 

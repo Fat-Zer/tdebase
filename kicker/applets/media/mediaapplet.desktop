@@ -127,4 +127,4 @@ Name[wa]=Sopoirts di wårdaedje
 Name[zh_CN]=存储介质
 Name[zh_TW]=儲存媒體
 Icon=3floppy_unmount
-X-KDE-Library=media_panelapplet
+X-TDE-Library=media_panelapplet

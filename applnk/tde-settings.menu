@@ -7,41 +7,41 @@
 		<Name>Accessibility</Name>
 		<Directory>tde-settings-accessibility.directory</Directory>
 		<Include>
-			<Category>X-KDE-settings-accessibility</Category>
+			<Category>X-TDE-settings-accessibility</Category>
 		</Include>
 	</Menu>
 	<Menu>
 		<Name>Components</Name>
 		<Directory>tde-settings-components.directory</Directory>
 		<Include>
-			<Category>X-KDE-settings-components</Category>
+			<Category>X-TDE-settings-components</Category>
 		</Include>
 	</Menu>
 	<Menu>
 		<Name>Desktop</Name>
 		<Directory>tde-settings-desktop.directory</Directory>
 		<Include>
-			<Category>X-KDE-settings-desktop</Category>
+			<Category>X-TDE-settings-desktop</Category>
 		</Include>
 	</Menu>
 	<Menu>
 		<Name>LookNFeel</Name>
 		<Directory>tde-settings-looknfeel.directory</Directory>
 		<Include>
-			<Category>X-KDE-settings-looknfeel</Category>
+			<Category>X-TDE-settings-looknfeel</Category>
 		</Include>
 	</Menu>
 	<Menu>
 		<Name>Network</Name>
 		<Directory>tde-settings-network.directory</Directory>
 		<Include>
-			<Category>X-KDE-settings-network</Category>
+			<Category>X-TDE-settings-network</Category>
 		</Include>
 		<Menu>
 			<Name>WebBrowsing</Name>
 			<Directory>tde-settings-webbrowsing.directory</Directory>
 			<Include>
-				<Category>X-KDE-settings-webbrowsing</Category>
+				<Category>X-TDE-settings-webbrowsing</Category>
 			</Include>
 		</Menu>
 	</Menu>
@@ -49,14 +49,14 @@
 		<Name>Peripherals</Name>
 		<Directory>tde-settings-peripherals.directory</Directory>
 		<Include>
-			<Category>X-KDE-settings-peripherals</Category>
-			<Category>X-KDE-settings-hardware</Category>
+			<Category>X-TDE-settings-peripherals</Category>
+			<Category>X-TDE-settings-hardware</Category>
 		</Include>
 		<Menu>
 			<Name>Information</Name>
 			<Directory>tde-settings-information.directory</Directory>
 			<Include>
-				<Category>X-KDE-settings-information</Category>
+				<Category>X-TDE-settings-information</Category>
 			</Include>
 		</Menu>
 	</Menu>
@@ -64,28 +64,28 @@
 		<Name>PowerControl</Name>
 		<Directory>tde-settings-power.directory</Directory>
 		<Include>
-			<Category>X-KDE-settings-power</Category>
+			<Category>X-TDE-settings-power</Category>
 		</Include>
 	</Menu>
 	<Menu>
 		<Name>Security</Name>
 		<Directory>tde-settings-security.directory</Directory>
 		<Include>
-			<Category>X-KDE-settings-security</Category>
+			<Category>X-TDE-settings-security</Category>
 		</Include>
 	</Menu>
 	<Menu>
 		<Name>Sound</Name>
 		<Directory>tde-settings-sound.directory</Directory>
 		<Include>
-			<Category>X-KDE-settings-sound</Category>
+			<Category>X-TDE-settings-sound</Category>
 		</Include>
 	</Menu>
 	<Menu>
 		<Name>System</Name>
 		<Directory>tde-settings-system.directory</Directory>
 		<Include>
-			<Category>X-KDE-settings-system</Category>
+			<Category>X-TDE-settings-system</Category>
 		</Include>
 	</Menu>
 </Menu>

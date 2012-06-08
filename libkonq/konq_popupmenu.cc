@@ -140,7 +140,7 @@ bool KonqPopupMenu::ProtocolInfo::trashIncluded() const
 }
 
 // This helper class stores the .desktop-file actions and the servicemenus
-// in order to support X-KDE-Priority and X-KDE-Submenu.
+// in order to support X-TDE-Priority and X-TDE-Submenu.
 class PopupServices
 {
 public:
@@ -303,12 +303,12 @@ int KonqPopupMenu::insertServices(const ServiceList& list,
 
 bool KonqPopupMenu::KIOSKAuthorizedAction(KConfig& cfg)
 {
-    if ( !cfg.hasKey( "X-KDE-AuthorizeAction") )
+    if ( !cfg.hasKey( "X-TDE-AuthorizeAction") )
     {
         return true;
     }
 
-    TQStringList list = cfg.readListEntry("X-KDE-AuthorizeAction");
+    TQStringList list = cfg.readListEntry("X-TDE-AuthorizeAction");
     if (kapp && !list.isEmpty())
     {
         for(TQStringList::ConstIterator it = list.begin();
@@ -649,8 +649,8 @@ void KonqPopupMenu::setup(KonqPopupFlags kpf)
         const TQString path = urlForServiceMenu.path();
         KSimpleConfig cfg( path, true );
         cfg.setDesktopGroup();
-        const TQString priority = cfg.readEntry("X-KDE-Priority");
-        const TQString submenuName = cfg.readEntry( "X-KDE-Submenu" );
+        const TQString priority = cfg.readEntry("X-TDE-Priority");
+        const TQString submenuName = cfg.readEntry( "X-TDE-Submenu" );
         if ( cfg.readEntry("Type") == "Link" ) {
            urlForServiceMenu = cfg.readEntry("URL");
            // TODO: Do we want to make all the actions apply on the target
@@ -674,8 +674,8 @@ void KonqPopupMenu::setup(KonqPopupFlags kpf)
 
             if (KIOSKAuthorizedAction(cfg))
             {
-                const TQString priority = cfg.readEntry("X-KDE-Priority");
-                const TQString submenuName = cfg.readEntry( "X-KDE-Submenu" );
+                const TQString priority = cfg.readEntry("X-TDE-Priority");
+                const TQString submenuName = cfg.readEntry( "X-TDE-Submenu" );
                 ServiceList* list = s.selectList( priority, submenuName );
                 (*list) += KDEDesktopMimeType::userDefinedServices( dotDirectoryFile, cfg, true );
             }
@@ -698,15 +698,15 @@ void KonqPopupMenu::setup(KonqPopupFlags kpf)
                 continue;
             }
 
-            if ( cfg.hasKey( "X-KDE-ShowIfRunning" ) )
+            if ( cfg.hasKey( "X-TDE-ShowIfRunning" ) )
             {
-                const TQString app = cfg.readEntry( "X-KDE-ShowIfRunning" );
+                const TQString app = cfg.readEntry( "X-TDE-ShowIfRunning" );
                 if ( !kapp->dcopClient()->isApplicationRegistered( app.utf8() ) )
                     continue;
             }
-            if ( cfg.hasKey( "X-KDE-ShowIfDcopCall" ) )
+            if ( cfg.hasKey( "X-TDE-ShowIfDcopCall" ) )
             {
-                TQString dcopcall = cfg.readEntry( "X-KDE-ShowIfDcopCall" );
+                TQString dcopcall = cfg.readEntry( "X-TDE-ShowIfDcopCall" );
                 const TQCString app = TQString(dcopcall.section(' ', 0,0)).utf8();
 
                 //if( !kapp->dcopClient()->isApplicationRegistered( app ))
@@ -721,7 +721,7 @@ void KonqPopupMenu::setup(KonqPopupFlags kpf)
                 TQCString object = TQString(dcopcall.section(' ', 1,-2)).utf8();
                 TQString function =  TQString(dcopcall.section(' ', -1));
                 if(!function.endsWith("(KURL::List)")) {
-                    kdWarning() << "Desktop file " << *eIt << " contains an invalid X-KDE-ShowIfDcopCall - the function must take the exact parameter (KURL::List) and must be specified." << endl;
+                    kdWarning() << "Desktop file " << *eIt << " contains an invalid X-TDE-ShowIfDcopCall - the function must take the exact parameter (KURL::List) and must be specified." << endl;
                     continue; //Be safe.
                 }
 
@@ -733,15 +733,15 @@ void KonqPopupMenu::setup(KonqPopupFlags kpf)
                     continue;
 
             }
-            if ( cfg.hasKey( "X-KDE-Protocol" ) )
+            if ( cfg.hasKey( "X-TDE-Protocol" ) )
             {
-                const TQString protocol = cfg.readEntry( "X-KDE-Protocol" );
+                const TQString protocol = cfg.readEntry( "X-TDE-Protocol" );
                 if ( protocol != urlForServiceMenu.protocol() )
                     continue;
             }
-            else if ( cfg.hasKey( "X-KDE-Protocols" ) )
+            else if ( cfg.hasKey( "X-TDE-Protocols" ) )
             {
-                TQStringList protocols = TQStringList::split( "," , cfg.readEntry( "X-KDE-Protocols" ) );
+                TQStringList protocols = TQStringList::split( "," , cfg.readEntry( "X-TDE-Protocols" ) );
                 if ( !protocols.contains( urlForServiceMenu.protocol() ) )
                     continue;
             }
@@ -753,13 +753,13 @@ void KonqPopupMenu::setup(KonqPopupFlags kpf)
                 continue;
             }
 
-            if ( cfg.hasKey( "X-KDE-Require" ) )
+            if ( cfg.hasKey( "X-TDE-Require" ) )
             {
-                const TQStringList capabilities = cfg.readListEntry( "X-KDE-Require" );
+                const TQStringList capabilities = cfg.readListEntry( "X-TDE-Require" );
                 if ( capabilities.contains( "Write" ) && !sWriting )
                     continue;
             }
-            if ( (cfg.hasKey( "Actions" ) || cfg.hasKey( "X-KDE-GetActionMenu") ) && cfg.hasKey( "ServiceTypes" ) )
+            if ( (cfg.hasKey( "Actions" ) || cfg.hasKey( "X-TDE-GetActionMenu") ) && cfg.hasKey( "ServiceTypes" ) )
             {
                 const TQStringList types = cfg.readListEntry( "ServiceTypes" );
                 const TQStringList excludeTypes = cfg.readListEntry( "ExcludeServiceTypes" );
@@ -814,8 +814,8 @@ void KonqPopupMenu::setup(KonqPopupFlags kpf)
 
                 if ( ok )
                 {
-                    const TQString priority = cfg.readEntry("X-KDE-Priority");
-                    const TQString submenuName = cfg.readEntry( "X-KDE-Submenu" );
+                    const TQString priority = cfg.readEntry("X-TDE-Priority");
+                    const TQString submenuName = cfg.readEntry( "X-TDE-Submenu" );
 
                     ServiceList* list = s.selectList( priority, submenuName );
                     (*list) += KDEDesktopMimeType::userDefinedServices( *eIt, cfg, url.isLocalFile(), m_lstPopupURLs );

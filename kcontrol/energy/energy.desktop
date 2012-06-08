@@ -3,10 +3,10 @@ Exec=kcmshell energy
 Icon=energy_star
 DocPath=kcontrol/energy/index.html
 Type=Application
-X-KDE-Library=energy
-X-KDE-Init=energy
-X-KDE-ParentApp=kcontrol
-X-KDE-Init-Phase=2
+X-TDE-Library=energy
+X-TDE-Init=energy
+X-TDE-ParentApp=kcontrol
+X-TDE-Init-Phase=2
 
 Name=Power Control
 Name[af]=Krag Beheer

@@ -1,6 +1,6 @@
 [Desktop Entry]
 Type=ServiceType
-X-KDE-ServiceType=UserAgentStrings
+X-TDE-ServiceType=UserAgentStrings
 Comment=UserAgent Strings
 Comment[af]=Gebruiker agent Stringe
 Comment[ar]=سلاسل UserAgent
@@ -76,23 +76,23 @@ Comment[zh_CN]=用户代理设置
 Comment[zh_TW]=使用者代理字串設定
 Comment[zu]=Iqoqo lamagama lommeli womsebenzisi
 
-[PropertyDef::X-KDE-UA-TAG]
+[PropertyDef::X-TDE-UA-TAG]
 Type=TQString
 
-[PropertyDef::X-KDE-UA-FULL]
+[PropertyDef::X-TDE-UA-FULL]
 Type=TQString
 
-[PropertyDef::X-KDE-UA-NAME]
+[PropertyDef::X-TDE-UA-NAME]
 Type=TQString
 
-[PropertyDef::X-KDE-UA-VERSION]
+[PropertyDef::X-TDE-UA-VERSION]
 Type=TQString
 
-[PropertyDef::X-KDE-UA-SYSNAME]
+[PropertyDef::X-TDE-UA-SYSNAME]
 Type=TQString
 
-[PropertyDef::X-KDE-UA-SYSRELEASE]
+[PropertyDef::X-TDE-UA-SYSRELEASE]
 Type=TQString
 
-[PropertyDef::X-KDE-UA-DYNAMIC-ENTRY]
+[PropertyDef::X-TDE-UA-DYNAMIC-ENTRY]
 Type=bool

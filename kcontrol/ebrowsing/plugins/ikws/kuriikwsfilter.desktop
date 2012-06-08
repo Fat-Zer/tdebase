@@ -65,6 +65,6 @@ Name[xh]=Amagama Angundoqo ecebo lokucoca ulwelo e Internet
 Name[zh_CN]=Internet 关键字过滤
 Name[zh_TW]=Internet 關鍵字過濾
 Name[zu]=Ihluzo lamagama abalulekile e-Internet
-X-KDE-Library=libkuriikwsfilter
+X-TDE-Library=libkuriikwsfilter
 ServiceTypes=KURIFilter/Plugin
 InitialPreference=1

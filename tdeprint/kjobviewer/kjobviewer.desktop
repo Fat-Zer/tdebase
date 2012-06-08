@@ -3,7 +3,7 @@ Exec=kjobviewer --all --show %i %m
 Icon=kjobviewer
 Terminal=false
 Type=Application
-X-KDE-StartupNotify=true
+X-TDE-StartupNotify=true
 
 Name=KJobViewer
 Name[bn]=কে-জব-ভিউয়ার
@@ -89,4 +89,4 @@ GenericName[zh_CN]=打印任务
 GenericName[zh_TW]=列印工作
 
 X-DCOP-ServiceType=Unique
-Categories=Qt;KDE;Utility
+Categories=Qt;TDE;Utility

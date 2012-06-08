@@ -4,9 +4,9 @@ Type=Application
 Exec=kcmshell kcmkonqyperformance
 
 
-X-KDE-Library=performance
-X-KDE-FactoryName=konqueror
-X-KDE-ParentApp=kcontrol
+X-TDE-Library=performance
+X-TDE-FactoryName=konqueror
+X-TDE-ParentApp=kcontrol
 
 Name=Performance
 Name[af]=Werkverrigting

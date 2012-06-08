@@ -5,9 +5,9 @@ Type=Application
 DocPath=kcontrol/fonts/index.html
 
 
-X-KDE-Library=fonts
-X-KDE-FactoryName=fonts
-X-KDE-ParentApp=kcontrol
+X-TDE-Library=fonts
+X-TDE-FactoryName=fonts
+X-TDE-ParentApp=kcontrol
 
 Name=Fonts
 Name[af]=Skriftipes
@@ -236,4 +236,4 @@ Keywords[zh_CN]=fonts,font size,styles,charsets,character sets,panel,kicker,cont
 Keywords[zh_TW]=fonts,font size,styles,charsets,character sets,panel,kicker,control panel,desktops,FileManager,Toolbars,Menu,Window Title,Title,字型,字型大小,風格,字元,字元集,面板,控制面板,桌面,檔案管理程式,工具列,選單,視窗標題,標題
 Keywords[zu]=Izinhlobo zamagama,uhlobo lwamagama,izitayela,charsets, amaqoqo ezaimpawu,kicker,lawula,iwindi lemininingwane,ama-desktop,Imenenja yefayela,amabha amathuluzi,Imenu,Isihloko se-Window,Isihloko
 
-Categories=Qt;KDE;X-KDE-settings-looknfeel;
+Categories=Qt;TDE;X-TDE-settings-looknfeel;

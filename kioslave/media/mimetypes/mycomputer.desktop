@@ -5,4 +5,4 @@ MimeType=media/builtin-mycomputer
 Comment=My Computer
 Patterns=My_Computer
 
-X-KDE-AutoEmbed=false
+X-TDE-AutoEmbed=false

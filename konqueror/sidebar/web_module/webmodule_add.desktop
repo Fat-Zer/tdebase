@@ -75,5 +75,5 @@ Name[wa]=Module di bår di costé waibe
 Name[zh_CN]=Web 侧边栏模块
 Name[zh_TW]=網頁邊列模組
 Open=false
-X-KDE-KonqSidebarAddModule=konqsidebar_web
-X-KDE-KonqSidebarUniversal=true
+X-TDE-KonqSidebarAddModule=konqsidebar_web
+X-TDE-KonqSidebarUniversal=true

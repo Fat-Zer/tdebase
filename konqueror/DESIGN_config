@@ -17,7 +17,7 @@ other : use builtin viewer (yes/no)  [checkbox] (i.e. application/*, like dvi, p
 - use builtin viewer (checkbox as "on")
 - use external application (checkbox as "off")
 
-(=> saved as X-KDE-AutoEmbed=true/false or no entry)
+(=> saved as X-TDE-AutoEmbed=true/false or no entry)
 
 This way, one can set choose between builtin and external for all text /
 images files, and set individual values too (e.g. an icon-team artist would

@@ -169,8 +169,8 @@ int main(int argc, char *argv[])
 		KDesktopFile saver(tempSaverFileList[i], true);
                 if (!saver.tryExec())
                     continue;
-		TQString saverType = saver.readEntry("X-KDE-Type");
-		if (!saverType.isEmpty()) // no X-KDE-Type defined so must be OK
+		TQString saverType = saver.readEntry("X-TDE-Type");
+		if (!saverType.isEmpty()) // no X-TDE-Type defined so must be OK
                 {
 			TQStringList saverTypes = TQStringList::split(";", saverType);
 			for (TQStringList::ConstIterator it =  saverTypes.begin(); it != saverTypes.end(); ++it )

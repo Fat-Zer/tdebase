@@ -127,4 +127,4 @@ GenericName[zh_CN]=监视系统负载
 GenericName[zh_TW]=監視系統負載
 GenericName[zu]=Iqikelela Ukulayisha kwesistimu
 Icon=xload
-X-KDE-StartupNotify=true
+X-TDE-StartupNotify=true

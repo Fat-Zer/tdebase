@@ -4,9 +4,9 @@ Type=Application
 Exec=kcmshell twinoptions
 DocPath=kcontrol/windowmanagement/index.html
 
-X-KDE-ModuleType=Library
-X-KDE-Library=twinoptions
-X-KDE-FactoryName=twinoptions
+X-TDE-ModuleType=Library
+X-TDE-Library=twinoptions
+X-TDE-FactoryName=twinoptions
 
 Name=Window Behavior
 Name[af]=Venster Gedrag
@@ -222,4 +222,4 @@ Keywords[vi]=chọn,dịch chuyển,ứng xử cửa sổ,hoạt hình,nâng lê
 Keywords[wa]=focus,plaece,dujhance des purneas,animåcion,rimonter,rimonte tot seu,purneas,cåde,bår di tite,clitchî deus côps,clitchî deus feyes
 Keywords[zh_CN]=focus,placement,window behavior,animation,raise,auto raise,windows,frame,titlebar,doubleclick,焦点,放置,窗口行为,动画,升起,自动升起,窗口,框架,标题栏,双击
 Keywords[zh_TW]=focus,placement,window behavior,animation,raise,auto raise,windows,frame,titlebar,doubleclick,焦點,放置,視窗行為,動畫,抬升,自動抬升,視窗,框架,標題列,雙擊
-Categories=Qt;KDE;X-KDE-settings-desktop;
+Categories=Qt;TDE;X-TDE-settings-desktop;

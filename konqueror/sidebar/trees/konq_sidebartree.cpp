@@ -95,8 +95,8 @@ void KonqSidebarTree::loadModuleFactories()
   {
     KSimpleConfig ksc(*it);
     ksc.setGroup("Desktop Entry");
-    TQString name    = ksc.readEntry("X-KDE-TreeModule");
-    TQString libName = ksc.readEntry("X-KDE-TreeModule-Lib");
+    TQString name    = ksc.readEntry("X-TDE-TreeModule");
+    TQString libName = ksc.readEntry("X-TDE-TreeModule-Lib");
     if ((name.isEmpty()) || (libName.isEmpty()))
         {kdWarning()<<"Bad Configuration file for a dirtree module "<<*it<<endl; continue;}
 
@@ -606,7 +606,7 @@ void KonqSidebarTree::scanDir( KonqSidebarTreeItem *parent, const TQString &path
             // Version 5 includes the audiocd browser
             // Version 6 includes the printmanager and lan browser
             const int currentVersion = 6;
-            TQString key = TQString::fromLatin1("X-KDE-DirTreeVersionNumber");
+            TQString key = TQString::fromLatin1("X-TDE-DirTreeVersionNumber");
             KSimpleConfig versionCfg( path + "/.directory" );
             int versionNumber = versionCfg.readNumEntry( key, 1 );
             kdDebug(1201) << "KonqSidebarTree::scanDir found version " << versionNumber << endl;
@@ -771,8 +771,8 @@ void KonqSidebarTree::loadTopLevelItem( KonqSidebarTreeItem *parent,  const TQSt
 
     // Here's where we need to create the right module...
     // ### TODO: make this KTrader/KLibrary based.
-    TQString moduleName = cfg.readEntry( "X-KDE-TreeModule" );
-    TQString showHidden=cfg.readEntry("X-KDE-TreeModule-ShowHidden");
+    TQString moduleName = cfg.readEntry( "X-TDE-TreeModule" );
+    TQString showHidden=cfg.readEntry("X-TDE-TreeModule-ShowHidden");
 
     if (moduleName.isEmpty()) moduleName="Directory";
     kdDebug(1201) << "##### Loading module: " << moduleName << " file: " << filename << endl;

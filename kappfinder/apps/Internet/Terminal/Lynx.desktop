@@ -89,4 +89,4 @@ Exec=lynx
 Terminal=true
 Icon=lynx
 Type=Application
-X-KDE-AuthorizeAction=shell_access
+X-TDE-AuthorizeAction=shell_access

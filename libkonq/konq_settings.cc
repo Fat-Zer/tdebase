@@ -131,15 +131,15 @@ bool KonqFMSettings::shouldEmbed( const TQString & serviceType ) const
     bool hasLocalProtocolRedirect = false;
     if ( serviceTypePtr )
     {
-        hasLocalProtocolRedirect = !serviceTypePtr->property( "X-KDE-LocalProtocol" ).toString().isEmpty();
-        TQVariant autoEmbedProp = serviceTypePtr->property( "X-KDE-AutoEmbed" );
+        hasLocalProtocolRedirect = !serviceTypePtr->property( "X-TDE-LocalProtocol" ).toString().isEmpty();
+        TQVariant autoEmbedProp = serviceTypePtr->property( "X-TDE-AutoEmbed" );
         if ( autoEmbedProp.isValid() )
         {
             bool autoEmbed = autoEmbedProp.toBool();
-            kdDebug(1203) << "X-KDE-AutoEmbed set to " << (autoEmbed ? "true" : "false") << endl;
+            kdDebug(1203) << "X-TDE-AutoEmbed set to " << (autoEmbed ? "true" : "false") << endl;
             return autoEmbed;
         } else
-            kdDebug(1203) << "No X-KDE-AutoEmbed, looking for group" << endl;
+            kdDebug(1203) << "No X-TDE-AutoEmbed, looking for group" << endl;
     }
     // 2 - in the configuration for the group if nothing was found in the mimetype
     TQString serviceTypeGroup = serviceType.left(serviceType.find("/"));

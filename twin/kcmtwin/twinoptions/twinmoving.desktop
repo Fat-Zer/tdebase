@@ -4,9 +4,9 @@ Type=Application
 Exec=kcmshell twinmoving
 DocPath=kcontrol/windowmanagement/index.html#action-moving
 
-X-KDE-ModuleType=Library
-X-KDE-Library=twinoptions
-X-KDE-FactoryName=twinmoving
+X-TDE-ModuleType=Library
+X-TDE-Library=twinoptions
+X-TDE-FactoryName=twinmoving
 
 Name=Moving
 Name[af]=Beweeg

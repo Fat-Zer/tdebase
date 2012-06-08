@@ -5,9 +5,9 @@ DocPath=kinfocenter/nics/index.html
 Icon=network
 
 
-X-KDE-Library=nic
-X-KDE-FactoryName=nic
-X-KDE-ParentApp=kinfocenter
+X-TDE-Library=nic
+X-TDE-FactoryName=nic
+X-TDE-ParentApp=kinfocenter
 
 Name=Network Interfaces
 Name[af]=Netwerk Koppelvlakke
@@ -170,5 +170,5 @@ Comment[zh_CN]=网络接口信息
 Comment[zh_TW]=網路界面資訊
 Comment[zu]=Ulwazi lomxhumanisi woxhumano olusakazekile
 
-Categories=Qt;KDE;X-KDE-settings-information;
+Categories=Qt;TDE;X-TDE-settings-information;
 

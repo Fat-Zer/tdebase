@@ -5,10 +5,10 @@ Type=Application
 DocPath=kcontrol/kcmstyle/index.html
 
 
-X-KDE-Library=style
-X-KDE-FactoryName=style
-X-KDE-Init=style
-X-KDE-ParentApp=kcontrol
+X-TDE-Library=style
+X-TDE-FactoryName=style
+X-TDE-Init=style
+X-TDE-ParentApp=kcontrol
 
 Name=Style
 Name[af]=Styl
@@ -231,4 +231,4 @@ Keywords[zh_CN]=style,styles,look,widget,icons,toolbars,text,highlight,apps,TDE 
 Keywords[zh_TW]=style,styles,look,widget,icons,toolbars,text,highlight,apps,TDE applications,風格,主題,外觀,視窗元件,圖示,工具列,文字,突出顯示,應用程式,TDE 應用程式
 Keywords[zu]=isitayela,izitayela,ukubukeka,widget,izimpawu zezithombe,amabha amathuluzi,umbhalo,ukugqamisa,apps,abayaleli be-TDE
 
-Categories=Qt;KDE;X-KDE-settings-looknfeel;
+Categories=Qt;TDE;X-TDE-settings-looknfeel;

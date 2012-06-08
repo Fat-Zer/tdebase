@@ -82,4 +82,4 @@ Comment[zu]=Unogada Wesistimu ye-TDE
 Icon=ksysguard
 Type=MimeType
 Patterns=*.sgrd;
-X-KDE-AutoEmbed=false
+X-TDE-AutoEmbed=false

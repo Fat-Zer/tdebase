@@ -27,7 +27,7 @@
         </entry>
         <entry name="Buttons" type="StringList">
             <label>Buttons</label>
-            <default>kde-Home.desktop,kde-konsole.desktop,kde-KControl.desktop,kde-Help.desktop,kde-kwrite.desktop</default>
+            <default>tde-Home.desktop,tde-konsole.desktop,tde-KControl.desktop,tde-Help.desktop,tde-kwrite.desktop</default>
         </entry>
         <entry name="VolatileButtons" type="StringList">
             <label>Volatile Buttons</label>

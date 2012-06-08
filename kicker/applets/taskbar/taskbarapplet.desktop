@@ -135,4 +135,4 @@ Comment[wa]=Li prémetowe bår di bouyes do manaedjmint d' purnea
 Comment[zh_CN]=窗口管理的默认任务栏
 Comment[zh_TW]=預設的視窗管理工作列
 Icon=taskbar
-X-KDE-Library=taskbar_panelapplet
+X-TDE-Library=taskbar_panelapplet

@@ -64,6 +64,6 @@ Comment[zh_CN]=未挂载的相机
 Comment[zh_TW]=未掛載的照相機
 Icon=camera_unmount
 
-X-KDE-AutoEmbed=true
-X-KDE-IsAlso=inode/directory
+X-TDE-AutoEmbed=true
+X-TDE-IsAlso=inode/directory
 

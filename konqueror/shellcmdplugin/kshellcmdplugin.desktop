@@ -1,15 +1,15 @@
 [Desktop Entry]
 Type=Service
-X-KDE-PluginInfo-Author=Alexander Neundorf
-X-KDE-PluginInfo-Email=neundorf@kde.org
-X-KDE-PluginInfo-Name=kshellcmdplugin
-X-KDE-PluginInfo-Version=3.4
-X-KDE-PluginInfo-Website=
-X-KDE-PluginInfo-Category=Tools
-X-KDE-PluginInfo-Depends=
-X-KDE-PluginInfo-License=GPL
-X-KDE-PluginInfo-EnabledByDefault=true
-X-KDE-ParentApp=konqueror
+X-TDE-PluginInfo-Author=Alexander Neundorf
+X-TDE-PluginInfo-Email=neundorf@kde.org
+X-TDE-PluginInfo-Name=kshellcmdplugin
+X-TDE-PluginInfo-Version=3.4
+X-TDE-PluginInfo-Website=
+X-TDE-PluginInfo-Category=Tools
+X-TDE-PluginInfo-Depends=
+X-TDE-PluginInfo-License=GPL
+X-TDE-PluginInfo-EnabledByDefault=true
+X-TDE-ParentApp=konqueror
 Icon=run
 Name=Shell Command Plugin
 Name[af]=Opdrag tolk inprop module

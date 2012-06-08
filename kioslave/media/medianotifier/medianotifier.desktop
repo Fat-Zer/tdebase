@@ -1,11 +1,11 @@
 [Desktop Entry]
 Type=Service
 ServiceTypes=KDEDModule
-X-KDE-ModuleType=Library
-X-KDE-Library=medianotifier
-X-KDE-FactoryName=medianotifier
-X-KDE-Kded-autoload=true
-X-KDE-Kded-load-on-demand=false
+X-TDE-ModuleType=Library
+X-TDE-Library=medianotifier
+X-TDE-FactoryName=medianotifier
+X-TDE-Kded-autoload=true
+X-TDE-Kded-load-on-demand=false
 Name=Media Notifier Daemon
 Name[af]=Media Inkennistelling Bediener
 Name[ar]=مراقبالتبليغ عن وسائط

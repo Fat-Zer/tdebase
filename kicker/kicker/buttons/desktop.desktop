@@ -126,4 +126,4 @@ Comment[wa]=On boton ki dene raddimint accès å scribanne cwand il est tchôkî
 Comment[zh_CN]=按下可快速访问桌面的按钮
 Comment[zh_TW]=按下去能快速顯示桌面的按鈕
 Icon=desktop
-X-KDE-Library=DesktopButton
+X-TDE-Library=DesktopButton

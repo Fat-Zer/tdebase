@@ -75,6 +75,6 @@ Type=MimeType
 MimeType=fonts/folder
 Patterns=
 
-X-KDE-AutoEmbed=true
-X-KDE-IsAlso=inode/directory
+X-TDE-AutoEmbed=true
+X-TDE-IsAlso=inode/directory
 

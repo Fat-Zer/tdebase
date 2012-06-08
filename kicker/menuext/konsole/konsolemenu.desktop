@@ -133,5 +133,5 @@ Comment[zh_CN]=以会话或书签启动终端模拟器的菜单
 Comment[zh_TW]=用來啟動作業階段和書籤的終端機模擬程式的選單
 Icon=konsole
 
-X-KDE-Library=kickermenu_konsole
-X-KDE-AuthorizeAction=shell_access
+X-TDE-Library=kickermenu_konsole
+X-TDE-AuthorizeAction=shell_access

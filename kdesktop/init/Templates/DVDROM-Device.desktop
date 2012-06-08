@@ -6,7 +6,7 @@ Type=FSDevice
 Icon=dvd_mount
 UnmountIcon=dvd_unmount
 Actions=Eject;
-X-KDE-Priority=TopLevel
+X-TDE-Priority=TopLevel
 [Desktop Action Eject]
 Name=Eject
 Name[af]=Uitskiet

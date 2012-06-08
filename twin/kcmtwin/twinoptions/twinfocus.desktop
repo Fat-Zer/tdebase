@@ -4,9 +4,9 @@ Type=Application
 Exec=kcmshell twinfocus
 DocPath=kcontrol/windowmanagement/index.html#action-focus
 
-X-KDE-ModuleType=Library
-X-KDE-Library=twinoptions
-X-KDE-FactoryName=twinfocus
+X-TDE-ModuleType=Library
+X-TDE-Library=twinoptions
+X-TDE-FactoryName=twinfocus
 
 Name=Focus
 Name[af]=Fokus

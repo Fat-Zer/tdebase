@@ -1,6 +1,6 @@
 [Desktop Entry]
 Type=ServiceType
-X-KDE-ServiceType=ThumbCreator
+X-TDE-ServiceType=ThumbCreator
 Comment=Thumbnail Handler
 Comment[af]=Duimnael Handteerder
 Comment[ar]=معامل الأظافر

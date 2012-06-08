@@ -71,4 +71,4 @@ Name[zh_CN]=街机
 Name[zh_TW]=大型遊戲機遊戲
 Name[zu]=Umhhume
 Icon=package_games_arcade
-X-KDE-SuppressGenericNames=Game,Arcade Game
+X-TDE-SuppressGenericNames=Game,Arcade Game

@@ -4,12 +4,12 @@ Icon=background
 Type=Application
 DocPath=kcontrol/iccconfig/index.html
 
-X-KDE-Library=iccconfig
-X-KDE-ParentApp=kcontrol
-X-KDE-RootOnly=true
-X-KDE-SubstituteUID=true
+X-TDE-Library=iccconfig
+X-TDE-ParentApp=kcontrol
+X-TDE-RootOnly=true
+X-TDE-SubstituteUID=true
 
-Categories=Qt;KDE;X-KDE-settings-hardware;
+Categories=Qt;TDE;X-TDE-settings-hardware;
 Comment=Configure display ICC profile
 Comment[en_US]=Configure display ICC profile
 DocPath=kcontrol/iccconfig.html

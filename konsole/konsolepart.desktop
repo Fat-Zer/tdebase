@@ -3,12 +3,12 @@ Type=Service
 Icon=konsole
 ServiceTypes=KParts/ReadOnlyPart,Browser/View,inode/directory,TerminalEmulator
 
-X-KDE-Library=libkonsolepart
-X-KDE-BrowserView-AllowAsDefault=false
-X-KDE-BrowserView-HideFromMenus=true
-X-KDE-BrowserView-Toggable=true
-X-KDE-BrowserView-ToggableView-Orientation=horizontal
-X-KDE-BrowserView-FollowActive=true
+X-TDE-Library=libkonsolepart
+X-TDE-BrowserView-AllowAsDefault=false
+X-TDE-BrowserView-HideFromMenus=true
+X-TDE-BrowserView-Toggable=true
+X-TDE-BrowserView-ToggableView-Orientation=horizontal
+X-TDE-BrowserView-FollowActive=true
 
 Name=Terminal Emulator
 Name[af]=Terminaal Emulasie
@@ -92,4 +92,4 @@ Name[xh]=Umzami kulinganisela ngokulinganayo Wendlela yesiphelo
 Name[zh_CN]=终端仿真器
 Name[zh_TW]=終端機模擬程式
 Name[zu]=Umlingisi wangaphandle
-X-KDE-AuthorizeAction=shell_access
+X-TDE-AuthorizeAction=shell_access

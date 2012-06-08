@@ -19,12 +19,12 @@ KonqSidebar_Tree::KonqSidebar_Tree(KInstance *instance,TQObject *parent,TQWidget
 	{
 		KSimpleConfig ksc(desktopName_);
 		ksc.setGroup("Desktop Entry");
-		int virt= ( (ksc.readEntry("X-KDE-TreeModule","")=="Virtual") ?VIRT_Folder:VIRT_Link);
-		if (virt==1) desktopName_=ksc.readEntry("X-KDE-RelURL","");
+		int virt= ( (ksc.readEntry("X-TDE-TreeModule","")=="Virtual") ?VIRT_Folder:VIRT_Link);
+		if (virt==1) desktopName_=ksc.readEntry("X-TDE-RelURL","");
 
 		widget = new TQVBox(widgetParent);
 
-		if (ksc.readBoolEntry("X-KDE-SearchableTreeModule",false)) {
+		if (ksc.readBoolEntry("X-TDE-SearchableTreeModule",false)) {
 			TQHBox* searchline = new TQHBox(widget);
 			searchline->setSpacing(KDialog::spacingHint());
 			tree=new KonqSidebarTree(this,widget,virt,desktopName_);
@@ -156,10 +156,10 @@ extern "C"
 			map->insert("Icon",ksc2.readEntry("Icon"));
 			map->insert("Name",ksc2.readEntry("Name"));
 		 	map->insert("Open","false");
-			map->insert("URL",ksc2.readEntry("X-KDE-Default-URL"));
-			map->insert("X-KDE-KonqSidebarModule","konqsidebar_tree");
-			map->insert("X-KDE-TreeModule",ksc2.readEntry("X-KDE-TreeModule"));
-			map->insert("X-KDE-TreeModule-ShowHidden",ksc2.readEntry("X-KDE-TreeModule-ShowHidden"));
+			map->insert("URL",ksc2.readEntry("X-TDE-Default-URL"));
+			map->insert("X-TDE-KonqSidebarModule","konqsidebar_tree");
+			map->insert("X-TDE-TreeModule",ksc2.readEntry("X-TDE-TreeModule"));
+			map->insert("X-TDE-TreeModule-ShowHidden",ksc2.readEntry("X-TDE-TreeModule-ShowHidden"));
 			fn->setLatin1("dirtree%1.desktop");
 			return true;
 		}

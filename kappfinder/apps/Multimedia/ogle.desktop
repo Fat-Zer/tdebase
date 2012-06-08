@@ -93,5 +93,5 @@ Name[th]=Ogel
 Name[ven]=Zondolola
 ServiceTypes=
 Type=Application
-X-KDE-SubstituteUID=false
-X-KDE-Username=
+X-TDE-SubstituteUID=false
+X-TDE-Username=

@@ -87,13 +87,13 @@ void addBackEnd::aboutToShowAddMenu()
 			continue;
 		}
 		if (m_universal) {
-			if (confFile->readEntry("X-KDE-KonqSidebarUniversal").upper()!="TRUE") {
+			if (confFile->readEntry("X-TDE-KonqSidebarUniversal").upper()!="TRUE") {
 				delete confFile;
 				i--;
 				continue;
 			}
 		} else {
-			if (confFile->readEntry("X-KDE-KonqSidebarBrowser").upper()=="FALSE") {
+			if (confFile->readEntry("X-TDE-KonqSidebarBrowser").upper()=="FALSE") {
 				delete confFile;
 				i--;
 				continue;
@@ -108,9 +108,9 @@ void addBackEnd::aboutToShowAddMenu()
 			menu->insertItem(confFile->readEntry("Name"), i);
 		}
 		libNames.resize(libNames.size()+1);
-		libNames.insert(libNames.count(), new TQString(confFile->readEntry("X-KDE-KonqSidebarAddModule")));
+		libNames.insert(libNames.count(), new TQString(confFile->readEntry("X-TDE-KonqSidebarAddModule")));
 		libParam.resize(libParam.size()+1);
-		libParam.insert(libParam.count(), new TQString(confFile->readEntry("X-KDE-KonqSidebarAddParam")));
+		libParam.insert(libParam.count(), new TQString(confFile->readEntry("X-TDE-KonqSidebarAddParam")));
 		delete confFile;
 	}
         menu->insertSeparator();
@@ -360,7 +360,7 @@ void Sidebar_Widget::addWebSideBar(const KURL& url, const TQString& /*name*/) {
 		scf.writeEntry("Icon", "netscape");
 		scf.writeEntry("Name", i18n("Web SideBar Plugin"));
 		scf.writeEntry("Open", "true");
-		scf.writeEntry("X-KDE-KonqSidebarModule", "konqsidebar_web");
+		scf.writeEntry("X-TDE-KonqSidebarModule", "konqsidebar_web");
 		scf.sync();
 
 		TQTimer::singleShot(0,this,TQT_SLOT(updateButtons()));
@@ -807,7 +807,7 @@ bool Sidebar_Widget::addButton(const TQString &desktoppath,int pos)
 	TQString name = confFile->readEntry("Name");
 	TQString comment = confFile->readEntry("Comment");
 	TQString url = confFile->readPathEntry("URL",TQString::null);
-	TQString lib = confFile->readEntry("X-KDE-KonqSidebarModule");
+	TQString lib = confFile->readEntry("X-TDE-KonqSidebarModule");
 
         delete confFile;
 

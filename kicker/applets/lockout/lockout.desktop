@@ -122,4 +122,4 @@ Comment[wa]=Radjout des botons po serer l' waitroûle a clé et dislodjî del se
 Comment[zh_CN]=添加锁定屏幕和注销会话的按钮
 Comment[zh_TW]=加入用來鎖定螢幕與登出作業階段的按鈕
 Icon=exit
-X-KDE-Library=lockout_panelapplet
+X-TDE-Library=lockout_panelapplet

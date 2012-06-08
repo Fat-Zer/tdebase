@@ -5,4 +5,4 @@ MimeType=media/builtin-printers
 Comment=Printers
 Patterns=Printers
 
-X-KDE-AutoEmbed=false
+X-TDE-AutoEmbed=false

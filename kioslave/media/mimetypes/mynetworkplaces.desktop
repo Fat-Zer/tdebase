@@ -5,4 +5,4 @@ MimeType=media/builtin-mynetworkplaces
 Comment=My Network Places
 Patterns=My_Network_Places
 
-X-KDE-AutoEmbed=false
+X-TDE-AutoEmbed=false

@@ -83,9 +83,9 @@ void FakeUASProvider::parseDescription()
 
   for ( ; it != lastItem; ++it )
   {
-    tmp = UA_PTOS("X-KDE-UA-FULL");
+    tmp = UA_PTOS("X-TDE-UA-FULL");
 
-    if ( (*it)->property("X-KDE-UA-DYNAMIC-ENTRY").toBool() )
+    if ( (*it)->property("X-TDE-UA-DYNAMIC-ENTRY").toBool() )
     {
       struct utsname utsn;
       uname( &utsn );
@@ -117,13 +117,13 @@ void FakeUASProvider::parseDescription()
 
     m_lstIdentity << tmp;
 
-    tmp = TQString("%1 %2").arg(UA_PTOS("X-KDE-UA-SYSNAME")).arg(UA_PTOS("X-KDE-UA-SYSRELEASE"));
+    tmp = TQString("%1 %2").arg(UA_PTOS("X-TDE-UA-SYSNAME")).arg(UA_PTOS("X-TDE-UA-SYSRELEASE"));
     if ( tmp.stripWhiteSpace().isEmpty() )
-      tmp = TQString("%1 %2").arg(UA_PTOS("X-KDE-UA-"
-                    "NAME")).arg(UA_PTOS("X-KDE-UA-VERSION"));
+      tmp = TQString("%1 %2").arg(UA_PTOS("X-TDE-UA-"
+                    "NAME")).arg(UA_PTOS("X-TDE-UA-VERSION"));
     else
-      tmp = TQString("%1 %2 on %3").arg(UA_PTOS("X-KDE-UA-"
-                    "NAME")).arg(UA_PTOS("X-KDE-UA-VERSION")).arg(tmp);
+      tmp = TQString("%1 %2 on %3").arg(UA_PTOS("X-TDE-UA-"
+                    "NAME")).arg(UA_PTOS("X-TDE-UA-VERSION")).arg(tmp);
 
     m_lstAlias << tmp;
   }

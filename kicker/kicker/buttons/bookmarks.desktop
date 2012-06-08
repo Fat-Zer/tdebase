@@ -130,4 +130,4 @@ Comment[wa]=Vos rmåkes Konqueror
 Comment[zh_CN]=您的 Konqueror 书签
 Comment[zh_TW]=您的 Konqueror 書籤
 Icon=bookmark
-X-KDE-Library=BookmarksButton
+X-TDE-Library=BookmarksButton

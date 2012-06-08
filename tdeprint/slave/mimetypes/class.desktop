@@ -72,4 +72,4 @@ Type=MimeType
 MimeType=print/class
 Patterns=
 
-X-KDE-AutoEmbed=true
+X-TDE-AutoEmbed=true

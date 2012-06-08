@@ -137,4 +137,4 @@ Comment[zh_CN]=您最近使用过的文档的菜单
 Comment[zh_TW]=您最近使用過的文件選單
 Icon=document
 
-X-KDE-Library=kickermenu_recentdocs
+X-TDE-Library=kickermenu_recentdocs

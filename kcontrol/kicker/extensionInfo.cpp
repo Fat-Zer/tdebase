@@ -56,15 +56,15 @@ void ExtensionInfo::load()
     {
         KDesktopFile df(_desktopFile);
         _name = df.readName();
-        _resizeable = df.readBoolEntry("X-KDE-PanelExt-Resizeable", _resizeable);
+        _resizeable = df.readBoolEntry("X-TDE-PanelExt-Resizeable", _resizeable);
 
         if (_resizeable)
         {
-            _useStdSizes = df.readBoolEntry("X-KDE-PanelExt-StdSizes", _useStdSizes);
-            _size = df.readNumEntry("X-KDE-PanelExt-StdSizeDefault", _size);
-            _customSizeMin = df.readNumEntry("X-KDE-PanelExt-CustomSizeMin", _customSizeMin);
-            _customSizeMax = df.readNumEntry("X-KDE-PanelExt-CustomSizeMax", _customSizeMax);
-            _customSize = df.readNumEntry("X-KDE-PanelExt-CustomSizeDefault", _customSize);
+            _useStdSizes = df.readBoolEntry("X-TDE-PanelExt-StdSizes", _useStdSizes);
+            _size = df.readNumEntry("X-TDE-PanelExt-StdSizeDefault", _size);
+            _customSizeMin = df.readNumEntry("X-TDE-PanelExt-CustomSizeMin", _customSizeMin);
+            _customSizeMax = df.readNumEntry("X-TDE-PanelExt-CustomSizeMax", _customSizeMax);
+            _customSize = df.readNumEntry("X-TDE-PanelExt-CustomSizeDefault", _customSize);
         }
 
         for (int i = 0; i < 4; i++)
@@ -72,10 +72,10 @@ void ExtensionInfo::load()
             _allowedPosition[i]=false;
         }
 
-        kdDebug()<<"BEFORE X-KDE-PanelExt-Positions parsing"<<endl;
+        kdDebug()<<"BEFORE X-TDE-PanelExt-Positions parsing"<<endl;
         TQStringList allowedPos;
         allowedPos << "BOTTOM" << "TOP" << "LEFT" << "RIGHT" << "BOTTOM";
-        allowedPos= df.readListEntry("X-KDE-PanelExt-Positions", allowedPos);
+        allowedPos= df.readListEntry("X-TDE-PanelExt-Positions", allowedPos);
 
         for (unsigned int i=0;i<allowedPos.count();i++)
         {

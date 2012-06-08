@@ -82,5 +82,5 @@ Comment[zh_TW]=未掛載的 CD-ROM
 Comment[zu]=I-CD-ROM eyehlisiwe
 Patterns=
 
-X-KDE-AutoEmbed=true
-X-KDE-IsAlso=inode/directory
+X-TDE-AutoEmbed=true
+X-TDE-IsAlso=inode/directory

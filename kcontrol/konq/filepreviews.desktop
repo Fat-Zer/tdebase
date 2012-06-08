@@ -5,9 +5,9 @@ Icon=kfm
 Exec=kcmshell filepreviews
 
 
-X-KDE-Library=konq
-X-KDE-FactoryName=previews
-X-KDE-ParentApp=kcontrol
+X-TDE-Library=konq
+X-TDE-FactoryName=previews
+X-TDE-ParentApp=kcontrol
 
 Name=Previews & Meta-Data
 Name[af]=Voorskoue & Meta-Data

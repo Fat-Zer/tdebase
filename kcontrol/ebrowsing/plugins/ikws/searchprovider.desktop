@@ -1,6 +1,6 @@
 [Desktop Entry]
 Type=ServiceType
-X-KDE-ServiceType=SearchProvider
+X-TDE-ServiceType=SearchProvider
 Comment=Search Engine
 Comment[af]=Soektog Masjien
 Comment[ar]=محرك البحث

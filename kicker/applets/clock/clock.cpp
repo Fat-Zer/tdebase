@@ -1517,14 +1517,14 @@ void ClockApplet::contextMenuActivated(int result)
         case 103:
             proc << locate("exe", "tdesu");
             proc << "--nonewdcop";
-            proc << TQString("%1 kde-clock.desktop --lang %2")
+            proc << TQString("%1 tde-clock.desktop --lang %2")
                 .arg(locate("exe", "kcmshell"))
                 .arg(KGlobal::locale()->language());
             proc.start(KProcess::DontCare);
             break;
         case 104:
             proc << locate("exe", "kcmshell");
-            proc << "kde-language.desktop";
+            proc << "tde-language.desktop";
             proc.start(KProcess::DontCare);
             break;
         case 110:

@@ -4,9 +4,9 @@ Type=Application
 Exec=kcmshell smartcard
 DocPath=kcontrol/smartcard.html
 
-X-KDE-Library=smartcard
-X-KDE-Init=smartcard
-X-KDE-ParentApp=kcontrol
+X-TDE-Library=smartcard
+X-TDE-Init=smartcard
+X-TDE-ParentApp=kcontrol
 Name=Smartcards
 Name[af]=Smartkaarte
 Name[ar]=البطاقات الذكية
@@ -209,4 +209,4 @@ Keywords[zh_CN]=Smartcard,PKCS,SSL,reader,smart,card,智能卡,智能,卡,读卡
 Keywords[zh_TW]=Smartcard,PKCS,SSL,reader,smart,card,智慧卡,閱讀器,智慧,卡
 Keywords[zu]=Ikhadi elikhaliphile,PKCS,SSLumfundi,okukhaliphile,ikhadi
 
-Categories=Qt;KDE;X-KDE-settings-peripherals;
+Categories=Qt;TDE;X-TDE-settings-peripherals;

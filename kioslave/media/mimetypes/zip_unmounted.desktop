@@ -81,5 +81,5 @@ Comment[zh_TW]=未掛載的 Zip 磁碟
 Comment[zu]=I-disk yokuhlanganiselwe ndawonye eyehlisiwe
 Patterns=
 
-X-KDE-AutoEmbed=true
-X-KDE-IsAlso=inode/directory
+X-TDE-AutoEmbed=true
+X-TDE-IsAlso=inode/directory

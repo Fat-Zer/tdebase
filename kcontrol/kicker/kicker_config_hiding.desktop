@@ -4,9 +4,9 @@ Type=Application
 DocPath=kcontrol/panel/index.html#panel-hiding
 Exec=kcmshell kicker_hiding
 
-X-KDE-Library=kicker
-X-KDE-FactoryName=kicker_hiding
-X-KDE-ParentApp=kicker
+X-TDE-Library=kicker
+X-TDE-FactoryName=kicker_hiding
+X-TDE-ParentApp=kicker
 
 Name=Hiding
 Name[af]=Wegsteking

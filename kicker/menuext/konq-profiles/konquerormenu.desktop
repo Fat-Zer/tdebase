@@ -133,4 +133,4 @@ Comment[zh_CN]=访问 Konqueror 配置文件的菜单
 Comment[zh_TW]=方便存取 Konqueror 設定組合的選單
 Icon=konqueror
 
-X-KDE-Library=kickermenu_konqueror
+X-TDE-Library=kickermenu_konqueror

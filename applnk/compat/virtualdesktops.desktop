@@ -78,7 +78,7 @@ Name[zh_TW]=多重桌面
 Type=Application
 Icon=desktop
 Exec=kcmshell desktop
-X-KDE-ModuleType=Library
-X-KDE-Library=konq
-X-KDE-FactoryName=ddesktop
+X-TDE-ModuleType=Library
+X-TDE-Library=konq
+X-TDE-FactoryName=ddesktop
 

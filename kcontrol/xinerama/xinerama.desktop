@@ -4,8 +4,8 @@ Type=Application
 Exec=kcmshell xinerama
 DocPath=kcontrol/multiplemonitors.html
 
-X-KDE-Library=xinerama
-X-KDE-Test-Module=true
+X-TDE-Library=xinerama
+X-TDE-Test-Module=true
 Name=Multiple Monitors
 Name[af]=Veelvuldige Skerms
 Name[ar]=شاشات متعددة

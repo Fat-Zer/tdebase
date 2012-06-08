@@ -116,5 +116,5 @@ Comment[wa]=On corwaitoe po les spepieus k' avale li håynaedje so gåde do sist
 Comment[zh_CN]=可显示 TDE 系统卫士效果的高级系统监视器
 Comment[zh_TW]=包含 TDE 系統守衛顯示的進階系統監視器
 Icon=ksysguard
-X-KDE-Library=sysguard_panelapplet
-X-KDE-UniqueApplet=true
+X-TDE-Library=sysguard_panelapplet
+X-TDE-UniqueApplet=true

@@ -61,10 +61,10 @@ AppletInfo::AppletInfo( const TQString& deskFile, const TQString& configFile, co
     setIcon(df.readIcon());
 
     // library
-    setLibrary(df.readEntry("X-KDE-Library"));
+    setLibrary(df.readEntry("X-TDE-Library"));
 
     // is it a unique applet?
-    setIsUnique(df.readBoolEntry("X-KDE-UniqueApplet", false));
+    setIsUnique(df.readBoolEntry("X-TDE-UniqueApplet", false));
 
     // should it be shown in the gui?
     m_hidden = df.readBoolEntry("Hidden", false);

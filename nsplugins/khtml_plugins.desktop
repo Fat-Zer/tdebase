@@ -4,12 +4,12 @@ DocPath=kcontrol/khtml/index.html#kbrowse-plugins
 Icon=konqueror
 Exec=kcmshell khtml_plugins
 
-X-KDE-ModuleType=Library
-X-KDE-Library=konqhtml
-X-KDE-FactoryName=khtml_plugins
-X-KDE-Init-Library=nsplugins
-X-KDE-Init=nsplugin
-X-KDE-ParentApp=kcontrol
+X-TDE-ModuleType=Library
+X-TDE-Library=konqhtml
+X-TDE-FactoryName=khtml_plugins
+X-TDE-Init-Library=nsplugins
+X-TDE-Init=nsplugin
+X-TDE-ParentApp=kcontrol
 
 Name=Plugins
 Name[af]=Inprop modules
@@ -230,4 +230,4 @@ Keywords[zh_CN]=konqueror,kfm,browser,html,web,www,fonts,plugins,浏览器,字�
 Keywords[zh_TW]=konqueror,kfm,browser,html,web,www,fonts,plugins,征服家,瀏覽器,網頁,字型,外掛程式
 Keywords[zu]=komqueror,kfm,umcingi,html,web,www,izinhlobo zamagama, ama-plugin
 
-Categories=Qt;KDE;X-KDE-settings-webbrowsing;
+Categories=Qt;TDE;X-TDE-settings-webbrowsing;

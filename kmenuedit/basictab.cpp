@@ -366,19 +366,19 @@ void BasicTab::setEntryInfo(MenuEntryInfo *entryInfo)
 
     _pathEdit->lineEdit()->setText(df->readPath());
     _termOptEdit->setText(df->readEntry("TerminalOptions"));
-    _uidEdit->setText(df->readEntry("X-KDE-Username"));
+    _uidEdit->setText(df->readEntry("X-TDE-Username"));
 
     if( df->hasKey( "StartupNotify" ))
         _launchCB->setChecked(df->readBoolEntry("StartupNotify", true));
     else // backwards comp.
-        _launchCB->setChecked(df->readBoolEntry("X-KDE-StartupNotify", true));
+        _launchCB->setChecked(df->readBoolEntry("X-TDE-StartupNotify", true));
 
     if(df->readNumEntry("Terminal", 0) == 1)
         _terminalCB->setChecked(true);
     else
         _terminalCB->setChecked(false);
 
-    _uidCB->setChecked(df->readBoolEntry("X-KDE-SubstituteUID", false));
+    _uidCB->setChecked(df->readBoolEntry("X-TDE-SubstituteUID", false));
 
     enableWidgets(true, entryInfo->hidden);
     blockSignals(false);
@@ -408,8 +408,8 @@ void BasicTab::apply()
             df->writeEntry("Terminal", 0);
 
         df->writeEntry("TerminalOptions", _termOptEdit->text());
-        df->writeEntry("X-KDE-SubstituteUID", _uidCB->isChecked());
-        df->writeEntry("X-KDE-Username", _uidEdit->text());
+        df->writeEntry("X-TDE-SubstituteUID", _uidCB->isChecked());
+        df->writeEntry("X-TDE-Username", _uidEdit->text());
         df->writeEntry("StartupNotify", _launchCB->isChecked());
     }
     else

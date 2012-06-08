@@ -5,9 +5,9 @@ Exec=kcmshell useragent
 DocPath=kcontrol/useragent/index.html
 
 
-X-KDE-Library=kio
-X-KDE-FactoryName=useragent
-X-KDE-ParentApp=kcontrol
+X-TDE-Library=kio
+X-TDE-FactoryName=useragent
+X-TDE-ParentApp=kcontrol
 
 Name=Browser Identification
 Name[af]=Stelsel identifisering
@@ -229,4 +229,4 @@ Keywords[zh_CN]=User Agent,Browser,Internet,WWW,Network,agent,bindings,server,lo
 Keywords[zh_TW]=User Agent,Browser,Internet,WWW,Network,agent,bindings,server,login,使用者代理程式,瀏覽器,網際網路,網路,代理程式,伺服器,登入
 Keywords[zu]=Ummeli Womsebenzisi,Umcingi,Internet,WWW,Uxhumano olusakazekile, ummeli,izibongo,umlekeleli,ngena ngaphakathi
 
-Categories=Qt;KDE;X-KDE-settings-webbrowsing;
+Categories=Qt;TDE;X-TDE-settings-webbrowsing;

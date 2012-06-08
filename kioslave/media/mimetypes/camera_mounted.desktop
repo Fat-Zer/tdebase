@@ -64,6 +64,6 @@ Comment[zh_CN]=挂载的相机
 Comment[zh_TW]=掛載的照相機
 Icon=camera_mount
 
-X-KDE-AutoEmbed=true
-X-KDE-IsAlso=inode/directory
+X-TDE-AutoEmbed=true
+X-TDE-IsAlso=inode/directory
 

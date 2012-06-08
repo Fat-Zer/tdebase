@@ -412,7 +412,7 @@ void KWinDecorationModule::findDecorations()
 				if (KDesktopFile::isDesktopFile(filename))
 				{
 					KDesktopFile desktopFile(filename);
-					TQString libName = desktopFile.readEntry("X-KDE-Library");
+					TQString libName = desktopFile.readEntry("X-TDE-Library");
 
 					if (!libName.isEmpty() && libName.startsWith( "twin3_" ))
 					{

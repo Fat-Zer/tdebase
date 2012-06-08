@@ -3,12 +3,12 @@ Exec=kcmshell bell
 Icon=bell
 Type=Application
 DocPath=kcontrol/bell/index.html
-Categories=Qt;KDE;X-KDE-settings-sound;
+Categories=Qt;TDE;X-TDE-settings-sound;
 
 
-X-KDE-Library=bell
-X-KDE-Init=bell
-X-KDE-ParentApp=kcontrol
+X-TDE-Library=bell
+X-TDE-Init=bell
+X-TDE-ParentApp=kcontrol
 
 Name=System Bell
 Name[af]=Stelsel Klok

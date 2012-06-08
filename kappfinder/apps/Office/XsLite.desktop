@@ -92,4 +92,4 @@ GenericName[vi]=Trình tính bảng
 GenericName[wa]=Tåvleu
 GenericName[zh_CN]=电子表格
 GenericName[zh_TW]=試算表
-X-KDE-StartupNotify=false
+X-TDE-StartupNotify=false

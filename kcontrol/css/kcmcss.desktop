@@ -5,9 +5,9 @@ Exec=kcmshell kcmcss
 DocPath=kcontrol/kcmcss/index.html
 
 
-X-KDE-Library=css
-X-KDE-FactoryName=kcmcss
-X-KDE-ParentApp=kcontrol
+X-TDE-Library=css
+X-TDE-FactoryName=kcmcss
+X-TDE-ParentApp=kcontrol
 
 Name=Stylesheets
 Name[af]=Stylblaaie
@@ -230,4 +230,4 @@ Keywords[zh_CN]=CSS,HTML,style,stylesheet,accessibility,风格,样式表,辅助�
 Keywords[zh_TW]=CSS,HTML,style,stylesheet,accessibility,風格,風格表單,可用性
 Keywords[zu]=CSS,HTML,isitayela,ikhasi lesitayela,ukungena
 
-Categories=Qt;KDE;X-KDE-settings-webbrowsing;
+Categories=Qt;TDE;X-TDE-settings-webbrowsing;

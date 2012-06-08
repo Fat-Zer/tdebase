@@ -76,7 +76,7 @@ Name[zh_CN]=文件夹
 Name[zh_TW]=資料夾
 Open=false
 
-X-KDE-TreeModule=Directory
-X-KDE-TreeModule-Lib=konq_sidebartree_dirtree
-X-KDE-Default-URL=file:/
-X-KDE-TreeModule-ShowHidden=false
+X-TDE-TreeModule=Directory
+X-TDE-TreeModule-Lib=konq_sidebartree_dirtree
+X-TDE-Default-URL=file:/
+X-TDE-TreeModule-ShowHidden=false

@@ -82,5 +82,5 @@ Comment[zh_TW]=已掛載的 CD Writer
 Comment[zu]=I-CD-Writer eyenyusiwe
 Patterns=
 
-X-KDE-AutoEmbed=true
-X-KDE-IsAlso=inode/directory
+X-TDE-AutoEmbed=true
+X-TDE-IsAlso=inode/directory

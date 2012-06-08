@@ -5,9 +5,9 @@ Type=Application
 DocPath=kinfocenter/cdinfo/index.html
 
 
-X-KDE-Library=info
-X-KDE-FactoryName=cdinfo
-X-KDE-ParentApp=kinfocenter
+X-TDE-Library=info
+X-TDE-FactoryName=cdinfo
+X-TDE-ParentApp=kinfocenter
 
 Name=CD-ROM Information
 Name[bg]=CD-ROM
@@ -163,4 +163,4 @@ Keywords[uk]=CD-ROM Information,CD-ROM,CD,CD Drive,Writer Capabilities,Інфо�
 Keywords[vi]=Thông tin đĩa CD-ROM,CD-ROM,CD, ổ đĩa CD, Khả năng ổ ghi
 Keywords[wa]=Informåcion do CD-ROM,CD-ROM,CD,léjheu d' CD,Usteyes di scrijhaedje
 
-Categories=Qt;KDE;X-KDE-settings-information;
+Categories=Qt;TDE;X-TDE-settings-information;

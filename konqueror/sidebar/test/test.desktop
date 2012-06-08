@@ -65,4 +65,4 @@ Name[zh_TW]=測試
 Name[zu]=Isivivinyo
 
 Open=false
-X-KDE-KonqSidebarModule=konq_sidebartest
+X-TDE-KonqSidebarModule=konq_sidebartest

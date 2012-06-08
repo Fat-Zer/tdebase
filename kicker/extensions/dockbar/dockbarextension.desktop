@@ -144,5 +144,5 @@ Comment[zh_TW]=嵌入延伸程式工具列
 Comment[zu]=Isandiso sebha Yomyaleli we-Dock
 
 Icon=dockbar
-X-KDE-Library=dockbar_panelextension
-X-KDE-UniqueApplet=true
+X-TDE-Library=dockbar_panelextension
+X-TDE-UniqueApplet=true

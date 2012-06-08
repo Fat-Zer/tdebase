@@ -27,7 +27,7 @@ emulated by your desktop file.
 
 NEW PROPERTIES:
 ===============
-X-KDE-UA-TAG
+X-TDE-UA-TAG
 FIELD:        REQUIRED
 TYPE:         QString
 TRANSLATE:    NO
@@ -38,9 +38,9 @@ approximations: IE, NN, MOZ, OP, MISC. These represent Internet
 Explorer, Netscape Navigator, Mozilla, Opera and Miscellaneous
 respectively. NOTE: you can enter any value here as it is just
 a place holder that would be automatically replaced with the
-actual user-agent name (X-KDE-UA-NAME).
+actual user-agent name (X-TDE-UA-NAME).
 
-X-KDE-UA-FULL
+X-TDE-UA-FULL
 FIELD:        REQUIRED
 TYPE:         QString
 TRANSLATE:    NO
@@ -57,24 +57,24 @@ appKDERelease       the current release number as set by KDE (ex: 2.1.9 >=200103
 appMachineType      the processor or machine type (ex: i686).
 
 NOTE: if you use any of these values and want them to be replaced
-automatically, make sure you include the X-KDE-UA-DYNAMIC-ENTRY field
+automatically, make sure you include the X-TDE-UA-DYNAMIC-ENTRY field
 and set its value to 1 (for true).
 
-X-KDE-UA-NAME
+X-TDE-UA-NAME
 FIELD:        REQUIRED
 TYPE:         QString
 TRANSLATE:    YES
 DESCRIPTION:
 The actual name of the browser or user-agent.
 
-X-KDE-UA-VERSION
+X-TDE-UA-VERSION
 FIELD:        REQUIRED
 TYPE:         QString
 TRANSLATE:    YES
 DESCRIPTION:
 The actual version of the browser or user-agent.
 
-X-KDE-UA-SYSNAME
+X-TDE-UA-SYSNAME
 FIELD:        OPTIONAL
 TYPE:         QString
 TRANSLATE:    YES
@@ -82,7 +82,7 @@ DESCRIPTION:
 The system name (for example Linux) where the browser
 identification was obtained from.
 
-X-KDE-UA-SYSRELEASE
+X-TDE-UA-SYSRELEASE
 FIELD:        OPTIONAL
 TYPE:         QString
 TRANSLATE:    YES
@@ -90,13 +90,13 @@ DESCRIPTION:
 The system version (for example 2.4.1) where the browser
 identification was obtained from.
 
-X-KDE-UA-DYNAMIC-ENTRY
+X-TDE-UA-DYNAMIC-ENTRY
 FIELD:        OPTIONAL
 TYPE:         BOOLEAN (0/1)
 TRANSLATE:    NO
 DESCRIPTION:
 A boolean that indicates whether the keywords described under
-X-KDE-UA-FULL should be translated.  Make sure this field is
+X-TDE-UA-FULL should be translated.  Make sure this field is
 there with its value set to "1" if you want the keywords to
 be replaced appropriately.
 
@@ -107,29 +107,29 @@ EXAMPLES:
 Name=UADescription (IE 5.5 on Win 98)
 Type=Service
 ServiceTypes=UserAgentStrings
-X-KDE-UA-TAG=IE
-X-KDE-UA-FULL=Mozilla/4.0 (compatible; MSIE 5.5; Windows 98)
-X-KDE-UA-NAME=Internet Explorer
-X-KDE-UA-VERSION=5.5
-X-KDE-UA-SYSNAME=Windows
-X-KDE-UA-SYSRELEASE=98
+X-TDE-UA-TAG=IE
+X-TDE-UA-FULL=Mozilla/4.0 (compatible; MSIE 5.5; Windows 98)
+X-TDE-UA-NAME=Internet Explorer
+X-TDE-UA-VERSION=5.5
+X-TDE-UA-SYSNAME=Windows
+X-TDE-UA-SYSRELEASE=98
 
 [Desktop Entry]
 Name=UADescription (NN 4.76 on current)
 Type=Service
 ServiceTypes=UserAgentStrings
-X-KDE-UA-TAG=NN
-X-KDE-UA-FULL=Mozilla/4.76 (appPlatform; U; appSysName appSysRelease appMachineType)
-X-KDE-UA-NAME=Netscape Navigator
-X-KDE-UA-VERSION=4.76
-X-KDE-UA-DYNAMIC-ENTRY=1
+X-TDE-UA-TAG=NN
+X-TDE-UA-FULL=Mozilla/4.76 (appPlatform; U; appSysName appSysRelease appMachineType)
+X-TDE-UA-NAME=Netscape Navigator
+X-TDE-UA-VERSION=4.76
+X-TDE-UA-DYNAMIC-ENTRY=1
 
 The first entry is a description file for Internet Explorer running on
 a Windows 98 machine while the second one is an example of a description
 file for Netscape browser using the "keyword" based approach to describe 
 the fields that should be replaced dynamically based on the current system 
 settings. Note that all "keyword" based desktop files should always set
-X-KDE-UA-DYNAMIC-ENTRY to 1.
+X-TDE-UA-DYNAMIC-ENTRY to 1.
 
 Enjoy,
 Dawit A.

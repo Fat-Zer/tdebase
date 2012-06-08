@@ -70,4 +70,4 @@ Comment[zh_CN]=DVD 影碟
 Comment[zh_TW]=DVD 視訊光碟
 Icon=dvd_unmount
 
-X-KDE-IsAlso=inode/directory
+X-TDE-IsAlso=inode/directory

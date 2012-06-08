@@ -1,6 +1,6 @@
 [Desktop Entry]
 Type=ServiceType
-X-KDE-ServiceType=KonqPopupMenu/Plugin
+X-TDE-ServiceType=KonqPopupMenu/Plugin
 Comment=Plugin for the Konqueror Popup Menu
 Comment[af]=Inplak vir die Konqueror Opspring Kieslys
 Comment[az]=Konqueror üçün PopupMenu əlavəsi

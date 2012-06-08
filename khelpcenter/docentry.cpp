@@ -228,7 +228,7 @@ bool DocEntry::readFromFile( const TQString &fileName )
   mSearchMethod = file.readEntry( "X-DOC-SearchMethod" );
   mDocumentType = file.readEntry( "X-DOC-DocumentType" );
 
-  mKhelpcenterSpecial = file.readEntry("X-KDE-KHelpcenter-Special");
+  mKhelpcenterSpecial = file.readEntry("X-TDE-KHelpcenter-Special");
 
   return true;
 }

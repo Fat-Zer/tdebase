@@ -1,7 +1,7 @@
 [Desktop Entry]
 Type=ServiceType
-X-KDE-ServiceType=Konqueror/FindPart
-X-KDE-Derived=Browser/View
+X-TDE-ServiceType=Konqueror/FindPart
+X-TDE-Derived=Browser/View
 Name=Find Part
 Name[af]=Soek Deel
 Name[ar]=ابحث عن جزء

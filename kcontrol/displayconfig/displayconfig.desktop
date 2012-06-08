@@ -1,5 +1,5 @@
 [Desktop Entry]
-Categories=Qt;KDE;X-KDE-settings-system;
+Categories=Qt;TDE;X-TDE-settings-system;
 Comment=Configure display
 Comment[en_US]=Configure display
 DocPath=kcontrol/displayconfig.html
@@ -18,8 +18,8 @@ Terminal=false
 TerminalOptions=
 Type=Application
 X-DCOP-ServiceType=
-X-KDE-Library=displayconfig
-X-KDE-ParentApp=kcontrol
-X-KDE-RootOnly=true
-X-KDE-SubstituteUID=true
-X-KDE-Username=
+X-TDE-Library=displayconfig
+X-TDE-ParentApp=kcontrol
+X-TDE-RootOnly=true
+X-TDE-SubstituteUID=true
+X-TDE-Username=

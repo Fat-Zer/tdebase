@@ -81,5 +81,5 @@ Name[zh_CN]=字体
 Name[zh_TW]=字型
 Name[zu]=Izinhlobo zamagama
 Open=false
-X-KDE-TreeModule=Directory
-X-KDE-KonqSidebarModule=konqsidebar_tree
+X-TDE-TreeModule=Directory
+X-TDE-KonqSidebarModule=konqsidebar_tree

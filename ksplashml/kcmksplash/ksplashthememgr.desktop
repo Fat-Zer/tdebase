@@ -3,10 +3,10 @@ Icon=ksplash
 Exec=kcmshell ksplashthememgr
 DocPath=ksplashml/themes.html
 
-X-KDE-ModuleType=Library
-X-KDE-Library=ksplashthemes
-X-KDE-FactoryName=ksplashthemes
-X-KDE-ParentApp=kcontrol
+X-TDE-ModuleType=Library
+X-TDE-Library=ksplashthemes
+X-TDE-FactoryName=ksplashthemes
+X-TDE-ParentApp=kcontrol
 
 Name=Splash Screen
 Name[af]=Spat Skerm
@@ -213,4 +213,4 @@ Keywords[vi]=màn hình chào mừng,sắc thái chào mừng,khởi động
 Keywords[wa]=waitroûle d' enondaedje,tinme d' enondaedje,enonde tot seu
 Keywords[zh_CN]=splash screen,splash theme,startup,飞溅屏幕,飞溅主题,启动
 Keywords[zh_TW]=splash screen,splash theme,startup,啟動
-Categories=Qt;KDE;X-KDE-settings-looknfeel;
+Categories=Qt;TDE;X-TDE-settings-looknfeel;

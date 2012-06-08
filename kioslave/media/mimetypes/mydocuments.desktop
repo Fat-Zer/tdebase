@@ -5,4 +5,4 @@ MimeType=media/builtin-mydocuments
 Comment=My Documents
 Patterns=My_Documents
 
-X-KDE-AutoEmbed=false
+X-TDE-AutoEmbed=false

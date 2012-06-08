@@ -95,4 +95,4 @@ GenericName[zh_CN]=Web 浏览器
 GenericName[zh_TW]=網頁瀏覽器
 GenericName[zu]=Umcingi we-Web
 MimeType=text/html
-X-KDE-StartupNotify=true
+X-TDE-StartupNotify=true

@@ -5,9 +5,9 @@ DocPath=kcontrol/kcmtaskbar/index.html
 Exec=kcmshell kcmtaskbar
 
 
-X-KDE-Library=taskbar
-X-KDE-FactoryName=taskbar
-X-KDE-ParentApp=kcontrol
+X-TDE-Library=taskbar
+X-TDE-FactoryName=taskbar
+X-TDE-ParentApp=kcontrol
 
 Name=Taskbar
 Name[af]=Kasbar
@@ -226,4 +226,4 @@ Keywords[zh_CN]=kicker,panel,kpanel,taskbar,startbar,launchbar,windows,面板,�
 Keywords[zh_TW]=kicker,panel,kpanel,taskbar,startbar,launchbar,windows,控制面板,工作列,狀態列,快捷列,視窗
 Keywords[zu]=kicker,iwindi lemininingwane,kpanel,ibha yemisebenzi, ibha yokuqala,ibha yokuqalisa,ama-window
 
-Categories=Qt;KDE;X-KDE-settings-desktop;
+Categories=Qt;TDE;X-TDE-settings-desktop;

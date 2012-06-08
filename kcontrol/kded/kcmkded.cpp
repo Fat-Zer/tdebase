@@ -159,7 +159,7 @@ void KDEDConfig::load( bool useDefaults ) {
 		if ( KDesktopFile::isDesktopFile( *it ) ) {
 			KDesktopFile file( *it, true, "services" );
 
-			if ( file.readBoolEntry("X-KDE-Kded-autoload") ) {
+			if ( file.readBoolEntry("X-TDE-Kded-autoload") ) {
 				clitem = new CheckListItem(_lvStartup, TQString::null);
 				connect(clitem, TQT_SIGNAL(changed(TQCheckListItem*)), TQT_SLOT(slotItemChecked(TQCheckListItem*)));
 				clitem->setOn(autoloadEnabled(&kdedrc, *it));
@@ -167,13 +167,13 @@ void KDEDConfig::load( bool useDefaults ) {
 				item->setText(1, file.readName());
 				item->setText(2, file.readComment());
 				item->setText(3, NOT_RUNNING);
-				item->setText(4, file.readEntry("X-KDE-Library"));
+				item->setText(4, file.readEntry("X-TDE-Library"));
 			}
-			else if ( file.readBoolEntry("X-KDE-Kded-load-on-demand") ) {
+			else if ( file.readBoolEntry("X-TDE-Kded-load-on-demand") ) {
 				item = new TQListViewItem(_lvLoD, file.readName());
 				item->setText(1, file.readComment());
 				item->setText(2, NOT_RUNNING);
-				item->setText(4, file.readEntry("X-KDE-Library"));
+				item->setText(4, file.readEntry("X-TDE-Library"));
 			}
 		}
 	}
@@ -199,9 +199,9 @@ void KDEDConfig::save() {
 			KConfig file( *it, false, false, "services" );
 			file.setGroup("Desktop Entry");
 
-			if (file.readBoolEntry("X-KDE-Kded-autoload")){
+			if (file.readBoolEntry("X-TDE-Kded-autoload")){
 
-				item = static_cast<TQCheckListItem *>(_lvStartup->findItem(file.readEntry("X-KDE-Library"),4));
+				item = static_cast<TQCheckListItem *>(_lvStartup->findItem(file.readEntry("X-TDE-Library"),4));
 				if (item) {
 					// we found a match, now compare and see what changed
 					setAutoloadEnabled(&kdedrc, *it, item->isOn());

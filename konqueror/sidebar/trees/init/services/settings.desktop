@@ -77,5 +77,5 @@ Name[wa]=Apontiaedjes
 Name[zh_CN]=设置
 Name[zh_TW]=設定
 Open=false
-X-KDE-TreeModule=Directory
-X-KDE-KonqSidebarModule=konqsidebar_tree
+X-TDE-TreeModule=Directory
+X-TDE-KonqSidebarModule=konqsidebar_tree

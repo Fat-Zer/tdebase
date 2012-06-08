@@ -124,4 +124,4 @@ Comment[zh_CN]=重要系统位置的菜单
 Comment[zh_TW]=重要系統位置選單
 Icon=system
 
-X-KDE-Library=kickermenu_systemmenu
+X-TDE-Library=kickermenu_systemmenu

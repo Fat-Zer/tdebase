@@ -84,4 +84,4 @@ GenericName[zh_TW]=行動電話管理工具
 Exec=xgnokii
 Type=Application
 Terminal=false
-# Categories=Qt;KDE;PIM
+# Categories=Qt;TDE;PIM

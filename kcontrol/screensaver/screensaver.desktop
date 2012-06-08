@@ -5,9 +5,9 @@ Type=Application
 DocPath=kcontrol/screensaver/index.html
 
 
-X-KDE-Library=screensaver
-X-KDE-FactoryName=screensaver
-X-KDE-ParentApp=kcontrol
+X-TDE-Library=screensaver
+X-TDE-FactoryName=screensaver
+X-TDE-ParentApp=kcontrol
 
 Name=Screen Saver
 Name[af]=Skerm Bewaarder
@@ -237,4 +237,4 @@ Keywords[zh_CN]=screensavers,Priority,优先级,屏幕保护程序
 Keywords[zh_TW]=screensavers,Priority,螢幕保護程式,優先權
 Keywords[zu]=abagcini zikrini,Ukubaluleka
 
-Categories=Qt;KDE;X-KDE-settings-looknfeel;
+Categories=Qt;TDE;X-TDE-settings-looknfeel;

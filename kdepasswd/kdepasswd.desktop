@@ -2,7 +2,7 @@
 Exec=kdepasswd
 Icon=password
 Type=Application
-Categories=Qt;KDE;Settings;
+Categories=Qt;TDE;Settings;
 NoDisplay=true
 X-DCOP-ServiceType=Unique
 Name=Change Password

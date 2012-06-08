@@ -143,4 +143,4 @@ Icon=xclipboard
 Path=
 Type=Application
 Terminal=false
-X-KDE-StartupNotify=true
+X-TDE-StartupNotify=true

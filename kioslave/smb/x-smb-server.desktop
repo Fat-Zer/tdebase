@@ -72,5 +72,5 @@ Comment[zh_TW]=視窗伺服器
 Icon=server
 Type=MimeType
 MimeType=application/x-smb-server
-X-KDE-AutoEmbed=true
-X-KDE-IsAlso=inode/directory
+X-TDE-AutoEmbed=true
+X-TDE-IsAlso=inode/directory

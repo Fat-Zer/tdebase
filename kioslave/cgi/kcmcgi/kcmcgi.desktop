@@ -3,8 +3,8 @@ Icon=run
 Type=Application
 Exec=kcmshell kcmcgi
 DocPath=
-X-KDE-ModuleType=Library
-X-KDE-Library=cgi
+X-TDE-ModuleType=Library
+X-TDE-Library=cgi
 
 Name=CGI Scripts
 Name[af]=CGI Skripte
@@ -228,4 +228,4 @@ Keywords[wa]=CGI,KIO,Slave,Paths,tchimins,mandaye
 Keywords[zh_CN]=CGI,KIO,Slave,Paths,路径
 Keywords[zh_TW]=CGI,KIO,Slave,Paths,路徑
 Keywords[zu]=CGI,KIO,Slave,Izindlela
-Categories=Qt;KDE;X-KDE-settings-webbrowsing;
+Categories=Qt;TDE;X-TDE-settings-webbrowsing;

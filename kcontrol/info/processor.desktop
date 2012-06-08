@@ -5,9 +5,9 @@ Type=Application
 DocPath=kinfocenter/processor/index.html
 
 
-X-KDE-Library=info
-X-KDE-FactoryName=cpu
-X-KDE-ParentApp=kinfocenter
+X-TDE-Library=info
+X-TDE-FactoryName=cpu
+X-TDE-ParentApp=kinfocenter
 
 Name=Processor
 Name[af]=Verwerker
@@ -246,5 +246,5 @@ Keywords[xh]=Umqhubekekisi,CPU,FPU,MHz,Inkcukacha Yendlela yokusebenza
 Keywords[zh_CN]=Processor,CPU,FPU,MHz,System Information,处理器,系统信息
 Keywords[zh_TW]=Processor,CPU,FPU,MHz,System Information,處理器,中央處理器,浮點運算器,系統資訊
 Keywords[zu]=Umqhubekisi,CPU,FPU,MHz,Ulwazi Lwesistimu
-Categories=Qt;KDE;X-KDE-settings-information;
+Categories=Qt;TDE;X-TDE-settings-information;
 

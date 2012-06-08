@@ -5,9 +5,9 @@ Type=Application
 DocPath=kinfocenter/memory/index.html
 
 
-X-KDE-Library=info
-X-KDE-FactoryName=memory
-X-KDE-ParentApp=kinfocenter
+X-TDE-Library=info
+X-TDE-FactoryName=memory
+X-TDE-ParentApp=kinfocenter
 
 Name=Memory
 Name[af]=Geheue
@@ -245,5 +245,5 @@ Keywords[xh]=Inkumbulo,RAM,Inkumbulo yobume,Inkumbulo yomzimba,Inkumbulo yokwahl
 Keywords[zh_CN]=Memory,RAM,Virtual memory,Physical memory,Shared memory,Swap,System Information,内存,虚拟存储,物理存储,共享内存,交换,系统信息
 Keywords[zh_TW]=Memory,RAM,Virtual memory,Physical memory,Shared memory,Swap,System Information,記憶體,虛擬記憶體,實體記憶體,共享記憶體,系統資訊
 Keywords[zu]=Inkumbulo,RAM,Inkumbulo yamanga,Inkumbulo siqu,Inkumbulo yokwabelana,Shintshanisa,Ulwazi Lwesistimu
-Categories=Qt;KDE;X-KDE-settings-information;
+Categories=Qt;TDE;X-TDE-settings-information;
 

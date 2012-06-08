@@ -7,5 +7,5 @@ Comment=Unmounted Decrypted DVD
 Comment[de]=Nicht eingebundene, entschlüsselte DVD
 Patterns=
 
-X-KDE-AutoEmbed=true
-X-KDE-IsAlso=inode/directory
+X-TDE-AutoEmbed=true
+X-TDE-IsAlso=inode/directory

@@ -154,8 +154,8 @@ KonqViewFactory KonqFactory::createView( const TQString &serviceType,
   {
     service = (*it);
     // Allowed as default ?
-    TQVariant prop = service->property( "X-KDE-BrowserView-AllowAsDefault" );
-    kdDebug(1202) << service->desktopEntryName() << " : X-KDE-BrowserView-AllowAsDefault is valid : " << prop.isValid() << endl;
+    TQVariant prop = service->property( "X-TDE-BrowserView-AllowAsDefault" );
+    kdDebug(1202) << service->desktopEntryName() << " : X-TDE-BrowserView-AllowAsDefault is valid : " << prop.isValid() << endl;
     if ( !prop.isValid() || prop.toBool() ) // defaults to true
     {
       //kdDebug(1202) << "Trying to open lib for service " << service->name() << endl;
@@ -181,7 +181,7 @@ KonqViewFactory KonqFactory::createView( const TQString &serviceType,
 
   TQStringList args;
 
-  TQVariant prop = service->property( "X-KDE-BrowserView-Args" );
+  TQVariant prop = service->property( "X-TDE-BrowserView-Args" );
 
   if ( prop.isValid() )
   {

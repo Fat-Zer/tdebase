@@ -4,8 +4,8 @@ Type=Application
 DocPath=kinfocenter/view1394/index.html
 Exec=kcmshell kcmview1394
 
-X-KDE-Library=view1394
-X-KDE-ParentApp=kinfocenter
+X-TDE-Library=view1394
+X-TDE-ParentApp=kinfocenter
 
 Name=IEEE 1394 Devices
 Name[af]=IEEE 1394 Toestelle
@@ -216,5 +216,5 @@ Keywords[wa]=1394,IEEE 1394,Firewire,éndjins,håyneu,contrôle,corwaitaedje
 Keywords[zh_CN]=1394,Firewire,devices,viewer,control,设备,查看器,控制,火线
 Keywords[zh_TW]=1394,Firewire,devices,viewer,control,裝置,檢視器,控制
 
-Categories=Qt;KDE;X-KDE-settings-information;
+Categories=Qt;TDE;X-TDE-settings-information;
 

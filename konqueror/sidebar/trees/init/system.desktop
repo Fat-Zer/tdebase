@@ -135,5 +135,5 @@ Comment[wa]=Ci ridant chal vos permete d' aler ås comonès plaeces so vosse cop
 Comment[zh_CN]=此文件夹允许您访问计算机中的公共位置
 Comment[zh_TW]=這個資料夾允許存取您電腦上的共同空間
 Open=true
-X-KDE-TreeModule=Directory
-X-KDE-KonqSidebarModule=konqsidebar_tree
+X-TDE-TreeModule=Directory
+X-TDE-KonqSidebarModule=konqsidebar_tree

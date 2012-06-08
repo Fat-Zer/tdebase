@@ -876,7 +876,7 @@
 2001-04-16 Monday 14:05  rich
 
 	* Added config handling (partial so far) Changed
-	  X-KDE-UniqueExtension to X-KDE-UniqueApplet (the former is
+	  X-TDE-UniqueExtension to X-TDE-UniqueApplet (the former is
 	  correct according to the docs but doesn't work).
 
 2001-04-10 Tuesday 21:13  rich

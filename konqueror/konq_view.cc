@@ -257,28 +257,28 @@ void KonqView::switchView( KonqViewFactory &viewFactory )
 
   TQVariant prop;
 
-  prop = m_service->property( "X-KDE-BrowserView-FollowActive");
+  prop = m_service->property( "X-TDE-BrowserView-FollowActive");
   if (prop.isValid() && prop.toBool())
   {
-    //kdDebug(1202) << "KonqView::switchView X-KDE-BrowserView-FollowActive -> setFollowActive" <<endl;
+    //kdDebug(1202) << "KonqView::switchView X-TDE-BrowserView-FollowActive -> setFollowActive" <<endl;
     setFollowActive(true);
   }
 
-  prop = m_service->property( "X-KDE-BrowserView-Built-Into" );
+  prop = m_service->property( "X-TDE-BrowserView-Built-Into" );
   m_bBuiltinView = (prop.isValid() && prop.toString() == "konqueror");
 
   if ( !m_pMainWindow->viewManager()->isLoadingProfile() )
   {
     // Honour "non-removeable passive mode" (like the dirtree)
-    prop = m_service->property( "X-KDE-BrowserView-PassiveMode");
+    prop = m_service->property( "X-TDE-BrowserView-PassiveMode");
     if ( prop.isValid() && prop.toBool() )
     {
-      kdDebug(1202) << "KonqView::switchView X-KDE-BrowserView-PassiveMode -> setPassiveMode" << endl;
+      kdDebug(1202) << "KonqView::switchView X-TDE-BrowserView-PassiveMode -> setPassiveMode" << endl;
       setPassiveMode( true ); // set as passive
     }
 
     // Honour "linked view"
-    prop = m_service->property( "X-KDE-BrowserView-LinkedView");
+    prop = m_service->property( "X-TDE-BrowserView-LinkedView");
     if ( prop.isValid() && prop.toBool() )
     {
       setLinkedView( true ); // set as linked
@@ -292,10 +292,10 @@ void KonqView::switchView( KonqViewFactory &viewFactory )
     }
   }
 
-  prop = m_service->property( "X-KDE-BrowserView-HierarchicalView");
+  prop = m_service->property( "X-TDE-BrowserView-HierarchicalView");
   if ( prop.isValid() && prop.toBool() )
   {
-    kdDebug() << "KonqView::switchView X-KDE-BrowserView-HierarchicalView -> setHierarchicalView" << endl;
+    kdDebug() << "KonqView::switchView X-TDE-BrowserView-HierarchicalView -> setHierarchicalView" << endl;
     setHierarchicalView( true );  // set as hierarchial
   }
   else

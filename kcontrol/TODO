@@ -20,7 +20,7 @@ Of course, nothing in this file is set in stone, or is "correct" or "true" for t
 * Rename "Peripherals" to "Hardware".
  - remove settings-peripherals.directory
  - Update kde-settings.menu and remove the Peripherals menu
- - Convert any kcmmodules that haven't already to X-KDE-settings-hardware
+ - Convert any kcmmodules that haven't already to X-TDE-settings-hardware
 
 * Rename password & User Account - "User Account"
 
@@ -69,7 +69,7 @@ Of course, nothing in this file is set in stone, or is "correct" or "true" for t
 
 * The following container:
 KCMODULECONTAINER("kcmfontinst, fonts", fonts )
-The desktop file is called "kcm_fonts" with "Name=Fonts" and "Categories=X-KDE-settings-appearance"
+The desktop file is called "kcm_fonts" with "Name=Fonts" and "Categories=X-TDE-settings-appearance"
 
 
 ---------- Various other stuff
@@ -78,7 +78,7 @@ The desktop file is called "kcm_fonts" with "Name=Fonts" and "Categories=X-KDE-s
 
 * Rename "KDE Wallet" to "Wallet"(people can't differentiate nor care about what is KDE and what's not. It is also irrelevant for the context).
 
-* Remove old categories, for example X-KDE-settings-peripherals.
+* Remove old categories, for example X-TDE-settings-peripherals.
 
 * Convert all options in "Internet & Network/Preferences" to KConfigXT and then remove the KCM.
 

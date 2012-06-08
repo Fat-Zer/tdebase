@@ -4,11 +4,11 @@ Exec=kcmshell kcm_useraccount
 Icon=tdmconfig
 DocPath=kcontrol/userinfo/index.html
 
-X-KDE-ModuleType=Library
-X-KDE-Library=useraccount
-X-KDE-FactoryName=userinfo
-X-KDE-HasReadOnlyMode=false
-X-KDE-ParentApp=kcontrol
+X-TDE-ModuleType=Library
+X-TDE-Library=useraccount
+X-TDE-FactoryName=userinfo
+X-TDE-HasReadOnlyMode=false
+X-TDE-ParentApp=kcontrol
 
 Name=User Account
 Name[af]=Gebruiker Rekening

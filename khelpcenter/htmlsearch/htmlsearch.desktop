@@ -4,10 +4,10 @@ Icon=help_index
 Type=Application
 DocPath=kcontrol/help-index.html
 
-X-KDE-ModuleType=Library
-X-KDE-Library=htmlsearch
-X-KDE-FactoryName=htmlsearch
-X-KDE-ControlModuleType=User
+X-TDE-ModuleType=Library
+X-TDE-Library=htmlsearch
+X-TDE-FactoryName=htmlsearch
+X-TDE-ControlModuleType=User
 
 Name=Index
 Name[af]=Indeks
@@ -236,4 +236,4 @@ Keywords[xh]=Uncedo,HTML,Phendla,Isalathiso,htdig,htsearch,htmerge,Scope,Ulwimi
 Keywords[zh_CN]=Help,HTML,Search,Index,htdig,htsearch,htmerge,Scope,Language,帮助,查找,索引,范围,语言
 Keywords[zh_TW]=Help,HTML,Search,Index,htdig,htsearch,htmerge,Scope,Language,求助,搜尋,索引,語言
 Keywords[zu]=Usizo,HTML,Usesho,Uhlelo lokuqukethwe,htdig,htsearch,htmerge, Indawo elinganiselwe,Ulimi
-Categories=Qt;KDE;X-KDE-settings-system;
+Categories=Qt;TDE;X-TDE-settings-system;

@@ -138,4 +138,4 @@ Exec=krandrtray
 Icon=randr
 Type=Application
 OnlyShowIn=TDE;
-Categories=Qt;KDE;System;
+Categories=Qt;TDE;System;

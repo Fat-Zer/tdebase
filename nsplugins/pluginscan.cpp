@@ -114,7 +114,7 @@ bool isPluginMimeType( TQString fname )
 {
     KDesktopFile cfg( fname, true );
     cfg.setDesktopGroup();
-    return cfg.hasKey( "X-KDE-nsplugin" );
+    return cfg.hasKey( "X-TDE-nsplugin" );
 }
 
 
@@ -132,7 +132,7 @@ void deletePluginMimeTypes()
     for ( unsigned int i=0; i<dirs.count(); i++ ) {
         if ( !dirs[i].contains(".") ) {
 
-            // check all mime types for X-KDE-nsplugin flag
+            // check all mime types for X-TDE-nsplugin flag
             kdDebug(1433) << " - Looking in " << dirs[i] << endl;
             TQDir files( dirs.absFilePath(dirs[i]), TQString::null,
                         TQDir::Name|TQDir::IgnoreCase, TQDir::Files );
@@ -183,8 +183,8 @@ void generateMimeType( TQString mime, TQString extensions, TQString pluginName, 
         ts << "MimeType=" << mime << endl;
         ts << "Icon=netscape_doc" << endl;
         ts << "Comment=Netscape " << pluginName << endl;
-        ts << "X-KDE-AutoEmbed=true" << endl;
-        ts << "X-KDE-nsplugin=true" << endl;
+        ts << "X-TDE-AutoEmbed=true" << endl;
+        ts << "X-TDE-nsplugin=true" << endl;
 
         if (!extensions.isEmpty()) {
             TQStringList exts = TQStringList::split(",", extensions);
@@ -469,10 +469,10 @@ void writeServicesFile( TQStringList mimeTypes )
         ts << "Type=Service" << endl;
         ts << "Icon=netscape" << endl;
         ts << "Comment=" << i18n("Netscape plugin viewer") << endl;
-        ts << "X-KDE-Library=libnsplugin" << endl;
+        ts << "X-TDE-Library=libnsplugin" << endl;
         ts << "InitialPreference=7" << endl;
         ts << "ServiceTypes=KParts/ReadOnlyPart,Browser/View" << endl;
-        ts << "X-KDE-BrowserView-PluginsInfo=nsplugins/pluginsinfo" << endl;
+        ts << "X-TDE-BrowserView-PluginsInfo=nsplugins/pluginsinfo" << endl;
 
         if (mimeTypes.count() > 0)
             ts << "MimeType=" << mimeTypes.join(";") << endl;

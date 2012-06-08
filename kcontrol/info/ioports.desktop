@@ -3,12 +3,12 @@ Exec=kcmshell ioports
 Icon=kcmmemory
 Type=Application
 DocPath=kinfocenter/ioports/index.html
-Categories=Qt;KDE;X-KDE-settings-information;
+Categories=Qt;TDE;X-TDE-settings-information;
 
 
-X-KDE-Library=info
-X-KDE-FactoryName=ioports
-X-KDE-ParentApp=kinfocenter
+X-TDE-Library=info
+X-TDE-FactoryName=ioports
+X-TDE-ParentApp=kinfocenter
 
 Name=IO-Ports
 Name[af]=Io-poorte

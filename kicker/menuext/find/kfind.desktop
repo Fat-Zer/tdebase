@@ -85,5 +85,5 @@ Name[xh]=Fumana Iifayile
 Name[zh_CN]=查找文件
 Name[zh_TW]=尋找檔案
 Name[zu]=Thola Amafayela
-X-KDE-StartupNotify=true
-Categories=Qt;KDE;Find;
+X-TDE-StartupNotify=true
+Categories=Qt;TDE;Find;

@@ -96,5 +96,5 @@ Icon=emacs
 Path=
 Type=Application
 Terminal=false
-X-KDE-StartupNotify=false
-X-KDE-AuthorizeAction=shell_access
+X-TDE-StartupNotify=false
+X-TDE-AuthorizeAction=shell_access

@@ -3,7 +3,7 @@ Exec=kinfocenter -caption "%c" %i %m
 Icon=hwinfo
 Type=Application
 DocPath=kinfocenter/index.html
-X-KDE-StartupNotify=true
+X-TDE-StartupNotify=true
 OnlyShowIn=TDE;
 
 Name=KInfoCenter
@@ -106,5 +106,5 @@ GenericName[zh_CN]=信息中心
 GenericName[zh_TW]=資訊中心
 
 X-DCOP-ServiceType=Unique
-Categories=Qt;KDE;System;
+Categories=Qt;TDE;System;
 NoDisplay=true

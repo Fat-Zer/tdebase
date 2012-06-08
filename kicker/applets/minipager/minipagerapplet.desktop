@@ -118,5 +118,5 @@ Comment[zh_TW]=預覽、管理並切換到多個虛擬桌面
 
 Icon=kpager
 
-X-KDE-Library=minipager_panelapplet
-X-KDE-UniqueApplet=false
+X-TDE-Library=minipager_panelapplet
+X-TDE-UniqueApplet=false

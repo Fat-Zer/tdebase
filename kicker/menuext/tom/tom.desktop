@@ -72,4 +72,4 @@ Comment[wa]=Ene dressêye sistinme fwaite po les bouyes
 Comment[zh_CN]=面向任务的菜单系统
 Comment[zh_TW]=一個工作導向的選單系統
 Icon=kmenu
-X-KDE-Library=kickermenu_tom
+X-TDE-Library=kickermenu_tom

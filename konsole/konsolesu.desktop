@@ -79,5 +79,5 @@ Name[vi]=Chương trình đầu cuối -  Dành cho người quản lý
 Name[wa]=Terminå - Môde super uzeu (root)
 Name[zh_CN]=终端程序 - 超级用户模式
 Name[zh_TW]=終端機程式 - 超級使用者模式
-X-KDE-AuthorizeAction=shell_access
-Categories=Qt;KDE;X-KDE-System-su;
+X-TDE-AuthorizeAction=shell_access
+Categories=Qt;TDE;X-TDE-System-su;

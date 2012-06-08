@@ -5,11 +5,11 @@ Type=Application
 DocPath=kcontrol/kcmfontinst/index.html
 
 
-X-KDE-Library=fontinst
-X-KDE-FactoryName=fontinst
-X-KDE-RootOnly=true
+X-TDE-Library=fontinst
+X-TDE-FactoryName=fontinst
+X-TDE-RootOnly=true
 
-X-KDE-ParentApp=kcontrol
+X-TDE-ParentApp=kcontrol
 
 Name=Font Installer
 Name[af]=Skrif tipe Installeerder
@@ -232,4 +232,4 @@ Keywords[wa]=fonte,fontes,astaleu,truetype,type1,speedo,bitmap
 Keywords[zh_CN]=font,fonts,installer,truetype,type1,speedo,bitmap,字体,安装程序,位图字体
 Keywords[zh_TW]=font,fonts,installer,truetype,type1,speedo,bitmap,字型,安裝程式,點陣
 
-Categories=Qt;KDE;X-KDE-settings-system;
+Categories=Qt;TDE;X-TDE-settings-system;

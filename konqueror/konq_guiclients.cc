@@ -170,8 +170,8 @@ ToggleViewGUIClient::ToggleViewGUIClient( KonqMainWindow *mainWindow )
   KTrader::OfferList::Iterator it = offers.begin();
   while ( it != offers.end() )
   {
-    TQVariant prop = (*it)->property( "X-KDE-BrowserView-Toggable" );
-    TQVariant orientation = (*it)->property( "X-KDE-BrowserView-ToggableView-Orientation" );
+    TQVariant prop = (*it)->property( "X-TDE-BrowserView-Toggable" );
+    TQVariant orientation = (*it)->property( "X-TDE-BrowserView-ToggableView-Orientation" );
 
     if ( !prop.isValid() || !prop.toBool() ||
          !orientation.isValid() || orientation.toString().isEmpty() )
@@ -207,7 +207,7 @@ ToggleViewGUIClient::ToggleViewGUIClient( KonqMainWindow *mainWindow )
 
     m_actions.insert( name, action );
 
-    TQVariant orientation = (*cIt)->property( "X-KDE-BrowserView-ToggableView-Orientation" );
+    TQVariant orientation = (*cIt)->property( "X-TDE-BrowserView-ToggableView-Orientation" );
     bool horizontal = orientation.toString().lower() == "horizontal";
     m_mapOrientation.insert( name, horizontal );
   }
@@ -332,9 +332,9 @@ void ToggleViewGUIClient::slotViewAdded( KonqView *view )
     // KonqView::isToggleView() is not set yet.. so just check for the orientation
 
 #if 0
-    TQVariant vert = view->service()->property( "X-KDE-BrowserView-ToggableView-Orientation");
+    TQVariant vert = view->service()->property( "X-TDE-BrowserView-ToggableView-Orientation");
     bool vertical = vert.toString().lower() == "vertical";
-    TQVariant nohead = view->service()->property( "X-KDE-BrowserView-ToggableView-NoHeader");
+    TQVariant nohead = view->service()->property( "X-TDE-BrowserView-ToggableView-NoHeader");
     bool noheader = nohead.isValid() ? nohead.toBool() : false;
     // if it is a vertical toggle part, turn on the header.
     // this works even when konq loads the view from a profile.

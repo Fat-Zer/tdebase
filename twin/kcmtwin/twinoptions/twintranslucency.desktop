@@ -4,9 +4,9 @@ Type=Application
 Exec=kcmshell twintranslucency
 DocPath=kcontrol/windowmanagement/index.html#action-translucency
 
-X-KDE-ModuleType=Library
-X-KDE-Library=twinoptions
-X-KDE-FactoryName=twintranslucency
+X-TDE-ModuleType=Library
+X-TDE-Library=twinoptions
+X-TDE-FactoryName=twintranslucency
 
 Name=Translucency
 Name[af]=Deursigtigheid

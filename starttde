@@ -26,10 +26,8 @@ echo "[starttde] This script is $0" 1>&2
 # the existence of $TDEDIR. That environment variable might not be
 # defined or defined to point to KDE4 binaries.
 BIN_DIR="`dirname \`readlink -f $0\``"
-# Do not use tde-config to determine the version. That command creates a
-# profile directory in the root of the file system. Refer to Bug Report 293.
-if [ -x $BIN_DIR/konqueror ]; then
-  TDE_VERSION="`$BIN_DIR/konqueror --version | grep TDE | awk '{print $2}'`"
+if [ -x $BIN_DIR/tde-config ]; then
+  TDE_VERSION="`$BIN_DIR/tde-config --version | grep TDE | awk '{print $2}'`"
   echo "[starttde] TDE version is $TDE_VERSION" 1>&2
   export TDEDIR=${BIN_DIR%/bin}
   echo "[starttde] TDE base directory is $TDEDIR" 1>&2
@@ -254,8 +252,40 @@ test -n "$TDEHOME" && tdehome=`echo "$TDEHOME" | sed "s,^~/,$HOME/,"`
 export DESKTOP_SESSION=trinity
 
 # Please see kstartupconfig source for usage.
-if [ ! -d "$HOME/.trinity" ]; then
-  echo "[starttde] Creating $HOME/.trinity." 1>&2
+if [ -d "$tdehome" ]; then
+  # Run some R14 updates but only once.
+  R14_UPDATED="`$TDEDIR/bin/kreadconfig --file kdeglobals --group "R14 XDG Updates" --key Updated`"
+  if [ "$R14_UPDATED" != "true" ]; then
+    echo "[starttde] Updating profile for R14 XDG changes. This is a one-time event."
+    find $tdehome -name "*.desktop" -exec sed -i 's|X-KDE-|X-TDE-|g' {} \; 2>/dev/null
+    find $tdehome -name "*.desktop" -exec sed -i 's|KDE\;|TDE\;|g' {} \; 2>/dev/null
+    # Exclude KMail mail files --- we don't want to touch those files.
+    find $tdehome $tdehome/share/apps/kmail/mail -prune -o -type f -exec sed -i "s|$TDEDIR/share/applications/kde|$TDEDIR/share/applications/tde|g" {} \; 2>/dev/null
+    # Try to preserve keyboard shortcuts.
+    sed -i -e 's|CommandURL=kde-|CommandURL=tde-|g' -e 's|K Menu - kde-|K Menu - tde-|g' $tdehome/share/config/khotkeysrc 2>/dev/null
+    # Try to preserve profilerc.
+    sed -i -e 's|Application=kde-|Application=tde-|g' $tdehome/share/config/profilerc 2>/dev/null
+    # Update sym link files in $HOME/.trinity/Autostart.
+    ( cd $tdehome/Autostart
+      for i in `find . -type l`; do
+        LINK="`readlink $i`"
+        LINK_PATH="`dirname $LINK`"
+        LINK_NAME="`basename $LINK`"
+        if [ -n "`echo $LINK_PATH | grep \"$TDEDIR/share/applications/kde\"`" ]; then
+          NEW_LINK_PATH="`echo $LINK_PATH | sed 's|/share/applications/kde|/share/applications/tde|'`"
+        fi
+        unlink $i
+        ln -sf $NEW_LINK_PATH/$LINK_NAME $LINK_NAME
+        if [ "$?" != "0" ]; then
+          echo "There was an error with creating a new sym link for $LINK." 1>&2
+        fi
+      done
+    )
+    $TDEDIR/bin/kwriteconfig --file kdeglobals --group "R14 XDG Updates" --key Updated --type bool 'true'
+  fi
+  unset R14_UPDATED
+else
+  echo "[starttde] Creating $tdehome" 1>&2
 fi
 mkdir -m 700 -p $tdehome
 mkdir -m 700 -p $tdehome/share

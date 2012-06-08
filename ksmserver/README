@@ -55,8 +55,8 @@ which may get outdated, so in case of doubts the source wins ;) ).
 
 The starttde scripts already launches tdeinit, which in turns launches
 TDE daemons like dcopserver, klauncher and kded. Kded loads autoloaded
-kded modules, i.e. those that have X-KDE-Kded-autoload=true in .desktop
-files. The exact way autoloading works is controlled by X-KDE-Kded-phase=,
+kded modules, i.e. those that have X-TDE-Kded-autoload=true in .desktop
+files. The exact way autoloading works is controlled by X-TDE-Kded-phase=,
 which may be 0, 1 or 2 (the default). Kded phase 0 means the module is
 always loaded by kded, even outside of TDE session. It should used only
 by kded modules which must be always running. Kded phase 1 modules are
@@ -66,7 +66,7 @@ will be loaded later.
 
 Startkde also launches kcminit, which performs initialization done by kcontrol
 modules. There are three kcminit phases, 0, 1 and 2, controlled
-by X-KDE-Init-Phase= in the .desktop file, which defaults to 1. Phase 0 kcminit
+by X-TDE-Init-Phase= in the .desktop file, which defaults to 1. Phase 0 kcminit
 modules should be only those that really need to be run early in the startup
 process (and those should probably actually use kstartupconfig in starttde
 to be done even before tdeinit and daemons). After executing phase 0
@@ -76,7 +76,7 @@ When ksmserver is launched, the first thing it does is launching
 the window manager, as the WM is necessary before any windows are possibly
 shown. When the WM is ready, ksmserver tells klauncher to perform autostart
 phase 0 ($TDEHOME/share/autostart). There are 3 autostart phases, 0, 1 and 2,
-defined by X-KDE-autostart-phase, defaulting to 2. Phase 0 is reserved only
+defined by X-TDE-autostart-phase, defaulting to 2. Phase 0 is reserved only
 for the actual visible base components of TDE, i.e. KDesktop and Kicker,
 in order to make the startup appear visually faster. Both KDesktop and Kicker
 use DCOP calls suspendStartup() and resumeStartup() to make ksmserver stay

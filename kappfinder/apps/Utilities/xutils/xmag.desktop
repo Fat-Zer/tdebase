@@ -141,4 +141,4 @@ GenericName[zh_CN]=桌面放大镜
 GenericName[zh_TW]=桌面放大鏡
 GenericName[zu]=Umkhulisi we-Desktop
 Icon=xmag
-X-KDE-StartupNotify=false
+X-TDE-StartupNotify=false

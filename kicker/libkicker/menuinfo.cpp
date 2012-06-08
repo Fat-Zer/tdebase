@@ -38,7 +38,7 @@ MenuInfo::MenuInfo(const TQString& desktopFile)
     KSimpleConfig df(locate("data", TQString::fromLatin1("kicker/menuext/%1").arg(desktopFile)));
     df.setGroup("Desktop Entry");
 
-    TQStringList list = df.readListEntry("X-KDE-AuthorizeAction");
+    TQStringList list = df.readListEntry("X-TDE-AuthorizeAction");
     if (kapp && !list.isEmpty())
     {
        for(TQStringList::ConstIterator it = list.begin();
@@ -53,7 +53,7 @@ MenuInfo::MenuInfo(const TQString& desktopFile)
     name_ = df.readEntry("Name");
     comment_ = df.readEntry("Comment");
     icon_ = df.readEntry("Icon");
-    library_ = df.readEntry("X-KDE-Library");
+    library_ = df.readEntry("X-TDE-Library");
     desktopfile_ = desktopFile;
 }
 

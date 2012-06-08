@@ -5,9 +5,9 @@ Icon=system
 Exec=kcmshell media
 
 
-X-KDE-Library=media
-X-KDE-FactoryName=media
-X-KDE-ParentApp=kcontrol
+X-TDE-Library=media
+X-TDE-FactoryName=media
+X-TDE-ParentApp=kcontrol
 
 Name=Storage Media
 Name[af]=Stoor Media
@@ -194,4 +194,4 @@ Keywords[wa]=wårdaedje,media,usb,cdrom,device,éndjin
 Keywords[zh_CN]=storage,media,usb,cdrom,device,存储,介质,设备
 Keywords[zh_TW]=storage,media,usb,cdrom,device,儲存,媒體,光碟機,裝置
 
-Categories=Qt;KDE;X-KDE-settings-peripherals;
+Categories=Qt;TDE;X-TDE-settings-peripherals;

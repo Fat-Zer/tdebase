@@ -73,5 +73,5 @@ Comment[zh_CN]=挂载的硬盘卷
 Comment[zh_TW]=已掛載的硬碟分割區
 Patterns=
 
-X-KDE-AutoEmbed=true
-X-KDE-IsAlso=inode/directory
+X-TDE-AutoEmbed=true
+X-TDE-IsAlso=inode/directory

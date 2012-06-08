@@ -97,4 +97,4 @@ GenericName[zh_TW]=計劃管理程式
 GenericName[zu]=Imenenja yeprojekthi
 Terminal=false
 Icon=planner
-X-KDE-StartupNotify=false
+X-TDE-StartupNotify=false

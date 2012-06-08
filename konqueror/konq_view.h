@@ -273,7 +273,7 @@ public:
   // Toggle views and passive views are locked to their view mode.
   bool isLockedViewMode() const { return m_bToggleView || m_bPassiveMode; }
 
-  // True if "builtin" (see X-KDE-BrowserView-Built-Into)
+  // True if "builtin" (see X-TDE-BrowserView-Built-Into)
   bool isBuiltinView() const { return m_bBuiltinView; }
 
   void setService( const KService::Ptr &s ) { m_service = s; }

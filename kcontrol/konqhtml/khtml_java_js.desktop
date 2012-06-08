@@ -5,8 +5,8 @@ Icon=konqueror
 Exec=kcmshell khtml_java_js
 
 
-X-KDE-Library=konqhtml
-X-KDE-FactoryName=khtml_java_js
+X-TDE-Library=konqhtml
+X-TDE-FactoryName=khtml_java_js
 
 Name=Java & JavaScript
 Name[af]=Java & Javaskrip
@@ -208,4 +208,4 @@ Keywords[zh_CN]=konqueror,kfm,browser,html,web,www,java,javascript,浏览器
 Keywords[zh_TW]=konqueror,kfm,browser,html,web,www,java,javascript,征服家,瀏覽器,網頁
 Keywords[zu]=konqueror,kfm,umcingi,html,web,www,java,javascript
 
-Categories=Qt;KDE;X-KDE-settings-webbrowsing;
+Categories=Qt;TDE;X-TDE-settings-webbrowsing;

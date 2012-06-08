@@ -96,5 +96,5 @@ Comment[zh_TW]=TDE 檔案管理程式和網頁瀏覽器
 Comment[zu]=Imenenja yamafayela ye-TDE & Umcingi we-Web
 Icon=konqueror
 X-DCOP-ServiceType=multi
-X-KDE-StartupNotify=true
-X-KDE-HasTempFileOption=true
+X-TDE-StartupNotify=true
+X-TDE-HasTempFileOption=true

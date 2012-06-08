@@ -5,6 +5,6 @@
 	<Name>Information</Name>
 	<Directory>tde-information.directory</Directory>
 	<Include>
-		<Category>X-KDE-information</Category>
+		<Category>X-TDE-information</Category>
 	</Include>
 </Menu>

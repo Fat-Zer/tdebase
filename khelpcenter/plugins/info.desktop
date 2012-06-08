@@ -73,7 +73,7 @@ Name[zh_CN]=浏览信息页面
 Name[zh_TW]=瀏覽資訊頁
 Icon=contents2
 
-X-KDE-KHelpcenter-Special=info
+X-TDE-KHelpcenter-Special=info
 
 DocPath=info:/dir
 

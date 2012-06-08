@@ -3,8 +3,8 @@ Exec=kcmkonsole
 Icon=konsole
 Type=Application
 
-X-KDE-ControlModuleType=User
-X-KDE-HideFromPanel=true
+X-TDE-ControlModuleType=User
+X-TDE-HideFromPanel=true
 
 Name=Console
 Name[af]=Konsole

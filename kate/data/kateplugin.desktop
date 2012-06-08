@@ -1,7 +1,7 @@
 [Desktop Entry]
 Type=ServiceType
-X-KDE-ServiceType=Kate/Plugin
-X-KDE-Derived=
+X-TDE-ServiceType=Kate/Plugin
+X-TDE-Derived=
 Comment=Kate Plugin
 Comment[af]=Kate Inplak
 Comment[az]=Kate Əlavəsi

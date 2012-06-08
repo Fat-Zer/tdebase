@@ -77,5 +77,5 @@ Comment[zh_CN]=挂载的 DVD
 Comment[zh_TW]=已掛載的 DVD-ROM
 Patterns=
 
-X-KDE-AutoEmbed=true
-X-KDE-IsAlso=inode/directory
+X-TDE-AutoEmbed=true
+X-TDE-IsAlso=inode/directory

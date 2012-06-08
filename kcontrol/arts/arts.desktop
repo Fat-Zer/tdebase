@@ -5,9 +5,9 @@ Type=Application
 DocPath=kcontrol/arts/index.html
 
 
-X-KDE-Library=arts
-X-KDE-Init=arts
-X-KDE-ParentApp=kcontrol
+X-TDE-Library=arts
+X-TDE-Init=arts
+X-TDE-ParentApp=kcontrol
 
 Name=Sound System
 Name[af]=Klank Stelsel
@@ -237,4 +237,4 @@ Keywords[zh_CN]=aRts,Sound Server,artsd,Audio,Sound,startup,network transparency
 Keywords[zh_TW]=aRts,Sound Server,artsd,Audio,Sound,startup,network transparency,transparency,priority,duplex,full duplex,response time,Mixer,Volume,KMix,Mix,login,MIDI,synthesizer,musica,聲音伺服器,聲音,啟動,網路透明,優先級,全雙工,響應時間,混音器,音量,登入
 Keywords[zu]=aRts,Umlekeleli Womsindo,artsd,Okuzwakalayo,Umsindo,Isiqaliso, ukubonakala koxhumano olusakazekile,Ukubonakala ngale,ukubaluleka,okunezingxemye ezimbili,okunezingxenye ezimbili eziphendulanayo,isikhathi sokuphendula, Umxubi,Izinga lomsindo,KMix,Xuba,ngena ngaphakathi,MIDI,umlungisi womsindo, umculo
 
-Categories=Qt;KDE;X-KDE-settings-sound;
+Categories=Qt;TDE;X-TDE-settings-sound;

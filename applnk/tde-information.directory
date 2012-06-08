@@ -83,5 +83,5 @@ Name[zh_CN]=信息
 Name[zh_TW]=資訊
 Name[zu]=Ulwazi
 Icon=hwinfo
-X-KDE-BaseGroup=info
+X-TDE-BaseGroup=info
 NoDisplay=true

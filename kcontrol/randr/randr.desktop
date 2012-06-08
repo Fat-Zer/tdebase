@@ -2,9 +2,9 @@
 Icon=randr
 Type=Application
 Exec=kcmshell randr
-X-KDE-Library=randr
-#X-KDE-Init=randr
-X-KDE-Test-Module=true
+X-TDE-Library=randr
+#X-TDE-Init=randr
+X-TDE-Test-Module=true
 
 Name=Size & Orientation
 Name[af]=Grootte & Ooriëntasie

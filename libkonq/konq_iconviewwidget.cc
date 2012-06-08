@@ -696,7 +696,7 @@ bool KonqIconViewWidget::mimeTypeMatch( const TQString& mimeType, const TQString
             return true;
         if ( (*mt) == "text/plain" )
         {
-            TQVariant textProperty = mime->property( "X-KDE-text" );
+            TQVariant textProperty = mime->property( "X-TDE-text" );
             if ( textProperty.type() == TQVariant::Bool && textProperty.toBool() )
                 return true;
         }

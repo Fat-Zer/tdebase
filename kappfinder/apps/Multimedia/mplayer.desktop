@@ -97,5 +97,5 @@ Name[te]=ఎంప్లెయర్
 Name[ven]=Tshitambisi tsha M
 ServiceTypes=
 Type=Application
-X-KDE-Protocols=http
+X-TDE-Protocols=http
 

@@ -87,7 +87,7 @@ void KonqSidebarDirTreeModule::addTopLevelItem( KonqSidebarTreeTopLevelItem * it
     {
         targetURL = cfg.readURL();
 		// some services might want to make their URL configurable in kcontrol
-		TQString configured = cfg.readEntry("X-KDE-ConfiguredURL");
+		TQString configured = cfg.readEntry("X-TDE-ConfiguredURL");
 		if (!configured.isEmpty()) {
 			TQStringList list = TQStringList::split(':', configured);
 			KConfig config(list[0]);
@@ -368,7 +368,7 @@ void KonqSidebarDirTreeModule::listDirectory( KonqSidebarTreeItem *item )
           {
 	      KMimeType::Ptr ptr;
 		
-	      if ( fileItem->url().isLocalFile() && (((ptr=fileItem->determineMimeType())!=0) && (ptr->is("inode/directory") || m_showArchivesAsFolders) && ((!ptr->property("X-KDE-LocalProtocol").toString().isEmpty()) ))) {
+	      if ( fileItem->url().isLocalFile() && (((ptr=fileItem->determineMimeType())!=0) && (ptr->is("inode/directory") || m_showArchivesAsFolders) && ((!ptr->property("X-TDE-LocalProtocol").toString().isEmpty()) ))) {
 		kdDebug()<<"Something not really a directory"<<endl;
 	      } else {
 //	              kdError() << "Item " << fileItem->url().prettyURL() << " is not a directory!" << endl;
@@ -437,7 +437,7 @@ void KonqSidebarDirTreeModule::slotNewItems( const KFileItemList& entries )
           {
 	      KMimeType::Ptr ptr;
 		
-	      if ( fileItem->url().isLocalFile() && (( (ptr=fileItem->determineMimeType())!=0) && (ptr->is("inode/directory") || m_showArchivesAsFolders) &&  ((!ptr->property("X-KDE-LocalProtocol").toString().isEmpty()) ))) {
+	      if ( fileItem->url().isLocalFile() && (( (ptr=fileItem->determineMimeType())!=0) && (ptr->is("inode/directory") || m_showArchivesAsFolders) &&  ((!ptr->property("X-TDE-LocalProtocol").toString().isEmpty()) ))) {
 		kdDebug()<<"Something really a directory"<<endl;
 	      } else {
 	              //kdError() << "Item " << fileItem->url().prettyURL() << " is not a directory!" << endl;

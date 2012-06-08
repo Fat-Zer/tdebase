@@ -83,7 +83,7 @@ Name[zh_CN]=屏幕保护程序
 Name[zh_TW]=螢幕保護程式
 Name[zu]=Abagcini Besikrini
 Icon=kscreensaver
-X-KDE-BaseGroup=screensavers
+X-TDE-BaseGroup=screensavers
 
 Comment=Screen saver demos
 Comment[af]=Skerm bewaarder demonstrasies

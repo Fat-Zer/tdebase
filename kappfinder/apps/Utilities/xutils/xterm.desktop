@@ -146,5 +146,5 @@ Icon=terminal
 Path=
 Type=Application
 Terminal=false
-X-KDE-StartupNotify=true
-X-KDE-AuthorizeAction=shell_access
+X-TDE-StartupNotify=true
+X-TDE-AuthorizeAction=shell_access

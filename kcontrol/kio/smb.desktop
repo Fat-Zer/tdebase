@@ -5,9 +5,9 @@ Icon=samba
 Exec=kcmshell smb
 
 
-X-KDE-Library=kio
-X-KDE-FactoryName=smb
-X-KDE-ParentApp=kcontrol
+X-TDE-Library=kio
+X-TDE-FactoryName=smb
+X-TDE-ParentApp=kcontrol
 
 Name=Windows Shares
 Name[af]=Vensters Gedeelde bronne

@@ -122,4 +122,4 @@ Comment[wa]=On enondeu po les programes ki n' sont nén dins l' dressêye TDE
 Comment[zh_CN]=启动不在 TDE 菜单中的程序
 Comment[zh_TW]=用於不在 TDE 選單中的程式啟動器
 Icon=exec
-X-KDE-Library=ExecButton
+X-TDE-Library=ExecButton

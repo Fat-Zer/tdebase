@@ -88,13 +88,13 @@ bool KCMInit::runModule(const TQString &libName, KService::Ptr service)
 
 void KCMInit::runModules( int phase )
 {
-  // look for X-KDE-Init=... entries
+  // look for X-TDE-Init=... entries
   for(KService::List::Iterator it = list.begin();
       it != list.end();
       ++it) {
       KService::Ptr service = (*it);
       
-      TQString library = service->property("X-KDE-Init-Library", TQVariant::String).toString();
+      TQString library = service->property("X-TDE-Init-Library", TQVariant::String).toString();
       if (library.isEmpty())
         library = service->library();
       
@@ -102,7 +102,7 @@ void KCMInit::runModules( int phase )
 	continue; // Skip
 
       // see ksmserver's README for the description of the phases
-      TQVariant vphase = service->property("X-KDE-Init-Phase", TQVariant::Int );
+      TQVariant vphase = service->property("X-TDE-Init-Phase", TQVariant::Int );
       int libphase = 1;
       if( vphase.isValid() )
           libphase = vphase.toInt();

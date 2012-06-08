@@ -73,4 +73,4 @@ Type=MimeType
 MimeType=print/driver
 Patterns=
 
-X-KDE-AutoEmbed=true
+X-TDE-AutoEmbed=true

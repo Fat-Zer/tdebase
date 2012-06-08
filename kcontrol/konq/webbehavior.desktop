@@ -5,9 +5,9 @@ Icon=kfm
 Exec=kcmshell filebehavior
 
 
-X-KDE-Library=konq
-X-KDE-FactoryName=behavior
-X-KDE-ParentApp=kcontrol
+X-TDE-Library=konq
+X-TDE-FactoryName=behavior
+X-TDE-ParentApp=kcontrol
 
 Name=Behavior
 Name[af]=Gedrag

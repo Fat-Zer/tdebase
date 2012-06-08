@@ -4,8 +4,8 @@ Type=Application
 DocPath=kinfocenter/usb/index.html
 Exec=kcmshell kcmusb
 
-X-KDE-Library=usb
-X-KDE-ParentApp=kinfocenter
+X-TDE-Library=usb
+X-TDE-ParentApp=kinfocenter
 
 Name=USB Devices
 Name[af]=USB Toestelle
@@ -237,4 +237,4 @@ Keywords[zh_CN]=USB,devices,viewer,control,设备,查看器,控制
 Keywords[zh_TW]=USB,devices,viewer,control,裝置,檢視器,控制
 Keywords[zu]=USB,amathukuzi ananjongo,umbukisi,lawula
 
-Categories=Qt;KDE;X-KDE-settings-information;
+Categories=Qt;TDE;X-TDE-settings-information;

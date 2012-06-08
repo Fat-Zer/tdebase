@@ -3,7 +3,7 @@ Exec=kcontrol -caption "%c" %i %m
 Icon=kcontrol
 Type=Application
 DocPath=kcontrol/index.html
-X-KDE-StartupNotify=true
+X-TDE-StartupNotify=true
 
 Name=Control Center
 Name[af]=Beheer Sentrum

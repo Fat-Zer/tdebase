@@ -109,10 +109,10 @@ void TypesListItem::init(KMimeType::Ptr mimetype)
 
 int TypesListItem::readAutoEmbed( KMimeType::Ptr mimetype )
 {
-  TQVariant v = mimetype->property( "X-KDE-AutoEmbed" );
+  TQVariant v = mimetype->property( "X-TDE-AutoEmbed" );
   if ( v.isValid() )
       return (v.toBool() ? 0 : 1);
-  else if ( !mimetype->property( "X-KDE-LocalProtocol" ).toString().isEmpty() )
+  else if ( !mimetype->property( "X-TDE-LocalProtocol" ).toString().isEmpty() )
       return 0; // embed by default for zip, tar etc.
   else
       return 2;
@@ -286,9 +286,9 @@ void TypesListItem::sync()
     config.writeEntry("Hidden", false);
 
     if ( m_autoEmbed == 2 )
-      config.deleteEntry( TQString::fromLatin1("X-KDE-AutoEmbed"), false );
+      config.deleteEntry( TQString::fromLatin1("X-TDE-AutoEmbed"), false );
     else
-      config.writeEntry( TQString::fromLatin1("X-KDE-AutoEmbed"), m_autoEmbed == 0 );
+      config.writeEntry( TQString::fromLatin1("X-TDE-AutoEmbed"), m_autoEmbed == 0 );
 
     m_bNewItem = false;
   }
@@ -585,7 +585,7 @@ void TypesListItem::setAskSave(bool _askSave)
 bool TypesListItem::canUseGroupSetting() const
 {
   // "Use group settings" isn't available for zip, tar etc.; those have a builtin default...
-    bool hasLocalProtocolRedirect = !m_mimetype->property( "X-KDE-LocalProtocol" ).toString().isEmpty();
+    bool hasLocalProtocolRedirect = !m_mimetype->property( "X-TDE-LocalProtocol" ).toString().isEmpty();
     return !hasLocalProtocolRedirect;
 }
 

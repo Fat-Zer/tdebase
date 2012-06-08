@@ -127,4 +127,4 @@ Comment[wa]=Ene dressêye ki fwait l' djivêye di tos les drovîs purneas
 Comment[zh_CN]=列出打开的全部窗口的菜单
 Comment[zh_TW]=一個列出所有開啟視窗的選單
 Icon=window_list
-X-KDE-Library=WindowListButton
+X-TDE-Library=WindowListButton

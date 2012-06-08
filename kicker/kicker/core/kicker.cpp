@@ -305,7 +305,7 @@ TQStringList Kicker::configModules(bool controlCenter)
              << "kde-kicker_config_menus.desktop"
              << "kde-kicker_config_appearance.desktop";
     }
-    args << "kde-kcmtaskbar.desktop";
+    args << "tde-kcmtaskbar.desktop";
     return args;
 }
 

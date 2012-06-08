@@ -5,9 +5,9 @@ Type=Application
 DocPath=kinfocenter/samba/index.html
 
 
-X-KDE-Library=samba
-X-KDE-FactoryName=samba
-X-KDE-ParentApp=kcontrol
+X-TDE-Library=samba
+X-TDE-FactoryName=samba
+X-TDE-ParentApp=kcontrol
 
 Name=Samba Status
 Name[ar]=حالة Samba
@@ -238,5 +238,5 @@ Keywords[xh]=SMB,SAMBA,umsebenzi womnatha wee window,LAN,Ulwazi lwendlela yokuse
 Keywords[zh_CN]=SMB,SAMBA,Windows network,LAN,System Information,局域网,系统信息
 Keywords[zh_TW]=SMB,SAMBA,Windows network,LAN,System Information,Windows 網路,區域網路,系統資訊
 Keywords[zu]=SMB,SAMBA,Uxhumano olusakazekile lwama-windows,LAN,Ulwazi lwesistimu
-Categories=Qt;KDE;X-KDE-settings-network;
+Categories=Qt;TDE;X-TDE-settings-network;
 

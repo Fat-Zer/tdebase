@@ -5,9 +5,9 @@ Icon=kfm
 Exec=kcmshell fileappearance
 
 
-X-KDE-Library=konq
-X-KDE-FactoryName=appearance
-X-KDE-ParentApp=kcontrol
+X-TDE-Library=konq
+X-TDE-FactoryName=appearance
+X-TDE-ParentApp=kcontrol
 
 Name=Appearance
 Name[af]=Voorkoms

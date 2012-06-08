@@ -3,9 +3,9 @@ Icon=history
 Type=Application
 Exec=kcmshell kcmhistory
 
-X-KDE-ModuleType=Library
-X-KDE-Library=history
-X-KDE-FactoryName=history
+X-TDE-ModuleType=Library
+X-TDE-Library=history
+X-TDE-FactoryName=history
 
 Name=History Sidebar
 Name[af]=Geskiedenis Kantbalk
@@ -230,4 +230,4 @@ Keywords[xh]=imbali,ephelelwa lixesha
 Keywords[zh_CN]=history,expire,历史,过期
 Keywords[zh_TW]=history,expire,歷史紀錄,過期
 Keywords[zu]=umlando,ukuphelelwa isikhathi
-Categories=Qt;KDE;X-KDE-settings-webbrowsing;
+Categories=Qt;TDE;X-TDE-settings-webbrowsing;

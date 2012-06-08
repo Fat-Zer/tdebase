@@ -1,15 +1,15 @@
 [Desktop Entry]
-X-KDE-Library=libkhtmlkttsdplugin
-X-KDE-PluginInfo-Author=Olaf Schmidt
-X-KDE-PluginInfo-Email=ojschmidt@kde.org
-X-KDE-PluginInfo-Name=khtmlkttsdplugin
-X-KDE-PluginInfo-Version=3.4
-X-KDE-PluginInfo-Website=
-X-KDE-PluginInfo-Category=Tools
-X-KDE-PluginInfo-Depends=
-X-KDE-PluginInfo-License=GPL
-X-KDE-PluginInfo-EnabledByDefault=true
-X-KDE-ParentApp=konqueror
+X-TDE-Library=libkhtmlkttsdplugin
+X-TDE-PluginInfo-Author=Olaf Schmidt
+X-TDE-PluginInfo-Email=ojschmidt@kde.org
+X-TDE-PluginInfo-Name=khtmlkttsdplugin
+X-TDE-PluginInfo-Version=3.4
+X-TDE-PluginInfo-Website=
+X-TDE-PluginInfo-Category=Tools
+X-TDE-PluginInfo-Depends=
+X-TDE-PluginInfo-License=GPL
+X-TDE-PluginInfo-EnabledByDefault=true
+X-TDE-ParentApp=konqueror
 Name=Text-to-Speech Plugin
 Name[ar]=برنامج مساعد تحويل لفظ النص
 Name[be]=Утулка галасавога ўзнаўлення тэксту

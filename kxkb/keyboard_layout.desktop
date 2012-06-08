@@ -4,10 +4,10 @@ Icon=keyboard
 Type=Application
 DocPath=kxkb/index.html
 
-X-KDE-ModuleType=Library
-X-KDE-Library=keyboard
-X-KDE-FactoryName=keyboard_layout
-X-KDE-ParentApp=kcontrol
+X-TDE-ModuleType=Library
+X-TDE-Library=keyboard
+X-TDE-FactoryName=keyboard_layout
+X-TDE-ParentApp=kcontrol
 
 Name=Keyboard Layout
 Name[af]=Sleutelbord Uitleg
@@ -236,4 +236,4 @@ Keywords[zh_CN]=Keyboard,Layout,International,键盘,布局,国际
 Keywords[zh_TW]=Keyboard,Layout,International,鍵盤,配置,國際化
 Keywords[zu]=Ibhodi lokhiye,Isendlalelo,Okwaphakathi kwezizwe
 
-Categories=Qt;KDE;X-KDE-settings-accessibility;
+Categories=Qt;TDE;X-TDE-settings-accessibility;

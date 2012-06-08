@@ -4,8 +4,8 @@ Icon=samba
 Exec=kcmshell lanbrowser
 
 
-X-KDE-Library=kio
-X-KDE-FactoryName=lanbrowser
+X-TDE-Library=kio
+X-TDE-FactoryName=lanbrowser
 
 Name=Local Network Browsing
 Name[af]=Plaaslike Netwerk Blaaiïng
@@ -223,4 +223,4 @@ Keywords[vi]=samba,smb,cửa sổ,mạng
 Keywords[wa]=samba,smb,windows,network,rantoele
 Keywords[zh_CN]=samba,smb,windows,network,网络
 
-Categories=Qt;KDE;X-KDE-settings-network;
+Categories=Qt;TDE;X-TDE-settings-network;

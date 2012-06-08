@@ -1,14 +1,14 @@
 [Desktop Entry]
 Type=Application
-Exec=kcmshell kde-clock.desktop
+Exec=kcmshell tde-clock.desktop
 Icon=date
 DocPath=kcontrol/clock/index.html
 
 
-X-KDE-Library=clock
-X-KDE-RootOnly=true
-X-KDE-SubstituteUID=true
-X-KDE-ParentApp=kcontrol
+X-TDE-Library=clock
+X-TDE-RootOnly=true
+X-TDE-SubstituteUID=true
+X-TDE-ParentApp=kcontrol
 
 Name=Date & Time
 Name[af]=Datum & Tyd
@@ -247,4 +247,4 @@ Keywords[wa]=ôrlodje,date,eure,coisse d' eureye
 Keywords[zh_CN]=clock,date,time,time zone,时钟,日期,时间,时区
 Keywords[zh_TW]=clock,日期,時間,時區
 
-Categories=Qt;KDE;X-KDE-settings-system;
+Categories=Qt;TDE;X-TDE-settings-system;

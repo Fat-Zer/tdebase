@@ -197,9 +197,9 @@ Name[zh_CN]=连接首选项
 Name[zh_TW]=連線偏好設定
 Type=Application
 DocPath=kcontrol/netpref/index.html
-X-KDE-FactoryName=netpref
-X-KDE-Library=kio
+X-TDE-FactoryName=netpref
+X-TDE-Library=kio
 
-X-KDE-ParentApp=kcontrol
+X-TDE-ParentApp=kcontrol
 
-Categories=Qt;KDE;X-KDE-settings-network;
+Categories=Qt;TDE;X-TDE-settings-network;

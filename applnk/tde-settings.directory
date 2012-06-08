@@ -85,4 +85,4 @@ Name[zh_TW]=設定模組
 Name[zu]=Izingxenye-zezilungiselelo
 NoDisplay=true
 Icon=package_settings
-X-KDE-BaseGroup=settings
+X-TDE-BaseGroup=settings

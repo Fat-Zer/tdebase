@@ -5,6 +5,6 @@
 	<Name>ScreenSavers</Name>
 	<Directory>tde-system-screensavers.directory</Directory>
 	<Include>
-		<Category>X-KDE-ScreenSaver</Category>
+		<Category>X-TDE-ScreenSaver</Category>
 	</Include>
 </Menu>

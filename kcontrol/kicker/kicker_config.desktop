@@ -5,9 +5,9 @@ DocPath=kcontrol/panel/index.html
 Exec=kcmshell panel
 
 
-X-KDE-Library=kicker
-X-KDE-FactoryName=kicker
-X-KDE-ParentApp=kicker
+X-TDE-Library=kicker
+X-TDE-FactoryName=kicker
+X-TDE-ParentApp=kicker
 
 Name=Layout
 Name[af]=Uitleg

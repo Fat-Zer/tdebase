@@ -81,4 +81,4 @@ Comment[zu]=Ingqikithi ye-TDE
 Icon=kthememgr
 Type=MimeType
 Patterns=*.kth;
-X-KDE-AutoEmbed=false
+X-TDE-AutoEmbed=false

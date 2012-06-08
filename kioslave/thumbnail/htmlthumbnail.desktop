@@ -82,5 +82,5 @@ Name[zh_TW]=HTML 檔案
 Name[zu]=Amafayela e-HTML
 ServiceTypes=ThumbCreator
 MimeTypes=text/html
-X-KDE-Library=htmlthumbnail
+X-TDE-Library=htmlthumbnail
 CacheThumbnail=true

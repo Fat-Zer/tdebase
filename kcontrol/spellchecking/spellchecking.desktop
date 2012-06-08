@@ -5,8 +5,8 @@ Type=Application
 DocPath=kcontrol/spellchecking/index.html
 
 
-X-KDE-Library=spellchecking
-X-KDE-ParentApp=kcontrol
+X-TDE-Library=spellchecking
+X-TDE-ParentApp=kcontrol
 
 Name=Spell Checker
 Name[af]=Spel Toetser
@@ -229,4 +229,4 @@ Keywords[zh_CN]=拼写
 Keywords[zh_TW]=拼字
 Keywords[zu]=Bizela
 
-Categories=Qt;KDE;X-KDE-settings-components;
+Categories=Qt;TDE;X-TDE-settings-components;

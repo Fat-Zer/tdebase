@@ -3,12 +3,12 @@ Exec=kcmshell interrupts
 Icon=kcmmemory
 Type=Application
 DocPath=kinfocenter/interrupts/index.html
-Categories=Qt;KDE;X-KDE-settings-information;
+Categories=Qt;TDE;X-TDE-settings-information;
 
 
-X-KDE-Library=info
-X-KDE-FactoryName=irq
-X-KDE-ParentApp=kinfocenter
+X-TDE-Library=info
+X-TDE-FactoryName=irq
+X-TDE-ParentApp=kinfocenter
 
 Name=Interrupts
 Name[ar]=مفاتيح الإنقطاع

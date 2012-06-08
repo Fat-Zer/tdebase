@@ -130,4 +130,4 @@ Comment[zh_CN]=启动文件或 Web 搜索的菜单
 Comment[zh_TW]=開始檔案或網頁搜尋的選單
 Icon=kfind
 
-X-KDE-Library=kickermenu_find
+X-TDE-Library=kickermenu_find

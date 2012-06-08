@@ -5,10 +5,10 @@ Type=Application
 DocPath=tdeprint/index.html
 MimeType=print/manager;
 
-X-KDE-ModuleType=Library
-X-KDE-Library=printmgr
-X-KDE-RootOnly=true
-X-KDE-HasReadOnlyMode=true
+X-TDE-ModuleType=Library
+X-TDE-Library=printmgr
+X-TDE-RootOnly=true
+X-TDE-HasReadOnlyMode=true
 
 Name=Printers
 Name[af]=Drukkers
@@ -232,4 +232,4 @@ Keywords[zh_CN]=print,printer,printing management,打印,打印机,打印管理
 Keywords[zh_TW]=print,printer,printing management,列印,印表機,列印管理
 Keywords[zu]=shicilela,umshicileli,abaphathi boshicilelo
 
-Categories=Qt;KDE;X-KDE-settings-hardware;Settings;
+Categories=Qt;TDE;X-TDE-settings-hardware;Settings;

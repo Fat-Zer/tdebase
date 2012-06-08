@@ -136,7 +136,7 @@ void KStylePage::saveKWin(bool curSettings){
 
 		if (kdf) {
 			kdf->setGroup("Desktop Entry");
-			twin = kdf->readEntry("X-KDE-Library", defaultKWinStyle);
+			twin = kdf->readEntry("X-TDE-Library", defaultKWinStyle);
 			delete kdf;
 		}
 		else {

@@ -1,7 +1,7 @@
 [Desktop Entry]
 Type=ServiceType
-X-KDE-ServiceType=TerminalEmulator
-X-KDE-Derived=KParts/ReadOnlyPart
+X-TDE-ServiceType=TerminalEmulator
+X-TDE-Derived=KParts/ReadOnlyPart
 Name=Terminal Emulator
 Name[af]=Terminaal Emulasie
 Name[ar]=مضاهِ مطراف

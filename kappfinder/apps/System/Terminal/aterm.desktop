@@ -129,4 +129,4 @@ GenericName[xh]=Inkqubo Yesixhobo sangaphandle sekhompyutha
 GenericName[zh_CN]=终端程序
 GenericName[zh_TW]=終端機程式
 GenericName[zu]=Uhlelo lwemisebenzi lwangaohandle
-X-KDE-AuthorizeAction=shell_access
+X-TDE-AuthorizeAction=shell_access

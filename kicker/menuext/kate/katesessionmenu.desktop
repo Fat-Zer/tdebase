@@ -95,4 +95,4 @@ Comment[wa]=Vos permete di drovi Kate avou ene sipecifieye session oudonbén nd 
 Comment[zh_CN]=允许您用指定会话打开 Kate，或创建新会话
 Comment[zh_TW]=讓您可以用指定的工作階段來開啟 Kate，或是建立新的工作階段
 Icon=kate
-X-KDE-Library=kickermenu_kate
+X-TDE-Library=kickermenu_kate

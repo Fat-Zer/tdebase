@@ -1,7 +1,7 @@
 [Desktop Entry]
 ServiceTypes=inode/directory
 Actions=openTerminalHere;
-X-KDE-AuthorizeAction=shell_access
+X-TDE-AuthorizeAction=shell_access
 Type=Application
 
 Name=Konsole

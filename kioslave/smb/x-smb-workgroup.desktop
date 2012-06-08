@@ -70,5 +70,5 @@ Comment[zh_TW]=視窗工作群組
 Icon=network_local
 Type=MimeType
 MimeType=application/x-smb-workgroup
-X-KDE-AutoEmbed=true
-X-KDE-IsAlso=inode/directory
+X-TDE-AutoEmbed=true
+X-TDE-IsAlso=inode/directory

@@ -4,12 +4,12 @@ Icon=tdmconfig
 Type=Application
 DocPath=tdm/index.html#configuring-tdm
 
-X-KDE-SubstituteUID=true
+X-TDE-SubstituteUID=true
 
-X-KDE-Library=tdm
-X-KDE-RootOnly=true
+X-TDE-Library=tdm
+X-TDE-RootOnly=true
 
-X-KDE-ParentApp=kcontrol
+X-TDE-ParentApp=kcontrol
 
 Name=Login Manager
 Name[af]=Aanteken Bestuurder
@@ -240,4 +240,4 @@ Keywords[zh_CN]=tdm,display manager,xdm,users,login,greeting,Logo,styles,languag
 Keywords[zh_TW]=tdm,display manager,xdm,users,login,greeting,Logo,styles,language,country,fonts,background,wallpapers,sessions,shutdown,restart,顯示管理程式,使用者,登入,歡迎,風格,語言,國家,字型,背景,底圖,工作階段,關機,重新啟動
 Keywords[zu]=tdm,Imenenja yokuveza,xdm,abasebenzisi,ukungena ngaphakathi,isibingelelo,Isiqubulo,izitayela,ulimi,izwe,izinhlobo zamagama, inkundla yangemuva,emaphepha ezindonga,iziqendu,vala,phinda uqale
 
-Categories=Qt;KDE;X-KDE-settings-system;
+Categories=Qt;TDE;X-TDE-settings-system;

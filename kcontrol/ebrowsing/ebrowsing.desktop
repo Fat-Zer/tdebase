@@ -5,9 +5,9 @@ Icon=enhanced_browsing
 Exec=kcmshell ebrowsing
 
 
-X-KDE-Library=kurifilt
-X-KDE-FactoryName=kurifilt
-X-KDE-ParentApp=kcontrol
+X-TDE-Library=kurifilt
+X-TDE-FactoryName=kurifilt
+X-TDE-ParentApp=kcontrol
 
 Name=Web Shortcuts
 Name[af]=Web Kortpaaie
@@ -234,4 +234,4 @@ Keywords[zh_CN]=Enhanced Browsing,Browsing,WWW,Internet,Internet Keywords,Intern
 Keywords[zh_TW]=Enhanced Browsing,Browsing,WWW,Internet,Internet Keywords,Internet Filters,Network,Search Engines,Shortcuts,增強瀏覽,瀏覽,網際網路,網路,搜尋引擎,捷徑
 Keywords[zu]=Ukucinga okujulile,Ukucinga,WWW,Internet,Amagama abalulekile e-Internet,Amahluzo,Uxhumano olusakazekile,Izinjini zokusesha, Izindlela ezimfushane
 
-Categories=Qt;KDE;X-KDE-settings-webbrowsing;
+Categories=Qt;TDE;X-TDE-settings-webbrowsing;

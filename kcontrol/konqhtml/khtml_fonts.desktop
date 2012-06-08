@@ -5,8 +5,8 @@ Icon=fonts
 Exec=kcmshell khtml_fonts
 
 
-X-KDE-Library=konqhtml
-X-KDE-FactoryName=khtml_fonts
+X-TDE-Library=konqhtml
+X-TDE-FactoryName=khtml_fonts
 
 Name=Fonts
 Name[af]=Skriftipes
@@ -227,4 +227,4 @@ Keywords[zh_CN]=konqueror,kfm,browser,html,web,www,fonts,charsets,character sets
 Keywords[zh_TW]=konqueror,kfm,browser,html,web,www,fonts,charsets,character sets,征服家,字元,字元集,編碼,瀏覽器,字型,網頁
 Keywords[zu]=konqueror,kfm,umcingi,html,web,www,izinhlobo zamagama,charsets,amaqoqo ezimpawu,ukubhala ngekhodi
 
-Categories=Qt;KDE;X-KDE-settings-webbrowsing;
+Categories=Qt;TDE;X-TDE-settings-webbrowsing;

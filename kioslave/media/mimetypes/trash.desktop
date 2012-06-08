@@ -6,4 +6,4 @@ MimeType=media/builtin-trash
 Comment=Trash
 Patterns=Trash
 
-X-KDE-AutoEmbed=false
+X-TDE-AutoEmbed=false

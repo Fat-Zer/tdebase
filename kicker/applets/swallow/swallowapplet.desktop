@@ -138,5 +138,5 @@ Comment[xh]=I window eneenkcukacha ye swallow applet
 Comment[zh_CN]=Swallow 面板小程序
 Comment[zh_TW]=swallow 面板小程式
 Comment[zu]=I-applet lewindi lemininingwane lokugwinya
-X-KDE-Library=swallow_panelapplet
-X-KDE-UniqueApplet=true
+X-TDE-Library=swallow_panelapplet
+X-TDE-UniqueApplet=true

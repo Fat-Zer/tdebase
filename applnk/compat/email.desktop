@@ -3,9 +3,9 @@ Icon=email
 Type=Application
 Exec=kcmshell kcm_useraccount
 DocPath=kcontrol/email/index.html
-X-KDE-ModuleType=Library
-X-KDE-Library=useraccount
-X-KDE-ParentApp=kcontrol
+X-TDE-ModuleType=Library
+X-TDE-Library=useraccount
+X-TDE-ParentApp=kcontrol
 
 Name=Email
 Name[af]=E-pos

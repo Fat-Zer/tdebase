@@ -3,12 +3,12 @@ Exec=kcmshell dma
 Icon=kcmmemory
 Type=Application
 DocPath=kinfocenter/dma/index.html
-Categories=Qt;KDE;X-KDE-settings-information;
+Categories=Qt;TDE;X-TDE-settings-information;
 
 
-X-KDE-Library=info
-X-KDE-FactoryName=dma
-X-KDE-ParentApp=kinfocenter
+X-TDE-Library=info
+X-TDE-FactoryName=dma
+X-TDE-ParentApp=kinfocenter
 
 Name=DMA-Channels
 Name[af]=Dma-kanale

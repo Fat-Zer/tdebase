@@ -75,4 +75,4 @@ ReadOnly=false
 Type=FSDevice
 Icon=3floppy_mount
 UnmountIcon=3floppy_unmount
-X-KDE-Priority=TopLevel
+X-TDE-Priority=TopLevel

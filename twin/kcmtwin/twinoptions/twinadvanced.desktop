@@ -4,9 +4,9 @@ Type=Application
 Exec=kcmshell twinadvanced
 DocPath=kcontrol/windowmanagement/index.html#action-advanced
 
-X-KDE-ModuleType=Library
-X-KDE-Library=twinoptions
-X-KDE-FactoryName=twinadvanced
+X-TDE-ModuleType=Library
+X-TDE-Library=twinoptions
+X-TDE-FactoryName=twinadvanced
 
 Name=Advanced
 Name[af]=Gevorderde

@@ -127,5 +127,5 @@ Comment[wa]=Trove et arestêye les schetés processus k' eployèt trop di tins C
 Comment[zh_CN]=检测并结束占用太多 CPU 时间的进程
 Comment[zh_TW]=偵測並終結浪費多數 CPU 時間的破損程序
 Icon=runprocesscatcher
-X-KDE-Library=naughty_panelapplet
-X-KDE-UniqueApplet=true
+X-TDE-Library=naughty_panelapplet
+X-TDE-UniqueApplet=true

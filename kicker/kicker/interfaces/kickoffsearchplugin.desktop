@@ -1,4 +1,4 @@
 [Desktop Entry]
 Type=ServiceType
-X-KDE-ServiceType=KickoffSearch/Plugin
+X-TDE-ServiceType=KickoffSearch/Plugin
 Comment=A search plugin for Kickoff

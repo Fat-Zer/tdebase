@@ -100,4 +100,4 @@ GenericName[wa]=Sicrijhaedje di tecse
 GenericName[zh_CN]=字处理器
 GenericName[zh_TW]=文書處理程式
 GenericName[zu]=Umqhubekisi wegama
-X-KDE-StartupNotify=false
+X-TDE-StartupNotify=false

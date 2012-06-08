@@ -149,4 +149,4 @@ GenericName[zh_CN]=时钟
 GenericName[zh_TW]=時鐘
 GenericName[zu]=Iwashi
 Terminal=false
-X-KDE-StartupNotify=true
+X-TDE-StartupNotify=true

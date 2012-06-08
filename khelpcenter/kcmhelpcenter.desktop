@@ -3,12 +3,12 @@ Type=Application
 Exec=kcmshell kcmhelpcenter
 Icon=help
 
-X-KDE-SubstituteUID=true
-X-KDE-ModuleType=Library
-X-KDE-Library=helpcenter
-X-KDE-RootOnly=true
-X-KDE-HasReadOnlyMode=true
-X-KDE-ParentApp=kcontrol
+X-TDE-SubstituteUID=true
+X-TDE-ModuleType=Library
+X-TDE-Library=helpcenter
+X-TDE-RootOnly=true
+X-TDE-HasReadOnlyMode=true
+X-TDE-ParentApp=kcontrol
 
 Name=Help Index
 Name[af]=Hulp Indeks
@@ -233,4 +233,4 @@ Keywords[xh]=khelpcenter,uncedo,isalathisi,uphendlo
 Keywords[zh_CN]=khelpcenter,help,index,search,帮助中心,帮助,索引,搜索
 Keywords[zh_TW]=khelpcenter,help,index,search,求助,索引,搜尋
 Keywords[zu]=khelpcenter,usizo,uhlelo lokuqukethwe,usesho
-Categories=Qt;KDE;X-KDE-settings-system;
+Categories=Qt;TDE;X-TDE-settings-system;

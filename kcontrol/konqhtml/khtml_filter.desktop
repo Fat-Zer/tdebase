@@ -4,8 +4,8 @@ DocPath=kcontrol/khtml/index.html#khtml-adblock
 Icon=filter
 Exec=kcmshell khtml_filter
 
-X-KDE-Library=konqhtml
-X-KDE-FactoryName=khtml_filter
+X-TDE-Library=konqhtml
+X-TDE-FactoryName=khtml_filter
 
 Name=AdBlocK Filters
 Name[af]=Advertensie blok filters
@@ -142,4 +142,4 @@ Comment[wa]=Apontyî es passetes AdBlocK di Konqueror
 Comment[zh_CN]=配置 Konqueror 的广告拦截过滤器
 Comment[zh_TW]=設定 Konqueror AdBlocK 過濾器
 
-Categories=Qt;KDE;X-KDE-settings-webbrowsing;
+Categories=Qt;TDE;X-TDE-settings-webbrowsing;

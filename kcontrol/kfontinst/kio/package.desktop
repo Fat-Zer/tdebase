@@ -69,6 +69,6 @@ Comment[wa]=Paket di fontes
 Comment[zh_CN]=字体包
 Comment[zh_TW]=字型套件
 
-[Property::X-KDE-LocalProtocol]
+[Property::X-TDE-LocalProtocol]
 Type=TQString
 Value=tar

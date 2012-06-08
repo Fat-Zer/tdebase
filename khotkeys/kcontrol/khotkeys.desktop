@@ -3,10 +3,10 @@ Exec=kcmshell khotkeys
 Icon=khotkeys
 Type=Application
 
-X-KDE-ModuleType=Library
-X-KDE-Library=khotkeys
-X-KDE-Init-Library=khotkeys_init
-X-KDE-Init=khotkeys
+X-TDE-ModuleType=Library
+X-TDE-Library=khotkeys
+X-TDE-Init-Library=khotkeys_init
+X-TDE-Init=khotkeys
 
 Name=Input Actions
 Name[af]=Inset Aksies
@@ -205,4 +205,4 @@ Keywords[wa]=Tapes,globås rascourtis,rascourtis,djesses,manire di bodjî,manire
 Keywords[zh_CN]=Keys,Global key bindings,Key bindings,Gestures,Mouse gestures,键,全局键绑定,手势,鼠标手势
 Keywords[zh_TW]=Keys,Global key bindings,Key bindings,Gestures,Mouse gestures,按鍵,全域按建連結,按鍵連結,手勢,滑鼠手勢
 
-Categories=Qt;KDE;X-KDE-settings-accessibility;
+Categories=Qt;TDE;X-TDE-settings-accessibility;

@@ -132,4 +132,4 @@ Comment[zh_CN]=控制中心模块菜单
 Comment[zh_TW]=控制中心模組選單
 Icon=package_settings
 
-X-KDE-Library=kickermenu_prefmenu
+X-TDE-Library=kickermenu_prefmenu

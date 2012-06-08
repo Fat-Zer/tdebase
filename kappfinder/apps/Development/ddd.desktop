@@ -69,5 +69,5 @@ Name[de]=DDD (Debugger)
 Name[hi]=डीडीडी
 Name[mn]=DDD (Debugger)
 Name[te]=డిడిడి
-X-KDE-StartupNotify=true
+X-TDE-StartupNotify=true
 Icon=xapp

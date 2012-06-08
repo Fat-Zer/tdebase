@@ -4,12 +4,12 @@ Icon=background
 Type=Application
 DocPath=kcontrol/hwmanager/index.html
 
-X-KDE-Library=hwmanager
-X-KDE-ParentApp=kcontrol
-X-KDE-RootOnly=true
-X-KDE-SubstituteUID=true
+X-TDE-Library=hwmanager
+X-TDE-ParentApp=kcontrol
+X-TDE-RootOnly=true
+X-TDE-SubstituteUID=true
 
-Categories=Qt;KDE;X-KDE-settings-hardware;
+Categories=Qt;TDE;X-TDE-settings-hardware;
 Comment=Configure hardware devices
 Comment[en_US]=Configure hardware devices
 DocPath=kcontrol/hwmanager.html

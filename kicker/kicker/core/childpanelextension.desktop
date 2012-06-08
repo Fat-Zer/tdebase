@@ -137,9 +137,9 @@ Comment[zh_TW]=子面板延伸。
 Comment[zu]=Isandiso sewindi lemininingwane elingumntwana.
 
 Icon=kicker
-X-KDE-Library=childpanel_panelextension
-X-KDE-PanelExt-Resizeable=true
-X-KDE-PanelExt-StdSizes=true
-X-KDE-PanelExt-CustomSizeMin=24
-X-KDE-PanelExt-CustomSizeMax=300
-X-KDE-PanelExt-CustomSizeDefault=58
+X-TDE-Library=childpanel_panelextension
+X-TDE-PanelExt-Resizeable=true
+X-TDE-PanelExt-StdSizes=true
+X-TDE-PanelExt-CustomSizeMin=24
+X-TDE-PanelExt-CustomSizeMax=300
+X-TDE-PanelExt-CustomSizeDefault=58

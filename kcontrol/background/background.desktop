@@ -5,9 +5,9 @@ Type=Application
 DocPath=kcontrol/background/index.html
 
 
-X-KDE-Library=background
-X-KDE-FactoryName=background
-X-KDE-ParentApp=kcontrol
+X-TDE-Library=background
+X-TDE-FactoryName=background
+X-TDE-ParentApp=kcontrol
 
 Name=Background
 Name[af]=Agtergrond
@@ -237,4 +237,4 @@ Keywords[zh_CN]=background,desktops,colors,colours,images,wallpapers,blending,ba
 Keywords[zh_TW]=background,desktops,colors,colours,images,wallpapers,blending,balance,cache,multiple wallpapers,pixmap,背景,桌面,顏色,影像,桌布,混色,平衡,緩衝,多個桌布,位圖
 Keywords[zu]=inkundla yangemuva,ama-desktop,imibala,imibala,izithombe,amaphepha ezindonga,ukuxubanisa,ukulinganisa,cache,amaphepha ezindonga eziningi,pixmap
 
-Categories=Qt;KDE;X-KDE-settings-looknfeel;
+Categories=Qt;TDE;X-TDE-settings-looknfeel;

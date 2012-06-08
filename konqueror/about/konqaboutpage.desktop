@@ -1,4 +1,4 @@
 [Desktop Entry]
 Type=ServiceType
-X-KDE-ServiceType=KonqAboutPage
+X-TDE-ServiceType=KonqAboutPage
 # No real need for a comment

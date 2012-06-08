@@ -1,6 +1,6 @@
 [Desktop Entry]
 Type=ServiceType
-X-KDE-ServiceType=KSplash/Plugin
+X-TDE-ServiceType=KSplash/Plugin
 
 [PropertyDef::X-KSplash-PluginName]
 Type=TQString

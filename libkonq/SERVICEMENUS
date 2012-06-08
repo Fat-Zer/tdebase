@@ -22,7 +22,7 @@ ServiceTypes=text/html,text/plain # use all/all for all entries
                                   # you can also do things like image/* for all
                                   # image mimetypes
 Actions=gzip;mail                 # those are ';' separated, per the standard !
-X-KDE-Submenu=Menuname            # this optional entry allows grouping the 
+X-TDE-Submenu=Menuname            # this optional entry allows grouping the 
                                   # entries in this servicemenu file into a
                                   # common submenu, in this case "Menuname"
 TryExec=gzip			  # Find if executable exist, if it doesn't exist

@@ -209,7 +209,7 @@ extern "C" {
 		map->insert("Icon", "netscape");
 		map->insert("Name", i18n("Web SideBar Plugin"));
 		map->insert("Open", "true");
-		map->insert("X-KDE-KonqSidebarModule","konqsidebar_web");
+		map->insert("X-TDE-KonqSidebarModule","konqsidebar_web");
 		fn->setLatin1("websidebarplugin%1.desktop");
 		return true;
 	}

@@ -4,9 +4,9 @@ Type=Application
 DocPath=kcontrol/panel/index.html#panel-position
 Exec=kcmshell kicker_arrangement
 
-X-KDE-Library=kicker
-X-KDE-FactoryName=kicker_arrangement
-X-KDE-ParentApp=kicker
+X-TDE-Library=kicker
+X-TDE-FactoryName=kicker_arrangement
+X-TDE-ParentApp=kicker
 
 Name=Arrangement
 Name[af]=Rangskikking

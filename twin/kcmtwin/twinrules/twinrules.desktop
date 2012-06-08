@@ -4,9 +4,9 @@ Type=Application
 Exec=kcmshell twinrules
 DocPath=kcontrol/windowmanagement/index.html
 
-X-KDE-ModuleType=Library
-X-KDE-Library=twinrules
-X-KDE-FactoryName=twinrules
+X-TDE-ModuleType=Library
+X-TDE-Library=twinrules
+X-TDE-FactoryName=twinrules
 
 Name=Window-Specific Settings
 Name[af]=Venser spesifike Instellings
@@ -206,4 +206,4 @@ Keywords[vi]=kích cỡ,vị trí,trạng thái,ứng xử cửa sổ,cửa sổ
 Keywords[wa]=grandeu,plaece,estat,estance,dujhance des purneas,purneas,specifike,workarounds,remember,rîles,sovni,sovnance
 Keywords[zh_CN]=size,position,state,window behavior,windows,specific,workarounds,remember,rules,大小,位置,状态,窗口行为,窗口,特定,工作区,记住,规则
 Keywords[zh_TW]=size,position,state,window behavior,windows,specific,workarounds,remember,rules,大小,位置,狀態,視窗行為,視窗,指定,記憶,規則
-Categories=Qt;KDE;X-KDE-settings-desktop;
+Categories=Qt;TDE;X-TDE-settings-desktop;

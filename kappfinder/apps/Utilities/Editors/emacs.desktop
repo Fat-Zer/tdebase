@@ -92,5 +92,5 @@ Icon=emacs
 Path=
 Type=Application
 Terminal=false
-X-KDE-StartupNotify=false
+X-TDE-StartupNotify=false
 X-StandardInstall=true

@@ -229,9 +229,9 @@ SwallowExec=
 SwallowTitle=
 Terminal=false
 Type=Application
-X-KDE-FactoryName=ioslaveinfo
-X-KDE-Library=ioslaveinfo
+X-TDE-FactoryName=ioslaveinfo
+X-TDE-Library=ioslaveinfo
 
-X-KDE-ParentApp=kinfocenter
+X-TDE-ParentApp=kinfocenter
 
-Categories=Qt;KDE;X-KDE-settings-network;
+Categories=Qt;TDE;X-TDE-settings-network;

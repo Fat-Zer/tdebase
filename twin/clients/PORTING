@@ -8,7 +8,7 @@ Makefile.am:
 - Do NOT rename the directory where the .desktop file is installed ( $(kde_datadir)/twin/ ).
 
 .desktop file:
-- Change twin_ to twin3_ in X-KDE-Library.
+- Change twin_ to twin3_ in X-TDE-Library.
 
 Sources:
 - There are no twin/something.h includes, and don't use the KWinInternal namespace.

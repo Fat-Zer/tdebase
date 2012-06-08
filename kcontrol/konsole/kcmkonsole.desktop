@@ -4,8 +4,8 @@ Type=Application
 Exec=kcmshell kcmkonsole
 DocPath=kcontrol/kcmkonsole/index.html
 
-X-KDE-Library=konsole
-X-KDE-ParentApp=kcontrol
+X-TDE-Library=konsole
+X-TDE-ParentApp=kcontrol
 Name=Konsole
 Name[ar]=طرفية التحكم
 Name[az]=Konsol

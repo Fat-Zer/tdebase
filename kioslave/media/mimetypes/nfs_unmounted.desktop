@@ -73,5 +73,5 @@ Comment[zh_CN]=未挂载的 NFS 共享
 Comment[zh_TW]=未掛載的 NFS 資源
 Patterns=
 
-X-KDE-AutoEmbed=true
-X-KDE-IsAlso=inode/directory
+X-TDE-AutoEmbed=true
+X-TDE-IsAlso=inode/directory

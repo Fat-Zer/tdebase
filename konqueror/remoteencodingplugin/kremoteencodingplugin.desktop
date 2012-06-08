@@ -1,15 +1,15 @@
 [Desktop Entry]
 Type=Service
-X-KDE-PluginInfo-Author=Thiago Macieira
-X-KDE-PluginInfo-Email=thiago.macieira@kdemail.net
-X-KDE-PluginInfo-Name=kremoteencodingplugin
-X-KDE-PluginInfo-Version=3.4
-X-KDE-PluginInfo-Website=
-X-KDE-PluginInfo-Category=Tools
-X-KDE-PluginInfo-Depends=
-X-KDE-PluginInfo-License=LGPL
-X-KDE-PluginInfo-EnabledByDefault=true
-X-KDE-ParentApp=konqueror
+X-TDE-PluginInfo-Author=Thiago Macieira
+X-TDE-PluginInfo-Email=thiago.macieira@kdemail.net
+X-TDE-PluginInfo-Name=kremoteencodingplugin
+X-TDE-PluginInfo-Version=3.4
+X-TDE-PluginInfo-Website=
+X-TDE-PluginInfo-Category=Tools
+X-TDE-PluginInfo-Depends=
+X-TDE-PluginInfo-License=LGPL
+X-TDE-PluginInfo-EnabledByDefault=true
+X-TDE-ParentApp=konqueror
 Icon=charset
 Name=Remote Encoding Plugin
 Name[af]=Afgeleë Enkodering Inprop Module

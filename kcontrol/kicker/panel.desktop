@@ -5,8 +5,8 @@ DocPath=kcontrol/panel/index.html
 Exec=kcmshell panel
 
 
-X-KDE-Library=kicker
-X-KDE-ParentApp=kcontrol
+X-TDE-Library=kicker
+X-TDE-ParentApp=kcontrol
 
 Name=Panels
 Name[af]=Panele
@@ -221,4 +221,4 @@ Keywords[wa]=kicker,panel,sicriftôr,scriftôr,kpanel,taskbar,bår des bouyes,st
 Keywords[zh_CN]=kicker,panel,kpanel,taskbar,startbar,launchbar,location,size,auto hide,hide,buttons,animation,background,themes,menu cache,cache,hidden,TDE Menu,bookmarks,recent documents,quickbrowser,browser menu,menu,icons,tiles,applets,startup,highlight,handles,zooming icons面板,任务栏,启动栏,位置,大小,自动隐藏,隐藏,按钮,动画,背景,主题,菜单缓存,缓存,书签,最近文档,快速浏览器,浏览器菜单,菜单,图标,平铺,启动,突出,句柄,缩放图标
 Keywords[zh_TW]=kicker,panel,kpanel,taskbar,startbar,launchbar,location,size,auto hide,hide,buttons,animation,background,themes,menu cache,cache,hidden,TDE Menu,bookmarks,recent documents,quickbrowser,browser menu,menu,icons,tiles,applets,startup,highlight,handles,zooming icons,面板,工作列,啟動列,快捷列,位置,大小,自動隱藏,隱藏,按鈕,動畫,背景,佈景主題,選單快取,快取,隱藏,TDE 選單,書籤,最近開啟的文件,快速瀏覽,瀏覽選單,選單,圖示,小圖塊,應用程式,啟動,高亮度,處理,縮放圖示
 
-Categories=Qt;KDE;X-KDE-settings-desktop;
+Categories=Qt;TDE;X-TDE-settings-desktop;

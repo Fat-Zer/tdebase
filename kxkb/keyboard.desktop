@@ -4,10 +4,10 @@ Icon=keyboard
 Type=Application
 DocPath=kcontrol/keyboard/index.html
 
-X-KDE-ModuleType=Library
-X-KDE-Library=keyboard
-X-KDE-FactoryName=keyboard
-X-KDE-Init=keyboard
+X-TDE-ModuleType=Library
+X-TDE-Library=keyboard
+X-TDE-FactoryName=keyboard
+X-TDE-Init=keyboard
 
 Name=Keyboard
 Name[af]=Sleutelbord
@@ -240,4 +240,4 @@ Keywords[zh_CN]=Keyboard,Keyboard repeat,Click volume,Input Devices,repeat,volum
 Keywords[zh_TW]=Keyboard,Keyboard repeat,Click volume,Input Devices,repeat,volume,鍵盤,鍵盤重複,敲擊音量,輸入裝置,重複速度,音量
 Keywords[zu]=Ibhodi lokhiye,ukuphindwa kwebhodi lokhiye,Cofa izinga lomsindo, Amathuluzi anenjongo omphumela wangaphakathi,phinda,izina lomsindo
 
-Categories=Qt;KDE;X-KDE-settings-hardware;
+Categories=Qt;TDE;X-TDE-settings-hardware;

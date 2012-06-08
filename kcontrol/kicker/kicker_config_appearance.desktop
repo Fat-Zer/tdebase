@@ -5,9 +5,9 @@ DocPath=kcontrol/panel/index.html#panel-looknfeel
 Exec=kcmshell kicker_appearance
 
 
-X-KDE-Library=kicker
-X-KDE-FactoryName=kicker_appearance
-X-KDE-ParentApp=kicker
+X-TDE-Library=kicker
+X-TDE-FactoryName=kicker_appearance
+X-TDE-ParentApp=kicker
 
 Name=Appearance
 Name[af]=Voorkoms

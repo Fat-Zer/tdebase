@@ -1,8 +1,8 @@
 [Desktop Entry]
 Icon=personal
-Categories=Qt;KDE;X-KDE-settings-security;
-X-KDE-ParentApp=kcontrol
-X-KDE-Library=useraccount
+Categories=Qt;TDE;X-TDE-settings-security;
+X-TDE-ParentApp=kcontrol
+X-TDE-Library=useraccount
 Type=Application
 Exec=kcmshell kcm_useraccount
 Name=Password & User Account

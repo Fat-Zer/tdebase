@@ -93,4 +93,4 @@ GenericName[zh_TW]=財務管理程式
 GenericName[zu]=Imenenja yezezimali
 Terminal=false
 Icon=gnucash
-X-KDE-StartupNotify=false
+X-TDE-StartupNotify=false

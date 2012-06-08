@@ -100,6 +100,6 @@ Name[zh_TW]=OQT 播放器
 Name[zu]=Umdlali we-OQT
 ServiceTypes=
 Type=Application
-X-KDE-SubstituteUID=false
-X-KDE-Username=
+X-TDE-SubstituteUID=false
+X-TDE-Username=
 

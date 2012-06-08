@@ -153,4 +153,4 @@ Path=
 Terminal=false
 Type=Application
 NoDisplay=true
-X-KDE-StartupNotify=false
+X-TDE-StartupNotify=false

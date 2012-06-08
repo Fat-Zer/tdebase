@@ -17,5 +17,5 @@ Name[pa]=ਕੋਨਕਿਉਰੋਰ
 Name[ta]=கான்கொரர்
 Name[te]=కాంకెరర్
 Name[th]=คอนเควอร์เรอร์
-Categories=Qt;KDE;System;
-X-KDE-HasTempFileOption=true
+Categories=Qt;TDE;System;
+X-TDE-HasTempFileOption=true

@@ -80,5 +80,5 @@ Comment[zh_TW]=未掛載的 Samba (Microsoft 網路) 分享
 Comment[zu]=Isabelo se-Samba esehlisiwe (Uxhumano olusakazekile lwe-Microsoft)
 Patterns=
 
-X-KDE-AutoEmbed=true
-X-KDE-IsAlso=inode/directory
+X-TDE-AutoEmbed=true
+X-TDE-IsAlso=inode/directory

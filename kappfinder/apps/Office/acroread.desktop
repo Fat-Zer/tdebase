@@ -115,4 +115,4 @@ GenericName[zu]=Umbukisi we-PDF
 Terminal=false
 Icon=acroread
 Caption=PDF Viewer
-X-KDE-StartupNotify=false
+X-TDE-StartupNotify=false

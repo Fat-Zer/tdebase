@@ -5,9 +5,9 @@ Icon=icons
 Exec=kcmshell icons
 
 
-X-KDE-Library=icons
-X-KDE-FactoryName=icons
-X-KDE-ParentApp=kcontrol
+X-TDE-Library=icons
+X-TDE-FactoryName=icons
+X-TDE-ParentApp=kcontrol
 
 Name=Icons
 Name[af]=Ikoone
@@ -246,4 +246,4 @@ Keywords[zh_CN]=icons,effects,size,hicolor,locolor,图标,效果,大小,高色�
 Keywords[zh_TW]=icons,effects,size,hicolor,locolor,圖示,效果,大小,高彩,低彩
 Keywords[zu]=izimpawu,imiphumela,usayizi,umbala ophezulu,umbala ophansi
 
-Categories=Qt;KDE;X-KDE-settings-looknfeel;
+Categories=Qt;TDE;X-TDE-settings-looknfeel;

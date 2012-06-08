@@ -5,9 +5,9 @@ Icon=cookie
 Exec=kcmshell cookies
 
 
-X-KDE-Library=kio
-X-KDE-FactoryName=cookie
-X-KDE-ParentApp=kcontrol
+X-TDE-Library=kio
+X-TDE-FactoryName=cookie
+X-TDE-ParentApp=kcontrol
 
 Name=Cookies
 Name[af]=Koekies
@@ -212,4 +212,4 @@ Keywords[zh_CN]=Cookies,Browsing,Internet,WWW,Network,Policy,Domains,浏览,互�
 Keywords[zh_TW]=Cookies,Browsing,Internet,WWW,Network,Policy,Domain,瀏覽,網際網路,網路,策略,域名
 Keywords[zu]=Cookies,Cinga,Internet,WWW,Uxhumano olusakazekile,Umthetho, Izindawo
 
-Categories=Qt;KDE;X-KDE-settings-webbrowsing;
+Categories=Qt;TDE;X-TDE-settings-webbrowsing;

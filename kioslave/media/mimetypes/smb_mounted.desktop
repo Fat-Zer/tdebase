@@ -79,5 +79,5 @@ Comment[zh_TW]=已掛載的 Samba (Microsoft 網路) 分享
 Comment[zu]=Isabelo se-Samba esinyusiwe (Uxhumano olusakazekile le-Network)
 Patterns=
 
-X-KDE-AutoEmbed=true
-X-KDE-IsAlso=inode/directory
+X-TDE-AutoEmbed=true
+X-TDE-IsAlso=inode/directory

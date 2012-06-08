@@ -3,7 +3,7 @@ Type=Application
 Exec=konqueror --profile filemanagement
 DocPath=konqueror/index.html
 Icon=kfm
-X-KDE-SubstituteUID=true
+X-TDE-SubstituteUID=true
 
 Name=File Manager - Super User Mode
 Name[af]=Lêer Bestuurder - Super Gebruiker Modus
@@ -86,5 +86,5 @@ Name[zh_TW]=檔案總管 - 超級使用者模式
 Name[zu]=Imenenja yamafayela - Indlela Yomsebenzisi Omkhulu
 
 
-Categories=Qt;KDE;X-KDE-System-su;
+Categories=Qt;TDE;X-TDE-System-su;
 NotShowIn=GNOME;

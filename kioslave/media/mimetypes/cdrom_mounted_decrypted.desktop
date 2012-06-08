@@ -7,5 +7,5 @@ Comment=Mounted Decrypted CD-ROM
 Comment[de]=Eingebundene, entschlüsselte CD-ROM
 Patterns=
 
-X-KDE-AutoEmbed=true
-X-KDE-IsAlso=inode/directory
+X-TDE-AutoEmbed=true
+X-TDE-IsAlso=inode/directory

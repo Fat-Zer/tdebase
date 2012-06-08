@@ -83,5 +83,5 @@ Name[zh_TW]=文字檔案
 Name[zu]=Amafayela Ombhalo
 ServiceTypes=ThumbCreator
 MimeTypes=text/plain
-X-KDE-Library=textthumbnail
+X-TDE-Library=textthumbnail
 CacheThumbnail=false

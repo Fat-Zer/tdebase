@@ -88,4 +88,4 @@ Name[ro]=Componentă  KMan
 Name[sv]=Kman-del
 Name[te]=కెమేన్ భాగం
 ServiceTypes=KParts/ReadOnlyPart,Browser/View
-X-KDE-Library=libkmanpart
+X-TDE-Library=libkmanpart

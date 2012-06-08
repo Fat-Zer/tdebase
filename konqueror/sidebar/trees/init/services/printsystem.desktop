@@ -81,5 +81,5 @@ Name[zh_CN]=打印系统浏览器
 Name[zh_TW]=列印系統瀏覽器
 Name[zu]=Umcingi wesistimu yokushicilela
 Open=false
-X-KDE-TreeModule=Directory
-X-KDE-KonqSidebarModule=konqsidebar_tree
+X-TDE-TreeModule=Directory
+X-TDE-KonqSidebarModule=konqsidebar_tree

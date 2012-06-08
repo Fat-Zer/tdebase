@@ -84,5 +84,5 @@ Name[zh_CN]=KDE 官方 FTP
 Name[zh_TW]=KDE 官方 FTP 站
 Name[zu]=I-FTP esemthethweni ye-KDE
 Open=false
-X-KDE-TreeModule=Directory
-X-KDE-KonqSidebarModule=konqsidebar_tree
+X-TDE-TreeModule=Directory
+X-TDE-KonqSidebarModule=konqsidebar_tree

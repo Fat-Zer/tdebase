@@ -129,4 +129,4 @@ Comment[zh_TW]=按下去能快速顯示桌面的按鈕
 Exec=dcop kdesktop KDesktopIface toggleShowDesktop
 Icon=desktop
 Type=Application
-Categories=Qt;KDE;X-KDE-settings-desktop;
+Categories=Qt;TDE;X-TDE-settings-desktop;

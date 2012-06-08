@@ -129,4 +129,4 @@ Comment[wa]=Programes et comones accions
 Comment[zh_CN]=应用程序和公共操作
 Comment[zh_TW]=應用程式與一般動作
 Icon=kmenu
-X-KDE-Library=KMenuButton
+X-TDE-Library=KMenuButton

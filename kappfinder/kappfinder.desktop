@@ -3,7 +3,7 @@ Exec=kappfinder
 Icon=kappfinder
 Type=Application
 Terminal=false
-X-KDE-StartupNotify=true
+X-TDE-StartupNotify=true
 OnlyShowIn=TDE;
 
 Name=Menu Updating Tool
@@ -78,4 +78,4 @@ Name[wa]=Usteye d' amidraedje des dressêyes
 Name[zh_CN]=菜单更新工具
 Name[zh_TW]=選單更新工具
 X-DCOP-ServiceType=Multi
-Categories=Qt;KDE;Settings;
+Categories=Qt;TDE;Settings;

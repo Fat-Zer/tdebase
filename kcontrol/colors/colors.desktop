@@ -5,9 +5,9 @@ Type=Application
 DocPath=kcontrol/colors/index.html
 
 
-X-KDE-Library=colors
-X-KDE-FactoryName=colors
-X-KDE-ParentApp=kcontrol
+X-TDE-Library=colors
+X-TDE-FactoryName=colors
+X-TDE-ParentApp=kcontrol
 
 Name=Colors
 Name[af]=Kleure
@@ -249,4 +249,4 @@ Keywords[zh_CN]=colors,colours,scheme,contrast,Widget colors,Color Scheme,颜色
 Keywords[zh_TW]=colors,colours,scheme,contrast,Widget colors,Color Scheme,顏色,對比,元件顏色,配色
 Keywords[zu]=imibala,imibala,iplani,ukugqama,imibala ye-Widget,Iplani Lombala
 
-Categories=Qt;KDE;X-KDE-settings-looknfeel;
+Categories=Qt;TDE;X-TDE-settings-looknfeel;

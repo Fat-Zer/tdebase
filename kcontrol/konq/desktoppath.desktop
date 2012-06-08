@@ -5,9 +5,9 @@ Icon=kfm
 Exec=kcmshell desktoppath
 
 
-X-KDE-Library=konq
-X-KDE-FactoryName=dpath
-X-KDE-ParentApp=kcontrol
+X-TDE-Library=konq
+X-TDE-FactoryName=dpath
+X-TDE-ParentApp=kcontrol
 
 Name=Paths
 Name[af]=Soekgidse
@@ -223,4 +223,4 @@ Keywords[wa]=konqueror,manaedjeu d' fitchî,tchimins,sicribanne,ridants,autostar
 Keywords[zh_CN]=konqueror,filemanager,paths,desktop,directories,autostart,文件管理器,路径,桌面,目录,自动启动
 Keywords[zh_TW]=konqueror,filemanager,paths,desktop,directories,autostart,征服家,檔案管理程式,路徑,桌面,目錄,自動啟動
 
-Categories=Qt;KDE;X-KDE-settings-system;
+Categories=Qt;TDE;X-TDE-settings-system;

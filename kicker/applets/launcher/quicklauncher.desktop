@@ -137,4 +137,4 @@ Comment[wa]=Accès direk ås programes sovint eployîs
 Comment[zh_CN]=直接访问您最经常使用的应用程序
 Comment[zh_TW]=直接存取您最常使用的應用程式
 Icon=launch
-X-KDE-Library=launcher_panelapplet
+X-TDE-Library=launcher_panelapplet

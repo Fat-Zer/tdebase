@@ -15,7 +15,7 @@ bool SaverConfig::read(const TQString &file)
     mExec = config.readPathEntry("Exec");
     mName = config.readEntry("Name");
     mCategory = i18n("Screen saver category", // Must be same in Makefile.am
-                     config.readEntry("X-KDE-Category").utf8());
+                     config.readEntry("X-TDE-Category").utf8());
 
     if (config.hasActionGroup("Setup"))
     {

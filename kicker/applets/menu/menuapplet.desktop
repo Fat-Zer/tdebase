@@ -124,5 +124,5 @@ Comment[wa]=Aplikete po fé ravaler des bårs di dressêye totes seules
 Comment[zh_CN]=嵌入独立菜单栏的小程序
 Comment[zh_TW]=單獨置於面板中的選單列
 
-X-KDE-Library=menu_panelapplet
-X-KDE-UniqueApplet=true
+X-TDE-Library=menu_panelapplet
+X-TDE-UniqueApplet=true

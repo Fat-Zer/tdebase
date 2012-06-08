@@ -975,7 +975,7 @@ $<envar>ICEAUTHORITY</envar></para>
 
 <para><command>kcminit</command> executes initialization services during
 startup. Initialization services are specified in the .desktop files of
-applications or services via the <varname>X-KDE-Init</varname> line:</para>
+applications or services via the <varname>X-TDE-Init</varname> line:</para>
 
 <programlisting>
 [Desktop Entry]
@@ -983,8 +983,8 @@ Encoding=UTF-8
 Exec=kcmshell energy
 Icon=energy_star
 Type=Application
-X-KDE-Library=energy
-X-KDE-Init=energy
+X-TDE-Library=energy
+X-TDE-Init=energy
 </programlisting>
 
 <para>Initialization services are typically used for initializing
@@ -1043,7 +1043,7 @@ indicated by <literal role="extension">.desktop</literal> files in the
 class="directory">$<envar>TDEDIR</envar>/share/autostart</filename>
 directory.  Whether or not to auto-start an application can be made
 conditional upon some configuration entry determined by the
-<varname>X-KDE-autostart-condition</varname> entry in the <literal
+<varname>X-TDE-autostart-condition</varname> entry in the <literal
 role="extension">.desktop</literal> file.</para>
 
 <informalexample>
@@ -1051,7 +1051,7 @@ role="extension">.desktop</literal> file.</para>
 contains:</para>
 
 <programlisting>
-X-KDE-autostart-condition=ktiprc:TipOfDay:RunOnStart:true
+X-TDE-autostart-condition=ktiprc:TipOfDay:RunOnStart:true
 </programlisting>
 
 <para>This means that the <filename>ktiprc</filename> configuration
@@ -1452,9 +1452,9 @@ TerminalOptions=<co id="co-terminaloptions"/>
 Path=<co id="co-path"/>
 Type=Application<co id="co-type"/>
 Terminal=0<co id="co-terminal"/>
-X-KDE-StartupNotify=true<co id="co-x-kde-startupnotify"/>
+X-TDE-StartupNotify=true<co id="co-x-kde-startupnotify"/>
 X-DCOP-ServiceType=Multi<co id="co-x-dcop-servicetype"/>
-Categories=Qt;KDE;Network<co id="co-categories"/>
+Categories=Qt;TDE;Network<co id="co-categories"/>
 </programlisting>
 
 <calloutlist>
@@ -1675,9 +1675,9 @@ new menu format:
 <listitem><para><filename>/usr/share/applications/Acrobat
 Reader.desktop</filename></para></listitem>
 
-<listitem><para><filename>/opt/trinity/share/applications/kde/kpresenter.desktop</filename></para></listitem>
+<listitem><para><filename>/opt/trinity/share/applications/tde/kpresenter.desktop</filename></para></listitem>
 
-<listitem><para><filename>/opt/trinity/share/applications/kde/kword.desktop</filename></para></listitem>
+<listitem><para><filename>/opt/trinity/share/applications/tde/kword.desktop</filename></para></listitem>
 
 </itemizedlist>
 </para>
@@ -1747,7 +1747,7 @@ menu. <filename>suse-edutainment-art.directory</filename> defines the
 name and icon for this menu, and the menu includes all applications
 that have <literal>X-SuSE-Art</literal> listed as a category, &eg;:
 <programlisting>
-Categories=Qt;KDE;Education;X-SuSE-Art
+Categories=Qt;TDE;Education;X-SuSE-Art
 </programlisting></para>
 
 <para><filename>suse-edutainment-art.directory</filename> defines the
@@ -2302,7 +2302,7 @@ menu.</para>
 <listitem>
 <para>The modules that are visible in the Control Center normally
 have a <literal role="extension">.desktop</literal> file in <filename
-class="directory">$<envar>TDEDIR</envar>/share/applications/kde</filename>
+class="directory">$<envar>TDEDIR</envar>/share/applications/tde</filename>
 and are sorted under the hidden <guimenu>Settings-Modules</guimenu> menu by
 the <filename>kde-settings.menu</filename>, included from
 <filename>kde-essential.menu</filename></para>

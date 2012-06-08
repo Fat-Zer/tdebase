@@ -63,6 +63,6 @@ Name[xh]=Phendla Amagama Angundoqo Ecebo Lokucoca Ulwelo
 Name[zh_CN]=搜索关键字过滤
 Name[zh_TW]=搜索關鍵字過濾
 Name[zu]=Ihluzo lamagama abalulekile okusesha
-X-KDE-Library=libkurisearchfilter
+X-TDE-Library=libkurisearchfilter
 ServiceTypes=KURIFilter/Plugin
 InitialPreference=4
