@@ -24,7 +24,7 @@ The &tde; Team thanks and acknowledges the original &kde; contributors of this g
 <listitem>
 
 <itemizedlist>
-<listitem><para>Wrote the notes which became <xref linkend="kde-for-administrators"/>.</para>
+<listitem><para>Wrote the notes which became <xref linkend="tde-for-administrators"/>.</para>
 </listitem>
 </itemizedlist>
 
@@ -91,7 +91,7 @@ The &tde; Team thanks and acknowledges the original &kde; contributors of this g
 	<listitem><para>Wrote <xref linkend="ktts" />.</para></listitem>
 	<listitem><para>Wrote <xref linkend="basic-applications" />.</para></listitem>
 	<listitem><para>Wrote <xref linkend="extragear-applications" />.</para></listitem>
-	<listitem><para>Re-wrote <xref linkend="kde-edutainment" />.</para></listitem>
+	<listitem><para>Re-wrote <xref linkend="tde-edutainment" />.</para></listitem>
 	<listitem><para>Wrote <xref linkend="migrator-applications" />.</para></listitem>
 </itemizedlist>
 
@@ -207,7 +207,7 @@ linkend="file-manager"/> and <xref linkend="accessibility"/>.</para>
 </listitem>
 <listitem><para>Wrote <xref linkend="menus"/>.</para>
 </listitem>
-<listitem><para>Marked up parts of <xref linkend="kde-for-administrators"/>.</para>
+<listitem><para>Marked up parts of <xref linkend="tde-for-administrators"/>.</para>
 </listitem>
 </itemizedlist>
 
@@ -271,7 +271,7 @@ linkend="file-manager"/> and <xref linkend="accessibility"/>.</para>
 <listitem><para>Wrote <xref linkend="getting-help"/>.</para>
 </listitem>
 <listitem><para>Marked up parts of <xref
-linkend="kde-for-administrators"/>.</para>
+linkend="tde-for-administrators"/>.</para>
 </listitem>
 </itemizedlist>
 

@@ -1,11 +1,11 @@
-<part id="kde-for-administrators">
+<part id="tde-for-administrators">
 
 <title>&tde; for Administrators</title>
 
 <chapter id="kde-internals">
 <title>&tde; Internals</title>
 
-<sect1 id="kde-for-admins-overview">
+<sect1 id="tde-for-admins-overview">
 <title>Overview</title>
 <para>to be written</para>
 </sect1>

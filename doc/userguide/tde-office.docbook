@@ -1,4 +1,4 @@
-<part id="kde-office">
+<part id="tde-office">
 <partinfo>
 <authorgroup>
 <author>
@@ -34,10 +34,10 @@
 
 <title>Office</title>
 
-<chapter id="kde-office-introduction">
+<chapter id="tde-office-introduction">
 <title>Introduction to KOffice</title>
 
-<sect1 id="kde-office-overview">
+<sect1 id="tde-office-overview">
 <title>Overview</title>
 <para>
 The &tde; project has also created a fully featured office suite
@@ -84,7 +84,7 @@ state of the application.
 -->
 </sect1>
 
-<sect1 id="kde-office-features">
+<sect1 id="tde-office-features">
 <title>Features</title>
 <para>
 This list gives a general outline of the &koffice; features.
@@ -103,7 +103,7 @@ The &koffice; office suite is too large to list every detail.
 </itemizedlist>
 </sect1>
 
-<sect1 id="kde-office-fileformat">
+<sect1 id="tde-office-fileformat">
 <title>OASIS OpenDocument file format</title>
 <para>
 It is important for an office suite to use standards where possible,
@@ -126,21 +126,21 @@ actually use the OASIS OpenDocument file format.
 </chapter>
 
 <!-- comment out for final commit before freeze
-<chapter id="kde-office-embedding">
+<chapter id="tde-office-embedding">
 <title>Component Embedding</title>
-<sect1 id="kde-office-kparts">
+<sect1 id="tde-office-kparts">
 <title>KParts and &koffice;</title>
 <para>To be written</para>
 </sect1>
 
-<sect1 id="kde-office-example">
+<sect1 id="tde-office-example">
 <title>Example</title>
 <para>To be written</para>
 </sect1>
 </chapter>
 -->
 
-<chapter id="kde-office-components">
+<chapter id="tde-office-components">
 <title>&koffice; Components Overview</title>
 
 <para>Keep in mind that all these components can integrate very well into each other. So basically a spreadsheet can contain anything from charts to presentations, reports and even text documents. Likewise almost any component can contain almost any other.</para>
@@ -281,10 +281,10 @@ actually use the OASIS OpenDocument file format.
 
 </chapter>
 
-<chapter id="kde-office-furtherinfo">
+<chapter id="tde-office-furtherinfo">
 
 <title>Further Information</title>
-<sect1 id="kde-office-manuals">
+<sect1 id="tde-office-manuals">
 <title>Application Manuals</title>
 <para>Each Koffice component comes with its own manual.
 These manuals offer all the latest information about the
@@ -293,7 +293,7 @@ read to learn more about &koffice;. The application manuals can be accessed by u
 also a good place to find out more; it is at <ulink url="http://www.koffice.org">http://www.koffice.org</ulink>.</para>
 </sect1>
 
-<sect1 id="kde-office-internet">
+<sect1 id="tde-office-internet">
 <title>Internet Resources</title>
 <para>The primary site on the internet is
 <ulink url="http://www.koffice.org">http://www.koffice.org</ulink></para>
@@ -304,7 +304,7 @@ found at <ulink url="http://www.kexi-project.org">http://www.kexi-project.org
 </ulink></para>
 </sect1>
 
-<sect1 id="kde-office-plugininfo">
+<sect1 id="tde-office-plugininfo">
 <title>Plugin development</title>
 <para>&koffice; can easily be extended with plugins. Plugin development is
 not very difficult and can be used to optimize your everyday workflow. Such

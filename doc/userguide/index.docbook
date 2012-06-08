@@ -13,14 +13,14 @@
   <!ENTITY programs-and-documents SYSTEM "programs-and-documents.docbook">
   <!ENTITY control-center SYSTEM "control-center.docbook">
   <!ENTITY customizing-desktop SYSTEM "customizing-desktop.docbook">
-  <!ENTITY base-kde-applications SYSTEM "base-kde-applications.docbook">
+  <!ENTITY base-tde-applications SYSTEM "base-tde-applications.docbook">
   <!ENTITY removable-disks SYSTEM "removable-disks.docbook">
   <!ENTITY burning-cds SYSTEM "burning-cds.docbook">
   <!ENTITY playing-music SYSTEM "playing-music.docbook">
   <!ENTITY playing-audiocds SYSTEM "playing-audiocds.docbook">
   <!ENTITY playing-movies SYSTEM "playing-movies.docbook">
-  <!ENTITY your-kde-account SYSTEM "your-kde-account.docbook">
-  <!ENTITY kde-as-root SYSTEM "kde-as-root.docbook">
+  <!ENTITY your-tde-account SYSTEM "your-tde-account.docbook">
+  <!ENTITY tde-as-root SYSTEM "tde-as-root.docbook">
   <!ENTITY switching-sessions SYSTEM "switching-sessions.docbook">
   <!ENTITY file-sharing SYSTEM "file-sharing.docbook">
   <!ENTITY networking-with-windows SYSTEM  "networking-with-windows.docbook">
@@ -32,7 +32,7 @@
   <!ENTITY creating-graphics SYSTEM "creating-graphics.docbook">
   <!ENTITY screen-captures SYSTEM "screen-captures.docbook">
   <!ENTITY konsole-intro SYSTEM "konsole-intro.docbook">
-  <!ENTITY kde-edutainment SYSTEM "kde-edutainment.docbook">
+  <!ENTITY tde-edutainment SYSTEM "tde-edutainment.docbook">
   <!ENTITY accessibility SYSTEM "accessibility.docbook">
   <!ENTITY under-the-hood SYSTEM "under-the-hood.docbook">
   <!ENTITY net-connection-setup SYSTEM "net-connection-setup.docbook">
@@ -41,8 +41,8 @@
   <!ENTITY browser-fine-tuning SYSTEM "browser-fine-tuning.docbook">
   <!ENTITY usenet SYSTEM "usenet.docbook">
   <!ENTITY messaging-intro SYSTEM "messaging-intro.docbook">
-  <!ENTITY kde-office SYSTEM "kde-office.docbook">
-  <!ENTITY kde-for-admins SYSTEM "kde-for-admins.docbook">
+  <!ENTITY tde-office SYSTEM "tde-office.docbook">
+  <!ENTITY tde-for-admins SYSTEM "tde-for-admins.docbook">
   <!ENTITY migrator-dictionary SYSTEM "migrator-dictionary.docbook">
   <!ENTITY glossary SYSTEM "glossary.docbook">
   <!ENTITY standard-menu-entries SYSTEM "standard-menu-entries.docbook">
@@ -264,14 +264,14 @@ here, but there's a taster of both of them in this part of the User
 Guide. At the end of this part are suggestions for tweaking &tde;
 in <xref linkend="tinkering-under-the-hood"/>.</para>
 
-<para><xref linkend="kde-online"/> highlights &tde;'s suite of
+<para><xref linkend="tde-online"/> highlights &tde;'s suite of
 Internet applications. &tde; includes a powerful web browser,
 &konqueror;, a full-featured email client, &kmail;, a news reader,
 &knode;, and many more applications to use the Internet.
 This part of the User Guide contains
 information about configuring these applications.</para>
 
-<para><xref linkend="kde-for-administrators"/> is a reference guide to
+<para><xref linkend="tde-for-administrators"/> is a reference guide to
 some &tde; features that are useful to administrators configuring
 multi-user systems. This part also has information that might be useful
 to &tde; users with single-user systems: where configuration files are
@@ -444,7 +444,7 @@ by entering <userinput>help:/tdm</userinput> in &konqueror;'s
 
 &control-center;
 
-&base-kde-applications;
+&base-tde-applications;
 
 &extragear-applications;
 
@@ -464,9 +464,9 @@ by entering <userinput>help:/tdm</userinput> in &konqueror;'s
 <chapter id="multiuser-kde">
 <title>&tde; the Multiuser Desktop</title>
 
-&your-kde-account;
+&your-tde-account;
 
-&kde-as-root;
+&tde-as-root;
 
 &switching-sessions;
 </chapter>
@@ -499,14 +499,14 @@ by entering <userinput>help:/tdm</userinput> in &konqueror;'s
 
 &konsole-intro;
 
-&kde-edutainment;
+&tde-edutainment;
 
 &accessibility;
 
 &under-the-hood;
 </part>
 
-<part id="kde-online">
+<part id="tde-online">
 <title>&tde; and the Internet</title>
 
 &net-connection-setup;
@@ -529,9 +529,9 @@ by entering <userinput>help:/tdm</userinput> in &konqueror;'s
 
 </part>
 
-&kde-office;
+&tde-office;
 
-&kde-for-admins;
+&tde-for-admins;
 
 <part id="more">
 <title>More Tools</title>

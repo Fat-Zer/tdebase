@@ -286,7 +286,7 @@
 
 <title>Office</title>
 
-<para>This includes all applications in the &koffice; suite. See <xref linkend="kde-office-components" /> for a summary of the components.</para>
+<para>This includes all applications in the &koffice; suite. See <xref linkend="tde-office-components" /> for a summary of the components.</para>
 
 </sect1>
 
