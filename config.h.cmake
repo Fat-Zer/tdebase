@@ -24,6 +24,9 @@
 // kxkb
 #cmakedefine HAVE_XTEST 1
 
+// xscreensaver
+#cmakedefine HAVE_XSCREENSAVER 1
+
 // libart
 #cmakedefine HAVE_LIBART 1
 
