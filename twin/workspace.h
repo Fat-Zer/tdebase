@@ -343,6 +343,9 @@ class Workspace : public TQObject, public KWinInterface, public KDecorationDefin
 
         void slotWalkThroughDesktops();
         void slotWalkBackThroughDesktops();
+        void slotWalkThroughApps();
+        void slotWalkBackThroughApps();
+
         void slotWalkThroughDesktopList();
         void slotWalkBackThroughDesktopList();
         void slotWalkThroughWindows();
@@ -565,6 +568,7 @@ class Workspace : public TQObject, public KWinInterface, public KDecorationDefin
         KShortcut cutWalkThroughDesktops, cutWalkThroughDesktopsReverse;
         KShortcut cutWalkThroughDesktopList, cutWalkThroughDesktopListReverse;
         KShortcut cutWalkThroughWindows, cutWalkThroughWindowsReverse;
+        KShortcut cutWalkThroughApps, cutWalkThroughAppsReverse;
         bool mouse_emulation;
         unsigned int mouse_emulation_state;
         WId mouse_emulation_window;

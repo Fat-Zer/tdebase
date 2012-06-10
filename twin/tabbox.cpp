@@ -47,6 +47,7 @@ TabBox::TabBox( Workspace *ws, const char *name )
     setLineWidth(2);
     setMargin(2);
 
+    appsOnly = false;
     showMiniIcon = false;
 
     no_tasks = i18n("*** No Windows ***");
@@ -86,6 +87,14 @@ void TabBox::setMode( Mode mode )
     m = mode;
     }
 
+/*! 
+  Sets AppsOnly, which when true, createClientList will return only applications within the same class
+
+  */
+void TabBox::setAppsOnly( bool a )
+    {
+    appsOnly = a;
+    }
 
 /*!
   Create list of clients on specified desktop, starting with client c
@@ -93,10 +102,13 @@ void TabBox::setMode( Mode mode )
 void TabBox::createClientList(ClientList &list, int desktop /*-1 = all*/, Client *c, bool chain)
     {
     ClientList::size_type idx = 0;
-
+    TQString startClass;
     list.clear();
 
     Client* start = c;
+
+    if( start ) 
+        startClass = start->resourceClass();
 
     if ( chain )
         c = workspace()->nextFocusChainClient(c);
@@ -120,6 +132,10 @@ void TabBox::createClientList(ClientList &list, int desktop /*-1 = all*/, Client
                 {
                 // nothing
                 }
+            }
+        if(appsOnly && (TQString::compare( startClass, c->resourceClass()) != 0))
+            {
+            add = NULL;
             }
 
         if( options->separateScreenFocus && options->xineramaEnabled )
@@ -645,6 +661,7 @@ void TabBox::hide()
     XEvent otherEvent;
     while (XCheckTypedEvent (tqt_xdisplay(), EnterNotify, &otherEvent ) )
         ;
+    appsOnly = false;
     }
 
 
@@ -893,6 +910,18 @@ void Workspace::slotWalkBackThroughWindows()
         }
     }
 
+void Workspace::slotWalkThroughApps()
+    {  
+    tab_box->setAppsOnly(true);
+  slotWalkThroughWindows();
+    }
+
+void Workspace::slotWalkBackThroughApps() 
+    {
+    tab_box->setAppsOnly(true);  
+    slotWalkBackThroughWindows();
+    }
+
 void Workspace::slotWalkThroughDesktops()
     {
     if ( root != tqt_xrootwin() )
@@ -1112,18 +1141,33 @@ void Workspace::tabBoxKeyPress( const KKeyNative& keyX )
     {
     bool forward = false;
     bool backward = false;
+    bool forwardapps = false;
+    bool backwardapps = false;
 
     if (tab_grab)
         {
         forward = cutWalkThroughWindows.contains( keyX );
         backward = cutWalkThroughWindowsReverse.contains( keyX );
-        if (forward || backward)
+
+        forwardapps = cutWalkThroughApps.contains( keyX );      
+        backwardapps = cutWalkThroughAppsReverse.contains( keyX );
+
+        if ( (forward || backward) && (!tab_box->isAppsOnly()) )
             {
             kdDebug(125) << "== " << cutWalkThroughWindows.toStringInternal()
                 << " or " << cutWalkThroughWindowsReverse.toStringInternal() << endl;
+
             KDEWalkThroughWindows( forward );
             }
-        }
+        
+       if ( (forwardapps || backwardapps) && (tab_box->isAppsOnly()) )
+            {
+            kdDebug(125) << "== " << cutWalkThroughWindows.toStringInternal()
+                << " or " << cutWalkThroughWindowsReverse.toStringInternal() << endl;
+            KDEWalkThroughWindows( forwardapps );
+            }
+       }
+    
     else if (control_grab)
         {
         forward = cutWalkThroughDesktops.contains( keyX ) ||

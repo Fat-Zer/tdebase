@@ -20,6 +20,8 @@
 	keys->insert( "Group:Navigation", i18n("Navigation") );
 	DEF( I18N_NOOP("Walk Through Windows"),                ALT+Qt::Key_Tab, ALT+Qt::Key_Tab, slotWalkThroughWindows() );
 	DEF( I18N_NOOP("Walk Through Windows (Reverse)"),      ALT+SHIFT+Qt::Key_Tab, ALT+SHIFT+Qt::Key_Tab, slotWalkBackThroughWindows() );
+  DEF( I18N_NOOP("Walk Through Windows of Same Application"),                ALT+Qt::Key_QuoteLeft, ALT+Qt::Key_QuoteLeft, slotWalkThroughApps() );
+  DEF( I18N_NOOP("Walk Through Windows of Same Application (Reverse)"),      ALT+Qt::Key_AsciiTilde, ALT+Qt::Key_AsciiTilde, slotWalkBackThroughApps() );
 	DEF( I18N_NOOP("Walk Through Desktops"),               0, WIN+Qt::Key_Tab, slotWalkThroughDesktops() );
 	DEF( I18N_NOOP("Walk Through Desktops (Reverse)"),     0, WIN+SHIFT+Qt::Key_Tab, slotWalkBackThroughDesktops() );
 	DEF( I18N_NOOP("Walk Through Desktop List"),           0, 0, slotWalkThroughDesktopList() );

@@ -35,13 +35,15 @@ class TabBox : public TQFrame
         Client* currentClient();
         void setCurrentClient( Client* c );
         int currentDesktop();
-
+        
     // DesktopMode and WindowsMode are based on the order in which the desktop
     //  or window were viewed.
     // DesktopListMode lists them in the order created.
         enum Mode { DesktopMode, DesktopListMode, WindowsMode };
         void setMode( Mode mode );
+        void setAppsOnly( bool a );
         Mode mode() const;
+        bool isAppsOnly() const;
 
         void reset();
         void nextPrev( bool next = TRUE);
@@ -72,6 +74,7 @@ class TabBox : public TQFrame
         int desk;
         int lineHeight;
         bool showMiniIcon;
+        bool appsOnly;
         TQTimer delayedShowTimer;
         TQString no_tasks;
         bool options_traverse_all;
@@ -96,6 +99,17 @@ inline TabBox::Mode TabBox::mode() const
     {
     return m;
     }
+
+/*! 
+  Returns the appsOnly variable
+
+  \sa setAppsOnly()
+  */
+inline bool TabBox::isAppsOnly() const
+    {
+    return appsOnly;
+    }
+
 
 } // namespace
 

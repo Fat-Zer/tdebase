@@ -279,6 +279,8 @@ void Workspace::readShortcuts()
     cutWalkThroughDesktopListReverse = keys->shortcut("Walk Through Desktop List (Reverse)");
     cutWalkThroughWindows = keys->shortcut("Walk Through Windows");
     cutWalkThroughWindowsReverse = keys->shortcut("Walk Through Windows (Reverse)");
+    cutWalkThroughApps = keys->shortcut("Walk Through Windows of Same Application");
+    cutWalkThroughAppsReverse = keys->shortcut("Walk Through Windows of Same Application (Reverse)");
 
     keys->updateConnections();
     disable_shortcuts_keys->updateConnections();
