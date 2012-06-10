@@ -3,6 +3,9 @@
 // Defined if you have fvisibility and fvisibility-inlines-hidden support.
 #cmakedefine __KDE_HAVE_GCC_VISIBILITY 1
 
+// Defined if compiler supports long long type.
+#cmakedefine HAVE_LONG_LONG 1
+
 // konsole
 #cmakedefine HAVE_PROC_CWD 1
 
