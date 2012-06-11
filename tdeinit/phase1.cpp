@@ -50,9 +50,10 @@ int main(int argc, char **argv)
 	about.addAuthor( "Timothy Pearson", 0, "kb9vqf@pearsoncomputing.net" );
 	KCmdLineArgs::init(argc, argv, &about);
 	KCmdLineArgs::addCmdLineOptions( options );
-	
+
+	KApplication::disableAutoDcopRegistration();
 	KApplication app;
-	
+
 	KConfig config("twinrc", true);
 	config.setGroup( "ThirdPartyWM" );
 	TQString wmToLaunch = config.readEntry("WMExecutable", "");
