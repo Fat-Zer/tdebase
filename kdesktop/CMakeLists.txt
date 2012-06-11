@@ -94,6 +94,7 @@ tde_add_tdeinit_executable( ${target} AUTOMOC
     kdesktopsettings-static bgnd-static dmctl-static
     konq-shared kutils-shared
     ${XRENDER_LIBRARIES} ${XCURSOR_LIBRARIES} Xext dl
+    ${XSS_LIBRARIES}
 )
 
 
