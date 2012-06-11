@@ -40,7 +40,7 @@ you prefer from
 install it using the &kcontrolcenter;.</para>
 <para>In order to change only the &kmenu; icon you can overwrite the
 <filename>kmenu.png</filename> image for every size in an icon theme set.
-So, for &tde; default icons this would be <filename>$<envar>TDEDIR</envar>/share/icons/default.kde/<replaceable>size</replaceable>/apps/kmenu.png</filename>,
+So, for &tde; default icons this would be <filename>$<envar>TDEDIR</envar>/share/icons/default.tde/<replaceable>size</replaceable>/apps/kmenu.png</filename>,
 where <replaceable>size</replaceable> is one of the sizes included in the
 &tde; icon theme. 
 </para>
