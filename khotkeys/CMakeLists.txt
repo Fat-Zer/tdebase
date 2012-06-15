@@ -9,7 +9,7 @@
 #
 #################################################
 
-check_c_source_runs( "
+check_cxx_source_runs( "
   class A { public: virtual A* me(); };
   class X { public: int x; virtual void ff() {}; };
   class B : public X, public A { public: virtual B* me(); };
