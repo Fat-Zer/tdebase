@@ -251,46 +251,23 @@ test -n "$TDEHOME" && tdehome=`echo "$TDEHOME" | sed "s,^~/,$HOME/,"`
 # to know that this is a Trinity desktop and not a TDE one.
 export DESKTOP_SESSION=trinity
 
-# Please see kstartupconfig source for usage.
 if [ -d "$tdehome" ]; then
-  # Run some R14 updates but only once.
+  # Possibly run some R14 XDG compliance updates.
   R14_UPDATED="`$TDEDIR/bin/kreadconfig --file kdeglobals --group "R14 XDG Updates" --key Updated`"
   if [ "$R14_UPDATED" != "true" ]; then
-    echo "[starttde] Updating profile for R14 XDG changes. This is a one-time event."
-    find $tdehome -name "*.desktop" -exec sed -i 's|X-KDE-|X-TDE-|g' {} \; 2>/dev/null
-    find $tdehome -name "*.desktop" -exec sed -i 's|KDE\;|TDE\;|g' {} \; 2>/dev/null
-    # Exclude KMail mail files --- we don't want to touch those files.
-    find $tdehome $tdehome/share/apps/kmail/mail -prune -o -type f -exec sed -i "s|$TDEDIR/share/applications/kde|$TDEDIR/share/applications/tde|g" {} \; 2>/dev/null
-    # Try to preserve keyboard shortcuts.
-    sed -i -e 's|CommandURL=kde-|CommandURL=tde-|g' -e 's|K Menu - kde-|K Menu - tde-|g' $tdehome/share/config/khotkeysrc 2>/dev/null
-    # Try to preserve profilerc.
-    sed -i -e 's|Application=kde-|Application=tde-|g' $tdehome/share/config/profilerc 2>/dev/null
-    # Update sym link files in $HOME/.trinity/Autostart.
-    ( cd $tdehome/Autostart
-      for i in `find . -type l`; do
-        LINK="`readlink $i`"
-        LINK_PATH="`dirname $LINK`"
-        LINK_NAME="`basename $LINK`"
-        if [ -n "`echo $LINK_PATH | grep \"$TDEDIR/share/applications/kde\"`" ]; then
-          NEW_LINK_PATH="`echo $LINK_PATH | sed 's|/share/applications/kde|/share/applications/tde|'`"
-        fi
-        unlink $i
-        ln -sf $NEW_LINK_PATH/$LINK_NAME $LINK_NAME
-        if [ "$?" != "0" ]; then
-          echo "There was an error with creating a new sym link for $LINK." 1>&2
-        fi
-      done
-    )
-    $TDEDIR/bin/kwriteconfig --file kdeglobals --group "R14 XDG Updates" --key Updated --type bool 'true'
+    sh $TDEDIR/bin/r14-xdg-update
+    if [ "$?" != "0" ]; then
+      exit 1
+    fi
   fi
-  unset R14_UPDATED
 else
   echo "[starttde] Creating $tdehome" 1>&2
 fi
-mkdir -m 700 -p $tdehome
-mkdir -m 700 -p $tdehome/share
-mkdir -m 700 -p $tdehome/share/config
-cat >$tdehome/share/config/startupconfigkeys <<EOF
+# Please see kstartupconfig source for usage.
+mkdir -m 700 -p "$tdehome"
+mkdir -m 700 -p "$tdehome/share"
+mkdir -m 700 -p "$tdehome/share/config"
+cat >"$tdehome/share/config/startupconfigkeys" <<EOF
 kcminputrc Mouse cursorTheme ''
 kcminputrc Mouse cursorSize ''
 kpersonalizerrc General FirstLogin true
@@ -307,15 +284,15 @@ if test $? -ne 0; then
   xmessage -center -geometry 500x100 "Could not start kstartupconfig. Check your installation."
 fi
 # $tdehome/share/config/startupconfig should exist but avoid script failure if not.
-if [ -r $tdehome/share/config/startupconfig ]; then
-  . $tdehome/share/config/startupconfig
+if [ -r "$tdehome/share/config/startupconfig" ]; then
+  . "$tdehome/share/config/startupconfig"
 fi
 
 # Make sure a default wallpaper is set.
-if [ ! -e $tdehome/share/config/kdesktoprc ]; then
+if [ ! -e "$tdehome/share/config/kdesktoprc" ]; then
  # With Trinity this file should exist, but test first.
   if [ -r /usr/share/wallpapers/isadora.png.desktop ]; then
-cat >$tdehome/share/config/kdesktoprc <<EOF
+cat >"$tdehome/share/config/kdesktoprc" <<EOF
 [Desktop0]
 Wallpaper=isadora.png
 WallpaperMode=Scaled
@@ -420,11 +397,10 @@ else
   TGTK_RC_TDE2=$TDEDIR/share/kgtk/.gtkrc-2.0-kde-kde4
 fi
 
-if [ ! -e $tdehome/env/gtk-qt-engine.rc.sh ] && [ -e $TGTK_RC_ENGINE ]
-then
- mkdir -p $tdehome/env
- cp -f $TGTK_RC_ENGINE $tdehome/env
- chmod 755 $tdehome/env/gtk-qt-engine.rc.sh
+if [ ! -e "$tdehome/env/gtk-qt-engine.rc.sh" ] && [ -e $TGTK_RC_ENGINE ]; then
+ mkdir -p "$tdehome/env"
+ cp -f $TGTK_RC_ENGINE "$tdehome/env"
+ chmod 755 "$tdehome/env/gtk-qt-engine.rc.sh"
 fi
 
 if [ ! -e $HOME/.gtkrc-2.0-kde4 ] && [ -e $TGTK_RC_TDE1 ]
@@ -612,9 +588,9 @@ if test "$kpersonalizerrc_general_firstlogin" = "true"; then
 fi
 
 # Remove moodin cache if we have a new wallpaper installed, jriddell. Distro-specific.
-if [ -d $tdehome/share/apps/ksplash/cache/Moodin/kubuntu ]; then
-  if [ /usr/share/wallpapers/kubuntu-wallpaper.png -nt $tdehome/share/apps/ksplash/cache/Moodin/kubuntu/ ]; then
-    rm -rf $tdehome/share/apps/ksplash/cache/Moodin/kubuntu/
+if [ -d "$tdehome/share/apps/ksplash/cache/Moodin/kubuntu" ]; then
+  if [ /usr/share/wallpapers/kubuntu-wallpaper.png -nt "$tdehome/share/apps/ksplash/cache/Moodin/kubuntu/" ]; then
+    rm -rf "$tdehome/share/apps/ksplash/cache/Moodin/kubuntu/"
   fi
 fi
 
