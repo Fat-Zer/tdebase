@@ -42,7 +42,7 @@ sftpFileAttr::sftpFileAttr(KRemoteEncoding* encoding){
 
 
 /** Constructor to initialize the file attributes on declaration. */
-sftpFileAttr::sftpFileAttr(Q_ULLONG size, uid_t uid, gid_t gid,
+sftpFileAttr::sftpFileAttr(TQ_ULLONG size, uid_t uid, gid_t gid,
                     mode_t permissions, time_t atime,
                     time_t mtime, TQ_UINT32 extendedCount) {
     clear();
@@ -127,7 +127,7 @@ TQDataStream& operator<< (TQDataStream& s, const sftpFileAttr& fa) {
     s << (TQ_UINT32)fa.mFlags;
 
     if( fa.mFlags & SSH2_FILEXFER_ATTR_SIZE )
-        { s << (Q_ULLONG)fa.mSize; }
+        { s << (TQ_ULLONG)fa.mSize; }
 
     if( fa.mFlags & SSH2_FILEXFER_ATTR_UIDGID )
         { s << (TQ_UINT32)fa.mUid << (TQ_UINT32)fa.mGid; }
@@ -170,7 +170,7 @@ TQDataStream& operator>> (TQDataStream& s, sftpFileAttr& fa) {
     s >> fa.mFlags;  // get flags
 
     if( fa.mFlags & SSH2_FILEXFER_ATTR_SIZE ) {
-        Q_ULLONG fileSize;
+        TQ_ULLONG fileSize;
         s >> fileSize;
         fa.setFileSize(fileSize);
     }
