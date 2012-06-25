@@ -255,8 +255,14 @@ if [ -d "$tdehome" ]; then
   # Possibly run some R14 XDG compliance updates.
   R14_UPDATED="`$TDEDIR/bin/kreadconfig --file kdeglobals --group "R14 XDG Updates" --key Updated`"
   if [ "$R14_UPDATED" != "true" ]; then
-    sh $TDEDIR/bin/r14-xdg-update
-    if [ "$?" != "0" ]; then
+    if [ -e $TDEDIR/bin/r14-xdg-update ]; then
+      sh $TDEDIR/bin/r14-xdg-update
+      EXIT_CODE="$?"
+    else
+      echo "[starttde] $TDEDIR/bin/r14-xdg-update does not exist." 1>&2
+      echo "           Unable to perform a profile update for Trinity release R14 XDG compliance."
+    fi
+    if [ "$EXIT_CODE" != "0" ]; then
       exit 1
     fi
   fi
