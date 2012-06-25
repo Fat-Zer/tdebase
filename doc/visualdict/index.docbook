@@ -23,7 +23,7 @@ The &tde; Team
 <releaseinfo>&tde-release-version;</releaseinfo>
 
 <copyright>
-<year>2000</year><year>2006</year>
+<year>2000-2006</year>
 <holder>The &kde; Team</holder>
 </copyright>
 <copyright>
@@ -33,13 +33,13 @@ The &tde; Team
 
 <legalnotice>&FDLNotice;</legalnotice>
 
-<abstract><para>A visual guide to &tde;'s interface.  This is a very early
-version
-of the document.  Eventually, this will be a graphical tour of
+<abstract><para>A visual guide to &tde;'s interface.  This is an early
+version of the document.  Eventually, this will be a graphical tour of
 &tde;.</para></abstract>
 
 <keywordset>
 <keyword>KDE</keyword>
+<keyword>TDE</keyword>
 <keyword>Visual</keyword>
 <keyword>Dictionary</keyword>
 <keyword>Guide</keyword>

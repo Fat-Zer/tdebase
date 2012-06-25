@@ -42,7 +42,7 @@ Once you have configured X.org correctly, transparency and other effects can be 
 them into the menu?</para>
 </question>
 <answer>
-<para>Use &kmenuedit;. To access it use the &RMB; on the 
+<para>Use &kmenuedit;. To access it use the &RMB; on the
 <guibutton>K</guibutton> button and select <guimenu>Menu Editor</guimenu>.</para>
 </answer>
 </qandaentry>
@@ -64,7 +64,7 @@ folders.</para>
 </question>
 <answer>
 <para>Simply click on the <guibutton>K</guibutton> button and select
-<guimenu>Logout</guimenu>.  In addition, if you
+<guimenu>Logout</guimenu>. In addition, if you
 <mousebutton>right</mousebutton> click on an
 empty area of the desktop, you will be presented with a menu
 containing logout as one of the options.
@@ -81,7 +81,7 @@ session management and cannot be recommended.</para></note></para>
 <acronym>ISP</acronym> if and only if I am online?</para>
 </question>
 <answer>
-<para>&korn; will do the job.  If you are not
+<para>&korn; will do the job. If you are not
 connected, it will just sit there (idling).</para>
 </answer>
 </qandaentry>
@@ -94,7 +94,7 @@ connected, it will just sit there (idling).</para>
 <para>We recommend to always use the latest stable release. If you
 don't, it will probably be difficult to get answers to your
 questions. If you have a problem with an old version, the answer will
-probably be <quote>Please upgrade and try again</quote>.  Note that
+probably be <quote>Please upgrade and try again</quote>. Note that
 new versions also sometimes fix security problems.</para>
 </answer>
 </qandaentry>
@@ -111,7 +111,7 @@ new versions also sometimes fix security problems.</para>
 <step performance="required"><para>Go to the destination area; depending on your configuration,
 you might need to click it using the &LMB; to give it
 focus.</para></step>
-<step performance="required"><para>Click the &MMB; to paste.  If you have a two
+<step performance="required"><para>Click the &MMB; to paste. If you have a two
 button mouse and are emulating a three button mouse, push both buttons
 simultaneously.</para></step>
 </procedure>
@@ -138,14 +138,14 @@ into the &konqueror; address bar. </para>
 <para>What is <acronym>CVS</acronym>?</para>
 </question>
 <answer>
-<para>It stands for Concurrent Versions System.  It is a version 
+<para>It stands for Concurrent Versions System. It is a version
 control system and is based on <acronym>RCS</acronym> (Revision
-Control System), but 
-offers more functionality.  It is used to maintain source code under
-development.  It will keep multiple versions of things (handy if you
+Control System), but
+offers more functionality. It is used to maintain source code under
+development. It will keep multiple versions of things (handy if you
 broke something and have to back up and get a clean old version), and
 allows people remote access over the Net to pick up the latest source
-code and even to check in new files if they have permission.  It is
+code and even to check in new files if they have permission. It is
 also open source (you pay for support if you want it), and since it is
 free it is the system of choice for people writing more free products,
 such as &tde;.</para>
@@ -172,21 +172,16 @@ such as &tde;.</para>
 </answer>
 </qandaentry>
 
-
 <qandaentry>
 <question>
 <para>How do I check which version of &tde; I am using?</para>
 </question>
 <answer>
-<para>Fire up your <application>&tde; Control
-Center</application>.  It comes up with an Info Screen including the version of &tde;
-The &tde; version is also included in the application's 
-<guimenuitem>About</guimenuitem> dialog.
+<para>Start any Trinity app. Each app has a Help menu providing
+related information in the <guimenuitem>About</guimenuitem> dialog.
 </para>
 </answer>
 </qandaentry>
-
-
 
 <qandaentry>
 <question>
@@ -201,19 +196,56 @@ artwork at <ulink url="http://kde-look.org">http://kde-look.org</ulink>.
 </answer>
 </qandaentry>
 
+<qandaentry>
+<question>
+<para>How do I learn about development updates?</para>
+</question>
+<answer>
+<para>You might want to subscribe to the &tde; developer's mail list.
+Check <ulink url="http://trinity-devel.pearsoncomputing.net/">http://trinity-devel.pearsoncomputing.net/</ulink>
+if you want to read without subscribing.</para>
+</answer>
+</qandaentry>
 
 <qandaentry>
 <question>
-<para>How can I get to know about development updates?</para>
+<para>Is there a release schedule?</para>
 </question>
 <answer>
-<para>You might want to subscribe to the various &tde; mailing lists
-available, especially kde-cvs, which lists all commits done to the
-&tde; <acronym>CVS</acronym> repository.  Check <ulink
-url="http://lists.kde.org">http://lists.kde.org</ulink> if you want to
-read without subscribing.</para>
+<para>The Trinity developers strive for a six to nine month schedule but that is not rigid or set in stone.</para>
 </answer>
 </qandaentry>
+
+<qandaentry>
+<question>
+<para>Are there plans to support semantic desktops?</para>
+</question>
+<answer>
+<para>Not at this time.</para>
+</answer>
+</qandaentry>
+
+<qandaentry>
+<question>
+<para>Are there plans to support tablet-like or special netbook desktop modes?</para>
+</question>
+<answer>
+<para>No. The TDE team suggests a tablet-centric interface such as Unity, KDE4, or GNOME 3 for those devices.</para>
+</answer>
+</qandaentry>
+
+<qandaentry>
+<question>
+<para>How do the developers propose to transition away from HAL (hardware abstraction layer)?</para>
+</question>
+<answer>
+<para>The Trinity team developed a new native hardware support layer that is under testing.
+That new system will be enabled by default in a future release, but is available now
+in the development sources.</para>
+</answer>
+</qandaentry>
+
+
 </qandaset>
 </chapter>
 

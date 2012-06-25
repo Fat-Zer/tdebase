@@ -1,5 +1,5 @@
 <?xml version="1.0" ?>
-<!DOCTYPE book PUBLIC "-//KDE//DTD DocBook XML V4.2-Based Variant V1.1//EN" 
+<!DOCTYPE book PUBLIC "-//KDE//DTD DocBook XML V4.2-Based Variant V1.1//EN"
 "dtd/kdex.dtd" [
   <!ENTITY kappname "&tde; Quick Start Guide">
   <!ENTITY package "tdebase">
@@ -9,7 +9,7 @@
 
 <book lang="&language;">
 <bookinfo>
-	
+
 <title>An Introduction to &tde;</title>
 
 <authorgroup>
@@ -20,11 +20,15 @@
 <!-- TRANS:ROLES_OF_TRANSLATORS -->
 </authorgroup>
 
-<date>2004-08-28</date>
-<releaseinfo>3.00.00</releaseinfo>
+<date>&tde-release-date;</date>
+<releaseinfo>&tde-release-version;</releaseinfo>
 
 <copyright>
-<year>1999</year><year>2000</year><year>2001</year><year>2002</year>
+<year>1999-2002</year>
+<holder>The &kde; Team</holder>
+</copyright>
+<copyright>
+<year>&tde-copyright-date;</year>
 <holder>The &tde; Team</holder>
 </copyright>
 
@@ -36,6 +40,7 @@
 
 <keywordset>
 <keyword>KDE</keyword>
+<keyword>TDE</keyword>
 <keyword>quick start</keyword>
 <keyword>introduction</keyword>
 </keywordset>
@@ -95,7 +100,7 @@ overview assumes that you are using the default environment.
 <para>A <interface>panel</interface> at the bottom of the screen, used
 to start applications and switch between desktops. Among other things, it
 contains the &kmenu;, a large &ticon;
-which displays a menu of applications to start when clicked. 
+which displays a menu of applications to start when clicked.
 </para>
 </listitem>
 
@@ -105,7 +110,7 @@ A <interface>taskbar</interface>, by default embedded in the panel, used
 to switch between and manage currently running applications. Click on an
 application on the taskbar to switch to the application.
 </para>
-</listitem> 
+</listitem>
 
 <listitem>
 <para>
@@ -155,7 +160,7 @@ Choose the <menuchoice><guimenuitem>Control Center</guimenuitem>
 </menuchoice>item on the &kmenu;
 to configure &tde;.
 </para>
-</listitem> 
+</listitem>
 
 <listitem>
 <para>
@@ -164,14 +169,14 @@ switch between applications and <keycombo
 action="simul">&Ctrl;<keycap>Tab</keycap></keycombo> to switch between
 desktops using the keyboard.
 </para>
-</listitem> 
+</listitem>
 
 <listitem>
 <para>
 Use the &RMB; mouse button to access context menus for the panel,
 desktop, and most &tde; applications.
 </para>
-</listitem> 
+</listitem>
 </itemizedlist>
 
 </sect1>
@@ -189,7 +194,7 @@ At the bottom of the screen you will find the desktop panel, which is called
 button on the left with a large &ticon;.
 </para>
 
-<para> 
+<para>
 This button is called the &kmenu;. It has
 a small arrow on the top to indicate that it will pop up a menu if you
 click on it. Just do it! The popup offers you easy access to all &tde;
@@ -199,19 +204,19 @@ applications installed on your computer system.
 <sect2>
 <title>Customizing &kicker;</title>
 
-<!-- FIXME: To add a button, use the little arrows on kicker, not the TDE menu 
+<!-- FIXME: To add a button, use the little arrows on kicker, not the TDE menu
 I am not sure I agree - some distributions fade or hide the applet handles by default, but
-I haven't found one yet that hides the kmenu. (JLH) --> 
+I haven't found one yet that hides the kmenu. (JLH) -->
 
 <para>If you use one application or tool very often, then you may want to have even faster
 access to it. In this case you can add a single application or an entire sub-menu of the
 &kmenu; as a special quick-launch button on the panel. If you want to reach an application
 directly via a launch button, click with the &RMB; either on a clear space on the panel or on the
 &kmenu; icon. Select <menuchoice><guimenu>Panel Menu</guimenu> <guisubmenu>Add Application to Panel...
-</guisubmenu></menuchoice> and then navigate to the application or menu you would like to add to 
+</guisubmenu></menuchoice> and then navigate to the application or menu you would like to add to
 the panel.</para>
 
-	
+
 <para>
 You can add an entire menu this way, or one of the &ticon;
 button sub-menus.  For example, if you have &koffice; installed and
@@ -237,7 +242,7 @@ simply hit the <mousebutton>first</mousebutton> mouse button (by default
 the <mousebutton>left</mousebutton> one). As you may have noticed,
 there is also a menu entry <guimenuitem>Remove</guimenuitem> in case you
 are tired of a certain launch button on your desktop.
-</para> 
+</para>
 </note>
 
 </sect2>
@@ -252,7 +257,7 @@ click the <mousebutton>right</mousebutton> mouse button to display a
 the item you clicked. It is therefore always a good idea to try out the
 <mousebutton>third</mousebutton> mouse button on something, if you do
 not know what to do with it. Even the background of the desktops has
-such a menu!  
+such a menu!
 </para>
 
 </sect2>
@@ -288,7 +293,7 @@ the <guibutton>Use Defaults</guibutton> button.
 By the way, if you are not sure what a certain button does in &tde;,
 just move the mouse pointer over it and wait for a short while: &tde;
 has a built-in mini context help, called <quote>tool tips</quote>, which
-explains the functionality of such controls in a few words.  
+explains the functionality of such controls in a few words.
 </para>
 
 
@@ -308,13 +313,13 @@ in perhaps some surprising places.
 
 <para>
 &tde; provides a very sophisticated command line window called
-&konsole;.  Choose <menuchoice><guimenu>TDE menu</guimenu> 
+&konsole;.  Choose <menuchoice><guimenu>TDE menu</guimenu>
 <guisubmenu>System</guisubmenu>
 <guimenuitem>Konsole</guimenuitem></menuchoice> to start it. This may
 be something you want on your panel: luckily it's already there in the
 default configuration!
 </para>
-  
+
 <para>
 Sometimes, you only want to enter one command on the command line. In
 these cases, you do not need a full-blown terminal. Just hit
@@ -367,7 +372,7 @@ shortcut commands, and you can even add your own!  Take a look in
 
 <para>
 Finally, there's a way to have your command line always available, no
-matter what you're doing - add one to your &kicker; panel! 
+matter what you're doing - add one to your &kicker; panel!
 </para>
 
 <para>Simply &RMB; click on an empty space in the panel and choose
@@ -388,8 +393,8 @@ using &tde;.
 <title>Working with Windows</title>
 
 <para>
-If you have not already done so, start an application using the <link 
-linkend="starter">&kmenu;</link>; say, 
+If you have not already done so, start an application using the <link
+linkend="starter">&kmenu;</link>; say,
 <guimenuitem>Find Files</guimenuitem>.
 </para>
 
@@ -410,7 +415,7 @@ of some of the most common window related functions:
 Drag the window's title bar, or hold the &Alt; key down
 and drag anywhere in the window.
 </para>
-</listitem> 
+</listitem>
 </varlistentry>
 
 <varlistentry>
@@ -418,7 +423,7 @@ and drag anywhere in the window.
 <listitem>
 <para>
 Drag the window's border, or hold the &Alt; key down and drag with the
-&RMB; anywhere in the window. 
+&RMB; anywhere in the window.
 </para>
 </listitem>
 </varlistentry>
@@ -444,7 +449,7 @@ Click the <guilabel>Minimize</guilabel> button in the titlebar (next to <guilabe
 to hide the window.  Restore it by clicking on the window's icon in the
 taskbar.
 </para>
-</listitem> 
+</listitem>
 </varlistentry>
 
 <varlistentry>
@@ -486,20 +491,20 @@ menu.
 <title>On the right side:</title>
 <listitem>
 <para>
-A <guilabel>Minimise</guilabel> button. 
+A <guilabel>Minimise</guilabel> button.
 </para>
 </listitem>
 
 <listitem>
 <para>
-A <guilabel>Maximize</guilabel> button. 
+A <guilabel>Maximize</guilabel> button.
 </para>
 </listitem>
 
 <listitem>
 <para>
 A <guilabel>Close</guilabel> button. This closes the window. Shortcut: <keycombo
-action="simul">&Alt;<keycap>F4</keycap></keycombo>.  
+action="simul">&Alt;<keycap>F4</keycap></keycombo>.
 </para>
 </listitem>
 </itemizedlist>
@@ -543,14 +548,14 @@ an empty area of the desktop, or click the icon with several windows
 on the panel, or finally click the up arrow at the left hand end of
 the taskbar in the panel.
 </para>
-</listitem> 
+</listitem>
 
 <listitem>
 <para>
 Hold down the &Alt; key and press <keycap>Tab</keycap> to cycle through
 the windows.
 </para>
-</listitem> 
+</listitem>
 
 <listitem>
 <para>
@@ -601,7 +606,7 @@ left hand side) and choosing <guimenuitem>Configure Taskbar...</guimenuitem>.
 The icons on the taskbar resize themselves to make room for
 applications, so you can fit many more applications than you might
 think.  Making the panel wider will let the taskbar icons take on a row
-and column layout, but they will still resize to fit more icons.  
+and column layout, but they will still resize to fit more icons.
 </para>
 
 </sect1>
@@ -615,29 +620,29 @@ Now, what was that <quote>sticky</quote> thing?
 
 <para>
 It may happen that you have more windows open than space on your
-desktop. In this case you have three possibilities: 
+desktop. In this case you have three possibilities:
 </para>
 
 <orderedlist>
 <listitem>
-<para> 
+<para>
 Leave all windows open (cluttered desktop)
 </para>
 </listitem>
 
 <listitem>
-<para> 
+<para>
 Iconify those windows which you do not need at present and use
 the taskbar or <keycombo action="simul">&Alt;
 <keycap>Tab</keycap></keycombo> to switch between them
-(still a bit confusing and much work!) 
+(still a bit confusing and much work!)
 </para>
-</listitem> 
+</listitem>
 
 <listitem>
 <para>
 Recommended: Do what a real operating system does if there is not enough
-physical memory: Use virtual memory, in this case virtual desktops. 
+physical memory: Use virtual memory, in this case virtual desktops.
 </para>
 </listitem>
 </orderedlist>
@@ -660,7 +665,7 @@ a small chat window, an alarm clock or whatever. In this case you can
 use the above mentioned <quote>sticky</quote> button which will pin the
 window on the background so that it will appear on every virtual
 desktop.
-</para> 
+</para>
 
 <para>
 The sticky button can also be used to move a window from one virtual
@@ -726,7 +731,7 @@ to remember your choice for the next time you open a file of that type.
 &konqueror; uses MIME types to associate
 files with applications.
 </para>
-</note> 
+</note>
 
 </sect2>
 
@@ -759,7 +764,7 @@ file. Try it!
 
 <sect2>
 <title>Setting File Properties</title>
- 
+
 <para>
 To change file properties, such as its name and permissions, &RMB;
 click the icon and choose <guimenuitem>Properties</guimenuitem> from
@@ -845,7 +850,7 @@ Printers
 <para>
 Mountable Devices (&eg; floppy drives)
 </para>
-</listitem> 
+</listitem>
 <listitem>
 <para>
 Internet resources (&eg; <acronym>WWW</acronym> documents, &FTP;
@@ -876,7 +881,7 @@ role="extension">.desktop</literal> file to the panel to create a
 quick-launch button.
 </para>
 
-<!-- 
+<!--
 <sect2>
 <title>Setting up printers</title>
 
@@ -905,10 +910,10 @@ looks like a <guiicon>cog</guiicon>, and select the <guiicon>Printer</guiicon> i
 </procedure>
 
 <para>Now you should be able to drag a file to the Printer icon and have it
-printed on your default printer.</para> 
+printed on your default printer.</para>
 </sect2>
 
---> 
+-->
 
 <sect2>
 <title>Mounting devices</title>
@@ -965,7 +970,7 @@ class="directory">/floppy</filename>, but you can just as easily have floppy
 disks mounted on <filename class="directory">~/mydisk</filename> if you
 want.
 </para>
-</step> 
+</step>
 <step>
 <para>
 Click the <guilabel>Unmounted Icon</guilabel> and select the picture
@@ -1012,9 +1017,9 @@ configuring your desktop.
 Launch the &kcontrolcenter; from the <link linkend="starter">&kmenu;</link>.
 A window with two panes appears, displaying a list of
 modules in the left pane.
-</para>  
+</para>
 
-<para> 
+<para>
 Open a module by clicking its name; a list of submodules will
 appear. Then, click one of the submodule category names to edit its
 configuration in the right pane.
@@ -1211,7 +1216,7 @@ entry in the &kmenu;.
 <para>In &konqueror; find or make a file with the extension you wish to
 link.
 </para>
-</step> 
+</step>
 
 <step>
 <para>
@@ -1254,7 +1259,7 @@ way as you did in the last step, and you can change the preferred
 order using the <guibutton>Move Up</guibutton> and <guibutton>Move
 Down</guibutton> buttons.
 </para>
-</step> 
+</step>
 
 <step>
 <para>
@@ -1268,7 +1273,7 @@ you have changed your mind and just want to close the dialog box.
 </para>
 </step>
 </procedure>
-  
+
 <para>
 Be sure to try your new association by opening a folder containing
 a file of the type you just selected. Click on the file, and the
@@ -1296,7 +1301,7 @@ the &konqueror; window, then you can set up a filename pattern that
 matches <literal>^<replaceable>clientname</replaceable>*</literal>.
 Then any files that have <replaceable>clientname</replaceable> at the
 beginning (the <token>^</token> character means <quote>starts with...</quote>) and
-without any regard to the rest of the filename. 
+without any regard to the rest of the filename.
 </para>
 </note>
 

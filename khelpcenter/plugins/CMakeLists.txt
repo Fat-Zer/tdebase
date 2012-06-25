@@ -11,12 +11,12 @@
 
 add_subdirectory( Applications )
 add_subdirectory( Manpages )
-add_subdirectory( Tutorials )
+# add_subdirectory( Tutorials )
 add_subdirectory( Scrollkeeper )
 
 install( FILES
   applets.desktop contact.desktop faq.desktop info.desktop
   links.desktop support.desktop userguide.desktop welcome.desktop
   hardwaremodules.desktop kcontrolmodules.desktop konqplugins.desktop
-  kioslaves.desktop
+  kioslaves.desktop quickstart.desktop visualdict.desktop
   DESTINATION ${DATA_INSTALL_DIR}/khelpcenter/plugins )

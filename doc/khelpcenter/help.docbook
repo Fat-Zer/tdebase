@@ -1,20 +1,20 @@
 <chapter id="help-system-user-manual">
 <chapterinfo>
-<date>2002-02-03</date>
-<releaseinfo>0.08.00</releaseinfo>
+<date>&tde-release-date;</date>
+<releaseinfo>&tde-release-version;</releaseinfo>
 </chapterinfo>
 <title>&tde; Help System User Manual</title>
 <anchor id="help"/>
 
 <sect1 id="help-introduction">
 <title>&tde; Help System</title>
-	
+
 <para>The &tde; help system is designed to make accessing the common
 &UNIX; help systems (<application>man</application> and
 <application>info</application>) simple, as well as the native &tde;
-documentation (&XML;). 
+documentation (&XML;).
 </para>
-	
+
 <para> All base &tde; applications come fully documented, thanks to
 the efforts of the Documentation team.  If you would like to help,
 please write to the Documentation coordinator, Lauri Watts, at
@@ -36,10 +36,9 @@ of this document.
 <title>Installation</title>
 
 <para>
-&khelpcenter; is an integral part of the &tde; Base installation, and
-is installed with every copy of &tde;.  It can be found in the tdebase
-package, and is available from the &kde-ftp;, or will be found in your
-operating system tdebase package.
+&khelpcenter; is an integral part of the &tde; base installation and
+is installed with every copy of &tde;. It can be found in the tdebase
+package or will be found in your operating system tdebase package.
 </para>
 
 </sect2>
@@ -52,15 +51,15 @@ operating system tdebase package.
 &khelpcenter; can be called in several ways:
 </para>
 
-<variablelist> 
-<varlistentry> 
-<term>From the <guimenu>Help</guimenu> menu</term> 
+<variablelist>
+<varlistentry>
+<term>From the <guimenu>Help</guimenu> menu</term>
 <listitem>
-<para>	
+<para>
 The most common will probably be from within an application.  Choose
 <menuchoice><guimenu>Help</guimenu>
 <guimenuitem>Contents</guimenuitem></menuchoice> to open that
-application's help file, at the contents page.  
+application's help file, at the contents page.
 </para>
 </listitem>
 </varlistentry>
@@ -73,7 +72,7 @@ Choose the big <guiicon>K</guiicon> in your panel, and select
 <guimenuitem>Help</guimenuitem> to open &khelpcenter;, starting at the
 default welcome page.
 </para>
-</listitem> 
+</listitem>
 </varlistentry>
 
 <varlistentry>
@@ -83,7 +82,7 @@ default welcome page.
 By default, the &kicker; panel contains an icon to call &khelpcenter;.
 Again, the default welcome page is displayed.
 </para>
-</listitem> 
+</listitem>
 </varlistentry>
 
 <varlistentry>
@@ -94,14 +93,14 @@ Again, the default welcome page is displayed.
 file.  &URL;s have been added for
 <command>info</command> and <command>man</command> pages
 also. You can use them as follows:
-</para> 
+</para>
 
 <variablelist>
 <varlistentry>
 <term>An application help file</term>
 <listitem>
 <para>
-<command>khelpcenter</command> 
+<command>khelpcenter</command>
 <option>help:/<replaceable>kedit</replaceable></option>
 </para>
 <para>
@@ -134,7 +133,7 @@ Opens the &kedit; help file, at the contents page.
 <term>An Info page</term>
 <listitem>
 <para>
-<command>khelpcenter</command> 
+<command>khelpcenter</command>
 <option>info:/<replaceable>gcc</replaceable></option>
 </para>
 </listitem>
@@ -177,7 +176,7 @@ different document, and you can use the <guiicon>Back</guiicon> (Left
 pointing arrow) or <guiicon>Forward</guiicon> (Right pointing arrow)
 icons on the toolbar to move through the documents you have viewed in
 this session.
-</para> 
+</para>
 
 <para>
 The two panes display the contents of the help system, and the help
@@ -192,7 +191,7 @@ The <guilabel>Contents</guilabel> pane in &khelpcenter; is
 displayed on the left hand side of the window.  As you might expect, you
 can move the splitter bar, to make sure you can comfortably read the
 contents of either pane.
-</para> 
+</para>
 
 <para>
 The <guilabel>Contents</guilabel> pane is further divided into two
@@ -208,7 +207,7 @@ of terms.
 <para>
 The <guilabel>Contents</guilabel> contains the following default
 entries:
-</para> 
+</para>
 
 <variablelist>
 <varlistentry>
@@ -234,7 +233,7 @@ Interface and specific help and tips on how to work smarter with &tde;.
 The &tde; User's manual is an in-depth exploration of &tde;, including
 installation, configuration and customization, and use.
 </para>
-</listitem> 
+</listitem>
 </varlistentry>
 
 <varlistentry>
@@ -245,14 +244,14 @@ Native &tde; application documentation. All &tde; applications have
 documentation in &XML; format, which are converted to
 <acronym>HTML</acronym> when you view them. This section lists all the
 &tde; applications with a brief description and a link to the full
-application documentation. 
+application documentation.
 </para>
 <para>
 The applications are displayed in a tree structure that echoes the default
 structure of the <guimenu>K</guimenu> menu, making it easy to find the
 application you are looking for.
 </para>
-</listitem> 
+</listitem>
 </varlistentry>
 
 <varlistentry>
@@ -264,7 +263,7 @@ application you are looking for.
 addition, man pages exist for programming functions and file
 formats.
 </para>
-</listitem> 
+</listitem>
 </varlistentry>
 
 <varlistentry>
@@ -327,7 +326,7 @@ How to help, and how to get involved.
 </variablelist>
 
 </sect3>
-<!-- 
+<!--
 <sect3 id="search">
 <title>The <guilabel>Search</guilabel> tab</title>
 
@@ -364,7 +363,7 @@ Choose how to search for multiple words.  If you choose
 terms are included in the page. <guilabel>or</guilabel> returns results
 if <emphasis>any</emphasis> of the search terms are found, and
 <guilabel>boolean</guilabel> lets you search using a combination.
-</para> 
+</para>
 <para>
 Boolean syntax lets you use the operators <literal>AND</literal>,
 <literal>OR</literal> and <literal>NOT</literal> to create complex
@@ -388,7 +387,7 @@ them.</para></listitem>
 for pages which contain <userinput>dog</userinput> but don't contain
 <userinput>nose</userinput>.  Pages which contain both
 <userinput>cat</userinput> and <userinput>nose</userinput> would be returned,
-pages containing all three words would not.</para></listitem> 
+pages containing all three words would not.</para></listitem>
 </varlistentry>
 </variablelist>
 <para>If your searches are not returning the results you expect, check
@@ -404,7 +403,7 @@ search.</para></listitem>
 <term><guilabel>Format</guilabel></term>
 <listitem><para>Decide if you want just a short link to the page
 containing your search terms, or do you want a longer
-summary.</para></listitem> 
+summary.</para></listitem>
 </varlistentry>
 <varlistentry>
 <term><guilabel>Sort</guilabel></term>
@@ -730,7 +729,8 @@ will take you directly back to that page.</para>
 <para>&khelpcenter;</para>
 
 <para>Originally developed by &Matthias.Elter; &Matthias.Elter.mail;</para>
-<para>The current maintainer is &Cornelius.Schumacher; &Cornelius.Schumacher.mail;</para>
+<para>Maintained for many years by &Cornelius.Schumacher; &Cornelius.Schumacher.mail;</para>
+<para>Currently maintained by the Trinity Development Team.</para>
 
 &underFDL;
 &underGPL;

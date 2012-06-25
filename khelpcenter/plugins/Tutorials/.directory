@@ -1,5 +1,4 @@
-# KDE Config File
-[KDE Desktop Entry]
+[Desktop Entry]
 Name=Tutorials
 Name[bg]=Ръководства
 Name[ca]=Programes d'aprenentatge
@@ -69,7 +68,7 @@ Comment[fr]=Didactitiels et documents de présentation
 Comment[hi]=शिक्षण पाठ तथा परिचय दस्तावेज़
 Comment[hr]=Praktični vodič i uvodni dokumenti.
 Comment[hu]=Bevezető jellegű dokumentumok.
-Comment[id]=Tutorial dan dokumen Pengenalan 
+Comment[id]=Tutorial dan dokumen Pengenalan
 Comment[is]=Kennslu- og kynningarefni.
 Comment[it]=Esercitazione e documenti introduttivi.
 Comment[ja]=チュートリアルと導入用ドキュメント

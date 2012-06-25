@@ -6,11 +6,11 @@
 <chapter id="install">
 <title>Installation instructions</title>
 
-<para>These are the generic installation instructions for the K
-Desktop Environment.  Please complement your reading with the
-<filename>README</filename>s and <filename>INSTALL</filename>s that
-come along with the package.  Please read them carefully and try to
-help yourself out if anything goes wrong.  If you need further
+<para>These are the generic installation instructions for the Trinity
+Desktop Environment. Please complement your reading with the
+<filename>README</filename> and <filename>INSTALL</filename> text files that
+come along with the package. Please read them carefully and try to
+help yourself if anything goes wrong. If you need further
 assistance, consider joining the &tde; mailing lists
 (see our web site instructions for joining the &tde;
 <ulink url="http://www.kde.org/mailinglists/">mailing
@@ -27,12 +27,12 @@ lists</ulink>) or newsgroups.</para>
 <answer>
 
 <para>So you have heard the rumors. Or you have seen the screenshots.
-And you are dying to get hold of &tde;.  But you know next to nothing
-about this whole <quote>alternative OS</quote> business.  Don't worry!
+And you are dying to get hold of &tde;. But you know next to nothing
+about this whole <quote>alternative operating system</quote> business. Don't worry!
 You only need to do some (well, maybe not some) reading, that's
 all!</para>
 
-<para>&tde; does not run on any version of &Microsoft; &Windows; or OS/2 (yet).  To run
+<para>&tde; does not run on any version of &Microsoft; &Windows; or OS/2 (yet). To run
 &tde;, you need to have a &UNIX; system. Please refer to <xref
 linkend="platform"/> for more details.</para>
 
@@ -43,12 +43,12 @@ url="http://www.kde.org"> runs on many &UNIX;</ulink> platforms. </para>
 <!-- Taken out because we can not help with all platforms and KDEisnotLINUX -->
 
 <para>Finally, you are ready to commence the &tde; installation.
-Please start reading from the next section.  To get &tde;, please
-refer to <xref linkend="where-to-get-kde"/>.  Last but not least, if
+Please start reading from the next section. To get &tde;, please
+refer to <xref linkend="where-to-get-tde"/>. Last but not least, if
 you encounter any problems while installing &tde;, please do not
-hesitate to make use of the &tde; <link 
+hesitate to make use of the &tde; <link
 linkend="mailing-lists">mailing lists</link> and <link
-linkend="newsgroups">newsgroups</link>.  But do bear this in mind: no
+linkend="newsgroups">newsgroups</link>. But do bear this in mind: no
 question is too silly to ask, but some are too silly to answer,
 especially when they are already answered in this <acronym>FAQ</acronym>.</para>
 <para>Good luck and have fun!</para>
@@ -73,7 +73,7 @@ especially when they are already answered in this <acronym>FAQ</acronym>.</para>
 
 
 <para>You can find several kinds of binary and source packages for
-different distributions and operating systems on the &kde-ftp;.  The
+different distributions and operating systems on the &kde-ftp;. The
 binary packages are not made by the &tde; Team, but by the
 distributors themselves, or some dedicated individuals. Please refer to
 <ulink url="http://dot.kde.org/986933826/">&tde; Package Policy
@@ -97,15 +97,15 @@ Page</ulink>.</para>
 
 <!-- rewrite to make it more general, pointing to the according webpages? -->
 
-<para>For &tde; 3.4.1, you need the &Qt; library version 3.3 or greater.  
-Please make sure you download the correct &Qt;.  You will
+<para>For &tde; 3.4.1, you need the &Qt; library version 3.3 or greater.
+Please make sure you download the correct &Qt;. You will
 also need the header files, if you want to compile &tde;
-yourself.  They are all available, at no cost, from <ulink
+yourself. They are all available, at no cost, from <ulink
 url="http://www.trolltech.com/products/download">http://www.trolltech.com/download</ulink>.
 In addition, there are optional libraries that might improve &tde; if
-installed on your system.  An example is OpenSSL which will enable
+installed on your system. An example is OpenSSL which will enable
 &konqueror; to browse web pages securely and is needed in a version
->=0.9.6.  These should be provided by your distributor; if not, ask
+>=0.9.6. These should be provided by your distributor; if not, ask
 for an update.</para>
 
 </answer>
@@ -117,7 +117,7 @@ for an update.</para>
 </question>
 <answer>
 <para>The base distribution currently consists of twenty
-packages.  Some are required, while others are optional.  Each package
+packages. Some are required, while others are optional. Each package
 is available in each of the aforementioned package formats.</para>
 <variablelist>
 <varlistentry>
@@ -141,7 +141,7 @@ emulator, the control center, the file manager, and the panel.</para>
 <term>&arts;</term>
 <listitem>
 <para>Required</para>
-<para>The &arts; sound server.  A powerful, network transparent sound
+<para>The &arts; sound server. A powerful, network transparent sound
 server.</para>
 </listitem>
 </varlistentry>
@@ -201,7 +201,7 @@ nifty stuff.</para>
 <term>tdenetwork</term>
 <listitem>
 <para>Optional</para>
-<para>Network applications.  Currently contains the instant messaging client &kopete;, the
+<para>Network applications. Currently contains the instant messaging client &kopete;, the
 download manager &kget;, and several other network-related programs.</para>
 </listitem>
 </varlistentry>
@@ -266,7 +266,7 @@ KDE accessibility programs such as a screen magnifier and speech synthesizer fro
 </listitem>
 </varlistentry>
 </variablelist>
-	
+
 <para>&arts; and then tdelibs should be installed before everything
 else, and tdeaddons last. The other packages can be installed in any
 arbitrary order.</para>
@@ -316,12 +316,12 @@ every package you want to install.</para></step>
 <term>Installation of the source <filename>.tar.bz2</filename> files</term>
 <listitem>
 <para>Since there are always changes and updates to the way &tde; is compiled, please
-refer to <ulink url="http://developer.kde.org/build/index.html">Download and Install from Source</ulink> for the most up to date installation instructions for the source packages. 
+refer to <ulink url="http://developer.kde.org/build/index.html">Download and Install from Source</ulink> for the most up to date installation instructions for the source packages.
 </para>
 <para>The general approach should work in most cases though.
 </para>
 <para>The source <filename>.tar.bz2</filename> package installs into <filename
-class="directory">/usr/local/kde</filename> by default.  You can
+class="directory">/usr/local/kde</filename> by default. You can
 override this setting by using the <option>--prefix</option> option of
 the <filename>configure</filename> script.</para>
 <procedure>
@@ -331,12 +331,12 @@ the <filename>configure</filename> script.</para>
 <replaceable>packagename</replaceable></command></para></step>
 <step performance="required"><para>configure the package: <command>./configure</command>
 <note><para>Some packages (notably tdebase) have special configuration
-options that might be applicable to your installation.  Type
+options that might be applicable to your installation. Type
 <command>./configure <option>--help</option></command> to see the
 available options.</para></note></para></step>
 <step performance="required"><para>build the package: <command>make</command></para></step>
 <step performance="required"><para>install the package: <command>su <option>-c "make
-install"</option></command> (if you aren't already root).  If you
+install"</option></command> (if you aren't already root). If you
 already are, just type <command>make
 <option>install</option></command>.</para></step>
 </procedure>
@@ -354,18 +354,18 @@ already are, just type <command>make
 <para>First of all, please make sure that you have added &tde;'s binary
 installation folder (&eg; <filename
 class="directory">/usr/local/kde/bin</filename>) to your <envar>PATH</envar>
-and &tde;'s 
+and &tde;'s
 library installation folder to your <envar>LD_LIBRARY_PATH</envar> (only
-necessary on systems that do not support rpath; on &Linux; &ELF;, it 
-should work without).  This environment variable may be called
+necessary on systems that do not support rpath; on &Linux; &ELF;, it
+should work without). This environment variable may be called
 differently on some systems, &eg; it is called
-<envar>SHLIB_PATH</envar> on &IRIX;.  Then set the environment variable
+<envar>SHLIB_PATH</envar> on &IRIX;. Then set the environment variable
 <envar>TDEDIR</envar> to the base of your &tde; tree, &eg; <filename
 class="directory">/usr/local/kde</filename>.
 <caution>
 <para>Please bear in mind that it is unwise to set
-<envar>LD_LIBRARY_PATH</envar> blindly.  In the vast majority of cases it is
-unnecessary and can do more harm than good.  There is a web page
+<envar>LD_LIBRARY_PATH</envar> blindly. In the vast majority of cases it is
+unnecessary and can do more harm than good. There is a web page
 written by <ulink url="mailto:barr@cis.ohio-state.edu">Dave
 Barr</ulink> explaining the evils of <envar>LD_LIBRARY_PATH</envar> and it can be
 found at <ulink
@@ -382,21 +382,21 @@ class="directory">$<envar>TDEDIR</envar>/bin</filename> and is therefore in your
 path.</para>
 <para>Edit the file <filename>.xinitrc</filename> in your home folder (make a backup
 copy first!), remove everything that looks like calling a window
-manager, and insert <command>starttde</command> instead.  Restart the &X-Server;.  If you use
+manager, and insert <command>starttde</command> instead. Restart the &X-Server;. If you use
 &tdm;/<application>xdm</application>, you will have to edit the file <filename>.xsession</filename> instead of
-<filename>.xinitrc</filename>.  And if there is no <filename>.xinitrc</filename> or <filename>.xsession</filename> in your home
+<filename>.xinitrc</filename>. And if there is no <filename>.xinitrc</filename> or <filename>.xsession</filename> in your home
 folder, simply create a new one with just one line containing
 <command>starttde</command>.
 <note>
 <para>Some systems (notably &RedHat; &Linux;) use <filename>.Xclients</filename>
 instead.</para>
 </note></para>
-<para>This should present you with a new shining &tde; desktop.  You
-can now start to explore the wonderful world of &tde;.  In case you
-want to read some documentation first, there is a highly recommended 
+<para>This should present you with a new shining &tde; desktop. You
+can now start to explore the wonderful world of &tde;. In case you
+want to read some documentation first, there is a highly recommended
 <ulink
 url="http://www.kde.org/documentation/quickstart/index.html">Quick Start
-guide</ulink> available.  Furthermore, every application has an online
+guide</ulink> available. Furthermore, every application has an online
 help that is available via the <guimenu>help</guimenu> menu.</para>
 </answer>
 </qandaentry>
@@ -408,7 +408,7 @@ help that is available via the <guimenu>help</guimenu> menu.</para>
 one?</para>
 </question>
 <answer>
-<para>In principle, this is not necessary.  <acronym>RPM</acronym> and Debian packages
+<para>In principle, this is not necessary. <acronym>RPM</acronym> and Debian packages
 should take care of all dependencies.</para>
 <para>If you compile the source code yourself, you should take more care.
 Instructions for running two different versions of &tde; on the same system are
@@ -425,11 +425,11 @@ can lead to problems if you are not careful. </para>
 </question>
 <answer>
 <para>The most comfortable method to start &tde; is to use the
-<filename>starttde</filename> script.  Simply put the line
+<filename>starttde</filename> script. Simply put the line
 <command>starttde</command> at the end of your <filename>.xsession</filename>
 file (or your <filename>.xinitrc</filename> or <filename>.Xclients</filename>
-file if you are not using &tdm; or <application>xdm</application>).  Please
-also remove the lines that start your previous window manager.  If there is no
+file if you are not using &tdm; or <application>xdm</application>). Please
+also remove the lines that start your previous window manager. If there is no
 <filename>.xsession</filename>, <filename>.xinitrc</filename>, or
 <filename>.Xclients</filename> in your home folder, simply create a new one
 that contains just one line: <command>starttde</command>.</para>
@@ -443,7 +443,7 @@ Why?</para>
 </question>
 <answer>
 <para>When your system uses shadow passwords, the screensaver can only
-run properly if the suid bit is set.  This bit gives the screensavers
+run properly if the suid bit is set. This bit gives the screensavers
 root privileges, which are needed to access the shadow passwords.
 <caution><para>The screensavers might be configured to secure the
 machine until the password is entered.</para></caution></para>
@@ -457,7 +457,7 @@ $<envar>TDEDIR</envar>/bin/*.kss</command></para></step>
 </procedure>
 <para>Alternatively, if you compile &tde; from source, you can use
 <command>./configure <option>with-shadow</option></command> to
-configure tdebase.  Then the suid bit is set automatically during
+configure tdebase. Then the suid bit is set automatically during
 <command>make install</command>.</para>
 </answer>
 </qandaentry>
@@ -467,14 +467,14 @@ configure tdebase.  Then the suid bit is set automatically during
 <para>Is it possible to install &tde; in my home directory?</para>
 </question>
 <answer>
-<para>Yes, you can install &tde; in any folder you want.  What you
+<para>Yes, you can install &tde; in any folder you want. What you
 have to do depends on the kind of packages you want to install:</para>
 <procedure><title>Source packages</title>
 <step performance="required"><para>Configure and install the package using <command>configure
 <option>--prefix=<replaceable>/home/me</replaceable></option>;
 make; make install</command> to install into <filename
 class="directory">/home/me</filename>. Replace <replaceable>/home/me</replaceable> with your home directory, generally defined in <envar>$HOME</envar></para></step>
-<step performance="required"><para>Add the following to your init files.  Please note that if
+<step performance="required"><para>Add the following to your init files. Please note that if
 it is not necessary for you to set <envar>LD_LIBRARY_PATH</envar>, it
 is better to leave it out.</para>
 
@@ -490,7 +490,7 @@ endif
 
 if ( ! $?LIBRARY_PATH ) then
    setenv LIBRARY_PATH $LD_LIBRARY_PATH
-endif  
+endif
 </programlisting>
 <para>For <application>bash</application>:</para>
 <programlisting>
@@ -504,7 +504,7 @@ export TDEDIR PATH LD_LIBRARY_PATH LIBRARY_PATH
 <procedure><title><acronym>RPM</acronym> packages</title>
 <step performance="required"><para><command>rpm</command> allows you to use the
 <option>--prefix</option> option to select the folder you want to
-install to.  For example, executing <command>rpm <option>-i
+install to. For example, executing <command>rpm <option>-i
 --prefix=<replaceable>/home/me
 package.rpm</replaceable></option></command> will install the package
 to <filename
@@ -513,7 +513,7 @@ class="directory">/home/me</filename>.</para></step>
 <para><note>
 <para>Although &tde; will run from a user folder, there are some
 problems with programs that require suid root, &eg; the programs in
-the tdeadmin package.  But since they are not meant to be run by users
+the tdeadmin package. But since they are not meant to be run by users
 in the first place, this is nothing to worry about.</para>
 <para>However, on systems using shadow passwords, the screensavers
 have to be suid root to enable password access for unlocking the
@@ -525,15 +525,15 @@ screen, so this option will not work.</para>
 <qandaentry>
 <question>
 <para><command>starttde</command> fails with <errorname>can not connect to X
-server</errorname>.  What is wrong?</para>
+server</errorname>. What is wrong?</para>
 </question>
 <answer>
-<para>You probably tried to start the X server with <command>starttde</command>.  The X
+<para>You probably tried to start the X server with <command>starttde</command>. The X
 server is started with <command>startx</command>.
-<command>starttde</command> is the 
+<command>starttde</command> is the
 script that should be run from your <filename>.xinitrc</filename>, <filename>.xsession</filename>, or
 <filename>.Xclients</filename> to activate the window manager and the necessary server
-daemons for &tde;.  See also <xref linkend="starttde"/>.</para>
+daemons for &tde;. See also <xref linkend="starttde"/>.</para>
 </answer>
 </qandaentry>
 
@@ -563,7 +563,7 @@ There is also some older information at <ulink url="http://space.twc.de/~stefan/
 </question>
 <answer>
 <para>If you can get &X-Window; to run on your laptop, you should not have any problem
-getting &tde; to run on it.  In addition, you might find the following
+getting &tde; to run on it. In addition, you might find the following
 links helpful:</para>
 <itemizedlist>
 <listitem>
@@ -578,7 +578,7 @@ links helpful:</para>
 
 <qandaentry>
 <question>
-<para>I do not like the default &tde; folder after installation.  How
+<para>I do not like the default &tde; folder after installation. How
 do I move it without breaking anything?</para>
 </question>
 <answer>
@@ -609,9 +609,9 @@ files be safely removed?</para>
 <para>There should not be any need to keep the <filename>.c</filename> and
 <filename>.o</filename> files, but you might want to keep the
 <filename>.h</filename> files, as they are used by includes if you ever want to
-compile your own &tde; programs.  But if you wish to add patches to the source
+compile your own &tde; programs. But if you wish to add patches to the source
 programs as they become available (rather than downloading everything again),
-then they should stay.</para> 
+then they should stay.</para>
 </answer>
 </qandaentry>
 
@@ -622,17 +622,17 @@ then they should stay.</para>
 <answer>
 
 <para>No. In most cases &tde; will be able to transport your settings
-intact.  You may need to reenter passwords in some applications (such
+intact. You may need to reenter passwords in some applications (such
 as &kmail; or &knode;) but most other settings will be safe.</para>
 
 <para>There were mixed reports of results between some previous
-versions of &tde;.  To be safe, you may like to back up your entire
+versions of &tde;. To be safe, you may like to back up your entire
 &tde; configuration. </para>
 
 <para>Settings are kept in the <filename
 class="directory">$<envar>HOME</envar>/.kde</filename> or <filename
 class="directory">$<envar>HOME</envar>/.kde2</filename> subfolder in your home
-folder.  Copy your
+folder. Copy your
 old <filename class="directory">.kde</filename>/<filename
 class="directory">.kde2</filename> folder to a backup location,
 install &tde; 3.2, and then copy back any necessary mail and news
@@ -641,15 +641,15 @@ removing the old <filename class="directory">.kde</filename> folder,
  without a hitch.</para>
 <para>You can override the use of <filename
 class="directory">$<envar>HOME</envar>/.kde</filename> by setting the
-$<envar>TDEHOME</envar> variable.</para> 
+$<envar>TDEHOME</envar> variable.</para>
 </answer>
 </qandaentry>
 
 <qandaentry id="greyscreen">
 <question>
 <para>I upgraded &tde; and it seemed to go fine, but when I start it,
-I get a blank gray screen, and nothing happens.  There are errors in
-the console about DCOPserver.  What's going on?</para>
+I get a blank gray screen, and nothing happens. There are errors in
+the console about DCOPserver. What's going on?</para>
 </question>
 
 <answer>
@@ -668,7 +668,7 @@ These are usually to be found in the following locations:</para>
 <para>If the symlinks get broken, usually because a
 <command>cron</command> or shutdown script is emptying out the
 <filename class="directory">/tmp</filename> folder, then strange
-things will happen.  These files, and the symlinks, will all be
+things will happen. These files, and the symlinks, will all be
 created automatically at the start of &tde; so you can safely remove
 them <emphasis>while &tde; is not running</emphasis>.</para>
 
@@ -682,13 +682,49 @@ seconds off your &tde; startup time by doing so.</para>
 
 <qandaentry>
 <question>
+<para>Is TDE backwards or binary compatible with KDE 3?</para>
+</question>
+<answer>
+<para>While many programs designed on KDE 3 will compile on Trinity, binary
+compatibility with KDE 3 is not a goal of the TDE project.</para>
+</answer>
+</qandaentry>
+
+<qandaentry>
+<question>
+<para>Is TDE backwards or binary compatible with previous releases of TDE?</para>
+</question>
+<answer>
+<para>Possibly, but binary compatibility is not a project goal with major point
+releases. A package that built on a previous version of TDE but no longer builds
+on the current release should be brought to the attention of the developers.</para>
+</answer>
+</qandaentry>
+
+<qandaentry>
+<question>
+<para>Is my KDE3 profile directory compatible with Trinity?</para>
+</question>
+<answer>
+<para>Not quite but don't worry. Some "scrubbing" cleanup is required to migrate
+a KDE3 profile. For new users or those with little customization we recommend
+creating a fresh profile. For those long-time users who cringe at the thought
+of recreating their desktop, we provide a migratekde3 shell script. That script
+copies a $HOME/.kde3 profile directory to $HOME/.trinity and performs the required
+"scrubbing" cleanup. Although the script has been tested we provide the tool "as is"
+with no warranties or guarantees. (The script works really well, actually. :-))</para>
+</answer>
+</qandaentry>
+
+<qandaentry>
+<question>
 <para>Compiling tdebase gives me a <errorname>bin/sh: msgfmt: command
 not found</errorname> error!</para>
 </question>
 <answer>
 <para>You need the &GNU; <application>msgfmt</application> which is
 part of the &GNU; i18n package <application>gettext</application>.
-You should be able to download it from any 
+You should be able to download it from any
 &GNU; mirror.</para>
 </answer>
 </qandaentry>
@@ -701,7 +737,7 @@ source?</para>
 <answer>
 <para>You can uninstall your programs by typing <command>make
 uninstall</command> in the folder where you did <command>make
-install</command>.  If you have already deleted that folder,
+install</command>. If you have already deleted that folder,
 then there is only one way, and it is not good: go to <filename
 class="directory">$<envar>TDEDIR</envar>/bin</filename> and start deleting files
 one by one.</para>
@@ -716,7 +752,7 @@ consider a program such as &GNU; <application>stow</application>, found at
 <para>What is up with &GIF; support?</para>
 </question>
 <answer>
-<para>This has to do with issues with Unisys' &LZW; patent.  &GIF;
+<para>This has to do with issues with Unisys' &LZW; patent. &GIF;
 support is turned off from &Qt; 1.44 onwards by default. When you want to use
 &GIF;s and have the relevant license, recompile &Qt; with &GIF; support.
 <command>./configure <option>-gif</option></command>.</para>

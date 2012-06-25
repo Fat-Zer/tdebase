@@ -1,12 +1,12 @@
 <chapter id="contact-the-tde-team">
 <chapterinfo>
-<date>2012-02-01</date>
-<releaseinfo>R14.0.0</releaseinfo>
+<date>&tde-release-date;</date>
+<releaseinfo>&tde-release-version;</releaseinfo>
 </chapterinfo>
-<title>Contact the &tde; Team</title>
+<title>Contacting the &tde; Community</title>
 <anchor id="contact"/>
 
-<para>The Trinity team invites you to contact members.</para>
+<para>The Trinity team invites you to contact community members.</para>
 
 <sect1 id="contact-mailinglists">
 <title>Mailing lists</title>
@@ -34,15 +34,11 @@ url="http://www.trinitydesktop.org/mailinglist.php">mailing list archive</ulink>
 
 </variablelist>
 
-</sect1>
-
-<sect1 id="contact-developers">
-<title>Contacting the &tde; developers</title>
+<sect2 id="useful-links">
+<title>Useful web links</title>
 <anchor id="links" />
 
-<para>On this page are links to &tde; related web sites.</para>
-
-<para>The Trinity Desktop Environment is developed by many people
+<para>The Trinity Desktop Environment is developed by people
 around the world. Our main communication channel is the Internet. For
 general questions, you will be best served by asking on the mailing
 lists mentioned in the <link linkend="contact-mailinglists">previous
@@ -76,6 +72,7 @@ found in the documentation of their individual application.</para>
 
 </variablelist>
 
+</sect2>
 </sect1>
 </chapter>
 <!-- Keep this comment at the end of the file
@@ -89,4 +86,3 @@ sgml-always-quote-attributes:t
 sgml-parent-document:index.docbook
 End:
 -->
-

@@ -24,7 +24,7 @@ url="http://www.trolltech.com">http://www.trolltech.com</ulink>.</para>
 <para>Why does &tde; use &Qt;?</para>
 </question>
 <answer>
-<para>&Qt; is a very sophisticated toolkit that provides everything that
+<para>&Qt; is a sophisticated toolkit that provides everything that
 is needed to build a modern user interface.  &Qt; is written in C++, thus
 allowing object-oriented development which ensures efficiency and
 code reuse in a project the size and scope of &tde;.  In our opinion
@@ -72,5 +72,29 @@ information, please contact <ulink
 url="http://www.trolltech.com">Troll Tech</ulink> directly.</para>
 </answer>
 </qandaentry>
+
+<qandaentry>
+<question>
+<para>Isn't Qt3 obsolete and "dead" technology?</para>
+</question>
+<answer>
+<para>The definition for "obsolete" varies based upon who applies the term.
+Generally the term "obsolete" means something no longer is useful or no longer
+needed. In software circles the term often means antiquated or no longer shiny.
+Usefulness often is not part of the intended meaning of the word. The term is
+used as an emotional wedge more than a factual observation.</para>
+</answer>
+</qandaentry>
+
+<qandaentry>
+<question>
+<para>Are there plans to migrate Trinity to Qt4?</para>
+</question>
+<answer>
+<para>Not at this time.</para>
+</answer>
+</qandaentry>
+
+
 </qandaset>
 </chapter>

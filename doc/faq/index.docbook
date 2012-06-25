@@ -6,16 +6,16 @@
   <!ENTITY % English "INCLUDE" > <!-- change language only here -->
   <!ENTITY faq-about SYSTEM "about.docbook">
   <!ENTITY faq-intro SYSTEM "intro.docbook">
-  <!ENTITY faq-getkde SYSTEM "getkde.docbook">
+  <!ENTITY faq-gettde SYSTEM "gettde.docbook">
   <!ENTITY faq-install SYSTEM "install.docbook">
   <!ENTITY faq-panel SYSTEM "panel.docbook">
   <!ENTITY faq-desktop SYSTEM "desktop.docbook">
   <!ENTITY faq-winmng SYSTEM "winmng.docbook">
   <!ENTITY faq-filemng SYSTEM "filemng.docbook">
   <!ENTITY faq-webbrowse SYSTEM "webbrowse.docbook">
-  <!ENTITY faq-configkde SYSTEM "configkde.docbook">
-  <!ENTITY faq-kdeapps SYSTEM "kdeapps.docbook">
-  <!ENTITY faq-nonkdeapps SYSTEM "nonkdeapps.docbook">
+  <!ENTITY faq-configtde SYSTEM "configtde.docbook">
+  <!ENTITY faq-tdeapps SYSTEM "tdeapps.docbook">
+  <!ENTITY faq-nontdeapps SYSTEM "nontdeapps.docbook">
   <!ENTITY faq-tips SYSTEM "tips.docbook">
   <!ENTITY faq-misc SYSTEM "misc.docbook">
   <!ENTITY faq-notrelated SYSTEM "notrelated.docbook">
@@ -42,35 +42,29 @@
 </authorgroup>
 
 <copyright>
-<year>1997</year>
-<year>1998</year>
-<year>1999</year>
-<year>2000</year>
-<year>2001</year>
-<year>2003</year>
-<year>2004</year>
-<year>2005</year>
+<year>1997-2005</year>
 <holder>The &kde; Team</holder>
 </copyright>
 <copyright>
-<year>2012</year>
+<year>&tde-copyright-date;</year>
 <holder>The &tde; Team</holder>
 </copyright>
 
 <legalnotice>&FDLNotice;</legalnotice>
 
-<date>2005-01-19</date>
-<releaseinfo>3.4</releaseinfo>
+<date>&tde-release-date;</date>
+<releaseinfo>&tde-release-version;</releaseinfo>
 
-<abstract> <para>This is a compilation of the most frequently asked
+<abstract> <para>This is a collection of frequently asked
 questions about the Trinity Desktop Environment.  Please report any bugs,
 inconsistencies, or omissions you find in this &FAQ; to
-<email>trinity-devel@lists.pearsoncomputing.net</email>.  Please do not mail your questions
-to this list. Post them to the &tde; mailing lists and newsgroups
-instead. They are monitored for this &FAQ;.</para> </abstract>
+<email>trinity-devel@lists.pearsoncomputing.net</email>.  Please post
+questions to the &tde; mailing lists. Questions are monitored to help
+maintain this &FAQ;.</para> </abstract>
 
 <keywordset>
 <keyword>KDE</keyword>
+<keyword>TDE</keyword>
 <keyword>FAQ</keyword>
 <keyword>question</keyword>
 <keyword>answer</keyword>
@@ -79,17 +73,17 @@ instead. They are monitored for this &FAQ;.</para> </abstract>
 
 &faq-about;
 &faq-intro;
-&faq-getkde;
+&faq-gettde;
 &faq-install;
 &faq-panel;
 &faq-desktop;
 &faq-winmng;
 &faq-filemng;
 &faq-webbrowse;
-&faq-configkde;
-&faq-kdeapps;
+&faq-configtde;
+&faq-tdeapps;
 &faq-sound;
-&faq-nonkdeapps;
+&faq-nontdeapps;
 &faq-tips;
 &faq-misc;
 &faq-qt;

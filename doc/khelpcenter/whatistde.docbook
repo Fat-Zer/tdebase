@@ -1,13 +1,13 @@
 <chapter id="what-is-tde">
 <chapterinfo>
-<date>2002-01-18</date>
-<releaseinfo>3.00.00</releaseinfo>
+<date>&tde-release-date;</date>
+<releaseinfo>&tde-release-version;</releaseinfo>
 </chapterinfo>
-<title>What is &tde;?</title>
+<title>What is the Trinity Desktop Environment?</title>
 <anchor id="whatistde"/>
 
 <sect1 id="what-is-tde-introduction">
-<title>What is &tde;?</title>
+<title>What is the Trinity Desktop Environment?</title>
 
 <para>&tde; is a desktop environment. In other words, &tde; is a
 collection of programs, technologies and documentation that attempt to
@@ -17,12 +17,9 @@ philosophy.</para>
 
 <para>The Trinity Desktop Environment is a fork of the K Desktop Environment
 version 3.5, originally written by the KDE Team, a world-wide network of
-software engineers committed to Free Software development.</para>
-
-<para>The creators of the K Desktop Environment are a world-wide group of
-software engineers. This group's major goal in free software development is to
-provide high quality software that empowers the user with easy control of his
-computer's resources.</para>
+software engineers committed to Free Software development. This group's
+major goal in free software development is to provide high quality software
+that empowers the user with easy control of his computer's resources.</para>
 
 <para>The &tde; developers continue the tradition of KDE 3.5.</para>
 
@@ -122,4 +119,3 @@ Information Manager - an organizer).</para>
 
 </sect1>
 </chapter>
-

@@ -1,0 +1,86 @@
+<!--
+<?xml version="1.0" ?>
+<!DOCTYPE chapter PUBLIC "-//KDE//DTD DocBook XML V4.2-Based Variant V1.1//EN"
+ "dtd/kdex.dtd">
+-->
+
+<chapter id="getting-tde">
+<title>Getting &tde;</title>
+
+<qandaset>
+<qandaentry>
+<question id="where-to-get-tde">
+<para>Where do I get &tde;?</para>
+</question>
+<answer>
+<!-- This needs a rewrite including informations about the latest version (link to the info page?)-->
+<para>The easiest way to get &tde; is to install a &Linux; distribution or another &UNIX; operating system
+that ships with &tde;.
+You can find an up-to-date list of distributions that ship
+with &tde; <ulink url="http://www.trinitydesktop.org/">here</ulink>.</para>
+
+<para>The main distribution site for &tde; is
+<ulink url="http://www.trinitydesktop.org/">http://www.trinitydesktop.org/</ulink>.</para>
+</answer>
+</qandaentry>
+
+<qandaentry>
+<question>
+<para>What is the current version?</para>
+</question>
+<answer>
+<para>TDE is developed continually. Find the latest stable version number <ulink url="http://www.trinitydesktop.org/releases.php">here</ulink>.</para>
+</answer>
+</qandaentry>
+
+<qandaentry>
+<question>
+<para>Binary packages are not available for my distro. What do I do?</para>
+</question>
+<answer>
+<para>That is always a challenging situation. Are there skilled packagers who
+might help? If you are skilled in compiling software from sources, source
+tarballs are available for each TDE release (http://www.trinitydesktop.org/releases.php).
+The development version can also be built from our GIT source tree. Use the forums
+or mailing lists to contact packagers to obtain copies of their build scripts
+that can be massaged to fit your distro.</para>
+</answer>
+</qandaentry>
+
+<qandaentry>
+<question>
+<para>Where do I find &tde; snapshots?</para>
+</question>
+<answer>
+<para>Learn more about the latest development snapshots at <ulink
+url="http://www.trinitydesktop.org/development.php">http://www.trinitydesktop.org/development.php</ulink>.
+You might want to consider setting up your own <acronym>GIT</acronym> account to
+maintain the latest snapshot at all times. Please refer to <ulink
+url="http://www.trinitydesktop.org/development.php">http://www.trinitydesktop.org/development.php</ulink> for further
+information.
+</para>
+
+</answer>
+</qandaentry>
+
+<qandaentry>
+<question id="where-to-get-qt">
+<para>Where do I get &Qt;?</para>
+</question>
+<answer>
+<para>&Qt; is a product of the Norwegian company Trolltech. The version
+upon which TDE is based no longer is actively maintained by Trolltech.
+Maintenance is handled by the TDE developers. Get the latest &Qt; version
+from the TDE GIT repository at
+<ulink url="http://git.trinitydesktop.org/">http://git.trinitydesktop.org/</ulink>.</para>
+<para>
+With most &Linux; distributions, this version of &Qt; no longer is
+included or maintained and must be obtained from the TDE repositories. Because
+this version of &Qt; is now maintained exclusively to support TDE, the version supported
+by TDE developers is not backwards compatible with the original version from Trolltech.</para>
+</answer>
+</qandaentry>
+
+
+</qandaset>
+</chapter>

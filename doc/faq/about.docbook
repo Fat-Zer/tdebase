@@ -3,36 +3,34 @@
 <!DOCTYPE chapter PUBLIC "-//KDE//DTD DocBook XML V4.2-Based Variant V1.1//EN"
  "dtd/kdex.dtd">
 -->
- 
+
 <chapter id="about">
 <title>About this <acronym>FAQ</acronym></title>
 
 <qandaset>
 <qandaentry>
 <question>
-<para>What can I do to help out with this <acronym>FAQ</acronym>?</para>
+<para>What can I do to help with this <acronym>FAQ</acronym>?</para>
 </question>
 
 <answer>
 
-<para>First, send us any errors that you may find.  Also, any
-suggestions that you might have, are appreciated.  Better yet, send us
-everything  that you think is unclear, and if possible, send us what
-you think would be a clearer solution. The email address of the current maintainer is <email>jhall@kde.org</email>.
-</para>
+<para>Notify us about any errors you find. Suggestions you have are
+appreciated. Send us everything that you think is unclear. When possible send us what
+you think would be a clearer solution.</para>
 
-<para>Second, send us your solutions of those frequently-asked
-questions which are still not in this <acronym>FAQ</acronym>.  We will
-put them in as soon as possible.</para>
+<para>Send us your solutions of those frequently-asked
+questions which are still not in this <acronym>FAQ</acronym>. We will
+add them as soon as practical.</para>
 
-<para>Last but not least, please make full use of this
-<acronym>FAQ</acronym>.  Read this <acronym>FAQ</acronym> (and other
+<para>Please make full use of this <acronym>FAQ</acronym>.
+Read this <acronym>FAQ</acronym> (and other
 relevant documentation) well before asking questions on the various
 &tde; mailing lists or newsgroups.</para>
 
-<note><para> You might also want to consider becoming a
+<note><para>You might want to consider becoming a
 <acronym>FAQ</acronym> maintainer. Please refer to <xref
-linkend="FAQ-maintainer-HOWTO"/> for more details.  </para></note>
+linkend="FAQ-maintainer-HOWTO"/> for details.</para></note>
 
 </answer>
 </qandaentry>
@@ -43,8 +41,8 @@ linkend="FAQ-maintainer-HOWTO"/> for more details.  </para></note>
 </question>
 
 <answer>
-<para>Actually, it is very easy to become an <acronym>FAQ</acronym>
-maintainer, and we are always in need of fresh blood. :-)  Just send
+<para>Actually, becoming an <acronym>FAQ</acronym> maintainer is easy
+and we are always grateful for new help. :-) Send
 us an email at <email>trinity-devel@lists.pearsoncomputing.net</email>.
 </para>
 </answer>

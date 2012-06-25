@@ -6,7 +6,7 @@
 <title>Welcome to the Trinity Desktop Environment (&tde;)</title>
 <anchor id="welcome"/>
 
-<para>The Trinity team welcomes you to user-friendly &UNIX;desktop computing.</para>
+<para>The Trinity team welcomes you to user-friendly &UNIX; desktop computing.</para>
 
 <sect1 id="welcome-information-about-tde">
 <title>Information about &tde;</title>
@@ -14,15 +14,15 @@
 <para>&tde; is a graphical desktop environment for &UNIX; workstations. The
 Trinity Desktop Environment combines ease of use, contemporary functionality, and
 professional graphical design along with the technical advantages of
-the &UNIX; operating system.</para>
+&UNIX; operating systems.</para>
+
+<para><link linkend="help">TDE Help System User Manual</link></para>
 
 <para><link linkend="what-is-tde">What is the Trinity Desktop Environment?</link></para>
 
-<para><link linkend="contact">Contacting the &tde; Project Team Members</link></para>
+<para><link linkend="contact">Contacting the &tde; Community</link></para>
 
 <para><link linkend="support">Supporting the &tde; Project</link></para>
-
-<para><link linkend="links">Useful links</link></para>
 
 </sect1>
 
@@ -43,7 +43,7 @@ the &UNIX; operating system.</para>
 <sect2 id="welcome-basic-applications">
 <title>Basic applications</title>
 
-<para><ulink url="help:/kicker">Desktop Panel</ulink></para>
+<para><ulink url="help:/kicker">Desktop Panel (Kicker)</ulink></para>
 
 <para><ulink url="help:/kcontrol">Control Center</ulink></para>
 
@@ -52,4 +52,3 @@ the &UNIX; operating system.</para>
 </sect2>
 </sect1>
 </chapter>
-

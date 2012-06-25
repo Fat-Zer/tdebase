@@ -1,13 +1,13 @@
 <chapter id="supporting-tde">
 <chapterinfo>
-<date>2002-03-04</date>
-<releaseinfo>2.02.00</releaseinfo>
+<date>&tde-release-date;</date>
+<releaseinfo>&tde-release-version;</releaseinfo>
 </chapterinfo>
-<title>Supporting &tde;</title>
+<title>Supporting the &tde; Project</title>
 <anchor id="support"/>
 
 <sect1 id="supporting-tde-introduction">
-<title>Supporting &tde;</title>
+<title>Supporting the &tde; Project</title>
 
 <para> If you are new to &tde;, the &tde; project might look like big
 machinery to you. Undoubtedly, &tde; is no longer a small project,
@@ -40,7 +40,7 @@ that interest you.
 </para></listitem>
 
 <listitem><para>
-Read the <ulink url="trinity-devel@lists.pearsoncomputing.net">&tde;
+Read the <ulink url="http://trinity-devel.pearsoncomputing.net/">&tde;
 developer mailing list</ulink> archives to get a feel for &tde; development.
 </para></listitem>
 
@@ -77,4 +77,3 @@ actively involved in &tde; development, please consider supporting
 
 </sect1>
 </chapter>
-

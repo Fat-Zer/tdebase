@@ -1,4 +1,4 @@
-[KDE Desktop Entry]
+[Desktop Entry]
 Name=UNIX manual pages
 Name[bg]=Ръководство за UNIX
 Name[ca]=Pàgines de manual UNIX
@@ -13,7 +13,7 @@ Name[es]=Páginas de manual de Unix
 Name[et]=UNIX-i manuaalileheküljed
 Name[fo]=Unix-handbøkur ("man"-snið)
 Name[fr]=Pages du manuel UNIX
-Name[hi]=यूनिक्स निर्देशिका पृष्ठ
+Name[hi]=यूनिक्स निर्देशिका पृष्�
 Name[hr]=UNIX priručnici
 Name[hu]=UNIX man oldalak
 Name[is]=Síður UNIX handbóka

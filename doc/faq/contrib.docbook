@@ -15,15 +15,15 @@
 </question>
 <answer>
 <para>&tde; is a free software project that lives from voluntary
-contributions.  Everybody is encouraged to contribute to &tde;.  Not
-only programmers are welcome.  There are many ways in which you can
+contributions. Everybody is encouraged to contribute to &tde;. Not
+only programmers are welcome. There are many ways in which you can
 help to improve &tde;:</para>
 <itemizedlist>
 <listitem><para>Test the software.</para></listitem>
-<listitem><para>Send in bug reports.  For more information on this,
+<listitem><para>Send in bug reports. For more information on this,
 see <link linkend="bug-report">How do I submit a bug
 report?</link>.</para></listitem>
-<listitem><para>Write documentation or help files.  You can get some
+<listitem><para>Write documentation or help files. You can get some
 information by visiting the <ulink
 url="http://i18n.kde.org/doc/">&tde; Editorial Team
 Home Page</ulink>.</para></listitem>
@@ -31,22 +31,22 @@ Home Page</ulink>.</para></listitem>
 For more information on this, you should visit <ulink
 url="http://i18n.kde.org">The &tde; Translators' and Documenters' Web
 Site</ulink>.</para></listitem>
-<listitem><para>Draw nice icons or compose sound effects.  You can
+<listitem><para>Draw nice icons or compose sound effects. You can
 visit the <ulink url="http://artist.kde.org/">&tde;
 artists page</ulink> to find out more.</para></listitem>
-<listitem><para>Write articles and books about &tde;.  If you want to
+<listitem><para>Write articles and books about &tde;. If you want to
 help spread the word about &tde;, simply send an email to
-<email>kde-pr@kde.org</email>.  This will get you in touch 
+<email>kde-pr@kde.org</email>. This will get you in touch
 with the &tde; public relations volunteers.</para></listitem>
-<listitem><para>Program new &tde; applications.  Please refer to <xref
+<listitem><para>Program new &tde; applications. Please refer to <xref
 linkend="programming"/> for more information.</para></listitem>
 <listitem><para> Of course, sponsors are also
 welcome. :-)</para></listitem>
 </itemizedlist>
 <para>There are several places to look for more information if you
-want to get involved in the development.  The first step is to
-subscribe to some of the <ulink  url="http://www.kde.org/mailinglists/">mailing 
-lists</ulink>.  You will soon see something
+want to get involved in the development. The first step is to
+subscribe to some of the <ulink  url="http://www.kde.org/mailinglists/">mailing
+lists</ulink>. You will soon see something
 that can be improved or added.</para>
 </answer>
 </qandaentry>
@@ -57,51 +57,63 @@ that can be improved or added.</para>
 </question>
 <answer>
 <para>There is a bug tracking system available at <ulink
-url="http://bugs.kde.org">http://bugs.kde.org</ulink>.  The
-system features a wizard to submit new bug reports and a
+url="http://bugs.pearsoncomputing.net/">http://bugs.pearsoncomputing.net/</ulink>
+and thanks for helping! The system features several query types and a
 list of all known bugs.</para>
 <para>The easiest way to submit a bug is to select
-<menuchoice><guimenu>Help</guimenu><guimenuitem>Report 
+<menuchoice><guimenu>Help</guimenu><guimenuitem>Report
 Bug...</guimenuitem></menuchoice> from the menu bar of the application
-with the bug.  This will open a small dialog box with a link
+with the bug. This will open a small dialog box with a link
 to the bug tracking system. Please make sure to follow the
 instructions of the bug reporting wizard.</para>
 </answer>
 </qandaentry>
 
 <qandaentry>
-<question id="programming">
-<para>I want to program for &tde;.  What should I do first?</para>
+<question>
+<para>May I join the development team?</para>
 </question>
 <answer>
-<para>Everybody is encouraged to develop software for &tde;.  What you
+<para>Please! Join our discussion list at
+<ulink url="http://www.trinitydesktop.org/mailinglist.php">
+http://www.trinitydesktop.org/mailinglist.php</ulink>. Join
+Internet Relay Chat (IRC) sessions at chat.freenode.net, channel: #trinity-desktop</para>
+</answer>
+</qandaentry>
+
+<qandaentry>
+<question id="programming">
+<para>I want to program for &tde;. What should I do first?</para>
+</question>
+<answer>
+<para>Everybody is encouraged to develop software for &tde;. What you
 should do first depends strongly on your experience, &eg; whether you have
 already learned C++ or have experience with the &Qt; toolkit and so
 on.</para>
 <para>To get into &tde; programming, you will need some basic tools:
 <application>automake</application>,
 <application>autoconf</application>, and
-<application>egcs</application>.  You should look to <ulink
-url="http://developer.kde.org/">http://developer.kde.org/</ulink> 
+<application>egcs</application>. You should look to <ulink
+url="http://developer.kde.org/">http://developer.kde.org/</ulink>
 for more tips.</para>
 <para>Another excellent resource for learning &tde;
-programming is the &Qt; 
-online tutorials.  These are installed along with &Qt;.  To view them,
-open <filename>$<envar>QTDIR</envar>/doc/html/index.html</filename> in 
-&konqueror; and bookmark it.  The tutorials
-can be found under "Using 
-Qt".  The source code for each lesson can be found in the <filename
+programming is the &Qt;
+online tutorials. These are installed along with &Qt;. To view them,
+open <filename>$<envar>QTDIR</envar>/doc/html/index.html</filename> in
+&konqueror; and bookmark it. The tutorials
+can be found under "Using
+Qt". The source code for each lesson can be found in the <filename
 class="directory">$<envar>QTDIR</envar>/tutorial</filename>
 directory.</para>
 <para>There is, however, one thing that everybody interested in
 programming for &tde; should do: <emphasis>subscribe to the developers
-mailing list</emphasis>.  To subscribe, you have to send an email to
+mailing list</emphasis>. To subscribe, you have to send an email to
 <ulink
 url="mailto:kde-devel-request@kde.org">kde-devel-request@kde.org</ulink>
 with the subject <userinput>subscribe
 <replaceable>your_email_address</replaceable></userinput>.
 <important><para>Please read <link linkend="subscribe">How to
-subscribe/unsubscribe to these lists</link> carefully.  Everything
+subscribe/unsubscribe to these lists</link> carefully. Everything
 said there applies to the development list as
 well.</para></important></para>
 </answer>
@@ -113,15 +125,15 @@ well.</para></important></para>
 </question>
 <answer>
 <para>The &tde; project uses <acronym>SVN</acronym> to develop the
-core parts of the software.  Usually, when you have changed one of the
+core parts of the software. Usually, when you have changed one of the
 parts (&eg; fixed a bug), and you want to commit this change, the best
 way is to create a patch against a current snapshot and send this
 patch to the developer/maintainer of the respective program.</para>
 <para>If you are doing this more or less regularly, there are instructions here on how to get write access to the <acronym>SVN</acronym> repository: <ulink url="http://developer.kde.org/documentation/other/developer-faq.html#q1.8">
-http://developer.kde.org/documentation/other/developer-faq.html#q1.8</ulink>.  But be aware that more users will slow
+http://developer.kde.org/documentation/other/developer-faq.html#q1.8</ulink>. But be aware that more users will slow
 down <acronym>SVN</acronym> access for all developers, so we want to
 keep the number of people with direct <acronym>SVN</acronym> access
-reasonably small.  But feel free to ask!</para>
+reasonably small. But feel free to ask!</para>
 </answer>
 </qandaentry>
 
@@ -154,7 +166,7 @@ language?</para>
 <answer>
 <para>Look at the <ulink url="http://i18n.kde.org">The &tde;
 Translators' and Documenters' Web Site</ulink> to see whether your
-program is already translated (most are).  Otherwise you will find 
+program is already translated (most are). Otherwise you will find
 information there on how to do it yourself.</para>
 </answer>
 </qandaentry>

@@ -37,7 +37,7 @@ display class (which can be ignored in most cases).</para>
 make up a section class.</para>
 
 <para>You can use the wildcard <literal>*</literal> (match any) for
-<replaceable>host</replaceable>, <replaceable>number</replaceable>, 
+<replaceable>host</replaceable>, <replaceable>number</replaceable>,
 and <replaceable>class</replaceable>. You may omit trailing components;
 they are assumed to be <literal>*</literal> then. The host part may be a
 domain specification like <replaceable>.inf.tu-dresden.de</replaceable>
@@ -972,7 +972,7 @@ The default depends on the system &tdm; was built on.
 <term id="option-systemshell"><option>SystemShell</option></term>
 <listitem>
 <para>
-The <envar>SHELL</envar> environment variable for all programs but the 
+The <envar>SHELL</envar> environment variable for all programs but the
 <option>Session</option>.
 </para>
 <para>The default is <quote>/bin/sh</quote>.</para>
@@ -1480,7 +1480,7 @@ Enable autocompletion in the username line edit.
 <term id="option-userlist"><option>UserList</option></term>
 <listitem>
 <para>
-Show a user list with unix login names, real names, and images in the greeter.
+Show a user list with login names, real names, and images in the greeter.
 </para>
 <para>The default is <quote>true</quote>.</para>
 </listitem>
@@ -1504,7 +1504,7 @@ Items in <option>SelectedUsers</option> and <option>HiddenUsers</option>
 which are prefixed with <literal>@</literal> represent all users in the
 user group named by that item.
 Finally, the user list will be sorted alphabetically, if
-<option>SortUsers</option> is enabled. 
+<option>SortUsers</option> is enabled.
 </para>
 <para>The default is <quote>NotHidden</quote>.</para>
 </listitem>
@@ -1740,7 +1740,7 @@ succeed. A grab may fail if some other X-client has the &X-Server; or the
 keyboard grabbed, or possibly if the network latencies are very high. You
 should be cautious when raising the timeout, as a user can be spoofed by
 a look-alike window on the display. If a grab fails, &tdm; kills and
-restarts the &X-Server; (if possible) and the session. 
+restarts the &X-Server; (if possible) and the session.
 </para>
 <para>The default is <quote>3</quote>.</para>
 </listitem>
@@ -1957,7 +1957,7 @@ file.
 display which should constantly be
 managed and which is not using &XDMCP;. This method is typically used only for
 local &X-Server;s that are started by &tdm;, but &tdm; can manage externally
-started (<quote>foreign</quote>) &X-Server;s as well, may they run on the 
+started (<quote>foreign</quote>) &X-Server;s as well, may they run on the
 local machine or rather remotely.</para>
 
 <para>The formal syntax of a specification is
@@ -2092,7 +2092,7 @@ permanently assigned range of multicast addresses for &XDMCP;. The
 identifier, such as 1 for Node-Local, 2 for Link-Local, 5 for Site-Local, and
 so on (see IETF RFC 2373 or its replacement for further details and scope
 definitions). &tdm; defaults to listening on the Link-Local scope address
-ff02:0:0:0:0:0:0:12b to most closely match the IPv4 subnet broadcast behavior. 
+ff02:0:0:0:0:0:0:12b to most closely match the IPv4 subnet broadcast behavior.
 If no <literal>LISTEN</literal> lines are given, &tdm; listens on all
 interfaces and joins the default &XDMCP; IPv6 multicast group (when
 compiled with IPv6 support).
@@ -2301,7 +2301,7 @@ the following environment variables are passed:</para>
 <para>Symmetrical with <filename>Xstartup</filename>, the
 <filename>Xreset</filename> program is run after the user session has
 terminated. Run as <systemitem class="username">root</systemitem>, it should
-contain commands that undo the effects of commands in 
+contain commands that undo the effects of commands in
 <filename>Xstartup</filename>, removing entries from <filename>utmp</filename>
 or unmounting directories from file servers.</para>
 
