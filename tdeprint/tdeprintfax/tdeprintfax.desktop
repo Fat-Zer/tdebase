@@ -94,4 +94,4 @@ Exec=tdeprintfax -caption "%c" %i %m %u
 Icon=tdeprintfax
 Terminal=false
 X-DCOP-ServiceType=Multi
-Categories=Qt;TDE;Utility
+Categories=Qt;TDE;Utility;X-TDE-Utilities-Peripherals;

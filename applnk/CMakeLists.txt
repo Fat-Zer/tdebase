@@ -48,4 +48,13 @@ install( FILES
     tde-utilities-peripherals.directory tde-utilities-file.directory
     tde-utilities-pim.directory tde-development-translation.directory
     tde-development-webdevelopment.directory
+    kde-development-webdevelopment.directory kde-development.directory
+    kde-editors.directory kde-edu-languages.directory kde-edu-mathematics.directory
+    kde-edu-miscellaneous.directory kde-edu-science.directory kde-games-arcade.directory
+    kde-games-board.directory kde-games-card.directory kde-games-kids.directory
+    kde-games-strategy.directory kde-games.directory kde-graphics.directory
+    kde-internet.directory kde-multimedia.directory kde-office.directory
+    kde-settingsmenu.directory kde-system.directory kde-toys.directory
+    kde-utilities-accessibility.directory kde-utilities-desktop.directory
+    kde-utilities-pim.directory kde-utilities.directory tde-office-pim.directory
   DESTINATION ${XDG_DIRECTORY_INSTALL_DIR} )
