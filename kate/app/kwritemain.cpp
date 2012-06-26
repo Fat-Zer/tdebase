@@ -543,7 +543,11 @@ extern "C" KDE_EXPORT int kdemain(int argc, char **argv)
   KLocale::setMainCatalogue("kate");         //lukas: set this to have the kwritepart translated using kate message catalog
 
   // here we go, construct the KWrite version
-  TQString kWriteVersion  = TQString ("%1.%2.%3").arg(KDE::versionMajor() + 1).arg(KDE::versionMinor()).arg(KDE::versionRelease());
+  // TQString kWriteVersion  = TQString ("%1.%2.%3").arg(KDE::versionMajor() + 1).arg(KDE::versionMinor()).arg(KDE::versionRelease());
+  /** The previous version computation scheme (commented out above) worked fine in the 3.5.x days.
+      With the new Trinity Rx.y.z scheme the version number gets weird.
+      We now hard-code the first two numbers to match the 3.5.x days and only update the last number. */
+  TQString kWriteVersion  = TQString ("4.5.%1").arg(KDE::versionMajor());
 
   KAboutData aboutData ( "kwrite",
                          I18N_NOOP("KWrite"),

@@ -131,8 +131,12 @@ Kate::Application *KateApp::application ()
  */
 TQString KateApp::kateVersion (bool fullVersion)
 {
-  return fullVersion ? TQString ("%1.%2.%3").arg(KDE::versionMajor() - 1).arg(KDE::versionMinor()).arg(KDE::versionRelease())
-           : TQString ("%1.%2").arg(KDE::versionMajor() - 1).arg(KDE::versionMinor());
+//   return fullVersion ? TQString ("%1.%2.%3").arg(KDE::versionMajor() - 1).arg(KDE::versionMinor()).arg(KDE::versionRelease())
+//            : TQString ("%1.%2").arg(KDE::versionMajor() - 1).arg(KDE::versionMinor());
+  /** The previous version computation scheme (commented out above) worked fine in the 3.5.x days.
+      With the new Trinity Rx.y.z scheme the version number gets weird.
+      We now hard-code the first two numbers to match the 3.5.x days and only update the last number. */
+  return fullVersion ? TQString ("2.5.%1").arg(KDE::versionMajor()) : TQString ("%1.%2").arg(2.5);
 }
 
 void KateApp::restoreKate ()
