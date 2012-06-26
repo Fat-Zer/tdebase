@@ -154,7 +154,7 @@ void KWrite::setupActions()
               actionCollection(), "view_new_view");
   a->setWhatsThis(i18n("Create another view containing the current document"));
 
-  a=new KAction(i18n("Choose Editor..."),0,TQT_TQOBJECT(this),TQT_SLOT(changeEditor()),
+  a=new KAction(i18n("Choose Editor Component..."),0,TQT_TQOBJECT(this),TQT_SLOT(changeEditor()),
 		actionCollection(),"settings_choose_editor");
   a->setWhatsThis(i18n("Override the system wide setting for the default editing component"));
 
