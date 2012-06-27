@@ -194,7 +194,7 @@
                                     <bool>true</bool>
                                 </property>
                                 <property name="whatsThis" stdset="0">
-                                    <string>If more than one layout is present in this list, the KDE panel will offer a docked flag. By clicking on this flag you can easily switch between layouts. The first layout will be default one.</string>
+                                    <string>If more than one layout is present in this list, the TDE panel will offer a docked flag. By clicking on this flag you can easily switch between layouts. The first layout will be default one.</string>
                                 </property>
                             </widget>
                             <widget class="TQLayoutWidget" row="4" column="2" rowspan="1" colspan="3">

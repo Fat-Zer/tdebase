@@ -1,5 +1,5 @@
 /*
-    Naughty applet - Runaway process monitor for the KDE panel
+    Naughty applet - Runaway process monitor for the TDE panel
 
     Copyright 2000 Rik Hemsley (rikkus) <rik@kde.org>
 
