@@ -285,7 +285,7 @@ TQString KTheme::createYourself( bool pack )
     konqElem.appendChild( konqBgColorElem );
     m_root.appendChild( konqElem );
 
-    // 9. Kicker (aka KDE Panel)
+    // 9. Kicker (aka TDE Panel)
     KConfig kickerConf( "kickerrc", true );
     kickerConf.setGroup( "General" );
 
