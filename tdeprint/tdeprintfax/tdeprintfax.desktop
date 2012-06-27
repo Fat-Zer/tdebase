@@ -1,17 +1,17 @@
 [Desktop Entry]
-Name=KdeprintFax
-Name[cy]=KdeargraffuFfacs
+Name=TdeprintFax
+Name[cy]=TdeargraffuFfacs
 Name[eo]=Presfakso
 Name[hi]=केडीई-प्रिंट-फ़ैक्स
 Name[lo]=ອິນເຕີເນັດ
-Name[ne]=Kdeprint फ्याक्स
-Name[nso]=Fax ya kgatiso ya kde
-Name[pa]=Kde ਫੈਕਸ ਛਾਪਣ
-Name[rw]=Kde-gucapaFagisi
-Name[sv]=KDE:s skriv ut fax
-Name[ta]=Kdeஅச்சுபாக்ஸ்
-Name[th]=KDEprintFax
-Name[vi]=In và Fax của KDE
+Name[ne]=Tdeprint फ्याक्स
+Name[nso]=Fax ya kgatiso ya tde
+Name[pa]=Tde ਫੈਕਸ ਛਾਪਣ
+Name[rw]=Tde-gucapaFagisi
+Name[sv]=TDE:s skriv ut fax
+Name[ta]=Tdeஅச்சுபாக்ஸ்
+Name[th]=TDEprintFax
+Name[vi]=In và Fax của TDE
 GenericName=Fax Utility
 GenericName[af]=Faks Program
 GenericName[ar]=أداة الفاكس
