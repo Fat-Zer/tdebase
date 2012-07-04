@@ -93,7 +93,7 @@ open different types of files?</para></question>
 <answer>
 <para>In order to configure file associations, you should go to the
 &kcontrolcenter; and choose the item <guimenuitem>File
-Associations</guimenuitem> under the category <guimenu>KDE
+Associations</guimenuitem> under the category <guimenu>TDEDE
 Components</guimenu>.</para>
 <para>
 Suppose the default <acronym>PDF</acronym> viewer is now &kghostview; and

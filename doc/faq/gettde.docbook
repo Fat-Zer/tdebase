@@ -14,8 +14,8 @@
 </question>
 <answer>
 <!-- This needs a rewrite including informations about the latest version (link to the info page?)-->
-<para>The easiest way to get &tde; is to install a &Linux; distribution or another &UNIX; operating system
-that ships with &tde;.
+<para>The easiest way to get &tde; is to install a &Linux; based distribution or another &UNIX; operating system
+that includes &tde;.
 You can find an up-to-date list of distributions that ship
 with &tde; <ulink url="http://www.trinitydesktop.org/">here</ulink>.</para>
 

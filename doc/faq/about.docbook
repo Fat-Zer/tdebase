@@ -28,21 +28,17 @@ Read this <acronym>FAQ</acronym> (and other
 relevant documentation) well before asking questions on the various
 &tde; mailing lists or newsgroups.</para>
 
-<note><para>You might want to consider becoming a
-<acronym>FAQ</acronym> maintainer. Please refer to <xref
-linkend="FAQ-maintainer-HOWTO"/> for details.</para></note>
-
 </answer>
 </qandaentry>
 
 <qandaentry>
 <question id="FAQ-maintainer-HOWTO">
-<para>How do I become a <acronym>FAQ</acronym> maintainer?</para>
+<para>How do I become an <acronym>FAQ</acronym> maintainer?</para>
 </question>
 
 <answer>
-<para>Actually, becoming an <acronym>FAQ</acronym> maintainer is easy
-and we are always grateful for new help. :-) Send
+<para>Becoming an <acronym>FAQ</acronym> maintainer is easy
+and we are always grateful for help. :-) Send
 us an email at <email>trinity-devel@lists.pearsoncomputing.net</email>.
 </para>
 </answer>

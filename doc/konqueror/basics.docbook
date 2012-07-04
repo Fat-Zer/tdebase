@@ -42,7 +42,7 @@ or desktop, then <mousebutton>left</mousebutton> click on it to open
 </guiicon> shaped icon on the panel or desktop to open &konqueror; in browser 
 mode.</para></listitem>
 
-<listitem><para>From the <guimenu>K</guimenu> menu, select
+<listitem><para>From the <guimenu>TDE</guimenu> menu, select
 <menuchoice><guisubmenu>Internet</guisubmenu><guimenuitem>Konqueror Web
 Browser</guimenuitem></menuchoice> to start it as a browser, or
 <guimenuitem>Home</guimenuitem> to launch &konqueror; in file manager mode.

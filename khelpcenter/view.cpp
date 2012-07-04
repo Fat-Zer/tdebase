@@ -118,11 +118,12 @@ void View::showAboutPage()
           .arg( i18n("Help Center") )
           .arg( langLookup( "khelpcenter/lines.png" ) )
           .arg( i18n( "Welcome to the Trinity Desktop Environment" ) )
-          .arg( i18n( "The TDE team welcomes you to user-friendly UNIX computing" ) )
-          .arg( i18n( "TDE is a graphical desktop environment for UNIX workstations. The\n"
+          .arg( i18n( "The TDE team welcomes you to user-friendly UNIX-like computing" ) )
+          .arg( i18n( "The Trinity Desktop Environment (TDE) is a graphical desktop\n"
+                      "environment for UNIX-like workstations. The\n"
                       "Trinity Desktop Environment combines ease of use, contemporary functionality, and\n"
                       "professional graphical design along with the technical advantages of\n"
-                      "the UNIX operating system." ) )
+                      "UNIX-like operating systems." ) )
           .arg( i18n( "What is the Trinity Desktop Environment?" ) )
           .arg( i18n( "Contacting the TDE Project Members" ) )
           .arg( i18n( "Supporting the TDE Project" ) )

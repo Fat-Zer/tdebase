@@ -38,7 +38,7 @@ easier for you to organize your desktop. Using the &tde; panel you
 can:</para>
 
 <itemizedlist>
-<listitem><para>launch applications using the <guimenu>K</guimenu> menu or
+<listitem><para>launch applications using the <guimenu>TDE</guimenu> menu or
 the application buttons</para></listitem>
 <listitem><para>switch desktops using the panel's pager applet</para>
 </listitem>
@@ -176,7 +176,7 @@ applications, the browser menus you can use to access folders and other
 menus like the recent documents menu.</para>
 
 <para>The <guilabel>TDE Menu</guilabel> frame offers you some options to
-configure the <guimenu>K</guimenu> menu's functionality. This frame consists 
+configure the <guimenu>TDE</guimenu> menu's functionality. This frame consists 
 of 4 items:</para>
 
 <itemizedlist>

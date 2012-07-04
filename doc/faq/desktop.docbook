@@ -14,9 +14,9 @@
 </question>
 <answer>
 
-<para>Just choose the desired application from the <guimenu>K</guimenu> menu and drag and drop it to the Desktop.
+<para>Just choose the desired application from the <guimenu>TDE</guimenu> menu and drag and drop it to the Desktop.
 </para> 
-<para>For applications not listed in the <guimenu>K</guimenu> menu, 
+<para>For applications not listed in the <guimenu>TDE</guimenu> menu, 
 use the &RMB; on the desktop and choose <menuchoice><guimenuitem>Create New</guimenuitem><guisubmenu>File</guisubmenu>
 <guimenuitem>Link to Application...</guimenuitem></menuchoice> and fill in the configuration for the application you want to link to.
 </para>

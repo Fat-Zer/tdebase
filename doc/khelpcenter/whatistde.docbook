@@ -13,9 +13,9 @@
 collection of programs, technologies and documentation that attempt to
 make life easier for computer users. &tde; is targeted at &UNIX;
 workstations. &tde; features network transparency and a contemporary work
-philosophy.</para>
+flow philosophy.</para>
 
-<para>The Trinity Desktop Environment is a fork of the K Desktop Environment
+<para>Historically, the Trinity Desktop Environment is a fork of the K Desktop Environment
 version 3.5, originally written by the KDE Team, a world-wide network of
 software engineers committed to Free Software development. This group's
 major goal in free software development is to provide high quality software
@@ -25,38 +25,38 @@ that empowers the user with easy control of his computer's resources.</para>
 
 <para>&tde; seeks to fill the need for an easy to use desktop for
 &UNIX; workstations, similar to the desktop environments found under
-&MacOS; or &Windows; 95/NT. &tde; meets the requirement
+&MacOS; or &Windows;. &tde; meets the requirement
 of users for an easy to use work environment. Tools used to reach
-this end are: enhanced inter-application communication, component
+this goal are: enhanced inter-application communication, component
 reuse, generalized drag and drop, uniform look and feel and many
 more. Thus, &tde; offers much more than the traditional &UNIX; window
 managers.</para>
 
 <para>Stability, scaleability and openness are qualities which have
 made &UNIX; the undisputed choice for the information technology
-professional for many years.  &tde; builds on top of this excellent
+professional for many years. &tde; builds on top of this excellent
 base framework and brings new, much needed qualities: usability, user
-friendliness and beauty! &tde; was the first, and stays the forefront
-player in bringing these qualities to &UNIX;, which constituted for
+friendliness and beauty! &tde; remains as a forefront
+player in bringing these qualities to &UNIX; systems, which constituted for
 years, the premier platform for server computers and scientific
 institutions, but wasn't very attractive for desktop users.</para>
 
-<para>Without &UNIX; the Internet would not exist, or at least would
-have a vastly different form. &UNIX; has not, until now, addressed the
+<para>Without Unix the Internet would not exist, or at least would
+have a vastly different form. Unix has not, until recent years, addressed the
 needs of the average computer user. This fact is particularly
-unfortunate, since a number of implementations of &UNIX; (<ulink
+unfortunate, since a number of implementations of &UNIX; systems (<ulink
 url="http://www.linux.org">&Linux;</ulink>, <ulink
 url="http://www.freebsd.org">FreeBSD</ulink>, <ulink
 url="http://www.netbsd.org">NetBSD</ulink>, &etc;) are freely
 available on the Internet, all of which are of exceptional quality and
-stability.  </para>
+stability. </para>
 
 </sect1>
 
 <sect1 id="what-is-tde-the-desktop">
 <title>&tde; The Desktop Environment</title>
 
-<para>In combination with a free implementation of &UNIX;, &tde;
+<para>In combination with a free implementation of &UNIX; systems, &tde;
 provides to the world an open and completely free desktop computing
 platform either at home or at work.</para>
 
@@ -64,12 +64,12 @@ platform either at home or at work.</para>
 its source code for anyone to modify.</para>
 
 <para>While there will always be room for improvement we believe we
-have now delivered a viable alternative to some of the more commonly
+provide a viable alternative to some of the more commonly
 found and commercial operating systems/desktops combinations available
-today. It is our hope that the combination of &UNIX; and &tde; will
+today. It is our hope that the combination of &UNIX; systems and &tde; will
 finally bring the same open, reliable, stable, and monopoly free
 computing to the average computer user that scientists and computing
-professionals world-wide have enjoyed for years.  </para>
+professionals world-wide have enjoyed for years. </para>
 
 </sect1>
 
@@ -78,17 +78,17 @@ professionals world-wide have enjoyed for years.  </para>
 
 <para>&tde; focuses on the user's needs, but it's obvious that this
 focus is more easily achieved by also giving developers the best
-tools.  &tde; code contains, and comes with, some of the best
+tools. &tde; code contains, and comes with, some of the best
 development technologies of the modern computing age.</para>
 
-<para>Authoring applications under &UNIX;/X11 used to be an extremely
-tedious and labor intensive process. &tde; recognizes the fact that a
+<para>Authoring applications under &UNIX;/X11 systems used to be an extremely
+tedious and labor intensive process. &tde; developers recognize the fact that a
 computing platform is only as good as the number of first class
 applications available to the users of that particular
 platform.</para>
 
-<para>&tde; defines new technologies in &DCOP; and KParts, created to
-offer a component document model and technology.  Together with the
+<para>&tde; includes technologies such as &DCOP; and KParts, created to
+offer a component document model and technology. Together with the
 complete &tde; libraries programming interface, &DCOP;/KParts are set
 in direct competition with other similar technologies like &Microsoft;
 <abbrev>MFC</abbrev>/<abbrev>COM</abbrev>/ActiveX technologies. The
@@ -103,17 +103,16 @@ reinventing the wheel.</para>
 <title>&tde; The Office Application Suite</title>
 
 <para>In its current form, &tde; provides, apart from the essential desktop
-component applications, a suite of powerful office programs known to the
-world by the name &koffice;.</para>
+component applications, a suite of office programs known as &koffice;.</para>
 
 <para>&koffice; is based on the &tde; &DCOP;/KParts
-technologies. It currently contains: a word processor with desktop
+technologies. It contains: a word processor with desktop
 publishing capabilities (&kword;), a spreadsheet application (&kspread;)
 and accompanying charting program (&kchart;), a presentation program
-(&kpresenter;) and a vector drawing program (&kontour;).  Tying things
+(&kpresenter;) and a vector drawing program (&karbon14;). Tying things
 together is the <application>KOffice Workspace</application>, an
 integrated shell to ease the use of the &koffice; components in
-conjunction with each other.  Additional components include an email
+conjunction with each other. Additional components include an email
 client, a news reader, and a powerful <abbrev>PIM</abbrev> (Personal
 Information Manager - an organizer).</para>
 

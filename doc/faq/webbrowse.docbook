@@ -182,7 +182,7 @@ Under the latest versions of X.org, having the composite extension loaded can ca
 </para></answer>
 </qandaentry>
 
-<qandaentry>
+<!--<qandaentry>
 <question>
 <para>Why can't &konqueror; render &GIF; images?</para>
 </question>
@@ -190,7 +190,7 @@ Under the latest versions of X.org, having the composite extension loaded can ca
 <para>It is because you did not enable &GIF; support in &Qt;.  Please see
 <xref linkend="gif"/> for more details.</para>
 </answer>
-</qandaentry>
+</qandaentry>-->
 
 <qandaentry>
 <question><para>When I try to open a web page with &konqueror;, I get the

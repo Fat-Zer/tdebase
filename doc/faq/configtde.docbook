@@ -95,14 +95,14 @@ off secure</userinput>.</para>
 <question>
 
 <para>I would like to click the &LMB; anywhere on the
-desktop and have the <guimenu>K</guimenu> menu displayed.</para>
+desktop and have the <guimenu>TDE</guimenu> menu displayed.</para>
 </question>
 <answer>
 <para>Open the <application>&tde; Control Center</application> and
 choose <menuchoice><guisubmenu>Desktop</guisubmenu>
 <guisubmenu>Behavior</guisubmenu></menuchoice>.  You
 can now choose the behavior of mouse clicks on the desktop.  To have
-the <guimenu>K</guimenu> menu open from a single &LMB; click, change
+the <guimenu>TDE</guimenu> menu open from a single &LMB; click, change
 the entry labeled <guilabel>Left button</guilabel> to say
 <guilabel>Application Menu</guilabel>.</para>
 </answer>

@@ -32,7 +32,7 @@ non-TDE applications</guilabel> checkbox and click
 than &konqueror;?</para></question>
 <answer>
 <para>If you are using &tde; 3.3 or later, open up the &kcontrolcenter; and
-navigate to the <menuchoice><guimenu>KDE
+navigate to the <menuchoice><guimenu>TDEDE
 Components</guimenu><guimenuitem>Component
 Chooser</guimenuitem></menuchoice> panel. Select <guilabel>Web
 Browser</guilabel> from the list on the left, then select <guilabel>Open

@@ -51,11 +51,6 @@ found in the documentation of their individual application.</para>
 
 <variablelist>
 <varlistentry>
-<term><ulink url="http://www.trinitydesktop.org">www.trinitydesktop.org</ulink></term>
-<listitem><para>&tde;'s official website</para></listitem>
-</varlistentry>
-
-<varlistentry>
 <term><ulink url="http://www.trinitydesktop.org/wiki">www.trinitydesktop.org/wiki</ulink></term>
 <listitem><para>The &tde; Wiki</para></listitem>
 </varlistentry>

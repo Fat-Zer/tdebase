@@ -81,7 +81,7 @@ if you use <acronym>POP3</acronym>.</para></listitem>
 </para>
 
 <para>Once you have that information, you are ready to start setting
-up &kmail;. Open &kmail; from the <guimenu>K</guimenu> menu (you can
+up &kmail;. Open &kmail; from the <guimenu>TDE</guimenu> menu (you can
 find it in the <guisubmenu>Internet</guisubmenu> submenu, or use one
 of the methods described in <xref linkend="programs-launching"/>.) Once
 &kmail; has opened, select the menu entry

@@ -94,12 +94,12 @@ maintain this &FAQ;.</para> </abstract>
 <chapter id="credits">
 <title>Credits and License</title>
 
-<para>The current &FAQ; maintainers are:</para>
+<!--<para>The current &FAQ; maintainers are:</para>
 
 <itemizedlist>
 <listitem><para>J Hall
 <email>jes.hall@kdemail.net</email></para></listitem>
-</itemizedlist>
+</itemizedlist>-->
 
 <para>Many of the answers in this &FAQ; are taken
 from the various &tde; mailing lists and newsgroups. Here is a
@@ -107,7 +107,7 @@ from the various &tde; mailing lists and newsgroups. Here is a
 answers that eventually appear in this &FAQ;.</para>
 
 <para>Special thanks go to the former &FAQ;
-maintainers, Rainer Endres and Mr. Lee Wee Tiong </para>
+maintainers, Rainer Endres, Mr. Lee Wee Tiong, and J. Hall. </para>
 
 
 <!-- TRANS:CREDIT_FOR_TRANSLATORS -->

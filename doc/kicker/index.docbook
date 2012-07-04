@@ -62,7 +62,7 @@ the desktop.
 
 <para>
 &kicker; is the application launcher panel of the Trinity Desktop Environment.
-Besides the <guimenu>K</guimenu> Menu, where you can start applications,
+Besides the <guimenu>TDE</guimenu> Menu, where you can start applications,
 &kicker; is also capable of running docked applets like the pager, the
 taskbar or the clock, and extensions, such as child panels.
 </para>
@@ -135,7 +135,7 @@ basics</link>.
 <para>
 The main use of &kicker; is starting applications. This is
 done by clicking icons, either from the panel or from the
-<guimenu>K</guimenu> Menu. &kicker; shows some more things too, so let's
+<guimenu>TDE</guimenu> Menu. &kicker; shows some more things too, so let's
 see.
 </para>
 
@@ -146,11 +146,11 @@ Having a look at the screenshots above, there are from left to right:
 <variablelist>
 
 <varlistentry>
-<term>The <guimenu>K</guimenu> Menu</term>
+<term>The <guimenu>TDE</guimenu> Menu</term>
 <listitem>
 <para>
 It is used for launching applications and some other useful
-things. Refer to <link linkend="k-menu">The <guimenu>K</guimenu> Menu
+things. Refer to <link linkend="k-menu">The <guimenu>TDE</guimenu> Menu
 </link>for more information.
 </para>
 </listitem>
@@ -273,7 +273,7 @@ There are three different ways to add an application to &kicker;:
 <listitem>
 <para>
 Simply drag any file from &konqueror; into &kicker; and it's there. Dragging
-also works from the <guimenu>K</guimenu> Menu with any entry.  You can
+also works from the <guimenu>TDE</guimenu> Menu with any entry.  You can
 change the attributes like optional command line parameters or the icon
 by clicking it with the &RMB; and choosing <guimenuitem>Configure 
 <replaceable>applicationname</replaceable> Button...</guimenuitem> from the
@@ -342,7 +342,7 @@ removed.
 <para>
 Folders can be added by simply dragging a folder to any free space of
 &kicker;. Quick Browsers can also be added from the context
-menu or the <guimenu>K</guimenu> Menu.
+menu or the <guimenu>TDE</guimenu> Menu.
 </para>
 
 <para>
@@ -419,7 +419,7 @@ then <guilabel>Special Buttons</guilabel> on the right top of the
 fileref="k_menu_icon.png"
 format="PNG"/></imageobject></inlinemediaobject></guiicon> The
 <guiicon>TDE Menu icon</guiicon> is one of the most necessary icons in
-&kicker;. As you might guess, it opens the <guimenu>K</guimenu> Menu,
+&kicker;. As you might guess, it opens the <guimenu>TDE</guimenu> Menu,
 which you can learn more about in <link linkend="k-menu">The K
 Menu</link>.
 </para>
@@ -522,7 +522,7 @@ about quick browsers.
 <!-- fileref="nonkdeapp_icon.png" format="PNG"/></imageobject> -->
 <!-- </inlinemediaobject></guiicon> -->
 The <guilabel>Non-&tde; Application Launcher</guilabel> lets you add an
-application which doesn't appear in the <guimenu>K</guimenu> menu to &kicker;.
+application which doesn't appear in the <guimenu>TDE</guimenu> menu to &kicker;.
 Refer to <link linkend="adding-apps">Adding Applications</link> for more
 information about Non-&tde; Applications.
 </para>
@@ -712,7 +712,7 @@ menu.
 Every <guiicon>application starter</guiicon> has some preferences you
 can set from their context menu with <guimenuitem>Configure <replaceable>application name</replaceable>Button...</guimenuitem>. Usually applications
 and folders have the same preferences as in &konqueror;.  Only the
-applications which are located in the <guimenu>K</guimenu> Menu (for
+applications which are located in the <guimenu>TDE</guimenu> Menu (for
 experienced users: those which have a <literal
 role="extension">.desktop</literal> extension in the <filename
 class="directory">applnk</filename> folder) have a special kind of config
@@ -727,7 +727,7 @@ Here you can see some information about the application link. You can also
 choose an icon by clicking on the <guibutton>icon button</guibutton>
 <!-- and change the filename of the link file -->.
 This may be useful if you want the icon on the panel behave different
-to the analog one in the <guimenu>K</guimenu> Menu.
+to the analog one in the <guimenu>TDE</guimenu> Menu.
 </para>
 <!-- Note: illogic-al: Modification not possible from Kicker's Properties menu
 as root usually owns these .desktop files-->
@@ -1034,22 +1034,22 @@ naturally, disables the panel animations.
 
 <para>
 In the <guilabel>Menus</guilabel> tab you can configure the panel menu's
-behavior. This affects the <guimenu>K</guimenu> menu you will often use
+behavior. This affects the <guimenu>TDE</guimenu> menu you will often use
 to launch applications, the browser menus you can use to access
 folders and other menus like the recent documents menu.
 </para>
 
 <para>
 The <guilabel>TDE Menu</guilabel> frame offers you some options to
-configure the <guimenu>K</guimenu> menu's functionality. The
+configure the <guimenu>TDE</guimenu> menu's functionality. The
 <guilabel>Bookmarks</guilabel> and <guilabel>Recent Documents</guilabel> options
 will enable submenus showing your <application>konqueror</application>
 bookmarks and the last documents you've opened using &tde; applications
 respectively. The <guilabel>Quick Browser</guilabel> option will enable a browser menu.
 Enabling the <guilabel>Show side image</guilabel> check box will display a neat
-image on the left side of the <guimenu>K</guimenu> menu.
+image on the left side of the <guimenu>TDE</guimenu> menu.
 The <guilabel>Menu item format</guilabel> entry allows you to set how
-detailed the <guimenu>K</guimenu> menu entries will be.
+detailed the <guimenu>TDE</guimenu> menu entries will be.
 The <guilabel>Name only</guilabel> option simply shows the application's name in the menu.
 The <guilabel>Name (Description)</guilabel> option will show a small description
 besides the name of the application.
@@ -1069,7 +1069,7 @@ when you browse folders containing many files.
 </para>
 
 <para>
-The quick start section in the <guimenu>K</guimenu> menu offers quick
+The quick start section in the <guimenu>TDE</guimenu> menu offers quick
 access to programs you have used often or recently. In the
 <guilabel>QuickStart Menu Items</guilabel> frame you
 can choose whether this section will show the most recently or the most
@@ -1424,15 +1424,15 @@ taskbar button contains more than one application.
 </chapter>
 
 <chapter id="k-menu">
-<title>The <guimenu>K</guimenu> Menu</title>
+<title>The <guimenu>TDE</guimenu> Menu</title>
 
 <para>
-The <guimenu>K</guimenu> Menu is one of the central elements of
+The <guimenu>TDE</guimenu> Menu is one of the central elements of
 &kicker;.
 </para>
 
 <para>
-There are five main groups in the <guimenu>K</guimenu> Menu which will
+There are five main groups in the <guimenu>TDE</guimenu> Menu which will
 be described now from bottom to top.
 </para>
 
@@ -1440,7 +1440,7 @@ be described now from bottom to top.
 <title>The &tde; Group</title>
 
 <para>
-This group is for the common &tde; things in the <guimenu>K</guimenu>
+This group is for the common &tde; things in the <guimenu>TDE</guimenu>
 Menu.
 </para>
 
@@ -1472,7 +1472,7 @@ screensaver's password settings.
 <term>Special Configuration</term>
 <listitem>
 <para>
-Clicking with the &RMB; on the <guimenu>K</guimenu> Menu, will produce a
+Clicking with the &RMB; on the <guimenu>TDE</guimenu> Menu, will produce a
 special submenu. In this submenu is the <guisubmenu>Panel Menu</guisubmenu>.
 Here you can change the settings of &kicker;, described in the
 <link linkend="configuring">Configuring &kicker;</link> section, add
@@ -2165,7 +2165,7 @@ There is only one standard shortcut available in &kicker;:
 <term><keycombo action="simul">&Alt;<keycap>F1</keycap></keycombo></term>
 <listitem>
 <para>
-Opens the <guimenu>K</guimenu> Menu
+Opens the <guimenu>TDE</guimenu> Menu
 </para>
 </listitem>
 </varlistentry>
@@ -2259,7 +2259,7 @@ taskbar, then choose <guimenuitem>Configure Taskbar...</guimenuitem> and check
 <qandaentry>
 <question>
 <para>
-How can I access the <guimenu>K</guimenu> Menu without using the mouse?
+How can I access the <guimenu>TDE</guimenu> Menu without using the mouse?
 </para>
 </question>
 <answer>
@@ -2322,7 +2322,7 @@ symbolic link: <userinput><command>ln</command> <option>-s</option>
 <qandaentry>
 <question>
 <para>
-Is it possible to change the <guiicon>K</guiicon> button of the panel to
+Is it possible to change the <guiicon>T</guiicon> button of the panel to
 another picture?
 </para>
 </question>

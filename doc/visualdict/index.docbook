@@ -33,9 +33,7 @@ The &tde; Team
 
 <legalnotice>&FDLNotice;</legalnotice>
 
-<abstract><para>A visual guide to &tde;'s interface.  This is an early
-version of the document.  Eventually, this will be a graphical tour of
-&tde;.</para></abstract>
+<abstract><para>A visual guide to the &tde; interface.</para></abstract>
 
 <keywordset>
 <keyword>KDE</keyword>
@@ -55,13 +53,12 @@ version of the document.  Eventually, this will be a graphical tour of
 
 <title>&tde; Visual Dictionary of terms</title>
 
-<para>This project was started to help unify the vocabulary used in &tde;
+<para>This handbook is intended help users understand the vocabulary used in &tde;
 documentation.</para>
 
 <para>We provide this for you here as an aid to learning your way around the
-&tde;
-Graphical User Interface.  These names have been standardized within &tde;
-documentation, so that you will always find interface items referred to in the
+&tde; Graphical User Interface. These names have been standardized within &tde;
+documentation, so you will always find interface items referred to in the
 same way.</para>
 
 <tip><para>The term <quote>Widget</quote> refers to the basic building

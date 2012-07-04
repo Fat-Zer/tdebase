@@ -66,7 +66,7 @@ location bar before saving the profile.</para>
 
 <note><para>You can create a desktop icon to start &konqueror; with your new
 profile. First create a desktop icon by dragging the &konqueror; icon from the
-<guimenu>K</guimenu> menu onto the desktop and selecting <guimenuitem>Copy
+<guimenu>TDE</guimenu> menu onto the desktop and selecting <guimenuitem>Copy
 Here</guimenuitem>.  Then <mousebutton>right</mousebutton> click on the new
 icon, select
 <guimenuitem>Properties...</guimenuitem> and change <guilabel>Program

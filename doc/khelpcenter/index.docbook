@@ -44,10 +44,11 @@ a way round it. (FF) -->
 <releaseinfo>&tde-release-version;</releaseinfo>
 
 <abstract>
-<para>&tde; is a graphical desktop environment for &UNIX; workstations. The
+<para>The
+Trinity Desktop Environment (&tde;) is a graphical desktop environment for &UNIX; workstations. The
 Trinity Desktop Environment combines ease of use, contemporary functionality, and
 professional graphical design along with the technical advantages of
-the &UNIX; operating system.</para>
+&UNIX; operating systems.</para>
 </abstract>
 
 <keywordset>

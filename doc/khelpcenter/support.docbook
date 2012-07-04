@@ -10,12 +10,12 @@
 <title>Supporting the &tde; Project</title>
 
 <para> If you are new to &tde;, the &tde; project might look like big
-machinery to you. Undoubtedly, &tde; is no longer a small project,
+machinery to you. Undoubtedly, &tde; is not a small project,
 nevertheless it is very important to realize that it is easy to
 <quote>make a difference</quote> in the &tde; world.  </para>
 
-<para> There is always a need for dedicated developers, graphic
-artists, sound engineers, translators and documentation
+<para> There is always a need for developers, graphic
+artists, sound engineers, translators, and documentation
 writers. Consider jumping aboard this exciting international project
 and make yourself a name in the software world.</para>
 
@@ -35,7 +35,7 @@ platform.  </para>
 <itemizedlist>
 
 <listitem><para>
-Subscribe to the <link linkend="contact">&tde; mailing lists</link>
+Subscribe to the <ulink url="http://www.trinitydesktop.org/mailinglist.php">mailing list</ulink>
 that interest you.
 </para></listitem>
 
@@ -56,7 +56,7 @@ Learn to program using the &tde; application framework and join the
 <sect1 id="supporting-tde-financial-support">
 <title>Supporting financially</title>
 
-<para> The &tde; team is working very hard on providing you with the
+<para> The &tde; team is working hard on providing you with the
 best desktop available for the &UNIX; operating system. &tde; is
 available for free and will always be available for free, including
 each and every line of its source code, for everyone to modify and

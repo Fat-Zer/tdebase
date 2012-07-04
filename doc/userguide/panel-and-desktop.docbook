@@ -32,7 +32,7 @@ next section describes some common ways to customize the panel.</para>
 <title>Customizing the icons on the panel</title>
 
 <para>When you first start &tde;, kicker displays some icons next to
-the <guimenu>K</guimenu> menu. These can be used to start the
+the <guimenu>TDE</guimenu> menu. These can be used to start the
 applications that they represent. To see which application is launched
  by each icon, hold the mouse cursor over the icon until a tooltip (a
 small popup label) appears telling you the name of the application.</para>
@@ -45,7 +45,7 @@ name</replaceable> Button</guilabel> in the popup menu that
 appears. To add a new icon, &RMB;-click on an empty space on the
 panel, and follow the menu entry <guisubmenu>Add Application to Panel
 </guisubmenu>. This leads you to a copy of the
-<guimenu>K</guimenu> menu, where you can find all of the &tde;
+<guimenu>TDE</guimenu> menu, where you can find all of the &tde;
 applications. For example, to add an icon for the &juk; music player,
 follow through the menus to <menuchoice><guisubmenu>Add Application
 to Panel</guisubmenu><guisubmenu>Multimedia</guisubmenu><guimenuitem>&juk; (Music

@@ -18,7 +18,7 @@ by <ulink url="mailto:ettrich@kde.org">Matthias Ettrich</ulink> in
 1996 and originally called the K Desktop Environment. The aim of the &tde; project is to connect the
 power of the &UNIX; operating systems with the comfort of a modern user
 interface.</para>
-<para>If you want further information about &tde;, look at
+<para>For additional information about &tde;, check the Trinity web site at
 <ulink url="http://www.trinitydesktop.org/about.php">About Trinity</ulink></para>
 </answer>
 </qandaentry>
@@ -29,7 +29,7 @@ interface.</para>
 </question>
 <answer>
 <para>&tde; is a Desktop Environment for all flavors of &UNIX; systems.
-While most &tde; developers use &Linux;, &tde; should run
+While most &tde; developers use &Linux; based systems, &tde; should run
 on a wide range of systems. You might need to tweak the
 source code a bit to get &tde; to compile on different variant
 of &UNIX; systems, or when not using the &GNU; development tools, in
@@ -57,8 +57,8 @@ computer desktop system.</para>
 <answer>
 <para>No, &tde; is not a window manager. While &tde; includes a
 sophisticated window manager (&twin;), &tde; is much more, providing
-a full integrated desktop environment.</para>
-<para>&tde; includes a web browser, a file manager, a window manager, a help system, a
+a full integrated desktop environment. &tde; includes a web browser,
+a file manager, a window manager, a help system, a
 configuration system, many tools and utilities, and many
 applications, including but not limited to mail
 and news clients, drawing programs, a PDF and a &DVI; viewer
@@ -72,9 +72,9 @@ and so forth.</para>
 <acronym>OS</acronym> clone?</para>
 </question>
 <answer>
-<para>No, &tde; is not a clone. Specifically &tde; is not a
-<acronym>CDE</acronym> or &Windows;  clone. While the &tde; developers
-have and will continue to glean the best features from all existing
+<para>&tde; is not a clone. Specifically &tde; is not a
+Common Desktop Environment (<acronym>CDE</acronym>) or &Windows; clone.
+While developers have and will continue to glean the best features from existing
 desktop environments, &tde; is a unique environment that has and
 will continue to go its own way.</para>
 </answer>
@@ -101,7 +101,7 @@ Public License. All &tde; libraries are available under the
 &tde; desktop possible, but all &tde; applications are licensed under
 the <acronym>GPL</acronym>.</para>
 <para>&tde; uses the <link linkend="qt">&Qt; C++ crossplatform
-toolkit</link>, which is also released (since version 2.2) under the
+toolkit</link>, which, since version 2.2, is released under the
 <acronym>GPL</acronym>.</para>
 <para>Both &tde; and &Qt; can be made available on
 &CD-ROM; free of charge. No runtime fees of any kind are
@@ -111,7 +111,7 @@ incurred.</para>
 
 <qandaentry>
 <question>
-<para>Why the rebranding and renaming efforts? Why can't you continue to call the software KDE?</para>
+<para>Why the rebranding and renaming efforts? Why not continue calling the software KDE?</para>
 </question>
 <answer>
 <para>The "KDE" name, various logos, and related efforts are trademarked by the KDE
@@ -125,14 +125,14 @@ we can't legally use their trademarks.</para>
 <para>How is Trinity different from KDE4?</para>
 </question>
 <answer>
-<para>Both desktop environments share common roots to KDE 3.5.10, the last
+<para>Both desktop environments share common roots to KDE 3.5.10, which was the last
 official release of KDE in the 3.x series. Many KDE developers wanted to break
 from that code chain and tool sets to start afresh. Thus was born KDE4. In
 addition to moving to the Qt4 tool set, the KDE developers revamped the
 underlying KDE code set.</para>
 
 <para>KDE4 and Trinity have different philosophies about work flow preferences.
-KDE4 developers want to support emerging work flow concepts and techniques.
+KDE4 developers want to support certain work flow concepts and techniques.
 Trinity developers want to maintain a "traditional" desktop environment.</para>
 
 <para>For example, KDE4 offers the following tools:</para>
@@ -179,13 +179,13 @@ Trinity developers want to maintain a "traditional" desktop environment.</para>
 with netbooks, tablets, and smart phones. TDE provides a single interface that is
 optimized for the mouse/keyboard HCI (Human-computer interaction) model.</para>
 
-<para>Both desktop environments provide an excellent choice for different work
+<para>Both desktop environments provide an excellent choice for various work
 flows but differ in approach. Trinity leans toward user expectations of how
 desktop environments have functioned traditionally. There is a sense of
 familiarity with that environment many people like. Similarly other users prefer
 the work flow features offered by KDE4 because those features match their
 expectations of how they want their computer to behave. The difference between the
-two environments does not mean one is smaller, buggier, or slower -- only that
+two environments does not mean one is better, buggier, or slower -- only that
 they are different and appeal to different types of people. Although sharing a
 common heritage, both desktops appeal to different groups of people. As always
 with free/libre software, there is a choice.</para>
