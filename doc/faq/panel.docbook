@@ -4,10 +4,8 @@
  "dtd/kdex.dtd">
 -->
 
-
 <chapter id="panel">
 <title>The panel</title>
-
 
 <qandaset>
 <qandaentry>
@@ -15,53 +13,41 @@
 <para>How do I add applications to the &tde; panel (&kicker;)?</para>
 </question>
 <answer>
-<para>There are several ways to add an application to the panel, of
-which the easiest is to right-click on the panel, and from the context
-menu which appears, select <menuchoice><guimenu>Panel
-Menu</guimenu><guisubmenu>Add to
-Panel</guisubmenu><guisubmenu>Application
-Button</guisubmenu></menuchoice> and then the application for which
-you want to add a link.</para> <para>For more ways of adding buttons
-to the panel, refer to the &kicker; Handbook.</para>
-
+<para>There are several ways to add an application to the panel.
+The easiest is to right-click on the panel, and from the context
+menu that appears, select <guimenu>Add Application to
+Panel</guimenu>.</para>
+<para>For more ways of adding buttons to the panel, refer to the
+<ulink url="help:/kicker">Kicker</ulink> Handbook.</para>
 </answer>
 </qandaentry>
 
-
 <qandaentry>
 <question>
-<para>Is it possible to change the <guibutton>K</guibutton> button of
+<para>How do I change the menu <guibutton>T</guibutton> button of
 the panel to another picture?</para>
 </question>
 <answer>
-<para>The simplest way is to download a new icon theme with a &kmenu; icon
-you prefer from 
-<ulink url="http://www.kde-look.org">http://www.kde-look.org</ulink> and 
-install it using the &kcontrolcenter;.</para>
-<para>In order to change only the &kmenu; icon you can overwrite the
-<filename>kmenu.png</filename> image for every size in an icon theme set.
-So, for &tde; default icons this would be <filename>$<envar>TDEDIR</envar>/share/icons/default.tde/<replaceable>size</replaceable>/apps/kmenu.png</filename>,
-where <replaceable>size</replaceable> is one of the sizes included in the
-&tde; icon theme. 
+<para>The simplest way is to right-click on the panel, from the context menu
+select <guimenu>Configure Panel</guimenu>, from the icon list on the left side,
+select Menus, then inside the TDE Menu grouping, select the TDE Menu button icon.
 </para>
 </answer>
 </qandaentry>
 
 <qandaentry>
 <question>
-<para>
-After an upgrade my &kmenu; appears to be empty! How can I get my menu back?
+<para>After updating &tde;, my &kmenu; appears to be empty! How can I get my menu back?
 </para>
 </question>
 <answer>
 <para>
-In &tde; 3.2 and later local modifications to the &kmenu; are stored
-in
-<filename>$<envar>HOME</envar>/.config/menus/applications-kmenuedit.menu
-</filename>. Try moving this file out of the way and then issuing the
+User modifications to the &kmenu; are stored in
+<filename>$<envar>HOME</envar>/.config/menus/applications-kmenuedit.menu</filename>.
+Try moving this file out of the way and then issuing the
 command <userinput><command>kbuildsycoca</command>
 <option>--noincremental</option></userinput>. This should restore you to the
-default system menus.
+default system menus. If that is the case you'll have to recreate your customized menu.
 </para>
 </answer>
 </qandaentry>
@@ -70,38 +56,32 @@ default system menus.
 <question><para>My desktop panel has disappeared. How can I get it
 back?</para>
 </question>
-
 <answer>
-
-<para>The panel disappearing is usually due to it crashing. This is
-most often caused by loading an applet that has a fatal bug or due to
-a bad installation of &tde; and/or the panel.</para>
-
+<para>The panel disappearing is usually due to a crash. This might be
+caused by loading an applet that has a fatal bug or a bad installation
+of &tde; and/or the panel.</para>
 <para>The easiest way to get the panel back is to launch the
 <guilabel>Run Command</guilabel> window by pressing <keycombo
-action="simul">&Alt;<keycap>F2</keycap> </keycombo> and entering
-<userinput><command>kicker</command></userinput> and then pressing the
+action="simul">&Alt;<keycap>F2</keycap></keycombo> and entering
+<userinput><command>kicker</command></userinput>, and then pressing the
 <guibutton>OK</guibutton> button.</para>
-
 <para>If the panel continues to disappear, you may wish to either
 remove or edit by hand your
 <filename>$<envar>TDEHOME</envar>/share/config/kickerrc</filename>
 file, where <filename
 class="directory">$<envar>TDEHOME</envar></filename> is usually
-<filename class="directory">~/.kde</filename>. If you choose to edit
-it by hand, start by removing the applet entry groups.</para>
-
+<filename class="directory">~/.trinity</filename>. If you choose to edit
+by hand, start by removing the applet entry groups.</para>
 </answer>
 </qandaentry>
 
-<qandaentry><question>
+<!--<qandaentry><question>
 <para>Where did the Icon Zooming option that used to be in &kicker; go?
 </para></question>
 <answer><para>
 Icon zooming was not actively maintained and had caused severe bugs and usability issues. It was replaced in &tde; 3.4 by the new mouse over effects, which combine esthetics with useful information.
 </para></answer>
-
-</qandaentry>
+</qandaentry>-->
 
 <qandaentry>
 <question><para>How can I start an application minimized to the system
@@ -113,14 +93,14 @@ in the system tray, run <userinput><command>ksystraycmd </command>
 <option>--hidden</option> <command>konsole</command></userinput>. For
 more information about <command>ksystraycmd</command>, see the section
 <quote>Advanced Window Management</quote> in the &tde;
-User Guide.</para>
+<ulink url="help:/khelpcenter/userguide/windows-how-to-work.html#advanced-window-management">
+User Guide</ulink>.</para>
 </answer>
 </qandaentry>
 
 <qandaentry>
 <question><para>How do I use the &Windows; key to open the &kmenu;?</para>
 </question>
-
 <answer><para>Previous versions of &tde; provided a trick to allow you to
 use the &Windows; key both as a modifier (so you could have shortcuts
 like <keycombo action="simul"><keysym>Win</keysym><keycap>R</keycap>
@@ -161,7 +141,7 @@ able to popup the &kmenu; by pressing the <keysym>Win</keysym> key.</para>
 </listitem>
 
 <listitem><para>One more step is required to save the changes across
-settings: Create a file <filename>~/.kde/env/win-key.sh</filename>
+settings: Create a file <filename>~/.trinity/env/win-key.sh</filename>
 (create the directory if it doesn't exist), and add the
 <command>xmodmap</command> command you used previously to it. The
 change should now be applied every time you start &tde;.</para>

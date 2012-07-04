@@ -68,15 +68,15 @@
 
 <h1>%1</h1> <!-- Welcome to the Trinity Desktop Environment -->
 
-<p><i>%1</i></p> <!-- The TDE team welcomes you to user-friendly UNIX computing -->
+<p><i>%1</i></p> <!-- The TDE team welcomes you to user-friendly Unix-like computing -->
 
 <p>%1</p><!-- TDE is a graphical desktop environment for UNIX workstations. The
 Trinity Desktop Environment combines ease of use, contemporary functionality, and
 professional graphical design along with the technical advantages of
-the UNIX operating system.  -->
+the Unix-like operating systems.  -->
 
 <ul>
-<li><p><a href="help:/khelpcenter/index.html?anchor=whatiskde">%1</a></p></li>
+<li><p><a href="help:/khelpcenter/index.html?anchor=whatistde">%1</a></p></li>
 <li><p><a href="help:/khelpcenter/index.html?anchor=contact">%1</a></p></li> <!-- Contacting the TDE Project -->
 <li><p><a href="help:/khelpcenter/index.html?anchor=support">%1</a></p></li> <!-- Supporting the TDE Project -->
 <li><p><a href="help:/khelpcenter/index.html?anchor=links">%1</a></p></li> <!-- Useful links -->
