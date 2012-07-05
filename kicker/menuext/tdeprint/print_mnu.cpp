@@ -106,7 +106,7 @@ void PrintMenu::slotExec(int ID)
             kapp->tdeinitExec("kaddprinterwizard");
             break;
         case TDEPRINT_SETTINGS_ID:
-	    kapp->tdeinitExec("kaddprinterwizard", TQStringList("--kdeconfig"));
+	    kapp->tdeinitExec("kaddprinterwizard", TQStringList("--tdeconfig"));
             break;
 	case CONFIG_SERVER_ID:
 	    kapp->tdeinitExec("kaddprinterwizard", TQStringList("--serverconfig"));
