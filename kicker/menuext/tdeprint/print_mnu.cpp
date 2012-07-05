@@ -112,7 +112,7 @@ void PrintMenu::slotExec(int ID)
 	    kapp->tdeinitExec("kaddprinterwizard", TQStringList("--serverconfig"));
 	    break;
         case PRINT_MANAGER_ID:
-            KRun::runCommand("kcmshell kde-printers.desktop");
+            KRun::runCommand("kcmshell tde-printers.desktop");
             break;
         case PRINT_BROWSER_ID:
             KRun::runCommand("kfmclient openProfile filemanagement print:/", "kfmclient", "konqueror");

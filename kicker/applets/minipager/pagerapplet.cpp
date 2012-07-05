@@ -143,7 +143,7 @@ KMiniPager::KMiniPager(const TQString& configFile, Type type, int actions,
     connect( m_twin, TQT_SIGNAL( desktopNamesChanged() ), this, TQT_SLOT( slotDesktopNamesChanged() ) );
     connect( kapp, TQT_SIGNAL(backgroundChanged(int)), TQT_SLOT(slotBackgroundChanged(int)) );
 
-    if (kapp->authorizeKAction("kicker_rmb") && kapp->authorizeControlModule("kde-kcmtaskbar.desktop"))
+    if (kapp->authorizeKAction("kicker_rmb") && kapp->authorizeControlModule("tde-kcmtaskbar.desktop"))
     {
         m_contextMenu = new TQPopupMenu();
         connect(m_contextMenu, TQT_SIGNAL(aboutToShow()), TQT_SLOT(aboutToShowContextMenu()));

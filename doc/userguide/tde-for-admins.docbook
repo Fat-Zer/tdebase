@@ -1662,8 +1662,8 @@ new menu format:
 	    &lt;Directory&gt;suse-office.directory&lt;/Directory&gt;
 	    &lt;Include&gt;
 	        &lt;Filename&gt;Acrobat Reader.desktop&lt;/Filename&gt;
-	        &lt;Filename&gt;kde-kpresenter.desktop&lt;/Filename&gt;
-	        &lt;Filename&gt;kde-kword.desktop&lt;/Filename&gt;
+	        &lt;Filename&gt;tde-kpresenter.desktop&lt;/Filename&gt;
+	        &lt;Filename&gt;tde-kword.desktop&lt;/Filename&gt;
 	    &lt;/Include&gt;
 	&lt;Menu&gt;
 </markup>
@@ -2286,7 +2286,7 @@ as part of the <guilabel>Configure Konqueror</guilabel> dialog in
 <para>To start the Proxy module use:</para>
 <itemizedlist>
 <listitem><para><command>kcmshell</command>
-<filename>kde-proxy.desktop</filename></para></listitem>
+<filename>tde-proxy.desktop</filename></para></listitem>
 <listitem><para><command>kcmshell</command> proxy</para></listitem>
 </itemizedlist>
 
@@ -2330,7 +2330,7 @@ following to <filename>kdeglobals</filename>:</para>
 <replaceable>module-id</replaceable>=false</screen>
 <para>For example, to disable the proxy module use</para>
 <screen>[TDE Control Module Restrictions]
-kde-proxy.desktop=false</screen>
+tde-proxy.desktop=false</screen>
 <para>Check the Control Center and the <guilabel>Configure
 Konqueror</guilabel> dialog if the proxy configuration is still
 there.</para>

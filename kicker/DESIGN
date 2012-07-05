@@ -171,7 +171,7 @@ as menu-editing (see below)
 
 How: ??? "General" group in kickerrc is marked immutable (??? that would
 imply that buttons can't be added either, loss of flexibility)
-How: Use "kde-panel.desktop" control module restriction.
+How: Use "tde-panel.desktop" control module restriction.
 
 * Menu editing can be restricted. Kicker offers several menu items in the
 TDE menu beyond the applications menu itself. See "Configure Panel -> Menus"
