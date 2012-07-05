@@ -177,8 +177,8 @@ void ContainerArea::defaultContainerConfig()
     }
     else
     {
-        buttons << "kde-Home.desktop"
-                << "kde-konqbrowser.desktop";
+        buttons << "tde-Home.desktop"
+                << "tde-konqbrowser.desktop";
     }
 
     //int size = dsize;

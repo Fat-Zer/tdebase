@@ -1209,10 +1209,10 @@ void Workspace::saveDesktopSettings()
 TQStringList Workspace::configModules(bool controlCenter)
     {
     TQStringList args;
-    args <<  "kde-twindecoration.desktop";
+    args <<  "tde-twindecoration.desktop";
     if (controlCenter)
-        args << "kde-twinoptions.desktop";
-    else if (kapp->authorizeControlModule("kde-twinoptions.desktop"))
+        args << "tde-twinoptions.desktop";
+    else if (kapp->authorizeControlModule("tde-twinoptions.desktop"))
         args  << "twinactions" << "twinfocus" <<  "twinmoving" << "twinadvanced" << "twinrules" << "twintranslucency";
     return args;
     }
