@@ -296,7 +296,7 @@ TQStringList Kicker::configModules(bool controlCenter)
 
     if (controlCenter)
     {
-        args << "kde-panel.desktop";
+        args << "tde-panel.desktop";
     }
     else
     {
