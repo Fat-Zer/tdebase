@@ -190,7 +190,7 @@ Browser, Word Processor, &etc;) are displayed on the &kmenu;.
 you to
 determine which special menu items appear in the &kmenu;.</para>
 <para>The <guilabel>Bookmarks</guilabel> 
-menu allows you to quickly select from the same bookmarks that are available in &konqueror;.  </para>
+menu allows you to quickly select from the same bookmarks that are available in &konqueror;.</para>
 <para>The <guilabel>Find</guilabel> menu offers access to the &kfind; application to search for local files, and a quick link to a search engine to search for things on the Internet.</para>
 <para>The <guilabel>Konqueror Profiles</guilabel> menu allows you to
 launch &konqueror; with any of your configured profiles.</para>
@@ -203,7 +203,7 @@ directly from the TDE menu.</para>
 the printer(s) attached to your system.</para>
 <para>The <guilabel>Quick Browser</guilabel> menu gives you quick links to locations on your hard drive.</para>
 <para>The <guilabel>Recent Documents</guilabel> menu lists the most recently edited documents and will automatically 
-launch the application to edit or view this document. </para>
+launch the application to edit or view this document.</para>
 <para>The <guilabel>System</guilabel> menu allows you quick access to
 some commonly visited places, including your Home folder, and the
 Trash. You may find this useful instead of having a separate entry for

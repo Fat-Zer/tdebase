@@ -14,30 +14,23 @@
 <para>How can I contribute to &tde;?</para>
 </question>
 <answer>
-<para>&tde; is a free software project that lives from voluntary
+<para>&tde; is a free/libre software project that lives from voluntary
 contributions. Everybody is encouraged to contribute to &tde;. Not
 only programmers are welcome. There are many ways in which you can
 help to improve &tde;:</para>
 <itemizedlist>
 <listitem><para>Test the software.</para></listitem>
-<listitem><para>Send in bug reports. For more information on this,
-see <link linkend="bug-report">How do I submit a bug
+<listitem><para>Send in bug reports. For more information,
+refer to <link linkend="bug-report">How do I submit a bug
 report?</link>.</para></listitem>
-<listitem><para>Write documentation or help files. You can get some
-information by visiting the <ulink
-url="http://i18n.kde.org/doc/">&tde; Editorial Team
-Home Page</ulink>.</para></listitem>
+<listitem><para>Write or edit documentation and help files.</para></listitem>
 <listitem><para>Translate programs, documentation, and help files.
-For more information on this, you should visit <ulink
-url="http://i18n.kde.org">The &tde; Translators' and Documenters' Web
-Site</ulink>.</para></listitem>
-<listitem><para>Draw nice icons or compose sound effects. You can
-visit the <ulink url="http://artist.kde.org/">&tde;
-artists page</ulink> to find out more.</para></listitem>
+</para></listitem>
+<listitem><para>Draw icons, wallpaper, or compose sound effects.</para></listitem>
 <listitem><para>Write articles and books about &tde;. If you want to
-help spread the word about &tde;, simply send an email to
-<email>kde-pr@kde.org</email>. This will get you in touch
-with the &tde; public relations volunteers.</para></listitem>
+help spread the word about &tde;, send an email to
+<email>trinity-devel@lists.pearsoncomputing.net</email>. This will get you in touch
+with the &tde; developers and packagers.</para></listitem>
 <listitem><para>Program new &tde; applications. Please refer to <xref
 linkend="programming"/> for more information.</para></listitem>
 <listitem><para> Of course, sponsors are also
@@ -45,7 +38,7 @@ welcome. :-)</para></listitem>
 </itemizedlist>
 <para>There are several places to look for more information if you
 want to get involved in the development. The first step is to
-subscribe to some of the <ulink  url="http://www.kde.org/mailinglists/">mailing
+subscribe to some of the <ulink  url="http://www.trinitydesktop.org/mailinglist.php">mailing
 lists</ulink>. You will soon see something
 that can be improved or added.</para>
 </answer>
@@ -62,9 +55,9 @@ and thanks for helping! The system features several query types and a
 list of all known bugs.</para>
 <para>The easiest way to submit a bug is to select
 <menuchoice><guimenu>Help</guimenu><guimenuitem>Report
-Bug...</guimenuitem></menuchoice> from the menu bar of the application
-with the bug. This will open a small dialog box with a link
-to the bug tracking system. Please make sure to follow the
+Bug/Request Enhancement...</guimenuitem></menuchoice> from the menu bar of the application
+with the bug. This will open a dialog box with a link
+to the bug tracking system. Please follow the
 instructions of the bug reporting wizard.</para>
 </answer>
 </qandaentry>
@@ -93,72 +86,66 @@ on.</para>
 <para>To get into &tde; programming, you will need some basic tools:
 <application>automake</application>,
 <application>autoconf</application>, and
-<application>egcs</application>. You should look to <ulink
-url="http://developer.kde.org/">http://developer.kde.org/</ulink>
-for more tips.</para>
-<para>Another excellent resource for learning &tde;
-programming is the &Qt;
-online tutorials. These are installed along with &Qt;. To view them,
+<application>cmake</application>.</para>
+<para>An excellent resource for learning &tde;
+programming is the &Qt; tutorials. These are installed along with &Qt;. To view them,
 open <filename>$<envar>QTDIR</envar>/doc/html/index.html</filename> in
-&konqueror; and bookmark it. The tutorials
-can be found under "Using
-Qt". The source code for each lesson can be found in the <filename
+&konqueror; and bookmark the locatio. The tutorials
+can be found under "Using Qt". The source code for each lesson can be found in the <filename
 class="directory">$<envar>QTDIR</envar>/tutorial</filename>
 directory.</para>
-<para>There is, however, one thing that everybody interested in
-programming for &tde; should do: <emphasis>subscribe to the developers
+<para>There is one thing everybody interested in
+programming for &tde; should do: please <emphasis>subscribe to the developers
 mailing list</emphasis>. To subscribe, you have to send an email to
 <ulink
-url="mailto:kde-devel-request@kde.org">kde-devel-request@kde.org</ulink>
-with the subject <userinput>subscribe
-<replaceable>your_email_address</replaceable></userinput>.
-<important><para>Please read <link linkend="subscribe">How to
-subscribe/unsubscribe to these lists</link> carefully. Everything
-said there applies to the development list as
-well.</para></important></para>
+url="mailto:trinity-devel-subscribe@lists.pearsoncomputing.net">trinity-devel-subscribe@lists.pearsoncomputing.net</ulink>
+with an empty email.
+<important><para>Please read<ulink url="http://www.trinitydesktop.org/mailinglist.php">
+http://www.trinitydesktop.org/mailinglist.php</ulink>. Everything
+written there applies to the development list as well.</para></important></para>
 </answer>
 </qandaentry>
 
 <qandaentry>
 <question>
-<para>How do I get access to &tde; <acronym>SVN</acronym>?</para>
+<para>How do I get access to &tde; <acronym>GIT</acronym>?</para>
 </question>
 <answer>
-<para>The &tde; project uses <acronym>SVN</acronym> to develop the
+<para>The &tde; project uses <acronym>GIT</acronym> to develop the
 core parts of the software. Usually, when you have changed one of the
 parts (&eg; fixed a bug), and you want to commit this change, the best
 way is to create a patch against a current snapshot and send this
 patch to the developer/maintainer of the respective program.</para>
-<para>If you are doing this more or less regularly, there are instructions here on how to get write access to the <acronym>SVN</acronym> repository: <ulink url="http://developer.kde.org/documentation/other/developer-faq.html#q1.8">
-http://developer.kde.org/documentation/other/developer-faq.html#q1.8</ulink>. But be aware that more users will slow
-down <acronym>SVN</acronym> access for all developers, so we want to
-keep the number of people with direct <acronym>SVN</acronym> access
-reasonably small. But feel free to ask!</para>
+<para>If you are doing this more or less regularly, then contact the developers
+to obtain write access to the <acronym>GIT</acronym> repository:
+<ulink url="trinity-devel@lists.pearsoncomputing.net">
+trinity-devel@lists.pearsoncomputing.net</ulink>.</para>
 </answer>
 </qandaentry>
 
 <qandaentry>
 <question>
-<para>Can I have read-only access to the <acronym>SVN</acronym> repository?</para>
+<para>Can I have read-only access to the <acronym>GIT</acronym> repository?</para>
 </question>
 <answer>
-<para>Yes. Instructions on how to get anonymous, read-only <acronym>SVN</acronym> access are here: <ulink url="http://developer.kde.org/source/anonsvn.html">
-http://developer.kde.org/source/anonsvn.html</ulink>
+<para>Yes. Instructions on how to get anonymous, read-only <acronym>GIT</acronym>
+access are here: <ulink url="http://www.trinitydesktop.org/wiki/bin/view/Developers/GIT">
+http://www.trinitydesktop.org/wiki/bin/view/Developers/GIT</ulink>
 </para>
 </answer>
 </qandaentry>
 
 <qandaentry>
 <question>
-<para>Are there any <acronym>SVN</acronym> mirror sites for &tde;?</para>
+<para>Are there any <acronym>GIT</acronym> mirror sites for &tde;?</para>
 </question>
 <answer>
-<para>No, there are currently no anonymous <acronym>SVN</acronym> mirror sites for &tde;. If you're interested in setting one up, please contact <email>sysadmin@kde.org</email>
+<para>No, currently there are no anonymous <acronym>GIT</acronym> mirror sites for &tde;.
 </para>
 </answer>
 </qandaentry>
 
-<qandaentry>
+<!--<qandaentry>
 <question>
 <para>How do I go about translating &tde; programs into my native
 language?</para>
@@ -169,7 +156,7 @@ Translators' and Documenters' Web Site</ulink> to see whether your
 program is already translated (most are). Otherwise you will find
 information there on how to do it yourself.</para>
 </answer>
-</qandaentry>
+</qandaentry>-->
 </qandaset>
 </chapter>
 

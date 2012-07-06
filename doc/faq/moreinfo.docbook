@@ -14,10 +14,7 @@
 </question>
 <answer>
 <para>The &tde; homepage is located at <ulink
-url="http://www.kde.org">http://www.kde.org</ulink>.  If you prefer a
-local mirror, there are several to choose from.  For a current list of
-web site mirrors sorted by location, please visit <ulink
-url="http://www.kde.org/mirrors/web.php">http://www.kde.org/mirrors/web.php</ulink>.</para>
+url="http://www.trinitydesktop.org/">http://www.trinitydesktop.org/</ulink>.</para>
 </answer>
 </qandaentry>
 
@@ -26,28 +23,32 @@ url="http://www.kde.org/mirrors/web.php">http://www.kde.org/mirrors/web.php</uli
 <para>Is there a &tde; mailing list?</para>
 </question>
 <answer>
-<para>There are several &tde; mailing lists.  Each focuses on a different
-aspect of &tde;.  Some are for developers, so they are not
-discussed in detail.  Some of the more important lists that users
+<para>There are several &tde; mailing lists. Each focuses on a different
+aspect of &tde;. Some are for developers, so they are not
+discussed in detail. Some of the more important lists that users
 might be interested in are:</para>
+
 <variablelist>
-<varlistentry><term>kde</term>
-<listitem><para>This is the main &tde; mailing list for general
-discussions.</para></listitem>
+<varlistentry>
+<term><ulink url="http://www.trinitydesktop.org/mailinglist.php">tde-users</ulink></term>
+<listitem><para>For general discussion, users helping each other.</para></listitem>
 </varlistentry>
-<varlistentry><term>kde-announce</term>
-<listitem><para>This list is used to announce new versions of &tde; as
-well as new tools and applications.</para></listitem>
+
+<varlistentry>
+<term><ulink url="http://www.trinitydesktop.org/mailinglist.php">tde-announce</ulink></term>
+<listitem><para>Announcements of &tde; news</para></listitem>
 </varlistentry>
-<varlistentry><term>kde-look</term>
-<listitem><para>This is the list that deals with questions about look and
-feel, and general user interface considerations.</para></listitem>
+
+<varlistentry>
+<term><ulink url="http://www.trinitydesktop.org/mailinglist.php">tde-devel</ulink></term>
+<listitem><para>For developers, artists, documentation writers.</para></listitem>
 </varlistentry>
 </variablelist>
+
 <para>For the complete list of mailing lists available, please refer
 to <ulink
-url="http://www.kde.org/mailinglists/">http://www.kde.org/mailinglists/</ulink>.</para>
-<para>Please note that it is not a good idea to ask questions which are
+url="http://www.trinitydesktop.org/mailinglist.php">http://www.trinitydesktop.org/mailinglist.php</ulink>.</para>
+<para>Please note that it is not a good idea to ask questions that are
 already answered in this &FAQ;.</para>
 </answer>
 </qandaentry>
@@ -57,31 +58,9 @@ already answered in this &FAQ;.</para>
 <para>How do I subscribe/unsubscribe to these lists?</para>
 </question>
 <answer>
-<para>To subscribe, send an email to list-request, that is:</para>
-<itemizedlist>
-<listitem><para><ulink
-url="mailto:kde-request@kde.org">kde-request@kde.org</ulink></para></listitem>
-<listitem><para><ulink url="mailto:kde-announce-request@kde.org">kde-announce-request@kde.org</ulink></para></listitem>
-<listitem><para><ulink url="mailto:kde-look-request@kde.org">kde-look-request@kde.org</ulink></para></listitem>
-</itemizedlist>
-<para>The email must contain <userinput>subscribe
-<replaceable>your_email_address</replaceable></userinput> in the
-subject.</para>
-<para>To unsubscribe, send an email to list-request, that is:</para>
-<itemizedlist>
-<listitem><para><ulink url="mailto:kde-request@kde.org">kde-request@kde.org</ulink></para></listitem>
-<listitem><para><ulink url="mailto:kde-announce-request@kde.org">kde-announce-request@kde.org</ulink></para></listitem>
-<listitem><para><ulink url="mailto:kde-look-request@kde.org">kde-look-request@kde.org</ulink></para></listitem>
-</itemizedlist>
-<para>The email must contain <userinput>unsubscribe
-<replaceable>your_email_address</replaceable></userinput> in the
-subject.
-<important><para>Never send subscribe/unsubscribe request to the
-mailing lists directly! Use the list-request
-instead.</para></important></para>
-<para>There is also a complete list of all &tde;-related mailing
-lists, and a web interface for subscribing and unsubscribing located
-at <ulink url="http://master.kde.org/mailman/listinfo">http://master.kde.org/mailman/listinfo</ulink>.</para>
+<para>To subscribe, follow the directions here:
+<ulink url="http://www.trinitydesktop.org/mailinglist.php">Official Mailing Lists</ulink>
+</para>
 </answer>
 </qandaentry>
 
@@ -90,44 +69,48 @@ at <ulink url="http://master.kde.org/mailman/listinfo">http://master.kde.org/mai
 <para>Is there a mailing list archive?</para>
 </question>
 <answer>
+<para>Yes, each list has a searchable archive:
 
-<para>Yes, there is a searchable mailing list archive hosted by <ulink
-url="http://www.progressive-comp.com">Progressive Computer
-Concepts</ulink>.  The &URL; is <ulink
-url="http://lists.kde.org">http://lists.kde.org</ulink>.  There you
-will see a folder listing of the mailing lists.  Note that you can
-only do a subject/author search at this level.  You probably will not
-find what you want doing this kind of search.</para>
+<variablelist>
+<varlistentry>
+<term><ulink url="http://trinity-users.pearsoncomputing.net/">tde-users</ulink></term>
+<listitem><para>General discussion archives.</para></listitem>
+</varlistentry>
 
-<para>To do a body search, you have to enter one of the mailing lists.
-Just click on the folder you want to search (&eg; <quote>kde</quote>
-or <quote>kde-devel</quote>) and then the pull-down menu by the search
-box will default to <quote>Body</quote> searches.  To be thorough, you
-should probably search the <quote>kde</quote>, <quote>kde-linux</quote>, and <quote>kde-devel</quote> folders. </para>
+<varlistentry>
+<term><ulink url="http://trinity-announce.pearsoncomputing.net/">tde-announce</ulink></term>
+<listitem><para>Announcement archives.</para></listitem>
+</varlistentry>
 
+<varlistentry>
+<term><ulink url="http://trinity-devel.pearsoncomputing.net/">tde-devel</ulink></term>
+<listitem><para>Developers, artists, documentation writer archives.</para></listitem>
+</varlistentry>
+</variablelist>
+
+</para>
 </answer>
 </qandaentry>
 
-<qandaentry>
+<!--<qandaentry>
 <question id="newsgroups">
 <para>Is there a newsgroup about &tde;?</para>
 </question>
 <answer>
 <para>Yes, there is!  It is at <literal>comp.windows.x.kde</literal>.
 In addition, there is also a German newsgroup at
-<literal>de.alt.comp.kde</literal>.  Please note that it is not a good
+<literal>de.alt.comp.kde</literal>. Please note that it is not a good
 idea to ask questions which are already answered in this
 &FAQ;.</para>
 </answer>
-</qandaentry>
+</qandaentry>-->
 
-<qandaentry>
+<!--<qandaentry>
 <question>
-<para>Are there any other &tde;-related
-&FAQ;s?</para>
+<para>Are there any other &tde;-related &FAQ;s?</para>
 </question>
 <answer>
-<para>Yes.  Here is a list of them:</para>
+<para>Yes. Here is a list of them:</para>
 <itemizedlist>
 <listitem><para><ulink
 url="http://www.kde.org/info/faq.php">&tde; &FAQ;</ulink></para></listitem>
@@ -136,18 +119,18 @@ url="http://konqueror.org/faq/">&konqueror;
 &FAQ;</ulink></para></listitem>
 <listitem><para><ulink
 url="http://www.arts-project.org/doc/manual/index.html">aRts
-sound server documentation</ulink></para></listitem>
+sound server documentation</ulink></para></listitem>-->
 
 <!-- Removed because the kmail FAQ is part of the KMail manual and not a -->
-<!-- separate document 
+<!-- separate document
 <listitem><para><ulink
 url="http://kmail.kde.org/manual/faq.html">&kmail;
 &FAQ;</ulink></para></listitem>
 -->
 
-</itemizedlist>
+<!--</itemizedlist>
 </answer>
-</qandaentry>
+</qandaentry>-->
 
 </qandaset>
 </chapter>

@@ -36,21 +36,21 @@
 direct connection that allows devices to transfer data to and from
 memory without going through the processor. Typically, i386-architecture
 systems (<acronym>PC</acronym>'s) have eight <acronym>DMA</acronym>
-channels (0-7).  </para>
+channels (0-7).</para>
 
 <note> <para> The exact information displayed is system-dependent.  On
 some systems, <acronym>DMA</acronym> Channel information cannot be
-displayed yet.  </para> </note>
+displayed yet.</para> </note>
 
 <para> On &Linux;, this information is read from <filename
 class="devicefile">/proc/dma</filename>, which is only available if the
 <filename class="directory">/proc</filename> pseudo-filesystem is
-compiled into the kernel.  </para>
+compiled into the kernel.</para>
 
 <para> A list of all currently-registered (<acronym>ISA</acronym> bus)
 <acronym>DMA</acronym> channels that are in use is shown. The first
 column shows the <acronym>DMA</acronym> channel, and the second column
-shows the device which uses that channel.  </para>
+shows the device which uses that channel.</para>
 
 <para>
 Unused <acronym>DMA</acronym> channels are not listed.

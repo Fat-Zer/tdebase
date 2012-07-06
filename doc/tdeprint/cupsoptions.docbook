@@ -42,7 +42,7 @@ in <acronym>HTML</acronym> and <acronym>PDF</acronym> if you are new to
 commandline and browser are two native &CUPS; interfaces. The many
 commandline utilities add up to the most complete control you have on
 &CUPS;. The web interface is only a subset of all available
-configuration or control options. </para>
+configuration or control options.</para>
 
 <para>This is also true for &tdeprint;. Generally, as &CUPS; develops,
 most new features will first be implemented through the commandline. Be
@@ -107,7 +107,7 @@ filter (1)        - cups file conversion filter interfaces
 Commandline</title>
 
 <para>Here are a few examples of options that are presently only
-available if you use the commandline. </para>
+available if you use the commandline.</para>
 
 <sect2>
 <title>Allowing or denying printer access for certain users</title>

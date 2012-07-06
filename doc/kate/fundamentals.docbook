@@ -263,7 +263,7 @@ usual labeled icons. And above that, a menubar.
 <para>
 The left-hand window is a side bar. It combines the Documents
 and Filesystem Browser windows. Switch between the two by clicking on the tabs
-to the left of the window. </para>
+to the left of the window.</para>
 
 <para>
 If you've started &kate; with a file, the right-hand window will show
@@ -423,7 +423,7 @@ text)</para></entry>
 </row>
 <row>
 <entry><para><keycombo action="simul">&Ctrl;<keycap>C</keycap></keycombo></para></entry>
-<entry><para> Copy the marked text to the clipboard. </para></entry>
+<entry><para> Copy the marked text to the clipboard.</para></entry>
 </row>
 
 <row>
@@ -454,7 +454,7 @@ text)</para></entry>
 
 <row>
 <entry><para><keycombo action="simul">&Ctrl;<keycap>X</keycap></keycombo></para></entry>
-<entry><para>Delete the marked text and copy it to the clipboard. </para></entry>
+<entry><para>Delete the marked text and copy it to the clipboard.</para></entry>
 </row>
 <row>
 <entry><para><keycombo action="simul">&Ctrl;<keycap>Z</keycap></keycombo></para></entry>

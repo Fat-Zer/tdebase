@@ -12,9 +12,9 @@
 also includes many utility classes like string classes and classes
 to handle input and output. It
 provides most of the widgets you will see in a &tde; application:
-menus, buttons, sliders, &etc;.  &Qt; is a cross-platform library that
-allows you to write code that will compile on &UNIX; systems as well as
-&Windows; and embedded devices.  You can learn more about &Qt; at <ulink
+menus, buttons, sliders, &etc; &Qt; is a cross-platform library that
+allows developers to write code that will compile on &UNIX; systems as well as
+&Windows; and embedded devices. Learn more about &Qt; at <ulink
 url="http://www.trolltech.com">http://www.trolltech.com</ulink>.</para>
 </answer>
 </qandaentry>
@@ -25,9 +25,9 @@ url="http://www.trolltech.com">http://www.trolltech.com</ulink>.</para>
 </question>
 <answer>
 <para>&Qt; is a sophisticated toolkit that provides everything that
-is needed to build a modern user interface.  &Qt; is written in C++, thus
+needed to build a modern user interface. &Qt; is written in C++, thus
 allowing object-oriented development which ensures efficiency and
-code reuse in a project the size and scope of &tde;.  In our opinion
+code reuse in a project the size and scope of &tde;. In our opinion
 there is no better toolkit available for &UNIX; systems and that it
 would have been a grave mistake to try to build &tde; on anything but
 the best.</para>
@@ -39,9 +39,9 @@ the best.</para>
 <para>Why does &tde; not use gtk, xforms, xlib, whatever?</para>
 </question>
 <answer>
-<para>There are a number of toolkits available.  To provide a
+<para>There are a number of toolkits available. To provide a
 consistent user interface and to keep used resources such as memory to
-a minimum, &tde; can use only one of them.  &Qt; was selected for the
+a minimum, &tde; can use only one of them. &Qt; was selected for the
 reasons mentioned above.</para>
 </answer>
 </qandaentry>
@@ -51,9 +51,9 @@ reasons mentioned above.</para>
 <para>But &Qt; isn't free, is it?</para>
 </question>
 <answer>
-<para>It is!  As of September 4, 2000, version 2.2 of the &Qt;
-libraries were licensed under the <acronym>GPL</acronym>, thereby
-fulfiling all aspects of <quote>free software</quote>.</para>
+<para>&Qt; is free/libre. Since September 4, 2000, version 2.2 of the &Qt;
+libraries are licensed under the <acronym>GPL</acronym>, thereby
+fulfiling all aspects of <quote>free/libre software</quote>.</para>
 </answer>
 </qandaentry>
 
@@ -64,12 +64,11 @@ fulfiling all aspects of <quote>free software</quote>.</para>
 <answer>
 <para>You can use the &tde; libraries to write <quote>commercial and
 closed source</quote> as well as <quote>commercial and open
-source</quote> software.  If you write open source software you can
-use the &Qt; free edition.  But if you write closed source software
+source</quote> software. If you write open source software you can
+use the &Qt; free edition. If you write closed source software
 you may not use the &Qt; free edition; you need to obtain the &Qt;
-professional edition from Troll Tech. </para> <para>If you want more
-information, please contact <ulink
-url="http://www.trolltech.com">Troll Tech</ulink> directly.</para>
+professional edition from Troll Tech. For more information, please
+contact <ulink url="http://www.trolltech.com">Troll Tech</ulink> directly.</para>
 </answer>
 </qandaentry>
 
@@ -88,7 +87,7 @@ used as an emotional wedge more than a factual observation.</para>
 
 <qandaentry>
 <question>
-<para>Are there plans to migrate Trinity to Qt4?</para>
+<para>Are there plans to migrate &tde; to Qt4?</para>
 </question>
 <answer>
 <para>Not at this time.</para>

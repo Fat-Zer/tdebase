@@ -20,7 +20,7 @@ editing.</para>
 
 <para>The rules for how commenting is done are defined in the syntax
 definitions, so if syntax highlighting is not used, commenting/uncommenting
-is not possible. </para>
+is not possible.</para>
 
 <para>Some formats define single line comment markers, some multiline
 markers and some both.  If multiline markers are not available,
@@ -1222,13 +1222,13 @@ by the KDE translation teams, if the files are in KDE's SVN repository.</para>
 linkend="advanced-editing-tools-scripting-introduction">above</link>)  for
 <filename>*.js</filename> files. For every file it checks whether there is a
 corresponding <filename>.desktop</filename> file, like for uppercase.js it
-would look for uppercase.desktop. </para>
+would look for uppercase.desktop.</para>
 <para>If a <filename>.desktop</filename> file can not be found the script will
 be registered in katepart's command line with the filename without the ending
 .js, so in our example this would be <literal>uppercase</literal>. If the
 command-name is fine and you don't need the extra features a
 <filename>.desktop</filename> file provides you do not need a
-<filename>.desktop</filename> file at all. </para>
+<filename>.desktop</filename> file at all.</para>
 <para>If a <filename>.desktop</filename> file exists katepart will read the name
 under which the script will be registered from the .desktop-entry
 X-Kate-Command, for example X-Kate-Command=uppercase-selection.</para>

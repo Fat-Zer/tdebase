@@ -313,7 +313,7 @@ unless you really knew what you were doing.</para>
 with you, or can enable you to log in remotely to your machine from another
 location.  You would then use a VNC client like &tde;'s Remote Desktop
 Connection application to control your desktop over the network. This is
-extremely useful if you want someone to help you perform a task. </para>
+extremely useful if you want someone to help you perform a task.</para>
 
 <para>Here you can create and manage invitations as well as set your
 security policy for uninvited connections. You can also configure whether to
@@ -568,7 +568,7 @@ devices such as keyboards and joysticks.</para>
 orientation and refresh rate of your display, and whether you would like
 these settings to be applied on &tde; startup. On the <guilabel>Power
 Control</guilabel> tab, you can configure your power management options for
-this screen such as blanking.  </para></listitem>
+this screen such as blanking.</para></listitem>
 </varlistentry>
 
 <varlistentry><term><guilabel>Joystick</guilabel></term>
@@ -879,7 +879,7 @@ configuration files for a &Linux; kernel. This configurator is compatible with k
 <varlistentry>
 <term><guilabel>Login Manager</guilabel></term>
 <listitem><para>This module allows you to configure the &tde; login manager, &tdm;. &tdm; is
-a powerful login manager with a large range of options. It supports user switching, remote graphical logins and has a fully customizable appearance. For more information, see the &tdm; handbook. </para></listitem>
+a powerful login manager with a large range of options. It supports user switching, remote graphical logins and has a fully customizable appearance. For more information, see the &tdm; handbook.</para></listitem>
 </varlistentry>
 <varlistentry>
 <term><guilabel>Paths</guilabel></term>

@@ -17,7 +17,7 @@ your box.</para>
 <title>Starting</title>
 
 <para>The welcome screen informs you that you can go back any time to
-change a setting. </para>
+change a setting.</para>
 
 <screenshot>
 <screeninfo>The &tdeprint; wizard introduction screen</screeninfo>
@@ -90,7 +90,7 @@ the previous screen. If you know the details, just type them in to
 configure your network settings directly.</para>
 
 <para>In other cases the wizard can scan the network for you, to help you
-decide which setting could be useful. </para>
+decide which setting could be useful.</para>
 
 <screenshot>
 <screeninfo>&tdeprint; wizard network scan</screeninfo>
@@ -155,7 +155,7 @@ wizard scan parts of your network.</phrase></textobject>
 <para>The hardest part is probably the <quote>Printer Model
 Selection</quote>. In former years the situation was difficult, because
 there were hardly any drivers to find. The difficulty now is there are too
-many; though some of them are very good, many are quite broken. </para>
+many; though some of them are very good, many are quite broken.</para>
 
 <para>If you have a current <quote>database</quote> of available drivers
 on your system, select the manufacturer in the left part of the window
@@ -182,7 +182,7 @@ used.</para>
 install a <quote>Foomatic</quote> or <quote>Gimp-Print</quote> &PPD;,
 even if it is offered. You won't be happy with it. Instead find the
 original &PPD; from the manufacturer, preferably the one written for
-&Windows; NT and use it. </para>
+&Windows; NT and use it.</para>
 </warning>
 
 <para>Some &Linux; distributions have supplied for &CUPS; every
@@ -232,7 +232,7 @@ system.</para>
 default paper size. In many cases this is set to
 <quote>Letter</quote>. If you live in an <quote>A4</quote>
 country and don't want your first test page to jam: now is the time to
-prevent this. </para>
+prevent this.</para>
 
 <para>You are ready to start a test print. Hit the
 <guibutton>Test</guibutton> button.</para>

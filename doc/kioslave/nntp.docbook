@@ -31,7 +31,7 @@ server connection, for example, to ensure that your new
 <application>leafnode</application> server is working correctly.</para>
 
 <para>If you don't enter a group name, and only the server name, you
-will see a list of available groups. </para>
+will see a list of available groups.</para>
 
 <para>Please be aware that this could take an enormous amount of time, and
 will cause a lot of network traffic.  Some commercial usenet servers

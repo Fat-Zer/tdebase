@@ -21,7 +21,7 @@
 				ACLs are used to check for the access by a given
 				(authenticated) user. A first rough support for ACLs
 				for printing is available from &CUPS;; this will be refined
-				in future versions. </para>
+				in future versions.</para>
                                 <glossseealso otherterm="gloss-authentication">Authentication</glossseealso>
                         </glossdef>
                 </glossentry>
@@ -136,7 +136,7 @@
 																
 				It is strong proof of the flexibility of &UNIX;; that "Line Printing" works
 				reliably, even under these modern conditions. But time has finally come now
-				to go for something new -- the IPP.
+				to go for something new  -- mdash; the IPP.
 				
 				</para>
 				<glossseealso otherterm="gloss-ipp">IPP</glossseealso>
@@ -251,7 +251,7 @@
 				One example of a daemon present on most
 				legacy &UNIX; systems is the LPD (Line Printer Daemon); &CUPS; is
 				widely seen as the successor to LPD in the &UNIX; world and
-				it also operates through a daemon. </para>
+				it also operates through a daemon.</para>
                                 <glossseealso otherterm="gloss-spooling">SPOOLing</glossseealso>
                         </glossdef>
                 </glossentry>
@@ -283,7 +283,7 @@
 				concept, known as "Foomatic". Foomatic extends the capabilities
 				of spoolers other than &CUPS; (LPR/LPD, LPRng, PDQ, PPR) to a certain
 				degree ("stealing" some concepts from &CUPS;). The Linuxprinting
-				Database is not a Linux-only stop -- people running other &UNIX;
+				Database is not a Linux-only stop  -- mdash; people running other &UNIX;
  				based OSes (like *BSD or &MacOS; X) will also find valuable information
 				and software there.
 				</para>
@@ -332,7 +332,7 @@
 				url="http://www.easysw.com/epm/">EPM software packaging</ulink> tool 
 				and <ulink url="http://www.easysw.com/htmldoc/">HTMLDOC</ulink>
 				(used by the "Linux Documentation Project" to build the PDF versions
-				of the HOWTOs) -- but most importantly:  <ulink 
+				of the HOWTOs)  -- mdash; but most importantly:  <ulink 
 				url="http://www.cups.org/">&CUPS;</ulink> (the 'Common &UNIX; Printing
 				System').
 <!--
@@ -359,7 +359,7 @@
 				<para>
 -->
 				Printing
-				via traditional protocols is not encrypted at all -- it is very easy
+				via traditional protocols is not encrypted at all  -- mdash; it is very easy
 				to tap and eavesdrop &eg; into &PostScript; or PCL data transfered
 				over the wire.
 <!--
@@ -514,7 +514,7 @@
 				system, that allows configuration of the underlying print subsystem
 				through a unified set of commands (however, this is much more
 				complicated than TDEPrint's &GUI; interface, which performs a similar
-				task with regards to different print subsystems). </para>
+				task with regards to different print subsystems).</para>
                                 <glossseealso otherterm="gloss-cups-o-matic">&CUPS;-O-Matic</glossseealso>
                                 <glossseealso otherterm="gloss-PPD-O-Matic">PPD-O-Matic</glossseealso>
                                 <glossseealso otherterm="gloss-cupsomatic">cupsomatic</glossseealso>
@@ -544,7 +544,7 @@
                         <glossterm>Gimp-Print</glossterm>
                         <glossdef><para>Contrary to its name, Gimp-Print is no longer
 				just the plugin to be used for printing from the popular
-				Gimp program -- its codebase can also serve to be compiled
+				Gimp program  -- mdash; its codebase can also serve to be compiled
 				into...
 				<!--
 				</para>
@@ -598,7 +598,7 @@ now.
                         <glossterm><acronym>&HP;</acronym></glossterm>
                         <glossdef><para>Abbreviation for <emphasis>H</emphasis>ewlett-<emphasis>Packard</emphasis>;
 				one of the first companies to distribute their own Linux printer
-				drivers. -- More recently, the Company has released their
+				drivers.  -- mdash; More recently, the Company has released their
 				"HPIJS" package of drivers, including source code and a Free license. 
 				This is the first printer manufacturer to do so. HPIJS supports most
 				current models of HP Ink- and DeskJets.
@@ -661,7 +661,7 @@ now.
 				<emphasis>P</emphasis>rinting <emphasis>P</emphasis>rotocol;
 				defined in a series of RFCs accepted by the IETF with
 				status "proposed standard"; was designed
-				by the PWG. -- IPP is a completely new design for network printing,
+				by the PWG.  -- mdash; IPP is a completely new design for network printing,
 				but it utilizes a very well-known and proven method for the
 				actual data transfer: HTTP 1.1! By not "re-inventing the wheel",
 				and basing itself on an existing and robust Internet standard,
@@ -727,7 +727,7 @@ now.
 				<para>
 -->
 				Most important for day-to-day usage is "kprinter", the new
-				&GUI; print command. -- Note: TDEPrint does <emphasis>not</emphasis> implement its own
+				&GUI; print command.  -- mdash; Note: TDEPrint does <emphasis>not</emphasis> implement its own
 				spooling mechanism or its own &PostScript; processing; for this it
 				relies on the selected <emphasis>print subsystem</emphasis>
 				-- however it does add some functionality of its own on top of this
@@ -821,7 +821,7 @@ now.
   				Configuration Toolset" (being able to configure, through one common
 				interface, different print subsystems and their required drivers) with the
 				ability to transfer all queues, printers and configuration files seamlessly
-				to another spooler without new configuration effort. -- Also, they maintain
+				to another spooler without new configuration effort.  -- mdash; Also, they maintain
 				the Printing Database; a collection of driver and device information that
 				enables everybody to find the most current information about printer models,
 				and also generate online the configuration files for any
@@ -918,7 +918,7 @@ now.
 				developed by &HP;. PCL started off in version 1 as a simple
 				command set for ASCII printing; now,
 				in its versions PCL6 and PCL-X, it is capable of printing graphics
-				and color -- but outside the &Microsoft; &Windows; realm and &HP-UX; 
+				and color  -- mdash; but outside the &Microsoft; &Windows; realm and &HP-UX; 
 				(&HP;'s own brand of &UNIX;), it is not commonly used...</para>
                                 <glossseealso otherterm="gloss-escp">ESC/P</glossseealso>
                                 <glossseealso otherterm="gloss-hpgl">&HP;/GL</glossseealso>
@@ -1090,7 +1090,7 @@ now.
 				user for each, where the spooling folder is located,
 				if there are banner pages to be used, and so on...
 				Some applications also depend on read access to the printcap 
-				file, to obtain the names of available printers. </para>
+				file, to obtain the names of available printers.</para>
                                 <glossseealso otherterm="gloss-bsdstyleprinting">BSD-style printing</glossseealso>
                         </glossdef>
                 </glossentry>
@@ -1132,7 +1132,7 @@ now.
                         <glossdef><para>You can use a syntax of "print:/..." to get quick access
 				to TDEPrint resources. Typing "print:/manager" as a Konqueror URL
 				address gives administrative access to TDEPrint. Konqueror uses &tde;'s
-				famous "KParts" technology to achieve that. </para>
+				famous "KParts" technology to achieve that.</para>
                                 <glossseealso otherterm="gloss-ioslave">IO Slave</glossseealso>
                                 <glossseealso otherterm="gloss-kparts">KParts</glossseealso>
                         </glossdef>
@@ -1154,7 +1154,7 @@ now.
 				what you liked about kups is now all in the TDEPrint Manager (accessible 
 				via the TDE Control Center or via the URL "print:/manager" from Konqueror) --
 				with more functionality and less bugs... Its former developer, Michael Goffioul, is now
-				the developer of TDEPrint -- a very nice and productive guy and quick bug fixer...
+				the developer of TDEPrint  -- mdash; a very nice and productive guy and quick bug fixer...
 				 </para>
                                 <glossseealso otherterm="gloss-kprinter">kprinter</glossseealso>
                         </glossdef>
@@ -1301,7 +1301,7 @@ now.
 				(and users) to continue their work
                                 as the job is being taken care of by a system <acronym>daemon</acronym>,
 				which stores the file at a temporary location until the printer is ready
-				to print. </para>
+				to print.</para>
                                 <glossseealso otherterm="gloss-daemon"><acronym>Daemon</acronym></glossseealso>
                         </glossdef>
                 </glossentry>

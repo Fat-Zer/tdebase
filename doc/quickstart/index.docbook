@@ -574,7 +574,7 @@ Use the taskbar (see below).
 The <interface>taskbar</interface> displays a list of small icons, one
 for each window on the desktop. In the default &tde; setup the taskbar
 is located inside the panel, but it can also be located at the top or
-the bottom of the screen.  </para>
+the bottom of the screen.</para>
 
 <para>
 The taskbar is very powerful.  In the default configuration, if you
@@ -891,7 +891,7 @@ dragging it to a printer icon. Here's how:
 </para>
 
 <procedure>
-<step><para>Open the Templates folder located on the desktop. </para></step>
+<step><para>Open the Templates folder located on the desktop.</para></step>
 <step><para>Drag the Program icon in the folder to the desktop. Choose
 <guimenuitem>Copy</guimenuitem> from the menu that appears when you drop the
 icon.</para></step>
@@ -1114,7 +1114,7 @@ well as where all the windows were located, so that it can open them
 for you the next time you log in. This feature is termed
 <emphasis>Session Management</emphasis>. &tde;-aware applications will
 restore themselves to the state they were in when you logged out.  For
-example, &kate; remembers which files you were editing.  </para>
+example, &kate; remembers which files you were editing.</para>
 
 <para>
 Non-&tde; applications do not memorize their state on logout, and
@@ -1232,7 +1232,7 @@ Type</guimenuitem></menuchoice> in &konqueror;'s menu bar.
 want. Remember that &UNIX; is case sensitive, so you may need to add
 variations - <userinput>*.mp3</userinput> may need
 <userinput>*.MP3</userinput> added as well, for example.  Add as many
-extensions as you like in this way.  </para> </step>
+extensions as you like in this way.</para> </step>
 
 <step>
 <para>

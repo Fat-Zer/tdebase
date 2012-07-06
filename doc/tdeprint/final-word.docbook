@@ -18,10 +18,10 @@ EfI.</para>
 My acquaintance with &Linux; and the Free Software community is not
 too old. When I started to play around with &Linux; at the beginning
 of 1999, my deepest disappointment was the poor support for
-printing. True, I made all our machines spit out simplex prints -- but
+printing. True, I made all our machines spit out simplex prints  -- mdash; but
 what about duplex? What about punching the output? How to make sorting
 work? Or stapling, cover sheets and all the other beautiful finishing
-options our engines offer to customers? No way -- at least for me as a
+options our engines offer to customers? No way  -- mdash; at least for me as a
 non-geek!</para>
 
 <para>
@@ -32,11 +32,11 @@ software.  After trying it briefly, I knew this was it!</para>
 
 <para>
 Next thing I attempted: to make &Linux; distributions interested in
-this new stuff. Believe me -- it was more than tenacious! They seemed
+this new stuff. Believe me  -- mdash; it was more than tenacious! They seemed
 to think they already had the best thing they could get in
 printing. One reason probably was that they (and many &Linux;
 developers) never had to think about how to best support a printer
-duplexer -- because one had never come near their own
+duplexer  -- mdash; because one had never come near their own
 desks...</para>
 
 <para>

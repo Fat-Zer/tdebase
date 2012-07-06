@@ -31,7 +31,7 @@
 features provided by your keyboard hardware and the X server on which
 &tde; is running.  As an example, you may find that changing the key
 click volume has no effect because that feature is not available on your
-system. </para>
+system.</para>
 
 <sect2 id="kbd-use">
 <title>Advanced</title>
@@ -43,10 +43,10 @@ system. </para>
 <para>When this option is selected, pressing and holding down a key
 emits the same character repeatedly until the key is released.  Pressing
 and holding the key will have the same effect as pressing it multiple
-times in succession.  </para>
+times in succession.</para>
 <tip><para> Almost all users will want to have this option enabled, because it
 makes navigating through documents with the arrow keys significantly
-easier. </para></tip>
+easier.</para></tip>
 </listitem>
 </varlistentry>
 

@@ -97,7 +97,7 @@ while you watch TV or movies on your monitor.</para>
 <para>&tde; does not prevent another screen saver from working.  To use a
 different screen saver, such as <application>xscreensaver</application>, simply
 disable the &tde; Screen Saver, and set up your other screen saver program
-normally.  </para>
+normally.</para>
 
 </sect2>
 
@@ -182,7 +182,7 @@ load the <filename>kdesktoprc</filename>.</para>
 <emphasis>[Screensaver]</emphasis>.</para>
 <para>Look through all lines in the section for an entry entitled 
 <emphasis>LockGrace</emphasis>.</para>
-<para>If the entry exists, you can edit the value of the entry.  </para>
+<para>If the entry exists, you can edit the value of the entry.</para>
 <screen>[Screensaver]
 LockGrace=3000</screen>
 <para>The value of the entity represents the duration of the grace period

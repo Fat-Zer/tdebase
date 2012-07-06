@@ -3,13 +3,10 @@
 
 <title>Asking Questions</title>
 
-<para>Chances are, you have been linked to this document from IRC or a
-mailing list. You've asked a question, and someone has told you that you
-need how to ask more effectively. In order to get an appropriate, clear
-answer you need to ask an appropriate, clear question in a manner that's
-going to provide an incentive for people to take their time to help you. If
-you appear to be rude, lazy or use bad or unclear language then chances are
-your question will be ignored</para>
+<para>To get an appropriate answer to questions requires asking a clear
+question in a manner that motivates people to help. Writing questions that
+appear to be rude, lazy, or uses bad or unclear language likely will result
+in your question being ignored.</para>
 
 <qandaset>
 <qandaentry>
@@ -19,25 +16,24 @@ your question will be ignored</para>
 <answer><para>Read the documentation and &FAQ; for the application. There is
 a wealth of &tde; documentation availible both in the help center and
 online. A lot of time and effort has gone into this documentation, and
-quite often the answer to your question is here. The general &tde; userguide
-can be found by typing
-<userinput><command>help:/userguide</command></userinput> into your
-&konqueror; addressbar.</para>
+often the answer to your question is there. The general &tde; userguide
+can be found by typing <userinput><command>help:/khelpcenter/userguide</command></userinput>
+into the &konqueror; address bar or <userinput><command>
+khelpcenter help:/khelpcenter/userguide with the minicli</command></userinput>.</para>
 
-<para>Search the web: Usually googling for a specific error message or
-searching mailing list archives can come up with a solution for you.</para>
+<para>Search the web: Usually searching for a specific error message or
+searching mailing list archives will find a solution.</para>
 
 <para>Try it and see! Look through all the application options, read the
 What's this? and tooltips for the ones you're not sure about. If you're
-really unsure about an option save your data and then try it. As long as you
-use some common sense, you are very unlikely to break anything by clicking
-buttons.</para>
+really unsure about an option save your data and then try. As long as you
+use common sense you are unlikely to break anything by experimenting.</para>
 
-<para>Above all, don't be lazy. If you show the people who you are asking
+<para>Don't be lazy. If you show the people who you are asking
 that you are able to troubleshoot and research in a logical manner, you're
 showing them you're a reasonable person who is worth their time to
 help. It's your problem and not theirs so the legwork is yours to do. Save
-your helpers as much time as you can, they're busy people.</para> </answer>
+your helpers as much time as you can.</para> </answer>
 </qandaentry>
 
 <qandaentry>
@@ -47,8 +43,12 @@ your helpers as much time as you can, they're busy people.</para> </answer>
 <acronym>IRC</acronym> channels and mailing lists devoted to user
 questions. Don't post simple questions about using &tde; to the devel
 channels and mailing lists, these are for technical discussions. Some good
-places are #kde on irc.freenode.net, and the &tde; mailing
-lists.</para></answer> </qandaentry>
+places are chat.freenode.net, channel: #trinity-desktop, and the &tde; <ulink
+url="http://www.trinitydesktop.org/mailinglist.php">mailing
+lists</ulink>.
+</para>
+</answer>
+</qandaentry>
 
 <qandaentry>
 <question><para>How do I ask?</para></question>
@@ -57,87 +57,82 @@ lists.</para></answer> </qandaentry>
 information possible and is polite and courteous. Don't ask to ask, just
 ask!</para>
 
-<para>Q: &tde; sucks, it's being slow</para>
+<para>Q: &tde; sucks, it's slow</para>
 
 <para>Is not a question that is likely to get you a useful answer. It does
 not give any useful information about troubleshooting the problem, and it
 starts out attacking the software in a way that isn't productive.</para>
 
-<para>Q: Since upgrading &tde; on Slackware &Linux; from version 3.2.3 to
-3.3.2 using sources, I have noticed it's being really slow &mdash; sometimes
+<para>Q: Since updating &tde; on Slackware &Linux; using sources, I have
+noticed it's being really slow &mdash; sometimes
 applications take up to 20 seconts to launch. I am using the same user
-configuration as I had with the previous version, and I have tried as a new
-user. I can't find anything about this on the mailing lists or by a google
+configuration as I had with the previous version. I have tried as a new
+user. I can't find anything about this on the mailing lists or by a web
 search. Could anyone point me to some information that could help?</para>
 
 <para>This question is polite, contains information to help people
 troubleshoot the problem and shows your helpers what avenues you have
 already tried.</para>
 
-<para>Don't assume automatically that the problem is the fault of
-&tde;. Proceed as though this is your error, otherwise you will quickly
-annoy people if it does indeed turn out to be your problem and not
-&tde;.</para>
+<para>Don't presume automatically that the problem is the fault of
+&tde;. Otherwise you likely will annoy people.</para>
 
 <para>Use clear language with correct spelling. Watch out for any
 ambiguities and make sure you think about what you say before you write
 it. If you are asked for clarification, give it as best you can. &tde; is a
 project where many of the users and developers are not native english
-speakers and if you don't use correct english, misunderstandings may
-ensue. Use the language appropriate to the channel or mailing list you are
-in &mdash; if you don't, people who might have been able to help you may
+speakers and if you don't use correct english, misunderstandings might
+ensue. Be patient. Use the language appropriate to the channel or mailing list you are
+in &mdash; if you don't, people who might have been able to help you might
 ignore your message because it is not in a language they understand.</para>
 
-<para>Include all information that could be relevant, even if you're not
-sure. Have you upgraded other software or hardware on your system,
+<para>Include all information that could be relevant, even when you're not
+sure. Have you updated other software or hardware on your system,
 particularly system libraries or a new kernel? These things could affect how
-&tde; performs. Even if you cannot see a link, someone else might.</para>
+&tde; performs. Even when you cannot see a connecting cause, someone else might.</para>
 
 <para>Don't paraphrase error messages. Paste in the exact error, and if it's
 more than a line or two don't paste them directly into an
-<acronym>IRC</acronym> channel. Use a paste service like <ulink
-url="http://www.rafb.net/paste/"> http://www.rafb.net/paste</ulink>. If you
-must type them in by hand, be sure you are 100% accurate. When you provide
-faulty information, your helpers cannot help you as easily. </para>
+<acronym>IRC</acronym> channel. Use an online paste service. If you
+must type the messages by hand, be sure you are accurate. When you provide
+faulty information, your helpers cannot help you as easily.</para>
 
-<para>Follow up on your solution! Tell us if it worked, or if you have
-solved it yourself in the meantime. This helps us know for sure if our
-solution worked, and helps other users who may be searching mailing list
-archives for a solution to the problem themselves.</para> </answer>
+<para>Follow through on your solution! Tell people when the solution worked, or when you have
+solved the problem yourself. This helps everybody involved know when
+solutions work and helps other users who might be searching for a similar
+solution to the problem.</para>
+</answer>
 </qandaentry>
 
 <qandaentry>
 <question><para>What do I do when told to look elsewhere?</para></question>
 
-<answer><para>When you're told <quote>google knows</quote> or <quote>google
-is your friend</quote> then chances are, you have not followed the above
-advice. You've not done your research, and the solution is probably one the
-helper knows very well to be easy to find. When you're linked to a
-<acronym>FAQ</acronym> or a usermanual don't ever say, <quote>No, I don't
-want to have to read this I want you to just tell me</quote>. This is very
-bad manners. If you cannot put in the effort to read the document, what is
-the incentive for your helper to put in the time and effort to help you?  If
-you're told to go use google, take it graciously and do so.</para> </answer>
-</qandaentry> </qandaset>
+<answer><para>Possibly you have not followed the above
+advice. You've not done your research, and the solution probably is one the
+helper knows very well to be easy to find. When provided a web link to an
+<acronym>FAQ</acronym> or documentation don't say, <quote>No, I don't
+want to have to read this I want you to just tell me</quote>. That response
+is considered bad manners. People who don't provide effort to learn often
+find others have little incentive to help.</para>
+</answer>
+</qandaentry>
+</qandaset>
 
-<para>Above all, use common courtesy. &tde; users and developers are usually
-volunteering their time out of an already very busy schedule, and like to
-know that you are appreciating that they are helping you for free. Be
-polite, say please and thank you and try to be pleasant and
-friendly. </para>
+<para>Use common courtesy. &tde; users and developers volunteer their time
+out of an already very busy schedule, and like to
+know that you are appreciating they are helping you for free. Be
+polite, say please and thank you, be constructive, and try to be pleasant and
+friendly.</para>
 
 <para> Does this seem like a lot of trouble to ask a question? If you want
 to be able to feel that people owe you an answer or support, then you're
 quite welcome to pay for commercial support from companies that support
 &tde; on &UNIX; platforms. If you don't want to pay money, then pay the
-people who do this for free with your politeness and appreciation :)</para>
-
+people who do this for free with your politeness and appreciation. :-)</para>
 
 <para>If you think the answer to your question should be included in the
 &tde; &FAQ; please feel free to submit any patches or suggestions to the
-&tde; &FAQ; Maintainer, at <email>faq@kde.org</email></para>
-
-
+&tde; &FAQ; Maintainer, at <email>trinity-devel@lists.pearsoncomputing.net</email></para>
 
 </chapter>
 

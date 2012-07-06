@@ -186,7 +186,7 @@ password.</para>
 generally have no authority to access your X display. &tdesu; gets
 around this by adding an authentication cookie for your display to a
 temporary <filename>.Xauthority</filename> file. After the command
-exits, this file is removed. </para>
+exits, this file is removed.</para>
 
 <para>If you don't use X cookies, you are on your own. &tdesu; will
 detect this and will not add a cookie but you will have to make sure
@@ -199,7 +199,7 @@ that root is allowed to access to your display.</para>
 
 <para>&tdesu; uses the sytem's <command>su</command> for acquiring
 priviliges. In this section, I explain the details of how &tdesu; does
-this. </para>
+this.</para>
 
 <para>Because some <command>su</command> implementations (&ie; the one
 from &RedHat;) don't want to read the password from

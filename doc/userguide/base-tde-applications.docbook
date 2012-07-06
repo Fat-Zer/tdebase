@@ -11,7 +11,7 @@
 
 <title>The Base &tde; Applications</title>
 
-<para>What follows is a brief description of a few of the base &tde; applications. For more information on any of the applications you should check the links recommended with each respective entry. </para>
+<para>What follows is a brief description of a few of the base &tde; applications. For more information on any of the applications you should check the links recommended with each respective entry.</para>
 
 <!-- What are they?? (Phil) -->
 <!-- Included a few here; may be a good idea to add to this in future -->
@@ -121,7 +121,7 @@
 
 <itemizedlist>
 <title>Related Information</title>
-	<listitem><para><ulink url="http://kde-apps.org">http://kde-apps.org</ulink> -- The largest directory of third-party &tde; applications.</para></listitem>
+	<listitem><para><ulink url="http://kde-apps.org">http://kde-apps.org</ulink>  -- mdash; The largest directory of third-party &tde; applications.</para></listitem>
 	<listitem><para>As you may have noticed, a wealth of information is accessible from the respective handbooks themselves, which can be accessed either by using the help KIO slave in &konqueror; (that is, type <userinput>help:/<replaceable>application</replaceable></userinput> in the Location toolbar), or by selecting it in the &khelpcenter;.</para></listitem>
 	<listitem><para>You can also likely find out quite a bit of information from the &tde; website, itself, at <ulink url="http://kde.org">http://kde.org</ulink>.</para></listitem>
 </itemizedlist>
@@ -140,7 +140,7 @@
 
 <title>Personal Information Management</title>
 
-<para>&tde; <acronym>PIM</acronym> (Personal Information Manager) is a sub-project of &tde;, and it aims to provide an application suite to manage personal information. It has several components, but these can all be brought under one application -- &kontact;, which is the personal information manager. Below is an overview of a few of its popular components; that is, a few of the applications that integrate into it.</para>
+<para>&tde; <acronym>PIM</acronym> (Personal Information Manager) is a sub-project of &tde;, and it aims to provide an application suite to manage personal information. It has several components, but these can all be brought under one application  -- mdash; &kontact;, which is the personal information manager. Below is an overview of a few of its popular components; that is, a few of the applications that integrate into it.</para>
 
 <variablelist>
 <varlistentry>
@@ -264,7 +264,7 @@
 
 <varlistentry>
 <term>&kget;</term>
-	<listitem><para>A manager for your downloads which integrates with &konqueror;. &kget; allows you to group your downloads, pause and resume them, as well as several other things. </para>
+	<listitem><para>A manager for your downloads which integrates with &konqueror;. &kget; allows you to group your downloads, pause and resume them, as well as several other things.</para>
 	
 		<itemizedlist>
 			<listitem><para>Website: <ulink url="http://kget.sourceforge.net/">http://kget.sourceforge.net</ulink></para></listitem>
@@ -321,7 +321,7 @@
 
 <varlistentry>
 <term><application>KView</application></term>
-	<listitem><para>An image viewer program which supports a number of different image filetypes including <acronym>JPEG</acronym>, <acronym>GIF</acronym>, <acronym>PNG</acronym>, <acronym>TIFF</acronym> and many others. <application>Kview</application> has full integration with &tde; and it can be embedded into &konqueror; for viewing image files on your diskdrive as well as your <acronym>FTP</acronym> site or webserver, using its &URL; open support. Other features include a few image manipulations such as zoom, rotate, grayscale and flip. </para>
+	<listitem><para>An image viewer program which supports a number of different image filetypes including <acronym>JPEG</acronym>, <acronym>GIF</acronym>, <acronym>PNG</acronym>, <acronym>TIFF</acronym> and many others. <application>Kview</application> has full integration with &tde; and it can be embedded into &konqueror; for viewing image files on your diskdrive as well as your <acronym>FTP</acronym> site or webserver, using its &URL; open support. Other features include a few image manipulations such as zoom, rotate, grayscale and flip.</para>
 	
 		<itemizedlist>
 			<listitem><para>Website: <ulink url="http://www.ph.unimelb.edu.au/~ssk/kde/kview/">http://www.ph.unimelb.edu.au/~ssk/kde/kview/</ulink></para></listitem>
@@ -343,7 +343,7 @@
 
 <varlistentry>
 <term>&kolourpaint;</term>
-	<listitem><para>A simple and easy-to-use paint program, with features such as basic painting (drawing diagrams and finger painting), image manipulation and icon editing. </para>
+	<listitem><para>A simple and easy-to-use paint program, with features such as basic painting (drawing diagrams and finger painting), image manipulation and icon editing.</para>
 	
 		<itemizedlist>
 			<listitem><para>Website: <ulink url="http://kolourpaint.sourceforge.net">http://kolourpaint.sourceforge.net</ulink></para></listitem>
@@ -381,7 +381,7 @@
 <variablelist>
 <varlistentry>
 <term>&juk;</term>
-	<listitem><para>An easy-to-use music player for &tde;. &juk; is playlist and meta-data focused, allowing you to quickly search through the dynamic playlist provided. Some of the features include &CD; cover-art fetching from <trademark class="registered">Google</trademark> images, <application>MusicBrainz</application> integration for file identification over the Internet, and multiple audio backends, including &arts;, <application>GStreamer</application> and <application>aKode</application>.  </para>
+	<listitem><para>An easy-to-use music player for &tde;. &juk; is playlist and meta-data focused, allowing you to quickly search through the dynamic playlist provided. Some of the features include &CD; cover-art fetching from <trademark class="registered">Google</trademark> images, <application>MusicBrainz</application> integration for file identification over the Internet, and multiple audio backends, including &arts;, <application>GStreamer</application> and <application>aKode</application>.</para>
 	
 		<itemizedlist>
 			<listitem><para>Website: <ulink url="http://developer.kde.org/~wheeler/juk.html">http://developer.kde.org/~wheeler/juk.html</ulink></para></listitem>
@@ -402,7 +402,7 @@
 
 <varlistentry>
 <term>&noatun;</term>
-	<listitem><para>A media player capable of playing <acronym>WAV</acronym>, <application>Ogg Vorbis</application>, as well as DivX encoded <acronym>AVI</acronym>s and other media formats. &noatun; features audio effects, a six-band graphic equalizer, a full plugin architecture, network transparency, and various look and feels. </para>
+	<listitem><para>A media player capable of playing <acronym>WAV</acronym>, <application>Ogg Vorbis</application>, as well as DivX encoded <acronym>AVI</acronym>s and other media formats. &noatun; features audio effects, a six-band graphic equalizer, a full plugin architecture, network transparency, and various look and feels.</para>
 	
 		<itemizedlist>
 			<listitem><para>Website: <ulink url="http://noatun.kde.org">http://noatun.kde.org</ulink></para></listitem>

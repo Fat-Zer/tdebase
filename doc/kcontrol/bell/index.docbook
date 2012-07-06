@@ -38,7 +38,7 @@
 <title>System bell</title>
 
 <para>The system bell or beep is a feature of the X server, which
-attempts to make good use of the available hardware. </para>
+attempts to make good use of the available hardware.</para>
 
 <para>&tde; normally doesn't use the system bell; instead using its
 own system notifications, which could include log entries, message

@@ -123,7 +123,7 @@ subsystem you use.</para>
 <para>To configure your printing subsystem from &kcontrol;, go to
 <menuchoice><guilabel>System</guilabel><guilabel>Printing
 Manager</guilabel></menuchoice> and select your subsystem. Or you can
-let &tdeprint; try to determine it... </para>
+let &tdeprint; try to determine it...</para>
 
 <screenshot>
 <screeninfo>&CUPS; Printing Manager dialog: overview via &kcontrol;</screeninfo>

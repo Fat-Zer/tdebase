@@ -18,7 +18,7 @@ action="simul">&Alt;<keycap>F2</keycap></keycombo> by
 default) and type:
 <itemizedlist>
 <listitem>
-<para><command>man:<replaceable>command</replaceable></command> for man pages.  It
+<para><command>man:<replaceable>command</replaceable></command> for man pages. It
 even unpacks on the fly if the man pages are gzipped.</para>
 </listitem>
 
@@ -35,14 +35,10 @@ application help pages.</para>
 </itemizedlist>
 </para>
 
-<para>You can also enter any of these in the <guilabel>Location</guilabel> text
+<para>You can enter any of these in the <guilabel>Location</guilabel> text
 box in &konqueror;.</para>
-<para>Or you can use the <application>&tde; Help Center</application> if you are using &tde;
-2.  Simply start the <application>&tde; Help Center</application> by clicking on the icon (the blue
-book with the yellow key) on the toolbar.  Once the <application>&tde; Help Center</application> has
-loaded, the window on the left will contain an entry called
-<guilabel>Unix manual pages</guilabel>.  Click once on this entry, and
-you can browse through all the installed manual pages on your
+<para>Uou can use the <application>&tde; Help Center</application>. Start the <application>&tde; Help Center</application> by selecting <guimenuitem>Help</guimenuitem> from the <guimenu>TDE menu</guimenu>. Once the <application>&tde; Help Center</application> has loaded, the window on the left will contain an entry called
+<guilabel>Unix manual pages</guilabel>. Select that entry to browse through all the installed manual pages on your
 system.</para>
 </answer>
 </qandaentry>
@@ -54,12 +50,13 @@ system.</para>
 <answer>
 <para>To move a window, use <keycombo
 action="simul">&Alt;<mousebutton>left</mousebutton></keycombo> mouse
-button.  <keycombo
+button. <keycombo
 action="simul">&Alt;<mousebutton>right</mousebutton></keycombo> mouse
-button will resize the window.  Last but not least, <keycombo
+button will resize the window. Last but not least, <keycombo
 action="simul">&Alt;<mousebutton>middle</mousebutton></keycombo> mouse button
 raises/lowers the window. The <application>&tde; Control Center</application>
-allows you to change these mouse bindings.</para>
+allows you to change these mouse bindings. Please refer to <ulink url="help:/khelpcenter/userguide/windows-how-to-work.html">
+Windows, How To Work Them</ulink> in the Trinity user guide for more information.</para>
 </answer>
 </qandaentry>
 
@@ -69,13 +66,13 @@ allows you to change these mouse bindings.</para>
 </question>
 <answer>
 <para>There is a standard keybinding (<keycombo
-action="simul">&Ctrl;&Alt;&Esc;</keycombo>) 
-that gives you a skull &amp; crossbones cursor.  Click that cursor on a
-window to kill it.  The keybindings are viewable/changeable from the
+action="simul">&Ctrl;&Alt;&Esc;</keycombo>)
+that changes the mouse pointer to a skull &amp; crossbones cursor. Click that cursor on a
+window to kill it. The keybindings are viewable/changeable from the
 <application>&tde; Control Center</application>.
 
-<caution><para>Using this option kills the program forcibly. Data may be lost,
-and some processes related to the program may remain active. Use only as a
+<caution><para>Using this option kills the program forcibly. Data might be lost,
+and some processes related to the program might remain active. Use only as a
 last resort.</para></caution>
 <!-- fixme: use only if necessary; processes might remain --></para>
 </answer>
@@ -113,9 +110,6 @@ operating system) to see if things work again. When you press
 <keycombo action="simul">&Alt;<keycap>Tab</keycap></keycombo> you should get a
 response from the window manager. If not, you need to get back to the
 text console and try to kill another process.</para>
-
-<para>Good candidates to kill are: the application you were working
-with, &kicker;, &klipper; and &kdesktop;.</para>
 </answer>
 </qandaentry>
 
@@ -127,7 +121,7 @@ with, &kicker;, &klipper; and &kdesktop;.</para>
 <answer>
 <para>If you want to switch your window manager on the fly, type the
 following into a terminal window: <command>kwmcom
-go:<replaceable>blackbox</replaceable></command>.  This switches to
+go:<replaceable>blackbox</replaceable></command>. This switches to
 Blackbox, but you can substitute any window manager you like.</para>
 </answer>
 </qandaentry>

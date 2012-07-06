@@ -56,7 +56,7 @@ directly editing the configuration files. The &tdeprint; &GUI; might not
 have caught up with &CUPS; development.</para>
 
 <para>Just in case you want to look at the original configuration files
-of your &CUPS; system -- they are here:</para>
+of your &CUPS; system  -- mdash; they are here:</para>
 
 <note>
 <para>These paths are based on the default installation.  Your &OS;
@@ -140,7 +140,7 @@ site.</para>
 <para>The following links give you access to the same files (probably
 icons and graphics will be missing) even if your CUPS daemon is not up
 and running. You need, however, CUPS installed on your system. (Some
-distributions might place the files somewhere else -- you're on your
+distributions might place the files somewhere else  -- mdash; you're on your
 own then to find out where...) To access all the original CUPS
 documentation, go to:</para>
 
@@ -272,7 +272,7 @@ configuring any printer on the clients.</para>
 to the <acronym>LAN</acronym>) you need to change settings from the
 defaults.</para>
 
-<para>The dialog to configure the &CUPS; server: welcome screen. </para>
+<para>The dialog to configure the &CUPS; server: welcome screen.</para>
 <screenshot>
 <screeninfo>CUPS server configuration dialog: welcome screen</screeninfo>
 <mediaobject>
@@ -965,7 +965,7 @@ try and replace it by an adequately similar font.</para>
 &CUPS; and its <acronym>RIP</acronym>-ing filtering system. &CUPS;
 will use the font path directive to grab the correct font when
 <acronym>RIP</acronym>-ing the &PostScript; in the
-<command>pstoraster</command> filter. </para>
+<command>pstoraster</command> filter.</para>
 
 <para>In the case of a &PostScript; output device, &CUPS; is just
 spooling the file (actually, it is passing it through the
@@ -985,7 +985,7 @@ printer nor embedded in the &PostScript;.
 Configuration</title>
 
 <para>The dialog to configure the &CUPS; server &HTTP; settings
-is shown here. </para>
+is shown here.</para>
 <para>&CUPS; server &HTTP; settings are the following ones: </para>
 <itemizedlist>
 <listitem><para>the <guilabel>Document folder</guilabel></para></listitem>
@@ -1454,7 +1454,7 @@ to do it on all servers.  Only one BrowsePort is recognized.</para>
 <title>Browsing Masks Configuration</title>
 
 <para>The dialog to configure the &CUPS; server allowed and/or denied browse
-packets from other servers is shown here. </para>
+packets from other servers is shown here.</para>
 
 <itemizedlist>
 <listitem><para><guilabel>Browse allow</guilabel>: </para></listitem>
@@ -2011,7 +2011,7 @@ format="PNG"/></imageobject>
 <para>.This is the second part or the dialog is to add a new
 ressource.  It looks similar if you want to modify an already existing
 resource. Here you define the actual access masks for the resource in
-question. </para>
+question.</para>
 
 <screenshot>
 <screeninfo>Dialog to add a new resource.</screeninfo>

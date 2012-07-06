@@ -11,7 +11,7 @@
 
 <title>&tde; Extragear Applications</title>
 
-<para>These are applications that are directly associated with &tde;, the project, but do not appear and are not shipped with the main &tde; distribution. This can be down to a number of reasons, but a common case is either down to a duplication of functionality, or because they're simply too specialised. Perhaps the most popular occurence however is that the developers themselves may not want it to appear in the main &tde; distribution; choosing, rather, to handle their own release schedules. Nevertheless, the applications in Extragear are distinguished by &tde;, and many are increasingly popular. </para>
+<para>These are applications that are directly associated with &tde;, the project, but do not appear and are not shipped with the main &tde; distribution. This can be down to a number of reasons, but a common case is either down to a duplication of functionality, or because they're simply too specialised. Perhaps the most popular occurence however is that the developers themselves may not want it to appear in the main &tde; distribution; choosing, rather, to handle their own release schedules. Nevertheless, the applications in Extragear are distinguished by &tde;, and many are increasingly popular.</para>
 
 <sect1 id="extragear-components">
 <title>Available in the &tde; Extragear</title>
@@ -38,7 +38,7 @@
 
 <varlistentry>
 <term><application>K3b</application></term>
-	<listitem><para>The definitive &CD;/<acronym>DVD</acronym> burning application for &tde;. With <application>K3b</application> you can create data, video, and audio (it comes with plugins for <acronym>WAV</acronym>, <acronym>MP3</acronym>, <acronym>FLAC</acronym>, and <application>Ogg Vorbis</application>) &CD;s. Projects can be saved and loaded, &CD;-ripping is supported, and you can appropriately make &CD;/<acronym>DVD</acronym> copies. </para>
+	<listitem><para>The definitive &CD;/<acronym>DVD</acronym> burning application for &tde;. With <application>K3b</application> you can create data, video, and audio (it comes with plugins for <acronym>WAV</acronym>, <acronym>MP3</acronym>, <acronym>FLAC</acronym>, and <application>Ogg Vorbis</application>) &CD;s. Projects can be saved and loaded, &CD;-ripping is supported, and you can appropriately make &CD;/<acronym>DVD</acronym> copies.</para>
 	
 		<itemizedlist>
 			<listitem><para>Extragear Summary: <ulink url="http://extragear.kde.org/apps/k3b/">http://extragear.kde.org/apps/k3b/</ulink></para></listitem>

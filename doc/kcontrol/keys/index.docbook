@@ -69,7 +69,7 @@ difference is:</para>
 <listitem><para><quote>Global shortcuts</quote> are shortcuts for
 actions that make sense even when no application is opened. These
 shortcuts usually refer to actions like switching desktops, manipulating
-windows etc.  </para></listitem> 
+windows etc.</para></listitem> 
 <listitem><para><quote>Application shortcuts</quote> refer to actions
 that are often available in applications, such as Save, Print, Copy
 etc.</para></listitem> 
@@ -95,7 +95,7 @@ configure.</para>
 <para>After you've selected an action you'll notice that most of the
 controls below the action list are enabled. There you can configure a
 combination of keys or maybe no key binding at all for the selected
-action.  </para>
+action.</para>
 
 <itemizedlist>
 <listitem><para><guilabel>No key</guilabel>: the selected action will not
@@ -104,7 +104,7 @@ be associated with any key.</para></listitem>
 <listitem><para><guilabel>Default key</guilabel>: the selected action
 will be associated with &tde;'s default value. This is a good choice
 for most actions, as &tde; comes with reasonable key bindings we have
-thought about.  </para></listitem>
+thought about.</para></listitem>
 
 <listitem><para><guilabel>Custom key</guilabel>: if this option is
 enabled, you can create a key combination for the selected
@@ -129,7 +129,7 @@ select by name. &tde; comes with several pre-defined key binding
 schemes. In addition to these bundled schemes, you will always see a scheme named
 <guilabel>Current scheme</guilabel> that represents the set of key
 bindings you are using right now (&ie; not the current settings you
-are playing with, but what you've been using up to now). </para>
+are playing with, but what you've been using up to now).</para>
 
 <para>When you are playing with the key bindings for the first time
 you don't have to be afraid of changing the default bindings: &tde;

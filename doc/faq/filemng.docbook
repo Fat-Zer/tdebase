@@ -1,14 +1,13 @@
 <!-- <?xml version="1.0" ?>
 <!DOCTYPE chapter PUBLIC "-//KDE//DTD DocBook XML V4.2-Based Variant V1.1//EN"
  "dtd/kdex.dtd"> -->
-	
+
 <chapter id="filemanager">
 <title>The File Manager</title>
 
-<para>&tde;'s file manager is &konqueror;.  The
-&konqueror; home page is located at <ulink
-url="http://www.konqueror.org">http://www.konqueror.org</ulink> where a
-&konqueror; specific <acronym>FAQ</acronym> can be found.</para>
+<para>The default file manager in &tde; is &konqueror;. Please refer to
+the <ulink url="help:/konqueror/index.html">
+Konqueror Handbook</ulink> for detailed information.</para>
 
 <qandaset>
 
@@ -36,28 +35,26 @@ Editor</guimenuitem></menuchoice>.
 <answer>
 <para>Normally, if you enter a &URL; like
 <userinput>ftp://<replaceable>ftp.somehost.com</replaceable></userinput>,
-&konqueror; will attempt an anonymous login to the &FTP; server.  If you
+&konqueror; will attempt an anonymous login to the &FTP; server. If you
 want to login as a particular user, enter a &URL; like
 <userinput>ftp://<replaceable>username@ftp.somehost.com</replaceable></userinput>
-instead.  &konqueror; will ask for your password and connect to the
+instead. &konqueror; will ask for your password and connect to the
 server.</para>
 </answer>
 </qandaentry>
-
 
 <qandaentry>
 <question>
 <para>How do I specify the startup folder for &konqueror;?</para>
 </question>
 <answer>
-
-<para>Using the &RMB;, click on the Home icon and choose
-<guimenuitem>Properties</guimenuitem>.  Under the
-<guilabel>Application</guilabel> tab you will probably find something like
-<command>kfmclient openProfile filemanagement</command>; just append
-<filename class="directory">file:/whereever/you/want</filename> with the
-folder you would like &konqueror; to start in.</para>
-
+<para>With the desktop Home icon, using the &RMB;, select the icon and choose
+<guimenuitem>Properties</guimenuitem>. Select the
+<guilabel>URL</guilabel> tab. Type <filename class="directory">/whereever/you/want</filename>
+with the folder you would like &konqueror; to start in.</para>
+<para>From within &konqueror; the process is similar. Ensure the Navigation Panel is active
+(press <keycap>F9</keycap>). From the Navigation Panel tabs, select the Home icon.
+In the Navigation Panel directory, use the &RMB; to select the top level <filename class="directory">Home Folder</filename> and select <guimenuitem>Properties</guimenuitem>.</para>
 </answer>
 </qandaentry>
 
@@ -76,11 +73,11 @@ folder you would like &konqueror; to start in.</para>
 <para>Where did the delete entry from my right-click context menu go?</para>
 </question>
 <answer>
-<para>In &tde; 3.4 the delete context menu entries that bypass the
-trashcan are no longer displayed by default. To enable them, go to 
+<para>The Delete context menu entry that bypasses the
+Trash can is not displayed by default. To enable that menu option, go to
 <menuchoice><guimenu>Settings</guimenu><guimenuitem>Configure
 &konqueror;</guimenuitem></menuchoice > and select
-<guilabel>Behaviour</guilabel> in the iconbar to the left. Tick the checkbox
+<guilabel>Behaviour</guilabel> in the iconbar to the left. Enable the checkbox
 <guilabel>Show 'Delete' context menu entries which bypass the
 trashcan</guilabel>.
 </para>
@@ -93,7 +90,7 @@ open different types of files?</para></question>
 <answer>
 <para>In order to configure file associations, you should go to the
 &kcontrolcenter; and choose the item <guimenuitem>File
-Associations</guimenuitem> under the category <guimenu>TDEDE
+Associations</guimenuitem> under the category <guimenu>TDE
 Components</guimenu>.</para>
 <para>
 Suppose the default <acronym>PDF</acronym> viewer is now &kghostview; and
@@ -116,7 +113,7 @@ associated Konqueror with inode/directory, but it cannot handle this file
 type.</quote></para>
 </question>
 <answer>
-<para>You need to make sure that the embedding settings for inode/directory
+<para>Make sure the embedding settings for inode/directory
 are correct:
 <orderedlist>
 <listitem><para>In &konqueror;, go to
@@ -136,34 +133,35 @@ of <guilabel>Services Preference Order.</guilabel></para></listitem>
 </qandaentry>
 
 <qandaentry> <question> <para>What are <option>%i</option> and
-<option>%m</option> in the Execute line?</para> </question> <answer>
+<option>%m</option> parameters in a file's Properties Command line?</para>
+</question>
+<answer>
 <para>They are used by all &tde; applications (since they are implemented in
 <classname>KApplication</classname> and all good &tde; programs create a
 <classname>KApplication</classname> object before they even look at the
 command line arguments).</para> <para>A standard line for a &tde;
 application looks like this: <userinput><command>foo</command>
-<option>... %i %m -caption \"%c\"</option></userinput>.  Pretty confusing,
+<option>... %i %m -caption \"%c\"</option></userinput>. Pretty confusing,
 -but it has been designed in that way so that it can integrate legacy,
-non-&tde; applications as smoothly as possible.  &konqueror;, when executing
+non-&tde; applications as smoothly as possible. &konqueror;, when executing
 the line above, will extend the command to
 <userinput><command><replaceable>foo</replaceable></command> <option>-icon
 something.png -miniicon something_mini.png -caption \"The
-Foo\"</option></userinput>.  Both the icon and the mini-icon as well as "The
-Foo" are properties defined in the <filename>.desktop</filename> file.  If
+Foo\"</option></userinput>. Both the icon and the mini-icon as well as "The
+Foo" are properties defined in the <filename>.desktop</filename> file. If
 the icons are not defined, they simply default to the executable name
 <replaceable>foo</replaceable>.</para>
- 
+
 <para>This way a user can change these things in &kmenuedit; for his or her
-applications.  The <option>-caption</option> option is important, because no
+applications. The <option>-caption</option> option is important, because no
 user will accept that the menu item <guimenuitem>Editor</guimenuitem> starts
-something called <guilabel>kedit-0.9pl4-build47</guilabel>.  Instead, he
-expects a window called <guilabel>Editor</guilabel>.  Furthermore these
-names are localized, <abbrev>i.e.</abbrev> an American user launches
+something called <guilabel>kedit-0.9pl4-build47</guilabel>. Instead, users
+expect a window called <guilabel>Editor</guilabel>. Furthermore these
+names are localized, &ie; an American English user launches
 <guimenuitem>CD-Player</guimenuitem> and gets a window called
 <guilabel>CD-Player</guilabel> while a German user launches
 <guimenuitem>CD-Spieler</guimenuitem> and gets a window called
 <guilabel>CD-Spieler</guilabel>.</para>
-
 </answer>
 </qandaentry>
 
@@ -174,15 +172,13 @@ I can't save a view profile when the menu bar is invisible!</para>
 
 <answer><para>The easiest way to do this is to edit &konqueror;'s
 configuration file manually. Add the following lines to
-<filename>~/.kde/share/config/konquerorrc</filename>:
+<filename>~/.trinity/share/config/konquerorrc</filename>:
 <programlisting>
 [KonqMainWindow]
 MenuBar=Disabled
 </programlisting>
 </para>
-
 <para>On restarting &konqueror;, the menubar should be hidden.</para>
-
 </answer>
 </qandaentry>
 

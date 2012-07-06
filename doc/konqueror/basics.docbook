@@ -149,7 +149,7 @@ Bookmark Toolbar, or even to add an Extra Toolbar.</para></listitem>
 <listitem><para>You can also <quote>flatten</quote> the toolbars by 
 <mousebutton>left</mousebutton> clicking on the vertical lines at the left hand end
 of the bars, or move them around by holding the &LMB; down while you
-drag these bars around. </para></listitem>
+drag these bars around.</para></listitem>
 <listitem><para>This screenshot does not show the optional <link linkend="sidebar">
 Navigation Panel</link>.</para></listitem>
 </itemizedlist>
@@ -203,7 +203,7 @@ Mouse Button Actions</title>
 <itemizedlist>
 
 <listitem><para><mousebutton>Left</mousebutton> click on an icon in the Toolbar
-to do whatever that icon is supposed to do. </para></listitem>
+to do whatever that icon is supposed to do.</para></listitem>
 <listitem><para><mousebutton>Left</mousebutton> click on an item in the Menubar
 to make that menu drop down.</para></listitem>
 <listitem><para><mousebutton>Left</mousebutton> click on a menu item to do that
@@ -277,7 +277,7 @@ down.</para></note>
 <listitem><para><mousebutton>Right</mousebutton> clicking on any free area of
 the Titlebar brings up the Titlebar Menu, allowing you to control the position
 of &konqueror;'s window as well as the decoration applied to all &tde; program
-windows. </para></listitem>
+windows.</para></listitem>
 </varlistentry>
 
 <varlistentry>
@@ -304,7 +304,7 @@ features.</para></listitem>
 <listitem><para> If you have the Bookmark Toolbar showing, then
 <mousebutton>right</mousebutton> click on any free part of it to bring up the
 Bookmark Toolbar Menu which lets you change its position and whether items are
-shown as text, icons, or both. </para></listitem> 
+shown as text, icons, or both.</para></listitem> 
 </varlistentry>
 
 <varlistentry>

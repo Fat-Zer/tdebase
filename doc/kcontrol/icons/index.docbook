@@ -84,7 +84,7 @@ example <guilabel>Toolbar</guilabel> or <guilabel>Panel</guilabel>.</para>
 icons of the selected kind will look using the current
 settings. Note that the state of this preview also depends on the icon
 state selected in the effects below (do not worry
-about that now, we will explain that below). </para> </listitem>
+about that now, we will explain that below).</para> </listitem>
 </itemizedlist>
 
 <para>When you want to configure icons, first select the usage of icons
@@ -95,7 +95,7 @@ that. At the end, if you are satisfied with your settings, click
 changes in effect.</para>
 
 <para>There are two further options to consider,
-<guilabel>Size</guilabel> and <guilabel>Effects</guilabel>. </para>
+<guilabel>Size</guilabel> and <guilabel>Effects</guilabel>.</para>
 
 <sect3 id="icons-use-size">
 <title>Icon Size</title>

@@ -19,7 +19,7 @@ level folder. This means that you can get from any folder to
 any other by going <quote>up</quote> until you reach a common point then
 <quote>down</quote> through the appropriate subfolders until you reach
 your
-target. </para>
+target.</para>
 
 <para>The position of any file or folder in the tree can be described by its
 <quote>path</quote>, which is a simple list of the folders you would have
@@ -173,7 +173,7 @@ tree:</para>
 <itemizedlist>
 <listitem><para>To descend into a subfolder <mousebutton>left
 </mousebutton> click on its name or
-icon -- or if you have already <quote>selected</quote> it (see below) -- then just press
+icon  -- mdash; or if you have already <quote>selected</quote> it (see below)  -- mdash; then just press
 <keycap>Enter</keycap>.</para></listitem>
 <listitem><para>To go up the folder tree you can click on the <guiicon>Up
 </guiicon> button in the Toolbar, use<keycombo action="simul">&Alt;<keysym>Up Arrow</keysym></keycombo>, or use the Menubar
@@ -268,7 +268,7 @@ how your system was set up.</para>
 or &CD-ROM; when you have inserted it into the drive, and <command>mount
 </command> other hard disk partitions when you want to access them. You also
 need to unmount a floppy disk or &CD-ROM; before removing it to register that
-it is no longer available. </para>
+it is no longer available.</para>
 
 <para>How you do this will depend on how your system:</para>
 
@@ -602,7 +602,7 @@ the way.
 </variablelist>
 
 <para>Once you have selected the right files then the normal delete, copy or
-move commands will act on all of the selected files at once. </para>
+move commands will act on all of the selected files at once.</para>
 
 <note><para>Depending on your keyboard type and locale, you may find
 that the <keycombo
@@ -789,7 +789,7 @@ ownership and access permissions and lets you change the permissions.
 <sect2 id="copyrename">
 <title>Copy and Rename</title>
 <para>If you want to make a copy of an existing file with a different name --
-perhaps as a backup -- in the same folder as the original file, do a normal
+perhaps as a backup  -- mdash; in the same folder as the original file, do a normal
 <guimenuitem>Copy</guimenuitem> then when you <guimenuitem>Paste</guimenuitem>
 it a dialog box will pop up  complaining that the file already exists.
 Just type the new name into the dialog's text box and press the
@@ -802,10 +802,10 @@ Just type the new name into the dialog's text box and press the
 
 <para>If you are running as a normal user and try to access files outside of
 your own home folder you will often be prevented from doing so and get an
-error message such as <errorname>Access Denied</errorname>. </para>
+error message such as <errorname>Access Denied</errorname>.</para>
 
 <para>To access these files you need to be logged in as the system
-administrator, often known as the Super User or <systemitem class="username">root</systemitem>. </para>
+administrator, often known as the Super User or <systemitem class="username">root</systemitem>.</para>
 
 <para>Rather than logging out then in again, you can launch &konqueror; from
 the

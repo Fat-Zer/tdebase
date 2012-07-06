@@ -230,7 +230,7 @@ specified as <userinput>\{@}</userinput> or
 <userinput>\{@}</userinput> since it removes all query variables
 (<replaceable>name</replaceable>=<replaceable>value</replaceable>)
 from the resulting string whereas <userinput>\{0}</userinput> will be
-substituted with the unmodified query string. </para>
+substituted with the unmodified query string.</para>
 
 <para>You can use <userinput>\{1}</userinput>
 ... <userinput>\{n}</userinput> to specify certain words from the
@@ -409,7 +409,7 @@ and password from you. To simplify things, most &FTP; sites that offer files
 for free downloading will accept the word <systemitem class="username">
 anonymous</systemitem> as a username and your email
 address as a password, and to make your life even easier &konqueror; will
-automatically supply these without troubling you. </para>
+automatically supply these without troubling you.</para>
 
 <note><para>If you try to access an &FTP; site that does not need a proper
 username or password but which is too busy to accept any more connections,

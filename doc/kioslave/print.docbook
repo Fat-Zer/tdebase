@@ -89,7 +89,7 @@ print-kioslave)</term>
 <term><userinput>print:/jobs </userinput> 
 or <userinput>print:jobs </userinput></term>
 <listitem>
-<para> lists the current and pending jobs. </para>
+<para> lists the current and pending jobs.</para>
 </listitem>
 </varlistentry>
 
@@ -119,9 +119,9 @@ or <userinput>print:printers/printer_name </userinput> </term>
 <para>opens a page very similar to the &tdeprint;
       Manager module inside the  &tde; Control Center.
       Switch to a different printing system here or do every
-      other administrative task. </para>
+      other administrative task.</para>
 <para>This is the most important of access points to your printing
-      system. </para>
+      system.</para>
 </listitem>
 </varlistentry>
 

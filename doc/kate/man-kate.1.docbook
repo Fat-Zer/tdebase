@@ -43,7 +43,7 @@ line</replaceable></group>
 
 <refsect1>
 <title>Description</title>
-<para>&kate; is the &tde; Advanced Text Editor. </para> 
+<para>&kate; is the &tde; Advanced Text Editor.</para> 
 <para>&kate; also provides the editor part for various applications, under
 the name &kwrite;.</para>
 <para>Some of &kate;'s many features include configurable syntax

@@ -4,15 +4,12 @@
  "dtd/kdex.dtd">
 -->
 
-
-
 <chapter id="windowmanager">
 <title>The window manager</title>
 
-<para>The default window manager provided by &tde; is the K Window
-Manager (&twin;).  Please read <quote>The
-K Window Manager Handbook</quote> (which should be accessible from the
-<application>&tde; Help Center</application>) for usage information.</para>
+<para>The default window manager provided by &tde; is the Trinity Window
+Manager (&twin;). Please refer to <ulink url="help:/khelpcenter/userguide/windows-how-to-work.html">
+Windows, How To Work Them</ulink> in the Trinity user guide for more information.</para>
 
 <qandaset>
 <qandaentry>
@@ -20,8 +17,10 @@ K Window Manager Handbook</quote> (which should be accessible from the
 <para>Are there keyboard shortcuts for &twin; operations?</para>
 </question>
 <answer>
-<para>Yes.  Please refer to "The K Window Manager Handbook" for the
-list of shortcuts available.</para>
+<para>Yes. Please use to the Trinity Control Center (&kcontrol;),
+<menuchoice><guimenu>Regional &amp; Accessibility</guimenu><guimenuitem>
+Keyboard Shortcuts</guimenuitem></menuchoice>, for the
+list of available shortcuts.</para>
 </answer>
 </qandaentry>
 
@@ -30,23 +29,23 @@ list of shortcuts available.</para>
 <para>Can I define my own set of keyboard shortcuts?</para>
 </question>
 <answer>
-<para>Yes.  Launch the
+<para>Yes. Launch the
 <application>&tde; Control Center</application> and select
 <menuchoice><guimenu>Regional &amp; Accessibility</guimenu><guimenuitem>Keyboard Shortcuts</guimenuitem></menuchoice> to
-configure window manager bindings like maximizing windows, &etc;. 
+configure window manager bindings like maximizing windows, &etc;.
 </para>
 </answer>
 </qandaentry>
 
 <qandaentry>
 <question>
-<para>When I "iconify" a window, it disappears.  Where does it
+<para>When I "iconify" a window, it disappears. Where does it
 go?</para>
 </question>
 <answer>
 <para>With many &X-Window; &GUI;s, the minimize button (a little dot) will
 erase the window that the program is running in and create, instead,
-an icon on the desktop.  &tde; does not do this.  Instead, when a
+an icon on the desktop. &tde; does not do this. Instead, when a
 window is iconified it is simply hidden (but the program is still
 running).</para>
 <para>There are a few ways to access <quote>disappeared</quote> windows:</para>
@@ -82,7 +81,7 @@ maximize fully/vertically/horizontally respectively.</para>
 </question>
 <answer>
 <para>By <quote>shading</quote> a window we mean <quote>rolling up</quote> the window leaving just
-the title bar visible.  You can do this by double clicking on the
+the title bar visible. You can do this by double clicking on the
 window title bar.</para>
 </answer>
 </qandaentry>
@@ -122,9 +121,9 @@ this feature.</para>
 placement of windows?</para>
 </question>
 <answer>
-<para>Yes.  Run <application>&tde; Control Center</application> and select <guimenu>Look and Feel</guimenu>
+<para>Yes. Run <application>&tde; Control Center</application> and select <guimenu>Look and Feel</guimenu>
 followed by <guisubmenu>Window Behavior</guisubmenu> and finally
-<guimenuitem>Advanced</guimenuitem>.  There is a dialog option that
+<guimenuitem>Advanced</guimenuitem>. There is a dialog option that
 allows you to set the placement policy you want.</para>
 </answer>
 </qandaentry>

@@ -38,7 +38,7 @@ liking. <acronym>CDDB</acronym>, in case you didn't know, stands for CD DataBase
 Disc DataBase in it's more free flowing form). This functionality enables
 &tde; to retrieve the Artist/Album/Track information about your CDs from the
 Internet. This metadata is also used to write tags to the MP3 or Ogg files
-that you'll be encoding your CDs to anytime now. </para>
+that you'll be encoding your CDs to anytime now.</para>
 
 
 <mediaobject>
@@ -70,7 +70,7 @@ pressing the magic <keycap>F9</keycap> key.</para>
 <para>Now click on Audio CD Browser and in a few seconds, you'll see a lot
 of folders which you can start browsing. If it's taking some time to show
 anything, it's because it's trying to fetch information about the CD from
-the CDDB database you configured earlier. </para>
+the CDDB database you configured earlier.</para>
 
 <para>In the screenshot below, you can see the contents of the Ogg Vorbis
 folder. It shows all the songs in the Ogg format; it even shows their file
@@ -91,7 +91,7 @@ you open the Ogg Vorbis folder, you are actually seeing the contents of the
 CD <emphasis>as if</emphasis> it were stored in the Ogg format. You can go through the other
 folders and you'll find MP3, flac and wav representations of the CD's
 contents. You can even see the approximate file sizes when encoded in the
-various formats. </para>
+various formats.</para>
 
 
 <para>So how do we rip and encode the CD? I think you can guess the answer
@@ -99,7 +99,7 @@ by now. Just decide which format you wish to rip to, open that folder, and
 copy and paste those files in your target folder. That's it! &tde; will start
 ripping and encoding the files on the fly! If you copy any of the files in
 the <guilabel>Full CD</guilabel> folder, you'll be ripping the entire CD as
-one continuous stream. </para>
+one continuous stream.</para>
 
 
 <mediaobject>

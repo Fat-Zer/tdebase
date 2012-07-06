@@ -161,7 +161,7 @@ actually use the OASIS OpenDocument file format.
 
 <varlistentry>
 <term>&kspread;</term>
-	<listitem><para>The spreadsheet component. &kspread; is a scriptable spreadsheet program which provides both table-oriented sheets and support for complex mathematical formulas and statistics. Features include Hyperlinks, cell data validity checking with configurable warnings/actions, scripting and specific cell customization. </para>
+	<listitem><para>The spreadsheet component. &kspread; is a scriptable spreadsheet program which provides both table-oriented sheets and support for complex mathematical formulas and statistics. Features include Hyperlinks, cell data validity checking with configurable warnings/actions, scripting and specific cell customization.</para>
 	
 		<itemizedlist>
 			<listitem><para>Website: <ulink url="http://www.koffice.org/kspread/">http://www.koffice.org/kspread/</ulink></para></listitem>
@@ -202,7 +202,7 @@ actually use the OASIS OpenDocument file format.
 
 <varlistentry>
 <term>&krita;</term>
-	<listitem><para>The painting and image manipulation component. &krita; contains both ease-of-use, fun features like guided painting, as well as high-end features like support for 16-bit images, <acronym>CMYK</acronym> and even OpenEXR <acronym>HDR</acronym> images.  </para>
+	<listitem><para>The painting and image manipulation component. &krita; contains both ease-of-use, fun features like guided painting, as well as high-end features like support for 16-bit images, <acronym>CMYK</acronym> and even OpenEXR <acronym>HDR</acronym> images.</para>
 	
 		<itemizedlist>
 			<listitem><para>Website: <ulink url="http://www.koffice.org/krita/">http://www.koffice.org/krita/</ulink></para></listitem>
@@ -237,7 +237,7 @@ actually use the OASIS OpenDocument file format.
 
 <varlistentry>
 <term>&kexi;</term>
-	<listitem><para>The data management component. It can be used for creating database schemas, inserting data, performing queries, and processing data. Forms can be created to provide a custom interface to your data. All database objects -- tables, queries and forms -- are stored in the database, making it easy to share data and database design.</para>
+	<listitem><para>The data management component. It can be used for creating database schemas, inserting data, performing queries, and processing data. Forms can be created to provide a custom interface to your data. All database objects  -- mdash; tables, queries and forms  -- mdash; are stored in the database, making it easy to share data and database design.</para>
 	
 		<itemizedlist>
 			<listitem><para>Website: <ulink url="http://www.koffice.org/kexi/">http://www.koffice.org/kexi/</ulink> and <ulink url="http://kexi-project.org">http://kexi-project.org</ulink>.</para></listitem>
@@ -249,7 +249,7 @@ actually use the OASIS OpenDocument file format.
 
 <varlistentry>
 <term>&kchart;</term>
-	<listitem><para>The chart drawing component; it is used to embed charts into one of the other &koffice; components. It's easy to use, highly customizable allowing all of the parameters to be changed, and has a flexible layout. </para>
+	<listitem><para>The chart drawing component; it is used to embed charts into one of the other &koffice; components. It's easy to use, highly customizable allowing all of the parameters to be changed, and has a flexible layout.</para>
 	
 		<itemizedlist>
 			<listitem><para>Website: <ulink url="http://www.koffice.org/kchart/">http://www.koffice.org/kchart/</ulink></para></listitem>

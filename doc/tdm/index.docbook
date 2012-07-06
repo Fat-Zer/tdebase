@@ -297,7 +297,7 @@ software.</para>
 
 <para>Pressing the <guibutton>OK</guibutton> button initiates the selected
 action; pressing the <guibutton>Cancel</guibutton> button returns to the
-main &tdm; dialog box. </para>
+main &tdm; dialog box.</para>
 
 </chapter>
 
@@ -560,7 +560,7 @@ covered with this one color.</para></listitem>
 <varlistentry>
 <term>Pattern</term>
 <listitem><para>By choosing this mode, you select two colors (using both color
-buttons). </para> <para>You then select a pattern by clicking
+buttons).</para> <para>You then select a pattern by clicking
 <guilabel>Setup</guilabel>. This opens a new dialog window, which gives you
 the opportunity to select a pattern. Simply click once on the pattern of your
 choice, then click on <guilabel>OK</guilabel>, and &tde; will render the pattern
@@ -779,7 +779,7 @@ login or disabling passwords.</para>
 options. Every option in the <guilabel>Convenience</guilabel> tab is
 well-suited to seriously compromise your system security. Practically,
 these options are only to be used in a completely non-critical
-environment, &eg; a private computer at home. </para></important>
+environment, &eg; a private computer at home.</para></important>
 
 <sect3 id="loginmanager-convenience-autologin">
 <title>Automatic Login</title>
@@ -1410,7 +1410,7 @@ more.</para>
 
 <programlisting>if tdmctl | grep -q shutdown; then
   IFS=$'\t'
-  set -- `tdmctl listbootoptions`
+  set  -- mdash; `tdmctl listbootoptions`
   if [ "$1" = ok ]; then
         fbsd=$(echo "$2" | tr ' ' '\n' | sed -ne 's,\\s, ,g;/freebsd/I{p;q}')
         if [ -n "$fbsd" ]; then

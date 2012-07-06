@@ -78,11 +78,11 @@ the left of the notification name.  These columns (from left to right) are:</par
 <sect2><title>Change a single notification</title>
 <para>To make a change to a notification, click on the name of the notification once with the &LMB;.  The notification will be highlighted. 
 Now click on the button labeled 
-<guibutton>More options</guibutton> so you can see all the checkboxes.  </para>
+<guibutton>More options</guibutton> so you can see all the checkboxes.</para>
 
 <tip><para>You can have more than one event triggered by a single notification. As an example, it is easy to have a sound played and 
 a message box appear in response to a system notification.  One notification does not prevent other notifications from operating.</para></tip>
-<para>The following list details each of the notification types and how to use them. </para>
+<para>The following list details each of the notification types and how to use them.</para>
 
 <variablelist>
 <varlistentry>
@@ -92,12 +92,12 @@ a message box appear in response to a system notification.  One notification doe
 
 <varlistentry>
 <term><guilabel>Log to a file</guilabel></term>
-<listitem><para>If a mark is in this checkbox, &tde; will write certain information to a file on disk for later retrieval.  To specify the log file to use, enter the pathname in the text box to the right of the checkbox.  You can use the folder button (located to the far right of the dialog box) to browse your directory tree.  </para></listitem>
+<listitem><para>If a mark is in this checkbox, &tde; will write certain information to a file on disk for later retrieval.  To specify the log file to use, enter the pathname in the text box to the right of the checkbox.  You can use the folder button (located to the far right of the dialog box) to browse your directory tree.</para></listitem>
 </varlistentry>
 
 <varlistentry>
 <term><guilabel>Execute a program</guilabel></term>
-<listitem><para>If a mark is in this checkbox, a separate program will be executed when this notification is performed.  To specify the program to execute, enter the pathname in the text box to the right of the checkbox.  You can use the folder button (located to the far right of the dialog box) to browse your directory tree.  </para></listitem>
+<listitem><para>If a mark is in this checkbox, a separate program will be executed when this notification is performed.  To specify the program to execute, enter the pathname in the text box to the right of the checkbox.  You can use the folder button (located to the far right of the dialog box) to browse your directory tree.</para></listitem>
 </varlistentry>
 
 <varlistentry>

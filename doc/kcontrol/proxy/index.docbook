@@ -183,7 +183,7 @@ file.</para>
 <varlistentry>
 <term><guilabel>Use persistent connections to proxy</guilabel></term>
 <listitem>
-<para>Use persistent connection to your proxy server. Keeps connection to proxy open, helps lower bandwidth/speed up connection. Enabling this option will require the proxy server's cooperation, if the proxy server does not support this, it will bring your internet to a stop. </para>
+<para>Use persistent connection to your proxy server. Keeps connection to proxy open, helps lower bandwidth/speed up connection. Enabling this option will require the proxy server's cooperation, if the proxy server does not support this, it will bring your internet to a stop.</para>
 </listitem>
 </varlistentry>
 </variablelist>

@@ -23,7 +23,7 @@ their lessons with &keduca;.  You can find a complete list of &tde;
 educational software on <ulink url="http://edu.kde.org">the TDE-Edu
 website</ulink>. What follows is an overview of a few of them.
 </para>
-<para>View the handbook of each application by typing <userinput>help:/&lt;appname&gt;</userinput> in &konqueror;'s Location Toolbar, or by selecting it in &khelpcenter;. </para>
+<para>View the handbook of each application by typing <userinput>help:/&lt;appname&gt;</userinput> in &konqueror;'s Location Toolbar, or by selecting it in &khelpcenter;.</para>
 
 <sect1 id="languages">
 <title>Improve your language skills</title>
@@ -133,7 +133,7 @@ website</ulink>. What follows is an overview of a few of them.
 <variablelist>
 <varlistentry>
 <term>&kbruch;</term>
-	<listitem><para>An application with several exercise types in order to enhance your calculating with fractions. Different tasks include exercises to find the sum of two fractions, the conversion of fractions into the respective decimal, the comparison (with less than, more than) of fractions, and more. </para>
+	<listitem><para>An application with several exercise types in order to enhance your calculating with fractions. Different tasks include exercises to find the sum of two fractions, the conversion of fractions into the respective decimal, the comparison (with less than, more than) of fractions, and more.</para>
 
 		<itemizedlist>
 			<listitem><para>Website: <ulink url="http://edu.kde.org/kbruch">http://edu.kde.org/kbruch</ulink></para></listitem>
@@ -146,7 +146,7 @@ website</ulink>. What follows is an overview of a few of them.
 
 <varlistentry>
 <term>&kig;</term>
-	<listitem><para>A great application with interactive geometry. Ideal for teachers attempting to draw a graph on the computer, or students who wish to find out more and investigate with graphs and curves. Currently many things are supported, and you can very easily construct several things from parabolas and hyperbolas, to ellipses. </para>
+	<listitem><para>A great application with interactive geometry. Ideal for teachers attempting to draw a graph on the computer, or students who wish to find out more and investigate with graphs and curves. Currently many things are supported, and you can very easily construct several things from parabolas and hyperbolas, to ellipses.</para>
 
 		<itemizedlist>
 			<listitem><para>Website: <ulink url="http://edu.kde.org/kig">http://edu.kde.org/kig</ulink></para></listitem>

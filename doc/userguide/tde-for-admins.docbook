@@ -2058,7 +2058,7 @@ url="http://www.kde.org/areas/sysadmin/">http://www.kde.org/areas/sysadmin/</uli
 </varlistentry>
 <varlistentry>
 <term><option>action/help_report_bug</option></term>
-<listitem><para>The <guimenuitem>Report Bug</guimenuitem> option from the
+<listitem><para>The <guimenuitem>Report Bug/Request Enhancement...</guimenuitem> option from the
 <guimenu>Help</guimenu> menu.</para></listitem>
 </varlistentry>
 <varlistentry>

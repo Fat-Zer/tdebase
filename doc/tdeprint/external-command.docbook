@@ -4,7 +4,7 @@
 <para>This module allows the print command to be specified completely
 (&Netscape;-like). An edit line is added in the print dialog for that
 purpose. Can be used in many cases, for example with a self-made print
-program. </para>
+program.</para>
 
 <sect1>
 <title>Overview of provided features</title>

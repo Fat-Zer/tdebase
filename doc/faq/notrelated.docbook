@@ -65,7 +65,7 @@ depth.</para>
 <para>Go buy a 3-button one, or use third button emulation.  The third
 button is emulated by pressing both the &LMB; and the &RMB;
 together.  You would need to enable <option>Emulate3Buttons</option>
-in your <filename>XF86Config</filename> file. </para>
+in your <filename>XF86Config</filename> file.</para>
 </answer>
 </qandaentry>
 
@@ -79,7 +79,7 @@ in your <filename>XF86Config</filename> file. </para>
 desktops, as if sticking to the glass of the screen.
 <application>Xclock</application> is a typical candidate for sticking,
 as you need to run only one instance of it, and it always stays with
-you. </para>
+you.</para>
 </answer>
 </qandaentry>
 

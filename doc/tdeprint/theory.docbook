@@ -116,7 +116,7 @@ many different operators and functions. You may even write
 write to a file. The main value and strength of &PostScript; however
 lies in the field to describe the layout of graphical objects on a
 page: it also can scale, mirror, translate, transform, rotate and
-distort everything you can imagine on a piece of paper -- such as
+distort everything you can imagine on a piece of paper  -- mdash; such as
 letters in different font representations, figures, shapes, shades,
 colors, lines, dots, raster...</para>
 

@@ -14,45 +14,41 @@
 </question>
 <answer>
 
-<para>Many &tde; users report problems using &kppp;.  But before you
-complain about &kppp;, make sure you have already checked the
+<para>Many &tde; users report problems using &kppp;. Make sure you have already checked the
 following:</para>
 
 <itemizedlist>
 <listitem><para>Can you dialup to your <acronym>ISP</acronym> without using &kppp;?  If you cannot, then perhaps &kppp; is not the culprit after
 all.</para></listitem>
-<listitem><para>Have you gone through the &kppp; documentation at
-least three times and followed its instructions and trouble-shooting
+<listitem><para>Have you gone through the &kppp; documentation
+and followed the instructions and troubleshooting
 suggestions?</para></listitem>
 </itemizedlist>
-<para>The &kppp; documentation can be accessed through the 
-<application>&tde; Help Center</application>.
- Last, but not least, the &kppp; homepage is at <ulink
- url="http://ktown.kde.org/~kppp/">http://ktown.kde.org/~kppp/</ulink>.</para>
-<para>Now, if you still encounter problems, here's what might help you
-solve them:</para>
+<para>The <ulink url="help:/kppp">&kppp; handbook</ulink> is available through the
+<application>&tde; Help Center</application>.</para>
+<para>If you still encounter problems, then the following might help:</para>
 <variablelist>
 <varlistentry><term>How do I change the &MTU; setting in &kppp;?</term>
 <listitem><para>Open up the &kppp; dialog box and select
-<guibutton>Setup</guibutton>.  Choose an existing account and click
+<guibutton>Setup</guibutton>. Choose an existing account and click
 <guibutton>Edit</guibutton>, or <guibutton>New</guibutton> to create a
-new dialup account.  Select the <guilabel>Dial</guilabel> tab and
-click <guibutton>Arguments</guibutton>.  Type what you want to change
+new dialup account. Select the <guilabel>Dial</guilabel> tab and
+click <guibutton>Arguments</guibutton>. Type what you want to change
 in the Argument textbox (&eg; <userinput>mtu 296</userinput>) and
-click <guibutton>Add</guibutton>.  When you are satisfied, click
+click <guibutton>Add</guibutton>. When you are satisfied, click
 <guibutton>Close</guibutton>.</para>
 <para>To check whether the options <quote>took</quote>, do one of the following:</para>
 <itemizedlist>
 <listitem>
 <para>In a terminal window, run
 <userinput><command>/sbin/ifconfig</command> ppp0</userinput> and look
-at the reported &MTU; in the output.  It should match your
+at the reported &MTU; in the output. It should match your
 request.</para>
 </listitem>
 <listitem><para>Add <option>debug</option> and <option>kdebug</option>
 (each on a separate line) to your
 <filename>/etc/ppp/options</filename> file and restart your
-&PPP; session.  You will find debugging messages in
+&PPP; session. You will find debugging messages in
 <filename>/var/log/messages</filename>, including &MRU; and &MTU;
 settings.</para></listitem>
 </itemizedlist>
@@ -68,13 +64,13 @@ normal.</term>
 <listitem><para>Try executing <command>setserial
 spd_hi</command>.</para></listitem>
 <listitem><para>The default &MTU; value is 1500,
-which maybe too large 
-for a dialup connection.  Try changing it to a smaller value like
+which maybe too large
+for a dialup connection. Try changing it to a smaller value like
 <userinput>296</userinput>
 or <userinput>576</userinput>.</para></listitem>
 <listitem><para>Check in your <filename
-class="directory">$<envar>HOME</envar>/.kde/share/config</filename> for the 
-<filename>kppprc</filename>.  Ensure the correct modem speed is
+class="directory">$<envar>HOME</envar>/.kde/share/config</filename> for the
+<filename>kppprc</filename>. Ensure the correct modem speed is
 actually defined there.</para></listitem>
 </itemizedlist></listitem>
 </varlistentry>
@@ -99,18 +95,22 @@ Dn</keycap></keycombo>.
 </varlistentry>
 
 <varlistentry>
-<term>How do I perform a simple <quote>copy</quote> from &konsole; to
+<term>How do I copy text from &konsole; to
 anything else?</term>
-<listitem><para>When I do a <command>ls</command>, first I select with
-the mouse the desired text, press 
-<keycombo action="simul">&Ctrl;<keycap>C</keycap></keycombo>,
-then I make the target application active, point the mouse to the
-relevant part and press <keycombo
+<listitem><para>Use the mouse to select the desired text. From the
+<guimenu>Edit</guimenu> menu, select <guimenuitem>Copy</guimenuitem>, or press
+<keycombo action="simul">&Ctrl;&Shift;<keycap>C</keycap></keycombo>. This places
+the text in the &tde; clipboard, &klipper;. Next select
+the target application, place the mouse pointer to the
+desired location and press <keycombo
 action="simul">&Ctrl;<keycap>V</keycap></keycombo>.
-Alternatively, highlight the text by dragging with the &LMB; down and
+Alternately, highlight the text by dragging with the &LMB; down and
 paste by clicking with the &MMB; (or both buttons if you are using a
 2 button mouse with 3 button emulation).
-</para></listitem>
+</para><note><para>Note that the copying and pasting keyboard shortcuts use the
+<keycap>&Shift;</keycap> key. That is because in traditional Unix terminals,
+<keycombo action="simul">&Ctrl;<keycap>C</keycap></keycombo> is used to break or stop
+a process from running.</para></note></listitem>
 </varlistentry>
 
 <varlistentry>
@@ -120,14 +120,14 @@ paste by clicking with the &MMB; (or both buttons if you are using a
 
 <para><application>FontConfig</application> must find the three fonts
 installed in: <filename
-class="directory">$<envar>TDEDIR</envar>/share/fonts</filename>. 
+class="directory">$<envar>TDEDIR</envar>/share/fonts</filename>.
  If
 the &tde; install does not install these fonts in a directory that
 already exists (&eg; <filename
 class="directory">/usr/share/fonts</filename>) then you must add this
 directory to the configuration file <filename
-class="directory">/etc/fonts/local.conf</filename>.  This should be
-the first line after <quote>&lt;fontconfig&gt;</quote>.  For example:
+class="directory">/etc/fonts/local.conf</filename>. This should be
+the first line after <quote>&lt;fontconfig&gt;</quote>. For example:
 <programlisting>
 &lt;fontconfig&gt;
 &lt;dir&gt;/usr/trinity/share/fonts&lt;/dir&gt;
@@ -143,7 +143,7 @@ it found the directory.</para>
 </answer>
 </qandaentry>
 
-<qandaentry>
+<!--<qandaentry>
 <question>
 <para>&kmail;</para>
 </question>
@@ -152,7 +152,7 @@ it found the directory.</para>
 url="http://kmail.kde.org">http://kmail.kde.org</ulink> where an
 <acronym>FAQ</acronym> is available.</para>
 </answer>
-</qandaentry>
+</qandaentry>-->
 
 </qandaset>
 </chapter>

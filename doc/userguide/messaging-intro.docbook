@@ -87,7 +87,7 @@ linkend="integrated-messaging"/></para>
 <para>Internet Relay Chat (<acronym>IRC</acronym>) has been around far longer than most <acronym>IM</acronym>
 systems, and is still widely used. It is mainly designed for group (many-to-many) communication in discussion forums called channels, but also allows one-to-one communication.</para>
 
-<para>The #kde channel is under Freenode, the <acronym>IRC</acronym> server, which provides an interactive environment for coordination and support of peer-directed projects, including -- and placing particular stress upon -- those relating to free software and open source projects, such as &tde;.</para>
+<para>The #kde channel is under Freenode, the <acronym>IRC</acronym> server, which provides an interactive environment for coordination and support of peer-directed projects, including  -- mdash; and placing particular stress upon  -- mdash; those relating to free software and open source projects, such as &tde;.</para>
 
 
 <para>While &kopete; has a <acronym>IRC</acronym> plugin, and handles both channels and nicks well,
@@ -115,7 +115,7 @@ client and look if that person is online via MSN, Jabber or IRC. Well
 <para>The requirements are &kmail;, &kaddressbook; and &kopete;
 (<application>Konversation</application> should do as well). Make sure &kmail; is configured and
 fully functional for email, and Kopete is well configured for IRC,
-Jabber and/or MSN and/or any other protocol. </para>
+Jabber and/or MSN and/or any other protocol.</para>
 
 <para>If an email comes in from a contact you know, the first thing
 you have to do is to add it to your address book. This can be achieved
@@ -150,7 +150,7 @@ see that it shows an extra field <guilabel>Presence</guilabel>, followed by the 
 status. This status will automatically update as soon as the contact
 goes away, offline, online, and so on.  Now go to &kmail;, select another email and return to the original email (in other words: reload
 the current email). You can now see behind the email address the
-current state of your contact. </para>
+current state of your contact.</para>
 
 <para>If you want to chat with this person, just right click the
 address in &kmail; and choose <guilabel>Chat With...</guilabel>. Your

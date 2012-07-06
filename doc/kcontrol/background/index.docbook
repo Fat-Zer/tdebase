@@ -165,7 +165,7 @@ original image.  This will provide you with an image that is not distorted.
 be scaled to fit the desktop, but it will not change the aspect ratio
 of the original image.  This will provide you with an image that is
 not distorted.  If there is any space over, the image will be
-duplicated to fill it.  </para>
+duplicated to fill it.</para>
 </listitem>
 </varlistentry>
 <varlistentry>

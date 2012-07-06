@@ -15,7 +15,7 @@
 <para>Does &tde; support transparency and other visual effects provided by the new composite extension to X.org?</para>
 </question>
 <answer>
-<para> Yes! An exciting new feature for &tde; 3.4 is support for the new X composite extension. This allows for effects such as translucency and drop shadows for all windows, easily configurable through &twin;'s configuration dialog. This requires you to be using X.org version 6.8.0 or newer and have:
+<para>Yes. &tde; supports for the X composite extension and provides its own compositor. This allows for effects such as translucency and drop shadows for all windows, easily configurable through &twin;'s configuration dialog. For those using an xorg.conf file, be sure the following is included:
 
 <screen>
 Section "Extensions"
@@ -23,15 +23,16 @@ Option  "Composite" "Enable"
 EndSection
 </screen>
 
-In your <filename>xorg.conf</filename>. If you have an nvidia graphics card and use the nvidia driver you can improve the performance of these effects by also adding the RenderAccel option to the Device section for your graphics card:
+<!-- This option is enabled by default -->
+<!--Those users with an Nvidia graphics card and driver can improve the performance of these effects by adding the RenderAccel option to the Device section for the graphics card:
 
 <screen>
 Section "Device"
     Identifier  "nvidia-fx5200"
     Driver      "nvidia"
     Option      "RenderAccel" "true"
-</screen>
-Once you have configured X.org correctly, transparency and other effects can be enabled through the <menuchoice><guimenu>Desktop</guimenu><guimenuitem>Window Behavior</guimenuitem></menuchoice> &kcontrolcenter; module, under the <guilabel>Translucency</guilabel> tab.
+</screen>-->
+After correctly configuring xorg.conf, transparency and other effects can be enabled through the <menuchoice><guimenu>Desktop</guimenu><guimenuitem>Window Behavior</guimenuitem></menuchoice> &kcontrolcenter; module, under the <guilabel>Translucency</guilabel> tab.
 </para>
 </answer>
 </qandaentry>
@@ -43,7 +44,7 @@ them into the menu?</para>
 </question>
 <answer>
 <para>Use &kmenuedit;. To access it use the &RMB; on the
-<guibutton>K</guibutton> button and select <guimenu>Menu Editor</guimenu>.</para>
+<guibutton>T</guibutton> button and select <guimenu>Menu Editor</guimenu>.</para>
 </answer>
 </qandaentry>
 
@@ -63,15 +64,17 @@ folders.</para>
 <para>How do I exit &tde;?</para>
 </question>
 <answer>
-<para>Simply click on the <guibutton>K</guibutton> button and select
-<guimenu>Logout</guimenu>. In addition, if you
-<mousebutton>right</mousebutton> click on an
-empty area of the desktop, you will be presented with a menu
-containing logout as one of the options.
+<para>On the panel (kicker) use the &LMB; to select the <guibutton>T</guibutton>
+button and select <guimenu>Log Out...</guimenu>. Another method is to use the &RMB;
+to select an empty area of the desktop, which opens a popup menu,
+containing <guimenu>Log Out...</guimenu> as one of the options.
+Another option is to use a keyboard shortcut, which on many systems is
+<keycombo action="simul">&Ctrl;&Alt;<keycap>Delete</keycap></keycombo>.
+A fourth option is to add the <application>Lock/Logout</application> button applet.
 <note><para>Depending on your configuration of the &X-Window;, <keycombo
 action="simul">&Ctrl;&Alt;&Backspace;</keycombo>
-might also do the trick by killing the X server, but its use prevents
-session management and cannot be recommended.</para></note></para>
+might also exit &tde; by killing the X server, but using that shortcut prevents
+session management and is recommended only for emergencies.</para></note></para>
 </answer>
 </qandaentry>
 
@@ -88,14 +91,13 @@ connected, it will just sit there (idling).</para>
 
 <qandaentry>
 <question>
-<para>Is it really necessary to upgrade to the latest version?</para>
+<para>Is it really necessary to update to the latest version?</para>
 </question>
 <answer>
-<para>We recommend to always use the latest stable release. If you
-don't, it will probably be difficult to get answers to your
-questions. If you have a problem with an old version, the answer will
-probably be <quote>Please upgrade and try again</quote>. Note that
-new versions also sometimes fix security problems.</para>
+<para>We recommend updating to the latest stable release, or at least to stay within
+a release version. Otherwise, getting answers to questions might be challenging.
+Each release always contains bug fixes and enhancements. Often a problem with an old version
+has been fixed in a more recent release. Newer versions also fix security problems. Only seldom are bug and security fixes backported to older releases.</para>
 </answer>
 </qandaentry>
 
@@ -115,10 +117,9 @@ focus.</para></step>
 button mouse and are emulating a three button mouse, push both buttons
 simultaneously.</para></step>
 </procedure>
-
-<para>For more information about using the clipboard in &tde; please see the &klipper; hand book, accessed by typing <userinput><command>help:/klipper</command></userinput>
-into the &konqueror; address bar. </para>
-
+<para>The standard keyboard shortcuts for copying is <keycombo action="simul">&Ctrl;<keycap>C</keycap></keycombo>, to cut is <keycombo action="simul">&Ctrl;<keycap>X</keycap></keycombo>, and to paste is <keycombo action="simul">&Ctrl;<keycap>V</keycap></keycombo>.</para>
+<para>&tde; provides a multiple layer clipboard called &klipper;. Refer to the <ulink
+url="help:/klipper">&klipper; handbook</ulink> for further information.</para>
 </answer>
 </qandaentry>
 
@@ -128,27 +129,19 @@ into the &konqueror; address bar. </para>
 <guimenu>TDE</guimenu> menu?</para>
 </question>
 <answer>
-<para>Click on the <guibutton>K</guibutton> button and select
+<para>Click on the <guibutton>T</guibutton> button and select
 <menuchoice><guimenu>System</guimenu><guimenuitem>Appfinder</guimenuitem></menuchoice>.</para>
 </answer>
 </qandaentry>
 
 <qandaentry>
-<question id="CVS">
-<para>What is <acronym>CVS</acronym>?</para>
+<question id="GIT">
+<para>What is <acronym>GIT</acronym>?</para>
 </question>
 <answer>
-<para>It stands for Concurrent Versions System. It is a version
-control system and is based on <acronym>RCS</acronym> (Revision
-Control System), but
-offers more functionality. It is used to maintain source code under
-development. It will keep multiple versions of things (handy if you
-broke something and have to back up and get a clean old version), and
-allows people remote access over the Net to pick up the latest source
-code and even to check in new files if they have permission. It is
-also open source (you pay for support if you want it), and since it is
-free it is the system of choice for people writing more free products,
-such as &tde;.</para>
+<para>GIT is a distributed version control and source code management system.
+GIT is used to maintain source code under development. The &tde; developers use GIT.
+</para>
 </answer>
 </qandaentry>
 
@@ -157,20 +150,19 @@ such as &tde;.</para>
 <para>Does &tde; support dual screen (Xinerama)?</para>
 </question>
 <answer>
-<para>Yes, you need to have a multi-headed X server
-(&eg; MetroX or XFree86 4.0 and above) and a &tde; >= 2.2.1
+<para>Yes, you need to have a multi-headed X server.
 </para>
 </answer>
 </qandaentry>
 
-<qandaentry>
+<!--<qandaentry>
 <question>
 <para>Why does Drag and Drop not work with Xinerama?</para>
 </question>
 <answer>
-<para>You should upgrade to XFree86 4.2.0 for this to work properly.</para>
+<para>You should update to XFree86 4.2.0 for this to work properly.</para>
 </answer>
-</qandaentry>
+</qandaentry>-->
 
 <qandaentry>
 <question>
@@ -183,9 +175,9 @@ related information in the <guimenuitem>About</guimenuitem> dialog.
 </answer>
 </qandaentry>
 
-<qandaentry>
+<!--<qandaentry>
 <question>
-<para>How do I go about creating themes and icons?</para>
+<para>How do I create themes and icons?</para>
 </question>
 <answer>
 <para>Go see <ulink
@@ -194,15 +186,17 @@ There is also a more informal community of &tde; related artists and
 artwork at <ulink url="http://kde-look.org">http://kde-look.org</ulink>.
 </para>
 </answer>
-</qandaentry>
+</qandaentry>-->
 
 <qandaentry>
 <question>
 <para>How do I learn about development updates?</para>
 </question>
 <answer>
-<para>You might want to subscribe to the &tde; developer's mail list.
-Check <ulink url="http://trinity-devel.pearsoncomputing.net/">http://trinity-devel.pearsoncomputing.net/</ulink>
+<para>You might want to subscribe to the
+<ulink url="http://www.trinitydesktop.org/mailinglist.php">
+&tde; developer's mail list</ulink>.
+Refer to <ulink url="http://trinity-devel.pearsoncomputing.net/">http://trinity-devel.pearsoncomputing.net/</ulink>
 if you want to read without subscribing.</para>
 </answer>
 </qandaentry>
@@ -245,7 +239,5 @@ in the development sources.</para>
 </answer>
 </qandaentry>
 
-
 </qandaset>
 </chapter>
-

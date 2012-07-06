@@ -468,7 +468,7 @@ in real-time.</para> </glossdef>
 mind. Such applications run fine in &tde;. However, they are not
 warned automatically when you shut down your &tde; session. You
 therefore must not forget to save documents open in these applications
-before you log out from &tde;. </para> <para>Additionally, many of
+before you log out from &tde;.</para> <para>Additionally, many of
 these applications do not support copying and pasting from
 &tde; compliant applications. &Netscape; 4.x browser is a prominent
 example of such application <footnote><para>Some <ulink

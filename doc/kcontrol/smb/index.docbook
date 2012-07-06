@@ -35,7 +35,7 @@ protocol is used to offer network services. Names like
 Network</quote> or <quote>LanManager</quote> are often used as
 well. Using <acronym>SMB</acronym> you can access so-called
 <quote>shares</quote> (&ie; folders made available by the server)
-as well as printers.  </para>
+as well as printers.</para>
 
 <para>&tde; comes with built-in support for the <acronym>SMB</acronym>
 protocol. As &tde; is network-transparent that means you can access

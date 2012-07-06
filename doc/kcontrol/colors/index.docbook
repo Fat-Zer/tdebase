@@ -58,7 +58,7 @@ application.</para></note>
 to a sample selection of widgets. It provides you with a
 <guilabel>preview</guilabel> of your current color choices.</para>
 
-<para>A color scheme consists of a set of 18 colors. </para>
+<para>A color scheme consists of a set of 18 colors.</para>
 
 <para>Each of the widgets is labeled to help you identify how your
 changes will impact the color scheme.</para>
@@ -99,12 +99,12 @@ define your own.</para>
 
 <para>The three major color components of each scheme are shown beside
 the name in the list. To preview a scheme in the larger preview area,
-click on its name in the list box. </para>
+click on its name in the list box.</para>
 
 <para>You can use the &tde;-supplied Color Schemes as a starting point
 to devise your own Scheme. Click on the <guibutton>Save
 Scheme...</guibutton> button to store the color scheme under a new name,
-then modify it. </para>
+then modify it.</para>
 
 <para>When such a user-created Color Scheme is selected, changes to it
 (as shown in the Preview) can be saved with the <guibutton>Save

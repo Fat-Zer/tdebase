@@ -22,7 +22,7 @@ problem.</para>
 <para>Try playing sound with
 <userinput><command>artsplay</command><option><replaceable>
 /path/to/some/soundfile</replaceable></option></userinput>. Try various
-formats, ogg, mp3 and wav.  Any error messages there might be useful in
+formats, ogg, mp3 and wav. Any error messages there might be useful in
 pointing you in the right direction.</para>
 
 <para>Try setting the &arts; output method to <acronym>OSS</acronym>. In the
@@ -42,14 +42,12 @@ conjunction with using <command>artsplay</command> in a second terminal can give
 </qandaentry>
 <qandaentry>
 <question><para>
-I've upgraded to the latest version of &tde; keeping my old configuration, and my system sounds don't work anymore!</para></question>
+I've updated to the latest version of &tde; keeping my previous configuration and my system sounds don't work anymore!</para></question>
 <answer><para>
-Assuming you've installed &arts; correctly and you still have the codecs installed your previous &tde; installation needed, chances are this is a small problem with your <filename>knotifyrc</filename>. To confirm this, try creating an entirely new user and seeing if system notifications work under the new account. If they do, try moving your <filename>$<envar>TDEHOME</envar>/share/config/knotifyrc</filename> out of the way for your original user to see if this solves the problem.
+Assuming you've installed &arts; correctly and you still have the codecs installed your previous &tde; installation needed, possibly there is a problem with your <filename>knotifyrc</filename>. To confirm this, try temporarily
+renaming the file. A new one will be created when starting &tde;.
 </para></answer>
 </qandaentry>
 
-
 </qandaset>
-
 </chapter>
-

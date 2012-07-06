@@ -47,7 +47,7 @@ the web sites get, or to customize banner advertising.</para>
 
 <para>The cookies module of the &kcontrol; allows you to set policies
 for the use of cookies when you are browsing the web with the
-&konqueror; web browser. </para>
+&konqueror; web browser.</para>
 
 <warning><para>Note that the policies that you set using this control
 module will <emphasis>not</emphasis> apply to other web browsers such

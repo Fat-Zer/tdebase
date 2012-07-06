@@ -356,7 +356,7 @@ choose between them in the menu appearing after dropping.
 <listitem>
 <para>Choosing this will add a link to the selected folder. Clicking
 this <guiicon>folder</guiicon> icon will open &konqueror; displaying the
-contents of this folder. </para>
+contents of this folder.</para>
 </listitem>
 </varlistentry>
 
@@ -1403,7 +1403,7 @@ put in the foreground without giving focus to it.</para>
 <listitem>
 <para>
 The first application of that group will be
-put in the background. It won't lose the focus. </para>
+put in the background. It won't lose the focus.</para>
 </listitem>
 </varlistentry>
 <varlistentry>

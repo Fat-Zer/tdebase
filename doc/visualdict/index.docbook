@@ -76,7 +76,7 @@ Perhaps list deprecated names, for search/replace purposes?
 <sect1 id="widget-table">
 <title>Listing of Common &tde; Widgets</title>
 <para>Currently, this guide consists of a table of the names of the graphical
-elements often found in &tde; documentation, and an example of each one. </para>
+elements often found in &tde; documentation, and an example of each one.</para>
 <para>Our hope, eventually, is to make this a much more complete document,
 which will take you on a visual tour of &tde;.</para>
 

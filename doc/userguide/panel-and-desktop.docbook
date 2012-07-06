@@ -76,7 +76,7 @@ virtual desktop by clicking on its image in the desktop pager.
 <para>You can find information about the other applets available for
 &kicker; in the &kicker; manual. Just enter
 <userinput>help:/kicker</userinput> in the
-<guilabel>Location</guilabel> bar in &konqueror;. </para>
+<guilabel>Location</guilabel> bar in &konqueror;.</para>
 </sect2>
 
 <sect2 id="the-system-tray">

@@ -162,7 +162,7 @@ covered with this one color.</para></listitem>
 <varlistentry>
 <term>Pattern</term>
 <listitem><para>By choosing this mode, you select two colors (using both color
-buttons). </para> <para>You then select a pattern by clicking
+buttons).</para> <para>You then select a pattern by clicking
 <guilabel>Setup</guilabel>.  This opens a new dialog window, which gives you
 the opportunity to select a pattern.  Simply click once on the pattern of your
 choice, then click on <guilabel>OK</guilabel>, and &tde; will render the pattern
@@ -325,7 +325,7 @@ PROGRAM section.</para>
 
 <para>To add a session, type its name in the
 blank entitled <guilabel>New types</guilabel>, and click
-<guibutton>Add new</guibutton>. </para>
+<guibutton>Add new</guibutton>.</para>
 
 <para>To remove a session, select the session from the list and click
 <guibutton>Remove</guibutton>.</para>
@@ -352,7 +352,7 @@ or not.</para>
 <para>If you choose to show users, then the login window will show
 images (which you select), of a list of users.  When someone is ready to
 login, they select their user name/image, enter their password, and they
-are granted access.  </para>
+are granted access.</para>
 
 <para>If you choose not to show users, then the login window will be
 more traditional.  Users will need to type their username, and password
@@ -390,7 +390,7 @@ checked, this has no effect.</para></listitem>
 <listitem><para>Show all users but no-show users: If this option is selected,
 all users will be listed, <emphasis>except</emphasis> those users contained in
 the list entitled <guilabel>No show users</guilabel>.  If <guilabel>Show
-users</guilabel> is not checked, this has no effect.  </para></listitem>
+users</guilabel> is not checked, this has no effect.</para></listitem>
 </itemizedlist>
 
 </sect3>
@@ -456,7 +456,7 @@ disabling passwords.</para>
 options. Every option in the <guilabel>convenience</guilabel> tab is
 well-suited to seriously compromise your system security. Practically,
 these options are only to be used in a completely non-critical
-environment, &eg; a private computer at home.  </para></important>
+environment, &eg; a private computer at home.</para></important>
 
 <sect3 id="loginmanager-convenience-autologin">
 <title>Automatic Login</title>

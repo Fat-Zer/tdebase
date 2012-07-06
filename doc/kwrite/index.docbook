@@ -337,7 +337,7 @@ action="simul">&Ctrl;<keycap>B</keycap></keycombo></para></entry>
 <row>
 <entry><para><keycombo
 action="simul">&Ctrl;<keycap>C</keycap></keycombo></para></entry>
-<entry><para> Copy the marked text to the clipboard. </para></entry>
+<entry><para> Copy the marked text to the clipboard.</para></entry>
 </row>
 <row>
 <entry><para><keycombo
@@ -423,7 +423,7 @@ action="simul">&Alt;&Ctrl;<keycap>U</keycap></keycombo></para></entry>
 <row>
 <entry><para><keycombo
 action="simul">&Ctrl;<keycap>V</keycap></keycombo></para></entry>
-<entry><para> Paste the clipboard text into line edit. </para></entry>
+<entry><para> Paste the clipboard text into line edit.</para></entry>
 </row>
 <row>
 <entry><para><keycombo
@@ -1684,7 +1684,7 @@ window, the user could select &Ctrl; and <keycap>Alt</keycap>, click on  the key
 button, and then press the <keycap>K</keycap> key on the keyboard.  This would
 mean that anytime he or she held down the &Ctrl; and  <keycap>Alt</keycap>
 buttons and pressed <keycap>K</keycap> (while using
-&kwrite;) the About &tde; display box would be called. </para>
+&kwrite;) the About &tde; display box would be called.</para>
 </listitem>
 </varlistentry>
 
@@ -2255,13 +2255,13 @@ dialog):
 <listitem><para><emphasis role="bold">Nowhere:</emphasis> Don't guess the search
 text.</para></listitem>
 <listitem><para><emphasis role="bold">Selection Only:</emphasis> Use
-    the current text selection, if available. </para></listitem>
+    the current text selection, if available.</para></listitem>
 <listitem><para><emphasis role="bold">Selection, then Current Word:</emphasis>
 Use the current selection if available, otherwise use the current word.
 </para></listitem>
 <listitem><para><emphasis role="bold">Current Word
 Only:</emphasis> Use the word that    the cursor is currently resting on, if
-available. </para></listitem>
+available.</para></listitem>
 <listitem><para><emphasis role="bold">Current Word, then Selection:</emphasis>
 Use the current word if    available, otherwise use the current selection.
 </para></listitem>
@@ -2505,7 +2505,7 @@ for &kwrite; config file and load the settings line from it.</para>
 <listitem><para>Backing up on save will cause &kwrite; to copy the disk file to
 &lt;prefix&gt;&lt;filename&gt;&lt;suffix&gt;' before saving changes.
 The suffix defaults to <emphasis role="bold">~</emphasis> and prefix is empty by
-default. </para>
+default.</para>
 <variablelist>
 <varlistentry>
 <term><guilabel>Local files</guilabel></term>

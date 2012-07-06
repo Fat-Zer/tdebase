@@ -12,7 +12,7 @@
 
 <title>Command Reference</title>
 
-<note><para>The shortcut key combinations shown in this chapter are the 
+<note><para>The shortcut key combinations shown in this chapter are the
 default ones. They can of course be <link linkend="configshort">changed</link>.
 </para></note>
 
@@ -76,7 +76,7 @@ window.</para></listitem>
 <keycombo action="simul">&Ctrl;&Shift;<keycap>N</keycap></keycombo>
 </shortcut>
 <guimenu>Location</guimenu> <guimenuitem>New Tab</guimenuitem>
-</menuchoice></term> 
+</menuchoice></term>
 <listitem><para>Open another &konqueror; tab, containing a
 blank page.</para></listitem>
 </varlistentry>
@@ -187,8 +187,8 @@ page.</para></listitem>
 <guimenu>Location</guimenu>
 <guimenuitem>Open With Netscape/Mozilla</guimenuitem>
 </menuchoice></term>
-<listitem><para>Open the web page you are 
-viewing in &konqueror; with &Netscape;/<application>Mozilla</application> as well.</para></listitem> 
+<listitem><para>Open the web page you are
+viewing in &konqueror; with &Netscape;/<application>Mozilla</application> as well.</para></listitem>
 </varlistentry>
 
 <varlistentry>
@@ -325,7 +325,7 @@ folder.</para></listitem>
 <listitem><para>Create a link to an application,
 <acronym>URL</acronym>, Floppy or &CD-ROM; device, or create a new Folder or
 text or &HTML; file. See the <link linkend="making">Create
-New...</link>section for more details.</para></listitem> 
+New...</link>section for more details.</para></listitem>
 </varlistentry>
 
 <varlistentry>
@@ -420,9 +420,9 @@ folders.</para></listitem>
 <guisubmenu>Selection</guisubmenu>
 <guimenuitem>Select All</guimenuitem>
 </menuchoice></term>
-<listitem><para>Selects all text in an &HTML; 
-page or in a text page being previewed, you can then 
-<guimenuitem>Copy</guimenuitem> it and <guimenuitem>Paste</guimenuitem> it into 
+<listitem><para>Selects all text in an &HTML;
+page or in a text page being previewed, you can then
+<guimenuitem>Copy</guimenuitem> it and <guimenuitem>Paste</guimenuitem> it into
 a text editor.</para></listitem> </varlistentry>
 </variablelist>
 </para>
@@ -447,8 +447,8 @@ page.</para></listitem>
 <guimenu>Edit</guimenu>
 <guimenuitem>Find Next</guimenuitem>
 </menuchoice></term>
-<listitem><para>Find the next occurrence of the text string 
-in the text or &HTML; page.</para></listitem> 
+<listitem><para>Find the next occurrence of the text string
+in the text or &HTML; page.</para></listitem>
 </varlistentry>
 
 <varlistentry>
@@ -476,7 +476,7 @@ page you are previewing.</para></listitem>
 </menuchoice></term>
 <listitem><para>Selects <guimenuitem>Icon</guimenuitem>,
 <guimenuitem>MultiColumn</guimenuitem>, <guimenuitem>Tree</guimenuitem>,
-<guimenuitem>Detailed List</guimenuitem> 
+<guimenuitem>Detailed List</guimenuitem>
 or <guimenuitem>Text</guimenuitem> view mode.</para></listitem>
 </varlistentry>
 
@@ -485,7 +485,7 @@ or <guimenuitem>Text</guimenuitem> view mode.</para></listitem>
 <guimenu>View</guimenu>
 <guimenuitem>Use index.html</guimenuitem>
 </menuchoice></term>
-<listitem><para>If a selected folder contains a file 
+<listitem><para>If a selected folder contains a file
 <filename>index.html</filename>, it will be opened as a web
 page rather than showing the folder as a list of
 files.</para></listitem>
@@ -499,7 +499,7 @@ files.</para></listitem>
 <listitem><para>Lock to current location.
 </para></listitem>
 </varlistentry>
-	  
+
 <varlistentry>
 <term><menuchoice>
 <guimenu>View</guimenu>
@@ -526,7 +526,7 @@ window.</para></listitem>
 </menuchoice></term>
 <listitem><para>Reload.</para></listitem>
 </varlistentry>
-	  
+
 <varlistentry>
 <term><menuchoice>
 <shortcut><keycap>Esc</keycap></shortcut>
@@ -554,7 +554,7 @@ viewing a folder in Icon Mode.</para></listitem>
 <listitem><para>Choose order in which items are presented in the
 window when in Icon or MultiColumn View mode.</para></listitem>
 </varlistentry>
-	  
+
 <varlistentry>
 <term><menuchoice>
 <guimenu>View</guimenu>
@@ -584,8 +584,8 @@ page.</para>
 <guimenuitem>View Frame Source</guimenuitem>
 </menuchoice></term>
 <listitem><para>View frame source text</para>
-<para>Only applies if you are viewing a web site that uses frames. Similar to 
-<guimenuitem>View Document Source</guimenuitem>. </para>
+<para>Only applies if you are viewing a web site that uses frames. Similar to
+<guimenuitem>View Document Source</guimenuitem>.</para>
 </listitem>
 </varlistentry>
 
@@ -705,7 +705,7 @@ bookmarks.</para></listitem>
 </menuchoice></term>
 <listitem>
 <para>Create a bookmark folder containing links to all of the &URL;s currently
-open in &konqueror; tabs. </para>
+open in &konqueror; tabs.</para>
 </listitem>
 </varlistentry>
 
@@ -742,7 +742,7 @@ folder.</para></listitem>
 <guimenu>Tools</guimenu>
 <guimenuitem>Run Command...</guimenuitem>
 </menuchoice></term>
-<listitem><para>Run a program by entering its name in a 
+<listitem><para>Run a program by entering its name in a
 simple dialog box.</para></listitem>
 </varlistentry>
 
@@ -795,7 +795,7 @@ and Profiles</link>.</para></note>
 <guimenu>Settings</guimenu>
 <guimenuitem>Toolbars</guimenuitem>
 </menuchoice></term>
-<listitem><para>Opens a sub menu where you can choose to show or hide 
+<listitem><para>Opens a sub menu where you can choose to show or hide
 the various Toolbars.</para></listitem>
 </varlistentry>
 
@@ -870,7 +870,7 @@ new one.</para></listitem>
 see and change &konqueror;'s shortcut key bindings, i.e. the
 associations between actions such as <guimenuitem>Copy</guimenuitem> and keys
 or combinations of keys such a <keycombo
-action="simul">&Ctrl;<keycap>V</keycap></keycombo>. If you do 
+action="simul">&Ctrl;<keycap>V</keycap></keycombo>. If you do
 this take care not to duplicate an existing shortcut.</para>
 </listitem></varlistentry>
 
@@ -879,7 +879,7 @@ this take care not to duplicate an existing shortcut.</para>
 <guimenuitem>Configure Toolbars...</guimenuitem>
 </menuchoice></term> <listitem><para>
 Lets you configure the Main, Extra and Location Toolbars. See the
-section <link linkend="configure-bars">Changing Bars</link>. 
+section <link linkend="configure-bars">Changing Bars</link>.
 </para></listitem> </varlistentry>
 
 <varlistentry>
@@ -943,7 +943,7 @@ pointer, clicking on a window item such as the
 <varlistentry>
 <term><menuchoice>
 <guimenu>Help</guimenu>
-<guimenuitem>Report Bug...</guimenuitem>
+<guimenuitem>Report Bug/Request Enhancement...</guimenuitem>
 </menuchoice></term>
 <listitem><para>Report bug.</para></listitem>
 </varlistentry>

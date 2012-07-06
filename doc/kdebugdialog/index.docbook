@@ -43,7 +43,7 @@ see a list of <quote>areas</quote>, that can be disabled or enabled. A
 something in the debug output only if the area is enabled.</para>
 
 <note><para>Note that kdWarning, kdError and kdFatal always appear,
-they are NOT controlled by this setting.  </para></note>
+they are NOT controlled by this setting.</para></note>
 
 <variablelist>
 <varlistentry>

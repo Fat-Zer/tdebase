@@ -83,7 +83,7 @@ power consumption to a bare minimum (zero).</para>
 <para>If your monitor is Energy Star Compliant, then you should put a
 mark in the check box labeled <guilabel>Enable Display Energy
 Saving</guilabel>.  This will activate the energy saving
-commands. </para>
+commands.</para>
 
 <para>The next three slider bars, tell the computer how many minutes of
 inactivity before automatically switching to a new state.  These numbers

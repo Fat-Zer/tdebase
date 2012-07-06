@@ -10,26 +10,25 @@
 <question>
 <para>How do I set the language used by &tde;?</para>
 </question>
-
 <answer>
-<para>There are two ways to set the language &tde; uses in the
+<para>First ensure the appropriate tde-i18n language package is installed.</para>
+<para>Thereafter there are two ways to set the language &tde; uses in the
 messages it will display:</para>
-
 <variablelist>
 <varlistentry><term>Using the <application>&tde; Control Center</application></term>
-<listitem><para>Fire up the <application>&tde; Control Center</application> and select
-<guimenu>Regional &amp; Accessibility</guimenu> followed by
-<guimenuitem>Country/Region &amp; Language</guimenuitem>.  You can select your language and location
-here.  If &tde; cannot find a translation in the first language
-chosen, it will fall back on the default language.  This is usually
+<listitem><para>Open the <application>&tde; Control Center</application> and select
+<guimenu>Regional &amp; Accessibility</guimenu> then
+<guimenuitem>Country/Region &amp; Language</guimenuitem>. You can select your language and location
+here. If &tde; cannot find a translation in the first language
+chosen, it will fall back on the default language. This is usually
 (American) English by default.</para>
 <note><para>Using the <application>&tde; Control Center</application> is the preferred way of choosing
 languages in &tde;.</para></note></listitem>
 </varlistentry>
 <varlistentry><term>Using the <envar>LANG</envar> environment variable</term>
 <listitem><para>The second method uses the standard locale setting on
-your system.  To change the language, simply set the environment
-variable <envar>LANG</envar> accordingly.  For example, if your shell 
+your system. To change the language, simply set the environment
+variable <envar>LANG</envar> accordingly. For example, if your shell
 is <application>bash</application>, execute
 <userinput><command>export</command> <envar>LANG</envar>=de</userinput>
 to set German as the language used.</para></listitem>
@@ -45,10 +44,9 @@ to set German as the language used.</para></listitem>
 </question>
 <answer>
 <para>
-Yes, you can configure it using the <application>&tde; Control Center</application>
-<guimenu>Regional &amp; Accessibility</guimenu>
-<guimenuitem>Keyboard Layout</guimenuitem>
- configuration page.
+Yes, configure the switcher using the <application>&tde; Control Center</application>
+<menuchoice><guimenu>Regional &amp; Accessibility</guimenu><guimenuitem>
+Keyboard Layout</guimenuitem></menuchoice> configuration page.
 </para>
 </answer>
 </qandaentry>
@@ -59,27 +57,27 @@ Yes, you can configure it using the <application>&tde; Control Center</applicati
 &tde; login screen?</para>
 </question>
 <answer>
-<note><para>Your distribution/&UNIX; flavor may have its own setup tools to
+<note><para>Your &UNIX; distribution might have its own setup tools to
 change this (&eg; <application>YaST</application> on &SuSE; &Linux;). This will
 be the safest way to enable the &tde; login screen. However, if for some reason
-you do not wish to use these tools, the following instructions may be useful.</para></note>
-<para>First, you need to change to the <quote>xdm runlevel</quote> (runlevel 5 on
+you do not wish to use these tools, the following instructions might be useful.</para></note>
+<para>First, ychange to the <quote>xdm runlevel</quote> (runlevel 5 on
 &RedHat; and &SuSE; systems) by editing your
-<filename>/etc/inittab</filename> file.  In the file, you should have
-a line saying <userinput>id:3:initdefault:</userinput>.  Change it to
-<userinput>id:5:initdefault:</userinput>.  Now, at the end of the file,
+<filename>/etc/inittab</filename> file. In the file, there should be
+a line saying <userinput>id:3:initdefault:</userinput>. Change it to
+<userinput>id:5:initdefault:</userinput>. At the end of the file,
 comment out the following line:
 <literal>x:5:respawn:/usr/bin/X11/xdm -nodaemon</literal> and
 replace it with
-<userinput>x:5:respawn:<replaceable>/opt/kde/</replaceable>bin/tdm
+<userinput>x:5:respawn:<replaceable>/opt/trinity/</replaceable>bin/tdm
 -nodaemon</userinput>.
-<note><para>The location of &tdm; may differ on your
+<note><para>The location of &tdm; might differ on your
 system.</para></note></para>
 <para>For changes to take effect immediately, type <command>init
-5</command> (for &RedHat; systems) at the shell prompt. 
+5</command> (for &RedHat; systems) at the shell prompt.
 <caution><para>It is risky to initiate a graphical login without
-checking beforehand whether it works.  If it fails to work, you would
-be in for a hard time getting back....</para></caution></para>
+checking beforehand whether it works. If it fails to work, you would
+be in for a hard time getting back.</para></caution></para>
 </answer>
 <answer>
 <para>
@@ -93,15 +91,13 @@ off secure</userinput>.</para>
 
 <qandaentry>
 <question>
-
 <para>I would like to click the &LMB; anywhere on the
 desktop and have the <guimenu>TDE</guimenu> menu displayed.</para>
 </question>
 <answer>
-<para>Open the <application>&tde; Control Center</application> and
-choose <menuchoice><guisubmenu>Desktop</guisubmenu>
-<guisubmenu>Behavior</guisubmenu></menuchoice>.  You
-can now choose the behavior of mouse clicks on the desktop.  To have
+<para>Use the &RMB; to select the desktop. From the popup menu, select
+<guisubmenu>Configure Desktop</guisubmenu>. From the icon list
+select the Behavior icon. Choose the behavior of mouse clicks on the desktop. To have
 the <guimenu>TDE</guimenu> menu open from a single &LMB; click, change
 the entry labeled <guilabel>Left button</guilabel> to say
 <guilabel>Application Menu</guilabel>.</para>
@@ -110,12 +106,10 @@ the entry labeled <guilabel>Left button</guilabel> to say
 
 <qandaentry>
 <question>
-<para>Where do I find information regarding &tde; themes?</para>
+<para>Where do I find additional &tde; themes?</para>
 </question>
 <answer>
-<para>Go to <ulink
-url="http://kde.themes.org/">http://kde.themes.org/</ulink> or <ulink
-url="http://www.kde-look.org">http://www.kde-look.org</ulink>.</para>
+<para>Go to <ulink url="http://www.kde-look.org">http://www.kde-look.org</ulink>.</para>
 </answer>
 </qandaentry>
 
@@ -124,30 +118,31 @@ url="http://www.kde-look.org">http://www.kde-look.org</ulink>.</para>
 <para>How do I change &MIME; Types?</para>
 </question>
 <answer>
-<para>If you are using &konqueror;, do this instead: first, open a
-&konqueror; window and choose
+<para>When using &konqueror;, open a &konqueror; window and choose
 <menuchoice><guimenu>Settings</guimenu><guimenuitem>Configure
-Konqueror</guimenuitem></menuchoice>, then <guilabel>File Associations</guilabel>.  Find the type you want to change
+Konqueror</guimenuitem></menuchoice>. From the icon list select
+<guilabel>File Associations</guilabel>. Find the mime type you want to change
 (&eg; <literal>text/english</literal> or
 <literal>image/gif</literal>), and set the application preference order
 to whatever you want.</para>
+<para>The same thing can be accomplished by using the <application>&tde; Control Center
+</application>. Select <menuchoice><guimenu>TDE Components</guimenu><guimenuitem>File Associations</guimenuitem></menuchoice>.</para>
 </answer>
 </qandaentry>
 
 <qandaentry>
 <question>
-<para>&tde; (&tdm;) does not read my
-<filename>.bash_profile</filename>!</para>
+<para>&tde; (&tdm;) does not read my <filename>.bash_profile</filename>.</para>
 </question>
 <answer>
 <para>The login managers<application>xdm</application> and &tdm; do
 not run a login shell, so <filename>.profile</filename>,
 <filename>.bash_profile</filename>, &etc; are not
-sourced.  When the user logs in, <application>xdm</application> runs
+sourced. When the user logs in, <application>xdm</application> runs
 <command>Xstartup</command> as root and then
-<command>Xsession</command> as user.  So the normal practice is to add
+<command>Xsession</command> as user. The normal practice is to add
 statements in <filename>Xsession</filename> to source the user
-profile.  Please edit your <filename>Xsession</filename> and
+profile. Please edit your <filename>Xsession</filename> and
 <filename>.xsession</filename> files.</para>
 </answer>
 </qandaentry>
@@ -157,49 +152,48 @@ profile.  Please edit your <filename>Xsession</filename> and
 <para>How do I use &TrueType; fonts in &tde;?</para>
 </question>
 <answer>
-
-<para>You need to install &TrueType; font support into your &X-Window; configuration.
-Please take a look at <ulink
+<para>Install &TrueType; font support into your &X-Window; configuration.
+<!--Please take a look at <ulink
 url="http://x.themes.org/">x.themes.org</ulink> for the fonts, and
 <ulink url="http://www.dcs.ed.ac.uk/home/jec/programs/xfsft/">xfsft:
 &TrueType; Font Support For X11</ulink> or <ulink
 url="http://X-TT.dsl.gr.jp/">X-&TrueType; Server Project Home
-Page</ulink> for the font servers.</para>
-
+Page</ulink> for the font servers.-->
+</para>
 <para>If you have a bunch of &TrueType; fonts from &Microsoft;
-&Windows;, edit the <filename>XF86Config</filename> file to get the
-fonts from the font folder.  Then just tell &tde; to use these new
-fonts with the font administrator utility.</para>
-
+&Windows;, edit the <filename>xorg.conf</filename> file to get the
+fonts from the font folder. Then configure &tde; to use these new
+fonts with the <filename>Font Administrator</filename> utility.</para>
 </answer>
 </qandaentry>
 
 <qandaentry>
 <question>
-<para>Is it possible to enter, show and work with the Euro Symbol in
+<para>Is it possible to enter, show, and work with the Euro Symbol in
 &tde;?</para>
 </question>
 <answer>
-<para>Yes and no.  For details, look here: <ulink
-url="http://www.koffice.org/kword/euro.php">http://www.koffice.org/kword/euro.php</ulink>.</para>
+<para>Yes. Open the <application>&tde; Control Center</application> and select
+<guimenu>Regional &amp; Accessibility</guimenu>, then
+<guimenuitem>Keyboard Layout</guimenuitem>. Select the <guimenuitem>Xkb Options</guimenuitem>
+tab and enable the <guilabel>Enable xkb options</guilabel> check box. Choose a compose key.
+Enable <guilabel>Adding Eurosign to certain keys</guilabel> and select the desired key.</para>
 </answer>
 </qandaentry>
 
 <qandaentry>
 <question><para>How do I run a program at &tde; startup?</para></question>
-
-<answer><para>There are many ways to do that. If what you want to do
-is to run some scripts that would set some environment variables (for
-example, to start <command>gpg-agent</command>, <command>ssh-agent</command> and others), you can put
-these scripts into <filename class="directory">$<envar>TDEHOME</envar>/env/</filename> and make sure their names end in
+<answer><para>There are several ways to do that. If you want to
+run some scripts that set environment variables (for
+example, to start <command>gpg-agent</command>, <command>ssh-agent</command> and others), place the
+scripts into <filename class="directory">$<envar>TDEHOME</envar>/env/</filename>. Make sure their names end in
 <literal role="extension">.sh</literal>. $<envar>TDEHOME</envar> is
-usually a folder named <filename class="directory">.kde</filename>
-(note the period at the beginning) in your home
+usually a folder named <filename class="directory">.trinity</filename>
+(notice the period at the beginning) in your home
 folder. If you want scripts to be executed for all &tde; users, you can
-put them under <filename class="directory">$<envar>TDEDIR</envar>/env/</filename>, where $<envar>TDEDIR</envar> is the prefix &tde; was
-installed to (you can find this out using the command
-<userinput><command>tde-config</command> --prefix</userinput>).</para>
-<para>If you wish to start a program after &tde; has started, you may want to use the 
+put them under <filename class="directory">$<envar>TDEDIR</envar>/env/</filename>, where $<envar>TDEDIR</envar> is the prefix &tde; is installed (you can find this out using the command
+<userinput><command>tde-config --prefix</command></userinput>).</para>
+<para>If you wish to start a program after &tde; has started, you may want to use the
 <filename class="directory">Autostart</filename> folder. To add
 entries to the <filename class="directory">Autostart</filename> folder:
 <orderedlist>
@@ -218,31 +212,30 @@ the <guilabel>Command</guilabel> text box.</para>
 </listitem>
 </orderedlist>
 </para>
-
 </answer>
 </qandaentry>
 
 <qandaentry>
 <question>
-<para>How can I allow more than one user to be logged in a at a time?  Can &tde; do <quote>fast user switching</quote>?</para>
+<para>How can I allow more than one user to be logged in a at a time? Can &tde; do <quote>fast user switching</quote>?</para>
 </question>
 <answer>
-
+<para>Yes, when starting &tde; through the graphical login mode. When starting &tde;
+from the command line using <filename>startx</filename>, then toggle to a different console
+to login in.</para>
 <para>To enable more than one user to log in at one time on the same
-computer (sometimes referred to as <quote>fast user switching</quote>) you
-need to tell the program that logs you in that it can use more than one
+computer (sometimes referred to as <quote>fast user switching</quote>)
+configure the program that logs you in to allow more than one
 session (or, in &X-Window; terms, <quote>display</quote>) at a time.</para>
-
 <para>In &tde;, this program is called &tdm; which stands for <quote>&tde;
 Display Manager</quote>. If you are not using &tdm; as your login screen
 then you will need to consult the documentation for the software you are using on how to
 accomplish multiple sessions.</para>
-
 <para>By default, this will be configured at installation time automatically
 if &tdm; supports virtual terminals on your system (currently Linux only).
 If it was not configured automatically, consult the &tdm; manual, section
-<ulink url="help:/tdm/tdmrc-xservers">Specifying permanent &X-Server;s</ulink>.
-After modifying tdmrc, you will have to let &tdm; know about it; just
+<ulink url="help:/tdm/tdmrc-xservers.html">Specifying permanent &X-Server;s</ulink>.
+After modifying tdmrc, you will have to restart &tdm;; just
 invoke <command>killall -HUP tdm</command>.</para>
 </answer>
 </qandaentry>

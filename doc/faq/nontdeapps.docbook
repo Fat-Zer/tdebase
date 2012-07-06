@@ -31,9 +31,8 @@ non-TDE applications</guilabel> checkbox and click
 <question><para>How can I set my default web browser to be something other
 than &konqueror;?</para></question>
 <answer>
-<para>If you are using &tde; 3.3 or later, open up the &kcontrolcenter; and
-navigate to the <menuchoice><guimenu>TDEDE
-Components</guimenu><guimenuitem>Component
+<para>Open the &kcontrolcenter; and
+navigate to the <menuchoice><guimenu>TDE Components</guimenu><guimenuitem>Component
 Chooser</guimenuitem></menuchoice> panel. Select <guilabel>Web
 Browser</guilabel> from the list on the left, then select <guilabel>Open
 http and https URLs in the following browser:</guilabel> and type in the
@@ -51,11 +50,8 @@ applications within &tde; ?
 </question>
 <answer>
 <para>
-The simplest way to achieve this is to download and compile the
-<acronym>gtk-qt</acronym> theme engine from <ulink
-url="http://www.freedesktop.org/Software/gtk-qt">
-http://www.freedesktop.org/Software/gtk-qt</ulink>. This theme engine makes
-your <acronym>GTK</acronym> applications look like your &tde; widget style
+Install the <application>qt-gtk-engine</application> package, which is available as part of &tde;. This
+theme engine makes <acronym>GTK</acronym> applications look like your &tde; widget style
 by calling functions from &Qt; instead of drawing the styles itself. Once
 the theme engine has been installed, there will be a &kcontrolcenter; module
 under <menuchoice><guimenu>Appearance &amp; Themes</guimenu><guimenuitem>GTK
@@ -64,7 +60,7 @@ Styles and Fonts</guimenuitem></menuchoice>.
 </answer>
 </qandaentry>
 
-<qandaentry>
+<!--<qandaentry>
 <question>
 <para>I have been hearing about this gecko kpart or &Qt; Mozilla, how do I
 get these?</para>
@@ -77,12 +73,12 @@ according to these instructions:
 <ulink url="http://www.mozilla.org/cvs.html">
 http://www.mozilla.org/cvs.html</ulink>. Then, configure either the Mozilla
 suite or the Firefox browser with the option
-<command>--enable-default-toolkit=qt</command> in addition to any other
+<command>- -enable-default-toolkit=qt</command> in addition to any other
 options you would like to enable. More instructions on building Mozilla can
 be found <ulink url="http://www.mozilla.org/build">here</ulink>.
 </para>
 </answer>
-</qandaentry>
+</qandaentry>-->
 
 </qandaset>
 </chapter>

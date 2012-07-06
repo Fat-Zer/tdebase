@@ -879,13 +879,13 @@ dialog):
 <listitem><para><emphasis role="bold">Nowhere:</emphasis> Don't guess the search
 text.</para></listitem>
 <listitem><para><emphasis role="bold">Selection Only:</emphasis> Use
-    the current text selection, if available. </para></listitem>
+    the current text selection, if available.</para></listitem>
 <listitem><para><emphasis role="bold">Selection, then Current Word:</emphasis>
 Use the current selection if available, otherwise use the current word.
 </para></listitem>
 <listitem><para><emphasis role="bold">Current Word
 Only:</emphasis> Use the word that    the cursor is currently resting on, if
-available. </para></listitem>
+available.</para></listitem>
 <listitem><para><emphasis role="bold">Current Word, then Selection:</emphasis>
 Use the current word if    available, otherwise use the current selection.
 </para></listitem>
@@ -1113,7 +1113,7 @@ for &kate; config file and load the settings line from it.</para>
 <listitem><para>Backing up on save will cause &kate; to copy the disk file to
 &lt;prefix&gt;&lt;filename&gt;&lt;suffix&gt;' before saving changes.
 The suffix defaults to <emphasis role="bold">~</emphasis> and prefix is empty by
-default. </para>
+default.</para>
 <variablelist>
 <varlistentry>
 <term><guilabel>Local files</guilabel></term>
@@ -1384,7 +1384,7 @@ with the following valid expressions:
 <varlistentry>
 <term><cmdsynopsis><command>auto-insert-doxygen</command><arg>BOOL</arg></cmdsynopsis></term>
 <listitem><para>Turn insertion of the leading asterisk in doxygen comments on or
-off. This has no effect unless you use the cstyle auto-indenter. </para></listitem>
+off. This has no effect unless you use the cstyle auto-indenter.</para></listitem>
 </varlistentry>
 
 <varlistentry>
