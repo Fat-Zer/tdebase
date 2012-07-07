@@ -1,7 +1,7 @@
 [Desktop Entry]
 Encoding=UTF-8
 Type=Directory
-Name=PIM
+Name=Personal Information Management
 Name[ar]=مدبِر المعلومات الشخصي
 Name[be]=Кіраўнік персанальнай інфармацыі
 Name[bn]=পি-আই-এম
@@ -20,7 +20,7 @@ Name[th]=ตัวจัดการข้อมูลส่วนตัว
 Name[uk]=Керування інформацією
 Name[zh_CN]=个人信息管理
 Icon=korganizer
-Comment=PIM
+Comment=Personal Information Management
 Comment[af]=Persoonlike Informasie Bestuurder
 Comment[ar]=مدبر المعلومات الشخصي
 Comment[be]=Кіраўнік персанальнай інфармацыі
