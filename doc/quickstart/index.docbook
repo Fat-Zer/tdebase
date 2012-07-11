@@ -1,7 +1,7 @@
 <?xml version="1.0" ?>
 <!DOCTYPE book PUBLIC "-//KDE//DTD DocBook XML V4.2-Based Variant V1.1//EN"
 "dtd/kdex.dtd" [
-  <!ENTITY kappname "&tde; Quick Start Guide">
+  <!ENTITY kappname "&tde; Quickstart Guide">
   <!ENTITY package "tdebase">
   <!ENTITY % addindex "IGNORE">
   <!ENTITY % English "INCLUDE" > <!-- change language only here -->
@@ -10,7 +10,7 @@
 <book lang="&language;">
 <bookinfo>
 
-<title>An Introduction to &tde;</title>
+<title>Quickstart Guide to &tde;</title>
 
 <authorgroup>
 
@@ -35,8 +35,9 @@
 <legalnotice>&FDLNotice;</legalnotice>
 
 <abstract>
+<para>Quickstart Guide to &tde;</para>
 <para>An introduction to the Trinity Desktop Environment</para>
-<para>Quick Start Guide to &tde;</para></abstract>
+</abstract>
 
 <keywordset>
 <keyword>KDE</keyword>
@@ -50,23 +51,23 @@
 <title>Introduction</title>
 
 <para>
-This document is a brief introduction to the Trinity Desktop Environment. It
+This guide provides a brief introduction to the Trinity Desktop Environment. It
 will familiarize you with some of the basic features of &tde;.
 </para>
 
 <para>
-This guide is far from covering all aspects of the Trinity Desktop or even most
-of them. It will only describe some of the most basic ways to accomplish a few
-of the most common tasks.
+This guide does not cover all aspects of the Trinity Desktop or even most
+of them. This guide only describes some of the most basic ways to accomplish a few
+of the most common tasks. The <ulink url="help:/khelpcenter/userguide">&tde; User's Guide</ulink>
+provides detailed coverage of using Trinity.
 </para>
 
 <para>
-We assume that you are already familiar with at least one graphical
-user interface, for example <trademark>CDE</trademark>,
+Use this guide with the presumption of being familiar with at least one graphical
+user interface, such as <trademark>CDE</trademark>,
 <trademark>Geos</trademark>, <trademark>GEM</trademark>, &NeXTSTEP;,
-&Mac;, <trademark>OS/2</trademark> or &Microsoft; &Windows;. So we
-will not explain the usage of the mouse or the keyboard but
-concentrate on hopefully more interesting things.
+&Mac;, <trademark>OS/2</trademark> or &Microsoft; &Windows;. Basic concepts, such as
+using the mouse or keyboard are not explained in this guide.
 </para>
 
 </chapter>
@@ -86,21 +87,21 @@ guide as needed.
 <note>
 <para>
 &tde; provides a highly configurable desktop environment. This
-overview assumes that you are using the default environment.
+overview presumes that you are using the default environment.
 </para>
 </note>
 
 <sect1 id="the-kde-desktop">
 <title>The &tde; Desktop</title>
 
-<para>A typical &tde; desktop consists of several parts:</para>
+<para>A typical Trinity desktop consists of several parts:</para>
 
 <itemizedlist>
 <listitem>
 <para>A <interface>panel</interface> at the bottom of the screen, used
 to start applications and switch between desktops. Among other things, it
-contains the &kmenu;, a large &ticon;
-which displays a menu of applications to start when clicked.
+contains the &kmenu;, with an &ticon;
+that displays a menu of applications to start.
 </para>
 </listitem>
 
@@ -115,7 +116,7 @@ application on the taskbar to switch to the application.
 <listitem>
 <para>
 The <interface>desktop</interface> itself, on which frequently used
-files and folders may be placed. &tde; provides multiple desktops,
+files and folders might be placed. &tde; provides multiple desktops,
 each of which has its own windows. Click on the numbered buttons on
 the panel to switch between desktops.
 </para>
@@ -157,8 +158,7 @@ execute a single command.
 <listitem>
 <para>
 Choose the <menuchoice><guimenuitem>Control Center</guimenuitem>
-</menuchoice>item on the &kmenu;
-to configure &tde;.
+</menuchoice> item on the &kmenu; to configure &tde;.
 </para>
 </listitem>
 
@@ -190,14 +190,14 @@ desktop, and most &tde; applications.
 
 <para>
 At the bottom of the screen you will find the desktop panel, which is called
-&kicker;.  You use the panel to launch applications. Have a look at the
+&kicker;. Use the panel to launch applications. Have a look at the
 button on the left with a large &ticon;.
 </para>
 
 <para>
-This button is called the &kmenu;. It has
-a small arrow on the top to indicate that it will pop up a menu if you
-click on it. Just do it! The popup offers you easy access to all &tde;
+This button is called the &kmenu;. When the mouse pointer hovers over the icon,
+a small arrow on the top indicates that it will pop up a menu if you
+click on it. The popup offers you easy access to all &tde;
 applications installed on your computer system.
 </para>
 
@@ -208,7 +208,7 @@ applications installed on your computer system.
 I am not sure I agree - some distributions fade or hide the applet handles by default, but
 I haven't found one yet that hides the kmenu. (JLH) -->
 
-<para>If you use one application or tool very often, then you may want to have even faster
+<para>If you use one application or tool very often, then you might want to have fast
 access to it. In this case you can add a single application or an entire sub-menu of the
 &kmenu; as a special quick-launch button on the panel. If you want to reach an application
 directly via a launch button, click with the &RMB; either on a clear space on the panel or on the
@@ -219,11 +219,11 @@ the panel.</para>
 
 <para>
 You can add an entire menu this way, or one of the &ticon;
-button sub-menus.  For example, if you have &koffice; installed and
+button sub-menus. For example, if you have &koffice; installed and
 want quick access to all the &koffice; applications, without having to
 navigate through the &kmenu;, then instead of choosing an
-application, click on the <guimenuitem>Add this menu</guimenuitem> menu
-entry.  Now you will have instant access to all the &koffice;
+application, click on the <guimenuitem>Add Menu to Main Panel</guimenuitem> menu
+entry. Thereafter you will have instant access to all the &koffice;
 applications, without having to put an icon for each on the panel.
 </para>
 
@@ -238,8 +238,8 @@ mouse differently, for example for left-handers, it might also be the
 <mousebutton>left</mousebutton> one). A menu will pop up where you can
 choose <guimenuitem>Move</guimenuitem>. Now move the mouse and see how
 the icon follows while still staying on the panel. When you are done,
-simply hit the <mousebutton>first</mousebutton> mouse button (by default
-the <mousebutton>left</mousebutton> one). As you may have noticed,
+simply press the <mousebutton>first</mousebutton> mouse button (by default
+the <mousebutton>left</mousebutton> one). As you might have noticed,
 there is also a menu entry <guimenuitem>Remove</guimenuitem> in case you
 are tired of a certain launch button on your desktop.
 </para>
@@ -267,15 +267,15 @@ such a menu!
 
 <para>
 There are other interesting things possible with the panel. One
-may be important if you have a low resolution on your monitor: it is
+might be important if you have a low resolution on your monitor: it is
 the <quote>hide-and-show</quote> function, activated by clicking on the
 small arrowed button, which is at one or both ends of the panel.
 </para>
 
 <para>
 Perhaps you just do not like the panel extending the full width of the
-screen.  That's easily changed!  &RMB; on an empty space in the panel,
-and choose <menuchoice><guimenuitem>Configure Panel...</guimenuitem></menuchoice>.  In the &kcontrolcenter;
+screen. That's easily changed!  &RMB; on an empty space in the panel,
+and choose <menuchoice><guimenuitem>Configure Panel...</guimenuitem></menuchoice>. In the &kcontrolcenter;
 dialog that pops up, you can choose <guilabel>Length</guilabel> on
 the <guilabel>Appearance</guilabel> tab, and use the slider there to set
 the panel to less than 100% width.
@@ -284,7 +284,7 @@ the panel to less than 100% width.
 <para>
 If you're following along, and have that dialog open anyway, then feel
 free to play with all the options, and use the
-<guibutton>Apply</guibutton> to see the effect they have.  You can
+<guibutton>Apply</guibutton> to see the effect they have. You can
 easily reset everything to the default configuration, by simply pressing
 the <guibutton>Use Defaults</guibutton> button.
 </para>
@@ -301,11 +301,11 @@ explains the functionality of such controls in a few words.
 </sect1>
 
 <sect1 id="want-command-line-back">
-<title>But I want my command line back!</title>
+<title>I want access to the command line!</title>
 
 <para>
-Just calm down, there is nothing to fear. &tde; does not want to take your
-beloved (and sometimes very effective) command line away from you. You can move
+There is nothing to fear. &tde; does not remove the
+effective command line. You can move
 your files with the desktop, but you can also use the &UNIX; commands you are
 accustomed to. In fact,&tde; puts command line power at your fingertips,
 in perhaps some surprising places.
@@ -313,39 +313,38 @@ in perhaps some surprising places.
 
 <para>
 &tde; provides a very sophisticated command line window called
-&konsole;.  Choose <menuchoice><guimenu>TDE menu</guimenu>
+&konsole;. Choose <menuchoice><guimenu>TDE menu</guimenu>
 <guisubmenu>System</guisubmenu>
-<guimenuitem>Konsole</guimenuitem></menuchoice> to start it. This may
-be something you want on your panel: luckily it's already there in the
-default configuration!
+<guimenuitem>Konsole</guimenuitem></menuchoice> to start it. This might
+be something you want on your panel.
 </para>
 
 <para>
 Sometimes, you only want to enter one command on the command line. In
-these cases, you do not need a full-blown terminal. Just hit
+these cases, you do not need a full-blown terminal. Just press
 <keycombo>&Alt;<keycap>F2</keycap></keycombo> and you get a
 small command line where you can enter one command. The command line
 window will disappear afterwards, but it remembers your command.
 </para>
 
 <para>
-When you pop up this window (which we call
-<application>minicli</application> by the way) and hit the <keycap>Up
+When you pop up this window (that is called
+<application>minicli</application>) and press the <keycap>Up
 arrow</keycap>, you can browse through all the commands you have
-previously entered.  Also, you can enter &URL;s in
+previously entered. Also, you can enter &URL;s in
 <application>minicli</application> to open a &konqueror; window with
 the specified &URL;.
 </para>
 
 <para>
-&konqueror; and the editor &kate; can both display terminal windows,
-which behave just like &konsole;.  In &konqueror;, you can turn this
+&konqueror; and the text editor &kate; can both display terminal windows,
+which behave just like &konsole;. In &konqueror;, you can turn this
 on with the menu choice
 <menuchoice><guimenu>Window</guimenu><guimenuitem>Show Terminal
-Emulator</guimenuitem></menuchoice>.  The embedded terminal will display
-at the bottom of your &konqueror; window, and the really clever thing
+Emulator</guimenuitem></menuchoice>. The embedded terminal will display
+at the bottom of your &konqueror; window, and the really clever part
 is that it will follow your clicks in the file manager view, changing
-folder as you do.  In &kate; you can display a terminal with the
+folder as you do. In &kate; you can display a terminal with the
 menu choice <menuchoice><guimenu>Settings</guimenu><guimenuitem>Show
 Console</guimenuitem></menuchoice>.
 </para>
@@ -363,7 +362,7 @@ is the name of a &UNIX; command.
 <para>
 To search for a word or words on the Google search engine, you can try entering
 <userinput><command>gg:</command><replaceable>word or
-words</replaceable></userinput>.  There are a whole lot more of these
+words</replaceable></userinput>. There are a whole lot more of these
 shortcut commands, and you can even add your own!  Take a look in
 &kcontrolcenter;, in the tab <menuchoice><guilabel>Web Browsing</guilabel>
 	<guilabel>Enhanced Browsing</guilabel></menuchoice>.
@@ -382,8 +381,7 @@ it with the &LMB; and click <guilabel>Add to Panel</guilabel>. This will embed a
 directly into your panel, complete with command history.</para>
 
 <para>
-So, in conclusion, the command line is never far from view when you're
-using &tde;.
+In conclusion, the command line is never far from view when using &tde;.
 </para>
 
 </sect1>
@@ -394,16 +392,15 @@ using &tde;.
 
 <para>
 If you have not already done so, start an application using the <link
-linkend="starter">&kmenu;</link>; say,
-<guimenuitem>Find Files</guimenuitem>.
+linkend="starter">&kmenu;</link>; for example, <guimenuitem>Find Files</guimenuitem>.
 </para>
 
 <sect1 id="window-what-now">
 <title>A window! What now?</title>
 
 <para>
-Well, usually people work <emphasis>inside</emphasis> windows, but
-sometimes you may want to manipulate windows. Here's a quick overview
+Usually people work <emphasis>inside</emphasis> windows, but
+sometimes you might want to manipulate windows. Here's a quick overview
 of some of the most common window related functions:
 </para>
 
@@ -433,9 +430,11 @@ Drag the window's border, or hold the &Alt; key down and drag with the
 <listitem>
 <para>
 Click the maximize button in the titlebar (in the default decoration it
-is the square, next to the X) to make the window fill the screen, or if
-the window is already maximized, to shrink it back to its original
-size.  Clicking with the &MMB; maximizes the window vertically, and with
+is the button with a square, next to the X, located on the far right side
+of the titlebar) to make the window fill the screen. If the window is
+already maximized, shrink the window using the same button, although the
+image will be a double square.
+Clicking with the &MMB; maximizes the window vertically, and with
 the &RMB;, horizontally.
 </para>
 </listitem>
@@ -446,7 +445,7 @@ the &RMB;, horizontally.
 <listitem>
 <para>
 Click the <guilabel>Minimize</guilabel> button in the titlebar (next to <guilabel>Maximize</guilabel>)
-to hide the window.  Restore it by clicking on the window's icon in the
+to hide the window. Restore it by clicking on the window's icon in the
 taskbar.
 </para>
 </listitem>
@@ -458,7 +457,7 @@ taskbar.
 <para>
 Aside from the usual mouse click to switch to another window,
 you can use <keycombo action="simul">&Alt;
-<keycap>Tab</keycap></keycombo> to switch windows.  See below for more
+<keycap>Tab</keycap></keycombo> to switch windows. See below for more
 techniques.
 </para>
 </listitem>
@@ -469,8 +468,8 @@ techniques.
 <title>Titlebar buttons</title>
 
 <para>
-&tde; windows have some pretty standard buttons on their titlebars which
-give you fast access to some common operations. The default button
+&tde; windows have some standard buttons on their titlebars that
+provide fast access to some common operations. The default button
 layout looks like this:
 </para>
 
@@ -479,9 +478,13 @@ layout looks like this:
 <listitem>
 <para>
 A <guilabel>Menu</guilabel> button. This usually shows a mini icon for the application. Click
-on it to get a window operations menu.  Shortcut: <keycombo
+on it to get a window operations menu. Shortcut: <keycombo
 action="simul">&Alt;<keycap>F3</keycap></keycombo> opens the window
 menu.
+</para>
+</listitem>
+<listitem>
+<para>A <guilabel>sticky</guilabel> button. This button will look like a tumb tack or pin.
 </para>
 </listitem>
 
@@ -491,7 +494,7 @@ menu.
 <title>On the right side:</title>
 <listitem>
 <para>
-A <guilabel>Minimise</guilabel> button.
+A <guilabel>Minimize</guilabel> button.
 </para>
 </listitem>
 
@@ -522,9 +525,9 @@ activity, &tde; offers several ways to do it; pick your favorite!
 </para>
 
 <para>
-Many window systems require you to click the mouse in another window
+Many graphical user interface systems require users to click the mouse in a window
 to begin using it. This is &tde;'s default behavior, termed
-<quote>Click To Focus</quote> focus policy. But you can also configure
+<quote>Click To Focus</quote> focus policy. You can configure
 your desktop in a way that moving the mouse pointer on to a window will
 activate it. This is called <quote>Focus Follows Mouse</quote>. If you
 select this policy using the <link linkend="configure">&tde; Control
@@ -559,7 +562,7 @@ the windows.
 
 <listitem>
 <para>
-Use the taskbar (see below).
+Use the taskbar (next section).
 </para>
 </listitem>
 </itemizedlist>
@@ -573,11 +576,11 @@ Use the taskbar (see below).
 <para>
 The <interface>taskbar</interface> displays a list of small icons, one
 for each window on the desktop. In the default &tde; setup the taskbar
-is located inside the panel, but it can also be located at the top or
+is located inside the panel, but can also be located at the top or
 the bottom of the screen.</para>
 
 <para>
-The taskbar is very powerful.  In the default configuration, if you
+The taskbar is powerful. In the default configuration, if you
 have more than one window from the same application open, they will be
 <quote>grouped</quote>, so that you see one icon per application in
 the taskbar.</para>
@@ -587,17 +590,17 @@ click on the taskbar button will pop up a list of the open windows for
 that application and you can choose the window you want to
 use. Choosing one of these entries with the
 <mousebutton>left</mousebutton> will bring you to the selected
-window immediately.  Click on a taskbar entry with the
+window immediately. Click on a taskbar entry with the
 <mousebutton>right</mousebutton> and you will see a menu allowing you
 to operate on all the windows grouped under that icon, or each window
 individually.</para>
 
 <para>
 You can choose to see all the windows on all the desktops in your
-taskbar, no matter which desktop you are currently viewing, or to only
-see the icons for the desktop you are looking at.  You can also choose
-to ungroup the icons, so that each open window will have its own icon
-in the taskbar. These and many more options are available simply by
+taskbar, regardless of which desktop you are currently viewing, or to only
+see the icons for the desktop you are viewing. You can choose
+to ungroup the icons, so each open window will have its own icon
+in the taskbar. There are many more options available simply by
 right clicking on the taskbar handle (the small textured bar at the
 left hand side) and choosing <guimenuitem>Configure Taskbar...</guimenuitem>.
 </para>
@@ -605,7 +608,7 @@ left hand side) and choosing <guimenuitem>Configure Taskbar...</guimenuitem>.
 <para>
 The icons on the taskbar resize themselves to make room for
 applications, so you can fit many more applications than you might
-think.  Making the panel wider will let the taskbar icons take on a row
+think. Making the panel wider will let the taskbar icons take on a row
 and column layout, but they will still resize to fit more icons.
 </para>
 
@@ -615,11 +618,11 @@ and column layout, but they will still resize to fit more icons.
 <title>Using Virtual Desktops</title>
 
 <para>
-Now, what was that <quote>sticky</quote> thing?
+Now, what was that <guilabel>Sticky</guilabel> button?
 </para>
 
 <para>
-It may happen that you have more windows open than space on your
+Perhaps you have more windows open than space on your
 desktop. In this case you have three possibilities:
 </para>
 
@@ -632,7 +635,7 @@ Leave all windows open (cluttered desktop)
 
 <listitem>
 <para>
-Iconify those windows which you do not need at present and use
+Iconify those windows that you do not need at present and use
 the taskbar or <keycombo action="simul">&Alt;
 <keycap>Tab</keycap></keycombo> to switch between them
 (still a bit confusing and much work!)
@@ -641,16 +644,15 @@ the taskbar or <keycombo action="simul">&Alt;
 
 <listitem>
 <para>
-Recommended: Do what a real operating system does if there is not enough
-physical memory: Use virtual memory, in this case virtual desktops.
+Recommended: Use virtual desktops.
 </para>
 </listitem>
 </orderedlist>
 
 <para>
 The third option is the way to go! &tde; can handle several different desktops,
-each with its own windows. The default configuration provides four
-desktops.  You can switch between the virtual desktops easily with a
+each with its own set of application windows. The default configuration provides four
+desktops. You can switch between the virtual desktops easily with a
 click on one of the desktop buttons on the panel. Also <keycombo
 action="simul">&Ctrl;<keycap>F1...F4</keycap></keycombo> will send you
 to the corresponding desktop immediately, or <keycombo
@@ -659,10 +661,10 @@ the desktops.
 </para>
 
 <para>
-Virtual desktops are very nice. But sometimes you want a window to be
+Virtual desktops are nice. Yet sometimes you want a window to be
 present on <emphasis>every</emphasis> desktop. This could be, for example,
 a small chat window, an alarm clock or whatever. In this case you can
-use the above mentioned <quote>sticky</quote> button which will pin the
+use the above mentioned <quote>sticky</quote> button that will pin the
 window on the background so that it will appear on every virtual
 desktop.
 </para>
@@ -688,7 +690,7 @@ option on the window operations menu.
 <para>
 A common metaphor of graphical desktops is the use of folders to
 represent folders on your hard disk. Folders contain files and
-other folders. A &tde; application called &konqueror;, the K File
+other folders. A &tde; application called &konqueror;, the Trinity File
 Manager, uses this metaphor to help you manage your files.
 </para>
 
@@ -696,7 +698,7 @@ Manager, uses this metaphor to help you manage your files.
 <title>Using &konqueror;</title>
 
 <para>
-The first time you start &tde;, a window with lots of icons in it
+The first time you start &konqueror;, a window with lots of icons in it
 appears. This is a &konqueror; window displaying the files in your
 home folder (the area where your personal files are stored). The
 pathname of the folder is displayed under the window's tool bar. If
@@ -705,7 +707,7 @@ looks like a folder with a picture of a house.
 </para>
 
 <para>
-To open a file or folder, simply click it once with the &LMB;.
+To open a file or folder, <quote>double-click</quote> it with the &LMB;.
 You can also choose
 <menuchoice><guimenu>Window</guimenu><guimenuitem>Show
 Navigation Panel</guimenuitem></menuchoice> from the menu to display the folder
@@ -718,10 +720,10 @@ displayed under the toolbar to get to a specific folder quickly.
 
 <para>
 &tde; comes with a set of applications to view and edit files of many
-common types, and when you click a file containing, say, a document
-or image, &konqueror; will start the appropriate application to
+common types, and when you select a file containing, say, a document
+or image, &konqueror; will start an appropriate application to
 display the file. If it does not know what application to start to open
-a file you clicked, &konqueror; will prompt you for the name of the
+a file you selected, &konqueror; will prompt you for the name of the
 application to run, and when you have chosen, &konqueror; will offer
 to remember your choice for the next time you open a file of that type.
 </para>
@@ -740,7 +742,7 @@ files with applications.
 
 <para>
 To copy or move a file, simply drag its icon to the desktop, to
-another &konqueror; window, or to a folder icon.  When you release the
+another &konqueror; window, or to a folder icon. When you release the
 button, &konqueror; displays a menu to allow you to choose to copy,
 move, or create a link to the file.
 </para>
@@ -778,13 +780,13 @@ the menu.
 <title>Working with Archives and Networks</title>
 
 <para>
-In the recent past, you needed special software to access files on the
+Once upon a time users needed special software to access files on the
 Internet. Not any more!
 </para>
 
 <para>
 &tde; supports a technology called <quote>Network Transparent
-Access</quote> (<acronym>NTA</acronym>) which allows you to work with
+Access</quote> (<acronym>NTA</acronym>), which allows you to work with
 files on the other side of the world as easily as those on your local
 hard disk.</para>
 
@@ -792,7 +794,7 @@ hard disk.</para>
 For example, to access files on an &FTP; server, just choose
 <menuchoice><guimenu>Location</guimenu><guimenuitem>Open
 Location</guimenuitem></menuchoice> from a &konqueror; menu, and enter
-the <acronym>URL</acronym> of an &FTP; server.  You can drag and drop
+the <acronym>URL</acronym> of an &FTP; server. You can drag and drop
 files to and from the folders on the server just as if they were on
 your local disk. You'll even be able to open files on the &FTP; server
 without having to manually copy them to your local disk (&tde; does it for you
@@ -801,8 +803,8 @@ when necessary).
 
 <note>
 <para>
-Note that &konqueror; uses anonymous &FTP; access, which may restrict
-your access to files on the &FTP; server.  If you have an account on
+Note that &konqueror; uses anonymous &FTP; access, which might restrict
+your access to files on the &FTP; server. If you have an account on
 the server, you can supply your user <abbrev>ID</abbrev> as part of
 the <acronym>URL</acronym>, like this:
 <userinput><command>ftp://</command><parameter>userid</parameter>@<parameter>server</parameter>/<parameter>folder</parameter></userinput>
@@ -817,8 +819,8 @@ succeeds, you will have full access to your files on the server.
 <para>
 If you are used to the
 <trademark><application>WinZip</application></trademark> utility on
-&Microsoft; &Windows;, then you will be happy to hear that &tde; can
-look into tar archives, too. It treats such archives just like a
+&Microsoft; &Windows;, then you will be happy to know that &tde; can
+look into archive files too. It treats such archives just like a
 normal folder, and you can browse into the archive, open files, &etc; In
 general, accessing files on the Internet and in archives should look
 and feel just like accessing files on your local disk, except for
@@ -827,12 +829,12 @@ delays imposed by the network and extracting the archive.
 </sect1>
 
 <sect1 id="using-templates">
-<title>Using Templates to access Applications and Devices</title>
+<title>Using Templates to Access Applications and Devices</title>
 
 <para>
 In &tde; it's easy to put icons on the panel or the desktop to access
-your applications.  It's just as easy to add icons to access other
-items of interest.  &tde; has templates for shortcuts to:
+your applications. It's just as easy to add icons to access other
+items of interest. &tde; has templates for shortcuts to:
 </para>
 
 <itemizedlist>
@@ -886,7 +888,7 @@ quick-launch button.
 <title>Setting up printers</title>
 
 <para>
-You can create icons for your printers so that you can print a file by
+You can create icons for your printers so you can print a file by
 dragging it to a printer icon. Here's how:
 </para>
 
@@ -902,7 +904,7 @@ icon.</para></step>
 <step><para>On the <guilabel>Execute</guilabel> tab, enter the following in the
 first <guilabel>Execute</guilabel> field:</para>
 <screen><command>lpr <option>%f</option></command></screen>
-<note><para>This example assumes that you print using the <command>lpr</command>
+<note><para>This example presumes that you print using the <command>lpr</command>
 command. If you use a different command, enter the one you
 use.</para></note></step>
 <step><para>Still in the <guilabel>Execute</guilabel> tab, click the icon that
@@ -919,7 +921,7 @@ printed on your default printer.</para>
 <title>Mounting devices</title>
 
 <para>
-&UNIX; provides access to storage devices other than the primary
+&UNIX; systems provide access to storage devices other than the primary
 <hardware>hard disk</hardware> through a process called
 <emphasis>mounting</emphasis>. &tde; uses <literal
 role="extension">.desktop</literal> files to allow you to easily
@@ -934,7 +936,7 @@ files on a floppy disk:
 
 <note>
 <para>
-Many systems require you to be logged in as <systemitem
+Many &UNIX; systems require you to be logged in as <systemitem
 class="username">root</systemitem> to mount and unmount devices.
 </para>
 </note>
@@ -963,8 +965,8 @@ as it is named on your system) as the <guilabel>Device</guilabel>.
 </step>
 <step>
 <para>
-You can add a <guilabel>Mount Point</guilabel> here too.  This should be
-an existing folder, but empty.  Common mount points are <filename
+You can add a <guilabel>Mount Point</guilabel> here too. This should be
+an existing folder, but empty. Common mount points are <filename
 class="directory">/mnt/floppy</filename> or <filename
 class="directory">/floppy</filename>, but you can just as easily have floppy
 disks mounted on <filename class="directory">~/mydisk</filename> if you
@@ -1028,7 +1030,7 @@ configuration in the right pane.
 <para>
 Changing the configuration is fairly straightforward. A help button is
 available on each configuration panel to explain settings that are not
-obvious.  Each panel has buttons labeled <guibutton>Help</guibutton>,
+obvious. Each panel has buttons labeled <guibutton>Help</guibutton>,
 <guibutton>Use Defaults</guibutton>, <guibutton>Apply</guibutton>, and
 <guibutton>Reset</guibutton>, which work as follows:
 </para>
@@ -1100,8 +1102,8 @@ pleasure that you never want to log out. But if you do, simply choose
 </para>
 
 <para>
-There is also a logout button directly on the panel, which looks like a
-small power button.  Or you can press <keycombo action="simul">&Ctrl;
+There also is an applet logout button that can be added directly to the panel, which looks like a
+small power button. Or you can press <keycombo action="simul">&Ctrl;
 &Alt; <keycap>Delete</keycap></keycombo> to log out.
 </para>
 
@@ -1113,11 +1115,11 @@ When you log out, &tde; can remember which applications you had open, as
 well as where all the windows were located, so that it can open them
 for you the next time you log in. This feature is termed
 <emphasis>Session Management</emphasis>. &tde;-aware applications will
-restore themselves to the state they were in when you logged out.  For
+restore themselves to the state they were in when you logged out. For
 example, &kate; remembers which files you were editing.</para>
 
 <para>
-Non-&tde; applications do not memorize their state on logout, and
+Non-&tde; applications might not memorize their state on logout, and
 &tde; will warn you to make sure that you have saved any important
 data in them when you start to log out.
 </para>
@@ -1128,8 +1130,8 @@ To illustrate session management, choose <menuchoice>
 <guimenuitem>Kate</guimenuitem> </menuchoice> to start &kate;. Open
 a text document to edit. Now log out and back in. You will observe
 that &kate; will be restored to the exact same position on the screen,
-including the right virtual desktop, and the document we left open in
-&kate; before we logged out is opened again automatically.  &kate;
+including the correct virtual desktop, and the document we left open in
+&kate; before we logged out is opened again automatically. &kate;
 will even remember whether you had unsaved changes to your document
 before you logged out and will save them to the file you were working
 on if you choose <guimenuitem>Save</guimenuitem> from the
@@ -1143,27 +1145,27 @@ on if you choose <guimenuitem>Save</guimenuitem> from the
 <title>&tde;, an exciting Journey</title>
 
 <para>
-We hope you enjoyed this brief tour of the Trinity Desktop environment and
+We hope you enjoyed this brief tour of the Trinity Desktop Environment and
 that this unique desktop environment will help you get your work done
 faster and more comfortably than ever.
 </para>
 
 <para>
 Please remember that the &tde; project is not a commercial venture,
-but rather a project run by volunteers from all over the world. We
+but rather a project run by volunteers from around the world. We
 would like to invite you to join the &tde; project and become part of
 this unique network of people. If you are a programmer you might
-consider helping us write &tde; applications. If you are an artist or
+consider helping us write or improve &tde; applications. If you are an artist or
 have experience with graphic design, consider creating icons sets,
-color schemes, sound schemes and logos for &tde;.  If you enjoy
-writing we would love for you to join our documentation project.
+color schemes, sound schemes and logos for &tde;. If you enjoy
+writing we would love for you to join our documentation team.
 </para>
 
 <para>
-As you can see there are many ways in which you can help. You are
-cordially invited to join this world-wide network of people dedicated
+As you can see there are many ways that you can help. You are
+invited to join this world-wide network of people dedicated
 to making &tde; the best desktop environment for any computer. Please
-visit <ulink url="http://www.kde.org">www.kde.org</ulink> for more
+visit <ulink url="http://www.trinitydesktop.org">www.trinitydesktop.org</ulink> for more
 information.
 </para>
 
@@ -1196,8 +1198,8 @@ Associations</guilabel> in a &konqueror; window.
 
 <para>
 &tde;'s handling of &MIME; types is very powerful, and very
-configurable.  On the one hand, you can set a default action to be
-performed when you click on a file in &konqueror;.  Just as usefully,
+configurable. On the one hand, you can set a default action to be
+performed when you click on a file in &konqueror;. Just as usefully,
 you can add many more actions, which are then available with a &RMB;
 click menu on the file in question.
 </para>
@@ -1229,20 +1231,20 @@ Type</guimenuitem></menuchoice> in &konqueror;'s menu bar.
 
 <step> <para> Add file masks for the application by clicking the
 <guibutton>Add</guibutton> button, and entering the file pattern you
-want. Remember that &UNIX; is case sensitive, so you may need to add
-variations - <userinput>*.mp3</userinput> may need
-<userinput>*.MP3</userinput> added as well, for example.  Add as many
+want. Remember that &UNIX; is case sensitive, so you might need to add
+variations - <userinput>*.mp3</userinput> might need
+<userinput>*.MP3</userinput> added as well, for example. Add as many
 extensions as you like in this way.</para> </step>
 
 <step>
 <para>
-Add a description if you like.  This is optional.
+Add a description if you like. This is optional.
 </para>
 </step>
 
 <step>
 <para>In the section labeled <guilabel>Application Preference
-Order</guilabel>, press the <guibutton>Add</guibutton> button.  A
+Order</guilabel>, press the <guibutton>Add</guibutton> button. A
 miniature copy of the &kmenu; will
 open, where you can choose the application you want files of this type
 to be opened with.
@@ -1251,10 +1253,10 @@ to be opened with.
 
 <step>
 <para>
-Sometimes, you may want to use a different application to open this
-file type.  For example, you might like to use &kate; to open text
+Sometimes, you might want to use a different application to open this
+file type. For example, you might like to use &kate; to open text
 files you wish to edit, and &kedit; for text files that you just want
-to take a quick peek into.  You can add more applications in the same
+to take a quick peek into. You can add more applications in the same
 way as you did in the last step, and you can change the preferred
 order using the <guibutton>Move Up</guibutton> and <guibutton>Move
 Down</guibutton> buttons.
@@ -1265,9 +1267,9 @@ Down</guibutton> buttons.
 <para>
 If you're satisfied with your choices, you can click the
 <guibutton>Apply</guibutton> button to save your changes without
-closing the dialog box.  This gives you the opportunity to test in the
+closing the dialog box. This gives you the opportunity to test in the
 <application>Konqueror</application> window that your file association
-is correct.  You can choose <guibutton>OK</guibutton> to save your
+is correct. You can choose <guibutton>OK</guibutton> to save your
 changes and close the dialog box, or <guibutton>Cancel</guibutton> if
 you have changed your mind and just want to close the dialog box.
 </para>
@@ -1282,10 +1284,10 @@ program needed to edit it should start.
 
 <note>
 <para>
-&MIME; types are a way of describing the contents of files.  You may
-be used to using file extensions for that purpose, and you may know
+&MIME; types are a way of describing the contents of files. You might
+be used to using file extensions for that purpose, and you might know
 that on &UNIX; systems the file extension often bears little or no
-relation to the contents of the file.  On the other hand, it may be
+relation to the contents of the file. On the other hand, it might be
 vital - for example, some implementations of <command>gunzip</command>
 will not operate on files that are not named <literal
 role="extension">.gz</literal>.
@@ -1294,7 +1296,7 @@ role="extension">.gz</literal>.
 <para>
 &MIME; types naturally make use of filename patterns, but not
 necessarily the extensions - you can set up any filename pattern you
-like.  For example, if you always want to open any files relating to a
+like. For example, if you always want to open any files relating to a
 particular client with &kate;,  and you make a habit of naming the files
 with the client's name at the beginning so that they naturally group in
 the &konqueror; window, then you can set up a filename pattern that
