@@ -16,10 +16,10 @@
 <listitem>
 <para>From the menu bar:
 <menuchoice><guimenu>Help</guimenu><guimenuitem><replaceable>Application name
-</replaceable></guimenuitem></menuchoice></para>
+</replaceable></guimenuitem></menuchoice>.</para>
 </listitem>
 <listitem>
-<para>By browsing in &khelpcenter;<indexterm><primary>&khelpcenter;</primary></indexterm></para>
+<para>By browsing in &khelpcenter;<indexterm><primary>&khelpcenter;</primary></indexterm>.</para>
 </listitem>
 <listitem>
 <para>By using the help KIOslave in &konqueror;. For example, in the Location bar, type <userinput>help:/<replaceable>Application name</replaceable></userinput>, where <replaceable>Application name</replaceable> is the name of the application.
@@ -40,17 +40,17 @@ Tooltips and <quote>What's This</quote> help.</para>
 
 <indexterm><primary>Tooltips</primary></indexterm>
 <para>Tooltips are small informational windows or balloons that appear when
-hovering the mouse over an item.</para>
+hovering the mouse pointer over an item.</para>
 
 <para>&tde; uses tooltips in many places to provide brief help or
-information about an item on the screen. For instance, most toolbar buttons
+information on the screen about an item. For instance, most toolbar buttons
 inside applications will display their name in a tooltip when resting or hovering
 the mouse pointer over them.</para>
 
 <para>Tooltips have another function, which is not specifically tied to
 help. In the &konqueror; file manager and on the Desktop, tooltips can
 provide information about files. This information is commonly referred to as
-<quote>meta information</quote>.</para>
+<quote>meta information.</quote></para>
 
 <para>Learn more about meta-information tooltips in the section
 about <link linkend="file-manager">the &konqueror; file manager</link>.</para>
@@ -72,7 +72,7 @@ window.</para>
 </listitem>
 <listitem>
 <para>By pressing the key combination
-<keycombo>&Shift;<keycap>F1</keycap></keycombo></para>
+<keycombo>&Shift;<keycap>F1</keycap></keycombo>.</para>
 </listitem>
 </itemizedlist>
 
@@ -104,7 +104,7 @@ the question <quote>How do I change the margin size for KWord
 documents</quote> is appropriate for this list.</para>
 <para>Subscribe to this list at <ulink
 url="http://www.trinitydesktop.org/mailinglist.php">http://www.trinitydesktop.org/mailinglist.php</ulink>.</para>
-<para>Find archives at <ulink
+<para>Find list archives at <ulink
 url="http://trinity-users.pearsoncomputing.net/">http://trinity-users.pearsoncomputing.net/</ulink>.</para>
 </listitem>
 </varlistentry>

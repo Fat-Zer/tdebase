@@ -271,7 +271,7 @@ vertical/horizontal maximization. Or is this advanced? -->
 
 <para>The simplest way to access the advanced window management
 facilities in &tde; is to use a little known
-utility called  &kstart;, which is included in &tde; since version 2.1 &kstart; lets you control the way an application interacts with
+utility called &kstart;. &kstart; lets you control the way an application interacts with
 the window manager. The command is usually
 used to define special behavior for commonly-used applications, but
 it can also be useful for integrating non-&tde; applications into your
@@ -286,8 +286,8 @@ before a command. To begin, let's look at how we might use
 <screen><prompt>%</prompt> <userinput><command>kstart</command> <option>--ontop</option> <option>--alldesktops</option> <option>kcalc</option></userinput></screen>
 </para>
 
-<para>With luck, the effect this command has
-should be fairly obvious - the kcalc window will stay on top of all
+<para>Hopefully the effect this command is
+obvious - the kcalc window will stay on top of all
 the others and be visible on every virtual desktop. A feature that is
 less obvious is that this command will work with any NET compliant
 environment, not just &tde;.</para>
@@ -295,9 +295,7 @@ environment, not just &tde;.</para>
 <para>We can pass arguments to programs we invoke with &kstart; as normal, for
 example:
 
-<screen><prompt>%</prompt> <userinput><command>kstart</command>
-<option>--skiptaskbar</option> <option>--desktop</option>
-1 xmessage'Hello World'</userinput></screen>
+<screen><prompt>%</prompt> <userinput><command>kstart</command> <option>--skiptaskbar</option> <option>--desktop</option> 1 xmessage 'Hello World'</userinput></screen>
 
 </para>
 
@@ -307,14 +305,14 @@ ensures that the window will be shown on the first virtual desktop and
 will be omitted from the taskbar. The fact that this program is
 written using the Xt toolkit rather than being a native &tde;
 application does not cause any problem for
-&kstart;, hopefully this illustrates how
+&kstart;. Hopefully this illustrates how
 &kstart; can be used to integrate foreign
 applications into your &tde; desktop.</para>
 </sect3>
 
 <sect3 id="special-window-settings">
 <title>Other Special Window Settings</title>
-<para>While you can use &kstart; to assign particular window settings, &tde; also allows you to alter these  -- mdash; as well as other similar settings  -- mdash; from the program window itself. Simply select the left-most button in the window titlebar (or just hit <keycombo action="simul">&Alt;<keycap>F3</keycap></keycombo> once the window is focued), and then go to <menuchoice><guisubmenu>Advanced</guisubmenu><guimenuitem>Special Window Settings...</guimenuitem></menuchoice>. As you can see, from here you change various things from its geometry upon startup, to whether it should have a border or not.</para>
+<para>While you can use &kstart; to assign particular window settings, &tde; also allows you to alter these &mdash; as well as other similar settings &mdash; from the program window itself. Simply select the left-most button in the window titlebar (or press <keycombo action="simul">&Alt;<keycap>F3</keycap></keycombo> after the window is focused), and then go to <menuchoice><guisubmenu>Advanced</guisubmenu><guimenuitem>Special Window Settings...</guimenuitem></menuchoice>. As you can see, from here you change various things from its geometry upon startup, to whether it should have a border or not.</para>
 </sect3>
 
 <sect3 id="system-tray">
@@ -341,7 +339,7 @@ command:
 
 <para>The icon shown in the tray is the one specified in the window
 hints and will be updated if the icon changes.  The window title is
-shown as a tooltip if you hold the mouse over the icon.
+shown as a tooltip if you hold the mouse pointer over the icon.
 <application>ksystraycmd</application> follows standard &tde;
 behaviour so the target window can be shown and hidden by clicking the
 tray icon, and a standard context menu is available.</para>
@@ -361,10 +359,8 @@ fileref="kcalc-systray.png"></imagedata></imageobject>
 <filename>.xsession-errors</filename> file (this is the log file that records what's
 happening on your desktop).  To begin with, we'll simply look at how
 we can view this:
-<screen><prompt>%</prompt> <userinput><command>konsole</command> <option>--icon</option>
-log <option>--caption</option> 'X Log' \
-<option>--nomenubar</option> <option>--notabbar</option>
-<option>--noframe</option> \
+<screen><prompt>%</prompt> <userinput><command>konsole</command> <option>--icon</option> log <option>--caption</option> 'X Log' \
+<option>--nomenubar</option> <option>--notabbar</option> <option>--noframe</option> \
 <option>-e</option> tail -f ~/.xsession-errors</userinput></screen>
 </para>
 
@@ -379,8 +375,7 @@ the tray icon. The <option>-e</option> argument is specific to &konsole; and tel
 to run the <command>less</command> command. Despite its complexity, we can easily move
 this window into the tray with <application>ksystraycmd</application>:
 
-<screen><prompt>%</prompt> <userinput><command>ksystraycmd</command>
-<option>--hidden</option> <option>--title</option> 'X Log' \
+<screen><prompt>%</prompt> <userinput><command>ksystraycmd</command> <option>--hidden</option> <option>--title</option> 'X Log' \
 konsole --icon log --caption 'XLog' \
 --nomenubar --notabbar --noframe \
 -e tail -f .xsession-errors</userinput></screen>
@@ -430,9 +425,7 @@ make our commands more robust we can use the
 of the target window. The following example uses the <option>--window</option> parameter
 to ensure that a particular konsole window is affected:
 
-<screen><prompt>%</prompt> <userinput><command>kstart</command> <option>--iconify</option> <option>--window</option> 'kstart_me' konsole
---caption 'kstart_me' -e tail -f
-~/.xsession-errors</userinput></screen>
+<screen><prompt>%</prompt> <userinput><command>kstart</command> <option>--iconify</option> <option>--window</option> 'kstart_me' konsole --caption 'kstart_me' -e tail -f ~/.xsession-errors</userinput></screen>
 
 </para>
 
@@ -456,7 +449,7 @@ throughout &tde;.) </para>
 
 <para>Sometimes, one screen's worth is just not enough space. If you
 use many applications at the same time, and find yourself drowning in
-different windows, virtual desktops offer the solution. By default,
+different windows, virtual desktops offer a solution. By default,
 &tde; has four virtual desktops, each one of which is like a separate
 screen: you can open windows, move windows around, and set backgrounds and
 icons on each of the desktops. If you are familiar with the concept of
@@ -465,13 +458,16 @@ desktops.</para>
 
 <sect3 id="switching-virtual-desktops">
 <title>Switching Virtual Desktops</title>
-<para>To move to a different virtual desktop, you can use <keycombo action="simul">&Ctrl;&Tab;
+<para>One way to move to a different desktop is to use the desktop pager in the panel.
+Use the mouse pointer and &LMB; to select the desired desktop.</para>
+<para>Another way to move to a different virtual desktop, is using <keycombo action="simul">&Ctrl;&Tab;
 </keycombo> in the same way as you would use <keycombo action="simul">&Alt;&Tab;
-</keycombo> to switch between windows (see <xref linkend="switching-between-windows"/>): Hold down &Ctrl; and then press
+</keycombo> to switch between windows (refer to the <xref linkend="switching-between-windows"/>):
+Hold down &Ctrl; and then press
 &Tab;. A small popup window appears, showing the virtual desktops,
-with one highlighted. If you release &Ctrl;, &tde; will switch to the
-highlighted virtual desktop. To select a different desktop, press
-&Tab; repeatedly, while holding down &Ctrl;. The selection moves
+with one highlighted. When you release &Ctrl;, &tde; will switch to the
+highlighted virtual desktop. To select a different desktop, hold down &Ctrl;
+whle pressing &Tab; repeatedly. The selection moves
 through the available desktops. When the desktop you want to switch to
 is highlighted, release &Ctrl;.</para>
 
@@ -481,10 +477,10 @@ is highlighted, release &Ctrl;.</para>
 
 <sect3 id="windows-and-virtual-desktops">
 <title>Windows and Virtual Desktops</title>
-<para>You can move windows around your virtual desktops with the
-<guisubmenu>To Desktop</guisubmenu> item in the window menu: just
-select the desktop to which you want to move the window. You can make the
-window appear on all desktops with the <guimenuitem>All
+<para>You can move windows to different virtual desktops with the
+<guisubmenu>To Desktop</guisubmenu> item in the window menu button. Use the &LMB;
+to select the window menu button and select the desktop to which you want to move
+the window. You can make the window appear on all desktops with the <guimenuitem>All
 Desktops</guimenuitem><indexterm><primary>Sticky
 Windows</primary></indexterm> item.</para>
 

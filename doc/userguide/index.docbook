@@ -377,7 +377,7 @@ the computer is ready for logging in graphically.</para>
 <para> Enter a username in the
 <guilabel>Username</guilabel> text box and password in the
 <guilabel>Password</guilabel> text box. The password will not be shown
-while typing; instead displaying as asterisks or dots. When finished,
+while typing, instead displaying as asterisks or dots. When finished,
 select the <guibutton>Login</guibutton> button, or press the Enter key,
 and &tde; will start. A &tde; splash image will appear,
 and provide &tde; startup information. When done
@@ -415,7 +415,7 @@ select the <guimenuitem>Log Out...</guimenuitem> item.</para>
 
 <itemizedlist>
 <title>Related Information</title>
-<listitem><para>The &tdm; Handbook has information about using and configuring
+<listitem><para>The <ulink url="help:/tdm">&tdm; Handbook</ulink> has information about using and configuring
 the &tde; graphical login manager. Read more in &khelpcenter; or
 by entering <userinput>help:/tdm</userinput> in &konqueror;'s
 <guilabel>Location</guilabel> bar.</para>
