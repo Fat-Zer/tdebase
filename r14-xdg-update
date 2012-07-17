@@ -119,20 +119,35 @@ if [ "$R14_UPDATED" != "true" ] || [ "$FORCE" = "true" ]; then
   # Exclude KMail mail files --- we don't want to touch those files.
   find "$PROFILE_DIR" -path "$PROFILE_DIR/share/apps/kmail/mail" -prune -o -type f -exec sed -i "s|$TDEDIR/share/applications/kde|$TDEDIR/share/applications/tde|g" {} \; 2>/dev/null
 
-  # Preserve keyboard shortcuts.
+  # Preserve keyboard shortcuts and input actions.
   Message_Prefix
   echo -e "Updating user-defined keyboard shortcuts in khotkeysrc."
-  sed -i -e 's|CommandURL=kde-|CommandURL=tde-|g' -e 's|K Menu - kde-|K Menu - tde-|g' "$PROFILE_DIR/share/config/khotkeysrc" 2>/dev/null
+  sed -i 's|CommandURL=kde-|CommandURL=tde-|g' "$PROFILE_DIR/share/config/khotkeysrc" 2>/dev/null
+  sed -i 's|K Menu - kde-|TDE Menu - tde-|g' "$PROFILE_DIR/share/config/khotkeysrc" 2>/dev/null
+  sed -i 's|Name=K Menu|Name=TDE Menu|g' "$PROFILE_DIR/share/config/khotkeysrc" 2>/dev/null
+  Message_Prefix
+  echo -e "Updating some text strings in khotkeysrc."
+  sed -i 's|Go to KDE Website|Go to TDE Website|g' "$PROFILE_DIR/share/config/khotkeysrc" 2>/dev/null
+  sed -i 's|www\.kde\.org|www\.trinitydesktop\.org|g' "$PROFILE_DIR/share/config/khotkeysrc" 2>/dev/null
+  sed -i 's|KDE3\.1|TDE|g' "$PROFILE_DIR/share/config/khotkeysrc" 2>/dev/null
+  sed -i 's|kde32b1|trinity2b1|g' "$PROFILE_DIR/share/config/khotkeysrc" 2>/dev/null
+  sed -i 's|kde321|trinity21|g' "$PROFILE_DIR/share/config/khotkeysrc" 2>/dev/null
+  # Fix the some of the same text strings in kglobalshortcutsrc.
+  Message_Prefix
+  echo -e "Updating some text strings in kglobalshortcutsrc."
+  sed -i 's|Go to KDE Website|Go to TDE Website|g' "$PROFILE_DIR/share/config/kglobalshortcutsrc" 2>/dev/null
+  sed -i 's|www\.kde\.org|www\.trinitydesktop\.org|g' "$PROFILE_DIR/share/config/kglobalshortcutsrc" 2>/dev/null
+  sed -i 's|KDE3\.1|TDE|g' "$PROFILE_DIR/share/config/kglobalshortcutsrc" 2>/dev/null
 
   # Preserve app preferences.
   Message_Prefix
-  echo -e "Updating user-defined app prefernces in profilerc."
-  sed -i -e 's|Application=kde-|Application=tde-|g' "$PROFILE_DIR/share/config/profilerc" 2>/dev/null
+  echo -e "Updating user-defined app preferences in profilerc."
+  sed -i 's|Application=kde-|Application=tde-|g' "$PROFILE_DIR/share/config/profilerc" 2>/dev/null
 
   # Preserve kicker/panel icons.
   Message_Prefix
   echo -e "Updating kicker/panel customizations in kickerrc."
-  sed -i -e 's|StorageId\[\$e\]=kde-|StorageId\[\$e\]=tde-|g' "$PROFILE_DIR/share/config/kickerrc" 2>/dev/null
+  sed -i 's|StorageId\[\$e\]=kde-|StorageId\[\$e\]=tde-|g' "$PROFILE_DIR/share/config/kickerrc" 2>/dev/null
 
   # Preserve Quick Launch icons.
   # There should only be one configuration file, but old KDE3 remnant files might exist ofr users who
@@ -141,7 +156,7 @@ if [ "$R14_UPDATED" != "true" ] || [ "$FORCE" = "true" ]; then
   if [ "$QUICK_LAUNCH_CONFIG" != "" ]; then
     Message_Prefix
     echo -e "Updating Quick Launch applet."
-    sed -i -e 's|,kde-|,tde-|g' "$PROFILE_DIR/share/config/$QUICK_LAUNCH_CONFIG" 2>/dev/null
+    sed -i 's|,kde-|,tde-|g' "$PROFILE_DIR/share/config/$QUICK_LAUNCH_CONFIG" 2>/dev/null
   fi
 
   # Update sym link files in $HOME/.trinity/Autostart.
