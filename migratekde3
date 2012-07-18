@@ -155,10 +155,14 @@ if [ -d "$HOME/.trinity" ]; then
   echo
 else
   echo "$HOME/.trinity does not exist." 1>&2
+  # If $HOME/.kde3 or $HOME/.kdemod3 exists, probably safe to presume a profile from KDE3 or a previous Trinity.
   if [ -d "$HOME/.kde3" ]; then
-    # If $HOME/.kde3 exists, probably safe to presume a profile from KDE3 or a previous Trinity.
     echo "Found $HOME/.kde3."
     KDE3_PROFILE=".kde3"
+    disk_space_test
+  elif [ -d "$HOME/.kdemod3" ]; then
+    echo "Found $HOME/.kdemod3."
+    KDE3_PROFILE=".kdemod3"
     disk_space_test
   elif [ -d "$HOME/.kde" ]; then
     # This is tricky --- ensure this profile directory is NOT KDE4.
