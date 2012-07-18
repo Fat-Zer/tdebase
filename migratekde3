@@ -199,7 +199,8 @@ if [ -n "$KDE3_PROFILE" ]; then
   echo "Cleaning config files (but not KMail mail files. :-))" 1>&2
   echo "Cleaning, first pass..." 1>&2
   find $HOME/.trinity -path $HOME/.trinity/share/apps/kmail/mail -prune -o -type f -exec sed -i "s|/${KDE3_PROFILE}|/\.trinity|g" {} \;
-  if [ "$?" = "0" ]; then
+  EXIT_CODE="$?"
+  if [ "$EXIT_CODE" = "0" ]; then
     echo "Done." 1>&2
     else
     echo "There was an error with the first pass." 1>&2
@@ -209,8 +210,11 @@ if [ -n "$KDE3_PROFILE" ]; then
     echo "The \$TDEDIR environment variable does not exist. Can't complete the cleanup." 1>&2
   else
     echo "Cleaning, second pass..." 1>&2
+    find $HOME/.trinity -path $HOME/.trinity/share/apps/kmail/mail -prune -o -type f -exec sed -i "s|/opt/kde/|${TDEDIR}/|g" {} \;
+    EXIT_CODE_1="$?"
     find $HOME/.trinity -path $HOME/.trinity/share/apps/kmail/mail -prune -o -type f -exec sed -i "s|/opt/kde3/|${TDEDIR}/|g" {} \;
-    if [ "$?" = "0" ]; then
+    EXIT_CODE_2="$?"
+    if [ "$EXIT_CODE_1" = "0" ] && [ "$EXIT_CODE_2" = "0" ]; then
       echo "Done." 1>&2
     else
       echo "There was an error with the second pass." 1>&2
