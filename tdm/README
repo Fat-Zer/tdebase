@@ -1,15 +1,12 @@
-This is the K Display Manager (TDM) for KDE 3.4,
-the KDE replacement for the X Display Manager (XDM).
-
-Semi-official home page: http://devel-home.kde.org/~ossi/sw/tdm.html
-
+This is the Trinity Display Manager (TDM),
+the TDE replacement for the X Display Manager (XDM).
 
 configure options that affect TDM
 ---------------------------------
 
 --with-pam[=service]
   Compile TDM (and other parts of tdebase) with PAM support. The default
-  service is "kde". PAM is automatically used if found.
+  service is "tde". PAM is automatically used if found.
 
 --with-tdm-pam=service
   Override the PAM service used specifically by TDM. Depends on --with-pam.
@@ -32,7 +29,7 @@ configure options that affect TDM
   Compile TDM with Kerberos 5 resp. secure RPC support for X authorization
   cookies. It's pretty pointless to enable this if you don't use an X server
   that supports it.
-  
+
   If you want user authentication against a Kerberos realm, compile TDM with
   PAM support and use the appropriate module.
 
@@ -47,16 +44,16 @@ configure options that affect TDM
 TDM's file system layout
 ------------------------
 
-${kde_confdir} is usually ${prefix}/share/config
-${kde_datadir} is usually ${prefix}/share/apps
+${tde_confdir} is usually ${prefix}/share/config
+${tde_datadir} is usually ${prefix}/share/apps
 The indented locations are envisioned for a configuration shared with GDM.
 
-${kde_confdir}/tdm/{tdmrc,Xservers,Xaccess,Xwilling,...}
-${kde_datadir}/tdm/sessions/*.desktop
+${tde_confdir}/tdm/{tdmrc,Xservers,Xaccess,Xwilling,...}
+${tde_datadir}/tdm/sessions/*.desktop
   /etc/X11/sessions/,/usr/share/xsessions/
-${kde_datadir}/tdm/pics/users/
-${kde_datadir}/tdm/pics/
-${kde_datadir}/tdm/faces/*.face{,.icon}
+${tde_datadir}/tdm/pics/users/
+${tde_datadir}/tdm/pics/
+${tde_datadir}/tdm/faces/*.face{,.icon}
   /usr/share/faces/
 /var/run/xauth/A*
 /var/run/xdmctl/xdmctl*
@@ -70,7 +67,7 @@ $HOME/.dmrc
 How to setup TDM
 ----------------
 
-TDM's config files are all located in ${kde_confdir}/tdm.
+TDM's config files are all located in ${tde_confdir}/tdm.
 "make install" will create a probably working configuration, either by
 deriving it from an already present TDM/XDM installation or by using
 defaults if no previous installation is found.
@@ -85,7 +82,6 @@ system uses PAM.
 Configuring session types
 -------------------------
 
-The way session types are configured changed drastically in KDE 3.2.
 Session types are now represented by .desktop files in appropriate locations.
 The format of the .desktop files is (not yet) defined in the FreeDesktop.org
 desktop entry spec. Differences to "standard" .desktop files are:
@@ -101,15 +97,15 @@ that's what will be saved to ~/.dmrc and what DESKTOP_SESSION will be set to.
 For every magic Exec constant a session type of the same name exists.
 
 Unless your system is configured differently already, you should create a
-directory ${kde_confdir}/tdm/sessions and add this to tdmrc:
+directory ${tde_confdir}/tdm/sessions and add this to tdmrc:
 
 [X-*-Core]
-SessionsDirs=${kde_confdir}/tdm/sessions,${kde_datadir}/tdm/sessions
+SessionsDirs=${tde_confdir}/tdm/sessions,${tde_datadir}/tdm/sessions
 
 (Note that you must use actual paths instead of variables, see the section
 about TDM's file system layout.)
 Do any changes only in the config directory - any changes in the data
-directory will be lost after the next KDE update.
+directory will be lost after the next TDE update.
 
 To override a session type, copy the .desktop file from the data dir to the
 config dir and edit it at will. Removing the shipped session types can be
@@ -135,9 +131,9 @@ modifying the XDM init script shipped by your distribution.
 
    Replace it with:
 
-       x:5:respawn:/opt/kde/bin/tdm
+       x:5:respawn:/opt/trinity/bin/tdm
 
-   This tells init(8) to respawn TDM, the KDE display manager, when
+   This tells init(8) to respawn TDM, the TDE display manager, when
    the system is in run level 5.
    Note that TDM does not need the -nodaemon option.
 
@@ -154,7 +150,7 @@ modifying the XDM init script shipped by your distribution.
 
    If you do the latter step, then every time your system boots
    successfully it will go into run level 5 and run TDM,
-   presenting you the exceedingly cute KDE login screen.
+   presenting you the exceedingly cute TDE login screen.
 
 
 The command sockets
@@ -300,7 +296,7 @@ Commands for all sockets:
    - Numeric user ID of the requesting user, -1 for the global socket.
    - The next boot OS choice or "-" for none.
    - New fields might be added later.
- 
+
 There are two ways of using the sockets:
 - Connecting them directly. FifoDir is exported as $DM_CONTROL; the name
   of per-display sockets can be derived from $DISPLAY.
@@ -448,7 +444,7 @@ BasysKom for sponsoring my (ossi's) work on the conversation plugin stuff.
 ... and _many_ others ...
 
 
--- 
+--
 Have fun with it (and feel free to comment),
 
 	Oswald Buddenhagen <ossi@kde.org>

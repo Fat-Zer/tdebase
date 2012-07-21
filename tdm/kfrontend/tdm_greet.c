@@ -1,6 +1,6 @@
 /*
 
-KDE Greeter module for xdm
+TDE Greeter module for xdm
 
 Copyright (C) 2001-2003 Oswald Buddenhagen <ossi@kde.org>
 

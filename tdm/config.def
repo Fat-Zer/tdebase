@@ -94,7 +94,7 @@
  _
  Please note: Settings in this file are sometimes ignored (overridden).
  The default TDM startup script /etc/init.d/tdm looks in /etc/default/tdm.d
- for theme-related settings which, if found, take precedence. The possibly 
+ for theme-related settings which, if found, take precedence. The possibly
  overridden settings are: UseBackground, BackgroundCfg, UseTheme, Theme.
  See /usr/share/doc/tdm/README.Debian for details
  _
@@ -222,7 +222,7 @@ display class (which can be ignored in most cases).</para>
 make up a section class.</para>
 
 <para>You can use the wildcard <literal>*</literal> (match any) for
-<replaceable>host</replaceable>, <replaceable>number</replaceable>, 
+<replaceable>host</replaceable>, <replaceable>number</replaceable>,
 and <replaceable>class</replaceable>. You may omit trailing components;
 they are assumed to be <literal>*</literal> then. The host part may be a
 domain specification like <replaceable>.inf.tu-dresden.de</replaceable>
@@ -324,7 +324,7 @@ kcontrol frontend.</para></note>
 display which should constantly be
 managed and which is not using &XDMCP;. This method is typically used only for
 local &X-Server;s that are started by &tdm;, but &tdm; can manage externally
-started (<quote>foreign</quote>) &X-Server;s as well, may they run on the 
+started (<quote>foreign</quote>) &X-Server;s as well, may they run on the
 local machine or rather remotely.</para>
 
 <para>The formal syntax of a specification is
@@ -459,7 +459,7 @@ permanently assigned range of multicast addresses for &XDMCP;. The
 identifier, such as 1 for Node-Local, 2 for Link-Local, 5 for Site-Local, and
 so on (see IETF RFC 2373 or its replacement for further details and scope
 definitions). &tdm; defaults to listening on the Link-Local scope address
-ff02:0:0:0:0:0:0:12b to most closely match the IPv4 subnet broadcast behavior. 
+ff02:0:0:0:0:0:0:12b to most closely match the IPv4 subnet broadcast behavior.
 If no <literal>LISTEN</literal> lines are given, &tdm; listens on all
 interfaces and joins the default &XDMCP; IPv6 multicast group (when
 compiled with IPv6 support).
@@ -668,7 +668,7 @@ the following environment variables are passed:</para>
 <para>Symmetrical with <filename>Xstartup</filename>, the
 <filename>Xreset</filename> program is run after the user session has
 terminated. Run as <systemitem class="username">root</systemitem>, it should
-contain commands that undo the effects of commands in 
+contain commands that undo the effects of commands in
 <filename>Xstartup</filename>, removing entries from <filename>utmp</filename>
 or unmounting directories from file servers.</para>
 
@@ -1563,12 +1563,12 @@ Update: cp_resources
 Merge: xdm
 Comment:
  Specify a file with X-resources for the greeter, chooser and background.
- The KDE frontend does not use this file, so you do not need it unless you
+ The TDE frontend does not use this file, so you do not need it unless you
  use another background generator than krootimage.
 Description:
  This option specifies the name of the file to be loaded by
  <command>xrdb</command> as the resource database onto the root window
- of screen 0 of the display. KDE programs generally do not use
+ of screen 0 of the display. TDE programs generally do not use
  X-resources, so this option is only needed if the <option>Setup</option>
  program needs some X-resources.
 
@@ -1717,7 +1717,7 @@ Merge: xdm
 Comment:
  The default system shell.
 Description:
- The <envar>SHELL</envar> environment variable for all programs but the 
+ The <envar>SHELL</envar> environment variable for all programs but the
  <option>Session</option>.
 
 Key: UserAuthDir
@@ -1744,7 +1744,7 @@ Merge: xdm
 Comment:
  Whether to automatically restart sessions after &X-Server; crashes.
  Note that enabling this makes circumventing screen lockers other than
- KDE's built-in one possible!
+ TDE's built-in one possible!
 Description:
  If enabled, &tdm; will automatically restart a session after an &X-Server;
  crash (or if it is killed by Alt-Ctrl-BackSpace). Note that enabling this
@@ -1924,7 +1924,7 @@ Instance: #:0/!
 Comment: &
 Description:
  Immediately lock the automatically started session. This works only with
- KDE sessions.
+ TDE sessions.
 
 Key: SessionsDirs
 Type: list
@@ -2247,7 +2247,7 @@ Description: !
  which are prefixed with <literal>@</literal> represent all users in the
  user group named by that item.
  Finally, the user list will be sorted alphabetically, if
- <option>SortUsers</option> is enabled. 
+ <option>SortUsers</option> is enabled.
 
 Key: SelectedUsers
 Type: list
@@ -2466,7 +2466,7 @@ Description:
  keyboard grabbed, or possibly if the network latencies are very high. You
  should be cautious when raising the timeout, as a user can be spoofed by
  a look-alike window on the display. If a grab fails, &tdm; kills and
- restarts the &X-Server; (if possible) and the session. 
+ restarts the &X-Server; (if possible) and the session.
 
 Key: AuthComplain
 Type: bool
