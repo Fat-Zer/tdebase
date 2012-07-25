@@ -17,6 +17,7 @@ License. See the file "COPYING" for the exact licensing terms.
 #include <tqpainter.h>
 #include <tqdatetime.h>
 #include <tqimage.h>
+#include <tqfile.h>
 #include <kprocess.h>
 #include <unistd.h>
 #include <kstandarddirs.h>
@@ -1855,26 +1856,17 @@ bool Client::isSuspendable() const
         }
     else
         {
-        FILE *procfile;
-        if(chdir(TQString("/proc/%1").arg(pid).ascii()) == 0)
+        TQFile procStatFile(TQString("/proc/%1/stat").arg(pid));
+        if (procStatFile.open(IO_ReadOnly))
             {
-            procfile = fopen("stat", "r");
-            }
-        if(!procfile)
-            {
-            return false;
-            }
-        else
-            {
-            long long int procpid;
-            char tcomm[PATH_MAX];
-            char state;
-            fscanf(procfile, "%lld ", &procpid);
-            fscanf(procfile, "%s ", tcomm);
-            fscanf(procfile, "%c ", &state);
-            if( state != 'T' )
+            TQByteArray statRaw = procStatFile.readAll();
+            procStatFile.close();
+            TQString statString(statRaw);
+            TQStringList statFields = TQStringList::split(" ", statString, TRUE);
+            TQString tcomm = statFields[1];
+            TQString state = statFields[2];
+            if( state != "T" )
                 {
-                fclose(procfile);
                 // Make sure no windows of this process are special
                 for ( ClientList::ConstIterator it = workspace()->clients.begin(); it != workspace()->clients.end(); ++it)
                     {
@@ -1902,9 +1894,12 @@ bool Client::isSuspendable() const
                 }
             else
                 {
-                fclose(procfile);
                 return false;
                 }
+            }
+        else
+            {
+            return false;
             }
         }
     }
@@ -1922,33 +1917,27 @@ bool Client::isResumeable() const
         }
     else
         {
-        FILE *procfile;
-        if(chdir(TQString("/proc/%1").arg(pid).ascii()) == 0)
+        TQFile procStatFile(TQString("/proc/%1/stat").arg(pid));
+        if (procStatFile.open(IO_ReadOnly))
             {
-            procfile = fopen("stat", "r");
-            }
-        if(!procfile)
-            {
-            return false;
-            }
-        else
-            {
-            long long int procpid;
-            char tcomm[PATH_MAX];
-            char state;
-            fscanf(procfile, "%lld ", &procpid);
-            fscanf(procfile, "%s ", tcomm);
-            fscanf(procfile, "%c ", &state);
-            if( state == 'T' )
+            TQByteArray statRaw = procStatFile.readAll();
+            procStatFile.close();
+            TQString statString(statRaw);
+            TQStringList statFields = TQStringList::split(" ", statString, TRUE);
+            TQString tcomm = statFields[1];
+            TQString state = statFields[2];
+            if( state == "T" )
                 {
-                fclose(procfile);
                 return true;
                 }
             else
                 {
-                fclose(procfile);
                 return false;
                 }
+            }
+        else
+            {
+            return false;
             }
         }
     }
