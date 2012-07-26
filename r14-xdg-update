@@ -1,47 +1,14 @@
-#!/bin/sh
+#!/bin/bash
 #
 # A script to perform R14.0.0 XDG compliance updates.
-# This script should be needed to run only once.
 
-SCRIPT_NAME="`basename \`readlink -f $0\``"
-
-# TODO: Do we need to trap whether the user is running this script while
-#       in a Trinity session? Most files can be updated "live" but some can't,
-#       such as kdeglobals.
-
-# Allow forced execution of this script regardless of the kdeglobals setting.
-if [ "$1" = "force" ]; then
-  FORCE="true"
-fi
-
-# TODO: As the user should not be logged into a Trinity session when running
-#       this script, or an administrator might run this script remotely, the
-#       $TDEHOME variable probably is not set or knowable from within this script.
-#       We presume $HOME/.trinity, but should provide a way to pass a command line
-#       parameter to change that location.
-PROFILE_DIR="$HOME/.trinity"
-CACHE_DIR="$PROFILE_DIR/cache-`uname -n`"
+# This script should be needed to run only once, but corner cases
+# and file/directory permissions could cause incomplete updates.
 
 # TODO: How to handle environments where files/directories are locked
-#       administratively and can't be updated. The nominal validation checks
-#       in this script provide some notice but no direct remedy.
-
-# The binaries for TDE are located in the same place as this script.
-# To determine that location use the following method rather than presuming
-# the existence of $TDEDIR. That environment variable might not be
-# defined or defined to point to KDE4 binaries.
-BIN_DIR="`dirname \`readlink -f $0\``"
-if [ -x $BIN_DIR/tde-config ]; then
-  TDEDIR=${BIN_DIR%/bin}
-else
-  echo "[r14-xdg-update] Unable to determine TDE base directory."
-  echo "[r14-xdg-update] This script should be installed in the same directory."
-  echo "[r14-xdg-update] Exiting."
-  exit 1
-fi
-unset BIN_DIR
-
-unset KDEGLOBALS_KEY_VALUE
+#       administratively or are owned by root and can't be updated.
+#       The nominal validation checks in this script provide some notice
+#       but no direct remedy.
 
 Wait_For_Response () {
 unset response
@@ -91,6 +58,71 @@ else
 fi
 }
 
+# Main script:
+
+# Allow forced execution of this script regardless of the kdeglobals setting.
+if [ "$1" = "force" ]; then
+  FORCE="true"
+fi
+
+SCRIPT_NAME="`basename \`readlink -f $0\``"
+
+unset KDEGLOBALS_KEY_VALUE
+
+WARNING_MESSAGE="Trinity R14 XDG compliance updates will not be performed.\n\nWithout R14 XDG compliance updates, some Trinity apps will fail to\nfunction properly.\n\nFailures include the following:\n\n* Many left-side icon lists will not populate,\n  such as the Panel and Konqueror configuration dialogs.\n\n* User-defined keyboard shortcuts fail (khotkeysrc).\n  System defined shortcuts remain functional.\n\n* User-defined app preferences fail (profilerc).\n\n* Konqueror navigation/sidebar panel won't open.\n\n* User-defined konqueror service menus, kicker customization,\n  konqueror sidebar, Recent Documents list fail.\n\nPossible remedies:\n\n* If necessary contact your system administrator."
+
+# As the user should not be logged into a Trinity session when running
+# this script, or an administrator might run this script remotely, the
+# $TDEHOME variable probably is not set or knowable from within this script.
+# We presume $HOME/.trinity, but provide a way to pass an environment
+# variable to change that location.
+if [ "$TDEHOME" = "" ]; then
+  PROFILE_DIR=${PROFILE_DIR:-"$HOME/.trinity"}
+else
+  PROFILE_DIR="$TDEHOME"
+fi
+if [ ! -d "$PROFILE_DIR" ]; then
+  MESSAGE="Unable to determine the user profile directory.\n\n${WARNING_MESSAGE}"
+  # Are we in X? Display an X dialog explaining breakage.
+  if [ "$DISPLAY" != "" ]; then
+    echo -e "$MESSAGE" | xmessage -center -file - -buttons Continue,Quit > /dev/null 2>/dev/null
+    if [ "$?" = "102" ]; then
+      # User select the Quit button: quit this script.
+      unset PROFILE_DIR
+      exit 1
+    fi
+  else
+    Message_Prefix
+    echo -e "$MESSAGE\n\n${WARNING_MESSAGE}"
+  fi
+fi
+CACHE_DIR="$PROFILE_DIR/cache-`uname -n`"
+
+# The binaries for TDE are located in the same place as this script.
+# To determine that location use the following method rather than presuming
+# the existence of $TDEDIR. That environment variable might not be
+# defined or defined to point to KDE4 binaries.
+BIN_DIR="`dirname \`readlink -f $0\``"
+if [ -x $BIN_DIR/tde-config ]; then
+  TDEDIR=${BIN_DIR%/bin}
+else
+  MESSAGE="Unable to determine TDE base directory."
+  # Are we in X? Display an X dialog explaining breakage.
+  if [ "$DISPLAY" != "" ]; then
+    echo -e "$MESSAGE" | xmessage -center -file - -buttons Continue,Quit > /dev/null 2>/dev/null
+    if [ "$?" = "102" ]; then
+      # User select the Quit button: quit this script.
+      unset PROFILE_DIR
+      exit 1
+    fi
+  else
+    Message_Prefix
+    echo -e "$MESSAGE\n\n${WARNING_MESSAGE}"
+  fi
+  exit 1
+fi
+unset BIN_DIR
+
 # Do not update when $TDEHOME is a sym link to another profile directory. Trinity should have
 # full reign within its own profile directory (limited to administrative locking), but the error
 # check is a conservative approach.
@@ -106,7 +138,7 @@ if [ "$TDEHOME_LINK" != "" ]; then
     echo "                    R14 updates will not be performed because Trinity needs its own separate profile directory." 1>&2
     echo "                    Without R14 updates some Trinity apps will fail to function correctly." 1>&2
   fi
-  MESSAGE="Oops! The profile directory $PROFILE_DIR is a sym link to $TDEHOME_LINK.\n\nTrinity R14 XDG compliance updates will not be performed because\nTrinity needs its own separate profile directory.\n\nWithout R14 XDG compliance updates, some Trinity apps will fail to\nfunction properly.\n\nFailures include the following:\n\n* Many left-side icon lists will not populate,\n  such as the Panel and Konqueror configuration dialogs.\n\n* User-defined keyboard shortcuts fail (khotkeysrc).\n  System defined shortcuts remain functional.\n\n* User-defined app preferences fail (profilerc).\n\n* Konqueror navigation/sidebar panel won't open.\n\n* User-defined konqueror service menus, kicker customization,\n  konqueror sidebar, Recent Documents list fail.\n\nPossible remedies:\n\n* If necessary contact your system administrator.\n\n* Break the sym link to allow Trinity to create a fresh Trinity profile.\n\n* Use the migratekde3 script to migrate a KDE3 profile to Trinity."
+  MESSAGE="Oops! The profile directory $PROFILE_DIR is a sym link to $TDEHOME_LINK.\n\n${WARNING_MESSAGE}\n\n* Break the sym link to allow Trinity to create a fresh Trinity profile.\n\n* Use the migratekde3 script to migrate a KDE3 profile to Trinity."
   # Are we in X? Display an X dialog explaining breakage.
   if [ "$DISPLAY" != "" ]; then
     echo -e "$MESSAGE" | xmessage -center -file - -buttons Continue,Quit > /dev/null 2>/dev/null
@@ -134,6 +166,7 @@ if [ "$TDEHOME_LINK" != "" ]; then
     fi
   fi
 fi
+unset TDEHOME_LINK
 
 R14_UPDATED="`$TDEDIR/bin/kreadconfig --file kdeglobals --group "R14 XDG Updates" --key Updated`"
 if [ "$R14_UPDATED" != "true" ] || [ "$FORCE" = "true" ]; then
@@ -142,6 +175,7 @@ if [ "$R14_UPDATED" != "true" ] || [ "$FORCE" = "true" ]; then
     echo "The r14-xdg-update script has been run at least once."
     Message_Prefix
     echo "The error code is $R14_UPDATED."
+    echo
     MESSAGE="The r14-xdg-update script has been run at least once.\n\nThe script is not successfully updating.\n\nThe script will run with each login until corrected.\n\nPlease contact an administrator or take appropriate\nadmininstrative action to correct the problem.\n\nThe error code is $R14_UPDATED."
     # Are we in X? Display an X dialog explaining breakage.
     if [ "$DISPLAY" != "" ]; then
@@ -150,186 +184,224 @@ if [ "$R14_UPDATED" != "true" ] || [ "$FORCE" = "true" ]; then
         # User select the Quit button: quit this script.
         unset PROFILE_DIR
         unset R14_UPDATED
-        unset TDEHOME_LINK
         exit 1
       fi
     fi
   fi
-  Message_Prefix
-  echo "Performing a profile update for Trinity release R14 XDG compliance."
-  Message_Prefix
-  echo "Updating *.desktop files."
-  find "$PROFILE_DIR" -name "*.desktop" -exec sed -i 's|X-KDE-|X-TDE-|g' {} \; 2>/dev/null
-  find "$PROFILE_DIR" -name "*.desktop" -exec sed -i 's|KDE\;|TDE\;|g' {} \; 2>/dev/null
-  find "$HOME/.local" -name "*.desktop" -exec sed -i 's|X-KDE-|X-TDE-|g' {} \; 2>/dev/null
-  find "$HOME/.local" -name "*.desktop" -exec sed -i 's|KDE\;|TDE\;|g' {} \; 2>/dev/null
-  Message_Prefix
-  echo "Updating references of $TDEDIR/share/applications/kde to share/applications/tde."
-  # Exclude KMail mail files --- we don't want to touch those files.
-  find "$PROFILE_DIR" -path "$PROFILE_DIR/share/apps/kmail/mail" -prune -o -type f -exec sed -i "s|$TDEDIR/share/applications/kde|$TDEDIR/share/applications/tde|g" {} \; 2>/dev/null
-
-  # Preserve keyboard shortcuts and input actions.
-  Message_Prefix
-  echo "Updating user-defined keyboard shortcuts in khotkeysrc."
-  sed -i 's|CommandURL=kde-|CommandURL=tde-|g' "$PROFILE_DIR/share/config/khotkeysrc" 2>/dev/null
-  sed -i 's|K Menu - kde-|TDE Menu - tde-|g' "$PROFILE_DIR/share/config/khotkeysrc" 2>/dev/null
-  sed -i 's|Name=K Menu|Name=TDE Menu|g' "$PROFILE_DIR/share/config/khotkeysrc" 2>/dev/null
-  sed -i 's|in KDE stands|in TDE stands|g' "$PROFILE_DIR/share/config/khotkeysrc" 2>/dev/null
-  sed -i 's| use KDE| use TDE|g' "$PROFILE_DIR/share/config/khotkeysrc" 2>/dev/null
-  Message_Prefix
-  echo "Updating some text strings in khotkeysrc."
-  sed -i 's|Go to KDE Website|Go to TDE Website|g' "$PROFILE_DIR/share/config/khotkeysrc" 2>/dev/null
-  sed -i 's|www\.kde\.org|www\.trinitydesktop\.org|g' "$PROFILE_DIR/share/config/khotkeysrc" 2>/dev/null
-  sed -i 's|KDE3\.1|TDE|g' "$PROFILE_DIR/share/config/khotkeysrc" 2>/dev/null
-  sed -i 's|kde32b1|trinity2b1|g' "$PROFILE_DIR/share/config/khotkeysrc" 2>/dev/null
-  sed -i 's|kde321|trinity21|g' "$PROFILE_DIR/share/config/khotkeysrc" 2>/dev/null
-  # Fix the some of the same text strings in kglobalshortcutsrc.
-  Message_Prefix
-  echo "Updating some text strings in kglobalshortcutsrc."
-  sed -i 's|Go to KDE Website|Go to TDE Website|g' "$PROFILE_DIR/share/config/kglobalshortcutsrc" 2>/dev/null
-  sed -i 's|www\.kde\.org|www\.trinitydesktop\.org|g' "$PROFILE_DIR/share/config/kglobalshortcutsrc" 2>/dev/null
-  sed -i 's|KDE3\.1|TDE|g' "$PROFILE_DIR/share/config/kglobalshortcutsrc" 2>/dev/null
-
-  # Preserve app preferences.
-  Message_Prefix
-  echo "Updating user-defined app preferences in profilerc."
-  sed -i 's|Application=kde-|Application=tde-|g' "$PROFILE_DIR/share/config/profilerc" 2>/dev/null
-
-  # Preserve kicker/panel icons.
-  Message_Prefix
-  echo "Updating kicker/panel customizations in kickerrc."
-  sed -i 's|StorageId\[\$e\]=kde-|StorageId\[\$e\]=tde-|g' "$PROFILE_DIR/share/config/kickerrc" 2>/dev/null
-
-  # Preserve Quick Launch icons.
-  # There should only be one configuration file, but old KDE3 remnant files might exist ofr users who
-  # migrated from KDE3. We don't care about those files, but we still need to update the correct configuration file.
-  QUICK_LAUNCH_CONFIG="`grep launcher_panelapplet $PROFILE_DIR/share/config/kickerrc | awk -F = '{print $2}'`"
-  if [ "$QUICK_LAUNCH_CONFIG" != "" ]; then
-    Message_Prefix
-    echo "Updating Quick Launch applet."
-    sed -i 's|,kde-|,tde-|g' "$PROFILE_DIR/share/config/$QUICK_LAUNCH_CONFIG" 2>/dev/null
-  fi
-
-  # Update sym link files in $HOME/.trinity/Autostart.
-  ( cd "$PROFILE_DIR/Autostart"
-    Message_Prefix
-    echo "Updating Autostart files."
-    for i in `find . -type l`; do
-      LINK="`readlink $i`"
-      LINK_PATH="`dirname $LINK`"
-      LINK_NAME="`basename $LINK`"
-      if [ -n "`echo $LINK_PATH | grep \"$TDEDIR/share/applications/kde\"`" ]; then
-        NEW_LINK_PATH="`echo \"$LINK_PATH\" | sed 's|/share/applications/kde|/share/applications/tde|'`"
-      fi
-      unlink $i
-      ln -sf "$NEW_LINK_PATH/$LINK_NAME" "$LINK_NAME"
-      if [ "$?" != "0" ]; then
-        Message_Prefix
-        echo "There was an error with creating a new sym link for $LINK." 1>&2
-        KDEGLOBALS_KEY_VALUE="autostart"
-      fi
-    done
-  )
-
-  # Update the user's customized menu.
-  if [ -r $HOME/.config/menus/applications-kmenuedit.menu ]; then
-    sed -i 's|<Filename>kde-|<Filename>tde-|g' $HOME/.config/menus/applications-kmenuedit.menu
-  fi
-
-  # Perform some nominal update validations.
-  # First clean house from any previous failures.
-  rm -f ${CACHE_DIR}/${SCRIPT_NAME}-test*.txt
-  # This first test includes *.desktop files in the profile Autostart directory.
-  TEST_NUM="1"
-  R14_UPDATE_TEST1="`find \"$PROFILE_DIR\" -name \"*.desktop\" -exec grep \"X-KDE\" {} \; &>${CACHE_DIR}/${SCRIPT_NAME}-test${TEST_NUM}.txt`"
-  if [ "$R14_UPDATE_TEST1" != "" ]; then
-    MESSAGE="Some Trinity profile R14 XDG compliance updates failed.\n\n(Check *.desktop files for 'X-KDE' in\n${CACHE_DIR}/${SCRIPT_NAME}-test${TEST_NUM}.txt.)"
-    Validation_Failure
-  else
-    rm -f ${CACHE_DIR}/${SCRIPT_NAME}-test${TEST_NUM}.txt
-  fi
-  TEST_NUM="2"
-  R14_UPDATE_TEST2="`find \"$PROFILE_DIR\" -name \"*.desktop\" -exec grep -q \"KDE;\" {} \; &>${CACHE_DIR}/${SCRIPT_NAME}-test${TEST_NUM}.txt`"
-  if [ "$R14_UPDATE_TEST2" != "" ]; then
-    MESSAGE="Some Trinity profile R14 XDG compliance updates failed.\n\n(Check *.desktop files for 'KDE;' in\n${CACHE_DIR}/${SCRIPT_NAME}-test${TEST_NUM}.txt.)"
-    Validation_Failure
-  else
-    rm -f ${CACHE_DIR}/${SCRIPT_NAME}-test${TEST_NUM}.txt
-  fi
-  TEST_NUM="3"
-  R14_UPDATE_TEST3="`find \"$PROFILE_DIR\" \"$PROFILE_DIR/share/apps/kmail/mail\" -prune -o -type f -exec grep -q \"$TDEDIR/share/applications/kde\" {} \; &>${CACHE_DIR}/${SCRIPT_NAME}-test${TEST_NUM}.txt`"
-  if [ "$R14_UPDATE_TEST3" != "" ]; then
-    MESSAGE="Some Trinity profile R14 XDG compliance updates failed.\n\n(Check files for '$TDEDIR/share/applications/kde' in\n${CACHE_DIR}/${SCRIPT_NAME}-test${TEST_NUM}.txt.)"
-    Validation_Failure
-  else
-    rm -f ${CACHE_DIR}/${SCRIPT_NAME}-test${TEST_NUM}.txt
-  fi
-  TEST_NUM="4"
-  R14_UPDATE_TEST4="`grep -q \"CommandURL=kde-\" \"$PROFILE_DIR/share/config/khotkeysrc\" &>${CACHE_DIR}/${SCRIPT_NAME}-test${TEST_NUM}.txt`"
-  if [ "$R14_UPDATE_TEST4" != "" ]; then
-    MESSAGE="Some Trinity profile R14 XDG compliance updates failed.\n\n(Check khotkeysrc for 'CommandURL=kde-' in\n${CACHE_DIR}/${SCRIPT_NAME}-test${TEST_NUM}.txt.)"
-  else
-    rm -f ${CACHE_DIR}/${SCRIPT_NAME}-test${TEST_NUM}.txt
-  fi
-  TEST_NUM="5"
-  R14_UPDATE_TEST5="`grep -q \"K Menu - kde-\" \"$PROFILE_DIR/share/config/khotkeysrc\" &>${CACHE_DIR}/${SCRIPT_NAME}-test${TEST_NUM}.txt`"
-  if [ "$R14_UPDATE_TEST5" != "" ]; then
-    MESSAGE="Some Trinity profile R14 XDG compliance updates failed.\n\n(Check khotkeysrc for 'K Menu - kde-' in\n${CACHE_DIR}/${SCRIPT_NAME}-test${TEST_NUM}.txt.)"
-    Validation_Failure
-  else
-    rm -f ${CACHE_DIR}/${SCRIPT_NAME}-test${TEST_NUM}.txt
-  fi
-  TEST_NUM="6"
-  R14_UPDATE_TEST6="`grep -q \"Application=kde-\" \"$PROFILE_DIR/share/config/profilerc\" &>${CACHE_DIR}/${SCRIPT_NAME}-test${TEST_NUM}.txt`"
-  if [ "$R14_UPDATE_TEST6" != "" ]; then
-    MESSAGE="Some Trinity profile R14 XDG compliance updates failed.\n\n(Check profilerc for 'Application=kde-' in\n${CACHE_DIR}/${SCRIPT_NAME}-test${TEST_NUM}.txt.)"
-    Validation_Failure
-  else
-    rm -f ${CACHE_DIR}/${SCRIPT_NAME}-test${TEST_NUM}.txt
-  fi
-  TEST_NUM="7"
-  R14_UPDATE_TEST7="`grep -q \"StorageId\[\$e\]=kde-\" \"$PROFILE_DIR/share/config/kickerrc\" &>${CACHE_DIR}/${SCRIPT_NAME}-test${TEST_NUM}.txt`"
-  if [ "$R14_UPDATE_TEST7" != "" ]; then
-    MESSAGE="Some Trinity profile R14 XDG compliance updates failed.\n\n(Check kickerrc for 'StorageId[$e]=kde-' in\n${CACHE_DIR}/${SCRIPT_NAME}-test${TEST_NUM}.txt.)"
-    Validation_Failure
-  else
-    rm -f ${CACHE_DIR}/${SCRIPT_NAME}-test${TEST_NUM}.txt
-  fi
-  if [ "$QUICK_LAUNCH_CONFIG" != "" ]; then
-    TEST_NUM="8"
-    R14_UPDATE_TEST8="`grep -q \"kde-\" \"$PROFILE_DIR/share/config/$QUICK_LAUNCH_CONFIG\" &>${CACHE_DIR}/${SCRIPT_NAME}-test${TEST_NUM}.txt`"
-    if [ "$R14_UPDATE_TEST8" != "" ]; then
-      MESSAGE="Some Trinity profile R14 XDG compliance updates failed.\n\n(Check $QUICK_LAUNCH_CONFIG for 'kde-' in\n${CACHE_DIR}/${SCRIPT_NAME}-test${TEST_NUM}.txt.)"
-      Validation_Failure
-    else
-      rm -f ${CACHE_DIR}/${SCRIPT_NAME}-test${TEST_NUM}.txt
-    fi
-  fi
-  if [ -r $HOME/.config/menus/applications-kmenuedit.menu ]; then
-    TEST_NUM="9"
-    R14_UPDATE_TEST9="`grep -q \"<Filename>kde-\" \"$HOME/.config/menus/applications-kmenuedit.menu\" &>${CACHE_DIR}/${SCRIPT_NAME}-test${TEST_NUM}.txt`"
-    if [ "$R14_UPDATE_TEST9" != "" ]; then
-      MESSAGE="Some Trinity profile R14 XDG compliance updates failed.\n\n(Check applications-kmenuedit.menu for '<Filename>kde-' in\n${CACHE_DIR}/${SCRIPT_NAME}-test${TEST_NUM}.txt.)"
-      Validation_Failure
-    else
-      rm -f ${CACHE_DIR}/${SCRIPT_NAME}-test${TEST_NUM}.txt
-    fi
-  fi
-  if [ "$R14_UPDATE_TEST1" = "" ] && [ "$R14_UPDATE_TEST2" = "" ] && [ "$R14_UPDATE_TEST3" = "" ] \
-    && [ "$R14_UPDATE_TEST4" = "" ] && [ "$R14_UPDATE_TEST5" = "" ] && [ "$R14_UPDATE_TEST6" = "" ] \
-    && [ "$R14_UPDATE_TEST7" = "" ] && [ "$R14_UPDATE_TEST8" = "" ] && [ "$R14_UPDATE_TEST9" = "" ]; then
-    $TDEDIR/bin/kwriteconfig --file kdeglobals --group "R14 XDG Updates" --key Updated --type bool "true"
-  else
-    # Don't use the --type parameter here because the value no longer is boolean.
-    $TDEDIR/bin/kwriteconfig --file kdeglobals --group "R14 XDG Updates" --key Updated "$KDEGLOBALS_KEY_VALUE"
-  fi
 else
   echo "This script has been run at least once previously. To run manually pass the 'force' parameter."
+  exit 0
+fi
+
+# Trap when the user runs this script while in a Trinity session.
+# Most files can be updated "live" but some can't, such as kdeglobals.
+if [ "$TDE_FULL_SESSION" != "" ] || [ "$TDE_SESSION_UID" != "" ]; then
+  MESSAGE="You are running this script from within a Trinity session.\n\nMost files can be updated \"live\" but some cannot, such as kdeglobals.\n\nThis script might complete successfully and might not."
+  # Are we in X? Display an X dialog explaining breakage.
+  if [ "$DISPLAY" != "" ]; then
+    #echo -e "$MESSAGE" | xmessage -center -file - -buttons Continue,Quit > /dev/null 2>/dev/null
+    #if [ "$?" = "102" ]; then
+      # User select the Quit button: quit this script.
+    #  unset PROFILE_DIR
+    #  exit 1
+    #fi
+    # If we are in a Trinity session then use kdialog.
+    kdialog --title "R14-XDG-Update" --warningyesno "${MESSAGE}\n\nContinue?"
+    if [ "$?" -gt "0" ]; then
+      unset PROFILE_DIR
+      exit 0
+    fi
+  else
+    Message_Prefix
+    echo -e "$MESSAGE\n\n${WARNING_MESSAGE}"
+    Wait_For_Response "Continue?"
+    Proceed_From_Response
+  fi
+fi
+
+Message_Prefix
+echo "Performing a profile update for Trinity release R14 XDG compliance."
+Message_Prefix
+echo "Profile directory: $PROFILE_DIR"
+Message_Prefix
+echo "Updating *.desktop files."
+find "$PROFILE_DIR" -name "*.desktop" -exec sed -i 's|X-KDE-|X-TDE-|g' {} \; 2>/dev/null
+find "$PROFILE_DIR" -name "*.desktop" -exec sed -i 's|KDE\;|TDE\;|g' {} \; 2>/dev/null
+find "$HOME/.local" -name "*.desktop" -exec sed -i 's|X-KDE-|X-TDE-|g' {} \; 2>/dev/null
+find "$HOME/.local" -name "*.desktop" -exec sed -i 's|KDE\;|TDE\;|g' {} \; 2>/dev/null
+Message_Prefix
+echo "Updating references of $TDEDIR/share/applications/kde to share/applications/tde."
+# Exclude KMail mail files --- we don't want to touch those files.
+find "$PROFILE_DIR" -path "$PROFILE_DIR/share/apps/kmail/mail" -prune -o -type f -exec sed -i "s|$TDEDIR/share/applications/kde|$TDEDIR/share/applications/tde|g" {} \; 2>/dev/null
+
+# Preserve keyboard shortcuts and input actions.
+Message_Prefix
+echo "Updating user-defined keyboard shortcuts in khotkeysrc."
+sed -i 's|CommandURL=kde-|CommandURL=tde-|g' "$PROFILE_DIR/share/config/khotkeysrc" 2>/dev/null
+sed -i 's|K Menu - kde-|TDE Menu - tde-|g' "$PROFILE_DIR/share/config/khotkeysrc" 2>/dev/null
+sed -i 's|Name=K Menu|Name=TDE Menu|g' "$PROFILE_DIR/share/config/khotkeysrc" 2>/dev/null
+sed -i 's|in KDE stands|in TDE stands|g' "$PROFILE_DIR/share/config/khotkeysrc" 2>/dev/null
+sed -i 's| use KDE| use TDE|g' "$PROFILE_DIR/share/config/khotkeysrc" 2>/dev/null
+Message_Prefix
+echo "Updating some text strings in khotkeysrc."
+sed -i 's|Go to KDE Website|Go to TDE Website|g' "$PROFILE_DIR/share/config/khotkeysrc" 2>/dev/null
+sed -i 's|www\.kde\.org|www\.trinitydesktop\.org|g' "$PROFILE_DIR/share/config/khotkeysrc" 2>/dev/null
+sed -i 's|KDE3\.1|TDE|g' "$PROFILE_DIR/share/config/khotkeysrc" 2>/dev/null
+sed -i 's|kde32b1|trinity2b1|g' "$PROFILE_DIR/share/config/khotkeysrc" 2>/dev/null
+sed -i 's|kde321|trinity21|g' "$PROFILE_DIR/share/config/khotkeysrc" 2>/dev/null
+# Fix the some of the same text strings in kglobalshortcutsrc.
+Message_Prefix
+echo "Updating some text strings in kglobalshortcutsrc."
+sed -i 's|Go to KDE Website|Go to TDE Website|g' "$PROFILE_DIR/share/config/kglobalshortcutsrc" 2>/dev/null
+sed -i 's|www\.kde\.org|www\.trinitydesktop\.org|g' "$PROFILE_DIR/share/config/kglobalshortcutsrc" 2>/dev/null
+sed -i 's|KDE3\.1|TDE|g' "$PROFILE_DIR/share/config/kglobalshortcutsrc" 2>/dev/null
+
+# Preserve app preferences.
+Message_Prefix
+echo "Updating user-defined app preferences in profilerc."
+sed -i 's|Application=kde-|Application=tde-|g' "$PROFILE_DIR/share/config/profilerc" 2>/dev/null
+
+# Preserve kicker/panel icons.
+Message_Prefix
+echo "Updating kicker/panel customizations in kickerrc."
+sed -i 's|StorageId\[\$e\]=kde-|StorageId\[\$e\]=tde-|g' "$PROFILE_DIR/share/config/kickerrc" 2>/dev/null
+
+# Preserve Quick Launch icons.
+# There should only be one configuration file, but old KDE3 remnant files might exist ofr users who
+# migrated from KDE3. We don't care about those files, but we still need to update the correct configuration file.
+QUICK_LAUNCH_CONFIG="`grep launcher_panelapplet $PROFILE_DIR/share/config/kickerrc | awk -F = '{print $2}'`"
+if [ "$QUICK_LAUNCH_CONFIG" != "" ]; then
+  Message_Prefix
+  echo "Updating Quick Launch applet."
+  sed -i 's|,kde-|,tde-|g' "$PROFILE_DIR/share/config/$QUICK_LAUNCH_CONFIG" 2>/dev/null
+fi
+
+# Update sym link files in $HOME/.trinity/Autostart.
+( cd "$PROFILE_DIR/Autostart"
+  Message_Prefix
+  echo "Updating Autostart files."
+  for i in `find . -type l`; do
+    LINK="`readlink $i`"
+    LINK_PATH="`dirname $LINK`"
+    LINK_NAME="`basename $LINK`"
+    if [ -n "`echo $LINK_PATH | grep \"$TDEDIR/share/applications/kde\"`" ]; then
+      NEW_LINK_PATH="`echo \"$LINK_PATH\" | sed 's|/share/applications/kde|/share/applications/tde|'`"
+    fi
+    unlink $i
+    ln -sf "$NEW_LINK_PATH/$LINK_NAME" "$LINK_NAME"
+    if [ "$?" != "0" ]; then
+      Message_Prefix
+      echo "There was an error with creating a new sym link for $LINK." 1>&2
+      KDEGLOBALS_KEY_VALUE="autostart"
+    fi
+  done
+)
+
+# Update the user's customized menu.
+if [ -r $HOME/.config/menus/applications-kmenuedit.menu ]; then
+  sed -i 's|<Filename>kde-|<Filename>tde-|g' $HOME/.config/menus/applications-kmenuedit.menu
+fi
+
+# Perform some nominal update validations.
+# First clean house from any previous failures.
+rm -f ${CACHE_DIR}/${SCRIPT_NAME}-test*.txt
+# This first test includes *.desktop files in the profile Autostart directory.
+TEST_NUM="1"
+R14_UPDATE_TEST1="`find \"$PROFILE_DIR\" -name \"*.desktop\" -exec grep \"X-KDE\" {} \; &>${CACHE_DIR}/${SCRIPT_NAME}-test${TEST_NUM}.txt`"
+if [ "$R14_UPDATE_TEST1" != "" ]; then
+  MESSAGE="Some Trinity profile R14 XDG compliance updates failed.\n\n(Check *.desktop files for 'X-KDE' in\n${CACHE_DIR}/${SCRIPT_NAME}-test${TEST_NUM}.txt.)"
+  Validation_Failure
+else
+  rm -f ${CACHE_DIR}/${SCRIPT_NAME}-test${TEST_NUM}.txt
+fi
+TEST_NUM="2"
+R14_UPDATE_TEST2="`find \"$PROFILE_DIR\" -name \"*.desktop\" -exec grep -q \"KDE;\" {} \; &>${CACHE_DIR}/${SCRIPT_NAME}-test${TEST_NUM}.txt`"
+if [ "$R14_UPDATE_TEST2" != "" ]; then
+  MESSAGE="Some Trinity profile R14 XDG compliance updates failed.\n\n(Check *.desktop files for 'KDE;' in\n${CACHE_DIR}/${SCRIPT_NAME}-test${TEST_NUM}.txt.)"
+  Validation_Failure
+else
+  rm -f ${CACHE_DIR}/${SCRIPT_NAME}-test${TEST_NUM}.txt
+fi
+TEST_NUM="3"
+R14_UPDATE_TEST3="`find \"$PROFILE_DIR\" \"$PROFILE_DIR/share/apps/kmail/mail\" -prune -o -type f -exec grep -q \"$TDEDIR/share/applications/kde\" {} \; &>${CACHE_DIR}/${SCRIPT_NAME}-test${TEST_NUM}.txt`"
+if [ "$R14_UPDATE_TEST3" != "" ]; then
+  MESSAGE="Some Trinity profile R14 XDG compliance updates failed.\n\n(Check files for '$TDEDIR/share/applications/kde' in\n${CACHE_DIR}/${SCRIPT_NAME}-test${TEST_NUM}.txt.)"
+  Validation_Failure
+else
+  rm -f ${CACHE_DIR}/${SCRIPT_NAME}-test${TEST_NUM}.txt
+fi
+TEST_NUM="4"
+R14_UPDATE_TEST4="`grep -q \"CommandURL=kde-\" \"$PROFILE_DIR/share/config/khotkeysrc\" &>${CACHE_DIR}/${SCRIPT_NAME}-test${TEST_NUM}.txt`"
+if [ "$R14_UPDATE_TEST4" != "" ]; then
+  MESSAGE="Some Trinity profile R14 XDG compliance updates failed.\n\n(Check khotkeysrc for 'CommandURL=kde-' in\n${CACHE_DIR}/${SCRIPT_NAME}-test${TEST_NUM}.txt.)"
+else
+  rm -f ${CACHE_DIR}/${SCRIPT_NAME}-test${TEST_NUM}.txt
+fi
+TEST_NUM="5"
+R14_UPDATE_TEST5="`grep -q \"K Menu - kde-\" \"$PROFILE_DIR/share/config/khotkeysrc\" &>${CACHE_DIR}/${SCRIPT_NAME}-test${TEST_NUM}.txt`"
+if [ "$R14_UPDATE_TEST5" != "" ]; then
+  MESSAGE="Some Trinity profile R14 XDG compliance updates failed.\n\n(Check khotkeysrc for 'K Menu - kde-' in\n${CACHE_DIR}/${SCRIPT_NAME}-test${TEST_NUM}.txt.)"
+  Validation_Failure
+else
+  rm -f ${CACHE_DIR}/${SCRIPT_NAME}-test${TEST_NUM}.txt
+fi
+TEST_NUM="6"
+R14_UPDATE_TEST6="`grep -q \"Application=kde-\" \"$PROFILE_DIR/share/config/profilerc\" &>${CACHE_DIR}/${SCRIPT_NAME}-test${TEST_NUM}.txt`"
+if [ "$R14_UPDATE_TEST6" != "" ]; then
+  MESSAGE="Some Trinity profile R14 XDG compliance updates failed.\n\n(Check profilerc for 'Application=kde-' in\n${CACHE_DIR}/${SCRIPT_NAME}-test${TEST_NUM}.txt.)"
+  Validation_Failure
+else
+  rm -f ${CACHE_DIR}/${SCRIPT_NAME}-test${TEST_NUM}.txt
+fi
+TEST_NUM="7"
+R14_UPDATE_TEST7="`grep -q \"StorageId\[\$e\]=kde-\" \"$PROFILE_DIR/share/config/kickerrc\" &>${CACHE_DIR}/${SCRIPT_NAME}-test${TEST_NUM}.txt`"
+if [ "$R14_UPDATE_TEST7" != "" ]; then
+  MESSAGE="Some Trinity profile R14 XDG compliance updates failed.\n\n(Check kickerrc for 'StorageId[$e]=kde-' in\n${CACHE_DIR}/${SCRIPT_NAME}-test${TEST_NUM}.txt.)"
+  Validation_Failure
+else
+  rm -f ${CACHE_DIR}/${SCRIPT_NAME}-test${TEST_NUM}.txt
+fi
+if [ "$QUICK_LAUNCH_CONFIG" != "" ]; then
+  TEST_NUM="8"
+  R14_UPDATE_TEST8="`grep -q \"kde-\" \"$PROFILE_DIR/share/config/$QUICK_LAUNCH_CONFIG\" &>${CACHE_DIR}/${SCRIPT_NAME}-test${TEST_NUM}.txt`"
+  if [ "$R14_UPDATE_TEST8" != "" ]; then
+    MESSAGE="Some Trinity profile R14 XDG compliance updates failed.\n\n(Check $QUICK_LAUNCH_CONFIG for 'kde-' in\n${CACHE_DIR}/${SCRIPT_NAME}-test${TEST_NUM}.txt.)"
+    Validation_Failure
+  else
+    rm -f ${CACHE_DIR}/${SCRIPT_NAME}-test${TEST_NUM}.txt
+  fi
+fi
+if [ -r $HOME/.config/menus/applications-kmenuedit.menu ]; then
+  TEST_NUM="9"
+  R14_UPDATE_TEST9="`grep -q \"<Filename>kde-\" \"$HOME/.config/menus/applications-kmenuedit.menu\" &>${CACHE_DIR}/${SCRIPT_NAME}-test${TEST_NUM}.txt`"
+  if [ "$R14_UPDATE_TEST9" != "" ]; then
+    MESSAGE="Some Trinity profile R14 XDG compliance updates failed.\n\n(Check applications-kmenuedit.menu for '<Filename>kde-' in\n${CACHE_DIR}/${SCRIPT_NAME}-test${TEST_NUM}.txt.)"
+    Validation_Failure
+  else
+    rm -f ${CACHE_DIR}/${SCRIPT_NAME}-test${TEST_NUM}.txt
+  fi
+fi
+if [ "$R14_UPDATE_TEST1" = "" ] && [ "$R14_UPDATE_TEST2" = "" ] && [ "$R14_UPDATE_TEST3" = "" ] \
+  && [ "$R14_UPDATE_TEST4" = "" ] && [ "$R14_UPDATE_TEST5" = "" ] && [ "$R14_UPDATE_TEST6" = "" ] \
+  && [ "$R14_UPDATE_TEST7" = "" ] && [ "$R14_UPDATE_TEST8" = "" ] && [ "$R14_UPDATE_TEST9" = "" ]; then
+  $TDEDIR/bin/kwriteconfig --file kdeglobals --group "R14 XDG Updates" --key Updated --type bool "true"
+  Message_Prefix
+  echo "R14 XDG updates completed successfully."
+else
+  # Don't use the --type parameter here because the value no longer is boolean.
+  $TDEDIR/bin/kwriteconfig --file kdeglobals --group "R14 XDG Updates" --key Updated "$KDEGLOBALS_KEY_VALUE"
+  MESSAGE="The r14-xdg-update script did not complete successfully.\n\nThe script will run with each login until corrected.\n\nPlease contact an administrator or take appropriate\nadmininstrative action to correct the problem.\n\nThe error code is $KDEGLOBALS_KEY_VALUE.\n\nBe sure to check file and directory permissions."
+  # Are we in X? Display an X dialog explaining breakage.
+  if [ "$DISPLAY" != "" ]; then
+    echo -e "$MESSAGE" | xmessage -center -file - -buttons OK > /dev/null 2>/dev/null
+  else
+    Message_Prefix
+    echo -e "$MESSAGE"
+  fi
 fi
 
 unset PROFILE_DIR
 unset R14_UPDATED
-unset TDEHOME_LINK
 unset R14_UPDATE_TEST1
 unset R14_UPDATE_TEST2
 unset R14_UPDATE_TEST3
