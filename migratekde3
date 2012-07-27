@@ -80,11 +80,15 @@ echo "Space required for new profile: ${PROFILE_SIZE} MB"
 # If obvious insufficient space then inform and quit.
 if [ $PROFILE_SIZE -gt $REMAINING_SPACE ]; then
   echo "Insufficient disk space. Exiting."
+  echo
   exit 0
+else
+  echo "Sufficient disk space exists. Continuing."
+  echo
 fi
 # Ask whether to proceed.
-Wait_For_Response "Migrate?"
-Proceed_From_Response
+# Wait_For_Response "Migrate?"
+# Proceed_From_Response
 # User wants to migrate.
 echo "Migrating an existing KDE3 profile directory:" 1>&2
 echo "This is a one-time event." 1>&2
