@@ -296,10 +296,13 @@ if [ -r "$PROFILE_DIR/share/config/kickerrc" ]; then
   QUICK_LAUNCH_CONFIG="`grep launcher_panelapplet $PROFILE_DIR/share/config/kickerrc | awk -F = '{print $2}'`"
   if [ "$QUICK_LAUNCH_CONFIG" != "" ]; then
     sed -i 's|,kde-|,tde-|g' "$PROFILE_DIR/share/config/$QUICK_LAUNCH_CONFIG" 2>/dev/null
+  else
+    Message_Prefix
+    echo "Quick Launch is not installed."
   fi
 else
   Message_Prefix
-  echo "Quick Launch does not exist."
+  echo "Quick Launch is not installed."
 fi
 
 # Update sym link files in $HOME/.trinity/Autostart.
@@ -325,7 +328,7 @@ if [ -d "$PROFILE_DIR/Autostart" ]; then
   )
 else
   Message_Prefix
-  echo "Autostart does not exist."
+  echo "Autostart directory not found."
 fi
 
 # Update the user's customized menu.

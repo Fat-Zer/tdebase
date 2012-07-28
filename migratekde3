@@ -91,7 +91,6 @@ fi
 # Proceed_From_Response
 # User wants to migrate.
 echo "Migrating an existing KDE3 profile directory:" 1>&2
-echo "This is a one-time event." 1>&2
 echo "Copying \$HOME/$KDE3_PROFILE to \$HOME/.trinity." 1>&2
 cp -a $HOME/$KDE3_PROFILE $HOME/.trinity
 }
@@ -155,8 +154,9 @@ if [ "$TDEHOME_LINK" != "" ]; then
 fi
 if [ -d "$HOME/.trinity" ]; then
   echo "$HOME/.trinity already exists." 1>&2
-  echo "No migration required." 1>&2
+  echo "No migration required, but running to update an older Trinity profile." 1>&2
   echo
+  KDE3_PROFILE=".trinity"
 else
   echo "$HOME/.trinity does not exist." 1>&2
   # If $HOME/.kde3 or $HOME/.kdemod3 exists, probably safe to presume a profile from KDE3 or a previous Trinity.
@@ -183,21 +183,30 @@ else
       KDE3_PROFILE=".kde"
       echo "$HOME/$KDE3_PROFILE does not look like a KDE4 profile directory."
       disk_space_test
-  else
-      echo "$HOME/.kde probably is a KDE4 profile directory."
-  fi
     else
+        echo "$HOME/.kde probably is a KDE4 profile directory."
+    fi
+  else
     echo "Found no KDE3 profile directory to migrate." 1>&2
   fi
 fi
-if [ -n "$KDE3_PROFILE" ]; then
-  # Let's remove any KDE3 "contamination."
-  echo "Removing KDE3 remnants from the new Trinity profile:" 1>&2
-  echo "Removing cache and temp files." 1>&2
-  rm -fr $HOME/.trinity/cache-*
-  rm -fr $HOME/.trinity/socket-*
-  rm -fr $HOME/.trinity/tmp-*
-  # Need to fix config files.
+
+if [ -n "$KDE3_PROFILE" ] && [ -d "$KDE3_PROFILE" ]; then
+  # Remove any KDE3 "contamination."
+
+  echo "Cleaning temp file locations." 1>&2
+  CACHE_DIR="`readlink $HOME/.trinity/cache-\`uname -n\``"
+  SOCKET_DIR="`readlink $HOME/.trinity/socket-\`uname -n\``"
+  TMP_DIR="`readlink $HOME/.trinity/tmp-\`uname -n\``"
+  rm -f ${CACHE_DIR}/ksycoca* 2>/dev/null
+  mkdir `dirname $CACHE_DIR`/tdecache-$USER 2>/dev/null
+  cp -a $CACHE_DIR/* `dirname $CACHE_DIR`/tdecache-$USER/ 2>/dev/null
+  unlink $HOME/.trinity/cache-`uname -n`
+  ln -s `dirname $CACHE_DIR`/tdecache-$USER $HOME/.trinity/cache-`uname -n`
+  unlink $HOME/.trinity/socket-`uname -n` 2>/dev/null
+  unlink $HOME/.trinity/tmp-`uname -n` 2>/dev/null
+
+  # Fix config files.
   # Exclude KMail mail files --- we don't want to touch those files.
   # I'm using maildir --- do these commands work for mbox too?
   echo "Cleaning config files (but not KMail mail files. :-))" 1>&2
@@ -206,12 +215,12 @@ if [ -n "$KDE3_PROFILE" ]; then
   EXIT_CODE="$?"
   if [ "$EXIT_CODE" = "0" ]; then
     echo "Done." 1>&2
-    else
+  else
     echo "There was an error with the first pass." 1>&2
-    fi
+  fi
   # What if $TDEDIR is not defined? Bummer.
   if [ -z "$TDEDIR" ]; then
-    echo "The \$TDEDIR environment variable does not exist. Can't complete the cleanup." 1>&2
+    echo "The \$TDEDIR environment variable does not exist. Cannot complete the second pass." 1>&2
   else
     echo "Cleaning, second pass..." 1>&2
     find $HOME/.trinity -path $HOME/.trinity/share/apps/kmail/mail -prune -o -type f -exec sed -i "s|/opt/kde/|${TDEDIR}/|g" {} \;
@@ -250,11 +259,11 @@ if [ -n "$KDE3_PROFILE" ]; then
   find $HOME/.trinity/Autostart -! -type l -type f -exec sed -i "s|/usr/bin/|${TDEDIR}/bin/|g" {} \;
   echo "Attempting to update sym links in Autostart." 1>&2
   ( cd $HOME/.trinity/Autostart
-      for i in `find . -type l`; do
-        LINK="`readlink $i`"
+    for i in `find . -type l`; do
+      LINK="`readlink $i`"
       echo "Found a sym link to $LINK." 1>&2
-        LINK_PATH="`dirname $LINK`"
-        LINK_NAME="`basename $LINK`"
+      LINK_PATH="`dirname $LINK`"
+      LINK_NAME="`basename $LINK`"
       if [ -n "`echo $LINK_PATH | grep \"/usr\"`" ]; then
         echo "Sym link points to /usr." 1>&2
         NEW_LINK_PATH="`echo $LINK_PATH | sed \"s|/usr|${TDEDIR}|\"`"
@@ -264,40 +273,59 @@ if [ -n "$KDE3_PROFILE" ]; then
       elif [ -n "`echo $LINK_PATH | grep \"/opt/kde3\"`" ]; then
         echo "Sym link points to /opt/kde3." 1>&2
         NEW_LINK_PATH="`echo $LINK_PATH | sed \"s|/opt/kde3|${TDEDIR}|\"`"
+      elif [ -n "`echo $LINK_PATH | grep \"${TDEDIR}\"`" ]; then
+        echo "Sym link points to ${TDEDIR}." 1>&2
       else
-        echo "Can't establish a path for a new link." 1>&2
-        fi
+        echo "Cannot establish a path for a new link." 1>&2
+      fi
+      if [ "$NEW_LINK_PATH" != "" ] && [ "$LINK_NAME" != "" ]; then
         unlink $i
-      echo "Attempting to create sym link to $NEW_LINK_PATH/$LINK_NAME." 1>&2
+        echo "Attempting to create a sym link to $NEW_LINK_PATH/$LINK_NAME." 1>&2
         ln -sf $NEW_LINK_PATH/$LINK_NAME $LINK_NAME
-      if [ "$?" = "0" ]; then
-        echo "Link created." 1>&2
-      else
-        echo "There was an error with creating the link." 1>&2
+        if [ "$?" = "0" ]; then
+          echo "Link created." 1>&2
+        else
+          echo "There was an error with creating the link." 1>&2
         fi
-      done
-    )
-  echo "Renaming krita configuration files to chalk."
+      else
+        echo "Not updating the link."
+      fi
+    done
+    if [ -f kmix.desktop ]; then
+      $TDEDIR/bin/kwriteconfig --file kmixrc --key Autostart --type bool "true"
+    fi
+    rm -f kmix.desktop
+  )
+
+  echo "Renaming various configuration files and directories."
+  # Don't force renaming in case this cript is used to update an existing Trinity profile.
+  echo "  krita->chalk"
   mv $HOME/.trinity/share/config/kritarc $HOME/.trinity/share/config/chalkrc 2>/dev/null
   mv $HOME/.trinity/share/apps/krita $HOME/.trinity/share/apps/chalk 2>/dev/null
-  rm -fr $HOME/.trinity/cache-`uname -n`/ksycoca* 2>/dev/null
-  rm -fr $HOME/.trinity/socket-* 2>/dev/null
-  rm -fr $HOME/.trinity/tmp-* 2>/dev/null
-  rm -fr $TMP/kde-$USER 2>/dev/null
-  rm -fr $TMP/ksocket-$USER 2>/dev/null
-  rm -fr $TMP/tde-$USER 2>/dev/null
-  rm -fr $TMP/tdesocket-$USER 2>/dev/null
+  echo "  kdeprint->tdeprint"
+  mv $HOME/.trinity/share/config/kdeprintrc $HOME/.trinity/share/config/tdeprintrc 2>/dev/null
+  mv $HOME/.trinity/share/apps/kdeprint $HOME/.trinity/share/apps/tdeprint 2>/dev/null
+  echo "  kdesurc->tdesurc"
+  mv $HOME/.trinity/share/config/kdesurc $HOME/.trinity/share/config/tdesurc 2>/dev/null
+  echo "  kdevelop->tdevelop"
+  mv $HOME/.trinity/share/config/kdeveloprc $HOME/.trinity/share/config/tdeveloprc 2>/dev/null
+  echo "  kwin->twin"
+  mv $HOME/.trinity/share/config/kwinrc $HOME/.trinity/share/config/twinrc 2>/dev/null
+  mv $HOME/.trinity/share/config/kwinrc.eventsrc $HOME/.trinity/share/config/twinrc.eventsrc 2>/dev/null
+  mv $HOME/.trinity/share/config/kwinrc $HOME/.trinity/share/config/twinrc 2>/dev/null
+  mv $HOME/.trinity/share/apps/kwinrulesrc $HOME/.trinity/share/apps/twinrulesrc 2>/dev/null
+  echo "  kwin4->twin4"
+  mv $HOME/.trinity/share/config/kwin4rc $HOME/.trinity/share/config/twin4rc 2>/dev/null
   # Note: Don't run kconf_update, which is run automatically when starting TDE.
   # Note: Don't run any profile R14 updates: starttde does that through the r14-xdg-update script.
   echo
-  echo "Migrated!" 1>&2
+  echo "Done!" 1>&2
   echo
+  echo "If any button icons to non Trinity apps in the kicker/panel"
+  echo "or system tray are incorrect, select the correct icon from the"
+  echo "button's configure menu option. The button's path to the app should"
+  echo "remain correct. (Note: please report any such anomalies.)"
 fi
-
-echo "If any button icons to non Trinity apps in the kicker/panel"
-echo "or system tray are incorrect, select the correct icon from the"
-echo "button's configure menu option. The button's path to the app should"
-echo "remain correct. (Note: please report any such anomalies.)"
 echo
 
 unset KDE3_PROFILE
