@@ -40,6 +40,7 @@ License. See the file "COPYING" for the exact licensing terms.
 #include "group.h"
 #include "rules.h"
 
+#include <X11/XKBlib.h>
 #include <X11/extensions/shape.h>
 #include <X11/keysym.h>
 #include <X11/keysymdef.h>
@@ -2180,7 +2181,7 @@ bool Workspace::keyPressMouseEmulation( XKeyEvent& ev )
     {
     if ( root != tqt_xrootwin() )
         return FALSE;
-    int kc = XKeycodeToKeysym(tqt_xdisplay(), ev.keycode, 0);
+    int kc = XkbKeycodeToKeysym(tqt_xdisplay(), ev.keycode, 0, 0);
     int km = ev.state & (ControlMask | Mod1Mask | ShiftMask);
 
     bool is_control = km & ControlMask;

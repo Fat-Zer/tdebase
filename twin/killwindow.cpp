@@ -15,6 +15,7 @@ License. See the file "COPYING" for the exact licensing terms.
 #include "killwindow.h"
 #include <tqcursor.h>
 #include <X11/Xlib.h>
+#include <X11/XKBlib.h>
 #include <X11/keysym.h>
 #include <X11/keysymdef.h>
 #include <X11/cursorfont.h>
@@ -61,7 +62,7 @@ void KillWindow::start()
 
             if (ev.type == KeyPress)    
                 {
-                int kc = XKeycodeToKeysym(tqt_xdisplay(), ev.xkey.keycode, 0);
+                int kc = XkbKeycodeToKeysym(tqt_xdisplay(), ev.xkey.keycode, 0, 0);
                 int mx = 0;
                 int my = 0;
                 return_pressed = (kc == XK_Return) || (kc == XK_space);

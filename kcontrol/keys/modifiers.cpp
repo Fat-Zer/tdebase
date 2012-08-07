@@ -20,6 +20,7 @@
 #include <X11/X.h>
 #include <X11/Xlib.h>
 #include <X11/Xutil.h>
+#include <X11/XKBlib.h>
 #include <X11/keysymdef.h>
 #include <ctype.h>
 #undef NONE
@@ -300,7 +301,7 @@ void ModifiersModule::updateWidgets()
 	for( int iMod = 0; iMod < 8; iMod++ ) {
 		// Find the default modifier index for the Win key.
 		/*if( iMod > Mod2Index ) {
-			uint symX = XKeycodeToKeysym( tqt_xdisplay(), xmk->modifiermap[xmk->max_keypermod * iMod], 0 );
+			uint symX = XkbKeycodeToKeysym( tqt_xdisplay(), xmk->modifiermap[xmk->max_keypermod * iMod], 0, 0 );
 			if( symX == XK_Super_L || symX == XK_Super_R )
 				iModWinDef = iMod;
 			else if( iModWinDef == -1 && (symX == XK_Meta_L || symX == XK_Meta_R) )
@@ -309,7 +310,7 @@ void ModifiersModule::updateWidgets()
 
 		// Insert items into X modifier map list
 		for( int iKey = 0; iKey < xmk->max_keypermod; iKey++ ) {
-			uint symX = XKeycodeToKeysym( tqt_xdisplay(), xmk->modifiermap[xmk->max_keypermod * iMod + iKey], 0 );
+			uint symX = XkbKeycodeToKeysym( tqt_xdisplay(), xmk->modifiermap[xmk->max_keypermod * iMod + iKey], 0, 0 );
 			m_plstXMods->itemAtIndex( iMod )->setText( 1 + iKey, XKeysymToString( symX ) );
 		}
 	}
