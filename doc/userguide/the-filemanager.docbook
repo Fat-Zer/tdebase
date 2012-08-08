@@ -16,20 +16,18 @@ Management</secondary></indexterm>
 <title>Introduction</title>
 
 <para>&tde; includes a versatile and powerful file manager called
-&konqueror; which allows you to do everything you want with the files
+&konqueror; that allows you to do everything you want with the files
 stored on your computer, your network, and even the Internet. There
 are too many features of &konqueror; to describe here, so we will just
-take an overview. If you want more details about what &konqueror; can
-do, take a look at the &konqueror; Handbook<indexterm><primary>&konqueror;</primary><secondary>Handbook</secondary></indexterm> by selecting
-<menuchoice><guimenu>Help</guimenu><guimenuitem>Konqueror
-Handbook</guimenuitem></menuchoice> in the &konqueror; menus; or, alternatively, you can use the help KIOslave in &konqueror; by entering <userinput>help:/konqueror</userinput> in the Location Toolbar.</para>
+take an overview. For more details about what &konqueror; can
+do, refer to the <ulink url="help:/konqueror">&konqueror; Handbook</ulink>.</para>
 </sect2>
 
 <sect2 id="folder-structure">
 <title>Folders</title>
 
 <para>When you first open &konqueror; in file management mode, you can
-see two panes: on the right is the folder view; on the left is the 
+see two panes: on the right is the folder view; on the left is the
 sidebar. The folder view contains icons for
 each item inside the current folder. These items can be
 folders or files. Many file types can be <quote>previewed</quote>
@@ -38,15 +36,14 @@ hold the mouse cursor over the name of the file for about a second: a
 popup window will appear, showing the contents of the file and other some
 useful information, like file's size and which user owns the file.</para>
 
-<para>You can open any item by clicking (just once &ndash; &tde;
-does not use double-clicking in its default settings) on the icon for the
+<para>You can open any item by clicking on the icon for the
 file.  Folders will be opened in the same window; files will either be
 opened in the appropriate program, or the file manager will ask you
 what program to use. For instance, if do not have a word-processor set up to
 open &Microsoft; Word documents, the file manager will
 ask you what to do.</para>
 
-<para>You can go back to the last-opened folder by clicking on the 
+<para>You can go back to the last-opened folder by clicking on the
 <guiicon>Back</guiicon><!--screenie --> button or go up one folder by clicking
 the <guiicon>Up</guiicon><!--screenie --> button.</para>
 </sect2>
@@ -69,8 +66,8 @@ the folder view can become impractical. The sidebar provides
 shortcuts and special functions that make it easier to
 find what you are searching for.</para>
 
-<para>On the left edge of the sidebar you will find a number of buttons, each 
- with a different icon:</para>
+<para>On the left edge of the sidebar be several buttons, each
+ with a different icon, such as the following:</para>
 
 <!-- TODO: Add screenies of what each of these buttons looks like -->
 <variablelist>
@@ -79,8 +76,8 @@ find what you are searching for.</para>
 <term><guilabel>Bookmarks</guilabel></term>
 
 <listitem>
-<para>As &konqueror; (the file manager) also serves as a very powerful 
-web browser, it also has a bookmark functionality. Here you will find the 
+<para>As &konqueror; (the file manager) also serves as a very powerful
+web browser, it also has a bookmark functionality. Here you will find the
 same structure as in your <guimenu>Bookmarks</guimenu> menu.</para>
 </listitem>
 </varlistentry>
@@ -91,7 +88,7 @@ same structure as in your <guimenu>Bookmarks</guimenu> menu.</para>
 <listitem>
 <para>Next the sidebar provides a list of all known devices
 on your computer. These devices can be either physical drives &mdash;
-such as your hard disk, &CD-ROM; drive, or floppy disk drive &mdash; 
+such as your hard disk, &CD-ROM; drive, or floppy disk drive &mdash;
 or virtual <quote>drives</quote> &mdash; such as remote shares or hard disk partitions.</para>
 </listitem>
 </varlistentry>
@@ -100,16 +97,16 @@ or virtual <quote>drives</quote> &mdash; such as remote shares or hard disk part
 <term><guilabel>History</guilabel></term>
 
 <listitem>
-<para>&konqueror; will remember the web pages you have visited and list them 
-either by date or alphabetically in a tree structure. You can select the 
-behavior by right clicking on the <guilabel>History</guilabel> item and  
-selecting <guimenu>Sort by</guimenu>. Left click on an item (&eg; 
-<guilabel>www.kde.org</guilabel>) and &konqueror; will show you the documents you have visited. Left 
-clicking on a document (&eg; <guilabel>index.html</guilabel>) will open 
+<para>&konqueror; will remember the web pages you have visited and list them
+either by date or alphabetically in a tree structure. You can select the
+behavior by right clicking on the <guilabel>History</guilabel> item and
+selecting <guimenu>Sort by</guimenu>. Left click on an item (&eg;
+<guilabel>www.kde.org</guilabel>) and &konqueror; will show you the documents you have visited. Left
+clicking on a document (&eg; <guilabel>index.html</guilabel>) will open
 the web site in the folder view.</para>
 <para>Right clicking on a history item, like <menuchoice><guimenu>www.kde.org</guimenu><guimenuitem>index.html</guimenuitem>
-</menuchoice>, opens a slightly different popup menu: you will also find the 
-item <guimenuitem>New Window</guimenuitem>, which makes &konqueror; open the 
+</menuchoice>, opens a slightly different popup menu: you will also find the
+item <guimenuitem>New Window</guimenuitem>, which makes &konqueror; open the
 site in a new window.</para>
 </listitem>
 </varlistentry>
@@ -118,10 +115,10 @@ site in a new window.</para>
 <term><guilabel>Home Directory</guilabel></term>
 
 <listitem>
-<para>The <guilabel>Home Directory</guilabel> item is in the sidebar's navigation 
-panel. You will find your home directory as the first entry. Below you will 
-find all folders of your home directory. Left clicking on any 
-folder in this view opens the folder in the folder view.  Alternatively, you can also 
+<para>The <guilabel>Home Directory</guilabel> item is in the sidebar's navigation
+panel. You will find your home directory as the first entry. Below you will
+find all folders of your home directory. Left clicking on any
+folder in this view opens the folder in the folder view.  Alternatively, you can also
 work with the folders' context menus, create subfolders, and so on.</para>
 </listitem>
 </varlistentry>
@@ -142,9 +139,9 @@ on the sidebar. The file will immediately be played.</para>
 <term><guilabel>Newsticker</guilabel></term>
 <!-- I don't have this button. Ought to check what it depends on -->
 <listitem>
-<para>Newsticker will display a customisable list of news sources. Right-click 
-either on the <guilabel>Configure button</guilabel> or on one of the 
-newssource buttons (e.g. TDE News, which is usually predefined) to add a new 
+<para>Newsticker will display a customisable list of news sources. Right-click
+either on the <guilabel>Configure button</guilabel> or on one of the
+newssource buttons (e.g. TDE News, which is usually predefined) to add a new
 newsticker source.</para>
 </listitem>
 </varlistentry>
@@ -220,10 +217,10 @@ type of files selected, so it is called a <quote>context menu</quote>).</para>
 <title>Links and Shortcuts</title>
 
 <para>
-As already mentioned above you can link files or folders anywhere. It means 
-that the linked folder will appear and behave just like the original in 
+As already mentioned above you can link files or folders anywhere. It means
+that the linked folder will appear and behave just like the original in
 another location without consuming additional space on your harddrive.
-So if you, for example, have a number of documents, and only a few are used 
+So if you, for example, have a number of documents, and only a few are used
 regularly, you can easily group them in a folder and create links in it.
 </para>
 
@@ -246,17 +243,14 @@ deleted permanently.</para>
 
 <!-- Add links to "further reading" here -->
 <itemizedlist>
-<title>Related Information</title> 
+<title>Related Information</title>
 
-<listitem><para>As mentioned in the introduction, the &konqueror;
-Handbook has much more information about the features available in
-&konqueror;. You can read it in &khelpcenter; or by entering
-<userinput>help:/konqueror</userinput> in &konqueror;'s
-<guilabel>Location</guilabel> bar.</para>
+<listitem><para>The <ulink url="help:/konqueror">&konqueror; Handbook</ulink>
+has much more information about the features available in
+&konqueror;.</para>
 </listitem>
 
 </itemizedlist>
-
 
 </sect2>
 </sect1>
