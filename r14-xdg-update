@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 #
 # A script to perform R14.0.0 XDG compliance updates.
 
@@ -36,16 +36,16 @@ fi
 }
 
 Display_Message () {
-if [ "$UID" != "0" ] && [ "$USER_DIR" = "$HOME" ] && [ "$DISPLAY" != "" ]; then
-  echo -e "$MESSAGE" | xmessage -center -file - > /dev/null 2>/dev/null
+if [ "$USER_DIR" = "$HOME" ] && [ "$DISPLAY" != "" ]; then
+  printf "%b" "$MESSAGE" | xmessage -center -file - > /dev/null 2>/dev/null
 else
-  echo -e "$MESSAGE"
+  printf "%b" "$MESSAGE"
 fi
 }
 
 Message_Prefix () {
-if [ "$UID" != "0" ] && [ "$USER_DIR" = "$HOME" ] && [ "$DISPLAY" != "" ]; then
-  echo -n "[r14-xdg-update] "
+if [ "$USER_DIR" = "$HOME" ] && [ "$DISPLAY" != "" ]; then
+  printf "%s" "[r14-xdg-update] "
 fi
 }
 
@@ -60,16 +60,30 @@ fi
 
 # Main script:
 
-# Allow forced execution of this script regardless of the kdeglobals setting.
-if [ "$1" = "force" ]; then
-  FORCE="true"
-fi
-
 SCRIPT_NAME="`basename \`readlink -f $0\``"
+
+# Allow forced execution of this script regardless of the kdeglobals setting
+# and allow passing a user home directory as a positional parameter.
+if [ "$#" -eq "2" ]; then
+  if [ "$1" = "force" ] || [ "$2" = "force" ]; then
+    FORCE="true"
+  fi
+  if [ "$1" != "force" ]; then
+    USER_DIR="$1"
+  elif [ "$2" != "force" ]; then
+    USER_DIR="$2"
+  fi
+elif [ "$#" -eq "1" ]; then
+  if [ "$1" = "force" ]; then
+    FORCE="true"
+  else
+    USER_DIR="$1"
+  fi
+fi
 
 unset KDEGLOBALS_KEY_VALUE
 
-WARNING_MESSAGE="Trinity R14 XDG compliance updates will not be performed automatically.\n\nWithout R14 XDG compliance updates, some Trinity apps will fail to\nfunction properly.\n\nFailures include the following:\n\n* Many left-side icon lists will not populate,\n  such as the Panel and Konqueror configuration dialogs.\n\n* User-defined keyboard shortcuts fail (khotkeysrc).\n  System defined shortcuts remain functional.\n\n* User-defined app preferences fail (profilerc).\n\n* Konqueror navigation/sidebar panel won't open.\n\n* User-defined konqueror service menus, kicker customization,\n  konqueror sidebar, Recent Documents list fail.\n\nPlease take appropriate action.\n"
+WARNING_MESSAGE="Trinity R14 XDG compliance updates will not be performed.\n\nWithout R14 XDG compliance updates, some Trinity apps will fail to\nfunction properly.\n\nFailures include the following:\n\n* Many left-side icon lists will not populate,\n  such as the Panel and Konqueror configuration dialogs.\n\n* User-defined keyboard shortcuts fail (khotkeysrc).\n  System defined shortcuts remain functional.\n\n* User-defined app preferences fail (profilerc).\n\n* Konqueror navigation/sidebar panel won't open.\n\n* User-defined konqueror service menus, kicker customization,\n* konqueror sidebar, Recent Documents list fail.\n\nPlease exercise appropriate action.\n"
 
 # As the user should not be logged into a Trinity session when running
 # this script, or an administrator might run this script remotely, the
@@ -77,29 +91,25 @@ WARNING_MESSAGE="Trinity R14 XDG compliance updates will not be performed automa
 # We presume $USER_DIR/.trinity and provide a way to pass an environment
 # variable to change that location.
 USER_DIR=${USER_DIR:-"$HOME"}
-if [ "$USER_DIR" != "$HOME" ] && [ "$UID" != "0" ]; then
-  echo "root privileges are required to run this script against other user directories. Exiting."
-  exit 1
-fi
-if [ "$USER_DIR" != "$HOME" ] && [ "$UID" = "0" ]; then
-  PROFILE_DIR="$USER_DIR/.trinity"
+if [ "$USER_DIR" != "$HOME" ]; then
+  PROFILE_DIR=${PROFILE_DIR:-"$USER_DIR/.trinity"}
 elif [ "$TDEHOME" = "" ]; then
-  PROFILE_DIR="$USER_DIR/.trinity"
+  PROFILE_DIR=${PROFILE_DIR:-"$USER_DIR/.trinity"}
 else
   PROFILE_DIR="$TDEHOME"
 fi
 if [ ! -d "$PROFILE_DIR" ]; then
-  MESSAGE="Warning! Unable to find the user profile directory $PROFILE_DIR.\n\n${WARNING_MESSAGE}"
+  MESSAGE="Warning! Unable to find the user profile directory $PROFILE_DIR.\n\nCheck permissions, paths, and typing.\n\n${WARNING_MESSAGE}"
   # Are we in X? Display an X dialog explaining breakage.
-  if [ "$UID" != "0" ] && [ "$USER_DIR" = "$HOME" ] && [ "$DISPLAY" != "" ]; then
-    echo -e "$MESSAGE" | xmessage -center -file - -buttons Continue,Quit > /dev/null 2>/dev/null
+  if [ "$USER_DIR" = "$HOME" ] && [ "$DISPLAY" != "" ]; then
+    printf "%b" "$MESSAGE" | xmessage -center -file - -buttons Continue,Quit > /dev/null 2>/dev/null
     if [ "$?" = "102" ]; then
       # User selected the Quit button: quit this script.
       unset PROFILE_DIR
     fi
   else
     Message_Prefix
-    echo -e "$MESSAGE"
+    printf "%b" "$MESSAGE"
   fi
   exit 1
 fi
@@ -115,8 +125,8 @@ if [ -x $BIN_DIR/tde-config ]; then
 else
   MESSAGE="Unable to determine the TDE bin directory, where this script should be located."
   # Are we in X? Display an X dialog explaining breakage.
-  if [ "$UID" != "0" ] && [ "$USER_DIR" = "$HOME" ] && [ "$DISPLAY" != "" ]; then
-    echo -e "$MESSAGE" | xmessage -center -file - -buttons Continue,Quit > /dev/null 2>/dev/null
+  if [ "$USER_DIR" = "$HOME" ] && [ "$DISPLAY" != "" ]; then
+    printf "%b" "$MESSAGE" | xmessage -center -file - -buttons Continue,Quit > /dev/null 2>/dev/null
     if [ "$?" = "102" ]; then
       # User selected the Quit button: quit this script.
       unset PROFILE_DIR
@@ -124,7 +134,7 @@ else
     fi
   else
     Message_Prefix
-    echo -e "$MESSAGE\n\n${WARNING_MESSAGE}"
+    printf "%b" "$MESSAGE\n\n${WARNING_MESSAGE}"
   fi
   exit 1
 fi
@@ -132,15 +142,28 @@ unset BIN_DIR
 
 Message_Prefix
 echo "Performing a profile update for Trinity release R14 XDG compliance."
-echo
-echo "To run this script as root or automated from within another script,"
-echo "set the \$USER_DIR environment variable before running the script."
-echo "For example: USER_DIR=/home/user_name r14-xdg-update"
-echo
+Message_Prefix
+echo "To run this script against a different user directory, or automated"
+Message_Prefix
+echo "from within another script, pass the directory path as a parameter."
+Message_Prefix
+echo "For example: r14-xdg-update /home/user_dir"
+Message_Prefix
+echo "Use the user home directory and not the profile directory."
 Message_Prefix
 echo "User directory: $USER_DIR"
+Message_Prefix
 echo "Profile directory: $PROFILE_DIR"
-echo
+if [ "$USER_DIR" != "$HOME" ]; then
+  Message_Prefix
+  echo "Root (admin) privileges might be required to run this script"
+  Message_Prefix
+  echo "against other user directories."
+  Message_Prefix
+  echo "This script is being run against $USER_DIR."
+  Message_Prefix
+  echo "Your normal user directory is $HOME."
+fi
 
 # Do not update when $TDEHOME is a sym link to another profile directory. Trinity should have
 # full reign within its own profile directory (limited to administrative locking), but the error
@@ -149,9 +172,9 @@ TDEHOME_LINK="`readlink \"$PROFILE_DIR\"`"
 if [ "$TDEHOME_LINK" != "" ]; then
   # Force this entry to ensure the updates eventually are performed should the user copy the
   # original kdeglobals file into a new Trinity profile.
-#   $TDEDIR/bin/kwriteconfig --file "$PROFILE_DIR/share/config/kdeglobals" --group "R14 XDG Updates" --key Updated --type bool 'false'
+  # $TDEDIR/bin/kwriteconfig --file "$PROFILE_DIR/share/config/kdeglobals" --group "R14 XDG Updates" --key Updated --type bool 'false'
   # Are we in X? Display an X dialog explaining breakage.
-  if [ "$UID" != "0" ] && [ "$USER_DIR" = "$HOME" ] && [ "$DISPLAY" != "" ]; then
+  if [ "$USER_DIR" = "$HOME" ] && [ "$DISPLAY" != "" ]; then
     echo "[r14-xdg-update] Warning! The profile directory $PROFILE_DIR is a" 1>&2
     echo "                 sym link to $TDEHOME_LINK!" 1>&2
     echo "                 R14 updates will not be performed because Trinity needs its own" 1>&2
@@ -160,9 +183,9 @@ if [ "$TDEHOME_LINK" != "" ]; then
   fi
   MESSAGE="Oops! The profile directory $PROFILE_DIR is a sym link to $TDEHOME_LINK.\n\n${WARNING_MESSAGE}\nPossible remedies:\n\n* Contact your system administrator.\n\n* Break the sym link to force creating a fresh Trinity profile.\n\n* Use the migratekde3 script to migrate a KDE3 profile to Trinity."
   # Are we in X? Display an X dialog explaining breakage.
-  if [ "$UID" != "0" ] && [ "$USER_DIR" = "$HOME" ] && [ "$DISPLAY" != "" ]; then
+  if [ "$USER_DIR" = "$HOME" ] && [ "$DISPLAY" != "" ]; then
     MESSAGE="${MESSAGE}\n\nSelecting the Continue button means retaining the KDE3 profile and\nbreaking the sym link. With the sym link broken, run the migratekde3\nscript before restarting Trinity to migrate a KDE3 profile or\nallow Trinity to create a fresh profile."
-    echo -e "$MESSAGE" | xmessage -center -file - -buttons Continue,Quit > /dev/null 2>/dev/null
+    printf "%b" "$MESSAGE" | xmessage -center -file - -buttons Continue,Quit > /dev/null 2>/dev/null
     EXIT_CODE="$?"
     unset TDEHOME_LINK
     if [ "$EXIT_CODE" = "102" ]; then
@@ -179,7 +202,7 @@ if [ "$TDEHOME_LINK" != "" ]; then
     fi
   else
     echo
-    echo -e "$MESSAGE"
+    printf "%b" "$MESSAGE"
     echo
     Wait_For_Response "Break the sym link now?"
     Proceed_From_Response
@@ -189,14 +212,14 @@ if [ "$TDEHOME_LINK" != "" ]; then
     unlink "$USER_DIR/.trinity" 2>/dev/null
     if [ "`readlink \"$USER_DIR/.trinity\"`" = "" ]; then
       MESSAGE="Sym link broken. With the sym link broken, run the migratekde3\nscript before restarting Trinity to migrate a KDE3 profile or\nallow Trinity to create a fresh profile."
-      if [ "$UID" != "0" ] && [ "$USER_DIR" = "$HOME" ] && [ "$DISPLAY" != "" ]; then
+      if [ "$USER_DIR" = "$HOME" ] && [ "$DISPLAY" != "" ]; then
         Message_Prefix
       fi
-      echo -e "$MESSAGE"
+      printf "%b" "$MESSAGE"
       echo
     else
       MESSAGE="Unable to break the sym link. Check file and directory privileges. Quitting."
-      if [ "$UID" != "0" ] && [ "$USER_DIR" = "$HOME" ] && [ "$DISPLAY" != "" ]; then
+      if [ "$USER_DIR" = "$HOME" ] && [ "$DISPLAY" != "" ]; then
         Message_Prefix
       fi
       echo "$MESSAGE"
@@ -219,8 +242,8 @@ if [ "$R14_UPDATED" != "true" ] || [ "$FORCE" = "true" ]; then
     echo
     MESSAGE="The r14-xdg-update script has been run at least once.\n\nThe script is not successfully updating.\n\nThe script will run with each login until corrected.\n\nPlease contact an administrator or take appropriate\nadmininstrative action to correct the problem.\n\nThe error code is $R14_UPDATED."
     # Are we in X? Display an X dialog explaining breakage.
-    if [ "$UID" != "0" ] && [ "$USER_DIR" = "$HOME" ] && [ "$DISPLAY" != "" ]; then
-      echo -e "$MESSAGE" | xmessage -center -file - -buttons Continue,Quit > /dev/null 2>/dev/null
+    if [ "$USER_DIR" = "$HOME" ] && [ "$DISPLAY" != "" ]; then
+      printf "%b" "$MESSAGE" | xmessage -center -file - -buttons Continue,Quit > /dev/null 2>/dev/null
       if [ "$?" = "102" ]; then
         # User select the Quit button: quit this script.
         unset PROFILE_DIR
@@ -236,11 +259,11 @@ fi
 
 # Trap when the user runs this script while in a Trinity session.
 # Most files can be updated "live" but some can't, such as kdeglobals.
-if [ "$USER_DIR" = "$HOME" ] && [ "$UID" != "0" ]; then
+if [ "$USER_DIR" = "$HOME" ]; then
   if [ "$TDE_FULL_SESSION" != "" ] || [ "$TDE_SESSION_UID" != "" ]; then
     MESSAGE="You are running this script from within a Trinity session.\n\nMost files can be updated \"live\" but some cannot, such as kdeglobals.\n\nThis script might complete successfully and might not."
     # Are we in X? Display an X dialog explaining breakage.
-    if [ "$UID" != "0" ] && [ "$USER_DIR" = "$HOME" ] && [ "$DISPLAY" != "" ]; then
+    if [ "$USER_DIR" = "$HOME" ] && [ "$DISPLAY" != "" ]; then
       # As we are in a Trinity session then use kdialog.
       kdialog --title "R14-XDG-Update" --warningyesno "${MESSAGE}\n\nContinue?"
       if [ "$?" -gt "0" ]; then
@@ -249,7 +272,7 @@ if [ "$USER_DIR" = "$HOME" ] && [ "$UID" != "0" ]; then
       fi
     else
       Message_Prefix
-      echo -e "$MESSAGE\n\n${WARNING_MESSAGE}"
+      printf "%b" "$MESSAGE\n\n${WARNING_MESSAGE}"
       Wait_For_Response "Continue?"
       Proceed_From_Response
     fi
@@ -468,11 +491,11 @@ else
   $TDEDIR/bin/kwriteconfig --file "$PROFILE_DIR/share/config/kdeglobals" --group "R14 XDG Updates" --key Updated "$KDEGLOBALS_KEY_VALUE"
   MESSAGE="The r14-xdg-update script did not complete successfully.\n\nThe script will run with each login until corrected.\n\nPlease contact an administrator or take appropriate\nadmininstrative action to correct the problem.\n\nThe error code is $KDEGLOBALS_KEY_VALUE.\n\nBe sure to check file and directory permissions."
   # Are we in X? Display an X dialog explaining breakage.
-  if [ "$UID" != "0" ] && [ "$USER_DIR" = "$HOME" ] && [ "$DISPLAY" != "" ]; then
-    echo -e "$MESSAGE" | xmessage -center -file - -buttons OK > /dev/null 2>/dev/null
+  if [ "$USER_DIR" = "$HOME" ] && [ "$DISPLAY" != "" ]; then
+    printf "%b" "$MESSAGE" | xmessage -center -file - -buttons OK > /dev/null 2>/dev/null
   else
     Message_Prefix
-    echo -e "$MESSAGE"
+    printf "%b" "$MESSAGE"
   fi
 fi
 
