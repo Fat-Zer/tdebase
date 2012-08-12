@@ -10,6 +10,9 @@
 #       The nominal validation checks in this script provide some notice
 #       but no direct remedy.
 
+# TODO: How to update profile directories not named $HOME/.trinity and $TDEHOME
+#       is not yet declared when running this script.
+
 Wait_For_Response () {
 unset response
 # -r Backslash does not act as an escape character.
@@ -123,7 +126,7 @@ BIN_DIR="`dirname \`readlink -f $0\``"
 if [ -x $BIN_DIR/tde-config ]; then
   TDEDIR=${BIN_DIR%/bin}
 else
-  MESSAGE="Unable to determine the TDE bin directory, where this script should be located."
+  MESSAGE="Unable to determine the TDE bin directory, where this script should be installed."
   # Are we in X? Display an X dialog explaining breakage.
   if [ "$USER_DIR" = "$HOME" ] && [ "$DISPLAY" != "" ]; then
     printf "%b" "$MESSAGE" | xmessage -center -file - -buttons Continue,Quit > /dev/null 2>/dev/null

@@ -109,7 +109,7 @@ if [ -x $BIN_DIR/tde-config ]; then
   export TDEDIR=${BIN_DIR%/bin}
   echo "Trinity Desktop Environment base directory is $TDEDIR" 1>&2
 else
-  echo "Unable to determine TDE base directory."
+  echo "Unable to determine the TDE bin directory, where this script should be installed."
   echo "This script should be installed in the same directory."
   echo "Exiting."
   exit 1
