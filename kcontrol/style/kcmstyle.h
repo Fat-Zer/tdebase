@@ -158,6 +158,7 @@ private:
 
 	TQCheckBox* cbIconsOnButtons;
 	TQCheckBox* cbScrollablePopupMenus;
+	TQCheckBox* cbAutoHideAccelerators;
 	TQCheckBox* cbTearOffHandles;
 };
 

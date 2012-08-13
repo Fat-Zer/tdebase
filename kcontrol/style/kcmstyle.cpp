@@ -183,6 +183,8 @@ KCMStyle::KCMStyle( TQWidget* parent, const char* name )
 	gbWidgetStyleLayout->addWidget( cbIconsOnButtons );
 	cbScrollablePopupMenus = new TQCheckBox( i18n("Enable &scrolling in popup menus"), gbWidgetStyle );
 	gbWidgetStyleLayout->addWidget( cbScrollablePopupMenus );
+	cbAutoHideAccelerators = new TQCheckBox( i18n("Hide &accelerators when not in use"), gbWidgetStyle );
+	gbWidgetStyleLayout->addWidget( cbAutoHideAccelerators );
 	cbEnableTooltips = new TQCheckBox( i18n("E&nable tooltips"), gbWidgetStyle );
 	gbWidgetStyleLayout->addWidget( cbEnableTooltips );
 	cbTearOffHandles = new TQCheckBox( i18n("Show tear-off handles in &popup menus"), gbWidgetStyle );
@@ -382,6 +384,7 @@ KCMStyle::KCMStyle( TQWidget* parent, const char* name )
 	connect( cbEnableTooltips,      TQT_SIGNAL(toggled(bool)),    this, TQT_SLOT(setEffectsDirty()));
 	connect( cbIconsOnButtons,      TQT_SIGNAL(toggled(bool)),    this, TQT_SLOT(setEffectsDirty()));
 	connect( cbScrollablePopupMenus,TQT_SIGNAL(toggled(bool)),    this, TQT_SLOT(setEffectsDirty()));
+	connect( cbAutoHideAccelerators,TQT_SIGNAL(toggled(bool)),    this, TQT_SLOT(setEffectsDirty()));
 	connect( cbTearOffHandles,      TQT_SIGNAL(toggled(bool)),    this, TQT_SLOT(setEffectsDirty()));
 	connect( comboToolbarIcons,     TQT_SIGNAL(activated(int)), this, TQT_SLOT(setToolbarsDirty()));
 
@@ -603,6 +606,7 @@ void KCMStyle::save()
 	{       // Braces force a TQSettings::sync()
 		TQSettings settings;    // Only for KStyle stuff
 		settings.writeEntry("/KStyle/Settings/ScrollablePopupMenus", cbScrollablePopupMenus->isChecked() );
+		settings.writeEntry("/KStyle/Settings/AutoHideAccelerators", cbAutoHideAccelerators->isChecked() );
 	}
 	config.writeEntry( "EffectNoTooltip", !cbEnableTooltips->isChecked(), true, true );
 
@@ -1031,6 +1035,7 @@ void KCMStyle::loadMisc( KConfig& config )
 
 	TQSettings settings;
 	cbScrollablePopupMenus->setChecked(settings.readBoolEntry("/KStyle/Settings/ScrollablePopupMenus", false));
+	cbAutoHideAccelerators->setChecked(settings.readBoolEntry("/KStyle/Settings/AutoHideAccelerators", false));
 
 	m_bToolbarsDirty = false;
 }
@@ -1090,6 +1095,7 @@ void KCMStyle::addWhatsThis()
 	TQWhatsThis::add( cbIconsOnButtons, i18n( "If you enable this option, TDE Applications will "
 							"show small icons alongside some important buttons.") );
 	TQWhatsThis::add( cbScrollablePopupMenus, i18n( "If you enable this option, pop-up menus will scroll if vertical space is exhausted." ) );
+	TQWhatsThis::add( cbAutoHideAccelerators, i18n( "If you enable this option, keyboard accelerator hints will be hidden unless the first accelerator key in the sequence (normally Alt) is depressed." ) );
 	TQWhatsThis::add( cbTearOffHandles, i18n( "If you enable this option some pop-up menus will "
 							"show so called tear-off handles. If you click them, you get the menu "
 							"inside a widget. This can be very helpful when performing "
