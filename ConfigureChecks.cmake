@@ -268,22 +268,20 @@ if( BUILD_TDM OR BUILD_KSMSERVER )
       tde_message_fatal( "dbus-tqt-1 is required, but was not found on your system" )
     endif( )
   endif( )
-  if( WITH_HAL )
-    # check for dbus-tqt
-    # dbus-tqt need Qt flags
-    pkg_check_modules( DBUS_TQT REQUIRED dbus-tqt )
-    tde_save( CMAKE_REQUIRED_INCLUDES CMAKE_REQUIRED_LIBRARIES )
-    set( CMAKE_REQUIRED_INCLUDES ${DBUS_TQT_INCLUDE_DIRS} ${TQT_INCLUDE_DIRS} ${QT_INCLUDE_DIRS})
-    set( CMAKE_REQUIRED_LIBRARIES ${DBUS_TQT_LDFLAGS} ${TQT_LDFLAGS} ${QT_LDFLAGS} )
-    check_cxx_source_compiles("
-      #include <tqt.h>
-      #include <dbus/connection.h>
-      int main(int, char**) { return 0; } "
-      HAVE_DBUS_QT3_07 )
-    tde_restore( CMAKE_REQUIRED_INCLUDES CMAKE_REQUIRED_LIBRARIES )
-    if( NOT HAVE_DBUS_QT3_07 )
-      tde_message_fatal( "dbus-tqt is required, but was not found on your system" )
-    endif( )
+  # check for dbus-tqt
+  # dbus-tqt need Qt flags
+  pkg_check_modules( DBUS_TQT REQUIRED dbus-tqt )
+  tde_save( CMAKE_REQUIRED_INCLUDES CMAKE_REQUIRED_LIBRARIES )
+  set( CMAKE_REQUIRED_INCLUDES ${DBUS_TQT_INCLUDE_DIRS} ${TQT_INCLUDE_DIRS} ${QT_INCLUDE_DIRS})
+  set( CMAKE_REQUIRED_LIBRARIES ${DBUS_TQT_LDFLAGS} ${TQT_LDFLAGS} ${QT_LDFLAGS} )
+  check_cxx_source_compiles("
+    #include <tqt.h>
+    #include <dbus/connection.h>
+    int main(int, char**) { return 0; } "
+    HAVE_DBUS_QT3_07 )
+  tde_restore( CMAKE_REQUIRED_INCLUDES CMAKE_REQUIRED_LIBRARIES )
+  if( NOT HAVE_DBUS_QT3_07 )
+    tde_message_fatal( "dbus-tqt is required, but was not found on your system" )
   endif( )
 
 endif( )
