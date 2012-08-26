@@ -169,7 +169,7 @@ if [ -d $TDEDIR/bin ]; then
 fi
 if [ -d $TDEDIR/share/man ]; then
   if [ -x /usr/bin/manpath ]; then
-    if [ "`manpath -q | grep \"$TDEDIR/share/man\"`" = "" ]; then
+    if [ "`manpath 2>/dev/null | grep \"$TDEDIR/share/man\"`" = "" ]; then
       export MANPATH=$TDEDIR/share/man:$MANPATH
     fi
   else
