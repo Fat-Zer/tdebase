@@ -284,15 +284,70 @@
 							    <cstring>unnamed</cstring>
 						    </property>
 						    <property name="text">
+							    <string>Filesystem Type:</string>
+						    </property>
+					    </widget>
+					    <widget class="TQLabel" row="1" column="1" colspan="1">
+						    <property name="name">
+							    <cstring>labelDiskFileSystemType</cstring>
+						    </property>
+					    </widget>
+					    <widget class="TQLabel" row="2" column="0" colspan="1">
+						    <property name="name">
+							    <cstring>unnamed</cstring>
+						    </property>
+						    <property name="text">
+							    <string>Volume UUID:</string>
+						    </property>
+					    </widget>
+					    <widget class="TQLabel" row="2" column="1" colspan="1">
+						    <property name="name">
+							    <cstring>labelDiskUUID</cstring>
+						    </property>
+					    </widget>
+					    <widget class="TQLabel" row="3" column="0" colspan="1">
+						    <property name="name">
+							    <cstring>unnamed</cstring>
+						    </property>
+						    <property name="text">
 							    <string>Status:</string>
 						    </property>
 						    <property name="alignment">
 							    <set>AlignTop|AlignLeft</set>
 						    </property>
 					    </widget>
-					    <widget class="TQLabel" row="1" column="1" colspan="1">
+					    <widget class="TQLabel" row="3" column="1" colspan="1">
 						    <property name="name">
 							    <cstring>labelDiskStatus</cstring>
+						    </property>
+					    </widget>
+				    </grid>
+			    </widget>
+			    <widget class="TQGroupBox" row="1" column="0">
+				    <property name="name">
+					    <cstring>groupDiskActions</cstring>
+				    </property>
+				    <property name="title">
+					    <string>Device Actions</string>
+				    </property>
+				    <grid>
+					    <property name="name">
+						    <cstring>unnamed</cstring>
+					    </property>
+					    <widget class="TQPushButton" row="0" column="0" colspan="1">
+						    <property name="name">
+							    <cstring>buttonDiskMount</cstring>
+						    </property>
+						    <property name="text">
+							    <string>Mount</string>
+						    </property>
+					    </widget>
+					    <widget class="TQPushButton" row="0" column="1" colspan="1">
+						    <property name="name">
+							    <cstring>buttonDiskUnmount</cstring>
+						    </property>
+						    <property name="text">
+							    <string>Unmount</string>
 						    </property>
 					    </widget>
 				    </grid>

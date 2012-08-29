@@ -38,6 +38,7 @@
 #include <kapplication.h>
 #include <klineedit.h>
 #include <kstdguiitem.h>
+#include <kmessagebox.h>
 
 #include "devicepropsdlg.h"
 
@@ -286,6 +287,11 @@ DevicePropertiesDialog::DevicePropertiesDialog(TDEGenericDevice* device, TQWidge
 		if (m_device->type() == TDEGenericDeviceType::CPU) {
 			connect(base->comboCPUGovernor, TQT_SIGNAL(activated(const TQString &)), this, TQT_SLOT(setCPUGovernor(const TQString &)));
 		}
+		if (m_device->type() == TDEGenericDeviceType::Disk) {
+			connect(base->buttonDiskMount, TQT_SIGNAL(clicked()), this, TQT_SLOT(mountDisk()));
+			connect(base->buttonDiskUnmount, TQT_SIGNAL(clicked()), this, TQT_SLOT(unmountDisk()));
+		}
+			
 		if ((m_device->type() == TDEGenericDeviceType::OtherSensor) || (m_device->type() == TDEGenericDeviceType::ThermalSensor)) {
 			base->groupSensors->setColumnLayout(0, TQt::Vertical );
 			base->groupSensors->layout()->setSpacing( KDialog::spacingHint() );
@@ -370,7 +376,18 @@ void DevicePropertiesDialog::populateDeviceInformation() {
 
 		if (m_device->type() == TDEGenericDeviceType::Disk) {
 			TDEStorageDevice* sdevice = static_cast<TDEStorageDevice*>(m_device);
-			base->labelDiskMountpoint->setText(sdevice->mountPath());
+
+			TQString mountPoint = sdevice->mountPath();
+			if (mountPoint == "") mountPoint = i18n("<none>");
+			base->labelDiskMountpoint->setText(mountPoint);
+
+			TQString fsName = sdevice->fileSystemName();
+			if (fsName == "") fsName = i18n("<unknown>");
+			base->labelDiskFileSystemType->setText(fsName);
+
+			TQString volUUID = sdevice->diskUUID();
+			if (volUUID == "") volUUID = i18n("<none>");
+			base->labelDiskUUID->setText(volUUID);
 
 			// Show status
 			TQString status_text = "<qt>";
@@ -401,8 +418,15 @@ void DevicePropertiesDialog::populateDeviceInformation() {
 			status_text += "</qt>";
 			base->labelDiskStatus->setText(status_text);
 
-			// TODO
-			// Add mount/unmount buttons
+			// Update mount/unmount button status
+			if (sdevice->checkDiskStatus(TDEDiskDeviceStatus::Mountable)) {
+				base->groupDiskActions->show();
+				base->buttonDiskMount->setEnabled((sdevice->mountPath() == ""));
+				base->buttonDiskUnmount->setEnabled((sdevice->mountPath() != ""));
+			}
+			else {
+				base->groupDiskActions->hide();
+			}
 		}
 
 		if (m_device->type() == TDEGenericDeviceType::CPU) {
@@ -739,6 +763,55 @@ void DevicePropertiesDialog::setHibernationMethod(int value) {
 	TDERootSystemDevice* rdevice = static_cast<TDERootSystemDevice*>(m_device);
 
 	rdevice->setHibernationMethod(m_hibernationComboMap.keys()[value]);
+	populateDeviceInformation();
+}
+
+void DevicePropertiesDialog::mountDisk() {
+	TDEStorageDevice* sdevice = static_cast<TDEStorageDevice*>(m_device);
+
+	// FIXME
+	// This can only mount normal volumes
+	TQString qerror;
+	TQString diskLabel = sdevice->diskLabel();
+	if (diskLabel.isNull()) {
+		diskLabel = i18n("%1 Removable Device").arg(sdevice->deviceFriendlySize());
+	}
+	TQString optionString;
+	TQString mountMessages;
+	TQString mountedPath = sdevice->mountDevice(diskLabel, optionString, &mountMessages);
+	if (mountedPath.isNull()) {
+		qerror = i18n("<qt>Unable to mount this device.<p>Potential reasons include:<br>Improper device and/or user privilege level<br>Corrupt data on storage device");
+		if (!mountMessages.isNull()) {
+			qerror.append(i18n("<p>Technical details:<br>").append(mountMessages));
+		}
+		qerror.append("</qt>");
+	}
+	else {
+		qerror = "";
+	}
+
+	if (qerror != "") KMessageBox::error(this, qerror, i18n("Mount Failed"));
+
+	populateDeviceInformation();
+}
+
+void DevicePropertiesDialog::unmountDisk() {
+	TDEStorageDevice* sdevice = static_cast<TDEStorageDevice*>(m_device);
+
+	TQString qerror;
+	TQString unmountMessages;
+	int unmountRetcode = 0;
+	if (!sdevice->unmountDevice(&unmountMessages, &unmountRetcode)) {
+		// Unmount failed!
+		qerror = "<qt>" + i18n("Unfortunately, the device could not be unmounted.");
+		if (!unmountMessages.isNull()) {
+			qerror.append(i18n("<p>Technical details:<br>").append(unmountMessages));
+		}
+		qerror.append("</qt>");
+	}
+
+	if (qerror != "") KMessageBox::error(this, qerror, i18n("Unmount Failed"));
+
 	populateDeviceInformation();
 }
 

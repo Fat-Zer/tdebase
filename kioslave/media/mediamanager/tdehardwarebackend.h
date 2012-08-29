@@ -135,6 +135,8 @@ private:
 	static TQString listUsingProcesses(const Medium *medium);
 	static TQString killUsingProcesses(const Medium *medium);
 
+	TQString driveUDIFromDeviceUID(TQString uuid);
+
 	// Decryption
 	Dialog* m_decryptDialog;
 	TQString m_decryptionPassword;

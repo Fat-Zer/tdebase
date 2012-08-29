@@ -36,14 +36,24 @@
 
 #include "dialog.h"
 
-#define MOUNT_SUFFIX (                                                                       \
-	(medium->isMounted() ? TQString("_mounted") : TQString("_unmounted")) +   \
-	(medium->isEncrypted() ? (sdevice->isDiskOfType(TDEDiskDeviceType::UnlockedCrypt) ? "_decrypted" : "_encrypted") : "" )          \
+#define MOUNT_SUFFIX (																\
+	(medium->isMounted() ? TQString("_mounted") : TQString("_unmounted")) +									\
+	(medium->isEncrypted() ? (sdevice->isDiskOfType(TDEDiskDeviceType::UnlockedCrypt) ? "_decrypted" : "_encrypted") : "" )			\
 	)
-#define MOUNT_ICON_SUFFIX (                                                              \
-	(medium->isMounted() ? TQString("_mount") : TQString("_unmount")) +   \
-	(medium->isEncrypted() ? (sdevice->isDiskOfType(TDEDiskDeviceType::UnlockedCrypt) ? "_decrypt" : "_encrypt") : "" )      \
+#define MOUNT_ICON_SUFFIX (															\
+	(medium->isMounted() ? TQString("_mount") : TQString("_unmount")) +									\
+	(medium->isEncrypted() ? (sdevice->isDiskOfType(TDEDiskDeviceType::UnlockedCrypt) ? "_decrypt" : "_encrypt") : "" )			\
 	)
+
+#define CHECK_FOR_AND_EXECUTE_AUTOMOUNT(udi, medium, allowNotification) {									\
+		TQMap<TQString,TQString> options = MediaManagerUtils::splitOptions(mountoptions(udi));						\
+		kdDebug() << "automount " << options["automount"] << endl;									\
+		if (options["automount"] == "true" && allowNotification ) {									\
+			TQString error = mount(medium);												\
+			if (!error.isEmpty())													\
+			kdDebug() << "error " << error << endl;											\
+		}																\
+	}
 
 /* Constructor */
 TDEBackend::TDEBackend(MediaList &list, TQObject* parent)
@@ -157,6 +167,9 @@ void TDEBackend::AddDevice(TDEStorageDevice * sdevice, bool allowNotification)
 			
 			// Insert medium into list
 			m_mediaList.addMedium(medium, allowNotification);
+
+			// Automount if enabled
+			CHECK_FOR_AND_EXECUTE_AUTOMOUNT(sdevice->uniqueID(), medium, allowNotification)
 		}
 	}
 
@@ -180,6 +193,9 @@ void TDEBackend::AddDevice(TDEStorageDevice * sdevice, bool allowNotification)
 		
 		// Insert medium into list
 		m_mediaList.addMedium(medium, allowNotification);
+
+		// Automount if enabled
+		CHECK_FOR_AND_EXECUTE_AUTOMOUNT(sdevice->uniqueID(), medium, allowNotification)
 	}
 
 	// Floppy & zip drives
@@ -250,10 +266,7 @@ void TDEBackend::RemoveDevice(TDEStorageDevice * sdevice)
 
 void TDEBackend::ModifyDevice(TDEStorageDevice * sdevice)
 {
-	bool allowNotification = true;
-// 	if (!sdevice->checkDiskStatus(TDEDiskDeviceStatus::Removable)) {	// FIXME Under which conditions would we not want notification?
-// 		allowNotification = false;
-// 	}
+	bool allowNotification = false;
 	ResetProperties(sdevice, allowNotification);
 }
 
@@ -595,25 +608,26 @@ void TDEBackend::setCameraProperties(Medium* medium)
 		return;
 	}
 
-	/** @todo find name */
-	medium->setName("camera");
+	TQString cameraName = sdevice->friendlyName();
+	cameraName.replace("/", "_");
+	medium->setName(cameraName);
 
 	TQString device = "camera:/";
 
-	// FIXME
-	// I don't have a PTP camera to develop with
-	// Getting this working should be fairly easy; you just have to query udev for this information via the /sys/... path returned by sdevice->systemPath()
-// 	if () {
-// 		device.sprintf("camera://%s@[usb:%03d,%03d]/", <camera's libgphoto2 name>, <usb bus number>, <usb linux device number>);
-// 	}
+	TQStringList devNodeList = TQStringList::split("/", sdevice->deviceNode(), TRUE);
+	TQString devNode0 = devNodeList[devNodeList.count()-2];
+	TQString devNode1 = devNodeList[devNodeList.count()-1];
 
-	/** @todo find the rest of this URL */
+	if ((devNode0 != "") && (devNode1 != "")) {
+		device.sprintf("camera://@[usb:%s,%s]/", devNode0.ascii(), devNode1.ascii());
+	}
+
 	medium->unmountableState(device);
 	medium->setMimeType("media/gphoto2camera");
 	medium->setIconName(TQString::null);
 
-	if (sdevice->vendorModel() != "") {
-		medium->setLabel(sdevice->vendorModel());
+	if (sdevice->friendlyName() != "") {
+		medium->setLabel(sdevice->friendlyName());
 	}
 	else {
 		medium->setLabel(i18n("Camera"));
@@ -648,21 +662,237 @@ TQStringList TDEBackend::mountoptions(const TQString &name)
 		return TQStringList(); // device is listed in fstab, therefore is not handled by us
 	}
 
-	TQString volume_udi = name;
 	if (medium->isEncrypted()) {
 		// if not decrypted yet then there are no mountoptions
 		return TQStringList();
 	}
 
+	TDEHardwareDevices *hwdevices = KGlobal::hardwareDevices();
+
+	TDEStorageDevice * sdevice = hwdevices->findDiskByUID(medium->id());
+	if (!sdevice) {
+		return TQStringList(); // we can't get the information needed in order to process mount options
+	}
+
+	TQStringList result;
+
+	// Allow only those options which are valid for the given device
+	// pmount only allows a subset of options, and those are given in the map below
 	// FIXME
-	// Just use the default mount options for now
-	return TQStringList();
+	TQMap<TQString,bool> valids;
+	valids["ro"] = true;
+	//valids["quiet"] = false;
+	//valids["flush"] = false;
+	//valids["uid"] = false;
+	valids["utf8"] = true;
+	//valids["shortname"] = false;
+	valids["locale"] = true;
+	valids["sync"] = true;
+	valids["noatime"] = true;
+	//valids["data"] = false;
+
+	TQString drive_udi = driveUDIFromDeviceUID(medium->id());
+
+	KConfig config("mediamanagerrc");
+
+	bool use_defaults = true;
+	if (config.hasGroup(drive_udi)) {
+		config.setGroup(drive_udi);
+		use_defaults = config.readBoolEntry("use_defaults", false);
+	}
+	if (use_defaults) {
+		config.setGroup("DefaultOptions");
+	}
+	result << TQString("use_defaults=%1").arg(use_defaults ? "true" : "false");
+
+	bool removable = false;
+	if (!drive_udi.isNull()) {
+		removable = ((sdevice->checkDiskStatus(TDEDiskDeviceStatus::Removable)) || (sdevice->checkDiskStatus(TDEDiskDeviceStatus::Hotpluggable)));
+	}
+
+	TQString tmp;
+	bool value;
+	if (use_defaults) {
+		value = config.readBoolEntry("automount", false);
+	}
+	else {
+		QString current_group = config.group();
+		config.setGroup(drive_udi);
+		value = config.readBoolEntry("automount", false);
+		config.setGroup(current_group);
+	}
+
+	if ((sdevice->isDiskOfType(TDEDiskDeviceType::CDROM))
+		|| (sdevice->isDiskOfType(TDEDiskDeviceType::CDRW))
+		|| (sdevice->isDiskOfType(TDEDiskDeviceType::DVDROM))
+		|| (sdevice->isDiskOfType(TDEDiskDeviceType::DVDRAM))
+		|| (sdevice->isDiskOfType(TDEDiskDeviceType::DVDRW))
+		|| (sdevice->isDiskOfType(TDEDiskDeviceType::BDROM))
+		|| (sdevice->isDiskOfType(TDEDiskDeviceType::BDRW))
+		|| (sdevice->isDiskOfType(TDEDiskDeviceType::CDAudio))
+		|| (sdevice->isDiskOfType(TDEDiskDeviceType::CDVideo))
+		|| (sdevice->isDiskOfType(TDEDiskDeviceType::DVDVideo))
+		|| (sdevice->isDiskOfType(TDEDiskDeviceType::BDVideo))
+		) {
+		value = false;
+	}
+
+	result << TQString("automount=%1").arg(value ? "true" : "false");
+
+	if (valids.contains("ro")) {
+		value = config.readBoolEntry("ro", false);
+		tmp = TQString("ro=%1").arg(value ? "true" : "false");
+		if (sdevice->fileSystemName() != "iso9660") {
+			result << tmp;
+		}
+	}
+
+	if (valids.contains("quiet")) {
+		value = config.readBoolEntry("quiet", false);
+		tmp = TQString("quiet=%1").arg(value ? "true" : "false");
+		if (sdevice->fileSystemName() != "iso9660") {
+			result << tmp;
+		}
+	}
+
+	if (valids.contains("flush")) {
+		value = config.readBoolEntry("flush", sdevice->fileSystemName().endsWith("fat"));
+		tmp = TQString("flush=%1").arg(value ? "true" : "false");
+		result << tmp;
+	}
+
+	if (valids.contains("uid")) {
+		value = config.readBoolEntry("uid", true);
+		tmp = TQString("uid=%1").arg(value ? "true" : "false");
+		result << tmp;
+	}
+
+	if (valids.contains("utf8")) {
+		value = config.readBoolEntry("utf8", true);
+		tmp = TQString("utf8=%1").arg(value ? "true" : "false");
+		result << tmp;
+	}
+
+	if (valids.contains("shortname")) {
+		TQString svalue = config.readEntry("shortname", "lower").lower();
+		if (svalue == "winnt") {
+			result << "shortname=winnt";
+		}
+		else if (svalue == "win95") {
+			result << "shortname=win95";
+		}
+		else if (svalue == "mixed") {
+			result << "shortname=mixed";
+		}
+		else {
+			result << "shortname=lower";
+		}
+	}
+
+	// pass our locale to the ntfs-3g driver so it can translate local characters
+	if (valids.contains("locale") && (sdevice->fileSystemName() == "ntfs-3g")) {
+		// have to obtain LC_CTYPE as returned by the `locale` command
+		// check in the same order as `locale` does
+		char *cType;
+		if ( (cType = getenv("LC_ALL")) || (cType = getenv("LC_CTYPE")) || (cType = getenv("LANG")) ) {
+			result << TQString("locale=%1").arg(cType);
+		}
+	}
+
+	if (valids.contains("sync")) {
+		value = config.readBoolEntry("sync", ( valids.contains("flush") && !sdevice->fileSystemName().endsWith("fat") ) && removable);
+		tmp = TQString("sync=%1").arg(value ? "true" : "false");
+		if (sdevice->fileSystemName() != "iso9660") {
+			result << tmp;
+		}
+	}
+
+	if (valids.contains("noatime")) {
+		value = config.readBoolEntry("atime", !sdevice->fileSystemName().endsWith("fat"));
+		tmp = TQString("atime=%1").arg(value ? "true" : "false");
+		if (sdevice->fileSystemName() != "iso9660") {
+			result << tmp;
+		}
+	}
+
+	TQString mount_point;
+	mount_point = config.readEntry("mountpoint", TQString::null);
+
+	if (!mount_point.startsWith("/")) {
+		mount_point = "/media/" + mount_point;
+	}
+	if (mount_point != "") {
+		result << TQString("mountpoint=%1").arg(mount_point);
+	}
+
+	TQString file_system_name;
+	file_system_name = sdevice->fileSystemName();
+	if (file_system_name != "") {
+		result << TQString("filesystem=%1").arg(file_system_name);
+	}
+
+	if (valids.contains("data")) {
+		TQString svalue = config.readEntry("journaling").lower();
+		if (svalue == "ordered") {
+			result << "journaling=ordered";
+		}
+		else if (svalue == "writeback") {
+			result << "journaling=writeback";
+		}
+		else if (svalue == "data") {
+			result << "journaling=data";
+		}
+		else {
+			result << "journaling=ordered";
+		}
+	}
+
+	return result;
 }
 
 bool TDEBackend::setMountoptions(const TQString &name, const TQStringList &options )
 {
-	// FIXME
-	// Just use the default mount options for now
+	const Medium* medium = m_mediaList.findById(name);
+	if (!medium) {
+		return false; // we know nothing about that device
+	}
+	if (!isInFstab(medium).isNull()) {
+		return false; // device is listed in fstab, therefore is not handled by us
+	}
+
+	TQString drive_udi = driveUDIFromDeviceUID(medium->id());
+
+	kdDebug() << "setMountoptions " << name << " " << options << endl;
+	
+	KConfig config("mediamanagerrc");
+	config.setGroup(drive_udi);
+	
+	TQMap<TQString,TQString> valids = MediaManagerUtils::splitOptions(options);
+	
+	const char *names[] = { "use_defaults", "ro", "quiet", "atime", "uid", "utf8", "flush", "sync", 0 };
+	for (int index = 0; names[index]; ++index) {
+		if (valids.contains(names[index])) {
+			config.writeEntry(names[index], valids[names[index]] == "true");
+		}
+	}
+	
+	if (valids.contains("shortname")) {
+		config.writeEntry("shortname", valids["shortname"]);
+	}
+	
+	if (valids.contains("journaling")) {
+		config.writeEntry("journaling", valids["journaling"]);
+	}
+	
+	if (!mountoptions(name).contains(TQString("mountpoint=%1").arg(valids["mountpoint"]))) {
+		config.writeEntry("mountpoint", valids["mountpoint"]);
+	}
+	
+	if (valids.contains("automount")) {
+		config.setGroup(drive_udi);
+		config.writeEntry("automount", valids["automount"]);
+	}
+	
 	return true;
 }
 
@@ -731,11 +961,15 @@ TQString TDEBackend::mount(const Medium *medium)
 	
 	TQString mount_point = valids["mountpoint"];
 	if (mount_point.startsWith("/media/")) {
-		mount_point = mount_point.mid(7);
+		diskLabel = mount_point.mid(7);
 	}
-	
-	if (valids.contains("shortname")) {
-		diskLabel = TQString("shortname=%1").arg(valids["shortname"]);
+
+	if (valids.contains("filesystem")) {
+		optionString.append(TQString(" -t %1").arg(valids["filesystem"]));
+	}
+
+	if (valids.contains("locale")) {
+		optionString.append(TQString(" -c %1").arg(valids["locale"]));
 	}
 	
 	TQString qerror = i18n("Cannot mount encrypted drives!");
@@ -1073,4 +1307,21 @@ TQString TDEBackend::generateName(const TQString &devNode)
 {
     return KURL(devNode).fileName();
 }
+
+TQString TDEBackend::driveUDIFromDeviceUID(TQString uuid) {
+	TDEHardwareDevices *hwdevices = KGlobal::hardwareDevices();
+
+	TDEStorageDevice * sdevice = hwdevices->findDiskByUID(uuid);
+	TQString ret;
+	if (sdevice) {
+		ret = sdevice->diskUUID();
+	}
+	if (ret == "") {
+		return TQString::null;
+	}
+	else {
+		return ret;
+	}
+}
+
 #include "tdehardwarebackend.moc"

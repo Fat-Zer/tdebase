@@ -188,6 +188,9 @@ private slots:
 	void setBacklightBrightness(int);
 	void setHibernationMethod(int);
 
+	void mountDisk();
+	void unmountDisk();
+
 private:
 	TDEGenericDevice* m_device;
 	DevicePropertiesDialogBase* base;
