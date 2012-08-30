@@ -47,11 +47,11 @@
 
 #define CHECK_FOR_AND_EXECUTE_AUTOMOUNT(udi, medium, allowNotification) {									\
 		TQMap<TQString,TQString> options = MediaManagerUtils::splitOptions(mountoptions(udi));						\
-		kdDebug() << "automount " << options["automount"] << endl;									\
+		kdDebug(1219) << "automount " << options["automount"] << endl;									\
 		if (options["automount"] == "true" && allowNotification ) {									\
 			TQString error = mount(medium);												\
 			if (!error.isEmpty())													\
-			kdDebug() << "error " << error << endl;											\
+			kdDebug(1219) << "error " << error << endl;										\
 		}																\
 	}
 
@@ -129,10 +129,13 @@ bool TDEBackend::ListDevices()
 // Create a media instance for a new storage device
 void TDEBackend::AddDevice(TDEStorageDevice * sdevice, bool allowNotification)
 {
+	kdDebug(1219) << "TDEBackend::AddDevice for " << sdevice->uniqueID() << endl;
+
 	// If the device is already listed, do not process it
 	// This should not happen, but who knows...
 	/** @todo : refresh properties instead ? */
 	if (m_mediaList.findById(sdevice->uniqueID())) {
+		kdDebug(1219) << "TDEBackend::AddDevice for " << sdevice->uniqueID() << " found existing entry in media list" << endl;
 		return;
 	}
 
@@ -168,6 +171,8 @@ void TDEBackend::AddDevice(TDEStorageDevice * sdevice, bool allowNotification)
 			// Insert medium into list
 			m_mediaList.addMedium(medium, allowNotification);
 
+			kdDebug(1219) << "TDEBackend::AddDevice inserted hard medium for " << sdevice->uniqueID() << endl;
+
 			// Automount if enabled
 			CHECK_FOR_AND_EXECUTE_AUTOMOUNT(sdevice->uniqueID(), medium, allowNotification)
 		}
@@ -193,6 +198,8 @@ void TDEBackend::AddDevice(TDEStorageDevice * sdevice, bool allowNotification)
 		
 		// Insert medium into list
 		m_mediaList.addMedium(medium, allowNotification);
+
+		kdDebug(1219) << "TDEBackend::AddDevice inserted optical medium for " << sdevice->uniqueID() << endl;
 
 		// Automount if enabled
 		CHECK_FOR_AND_EXECUTE_AUTOMOUNT(sdevice->uniqueID(), medium, allowNotification)
@@ -236,6 +243,9 @@ void TDEBackend::AddDevice(TDEStorageDevice * sdevice, bool allowNotification)
 			}
 
 			m_mediaList.addMedium(medium, allowNotification);
+
+			kdDebug(1219) << "TDEBackend::AddDevice inserted floppy medium for " << sdevice->uniqueID() << endl;
+
 			return;
 		}
 	}
@@ -250,6 +260,8 @@ void TDEBackend::AddDevice(TDEStorageDevice * sdevice, bool allowNotification)
 			setCameraProperties(medium);
 			m_mediaList.addMedium(medium, allowNotification);
 
+			kdDebug(1219) << "TDEBackend::AddDevice inserted camera medium for " << sdevice->uniqueID() << endl;
+
 			return;
 		}
 	}
@@ -257,7 +269,10 @@ void TDEBackend::AddDevice(TDEStorageDevice * sdevice, bool allowNotification)
 
 void TDEBackend::RemoveDevice(TDEStorageDevice * sdevice)
 {
+	kdDebug(1219) << "TDEBackend::RemoveDevice for " << sdevice->uniqueID() << endl;
+
 	if (!m_mediaList.findById(sdevice->uniqueID())) {
+		kdDebug(1219) << "TDEBackend::RemoveDevice for " << sdevice->uniqueID() << " existing entry in media list was not found" << endl;
 		return;
 	}
 
@@ -266,14 +281,22 @@ void TDEBackend::RemoveDevice(TDEStorageDevice * sdevice)
 
 void TDEBackend::ModifyDevice(TDEStorageDevice * sdevice)
 {
+	kdDebug(1219) << "TDEBackend::ModifyDevice for " << sdevice->uniqueID() << endl;
+
 	bool allowNotification = false;
+	if (sdevice->checkDiskStatus(TDEDiskDeviceStatus::Removable) && (sdevice->checkDiskStatus(TDEDiskDeviceStatus::Inserted))) {
+		allowNotification = true;
+	}
 	ResetProperties(sdevice, allowNotification);
 }
 
 void TDEBackend::ResetProperties(TDEStorageDevice * sdevice, bool allowNotification, bool overrideIgnoreList)
 {
+	kdDebug(1219) << "TDEBackend::ResetProperties for " << sdevice->uniqueID() << " allowNotification: " << allowNotification << " overrideIgnoreList: " << overrideIgnoreList << endl;
+
 	if (!m_mediaList.findById(sdevice->uniqueID())) {
 		// This device is not currently in the device list, so add it and exit
+		kdDebug(1219) << "TDEBackend::ResetProperties for " << sdevice->uniqueID() << " existing entry in media list was not found" << endl;
 		AddDevice(sdevice, allowNotification);
 		return;
 	}
@@ -357,6 +380,12 @@ void TDEBackend::ResetProperties(TDEStorageDevice * sdevice, bool allowNotificat
 	}
 
 	// END
+
+	if (sdevice->isDiskOfType(TDEDiskDeviceType::Optical)) {
+		kdDebug(1219) << "TDEBackend::ResetProperties for " << sdevice->uniqueID() << " device was removed from system" << endl;
+		RemoveDevice(sdevice);
+		return;
+	}
 
 	m_mediaList.changeMediumState(*m, allowNotification);
 
@@ -722,13 +751,7 @@ TQStringList TDEBackend::mountoptions(const TQString &name)
 		config.setGroup(current_group);
 	}
 
-	if ((sdevice->isDiskOfType(TDEDiskDeviceType::CDROM))
-		|| (sdevice->isDiskOfType(TDEDiskDeviceType::CDRW))
-		|| (sdevice->isDiskOfType(TDEDiskDeviceType::DVDROM))
-		|| (sdevice->isDiskOfType(TDEDiskDeviceType::DVDRAM))
-		|| (sdevice->isDiskOfType(TDEDiskDeviceType::DVDRW))
-		|| (sdevice->isDiskOfType(TDEDiskDeviceType::BDROM))
-		|| (sdevice->isDiskOfType(TDEDiskDeviceType::BDRW))
+	if ((sdevice->checkDiskStatus(TDEDiskDeviceStatus::Blank))
 		|| (sdevice->isDiskOfType(TDEDiskDeviceType::CDAudio))
 		|| (sdevice->isDiskOfType(TDEDiskDeviceType::CDVideo))
 		|| (sdevice->isDiskOfType(TDEDiskDeviceType::DVDVideo))
@@ -862,7 +885,7 @@ bool TDEBackend::setMountoptions(const TQString &name, const TQStringList &optio
 
 	TQString drive_udi = driveUDIFromDeviceUID(medium->id());
 
-	kdDebug() << "setMountoptions " << name << " " << options << endl;
+	kdDebug(1219) << "setMountoptions " << name << " " << options << endl;
 	
 	KConfig config("mediamanagerrc");
 	config.setGroup(drive_udi);
@@ -1315,6 +1338,12 @@ TQString TDEBackend::driveUDIFromDeviceUID(TQString uuid) {
 	TQString ret;
 	if (sdevice) {
 		ret = sdevice->diskUUID();
+		if (ret == "") {
+			ret = sdevice->deviceNode();
+		}
+		if (ret == "") {
+			ret = sdevice->uniqueID();
+		}
 	}
 	if (ret == "") {
 		return TQString::null;
