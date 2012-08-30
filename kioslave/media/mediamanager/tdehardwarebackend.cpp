@@ -284,9 +284,6 @@ void TDEBackend::ModifyDevice(TDEStorageDevice * sdevice)
 	kdDebug(1219) << "TDEBackend::ModifyDevice for " << sdevice->uniqueID() << endl;
 
 	bool allowNotification = false;
-	if (sdevice->checkDiskStatus(TDEDiskDeviceStatus::Removable) && (sdevice->checkDiskStatus(TDEDiskDeviceStatus::Inserted))) {
-		allowNotification = true;
-	}
 	ResetProperties(sdevice, allowNotification);
 }
 
@@ -297,7 +294,7 @@ void TDEBackend::ResetProperties(TDEStorageDevice * sdevice, bool allowNotificat
 	if (!m_mediaList.findById(sdevice->uniqueID())) {
 		// This device is not currently in the device list, so add it and exit
 		kdDebug(1219) << "TDEBackend::ResetProperties for " << sdevice->uniqueID() << " existing entry in media list was not found" << endl;
-		AddDevice(sdevice, allowNotification);
+		AddDevice(sdevice);
 		return;
 	}
 
@@ -381,7 +378,7 @@ void TDEBackend::ResetProperties(TDEStorageDevice * sdevice, bool allowNotificat
 
 	// END
 
-	if (sdevice->isDiskOfType(TDEDiskDeviceType::Optical)) {
+	if ((sdevice->checkDiskStatus(TDEDiskDeviceStatus::Removable)) && (!(sdevice->checkDiskStatus(TDEDiskDeviceStatus::Inserted)))) {
 		kdDebug(1219) << "TDEBackend::ResetProperties for " << sdevice->uniqueID() << " device was removed from system" << endl;
 		RemoveDevice(sdevice);
 		return;
