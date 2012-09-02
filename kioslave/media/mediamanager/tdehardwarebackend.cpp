@@ -518,13 +518,13 @@ void TDEBackend::setVolumeProperties(Medium* medium)
 			if (sdevice->isDiskOfType(TDEDiskDeviceType::CompactFlash)) {
 				medium->setIconName("compact_flash" + MOUNT_ICON_SUFFIX);
 			}
-			if (sdevice->isDiskOfType(TDEDiskDeviceType::CompactFlash)) {
+			if (sdevice->isDiskOfType(TDEDiskDeviceType::MemoryStick)) {
 				medium->setIconName("memory_stick" + MOUNT_ICON_SUFFIX);
 			}
-			if (sdevice->isDiskOfType(TDEDiskDeviceType::CompactFlash)) {
+			if (sdevice->isDiskOfType(TDEDiskDeviceType::SmartMedia)) {
 				medium->setIconName("smart_media" + MOUNT_ICON_SUFFIX);
 			}
-			if (sdevice->isDiskOfType(TDEDiskDeviceType::CompactFlash)) {
+			if (sdevice->isDiskOfType(TDEDiskDeviceType::SDMMC)) {
 				medium->setIconName("sd_mmc" + MOUNT_ICON_SUFFIX);
 			}
 			if (sdevice->isDiskOfType(TDEDiskDeviceType::MediaDevice)) {
