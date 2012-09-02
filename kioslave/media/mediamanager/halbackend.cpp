@@ -265,7 +265,7 @@ void HALBackend::AddDevice(const char *udi, bool allowNotification)
         libhal_volume_free(halVolume);
 
         /* Create medium */
-        Medium* medium = new Medium(udi, "");
+        Medium* medium = new Medium(udi, udi, "");
         setVolumeProperties(medium);
 
         if ( isInFstab( medium ).isNull() )
@@ -304,7 +304,7 @@ void HALBackend::AddDevice(const char *udi, bool allowNotification)
             if (! libhal_device_get_property_bool(m_halContext, udi, "storage.removable.media_available", NULL) )
                 allowNotification = false;
             /* Create medium */
-            Medium* medium = new Medium(udi, "");
+            Medium* medium = new Medium(udi, udi, "");
             // if the storage has a volume, we ignore it
             if ( setFloppyProperties(medium) )
                 m_mediaList.addMedium(medium, allowNotification);
@@ -322,7 +322,7 @@ void HALBackend::AddDevice(const char *udi, bool allowNotification)
         )
     {
         /* Create medium */
-        Medium* medium = new Medium(udi, "");
+        Medium* medium = new Medium(udi, udi, "");
         setCameraProperties(medium);
         m_mediaList.addMedium(medium, allowNotification);
         return;
@@ -460,7 +460,7 @@ void HALBackend::ResetProperties(const char* mediumUdi, bool allowNotification)
        }
     }
 
-    Medium* m = new Medium(mediumUdi, "");
+    Medium* m = new Medium(mediumUdi, mediumUdi, "");
 
     if (libhal_device_query_capability(m_halContext, mediumUdi, "volume", NULL))
         setVolumeProperties(m);

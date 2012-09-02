@@ -281,7 +281,7 @@ void FstabBackend::handleFstabChange(bool allowNotification)
 		{
 			TQString name = generateName(dev, fs);
 
-			Medium *m = new Medium(id, name);
+			Medium *m = new Medium(id, id, name);
 
 			m->mountableState(dev, mp, fs, false);
 

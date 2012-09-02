@@ -29,31 +29,33 @@ class Medium
 public:
 	typedef TQValueList<Medium> MList;
 
-	static const uint ID = 0;
-	static const uint NAME = 1;
-	static const uint LABEL = 2;
-	static const uint USER_LABEL = 3;
-	static const uint MOUNTABLE = 4;
-	static const uint DEVICE_NODE = 5;
-	static const uint MOUNT_POINT = 6;
-	static const uint FS_TYPE = 7;
-	static const uint MOUNTED = 8;
-	static const uint BASE_URL = 9;
-	static const uint MIME_TYPE = 10;
-	static const uint ICON_NAME = 11;
-	static const uint ENCRYPTED = 12;
-	static const uint CLEAR_DEVICE_UDI = 13;
-	static const uint HIDDEN = 14;
-	static const uint PROPERTIES_COUNT = 15;
+	static const uint ID =			0;
+	static const uint UUID =		1;
+	static const uint NAME =		2;
+	static const uint LABEL =		3;
+	static const uint USER_LABEL =		4;
+	static const uint MOUNTABLE =		5;
+	static const uint DEVICE_NODE = 	6;
+	static const uint MOUNT_POINT = 	7;
+	static const uint FS_TYPE = 		8;
+	static const uint MOUNTED = 		9;
+	static const uint BASE_URL = 		10;
+	static const uint MIME_TYPE = 		11;
+	static const uint ICON_NAME = 		12;
+	static const uint ENCRYPTED = 		13;
+	static const uint CLEAR_DEVICE_UDI = 	14;
+	static const uint HIDDEN = 		15;
+	static const uint PROPERTIES_COUNT = 	16;
 	static const TQString SEPARATOR;
 
-	Medium(const TQString &id, const TQString &name);
+	Medium(const TQString id, TQString uuid, const TQString name);
 	static const Medium create(const TQStringList &properties);
 	static MList createList(const TQStringList &properties);
 
 	const TQStringList &properties() const { return m_properties; }
 
 	TQString id() const { return m_properties[ID]; }
+	TQString uuid() const { return m_properties[UUID]; }
 	TQString name() const { return m_properties[NAME]; }
 	TQString label() const { return m_properties[LABEL]; }
 	TQString userLabel() const { return m_properties[USER_LABEL]; }

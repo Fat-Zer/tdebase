@@ -155,7 +155,7 @@ void TDEBackend::AddDevice(TDEStorageDevice * sdevice, bool allowNotification)
 		}
 		else {
 			// Create medium
-			Medium* medium = new Medium(sdevice->uniqueID(), "");
+			Medium* medium = new Medium(sdevice->uniqueID(), driveUDIFromDeviceUID(sdevice->uniqueID()), "");
 			setVolumeProperties(medium);
 
 			// Do not list the LUKS backend device if it has been unlocked elsewhere
@@ -193,7 +193,7 @@ void TDEBackend::AddDevice(TDEStorageDevice * sdevice, bool allowNotification)
 		) {
 
 		// Create medium
-		Medium* medium = new Medium(sdevice->uniqueID(), "");
+		Medium* medium = new Medium(sdevice->uniqueID(), driveUDIFromDeviceUID(sdevice->uniqueID()), "");
 		setVolumeProperties(medium);
 		
 		// Insert medium into list
@@ -228,7 +228,7 @@ void TDEBackend::AddDevice(TDEStorageDevice * sdevice, bool allowNotification)
 		}
 		else {
 			// Create medium
-			Medium* medium = new Medium(sdevice->uniqueID(), "");
+			Medium* medium = new Medium(sdevice->uniqueID(), driveUDIFromDeviceUID(sdevice->uniqueID()), "");
 
 			setFloppyProperties(medium);
 
@@ -256,7 +256,7 @@ void TDEBackend::AddDevice(TDEStorageDevice * sdevice, bool allowNotification)
 		if (KProtocolInfo::isKnownProtocol( TQString("camera") ) )
 		{
 			// Create medium
-			Medium* medium = new Medium(sdevice->uniqueID(), "");
+			Medium* medium = new Medium(sdevice->uniqueID(), driveUDIFromDeviceUID(sdevice->uniqueID()), "");
 			setCameraProperties(medium);
 			m_mediaList.addMedium(medium, allowNotification);
 
@@ -305,7 +305,7 @@ void TDEBackend::ResetProperties(TDEStorageDevice * sdevice, bool allowNotificat
 		}
 	}
 
-	Medium* m = new Medium(sdevice->uniqueID(), "");
+	Medium* m = new Medium(sdevice->uniqueID(), driveUDIFromDeviceUID(sdevice->uniqueID()), "");
 
 	// Keep these conditions in sync with ::AddDevice above, OR ELSE!!!
 	// BEGIN
@@ -1335,11 +1335,17 @@ TQString TDEBackend::driveUDIFromDeviceUID(TQString uuid) {
 	TQString ret;
 	if (sdevice) {
 		ret = sdevice->diskUUID();
-		if (ret == "") {
-			ret = sdevice->deviceNode();
+		if (ret != "") {
+			ret = "volume_uuid_" + ret;
 		}
-		if (ret == "") {
-			ret = sdevice->uniqueID();
+		else {
+			ret = sdevice->deviceNode();
+			if (ret != "") {
+				ret = "device_node_" + ret;
+			}
+			else {
+				ret = sdevice->uniqueID();
+			}
 		}
 	}
 	if (ret == "") {

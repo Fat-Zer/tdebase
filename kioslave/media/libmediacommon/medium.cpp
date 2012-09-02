@@ -23,9 +23,10 @@
 
 const TQString Medium::SEPARATOR = "---";
 
-Medium::Medium(const TQString &id, const TQString &name)
+Medium::Medium(const TQString id, TQString uuid, const TQString name)
 {
 	m_properties+= id; /* ID */
+	m_properties+= uuid; /* UUID */
 	m_properties+= name; /* NAME */
 	m_properties+= name; /* LABEL */
 	m_properties+= TQString::null; /* USER_LABEL */
@@ -50,6 +51,7 @@ Medium::Medium(const TQString &id, const TQString &name)
 Medium::Medium()
 {
 	m_properties+= TQString::null; /* ID */
+	m_properties+= TQString::null; /* UUID */
 	m_properties+= TQString::null; /* NAME */
 	m_properties+= TQString::null; /* LABEL */
 	m_properties+= TQString::null; /* USER_LABEL */
@@ -76,6 +78,7 @@ const Medium Medium::create(const TQStringList &properties)
 	if ( properties.size() >= PROPERTIES_COUNT )
 	{
 		m.m_properties[ID] = properties[ID];
+		m.m_properties[UUID] = properties[UUID];
 		m.m_properties[NAME] = properties[NAME];
 		m.m_properties[LABEL] = properties[LABEL];
 		m.m_properties[USER_LABEL] = properties[USER_LABEL];
@@ -147,7 +150,7 @@ void Medium::setUserLabel(const TQString &label)
 	KConfig cfg("mediamanagerrc");
 	cfg.setGroup("UserLabels");
 
-	TQString entry_name = m_properties[ID];
+	TQString entry_name = m_properties[UUID];
 
 	if ( label.isNull() )
 	{
@@ -166,7 +169,7 @@ void Medium::loadUserLabel()
 	KConfig cfg("mediamanagerrc");
 	cfg.setGroup("UserLabels");
 
-	TQString entry_name = m_properties[ID];
+	TQString entry_name = m_properties[UUID];
 
 	if ( cfg.hasKey(entry_name) )
 	{

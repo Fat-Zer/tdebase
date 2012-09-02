@@ -45,7 +45,7 @@ const Medium MountHelper::findMedium(const KURL &url)
 	DCOPReply reply = mediamanager.call( "properties", url.fileName() );
 	if ( !reply.isValid() ) {
 		m_errorStr = i18n("The TDE mediamanager is not running.")+"\n";
-		return Medium(TQString::null, TQString::null);
+		return Medium(TQString::null, TQString::null, TQString::null);
 	}
 	const Medium& medium = Medium::create(reply);
 	if ( medium.id().isEmpty() ) {
@@ -53,7 +53,7 @@ const Medium MountHelper::findMedium(const KURL &url)
 		reply = mediamanager.call( "properties", url.prettyURL() );
 		if ( !reply.isValid() ) {
 			m_errorStr = i18n("Internal Error");
-			return Medium(TQString::null, TQString::null);
+			return Medium(TQString::null, TQString::null, TQString::null);
 		}
 		return Medium::create(reply);
 	} else {

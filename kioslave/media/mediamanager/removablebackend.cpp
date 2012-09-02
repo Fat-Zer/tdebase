@@ -62,7 +62,7 @@ bool RemovableBackend::plug(const TQString &devNode, const TQString &label)
 
 	if (!m_removableIds.contains(id))
 	{
-		Medium *medium = new Medium(id, name);
+		Medium *medium = new Medium(id, id, name);
 		medium->mountableState(devNode, TQString::null,
 		                       TQString::null, false);
 
