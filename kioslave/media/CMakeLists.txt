@@ -17,7 +17,7 @@ add_subdirectory( kfile-plugin )
 add_subdirectory( kcmodule )
 add_subdirectory( mimetypes )
 add_subdirectory( services )
-tde_conditional_add_subdirectory( WITH_HAL propsdlgplugin )
+add_subdirectory( propsdlgplugin )
 
 
 include_directories(

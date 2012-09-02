@@ -291,23 +291,29 @@ find "$USER_DIR/.local" -name "*.desktop" -exec sed -i 's|KDE\;|TDE\;|g' {} \; 2
 Message_Prefix
 echo "Updating references of $TDEDIR/share/applications/kde to share/applications/tde."
 # Exclude KMail mail files --- we don't want to touch those files.
-find "$PROFILE_DIR" -path "$PROFILE_DIR/share/apps/kmail/mail" -prune -o -type f -exec sed -i "s|$TDEDIR/share/applications/kde|$TDEDIR/share/applications/tde|g" {} \; 2>/dev/null
+if [ -d "$PROFILE_DIR/share/apps/kmail/mail" ]; then
+  find "$PROFILE_DIR" -path "$PROFILE_DIR/share/apps/kmail/mail" -prune -o -type f -exec sed -i "s|$TDEDIR/share/applications/kde|$TDEDIR/share/applications/tde|g" {} \; 2>/dev/null
+else
+  find "$PROFILE_DIR" -type f -exec sed -i "s|$TDEDIR/share/applications/kde|$TDEDIR/share/applications/tde|g" {} \; 2>/dev/null
+fi
 
 # Preserve keyboard shortcuts and input actions.
-Message_Prefix
-echo "Updating user-defined keyboard shortcuts in khotkeysrc."
-sed -i 's|CommandURL=kde-|CommandURL=tde-|g' "$PROFILE_DIR/share/config/khotkeysrc" 2>/dev/null
-sed -i 's|K Menu - kde-|TDE Menu - tde-|g' "$PROFILE_DIR/share/config/khotkeysrc" 2>/dev/null
-sed -i 's|Name=K Menu|Name=TDE Menu|g' "$PROFILE_DIR/share/config/khotkeysrc" 2>/dev/null
-sed -i 's|in KDE stands|in TDE stands|g' "$PROFILE_DIR/share/config/khotkeysrc" 2>/dev/null
-sed -i 's| use KDE| use TDE|g' "$PROFILE_DIR/share/config/khotkeysrc" 2>/dev/null
-Message_Prefix
-echo "Updating some text strings in khotkeysrc."
-sed -i 's|Go to KDE Website|Go to TDE Website|g' "$PROFILE_DIR/share/config/khotkeysrc" 2>/dev/null
-sed -i 's|www\.kde\.org|www\.trinitydesktop\.org|g' "$PROFILE_DIR/share/config/khotkeysrc" 2>/dev/null
-sed -i 's|KDE3\.1|TDE|g' "$PROFILE_DIR/share/config/khotkeysrc" 2>/dev/null
-sed -i 's|kde32b1|trinity2b1|g' "$PROFILE_DIR/share/config/khotkeysrc" 2>/dev/null
-sed -i 's|kde321|trinity21|g' "$PROFILE_DIR/share/config/khotkeysrc" 2>/dev/null
+if [ -r "$PROFILE_DIR/share/config/khotkeysrc" ]; then
+  Message_Prefix
+  echo "Updating user-defined keyboard shortcuts in khotkeysrc."
+  sed -i 's|CommandURL=kde-|CommandURL=tde-|g' "$PROFILE_DIR/share/config/khotkeysrc" 2>/dev/null
+  sed -i 's|K Menu - kde-|TDE Menu - tde-|g' "$PROFILE_DIR/share/config/khotkeysrc" 2>/dev/null
+  sed -i 's|Name=K Menu|Name=TDE Menu|g' "$PROFILE_DIR/share/config/khotkeysrc" 2>/dev/null
+  sed -i 's|in KDE stands|in TDE stands|g' "$PROFILE_DIR/share/config/khotkeysrc" 2>/dev/null
+  sed -i 's| use KDE| use TDE|g' "$PROFILE_DIR/share/config/khotkeysrc" 2>/dev/null
+  Message_Prefix
+  echo "Updating some text strings in khotkeysrc."
+  sed -i 's|Go to KDE Website|Go to TDE Website|g' "$PROFILE_DIR/share/config/khotkeysrc" 2>/dev/null
+  sed -i 's|www\.kde\.org|www\.trinitydesktop\.org|g' "$PROFILE_DIR/share/config/khotkeysrc" 2>/dev/null
+  sed -i 's|KDE3\.1|TDE|g' "$PROFILE_DIR/share/config/khotkeysrc" 2>/dev/null
+  sed -i 's|kde32b1|trinity2b1|g' "$PROFILE_DIR/share/config/khotkeysrc" 2>/dev/null
+  sed -i 's|kde321|trinity21|g' "$PROFILE_DIR/share/config/khotkeysrc" 2>/dev/null
+fi
 # Fix the some of the same text strings in kglobalshortcutsrc.
 Message_Prefix
 echo "Updating some text strings in kglobalshortcutsrc."
@@ -316,18 +322,22 @@ sed -i 's|www\.kde\.org|www\.trinitydesktop\.org|g' "$PROFILE_DIR/share/config/k
 sed -i 's|KDE3\.1|TDE|g' "$PROFILE_DIR/share/config/kglobalshortcutsrc" 2>/dev/null
 
 # Preserve app preferences.
-Message_Prefix
-echo "Updating user-defined app preferences in profilerc."
-sed -i 's|Application=kde-|Application=tde-|g' "$PROFILE_DIR/share/config/profilerc" 2>/dev/null
+if [ -r $PROFILE_DIR/share/config/profilerc ]; then
+  Message_Prefix
+  echo "Updating user-defined app preferences in profilerc."
+  sed -i 's|Application=kde-|Application=tde-|g' "$PROFILE_DIR/share/config/profilerc" 2>/dev/null
+fi
 
 # Preserve kicker/panel icons.
-Message_Prefix
-echo "Updating kicker/panel customizations in kickerrc."
-if [ -r "$PROFILE_DIR/share/config/kickerrc" ]; then
-  sed -i 's|StorageId\[\$e\]=kde-|StorageId\[\$e\]=tde-|g' "$PROFILE_DIR/share/config/kickerrc" 2>/dev/null
-else
+if [ -r $PROFILE_DIR/share/config/kickerrc ]; then
   Message_Prefix
-  echo "kickerrc does not exist."
+  echo "Updating kicker/panel customizations in kickerrc."
+  if [ -r "$PROFILE_DIR/share/config/kickerrc" ]; then
+    sed -i 's|StorageId\[\$e\]=kde-|StorageId\[\$e\]=tde-|g' "$PROFILE_DIR/share/config/kickerrc" 2>/dev/null
+  else
+    Message_Prefix
+    echo "kickerrc does not exist."
+  fi
 fi
 
 # Preserve Quick Launch icons.
@@ -412,7 +422,11 @@ else
 fi
 TEST_NUM="3"
 R14_UPDATE_TEST3=""
-find "$PROFILE_DIR" "$PROFILE_DIR/share/apps/kmail/mail" -prune -o -type f -exec grep -l "$TDEDIR/share/applications/kde" {} \; &>${CACHE_DIR}/${SCRIPT_NAME}-test${TEST_NUM}.txt
+if [ -d "$PROFILE_DIR/share/apps/kmail/mail" ]; then
+  find "$PROFILE_DIR" -path "$PROFILE_DIR/share/apps/kmail/mail" -prune -o -type f -exec grep -l "$TDEDIR/share/applications/kde" {} \; &>${CACHE_DIR}/${SCRIPT_NAME}-test${TEST_NUM}.txt
+else
+  find "$PROFILE_DIR" -type f -exec grep -l "$TDEDIR/share/applications/kde" {} \; &>${CACHE_DIR}/${SCRIPT_NAME}-test${TEST_NUM}.txt
+fi
 if [ -s ${CACHE_DIR}/${SCRIPT_NAME}-test${TEST_NUM}.txt ]; then
   R14_UPDATE_TEST3="failed"
   MESSAGE="Some Trinity profile R14 XDG compliance updates failed.\n\n(Check files for '$TDEDIR/share/applications/kde' in\n${CACHE_DIR}/${SCRIPT_NAME}-test${TEST_NUM}.txt.)"
@@ -422,42 +436,50 @@ else
 fi
 TEST_NUM="4"
 R14_UPDATE_TEST4=""
-grep "CommandURL=kde-" "$PROFILE_DIR/share/config/khotkeysrc" &>${CACHE_DIR}/${SCRIPT_NAME}-test${TEST_NUM}.txt
-if [ -s ${CACHE_DIR}/${SCRIPT_NAME}-test${TEST_NUM}.txt ]; then
-  R14_UPDATE_TEST4="failed"
-  MESSAGE="Some Trinity profile R14 XDG compliance updates failed.\n\n(Check khotkeysrc for 'CommandURL=kde-' in\n${CACHE_DIR}/${SCRIPT_NAME}-test${TEST_NUM}.txt.)"
-else
-  rm -f ${CACHE_DIR}/${SCRIPT_NAME}-test${TEST_NUM}.txt 2>/dev/null
+if [ -r "$PROFILE_DIR/share/config/khotkeysrc" ]; then
+  grep "CommandURL=kde-" "$PROFILE_DIR/share/config/khotkeysrc" &>${CACHE_DIR}/${SCRIPT_NAME}-test${TEST_NUM}.txt
+  if [ -s ${CACHE_DIR}/${SCRIPT_NAME}-test${TEST_NUM}.txt ]; then
+    R14_UPDATE_TEST4="failed"
+    MESSAGE="Some Trinity profile R14 XDG compliance updates failed.\n\n(Check khotkeysrc for 'CommandURL=kde-' in\n${CACHE_DIR}/${SCRIPT_NAME}-test${TEST_NUM}.txt.)"
+  else
+    rm -f ${CACHE_DIR}/${SCRIPT_NAME}-test${TEST_NUM}.txt 2>/dev/null
+  fi
 fi
 TEST_NUM="5"
 R14_UPDATE_TEST5=""
-grep "K Menu - kde-" "$PROFILE_DIR/share/config/khotkeysrc" &>${CACHE_DIR}/${SCRIPT_NAME}-test${TEST_NUM}.txt
-if [ -s ${CACHE_DIR}/${SCRIPT_NAME}-test${TEST_NUM}.txt ]; then
-  R14_UPDATE_TEST5="failed"
-  MESSAGE="Some Trinity profile R14 XDG compliance updates failed.\n\n(Check khotkeysrc for 'K Menu - kde-' in\n${CACHE_DIR}/${SCRIPT_NAME}-test${TEST_NUM}.txt.)"
-  Validation_Failure
-else
-  rm -f ${CACHE_DIR}/${SCRIPT_NAME}-test${TEST_NUM}.txt 2>/dev/null
+if [ -r "$PROFILE_DIR/share/config/khotkeysrc" ]; then
+  grep "K Menu - kde-" "$PROFILE_DIR/share/config/khotkeysrc" &>${CACHE_DIR}/${SCRIPT_NAME}-test${TEST_NUM}.txt
+  if [ -s ${CACHE_DIR}/${SCRIPT_NAME}-test${TEST_NUM}.txt ]; then
+    R14_UPDATE_TEST5="failed"
+    MESSAGE="Some Trinity profile R14 XDG compliance updates failed.\n\n(Check khotkeysrc for 'K Menu - kde-' in\n${CACHE_DIR}/${SCRIPT_NAME}-test${TEST_NUM}.txt.)"
+    Validation_Failure
+  else
+    rm -f ${CACHE_DIR}/${SCRIPT_NAME}-test${TEST_NUM}.txt 2>/dev/null
+  fi
 fi
 TEST_NUM="6"
 R14_UPDATE_TEST6=""
-grep "Application=kde-" "$PROFILE_DIR/share/config/profilerc" &>${CACHE_DIR}/${SCRIPT_NAME}-test${TEST_NUM}.txt
-if [ -s ${CACHE_DIR}/${SCRIPT_NAME}-test${TEST_NUM}.txt ]; then
-  R14_UPDATE_TEST6="failed"
-  MESSAGE="Some Trinity profile R14 XDG compliance updates failed.\n\n(Check profilerc for 'Application=kde-' in\n${CACHE_DIR}/${SCRIPT_NAME}-test${TEST_NUM}.txt.)"
-  Validation_Failure
-else
-  rm -f ${CACHE_DIR}/${SCRIPT_NAME}-test${TEST_NUM}.txt 2>/dev/null
+if [ -r $PROFILE_DIR/share/config/profilerc ]; then
+  grep "Application=kde-" "$PROFILE_DIR/share/config/profilerc" &>${CACHE_DIR}/${SCRIPT_NAME}-test${TEST_NUM}.txt
+  if [ -s ${CACHE_DIR}/${SCRIPT_NAME}-test${TEST_NUM}.txt ]; then
+    R14_UPDATE_TEST6="failed"
+    MESSAGE="Some Trinity profile R14 XDG compliance updates failed.\n\n(Check profilerc for 'Application=kde-' in\n${CACHE_DIR}/${SCRIPT_NAME}-test${TEST_NUM}.txt.)"
+    Validation_Failure
+  else
+    rm -f ${CACHE_DIR}/${SCRIPT_NAME}-test${TEST_NUM}.txt 2>/dev/null
+  fi
 fi
 TEST_NUM="7"
 R14_UPDATE_TEST7=""
-grep "StorageId\[\$e\]=kde-" "$PROFILE_DIR/share/config/kickerrc" &>${CACHE_DIR}/${SCRIPT_NAME}-test${TEST_NUM}.txt
-if [ -s ${CACHE_DIR}/${SCRIPT_NAME}-test${TEST_NUM}.txt ]; then
-  R14_UPDATE_TEST7="failed"
-  MESSAGE="Some Trinity profile R14 XDG compliance updates failed.\n\n(Check kickerrc for 'StorageId[$e]=kde-' in\n${CACHE_DIR}/${SCRIPT_NAME}-test${TEST_NUM}.txt.)"
-  Validation_Failure
-else
-  rm -f ${CACHE_DIR}/${SCRIPT_NAME}-test${TEST_NUM}.txt 2>/dev/null
+if [ -r $PROFILE_DIR/share/config/kickerrc ]; then
+  grep "StorageId\[\$e\]=kde-" "$PROFILE_DIR/share/config/kickerrc" &>${CACHE_DIR}/${SCRIPT_NAME}-test${TEST_NUM}.txt
+  if [ -s ${CACHE_DIR}/${SCRIPT_NAME}-test${TEST_NUM}.txt ]; then
+    R14_UPDATE_TEST7="failed"
+    MESSAGE="Some Trinity profile R14 XDG compliance updates failed.\n\n(Check kickerrc for 'StorageId[$e]=kde-' in\n${CACHE_DIR}/${SCRIPT_NAME}-test${TEST_NUM}.txt.)"
+    Validation_Failure
+  else
+    rm -f ${CACHE_DIR}/${SCRIPT_NAME}-test${TEST_NUM}.txt 2>/dev/null
+  fi
 fi
 TEST_NUM="8"
 R14_UPDATE_TEST8=""
