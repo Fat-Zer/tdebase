@@ -991,6 +991,14 @@ TQString TDEBackend::mount(const Medium *medium)
 	if (valids.contains("locale")) {
 		optionString.append(TQString(" -c %1").arg(valids["locale"]));
 	}
+
+	if (diskLabel == "") {
+		// Try to use a pretty mount point if possible
+		TQStringList pieces = TQStringList::split("/", sdevice->deviceNode(), FALSE);
+		TQString node = pieces[pieces.count()-1];
+		diskLabel = medium->label() + " (" + node + ")";
+		diskLabel.replace("/", "_");
+	}
 	
 	TQString qerror = i18n("Cannot mount encrypted drives!");
 
