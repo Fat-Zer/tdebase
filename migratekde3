@@ -297,6 +297,13 @@ if [ -n "$KDE3_PROFILE" ] && [ -d "$KDE3_PROFILE" ]; then
     rm -f kmix.desktop
   )
 
+  echo "Validating KDED services."
+  for i in `/bin/ls -1 $HOME/.trinity/share/services/kded/*.desktop`; do
+    SERVICE_NAME=`basename $i`
+    if [ ! -f $TDEDIR/share/services/kded/$SERVICE_NAME ]; then
+      $TDEDIR/bin/kwriteconfig --file $i --group "Desktop Entry" --key "X-KDE-Kded-autoload" --type bool "false"
+    fi
+  done
   echo "Renaming various configuration files and directories."
   # Don't force renaming in case this cript is used to update an existing Trinity profile.
   echo "  krita->chalk"
