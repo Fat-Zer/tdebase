@@ -1417,7 +1417,7 @@ Please note that on slow machines this may cause a "lag" between the event causi
     </connection>
     <connection>
         <sender>soundToPlay</sender>
-        <signal>textChanged(const QString&amp;)</signal>
+        <signal>textChanged(const TQString&amp;)</signal>
         <receiver>AccessibilityConfigWidget</receiver>
         <slot>changed(bool)</slot>
     </connection>

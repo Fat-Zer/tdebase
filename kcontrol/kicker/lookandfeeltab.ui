@@ -560,7 +560,7 @@ This option is only active if 'Enable background image' is selected.</string>
         <sender>kcfg_BackgroundTheme</sender>
         <signal>urlSelected(const TQString&amp;)</signal>
         <receiver>LookAndFeelTabBase</receiver>
-        <slot>browseTheme(const QString&amp;)</slot>
+        <slot>browseTheme(const TQString&amp;)</slot>
     </connection>
     <connection>
         <sender>advancedOptionsButton</sender>
@@ -572,7 +572,7 @@ This option is only active if 'Enable background image' is selected.</string>
         <sender>kcfg_BackgroundTheme</sender>
         <signal>returnPressed(const TQString&amp;)</signal>
         <receiver>LookAndFeelTabBase</receiver>
-        <slot>browseTheme(const QString&amp;)</slot>
+        <slot>browseTheme(const TQString&amp;)</slot>
     </connection>
     <connection>
         <sender>kcfg_Transparent</sender>

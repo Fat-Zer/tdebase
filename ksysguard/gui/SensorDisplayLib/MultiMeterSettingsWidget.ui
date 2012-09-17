@@ -324,9 +324,9 @@
         <slot access="private" specifier="">cleanupEventFilter(QObject*)</slot>
         <slot access="public" specifier="">setEnabled(bool)</slot>
         <slot access="public" specifier="">setDisabled(bool)</slot>
-        <slot access="public" specifier="">setCaption(const QString&amp;)</slot>
+        <slot access="public" specifier="">setCaption(const TQString&amp;)</slot>
         <slot access="public" specifier="">setIcon(const QPixmap&amp;)</slot>
-        <slot access="public" specifier="">setIconText(const QString&amp;)</slot>
+        <slot access="public" specifier="">setIconText(const TQString&amp;)</slot>
         <slot access="public" specifier="">setMouseTracking(bool)</slot>
         <slot access="public" specifier="">setFocus()</slot>
         <slot access="public" specifier="">clearFocus()</slot>

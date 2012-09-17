@@ -365,19 +365,19 @@
     </connection>
     <connection>
         <sender>_user</sender>
-        <signal>textChanged(const QString&amp;)</signal>
+        <signal>textChanged(const TQString&amp;)</signal>
         <receiver>KNetAttach</receiver>
         <slot>updateParametersPageStatus()</slot>
     </connection>
     <connection>
         <sender>_host</sender>
-        <signal>textChanged(const QString&amp;)</signal>
+        <signal>textChanged(const TQString&amp;)</signal>
         <receiver>KNetAttach</receiver>
         <slot>updateParametersPageStatus()</slot>
     </connection>
     <connection>
         <sender>_path</sender>
-        <signal>textChanged(const QString&amp;)</signal>
+        <signal>textChanged(const TQString&amp;)</signal>
         <receiver>KNetAttach</receiver>
         <slot>updateParametersPageStatus()</slot>
     </connection>

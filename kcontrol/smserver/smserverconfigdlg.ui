@@ -237,7 +237,7 @@
     </connection>
     <connection>
         <sender>excludeLineedit</sender>
-        <signal>textChanged(const QString&amp;)</signal>
+        <signal>textChanged(const TQString&amp;)</signal>
         <receiver>SMServerConfigDlg</receiver>
         <slot>configChanged()</slot>
     </connection>
