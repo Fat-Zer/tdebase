@@ -109,10 +109,19 @@ if [ -x $BIN_DIR/tde-config ]; then
   export TDEDIR=${BIN_DIR%/bin}
   echo "Trinity Desktop Environment base directory is $TDEDIR" 1>&2
 else
-  echo "Unable to determine the TDE bin directory, where this script should be installed."
-  echo "This script should be installed in the same directory."
-  echo "Exiting."
-  exit 1
+  # This might be a Trinity version before kde-config was renamed to tde-config.
+  # Don't use kde-config because of a bug that always creates a $TDEHOME directory.
+  if [ -x $BIN_DIR/konqueror ]; then
+    TDE_VERSION="`$BIN_DIR/konqueror --version | grep KDE | awk '{print $2}'`"
+    echo "Trinity Desktop Environment version is $TDE_VERSION" 1>&2
+    export TDEDIR=${BIN_DIR%/bin}
+    echo "Trinity Desktop Environment base directory is $TDEDIR" 1>&2
+  else
+    echo "Unable to determine the TDE bin directory, where this script should be installed."
+    echo "This script should be installed in the same directory."
+    echo "Exiting."
+    exit 1
+  fi
 fi
 unset BIN_DIR
 
@@ -152,6 +161,7 @@ if [ "$TDEHOME_LINK" != "" ]; then
     exit 0
   fi
 fi
+
 if [ -d "$HOME/.trinity" ]; then
   echo "$HOME/.trinity already exists." 1>&2
   echo "No migration required, but running to update an older Trinity profile." 1>&2
@@ -297,32 +307,48 @@ if [ -n "$KDE3_PROFILE" ] && [ -d "$KDE3_PROFILE" ]; then
     rm -f kmix.desktop
   )
 
-  echo "Validating KDED services."
-  for i in `/bin/ls -1 $HOME/.trinity/share/services/kded/*.desktop`; do
-    SERVICE_NAME=`basename $i`
-    if [ ! -f $TDEDIR/share/services/kded/$SERVICE_NAME ]; then
-      $TDEDIR/bin/kwriteconfig --file $i --group "Desktop Entry" --key "X-KDE-Kded-autoload" --type bool "false"
+  if [ -d $HOME/.trinity/share/services/kded ]; then
+    if [ "`find $HOME/.trinity/share/services/kded -name *.desktop`" != "" ]; then
+      echo "Validating KDED services."
+      for i in `/bin/ls -1 $HOME/.trinity/share/services/kded/*.desktop`; do
+        SERVICE_NAME=`basename $i`
+        if [ ! -f $TDEDIR/share/services/kded/$SERVICE_NAME ]; then
+          $TDEDIR/bin/kwriteconfig --file $i --group "Desktop Entry" --key "X-KDE-Kded-autoload" --type bool "false"
+        fi
+      done
     fi
-  done
+  fi
   echo "Renaming various configuration files and directories."
   # Don't force renaming in case this cript is used to update an existing Trinity profile.
-  echo "  krita->chalk"
-  mv $HOME/.trinity/share/config/kritarc $HOME/.trinity/share/config/chalkrc 2>/dev/null
-  mv $HOME/.trinity/share/apps/krita $HOME/.trinity/share/apps/chalk 2>/dev/null
-  echo "  kdeprint->tdeprint"
-  mv $HOME/.trinity/share/config/kdeprintrc $HOME/.trinity/share/config/tdeprintrc 2>/dev/null
-  mv $HOME/.trinity/share/apps/kdeprint $HOME/.trinity/share/apps/tdeprint 2>/dev/null
-  echo "  kdesurc->tdesurc"
-  mv $HOME/.trinity/share/config/kdesurc $HOME/.trinity/share/config/tdesurc 2>/dev/null
-  echo "  kdevelop->tdevelop"
-  mv $HOME/.trinity/share/config/kdeveloprc $HOME/.trinity/share/config/tdeveloprc 2>/dev/null
-  echo "  kwin->twin"
-  mv $HOME/.trinity/share/config/kwinrc $HOME/.trinity/share/config/twinrc 2>/dev/null
-  mv $HOME/.trinity/share/config/kwinrc.eventsrc $HOME/.trinity/share/config/twinrc.eventsrc 2>/dev/null
-  mv $HOME/.trinity/share/config/kwinrc $HOME/.trinity/share/config/twinrc 2>/dev/null
-  mv $HOME/.trinity/share/apps/kwinrulesrc $HOME/.trinity/share/apps/twinrulesrc 2>/dev/null
-  echo "  kwin4->twin4"
-  mv $HOME/.trinity/share/config/kwin4rc $HOME/.trinity/share/config/twin4rc 2>/dev/null
+  if [ -f $TDEDIR/bin/chalk ]; then
+    echo "  krita->chalk"
+    mv $HOME/.trinity/share/config/kritarc $HOME/.trinity/share/config/chalkrc 2>/dev/null
+    mv $HOME/.trinity/share/apps/krita $HOME/.trinity/share/apps/chalk 2>/dev/null
+  fi
+  if [ -d /opt/trinity/include/tdeprint ]; then
+    echo "  kdeprint->tdeprint"
+    mv $HOME/.trinity/share/config/kdeprintrc $HOME/.trinity/share/config/tdeprintrc 2>/dev/null
+    mv $HOME/.trinity/share/apps/kdeprint $HOME/.trinity/share/apps/tdeprint 2>/dev/null
+  fi
+  if [ -f $TDEDIR/bin/tdesu ]; then
+    echo "  kdesurc->tdesurc"
+    mv $HOME/.trinity/share/config/kdesurc $HOME/.trinity/share/config/tdesurc 2>/dev/null
+  fi
+  if [ -f $TDEDIR/bin/tdevelop ]; then
+    echo "  kdevelop->tdevelop"
+    mv $HOME/.trinity/share/config/kdeveloprc $HOME/.trinity/share/config/tdeveloprc 2>/dev/null
+  fi
+  if [ -f $TDEDIR/bin/twin ]; then
+    echo "  kwin->twin"
+    mv $HOME/.trinity/share/config/kwinrc $HOME/.trinity/share/config/twinrc 2>/dev/null
+    mv $HOME/.trinity/share/config/kwinrc.eventsrc $HOME/.trinity/share/config/twinrc.eventsrc 2>/dev/null
+    mv $HOME/.trinity/share/config/kwinrc $HOME/.trinity/share/config/twinrc 2>/dev/null
+    mv $HOME/.trinity/share/apps/kwinrulesrc $HOME/.trinity/share/apps/twinrulesrc 2>/dev/null
+  fi
+  if [ -f $TDEDIR/bin/twin4 ]; then
+    echo "  kwin4->twin4"
+    mv $HOME/.trinity/share/config/kwin4rc $HOME/.trinity/share/config/twin4rc 2>/dev/null
+  fi
   # Note: Don't run kconf_update, which is run automatically when starting TDE.
   # Note: Don't run any profile R14 updates: starttde does that through the r14-xdg-update script.
   echo
