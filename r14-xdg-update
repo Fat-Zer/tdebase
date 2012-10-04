@@ -358,6 +358,15 @@ else
   echo "Quick Launch is not installed."
 fi
 
+Message_Prefix
+echo "Updating Quanta Plus plugins.rc."
+if [ -r $PROFILE_DIR/share/apps/quanta/plugins.rc ]; then
+  sed -i 's|FileName=kde3|FileName=trinity|g' "$PROFILE_DIR/share/apps/quanta/plugins.rc" 2>/dev/null
+else
+  Message_Prefix
+  echo "$PROFILE_DIR/share/apps/quanta/plugins.rc does not exist."
+fi
+
 # Update sym link files in $USER_DIR/.trinity/Autostart.
 if [ -d "$PROFILE_DIR/Autostart" ]; then
   ( cd "$PROFILE_DIR/Autostart"
