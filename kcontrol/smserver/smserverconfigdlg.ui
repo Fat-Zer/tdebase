@@ -61,6 +61,9 @@
                     <property name="text">
                         <string>O&amp;ffer shutdown options</string>
                     </property>
+                    <property name="whatsThis" stdset="0">
+                        <string>Check this option if you want to see various options when displaying a logout confirmation dialog box.</string>
+                    </property>
                 </widget>
                 <widget class="TQCheckBox">
                     <property name="name">
