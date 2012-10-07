@@ -220,9 +220,21 @@ if [ -n "$KDE3_PROFILE" ] && [ -d "$KDE3_PROFILE" ]; then
   # Fix config files.
   # Exclude KMail mail files --- we don't want to touch those files.
   # I'm using maildir --- do these commands work for mbox too?
-  echo "Cleaning config files (but not KMail mail files. :-))" 1>&2
+  echo "Cleaning config files (but not files with user data, e.g. KMail mail files. :-))" 1>&2
   echo "Cleaning, first pass..." 1>&2
-  find $HOME/.trinity -path $HOME/.trinity/share/apps/kmail/mail -prune -o -type f -exec sed -i "s|/${KDE3_PROFILE}|/\.trinity|g" {} \;
+  find $HOME/.trinity \
+       -path $HOME/.trinity/share/apps/amarok/albumcovers -prune -o \
+       -path $HOME/.trinity/share/apps/basket/baskets -prune -o \
+       -path $HOME/.trinity/share/apps/juk/covers -prune -o \
+       -path $HOME/.trinity/share/apps/kget/logs -prune -o \
+       -path $HOME/.trinity/share/apps/kmail/autosave -prune -o \
+       -path $HOME/.trinity/share/apps/kmail/dimap -prune -o \
+       -path $HOME/.trinity/share/apps/kmail/imap -prune -o \
+       -path $HOME/.trinity/share/apps/kmail/mail -prune -o \
+       -path $HOME/.trinity/share/apps/kmail/search -prune -o \
+       -path $HOME/.trinity/share/apps/knotes -prune -o \
+       -path $HOME/.trinity/share/apps/kopete/logs -prune -o \
+       -type f -exec sed -i "s|/${KDE3_PROFILE}|/\.trinity|g" {} \;
   EXIT_CODE="$?"
   if [ "$EXIT_CODE" = "0" ]; then
     echo "Done." 1>&2
@@ -234,9 +246,33 @@ if [ -n "$KDE3_PROFILE" ] && [ -d "$KDE3_PROFILE" ]; then
     echo "The \$TDEDIR environment variable does not exist. Cannot complete the second pass." 1>&2
   else
     echo "Cleaning, second pass..." 1>&2
-    find $HOME/.trinity -path $HOME/.trinity/share/apps/kmail/mail -prune -o -type f -exec sed -i "s|/opt/kde/|${TDEDIR}/|g" {} \;
+    find $HOME/.trinity \
+         -path $HOME/.trinity/share/apps/amarok/albumcovers -prune -o \
+         -path $HOME/.trinity/share/apps/basket/baskets -prune -o \
+         -path $HOME/.trinity/share/apps/juk/covers -prune -o \
+         -path $HOME/.trinity/share/apps/kget/logs -prune -o \
+         -path $HOME/.trinity/share/apps/kmail/autosave -prune -o \
+         -path $HOME/.trinity/share/apps/kmail/dimap -prune -o \
+         -path $HOME/.trinity/share/apps/kmail/imap -prune -o \
+         -path $HOME/.trinity/share/apps/kmail/mail -prune -o \
+         -path $HOME/.trinity/share/apps/kmail/search -prune -o \
+         -path $HOME/.trinity/share/apps/knotes -prune -o \
+         -path $HOME/.trinity/share/apps/kopete/logs -prune -o \
+         -type f -exec sed -i "s|/opt/kde/|${TDEDIR}/|g" {} \;
     EXIT_CODE_1="$?"
-    find $HOME/.trinity -path $HOME/.trinity/share/apps/kmail/mail -prune -o -type f -exec sed -i "s|/opt/kde3/|${TDEDIR}/|g" {} \;
+    find $HOME/.trinity \
+         -path $HOME/.trinity/share/apps/amarok/albumcovers -prune -o \
+         -path $HOME/.trinity/share/apps/basket/baskets -prune -o \
+         -path $HOME/.trinity/share/apps/juk/covers -prune -o \
+         -path $HOME/.trinity/share/apps/kget/logs -prune -o \
+         -path $HOME/.trinity/share/apps/kmail/autosave -prune -o \
+         -path $HOME/.trinity/share/apps/kmail/dimap -prune -o \
+         -path $HOME/.trinity/share/apps/kmail/imap -prune -o \
+         -path $HOME/.trinity/share/apps/kmail/mail -prune -o \
+         -path $HOME/.trinity/share/apps/kmail/search -prune -o \
+         -path $HOME/.trinity/share/apps/knotes -prune -o \
+         -path $HOME/.trinity/share/apps/kopete/logs -prune -o \
+         -type f -exec sed -i "s|/opt/kde3/|${TDEDIR}/|g" {} \;
     EXIT_CODE_2="$?"
     if [ "$EXIT_CODE_1" = "0" ] && [ "$EXIT_CODE_2" = "0" ]; then
       echo "Done." 1>&2
@@ -250,7 +286,19 @@ if [ -n "$KDE3_PROFILE" ] && [ -d "$KDE3_PROFILE" ]; then
     if [ -e "$KICKER_FIREFOX" ]; then
       FIREFOX_PNG_LOCATION="`grep \"Icon=\" \"$KICKER_FIREFOX\"`"
     fi
-    find $HOME/.trinity -path $HOME/.trinity/share/apps/kmail/mail -prune -o -type f -exec sed -i "s|/usr/share/|${TDEDIR}/share/|g" {} \;
+    find $HOME/.trinity \
+         -path $HOME/.trinity/share/apps/amarok/albumcovers -prune -o \
+         -path $HOME/.trinity/share/apps/basket/baskets -prune -o \
+         -path $HOME/.trinity/share/apps/juk/covers -prune -o \
+         -path $HOME/.trinity/share/apps/kget/logs -prune -o \
+         -path $HOME/.trinity/share/apps/kmail/autosave -prune -o \
+         -path $HOME/.trinity/share/apps/kmail/dimap -prune -o \
+         -path $HOME/.trinity/share/apps/kmail/imap -prune -o \
+         -path $HOME/.trinity/share/apps/kmail/mail -prune -o \
+         -path $HOME/.trinity/share/apps/kmail/search -prune -o \
+         -path $HOME/.trinity/share/apps/knotes -prune -o \
+         -path $HOME/.trinity/share/apps/kopete/logs -prune -o \
+         -type f -exec sed -i "s|/usr/share/|${TDEDIR}/share/|g" {} \;
     if [ "$?" = "0" ]; then
       if [ "$FIREFOX_PNG_LOCATION" != "" ]; then
         FIREFOX_PNG_LOCATION_NEW="`grep \"Icon=\" \"$HOME/.trinity/share/apps/kicker/mozilla-firefox.desktop\"`"
