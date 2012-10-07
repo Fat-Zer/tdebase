@@ -108,6 +108,7 @@ if [ -x $BIN_DIR/tde-config ]; then
   echo "Trinity Desktop Environment version is $TDE_VERSION" 1>&2
   export TDEDIR=${BIN_DIR%/bin}
   echo "Trinity Desktop Environment base directory is $TDEDIR" 1>&2
+  TDE_REBRAND=1
 else
   # This might be a Trinity version before kde-config was renamed to tde-config.
   # Don't use kde-config because of a bug that always creates a $TDEHOME directory.
@@ -320,32 +321,32 @@ if [ -n "$KDE3_PROFILE" ] && [ -d "$KDE3_PROFILE" ]; then
   fi
   echo "Renaming various configuration files and directories."
   # Don't force renaming in case this cript is used to update an existing Trinity profile.
-  if [ -f $TDEDIR/bin/chalk ]; then
+  if [ -f $HOME/.trinity/share/config/kritarc ] || [ -d $HOME/.trinity/share/apps/krita ]; then
     echo "  krita->chalk"
     mv $HOME/.trinity/share/config/kritarc $HOME/.trinity/share/config/chalkrc 2>/dev/null
     mv $HOME/.trinity/share/apps/krita $HOME/.trinity/share/apps/chalk 2>/dev/null
   fi
-  if [ -d /opt/trinity/include/tdeprint ]; then
+  if [ "$TDE_REBRAND" != "" ] && [ -f $HOME/.trinity/share/config/kdeprintrc ] || [ -d $HOME/.trinity/share/apps/kdeprint ]; then
     echo "  kdeprint->tdeprint"
     mv $HOME/.trinity/share/config/kdeprintrc $HOME/.trinity/share/config/tdeprintrc 2>/dev/null
     mv $HOME/.trinity/share/apps/kdeprint $HOME/.trinity/share/apps/tdeprint 2>/dev/null
   fi
-  if [ -f $TDEDIR/bin/tdesu ]; then
+  if [ "$TDE_REBRAND" != "" ] && [ -f $HOME/.trinity/share/config/kdesurc ]; then
     echo "  kdesurc->tdesurc"
     mv $HOME/.trinity/share/config/kdesurc $HOME/.trinity/share/config/tdesurc 2>/dev/null
   fi
-  if [ -f $TDEDIR/bin/tdevelop ]; then
+  if [ "$TDE_REBRAND" != "" ] && [ -f $HOME/.trinity/share/config/kdeveloprc ]; then
     echo "  kdevelop->tdevelop"
     mv $HOME/.trinity/share/config/kdeveloprc $HOME/.trinity/share/config/tdeveloprc 2>/dev/null
   fi
-  if [ -f $TDEDIR/bin/twin ]; then
+  if [ "$TDE_REBRAND" != "" ] && [ -f $HOME/.trinity/share/config/kwinrc ] || [ -d $HOME/.trinity/share/apps/kwinrulesrc ]; then
     echo "  kwin->twin"
     mv $HOME/.trinity/share/config/kwinrc $HOME/.trinity/share/config/twinrc 2>/dev/null
     mv $HOME/.trinity/share/config/kwinrc.eventsrc $HOME/.trinity/share/config/twinrc.eventsrc 2>/dev/null
     mv $HOME/.trinity/share/config/kwinrc $HOME/.trinity/share/config/twinrc 2>/dev/null
     mv $HOME/.trinity/share/apps/kwinrulesrc $HOME/.trinity/share/apps/twinrulesrc 2>/dev/null
   fi
-  if [ -f $TDEDIR/bin/twin4 ]; then
+  if [ "$TDE_REBRAND" != "" ] && [ -f $HOME/.trinity/share/config/kwin4rc ]; then
     echo "  kwin4->twin4"
     mv $HOME/.trinity/share/config/kwin4rc $HOME/.trinity/share/config/twin4rc 2>/dev/null
   fi
