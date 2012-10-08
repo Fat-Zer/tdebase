@@ -234,7 +234,8 @@ if [ -n "$KDE3_PROFILE" ] && [ -d "$KDE3_PROFILE" ]; then
        -path $HOME/.trinity/share/apps/kmail/search -prune -o \
        -path $HOME/.trinity/share/apps/knotes -prune -o \
        -path $HOME/.trinity/share/apps/kopete/logs -prune -o \
-       -type f -exec sed -i "s|/${KDE3_PROFILE}|/\.trinity|g" {} \;
+       -type f -print0 | \
+    xargs -r0 sed -i "s|/${KDE3_PROFILE}|/\.trinity|g"
   EXIT_CODE="$?"
   if [ "$EXIT_CODE" = "0" ]; then
     echo "Done." 1>&2
@@ -258,7 +259,8 @@ if [ -n "$KDE3_PROFILE" ] && [ -d "$KDE3_PROFILE" ]; then
          -path $HOME/.trinity/share/apps/kmail/search -prune -o \
          -path $HOME/.trinity/share/apps/knotes -prune -o \
          -path $HOME/.trinity/share/apps/kopete/logs -prune -o \
-         -type f -exec sed -i "s|/opt/kde/|${TDEDIR}/|g" {} \;
+         -type f -print0 | \
+      xargs -r0 sed -i "s|/opt/kde/|${TDEDIR}/|g"
     EXIT_CODE_1="$?"
     find $HOME/.trinity \
          -path $HOME/.trinity/share/apps/amarok/albumcovers -prune -o \
@@ -272,7 +274,8 @@ if [ -n "$KDE3_PROFILE" ] && [ -d "$KDE3_PROFILE" ]; then
          -path $HOME/.trinity/share/apps/kmail/search -prune -o \
          -path $HOME/.trinity/share/apps/knotes -prune -o \
          -path $HOME/.trinity/share/apps/kopete/logs -prune -o \
-         -type f -exec sed -i "s|/opt/kde3/|${TDEDIR}/|g" {} \;
+         -type f -print0 | \
+      xargs -r0 sed -i "s|/opt/kde3/|${TDEDIR}/|g"
     EXIT_CODE_2="$?"
     if [ "$EXIT_CODE_1" = "0" ] && [ "$EXIT_CODE_2" = "0" ]; then
       echo "Done." 1>&2
@@ -298,7 +301,8 @@ if [ -n "$KDE3_PROFILE" ] && [ -d "$KDE3_PROFILE" ]; then
          -path $HOME/.trinity/share/apps/kmail/search -prune -o \
          -path $HOME/.trinity/share/apps/knotes -prune -o \
          -path $HOME/.trinity/share/apps/kopete/logs -prune -o \
-         -type f -exec sed -i "s|/usr/share/|${TDEDIR}/share/|g" {} \;
+         -type f -print0 | \
+      xargs -r0 sed -i "s|/usr/share/|${TDEDIR}/share/|g"
     if [ "$?" = "0" ]; then
       if [ "$FIREFOX_PNG_LOCATION" != "" ]; then
         FIREFOX_PNG_LOCATION_NEW="`grep \"Icon=\" \"$HOME/.trinity/share/apps/kicker/mozilla-firefox.desktop\"`"
@@ -315,7 +319,8 @@ if [ -n "$KDE3_PROFILE" ] && [ -d "$KDE3_PROFILE" ]; then
   # Recreate those links to the correct Trinity location.
   # This needs improvement for apps not in /usr/bin.
   echo "Attempting to update *.desktop files in Autostart." 1>&2
-  find $HOME/.trinity/Autostart -! -type l -type f -exec sed -i "s|/usr/bin/|${TDEDIR}/bin/|g" {} \;
+  find $HOME/.trinity/Autostart -! -type l -type f -print0 | \
+    xargs -r0 sed -i "s|/usr/bin/|${TDEDIR}/bin/|g"
   echo "Attempting to update sym links in Autostart." 1>&2
   ( cd $HOME/.trinity/Autostart
     for i in `find . -type l`; do
