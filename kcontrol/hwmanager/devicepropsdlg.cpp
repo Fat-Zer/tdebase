@@ -435,7 +435,7 @@ void DevicePropertiesDialog::populateDeviceInformation() {
 			// Show information
 			base->labelCPUVendor->setText(cdevice->vendorEncoded());
 			base->labelCPUFrequency->setText((cdevice->frequency()<0)?i18n("<unsupported>"):TQString("%1 MHz").arg(cdevice->frequency()));
-			base->labelMinCPUFrequency->setText((cdevice->minFrequency()<0)?i18n("<unknown>"):TQString("%1 MHz").arg(cdevice->minFrequency()));
+			base->labelMinCPUFrequency->setText((cdevice->minFrequency()<0)?i18n("<unsupported>"):TQString("%1 MHz").arg(cdevice->minFrequency()));
 			base->labelMaxCPUFrequency->setText((cdevice->maxFrequency()<0)?i18n("<unsupported>"):TQString("%1 MHz").arg(cdevice->maxFrequency()));
 			base->labelScalingDriver->setText((cdevice->scalingDriver().isNull())?i18n("<none>"):cdevice->scalingDriver());
 			TQStringList scalingfreqs = cdevice->availableFrequencies();
