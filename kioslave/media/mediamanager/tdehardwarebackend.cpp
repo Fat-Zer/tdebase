@@ -413,7 +413,6 @@ void TDEBackend::setVolumeProperties(Medium* medium)
 	if (diskLabel.isNull()) {
 		diskLabel = i18n("%1 Removable Device").arg(sdevice->deviceFriendlySize());
 	}
-	medium->setLabel(diskLabel);
 
 	TQString mimeType;
 
@@ -437,31 +436,35 @@ void TDEBackend::setVolumeProperties(Medium* medium)
 		if (sdevice->isDiskOfType(TDEDiskDeviceType::CDROM)) {
 			mimeType = "media/cdrom" + MOUNT_SUFFIX;
 			if (sdevice->checkDiskStatus(TDEDiskDeviceStatus::Blank)) {
-				mimeType = "media/blankcd" + MOUNT_SUFFIX;
+				mimeType = "media/blankcd";
 				medium->unmountableState("");
+				diskLabel = i18n("Blank CDROM");
 			}
 		}
 		if (sdevice->isDiskOfType(TDEDiskDeviceType::CDRW)) {
 			mimeType = "media/cdwriter" + MOUNT_SUFFIX;
 			if (sdevice->checkDiskStatus(TDEDiskDeviceStatus::Blank)) {
-				mimeType = "media/blankcd" + MOUNT_SUFFIX;
+				mimeType = "media/blankcd";
 				medium->unmountableState("");
+				diskLabel = i18n("Blank CDRW");
 			}
 		}
 	
 		if (sdevice->isDiskOfType(TDEDiskDeviceType::DVDROM)) {
 			mimeType = "media/dvd" + MOUNT_SUFFIX;
 			if (sdevice->checkDiskStatus(TDEDiskDeviceStatus::Blank)) {
-				mimeType = "media/blankdvd" + MOUNT_SUFFIX;
+				mimeType = "media/blankdvd";
 				medium->unmountableState("");
+				diskLabel = i18n("Blank DVDROM");
 			}
 		}
 	
 		if (sdevice->isDiskOfType(TDEDiskDeviceType::DVDRAM)) {
 			mimeType = "media/dvd" + MOUNT_SUFFIX;
 			if (sdevice->checkDiskStatus(TDEDiskDeviceStatus::Blank)) {
-				mimeType = "media/blankdvd" + MOUNT_SUFFIX;
+				mimeType = "media/blankdvd";
 				medium->unmountableState("");
+				diskLabel = i18n("Blank DVDRAM");
 			}
 		}
 	
@@ -470,6 +473,7 @@ void TDEBackend::setVolumeProperties(Medium* medium)
 			if (sdevice->checkDiskStatus(TDEDiskDeviceStatus::Blank)) {
 				mimeType = "media/blankdvd" + MOUNT_SUFFIX;
 				medium->unmountableState("");
+				diskLabel = i18n("Blank DVDRW");
 			}
 		}
 
@@ -478,6 +482,7 @@ void TDEBackend::setVolumeProperties(Medium* medium)
 			if (sdevice->checkDiskStatus(TDEDiskDeviceStatus::Blank)) {
 				mimeType = "media/blankbd" + MOUNT_SUFFIX;
 				medium->unmountableState("");
+				diskLabel = i18n("Blank BDROM");
 			}
 		}
 	
@@ -486,6 +491,7 @@ void TDEBackend::setVolumeProperties(Medium* medium)
 			if (sdevice->checkDiskStatus(TDEDiskDeviceStatus::Blank)) {
 				mimeType = "media/blankbd" + MOUNT_SUFFIX;
 				medium->unmountableState("");
+				diskLabel = i18n("Blank BDRW");
 			}
 		}
 	
@@ -555,6 +561,7 @@ void TDEBackend::setVolumeProperties(Medium* medium)
 		}
 	}
 
+	medium->setLabel(diskLabel);
 	medium->setMimeType(mimeType);
 }
 

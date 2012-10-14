@@ -400,6 +400,9 @@ void DevicePropertiesDialog::populateDeviceInformation() {
 			if (sdevice->checkDiskStatus(TDEDiskDeviceStatus::Inserted)) {
 				status_text += "Inserted<br>";
 			}
+			if (sdevice->checkDiskStatus(TDEDiskDeviceStatus::Blank)) {
+				status_text += "Blank<br>";
+			}
 			if (sdevice->checkDiskStatus(TDEDiskDeviceStatus::UsedByDevice)) {
 				status_text += "In use<br>";
 			}
