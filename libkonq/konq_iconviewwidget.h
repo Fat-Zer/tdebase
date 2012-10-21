@@ -42,10 +42,10 @@ namespace KIO { class Job; }
 class LIBKONQ_EXPORT KonqIconViewWidget : public KIconView
 {
     Q_OBJECT
-    Q_PROPERTY( bool sortDirectoriesFirst READ sortDirectoriesFirst WRITE setSortDirectoriesFirst )
-    Q_PROPERTY( TQRect iconArea READ iconArea WRITE setIconArea )
-    Q_PROPERTY( int lineupMode READ lineupMode WRITE setLineupMode )
-    Q_PROPERTY( TQString url READ urlString WRITE setNewURL )
+    TQ_PROPERTY( bool sortDirectoriesFirst READ sortDirectoriesFirst WRITE setSortDirectoriesFirst )
+    TQ_PROPERTY( TQRect iconArea READ iconArea WRITE setIconArea )
+    TQ_PROPERTY( int lineupMode READ lineupMode WRITE setLineupMode )
+    TQ_PROPERTY( TQString url READ urlString WRITE setNewURL )
 
     friend class KFileIVI;
 
