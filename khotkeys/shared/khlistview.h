@@ -23,7 +23,7 @@ class KDE_EXPORT KHListView
     : public KListView
     {
     Q_OBJECT
-    Q_PROPERTY( bool forceSelect READ forceSelect WRITE setForceSelect )
+    TQ_PROPERTY( bool forceSelect READ forceSelect WRITE setForceSelect )
     public:
         KHListView( TQWidget* parent_P, const char* name_P = NULL );
         virtual void clear();

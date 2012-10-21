@@ -80,12 +80,12 @@ typedef TQPtrList<KasItem> KasItemList;
 class KDE_EXPORT KasBar : public TQWidget
 {
    Q_OBJECT
-   Q_PROPERTY( int maxBoxes READ maxBoxes )
-   Q_PROPERTY( uint boxesPerLine READ boxesPerLine )
-   Q_PROPERTY( Direction direction READ direction )
-   Q_PROPERTY( Orientation orientation READ orientation )
-   Q_PROPERTY( bool masked READ isMasked )
-   Q_ENUMS( Direction )
+   TQ_PROPERTY( int maxBoxes READ maxBoxes )
+   TQ_PROPERTY( uint boxesPerLine READ boxesPerLine )
+   TQ_PROPERTY( Direction direction READ direction )
+   TQ_PROPERTY( Orientation orientation READ orientation )
+   TQ_PROPERTY( bool masked READ isMasked )
+   TQ_ENUMS( Direction )
 
    friend class KasItem;
 public:

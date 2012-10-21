@@ -88,15 +88,15 @@ class KonqExtendedBookmarkOwner;
 class KonqMainWindow : public KParts::MainWindow, public KonqFrameContainerBase
 {
   Q_OBJECT
-  Q_PROPERTY( int viewCount READ viewCount )
-  Q_PROPERTY( int activeViewsCount READ activeViewsCount )
-  Q_PROPERTY( int linkableViewsCount READ linkableViewsCount )
-  Q_PROPERTY( TQString locationBarURL READ locationBarURL )
-  Q_PROPERTY( bool fullScreenMode READ fullScreenMode )
-  Q_PROPERTY( TQString currentTitle READ currentTitle )
-  Q_PROPERTY( TQString currentURL READ currentURL )
-  Q_PROPERTY( bool isHTMLAllowed READ isHTMLAllowed )
-  Q_PROPERTY( TQString currentProfile READ currentProfile )
+  TQ_PROPERTY( int viewCount READ viewCount )
+  TQ_PROPERTY( int activeViewsCount READ activeViewsCount )
+  TQ_PROPERTY( int linkableViewsCount READ linkableViewsCount )
+  TQ_PROPERTY( TQString locationBarURL READ locationBarURL )
+  TQ_PROPERTY( bool fullScreenMode READ fullScreenMode )
+  TQ_PROPERTY( TQString currentTitle READ currentTitle )
+  TQ_PROPERTY( TQString currentURL READ currentURL )
+  TQ_PROPERTY( bool isHTMLAllowed READ isHTMLAllowed )
+  TQ_PROPERTY( TQString currentProfile READ currentProfile )
 public:
   enum ComboAction { ComboClear, ComboAdd, ComboRemove };
   enum PageSecurity { NotCrypted, Encrypted, Mixed };

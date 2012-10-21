@@ -22,7 +22,7 @@ class KHListBox
     : public TQListBox
     {
     Q_OBJECT
-    Q_PROPERTY( bool forceSelect READ forceSelect WRITE setForceSelect )
+    TQ_PROPERTY( bool forceSelect READ forceSelect WRITE setForceSelect )
     public:
         KHListBox( TQWidget* parent_P, const char* name_P = NULL );
         virtual void clear();

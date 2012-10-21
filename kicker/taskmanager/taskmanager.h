@@ -71,28 +71,28 @@ typedef TQValueList<WId> WindowList;
 class KDE_EXPORT Task: public TQObject, public KShared
 {
     Q_OBJECT
-    Q_PROPERTY( TQString visibleIconicName READ visibleIconicName )
-    Q_PROPERTY( TQString iconicName READ iconicName )
-    Q_PROPERTY( TQString visibleIconicNameWithState READ visibleIconicNameWithState )
-    Q_PROPERTY( TQString visibleName READ visibleName )
-    Q_PROPERTY( TQString name READ name )
-    Q_PROPERTY( TQString visibleNameWithState READ visibleNameWithState )
-    Q_PROPERTY( TQPixmap pixmap READ pixmap )
-    Q_PROPERTY( bool maximized READ isMaximized )
-    Q_PROPERTY( bool minimized READ isMinimized )
+    TQ_PROPERTY( TQString visibleIconicName READ visibleIconicName )
+    TQ_PROPERTY( TQString iconicName READ iconicName )
+    TQ_PROPERTY( TQString visibleIconicNameWithState READ visibleIconicNameWithState )
+    TQ_PROPERTY( TQString visibleName READ visibleName )
+    TQ_PROPERTY( TQString name READ name )
+    TQ_PROPERTY( TQString visibleNameWithState READ visibleNameWithState )
+    TQ_PROPERTY( TQPixmap pixmap READ pixmap )
+    TQ_PROPERTY( bool maximized READ isMaximized )
+    TQ_PROPERTY( bool minimized READ isMinimized )
     // KDE4 deprecated
-    Q_PROPERTY( bool iconified READ isIconified )
-    Q_PROPERTY( bool shaded READ isShaded WRITE setShaded )
-    Q_PROPERTY( bool active READ isActive )
-    Q_PROPERTY( bool onCurrentDesktop READ isOnCurrentDesktop )
-    Q_PROPERTY( bool onAllDesktops READ isOnAllDesktops )
-    Q_PROPERTY( bool alwaysOnTop READ isAlwaysOnTop WRITE setAlwaysOnTop )
-    Q_PROPERTY( bool modified READ isModified )
-    Q_PROPERTY( bool demandsAttention READ demandsAttention )
-    Q_PROPERTY( int desktop READ desktop )
-    Q_PROPERTY( double thumbnailSize READ thumbnailSize WRITE setThumbnailSize )
-    Q_PROPERTY( bool hasThumbnail READ hasThumbnail )
-    Q_PROPERTY( TQPixmap thumbnail READ thumbnail )
+    TQ_PROPERTY( bool iconified READ isIconified )
+    TQ_PROPERTY( bool shaded READ isShaded WRITE setShaded )
+    TQ_PROPERTY( bool active READ isActive )
+    TQ_PROPERTY( bool onCurrentDesktop READ isOnCurrentDesktop )
+    TQ_PROPERTY( bool onAllDesktops READ isOnAllDesktops )
+    TQ_PROPERTY( bool alwaysOnTop READ isAlwaysOnTop WRITE setAlwaysOnTop )
+    TQ_PROPERTY( bool modified READ isModified )
+    TQ_PROPERTY( bool demandsAttention READ demandsAttention )
+    TQ_PROPERTY( int desktop READ desktop )
+    TQ_PROPERTY( double thumbnailSize READ thumbnailSize WRITE setThumbnailSize )
+    TQ_PROPERTY( bool hasThumbnail READ hasThumbnail )
+    TQ_PROPERTY( TQPixmap thumbnail READ thumbnail )
 
 public:
     typedef KSharedPtr<Task> Ptr;
@@ -514,9 +514,9 @@ public:
 class KDE_EXPORT Startup: public TQObject, public KShared
 {
     Q_OBJECT
-    Q_PROPERTY( TQString text READ text )
-    Q_PROPERTY( TQString bin READ bin )
-    Q_PROPERTY( TQString icon READ icon )
+    TQ_PROPERTY( TQString text READ text )
+    TQ_PROPERTY( TQString bin READ bin )
+    TQ_PROPERTY( TQString icon READ icon )
 
 public:
     typedef KSharedPtr<Startup> Ptr;
@@ -568,8 +568,8 @@ private:
 class KDE_EXPORT TaskManager : public TQObject
 {
     Q_OBJECT
-    Q_PROPERTY( int currentDesktop READ currentDesktop )
-    Q_PROPERTY( int numberOfDesktops READ numberOfDesktops )
+    TQ_PROPERTY( int currentDesktop READ currentDesktop )
+    TQ_PROPERTY( int numberOfDesktops READ numberOfDesktops )
 
 public:
     static TaskManager* the();

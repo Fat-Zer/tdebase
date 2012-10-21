@@ -45,8 +45,8 @@ class KonqKfmIconView : public KonqDirPart
 {
   friend class IconViewBrowserExtension; // to access m_pProps
   Q_OBJECT
-  Q_PROPERTY( bool supportsUndo READ supportsUndo )
-  Q_PROPERTY( TQString viewMode READ viewMode WRITE setViewMode )
+  TQ_PROPERTY( bool supportsUndo READ supportsUndo )
+  TQ_PROPERTY( TQString viewMode READ viewMode WRITE setViewMode )
 public:
 
   enum SortCriterion { NameCaseSensitive, NameCaseInsensitive, Size, Type, Date };
