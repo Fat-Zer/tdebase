@@ -68,7 +68,7 @@ option( WITH_XRANDR "Enable xrandr support" ${WITH_ALL_OPTIONS} )
 option( WITH_XRENDER "Enable xrender support" ${WITH_ALL_OPTIONS} )
 option( WITH_XDAMAGE "Enable xdamage support" ${WITH_ALL_OPTIONS} )
 option( WITH_XEXT "Enable xext support" ${WITH_ALL_OPTIONS} )
-option( WITH_XTEST "Enable xext support" ${WITH_ALL_OPTIONS} )
+option( WITH_XTEST "Enable xtest support" ${WITH_ALL_OPTIONS} )
 option( WITH_XSCREENSAVER "Enable xscreensaver support" ${WITH_ALL_OPTIONS} )
 option( WITH_LIBART "Enable libart support (for SVG icons and wallpapers)" ${WITH_ALL_OPTIONS} )
 option( WITH_LIBUSB "Enable control of some mouse models through libusb" ${WITH_ALL_OPTIONS} )
@@ -85,6 +85,49 @@ option( WITH_TDEHWLIB "Enable TDE hardware library support" OFF )
 option( WITH_UPOWER "Enable UPOWER support" ${WITH_ALL_OPTIONS} )
 option( WITH_GCC_VISIBILITY "Enable fvisibility and fvisibility-inlines-hidden" ${WITH_ALL_OPTIONS} )
 
+##### options comments ##########################
+
+# WITH_SASL         affects kioslaves(kio_ldap kio_smtp kio_pop3)
+# WITH_LDAP         affects kioslaves(kio_ldap)
+# WITH_SAMBA        affects kioslaves(kio_samba) kcontrol
+# WITH_OPENEXR      affects kioslaves(thumbnail)
+# WITH_XCOMPOSITE   affects twin kicker(taskmanager) tdm
+# WITH_XCURSOR      affects kioslaves(thumbnail), kcontrol(input), kdesktop
+# WITH_XFIXES       affects twin klipper kicker(taskmanager)
+# WITH_XDAMAGE      affects <nothing>
+# WITH_XEXT         affects <nothing>
+# WITH_XRANDR       affects tdm, kcontrol(displayconfig randr iccconfig)
+# WITH_XRENDER      affects twin konsole kicker(taskmanager) kdesktop
+#                           kcontrol(style)
+# WITH_XTEST        desription adds some hotkey functonality. Its functionality
+#                              replaced by xkb nearly everywhere except the
+#                              mouse gestures. Also it used as a fallback if
+#                              xkb initialization fails.
+# WITH_XTEST        affects tdm kxkb khotkeys
+# WITH_XSCREENSAVER affects kdesktop
+# WITH_LIBART       affects tdm kcontrol(icons background)
+# WITH_LIBUSB       affects kcontrol(input)
+# WITH_XDMCP        affects tdm
+# WITH_XINERAMA     affects ksplashml
+# WITH_ARTS         affects libkonq khotkeys
+# WITH_I8K          affects ksysguard
+# WITH_HAL          affects kioslaves(media) ksmserver
+# WITH_TDEHWLIB     affects kioslaves(media), replaces WITH_HAL on systems without HAL
+# WITH_LIBRAW1394   affects kcontrol(view1394)
+# WITH_PAM          affects tdm kdesktop kcheckpass
+# WITH_SHADOW       affects tdm kcheckpass
+# WITH_UPOWER       affects ksmserver
+# WITH_SUDO_TDESU_BACKEND affects tdesu
+
+# NOTE: WITH_SHADOW and WITH_PAM shouldn't be set concurrently
+#       WITH_PAM will override WITH_SHADOW
+# NOTE: if WITH_XCOMPOSITE=ON then the following options are also required:
+#       WITH_XRENDER=ON
+#       WITH_XFIXES=ON
+#       WITH_XDAMAGE=ON
+#       WITH_XEXT=ON
+# NOTE: seems WITH_XDAMAGE and WITH_XET doesn't change anything
+#       they are just required by WITH_XCOMPOSITE
 
 ##### user requested modules ####################
 
