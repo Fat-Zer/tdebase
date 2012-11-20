@@ -48,7 +48,7 @@ PanelBrowserDialog::PanelBrowserDialog( const TQString& path, const TQString &ic
 
     iconBtn = new KIconButton( hbox2 );
     iconBtn->setFixedSize( 50, 50 );
-    iconBtn->setIconType( KIcon::Panel, KIcon::FileSystem );
+    iconBtn->setIconType( KIcon::Panel, KIcon::Place );
     label1->setBuddy( iconBtn );
 
     TQHBox *hbox1 = new TQHBox( page );
