@@ -226,6 +226,7 @@ if [ -n "$KDE3_PROFILE" ] && [ -d "$KDE3_PROFILE" ]; then
   # I'm using maildir --- do these commands work for mbox too?
   echo "Cleaning config files (but not files with user data, e.g. KMail mail files. :-))" 1>&2
   echo "Cleaning, first pass..." 1>&2
+  KDE3_PROFILE_R=$(echo $KDE3_PROFILE | sed "s|\.|\\\\.|g")
   find $HOME/.trinity \
        -path $HOME/.trinity/share/apps/amarok/albumcovers -prune -o \
        -path $HOME/.trinity/share/apps/basket/baskets -prune -o \
@@ -239,7 +240,7 @@ if [ -n "$KDE3_PROFILE" ] && [ -d "$KDE3_PROFILE" ]; then
        -path $HOME/.trinity/share/apps/knotes -prune -o \
        -path $HOME/.trinity/share/apps/kopete/logs -prune -o \
        -type f -print0 | \
-    xargs -r0 sed -i "s|/${KDE3_PROFILE}|/\.trinity|g"
+    xargs -r0 sed -i "s|/${KDE3_PROFILE_R}|/\.trinity|g"
   EXIT_CODE="$?"
   if [ "$EXIT_CODE" = "0" ]; then
     echo "Done." 1>&2
@@ -310,7 +311,8 @@ if [ -n "$KDE3_PROFILE" ] && [ -d "$KDE3_PROFILE" ]; then
     if [ "$?" = "0" ]; then
       if [ "$FIREFOX_PNG_LOCATION" != "" ]; then
         FIREFOX_PNG_LOCATION_NEW="`grep \"Icon=\" \"$HOME/.trinity/share/apps/kicker/mozilla-firefox.desktop\"`"
-        sed -i "s|$FIREFOX_PNG_LOCATION_NEW|$FIREFOX_PNG_LOCATION|" $HOME/.trinity/share/apps/kicker/mozilla-firefox.desktop
+        FIREFOX_PNG_LOCATION_NEW_R=$(echo $FIREFOX_PNG_LOCATION_NEW | sed "s|\.|\\\\.|g")
+        sed -i "s|$FIREFOX_PNG_LOCATION_NEW_R|$FIREFOX_PNG_LOCATION|" $HOME/.trinity/share/apps/kicker/mozilla-firefox.desktop
       fi
       echo "Done." 1>&2
     else
