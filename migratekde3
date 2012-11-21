@@ -72,8 +72,8 @@ PROFILE_SIZE="`du -s $HOME/$KDE3_PROFILE | awk '{print $1}'`"
 # Determine remaining partition space after migrating.
 REMAINING_SPACE=$(($AVAILABLE - $PROFILE_SIZE))
 # Convert to human friendly numbers (MBs).
-PROFILE_SIZE="`echo \"${PROFILE_SIZE} / 1024\" | bc`"
-REMAINING_SPACE="`echo \"$REMAINING_SPACE / 1024\" | bc`"
+PROFILE_SIZE=$(( ${PROFILE_SIZE} / 1024 ))
+REMAINING_SPACE=$(( $REMAINING_SPACE / 1024 ))
 # Let the user know the results.
 echo "Remaining disk space: ${REMAINING_SPACE} MB"
 echo "Space required for new profile: ${PROFILE_SIZE} MB"
@@ -209,13 +209,17 @@ if [ -n "$KDE3_PROFILE" ] && [ -d "$KDE3_PROFILE" ]; then
   CACHE_DIR="`readlink $HOME/.trinity/cache-\`uname -n\``"
   SOCKET_DIR="`readlink $HOME/.trinity/socket-\`uname -n\``"
   TMP_DIR="`readlink $HOME/.trinity/tmp-\`uname -n\``"
-  rm -f ${CACHE_DIR}/ksycoca* 2>/dev/null
-  mkdir `dirname $CACHE_DIR`/tdecache-$USER 2>/dev/null
-  cp -a $CACHE_DIR/* `dirname $CACHE_DIR`/tdecache-$USER/ 2>/dev/null
-  unlink $HOME/.trinity/cache-`uname -n`
-  ln -s `dirname $CACHE_DIR`/tdecache-$USER $HOME/.trinity/cache-`uname -n`
+  unlink $HOME/.trinity/cache-`uname -n` 2>/dev/null
   unlink $HOME/.trinity/socket-`uname -n` 2>/dev/null
   unlink $HOME/.trinity/tmp-`uname -n` 2>/dev/null
+  if [ -n "$CACHE_DIR" ] && [ -d "$CACHE_DIR" ]; then
+    rm -f ${CACHE_DIR}/ksycoca* 2>/dev/null
+    if [ -n "$TDE_REBRAND" ]; then
+      mkdir `dirname $CACHE_DIR`/tdecache-$USER 2>/dev/null
+      ln -s `dirname $CACHE_DIR`/tdecache-$USER $HOME/.trinity/cache-`uname -n`
+      cp -a $CACHE_DIR/* `dirname $CACHE_DIR`/tdecache-$USER/ 2>/dev/null
+    fi
+  fi
 
   # Fix config files.
   # Exclude KMail mail files --- we don't want to touch those files.
@@ -374,12 +378,12 @@ if [ -n "$KDE3_PROFILE" ] && [ -d "$KDE3_PROFILE" ]; then
   fi
   echo "Renaming various configuration files and directories."
   # Don't force renaming in case this cript is used to update an existing Trinity profile.
-  if [ -f $HOME/.trinity/share/config/kritarc ] || [ -d $HOME/.trinity/share/apps/krita ]; then
+  if [ -f $HOME/.trinity/share/config/kritarc -o -d $HOME/.trinity/share/apps/krita ]; then
     echo "  krita->chalk"
     mv $HOME/.trinity/share/config/kritarc $HOME/.trinity/share/config/chalkrc 2>/dev/null
     mv $HOME/.trinity/share/apps/krita $HOME/.trinity/share/apps/chalk 2>/dev/null
   fi
-  if [ "$TDE_REBRAND" != "" ] && [ -f $HOME/.trinity/share/config/kdeprintrc ] || [ -d $HOME/.trinity/share/apps/kdeprint ]; then
+  if [ "$TDE_REBRAND" != "" ] && [ -f $HOME/.trinity/share/config/kdeprintrc -o -d $HOME/.trinity/share/apps/kdeprint ]; then
     echo "  kdeprint->tdeprint"
     mv $HOME/.trinity/share/config/kdeprintrc $HOME/.trinity/share/config/tdeprintrc 2>/dev/null
     mv $HOME/.trinity/share/apps/kdeprint $HOME/.trinity/share/apps/tdeprint 2>/dev/null
@@ -392,7 +396,7 @@ if [ -n "$KDE3_PROFILE" ] && [ -d "$KDE3_PROFILE" ]; then
     echo "  kdevelop->tdevelop"
     mv $HOME/.trinity/share/config/kdeveloprc $HOME/.trinity/share/config/tdeveloprc 2>/dev/null
   fi
-  if [ "$TDE_REBRAND" != "" ] && [ -f $HOME/.trinity/share/config/kwinrc ] || [ -d $HOME/.trinity/share/apps/kwinrulesrc ]; then
+  if [ "$TDE_REBRAND" != "" ] && [ -f $HOME/.trinity/share/config/kwinrc -o -d $HOME/.trinity/share/apps/kwinrulesrc ]; then
     echo "  kwin->twin"
     mv $HOME/.trinity/share/config/kwinrc $HOME/.trinity/share/config/twinrc 2>/dev/null
     mv $HOME/.trinity/share/config/kwinrc.eventsrc $HOME/.trinity/share/config/twinrc.eventsrc 2>/dev/null
