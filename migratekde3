@@ -95,6 +95,11 @@ echo "Copying \$HOME/$KDE3_PROFILE to \$HOME/.trinity." 1>&2
 cp -a $HOME/$KDE3_PROFILE $HOME/.trinity
 }
 
+# Require a backup of the profile.
+if [ "$1" = "backup" ]; then
+  BACKUP="true"
+fi
+
 # Avoid any possible conflict with KDE4. Therefore within this script
 # use full path names to all binaries used.
 
@@ -128,9 +133,14 @@ unset BIN_DIR
 
 echo
 echo "This script migrates an existing KDE3 profile directory."
+echo "The definition of a KDE3 profile directory includes some"
+echo "older Trinity profile directories."
+echo
 echo "The KDE3 profile directory will be copied/duplicated"
 echo "and then cleaned/scrubbed to remove remnants of KDE3."
 echo "KMail config files will be scrubbed but not the mail files."
+echo "Likewise with other data files, such as for Amarok, Basket,"
+echo "Juk, KGet, KNotes, and Kopete."
 echo "The result is a new Trinity profile directory. :-)"
 echo
 
@@ -163,7 +173,19 @@ if [ "$TDEHOME_LINK" != "" ]; then
   fi
 fi
 
-if [ -d "$HOME/.trinity" ]; then
+if [ -d "$HOME/.trinity" ] && [ "$BACKUP" = "true" ]; then
+  echo "$HOME/.trinity already exists." 1>&2
+  echo "User requested a backup copy."
+  if [ -d $HOME/.trinity.old ]; then
+    echo "Creating backup copy $HOME/.trinity.old2..." 1>&2
+    cp -a $HOME/.trinity $HOME/.trinity.old2
+  else
+  echo "Creating backup copy $HOME/.trinity.old..." 1>&2
+    cp -a $HOME/.trinity $HOME/.trinity.old
+  fi
+  echo
+  KDE3_PROFILE=".trinity"
+elif [ -d "$HOME/.trinity" ]; then
   echo "$HOME/.trinity already exists." 1>&2
   echo "No migration required, but running to update an older Trinity profile." 1>&2
   echo
@@ -378,8 +400,8 @@ if [ -n "$KDE3_PROFILE" ] && [ -d "$KDE3_PROFILE" ]; then
       done
     fi
   fi
-  echo "Renaming various configuration files and directories."
-  # Don't force renaming in case this cript is used to update an existing Trinity profile.
+  echo "Renaming some configuration files and directories."
+  # Don't force renaming in case this script is used to update an existing Trinity profile.
   if [ -f $HOME/.trinity/share/config/kritarc -o -d $HOME/.trinity/share/apps/krita ]; then
     echo "  krita->chalk"
     mv $HOME/.trinity/share/config/kritarc $HOME/.trinity/share/config/chalkrc 2>/dev/null
