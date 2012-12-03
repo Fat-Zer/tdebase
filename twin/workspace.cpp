@@ -1894,8 +1894,9 @@ void Workspace::killWindowId( Window window_to_kill )
         client = findClient( FrameIdMatchPredicate( window ));
         if( client != NULL ) // found the client
             break;
-        Window parent, root;
-        Window* children;
+        Window parent = NULL;
+        Window root = NULL;
+        Window* children = NULL;
         unsigned int children_count;
         XQueryTree( tqt_xdisplay(), window, &root, &parent, &children, &children_count );
         if( children != NULL )
@@ -1903,6 +1904,8 @@ void Workspace::killWindowId( Window window_to_kill )
         if( window == root ) // we didn't find the client, probably an override-redirect window
             break;
         window = parent; // go up
+        if( window == NULL )
+            break;
         }
     if( client != NULL )
         client->killWindow();
@@ -1921,8 +1924,9 @@ void Workspace::suspendWindowId( Window window_to_suspend )
         client = findClient( FrameIdMatchPredicate( window ));
         if( client != NULL ) // found the client
             break;
-        Window parent, root;
-        Window* children;
+        Window parent = NULL;
+        Window root = NULL;
+        Window* children = NULL;
         unsigned int children_count;
         XQueryTree( tqt_xdisplay(), window, &root, &parent, &children, &children_count );
         if( children != NULL )
@@ -1930,6 +1934,8 @@ void Workspace::suspendWindowId( Window window_to_suspend )
         if( window == root ) // we didn't find the client, probably an override-redirect window
             break;
         window = parent; // go up
+        if( window == NULL )
+            break;
         }
     if( client != NULL )
         client->suspendWindow();
@@ -1948,8 +1954,9 @@ void Workspace::resumeWindowId( Window window_to_resume )
         client = findClient( FrameIdMatchPredicate( window ));
         if( client != NULL ) // found the client
             break;
-        Window parent, root;
-        Window* children;
+        Window parent = NULL;
+        Window root = NULL;
+        Window* children = NULL;
         unsigned int children_count;
         XQueryTree( tqt_xdisplay(), window, &root, &parent, &children, &children_count );
         if( children != NULL )
@@ -1957,6 +1964,8 @@ void Workspace::resumeWindowId( Window window_to_resume )
         if( window == root ) // we didn't find the client, probably an override-redirect window
             break;
         window = parent; // go up
+        if( window == NULL )
+            break;
         }
     if( client != NULL )
         client->resumeWindow();

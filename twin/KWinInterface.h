@@ -12,9 +12,9 @@ class KWinInterface : virtual public DCOPObject
     virtual ASYNC cascadeDesktop() = 0;
     virtual ASYNC unclutterDesktop() = 0;
     virtual ASYNC reconfigure() = 0;
-    virtual ASYNC killWindow() = 0;
-    virtual ASYNC suspendWindow() = 0;
-    virtual ASYNC resumeWindow() = 0;
+    virtual ASYNC killWindowId(unsigned long winId) = 0;
+    virtual ASYNC suspendWindowId(unsigned long winId) = 0;
+    virtual ASYNC resumeWindowId(unsigned long winId) = 0;
     virtual void refresh() = 0;
     virtual void doNotManage(TQString)= 0;
     virtual void showWindowMenuAt(unsigned long winId, int x, int y)= 0;
