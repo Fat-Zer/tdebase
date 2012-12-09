@@ -116,7 +116,6 @@ if [ ! -d "$PROFILE_DIR" ]; then
   fi
   exit 1
 fi
-CACHE_DIR="$PROFILE_DIR/cache-`uname -n`"
 
 # The binaries for TDE are located in the same place as this script.
 # To determine that location use the following method rather than presuming
@@ -264,22 +263,59 @@ fi
 # Most files can be updated "live" but some can't, such as kdeglobals.
 if [ "$USER_DIR" = "$HOME" ]; then
   if [ "$TDE_FULL_SESSION" != "" ] || [ "$TDE_SESSION_UID" != "" ]; then
-    MESSAGE="You are running this script from within a Trinity session.\n\nMost files can be updated \"live\" but some cannot, such as kdeglobals.\n\nThis script might complete successfully and might not."
-    # Are we in X? Display an X dialog explaining breakage.
-    if [ "$USER_DIR" = "$HOME" ] && [ "$DISPLAY" != "" ]; then
-      # As we are in a Trinity session then use kdialog.
-      kdialog --title "R14-XDG-Update" --warningyesno "${MESSAGE}\n\nContinue?"
-      if [ "$?" -gt "0" ]; then
-        unset PROFILE_DIR
-        exit 0
-      fi
-    else
-      Message_Prefix
-      printf "%b" "$MESSAGE\n\n${WARNING_MESSAGE}"
-      Wait_For_Response "Continue?"
-      Proceed_From_Response
-    fi
+    MESSAGE="You are running this script from while a Trinity session is active.\n\nMost files can be updated \"live\" but some cannot, such as kdeglobals.\n\nThis script might complete successfully and might not."
+    Message_Prefix
+    printf "%b" "$MESSAGE\n\n${WARNING_MESSAGE}"
+    Wait_For_Response "Continue?"
+    Proceed_From_Response
   fi
+fi
+
+Message_Prefix
+echo "Updating temp file locations."
+# All three directories are for temporary files. The cache directory is
+# intended for persistent temporary data (is expected to remain across reboots
+# and shutdowns). The other two directories are for non-persistent data and
+# can be deleted across reboots and shutdowns.
+CACHE_DIR="`readlink $PROFILE_DIR/cache-\`uname -n\``"
+SOCKET_DIR="`readlink $PROFILE_DIR/socket-\`uname -n\``"
+TMP_DIR="`readlink $PROFILE_DIR/tmp-\`uname -n\``"
+# Delete the non-persistent temporary directories. This is safe at any time.
+unlink $PROFILE_DIR/socket-`uname -n` 2>/dev/null
+unlink $PROFILE_DIR/tmp-`uname -n` 2>/dev/null
+if [ "$SOCKET_DIR" != "" ]; then
+  rm -fr $SOCKET_DIR 2>/dev/null
+fi
+if [ "$TMP_DIR" != "" ]; then
+  rm -fr $TMP_DIR 2>/dev/null
+fi
+# Remember that this script may be run more than once. The new directory
+# might already exist.
+if [ -n "$CACHE_DIR" ] && [ -d "$CACHE_DIR" ]; then
+  # Flush the old ksycoca cache files. This is safe at any time.
+  rm -f ${CACHE_DIR}/ksycoca* 2>/dev/null
+  # Old cache directory: /var/tmp/kde*cache-$USER
+  # New cache directory: /var/tmp/tdecache-$USER
+  # Rename/move the directory name but only when the new name does not exist.
+  if [ "`echo $CACHEDIR | grep tdecache`" = "" ]; then
+    Message_Prefix
+    echo "Renaming the temporary cache directory."
+    unlink $PROFILE_DIR/cache-`uname -n` 2>/dev/null
+    mv -f $CACHE_DIR `dirname $CACHE_DIR`/tdecache-$USER 2>/dev/null
+    Message_Prefix
+    echo "Creating a sym link for the temporary cache directory."
+    ln -s `dirname $CACHE_DIR`/tdecache-$USER $PROFILE_DIR/cache-`uname -n`
+  fi
+fi
+# Housekeeping: the old locations are no longer needed.
+if [ "$CACHE_DIR" != "" ]; then
+  rm -fr `dirname 2>/dev/null $CACHE_DIR`/kde*cache-$USER
+fi
+if [ "$SOCKET_DIR" != "" ]; then
+  rm -fr `dirname 2>/dev/null $SOCKET_DIR`/ksocket-$USER
+fi
+if [ "$TMP_DIR" != "" ]; then
+  rm -fr `dirname 2>/dev/null $TMP_DIR`/kde-$USER
 fi
 
 Message_Prefix
@@ -397,6 +433,73 @@ fi
 if [ -r $USER_DIR/.config/menus/applications-kmenuedit.menu ]; then
   sed -i 's|<Filename>kde-|<Filename>tde-|g' $USER_DIR/.config/menus/applications-kmenuedit.menu
 fi
+
+# Ensure all KDED services are accounted for in the user's profile. Any that are missing
+# are defaulted to not auto-loading (false). Refer to bug report 1210. This same test is
+# performed in the migratekde3 script.
+if [ -d $PROFILE_DIR/share/services/kded ]; then
+  if [ "`find $PROFILE_DIR/share/services/kded -name *.desktop`" != "" ]; then
+    Message_Prefix
+    echo "Validating KDED services."
+    for i in `/bin/ls -1 $PROFILE_DIR/share/services/kded/*.desktop`; do
+      SERVICE_NAME=`basename $i`
+      if [ ! -f $TDEDIR/share/services/kded/$SERVICE_NAME ]; then
+        $TDEDIR/bin/kwriteconfig --file $i --group "Desktop Entry" --key "X-KDE-Kded-autoload" --type bool "false"
+      fi
+    done
+  fi
+fi
+
+# Try to update sessions.
+sed -i 's|kwin|twin|g' $PROFILE_DIR/share/config/ksmserverrc
+for i in `/bin/ls -1 $PROFILE_DIR/share/config/session/kwin_* 2>/dev/null`; do
+  mv $i $PROFILE_DIR/share/config/session/`basename $i | sed 's|kwin_|twin_|'`
+done
+
+Message_Prefix
+echo "Renaming some configuration files and directories."
+# Note: The only rebranding that occured before starting the R14 branch was krita. All other
+# rebranding updates belong in this script.
+# Don't force renaming in case this script is used to update an existing Trinity profile. That is,
+# always check whether the new config file already exists.
+if [ ! -f $PROFILE_DIR/share/config/tdeprintrc ] && [ -f $PROFILE_DIR/share/config/kdeprintrc ] || [ -d $PROFILE_DIR/share/apps/kdeprint ]; then
+  Message_Prefix
+  echo "  kdeprint->tdeprint"
+  mv $PROFILE_DIR/share/config/kdeprintrc $PROFILE_DIR/share/config/tdeprintrc 2>/dev/null
+  mv $PROFILE_DIR/share/apps/kdeprint $PROFILE_DIR/share/apps/tdeprint 2>/dev/null
+fi
+if [ ! -f $PROFILE_DIR/share/config/tdesurc ] && [ -f $PROFILE_DIR/share/config/kdesurc ]; then
+  Message_Prefix
+  echo "  kdesurc->tdesurc"
+  mv $PROFILE_DIR/share/config/kdesurc $PROFILE_DIR/share/config/tdesurc 2>/dev/null
+fi
+if [ ! -f $PROFILE_DIR/share/config/tdeveloprc ] && [ -f $PROFILE_DIR/share/config/kdeveloprc ]; then
+  Message_Prefix
+  echo "  kdevelop->tdevelop"
+  mv $PROFILE_DIR/share/config/kdeveloprc $PROFILE_DIR/share/config/tdeveloprc 2>/dev/null
+fi
+# kwin/twin is the Trinity window manager. kwin4/twin4 is a game.
+if [ ! -f $PROFILE_DIR/share/config/twinrc ] && [ -f $PROFILE_DIR/share/config/kwinrc ] || [ -d $PROFILE_DIR/share/apps/kwinrulesrc ]; then
+  # Do not include kwinrules_update because that is an auto-generated file.
+  Message_Prefix
+  echo "  kwin->twin"
+  mv $PROFILE_DIR/share/config/kwinrc $PROFILE_DIR/share/config/twinrc 2>/dev/null
+  mv $PROFILE_DIR/share/config/kwinrc.eventsrc $PROFILE_DIR/share/config/twinrc.eventsrc 2>/dev/null
+  mv $PROFILE_DIR/share/config/kwinrc $PROFILE_DIR/share/config/twinrc 2>/dev/null
+  mv $PROFILE_DIR/share/apps/kwinrulesrc $PROFILE_DIR/share/apps/twinrulesrc 2>/dev/null
+  mv $PROFILE_DIR/share/apps/kwin_rules_dialogrc $PROFILE_DIR/share/apps/twin_rules_dialogrc 2>/dev/null
+  sed -i 's|PluginLib=kwin_|PluginLib=twin_|' $PROFILE_DIR/share/config/twinrc
+fi
+if [ ! -f $PROFILE_DIR/share/config/twin4rc ] && [ -f $PROFILE_DIR/share/config/kwin4rc ]; then
+  Message_Prefix
+  echo "  kwin4->twin4"
+  mv $PROFILE_DIR/share/config/kwin4rc $PROFILE_DIR/share/config/twin4rc 2>/dev/null
+fi
+
+# Disable some features new to R14, otherwise users will see an unfamiliar desktop.
+$TDEDIR/bin/kwriteconfig --file kickerrc --group "General" --key "ShowDeepButtons" --type bool "false"
+$TDEDIR/bin/kwriteconfig --file kickerrc --group "General" --key "UseResizeHandle" --type bool "false"
+$TDEDIR/bin/kwriteconfig --file kickerrc --group "General" --key "MenubarPanelBlurred" --type bool "false"
 
 # Perform some nominal update validations.
 # First clean house from any previous failures.
