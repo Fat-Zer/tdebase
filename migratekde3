@@ -113,7 +113,6 @@ if [ -x $BIN_DIR/tde-config ]; then
   echo "Trinity Desktop Environment version is $TDE_VERSION" 1>&2
   export TDEDIR=${BIN_DIR%/bin}
   echo "Trinity Desktop Environment base directory is $TDEDIR" 1>&2
-  TDE_REBRAND=1
 else
   # This might be a Trinity version before kde-config was renamed to tde-config.
   # Don't use kde-config because of a bug that always creates a $TDEHOME directory.
@@ -173,6 +172,16 @@ if [ "$TDEHOME_LINK" != "" ]; then
   fi
 fi
 
+# Trap when the user runs this script while in a Trinity session.
+# Most files can be updated "live" but some can't, such as kdeglobals.
+if [ "$TDE_FULL_SESSION" != "" ] || [ "$TDE_SESSION_UID" != "" ] || [ -f $HOME/.DCOPserver_`uname -n`__* ]; then
+  MESSAGE="You are running this script while a Trinity session is active.\nMost files can be updated \"live\" but some cannot, such as kdeglobals.\n\nThis script might complete successfully and might not. Probably not. :-)"
+  # Are we in X? Display an X dialog explaining breakage.
+  printf "%b" "$MESSAGE\n"
+  Wait_For_Response "Continue?"
+  Proceed_From_Response
+fi
+
 if [ -d "$HOME/.trinity" ] && [ "$BACKUP" = "true" ]; then
   echo "$HOME/.trinity already exists." 1>&2
   echo "User requested a backup copy."
@@ -225,23 +234,29 @@ else
 fi
 
 if [ -n "$KDE3_PROFILE" ] && [ -d "$KDE3_PROFILE" ]; then
-  # Remove any KDE3 "contamination."
+  # Remove KDE3 remnants.
 
   echo "Cleaning temp file locations." 1>&2
+  # All three directories are for temporary files. The cache directory is
+  # intended for persistent temporary data (is expected to remain across reboots
+  # and shutdowns). The other two directories are for non-persistent data and
+  # can be deleted across reboots and shutdowns.
   CACHE_DIR="`readlink $HOME/.trinity/cache-\`uname -n\``"
   SOCKET_DIR="`readlink $HOME/.trinity/socket-\`uname -n\``"
   TMP_DIR="`readlink $HOME/.trinity/tmp-\`uname -n\``"
-  unlink $HOME/.trinity/cache-`uname -n` 2>/dev/null
+  # Delete the non-persistent temporary directories. This is safe at any time.
   unlink $HOME/.trinity/socket-`uname -n` 2>/dev/null
   unlink $HOME/.trinity/tmp-`uname -n` 2>/dev/null
-  if [ -n "$CACHE_DIR" ] && [ -d "$CACHE_DIR" ]; then
-    rm -f ${CACHE_DIR}/ksycoca* 2>/dev/null
-    if [ -n "$TDE_REBRAND" ]; then
-      mkdir `dirname $CACHE_DIR`/tdecache-$USER 2>/dev/null
-      ln -s `dirname $CACHE_DIR`/tdecache-$USER $HOME/.trinity/cache-`uname -n`
-      cp -a $CACHE_DIR/* `dirname $CACHE_DIR`/tdecache-$USER/ 2>/dev/null
-    fi
+  if [ "$SOCKET_DIR" != "" ]; then
+    rm -fr $SOCKET_DIR 2>/dev/null
   fi
+  if [ "$TMP_DIR" != "" ]; then
+    rm -fr $TMP_DIR 2>/dev/null
+  fi
+  # Remove the ksycoca files from the cache directory. The KDE3 and Trinity
+  # cache directories will be linked to the same location, but deleting the
+  # ksycoca files is non-destructive.
+  rm -f $HOME/.trinity/cache-`uname -n`/ksycoca* 2>/dev/null
 
   # Fix config files.
   # Exclude KMail mail files --- we don't want to touch those files.
@@ -389,6 +404,9 @@ if [ -n "$KDE3_PROFILE" ] && [ -d "$KDE3_PROFILE" ]; then
     rm -f kmix.desktop
   )
 
+  # Ensure all KDED services are accounted for in the user's profile. Any that are missing
+  # are defaulted to not auto-loading (false). Refer to bug report 1210. This same test is
+  # performed in the r14-xdg-update script.
   if [ -d $HOME/.trinity/share/services/kded ]; then
     if [ "`find $HOME/.trinity/share/services/kded -name *.desktop`" != "" ]; then
       echo "Validating KDED services."
@@ -400,36 +418,24 @@ if [ -n "$KDE3_PROFILE" ] && [ -d "$KDE3_PROFILE" ]; then
       done
     fi
   fi
+
+  # Preserve kicker/panel icons.
+  if [ -r $HOME/.trinity/share/config/kickerrc ]; then
+    echo "Updating kicker/panel customizations in kickerrc."
+    if [ -r "$HOME/.trinity/share/config/kickerrc" ]; then
+      sed -i "s|/usr/share/|${TDEDIR}/share/|g" "$HOME/.trinity/share/config/kickerrc" 2>/dev/null
+    else
+      echo "kickerrc does not exist."
+    fi
+  fi
+
   echo "Renaming some configuration files and directories."
-  # Don't force renaming in case this script is used to update an existing Trinity profile.
-  if [ -f $HOME/.trinity/share/config/kritarc -o -d $HOME/.trinity/share/apps/krita ]; then
+  # Note: The only rebranding that occurred before starting the R14 branch was krita. All other
+  # rebranding updates belong in the r14-xdg-update script.
+  if [ ! -f $HOME/.trinity/share/config/chalkrc ] && [ -f $HOME/.trinity/share/config/kritarc -o -d $HOME/.trinity/share/apps/krita ]; then
     echo "  krita->chalk"
     mv $HOME/.trinity/share/config/kritarc $HOME/.trinity/share/config/chalkrc 2>/dev/null
     mv $HOME/.trinity/share/apps/krita $HOME/.trinity/share/apps/chalk 2>/dev/null
-  fi
-  if [ "$TDE_REBRAND" != "" ] && [ -f $HOME/.trinity/share/config/kdeprintrc -o -d $HOME/.trinity/share/apps/kdeprint ]; then
-    echo "  kdeprint->tdeprint"
-    mv $HOME/.trinity/share/config/kdeprintrc $HOME/.trinity/share/config/tdeprintrc 2>/dev/null
-    mv $HOME/.trinity/share/apps/kdeprint $HOME/.trinity/share/apps/tdeprint 2>/dev/null
-  fi
-  if [ "$TDE_REBRAND" != "" ] && [ -f $HOME/.trinity/share/config/kdesurc ]; then
-    echo "  kdesurc->tdesurc"
-    mv $HOME/.trinity/share/config/kdesurc $HOME/.trinity/share/config/tdesurc 2>/dev/null
-  fi
-  if [ "$TDE_REBRAND" != "" ] && [ -f $HOME/.trinity/share/config/kdeveloprc ]; then
-    echo "  kdevelop->tdevelop"
-    mv $HOME/.trinity/share/config/kdeveloprc $HOME/.trinity/share/config/tdeveloprc 2>/dev/null
-  fi
-  if [ "$TDE_REBRAND" != "" ] && [ -f $HOME/.trinity/share/config/kwinrc -o -d $HOME/.trinity/share/apps/kwinrulesrc ]; then
-    echo "  kwin->twin"
-    mv $HOME/.trinity/share/config/kwinrc $HOME/.trinity/share/config/twinrc 2>/dev/null
-    mv $HOME/.trinity/share/config/kwinrc.eventsrc $HOME/.trinity/share/config/twinrc.eventsrc 2>/dev/null
-    mv $HOME/.trinity/share/config/kwinrc $HOME/.trinity/share/config/twinrc 2>/dev/null
-    mv $HOME/.trinity/share/apps/kwinrulesrc $HOME/.trinity/share/apps/twinrulesrc 2>/dev/null
-  fi
-  if [ "$TDE_REBRAND" != "" ] && [ -f $HOME/.trinity/share/config/kwin4rc ]; then
-    echo "  kwin4->twin4"
-    mv $HOME/.trinity/share/config/kwin4rc $HOME/.trinity/share/config/twin4rc 2>/dev/null
   fi
   # Note: Don't run kconf_update, which is run automatically when starting TDE.
   # Note: Don't run any profile R14 updates: starttde does that through the r14-xdg-update script.
@@ -444,7 +450,22 @@ fi
 echo
 
 unset KDE3_PROFILE
+unset KDE3_PROFILE_R
 unset TDEHOME_LINK
 unset KICKER_FIREFOX
 unset FIREFOX_PNG_LOCATION
 unset FIREFOX_PNG_LOCATION_NEW
+unset FIREFOX_PNG_LOCATION_NEW_R
+unset SERVICE_NAME
+unset NEW_LINK_PATH
+unset LINK_NAME
+unset AVAILABLE
+unset PROFILE_SIZE
+unset REMAINING_SPACE
+unset BIN_DIR
+unset TDE_VERSION
+unset TDEHOME_LINK
+unset CACHE_DIR
+unset SOCKET_DIR
+unset TMP_DIR
+unset EXIT_CODE
