@@ -2806,11 +2806,19 @@ void Workspace::stopKompmgr()
     kompmgr->disconnect(this, TQT_SLOT(restartKompmgr(KProcess*)));
     options->useTranslucency = FALSE;
     if (popup){ delete popup; popup = 0L; } // to add/remove opacity slider
-    kompmgr->kill();
+    kompmgr->kill(SIGKILL);
     TQByteArray ba;
     TQDataStream arg(ba, IO_WriteOnly);
     arg << "";
     kapp->dcopClient()->emitDCOPSignal("default", "kompmgrStopped()", ba);
+}
+
+void Workspace::kompmgrReloadSettings()
+{
+    if (!kompmgr || !kompmgr->isRunning()) {
+        return;
+    }
+    kompmgr->kill(SIGUSR2);
 }
 
 bool Workspace::kompmgrIsRunning()

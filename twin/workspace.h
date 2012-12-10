@@ -413,7 +413,8 @@ class Workspace : public TQObject, public KWinInterface, public KDecorationDefin
         void restartKompmgr( KProcess *proc );
         void handleKompmgrOutput( KProcess *proc, char *buffer, int buflen);
         void stopKompmgr();
-        // end 
+        void kompmgrReloadSettings();
+        // end
 
     protected:
         bool keyPressMouseEmulation( XKeyEvent& ev );

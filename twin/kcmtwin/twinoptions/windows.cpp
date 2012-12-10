@@ -1357,56 +1357,65 @@ KTranslucencyConfig::KTranslucencyConfig (bool _standAlone, KConfig *_config, TQ
   TQGridLayout *gLay2 = new TQGridLayout(vLay2,6,2);
   gLay2->setColStretch(1,1);
 
-  TQLabel *label2 = new TQLabel(i18n("Base shadow size:"),sGroup);
+  TQLabel *label2 = new TQLabel(i18n("Base shadow radius:"),sGroup);
   gLay2->addWidget(label2,0,0);
+  baseShadowSize = new KIntNumInput(6,sGroup);
+  baseShadowSize->setRange(0,32);
+//   inactiveWindowShadowSize->setSuffix("px");
+  gLay2->addWidget(baseShadowSize,0,1);
+
+  TQLabel *label2a = new TQLabel(i18n("Inactive window shadow size:"),sGroup);
+  gLay2->addWidget(label2a,1,0);
   inactiveWindowShadowSize = new KIntNumInput(6,sGroup);
   inactiveWindowShadowSize->setRange(0,32);
 //   inactiveWindowShadowSize->setSuffix("px");
-  gLay2->addWidget(inactiveWindowShadowSize,0,1);
+  gLay2->addWidget(inactiveWindowShadowSize,1,1);
 
-  TQLabel *label1 = new TQLabel(i18n("Active window shadow size multiplier:"),sGroup);
-  gLay2->addWidget(label1,1,0);
+  TQLabel *label1 = new TQLabel(i18n("Active window shadow size:"),sGroup);
+  gLay2->addWidget(label1,2,0);
   activeWindowShadowSize = new KIntNumInput(12,sGroup);
   activeWindowShadowSize->setRange(0,32);
 //   activeWindowShadowSize->setSuffix("px");
-  gLay2->addWidget(activeWindowShadowSize,1,1);
+  gLay2->addWidget(activeWindowShadowSize,2,1);
 
-  TQLabel *label3 = new TQLabel(i18n("Dock shadow size multiplier:"),sGroup);
-  gLay2->addWidget(label3,2,0);
+  TQLabel *label3 = new TQLabel(i18n("Dock shadow size:"),sGroup);
+  gLay2->addWidget(label3,3,0);
   dockWindowShadowSize = new KIntNumInput(6,sGroup);
   dockWindowShadowSize->setRange(0,32);
 //   dockWindowShadowSize->setSuffix("px");
-  gLay2->addWidget(dockWindowShadowSize,2,1);
+  gLay2->addWidget(dockWindowShadowSize,3,1);
 
-  TQLabel *label3a = new TQLabel(i18n("Menu shadow size multiplier:"),sGroup);
-  gLay2->addWidget(label3a,3,0);
+  TQLabel *label3a = new TQLabel(i18n("Menu shadow size:"),sGroup);
+  gLay2->addWidget(label3a,4,0);
   menuWindowShadowSize = new KIntNumInput(6,sGroup);
   menuWindowShadowSize->setRange(0,32);
 //   menuWindowShadowSize->setSuffix("px");
-  gLay2->addWidget(menuWindowShadowSize,3,1);
+  gLay2->addWidget(menuWindowShadowSize,4,1);
 
-  // Menu shadow settings don't work
+  // FIXME
+  // Menu control does not work!
+  // Menus appear to be controlled by the base shadow radius ONLY
   label3a->hide();
   menuWindowShadowSize->hide();
 
   TQLabel *label4 = new TQLabel(i18n("Vertical offset:"),sGroup);
-  gLay2->addWidget(label4,4,0);
+  gLay2->addWidget(label4,5,0);
   shadowTopOffset = new KIntNumInput(80,sGroup);
   shadowTopOffset->setSuffix("%");
   shadowTopOffset->setRange(-200,200);
-  gLay2->addWidget(shadowTopOffset,4,1);
+  gLay2->addWidget(shadowTopOffset,5,1);
 
   TQLabel *label5 = new TQLabel(i18n("Horizontal offset:"),sGroup);
-  gLay2->addWidget(label5,5,0);
+  gLay2->addWidget(label5,6,0);
   shadowLeftOffset = new KIntNumInput(0,sGroup);
   shadowLeftOffset->setSuffix("%");
   shadowLeftOffset->setRange(-200,200);
-  gLay2->addWidget(shadowLeftOffset,5,1);
+  gLay2->addWidget(shadowLeftOffset,6,1);
 
   TQLabel *label6 = new TQLabel(i18n("Shadow color:"),sGroup);
-  gLay2->addWidget(label6,5,0);
+  gLay2->addWidget(label6,7,0);
   shadowColor = new KColorButton(Qt::black,sGroup);
-  gLay2->addWidget(shadowColor,6,1);
+  gLay2->addWidget(shadowColor,7,1);
   gLay2->setColStretch(1,1);
   vLay2->addSpacing(11);
   removeShadowsOnMove = new TQCheckBox(i18n("Remove shadows on move"),sGroup);
@@ -1468,6 +1477,7 @@ KTranslucencyConfig::KTranslucencyConfig (bool _standAlone, KConfig *_config, TQ
   connect(menuWindowShadowSize, TQT_SIGNAL(valueChanged(int)), TQT_SLOT(changed()));
   connect(activeWindowShadowSize, TQT_SIGNAL(valueChanged(int)), TQT_SLOT(changed()));
   connect(inactiveWindowShadowSize, TQT_SIGNAL(valueChanged(int)), TQT_SLOT(changed()));
+  connect(baseShadowSize, TQT_SIGNAL(valueChanged(int)), TQT_SLOT(changed()));
   connect(shadowTopOffset, TQT_SIGNAL(valueChanged(int)), TQT_SLOT(changed()));
   connect(shadowLeftOffset, TQT_SIGNAL(valueChanged(int)), TQT_SLOT(changed()));
   connect(shadowColor, TQT_SIGNAL(changed(const TQColor&)), TQT_SLOT(changed()));
@@ -1481,6 +1491,7 @@ KTranslucencyConfig::KTranslucencyConfig (bool _standAlone, KConfig *_config, TQ
   connect(useShadows, TQT_SIGNAL(toggled(bool)), menuWindowShadowSize, TQT_SLOT(setEnabled(bool)));
   connect(useShadows, TQT_SIGNAL(toggled(bool)), activeWindowShadowSize, TQT_SLOT(setEnabled(bool)));
   connect(useShadows, TQT_SIGNAL(toggled(bool)), inactiveWindowShadowSize, TQT_SLOT(setEnabled(bool)));
+  connect(useShadows, TQT_SIGNAL(toggled(bool)), baseShadowSize, TQT_SLOT(setEnabled(bool)));
   connect(useShadows, TQT_SIGNAL(toggled(bool)), shadowTopOffset, TQT_SLOT(setEnabled(bool)));
   connect(useShadows, TQT_SIGNAL(toggled(bool)), shadowLeftOffset, TQT_SLOT(setEnabled(bool)));
   connect(useShadows, TQT_SIGNAL(toggled(bool)), shadowColor, TQT_SLOT(setEnabled(bool)));
@@ -1496,6 +1507,7 @@ KTranslucencyConfig::KTranslucencyConfig (bool _standAlone, KConfig *_config, TQ
   connect(disableARGB, TQT_SIGNAL(toggled(bool)), TQT_SLOT(resetKompmgr()));
   connect(useShadows, TQT_SIGNAL(toggled(bool)), TQT_SLOT(resetKompmgr()));
   connect(inactiveWindowShadowSize, TQT_SIGNAL(valueChanged(int)), TQT_SLOT(resetKompmgr()));
+  connect(baseShadowSize, TQT_SIGNAL(valueChanged(int)), TQT_SLOT(resetKompmgr()));
   connect(shadowTopOffset, TQT_SIGNAL(valueChanged(int)), TQT_SLOT(resetKompmgr()));
   connect(shadowLeftOffset, TQT_SIGNAL(valueChanged(int)), TQT_SLOT(resetKompmgr()));
   connect(shadowColor, TQT_SIGNAL(changed(const TQColor&)), TQT_SLOT(resetKompmgr()));
@@ -1536,10 +1548,10 @@ void KTranslucencyConfig::load( void )
   dockWindowOpacity->setValue(config->readNumEntry("DockOpacity",80));
 
   int ass, iss, dss, mss;
-  dss = config->readNumEntry("DockShadowSize", 33);
-  mss = config->readNumEntry("MenuShadowSize", 33);
-  ass = config->readNumEntry("ActiveWindowShadowSize", 133);
-  iss = config->readNumEntry("InactiveWindowShadowSize", 67);
+  dss = config->readNumEntry("DockShadowSize", 0*100);
+  mss = config->readNumEntry("MenuShadowSize", 1*100);
+  ass = config->readNumEntry("ActiveWindowShadowSize", 2*100);
+  iss = config->readNumEntry("InactiveWindowShadowSize", 1*100);
 
   activeWindowOpacity->setEnabled(activeWindowTransparency->isChecked());
   inactiveWindowOpacity->setEnabled(inactiveWindowTransparency->isChecked());
@@ -1552,14 +1564,15 @@ void KTranslucencyConfig::load( void )
   disableARGB->setChecked(conf_.readBoolEntry("DisableARGB",FALSE));
 
   useShadows->setChecked(conf_.readEntry("Compmode","").compare("CompClientShadows") == 0);
-  shadowTopOffset->setValue(-1*(conf_.readNumEntry("ShadowOffsetY",-80)));
-  shadowLeftOffset->setValue(-1*(conf_.readNumEntry("ShadowOffsetX",0)));
+  shadowTopOffset->setValue(-1*(conf_.readNumEntry("ShadowOffsetY",200)));
+  shadowLeftOffset->setValue(-1*(conf_.readNumEntry("ShadowOffsetX",200)));
 
   int ss =  conf_.readNumEntry("ShadowRadius",6);
-  dockWindowShadowSize->setValue((int)(dss*ss/100.0));
-  menuWindowShadowSize->setValue((int)(mss*ss/100.0));
-  activeWindowShadowSize->setValue((int)(ass*ss/100.0));
-  inactiveWindowShadowSize->setValue((int)(iss*ss/100.0));
+  dockWindowShadowSize->setValue((int)(dss/100.0));
+  menuWindowShadowSize->setValue((int)(mss/100.0));
+  activeWindowShadowSize->setValue((int)(ass/100.0));
+  inactiveWindowShadowSize->setValue((int)(iss/100.0));
+  baseShadowSize->setValue((int)(ss));
 
   TQString hex = conf_.readEntry("ShadowColor","#000000");
   uint r, g, b;
@@ -1602,10 +1615,10 @@ void KTranslucencyConfig::save( void )
   // we set inactive windows to 100%, the radius to the inactive window value and adjust the multiplicators for docks and active windows
   // this way the user can set the three values without caring about the radius/multiplicator stuff
    // additionally we find a value between big and small values to have a more smooth appereance
-   config->writeEntry("DockShadowSize",(int)(200.0 * dockWindowShadowSize->value() / (activeWindowShadowSize->value() + inactiveWindowShadowSize->value())));
-   config->writeEntry("MenuShadowSize",(int)(200.0 * menuWindowShadowSize->value() / (activeWindowShadowSize->value() + inactiveWindowShadowSize->value())));
-   config->writeEntry("ActiveWindowShadowSize",(int)(200.0 * activeWindowShadowSize->value() / (activeWindowShadowSize->value() + inactiveWindowShadowSize->value())));
-   config->writeEntry("InactiveWindowShadowSize",(int)(200.0 * inactiveWindowShadowSize->value() / (activeWindowShadowSize->value() + inactiveWindowShadowSize->value())));
+  config->writeEntry("DockShadowSize",(int)(100.0 * dockWindowShadowSize->value()));
+  config->writeEntry("MenuShadowSize",(int)(100.0 * menuWindowShadowSize->value()));
+  config->writeEntry("ActiveWindowShadowSize",(int)(100.0 * activeWindowShadowSize->value()));
+  config->writeEntry("InactiveWindowShadowSize",(int)(100.0 * inactiveWindowShadowSize->value()));
 
   config->writeEntry("RemoveShadowsOnMove",removeShadowsOnMove->isChecked());
   config->writeEntry("RemoveShadowsOnResize",removeShadowsOnResize->isChecked());
@@ -1626,7 +1639,7 @@ void KTranslucencyConfig::save( void )
   TQString hex;
   hex.sprintf("0x%02X%02X%02X", r,g,b);
   conf_->writeEntry("ShadowColor",hex);
-  conf_->writeEntry("ShadowRadius",(activeWindowShadowSize->value() + inactiveWindowShadowSize->value()) / 2);
+  conf_->writeEntry("ShadowRadius",baseShadowSize->value());
   conf_->writeEntry("FadeWindows",fadeInWindows->isChecked());
   conf_->writeEntry("FadeMenuWindows",fadeInMenuWindows->isChecked());
   conf_->writeEntry("FadeTrans",fadeOnOpacityChange->isChecked());
@@ -1644,6 +1657,8 @@ void KTranslucencyConfig::save( void )
   }
   if (useTranslucency->isChecked())
     startKompmgr();
+  else
+    stopKompmgr();
   emit KCModule::changed(false);
 }
 
@@ -1665,12 +1680,13 @@ void KTranslucencyConfig::defaults()
   movingWindowOpacity->setValue(25);
   dockWindowOpacity->setValue(80);
 
-  dockWindowShadowSize->setValue(6);
-  menuWindowShadowSize->setValue(6);
-  activeWindowShadowSize->setValue(12);
-  inactiveWindowShadowSize->setValue(6);
-  shadowTopOffset->setValue(80);
-  shadowLeftOffset->setValue(0);
+  dockWindowShadowSize->setValue(0);
+  menuWindowShadowSize->setValue(1);
+  activeWindowShadowSize->setValue(2);
+  inactiveWindowShadowSize->setValue(1);
+  baseShadowSize->setValue(1);
+  shadowTopOffset->setValue(200);
+  shadowLeftOffset->setValue(200);
 
   activeWindowOpacity->setEnabled(false);
   inactiveWindowOpacity->setEnabled(false);
@@ -1701,10 +1717,13 @@ bool KTranslucencyConfig::kompmgrAvailable()
 
 void KTranslucencyConfig::startKompmgr()
 {
-    bool ret;
-    KProcess proc;
-    proc << "kompmgr";
-    ret = proc.start(KProcess::DontCare);
+    kapp->dcopClient()->send("twin*", "", "startKompmgr()", TQString(""));
+    kapp->dcopClient()->send("twin*", "", "kompmgrReloadSettings()", TQString(""));
+}
+
+void KTranslucencyConfig::stopKompmgr()
+{
+    kapp->dcopClient()->send("twin*", "", "stopKompmgr()", TQString(""));
 }
 
 void KTranslucencyConfig::showWarning(bool alphaActivated)

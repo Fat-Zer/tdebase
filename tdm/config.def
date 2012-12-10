@@ -2045,9 +2045,9 @@ Type: enum
  None/LOGO_NONE: nothing
  Logo/LOGO_LOGO: the image specified by <option>LogoPixmap</option>
  Clock/LOGO_CLOCK: a neat analog clock
-Default: Clock
+Default: None
 User: greeter
-Instance: */Logo
+Instance: */None
 Comment:
  What should be shown in the greeter's logo are:
 Description:
@@ -2153,10 +2153,10 @@ Description:
 
 Key: GreetFont
 Type: string
-Default: "Sans Serif,22,5,0,50,0"
-CDefault: "Serif,20,bold"
+Default: "Sans Serif,10,-1,5,75,0,0,0,0,0"
+CDefault: "Serif,10,bold"
 User: greeter:font
-Instance: #*/"Sans Serif,22,5,0,50,0"
+Instance: #*/"Sans Serif,10,-1,5,75,0,0,0,0,0"
 Comment: &
 Description:
  The font for the greeter headline.

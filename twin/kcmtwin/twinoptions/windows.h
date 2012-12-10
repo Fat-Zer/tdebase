@@ -275,6 +275,7 @@ private:
   KIntNumInput *menuWindowShadowSize;
   KIntNumInput *activeWindowShadowSize;
   KIntNumInput *inactiveWindowShadowSize;
+  KIntNumInput *baseShadowSize;
   KIntNumInput *shadowTopOffset;
   KIntNumInput *shadowLeftOffset;
   KIntNumInput *fadeInSpeed;
@@ -286,9 +287,10 @@ private:
   bool resetKompmgr_;
   bool kompmgrAvailable();
   void startKompmgr();
+  void stopKompmgr();
   bool kompmgrAvailable_;
   KProcess *kompmgr;
-  
+
 private slots:
   void resetKompmgr();
   void showWarning(bool alphaActivated);

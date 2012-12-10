@@ -183,12 +183,12 @@ unsigned long Options::updateSettings()
     keepAboveAsActive = config->readBoolEntry("TreatKeepAboveAsActive", true);
     //TODO: remove this variable
     useTitleMenuSlider = true;
-    activeWindowShadowSize = config->readNumEntry("ActiveWindowShadowSize", 200);
-    inactiveWindowShadowSize = config->readNumEntry("InactiveWindowShadowSize", 100);
-    dockShadowSize = config->readNumEntry("DockShadowSize", 80);
-    menuShadowSize = config->readNumEntry("MenuShadowSize", 80);
-    removeShadowsOnMove = config->readBoolEntry("RemoveShadowsOnMove", true);
-    removeShadowsOnResize = config->readBoolEntry("RemoveShadowsOnResize", true);
+    activeWindowShadowSize = config->readNumEntry("ActiveWindowShadowSize",  2*100);
+    inactiveWindowShadowSize = config->readNumEntry("InactiveWindowShadowSize",  1*100);
+    dockShadowSize = config->readNumEntry("DockShadowSize", 0*100);
+    menuShadowSize = config->readNumEntry("MenuShadowSize", 1*100);
+    removeShadowsOnMove = config->readBoolEntry("RemoveShadowsOnMove", false);
+    removeShadowsOnResize = config->readBoolEntry("RemoveShadowsOnResize", false);
     onlyDecoTranslucent = config->readBoolEntry("OnlyDecoTranslucent",false);
     resetKompmgr = config->readBoolEntry("ResetKompmgr", false);
     if (resetKompmgr)

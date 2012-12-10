@@ -40,6 +40,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include <ksimpleconfig.h>
 #include <kstringhandler.h>
 #include <kdebug.h>
+#include <kdialog.h>
 
 #undef Unsorted // x headers suck - make tqdir.h work with --enable-final
 #include <tqdir.h>
@@ -908,11 +909,21 @@ KStdGreeter::KStdGreeter()
 		complainLabel->setPaletteForegroundColor( Qt::red );
 		inner_box->addWidget( complainLabel );
 	}
+	if (_logoArea == LOGO_NONE) {
+		KSMModalDialogHeader *theader = new KSMModalDialogHeader(this);
+		inner_box->addWidget( theader, AlignCenter );
+	}
 	if (!_greetString.isEmpty()) {
 		TQLabel *welcomeLabel = new TQLabel( _greetString, this );
 		welcomeLabel->setAlignment( AlignCenter );
 		welcomeLabel->setFont( _greetFont );
 		inner_box->addWidget( welcomeLabel );
+		if (_logoArea == LOGO_NONE) {
+			// Match caps lock warning font size
+			TQLabel *spacerLabel = new TQLabel( " ", this );
+			spacerLabel->setFont( _failFont );
+			inner_box->addWidget( spacerLabel, AlignCenter );
+		}
 	}
 
 	switch (_logoArea) {

@@ -277,6 +277,15 @@ get_opacity_percent(Display *dpy, win *w);
 static XserverRegion
 win_extents (Display *dpy, win *w);
 
+static void
+presum_gaussian (conv *map);
+
+static conv *
+make_gaussian_map (Display *dpy, double r);
+
+Picture
+solid_picture (Display *dpy, Bool argb, double a, double r, double g, double b);
+
 CompMode    compMode = CompSimple;
 
 int	    shadowRadius = 12;
@@ -403,6 +412,27 @@ void delete_pid_file()
 #endif
 }
 
+void clear_shadow_cache()
+{
+    win *w;
+
+    for (w = list; w; w = w->next) {
+        if (w->shadow)
+        {
+            XRenderFreePicture (dpy, w->shadow);
+            w->shadow = None;
+            if (w->opacity != OPAQUE && !w->alphaPict)
+                w->alphaPict = solid_picture (dpy, False,
+                    (double) w->opacity / OPAQUE, shadowColor.red, shadowColor.green, shadowColor.blue);
+            if( w->extents != None ) {
+                XFixesDestroyRegion( dpy, w->extents );
+            }
+            w->extents = win_extents (dpy, w);
+            w->damaged = 1; /* redraw */
+	}
+    }
+}
+
 void handle_siguser (int sig)
 {
     int uidnum;
@@ -455,6 +485,19 @@ void handle_siguser (int sig)
         strcat(filename, configfile);
 
         loadConfig(filename); /* reload the configuration file */
+
+        /* set background/shadow picture using the new settings */
+        blackPicture = solid_picture (dpy, True, 1, (double)(shadowColor.red)/0xff, (double)(shadowColor.green)/0xff, (double)(shadowColor.blue)/0xff);
+        if (compMode == CompServerShadows)
+            transBlackPicture = solid_picture (dpy, True, 0.3, 0, 0, 0);
+
+        /* regenerate shadows using the new settings */
+        if (compMode == CompClientShadows)
+        {
+            gaussianMap = make_gaussian_map(dpy, shadowRadius);
+            presum_gaussian (gaussianMap);
+        }
+        clear_shadow_cache();
 
         free(filename);
         filename = NULL;
@@ -1419,7 +1462,6 @@ paint_all (Display *dpy, XserverRegion region)
 		{
 			w->borderClip = XFixesCreateRegion (dpy, 0, 0);
 			XFixesCopyRegion (dpy, w->borderClip, region);
-			XFixesIntersectRegion(dpy, w->borderClip, w->borderClip, w->borderSize);
 		}
 		w->prev_trans = t;
 		t = w;
@@ -2892,6 +2934,8 @@ options[NUMBEROFOPTIONS] = {
 
 void
 setValue(Option option, char *value ){
+	int i;
+
 	switch(option){ /*please keep that upside-down, because this way adding a new option is easier (all in one view)*/
 
 		case FadeDelta:
@@ -2920,7 +2964,7 @@ setValue(Option option, char *value ){
 			break;
 		case ShadowRadius:
 			shadowRadius = atoi(value);
-			break;                    
+			break;
 		case ShadowColor:
 			setShadowColor(value);
 			break;
@@ -2955,12 +2999,18 @@ setValue(Option option, char *value ){
 		case Compmode:
 			if( strcasecmp(value, "CompClientShadows") == 0 ){
 				compMode = CompClientShadows;
+				for (i = 0; i < NUM_WINTYPES; ++i)
+					winTypeShadow[i] = True;
 			}
 			else if( strcasecmp(value, "CompServerShadows") == 0 ){
 				compMode = CompServerShadows;
+				for (i = 0; i < NUM_WINTYPES; ++i)
+					winTypeShadow[i] = True;
 			}
 			else{
 				compMode = CompSimple; /*default*/
+				for (i = 0; i < NUM_WINTYPES; ++i)
+					winTypeShadow[i] = False;
 			}
 			break;
 		case Display_:
