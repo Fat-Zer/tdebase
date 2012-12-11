@@ -2765,8 +2765,10 @@ void Workspace::startKompmgr()
         TQTimer::singleShot( 200, this, TQT_SLOT(startKompmgr()) );
         return;
     }
-    if (!kompmgr || kompmgr->isRunning())
+    if (!kompmgr || kompmgr->isRunning()) {
+        kompmgrReloadSettings();
         return;
+    }
     if (!kompmgr->start(KProcess::OwnGroup, KProcess::Stderr))
     {
         options->useTranslucency = FALSE;
