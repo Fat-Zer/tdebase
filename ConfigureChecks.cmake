@@ -259,8 +259,8 @@ if( BUILD_TDM OR BUILD_KSMSERVER )
 endif( )
 
 
-# tqt-dbus (tdm, ksmserver)
-if( BUILD_TDM OR BUILD_KSMSERVER )
+# dbus-tqt (tdm, ksmserver, kioslaves(media))
+if( BUILD_TDM OR BUILD_KSMSERVER OR (BUILD_KIOSLAVES AND WITH_HAL) )
 
   if( BUILD_KSMSERVER AND WITH_UPOWER )
     pkg_check_modules( DBUS_1_TQT dbus-1-tqt )
