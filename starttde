@@ -15,6 +15,26 @@ if [ -r $HOME/.xprofile ]; then
   source $HOME/.xprofile
 fi
 
+# Some functions to parse and check path correctly ...
+is_in_path() {
+  search="$1"; ifs="$IFS"; IFS=":"; set $PATH; IFS="$ifs"
+  for i in $*; do
+    [ "${i}" = "${search}" ] && return 0
+  done
+  return 1
+}
+
+# Usage: place_before_in_path /opt/trinity/games /usr/games
+place_before_in_path() {
+  insert="$1"; before="$2"; ifs="$IFS"; IFS=":"; set $PATH; IFS="$ifs"
+  NPATH=""
+  for i in $*; do
+    [ "${i}" = "${before}" ] && NPATH="${NPATH}:${insert}"
+    NPATH="${NPATH}:${i}"
+  done
+  export PATH=${NPATH#:}
+}
+
 echo "[starttde] Starting starttde." 1>&2
 echo "[starttde] This script is $0" 1>&2
 
@@ -27,7 +47,7 @@ echo "[starttde] This script is $0" 1>&2
 # defined or defined to point to KDE4 binaries.
 BIN_DIR="`dirname \`readlink -f $0\``"
 if [ -x $BIN_DIR/tde-config ]; then
-  TDE_VERSION="`$BIN_DIR/tde-config --version | grep TDE | awk '{print $2}'`"
+  TDE_VERSION=$($BIN_DIR/tde-config --version | while IFS=: read a b; do [ "${a#TDE}" != "$a" ] && echo $b; done)
   echo "[starttde] TDE version is $TDE_VERSION" 1>&2
   export TDEDIR=${BIN_DIR%/bin}
   echo "[starttde] TDE base directory is $TDEDIR" 1>&2
@@ -103,27 +123,12 @@ else
   # This script and kstandardirs.h and kstandardirs.cpp must match.
   # The latter two must be edited/patched before compiling.
   echo "[starttde] TDEHOME is not set." 1>&2
-  if [ -d $HOME/.trinity ]; then
-    # OK, this one is obvious.
-    export TDEHOME=$HOME/.trinity
-  elif [ -f /usr/bin/kde4-config ]; then
-    # Looks like KDE4 is installed.
-    if [ -d $HOME/.kde ] && [ ! -d $HOME/.trinity ]; then
-      # Presume $HOME/.kde is being used for KDE4 as it already exists.
-      export TDEHOME=$HOME/.trinity
-    else
-      # Presume $HOME/.kde is being used for KDE4 to be on the safe side.
-      export TDEHOME=$HOME/.trinity
-    fi
-  elif [ -f /opt/trinity/bin/tde-config ]; then
-    # Looks like Trinity is installed.
-    export TDEHOME=$HOME/.trinity
-  elif [ -f /usr/bin/tde-config ] && [ -d $HOME/.kde ]; then
+  # Default value: $HOME/.trinity. Most users will use this.
+  export TDEHOME=$HOME/.trinity
+
+  if [ ! -d $HOME/.trinity ] && [ ! -f /usr/bin/kde4-config ] && [ "$TDEDIR"="/usr" ] && [ -d $HOME/.kde ]; then
     # Looks like Trinity is installed and not playing second fiddle to KDE4.
     export TDEHOME=$HOME/.kde
-  else
-    # Resort to this and hope for the best!
-    export TDEHOME=$HOME/.trinity
   fi
   echo "[starttde] Set TDEHOME to $TDEHOME." 1>&2
 fi
@@ -138,30 +143,30 @@ fi
 
 # Modify the following environment variables only as necessary.
 if [ -d $TDEDIR/games ]; then
-  if [ "`echo $PATH | grep \"$TDEDIR/games\"`" = "" ]; then
+  if ! is_in_path "$TDEDIR/games" ; then
     # Respect the traditional path order. Don't blindly place $TDEDIR/games
     # first in the path. Only place $TDEDIR/games before /usr/games. If packagers
     # are adding $TDEDIR/games elsewhere, then they need to ensure the traditional
     # search patch is respected.
     # Is there a way we can check that $TDEDIR/games is always placed only just before
     # /usr/games in the search path?
-    if [ "`echo $PATH | grep \"^\\(.*:\\)\\?/usr/games\\(:.*\\)\\?$\"`" != "" ]; then
-      export PATH="`echo $PATH | sed \"s|^\\(.*:\\)\\?/usr/games\\(:.*\\)\\?$|\\1$TDEDIR/games:/usr/games\\2|\"`"
+    if is_in_path "/usr/games"; then
+      place_before_in_path "$TDEDIR/games" "/usr/games"
     else
       export PATH=$TDEDIR/games:$PATH
     fi
   fi
 fi
 if [ -d $TDEDIR/bin ]; then
-  if [ "`echo $PATH | grep \"$TDEDIR/bin\"`" = "" ]; then
+  if ! is_in_path "$TDEDIR/bin" ]; then
     # Respect the traditional path order. Don't blindly place $TDEDIR/bin
     # first in the path. Only place $TDEDIR/bin before /usr/bin. This order is
     # consistent with tdelibs/tdesu/stub.cpp. If packagers are adding $TDEDIR/bin
     # elsewhere, then they need to ensure the traditional search patch is respected.
     # Is there a way we can check that $TDEDIR/bin is always placed only just before
     # /usr/bin in the search path?
-    if [ "`echo $PATH | grep \"^\\(.*:\\)\\?/usr/bin\\(:.*\\)\\?$\"`" != "" ]; then
-      export PATH="`echo $PATH | sed \"s|^\\(.*:\\)\\?/usr/bin\\(:.*\\)\\?$|\\1$TDEDIR/bin:/usr/bin\\2|\"`"
+    if is_in_path "/usr/bin"; then
+      place_before_in_path "$TDEDIR/bin" "/usr/bin"
     else
       export PATH=$TDEDIR/bin:$PATH
     fi
