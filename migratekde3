@@ -277,6 +277,7 @@ if [ -n "$KDE3_PROFILE" ] && [ -d "$KDE3_PROFILE" ]; then
        -path $HOME/.trinity/share/apps/knotes -prune -o \
        -path $HOME/.trinity/share/apps/kopete/logs -prune -o \
        -type f -print0 | \
+    xargs -r0 grep -ZIFl "/${KDE3_PROFILE}" | \
     xargs -r0 sed -i "s|/${KDE3_PROFILE_R}|/\.trinity|g"
   EXIT_CODE="$?"
   if [ "$EXIT_CODE" = "0" ]; then
@@ -302,6 +303,7 @@ if [ -n "$KDE3_PROFILE" ] && [ -d "$KDE3_PROFILE" ]; then
          -path $HOME/.trinity/share/apps/knotes -prune -o \
          -path $HOME/.trinity/share/apps/kopete/logs -prune -o \
          -type f -print0 | \
+      xargs -r0 grep -ZIFl "/opt/kde/" | \
       xargs -r0 sed -i "s|/opt/kde/|${TDEDIR}/|g"
     EXIT_CODE_1="$?"
     find $HOME/.trinity \
@@ -317,6 +319,7 @@ if [ -n "$KDE3_PROFILE" ] && [ -d "$KDE3_PROFILE" ]; then
          -path $HOME/.trinity/share/apps/knotes -prune -o \
          -path $HOME/.trinity/share/apps/kopete/logs -prune -o \
          -type f -print0 | \
+      xargs -r0 grep -ZIFl "/opt/kde3/" | \
       xargs -r0 sed -i "s|/opt/kde3/|${TDEDIR}/|g"
     EXIT_CODE_2="$?"
     if [ "$EXIT_CODE_1" = "0" ] && [ "$EXIT_CODE_2" = "0" ]; then
@@ -344,6 +347,7 @@ if [ -n "$KDE3_PROFILE" ] && [ -d "$KDE3_PROFILE" ]; then
          -path $HOME/.trinity/share/apps/knotes -prune -o \
          -path $HOME/.trinity/share/apps/kopete/logs -prune -o \
          -type f -print0 | \
+      xargs -r0 grep -ZIFl "/usr/share/" | \
       xargs -r0 sed -i "s|/usr/share/|${TDEDIR}/share/|g"
     if [ "$?" = "0" ]; then
       if [ "$FIREFOX_PNG_LOCATION" != "" ]; then
@@ -363,6 +367,7 @@ if [ -n "$KDE3_PROFILE" ] && [ -d "$KDE3_PROFILE" ]; then
   # This needs improvement for apps not in /usr/bin.
   echo "Attempting to update *.desktop files in Autostart." 1>&2
   find $HOME/.trinity/Autostart -! -type l -type f -print0 | \
+    xargs -r0 grep -ZIFl "/usr/bin/" | \
     xargs -r0 sed -i "s|/usr/bin/|${TDEDIR}/bin/|g"
   echo "Attempting to update sym links in Autostart." 1>&2
   ( cd $HOME/.trinity/Autostart
