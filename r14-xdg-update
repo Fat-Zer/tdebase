@@ -320,18 +320,27 @@ fi
 
 Message_Prefix
 echo "Updating *.desktop files."
-find "$PROFILE_DIR" -name "*.desktop" -exec sed -i 's|X-KDE-|X-TDE-|g' {} \; 2>/dev/null
-find "$PROFILE_DIR" -name "*.desktop" -exec sed -i 's|KDE\;|TDE\;|g' {} \; 2>/dev/null
-find "$USER_DIR/.local" -name "*.desktop" -exec sed -i 's|X-KDE-|X-TDE-|g' {} \; 2>/dev/null
-find "$USER_DIR/.local" -name "*.desktop" -exec sed -i 's|KDE\;|TDE\;|g' {} \; 2>/dev/null
+find "$PROFILE_DIR" "$USER_DIR/.local" -name "*.desktop" -print0 2>/dev/null | \
+  xargs -r0 grep -ZIl "\(X-KDE-\|KDE;\)" | \
+  xargs -r0 sed -i -e "s|X-KDE-|X-TDE-|g" -e "s|KDE;|TDE;|g"
 Message_Prefix
 echo "Updating references of $TDEDIR/share/applications/kde to share/applications/tde."
 # Exclude KMail mail files --- we don't want to touch those files.
-if [ -d "$PROFILE_DIR/share/apps/kmail/mail" ]; then
-  find "$PROFILE_DIR" -path "$PROFILE_DIR/share/apps/kmail/mail" -prune -o -type f -exec sed -i "s|$TDEDIR/share/applications/kde|$TDEDIR/share/applications/tde|g" {} \; 2>/dev/null
-else
-  find "$PROFILE_DIR" -type f -exec sed -i "s|$TDEDIR/share/applications/kde|$TDEDIR/share/applications/tde|g" {} \; 2>/dev/null
-fi
+find "$PROFILE_DIR" \
+     -path $PROFILE_DIR/share/apps/amarok/albumcovers -prune -o \
+     -path $PROFILE_DIR/share/apps/basket/baskets -prune -o \
+     -path $PROFILE_DIR/share/apps/juk/covers -prune -o \
+     -path $PROFILE_DIR/share/apps/kget/logs -prune -o \
+     -path $PROFILE_DIR/share/apps/kmail/autosave -prune -o \
+     -path $PROFILE_DIR/share/apps/kmail/dimap -prune -o \
+     -path $PROFILE_DIR/share/apps/kmail/imap -prune -o \
+     -path $PROFILE_DIR/share/apps/kmail/mail -prune -o \
+     -path $PROFILE_DIR/share/apps/kmail/search -prune -o \
+     -path $PROFILE_DIR/share/apps/knotes -prune -o \
+     -path $PROFILE_DIR/share/apps/kopete/logs -prune -o \
+     -type f -print0 2>/dev/null | \
+  xargs -r0 grep -ZIFl "$TDEDIR/share/applications/kde" | \
+  xargs -r0 sed -i "s|$TDEDIR/share/applications/kde|$TDEDIR/share/applications/tde|g"
 
 # Preserve keyboard shortcuts and input actions.
 if [ -r "$PROFILE_DIR/share/config/khotkeysrc" ]; then
@@ -503,6 +512,9 @@ $TDEDIR/bin/kwriteconfig --file kickerrc --group "General" --key "MenubarPanelBl
 
 # Perform some nominal update validations.
 # First clean house from any previous failures.
+if [ -z "$CACHE_DIR" ]; then
+  CACHE_DIR=$PROFILE_DIR
+fi
 if [ -d "$CACHE_DIR" ]; then
   rm -f ${CACHE_DIR}/${SCRIPT_NAME}-test*.txt 2>/dev/null
 else
@@ -513,7 +525,8 @@ fi
 # This first test includes *.desktop files in the profile Autostart directory.
 TEST_NUM="1"
 R14_UPDATE_TEST1=""
-find "$PROFILE_DIR" -name "*.desktop" -exec grep -l "X-KDE" {} \; &>${CACHE_DIR}/${SCRIPT_NAME}-test${TEST_NUM}.txt
+find "$PROFILE_DIR" -name "*.desktop" -print0 2>/dev/null | \
+  xargs -r0 grep -IFl "X-KDE-" >${CACHE_DIR}/${SCRIPT_NAME}-test${TEST_NUM}.txt
 if [ -s ${CACHE_DIR}/${SCRIPT_NAME}-test${TEST_NUM}.txt ]; then
   R14_UPDATE_TEST1="failed"
   MESSAGE="Some Trinity profile R14 XDG compliance updates failed.\n\n(Check *.desktop files for 'X-KDE' in\n${CACHE_DIR}/${SCRIPT_NAME}-test${TEST_NUM}.txt.)"
@@ -524,7 +537,8 @@ fi
 
 TEST_NUM="2"
 R14_UPDATE_TEST2=""
-find $PROFILE_DIR -name "*.desktop" -exec grep -l "KDE;" {} \; &>${CACHE_DIR}/${SCRIPT_NAME}-test${TEST_NUM}.txt
+find "$PROFILE_DIR" -name "*.desktop" -print0 2>/dev/null | \
+  xargs -r0 grep -IFl "KDE;" >${CACHE_DIR}/${SCRIPT_NAME}-test${TEST_NUM}.txt
 if [ -s ${CACHE_DIR}/${SCRIPT_NAME}-test${TEST_NUM}.txt ]; then
   R14_UPDATE_TEST2="failed"
   MESSAGE="Some Trinity profile R14 XDG compliance updates failed.\n\n(Check *.desktop files for 'KDE;' in\n${CACHE_DIR}/${SCRIPT_NAME}-test${TEST_NUM}.txt.)"
@@ -534,11 +548,20 @@ else
 fi
 TEST_NUM="3"
 R14_UPDATE_TEST3=""
-if [ -d "$PROFILE_DIR/share/apps/kmail/mail" ]; then
-  find "$PROFILE_DIR" -path "$PROFILE_DIR/share/apps/kmail/mail" -prune -o -type f -exec grep -l "$TDEDIR/share/applications/kde" {} \; &>${CACHE_DIR}/${SCRIPT_NAME}-test${TEST_NUM}.txt
-else
-  find "$PROFILE_DIR" -type f -exec grep -l "$TDEDIR/share/applications/kde" {} \; &>${CACHE_DIR}/${SCRIPT_NAME}-test${TEST_NUM}.txt
-fi
+find "$PROFILE_DIR" \
+     -path $PROFILE_DIR/share/apps/amarok/albumcovers -prune -o \
+     -path $PROFILE_DIR/share/apps/basket/baskets -prune -o \
+     -path $PROFILE_DIR/share/apps/juk/covers -prune -o \
+     -path $PROFILE_DIR/share/apps/kget/logs -prune -o \
+     -path $PROFILE_DIR/share/apps/kmail/autosave -prune -o \
+     -path $PROFILE_DIR/share/apps/kmail/dimap -prune -o \
+     -path $PROFILE_DIR/share/apps/kmail/imap -prune -o \
+     -path $PROFILE_DIR/share/apps/kmail/mail -prune -o \
+     -path $PROFILE_DIR/share/apps/kmail/search -prune -o \
+     -path $PROFILE_DIR/share/apps/knotes -prune -o \
+     -path $PROFILE_DIR/share/apps/kopete/logs -prune -o \
+     -type f -print0 2>/dev/null | \
+  xargs -r0 grep -IFl "$TDEDIR/share/applications/kde" >${CACHE_DIR}/${SCRIPT_NAME}-test${TEST_NUM}.txt
 if [ -s ${CACHE_DIR}/${SCRIPT_NAME}-test${TEST_NUM}.txt ]; then
   R14_UPDATE_TEST3="failed"
   MESSAGE="Some Trinity profile R14 XDG compliance updates failed.\n\n(Check files for '$TDEDIR/share/applications/kde' in\n${CACHE_DIR}/${SCRIPT_NAME}-test${TEST_NUM}.txt.)"
