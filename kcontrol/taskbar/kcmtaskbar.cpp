@@ -118,6 +118,25 @@ TQStringList TaskbarConfig::i18nGroupModeList()
    return i18nList;
 }
 
+// These are the strings that are actually stored in the config file.
+const TQStringList& TaskbarConfig::showTaskStatesList()
+{
+    static TQStringList list(
+            TQStringList() << I18N_NOOP("Any") << I18N_NOOP("Only Stopped")
+            << I18N_NOOP("Only Running"));
+    return list;
+}
+
+// Get a translated version of the above string list.
+TQStringList TaskbarConfig::i18nShowTaskStatesList()
+{
+   TQStringList i18nList;
+   for( TQStringList::ConstIterator it = showTaskStatesList().begin(); it != showTaskStatesList().end(); ++it ) {
+      i18nList << i18n((*it).latin1());
+   }
+   return i18nList;
+}
+
 TaskbarConfig::TaskbarConfig(TQWidget *parent, const char* name, const TQStringList&)
   : KCModule(TaskBarFactory::instance(), parent, name)
 {
@@ -151,6 +170,7 @@ TaskbarConfig::TaskbarConfig(TQWidget *parent, const char* name, const TQStringL
     m_widget->kcfg_MiddleButtonAction->insertStringList(list);
     m_widget->kcfg_RightButtonAction->insertStringList(list);
     m_widget->kcfg_GroupTasks->insertStringList(i18nGroupModeList());
+    m_widget->kcfg_ShowTaskStates->insertStringList(i18nShowTaskStatesList());
 
     connect(m_widget->kcfg_GroupTasks, TQT_SIGNAL(activated(int)),
             this, TQT_SLOT(slotUpdateComboBox()));

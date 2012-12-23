@@ -65,6 +65,7 @@ public:
     bool onCurrentDesktop();
     bool isIconified();
     bool isOnScreen();
+    bool isHidden();
 
     TQString id();
     int desktop();

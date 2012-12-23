@@ -53,12 +53,13 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 TaskBar::TaskBar( TQWidget *parent, const char *name )
     : Panner( parent, name ),
       m_showAllWindows(false),
+      m_cycleWheel(false),
       m_currentScreen(-1),
       m_showOnlyCurrentScreen(false),
       m_sortByDesktop(false),
-      m_cycleWheel(false),
       m_showIcon(false),
       m_showOnlyIconified(false),
+      m_showTaskStates(0),
       m_textShadowEngine(0),
       m_ignoreUpdates(false),
       m_relayoutTimer(0, "TaskBar::m_relayoutTimer")
@@ -237,12 +238,14 @@ void TaskBar::configure()
     bool wasCycleWheel = m_cycleWheel;
     bool wasShowIcon = m_showIcon;
     bool wasShowOnlyIconified = m_showOnlyIconified;
+    int  wasShowTaskStates = m_showTaskStates;
 
     m_showAllWindows = TaskBarSettings::showAllWindows();
     m_sortByDesktop = m_showAllWindows && TaskBarSettings::sortByDesktop();
     m_showIcon = TaskBarSettings::showIcon();
     m_showOnlyIconified = TaskBarSettings::showOnlyIconified();
     m_cycleWheel = TaskBarSettings::cycleWheel();
+    m_showTaskStates = TaskBarSettings::showTaskStates();
 
     m_currentScreen = -1;    // Show all screens or re-get our screen
     m_showOnlyCurrentScreen = (TaskBarSettings::showCurrentScreenOnly() &&
@@ -266,7 +269,8 @@ void TaskBar::configure()
         wasSortByDesktop != m_sortByDesktop ||
         wasShowIcon != m_showIcon ||
         wasCycleWheel != m_cycleWheel ||
-        wasShowOnlyIconified != m_showOnlyIconified)
+        wasShowOnlyIconified != m_showOnlyIconified ||
+        wasShowTaskStates != m_showTaskStates)
     {
         // relevant settings changed, update our task containers
         for (TaskContainer::Iterator it = containers.begin();
@@ -597,7 +601,8 @@ void TaskBar::windowChanged(Task::Ptr task)
     if (!container ||
         (!m_showAllWindows &&
          !container->onCurrentDesktop() &&
-         !container->isVisibleTo(this)))
+         !container->isVisibleTo(this)) ||
+        container->isHidden())
     {
         return;
     }
@@ -927,7 +932,10 @@ int TaskBar::containerCount() const
         if ((m_showAllWindows || (*it)->onCurrentDesktop()) &&
             ((showScreen() == -1) || ((*it)->isOnScreen())))
         {
-            i++;
+            if (!(*it)->isHidden())
+            {
+                i++;
+            }
         }
     }
 
@@ -945,7 +953,10 @@ int TaskBar::taskCount() const
         if ((m_showAllWindows || (*it)->onCurrentDesktop()) &&
             ((showScreen() == -1) || ((*it)->isOnScreen())))
         {
-            i += (*it)->filteredTaskCount();
+            if (!(*it)->isHidden())
+            {
+                i += (*it)->filteredTaskCount();
+            }
         }
     }
 
@@ -1048,7 +1059,8 @@ TaskContainer::List TaskBar::filteredContainers()
         TaskContainer* c = *it;
         if ((m_showAllWindows || c->onCurrentDesktop()) &&
             (!m_showOnlyIconified || c->isIconified()) &&
-            ((showScreen() == -1) || c->isOnScreen()))
+            ((showScreen() == -1) || c->isOnScreen()) &&
+            (!c->isHidden()))
         {
             list.append(c);
             c->show();

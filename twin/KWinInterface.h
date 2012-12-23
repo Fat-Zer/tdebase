@@ -15,6 +15,7 @@ class KWinInterface : virtual public DCOPObject
     virtual ASYNC killWindowId(unsigned long winId) = 0;
     virtual ASYNC suspendWindowId(unsigned long winId) = 0;
     virtual ASYNC resumeWindowId(unsigned long winId) = 0;
+    virtual bool isResumeableWindowID(unsigned long winId) = 0;
     virtual void refresh() = 0;
     virtual void doNotManage(TQString)= 0;
     virtual void showWindowMenuAt(unsigned long winId, int x, int y)= 0;

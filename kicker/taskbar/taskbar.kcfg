@@ -37,6 +37,22 @@
             <label>Group similar tasks:</label>
             <whatsthis>The taskbar can group similar windows into single buttons. When one of these window group buttons are clicked on a menu appears showing all the windows in that group. This can be especially useful with the <em>Show all windows</em> option.\n\nYou can set the taskbar to <strong>Never</strong> group windows, to <strong>Always</strong> group windows or to group windows only <strong>When the Taskbar is Full</strong>.\n\nBy default the taskbar groups windows when it is full.</whatsthis>
         </entry>
+        <entry key="ShowTaskStates" type="Enum" >
+            <choices>
+                <choice name="ShowAll">
+                    <label>Any</label>
+                </choice>
+                <choice name="ShowStopped">
+                    <label>Only Stopped</label>
+                </choice>
+                <choice name="ShowRunning">
+                    <label>Only Running</label>
+                </choice>
+            </choices>
+	    <default>ShowAll</default>
+            <label>Show tasks with state:</label>
+	    <whatsthis>The taskbar can show and/or hide tasks based on their current process state.  Select <em>Any</em> to show all tasks regardless of current state.</whatsthis>
+        </entry>
         <entry key="SortByDesktop" type="Bool" >
             <default>true</default>
             <label>Sort windows by desktop</label>
