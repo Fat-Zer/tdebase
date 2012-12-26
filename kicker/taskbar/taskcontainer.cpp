@@ -34,6 +34,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <tqstyle.h>
 #include <tqstylesheet.h>
 #include <tqtooltip.h>
+#include <tqfile.h>
 
 #include <kapplication.h>
 #include <kdebug.h>
@@ -42,6 +43,12 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <kiconeffect.h>
 #include <kiconloader.h>
 #include <kimageeffect.h>
+
+#ifdef Q_WS_X11
+#include <X11/Xlib.h>
+#include <netwm.h>
+#include <fixx11h.h>
+#endif
 
 #include "global.h"
 #include "kickerSettings.h"
@@ -53,6 +60,57 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #include "taskcontainer.h"
 #include "taskcontainer.moc"
+
+static Bool netwm_atoms_created = False;
+static Atom net_wm_pid = 0;
+
+static const int netAtomCount = 1;
+static void create_atoms(Display *d) {
+    static const char * const names[netAtomCount] =
+    {
+	"_NET_WM_PID"
+	    };
+
+    Atom atoms[netAtomCount], *atomsp[netAtomCount] =
+    {
+	&net_wm_pid
+	    };
+
+    assert( !netwm_atoms_created );
+
+    int i = netAtomCount;
+    while (i--)
+	atoms[i] = 0;
+
+    XInternAtoms(d, (char **) names, netAtomCount, False, atoms);
+
+    i = netAtomCount;
+    while (i--)
+	*atomsp[i] = atoms[i];
+
+    netwm_atoms_created = True;
+}
+
+bool is_process_resumable(pid_t pid) {
+	TQFile procStatFile(TQString("/proc/%1/stat").arg(pid));
+	if (procStatFile.open(IO_ReadOnly)) {
+		TQByteArray statRaw = procStatFile.readAll();
+		procStatFile.close();
+		TQString statString(statRaw);
+		TQStringList statFields = TQStringList::split(" ", statString, TRUE);
+		TQString tcomm = statFields[1];
+		TQString state = statFields[2];
+		if( state == "T" ) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+	else {
+		return false;
+	}
+}
 
 TaskContainer::TaskContainer(Task::Ptr task, TaskBar* bar,
                              TQWidget *parent, const char *name)
@@ -117,6 +175,8 @@ TaskContainer::TaskContainer(Startup::Ptr startup, PixmapList& startupFrames,
 
 void TaskContainer::init()
 {
+    if (!netwm_atoms_created) create_atoms(TQPaintDevice::x11AppDisplay());
+
     setWFlags(TQt::WNoAutoErase);
     setBackgroundMode(NoBackground);
     animBg = TQPixmap(16, 16);
@@ -430,6 +490,11 @@ bool TaskContainer::contains(WId win)
 bool TaskContainer::isEmpty()
 {
     return (tasks.isEmpty() && !m_startup);
+}
+
+bool TaskContainer::isHidden()
+{
+    return ((m_filteredTasks.count() < 1) && !m_startup);
 }
 
 TQString TaskContainer::id()
@@ -1477,7 +1542,58 @@ void TaskContainer::updateFilteredTaskList()
         if ((taskBar->showAllWindows() || t->isOnCurrentDesktop()) &&
             (!TaskBarSettings::showOnlyIconified() || t->isIconified()))
         {
-            m_filteredTasks.append(t);
+            pid_t pid = 0;
+#ifdef Q_WS_X11
+            Atom type_ret;
+            int format_ret;
+            unsigned long nitems_ret = 0, unused = 0;
+            unsigned char *data_ret = 0;
+            if (XGetWindowProperty(TQPaintDevice::x11AppDisplay(), t->window(), net_wm_pid, 0l, 1l,
+                                   False, XA_CARDINAL, &type_ret, &format_ret,
+                                   &nitems_ret, &unused, &data_ret) == Success) {
+                if (type_ret == XA_CARDINAL && format_ret == 32 && nitems_ret == 1) {
+                    pid = *((long *) data_ret);
+                }
+                if ( data_ret )
+                    XFree(data_ret);
+            }
+#endif
+            if (pid < 0) {
+                m_filteredTasks.append(t);
+            }
+            else if (TaskBarSettings::showTaskStates() != TaskBarSettings::ShowAll) {
+                if (is_process_resumable(pid)) {
+                    if (TaskBarSettings::showTaskStates() == TaskBarSettings::ShowAll) {
+                        m_filteredTasks.append(t);
+                    }
+                    else if (TaskBarSettings::showTaskStates() == TaskBarSettings::ShowStopped) {
+                        m_filteredTasks.append(t);
+                    }
+                    else if (TaskBarSettings::showTaskStates() == TaskBarSettings::ShowRunning) {
+                        t->publishIconGeometry( TQRect());
+                    }
+                    else {
+                        m_filteredTasks.append(t);
+                    }
+                }
+                else {
+                    if (TaskBarSettings::showTaskStates() == TaskBarSettings::ShowAll) {
+                        m_filteredTasks.append(t);
+                    }
+                    else if (TaskBarSettings::showTaskStates() == TaskBarSettings::ShowStopped) {
+                        t->publishIconGeometry( TQRect());
+                    }
+                    else if (TaskBarSettings::showTaskStates() == TaskBarSettings::ShowRunning) {
+                        m_filteredTasks.append(t);
+                    }
+                    else {
+                        m_filteredTasks.append(t);
+                    }
+                }
+            }
+            else {
+                m_filteredTasks.append(t);
+            }
         }
         else
         {

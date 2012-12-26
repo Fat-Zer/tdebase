@@ -96,9 +96,10 @@ class Workspace : public TQObject, public KWinInterface, public KDecorationDefin
         /**
          * @internal
          */
-        void killWindowId( Window window);
-        void suspendWindowId( Window window);
-        void resumeWindowId( Window window);
+        void killWindowId( Window window );
+        void suspendWindowId( Window window );
+        void resumeWindowId( Window window );
+        bool isResumeableWindowID( Window window );
 
         void killWindow() { slotKillWindow(); }
         void suspendWindow() { slotSuspendWindow(); }

@@ -73,6 +73,8 @@ private:
     static TQStringList i18nActionList();
     static const TQStringList& groupModeList();
     static TQStringList i18nGroupModeList();
+    static const TQStringList& showTaskStatesList();
+    static TQStringList i18nShowTaskStatesList();
     TaskbarConfigUI *m_widget;
 };
 

@@ -107,13 +107,40 @@ By default the taskbar groups windows when it is full.</string>
                 </widget>
                 <widget class="TQLabel" row="7" column="0" rowspan="1" colspan="2">
                     <property name="name">
-                        <cstring>groupTasksLabel</cstring>
+                        <cstring>showTaskStatesLabel</cstring>
                     </property>
                     <property name="text">
                         <string>&amp;Group similar tasks:</string>
                     </property>
                     <property name="buddy" stdset="0">
-                        <cstring>kcfg_GroupTasks</cstring>
+                        <cstring>kcfg_ShowTaskStates</cstring>
+                    </property>
+                </widget>
+                <widget class="TQComboBox" row="8" column="2">
+                    <property name="name">
+                        <cstring>kcfg_ShowTaskStates</cstring>
+                    </property>
+                    <property name="sizePolicy">
+                        <sizepolicy>
+                            <hsizetype>7</hsizetype>
+                            <vsizetype>0</vsizetype>
+                            <horstretch>0</horstretch>
+                            <verstretch>0</verstretch>
+                        </sizepolicy>
+                    </property>
+                    <property name="whatsThis" stdset="0">
+			    <string>The taskbar can show and/or hide tasks based on their current process state.  Select &lt;em&gt;Any&lt;/em&gt; to show all tasks regardless of current state.</string>
+                    </property>
+                </widget>
+                <widget class="TQLabel" row="8" column="0" rowspan="1" colspan="2">
+                    <property name="name">
+                        <cstring>groupTasksLabel</cstring>
+                    </property>
+                    <property name="text">
+			    <string>&amp;Show tasks with state:</string>
+                    </property>
+                    <property name="buddy" stdset="0">
+                        <cstring>kcfg_ShowTaskStates</cstring>
                     </property>
                 </widget>
                 <widget class="TQCheckBox" row="4" column="0" rowspan="1" colspan="3">
@@ -161,12 +188,12 @@ By default this option is selected.</string>
 By default, this option is selected and all windows are shown.</string>
                     </property>
                 </widget>
-                <widget class="TQComboBox" row="8" column="2">
+                <widget class="TQComboBox" row="9" column="2">
                     <property name="name">
                         <cstring>appearance</cstring>
                     </property>
                 </widget>
-                <widget class="TQLabel" row="8" column="0" rowspan="1" colspan="2">
+                <widget class="TQLabel" row="9" column="0" rowspan="1" colspan="2">
                     <property name="name">
                         <cstring>textLabel1</cstring>
                     </property>
@@ -177,7 +204,7 @@ By default, this option is selected and all windows are shown.</string>
                         <cstring>appearance</cstring>
                     </property>
                 </widget>
-                <widget class="TQCheckBox" row="9" column="0" rowspan="1" colspan="2">
+                <widget class="TQCheckBox" row="10" column="0" rowspan="1" colspan="2">
                     <property name="name">
                         <cstring>kcfg_UseCustomColors</cstring>
                     </property>
@@ -191,7 +218,7 @@ By default, this option is selected and all windows are shown.</string>
                         <bool>true</bool>
                     </property>
                 </widget>
-                <widget class="TQLayoutWidget" row="10" column="0" rowspan="1" colspan="3">
+                <widget class="TQLayoutWidget" row="11" column="0" rowspan="1" colspan="3">
                     <property name="name">
                         <cstring>layout9</cstring>
                     </property>
@@ -199,23 +226,17 @@ By default, this option is selected and all windows are shown.</string>
                         <property name="name">
                             <cstring>unnamed</cstring>
                         </property>
-                        <spacer row="1" column="2">
+                        <widget class="TQLabel" row="0" column="0">
                             <property name="name">
-                                <cstring>spacer11_2</cstring>
+                                <cstring>inactiveTaskTextColorLabel</cstring>
                             </property>
-                            <property name="orientation">
-                                <enum>Horizontal</enum>
+                            <property name="text">
+                                <string>Inacti&amp;ve task text color:</string>
                             </property>
-                            <property name="sizeType">
-                                <enum>Expanding</enum>
+                            <property name="buddy" stdset="0">
+                                <cstring>kcfg_InactiveTaskTextColor</cstring>
                             </property>
-                            <property name="sizeHint">
-                                <size>
-                                    <width>191</width>
-                                    <height>20</height>
-                                </size>
-                            </property>
-                        </spacer>
+                        </widget>
                         <widget class="KColorButton" row="0" column="1">
                             <property name="name">
                                 <cstring>kcfg_InactiveTaskTextColor</cstring>
@@ -241,45 +262,7 @@ By default, this option is selected and all windows are shown.</string>
                                 </size>
                             </property>
                         </spacer>
-                        <widget class="KColorButton" row="2" column="1">
-                            <property name="name">
-                                <cstring>kcfg_TaskBackgroundColor</cstring>
-                            </property>
-                            <property name="text">
-                                <string></string>
-                            </property>
-                        </widget>
-                        <widget class="TQLabel" row="2" column="0">
-                            <property name="name">
-                                <cstring>taskBackgroundColorLabel</cstring>
-                            </property>
-                            <property name="text">
-                                <string>&amp;Background color:</string>
-                            </property>
-                            <property name="buddy" stdset="0">
-                                <cstring>kcfg_TaskBackgroundColor</cstring>
-                            </property>
-                        </widget>
-                        <widget class="KColorButton" row="1" column="1">
-                            <property name="name">
-                                <cstring>kcfg_ActiveTaskTextColor</cstring>
-                            </property>
-                            <property name="text">
-                                <string></string>
-                            </property>
-                        </widget>
-                        <widget class="TQLabel" row="0" column="0">
-                            <property name="name">
-                                <cstring>inactiveTaskTextColorLabel</cstring>
-                            </property>
-                            <property name="text">
-                                <string>Inacti&amp;ve task text color:</string>
-                            </property>
-                            <property name="buddy" stdset="0">
-                                <cstring>kcfg_InactiveTaskTextColor</cstring>
-                            </property>
-                        </widget>
-                        <widget class="TQLabel" row="1" column="0">
+                        <widget class="TQLabel" row="0" column="3">
                             <property name="name">
                                 <cstring>activeTaskTextColorLabel</cstring>
                             </property>
@@ -290,7 +273,51 @@ By default, this option is selected and all windows are shown.</string>
                                 <cstring>kcfg_ActiveTaskTextColor</cstring>
                             </property>
                         </widget>
-                        <spacer row="2" column="2">
+                        <widget class="KColorButton" row="0" column="4">
+                            <property name="name">
+                                <cstring>kcfg_ActiveTaskTextColor</cstring>
+                            </property>
+                            <property name="text">
+                                <string></string>
+                            </property>
+                        </widget>
+                        <spacer row="0" column="5">
+                            <property name="name">
+                                <cstring>spacer11_2</cstring>
+                            </property>
+                            <property name="orientation">
+                                <enum>Horizontal</enum>
+                            </property>
+                            <property name="sizeType">
+                                <enum>Expanding</enum>
+                            </property>
+                            <property name="sizeHint">
+                                <size>
+                                    <width>191</width>
+                                    <height>20</height>
+                                </size>
+                            </property>
+                        </spacer>
+                        <widget class="TQLabel" row="0" column="6">
+                            <property name="name">
+                                <cstring>taskBackgroundColorLabel</cstring>
+                            </property>
+                            <property name="text">
+                                <string>&amp;Background color:</string>
+                            </property>
+                            <property name="buddy" stdset="0">
+                                <cstring>kcfg_TaskBackgroundColor</cstring>
+                            </property>
+                        </widget>
+                        <widget class="KColorButton" row="0" column="7">
+                            <property name="name">
+                                <cstring>kcfg_TaskBackgroundColor</cstring>
+                            </property>
+                            <property name="text">
+                                <string></string>
+                            </property>
+                        </widget>
+                        <spacer row="0" column="8">
                             <property name="name">
                                 <cstring>spacer12</cstring>
                             </property>
@@ -471,6 +498,7 @@ By default, this option is selected and all windows are shown.</string>
     <tabstop>kcfg_ShowIcon</tabstop>
     <tabstop>kcfg_ShowWindowListBtn</tabstop>
     <tabstop>kcfg_GroupTasks</tabstop>
+    <tabstop>kcfg_ShowTaskStates</tabstop>
     <tabstop>appearance</tabstop>
     <tabstop>kcfg_UseCustomColors</tabstop>
     <tabstop>kcfg_InactiveTaskTextColor</tabstop>

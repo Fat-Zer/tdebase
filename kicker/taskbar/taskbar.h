@@ -110,13 +110,14 @@ private:
 
     bool			blocklayout;
     bool			m_showAllWindows;
-    bool      m_cycleWheel;
+    bool			m_cycleWheel;
     // The screen to show, -1 for all screens
     int 			m_currentScreen;
     bool			m_showOnlyCurrentScreen;
     bool			m_sortByDesktop;
     bool			m_showIcon;
     bool			m_showOnlyIconified;
+    int				m_showTaskStates;
     ArrowType 			arrowType;
     TaskContainer::List		containers;
     TaskContainer::List		m_hiddenContainers;
@@ -127,10 +128,10 @@ private:
     bool                        isGrouping;
     void                        reGroup();
     KGlobalAccel*               keys;
-    KTextShadowEngine* m_textShadowEngine;
-    TQTimer m_relayoutTimer;
-    bool m_ignoreUpdates;
-    TQImage m_blendGradient;
+    KTextShadowEngine*		m_textShadowEngine;
+    bool			m_ignoreUpdates;
+    TQTimer			m_relayoutTimer;
+    TQImage			m_blendGradient;
 };
 
 #endif

@@ -1974,6 +1974,37 @@ void Workspace::resumeWindowId( Window window_to_resume )
     }
 
 
+bool Workspace::isResumeableWindowID( Window window_to_check )
+    {
+    if( window_to_check == None )
+        return false;
+    Window window = window_to_check;
+    Client* client = NULL;
+    for(;;)
+        {
+        client = findClient( FrameIdMatchPredicate( window ));
+        if( client != NULL ) // found the client
+            break;
+        Window parent = NULL;
+        Window root = NULL;
+        Window* children = NULL;
+        unsigned int children_count;
+        XQueryTree( tqt_xdisplay(), window, &root, &parent, &children, &children_count );
+        if( children != NULL )
+            XFree( children );
+        if( window == root ) // we didn't find the client, probably an override-redirect window
+            break;
+        window = parent; // go up
+        if( window == NULL )
+            break;
+        }
+    if( client != NULL )
+        return client->isResumeable();
+    else
+        return false;
+    }
+
+
 void Workspace::sendPingToWindow( Window window, Time timestamp )
     {
     rootInfo->sendPing( window, timestamp );
