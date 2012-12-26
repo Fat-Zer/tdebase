@@ -276,8 +276,8 @@ extern "C"
 KDE_EXPORT int kdemain( int argc, char* argv[] )
     {
     KLocale::setMainCatalogue( "kcmtwinrules" );
-    KCmdLineArgs::init( argc, argv, "twin_rules_dialog", I18N_NOOP( "KWin" ),
-	I18N_NOOP( "KWin helper utility" ), "1.0" );
+    KCmdLineArgs::init( argc, argv, "twin_rules_dialog", I18N_NOOP( "TWin" ),
+	I18N_NOOP( "TWin helper utility" ), "1.0" );
     KCmdLineArgs::addCmdLineOptions( options );
     KApplication app;
     KCmdLineArgs* args = KCmdLineArgs::parsedArgs();

@@ -309,7 +309,7 @@ KDE_EXPORT int kdemain( int argc, char * argv[] )
 
     KGlobal::locale()->setMainCatalogue("twin");
 
-    KAboutData aboutData( "twin", I18N_NOOP("KWin"),
+    KAboutData aboutData( "twin", I18N_NOOP("TWin"),
                           version, description, KAboutData::License_GPL,
                           I18N_NOOP("(c) 1999-2005, The KDE Developers"));
     aboutData.addAuthor("Matthias Ettrich",0, "ettrich@kde.org");

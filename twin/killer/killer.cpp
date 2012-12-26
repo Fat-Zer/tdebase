@@ -46,8 +46,8 @@ static const KCmdLineOptions options[] =
 int main( int argc, char* argv[] )
     {
     KLocale::setMainCatalogue( "twin" ); // the messages are in twin's .po file
-    KCmdLineArgs::init( argc, argv, "twin_killer_helper", I18N_NOOP( "KWin" ),
-	I18N_NOOP( "KWin helper utility" ), "1.0" );
+    KCmdLineArgs::init( argc, argv, "twin_killer_helper", I18N_NOOP( "TWin" ),
+	I18N_NOOP( "TWin helper utility" ), "1.0" );
     KCmdLineArgs::addCmdLineOptions( options );
     KApplication app;
     KCmdLineArgs* args = KCmdLineArgs::parsedArgs();
