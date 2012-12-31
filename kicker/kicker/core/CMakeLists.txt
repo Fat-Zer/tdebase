@@ -38,7 +38,7 @@ set( target kicker_core )
 
 set( ${target}_SRCS
   extensionSettings.kcfgc main.cpp kicker.cpp kicker.skel
-  userrectsel.cpp containerarea.cpp kmenubase.ui
+  userrectsel.cpp usersizesel.cpp containerarea.cpp kmenubase.ui
   applethandle.cpp container_base.cpp container_button.cpp
   container_applet.cpp container_extension.cpp extensionmanager.cpp
   menumanager.cpp pluginmanager.cpp showdesktop.cpp

@@ -42,15 +42,25 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include "taskbarcontainer.h"
 #include "taskbarcontainer.moc"
 
-TaskBarContainer::TaskBarContainer( bool enableFrame, TQWidget *parent, const char *name )
+#define GLOBAL_TASKBAR_CONFIG_FILE_NAME "ktaskbarrc"
+
+TaskBarContainer::TaskBarContainer( bool enableFrame, TQString configFileOverride, TQWidget *parent, const char *name )
     : TQFrame(parent, name),
+      configFile(configFileOverride),
       direction( KPanelApplet::Up ),
       showWindowListButton( true ),
       windowListButton(0),
-      windowListMenu(0)
+      windowListMenu(0),
+      settingsObject(NULL)
 {
+    if (configFile == "")
+    {
+        configFile = GLOBAL_TASKBAR_CONFIG_FILE_NAME;
+    }
+    settingsObject = new TaskBarSettings(KSharedConfig::openConfig(configFile));
+
     setBackgroundOrigin( AncestorOrigin );
-    
+
     uint margin;
     if ( enableFrame )
     {
@@ -69,7 +79,7 @@ TaskBarContainer::TaskBarContainer( bool enableFrame, TQWidget *parent, const ch
     layout->setMargin( margin );
 
     // scrollable taskbar
-    taskBar = new TaskBar(this);
+    taskBar = new TaskBar(settingsObject, this);
     layout->addWidget( taskBar );
 
     connect( taskBar, TQT_SIGNAL( containerCountChanged() ), TQT_SIGNAL( containerCountChanged() ) );
@@ -85,13 +95,14 @@ TaskBarContainer::TaskBarContainer( bool enableFrame, TQWidget *parent, const ch
 
 TaskBarContainer::~TaskBarContainer()
 {
-    delete windowListMenu;
+    if (windowListMenu) delete windowListMenu;
+    if (settingsObject) delete settingsObject;
 }
 
 void TaskBarContainer::configure()
 {
-    setFont(TaskBarSettings::taskbarFont());
-    showWindowListButton = TaskBarSettings::showWindowListBtn();
+    setFont(settingsObject->taskbarFont());
+    showWindowListButton = settingsObject->showWindowListBtn();
 
     if (!showWindowListButton)
     {
@@ -148,7 +159,7 @@ void TaskBarContainer::configChanged()
     // doesn't have to also connect to the DCOP signal (less places
     // to change/fix it if/when it changes) without calling
     // configure() twice on taskbar on start up
-    TaskBarSettings::self()->readConfig();
+    settingsObject->readConfig();
 
     configure();
     taskBar->configure();
@@ -163,7 +174,16 @@ void TaskBarContainer::preferences()
         kapp->dcopClient()->attach();
     }
 
-    kapp->dcopClient()->send("kicker", "kicker", "showTaskBarConfig()", data);
+    if (configFile == GLOBAL_TASKBAR_CONFIG_FILE_NAME)
+    {
+        kapp->dcopClient()->send("kicker", "kicker", "showTaskBarConfig()", data);
+    }
+    else
+    {
+        TQDataStream args( data, IO_WriteOnly );
+        args << configFile;
+        kapp->dcopClient()->send("kicker", "kicker", "showTaskBarConfig(TQString)", data);
+    }
 }
 
 void TaskBarContainer::orientationChange(Orientation o)

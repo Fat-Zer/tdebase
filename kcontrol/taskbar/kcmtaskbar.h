@@ -24,6 +24,7 @@
 #include <kcmodule.h>
 
 class TaskbarConfigUI;
+class TaskBarSettings;
 
 class TaskbarAppearance
 {
@@ -34,7 +35,8 @@ class TaskbarAppearance
         TaskbarAppearance(TQString name,
                           bool drawButtons,
                           bool haloText,
-                          bool showButtonOnHover);
+                          bool showButtonOnHover,
+                          TaskBarSettings* settingsObject);
 
         bool matchesSettings() const;
         void alterSettings() const;
@@ -45,6 +47,7 @@ class TaskbarAppearance
         bool m_drawButtons;
         bool m_haloText;
         bool m_showButtonOnHover;
+        TaskBarSettings* m_settingsObject;
 };
 
 class TaskbarConfig : public KCModule
@@ -54,6 +57,7 @@ class TaskbarConfig : public KCModule
 public:
     TaskbarConfig(TQWidget *parent = 0, const char* name = 0,
                   const TQStringList &list = TQStringList());
+    ~TaskbarConfig();
 
 public slots:
     void load();
@@ -76,6 +80,8 @@ private:
     static const TQStringList& showTaskStatesList();
     static TQStringList i18nShowTaskStatesList();
     TaskbarConfigUI *m_widget;
+    TQString m_configFileName;
+    TaskBarSettings* m_settingsObject;
 };
 
 #endif

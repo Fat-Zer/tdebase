@@ -496,7 +496,9 @@ void TDEBackend::setVolumeProperties(Medium* medium)
 		}
 	
 		if (sdevice->isDiskOfType(TDEDiskDeviceType::CDAudio)) {
-			mimeType = "media/audiocd" + MOUNT_SUFFIX;
+			mimeType = "media/audiocd";
+			medium->unmountableState("audiocd:/?device=" + sdevice->deviceNode());
+			diskLabel = i18n("Audio CD");
 		}
 
 		if (sdevice->isDiskOfType(TDEDiskDeviceType::CDVideo)) {

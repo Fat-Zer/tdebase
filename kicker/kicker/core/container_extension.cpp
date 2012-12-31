@@ -61,6 +61,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include "kickertip.h"
 #include "pluginmanager.h"
 #include "userrectsel.h"
+#include "usersizesel.h"
 
 #include "container_extension.h"
 
@@ -178,7 +179,7 @@ void ExtensionContainer::init()
     {
         _userHidden = static_cast<UserHidden>(tmp);
     }
-    
+
     if (m_extension)
     {
         // if we have an extension, we need to grab the extension-specific
@@ -218,6 +219,8 @@ void ExtensionContainer::init()
         m_settings.setIExist(true);
         m_settings.writeConfig();
     }
+
+    setMouseTracking(true);
 }
 
 ExtensionContainer::~ExtensionContainer()
@@ -2028,6 +2031,66 @@ TQRect ExtensionContainer::initialGeometry(KPanelExtension::Position p,
     return TQRect(point, size);
 }
 
+bool ExtensionContainer::inResizeArea(TQPoint mousePos) const
+{
+    if (KickerSettings::useResizeHandle() &&
+        !KickerSettings::locked() &&
+        !Kicker::the()->isImmutable() &&
+        !m_settings.config()->isImmutable() &&
+        !ExtensionManager::the()->isMenuBar(this))
+    {
+        KPanelExtension::Position pos = position();
+        if (pos == KPanelExtension::Left)
+        {
+            if (mousePos.x() < (width() - PANEL_RESIZE_HANDLE_WIDTH))
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+        else if (pos == KPanelExtension::Right)
+        {
+            if (mousePos.x() <= PANEL_RESIZE_HANDLE_WIDTH)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        else if (pos == KPanelExtension::Top)
+        {
+            if (mousePos.y() < (height() - PANEL_RESIZE_HANDLE_WIDTH))
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+        else
+        {
+            if (mousePos.y() <= PANEL_RESIZE_HANDLE_WIDTH)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+    }
+    else
+    {
+        return false;
+    }
+}
+
 bool ExtensionContainer::eventFilter( TQObject*, TQEvent * e)
 {
     if (autoHidden())
@@ -2066,8 +2129,27 @@ bool ExtensionContainer::eventFilter( TQObject*, TQEvent * e)
             TQMouseEvent* me = TQT_TQMOUSEEVENT(e);
             if ( me->button() == Qt::LeftButton )
             {
-                _last_lmb_press = me->globalPos();
-                _is_lmb_down = true;
+                if (inResizeArea(me->pos()))
+                {
+                    _last_lmb_press = me->globalPos();
+                    _is_lmb_down = true;
+
+                    KPanelExtension::Position pos = position();
+                    TQRect newRect = UserSizeSel::select(geometry(), position(), m_highlightColor);
+                    if ((pos == KPanelExtension::Left) || (pos == KPanelExtension::Right))
+                    {
+                        setSize(KPanelExtension::SizeCustom, newRect.width()-((KickerSettings::useResizeHandle())?(PANEL_RESIZE_HANDLE_WIDTH + PANEL_BOTTOM_SPACING_W_RESIZE_HANDLE):0));
+                    }
+                    if ((pos == KPanelExtension::Top) || (pos == KPanelExtension::Bottom))
+                    {
+                        setSize(KPanelExtension::SizeCustom, newRect.height()-((KickerSettings::useResizeHandle())?(PANEL_RESIZE_HANDLE_WIDTH + PANEL_BOTTOM_SPACING_W_RESIZE_HANDLE):0));
+                    }
+                }
+                else
+                {
+                    _last_lmb_press = me->globalPos();
+                    _is_lmb_down = true;
+                }
             }
             else if (me->button() == Qt::RightButton)
             {
@@ -2089,7 +2171,56 @@ bool ExtensionContainer::eventFilter( TQObject*, TQEvent * e)
 
         case TQEvent::MouseMove:
         {
-            TQMouseEvent* me = (TQMouseEvent*) e;
+            TQMouseEvent* me = TQT_TQMOUSEEVENT(e);
+            if (KickerSettings::useResizeHandle())
+            {
+                KPanelExtension::Position pos = position();
+                if (pos == KPanelExtension::Left)
+                {
+                    if (inResizeArea(me->pos()))
+                    {
+                        setCursor(sizeHorCursor);
+                    }
+                    else
+                    {
+                        setCursor(tqarrowCursor);
+                    }
+                }
+                else if (pos == KPanelExtension::Right)
+                {
+                    if (inResizeArea(me->pos()))
+                    {
+                        setCursor(sizeHorCursor);
+                    }
+                    else
+                    {
+                        setCursor(tqarrowCursor);
+                    }
+                }
+                else if (pos == KPanelExtension::Top)
+                {
+                    if (inResizeArea(me->pos()))
+                    {
+                        setCursor(tqsizeVerCursor);
+                    }
+                    else
+                    {
+                        setCursor(tqarrowCursor);
+                    }
+                }
+                else
+                {
+                    if (inResizeArea(me->pos()))
+                    {
+                        setCursor(tqsizeVerCursor);
+                    }
+                    else
+                    {
+                        setCursor(tqarrowCursor);
+                    }
+                }
+            }
+
             if (_is_lmb_down &&
                 ((me->state() & Qt::LeftButton) == Qt::LeftButton) &&
                 !Kicker::the()->isImmutable() &&

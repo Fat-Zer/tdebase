@@ -34,6 +34,7 @@ class TQBoxLayout;
 class SimpleButton;
 class KWindowListMenu;
 class TaskBar;
+class TaskBarSettings;
 
 class KDE_EXPORT TaskBarContainer : public TQFrame, public DCOPObject
 {
@@ -41,7 +42,7 @@ class KDE_EXPORT TaskBarContainer : public TQFrame, public DCOPObject
     K_DCOP
 
 public:
-    TaskBarContainer( bool enableFrame, TQWidget* parent = 0, const char* name = 0 );
+    TaskBarContainer( bool enableFrame, TQString configFileOverride = TQString::null, TQWidget* parent = 0, const char* name = 0 );
     ~TaskBarContainer();
 
     void orientationChange( Orientation );
@@ -64,12 +65,14 @@ protected slots:
     void reconnectWindowListButton();
 
 private:
+    TQString                     configFile;
     KPanelApplet::Direction      direction;
     bool                         showWindowListButton;
-    TQBoxLayout *                 layout;
+    TQBoxLayout *                layout;
     TaskBar *                    taskBar;
     SimpleButton *               windowListButton;
     KWindowListMenu *            windowListMenu;
+    TaskBarSettings *            settingsObject;
 };
 
 #endif
