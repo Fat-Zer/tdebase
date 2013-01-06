@@ -445,7 +445,8 @@ fi
 
 # Ensure all KDED services are accounted for in the user's profile. Any that are missing
 # are defaulted to not auto-loading (false). Refer to bug report 1210. This same test is
-# performed in the migratekde3 script.
+# performed in the migratekde3 script, but notice the migratekde3 script uses the key of
+# X-KDE-Kded-autoload whereas X-TDE-Kded-autoload is used here.
 if [ -d $PROFILE_DIR/share/services/kded ]; then
   if [ "`find $PROFILE_DIR/share/services/kded -name *.desktop`" != "" ]; then
     Message_Prefix
@@ -453,7 +454,7 @@ if [ -d $PROFILE_DIR/share/services/kded ]; then
     for i in `/bin/ls -1 $PROFILE_DIR/share/services/kded/*.desktop`; do
       SERVICE_NAME=`basename $i`
       if [ ! -f $TDEDIR/share/services/kded/$SERVICE_NAME ]; then
-        $TDEDIR/bin/kwriteconfig --file $i --group "Desktop Entry" --key "X-KDE-Kded-autoload" --type bool "false"
+        $TDEDIR/bin/kwriteconfig --file $i --group "Desktop Entry" --key "X-TDE-Kded-autoload" --type bool "false"
       fi
     done
   fi
