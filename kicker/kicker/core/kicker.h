@@ -56,8 +56,9 @@ k_dcop:
     void showKMenu();
     void toggleShowDesktop();
     bool desktopShowing();
-    void showConfig(const TQString& config, int page = -1);
+    void showConfig(const TQString& config, const TQString& configFile = TQString::null, int page = -1);
     void showTaskBarConfig();
+    void showTaskBarConfig(const TQString& configFile);
     void configureMenubar();
     // return the region on the desktop, which is not covered by panels
     // and therefore allowed to be used by icons placed on the desktop

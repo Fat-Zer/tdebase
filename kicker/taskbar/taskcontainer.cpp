@@ -112,7 +112,7 @@ bool is_process_resumable(pid_t pid) {
 	}
 }
 
-TaskContainer::TaskContainer(Task::Ptr task, TaskBar* bar,
+TaskContainer::TaskContainer(Task::Ptr task, TaskBar* bar, TaskBarSettings* settingsObject,
                              TQWidget *parent, const char *name)
     : TQToolButton(parent, name),
       animationTimer(0, "TaskContainer::animationTimer"),
@@ -129,7 +129,8 @@ TaskContainer::TaskContainer(Task::Ptr task, TaskBar* bar,
       discardNextMouseEvent(false),
       aboutToActivate(false),
       m_mouseOver(false),
-      m_paintEventCompression(false)
+      m_paintEventCompression(false),
+      m_settingsObject(settingsObject)
 {
     init();
     setAcceptDrops(true); // Always enabled to activate task during drag&drop.
@@ -144,7 +145,7 @@ TaskContainer::TaskContainer(Task::Ptr task, TaskBar* bar,
 }
 
 TaskContainer::TaskContainer(Startup::Ptr startup, PixmapList& startupFrames,
-                             TaskBar* bar, TQWidget *parent, const char *name)
+                             TaskBar* bar, TaskBarSettings* settingsObject, TQWidget *parent, const char *name)
     : TQToolButton(parent, name),
       animationTimer(0, "TaskContainer::animationTimer"),
       dragSwitchTimer(0, "TaskContainer::dragSwitchTimer"),
@@ -161,7 +162,8 @@ TaskContainer::TaskContainer(Startup::Ptr startup, PixmapList& startupFrames,
       discardNextMouseEvent(false),
       aboutToActivate(false),
       m_mouseOver(false),
-      m_paintEventCompression(false)
+      m_paintEventCompression(false),
+      m_settingsObject(settingsObject)
 {
     init();
     setEnabled(false);
@@ -175,6 +177,11 @@ TaskContainer::TaskContainer(Startup::Ptr startup, PixmapList& startupFrames,
 
 void TaskContainer::init()
 {
+    if (m_settingsObject)
+    {
+        m_settingsObject->readConfig();
+    }
+
     if (!netwm_atoms_created) create_atoms(TQPaintDevice::x11AppDisplay());
 
     setWFlags(TQt::WNoAutoErase);
@@ -349,11 +356,11 @@ void TaskContainer::checkAttention(const Task::Ptr t)
 void TaskContainer::attentionTimerFired()
 {
     assert( attentionState != -1 );
-    if (attentionState < TaskBarSettings::attentionBlinkIterations()*2)
+    if (attentionState < m_settingsObject->attentionBlinkIterations()*2)
     {
         ++attentionState;
     }
-    else if (TaskBarSettings::attentionBlinkIterations() < 1000)
+    else if (m_settingsObject->attentionBlinkIterations() < 1000)
     {
         attentionTimer.stop();
     }
@@ -564,12 +571,12 @@ void TaskContainer::drawButton(TQPainter *p)
     TQPixmap *pm((TQPixmap*)p->device());
     TQPixmap pixmap; // icon
     Task::Ptr task = 0;
-    bool iconified = !TaskBarSettings::showOnlyIconified();
-    bool halo = TaskBarSettings::haloText();
-    bool alwaysDrawButtons = TaskBarSettings::drawButtons();
+    bool iconified = !m_settingsObject->showOnlyIconified();
+    bool halo = m_settingsObject->haloText();
+    bool alwaysDrawButtons = m_settingsObject->drawButtons();
     bool drawButton = alwaysDrawButtons ||
                       (m_mouseOver && !halo && isEnabled() &&
-                       TaskBarSettings::showButtonOnHover());
+                       m_settingsObject->showButtonOnHover());
     TQFont font(KGlobalSettings::taskbarFont());
 
     // draw sunken if we contain the active task
@@ -591,7 +598,7 @@ void TaskContainer::drawButton(TQPainter *p)
 
         if (task->demandsAttention())
         {
-            demandsAttention = attentionState == TaskBarSettings::attentionBlinkIterations() ||
+            demandsAttention = attentionState == m_settingsObject->attentionBlinkIterations() ||
                                attentionState % 2 == 0;
         }
     }
@@ -600,12 +607,12 @@ void TaskContainer::drawButton(TQPainter *p)
 
     TQColorGroup colors = palette().active();
     
-    if (TaskBarSettings::useCustomColors())
+    if (m_settingsObject->useCustomColors())
     {
-        colors.setColor( TQColorGroup::Button, TaskBarSettings::taskBackgroundColor());
-        colors.setColor( TQColorGroup::Background, TaskBarSettings::taskBackgroundColor() );
-        colors.setColor( TQColorGroup::ButtonText, TaskBarSettings::inactiveTaskTextColor() );
-        colors.setColor( TQColorGroup::Text, TaskBarSettings::inactiveTaskTextColor() );
+        colors.setColor( TQColorGroup::Button, m_settingsObject->taskBackgroundColor());
+        colors.setColor( TQColorGroup::Background, m_settingsObject->taskBackgroundColor() );
+        colors.setColor( TQColorGroup::ButtonText, m_settingsObject->inactiveTaskTextColor() );
+        colors.setColor( TQColorGroup::Text, m_settingsObject->inactiveTaskTextColor() );
     }
     
     if (demandsAttention)
@@ -753,9 +760,9 @@ void TaskContainer::drawButton(TQPainter *p)
         }
         else // hack for the dotNET style and others
         {
-            if (TaskBarSettings::useCustomColors())
+            if (m_settingsObject->useCustomColors())
             {
-                textPen = TQPen(TaskBarSettings::activeTaskTextColor());
+                textPen = TQPen(m_settingsObject->activeTaskTextColor());
             }
             else
             {
@@ -982,20 +989,20 @@ void TaskContainer::mousePressEvent( TQMouseEvent* e )
     switch (e->button())
     {
         case Qt::LeftButton:
-            buttonAction = TaskBarSettings::action(TaskBarSettings::LeftButton);
+            buttonAction = m_settingsObject->action(m_settingsObject->LeftButton);
             break;
         case Qt::MidButton:
-            buttonAction = TaskBarSettings::action(TaskBarSettings::MiddleButton);
+            buttonAction = m_settingsObject->action(m_settingsObject->MiddleButton);
             break;
         case Qt::RightButton:
         default:
-            buttonAction = TaskBarSettings::action(TaskBarSettings::RightButton);
+            buttonAction = m_settingsObject->action(m_settingsObject->RightButton);
             break;
     }
 
-    if ((buttonAction == TaskBarSettings::ShowTaskList &&
+    if ((buttonAction == m_settingsObject->ShowTaskList &&
           m_filteredTasks.count() > 1) ||
-        buttonAction == TaskBarSettings::ShowOperationsMenu)
+        buttonAction == m_settingsObject->ShowOperationsMenu)
     {
         performAction(buttonAction);
     }
@@ -1005,7 +1012,7 @@ void TaskContainer::mouseReleaseEvent(TQMouseEvent *e)
 {
     m_dragStartPos = TQPoint();
 
-    if (!TaskBarSettings::drawButtons())
+    if (!m_settingsObject->drawButtons())
     {
         setDown(false);
     }
@@ -1023,20 +1030,20 @@ void TaskContainer::mouseReleaseEvent(TQMouseEvent *e)
     switch (e->button())
     {
         case Qt::LeftButton:
-            buttonAction = TaskBarSettings::action(TaskBarSettings::LeftButton);
+            buttonAction = m_settingsObject->action(m_settingsObject->LeftButton);
             break;
         case Qt::MidButton:
-            buttonAction = TaskBarSettings::action(TaskBarSettings::MiddleButton);
+            buttonAction = m_settingsObject->action(m_settingsObject->MiddleButton);
             break;
         case Qt::RightButton:
         default:
-            buttonAction = TaskBarSettings::action(TaskBarSettings::RightButton);
+            buttonAction = m_settingsObject->action(m_settingsObject->RightButton);
             break;
     }
 
-    if ((buttonAction == TaskBarSettings::ShowTaskList &&
+    if ((buttonAction == m_settingsObject->ShowTaskList &&
          m_filteredTasks.count() > 1) ||
-        buttonAction == TaskBarSettings::ShowOperationsMenu)
+        buttonAction == m_settingsObject->ShowOperationsMenu)
     {
         return;
     }
@@ -1063,13 +1070,13 @@ void TaskContainer::performAction(int action)
     // If there is only one task, the correct behavior is
     // to activate, raise, or iconify it, not show the task menu.
     if( m_filteredTasks.count() > 1 ) {
-                popupMenu( TaskBarSettings::ShowTaskList );
+                popupMenu( m_settingsObject->ShowTaskList );
     } else {
                 performAction( TaskBarSettings::ActivateRaiseOrMinimize );
     }
     break;
     case TaskBarSettings::ShowOperationsMenu:
-        popupMenu( TaskBarSettings::ShowOperationsMenu );
+        popupMenu( m_settingsObject->ShowOperationsMenu );
     break;
     case TaskBarSettings::ActivateRaiseOrMinimize:
     if (m_filteredTasks.isEmpty())
@@ -1199,11 +1206,11 @@ bool TaskContainer::activateNextTask(bool forward, bool& forcenext)
 
 void TaskContainer::popupMenu(int action)
 {
-    if (action == TaskBarSettings::ShowTaskList )
+    if (action == m_settingsObject->ShowTaskList )
     {
         m_menu = new TaskLMBMenu(m_filteredTasks);
     }
-    else if (action == TaskBarSettings::ShowOperationsMenu)
+    else if (action == m_settingsObject->ShowOperationsMenu)
     {
         if (!kapp->authorizeKAction("twin_rmb"))
         {
@@ -1447,7 +1454,7 @@ void TaskContainer::dragSwitch()
     }
     else
     {
-        popupMenu(TaskBarSettings::ShowTaskList);
+        popupMenu(m_settingsObject->ShowTaskList);
     }
 }
 
@@ -1540,7 +1547,7 @@ void TaskContainer::updateFilteredTaskList()
     {
         Task::Ptr t = *it;
         if ((taskBar->showAllWindows() || t->isOnCurrentDesktop()) &&
-            (!TaskBarSettings::showOnlyIconified() || t->isIconified()))
+            (!m_settingsObject->showOnlyIconified() || t->isIconified()))
         {
             pid_t pid = 0;
 #ifdef Q_WS_X11
@@ -1561,15 +1568,15 @@ void TaskContainer::updateFilteredTaskList()
             if (pid < 0) {
                 m_filteredTasks.append(t);
             }
-            else if (TaskBarSettings::showTaskStates() != TaskBarSettings::ShowAll) {
+            else if (m_settingsObject->showTaskStates() != m_settingsObject->ShowAll) {
                 if (is_process_resumable(pid)) {
-                    if (TaskBarSettings::showTaskStates() == TaskBarSettings::ShowAll) {
+                    if (m_settingsObject->showTaskStates() == m_settingsObject->ShowAll) {
                         m_filteredTasks.append(t);
                     }
-                    else if (TaskBarSettings::showTaskStates() == TaskBarSettings::ShowStopped) {
+                    else if (m_settingsObject->showTaskStates() == m_settingsObject->ShowStopped) {
                         m_filteredTasks.append(t);
                     }
-                    else if (TaskBarSettings::showTaskStates() == TaskBarSettings::ShowRunning) {
+                    else if (m_settingsObject->showTaskStates() == m_settingsObject->ShowRunning) {
                         t->publishIconGeometry( TQRect());
                     }
                     else {
@@ -1577,13 +1584,13 @@ void TaskContainer::updateFilteredTaskList()
                     }
                 }
                 else {
-                    if (TaskBarSettings::showTaskStates() == TaskBarSettings::ShowAll) {
+                    if (m_settingsObject->showTaskStates() == m_settingsObject->ShowAll) {
                         m_filteredTasks.append(t);
                     }
-                    else if (TaskBarSettings::showTaskStates() == TaskBarSettings::ShowStopped) {
+                    else if (m_settingsObject->showTaskStates() == m_settingsObject->ShowStopped) {
                         t->publishIconGeometry( TQRect());
                     }
-                    else if (TaskBarSettings::showTaskStates() == TaskBarSettings::ShowRunning) {
+                    else if (m_settingsObject->showTaskStates() == m_settingsObject->ShowRunning) {
                         m_filteredTasks.append(t);
                     }
                     else {
@@ -1670,12 +1677,12 @@ void TaskContainer::updateKickerTip(KickerTip::Data& data)
     
     if (m_filteredTasks.count() > 0)
     {
-        if (TaskBarSettings::showThumbnails() &&
+        if (m_settingsObject->showThumbnails() &&
             m_filteredTasks.count() == 1)
         {
             Task::Ptr t = m_filteredTasks.first();
     
-            pixmap = t->thumbnail(TaskBarSettings::thumbnailMaxDimension());
+            pixmap = t->thumbnail(m_settingsObject->thumbnailMaxDimension());
         }
     
         if (pixmap.isNull() && tasks.count())
@@ -1718,7 +1725,7 @@ void TaskContainer::updateKickerTip(KickerTip::Data& data)
             }
         }
     
-        if (TaskBarSettings::showAllWindows() && KWin::numberOfDesktops() > 1)
+        if (m_settingsObject->showAllWindows() && KWin::numberOfDesktops() > 1)
         {
             if (desktopMap.isEmpty())
             {

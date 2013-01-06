@@ -44,7 +44,7 @@ class TaskBar : public Panner
     Q_OBJECT
 
 public:
-    TaskBar( TQWidget *parent = 0, const char *name = 0 );
+    TaskBar( TaskBarSettings* settingsObject, TQWidget *parent = 0, const char *name = 0 );
     ~TaskBar();
 
     TQSize sizeHint() const;
@@ -132,6 +132,7 @@ private:
     bool			m_ignoreUpdates;
     TQTimer			m_relayoutTimer;
     TQImage			m_blendGradient;
+    TaskBarSettings*		m_settingsObject;
 };
 
 #endif

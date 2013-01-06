@@ -100,6 +100,8 @@ public:
     void unhideIfHidden(int showForHowManyMS = 0);
     bool reserveStrut() const;
 
+    bool inResizeArea(TQPoint mousePos) const;
+
     KPanelExtension::Alignment alignment() const;
     void setAlignment(KPanelExtension::Alignment a) { arrange( position(), a, xineramaScreen() ); }
 
@@ -172,17 +174,17 @@ private:
     bool             _autoHidden;
     UserHidden       _userHidden;
     bool             _block_user_input;
-    TQPoint           _last_lmb_press;
+    TQPoint          _last_lmb_press;
     bool             _is_lmb_down;
     bool             _in_autohide;
 
     // Misc objects
-    TQTimer               *_autohideTimer;
-    TQTimer               *_updateLayoutTimer;
+    TQTimer              *_autohideTimer;
+    TQTimer              *_updateLayoutTimer;
     NETExtendedStrut      _strut;
     PopupWidgetFilter    *_popupWidgetFilter;
 
-    TQString               _id;
+    TQString              _id;
     PanelExtensionOpMenu *_opMnu;
     AppletInfo            _info;
     KPanelExtension::Type _type;

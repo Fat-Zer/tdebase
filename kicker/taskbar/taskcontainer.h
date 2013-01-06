@@ -33,6 +33,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include "taskmanager.h"
 
 class TaskBar;
+class TaskBarSettings;
 
 typedef TQValueList<TQPixmap*> PixmapList;
 
@@ -44,8 +45,8 @@ public:
     typedef TQValueList<TaskContainer*> List;
     typedef TQValueList<TaskContainer*>::iterator Iterator;
 
-    TaskContainer(Task::Ptr, TaskBar*, TQWidget *parent = 0, const char *name = 0);
-    TaskContainer(Startup::Ptr, PixmapList&, TaskBar*,
+    TaskContainer(Task::Ptr, TaskBar*, TaskBarSettings* settingsObject, TQWidget *parent = 0, const char *name = 0);
+    TaskContainer(Startup::Ptr, PixmapList&, TaskBar*, TaskBarSettings* settingsObject,
                   TQWidget *parent = 0, const char *name = 0);
     virtual ~TaskContainer();
 
@@ -148,7 +149,8 @@ private:
     bool                        m_mouseOver;
     bool                        m_paintEventCompression;
     enum                        { ATTENTION_BLINK_TIMEOUT = 4 };
-    TQPoint                      m_dragStartPos;
+    TQPoint                     m_dragStartPos;
+    TaskBarSettings*            m_settingsObject;
 };
 
 #endif

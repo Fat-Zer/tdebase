@@ -320,7 +320,7 @@ void Kicker::setInsertionPoint(const TQPoint &p)
 }
 
 
-void Kicker::showConfig(const TQString& configPath, int page)
+void Kicker::showConfig(const TQString& configPath, const TQString& configFile, int page)
 {
     if (!m_configDialog)
     {
@@ -328,9 +328,27 @@ void Kicker::showConfig(const TQString& configPath, int page)
 
          TQStringList modules = configModules(false);
          TQStringList::ConstIterator end(modules.end());
+         int moduleNumber = 0;
          for (TQStringList::ConstIterator it = modules.begin(); it != end; ++it)
          {
-            m_configDialog->addModule(*it);
+            if (configFile == "")
+            {
+                m_configDialog->addModule(*it);
+            }
+            else
+            {
+                if (moduleNumber == page)
+                {
+                    TQStringList argList;
+                    argList << configFile;
+                    m_configDialog->addModule(*it, true, argList);
+                }
+                else
+                {
+                    m_configDialog->addModule(*it);
+                }
+            }
+            moduleNumber++;
          }
 
          connect(m_configDialog, TQT_SIGNAL(finished()), TQT_SLOT(configDialogFinished()));
@@ -349,13 +367,24 @@ void Kicker::showConfig(const TQString& configPath, int page)
     m_configDialog->raise();
     if (page > -1)
     {
-        m_configDialog->showPage(page);
+        if (configFile == "")
+        {
+            m_configDialog->showPage(0);
+        }
+        else {
+            m_configDialog->showPage(page);
+        }
     }
 }
 
 void Kicker::showTaskBarConfig()
 {
-    showConfig(TQString(), 4);
+    showConfig(TQString(), TQString(), 4);
+}
+
+void Kicker::showTaskBarConfig(const TQString& configFile)
+{
+    showConfig(TQString(), configFile, 4);
 }
 
 void Kicker::configureMenubar()

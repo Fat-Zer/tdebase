@@ -36,10 +36,13 @@
 #define protected public
 #include "kcmtaskbarui.h"
 #undef protected
+
 #include "taskbarsettings.h"
 
 #include "kcmtaskbar.h"
 #include "kcmtaskbar.moc"
+
+#define GLOBAL_TASKBAR_CONFIG_FILE_NAME "ktaskbarrc"
 
 typedef KGenericFactory<TaskbarConfig, TQWidget > TaskBarFactory;
 K_EXPORT_COMPONENT_FACTORY (kcm_taskbar, TaskBarFactory("kcmtaskbar") )
@@ -47,33 +50,41 @@ K_EXPORT_COMPONENT_FACTORY (kcm_taskbar, TaskBarFactory("kcmtaskbar") )
 TaskbarAppearance::TaskbarAppearance(TQString name,
                                      bool drawButtons,
                                      bool haloText,
-                                     bool showButtonOnHover)
+                                     bool showButtonOnHover,
+                                     TaskBarSettings* settingsObject)
     : m_name(name),
       m_drawButtons(drawButtons),
       m_haloText(haloText),
-      m_showButtonOnHover(showButtonOnHover)
+      m_showButtonOnHover(showButtonOnHover),
+      m_settingsObject(NULL)
 {
+    m_settingsObject = settingsObject;
+    if (m_settingsObject)
+    {
+        m_settingsObject->readConfig();
+    }
 }
 
 TaskbarAppearance::TaskbarAppearance()
     : m_drawButtons(false),
       m_haloText(false),
-      m_showButtonOnHover(true)
+      m_showButtonOnHover(true),
+      m_settingsObject(NULL)
 {
 }
 
 bool TaskbarAppearance::matchesSettings() const
 {
-    return TaskBarSettings::drawButtons() == m_drawButtons &&
-           TaskBarSettings::haloText() == m_haloText &&
-           TaskBarSettings::showButtonOnHover() == m_showButtonOnHover;
+    return m_settingsObject->drawButtons() == m_drawButtons &&
+           m_settingsObject->haloText() == m_haloText &&
+           m_settingsObject->showButtonOnHover() == m_showButtonOnHover;
 }
 
 void TaskbarAppearance::alterSettings() const
 {
-    TaskBarSettings::self()->setDrawButtons(m_drawButtons);
-    TaskBarSettings::self()->setHaloText(m_haloText);
-    TaskBarSettings::self()->setShowButtonOnHover(m_showButtonOnHover);
+    m_settingsObject->setDrawButtons(m_drawButtons);
+    m_settingsObject->setHaloText(m_haloText);
+    m_settingsObject->setShowButtonOnHover(m_showButtonOnHover);
 }
 
 // These are the strings that are actually stored in the config file.
@@ -137,17 +148,27 @@ TQStringList TaskbarConfig::i18nShowTaskStatesList()
    return i18nList;
 }
 
-TaskbarConfig::TaskbarConfig(TQWidget *parent, const char* name, const TQStringList&)
-  : KCModule(TaskBarFactory::instance(), parent, name)
+TaskbarConfig::TaskbarConfig(TQWidget *parent, const char* name, const TQStringList& args)
+  : KCModule(TaskBarFactory::instance(), parent, name),
+    m_settingsObject(NULL)
 {
     TQVBoxLayout *layout = new TQVBoxLayout(this, 0, KDialog::spacingHint());
     m_widget = new TaskbarConfigUI(this);
     layout->addWidget(m_widget);
 
+    m_configFileName = GLOBAL_TASKBAR_CONFIG_FILE_NAME;
+    if (args.count() > 0)
+    {
+        m_configFileName = args[0];
+        m_widget->globalConfigWarning->hide();
+    }
+    m_settingsObject = new TaskBarSettings(KSharedConfig::openConfig(m_configFileName));
+    m_settingsObject->readConfig();
+
     // TODO: Load these from .desktop files?
-    m_appearances.append(TaskbarAppearance(i18n("Elegant"), false, false, true));
-    m_appearances.append(TaskbarAppearance(i18n("Classic"), true, false, true));
-    m_appearances.append(TaskbarAppearance(i18n("For Transparency"), false, true, true));
+    m_appearances.append(TaskbarAppearance(i18n("Elegant"), false, false, true, m_settingsObject));
+    m_appearances.append(TaskbarAppearance(i18n("Classic"), true, false, true, m_settingsObject));
+    m_appearances.append(TaskbarAppearance(i18n("For Transparency"), false, true, true, m_settingsObject));
 
     for (TaskbarAppearance::List::const_iterator it = m_appearances.constBegin();
          it != m_appearances.constEnd();
@@ -158,7 +179,7 @@ TaskbarConfig::TaskbarConfig(TQWidget *parent, const char* name, const TQStringL
 
     connect(m_widget->appearance, TQT_SIGNAL(activated(int)),
             this, TQT_SLOT(appearanceChanged(int)));
-    addConfig(TaskBarSettings::self(), m_widget);
+    addConfig(m_settingsObject, m_widget);
 
     setQuickHelp(i18n("<h1>Taskbar</h1> You can configure the taskbar here."
                 " This includes options such as whether or not the taskbar should show all"
@@ -205,6 +226,14 @@ TaskbarConfig::TaskbarConfig(TQWidget *parent, const char* name, const TQStringL
 
     load();
     TQTimer::singleShot(0, this, TQT_SLOT(notChanged()));
+}
+
+TaskbarConfig::~TaskbarConfig()
+{
+    if (m_settingsObject)
+    {
+        delete m_settingsObject;
+    }
 }
 
 void TaskbarConfig::slotUpdateCustomColors()
@@ -279,17 +308,17 @@ void TaskbarConfig::load()
     KCModule::load();
     slotUpdateComboBox();
     updateAppearanceCombo();
-    m_widget->showAllScreens->setChecked(!TaskBarSettings::self()->showCurrentScreenOnly());
+    m_widget->showAllScreens->setChecked(!m_settingsObject->showCurrentScreenOnly());
 }
 
 void TaskbarConfig::save()
 {
-    TaskBarSettings::self()->setShowCurrentScreenOnly(!m_widget->showAllScreens->isChecked());
+    m_settingsObject->setShowCurrentScreenOnly(!m_widget->showAllScreens->isChecked());
     int selectedAppearance = m_widget->appearance->currentItem();
     if (selectedAppearance < m_appearances.count())
     {
         m_appearances[selectedAppearance].alterSettings();
-        TaskBarSettings::self()->writeConfig();
+        m_settingsObject->writeConfig();
     }
 
     KCModule::save();

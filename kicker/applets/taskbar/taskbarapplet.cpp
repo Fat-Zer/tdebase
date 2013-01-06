@@ -57,7 +57,7 @@ TaskbarApplet::TaskbarApplet( const TQString& configFile, Type type, int actions
 {
     setBackgroundOrigin( AncestorOrigin );
     TQHBoxLayout* layout = new TQHBoxLayout( this );
-    container = new TaskBarContainer( false, this );
+    container = new TaskBarContainer( false, configFile, this );
     container->setBackgroundOrigin( AncestorOrigin );
     connect(container, TQT_SIGNAL(containerCountChanged()), this, TQT_SIGNAL(updateLayout()));
     layout->addWidget( container, 1 );

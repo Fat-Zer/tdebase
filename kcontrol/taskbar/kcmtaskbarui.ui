@@ -462,6 +462,17 @@ By default, this option is selected and all windows are shown.</string>
                 </widget>
             </grid>
         </widget>
+	<widget class="TQLabel" rowspan="1" colspan="2">
+		<property name="name">
+			<cstring>globalConfigWarning</cstring>
+		</property>
+		<property name="text">
+			<string>NOTE: This module is currently editing the global floating taskbar configuration.&lt;br&gt;To change the configuration of a specific Kicker taskbar applet, please use the Configure Taskbar menu option.</string>
+		</property>
+		<property name="buddy" stdset="0">
+			<cstring>kcfg_ShowTaskStates</cstring>
+		</property>
+	</widget>
         <spacer>
             <property name="name">
                 <cstring>Spacer1</cstring>

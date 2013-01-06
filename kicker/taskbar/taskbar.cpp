@@ -50,7 +50,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include "taskbar.moc"
 
 
-TaskBar::TaskBar( TQWidget *parent, const char *name )
+TaskBar::TaskBar( TaskBarSettings* settingsObject, TQWidget *parent, const char *name )
     : Panner( parent, name ),
       m_showAllWindows(false),
       m_cycleWheel(false),
@@ -66,7 +66,13 @@ TaskBar::TaskBar( TQWidget *parent, const char *name )
 {
     arrowType = LeftArrow;
     blocklayout = true;
-    
+
+    m_settingsObject = settingsObject;
+    if (m_settingsObject)
+    {
+        m_settingsObject->readConfig();
+    }
+
     // init
     setSizePolicy( TQSizePolicy( TQSizePolicy::Expanding, TQSizePolicy::Expanding ) );
 
@@ -167,8 +173,8 @@ TQSize TaskBar::sizeHint() const
     // get our minimum height based on the minimum button height or the
     // height of the font in use, which is largest
     TQFontMetrics fm(KGlobalSettings::taskbarFont());
-    int minButtonHeight = fm.height() > TaskBarSettings::minimumButtonHeight() ?
-                          fm.height() : TaskBarSettings::minimumButtonHeight();
+    int minButtonHeight = fm.height() > m_settingsObject->minimumButtonHeight() ?
+                          fm.height() : m_settingsObject->minimumButtonHeight();
 
     return TQSize(BUTTON_MIN_WIDTH, minButtonHeight);
 }
@@ -178,8 +184,8 @@ TQSize TaskBar::sizeHint( KPanelExtension::Position p, TQSize maxSize) const
     // get our minimum height based on the minimum button height or the
     // height of the font in use, which is largest
     TQFontMetrics fm(KGlobalSettings::taskbarFont());
-    int minButtonHeight = fm.height() > TaskBarSettings::minimumButtonHeight() ?
-                          fm.height() : TaskBarSettings::minimumButtonHeight();
+    int minButtonHeight = fm.height() > m_settingsObject->minimumButtonHeight() ?
+                          fm.height() : m_settingsObject->minimumButtonHeight();
 
     if ( p == KPanelExtension::Left || p == KPanelExtension::Right )
     {
@@ -206,7 +212,7 @@ TQSize TaskBar::sizeHint( KPanelExtension::Position p, TQSize maxSize) const
             rows = 1;
         }
 
-        int maxWidth = TaskBarSettings::maximumButtonWidth();
+        int maxWidth = m_settingsObject->maximumButtonWidth();
         if (maxWidth == 0)
         {
             maxWidth = BUTTON_MAX_WIDTH;
@@ -240,15 +246,15 @@ void TaskBar::configure()
     bool wasShowOnlyIconified = m_showOnlyIconified;
     int  wasShowTaskStates = m_showTaskStates;
 
-    m_showAllWindows = TaskBarSettings::showAllWindows();
-    m_sortByDesktop = m_showAllWindows && TaskBarSettings::sortByDesktop();
-    m_showIcon = TaskBarSettings::showIcon();
-    m_showOnlyIconified = TaskBarSettings::showOnlyIconified();
-    m_cycleWheel = TaskBarSettings::cycleWheel();
-    m_showTaskStates = TaskBarSettings::showTaskStates();
+    m_showAllWindows = m_settingsObject->showAllWindows();
+    m_sortByDesktop = m_showAllWindows && m_settingsObject->sortByDesktop();
+    m_showIcon = m_settingsObject->showIcon();
+    m_showOnlyIconified = m_settingsObject->showOnlyIconified();
+    m_cycleWheel = m_settingsObject->cycleWheel();
+    m_showTaskStates = m_settingsObject->showTaskStates();
 
     m_currentScreen = -1;    // Show all screens or re-get our screen
-    m_showOnlyCurrentScreen = (TaskBarSettings::showCurrentScreenOnly() &&
+    m_showOnlyCurrentScreen = (m_settingsObject->showCurrentScreenOnly() &&
                               TQApplication::desktop()->isVirtualDesktop() &&
                               TQApplication::desktop()->numScreens() > 1) || (TQApplication::desktop()->numScreens() < 2);
 
@@ -281,7 +287,7 @@ void TaskBar::configure()
         }
     }
 
-    TaskManager::the()->setXCompositeEnabled(TaskBarSettings::showThumbnails());
+    TaskManager::the()->setXCompositeEnabled(m_settingsObject->showThumbnails());
 
     reLayoutEventually();
 }
@@ -344,7 +350,7 @@ void TaskBar::add(Task::Ptr task)
     }
 
     // create new container
-    TaskContainer *container = new TaskContainer(task, this, viewport());
+    TaskContainer *container = new TaskContainer(task, this, m_settingsObject, viewport());
     m_hiddenContainers.append(container);
 
     // even though there is a signal to listen to, we have to add this
@@ -373,7 +379,7 @@ void TaskBar::add(Startup::Ptr startup)
     }
 
     // create new container
-    TaskContainer *container = new TaskContainer(startup, frames, this, viewport());
+    TaskContainer *container = new TaskContainer(startup, frames, this, m_settingsObject, viewport());
     m_hiddenContainers.append(container);
     connect(container, TQT_SIGNAL(showMe(TaskContainer*)), this, TQT_SLOT(showTaskContainer(TaskContainer*)));
 }
@@ -392,7 +398,7 @@ void TaskBar::showTaskContainer(TaskContainer* container)
     }
 
     // try to place the container after one of the same app
-    if (TaskBarSettings::sortByApp())
+    if (m_settingsObject->sortByApp())
     {
         TaskContainer::Iterator it = containers.begin();
         for (; it != containers.end(); ++it)
@@ -601,8 +607,7 @@ void TaskBar::windowChanged(Task::Ptr task)
     if (!container ||
         (!m_showAllWindows &&
          !container->onCurrentDesktop() &&
-         !container->isVisibleTo(this)) ||
-        container->isHidden())
+         !container->isVisibleTo(this)))
     {
         return;
     }
@@ -706,8 +711,8 @@ void TaskBar::reLayout()
     // minimum button height or the height of the font in use, whichever is
     // largest
     TQFontMetrics fm(KGlobalSettings::taskbarFont());
-    int minButtonHeight = fm.height() > TaskBarSettings::minimumButtonHeight() ?
-                          fm.height() : TaskBarSettings::minimumButtonHeight();
+    int minButtonHeight = fm.height() > m_settingsObject->minimumButtonHeight() ?
+                          fm.height() : m_settingsObject->minimumButtonHeight();
 
     // horizontal layout
     if (orientation() == Qt::Horizontal)
@@ -745,7 +750,7 @@ void TaskBar::reLayout()
         if (mbpr > bpr)
         {
             bwidth = contentsRect().width() / bpr;
-            int maxWidth = TaskBarSettings::maximumButtonWidth();
+            int maxWidth = m_settingsObject->maximumButtonWidth();
             if (maxWidth > 0 && bwidth > maxWidth)
             {
                 bwidth = maxWidth;
@@ -966,8 +971,8 @@ int TaskBar::taskCount() const
 int TaskBar::maximumButtonsWithoutShrinking() const
 {
     TQFontMetrics fm(KGlobalSettings::taskbarFont());
-    int minButtonHeight = fm.height() > TaskBarSettings::minimumButtonHeight() ?
-                          fm.height() : TaskBarSettings::minimumButtonHeight();
+    int minButtonHeight = fm.height() > m_settingsObject->minimumButtonHeight() ?
+                          fm.height() : m_settingsObject->minimumButtonHeight();
     int rows = contentsRect().height() / minButtonHeight;
 
     if (rows < 1)
@@ -977,7 +982,7 @@ int TaskBar::maximumButtonsWithoutShrinking() const
 
     if ( orientation() == Qt::Horizontal ) {
         // maxWidth of 0 means no max width, drop back to default
-        int maxWidth = TaskBarSettings::maximumButtonWidth();
+        int maxWidth = m_settingsObject->maximumButtonWidth();
         if (maxWidth == 0)
         {
             maxWidth = BUTTON_MAX_WIDTH;
@@ -995,8 +1000,8 @@ int TaskBar::maximumButtonsWithoutShrinking() const
 
 bool TaskBar::shouldGroup() const
 {
-    return TaskBarSettings::groupTasks() == TaskBarSettings::GroupAlways ||
-           (TaskBarSettings::groupTasks() == TaskBarSettings::GroupWhenFull &&
+    return m_settingsObject->groupTasks() == m_settingsObject->GroupAlways ||
+           (m_settingsObject->groupTasks() == m_settingsObject->GroupWhenFull &&
             taskCount() > maximumButtonsWithoutShrinking());
 }
 
@@ -1144,7 +1149,7 @@ void TaskBar::activateNextTask(bool forward)
 void TaskBar::wheelEvent(TQWheelEvent* e)
 {
 
-    if(TaskBarSettings::cycleWheel()) {
+    if(m_settingsObject->cycleWheel()) {
 
         if (e->delta() > 0)
         {

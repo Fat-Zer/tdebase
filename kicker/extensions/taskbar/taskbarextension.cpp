@@ -58,7 +58,7 @@ TaskBarExtension::TaskBarExtension(const TQString& configFile, Type type,
       m_rootPixmap(0)
 {
     TQHBoxLayout *layout = new TQHBoxLayout(this);
-    m_container = new TaskBarContainer(false, this);
+    m_container = new TaskBarContainer(false, TQString::null, this);
     m_container->setBackgroundOrigin(AncestorOrigin);
     positionChange(position());
     layout->addWidget(m_container);
