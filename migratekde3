@@ -411,7 +411,8 @@ if [ -n "$KDE3_PROFILE" ] && [ -d "$KDE3_PROFILE" ]; then
 
   # Ensure all KDED services are accounted for in the user's profile. Any that are missing
   # are defaulted to not auto-loading (false). Refer to bug report 1210. This same test is
-  # performed in the r14-xdg-update script.
+  # performed in the r14-xdg-update script, but notice the r14-xdg-update script uses the
+  # key of X-TDE-Kded-autoload whereas X-KDE-Kded-autoload is used here.
   if [ -d $HOME/.trinity/share/services/kded ]; then
     if [ "`find $HOME/.trinity/share/services/kded -name *.desktop`" != "" ]; then
       echo "Validating KDED services."
