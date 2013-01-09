@@ -52,8 +52,7 @@ public:
 	void load( bool useDefaults);
 	void save();
 	void defaults();
-	
-	int buttons();
+
 	TQString quickHelp() const;
 	
 k_dcop:

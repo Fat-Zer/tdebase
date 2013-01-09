@@ -598,6 +598,10 @@ if test "$kpersonalizerrc_general_firstlogin" = "true"; then
   fi
 fi
 
+# Apply any user-specific display configuration settings
+$TDEDIR/bin/tdeinit_displayconfig
+EXIT_CODE="$?"
+
 # Remove moodin cache if we have a new wallpaper installed, jriddell. Distro-specific.
 if [ -d "$tdehome/share/apps/ksplash/cache/Moodin/kubuntu" ]; then
   if [ /usr/share/wallpapers/kubuntu-wallpaper.png -nt "$tdehome/share/apps/ksplash/cache/Moodin/kubuntu/" ]; then

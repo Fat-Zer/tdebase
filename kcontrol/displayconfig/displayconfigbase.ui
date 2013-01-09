@@ -4,14 +4,6 @@
     <property name="name">
 	    <cstring>DisplayConfigBase</cstring>
     </property>
-    <property name="geometry">
-        <rect>
-            <x>0</x>
-            <y>0</y>
-            <width>519</width>
-            <height>356</height>
-        </rect>
-    </property>
     <grid>
         <property name="name">
             <cstring>unnamed</cstring>
@@ -111,15 +103,21 @@
 					    <property name="sizePolicy">
 						    <sizepolicy>
 							    <hsizetype>7</hsizetype>
-							    <vsizetype>1</vsizetype>
+							    <vsizetype>7</vsizetype>
 							    <horstretch>1</horstretch>
 							    <verstretch>0</verstretch>
 						    </sizepolicy>
 					    </property>
+					    <property name="minimumSize">
+						    <size>
+							    <width>150</width>
+							    <height>150</height>
+						    </size>
+					    </property>
 					    <property name="maximumSize">
 						    <size>
 							    <width>32767</width>
-							    <height>200</height>
+							    <height>400</height>
 						    </size>
 					    </property>
 				    </widget>
@@ -193,7 +191,7 @@
 						    </widget>
 					    </grid>
 		    		    </widget>
-				    <widget class="TQGroupBox" row="4" column="2" colspan="2">
+				    <widget class="TQGroupBox" row="4" column="2" colspan="1">
 					    <property name="name">
 						    <cstring>groupColorDepth</cstring>
 					    </property>
@@ -216,7 +214,7 @@
 						    </widget>
 					    </grid>
 		    		    </widget>
-				    <widget class="TQGroupBox" row="5" column="0" colspan="4">
+				    <widget class="TQGroupBox" row="4" column="3" colspan="1">
 					    <property name="name">
 						    <cstring>groupOrientation</cstring>
 					    </property>
@@ -240,7 +238,7 @@
 								    <string>&amp;Mirror screen horizontally</string>
 							    </property>
 						    </widget>
-						    <widget class="TQCheckBox" row="0" column="2" colspan="1">
+						    <widget class="TQCheckBox" row="1" column="1" colspan="1">
 							    <property name="name">
 								    <cstring>orientationVFlip</cstring>
 							    </property>
@@ -363,6 +361,9 @@
 								    <string>Visual Calibration Aid</string>
 							    </property>
 							    <grid>
+								    <property name="name">
+									    <cstring>unnamed</cstring>
+								    </property>
 								    <widget class="TQWidget" row="0" column="0" colspan="2">
 									    <property name="name">
 										<cstring>gammaTestImage</cstring>
@@ -405,10 +406,10 @@
 									</property>
 									<property name="sizeHint">
 										<size>
-										<width>20</width>
-										<height>20</height>
-									</size>
-								    </property>
+											<width>20</width>
+											<height>20</height>
+										</size>
+									</property>
 								    </spacer>
 								    <spacer row="1" column="2">
 									    <property name="name" stdset="0">
@@ -427,8 +428,8 @@
 									</size>
 									</property>
 								    </spacer>
-							</grid>
-						    </widget>
+							    </grid>
+							</widget>
 						    <widget class="TQGroupBox" row="1" column="0" colspan="1">
 							    <property name="name">
 								    <cstring>groupHardware</cstring>
@@ -587,25 +588,25 @@
 								    <string>Tip: Most computer software expects a gamma of 2.2.&lt;br&gt;Additionally, any ICC settings for the selected screen will override the gamma controls available on this tab.</string>
 							    </property>
 						    </widget>
-						    <spacer row="4" column="0">
-							    <property name="name" stdset="0">
-								    <cstring>Spacer4</cstring>
-							    </property>
-							    <property name="orientation">
-								    <enum>Vertical</enum>
-							    </property>
-							    <property name="sizeType">
-								    <enum>Expanding</enum>
-							    </property>
-							    <property name="sizeHint">
-								    <size>
-									    <width>20</width>
-									    <height>20</height>
-								    </size>
-							    </property>
-						    </spacer>
 					    </grid>
 				    </widget>
+				    <spacer row="3" column="0">
+					    <property name="name" stdset="0">
+						    <cstring>Spacer5</cstring>
+					    </property>
+					    <property name="orientation">
+						    <enum>Vertical</enum>
+					    </property>
+					    <property name="sizeType">
+						    <enum>Expanding</enum>
+					    </property>
+					    <property name="sizeHint">
+						    <size>
+							    <width>20</width>
+							    <height>20</height>
+						    </size>
+					    </property>
+				    </spacer>
 			    </grid>
 		    </grid>
 	    </widget>

@@ -34,7 +34,11 @@
 #include <pwd.h>
 #include <signal.h>
 
-static const char description[] = I18N_NOOP("TDE Initialization Phase 1");
+#ifdef WITH_XRANDR
+#include <libkrandr/libkrandr.h>
+#endif
+
+static const char description[] = I18N_NOOP("TDE Initialization Display Configuration");
 
 static const char version[] = "0.1";
 
@@ -47,8 +51,8 @@ int main(int argc, char **argv)
 {
 	int return_code = -1;
 
-	KAboutData about("tdeinit_phase1", I18N_NOOP("tdeinit_phase1"), version, description,
-			KAboutData::License_GPL, "(C) 2012 Timothy Pearson", 0, 0, "kb9vqf@pearsoncomputing.net");
+	KAboutData about("tdeinit_displayconfig", I18N_NOOP("tdeinit_displayconfig"), version, description,
+			KAboutData::License_GPL, "(C) 2013 Timothy Pearson", 0, 0, "kb9vqf@pearsoncomputing.net");
 	about.addAuthor( "Timothy Pearson", 0, "kb9vqf@pearsoncomputing.net" );
 	KCmdLineArgs::init(argc, argv, &about);
 	KCmdLineArgs::addCmdLineOptions( options );
@@ -56,34 +60,13 @@ int main(int argc, char **argv)
 	KApplication::disableAutoDcopRegistration();
 	KApplication app;
 
-	KConfig config("twinrc", true);
-	config.setGroup( "ThirdPartyWM" );
-	TQString wmToLaunch = config.readEntry("WMExecutable", "");
-	TQString wmArguments = config.readEntry("WMAdditionalArguments", "");
+#ifdef WITH_XRANDR
+	// Load up user specific display settings
+	KRandrSimpleAPI *randrsimple = new KRandrSimpleAPI();
+	randrsimple->applySystemwideDisplayConfiguration("", locateLocal("config", "/", true));
+	delete randrsimple;
+#endif
 
-	// Check for TWIN override environment variable
-	const char * twin_env = getenv("TWIN");
-	if (twin_env) {
-		wmToLaunch = twin_env;
-	}
-
-	// Make sure the specified WM exists
-	if (KStandardDirs::findExe(wmToLaunch) == TQString::null) {
-		wmToLaunch = "";
-		
-	}
-
-	// Launch the WM!
-	if (wmToLaunch == "") {
-		return_code = system("kwrapper ksmserver");
-	}
-	else if (wmArguments == "") {
-		return_code = system((TQString("kwrapper ksmserver --windowmanager %1").arg(wmToLaunch)).ascii());
-	}
-	else {
-		return_code = system((TQString("kwrapper ksmserver --windowmanager %1 --windowmanageraddargs %2").arg(wmToLaunch).arg(wmArguments)).ascii());
-	}
-
-	return return_code;
+	return return_code = 0;
 }
 

@@ -61,11 +61,16 @@ KSimpleConfig *systemconfig;
 /**** KICCConfig ****/
 
 KICCConfig::KICCConfig(TQWidget *parent, const char *name, const TQStringList &)
-  : KCModule(KICCCFactory::instance(), parent, name)
+  : KCModule(KICCCFactory::instance(), parent, name), iccFileArray(NULL)
 {
 
   TQVBoxLayout *layout = new TQVBoxLayout(this, KDialog::marginHint(), KDialog::spacingHint());
-  config = new KSimpleConfig( TQString::fromLatin1( "kiccconfigrc" ));
+  if (getuid() != 0) {
+      config = new KSimpleConfig( TQString::fromLatin1( "kiccconfigrc" ));
+  }
+  else {
+      config = NULL;
+  }
   systemconfig = new KSimpleConfig( TQString::fromLatin1( KDE_CONFDIR "/kicc/kiccconfigrc" ));
 
   KAboutData *about =
@@ -80,7 +85,7 @@ KICCConfig::KICCConfig(TQWidget *parent, const char *name, const TQStringList &)
   layout->add(base);
 
   setRootOnlyMsg(i18n("<b>The global ICC color profile is a system wide setting, and requires administrator access</b><br>To alter the system's global ICC profile, click on the \"Administrator Mode\" button below."));
-  setUseRootOnlyMsg(true);
+//   setUseRootOnlyMsg(true);	// Setting this hides the Apply button!
 
   connect(base->systemEnableSupport, TQT_SIGNAL(clicked()), TQT_SLOT(changed()));
   connect(base->systemEnableSupport, TQT_SIGNAL(toggled(bool)), base->systemIccFile, TQT_SLOT(setEnabled(bool)));
@@ -102,7 +107,7 @@ KICCConfig::KICCConfig(TQWidget *parent, const char *name, const TQStringList &)
 
   load();
 
-  if (!config->checkConfigFilesWritable( true )) {
+  if (!config || !config->checkConfigFilesWritable( true )) {
     base->enableSupport->setEnabled(false);
     base->randrScreenList->setEnabled(false);
     base->iccProfileList->setEnabled(false);
@@ -120,8 +125,12 @@ KICCConfig::KICCConfig(TQWidget *parent, const char *name, const TQStringList &)
 
 KICCConfig::~KICCConfig()
 {
-    delete [] iccFileArray;
-    delete config;
+    if (iccFileArray) {
+        delete [] iccFileArray;
+    }
+    if (config) {
+        delete config;
+    }
     delete systemconfig;
 }
 
@@ -130,7 +139,7 @@ void KICCConfig::deleteProfile () {
 	TQString *iccFileArrayNew;
 
 	// Delete the profile
-	config->deleteGroup(base->iccProfileList->currentText());
+	if (config) config->deleteGroup(base->iccProfileList->currentText());
 	base->iccProfileList->removeItem(base->iccProfileList->currentItem());
 	base->iccProfileList->setCurrentItem(base->iccProfileList->count()-1);
 
@@ -171,7 +180,7 @@ void KICCConfig::renameProfile () {
 	}
 
 	// Rename the profile
-	config->deleteGroup(base->iccProfileList->currentText());
+	if (config) config->deleteGroup(base->iccProfileList->currentText());
 	base->iccProfileList->changeItem(_new, base->iccProfileList->currentItem());
 
 	updateDisplayedInformation();
@@ -240,9 +249,11 @@ void KICCConfig::selectScreen (int slotNumber) {
 
 void KICCConfig::updateArray (void) {
 	iccFileArray[((base->iccProfileList->currentItem())*(base->randrScreenList->count()))+(base->randrScreenList->currentItem())] = base->iccFile->url();
-	config->setGroup(base->iccProfileList->currentText());
-	if (config->readEntry(base->randrScreenList->currentText()) != iccFileArray[((base->iccProfileList->currentItem())*(base->randrScreenList->count()))+(base->randrScreenList->currentItem())]) {
-		emit changed();
+	if (config) {
+		config->setGroup(base->iccProfileList->currentText());
+		if (config->readEntry(base->randrScreenList->currentText()) != iccFileArray[((base->iccProfileList->currentItem())*(base->randrScreenList->count()))+(base->randrScreenList->currentItem())]) {
+			emit changed();
+		}
 	}
 }
 
@@ -288,58 +299,69 @@ void KICCConfig::load(bool useDefaults )
   XRROutputInfo *output_info;
   KRandrSimpleAPI *randrsimple = new KRandrSimpleAPI();
 
-  config->setReadDefaults( useDefaults );
+  if (config) {
+      config->setReadDefaults( useDefaults );
 
-  config->setGroup(NULL);
-  base->enableSupport->setChecked(config->readBoolEntry("EnableICC", false));
-  base->randrScreenList->setEnabled(config->readBoolEntry("EnableICC", false));
-  base->iccProfileList->setEnabled(config->readBoolEntry("EnableICC", false));
-  base->iccFile->setEnabled(config->readBoolEntry("EnableICC", false));
-  base->addProfileButton->setEnabled(config->readBoolEntry("EnableICC", false));
-  base->renameProfileButton->setEnabled(config->readBoolEntry("EnableICC", false));
-  base->deleteProfileButton->setEnabled(config->readBoolEntry("EnableICC", false));
+      config->setGroup(NULL);
+      base->enableSupport->setChecked(config->readBoolEntry("EnableICC", false));
+      base->randrScreenList->setEnabled(config->readBoolEntry("EnableICC", false));
+      base->iccProfileList->setEnabled(config->readBoolEntry("EnableICC", false));
+      base->iccFile->setEnabled(config->readBoolEntry("EnableICC", false));
+      base->addProfileButton->setEnabled(config->readBoolEntry("EnableICC", false));
+      base->renameProfileButton->setEnabled(config->readBoolEntry("EnableICC", false));
+      base->deleteProfileButton->setEnabled(config->readBoolEntry("EnableICC", false));
 
-  numberOfScreens = 0;
-  if (randrsimple->isValid() == true) {
-      randr_display = XOpenDisplay(NULL);
-      randr_screen_info = randrsimple->read_screen_info(randr_display);
-      for (i = 0; i < randr_screen_info->n_output; i++) {
-          output_info = randr_screen_info->outputs[i]->info;
-          base->randrScreenList->insertItem(output_info->name, -1);
+      numberOfScreens = 0;
+      if (randrsimple->isValid() == true) {
+          randr_display = XOpenDisplay(NULL);
+          randr_screen_info = randrsimple->read_screen_info(randr_display);
+          for (i = 0; i < randr_screen_info->n_output; i++) {
+              output_info = randr_screen_info->outputs[i]->info;
+              base->randrScreenList->insertItem(output_info->name, -1);
+              numberOfScreens++;
+          }
+      }
+      else {
+          base->randrScreenList->insertItem("Default", -1);
           numberOfScreens++;
       }
-  }
-  else {
-      base->randrScreenList->insertItem("Default", -1);
-      numberOfScreens++;
-  }
 
-  // Find all profile names
-  numberOfProfiles = 0;
-  cfgProfiles = config->groupList();
-  for (TQStringList::Iterator i(cfgProfiles.begin()); i != cfgProfiles.end(); ++i) {
-      base->iccProfileList->insertItem((*i), -1);
-      numberOfProfiles++;
-  }
-  if (numberOfProfiles == 0) {
-      base->iccProfileList->insertItem("<default>", -1);
-      numberOfProfiles++;
-  }
+      // Find all profile names
+      numberOfProfiles = 0;
+      cfgProfiles = config->groupList();
+      for (TQStringList::Iterator i(cfgProfiles.begin()); i != cfgProfiles.end(); ++i) {
+          base->iccProfileList->insertItem((*i), -1);
+          numberOfProfiles++;
+      }
+      if (numberOfProfiles == 0) {
+          base->iccProfileList->insertItem("<default>", -1);
+          numberOfProfiles++;
+      }
 
-  // Load all profiles into memory
-  iccFileArray = new TQString[numberOfProfiles*numberOfScreens];
-  for (i=0;i<(base->iccProfileList->count());i++) {
-      config->setGroup(base->iccProfileList->text(i));
-      for (j=0;j<(base->randrScreenList->count());j++) {
-          iccFileArray[(i*(base->randrScreenList->count()))+j] = config->readEntry(base->randrScreenList->text(j));
+      // Load all profiles into memory
+      iccFileArray = new TQString[numberOfProfiles*numberOfScreens];
+      for (i=0;i<(base->iccProfileList->count());i++) {
+          config->setGroup(base->iccProfileList->text(i));
+          for (j=0;j<(base->randrScreenList->count());j++) {
+              iccFileArray[(i*(base->randrScreenList->count()))+j] = config->readEntry(base->randrScreenList->text(j));
+          }
+      }
+
+      if ((findProfileIndex(base->iccProfileList->currentText()) >= 0) && (findScreenIndex(base->randrScreenList->currentText()) >= 0)) {
+          base->iccFile->setURL(iccFileArray[(findProfileIndex(base->iccProfileList->currentText())*base->randrScreenList->count())+findScreenIndex(base->randrScreenList->currentText())]);
+      }
+      else {
+          base->iccFile->setURL("");
       }
   }
-
-  if ((findProfileIndex(base->iccProfileList->currentText()) >= 0) && (findScreenIndex(base->randrScreenList->currentText()) >= 0)) {
-      base->iccFile->setURL(iccFileArray[(findProfileIndex(base->iccProfileList->currentText())*base->randrScreenList->count())+findScreenIndex(base->randrScreenList->currentText())]);
-  }
   else {
-      base->iccFile->setURL("");
+      base->enableSupport->setChecked(false);
+      base->randrScreenList->setEnabled(false);
+      base->iccProfileList->setEnabled(false);
+      base->iccFile->setEnabled(false);
+      base->addProfileButton->setEnabled(false);
+      base->renameProfileButton->setEnabled(false);
+      base->deleteProfileButton->setEnabled(false);
   }
 
   systemconfig->setGroup(NULL);
@@ -362,22 +384,24 @@ void KICCConfig::save()
 	systemconfig->setGroup(NULL);
 	systemconfig->writeEntry("EnableICC", base->systemEnableSupport->isChecked());
 	systemconfig->writeEntry("ICCFile", base->systemIccFile->url());
-
-	// Write user configuration
-	config->setGroup(NULL);
-	config->writeEntry("DefaultProfile", m_defaultProfile);
-	config->writeEntry("EnableICC", base->enableSupport->isChecked());
-
-	// Save all profiles to disk
-	for (i=0;i<(base->iccProfileList->count());i++) {
-		config->setGroup(base->iccProfileList->text(i));
-		for (j=0;j<(base->randrScreenList->count());j++) {
-			config->writeEntry(base->randrScreenList->text(j), iccFileArray[(i*(base->randrScreenList->count()))+j]);
-		}
-	}
-
-	config->sync();
 	systemconfig->sync();
+
+	if (config) {
+		// Write user configuration
+		config->setGroup(NULL);
+		config->writeEntry("DefaultProfile", m_defaultProfile);
+		config->writeEntry("EnableICC", base->enableSupport->isChecked());
+	
+		// Save all profiles to disk
+		for (i=0;i<(base->iccProfileList->count());i++) {
+			config->setGroup(base->iccProfileList->text(i));
+			for (j=0;j<(base->randrScreenList->count());j++) {
+				config->writeEntry(base->randrScreenList->text(j), iccFileArray[(i*(base->randrScreenList->count()))+j]);
+			}
+		}
+	
+		config->sync();
+	}
 
 	TQString errorstr;
 	if (base->enableSupport->isChecked() == true) {

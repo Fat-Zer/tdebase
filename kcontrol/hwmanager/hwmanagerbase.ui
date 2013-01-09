@@ -4,14 +4,6 @@
     <property name="name">
 	    <cstring>TDEHWManagerBase</cstring>
     </property>
-    <property name="geometry">
-        <rect>
-            <x>0</x>
-            <y>0</y>
-            <width>519</width>
-            <height>356</height>
-        </rect>
-    </property>
     <grid>
         <property name="name">
             <cstring>unnamed</cstring>

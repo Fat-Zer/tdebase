@@ -80,7 +80,7 @@ TDEHWManager::TDEHWManager(TQWidget *parent, const char *name, const TQStringLis
 
 	base->deviceFilter->setListView(base->deviceTree);
 
-	setRootOnlyMsg(i18n("<b>Hardware settings are system wide, and requires administrator access</b><br>To alter the system's hardware settings, click on the \"Administrator Mode\" button below."));
+	setRootOnlyMsg(i18n("<b>Hardware settings are system wide, and therefore require administrator access</b><br>To alter the system's hardware settings, click on the \"Administrator Mode\" button below."));
 	setUseRootOnlyMsg(true);
 
 	TDEHardwareDevices *hwdevices = KGlobal::hardwareDevices();

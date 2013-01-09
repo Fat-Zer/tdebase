@@ -61,7 +61,6 @@ public:
 	void save();
 	void defaults();
 
-	int buttons();
 	TQString quickHelp() const;
 
 k_dcop:

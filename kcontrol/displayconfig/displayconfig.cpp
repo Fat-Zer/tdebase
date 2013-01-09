@@ -302,11 +302,11 @@ TQPoint moveTQRectOutsideMonitorRegion(TQRect rect, MonitorRegion region) {
 	// Next, find which rectangle is closest to the center of the TQRect
 	int closest = 0;
 	long distance = 16384*16384;
-	int fallback_mode;
+	int fallback_mode = 0;
 	long test_distance;
 	long test_center_x;
 	long test_center_y;
-	for ( int i = 0; i < rectangles.size(); i++ ) {
+	for ( unsigned int i = 0; i < rectangles.size(); i++ ) {
 		test_center_x = rectangles[i].x() + (rectangles[i].width()/2);
 		test_center_y = rectangles[i].y() + (rectangles[i].height()/2);
 		test_distance = pow(test_center_x-rect_center_x,2) + pow(test_center_y-rect_center_y,2);
@@ -381,7 +381,7 @@ TQPoint compressTQRectTouchingMonitorRegion(TQRect rect, MonitorRegion region, T
 	long test_distance;
 	long test_center_x;
 	long test_center_y;
-	for ( int i = 0; i < rectangles.size(); i++ ) {
+	for ( unsigned int i = 0; i < rectangles.size(); i++ ) {
 		test_center_x = rectangles[i].x() + (rectangles[i].width()/2);
 		test_center_y = rectangles[i].y() + (rectangles[i].height()/2);
 		test_distance = pow(test_center_x-rect_center_x,2) + pow(test_center_y-rect_center_y,2);
@@ -422,10 +422,10 @@ void KDisplayConfig::updateDraggableMonitorInformation (int monitor_id) {
 
 void KDisplayConfig::updateDraggableMonitorInformationInternal (int monitor_id, bool recurse) {
 	int i;
-	int j;
-	DraggableMonitor *primary_monitor;
-	DraggableMonitor *moved_monitor;
-	SingleScreenData *screendata;
+	int j=0;
+	DraggableMonitor *primary_monitor = NULL;
+	DraggableMonitor *moved_monitor = NULL;
+	SingleScreenData *screendata = NULL;
 	TQObjectList monitors;
 
 	// Find the moved draggable monitor object
@@ -442,6 +442,10 @@ void KDisplayConfig::updateDraggableMonitorInformationInternal (int monitor_id, 
 		}
 	}
 
+	if (!screendata) {
+		return;
+	}
+
 	TQString rotationDesired = *screendata->rotations.at(screendata->current_rotation_index);
 	bool isvisiblyrotated = ((rotationDesired == "Rotate 90 degrees") || (rotationDesired == "Rotate 270 degrees"));
 
@@ -453,10 +457,12 @@ void KDisplayConfig::updateDraggableMonitorInformationInternal (int monitor_id, 
 	}
 
 	// Handle resizing
-	if (isvisiblyrotated)
+	if (isvisiblyrotated) {
 		moved_monitor->setFixedSize(screendata->current_y_pixel_count*base->monitorPhyArrange->resize_factor, screendata->current_x_pixel_count*base->monitorPhyArrange->resize_factor);
-	else
+	}
+	else {
 		moved_monitor->setFixedSize(screendata->current_x_pixel_count*base->monitorPhyArrange->resize_factor, screendata->current_y_pixel_count*base->monitorPhyArrange->resize_factor);
+	}
 
 	// Find the primary monitor
 	for (i=0;i<numberOfScreens;i++) {
@@ -525,9 +531,7 @@ bool KDisplayConfig::applyMonitorLayoutRules() {
 
 bool KDisplayConfig::applyMonitorLayoutRules(DraggableMonitor* monitor_to_move) {
 	int i;
-	int j;
 	bool monitor_was_moved;
-	SingleScreenData *screendata;
 	TQObjectList monitors;
 
 	// Ensure that the monitors:
@@ -618,7 +622,7 @@ bool KDisplayConfig::applyMonitorLayoutRules(DraggableMonitor* monitor_to_move) 
 
 void KDisplayConfig::moveMonitor(DraggableMonitor* monitor, int realx, int realy) {
 	int i;
-	int j;
+	int j=0;
 	bool primary_found;
 	DraggableMonitor *primary_monitor;
 	SingleScreenData *screendata;
@@ -669,7 +673,6 @@ void KDisplayConfig::moveMonitor(DraggableMonitor* monitor, int realx, int realy
 // }
 
 TQStringList sortResolutions(TQStringList unsorted) {
-	int i;
 	int xres;
 	int largest;
 	TQStringList sorted;
@@ -697,8 +700,8 @@ TQStringList sortResolutions(TQStringList unsorted) {
 }
 
 int KDisplayConfig::realResolutionSliderValue() {
-	int i;
-	int j;
+	unsigned int i;
+	unsigned int j;
 	SingleScreenData *screendata;
 
 	screendata = m_screenInfoArray.at(base->monitorDisplaySelectDD->currentItem());
@@ -716,8 +719,8 @@ int KDisplayConfig::realResolutionSliderValue() {
 }
 
 void KDisplayConfig::setRealResolutionSliderValue(int index) {
-	int i;
-	int j;
+	unsigned int i;
+	unsigned int j;
 	SingleScreenData *screendata;
 
 	screendata = m_screenInfoArray.at(base->monitorDisplaySelectDD->currentItem());
@@ -742,9 +745,15 @@ KDisplayConfig::KDisplayConfig(TQWidget *parent, const char *name, const TQStrin
 
 	m_randrsimple = new KRandrSimpleAPI();
 
-	TQVBoxLayout *layout = new TQVBoxLayout(this, KDialog::marginHint(), KDialog::spacingHint());
-	systemconfig = new KSimpleConfig( TQString::fromLatin1( KDE_CONFDIR "/kdisplay/kdisplayconfigrc" ));
-	systemconfig->setFileWriteMode(0644);
+	TQVBoxLayout *layout = new TQVBoxLayout(this, 0, KDialog::spacingHint());
+	if (getuid() != 0) {
+		systemconfig = new KSimpleConfig( locateLocal("config", "kdisplay/", true) + "kdisplayconfigrc" );
+		systemconfig->setFileWriteMode(0600);
+	}
+	else {
+		systemconfig = new KSimpleConfig( TQString::fromLatin1( KDE_CONFDIR "/kdisplay/kdisplayconfigrc" ));
+		systemconfig->setFileWriteMode(0644);
+	}
 
 	KAboutData *about =
 		new KAboutData(I18N_NOOP("kcmdisplayconfig"), I18N_NOOP("TDE Display Profile Control Module"),
@@ -758,10 +767,14 @@ KDisplayConfig::KDisplayConfig(TQWidget *parent, const char *name, const TQStrin
 	connect(m_gammaApplyTimer, SIGNAL(timeout()), this, SLOT(applyGamma()));
 
 	base = new DisplayConfigBase(this);
-	layout->add(base);
+	layout->addWidget(base);
 
-	setRootOnlyMsg(i18n("<b>The global display configuration is a system wide setting, and requires administrator access</b><br>To alter the system's global display configuration, click on the \"Administrator Mode\" button below."));
-	setUseRootOnlyMsg(true);
+	if (getuid() != 0) {
+		base->systemEnableSupport->setText(i18n("&Enable local display control for this session"));
+	}
+
+	setRootOnlyMsg(i18n("<b>The global display configuration is a system wide setting, and requires administrator access</b><br>To alter the system's global display configuration, click on the \"Administrator Mode\" button below.<br>Otherwise, you may change your session-specific display configuration below."));
+// 	setUseRootOnlyMsg(true);	// Setting this hides the Apply button!
 
 	connect(base->systemEnableSupport, TQT_SIGNAL(clicked()), TQT_SLOT(changed()));
 	connect(base->systemEnableSupport, TQT_SIGNAL(clicked()), TQT_SLOT(processLockoutControls()));
@@ -840,32 +853,34 @@ void KDisplayConfig::rescanHardware (void) {
 void KDisplayConfig::reloadProfile (void) {
 	// FIXME
 	m_randrsimple->destroyScreenInformationObject(m_screenInfoArray);
-	m_screenInfoArray = m_randrsimple->loadSystemwideDisplayConfiguration("", KDE_CONFDIR);
+	if (getuid() != 0) {
+		m_screenInfoArray = m_randrsimple->loadSystemwideDisplayConfiguration("", locateLocal("config", "/", true));
+	}
+	else {
+		m_screenInfoArray = m_randrsimple->loadSystemwideDisplayConfiguration("", KDE_CONFDIR);
+	}
 	m_randrsimple->ensureMonitorDataConsistency(m_screenInfoArray);
 	numberOfScreens = m_screenInfoArray.count();
 	refreshDisplayedInformation();
 }
 
 void KDisplayConfig::identifyMonitors () {
-	int i;
+	unsigned int i;
 
 	TQLabel* idWidget;
 	TQPtrList<TQWidget> widgetList;
 
 	Display *randr_display;
 	ScreenInfo *randr_screen_info;
-	XRROutputInfo *output_info;
 
 	randr_display = tqt_xdisplay();
 	randr_screen_info = m_randrsimple->read_screen_info(randr_display);
 
 	for (i = 0; i < m_screenInfoArray.count(); i++) {
-		output_info = randr_screen_info->outputs[i]->info;
 		// Look for ON outputs...
 		if (!randr_screen_info->outputs[i]->cur_crtc) {
 			continue;
 		}
-		SingleScreenData *screendata = m_screenInfoArray.at(i);
 		idWidget = new TQLabel(TQString("Screen\n%1").arg(i+1), (TQWidget*)0, "", Qt::WStyle_Customize | Qt::WStyle_NoBorder | Qt::WStyle_StaysOnTop | Qt::WX11BypassWM | Qt::WDestructiveClose);
 		widgetList.append(idWidget);
 		idWidget->resize(150, 100);
@@ -923,7 +938,7 @@ void KDisplayConfig::updateArray (void) {
 
 void KDisplayConfig::updateDisplayedInformation () {
 	// Insert data into the GUI
-	int i;
+	unsigned int i;
 	SingleScreenData *screendata;
 
 	ensureMonitorDataConsistency();
@@ -1056,8 +1071,6 @@ void KDisplayConfig::updateDragDropDisplay() {
 	// Insert data into the GUI
 	int i;
 	int j;
-	int largest_x_pixels;
-	int largest_y_pixels;
 	TQObjectList monitors;
 	SingleScreenData *screendata;
 
@@ -1073,8 +1086,6 @@ void KDisplayConfig::updateDragDropDisplay() {
 			}
 		}
 	}
-
-	int currentScreenIndex = base->monitorDisplaySelectDD->currentItem();
 
 	ensureMonitorDataConsistency();
 
@@ -1109,8 +1120,6 @@ void KDisplayConfig::updateDragDropDisplay() {
 
 void KDisplayConfig::layoutDragDropDisplay() {
 	int i;
-	int largest_x_pixels;
-	int largest_y_pixels;
 	TQObjectList monitors;
 	SingleScreenData *screendata;
 
@@ -1400,7 +1409,7 @@ void KDisplayConfig::processDPMSControls() {
 }
 
 void KDisplayConfig::processLockoutControls() {
-	if (getuid() != 0 || !systemconfig->checkConfigFilesWritable( true )) {
+	if (!systemconfig->checkConfigFilesWritable( true )) {
 		base->globalTab->setEnabled(false);
 		base->resolutionTab->setEnabled(false);
 		base->gammaTab->setEnabled(false);
@@ -1450,9 +1459,6 @@ KCModule* KDisplayConfig::addTab( const TQString name, const TQString label )
 void KDisplayConfig::load(bool useDefaults )
 {
 	// Update the toggle buttons with the current configuration
-	int i;
-	int j;
-
 	updateArray();
 
 	systemconfig->setGroup(NULL);
@@ -1477,7 +1483,12 @@ void KDisplayConfig::load(bool useDefaults )
 void KDisplayConfig::save()
 {
 	if (m_randrsimple->applySystemwideDisplayConfiguration(m_screenInfoArray, TRUE)) {
-		m_randrsimple->saveSystemwideDisplayConfiguration(base->systemEnableSupport->isChecked(), "", KDE_CONFDIR, m_screenInfoArray);
+		if (getuid() != 0) {
+			m_randrsimple->saveSystemwideDisplayConfiguration(base->systemEnableSupport->isChecked(), "", locateLocal("config", "/", true), m_screenInfoArray);
+		}
+		else {
+			m_randrsimple->saveSystemwideDisplayConfiguration(base->systemEnableSupport->isChecked(), "", KDE_CONFDIR, m_screenInfoArray);
+		}
 
 		// Write system configuration
 		systemconfig->setGroup(NULL);
