@@ -57,6 +57,7 @@ class ExtensionInfo
         bool     _autohidePanel;
         bool     _backgroundHide;
         bool     _autoHideSwitch;
+        bool     _xineramaHideSwitch;
         int      _autoHideDelay;
         bool     _hideAnim;
         int      _hideAnimSpeed;

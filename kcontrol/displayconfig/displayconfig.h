@@ -35,6 +35,7 @@
 #include <dcopobject.h>
 
 #include <libkrandr/libkrandr.h>
+#include <tdehardwaredevices.h>
 
 #include "monitorworkspace.h"
 #include "displayconfigbase.h"
@@ -128,6 +129,7 @@ private slots:
 	void gammaTargetChanged (int slotNumber);
 	void dpmsChanged (void);
 	void processDPMSControls (void);
+	void deviceChanged (TDEGenericDevice*);
 };
 
 #endif

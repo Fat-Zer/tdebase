@@ -25,6 +25,7 @@
 #include <kglobalaccel.h>
 
 #include <libkrandr/libkrandr.h>
+#include <tdehardwaredevices.h>
 
 class KHelpMenu;
 class KPopupMenu;
@@ -50,7 +51,7 @@ protected slots:
 	void slotOrientationChanged(int parameter);
 	void slotRefreshRateChanged(int parameter);
 	void slotPrefs();
-	void slotColorConfig();
+	void slotDisplayConfig();
 	void slotSKeys();
 	void slotSettingsChanged(int category);
 	void slotCycleDisplays();
@@ -67,6 +68,7 @@ private:
 	int GetDefaultResolutionParameter();
 	int GetHackResolutionParameter();
 	void findPrimaryDisplay();
+	void reloadDisplayConfiguration();
 
 	bool m_popupUp;
 	KHelpMenu* m_help;
@@ -85,6 +87,7 @@ private:
 
 private slots:
 	void _quit();
+	void deviceChanged (TDEGenericDevice*);
 };
 
 #endif

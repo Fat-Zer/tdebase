@@ -26,7 +26,12 @@
 			    <property name="name">
 				    <cstring>unnamed</cstring>
 			    </property>
-			    <widget class="TQGroupBox" row="0" column="0">
+			    <widget class="TQLabel" row="0" column="0">
+				    <property name="name">
+					    <cstring>nonRootWarningLabel</cstring>
+				    </property>
+			    </widget>
+			    <widget class="TQGroupBox" row="1" column="0">
 				    <property name="name">
 					    <cstring>groupSystemSettings</cstring>
 				    </property>
@@ -47,7 +52,7 @@
 					    </widget>
 				    </grid>
 			    </widget>
-			    <spacer row="1" column="0">
+			    <spacer row="2" column="0">
 				    <property name="name" stdset="0">
 					    <cstring>Spacer4</cstring>
 				    </property>
@@ -225,7 +230,15 @@
 						    <property name="name">
 							    <cstring>unnamed</cstring>
 						    </property>
-						    <widget class="KComboBox" row="0" column="0" colspan="1">
+						    <widget class="TQLabel" row="0" column="0" colspan="1">
+							    <property name="name">
+								    <cstring>textLabel7_9</cstring>
+							    </property>
+							    <property name="text">
+								    <string>Rotate screen by:</string>
+							    </property>
+						    </widget>
+						    <widget class="KComboBox" row="1" column="0" colspan="1">
 							    <property name="name">
 								    <cstring>rotationSelectDD</cstring>
 							    </property>
@@ -265,36 +278,46 @@
 					    </property>
 				    </widget>
 				    <widget class="KPushButton" row="8" column="0" colspan="1">
-					    <property name="name">
-						    <cstring>rescanHardware</cstring>
-					    </property>
-					    <property name="text">
-						    <string>&amp;Rescan Displays</string>
-					    </property>
+					<property name="name">
+						<cstring>rescanHardware</cstring>
+					</property>
+					<property name="text">
+						<string>&amp;Rescan Displays</string>
+					</property>
 				    </widget>
 				    <widget class="KPushButton" row="8" column="1" colspan="1">
-					    <property name="name">
-						    <cstring>loadExistingProfile</cstring>
-					    </property>
-					    <property name="text">
-						    <string>Load &amp;Existing Profile</string>
-					    </property>
+					<property name="name">
+						<cstring>loadExistingProfile</cstring>
+					</property>
+					<property name="text">
+						<string>Load &amp;Existing Profile</string>
+					</property>
 				    </widget>
-				    <widget class="KPushButton" row="8" column="2" colspan="1">
+				    <widget class="TQLayoutWidget" row="8" column="3" colspan="1">
 					    <property name="name">
-						    <cstring>previewConfiguration</cstring>
+						    <cstring>layout7</cstring>
 					    </property>
-					    <property name="text">
-						    <string>&amp;Test Settings</string>
-					    </property>
-				    </widget>
-				    <widget class="KPushButton" row="8" column="3" colspan="1">
-					    <property name="name">
-						    <cstring>identifyMonitors</cstring>
-					    </property>
-					    <property name="text">
-						    <string>&amp;Identify</string>
-					    </property>
+					    <hbox>
+						    <property name="name">
+							    <cstring>unnamed</cstring>
+						</property>
+						<widget class="KPushButton" row="8" column="0" colspan="1">
+							<property name="name">
+								<cstring>previewConfiguration</cstring>
+							</property>
+							<property name="text">
+								<string>&amp;Test Settings</string>
+							</property>
+						</widget>
+						<widget class="KPushButton" row="8" column="1" colspan="1">
+							<property name="name">
+								<cstring>identifyMonitors</cstring>
+							</property>
+							<property name="text">
+								<string>&amp;Identify</string>
+							</property>
+						</widget>
+					</hbox>
 				    </widget>
 			    </grid>
 		    </widget>

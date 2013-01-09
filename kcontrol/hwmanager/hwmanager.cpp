@@ -90,7 +90,7 @@ TDEHWManager::TDEHWManager(TQWidget *parent, const char *name, const TQStringLis
 
 	connect(hwdevices, TQT_SIGNAL(hardwareAdded(TDEGenericDevice*)), this, TQT_SLOT(populateTreeView()));
 	connect(hwdevices, TQT_SIGNAL(hardwareRemoved(TDEGenericDevice*)), this, TQT_SLOT(populateTreeView()));
-// 	connect(hwdevices, TQT_SIGNAL(hardwareUpdated(TDEGenericDevice*)), this, TQT_SLOT(populateTreeView()));
+	connect(hwdevices, TQT_SIGNAL(hardwareUpdated(TDEGenericDevice*)), this, TQT_SLOT(deviceChanged(TDEGenericDevice*)));
 
 	load();
 
@@ -185,6 +185,24 @@ void TDEHWManager::populateTreeViewLeaf(DeviceIconItem *parent, bool show_by_con
 				populateTreeViewLeaf(item, show_by_connection, selected_syspath);
 			}
 		}
+	}
+}
+
+void TDEHWManager::deviceChanged(TDEGenericDevice* device) {
+	TQListViewItemIterator it(base->deviceTree);
+	while (it.current()) {
+		DeviceIconItem* item = dynamic_cast<DeviceIconItem*>(it.current());
+		if (item) {
+			TDEGenericDevice* candidate = item->device();
+			if (candidate) {
+				if (candidate->systemPath() == device->systemPath()) {
+					if (item->text(0) != device->friendlyName()) {
+						item->setText(0, device->friendlyName());
+					}
+				}
+			}
+		}
+		++it;
 	}
 }
 

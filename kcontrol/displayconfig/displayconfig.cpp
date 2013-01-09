@@ -447,7 +447,7 @@ void KDisplayConfig::updateDraggableMonitorInformationInternal (int monitor_id, 
 	}
 
 	TQString rotationDesired = *screendata->rotations.at(screendata->current_rotation_index);
-	bool isvisiblyrotated = ((rotationDesired == "Rotate 90 degrees") || (rotationDesired == "Rotate 270 degrees"));
+	bool isvisiblyrotated = ((rotationDesired == ROTATION_90_DEGREES_STRING) || (rotationDesired == ROTATION_270_DEGREES_STRING));
 
 	if (screendata->is_extended) {
 		moved_monitor->show();
@@ -742,6 +742,8 @@ void KDisplayConfig::setRealResolutionSliderValue(int index) {
 KDisplayConfig::KDisplayConfig(TQWidget *parent, const char *name, const TQStringList &)
   : KCModule(KDisplayCFactory::instance(), parent, name), iccTab(0), m_randrsimple(0), m_gammaApplyTimer(0)
 {
+	TDEHardwareDevices *hwdevices = KGlobal::hardwareDevices();
+	connect(hwdevices, TQT_SIGNAL(hardwareUpdated(TDEGenericDevice*)), this, TQT_SLOT(deviceChanged(TDEGenericDevice*)));
 
 	m_randrsimple = new KRandrSimpleAPI();
 
@@ -773,8 +775,17 @@ KDisplayConfig::KDisplayConfig(TQWidget *parent, const char *name, const TQStrin
 		base->systemEnableSupport->setText(i18n("&Enable local display control for this session"));
 	}
 
-	setRootOnlyMsg(i18n("<b>The global display configuration is a system wide setting, and requires administrator access</b><br>To alter the system's global display configuration, click on the \"Administrator Mode\" button below.<br>Otherwise, you may change your session-specific display configuration below."));
+// 	setRootOnlyMsg(i18n("<b>The global display configuration is a system wide setting, and requires administrator access</b><br>To alter the system's global display configuration, click on the \"Administrator Mode\" button below.<br>Otherwise, you may change your session-specific display configuration below."));
 // 	setUseRootOnlyMsg(true);	// Setting this hides the Apply button!
+
+	base->nonRootWarningLabel->setFrameShape(TQFrame::Box);
+	base->nonRootWarningLabel->setFrameShadow(TQFrame::Raised);
+	if (getuid() != 0) {
+		base->nonRootWarningLabel->setText(i18n("<b>The global display configuration is a system wide setting, and requires administrator access</b><br>To alter the system's global display configuration, click on the \"Administrator Mode\" button below.<br>Otherwise, you may change your session-specific display configuration below."));
+	}
+	else {
+		base->nonRootWarningLabel->hide();
+	}
 
 	connect(base->systemEnableSupport, TQT_SIGNAL(clicked()), TQT_SLOT(changed()));
 	connect(base->systemEnableSupport, TQT_SIGNAL(clicked()), TQT_SLOT(processLockoutControls()));
@@ -830,6 +841,16 @@ KDisplayConfig::~KDisplayConfig()
 	if (m_randrsimple) {
 		delete m_randrsimple;
 		m_randrsimple = 0;
+	}
+}
+
+void KDisplayConfig::deviceChanged (TDEGenericDevice* device) {
+	if (device->type() == TDEGenericDeviceType::Monitor) {
+		if (base->rescanHardware->isEnabled()) {
+			base->rescanHardware->setEnabled(false);
+			rescanHardware();
+			base->rescanHardware->setEnabled(true);
+		}
 	}
 }
 
@@ -987,7 +1008,7 @@ void KDisplayConfig::updateDisplayedInformation () {
 		base->orientationVFlip->setChecked(screendata->has_y_flip);
 	}
 	else {
-		base->rotationSelectDD->insertItem("Normal", 0);
+		base->rotationSelectDD->insertItem(ROTATION_0_DEGREES_STRING, 0);
 		base->rotationSelectDD->setCurrentItem(0);
 		base->orientationHFlip->hide();
 		base->orientationVFlip->hide();
@@ -1097,7 +1118,7 @@ void KDisplayConfig::updateDragDropDisplay() {
 			screendata = m_screenInfoArray.at(i);
 			if (((j==0) && (screendata->is_primary==true)) || ((j==1) && (screendata->is_primary==false))) {	// This ensures that the primary monitor is always the first one created and placed on the configuration widget
 				TQString rotationDesired = *screendata->rotations.at(screendata->current_rotation_index);
-				bool isvisiblyrotated = ((rotationDesired == "Rotate 90 degrees") || (rotationDesired == "Rotate 270 degrees"));
+				bool isvisiblyrotated = ((rotationDesired == ROTATION_90_DEGREES_STRING) || (rotationDesired == ROTATION_270_DEGREES_STRING));
 				DraggableMonitor *m = new DraggableMonitor( base->monitorPhyArrange, 0, WStyle_Customize | WDestructiveClose | WStyle_NoBorder | WX11BypassWM );
 				connect(m, TQT_SIGNAL(workspaceRelayoutNeeded()), this, TQT_SLOT(layoutDragDropDisplay()));
 				connect(m, TQT_SIGNAL(monitorSelected(int)), this, TQT_SLOT(selectScreen(int)));

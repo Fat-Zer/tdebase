@@ -60,6 +60,11 @@
       <default>false</default>
    </entry>
 
+<entry name="XineramaHideSwitch" type="Bool" >
+      <label>Auto hide when Xinerama screen is not available</label>
+      <default>true</default>
+   </entry>
+
 <entry name="AutoHideDelay" type="Int" >
       <label>Delay before auto hide</label>
       <default>3</default>

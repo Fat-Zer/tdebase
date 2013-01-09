@@ -41,8 +41,9 @@ HidingTab::HidingTab(TQWidget *parent, const char* name)
     connect(m_manual,TQT_SIGNAL(toggled(bool)), TQT_SIGNAL(changed()));
     connect(m_automatic, TQT_SIGNAL(toggled(bool)), TQT_SIGNAL(changed()));
     connect(m_automatic, TQT_SIGNAL(toggled(bool)), TQT_SLOT(backgroundModeClicked()));
-    connect(m_background,TQT_SIGNAL(toggled(bool)), TQT_SIGNAL(changed()));
+    connect(m_background, TQT_SIGNAL(toggled(bool)), TQT_SIGNAL(changed()));
     connect(m_background, TQT_SIGNAL(toggled(bool)), TQT_SLOT(backgroundModeClicked()));
+    connect(m_xineramaHide, TQT_SIGNAL(toggled(bool)), TQT_SIGNAL(changed()));
     connect(m_hideSlider, TQT_SIGNAL(valueChanged(int)), TQT_SIGNAL(changed()));
     connect(m_delaySpinBox, TQT_SIGNAL(valueChanged(int)), TQT_SIGNAL(changed()));
     connect(m_animateHiding, TQT_SIGNAL(toggled(bool)), TQT_SIGNAL(changed()));
@@ -141,6 +142,8 @@ void HidingTab::switchPanel(int panelItem)
        m_manual->setChecked(true);
     }
 
+    m_xineramaHide->setChecked(m_panelInfo->_xineramaHideSwitch);
+
     m_delaySpinBox->setValue(m_panelInfo->_autoHideDelay);
     m_autoHideSwitch->setChecked(m_panelInfo->_autoHideSwitch);
 
@@ -190,6 +193,8 @@ void HidingTab::storeInfo()
     m_panelInfo->_autoHideDelay = m_delaySpinBox->value();
     m_panelInfo->_autoHideSwitch = m_autoHideSwitch->isChecked();
 
+    m_panelInfo->_xineramaHideSwitch = m_xineramaHide->isChecked();
+
     m_panelInfo->_unhideLocation = m_backgroundRaise->isChecked() ?
                                    triggerComboToConfig(m_backgroundPos->currentItem()) : 0;
 }
@@ -199,6 +204,7 @@ void HidingTab::defaults()
    m_manual->setChecked( true );
    m_delaySpinBox->setValue( 3 );
    m_autoHideSwitch->setChecked( false );
+   m_xineramaHide->setChecked( true );
    m_lHB->setChecked(  false );
    m_rHB->setChecked(  true );
    m_animateHiding->setChecked( true );

@@ -212,6 +212,10 @@ TaskbarConfig::TaskbarConfig(TQWidget *parent, const char* name, const TQStringL
     {
         m_widget->showAllScreens->hide();
     }
+    else
+    {
+        m_widget->showAllScreens->show();
+    }
     connect( m_widget->showAllScreens, TQT_SIGNAL( stateChanged( int )), TQT_SLOT( changed()));
 
     KAboutData *about = new KAboutData(I18N_NOOP("kcmtaskbar"),

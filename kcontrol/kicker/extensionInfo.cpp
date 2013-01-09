@@ -124,21 +124,22 @@ void ExtensionInfo::load()
     KConfig c(_configFile);
     c.setGroup("General");
 
-    _position       = c.readNumEntry ("Position",            _position);
-    _alignment      = c.readNumEntry ("Alignment",           _alignment);
-    _xineramaScreen = c.readNumEntry ("XineramaScreen",      _xineramaScreen);
-    _showLeftHB     = c.readBoolEntry("ShowLeftHideButton",  _showLeftHB);
-    _showRightHB    = c.readBoolEntry("ShowRightHideButton", _showRightHB);
-    _hideButtonSize = c.readNumEntry ("HideButtonSize",      _hideButtonSize);
-    _autohidePanel  = c.readBoolEntry("AutoHidePanel",       _autohidePanel);
-    _backgroundHide = c.readBoolEntry("BackgroundHide",      _backgroundHide);
-    _autoHideSwitch = c.readBoolEntry("AutoHideSwitch",      _autoHideSwitch);
-    _autoHideDelay  = c.readNumEntry ("AutoHideDelay",       _autoHideDelay);
-    _hideAnim       = c.readBoolEntry("HideAnimation",       _hideAnim);
-    _hideAnimSpeed  = c.readNumEntry ("HideAnimationSpeed",  _hideAnimSpeed);
-    _unhideLocation = c.readNumEntry ("UnhideLocation",      _unhideLocation);
-    _sizePercentage = c.readNumEntry ("SizePercentage",      _sizePercentage);
-    _expandSize     = c.readBoolEntry("ExpandSize",          _expandSize);
+    _position           = c.readNumEntry ("Position",            _position);
+    _alignment          = c.readNumEntry ("Alignment",           _alignment);
+    _xineramaScreen     = c.readNumEntry ("XineramaScreen",      _xineramaScreen);
+    _showLeftHB         = c.readBoolEntry("ShowLeftHideButton",  _showLeftHB);
+    _showRightHB        = c.readBoolEntry("ShowRightHideButton", _showRightHB);
+    _hideButtonSize     = c.readNumEntry ("HideButtonSize",      _hideButtonSize);
+    _autohidePanel      = c.readBoolEntry("AutoHidePanel",       _autohidePanel);
+    _backgroundHide     = c.readBoolEntry("BackgroundHide",      _backgroundHide);
+    _autoHideSwitch     = c.readBoolEntry("AutoHideSwitch",      _autoHideSwitch);
+    _xineramaHideSwitch = c.readBoolEntry("XineramaHideSwitch",  _xineramaHideSwitch);
+    _autoHideDelay      = c.readNumEntry ("AutoHideDelay",       _autoHideDelay);
+    _hideAnim           = c.readBoolEntry("HideAnimation",       _hideAnim);
+    _hideAnimSpeed      = c.readNumEntry ("HideAnimationSpeed",  _hideAnimSpeed);
+    _unhideLocation     = c.readNumEntry ("UnhideLocation",      _unhideLocation);
+    _sizePercentage     = c.readNumEntry ("SizePercentage",      _sizePercentage);
+    _expandSize         = c.readBoolEntry("ExpandSize",          _expandSize);
 
     if (_resizeable)
     {
@@ -196,27 +197,28 @@ void ExtensionInfo::configChanged()
 void ExtensionInfo::setDefaults()
 {
     // defaults
-    _position       = 3;
-    _alignment      = TQApplication::reverseLayout() ? 2 : 0;
-    _xineramaScreen = TQApplication::desktop()->primaryScreen();
-    _size           = 2;
-    _showLeftHB     = false;
-    _showRightHB    = true;
-    _hideButtonSize = 14;
-    _autohidePanel  = false;
-    _backgroundHide = false;
-    _autoHideSwitch = false;
-    _autoHideDelay  = 3;
-    _hideAnim       = true;
-    _hideAnimSpeed  = 40;
-    _unhideLocation = 0;
-    _sizePercentage = 100;
-    _expandSize     = true;
-    _customSize     = 0;
-    _resizeable     = false;
-    _useStdSizes    = false;
-    _customSizeMin  = 0;
-    _customSizeMax  = 0;
+    _position           = 3;
+    _alignment          = TQApplication::reverseLayout() ? 2 : 0;
+    _xineramaScreen     = TQApplication::desktop()->primaryScreen();
+    _size               = 2;
+    _showLeftHB         = false;
+    _showRightHB        = true;
+    _hideButtonSize     = 14;
+    _autohidePanel      = false;
+    _backgroundHide     = false;
+    _autoHideSwitch     = false;
+    _xineramaHideSwitch = true;
+    _autoHideDelay      = 3;
+    _hideAnim           = true;
+    _hideAnimSpeed      = 40;
+    _unhideLocation     = 0;
+    _sizePercentage     = 100;
+    _expandSize         = true;
+    _customSize         = 0;
+    _resizeable         = false;
+    _useStdSizes        = false;
+    _customSizeMin      = 0;
+    _customSizeMax      = 0;
 }
 
 void ExtensionInfo::save()
@@ -232,6 +234,7 @@ void ExtensionInfo::save()
     c.writeEntry("AutoHidePanel",       _autohidePanel);
     c.writeEntry("BackgroundHide",      _backgroundHide);
     c.writeEntry("AutoHideSwitch",      _autoHideSwitch);
+    c.writeEntry("XineramaHideSwitch",  _xineramaHideSwitch);
     c.writeEntry("AutoHideDelay",       _autoHideDelay);
     c.writeEntry("HideAnimation",       _hideAnim);
     c.writeEntry("HideAnimationSpeed",  _hideAnimSpeed);

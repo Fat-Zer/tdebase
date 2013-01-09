@@ -476,6 +476,12 @@ void ExtensionContainer::removeSessionConfigFile()
 void ExtensionContainer::moveMe()
 {
     int screen = xineramaScreen();
+    if (screen == -3)
+    {
+        // we aren't on any screen? um. ok.
+        return;
+    }
+
     if (screen < 0)
     {
         screen = kapp->desktop()->screenNumber(this);
@@ -1980,7 +1986,7 @@ int ExtensionContainer::xineramaScreen() const
     // sanitize at runtime only, since many Xinerama users
     // turn it on and off and don't want kicker to lose their configs
 
-    /* -2 means all screens, -1 primary screens, the rest are valid screen numbers */
+    /* -3 means no screens, -2 means all screens, -1 primary screens, the rest are valid screen numbers */
     if (XineramaAllScreens <= m_settings.xineramaScreen() &&
         m_settings.xineramaScreen() < TQApplication::desktop()->numScreens())
     {
@@ -1988,8 +1994,15 @@ int ExtensionContainer::xineramaScreen() const
     }
     else
     {
-        /* force invalid screen locations onto the primary screen */
-        return TQApplication::desktop()->primaryScreen();
+        if (m_settings.xineramaHideSwitch())
+        {
+            return -3;
+        }
+        else
+        {
+            /* force invalid screen locations onto the primary screen */
+            return TQApplication::desktop()->primaryScreen();
+        }
     }
 }
 
