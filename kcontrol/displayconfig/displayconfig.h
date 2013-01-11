@@ -44,6 +44,8 @@ class KConfig;
 class KPopupMenu;
 class KListViewItem;
 
+typedef TQMap< TQString, TQPtrList< SingleScreenData > > ScreenConfigurationMap;
+
 class KDisplayConfig : public KCModule, public DCOPObject
 {
   K_DCOP
@@ -79,13 +81,13 @@ private:
 	TQStringList cfgProfiles;
 	void refreshDisplayedInformation ();
 	void updateDisplayedInformation ();
-	TQString extractFileName(TQString displayName, TQString profileName);
 	TQString *displayFileArray;
 	int findProfileIndex(TQString profileName);
-	int findScreenIndex(TQString screenName);
 	TQString m_defaultProfile;
 	KRandrSimpleAPI *m_randrsimple;
-	TQPtrList<SingleScreenData> m_screenInfoArray;
+	ScreenConfigurationMap m_screenInfoArray;
+	TQString activeProfileName;
+	TQString startupProfileName;
 	int realResolutionSliderValue();
 	void setRealResolutionSliderValue(int index);
 	KCModule* addTab( const TQString name, const TQString label );
@@ -97,6 +99,14 @@ private:
 	void gammaSetAverageAllSlider();
 	void setGammaLabels();
 	void generateSortedResolutions();
+	void loadProfileFromDiskHelper(bool forceReload = false);
+	void saveActiveSystemWideProfileToDisk();
+	void createHotplugRulesGrid();
+	TQGridLayout* profileRulesGrid;
+	TQStringList availableProfileNames;
+	void profileListChanged();
+	HotPlugRulesList currentHotplugRules;
+	void updateProfileConfigObjectFromGrid();
 
 private slots:
 	void selectProfile (int slotNumber);
@@ -107,6 +117,9 @@ private slots:
 	void addProfile (void);
 	void renameProfile (void);
 	void deleteProfile (void);
+	void activateProfile (void);
+	void reloadProfileFromDisk (void);
+	void saveProfile (void);
 	void ensurePrimaryMonitorIsAvailable (void);
 	void updateDragDropDisplay (void);
 	void layoutDragDropDisplay (void);
@@ -130,6 +143,11 @@ private slots:
 	void dpmsChanged (void);
 	void processDPMSControls (void);
 	void deviceChanged (TDEGenericDevice*);
+	void updateStartupProfileLabel (void);
+	void selectDefaultProfile (int index);
+	void addNewProfileRule (void);
+	void deleteProfileRule (void);
+	void profileRuleCheckBoxStateChanged (int state);
 };
 
 #endif

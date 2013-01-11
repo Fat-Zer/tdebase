@@ -278,7 +278,7 @@ kg_main( const char *argv0 )
 	// Load up systemwide display settings
 #ifdef WITH_XRANDR
 	KRandrSimpleAPI *randrsimple = new KRandrSimpleAPI();
-	TQPoint primaryScreenPosition = randrsimple->applySystemwideDisplayConfiguration("", KDE_CONFDIR);
+	TQPoint primaryScreenPosition = randrsimple->applyDisplayConfiguration("", KDE_CONFDIR);
 	delete randrsimple;
 #endif
 

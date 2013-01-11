@@ -436,7 +436,7 @@ void KDisplayConfig::updateDraggableMonitorInformationInternal (int monitor_id, 
 				DraggableMonitor *monitor = static_cast<DraggableMonitor*>(TQT_TQWIDGET(monitors.at( i )));
 				if (monitor->screen_id == monitor_id) {
 					moved_monitor = monitor;
-					screendata = m_screenInfoArray.at(moved_monitor->screen_id);
+					screendata = m_screenInfoArray[activeProfileName].at(moved_monitor->screen_id);
 				}
 			}
 		}
@@ -466,7 +466,7 @@ void KDisplayConfig::updateDraggableMonitorInformationInternal (int monitor_id, 
 
 	// Find the primary monitor
 	for (i=0;i<numberOfScreens;i++) {
-		screendata = m_screenInfoArray.at(i);
+		screendata = m_screenInfoArray[activeProfileName].at(i);
 		if (screendata->is_primary)
 			j=i;
 	}
@@ -498,7 +498,7 @@ void KDisplayConfig::updateDraggableMonitorInformationInternal (int monitor_id, 
 			int offset_x = toffset_x / base->monitorPhyArrange->resize_factor;
 			int offset_y = toffset_y / base->monitorPhyArrange->resize_factor;
 
-			screendata = m_screenInfoArray.at(monitor_id);
+			screendata = m_screenInfoArray[activeProfileName].at(monitor_id);
 			screendata->absolute_x_position = offset_x;
 			screendata->absolute_y_position = offset_y;
 		}
@@ -630,7 +630,7 @@ void KDisplayConfig::moveMonitor(DraggableMonitor* monitor, int realx, int realy
 	// Find the primary monitor
 	primary_found = false;
 	for (i=0;i<numberOfScreens;i++) {
-		screendata = m_screenInfoArray.at(i);
+		screendata = m_screenInfoArray[activeProfileName].at(i);
 		if (screendata->is_primary) {
 			j=i;
 			primary_found = true;
@@ -704,7 +704,7 @@ int KDisplayConfig::realResolutionSliderValue() {
 	unsigned int j;
 	SingleScreenData *screendata;
 
-	screendata = m_screenInfoArray.at(base->monitorDisplaySelectDD->currentItem());
+	screendata = m_screenInfoArray[activeProfileName].at(base->monitorDisplaySelectDD->currentItem());
 	TQStringList sortedList = screendata->resolutions;
 	sortedList = sortResolutions(sortedList);
 
@@ -723,7 +723,7 @@ void KDisplayConfig::setRealResolutionSliderValue(int index) {
 	unsigned int j;
 	SingleScreenData *screendata;
 
-	screendata = m_screenInfoArray.at(base->monitorDisplaySelectDD->currentItem());
+	screendata = m_screenInfoArray[activeProfileName].at(base->monitorDisplaySelectDD->currentItem());
 	TQStringList sortedList = screendata->resolutions;
 	sortedList = sortResolutions(sortedList);
 
@@ -740,7 +740,7 @@ void KDisplayConfig::setRealResolutionSliderValue(int index) {
 /**** KDisplayConfig ****/
 
 KDisplayConfig::KDisplayConfig(TQWidget *parent, const char *name, const TQStringList &)
-  : KCModule(KDisplayCFactory::instance(), parent, name), iccTab(0), m_randrsimple(0), m_gammaApplyTimer(0)
+  : KCModule(KDisplayCFactory::instance(), parent, name), iccTab(0), m_randrsimple(0), activeProfileName(""), m_gammaApplyTimer(0)
 {
 	TDEHardwareDevices *hwdevices = KGlobal::hardwareDevices();
 	connect(hwdevices, TQT_SIGNAL(hardwareUpdated(TDEGenericDevice*)), this, TQT_SLOT(deviceChanged(TDEGenericDevice*)));
@@ -769,6 +769,8 @@ KDisplayConfig::KDisplayConfig(TQWidget *parent, const char *name, const TQStrin
 	connect(m_gammaApplyTimer, SIGNAL(timeout()), this, SLOT(applyGamma()));
 
 	base = new DisplayConfigBase(this);
+	profileRulesGrid = new TQGridLayout(base->profileRulesGridWidget, 1, 1, KDialog::marginHint());
+
 	layout->addWidget(base);
 
 	if (getuid() != 0) {
@@ -789,6 +791,16 @@ KDisplayConfig::KDisplayConfig(TQWidget *parent, const char *name, const TQStrin
 
 	connect(base->systemEnableSupport, TQT_SIGNAL(clicked()), TQT_SLOT(changed()));
 	connect(base->systemEnableSupport, TQT_SIGNAL(clicked()), TQT_SLOT(processLockoutControls()));
+	connect(base->addProfileButton, TQT_SIGNAL(clicked()), this, TQT_SLOT(addProfile()));
+	connect(base->renameProfileButton, TQT_SIGNAL(clicked()), this, TQT_SLOT(renameProfile()));
+	connect(base->deleteProfileButton, TQT_SIGNAL(clicked()), this, TQT_SLOT(deleteProfile()));
+	connect(base->activateProfileButton, TQT_SIGNAL(clicked()), this, TQT_SLOT(activateProfile()));
+	connect(base->reloadProfileButton, TQT_SIGNAL(clicked()), this, TQT_SLOT(reloadProfileFromDisk()));
+	connect(base->saveProfileButton, TQT_SIGNAL(clicked()), this, TQT_SLOT(saveProfile()));
+	connect(base->startupDisplayProfileList, TQT_SIGNAL(activated(int)), this, TQT_SLOT(changed()));
+	connect(base->startupDisplayProfileList, TQT_SIGNAL(activated(int)), this, TQT_SLOT(selectDefaultProfile(int)));
+	connect(base->displayProfileList, TQT_SIGNAL(activated(int)), this, TQT_SLOT(selectProfile(int)));
+
 	connect(base->monitorDisplaySelectDD, TQT_SIGNAL(activated(int)), TQT_SLOT(changed()));
 	connect(base->gammamonitorDisplaySelectDD, TQT_SIGNAL(activated(int)), TQT_SLOT(changed()));
 	connect(base->gammaTargetSelectDD, TQT_SIGNAL(activated(int)), TQT_SLOT(gammaTargetChanged(int)));
@@ -857,31 +869,23 @@ void KDisplayConfig::deviceChanged (TDEGenericDevice* device) {
 void KDisplayConfig::updateExtendedMonitorInformation () {
 	SingleScreenData *screendata;
 
-	screendata = m_screenInfoArray.at(base->monitorDisplaySelectDD->currentItem());
+	screendata = m_screenInfoArray[activeProfileName].at(base->monitorDisplaySelectDD->currentItem());
 	screendata->is_extended = base->isExtendedMonitorCB->isChecked();
 
 	refreshDisplayedInformation();
 }
 
 void KDisplayConfig::rescanHardware (void) {
-	m_randrsimple->destroyScreenInformationObject(m_screenInfoArray);
-	m_screenInfoArray = m_randrsimple->readCurrentDisplayConfiguration();
-	m_randrsimple->ensureMonitorDataConsistency(m_screenInfoArray);
-	numberOfScreens = m_screenInfoArray.count();
+	m_randrsimple->destroyScreenInformationObject(m_screenInfoArray[activeProfileName]);
+	m_screenInfoArray[activeProfileName] = m_randrsimple->readCurrentDisplayConfiguration();
+	m_randrsimple->ensureMonitorDataConsistency(m_screenInfoArray[activeProfileName]);
+	numberOfScreens = m_screenInfoArray[activeProfileName].count();
 	refreshDisplayedInformation();
 }
 
 void KDisplayConfig::reloadProfile (void) {
-	// FIXME
-	m_randrsimple->destroyScreenInformationObject(m_screenInfoArray);
-	if (getuid() != 0) {
-		m_screenInfoArray = m_randrsimple->loadSystemwideDisplayConfiguration("", locateLocal("config", "/", true));
-	}
-	else {
-		m_screenInfoArray = m_randrsimple->loadSystemwideDisplayConfiguration("", KDE_CONFDIR);
-	}
-	m_randrsimple->ensureMonitorDataConsistency(m_screenInfoArray);
-	numberOfScreens = m_screenInfoArray.count();
+	m_randrsimple->ensureMonitorDataConsistency(m_screenInfoArray[activeProfileName]);
+	numberOfScreens = m_screenInfoArray[activeProfileName].count();
 	refreshDisplayedInformation();
 }
 
@@ -897,7 +901,7 @@ void KDisplayConfig::identifyMonitors () {
 	randr_display = tqt_xdisplay();
 	randr_screen_info = m_randrsimple->read_screen_info(randr_display);
 
-	for (i = 0; i < m_screenInfoArray.count(); i++) {
+	for (i = 0; i < m_screenInfoArray[activeProfileName].count(); i++) {
 		// Look for ON outputs...
 		if (!randr_screen_info->outputs[i]->cur_crtc) {
 			continue;
@@ -920,20 +924,8 @@ void KDisplayConfig::identifyMonitors () {
 	m_randrsimple->freeScreenInfoStructure(randr_screen_info);
 }
 
-void KDisplayConfig::deleteProfile () {
-
-}
-
-void KDisplayConfig::renameProfile () {
-
-}
-
-void KDisplayConfig::addProfile () {
-
-}
-
 void KDisplayConfig::activatePreview() {
-	m_randrsimple->applySystemwideDisplayConfiguration(m_screenInfoArray, TRUE);
+	m_randrsimple->applyDisplayConfiguration(m_screenInfoArray[activeProfileName], TRUE);
 }
 
 void KDisplayConfig::load()
@@ -941,8 +933,217 @@ void KDisplayConfig::load()
 	load( false );
 }
 
-void KDisplayConfig::selectProfile (int slotNumber) {
+void KDisplayConfig::loadProfileFromDiskHelper(bool forceReload) {
+	if (forceReload) {
+		m_randrsimple->destroyScreenInformationObject(m_screenInfoArray[activeProfileName]);
+		m_screenInfoArray.remove(activeProfileName);
+	}
+	if (!m_screenInfoArray.contains(activeProfileName)) {
+		TQPtrList<SingleScreenData> originalInfoArray;
+		TQPtrList<SingleScreenData> newInfoArray;
+	
+		// If a configuration is present, load it in
+		// Otherwise, use the current display configuration
+		originalInfoArray = m_screenInfoArray[activeProfileName];
+		if (getuid() != 0) {
+			newInfoArray = m_randrsimple->loadDisplayConfiguration(activeProfileName, locateLocal("config", "/", true));
+		}
+		else {
+			newInfoArray = m_randrsimple->loadDisplayConfiguration(activeProfileName, KDE_CONFDIR);
+		}
+		if (newInfoArray.count() > 0) {
+			m_screenInfoArray[activeProfileName] = newInfoArray;
+			m_randrsimple->destroyScreenInformationObject(originalInfoArray);
+		}
+		else {
+			m_screenInfoArray[activeProfileName] = originalInfoArray;
+			m_randrsimple->destroyScreenInformationObject(newInfoArray);
+		}
+	}
 
+	// If there is still no valid configuration, read the active display information from the hardware
+	// to initialise the configuration...
+	if (m_screenInfoArray[activeProfileName].count() < 1) {
+		m_screenInfoArray[activeProfileName] = m_randrsimple->readCurrentDisplayConfiguration();
+	}
+
+	m_randrsimple->ensureMonitorDataConsistency(m_screenInfoArray[activeProfileName]);
+	numberOfScreens = m_screenInfoArray[activeProfileName].count();
+
+	reloadProfile();
+}
+
+void KDisplayConfig::selectProfile (int slotNumber) {
+	TQString selectedProfile = base->displayProfileList->currentText();
+	if (selectedProfile == "<default>") {
+		selectedProfile = "";
+	}
+	activeProfileName = selectedProfile;
+
+	loadProfileFromDiskHelper();
+}
+
+void KDisplayConfig::deleteProfile () {
+	if (activeProfileName == "") {
+		KMessageBox::sorry(this, i18n("You cannot delete the default profile!"), i18n("Invalid operation requested"));
+		return;
+	}
+
+	int ret = KMessageBox::warningYesNo(this, i18n("<qt><b>You are attempting to delete the display profile '%1'</b><br>If you click Yes, the profile will be permanently removed from disk<p>Do you want to delete this profile?</qt>").arg(activeProfileName), i18n("Delete display profile?"));
+	if (ret == KMessageBox::Yes) {
+		bool success = false;
+		if (getuid() != 0) {
+			success = m_randrsimple->deleteDisplayConfiguration(activeProfileName, locateLocal("config", "/", true));
+		}
+		else {
+			success = m_randrsimple->deleteDisplayConfiguration(activeProfileName, KDE_CONFDIR);
+		}
+		if (success) {
+			TQStringList::Iterator it = availableProfileNames.find(activeProfileName);
+			if (it != availableProfileNames.end()) {
+				availableProfileNames.remove(it);
+			}
+			profileListChanged();
+			selectProfile(base->displayProfileList->currentItem());
+		}
+		else {
+			KMessageBox::error(this, i18n("<qt><b>Unable to delete profile '%1'!</b><p>Please verify that you have permission to access the configuration file</qt>").arg(activeProfileName), i18n("Deletion failed!"));
+		}
+	}
+}
+
+void KDisplayConfig::renameProfile () {
+	if (activeProfileName == "") {
+		KMessageBox::sorry(this, i18n("You cannot rename the default profile!"), i18n("Invalid operation requested"));
+		return;
+	}
+
+	// Pop up a text entry box asking for the new name of the profile
+	bool _ok = false;
+	bool _end = false;
+	TQString _new;
+	TQString _text = i18n("Please enter the new profile name below:");
+	TQString _error;
+
+	while (!_end) {
+		_new = KInputDialog::getText( i18n("Display Profile Configuration"),  _error + _text, activeProfileName, &_ok, this);
+		if (!_ok ) {
+			_end = true;
+		}
+		else {
+			_error = TQString();
+			if (!_new.isEmpty()) {
+				if (findProfileIndex(_new) != -1) {
+					_error = i18n("Error: A profile with that name already exists") + TQString("\n");
+				}
+				else {
+					_end = true;
+				}
+			}
+		}
+	}
+	if (!_ok) return;
+
+
+	bool success = false;
+	if (getuid() != 0) {
+		success = m_randrsimple->renameDisplayConfiguration(activeProfileName, _new, locateLocal("config", "/", true));
+	}
+	else {
+		success = m_randrsimple->renameDisplayConfiguration(activeProfileName, _new, KDE_CONFDIR);
+	}
+
+	if (success) {
+		TQStringList::Iterator it = availableProfileNames.find(activeProfileName);
+		if (it != availableProfileNames.end()) {
+			availableProfileNames.remove(it);
+		}
+		availableProfileNames.append(_new);
+		profileListChanged();
+		base->displayProfileList->setCurrentItem(_new);
+		selectProfile(base->displayProfileList->currentItem());
+	}
+	else {
+		KMessageBox::error(this, i18n("<qt><b>Unable to rename profile '%1'!</b><p>Please verify that you have permission to access the configuration file</qt>").arg(activeProfileName), i18n("Renaming failed!"));
+	}
+}
+
+void KDisplayConfig::activateProfile() {
+	if (getuid() != 0) {
+		m_randrsimple->applyDisplayConfiguration(m_screenInfoArray[activeProfileName], TRUE, locateLocal("config", "/", true));
+	}
+	else {
+		m_randrsimple->applyDisplayConfiguration(m_screenInfoArray[activeProfileName], TRUE, KDE_CONFDIR);
+	}
+	rescanHardware();
+}
+
+void KDisplayConfig::reloadProfileFromDisk() {
+	loadProfileFromDiskHelper(true);
+}
+
+void KDisplayConfig::saveProfile() {
+	saveActiveSystemWideProfileToDisk();
+}
+
+void KDisplayConfig::addProfile () {
+	// Pop up a text entry box asking for the name of the new profile
+	bool _ok = false;
+	bool _end = false;
+	TQString _new;
+	TQString _text = i18n("Please enter the new profile name below:");
+	TQString _error;
+
+	while (!_end) {
+		_new = KInputDialog::getText( i18n("Display Profile Configuration"),  _error + _text, TQString::null, &_ok, this);
+		if (!_ok ) {
+			_end = true;
+		}
+		else {
+			_error = TQString();
+			if (!_new.isEmpty()) {
+				if (findProfileIndex(_new) != -1) {
+					_error = i18n("Error: A profile with that name already exists") + TQString("\n");
+				}
+				else {
+					_end = true;
+				}
+			}
+		}
+	}
+	if (!_ok) return;
+
+	m_screenInfoArray[_new] = m_randrsimple->copyScreenInformationObject(m_screenInfoArray[activeProfileName]);
+
+	// Insert the new profile name
+	availableProfileNames.append(_new);
+	profileListChanged();
+	base->displayProfileList->setCurrentItem(_new);
+	selectProfile(base->displayProfileList->currentItem());
+
+	updateDisplayedInformation();
+	saveActiveSystemWideProfileToDisk();
+	emit changed();
+}
+
+void KDisplayConfig::updateStartupProfileLabel()
+{
+	TQString friendlyName = startupProfileName;
+	if (friendlyName == "") {
+		friendlyName = "<default>";
+	}
+
+	base->startupDisplayProfileList->setCurrentItem(friendlyName, false);
+}
+
+void KDisplayConfig::selectDefaultProfile(int slotNumber)
+{
+	TQString selectedProfile = base->startupDisplayProfileList->currentText();
+	if (selectedProfile == "<default>") {
+		selectedProfile = "";
+	}
+
+	startupProfileName = selectedProfile;
 }
 
 void KDisplayConfig::selectScreen (int slotNumber) {
@@ -952,9 +1153,9 @@ void KDisplayConfig::selectScreen (int slotNumber) {
 }
 
 void KDisplayConfig::updateArray (void) {
-	m_screenInfoArray = m_randrsimple->readCurrentDisplayConfiguration();
-	m_randrsimple->ensureMonitorDataConsistency(m_screenInfoArray);
-	numberOfScreens = m_screenInfoArray.count();
+	m_screenInfoArray[activeProfileName] = m_randrsimple->readCurrentDisplayConfiguration();
+	m_randrsimple->ensureMonitorDataConsistency(m_screenInfoArray[activeProfileName]);
+	numberOfScreens = m_screenInfoArray[activeProfileName].count();
 }
 
 void KDisplayConfig::updateDisplayedInformation () {
@@ -964,7 +1165,18 @@ void KDisplayConfig::updateDisplayedInformation () {
 
 	ensureMonitorDataConsistency();
 
-	screendata = m_screenInfoArray.at(base->monitorDisplaySelectDD->currentItem());
+	screendata = m_screenInfoArray[activeProfileName].at(base->monitorDisplaySelectDD->currentItem());
+
+	if (!screendata) {
+		base->resolutionSlider->setEnabled(false);
+		base->refreshRateDD->setEnabled(false);
+		base->rotationSelectDD->setEnabled(false);
+		base->orientationHFlip->setEnabled(false);
+		base->orientationVFlip->setEnabled(false);
+		base->isPrimaryMonitorCB->setEnabled(false);
+		base->isExtendedMonitorCB->setEnabled(false);
+		return;
+	}
 
 	if (screendata->screen_connected) {
 		base->resolutionSlider->setEnabled(true);
@@ -1053,6 +1265,8 @@ void KDisplayConfig::updateDisplayedInformation () {
 }
 
 void KDisplayConfig::refreshDisplayedInformation () {
+	createHotplugRulesGrid();
+
 	// Insert data into the GUI
 	int i;
 	SingleScreenData *screendata;
@@ -1061,13 +1275,13 @@ void KDisplayConfig::refreshDisplayedInformation () {
 	int currentScreenIndex = base->monitorDisplaySelectDD->currentItem();
 	base->monitorDisplaySelectDD->clear();
 	for (i=0;i<numberOfScreens;i++) {
-		screendata = m_screenInfoArray.at(i);
+		screendata = m_screenInfoArray[activeProfileName].at(i);
 		base->monitorDisplaySelectDD->insertItem(screendata->screenFriendlyName, i);
 	}
 	base->monitorDisplaySelectDD->setCurrentItem(currentScreenIndex);
 	base->gammamonitorDisplaySelectDD->clear();
 	for (i=0;i<numberOfScreens;i++) {
-		screendata = m_screenInfoArray.at(i);
+		screendata = m_screenInfoArray[activeProfileName].at(i);
 		base->gammamonitorDisplaySelectDD->insertItem(screendata->screenFriendlyName, i);
 	}
 	base->gammamonitorDisplaySelectDD->setCurrentItem(currentScreenIndex);
@@ -1076,15 +1290,21 @@ void KDisplayConfig::refreshDisplayedInformation () {
 
 	updateDragDropDisplay();
 
-	screendata = m_screenInfoArray.at(0);
-	base->systemEnableDPMS->setEnabled(screendata->has_dpms);
-	base->systemEnableDPMS->setChecked(screendata->enable_dpms);
-	base->systemEnableDPMSStandby->setChecked(screendata->dpms_standby_delay!=0);
-	base->systemEnableDPMSSuspend->setChecked(screendata->dpms_suspend_delay!=0);
-	base->systemEnableDPMSPowerDown->setChecked(screendata->dpms_off_delay!=0);
-	base->dpmsStandbyTimeout->setValue(screendata->dpms_standby_delay/60);
-	base->dpmsSuspendTimeout->setValue(screendata->dpms_suspend_delay/60);
-	base->dpmsPowerDownTimeout->setValue(screendata->dpms_off_delay/60);
+	screendata = m_screenInfoArray[activeProfileName].at(0);
+	if (screendata) {
+		base->groupPowerManagement->setEnabled(true);
+		base->systemEnableDPMS->setEnabled(screendata->has_dpms);
+		base->systemEnableDPMS->setChecked(screendata->enable_dpms);
+		base->systemEnableDPMSStandby->setChecked(screendata->dpms_standby_delay!=0);
+		base->systemEnableDPMSSuspend->setChecked(screendata->dpms_suspend_delay!=0);
+		base->systemEnableDPMSPowerDown->setChecked(screendata->dpms_off_delay!=0);
+		base->dpmsStandbyTimeout->setValue(screendata->dpms_standby_delay/60);
+		base->dpmsSuspendTimeout->setValue(screendata->dpms_suspend_delay/60);
+		base->dpmsPowerDownTimeout->setValue(screendata->dpms_off_delay/60);
+	}
+	else {
+		base->groupPowerManagement->setEnabled(false);
+	}
 	processDPMSControls();
 }
 
@@ -1115,7 +1335,7 @@ void KDisplayConfig::updateDragDropDisplay() {
 	base->monitorPhyArrange->resize_factor = 0.0625;	// This always needs to divide by a multiple of 2
 	for (j=0;j<2;j++) {
 		for (i=0;i<numberOfScreens;i++) {
-			screendata = m_screenInfoArray.at(i);
+			screendata = m_screenInfoArray[activeProfileName].at(i);
 			if (((j==0) && (screendata->is_primary==true)) || ((j==1) && (screendata->is_primary==false))) {	// This ensures that the primary monitor is always the first one created and placed on the configuration widget
 				TQString rotationDesired = *screendata->rotations.at(screendata->current_rotation_index);
 				bool isvisiblyrotated = ((rotationDesired == ROTATION_90_DEGREES_STRING) || (rotationDesired == ROTATION_270_DEGREES_STRING));
@@ -1154,7 +1374,7 @@ void KDisplayConfig::layoutDragDropDisplay() {
 		for ( i = 0; i < int(monitors.count()); ++i ) {
 			if (::tqqt_cast<DraggableMonitor*>(TQT_TQWIDGET(monitors.at( i )))) {
 				DraggableMonitor *monitor = static_cast<DraggableMonitor*>(TQT_TQWIDGET(monitors.at( i )));
-				screendata = m_screenInfoArray.at(monitor->screen_id);
+				screendata = m_screenInfoArray[activeProfileName].at(monitor->screen_id);
 				moveMonitor(monitor, screendata->absolute_x_position, screendata->absolute_y_position);
 			}
 		}
@@ -1162,30 +1382,32 @@ void KDisplayConfig::layoutDragDropDisplay() {
 }
 
 void KDisplayConfig::ensureMonitorDataConsistency() {
-	m_randrsimple->ensureMonitorDataConsistency(m_screenInfoArray);
+	m_randrsimple->ensureMonitorDataConsistency(m_screenInfoArray[activeProfileName]);
 }
 
 void KDisplayConfig::resolutionSliderTextUpdate(int index) {
 	SingleScreenData *screendata;
-	screendata = m_screenInfoArray.at(base->monitorDisplaySelectDD->currentItem());
+	screendata = m_screenInfoArray[activeProfileName].at(base->monitorDisplaySelectDD->currentItem());
 
 	base->resolutionLabel->setText(screendata->resolutions[realResolutionSliderValue()] + TQString(" ") + i18n("pixels"));
 }
 
 void KDisplayConfig::resolutionSliderChanged(int index) {
 	SingleScreenData *screendata;
-	screendata = m_screenInfoArray.at(base->monitorDisplaySelectDD->currentItem());
+	screendata = m_screenInfoArray[activeProfileName].at(base->monitorDisplaySelectDD->currentItem());
 
 	screendata->current_resolution_index = realResolutionSliderValue();
 	updateDisplayedInformation();
 	updateDraggableMonitorInformation(base->monitorDisplaySelectDD->currentItem());
+
+	applyMonitorLayoutRules();
 
 	changed();
 }
 
 void KDisplayConfig::rotationInfoChanged() {
 	SingleScreenData *screendata;
-	screendata = m_screenInfoArray.at(base->monitorDisplaySelectDD->currentItem());
+	screendata = m_screenInfoArray[activeProfileName].at(base->monitorDisplaySelectDD->currentItem());
 
 	screendata->current_rotation_index = base->rotationSelectDD->currentItem();
 	screendata->has_x_flip = base->orientationHFlip->isChecked();
@@ -1193,22 +1415,20 @@ void KDisplayConfig::rotationInfoChanged() {
 	updateDisplayedInformation();
 	updateDraggableMonitorInformation(base->monitorDisplaySelectDD->currentItem());
 
+	applyMonitorLayoutRules();
+
 	changed();
 }
 
 void KDisplayConfig::refreshInfoChanged() {
 	SingleScreenData *screendata;
-	screendata = m_screenInfoArray.at(base->monitorDisplaySelectDD->currentItem());
+	screendata = m_screenInfoArray[activeProfileName].at(base->monitorDisplaySelectDD->currentItem());
 
 	screendata->current_refresh_rate_index = base->refreshRateDD->currentItem();
 	updateDisplayedInformation();
 	updateDraggableMonitorInformation(base->monitorDisplaySelectDD->currentItem());
 
 	changed();
-}
-
-TQString KDisplayConfig::extractFileName(TQString displayName, TQString profileName) {
-
 }
 
 void KDisplayConfig::ensurePrimaryMonitorIsAvailable() {
@@ -1219,11 +1439,11 @@ void KDisplayConfig::ensurePrimaryMonitorIsAvailable() {
 	// First, the screens
 	int currentScreenIndex = base->monitorDisplaySelectDD->currentItem();
 	for (i=0;i<numberOfScreens;i++) {
-		screendata = m_screenInfoArray.at(i);
+		screendata = m_screenInfoArray[activeProfileName].at(i);
 		if (i != currentScreenIndex)
 			screendata->is_primary = false;
 	}
-	screendata = m_screenInfoArray.at(currentScreenIndex);
+	screendata = m_screenInfoArray[activeProfileName].at(currentScreenIndex);
 	screendata->is_primary = true;
 	screendata->is_extended = true;
 	updateDragDropDisplay();
@@ -1231,17 +1451,19 @@ void KDisplayConfig::ensurePrimaryMonitorIsAvailable() {
 }
 
 int KDisplayConfig::findProfileIndex(TQString profileName) {
-
-}
-
-int KDisplayConfig::findScreenIndex(TQString screenName) {
-
+	int i;
+	for (i=0;i<base->displayProfileList->count();i++) {
+		if (base->displayProfileList->text(i) == profileName) {
+			return i;
+		}
+	}
+	return -1;
 }
 
 void KDisplayConfig::setGammaLabels() {
 	SingleScreenData *screendata;
 
-	screendata = m_screenInfoArray.at(base->gammamonitorDisplaySelectDD->currentItem());
+	screendata = m_screenInfoArray[activeProfileName].at(base->gammamonitorDisplaySelectDD->currentItem());
 
 	// Round off the gammas to one decimal place
 	screendata->gamma_red = floorf(screendata->gamma_red * 10 + 0.5) / 10;
@@ -1259,7 +1481,7 @@ void KDisplayConfig::gammaSetAverageAllSlider() {
 	float average_gamma;
 	SingleScreenData *screendata;
 
-	screendata = m_screenInfoArray.at(base->gammamonitorDisplaySelectDD->currentItem());
+	screendata = m_screenInfoArray[activeProfileName].at(base->gammamonitorDisplaySelectDD->currentItem());
 	average_gamma = (screendata->gamma_red+screendata->gamma_green+screendata->gamma_blue)/3.0;
 	average_gamma = floorf(average_gamma* 10 + 0.5) / 10;	// Round off the gamma to one decimal place
 	base->gammaAllSlider->setValue(average_gamma*10.0);
@@ -1273,7 +1495,7 @@ void KDisplayConfig::gammaselectScreen (int slotNumber) {
 	base->gammaGreenSlider->blockSignals(true);
 	base->gammaBlueSlider->blockSignals(true);
 
-	screendata = m_screenInfoArray.at(base->gammamonitorDisplaySelectDD->currentItem());
+	screendata = m_screenInfoArray[activeProfileName].at(base->gammamonitorDisplaySelectDD->currentItem());
 	base->gammaRedSlider->setValue(screendata->gamma_red*10.0);
 	base->gammaGreenSlider->setValue(screendata->gamma_green*10.0);
 	base->gammaBlueSlider->setValue(screendata->gamma_blue*10.0);
@@ -1294,7 +1516,7 @@ void KDisplayConfig::gammaAllSliderChanged(int index) {
 	base->gammaGreenSlider->blockSignals(true);
 	base->gammaBlueSlider->blockSignals(true);
 
-	screendata = m_screenInfoArray.at(base->gammamonitorDisplaySelectDD->currentItem());
+	screendata = m_screenInfoArray[activeProfileName].at(base->gammamonitorDisplaySelectDD->currentItem());
 
 	base->gammaRedSlider->setValue(base->gammaAllSlider->value());
 	base->gammaGreenSlider->setValue(base->gammaAllSlider->value());
@@ -1323,7 +1545,7 @@ void KDisplayConfig::gammaRedSliderChanged(int index) {
 	base->gammaGreenSlider->blockSignals(true);
 	base->gammaBlueSlider->blockSignals(true);
 
-	screendata = m_screenInfoArray.at(base->gammamonitorDisplaySelectDD->currentItem());
+	screendata = m_screenInfoArray[activeProfileName].at(base->gammamonitorDisplaySelectDD->currentItem());
 	screendata->gamma_red = ((float)index)/10.0;
 	gammaSetAverageAllSlider();
 	setGammaLabels();
@@ -1345,7 +1567,7 @@ void KDisplayConfig::gammaGreenSliderChanged(int index) {
 	base->gammaGreenSlider->blockSignals(true);
 	base->gammaBlueSlider->blockSignals(true);
 
-	screendata = m_screenInfoArray.at(base->gammamonitorDisplaySelectDD->currentItem());
+	screendata = m_screenInfoArray[activeProfileName].at(base->gammamonitorDisplaySelectDD->currentItem());
 	screendata->gamma_green = ((float)index)/10.0;
 	gammaSetAverageAllSlider();
 	setGammaLabels();
@@ -1367,7 +1589,7 @@ void KDisplayConfig::gammaBlueSliderChanged(int index) {
 	base->gammaGreenSlider->blockSignals(true);
 	base->gammaBlueSlider->blockSignals(true);
 
-	screendata = m_screenInfoArray.at(base->gammamonitorDisplaySelectDD->currentItem());
+	screendata = m_screenInfoArray[activeProfileName].at(base->gammamonitorDisplaySelectDD->currentItem());
 	screendata->gamma_blue = ((float)index)/10.0;
 	gammaSetAverageAllSlider();
 	setGammaLabels();
@@ -1382,7 +1604,7 @@ void KDisplayConfig::gammaBlueSliderChanged(int index) {
 }
 
 void KDisplayConfig::applyGamma() {
-	m_randrsimple->applySystemwideDisplayGamma(m_screenInfoArray);
+	m_randrsimple->applyDisplayGamma(m_screenInfoArray[activeProfileName]);
 }
 
 void KDisplayConfig::gammaTargetChanged (int slotNumber) {
@@ -1392,7 +1614,7 @@ void KDisplayConfig::gammaTargetChanged (int slotNumber) {
 
 void KDisplayConfig::dpmsChanged() {
 	SingleScreenData *screendata;
-	screendata = m_screenInfoArray.at(0);
+	screendata = m_screenInfoArray[activeProfileName].at(0);
 
 	processDPMSControls();
 
@@ -1402,6 +1624,194 @@ void KDisplayConfig::dpmsChanged() {
 	screendata->dpms_off_delay = (base->systemEnableDPMSPowerDown->isChecked())?base->dpmsPowerDownTimeout->value()*60:0;
 
 	changed();
+}
+
+void KDisplayConfig::createHotplugRulesGrid() {
+	const TQObjectList children = base->profileRulesGridWidget->childrenListObject();
+	TQObjectList::iterator it = children.begin();
+	for (; it != children.end(); ++it) {
+		TQWidget *w = dynamic_cast<TQWidget*>(*it);
+		if (w) {
+			delete w;
+		}
+	}
+
+	int i = 0;
+	int j = 0;
+	TQLabel* label;
+	SingleScreenData *screendata;
+	for (i=0;i<numberOfScreens;i++) {
+		screendata = m_screenInfoArray[activeProfileName].at(i);
+		label = new TQLabel(base->profileRulesGridWidget, (TQString("%1").arg(i)).ascii());
+		if (screendata) {
+			label->setText(screendata->screenUniqueName);
+		}
+		profileRulesGrid->addWidget(label, 0, i);
+		label->show();
+	}
+	label = new TQLabel(base->profileRulesGridWidget, "<ignore>");
+	label->setText(i18n("Activate Profile on Match"));
+	profileRulesGrid->addWidget(label, 0, i+1);
+	label->show();
+
+	i=0;
+	HotPlugRulesList::Iterator it2;
+	for (it2=currentHotplugRules.begin(); it2 != currentHotplugRules.end(); ++it2) {
+		for (j=0;j<numberOfScreens;j++) {
+			int index = (*it2).outputs.findIndex(m_screenInfoArray[activeProfileName].at(j)->screenUniqueName);
+
+			TQCheckBox* cb = new TQCheckBox(base->profileRulesGridWidget, (TQString("%1:%2").arg(i).arg(j)).ascii());
+			connect(cb, TQT_SIGNAL(stateChanged(int)), this, TQT_SLOT(profileRuleCheckBoxStateChanged(int)));
+			connect(cb, TQT_SIGNAL(stateChanged(int)), this, TQT_SLOT(changed()));
+			cb->setTristate(true);
+			if (index < 0) {
+				cb->setNoChange();
+			}
+			else {
+				switch ((*it2).states[index]) {
+					case HotPlugRule::AnyState:
+						cb->setNoChange();
+						break;
+					case HotPlugRule::Connected:
+						cb->setChecked(true);
+						break;
+					case HotPlugRule::Disconnected:
+						cb->setChecked(false);
+						break;
+				}
+			}
+			profileRulesGrid->addWidget(cb, i+1, j);
+			cb->show();
+		}
+		KComboBox* combo = new KComboBox(base->profileRulesGridWidget, (TQString("%1").arg(i)).ascii());
+		connect(combo, TQT_SIGNAL(activated(int)), this, TQT_SLOT(changed()));
+		combo->insertItem("<default>");
+		for (TQStringList::Iterator it3 = availableProfileNames.begin(); it3 != availableProfileNames.end(); ++it3) {
+			combo->insertItem(*it3);
+		}
+		combo->setCurrentItem((*it2).profileName);
+		profileRulesGrid->addWidget(combo, i+1, j+1);
+		combo->show();
+		TQPushButton* button = new TQPushButton(base->profileRulesGridWidget, (TQString("%1").arg(i)).ascii());
+		button->setText(i18n("Delete Rule"));
+		connect(button, TQT_SIGNAL(clicked()), this, TQT_SLOT(deleteProfileRule()));
+		connect(button, TQT_SIGNAL(clicked()), this, TQT_SLOT(changed()));
+		profileRulesGrid->addWidget(button, i+1, j+2);
+		button->show();
+		i++;
+	}
+
+	TQPushButton* button = new TQPushButton(base->profileRulesGridWidget);
+	button->setText(i18n("Add New Rule"));
+	connect(button, TQT_SIGNAL(clicked()), this, TQT_SLOT(addNewProfileRule()));
+	connect(button, TQT_SIGNAL(clicked()), this, TQT_SLOT(changed()));
+	profileRulesGrid->addMultiCellWidget(button, i+2, i+2, 0, numberOfScreens+2);
+	button->show();
+}
+
+void KDisplayConfig::addNewProfileRule() {
+	currentHotplugRules.append(HotPlugRule());
+	createHotplugRulesGrid();
+}
+
+void KDisplayConfig::deleteProfileRule() {
+	const TQWidget* w = dynamic_cast<const TQWidget*>(sender());
+	if (w) {
+		int row = atoi(w->name());
+		currentHotplugRules.remove(currentHotplugRules.at(row));
+		createHotplugRulesGrid();
+	}
+}
+
+void KDisplayConfig::profileRuleCheckBoxStateChanged(int state) {
+	updateProfileConfigObjectFromGrid();
+	emit(changed());
+}
+
+void KDisplayConfig::updateProfileConfigObjectFromGrid() {
+	const TQObjectList children = base->profileRulesGridWidget->childrenListObject();
+	TQObjectList::iterator it = children.begin();
+	for (; it != children.end(); ++it) {
+		TQWidget *w = dynamic_cast<TQWidget*>(*it);
+		TQCheckBox *cb = dynamic_cast<TQCheckBox*>(w);
+		TQComboBox *combo = dynamic_cast<TQComboBox*>(w);
+		TQLabel* label = dynamic_cast<TQLabel*>(w);
+
+		if (label) {
+			if (TQString(w->name()) != TQString("<ignore>")) {
+				int col = atoi(w->name());
+				HotPlugRulesList::Iterator it2;
+				for (it2=currentHotplugRules.begin(); it2 != currentHotplugRules.end(); ++it2) {
+					TQStringList &strlist = (*it2).outputs;
+					while (strlist.count() < (uint)numberOfScreens) {
+						strlist.append("");
+					}
+					while (strlist.count() > (uint)numberOfScreens) {
+						strlist.remove(strlist.at(strlist.count()-1));
+					}
+					strlist[col] = label->text();
+				}
+			}
+		}
+		if (cb) {
+			TQStringList rowcol = TQStringList::split(":", cb->name());
+			int row = atoi(rowcol[0].ascii());
+			int col = atoi(rowcol[1].ascii());
+			TQValueList<int> &intlist = (*(currentHotplugRules.at(row))).states;
+			while (intlist.count() < (uint)numberOfScreens) {
+				intlist.append(HotPlugRule::AnyState);
+			}
+			while (intlist.count() > (uint)numberOfScreens) {
+				intlist.remove(intlist.at(intlist.count()-1));
+			}
+			int state = cb->state();
+			if (state == TQButton::On) {
+				intlist[col] = HotPlugRule::Connected;
+			}
+			else if (state == TQButton::Off) {
+				intlist[col] = HotPlugRule::Disconnected;
+			}
+			else {
+				intlist[col] = HotPlugRule::AnyState;
+			}
+		}
+		if (combo) {
+			int row = atoi(w->name());
+			(*(currentHotplugRules.at(row))).profileName = combo->currentText();
+		}
+	}
+}
+
+void KDisplayConfig::profileListChanged() {
+	// Save selected profile settings
+	TQString currentDisplayProfileListItem = base->displayProfileList->currentText();
+	TQString currentStartupDisplayProfileListItem = base->startupDisplayProfileList->currentText();
+
+	// Clear and reload the combo boxes
+	base->displayProfileList->clear();
+	base->startupDisplayProfileList->clear();
+	base->displayProfileList->insertItem("<default>");
+	base->startupDisplayProfileList->insertItem("<default>");
+	for (TQStringList::Iterator it = availableProfileNames.begin(); it != availableProfileNames.end(); ++it) {
+		base->displayProfileList->insertItem(*it);
+		base->startupDisplayProfileList->insertItem(*it);
+	}
+
+	// Restore selected profile settings if possible
+	if (base->displayProfileList->contains(currentDisplayProfileListItem)) {
+		base->displayProfileList->setCurrentItem(currentDisplayProfileListItem);
+	}
+	else {
+		base->displayProfileList->setCurrentItem(0);
+	}
+	if (base->startupDisplayProfileList->contains(currentStartupDisplayProfileListItem)) {
+		base->startupDisplayProfileList->setCurrentItem(currentStartupDisplayProfileListItem);
+	}
+	else {
+		base->startupDisplayProfileList->setCurrentItem(0);
+	}
+
+	createHotplugRulesGrid();
 }
 
 void KDisplayConfig::processDPMSControls() {
@@ -1435,6 +1845,15 @@ void KDisplayConfig::processLockoutControls() {
 		base->resolutionTab->setEnabled(false);
 		base->gammaTab->setEnabled(false);
 		base->powerTab->setEnabled(false);
+		base->displayProfileList->setEnabled(false);
+		base->addProfileButton->setEnabled(false);
+		base->renameProfileButton->setEnabled(false);
+		base->deleteProfileButton->setEnabled(false);
+		base->reloadProfileButton->setEnabled(false);
+		base->saveProfileButton->setEnabled(false);
+		base->activateProfileButton->setEnabled(false);
+		base->startupDisplayProfileList->setEnabled(false);
+		base->groupProfileRules->setEnabled(false);
 	}
 	else {
 		base->globalTab->setEnabled(true);
@@ -1442,11 +1861,29 @@ void KDisplayConfig::processLockoutControls() {
 			base->resolutionTab->setEnabled(true);
 			base->gammaTab->setEnabled(true);
 			base->powerTab->setEnabled(true);
+			base->displayProfileList->setEnabled(true);
+			base->addProfileButton->setEnabled(true);
+			base->renameProfileButton->setEnabled(true);
+			base->deleteProfileButton->setEnabled(true);
+			base->reloadProfileButton->setEnabled(true);
+			base->saveProfileButton->setEnabled(true);
+			base->activateProfileButton->setEnabled(true);
+			base->startupDisplayProfileList->setEnabled(true);
+			base->groupProfileRules->setEnabled(true);
 		}
 		else {
 			base->resolutionTab->setEnabled(false);
 			base->gammaTab->setEnabled(false);
 			base->powerTab->setEnabled(false);
+			base->displayProfileList->setEnabled(false);
+			base->addProfileButton->setEnabled(false);
+			base->renameProfileButton->setEnabled(false);
+			base->deleteProfileButton->setEnabled(false);
+			base->reloadProfileButton->setEnabled(false);
+			base->saveProfileButton->setEnabled(false);
+			base->activateProfileButton->setEnabled(false);
+			base->startupDisplayProfileList->setEnabled(false);
+			base->groupProfileRules->setEnabled(false);
 		}
 	}
 
@@ -1479,11 +1916,22 @@ KCModule* KDisplayConfig::addTab( const TQString name, const TQString label )
 
 void KDisplayConfig::load(bool useDefaults )
 {
+	if (getuid() != 0) {
+		availableProfileNames = m_randrsimple->getDisplayConfigurationProfiles(locateLocal("config", "/", true));
+	}
+	else {
+		availableProfileNames = m_randrsimple->getDisplayConfigurationProfiles(KDE_CONFDIR);
+	}
+	profileListChanged();
+
 	// Update the toggle buttons with the current configuration
 	updateArray();
 
 	systemconfig->setGroup(NULL);
 	base->systemEnableSupport->setChecked(systemconfig->readBoolEntry("EnableDisplayControl", false));
+
+	startupProfileName = systemconfig->readEntry("StartupProfileName", "");
+	updateStartupProfileLabel();
 
 	refreshDisplayedInformation();
 
@@ -1498,22 +1946,39 @@ void KDisplayConfig::load(bool useDefaults )
 	base->gammaTargetSelectDD->setCurrentItem(4);
 	gammaTargetChanged(4);
 
+	currentHotplugRules = m_randrsimple->getHotplugRules(locateLocal("config", "/", true));
+	createHotplugRulesGrid();
+
 	emit changed(useDefaults);
+}
+
+void KDisplayConfig::saveActiveSystemWideProfileToDisk()
+{
+	if (getuid() != 0) {
+		m_randrsimple->saveDisplayConfiguration(base->systemEnableSupport->isChecked(), activeProfileName, startupProfileName, locateLocal("config", "/", true), m_screenInfoArray[activeProfileName]);
+	}
+	else {
+		m_randrsimple->saveDisplayConfiguration(base->systemEnableSupport->isChecked(), activeProfileName, startupProfileName, KDE_CONFDIR, m_screenInfoArray[activeProfileName]);
+	}
 }
 
 void KDisplayConfig::save()
 {
-	if (m_randrsimple->applySystemwideDisplayConfiguration(m_screenInfoArray, TRUE)) {
+	if (m_randrsimple->applyDisplayConfiguration(m_screenInfoArray[activeProfileName], TRUE)) {
+		saveActiveSystemWideProfileToDisk();
+
+		updateProfileConfigObjectFromGrid();
 		if (getuid() != 0) {
-			m_randrsimple->saveSystemwideDisplayConfiguration(base->systemEnableSupport->isChecked(), "", locateLocal("config", "/", true), m_screenInfoArray);
+			m_randrsimple->saveHotplugRules(currentHotplugRules, locateLocal("config", "/", true));
 		}
 		else {
-			m_randrsimple->saveSystemwideDisplayConfiguration(base->systemEnableSupport->isChecked(), "", KDE_CONFDIR, m_screenInfoArray);
+			m_randrsimple->saveHotplugRules(currentHotplugRules, KDE_CONFDIR);
 		}
 
 		// Write system configuration
 		systemconfig->setGroup(NULL);
 		systemconfig->writeEntry("EnableDisplayControl", base->systemEnableSupport->isChecked());
+		systemconfig->writeEntry("StartupProfileName", startupProfileName);
 
 		systemconfig->sync();
 		

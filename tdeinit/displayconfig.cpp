@@ -63,7 +63,7 @@ int main(int argc, char **argv)
 #ifdef WITH_XRANDR
 	// Load up user specific display settings
 	KRandrSimpleAPI *randrsimple = new KRandrSimpleAPI();
-	randrsimple->applySystemwideDisplayConfiguration("", locateLocal("config", "/", true));
+	randrsimple->applyDisplayConfiguration("", locateLocal("config", "/", true));
 	delete randrsimple;
 #endif
 

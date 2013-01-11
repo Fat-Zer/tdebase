@@ -2030,6 +2030,13 @@ TQRect ExtensionContainer::initialGeometry(KPanelExtension::Position p,
 {
     //RESEARCH: is there someway to cache the results of the repeated calls to this method?
 
+    if (XineramaScreen == -3) {
+        // Forcibly hide
+        autoHidden = true;
+        userHidden = Unhidden;
+        XineramaScreen = kapp->desktop()->screenNumber(const_cast<ExtensionContainer*>(this));
+    }
+
     /*kdDebug(1210) << "initialGeometry() Computing geometry for " << name() <<
         " on screen " << XineramaScreen << endl;*/
     TQRect workArea = ExtensionManager::the()->workArea(XineramaScreen, this);

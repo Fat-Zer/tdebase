@@ -32,6 +32,7 @@
 #include <kstdguiitem.h>
 #include <kglobal.h>
 #include <kmessagebox.h>
+#include <kstandarddirs.h>
 
 #include <cstdlib>
 #include <unistd.h>
@@ -139,9 +140,6 @@ void KRandRSystemTray::mousePressEvent(TQMouseEvent* e)
 void KRandRSystemTray::reloadDisplayConfiguration()
 {
 	// Reload the randr configuration...
-	XRROutputInfo *output_info;
-	char *output_name;
-	RROutput output_id;
 	int i;
 	int activeOutputs = 0;
 	int screenDeactivated = 0;
@@ -152,7 +150,6 @@ void KRandRSystemTray::reloadDisplayConfiguration()
 		// Count outputs in the active state
 		activeOutputs = 0;
 		for (i = 0; i < randr_screen_info->n_output; i++) {
-			output_info = randr_screen_info->outputs[i]->info;
 			// Look for ON outputs
 			if (!randr_screen_info->outputs[i]->cur_crtc) {
 				continue;
@@ -170,7 +167,6 @@ void KRandRSystemTray::reloadDisplayConfiguration()
 			// There are no active displays!
 			// Activate the first connected display we come across...
 			for (i = 0; i < randr_screen_info->n_output; i++) {
-				output_info = randr_screen_info->outputs[i]->info;
 				// Look for OFF outputs
 				if (randr_screen_info->outputs[i]->cur_crtc) {
 					continue;
@@ -197,7 +193,6 @@ void KRandRSystemTray::reloadDisplayConfiguration()
 		}
 
 		for (i = 0; i < randr_screen_info->n_output; i++) {
-			output_info = randr_screen_info->outputs[i]->info;
 			// Look for ON outputs
 			if (!randr_screen_info->outputs[i]->cur_crtc) {
 				continue;
@@ -206,9 +201,6 @@ void KRandRSystemTray::reloadDisplayConfiguration()
 			if (RR_Disconnected != randr_screen_info->outputs[i]->info->connection) {
 				continue;
 			}
-
-			output_name = output_info->name;
-			output_id = randr_screen_info->outputs[i]->id;
 
 			// Deactivate this display to avoid a crash!
 			randr_screen_info->cur_crtc = randr_screen_info->outputs[i]->cur_crtc;
@@ -279,6 +271,19 @@ void KRandRSystemTray::contextMenuAboutToShow(KPopupMenu* menu)
 		}
 		menu->setItemEnabled(lastIndex, t_config->readBoolEntry("EnableICC", false));
 		menu->connectItem(lastIndex, this, TQT_SLOT(slotColorProfileChanged(int)));
+	}
+
+	// Find any display profiles
+	TQStringList displayProfiles;
+	displayProfiles = getDisplayConfigurationProfiles(locateLocal("config", "/", true));
+	if (displayProfiles.isEmpty() == false) {
+		menu->insertTitle(SmallIcon("background"), i18n("Display Profiles"));
+	}
+	lastIndex = menu->insertItem(SmallIcon("bookmark"), "<default>");
+	menu->connectItem(lastIndex, this, TQT_SLOT(slotDisplayProfileChanged(int)));
+	for (TQStringList::Iterator t(displayProfiles.begin()); t != displayProfiles.end(); ++t) {
+		lastIndex = menu->insertItem(SmallIcon("bookmark"), *t);
+		menu->connectItem(lastIndex, this, TQT_SLOT(slotDisplayProfileChanged(int)));
 	}
 
 	menu->insertTitle(SmallIcon("randr"), i18n("Global Configuation"));
@@ -550,13 +555,10 @@ void KRandRSystemTray::slotCycleDisplays()
 {
 	XRROutputInfo *output_info;
 	char *output_name;
-	RROutput output_id;
 	int i;
-	int lastIndex = 0;
 	int current_on_index = -1;
 	int max_index = -1;
 	int prev_on_index;
-	Status s;
 
 	randr_screen_info = read_screen_info(randr_display);
 
@@ -572,7 +574,6 @@ void KRandRSystemTray::slotCycleDisplays()
 		}
 
 		output_name = output_info->name;
-		output_id = randr_screen_info->outputs[i]->id;
 		current_on_index = i;
 		if (i > max_index) {
 			max_index = i;
@@ -591,7 +592,6 @@ void KRandRSystemTray::slotCycleDisplays()
 		}
 
 		output_name = output_info->name;
-		output_id = randr_screen_info->outputs[i]->id;
 		if (i > max_index) {
 			max_index = i;
 		}
@@ -609,7 +609,6 @@ void KRandRSystemTray::slotCycleDisplays()
 		}
 
 		output_name = output_info->name;
-		output_id = randr_screen_info->outputs[i]->id;
 		if (i > max_index) {
 			max_index = i;
 		}
@@ -671,7 +670,6 @@ void KRandRSystemTray::slotCycleDisplays()
 				}
 
 				output_name = output_info->name;
-				output_id = randr_screen_info->outputs[i]->id;
 
 				// Deactivate this display to avoid a crash!
 				randr_screen_info->cur_crtc = randr_screen_info->outputs[i]->cur_crtc;
@@ -697,14 +695,9 @@ void KRandRSystemTray::slotCycleDisplays()
 
 void KRandRSystemTray::findPrimaryDisplay()
 {
-	XRROutputInfo *output_info;
-	char *output_name;
-	RROutput output_id;
 	int i;
-	int lastIndex = 0;
 
 	for (i = 0; i < randr_screen_info->n_output; i++) {
-		output_info = randr_screen_info->outputs[i]->info;
 		// Look for ON outputs...
 		if (!randr_screen_info->outputs[i]->cur_crtc) {
 			continue;
@@ -715,10 +708,6 @@ void KRandRSystemTray::findPrimaryDisplay()
 			continue;
 		}
 
-		output_name = output_info->name;
-		output_id = randr_screen_info->outputs[i]->id;
-		//printf("ACTIVE CHECK: Found output %s\n\r", output_name);
-
 		randr_screen_info->cur_crtc = randr_screen_info->outputs[i]->cur_crtc;
 		randr_screen_info->cur_output = randr_screen_info->outputs[i];
 	}
@@ -728,7 +717,6 @@ void KRandRSystemTray::addOutputMenu(KPopupMenu* menu)
 {
 	XRROutputInfo *output_info;
 	char *output_name;
-	RROutput output_id;
 	int i;
 	int lastIndex = 0;
 	int connected_displays = 0;
@@ -747,7 +735,6 @@ void KRandRSystemTray::addOutputMenu(KPopupMenu* menu)
 			}
 
 			output_name = output_info->name;
-			output_id = randr_screen_info->outputs[i]->id;
 			//printf("ON: Found output %s\n\r", output_name);
 
 			lastIndex = menu->insertItem(i18n("%1 (Active)").arg(output_name));
@@ -770,7 +757,6 @@ void KRandRSystemTray::addOutputMenu(KPopupMenu* menu)
 			}
 
 			output_name = output_info->name;
-			output_id = randr_screen_info->outputs[i]->id;
 			//printf("CONNECTED, NOT ON: Found output %s\n\r", output_name);
 
 			lastIndex = menu->insertItem(i18n("%1 (Connected, Inactive)").arg(output_name));
@@ -793,7 +779,6 @@ void KRandRSystemTray::addOutputMenu(KPopupMenu* menu)
 			}
 
 			output_name = output_info->name;
-			output_id = randr_screen_info->outputs[i]->id;
 			//printf("DISCONNECTED, NOT ON: Found output %s\n\r", output_name);
 
 			lastIndex = menu->insertItem(i18n("%1 (Disconnected, Inactive)").arg(output_name));
@@ -817,16 +802,25 @@ void KRandRSystemTray::slotColorProfileChanged(int parameter)
 	applyIccConfiguration(m_menu->text(parameter), NULL);
 }
 
+void KRandRSystemTray::slotDisplayProfileChanged(int parameter)
+{
+	TQString profileName = m_menu->text(parameter);
+	if (profileName == "<default>") {
+		profileName = "";
+	}
+	TQPtrList<SingleScreenData> profileData = loadDisplayConfiguration(profileName, locateLocal("config", "/", true));
+	applyDisplayConfiguration(profileData, TRUE, locateLocal("config", "/", true));
+	destroyScreenInformationObject(profileData);
+}
+
 void KRandRSystemTray::slotOutputChanged(int parameter)
 {
-	XRROutputInfo *output_info;
 	char *output_name;
 	int i;
 	int num_outputs_on;
 
 	num_outputs_on = 0;
 	for (i = 0; i < randr_screen_info->n_output; i++) {
-		output_info = randr_screen_info->outputs[i]->info;
 		// Look for ON outputs
 		if (!randr_screen_info->outputs[i]->cur_crtc) {
 			continue;
@@ -880,5 +874,6 @@ void KRandRSystemTray::deviceChanged (TDEGenericDevice* device) {
 		this, "ScreenChangeNotification");
 
 		reloadDisplayConfiguration();
+		applyHotplugRules(locateLocal("config", "/", true));
 	}
 }

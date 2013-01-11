@@ -178,6 +178,7 @@ void KICCConfig::renameProfile () {
 			}
 		}
 	}
+	if (!_ok) return;
 
 	// Rename the profile
 	if (config) config->deleteGroup(base->iccProfileList->currentText());
@@ -212,6 +213,7 @@ void KICCConfig::addProfile () {
 			}
 		}
 	}
+	if (!_ok) return;
 
 	// Expand the profile memory
 	numberOfProfiles++;
