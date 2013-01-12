@@ -58,13 +58,13 @@
 							    <property name="name">
 								    <cstring>unnamed</cstring>
 							    </property>
-							    <widget class="TQLabel">
-								<property name="name">
-									<cstring>textLabel2_0</cstring>
-								</property>
-								<property name="text">
-									<string>Startup Profile:</string>
-								</property>
+							    <widget class="TQCheckBox">
+								    <property name="name">
+									    <cstring>systemEnableStartupProfile</cstring>
+								    </property>
+								    <property name="text">
+									    <string>&amp;Automatically apply profile on startup</string>
+								    </property>
 							    </widget>
 							    <widget class="KComboBox">
 								<property name="name">

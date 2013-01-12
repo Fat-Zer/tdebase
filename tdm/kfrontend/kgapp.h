@@ -27,6 +27,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #define KGAPP_H
 
 #include <kapplication.h>
+#include <tdehardwaredevices.h>
 
 class GreeterApp : public KApplication {
 	Q_OBJECT
@@ -41,7 +42,10 @@ class GreeterApp : public KApplication {
 	virtual void timerEvent( TQTimerEvent * );
 
   signals:
-    void activity();
+	void activity();
+
+  private slots:
+	void deviceChanged( TDEGenericDevice * );
 
   private:
 	int pingInterval;

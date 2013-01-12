@@ -86,6 +86,7 @@ private:
 	TQString m_defaultProfile;
 	KRandrSimpleAPI *m_randrsimple;
 	ScreenConfigurationMap m_screenInfoArray;
+	TQPtrList<SingleScreenData> m_hardwareScreenInfoArray;
 	TQString activeProfileName;
 	TQString startupProfileName;
 	int realResolutionSliderValue();

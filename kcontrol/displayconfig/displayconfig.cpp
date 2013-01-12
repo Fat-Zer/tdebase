@@ -797,6 +797,8 @@ KDisplayConfig::KDisplayConfig(TQWidget *parent, const char *name, const TQStrin
 	connect(base->activateProfileButton, TQT_SIGNAL(clicked()), this, TQT_SLOT(activateProfile()));
 	connect(base->reloadProfileButton, TQT_SIGNAL(clicked()), this, TQT_SLOT(reloadProfileFromDisk()));
 	connect(base->saveProfileButton, TQT_SIGNAL(clicked()), this, TQT_SLOT(saveProfile()));
+	connect(base->systemEnableStartupProfile, TQT_SIGNAL(clicked()), this, TQT_SLOT(changed()));
+	connect(base->systemEnableStartupProfile, TQT_SIGNAL(clicked()), this, TQT_SLOT(processLockoutControls()));
 	connect(base->startupDisplayProfileList, TQT_SIGNAL(activated(int)), this, TQT_SLOT(changed()));
 	connect(base->startupDisplayProfileList, TQT_SIGNAL(activated(int)), this, TQT_SLOT(selectDefaultProfile(int)));
 	connect(base->displayProfileList, TQT_SIGNAL(activated(int)), this, TQT_SLOT(selectProfile(int)));
@@ -877,8 +879,9 @@ void KDisplayConfig::updateExtendedMonitorInformation () {
 
 void KDisplayConfig::rescanHardware (void) {
 	m_randrsimple->destroyScreenInformationObject(m_screenInfoArray[activeProfileName]);
-	m_screenInfoArray[activeProfileName] = m_randrsimple->readCurrentDisplayConfiguration();
-	m_randrsimple->ensureMonitorDataConsistency(m_screenInfoArray[activeProfileName]);
+	m_hardwareScreenInfoArray = m_randrsimple->readCurrentDisplayConfiguration();
+	m_randrsimple->ensureMonitorDataConsistency(m_hardwareScreenInfoArray);
+	m_screenInfoArray[activeProfileName] = m_randrsimple->copyScreenInformationObject(m_hardwareScreenInfoArray);
 	numberOfScreens = m_screenInfoArray[activeProfileName].count();
 	refreshDisplayedInformation();
 }
@@ -964,7 +967,9 @@ void KDisplayConfig::loadProfileFromDiskHelper(bool forceReload) {
 	// If there is still no valid configuration, read the active display information from the hardware
 	// to initialise the configuration...
 	if (m_screenInfoArray[activeProfileName].count() < 1) {
-		m_screenInfoArray[activeProfileName] = m_randrsimple->readCurrentDisplayConfiguration();
+		m_hardwareScreenInfoArray = m_randrsimple->readCurrentDisplayConfiguration();
+		m_randrsimple->ensureMonitorDataConsistency(m_hardwareScreenInfoArray);
+		m_screenInfoArray[activeProfileName] = m_randrsimple->copyScreenInformationObject(m_hardwareScreenInfoArray);
 	}
 
 	m_randrsimple->ensureMonitorDataConsistency(m_screenInfoArray[activeProfileName]);
@@ -1153,8 +1158,9 @@ void KDisplayConfig::selectScreen (int slotNumber) {
 }
 
 void KDisplayConfig::updateArray (void) {
-	m_screenInfoArray[activeProfileName] = m_randrsimple->readCurrentDisplayConfiguration();
-	m_randrsimple->ensureMonitorDataConsistency(m_screenInfoArray[activeProfileName]);
+	m_hardwareScreenInfoArray = m_randrsimple->readCurrentDisplayConfiguration();
+	m_randrsimple->ensureMonitorDataConsistency(m_hardwareScreenInfoArray);
+	m_screenInfoArray[activeProfileName] = m_randrsimple->copyScreenInformationObject(m_hardwareScreenInfoArray);
 	numberOfScreens = m_screenInfoArray[activeProfileName].count();
 }
 
@@ -1641,7 +1647,7 @@ void KDisplayConfig::createHotplugRulesGrid() {
 	TQLabel* label;
 	SingleScreenData *screendata;
 	for (i=0;i<numberOfScreens;i++) {
-		screendata = m_screenInfoArray[activeProfileName].at(i);
+		screendata = m_hardwareScreenInfoArray.at(i);
 		label = new TQLabel(base->profileRulesGridWidget, (TQString("%1").arg(i)).ascii());
 		if (screendata) {
 			label->setText(screendata->screenUniqueName);
@@ -1658,7 +1664,7 @@ void KDisplayConfig::createHotplugRulesGrid() {
 	HotPlugRulesList::Iterator it2;
 	for (it2=currentHotplugRules.begin(); it2 != currentHotplugRules.end(); ++it2) {
 		for (j=0;j<numberOfScreens;j++) {
-			int index = (*it2).outputs.findIndex(m_screenInfoArray[activeProfileName].at(j)->screenUniqueName);
+			int index = (*it2).outputs.findIndex(m_hardwareScreenInfoArray.at(j)->screenUniqueName);
 
 			TQCheckBox* cb = new TQCheckBox(base->profileRulesGridWidget, (TQString("%1:%2").arg(i).arg(j)).ascii());
 			connect(cb, TQT_SIGNAL(stateChanged(int)), this, TQT_SLOT(profileRuleCheckBoxStateChanged(int)));
@@ -1707,14 +1713,6 @@ void KDisplayConfig::createHotplugRulesGrid() {
 	connect(button, TQT_SIGNAL(clicked()), this, TQT_SLOT(changed()));
 	profileRulesGrid->addMultiCellWidget(button, i+2, i+2, 0, numberOfScreens+2);
 	button->show();
-
-	if (getuid() == 0) {
-		// FIXME
-		label = new TQLabel(base->profileRulesGridWidget, "<ignore>");
-		label->setText(i18n("NOTE: Hotplug support for the graphical login manager is only partly implemented!"));
-		profileRulesGrid->addMultiCellWidget(label, i+3, i+3, 0, numberOfScreens+2);
-		label->show();
-	}
 }
 
 void KDisplayConfig::addNewProfileRule() {
@@ -1861,6 +1859,7 @@ void KDisplayConfig::processLockoutControls() {
 		base->saveProfileButton->setEnabled(false);
 		base->activateProfileButton->setEnabled(false);
 		base->startupDisplayProfileList->setEnabled(false);
+		base->systemEnableStartupProfile->setEnabled(false);
 		base->groupProfileRules->setEnabled(false);
 	}
 	else {
@@ -1876,8 +1875,14 @@ void KDisplayConfig::processLockoutControls() {
 			base->reloadProfileButton->setEnabled(true);
 			base->saveProfileButton->setEnabled(true);
 			base->activateProfileButton->setEnabled(true);
-			base->startupDisplayProfileList->setEnabled(true);
+			base->systemEnableStartupProfile->setEnabled(true);
 			base->groupProfileRules->setEnabled(true);
+			if (base->systemEnableStartupProfile->isChecked()) {
+				base->startupDisplayProfileList->setEnabled(true);
+			}
+			else {
+				base->startupDisplayProfileList->setEnabled(false);
+			}
 		}
 		else {
 			base->resolutionTab->setEnabled(false);
@@ -1891,6 +1896,7 @@ void KDisplayConfig::processLockoutControls() {
 			base->saveProfileButton->setEnabled(false);
 			base->activateProfileButton->setEnabled(false);
 			base->startupDisplayProfileList->setEnabled(false);
+			base->systemEnableStartupProfile->setEnabled(false);
 			base->groupProfileRules->setEnabled(false);
 		}
 	}
@@ -1935,10 +1941,16 @@ void KDisplayConfig::load(bool useDefaults )
 	// Update the toggle buttons with the current configuration
 	updateArray();
 
-	systemconfig->setGroup(NULL);
-	base->systemEnableSupport->setChecked(systemconfig->readBoolEntry("EnableDisplayControl", false));
-
-	startupProfileName = systemconfig->readEntry("StartupProfileName", "");
+	if (getuid() != 0) {
+		base->systemEnableSupport->setChecked(m_randrsimple->getDisplayConfigurationEnabled(locateLocal("config", "/", true)));
+		base->systemEnableStartupProfile->setChecked(m_randrsimple->getDisplayConfigurationStartupAutoApplyEnabled(locateLocal("config", "/", true)));
+		startupProfileName = m_randrsimple->getDisplayConfigurationStartupAutoApplyName(locateLocal("config", "/", true));
+	}
+	else {
+		base->systemEnableStartupProfile->setChecked(m_randrsimple->getDisplayConfigurationStartupAutoApplyEnabled(KDE_CONFDIR));
+		base->systemEnableSupport->setChecked(m_randrsimple->getDisplayConfigurationEnabled(KDE_CONFDIR));
+		startupProfileName = m_randrsimple->getDisplayConfigurationStartupAutoApplyName(KDE_CONFDIR);
+	}
 	updateStartupProfileLabel();
 
 	refreshDisplayedInformation();
@@ -1968,10 +1980,10 @@ void KDisplayConfig::load(bool useDefaults )
 void KDisplayConfig::saveActiveSystemWideProfileToDisk()
 {
 	if (getuid() != 0) {
-		m_randrsimple->saveDisplayConfiguration(base->systemEnableSupport->isChecked(), activeProfileName, startupProfileName, locateLocal("config", "/", true), m_screenInfoArray[activeProfileName]);
+		m_randrsimple->saveDisplayConfiguration(base->systemEnableSupport->isChecked(), base->systemEnableStartupProfile->isChecked(), activeProfileName, startupProfileName, locateLocal("config", "/", true), m_screenInfoArray[activeProfileName]);
 	}
 	else {
-		m_randrsimple->saveDisplayConfiguration(base->systemEnableSupport->isChecked(), activeProfileName, startupProfileName, KDE_CONFDIR, m_screenInfoArray[activeProfileName]);
+		m_randrsimple->saveDisplayConfiguration(base->systemEnableSupport->isChecked(), base->systemEnableStartupProfile->isChecked(), activeProfileName, startupProfileName, KDE_CONFDIR, m_screenInfoArray[activeProfileName]);
 	}
 }
 
@@ -1991,6 +2003,7 @@ void KDisplayConfig::save()
 		// Write system configuration
 		systemconfig->setGroup(NULL);
 		systemconfig->writeEntry("EnableDisplayControl", base->systemEnableSupport->isChecked());
+		systemconfig->writeEntry("EnableAutoStartProfile", base->systemEnableStartupProfile->isChecked());
 		systemconfig->writeEntry("StartupProfileName", startupProfileName);
 
 		systemconfig->sync();

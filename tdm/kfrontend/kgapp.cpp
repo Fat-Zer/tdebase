@@ -100,6 +100,9 @@ GreeterApp::GreeterApp()
 		alarm( pingInterval * 70 ); // sic! give the "proper" pinger enough time
 		startTimer( pingInterval * 60000 );
 	}
+
+	TDEHardwareDevices *hwdevices = KGlobal::hardwareDevices();
+	connect(hwdevices, TQT_SIGNAL(hardwareUpdated(TDEGenericDevice*)), this, TQT_SLOT(deviceChanged(TDEGenericDevice*)));
 }
 
 GreeterApp::GreeterApp(Display *dpy, Qt::HANDLE visual, Qt::HANDLE colormap) : KApplication(dpy, visual, colormap)
@@ -113,6 +116,17 @@ GreeterApp::GreeterApp(Display *dpy, Qt::HANDLE visual, Qt::HANDLE colormap) : K
 		sigaction( SIGALRM, &sa, 0 );
 		alarm( pingInterval * 70 ); // sic! give the "proper" pinger enough time
 		startTimer( pingInterval * 60000 );
+	}
+
+	TDEHardwareDevices *hwdevices = KGlobal::hardwareDevices();
+	connect(hwdevices, TQT_SIGNAL(hardwareUpdated(TDEGenericDevice*)), this, TQT_SLOT(deviceChanged(TDEGenericDevice*)));
+}
+
+void GreeterApp::deviceChanged(TDEGenericDevice* device) {
+	if (device->type() == TDEGenericDeviceType::Monitor) {
+		KRandrSimpleAPI *randrsimple = new KRandrSimpleAPI();
+		randrsimple->applyHotplugRules(KDE_CONFDIR);
+		delete randrsimple;
 	}
 }
 
@@ -272,13 +286,14 @@ kg_main( const char *argv0 )
 
 	Display *dpy = tqt_xdisplay();
 
-	if (!_GUIStyle.isEmpty())
+	if (!_GUIStyle.isEmpty()) {
 		app->setStyle( _GUIStyle );
+	}
 
 	// Load up systemwide display settings
 #ifdef WITH_XRANDR
 	KRandrSimpleAPI *randrsimple = new KRandrSimpleAPI();
-	TQPoint primaryScreenPosition = randrsimple->applyDisplayConfiguration("", KDE_CONFDIR);
+	TQPoint primaryScreenPosition = randrsimple->applyStartupDisplayConfiguration(KDE_CONFDIR);
 	randrsimple->applyHotplugRules(KDE_CONFDIR);
 	delete randrsimple;
 #endif
