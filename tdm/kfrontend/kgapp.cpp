@@ -71,6 +71,7 @@ bool argb_visual_available = false;
 bool has_twin = false;
 bool is_themed = false;
 bool trinity_desktop_lock_use_sak = TRUE;
+TQPoint primaryScreenPosition;
 
 static int
 ignoreXError( Display *dpy ATTR_UNUSED, XErrorEvent *event ATTR_UNUSED )
@@ -90,22 +91,20 @@ sigAlarm( int )
 
 GreeterApp::GreeterApp()
 {
-	pingInterval = _isLocal ? 0 : _pingInterval;
-	if (pingInterval) {
-		struct sigaction sa;
-		sigemptyset( &sa.sa_mask );
-		sa.sa_flags = 0;
-		sa.sa_handler = sigAlarm;
-		sigaction( SIGALRM, &sa, 0 );
-		alarm( pingInterval * 70 ); // sic! give the "proper" pinger enough time
-		startTimer( pingInterval * 60000 );
-	}
+	init();
+}
 
-	TDEHardwareDevices *hwdevices = KGlobal::hardwareDevices();
-	connect(hwdevices, TQT_SIGNAL(hardwareUpdated(TDEGenericDevice*)), this, TQT_SLOT(deviceChanged(TDEGenericDevice*)));
+GreeterApp::GreeterApp(Display *dpy) : KApplication(dpy)
+{
+	init();
 }
 
 GreeterApp::GreeterApp(Display *dpy, Qt::HANDLE visual, Qt::HANDLE colormap) : KApplication(dpy, visual, colormap)
+{
+	init();
+}
+
+void GreeterApp::init()
 {
 	pingInterval = _isLocal ? 0 : _pingInterval;
 	if (pingInterval) {
@@ -229,8 +228,6 @@ kg_main( const char *argv0 )
 		delete tsak;
 	}
 
-#ifdef HAVE_XCOMPOSITE
-	// Begin ARGB initialization
 	XSetErrorHandler( ignoreXError );
 	argb_visual_available = false;
 	char *display = 0;
@@ -241,6 +238,8 @@ kg_main( const char *argv0 )
 		exit( 1 );
 	}
 
+#ifdef HAVE_XCOMPOSITE
+	// Begin ARGB initialization
 	int screen = DefaultScreen( dpyi );
 	Colormap colormap = 0;
 	Visual *visual = 0;
@@ -273,27 +272,17 @@ kg_main( const char *argv0 )
 		app = new GreeterApp(dpyi, Qt::HANDLE( visual ), Qt::HANDLE( colormap ));
 	}
 	else {
-		app = new GreeterApp();
+		app = new GreeterApp(dpyi);
 	}
 	// End ARGB initialization
 #else
-	GreeterApp *app = new GreeterApp();
+	GreeterApp *app = new GreeterApp(dpyi);
 #endif
-
-	XSetIOErrorHandler( xIOErr );
-	TQString login_user;
-	TQString login_session_wm;
-
-	Display *dpy = tqt_xdisplay();
-
-	if (!_GUIStyle.isEmpty()) {
-		app->setStyle( _GUIStyle );
-	}
 
 	// Load up systemwide display settings
 #ifdef WITH_XRANDR
 	KRandrSimpleAPI *randrsimple = new KRandrSimpleAPI();
-	TQPoint primaryScreenPosition = randrsimple->applyStartupDisplayConfiguration(KDE_CONFDIR);
+	primaryScreenPosition = randrsimple->applyStartupDisplayConfiguration(KDE_CONFDIR);
 	randrsimple->applyHotplugRules(KDE_CONFDIR);
 	delete randrsimple;
 #endif
@@ -306,7 +295,25 @@ kg_main( const char *argv0 )
 		TQString iccCommand = TQString("/usr/bin/xcalib ");
 		iccCommand += iccconfig.readEntry("ICCFile");
 		iccCommand += TQString(" &");
-		system(iccCommand.ascii());
+		if (system(iccCommand.ascii()) < 0) {
+			printf("WARNING: Unable to execute command \"%s\"\n\r", iccCommand.ascii());
+		}
+	}
+
+	// Make sure TQt is aware of the screen geometry changes before any dialogs are created
+	XSync(tqt_xdisplay(), false);
+	app->processEvents();
+	TQRect screenRect = TQApplication::desktop()->screenGeometry();
+	TQCursor::setPos(screenRect.center().x(), screenRect.center().y());
+
+	XSetIOErrorHandler( xIOErr );
+	TQString login_user;
+	TQString login_session_wm;
+
+	Display *dpy = tqt_xdisplay();
+
+	if (!_GUIStyle.isEmpty()) {
+		app->setStyle( _GUIStyle );
 	}
 
 	_colorScheme = locate( "data", "kdisplay/color-schemes/" + _colorScheme + ".kcsrc" );

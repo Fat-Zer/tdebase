@@ -35,6 +35,7 @@ class GreeterApp : public KApplication {
 
   public:
 	GreeterApp();
+	GreeterApp(Display *dpy);
 	GreeterApp(Display *dpy, Qt::HANDLE visual, Qt::HANDLE colormap);
 	virtual bool x11EventFilter( XEvent * );
 
@@ -48,6 +49,7 @@ class GreeterApp : public KApplication {
 	void deviceChanged( TDEGenericDevice * );
 
   private:
+	void init();
 	int pingInterval;
 };
 
