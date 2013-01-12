@@ -740,7 +740,7 @@ void KDisplayConfig::setRealResolutionSliderValue(int index) {
 /**** KDisplayConfig ****/
 
 KDisplayConfig::KDisplayConfig(TQWidget *parent, const char *name, const TQStringList &)
-  : KCModule(KDisplayCFactory::instance(), parent, name), iccTab(0), m_randrsimple(0), activeProfileName(""), m_gammaApplyTimer(0)
+  : KCModule(KDisplayCFactory::instance(), parent, name), iccTab(0), numberOfProfiles(0), numberOfScreens(0), m_randrsimple(0), activeProfileName(""), m_gammaApplyTimer(0)
 {
 	TDEHardwareDevices *hwdevices = KGlobal::hardwareDevices();
 	connect(hwdevices, TQT_SIGNAL(hardwareUpdated(TDEGenericDevice*)), this, TQT_SLOT(deviceChanged(TDEGenericDevice*)));
@@ -1707,6 +1707,14 @@ void KDisplayConfig::createHotplugRulesGrid() {
 	connect(button, TQT_SIGNAL(clicked()), this, TQT_SLOT(changed()));
 	profileRulesGrid->addMultiCellWidget(button, i+2, i+2, 0, numberOfScreens+2);
 	button->show();
+
+	if (getuid() == 0) {
+		// FIXME
+		label = new TQLabel(base->profileRulesGridWidget, "<ignore>");
+		label->setText(i18n("NOTE: Hotplug support for the graphical login manager is only partly implemented!"));
+		profileRulesGrid->addMultiCellWidget(label, i+3, i+3, 0, numberOfScreens+2);
+		label->show();
+	}
 }
 
 void KDisplayConfig::addNewProfileRule() {
@@ -1946,7 +1954,12 @@ void KDisplayConfig::load(bool useDefaults )
 	base->gammaTargetSelectDD->setCurrentItem(4);
 	gammaTargetChanged(4);
 
-	currentHotplugRules = m_randrsimple->getHotplugRules(locateLocal("config", "/", true));
+	if (getuid() != 0) {
+		currentHotplugRules = m_randrsimple->getHotplugRules(locateLocal("config", "/", true));
+	}
+	else {
+		currentHotplugRules = m_randrsimple->getHotplugRules(KDE_CONFDIR);
+	}
 	createHotplugRulesGrid();
 
 	emit changed(useDefaults);

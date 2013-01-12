@@ -64,6 +64,7 @@ int main(int argc, char **argv)
 	// Load up user specific display settings
 	KRandrSimpleAPI *randrsimple = new KRandrSimpleAPI();
 	randrsimple->applyDisplayConfiguration("", locateLocal("config", "/", true));
+	randrsimple->applyHotplugRules(locateLocal("config", "/", true));
 	delete randrsimple;
 #endif
 

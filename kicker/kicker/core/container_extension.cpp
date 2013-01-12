@@ -2034,7 +2034,6 @@ TQRect ExtensionContainer::initialGeometry(KPanelExtension::Position p,
         // Forcibly hide
         autoHidden = true;
         userHidden = Unhidden;
-        XineramaScreen = kapp->desktop()->screenNumber(const_cast<ExtensionContainer*>(this));
     }
 
     /*kdDebug(1210) << "initialGeometry() Computing geometry for " << name() <<

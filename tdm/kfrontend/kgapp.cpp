@@ -279,6 +279,7 @@ kg_main( const char *argv0 )
 #ifdef WITH_XRANDR
 	KRandrSimpleAPI *randrsimple = new KRandrSimpleAPI();
 	TQPoint primaryScreenPosition = randrsimple->applyDisplayConfiguration("", KDE_CONFDIR);
+	randrsimple->applyHotplugRules(KDE_CONFDIR);
 	delete randrsimple;
 #endif
 
