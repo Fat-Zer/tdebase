@@ -232,11 +232,14 @@ void KRandRSystemTray::contextMenuAboutToShow(KPopupMenu* menu)
 	menu->clear();
 	menu->setCheckable(true);
 
-	if (!isValid()) {
+	bool valid = isValid();
+
+	if (!valid) {
 		lastIndex = menu->insertItem(i18n("Required X Extension Not Available"));
 		menu->setItemEnabled(lastIndex, false);
 
-	} else {
+	}
+	else {
 		m_screenPopups.clear();
 		for (int s = 0; s < numScreens() /*&& numScreens() > 1 */; s++) {
 			setCurrentScreen(s);
@@ -273,17 +276,19 @@ void KRandRSystemTray::contextMenuAboutToShow(KPopupMenu* menu)
 		menu->connectItem(lastIndex, this, TQT_SLOT(slotColorProfileChanged(int)));
 	}
 
-	// Find any display profiles
-	TQStringList displayProfiles;
-	displayProfiles = getDisplayConfigurationProfiles(locateLocal("config", "/", true));
-	if (displayProfiles.isEmpty() == false) {
-		menu->insertTitle(SmallIcon("background"), i18n("Display Profiles"));
-	}
-	lastIndex = menu->insertItem(SmallIcon("bookmark"), "<default>");
-	menu->connectItem(lastIndex, this, TQT_SLOT(slotDisplayProfileChanged(int)));
-	for (TQStringList::Iterator t(displayProfiles.begin()); t != displayProfiles.end(); ++t) {
-		lastIndex = menu->insertItem(SmallIcon("bookmark"), *t);
+	if (valid) {
+		// Find any display profiles
+		TQStringList displayProfiles;
+		displayProfiles = getDisplayConfigurationProfiles(locateLocal("config", "/", true));
+		if (displayProfiles.isEmpty() == false) {
+			menu->insertTitle(SmallIcon("background"), i18n("Display Profiles"));
+		}
+		lastIndex = menu->insertItem(SmallIcon("bookmark"), "<default>");
 		menu->connectItem(lastIndex, this, TQT_SLOT(slotDisplayProfileChanged(int)));
+		for (TQStringList::Iterator t(displayProfiles.begin()); t != displayProfiles.end(); ++t) {
+			lastIndex = menu->insertItem(SmallIcon("bookmark"), *t);
+			menu->connectItem(lastIndex, this, TQT_SLOT(slotDisplayProfileChanged(int)));
+		}
 	}
 
 	menu->insertTitle(SmallIcon("randr"), i18n("Global Configuation"));
