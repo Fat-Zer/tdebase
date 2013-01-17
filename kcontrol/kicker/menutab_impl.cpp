@@ -36,6 +36,7 @@
 #include <kmessagebox.h>
 #include <knuminput.h>
 #include <kstandarddirs.h>
+#include <kfontrequester.h>
 
 #include <kicondialog.h>
 #include <kiconloader.h>
@@ -198,6 +199,8 @@ void MenuTab::menuStyleChanged()
 
 void MenuTab::save()
 {
+    bool forceRestart = false;
+
     KSharedConfig::Ptr c = KSharedConfig::openConfig(KickerConfig::the()->configName());
 
     c->setGroup("menus");
@@ -226,19 +229,37 @@ void MenuTab::save()
     bool kmenusetting = m_comboMenuStyle->currentItem()==1;
     bool oldkmenusetting = c->readBoolEntry("LegacyKMenu", true);
 
+    c->setGroup("KMenu");
+    bool oldmenutextenabledsetting = c->readBoolEntry("ShowText", true);
+    TQString oldmenutextsetting = c->readEntry("Text", "");
+
+    c->setGroup("buttons");
+    TQFont oldmenufontsetting = c->readFontEntry("Font");
+
     c->writeEntry("LegacyKMenu", kmenusetting);
     c->writeEntry("OpenOnHover", m_openOnHover->isChecked());
     c->sync();
 
-    if (kmenusetting != oldkmenusetting)
-        DCOPRef ("kicker", "default").call("restart()");
+    if (kmenusetting != oldkmenusetting) {
+        forceRestart = true;
+    }
+    if (kcfg_ShowKMenuText->isChecked() != oldmenutextenabledsetting) {
+        forceRestart = true;
+    }
+    if (kcfg_KMenuText->text() != oldmenutextsetting) {
+        forceRestart = true;
+    }
+    if (kcfg_ButtonFont->font() != oldmenufontsetting) {
+        forceRestart = true;
+    }
 
     c->setGroup("KMenu");
     bool sidepixmapsetting = kcfg_UseSidePixmap->isChecked();
     bool oldsidepixmapsetting = c->readBoolEntry("UseSidePixmap", true);
 
-    if (sidepixmapsetting != oldsidepixmapsetting)
-        DCOPRef ("kicker", "default").call("restart()");
+    if (sidepixmapsetting != oldsidepixmapsetting) {
+        forceRestart = true;
+    }
 
     // Save KMenu settings
     c->setGroup("KMenu");
@@ -253,6 +274,10 @@ void MenuTab::save()
     config->sync();
 
     if (m_kmenu_button_changed == true) {
+        forceRestart = true;
+    }
+
+    if (forceRestart) {
         DCOPRef ("kicker", "default").call("restart()");
     }
 }

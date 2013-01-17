@@ -661,7 +661,7 @@ void TaskContainer::drawButton(TQPainter *p)
     // draw button background
     if (drawButton)
     {
-        if (KickerSettings::showDeepButtons()) {
+        if (m_settingsObject->drawButtons() && KickerSettings::showDeepButtons()) {
             style().tqdrawPrimitive(TQStyle::PE_ButtonBevel, p,
                               TQRect(1, 1, width()-3, height()-2),
                               colors, sunken ? TQStyle::Style_On : TQStyle::Style_Raised);
@@ -770,7 +770,7 @@ void TaskContainer::drawButton(TQPainter *p)
             }
         }
 
-        int availableWidth = width() - (br.x() * 2) - textPos - 2 - KickerSettings::showDeepButtons()?2:0;
+        int availableWidth = width() - (br.x() * 2) - textPos - 2 - (m_settingsObject->drawButtons() && KickerSettings::showDeepButtons())?2:0;
         if (m_filteredTasks.count() > 1)
         {
             availableWidth -= 8;
@@ -846,7 +846,7 @@ void TaskContainer::drawButton(TQPainter *p)
     }
 
     // draw popup arrow
-    if ((m_filteredTasks.count() > 1) && (!KickerSettings::showDeepButtons()))
+    if ((m_filteredTasks.count() > 1) && (!(m_settingsObject->drawButtons() && KickerSettings::showDeepButtons())))
     {
         TQStyle::PrimitiveElement e = TQStyle::PE_ArrowLeft;
 

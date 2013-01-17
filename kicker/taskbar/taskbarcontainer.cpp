@@ -23,11 +23,13 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #include <tqlayout.h>
 #include <tqtimer.h>
+#include <tqfile.h>
 
 #include <dcopclient.h>
 #include <kapplication.h>
 #include <kdebug.h>
 #include <kiconloader.h>
+#include <kstandarddirs.h>
 #include <twindowlistmenu.h>
 
 #include <X11/X.h>
@@ -56,6 +58,14 @@ TaskBarContainer::TaskBarContainer( bool enableFrame, TQString configFileOverrid
     if (configFile == "")
     {
         configFile = GLOBAL_TASKBAR_CONFIG_FILE_NAME;
+    }
+    TQFile configFileObject(locateLocal("config", configFile));
+    if (!configFileObject.exists())
+    {
+        KConfig globalConfig(GLOBAL_TASKBAR_CONFIG_FILE_NAME, TRUE, TRUE);
+        KConfig localConfig(configFile);
+        globalConfig.copyTo(configFile, &localConfig);
+        localConfig.sync();
     }
     settingsObject = new TaskBarSettings(KSharedConfig::openConfig(configFile));
 

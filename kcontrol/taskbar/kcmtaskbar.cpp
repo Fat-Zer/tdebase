@@ -21,6 +21,8 @@
 #include <tqlayout.h>
 #include <tqtimer.h>
 #include <tqvaluelist.h>
+#include <tqfile.h>
+#include <tqlabel.h>
 
 #include <dcopclient.h>
 
@@ -31,7 +33,7 @@
 #include <kgenericfactory.h>
 #include <twin.h>
 #include <kcolorbutton.h>
-#include <tqlabel.h>
+#include <kstandarddirs.h>
 
 #define protected public
 #include "kcmtaskbarui.h"
@@ -161,7 +163,24 @@ TaskbarConfig::TaskbarConfig(TQWidget *parent, const char* name, const TQStringL
     {
         m_configFileName = args[0];
         m_widget->globalConfigWarning->hide();
+        m_widget->globalConfigReload->show();
     }
+    else
+    {
+        m_widget->globalConfigReload->hide();
+        m_widget->globalConfigWarning->show();
+    }
+    connect(m_widget->globalConfigReload, TQT_SIGNAL(clicked()), this, TQT_SLOT(slotReloadConfigurationFromGlobals()));
+
+    TQFile configFile(locateLocal("config", m_configFileName));
+    if (!configFile.exists())
+    {
+        KConfig globalConfig(GLOBAL_TASKBAR_CONFIG_FILE_NAME, TRUE, TRUE);
+        KConfig localConfig(m_configFileName);
+        globalConfig.copyTo(m_configFileName, &localConfig);
+        localConfig.sync();
+    }
+
     m_settingsObject = new TaskBarSettings(KSharedConfig::openConfig(m_configFileName));
     m_settingsObject->readConfig();
 
@@ -238,6 +257,14 @@ TaskbarConfig::~TaskbarConfig()
     {
         delete m_settingsObject;
     }
+}
+
+void TaskbarConfig::slotReloadConfigurationFromGlobals()
+{
+    KConfig globalConfig(GLOBAL_TASKBAR_CONFIG_FILE_NAME, TRUE, TRUE);
+    globalConfig.copyTo(m_configFileName);
+    m_settingsObject->readConfig();
+    load();
 }
 
 void TaskbarConfig::slotUpdateCustomColors()

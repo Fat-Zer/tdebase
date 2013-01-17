@@ -70,6 +70,9 @@ protected slots:
     void notChanged();
     void slotUpdateCustomColors();
 
+private slots:
+    void slotReloadConfigurationFromGlobals();
+
 private:
     TaskbarAppearance::List m_appearances;
     void updateAppearanceCombo();
