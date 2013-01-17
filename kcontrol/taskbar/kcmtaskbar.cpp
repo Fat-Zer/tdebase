@@ -262,7 +262,9 @@ TaskbarConfig::~TaskbarConfig()
 void TaskbarConfig::slotReloadConfigurationFromGlobals()
 {
     KConfig globalConfig(GLOBAL_TASKBAR_CONFIG_FILE_NAME, TRUE, TRUE);
-    globalConfig.copyTo(m_configFileName);
+    KConfig localConfig(m_configFileName);
+    globalConfig.copyTo(m_configFileName, &localConfig);
+    localConfig.sync();
     m_settingsObject->readConfig();
     load();
 }
