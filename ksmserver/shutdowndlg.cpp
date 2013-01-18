@@ -792,15 +792,17 @@ KSMShutdownDlg::KSMShutdownDlg( TQWidget* parent,
 		TQValueList<TQT_DBusData> params;
 		params << TQT_DBusData::fromString(upowerProperties.interface()) << TQT_DBusData::fromString("CanSuspend");
 		TQT_DBusMessage reply = upowerProperties.sendWithReply("Get", params);
-		if(reply.type() == TQT_DBusMessage::ReplyMessage && reply.count() == 1)
+		if(reply.type() == TQT_DBusMessage::ReplyMessage && reply.count() == 1) {
 			canSuspend = reply[0].toVariant().value.toBool();
+		}
 
 		// can hibernate?
 		params.clear();
 		params << TQT_DBusData::fromString(upowerProperties.interface()) << TQT_DBusData::fromString("CanHibernate");
 		reply = upowerProperties.sendWithReply("Get", params);
-		if(reply.type() == TQT_DBusMessage::ReplyMessage && reply.count() == 1)
+		if(reply.type() == TQT_DBusMessage::ReplyMessage && reply.count() == 1) {
 			canHibernate = reply[0].toVariant().value.toBool();
+		}
 #else
 #ifdef COMPILE_HALBACKEND
 		// Query HAL for suspend/resume support
