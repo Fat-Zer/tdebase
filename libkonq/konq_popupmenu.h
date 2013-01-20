@@ -172,9 +172,14 @@ public slots: // KDE4: why public?
   void slotPopupMimeType();
   void slotPopupProperties();
   void slotOpenShareFileDialog();
+
 protected:
   KActionCollection &m_actions;
   KActionCollection m_ownActions;
+
+private slots:
+  void slotLocalURL( KIO::Job *, const KURL&, bool );
+  void slotLocalURLKIODestroyed( );
 
 private:
   void init (TQWidget * parentWidget, KonqPopupFlags kpf, KParts::BrowserExtension::PopupFlags itemFlags);

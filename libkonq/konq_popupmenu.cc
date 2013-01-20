@@ -19,6 +19,7 @@
 */
 
 #include <tqdir.h>
+#include <tqeventloop.h>
 
 #include <klocale.h>
 #include <kapplication.h>
@@ -103,6 +104,10 @@ public:
   TQString m_urlTitle;
   TQWidget *m_parentWidget;
   KParts::BrowserExtension::PopupFlags m_itemFlags;
+
+  bool localURLSlotFired;
+  KURL localURLResultURL;
+  bool localURLResultIsLocal;
 };
 
 KonqPopupMenu::ProtocolInfo::ProtocolInfo()
@@ -414,7 +419,26 @@ void KonqPopupMenu::setup(KonqPopupFlags kpf)
         if ( (*it)->mimetype().startsWith("media/") )
             mediaFiles = true;
     }
-    url = m_sViewURL;
+
+    // If a local path is available, monitor that instead of the given remote URL...
+    KURL realURL = m_sViewURL;
+    if (!realURL.isLocalFile()) {
+        KIO::LocalURLJob* localURLJob = KIO::localURL(m_sViewURL);
+        if (localURLJob) {
+            connect(localURLJob, TQT_SIGNAL(localURL(KIO::Job*, const KURL&, bool)), this, TQT_SLOT(slotLocalURL(KIO::Job*, const KURL&, bool)));
+            connect(localURLJob, TQT_SIGNAL(destroyed()), this, TQT_SLOT(slotLocalURLKIODestroyed()));
+            d->localURLSlotFired = false;
+            while (!d->localURLSlotFired) {
+                tqApp->eventLoop()->processEvents(TQEventLoop::ExcludeUserInput);
+                usleep(1000);
+            }
+            if (d->localURLResultIsLocal) {
+                realURL = d->localURLResultURL;
+            }
+        }
+    }
+
+    url = realURL;
     url.cleanPath();
 
     //check if url is current directory
@@ -787,11 +811,11 @@ void KonqPopupMenu::setup(KonqPopupFlags kpf)
                     }
 
                     // if we have a mimetype, see if we have an exact or a type globbed match
-                    if (!ok &&
+                    if ((!ok &&
                         (!m_sMimeType.isEmpty() &&
-                         *it == m_sMimeType) ||
+                         *it == m_sMimeType)) ||
                         (!mimeGroup.isEmpty() &&
-                         ((*it).right(1) == "*" &&
+                         (((*it).right(1) == "*") &&
                           (*it).left((*it).find('/')) == mimeGroup)))
                     {
                         checkTheMimetypes = true;
@@ -1200,6 +1224,22 @@ KFileItemList KonqPopupMenu::fileItemList() const
 KURL::List KonqPopupMenu::popupURLList() const
 {
   return m_lstPopupURLs;
+}
+
+void KonqPopupMenu::slotLocalURL(KIO::Job *job, const KURL& url, bool isLocal)
+{
+  d->localURLSlotFired = true;
+  d->localURLResultURL = url;
+  d->localURLResultIsLocal = isLocal;
+}
+
+void KonqPopupMenu::slotLocalURLKIODestroyed()
+{
+  if (!d->localURLSlotFired) {
+    d->localURLSlotFired = true;
+    d->localURLResultURL = KURL();
+    d->localURLResultIsLocal = false;
+  }
 }
 
 /**
