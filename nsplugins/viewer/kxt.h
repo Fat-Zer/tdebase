@@ -53,7 +53,7 @@
 #include <tqwidget.h>
 #include <X11/Intrinsic.h>
 
-class KXtApplication : public KApplication {
+class KXtApplication : public TDEApplication {
     Q_OBJECT
     void init();
 

@@ -46,9 +46,9 @@ static bool check(const TQString& txt, TQString a, TQString b)
 
 int main(int argc, char *argv[])
 {
-    KApplication::disableAutoDcopRegistration();
+    TDEApplication::disableAutoDcopRegistration();
     TDECmdLineArgs::init(argc,argv,"testhome", 0, 0, 0, 0);
-    KApplication app;
+    TDEApplication app;
 
     TestHome test;
     test.setup();

@@ -150,7 +150,7 @@ void MenuManager::kmenuAccelActivated()
         // no button to use, make it behave like a desktop menu
         TQPoint p;
         // Popup the K-menu at the center of the screen.
-        TQDesktopWidget* desktop = KApplication::desktop();
+        TQDesktopWidget* desktop = TDEApplication::desktop();
         TQRect r;
         if (desktop->numScreens() < 2)
             r = desktop->geometry();

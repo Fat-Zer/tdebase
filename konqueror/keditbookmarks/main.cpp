@@ -83,7 +83,7 @@ static void continueInWindow(TQString _wname) {
 }
 
 // TODO - make this register() or something like that and move dialog into main
-static int askUser(KApplication &app, TQString filename, bool &readonly) {
+static int askUser(TDEApplication &app, TQString filename, bool &readonly) {
     TQCString requestedName("keditbookmarks");
 
     if (!filename.isEmpty())
@@ -122,7 +122,7 @@ extern "C" KDE_EXPORT int kdemain(int argc, char **argv) {
     aboutData.addAuthor("Alexander Kellett", I18N_NOOP("Author"), "lypanov@kde.org");
 
     TDECmdLineArgs::init(argc, argv, &aboutData);
-    KApplication::addCmdLineOptions();
+    TDEApplication::addCmdLineOptions();
     TDECmdLineArgs::addCmdLineOptions(options);
 
     TDECmdLineArgs *args = TDECmdLineArgs::parsedArgs();
@@ -133,8 +133,8 @@ extern "C" KDE_EXPORT int kdemain(int argc, char **argv) {
 
     bool browser = args->isSet("browser");
 
-    KApplication::disableAutoDcopRegistration(); 
-    KApplication app(isGui, isGui);
+    TDEApplication::disableAutoDcopRegistration(); 
+    TDEApplication app(isGui, isGui);
 
     bool gotArg = (args->count() == 1);
 

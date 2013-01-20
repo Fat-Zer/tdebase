@@ -66,7 +66,7 @@ KButton::~KButton()
 
 void KButton::properties()
 {
-    KApplication::startServiceByDesktopName("kmenuedit", TQStringList(),
+    TDEApplication::startServiceByDesktopName("kmenuedit", TQStringList(),
                                             0, 0, 0, "", true);
 }
 

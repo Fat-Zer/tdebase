@@ -133,7 +133,7 @@ void Module::save()
         if( !kapp->dcopClient()->isApplicationRegistered( "khotkeys" ))
             {
             kdDebug( 1217 ) << "launching new khotkeys daemon" << endl;
-            KApplication::tdeinitExec( "khotkeys" );
+            TDEApplication::tdeinitExec( "khotkeys" );
             }
         else
             {

@@ -46,7 +46,7 @@ extern "C" int KDE_EXPORT kdemain(int argc, char *argv[])
 {
 	TDECmdLineArgs::init(argc,argv,"kprinter",I18N_NOOP("KPrinter"),I18N_NOOP("A printer tool for TDE" ),"0.0.1");
 	TDECmdLineArgs::addCmdLineOptions(options);
-	KApplication	app;
+	TDEApplication	app;
 	PrintWrapper	*wrap = new PrintWrapper;
 	app.setMainWidget(wrap);
 	TQTimer::singleShot(10,wrap,TQT_SLOT(slotPrint()));

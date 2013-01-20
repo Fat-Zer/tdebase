@@ -81,7 +81,7 @@ void ShortcutsModule::save()
 	m_actionsGeneral.writeActions( "Global Shortcuts", 0, true, true );
 	m_actionsSequence.writeActions( "Global Shortcuts", 0, true, true );
 
-	KIPC::sendMessageAll( KIPC::SettingsChanged, KApplication::SETTINGS_SHORTCUTS );
+	KIPC::sendMessageAll( KIPC::SettingsChanged, TDEApplication::SETTINGS_SHORTCUTS );
 }
 
 void ShortcutsModule::defaults()

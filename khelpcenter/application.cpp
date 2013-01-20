@@ -76,7 +76,7 @@ extern "C" int KDE_EXPORT kdemain( int argc, char **argv )
 
   TDECmdLineArgs::init( argc, argv, &aboutData );
   TDECmdLineArgs::addCmdLineOptions( options );
-  KApplication::addCmdLineOptions();
+  TDEApplication::addCmdLineOptions();
 
   KHC::Application app;
 

@@ -554,7 +554,7 @@ void PanelServiceMenu::slotExec(int id)
     kapp->propagateSessionManager();
 
     KService::Ptr service = static_cast<KService *>(e);
-    KApplication::startServiceByDesktopPath(service->desktopEntryPath(),
+    TDEApplication::startServiceByDesktopPath(service->desktopEntryPath(),
       TQStringList(), 0, 0, 0, "", true);
 
     updateRecentlyUsedApps(service);

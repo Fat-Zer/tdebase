@@ -50,7 +50,7 @@ KSmartcardConfig::KSmartcardConfig(TQWidget *parent, const char *name)
   TQVBoxLayout *layout = new TQVBoxLayout(this, KDialog::marginHint(), KDialog::spacingHint());
   config = new KConfig("ksmartcardrc", false, false);
 
-  DCOPClient *dc = KApplication::kApplication()->dcopClient();
+  DCOPClient *dc = TDEApplication::kApplication()->dcopClient();
 
   _ok = false;
   dc->remoteInterfaces("kded", "kardsvc", &_ok);

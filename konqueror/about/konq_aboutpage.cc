@@ -503,7 +503,7 @@ void KonqAboutPage::urlSelected( const TQString &url, int button, int state, con
         TQStringList args = TQStringList::split( TQChar( ' ' ), url.mid( 6 ) );
         TQString executable = args[ 0 ];
         args.remove( args.begin() );
-        KApplication::tdeinitExec( executable, args );
+        TDEApplication::tdeinitExec( executable, args );
         return;
     }
 

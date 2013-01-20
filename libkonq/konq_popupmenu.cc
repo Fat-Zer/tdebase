@@ -588,7 +588,7 @@ void KonqPopupMenu::setup(KonqPopupFlags kpf)
             if ( sDeleting ) {
                 if ( !isLocal )
                     addDel = true;
-                else if (KApplication::keyboardMouseState() & TQt::ShiftButton) {
+                else if (TDEApplication::keyboardMouseState() & TQt::ShiftButton) {
                     addTrash = false;
                     addDel = true;
                 }

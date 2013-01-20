@@ -113,7 +113,7 @@ void DocEntry::setIdentifier( const TQString &identifier )
 
 TQString DocEntry::identifier() const
 {
-  if ( mIdentifier.isEmpty() ) mIdentifier = KApplication::randomString( 15 );
+  if ( mIdentifier.isEmpty() ) mIdentifier = TDEApplication::randomString( 15 );
   return mIdentifier;
 }
 

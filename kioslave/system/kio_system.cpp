@@ -41,11 +41,11 @@ static const KCmdLineOptions options[] =
 extern "C" {
 	KDE_EXPORT int kdemain( int argc, char **argv )
 	{
-		// KApplication is necessary to use other ioslaves
+		// TDEApplication is necessary to use other ioslaves
 		putenv(strdup("SESSION_MANAGER="));
 		TDECmdLineArgs::init(argc, argv, "kio_system", 0, 0, 0, 0);
 		TDECmdLineArgs::addCmdLineOptions( options );
-		KApplication app( false, false );
+		TDEApplication app( false, false );
 		// We want to be anonymous even if we use DCOP
 		app.dcopClient()->attach();
 

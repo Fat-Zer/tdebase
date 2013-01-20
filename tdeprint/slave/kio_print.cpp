@@ -148,7 +148,7 @@ int kdemain(int argc, char **argv)
 	KAboutData about( "kio_print", "kio_print", "fake_version", 
 			"TDEPrint IO slave", KAboutData::License_GPL, "(c) 2003, Michael Goffioul" );
 	TDECmdLineArgs::init( &about );
-	KApplication app;
+	TDEApplication app;
 
 	KIO_Print	 slave(argv[2], argv[3]);
 	slave.dispatchLoop();

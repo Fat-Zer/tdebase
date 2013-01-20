@@ -100,7 +100,7 @@ Navigator::Navigator( View *view, TQWidget *parent, const char *name )
     searchLayout->setMargin( 6 );
 
     TQPushButton *clearButton = new TQPushButton( mSearchFrame );
-    clearButton->setIconSet( KApplication::reverseLayout() ?
+    clearButton->setIconSet( TDEApplication::reverseLayout() ?
       SmallIconSet( "clear_left" ) : SmallIconSet("locationbar_erase") );
     searchLayout->addWidget( clearButton );
     connect( clearButton, TQT_SIGNAL( clicked() ), TQT_SLOT( clearSearch() ) );

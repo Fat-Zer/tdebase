@@ -302,7 +302,7 @@ int main( int argc, char *argv[] )
 
   TDECmdLineArgs::addCmdLineOptions( options ); // Add our own options.
 
-  KApplication app;
+  TDEApplication app;
 
   TDECmdLineArgs *args = TDECmdLineArgs::parsedArgs();
 

@@ -77,7 +77,7 @@ void FindMenu::slotExec( int pos )
   }
   else
   {
-    KApplication::startServiceByDesktopPath( app );
+    TDEApplication::startServiceByDesktopPath( app );
   }
 }
 

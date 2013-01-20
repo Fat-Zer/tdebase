@@ -97,15 +97,15 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 void KSMServer::logout( int confirm, int sdtype, int sdmode )
 {
-    shutdown( (KApplication::ShutdownConfirm)confirm,
-              (KApplication::ShutdownType)sdtype,
-              (KApplication::ShutdownMode)sdmode );
+    shutdown( (TDEApplication::ShutdownConfirm)confirm,
+              (TDEApplication::ShutdownType)sdtype,
+              (TDEApplication::ShutdownMode)sdmode );
 }
 
 bool KSMServer::checkStatus( bool &logoutConfirmed, bool &maysd,
-                             KApplication::ShutdownConfirm confirm,
-                             KApplication::ShutdownType sdtype,
-                             KApplication::ShutdownMode sdmode )
+                             TDEApplication::ShutdownConfirm confirm,
+                             TDEApplication::ShutdownType sdtype,
+                             TDEApplication::ShutdownMode sdmode )
 {
     pendingShutdown.stop();
     if( dialogActive )
@@ -130,15 +130,15 @@ bool KSMServer::checkStatus( bool &logoutConfirmed, bool &maysd,
 
     config->setGroup("General" );
     logoutConfirmed =
-        (confirm == KApplication::ShutdownConfirmYes) ? false :
-        (confirm == KApplication::ShutdownConfirmNo) ? true :
+        (confirm == TDEApplication::ShutdownConfirmYes) ? false :
+        (confirm == TDEApplication::ShutdownConfirmNo) ? true :
         !config->readBoolEntry( "confirmLogout", true );
     maysd = false;
     if (config->readBoolEntry( "offerShutdown", true ) && DM().canShutdown())
         maysd = true;
     if (!maysd) {
-        if (sdtype != KApplication::ShutdownTypeNone &&
-            sdtype != KApplication::ShutdownTypeDefault &&
+        if (sdtype != TDEApplication::ShutdownTypeNone &&
+            sdtype != TDEApplication::ShutdownTypeDefault &&
             logoutConfirmed)
             return false; /* unsupported fast shutdown */
     }
@@ -146,9 +146,9 @@ bool KSMServer::checkStatus( bool &logoutConfirmed, bool &maysd,
     return true;
 }
 
-void KSMServer::shutdownInternal( KApplication::ShutdownConfirm confirm,
-                                  KApplication::ShutdownType sdtype,
-                                  KApplication::ShutdownMode sdmode,
+void KSMServer::shutdownInternal( TDEApplication::ShutdownConfirm confirm,
+                                  TDEApplication::ShutdownType sdtype,
+                                  TDEApplication::ShutdownMode sdmode,
                                   TQString bopt )
 {
     bool maysd = false;
@@ -160,12 +160,12 @@ void KSMServer::shutdownInternal( KApplication::ShutdownConfirm confirm,
 
     config->setGroup("General" );
     if (!maysd) {
-        sdtype = KApplication::ShutdownTypeNone;
-    } else if (sdtype == KApplication::ShutdownTypeDefault)
-        sdtype = (KApplication::ShutdownType)
-                 config->readNumEntry( "shutdownType", (int)KApplication::ShutdownTypeNone );
-    if (sdmode == KApplication::ShutdownModeDefault)
-        sdmode = KApplication::ShutdownModeInteractive;
+        sdtype = TDEApplication::ShutdownTypeNone;
+    } else if (sdtype == TDEApplication::ShutdownTypeDefault)
+        sdtype = (TDEApplication::ShutdownType)
+                 config->readNumEntry( "shutdownType", (int)TDEApplication::ShutdownTypeNone );
+    if (sdmode == TDEApplication::ShutdownModeDefault)
+        sdmode = TDEApplication::ShutdownModeInteractive;
 
     // shall we show a logout status dialog box?
     bool showLogoutStatusDlg = KConfigGroup(KGlobal::config(), "Logout").readBoolEntry("showLogoutStatusDlg", true);
@@ -282,8 +282,8 @@ void KSMServer::shutdownInternal( KApplication::ShutdownConfirm confirm,
     dialogActive = false;
 }
 
-void KSMServer::shutdown( KApplication::ShutdownConfirm confirm,
-    KApplication::ShutdownType sdtype, KApplication::ShutdownMode sdmode )
+void KSMServer::shutdown( TDEApplication::ShutdownConfirm confirm,
+    TDEApplication::ShutdownType sdtype, TDEApplication::ShutdownMode sdmode )
 {
     shutdownInternal( confirm, sdtype, sdmode );
 }
@@ -297,9 +297,9 @@ void KSMServer::logoutTimed( int sdtype, int sdmode, TQString bootOption )
     KConfig* config = KGlobal::config();
     config->setGroup( "General" );
 
-    if ( sdtype == KApplication::ShutdownTypeHalt )
+    if ( sdtype == TDEApplication::ShutdownTypeHalt )
         confirmDelay = config->readNumEntry( "confirmShutdownDelay", 31 );
-    else if ( sdtype == KApplication::ShutdownTypeReboot )
+    else if ( sdtype == TDEApplication::ShutdownTypeReboot )
         confirmDelay = config->readNumEntry( "confirmRebootDelay", 31 );
     else
         confirmDelay = config->readNumEntry( "confirmLogoutDelay", 31 );
@@ -307,14 +307,14 @@ void KSMServer::logoutTimed( int sdtype, int sdmode, TQString bootOption )
     bool result = true;
     if (confirmDelay) {
         KSMShutdownFeedback::start(); // make the screen gray
-        result = KSMDelayedMessageBox::showTicker( (KApplication::ShutdownType)sdtype, bootOption, confirmDelay );
+        result = KSMDelayedMessageBox::showTicker( (TDEApplication::ShutdownType)sdtype, bootOption, confirmDelay );
         KSMShutdownFeedback::stop(); // make the screen become normal again
     }
 
     if ( result )
-        shutdownInternal( KApplication::ShutdownConfirmNo,
-                          (KApplication::ShutdownType)sdtype,
-                          (KApplication::ShutdownMode)sdmode,
+        shutdownInternal( TDEApplication::ShutdownConfirmNo,
+                          (TDEApplication::ShutdownType)sdtype,
+                          (TDEApplication::ShutdownMode)sdmode,
                            bootOption );
 }
 

@@ -86,7 +86,7 @@ PanelButton::PanelButton( TQWidget* parent, const char* name, bool forceStandard
 
     m_textColor = KGlobalSettings::textColor();
 
-    updateSettings(KApplication::SETTINGS_MOUSE);
+    updateSettings(TDEApplication::SETTINGS_MOUSE);
 
     kapp->addKipcEventMask(KIPC::SettingsChanged | KIPC::IconChanged);
 
@@ -219,7 +219,7 @@ void PanelButton::updateIcon(int group)
 
 void PanelButton::updateSettings(int category)
 {
-    if (category != KApplication::SETTINGS_MOUSE)
+    if (category != TDEApplication::SETTINGS_MOUSE)
     {
         return;
     }

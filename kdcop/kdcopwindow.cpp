@@ -157,7 +157,7 @@ DCOPBrowserApplicationItem::setOpen(bool o)
   void
 DCOPBrowserApplicationItem::populate()
 {
-  KApplication::setOverrideCursor(tqwaitCursor);
+  TDEApplication::setOverrideCursor(tqwaitCursor);
 
   bool ok = false;
   bool isDefault = false;
@@ -175,7 +175,7 @@ DCOPBrowserApplicationItem::populate()
     isDefault = false;
   }
 
-  KApplication::restoreOverrideCursor();
+  TDEApplication::restoreOverrideCursor();
 }
 
 void DCOPBrowserApplicationItem::slotGotWindowName(int /*callId*/, const TQCString& /*replyType*/, const TQByteArray &replyData)
@@ -240,7 +240,7 @@ DCOPBrowserInterfaceItem::setOpen(bool o)
   void
 DCOPBrowserInterfaceItem::populate()
 {
-  KApplication::setOverrideCursor(tqwaitCursor);
+  TDEApplication::setOverrideCursor(tqwaitCursor);
 
   bool ok = false;
 
@@ -250,7 +250,7 @@ DCOPBrowserInterfaceItem::populate()
     if ((*it) != "QCStringList functions()")
       new DCOPBrowserFunctionItem(this, app_, object_, *it);
 
-  KApplication::restoreOverrideCursor();
+  TDEApplication::restoreOverrideCursor();
 }
 
 // ------------------------------------------------------------------------
@@ -902,7 +902,7 @@ void KDCOPWindow::slotCallFunction( TQListViewItem* it )
 
 void KDCOPWindow::slotFillApplications()
 {
-  KApplication::setOverrideCursor(tqwaitCursor);
+  TDEApplication::setOverrideCursor(tqwaitCursor);
 
   QCStringList apps = dcopClient->registeredApplications();
   TQCString appId = dcopClient->appId();
@@ -917,7 +917,7 @@ void KDCOPWindow::slotFillApplications()
     }
   }
 
-  KApplication::restoreOverrideCursor();
+  TDEApplication::restoreOverrideCursor();
 }
 
 bool KDCOPWindow::demarshal

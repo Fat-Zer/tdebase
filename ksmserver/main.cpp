@@ -190,7 +190,7 @@ extern "C" KDE_EXPORT int kdemain( int argc, char* argv[] )
     TDECmdLineArgs::addCmdLineOptions( options );
 
     putenv((char*)"SESSION_MANAGER=");
-    KApplication a(KApplication::openX11RGBADisplay(), false); // Disable styles until we need them.
+    TDEApplication a(TDEApplication::openX11RGBADisplay(), false); // Disable styles until we need them.
     fcntl(ConnectionNumber(tqt_xdisplay()), F_SETFD, 1);
 
 

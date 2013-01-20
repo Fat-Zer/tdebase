@@ -88,7 +88,7 @@ int main(int argc, char **argv)
     }
 
 
-    KApplication * app = new KPagerApplication;
+    TDEApplication * app = new KPagerApplication;
     TDECmdLineArgs *args = TDECmdLineArgs::parsedArgs();
 
     KPagerMainWindow *kpager = new KPagerMainWindow(0,"KPager");

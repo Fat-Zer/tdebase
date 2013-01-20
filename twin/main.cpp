@@ -82,7 +82,7 @@ int x11ErrorHandler(Display *d, XErrorEvent *e)
     }
 
 Application::Application( )
-: KApplication( ), owner( screen_number )
+: TDEApplication( ), owner( screen_number )
     {
 #ifdef USE_QT4
     // I'm special...
@@ -216,7 +216,7 @@ bool Application::x11EventFilter( XEvent *e )
     {
     if ( Workspace::self()->workspaceEvent( e ) )
              return TRUE;
-    return KApplication::x11EventFilter( e );
+    return TDEApplication::x11EventFilter( e );
     }
     
 static void sighandler(int) 
@@ -327,7 +327,7 @@ KDE_EXPORT int kdemain( int argc, char * argv[] )
     if (signal(SIGHUP, KWinInternal::sighandler) == SIG_IGN)
         signal(SIGHUP, SIG_IGN);
 
-    KApplication::disableAutoDcopRegistration();
+    TDEApplication::disableAutoDcopRegistration();
     KWinInternal::Application a;
     KWinInternal::SessionManaged weAreIndeed;
     KWinInternal::SessionSaveDoneHelper helper;

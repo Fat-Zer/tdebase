@@ -247,12 +247,12 @@ extern "C" int KDE_EXPORT kdemain(int argc, char* argv[])
   if( qtargs->isSet("font") )
       kdWarning() << "The Qt option -fn, --font has no effect." << endl;
 
-  KApplication* a = NULL;
+  TDEApplication* a = NULL;
 #ifdef COMPOSITE
-  a = new KApplication(KApplication::openX11RGBADisplay());
+  a = new TDEApplication(TDEApplication::openX11RGBADisplay());
   argb_visual = a->isX11CompositionAvailable();
 #else
-  a = new KApplication;
+  a = new TDEApplication;
 #endif
 
   TQString dataPathBase = KStandardDirs::kde_default("data").append("konsole/");

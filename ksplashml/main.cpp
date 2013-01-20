@@ -55,11 +55,11 @@ int main( int argc, char **argv )
   TDECmdLineArgs *arg = TDECmdLineArgs::parsedArgs();
 
   if ( !( arg->isSet( "dcop" ) ) )
-    KApplication::disableAutoDcopRegistration();
-  else if ( KApplication::dcopClient()->attach() )
-    KApplication::dcopClient()->registerAs( "ksplash", false );
+    TDEApplication::disableAutoDcopRegistration();
+  else if ( TDEApplication::dcopClient()->attach() )
+    TDEApplication::dcopClient()->registerAs( "ksplash", false );
 
-  KApplication app;
+  TDEApplication app;
 
   KSplash wndMain("ksplash");
   if ( arg->isSet( "steps" ) )

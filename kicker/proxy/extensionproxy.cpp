@@ -64,10 +64,10 @@ extern "C" KDE_EXPORT int kdemain( int argc, char ** argv )
     TDECmdLineArgs::init(argc, argv, &aboutData );
     aboutData.addAuthor("Matthias Elter",0, "elter@kde.org");
     aboutData.addAuthor("Matthias Ettrich",0, "ettrich@kde.org");
-    KApplication::addCmdLineOptions();
+    TDEApplication::addCmdLineOptions();
     TDECmdLineArgs::addCmdLineOptions(options); // Add our own options.
 
-    KApplication a;
+    TDEApplication a;
     a.disableSessionManagement();
 
     KGlobal::dirs()->addResourceType("extensions", KStandardDirs::kde_default("data") +

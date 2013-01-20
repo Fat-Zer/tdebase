@@ -94,7 +94,7 @@ int main( int argc, char **argv)
 	TDECmdLineArgs::addCmdLineOptions( options );
 	TDECmdLineArgs *args = TDECmdLineArgs::parsedArgs();
 
-	KApplication app;
+	TDEApplication app;
 	app.disableSessionManagement();
 
 	if (args->isSet( "xdgname" ) == true) {

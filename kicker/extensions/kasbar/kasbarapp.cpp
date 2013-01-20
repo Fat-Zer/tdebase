@@ -78,7 +78,7 @@ int main( int argc, char **argv )
   TDECmdLineArgs::init( argc, argv, "kasbar", "KasBar", I18N_NOOP( "An alternative task manager" ), VERSION_STRING );
   TDECmdLineArgs::addCmdLineOptions( options );
   KGlobal::locale()->setMainCatalogue( "kasbarextension" );
-  KApplication app;
+  TDEApplication app;
   TDECmdLineArgs *args = TDECmdLineArgs::parsedArgs();
 
   kdDebug(1345) << "Kasbar starting..." << endl;
@@ -116,7 +116,7 @@ int main( int argc, char **argv )
   KWin::setOnAllDesktops( kasbar->winId(), true );
   kdDebug() << "kasbar: Window id is " << kasbar->winId() << endl;
 
-  KApplication::kApplication()->dcopClient()->registerAs( "kasbar" );
+  TDEApplication::kApplication()->dcopClient()->registerAs( "kasbar" );
 
   app.connect( &app, TQT_SIGNAL( lastWindowClosed() ), TQT_SLOT(quit()) );
 

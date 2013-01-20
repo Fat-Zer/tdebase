@@ -92,7 +92,7 @@ KasBarExtension::KasBarExtension( const TQString& configFile,
       detached_( false )
 {
     kdDebug(1345) << "KasBarExtension: Created '" << name << "', '" << configFile << "'" << endl;
-//    KApplication::kApplication()->dcopClient()->registerAs( "kasbar" );
+//    TDEApplication::kApplication()->dcopClient()->registerAs( "kasbar" );
 
 //    setBackgroundMode( NoBackground );
     kasbar = new KasTasker( orientation(), this, name );

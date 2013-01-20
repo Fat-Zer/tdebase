@@ -195,10 +195,10 @@ void KSMSaveYourselfRequestProc (
 {
     if ( shutdown ) {
         the_server->shutdown( fast ?
-                              KApplication::ShutdownConfirmNo :
-                              KApplication::ShutdownConfirmDefault,
-                              KApplication::ShutdownTypeDefault,
-                              KApplication::ShutdownModeDefault );
+                              TDEApplication::ShutdownConfirmNo :
+                              TDEApplication::ShutdownConfirmDefault,
+                              TDEApplication::ShutdownTypeDefault,
+                              TDEApplication::ShutdownModeDefault );
     } else if ( !global ) {
         SmsSaveYourself( smsConn, saveType, false, interactStyle, fast );
         SmsSaveComplete( smsConn );
@@ -586,7 +586,7 @@ KSMServer::KSMServer( const TQString& windowManager, const TQString& windowManag
     wm = windowManager;
     wmAddArgs = windowManagerAddArgs;
 
-    shutdownType = KApplication::ShutdownTypeNone;
+    shutdownType = TDEApplication::ShutdownTypeNone;
 
     state = Idle;
     dialogActive = false;
@@ -609,7 +609,7 @@ KSMServer::KSMServer( const TQString& windowManager, const TQString& windowManag
     only_local = false;
 #endif
 
-    launcher = KApplication::launcher();
+    launcher = TDEApplication::launcher();
 
     char        errormsg[256];
     if (!SmsInitialize ( (char*) KSMVendorString, (char*) KSMReleaseString,

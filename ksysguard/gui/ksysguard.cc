@@ -571,9 +571,9 @@ int main( int argc, char** argv )
   TDECmdLineArgs::init( argc, argv, &aboutData );
   TDECmdLineArgs::addCmdLineOptions( options );
 
-  KApplication::disableAutoDcopRegistration();
+  TDEApplication::disableAutoDcopRegistration();
   // initialize KDE application
-  KApplication *app = new KApplication;
+  TDEApplication *app = new TDEApplication;
 
   KSGRD::SensorMgr = new KSGRD::SensorManager();
   KSGRD::Style = new KSGRD::StyleEngine();

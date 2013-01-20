@@ -137,8 +137,8 @@ of <guilabel>Services Preference Order.</guilabel></para></listitem>
 </question>
 <answer>
 <para>They are used by all &tde; applications (since they are implemented in
-<classname>KApplication</classname> and all good &tde; programs create a
-<classname>KApplication</classname> object before they even look at the
+<classname>TDEApplication</classname> and all good &tde; programs create a
+<classname>TDEApplication</classname> object before they even look at the
 command line arguments).</para> <para>A standard line for a &tde;
 application looks like this: <userinput><command>foo</command>
 <option>... %i %m -caption \"%c\"</option></userinput>. Pretty confusing,

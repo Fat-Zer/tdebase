@@ -53,9 +53,9 @@ void testKonqIconDrag2()
 
 int main(int argc, char *argv[])
 {
-  KApplication::disableAutoDcopRegistration();
+  TDEApplication::disableAutoDcopRegistration();
   TDECmdLineArgs::init( argc, argv, "kurltest", 0, 0, 0, 0 );
-  KApplication app; // GUI needed for QPixmaps
+  TDEApplication app; // GUI needed for QPixmaps
 
   testKonqIconDrag2();
   return 0;

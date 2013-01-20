@@ -35,7 +35,7 @@
 
 static TQCString configname()
 {
-	int desktop = KApplication::desktop()->primaryScreen();
+	int desktop = TDEApplication::desktop()->primaryScreen();
 	TQCString name;
 	if (desktop == 0)
 		name = "kdesktoprc";

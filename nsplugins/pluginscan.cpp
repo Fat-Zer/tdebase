@@ -539,7 +539,7 @@ int main( int argc, char **argv )
       printf("10\n"); fflush(stdout);
     }
 
-    KApplication app(false, false);
+    TDEApplication app(false, false);
 
     // Set up SIGCHLD handler
     struct sigaction act;

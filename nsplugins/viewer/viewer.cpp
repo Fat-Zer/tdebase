@@ -248,8 +248,8 @@ int main(int argc, char** argv)
    parseCommandLine(argc, argv);
    KLocale::setMainCatalogue("nsplugin");
 
-   kdDebug(1430) << "4 - create KApplication" << endl;
-   KApplication app( argc,  argv, "nspluginviewer" );
+   kdDebug(1430) << "4 - create TDEApplication" << endl;
+   TDEApplication app( argc,  argv, "nspluginviewer" );
    GlibEvents glibevents;
 #endif
 

@@ -1,5 +1,5 @@
 [Desktop Entry]
-# This desktop file is the one used by KApplication::invokeBrowser
+# This desktop file is the one used by TDEApplication::invokeBrowser
 Type=Application
 Exec=kfmclient openURL %u
 Icon=konqueror

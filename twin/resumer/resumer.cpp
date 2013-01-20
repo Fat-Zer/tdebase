@@ -48,7 +48,7 @@ int main( int argc, char* argv[] )
     TDECmdLineArgs::init( argc, argv, "twin_resume_helper", I18N_NOOP( "TWin" ),
 	I18N_NOOP( "TWin helper utility" ), "1.0" );
     TDECmdLineArgs::addCmdLineOptions( options );
-    KApplication app;
+    TDEApplication app;
     TDECmdLineArgs* args = TDECmdLineArgs::parsedArgs();
     TQCString hostname = args->getOption( "hostname" );
     bool pid_ok = false;

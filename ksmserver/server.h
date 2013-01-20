@@ -86,17 +86,17 @@ public:
     void restoreSession( TQString sessionName );
     void startDefaultSession();
 
-    void shutdown( KApplication::ShutdownConfirm confirm,
-                   KApplication::ShutdownType sdtype,
-                   KApplication::ShutdownMode sdmode );
+    void shutdown( TDEApplication::ShutdownConfirm confirm,
+                   TDEApplication::ShutdownType sdtype,
+                   TDEApplication::ShutdownMode sdmode );
 
     virtual void suspendStartup( TQCString app );
     virtual void resumeStartup( TQCString app );
 
     bool checkStatus( bool &logoutConfirmed, bool &maysd, 
-		      KApplication::ShutdownConfirm confirm,
-		      KApplication::ShutdownType sdtype,
-		      KApplication::ShutdownMode sdmode );
+		      TDEApplication::ShutdownConfirm confirm,
+		      TDEApplication::ShutdownType sdtype,
+		      TDEApplication::ShutdownMode sdmode );
 
 public slots:
     void cleanUp();
@@ -150,9 +150,9 @@ private:
     bool defaultSession() const; // empty session
     void setupXIOErrorHandler();
 
-    void shutdownInternal( KApplication::ShutdownConfirm confirm,
-			   KApplication::ShutdownType sdtype,
-			   KApplication::ShutdownMode sdmode,
+    void shutdownInternal( TDEApplication::ShutdownConfirm confirm,
+			   TDEApplication::ShutdownType sdtype,
+			   TDEApplication::ShutdownMode sdmode,
 			   TQString bootOption = TQString::null );
 
     void performLegacySessionSave();
@@ -196,8 +196,8 @@ private:
     int saveType;
     TQMap< TQCString, int > startupSuspendCount;
 
-    KApplication::ShutdownType shutdownType;
-    KApplication::ShutdownMode shutdownMode;
+    TDEApplication::ShutdownType shutdownType;
+    TDEApplication::ShutdownMode shutdownMode;
     TQString bootOption;
 
     bool clean;
@@ -216,9 +216,9 @@ private:
     bool waitAutoStart2;
     bool waitKcmInit2;
     TQTimer pendingShutdown;
-    KApplication::ShutdownConfirm pendingShutdown_confirm;
-    KApplication::ShutdownType pendingShutdown_sdtype;
-    KApplication::ShutdownMode pendingShutdown_sdmode;
+    TDEApplication::ShutdownConfirm pendingShutdown_confirm;
+    TDEApplication::ShutdownType pendingShutdown_sdtype;
+    TDEApplication::ShutdownMode pendingShutdown_sdmode;
 
     // ksplash interface
     void upAndRunning( const TQString& msg );

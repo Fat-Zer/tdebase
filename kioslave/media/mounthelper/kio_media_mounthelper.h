@@ -30,7 +30,7 @@
 
 class Dialog;
 
-class MountHelper : public KApplication
+class MountHelper : public TDEApplication
 {
         Q_OBJECT
 public:

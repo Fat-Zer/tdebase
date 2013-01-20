@@ -54,7 +54,7 @@ KBackgroundRenderer::KBackgroundRenderer(int desk, int screen, bool drawBackgrou
     m_isBusyCursor = false;
     m_enableBusyCursor = false;
     m_pDirs = KGlobal::dirs();
-    m_rSize = m_Size = drawBackgroundPerScreen ? KApplication::desktop()->screenGeometry(screen).size() : KApplication::desktop()->geometry().size();
+    m_rSize = m_Size = drawBackgroundPerScreen ? TDEApplication::desktop()->screenGeometry(screen).size() : TDEApplication::desktop()->geometry().size();
     m_pProc = 0L;
     m_Tempfile = 0L;
     m_bPreview = false;
@@ -85,7 +85,7 @@ void KBackgroundRenderer::setSize(const TQSize &size)
 void KBackgroundRenderer::desktopResized()
 {
     m_State = 0;
-    m_rSize = drawBackgroundPerScreen() ? KApplication::desktop()->screenGeometry(screen()).size() : KApplication::desktop()->geometry().size();
+    m_rSize = drawBackgroundPerScreen() ? TDEApplication::desktop()->screenGeometry(screen()).size() : TDEApplication::desktop()->geometry().size();
     if( !m_bPreview )
         m_Size = m_rSize;
 }
@@ -1046,7 +1046,7 @@ KVirtualBGRenderer::KVirtualBGRenderer( int desk, KConfig *config )
     }
 
     initRenderers();
-    m_size = KApplication::desktop()->geometry().size();
+    m_size = TDEApplication::desktop()->geometry().size();
 }
 
 KVirtualBGRenderer::~KVirtualBGRenderer()
@@ -1153,7 +1153,7 @@ void KVirtualBGRenderer::setEnabled(bool enable)
 
 void KVirtualBGRenderer::desktopResized()
 {
-    m_size = KApplication::desktop()->geometry().size();
+    m_size = TDEApplication::desktop()->geometry().size();
 
     if (m_pPixmap)
     {
@@ -1194,7 +1194,7 @@ void KVirtualBGRenderer::setPreview(const TQSize & size)
 
 TQSize KVirtualBGRenderer::renderSize(int screen)
 {
-    return m_bDrawBackgroundPerScreen ? KApplication::desktop()->screenGeometry(screen).size() : KApplication::desktop()->geometry().size();
+    return m_bDrawBackgroundPerScreen ? TDEApplication::desktop()->screenGeometry(screen).size() : TDEApplication::desktop()->geometry().size();
 }
 
 
@@ -1205,7 +1205,7 @@ void KVirtualBGRenderer::initRenderers()
 
     m_bCommonScreen = m_pConfig->readBoolEntry("CommonScreen", _defCommonScreen);
 
-    m_numRenderers = m_bDrawBackgroundPerScreen ? KApplication::desktop()->numScreens() : 1;
+    m_numRenderers = m_bDrawBackgroundPerScreen ? TDEApplication::desktop()->numScreens() : 1;
 
     m_bFinished.resize(m_numRenderers);
     m_bFinished.fill(false);
@@ -1264,11 +1264,11 @@ void KVirtualBGRenderer::screenDone(int _desk, int _screen)
         // There's more than one renderer, so we are drawing each output to our own pixmap
 
         TQRect overallGeometry;
-        for (int i=0; i < KApplication::desktop()->numScreens(); ++i) {
-            overallGeometry |= KApplication::desktop()->screenGeometry(i);
+        for (int i=0; i < TDEApplication::desktop()->numScreens(); ++i) {
+            overallGeometry |= TDEApplication::desktop()->screenGeometry(i);
         }
 
-        TQPoint drawPos = KApplication::desktop()->screenGeometry(screen).topLeft() - overallGeometry.topLeft();
+        TQPoint drawPos = TDEApplication::desktop()->screenGeometry(screen).topLeft() - overallGeometry.topLeft();
         drawPos.setX( int(drawPos.x() * m_scaleX) );
         drawPos.setY( int(drawPos.y() * m_scaleY) );
 

@@ -52,7 +52,7 @@
 #include <sys/types.h>
 
 KateApp::KateApp (TDECmdLineArgs *args)
- : KApplication ()
+ : TDEApplication ()
  , m_args (args)
  , m_shouldExit (false)
 {

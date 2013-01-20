@@ -999,7 +999,7 @@ void Workspace::reconfigure()
 void Workspace::slotSettingsChanged(int category)
     {
     kdDebug(1212) << "Workspace::slotSettingsChanged()" << endl;
-    if( category == (int) KApplication::SETTINGS_SHORTCUTS )
+    if( category == (int) TDEApplication::SETTINGS_SHORTCUTS )
         readShortcuts();
     }
 
@@ -1220,7 +1220,7 @@ TQStringList Workspace::configModules(bool controlCenter)
 
 void Workspace::configureWM()
     {
-    KApplication::tdeinitExec( "kcmshell", configModules(false) );
+    TDEApplication::tdeinitExec( "kcmshell", configModules(false) );
     }
 
 /*!

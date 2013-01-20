@@ -106,9 +106,9 @@ void advancedTabDialog::save()
     else m_pConfig->writeEntry( "MultipleTabConfirm", true );
 
     TQByteArray data;
-    if ( !KApplication::kApplication()->dcopClient()->isAttached() )
+    if ( !TDEApplication::kApplication()->dcopClient()->isAttached() )
       kapp->dcopClient()->attach();
-    KApplication::kApplication()->dcopClient()->send( "konqueror*", "KonquerorIface", "reparseConfiguration()", data );
+    TDEApplication::kApplication()->dcopClient()->send( "konqueror*", "KonquerorIface", "reparseConfiguration()", data );
 
     actionButton(Apply)->setEnabled(false);
 }

@@ -1254,7 +1254,7 @@ NSPluginViewer::NSPluginViewer( TQCString dcopId,
    : DCOPObject(dcopId), TQObject( parent, name ) 
 {
     _classes.setAutoDelete( true );
-    connect(KApplication::dcopClient(),
+    connect(TDEApplication::dcopClient(),
             TQT_SIGNAL(applicationRemoved(const TQCString&)),
             this,
             TQT_SLOT(appUnregistered(const TQCString&)));

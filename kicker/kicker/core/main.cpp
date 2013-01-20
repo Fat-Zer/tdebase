@@ -139,7 +139,7 @@ extern "C" KDE_EXPORT int kdemain( int argc, char ** argv )
     if (signal(SIGHUP, sighandler) == SIG_IGN)
 	signal(SIGHUP, SIG_IGN);
 
-    // send it even before KApplication ctor, because ksmserver will launch another app as soon
+    // send it even before TDEApplication ctor, because ksmserver will launch another app as soon
     // as TQApplication registers with it
     DCOPClient* cl = new DCOPClient;
     cl->attach();

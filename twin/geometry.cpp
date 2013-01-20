@@ -42,7 +42,7 @@ namespace KWinInternal
 void Workspace::desktopResized()
     {
     //printf("Workspace::desktopResized()\n\r");
-    TQRect geom = KApplication::desktop()->geometry();
+    TQRect geom = TDEApplication::desktop()->geometry();
     NETSize desktop_geometry;
     desktop_geometry.width = geom.width();
     desktop_geometry.height = geom.height();
@@ -58,7 +58,7 @@ void Workspace::desktopResized()
 void Workspace::kDestopResized()
     {
     //printf("Workspace::kDesktopResized()\n\r");
-    TQRect geom = KApplication::desktop()->geometry();
+    TQRect geom = TDEApplication::desktop()->geometry();
     NETSize desktop_geometry;
     desktop_geometry.width = geom.width();
     desktop_geometry.height = geom.height();
@@ -82,7 +82,7 @@ void Workspace::kDestopResized()
 
 void Workspace::updateClientArea( bool force )
     {
-    TQDesktopWidget *desktopwidget = KApplication::desktop();
+    TQDesktopWidget *desktopwidget = TDEApplication::desktop();
     int nscreens = desktopwidget -> numScreens ();
 //    kdDebug () << "screens: " << nscreens << endl;
     TQRect* new_wareas = new TQRect[ numberOfDesktops() + 1 ];
@@ -295,7 +295,7 @@ TQRect Workspace::clientArea( clientAreaOption opt, int screen, int desktop ) co
 
 TQRect Workspace::clientArea( clientAreaOption opt, const TQPoint& p, int desktop ) const
     {
-    TQDesktopWidget *desktopwidget = KApplication::desktop();
+    TQDesktopWidget *desktopwidget = TDEApplication::desktop();
     int screen = desktopwidget->screenNumber( p );
     if( screen < 0 )
         screen = desktopwidget->primaryScreen();

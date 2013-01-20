@@ -108,11 +108,11 @@ int main(int argc, char *argv[])
 
     TDECmdLineArgs::init(argc, argv, &aboutData);
     TDECmdLineArgs::addCmdLineOptions(options);
-    KApplication::disableAutoDcopRegistration();
+    TDEApplication::disableAutoDcopRegistration();
     // tdesu doesn't process SM events, so don't even connect to ksmserver
     TQCString session_manager = getenv( "SESSION_MANAGER" );
     unsetenv( "SESSION_MANAGER" );
-    KApplication app;
+    TDEApplication app;
     // but propagate it to the started app
     if (session_manager.data())
     {

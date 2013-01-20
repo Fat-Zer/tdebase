@@ -1145,7 +1145,7 @@ void KonqMainWindow::slotCreateNewWindow( const KURL &url, const KParts::URLArgs
       req.newTabInFront = KonqSettings::newTabsInFront();
       req.openAfterCurrentPage = KonqSettings::openAfterCurrentPage();
 
-      if (KApplication::keyboardMouseState() & TQt::ShiftButton)
+      if (TDEApplication::keyboardMouseState() & TQt::ShiftButton)
         req.newTabInFront = !req.newTabInFront;
       req.args = args;
       openURL( 0L, url, TQString::null, req );
@@ -2016,7 +2016,7 @@ void KonqMainWindow::slotConfigure()
 
 void KonqMainWindow::slotConfigureSpellChecking()
 {
-    KApplication::startServiceByDesktopName("spellchecking");
+    TDEApplication::startServiceByDesktopName("spellchecking");
 }
 
 void KonqMainWindow::slotConfigureToolbars()
@@ -2739,7 +2739,7 @@ void KonqMainWindow::slotPopupNewTab()
     bool openAfterCurrentPage = KonqSettings::openAfterCurrentPage();
     bool newTabsInFront = KonqSettings::newTabsInFront();
 
-    if (KApplication::keyboardMouseState() & TQt::ShiftButton)
+    if (TDEApplication::keyboardMouseState() & TQt::ShiftButton)
       newTabsInFront = !newTabsInFront;
 
     popupNewTab(newTabsInFront, openAfterCurrentPage);
@@ -2749,7 +2749,7 @@ void KonqMainWindow::slotPopupNewTabRight()
 {
     bool newTabsInFront = KonqSettings::newTabsInFront();
 
-    if (KApplication::keyboardMouseState() & ShiftButton)
+    if (TDEApplication::keyboardMouseState() & ShiftButton)
       newTabsInFront = !newTabsInFront;
 
     popupNewTab(newTabsInFront, false);

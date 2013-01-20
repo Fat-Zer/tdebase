@@ -311,9 +311,9 @@ static int directCommand(TDECmdLineArgs *args)
 	    int w, h;
 	    int m = XParseGeometry( kapp->geometryArgument().latin1(), &x, &y, (unsigned int*)&w, (unsigned int*)&h);
 	    if ( (m & XNegative) )
-		x = KApplication::desktop()->width()  + x - w;
+		x = TDEApplication::desktop()->width()  + x - w;
 	    if ( (m & YNegative) )
-		y = KApplication::desktop()->height() + y - h;
+		y = TDEApplication::desktop()->height() + y - h;
 	    popup->setAnchor( TQPoint(x, y) );
 	}
 #endif
@@ -691,7 +691,7 @@ int main(int argc, char *argv[])
   TDECmdLineArgs::init(argc, argv, &aboutData);
   TDECmdLineArgs::addCmdLineOptions( options ); // Add our own options.
 
-  KApplication app;
+  TDEApplication app;
 
   TDECmdLineArgs *args = TDECmdLineArgs::parsedArgs();
 

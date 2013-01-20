@@ -130,7 +130,7 @@ void CommandShortcutsModule::initGUI()
 
 void CommandShortcutsModule::launchMenuEditor()
 {
-    if ( KApplication::startServiceByDesktopName( "kmenuedit",
+    if ( TDEApplication::startServiceByDesktopName( "kmenuedit",
                                                   TQString() /*url*/,
                                                   0 /*error*/,
                                                   0 /*dcopservice*/,

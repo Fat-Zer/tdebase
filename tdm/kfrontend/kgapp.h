@@ -29,9 +29,9 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include <kapplication.h>
 #include <tdehardwaredevices.h>
 
-class GreeterApp : public KApplication {
+class GreeterApp : public TDEApplication {
 	Q_OBJECT
-	typedef KApplication inherited;
+	typedef TDEApplication inherited;
 
   public:
 	GreeterApp();

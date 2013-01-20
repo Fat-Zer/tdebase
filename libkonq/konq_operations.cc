@@ -437,7 +437,7 @@ void KonqOperations::asyncDrop( const KFileItem * destItem )
             {
                 stringList.append((*it).url());
             }
-            if ( KApplication::startServiceByDesktopPath( m_destURL.path(), stringList, &error ) > 0 )
+            if ( TDEApplication::startServiceByDesktopPath( m_destURL.path(), stringList, &error ) > 0 )
                 KMessageBox::error( 0L, error );
         }
         else
@@ -645,7 +645,7 @@ void KonqOperations::rename( TQWidget * parent, const KURL & oldurl, const KURL&
         KConfigGroupSaver cgs( globalConfig, "Paths" );
         globalConfig->writePathEntry("Desktop" , newurl.path(), true, true );
         globalConfig->sync();
-        KIPC::sendMessageAll(KIPC::SettingsChanged, KApplication::SETTINGS_PATHS);
+        KIPC::sendMessageAll(KIPC::SettingsChanged, TDEApplication::SETTINGS_PATHS);
     }
 }
 

@@ -279,7 +279,7 @@ KDE_EXPORT int kdemain( int argc, char* argv[] )
     TDECmdLineArgs::init( argc, argv, "twin_rules_dialog", I18N_NOOP( "TWin" ),
 	I18N_NOOP( "TWin helper utility" ), "1.0" );
     TDECmdLineArgs::addCmdLineOptions( options );
-    KApplication app;
+    TDEApplication app;
     TDECmdLineArgs* args = TDECmdLineArgs::parsedArgs();
     bool id_ok = false;
     Window id = args->getOption( "wid" ).toULong( &id_ok );

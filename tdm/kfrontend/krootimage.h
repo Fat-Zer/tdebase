@@ -29,7 +29,7 @@ Boston, MA 02110-1301, USA.
 #include <bgrender.h>
 
 
-class MyApplication : public KApplication
+class MyApplication : public TDEApplication
 {
 	Q_OBJECT
 

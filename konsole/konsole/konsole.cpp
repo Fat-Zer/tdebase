@@ -316,7 +316,7 @@ Konsole::Konsole(const char* name, int histon, bool menubaron, bool tabbaron, bo
 
   if (isRestored) {
     n_tabbar = wanted_tabbar;
-    KConfig *c = KApplication::kApplication()->sessionConfig();
+    KConfig *c = TDEApplication::kApplication()->sessionConfig();
 //    c->setDesktopGroup();      // Reads from wrong group
     b_dynamicTabHide = c->readBoolEntry("DynamicTabHide", false);
   }
@@ -2073,7 +2073,7 @@ void Konsole::slotConfigure()
 {
   TQStringList args;
   args << "kcmkonsole";
-  KApplication::tdeinitExec( "kcmshell", args );
+  TDEApplication::tdeinitExec( "kcmshell", args );
 }
 
 void Konsole::reparseConfiguration()

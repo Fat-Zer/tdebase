@@ -55,7 +55,7 @@ SimpleButton::SimpleButton(TQWidget *parent, const char *name, bool forceStandar
     kapp->addKipcEventMask( KIPC::SettingsChanged );
     kapp->addKipcEventMask( KIPC::IconChanged );
 
-    slotSettingsChanged( KApplication::SETTINGS_MOUSE );
+    slotSettingsChanged( TDEApplication::SETTINGS_MOUSE );
 }
 
 void SimpleButton::setPixmap(const TQPixmap &pix)
@@ -165,7 +165,7 @@ void SimpleButton::generateIcons()
 
 void SimpleButton::slotSettingsChanged(int category)
 {
-    if (category != KApplication::SETTINGS_MOUSE)
+    if (category != TDEApplication::SETTINGS_MOUSE)
     {
         return;
     }

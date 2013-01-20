@@ -183,7 +183,7 @@ int main( int argc, char **argv )
   TDECmdLineArgs::addCmdLineOptions( options );
   KUniqueApplication::addCmdLineOptions();
 
-  KApplication app;
+  TDEApplication app;
 
   TDECmdLineArgs *args = TDECmdLineArgs::parsedArgs();
 

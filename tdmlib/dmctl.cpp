@@ -184,11 +184,11 @@ DM::canShutdown()
 }
 
 void
-DM::shutdown( KApplication::ShutdownType shutdownType,
-              KApplication::ShutdownMode shutdownMode, /* NOT Default */
+DM::shutdown( TDEApplication::ShutdownType shutdownType,
+              TDEApplication::ShutdownMode shutdownMode, /* NOT Default */
               const TQString &bootOption )
 {
-	if (shutdownType == KApplication::ShutdownTypeNone)
+	if (shutdownType == TDEApplication::ShutdownTypeNone)
 		return;
 
 	bool cap_ask;
@@ -200,26 +200,26 @@ DM::shutdown( KApplication::ShutdownType shutdownType,
 			return;
 		cap_ask = false;
 	}
-	if (!cap_ask && shutdownMode == KApplication::ShutdownModeInteractive)
-		shutdownMode = KApplication::ShutdownModeForceNow;
+	if (!cap_ask && shutdownMode == TDEApplication::ShutdownModeInteractive)
+		shutdownMode = TDEApplication::ShutdownModeForceNow;
 
 	TQCString cmd;
 	if (DMType == GDM) {
-		cmd.append( shutdownMode == KApplication::ShutdownModeForceNow ?
+		cmd.append( shutdownMode == TDEApplication::ShutdownModeForceNow ?
 		            "SET_LOGOUT_ACTION " : "SET_SAFE_LOGOUT_ACTION " );
-		cmd.append( shutdownType == KApplication::ShutdownTypeReboot ?
+		cmd.append( shutdownType == TDEApplication::ShutdownTypeReboot ?
 		            "REBOOT\n" : "HALT\n" );
 	} else {
 		cmd.append( "shutdown\t" );
-		cmd.append( shutdownType == KApplication::ShutdownTypeReboot ?
+		cmd.append( shutdownType == TDEApplication::ShutdownTypeReboot ?
 		            "reboot\t" : "halt\t" );
 		if (!bootOption.isEmpty())
 			cmd.append( "=" ).append( bootOption.local8Bit() ).append( "\t" );
-		cmd.append( shutdownMode == KApplication::ShutdownModeInteractive ?
+		cmd.append( shutdownMode == TDEApplication::ShutdownModeInteractive ?
 		            "ask\n" :
-		            shutdownMode == KApplication::ShutdownModeForceNow ?
+		            shutdownMode == TDEApplication::ShutdownModeForceNow ?
 		            "forcenow\n" :
-		            shutdownMode == KApplication::ShutdownModeTryNow ?
+		            shutdownMode == TDEApplication::ShutdownModeTryNow ?
 		            "trynow\n" : "schedule\n" );
 	}
 	exec( cmd.data() );

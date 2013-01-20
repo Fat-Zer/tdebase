@@ -674,7 +674,7 @@ void KSMShutdownIPFeedback::slotPaintEffect()
 //////
 
 KSMShutdownDlg::KSMShutdownDlg( TQWidget* parent,
-								bool maysd, KApplication::ShutdownType sdtype, int* selection )
+								bool maysd, TDEApplication::ShutdownType sdtype, int* selection )
   : TQDialog( parent, 0, TRUE, (WFlags)WType_Popup ), targets(0), m_selection(selection)
 	// this is a WType_Popup on purpose. Do not change that! Not
 	// having a popup here has severe side effects.
@@ -903,7 +903,7 @@ KSMShutdownDlg::KSMShutdownDlg( TQWidget* parent,
 			btnReboot->setAccel( "ALT+" + btnReboot->textLabel().lower()[i+1] ) ;
 			hbuttonbox2->addWidget ( btnReboot);
 			connect(btnReboot, TQT_SIGNAL(clicked()), TQT_SLOT(slotReboot()));
-			if ( sdtype == KApplication::ShutdownTypeReboot )
+			if ( sdtype == TDEApplication::ShutdownTypeReboot )
 				btnReboot->setFocus();
 
 			// BAD CARMA .. this code is copied line by line from standard konqy dialog
@@ -938,7 +938,7 @@ KSMShutdownDlg::KSMShutdownDlg( TQWidget* parent,
 			btnHalt->setAccel( "ALT+" + btnHalt->textLabel().lower()[i+1] ) ;
 			hbuttonbox2->addWidget ( btnHalt );
 			connect(btnHalt, TQT_SIGNAL(clicked()), TQT_SLOT(slotHalt()));
-				if ( sdtype == KApplication::ShutdownTypeHalt )
+				if ( sdtype == TDEApplication::ShutdownTypeHalt )
 					btnHalt->setFocus();
 
 			// cancel buttonbox
@@ -959,7 +959,7 @@ KSMShutdownDlg::KSMShutdownDlg( TQWidget* parent,
 			btnHalt->setFont( btnFont );
 			buttonlay->addWidget( btnHalt );
 			connect(btnHalt, TQT_SIGNAL(clicked()), TQT_SLOT(slotHalt()));
-		if ( sdtype == KApplication::ShutdownTypeHalt || getenv("TDM_AUTOLOGIN") )
+		if ( sdtype == TDEApplication::ShutdownTypeHalt || getenv("TDM_AUTOLOGIN") )
 				btnHalt->setFocus();
 
 			// Reboot
@@ -969,7 +969,7 @@ KSMShutdownDlg::KSMShutdownDlg( TQWidget* parent,
 			buttonlay->addWidget( btnReboot );
 
 			connect(btnReboot, TQT_SIGNAL(clicked()), TQT_SLOT(slotReboot()));
-			if ( sdtype == KApplication::ShutdownTypeReboot )
+			if ( sdtype == TDEApplication::ShutdownTypeReboot )
 				btnReboot->setFocus();
 
 			// this section is copied as-is into ubuntulogout as well
@@ -1078,7 +1078,7 @@ KSMShutdownDlg::~KSMShutdownDlg()
 
 void KSMShutdownDlg::slotLogout()
 {
-	m_shutdownType = KApplication::ShutdownTypeNone;
+	m_shutdownType = TDEApplication::ShutdownTypeNone;
 	accept();
 }
 
@@ -1087,7 +1087,7 @@ void KSMShutdownDlg::slotReboot()
 {
 	// no boot option selected -> current
 	m_bootOption = TQString::null;
-	m_shutdownType = KApplication::ShutdownTypeReboot;
+	m_shutdownType = TDEApplication::ShutdownTypeReboot;
 	accept();
 }
 
@@ -1095,7 +1095,7 @@ void KSMShutdownDlg::slotReboot(int opt)
 {
 	if (int(rebootOptions.size()) > opt)
 		m_bootOption = rebootOptions[opt];
-	m_shutdownType = KApplication::ShutdownTypeReboot;
+	m_shutdownType = TDEApplication::ShutdownTypeReboot;
 	accept();
 }
 
@@ -1103,7 +1103,7 @@ void KSMShutdownDlg::slotReboot(int opt)
 void KSMShutdownDlg::slotHalt()
 {
 	m_bootOption = TQString::null;
-	m_shutdownType = KApplication::ShutdownTypeHalt;
+	m_shutdownType = TDEApplication::ShutdownTypeHalt;
 	accept();
 }
 
@@ -1160,7 +1160,7 @@ void KSMShutdownDlg::slotHibernate()
 	reject(); // continue on resume
 }
 
-bool KSMShutdownDlg::confirmShutdown( bool maysd, KApplication::ShutdownType& sdtype, TQString& bootOption, int* selection )
+bool KSMShutdownDlg::confirmShutdown( bool maysd, TDEApplication::ShutdownType& sdtype, TQString& bootOption, int* selection )
 {
 	kapp->enableStyles();
 	KSMShutdownDlg* l = new KSMShutdownDlg( 0,
@@ -1245,16 +1245,16 @@ void KSMDelayedPushButton::slotTimeout()
   setDown(false);
 }
 
-KSMDelayedMessageBox::KSMDelayedMessageBox( KApplication::ShutdownType sdtype, const TQString &bootOption, int confirmDelay )
+KSMDelayedMessageBox::KSMDelayedMessageBox( TDEApplication::ShutdownType sdtype, const TQString &bootOption, int confirmDelay )
 	: TimedLogoutDlg( 0, 0, true, (WFlags)WType_Popup ), m_remaining(confirmDelay)
 {
-	if ( sdtype == KApplication::ShutdownTypeHalt )
+	if ( sdtype == TDEApplication::ShutdownTypeHalt )
 	{
 		m_title->setText( i18n( "Would you like to turn off your computer?" ) );
 		m_template = i18n( "This computer will turn off automatically\n"
 						   "after %1 seconds." );
 		m_logo->setPixmap( BarIcon( "exit", 48 ) );
-	} else if ( sdtype == KApplication::ShutdownTypeReboot )
+	} else if ( sdtype == TDEApplication::ShutdownTypeReboot )
 	{
 		if (bootOption.isEmpty())
 			m_title->setText( i18n( "Would you like to reboot your computer?" ) );
@@ -1294,7 +1294,7 @@ void KSMDelayedMessageBox::updateText()
 	m_text->setText( m_template.arg( m_remaining ) );
 }
 
-bool KSMDelayedMessageBox::showTicker( KApplication::ShutdownType sdtype, const TQString &bootOption, int confirmDelay )
+bool KSMDelayedMessageBox::showTicker( TDEApplication::ShutdownType sdtype, const TQString &bootOption, int confirmDelay )
 {
 	kapp->enableStyles();
 	KSMDelayedMessageBox msg( sdtype, bootOption, confirmDelay );

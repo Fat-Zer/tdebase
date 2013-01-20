@@ -422,7 +422,7 @@ static void createGtkrc( bool exportColors, const TQColorGroup& cg, int version 
 void runRdb( uint flags )
 {
   // Obtain the application palette that is about to be set.
-  TQPalette newPal = KApplication::createApplicationPalette();
+  TQPalette newPal = TDEApplication::createApplicationPalette();
   bool exportColors      = flags & KRdbExportColors;
   bool exportQtColors    = flags & KRdbExportQtColors;
   bool exportQtSettings  = flags & KRdbExportQtSettings;

@@ -52,7 +52,7 @@ int main(int argc, char **argv)
 	TDECmdLineArgs::init(argc, argv, &about);
 	TDECmdLineArgs::addCmdLineOptions( options );
 	
-	KApplication app;
+	TDEApplication app;
 
 	// no session.. just start up normally
 	TDECmdLineArgs *args = TDECmdLineArgs::parsedArgs();

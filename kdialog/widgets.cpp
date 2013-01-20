@@ -47,9 +47,9 @@ void Widgets::handleXGeometry(TQWidget * dlg)
 	int w, h;
 	int m = XParseGeometry( kapp->geometryArgument().latin1(), &x, &y, (unsigned int*)&w, (unsigned int*)&h);
 	if ( (m & XNegative) )
-	    x = KApplication::desktop()->width()  + x - w;
+	    x = TDEApplication::desktop()->width()  + x - w;
 	if ( (m & YNegative) )
-	    y = KApplication::desktop()->height() + y - h;
+	    y = TDEApplication::desktop()->height() + y - h;
 	dlg->setGeometry(x, y, w, h);
 	// kdDebug() << "x: " << x << "  y: " << y << "  w: " << w << "  h: " << h << endl;
     }

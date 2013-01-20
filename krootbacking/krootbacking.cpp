@@ -52,7 +52,7 @@ public:
 
 
 KRootBacking::KRootBacking()
-    : TQObject(KApplication::desktop(), "KRootBacking" ), m_Desk(0), m_timeout(0)
+    : TQObject(TDEApplication::desktop(), "KRootBacking" ), m_Desk(0), m_timeout(0)
 {
     enableExports();
 
@@ -146,7 +146,7 @@ void KRootBacking::repaint()
 
 void KRootBacking::repaint(bool force)
 {
-    TQWidget* desktopWidget = KApplication::desktop();
+    TQWidget* desktopWidget = TDEApplication::desktop();
     TQPoint p1 = desktopWidget->mapToGlobal(desktopWidget->rect().topLeft());
     TQPoint p2 = desktopWidget->mapToGlobal(desktopWidget->rect().bottomRight());
     if (!force && (m_Rect == TQRect(p1, p2)))

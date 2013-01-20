@@ -23,7 +23,7 @@ int main(int argc, char *argv[])
   TDECmdLineArgs::addCmdLineOptions( options );
 
   KGlobal::locale()->setMainCatalogue("htmlsearch");
-  KApplication app;
+  TDEApplication app;
   HTMLSearch search;
 
   TDECmdLineArgs *args = TDECmdLineArgs::parsedArgs();

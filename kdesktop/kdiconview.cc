@@ -780,7 +780,7 @@ void KDIconView::saveMediaListView()
 
     // Reload kdesktop configuration to apply changes
     TQByteArray data;
-    int konq_screen_number = KApplication::desktop()->primaryScreen();
+    int konq_screen_number = TDEApplication::desktop()->primaryScreen();
     TQCString appname;
     if (konq_screen_number == 0)
         appname = "kdesktop";

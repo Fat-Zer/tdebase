@@ -335,7 +335,7 @@ void KonqFontOptions::save()
     kapp->dcopClient()->send( "konqueror*", "KonquerorIface", "reparseConfiguration()", data );
 
     // Tell kdesktop about the new config file
-    int konq_screen_number = KApplication::desktop()->primaryScreen();
+    int konq_screen_number = TDEApplication::desktop()->primaryScreen();
     TQCString appname;
     if (konq_screen_number == 0)
         appname = "kdesktop";

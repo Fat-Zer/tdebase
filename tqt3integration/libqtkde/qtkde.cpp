@@ -87,7 +87,7 @@ static DCOPClient* dcopClient()
         assert( tqApp != NULL ); // TODO
         prepared = true;
         dcop->bindToApp();
-        if( !tqApp->inherits( "KApplication" )) // KApp takes care of input blocking
+        if( !tqApp->inherits( "TDEApplication" )) // KApp takes care of input blocking
             {
             static qtkde_EventLoop* loop = new qtkde_EventLoop;
             TQObject::connect( dcop, TQT_SIGNAL( blockUserInput( bool )), loop, TQT_SLOT( block( bool )));

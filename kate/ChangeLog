@@ -208,7 +208,7 @@
   * QPopupMenu for filelist
 
 2001-03-20 Christoph Cullmann <cullmann@kde.org>
-  * kate is now a normal KApplication
+  * kate is now a normal TDEApplication
 
 2001-03-18 Christoph Cullmann <cullmann@kde.org>
   * big location changes of source files

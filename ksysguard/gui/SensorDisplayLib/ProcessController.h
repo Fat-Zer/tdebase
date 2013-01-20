@@ -40,7 +40,7 @@ class TQComboBox;
 class KPushButton;
 class KListViewSearchLineWidget;
 
-extern KApplication* Kapp;
+extern TDEApplication* Kapp;
 
 /**
  * This widget implements a process list page. Besides the process

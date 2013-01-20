@@ -648,7 +648,7 @@ void KCMStyle::save()
 
 	if ( m_bToolbarsDirty )
 		// ##### FIXME - Doesn't apply all settings correctly due to bugs in
-		// KApplication/KToolbar
+		// TDEApplication/KToolbar
 		KIPC::sendMessageAll(KIPC::ToolbarStyleChanged);
 
 	if (m_bEffectsDirty) {
@@ -866,7 +866,7 @@ void KCMStyle::setStyleRecursive(TQWidget* w, TQStyle* s)
 	// for other styles being previewed. (e.g SGI style)
 	w->unsetPalette();
 
-	TQPalette newPalette(KApplication::createApplicationPalette());
+	TQPalette newPalette(TDEApplication::createApplicationPalette());
 	s->polish( newPalette );
 	w->setPalette(newPalette);
 

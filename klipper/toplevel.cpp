@@ -527,7 +527,7 @@ void KlipperWidget::saveSession()
 
 void KlipperWidget::slotSettingsChanged( int category )
 {
-    if ( category == (int) KApplication::SETTINGS_SHORTCUTS ) {
+    if ( category == (int) TDEApplication::SETTINGS_SHORTCUTS ) {
         globalKeys->readSettings();
         globalKeys->updateConnections();
         toggleURLGrabAction->setShortcut(globalKeys->shortcut("Enable/Disable Clipboard Actions"));
@@ -1034,7 +1034,7 @@ bool KlipperWidget::ignoreClipboardChanges() const
 // which could possibly lead to TQClipboard reporting empty clipboard.
 // Therefore, tqt_x_time needs to be updated to current X server timestamp.
 
-// Call KApplication::updateUserTime() only from functions that are
+// Call TDEApplication::updateUserTime() only from functions that are
 // called from outside (DCOP), or from TQTimer timeout !
 
 static Time next_x_time;

@@ -24,10 +24,10 @@
 
 #include <time.h>
 
-class MyApp : public KApplication {
+class MyApp : public TDEApplication {
     Q_OBJECT
 public:
-    MyApp() : KApplication(), lastTick( 0 ) {}
+    MyApp() : TDEApplication(), lastTick( 0 ) {}
 protected:
     bool x11EventFilter( XEvent * );
 signals:

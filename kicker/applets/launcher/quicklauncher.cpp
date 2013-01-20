@@ -129,7 +129,7 @@ QuickLauncher::QuickLauncher(const TQString& configFile, Type type, int actions,
     DEBUGSTR << "    QuickLauncher::QuickLauncher(" << configFile << 
                 ",...) END" << endl << flush;
 
-    DCOPClient *dcopClient = KApplication::dcopClient();
+    DCOPClient *dcopClient = TDEApplication::dcopClient();
     dcopClient->connectDCOPSignal(0, "appLauncher", 
         "serviceStartedByStorageId(TQString,TQString)",
         "QuickLauncherApplet",

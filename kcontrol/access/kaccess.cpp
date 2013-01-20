@@ -357,7 +357,7 @@ bool KAccessApp::x11EventFilter(XEvent *event)
     }
 
   // process other events as usual
-  return KApplication::x11EventFilter(event);
+  return TDEApplication::x11EventFilter(event);
 }
 
 
@@ -574,7 +574,7 @@ void KAccessApp::createDialogContents() {
       lay->setSpacing(KDialog::spacingHint());
 
       TQLabel *label1 = new TQLabel( contents);
-      TQPixmap pixmap = KApplication::kApplication()->iconLoader()->loadIcon("messagebox_warning", KIcon::NoGroup, KIcon::SizeMedium, KIcon::DefaultState, 0, true);
+      TQPixmap pixmap = TDEApplication::kApplication()->iconLoader()->loadIcon("messagebox_warning", KIcon::NoGroup, KIcon::SizeMedium, KIcon::DefaultState, 0, true);
       if (pixmap.isNull())
          pixmap = TQMessageBox::standardIcon(TQMessageBox::Warning);
       label1->setPixmap(pixmap);

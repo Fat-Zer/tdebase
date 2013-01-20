@@ -314,7 +314,7 @@ KXtApplication::KXtApplication(int& argc, char** argv,
         const TQCString& rAppName, bool allowStyles, bool GUIenabled,
         XrmOptionDescRec *options, int num_options,
         char** resources)
-  : KApplication(argc, argv, rAppName, allowStyles, GUIenabled)
+  : TDEApplication(argc, argv, rAppName, allowStyles, GUIenabled)
 {
     my_xt = TRUE;
 
@@ -335,7 +335,7 @@ KXtApplication::KXtApplication(int& argc, char** argv,
 */
 KXtApplication::KXtApplication(Display* dpy, int& argc, char** argv,
         const TQCString& rAppName, bool allowStyles, bool GUIenabled)
-   : KApplication(dpy, argc, argv, rAppName, allowStyles, GUIenabled)
+   : TDEApplication(dpy, argc, argv, rAppName, allowStyles, GUIenabled)
 {
     my_xt = FALSE;
     init();

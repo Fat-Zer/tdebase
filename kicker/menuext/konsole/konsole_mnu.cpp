@@ -258,7 +258,7 @@ void KonsoleMenu::slotExec(int id)
         args << "-r";
         args << screenList[id - sessionList.count()];
     }
-    KApplication::tdeinitExec("konsole", args);
+    TDEApplication::tdeinitExec("konsole", args);
     return;
 }
 
@@ -292,7 +292,7 @@ void KonsoleMenu::newSession(const TQString& sURL, const TQString& title)
     {
         args << "-T" << title;
         args << "--workdir" << url.path();
-        KApplication::tdeinitExec("konsole", args);
+        TDEApplication::tdeinitExec("konsole", args);
         return;
     }
     else if ((!url.protocol().isEmpty()) && (url.hasHost()))
@@ -305,7 +305,7 @@ void KonsoleMenu::newSession(const TQString& sURL, const TQString& title)
             args << "-l" << url.user().latin1();
         }
         args << host.latin1();
-        KApplication::tdeinitExec("konsole", args);
+        TDEApplication::tdeinitExec("konsole", args);
         return;
     }
     /*

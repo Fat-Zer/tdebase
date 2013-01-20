@@ -129,7 +129,7 @@ class KSMShutdownDlg : public TQDialog
 	Q_OBJECT
 
 public:
-	static bool confirmShutdown( bool maysd, KApplication::ShutdownType& sdtype, TQString& bopt, int* selection=0 );
+	static bool confirmShutdown( bool maysd, TDEApplication::ShutdownType& sdtype, TQString& bopt, int* selection=0 );
 
 public slots:
 	void slotLogout();
@@ -143,8 +143,8 @@ protected:
 	~KSMShutdownDlg();
 
 private:
-	KSMShutdownDlg( TQWidget* parent, bool maysd, KApplication::ShutdownType sdtype, int* selection=0 );
-	KApplication::ShutdownType m_shutdownType;
+	KSMShutdownDlg( TQWidget* parent, bool maysd, TDEApplication::ShutdownType sdtype, int* selection=0 );
+	TDEApplication::ShutdownType m_shutdownType;
 	TQString m_bootOption;
 	TQPopupMenu *targets;
 	TQStringList rebootOptions;
@@ -248,8 +248,8 @@ class  KSMDelayedMessageBox : public TimedLogoutDlg
 	Q_OBJECT
 
 public:
-	KSMDelayedMessageBox( KApplication::ShutdownType sdtype, const TQString &bootOption, int confirmDelay );
-	static bool showTicker( KApplication::ShutdownType sdtype, const TQString &bootOption, int confirmDelay );
+	KSMDelayedMessageBox( TDEApplication::ShutdownType sdtype, const TQString &bootOption, int confirmDelay );
+	static bool showTicker( TDEApplication::ShutdownType sdtype, const TQString &bootOption, int confirmDelay );
 
 protected slots:
 	void updateText();

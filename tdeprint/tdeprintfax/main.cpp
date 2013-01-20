@@ -53,9 +53,9 @@ int main(int argc, char *argv[])
   aboutData.addAuthor("Michael Goffioul",0, "tdeprint@swing.be");
   TDECmdLineArgs::init( argc, argv, &aboutData );
   TDECmdLineArgs::addCmdLineOptions( options ); // Add our own options.
-  KApplication::addCmdLineOptions();
+  TDEApplication::addCmdLineOptions();
 
-  KApplication a;
+  TDEApplication a;
   TDECmdLineArgs	*args = TDECmdLineArgs::parsedArgs();
 
   KdeprintFax	*w = new KdeprintFax;

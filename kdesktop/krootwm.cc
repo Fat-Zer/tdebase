@@ -523,7 +523,7 @@ void KRootWm::slotToggleAutoAlign( bool b )
     KDesktopSettings::writeConfig();
 
     // Also save it globally...
-    int desktop = KApplication::desktop()->primaryScreen();
+    int desktop = TDEApplication::desktop()->primaryScreen();
     TQCString cfilename;
     if (desktop == 0)
         cfilename = "kdesktoprc";
@@ -627,7 +627,7 @@ void KRootWm::mousePressed( const TQPoint& _global, int _button )
 void KRootWm::slotWindowList() {
 //  kdDebug() << "KRootWm::slotWindowList" << endl;
 // Popup at the center of the screen, this is from keyboard shortcut.
-  TQDesktopWidget* desktop = KApplication::desktop();
+  TQDesktopWidget* desktop = TDEApplication::desktop();
   TQRect r;
   if (desktop->numScreens() < 2)
       r = desktop->geometry();
@@ -647,7 +647,7 @@ void KRootWm::slotSwitchUser() {
 //  kdDebug() << "KRootWm::slotSwitchUser" << endl;
   if (!sessionsMenu)
     return;
-  TQDesktopWidget* desktop = KApplication::desktop();
+  TQDesktopWidget* desktop = TDEApplication::desktop();
   TQRect r;
   if (desktop->numScreens() < 2)
       r = desktop->geometry();
@@ -830,7 +830,7 @@ void KRootWm::slotSave() {
 
 
 void KRootWm::slotLogout() {
-    m_pDesktop->logout(KApplication::ShutdownConfirmDefault, KApplication::ShutdownTypeDefault);
+    m_pDesktop->logout(TDEApplication::ShutdownConfirmDefault, TDEApplication::ShutdownTypeDefault);
 }
 
 void KRootWm::slotPopulateSessions()

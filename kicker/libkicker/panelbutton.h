@@ -352,14 +352,14 @@ protected:
 
 protected slots:
     /**
-     * Called from KApplication when global icon settings have changed.
+     * Called from TDEApplication when global icon settings have changed.
      * @param group the new group
      */
     void updateIcon(int group);
 
     /**
-     * Called from KApplication when global settings have changed.
-     * @param category the settings category, see KApplication::SettingsCategory
+     * Called from TDEApplication when global settings have changed.
+     * @param category the settings category, see TDEApplication::SettingsCategory
      */
     void updateSettings(int category);
 

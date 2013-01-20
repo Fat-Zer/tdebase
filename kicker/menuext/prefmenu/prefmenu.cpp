@@ -331,7 +331,7 @@ void PrefMenu::slotExec(int id)
     kapp->propagateSessionManager();
     KSycocaEntry *e = m_entryMap[id];
     KService::Ptr service = static_cast<KService *>(e);
-    KApplication::startServiceByDesktopPath(service->desktopEntryPath(),
+    TDEApplication::startServiceByDesktopPath(service->desktopEntryPath(),
                                             TQStringList(), 0, 0, 0, "", true);
     m_dragStartPos = TQPoint(-1,-1);
 }
@@ -378,7 +378,7 @@ void PrefMenu::aboutToClose()
 
 void PrefMenu::launchControlCenter()
 {
-    KApplication::startServiceByDesktopName("kcontrol", TQStringList(),
+    TDEApplication::startServiceByDesktopName("kcontrol", TQStringList(),
                                             0, 0, 0, "", true);
 }
 

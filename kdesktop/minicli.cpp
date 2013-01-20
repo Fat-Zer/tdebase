@@ -650,7 +650,7 @@ void Minicli::notifyServiceStarted(KService::Ptr service)
     TQDataStream stream(params, IO_WriteOnly);
     stream << "minicli" << service->storageId();
     kdDebug() << "minicli appLauncher dcop signal: " << service->storageId() << endl;
-    KApplication::kApplication()->dcopClient()->emitDCOPSignal("appLauncher",
+    TDEApplication::kApplication()->dcopClient()->emitDCOPSignal("appLauncher",
         "serviceStartedByStorageId(TQString,TQString)", params);
 }
 

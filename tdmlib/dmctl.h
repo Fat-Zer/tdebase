@@ -40,8 +40,8 @@ public:
 	~DM();
 
 	bool canShutdown();
-	void shutdown( KApplication::ShutdownType shutdownType,
-	               KApplication::ShutdownMode shutdownMode,
+	void shutdown( TDEApplication::ShutdownType shutdownType,
+	               TDEApplication::ShutdownMode shutdownMode,
 	               const TQString &bootOption = TQString::null );
 
 	void setLock( bool on );
@@ -72,8 +72,8 @@ public:
 	DM() {}
 
 	bool canShutdown() { return false; }
-	void shutdown( KApplication::ShutdownType shutdownType,
-	               KApplication::ShutdownMode shutdownMode,
+	void shutdown( TDEApplication::ShutdownType shutdownType,
+	               TDEApplication::ShutdownMode shutdownMode,
 	               const TQString &bootOption = TQString::null ) {}
 
 	void setLock( bool ) {}

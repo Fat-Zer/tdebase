@@ -87,7 +87,7 @@ PanelKMenu::PanelKMenu()
     setCaption(i18n("TDE Menu"));
     connect(Kicker::the(), TQT_SIGNAL(configurationChanged()),
             this, TQT_SLOT(configChanged()));
-    DCOPClient *dcopClient = KApplication::dcopClient();
+    DCOPClient *dcopClient = TDEApplication::dcopClient();
     dcopClient->connectDCOPSignal(0, "appLauncher",
         "serviceStartedByStorageId(TQString,TQString)",
         dcopObjId,

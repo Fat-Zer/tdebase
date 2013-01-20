@@ -5,7 +5,7 @@
 
 int main(int argc, char **argv)
 {
-    KApplication app(argc, argv, "testicons");
+    TDEApplication app(argc, argv, "testicons");
     KIconConfig *w = new KIconConfig(0L, "testicons");
     app.setMainWidget(w);
     w->show();

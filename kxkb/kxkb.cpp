@@ -274,7 +274,7 @@ void KXKBApp::menuActivated(int id)
 	}
 	else if (id == KxkbLabelController::HELP_MENU_ID)
 	{
-		KApplication::kApplication()->invokeHelp(0, "kxkb");
+		TDEApplication::kApplication()->invokeHelp(0, "kxkb");
 	}
 	else
 	{
@@ -321,7 +321,7 @@ void KXKBApp::windowChanged(WId winId)
 
 void KXKBApp::slotSettingsChanged(int category)
 {
-    if ( category != KApplication::SETTINGS_SHORTCUTS)
+    if ( category != TDEApplication::SETTINGS_SHORTCUTS)
 		return;
 
     KGlobal::config()->reparseConfiguration(); // kcontrol modified kdeglobals

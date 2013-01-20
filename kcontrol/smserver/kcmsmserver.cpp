@@ -79,11 +79,11 @@ void SMServerConfig::load(bool useDefaults )
   else // "restorePreviousLogout"
       dialog->previousSessionRadio->setChecked(true);
 
-  switch (c->readNumEntry("shutdownType", int(KApplication::ShutdownTypeNone))) {
-  case int(KApplication::ShutdownTypeHalt):
+  switch (c->readNumEntry("shutdownType", int(TDEApplication::ShutdownTypeNone))) {
+  case int(TDEApplication::ShutdownTypeHalt):
     dialog->haltRadio->setChecked(true);
     break;
-  case int(KApplication::ShutdownTypeReboot):
+  case int(TDEApplication::ShutdownTypeReboot):
     dialog->rebootRadio->setChecked(true);
     break;
   default:
@@ -116,10 +116,10 @@ void SMServerConfig::save()
 
   c->writeEntry( "shutdownType",
                  dialog->haltRadio->isChecked() ?
-                   int(KApplication::ShutdownTypeHalt) :
+                   int(TDEApplication::ShutdownTypeHalt) :
                    dialog->rebootRadio->isChecked() ?
-                     int(KApplication::ShutdownTypeReboot) :
-                     int(KApplication::ShutdownTypeNone));
+                     int(TDEApplication::ShutdownTypeReboot) :
+                     int(TDEApplication::ShutdownTypeNone));
   c->writeEntry("excludeApps", dialog->excludeLineedit->text());
   c->setGroup("Logout");
   c->writeEntry( "showLogoutStatusDlg", dialog->showLogoutStatusDialog->isChecked());

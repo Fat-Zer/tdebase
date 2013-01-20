@@ -43,7 +43,7 @@ int main( int argc, char *argv[] )
   TDECmdLineArgs::addCmdLineOptions( options );
   TDECmdLineArgs *args = TDECmdLineArgs::parsedArgs();
 
-  KApplication app;
+  TDEApplication app;
 
   TopLevel *dlg = new TopLevel( args->getOption( "dir" ) );
   app.setMainWidget( dlg );

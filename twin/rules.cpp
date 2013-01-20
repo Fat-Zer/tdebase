@@ -950,7 +950,7 @@ void Workspace::editWindowRules( Client* c, bool whole_app )
     args << "--wid" << TQString::number( c->window());
     if( whole_app )
         args << "--whole-app";
-    KApplication::tdeinitExec( "twin_rules_dialog", args );
+    TDEApplication::tdeinitExec( "twin_rules_dialog", args );
     }
 
 void Workspace::loadWindowRules()

@@ -82,9 +82,9 @@ int main(int argc, char *argv[])
     setenv( "XDG_DATA_HOME", TQFile::encodeName( TQDir::homeDirPath() + "/.local-testtrash" ), true );
     setenv( "TDE_FORK_SLAVES", "yes", true );
 
-    KApplication::disableAutoDcopRegistration();
+    TDEApplication::disableAutoDcopRegistration();
     TDECmdLineArgs::init(argc,argv,"testtrash", 0, 0, 0, 0);
-    KApplication app;
+    TDEApplication app;
 
     TestTrash test;
     test.setup();

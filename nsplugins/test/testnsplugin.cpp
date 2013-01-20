@@ -126,7 +126,7 @@ int main(int argc, char *argv[])
    setvbuf( stderr, NULL, _IONBF, 0 );
    TDECmdLineArgs::init(argc, argv, "nsplugin", "A Netscape Plugin test program", "0.1");
 
-   KApplication app("nsplugin");
+   TDEApplication app("nsplugin");
 
    app.dcopClient()->attach();
    app.dcopClient()->registerAs(app.name());

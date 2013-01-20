@@ -120,7 +120,7 @@ int main(int argc, char ** argv)
 
   TDECmdLineArgs::init( argc, argv, &aboutData );
   TDECmdLineArgs::addCmdLineOptions( options ); // Add our own options.
-  KApplication app;
+  TDEApplication app;
   TDECmdLineArgs *args = TDECmdLineArgs::parsedArgs();
 
   if (args->count() == 0)

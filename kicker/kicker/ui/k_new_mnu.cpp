@@ -2554,7 +2554,7 @@ void KMenu::slotStartService(KService::Ptr ptr)
     accept();
 
     addToHistory();
-    KApplication::startServiceByDesktopPath(ptr->desktopEntryPath(),
+    TDEApplication::startServiceByDesktopPath(ptr->desktopEntryPath(),
                                             TQStringList(), 0, 0, 0, "", true);
     updateRecentlyUsedApps(ptr);
 }
@@ -2587,12 +2587,12 @@ void KMenu::slotStartURL(const TQString& u)
         kapp->dcopClient()->send("ksmserver", "default", "logoutTimed(int,int,TQString)", params);
 #else
         DCOPRef mediamanager("ksmserver", "ksmserver");
-        DCOPReply reply = mediamanager.call( "logoutTimed", (int)KApplication::ShutdownTypeNone, (int)KApplication::ShutdownModeDefault );
+        DCOPReply reply = mediamanager.call( "logoutTimed", (int)TDEApplication::ShutdownTypeNone, (int)TDEApplication::ShutdownModeDefault );
 	if (!reply.isValid() && KMessageBox::Continue==KMessageBox::warningContinueCancel(this, i18n("Do you really want to end the session?"),
                                                                                           i18n("Logout Confirmation"), KGuiItem(i18n("Logout"),"undo")))
-            kapp->requestShutDown( KApplication::ShutdownConfirmNo,
-                                   KApplication::ShutdownTypeNone,
-                                   KApplication::ShutdownModeDefault );
+            kapp->requestShutDown( TDEApplication::ShutdownConfirmNo,
+                                   TDEApplication::ShutdownTypeNone,
+                                   TDEApplication::ShutdownModeDefault );
 
 #endif
     }
@@ -2610,9 +2610,9 @@ void KMenu::slotStartURL(const TQString& u)
 #else
         if (KMessageBox::Continue==KMessageBox::warningContinueCancel(this, i18n("Do you really want to turn off the computer?"),
                                                                       i18n("Shutdown Confirmation"), KGuiItem(i18n("Shutdown"),"exit")))
-            kapp->requestShutDown( KApplication::ShutdownConfirmNo,
-                                   KApplication::ShutdownTypeHalt,
-                                   KApplication::ShutdownModeDefault );
+            kapp->requestShutDown( TDEApplication::ShutdownConfirmNo,
+                                   TDEApplication::ShutdownTypeHalt,
+                                   TDEApplication::ShutdownModeDefault );
 #endif
     }
     else if ( u == "kicker:/restart" ) {
@@ -2625,9 +2625,9 @@ void KMenu::slotStartURL(const TQString& u)
 #else
         if (KMessageBox::Continue==KMessageBox::warningContinueCancel(this, i18n("Do you really want to reset the computer and boot (another operating system)?"),
                                                                       i18n("Restart Confirmation"), KGuiItem(i18n("Restart"),"reload")))
-            kapp->requestShutDown( KApplication::ShutdownConfirmNo,
-                                   KApplication::ShutdownTypeReboot,
-                                   KApplication::ShutdownModeDefault );
+            kapp->requestShutDown( TDEApplication::ShutdownConfirmNo,
+                                   TDEApplication::ShutdownTypeReboot,
+                                   TDEApplication::ShutdownModeDefault );
 #endif
     }
 #ifdef KDELIBS_SUSE
@@ -3197,7 +3197,7 @@ void KMenu::notifyServiceStarted(KService::Ptr service)
     TQDataStream stream(params, IO_WriteOnly);
     stream << "minicli" << service->storageId();
     kdDebug() << "minicli appLauncher dcop signal: " << service->storageId() << endl;
-    KApplication::kApplication()->dcopClient()->emitDCOPSignal("appLauncher",
+    TDEApplication::kApplication()->dcopClient()->emitDCOPSignal("appLauncher",
         "serviceStartedByStorageId(TQString,TQString)", params);
 }
 

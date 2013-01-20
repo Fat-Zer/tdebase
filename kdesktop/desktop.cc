@@ -794,13 +794,13 @@ void KDesktop::configure()
 void KDesktop::slotSettingsChanged(int category)
 {
     //kdDebug(1204) << "KDesktop::slotSettingsChanged" << endl;
-    if (category == KApplication::SETTINGS_PATHS)
+    if (category == TDEApplication::SETTINGS_PATHS)
     {
         kdDebug(1204) << "KDesktop::slotSettingsChanged SETTINGS_PATHS" << endl;
         if (m_pIconView)
             m_pIconView->recheckDesktopURL();
     }
-    else if (category == KApplication::SETTINGS_SHORTCUTS)
+    else if (category == TDEApplication::SETTINGS_SHORTCUTS)
     {
         kdDebug(1204) << "KDesktop::slotSettingsChanged SETTINGS_SHORTCUTS" << endl;
         keys->readSettings();
@@ -1021,12 +1021,12 @@ void KDesktop::slotNewWallpaper(const KURL &url)
 // for dcop interface backward compatibility
 void KDesktop::logout()
 {
-    logout( KApplication::ShutdownConfirmDefault,
-            KApplication::ShutdownTypeNone );
+    logout( TDEApplication::ShutdownConfirmDefault,
+            TDEApplication::ShutdownTypeNone );
 }
 
-void KDesktop::logout( KApplication::ShutdownConfirm confirm,
-                       KApplication::ShutdownType sdtype )
+void KDesktop::logout( TDEApplication::ShutdownConfirm confirm,
+                       TDEApplication::ShutdownType sdtype )
 {
     if( !kapp->requestShutDown( confirm, sdtype ) )
         // this i18n string is also in kicker/applets/run/runapplet
@@ -1038,26 +1038,26 @@ void KDesktop::logout( KApplication::ShutdownConfirm confirm,
 
 void KDesktop::slotLogout()
 {
-    logout( KApplication::ShutdownConfirmDefault,
-            KApplication::ShutdownTypeDefault );
+    logout( TDEApplication::ShutdownConfirmDefault,
+            TDEApplication::ShutdownTypeDefault );
 }
 
 void KDesktop::slotLogoutNoCnf()
 {
-    logout( KApplication::ShutdownConfirmNo,
-            KApplication::ShutdownTypeNone );
+    logout( TDEApplication::ShutdownConfirmNo,
+            TDEApplication::ShutdownTypeNone );
 }
 
 void KDesktop::slotHaltNoCnf()
 {
-    logout( KApplication::ShutdownConfirmNo,
-            KApplication::ShutdownTypeHalt );
+    logout( TDEApplication::ShutdownConfirmNo,
+            TDEApplication::ShutdownTypeHalt );
 }
 
 void KDesktop::slotRebootNoCnf()
 {
-    logout( KApplication::ShutdownConfirmNo,
-            KApplication::ShutdownTypeReboot );
+    logout( TDEApplication::ShutdownConfirmNo,
+            TDEApplication::ShutdownTypeReboot );
 }
 
 void KDesktop::setVRoot( bool enable )

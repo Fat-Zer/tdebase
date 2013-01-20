@@ -44,7 +44,7 @@ HideButton::HideButton(TQWidget *parent, const char *name)
     kapp->addKipcEventMask(KIPC::SettingsChanged);
     kapp->addKipcEventMask(KIPC::IconChanged);
 
-    slotSettingsChanged(KApplication::SETTINGS_MOUSE);
+    slotSettingsChanged(TDEApplication::SETTINGS_MOUSE);
 }
 
 void HideButton::drawButton(TQPainter *p)
@@ -148,7 +148,7 @@ void HideButton::generateIcons()
 
 void HideButton::slotSettingsChanged(int category)
 {
-    if (category != KApplication::SETTINGS_MOUSE)
+    if (category != TDEApplication::SETTINGS_MOUSE)
     {
         return;
     }

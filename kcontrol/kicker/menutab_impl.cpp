@@ -289,7 +289,7 @@ void MenuTab::defaults()
 
 void MenuTab::launchMenuEditor()
 {
-    if ( KApplication::startServiceByDesktopName( "kmenuedit",
+    if ( TDEApplication::startServiceByDesktopName( "kmenuedit",
                                                   TQString::null /*url*/,
                                                   0 /*error*/,
                                                   0 /*dcopservice*/,

@@ -149,7 +149,7 @@ bool MyApp::x11EventFilter( XEvent *ev )
         }
     }
 #endif
-    return KApplication::x11EventFilter( ev );
+    return TDEApplication::x11EventFilter( ev );
 }
 
 
@@ -213,7 +213,7 @@ int main( int argc, char **argv )
 
     putenv(strdup("SESSION_MANAGER="));
 
-    KApplication::disableAutoDcopRegistration(); // not needed
+    TDEApplication::disableAutoDcopRegistration(); // not needed
 
     XSetErrorHandler(trapXErrors);
 

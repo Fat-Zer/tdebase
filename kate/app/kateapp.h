@@ -39,7 +39,7 @@ class TDECmdLineArgs;
  * Kate Application
  * This class represents the core kate application object
  */
-class KDE_EXPORT KateApp : public KApplication
+class KDE_EXPORT KateApp : public TDEApplication
 {
   Q_OBJECT
 

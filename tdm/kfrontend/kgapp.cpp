@@ -94,12 +94,12 @@ GreeterApp::GreeterApp()
 	init();
 }
 
-GreeterApp::GreeterApp(Display *dpy) : KApplication(dpy)
+GreeterApp::GreeterApp(Display *dpy) : TDEApplication(dpy)
 {
 	init();
 }
 
-GreeterApp::GreeterApp(Display *dpy, Qt::HANDLE visual, Qt::HANDLE colormap) : KApplication(dpy, visual, colormap)
+GreeterApp::GreeterApp(Display *dpy, Qt::HANDLE visual, Qt::HANDLE colormap) : TDEApplication(dpy, visual, colormap)
 {
 	init();
 }
@@ -199,7 +199,7 @@ kg_main( const char *argv0 )
 
 	kdDebug() << timestamp() << "start" << endl;
 	kde_have_kipc = false;
-	KApplication::disableAutoDcopRegistration();
+	TDEApplication::disableAutoDcopRegistration();
 	KCrash::setSafer( true );
 
 	KProcess *tsak = 0;

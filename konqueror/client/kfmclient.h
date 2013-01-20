@@ -23,7 +23,7 @@
 #include <kapplication.h>
 #include <krun.h>
 
-class clientApp : public KApplication
+class clientApp : public TDEApplication
 {
   Q_OBJECT
 public:

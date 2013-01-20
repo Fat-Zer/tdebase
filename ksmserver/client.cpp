@@ -99,7 +99,7 @@ static char * safeSmsGenerateClientID( SmsConn /*c*/ )
               (1 would be IP, 2 would be DEC-NET format) */
            char hostname[ 256 ];
            if( gethostname( hostname, 255 ) != 0 )
-               my_addr->sprintf("0%.8x", KApplication::random());
+               my_addr->sprintf("0%.8x", TDEApplication::random());
            else {
                // create some kind of hash for the hostname
                int addr[ 4 ] = { 0, 0, 0, 0 };

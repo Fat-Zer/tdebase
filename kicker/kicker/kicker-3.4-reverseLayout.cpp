@@ -23,7 +23,7 @@ int main(int argc, char** argv)
 {
     // We must disguise as Kicker in order to obtain the correct reverseLayout setting.
     TDECmdLineArgs::init(argc, argv, "kicker", "", "", "", false);
-    KApplication app(false, false);
+    TDEApplication app(false, false);
 
     TQStringList stretchableApplets;
     stretchableApplets << "taskbarapplet.desktop";

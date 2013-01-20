@@ -1176,7 +1176,7 @@ void TaskBar::slotActivatePreviousTask()
 
 void TaskBar::slotSettingsChanged( int category )
 {
-    if( category == (int) KApplication::SETTINGS_SHORTCUTS )
+    if( category == (int) TDEApplication::SETTINGS_SHORTCUTS )
     {
         keys->readSettings();
         keys->updateConnections();

@@ -251,7 +251,7 @@ void DesktopPathConfig::save()
     if (pathChanged)
     {
         kdDebug() << "DesktopPathConfig::save sending message SettingsChanged" << endl;
-        KIPC::sendMessageAll(KIPC::SettingsChanged, KApplication::SETTINGS_PATHS);
+        KIPC::sendMessageAll(KIPC::SettingsChanged, TDEApplication::SETTINGS_PATHS);
     }
 
     // Tell kdesktop about the new config file
@@ -259,7 +259,7 @@ void DesktopPathConfig::save()
        kapp->dcopClient()->attach();
     TQByteArray data;
 
-    int konq_screen_number = KApplication::desktop()->primaryScreen();
+    int konq_screen_number = TDEApplication::desktop()->primaryScreen();
     TQCString appname;
     if (konq_screen_number == 0)
         appname = "kdesktop";

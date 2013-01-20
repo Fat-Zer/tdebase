@@ -510,7 +510,7 @@
 2003-08-07 Thursday 19:51  lunakl
 
 	* Rewrite handling of _NET_WM_ICON_NAME. This together with the
-	  recent KApplication change should hopefully make taskbar again
+	  recent TDEApplication change should hopefully make taskbar again
 	  display what it's supposed to display. Please yell if something
 	  is still wrong.
 

@@ -29,7 +29,7 @@ enum Tests {
 	RecreationTest
 };
 
-class DecoBenchApplication : public KApplication
+class DecoBenchApplication : public TDEApplication
 {
 	Q_OBJECT
 public:

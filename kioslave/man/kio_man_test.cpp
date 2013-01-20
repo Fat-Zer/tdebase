@@ -27,7 +27,7 @@ protected:
 
 int main(int argc, char **argv)
 {
-  KApplication a( argc, argv , "p2");
+  TDEApplication a( argc, argv , "p2");
 
   MANProtocol testproto("/tmp/kiotest.in", "/tmp/kiotest.out");
   testproto.showIndex("3");

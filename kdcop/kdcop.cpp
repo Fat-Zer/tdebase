@@ -27,7 +27,7 @@ int main( int argc, char ** argv )
   TDECmdLineArgs::init( argc, argv, &aboutData );
   TDECmdLineArgs::addCmdLineOptions( options );
 
-  KApplication a;
+  TDEApplication a;
 
   KDCOPWindow* kdcopwindow = new KDCOPWindow;
   a.setMainWidget( kdcopwindow );

@@ -55,7 +55,7 @@ class CFontViewerAppMainWindow : public KParts::MainWindow
 
 };
 
-class CFontViewerApp : public KApplication
+class CFontViewerApp : public TDEApplication
 {
     public:
 

@@ -123,7 +123,7 @@ bogus value.
 
 In addition, ksmserver propagates both its network address and its
 process id in ~/.trinity/socket-$HOSTNAME/KSMserver-$DISPLAY. A
-utility function KApplication::propagateSessionManager() reads this
+utility function TDEApplication::propagateSessionManager() reads this
 setting and sets SESSION_MANAGER accordingly, so that child processes
 can pick it up.  The function is called by clients that are started
 outside the session ( i.e. before ksmserver is started), but want to
@@ -146,7 +146,7 @@ Requesting a shutdown
 
 If an application wants to request a shutdown (i.e. a logout), it does
 this via an SmcRequestSaveYourself message to the server. In TDE, a
-utility function KApplication::requestShutDown() does exactly
+utility function TDEApplication::requestShutDown() does exactly
 this. It's for example called by TDE's panel or by the context menu of
 the desktop.
 

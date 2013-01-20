@@ -400,7 +400,7 @@ void DesktopBehavior::save()
        kapp->dcopClient()->attach();
     TQByteArray data;
 
-    int konq_screen_number = KApplication::desktop()->primaryScreen();
+    int konq_screen_number = TDEApplication::desktop()->primaryScreen();
     TQCString appname;
     if (konq_screen_number == 0)
         appname = "kdesktop";

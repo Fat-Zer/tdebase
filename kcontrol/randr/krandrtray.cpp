@@ -537,7 +537,7 @@ void KRandRSystemTray::slotDisplayConfig()
 
 void KRandRSystemTray::slotSettingsChanged(int category)
 {
-	if ( category == (int) KApplication::SETTINGS_SHORTCUTS ) {
+	if ( category == (int) TDEApplication::SETTINGS_SHORTCUTS ) {
 		globalKeys->readSettings();
 		globalKeys->updateConnections();
 	}

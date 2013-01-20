@@ -803,7 +803,7 @@ void KCommonDecoration::updateWindowShape()
 
     bool tl=true,tr=true,bl=true,br=true; // is there a transparent rounded corner in top-left? etc
 
-    TQDesktopWidget *desktop=KApplication::desktop();
+    TQDesktopWidget *desktop=TDEApplication::desktop();
     // no transparent rounded corners if this window corner lines up with a screen corner
     for(int screen=0; screen < desktop->numScreens(); ++screen)
     {

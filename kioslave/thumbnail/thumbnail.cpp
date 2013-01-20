@@ -53,7 +53,7 @@
 #include "thumbnail.h"
 #include <kio/thumbcreator.h>
 
-// Use correctly KInstance instead of KApplication (but then no TQPixmap)
+// Use correctly KInstance instead of TDEApplication (but then no TQPixmap)
 #undef USE_KINSTANCE
 // Fix thumbnail: protocol
 #define THUMBNAIL_HACK (1)
@@ -98,16 +98,16 @@ int kdemain(int argc, char **argv)
 #ifdef USE_KINSTANCE
     KInstance instance("kio_thumbnail");
 #else
-    // creating KApplication in a slave in not a very good idea,
+    // creating TDEApplication in a slave in not a very good idea,
     // as dispatchLoop() doesn't allow it to process its messages,
     // so it for example wouldn't reply to ksmserver - on the other
     // hand, this slave uses QPixmaps for some reason, and they
     // need QApplication
-    // and HTML previews need even KApplication :(
+    // and HTML previews need even TDEApplication :(
     putenv(strdup("SESSION_MANAGER="));
-    KApplication::disableAutoDcopRegistration();
+    TDEApplication::disableAutoDcopRegistration();
 
-    KApplication app(argc, argv, "kio_thumbnail", false, true);
+    TDEApplication app(argc, argv, "kio_thumbnail", false, true);
 #endif
 
     if (argc != 4)

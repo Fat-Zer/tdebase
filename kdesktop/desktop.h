@@ -94,7 +94,7 @@ public:
 
   virtual void desktopIconsAreaChanged(const TQRect &area, int screen);
 
-  void logout( KApplication::ShutdownConfirm confirm, KApplication::ShutdownType sdtype );
+  void logout( TDEApplication::ShutdownConfirm confirm, TDEApplication::ShutdownType sdtype );
 
   KWinModule* twinModule() const { return m_pKwinmodule; }
 

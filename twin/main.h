@@ -19,7 +19,7 @@ License. See the file "COPYING" for the exact licensing terms.
 namespace KWinInternal
 {
 
-class Application : public  KApplication
+class Application : public  TDEApplication
     {
     Q_OBJECT
     public:

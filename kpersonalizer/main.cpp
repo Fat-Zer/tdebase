@@ -47,7 +47,7 @@ int main(int argc, char *argv[])
 
 	KLocale::setMainCatalogue("kpersonalizer");
 
-	KApplication a;
+	TDEApplication a;
 	if ( !kapp->dcopClient()->isAttached() )
 		kapp->dcopClient()->attach();
 

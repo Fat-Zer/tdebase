@@ -189,10 +189,10 @@ from Konsole as 'dcop kdesktop KDesktopIface popupExecuteCommand" will lead
 to showing the minicli, but the last user activity timestamp gained from events
 sent by X server will be older than user activity timestamp of Konsole, and
 would normally result in minicli not being active. Therefore, before showing
-the minicli, kdesktop needs to call KApplication::updateUserTimestamp().
+the minicli, kdesktop needs to call TDEApplication::updateUserTimestamp().
 
  However, this shouldn't be done with all DCOP calls. If a DCOP call is not
-a result of direct user action, calling KApplication::updateUserTimestamp()
+a result of direct user action, calling TDEApplication::updateUserTimestamp()
 would lead to focus stealing. For example, let's assume for a moment
 that KMail would use this DCOP call in case it detects the modem is not
 connected, allowing to you to start KPPP or whatever tool you use. If KMail
@@ -201,6 +201,6 @@ possibly suddenly showing up at every check. Basically, doing the above change
 to kdesktop's minicli means that the popupExecuteCommand() DCOP call is only
 for user scripting. (TODO write about focus transferring?)
 
- Simply said, KApplication::updateUserTimestamp() should be called only
+ Simply said, TDEApplication::updateUserTimestamp() should be called only
 as a result of user action. Unfortunately, I'm not aware of any universal
 way how to handle this, so every case will have to be considered separately.

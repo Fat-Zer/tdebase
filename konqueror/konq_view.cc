@@ -77,7 +77,7 @@ KonqView::KonqView( KonqViewFactory &viewFactory,
   m_pPart = 0L;
   m_dcopObject = 0L;
 
-  m_randID = KApplication::random();
+  m_randID = TDEApplication::random();
 
   m_service = service;
   m_partServiceOffers = partServiceOffers;

@@ -80,9 +80,9 @@ int main( int argc, char* argv[] )
   TDECmdLineArgs::init(argc, argv, &aboutData);
   TDECmdLineArgs::addCmdLineOptions( options );
 
-  KApplication::disableAutoDcopRegistration();
+  TDEApplication::disableAutoDcopRegistration();
 
-  KApplication a;
+  TDEApplication a;
 
   KrashConfig krashconf;
 

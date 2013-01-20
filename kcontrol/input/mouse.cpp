@@ -827,7 +827,7 @@ void MouseSettings::save(KConfig *config)
   }
 #endif
   config->sync();
-  KIPC::sendMessageAll(KIPC::SettingsChanged, KApplication::SETTINGS_MOUSE);
+  KIPC::sendMessageAll(KIPC::SettingsChanged, TDEApplication::SETTINGS_MOUSE);
 }
 
 void MouseConfig::slotScrollPolarityChanged()

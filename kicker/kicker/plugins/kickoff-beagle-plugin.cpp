@@ -132,7 +132,7 @@ void KickoffBeaglePlugin::query(TQString term, bool _genericTitle)
 	kdDebug () << "Previous client w/id " << current_beagle_client->id << " still running ... ignoring it." << endl;
 	current_beagle_client->stopClient ();
     }
-    current_beagle_client_id = KApplication::random ();
+    current_beagle_client_id = TDEApplication::random ();
     kdDebug () << "Creating client with id:" << current_beagle_client_id << endl;
 
     BeagleClient *beagle_client = beagle_client_new (NULL);

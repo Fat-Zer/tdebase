@@ -146,7 +146,7 @@ void URLButton::dropEvent(TQDropEvent *ev)
         KURL url( fileItem->url() );
         if(!execList.isEmpty())  {
              if (KDesktopFile::isDesktopFile(url.path())){
-                KApplication::startServiceByDesktopPath(url.path(), execList.toStringList(),
+                TDEApplication::startServiceByDesktopPath(url.path(), execList.toStringList(),
                                                         0, 0, 0, "", true);
              }
              else // attempt to interpret path as directory

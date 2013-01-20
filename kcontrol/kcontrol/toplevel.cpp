@@ -99,7 +99,7 @@ TopLevel::TopLevel(const char* name)
   searchLayout->setMargin( 6 );
 
   TQPushButton *clearButton = new TQPushButton( mSearchFrame );
-  clearButton->setIconSet( KApplication::reverseLayout() ?
+  clearButton->setIconSet( TDEApplication::reverseLayout() ?
     SmallIconSet( "clear_left" ) : SmallIconSet("locationbar_erase") );
   searchLayout->addWidget( clearButton );
   TQToolTip::add( clearButton, i18n("Clear search") );

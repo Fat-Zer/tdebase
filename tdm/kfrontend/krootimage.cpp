@@ -48,7 +48,7 @@ static Atom prop_root;
 static bool properties_inited = false;
 
 MyApplication::MyApplication( const char *conf )
-	: KApplication(),
+	: TDEApplication(),
 	  renderer( 0, new KSimpleConfig( TQFile::decodeName( conf ) ) )
 {
 	connect( &timer, TQT_SIGNAL(timeout()), TQT_SLOT(slotTimeout()) );
@@ -115,7 +115,7 @@ MyApplication::slotTimeout()
 int
 main( int argc, char *argv[] )
 {
-	KApplication::disableAutoDcopRegistration();
+	TDEApplication::disableAutoDcopRegistration();
 
 	KLocale::setMainCatalogue( "kdesktop" );
 	TDECmdLineArgs::init( argc, argv, "krootimage", I18N_NOOP( "KRootImage" ), description, version );

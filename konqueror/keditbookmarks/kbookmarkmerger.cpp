@@ -70,9 +70,9 @@ int main( int argc, char**argv )
 	TDECmdLineArgs::addCmdLineOptions( cmdLineOptions );
 
 	if ( !kdeRunning ) {
-		KApplication::disableAutoDcopRegistration();
+		TDEApplication::disableAutoDcopRegistration();
 	}
-	KApplication app( false, false );
+	TDEApplication app( false, false );
 	app.disableSessionManagement();
 
 	TDECmdLineArgs *args = TDECmdLineArgs::parsedArgs();

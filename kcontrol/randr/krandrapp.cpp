@@ -43,5 +43,5 @@ bool KRandRApp::x11EventFilter(XEvent* e)
 	if (e->type == m_tray->screenChangeNotifyEvent()) {
 		m_eventMergingTimer.start(1000, TRUE);
 	}
-	return KApplication::x11EventFilter( e );
+	return TDEApplication::x11EventFilter( e );
 }

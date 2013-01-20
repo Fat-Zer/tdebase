@@ -241,7 +241,7 @@ extern "C" KDE_EXPORT int kdemain(int argc, char *argv[])
   TDECmdLineArgs::init(argc, argv, &aboutData);
   TDECmdLineArgs::addCmdLineOptions( options ); // Add our own options.
 
-  KApplication app;
+  TDEApplication app;
   app.dcopClient()->registerAs( "kcminit", false );
   KLocale::setMainCatalogue(0);
   KCMInit kcminit( TDECmdLineArgs::parsedArgs());

@@ -77,7 +77,7 @@ int main(int argc, char *argv[])
   TDECmdLineArgs::init(argc, argv, &aboutData);
   TDECmdLineArgs::addCmdLineOptions(options);
 
-  KApplication app(false, false);
+  TDEApplication app(false, false);
   TDECmdLineArgs *args = TDECmdLineArgs::parsedArgs();
   TQCString type = args->count() ? args->arg(0) : "";
   int crashtype = Crash;

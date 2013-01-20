@@ -61,7 +61,7 @@ const Medium MountHelper::findMedium(const KURL &url)
 	}
 }
 
-MountHelper::MountHelper() : KApplication()
+MountHelper::MountHelper() : TDEApplication()
 {
 	TDECmdLineArgs *args = TDECmdLineArgs::parsedArgs();
 
@@ -269,10 +269,10 @@ int main(int argc, char **argv)
 
 	TDECmdLineArgs::addCmdLineOptions( options );
 	KGlobal::locale()->setMainCatalogue("kio_media");
-	KApplication::addCmdLineOptions();
+	TDEApplication::addCmdLineOptions();
 
 	if (TDECmdLineArgs::parsedArgs()->count()==0) TDECmdLineArgs::usage();
-	KApplication *app = new  MountHelper();
+	TDEApplication *app = new  MountHelper();
 
 	KStartupInfo::appStarted();
 	app->dcopClient()->attach();

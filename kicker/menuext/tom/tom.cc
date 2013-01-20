@@ -827,7 +827,7 @@ void TOM::runTask(int id)
     if (!m_tasks.contains(id)) return;
 
     kapp->propagateSessionManager();
-    KApplication::startServiceByDesktopPath(m_tasks[id]->desktopEntryPath(),
+    TDEApplication::startServiceByDesktopPath(m_tasks[id]->desktopEntryPath(),
       TQStringList(), 0, 0, 0, "", true);
 }
 

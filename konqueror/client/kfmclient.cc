@@ -167,7 +167,7 @@ extern "C" KDE_EXPORT int kdemain( int argc, char **argv )
  The URL is safe, if the view used to view it is listed in the allowed KPart's.
  In order to find out the part, mimetype is needed, and KTrader is needed.
  If mimetype is not known, KMimeType is used (which doesn't work e.g. for remote
- URLs, but oh well). Since this function may be running without a KApplication
+ URLs, but oh well). Since this function may be running without a TDEApplication
  instance, I'm actually quite surprised it works, and it may sooner or later break.
  Nice, isn't it?
 
@@ -234,7 +234,7 @@ static int currentScreen()
 {
     if( tqt_xdisplay() != NULL )
         return tqt_xscreen();
-    // case when there's no KApplication instance
+    // case when there's no TDEApplication instance
     const char* env = getenv( "DISPLAY" );
     if( env == NULL )
         return 0;
@@ -271,7 +271,7 @@ static TQCString konqyToReuse( const TQString& url, const TQString& mimetype, co
     TQByteArray data;
     TQDataStream str( data, IO_WriteOnly );
     str << currentScreen();
-    if( !KApplication::dcopClient()->findObject( "konqueror*", "KonquerorIface",
+    if( !TDEApplication::dcopClient()->findObject( "konqueror*", "KonquerorIface",
              "processCanBeReused( int )", data, ret, appObj, false, 3000 ) )
         return "";
     return ret;
@@ -337,7 +337,7 @@ bool clientApp::createNewWindow(const KURL & url, bool newTab, bool tempFile, co
         TQCString foundApp, foundObj;
         TQByteArray data;
         TQDataStream str( data, IO_WriteOnly );
-        if( KApplication::dcopClient()->findObject( "konqueror*", "konqueror-mainwindow*",
+        if( TDEApplication::dcopClient()->findObject( "konqueror*", "konqueror-mainwindow*",
             "windowCanBeUsedForTab()", data, foundApp, foundObj, false, 3000 ) )
         {
             DCOPRef ref( foundApp, foundObj );
@@ -361,7 +361,7 @@ bool clientApp::createNewWindow(const KURL & url, bool newTab, bool tempFile, co
     {
         TQString error;
         /* Well, we can't pass a mimetype through startServiceByDesktopPath !
-        if ( KApplication::startServiceByDesktopPath( TQString::fromLatin1("konqueror.desktop"),
+        if ( TDEApplication::startServiceByDesktopPath( TQString::fromLatin1("konqueror.desktop"),
                                                       url.url(), &error ) > 0 )
         {
             kdError() << "Couldn't start konqueror from konqueror.desktop: " << error << endl;
@@ -391,7 +391,7 @@ bool clientApp::openProfile( const TQString & profileName, const TQString & url,
   if( appId.isEmpty())
   {
     TQString error;
-    if ( KApplication::startServiceByDesktopPath( TQString::fromLatin1("konqueror.desktop"),
+    if ( TDEApplication::startServiceByDesktopPath( TQString::fromLatin1("konqueror.desktop"),
         TQString::fromLatin1("--silent"), &error, &appId, NULL, startup_id_str ) > 0 )
     {
       kdError() << "Couldn't start konqueror from konqueror.desktop: " << error << endl;
@@ -460,10 +460,10 @@ bool clientApp::doIt()
   if ( command == "openURL" || command == "newTab" )
   {
     KInstance inst(appName);
-    if( !KApplication::dcopClient()->attach())
+    if( !TDEApplication::dcopClient()->attach())
     {
-	KApplication::startKdeinit();
-	KApplication::dcopClient()->attach();
+	TDEApplication::startKdeinit();
+	TDEApplication::dcopClient()->attach();
     }
     checkArgumentCount(argc, 1, 3);
     bool tempFile = TDECmdLineArgs::isTempFileSet();
@@ -485,10 +485,10 @@ bool clientApp::doIt()
   else if ( command == "openProfile" )
   {
     KInstance inst(appName);
-    if( !KApplication::dcopClient()->attach())
+    if( !TDEApplication::dcopClient()->attach())
     {
-	KApplication::startKdeinit();
-	KApplication::dcopClient()->attach();
+	TDEApplication::startKdeinit();
+	TDEApplication::dcopClient()->attach();
     }
     checkArgumentCount(argc, 2, 3);
     TQString url;
@@ -497,7 +497,7 @@ bool clientApp::doIt()
     return openProfile( TQString::fromLocal8Bit(args->arg(1)), url );
   }
 
-  // the following commands need KApplication
+  // the following commands need TDEApplication
   clientApp app;
 
   if ( command == "openProperties" )

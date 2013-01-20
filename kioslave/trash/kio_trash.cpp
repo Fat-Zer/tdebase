@@ -53,12 +53,12 @@ extern "C" {
     int KDE_EXPORT kdemain( int argc, char **argv )
     {
         //KInstance instance( "kio_trash" );
-        // KApplication is necessary to use kio_file
+        // TDEApplication is necessary to use kio_file
         putenv(strdup("SESSION_MANAGER="));
-        KApplication::disableAutoDcopRegistration();
+        TDEApplication::disableAutoDcopRegistration();
         TDECmdLineArgs::init(argc, argv, "kio_trash", 0, 0, 0, 0);
         TDECmdLineArgs::addCmdLineOptions( options );
-        KApplication app( false, false );
+        TDEApplication app( false, false );
 
         TDECmdLineArgs *args = TDECmdLineArgs::parsedArgs();
         TrashProtocol slave( args->arg(0), args->arg(1), args->arg(2) );

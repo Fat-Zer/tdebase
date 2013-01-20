@@ -57,8 +57,8 @@ int main(int argc, char **argv)
 	TDECmdLineArgs::init(argc, argv, &about);
 	TDECmdLineArgs::addCmdLineOptions( options );
 
-	KApplication::disableAutoDcopRegistration();
-	KApplication app;
+	TDEApplication::disableAutoDcopRegistration();
+	TDEApplication app;
 
 #ifdef WITH_XRANDR
 	// Load up user specific display settings

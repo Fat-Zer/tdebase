@@ -41,7 +41,7 @@ int main(int argc, char **argv)
 {
     TDECmdLineArgs::init(argc, argv, "kwmtheme", description, "0.1");
     TDECmdLineArgs::addCmdLineOptions( options );
-    KApplication app(argc, argv);
+    TDEApplication app(argc, argv);
     TDECmdLineArgs *args = TDECmdLineArgs::parsedArgs();
     if(!args->count()){
         kdWarning() << "You need to specify the path to a theme config file!" << endl;

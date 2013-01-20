@@ -10,14 +10,14 @@ main(int argc, char *argv[])
    KAboutData about("kapptest", "kapptest", "version");
    TDECmdLineArgs::init(argc, argv, &about);
 
-   KApplication a;
+   TDEApplication a;
    a.iconLoader()->addAppDir("ksmserver");
    KSMShutdownFeedback::start();
 
    // ShutdownTypeNone == Logout == 0
    // ShutdownTypeReboot == 1
    // ShutdownTypeHalt == 2
-   KApplication::ShutdownType sdtype = KApplication::ShutdownTypeNone;
+   TDEApplication::ShutdownType sdtype = TDEApplication::ShutdownTypeNone;
    TQString bopt;
    KSMDelayedMessageBox::showTicker( sdtype );
    /*
