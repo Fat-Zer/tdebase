@@ -45,11 +45,11 @@ static const KCmdLineOptions options[] =
 int main( int argc, char* argv[] )
     {
     KLocale::setMainCatalogue( "twin" ); // the messages are in twin's .po file
-    KCmdLineArgs::init( argc, argv, "twin_resume_helper", I18N_NOOP( "TWin" ),
+    TDECmdLineArgs::init( argc, argv, "twin_resume_helper", I18N_NOOP( "TWin" ),
 	I18N_NOOP( "TWin helper utility" ), "1.0" );
-    KCmdLineArgs::addCmdLineOptions( options );
+    TDECmdLineArgs::addCmdLineOptions( options );
     KApplication app;
-    KCmdLineArgs* args = KCmdLineArgs::parsedArgs();
+    TDECmdLineArgs* args = TDECmdLineArgs::parsedArgs();
     TQCString hostname = args->getOption( "hostname" );
     bool pid_ok = false;
     pid_t pid = args->getOption( "pid" ).toULong( &pid_ok );

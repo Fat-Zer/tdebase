@@ -38,15 +38,15 @@ static KCmdLineOptions options[] =
 int main(int argc, char *argv[])
 {
     KApplication::disableAutoDcopRegistration();
-    KCmdLineArgs::init( argc, argv, "ktrash",
+    TDECmdLineArgs::init( argc, argv, "ktrash",
                         I18N_NOOP( "ktrash" ),
                         I18N_NOOP( "Helper program to handle the TDE trash can\n"
 				   "Note: to move files to the trash, do not use ktrash, but \"kfmclient move 'url' trash:/\"" ),
                         TDE_VERSION_STRING );
-    KCmdLineArgs::addCmdLineOptions( options );
+    TDECmdLineArgs::addCmdLineOptions( options );
     KApplication app;
 
-    KCmdLineArgs* args = KCmdLineArgs::parsedArgs();
+    TDECmdLineArgs* args = TDECmdLineArgs::parsedArgs();
     if ( args->isSet( "empty" ) ) {
         // We use a kio job instead of linking to TrashImpl, for a smaller binary
         // (and the possibility of a central service at some point)

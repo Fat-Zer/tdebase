@@ -60,7 +60,7 @@ void KrashConfig :: acceptDebuggingApp()
 
 void KrashConfig :: readConfig()
 {
-  KCmdLineArgs *args = KCmdLineArgs::parsedArgs();
+  TDECmdLineArgs *args = TDECmdLineArgs::parsedArgs();
   m_signalnum = args->getOption( "signal" ).toInt();
   m_pid = args->getOption( "pid" ).toInt();
   m_startedByKdeinit = args->isSet("tdeinit");

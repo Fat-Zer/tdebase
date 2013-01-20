@@ -195,7 +195,7 @@ void
 kg_main( const char *argv0 )
 {
 	static char *argv[] = { (char *)"tdmgreet", 0 };
-	KCmdLineArgs::init( 1, argv, *argv, 0, 0, 0, true );
+	TDECmdLineArgs::init( 1, argv, *argv, 0, 0, 0, true );
 
 	kdDebug() << timestamp() << "start" << endl;
 	kde_have_kipc = false;

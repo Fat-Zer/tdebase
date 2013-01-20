@@ -257,7 +257,7 @@ int main(int argc, char *argv[])
             "Copyright (c) 1999,2000 Geert Jansen");
     aboutData.addAuthor("Geert Jansen", I18N_NOOP("Author"),
             "jansen@kde.org", "http://www.stack.nl/~geertj/");
-    KCmdLineArgs::init(argc, argv, &aboutData);
+    TDECmdLineArgs::init(argc, argv, &aboutData);
     KInstance instance(&aboutData);
 
     // Set core dump size to 0

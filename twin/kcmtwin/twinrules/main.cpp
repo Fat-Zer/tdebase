@@ -276,18 +276,18 @@ extern "C"
 KDE_EXPORT int kdemain( int argc, char* argv[] )
     {
     KLocale::setMainCatalogue( "kcmtwinrules" );
-    KCmdLineArgs::init( argc, argv, "twin_rules_dialog", I18N_NOOP( "TWin" ),
+    TDECmdLineArgs::init( argc, argv, "twin_rules_dialog", I18N_NOOP( "TWin" ),
 	I18N_NOOP( "TWin helper utility" ), "1.0" );
-    KCmdLineArgs::addCmdLineOptions( options );
+    TDECmdLineArgs::addCmdLineOptions( options );
     KApplication app;
-    KCmdLineArgs* args = KCmdLineArgs::parsedArgs();
+    TDECmdLineArgs* args = TDECmdLineArgs::parsedArgs();
     bool id_ok = false;
     Window id = args->getOption( "wid" ).toULong( &id_ok );
     bool whole_app = args->isSet( "whole-app" );
     args->clear();
     if( !id_ok || id == None )
         {
-	KCmdLineArgs::usage( i18n( "This helper utility is not supposed to be called directly." ));
+	TDECmdLineArgs::usage( i18n( "This helper utility is not supposed to be called directly." ));
 	return 1;
         }
     return KWinInternal::edit( id, whole_app );

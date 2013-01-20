@@ -47,7 +47,7 @@ static bool check(const TQString& txt, TQString a, TQString b)
 int main(int argc, char *argv[])
 {
     KApplication::disableAutoDcopRegistration();
-    KCmdLineArgs::init(argc,argv,"testmedia", 0, 0, 0, 0);
+    TDECmdLineArgs::init(argc,argv,"testmedia", 0, 0, 0, 0);
     KApplication app;
 
     TestMedia test;

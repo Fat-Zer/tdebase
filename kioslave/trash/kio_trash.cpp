@@ -56,11 +56,11 @@ extern "C" {
         // KApplication is necessary to use kio_file
         putenv(strdup("SESSION_MANAGER="));
         KApplication::disableAutoDcopRegistration();
-        KCmdLineArgs::init(argc, argv, "kio_trash", 0, 0, 0, 0);
-        KCmdLineArgs::addCmdLineOptions( options );
+        TDECmdLineArgs::init(argc, argv, "kio_trash", 0, 0, 0, 0);
+        TDECmdLineArgs::addCmdLineOptions( options );
         KApplication app( false, false );
 
-        KCmdLineArgs *args = KCmdLineArgs::parsedArgs();
+        TDECmdLineArgs *args = TDECmdLineArgs::parsedArgs();
         TrashProtocol slave( args->arg(0), args->arg(1), args->arg(2) );
         slave.dispatchLoop();
         return 0;

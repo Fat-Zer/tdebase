@@ -63,7 +63,7 @@ const Medium MountHelper::findMedium(const KURL &url)
 
 MountHelper::MountHelper() : KApplication()
 {
-	KCmdLineArgs *args = KCmdLineArgs::parsedArgs();
+	TDECmdLineArgs *args = TDECmdLineArgs::parsedArgs();
 
 	m_errorStr = TQString::null;
 
@@ -263,15 +263,15 @@ static KCmdLineOptions options[] =
 
 int main(int argc, char **argv)
 {
-	KCmdLineArgs::init(argc, argv, "kio_media_mounthelper",
+	TDECmdLineArgs::init(argc, argv, "kio_media_mounthelper",
 	                   "kio_media_mounthelper", "kio_media_mounthelper",
 	                   "0.1");
 
-	KCmdLineArgs::addCmdLineOptions( options );
+	TDECmdLineArgs::addCmdLineOptions( options );
 	KGlobal::locale()->setMainCatalogue("kio_media");
 	KApplication::addCmdLineOptions();
 
-	if (KCmdLineArgs::parsedArgs()->count()==0) KCmdLineArgs::usage();
+	if (TDECmdLineArgs::parsedArgs()->count()==0) TDECmdLineArgs::usage();
 	KApplication *app = new  MountHelper();
 
 	KStartupInfo::appStarted();

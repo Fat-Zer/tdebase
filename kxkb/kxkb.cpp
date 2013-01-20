@@ -377,7 +377,7 @@ extern "C" KDE_EXPORT int kdemain(int argc, char *argv[])
     KAboutData about("kxkb", I18N_NOOP("TDE Keyboard Tool"), "1.0",
                      DESCRIPTION, KAboutData::License_LGPL,
                      "Copyright (C) 2001, S.R.Haque\n(C) 2002-2003, 2006 Andriy Rysin");
-    KCmdLineArgs::init(argc, argv, &about);
+    TDECmdLineArgs::init(argc, argv, &about);
     KXKBApp::addCmdLineOptions();
 
     if (!KXKBApp::start())

@@ -77,8 +77,8 @@ int main(int argc, char **argv)
     aboutdata->addAuthor("Matthias Ettrich",
 			 I18N_NOOP("Developer"),"ettrich@kde.org", "");
 
-    KCmdLineArgs::init(argc, argv, aboutdata);
-    KCmdLineArgs::addCmdLineOptions(pagerOpts);
+    TDECmdLineArgs::init(argc, argv, aboutdata);
+    TDECmdLineArgs::addCmdLineOptions(pagerOpts);
     KUniqueApplication::addCmdLineOptions();
 
     if (!KUniqueApplication::start())
@@ -89,7 +89,7 @@ int main(int argc, char **argv)
 
 
     KApplication * app = new KPagerApplication;
-    KCmdLineArgs *args = KCmdLineArgs::parsedArgs();
+    TDECmdLineArgs *args = TDECmdLineArgs::parsedArgs();
 
     KPagerMainWindow *kpager = new KPagerMainWindow(0,"KPager");
     kpager->setPlainCaption( i18n("Desktop Pager") );

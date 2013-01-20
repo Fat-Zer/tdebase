@@ -88,7 +88,7 @@ Application::Application( )
     // I'm special...
     setQuitOnLastWindowClosed(false);
 #endif // USE_QT4
-    KCmdLineArgs* args = KCmdLineArgs::parsedArgs();
+    TDECmdLineArgs* args = TDECmdLineArgs::parsedArgs();
     if (!config()->isImmutable() && args->isSet("lock"))
         {
         config()->setReadOnly(true);
@@ -317,8 +317,8 @@ KDE_EXPORT int kdemain( int argc, char * argv[] )
     aboutData.addAuthor("Daniel M. Duley",0, "mosfet@kde.org");
     aboutData.addAuthor("Luboš Luňák", I18N_NOOP( "Maintainer" ), "l.lunak@kde.org");
 
-    KCmdLineArgs::init(argc, argv, &aboutData);
-    KCmdLineArgs::addCmdLineOptions( args );
+    TDECmdLineArgs::init(argc, argv, &aboutData);
+    TDECmdLineArgs::addCmdLineOptions( args );
 
     if (signal(SIGTERM, KWinInternal::sighandler) == SIG_IGN)
         signal(SIGTERM, SIG_IGN);

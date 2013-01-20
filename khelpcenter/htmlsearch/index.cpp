@@ -19,13 +19,13 @@ int main(int argc, char *argv[])
 	"",
 	I18N_NOOP("TDE Index generator for help files."));
 
-  KCmdLineArgs::init(argc, argv, &aboutData);
-  KCmdLineArgs::addCmdLineOptions( options );
+  TDECmdLineArgs::init(argc, argv, &aboutData);
+  TDECmdLineArgs::addCmdLineOptions( options );
 
   KGlobal::locale()->setMainCatalogue("htmlsearch");
   KApplication app;
   HTMLSearch search;
 
-  KCmdLineArgs *args = KCmdLineArgs::parsedArgs();
+  TDECmdLineArgs *args = TDECmdLineArgs::parsedArgs();
   search.generateIndex(args->getOption("lang"));
 }

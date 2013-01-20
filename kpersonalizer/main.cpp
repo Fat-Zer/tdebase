@@ -42,8 +42,8 @@ int main(int argc, char *argv[])
 	aboutData.addAuthor("Carsten Wolff",0, "wolff@kde.org");
 	aboutData.addAuthor("qwertz",0, "kraftw@gmx.de");
 	aboutData.addAuthor("Bernhard Rosenkraenzer", 0, "bero@redhat.com");
-	KCmdLineArgs::init( argc, argv, &aboutData );
-	KCmdLineArgs::addCmdLineOptions( options ); // Add our own options.
+	TDECmdLineArgs::init( argc, argv, &aboutData );
+	TDECmdLineArgs::addCmdLineOptions( options ); // Add our own options.
 
 	KLocale::setMainCatalogue("kpersonalizer");
 
@@ -51,7 +51,7 @@ int main(int argc, char *argv[])
 	if ( !kapp->dcopClient()->isAttached() )
 		kapp->dcopClient()->attach();
 
-	KCmdLineArgs *args = KCmdLineArgs::parsedArgs();
+	TDECmdLineArgs *args = TDECmdLineArgs::parsedArgs();
 
 	if (args->isSet("before-session"))
 		KPersonalizer::setBeforeSession();

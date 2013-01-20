@@ -16,7 +16,7 @@ enum CrashType { Crash, Malloc, Div0, Assert };
 
 void do_crash()
 {
-  KCmdLineArgs *args = 0;
+  TDECmdLineArgs *args = 0;
   TQCString type = args->arg(0);
   printf("result = %s\n", type.data());
 }
@@ -74,11 +74,11 @@ int main(int argc, char *argv[])
                        KAboutData::License_GPL,
                        "(c) 2000-2002 David Faure, Waldo Bastian");
 
-  KCmdLineArgs::init(argc, argv, &aboutData);
-  KCmdLineArgs::addCmdLineOptions(options);
+  TDECmdLineArgs::init(argc, argv, &aboutData);
+  TDECmdLineArgs::addCmdLineOptions(options);
 
   KApplication app(false, false);
-  KCmdLineArgs *args = KCmdLineArgs::parsedArgs();
+  TDECmdLineArgs *args = TDECmdLineArgs::parsedArgs();
   TQCString type = args->count() ? args->arg(0) : "";
   int crashtype = Crash;
   if (type == "malloc")

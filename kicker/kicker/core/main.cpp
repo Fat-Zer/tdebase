@@ -125,7 +125,7 @@ extern "C" KDE_EXPORT int kdemain( int argc, char ** argv )
     aboutData.addCredit("Jessica Hall", /* I18N_NOOP("KConfigXT") */ 0, "jes.hall@kdemail.net");
     aboutData.addCredit("Stefan Nikolaus", /* I18N_NOOP("Bug fixes") */ 0, "stefan.nikolaus@kdemail.net");
     aboutData.addCredit("Benoît Minisini", /* I18N_NOOP("Bug fixes") */ 0, "gambas@users.sourceforge.net");
-    KCmdLineArgs::init( argc, argv, &aboutData );
+    TDECmdLineArgs::init( argc, argv, &aboutData );
 
     if (!Kicker::start()) {
 	kdError() << "kicker is already running!" << endl;

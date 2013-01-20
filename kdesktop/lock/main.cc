@@ -207,9 +207,9 @@ int main( int argc, char **argv )
 {
     KLocale::setMainCatalogue("kdesktop");
 
-    KCmdLineArgs::init( argc, argv, "kdesktop_lock", I18N_NOOP("KDesktop Locker"), I18N_NOOP("Session Locker for KDesktop"), "2.1" );
-    KCmdLineArgs::addCmdLineOptions( options );
-    KCmdLineArgs *args = KCmdLineArgs::parsedArgs();
+    TDECmdLineArgs::init( argc, argv, "kdesktop_lock", I18N_NOOP("KDesktop Locker"), I18N_NOOP("Session Locker for KDesktop"), "2.1" );
+    TDECmdLineArgs::addCmdLineOptions( options );
+    TDECmdLineArgs *args = TDECmdLineArgs::parsedArgs();
 
     putenv(strdup("SESSION_MANAGER="));
 

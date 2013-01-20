@@ -181,8 +181,8 @@ extern "C" KDE_EXPORT int kdemain( int argc, char **argv )
     aboutData.addAuthor("Torben Weis", 0, "weis@kde.org");
     aboutData.addAuthor("Matthias Ettrich", 0, "ettrich@kde.org");
 
-    KCmdLineArgs::init( argc, argv, &aboutData );
-    KCmdLineArgs::addCmdLineOptions( options );
+    TDECmdLineArgs::init( argc, argv, &aboutData );
+    TDECmdLineArgs::addCmdLineOptions( options );
 
     if (!KUniqueApplication::start()) {
         fprintf(stderr, "kdesktop is already running!\n");
@@ -195,11 +195,11 @@ extern "C" KDE_EXPORT int kdemain( int argc, char **argv )
     r.send( "suspendStartup", TQCString( "kdesktop" ));
     delete cl;
 
-    KCmdLineArgs *args = KCmdLineArgs::parsedArgs();
+    TDECmdLineArgs *args = TDECmdLineArgs::parsedArgs();
 
 #ifdef COMPOSITE
 
-    KCmdLineArgs *qtargs = KCmdLineArgs::parsedArgs("qt");
+    TDECmdLineArgs *qtargs = TDECmdLineArgs::parsedArgs("qt");
 
     if ( args->isSet("bg-transparency")) {
         char *display = 0;

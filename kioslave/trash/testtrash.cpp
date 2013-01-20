@@ -83,7 +83,7 @@ int main(int argc, char *argv[])
     setenv( "TDE_FORK_SLAVES", "yes", true );
 
     KApplication::disableAutoDcopRegistration();
-    KCmdLineArgs::init(argc,argv,"testtrash", 0, 0, 0, 0);
+    TDECmdLineArgs::init(argc,argv,"testtrash", 0, 0, 0, 0);
     KApplication app;
 
     TestTrash test;

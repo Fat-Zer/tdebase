@@ -90,9 +90,9 @@ static KCmdLineOptions options[] =
 
 int main( int argc, char **argv)
 {
-	KCmdLineArgs::init( argc, argv, "kxdglauncher", I18N_NOOP("TDE XDG File Browser Launcher and Prompter"), I18N_NOOP("Prompts if directory does not exist, otherwise launches"), "1.0" );
-	KCmdLineArgs::addCmdLineOptions( options );
-	KCmdLineArgs *args = KCmdLineArgs::parsedArgs();
+	TDECmdLineArgs::init( argc, argv, "kxdglauncher", I18N_NOOP("TDE XDG File Browser Launcher and Prompter"), I18N_NOOP("Prompts if directory does not exist, otherwise launches"), "1.0" );
+	TDECmdLineArgs::addCmdLineOptions( options );
+	TDECmdLineArgs *args = TDECmdLineArgs::parsedArgs();
 
 	KApplication app;
 	app.disableSessionManagement();

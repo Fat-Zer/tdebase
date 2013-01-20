@@ -90,7 +90,7 @@ KSplash::~KSplash()
 
 void KSplash::slotReadProperties( KConfig *config )
 {
-  KCmdLineArgs *arg = KCmdLineArgs::parsedArgs();
+  TDECmdLineArgs *arg = TDECmdLineArgs::parsedArgs();
   mTheme = arg->getOption("theme");
   if (mTheme.isEmpty())
   {
@@ -357,7 +357,7 @@ ThemeEngine *KSplash::_loadThemeEngine( const TQString& pluginName, const TQStri
   TQString libName;
   TQString objName;
   // Replace this test by a "nodcop" command line option.
-  if ( /*!mKsTheme->managedMode() ||*/ !KCmdLineArgs::parsedArgs()->isSet( "dcop" ) )
+  if ( /*!mKsTheme->managedMode() ||*/ !TDECmdLineArgs::parsedArgs()->isSet( "dcop" ) )
   {
     libName = TQString("ksplash%1").arg(pluginName.lower());
     objName = TQString("Theme%1").arg(pluginName);

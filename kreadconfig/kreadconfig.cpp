@@ -49,9 +49,9 @@ int main(int argc, char **argv)
 		KAboutData::License_GPL,
 		"(c) 2001 Red Hat, Inc.");
 	aboutData.addAuthor("Bernhard Rosenkraenzer", 0, "bero@redhat.com");
-	KCmdLineArgs::init(argc, argv, &aboutData);
-	KCmdLineArgs::addCmdLineOptions(options);
-	KCmdLineArgs *args=KCmdLineArgs::parsedArgs();
+	TDECmdLineArgs::init(argc, argv, &aboutData);
+	TDECmdLineArgs::addCmdLineOptions(options);
+	TDECmdLineArgs *args=TDECmdLineArgs::parsedArgs();
 
 	TQString group=TQString::fromLocal8Bit(args->getOption("group"));
 	TQString key=TQString::fromLocal8Bit(args->getOption("key"));
@@ -60,7 +60,7 @@ int main(int argc, char **argv)
 	TQCString type=args->getOption("type").lower();
 
 	if (key.isNull()) {
-		KCmdLineArgs::usage();
+		TDECmdLineArgs::usage();
 		return 1;
 	}
 

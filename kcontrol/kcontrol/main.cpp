@@ -134,7 +134,7 @@ extern "C" KDE_EXPORT int kdemain(int argc, char *argv[])
   aboutData->addAuthor("Matthias Ettrich",0, "ettrich@kde.org");
   aboutData->addAuthor("Waldo Bastian",0, "bastian@kde.org");
 
-  KCmdLineArgs::init( argc, argv, aboutData );
+  TDECmdLineArgs::init( argc, argv, aboutData );
   KUniqueApplication::addCmdLineOptions();
 
   KCGlobal::init();

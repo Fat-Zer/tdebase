@@ -34,7 +34,7 @@ int main(int argc, char **argv) {
 
 	about.addAuthor("George Staikos", I18N_NOOP("Primary author and maintainer"), "staikos@kde.org");
 
-	KCmdLineArgs::init(argc, argv, &about);
+	TDECmdLineArgs::init(argc, argv, &about);
 	KApplication a;
 
 	KNetAttach na;

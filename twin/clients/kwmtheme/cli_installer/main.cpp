@@ -39,10 +39,10 @@ void copy(const TQString &src, const TQString &dest)
 
 int main(int argc, char **argv)
 {
-    KCmdLineArgs::init(argc, argv, "kwmtheme", description, "0.1");
-    KCmdLineArgs::addCmdLineOptions( options );
+    TDECmdLineArgs::init(argc, argv, "kwmtheme", description, "0.1");
+    TDECmdLineArgs::addCmdLineOptions( options );
     KApplication app(argc, argv);
-    KCmdLineArgs *args = KCmdLineArgs::parsedArgs();
+    TDECmdLineArgs *args = TDECmdLineArgs::parsedArgs();
     if(!args->count()){
         kdWarning() << "You need to specify the path to a theme config file!" << endl;
         return(1);

@@ -55,15 +55,15 @@ int main( int argc, char *argv[] )
 			"(C) 2001-2002 Richard Moore (rich@kde.org)" );
   aboutData.addAuthor( "Richard Moore", 0, "rich@kde.org" );
 
-  KCmdLineArgs::init( argc, argv, &aboutData );
-  KCmdLineArgs::addCmdLineOptions( options ); // Add our own options.
+  TDECmdLineArgs::init( argc, argv, &aboutData );
+  TDECmdLineArgs::addCmdLineOptions( options ); // Add our own options.
 
   KApplication app;
 
   //
   // Setup the tray icon from the arguments.
   //
-  KCmdLineArgs *args = KCmdLineArgs::parsedArgs();
+  TDECmdLineArgs *args = TDECmdLineArgs::parsedArgs();
   KSysTrayCmd cmd;
 
   // Read the window id
@@ -90,7 +90,7 @@ int main( int argc, char *argv[] )
       cmd.setPattern( title );
 
   if ( !title && !wid && (args->count() == 0) )
-    KCmdLineArgs::usage(i18n("No command or window specified"));
+    TDECmdLineArgs::usage(i18n("No command or window specified"));
 
   // Read the command
   TQString command;

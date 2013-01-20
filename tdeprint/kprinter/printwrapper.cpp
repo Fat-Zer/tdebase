@@ -135,7 +135,7 @@ PrintWrapper::PrintWrapper()
 
 void PrintWrapper::slotPrint()
 {
-	KCmdLineArgs	*args = KCmdLineArgs::parsedArgs();
+	TDECmdLineArgs	*args = TDECmdLineArgs::parsedArgs();
 
 #if defined(HAVE_SIGACTION) && !defined(HAVE_SIGSET)
 	struct sigaction action;

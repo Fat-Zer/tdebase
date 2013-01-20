@@ -179,13 +179,13 @@ int main( int argc, char **argv )
 
   aboutData.addAuthor( "Cornelius Schumacher", 0, "schumacher@kde.org" );
 
-  KCmdLineArgs::init( argc, argv, &aboutData );
-  KCmdLineArgs::addCmdLineOptions( options );
+  TDECmdLineArgs::init( argc, argv, &aboutData );
+  TDECmdLineArgs::addCmdLineOptions( options );
   KUniqueApplication::addCmdLineOptions();
 
   KApplication app;
 
-  KCmdLineArgs *args = KCmdLineArgs::parsedArgs();
+  TDECmdLineArgs *args = TDECmdLineArgs::parsedArgs();
 
   if ( args->count() != 2 ) {
     kdDebug(1402) << "Wrong number of arguments." << endl;

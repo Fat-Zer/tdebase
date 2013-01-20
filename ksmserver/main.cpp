@@ -186,15 +186,15 @@ extern "C" KDE_EXPORT int kdemain( int argc, char* argv[] )
     aboutData.addAuthor("Matthias Ettrich",0, "ettrich@kde.org");
     aboutData.addAuthor("Luboš Luňák", I18N_NOOP( "Maintainer" ), "l.lunak@kde.org" );
 
-    KCmdLineArgs::init(argc, argv, &aboutData);
-    KCmdLineArgs::addCmdLineOptions( options );
+    TDECmdLineArgs::init(argc, argv, &aboutData);
+    TDECmdLineArgs::addCmdLineOptions( options );
 
     putenv((char*)"SESSION_MANAGER=");
     KApplication a(KApplication::openX11RGBADisplay(), false); // Disable styles until we need them.
     fcntl(ConnectionNumber(tqt_xdisplay()), F_SETFD, 1);
 
 
-    KCmdLineArgs *args = KCmdLineArgs::parsedArgs();
+    TDECmdLineArgs *args = TDECmdLineArgs::parsedArgs();
 
     kapp->dcopClient()->registerAs("ksmserver", false);
     if (!kapp->dcopClient()->isRegistered())

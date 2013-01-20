@@ -126,7 +126,7 @@ void KCMInit::runModules( int phase )
   }
 }
 
-KCMInit::KCMInit( KCmdLineArgs* args )
+KCMInit::KCMInit( TDECmdLineArgs* args )
 : DCOPObject( "kcminit" )
 {
   TQCString arg;
@@ -238,13 +238,13 @@ extern "C" KDE_EXPORT int kdemain(int argc, char *argv[])
 	"",
 	I18N_NOOP("KCMInit - runs startups initialization for Control Modules."));
 
-  KCmdLineArgs::init(argc, argv, &aboutData);
-  KCmdLineArgs::addCmdLineOptions( options ); // Add our own options.
+  TDECmdLineArgs::init(argc, argv, &aboutData);
+  TDECmdLineArgs::addCmdLineOptions( options ); // Add our own options.
 
   KApplication app;
   app.dcopClient()->registerAs( "kcminit", false );
   KLocale::setMainCatalogue(0);
-  KCMInit kcminit( KCmdLineArgs::parsedArgs());
+  KCMInit kcminit( TDECmdLineArgs::parsedArgs());
   return 0;
 }
 

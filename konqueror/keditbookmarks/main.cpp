@@ -121,11 +121,11 @@ extern "C" KDE_EXPORT int kdemain(int argc, char **argv) {
     aboutData.addAuthor("David Faure", I18N_NOOP("Initial author"), "faure@kde.org");
     aboutData.addAuthor("Alexander Kellett", I18N_NOOP("Author"), "lypanov@kde.org");
 
-    KCmdLineArgs::init(argc, argv, &aboutData);
+    TDECmdLineArgs::init(argc, argv, &aboutData);
     KApplication::addCmdLineOptions();
-    KCmdLineArgs::addCmdLineOptions(options);
+    TDECmdLineArgs::addCmdLineOptions(options);
 
-    KCmdLineArgs *args = KCmdLineArgs::parsedArgs();
+    TDECmdLineArgs *args = TDECmdLineArgs::parsedArgs();
     bool isGui = !(args->isSet("exportmoz") || args->isSet("exportns") || args->isSet("exporthtml") 
                 || args->isSet("exportie") || args->isSet("exportopera")
                 || args->isSet("importmoz") || args->isSet("importns")
@@ -160,12 +160,12 @@ extern "C" KDE_EXPORT int kdemain(int argc, char **argv) {
             Q_ASSERT(arg2);
             // TODO - maybe an xbel export???
             if (got > 1) // got == 0 isn't possible as !isGui is dependant on "export.*"
-                KCmdLineArgs::usage(I18N_NOOP("You may only specify a single --export option."));
+                TDECmdLineArgs::usage(I18N_NOOP("You may only specify a single --export option."));
             TQString path = TQString::fromLocal8Bit(args->getOption(arg2));
             CurrentMgr::self()->doExport(exportType, path);
         } else if (importType) {
             if (got > 1) // got == 0 isn't possible as !isGui is dependant on "import.*"
-                KCmdLineArgs::usage(I18N_NOOP("You may only specify a single --import option."));
+                TDECmdLineArgs::usage(I18N_NOOP("You may only specify a single --import option."));
             TQString path = TQString::fromLocal8Bit(args->getOption(arg2));
             ImportCommand *importer = ImportCommand::importerFactory(importType);
             importer->import(path, true);

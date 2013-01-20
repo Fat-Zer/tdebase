@@ -33,7 +33,7 @@ public:
   explicit ObjKsTheme( const TQString& );
   virtual ~ObjKsTheme();
 
-  void loadCmdLineArgs( KCmdLineArgs * );
+  void loadCmdLineArgs( TDECmdLineArgs * );
 
   TQString theme() const      { return( mActiveTheme ); }
   TQString themeEngine() const { return( mThemeEngine ); }

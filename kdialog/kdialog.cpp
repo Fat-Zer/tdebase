@@ -152,7 +152,7 @@ static void outputStringList(TQStringList list, bool separateOutput)
     }
 }
 
-static int directCommand(KCmdLineArgs *args)
+static int directCommand(TDECmdLineArgs *args)
 {
     TQString title;
     bool separateOutput = FALSE;
@@ -161,7 +161,7 @@ static int directCommand(KCmdLineArgs *args)
     TQString defaultEntry;
 
     // --title text
-    KCmdLineArgs *qtargs = KCmdLineArgs::parsedArgs("qt"); // --title is a qt option
+    TDECmdLineArgs *qtargs = TDECmdLineArgs::parsedArgs("qt"); // --title is a qt option
     if(qtargs->isSet("title")) {
       title = TQFile::decodeName(qtargs->getOption("title"));
     }
@@ -669,7 +669,7 @@ static int directCommand(KCmdLineArgs *args)
        return Widgets::progressBar(0, title, text, totalsteps) ? 1 : 0;
     }
 
-    KCmdLineArgs::usage();
+    TDECmdLineArgs::usage();
     return -2; // NOTREACHED
 }
 
@@ -688,12 +688,12 @@ int main(int argc, char *argv[])
   aboutData.addAuthor("Richard Moore",0,"rich@kde.org");
   aboutData.addAuthor("Dawit Alemayehu",0,"adawit@kde.org");
 
-  KCmdLineArgs::init(argc, argv, &aboutData);
-  KCmdLineArgs::addCmdLineOptions( options ); // Add our own options.
+  TDECmdLineArgs::init(argc, argv, &aboutData);
+  TDECmdLineArgs::addCmdLineOptions( options ); // Add our own options.
 
   KApplication app;
 
-  KCmdLineArgs *args = KCmdLineArgs::parsedArgs();
+  TDECmdLineArgs *args = TDECmdLineArgs::parsedArgs();
 
   // execute direct kdialog command
   return directCommand(args);

@@ -23,7 +23,7 @@
 #include <dcopobject.h>
 #include <kservice.h>
 
-class KCmdLineArgs;
+class TDECmdLineArgs;
 
 class KCMInit : public TQObject, public DCOPObject
 {
@@ -33,7 +33,7 @@ class KCMInit : public TQObject, public DCOPObject
         void runPhase1();
         void runPhase2();
     public:
-        KCMInit( KCmdLineArgs* args );
+        KCMInit( TDECmdLineArgs* args );
         virtual ~KCMInit();
     private:
         bool runModule(const TQString &libName, KService::Ptr service);

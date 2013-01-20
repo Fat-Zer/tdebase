@@ -34,8 +34,8 @@ int main(int argc, char **argv)
     aboutData.addAuthor("Geert Jansen", I18N_NOOP("Maintainer"),
             "jansen@kde.org", "http://www.stack.nl/~geertj/");
  
-    KCmdLineArgs::init(argc, argv, &aboutData);
-    KCmdLineArgs::addCmdLineOptions(options);
+    TDECmdLineArgs::init(argc, argv, &aboutData);
+    TDECmdLineArgs::addCmdLineOptions(options);
     KUniqueApplication::addCmdLineOptions();
 
 
@@ -49,7 +49,7 @@ int main(int argc, char **argv)
     KUser ku;
     TQCString user;
     bool bRoot = ku.isSuperUser();
-    KCmdLineArgs *args = KCmdLineArgs::parsedArgs();
+    TDECmdLineArgs *args = TDECmdLineArgs::parsedArgs();
 
     if (args->count())
 	user = args->arg(0);

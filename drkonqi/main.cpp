@@ -77,8 +77,8 @@ int main( int argc, char* argv[] )
   aboutData.addAuthor("Timothy Pearson", 0, "kb9vqf@pearsoncomputing.net");
   aboutData.addAuthor("Hans Petter Bieker", 0, "bieker@kde.org");
 
-  KCmdLineArgs::init(argc, argv, &aboutData);
-  KCmdLineArgs::addCmdLineOptions( options );
+  TDECmdLineArgs::init(argc, argv, &aboutData);
+  TDECmdLineArgs::addCmdLineOptions( options );
 
   KApplication::disableAutoDcopRegistration();
 

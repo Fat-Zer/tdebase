@@ -106,8 +106,8 @@ int main(int argc, char *argv[])
     aboutData.addAuthor("Pietro Iglio", I18N_NOOP("Original author"),
             "iglio@fub.it");
 
-    KCmdLineArgs::init(argc, argv, &aboutData);
-    KCmdLineArgs::addCmdLineOptions(options);
+    TDECmdLineArgs::init(argc, argv, &aboutData);
+    TDECmdLineArgs::addCmdLineOptions(options);
     KApplication::disableAutoDcopRegistration();
     // tdesu doesn't process SM events, so don't even connect to ksmserver
     TQCString session_manager = getenv( "SESSION_MANAGER" );
@@ -137,7 +137,7 @@ int main(int argc, char *argv[])
 
 static int startApp()
 {
-    KCmdLineArgs *args = KCmdLineArgs::parsedArgs();
+    TDECmdLineArgs *args = TDECmdLineArgs::parsedArgs();
     // Stop daemon and exit?
     if (args->isSet("s"))
     {
@@ -205,7 +205,7 @@ static int startApp()
     int priority = tmp.toInt(&ok);
     if (!ok || (priority < 0) || (priority > 100))
     {
-        KCmdLineArgs::usage(i18n("Illegal priority: %1").arg(static_cast<const char *>(tmp)));
+        TDECmdLineArgs::usage(i18n("Illegal priority: %1").arg(static_cast<const char *>(tmp)));
         exit(1);
     }
     int scheduler = SuProcess::SchedNormal;
@@ -233,7 +233,7 @@ static int startApp()
     {
         if( args->count() == 0 )
         {
-            KCmdLineArgs::usage(i18n("No command specified."));
+            TDECmdLineArgs::usage(i18n("No command specified."));
             exit(1);
         }
         command = args->arg(0);

@@ -228,11 +228,11 @@ extern "C" int KDE_EXPORT kdemain(int argc, char* argv[])
     "The above list only reflects the contributors\n"
     "I managed to keep track of."));
 
-  KCmdLineArgs::init( argc, argv, &aboutData );
-  KCmdLineArgs::addCmdLineOptions( options ); // Add our own options.
+  TDECmdLineArgs::init( argc, argv, &aboutData );
+  TDECmdLineArgs::addCmdLineOptions( options ); // Add our own options.
   //1.53 sec
-  KCmdLineArgs *args = KCmdLineArgs::parsedArgs();
-  KCmdLineArgs *qtargs = KCmdLineArgs::parsedArgs("qt");
+  TDECmdLineArgs *args = TDECmdLineArgs::parsedArgs();
+  TDECmdLineArgs *qtargs = TDECmdLineArgs::parsedArgs("qt");
   has_noxft = !args->isSet("xft");
   TEWidget::setAntialias( !has_noxft );
   TEWidget::setStandalone( true );
@@ -281,7 +281,7 @@ extern "C" int KDE_EXPORT kdemain(int argc, char* argv[])
   if (!args->getOption("e").isEmpty())
   {
      if (args->isSet("ls"))
-        KCmdLineArgs::usage(i18n("You can't use BOTH -ls and -e.\n"));
+        TDECmdLineArgs::usage(i18n("You can't use BOTH -ls and -e.\n"));
      shell = strdup(args->getOption("e"));
      eargs.append(shell);
      for(int i=0; i < args->count(); i++)
@@ -408,7 +408,7 @@ extern "C" int KDE_EXPORT kdemain(int argc, char* argv[])
     }
     else
     {
-       KCmdLineArgs::usage(i18n("expected --vt_sz <#columns>x<#lines> e.g. 80x40\n"));
+       TDECmdLineArgs::usage(i18n("expected --vt_sz <#columns>x<#lines> e.g. 80x40\n"));
     }
   }
 

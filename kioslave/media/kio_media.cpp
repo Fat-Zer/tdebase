@@ -44,13 +44,13 @@ extern "C" {
 	{
 		// KApplication is necessary to use other ioslaves
 		putenv(strdup("SESSION_MANAGER="));
-		KCmdLineArgs::init(argc, argv, "kio_media", 0, 0, 0, 0);
-		KCmdLineArgs::addCmdLineOptions( options );
+		TDECmdLineArgs::init(argc, argv, "kio_media", 0, 0, 0, 0);
+		TDECmdLineArgs::addCmdLineOptions( options );
 		KApplication app( false, false );
 		// We want to be anonymous even if we use DCOP
 		app.dcopClient()->attach();
 
-		KCmdLineArgs *args = KCmdLineArgs::parsedArgs();
+		TDECmdLineArgs *args = TDECmdLineArgs::parsedArgs();
 		MediaProtocol slave( args->arg(0), args->arg(1), args->arg(2) );
 		slave.dispatchLoop();
 		return 0;

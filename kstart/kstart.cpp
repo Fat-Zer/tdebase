@@ -298,16 +298,16 @@ int main( int argc, char *argv[] )
   aboutData.addAuthor( "David Faure", 0, "faure@kde.org" );
   aboutData.addAuthor( "Richard J. Moore", 0, "rich@kde.org" );
 
-  KCmdLineArgs::init( argc, argv, &aboutData );
+  TDECmdLineArgs::init( argc, argv, &aboutData );
 
-  KCmdLineArgs::addCmdLineOptions( options ); // Add our own options.
+  TDECmdLineArgs::addCmdLineOptions( options ); // Add our own options.
 
   KApplication app;
 
-  KCmdLineArgs *args = KCmdLineArgs::parsedArgs();
+  TDECmdLineArgs *args = TDECmdLineArgs::parsedArgs();
 
   if ( args->count() == 0 )
-      KCmdLineArgs::usage(i18n("No command specified"));
+      TDECmdLineArgs::usage(i18n("No command specified"));
 
   for(int i=0; i < args->count(); i++)
     proc << args->arg(i);

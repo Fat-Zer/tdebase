@@ -50,10 +50,10 @@ static const KCmdLineOptions options[] =
 
 extern "C" KDE_EXPORT int kdemain( int argc, char **argv )
 {
-  KCmdLineArgs::init( argc, argv, KonqFactory::aboutData() );
+  TDECmdLineArgs::init( argc, argv, KonqFactory::aboutData() );
 
-  KCmdLineArgs::addCmdLineOptions( options ); // Add our own options.
-  KCmdLineArgs::addTempFileOption();
+  TDECmdLineArgs::addCmdLineOptions( options ); // Add our own options.
+  TDECmdLineArgs::addTempFileOption();
 
   KonquerorApplication app;
 
@@ -65,7 +65,7 @@ extern "C" KDE_EXPORT int kdemain( int argc, char **argv )
   KGlobal::locale()->insertCatalogue("libkonq"); // needed for apps using libkonq
   KImageIO::registerFormats();
 
-  KCmdLineArgs *args = KCmdLineArgs::parsedArgs();
+  TDECmdLineArgs *args = TDECmdLineArgs::parsedArgs();
 
   KTempFile crashlog_file(locateLocal("tmp", "konqueror-crash-"), ".log");
   KonqMainWindow::s_crashlog_file = crashlog_file.file();
@@ -191,7 +191,7 @@ extern "C" KDE_EXPORT int kdemain( int argc, char **argv )
                            urlToOpen.setFileName("");
                         }
                      }
-                     const bool tempFile = KCmdLineArgs::isTempFileSet();
+                     const bool tempFile = TDECmdLineArgs::isTempFileSet();
                      mainwin = KonqMisc::createNewWindow( urlToOpen, urlargs, false, filesToSelect, tempFile );
                  } else
                      urlList += urlToOpen;

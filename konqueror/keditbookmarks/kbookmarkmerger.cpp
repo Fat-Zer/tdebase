@@ -66,8 +66,8 @@ int main( int argc, char**argv )
 	aboutData.addAuthor( "Frerich Raabe", I18N_NOOP( "Original author" ),
 	                     "raabe@kde.org" );
 
-	KCmdLineArgs::init( argc, argv, &aboutData );
-	KCmdLineArgs::addCmdLineOptions( cmdLineOptions );
+	TDECmdLineArgs::init( argc, argv, &aboutData );
+	TDECmdLineArgs::addCmdLineOptions( cmdLineOptions );
 
 	if ( !kdeRunning ) {
 		KApplication::disableAutoDcopRegistration();
@@ -75,7 +75,7 @@ int main( int argc, char**argv )
 	KApplication app( false, false );
 	app.disableSessionManagement();
 
-	KCmdLineArgs *args = KCmdLineArgs::parsedArgs();
+	TDECmdLineArgs *args = TDECmdLineArgs::parsedArgs();
 	if ( args->count() != 1 ) {
 		kdError() << "No directory to scan for bookmarks specified." << endl;
 		return 1;

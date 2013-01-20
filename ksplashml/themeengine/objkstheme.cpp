@@ -50,7 +50,7 @@ ObjKsTheme::ObjKsTheme( const TQString& theme )
     if( !loadLocalConfig( mActiveTheme, false ) )
       if( !loadThemeRc( "Default", false ) )
         loadLocalConfig( "Default", true ); //force: we need some defaults
-  loadCmdLineArgs(KCmdLineArgs::parsedArgs());
+  loadCmdLineArgs(TDECmdLineArgs::parsedArgs());
   mThemePrefix += ( mActiveTheme + "/" );
 }
 
@@ -141,7 +141,7 @@ bool ObjKsTheme::loadKConfig( KConfig *cfg, const TQString& activeTheme, bool fo
  * ObjKsTheme::loadCmdLineArgs(): Handle any overrides which the user might have
  * specified.
  */
-void ObjKsTheme::loadCmdLineArgs( KCmdLineArgs *args )
+void ObjKsTheme::loadCmdLineArgs( TDECmdLineArgs *args )
 {
 
   mManagedMode = args->isSet( "managed" );

@@ -75,11 +75,11 @@ static KCmdLineOptions options[] =
 
 int main( int argc, char **argv )
 {
-  KCmdLineArgs::init( argc, argv, "kasbar", "KasBar", I18N_NOOP( "An alternative task manager" ), VERSION_STRING );
-  KCmdLineArgs::addCmdLineOptions( options );
+  TDECmdLineArgs::init( argc, argv, "kasbar", "KasBar", I18N_NOOP( "An alternative task manager" ), VERSION_STRING );
+  TDECmdLineArgs::addCmdLineOptions( options );
   KGlobal::locale()->setMainCatalogue( "kasbarextension" );
   KApplication app;
-  KCmdLineArgs *args = KCmdLineArgs::parsedArgs();
+  TDECmdLineArgs *args = TDECmdLineArgs::parsedArgs();
 
   kdDebug(1345) << "Kasbar starting..." << endl;
 

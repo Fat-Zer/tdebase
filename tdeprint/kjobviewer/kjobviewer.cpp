@@ -108,7 +108,7 @@ int KJobViewerApp::newInstance()
 
 void KJobViewerApp::initialize()
 {
-	KCmdLineArgs	*args = KCmdLineArgs::parsedArgs();
+	TDECmdLineArgs	*args = TDECmdLineArgs::parsedArgs();
 	bool 	showIt = args->isSet("show");
 	bool	all = args->isSet("all");
 	QString	prname = args->getOption("d");

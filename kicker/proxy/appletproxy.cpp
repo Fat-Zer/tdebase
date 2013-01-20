@@ -75,11 +75,11 @@ extern "C" KDE_EXPORT int kdemain( int argc, char ** argv )
                           ,I18N_NOOP("Panel applet proxy.")
                           , KAboutData::License_BSD
                           , "(c) 2000, The KDE Developers");
-    KCmdLineArgs::init(argc, argv, &aboutData );
+    TDECmdLineArgs::init(argc, argv, &aboutData );
     aboutData.addAuthor("Matthias Elter",0, "elter@kde.org");
     aboutData.addAuthor("Matthias Ettrich",0, "ettrich@kde.org");
     KApplication::addCmdLineOptions();
-    KCmdLineArgs::addCmdLineOptions(options); // Add our own options.
+    TDECmdLineArgs::addCmdLineOptions(options); // Add our own options.
 
     KApplication a;
     a.disableSessionManagement();
@@ -91,10 +91,10 @@ extern "C" KDE_EXPORT int kdemain( int argc, char ** argv )
     AppletProxy proxy(0, "appletproxywidget");
 
     // parse cmdline args
-    KCmdLineArgs *args = KCmdLineArgs::parsedArgs();
+    TDECmdLineArgs *args = TDECmdLineArgs::parsedArgs();
 
     if ( args->count() == 0 )
-        KCmdLineArgs::usage(i18n("No desktop file specified") );
+        TDECmdLineArgs::usage(i18n("No desktop file specified") );
 
     // Perhaps we should use a konsole-like solution here (shell, list of args...)
     TQString desktopfile( args->arg(0) );

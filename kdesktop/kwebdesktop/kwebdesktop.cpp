@@ -93,13 +93,13 @@ int main( int argc, char **argv )
                      "(c) 2000, David Faure <faure@kde.org>" );
     data.addAuthor( "David Faure", I18N_NOOP("developer and maintainer"), "faure@kde.org" );
 
-    KCmdLineArgs::init( argc, argv, &data );
+    TDECmdLineArgs::init( argc, argv, &data );
 
-    KCmdLineArgs::addCmdLineOptions( options ); // Add our own options.
+    TDECmdLineArgs::addCmdLineOptions( options ); // Add our own options.
 
     KApplication app;
 
-    KCmdLineArgs *args = KCmdLineArgs::parsedArgs();
+    TDECmdLineArgs *args = TDECmdLineArgs::parsedArgs();
     if ( args->count() != 3 && args->count() != 4 )
     {
        args->usage();

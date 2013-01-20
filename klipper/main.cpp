@@ -38,7 +38,7 @@
 extern "C" int KDE_EXPORT kdemain(int argc, char *argv[])
 {
   Klipper::createAboutData();
-  KCmdLineArgs::init( argc, argv, Klipper::aboutData());
+  TDECmdLineArgs::init( argc, argv, Klipper::aboutData());
   KUniqueApplication::addCmdLineOptions();
 
   if (!KUniqueApplication::start()) {

@@ -39,9 +39,9 @@ int main( int argc, char *argv[] )
   aboutData.addAuthor( "Matthias Hoelzer-Kluepfel", 0, "hoelzer@kde.org" );
   aboutData.addAuthor( "Tobias Koenig", 0, "tokoe@kde.org" );
 
-  KCmdLineArgs::init( argc, argv, &aboutData );
-  KCmdLineArgs::addCmdLineOptions( options );
-  KCmdLineArgs *args = KCmdLineArgs::parsedArgs();
+  TDECmdLineArgs::init( argc, argv, &aboutData );
+  TDECmdLineArgs::addCmdLineOptions( options );
+  TDECmdLineArgs *args = TDECmdLineArgs::parsedArgs();
 
   KApplication app;
 

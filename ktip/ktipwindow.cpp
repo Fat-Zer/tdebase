@@ -36,7 +36,7 @@ int main(int argc, char *argv[])
 	KAboutData aboutData("ktip", I18N_NOOP("KTip"),
 				"0.3", description, KAboutData::License_GPL,
 				"(c) 1998-2002, KDE Developers");
-	KCmdLineArgs::init( argc, argv, &aboutData );
+	TDECmdLineArgs::init( argc, argv, &aboutData );
 	KUniqueApplication::addCmdLineOptions();
 
 	if (!KUniqueApplication::start())

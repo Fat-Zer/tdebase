@@ -82,11 +82,11 @@ int main(int argc, char ** argv)
     KAboutData::License_GPL, "(c) 2009,2010, Timothy Pearson <kb9vqf@pearsoncomputing.net>");
   data.addAuthor("Timothy Pearson", I18N_NOOP("Maintainer"), "kb9vqf@pearsoncomputing.net");
   data.addAuthor("David Faure", I18N_NOOP("Original maintainer/developer"), "faure@kde.org");
-  KCmdLineArgs::init( argc, argv, &data );
-  KCmdLineArgs::addCmdLineOptions( options );
+  TDECmdLineArgs::init( argc, argv, &data );
+  TDECmdLineArgs::addCmdLineOptions( options );
   KUniqueApplication::addCmdLineOptions();
   KUniqueApplication app;
-  KCmdLineArgs *args = KCmdLineArgs::parsedArgs();
+  TDECmdLineArgs *args = TDECmdLineArgs::parsedArgs();
 
   TQStringList areaList ( readAreaList() );
   KAbstractDebugDialog * dialog;

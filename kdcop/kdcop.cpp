@@ -24,8 +24,8 @@ int main( int argc, char ** argv )
   aboutData.addAuthor("Matthias Kalle Dalheimer",0, "kalle@kde.org");
   aboutData.addAuthor("Rik Hemsley",0, "rik@kde.org");
   aboutData.addAuthor("Ian Reinhart Geiser",0,"geiseri@kde.org");
-  KCmdLineArgs::init( argc, argv, &aboutData );
-  KCmdLineArgs::addCmdLineOptions( options );
+  TDECmdLineArgs::init( argc, argv, &aboutData );
+  TDECmdLineArgs::addCmdLineOptions( options );
 
   KApplication a;
 

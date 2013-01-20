@@ -22,7 +22,7 @@ typedef TQMap<TQString, AppletInfo> AppletInfoMap;
 int main(int argc, char** argv)
 {
     // We must disguise as Kicker in order to obtain the correct reverseLayout setting.
-    KCmdLineArgs::init(argc, argv, "kicker", "", "", "", false);
+    TDECmdLineArgs::init(argc, argv, "kicker", "", "", "", false);
     KApplication app(false, false);
 
     TQStringList stretchableApplets;

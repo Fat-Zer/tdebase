@@ -102,13 +102,13 @@ int main(int argc, char** argv)
 	TQString style = "keramik";
 	// KApplication app(argc, argv);
 	KAboutData about("decobenchmark", "DecoBenchmark", "0.1", "twin decoration performance tester...", KAboutData::License_LGPL, "(C) 2005 Sandro Giessl");
-	KCmdLineArgs::init(argc, argv, &about);
-	KCmdLineArgs::addCmdLineOptions( options );
+	TDECmdLineArgs::init(argc, argv, &about);
+	TDECmdLineArgs::addCmdLineOptions( options );
 
-	KCmdLineArgs *args = KCmdLineArgs::parsedArgs();
+	TDECmdLineArgs *args = TDECmdLineArgs::parsedArgs();
 
 	if (args->count() != 3)
-		KCmdLineArgs::usage("Wrong number of arguments!");
+		TDECmdLineArgs::usage("Wrong number of arguments!");
 
 	TQString library = TQString(args->arg(0) );
 	TQString t = TQString(args->arg(1) );
@@ -126,7 +126,7 @@ int main(int argc, char** argv)
 	else if (t == "recreation")
 		test = RecreationTest;
 	else
-		KCmdLineArgs::usage("Specify a valid test!");
+		TDECmdLineArgs::usage("Specify a valid test!");
 
 	DecoBenchApplication app(library, test, count);
 

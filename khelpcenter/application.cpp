@@ -35,7 +35,7 @@ int Application::newInstance()
 {
   if (restoringSession()) return 0;
   
-  KCmdLineArgs *args = KCmdLineArgs::parsedArgs();
+  TDECmdLineArgs *args = TDECmdLineArgs::parsedArgs();
 
   KURL url;
   if ( args->count() )
@@ -74,8 +74,8 @@ extern "C" int KDE_EXPORT kdemain( int argc, char **argv )
   aboutData.addAuthor( "Wojciech Smigaj", I18N_NOOP("Info page support"),
                        "achu@klub.chip.pl" );
 
-  KCmdLineArgs::init( argc, argv, &aboutData );
-  KCmdLineArgs::addCmdLineOptions( options );
+  TDECmdLineArgs::init( argc, argv, &aboutData );
+  TDECmdLineArgs::addCmdLineOptions( options );
   KApplication::addCmdLineOptions();
 
   KHC::Application app;

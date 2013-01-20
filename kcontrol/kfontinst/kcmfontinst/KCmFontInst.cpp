@@ -93,10 +93,10 @@ CKCmFontInst::CKCmFontInst(TQWidget *parent, const char *, const TQStringList&)
     about->addAuthor("Craig Drummond", I18N_NOOP("Developer and maintainer"), "craig@kde.org");
     setAboutData(about);
 
-    const char *appName=KCmdLineArgs::appName();
+    const char *appName=TDECmdLineArgs::appName();
 
     itsEmbeddedAdmin=Misc::root() && (NULL==appName || strcmp("kcontrol", appName) &&
-                     KCmdLineArgs::parsedArgs()->isSet("embed"));
+                     TDECmdLineArgs::parsedArgs()->isSet("embed"));
 
     itsStatusLabel = new TQLabel(this);
     itsStatusLabel->setFrameShape(TQFrame::Panel);

@@ -34,11 +34,11 @@ static const KCmdLineOptions options[] =
 
 int main( int argc, char* argv[] )
     {
-    KCmdLineArgs::init( argc, argv, "khotkeys_update", "KHotKeys Update",
+    TDECmdLineArgs::init( argc, argv, "khotkeys_update", "KHotKeys Update",
 	"KHotKeys update utility", "1.0" );
-    KCmdLineArgs::addCmdLineOptions( options );
+    TDECmdLineArgs::addCmdLineOptions( options );
     KApplication app( false, true ); // X11 connection is necessary for KKey* stuff :-/
-    KCmdLineArgs* args = KCmdLineArgs::parsedArgs();
+    TDECmdLineArgs* args = TDECmdLineArgs::parsedArgs();
     TQCString id = args->getOption( "id" );
     TQString file = locate( "data", "khotkeys/" + id + ".khotkeys" );
     if( file.isEmpty())

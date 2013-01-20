@@ -42,12 +42,12 @@ int main( int argc, char ** argv )
   aboutData.addAuthor("Alexander Neundorf", 0, "neundorf@kde.org");
   aboutData.addAuthor("Clarence Dang", 0, "dang@kde.org");
 
-  KCmdLineArgs::init( argc, argv, &aboutData );
-  KCmdLineArgs::addCmdLineOptions( options );
+  TDECmdLineArgs::init( argc, argv, &aboutData );
+  TDECmdLineArgs::addCmdLineOptions( options );
 
   KApplication app;
 
-  KCmdLineArgs *args= KCmdLineArgs::parsedArgs();
+  TDECmdLineArgs *args= TDECmdLineArgs::parsedArgs();
 
   KURL url;
   if (args->count() > 0)

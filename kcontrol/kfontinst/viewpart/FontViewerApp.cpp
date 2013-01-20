@@ -54,7 +54,7 @@ CFontViewerAppMainWindow::CFontViewerAppMainWindow()
 
         itsPreview=(KParts::ReadOnlyPart *)factory->create(TQT_TQOBJECT(this), "fontvier", "KParts::ReadOnlyPart");
 
-        KCmdLineArgs *args = KCmdLineArgs::parsedArgs();
+        TDECmdLineArgs *args = TDECmdLineArgs::parsedArgs();
         KURL         openURL;
 
         if(args->count() > 0)
@@ -118,8 +118,8 @@ static KAboutData aboutData("kfontview", I18N_NOOP("Font Viewer"), 0, I18N_NOOP(
 
 int main(int argc, char **argv)
 {
-    KCmdLineArgs::init(argc, argv, &aboutData);
-    KCmdLineArgs::addCmdLineOptions(options);
+    TDECmdLineArgs::init(argc, argv, &aboutData);
+    TDECmdLineArgs::addCmdLineOptions(options);
     KFI::CFontViewerApp::addCmdLineOptions();
 
     KFI::CFontViewerApp app;

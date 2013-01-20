@@ -48,7 +48,7 @@ public:
    
    virtual int newInstance()
    {
-      KCmdLineArgs *args = KCmdLineArgs::parsedArgs();
+      TDECmdLineArgs *args = TDECmdLineArgs::parsedArgs();
       if (args->count() > 0)
       {
           menuEdit->selectMenu(TQString::fromLocal8Bit(args->arg(0)));
@@ -71,9 +71,9 @@ extern "C" int KDE_EXPORT kdemain( int argc, char **argv )
     aboutData.addAuthor("Raffaele Sandrini", I18N_NOOP("Previous Maintainer"), "sandrini@kde.org");
     aboutData.addAuthor("Matthias Elter", I18N_NOOP("Original Author"), "elter@kde.org");
 
-    KCmdLineArgs::init( argc, argv, &aboutData );
+    TDECmdLineArgs::init( argc, argv, &aboutData );
     KUniqueApplication::addCmdLineOptions();
-    KCmdLineArgs::addCmdLineOptions( options );
+    TDECmdLineArgs::addCmdLineOptions( options );
 
     if (!KUniqueApplication::start()) 
 	return 1;

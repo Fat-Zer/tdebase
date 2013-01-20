@@ -118,13 +118,13 @@ int main(int argc, char ** argv)
   aboutData.addAuthor("Preston Brown",0, "pbrown@kde.org");
   aboutData.addAuthor("David Faure",0, "faure@kde.org");
 
-  KCmdLineArgs::init( argc, argv, &aboutData );
-  KCmdLineArgs::addCmdLineOptions( options ); // Add our own options.
+  TDECmdLineArgs::init( argc, argv, &aboutData );
+  TDECmdLineArgs::addCmdLineOptions( options ); // Add our own options.
   KApplication app;
-  KCmdLineArgs *args = KCmdLineArgs::parsedArgs();
+  TDECmdLineArgs *args = TDECmdLineArgs::parsedArgs();
 
   if (args->count() == 0)
-    KCmdLineArgs::usage();
+    TDECmdLineArgs::usage();
 
   TQString arg = args->arg(0);
 

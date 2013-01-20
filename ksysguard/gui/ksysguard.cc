@@ -568,8 +568,8 @@ int main( int argc, char** argv )
                        "module of William LeFebvre's \"top\" utility." ),
                        "tk@Genetik.Uni-Bielefeld.DE" );
 
-  KCmdLineArgs::init( argc, argv, &aboutData );
-  KCmdLineArgs::addCmdLineOptions( options );
+  TDECmdLineArgs::init( argc, argv, &aboutData );
+  TDECmdLineArgs::addCmdLineOptions( options );
 
   KApplication::disableAutoDcopRegistration();
   // initialize KDE application
@@ -578,7 +578,7 @@ int main( int argc, char** argv )
   KSGRD::SensorMgr = new KSGRD::SensorManager();
   KSGRD::Style = new KSGRD::StyleEngine();
 
-  KCmdLineArgs* args = KCmdLineArgs::parsedArgs();
+  TDECmdLineArgs* args = TDECmdLineArgs::parsedArgs();
 
   int result = 0;
 

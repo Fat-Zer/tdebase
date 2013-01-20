@@ -51,7 +51,7 @@
 #include <unistd.h>
 #include <sys/types.h>
 
-KateApp::KateApp (KCmdLineArgs *args)
+KateApp::KateApp (TDECmdLineArgs *args)
  : KApplication ()
  , m_args (args)
  , m_shouldExit (false)
@@ -192,7 +192,7 @@ bool KateApp::startupKate ()
 
   TQTextCodec *codec = m_args->isSet("encoding") ? TQTextCodec::codecForName(m_args->getOption("encoding")) : 0;
 
-  bool tempfileSet = KCmdLineArgs::isTempFileSet();
+  bool tempfileSet = TDECmdLineArgs::isTempFileSet();
 
   Kate::Document::setOpenErrorDialogsActivated (false);
   uint id = 0;

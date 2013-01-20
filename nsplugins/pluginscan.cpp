@@ -530,9 +530,9 @@ int main( int argc, char **argv )
                           "(c) 2000,2001 by Stefan Schimanski" );
 
     KLocale::setMainCatalogue("nsplugin");
-    KCmdLineArgs::init( argc, argv, &aboutData );
-    KCmdLineArgs::addCmdLineOptions( options );
-    KCmdLineArgs *args = KCmdLineArgs::parsedArgs();
+    TDECmdLineArgs::init( argc, argv, &aboutData );
+    TDECmdLineArgs::addCmdLineOptions( options );
+    TDECmdLineArgs *args = TDECmdLineArgs::parsedArgs();
 
     showProgress = args->isSet("verbose");
     if (showProgress) {

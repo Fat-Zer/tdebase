@@ -42,7 +42,7 @@ extern "C" int KDE_EXPORT kdemain( int argc, char **argv )
     aboutData.addAuthor("Raffaele Sandrini", I18N_NOOP("Previous Maintainer"), "sandrini@kde.org");
     aboutData.addAuthor("Matthias Elter", I18N_NOOP("Original Author"), "elter@kde.org");
 
-    KCmdLineArgs::init( argc, argv, &aboutData );
+    TDECmdLineArgs::init( argc, argv, &aboutData );
     KUniqueApplication::addCmdLineOptions();
 
     if (!KUniqueApplication::start()) 

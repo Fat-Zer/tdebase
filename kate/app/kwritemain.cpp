@@ -588,8 +588,8 @@ extern "C" KDE_EXPORT int kdemain(int argc, char **argv)
 
   aboutData.setTranslator(I18N_NOOP("_: NAME OF TRANSLATORS\nYour names"), I18N_NOOP("_: EMAIL OF TRANSLATORS\nYour emails"));
 
-  KCmdLineArgs::init( argc, argv, &aboutData );
-  KCmdLineArgs::addCmdLineOptions( options );
+  TDECmdLineArgs::init( argc, argv, &aboutData );
+  TDECmdLineArgs::addCmdLineOptions( options );
 
   KApplication a;
 
@@ -602,7 +602,7 @@ extern "C" KDE_EXPORT int kdemain(int argc, char **argv)
     client->registerAs("kwrite");
   }
 
-  KCmdLineArgs *args = KCmdLineArgs::parsedArgs();
+  TDECmdLineArgs *args = TDECmdLineArgs::parsedArgs();
 
   if (kapp->isRestored())
   {

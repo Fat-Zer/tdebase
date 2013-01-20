@@ -33,7 +33,7 @@ namespace Kate {
   class Application;
 }
 
-class KCmdLineArgs;
+class TDECmdLineArgs;
 
 /**
  * Kate Application
@@ -51,7 +51,7 @@ class KDE_EXPORT KateApp : public KApplication
      * application constructor
      * @param args parsed command line args
      */
-    KateApp (KCmdLineArgs *args);
+    KateApp (TDECmdLineArgs *args);
 
     /**
      * application destructor
@@ -202,7 +202,7 @@ class KDE_EXPORT KateApp : public KApplication
     /**
      * kate's command line args
      */
-    KCmdLineArgs *m_args;
+    TDECmdLineArgs *m_args;
 
     /**
      * plugin interface

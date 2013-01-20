@@ -32,9 +32,9 @@ int main(int argc, char **argv)
 		"(c) 2001 Red Hat, Inc. & Lu�s Pedro Coelho");
 	aboutData.addAuthor("Lu�s Pedro Coelho", 0, "luis_pedro@netcabo.pt");
 	aboutData.addAuthor("Bernhard Rosenkraenzer", "Wrote kreadconfig on which this is based", "bero@redhat.com");
-	KCmdLineArgs::init(argc, argv, &aboutData);
-	KCmdLineArgs::addCmdLineOptions(options);
-	KCmdLineArgs *args=KCmdLineArgs::parsedArgs();
+	TDECmdLineArgs::init(argc, argv, &aboutData);
+	TDECmdLineArgs::addCmdLineOptions(options);
+	TDECmdLineArgs *args=TDECmdLineArgs::parsedArgs();
 
 	TQString group=TQString::fromLocal8Bit(args->getOption("group"));
 	TQString key=TQString::fromLocal8Bit(args->getOption("key"));
@@ -43,7 +43,7 @@ int main(int argc, char **argv)
 
 
 	if (key.isNull() || !args->count()) {
-		KCmdLineArgs::usage();
+		TDECmdLineArgs::usage();
 		return 1;
 	}
 	TQCString value = args->arg( 0 );

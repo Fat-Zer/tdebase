@@ -54,8 +54,8 @@ int main(int argc, char **argv)
 	KAboutData about("tdeinit_displayconfig", I18N_NOOP("tdeinit_displayconfig"), version, description,
 			KAboutData::License_GPL, "(C) 2013 Timothy Pearson", 0, 0, "kb9vqf@pearsoncomputing.net");
 	about.addAuthor( "Timothy Pearson", 0, "kb9vqf@pearsoncomputing.net" );
-	KCmdLineArgs::init(argc, argv, &about);
-	KCmdLineArgs::addCmdLineOptions( options );
+	TDECmdLineArgs::init(argc, argv, &about);
+	TDECmdLineArgs::addCmdLineOptions( options );
 
 	KApplication::disableAutoDcopRegistration();
 	KApplication app;

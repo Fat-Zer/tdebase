@@ -42,8 +42,8 @@ int main(int argc, char **argv)
 	aboutData.setProductName("krandr/krandrtray");
 	KGlobal::locale()->setMainCatalogue("krandr");
 
-	KCmdLineArgs::init(argc,argv,&aboutData);
-	KCmdLineArgs::addCmdLineOptions(options);
+	TDECmdLineArgs::init(argc,argv,&aboutData);
+	TDECmdLineArgs::addCmdLineOptions(options);
 	KApplication::addCmdLineOptions();
 
 	KRandRApp app;

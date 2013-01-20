@@ -12,7 +12,7 @@ extern "C" KDE_EXPORT int kdemain(int argc, char * argv[] )
 
   about.addAuthor("Matthias Hoelzer-Kluepfel", I18N_NOOP("Author") , "hoelzer@kde.org");
 
-  KCmdLineArgs::init( argc, argv, &about );
+  TDECmdLineArgs::init( argc, argv, &about );
 
   if (!KAccessApp::start())
     return 0;

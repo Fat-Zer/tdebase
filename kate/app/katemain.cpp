@@ -99,13 +99,13 @@ extern "C" KDE_EXPORT int kdemain( int argc, char **argv )
   aboutData.setTranslator(I18N_NOOP2("NAME OF TRANSLATORS","Your names"), I18N_NOOP2("EMAIL OF TRANSLATORS","Your emails"));
 
   // command line args init and co
-  KCmdLineArgs::init (argc, argv, &aboutData);
-  KCmdLineArgs::addCmdLineOptions (options);
-  KCmdLineArgs::addTempFileOption();
+  TDECmdLineArgs::init (argc, argv, &aboutData);
+  TDECmdLineArgs::addCmdLineOptions (options);
+  TDECmdLineArgs::addTempFileOption();
   KateApp::addCmdLineOptions ();
 
   // get our command line args ;)
-  KCmdLineArgs* args = KCmdLineArgs::parsedArgs();
+  TDECmdLineArgs* args = TDECmdLineArgs::parsedArgs();
 
   // now, first try to contact running kate instance if needed
   if ( args->isSet("use") || (::getenv("KATE_PID")!=0) )
@@ -172,7 +172,7 @@ extern "C" KDE_EXPORT int kdemain( int argc, char **argv )
 
       TQString enc = args->isSet("encoding") ? args->getOption("encoding") : TQCString("");
 
-      bool tempfileSet = KCmdLineArgs::isTempFileSet();
+      bool tempfileSet = TDECmdLineArgs::isTempFileSet();
 
       for (int z=0; z<args->count(); z++)
         kRef.call( "openURL", args->url(z), enc, tempfileSet );

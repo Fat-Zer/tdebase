@@ -50,9 +50,9 @@ int main( int argc, char **argv )
   about.addAuthor( "Ravikiran Rajagopal", I18N_NOOP("Author and maintainer"), "ravi@ee.eng.ohio-state.edu" );
   about.addAuthor( "Brian Ledbetter", I18N_NOOP("Original author"), "brian@shadowcom.net" );
 
-  KCmdLineArgs::init(argc, argv, &about);
-  KCmdLineArgs::addCmdLineOptions(options);
-  KCmdLineArgs *arg = KCmdLineArgs::parsedArgs();
+  TDECmdLineArgs::init(argc, argv, &about);
+  TDECmdLineArgs::addCmdLineOptions(options);
+  TDECmdLineArgs *arg = TDECmdLineArgs::parsedArgs();
 
   if ( !( arg->isSet( "dcop" ) ) )
     KApplication::disableAutoDcopRegistration();

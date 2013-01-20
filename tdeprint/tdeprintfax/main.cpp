@@ -51,12 +51,12 @@ int main(int argc, char *argv[])
     "1.0", description, KAboutData::License_GPL,
     "(c), 2001 Michael Goffioul", 0, "http://printing.kde.org");
   aboutData.addAuthor("Michael Goffioul",0, "tdeprint@swing.be");
-  KCmdLineArgs::init( argc, argv, &aboutData );
-  KCmdLineArgs::addCmdLineOptions( options ); // Add our own options.
+  TDECmdLineArgs::init( argc, argv, &aboutData );
+  TDECmdLineArgs::addCmdLineOptions( options ); // Add our own options.
   KApplication::addCmdLineOptions();
 
   KApplication a;
-  KCmdLineArgs	*args = KCmdLineArgs::parsedArgs();
+  TDECmdLineArgs	*args = TDECmdLineArgs::parsedArgs();
 
   KdeprintFax	*w = new KdeprintFax;
   a.setMainWidget(w);

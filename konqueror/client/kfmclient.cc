@@ -70,16 +70,16 @@ static const KCmdLineOptions options[] =
 
 extern "C" KDE_EXPORT int kdemain( int argc, char **argv )
 {
-  KCmdLineArgs::init(argc, argv, appName, programName, description, version, false);
+  TDECmdLineArgs::init(argc, argv, appName, programName, description, version, false);
 
-  KCmdLineArgs::addCmdLineOptions( options );
-  KCmdLineArgs::addTempFileOption();
+  TDECmdLineArgs::addCmdLineOptions( options );
+  TDECmdLineArgs::addTempFileOption();
 
-  KCmdLineArgs *args = KCmdLineArgs::parsedArgs();
+  TDECmdLineArgs *args = TDECmdLineArgs::parsedArgs();
 
   if ( args->isSet("commands") )
   {
-    KCmdLineArgs::enable_i18n();
+    TDECmdLineArgs::enable_i18n();
     puts(i18n("\nSyntax:\n").local8Bit());
     puts(i18n("  kfmclient openURL 'url' ['mimetype']\n"
                 "            # Opens a window showing 'url'.\n"
@@ -445,7 +445,7 @@ static void checkArgumentCount(int count, int min, int max)
 
 bool clientApp::doIt()
 {
-  KCmdLineArgs *args = KCmdLineArgs::parsedArgs();
+  TDECmdLineArgs *args = TDECmdLineArgs::parsedArgs();
   int argc = args->count();
   checkArgumentCount(argc, 1, 0);
 
@@ -466,7 +466,7 @@ bool clientApp::doIt()
 	KApplication::dcopClient()->attach();
     }
     checkArgumentCount(argc, 1, 3);
-    bool tempFile = KCmdLineArgs::isTempFileSet();
+    bool tempFile = TDECmdLineArgs::isTempFileSet();
     if ( argc == 1 )
     {
       KURL url;

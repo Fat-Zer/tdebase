@@ -59,7 +59,7 @@ ThemeEngine::ThemeEngine( TQWidget *, const char *, const TQStringList& args )
   if (args.first() == "Unified") {
     mUseWM = true;
   }
-  mTheme->loadCmdLineArgs( KCmdLineArgs::parsedArgs() );
+  mTheme->loadCmdLineArgs( TDECmdLineArgs::parsedArgs() );
 }
 
 ThemeEngine::~ThemeEngine()
