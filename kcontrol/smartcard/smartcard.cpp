@@ -55,9 +55,9 @@ KSmartcardConfig::KSmartcardConfig(TQWidget *parent, const char *name)
   _ok = false;
   dc->remoteInterfaces("kded", "kardsvc", &_ok);
 
-  KAboutData *about =
-  new KAboutData(I18N_NOOP("kcmsmartcard"), I18N_NOOP("TDE Smartcard Control Module"),
-                0, 0, KAboutData::License_GPL,
+  TDEAboutData *about =
+  new TDEAboutData(I18N_NOOP("kcmsmartcard"), I18N_NOOP("TDE Smartcard Control Module"),
+                0, 0, TDEAboutData::License_GPL,
                 I18N_NOOP("(c) 2001 George Staikos"));
 
   about->addAuthor("George Staikos", 0, "staikos@kde.org");

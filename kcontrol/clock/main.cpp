@@ -42,9 +42,9 @@ K_EXPORT_COMPONENT_FACTORY( kcm_clock, KlockModuleFactory("kcmkclock"))
 KclockModule::KclockModule(TQWidget *parent, const char *name, const TQStringList &)
   : KCModule(KlockModuleFactory::instance(), parent, name)
 {
-  KAboutData *about =
-  new KAboutData(I18N_NOOP("kcmclock"), I18N_NOOP("TDE Clock Control Module"),
-                  0, 0, KAboutData::License_GPL,
+  TDEAboutData *about =
+  new TDEAboutData(I18N_NOOP("kcmclock"), I18N_NOOP("TDE Clock Control Module"),
+                  0, 0, TDEAboutData::License_GPL,
                   "(c) 1996 - 2001 Luca Montecchiani");
 
   about->addAuthor("Luca Montecchiani", I18N_NOOP("Original author"), "m.luca@usa.net");

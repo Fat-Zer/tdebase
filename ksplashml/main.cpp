@@ -39,12 +39,12 @@ static KCmdLineOptions options[] = {
 
 int main( int argc, char **argv )
 {
-  KAboutData about(
+  TDEAboutData about(
     "ksplash",
     I18N_NOOP("KSplash"),
     VERSION,
     I18N_NOOP("Trinity splash screen"),
-    KAboutData::License_GPL,
+    TDEAboutData::License_GPL,
     I18N_NOOP("(c) 2001 - 2003, Flaming Sword Productions\n (c) 2003 KDE developers"),
     "http://www.kde.org");
   about.addAuthor( "Ravikiran Rajagopal", I18N_NOOP("Author and maintainer"), "ravi@ee.eng.ohio-state.edu" );

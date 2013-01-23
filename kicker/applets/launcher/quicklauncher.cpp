@@ -496,9 +496,9 @@ void QuickLauncher::addAppBeforeManually(TQString url, TQString sender)
 
 void QuickLauncher::about()
 {
-    KAboutData about("quicklauncher", I18N_NOOP("Quick Launcher"), "2.0",
+    TDEAboutData about("quicklauncher", I18N_NOOP("Quick Launcher"), "2.0",
                      I18N_NOOP("A simple application launcher"),
-                     KAboutData::License_GPL_V2, 
+                     TDEAboutData::License_GPL_V2, 
                      "(C) 2000 Bill Nagel\n(C) 2004 Dan Bullok\n(C) 2005 Fred Schaettgen");
     KAboutApplication a(&about, this);
     a.exec();

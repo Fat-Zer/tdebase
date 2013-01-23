@@ -35,7 +35,7 @@
 
 #include <assert.h>
 
-KAboutData *KonqFactory::s_aboutData = 0;
+TDEAboutData *KonqFactory::s_aboutData = 0;
 
 KonqViewFactory::KonqViewFactory( KLibFactory *factory, const TQStringList &args,
                                   bool createBrowser )
@@ -211,14 +211,14 @@ void KonqFactory::getOffers( const TQString & serviceType,
 }
 
 
-const KAboutData *KonqFactory::aboutData()
+const TDEAboutData *KonqFactory::aboutData()
 {
   if (!s_aboutData)
   {
-    s_aboutData = new KAboutData( "konqueror", I18N_NOOP("Konqueror"),
+    s_aboutData = new TDEAboutData( "konqueror", I18N_NOOP("Konqueror"),
                         KONQUEROR_VERSION,
                         I18N_NOOP("Web browser, file manager, ..."),
-                        KAboutData::License_GPL,
+                        TDEAboutData::License_GPL,
                         I18N_NOOP("(c) 1999-2010, The Konqueror developers"),
                         0,
                         I18N_NOOP("http://konqueror.kde.org") );

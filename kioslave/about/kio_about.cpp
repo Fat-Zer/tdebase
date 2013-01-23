@@ -59,7 +59,7 @@ extern "C"
 {
     int KDE_EXPORT kdemain( int argc, char **argv ) {
 
-        KInstance instance("kio_about");
+        TDEInstance instance("kio_about");
 
         if (argc != 4)
         {

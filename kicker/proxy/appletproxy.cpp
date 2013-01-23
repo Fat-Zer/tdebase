@@ -70,10 +70,10 @@ static KCmdLineOptions options[] =
 
 extern "C" KDE_EXPORT int kdemain( int argc, char ** argv )
 {
-    KAboutData aboutData( "kicker", I18N_NOOP("Panel applet proxy.")
+    TDEAboutData aboutData( "kicker", I18N_NOOP("Panel applet proxy.")
                           , "v0.1.0"
                           ,I18N_NOOP("Panel applet proxy.")
-                          , KAboutData::License_BSD
+                          , TDEAboutData::License_BSD
                           , "(c) 2000, The KDE Developers");
     TDECmdLineArgs::init(argc, argv, &aboutData );
     aboutData.addAuthor("Matthias Elter",0, "elter@kde.org");

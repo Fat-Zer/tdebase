@@ -251,14 +251,14 @@ int main(int argc, char *argv[])
 {
     prctl(PR_SET_DUMPABLE, 0);
 
-    KAboutData aboutData("tdesud", I18N_NOOP("TDE su daemon"),
+    TDEAboutData aboutData("tdesud", I18N_NOOP("TDE su daemon"),
             Version, I18N_NOOP("Daemon used by tdesu"),
-            KAboutData::License_Artistic,
+            TDEAboutData::License_Artistic,
             "Copyright (c) 1999,2000 Geert Jansen");
     aboutData.addAuthor("Geert Jansen", I18N_NOOP("Author"),
             "jansen@kde.org", "http://www.stack.nl/~geertj/");
     TDECmdLineArgs::init(argc, argv, &aboutData);
-    KInstance instance(&aboutData);
+    TDEInstance instance(&aboutData);
 
     // Set core dump size to 0
     struct rlimit rlim;

@@ -85,7 +85,7 @@ CFontViewPart::CFontViewPart(TQWidget *parent, const char *name)
     itsToolsFrame->setFrameShape(TQFrame::NoFrame);
     previewFrame->setFrameShadow(kcm ? TQFrame::Sunken : TQFrame::Raised);
     previewFrame->setFrameShape(TQFrame::Panel);
-    setInstance(new KInstance("kfontview"));
+    setInstance(new TDEInstance("kfontview"));
 
     itsPreview=new CFontPreview(previewFrame, "FontViewPart::Preview");
     itsPreview->setSizePolicy(TQSizePolicy::MinimumExpanding, TQSizePolicy::MinimumExpanding);

@@ -84,9 +84,9 @@ TDModule::TDModule(TQWidget *parent, const char *name, const TQStringList &)
   , maxshowuid(0)
   , updateOK(false)
 {
-  KAboutData *about =
-    new KAboutData(I18N_NOOP("kcmtdm"), I18N_NOOP("TDE Login Manager Config Module"),
-                0, 0, KAboutData::License_GPL,
+  TDEAboutData *about =
+    new TDEAboutData(I18N_NOOP("kcmtdm"), I18N_NOOP("TDE Login Manager Config Module"),
+                0, 0, TDEAboutData::License_GPL,
                 I18N_NOOP("(c) 1996 - 2005 The TDM Authors"));
 
   about->addAuthor("Thomas Tanghus", I18N_NOOP("Original author"), "tanghus@earthling.net");

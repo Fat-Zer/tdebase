@@ -53,7 +53,7 @@ extern "C" { KDE_EXPORT int kdemain(int argc, char **argv); }
 
 int kdemain( int argc, char **argv )
 {
-  KInstance instance( "kio_floppy" );
+  TDEInstance instance( "kio_floppy" );
 
   if (argc != 4)
   {

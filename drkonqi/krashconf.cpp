@@ -74,7 +74,7 @@ void KrashConfig :: readConfig()
     programname.setStr(I18N_NOOP("unknown"));
   // leak some memory... Well. It's only done once anyway :-)
   const char * progname = tqstrdup(programname);
-  m_aboutData = new KAboutData(args->getOption("appname"),
+  m_aboutData = new TDEAboutData(args->getOption("appname"),
                                progname,
                                args->getOption("appversion"),
                                0, 0, 0, 0, 0,

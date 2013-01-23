@@ -72,10 +72,10 @@ KParts::Part* KonqListViewFactory::createPartObject( TQWidget *parentWidget, con
   return obj;
 }
 
-KInstance *KonqListViewFactory::instance()
+TDEInstance *KonqListViewFactory::instance()
 {
   if ( !s_instance )
-    s_instance = new KInstance( "konqlistview" );
+    s_instance = new TDEInstance( "konqlistview" );
   return s_instance;
 }
 
@@ -88,7 +88,7 @@ KonqPropsView *KonqListViewFactory::defaultViewProps()
   return s_defaultViewProps;
 }
 
-KInstance *KonqListViewFactory::s_instance = 0;
+TDEInstance *KonqListViewFactory::s_instance = 0;
 KonqPropsView *KonqListViewFactory::s_defaultViewProps = 0;
 
 K_EXPORT_COMPONENT_FACTORY( konq_listview, KonqListViewFactory )

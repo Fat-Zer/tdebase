@@ -25,7 +25,7 @@
 
 class PrintPartExtension;
 class KMMainView;
-class KAboutData;
+class TDEAboutData;
 
 class PrintPart : public KParts::ReadOnlyPart
 {
@@ -36,7 +36,7 @@ public:
 		  const TQStringList & );
 	virtual ~PrintPart();
 
-	static KAboutData *createAboutData();
+	static TDEAboutData *createAboutData();
 
 protected:
 	bool openFile();

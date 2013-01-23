@@ -36,7 +36,7 @@ using namespace KIO;
 
 extern "C" {
     int KDE_EXPORT kdemain(int, char **argv) {
-        KInstance instance("kio_mac");
+        TDEInstance instance("kio_mac");
         MacProtocol slave(argv[2], argv[3]);
         slave.dispatchLoop();
         return 0;

@@ -903,8 +903,8 @@ KonqSidebarPlugin *Sidebar_Widget::loadModule(TQWidget *par,TQString &desktopNam
 		{
 			// create the module
 
-			KonqSidebarPlugin* (*func)(KInstance*,TQObject *, TQWidget*, TQString&, const char *);
-			func = (KonqSidebarPlugin* (*)(KInstance*,TQObject *, TQWidget *, TQString&, const char *)) create;
+			KonqSidebarPlugin* (*func)(TDEInstance*,TQObject *, TQWidget*, TQString&, const char *);
+			func = (KonqSidebarPlugin* (*)(TDEInstance*,TQObject *, TQWidget *, TQString&, const char *)) create;
 			TQString fullPath(m_path+desktopName);
 			return  (KonqSidebarPlugin*)func(getInstance(),bi,par,fullPath,0);
 		}
@@ -1084,7 +1084,7 @@ void Sidebar_Widget::dockWidgetHasUndocked(KDockWidget* wid)
 	}
 }
 
-KInstance  *Sidebar_Widget::getInstance()
+TDEInstance  *Sidebar_Widget::getInstance()
 {
 	return ((KonqSidebar*)m_partParent)->getInstance();
 }

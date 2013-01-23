@@ -34,7 +34,7 @@
 
 int main( int argc, char *argv[] )
 {
-  KInstance instance( "kappfinder_install" );
+  TDEInstance instance( "kappfinder_install" );
   int added = 0;
 
   if ( argc != 2 ) {

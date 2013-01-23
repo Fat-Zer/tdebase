@@ -78,9 +78,9 @@ KCMUserAccount::KCMUserAccount( TQWidget *parent, const char *name,
 	_mw->lblUsername->setText( _ku->loginName() );
 	_mw->lblUID->setText( TQString().number(_ku->uid()) );
 
-	KAboutData *about = new KAboutData(I18N_NOOP("kcm_useraccount"), 
+	TDEAboutData *about = new TDEAboutData(I18N_NOOP("kcm_useraccount"), 
 		I18N_NOOP("Password & User Information"), 0, 0,
-		KAboutData::License_GPL,
+		TDEAboutData::License_GPL,
 		I18N_NOOP("(C) 2002, Braden MacDonald, "
 			"(C) 2004 Ravikiran Rajagopal"));
 

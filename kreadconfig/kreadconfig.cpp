@@ -43,10 +43,10 @@ static KCmdLineOptions options[] =
 };
 int main(int argc, char **argv)
 {
-	KAboutData aboutData("kreadconfig", I18N_NOOP("KReadConfig"),
+	TDEAboutData aboutData("kreadconfig", I18N_NOOP("KReadConfig"),
 		"1.0.1",
 		I18N_NOOP("Read KConfig entries - for use in shell scripts"),
-		KAboutData::License_GPL,
+		TDEAboutData::License_GPL,
 		"(c) 2001 Red Hat, Inc.");
 	aboutData.addAuthor("Bernhard Rosenkraenzer", 0, "bero@redhat.com");
 	TDECmdLineArgs::init(argc, argv, &aboutData);
@@ -64,7 +64,7 @@ int main(int argc, char **argv)
 		return 1;
 	}
 
-	KInstance inst(&aboutData);
+	TDEInstance inst(&aboutData);
 	KGlobal::config();
 
 	KConfig *konfig;

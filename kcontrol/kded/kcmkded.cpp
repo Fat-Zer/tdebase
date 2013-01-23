@@ -49,9 +49,9 @@ K_EXPORT_COMPONENT_FACTORY( kcm_kded, KDEDFactory( "kcmkded" ) )
 KDEDConfig::KDEDConfig(TQWidget* parent, const char* name, const TQStringList &) :
 	KCModule( KDEDFactory::instance(), parent, name )
 {
-	KAboutData *about =
-		new KAboutData( I18N_NOOP( "kcmkded" ), I18N_NOOP( "TDE Service Manager" ),
-				0, 0, KAboutData::License_GPL,
+	TDEAboutData *about =
+		new TDEAboutData( I18N_NOOP( "kcmkded" ), I18N_NOOP( "TDE Service Manager" ),
+				0, 0, TDEAboutData::License_GPL,
 				I18N_NOOP( "(c) 2002 Daniel Molkentin" ) );
 	about->addAuthor("Daniel Molkentin",0,"molkentin@kde.org");
 	setAboutData( about );

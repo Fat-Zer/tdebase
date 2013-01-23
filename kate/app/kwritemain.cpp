@@ -549,10 +549,10 @@ extern "C" KDE_EXPORT int kdemain(int argc, char **argv)
       We now hard-code the first two numbers to match the 3.5.x days and only update the last number. */
   TQString kWriteVersion  = TQString ("4.5.%1").arg(KDE::versionMajor());
 
-  KAboutData aboutData ( "kwrite",
+  TDEAboutData aboutData ( "kwrite",
                          I18N_NOOP("KWrite"),
                          kWriteVersion.latin1(),
-                         I18N_NOOP( "KWrite - Text Editor" ), KAboutData::License_LGPL_V2,
+                         I18N_NOOP( "KWrite - Text Editor" ), TDEAboutData::License_LGPL_V2,
                          I18N_NOOP( "(c) 2000-2005 The Kate Authors" ), 0, "http://kate.kde.org" );
 
   aboutData.addAuthor ("Christoph Cullmann", I18N_NOOP("Maintainer"), "cullmann@kde.org", "http://www.babylon2k.de");

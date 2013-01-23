@@ -28,7 +28,7 @@
 #include <kurifilter.h>
 #include <tqregexp.h>
 
-class KInstance;
+class TDEInstance;
 class KProcess;
 
 /*

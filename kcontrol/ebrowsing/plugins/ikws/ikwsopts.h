@@ -35,7 +35,7 @@ class FilterOptions : public KCModule
     Q_OBJECT
 
 public:
-    FilterOptions(KInstance *instance, TQWidget *parent = 0, const char *name = 0);
+    FilterOptions(TDEInstance *instance, TQWidget *parent = 0, const char *name = 0);
 
     void load();
     void load( bool useDefaults );

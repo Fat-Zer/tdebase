@@ -30,8 +30,8 @@
 
 #include <tqcstring.h>
 
-class KInstance;
-class KAboutData;
+class TDEInstance;
+class TDEAboutData;
 
 /**
  * Man Page Viewer
@@ -48,11 +48,11 @@ class KManPartFactory: public KParts::Factory
                                 TQObject* parent, const char* name, const char * classname,
                                 const TQStringList &args);
 
-      static KInstance * instance();
+      static TDEInstance * instance();
 
    private:
-      static KInstance * s_instance;
-      static KAboutData * s_about;
+      static TDEInstance * s_instance;
+      static TDEAboutData * s_about;
 
 };
 
@@ -70,7 +70,7 @@ class KManPart : public KHTMLPart
       void jobDone( KIO::Job *);
    protected:
       virtual bool openFile();
-      KInstance *m_instance;
+      TDEInstance *m_instance;
       KParts::BrowserExtension * m_extension;
       KIO::TransferJob *m_job;
 };

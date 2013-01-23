@@ -89,11 +89,11 @@ MediaApplet::~MediaApplet()
 
 void MediaApplet::about()
 {
-    KAboutData data("mediaapplet",
+    TDEAboutData data("mediaapplet",
                     I18N_NOOP("Media Applet"),
                     "1.0",
                     I18N_NOOP("\"media:/\" ioslave frontend applet"),
-                    KAboutData::License_GPL_V2,
+                    TDEAboutData::License_GPL_V2,
                     "(c) 2004, Kevin Ottens");
     
     data.addAuthor("Kevin \'ervin\' Ottens",

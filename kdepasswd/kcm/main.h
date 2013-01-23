@@ -23,7 +23,7 @@
 
 #include "main_widget.h"
 
-class KAboutData;
+class TDEAboutData;
 class KUser;
 class KEmailSettings;
 class TQEvent;

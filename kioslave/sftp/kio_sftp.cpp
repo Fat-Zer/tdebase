@@ -79,7 +79,7 @@ extern "C"
 {
   int KDE_EXPORT kdemain( int argc, char **argv )
   {
-    KInstance instance( "kio_sftp" );
+    TDEInstance instance( "kio_sftp" );
 
     kdDebug(KIO_SFTP_DB) << "*** Starting kio_sftp " << endl;
 

@@ -459,7 +459,7 @@ bool clientApp::doIt()
 
   if ( command == "openURL" || command == "newTab" )
   {
-    KInstance inst(appName);
+    TDEInstance inst(appName);
     if( !TDEApplication::dcopClient()->attach())
     {
 	TDEApplication::startKdeinit();
@@ -484,7 +484,7 @@ bool clientApp::doIt()
   }
   else if ( command == "openProfile" )
   {
-    KInstance inst(appName);
+    TDEInstance inst(appName);
     if( !TDEApplication::dcopClient()->attach())
     {
 	TDEApplication::startKdeinit();

@@ -78,9 +78,9 @@ extern "C"
 KJSParts::KJSParts(KConfig *config, TQWidget *parent, const char *name)
 	: KCModule(parent, name), mConfig(config)
 {
-  KAboutData *about =
-  new KAboutData(I18N_NOOP("kcmkonqhtml"), I18N_NOOP("Konqueror Browsing Control Module"),
-                0, 0, KAboutData::License_GPL,
+  TDEAboutData *about =
+  new TDEAboutData(I18N_NOOP("kcmkonqhtml"), I18N_NOOP("Konqueror Browsing Control Module"),
+                0, 0, TDEAboutData::License_GPL,
                 I18N_NOOP("(c) 1999 - 2001 The Konqueror Developers"));
 
   about->addAuthor("Waldo Bastian",0,"bastian@kde.org");

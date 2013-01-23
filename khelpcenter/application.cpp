@@ -60,10 +60,10 @@ static KCmdLineOptions options[] =
 
 extern "C" int KDE_EXPORT kdemain( int argc, char **argv )
 {
-  KAboutData aboutData( "khelpcenter", I18N_NOOP("Trinity Help Center"),
+  TDEAboutData aboutData( "khelpcenter", I18N_NOOP("Trinity Help Center"),
                         HELPCENTER_VERSION,
                         I18N_NOOP("The Trinity Help Center"),
-                        KAboutData::License_GPL,
+                        TDEAboutData::License_GPL,
                         I18N_NOOP("(c) 1999-2003, The KHelpCenter developers") );
 
   aboutData.addAuthor( "Timothy Pearson", 0, "kb9vqf@pearsoncomputing.net" );

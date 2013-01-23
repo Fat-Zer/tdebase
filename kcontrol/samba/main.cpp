@@ -81,10 +81,10 @@ SambaContainer::SambaContainer(TQWidget *parent, const char* name, const TQStrin
      " is parsed. On some systems showmount is in /usr/sbin, check if you have"
      " showmount in your PATH."));
 
-    KAboutData *about =
-    new KAboutData(I18N_NOOP("kcmsamba"),
+    TDEAboutData *about =
+    new TDEAboutData(I18N_NOOP("kcmsamba"),
 		I18N_NOOP("TDE Panel System Information Control Module"),
-		0, 0, KAboutData::License_GPL,
+		0, 0, TDEAboutData::License_GPL,
 		I18N_NOOP("(c) 2002 KDE Information Control Module Samba Team"));
     about->addAuthor("Michael Glauche", 0, "glauche@isa.rwth-aachen.de");
     about->addAuthor("Matthias Hoelzer", 0, "hoelzer@kde.org");

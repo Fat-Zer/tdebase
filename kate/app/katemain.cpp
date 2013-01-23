@@ -60,8 +60,8 @@ extern "C" KDE_EXPORT int kdemain( int argc, char **argv )
   // here we go, construct the Kate version
   TQString kateVersion = KateApp::kateVersion();
 
-  KAboutData aboutData ("kate", I18N_NOOP("Kate"), kateVersion.latin1(),
-                        I18N_NOOP( "Kate - Advanced Text Editor" ), KAboutData::License_LGPL_V2,
+  TDEAboutData aboutData ("kate", I18N_NOOP("Kate"), kateVersion.latin1(),
+                        I18N_NOOP( "Kate - Advanced Text Editor" ), TDEAboutData::License_LGPL_V2,
                         I18N_NOOP( "(c) 2000-2005 The Kate Authors" ), 0, "http://kate.kde.org");
 
   aboutData.addAuthor ("Christoph Cullmann", I18N_NOOP("Maintainer"), "cullmann@kde.org", "http://www.babylon2k.de");

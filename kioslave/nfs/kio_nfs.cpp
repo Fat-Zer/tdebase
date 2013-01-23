@@ -113,7 +113,7 @@ extern "C" { int KDE_EXPORT kdemain(int argc, char **argv); }
 
 int kdemain( int argc, char **argv )
 {
-  KInstance instance( "kio_nfs" );
+  TDEInstance instance( "kio_nfs" );
 
   if (argc != 4)
   {

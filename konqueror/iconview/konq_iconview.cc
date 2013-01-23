@@ -82,10 +82,10 @@ public:
       return obj;
    }
 
-   static KInstance *instance()
+   static TDEInstance *instance()
    {
       if ( !s_instance )
-         s_instance = new KInstance( "konqiconview" );
+         s_instance = new TDEInstance( "konqiconview" );
       return s_instance;
    }
 
@@ -98,11 +98,11 @@ public:
    }
 
    private:
-      static KInstance *s_instance;
+      static TDEInstance *s_instance;
       static KonqPropsView *s_defaultViewProps;
 };
 
-KInstance *KonqIconViewFactory::s_instance = 0;
+TDEInstance *KonqIconViewFactory::s_instance = 0;
 KonqPropsView *KonqIconViewFactory::s_defaultViewProps = 0;
 
 

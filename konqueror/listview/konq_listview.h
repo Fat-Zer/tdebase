@@ -46,11 +46,11 @@ public:
 
   virtual KParts::Part* createPartObject( TQWidget *parentWidget, const char *, TQObject *parent, const char *name, const char*, const TQStringList &args );
 
-  static KInstance *instance();
+  static TDEInstance *instance();
   static KonqPropsView *defaultViewProps();
 
 private:
-  static KInstance *s_instance;
+  static TDEInstance *s_instance;
   static KonqPropsView *s_defaultViewProps;
 };
 

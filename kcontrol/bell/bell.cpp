@@ -132,9 +132,9 @@ KBellConfig::KBellConfig(TQWidget *parent, const char *name):
   connect(m_pitch, TQT_SIGNAL(valueChanged(int)), TQT_SLOT(changed()));
   connect(m_duration, TQT_SIGNAL(valueChanged(int)), TQT_SLOT(changed()));
   
-  KAboutData *about =
-    new KAboutData(I18N_NOOP("kcmbell"), I18N_NOOP("TDE Bell Control Module"),
-                  0, 0, KAboutData::License_GPL,
+  TDEAboutData *about =
+    new TDEAboutData(I18N_NOOP("kcmbell"), I18N_NOOP("TDE Bell Control Module"),
+                  0, 0, TDEAboutData::License_GPL,
                   I18N_NOOP("(c) 1997 - 2001 Christian Czezatke, Matthias Elter"));
 
   about->addAuthor("Christian Czezatke", I18N_NOOP("Original author"), "e9025461@student.tuwien.ac.at");

@@ -27,7 +27,7 @@
 
 #include <kurifilter.h>
 
-class KInstance;
+class TDEInstance;
 
 class KURISearchFilter : public KURIFilterPlugin, public DCOPObject
 {

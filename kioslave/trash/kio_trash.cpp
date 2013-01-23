@@ -52,7 +52,7 @@ static const KCmdLineOptions options[] =
 extern "C" {
     int KDE_EXPORT kdemain( int argc, char **argv )
     {
-        //KInstance instance( "kio_trash" );
+        //TDEInstance instance( "kio_trash" );
         // TDEApplication is necessary to use kio_file
         putenv(strdup("SESSION_MANAGER="));
         TDEApplication::disableAutoDcopRegistration();

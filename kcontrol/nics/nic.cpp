@@ -106,10 +106,10 @@ KCMNic::KCMNic(TQWidget *parent, const char * name, const TQStringList &)
    connect(m_updateButton,TQT_SIGNAL(clicked()),this,TQT_SLOT(update()));
    connect(timer,TQT_SIGNAL(timeout()),this,TQT_SLOT(update()));
    update();
-   KAboutData *about =
-   new KAboutData(I18N_NOOP("kcminfo"),
+   TDEAboutData *about =
+   new TDEAboutData(I18N_NOOP("kcminfo"),
 	I18N_NOOP("TDE Panel System Information Control Module"),
-	0, 0, KAboutData::License_GPL,
+	0, 0, TDEAboutData::License_GPL,
 	I18N_NOOP("(c) 2001 - 2002 Alexander Neundorf"));
 
    about->addAuthor("Alexander Neundorf", 0, "neundorf@kde.org");

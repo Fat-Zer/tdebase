@@ -313,7 +313,7 @@ protected:
                  const TQString &name, const KURL & defaultURL, bool openURL, bool openAfterCurrentPage = false );
 
   // Disabled - we do it ourselves
-  virtual void setActiveInstance( KInstance * ) {}
+  virtual void setActiveInstance( TDEInstance * ) {}
 
 private:
 

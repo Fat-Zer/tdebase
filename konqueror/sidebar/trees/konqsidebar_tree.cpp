@@ -14,7 +14,7 @@
 #include <tqvbox.h>
 #include <tqapplication.h>
 
-KonqSidebar_Tree::KonqSidebar_Tree(KInstance *instance,TQObject *parent,TQWidget *widgetParent, TQString &desktopName_, const char* name):
+KonqSidebar_Tree::KonqSidebar_Tree(TDEInstance *instance,TQObject *parent,TQWidget *widgetParent, TQString &desktopName_, const char* name):
                    KonqSidebarPlugin(instance,parent,widgetParent,desktopName_,name)
 	{
 		KSimpleConfig ksc(desktopName_);
@@ -124,7 +124,7 @@ void KonqSidebar_Tree::rename()
 
 extern "C"
 {
-    KDE_EXPORT void*  create_konqsidebar_tree(KInstance *inst,TQObject *par,TQWidget *widp,TQString &desktopname,const char *name)
+    KDE_EXPORT void*  create_konqsidebar_tree(TDEInstance *inst,TQObject *par,TQWidget *widp,TQString &desktopname,const char *name)
     {
         return new KonqSidebar_Tree(inst,par,widp,desktopname,name);
     }

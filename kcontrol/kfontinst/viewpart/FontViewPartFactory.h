@@ -31,8 +31,8 @@
 
 #include <klibloader.h>
 
-class KInstance;
-class KAboutData;
+class TDEInstance;
+class TDEAboutData;
 
 namespace KFI
 {
@@ -47,12 +47,12 @@ class CFontViewPartFactory : public KLibFactory
     virtual ~CFontViewPartFactory();
     virtual TQObject *createObject(TQObject *parent = 0, const char *name = 0, const char *classname = TQOBJECT_OBJECT_NAME_STRING, const TQStringList &args = TQStringList());
 
-    static KInstance * instance();
+    static TDEInstance * instance();
 
     private:
 
-    static KInstance  *theirInstance;
-    static KAboutData *theirAbout;
+    static TDEInstance  *theirInstance;
+    static TDEAboutData *theirAbout;
 };
 
 }

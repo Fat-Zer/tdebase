@@ -180,8 +180,8 @@ extern "C" KDE_EXPORT int kdemain( int argc, char* argv[] )
 {
     sanity_check(argc, argv);
 
-    KAboutData aboutData( "ksmserver", I18N_NOOP("The TDE Session Manager"),
-       version, description, KAboutData::License_BSD,
+    TDEAboutData aboutData( "ksmserver", I18N_NOOP("The TDE Session Manager"),
+       version, description, TDEAboutData::License_BSD,
        "(C) 2000, The KDE Developers");
     aboutData.addAuthor("Matthias Ettrich",0, "ettrich@kde.org");
     aboutData.addAuthor("Luboš Luňák", I18N_NOOP( "Maintainer" ), "l.lunak@kde.org" );

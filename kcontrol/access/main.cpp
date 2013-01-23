@@ -6,8 +6,8 @@
 
 extern "C" KDE_EXPORT int kdemain(int argc, char * argv[] )
 {
-  KAboutData about(I18N_NOOP("kaccess"), I18N_NOOP("TDE Accessibility Tool"),
-                  0, 0, KAboutData::License_GPL,
+  TDEAboutData about(I18N_NOOP("kaccess"), I18N_NOOP("TDE Accessibility Tool"),
+                  0, 0, TDEAboutData::License_GPL,
                   I18N_NOOP("(c) 2000, Matthias Hoelzer-Kluepfel"));
 
   about.addAuthor("Matthias Hoelzer-Kluepfel", I18N_NOOP("Author") , "hoelzer@kde.org");

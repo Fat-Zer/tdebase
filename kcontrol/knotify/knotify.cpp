@@ -84,10 +84,10 @@ KCMKNotify::KCMKNotify(TQWidget *parent, const char *name, const TQStringList & 
     connect( m_notifyWidget->m_playerButton, TQT_SIGNAL( clicked() ),
              TQT_SLOT( slotPlayerSettings()));
 
-    KAboutData* ab = new KAboutData(
+    TDEAboutData* ab = new TDEAboutData(
         "kcmknotify", I18N_NOOP("KNotify"), "3.0",
         I18N_NOOP("System Notification Control Panel Module"),
-        KAboutData::License_GPL, "(c) 2002 Carsten Pfeiffer", 0, 0 );
+        TDEAboutData::License_GPL, "(c) 2002 Carsten Pfeiffer", 0, 0 );
     ab->addAuthor( "Carsten Pfeiffer", 0, "pfeiffer@kde.org" );
     ab->addCredit( "Charles Samuels", I18N_NOOP("Original implementation"),
 	       "charles@altair.dhs.org" );

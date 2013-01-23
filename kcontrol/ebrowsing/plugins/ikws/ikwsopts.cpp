@@ -75,7 +75,7 @@ private:
     SearchProvider *m_provider;
 };
 
-FilterOptions::FilterOptions(KInstance *instance, TQWidget *parent, const char *name)
+FilterOptions::FilterOptions(TDEInstance *instance, TQWidget *parent, const char *name)
               :KCModule(instance, parent, name)
 {
     TQVBoxLayout *mainLayout = new TQVBoxLayout( this, KDialog::marginHint(),

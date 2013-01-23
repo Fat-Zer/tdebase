@@ -86,10 +86,10 @@ void KWebDesktopRun::slotFinished( KIO::Job * job )
 
 int main( int argc, char **argv )
 {
-    KAboutData data( "kwebdesktop", I18N_NOOP("TDE Web Desktop"),
+    TDEAboutData data( "kwebdesktop", I18N_NOOP("TDE Web Desktop"),
                      VERSION,
                      I18N_NOOP("Displays an HTML page as the background of the desktop"),
-                     KAboutData::License_GPL,
+                     TDEAboutData::License_GPL,
                      "(c) 2000, David Faure <faure@kde.org>" );
     data.addAuthor( "David Faure", I18N_NOOP("developer and maintainer"), "faure@kde.org" );
 

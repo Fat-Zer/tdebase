@@ -27,7 +27,7 @@
 
 #include <kurifilter.h>
 
-class KInstance;
+class TDEInstance;
 
 class KAutoWebSearch : public KURIFilterPlugin, public DCOPObject
 {

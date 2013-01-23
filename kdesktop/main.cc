@@ -168,8 +168,8 @@ extern "C" KDE_EXPORT int kdemain( int argc, char **argv )
         twin_name.sprintf("twin-screen-%d", kdesktop_screen_number);
     }
 
-    KAboutData aboutData( kdesktop_name, I18N_NOOP("KDesktop"),
-			  version, description, KAboutData::License_GPL,
+    TDEAboutData aboutData( kdesktop_name, I18N_NOOP("KDesktop"),
+			  version, description, TDEAboutData::License_GPL,
 			  "(c) 1998-2000, The KDesktop Authors");
     aboutData.addAuthor("David Faure", 0, "faure@kde.org");
     aboutData.addAuthor("Martin Koller", 0, "m.koller@surfeu.at");

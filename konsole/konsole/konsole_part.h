@@ -32,7 +32,7 @@
 #include "schema.h"
 #include "session.h"
 
-class KInstance;
+class TDEInstance;
 class konsoleBrowserExtension;
 class TQPushButton;
 class TQSpinBox;
@@ -57,11 +57,11 @@ public:
                                      const char* classname = "KParts::Part",
                                      const TQStringList &args = TQStringList());
 
-    static KInstance *instance();
+    static TDEInstance *instance();
 
  private:
-    static KInstance *s_instance;
-    static KAboutData *s_aboutData;
+    static TDEInstance *s_instance;
+    static TDEAboutData *s_aboutData;
 };
 
 //////////////////////////////////////////////////////////////////////

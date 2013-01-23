@@ -145,7 +145,7 @@ void NSPluginCallback::evalJavaScript( int id, TQString script )
  * We need one static instance of the factory for our C 'main'
  * function
  */
-KInstance *PluginFactory::s_instance = 0L;
+TDEInstance *PluginFactory::s_instance = 0L;
 
 
 PluginFactory::PluginFactory()
@@ -182,18 +182,18 @@ KParts::Part * PluginFactory::createPartObject(TQWidget *parentWidget, const cha
 }
 
 
-KInstance *PluginFactory::instance()
+TDEInstance *PluginFactory::instance()
 {
     kdDebug(1432) << "PluginFactory::instance" << endl;
 
     if ( !s_instance )
-        s_instance = new KInstance( aboutData() );
+        s_instance = new TDEInstance( aboutData() );
     return s_instance;
 }
 
-KAboutData *PluginFactory::aboutData()
+TDEAboutData *PluginFactory::aboutData()
 {
-    KAboutData *about = new KAboutData("plugin", I18N_NOOP("plugin"), "1.99");
+    TDEAboutData *about = new TDEAboutData("plugin", I18N_NOOP("plugin"), "1.99");
     return about;
 }
 

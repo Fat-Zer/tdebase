@@ -5,7 +5,7 @@
 #include <khtml_part.h>
 
 class KHTMLPart;
-class KInstance;
+class TDEInstance;
 
 class KonqAboutPageFactory : public KParts::Factory
 {
@@ -17,7 +17,7 @@ public:
                                             TQObject *parent, const char *name,
                                             const char *classname, const TQStringList &args );
 
-    static KInstance *instance() { return s_instance; }
+    static TDEInstance *instance() { return s_instance; }
 
     static TQString launch();
     static TQString intro();
@@ -28,7 +28,7 @@ public:
 private:
     static TQString loadFile( const TQString& file );
 
-    static KInstance *s_instance;
+    static TDEInstance *s_instance;
     static TQString *s_launch_html, *s_intro_html, *s_specs_html, *s_tips_html, *s_plugins_html;
 };
 

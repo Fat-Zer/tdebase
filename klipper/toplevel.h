@@ -31,7 +31,7 @@
 
 class TQClipboard;
 class KToggleAction;
-class KAboutData;
+class TDEAboutData;
 class URLGrabber;
 class ClipboardPoll;
 class TQTime;
@@ -69,7 +69,7 @@ public:
     static void updateTimestamp();
     static void createAboutData();
     static void destroyAboutData();
-    static KAboutData* aboutData();
+    static TDEAboutData* aboutData();
 
 public slots:
     void saveSession();
@@ -204,7 +204,7 @@ private:
     TQTimer m_pendingCheckTimer;
     bool m_pendingContentsCheck;
     ClipboardPoll* poll;
-    static KAboutData* about_data;
+    static TDEAboutData* about_data;
 
     bool blockFetchingNewData();
     KlipperSessionManaged* session_managed;

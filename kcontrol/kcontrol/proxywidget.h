@@ -29,7 +29,7 @@ class TQPushButton;
 class TQFrame;
 
 class KCModule;
-class KAboutData;
+class TDEAboutData;
 
 #include "dockcontainer.h"
 #include <tqscrollview.h>
@@ -46,7 +46,7 @@ public:
   ~ProxyWidget();
 
   TQString quickHelp() const;
-  const KAboutData *aboutData() const;
+  const TDEAboutData *aboutData() const;
 
 public slots:
 

@@ -22,7 +22,7 @@ class TQRadioButton;
 class KColorButton;
 class TQSlider;
 class KNumInput;
-class KAboutData;
+class TDEAboutData;
 
 class ExtendedIntNumInput : public KIntNumInput
 {

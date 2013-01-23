@@ -100,7 +100,7 @@ private:
    * against a module with no about data
    * we construct one for him
    **/
-  KAboutData *dummyAbout;
+  TDEAboutData *dummyAbout;
 };
 
 #endif

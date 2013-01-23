@@ -53,7 +53,7 @@
 #include "thumbnail.h"
 #include <kio/thumbcreator.h>
 
-// Use correctly KInstance instead of TDEApplication (but then no TQPixmap)
+// Use correctly TDEInstance instead of TDEApplication (but then no TQPixmap)
 #undef USE_KINSTANCE
 // Fix thumbnail: protocol
 #define THUMBNAIL_HACK (1)
@@ -96,7 +96,7 @@ int kdemain(int argc, char **argv)
 #endif
 
 #ifdef USE_KINSTANCE
-    KInstance instance("kio_thumbnail");
+    TDEInstance instance("kio_thumbnail");
 #else
     // creating TDEApplication in a slave in not a very good idea,
     // as dispatchLoop() doesn't allow it to process its messages,

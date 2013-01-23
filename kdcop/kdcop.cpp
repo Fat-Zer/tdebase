@@ -17,9 +17,9 @@ static const KCmdLineOptions options[] =
 
 int main( int argc, char ** argv )
 {
-  KAboutData aboutData( "kdcop", I18N_NOOP("KDCOP"),
+  TDEAboutData aboutData( "kdcop", I18N_NOOP("KDCOP"),
 			"0.1", I18N_NOOP( "A graphical DCOP browser/client" ),
-			KAboutData::License_Artistic,
+			TDEAboutData::License_Artistic,
 			"(c) 2000, Matthias Kalle Dalheimer");
   aboutData.addAuthor("Matthias Kalle Dalheimer",0, "kalle@kde.org");
   aboutData.addAuthor("Rik Hemsley",0, "rik@kde.org");

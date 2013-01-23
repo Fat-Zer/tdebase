@@ -112,8 +112,8 @@ static KCmdLineOptions options[] =
     KCmdLineLastOption
 };
 
-static KAboutData aboutData("kfontview", I18N_NOOP("Font Viewer"), 0, I18N_NOOP("Simple font viewer"),
-                            KAboutData::License_GPL,
+static TDEAboutData aboutData("kfontview", I18N_NOOP("Font Viewer"), 0, I18N_NOOP("Simple font viewer"),
+                            TDEAboutData::License_GPL,
                             I18N_NOOP("(c) Craig Drummond, 2004"));
 
 int main(int argc, char **argv)

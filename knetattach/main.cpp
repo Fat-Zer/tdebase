@@ -26,9 +26,9 @@
 #include "knetattach.h"
 
 int main(int argc, char **argv) {
-	KAboutData about("knetattach", I18N_NOOP("TDE Network Wizard"), "1.0",
+	TDEAboutData about("knetattach", I18N_NOOP("TDE Network Wizard"), "1.0",
 		I18N_NOOP("TDE Network Wizard"),
-		KAboutData::License_GPL,
+		TDEAboutData::License_GPL,
 		I18N_NOOP("(c) 2004 George Staikos"), 0,
 		"http://www.kde.org/");
 

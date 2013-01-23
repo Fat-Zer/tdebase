@@ -281,9 +281,9 @@ KScreenSaver::KScreenSaver(TQWidget *parent, const char *name, const TQStringLis
     mChanged = false;
     emit changed(false);
 
-    KAboutData *about =
-    new KAboutData(I18N_NOOP("kcmscreensaver"), I18N_NOOP("TDE Screen Saver Control Module"),
-                  0, 0, KAboutData::License_GPL,
+    TDEAboutData *about =
+    new TDEAboutData(I18N_NOOP("kcmscreensaver"), I18N_NOOP("TDE Screen Saver Control Module"),
+                  0, 0, TDEAboutData::License_GPL,
                   I18N_NOOP("(c) 1997-2002 Martin R. Jones\n"
                   "(c) 2003-2004 Chris Howells"));
     about->addAuthor("Chris Howells", 0, "howells@kde.org");

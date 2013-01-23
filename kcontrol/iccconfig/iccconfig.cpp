@@ -73,9 +73,9 @@ KICCConfig::KICCConfig(TQWidget *parent, const char *name, const TQStringList &)
   }
   systemconfig = new KSimpleConfig( TQString::fromLatin1( KDE_CONFDIR "/kicc/kiccconfigrc" ));
 
-  KAboutData *about =
-  new KAboutData(I18N_NOOP("kcmiccconfig"), I18N_NOOP("TDE ICC Profile Control Module"),
-                0, 0, KAboutData::License_GPL,
+  TDEAboutData *about =
+  new TDEAboutData(I18N_NOOP("kcmiccconfig"), I18N_NOOP("TDE ICC Profile Control Module"),
+                0, 0, TDEAboutData::License_GPL,
                 I18N_NOOP("(c) 2009,2010 Timothy Pearson"));
 
   about->addAuthor("Timothy Pearson", 0, "kb9vqf@pearsoncomputing.net");

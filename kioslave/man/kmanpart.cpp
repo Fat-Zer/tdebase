@@ -36,8 +36,8 @@ extern "C"
    }
 }
 
-KInstance* KManPartFactory::s_instance = 0L;
-KAboutData* KManPartFactory::s_about = 0L;
+TDEInstance* KManPartFactory::s_instance = 0L;
+TDEAboutData* KManPartFactory::s_about = 0L;
 
 KManPartFactory::KManPartFactory( TQObject* parent, const char* name )
    : KParts::Factory( parent, name )
@@ -57,13 +57,13 @@ KParts::Part* KManPartFactory::createPartObject( TQWidget * parentWidget, const 
    return part;
 }
 
-KInstance* KManPartFactory::instance()
+TDEInstance* KManPartFactory::instance()
 {
    if( !s_instance )
    {
-      s_about = new KAboutData( "kmanpart",
+      s_about = new TDEAboutData( "kmanpart",
                                 I18N_NOOP( "KMan" ), TDE_VERSION_STRING );
-      s_instance = new KInstance( s_about );
+      s_instance = new TDEInstance( s_about );
    }
    return s_instance;
 }
@@ -73,7 +73,7 @@ KManPart::KManPart( TQWidget * parent, const char * name )
 : KHTMLPart( parent, name )
 ,m_job(0)
 {
-   KInstance * instance = new KInstance( "kmanpart" );
+   TDEInstance * instance = new TDEInstance( "kmanpart" );
    setInstance( instance );
    m_extension=new KParts::BrowserExtension(this);
 }

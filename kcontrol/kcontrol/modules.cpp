@@ -253,7 +253,7 @@ void ConfigModule::embedded()
   _embedStack->raiseWidget(_embedWidget); // put it above the busy label
 }
 
-const KAboutData *ConfigModule::aboutData() const
+const TDEAboutData *ConfigModule::aboutData() const
 {
   if (!_module) return 0;
   return _module->aboutData();

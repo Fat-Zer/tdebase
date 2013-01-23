@@ -25,10 +25,10 @@ static KCmdLineOptions options[] =
 };
 int main(int argc, char **argv)
 {
-	KAboutData aboutData("kwriteconfig", I18N_NOOP("KWriteConfig"),
+	TDEAboutData aboutData("kwriteconfig", I18N_NOOP("KWriteConfig"),
 		"1.0.0",
 		I18N_NOOP("Write KConfig entries - for use in shell scripts"),
-		KAboutData::License_GPL,
+		TDEAboutData::License_GPL,
 		"(c) 2001 Red Hat, Inc. & Lu�s Pedro Coelho");
 	aboutData.addAuthor("Lu�s Pedro Coelho", 0, "luis_pedro@netcabo.pt");
 	aboutData.addAuthor("Bernhard Rosenkraenzer", "Wrote kreadconfig on which this is based", "bero@redhat.com");
@@ -48,7 +48,7 @@ int main(int argc, char **argv)
 	}
 	TQCString value = args->arg( 0 );
 
-	KInstance inst(&aboutData);
+	TDEInstance inst(&aboutData);
 
 	KConfig *konfig;
 	if (file.isEmpty())

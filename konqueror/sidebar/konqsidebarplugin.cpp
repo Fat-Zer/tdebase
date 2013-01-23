@@ -22,7 +22,7 @@
 #include <kdebug.h>
 
 
-KonqSidebarPlugin::KonqSidebarPlugin(KInstance *instance,TQObject *parent,
+KonqSidebarPlugin::KonqSidebarPlugin(TDEInstance *instance,TQObject *parent,
 	TQWidget * /*widgetParent*/, TQString &desktopName_, const char* name)
 	: TQObject(parent,name), desktopName(desktopName_)
 {
@@ -31,7 +31,7 @@ KonqSidebarPlugin::KonqSidebarPlugin(KInstance *instance,TQObject *parent,
 
 KonqSidebarPlugin::~KonqSidebarPlugin() { }
 
-KInstance *KonqSidebarPlugin::parentInstance(){return m_parentInstance;}
+TDEInstance *KonqSidebarPlugin::parentInstance(){return m_parentInstance;}
 
 void KonqSidebarPlugin::openURL(const KURL& url){handleURL(url);}
 

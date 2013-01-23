@@ -242,9 +242,9 @@ KArtsModule::KArtsModule(TQWidget *parent, const char *name)
 	connect(hardware->midiMapper, TQT_SIGNAL( textChanged( const TQString& ) ),
 			this, TQT_SLOT( slotChanged() ) );
 
-	KAboutData *about =  new KAboutData(I18N_NOOP("kcmarts"),
+	TDEAboutData *about =  new TDEAboutData(I18N_NOOP("kcmarts"),
                   I18N_NOOP("The Sound Server Control Module"),
-                  0, 0, KAboutData::License_GPL,
+                  0, 0, TDEAboutData::License_GPL,
                   I18N_NOOP("(c) 1999 - 2001, Stefan Westerfeld"));
 	about->addAuthor("Stefan Westerfeld",I18N_NOOP("aRts Author") , "stw@kde.org");
 	setAboutData(about);

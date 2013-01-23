@@ -257,7 +257,7 @@ extern "C" { int KDE_EXPORT kdemain( int argc, char **argv ); }
 
 int kdemain( int argc, char **argv )
 {
-  KInstance instance( "kio_cgi" );
+  TDEInstance instance( "kio_cgi" );
 
   kdDebug(7124) << "kio_cgi starting " << getpid() << endl;
 

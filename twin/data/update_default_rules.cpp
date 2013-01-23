@@ -20,7 +20,7 @@ int main( int argc, char* argv[] )
     {
     if( argc != 2 )
         return 1;
-    KInstance inst( "twin_update_default_rules" );
+    TDEInstance inst( "twin_update_default_rules" );
     TQString file = locate( "data", TQString( "twin/default_rules/" ) + argv[ 1 ] );
     if( file.isEmpty())
         {

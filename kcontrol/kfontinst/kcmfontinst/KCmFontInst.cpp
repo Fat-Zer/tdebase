@@ -84,10 +84,10 @@ CKCmFontInst::CKCmFontInst(TQWidget *parent, const char *, const TQStringList&)
 {
     KGlobal::locale()->insertCatalogue(KFI_CATALOGUE);
 
-    KAboutData* about = new KAboutData("kcmfontinst",
+    TDEAboutData* about = new TDEAboutData("kcmfontinst",
          I18N_NOOP("TDE Font Installer"),
          0, 0,
-         KAboutData::License_GPL,
+         TDEAboutData::License_GPL,
          I18N_NOOP("GUI front end to the fonts:/ ioslave.\n"
          "(c) Craig Drummond, 2000 - 2004"));
     about->addAuthor("Craig Drummond", I18N_NOOP("Developer and maintainer"), "craig@kde.org");

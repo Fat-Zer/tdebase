@@ -72,7 +72,7 @@ struct KonqPropsView::Private
    TQString sortcriterion;
 };
 
-KonqPropsView::KonqPropsView( KInstance * instance, KonqPropsView * defaultProps )
+KonqPropsView::KonqPropsView( TDEInstance * instance, KonqPropsView * defaultProps )
     : m_bSaveViewPropertiesLocally( false ), // will be overridden by setSave... anyway
     // if this is the default properties instance, then keep config object for saving
     m_dotDirExists( true ), // HACK so that enterDir returns true initially

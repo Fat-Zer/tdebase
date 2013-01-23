@@ -59,7 +59,7 @@ SMBSlave* G_TheSlave;
 int KDE_EXPORT kdemain( int argc, char **argv )
 {
 
-    KInstance instance( "kio_smb" );
+    TDEInstance instance( "kio_smb" );
     if( argc != 4 )
     {
         kdDebug(KIO_SMB) << "Usage: kio_smb protocol domain-socket1 domain-socket2"

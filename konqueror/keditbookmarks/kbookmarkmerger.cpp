@@ -59,9 +59,9 @@ int main( int argc, char**argv )
 {
 	const bool kdeRunning = kdeIsRunning();
 
-	KAboutData aboutData( "kbookmarkmerger", I18N_NOOP( "KBookmarkMerger" ),
+	TDEAboutData aboutData( "kbookmarkmerger", I18N_NOOP( "KBookmarkMerger" ),
 	                      "1.0", I18N_NOOP( "Merges bookmarks installed by 3rd parties into the user's bookmarks" ),
-	                      KAboutData::License_BSD,
+	                      TDEAboutData::License_BSD,
 	                      I18N_NOOP(  "Copyright © 2005 Frerich Raabe" ) );
 	aboutData.addAuthor( "Frerich Raabe", I18N_NOOP( "Original author" ),
 	                     "raabe@kde.org" );

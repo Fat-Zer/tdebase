@@ -130,10 +130,10 @@ KCMStyle::KCMStyle( TQWidget* parent, const char* name )
 	KGlobal::dirs()->addResourceType("themes",
 		KStandardDirs::kde_default("data") + "kstyle/themes");
 
-	KAboutData *about =
-		new KAboutData( I18N_NOOP("kcmstyle"),
+	TDEAboutData *about =
+		new TDEAboutData( I18N_NOOP("kcmstyle"),
 						I18N_NOOP("TDE Style Module"),
-						0, 0, KAboutData::License_GPL,
+						0, 0, TDEAboutData::License_GPL,
 						I18N_NOOP("(c) 2002 Karol Szwed, Daniel Molkentin"));
 
 	about->addAuthor("Karol Szwed", 0, "gallium@kde.org");

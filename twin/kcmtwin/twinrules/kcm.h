@@ -24,7 +24,7 @@
 #include <kconfig.h>
 
 class KConfig;
-class KAboutData;
+class TDEAboutData;
 
 namespace KWinInternal
 {

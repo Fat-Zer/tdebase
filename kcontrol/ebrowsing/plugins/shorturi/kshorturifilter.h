@@ -27,7 +27,7 @@
 #include <kgenericfactory.h>
 #include <kurifilter.h>
 
-class KInstance;
+class TDEInstance;
 
 /**
 * This is short URL filter class.

@@ -33,8 +33,8 @@ static KCmdLineOptions options[] = {
 
 int main( int argc, char *argv[] )
 {
-  KAboutData aboutData( "kappfinder", I18N_NOOP( "KAppfinder" ),
-                        "1.0", description, KAboutData::License_GPL,
+  TDEAboutData aboutData( "kappfinder", I18N_NOOP( "KAppfinder" ),
+                        "1.0", description, TDEAboutData::License_GPL,
                         "(c) 1998-2000, Matthias Hoelzer-Kluepfel" );
   aboutData.addAuthor( "Matthias Hoelzer-Kluepfel", 0, "hoelzer@kde.org" );
   aboutData.addAuthor( "Tobias Koenig", 0, "tokoe@kde.org" );

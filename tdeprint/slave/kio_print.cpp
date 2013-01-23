@@ -135,7 +135,7 @@ TQString buildGroupTable(DrGroup *grp, bool showHeader = true)
 
 int kdemain(int argc, char **argv)
 {
-	KInstance  instance("kio_print");
+	TDEInstance  instance("kio_print");
 
 	PRINT_DEBUG << "starting ioslave" << endl;
 	if (argc != 4)
@@ -145,8 +145,8 @@ int kdemain(int argc, char **argv)
 	}
 
 	/* create fake KApplicatiom object, needed for job stuffs */
-	KAboutData about( "kio_print", "kio_print", "fake_version", 
-			"TDEPrint IO slave", KAboutData::License_GPL, "(c) 2003, Michael Goffioul" );
+	TDEAboutData about( "kio_print", "kio_print", "fake_version", 
+			"TDEPrint IO slave", TDEAboutData::License_GPL, "(c) 2003, Michael Goffioul" );
 	TDECmdLineArgs::init( &about );
 	TDEApplication app;
 

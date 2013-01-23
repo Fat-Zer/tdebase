@@ -64,8 +64,8 @@ public:
 
 extern "C" int KDE_EXPORT kdemain( int argc, char **argv )
 {
-    KAboutData aboutData("kmenuedit", I18N_NOOP("TDE Menu Editor"),
-			 version, description, KAboutData::License_GPL,
+    TDEAboutData aboutData("kmenuedit", I18N_NOOP("TDE Menu Editor"),
+			 version, description, TDEAboutData::License_GPL,
 			 "(C) 2000-2003, Waldo Bastian, Raffaele Sandrini, Matthias Elter");
     aboutData.addAuthor("Waldo Bastian", I18N_NOOP("Maintainer"), "bastian@kde.org");
     aboutData.addAuthor("Raffaele Sandrini", I18N_NOOP("Previous Maintainer"), "sandrini@kde.org");

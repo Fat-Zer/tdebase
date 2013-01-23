@@ -88,7 +88,7 @@ class AsyncTraverser : public DocEntryTraverser
 
 int main(int argc,char **argv)
 {
-  KAboutData aboutData("testmetainfo","TestDocMetaInfo","0.1");
+  TDEAboutData aboutData("testmetainfo","TestDocMetaInfo","0.1");
   TDECmdLineArgs::init(argc,argv,&aboutData);
 
   TDEApplication app;

@@ -47,8 +47,8 @@ static KCmdLineOptions options[] =
 int main(int argc, char *argv[])
 {
 
-  KAboutData aboutData( "tdeprintfax", I18N_NOOP("KdeprintFax"),
-    "1.0", description, KAboutData::License_GPL,
+  TDEAboutData aboutData( "tdeprintfax", I18N_NOOP("KdeprintFax"),
+    "1.0", description, TDEAboutData::License_GPL,
     "(c), 2001 Michael Goffioul", 0, "http://printing.kde.org");
   aboutData.addAuthor("Michael Goffioul",0, "tdeprint@swing.be");
   TDECmdLineArgs::init( argc, argv, &aboutData );

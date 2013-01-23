@@ -35,7 +35,7 @@ int main( int argc, char** argv )
     usage();
     return 1;
   }
-  KInstance instance("ktartest");
+  TDEInstance instance("ktartest");
 
   TQString command = argv[1];
   kdDebug() << "main: command=" << command << endl;

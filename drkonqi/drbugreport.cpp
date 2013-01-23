@@ -35,7 +35,7 @@
 #include "drbugreport.h"
 
 DrKBugReport::DrKBugReport(TQWidget *parent, bool modal,
-                           const KAboutData *aboutData)
+                           const TDEAboutData *aboutData)
   : KBugReport(parent, modal, aboutData)
 {
 }

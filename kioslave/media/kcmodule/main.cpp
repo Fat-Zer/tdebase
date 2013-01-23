@@ -59,11 +59,11 @@ MediaModule::MediaModule( TQWidget *parent, const char *name, const TQStringList
 
 
 
-	KAboutData * about = new KAboutData("kcmmedia",
+	TDEAboutData * about = new TDEAboutData("kcmmedia",
 	                                    I18N_NOOP("Storage Media"),
 	                                    "0.6",
 	                                    I18N_NOOP("Storage Media Control Panel Module"),
-	                                    KAboutData::License_GPL_V2,
+	                                    TDEAboutData::License_GPL_V2,
 	                                    I18N_NOOP("(c) 2005 Jean-Remy Falleri"));
 	about->addAuthor("Jean-Remy Falleri", I18N_NOOP("Maintainer"), "jr.falleri@laposte.net");
 	about->addAuthor("Kevin Ottens", 0, "ervin ipsquad net");

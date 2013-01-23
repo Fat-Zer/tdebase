@@ -35,7 +35,7 @@ static KCmdLineOptions options[] = {
 
 extern "C" int KDE_EXPORT kdemain(int argc, char *argv[])
 {
-	KAboutData	aboutData("kjobviewer",I18N_NOOP("KJobViewer"),"0.1",I18N_NOOP("A print job viewer"),KAboutData::License_GPL,"(c) 2001, Michael Goffioul", 0, "http://printing.kde.org");
+	TDEAboutData	aboutData("kjobviewer",I18N_NOOP("KJobViewer"),"0.1",I18N_NOOP("A print job viewer"),TDEAboutData::License_GPL,"(c) 2001, Michael Goffioul", 0, "http://printing.kde.org");
 	aboutData.addAuthor("Michael Goffioul",0,"tdeprint@swing.be");
 	TDECmdLineArgs::init(argc,argv,&aboutData);
 	TDECmdLineArgs::addCmdLineOptions(options);

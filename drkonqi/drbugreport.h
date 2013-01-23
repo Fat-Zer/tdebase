@@ -28,7 +28,7 @@
 #ifndef DRBUGREPORT_H
 #define DRBUGREPORT_H
 
-class KAboutData;
+class TDEAboutData;
 
 #include <kbugreport.h>
 
@@ -41,7 +41,7 @@ public:
    * Constructor.
    */
   DrKBugReport(TQWidget *parent = 0, bool modal = true,
-               const KAboutData *aboutData = 0);
+               const TDEAboutData *aboutData = 0);
 
 public:
   /**

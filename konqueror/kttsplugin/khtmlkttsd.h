@@ -20,7 +20,7 @@
 #include <kparts/plugin.h>
 
 class KURL;
-class KInstance;
+class TDEInstance;
 
 /**
  * KHTML KParts Plugin

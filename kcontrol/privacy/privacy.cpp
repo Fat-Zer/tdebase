@@ -45,9 +45,9 @@ Privacy::Privacy(TQWidget *parent, const char *name)
 
   setButtons( KCModule::Default|KCModule::Apply|KCModule::Help );
 
-  KAboutData *about =
-    new KAboutData(I18N_NOOP("kcm_privacy"), I18N_NOOP("TDE Privacy Control Module"),
-                  0, 0, KAboutData::License_GPL,
+  TDEAboutData *about =
+    new TDEAboutData(I18N_NOOP("kcm_privacy"), I18N_NOOP("TDE Privacy Control Module"),
+                  0, 0, TDEAboutData::License_GPL,
                   I18N_NOOP("(c) 2003 Ralf Hoelzer"));
 
   about->addAuthor("Ralf Hoelzer", 0, "ralf@well.com");

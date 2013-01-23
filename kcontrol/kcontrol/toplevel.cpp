@@ -486,15 +486,15 @@ void TopLevel::reportBug()
     bool deleteit = false;
 
     if (!_active) // report against kcontrol
-        dummyAbout = const_cast<KAboutData*>(KGlobal::instance()->aboutData());
+        dummyAbout = const_cast<TDEAboutData*>(KGlobal::instance()->aboutData());
     else
     {
         if (_active->aboutData())
-            dummyAbout = const_cast<KAboutData*>(_active->aboutData());
+            dummyAbout = const_cast<TDEAboutData*>(_active->aboutData());
         else
         {
             snprintf(buffer, sizeof(buffer), "kcm%s", _active->library().latin1());
-            dummyAbout = new KAboutData(buffer, _active->moduleName().utf8(), "2.0");
+            dummyAbout = new TDEAboutData(buffer, _active->moduleName().utf8(), "2.0");
             deleteit = true;
         }
     }

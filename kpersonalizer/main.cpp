@@ -35,8 +35,8 @@ static KCmdLineOptions options[] =
 
 int main(int argc, char *argv[])
 {
-	KAboutData aboutData( "kpersonalizer", I18N_NOOP("KPersonalizer"),
-		VERSION, description, KAboutData::License_GPL,
+	TDEAboutData aboutData( "kpersonalizer", I18N_NOOP("KPersonalizer"),
+		VERSION, description, TDEAboutData::License_GPL,
 		"(c) 2001, Ralf Nolden", 0, 0, "nolden@kde.org");
 	aboutData.addAuthor("Ralf Nolden",0, "nolden@kde.org");
 	aboutData.addAuthor("Carsten Wolff",0, "wolff@kde.org");

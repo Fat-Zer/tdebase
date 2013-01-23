@@ -114,9 +114,9 @@ static int askUser(TDEApplication &app, TQString filename, bool &readonly) {
 
 extern "C" KDE_EXPORT int kdemain(int argc, char **argv) {
     KLocale::setMainCatalogue("konqueror");
-    KAboutData aboutData("keditbookmarks", I18N_NOOP("Bookmark Editor"), VERSION,
+    TDEAboutData aboutData("keditbookmarks", I18N_NOOP("Bookmark Editor"), VERSION,
             I18N_NOOP("Konqueror Bookmarks Editor"),
-            KAboutData::License_GPL,
+            TDEAboutData::License_GPL,
             I18N_NOOP("(c) 2000 - 2003, KDE developers") );
     aboutData.addAuthor("David Faure", I18N_NOOP("Initial author"), "faure@kde.org");
     aboutData.addAuthor("Alexander Kellett", I18N_NOOP("Author"), "lypanov@kde.org");

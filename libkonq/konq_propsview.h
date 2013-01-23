@@ -26,7 +26,7 @@
 #include <kurl.h>
 #include <libkonq_export.h>
 
-class KInstance;
+class TDEInstance;
 class KConfigBase;
 class KConfig;
 
@@ -51,7 +51,7 @@ public:
    * is the one used by a view, and its value can differ from the default ones.
    * The instance parameter should be the same for both...
    */
-  KonqPropsView( KInstance * instance, KonqPropsView * defaultProps /*= 0L*/ );
+  KonqPropsView( TDEInstance * instance, KonqPropsView * defaultProps /*= 0L*/ );
 
   /** Destructor */
   virtual ~KonqPropsView();

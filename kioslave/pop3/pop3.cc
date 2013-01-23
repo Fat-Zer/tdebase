@@ -104,7 +104,7 @@ int kdemain(int argc, char **argv)
   }
 #endif
 
-  KInstance instance("kio_pop3");
+  TDEInstance instance("kio_pop3");
   POP3Protocol *slave;
 
   // Are we looking to use SSL?

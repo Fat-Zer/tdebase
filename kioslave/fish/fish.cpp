@@ -127,7 +127,7 @@ static void ripper(int)
 int KDE_EXPORT kdemain( int argc, char **argv )
 {
     KLocale::setMainCatalogue("kio_fish");
-    KInstance instance("fish");
+    TDEInstance instance("fish");
 
     myDebug( << "*** Starting fish " << endl);
     if (argc != 4) {

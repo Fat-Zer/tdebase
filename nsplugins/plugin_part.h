@@ -31,8 +31,8 @@
 #include <tqwidget.h>
 #include <tqguardedptr.h>
 
-class KAboutData;
-class KInstance;
+class TDEAboutData;
+class TDEInstance;
 class PluginBrowserExtension;
 class PluginLiveConnectExtension;
 class TQLabel;
@@ -72,12 +72,12 @@ public:
   			            const char *classname = "KParts::Part",
    			            const TQStringList &args = TQStringList());
 
-  static KInstance *instance();
-  static KAboutData *aboutData();
+  static TDEInstance *instance();
+  static TDEAboutData *aboutData();
 
 private:
 
-  static KInstance *s_instance;
+  static TDEInstance *s_instance;
   class NSPluginLoader *_loader;
 };
 

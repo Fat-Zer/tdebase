@@ -63,7 +63,7 @@ KonqExtensionManager::KonqExtensionManager(TQWidget *parent, KonqMainWindow *mai
 	// have their config in the same KConfig[Group]. So we can't show konqueror extensions and khtml extensions in the same tab.
 	d->pluginSelector->addPlugins("konqueror", i18n("Extensions"), "Extensions", KGlobal::config());
 	if ( activePart ) {
-		KInstance* instance = activePart->instance();
+		TDEInstance* instance = activePart->instance();
 		d->pluginSelector->addPlugins(instance->instanceName(), i18n("Tools"), "Tools", instance->config());
 		d->pluginSelector->addPlugins(instance->instanceName(), i18n("Statusbar"), "Statusbar", instance->config());
 	}

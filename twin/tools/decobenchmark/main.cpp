@@ -101,7 +101,7 @@ int main(int argc, char** argv)
 {
 	TQString style = "keramik";
 	// TDEApplication app(argc, argv);
-	KAboutData about("decobenchmark", "DecoBenchmark", "0.1", "twin decoration performance tester...", KAboutData::License_LGPL, "(C) 2005 Sandro Giessl");
+	TDEAboutData about("decobenchmark", "DecoBenchmark", "0.1", "twin decoration performance tester...", TDEAboutData::License_LGPL, "(C) 2005 Sandro Giessl");
 	TDECmdLineArgs::init(argc, argv, &about);
 	TDECmdLineArgs::addCmdLineOptions( options );
 

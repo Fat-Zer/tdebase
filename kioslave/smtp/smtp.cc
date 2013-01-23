@@ -95,7 +95,7 @@ extern "C" {
 
 int kdemain(int argc, char **argv)
 {
-  KInstance instance("kio_smtp");
+  TDEInstance instance("kio_smtp");
 
   if (argc != 4) {
     fprintf(stderr,

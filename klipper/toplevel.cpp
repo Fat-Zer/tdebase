@@ -1102,8 +1102,8 @@ static const char * const description =
 
 void KlipperWidget::createAboutData()
 {
-  about_data = new KAboutData("klipper", I18N_NOOP("Klipper"),
-    klipper_version, description, KAboutData::License_GPL,
+  about_data = new TDEAboutData("klipper", I18N_NOOP("Klipper"),
+    klipper_version, description, TDEAboutData::License_GPL,
 		       "(c) 1998, Andrew Stanley-Jones\n"
 		       "1998-2002, Carsten Pfeiffer\n"
 		       "2001, Patrick Dubroy");
@@ -1135,9 +1135,9 @@ void KlipperWidget::destroyAboutData()
   about_data = NULL;
 }
 
-KAboutData* KlipperWidget::about_data;
+TDEAboutData* KlipperWidget::about_data;
 
-KAboutData* KlipperWidget::aboutData()
+TDEAboutData* KlipperWidget::aboutData()
 {
   return about_data;
 }

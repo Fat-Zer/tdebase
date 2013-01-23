@@ -49,11 +49,11 @@ KLocaleApplication::KLocaleApplication(TQWidget *parent, const char* /*name*/,
                                        const TQStringList &args)
   : KCModule( KLocaleFactory::instance(), parent, args)
 {
-  KAboutData* aboutData = new KAboutData("kcmlocale",
+  TDEAboutData* aboutData = new TDEAboutData("kcmlocale",
         I18N_NOOP("KCMLocale"),
         "3.0",
         I18N_NOOP("Regional settings"),
-        KAboutData::License_GPL,
+        TDEAboutData::License_GPL,
         "(C) 1998 Matthias Hoelzer, "
         "(C) 1999-2003 Hans Petter Bieker",
         0, 0, "bieker@kde.org");

@@ -27,7 +27,7 @@
 
 template<class ConfigModule> class TQPtrList;
 class TQStringList;
-class KAboutData;
+class TDEAboutData;
 class KCModule;
 class ProxyWidget;
 class KProcess;
@@ -50,7 +50,7 @@ public:
 
   bool isActive() { return _module != 0; };
   ProxyWidget *module();
-  const KAboutData *aboutData() const;
+  const TDEAboutData *aboutData() const;
 
 
 public slots:

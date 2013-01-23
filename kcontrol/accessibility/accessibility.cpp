@@ -56,9 +56,9 @@ K_EXPORT_COMPONENT_FACTORY( kcm_accessibility, AccessibilityFactory("kcmaccessib
 AccessibilityConfig::AccessibilityConfig(TQWidget *parent, const char *name, const TQStringList &)
   : AccessibilityConfigWidget( parent, name){
 
-   KAboutData *about =
-   new KAboutData(I18N_NOOP("kcmaccessiblity"), I18N_NOOP("TDE Accessibility Tool"),
-                  0, 0, KAboutData::License_GPL,
+   TDEAboutData *about =
+   new TDEAboutData(I18N_NOOP("kcmaccessiblity"), I18N_NOOP("TDE Accessibility Tool"),
+                  0, 0, TDEAboutData::License_GPL,
                   I18N_NOOP("(c) 2000, Matthias Hoelzer-Kluepfel"));
 
    about->addAuthor("Matthias Hoelzer-Kluepfel", I18N_NOOP("Author") , "hoelzer@kde.org");

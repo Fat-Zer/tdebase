@@ -20,7 +20,7 @@
 
 #include "componentchooser.h"
 
-class KAboutData;
+class TDEAboutData;
 
 class KCMComponentChooser : public KCModule
 {

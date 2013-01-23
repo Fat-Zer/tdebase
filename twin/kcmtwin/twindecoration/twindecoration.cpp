@@ -378,10 +378,10 @@ KWinDecorationModule::KWinDecorationModule(TQWidget* parent, const char* name, c
 	// Allow twin dcop signal to update our selection list
 	connectDCOPSignal("twin", 0, "dcopResetAllClients()", "dcopUpdateClientList()", false);
 	
-	KAboutData *about =
-		new KAboutData(I18N_NOOP("kcmtwindecoration"),
+	TDEAboutData *about =
+		new TDEAboutData(I18N_NOOP("kcmtwindecoration"),
 				I18N_NOOP("Window Decoration Control Module"),
-				0, 0, KAboutData::License_GPL,
+				0, 0, TDEAboutData::License_GPL,
 				I18N_NOOP("(c) 2001 Karol Szwed"));
 	about->addAuthor("Karol Szwed", 0, "gallium@kde.org");
 	setAboutData(about);

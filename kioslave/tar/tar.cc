@@ -32,7 +32,7 @@ extern "C" { int KDE_EXPORT kdemain(int argc, char **argv); }
 
 int kdemain( int argc, char **argv )
 {
-  KInstance instance( "kio_tar" );
+  TDEInstance instance( "kio_tar" );
 
   kdDebug(7109) << "Starting " << getpid() << endl;
 

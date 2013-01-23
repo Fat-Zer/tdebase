@@ -170,11 +170,11 @@ static KCmdLineOptions options[] =
 
 int main( int argc, char **argv )
 {
-  KAboutData aboutData( "khc_indexbuilder",
+  TDEAboutData aboutData( "khc_indexbuilder",
                         I18N_NOOP("KHelpCenter Index Builder"),
                         HELPCENTER_VERSION,
                         I18N_NOOP("The TDE Help Center"),
-                        KAboutData::License_GPL,
+                        TDEAboutData::License_GPL,
                         I18N_NOOP("(c) 2003, The KHelpCenter developers") );
 
   aboutData.addAuthor( "Cornelius Schumacher", 0, "schumacher@kde.org" );

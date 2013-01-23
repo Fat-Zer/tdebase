@@ -46,8 +46,8 @@ static KCmdLineOptions options[] =
 
 int main(int argc, char **argv)
 {
-	KAboutData about("krootbacking", I18N_NOOP("krootbacking"), version, description,
-			KAboutData::License_GPL, "(C) 2011 Timothy Pearson", 0, 0, "kb9vqf@pearsoncomputing.net");
+	TDEAboutData about("krootbacking", I18N_NOOP("krootbacking"), version, description,
+			TDEAboutData::License_GPL, "(C) 2011 Timothy Pearson", 0, 0, "kb9vqf@pearsoncomputing.net");
 	about.addAuthor( "Timothy Pearson", 0, "kb9vqf@pearsoncomputing.net" );
 	TDECmdLineArgs::init(argc, argv, &about);
 	TDECmdLineArgs::addCmdLineOptions( options );

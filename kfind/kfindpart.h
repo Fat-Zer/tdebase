@@ -28,7 +28,7 @@
 #include <konq_dirpart.h>
 
 class KQuery;
-class KAboutData;
+class TDEAboutData;
 //added
 class KonqPropsView;
 class KAction;
@@ -48,7 +48,7 @@ public:
 	       TQObject *parent, const char *name, const TQStringList & /*args*/ );
     virtual ~KFindPart();
 
-    static KAboutData *createAboutData();
+    static TDEAboutData *createAboutData();
 
     virtual bool doOpenURL( const KURL &url );
     virtual bool doCloseURL() { return true; }

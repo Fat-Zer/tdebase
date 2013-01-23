@@ -111,9 +111,9 @@ static KCmdLineOptions options[] =
 int main(int argc, char ** argv)
 {
   KLocale::setMainCatalogue("filetypes");
-  KAboutData aboutData( "keditfiletype", I18N_NOOP("KEditFileType"), "1.0",
+  TDEAboutData aboutData( "keditfiletype", I18N_NOOP("KEditFileType"), "1.0",
                         I18N_NOOP("TDE file type editor - simplified version for editing a single file type"),
-                        KAboutData::License_GPL,
+                        TDEAboutData::License_GPL,
                         I18N_NOOP("(c) 2000, KDE developers") );
   aboutData.addAuthor("Preston Brown",0, "pbrown@kde.org");
   aboutData.addAuthor("David Faure",0, "faure@kde.org");

@@ -48,10 +48,10 @@ static KCmdLineOptions options[] =
 
 int main( int argc, char *argv[] )
 {
-  KAboutData aboutData( "ksystraycmd", I18N_NOOP( "KSysTrayCmd" ),
+  TDEAboutData aboutData( "ksystraycmd", I18N_NOOP( "KSysTrayCmd" ),
 			"KSysTrayCmd 0.1",
 			I18N_NOOP( "Allows any application to be kept in the system tray" ),
-			KAboutData::License_GPL,
+			TDEAboutData::License_GPL,
 			"(C) 2001-2002 Richard Moore (rich@kde.org)" );
   aboutData.addAuthor( "Richard Moore", 0, "rich@kde.org" );
 

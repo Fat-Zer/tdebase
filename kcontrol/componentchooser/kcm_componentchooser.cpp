@@ -30,9 +30,9 @@ KCMComponentChooser::KCMComponentChooser( TQWidget *parent, const char *name ):
 	connect(m_chooser,TQT_SIGNAL(changed(bool)),this,TQT_SIGNAL(changed(bool)));
 	setButtons( Help | Apply );
 
-	KAboutData *about =
-	new KAboutData(I18N_NOOP("kcmcomponentchooser"), I18N_NOOP("Component Chooser"),
-			0, 0, KAboutData::License_GPL,
+	TDEAboutData *about =
+	new TDEAboutData(I18N_NOOP("kcmcomponentchooser"), I18N_NOOP("Component Chooser"),
+			0, 0, TDEAboutData::License_GPL,
 			I18N_NOOP("(c), 2002 Joseph Wenninger"));
 
 	about->addAuthor("Joseph Wenninger", 0 , "jowenn@kde.org");

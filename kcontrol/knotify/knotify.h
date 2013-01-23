@@ -32,7 +32,7 @@ class TQCheckBox;
 class TQLabel;
 class TQSlider;
 
-class KAboutData;
+class TDEAboutData;
 class KComboBox;
 class KURLRequester;
 class PlayerSettingsDialog;

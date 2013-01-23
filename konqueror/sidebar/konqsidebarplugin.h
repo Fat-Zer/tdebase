@@ -34,17 +34,17 @@ class KDE_EXPORT KonqSidebarPlugin : public TQObject
 {
 	Q_OBJECT
 	public:
-		KonqSidebarPlugin(KInstance *instance,TQObject *parent,TQWidget *widgetParent,TQString &desktopName_, const char* name=0);
+		KonqSidebarPlugin(TDEInstance *instance,TQObject *parent,TQWidget *widgetParent,TQString &desktopName_, const char* name=0);
 		~KonqSidebarPlugin();
 		virtual TQWidget *getWidget()=0;
 		virtual void *provides(const TQString &)=0;
-		KInstance *parentInstance();
+		TDEInstance *parentInstance();
 	protected:
 		virtual void handleURL(const KURL &url)=0;
 		virtual void handlePreview(const KFileItemList & items);
 		virtual void handlePreviewOnMouseOver(const KFileItem &items); //not used yet, perhaps in KDE 3.1
 		TQString desktopName;
-		KInstance* m_parentInstance;
+		TDEInstance* m_parentInstance;
 
 	private:
 		KonqSidebarPluginPrivate *d;

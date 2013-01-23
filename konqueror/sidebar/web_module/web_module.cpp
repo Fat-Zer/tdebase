@@ -32,7 +32,7 @@
 #include <kstandarddirs.h>
 
 
-KonqSideBarWebModule::KonqSideBarWebModule(KInstance *instance, TQObject *parent, TQWidget *widgetParent, TQString &desktopName, const char* name)
+KonqSideBarWebModule::KonqSideBarWebModule(TDEInstance *instance, TQObject *parent, TQWidget *widgetParent, TQString &desktopName, const char* name)
 	: KonqSidebarPlugin(instance, parent, widgetParent, desktopName, name)
 {
 	_htmlPart = new KHTMLSideBar(universalMode());
@@ -182,7 +182,7 @@ void KonqSideBarWebModule::pageLoaded() {
 
 
 extern "C" {
-	KDE_EXPORT KonqSidebarPlugin* create_konqsidebar_web(KInstance *instance, TQObject *parent, TQWidget *widget, TQString &desktopName, const char *name) {
+	KDE_EXPORT KonqSidebarPlugin* create_konqsidebar_web(TDEInstance *instance, TQObject *parent, TQWidget *widget, TQString &desktopName, const char *name) {
 		return new KonqSideBarWebModule(instance, parent, widget, desktopName, name);
 	}
 }

@@ -45,8 +45,8 @@ extern "C"
 namespace KFI
 {
 
-KInstance * CFontViewPartFactory::theirInstance=NULL;
-KAboutData * CFontViewPartFactory::theirAbout=NULL;
+TDEInstance * CFontViewPartFactory::theirInstance=NULL;
+TDEAboutData * CFontViewPartFactory::theirAbout=NULL;
 
 CFontViewPartFactory::CFontViewPartFactory()
 {
@@ -71,12 +71,12 @@ TQObject * CFontViewPartFactory::createObject(TQObject *parent, const char *name
     return new CFontViewPart((TQWidget*) parent, name);
 }
 
-KInstance* CFontViewPartFactory::instance()
+TDEInstance* CFontViewPartFactory::instance()
 {
     if(!theirInstance)
     {
-        theirAbout = new KAboutData("fontviewpart", I18N_NOOP("CFontViewPart"), "0.1");
-        theirInstance = new KInstance(theirAbout);
+        theirAbout = new TDEAboutData("fontviewpart", I18N_NOOP("CFontViewPart"), "0.1");
+        theirInstance = new TDEInstance(theirAbout);
     }
     return theirInstance;
 }

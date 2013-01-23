@@ -47,9 +47,9 @@ KCMPrintMgr::KCMPrintMgr(TQWidget *parent, const char *name, const TQStringList 
 	main_->addWidget(m_mainview);
 	main_->activate();
 	
-	KAboutData *about =
-	  new KAboutData(I18N_NOOP("kcmprintmgr"), I18N_NOOP("TDE Printing Management"),
-                  0, 0, KAboutData::License_GPL,
+	TDEAboutData *about =
+	  new TDEAboutData(I18N_NOOP("kcmprintmgr"), I18N_NOOP("TDE Printing Management"),
+                  0, 0, TDEAboutData::License_GPL,
                   I18N_NOOP("(c) 2000 - 2002 Michael Goffioul"));
 	about->addAuthor("Michael Goffioul", 0, "tdeprint@swing.be");
 	setAboutData(about);

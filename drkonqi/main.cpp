@@ -68,11 +68,11 @@ int main( int argc, char* argv[] )
   setenv("TDE_DEBUG", "true", 1);
   unsetenv("SESSION_MANAGER");
 
-  KAboutData aboutData( "drkonqi",
+  TDEAboutData aboutData( "drkonqi",
                         I18N_NOOP("The TDE Crash Handler"),
                         version,
                         description,
-                        KAboutData::License_BSD,
+                        TDEAboutData::License_BSD,
                         "(C) 2012, The Trinity Desktop Project");
   aboutData.addAuthor("Timothy Pearson", 0, "kb9vqf@pearsoncomputing.net");
   aboutData.addAuthor("Hans Petter Bieker", 0, "bieker@kde.org");

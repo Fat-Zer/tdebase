@@ -29,7 +29,7 @@
 
 class TQString;
 
-class KAboutData;
+class TDEAboutData;
 
 #define ORIGINAL_THEME "original" // no i18n() here!!!
 

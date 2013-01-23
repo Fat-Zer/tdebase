@@ -320,7 +320,7 @@ void ProxyWidget::clientChanged(bool state)
   emit changed(state);
 }
 
-const KAboutData *ProxyWidget::aboutData() const
+const TDEAboutData *ProxyWidget::aboutData() const
 {
   return _client->aboutData();
 }

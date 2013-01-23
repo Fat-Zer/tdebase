@@ -21,7 +21,7 @@
 
 K_EXPORT_COMPONENT_FACTORY( konq_aboutpage, KonqAboutPageFactory )
 
-KInstance *KonqAboutPageFactory::s_instance = 0;
+TDEInstance *KonqAboutPageFactory::s_instance = 0;
 TQString *KonqAboutPageFactory::s_launch_html = 0;
 TQString *KonqAboutPageFactory::s_intro_html = 0;
 TQString *KonqAboutPageFactory::s_specs_html = 0;
@@ -31,7 +31,7 @@ TQString *KonqAboutPageFactory::s_plugins_html = 0;
 KonqAboutPageFactory::KonqAboutPageFactory( TQObject *parent, const char *name )
     : KParts::Factory( parent, name )
 {
-    s_instance = new KInstance( "konqaboutpage" );
+    s_instance = new TDEInstance( "konqaboutpage" );
 }
 
 KonqAboutPageFactory::~KonqAboutPageFactory()

@@ -56,8 +56,8 @@ K_EXPORT_COMPONENT_FACTORY( kcm_kdnssd, KCMDnssdFactory("kcmkdnssd"))
 KCMDnssd::KCMDnssd(TQWidget *parent, const char *name, const TQStringList&)
 		: ConfigDialog(parent, name), m_wdchanged(false)
 {
-	setAboutData(new KAboutData(I18N_NOOP("kcm_kdnssd"),
-	                            I18N_NOOP("ZeroConf configuration"),0,0,KAboutData::License_GPL,
+	setAboutData(new TDEAboutData(I18N_NOOP("kcm_kdnssd"),
+	                            I18N_NOOP("ZeroConf configuration"),0,0,TDEAboutData::License_GPL,
 	                            I18N_NOOP("(C) 2004,2005 Jakub Stachowski")));
 	setQuickHelp(i18n("Setup services browsing with ZeroConf"));
 	if (geteuid()!=0) tabs->removePage(tab_2); // normal user cannot change wide-area settings

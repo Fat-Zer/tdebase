@@ -57,8 +57,8 @@ K_EXPORT_COMPONENT_FACTORY( libkonsolepart, konsoleFactory )
 /**
  * We need one static instance of the factory for our C 'main' function
  */
-KInstance *konsoleFactory::s_instance = 0L;
-KAboutData *konsoleFactory::s_aboutData = 0;
+TDEInstance *konsoleFactory::s_instance = 0L;
+TDEAboutData *konsoleFactory::s_aboutData = 0;
 
 konsoleFactory::konsoleFactory()
 {
@@ -85,12 +85,12 @@ KParts::Part *konsoleFactory::createPartObject(TQWidget *parentWidget, const cha
   return obj;
 }
 
-KInstance *konsoleFactory::instance()
+TDEInstance *konsoleFactory::instance()
 {
   if ( !s_instance )
     {
-      s_aboutData = new KAboutData("konsole", I18N_NOOP("Konsole"), "1.5");
-      s_instance = new KInstance( s_aboutData );
+      s_aboutData = new TDEAboutData("konsole", I18N_NOOP("Konsole"), "1.5");
+      s_instance = new TDEInstance( s_aboutData );
     }
   return s_instance;
 }

@@ -53,8 +53,8 @@ KCMKonsole::KCMKonsole(TQWidget * parent, const char *name, const TQStringList&)
     topLayout->add(dialog);
     load();
 
-    KAboutData *ab=new KAboutData( "kcmkonsole", I18N_NOOP("KCM Konsole"),
-       "0.2",I18N_NOOP("KControl module for Konsole configuration"), KAboutData::License_GPL,
+    TDEAboutData *ab=new TDEAboutData( "kcmkonsole", I18N_NOOP("KCM Konsole"),
+       "0.2",I18N_NOOP("KControl module for Konsole configuration"), TDEAboutData::License_GPL,
        "(c) 2001, Andrea Rizzi", 0, 0, "rizzi@kde.org");
 
     ab->addAuthor("Andrea Rizzi",0, "rizzi@kde.org");

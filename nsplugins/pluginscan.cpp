@@ -525,8 +525,8 @@ static KCmdLineOptions options[] =
 
 int main( int argc, char **argv )
 {
-    KAboutData aboutData( "nspluginscan", I18N_NOOP("nspluginscan"),
-                          "0.3", "nspluginscan", KAboutData::License_GPL,
+    TDEAboutData aboutData( "nspluginscan", I18N_NOOP("nspluginscan"),
+                          "0.3", "nspluginscan", TDEAboutData::License_GPL,
                           "(c) 2000,2001 by Stefan Schimanski" );
 
     KLocale::setMainCatalogue("nsplugin");

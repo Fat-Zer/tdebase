@@ -166,7 +166,7 @@ class KonqSideBarWebModule : public KonqSidebarPlugin
 {
 	Q_OBJECT
 	public:
-		KonqSideBarWebModule(KInstance *instance, TQObject *parent,
+		KonqSideBarWebModule(TDEInstance *instance, TQObject *parent,
 			       	TQWidget *widgetParent, TQString &desktopName,
 			       	const char *name);
 		virtual ~KonqSideBarWebModule();

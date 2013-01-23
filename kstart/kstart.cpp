@@ -286,12 +286,12 @@ static KCmdLineOptions options[] =
 int main( int argc, char *argv[] )
 {
   // David, 05/03/2000
-  KAboutData aboutData( "kstart", I18N_NOOP("KStart"), KSTART_VERSION,
+  TDEAboutData aboutData( "kstart", I18N_NOOP("KStart"), KSTART_VERSION,
       I18N_NOOP(""
        "Utility to launch applications with special window properties \n"
        "such as iconified, maximized, a certain virtual desktop, a special decoration\n"
        "and so on." ),
-      KAboutData::License_GPL,
+      TDEAboutData::License_GPL,
        "(C) 1997-2000 Matthias Ettrich (ettrich@kde.org)" );
 
   aboutData.addAuthor( "Matthias Ettrich", 0, "ettrich@kde.org" );

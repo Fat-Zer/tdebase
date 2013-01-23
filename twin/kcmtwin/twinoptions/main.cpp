@@ -122,9 +122,9 @@ KWinOptions::KWinOptions(TQWidget *parent, const char *name)
   tab->addTab(mTranslucency, i18n("&Translucency"));
   connect(mTranslucency, TQT_SIGNAL(changed(bool)), this, TQT_SLOT(moduleChanged(bool)));
     
-  KAboutData *about =
-    new KAboutData(I18N_NOOP("kcmtwinoptions"), I18N_NOOP("Window Behavior Configuration Module"),
-                  0, 0, KAboutData::License_GPL,
+  TDEAboutData *about =
+    new TDEAboutData(I18N_NOOP("kcmtwinoptions"), I18N_NOOP("Window Behavior Configuration Module"),
+                  0, 0, TDEAboutData::License_GPL,
                   I18N_NOOP("(c) 1997 - 2002 KWin and KControl Authors"));
 
   about->addAuthor("Matthias Ettrich",0,"ettrich@kde.org");

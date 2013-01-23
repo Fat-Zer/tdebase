@@ -51,9 +51,9 @@ IconModule::IconModule(TQWidget *parent, const char *name, const TQStringList &)
   tab->addTab(tab2, i18n("Ad&vanced"));
   connect(tab2, TQT_SIGNAL(changed(bool)), this, TQT_SLOT(moduleChanged(bool)));
 
-  KAboutData* about = new KAboutData("kcmicons", I18N_NOOP("Icons"), "3.0",
+  TDEAboutData* about = new TDEAboutData("kcmicons", I18N_NOOP("Icons"), "3.0",
 	      I18N_NOOP("Icons Control Panel Module"),
-	      KAboutData::License_GPL,
+	      TDEAboutData::License_GPL,
  	      I18N_NOOP("(c) 2000-2003 Geert Jansen"), 0, 0);
   about->addAuthor("Geert Jansen", 0, "jansen@kde.org");
   about->addAuthor("Antonio Larrosa Jimenez", 0, "larrosa@kde.org");

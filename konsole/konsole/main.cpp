@@ -162,8 +162,8 @@ extern "C" int KDE_EXPORT kdemain(int argc, char* argv[])
   bool scrollbaron = true;
   bool showtip = true;
 
-  KAboutData aboutData( "konsole", I18N_NOOP("Konsole"),
-    KONSOLE_VERSION, description, KAboutData::License_GPL_V2,
+  TDEAboutData aboutData( "konsole", I18N_NOOP("Konsole"),
+    KONSOLE_VERSION, description, TDEAboutData::License_GPL_V2,
     "Copyright (c) 1997-2006, Lars Doelle");
   aboutData.addAuthor("Robert Knight",I18N_NOOP("Maintainer"), "robertknight@gmail.com");
   aboutData.addAuthor("Lars Doelle",I18N_NOOP("Author"), "lars.doelle@on-line.de");

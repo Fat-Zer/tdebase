@@ -33,7 +33,7 @@ PopupMenuGUIClient::PopupMenuGUIClient( KonqMainWindow *mainWindow,
 {
     //giving a name to each guiclient: just for debugging
     // (needs delete instance() in the dtor if enabled for good)
-    //setInstance( new KInstance( "PopupMenuGUIClient" ) );
+    //setInstance( new TDEInstance( "PopupMenuGUIClient" ) );
 
     m_mainWindow = mainWindow;
 

@@ -137,7 +137,7 @@ signals:
 
 public:
 	/* interface KonqSidebar_PluginInterface*/
-	KInstance  *getInstance();
+	TDEInstance  *getInstance();
 //        virtual void showError(TQString &);      for later extension
 //        virtual void showMessage(TQString &);    for later extension
 	/* end of interface implementation */

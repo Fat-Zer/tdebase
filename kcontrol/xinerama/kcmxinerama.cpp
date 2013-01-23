@@ -44,10 +44,10 @@ KCMXinerama::KCMXinerama(TQWidget *parent, const char *name)
   : KCModule(parent, name) {
 	_indicators.setAutoDelete(true);
 
-	KAboutData *about =
-	new KAboutData(I18N_NOOP("kcmxinerama"),
+	TDEAboutData *about =
+	new TDEAboutData(I18N_NOOP("kcmxinerama"),
 			I18N_NOOP("TDE Multiple Monitor Configurator"),
-			0, 0, KAboutData::License_GPL,
+			0, 0, TDEAboutData::License_GPL,
 			I18N_NOOP("(c) 2002-2003 George Staikos"));
  
 	about->addAuthor("George Staikos", 0, "staikos@kde.org");

@@ -101,16 +101,16 @@ KControlApp::~KControlApp()
 extern "C" KDE_EXPORT int kdemain(int argc, char *argv[])
 {
   KLocale::setMainCatalogue("kcontrol");
-  KAboutData aboutKControl( "kcontrol", I18N_NOOP("Trinity Control Center"),
-    KCONTROL_VERSION, I18N_NOOP("The Trinity Control Center"), KAboutData::License_GPL,
+  TDEAboutData aboutKControl( "kcontrol", I18N_NOOP("Trinity Control Center"),
+    KCONTROL_VERSION, I18N_NOOP("The Trinity Control Center"), TDEAboutData::License_GPL,
     I18N_NOOP("(c) 1998-2004, The TDE Control Center Developers"));
 
-  KAboutData aboutKInfoCenter( "kinfocenter", I18N_NOOP("Trinity Info Center"),
-    KCONTROL_VERSION, I18N_NOOP("The Trinity Info Center"), KAboutData::License_GPL,
+  TDEAboutData aboutKInfoCenter( "kinfocenter", I18N_NOOP("Trinity Info Center"),
+    KCONTROL_VERSION, I18N_NOOP("The Trinity Info Center"), TDEAboutData::License_GPL,
     I18N_NOOP("(c) 1998-2004, The TDE Control Center Developers"));
 
   TQCString argv_0 = argv[0];
-  KAboutData *aboutData;
+  TDEAboutData *aboutData;
   if (argv_0.right(11) == "kinfocenter")
   {
      aboutData = &aboutKInfoCenter;

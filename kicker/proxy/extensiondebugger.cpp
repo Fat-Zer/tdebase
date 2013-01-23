@@ -74,10 +74,10 @@ KPanelExtension* loadExtension(const AppletInfo& info)
 
 int main( int argc, char ** argv )
 {
-    KAboutData aboutData( "extensionproxy", I18N_NOOP("Panel extension proxy.")
+    TDEAboutData aboutData( "extensionproxy", I18N_NOOP("Panel extension proxy.")
                           , "v0.1.0"
                           ,I18N_NOOP("Panel extension proxy.")
-                          , KAboutData::License_BSD
+                          , TDEAboutData::License_BSD
                           , "(c) 2000, The KDE Developers");
     TDECmdLineArgs::init(argc, argv, &aboutData );
     aboutData.addAuthor("Matthias Elter",0, "elter@kde.org");

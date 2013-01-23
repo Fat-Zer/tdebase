@@ -30,7 +30,7 @@
 #ifndef TOPLEVEL_H
 #define TOPLEVEL_H
 
-class KAboutData;
+class TDEAboutData;
 class KrashConfig;
 class DrKBugReport;
 

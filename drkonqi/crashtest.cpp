@@ -68,10 +68,10 @@ void level1(int t)
 
 int main(int argc, char *argv[])
 {
-  KAboutData aboutData("crashtext", "Crash Test for DrKonqi",
+  TDEAboutData aboutData("crashtext", "Crash Test for DrKonqi",
                        "1.1",
                        "Crash Test for DrKonqi",
-                       KAboutData::License_GPL,
+                       TDEAboutData::License_GPL,
                        "(c) 2000-2002 David Faure, Waldo Bastian");
 
   TDECmdLineArgs::init(argc, argv, &aboutData);

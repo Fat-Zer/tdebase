@@ -45,7 +45,7 @@ extern "C"
 {
   KDE_EXPORT int kdemain( int argc, char **argv )
   {
-    KInstance instance( "kio_finger" );
+    TDEInstance instance( "kio_finger" );
 
     //kdDebug() << "*** Starting kio_finger " << getpid() << endl;
 

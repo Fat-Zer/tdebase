@@ -41,7 +41,7 @@ KonqSidebar::KonqSidebar( TQWidget *parentWidget, const char *widgetName,
 	setWidget(TQT_TQWIDGET(m_widget));
 }
 
-KInstance *KonqSidebar::getInstance()
+TDEInstance *KonqSidebar::getInstance()
 {
 	kdDebug() << "KonqSidebar::getInstance()" << endl;
 	return KonqSidebarFactory::instance(); 
@@ -76,13 +76,13 @@ void KonqSidebar::customEvent(TQCustomEvent* ev)
 
 
 // It's usually safe to leave the factory code alone.. with the
-// notable exception of the KAboutData data
+// notable exception of the TDEAboutData data
 #include <kaboutdata.h>
 #include <klocale.h>
 #include <kinstance.h>
 
-KInstance*  KonqSidebarFactory::s_instance = 0L;
-KAboutData* KonqSidebarFactory::s_about = 0L;
+TDEInstance*  KonqSidebarFactory::s_instance = 0L;
+TDEAboutData* KonqSidebarFactory::s_about = 0L;
 
 KonqSidebarFactory::KonqSidebarFactory()
     : KParts::Factory()
@@ -111,13 +111,13 @@ KParts::Part* KonqSidebarFactory::createPartObject( TQWidget *parentWidget, cons
     return obj;
 }
 
-KInstance* KonqSidebarFactory::instance()
+TDEInstance* KonqSidebarFactory::instance()
 {
 	if( !s_instance )
 	{
-		s_about = new KAboutData("konqsidebartng", I18N_NOOP("Extended Sidebar"), "0.1");
+		s_about = new TDEAboutData("konqsidebartng", I18N_NOOP("Extended Sidebar"), "0.1");
 		s_about->addAuthor("Joseph WENNINGER", 0, "jowenn@bigfoot.com");
-		s_instance = new KInstance(s_about);
+		s_instance = new TDEInstance(s_about);
 	}
 	return s_instance;
 }

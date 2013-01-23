@@ -757,9 +757,9 @@ KDisplayConfig::KDisplayConfig(TQWidget *parent, const char *name, const TQStrin
 		systemconfig->setFileWriteMode(0644);
 	}
 
-	KAboutData *about =
-		new KAboutData(I18N_NOOP("kcmdisplayconfig"), I18N_NOOP("TDE Display Profile Control Module"),
-			0, 0, KAboutData::License_GPL,
+	TDEAboutData *about =
+		new TDEAboutData(I18N_NOOP("kcmdisplayconfig"), I18N_NOOP("TDE Display Profile Control Module"),
+			0, 0, TDEAboutData::License_GPL,
 			I18N_NOOP("(c) 2011 Timothy Pearson"));
 
 	about->addAuthor("Timothy Pearson", 0, "kb9vqf@pearsoncomputing.net");

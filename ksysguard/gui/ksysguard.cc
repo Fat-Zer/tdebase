@@ -553,8 +553,8 @@ int main( int argc, char** argv )
   close( initpipe[ 0 ] );
   setsid();
 
-  KAboutData aboutData( "ksysguard", I18N_NOOP( "TDE System Guard" ),
-                        KSYSGUARD_VERSION, Description, KAboutData::License_GPL,
+  TDEAboutData aboutData( "ksysguard", I18N_NOOP( "TDE System Guard" ),
+                        KSYSGUARD_VERSION, Description, TDEAboutData::License_GPL,
                         I18N_NOOP( "(c) 1996-2002 The KSysGuard Developers" ) );
   aboutData.addAuthor( "Chris Schlaeger", "Current Maintainer", "cs@kde.org" );
   aboutData.addAuthor( "Tobias Koenig", 0, "tokoe@kde.org" );

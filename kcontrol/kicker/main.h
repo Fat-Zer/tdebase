@@ -24,7 +24,7 @@
 #include "extensionInfo.h"
 
 class TQComboBox;
-class KAboutData;
+class TDEAboutData;
 class KDirWatch;
 
 class KickerConfig : public TQObject, public DCOPObject
@@ -46,7 +46,7 @@ public:
     void restartKicker();
 
     TQString quickHelp() const;
-    KAboutData *aboutData();
+    TDEAboutData *aboutData();
 
     int currentPanelIndex() const { return m_currentPanelIndex; }
 

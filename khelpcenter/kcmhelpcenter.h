@@ -34,7 +34,7 @@ class TQLabel;
 
 class KProcess;
 class KConfig;
-class KAboutData;
+class TDEAboutData;
 class KTempFile;
 class KURLRequester;
 class KListView;
@@ -164,7 +164,7 @@ class KCMHelpCenter : public KDialogBase, virtual public KCMHelpCenterIface
     
     KConfig *mConfig;
     
-    KAboutData *mAboutData;
+    TDEAboutData *mAboutData;
 
     KHC::HtmlSearchConfig *mHtmlSearchTab;
     TQWidget *mScopeTab;

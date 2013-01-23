@@ -70,7 +70,7 @@ public:
   bool showDebugger() const { return m_showdebugger && !m_debugger.isNull(); };
   bool showBugReport() const { return m_showbugreport; };
   bool disableChecks() const { return m_disablechecks; };
-  const KAboutData *aboutData() const { return m_aboutData; }
+  const TDEAboutData *aboutData() const { return m_aboutData; }
   TQString execName() const { return m_execname; }
 
   void expandString(TQString &str, bool shell, const TQString &tempFile = TQString::null) const;
@@ -84,7 +84,7 @@ private:
   void readConfig();
 
 private:
-  KAboutData *m_aboutData;
+  TDEAboutData *m_aboutData;
   int m_pid;
   int m_signalnum;
   bool m_showdebugger;

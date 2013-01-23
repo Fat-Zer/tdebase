@@ -60,11 +60,11 @@ KSplashThemeMgr::KSplashThemeMgr( TQWidget *parent, const char *name, const TQSt
   box->addWidget(mInstaller);
 #endif
   connect( mInstaller, TQT_SIGNAL(changed(bool)), TQT_SIGNAL(changed(bool)) );
-  KAboutData *about = new KAboutData( "kcmksplash"
+  TDEAboutData *about = new TDEAboutData( "kcmksplash"
                                       ,I18N_NOOP("TDE splash screen theme manager")
                                       ,"0.1"
                                       ,0
-                                      ,KAboutData::License_GPL
+                                      ,TDEAboutData::License_GPL
                                       ,I18N_NOOP("(c) 2003 KDE developers") );
   about->addAuthor("Ravikiran Rajagopal", 0, "ravi@ee.eng.ohio-state.edu");
   about->addCredit("Brian Ledbetter", I18N_NOOP("Original KSplash/ML author"), "brian@shadowcom.net");

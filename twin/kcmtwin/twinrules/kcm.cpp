@@ -46,9 +46,9 @@ KCMRules::KCMRules( TQWidget *parent, const char *name )
     widget = new KCMRulesList( this );
     layout->addWidget( TQT_TQWIDGET(widget) );
     connect( widget, TQT_SIGNAL( changed( bool )), TQT_SLOT( moduleChanged( bool )));
-    KAboutData *about = new KAboutData(I18N_NOOP( "kcmtwinrules" ),
+    TDEAboutData *about = new TDEAboutData(I18N_NOOP( "kcmtwinrules" ),
         I18N_NOOP( "Window-Specific Settings Configuration Module" ),
-        0, 0, KAboutData::License_GPL, I18N_NOOP( "(c) 2004 KWin and KControl Authors" ));
+        0, 0, TDEAboutData::License_GPL, I18N_NOOP( "(c) 2004 KWin and KControl Authors" ));
     about->addAuthor("Lubos Lunak",0,"l.lunak@kde.org");
     setAboutData(about);
     }

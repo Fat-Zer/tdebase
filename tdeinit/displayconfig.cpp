@@ -51,8 +51,8 @@ int main(int argc, char **argv)
 {
 	int return_code = -1;
 
-	KAboutData about("tdeinit_displayconfig", I18N_NOOP("tdeinit_displayconfig"), version, description,
-			KAboutData::License_GPL, "(C) 2013 Timothy Pearson", 0, 0, "kb9vqf@pearsoncomputing.net");
+	TDEAboutData about("tdeinit_displayconfig", I18N_NOOP("tdeinit_displayconfig"), version, description,
+			TDEAboutData::License_GPL, "(C) 2013 Timothy Pearson", 0, 0, "kb9vqf@pearsoncomputing.net");
 	about.addAuthor( "Timothy Pearson", 0, "kb9vqf@pearsoncomputing.net" );
 	TDECmdLineArgs::init(argc, argv, &about);
 	TDECmdLineArgs::addCmdLineOptions( options );

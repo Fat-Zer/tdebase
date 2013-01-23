@@ -32,7 +32,7 @@
 
 class BrowserView;
 class KonqMainWindow;
-class KAboutData;
+class TDEAboutData;
 
 class KonqViewFactory
 {
@@ -77,10 +77,10 @@ public:
                          KTrader::OfferList *partServiceOffers = 0,
                          KTrader::OfferList *appServiceOffers = 0);
 
-  static const KAboutData* aboutData();
+  static const TDEAboutData* aboutData();
 
 private:
-  static KAboutData *s_aboutData;
+  static TDEAboutData *s_aboutData;
 };
 
 #endif

@@ -52,7 +52,7 @@ extern "C" {
 	KDE_EXPORT int kdemain( int, char **argv )
 	{
 	  kdDebug() << "kdemain for settings kioslave" << endl;
-	  KInstance instance( "kio_settings" );
+	  TDEInstance instance( "kio_settings" );
 	  SettingsProtocol slave(argv[1], argv[2], argv[3]);
 	  slave.dispatchLoop();
 	  return 0;

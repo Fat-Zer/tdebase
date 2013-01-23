@@ -156,13 +156,13 @@ NaughtyApplet::slotLoad(uint l)
   void
 NaughtyApplet::about()
 {
-  KAboutData about
+  TDEAboutData about
     (
      "naughtyapplet",
      I18N_NOOP("Naughty applet"),
      "1.0",
      I18N_NOOP("Runaway process catcher"),
-     KAboutData::License_GPL_V2,
+     TDEAboutData::License_GPL_V2,
      "(C) 2000 Rik Hemsley (rikkus) <rik@kde.org>"
    );
 

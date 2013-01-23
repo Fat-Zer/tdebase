@@ -34,7 +34,7 @@ extern "C" { int KDE_EXPORT kdemain(int argc, char **argv); }
  */
 int kdemain( int argc, char **argv )
 {
-  KInstance instance( "kio_ldap" );
+  TDEInstance instance( "kio_ldap" );
 
   kdDebug(7125) << "Starting " << getpid() << endl;
 

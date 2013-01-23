@@ -676,9 +676,9 @@ static int directCommand(TDECmdLineArgs *args)
 
 int main(int argc, char *argv[])
 {
-  KAboutData aboutData( "kdialog", I18N_NOOP("KDialog"),
+  TDEAboutData aboutData( "kdialog", I18N_NOOP("KDialog"),
                         "1.0", I18N_NOOP( "KDialog can be used to show nice dialog boxes from shell scripts" ),
-			KAboutData::License_GPL,
+			TDEAboutData::License_GPL,
                         "(C) 2000, Nick Thompson");
   aboutData.addAuthor("David Faure", I18N_NOOP("Current maintainer"),"faure@kde.org");
   aboutData.addAuthor("Brad Hards", 0, "bradh@frogmouth.net");
