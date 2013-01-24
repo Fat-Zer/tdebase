@@ -292,9 +292,9 @@ void Dcop_action::execute()
             }
         }
     kdDebug( 1217 ) << "DCOP call:" << app << ":" << obj << ":" << call << ":" << args_list << endl;
-    KProcess proc;
+    TDEProcess proc;
     proc << "dcop" << app << obj << call << args_list;
-    proc.start( KProcess::DontCare );
+    proc.start( TDEProcess::DontCare );
     }
     
 TQString Dcop_action::description() const

@@ -149,12 +149,12 @@ TQString View::langLookup( const TQString &fname )
     TQStringList search;
 
     // assemble the local search paths
-    const TQStringList localDoc = KGlobal::dirs()->resourceDirs("html");
+    const TQStringList localDoc = TDEGlobal::dirs()->resourceDirs("html");
 
     // look up the different languages
     for (int id=localDoc.count()-1; id >= 0; --id)
     {
-        TQStringList langs = KGlobal::locale()->languageList();
+        TQStringList langs = TDEGlobal::locale()->languageList();
         langs.append( "en" );
         langs.remove( "C" );
         TQStringList::ConstIterator lang;

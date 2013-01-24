@@ -87,7 +87,7 @@ ThemeRedmond::ThemeRedmond( TQWidget *parent, const char *name, const TQStringLi
 void ThemeRedmond::_initUi()
 {
   const TQRect screen = kapp->desktop()->screenGeometry( mTheme->xineramaScreen() );
-  //TQRect fullScreen = KGlobalSettings::desktopGeometry(0L);
+  //TQRect fullScreen = TDEGlobalSettings::desktopGeometry(0L);
 
   mImage.resize( screen.width(), screen.height() );
 
@@ -197,7 +197,7 @@ void ThemeRedmond::_initUi()
     int faceSource = fAdminOnly;
     KConfig *tdmconfig = new KConfig("tdm/tdmrc", true);
     tdmconfig->setGroup("X-*-Greeter");
-    TQString userPicsDir = tdmconfig->readEntry( "FaceDir", KGlobal::dirs()->resourceDirs("data").last() + "tdm/faces" ) + '/';
+    TQString userPicsDir = tdmconfig->readEntry( "FaceDir", TDEGlobal::dirs()->resourceDirs("data").last() + "tdm/faces" ) + '/';
     TQString fs = tdmconfig->readEntry( "FaceSource" );
     if (fs == TQString::fromLatin1("UserOnly"))
       faceSource = fUserOnly;
@@ -309,7 +309,7 @@ void ThemeRedmond::paintEvent( TQPaintEvent *pe )
 void ThemeRedmond::_readSettings()
 {
   const TQRect screen = kapp->desktop()->screenGeometry( mTheme->xineramaScreen() );
-  //TQRect fullScreen = KGlobalSettings::desktopGeometry(0L);
+  //TQRect fullScreen = TDEGlobalSettings::desktopGeometry(0L);
 
   if( !mTheme )
     return;

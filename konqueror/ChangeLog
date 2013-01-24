@@ -55,7 +55,7 @@
 	setHighlightingEnabled in the KonqDirPart constructor
 
 	* konq_mainwindow.cc (slotShowMenuBar): call saveMainWindowSettings and
-	KGlobal::config()->sync() after toggling the visiblity of the menubar,
+	TDEGlobal::config()->sync() after toggling the visiblity of the menubar,
 	just like it is done for toolbars.
 	(slotPartActivated): connect and disconnect to/from the actionStatusText
 	and clearStatusText signals of the part's actioncollection

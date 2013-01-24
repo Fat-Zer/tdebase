@@ -63,7 +63,7 @@ SMBRoOptions::SMBRoOptions(TQWidget *parent)
    layout->addMultiCellWidget(m_showHiddenShares,4,4,0,1);
 
    m_encodingList = new KComboBox( false, this );
-   TQStringList _strList = KGlobal::charsets()->availableEncodingNames();
+   TQStringList _strList = TDEGlobal::charsets()->availableEncodingNames();
    m_encodingList->insertStringList( _strList );
 
    label = new TQLabel( m_encodingList, i18n( "MS Windows encoding:" ), this );
@@ -99,7 +99,7 @@ void SMBRoOptions::load()
 //   m_workgroupLe->setText(cfg->readEntry("Workgroup"));
 //   m_showHiddenShares->setChecked(cfg->readBoolEntry("ShowHiddenShares",false));
 
-//   TQStringList _strList = KGlobal::charsets()->availableEncodingNames();
+//   TQStringList _strList = TDEGlobal::charsets()->availableEncodingNames();
 //   TQString m_encoding = TQTextCodec::codecForLocale()->name();
 //   m_encodingList->setCurrentItem( _strList.findIndex( cfg->readEntry( "Encoding", m_encoding.lower() ) ) );
 

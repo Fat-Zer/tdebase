@@ -42,7 +42,7 @@ int main( int argc, char *argv[] )
     return -1;
   }
 
-  TQStringList templates = KGlobal::dirs()->findAllResources( "data", "kappfinder/apps/*.desktop", true );
+  TQStringList templates = TDEGlobal::dirs()->findAllResources( "data", "kappfinder/apps/*.desktop", true );
 
   TQString dir = TQString( argv[ 1 ] ) + "/";
 

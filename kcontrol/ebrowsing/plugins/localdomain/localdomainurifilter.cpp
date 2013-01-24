@@ -82,11 +82,11 @@ bool LocalDomainURIFilter::isLocalDomainHost( TQString& cmd ) const
 
         m_fullname = TQString::null;
 
-        KProcess proc;
+        TDEProcess proc;
         proc << helper << host;
-        connect( &proc, TQT_SIGNAL(receivedStdout(KProcess *, char *, int)),
-                 TQT_SLOT(receiveOutput(KProcess *, char *, int)) );
-        if( !proc.start( KProcess::NotifyOnExit, KProcess::Stdout ))
+        connect( &proc, TQT_SIGNAL(receivedStdout(TDEProcess *, char *, int)),
+                 TQT_SLOT(receiveOutput(TDEProcess *, char *, int)) );
+        if( !proc.start( TDEProcess::NotifyOnExit, TDEProcess::Stdout ))
             return last_result = false;
 
         last_host = host;
@@ -101,7 +101,7 @@ bool LocalDomainURIFilter::isLocalDomainHost( TQString& cmd ) const
     return last_result;
 }
 
-void LocalDomainURIFilter::receiveOutput( KProcess *, char *buf, int )
+void LocalDomainURIFilter::receiveOutput( TDEProcess *, char *buf, int )
 {
     m_fullname = TQFile::decodeName( buf );
 }

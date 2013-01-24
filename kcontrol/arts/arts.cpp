@@ -57,7 +57,7 @@ extern "C" {
 
     KDE_EXPORT KCModule *create_arts(TQWidget *parent, const char* /*name*/)
 	{
-		KGlobal::locale()->insertCatalogue("kcmarts");
+		TDEGlobal::locale()->insertCatalogue("kcmarts");
 		return new KArtsModule(parent, "kcmarts" );
 	}
 }
@@ -96,16 +96,16 @@ static bool startArts()
  */
 void KArtsModule::initAudioIOList()
 {
-	KProcess* artsd = new KProcess();
+	TDEProcess* artsd = new TDEProcess();
 	*artsd << "artsd";
 	*artsd << "-A";
 
-	connect(artsd, TQT_SIGNAL(processExited(KProcess*)),
-	        this, TQT_SLOT(slotArtsdExited(KProcess*)));
-	connect(artsd, TQT_SIGNAL(receivedStderr(KProcess*, char*, int)),
-	        this, TQT_SLOT(slotProcessArtsdOutput(KProcess*, char*, int)));
+	connect(artsd, TQT_SIGNAL(processExited(TDEProcess*)),
+	        this, TQT_SLOT(slotArtsdExited(TDEProcess*)));
+	connect(artsd, TQT_SIGNAL(receivedStderr(TDEProcess*, char*, int)),
+	        this, TQT_SLOT(slotProcessArtsdOutput(TDEProcess*, char*, int)));
 
-	if (!artsd->start(KProcess::Block, KProcess::Stderr)) {
+	if (!artsd->start(TDEProcess::Block, TDEProcess::Stderr)) {
 		KMessageBox::error(0, i18n("Unable to start the sound server to "
 		                           "retrieve possible sound I/O methods.\n"
 		                           "Only automatic detection will be "
@@ -114,13 +114,13 @@ void KArtsModule::initAudioIOList()
 	}
 }
 
-void KArtsModule::slotArtsdExited(KProcess* proc)
+void KArtsModule::slotArtsdExited(TDEProcess* proc)
 {
 	latestProcessStatus = proc->exitStatus();
 	delete proc;
 }
 
-void KArtsModule::slotProcessArtsdOutput(KProcess*, char* buf, int len)
+void KArtsModule::slotProcessArtsdOutput(TDEProcess*, char* buf, int len)
 {
 	// XXX(gioele): I suppose this will be called with full lines, am I wrong?
 
@@ -438,10 +438,10 @@ void KArtsModule::slotTestSound()
 	if (configChanged && (userSavedChanges() == KMessageBox::Yes) || !artsdIsRunning() )
 		restartServer();
 
-	KProcess test;
+	TDEProcess test;
 	test << "artsplay";
 	test << locate("sound", "KDE_Startup_1.ogg");
-	test.start(KProcess::DontCare);
+	test.start(TDEProcess::DontCare);
 }
 
 void KArtsModule::defaults()
@@ -538,13 +538,13 @@ bool KArtsModule::realtimeIsPossible()
 	static bool checked = false;
 	if (!checked)
 	{
-	KProcess* checkProcess = new KProcess();
+	TDEProcess* checkProcess = new TDEProcess();
 	*checkProcess << "artswrapper";
 	*checkProcess << "check";
 
-	connect(checkProcess, TQT_SIGNAL(processExited(KProcess*)),
-	        this, TQT_SLOT(slotArtsdExited(KProcess*)));
-	if (!checkProcess->start(KProcess::Block))
+	connect(checkProcess, TQT_SIGNAL(processExited(TDEProcess*)),
+	        this, TQT_SLOT(slotArtsdExited(TDEProcess*)));
+	if (!checkProcess->start(TDEProcess::Block))
 	{
 		delete checkProcess;
 		realtimePossible =  false;
@@ -574,10 +574,10 @@ void KArtsModule::restartServer()
 	DCOPRef("knotify", "qt/knotify").send("quit");
 
 	// Shut down artsd
-	KProcess terminateArts;
+	TDEProcess terminateArts;
 	terminateArts << "artsshell";
 	terminateArts << "terminate";
-	terminateArts.start(KProcess::Block);
+	terminateArts.start(TDEProcess::Block);
 
 	if (starting)
 	{
@@ -594,10 +594,10 @@ void KArtsModule::restartServer()
 
 bool KArtsModule::artsdIsRunning()
 {
-	KProcess check;
+	TDEProcess check;
 	check << "artsshell";
 	check << "status";
-	check.start(KProcess::Block);
+	check.start(TDEProcess::Block);
 
 	return (check.exitStatus() == 0);
 }

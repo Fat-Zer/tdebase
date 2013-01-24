@@ -195,9 +195,9 @@ void Dtime::serverTimeCheck() {
 }
 
 void Dtime::findNTPutility(){
-  KProcess proc;
+  TDEProcess proc;
   proc << "which" << "ntpdate";
-  proc.start(KProcess::Block);
+  proc.start(TDEProcess::Block);
   if(proc.exitStatus() == 0) {
     ntpUtility = "ntpdate";
     kdDebug() << "ntpUtility = " << ntpUtility.latin1() << endl;
@@ -205,7 +205,7 @@ void Dtime::findNTPutility(){
   }
   proc.clearArguments();
   proc << "which" << "rdate";
-  proc.start(KProcess::Block);
+  proc.start(TDEProcess::Block);
   if(proc.exitStatus() == 0) {
     ntpUtility = "rdate";
     kdDebug() << "ntpUtility = " << ntpUtility.latin1() << endl;
@@ -289,9 +289,9 @@ void Dtime::save()
       timeServer.replace( TQRegExp("\\).*"), "" );
       // Would this be better?: s/^.*\(([^)]*)\).*$/\1/
     }
-    KProcess proc;
+    TDEProcess proc;
     proc << ntpUtility << timeServer;
-    proc.start( KProcess::Block );
+    proc.start( TDEProcess::Block );
     if( proc.exitStatus() != 0 ){
       KMessageBox::error( this, i18n(TQString("Unable to contact time server: %1.").arg(timeServer).latin1()));
       setDateTimeAuto->setChecked( false );
@@ -303,7 +303,7 @@ void Dtime::save()
   }
   else {
     // User time setting
-    KProcess c_proc;
+    TDEProcess c_proc;
 
   // BSD systems reverse year compared to Susv3
 #if defined(__OpenBSD__) || defined(__FreeBSD__) || defined(__NetBSD__) || defined(__DragonFly__)
@@ -321,7 +321,7 @@ void Dtime::save()
     kdDebug() << "Set date " << BufS << endl;
 
     c_proc << "date" << BufS;
-    c_proc.start( KProcess::Block );
+    c_proc.start( TDEProcess::Block );
     int result = c_proc.exitStatus();
     if (result != 0
 #if defined(__OpenBSD__) || defined(__FreeBSD__) || defined(__NetBSD__) || defined(__DragonFly__)
@@ -333,9 +333,9 @@ void Dtime::save()
     }
 
     // try to set hardware clock. We do not care if it fails
-    KProcess hwc_proc;
+    TDEProcess hwc_proc;
     hwc_proc << "hwclock" << "--systohc";
-    hwc_proc.start(KProcess::Block);
+    hwc_proc.start(TDEProcess::Block);
   }
 
   // restart time

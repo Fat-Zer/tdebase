@@ -75,8 +75,8 @@
 #include "kasprefsdlg.h"
 #include "kasprefsdlg.moc"
 
-#define Icon(x) KGlobal::iconLoader()->loadIcon( x, KIcon::NoGroup, KIcon::SizeMedium )
-#define LargeIcon(x) KGlobal::iconLoader()->loadIcon( x, KIcon::NoGroup, KIcon::SizeLarge )
+#define Icon(x) TDEGlobal::iconLoader()->loadIcon( x, KIcon::NoGroup, KIcon::SizeMedium )
+#define LargeIcon(x) TDEGlobal::iconLoader()->loadIcon( x, KIcon::NoGroup, KIcon::SizeLarge )
 
 
 KasPrefsDialog::KasPrefsDialog( KasTasker *kas, TQWidget *parent )

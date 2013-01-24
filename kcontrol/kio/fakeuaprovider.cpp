@@ -94,7 +94,7 @@ void FakeUASProvider::parseDescription()
       tmp.replace( QFL("appSysRelease"), TQString(utsn.release) );
       tmp.replace( QFL("appMachineType"), TQString(utsn.machine) );
 
-      TQStringList languageList = KGlobal::locale()->languageList();
+      TQStringList languageList = TDEGlobal::locale()->languageList();
       if ( languageList.count() )
       {
         TQStringList::Iterator it = languageList.find( TQString::fromLatin1("C") );

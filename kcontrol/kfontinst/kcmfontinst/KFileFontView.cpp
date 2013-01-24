@@ -189,7 +189,7 @@ void CKFileFontView::slotActivate(TQListViewItem *item)
 void CKFileFontView::selected(TQListViewItem *item)
 {
     if (item && !(TDEApplication::keyboardMouseState() & (ShiftButton|ControlButton)) &&
-         KGlobalSettings::singleClick())
+         TDEGlobalSettings::singleClick())
     {
         const KFileItem *fi = ((CFontListViewItem*)item)->fileInfo();
 
@@ -632,7 +632,7 @@ void CFontListViewItem::init()
     CFontListViewItem::setPixmap(COL_NAME, itsInf->pixmap(KIcon::SizeSmall));
 
     setText(COL_NAME, itsInf->text());
-    setText(COL_SIZE, itsInf->isDir() ? "" : KGlobal::locale()->formatNumber(itsInf->size(), 0));
+    setText(COL_SIZE, itsInf->isDir() ? "" : TDEGlobal::locale()->formatNumber(itsInf->size(), 0));
     setText(COL_TYPE, itsInf->mimeComment());
 }
 

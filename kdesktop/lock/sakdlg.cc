@@ -104,24 +104,24 @@ SAKDlg::SAKDlg(LockProcess *parent)
     installEventFilter(this);
     setFixedSize( sizeHint() );
 
-    mSAKProcess = new KProcess;
-    *mSAKProcess << "tdmtsak";
-    connect(mSAKProcess, TQT_SIGNAL(processExited(KProcess*)), this, TQT_SLOT(slotSAKProcessExited()));
-    mSAKProcess->start();
+    mSATDEProcess = new TDEProcess;
+    *mSATDEProcess << "tdmtsak";
+    connect(mSATDEProcess, TQT_SIGNAL(processExited(TDEProcess*)), this, TQT_SLOT(slotSATDEProcessExited()));
+    mSATDEProcess->start();
 }
 
-void SAKDlg::slotSAKProcessExited()
+void SAKDlg::slotSATDEProcessExited()
 {
-    int retcode = mSAKProcess->exitStatus();
+    int retcode = mSATDEProcess->exitStatus();
     if (retcode != 0) trinity_desktop_lock_use_sak = false;
     hide();
 }
 
 SAKDlg::~SAKDlg()
 {
-    if ((mSAKProcess) && (mSAKProcess->isRunning())) {
-        mSAKProcess->kill(SIGTERM);
-        delete mSAKProcess;
+    if ((mSATDEProcess) && (mSATDEProcess->isRunning())) {
+        mSATDEProcess->kill(SIGTERM);
+        delete mSATDEProcess;
     }
     hide();
 }

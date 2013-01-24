@@ -125,7 +125,7 @@ TaskBar::TaskBar( TaskBarSettings* settingsObject, TQWidget *parent, const char 
     blocklayout = false;
 
     connect(kapp, TQT_SIGNAL(settingsChanged(int)), TQT_SLOT(slotSettingsChanged(int)));
-    keys = new KGlobalAccel( TQT_TQOBJECT(this) );
+    keys = new TDEGlobalAccel( TQT_TQOBJECT(this) );
 #include "taskbarbindings.cpp"
     keys->readSettings();
     keys->updateConnections();
@@ -172,7 +172,7 @@ TQSize TaskBar::sizeHint() const
 {
     // get our minimum height based on the minimum button height or the
     // height of the font in use, which is largest
-    TQFontMetrics fm(KGlobalSettings::taskbarFont());
+    TQFontMetrics fm(TDEGlobalSettings::taskbarFont());
     int minButtonHeight = fm.height() > m_settingsObject->minimumButtonHeight() ?
                           fm.height() : m_settingsObject->minimumButtonHeight();
 
@@ -183,7 +183,7 @@ TQSize TaskBar::sizeHint( KPanelExtension::Position p, TQSize maxSize) const
 {
     // get our minimum height based on the minimum button height or the
     // height of the font in use, which is largest
-    TQFontMetrics fm(KGlobalSettings::taskbarFont());
+    TQFontMetrics fm(TDEGlobalSettings::taskbarFont());
     int minButtonHeight = fm.height() > m_settingsObject->minimumButtonHeight() ?
                           fm.height() : m_settingsObject->minimumButtonHeight();
 
@@ -710,7 +710,7 @@ void TaskBar::reLayout()
     // number of rows simply depends on our height which is either the
     // minimum button height or the height of the font in use, whichever is
     // largest
-    TQFontMetrics fm(KGlobalSettings::taskbarFont());
+    TQFontMetrics fm(TDEGlobalSettings::taskbarFont());
     int minButtonHeight = fm.height() > m_settingsObject->minimumButtonHeight() ?
                           fm.height() : m_settingsObject->minimumButtonHeight();
 
@@ -970,7 +970,7 @@ int TaskBar::taskCount() const
 
 int TaskBar::maximumButtonsWithoutShrinking() const
 {
-    TQFontMetrics fm(KGlobalSettings::taskbarFont());
+    TQFontMetrics fm(TDEGlobalSettings::taskbarFont());
     int minButtonHeight = fm.height() > m_settingsObject->minimumButtonHeight() ?
                           fm.height() : m_settingsObject->minimumButtonHeight();
     int rows = contentsRect().height() / minButtonHeight;

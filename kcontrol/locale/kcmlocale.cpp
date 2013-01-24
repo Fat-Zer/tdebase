@@ -88,7 +88,7 @@ KLocaleConfig::KLocaleConfig(KLocale *locale,
   // #### HPB: This should be implemented for KDE 3
   //  new TQLabel(this, I18N_NOOP("Encoding:"));
   //TQComboBox * cb = new TQComboBox( this );
-  //cb->insertStringList( KGlobal::charsets()->descriptiveEncodingNames() );
+  //cb->insertStringList( TDEGlobal::charsets()->descriptiveEncodingNames() );
 
   lay->addMultiCellWidget(m_labCountry, 0, 0, 0, 1);
   lay->addWidget(m_comboCountry, 0, 2);
@@ -122,41 +122,41 @@ KLocaleConfig::KLocaleConfig(KLocale *locale,
 
 void KLocaleConfig::slotInstallLanguage()
 {
-  KProcess *proc = new KProcess;
+  TDEProcess *proc = new TDEProcess;
 
   *proc << "tdesu";
   *proc << "qt-language-selector --mode install";
-  TQApplication::connect(proc, TQT_SIGNAL(processExited(KProcess *)),
-			this, TQT_SLOT(slotLanguageSelectorExited(KProcess *)));
+  TQApplication::connect(proc, TQT_SIGNAL(processExited(TDEProcess *)),
+			this, TQT_SLOT(slotLanguageSelectorExited(TDEProcess *)));
   setEnabled(false);
   proc->start();
 }
 
 void KLocaleConfig::slotUninstallLanguage()
 {
-  KProcess *proc = new KProcess;
+  TDEProcess *proc = new TDEProcess;
 
   *proc << "tdesu";
   *proc << "qt-language-selector --mode uninstall";
-  TQApplication::connect(proc, TQT_SIGNAL(processExited(KProcess *)),
-			this, TQT_SLOT(slotLanguageSelectorExited(KProcess *)));
+  TQApplication::connect(proc, TQT_SIGNAL(processExited(TDEProcess *)),
+			this, TQT_SLOT(slotLanguageSelectorExited(TDEProcess *)));
   setEnabled(false);
   proc->start();
 }
 
 void KLocaleConfig::slotSelectLanguage()
 {
-  KProcess *proc = new KProcess;
+  TDEProcess *proc = new TDEProcess;
 
   *proc << "tdesu";
   *proc << "qt-language-selector --mode select";
-  TQApplication::connect(proc, TQT_SIGNAL(processExited(KProcess *)),
-			this, TQT_SLOT(slotLanguageSelectorExited(KProcess *)));
+  TQApplication::connect(proc, TQT_SIGNAL(processExited(TDEProcess *)),
+			this, TQT_SLOT(slotLanguageSelectorExited(TDEProcess *)));
   setEnabled(false);
   proc->start();
 }
 
-void KLocaleConfig::slotLanguageSelectorExited(KProcess *)
+void KLocaleConfig::slotLanguageSelectorExited(TDEProcess *)
 {
   //reload here
   loadLanguageList();
@@ -256,8 +256,8 @@ void KLocaleConfig::slotLanguageDown()
 void KLocaleConfig::loadLanguageList()
 {
   // temperary use of our locale as the global locale
-  KLocale *lsave = KGlobal::_locale;
-  KGlobal::_locale = m_locale;
+  KLocale *lsave = TDEGlobal::_locale;
+  TDEGlobal::_locale = m_locale;
 
   // clear the list
   m_addLanguage->clear();
@@ -277,7 +277,7 @@ void KLocaleConfig::loadLanguageList()
   }
 
   // add all languages to the list
-  TQStringList alllang = KGlobal::dirs()->findAllResources("locale",
+  TQStringList alllang = TDEGlobal::dirs()->findAllResources("locale",
                                TQString::fromLatin1("*/entry.desktop"), 
                                false, true);
   TQStringList langlist = prilang;
@@ -313,21 +313,21 @@ void KLocaleConfig::loadLanguageList()
   }
 
   // restore the old global locale
-  KGlobal::_locale = lsave;
+  TDEGlobal::_locale = lsave;
 }
 
 void KLocaleConfig::loadCountryList()
 {
   // temperary use of our locale as the global locale
-  KLocale *lsave = KGlobal::_locale;
-  KGlobal::_locale = m_locale;
+  KLocale *lsave = TDEGlobal::_locale;
+  TDEGlobal::_locale = m_locale;
 
   TQString sub = TQString::fromLatin1("l10n/");
 
   // clear the list
   m_comboCountry->clear();
 
-  TQStringList regionlist = KGlobal::dirs()->findAllResources("locale",
+  TQStringList regionlist = TDEGlobal::dirs()->findAllResources("locale",
                                  sub + TQString::fromLatin1("*.desktop"), 
                                  false, true );
 
@@ -356,12 +356,12 @@ void KLocaleConfig::loadCountryList()
                           .arg(tag) ) );
     TQIconSet icon;
     if ( !map.isNull() )
-      icon = KGlobal::iconLoader()->loadIconSet(map, KIcon::Small);
+      icon = TDEGlobal::iconLoader()->loadIconSet(map, KIcon::Small);
     m_comboCountry->insertSubmenu( icon, name, tag, sub, -2 );
   }
 
   // add all languages to the list
-  TQStringList countrylist = KGlobal::dirs()->findAllResources
+  TQStringList countrylist = TDEGlobal::dirs()->findAllResources
     ("locale", sub + TQString::fromLatin1("*/entry.desktop"), false, true);
 
   for ( TQStringList::ConstIterator it = countrylist.begin();
@@ -383,20 +383,20 @@ void KLocaleConfig::loadCountryList()
     TQString flag( locate( "locale",
                           TQString::fromLatin1( "l10n/%1/flag.png" )
                           .arg(tag) ) );
-    TQIconSet icon( KGlobal::iconLoader()->loadIconSet(flag, KIcon::Small) );
+    TQIconSet icon( TDEGlobal::iconLoader()->loadIconSet(flag, KIcon::Small) );
     m_comboCountry->insertItem( icon, name, tag, submenu, menu_index );
   }
 
   // restore the old global locale
-  KGlobal::_locale = lsave;
+  TDEGlobal::_locale = lsave;
 }
 
 void KLocaleConfig::readLocale(const TQString &path, TQString &name,
                                const TQString &sub) const
 {
   // temperary use of our locale as the global locale
-  KLocale *lsave = KGlobal::_locale;
-  KGlobal::_locale = m_locale;
+  KLocale *lsave = TDEGlobal::_locale;
+  TDEGlobal::_locale = m_locale;
 
   // read the name
   TQString filepath = TQString::fromLatin1("%1%2/entry.desktop")
@@ -408,12 +408,12 @@ void KLocaleConfig::readLocale(const TQString &path, TQString &name,
   name = entry.readEntry("Name");
 
   // restore the old global locale
-  KGlobal::_locale = lsave;
+  TDEGlobal::_locale = lsave;
 }
 
 void KLocaleConfig::save()
 {
-  KConfigBase *config = KGlobal::config();
+  KConfigBase *config = TDEGlobal::config();
 
   config->setGroup("Locale");
 

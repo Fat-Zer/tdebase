@@ -16,7 +16,7 @@
 
 class Sound;
 class TQTimer;
-class KGlobalAccel;
+class TDEGlobalAccel;
 
 namespace KHotKeys
 {
@@ -70,7 +70,7 @@ class KDE_EXPORT Voice  : public TQObject
 		SoundRecorder *_recorder;
 		
 		KShortcut _shortcut;
-		KGlobalAccel *_kga;
+		TDEGlobalAccel *_kga;
 		
 		TQTimer *_timer;
     };

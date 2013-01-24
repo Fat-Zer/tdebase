@@ -31,7 +31,7 @@ extern "C"
     KDE_EXPORT KCModule *create_twinrules( TQWidget *parent, const char *name )
     {
     //CT there's need for decision: kwm or twin?
-    KGlobal::locale()->insertCatalogue( "kcmtwinrules" );
+    TDEGlobal::locale()->insertCatalogue( "kcmtwinrules" );
     return new KWinInternal::KCMRules( parent, name );
     }
 

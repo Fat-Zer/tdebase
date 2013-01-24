@@ -311,7 +311,7 @@ extern "C"
 
   KDE_EXPORT KCModule *create_privacy(TQWidget *parent, const char * /*name*/)
   {
-    KGlobal::locale()->insertCatalogue("privacy");
+    TDEGlobal::locale()->insertCatalogue("privacy");
     return new Privacy(parent, "Privacy");
   }
 }

@@ -376,9 +376,9 @@ void HALBackend::DeviceCondition(const char* udi, const char* condition)
             }
         }
         if (medium) {
-	    KProcess p;
+	    TDEProcess p;
 	    p << "kio_media_mounthelper" << "-e" << medium->name();
-	    p.start(KProcess::DontCare);
+	    p.start(TDEProcess::DontCare);
         }
     }
 
@@ -1128,7 +1128,7 @@ bool HALBackend::setMountoptions(const TQString &name, const TQStringList &optio
 TQString startKdeSudoProcess(const TQString& tdesudoPath, const TQString& command,
         const TQString& dialogCaption, const TQString& dialogComment)
 {
-    KProcess tdesudoProcess;
+    TDEProcess tdesudoProcess;
 
     tdesudoProcess << tdesudoPath
 		<< "-d"
@@ -1138,7 +1138,7 @@ TQString startKdeSudoProcess(const TQString& tdesudoPath, const TQString& comman
 		<< "-c" << command;
 
     // @todo handle tdesudo output
-    tdesudoProcess.start(KProcess::Block);
+    tdesudoProcess.start(TDEProcess::Block);
 
     return TQString();
 }
@@ -1146,7 +1146,7 @@ TQString startKdeSudoProcess(const TQString& tdesudoPath, const TQString& comman
 TQString startKdeSuProcess(const TQString& tdesuPath, const TQString& command,
         const TQString& dialogCaption)
 {
-    KProcess tdesuProcess;
+    TDEProcess tdesuProcess;
 
     tdesuProcess << tdesuPath
 		<< "-d"
@@ -1155,7 +1155,7 @@ TQString startKdeSuProcess(const TQString& tdesuPath, const TQString& command,
 		<< "-c" << command;
 
     // @todo handle tdesu output
-    tdesuProcess.start(KProcess::Block);
+    tdesuProcess.start(TDEProcess::Block);
 
     return TQString();
 }
@@ -1299,7 +1299,7 @@ static TQString mount_priv(const char *udi, const char *mount_point, const char 
 TQString HALBackend::listUsingProcesses(const Medium* medium)
 {
     TQString proclist, fullmsg;
-    TQString cmdline = TQString("/usr/bin/env fuser -vm %1 2>&1").arg(KProcess::quote(medium->mountPoint()));
+    TQString cmdline = TQString("/usr/bin/env fuser -vm %1 2>&1").arg(TDEProcess::quote(medium->mountPoint()));
     FILE *fuser = popen(cmdline.latin1(), "r");
 
     uint counter = 0;
@@ -1336,7 +1336,7 @@ TQString HALBackend::listUsingProcesses(const Medium* medium)
 TQString HALBackend::killUsingProcesses(const Medium* medium)
 {
     TQString proclist, fullmsg;
-    TQString cmdline = TQString("/usr/bin/env fuser -vmk %1 2>&1").arg(KProcess::quote(medium->mountPoint()));
+    TQString cmdline = TQString("/usr/bin/env fuser -vmk %1 2>&1").arg(TDEProcess::quote(medium->mountPoint()));
     FILE *fuser = popen(cmdline.latin1(), "r");
 
     uint counter = 0;

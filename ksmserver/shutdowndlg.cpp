@@ -119,14 +119,14 @@ void KSMShutdownFeedback::fadeBack( void )
 void KSMShutdownFeedback::slotPaintEffect()
 {
 	// determine which fade to use
-   if (KConfigGroup(KGlobal::config(), "Logout").readBoolEntry("doFancyLogout", true))
+   if (KConfigGroup(TDEGlobal::config(), "Logout").readBoolEntry("doFancyLogout", true))
 	{
 
-	float doFancyLogoutAdditionalDarkness  = (float)KConfigGroup(KGlobal::config(), "Logout").readDoubleNumEntry("doFancyLogoutAdditionalDarkness", 0.6);
+	float doFancyLogoutAdditionalDarkness  = (float)KConfigGroup(TDEGlobal::config(), "Logout").readDoubleNumEntry("doFancyLogoutAdditionalDarkness", 0.6);
 
-	float doFancyLogoutFadeTime = (float)KConfigGroup(KGlobal::config(), "Logout").readDoubleNumEntry("doFancyLogoutFadeTime", 4000);
+	float doFancyLogoutFadeTime = (float)KConfigGroup(TDEGlobal::config(), "Logout").readDoubleNumEntry("doFancyLogoutFadeTime", 4000);
 
-	float doFancyLogoutFadeBackTime = (float)KConfigGroup(KGlobal::config(), "Logout").readDoubleNumEntry("doFancyLogoutFadeBackTime", 1000);
+	float doFancyLogoutFadeBackTime = (float)KConfigGroup(TDEGlobal::config(), "Logout").readDoubleNumEntry("doFancyLogoutFadeBackTime", 1000);
 
 	if (kapp->isX11CompositionAvailable()) {
 		// We can do this in a different (simpler) manner because we have compositing support!
@@ -697,7 +697,7 @@ KSMShutdownDlg::KSMShutdownDlg( TQWidget* parent,
 							2 * KDialog::spacingHint() );
 
 	// default factor
-	bool doUbuntuLogout = KConfigGroup(KGlobal::config(), "Logout").readBoolEntry("doUbuntuLogout", false);
+	bool doUbuntuLogout = KConfigGroup(TDEGlobal::config(), "Logout").readBoolEntry("doUbuntuLogout", false);
 
 	// slighty more space for the new logout
 	int factor = 2;
@@ -1169,7 +1169,7 @@ bool KSMShutdownDlg::confirmShutdown( bool maysd, TDEApplication::ShutdownType& 
 
 	// Show dialog (will save the background in showEvent)
 	TQSize sh = l->sizeHint();
-	TQRect rect = KGlobalSettings::desktopGeometry(TQCursor::pos());
+	TQRect rect = TDEGlobalSettings::desktopGeometry(TQCursor::pos());
 
 	l->move(rect.x() + (rect.width() - sh.width())/2,
 			rect.y() + (rect.height() - sh.height())/2);
@@ -1299,7 +1299,7 @@ bool KSMDelayedMessageBox::showTicker( TDEApplication::ShutdownType sdtype, cons
 	kapp->enableStyles();
 	KSMDelayedMessageBox msg( sdtype, bootOption, confirmDelay );
 	TQSize sh = msg.sizeHint();
-	TQRect rect = KGlobalSettings::desktopGeometry(TQCursor::pos());
+	TQRect rect = TDEGlobalSettings::desktopGeometry(TQCursor::pos());
 
 	msg.move(rect.x() + (rect.width() - sh.width())/2,
 			rect.y() + (rect.height() - sh.height())/2);

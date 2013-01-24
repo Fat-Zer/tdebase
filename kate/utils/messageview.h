@@ -36,7 +36,7 @@
     @section Usage
     
     To use it in the intended way:
-    @li Create a KProcess (or derived class)
+    @li Create a TDEProcess (or derived class)
     @li As the output of the process arrives, hand it over
         using addText(). The view will add it to the end and
         make sure it is scrolled to the end.

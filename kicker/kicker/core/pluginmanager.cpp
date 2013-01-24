@@ -55,28 +55,28 @@ PluginManager* PluginManager::the()
 AppletInfo::List PluginManager::applets(bool sort, AppletInfo::List* list)
 {
     TQStringList rel;
-    KGlobal::dirs()->findAllResources("applets", "*.desktop", false, true, rel);
+    TDEGlobal::dirs()->findAllResources("applets", "*.desktop", false, true, rel);
     return plugins(rel, AppletInfo::Applet, sort, list);
 }
 
 AppletInfo::List PluginManager::extensions(bool sort, AppletInfo::List* list)
 {
     TQStringList rel;
-    KGlobal::dirs()->findAllResources("extensions", "*.desktop", false, true, rel);
+    TDEGlobal::dirs()->findAllResources("extensions", "*.desktop", false, true, rel);
     return plugins(rel, AppletInfo::Extension, sort, list);
 }
 
 AppletInfo::List PluginManager::builtinButtons(bool sort, AppletInfo::List* list)
 {
     TQStringList rel;
-    KGlobal::dirs()->findAllResources("builtinbuttons", "*.desktop", false, true, rel);
+    TDEGlobal::dirs()->findAllResources("builtinbuttons", "*.desktop", false, true, rel);
     return plugins(rel, AppletInfo::BuiltinButton, sort, list);
 }
 
 AppletInfo::List PluginManager::specialButtons(bool sort, AppletInfo::List* list)
 {
     TQStringList rel;
-    KGlobal::dirs()->findAllResources("specialbuttons", "*.desktop", false, true, rel);
+    TDEGlobal::dirs()->findAllResources("specialbuttons", "*.desktop", false, true, rel);
     return plugins(rel, AppletInfo::SpecialButton, sort, list);
 }
 
@@ -113,7 +113,7 @@ AppletInfo::List PluginManager::plugins(const TQStringList& desktopFiles,
 
 PluginManager::PluginManager()
 {
-    KConfigGroup generalGroup(KGlobal::config(), "General");
+    KConfigGroup generalGroup(TDEGlobal::config(), "General");
     m_untrustedApplets = generalGroup.readListEntry("UntrustedApplets");
     m_untrustedExtensions = generalGroup.readListEntry("UntrustedExtensions");
 }
@@ -250,13 +250,13 @@ AppletContainer* PluginManager::createAppletContainer(
         TQWidget* parent,
         bool isImmutable)
 {
-    TQString desktopPath = KGlobal::dirs()->findResource( "applets", desktopFile );
+    TQString desktopPath = TDEGlobal::dirs()->findResource( "applets", desktopFile );
 
     // KDE4: remove
     // support the old (KDE 2.2) nameing scheme
     if (desktopPath.isEmpty())
     {
-        desktopPath = KGlobal::dirs()->findResource( "applets",
+        desktopPath = TDEGlobal::dirs()->findResource( "applets",
         desktopFile.right(
                 desktopFile.length() - 1 ) );
     }
@@ -282,7 +282,7 @@ AppletContainer* PluginManager::createAppletContainer(
     {
         // we haven't loaded this puppy before and we're not in the untrusted list
         m_untrustedApplets.append(desktopFile);
-        KConfigGroup generalGroup(KGlobal::config(), "General");
+        KConfigGroup generalGroup(TDEGlobal::config(), "General");
         generalGroup.writeEntry("UntrustedApplets", m_untrustedApplets);
         generalGroup.sync();
     }
@@ -308,7 +308,7 @@ ExtensionContainer* PluginManager::createExtensionContainer(const TQString& desk
         return 0;
     }
 
-    TQString desktopPath = KGlobal::dirs()->findResource("extensions", desktopFile);
+    TQString desktopPath = TDEGlobal::dirs()->findResource("extensions", desktopFile);
     if (desktopPath.isEmpty())
     {
         return 0;
@@ -335,7 +335,7 @@ ExtensionContainer* PluginManager::createExtensionContainer(const TQString& desk
         {
             // we don't have an instance around and we're not in the untrusted list!
             m_untrustedExtensions.append(desktopFile);
-            KConfigGroup generalGroup(KGlobal::config(), "General");
+            KConfigGroup generalGroup(TDEGlobal::config(), "General");
             generalGroup.writeEntry("UntrustedExtensions", m_untrustedExtensions);
             generalGroup.sync();
         }
@@ -349,7 +349,7 @@ void PluginManager::clearUntrustedLists()
     m_untrustedExtensions.clear();
     m_untrustedApplets.clear();
 
-    KConfigGroup generalGroup(KGlobal::config(), "General");
+    KConfigGroup generalGroup(TDEGlobal::config(), "General");
     generalGroup.writeEntry("UntrustedApplets", m_untrustedApplets);
     generalGroup.writeEntry("UntrustedExtensions", m_untrustedExtensions);
     generalGroup.sync();

@@ -59,7 +59,7 @@ int main(int argc, char *argv[])
 	if (!args->isSet("r")) {	// we'll first show the first page
 		KFindLanguage *flang = new KFindLanguage();
 		if( !flang->getBestLang().isEmpty())	// if we have the users language, use it
-			KGlobal::locale()->setLanguage( flang->getBestLang() );
+			TDEGlobal::locale()->setLanguage( flang->getBestLang() );
 		delete flang;
 	}
 

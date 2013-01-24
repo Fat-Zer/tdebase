@@ -40,7 +40,7 @@ KonqHistoryManager::KonqHistoryManager( TQObject *parent, const char *name )
     m_updateTimer = new TQTimer( this );
 
     // defaults
-    KConfig *config = KGlobal::config();
+    KConfig *config = TDEGlobal::config();
     KConfigGroupSaver cs( config, "HistorySettings" );
     m_maxCount = config->readNumEntry( "Maximum of History entries", 500 );
     m_maxCount = TQMAX( 1, m_maxCount );
@@ -493,7 +493,7 @@ void KonqHistoryManager::notifyMaxCount( TQ_UINT32 count, TQCString )
     clearPending();
     adjustSize();
 
-    KConfig *config = KGlobal::config();
+    KConfig *config = TDEGlobal::config();
     KConfigGroupSaver cs( config, "HistorySettings" );
     config->writeEntry( "Maximum of History entries", m_maxCount );
 
@@ -509,7 +509,7 @@ void KonqHistoryManager::notifyMaxAge( TQ_UINT32 days, TQCString  )
     clearPending();
     adjustSize();
 
-    KConfig *config = KGlobal::config();
+    KConfig *config = TDEGlobal::config();
     KConfigGroupSaver cs( config, "HistorySettings" );
     config->writeEntry( "Maximum age of History entries", m_maxAgeDays );
 

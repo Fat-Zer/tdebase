@@ -206,8 +206,8 @@ KlipperWidget::KlipperWidget( TQWidget *parent, KConfig* config )
     m_iconOrigHeight = height();
     adjustSize();
 
-    globalKeys = new KGlobalAccel(TQT_TQOBJECT(this));
-    KGlobalAccel* keys = globalKeys;
+    globalKeys = new TDEGlobalAccel(TQT_TQOBJECT(this));
+    TDEGlobalAccel* keys = globalKeys;
 #include "klipperbindings.cpp"
     // the keys need to be read from kdeglobals, not kickerrc --ellis, 22/9/02
     globalKeys->readSettings();
@@ -337,7 +337,7 @@ void KlipperWidget::showPopupMenu( TQPopupMenu *menu )
     } else {
         KWin::WindowInfo i = KWin::windowInfo( winId(), NET::WMGeometry );
         TQRect g = i.geometry();
-        TQRect screen = KGlobalSettings::desktopGeometry(g.center());
+        TQRect screen = TDEGlobalSettings::desktopGeometry(g.center());
 
         if ( g.x()-screen.x() > screen.width()/2 &&
              g.y()-screen.y() + size.height() > screen.height() )
@@ -606,7 +606,7 @@ void KlipperWidget::slotQuit()
     saveSession();
     int autoStart = KMessageBox::questionYesNoCancel( 0L, i18n("Should Klipper start automatically\nwhen you login?"), i18n("Automatically Start Klipper?"), i18n("Start"), i18n("Do Not Start") );
 
-    KConfig *config = KGlobal::config();
+    KConfig *config = TDEGlobal::config();
     config->setGroup("General");
     if ( autoStart == KMessageBox::Yes ) {
         config->writeEntry("AutoStart", true);
@@ -1176,8 +1176,8 @@ static void ensureGlobalSyncOff(KConfig* config) {
                            true,
                            true );
         config->sync();
-        KClipboardSynchronizer::setSynchronizing( false );
-        KClipboardSynchronizer::setReverseSynchronizing( false );
+        TDEClipboardSynchronizer::setSynchronizing( false );
+        TDEClipboardSynchronizer::setReverseSynchronizing( false );
         KIPC::sendMessageAll( KIPC::ClipboardConfigChanged, 0 );
     }
 

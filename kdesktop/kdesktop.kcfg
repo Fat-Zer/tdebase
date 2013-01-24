@@ -411,11 +411,11 @@
       <!--   config->writePathEntry( "CompletionItems", m_dlg->cbCommand->completionObject()->items() ); -->
     </entry>
     <entry key="CompletionMode" type="Int">
-      <default code="true">KGlobalSettings::completionMode()</default>
+      <default code="true">TDEGlobalSettings::completionMode()</default>
       <label></label>
       <whatsthis></whatsthis>
       <!-- minicli.cpp:210 -->
-      <!--   int mode = config->readNumEntry( "CompletionMode", KGlobalSettings::completionMode() ); -->
+      <!--   int mode = config->readNumEntry( "CompletionMode", TDEGlobalSettings::completionMode() ); -->
       <!-- minicli.cpp:252 -->
       <!--     config->writeEntry( "CompletionMode", m_dlg->cbCommand->completionMode() ); -->
     </entry>

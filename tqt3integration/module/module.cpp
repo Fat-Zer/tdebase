@@ -78,7 +78,7 @@ bool Module::initializeIntegration( const TQString& hostname )
     if( hostname != getHostname())
         return false;
     // multihead support in KDE is just a hack, it wouldn't work very well anyway
-    if( KGlobalSettings::isMultiHead())
+    if( TDEGlobalSettings::isMultiHead())
         return false;
     return true;
     }

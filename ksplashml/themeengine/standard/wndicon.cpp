@@ -99,7 +99,7 @@ TQPoint WndIcon::determinePosition()
 
   bottomshift = topshift = 0;
   const TQRect srect = kapp->desktop()->screenGeometry( mXineramaScreen );
-  // KGlobalSettings::splashScreenDesktopGeometry(); cannot be used here.
+  // TDEGlobalSettings::splashScreenDesktopGeometry(); cannot be used here.
   DW = srect.width();
   DH = srect.height();
   SBH = mStatusHeight;

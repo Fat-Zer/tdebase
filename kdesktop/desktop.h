@@ -32,7 +32,7 @@ class KURL;
 class TQCloseEvent;
 class TQDropEvent;
 class TQPopupMenu;
-class KGlobalAccel;
+class TDEGlobalAccel;
 class KWinModule;
 class KBackgroundManager;
 class TQTimer;
@@ -187,7 +187,7 @@ signals:
 
 private:
 
-  KGlobalAccel *keys;
+  TDEGlobalAccel *keys;
 
   KWinModule* m_pKwinmodule;
 

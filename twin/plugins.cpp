@@ -20,7 +20,7 @@ namespace KWinInternal
 {
 
 PluginMgr::PluginMgr()
-    : KDecorationPlugins( KGlobal::config())
+    : KDecorationPlugins( TDEGlobal::config())
     {
     defaultPlugin = (TQPixmap::defaultDepth() > 8) ?
             "twin3_plastik" : "twin3_quartz";

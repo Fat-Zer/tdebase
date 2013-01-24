@@ -941,7 +941,7 @@ void TEWidget::setImage(const ca* const newimg, int lines, int columns)
      if (!mResizeWidget)
      {
         mResizeWidget = new TQFrame(this);
-        TQFont f = KGlobalSettings::generalFont();
+        TQFont f = TDEGlobalSettings::generalFont();
         int fs = f.pointSize();
         if (fs == -1)
            fs = TQFontInfo(f).pointSize();
@@ -1367,7 +1367,7 @@ void TEWidget::mouseMoveEvent(TQMouseEvent* ev)
     // we had a mouse down, but haven't confirmed a drag yet
     // if the mouse has moved sufficiently, we will confirm
 
-   int distance = KGlobalSettings::dndEventDelay();
+   int distance = TDEGlobalSettings::dndEventDelay();
    if ( ev->x() > dragInfo.start.x() + distance || ev->x() < dragInfo.start.x() - distance ||
         ev->y() > dragInfo.start.y() + distance || ev->y() < dragInfo.start.y() - distance) {
       // we've left the drag square, we can start a real drag operation now

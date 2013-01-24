@@ -74,7 +74,7 @@ AppletWidget::AppletWidget(const AppletInfo& info, bool odd, TQWidget *parent)
 
     itemDescription->installEventFilter(this);
 
-    KIconLoader * ldr = KGlobal::iconLoader();
+    KIconLoader * ldr = TDEGlobal::iconLoader();
     TQPixmap icon = ldr->loadIcon(info.icon(), KIcon::Panel, KIcon::SizeLarge);
     itemPixmap->setPixmap(icon);
     itemPixmap->installEventFilter(this);
@@ -99,7 +99,7 @@ bool AppletWidget::eventFilter(TQObject*, TQEvent* e)
     {
         TQMouseEvent* me = TQT_TQMOUSEEVENT(e);
         if ((me->pos() - m_dragStart).manhattanLength() >
-            KGlobalSettings::dndEventDelay())
+            TDEGlobalSettings::dndEventDelay())
         {
             AppletInfoDrag* drag = new AppletInfoDrag(m_appletInfo, this);
 
@@ -165,7 +165,7 @@ void AppletWidget::mouseMoveEvent(TQMouseEvent *e)
     if (e->button() == Qt::LeftButton &&
         !m_dragStart.isNull() &&
         (e->pos() - m_dragStart).manhattanLength() >
-         KGlobalSettings::dndEventDelay())
+         TDEGlobalSettings::dndEventDelay())
     {
         AppletInfoDrag* drag = new AppletInfoDrag(m_appletInfo, this);
 
@@ -202,18 +202,18 @@ void AppletWidget::setSelected(bool selected)
     // for now just used to switch colours around =)
     if (m_selected)
     {
-        setPaletteBackgroundColor(KGlobalSettings::highlightColor());
-        setPaletteForegroundColor(KGlobalSettings::highlightedTextColor());
+        setPaletteBackgroundColor(TDEGlobalSettings::highlightColor());
+        setPaletteForegroundColor(TDEGlobalSettings::highlightedTextColor());
     }
     else if (m_odd)
     {
-        setPaletteBackgroundColor(KGlobalSettings::baseColor());
-        setPaletteForegroundColor(KGlobalSettings::textColor());
+        setPaletteBackgroundColor(TDEGlobalSettings::baseColor());
+        setPaletteForegroundColor(TDEGlobalSettings::textColor());
     }
     else
     {
-        setPaletteBackgroundColor(KGlobalSettings::alternateBackgroundColor());
-        setPaletteForegroundColor(KGlobalSettings::textColor());
+        setPaletteBackgroundColor(TDEGlobalSettings::alternateBackgroundColor());
+        setPaletteForegroundColor(TDEGlobalSettings::textColor());
     }
 }
 
@@ -241,7 +241,7 @@ AddAppletDialog::AddAppletDialog(ContainerArea* cArea,
     m_mainWidget = new AppletView(this, "AddAppletDialog::m_mainWidget");
     m_mainWidget->appletScrollView->setResizePolicy(TQScrollView::Manual);
     m_mainWidget->appletScrollView->setHScrollBarMode(TQScrollView::AlwaysOff);
-    m_mainWidget->appletScrollView->viewport()->setPaletteBackgroundColor(KGlobalSettings::baseColor());
+    m_mainWidget->appletScrollView->viewport()->setPaletteBackgroundColor(TDEGlobalSettings::baseColor());
 
     setMainWidget(m_mainWidget);
 
@@ -311,7 +311,7 @@ bool AddAppletDialog::eventFilter(TQObject *o, TQEvent *e)
 void AddAppletDialog::populateApplets()
 {
     m_appletBox = new TQWidget(m_mainWidget->appletScrollView->viewport());
-    m_appletBox->setPaletteBackgroundColor(KGlobalSettings::baseColor());
+    m_appletBox->setPaletteBackgroundColor(TDEGlobalSettings::baseColor());
     m_mainWidget->appletScrollView->addChild(m_appletBox, 0, 0);
     m_appletBox->show();
     TQVBoxLayout* layout = new TQVBoxLayout(m_appletBox);

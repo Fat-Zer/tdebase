@@ -64,7 +64,7 @@ extern "C"
 {
     KDE_EXPORT KPanelApplet* init(TQWidget *parent, const TQString& configFile)
     {
-        KGlobal::locale()->insertCatalogue("ksystemtrayapplet");
+        TDEGlobal::locale()->insertCatalogue("ksystemtrayapplet");
         return new SystemTrayApplet(configFile, KPanelApplet::Normal,
                                     KPanelApplet::Preferences, parent, "ksystemtrayapplet");
     }
@@ -201,7 +201,7 @@ SystemTrayApplet::~SystemTrayApplet()
     if (m_leftSpacer) delete m_leftSpacer;
     if (m_rightSpacer) delete m_rightSpacer;
 
-    KGlobal::locale()->removeCatalogue("ksystemtrayapplet");
+    TDEGlobal::locale()->removeCatalogue("ksystemtrayapplet");
 }
 
 bool SystemTrayApplet::x11Event( XEvent *e )

@@ -76,7 +76,7 @@ void KateSessionMenu::initialize()
 
   insertSeparator();
 
-  TQStringList list = KGlobal::dirs()->findAllResources( "data", "kate/sessions/*.katesession", false, true);
+  TQStringList list = TDEGlobal::dirs()->findAllResources( "data", "kate/sessions/*.katesession", false, true);
   for (TQStringList::ConstIterator it = list.begin(); it != list.end(); ++it)
   {
     KSimpleConfig config( *it, true );

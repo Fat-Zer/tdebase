@@ -136,7 +136,7 @@ KRootWm::KRootWm(KDesktop* _desktop) : TQObject(_desktop), startup(FALSE)
 	m_actionCollection, "open_terminal" );
   }
 
-  if (!KGlobal::config()->isImmutable())
+  if (!TDEGlobal::config()->isImmutable())
   {
      new KAction(i18n("Configure Desktop..."), "configure", 0, this, TQT_SLOT( slotConfigureDesktop() ),
                  m_actionCollection, "configdesktop" );
@@ -754,15 +754,15 @@ TQStringList KRootWm::configModules() {
 void KRootWm::slotOpenTerminal()
 {
     // kdDebug() << "KRootWm::slotOpenTerminal" << endl;
-    KProcess* p = new KProcess;
+    TDEProcess* p = new TDEProcess;
     TQ_CHECK_PTR(p);
 
-    KConfigGroupSaver gs(KGlobal::config(), "General");
-    TQString terminal = KGlobal::config()->readPathEntry("TerminalApplication", "konsole");
+    KConfigGroupSaver gs(TDEGlobal::config(), "General");
+    TQString terminal = TDEGlobal::config()->readPathEntry("TerminalApplication", "konsole");
 
-    *p << terminal << "--workdir=" + KGlobalSettings::desktopPath() + "/";
+    *p << terminal << "--workdir=" + TDEGlobalSettings::desktopPath() + "/";
 
-    p->start(KProcess::DontCare);
+    p->start(TDEProcess::DontCare);
 
     delete p;
 }

@@ -122,7 +122,7 @@ DesktopBehavior::DesktopBehavior(KConfig *config, TQWidget *parent, const char *
    * or left handed.  The outer button functionality is actually swapped
    *
    */
-  bool leftHandedMouse = ( KGlobalSettings::mouseSettings().handed == KGlobalSettings::KMouseSettings::LeftHanded);
+  bool leftHandedMouse = ( TDEGlobalSettings::mouseSettings().handed == TDEGlobalSettings::KMouseSettings::LeftHanded);
 
   m_bHasMedia = KProtocolInfo::isKnownProtocol(TQString::fromLatin1("media"));
 

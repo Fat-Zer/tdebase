@@ -53,7 +53,7 @@
 #include <stdlib.h>
 #include <stdarg.h>
 
-#define quote(x) KProcess::quote(x)
+#define quote(x) TDEProcess::quote(x)
 
 /** \brief Return a string for the page size.
  *
@@ -75,14 +75,14 @@ char const* pageSizeText(int size)
  */
 static TQString pageSize()
 {
-	KConfig	*conf = KGlobal::config();
+	KConfig	*conf = TDEGlobal::config();
 	conf->setGroup("Fax");
-	return conf->readEntry("Page", pageSizeText(KGlobal::locale()->pageSize()));
+	return conf->readEntry("Page", pageSizeText(TDEGlobal::locale()->pageSize()));
 }
 
 static TQString stripNumber( const TQString& s )
 {
-	KConfig *conf = KGlobal::config();
+	KConfig *conf = TDEGlobal::config();
 	conf->setGroup( "Personal" );
 
 	// removes any non-numeric character, except ('+','*','#') (hope it's supported by faxing tools)
@@ -193,7 +193,7 @@ static TQString replaceTags( const TQString& s, const TQString& tags, KdeprintFa
 	// unquote variables (they will be replaced with quoted values later)
 
 	TQValueStack<bool> stack;
-	KConfig	*conf = KGlobal::config();
+	KConfig	*conf = TDEGlobal::config();
 
 	TQString cmd = s;
 
@@ -354,11 +354,11 @@ static TQString replaceTags( const TQString& s, const TQString& tags, KdeprintFa
 FaxCtrl::FaxCtrl(TQWidget *parent, const char *name)
 : TQObject(parent, name)
 {
-	m_process = new KProcess();
+	m_process = new TDEProcess();
 	m_process->setUseShell(true);
-	connect(m_process, TQT_SIGNAL(receivedStdout(KProcess*,char*,int)), TQT_SLOT(slotReceivedStdout(KProcess*,char*,int)));
-	connect(m_process, TQT_SIGNAL(receivedStderr(KProcess*,char*,int)), TQT_SLOT(slotReceivedStdout(KProcess*,char*,int)));
-	connect(m_process, TQT_SIGNAL(processExited(KProcess*)), TQT_SLOT(slotProcessExited(KProcess*)));
+	connect(m_process, TQT_SIGNAL(receivedStdout(TDEProcess*,char*,int)), TQT_SLOT(slotReceivedStdout(TDEProcess*,char*,int)));
+	connect(m_process, TQT_SIGNAL(receivedStderr(TDEProcess*,char*,int)), TQT_SLOT(slotReceivedStdout(TDEProcess*,char*,int)));
+	connect(m_process, TQT_SIGNAL(processExited(TDEProcess*)), TQT_SLOT(slotProcessExited(TDEProcess*)));
 	connect(this, TQT_SIGNAL(faxSent(bool)), TQT_SLOT(cleanTempFiles()));
 	m_logview = 0;
 }
@@ -390,14 +390,14 @@ bool FaxCtrl::send(KdeprintFax *f)
 	return true;
 }
 
-void FaxCtrl::slotReceivedStdout(KProcess*, char *buffer, int len)
+void FaxCtrl::slotReceivedStdout(TDEProcess*, char *buffer, int len)
 {
 	TQCString	str(buffer, len);
 	kdDebug() << "Received stdout: " << str << endl;
 	addLog(TQString(str));
 }
 
-void FaxCtrl::slotProcessExited(KProcess*)
+void FaxCtrl::slotProcessExited(TDEProcess*)
 {
 	// we exited a process: if there's still entries in m_files, this was a filter
 	// process, else this was the fax process
@@ -426,7 +426,7 @@ void FaxCtrl::slotProcessExited(KProcess*)
 
 TQString FaxCtrl::faxCommand()
 {
-	KConfig	*conf = KGlobal::config();
+	KConfig	*conf = TDEGlobal::config();
 	conf->setGroup("System");
 	TQString	sys = conf->readPathEntry("System", "efax");
 	TQString cmd;
@@ -465,7 +465,7 @@ void FaxCtrl::sendFax()
 		m_process->clearArguments();
 		*m_process << cmd;
 		addLog(i18n("Sending to fax using: %1").arg(cmd));
-		if (!m_process->start(KProcess::NotifyOnExit, KProcess::AllOutput))
+		if (!m_process->start(TDEProcess::NotifyOnExit, TDEProcess::AllOutput))
 			emit faxSent(false);
 		else
 			emit message(i18n("Sending fax to %1...").arg( item.number ));
@@ -490,11 +490,11 @@ void FaxCtrl::filter()
 			m_filteredfiles.prepend(tmp);
 			m_tempfiles.append(tmp);
 			m_process->clearArguments();
-			*m_process << locate("data","tdeprintfax/anytops") << "-m" << KProcess::quote(locate("data","tdeprintfax/faxfilters"))
+			*m_process << locate("data","tdeprintfax/anytops") << "-m" << TDEProcess::quote(locate("data","tdeprintfax/faxfilters"))
 				<< TQString::fromLatin1("--mime=%1").arg(mimeType)
 				<< "-p" << pageSize()
-				<<  KProcess::quote(m_files[0]) << KProcess::quote(tmp);
-			if (!m_process->start(KProcess::NotifyOnExit, KProcess::AllOutput))
+				<<  TDEProcess::quote(m_files[0]) << TDEProcess::quote(tmp);
+			if (!m_process->start(TDEProcess::NotifyOnExit, TDEProcess::AllOutput))
 				emit faxSent(false);
 			else
 				emit message(i18n("Filtering %1...").arg(m_files[0]));
@@ -576,7 +576,7 @@ void FaxCtrl::addLog(const TQString& s, bool isTitle)
 
 TQString FaxCtrl::faxSystem()
 {
-	KConfig	*conf = KGlobal::config();
+	KConfig	*conf = TDEGlobal::config();
 	conf->setGroup("System");
 	TQString	s = conf->readEntry("System", "efax");
 	s[0] = s[0].upper();

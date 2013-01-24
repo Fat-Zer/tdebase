@@ -55,7 +55,7 @@ bool scanDesktopFile( TQPtrList<AppLnkCache> &appCache, const TQString &templ,
   // find out where to put the .desktop files
   TQString destName;
   if ( destDir.isNull() )
-    destDir = KGlobal::dirs()->saveLocation( "apps" );
+    destDir = TDEGlobal::dirs()->saveLocation( "apps" );
   else
     destDir += "/";
 
@@ -82,7 +82,7 @@ bool scanDesktopFile( TQPtrList<AppLnkCache> &appCache, const TQString &templ,
     exec = exec.left( pos );
 
   // try to locate the binary
-  TQString pexec = KGlobal::dirs()->findExe( exec, 
+  TQString pexec = TDEGlobal::dirs()->findExe( exec, 
                  TQString( ::getenv( "PATH" ) ) + ":/usr/X11R6/bin:/usr/games" );
   if ( pexec.isEmpty() ) {
     kdDebug(DBG_CODE) << "looking for " << exec.local8Bit()
@@ -134,11 +134,11 @@ void decorateDirs( TQString destDir )
 {
   // find out where to put the .directory files
   if ( destDir.isNull() )
-    destDir = KGlobal::dirs()->saveLocation( "apps" );
+    destDir = TDEGlobal::dirs()->saveLocation( "apps" );
   else
     destDir += "/";
 
-  TQStringList dirs = KGlobal::dirs()->findAllResources( "data", "kappfinder/apps/*.directory", true );
+  TQStringList dirs = TDEGlobal::dirs()->findAllResources( "data", "kappfinder/apps/*.directory", true );
 
   TQStringList::Iterator it;
   for ( it = dirs.begin(); it != dirs.end(); ++it ) {

@@ -50,7 +50,7 @@ KCountryPage::KCountryPage(TQWidget *parent, const char *name ) : KCountryPageDl
 	flang = new KFindLanguage();
 
 	// need this ones for decision over restarts of kp, kicker, etc
-	s_oldlocale = KGlobal::locale()->language();
+	s_oldlocale = TDEGlobal::locale()->language();
 
 	// load the Menus and guess the selection
 	loadCountryList(cb_country);
@@ -81,7 +81,7 @@ void KCountryPage::loadCountryList(KLanguageButton *combo) {
 	// clear the list
 	combo->clear();
 
-	TQStringList regionfiles = KGlobal::dirs()->findAllResources("locale", sub + "*.desktop");
+	TQStringList regionfiles = TDEGlobal::dirs()->findAllResources("locale", sub + "*.desktop");
 	TQMap<TQString,TQString> regionnames;
 
 	for ( TQStringList::ConstIterator it = regionfiles.begin(); it != regionfiles.end(); ++it ) {
@@ -108,7 +108,7 @@ void KCountryPage::loadCountryList(KLanguageButton *combo) {
 	}
 
 	// add all languages to the list
-	TQStringList countrylist = KGlobal::dirs()->findAllResources("locale", sub + "*/entry.desktop");
+	TQStringList countrylist = TDEGlobal::dirs()->findAllResources("locale", sub + "*/entry.desktop");
 	countrylist.sort();
 
 	for ( TQStringList::ConstIterator it = countrylist.begin(); it != countrylist.end(); ++it ) {
@@ -149,7 +149,7 @@ void KCountryPage::fillLanguageMenu(KLanguageButton *combo) {
 /** No descriptions */
 bool KCountryPage::save(KLanguageButton *comboCountry, KLanguageButton *comboLang) {
 	kdDebug() << "KCountryPage::save()" << endl;
-	KConfigBase *config = KGlobal::config();
+	KConfigBase *config = TDEGlobal::config();
 
 	config->setGroup(TQString::fromLatin1("Locale"));
 	config->writeEntry(TQString::fromLatin1("Country"), comboCountry->current(), true, true);
@@ -166,9 +166,9 @@ bool KCountryPage::save(KLanguageButton *comboCountry, KLanguageButton *comboLan
 		if ( !kapp->dcopClient()->isAttached() )
 			kapp->dcopClient()->attach();
 		// ksycoca needs to be rebuilt
-		KProcess proc;
+		TDEProcess proc;
 		proc << TQString::fromLatin1("kbuildsycoca");
-		proc.start(KProcess::DontCare);
+		proc.start(TDEProcess::DontCare);
 		kdDebug() << "KLocaleConfig::save : sending signal to kdesktop" << endl;
 		// inform kicker and kdeskop about the new language
 		kapp->dcopClient()->send( "kicker", "Panel", "restart()", TQString::null);

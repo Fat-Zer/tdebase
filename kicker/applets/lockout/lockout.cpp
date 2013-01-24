@@ -48,7 +48,7 @@ extern "C"
 {
     KDE_EXPORT KPanelApplet* init(TQWidget *parent, const TQString& configFile)
     {
-        KGlobal::locale()->insertCatalogue("lockout");
+        TDEGlobal::locale()->insertCatalogue("lockout");
         return new Lockout(configFile, parent, "lockout");
     }
 }
@@ -105,7 +105,7 @@ Lockout::Lockout( const TQString& configFile, TQWidget *parent, const char *name
 
 Lockout::~Lockout()
 {
-    KGlobal::locale()->removeCatalogue("lockout");
+    TDEGlobal::locale()->removeCatalogue("lockout");
 }
 
 // the -2 is due to kicker allowing us a width/height of 42 and the buttons

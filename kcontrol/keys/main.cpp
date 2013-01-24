@@ -132,9 +132,9 @@ extern "C"
   KDE_EXPORT KCModule *create_keys(TQWidget *parent, const char * /*name*/)
   {
 	// What does this do?  Why not insert klipper and kxkb, too? --ellis, 2002/01/15
-	KGlobal::locale()->insertCatalogue("twin");
-	KGlobal::locale()->insertCatalogue("kdesktop");
-	KGlobal::locale()->insertCatalogue("kicker");
+	TDEGlobal::locale()->insertCatalogue("twin");
+	TDEGlobal::locale()->insertCatalogue("kdesktop");
+	TDEGlobal::locale()->insertCatalogue("kicker");
 	return new KeyModule(parent, "kcmkeys");
   }
 
@@ -142,8 +142,8 @@ extern "C"
   {
 	kdDebug(125) << "KeyModule::initModifiers()" << endl;
 
-	KConfigGroupSaver cgs( KGlobal::config(), "Keyboard" );
-	bool bMacSwap = KGlobal::config()->readBoolEntry( "Mac Modifier Swap", false );
+	KConfigGroupSaver cgs( TDEGlobal::config(), "Keyboard" );
+	bool bMacSwap = TDEGlobal::config()->readBoolEntry( "Mac Modifier Swap", false );
 	if( bMacSwap )
 		ModifiersModule::setupMacModifierKeys();
   }
@@ -153,11 +153,11 @@ extern "C"
 	kdDebug(125) << "KeyModule::init()\n";
 
 	/*kdDebug(125) << "KKeyModule::init() - Initialize # Modifier Keys Settings\n";
-	KConfigGroupSaver cgs( KGlobal::config(), "Keyboard" );
-	TQString fourMods = KGlobal::config()->readEntry( "Use Four Modifier Keys", KAccel::keyboardHasMetaKey() ? "true" : "false" );
+	KConfigGroupSaver cgs( TDEGlobal::config(), "Keyboard" );
+	TQString fourMods = TDEGlobal::config()->readEntry( "Use Four Modifier Keys", KAccel::keyboardHasMetaKey() ? "true" : "false" );
 	KAccel::useFourModifierKeys( fourMods == "true" );
 	bool bUseFourModifierKeys = KAccel::useFourModifierKeys();
-	KGlobal::config()->writeEntry( "User Four Modifier Keys", bUseFourModifierKeys ? "true" : "false", true, true );
+	TDEGlobal::config()->writeEntry( "User Four Modifier Keys", bUseFourModifierKeys ? "true" : "false", true, true );
 	*/
 	KAccelActions* keys = new KAccelActions();
 
@@ -179,16 +179,16 @@ extern "C"
   // This is needed to be able to check for conflicts with global keys in app's keyconfig
   // dialogs, kdeglobals is empty as long as you don't apply any change in controlcenter/keys.
   // However, avoid writing at every KDE startup, just update them after every rebuild of this file.
-        KConfigGroup group( KGlobal::config(), "Global Shortcuts" );
+        KConfigGroup group( TDEGlobal::config(), "Global Shortcuts" );
         if( group.readEntry( "Defaults timestamp" ) != __DATE__ __TIME__ ) {
 	    kdDebug(125) << "KeyModule::init() - Read Config Bindings\n";
 	    // Check for old group,
-	    if( KGlobal::config()->hasGroup( "Global Keys" ) ) {
+	    if( TDEGlobal::config()->hasGroup( "Global Keys" ) ) {
 		keys->readActions( "Global Keys" );
-		KGlobal::config()->deleteGroup( "Global Keys", true, true );
+		TDEGlobal::config()->deleteGroup( "Global Keys", true, true );
 	    }
 	    keys->readActions( "Global Shortcuts" );
-            KGlobal::config()->deleteGroup( "Global Shortcuts", true, true );
+            TDEGlobal::config()->deleteGroup( "Global Shortcuts", true, true );
 
 	    kdDebug(125) << "KeyModule::init() - Write Config Bindings\n";
 	    keys->writeActions( "Global Shortcuts", 0, true, true );

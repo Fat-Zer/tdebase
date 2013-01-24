@@ -67,12 +67,12 @@ void KShellCmdPlugin::slotExecuteShellCommand()
    bool ok;
    TQString cmd = KInputDialog::getText( i18n("Execute Shell Command"),
       i18n( "Execute shell command in current directory:" ),
-      KProcess::quote( path ), &ok, part->widget() );
+      TDEProcess::quote( path ), &ok, part->widget() );
    if ( ok )
    {
       TQString chDir;
       chDir="cd ";
-      chDir+=KProcess::quote(part->url().path());
+      chDir+=TDEProcess::quote(part->url().path());
       chDir+="; ";
       chDir+=cmd;
 

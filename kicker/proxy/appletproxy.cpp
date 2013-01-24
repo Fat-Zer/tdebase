@@ -84,7 +84,7 @@ extern "C" KDE_EXPORT int kdemain( int argc, char ** argv )
     TDEApplication a;
     a.disableSessionManagement();
 
-    KGlobal::dirs()->addResourceType("applets", KStandardDirs::kde_default("data") +
+    TDEGlobal::dirs()->addResourceType("applets", KStandardDirs::kde_default("data") +
 				     "kicker/applets");
 
     // setup proxy object
@@ -162,7 +162,7 @@ void AppletProxy::loadApplet(const TQString& desktopFile, const TQString& config
 	df = finfo.absFilePath();
     } else {
 	// locate desktop file
-	df = KGlobal::dirs()->findResource("applets", desktopFile);
+	df = TDEGlobal::dirs()->findResource("applets", desktopFile);
     }
 
     TQFile file(df);

@@ -44,7 +44,7 @@ extern "C"
 {
     KDE_EXPORT KPanelExtension* init( TQWidget *parent, const TQString& configFile )
     {
-        KGlobal::locale()->insertCatalogue( "taskbarextension" );
+        TDEGlobal::locale()->insertCatalogue( "taskbarextension" );
    	return new TaskBarExtension( configFile, KPanelExtension::Stretch,
 				     KPanelExtension::Preferences, parent, "taskbarextension" );
     }
@@ -78,7 +78,7 @@ TaskBarExtension::TaskBarExtension(const TQString& configFile, Type type,
 
 TaskBarExtension::~TaskBarExtension()
 {
-    KGlobal::locale()->removeCatalogue( "taskbarextension" );
+    TDEGlobal::locale()->removeCatalogue( "taskbarextension" );
 }
 
 void TaskBarExtension::positionChange( Position p )

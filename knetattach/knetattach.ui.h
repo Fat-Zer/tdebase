@@ -169,10 +169,10 @@ void KNetAttach::finished()
     TQString name = _connectionName->text().stripWhiteSpace();
 
     if (_createIcon->isChecked()) {
-	KGlobal::dirs()->addResourceType("remote_entries",
+	TDEGlobal::dirs()->addResourceType("remote_entries",
 		KStandardDirs::kde_default("data") + "remoteview");
 
-	TQString path = KGlobal::dirs()->saveLocation("remote_entries");
+	TQString path = TDEGlobal::dirs()->saveLocation("remote_entries");
 	path += name + ".desktop";
 	KSimpleConfig desktopFile(path, false);
 	desktopFile.setGroup("Desktop Entry");

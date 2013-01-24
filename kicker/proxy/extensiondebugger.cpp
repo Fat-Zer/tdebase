@@ -88,7 +88,7 @@ int main( int argc, char ** argv )
     TDEApplication a;
     a.disableSessionManagement();
 
-    KGlobal::dirs()->addResourceType("extensions", KStandardDirs::kde_default("data") +
+    TDEGlobal::dirs()->addResourceType("extensions", KStandardDirs::kde_default("data") +
 				     "kicker/extensions");
 
     TQString df;
@@ -109,7 +109,7 @@ int main( int argc, char ** argv )
 	df = finfo.absFilePath();
     } else {
 	// locate desktop file
-	df = KGlobal::dirs()->findResource("extensions", TQString(desktopFile));
+	df = TDEGlobal::dirs()->findResource("extensions", TQString(desktopFile));
     }
 
     // does the config file exist?

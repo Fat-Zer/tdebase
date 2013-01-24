@@ -163,7 +163,7 @@ void KCMKNotify::load( bool useDefaults )
     m_notifyWidget->clear();
 
     TQStringList fullpaths =
-        KGlobal::dirs()->findAllResources("data", "*/eventsrc", false, true );
+        TDEGlobal::dirs()->findAllResources("data", "*/eventsrc", false, true );
 
     TQStringList::ConstIterator it = fullpaths.begin();
     for ( ; it != fullpaths.end(); ++it)

@@ -83,7 +83,7 @@ void ModuleTitle::showTitleFor( ConfigModule *config )
 
   TQWhatsThis::remove( this );
   TQWhatsThis::add( this, config->comment() );
-  KIconLoader *loader = KGlobal::instance()->iconLoader();
+  KIconLoader *loader = TDEGlobal::instance()->iconLoader();
   TQPixmap icon = loader->loadIcon( config->icon(), KIcon::NoGroup, 22 );
   m_icon->setPixmap( icon );
   m_name->setText( config->moduleName() );

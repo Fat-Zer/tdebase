@@ -1819,25 +1819,25 @@ void Client::killProcess( bool ask, Time timestamp )
         {
         if( machine != "localhost" )
             {
-            KProcess proc;
+            TDEProcess proc;
             proc << "xon" << machine << "kill" << pid;
-            proc.start( KProcess::DontCare );
+            proc.start( TDEProcess::DontCare );
             }
         else
             ::kill( pid, SIGTERM );
         }
     else
         { // SELI TODO handle the window created by handler specially (on top,urgent?)
-        process_killer = new KProcess( this );
+        process_killer = new TDEProcess( this );
         *process_killer << KStandardDirs::findExe( "twin_killer_helper" )
             << "--pid" << TQCString().setNum( pid ) << "--hostname" << machine
             << "--windowname" << caption().utf8()
             << "--applicationname" << resourceClass()
             << "--wid" << TQCString().setNum( window())
             << "--timestamp" << TQCString().setNum( timestamp );
-        connect( process_killer, TQT_SIGNAL( processExited( KProcess* )),
+        connect( process_killer, TQT_SIGNAL( processExited( TDEProcess* )),
             TQT_SLOT( processKillerExited()));
-        if( !process_killer->start( KProcess::NotifyOnExit ))
+        if( !process_killer->start( TDEProcess::NotifyOnExit ))
             {
             delete process_killer;
             process_killer = NULL;
@@ -1957,15 +1957,15 @@ bool Client::queryUserSuspendedResume()
                 return false;
                 }
             // FIXME We should display a busy cursor until twin_resumer_helper loads
-            process_resumer = new KProcess( this );
+            process_resumer = new TDEProcess( this );
             *process_resumer << KStandardDirs::findExe( "twin_resumer_helper" )
                 << "--pid" << TQCString().setNum( info->pid() ) << "--hostname" << wmClientMachine( true )
                 << "--windowname" << caption().utf8()
                 << "--applicationname" << resourceClass()
                 << "--wid" << TQCString().setNum( window());
-            connect( process_resumer, TQT_SIGNAL( processExited( KProcess* )),
+            connect( process_resumer, TQT_SIGNAL( processExited( TDEProcess* )),
                 TQT_SLOT( processResumerExited()));
-            if( !process_resumer->start( KProcess::NotifyOnExit ))
+            if( !process_resumer->start( TDEProcess::NotifyOnExit ))
                 {
                 delete process_resumer;
                 process_resumer = NULL;

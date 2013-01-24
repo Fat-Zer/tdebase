@@ -334,7 +334,7 @@ bool KCookiesManagement::cookieDetails(CookieProp *cookie)
   {
     TQDateTime expDate;
     expDate.setTime_t(tmp);
-    cookie->expireDate = KGlobal::locale()->formatDateTime(expDate);
+    cookie->expireDate = TDEGlobal::locale()->formatDateTime(expDate);
   }
 
   tmp = (*c).toUInt();

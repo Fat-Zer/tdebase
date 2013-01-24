@@ -89,7 +89,7 @@ protected slots:
 
 private slots:
     void handleSecureDialog();
-    void slotSAKProcessExited();
+    void slotSATDEProcessExited();
 
     /**
      * Enable wallpaper exports
@@ -110,7 +110,7 @@ protected:
 
     State       mState;
     XAutoLock   *mXAutoLock;
-    KProcess    mLockProcess;
+    TDEProcess    mLockProcess;
     int		mTimeout;
 
     // the original X screensaver parameters
@@ -123,7 +123,7 @@ protected:
     TQValueVector< DCOPClientTransaction* > mLockTransactions;
 
 private:
-    KProcess*   mSAKProcess;
+    TDEProcess*   mSATDEProcess;
     bool        mTerminationRequested;
 };
 

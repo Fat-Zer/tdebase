@@ -33,8 +33,8 @@ extern "C"
 {
    KDE_EXPORT KPanelExtension *init( TQWidget *parent, const TQString& configFile )
    {
-      KGlobal::locale()->insertCatalogue("kickersidebarextension");
-      KGlobal::locale()->insertCatalogue("konqueror");
+      TDEGlobal::locale()->insertCatalogue("kickersidebarextension");
+      TDEGlobal::locale()->insertCatalogue("konqueror");
       return new SidebarExtension( configFile,
 				  KPanelExtension::Normal,
 				  0,
@@ -106,8 +106,8 @@ void SidebarExtension::openURLRequest( const KURL &url, const KParts::URLArgs &)
 
 SidebarExtension::~SidebarExtension()
 {
-      KGlobal::locale()->removeCatalogue("kickersidebarextension");
-      KGlobal::locale()->removeCatalogue("konqueror");
+      TDEGlobal::locale()->removeCatalogue("kickersidebarextension");
+      TDEGlobal::locale()->removeCatalogue("konqueror");
 }
 
 bool SidebarExtension::eventFilter( TQObject *, TQEvent *e ) {

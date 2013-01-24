@@ -28,7 +28,7 @@ extern "C"
 ModernSysConfig::ModernSysConfig(KConfig* conf, TQWidget* parent) : TQObject(parent)
 {	
 	clientrc = new KConfig("twinmodernsysrc");
-	KGlobal::locale()->insertCatalogue("twin_clients");
+	TDEGlobal::locale()->insertCatalogue("twin_clients");
 	mainw = new TQWidget(parent);
 	vbox = new TQVBoxLayout(mainw);
 	vbox->setSpacing(6);

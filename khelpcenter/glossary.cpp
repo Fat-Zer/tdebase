@@ -146,9 +146,9 @@ void Glossary::rebuildGlossaryCache()
 	Q_ASSERT( mainWindow );
 	mainWindow->statusBar()->message( i18n( "Rebuilding cache..." ) );
 
-	KProcess *meinproc = new KProcess;
-	connect( meinproc, TQT_SIGNAL( processExited( KProcess * ) ),
-	         this, TQT_SLOT( meinprocExited( KProcess * ) ) );
+	TDEProcess *meinproc = new TDEProcess;
+	connect( meinproc, TQT_SIGNAL( processExited( TDEProcess * ) ),
+	         this, TQT_SLOT( meinprocExited( TDEProcess * ) ) );
 
 	*meinproc << locate( "exe", TQString::fromLatin1( "meinproc" ) );
 	*meinproc << TQString::fromLatin1( "--output" ) << m_cacheFile;
@@ -156,10 +156,10 @@ void Glossary::rebuildGlossaryCache()
 	          << locate( "data", TQString::fromLatin1( "khelpcenter/glossary.xslt" ) );
 	*meinproc << m_sourceFile;
 
-	meinproc->start( KProcess::NotifyOnExit );
+	meinproc->start( TDEProcess::NotifyOnExit );
 }
 
-void Glossary::meinprocExited( KProcess *meinproc )
+void Glossary::meinprocExited( TDEProcess *meinproc )
 {
 	delete meinproc;
 

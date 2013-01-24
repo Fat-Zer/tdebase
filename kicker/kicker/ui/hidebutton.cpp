@@ -153,7 +153,7 @@ void HideButton::slotSettingsChanged(int category)
         return;
     }
 
-    bool changeCursor = KGlobalSettings::changeCursorOverIcon();
+    bool changeCursor = TDEGlobalSettings::changeCursorOverIcon();
 
     if (changeCursor)
     {

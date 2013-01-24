@@ -388,7 +388,7 @@ void PanelExtension::slotBuildOpMenu()
 
     if (kapp->authorize("action/help"))
     {
-        KHelpMenu* help = new KHelpMenu( this, KGlobal::instance()->aboutData(), false);
+        KHelpMenu* help = new KHelpMenu( this, TDEGlobal::instance()->aboutData(), false);
         _opMnu->insertItem(SmallIconSet("help"), KStdGuiItem::help().text(), help->menu());
     }
     _opMnu->adjustSize();

@@ -49,7 +49,7 @@ void KHTTPOptions::load( bool useDefaults )
   m_pConfig->setReadDefaults( useDefaults );
 
   m_pConfig->setGroup( "Browser Settings/HTTP" );	
-  tmp = m_pConfig->readEntry( "AcceptLanguages",KGlobal::locale()->languageList().join(","));
+  tmp = m_pConfig->readEntry( "AcceptLanguages",TDEGlobal::locale()->languageList().join(","));
   le_languages->setText( tmp );
   tmp = m_pConfig->readEntry( "AcceptCharsets",defaultCharsets);
   le_charsets->setText( tmp );

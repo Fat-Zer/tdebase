@@ -83,7 +83,7 @@ static void create_pixmaps()
         return;
     pixmaps_created = true;
     
-    KConfig *config = KGlobal::config();
+    KConfig *config = TDEGlobal::config();
     config->setGroup("General");
     TQString tmpStr;
 
@@ -270,7 +270,7 @@ void KWMThemeClient::init()
     TQBoxLayout* hb = new TQBoxLayout(0, TQBoxLayout::LeftToRight, 0, 0, 0);
     layout->addLayout( hb, 1, 1 );
 
-    KConfig *config = KGlobal::config();
+    KConfig *config = TDEGlobal::config();
     config->setGroup("Buttons");
     TQString val;
     MyButton *btn;

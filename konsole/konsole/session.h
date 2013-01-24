@@ -32,7 +32,7 @@
 #include "sessioniface.h"
 
 class KProcIO;
-class KProcess;
+class TDEProcess;
 class ZModemDialog;
 
 class TESession : public TQObject, virtual public SessionIface
@@ -137,15 +137,15 @@ public slots:
   void slotZModemDetected();
   void emitZModemDetected();
 
-  void zmodemStatus(KProcess *, char *data, int len);
-  void zmodemSendBlock(KProcess *, char *data, int len);
+  void zmodemStatus(TDEProcess *, char *data, int len);
+  void zmodemSendBlock(TDEProcess *, char *data, int len);
   void zmodemRcvBlock(const char *data, int len);
   void zmodemDone();
   void zmodemContinue();
 
 signals:
 
-  void processExited(KProcess *);
+  void processExited(TDEProcess *);
   void forkedChild();
   void receivedData( const TQString& text );
   void done(TESession*);

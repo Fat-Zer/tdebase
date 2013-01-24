@@ -92,7 +92,7 @@ bool KRootWidget::eventFilter ( TQObject *, TQEvent * e )
      else if ( e->type() == TQEvent::DragEnter )
      {
        TQDragEnterEvent* de = static_cast<TQDragEnterEvent*>( e );
-       bool b = !KGlobal::config()->isImmutable() && !KGlobal::dirs()->isRestrictedResource( "wallpaper" );
+       bool b = !TDEGlobal::config()->isImmutable() && !TDEGlobal::dirs()->isRestrictedResource( "wallpaper" );
 
        bool imageURL = false;
        if ( KURLDrag::canDecode( de ) )
@@ -146,9 +146,9 @@ KDesktop::KDesktop( bool x_root_hack, bool wait_for_kded ) :
   m_bWaitForKded = wait_for_kded;
   m_miniCli = 0; // created on demand
   keys = 0; // created later
-  KGlobal::locale()->insertCatalogue("kdesktop");
-  KGlobal::locale()->insertCatalogue("libkonq"); // needed for apps using libkonq
-  KGlobal::locale()->insertCatalogue("libdmctl");
+  TDEGlobal::locale()->insertCatalogue("kdesktop");
+  TDEGlobal::locale()->insertCatalogue("libkonq"); // needed for apps using libkonq
+  TDEGlobal::locale()->insertCatalogue("libdmctl");
 
   setCaption( "KDE Desktop");
 
@@ -393,7 +393,7 @@ KDesktop::slotStart()
      m_pIconView->start();
 
   // Global keys
-  keys = new KGlobalAccel( TQT_TQOBJECT(this) );
+  keys = new TDEGlobalAccel( TQT_TQOBJECT(this) );
   (void) new KRootWm( this );
 
 #include "kdesktopbindings.cpp"
@@ -412,7 +412,7 @@ KDesktop::runAutoStart()
      // now let's execute all the stuff in the autostart folder.
      // the stuff will actually be really executed when the event loop is
      // entered, since KRun internally uses a QTimer
-     TQDir dir( KGlobalSettings::autostartPath() );
+     TQDir dir( TDEGlobalSettings::autostartPath() );
      TQStringList entries = dir.entryList( TQDir::Files );
      TQStringList::Iterator it = entries.begin();
      TQStringList::Iterator end = entries.end();
@@ -525,7 +525,7 @@ void KDesktop::popupExecuteCommand(const TQString& command)
   } else {
       NETRootInfo i( tqt_xdisplay(), NET::Supported );
       if( !i.isSupported( NET::WM2FullPlacement )) {
-          TQRect rect = KGlobalSettings::desktopGeometry(TQCursor::pos());
+          TQRect rect = TDEGlobalSettings::desktopGeometry(TQCursor::pos());
           m_miniCli->move(rect.x() + (rect.width() - m_miniCli->width())/2,
                           rect.y() + (rect.height() - m_miniCli->height())/2);
       }
@@ -546,13 +546,13 @@ void KDesktop::slotShowWindowList()
 void KDesktop::slotShowTaskManager()
 {
     //kdDebug(1204) << "Launching KSysGuard..." << endl;
-    KProcess* p = new KProcess;
+    TDEProcess* p = new TDEProcess;
     TQ_CHECK_PTR(p);
 
     *p << "ksysguard";
     *p << "--showprocesses";
 
-    p->start(KProcess::DontCare);
+    p->start(TDEProcess::DontCare);
 
     delete p;
 }
@@ -772,7 +772,7 @@ void KDesktop::slotConfigure()
 void KDesktop::configure()
 {
     // re-read configuration and apply it
-    KGlobal::config()->reparseConfiguration();
+    TDEGlobal::config()->reparseConfiguration();
     KDesktopSettings::self()->readConfig();
 
     // If we have done start() already, then re-configure.
@@ -990,7 +990,7 @@ void KDesktop::handleImageDropEvent(TQDropEvent * e)
     {
         TQImage i;
         TQImageDrag::decode(e, i);
-        KTempFile tmpFile(KGlobal::dirs()->saveLocation("wallpaper"), ".png");
+        KTempFile tmpFile(TDEGlobal::dirs()->saveLocation("wallpaper"), ".png");
         i.save(tmpFile.name(), "PNG");
         kdDebug(1204) << "KDesktop::contentsDropEvent " << tmpFile.name() << endl;
         bgMgr->setWallpaper(tmpFile.name());
@@ -1010,7 +1010,7 @@ void KDesktop::slotNewWallpaper(const KURL &url)
         TQFileInfo fileInfo( fileName );
         TQString ext = fileInfo.extension();
         // Store tempfile in a place where it will still be available after a reboot
-        KTempFile tmpFile( KGlobal::dirs()->saveLocation("wallpaper"), "." + ext );
+        KTempFile tmpFile( TDEGlobal::dirs()->saveLocation("wallpaper"), "." + ext );
         KURL localURL; localURL.setPath( tmpFile.name() );
         // We pass 0 as parent window because passing the desktop is not a good idea
         KIO::NetAccess::file_copy( url, localURL, -1, true /*overwrite*/ );
@@ -1155,7 +1155,7 @@ TQPoint KDesktop::findPlaceForIcon( int column, int row )
 
 void KDesktop::addIcon(const TQString & _url, int x, int y)
 {
-    addIcon( _url, KGlobalSettings::desktopPath(), x, y );
+    addIcon( _url, TDEGlobalSettings::desktopPath(), x, y );
 }
 
 void KDesktop::addIcon(const TQString & _url, const TQString & _dest, int x, int y)

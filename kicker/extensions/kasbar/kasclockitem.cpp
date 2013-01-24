@@ -75,8 +75,8 @@ KasPopup *KasClockItem::createPopup()
 
 void KasClockItem::updateTime()
 {
-    setText( KGlobal::locale()->formatDate( TQDate::currentDate(), true /* shortFormat */ ) );
-    lcd->display( KGlobal::locale()->formatTime( TQTime::currentTime(), false /* includeSecs */, false /* isDuration */) );
+    setText( TDEGlobal::locale()->formatDate( TQDate::currentDate(), true /* shortFormat */ ) );
+    lcd->display( TDEGlobal::locale()->formatTime( TQTime::currentTime(), false /* includeSecs */, false /* isDuration */) );
     
     update();
 }

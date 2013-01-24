@@ -41,7 +41,7 @@ XKBExtension::XKBExtension(Display *d)
 		d = tqt_xdisplay();
 	m_dpy = d;
 	
-//	TQStringList dirs = KGlobal::dirs()->findDirs ( "tmp", "" );
+//	TQStringList dirs = TDEGlobal::dirs()->findDirs ( "tmp", "" );
 //	m_tempDir = dirs.count() == 0 ? "/tmp/" : dirs[0];
 	m_tempDir = locateLocal("tmp", "");
 }
@@ -99,17 +99,17 @@ bool XKBExtension::setXkbOptions(const TQString& options, bool resetOld)
     if (options.isEmpty())
         return true;
 
-    TQString exe = KGlobal::dirs()->findExe("setxkbmap");
+    TQString exe = TDEGlobal::dirs()->findExe("setxkbmap");
     if (exe.isEmpty())
         return false;
 
-    KProcess p;
+    TDEProcess p;
     p << exe;
     if( resetOld )
         p << "-option";
     p << "-option" << options;
 
-    p.start(KProcess::Block);
+    p.start(TDEProcess::Block);
 
     return p.normalExit() && (p.exitStatus() == 0);
 }
@@ -150,7 +150,7 @@ bool XKBExtension::setLayoutInternal(const TQString& model,
     if ( layout.isEmpty() )
         return false;
 
-	TQString exe = KGlobal::dirs()->findExe("setxkbmap");
+	TQString exe = TDEGlobal::dirs()->findExe("setxkbmap");
 	if( exe.isEmpty() ) {
 		kdError() << "Can't find setxkbmap" << endl;
 		return false;
@@ -168,7 +168,7 @@ bool XKBExtension::setLayoutInternal(const TQString& model,
         fullVariant += variant;
     }
  
-    KProcess p;
+    TDEProcess p;
     p << exe;
 //  p << "-rules" << rule;
 	if( model.isEmpty() == false )
@@ -177,19 +177,19 @@ bool XKBExtension::setLayoutInternal(const TQString& model,
     if( !fullVariant.isNull() && !fullVariant.isEmpty() )
         p << "-variant" << fullVariant;
 
-    p.start(KProcess::Block); 
+    p.start(TDEProcess::Block); 
 
     // reload system-wide hotkey-setup keycode -> keysym maps
     if ( TQFile::exists( "/opt/trinity/share/apps/kxkb/system.xmodmap" ) ) {
-        KProcess pXmodmap;
+        TDEProcess pXmodmap;
         pXmodmap << "xmodmap" << "/opt/trinity/share/apps/kxkb/system.xmodmap";
-        pXmodmap.start(KProcess::Block);
+        pXmodmap.start(TDEProcess::Block);
     }
 
     if ( TQFile::exists( TQDir::home().path() + "/.Xmodmap" ) ) {
-        KProcess pXmodmapHome;
+        TDEProcess pXmodmapHome;
         pXmodmapHome << "xmodmap" << TQDir::home().path() + "/.Xmodmap";
-        pXmodmapHome.start(KProcess::Block);
+        pXmodmapHome.start(TDEProcess::Block);
     }
 
     return p.normalExit() && (p.exitStatus() == 0);

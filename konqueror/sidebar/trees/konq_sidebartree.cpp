@@ -87,7 +87,7 @@ void KonqSidebarTree::loadModuleFactories()
 {
   pluginFactories.clear();
   pluginInfo.clear();
-  KStandardDirs *dirs=KGlobal::dirs();
+  KStandardDirs *dirs=TDEGlobal::dirs();
   TQStringList list=dirs->findAllResources("data","konqsidebartng/dirtree/*.desktop",false,true);
 
 
@@ -168,12 +168,12 @@ KonqSidebarTree::KonqSidebarTree( KonqSidebar_Tree *parent, TQWidget *parentWidg
 /*    assert( m_part->getInterfaces()->getInstance()->dirs );
     TQString dirtreeDir = m_part->getInterfaces()->getInstance()->dirs()->saveLocation( "data", "konqueror/dirtree/" ); */
 
-//    assert( KGlobal::dirs() );
+//    assert( TDEGlobal::dirs() );
 //    TQString dirtreeDir = part->getInterfaces()->getInstance()->dirs()->saveLocation( "data", "konqueror/dirtree/" );
 
     if (virt==VIRT_Folder)
 		{
-		  m_dirtreeDir.dir.setPath(KGlobal::dirs()->saveLocation("data","konqsidebartng/virtual_folders/"+path+"/"));
+		  m_dirtreeDir.dir.setPath(TDEGlobal::dirs()->saveLocation("data","konqsidebartng/virtual_folders/"+path+"/"));
 		  m_dirtreeDir.relDir=path;
 		}
 	else
@@ -620,10 +620,10 @@ void KonqSidebarTree::scanDir( KonqSidebarTreeItem *parent, const TQString &path
         if (copyConfig)
         {
             // We will copy over the configuration for the dirtree, from the global directory
-            TQStringList dirtree_dirs = KGlobal::dirs()->findDirs("data","konqsidebartng/virtual_folders/"+m_dirtreeDir.relDir+"/");
+            TQStringList dirtree_dirs = TDEGlobal::dirs()->findDirs("data","konqsidebartng/virtual_folders/"+m_dirtreeDir.relDir+"/");
 
 
-//            TQString dirtree_dir = KGlobal::dirs()->findDirs("data","konqsidebartng/virtual_folders/"+m_dirtreeDir.relDir+"/").last();  // most global
+//            TQString dirtree_dir = TDEGlobal::dirs()->findDirs("data","konqsidebartng/virtual_folders/"+m_dirtreeDir.relDir+"/").last();  // most global
 //            kdDebug(1201) << "KonqSidebarTree::scanDir dirtree_dir=" << dirtree_dir << endl;
 
             /*
@@ -655,9 +655,9 @@ void KonqSidebarTree::scanDir( KonqSidebarTreeItem *parent, const TQString &path
                 	         && !entries.contains( *eIt ) && !dirEntries.contains( *eIt ) )
 	                    { // we don't have that one yet -> copy it.
                 	        TQString cp("cp -R -- ");
-        	                cp += KProcess::quote(dirtree_dir + *eIt);
+        	                cp += TDEProcess::quote(dirtree_dir + *eIt);
 	                        cp += " ";
-        	                cp += KProcess::quote(path);
+        	                cp += TDEProcess::quote(path);
                 	        kdDebug(1201) << "KonqSidebarTree::scanDir executing " << cp << endl;
                         	::system( TQFile::encodeName(cp) );
 	                    }
@@ -698,7 +698,7 @@ void KonqSidebarTree::scanDir( KonqSidebarTreeItem *parent, const TQString &path
     {
         TQString newPath = TQString( path ).append( *eIt ).append( '/' );
 
-        if ( newPath == KGlobalSettings::autostartPath() )
+        if ( newPath == TDEGlobalSettings::autostartPath() )
             continue;
 
         loadTopLevelGroup( parent, newPath );
@@ -984,7 +984,7 @@ void KonqSidebarTree::slotCreateFolder()
         name = name + "-2";
    }
 
-   KGlobal::dirs()->makeDir(path);
+   TDEGlobal::dirs()->makeDir(path);
 
    loadTopLevelGroup(m_currentTopLevelItem, path);
 }

@@ -178,7 +178,7 @@ void KHTMLSearchConfig::loadLanguages()
   language->clear();
 
   // add all languages to the list
-  TQStringList langs = KGlobal::dirs()->findAllResources("locale",
+  TQStringList langs = TDEGlobal::dirs()->findAllResources("locale",
 							TQString::fromLatin1("*/entry.desktop"));
   langs.sort();
 
@@ -186,7 +186,7 @@ void KHTMLSearchConfig::loadLanguages()
     {
       KSimpleConfig entry(*it);
       entry.setGroup(TQString::fromLatin1("KCM Locale"));
-      TQString name = entry.readEntry(TQString::fromLatin1("Name"), KGlobal::locale()->translate("without name"));
+      TQString name = entry.readEntry(TQString::fromLatin1("Name"), TDEGlobal::locale()->translate("without name"));
 
       TQString path = *it;
       int index = path.findRev('/');
@@ -272,7 +272,7 @@ void KHTMLSearchConfig::load()
     searchPaths->insertItem(*it);
 
   config->setGroup("Locale");
-  TQString lang = config->readEntry("Search Language", KGlobal::locale()->language());
+  TQString lang = config->readEntry("Search Language", TDEGlobal::locale()->language());
   language->setCurrentItem(lang);
 
   emit changed(false);
@@ -320,7 +320,7 @@ void KHTMLSearchConfig::defaults()
 
   searchPaths->clear();
 
-  language->setCurrentItem(KGlobal::locale()->language());
+  language->setCurrentItem(TDEGlobal::locale()->language());
 
   emit changed(true);
 }
@@ -342,11 +342,11 @@ void KHTMLSearchConfig::generateIndex()
 
   delete indexProc;
 
-  indexProc = new KProcess;
+  indexProc = new TDEProcess;
   *indexProc << exe << "--lang" << language->currentTag();
 
-  connect(indexProc, TQT_SIGNAL(processExited(KProcess *)),
-      this, TQT_SLOT(indexTerminated(KProcess *)));
+  connect(indexProc, TQT_SIGNAL(processExited(TDEProcess *)),
+      this, TQT_SLOT(indexTerminated(TDEProcess *)));
 
   runButton->setEnabled(false);
 
@@ -354,7 +354,7 @@ void KHTMLSearchConfig::generateIndex()
 }
 
 
-void KHTMLSearchConfig::indexTerminated(KProcess *)
+void KHTMLSearchConfig::indexTerminated(TDEProcess *)
 {
   runButton->setEnabled(true);
 }
@@ -364,7 +364,7 @@ extern "C"
 {
   KDE_EXPORT KCModule *create_htmlsearch(TQWidget *parent, const char *name)
   {
-    KGlobal::locale()->insertCatalogue("kcmhtmlsearch");
+    TDEGlobal::locale()->insertCatalogue("kcmhtmlsearch");
     return new KHTMLSearchConfig(parent, name);
   };
 }

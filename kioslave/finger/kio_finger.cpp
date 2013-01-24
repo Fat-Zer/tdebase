@@ -121,17 +121,17 @@ void FingerProtocol::get(const KURL& url )
 
   //kdDebug() << "Refresh rate: " << refreshRate << endl;
 
-  myKProcess = new KProcess();
-  *myKProcess << *myPerlPath << *myFingerPerlScript
+  myTDEProcess = new TDEProcess();
+  *myTDEProcess << *myPerlPath << *myFingerPerlScript
 	      << *myFingerPath << *myFingerCSSFile
 	      << refreshRate << myURL->host() << myURL->user() ;
 
-  connect(myKProcess, TQT_SIGNAL(receivedStdout(KProcess *, char *, int)),
-	  this, TQT_SLOT(slotGetStdOutput(KProcess *, char *, int)));
-  //connect(myKProcess, TQT_SIGNAL(receivedStderr(KProcess *, char *, int)),
-  //	  this, TQT_SLOT(slotGetStdOutput(KProcess *, char *, int)));
+  connect(myTDEProcess, TQT_SIGNAL(receivedStdout(TDEProcess *, char *, int)),
+	  this, TQT_SLOT(slotGetStdOutput(TDEProcess *, char *, int)));
+  //connect(myTDEProcess, TQT_SIGNAL(receivedStderr(TDEProcess *, char *, int)),
+  //	  this, TQT_SLOT(slotGetStdOutput(TDEProcess *, char *, int)));
 
-  myKProcess->start(KProcess::Block, KProcess::All);
+  myTDEProcess->start(TDEProcess::Block, TDEProcess::All);
 
   data(TQCString(TQString(*myStdStream).local8Bit()));
 
@@ -140,14 +140,14 @@ void FingerProtocol::get(const KURL& url )
 
   //clean up
 
-  delete myKProcess;
+  delete myTDEProcess;
 }
 
 
 /* ---------------------------------------------------------------------------------- */
 
 
-void FingerProtocol::slotGetStdOutput(KProcess* /* p */, char *s, int len)
+void FingerProtocol::slotGetStdOutput(TDEProcess* /* p */, char *s, int len)
 {
   //kdDebug() <<  "void FingerProtocol::slotGetStdoutOutput()" << endl;
   *myStdStream += TQString::fromLocal8Bit(s, len);
@@ -172,7 +172,7 @@ void FingerProtocol::getProgramPath()
   //kdDebug() << "kfingerMainWindow::getProgramPath()" << endl;
   // Not to sure wether I'm using the right error number here. - schlpbch -
 
-  myPerlPath = new TQString(KGlobal::dirs()->findExe("perl"));
+  myPerlPath = new TQString(TDEGlobal::dirs()->findExe("perl"));
   if (myPerlPath->isEmpty())
     {
       //kdDebug() << "Perl command not found" << endl;
@@ -185,7 +185,7 @@ void FingerProtocol::getProgramPath()
       //kdDebug() << "Perl command found:" << *myPerlPath << endl;
     }
 
-  myFingerPath = new TQString(KGlobal::dirs()->findExe("finger"));
+  myFingerPath = new TQString(TDEGlobal::dirs()->findExe("finger"));
   if ((myFingerPath->isEmpty()))
     {
       //kdDebug() << "Finger command not found" << endl;

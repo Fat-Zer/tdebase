@@ -341,7 +341,7 @@ void KasItem::paintLabel( TQPainter *p )
 	    }
 	}
 
-	p->setFont( KGlobalSettings::taskbarFont() );
+	p->setFont( TDEGlobalSettings::taskbarFont() );
 	p->setPen( resources()->labelPenColor() );
 
 	if ( fontMetrics().width( text ) > extent()-4 )
@@ -405,7 +405,7 @@ void KasItem::paintArrowLabel( TQPainter *p, int arrowSize, bool arrowOnLeft )
 	w -= arrowSize;
     }
 
-    p->setFont( KGlobalSettings::taskbarFont() );
+    p->setFont( TDEGlobalSettings::taskbarFont() );
     p->setPen( resources()->labelPenColor() );
     if ( fontMetrics().width( text ) > w )
 	p->drawText( lx, ly, w, h-1, AlignLeft | AlignVCenter, text );

@@ -28,7 +28,7 @@
 #ifndef BACKTRACE_H
 #define BACKTRACE_H
 
-class KProcess;
+class TDEProcess;
 class KrashConfig;
 class KTempFile;
 
@@ -52,13 +52,13 @@ signals:
   void done(const TQString &); // replaces whole text
 
 protected slots:
-  void slotProcessExited(KProcess * proc);
-  void slotReadInput(KProcess * proc, char * buf, int buflen);
+  void slotProcessExited(TDEProcess * proc);
+  void slotReadInput(TDEProcess * proc, char * buf, int buflen);
 
 private:
   bool usefulBacktrace();
   void processBacktrace();
-  KProcess *m_proc;
+  TDEProcess *m_proc;
   const KrashConfig *m_krashconf;
   KTempFile *m_temp;
   KTempFile *m_temp_cmd;

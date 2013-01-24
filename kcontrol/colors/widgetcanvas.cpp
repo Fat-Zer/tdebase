@@ -282,14 +282,14 @@ void WidgetCanvas::drawSampleWidgets()
 
     // Keep in sync with kglobalsettings.
 
-    TQFont windowFontGuess(KGlobalSettings::generalFont().family(), 12, TQFont::SansSerif, true);
+    TQFont windowFontGuess(TDEGlobalSettings::generalFont().family(), 12, TQFont::SansSerif, true);
     windowFontGuess.setPixelSize(12);
 
     c->setGroup("WM");
     TQFont windowFont = c->readFontEntry("activeFont", &windowFontGuess);
 
     c->setGroup("General");
-    TQFont defaultMenuFont = KGlobalSettings::menuFont();
+    TQFont defaultMenuFont = TDEGlobalSettings::menuFont();
     TQFont menuFont = c->readFontEntry("menuFont", &defaultMenuFont);
 
     delete c;
@@ -468,7 +468,7 @@ void WidgetCanvas::drawSampleWidgets()
                       height(), cg, TRUE, 2, &brush);
 
     // Standard text
-    TQFont fnt = KGlobalSettings::generalFont();
+    TQFont fnt = TDEGlobalSettings::generalFont();
     paint.setFont( fnt );
     paint.setPen( windowTxt );
     paint.drawText( 140, 127-20, i18n( "Standard text") );

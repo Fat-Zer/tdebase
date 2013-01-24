@@ -46,7 +46,7 @@ extern "C"
 {
     KDE_EXPORT KPanelExtension* init(TQWidget *parent, const TQString& configFile)
     {
-	KGlobal::locale()->insertCatalogue("dockbarextension");
+	TDEGlobal::locale()->insertCatalogue("dockbarextension");
 	return new DockBarExtension(configFile, KPanelExtension::Normal,
 				    0, parent, "dockbarextension");
     }
@@ -316,9 +316,9 @@ void DockBarExtension::loadContainerConfig()
         DockContainer* c = new DockContainer(cmd, this, resName, resClass );
         addContainer(c);
 	
-        KProcess proc;
+        TDEProcess proc;
         proc << KShell::splitArgs( cmd );
-        if (!proc.start(KProcess::DontCare)) {
+        if (!proc.start(TDEProcess::DontCare)) {
             fail_list.append(cmd);
             removeContainer(c);
         }

@@ -121,15 +121,15 @@ KonqPropsView::KonqPropsView( TDEInstance * instance, KonqPropsView * defaultPro
   // So now we read the settings from the app global file, if this is the default props
   if (!defaultProps)
   {
-      KConfigGroupSaver cgs2(KGlobal::config(), "Settings");
-      m_textColor = KGlobal::config()->readColorEntry( "TextColor", &m_textColor );
-      m_bgColor = KGlobal::config()->readColorEntry( "BgColor", &m_bgColor );
-      m_bgPixmapFile = KGlobal::config()->readPathEntry( "BgImage", m_bgPixmapFile );
-      //kdDebug(1203) << "KonqPropsView::KonqPropsView from KGlobal : BgImage=" << m_bgPixmapFile << endl;
+      KConfigGroupSaver cgs2(TDEGlobal::config(), "Settings");
+      m_textColor = TDEGlobal::config()->readColorEntry( "TextColor", &m_textColor );
+      m_bgColor = TDEGlobal::config()->readColorEntry( "BgColor", &m_bgColor );
+      m_bgPixmapFile = TDEGlobal::config()->readPathEntry( "BgImage", m_bgPixmapFile );
+      //kdDebug(1203) << "KonqPropsView::KonqPropsView from TDEGlobal : BgImage=" << m_bgPixmapFile << endl;
   }
 
-  KGlobal::dirs()->addResourceType("tiles",
-                                   KGlobal::dirs()->kde_default("data") + "konqueror/tiles/");
+  TDEGlobal::dirs()->addResourceType("tiles",
+                                   TDEGlobal::dirs()->kde_default("data") + "konqueror/tiles/");
 }
 
 bool KonqPropsView::isCaseInsensitiveSort() const
@@ -169,7 +169,7 @@ KConfigBase * KonqPropsView::currentColorConfig()
         return currentConfig(); // Will create it if necessary
     else
         // Save color settings in app's file, not in view's file
-        return KGlobal::config();
+        return TDEGlobal::config();
 }
 
 KonqPropsView::~KonqPropsView()

@@ -37,7 +37,7 @@ class TQButtonGroup;
 class TQGridLayout;
 class TQTimer;
 
-class KProcess;
+class TDEProcess;
 class KWinModule;
 class KTextShadowEngine;
 class KSelectionOwner;

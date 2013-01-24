@@ -77,7 +77,7 @@ KRemoteEncodingPlugin::loadSettings()
 {
   m_loaded = true;
 
-  m_encodingDescriptions = KGlobal::charsets()->descriptiveEncodingNames();
+  m_encodingDescriptions = TDEGlobal::charsets()->descriptiveEncodingNames();
 
   fillMenu();
 }
@@ -172,7 +172,7 @@ KRemoteEncodingPlugin::slotItemSelected(int id)
 
   if (!m_menu->popupMenu()->isItemChecked(id))
     {
-      TQString charset = KGlobal::charsets()->encodingForName(m_encodingDescriptions[id - 1]);
+      TQString charset = TDEGlobal::charsets()->encodingForName(m_encodingDescriptions[id - 1]);
 
       config.setGroup(host);
       config.writeEntry(DATA_KEY, charset);

@@ -309,7 +309,7 @@ public:
 
   void goHistory( int steps );
 
-  // Set the KGlobal active instance (the one used by KBugReport)
+  // Set the TDEGlobal active instance (the one used by KBugReport)
   void setActiveInstance();
 
   // Called before reloading this view. Sets args.reload to true, and offers to repost form data.

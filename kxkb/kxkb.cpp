@@ -73,7 +73,7 @@ KXKBApp::KXKBApp(bool allowStyles, bool GUIenabled)
     }
 	
     // keep in sync with kcmlayout.cpp
-    keys = new KGlobalAccel(TQT_TQOBJECT(this));
+    keys = new TDEGlobalAccel(TQT_TQOBJECT(this));
 #include "kxkbbindings.cpp"
     keys->updateConnections();
 
@@ -180,7 +180,7 @@ bool KXKBApp::settingsRead()
 
 	initTray();
 	
-	KGlobal::config()->reparseConfiguration(); // kcontrol modified kdeglobals
+	TDEGlobal::config()->reparseConfiguration(); // kcontrol modified kdeglobals
 	keys->readSettings();
 	keys->updateConnections();
 
@@ -268,9 +268,9 @@ void KXKBApp::menuActivated(int id)
 	}
 	else if (id == KxkbLabelController::CONFIG_MENU_ID)
     {
-        KProcess p;
+        TDEProcess p;
         p << "kcmshell" << "keyboard_layout";
-        p.start(KProcess::DontCare);
+        p.start(TDEProcess::DontCare);
 	}
 	else if (id == KxkbLabelController::HELP_MENU_ID)
 	{
@@ -324,7 +324,7 @@ void KXKBApp::slotSettingsChanged(int category)
     if ( category != TDEApplication::SETTINGS_SHORTCUTS)
 		return;
 
-    KGlobal::config()->reparseConfiguration(); // kcontrol modified kdeglobals
+    TDEGlobal::config()->reparseConfiguration(); // kcontrol modified kdeglobals
     keys->readSettings();
     keys->updateConnections();
 }
@@ -347,7 +347,7 @@ This is done by loading each one of them and then dumping the compiled
 map from the X server into our local buffer.*/
 // void KXKBApp::initPrecompiledLayouts()
 // {
-//     TQStringList dirs = KGlobal::dirs()->findDirs ( "tmp", "" );
+//     TQStringList dirs = TDEGlobal::dirs()->findDirs ( "tmp", "" );
 //     TQString tempDir = dirs.count() == 0 ? "/tmp/" : dirs[0]; 
 // 
 // 	TQValueList<LayoutUnit>::ConstIterator end = kxkbConfig.m_layouts.end();

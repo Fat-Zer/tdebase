@@ -87,7 +87,7 @@ void KonqInfoListViewItem::updateContents()
             break;
          case KIO::UDS_SIZE:
             if ( static_cast<KonqBaseListViewWidget *>(listView())->m_pSettings->fileSizeInBytes() )
-                setText(tmpColumn->displayInColumn,KGlobal::locale()->formatNumber( m_fileitem->size(),0)+" ");
+                setText(tmpColumn->displayInColumn,TDEGlobal::locale()->formatNumber( m_fileitem->size(),0)+" ");
             else
                 setText(tmpColumn->displayInColumn,KIO::convertSize(m_fileitem->size())+" ");
             break;
@@ -103,7 +103,7 @@ void KonqInfoListViewItem::updateContents()
                if ( _time != 0 )
                {
                    dt.setTime_t( _time );
-                   setText(tmpColumn->displayInColumn,KGlobal::locale()->formatDateTime(dt));
+                   setText(tmpColumn->displayInColumn,TDEGlobal::locale()->formatDateTime(dt));
                }
             }
             break;
@@ -202,7 +202,7 @@ void KonqInfoListViewItem::setDisabled( bool disabled )
 {
     KonqBaseListViewItem::setDisabled( disabled );
     int iconSize = static_cast<KonqBaseListViewWidget *>(listView())->iconSize();
-    iconSize = iconSize ? iconSize : KGlobal::iconLoader()->currentSize( KIcon::Small ); // Default = small
+    iconSize = iconSize ? iconSize : TDEGlobal::iconLoader()->currentSize( KIcon::Small ); // Default = small
     setPixmap( 0, m_fileitem->pixmap( iconSize, state() ) );
 }
 

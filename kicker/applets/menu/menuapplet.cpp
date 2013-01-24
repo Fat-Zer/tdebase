@@ -61,7 +61,7 @@ extern "C"
 {
     KDE_EXPORT KPanelApplet* init( TQWidget* parent_P, const TQString& configFile_P )
     {
-      KGlobal::locale()->insertCatalogue("kmenuapplet");
+      TDEGlobal::locale()->insertCatalogue("kmenuapplet");
       return new KickerMenuApplet::Applet( configFile_P, parent_P );
     }
 }
@@ -102,7 +102,7 @@ Applet::~Applet()
     delete selection;
     delete selection_watcher;
     delete module;
-    KGlobal::locale()->removeCatalogue("kmenuapplet");
+    TDEGlobal::locale()->removeCatalogue("kmenuapplet");
     }
 
 void Applet::windowAdded( WId w_P )

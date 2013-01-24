@@ -308,7 +308,7 @@ void KColorScheme::load()
 }
 void KColorScheme::load( bool useDefaults )
 {
-    KConfig *config = KGlobal::config();
+    KConfig *config = TDEGlobal::config();
     config->setReadDefaults(  useDefaults );
     config->setGroup("KDE");
     sCurrentScheme = config->readEntry("colorScheme");
@@ -335,7 +335,7 @@ void KColorScheme::load( bool useDefaults )
 
 void KColorScheme::save()
 {
-    KConfig *cfg = KGlobal::config();
+    KConfig *cfg = TDEGlobal::config();
     cfg->setGroup( "General" );
     cfg->writeEntry("background", cs->back, true, true);
     cfg->writeEntry("selectBackground", cs->select, true, true);
@@ -560,7 +560,7 @@ void KColorScheme::slotAdd()
     }
     else
     {
-       sFile = KGlobal::dirs()->saveLocation("data", "kdisplay/color-schemes/") + sFile + ".kcsrc";
+       sFile = TDEGlobal::dirs()->saveLocation("data", "kdisplay/color-schemes/") + sFile + ".kcsrc";
        KSimpleConfig *config = new KSimpleConfig(sFile);
        config->setGroup( "Color Scheme");
        config->writeEntry("Name", sName);
@@ -676,11 +676,11 @@ void KColorScheme::slotSelectColor(const TQColor &col)
     // of course
     if ( selection == CSM_Standard_background &&
          color(CSM_Alternate_background) ==
-         KGlobalSettings::calculateAlternateBackgroundColor(
+         TDEGlobalSettings::calculateAlternateBackgroundColor(
              color(CSM_Standard_background) ) )
     {
         color(CSM_Alternate_background) =
-            KGlobalSettings::calculateAlternateBackgroundColor( col );
+            TDEGlobalSettings::calculateAlternateBackgroundColor( col );
     }
 
     color(selection) = col;
@@ -791,7 +791,7 @@ void KColorScheme::readScheme( int index )
 
     if (index == 0) {
       // Current scheme
-      config = KGlobal::config();
+      config = TDEGlobal::config();
       config->setGroup("General");
     } else {
       // Open scheme file
@@ -818,7 +818,7 @@ void KColorScheme::readScheme( int index )
     cs->buttonTxt = config->readColorEntry( "buttonForeground", &black );
     cs->link = config->readColorEntry( "linkColor", &link );
     cs->visitedLink = config->readColorEntry( "visitedLinkColor", &visitedLink );
-    TQColor alternate = KGlobalSettings::calculateAlternateBackgroundColor(cs->window);
+    TQColor alternate = TDEGlobalSettings::calculateAlternateBackgroundColor(cs->window);
     cs->alternateBackground = config->readColorEntry( "alternateBackground", &alternate );
 
     if (index == 0)
@@ -860,7 +860,7 @@ void KColorScheme::readSchemeNames()
     nSysSchemes = 2;
 
     // Global + local schemes
-    TQStringList list = KGlobal::dirs()->findAllResources("data",
+    TQStringList list = TDEGlobal::dirs()->findAllResources("data",
             "kdisplay/color-schemes/*.kcsrc", false, true);
 
     // And add them

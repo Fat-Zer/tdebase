@@ -717,7 +717,7 @@ void KasBar::addTestItems()
    KasItem *i = new KasItem( this );
    insert( 0, i );
    i->setText( "Animated" );
-   i->setIcon( KGlobal::iconLoader()->loadIcon( "icons", KIcon::NoGroup, KIcon::SizeMedium ) );
+   i->setIcon( TDEGlobal::iconLoader()->loadIcon( "icons", KIcon::NoGroup, KIcon::SizeMedium ) );
    i->setAnimation( resources()->startupAnimation() );
    TQTimer *aniTimer = new TQTimer( i, "aniTimer" );
    connect( aniTimer, TQT_SIGNAL( timeout() ), i, TQT_SLOT( advanceAnimation() ) );

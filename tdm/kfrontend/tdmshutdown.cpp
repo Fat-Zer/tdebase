@@ -329,7 +329,7 @@ get_date( const char *str )
 {
 	KProcIO prc;
 	prc << "/bin/date" << "+%s" << "-d" << str;
-	prc.start( KProcess::Block, false );
+	prc.start( TDEProcess::Block, false );
 	TQString dstr;
 	if (prc.readln( dstr, false, 0 ) < 0)
 		return -1;
@@ -472,7 +472,7 @@ TDMSlimShutdown::TDMSlimShutdown( TQWidget *_parent )
 {
 	setCaption(i18n("Shutdown TDE"));
 
-	bool doUbuntuLogout = KConfigGroup(KGlobal::config(), "Shutdown").readBoolEntry("doUbuntuLogout", false);
+	bool doUbuntuLogout = KConfigGroup(TDEGlobal::config(), "Shutdown").readBoolEntry("doUbuntuLogout", false);
 
 	TQFrame* lfrm = new TQFrame( this );
 	TQHBoxLayout* hbuttonbox;

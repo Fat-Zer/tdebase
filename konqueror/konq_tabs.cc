@@ -321,7 +321,7 @@ void KonqFrameTabs::removeChildFrame( KonqFrameBase * frame )
 
 void KonqFrameTabs::slotCurrentChanged( TQWidget* newPage )
 {
-  setTabColor( newPage, KGlobalSettings::textColor() );
+  setTabColor( newPage, TDEGlobalSettings::textColor() );
   KonqFrameBase* currentFrame = tqt_dynamic_cast<KonqFrameBase*>(newPage);
 
   if (currentFrame && !m_pViewManager->isLoadingProfile()) {

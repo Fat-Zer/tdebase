@@ -26,7 +26,7 @@
 
 typedef  TQPtrVector<Kate::Document> DocVector;
 class KProcIO;
-class KProcess;
+class TDEProcess;
 /**
  * A dialog for handling multiple documents modified on disk
  * from within KateMainWindow
@@ -47,7 +47,7 @@ class KateMwModOnHdDialog : public KDialogBase
     void slotDiff();
     void slotSelectionChanged();
     void slotPRead(KProcIO*);
-    void slotPDone(KProcess*);
+    void slotPDone(TDEProcess*);
 
   private:
     enum Action { Ignore, Overwrite, Reload };

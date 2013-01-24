@@ -302,10 +302,10 @@ public:
 /**
  * A class to read/modify the global desktop background settings.
  */
-class KGlobalBackgroundSettings
+class TDEGlobalBackgroundSettings
 {
 public:
-    KGlobalBackgroundSettings(KConfig *config);
+    TDEGlobalBackgroundSettings(KConfig *config);
 
     TQString deskName(int desk);
     //void setDeskName(int desk, TQString name);

@@ -38,7 +38,7 @@ class TQPushButton;
 
 class KListView;
 class KService;
-class KProcess;
+class TDEProcess;
 class KProcIO;
 
 class KCMHelpCenter;

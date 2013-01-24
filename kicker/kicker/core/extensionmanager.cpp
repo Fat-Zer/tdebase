@@ -87,7 +87,7 @@ ExtensionManager::~ExtensionManager()
 void ExtensionManager::initialize()
 {
 //    kdDebug(1210) << "ExtensionManager::loadContainerConfig()" << endl;
-    KConfig* config = KGlobal::config();
+    KConfig* config = TDEGlobal::config();
     PluginManager* pm = PluginManager::the();
 
     // set up the "main" panel
@@ -179,7 +179,7 @@ void ExtensionManager::configureMenubar(bool duringInit)
     if( KConfigGroup( &menuConfig, "KDE" ).readBoolEntry("macStyle", false)
         || KConfigGroup( &menuConfig, "Menubar" ).readBoolEntry( "ShowMenubar", false ))
     {
-        if (KGlobal::dirs()->findResource("applets", "menuapplet.desktop").isEmpty() ||
+        if (TDEGlobal::dirs()->findResource("applets", "menuapplet.desktop").isEmpty() ||
             m_menubarPanel)
         {
             return;
@@ -239,7 +239,7 @@ void ExtensionManager::migrateMenubar()
     // panel, meaning kickerrc itself would have to be vastly modified
     // with lots of complications. not work it IMHO.
 
-    KConfig* config = KGlobal::config();
+    KConfig* config = TDEGlobal::config();
     config->setGroup("General");
 
     if (config->readBoolEntry("CheckedForMenubar", false))
@@ -322,7 +322,7 @@ void ExtensionManager::saveContainerConfig()
 {
 //    kdDebug(1210) << "ExtensionManager::saveContainerConfig()" << endl;
 
-    KConfig *config = KGlobal::config();
+    KConfig *config = TDEGlobal::config();
 
     // build the extension list
     TQStringList elist;

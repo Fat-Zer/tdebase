@@ -158,7 +158,7 @@ KfindTabWidget::KfindTabWidget(TQWidget *parent, const char *name)
     betweenType->setCurrentItem(1);
 
 
-    TQDate dt = KGlobal::locale()->calendar()->addYears(TQDate::currentDate(), -1);
+    TQDate dt = TDEGlobal::locale()->calendar()->addYears(TQDate::currentDate(), -1);
 
     fromDate = new KDateCombo(dt, pages[1], "fromDate");
     toDate = new KDateCombo(pages[1], "toDate");
@@ -380,7 +380,7 @@ KfindTabWidget::~KfindTabWidget()
 
 void KfindTabWidget::setURL( const KURL & url )
 {
-  KConfig *conf = KGlobal::config();
+  KConfig *conf = TDEGlobal::config();
   conf->setGroup("History");
   m_url = url;
   TQStringList sl = conf->readPathListEntry("Directories");
@@ -459,7 +459,7 @@ void KfindTabWidget::saveHistory()
 void KfindTabWidget::loadHistory()
 {
   // Load pattern history
-  KConfig *conf = KGlobal::config();
+  KConfig *conf = TDEGlobal::config();
   conf->setGroup("History");
   TQStringList sl = conf->readListEntry("Patterns");
   if(!sl.isEmpty())
@@ -522,7 +522,7 @@ void KfindTabWidget::slotSizeBoxChanged(int index)
 
 void KfindTabWidget::setDefaults()
 {
-    TQDate dt = KGlobal::locale()->calendar()->addYears(TQDate::currentDate(), -1);
+    TQDate dt = TDEGlobal::locale()->calendar()->addYears(TQDate::currentDate(), -1);
 
     fromDate ->setDate(dt);
     toDate ->setDate(TQDate::currentDate());
@@ -726,11 +726,11 @@ void KfindTabWidget::setQuery(KQuery *query)
 }
 
 TQString KfindTabWidget::date2String(const TQDate & date) {
-  return(KGlobal::locale()->formatDate(date, true));
+  return(TDEGlobal::locale()->formatDate(date, true));
 }
 
 TQDate &KfindTabWidget::string2Date(const TQString & str, TQDate *qd) {
-  return *qd = KGlobal::locale()->readDate(str);
+  return *qd = TDEGlobal::locale()->readDate(str);
 }
 
 void KfindTabWidget::getDirectory()
@@ -849,7 +849,7 @@ static void save_pattern(TQComboBox *obj,
     }
   }
 
-  KConfig *conf = KGlobal::config();
+  KConfig *conf = TDEGlobal::config();
   conf->setGroup(group);
   conf->writePathEntry(entry, sl);
 }

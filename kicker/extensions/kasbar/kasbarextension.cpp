@@ -76,7 +76,7 @@ extern "C"
 {
    KDE_EXPORT KPanelExtension *init( TQWidget *parent, const TQString& configFile )
    {
-      KGlobal::locale()->insertCatalogue("kasbarextension");
+      TDEGlobal::locale()->insertCatalogue("kasbarextension");
       return new KasBarExtension( configFile,
 				  KPanelExtension::Normal,
 				  KPanelExtension::About | KPanelExtension::Preferences,
@@ -109,7 +109,7 @@ KasBarExtension::~KasBarExtension()
 {
     if ( detached_ && (!kasbar.isNull()) )
 	kasbar->deleteLater();
-    KGlobal::locale()->removeCatalogue("kasbarextension");
+    TDEGlobal::locale()->removeCatalogue("kasbarextension");
 }
 
 void KasBarExtension::setDetached( bool detach )

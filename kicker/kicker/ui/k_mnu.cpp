@@ -404,7 +404,7 @@ void PanelKMenu::initialize()
     // WABA: tear off handles don't work together with dynamically updated
     // menus. We can't update the menu while torn off, and we don't know
     // when it is torn off.
-    if (KGlobalSettings::insertTearOffHandle())
+    if (TDEGlobalSettings::insertTearOffHandle())
       insertTearOffHandle();
 #endif
 

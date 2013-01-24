@@ -194,7 +194,7 @@ static TQString entryToDirId(const TQString &path)
    {
       // XDG Desktop menu items come with absolute paths, we need to
       // extract their relative path and then build a local path.
-      local = KGlobal::dirs()->relativeLocation("xdgdata-dirs", path);
+      local = TDEGlobal::dirs()->relativeLocation("xdgdata-dirs", path);
    }
    
    if (local.isEmpty() || local.startsWith("/"))

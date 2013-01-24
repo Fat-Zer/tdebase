@@ -246,7 +246,7 @@ KWinbindGreeter::loadUsers( const TQStringList &users )
 	KCompletion *userNamesCompletion = new KCompletion;
 	loginEdit->setCompletionObject( userNamesCompletion );
 	loginEdit->setAutoDeleteCompletionObject( true );
-	loginEdit->setCompletionMode( KGlobalSettings::CompletionAuto );
+	loginEdit->setCompletionMode( TDEGlobalSettings::CompletionAuto );
 	slotChangedDomain( defaultDomain );
 }
 
@@ -572,10 +572,10 @@ KWinbindGreeter::slotStartDomainList()
 
     m_domainLister = new KProcIO;
     connect(m_domainLister, TQT_SIGNAL(readReady(KProcIO*)), TQT_SLOT(slotReadDomainList()));
-    connect(m_domainLister, TQT_SIGNAL(processExited(KProcess*)), TQT_SLOT(slotEndDomainList()));
+    connect(m_domainLister, TQT_SIGNAL(processExited(TDEProcess*)), TQT_SLOT(slotEndDomainList()));
 
     (*m_domainLister) << "wbinfo" << "--own-domain" << "--trusted-domains";
-    m_domainLister->setComm (KProcess::Stdout);
+    m_domainLister->setComm (TDEProcess::Stdout);
     m_domainLister->start();
 }
 
@@ -648,13 +648,13 @@ static bool init( const TQString &,
 			sepstr = "\\";
 	}
 	separator = sepstr[0].latin1();
-	KGlobal::locale()->insertCatalogue( "kgreet_winbind" );
+	TDEGlobal::locale()->insertCatalogue( "kgreet_winbind" );
 	return true;
 }
 
 static void done( void )
 {
-	KGlobal::locale()->removeCatalogue( "kgreet_winbind" );
+	TDEGlobal::locale()->removeCatalogue( "kgreet_winbind" );
 	// avoid static deletion problems ... hopefully
 	staticDomains.clear();
 	defaultDomain = TQString::null;

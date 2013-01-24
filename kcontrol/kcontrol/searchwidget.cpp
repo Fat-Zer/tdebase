@@ -39,7 +39,7 @@ class ModuleItem : public TQListBoxPixmap
 public:
  ModuleItem(ConfigModule *module, TQListBox * listbox = 0) :
 	TQListBoxPixmap(listbox,
-      KGlobal::iconLoader()->loadIcon(module->icon(), KIcon::Desktop, KIcon::SizeSmall),
+      TDEGlobal::iconLoader()->loadIcon(module->icon(), KIcon::Desktop, KIcon::SizeSmall),
       module->moduleName())
   , m_module(module)
  { 

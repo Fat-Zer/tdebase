@@ -256,8 +256,8 @@ LockProcess::LockProcess()
     XSelectInput( tqt_xdisplay(), tqt_xrootwin(), SubstructureNotifyMask | rootAttr.your_event_mask );
 
     // Add non-TDE path
-    KGlobal::dirs()->addResourceType("scrsav",
-                                    KGlobal::dirs()->kde_default("apps") +
+    TDEGlobal::dirs()->addResourceType("scrsav",
+                                    TDEGlobal::dirs()->kde_default("apps") +
                                     "System/ScreenSavers/");
 
     // Add KDE specific screensaver path
@@ -268,8 +268,8 @@ LockProcess::LockProcess()
       relPath=servGroup->relPath();
       kdDebug(1204) << "relPath=" << relPath << endl;
     }
-    KGlobal::dirs()->addResourceType("scrsav",
-                                     KGlobal::dirs()->kde_default("apps") +
+    TDEGlobal::dirs()->addResourceType("scrsav",
+                                     TDEGlobal::dirs()->kde_default("apps") +
                                      relPath);
 
     // virtual root property
@@ -356,7 +356,7 @@ void LockProcess::init(bool child, bool useBlankOnly)
     connect( mHackDelayStartupTimer, TQT_SIGNAL(timeout()), this, TQT_SLOT(closeDialogAndStartHack()) );
     connect( mEnsureVRootWindowSecurityTimer, TQT_SIGNAL(timeout()), this, TQT_SLOT(repaintRootWindowIfNeeded()) );
     connect(tqApp, TQT_SIGNAL(mouseInteraction(XEvent *)), TQT_SLOT(slotMouseActivity(XEvent *)));
-    connect(&mHackProc, TQT_SIGNAL(processExited(KProcess *)), TQT_SLOT(hackExited(KProcess *)));
+    connect(&mHackProc, TQT_SIGNAL(processExited(TDEProcess *)), TQT_SLOT(hackExited(TDEProcess *)));
     connect(&mSuspendTimer, TQT_SIGNAL(timeout()), TQT_SLOT(suspend()));
 
 #ifdef HAVE_DPMS
@@ -1684,7 +1684,7 @@ void LockProcess::stopHack()
 
 //---------------------------------------------------------------------------
 //
-void LockProcess::hackExited(KProcess *)
+void LockProcess::hackExited(TDEProcess *)
 {
 	// Hack exited while we're supposed to be saving the screen.
 	// Make sure the saver window is black.
@@ -1831,11 +1831,11 @@ bool LockProcess::checkPass()
 
         if (trinity_desktop_lock_use_sak) {
             // Verify SAK operational status
-            KProcess* checkSAKProcess = new KProcess;
-            *checkSAKProcess << "tdmtsak" << "check";
-            checkSAKProcess->start(KProcess::Block, KProcess::NoCommunication);
-            int retcode = checkSAKProcess->exitStatus();
-            delete checkSAKProcess;
+            TDEProcess* checkSATDEProcess = new TDEProcess;
+            *checkSATDEProcess << "tdmtsak" << "check";
+            checkSATDEProcess->start(TDEProcess::Block, TDEProcess::NoCommunication);
+            int retcode = checkSATDEProcess->exitStatus();
+            delete checkSATDEProcess;
             if (retcode != 0) {
                 trinity_desktop_lock_use_sak = false;
             }
@@ -1903,7 +1903,7 @@ int LockProcess::execDialog( TQDialog *dlg )
     dlg->adjustSize();
 
     TQRect rect = dlg->geometry();
-    rect.moveCenter(KGlobalSettings::desktopGeometry(TQCursor::pos()).center());
+    rect.moveCenter(TDEGlobalSettings::desktopGeometry(TQCursor::pos()).center());
     dlg->move( rect.topLeft() );
 
     if (mDialogs.isEmpty())
@@ -2352,7 +2352,7 @@ void LockProcess::showVkbd()
         mVkbdLastEventWindow = None;
         mKWinModule = new KWinModule( NULL, KWinModule::INFO_WINDOWS );
         connect( mKWinModule, TQT_SIGNAL( windowAdded( WId )), TQT_SLOT( windowAdded( WId )));
-        mVkbdProcess = new KProcess;
+        mVkbdProcess = new TDEProcess;
         *mVkbdProcess << "xvkbd" << "-compact" << "-geometry" << "-0-0" << "-xdm";
         mVkbdProcess->start();
     }

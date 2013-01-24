@@ -225,7 +225,7 @@ extern "C" KDE_EXPORT int kdemain( int argc, char* argv[] )
 
     IceSetIOErrorHandler( IoErrorHandler );
 
-    KConfig *config = KGlobal::config();
+    KConfig *config = TDEGlobal::config();
     config->setGroup( "General" );
 
     int realScreenCount = ScreenCount( tqt_xdisplay() );

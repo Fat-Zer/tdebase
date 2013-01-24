@@ -86,7 +86,7 @@ TQString KSplashThemeMgr::quickHelp() const
 
 void KSplashThemeMgr::init()
 {
-  KGlobal::dirs()->addResourceType("ksplashthemes", KStandardDirs::kde_default("data") + "ksplash/Themes");
+  TDEGlobal::dirs()->addResourceType("ksplashthemes", KStandardDirs::kde_default("data") + "ksplash/Themes");
 }
 
 void KSplashThemeMgr::save()

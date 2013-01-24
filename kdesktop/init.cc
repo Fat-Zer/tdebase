@@ -101,9 +101,9 @@ static void copyDirectoryFile(const TQString &fileName, const TQString& dir, boo
 {
   if (force || !TQFile::exists(dir + "/.directory")) {
     TQString cmd = "cp ";
-    cmd += KProcess::quote(locate("data", TQString("kdesktop/") + fileName));
+    cmd += TDEProcess::quote(locate("data", TQString("kdesktop/") + fileName));
     cmd += " ";
-    cmd += KProcess::quote(dir+"/.directory");
+    cmd += TDEProcess::quote(dir+"/.directory");
     system( TQFile::encodeName(cmd) );
   }
 }
@@ -111,15 +111,15 @@ static void copyDirectoryFile(const TQString &fileName, const TQString& dir, boo
 static void copyFile( const TQString& src, const TQString& dest )
 {
     TQCString cmd = "cp ";
-    cmd += TQFile::encodeName(KProcess::quote(src));
+    cmd += TQFile::encodeName(TDEProcess::quote(src));
     cmd += " ";
-    cmd += TQFile::encodeName(KProcess::quote(dest));
+    cmd += TQFile::encodeName(TDEProcess::quote(dest));
     system( cmd );
 }
 
 static TQString realDesktopPath()
 {
-    TQString desktopPath = KGlobalSettings::desktopPath();
+    TQString desktopPath = TDEGlobalSettings::desktopPath();
     if (kdesktop_screen_number != 0) {
 	TQString dn = "Desktop";
 	dn += TQString::number(kdesktop_screen_number);
@@ -140,7 +140,7 @@ static void copyDesktopLinks()
        return;
 
     TQStringList list =
-	KGlobal::dirs()->findAllResources("appdata", "DesktopLinks/*", false, true);
+	TDEGlobal::dirs()->findAllResources("appdata", "DesktopLinks/*", false, true);
 
     TQString desktopPath = realDesktopPath();
 
@@ -197,15 +197,15 @@ void testLocalInstallation()
     // Do not force copying that one (it would lose the icon positions)
     copyDirectoryFile("directory.desktop", desktopPath, false);
 
-    testDir( KGlobalSettings::autostartPath() );
+    testDir( TDEGlobalSettings::autostartPath() );
     // we force the copying in case of a new release, to install new translations....
-    copyDirectoryFile("directory.autostart", KGlobalSettings::autostartPath(), newRelease);
+    copyDirectoryFile("directory.autostart", TDEGlobalSettings::autostartPath(), newRelease);
 
     if (emptyDesktop)
 	copyDesktopLinks();
 
     // Take care of creating or updating trash.desktop
-    const TQString trashDir = KGlobal::dirs()->localxdgdatadir() + "Trash";
+    const TQString trashDir = TDEGlobal::dirs()->localxdgdatadir() + "Trash";
     const bool firstTimeWithNewTrash = !TQFile::exists( trashDir );
     const TQString trashDesktopPath = desktopPath + "/trash.desktop";
     const bool trashDesktopExists = TQFile::exists( trashDesktopPath );

@@ -131,7 +131,7 @@ void DesktopPathConfig::load( bool useDefaults )
     // Desktop Paths
 	config.setReadDefaults( useDefaults );
     config.setGroup("Paths");
-    urAutostart->setURL( config.readPathEntry( "Autostart" , KGlobalSettings::autostartPath() ));
+    urAutostart->setURL( config.readPathEntry( "Autostart" , TDEGlobalSettings::autostartPath() ));
 
     KConfig xdguserconfig( TQDir::homeDirPath()+"/.config/user-dirs.dirs" );
      
@@ -148,7 +148,7 @@ void DesktopPathConfig::defaults()
 
 void DesktopPathConfig::save()
 {
-    KConfig *config = KGlobal::config();
+    KConfig *config = TDEGlobal::config();
     KConfig *xdgconfig = new KConfig( TQDir::homeDirPath()+"/.config/user-dirs.dirs" );
     KConfigGroupSaver cgs( config, "Paths" );
 
@@ -156,17 +156,17 @@ void DesktopPathConfig::save()
     bool autostartMoved = false;
 
     KURL desktopURL;
-    desktopURL.setPath( KGlobalSettings::desktopPath() );
+    desktopURL.setPath( TDEGlobalSettings::desktopPath() );
     KURL newDesktopURL;
     newDesktopURL.setPath(urDesktop->url());
 
     KURL autostartURL;
-    autostartURL.setPath( KGlobalSettings::autostartPath() );
+    autostartURL.setPath( TDEGlobalSettings::autostartPath() );
     KURL newAutostartURL;
     newAutostartURL.setPath(urAutostart->url());
 
     KURL documentURL;
-    documentURL.setPath( KGlobalSettings::documentPath() );
+    documentURL.setPath( TDEGlobalSettings::documentPath() );
     KURL newDocumentURL;
     newDocumentURL.setPath(urDocument->url());
 
@@ -202,11 +202,11 @@ void DesktopPathConfig::save()
                 if ( newAutostartURL.equals( futureAutostartURL, true ) )
                     autostartMoved = true;
                 else
-                    autostartMoved = moveDir( KURL( KGlobalSettings::autostartPath() ), KURL( urAutostart->url() ), i18n("Autostart") );
+                    autostartMoved = moveDir( KURL( TDEGlobalSettings::autostartPath() ), KURL( urAutostart->url() ), i18n("Autostart") );
             }
         }
 
-        if ( moveDir( KURL( KGlobalSettings::desktopPath() ), KURL( urlDesktop ), i18n("Desktop") ) )
+        if ( moveDir( KURL( TDEGlobalSettings::desktopPath() ), KURL( urlDesktop ), i18n("Desktop") ) )
         {
             xdgconfig->writePathEntry( "XDG_DESKTOP_DIR", '"'+ urlDesktop + '"', true, false );
             pathChanged = true;
@@ -216,7 +216,7 @@ void DesktopPathConfig::save()
     if ( !newAutostartURL.equals( autostartURL, true ) )
     {
         if (!autostartMoved)
-            autostartMoved = moveDir( KURL( KGlobalSettings::autostartPath() ), KURL( urAutostart->url() ), i18n("Autostart") );
+            autostartMoved = moveDir( KURL( TDEGlobalSettings::autostartPath() ), KURL( urAutostart->url() ), i18n("Autostart") );
         if (autostartMoved)
         {
             config->writePathEntry( "Autostart", urAutostart->url(), true, true );

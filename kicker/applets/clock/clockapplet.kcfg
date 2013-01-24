@@ -29,7 +29,7 @@
     <entry name="DateFont" type="Font" key="Font">
       <label>Font for the clock.</label>
       <code>
-TQFont defFont=KGlobalSettings::generalFont();
+TQFont defFont=TDEGlobalSettings::generalFont();
 defFont.setPointSize(8);
       </code>
       <default code="true">defFont</default>
@@ -55,7 +55,7 @@ defFont.setPointSize(8);
     <entry name="PlainFont" type="Font" key="Font">
       <label>Font for the clock.</label>
       <code>
-defFont=KGlobalSettings::generalFont();
+defFont=TDEGlobalSettings::generalFont();
 defFont.setPointSize(8);
 defFont.setBold(true);
       </code>
@@ -162,7 +162,7 @@ defFont.setBold(true);
     <entry name="FuzzyFont" type="Font" key="Font">
       <label>Font for the clock.</label>
       <code>
-defFont=KGlobalSettings::generalFont();
+defFont=TDEGlobalSettings::generalFont();
       </code>
       <default code="true">defFont</default>
     </entry>

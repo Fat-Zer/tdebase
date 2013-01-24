@@ -51,7 +51,7 @@ extern "C"
     KDE_EXPORT KCModule* create_khotkeys( TQWidget* parent_P, const char* name_P )
     {
 //    sleep( 20 ); // CHECKME DEBUG
-    KGlobal::locale()->insertCatalogue("khotkeys");
+    TDEGlobal::locale()->insertCatalogue("khotkeys");
     KHotKeys::Module* ret = new KHotKeys::Module( parent_P, name_P );
     ret->load(); // CHECKME
     return ret;

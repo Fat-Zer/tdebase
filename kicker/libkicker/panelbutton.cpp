@@ -80,11 +80,11 @@ PanelButton::PanelButton( TQWidget* parent, const char* name, bool forceStandard
 {
     setBackgroundOrigin(AncestorOrigin);
     setWFlags(TQt::WNoAutoErase);
-    KGlobal::locale()->insertCatalogue("libkicker");
+    TDEGlobal::locale()->insertCatalogue("libkicker");
     calculateIconSize();
     setAcceptDrops(true);
 
-    m_textColor = KGlobalSettings::textColor();
+    m_textColor = TDEGlobalSettings::textColor();
 
     updateSettings(TDEApplication::SETTINGS_MOUSE);
 
@@ -108,7 +108,7 @@ void PanelButton::configure()
         return;
     }
 
-    KConfigGroup tilesGroup( KGlobal::config(), "button_tiles" );
+    KConfigGroup tilesGroup( TDEGlobal::config(), "button_tiles" );
     if( !tilesGroup.readBoolEntry( "Enable" + name + "Tiles", true ) ) {
             setTile( TQString::null );
         return;
@@ -171,7 +171,7 @@ TQImage PanelButton::loadTile(const TQString& tile,
 
     name += state + ".png";
 
-    TQImage tileImg(KGlobal::dirs()->findResource("tiles", name));
+    TQImage tileImg(TDEGlobal::dirs()->findResource("tiles", name));
 
     // scale if size does not match exactly
     if (!tileImg.isNull() && tileImg.size() != size)
@@ -225,7 +225,7 @@ void PanelButton::updateSettings(int category)
     }
 
     if (m_forceStandardCursor == FALSE)
-        m_changeCursorOverItem = KGlobalSettings::changeCursorOverIcon();
+        m_changeCursorOverItem = TDEGlobalSettings::changeCursorOverIcon();
     else
         m_changeCursorOverItem = FALSE;
 
@@ -490,7 +490,7 @@ void PanelButton::mouseMoveEvent(TQMouseEvent *e)
     TQPoint p(e->pos() - m_lastLeftMouseButtonPress);
     if (p.manhattanLength() <= 16)
     {
-        // KGlobalSettings::dndEventDelay() is not enough!
+        // TDEGlobalSettings::dndEventDelay() is not enough!
         return;
     }
 
@@ -781,7 +781,7 @@ int PanelButton::preferredIconSize(int proposed_size) const
 {
     // (re)calculates the icon sizes and report true if they have changed.
     // Get sizes from icontheme. We assume they are sorted.
-    KIconTheme *ith = KGlobal::iconLoader()->theme();
+    KIconTheme *ith = TDEGlobal::iconLoader()->theme();
 
     if (!ith)
     {
@@ -878,7 +878,7 @@ void PanelButton::loadTiles()
 
 void PanelButton::loadIcons()
 {
-    KIconLoader * ldr = KGlobal::iconLoader();
+    KIconLoader * ldr = TDEGlobal::iconLoader();
     TQString nm = m_iconName;
     KIcon::States defaultState = isEnabled() ? KIcon::DefaultState :
                                                KIcon::DisabledState;

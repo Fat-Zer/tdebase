@@ -51,8 +51,8 @@ int PrivateListViewItem::compare( TQListViewItem *item, int col, bool ascending 
   int type = ((PrivateListView*)listView())->columnType( col );
 
   if ( type == PrivateListView::Int ) {
-    int prev = (int)KGlobal::locale()->readNumber( key( col, ascending ) );
-    int next = (int)KGlobal::locale()->readNumber( item->key( col, ascending ) );
+    int prev = (int)TDEGlobal::locale()->readNumber( key( col, ascending ) );
+    int next = (int)TDEGlobal::locale()->readNumber( item->key( col, ascending ) );
     if ( prev < next )
       return -1;
     else if ( prev == next )
@@ -60,8 +60,8 @@ int PrivateListViewItem::compare( TQListViewItem *item, int col, bool ascending 
     else
       return 1;
   } else if ( type == PrivateListView::Float ) {
-    double prev = KGlobal::locale()->readNumber( key( col, ascending ) );
-    double next = KGlobal::locale()->readNumber( item->key( col, ascending ) );
+    double prev = TDEGlobal::locale()->readNumber( key( col, ascending ) );
+    double next = TDEGlobal::locale()->readNumber( item->key( col, ascending ) );
     if ( prev < next )
       return -1;
     else
@@ -130,9 +130,9 @@ void PrivateListView::update(const TQString& answer)
 		KSGRD::SensorTokenizer records(lines[i], '\t');
 		for (uint j = 0; j < records.count(); j++) {
       if ( mColumnTypes[ j ] == "f" )
-        item->setText(j, KGlobal::locale()->formatNumber( records[j].toFloat() ) );
+        item->setText(j, TDEGlobal::locale()->formatNumber( records[j].toFloat() ) );
       else if ( mColumnTypes[ j ] == "D" )
-        item->setText(j, KGlobal::locale()->formatNumber( records[j].toDouble(), 0 ) );
+        item->setText(j, TDEGlobal::locale()->formatNumber( records[j].toDouble(), 0 ) );
       else
 			  item->setText(j, records[j]);
     }

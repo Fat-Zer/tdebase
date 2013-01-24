@@ -60,8 +60,8 @@ MacProtocol::~MacProtocol() {
     delete logStream;
     logStream = 0;
 */
-    delete myKProcess;
-    myKProcess = 0L;
+    delete myTDEProcess;
+    myTDEProcess = 0L;
 }
 
 //get() called when a file is to be read
@@ -100,24 +100,24 @@ void MacProtocol::get(const KURL& url) {
     }
 
     //now we can read the file
-    myKProcess = new KProcess();
+    myTDEProcess = new TDEProcess();
 
-    *myKProcess << "hpcopy" << mode << path << "-";
+    *myTDEProcess << "hpcopy" << mode << path << "-";
 
     //data is now sent directly from the slot
-    connect(myKProcess, TQT_SIGNAL(receivedStdout(KProcess *, char *, int)),
-            this, TQT_SLOT(slotSetDataStdOutput(KProcess *, char *, int)));
+    connect(myTDEProcess, TQT_SIGNAL(receivedStdout(TDEProcess *, char *, int)),
+            this, TQT_SLOT(slotSetDataStdOutput(TDEProcess *, char *, int)));
 
-    myKProcess->start(KProcess::Block, KProcess::All);
+    myTDEProcess->start(TDEProcess::Block, TDEProcess::All);
 
-    if (!myKProcess->normalExit() || !(myKProcess->exitStatus() == 0)) {
+    if (!myTDEProcess->normalExit() || !(myTDEProcess->exitStatus() == 0)) {
         error(ERR_SLAVE_DEFINED,
               i18n("There was an error with hpcopy - please ensure it is installed"));
         return;
     }
 
     //clean up
-    delete myKProcess; myKProcess = 0;
+    delete myTDEProcess; myTDEProcess = 0;
     //finish
     data(TQByteArray());
     finished();
@@ -130,24 +130,24 @@ void MacProtocol::listDir(const KURL& url) {
     if (filename.isNull()) {
         error(ERR_CANNOT_LAUNCH_PROCESS, i18n("No filename was found"));
     } else {
-        myKProcess = new KProcess();
-        *myKProcess << "hpls" << "-la" << filename;
+        myTDEProcess = new TDEProcess();
+        *myTDEProcess << "hpls" << "-la" << filename;
 
         standardOutputStream = TQString::null;
-        connect(myKProcess, TQT_SIGNAL(receivedStdout(KProcess *, char *, int)),
-                this, TQT_SLOT(slotGetStdOutput(KProcess *, char *, int)));
+        connect(myTDEProcess, TQT_SIGNAL(receivedStdout(TDEProcess *, char *, int)),
+                this, TQT_SLOT(slotGetStdOutput(TDEProcess *, char *, int)));
 
-        myKProcess->start(KProcess::Block, KProcess::All);
+        myTDEProcess->start(TDEProcess::Block, TDEProcess::All);
 
-        if ((!myKProcess->normalExit()) || (!myKProcess->exitStatus() == 0)) {
+        if ((!myTDEProcess->normalExit()) || (!myTDEProcess->exitStatus() == 0)) {
             error(ERR_SLAVE_DEFINED,
                   i18n("There was an error with hpls - please ensure it is installed"));
         }
 
         //clean up
-        delete myKProcess; myKProcess = 0;
-        disconnect(myKProcess, TQT_SIGNAL(receivedStdout(KProcess *, char *, int)),
-                this, TQT_SLOT(slotGetStdOutput(KProcess *, char *, int)));
+        delete myTDEProcess; myTDEProcess = 0;
+        disconnect(myTDEProcess, TQT_SIGNAL(receivedStdout(TDEProcess *, char *, int)),
+                this, TQT_SLOT(slotGetStdOutput(TDEProcess *, char *, int)));
 
         UDSEntry entry;
         if (!standardOutputStream.isEmpty()) {
@@ -186,25 +186,25 @@ TQValueList<KIO::UDSAtom> MacProtocol::doStat(const KURL& url) {
     if (filename.isNull()) {
         error(ERR_SLAVE_DEFINED, i18n("No filename was found in the URL"));
     } else if (! filename.isEmpty()) {
-        myKProcess = new KShellProcess();
+        myTDEProcess = new KShellProcess();
 
-        *myKProcess << "hpls" << "-ld" << filename;
+        *myTDEProcess << "hpls" << "-ld" << filename;
 
         standardOutputStream = TQString::null;
-        connect(myKProcess, TQT_SIGNAL(receivedStdout(KProcess *, char *, int)),
-                this, TQT_SLOT(slotGetStdOutput(KProcess *, char *, int)));
+        connect(myTDEProcess, TQT_SIGNAL(receivedStdout(TDEProcess *, char *, int)),
+                this, TQT_SLOT(slotGetStdOutput(TDEProcess *, char *, int)));
 
-        myKProcess->start(KProcess::Block, KProcess::All);
+        myTDEProcess->start(TDEProcess::Block, TDEProcess::All);
 
-        if ((!myKProcess->normalExit()) || (!myKProcess->exitStatus() == 0)) {
+        if ((!myTDEProcess->normalExit()) || (!myTDEProcess->exitStatus() == 0)) {
             error(ERR_SLAVE_DEFINED,
                   i18n("hpls did not exit normally - please ensure you have installed the hfsplus tools"));
         }
 
         //clean up
-        delete myKProcess; myKProcess = 0;
-        disconnect(myKProcess, TQT_SIGNAL(receivedStdout(KProcess *, char *, int)),
-                this, TQT_SLOT(slotGetStdOutput(KProcess *, char *, int)));
+        delete myTDEProcess; myTDEProcess = 0;
+        disconnect(myTDEProcess, TQT_SIGNAL(receivedStdout(TDEProcess *, char *, int)),
+                this, TQT_SLOT(slotGetStdOutput(TDEProcess *, char *, int)));
 
         if (standardOutputStream.isEmpty()) {
             filename.replace("\\ ", " "); //get rid of escapes
@@ -254,13 +254,13 @@ TQString MacProtocol::prepareHP(const KURL& url) {
     delete config; config = 0;
 
     //first we run just hpmount and check the output to see if it's version 1.0.2 or 1.0.4
-    myKProcess = new KProcess();
-    *myKProcess << "hpmount";
+    myTDEProcess = new TDEProcess();
+    *myTDEProcess << "hpmount";
     standardOutputStream = TQString::null;
-    connect(myKProcess, TQT_SIGNAL(receivedStderr(KProcess *, char *, int)),
-            this, TQT_SLOT(slotGetStdOutput(KProcess *, char *, int)));
+    connect(myTDEProcess, TQT_SIGNAL(receivedStderr(TDEProcess *, char *, int)),
+            this, TQT_SLOT(slotGetStdOutput(TDEProcess *, char *, int)));
 
-    myKProcess->start(KProcess::Block, KProcess::All);
+    myTDEProcess->start(TDEProcess::Block, TDEProcess::All);
 
     bool version102 = true;
 
@@ -268,21 +268,21 @@ TQString MacProtocol::prepareHP(const KURL& url) {
         version102 = false;
     }
 
-    delete myKProcess; myKProcess = 0;
-    disconnect(myKProcess, TQT_SIGNAL(receivedStderr(KProcess *, char *, int)),
-            this, TQT_SLOT(slotGetStdOutput(KProcess *, char *, int)));
+    delete myTDEProcess; myTDEProcess = 0;
+    disconnect(myTDEProcess, TQT_SIGNAL(receivedStderr(TDEProcess *, char *, int)),
+            this, TQT_SLOT(slotGetStdOutput(TDEProcess *, char *, int)));
 
     //now mount the drive
-    myKProcess = new KProcess();
+    myTDEProcess = new TDEProcess();
     if (version102) {
-        *myKProcess << "hpmount" << device;
+        *myTDEProcess << "hpmount" << device;
     } else {
-        *myKProcess << "hpmount" << "-r" << device;
+        *myTDEProcess << "hpmount" << "-r" << device;
     }
 
-    myKProcess->start(KProcess::Block, KProcess::All);
+    myTDEProcess->start(TDEProcess::Block, TDEProcess::All);
 
-    if ((!myKProcess->normalExit()) || (!myKProcess->exitStatus() == 0)) {
+    if ((!myTDEProcess->normalExit()) || (!myTDEProcess->exitStatus() == 0)) {
         //TODO this error interrupts the user when typing ?dev=foo on each letter of foo
         error(ERR_SLAVE_DEFINED,
               i18n("hpmount did not exit normally - please ensure that hfsplus utils are installed,\n"
@@ -293,7 +293,7 @@ TQString MacProtocol::prepareHP(const KURL& url) {
     }
 
     //clean up
-    delete myKProcess; myKProcess = 0;
+    delete myTDEProcess; myTDEProcess = 0;
 
     //escape any funny characters
     //TODO are there any more characters to escape?
@@ -310,19 +310,19 @@ TQString MacProtocol::prepareHP(const KURL& url) {
         dir = path.left(s);
         path = path.mid(s+1);
 
-        myKProcess = new KProcess();
-        *myKProcess << "hpcd" << dir;
+        myTDEProcess = new TDEProcess();
+        *myTDEProcess << "hpcd" << dir;
 
-        myKProcess->start(KProcess::Block, KProcess::All);
+        myTDEProcess->start(TDEProcess::Block, TDEProcess::All);
 
-        if ((!myKProcess->normalExit()) || (!myKProcess->exitStatus() == 0)) {
+        if ((!myTDEProcess->normalExit()) || (!myTDEProcess->exitStatus() == 0)) {
             error(ERR_SLAVE_DEFINED,
                   i18n("hpcd did not exit normally - please ensure it is installed"));
             return NULL;
         }
 
         //clean up
-        delete myKProcess; myKProcess = 0;
+        delete myTDEProcess; myTDEProcess = 0;
 
         s = path.find('/');
     }
@@ -412,13 +412,13 @@ TQValueList<KIO::UDSAtom> MacProtocol::makeUDS(const TQString& _line) {
 
 //slotGetStdOutput() grabs output from the hp commands
 // and adds it to the buffer
-void MacProtocol::slotGetStdOutput(KProcess*, char *s, int len) {
+void MacProtocol::slotGetStdOutput(TDEProcess*, char *s, int len) {
   standardOutputStream += TQString::fromLocal8Bit(s, len);
 }
 
 //slotSetDataStdOutput() is used during hpcopy to give
 //standard output to KDE
-void MacProtocol::slotSetDataStdOutput(KProcess*, char *s, int len) {
+void MacProtocol::slotSetDataStdOutput(TDEProcess*, char *s, int len) {
     processedBytes += len;
     processedSize(processedBytes);
     TQByteArray array;

@@ -67,7 +67,7 @@ KateSession::KateSession (KateSessionManager *manager, const TQString &fileName,
 void KateSession::init ()
 {
   // given file exists, use it to load some stuff ;)
-  if (!m_sessionFileRel.isEmpty() && KGlobal::dirs()->exists(sessionFile ()))
+  if (!m_sessionFileRel.isEmpty() && TDEGlobal::dirs()->exists(sessionFile ()))
   {
     KSimpleConfig config (sessionFile (), true);
 
@@ -146,7 +146,7 @@ bool KateSession::create (const TQString &name, bool force)
     KMD5 md5 (tname);
     m_sessionFileRel = TQString ("%1.katesession").arg (md5.hexDigest().data());
 
-    if (!KGlobal::dirs()->exists(sessionFile ()))
+    if (!TDEGlobal::dirs()->exists(sessionFile ()))
       break;
   }
 
@@ -211,7 +211,7 @@ KateSessionManager::KateSessionManager (TQObject *parent)
   kdDebug() << "LOCAL SESSION DIR: " << m_sessionsDir << endl;
 
   // create dir if needed
-  KGlobal::dirs()->makeDir (m_sessionsDir);
+  TDEGlobal::dirs()->makeDir (m_sessionsDir);
 }
 
 KateSessionManager::~KateSessionManager()

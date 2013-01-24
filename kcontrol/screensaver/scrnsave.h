@@ -28,7 +28,7 @@ class TQListView;
 class TQListViewItem;
 class TQPushButton;
 class KIntNumInput;
-class KProcess;
+class TDEProcess;
 
 //===========================================================================
 class KScreenSaver : public KCModule
@@ -56,11 +56,11 @@ protected slots:
     void slotTimeoutChanged( int );
     void slotLockTimeoutChanged( int );
     void slotLock( bool );
-    void slotSetupDone(KProcess*);
+    void slotSetupDone(TDEProcess*);
     // when selecting a new screensaver, the old preview will
     // be killed. -- This callback is responsible for restarting the
     // new preview
-    void slotPreviewExited(KProcess *);
+    void slotPreviewExited(TDEProcess *);
     void findSavers();
 
 protected:
@@ -74,9 +74,9 @@ protected:
 
 protected:
     TestWin     *mTestWin;
-    KProcess    *mTestProc;
-    KProcess    *mSetupProc;
-    KProcess    *mPreviewProc;
+    TDEProcess    *mTestProc;
+    TDEProcess    *mSetupProc;
+    TDEProcess    *mPreviewProc;
     KSSMonitor  *mMonitor;
     TQPushButton *mSetupBt;
     TQPushButton *mTestBt;

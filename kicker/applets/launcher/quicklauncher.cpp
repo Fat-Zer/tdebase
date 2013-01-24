@@ -71,7 +71,7 @@ extern "C"
 {
     KDE_EXPORT KPanelApplet* init(TQWidget *parent, const TQString& configFile)
     {
-        KGlobal::locale()->insertCatalogue("quicklauncher");
+        TDEGlobal::locale()->insertCatalogue("quicklauncher");
         return new QuickLauncher(configFile, KPanelApplet::Normal,
                                  KPanelApplet::Preferences,
                                  parent, "quicklauncher");
@@ -143,7 +143,7 @@ QuickLauncher::QuickLauncher(const TQString& configFile, Type type, int actions,
 
 QuickLauncher::~QuickLauncher()
 {
-    KGlobal::locale()->removeCatalogue("quicklauncher");
+    TDEGlobal::locale()->removeCatalogue("quicklauncher");
     setCustomMenu(0);
     delete m_popup;
     delete m_appletPopup;

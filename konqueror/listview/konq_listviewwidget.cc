@@ -276,7 +276,7 @@ void KonqBaseListViewWidget::readProtocolConfig( const KURL & url )
                TQString str;
 
                if ( tmpColumn->udsId == KIO::UDS_SIZE )
-                  str = KGlobal::locale()->formatNumber( 888888888, 0 ) + "  ";
+                  str = TDEGlobal::locale()->formatNumber( 888888888, 0 ) + "  ";
                else if ( tmpColumn->udsId == KIO::UDS_ACCESS )
                   str = "--Permissions--";
                else if ( tmpColumn->udsId == KIO::UDS_USER )
@@ -296,7 +296,7 @@ void KonqBaseListViewWidget::readProtocolConfig( const KURL & url )
                              (tmpColumn->type & TQVariant::DateTime)) )
                {
                   TQDateTime dt( TQDate( 2000, 10, 10 ), TQTime( 20, 20, 20 ) );
-                  str = KGlobal::locale()->formatDateTime( dt ) + "--";
+                  str = TDEGlobal::locale()->formatDateTime( dt ) + "--";
                }
                else
                   str = "it_is_the_default_width";
@@ -492,7 +492,7 @@ void KonqBaseListViewWidget::contentsMouseMoveEvent( TQMouseEvent *e )
          vp.setY( itemRect( item ).y() );
          TQRect rect( viewportToContents( vp ), TQSize(20, item->height()) );
          m_fileTip->setItem( item->item(), rect, item->pixmap( 0 ) );
-         m_fileTip->setPreview( KGlobalSettings::showFilePreview( item->item()->url() ) );
+         m_fileTip->setPreview( TDEGlobalSettings::showFilePreview( item->item()->url() ) );
          setShowToolTips( !m_pSettings->showFileTips() );
       }
       else
@@ -839,7 +839,7 @@ void KonqBaseListViewWidget::startDrag()
    if (( urls.count() > 1 ) || (pixmap0Invalid))
    {
       int iconSize = m_pBrowserView->m_pProps->iconSize();
-      iconSize = iconSize ? iconSize : KGlobal::iconLoader()->currentSize( KIcon::Small ); // Default = small
+      iconSize = iconSize ? iconSize : TDEGlobal::iconLoader()->currentSize( KIcon::Small ); // Default = small
       pixmap2 = DesktopIcon( "kmultiple", iconSize );
       if ( pixmap2.isNull() )
           kdWarning(1202) << "Could not find multiple pixmap" << endl;
@@ -977,7 +977,7 @@ void KonqBaseListViewWidget::slotReturnPressed( TQListViewItem *_item )
 
    KURL url = fileItem->url();
    url.cleanPath();
-   bool isIntoTrash =  url.isLocalFile() && url.path(1).startsWith(KGlobalSettings::trashPath());
+   bool isIntoTrash =  url.isLocalFile() && url.path(1).startsWith(TDEGlobalSettings::trashPath());
    if ( !isIntoTrash || (isIntoTrash && fileItem->isDir()) )
    {
          m_pBrowserView->lmbClicked( fileItem );
@@ -1010,7 +1010,7 @@ void KonqBaseListViewWidget::slotReturnPressed( TQListViewItem *_item )
 	   TQPixmap *pix = new TQPixmap(*(_item->pixmap(0)));
 
 	   // call the icon effect if enabled
-	   if (KGlobalSettings::showKonqIconActivationEffect() == true) {
+	   if (TDEGlobalSettings::showKonqIconActivationEffect() == true) {
 	       KIconEffect::visualActivate(viewport(), rect, pix);
 	   }
 

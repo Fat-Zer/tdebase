@@ -77,7 +77,7 @@ void KonqXMLGUIClient::addAction( KAction *act, const TQDomElement &menu )
 
 void KonqXMLGUIClient::addAction( const char *name, const TQDomElement &menu )
 {
-  static const TQString& tagAction = KGlobal::staticQString( "action" );
+  static const TQString& tagAction = TDEGlobal::staticQString( "action" );
 
   if (!kapp->authorizeKAction(name))
      return;
@@ -96,7 +96,7 @@ void KonqXMLGUIClient::addAction( const char *name, const TQDomElement &menu )
 
 void KonqXMLGUIClient::addSeparator( const TQDomElement &menu )
 {
-  static const TQString& tagSeparator = KGlobal::staticQString( "separator" );
+  static const TQString& tagSeparator = TDEGlobal::staticQString( "separator" );
 
   TQDomElement parent = menu;
   if ( parent.isNull() ) {
@@ -110,7 +110,7 @@ void KonqXMLGUIClient::addSeparator( const TQDomElement &menu )
 
 //void KonqXMLGUIClient::addWeakSeparator()
 //{
-//  static const TQString& tagWeakSeparator = KGlobal::staticQString( "weakSeparator" );
+//  static const TQString& tagWeakSeparator = TDEGlobal::staticQString( "weakSeparator" );
 //  m_menuElement.appendChild( m_doc.createElement( tagWeakSeparator ) );
 //}
 

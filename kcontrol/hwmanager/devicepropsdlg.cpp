@@ -312,7 +312,7 @@ DevicePropertiesDialog::DevicePropertiesDialog(TDEGenericDevice* device, TQWidge
 		mainGrid->addWidget(base, 0, 0);
 	}
 
-	TDEHardwareDevices *hwdevices = KGlobal::hardwareDevices();
+	TDEHardwareDevices *hwdevices = TDEGlobal::hardwareDevices();
 
 	connect(hwdevices, TQT_SIGNAL(hardwareRemoved(TDEGenericDevice*)), this, TQT_SLOT(processHardwareRemoved(TDEGenericDevice*)));
 	connect(hwdevices, TQT_SIGNAL(hardwareUpdated(TDEGenericDevice*)), this, TQT_SLOT(processHardwareUpdated(TDEGenericDevice*)));

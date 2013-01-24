@@ -24,7 +24,7 @@
 #include <tqobject.h>
 #include <tqptrlist.h>
 
-class KProcess;
+class TDEProcess;
 class KShellProcess;
 
 class TQString;

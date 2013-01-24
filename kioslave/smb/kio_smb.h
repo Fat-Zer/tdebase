@@ -87,7 +87,7 @@ extern "C"
 #define KIO_SMB                     7106
 
 using namespace KIO;
-class KProcess;
+class TDEProcess;
 
 //===========================================================================
 
@@ -262,8 +262,8 @@ public:
     virtual void special( const TQByteArray & );
 
 private slots:
-    void readOutput(KProcess *proc, char *buffer, int buflen);
-    void readStdErr(KProcess *proc, char *buffer, int buflen);
+    void readOutput(TDEProcess *proc, char *buffer, int buflen);
+    void readStdErr(TDEProcess *proc, char *buffer, int buflen);
 
 private:
     TQString mybuf, mystderr;

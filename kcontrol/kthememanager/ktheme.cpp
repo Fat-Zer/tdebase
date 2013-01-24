@@ -54,7 +54,7 @@ KTheme::KTheme( TQWidget *parent, const TQString & xmlFile )
     //kdDebug() << m_dom.toString( 2 ) << endl;
 
     setName( TQFileInfo( file ).baseName() );
-    m_kgd = KGlobal::dirs();
+    m_kgd = TDEGlobal::dirs();
 }
 
 KTheme::KTheme( TQWidget *parent, bool create )
@@ -72,7 +72,7 @@ KTheme::KTheme( TQWidget *parent, bool create )
         m_root.appendChild( m_general );
     }
 
-    m_kgd = KGlobal::dirs();
+    m_kgd = TDEGlobal::dirs();
 }
 
 KTheme::~KTheme()
@@ -125,7 +125,7 @@ TQString KTheme::createYourself( bool pack )
     // 1. General stuff set by methods setBlah()
 
     // 2. Background theme
-    KConfig * globalConf = KGlobal::config();
+    KConfig * globalConf = TDEGlobal::config();
 
     KConfig twinConf( "twinrc", true );
     twinConf.setGroup( "Desktops" );
@@ -448,7 +448,7 @@ void KTheme::apply()
     TQDomElement iconElem = m_dom.elementsByTagName( "icons" ).item( 0 ).toElement();
     if ( !iconElem.isNull() )
     {
-        KConfig * iconConf = KGlobal::config();
+        KConfig * iconConf = TDEGlobal::config();
         iconConf->setGroup( "Icons" );
         iconConf->writeEntry( "Theme", iconElem.attribute( "name", "crystalsvg" ), true, true );
 
@@ -526,7 +526,7 @@ void KTheme::apply()
     if ( !colorsElem.isNull() )
     {
         TQDomNodeList colorList = colorsElem.childNodes();
-        KConfig * colorConf = KGlobal::config();
+        KConfig * colorConf = TDEGlobal::config();
 
         TQString sCurrentScheme = locateLocal("data", "kdisplay/color-schemes/thememgr.kcsrc");
         KSimpleConfig *colorScheme = new KSimpleConfig( sCurrentScheme );
@@ -643,7 +643,7 @@ void KTheme::apply()
 
     if ( !widgetsElem.isNull() )
     {
-        KConfig * widgetConf = KGlobal::config();
+        KConfig * widgetConf = TDEGlobal::config();
         widgetConf->setGroup( "General" );
         widgetConf->writeEntry( "widgetStyle", widgetsElem.attribute( "name" ), true, true );
         widgetConf->sync();
@@ -654,7 +654,7 @@ void KTheme::apply()
     TQDomElement fontsElem = m_dom.elementsByTagName( "fonts" ).item( 0 ).toElement();
     if ( !fontsElem.isNull() )
     {
-        KConfig * fontsConf = KGlobal::config();
+        KConfig * fontsConf = TDEGlobal::config();
         KConfig * kde1xConf = new KSimpleConfig( TQDir::homeDirPath() + "/.kderc" );
         kde1xConf->setGroup( "General" );
 
@@ -688,7 +688,7 @@ void KTheme::apply()
 bool KTheme::remove( const TQString & name )
 {
     kdDebug() << "Going to remove theme: " << name << endl;
-    return KIO::NetAccess::del( KGlobal::dirs()->saveLocation( "themes", name + "/" ), 0L );
+    return KIO::NetAccess::del( TDEGlobal::dirs()->saveLocation( "themes", name + "/" ), 0L );
 }
 
 void KTheme::setProperty( const TQString & name, const TQString & value, TQDomElement parent )

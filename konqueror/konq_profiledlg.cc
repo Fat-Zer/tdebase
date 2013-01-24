@@ -42,7 +42,7 @@ KonqProfileMap KonqProfileDlg::readAllProfiles()
 {
   KonqProfileMap mapProfiles;
 
-  TQStringList profiles = KGlobal::dirs()->findAllResources( "data", "konqueror/profiles/*", false, true );
+  TQStringList profiles = TDEGlobal::dirs()->findAllResources( "data", "konqueror/profiles/*", false, true );
   TQStringList::ConstIterator pIt = profiles.begin();
   TQStringList::ConstIterator pEnd = profiles.end();
   for (; pIt != pEnd; ++pIt )

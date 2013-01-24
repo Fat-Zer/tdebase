@@ -31,7 +31,7 @@ License. See the file "COPYING" for the exact licensing terms.
 #include "rules.h"
 
 class TQTimer;
-class KProcess;
+class TDEProcess;
 class KStartupInfoData;
 
 namespace KWinInternal
@@ -561,8 +561,8 @@ class Client : public TQObject, public KDecorationDefines
         Window window_group;
         Layer in_layer;
         TQTimer* ping_timer;
-        KProcess* process_killer;
-        KProcess* process_resumer;
+        TDEProcess* process_killer;
+        TDEProcess* process_resumer;
         Time ping_timestamp;
         Time user_time;
         unsigned long allowed_actions;

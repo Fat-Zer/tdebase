@@ -41,11 +41,11 @@ void SystemDirNotify::init()
 		printf("[systemdirnotify] SystemDirNotify::init(mInited)");
 		return;
 	mInited = true;
-	KGlobal::dirs()->addResourceType("system_entries",
+	TDEGlobal::dirs()->addResourceType("system_entries",
 		KStandardDirs::kde_default("data") + "systemview");
 
 	TQStringList names_found;
-	TQStringList dirList = KGlobal::dirs()->resourceDirs("system_entries");
+	TQStringList dirList = TDEGlobal::dirs()->resourceDirs("system_entries");
 
 	TQStringList::ConstIterator dirpath = dirList.begin();
 	TQStringList::ConstIterator end = dirList.end();

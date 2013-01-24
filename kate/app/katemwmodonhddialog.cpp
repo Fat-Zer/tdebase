@@ -212,16 +212,16 @@ void KateMwModOnHdDialog::slotDiff()
   if ( KateDocManager::self()->documentInfo( doc )->modifiedOnDiscReason == 3 )
     return;
 
-  // Start a KProcess that creates a diff
+  // Start a TDEProcess that creates a diff
   KProcIO *p = new KProcIO();
-  p->setComm( KProcess::All );
+  p->setComm( TDEProcess::All );
   *p << "diff" << "-u" << "-" <<  doc->url().path();
-  connect( p, TQT_SIGNAL(processExited(KProcess*)), this, TQT_SLOT(slotPDone(KProcess*)) );
+  connect( p, TQT_SIGNAL(processExited(TDEProcess*)), this, TQT_SLOT(slotPDone(TDEProcess*)) );
   connect( p, TQT_SIGNAL(readReady(KProcIO*)), this, TQT_SLOT(slotPRead(KProcIO*)) );
 
   setCursor( WaitCursor );
 
-  p->start( KProcess::NotifyOnExit, true );
+  p->start( TDEProcess::NotifyOnExit, true );
 
   uint lastln =  doc->numLines();
   for ( uint l = 0; l <  lastln; l++ )
@@ -247,7 +247,7 @@ void KateMwModOnHdDialog::slotPRead( KProcIO *p)
     p->ackRead();
 }
 
-void KateMwModOnHdDialog::slotPDone( KProcess *p )
+void KateMwModOnHdDialog::slotPDone( TDEProcess *p )
 {
   setCursor( ArrowCursor );
   if( ! m_tmpfile )

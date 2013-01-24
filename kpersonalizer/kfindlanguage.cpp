@@ -29,7 +29,7 @@
 #include "kfindlanguage.h"
 
 KFindLanguage::KFindLanguage() {
-	KConfig *config = KGlobal::config();
+	KConfig *config = TDEGlobal::config();
 	config->setGroup("Locale");
 
 	m_oldlang = config->readEntry("Language");
@@ -69,7 +69,7 @@ KFindLanguage::KFindLanguage() {
 	}
 
 	// add all languages to the list
-	TQStringList alllang = KGlobal::dirs()->findAllResources("locale", "*/entry.desktop", false, true);
+	TQStringList alllang = TDEGlobal::dirs()->findAllResources("locale", "*/entry.desktop", false, true);
 	alllang.sort();
 	TQStringList langlist = prilang;
 	if (langlist.count() > 0)

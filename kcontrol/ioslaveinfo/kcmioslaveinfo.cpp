@@ -119,7 +119,7 @@ void KCMIOSlaveInfo::slotResult(KIO::Job *)
 void KCMIOSlaveInfo::showInfo(const TQString& protocol)
 {
    TQString file = TQString("kioslave/%1.docbook").arg( protocol );
-   file = KGlobal::locale()->langLookup( file );
+   file = TDEGlobal::locale()->langLookup( file );
    if (m_tfj)
    {
       m_tfj->kill();

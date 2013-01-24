@@ -33,7 +33,7 @@
 #include <klistview.h>
 #include <knuminput.h>
 
-class KGlobalAccel;
+class TDEGlobalAccel;
 class KKeyChooser;
 class KListView;
 class TQPushButton;
@@ -45,7 +45,7 @@ class ConfigDialog : public KDialogBase
     Q_OBJECT
 
 public:
-    ConfigDialog(KGlobalAccel *accel, bool isApplet );
+    ConfigDialog(TDEGlobalAccel *accel, bool isApplet );
     ~ConfigDialog();
 
     virtual void show();

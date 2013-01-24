@@ -111,7 +111,7 @@ SearchWidget::SearchWidget( SearchEngine *engine, TQWidget *parent )
 
 SearchWidget::~SearchWidget()
 {
-  writeConfig( KGlobal::config() );
+  writeConfig( TDEGlobal::config() );
 }
 
 
@@ -311,7 +311,7 @@ int ScopeTraverser::mNestingLevel = 2;
 
 void SearchWidget::searchIndexUpdated()
 {
-  KGlobal::config()->reparseConfiguration();
+  TDEGlobal::config()->reparseConfiguration();
   updateScopeList();
   update();
 }

@@ -61,11 +61,11 @@ KfFileLVI::KfFileLVI(KfindWindow* lv, const KFileItem &item, const TQString& mat
 {
   fileInfo = new TQFileInfo(item.url().path());
 
-  TQString size = KGlobal::locale()->formatNumber(item.size(), 0);
+  TQString size = TDEGlobal::locale()->formatNumber(item.size(), 0);
 
   TQDateTime dt;
   dt.setTime_t(item.time(KIO::UDS_MODIFICATION_TIME));
-  TQString date = KGlobal::locale()->formatDateTime(dt);
+  TQString date = TDEGlobal::locale()->formatDateTime(dt);
 
   int perm_index;
   if(fileInfo->isReadable())
@@ -372,7 +372,7 @@ void KfindWindow::resetColumns(bool init)
   {
     setColumnWidth(2, QMAX(fm.width(columnText(2)), fm.width("0000000")) + 15);
     TQString sampleDate =
-      KGlobal::locale()->formatDateTime(TQDateTime::currentDateTime());
+      TDEGlobal::locale()->formatDateTime(TQDateTime::currentDateTime());
     setColumnWidth(3, QMAX(fm.width(columnText(3)), fm.width(sampleDate)) + 15);
     setColumnWidth(4, QMAX(fm.width(columnText(4)), fm.width(i18n(perm[RO]))) + 15);
     setColumnWidth(5, QMAX(fm.width(columnText(5)), fm.width("some text")) + 15);

@@ -85,7 +85,7 @@
 #include "kastaskitem.h"
 #include "kasbarextension.h"
 
-#define Icon(x) KGlobal::iconLoader()->loadIcon( x, KIcon::NoGroup, KIcon::SizeMedium )
+#define Icon(x) TDEGlobal::iconLoader()->loadIcon( x, KIcon::NoGroup, KIcon::SizeMedium )
 
 static const int CHECK_ATTENTION_DELAY = 2000;
 
@@ -350,11 +350,11 @@ void KasTaskItem::sendToTray()
     TQString s;
     s.setNum( task_->window() );
 
-    KProcess proc;
+    TDEProcess proc;
     proc << "ksystraycmd";
     proc << "--wid" << s << "--hidden";
 
-    bool ok = proc.start( KProcess::DontCare );
+    bool ok = proc.start( TDEProcess::DontCare );
     if ( !ok ) {
 	kdWarning(1345) << "Unable to launch ksystraycmd" << endl;
 	KPassivePopup::message( i18n("Could Not Send to Tray"),

@@ -50,13 +50,13 @@ TQPopupMenu* Workspace::clientPopup()
         {
         popup = new TQPopupMenu;
         popup->setCheckable( TRUE );
-        popup->setFont(KGlobalSettings::menuFont());
+        popup->setFont(TDEGlobalSettings::menuFont());
         connect( popup, TQT_SIGNAL( aboutToShow() ), this, TQT_SLOT( clientPopupAboutToShow() ) );
         connect( popup, TQT_SIGNAL( activated(int) ), this, TQT_SLOT( clientPopupActivated(int) ) );
       
         advanced_popup = new TQPopupMenu( popup );
         advanced_popup->setCheckable( TRUE );
-        advanced_popup->setFont(KGlobalSettings::menuFont());
+        advanced_popup->setFont(TDEGlobalSettings::menuFont());
         connect( advanced_popup, TQT_SIGNAL( activated(int) ), this, TQT_SLOT( clientPopupActivated(int) ) );
         advanced_popup->insertItem( SmallIconSet( "up" ),
             i18n("Keep &Above Others")+'\t'+keys->shortcut("Window Above Other Windows").seq(0).toString(), Options::KeepAboveOp );
@@ -102,7 +102,7 @@ TQPopupMenu* Workspace::clientPopup()
 
         popup->insertSeparator();
 
-        if (!KGlobal::config()->isImmutable() && 
+        if (!TDEGlobal::config()->isImmutable() && 
             !kapp->authorizeControlModules(Workspace::configModules(true)).isEmpty())
             {
             popup->insertItem(SmallIconSet( "configure" ), i18n("Configur&e Window Behavior..."), this, TQT_SLOT( configureWM() ));
@@ -200,7 +200,7 @@ void Workspace::initDesktopPopup()
 
     desk_popup = new TQPopupMenu( popup );
     desk_popup->setCheckable( TRUE );
-    desk_popup->setFont(KGlobalSettings::menuFont());
+    desk_popup->setFont(TDEGlobalSettings::menuFont());
     connect( desk_popup, TQT_SIGNAL( activated(int) ),
              this, TQT_SLOT( slotSendToDesktop(int) ) );
     connect( desk_popup, TQT_SIGNAL( aboutToShow() ),
@@ -258,10 +258,10 @@ void Workspace::closeActivePopup()
  */
 void Workspace::initShortcuts()
     {
-    keys = new KGlobalAccel( this );
-    // a separate KGlobalAccel is needed for the shortcut for disabling global shortcuts,
+    keys = new TDEGlobalAccel( this );
+    // a separate TDEGlobalAccel is needed for the shortcut for disabling global shortcuts,
     // otherwise it would also disable itself
-    disable_shortcuts_keys = new KGlobalAccel( this );
+    disable_shortcuts_keys = new TDEGlobalAccel( this );
     disable_shortcuts_keys->disableBlocking( true );
 #define IN_KWIN
 #include "twinbindings.cpp"

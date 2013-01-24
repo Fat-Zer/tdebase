@@ -171,11 +171,11 @@ void TEPty::setWriteable(bool writeable)
 TEPty::TEPty()
 {
   m_bufferFull = false;
-  connect(this, TQT_SIGNAL(receivedStdout(KProcess *, char *, int )),
-	  this, TQT_SLOT(dataReceived(KProcess *,char *, int)));
-  connect(this, TQT_SIGNAL(processExited(KProcess *)),
+  connect(this, TQT_SIGNAL(receivedStdout(TDEProcess *, char *, int )),
+	  this, TQT_SLOT(dataReceived(TDEProcess *,char *, int)));
+  connect(this, TQT_SIGNAL(processExited(TDEProcess *)),
           this, TQT_SLOT(donePty()));
-  connect(this, TQT_SIGNAL(wroteStdin(KProcess *)),
+  connect(this, TQT_SIGNAL(wroteStdin(TDEProcess *)),
           this, TQT_SLOT(writeReady()));
 
   setUsePty(All, false); // utmp will be overridden later
@@ -237,7 +237,7 @@ void TEPty::send_bytes(const char* s, int len)
 }
 
 /*! indicates that a block of data is received */
-void TEPty::dataReceived(KProcess *,char *buf, int len)
+void TEPty::dataReceived(TDEProcess *,char *buf, int len)
 {
   emit block_in(buf,len);
 }
@@ -252,7 +252,7 @@ void TEPty::lockPty(bool lock)
 
 int TEPty::commSetupDoneC ()
 {
-    int ok = KProcess::commSetupDoneC ();
+    int ok = TDEProcess::commSetupDoneC ();
     if ( ok ) {
         emit forkedChild();
     }

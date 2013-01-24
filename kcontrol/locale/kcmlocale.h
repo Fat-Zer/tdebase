@@ -79,7 +79,7 @@ private slots:
   void slotInstallLanguage();
   void slotUninstallLanguage();
   void slotSelectLanguage();
-  void slotLanguageSelectorExited(KProcess *);
+  void slotLanguageSelectorExited(TDEProcess *);
 
 private:
   TQStringList languageList() const;

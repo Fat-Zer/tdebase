@@ -98,7 +98,7 @@ TQString KonqAboutPageFactory::launch()
   if ( res.isEmpty() )
     return res;
 
-  KIconLoader *iconloader = KGlobal::iconLoader();
+  KIconLoader *iconloader = TDEGlobal::iconLoader();
   int iconSize = iconloader->currentSize(KIcon::Desktop);
   TQString home_icon_path = iconloader->iconPath("kfm_home", KIcon::Desktop );
   TQString storage_icon_path = iconloader->iconPath("system", KIcon::Desktop );
@@ -190,7 +190,7 @@ TQString KonqAboutPageFactory::intro()
     if ( res.isEmpty() )
 	return res;
 
-    KIconLoader *iconloader = KGlobal::iconLoader();
+    KIconLoader *iconloader = TDEGlobal::iconLoader();
     TQString back_icon_path = TQApplication::reverseLayout()?iconloader->iconPath("forward", KIcon::Small ):iconloader->iconPath("back", KIcon::Small );
     TQString gohome_icon_path = iconloader->iconPath("gohome", KIcon::Small );
     TQString continue_icon_path = TQApplication::reverseLayout()?iconloader->iconPath("1leftarrow", KIcon::Small ):iconloader->iconPath("1rightarrow", KIcon::Small );
@@ -244,7 +244,7 @@ TQString KonqAboutPageFactory::specs()
     if ( s_specs_html )
         return *s_specs_html;
 
-    KIconLoader *iconloader = KGlobal::iconLoader();
+    KIconLoader *iconloader = TDEGlobal::iconLoader();
     TQString res = loadFile( locate( "data", "konqueror/about/specs.html" ));
     TQString continue_icon_path = TQApplication::reverseLayout()?iconloader->iconPath("1leftarrow", KIcon::Small ):iconloader->iconPath("1rightarrow", KIcon::Small );
     if ( res.isEmpty() )
@@ -330,7 +330,7 @@ TQString KonqAboutPageFactory::tips()
     if ( res.isEmpty() )
 	return res;
 
-    KIconLoader *iconloader = KGlobal::iconLoader();
+    KIconLoader *iconloader = TDEGlobal::iconLoader();
     TQString viewmag_icon_path =
 	    iconloader->iconPath("viewmag", KIcon::Small );
     TQString history_icon_path =
@@ -432,7 +432,7 @@ KonqAboutPage::KonqAboutPage( //KonqMainWindow *
     : KHTMLPart( parentWidget, widgetName, parent, name, BrowserViewGUI )
 {
     //m_mainWindow = mainWindow;
-    TQTextCodec* codec = KGlobal::locale()->codecForEncoding();
+    TQTextCodec* codec = TDEGlobal::locale()->codecForEncoding();
     if (codec)
 	setCharset(codec->name(), true);
     else

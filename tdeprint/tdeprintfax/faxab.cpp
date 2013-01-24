@@ -60,7 +60,7 @@ FaxAB::FaxAB(TQWidget *parent, const char *name)
 	l2->addWidget(m_ok, 0);
 	l2->addWidget(m_cancel, 0);
 
-	KConfig *conf = KGlobal::config();
+	KConfig *conf = TDEGlobal::config();
 	conf->setGroup( "General" );
 	TQSize defsize( 400, 200 );
 	resize( conf->readSizeEntry( "ABSize", &defsize ) );
@@ -71,7 +71,7 @@ FaxAB::FaxAB(TQWidget *parent, const char *name)
 
 FaxAB::~FaxAB()
 {
-	KConfig *conf = KGlobal::config();
+	KConfig *conf = TDEGlobal::config();
 	conf->setGroup( "General" );
 	conf->writeEntry( "ABSize", size() );
 }

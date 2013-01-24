@@ -60,8 +60,8 @@ public:
     static MANProtocol *self();
 
 private slots:
-  void slotGetStdOutput(KProcess*, char*, int);
-  void slotGetStdOutputUtf8(KProcess*, char*, int);
+  void slotGetStdOutput(TDEProcess*, char*, int);
+  void slotGetStdOutputUtf8(TDEProcess*, char*, int);
     
 private:
     void checkManPaths();

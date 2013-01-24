@@ -68,7 +68,7 @@ void ThemeListBox::mouseMoveEvent(TQMouseEvent *e)
 {
    if (((e->state() & Qt::LeftButton) != 0) && !mDragFile.isEmpty())
    {
-      int delay = KGlobalSettings::dndEventDelay();
+      int delay = TDEGlobalSettings::dndEventDelay();
       TQPoint newPos = e->globalPos();
       if(newPos.x() > mOldPos.x()+delay || newPos.x() < mOldPos.x()-delay ||
          newPos.y() > mOldPos.y()+delay || newPos.y() < mOldPos.y()-delay)
@@ -88,7 +88,7 @@ void ThemeListBox::mouseMoveEvent(TQMouseEvent *e)
 SplashInstaller::SplashInstaller (TQWidget *aParent, const char *aName, bool aInit)
   : TQWidget(aParent, aName), mGui(!aInit)
 {
-  KGlobal::dirs()->addResourceType("ksplashthemes", KStandardDirs::kde_default("data") + "ksplash/Themes");
+  TDEGlobal::dirs()->addResourceType("ksplashthemes", KStandardDirs::kde_default("data") + "ksplash/Themes");
 
   if (!mGui)
     return;
@@ -161,7 +161,7 @@ int SplashInstaller::addTheme(const TQString &path, const TQString &name)
 // Copy theme package into themes directory
 void SplashInstaller::addNewTheme(const KURL &srcURL)
 {
-  TQString dir = KGlobal::dirs()->saveLocation("ksplashthemes");
+  TQString dir = TDEGlobal::dirs()->saveLocation("ksplashthemes");
   KURL url;
   TQString filename = srcURL.fileName();
   int i = filename.findRev('.');
@@ -222,7 +222,7 @@ void SplashInstaller::readThemesList()
   mThemesList->clear();
 
   // Read local themes
-  TQStringList entryList = KGlobal::dirs()->resourceDirs("ksplashthemes");
+  TQStringList entryList = TDEGlobal::dirs()->resourceDirs("ksplashthemes");
   //kdDebug() << "readThemesList: " << entryList << endl;
   TQDir dir;
   TQStringList subdirs;
@@ -468,15 +468,15 @@ void SplashInstaller::slotTest()
     return;
   if( themeName == "Simple" )
   {
-    KProcess proc;
+    TDEProcess proc;
     proc << "ksplashsimple" << "--test";
-    if (!proc.start(KProcess::Block))
+    if (!proc.start(TDEProcess::Block))
       KMessageBox::error(this,i18n("Unable to start ksplashsimple."));
     return;
   }
-  KProcess proc;
+  TDEProcess proc;
   proc << "ksplash" << "--test" << "--theme" << themeName;
-  if (!proc.start(KProcess::Block))
+  if (!proc.start(TDEProcess::Block))
     KMessageBox::error(this,i18n("Unable to start ksplash."));
 }
 

@@ -255,7 +255,7 @@ void SwallowApplet::removeApplet( SwallowApp *app )
 ///////////////////////////////////////////////////////////////////
 
 
-static void parseCommand(KProcess *proc, TQString cmd)
+static void parseCommand(TDEProcess *proc, TQString cmd)
 {
     int pos;
 
@@ -282,15 +282,15 @@ SwallowApp::SwallowApp(const SwallowCommand *swc, TQWidget* parent,
 	    this, TQT_SLOT(windowAdded(WId)));
 
     if (!swc->cmdline.isEmpty()) {
-	KProcess *process = new KProcess;
+	TDEProcess *process = new TDEProcess;
 	parseCommand(process, swc->cmdline);
 
 	// move window out of sight
 	//	*process << "-geometry";
 	//	*process << TQString("32x32+%1+%2").arg(kapp->desktop()->width()).arg(kapp->desktop()->height());
 
-	connect(process, TQT_SIGNAL(processExited(KProcess*)),
-		this, TQT_SLOT(processExited(KProcess*)));
+	connect(process, TQT_SIGNAL(processExited(TDEProcess*)),
+		this, TQT_SLOT(processExited(TDEProcess*)));
 
 	process->start();
     }
@@ -340,7 +340,7 @@ void SwallowApp::windowAdded(WId win)
 }
 
 
-void SwallowApp::processExited(KProcess *)
+void SwallowApp::processExited(TDEProcess *)
 {
     SwallowApplet::removeApplet( this ); // also deletes this app
 }

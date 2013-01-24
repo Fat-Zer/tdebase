@@ -124,7 +124,7 @@ static TQString calculate(const TQString &exp)
    TQString result, cmd;
    const TQString bc = KStandardDirs::findExe("bc");
    if ( !bc.isEmpty() )
-      cmd = TQString("echo %1 | %2").arg(KProcess::quote(exp), KProcess::quote(bc));
+      cmd = TQString("echo %1 | %2").arg(TDEProcess::quote(exp), TDEProcess::quote(bc));
    else
       cmd = TQString("echo $((%1))").arg(exp);
    FILE *fs = popen(TQFile::encodeName(cmd).data(), "r");
@@ -160,7 +160,7 @@ int base_category_id[] = {ACTIONS_ID_BASE, APP_ID_BASE, BOOKMARKS_ID_BASE, NOTES
 
 static int used_size( TQLabel *label, int oldsize )
 {
-    TQSimpleRichText st( label->text(), KGlobalSettings::toolBarFont() );
+    TQSimpleRichText st( label->text(), TDEGlobalSettings::toolBarFont() );
     st.setWidth( oldsize );
     return QMAX( st.widthUsed(), oldsize );
 }
@@ -344,7 +344,7 @@ KMenu::KMenu()
 
     m_kcommand->setDuplicatesEnabled( false );
     m_kcommand->setLineEdit(new KLineEdit(m_kcommand, "m_kcommand-lineedit"));
-    m_kcommand->setCompletionMode( KGlobalSettings::CompletionAuto );
+    m_kcommand->setCompletionMode( TDEGlobalSettings::CompletionAuto );
     connect(m_kcommand, TQT_SIGNAL(cleared()), TQT_SLOT(clearedHistory()));
     connect(m_kcommand->lineEdit(), TQT_SIGNAL(returnPressed()), TQT_SLOT(searchAccept()));
     connect(m_kcommand->lineEdit(), TQT_SIGNAL(textChanged(const TQString &)), TQT_SLOT(searchChanged(const TQString &)));
@@ -1353,9 +1353,9 @@ void KMenu::insertStaticItems()
     m_systemView->insertItem( "folder_home", i18n( "Home Folder" ),
                               TQDir::homeDirPath(), "file://"+TQDir::homeDirPath(), nId++, index++ );
 
-    if ( KStandardDirs::exists( KGlobalSettings::documentPath() + "/" ) )
+    if ( KStandardDirs::exists( TDEGlobalSettings::documentPath() + "/" ) )
     {
-        TQString documentPath = KGlobalSettings::documentPath();
+        TQString documentPath = TDEGlobalSettings::documentPath();
         if ( documentPath.endsWith( "/" ) )
             documentPath = documentPath.left( documentPath.length() - 1 );
         if (documentPath!=TQDir::homeDirPath())
@@ -2083,7 +2083,7 @@ void KMenu::searchProgramList(TQString relPath)
                                 int pos = exe.find(' ');
                                 if (pos>0)
                                   exe=exe.left(pos);
-				m_programsInMenu+=KGlobal::dirs()->findExe(exe);
+				m_programsInMenu+=TDEGlobal::dirs()->findExe(exe);
 			}
 		}
 	}
@@ -2282,7 +2282,7 @@ void KMenu::doQuery (bool return_pressed)
                     "kcalc", TQString(), (++max_category_id [ACTIONS]), ACTIONS, "kcalc");
             int index = getHitMenuItemPosition (hit_item);
             m_searchResultsWidget->insertItem(iconForHitMenuItem(hit_item), hit_item->display_name,
-                    hit_item->display_info, KGlobal::dirs()->findExe("kcalc"), max_category_id [ACTIONS], index);
+                    hit_item->display_info, TDEGlobal::dirs()->findExe("kcalc"), max_category_id [ACTIONS], index);
         }
     }
 
@@ -2321,7 +2321,7 @@ void KMenu::doQuery (bool return_pressed)
         case KURIFilterData::SHELL:
         case KURIFilterData::EXECUTABLE:
         {
-            exe = KGlobal::dirs()->findExe(filterData.uri().url());
+            exe = TDEGlobal::dirs()->findExe(filterData.uri().url());
 #ifdef KDELIBS_SUSE
             bool gimp_hack = false;
             if (exe.endsWith("/bin/gimp")) {
@@ -2688,13 +2688,13 @@ void KMenu::slotStartURL(const TQString& u)
     else {
         addToHistory();
         if (u.startsWith("kaddressbook:/")) {
-            KProcess *proc = new KProcess;
+            TDEProcess *proc = new TDEProcess;
             *proc << "kaddressbook" << "--uid" << u.mid(14);
             proc->start();
             accept();
             return;
         } else if (u.startsWith("note:/")) {
-            KProcess *proc = new KProcess;
+            TDEProcess *proc = new TDEProcess;
             *proc << "tomboy";
             *proc << "--open-note" << u;
             if (!proc->start())
@@ -2892,7 +2892,7 @@ void KMenu::slotContextMenu(int selected)
     KURL src,dest;
     KIO::CopyJob *job;
 
-    KProcess *proc;
+    TDEProcess *proc;
 
     TQStringList favs = KickerSettings::favorites();
 
@@ -2900,15 +2900,15 @@ void KMenu::slotContextMenu(int selected)
         case AddItemToDesktop:
             accept();
 	    if (m_popupService) {
-	        src.setPath( KGlobal::dirs()->findResource( "apps", m_popupService->desktopEntryPath() ) );
-	        dest.setPath( KGlobalSettings::desktopPath() );
+	        src.setPath( TDEGlobal::dirs()->findResource( "apps", m_popupService->desktopEntryPath() ) );
+	        dest.setPath( TDEGlobalSettings::desktopPath() );
 	        dest.setFileName( src.fileName() );
 
                 job = KIO::copyAs( src, dest );
                 job->setDefaultPermissions( true );
  	    }
             else {
-		KDesktopFile* df = new KDesktopFile( newDesktopFile(KURL(m_popupPath.path), KGlobalSettings::desktopPath() ) );
+		KDesktopFile* df = new KDesktopFile( newDesktopFile(KURL(m_popupPath.path), TDEGlobalSettings::desktopPath() ) );
 		df->writeEntry("GenericName", m_popupPath.description);
 		df->writeEntry( "Icon", m_popupPath.icon );
 		df->writePathEntry( "URL", m_popupPath.path );
@@ -2933,7 +2933,7 @@ void KMenu::slotContextMenu(int selected)
 	case EditItem:
         case EditMenu:
 	    accept();
-            proc = new KProcess(TQT_TQOBJECT(this));
+            proc = new TDEProcess(TQT_TQOBJECT(this));
             *proc << KStandardDirs::findExe(TQString::fromLatin1("kmenuedit"));
             *proc << "/"+m_popupPath.menuPath.section('/',-200,-2) << m_popupPath.menuPath.section('/', -1);
             proc->start();
@@ -2951,7 +2951,7 @@ void KMenu::slotContextMenu(int selected)
 
 	case AddMenuToDesktop: {
 	    accept();
-	    KDesktopFile *df = new KDesktopFile( newDesktopFile(KURL("programs:/"+m_popupPath.menuPath),KGlobalSettings::desktopPath()));
+	    KDesktopFile *df = new KDesktopFile( newDesktopFile(KURL("programs:/"+m_popupPath.menuPath),TDEGlobalSettings::desktopPath()));
             df->writeEntry( "Icon", m_popupPath.icon );
             df->writePathEntry( "URL", "programs:/"+m_popupPath.menuPath );
 	    df->writeEntry( "Name", m_popupPath.title );

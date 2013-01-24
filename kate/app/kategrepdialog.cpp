@@ -69,7 +69,7 @@ GrepTool::GrepTool(TQWidget *parent, const char *name)
   : TQWidget(parent, name/*, false*/), m_fixFocus(true), childproc(0)
 {
   setCaption(i18n("Find in Files"));
-  config = KGlobal::config();
+  config = TDEGlobal::config();
   config->setGroup("GrepTool");
   lastSearchItems = config->readListEntry("LastSearchItems");
   lastSearchPaths = config->readListEntry("LastSearchPaths");
@@ -351,7 +351,7 @@ void GrepTool::slotSearch()
   TQString pattern = leTemplate->text();
   pattern.replace( "%s", s );
 
-  childproc = new KProcess();
+  childproc = new TDEProcess();
   childproc->setWorkingDirectory( m_workingDir );
   *childproc << "find" << ".";
   if (!cbRecursive->isChecked())
@@ -377,18 +377,18 @@ void GrepTool::slotSearch()
   *childproc << "/dev/null"; //trick to have grep always display the filename
   *childproc << ";";
 
-  connect( childproc, TQT_SIGNAL(processExited(KProcess *)),
+  connect( childproc, TQT_SIGNAL(processExited(TDEProcess *)),
            TQT_SLOT(childExited()) );
-  connect( childproc, TQT_SIGNAL(receivedStdout(KProcess *, char *, int)),
-           TQT_SLOT(receivedOutput(KProcess *, char *, int)) );
-  connect( childproc, TQT_SIGNAL(receivedStderr(KProcess *, char *, int)),
-           TQT_SLOT(receivedErrOutput(KProcess *, char *, int)) );
+  connect( childproc, TQT_SIGNAL(receivedStdout(TDEProcess *, char *, int)),
+           TQT_SLOT(receivedOutput(TDEProcess *, char *, int)) );
+  connect( childproc, TQT_SIGNAL(receivedStderr(TDEProcess *, char *, int)),
+           TQT_SLOT(receivedErrOutput(TDEProcess *, char *, int)) );
 
   // actually it should be checked whether the process was started successfully
   lbResult->setCursor( TQCursor(Qt::WaitCursor) );
   btnClear->setEnabled( false );
   btnSearch->setGuiItem( KGuiItem(i18n("Cancel"), "button_cancel"));
-  childproc->start(KProcess::NotifyOnExit, KProcess::AllOutput);
+  childproc->start(TDEProcess::NotifyOnExit, TDEProcess::AllOutput);
 }
 
 void GrepTool::slotSearchFor(const TQString &pattern)
@@ -483,13 +483,13 @@ void GrepTool::childExited()
     finish();
 }
 
-void GrepTool::receivedOutput(KProcess */*proc*/, char *buffer, int buflen)
+void GrepTool::receivedOutput(TDEProcess */*proc*/, char *buffer, int buflen)
 {
   buf += TQCString(buffer, buflen+1);
   processOutput();
 }
 
-void GrepTool::receivedErrOutput(KProcess */*proc*/, char *buffer, int buflen)
+void GrepTool::receivedErrOutput(TDEProcess */*proc*/, char *buffer, int buflen)
 {
   errbuf += TQCString( buffer, buflen + 1 );
 }

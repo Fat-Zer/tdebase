@@ -82,10 +82,10 @@ KLocaleConfigNumber::~KLocaleConfigNumber()
 void KLocaleConfigNumber::save()
 {
   // temperary use of our locale as the global locale
-  KLocale *lsave = KGlobal::_locale;
-  KGlobal::_locale = m_locale;
+  KLocale *lsave = TDEGlobal::_locale;
+  TDEGlobal::_locale = m_locale;
 
-  KConfig *config = KGlobal::config();
+  KConfig *config = TDEGlobal::config();
   KConfigGroupSaver saver(config, "Locale");
 
   KSimpleConfig ent(locate("locale",
@@ -122,7 +122,7 @@ void KLocaleConfigNumber::save()
     config->writeEntry("NegativeSign", m_locale->negativeSign(), true, true);
 
   // restore the old global locale
-  KGlobal::_locale = lsave;
+  TDEGlobal::_locale = lsave;
 }
 
 void KLocaleConfigNumber::slotLocaleChanged()

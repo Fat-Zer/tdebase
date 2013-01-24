@@ -289,7 +289,7 @@ static int startApp()
        // root uses TDEROOTHOME
        
        // Translate the TDEHOME of this user to the new user.
-       TQString kdeHome = KGlobal::dirs()->relativeLocation("home", KGlobal::dirs()->localtdedir());
+       TQString kdeHome = TDEGlobal::dirs()->relativeLocation("home", TDEGlobal::dirs()->localtdedir());
        if (kdeHome[0] != '/')
           kdeHome.prepend("~/"); 
        else
@@ -332,7 +332,7 @@ static int startApp()
     }
 
     // Read configuration
-    KConfig *config = KGlobal::config();
+    KConfig *config = TDEGlobal::config();
     config->setGroup("Passwords");
     int timeout = config->readNumEntry("Timeout", defTimeout);
 

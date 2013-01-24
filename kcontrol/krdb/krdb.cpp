@@ -210,7 +210,7 @@ static void applyQtSettings( KConfig& kglobals, TQSettings& settings )
   kdeAdded.clear();
 
   //Merge in KDE ones..
-  plugins = KGlobal::dirs()->resourceDirs( "qtplugins" );
+  plugins = TDEGlobal::dirs()->resourceDirs( "qtplugins" );
 
   for (TQStringList::ConstIterator it = plugins.begin(); it != plugins.end(); ++it)
   {
@@ -257,7 +257,7 @@ static void applyQtSettings( KConfig& kglobals, TQSettings& settings )
     settings.writeEntry("/qt/style", style);
 
   /* export font settings */
-  settings.writeEntry("/qt/font", KGlobalSettings::generalFont().toString());
+  settings.writeEntry("/qt/font", TDEGlobalSettings::generalFont().toString());
 
   /* ##### looks like kcmfonts skips this, so we don't do this here */
 /*bool usexft = kglobals.readBoolEntry("AntiAliasing", false);
@@ -444,9 +444,9 @@ void runRdb( uint flags )
   // Export colors to non-(KDE/Qt) apps (e.g. Motif, GTK+ apps)
   if (exportColors)
   {
-    KGlobal::dirs()->addResourceType("appdefaults", KStandardDirs::kde_default("data") + "kdisplay/app-defaults/");
+    TDEGlobal::dirs()->addResourceType("appdefaults", KStandardDirs::kde_default("data") + "kdisplay/app-defaults/");
     TQColorGroup cg = newPal.active();
-    KGlobal::locale()->insertCatalogue("krdb");
+    TDEGlobal::locale()->insertCatalogue("krdb");
     createGtkrc( true, cg, 1 );
     createGtkrc( true, cg, 2 );
 
@@ -454,23 +454,23 @@ void runRdb( uint flags )
     TQColor backCol = cg.background();
     addColorDef(preproc, "FOREGROUND"         , cg.foreground());
     addColorDef(preproc, "BACKGROUND"         , backCol);
-    addColorDef(preproc, "HIGHLIGHT"          , backCol.light(100+(2*KGlobalSettings::contrast()+4)*16/1));
-    addColorDef(preproc, "LOWLIGHT"           , backCol.dark(100+(2*KGlobalSettings::contrast()+4)*10));
+    addColorDef(preproc, "HIGHLIGHT"          , backCol.light(100+(2*TDEGlobalSettings::contrast()+4)*16/1));
+    addColorDef(preproc, "LOWLIGHT"           , backCol.dark(100+(2*TDEGlobalSettings::contrast()+4)*10));
     addColorDef(preproc, "SELECT_BACKGROUND"  , cg.highlight());
     addColorDef(preproc, "SELECT_FOREGROUND"  , cg.highlightedText());
     addColorDef(preproc, "WINDOW_BACKGROUND"  , cg.base());
     addColorDef(preproc, "WINDOW_FOREGROUND"  , cg.foreground());
-    addColorDef(preproc, "INACTIVE_BACKGROUND", KGlobalSettings::inactiveTitleColor());
-    addColorDef(preproc, "INACTIVE_FOREGROUND", KGlobalSettings::inactiveTitleColor());
-    addColorDef(preproc, "ACTIVE_BACKGROUND"  , KGlobalSettings::activeTitleColor());
-    addColorDef(preproc, "ACTIVE_FOREGROUND"  , KGlobalSettings::activeTitleColor());
+    addColorDef(preproc, "INACTIVE_BACKGROUND", TDEGlobalSettings::inactiveTitleColor());
+    addColorDef(preproc, "INACTIVE_FOREGROUND", TDEGlobalSettings::inactiveTitleColor());
+    addColorDef(preproc, "ACTIVE_BACKGROUND"  , TDEGlobalSettings::activeTitleColor());
+    addColorDef(preproc, "ACTIVE_FOREGROUND"  , TDEGlobalSettings::activeTitleColor());
     //---------------------------------------------------------------
 
     tmp.writeBlock( preproc.latin1(), preproc.length() );
 
     TQStringList list;
 
-    TQStringList adPaths = KGlobal::dirs()->findDirs("appdefaults", "");
+    TQStringList adPaths = TDEGlobal::dirs()->findDirs("appdefaults", "");
     for (TQStringList::ConstIterator it = adPaths.begin(); it != adPaths.end(); ++it) {
       TQDir dSys( *it );
 
@@ -556,13 +556,13 @@ void runRdb( uint flags )
 
   tmpFile.close();
 
-  KProcess proc;
+  TDEProcess proc;
 #ifndef NDEBUG
   proc << "xrdb" << "-merge" << "-nocpp" << tmpFile.name();
 #else
   proc << "xrdb" << "-quiet" << "-merge" << "-nocpp" << tmpFile.name();
 #endif
-  proc.start( KProcess::Block, KProcess::Stdin );
+  proc.start( TDEProcess::Block, TDEProcess::Stdin );
 
   tmpFile.unlink();
 

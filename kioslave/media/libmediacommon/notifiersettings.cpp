@@ -361,7 +361,7 @@ bool NotifierSettings::shouldLoadActions( KDesktopFile &desktop, const TQString 
 TQValueList<NotifierServiceAction*> NotifierSettings::listServices( const TQString &mimetype ) const
 {
 	TQValueList<NotifierServiceAction*> services;
-	TQStringList dirs = KGlobal::dirs()->findDirs("data", "konqueror/servicemenus/");
+	TQStringList dirs = TDEGlobal::dirs()->findDirs("data", "konqueror/servicemenus/");
 	
 	TQStringList::ConstIterator dir_it = dirs.begin();
 	TQStringList::ConstIterator dir_end = dirs.end();

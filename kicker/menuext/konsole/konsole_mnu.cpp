@@ -54,7 +54,7 @@ KonsoleMenu::KonsoleMenu(TQWidget *parent, const char *name, const TQStringList&
 
 KonsoleMenu::~KonsoleMenu()
 {
-    KGlobal::locale()->removeCatalogue("libkickermenu_konsole");
+    TDEGlobal::locale()->removeCatalogue("libkickermenu_konsole");
 }
 
 static void insertItemSorted(KPopupMenu *menu,
@@ -96,7 +96,7 @@ void KonsoleMenu::initialize()
 
     setInitialized(true);
 
-    TQStringList list = KGlobal::dirs()->findAllResources("data",
+    TQStringList list = TDEGlobal::dirs()->findAllResources("data",
                                                          "konsole/*.desktop",
                                                           false, true);
 
@@ -126,7 +126,7 @@ void KonsoleMenu::initialize()
 
         exec = KRun::binaryName(exec, false);
         exec = KShell::tildeExpand(exec);
-        TQString pexec = KGlobal::dirs()->findExe(exec);
+        TQString pexec = TDEGlobal::dirs()->findExe(exec);
         if (text.isEmpty() ||
             conf.readEntry("Type") != "KonsoleApplication" ||
             (!exec.isEmpty() && pexec.isEmpty()))
@@ -197,7 +197,7 @@ void KonsoleMenu::initialize()
 
     delete m_profileMenu;
     m_profileMenu = new KPopupMenu(this);
-    TQStringList profiles = KGlobal::dirs()->findAllResources("data",
+    TQStringList profiles = TDEGlobal::dirs()->findAllResources("data",
                                                            "konsole/profiles/*",
                                                            false, true );
     m_profiles.resize(profiles.count());

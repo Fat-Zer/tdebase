@@ -53,9 +53,9 @@ class KQuery : public TQObject
   void slotListEntries(KIO::Job *, const KIO::UDSEntryList &);
   void slotResult(KIO::Job *);
   void slotCanceled(KIO::Job *);
-  void slotreceivedSdtout(KProcess*,char*,int);
-  void slotreceivedSdterr(KProcess*,char*,int);
-  void slotendProcessLocate(KProcess*);
+  void slotreceivedSdtout(TDEProcess*,char*,int);
+  void slotreceivedSdterr(TDEProcess*,char*,int);
+  void slotendProcessLocate(TDEProcess*);
 
  signals:
   void addFile(const KFileItem *filename, const TQString& matchingLine);
@@ -86,7 +86,7 @@ class KQuery : public TQObject
   char* bufferLocate;
   int bufferLocateLength;
   TQStringList locateList;
-  KProcess *processLocate;
+  TDEProcess *processLocate;
   TQPtrList<TQRegExp> m_regexps;// regexps for file name
 //  TQValueList<bool> m_regexpsContainsGlobs;  // what should this be good for ? Alex
   KIO::ListJob *job;

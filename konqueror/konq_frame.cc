@@ -497,7 +497,7 @@ KonqFrameContainer::KonqFrameContainer( Orientation o,
   m_pFirstChild = 0L;
   m_pSecondChild = 0L;
   m_pActiveChild = 0L;
-  setOpaqueResize( KGlobalSettings::opaqueResize() );
+  setOpaqueResize( TDEGlobalSettings::opaqueResize() );
 }
 
 KonqFrameContainer::~KonqFrameContainer()

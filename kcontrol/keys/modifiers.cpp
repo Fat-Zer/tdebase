@@ -61,7 +61,7 @@ ModifiersModule::ModifiersModule( TQWidget *parent, const char *name )
 
 void ModifiersModule::load( bool useDefaults )
 {
-   KConfig *c = KGlobal::config();
+   KConfig *c = TDEGlobal::config();
 
    c->setReadDefaults( useDefaults );
 
@@ -82,35 +82,35 @@ void ModifiersModule::save()
 {
 	kdDebug(125) << "ModifiersModule::save()" << endl;
 
-	KConfigGroupSaver cgs( KGlobal::config(), "Keyboard" );
+	KConfigGroupSaver cgs( TDEGlobal::config(), "Keyboard" );
 
 	if( m_plblCtrl->text() != "Ctrl" )
-		KGlobal::config()->writeEntry( "Label Ctrl", m_plblCtrl->text(), true, true );
+		TDEGlobal::config()->writeEntry( "Label Ctrl", m_plblCtrl->text(), true, true );
 	else
-		KGlobal::config()->deleteEntry( "Label Ctrl", false, true );
+		TDEGlobal::config()->deleteEntry( "Label Ctrl", false, true );
 
 	if( m_plblAlt->text() != "Alt" )
-		KGlobal::config()->writeEntry( "Label Alt", m_plblAlt->text(), true, true );
+		TDEGlobal::config()->writeEntry( "Label Alt", m_plblAlt->text(), true, true );
 	else
-		KGlobal::config()->deleteEntry( "Label Alt", false, true );
+		TDEGlobal::config()->deleteEntry( "Label Alt", false, true );
 
 	if( m_plblWin->text() != "Win" )
-		KGlobal::config()->writeEntry( "Label Win", m_plblWin->text(), true, true );
+		TDEGlobal::config()->writeEntry( "Label Win", m_plblWin->text(), true, true );
 	else
-		KGlobal::config()->deleteEntry( "Label Win", false, true );
+		TDEGlobal::config()->deleteEntry( "Label Win", false, true );
 
 	if( m_pchkMacKeyboard->isChecked() )
-		KGlobal::config()->writeEntry( "Mac Keyboard", true, true, true );
+		TDEGlobal::config()->writeEntry( "Mac Keyboard", true, true, true );
 	else
-		KGlobal::config()->deleteEntry( "Mac Keyboard", false, true );
+		TDEGlobal::config()->deleteEntry( "Mac Keyboard", false, true );
 
 	bool bMacSwap = m_pchkMacKeyboard->isChecked() && m_pchkMacSwap->isChecked();
 	if( bMacSwap )
-		KGlobal::config()->writeEntry( "Mac Modifier Swap", true, true, true );
+		TDEGlobal::config()->writeEntry( "Mac Modifier Swap", true, true, true );
 	else
-		KGlobal::config()->deleteEntry( "Mac Modifier Swap", false, true );
+		TDEGlobal::config()->deleteEntry( "Mac Modifier Swap", false, true );
 
-	KGlobal::config()->sync();
+	TDEGlobal::config()->sync();
 
 	if( m_bMacSwapOrig != bMacSwap ) {
 		if( bMacSwap )

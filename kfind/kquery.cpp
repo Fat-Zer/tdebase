@@ -20,10 +20,10 @@ KQuery::KQuery(TQObject *parent, const char * name)
 {
   m_regexps.setAutoDelete(true);
   m_fileItems.setAutoDelete(true);
-  processLocate = new KProcess(this);
-  connect(processLocate,TQT_SIGNAL(receivedStdout(KProcess*, char*, int)),this,TQT_SLOT(slotreceivedSdtout(KProcess*,char*,int)));
-  connect(processLocate,TQT_SIGNAL(receivedStderr(KProcess*, char*, int)),this,TQT_SLOT(slotreceivedSdterr(KProcess*,char*,int)));
-  connect(processLocate,TQT_SIGNAL(processExited(KProcess*)),this,TQT_SLOT(slotendProcessLocate(KProcess*)));
+  processLocate = new TDEProcess(this);
+  connect(processLocate,TQT_SIGNAL(receivedStdout(TDEProcess*, char*, int)),this,TQT_SLOT(slotreceivedSdtout(TDEProcess*,char*,int)));
+  connect(processLocate,TQT_SIGNAL(receivedStderr(TDEProcess*, char*, int)),this,TQT_SLOT(slotreceivedSdterr(TDEProcess*,char*,int)));
+  connect(processLocate,TQT_SIGNAL(processExited(TDEProcess*)),this,TQT_SLOT(slotendProcessLocate(TDEProcess*)));
 
   // Files with these mime types can be ignored, even if
   // findFormatByFileContent() in some cases may claim that
@@ -78,7 +78,7 @@ void KQuery::start()
     *processLocate << m_url.path(1).latin1();
     bufferLocate=NULL;
     bufferLocateLength=0;
-    processLocate->start(KProcess::NotifyOnExit,KProcess::AllOutput);
+    processLocate->start(TDEProcess::NotifyOnExit,TDEProcess::AllOutput);
     return;
   }
 
@@ -478,12 +478,12 @@ void KQuery::setUseFileIndex(bool useLocate)
   m_useLocate=useLocate;
 }
 
-void KQuery::slotreceivedSdterr(KProcess* ,char* str,int)
+void KQuery::slotreceivedSdterr(TDEProcess* ,char* str,int)
 {
   KMessageBox::error(NULL, TQString(str), i18n("Error while using locate"));
 }
 
-void KQuery::slotreceivedSdtout(KProcess*,char* str,int l)
+void KQuery::slotreceivedSdtout(TDEProcess*,char* str,int l)
 {
   int i;
 
@@ -494,7 +494,7 @@ void KQuery::slotreceivedSdtout(KProcess*,char* str,int l)
     bufferLocate[bufferLocateLength-l+i]=str[i];
 }
 
-void KQuery::slotendProcessLocate(KProcess*)
+void KQuery::slotendProcessLocate(TDEProcess*)
 {
   TQString qstr;
   TQStringList strlist;

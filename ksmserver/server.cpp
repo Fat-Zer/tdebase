@@ -131,11 +131,11 @@ void KSMServer::executeCommand( const TQStringList& command )
 {
     if ( command.isEmpty() )
         return;
-    KProcess proc;
+    TDEProcess proc;
     for ( TQStringList::ConstIterator it = command.begin();
           it != command.end(); ++it )
         proc << (*it).latin1();
-    proc.start( KProcess::Block );
+    proc.start( TDEProcess::Block );
 }
 
 IceAuthDataEntry *authDataEntries = 0;
@@ -432,16 +432,16 @@ Status SetAuthentication (int count, IceListenObj *listenObjs,
     addAuthFile.close();
     remAuthFile->close();
 
-    TQString iceAuth = KGlobal::dirs()->findExe("iceauth");
+    TQString iceAuth = TDEGlobal::dirs()->findExe("iceauth");
     if (iceAuth.isEmpty())
     {
         tqWarning("[KSMServer] could not find iceauth");
         return 0;
     }
 
-    KProcess p;
+    TDEProcess p;
     p << iceAuth << "source" << addAuthFile.name();
-    p.start(KProcess::Block);
+    p.start(TDEProcess::Block);
 
     return (1);
 }
@@ -462,16 +462,16 @@ void FreeAuthenticationData(int count, IceAuthDataEntry *authDataEntries)
 
     free (authDataEntries);
 
-    TQString iceAuth = KGlobal::dirs()->findExe("iceauth");
+    TQString iceAuth = TDEGlobal::dirs()->findExe("iceauth");
     if (iceAuth.isEmpty())
     {
         tqWarning("[KSMServer] could not find iceauth");
         return;
     }
     
-    KProcess p;
+    TDEProcess p;
     p << iceAuth << "source" << remAuthFile->name();
-    p.start(KProcess::Block);
+    p.start(TDEProcess::Block);
 
     delete remAuthFile;
     remAuthFile = 0;
@@ -592,7 +592,7 @@ KSMServer::KSMServer( const TQString& windowManager, const TQString& windowManag
     dialogActive = false;
     saveSession = false;
     wmPhase1WaitingCount = 0;
-    KConfig* config = KGlobal::config();
+    KConfig* config = TDEGlobal::config();
     config->setGroup("General" );
     clientInteracting = 0;
     xonCommand = config->readEntry( "xonCommand", "xon" );
@@ -807,7 +807,7 @@ TQString KSMServer::currentSession()
 
 void KSMServer::discardSession()
 {
-    KConfig* config = KGlobal::config();
+    KConfig* config = TDEGlobal::config();
     config->setGroup( sessionGroup );
     int count =  config->readNumEntry( "count", 0 );
     for ( KSMClient* c = clients.first(); c; c = clients.next() ) {
@@ -828,7 +828,7 @@ void KSMServer::discardSession()
 
 void KSMServer::storeSession()
 {
-    KConfig* config = KGlobal::config();
+    KConfig* config = TDEGlobal::config();
     config->reparseConfiguration(); // config may have changed in the KControl module
     config->setGroup("General" );
     excludeApps = TQStringList::split( TQRegExp( "[,:]" ), config->readEntry( "excludeApps" ).lower()); 
@@ -895,7 +895,7 @@ void KSMServer::storeSession()
 TQStringList KSMServer::sessionList()
 {
     TQStringList sessions = "default";
-    KConfig* config = KGlobal::config();
+    KConfig* config = TDEGlobal::config();
     TQStringList groups = config->groupList();
     for ( TQStringList::ConstIterator it = groups.begin(); it != groups.end(); it++ )
         if ( (*it).startsWith( "Session: " ) )

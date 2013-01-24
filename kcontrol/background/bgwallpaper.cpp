@@ -149,7 +149,7 @@ void BGMultiWallpaperDialog::slotAdd()
     mimeTypes += "image/svg+xml";
 #endif
 
-    KFileDialog fileDialog(KGlobal::dirs()->findDirs("wallpaper", "").first(),
+    KFileDialog fileDialog(TDEGlobal::dirs()->findDirs("wallpaper", "").first(),
 			   mimeTypes.join( " " ), this,
 			   0L, true);
 

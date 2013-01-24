@@ -76,7 +76,7 @@ KLocaleConfigOther::~KLocaleConfigOther()
 
 void KLocaleConfigOther::save()
 {
-  KConfig *config = KGlobal::config();
+  KConfig *config = TDEGlobal::config();
   KConfigGroupSaver saver(config, "Locale");
 
   KSimpleConfig ent(locate("locale",

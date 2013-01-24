@@ -86,7 +86,7 @@ protected:
     virtual void resizeEvent(TQResizeEvent *);
 
 private slots:
-    void hackExited(KProcess *);
+    void hackExited(TDEProcess *);
     void signalPipeSignal();
     bool startLock();
     void suspend();
@@ -136,7 +136,7 @@ private:
     int         mLockGrace;
     int         mPriority;
     bool        mBusy;
-    KProcess    mHackProc;
+    TDEProcess    mHackProc;
     int         mRootWidth;
     int         mRootHeight;
     TQString     mSaverExec;
@@ -168,7 +168,7 @@ private:
 
     TQTimer      *hackResumeTimer;
 
-    KProcess*   mVkbdProcess;
+    TDEProcess*   mVkbdProcess;
     KWinModule* mKWinModule;
     struct VkbdWindow
         {

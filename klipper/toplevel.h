@@ -59,7 +59,7 @@ public:
     ~KlipperWidget();
 
     virtual void adjustSize();
-    KGlobalAccel *globalKeys;
+    TDEGlobalAccel *globalKeys;
 
     /**
      * Get clipboard history (the "document")

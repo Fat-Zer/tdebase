@@ -91,7 +91,7 @@ void Workspace::readProperties( KConfig *cfg )
     /* If workDir is not specified in the config file, it's
      * probably the first time the user has started KSysGuard. We
      * then "restore" a special default configuration. */
-    KStandardDirs* kstd = KGlobal::dirs();
+    KStandardDirs* kstd = TDEGlobal::dirs();
     kstd->addResourceType( "data", "share/apps/ksysguard" );
 
     mWorkDir = kstd->saveLocation( "data", "ksysguard" );
@@ -440,7 +440,7 @@ void Workspace::applyStyle()
 
 void Workspace::showProcesses()
 {
-  KStandardDirs* kstd = KGlobal::dirs();
+  KStandardDirs* kstd = TDEGlobal::dirs();
   kstd->addResourceType( "data", "share/apps/ksysguard" );
 
   TQString file = kstd->findResource( "data", "ProcessTable.sgrd" );

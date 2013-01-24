@@ -256,7 +256,7 @@ extern "C" int KDE_EXPORT kdemain(int argc, char* argv[])
 #endif
 
   TQString dataPathBase = KStandardDirs::kde_default("data").append("konsole/");
-  KGlobal::dirs()->addResourceType("wallpaper", dataPathBase + "wallpapers");
+  TDEGlobal::dirs()->addResourceType("wallpaper", dataPathBase + "wallpapers");
 
   KImageIO::registerFormats(); // add io for additional image formats
   //2.1 secs
@@ -316,7 +316,7 @@ extern "C" int KDE_EXPORT kdemain(int argc, char* argv[])
     type = args->getOption("type");
   }
   if(args->isSet("types")) {
-    TQStringList types = KGlobal::dirs()->findAllResources("appdata", "*.desktop", false, true);
+    TQStringList types = TDEGlobal::dirs()->findAllResources("appdata", "*.desktop", false, true);
     types.sort();
     for(TQStringList::ConstIterator it = types.begin();
         it != types.end(); ++it)
@@ -343,7 +343,7 @@ extern "C" int KDE_EXPORT kdemain(int argc, char* argv[])
   }
 
   if(args->isSet("keytabs")) {
-    TQStringList lst = KGlobal::dirs()->findAllResources("data", "konsole/*.keytab");
+    TQStringList lst = TDEGlobal::dirs()->findAllResources("data", "konsole/*.keytab");
 
     printf("default\n");   // 'buildin' keytab
     lst.sort();
@@ -378,7 +378,7 @@ extern "C" int KDE_EXPORT kdemain(int argc, char* argv[])
   }
   if (args->isSet("profiles"))
   {
-     TQStringList profiles = KGlobal::dirs()->findAllResources("data", "konsole/profiles/*", false, true);
+     TQStringList profiles = TDEGlobal::dirs()->findAllResources("data", "konsole/profiles/*", false, true);
      profiles.sort();
      for(TQStringList::ConstIterator it = profiles.begin();
          it != profiles.end(); ++it)
@@ -477,7 +477,7 @@ extern "C" int KDE_EXPORT kdemain(int argc, char* argv[])
         m->setEncoding(sessionconfig->readNumEntry("Encoding0"));
         m->setSchema(sessionconfig->readEntry("Schema0"));
         // Use konsolerc default as tmpFont instead?
-        TQFont tmpFont = KGlobalSettings::fixedFont();
+        TQFont tmpFont = TDEGlobalSettings::fixedFont();
         m->initSessionFont(sessionconfig->readFontEntry("SessionFont0", &tmpFont));
         m->initSessionKeyTab(sessionconfig->readEntry("KeyTab0"));
         m->initMonitorActivity(sessionconfig->readBoolEntry("MonitorActivity0",false));
@@ -522,7 +522,7 @@ extern "C" int KDE_EXPORT kdemain(int argc, char* argv[])
           key = TQString("Encoding%1").arg(counter);
           m->setEncoding(sessionconfig->readNumEntry(key));
           key = TQString("SessionFont%1").arg(counter);
-          TQFont tmpFont = KGlobalSettings::fixedFont();
+          TQFont tmpFont = TDEGlobalSettings::fixedFont();
           m->initSessionFont(sessionconfig->readFontEntry(key, &tmpFont));
           key = TQString("KeyTab%1").arg(counter);
           m->initSessionKeyTab(sessionconfig->readEntry(key));

@@ -121,7 +121,7 @@ TDModule::TDModule(TQWidget *parent, const char *name, const TQStringList &)
 
   setlocale( LC_COLLATE, "C" );
 
-  KGlobal::locale()->insertCatalogue("kcmbackground");
+  TDEGlobal::locale()->insertCatalogue("kcmbackground");
 
   TQStringList sl;
   TQMap<gid_t,TQStringList> tgmap;

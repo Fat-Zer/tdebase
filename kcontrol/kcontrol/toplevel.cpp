@@ -57,7 +57,7 @@ TopLevel::TopLevel(const char* name)
   report_bug = 0;
 
   // read settings
-  KConfig *config = KGlobal::config();
+  KConfig *config = TDEGlobal::config();
   config->setGroup("Index");
   TQString viewmode = config->readEntry("ViewMode", "Tree");
 
@@ -182,8 +182,8 @@ TopLevel::TopLevel(const char* name)
                TQT_SLOT( activateModule( ConfigModule * ) ) );
       _dock->setBaseWidget( aw );
       KWin::setIcons(  winId(),
-		       KGlobal::iconLoader()->loadIcon("hwinfo",  KIcon::NoGroup,  32 ),
-		       KGlobal::iconLoader()->loadIcon("hwinfo",  KIcon::NoGroup,  16 ) );
+		       TDEGlobal::iconLoader()->loadIcon("hwinfo",  KIcon::NoGroup,  32 ),
+		       TDEGlobal::iconLoader()->loadIcon("hwinfo",  KIcon::NoGroup,  16 ) );
   }
   else
   {
@@ -196,7 +196,7 @@ TopLevel::TopLevel(const char* name)
 
 TopLevel::~TopLevel()
 {
-  KConfig *config = KGlobal::config();
+  KConfig *config = TDEGlobal::config();
   config->setGroup("Index");
   if (KCGlobal::viewMode() == Tree)
     config->writeEntry("ViewMode", "Tree");
@@ -486,7 +486,7 @@ void TopLevel::reportBug()
     bool deleteit = false;
 
     if (!_active) // report against kcontrol
-        dummyAbout = const_cast<TDEAboutData*>(KGlobal::instance()->aboutData());
+        dummyAbout = const_cast<TDEAboutData*>(TDEGlobal::instance()->aboutData());
     else
     {
         if (_active->aboutData())

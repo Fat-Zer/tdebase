@@ -158,8 +158,8 @@ KPreviewOptions::KPreviewOptions( TQWidget *parent, const char */*name*/ )
 void KPreviewOptions::load(bool useDefaults)
 {
     // *** load and apply to GUI ***
-    KGlobal::config()->setReadDefaults(useDefaults);
-    KConfigGroup group( KGlobal::config(), "PreviewSettings" );
+    TDEGlobal::config()->setReadDefaults(useDefaults);
+    KConfigGroup group( TDEGlobal::config(), "PreviewSettings" );
     TQPtrListIterator<TQCheckListItem> it( m_items );
 
     for ( ; it.current() ; ++it ) {
@@ -176,7 +176,7 @@ void KPreviewOptions::load(bool useDefaults)
 
     m_boostSize->setChecked( group.readBoolEntry( "BoostSize", false /*default*/ ) );
     m_useFileThumbnails->setChecked( group.readBoolEntry( "UseFileThumbnails", true /*default*/ ) );
-    KGlobal::config()->setReadDefaults(false);
+    TDEGlobal::config()->setReadDefaults(false);
 }
 
 void KPreviewOptions::load()
@@ -191,7 +191,7 @@ void KPreviewOptions::defaults()
 
 void KPreviewOptions::save()
 {
-    KConfigGroup group( KGlobal::config(), "PreviewSettings" );
+    KConfigGroup group( TDEGlobal::config(), "PreviewSettings" );
     TQPtrListIterator<TQCheckListItem> it( m_items );
     for ( ; it.current() ; ++it ) {
         TQString protocol( it.current()->text() );

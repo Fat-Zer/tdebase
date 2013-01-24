@@ -123,7 +123,7 @@ void DocMetaInfo::scanMetaInfo( bool force )
 {
   if ( mLoaded && !force ) return;
 
-  mLanguages = KGlobal::locale()->languagesTwoAlpha();
+  mLanguages = TDEGlobal::locale()->languagesTwoAlpha();
 
   kdDebug( 1400 ) << "LANGS: " << mLanguages.join( " " ) << endl;
 
@@ -137,7 +137,7 @@ void DocMetaInfo::scanMetaInfo( bool force )
   TQStringList metaInfos = config.readListEntry( "MetaInfoDirs" );
 
   if ( metaInfos.isEmpty() ) {
-    KStandardDirs* kstd = KGlobal::dirs();
+    KStandardDirs* kstd = TDEGlobal::dirs();
     kstd->addResourceType( "data", "share/apps/khelpcenter" );
     metaInfos = kstd->findDirs( "data", "plugins" );
   }

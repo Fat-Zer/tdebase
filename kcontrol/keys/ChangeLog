@@ -15,8 +15,8 @@
 	global.cpp did for just the global keys.
 	* converted main.cpp to use keyconfig.cpp rather than
 	global.cpp and standard.cpp for standard and globall
-	key configuration.  KGlobalConfig and KStdConfig disappear. 
-	(KGlobalConfig is renamed to KKeyConfig)
+	key configuration.  TDEGlobalConfig and KStdConfig disappear. 
+	(TDEGlobalConfig is renamed to KKeyConfig)
 	* appropriate changes to Makefile.am.
 	* standard key binding are now #include'd from
 	stdbindings.cpp

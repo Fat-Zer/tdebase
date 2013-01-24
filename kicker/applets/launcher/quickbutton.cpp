@@ -132,7 +132,7 @@ TQPixmap QuickURL::pixmap( mode_t _mode, KIcon::Group _group,
    TQPixmap pxmap;
    // Load icon
    if (_kurl.url() == "SPECIAL_BUTTON__SHOW_DESKTOP") {
-       pxmap = KGlobal::iconLoader()->loadIcon("desktop", _group, _force_size, _state);
+       pxmap = TDEGlobal::iconLoader()->loadIcon("desktop", _group, _force_size, _state);
    }
    else {
        pxmap = KMimeType::pixmapForURL(_kurl, _mode, _group, _force_size, _state);
@@ -231,7 +231,7 @@ void QuickButton::mouseMoveEvent(TQMouseEvent *e)
 {
    if ((e->state() & Qt::LeftButton) == 0) return;
    TQPoint p(e->pos() - _dragPos);
-   if (p.manhattanLength() <= KGlobalSettings::dndEventDelay())
+   if (p.manhattanLength() <= TDEGlobalSettings::dndEventDelay())
       return;
    DEBUGSTR<<"dragstart"<<endl<<flush;
    setDown(false);
@@ -344,7 +344,7 @@ void QuickButton::updateKickerTip(KickerTip::Data &data)
         data.subtext = data.message;
     }
     if (_qurl->url() == "SPECIAL_BUTTON__SHOW_DESKTOP") {
-        data.icon = KGlobal::iconLoader()->loadIcon("desktop", KIcon::Panel, KIcon::SizeHuge, KIcon::DefaultState);
+        data.icon = TDEGlobal::iconLoader()->loadIcon("desktop", KIcon::Panel, KIcon::SizeHuge, KIcon::DefaultState);
     }
     else {
         data.icon = KMimeType::pixmapForURL(_qurl->kurl(), 0, KIcon::Panel, KIcon::SizeHuge, KIcon::DefaultState);

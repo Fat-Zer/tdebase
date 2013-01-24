@@ -11,7 +11,7 @@
 #include "docentrytraverser.h"
 
 class TQWidget;
-class KProcess;
+class TDEProcess;
 class KConfig;
 class KHTMLPart;
 
@@ -114,15 +114,15 @@ class SearchEngine : public TQObject
     void searchFinished();
 
   protected slots:
-    void searchStdout(KProcess *proc, char *buffer, int buflen);
-    void searchStderr(KProcess *proc, char *buffer, int buflen);
-    void searchExited(KProcess *proc);
+    void searchStdout(TDEProcess *proc, char *buffer, int buflen);
+    void searchStderr(TDEProcess *proc, char *buffer, int buflen);
+    void searchExited(TDEProcess *proc);
 
   protected:
     void processSearchQueue();
     
   private:
-    KProcess *mProc;
+    TDEProcess *mProc;
     bool mSearchRunning;
     TQString mSearchResult;
 

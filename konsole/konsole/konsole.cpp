@@ -297,7 +297,7 @@ Konsole::Konsole(const char* name, int histon, bool menubaron, bool tabbaron, bo
   // read and apply default values ///////////////////////////////////////////
   resize(321, 321); // Dummy.
   TQSize currentSize = size();
-  KConfig * config = KGlobal::config();
+  KConfig * config = TDEGlobal::config();
   config->setDesktopGroup();
   applyMainWindowSettings(config);
   if (currentSize != size())
@@ -367,7 +367,7 @@ Konsole::~Konsole()
     }
 
     // Wait a bit for all childs to clean themselves up.
-    while(sessions.count() && KProcessController::theKProcessController->waitForProcessExit(1))
+    while(sessions.count() && TDEProcessController::theTDEProcessController->waitForProcessExit(1))
         ;
 
     sessions.setAutoDelete(true);
@@ -652,7 +652,7 @@ void Konsole::makeGUI()
 
       // encoding menu, start with default checked !
       selectSetEncoding = new KSelectAction( i18n( "&Encoding" ), SmallIconSet( "charset" ), 0, TQT_TQOBJECT(this), TQT_SLOT(slotSetEncoding()), actions, "set_encoding" );
-      TQStringList list = KGlobal::charsets()->descriptiveEncodingNames();
+      TQStringList list = TDEGlobal::charsets()->descriptiveEncodingNames();
       list.prepend( i18n( "Default" ) );
       selectSetEncoding->setItems(list);
       selectSetEncoding->setCurrentItem (0);
@@ -703,7 +703,7 @@ void Konsole::makeGUI()
       KAction *configure = KStdAction::preferences(TQT_TQOBJECT(this), TQT_SLOT(slotConfigure()), actions);
       configure->plug(m_options);
 
-      if (KGlobalSettings::insertTearOffHandle())
+      if (TDEGlobalSettings::insertTearOffHandle())
          m_options->insertTearOffHandle();
    }
 
@@ -758,7 +758,7 @@ void Konsole::makeGUI()
       }
       m_rightButton->insertSeparator();
       m_closeSession->plug(m_rightButton );
-      if (KGlobalSettings::insertTearOffHandle())
+      if (TDEGlobalSettings::insertTearOffHandle())
          m_rightButton->insertTearOffHandle();
    }
 
@@ -884,8 +884,8 @@ void Konsole::slotSetEncoding()
   else
   {
     bool found;
-    TQString enc = KGlobal::charsets()->encodingForName(selectSetEncoding->currentText());
-    qtc = KGlobal::charsets()->codecForName(enc, found);
+    TQString enc = TDEGlobal::charsets()->encodingForName(selectSetEncoding->currentText());
+    qtc = TDEGlobal::charsets()->codecForName(enc, found);
 
     // BR114535 : Remove jis7 due to infinite loop.
     if ( enc == "jis7" ) {
@@ -966,7 +966,7 @@ bool Konsole::eventFilter( TQObject *o, TQEvent *ev )
     {
       TQMouseEvent* mev = TQT_TQMOUSEEVENT(ev);
       if ((mev->pos() - m_newSessionButtonMousePressPos).manhattanLength()
-            > KGlobalSettings::dndEventDelay())
+            > TDEGlobalSettings::dndEventDelay())
       {
         m_newSessionButton->openPopup();
         return true;
@@ -1167,7 +1167,7 @@ void Konsole::makeBasicGUI()
   new KAction(i18n("Toggle Bidi"), Qt::CTRL+Qt::ALT+Qt::Key_B, TQT_TQOBJECT(this), TQT_SLOT(toggleBidi()), m_shortcuts, "toggle_bidi");
 
   // Should we load all *.desktop files now?  Required for Session shortcuts.
-  if ( KConfigGroup(KGlobal::config(), "General").readBoolEntry("SessionShortcutsEnabled", false) ) {
+  if ( KConfigGroup(TDEGlobal::config(), "General").readBoolEntry("SessionShortcutsEnabled", false) ) {
     b_sessionShortcutsEnabled = true;
     loadSessionCommands();
     loadScreenSessions();
@@ -1438,7 +1438,7 @@ void Konsole::slotSaveSessionsProfile()
   if ( ok ) {
     TQString path = locateLocal( "data",
         TQString::fromLatin1( "konsole/profiles/" ) + prof,
-        KGlobal::instance() );
+        TDEGlobal::instance() );
 
     if ( TQFile::exists( path ) )
       TQFile::remove( path );
@@ -1454,7 +1454,7 @@ void Konsole::saveProperties(KConfig* config) {
   uint active=0;
   TQString key;
 
-  if (config != KGlobal::config())
+  if (config != TDEGlobal::config())
   {
      // called by the session manager
      config->writeEntry("numSes",sessions.count());
@@ -1526,7 +1526,7 @@ void Konsole::saveProperties(KConfig* config) {
 
   if (selectSetEncoding)
   {
-    TQString encoding = KGlobal::charsets()->encodingForName(selectSetEncoding->currentText());
+    TQString encoding = TDEGlobal::charsets()->encodingForName(selectSetEncoding->currentText());
     config->writeEntry("EncodingName", encoding);
   } else {    // This will not always work (ie 'winsami' saves as 'ws2')
     if (se) config->writeEntry("EncodingName", se->encoding());
@@ -1538,7 +1538,7 @@ void Konsole::saveProperties(KConfig* config) {
   }
 
   config->writeEntry("class",name());
-  if (config != KGlobal::config())
+  if (config != TDEGlobal::config())
   {
       saveMainWindowSettings(config);
   }
@@ -1551,7 +1551,7 @@ void Konsole::saveProperties(KConfig* config) {
 }
 
 
-// Called by constructor (with config = KGlobal::config())
+// Called by constructor (with config = TDEGlobal::config())
 // and by session-management (with config = sessionconfig).
 // So it has to apply the settings when reading them.
 void Konsole::readProperties(KConfig* config)
@@ -1567,7 +1567,7 @@ void Konsole::readProperties(KConfig* config)
 void Konsole::readProperties(KConfig* config, const TQString &schema, bool globalConfigOnly)
 {
 
-   if (config==KGlobal::config())
+   if (config==TDEGlobal::config())
    {
      config->setDesktopGroup();
      b_warnQuit=config->readBoolEntry( "WarnQuit", true );
@@ -1614,7 +1614,7 @@ void Konsole::readProperties(KConfig* config, const TQString &schema, bool globa
 
       // (1) set menu items and Konsole members
 
-      TQFont tmpFont = KGlobalSettings::fixedFont();
+      TQFont tmpFont = TDEGlobalSettings::fixedFont();
       defaultFont = config->readFontEntry("defaultfont", &tmpFont);
 
       //set the schema
@@ -2013,7 +2013,7 @@ void Konsole::slotSelectTabbar() {
 
 void Konsole::slotSaveSettings()
 {
-  KConfig *config = KGlobal::config();
+  KConfig *config = TDEGlobal::config();
   config->setDesktopGroup();
   saveProperties(config);
   saveMainWindowSettings(config);
@@ -2047,7 +2047,7 @@ void Konsole::slotConfigureKeys()
          m_shortcuts->action( i )->shortcut().count() &&
          TQString(m_shortcuts->action( i )->name()).startsWith("SSC_") ) {
       b_sessionShortcutsEnabled = true;
-      KConfigGroup group(KGlobal::config(), "General");
+      KConfigGroup group(TDEGlobal::config(), "General");
       group.writeEntry("SessionShortcutsEnabled", true);
     }
   }
@@ -2078,8 +2078,8 @@ void Konsole::slotConfigure()
 
 void Konsole::reparseConfiguration()
 {
-  KGlobal::config()->reparseConfiguration();
-  readProperties(KGlobal::config(), TQString::null, true);
+  TDEGlobal::config()->reparseConfiguration();
+  readProperties(TDEGlobal::config(), TQString::null, true);
 
   // The .desktop files may have been changed by user...
   b_sessionShortcutsMapped = false;
@@ -2125,7 +2125,7 @@ void Konsole::reparseConfiguration()
   m_shortcuts->readShortcutSettings();
 
   // User may have changed Schema->Set as default schema
-  s_kconfigSchema = KGlobal::config()->readEntry("schema");
+  s_kconfigSchema = TDEGlobal::config()->readEntry("schema");
   ColorSchema* sch = colors->find(s_kconfigSchema);
   if (!sch)
   {
@@ -2662,8 +2662,8 @@ void Konsole::setSessionEncoding( const TQString &encoding, TESession *session )
         session = se;
 
     bool found = false;
-    TQString enc = KGlobal::charsets()->encodingForName(encoding);
-    TQTextCodec * qtc = KGlobal::charsets()->codecForName(enc, found);
+    TQString enc = TDEGlobal::charsets()->encodingForName(encoding);
+    TQTextCodec * qtc = TDEGlobal::charsets()->codecForName(enc, found);
     if ( !found || !qtc )
         return;
 
@@ -2671,13 +2671,13 @@ void Konsole::setSessionEncoding( const TQString &encoding, TESession *session )
     // it corresponds to.
     int i = 0;
     bool found_encoding = false;
-    TQStringList encodingNames = KGlobal::charsets()->descriptiveEncodingNames();
+    TQStringList encodingNames = TDEGlobal::charsets()->descriptiveEncodingNames();
     TQStringList::ConstIterator it = encodingNames.begin();
     TQString t_encoding = encoding.lower();
 
     while ( it != encodingNames.end() && !found_encoding )
     {
-      if ( TQString::compare( KGlobal::charsets()->encodingForName(*it), 
+      if ( TQString::compare( TDEGlobal::charsets()->encodingForName(*it), 
                              t_encoding ) == 0 ) {
          found_encoding = true;
       }
@@ -2727,7 +2727,7 @@ void Konsole::allowPrevNext()
 KSimpleConfig *Konsole::defaultSession()
 {
   if (!m_defaultSession) {
-    KConfig * config = KGlobal::config();
+    KConfig * config = TDEGlobal::config();
     config->setDesktopGroup();
     setDefaultSession(config->readEntry("DefaultSession","shell.desktop"));
   }
@@ -2886,7 +2886,7 @@ TQString Konsole::newSession(KSimpleConfig *co, TQString program, const TQStrLis
     initTEWidget(te, te_old);
   }
   else {
-    readProperties(KGlobal::config(), "", true);
+    readProperties(TDEGlobal::config(), "", true);
     te->setVTFont(font);
     te->setScrollbarLocation(n_scroll);
     te->setBellMode(n_bell);
@@ -3287,9 +3287,9 @@ void Konsole::notifySessionState(TESession* session, int state)
       && session->testAndSetStateIconName(state_iconname)
       && m_tabViewMode != ShowTextOnly) {
 
-    TQPixmap normal = KGlobal::instance()->iconLoader()->loadIcon(state_iconname,
+    TQPixmap normal = TDEGlobal::instance()->iconLoader()->loadIcon(state_iconname,
                        KIcon::Small, 0, KIcon::DefaultState, 0L, true);
-    TQPixmap active = KGlobal::instance()->iconLoader()->loadIcon(state_iconname,
+    TQPixmap active = TDEGlobal::instance()->iconLoader()->loadIcon(state_iconname,
                        KIcon::Small, 0, KIcon::ActiveState, 0L, true);
 
     // make sure they are not larger than 16x16
@@ -3375,7 +3375,7 @@ void Konsole::addSessionCommand(const TQString &path)
 
   exec = KRun::binaryName(exec, false);
   exec = KShell::tildeExpand(exec);
-  TQString pexec = KGlobal::dirs()->findExe(exec);
+  TQString pexec = TDEGlobal::dirs()->findExe(exec);
 
   if (typ.isEmpty() || txt.isEmpty() || typ != "KonsoleApplication"
       || ( !exec.isEmpty() && pexec.isEmpty() ) )
@@ -3425,7 +3425,7 @@ void Konsole::loadSessionCommands()
 
   addSessionCommand(TQString::null);
 
-  TQStringList lst = KGlobal::dirs()->findAllResources("appdata", "*.desktop", false, true);
+  TQStringList lst = TDEGlobal::dirs()->findAllResources("appdata", "*.desktop", false, true);
 
   for(TQStringList::Iterator it = lst.begin(); it != lst.end(); ++it )
     if (!(*it).endsWith("/shell.desktop"))
@@ -4128,9 +4128,9 @@ void Konsole::slotZModemUpload()
          i18n("<p>The current session already has a ZModem file transfer in progress."));
     return;
   }
-  TQString zmodem = KGlobal::dirs()->findExe("sz");
+  TQString zmodem = TDEGlobal::dirs()->findExe("sz");
   if (zmodem.isEmpty())
-    zmodem = KGlobal::dirs()->findExe("lsz");
+    zmodem = TDEGlobal::dirs()->findExe("lsz");
   if (zmodem.isEmpty())
   {
     KMessageBox::sorry(this,
@@ -4155,9 +4155,9 @@ void Konsole::slotZModemDetected(TESession *session)
   if(se != session)
     activateSession(session);
 
-  TQString zmodem = KGlobal::dirs()->findExe("rz");
+  TQString zmodem = TDEGlobal::dirs()->findExe("rz");
   if (zmodem.isEmpty())
-    zmodem = KGlobal::dirs()->findExe("lrz");
+    zmodem = TDEGlobal::dirs()->findExe("lrz");
   if (zmodem.isEmpty())
   {
     KMessageBox::information(this,
@@ -4167,7 +4167,7 @@ void Konsole::slotZModemDetected(TESession *session)
                         "<p>You may wish to install the 'rzsz' or 'lrzsz' package.\n"));
     return;
   }
-  KURLRequesterDlg dlg(KGlobalSettings::documentPath(),
+  KURLRequesterDlg dlg(TDEGlobalSettings::documentPath(),
                    i18n("A ZModem file transfer attempt has been detected.\n"
                         "Please specify the folder you want to store the file(s):"),
                    this, "zmodem_dlg");

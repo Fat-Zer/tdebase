@@ -30,7 +30,7 @@ SystemDirNotifyModule::SystemDirNotifyModule(const TQCString &obj)
 extern "C" {
 	KDE_EXPORT KDEDModule *create_systemdirnotify(const TQCString &obj)
 	{
-		KGlobal::locale()->insertCatalogue("kio_system");
+		TDEGlobal::locale()->insertCatalogue("kio_system");
 		return new SystemDirNotifyModule(obj);
 	}
 }

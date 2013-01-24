@@ -578,7 +578,7 @@ void KAccessConfig::changeFlashScreenColor()
 
 void KAccessConfig::selectSound()
 {
-  TQStringList list = KGlobal::dirs()->findDirs("sound", "");
+  TQStringList list = TDEGlobal::dirs()->findDirs("sound", "");
   TQString start;
   if (list.count()>0)
     start = list[0];

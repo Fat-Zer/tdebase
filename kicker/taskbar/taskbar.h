@@ -37,7 +37,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 class Startup;
 class Task;
-class KGlobalAccel;
+class TDEGlobalAccel;
 
 class TaskBar : public Panner
 {
@@ -127,7 +127,7 @@ private:
     bool                        shouldGroup() const;
     bool                        isGrouping;
     void                        reGroup();
-    KGlobalAccel*               keys;
+    TDEGlobalAccel*               keys;
     KTextShadowEngine*		m_textShadowEngine;
     bool			m_ignoreUpdates;
     TQTimer			m_relayoutTimer;

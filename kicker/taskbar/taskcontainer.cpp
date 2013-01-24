@@ -577,7 +577,7 @@ void TaskContainer::drawButton(TQPainter *p)
     bool drawButton = alwaysDrawButtons ||
                       (m_mouseOver && !halo && isEnabled() &&
                        m_settingsObject->showButtonOnHover());
-    TQFont font(KGlobalSettings::taskbarFont());
+    TQFont font(TDEGlobalSettings::taskbarFont());
 
     // draw sunken if we contain the active task
     bool active = false;
@@ -1273,7 +1273,7 @@ bool TaskContainer::startDrag(const TQPoint& pos)
         return false;
     }
 
-    int delay = KGlobalSettings::dndEventDelay();
+    int delay = TDEGlobalSettings::dndEventDelay();
 
     if ((m_dragStartPos - pos).manhattanLength() > delay)
     {
@@ -1663,7 +1663,7 @@ void TaskContainer::updateKickerTip(KickerTip::Data& data)
         data.message = m_startup->text();
         data.duration = 4000;
         data.subtext = i18n("Loading application ...");
-        data.icon = KGlobal::iconLoader()->loadIcon(m_startup->icon(),
+        data.icon = TDEGlobal::iconLoader()->loadIcon(m_startup->icon(),
                                                     KIcon::Small,
                                                     KIcon::SizeMedium,
                                                     KIcon::DefaultState,

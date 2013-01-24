@@ -64,7 +64,7 @@ ver. 0.4.1: Mario Weilguni <mweilguni@kde.org>
 
 ver. 0.4: Mario Weilguni <mweilguni@kde.org>
 	* introduced this ChangeLog
-	* kfind now uses KShellProcess instead of KProcess, makes
+	* kfind now uses KShellProcess instead of TDEProcess, makes
 	  regular expression search possible with egrep/xargs
 	* kftabdlg.cpp: tab-dialog isn't closed anymore if Escape key
 	  is pressed
@@ -83,7 +83,7 @@ ver. 0.3.4:
 
 ver. 0.3.3:
 
- o uses KProcess
+ o uses TDEProcess
  o supports other languages then english (at this time german and czech)
 
 ver. 0.3.2:

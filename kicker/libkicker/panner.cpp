@@ -42,7 +42,7 @@ Panner::Panner( TQWidget* parent, const char* name )
       _cwidth(0), _cheight(0),
       _cx(0), _cy(0)
 {
-    KGlobal::locale()->insertCatalogue("libkicker");
+    TDEGlobal::locale()->insertCatalogue("libkicker");
     setBackgroundOrigin( AncestorOrigin );
 
     _updateScrollButtonsTimer = new TQTimer(this);

@@ -44,7 +44,7 @@ FindMenu::~FindMenu()
 
 void FindMenu::initialize()
 {
-  TQStringList list = KGlobal::dirs()->findAllResources( "data", "kicker/menuext/find/*.desktop", false, true );
+  TQStringList list = TDEGlobal::dirs()->findAllResources( "data", "kicker/menuext/find/*.desktop", false, true );
 
   list.sort();
 

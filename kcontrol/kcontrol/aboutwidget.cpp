@@ -150,7 +150,7 @@ void AboutWidget::updatePixmap()
     }
     else
     {
-        KIconLoader *loader = KGlobal::instance()->iconLoader();
+        KIconLoader *loader = TDEGlobal::instance()->iconLoader();
         TQString iconPath;
         if (!_icon.isEmpty()) {
             iconPath = loader->iconPath( _icon, KIcon::Toolbar );

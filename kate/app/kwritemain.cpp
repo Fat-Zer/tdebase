@@ -593,7 +593,7 @@ extern "C" KDE_EXPORT int kdemain(int argc, char **argv)
 
   TDEApplication a;
 
-  KGlobal::locale()->insertCatalogue("katepart");
+  TDEGlobal::locale()->insertCatalogue("katepart");
 
   DCOPClient *client = kapp->dcopClient();
   if (!client->isRegistered())

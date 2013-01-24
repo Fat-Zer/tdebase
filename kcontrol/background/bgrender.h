@@ -24,7 +24,7 @@ class TQString;
 class TQTimer;
 
 class KConfig;
-class KProcess;
+class TDEProcess;
 class KTempFile;
 class KShellProcess;
 class KStandardDirs;
@@ -68,7 +68,7 @@ signals:
     void programSuccess(int desk);                //programSuccess is emitted after imageDone
 
 private slots:
-    void slotBackgroundDone(KProcess *);
+    void slotBackgroundDone(TDEProcess *);
     void render();
     void done();
 

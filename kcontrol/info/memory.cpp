@@ -80,11 +80,11 @@ static TQString formatted_unit(t_memsize value)
 {
     if (value > (1024 * 1024))
         if (value > (1024 * 1024 * 1024))
-            return i18n("%1 GB").arg(KGlobal::locale()->formatNumber(value / (1024 * 1024 * 1024.0), 2));
+            return i18n("%1 GB").arg(TDEGlobal::locale()->formatNumber(value / (1024 * 1024 * 1024.0), 2));
         else
-            return i18n("%1 MB").arg(KGlobal::locale()->formatNumber(value / (1024 * 1024.0), 2));
+            return i18n("%1 MB").arg(TDEGlobal::locale()->formatNumber(value / (1024 * 1024.0), 2));
     else
-        return i18n("%1 KB").arg(KGlobal::locale()->formatNumber(value / 1024.0, 2));
+        return i18n("%1 KB").arg(TDEGlobal::locale()->formatNumber(value / 1024.0, 2));
 }
 
 KMemoryWidget::KMemoryWidget(TQWidget * parent, const char *name)
@@ -368,7 +368,7 @@ void KMemoryWidget::update_Values()
 	    label->clear();
 	else
 	    label->setText(i18n("%1 bytes =").
-			   arg(KGlobal::locale()->
+			   arg(TDEGlobal::locale()->
 			       formatNumber(Memory_Info[i], 0)));
     }
 

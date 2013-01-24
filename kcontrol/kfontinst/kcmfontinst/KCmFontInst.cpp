@@ -82,7 +82,7 @@ CKCmFontInst::CKCmFontInst(TQWidget *parent, const char *, const TQStringList&)
 #endif
               itsConfig(KFI_UI_CFG_FILE)
 {
-    KGlobal::locale()->insertCatalogue(KFI_CATALOGUE);
+    TDEGlobal::locale()->insertCatalogue(KFI_CATALOGUE);
 
     TDEAboutData* about = new TDEAboutData("kcmfontinst",
          I18N_NOOP("TDE Font Installer"),

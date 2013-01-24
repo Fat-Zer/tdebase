@@ -64,8 +64,8 @@ int ProcessLVI::compare( TQListViewItem *item, int col, bool ascending ) const
   int type = ((ProcessList*)listView())->columnType( col );
 
   if ( type == ProcessList::Int ) {
-    int prev = (int)KGlobal::locale()->readNumber( key( col, ascending ) );
-    int next = (int)KGlobal::locale()->readNumber( item->key( col, ascending ) );
+    int prev = (int)TDEGlobal::locale()->readNumber( key( col, ascending ) );
+    int next = (int)TDEGlobal::locale()->readNumber( item->key( col, ascending ) );
     if ( prev < next )
       return -1;
     else if ( prev == next )
@@ -75,8 +75,8 @@ int ProcessLVI::compare( TQListViewItem *item, int col, bool ascending ) const
   }
 
   if ( type == ProcessList::Float ) {
-    double prev = KGlobal::locale()->readNumber( key( col, ascending ) );
-    double next = KGlobal::locale()->readNumber( item->key( col, ascending ) );
+    double prev = TDEGlobal::locale()->readNumber( key( col, ascending ) );
+    double next = TDEGlobal::locale()->readNumber( item->key( col, ascending ) );
     if ( prev < next )
       return -1;
     else
@@ -613,11 +613,11 @@ ProcessList::addProcess(KSGRD::SensorPSLine* p, ProcessLVI* pli)
 	TQPixmap pix;
 	if (!iconCache[name])
 	{
-		pix = KGlobal::iconLoader()->loadIcon(name, KIcon::Small,
+		pix = TDEGlobal::iconLoader()->loadIcon(name, KIcon::Small,
 							  KIcon::SizeSmall, KIcon::DefaultState,
 							  0L, true);
 		if (pix.isNull() || !pix.mask())
-			pix = KGlobal::iconLoader()->loadIcon("unknownapp", KIcon::User,
+			pix = TDEGlobal::iconLoader()->loadIcon("unknownapp", KIcon::User,
 								  KIcon::SizeSmall);
 
 		if (pix.width() != 16 || pix.height() != 16)
@@ -659,9 +659,9 @@ ProcessList::addProcess(KSGRD::SensorPSLine* p, ProcessLVI* pli)
 		if (mColumnTypes[col] == "S" && columnDict[(*p)[col]])
 			pli->setText(col, *columnDict[(*p)[col]]);
 		else if ( mColumnTypes[col] == "f" )
-      pli->setText( col, KGlobal::locale()->formatNumber( (*p)[col].toFloat() ) );
+      pli->setText( col, TDEGlobal::locale()->formatNumber( (*p)[col].toFloat() ) );
     else if ( mColumnTypes[col] == "D" )
-      pli->setText( col, KGlobal::locale()->formatNumber( (*p)[col].toInt(), 0 ) );
+      pli->setText( col, TDEGlobal::locale()->formatNumber( (*p)[col].toInt(), 0 ) );
     else
 			pli->setText(col, (*p)[col]);
 	}

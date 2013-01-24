@@ -182,7 +182,7 @@ DCOPRef KonquerorIface::createBrowserWindowFromProfileAndURLASN( const TQString 
 
 void KonquerorIface::reparseConfiguration()
 {
-  KGlobal::config()->reparseConfiguration();
+  TDEGlobal::config()->reparseConfiguration();
   KonqFMSettings::reparseConfiguration();
 
   TQPtrList<KonqMainWindow> *mainWindows = KonqMainWindow::mainWindowList();

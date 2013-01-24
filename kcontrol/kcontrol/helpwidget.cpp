@@ -74,13 +74,13 @@ bool HelpWidget::clicked(const TQString & _url)
         return true;
     }
 
-    KProcess process;
+    TDEProcess process;
     KURL url(KURL("help:/"), _url);
 
     if (url.protocol() == "help" || url.protocol() == "man" || url.protocol() == "info") {
         process << "khelpcenter"
                 << url.url();
-        process.start(KProcess::DontCare);
+        process.start(TDEProcess::DontCare);
     } else {
         new KRun(url);
     }

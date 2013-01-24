@@ -60,7 +60,7 @@ TaskManager::TaskManager()
       m_winModule(new KWinModule()),
       m_trackGeometry(false)
 {
-    KGlobal::locale()->insertCatalogue("libtaskmanager");
+    TDEGlobal::locale()->insertCatalogue("libtaskmanager");
     connect(m_winModule, TQT_SIGNAL(windowAdded(WId)),
             this,        TQT_SLOT(windowAdded(WId)));
     connect(m_winModule, TQT_SIGNAL(windowRemoved(WId)),
@@ -88,7 +88,7 @@ TaskManager::TaskManager()
 
 TaskManager::~TaskManager()
 {
-    KGlobal::locale()->removeCatalogue("libtaskmanager");
+    TDEGlobal::locale()->removeCatalogue("libtaskmanager");
 }
 
 void TaskManager::configure_startup()
@@ -628,7 +628,7 @@ Task::Task(WId win, TQObject *parent, const char *name)
     // try to guess the icon from the classhint
     if(_pixmap.isNull())
     {
-        KGlobal::iconLoader()->loadIcon(className().lower(),
+        TDEGlobal::iconLoader()->loadIcon(className().lower(),
                                                     KIcon::Small,
                                                     KIcon::Small,
                                                     KIcon::DefaultState,
@@ -709,7 +709,7 @@ void Task::refreshIcon()
     // try to guess the icon from the classhint
     if(_pixmap.isNull())
     {
-        KGlobal::iconLoader()->loadIcon(className().lower(),
+        TDEGlobal::iconLoader()->loadIcon(className().lower(),
                                                     KIcon::Small,
                                                     KIcon::Small,
                                                     KIcon::DefaultState,
@@ -914,7 +914,7 @@ TQPixmap Task::bestIcon( int size, bool &isStaticIcon )
 
       // Icon of last resort
       if( pixmap.isNull() ) {
-        pixmap = KGlobal::iconLoader()->loadIcon( "go",
+        pixmap = TDEGlobal::iconLoader()->loadIcon( "go",
                                                   KIcon::NoGroup,
                                                   KIcon::SizeSmall );
         isStaticIcon = true;
@@ -937,7 +937,7 @@ TQPixmap Task::bestIcon( int size, bool &isStaticIcon )
 
       // Icon of last resort
       if( pixmap.isNull() ) {
-        pixmap = KGlobal::iconLoader()->loadIcon( "go",
+        pixmap = TDEGlobal::iconLoader()->loadIcon( "go",
                             KIcon::NoGroup,
                             KIcon::SizeMedium );
         isStaticIcon = true;
@@ -951,7 +951,7 @@ TQPixmap Task::bestIcon( int size, bool &isStaticIcon )
 
       // If not, try to get one from the classname
       if ( pixmap.isNull() || pixmap.width() != size || pixmap.height() != size ) {
-        pixmap = KGlobal::iconLoader()->loadIcon( className(),
+        pixmap = TDEGlobal::iconLoader()->loadIcon( className(),
                             KIcon::NoGroup,
                             size,
                             KIcon::DefaultState,
@@ -968,7 +968,7 @@ TQPixmap Task::bestIcon( int size, bool &isStaticIcon )
 
       // Icon of last resort
       if( pixmap.isNull() ) {
-        pixmap = KGlobal::iconLoader()->loadIcon( "go",
+        pixmap = TDEGlobal::iconLoader()->loadIcon( "go",
                                                   KIcon::NoGroup,
                                                   size );
         isStaticIcon = true;

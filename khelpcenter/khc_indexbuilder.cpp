@@ -84,29 +84,29 @@ void IndexBuilder::processCmdQueue()
 
   kdDebug(1402) << "PROCESS: " << cmd << endl;
 
-  KProcess *proc = new KProcess;
+  TDEProcess *proc = new TDEProcess;
   proc->setRunPrivileged( true );
 
   TQStringList args = TQStringList::split( " ", cmd );
   *proc << args;
 
 
-  connect( proc, TQT_SIGNAL( processExited( KProcess * ) ),
-           TQT_SLOT( slotProcessExited( KProcess * ) ) );
-  connect( proc, TQT_SIGNAL( receivedStdout(KProcess *, char *, int ) ),
-           TQT_SLOT( slotReceivedStdout(KProcess *, char *, int ) ) );
-  connect( proc, TQT_SIGNAL( receivedStderr(KProcess *, char *, int ) ),
-           TQT_SLOT( slotReceivedStderr(KProcess *, char *, int ) ) );
+  connect( proc, TQT_SIGNAL( processExited( TDEProcess * ) ),
+           TQT_SLOT( slotProcessExited( TDEProcess * ) ) );
+  connect( proc, TQT_SIGNAL( receivedStdout(TDEProcess *, char *, int ) ),
+           TQT_SLOT( slotReceivedStdout(TDEProcess *, char *, int ) ) );
+  connect( proc, TQT_SIGNAL( receivedStderr(TDEProcess *, char *, int ) ),
+           TQT_SLOT( slotReceivedStderr(TDEProcess *, char *, int ) ) );
 
   mCmdQueue.remove( it );
 
-  if ( !proc->start( KProcess::NotifyOnExit, KProcess::AllOutput ) ) {
+  if ( !proc->start( TDEProcess::NotifyOnExit, TDEProcess::AllOutput ) ) {
     sendErrorSignal( i18n("Unable to start command '%1'.").arg( cmd ) );
     processCmdQueue();
   }
 }
 
-void IndexBuilder::slotProcessExited( KProcess *proc )
+void IndexBuilder::slotProcessExited( TDEProcess *proc )
 {
   kdDebug(1402) << "IndexBuilder::slotIndexFinished()" << endl;
 
@@ -124,13 +124,13 @@ void IndexBuilder::slotProcessExited( KProcess *proc )
   processCmdQueue();
 }
 
-void IndexBuilder::slotReceivedStdout( KProcess *, char *buffer, int buflen )
+void IndexBuilder::slotReceivedStdout( TDEProcess *, char *buffer, int buflen )
 {
   TQString text = TQString::fromLocal8Bit( buffer, buflen );
   std::cout << text.local8Bit().data() << std::flush;
 }
 
-void IndexBuilder::slotReceivedStderr( KProcess *, char *buffer, int buflen )
+void IndexBuilder::slotReceivedStderr( TDEProcess *, char *buffer, int buflen )
 {
   TQString text = TQString::fromLocal8Bit( buffer, buflen );
   std::cerr << text.local8Bit().data() << std::flush;

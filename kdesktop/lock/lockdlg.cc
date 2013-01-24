@@ -692,7 +692,7 @@ void PasswordDlg::slotStartNewSession()
     // Calculate a proper size for the text.
     {
        TQSimpleRichText rt(qt_text, dialog->font());
-       TQRect rect = KGlobalSettings::desktopGeometry(dialog);
+       TQRect rect = TDEGlobalSettings::desktopGeometry(dialog);
 
        pref_width = rect.width() / 3;
        rt.setWidth(pref_width);

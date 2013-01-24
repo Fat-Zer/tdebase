@@ -218,7 +218,7 @@ void KCMXinerama::windowIndicator(int dpy) {
 TQWidget *KCMXinerama::indicator(int dpy) {
 	TQLabel *si = new TQLabel(TQString::number(dpy+1), 0, "Screen Indicator", (WFlags)WX11BypassWM );
 
-	TQFont fnt = KGlobalSettings::generalFont();
+	TQFont fnt = TDEGlobalSettings::generalFont();
 	fnt.setPixelSize(100);
 	si->setFont(fnt);
 	si->setFrameStyle(TQFrame::Panel);
@@ -240,7 +240,7 @@ void KCMXinerama::clearIndicator() {
 
 extern "C" {
         KDE_EXPORT KCModule *create_xinerama(TQWidget *parent, const char *name) {
-   	    KGlobal::locale()->insertCatalogue("kcmxinerama");
+   	    TDEGlobal::locale()->insertCatalogue("kcmxinerama");
 	    return new KCMXinerama(parent, name);
         }
 

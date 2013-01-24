@@ -268,7 +268,7 @@ namespace KFI
 KFileFontPlugin::KFileFontPlugin(TQObject *parent, const char *name, const TQStringList& args)
                : KFilePlugin(parent, name, args)
 {
-    KGlobal::locale()->insertCatalogue(KFI_CATALOGUE);
+    TDEGlobal::locale()->insertCatalogue(KFI_CATALOGUE);
 
     addMimeType("application/x-font-ttf"),
     addMimeType("application/x-font-type1");

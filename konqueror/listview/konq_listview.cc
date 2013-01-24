@@ -124,7 +124,7 @@ void ListViewBrowserExtension::updateActions()
   {
     canCopy++;
     KURL url = item->url();
-    if ( url.directory(false) == KGlobalSettings::trashPath() )
+    if ( url.directory(false) == TDEGlobalSettings::trashPath() )
       bInTrash = true;
     if (  KProtocolInfo::supportsDeleting(  url ) )
       canDel++;

@@ -67,7 +67,7 @@ void addBackEnd::aboutToShowAddMenu()
 {
 	if (!menu)
 		return;
-	KStandardDirs *dirs = KGlobal::dirs();
+	KStandardDirs *dirs = TDEGlobal::dirs();
 	TQStringList list = dirs->findAllResources("data","konqsidebartng/add/*.desktop",true,true);
 	libNames.setAutoDelete(true);
 	libNames.resize(0);
@@ -122,7 +122,7 @@ void addBackEnd::doRollBack()
 {
 	if (KMessageBox::warningContinueCancel(m_parent, i18n("<qt>This removes all your entries from the sidebar and adds the system default ones.<BR><B>This procedure is irreversible</B><BR>Do you want to proceed?</qt>"))==KMessageBox::Continue)
 	{
-		KStandardDirs *dirs = KGlobal::dirs();
+		KStandardDirs *dirs = TDEGlobal::dirs();
 		TQString loc=dirs->saveLocation("data","konqsidebartng/" + m_currentProfile + "/",true);
 		TQDir dir(loc);
 		TQStringList dirEntries = dir.entryList( TQDir::Dirs | TQDir::NoSymLinks );
@@ -139,7 +139,7 @@ void addBackEnd::doRollBack()
 
 static TQString findFileName(const TQString* tmpl,bool universal, const TQString &profile) {
 	TQString myFile, filename;
-	KStandardDirs *dirs = KGlobal::dirs();
+	KStandardDirs *dirs = TDEGlobal::dirs();
 	TQString tmp = *tmpl;
 
 	if (universal) {
@@ -248,7 +248,7 @@ Sidebar_Widget::Sidebar_Widget(TQWidget *parent, KParts::ReadOnlyPart *par, cons
 	{
 		m_relPath = "konqsidebartng/" + currentProfile + "/entries/";
 	}
-	m_path = KGlobal::dirs()->saveLocation("data", m_relPath, true);
+	m_path = TDEGlobal::dirs()->saveLocation("data", m_relPath, true);
 	m_buttons.setAutoDelete(true);
 	m_hasStoredUrl = false;
 	m_latestViewed = -1;
@@ -331,7 +331,7 @@ void Sidebar_Widget::addWebSideBar(const KURL& url, const TQString& /*name*/) {
 	//	<< " [" << name << "]" << endl;
 
 	// Look for existing ones with this URL
-	KStandardDirs *dirs = KGlobal::dirs();
+	KStandardDirs *dirs = TDEGlobal::dirs();
 	TQString list;
 	dirs->saveLocation("data", m_relPath, true);
 	list = locateLocal("data", m_relPath);
@@ -370,7 +370,7 @@ void Sidebar_Widget::addWebSideBar(const KURL& url, const TQString& /*name*/) {
 
 void Sidebar_Widget::finishRollBack()
 {
-	m_path = KGlobal::dirs()->saveLocation("data",m_relPath,true);
+	m_path = TDEGlobal::dirs()->saveLocation("data",m_relPath,true);
         initialCopy();
         TQTimer::singleShot(0,this,TQT_SLOT(updateButtons()));
 }
@@ -421,9 +421,9 @@ void Sidebar_Widget::initialCopy()
 	kdDebug()<<"Initial copy"<<endl;
 	TQStringList dirtree_dirs;
 	if (m_universalMode)
-		dirtree_dirs = KGlobal::dirs()->findDirs("data","konqsidebartng/kicker_entries/");
+		dirtree_dirs = TDEGlobal::dirs()->findDirs("data","konqsidebartng/kicker_entries/");
 	else
-		dirtree_dirs = KGlobal::dirs()->findDirs("data","konqsidebartng/entries/");
+		dirtree_dirs = TDEGlobal::dirs()->findDirs("data","konqsidebartng/entries/");
 	if (dirtree_dirs.last()==m_path)
 		return; //oups;
 
@@ -467,9 +467,9 @@ void Sidebar_Widget::initialCopy()
 					!dirEntries.contains( *eIt ) )
 				{ // we don't have that one yet -> copy it.
 					TQString cp("cp -R -- ");
-					cp += KProcess::quote(dirtree_dir + *eIt);
+					cp += TDEProcess::quote(dirtree_dir + *eIt);
 					cp += " ";
-					cp += KProcess::quote(m_path);
+					cp += TDEProcess::quote(m_path);
 					kdDebug() << "SidebarWidget::intialCopy executing " << cp << endl;
 					::system( TQFile::encodeName(cp) );
 				}

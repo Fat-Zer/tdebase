@@ -106,7 +106,7 @@ kthememanager::~kthememanager()
 
 void kthememanager::init()
 {
-    KGlobal::dirs()->addResourceType( "themes", KStandardDirs::kde_default("data") +
+    TDEGlobal::dirs()->addResourceType( "themes", KStandardDirs::kde_default("data") +
                                       "kthememanager/themes/" );
 }
 
@@ -115,7 +115,7 @@ void kthememanager::updateButton()
     TQListViewItem * cur = dlg->lvThemes->currentItem();
     bool enable = (cur != 0);
     if (enable) {
-        enable = TQFile(KGlobal::dirs()->saveLocation( "themes",  cur->text( 0 ) + "/"+ cur->text( 0 )+ ".xml" ,false)).exists() ;
+        enable = TQFile(TDEGlobal::dirs()->saveLocation( "themes",  cur->text( 0 ) + "/"+ cur->text( 0 )+ ".xml" ,false)).exists() ;
     }
     dlg->btnRemove->setEnabled(enable);
 }
@@ -160,7 +160,7 @@ void kthememanager::save()
     {
         TQString themeName = cur->text( 0 );
 
-        m_theme = new KTheme( this, KGlobal::dirs()->findResource( "themes", themeName + "/" + themeName + ".xml") );
+        m_theme = new KTheme( this, TDEGlobal::dirs()->findResource( "themes", themeName + "/" + themeName + ".xml") );
         m_theme->apply();
 
         // Save the current theme name
@@ -180,7 +180,7 @@ void kthememanager::listThemes()
     dlg->lvThemes->clear();
     dlg->lbPreview->setPixmap( TQPixmap() );
 
-    TQStringList themes = KGlobal::dirs()->findAllResources( "themes", "*.xml", true /*recursive*/ );
+    TQStringList themes = TDEGlobal::dirs()->findAllResources( "themes", "*.xml", true /*recursive*/ );
 
     TQStringList::const_iterator it;
 
@@ -197,7 +197,7 @@ void kthememanager::listThemes()
 
 float kthememanager::getThemeVersion( const TQString & themeName )
 {
-    TQStringList themes = KGlobal::dirs()->findAllResources( "themes", "*.xml", true /*recursive*/ );
+    TQStringList themes = TDEGlobal::dirs()->findAllResources( "themes", "*.xml", true /*recursive*/ );
 
     TQStringList::const_iterator it;
 
@@ -325,7 +325,7 @@ void kthememanager::slotThemeChanged( TQListViewItem * item )
         TQString themeName = item->text(0);
         kdDebug() << "Activated theme: " << themeName  << endl;
 
-        TQString themeDir = KGlobal::dirs()->findResourceDir( "themes", themeName + "/" + themeName + ".xml") + themeName + "/";
+        TQString themeDir = TDEGlobal::dirs()->findResourceDir( "themes", themeName + "/" + themeName + ".xml") + themeName + "/";
 
         TQString pixFile = themeDir + themeName + ".preview.png";
 
@@ -392,7 +392,7 @@ void kthememanager::queryLNFModules()
     dlg->lvDetails->sort();*/
 
     // For now use a static list
-    KIconLoader * il = KGlobal::iconLoader();
+    KIconLoader * il = TDEGlobal::iconLoader();
     dlg->btnBackground->setIconSet( il->loadIconSet( "background", KIcon::Desktop, 32 ) );
     dlg->btnColors->setIconSet( il->loadIconSet( "colorscm", KIcon::Desktop, 32 ) );
     dlg->btnStyle->setIconSet( il->loadIconSet( "style", KIcon::Desktop, 32 ) );
@@ -417,7 +417,7 @@ extern "C"
 {
     KDE_EXPORT KCModule *create_kthememanager(TQWidget *parent, const char *)
     {
-        KGlobal::locale()->insertCatalogue( "kthememanager" );
+        TDEGlobal::locale()->insertCatalogue( "kthememanager" );
         return new kthememanager( parent, "kthememanager" );
     }
 }

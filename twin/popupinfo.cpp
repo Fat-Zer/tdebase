@@ -116,7 +116,7 @@ void PopupInfo::hide()
 
 void PopupInfo::reconfigure() 
     {
-    KConfig * c(KGlobal::config());
+    KConfig * c(TDEGlobal::config());
     c->setGroup("PopupInfo");
     m_show = c->readBoolEntry("ShowPopup", false );
     m_delayTime = c->readNumEntry("PopupHideDelay", 350 );

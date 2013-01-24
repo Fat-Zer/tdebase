@@ -37,7 +37,7 @@ using namespace KHC;
 
 SearchHandler::SearchHandler()
 {
-  mLang = KGlobal::locale()->language().left( 2 );
+  mLang = TDEGlobal::locale()->language().left( 2 );
 }
 
 SearchHandler *SearchHandler::initFromFile( const TQString &filename )
@@ -102,7 +102,7 @@ void SearchHandler::search( DocEntry *entry, const TQStringList &words,
 
     kdDebug() << "SearchHandler::search() CMD: " << cmdString << endl;
 
-    KProcess *proc = new KProcess();
+    TDEProcess *proc = new TDEProcess();
 
     TQStringList cmd = TQStringList::split( " ", cmdString );
     TQStringList::ConstIterator it;
@@ -114,12 +114,12 @@ void SearchHandler::search( DocEntry *entry, const TQStringList &words,
       *proc << arg.utf8();
     }
 
-    connect( proc, TQT_SIGNAL( receivedStdout( KProcess *, char *, int ) ),
-             TQT_SLOT( searchStdout( KProcess *, char *, int ) ) );
-    connect( proc, TQT_SIGNAL( receivedStderr( KProcess *, char *, int ) ),
-             TQT_SLOT( searchStderr( KProcess *, char *, int ) ) );
-    connect( proc, TQT_SIGNAL( processExited( KProcess * ) ),
-             TQT_SLOT( searchExited( KProcess * ) ) );
+    connect( proc, TQT_SIGNAL( receivedStdout( TDEProcess *, char *, int ) ),
+             TQT_SLOT( searchStdout( TDEProcess *, char *, int ) ) );
+    connect( proc, TQT_SIGNAL( receivedStderr( TDEProcess *, char *, int ) ),
+             TQT_SLOT( searchStderr( TDEProcess *, char *, int ) ) );
+    connect( proc, TQT_SIGNAL( processExited( TDEProcess * ) ),
+             TQT_SLOT( searchExited( TDEProcess * ) ) );
 
     SearchJob *searchJob = new SearchJob;
     searchJob->mEntry = entry;
@@ -128,7 +128,7 @@ void SearchHandler::search( DocEntry *entry, const TQStringList &words,
 
     mProcessJobs.insert( proc, searchJob );
 
-    if ( !proc->start( KProcess::NotifyOnExit, KProcess::All ) ) {
+    if ( !proc->start( TDEProcess::NotifyOnExit, TDEProcess::All ) ) {
       TQString txt = i18n("Error executing search command '%1'.").arg( cmdString );
       emit searchFinished( this, entry, txt );
     }
@@ -155,7 +155,7 @@ void SearchHandler::search( DocEntry *entry, const TQStringList &words,
   }
 }
 
-void SearchHandler::searchStdout( KProcess *proc, char *buffer, int len )
+void SearchHandler::searchStdout( TDEProcess *proc, char *buffer, int len )
 {
   if ( !buffer || len == 0 )
     return;
@@ -166,7 +166,7 @@ void SearchHandler::searchStdout( KProcess *proc, char *buffer, int len )
   p = strncpy( p, buffer, len );
   p[len] = '\0';
 
-  TQMap<KProcess *, SearchJob *>::ConstIterator it = mProcessJobs.find( proc );
+  TQMap<TDEProcess *, SearchJob *>::ConstIterator it = mProcessJobs.find( proc );
   if ( it != mProcessJobs.end() ) {
     (*it)->mResult += bufferStr.fromUtf8( p );
   }
@@ -174,18 +174,18 @@ void SearchHandler::searchStdout( KProcess *proc, char *buffer, int len )
   free( p );
 }
 
-void SearchHandler::searchStderr( KProcess *proc, char *buffer, int len )
+void SearchHandler::searchStderr( TDEProcess *proc, char *buffer, int len )
 {
   if ( !buffer || len == 0 )
     return;
 
-  TQMap<KProcess *, SearchJob *>::ConstIterator it = mProcessJobs.find( proc );
+  TQMap<TDEProcess *, SearchJob *>::ConstIterator it = mProcessJobs.find( proc );
   if ( it != mProcessJobs.end() ) {
     (*it)->mError += TQString::fromUtf8( buffer, len );
   }
 }
 
-void SearchHandler::searchExited( KProcess *proc )
+void SearchHandler::searchExited( TDEProcess *proc )
 {
 //  kdDebug() << "SearchHandler::searchExited()" << endl;
 
@@ -193,7 +193,7 @@ void SearchHandler::searchExited( KProcess *proc )
   TQString error;
   DocEntry *entry = 0;
 
-  TQMap<KProcess *, SearchJob *>::ConstIterator it = mProcessJobs.find( proc );
+  TQMap<TDEProcess *, SearchJob *>::ConstIterator it = mProcessJobs.find( proc );
   if ( it != mProcessJobs.end() ) {
     SearchJob *j = *it;
     entry = j->mEntry;

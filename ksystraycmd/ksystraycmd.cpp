@@ -180,7 +180,7 @@ bool KSysTrayCmd::startClient()
   client = new KShellProcess();
   *client << command;
   connect( twinmodule, TQT_SIGNAL(windowAdded(WId)), TQT_SLOT(windowAdded(WId)) );
-  connect( client, TQT_SIGNAL( processExited(KProcess *) ),
+  connect( client, TQT_SIGNAL( processExited(TDEProcess *) ),
 	   this, TQT_SLOT( clientExited() ) );
 
   return client->start();

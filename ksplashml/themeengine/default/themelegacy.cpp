@@ -187,7 +187,7 @@ void ThemeDefault::_initUi()
                   top_label->height() + bottom_label->height() );
 
   const TQRect rect = kapp->desktop()->screenGeometry( mTheme->xineramaScreen() );
-  // KGlobalSettings::splashScreenDesktopGeometry(); cannot be used here.
+  // TDEGlobalSettings::splashScreenDesktopGeometry(); cannot be used here.
   // kdDebug() << "ThemeDefault::_initUi" << rect << endl;
 
   move( rect.x() + (rect.width() - size().width())/2,

@@ -185,7 +185,7 @@ void MainWindow::readProperties( KConfig *config )
 
 void MainWindow::readConfig()
 {
-    KConfig *config = KGlobal::config();
+    KConfig *config = TDEGlobal::config();
     config->setGroup( "MainWindowState" );
     TQValueList<int> sizes = config->readIntListEntry( "Splitter" );
     if ( sizes.count() == 2 ) {
@@ -197,7 +197,7 @@ void MainWindow::readConfig()
 
 void MainWindow::writeConfig()
 {
-    KConfig *config = KGlobal::config();
+    KConfig *config = TDEGlobal::config();
     config->setGroup( "MainWindowState" );
     config->writeEntry( "Splitter", mSplitter->sizes() );
 
@@ -237,7 +237,7 @@ void MainWindow::setupActions()
     KStdAction::keyBindings( guiFactory(), TQT_SLOT( configureShortcuts() ),
       actionCollection() );
 
-    KConfig *cfg = KGlobal::config();
+    KConfig *cfg = TDEGlobal::config();
     cfg->setGroup( "Debug" );
     if ( cfg->readBoolEntry( "SearchErrorLog", false ) ) {
       new KAction( i18n("Show Search Error Log"), 0, TQT_TQOBJECT(this),

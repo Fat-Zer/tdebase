@@ -5,7 +5,7 @@
 
 #include <kio/slavebase.h>
 
-class KProcess;
+class TDEProcess;
 
 class InfoProtocol : public KIO::SlaveBase
 {

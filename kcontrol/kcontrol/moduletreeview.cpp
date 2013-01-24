@@ -38,7 +38,7 @@
 static TQPixmap appIcon(const TQString &iconName)
 {
      TQString path;
-     TQPixmap normal = KGlobal::iconLoader()->loadIcon(iconName, KIcon::Small, 0, KIcon::DefaultState, &path, true);
+     TQPixmap normal = TDEGlobal::iconLoader()->loadIcon(iconName, KIcon::Small, 0, KIcon::DefaultState, &path, true);
      // make sure they are not larger than KIcon::SizeSmall
      if (normal.width() > KIcon::SizeSmall || normal.height() > KIcon::SizeSmall)
      {

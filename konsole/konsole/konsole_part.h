@@ -74,7 +74,7 @@ class konsolePart: public KParts::ReadOnlyPart, public TerminalInterface, public
     virtual ~konsolePart();
 
 signals:
-    void processExited( KProcess * );
+    void processExited( TDEProcess * );
     void receivedData( const TQString& s );
     void forkedChild();
  protected:

@@ -455,7 +455,7 @@ void KateViewSpaceContainer::splitViewSpace( KateViewSpace* vs,
 
   Qt::Orientation o = isHoriz ? Qt::Vertical : Qt::Horizontal;
   KateMDI::Splitter* s = new KateMDI::Splitter(o, vs->parentWidget());
-  s->setOpaqueResize( KGlobalSettings::opaqueResize() );
+  s->setOpaqueResize( TDEGlobalSettings::opaqueResize() );
 
   if (! isFirstTime) {
     // anders: make sure the split' viewspace is always

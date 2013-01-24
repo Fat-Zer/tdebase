@@ -95,7 +95,7 @@ bool trinity_startup_main_sequence_done = FALSE;
  */
 void KSMServer::restoreSession( TQString sessionName )
 {
-    showFancyLogin = KConfigGroup(KGlobal::config(), "Login").readBoolEntry("showFancyLogin", true);
+    showFancyLogin = KConfigGroup(TDEGlobal::config(), "Login").readBoolEntry("showFancyLogin", true);
     KConfig ksplashcfg( "ksplashrc", true );
     ksplashcfg.setGroup( "KSplash" );
     if ( ksplashcfg.readEntry( "Theme", "Default" ) != TQString("Unified") )
@@ -107,7 +107,7 @@ void KSMServer::restoreSession( TQString sessionName )
 
     kdDebug( 1218 ) << "KSMServer::restoreSession " << sessionName << endl;
     upAndRunning( "restore session");
-    KConfig* config = KGlobal::config();
+    KConfig* config = TDEGlobal::config();
 
     sessionGroup = "Session: " + sessionName;
 
@@ -161,7 +161,7 @@ void KSMServer::restoreSession( TQString sessionName )
  */
 void KSMServer::startDefaultSession()
 {
-    showFancyLogin = KConfigGroup(KGlobal::config(), "Login").readBoolEntry("showFancyLogin", true);
+    showFancyLogin = KConfigGroup(TDEGlobal::config(), "Login").readBoolEntry("showFancyLogin", true);
     KConfig ksplashcfg( "ksplashrc", true );
     ksplashcfg.setGroup( "KSplash" );
     if ( ksplashcfg.readEntry( "Theme", "Default" ) != TQString("None") )
@@ -286,7 +286,7 @@ void KSMServer::tryRestoreNext()
     if( state != Restoring )
         return;
     restoreTimer.stop();
-    KConfig* config = KGlobal::config();
+    KConfig* config = TDEGlobal::config();
     config->setGroup( sessionGroup );
 
     while ( lastAppStarted < appsToStart ) {
@@ -336,7 +336,7 @@ void KSMServer::autoStart2()
     TQTimer::singleShot( 10000, this, TQT_SLOT( kcmPhase2Timeout())); // protection
     DCOPRef( "kcminit", "kcminit" ).send( "runPhase2" );
     if( !defaultSession())
-        restoreLegacySession( KGlobal::config());
+        restoreLegacySession( TDEGlobal::config());
     KNotifyClient::event( 0, "starttde" ); // this is the time KDE is up, more or less
 }
 

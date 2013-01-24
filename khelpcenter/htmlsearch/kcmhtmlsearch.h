@@ -29,7 +29,7 @@ class TQLineEdit;
 class TQCheckBox;
 class TQPushButton;
 class KListBox;
-class KProcess;
+class TDEProcess;
 class KLanguageCombo;
 class KURLRequester;
 
@@ -60,7 +60,7 @@ protected slots:
   void urlClicked(const TQString&);
   void generateIndex();
 
-  void indexTerminated(KProcess *proc);
+  void indexTerminated(TDEProcess *proc);
 
       
 private:
@@ -74,7 +74,7 @@ private:
   KListBox *searchPaths;
   KLanguageCombo *language;
 
-  KProcess *indexProc;
+  TDEProcess *indexProc;
 
 };
 

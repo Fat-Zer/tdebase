@@ -218,7 +218,7 @@ PlainClock::PlainClock(ClockApplet *applet, Prefs *prefs, TQWidget *parent, cons
 
 int PlainClock::preferedWidthForHeight(int ) const
 {
-    TQString maxLengthTime = KGlobal::locale()->formatTime( TQTime( 23, 59 ), _prefs->plainShowSeconds());
+    TQString maxLengthTime = TDEGlobal::locale()->formatTime( TQTime( 23, 59 ), _prefs->plainShowSeconds());
     return fontMetrics().width( maxLengthTime ) + 8;
 }
 
@@ -231,7 +231,7 @@ int PlainClock::preferedHeightForWidth(int /*w*/) const
 
 void PlainClock::updateClock()
 {
-    TQString newStr = KGlobal::locale()->formatTime(_applet->clockGetTime(), _prefs->plainShowSeconds());
+    TQString newStr = TDEGlobal::locale()->formatTime(_applet->clockGetTime(), _prefs->plainShowSeconds());
 
     if (_force || newStr != _timeStr) {
         _timeStr = newStr;
@@ -334,7 +334,7 @@ void DigitalClock::updateClock()
     if (_prefs->digitalShowSeconds())
         format += sep + "%02d";
 
-    if (KGlobal::locale()->use12Clock()) {
+    if (TDEGlobal::locale()->use12Clock()) {
         if (h > 12)
             h -= 12;
         else if( h == 0)
@@ -940,8 +940,8 @@ ClockApplet::~ClockApplet()
 {
     delete m_shadowEngine;
     //reverse for the moment
-    KGlobal::locale()->removeCatalogue("clockapplet");
-    KGlobal::locale()->removeCatalogue("timezones"); // For time zone translations
+    TDEGlobal::locale()->removeCatalogue("clockapplet");
+    TDEGlobal::locale()->removeCatalogue("timezones"); // For time zone translations
 
     if (_calendar)
     {
@@ -1019,7 +1019,7 @@ int ClockApplet::widthForHeight(int h) const
             {
                 // if the date format STARTS with a year, assume it's in descending
                 // order and should therefore PRECEED the date.
-                TQString dateFormat = KGlobal::locale()->dateFormatShort();
+                TQString dateFormat = TDEGlobal::locale()->dateFormatShort();
                 dateFirst = dateFormat.at(1) == 'y' || dateFormat.at(1) == 'Y';
             }
 
@@ -1508,7 +1508,7 @@ void ClockApplet::contextMenuActivated(int result)
         return;
     };
 
-    KProcess proc;
+    TDEProcess proc;
     switch (result)
     {
         case 102:
@@ -1519,13 +1519,13 @@ void ClockApplet::contextMenuActivated(int result)
             proc << "--nonewdcop";
             proc << TQString("%1 tde-clock.desktop --lang %2")
                 .arg(locate("exe", "kcmshell"))
-                .arg(KGlobal::locale()->language());
-            proc.start(KProcess::DontCare);
+                .arg(TDEGlobal::locale()->language());
+            proc.start(TDEProcess::DontCare);
             break;
         case 104:
             proc << locate("exe", "kcmshell");
             proc << "tde-language.desktop";
-            proc.start(KProcess::DontCare);
+            proc.start(TDEProcess::DontCare);
             break;
         case 110:
             preferences(true);
@@ -1540,7 +1540,7 @@ void ClockApplet::aboutToShowContextMenu()
     menu->clear();
     menu->insertTitle( SmallIcon( "clock" ), i18n( "Clock" ) );
 
-    KLocale *loc = KGlobal::locale();
+    KLocale *loc = TDEGlobal::locale();
     TQDateTime dt = TQDateTime::currentDateTime();
     dt = TQT_TQDATETIME_OBJECT(dt.addSecs(TZoffset));
 
@@ -1694,7 +1694,7 @@ void ClockApplet::positionChange(Position p)
 void ClockApplet::updateDateLabel(bool reLayout)
 {
     _lastDate = clockGetDate();
-    _dayOfWeek->setText(KGlobal::locale()->calendar()->weekDayName(_lastDate));
+    _dayOfWeek->setText(TDEGlobal::locale()->calendar()->weekDayName(_lastDate));
 
     if (zone->zoneIndex() != 0)
     {
@@ -1704,7 +1704,7 @@ void ClockApplet::updateDateLabel(bool reLayout)
     }
     else
     {
-        TQString dateStr = KGlobal::locale()->formatDate(_lastDate, true);
+        TQString dateStr = TDEGlobal::locale()->formatDate(_lastDate, true);
         _date->setText(dateStr);
         _date->setShown(showDate);
     }
@@ -1728,9 +1728,9 @@ void ClockApplet::updateKickerTip(KickerTip::Data& data)
     TQString activeZone = zone->zone();
     if (zoneCount == 0)
     {
-        TQString _time = KGlobal::locale()->formatTime(clockGetTime(),
+        TQString _time = TDEGlobal::locale()->formatTime(clockGetTime(),
                                                     _prefs->plainShowSeconds());
-        TQString _date = KGlobal::locale()->formatDate(clockGetDate(), false);
+        TQString _date = TDEGlobal::locale()->formatDate(clockGetDate(), false);
         data.message = _time;
         data.subtext = _date;
 
@@ -1754,9 +1754,9 @@ void ClockApplet::updateKickerTip(KickerTip::Data& data)
                 m_zone = i18n(m_zone.utf8()); // ensure it gets translated
             }
 
-            TQString _time = KGlobal::locale()->formatTime(clockGetTime(),
+            TQString _time = TDEGlobal::locale()->formatTime(clockGetTime(),
                                                           _prefs->plainShowSeconds());
-            TQString _date = KGlobal::locale()->formatDate(clockGetDate(), false);
+            TQString _date = TDEGlobal::locale()->formatDate(clockGetDate(), false);
 
             if (activeIndex == i)
             {
@@ -1840,11 +1840,11 @@ void ClockAppletToolTip::maybeTip( const TQPoint & /*point*/ )
          (m_clock->type() == Prefs::EnumType::Analog) )
     {
         // show full time (incl. hour) as tooltip for Fuzzy clock
-        tipText = KGlobal::locale()->formatDateTime(TQT_TQDATETIME_OBJECT(TQDateTime::currentDateTime().addSecs(m_clock->TZoffset)));
+        tipText = TDEGlobal::locale()->formatDateTime(TQT_TQDATETIME_OBJECT(TQDateTime::currentDateTime().addSecs(m_clock->TZoffset)));
     }
     else
     {
-        tipText = KGlobal::locale()->formatDate(m_clock->clockGetDate());
+        tipText = TDEGlobal::locale()->formatDate(m_clock->clockGetDate());
     }
 
     if (m_clock->timezones() && m_clock->timezones()->zoneIndex() > 0)

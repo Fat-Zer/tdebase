@@ -70,8 +70,8 @@ extern "C"
 {
     KDE_EXPORT KPanelApplet* init(TQWidget *parent, const TQString& configFile)
     {
-        KGlobal::locale()->insertCatalogue("clockapplet");
-        KGlobal::locale()->insertCatalogue("timezones"); // For time zone translations
+        TDEGlobal::locale()->insertCatalogue("clockapplet");
+        TDEGlobal::locale()->insertCatalogue("timezones"); // For time zone translations
         return new ClockApplet(configFile, KPanelApplet::Normal,
                                KPanelApplet::Preferences, parent, "clockapplet");
     }

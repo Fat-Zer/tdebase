@@ -145,7 +145,7 @@ unsigned long KDecorationOptionsPrivate::updateKWinSettings( KConfig* config )
     TQFont old_activeFontSmall = activeFontSmall;
     TQFont old_inactiveFontSmall = inactiveFontSmall;
 
-    TQFont activeFontGuess = KGlobalSettings::windowTitleFont();
+    TQFont activeFontGuess = TDEGlobalSettings::windowTitleFont();
 
     activeFont = config->readFontEntry("activeFont", &activeFontGuess);
     inactiveFont = config->readFontEntry("inactiveFont", &activeFont);

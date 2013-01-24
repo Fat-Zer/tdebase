@@ -98,7 +98,7 @@ void KFileIVI::invalidateThumb( int state, bool redraw )
 	    break;
     }
     d->icons = TQIconSet();
-    d->icons.setPixmap( KGlobal::iconLoader()->iconEffect()->
+    d->icons.setPixmap( TDEGlobal::iconLoader()->iconEffect()->
 			apply( d->thumb, KIcon::Desktop, state ),
 			TQIconSet::Large, mode );
     m_state = state;
@@ -206,7 +206,7 @@ void KFileIVI::setThumbnailPixmap( const TQPixmap & pixmap )
     // TQIconSet::reset() doesn't seem to clear the other generated pixmaps,
     // so we just create a blank TQIconSet here
     d->icons = TQIconSet();
-    d->icons.setPixmap( KGlobal::iconLoader()->iconEffect()->
+    d->icons.setPixmap( TDEGlobal::iconLoader()->iconEffect()->
 		    apply( pixmap, KIcon::Desktop, KIcon::DefaultState ),
 		    TQIconSet::Large, TQIconSet::Normal );
 
@@ -244,7 +244,7 @@ void KFileIVI::setEffect( int state )
     }
     // Do not update if the fingerprint is identical (prevents flicker)!
 
-    KIconEffect *effect = KGlobal::iconLoader()->iconEffect();
+    KIconEffect *effect = TDEGlobal::iconLoader()->iconEffect();
 
     bool haveEffect = effect->hasEffect( KIcon::Desktop, m_state ) !=
                       effect->hasEffect( KIcon::Desktop, state );
@@ -459,7 +459,7 @@ int KFileIVI::compare( TQIconViewItem *i ) const
 void KFileIVI::updatePixmapSize()
 {
     int size = m_size ? m_size :
-        KGlobal::iconLoader()->currentSize( KIcon::Desktop );
+        TDEGlobal::iconLoader()->currentSize( KIcon::Desktop );
 
     KonqIconViewWidget* view = static_cast<KonqIconViewWidget*>( iconView() );
 

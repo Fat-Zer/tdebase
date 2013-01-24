@@ -149,7 +149,7 @@ void PanelBrowserMenu::initialize()
     // only the first part menu got them
     if(_startid == 0 && !_filesOnly) {
        insertTitle(path());
-       KConfig *c = KGlobal::config();
+       KConfig *c = TDEGlobal::config();
        c->setGroup("menus");
        insertItem(CICON("kfm"), i18n("Open in File Manager"), this, TQT_SLOT(slotOpenFileManager()));
 	if (kapp->authorize("shell_access") && c->readBoolEntry("kickerOpenInTerminalIsVisible",false)) 
@@ -196,7 +196,7 @@ void PanelBrowserMenu::initialize()
                 if ( iconPath.startsWith("./") )
                     iconPath = path + '/' + iconPath.mid(2);
 
-                icon = KGlobal::iconLoader()->loadIcon(iconPath,
+                icon = TDEGlobal::iconLoader()->loadIcon(iconPath,
                                                        KIcon::Small, KIcon::SizeSmall,
                                                        KIcon::DefaultState, 0, true);
                 if(icon.isNull())
@@ -245,7 +245,7 @@ void PanelBrowserMenu::initialize()
 
                 TQString s = c.readEntry("Icon");
                 if(!_icons->contains(s)) {
-                    icon  = KGlobal::iconLoader()->loadIcon(s, KIcon::Small, KIcon::SizeSmall,
+                    icon  = TDEGlobal::iconLoader()->loadIcon(s, KIcon::Small, KIcon::SizeSmall,
                                                             KIcon::DefaultState, 0, true);
 
                     if(icon.isNull()) {
@@ -309,7 +309,7 @@ void PanelBrowserMenu::initialize()
     // WABA: tear off handles don't work together with dynamically updated
     // menus. We can't update the menu while torn off, and we don't know
     // when it is torn off.
-    if(KGlobalSettings::insertTearOffHandle() && item_count > 0)
+    if(TDEGlobalSettings::insertTearOffHandle() && item_count > 0)
         insertTearOffHandle();
 #endif
 
@@ -453,13 +453,13 @@ void PanelBrowserMenu::slotOpenTerminal()
     config->setGroup("General");
     TQString term = config->readPathEntry("TerminalApplication", "konsole");
 
-    KProcess proc;
+    TDEProcess proc;
     proc << term;
     if (term == "konsole")
       proc << "--workdir" << path();
     else
       proc.setWorkingDirectory(path());
-    proc.start(KProcess::DontCare);
+    proc.start(TDEProcess::DontCare);
 }
 
 void PanelBrowserMenu::slotOpenFileManager()

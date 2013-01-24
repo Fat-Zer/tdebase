@@ -46,7 +46,7 @@ Options::~Options()
 
 unsigned long Options::updateSettings()
     {
-    KConfig *config = KGlobal::config();
+    KConfig *config = TDEGlobal::config();
     unsigned long changed = 0;
     changed |= d->updateKWinSettings( config ); // read decoration settings
 

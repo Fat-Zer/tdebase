@@ -251,14 +251,14 @@ void URLGrabber::execute( const struct ClipCommand *command,
         if ( cmdLine.isEmpty() )
             return;
 
-        KProcess proc;
+        TDEProcess proc;
         const char *shell = getenv("KLIPPER_SHELL");
         if (shell==NULL) shell = getenv("SHELL");
         proc.setUseShell(true,shell);
 
         proc << cmdLine.stripWhiteSpace();
 
-        if ( !proc.start(KProcess::DontCare, KProcess::NoCommunication ))
+        if ( !proc.start(TDEProcess::DontCare, TDEProcess::NoCommunication ))
             tqWarning("Klipper: Couldn't start process!");
     }
 }

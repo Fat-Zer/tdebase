@@ -84,7 +84,7 @@ MenuTab::MenuTab( TQWidget *parent, const char* name )
     //connect(kcfg_ButtonFont, TQT_SIGNAL(fontSelected(const TQFont &)), TQT_SLOT(kmenuChanged()));
     connect(maxrecentdocs, TQT_SIGNAL(valueChanged(int)), this, TQT_SLOT(kmenuChanged()));
 
-    KIconLoader * ldr = KGlobal::iconLoader();
+    KIconLoader * ldr = TDEGlobal::iconLoader();
     TQPixmap kmenu_icon;
     m_kmenu_icon = KickerSettings::customKMenuIcon();
     if (m_kmenu_icon.isNull() == true) {
@@ -136,7 +136,7 @@ void MenuTab::load( bool useDefaults )
     TQStringList ext_default;
     ext_default << "prefmenu.desktop" << "systemmenu.desktop";
     TQStringList ext = c->readListEntry("Extensions", ext_default);
-    TQStringList dirs = KGlobal::dirs()->findDirs("data", "kicker/menuext");
+    TQStringList dirs = TDEGlobal::dirs()->findDirs("data", "kicker/menuext");
     kSubMenuItem* menuItem(0);
     for (TQStringList::ConstIterator dit=dirs.begin(); dit!=dirs.end(); ++dit)
     {
@@ -312,7 +312,7 @@ void MenuTab::launchIconEditor()
         return;
 
     m_kmenu_icon = newIcon;
-    KIconLoader * ldr = KGlobal::iconLoader();
+    KIconLoader * ldr = TDEGlobal::iconLoader();
     TQPixmap kmenu_icon;
     kmenu_icon = ldr->loadIcon(m_kmenu_icon, KIcon::Small, KIcon::SizeSmall);
     btnCustomKMenuIcon->setPixmap(kmenu_icon);

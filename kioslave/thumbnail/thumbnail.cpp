@@ -195,7 +195,7 @@ void ThumbnailProtocol::get(const KURL &url)
 #endif
 
     if (!iconSize)
-        iconSize = KGlobal::iconLoader()->currentSize(KIcon::Desktop);
+        iconSize = TDEGlobal::iconLoader()->currentSize(KIcon::Desktop);
     if (iconSize != m_iconSize)
         m_iconDict.clear();
     m_iconSize = iconSize;
@@ -206,7 +206,7 @@ void ThumbnailProtocol::get(const KURL &url)
 
     TQImage img;
 
-    KConfigGroup group( KGlobal::config(), "PreviewSettings" );
+    KConfigGroup group( TDEGlobal::config(), "PreviewSettings" );
 
     
     // ### KFMI
@@ -341,7 +341,7 @@ void ThumbnailProtocol::get(const KURL &url)
     }
 #endif
 
-    if ((flags & ThumbCreator::BlendIcon) && KGlobal::iconLoader()->alphaBlending(KIcon::Desktop))
+    if ((flags & ThumbCreator::BlendIcon) && TDEGlobal::iconLoader()->alphaBlending(KIcon::Desktop))
     {
         // blending the mimetype icon in
         TQImage icon = getIcon();

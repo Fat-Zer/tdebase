@@ -65,12 +65,12 @@ int main(int argc, char **argv)
 	}
 
 	TDEInstance inst(&aboutData);
-	KGlobal::config();
+	TDEGlobal::config();
 
 	KConfig *konfig;
         bool configMustDeleted = false;
 	if (file.isEmpty())
-	   konfig = KGlobal::config();
+	   konfig = TDEGlobal::config();
 	else
         {
 	   konfig = new KConfig(file, true, false);

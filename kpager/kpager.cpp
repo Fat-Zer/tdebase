@@ -122,7 +122,7 @@ extern bool closed_by_sm;
 
 bool KPagerMainWindow::queryClose()
 {
-    KConfig *cfg=KGlobal::config();
+    KConfig *cfg=TDEGlobal::config();
 
     cfg->setGroup("KPager");
     cfg->writeEntry("layoutType", static_cast<int>(m_pPager->m_layoutType));
@@ -227,7 +227,7 @@ KPager::KPager(KPagerMainWindow *parent, const char *name)
     connect(kapp, TQT_SIGNAL(backgroundChanged(int)),
             TQT_SLOT(slotBackgroundChanged(int)));
 
-    TQFont defFont(KGlobalSettings::generalFont().family(), 10, TQFont::Bold);
+    TQFont defFont(TDEGlobalSettings::generalFont().family(), 10, TQFont::Bold);
     defFont = cfg->readFontEntry("Font", &defFont);
     setFont(defFont);
 
@@ -356,7 +356,7 @@ void KPager::configureDialog()
     if (dialog->exec())
     {
         m_layoutType=static_cast<enum KPager::LayoutTypes>(KPagerConfigDialog::m_layoutType);
-	KConfig *cfg=KGlobal::config();
+	KConfig *cfg=TDEGlobal::config();
 	int nWd = (parent() ? ((TQWidget *)parent())->width() : width());
 	int nHg = (parent() ? ((TQWidget *)parent())->width() : width());
 

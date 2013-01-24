@@ -52,7 +52,7 @@ extern "C"
 {
   KDE_EXPORT KPanelApplet* init( TQWidget *parent, const TQString& configFile )
   {
-    KGlobal::locale()->insertCatalogue( "ksysguard" );
+    TDEGlobal::locale()->insertCatalogue( "ksysguard" );
     return new KSysGuardApplet( configFile, KPanelApplet::Normal,
                                 KPanelApplet::Preferences, parent,
                                 "ksysguardapplet" );
@@ -309,7 +309,7 @@ void KSysGuardApplet::resizeDocks( uint newDockCount )
 
 bool KSysGuardApplet::load()
 {
-  KStandardDirs* kstd = KGlobal::dirs();
+  KStandardDirs* kstd = TDEGlobal::dirs();
   kstd->addResourceType( "data", "share/apps/ksysguard" );
   TQString fileName = kstd->findResource( "data", "KSysGuardApplet.xml" );
 
@@ -458,7 +458,7 @@ bool KSysGuardApplet::save()
       ((KSGRD::SensorDisplay*)mDockList[ i ])->saveSettings( doc, element );
     }
 
-  KStandardDirs* kstd = KGlobal::dirs();
+  KStandardDirs* kstd = TDEGlobal::dirs();
   kstd->addResourceType( "data", "share/apps/ksysguard" );
   TQString fileName = kstd->saveLocation( "data", "ksysguard" );
   fileName += "/KSysGuardApplet.xml";

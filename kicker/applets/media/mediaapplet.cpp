@@ -35,7 +35,7 @@ extern "C"
 {
     KDE_EXPORT KPanelApplet* init( TQWidget *parent, const TQString configFile)
     {
-        KGlobal::locale()->insertCatalogue("mediaapplet");
+        TDEGlobal::locale()->insertCatalogue("mediaapplet");
         return new MediaApplet(configFile, KPanelApplet::Normal,
             KPanelApplet::About | KPanelApplet::Preferences,
             parent, "mediaapplet");
@@ -84,7 +84,7 @@ MediaApplet::~MediaApplet()
         delete b;
     }
     
-    KGlobal::locale()->removeCatalogue("mediaapplet");
+    TDEGlobal::locale()->removeCatalogue("mediaapplet");
 }
 
 void MediaApplet::about()

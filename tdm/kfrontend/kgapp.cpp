@@ -117,7 +117,7 @@ void GreeterApp::init()
 		startTimer( pingInterval * 60000 );
 	}
 
-	TDEHardwareDevices *hwdevices = KGlobal::hardwareDevices();
+	TDEHardwareDevices *hwdevices = TDEGlobal::hardwareDevices();
 	connect(hwdevices, TQT_SIGNAL(hardwareUpdated(TDEGenericDevice*)), this, TQT_SLOT(deviceChanged(TDEGenericDevice*)));
 }
 
@@ -202,11 +202,11 @@ kg_main( const char *argv0 )
 	TDEApplication::disableAutoDcopRegistration();
 	KCrash::setSafer( true );
 
-	KProcess *tsak = 0;
-	KProcess *proc = 0;
-	KProcess *comp = 0;
-	KProcess *dcop = 0;
-	KProcess *twin = 0;
+	TDEProcess *tsak = 0;
+	TDEProcess *proc = 0;
+	TDEProcess *comp = 0;
+	TDEProcess *dcop = 0;
+	TDEProcess *twin = 0;
 
 #ifdef BUILD_TSAK
 	trinity_desktop_lock_use_sak = _useSAK;
@@ -214,9 +214,9 @@ kg_main( const char *argv0 )
 	trinity_desktop_lock_use_sak = false;
 #endif
 	if (trinity_desktop_lock_use_sak) {
-		tsak = new KProcess;
+		tsak = new TDEProcess;
 		*tsak << TQCString( argv0, strrchr( argv0, '/' ) - argv0 + 2 ) + "tsak";
-		tsak->start(KProcess::Block, KProcess::AllOutput);
+		tsak->start(TDEProcess::Block, TDEProcess::AllOutput);
 	}
 	else {
 		remove(TSAK_FIFO_FILE);
@@ -329,7 +329,7 @@ kg_main( const char *argv0 )
 	SecureDisplay( dpy );
 	if (!_grabServer) {
 		if (_useBackground) {
-			proc = new KProcess;
+			proc = new TDEProcess;
 			*proc << TQCString( argv0, strrchr( argv0, '/' ) - argv0 + 2 ) + "krootimage";
 			*proc << _backgroundCfg;
 			proc->start();
@@ -339,20 +339,20 @@ kg_main( const char *argv0 )
 	}
 
 	if (!_compositor.isEmpty()) {
-		comp = new KProcess;
+		comp = new TDEProcess;
 		*comp << TQCString( argv0, strrchr( argv0, '/' ) - argv0 + 2 ) + _compositor.ascii();
-		comp->start(KProcess::NotifyOnExit, KProcess::Stdin);
+		comp->start(TDEProcess::NotifyOnExit, TDEProcess::Stdin);
 	}
 
 	if (!_windowManager.isEmpty()) {
 		if (_windowManager == "twin") {
 			// Special case
 			// Start DCOP...
-			dcop = new KProcess;
+			dcop = new TDEProcess;
 			*dcop << TQCString( argv0, strrchr( argv0, '/' ) - argv0 + 2 ) + "dcopserver" << TQCString("--suicide");
 			dcop->start();
 		}
-		twin = new KProcess;
+		twin = new TDEProcess;
 		*twin << TQCString( argv0, strrchr( argv0, '/' ) - argv0 + 2 ) + _windowManager.ascii();
 		twin->start();
 		has_twin = true;
@@ -384,7 +384,7 @@ kg_main( const char *argv0 )
 			cmd = G_Greet;
 		}
 
-		KProcess *proc2 = 0;
+		TDEProcess *proc2 = 0;
 		app->setOverrideCursor( Qt::WaitCursor );
 		FDialog *dialog = NULL;
 #ifdef XDMCP
@@ -440,7 +440,7 @@ kg_main( const char *argv0 )
 			TQCursor::setPos(oldCursorPos.x() + primaryScreenPosition.x(), oldCursorPos.y() + primaryScreenPosition.y());
 #endif
 			if (*_preloader) {
-				proc2 = new KProcess;
+				proc2 = new TDEProcess;
 				*proc2 << _preloader;
 				proc2->start();
 			}

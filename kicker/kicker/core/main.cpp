@@ -99,7 +99,7 @@ extern "C" KDE_EXPORT int kdemain( int argc, char ** argv )
 	}
     }
 
-    KGlobal::locale()->setMainCatalogue("kicker");
+    TDEGlobal::locale()->setMainCatalogue("kicker");
 
     TQCString appname;
     if (kicker_screen_number == 0)

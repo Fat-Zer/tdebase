@@ -134,7 +134,7 @@ void FontDialog::setupFontEncodingBox()
 	layout->addWidget( lDefaultEncoding, 0, 0 );
 	m_defaultEncoding = new KComboBox( false, gb );
 	layout->addWidget( m_defaultEncoding, 0, 1 );
-	TQStringList encodings = KGlobal::charsets()->availableEncodingNames();
+	TQStringList encodings = TDEGlobal::charsets()->availableEncodingNames();
 	encodings.prepend( i18n( "Use Language Encoding" ) );
 	m_defaultEncoding->insertStringList( encodings );
 	lDefaultEncoding->setBuddy( m_defaultEncoding );
@@ -157,8 +157,8 @@ void FontDialog::load()
 
 		TQStringList fonts = cfg->readListEntry( "Fonts" );
 		if ( fonts.isEmpty() )
-			fonts << KGlobalSettings::generalFont().family()
-			      << KGlobalSettings::fixedFont().family()
+			fonts << TDEGlobalSettings::generalFont().family()
+			      << TDEGlobalSettings::fixedFont().family()
 			      << HTML_DEFAULT_VIEW_SERIF_FONT
 			      << HTML_DEFAULT_VIEW_SANSSERIF_FONT
 			      << HTML_DEFAULT_VIEW_CURSIVE_FONT

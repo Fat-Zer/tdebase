@@ -22,7 +22,7 @@
 
 #include <kio/slavebase.h>
 
-class KProcess;
+class TDEProcess;
 
 /*!
   This class implements an ioslave for viewing CGI script output without the

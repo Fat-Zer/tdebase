@@ -371,7 +371,7 @@ void CSSConfig::slotPreview()
   // Show the preview
   PreviewDialog *dlg = new PreviewDialog(this, 0, true);
   dlg->preview->setPaper(back);
-  dlg->preview->viewport()->setFont(TQFont(KGlobalSettings::generalFont().family(), bfs));
+  dlg->preview->viewport()->setFont(TQFont(TDEGlobalSettings::generalFont().family(), bfs));
 
   dlg->exec();
 

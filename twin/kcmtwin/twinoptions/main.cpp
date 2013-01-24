@@ -39,7 +39,7 @@ extern "C"
 	KDE_EXPORT KCModule *create_twinfocus(TQWidget *parent, const char *name)
 	{
 		//CT there's need for decision: kwm or twin?
-		KGlobal::locale()->insertCatalogue("kcmkwm");
+		TDEGlobal::locale()->insertCatalogue("kcmkwm");
 		KConfig *c = new KConfig("twinrc", false, true);
 		return new KFocusConfig(true, c, parent, name);
 	}
@@ -47,14 +47,14 @@ extern "C"
 	KDE_EXPORT KCModule *create_twinactions(TQWidget *parent, const char *name)
 	{
 		//CT there's need for decision: kwm or twin?
-		KGlobal::locale()->insertCatalogue("kcmkwm");
+		TDEGlobal::locale()->insertCatalogue("kcmkwm");
 		return new KActionsOptions( parent, name);
 	}
 
 	KDE_EXPORT KCModule *create_twinmoving(TQWidget *parent, const char *name)
 	{
 		//CT there's need for decision: kwm or twin?
-		KGlobal::locale()->insertCatalogue("kcmkwm");
+		TDEGlobal::locale()->insertCatalogue("kcmkwm");
 		KConfig *c = new KConfig("twinrc", false, true);
 		return new KMovingConfig(true, c, parent, name);
 	}
@@ -62,7 +62,7 @@ extern "C"
 	KDE_EXPORT KCModule *create_twinadvanced(TQWidget *parent, const char *name)
 	{
 		//CT there's need for decision: kwm or twin?
-		KGlobal::locale()->insertCatalogue("kcmkwm");
+		TDEGlobal::locale()->insertCatalogue("kcmkwm");
 		KConfig *c = new KConfig("twinrc", false, true);
 		return new KAdvancedConfig(true, c, parent, name);
 	}
@@ -70,7 +70,7 @@ extern "C"
 	KDE_EXPORT KCModule *create_twintranslucency(TQWidget *parent, const char *name)
 	{
 		//CT there's need for decision: kwm or twin?
-		KGlobal::locale()->insertCatalogue("kcmkwm");
+		TDEGlobal::locale()->insertCatalogue("kcmkwm");
 		KConfig *c = new KConfig("twinrc", false, true);
 		return new KTranslucencyConfig(true, c, parent, name);
 	}
@@ -78,7 +78,7 @@ extern "C"
 	KDE_EXPORT KCModule *create_twinoptions ( TQWidget *parent, const char* name)
 	{
 		//CT there's need for decision: kwm or twin?
-		KGlobal::locale()->insertCatalogue("kcmkwm");
+		TDEGlobal::locale()->insertCatalogue("kcmkwm");
 		return new KWinOptions( parent, name);
 	}
 }

@@ -51,7 +51,7 @@ K_EXPORT_COMPONENT_FACTORY (kcm_history, KCMHistoryFactory("kcmhistory") )
 HistorySidebarConfig::HistorySidebarConfig( TQWidget *parent, const char* name, const TQStringList & )
     : KCModule (KCMHistoryFactory::instance(), parent, name)
 {
-    KGlobal::locale()->insertCatalogue("konqueror");
+    TDEGlobal::locale()->insertCatalogue("konqueror");
 
     m_settings = new KonqSidebarHistorySettings( 0, "history settings" );
     m_settings->readSettings( false );

@@ -34,7 +34,7 @@ QuartzConfig::QuartzConfig( KConfig* conf, TQWidget* parent )
 	: TQObject( parent )
 {
 	quartzConfig = new KConfig("twinquartzrc");
-	KGlobal::locale()->insertCatalogue("twin_clients");
+	TDEGlobal::locale()->insertCatalogue("twin_clients");
 	gb = new TQVBox( parent );
 	cbColorBorder = new TQCheckBox( 
 						i18n("Draw window frames using &titlebar colors"), gb );

@@ -32,7 +32,7 @@ extern "C"
 KDEDefaultConfig::KDEDefaultConfig( KConfig* conf, TQWidget* parent )
 	: TQObject( parent )
 {
-	KGlobal::locale()->insertCatalogue("twin_clients");
+	TDEGlobal::locale()->insertCatalogue("twin_clients");
 	highcolor = TQPixmap::defaultDepth() > 8;
 	gb = new TQVBox( parent );
         gb->setSpacing( KDialog::spacingHint() );

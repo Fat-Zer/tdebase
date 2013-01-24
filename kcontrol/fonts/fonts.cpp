@@ -162,7 +162,7 @@ void FontUseItem::readFont( bool useDefaults )
 
   bool deleteme = false;
   if (_rcfile.isEmpty())
-    config = KGlobal::config();
+    config = TDEGlobal::config();
   else
   {
     config = new KConfig(_rcfile, true);
@@ -182,7 +182,7 @@ void FontUseItem::writeFont()
   KConfigBase *config;
 
   if (_rcfile.isEmpty()) {
-    config = KGlobal::config();
+    config = TDEGlobal::config();
     config->setGroup(_rcgroup);
     config->writeEntry(_rckey, font(), true, true);
   } else {
@@ -713,7 +713,7 @@ void KFonts::save()
 
   for ( FontUseItem* i = fontUseList.first(); i; i = fontUseList.next() )
       i->writeFont();
-  KGlobal::config()->sync();
+  TDEGlobal::config()->sync();
 
   KConfig cfgfonts("kcmfonts");
   cfgfonts.setGroup("General");
@@ -729,7 +729,7 @@ void KFonts::save()
       proc << "xrdb" << "-quiet" << "-remove" << "-nocpp";
       proc.writeStdin( TQCString( "Xft.dpi" ), true );
       proc.closeWhenDone();
-      proc.start( KProcess::Block );
+      proc.start( TDEProcess::Block );
   }
 
   // KDE-1.x support

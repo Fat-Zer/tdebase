@@ -77,9 +77,9 @@ int main( int argc, char* argv[] )
         {    
 	if( hostname != "localhost" )
             {
-    	    KProcess proc;
+    	    TDEProcess proc;
 	    proc << "xon" << hostname << "kill" << pid;
-    	    proc.start( KProcess::DontCare );
+    	    proc.start( TDEProcess::DontCare );
 	    }
 	else
 	    ::kill( pid, SIGKILL );

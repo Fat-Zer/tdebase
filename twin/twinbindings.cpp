@@ -160,7 +160,7 @@
 	DEF( I18N_NOOP("Desktop Screenshot"),                  CTRL+Qt::Key_Print, WIN+Qt::Key_Print, slotGrabDesktop() );
 #ifdef IN_KWIN
         {
-        KGlobalAccel* keys = disable_shortcuts_keys;
+        TDEGlobalAccel* keys = disable_shortcuts_keys;
 #endif
         DEF( I18N_NOOP("Block Global Shortcuts"),            0, 0, slotDisableGlobalShortcuts());
 #ifdef IN_KWIN

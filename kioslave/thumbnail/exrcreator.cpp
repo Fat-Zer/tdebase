@@ -62,7 +62,7 @@ bool EXRCreator::create(const TQString &path, int, int, TQImage &img)
 	// EXR images just to turn it into an icon, so we go back
 	// to honouring it in here.
 	kdDebug() << "EXRcreator - using original image" << endl;
-	KConfig * config = KGlobal::config();
+	KConfig * config = TDEGlobal::config();
 	KConfigGroupSaver cgs( config, "PreviewSettings" );
 	unsigned long long maxSize = config->readNumEntry( "MaximumSize", 1024*1024 /* 1MB */ );
 	unsigned long long fileSize = TQFile( path ).size();

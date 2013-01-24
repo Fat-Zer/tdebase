@@ -205,7 +205,7 @@ SearchEngine::SearchEngine( View *destination )
     mProc( 0 ), mSearchRunning( false ), mView( destination ),
     mRootTraverser( 0 )
 {
-  mLang = KGlobal::locale()->language().left( 2 );
+  mLang = TDEGlobal::locale()->language().left( 2 );
 }
 
 SearchEngine::~SearchEngine()
@@ -215,7 +215,7 @@ SearchEngine::~SearchEngine()
 
 bool SearchEngine::initSearchHandlers()
 {
-  TQStringList resources = KGlobal::dirs()->findAllResources(
+  TQStringList resources = TDEGlobal::dirs()->findAllResources(
     "appdata", "searchhandlers/*.desktop" );
   TQStringList::ConstIterator it;
   for( it = resources.begin(); it != resources.end(); ++it ) {
@@ -246,7 +246,7 @@ bool SearchEngine::initSearchHandlers()
   return true;
 }
 
-void SearchEngine::searchStdout(KProcess *, char *buffer, int len)
+void SearchEngine::searchStdout(TDEProcess *, char *buffer, int len)
 {
   if ( !buffer || len == 0 )
     return;
@@ -262,7 +262,7 @@ void SearchEngine::searchStdout(KProcess *, char *buffer, int len)
   free(p);
 }
 
-void SearchEngine::searchStderr(KProcess *, char *buffer, int len)
+void SearchEngine::searchStderr(TDEProcess *, char *buffer, int len)
 {
   if ( !buffer || len == 0 )
     return;
@@ -270,7 +270,7 @@ void SearchEngine::searchStderr(KProcess *, char *buffer, int len)
   mStderr.append( TQString::fromUtf8( buffer, len ) );
 }
 
-void SearchEngine::searchExited(KProcess *)
+void SearchEngine::searchExited(TDEProcess *)
 {
   kdDebug() << "Search terminated" << endl;
   mSearchRunning = false;
@@ -293,7 +293,7 @@ bool SearchEngine::search( TQString words, TQString method, int matches,
   if ( method == "or" ) mOperation = Or;
   else mOperation = And;
 
-  KConfig *cfg = KGlobal::config();
+  KConfig *cfg = TDEGlobal::config();
   cfg->setGroup( "Search" );
   TQString commonSearchProgram = cfg->readPathEntry( "CommonProgram" );
   bool useCommon = cfg->readBoolEntry( "UseCommonProgram", false );
@@ -320,7 +320,7 @@ bool SearchEngine::search( TQString words, TQString method, int matches,
 
     return true;
   } else {
-    TQString lang = KGlobal::locale()->language().left(2);
+    TQString lang = TDEGlobal::locale()->language().left(2);
 
     if ( lang.lower() == "c" || lang.lower() == "posix" )
 	  lang = "en";
@@ -340,7 +340,7 @@ bool SearchEngine::search( TQString words, TQString method, int matches,
 
     kdDebug() << "Common Search: " << commonSearchProgram << endl;
 
-    mProc = new KProcess();
+    mProc = new TDEProcess();
 
     TQStringList cmd = TQStringList::split( " ", commonSearchProgram );
     TQStringList::ConstIterator it;
@@ -352,18 +352,18 @@ bool SearchEngine::search( TQString words, TQString method, int matches,
       *mProc << arg.utf8();
     }
 
-    connect( mProc, TQT_SIGNAL( receivedStdout( KProcess *, char *, int ) ),
-             TQT_SLOT( searchStdout( KProcess *, char *, int ) ) );
-    connect( mProc, TQT_SIGNAL( receivedStderr( KProcess *, char *, int ) ),
-             TQT_SLOT( searchStderr( KProcess *, char *, int ) ) );
-    connect( mProc, TQT_SIGNAL( processExited( KProcess * ) ),
-             TQT_SLOT( searchExited( KProcess * ) ) );
+    connect( mProc, TQT_SIGNAL( receivedStdout( TDEProcess *, char *, int ) ),
+             TQT_SLOT( searchStdout( TDEProcess *, char *, int ) ) );
+    connect( mProc, TQT_SIGNAL( receivedStderr( TDEProcess *, char *, int ) ),
+             TQT_SLOT( searchStderr( TDEProcess *, char *, int ) ) );
+    connect( mProc, TQT_SIGNAL( processExited( TDEProcess * ) ),
+             TQT_SLOT( searchExited( TDEProcess * ) ) );
 
     mSearchRunning = true;
     mSearchResult = "";
     mStderr = "<b>" + commonSearchProgram + "</b>\n\n";
 
-    mProc->start(KProcess::NotifyOnExit, KProcess::All);
+    mProc->start(TDEProcess::NotifyOnExit, TDEProcess::All);
 
     while (mSearchRunning && mProc->isRunning())
       kapp->processEvents();

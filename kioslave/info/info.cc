@@ -25,7 +25,7 @@ InfoProtocol::InfoProtocol( const TQCString &pool, const TQCString &app )
 {
     kdDebug( 7108 ) << "InfoProtocol::InfoProtocol" << endl;
 
-    m_perl = KGlobal::dirs()->findExe( "perl" );
+    m_perl = TDEGlobal::dirs()->findExe( "perl" );
     m_infoScript = locate( "data", "kio_info/kde-info2html" );
     m_infoConf = locate("data", "kio_info/kde-info2html.conf");
 
@@ -92,21 +92,21 @@ void InfoProtocol::get( const KURL& url )
     // extract the path and node from url
     decodeURL( url );
 
-    TQString path = KGlobal::iconLoader()->iconPath("up", KIcon::Toolbar, true);
+    TQString path = TDEGlobal::iconLoader()->iconPath("up", KIcon::Toolbar, true);
     int revindex = path.findRev('/');
     path = path.left(revindex);
 
-    TQString cmd = KProcess::quote(m_perl);
+    TQString cmd = TDEProcess::quote(m_perl);
     cmd += " ";
-    cmd += KProcess::quote(m_infoScript);
+    cmd += TDEProcess::quote(m_infoScript);
     cmd += " ";
-    cmd += KProcess::quote(m_infoConf);
+    cmd += TDEProcess::quote(m_infoConf);
     cmd += " ";
-    cmd += KProcess::quote(path);
+    cmd += TDEProcess::quote(path);
     cmd += " ";
-    cmd += KProcess::quote(m_page);
+    cmd += TDEProcess::quote(m_page);
     cmd += " ";
-    cmd += KProcess::quote(m_node);
+    cmd += TDEProcess::quote(m_node);
 
     kdDebug( 7108 ) << "cmd: " << cmd << endl;
 

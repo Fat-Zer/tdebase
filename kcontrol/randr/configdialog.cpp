@@ -35,7 +35,7 @@
 
 #include "configdialog.h"
 
-ConfigDialog::ConfigDialog(KGlobalAccel *accel,
+ConfigDialog::ConfigDialog(TDEGlobalAccel *accel,
                             bool isApplet )
     : KDialogBase( Tabbed, i18n("Configure"),
                     Ok | Cancel | Help,

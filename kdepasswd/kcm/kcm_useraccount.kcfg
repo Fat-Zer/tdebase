@@ -9,7 +9,7 @@
 	<group name="X-*-Greeter">
 		<entry name="faceDir" type="Path">
 			<default code="true">
-				KGlobal::dirs()->resourceDirs("data").last() + "tdm/faces"  + '/'
+				TDEGlobal::dirs()->resourceDirs("data").last() + "tdm/faces"  + '/'
 			</default>
 		</entry>
 		<entry name="UserFaceDir" type="Path">

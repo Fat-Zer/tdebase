@@ -205,7 +205,7 @@ void Voice::set_shortcut( const KShortcut &shortcut)
     if( !_enabled )
         return;
     if(!_kga)
-        _kga = new KGlobalAccel( this );	
+        _kga = new TDEGlobalAccel( this );	
     _kga->remove("voice");
 
 	_kga->insert( "voice", i18n("Voice"), TQString::null,  shortcut, 0, this, TQT_SLOT(slot_key_pressed())) ;

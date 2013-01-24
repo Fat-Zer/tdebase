@@ -62,7 +62,7 @@ Desktop::Desktop( int desk, TQString desktopName, TQWidget *parent, const char *
   setBackgroundMode(NoBackground);
 
   if (m_desk==1) Desktop::m_windowPixmaps.setAutoDelete(true);
-  KConfig *cfg= KGlobal::config();
+  KConfig *cfg= TDEGlobal::config();
   m_transparentMode=static_cast<WindowTransparentMode>
       (cfg->readNumEntry("windowTransparentMode", c_defWindowTransparentMode));
   resize(67, 50);
@@ -466,11 +466,11 @@ void Desktop::paintEvent( TQPaintEvent * )
 
 	// set font
 	if (sname) {
-	    TQFont f(KGlobalSettings::generalFont().family(), 10, TQFont::Bold);
+	    TQFont f(TDEGlobalSettings::generalFont().family(), 10, TQFont::Bold);
 	    p.setFont(f);
 	}
 	else {
-	    TQFont f(KGlobalSettings::generalFont().family(), 12, TQFont::Bold);
+	    TQFont f(TDEGlobalSettings::generalFont().family(), 12, TQFont::Bold);
 	    p.setFont(f);
 	}
 

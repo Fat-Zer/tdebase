@@ -215,7 +215,7 @@ TQStringList AppTreeView::fileList(const TQString& rPath)
     TQStringList filelist;
 
     // loop through all resource dirs and build a file list
-    TQStringList resdirlist = KGlobal::dirs()->resourceDirs("apps");
+    TQStringList resdirlist = TDEGlobal::dirs()->resourceDirs("apps");
     for (TQStringList::ConstIterator it = resdirlist.begin(); it != resdirlist.end(); ++it)
     {
         TQDir dir((*it) + "/" + relativePath);
@@ -254,7 +254,7 @@ TQStringList AppTreeView::dirList(const TQString& rPath)
     TQStringList dirlist;
 
     // loop through all resource dirs and build a subdir list
-    TQStringList resdirlist = KGlobal::dirs()->resourceDirs("apps");
+    TQStringList resdirlist = TDEGlobal::dirs()->resourceDirs("apps");
     for (TQStringList::ConstIterator it = resdirlist.begin(); it != resdirlist.end(); ++it)
     {
         TQDir dir((*it) + "/" + relativePath);

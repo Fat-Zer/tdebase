@@ -96,26 +96,26 @@ Kicker::Kicker()
     dcopClient()->setDefaultObject("Panel");
     disableSessionManagement();
     TQString dataPathBase = KStandardDirs::kde_default("data").append("kicker/");
-    KGlobal::dirs()->addResourceType("mini", dataPathBase + "pics/mini");
-    KGlobal::dirs()->addResourceType("icon", dataPathBase + "pics");
-    KGlobal::dirs()->addResourceType("builtinbuttons", dataPathBase + "builtins");
-    KGlobal::dirs()->addResourceType("specialbuttons", dataPathBase + "menuext");
-    KGlobal::dirs()->addResourceType("applets", dataPathBase + "applets");
-    KGlobal::dirs()->addResourceType("tiles", dataPathBase + "tiles");
-    KGlobal::dirs()->addResourceType("extensions", dataPathBase +  "extensions");
+    TDEGlobal::dirs()->addResourceType("mini", dataPathBase + "pics/mini");
+    TDEGlobal::dirs()->addResourceType("icon", dataPathBase + "pics");
+    TDEGlobal::dirs()->addResourceType("builtinbuttons", dataPathBase + "builtins");
+    TDEGlobal::dirs()->addResourceType("specialbuttons", dataPathBase + "menuext");
+    TDEGlobal::dirs()->addResourceType("applets", dataPathBase + "applets");
+    TDEGlobal::dirs()->addResourceType("tiles", dataPathBase + "tiles");
+    TDEGlobal::dirs()->addResourceType("extensions", dataPathBase +  "extensions");
 
     KImageIO::registerFormats();
 
-    KGlobal::iconLoader()->addExtraDesktopThemes();
+    TDEGlobal::iconLoader()->addExtraDesktopThemes();
 
-    KGlobal::locale()->insertCatalogue("tdmgreet");
-    KGlobal::locale()->insertCatalogue("libkonq");
-    KGlobal::locale()->insertCatalogue("libdmctl");
-    KGlobal::locale()->insertCatalogue("libtaskbar");
+    TDEGlobal::locale()->insertCatalogue("tdmgreet");
+    TDEGlobal::locale()->insertCatalogue("libkonq");
+    TDEGlobal::locale()->insertCatalogue("libdmctl");
+    TDEGlobal::locale()->insertCatalogue("libtaskbar");
 
     // initialize our keys
     // note that this creates the KMenu by calling MenuManager::the()
-    keys = new KGlobalAccel( TQT_TQOBJECT(this) );
+    keys = new TDEGlobalAccel( TQT_TQOBJECT(this) );
 #define KICKER_ALL_BINDINGS
 #include "kickerbindings.cpp"
     keys->readSettings();
@@ -197,7 +197,7 @@ void Kicker::slotSettingsChanged(int category)
 
 void Kicker::paletteChanged()
 {
-    KConfigGroup c(KGlobal::config(), "General");
+    KConfigGroup c(TDEGlobal::config(), "General");
     KickerSettings::setTintColor(c.readColorEntry("TintColor",
                                            &palette().active().mid()));
     KickerSettings::self()->writeConfig();
@@ -227,7 +227,7 @@ void Kicker::configure()
 {
     static bool notFirstConfig = false;
 
-    KConfig* c = KGlobal::config();
+    KConfig* c = TDEGlobal::config();
     c->reparseConfiguration();
     c->setGroup("General");
     m_canAddContainers = !c->entryIsImmutable("Applets2");

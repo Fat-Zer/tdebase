@@ -36,8 +36,8 @@ public:
     virtual void listDir(const KURL& url);
     virtual void stat(const KURL& url);
 protected slots:
-    void slotGetStdOutput(KProcess*, char*, int);
-    void slotSetDataStdOutput(KProcess*, char *s, int len);
+    void slotGetStdOutput(TDEProcess*, char*, int);
+    void slotSetDataStdOutput(TDEProcess*, char *s, int len);
 protected:
     TQString prepareHP(const KURL& _url);
     TQValueList<KIO::UDSAtom> makeUDS(const TQString& _line);
@@ -47,7 +47,7 @@ protected:
 
     KIO::filesize_t processedBytes;
     TQString standardOutputStream;
-    KProcess* myKProcess;
+    TDEProcess* myTDEProcess;
 
     //for debugging
     //TQFile* logFile;

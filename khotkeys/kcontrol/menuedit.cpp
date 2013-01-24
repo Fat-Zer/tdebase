@@ -39,7 +39,7 @@ static TQObject* owner = NULL;
 void khotkeys_init()
     {
     // I hope this works
-    KGlobal::locale()->insertCatalogue("khotkeys");
+    TDEGlobal::locale()->insertCatalogue("khotkeys");
     // CHECKME hack
     assert( owner == NULL );
     owner = new TQObject;

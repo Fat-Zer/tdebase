@@ -26,7 +26,7 @@
 #include <tqobject.h>
 #include <tqtimer.h>
 
-class KProcess;
+class TDEProcess;
 
 namespace KHC {
 
@@ -44,9 +44,9 @@ class IndexBuilder : public QObject
 
   protected slots:
     void buildIndices();
-    void slotProcessExited( KProcess * );
-    void slotReceivedStdout( KProcess *, char *buffer, int buflen );
-    void slotReceivedStderr( KProcess *, char *buffer, int buflen );
+    void slotProcessExited( TDEProcess * );
+    void slotReceivedStdout( TDEProcess *, char *buffer, int buflen );
+    void slotReceivedStderr( TDEProcess *, char *buffer, int buflen );
 
   private:
     TQString m_cmdFile;

@@ -131,7 +131,7 @@ Navigator::Navigator( View *view, TQWidget *parent, const char *name )
       hideSearch();
     } else {
       mSearchWidget->updateScopeList();
-      mSearchWidget->readConfig( KGlobal::config() );
+      mSearchWidget->readConfig( TDEGlobal::config() );
     }
 
     connect( mTabWidget, TQT_SIGNAL( currentChanged( QWidget * ) ),
@@ -591,7 +591,7 @@ void Navigator::hideSearch()
 
 bool Navigator::checkSearchIndex()
 {
-  KConfig *cfg = KGlobal::config();
+  KConfig *cfg = TDEGlobal::config();
   cfg->setGroup( "Search" );
   if ( cfg->readBoolEntry( "IndexExists", false ) ) return true;
 
@@ -626,7 +626,7 @@ KURL Navigator::homeURL()
 {
   if ( !mHomeUrl.isEmpty() ) return mHomeUrl;
 
-  KConfig *cfg = KGlobal::config();
+  KConfig *cfg = TDEGlobal::config();
   // We have to reparse the configuration here in order to get a
   // language-specific StartUrl, e.g. "StartUrl[de]".
   cfg->reparseConfiguration();

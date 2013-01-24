@@ -1154,7 +1154,7 @@ void Theme2k::initUi()
   mText-&gt;setFixedHeight( 48 );
 
   setFixedSize( vbox-&gt;sizeHint() );
-  QRect rect(KGlobalSettings::splashScreenDesktopGeometry());
+  QRect rect(TDEGlobalSettings::splashScreenDesktopGeometry());
   move( rect.x() + (rect.width() - size().width())/2,
         rect.y() + (rect.height() - size().height())/2 );
 }

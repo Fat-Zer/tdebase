@@ -182,12 +182,12 @@ void NonKDEAppButton::dropEvent(TQDropEvent *ev)
                 deskFile.setDesktopGroup();
 
                 // ... and add it to the exec string
-                execStr += KProcess::quote(deskFile.readURL()) + " ";
+                execStr += TDEProcess::quote(deskFile.readURL()) + " ";
             }
             else
             {
                 // it's just a URL of some sort, add it directly to the exec
-                execStr += KProcess::quote(url.path()) + " ";
+                execStr += TDEProcess::quote(url.path()) + " ";
             }
         }
 
@@ -223,7 +223,7 @@ void NonKDEAppButton::runCommand(const TQString& execStr)
         // run in a terminal? ok! we find this in the config file in the
         // [misc] group (this will usually be in kdeglobal, actually, which
         // get merged into the application config automagically for us
-        KConfig *config = KGlobal::config();
+        KConfig *config = TDEGlobal::config();
         config->setGroup("misc");
         TQString termStr = config->readPathEntry("Terminal", "konsole");
 

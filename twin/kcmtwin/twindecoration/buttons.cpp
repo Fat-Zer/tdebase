@@ -607,7 +607,7 @@ void ButtonDropSite::drawContents( TQPainter* p )
 	TQColor c1( 0x0A, 0x5F, 0x89 );		// KDE 2 titlebar default colour
 	p->fillRect( r, c1 );
 	p->setPen( Qt::white );
-	p->setFont( TQFont( KGlobalSettings::generalFont().family(), 12, TQFont::Bold) );
+	p->setFont( TQFont( TDEGlobalSettings::generalFont().family(), 12, TQFont::Bold) );
 	p->drawText( r, AlignLeft | AlignVCenter, i18n("KDE") );
 
 	offset = geometry().width() - 3 - rightoffset;

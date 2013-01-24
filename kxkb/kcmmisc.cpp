@@ -528,14 +528,14 @@ void set_repeatrate(int delay, double rate)
   else
      r = (int)floor(rate + 0.5);
 
-  TQString exe = KGlobal::dirs()->findExe("xset");
+  TQString exe = TDEGlobal::dirs()->findExe("xset");
   if (exe.isEmpty())
     return;
 
-  KProcess p;
+  TDEProcess p;
   p << exe << "r" << "rate" << TQString::number(delay) << TQString::number(r);
   
-  p.start(KProcess::Block);
+  p.start(TDEProcess::Block);
 }
 #endif
 

@@ -41,7 +41,7 @@ KonquerorProfilesMenu::KonquerorProfilesMenu(TQWidget *parent, const char *name,
 {
     static bool tdeprintIconsInitialized = false;
     if ( !tdeprintIconsInitialized ) {
-        KGlobal::iconLoader()->addAppDir("tdeprint");
+        TDEGlobal::iconLoader()->addAppDir("tdeprint");
         tdeprintIconsInitialized = true;
     }
 }
@@ -55,7 +55,7 @@ void KonquerorProfilesMenu::initialize()
    if (initialized()) clear();
    setInitialized(true);
 
-   TQStringList profiles = KGlobal::dirs()->findAllResources( "data", "konqueror/profiles/*", false, true );
+   TQStringList profiles = TDEGlobal::dirs()->findAllResources( "data", "konqueror/profiles/*", false, true );
 
    m_profiles.resize(profiles.count());
    int id=1;

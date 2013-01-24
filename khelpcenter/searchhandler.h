@@ -38,7 +38,7 @@ class SearchJob
 
     DocEntry *mEntry;
   
-    KProcess *mProcess;
+    TDEProcess *mProcess;
     KIO::Job *mKioJob;
     
     TQString mCmd;
@@ -71,9 +71,9 @@ class SearchHandler : public QObject
     bool checkBinary( const TQString &cmd ) const;
 
   protected slots:
-    void searchStdout( KProcess *proc, char *buffer, int buflen );
-    void searchStderr( KProcess *proc, char *buffer, int buflen );
-    void searchExited( KProcess *proc ); 
+    void searchStdout( TDEProcess *proc, char *buffer, int buflen );
+    void searchStderr( TDEProcess *proc, char *buffer, int buflen );
+    void searchExited( TDEProcess *proc ); 
 
     void slotJobResult( KIO::Job *job );
     void slotJobData( KIO::Job *, const TQByteArray &data );
@@ -88,7 +88,7 @@ class SearchHandler : public QObject
     TQString mIndexCommand;
     TQStringList mDocumentTypes;
 
-    TQMap<KProcess *,SearchJob *> mProcessJobs;
+    TQMap<TDEProcess *,SearchJob *> mProcessJobs;
     TQMap<KIO::Job *,SearchJob *> mKioJobs;
 };
 

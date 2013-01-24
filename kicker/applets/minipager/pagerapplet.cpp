@@ -75,7 +75,7 @@ extern "C"
 {
     KDE_EXPORT KPanelApplet* init(TQWidget *parent, const TQString& configFile)
     {
-      KGlobal::locale()->insertCatalogue("kminipagerapplet");
+      TDEGlobal::locale()->insertCatalogue("kminipagerapplet");
       return new KMiniPager(configFile, KPanelApplet::Normal, 0, parent, "kminipagerapplet");
     }
 }
@@ -112,7 +112,7 @@ KMiniPager::KMiniPager(const TQString& configFile, Type type, int actions,
     m_group->setFrameStyle(TQFrame::NoFrame);
     m_group->setExclusive( true );
 
-    setFont( KGlobalSettings::taskbarFont() );
+    setFont( TDEGlobalSettings::taskbarFont() );
 
     m_twin = new KWinModule(TQT_TQOBJECT(this));
     m_activeWindow = m_twin->activeWindow();
@@ -164,7 +164,7 @@ KMiniPager::KMiniPager(const TQString& configFile, Type type, int actions,
 
 KMiniPager::~KMiniPager()
 {
-    KGlobal::locale()->removeCatalogue("kminipagerapplet");
+    TDEGlobal::locale()->removeCatalogue("kminipagerapplet");
     delete m_contextMenu;
     delete m_settings;
     delete m_shadowEngine;
@@ -897,10 +897,10 @@ void KMiniPager::showPager()
         TQString strAppPath(locate("exe", "kpager"));
         if (!strAppPath.isEmpty())
         {
-            KProcess process;
+            TDEProcess process;
             process << strAppPath;
             process << "--hidden";
-            process.start(KProcess::DontCare);
+            process.start(TDEProcess::DontCare);
         }
     }
 }

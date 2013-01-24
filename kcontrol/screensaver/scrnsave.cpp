@@ -82,8 +82,8 @@ KScreenSaver::KScreenSaver(TQWidget *parent, const char *name, const TQStringLis
     mTesting = false;
 
     // Add non-TDE path
-    KGlobal::dirs()->addResourceType("scrsav",
-                                     KGlobal::dirs()->kde_default("apps") +
+    TDEGlobal::dirs()->addResourceType("scrsav",
+                                     TDEGlobal::dirs()->kde_default("apps") +
                                      "apps/ScreenSavers/");
 
     setQuickHelp( i18n("<h1>Screen Saver</h1> This module allows you to enable and"
@@ -107,19 +107,19 @@ KScreenSaver::KScreenSaver(TQWidget *parent, const char *name, const TQStringLis
       kdDebug() << "relPath=" << relPath << endl;
     }
 
-    KGlobal::dirs()->addResourceType("scrsav",
-                                     KGlobal::dirs()->kde_default("apps") +
+    TDEGlobal::dirs()->addResourceType("scrsav",
+                                     TDEGlobal::dirs()->kde_default("apps") +
                                      relPath);
 
     readSettings( false );
 
-    mSetupProc = new KProcess;
-    connect(mSetupProc, TQT_SIGNAL(processExited(KProcess *)),
-            this, TQT_SLOT(slotSetupDone(KProcess *)));
+    mSetupProc = new TDEProcess;
+    connect(mSetupProc, TQT_SIGNAL(processExited(TDEProcess *)),
+            this, TQT_SLOT(slotSetupDone(TDEProcess *)));
 
-    mPreviewProc = new KProcess;
-    connect(mPreviewProc, TQT_SIGNAL(processExited(KProcess *)),
-            this, TQT_SLOT(slotPreviewExited(KProcess *)));
+    mPreviewProc = new TDEProcess;
+    connect(mPreviewProc, TQT_SIGNAL(processExited(TDEProcess *)),
+            this, TQT_SLOT(slotPreviewExited(TDEProcess *)));
 
     TQBoxLayout *topLayout = new TQHBoxLayout(this, 0, KDialog::spacingHint());
 
@@ -465,7 +465,7 @@ void KScreenSaver::save()
 void KScreenSaver::findSavers()
 {
     if ( !mNumLoaded ) {
-        mSaverFileList = KGlobal::dirs()->findAllResources("scrsav",
+        mSaverFileList = TDEGlobal::dirs()->findAllResources("scrsav",
                             "*.desktop", false, true);
         new TQListViewItem ( mSaverListView, i18n("Loading...") );
         if ( mSaverFileList.isEmpty() )
@@ -562,7 +562,7 @@ void KScreenSaver::setMonitor()
 
 //---------------------------------------------------------------------------
 //
-void KScreenSaver::slotPreviewExited(KProcess *)
+void KScreenSaver::slotPreviewExited(TDEProcess *)
 {
     // Ugly hack to prevent continual respawning of savers that crash
     if (mSelected == mPrevSelected)
@@ -754,7 +754,7 @@ void KScreenSaver::slotTest()
         return;
 
     if (!mTestProc) {
-        mTestProc = new KProcess;
+        mTestProc = new TDEProcess;
     }
 
     mTestProc->clearArguments();
@@ -800,7 +800,7 @@ void KScreenSaver::slotTest()
         }
 
 	mTesting = true;
-        mTestProc->start(KProcess::NotifyOnExit);
+        mTestProc->start(TDEProcess::NotifyOnExit);
     }
 }
 
@@ -851,7 +851,7 @@ void KScreenSaver::slotLock( bool l )
 
 //---------------------------------------------------------------------------
 //
-void KScreenSaver::slotSetupDone(KProcess *)
+void KScreenSaver::slotSetupDone(TDEProcess *)
 {
     mPrevSelected = -1;  // see ugly hack in slotPreviewExited()
     setMonitor();

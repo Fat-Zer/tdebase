@@ -34,7 +34,7 @@ extern "C"
 {
     KDE_EXPORT KPanelApplet* init(TQWidget *parent, const TQString& configFile)
     {
-        KGlobal::locale()->insertCatalogue("klipper");
+        TDEGlobal::locale()->insertCatalogue("klipper");
         int actions = KPanelApplet::Preferences | KPanelApplet::About | KPanelApplet::Help;
         return new KlipperApplet(configFile, KPanelApplet::Normal, actions, parent, "klipper");
     }

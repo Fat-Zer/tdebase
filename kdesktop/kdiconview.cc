@@ -154,7 +154,7 @@ KDIconView::KDIconView( TQWidget *parent, const char* name )
     setIconArea( desktopRect() );  // the default is the whole desktop
 
     // Initialise the shadow data objects...
-    m_shadowEngine = new KShadowEngine(new KDesktopShadowSettings(KGlobal::config()));
+    m_shadowEngine = new KShadowEngine(new KDesktopShadowSettings(TDEGlobal::config()));
 
     // Initialize media handler
     mMediaListView = new TQListView();
@@ -164,7 +164,7 @@ KDIconView::KDIconView( TQWidget *parent, const char* name )
 
     setURL( desktopURL() ); // sets m_url
 
-    m_desktopDirs = KGlobal::dirs()->findDirs( "appdata", "Desktop" );
+    m_desktopDirs = TDEGlobal::dirs()->findDirs( "appdata", "Desktop" );
     initDotDirectories();
 
     connect( this, TQT_SIGNAL( executed( TQIconViewItem * ) ),
@@ -278,14 +278,14 @@ void KDIconView::initConfig( bool init )
         KDesktopSettings::self()->readConfig();
     }
 
-    KConfig * config = KGlobal::config();
+    KConfig * config = TDEGlobal::config();
 
     if ( !init ) {
       KDesktopShadowSettings *shadowSettings = static_cast<KDesktopShadowSettings *>(m_shadowEngine->shadowSettings());
       shadowSettings->setConfig(config);
     }
 
-    setMaySetWallpaper(!config->isImmutable() && !KGlobal::dirs()->isRestrictedResource("wallpaper"));
+    setMaySetWallpaper(!config->isImmutable() && !TDEGlobal::dirs()->isRestrictedResource("wallpaper"));
     m_bShowDot = KDesktopSettings::showHidden();
     m_bVertAlign = KDesktopSettings::vertAlign();
     TQStringList oldPreview = previewSettings();
@@ -490,7 +490,7 @@ void KDIconView::setAutoAlign( bool b )
     // Auto line-up icons
     if ( b ) {
         // set maxItemWidth to ensure sane initial icon layout before the auto align code is fully activated
-        int sz = iconSize() ? iconSize() : KGlobal::iconLoader()->currentSize( KIcon::Desktop );
+        int sz = iconSize() ? iconSize() : TDEGlobal::iconLoader()->currentSize( KIcon::Desktop );
         setMaxItemWidth( QMAX( QMAX( sz, previewIconSize( iconSize() ) ), KonqFMSettings::settings()->iconTextWidth() ) );
         setFont( font() );  // Force calcRect()
 
@@ -505,7 +505,7 @@ void KDIconView::setAutoAlign( bool b )
     }
     else {
         // change maxItemWidth, because when grid-align was active, it changed this for the grid
-        int sz = iconSize() ? iconSize() : KGlobal::iconLoader()->currentSize( KIcon::Desktop );
+        int sz = iconSize() ? iconSize() : TDEGlobal::iconLoader()->currentSize( KIcon::Desktop );
         setMaxItemWidth( QMAX( QMAX( sz, previewIconSize( iconSize() ) ), KonqFMSettings::settings()->iconTextWidth() ) );
         setFont( font() );  // Force calcRect()
 
@@ -587,7 +587,7 @@ void KDIconView::recheckDesktopURL()
 KURL KDIconView::desktopURL()
 {
     // Support both paths and URLs
-    TQString desktopPath = KGlobalSettings::desktopPath();
+    TQString desktopPath = TDEGlobalSettings::desktopPath();
     if (kdesktop_screen_number != 0) {
         TQString dn = "Desktop";
         dn += TQString::number(kdesktop_screen_number);
@@ -1540,7 +1540,7 @@ void KDIconView::contentsDropEvent( TQDropEvent * e )
     bool isImageDrag = TQImageDrag::canDecode(e);
     bool isUrlDrag = KURLDrag::canDecode(e);
 
-    bool isImmutable = KGlobal::config()->isImmutable();
+    bool isImmutable = TDEGlobal::config()->isImmutable();
 
     if ( (isColorDrag || isImageDrag) && !isUrlDrag ) {
         // Hack to clear the drag shape

@@ -579,7 +579,7 @@ bool CFcEngine::draw(const KURL &url, int w, int h, TQPixmap &pix, int faceNo, b
                     if(1==itsSizes.size())
                         title=i18n("%1 [1 pixel]", "%1 [%n pixels]", itsSizes[0]).arg(title);
 
-                    painter.setFont(KGlobalSettings::generalFont());
+                    painter.setFont(TDEGlobalSettings::generalFont());
                     painter.setPen(Qt::black);
                     y=painter.fontMetrics().height();
                     drawText(painter, x, y, w-offset, title);

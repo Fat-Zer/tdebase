@@ -136,7 +136,7 @@ void KonqFileTip::reposition()
     // 4+: none
     m_corner = 0;
     // should the tooltip be shown to the left or to the right of the ivi ?
-    TQRect desk = KGlobalSettings::desktopGeometry(rect.center());
+    TQRect desk = TDEGlobalSettings::desktopGeometry(rect.center());
     if (rect.center().x() + width() > desk.right())
     {
         // to the left

@@ -689,7 +689,7 @@ void PositionTab::showIdentify()
 
         TQLabel *screenLabel = new TQLabel(0,"Screen Identify", (WFlags)(WDestructiveClose | WStyle_Customize | WX11BypassWM) );
 
-        TQFont identifyFont(KGlobalSettings::generalFont());
+        TQFont identifyFont(TDEGlobalSettings::generalFont());
         identifyFont.setPixelSize(100);
         screenLabel->setFont(identifyFont);
 

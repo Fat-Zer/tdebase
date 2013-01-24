@@ -29,7 +29,7 @@
 #include <tqregexp.h>
 
 class TDEInstance;
-class KProcess;
+class TDEProcess;
 
 /*
  This filter takes care of hostnames in the local search domain.
@@ -59,7 +59,7 @@ class LocalDomainURIFilter : public KURIFilterPlugin, public DCOPObject
     TQRegExp m_hostPortPattern;
 
   private slots:
-    void receiveOutput( KProcess *, char *, int );
+    void receiveOutput( TDEProcess *, char *, int );
 };
 
 #endif

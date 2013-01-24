@@ -74,7 +74,7 @@ TDMUsersWidget::TDMUsersWidget(TQWidget *parent, const char *name)
     // We assume that $kde_datadir/tdm exists, but better check for pics/ and pics/users,
     // and create them if necessary.
     config->setGroup( "X-*-Greeter" );
-    m_userPixDir = config->readEntry( "FaceDir", KGlobal::dirs()->resourceDirs("data").last() + "tdm/faces" ) + '/';
+    m_userPixDir = config->readEntry( "FaceDir", TDEGlobal::dirs()->resourceDirs("data").last() + "tdm/faces" ) + '/';
     m_notFirst = false;
     TQDir testDir( m_userPixDir );
     if ( !testDir.exists() && !testDir.mkdir( testDir.absPath() ) && !geteuid() )
@@ -301,7 +301,7 @@ void TDMUsersWidget::changeUserPix(const TQString &pix)
 void TDMUsersWidget::slotUserButtonClicked()
 {
     KFileDialog dlg(m_notFirst ? TQString::null :
-	KGlobal::dirs()->resourceDirs("data").last() + "tdm/pics/users",
+	TDEGlobal::dirs()->resourceDirs("data").last() + "tdm/pics/users",
                     KImageIO::pattern( KImageIO::Reading ),
                     this, 0, true);
     dlg.setOperationMode( KFileDialog::Opening );

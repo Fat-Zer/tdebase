@@ -27,7 +27,7 @@
 
 #include "tdeprintfax.h"
 
-class KProcess;
+class TDEProcess;
 class TQTextEdit;
 
 class FaxCtrl : public TQObject
@@ -48,8 +48,8 @@ signals:
 	void faxSent(bool);
 
 protected slots:
-	void slotReceivedStdout(KProcess*, char*, int);
-	void slotProcessExited(KProcess*);
+	void slotReceivedStdout(TDEProcess*, char*, int);
+	void slotProcessExited(TDEProcess*);
 	void cleanTempFiles();
 	void slotClearLog();
 	void slotCloseLog();
@@ -63,7 +63,7 @@ protected:
 	void addLogTitle( const TQString& );
 
 private:
-	KProcess	*m_process;
+	TDEProcess	*m_process;
 	TQString		m_log, m_command;
 	TQStringList	m_files, m_filteredfiles, m_tempfiles;
 	TQTextEdit	*m_logview;

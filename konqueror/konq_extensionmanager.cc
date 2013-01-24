@@ -61,7 +61,7 @@ KonqExtensionManager::KonqExtensionManager(TQWidget *parent, KonqMainWindow *mai
 
 	// There's a limitation of KPluginSelector here... It assumes that all plugins in a given widget (as created by addPlugins)
 	// have their config in the same KConfig[Group]. So we can't show konqueror extensions and khtml extensions in the same tab.
-	d->pluginSelector->addPlugins("konqueror", i18n("Extensions"), "Extensions", KGlobal::config());
+	d->pluginSelector->addPlugins("konqueror", i18n("Extensions"), "Extensions", TDEGlobal::config());
 	if ( activePart ) {
 		TDEInstance* instance = activePart->instance();
 		d->pluginSelector->addPlugins(instance->instanceName(), i18n("Tools"), "Tools", instance->config());
@@ -100,7 +100,7 @@ void KonqExtensionManager::apply()
 		setChanged(false);
 		if( d->mainWindow )
 		{
-			KParts::Plugin::loadPlugins(TQT_TQOBJECT(d->mainWindow), d->mainWindow, KGlobal::instance());
+			KParts::Plugin::loadPlugins(TQT_TQOBJECT(d->mainWindow), d->mainWindow, TDEGlobal::instance());
 			TQPtrList<KParts::Plugin> plugins = KParts::Plugin::pluginObjects(TQT_TQOBJECT(d->mainWindow));
 			TQPtrListIterator<KParts::Plugin> it(plugins);
 			KParts::Plugin *plugin;

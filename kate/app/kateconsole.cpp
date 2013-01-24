@@ -70,7 +70,7 @@ void KateConsole::loadConsoleIfNeeded()
 
   setFocusProxy(m_part->widget());
 
-  KGlobal::locale()->insertCatalogue("konsole");
+  TDEGlobal::locale()->insertCatalogue("konsole");
 
   m_part->widget()->show();
 

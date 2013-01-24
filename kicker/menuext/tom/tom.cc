@@ -64,7 +64,7 @@ extern "C"
 {
     KDE_EXPORT void* init_kickermenu_tom()
     {
-        KGlobal::locale()->insertCatalogue("libkickermenu_tom");
+        TDEGlobal::locale()->insertCatalogue("libkickermenu_tom");
         return new TOMFactory;
     }
 };
@@ -180,7 +180,7 @@ TOM::TOM(TQWidget *parent, const char *name)
     setCaption(i18n("Task-Oriented Menu"));
 
     // KMenu legacy: support some menu config options
-    KConfig* config = KGlobal::config();
+    KConfig* config = TDEGlobal::config();
     config->setGroup("menus");
     m_detailedTaskEntries = config->readBoolEntry("DetailedMenuEntries", false);
     if (m_detailedTaskEntries)
@@ -438,7 +438,7 @@ void TOM::initialize()
     // TASKS
     insertTitle(i18n("Tasks"), contextMenuTitleID);
 
-    TQStringList dirs = KGlobal::dirs()->findDirs("data", "kicker/tom/");
+    TQStringList dirs = TDEGlobal::dirs()->findDirs("data", "kicker/tom/");
     TQStringList::ConstIterator dIt = dirs.begin();
     TQStringList::ConstIterator dEnd = dirs.end();
 
@@ -516,7 +516,7 @@ void TOM::initialize()
     }
 
 
-    KConfig* config = KGlobal::config();
+    KConfig* config = TDEGlobal::config();
     TQStringList menu_ext = config->readListEntry("Extensions");
     if (!menu_ext.isEmpty())
     {
@@ -628,7 +628,7 @@ void TOM::removeTask()
  *
 bool TOM::loadSidePixmap()
 {
-  KConfig *config = KGlobal::config();
+  KConfig *config = TDEGlobal::config();
   TQColor color = palette().active().highlight();
   TQImage image;
 

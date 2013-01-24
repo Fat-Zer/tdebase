@@ -44,7 +44,7 @@ BackTrace::BackTrace(const KrashConfig *krashconf, TQObject *parent,
   : TQObject(parent, name),
     m_krashconf(krashconf), m_temp(NULL), m_temp_cmd(NULL)
 {
-  m_proc = new KProcess;
+  m_proc = new TDEProcess;
 }
 
 BackTrace::~BackTrace()
@@ -123,7 +123,7 @@ void BackTrace::start()
   }
 
   // start the debugger
-  m_proc = new KProcess;
+  m_proc = new TDEProcess;
   m_proc->setUseShell(true);
 
   if (need_root_access == false) {
@@ -133,15 +133,15 @@ void BackTrace::start()
     *m_proc << "tdesu -t --comment \"" << i18n("Administrative access is required to generate a backtrace") << "\" -c \"" << m_temp_cmd->name() << "\"";
   }
 
-  connect(m_proc, TQT_SIGNAL(receivedStdout(KProcess*, char*, int)),
-          TQT_SLOT(slotReadInput(KProcess*, char*, int)));
-  connect(m_proc, TQT_SIGNAL(processExited(KProcess*)),
-          TQT_SLOT(slotProcessExited(KProcess*)));
+  connect(m_proc, TQT_SIGNAL(receivedStdout(TDEProcess*, char*, int)),
+          TQT_SLOT(slotReadInput(TDEProcess*, char*, int)));
+  connect(m_proc, TQT_SIGNAL(processExited(TDEProcess*)),
+          TQT_SLOT(slotProcessExited(TDEProcess*)));
 
-  m_proc->start ( KProcess::NotifyOnExit, KProcess::All );
+  m_proc->start ( TDEProcess::NotifyOnExit, TDEProcess::All );
 }
 
-void BackTrace::slotReadInput(KProcess *, char* buf, int buflen)
+void BackTrace::slotReadInput(TDEProcess *, char* buf, int buflen)
 {
   TQString newstr = TQString::fromLocal8Bit(buf, buflen);
   newstr.replace("\n\n", "\n");
@@ -156,7 +156,7 @@ void BackTrace::slotReadInput(KProcess *, char* buf, int buflen)
   }
 }
 
-void BackTrace::slotProcessExited(KProcess *proc)
+void BackTrace::slotProcessExited(TDEProcess *proc)
 {
   // start it again
   kill(m_krashconf->pid(), SIGCONT);

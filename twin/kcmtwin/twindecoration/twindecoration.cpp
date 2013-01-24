@@ -399,7 +399,7 @@ KWinDecorationModule::~KWinDecorationModule()
 // And insert these into a DecorationInfo structure
 void KWinDecorationModule::findDecorations()
 {
-	TQStringList dirList = KGlobal::dirs()->findDirs("data", "twin");
+	TQStringList dirList = TDEGlobal::dirs()->findDirs("data", "twin");
 	TQStringList::ConstIterator it;
 
 	for (it = dirList.begin(); it != dirList.end(); it++)
@@ -819,13 +819,13 @@ void KWinDecorationModule::writeConfig( KConfig* conf )
 		wmExecutableName.truncate(descStart);
 	}
 	if (conf->readEntry("WMExecutable", "twin") != wmExecutableName) {
-		KProcess newWMProc;
+		TDEProcess newWMProc;
 		TQStringList wmstartupcommand;
 		wmstartupcommand.split(" ", thirdpartyWMArguments->text());
 		wmstartupcommand.prepend(wmExecutableName);
 		wmstartupcommand.append("--replace");
 		newWMProc << wmstartupcommand;
-		newWMProc.start(KProcess::DontCare, KProcess::NoCommunication);
+		newWMProc.start(TDEProcess::DontCare, TDEProcess::NoCommunication);
 		newWMProc.detach();
 	}
 	conf->writeEntry("WMExecutable", wmExecutableName);

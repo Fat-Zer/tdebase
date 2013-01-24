@@ -112,7 +112,7 @@ extern "C" KDE_EXPORT int kdemain( int argc, char **argv )
     signal(SIGHUP,  signalHandler);
 
     {
-        if (KGlobalSettings::isMultiHead())
+        if (TDEGlobalSettings::isMultiHead())
         {
        	    Display *dpy = XOpenDisplay(NULL);
 	    if (! dpy) {
@@ -156,7 +156,7 @@ extern "C" KDE_EXPORT int kdemain( int argc, char **argv )
 	}
     }
 
-    KGlobal::locale()->setMainCatalogue("kdesktop");
+    TDEGlobal::locale()->setMainCatalogue("kdesktop");
 
     if (kdesktop_screen_number == 0) {
         kdesktop_name = "kdesktop";

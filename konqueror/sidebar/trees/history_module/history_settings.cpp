@@ -46,7 +46,7 @@ void KonqSidebarHistorySettings::readSettings(bool global)
     TQString oldgroup;
 
     if (global) {
-      config = KGlobal::config();
+      config = TDEGlobal::config();
       oldgroup= config->group();
     }
     else

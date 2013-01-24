@@ -117,9 +117,9 @@ void KCacheConfigDialog::configChanged()
 
 void KCacheConfigDialog::slotClearCache()
 {
-  KProcess process;
+  TDEProcess process;
   process << "kio_http_cache_cleaner" << "--clear-all";
-  process.start(KProcess::DontCare);
+  process.start(TDEProcess::DontCare);
   // Cleaning up might take a while. Better detach.
   process.detach();
 }

@@ -491,7 +491,7 @@ protected slots:
   void slotForwardActivated( int id );
   void slotGoHistoryDelayed();
 
-  void slotCompletionModeChanged( KGlobalSettings::Completion );
+  void slotCompletionModeChanged( TDEGlobalSettings::Completion );
   void slotMakeCompletion( const TQString& );
   void slotSubstringcompletion( const TQString& );
   void slotRotation( KCompletionBase::KeyBindingType );

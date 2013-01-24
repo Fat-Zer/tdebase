@@ -287,7 +287,7 @@ void Sidebar::setSplitter (Splitter *sp)
 {
   m_splitter = sp;
   m_ownSplit = new Splitter ((position() == KMultiTabBar::Top || position() == KMultiTabBar::Bottom) ? Qt::Horizontal : Qt::Vertical, m_splitter);
-  m_ownSplit->setOpaqueResize( KGlobalSettings::opaqueResize() );
+  m_ownSplit->setOpaqueResize( TDEGlobalSettings::opaqueResize() );
   m_ownSplit->setChildrenCollapsible( false );
   m_splitter->setResizeMode( m_ownSplit, TQSplitter::KeepSize );
   m_ownSplit->hide ();
@@ -673,7 +673,7 @@ MainWindow::MainWindow (TQWidget* parentWidget, const char* name)
   m_sidebars[KMultiTabBar::Left] = new Sidebar (KMultiTabBar::Left, this, hb);
 
   m_hSplitter = new Splitter (Qt::Horizontal, hb);
-  m_hSplitter->setOpaqueResize( KGlobalSettings::opaqueResize() );
+  m_hSplitter->setOpaqueResize( TDEGlobalSettings::opaqueResize() );
 
   m_sidebars[KMultiTabBar::Left]->setSplitter (m_hSplitter);
 
@@ -683,7 +683,7 @@ MainWindow::MainWindow (TQWidget* parentWidget, const char* name)
   m_sidebars[KMultiTabBar::Top] = new Sidebar (KMultiTabBar::Top, this, vb);
 
   m_vSplitter = new Splitter (Qt::Vertical, vb);
-  m_vSplitter->setOpaqueResize( KGlobalSettings::opaqueResize() );
+  m_vSplitter->setOpaqueResize( TDEGlobalSettings::opaqueResize() );
 
   m_sidebars[KMultiTabBar::Top]->setSplitter (m_vSplitter);
 

@@ -56,7 +56,7 @@ TrashImpl::TrashImpl() :
     m_lastId( 0 ),
     m_homeDevice( 0 ),
     m_trashDirectoriesScanned( false ),
-    m_mibEnum( KGlobal::locale()->fileEncodingMib() ),
+    m_mibEnum( TDEGlobal::locale()->fileEncodingMib() ),
     // not using kio_trashrc since KIO uses that one already for kio_trash
     // so better have a separate one, for faster parsing by e.g. kmimetype.cpp
     m_config( "trashrc" )
@@ -132,7 +132,7 @@ bool TrashImpl::init()
     // see also kdesktop/init.cc for first time initialization
     m_initStatus = InitError;
     // $XDG_DATA_HOME/Trash, i.e. ~/.local/share/Trash by default.
-    const TQString xdgDataDir = KGlobal::dirs()->localxdgdatadir();
+    const TQString xdgDataDir = TDEGlobal::dirs()->localxdgdatadir();
     if ( !KStandardDirs::makeDir( xdgDataDir, 0700 ) ) {
         kdWarning() << "failed to create " << xdgDataDir << endl;
         return false;
@@ -161,7 +161,7 @@ bool TrashImpl::init()
 void TrashImpl::migrateOldTrash()
 {
     kdDebug() << k_funcinfo << endl;
-    const TQString oldTrashDir = KGlobalSettings::trashPath();
+    const TQString oldTrashDir = TDEGlobalSettings::trashPath();
     const TQStrList entries = listDir( oldTrashDir );
     bool allOK = true;
     TQStrListIterator entryIt( entries );

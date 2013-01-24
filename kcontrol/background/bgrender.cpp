@@ -53,7 +53,7 @@ KBackgroundRenderer::KBackgroundRenderer(int desk, int screen, bool drawBackgrou
     m_State = 0;
     m_isBusyCursor = false;
     m_enableBusyCursor = false;
-    m_pDirs = KGlobal::dirs();
+    m_pDirs = TDEGlobal::dirs();
     m_rSize = m_Size = drawBackgroundPerScreen ? TDEApplication::desktop()->screenGeometry(screen).size() : TDEApplication::desktop()->geometry().size();
     m_pProc = 0L;
     m_Tempfile = 0L;
@@ -238,8 +238,8 @@ int KBackgroundRenderer::doBackground(bool quit)
         delete m_pProc;
         m_pProc = new KShellProcess;
         *m_pProc << file;
-        connect(m_pProc, TQT_SIGNAL(processExited(KProcess *)),
-                TQT_SLOT(slotBackgroundDone(KProcess *)));
+        connect(m_pProc, TQT_SIGNAL(processExited(TDEProcess *)),
+                TQT_SLOT(slotBackgroundDone(TDEProcess *)));
         m_pProc->start(KShellProcess::NotifyOnExit);
         retval = Wait;
         break;
@@ -741,7 +741,7 @@ void KBackgroundRenderer::blend(TQImage& dst, TQRect dr, const TQImage& src, TQP
 
 
 
-void KBackgroundRenderer::slotBackgroundDone(KProcess *process)
+void KBackgroundRenderer::slotBackgroundDone(TDEProcess *process)
 {
     Q_ASSERT(process == m_pProc);
     m_State |= BackgroundDone;

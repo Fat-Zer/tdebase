@@ -39,7 +39,7 @@ KShellCommandExecutor::KShellCommandExecutor(const TQString& command, TQWidget* 
 ,m_writeNotifier(0)
 {
    setTextFormat(PlainText);
-   setFont( KGlobalSettings::fixedFont() );
+   setFont( TDEGlobalSettings::fixedFont() );
 }
 
 KShellCommandExecutor::~KShellCommandExecutor()

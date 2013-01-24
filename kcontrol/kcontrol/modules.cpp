@@ -189,7 +189,7 @@ void ConfigModule::runAsRoot()
   TQString tdesu = KStandardDirs::findExe("tdesu");
   if (!tdesu.isEmpty())
     {
-      _rootProcess = new KProcess;
+      _rootProcess = new TDEProcess;
       *_rootProcess << tdesu;
       *_rootProcess << "--nonewdcop";
       // We have to disable the keep-password feature because
@@ -198,15 +198,15 @@ void ConfigModule::runAsRoot()
       // We also don't have a way to close the module in that case.
       *_rootProcess << "--n"; // Don't keep password.
       if (kdeshell) {
-         *_rootProcess << TQString("%1 %2 --embed %3 --lang %4").arg(locate("exe", "kcmshell")).arg(cmd).arg(_embedWidget->winId()).arg(KGlobal::locale()->language());
+         *_rootProcess << TQString("%1 %2 --embed %3 --lang %4").arg(locate("exe", "kcmshell")).arg(cmd).arg(_embedWidget->winId()).arg(TDEGlobal::locale()->language());
       }
       else {
-         *_rootProcess << TQString("%1 --embed %2 --lang %3").arg(cmd).arg(_embedWidget->winId()).arg( KGlobal::locale()->language() );
+         *_rootProcess << TQString("%1 --embed %2 --lang %3").arg(cmd).arg(_embedWidget->winId()).arg( TDEGlobal::locale()->language() );
       }
 
-      connect(_rootProcess, TQT_SIGNAL(processExited(KProcess*)), this, TQT_SLOT(rootExited(KProcess*)));
+      connect(_rootProcess, TQT_SIGNAL(processExited(TDEProcess*)), this, TQT_SLOT(rootExited(TDEProcess*)));
 
-      if ( !_rootProcess->start(KProcess::NotifyOnExit) )
+      if ( !_rootProcess->start(TDEProcess::NotifyOnExit) )
       {
           delete _rootProcess;
           _rootProcess = 0L;
@@ -226,7 +226,7 @@ void ConfigModule::runAsRoot()
 }
 
 
-void ConfigModule::rootExited(KProcess *)
+void ConfigModule::rootExited(TDEProcess *)
 {
   if (_embedWidget->embeddedWinId())
     XDestroyWindow(tqt_xdisplay(), _embedWidget->embeddedWinId());

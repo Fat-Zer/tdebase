@@ -53,7 +53,7 @@
     </entry>
 <!-- fontopts.cpp -->
     <entry key="StandardFont" type="Font"> <!--LIBKONQ-->
-      <default code="true">KGlobalSettings::generalFont()</default> 
+      <default code="true">TDEGlobalSettings::generalFont()</default> 
       <label>Standard font</label>
       <whatsthis>This is the font used to display text in Konqueror windows.</whatsthis>
       <!-- checked -->
@@ -580,7 +580,7 @@ PATH_JAVA
       <!-- checked -->
     </entry>
     <entry name="SettingsCompletionMode" key="CompletionMode" type="Enum">
-      <default code="true">KGlobalSettings::completionMode()</default> 
+      <default code="true">TDEGlobalSettings::completionMode()</default> 
       <label></label>
       <whatsthis></whatsthis>
     </entry>

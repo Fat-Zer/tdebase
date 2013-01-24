@@ -439,7 +439,7 @@ void SensorDisplay::setSensorOk( bool ok )
     if ( mErrorIndicator )
       return;
 
-    TQPixmap errorIcon = KGlobal::iconLoader()->loadIcon( "connect_creating", KIcon::Desktop,
+    TQPixmap errorIcon = TDEGlobal::iconLoader()->loadIcon( "connect_creating", KIcon::Desktop,
                                                           KIcon::SizeSmall );
     if ( !mPlotterWdg )
       return;

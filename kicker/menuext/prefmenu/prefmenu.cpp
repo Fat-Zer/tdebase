@@ -182,7 +182,7 @@ void PrefMenu::mouseMoveEvent(TQMouseEvent * ev)
 
         case KST_KServiceGroup:
         {
-            icon = KGlobal::iconLoader()->loadIcon(static_cast<KServiceGroup*>(e)->icon(),
+            icon = TDEGlobal::iconLoader()->loadIcon(static_cast<KServiceGroup*>(e)->icon(),
                                                    KIcon::Small);
             url = "programs:/" + static_cast<KServiceGroup*>(e)->relPath();
             break;

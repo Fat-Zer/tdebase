@@ -40,7 +40,7 @@ extern "C"
 {
   KDE_EXPORT KPanelApplet*  init(TQWidget * parent, const TQString & configFile)
   {
-    KGlobal::locale()->insertCatalogue("naughtyapplet");
+    TDEGlobal::locale()->insertCatalogue("naughtyapplet");
 
     return new NaughtyApplet
       (
@@ -63,7 +63,7 @@ NaughtyApplet::NaughtyApplet
 )
   : KPanelApplet(configFile, t, actions, parent, name)
 {
-  KGlobal::iconLoader()->addAppDir("naughtyapplet");
+  TDEGlobal::iconLoader()->addAppDir("naughtyapplet");
   setBackgroundOrigin( AncestorOrigin );
 
   button_ = new SimpleButton(this);
@@ -99,7 +99,7 @@ NaughtyApplet::NaughtyApplet
 
 NaughtyApplet::~NaughtyApplet()
 {
-    KGlobal::locale()->removeCatalogue("naughtyapplet");
+    TDEGlobal::locale()->removeCatalogue("naughtyapplet");
 }
 
   void

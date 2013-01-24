@@ -52,7 +52,7 @@ KdmLabel::KdmLabel( KdmItem *parent, const TQDomNode &node, const char *name )
 	label.prelight.present = false;
 	label.maximumWidth = -1;
 
-	const TQString locale = KGlobal::locale()->language();
+	const TQString locale = TDEGlobal::locale()->language();
 
 	// Read LABEL ID
 	TQDomNode n = node;
@@ -267,8 +267,8 @@ KdmLabel::lookupText( const TQString &t )
 	m['d'] = TQString::number( KThemedGreeter::timedDelay );
 	m['s'] = KThemedGreeter::timedUser;
 	// xgettext:no-c-format
-	KGlobal::locale()->setDateFormat( i18n("date format", "%a %d %B") );
-	m['c'] = KGlobal::locale()->formatDateTime( TQDateTime::currentDateTime(), false, false );
+	TDEGlobal::locale()->setDateFormat( i18n("date format", "%a %d %B") );
+	m['c'] = TDEGlobal::locale()->formatDateTime( TQDateTime::currentDateTime(), false, false );
 
 	return KMacroExpander::expandMacros( text, m );
 }

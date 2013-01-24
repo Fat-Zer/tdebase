@@ -49,20 +49,20 @@ bool SensorShellAgent::start( const TQString &host, const TQString &shell,
                               const TQString &command, int )
 {
   mRetryCount = 3;
-  mDaemon = new KProcess;
+  mDaemon = new TDEProcess;
   mDaemon->setUseShell(true);
   setHostName( host );
   mShell = shell;
   mCommand = command;
 
-  connect( mDaemon, TQT_SIGNAL( processExited( KProcess* ) ),
-           TQT_SLOT( daemonExited( KProcess* ) ) );
-  connect( mDaemon, TQT_SIGNAL( receivedStdout( KProcess*, char*, int ) ),
-           TQT_SLOT( msgRcvd( KProcess*, char*, int ) ) );
-  connect( mDaemon, TQT_SIGNAL( receivedStderr( KProcess*, char*, int ) ),
-           TQT_SLOT( errMsgRcvd( KProcess*, char*, int ) ) );
-  connect( mDaemon, TQT_SIGNAL( wroteStdin( KProcess* ) ),
-           TQT_SLOT( msgSent( KProcess* ) ) );
+  connect( mDaemon, TQT_SIGNAL( processExited( TDEProcess* ) ),
+           TQT_SLOT( daemonExited( TDEProcess* ) ) );
+  connect( mDaemon, TQT_SIGNAL( receivedStdout( TDEProcess*, char*, int ) ),
+           TQT_SLOT( msgRcvd( TDEProcess*, char*, int ) ) );
+  connect( mDaemon, TQT_SIGNAL( receivedStderr( TDEProcess*, char*, int ) ),
+           TQT_SLOT( errMsgRcvd( TDEProcess*, char*, int ) ) );
+  connect( mDaemon, TQT_SIGNAL( wroteStdin( TDEProcess* ) ),
+           TQT_SLOT( msgSent( TDEProcess* ) ) );
 
   TQString cmd;
   if ( !command.isEmpty() )
@@ -71,7 +71,7 @@ bool SensorShellAgent::start( const TQString &host, const TQString &shell,
     cmd = mShell + " " + hostName() + " ksysguardd";
   *mDaemon << cmd;
 
-  if ( !mDaemon->start( KProcess::NotifyOnExit, KProcess::All ) ) {
+  if ( !mDaemon->start( TDEProcess::NotifyOnExit, TDEProcess::All ) ) {
     sensorManager()->hostLost( this );
     kdDebug (1215) << "Command '" << cmd << "' failed"  << endl;
     return false;
@@ -88,7 +88,7 @@ void SensorShellAgent::hostInfo( TQString &shell, TQString &command,
   port = -1;
 }
 
-void SensorShellAgent::msgSent( KProcess* )
+void SensorShellAgent::msgSent( TDEProcess* )
 {
   setTransmitting( false );
 
@@ -96,7 +96,7 @@ void SensorShellAgent::msgSent( KProcess* )
   executeCommand();
 }
 
-void SensorShellAgent::msgRcvd( KProcess*, char *buffer, int buflen )
+void SensorShellAgent::msgRcvd( TDEProcess*, char *buffer, int buflen )
 {
   if ( !buffer || buflen == 0 )
     return;
@@ -106,7 +106,7 @@ void SensorShellAgent::msgRcvd( KProcess*, char *buffer, int buflen )
   processAnswer( aux );
 }
 
-void SensorShellAgent::errMsgRcvd( KProcess*, char *buffer, int buflen )
+void SensorShellAgent::errMsgRcvd( TDEProcess*, char *buffer, int buflen )
 {
   if ( !buffer || buflen == 0 )
     return;
@@ -117,10 +117,10 @@ void SensorShellAgent::errMsgRcvd( KProcess*, char *buffer, int buflen )
                 << endl << buf << endl;
 }
 
-void SensorShellAgent::daemonExited( KProcess *process )
+void SensorShellAgent::daemonExited( TDEProcess *process )
 {
   kdDebug() << "daemonExited" << endl;
-  if ( mRetryCount-- <= 0 || !mDaemon->start( KProcess::NotifyOnExit, KProcess::All ) ) {
+  if ( mRetryCount-- <= 0 || !mDaemon->start( TDEProcess::NotifyOnExit, TDEProcess::All ) ) {
     kdDebug() << "daemon could not be restart" << endl;
     setDaemonOnLine( false );
     sensorManager()->hostLost( this );

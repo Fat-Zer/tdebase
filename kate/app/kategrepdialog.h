@@ -30,7 +30,7 @@ class TQCheckBox;
 class TQListBox;
 class KPushButton;
 class TQLabel;
-class KProcess;
+class TDEProcess;
 class KConfig;
 class KURLRequester;
 class TQEvent;
@@ -64,8 +64,8 @@ protected:
 private slots:
     void templateActivated(int index);
     void childExited();
-    void receivedOutput(KProcess *proc, char *buffer, int buflen);
-    void receivedErrOutput(KProcess *proc, char *buffer, int buflen);
+    void receivedOutput(TDEProcess *proc, char *buffer, int buflen);
+    void receivedErrOutput(TDEProcess *proc, char *buffer, int buflen);
     void itemSelected(const TQString&);
     void slotSearch();
     void slotCancel();
@@ -82,7 +82,7 @@ private:
     TQCheckBox *cbCasesensitive, *cbRegex;
     TQListBox *lbResult;
     KPushButton *btnSearch, *btnClear;
-    KProcess *childproc;
+    TDEProcess *childproc;
     TQString buf;
     TQString errbuf;
     KConfig* config;

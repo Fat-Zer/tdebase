@@ -72,7 +72,7 @@ void ModuleMenu::fill(KPopupMenu *parentMenu, const TQString &parentPath)
      TQString name = group->caption();
      name.replace("&", "&&");
   
-     parentMenu->insertItem(KGlobal::iconLoader()->loadIcon(group->icon(), KIcon::Desktop, KIcon::SizeSmall)
+     parentMenu->insertItem(TDEGlobal::iconLoader()->loadIcon(group->icon(), KIcon::Desktop, KIcon::SizeSmall)
                         , name, menu);
 
      fill(menu, path);
@@ -87,7 +87,7 @@ void ModuleMenu::fill(KPopupMenu *parentMenu, const TQString &parentPath)
      TQString name = module->moduleName();
      name.replace("&", "&&");
 
-     int realid = parentMenu->insertItem(KGlobal::iconLoader()->loadIcon(module->icon(), KIcon::Desktop, KIcon::SizeSmall)
+     int realid = parentMenu->insertItem(TDEGlobal::iconLoader()->loadIcon(module->icon(), KIcon::Desktop, KIcon::SizeSmall)
                                      , name, id);
      _moduleDict.insert(realid, module);
 

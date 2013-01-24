@@ -54,7 +54,7 @@ SaverEngine::SaverEngine()
     : TQWidget(),
       KScreensaverIface(),
       mBlankOnly(false),
-      mSAKProcess(NULL),
+      mSATDEProcess(NULL),
       mTerminationRequested(false)
 {
     struct sigaction act;
@@ -83,12 +83,12 @@ SaverEngine::SaverEngine()
     mXAutoLock = 0;
     mEnabled = false;
 
-    connect(&mLockProcess, TQT_SIGNAL(processExited(KProcess *)),
+    connect(&mLockProcess, TQT_SIGNAL(processExited(TDEProcess *)),
                         TQT_SLOT(lockProcessExited()));
 
-    mSAKProcess = new KProcess;
-    *mSAKProcess << "tdmtsak";
-    connect(mSAKProcess, TQT_SIGNAL(processExited(KProcess*)), this, TQT_SLOT(slotSAKProcessExited()));
+    mSATDEProcess = new TDEProcess;
+    *mSATDEProcess << "tdmtsak";
+    connect(mSATDEProcess, TQT_SIGNAL(processExited(TDEProcess*)), this, TQT_SLOT(slotSATDEProcessExited()));
 
     TQTimer::singleShot( 0, this, TQT_SLOT(handleSecureDialog()) );
 
@@ -134,7 +134,7 @@ void SaverEngine::lock()
     bool ok = true;
     if (mState != Saving)
     {
-        mSAKProcess->kill(SIGTERM);
+        mSATDEProcess->kill(SIGTERM);
         ok = startLockProcess( ForceLock );
         // It takes a while for kdesktop_lock to start and lock the screen.
         // Therefore delay the DCOP call until it tells kdesktop that the locking is in effect.
@@ -179,7 +179,7 @@ void SaverEngine::save()
 {
     if (mState == Waiting)
     {
-        mSAKProcess->kill(SIGTERM);
+        mSATDEProcess->kill(SIGTERM);
         startLockProcess( DefaultLock );
     }
 }
@@ -276,18 +276,18 @@ void SaverEngine::enableExports()
 void SaverEngine::handleSecureDialog()
 {
     // Wait for SAK press
-    if (!mSAKProcess->isRunning()) mSAKProcess->start();
+    if (!mSATDEProcess->isRunning()) mSATDEProcess->start();
 }
 
-void SaverEngine::slotSAKProcessExited()
+void SaverEngine::slotSATDEProcessExited()
 {
-    int retcode = mSAKProcess->exitStatus();
-    if ((retcode != 0) && (mSAKProcess->normalExit())) {
+    int retcode = mSATDEProcess->exitStatus();
+    if ((retcode != 0) && (mSATDEProcess->normalExit())) {
         trinity_lockeng_sak_available = FALSE;
         printf("[kdesktop] SAK driven secure dialog is not available for use (retcode %d).  Check tdmtsak for proper functionality.\n", retcode); fflush(stdout);
     }
 
-    if ((mSAKProcess->normalExit()) && (trinity_lockeng_sak_available == TRUE)) {
+    if ((mSATDEProcess->normalExit()) && (trinity_lockeng_sak_available == TRUE)) {
         bool ok = true;
         if (mState == Waiting)
         {
@@ -525,7 +525,7 @@ void SaverEngine::idleTimeout()
     // disable X screensaver
     XForceScreenSaver(tqt_xdisplay(), ScreenSaverReset );
     XSetScreenSaver(tqt_xdisplay(), 0, mXInterval, PreferBlanking, DontAllowExposures);
-    mSAKProcess->kill(SIGTERM);
+    mSATDEProcess->kill(SIGTERM);
     startLockProcess( DefaultLock );
 }
 

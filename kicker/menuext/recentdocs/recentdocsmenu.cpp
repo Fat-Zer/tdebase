@@ -119,7 +119,7 @@ void RecentDocsMenu::mouseMoveEvent(TQMouseEvent* e) {
 
 	int dragLength = (e->pos() - _mouseDown).manhattanLength();
 
-	if (dragLength <= KGlobalSettings::dndEventDelay())
+	if (dragLength <= TDEGlobalSettings::dndEventDelay())
 		return;  // ignore it
 
 	int id = idAt(_mouseDown);

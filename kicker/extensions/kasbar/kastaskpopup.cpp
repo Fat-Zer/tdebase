@@ -73,7 +73,7 @@ KasTaskPopup::KasTaskPopup( KasTaskItem *item, const char *name )
 {
     this->item = item;
 
-    setFont(KGlobalSettings::generalFont());
+    setFont(TDEGlobalSettings::generalFont());
     setMouseTracking( true );
 
     TQString text = item->task()->visibleIconicName();

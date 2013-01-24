@@ -178,7 +178,7 @@ void ThemePage::fixCursorFile()
 	//
 	// Run mkfontdir to update fonts.dir in that dir.
 
-	KGlobal::dirs()->addResourceType( "font", "share/fonts/" );
+	TDEGlobal::dirs()->addResourceType( "font", "share/fonts/" );
 	KIO::mkdir( KURL::fromPathOrURL(TQDir::homeDirPath() + "/.fonts/kde-override") );
 	TQString overrideDir = TQDir::homeDirPath() + "/.fonts/kde-override/";
 
@@ -200,12 +200,12 @@ void ThemePage::fixCursorFile()
 		KIO::NetAccess::file_copy( source, installedFont, -1, true );
 	}
 
-	TQString cmd = KGlobal::dirs()->findExe( "mkfontdir" );
+	TQString cmd = TDEGlobal::dirs()->findExe( "mkfontdir" );
 	if ( !cmd.isEmpty() )
 	{
-		KProcess p;
+		TDEProcess p;
 		p << cmd << overrideDir;
-		p.start(KProcess::Block);
+		p.start(TDEProcess::Block);
 	}
 }
 

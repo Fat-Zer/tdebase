@@ -95,7 +95,7 @@ void KCMDnssd::save()
 
 	  TQString scaryMessage = i18n("Enabling local network browsing will open a network port (5353) on your computer.  If security problems are discovered in the zeroconf server, remote attackers could access your computer as the \"avahi\" user.");
 
-	  KProcess *proc = new KProcess;
+	  TDEProcess *proc = new TDEProcess;
 
 	  *proc << "tdesu";
 
@@ -103,13 +103,13 @@ void KCMDnssd::save()
 	    if (KMessageBox::warningYesNo( this, scaryMessage, i18n("Enable Zeroconf Network Browsing"), KGuiItem(i18n("Enable Browsing")), KGuiItem(i18n("Don't Enable Browsing")) ) == KMessageBox::Yes) {	    
 
 	      *proc << "/usr/share/avahi/enable_avahi 1";
-	      proc->start(KProcess::Block);
+	      proc->start(TDEProcess::Block);
 	    } else {
 	      enableZeroconf->setChecked(false);
 	    }
 	  } else {
 	    *proc << "/usr/share/avahi/enable_avahi 0";
-	    proc->start(KProcess::Block);
+	    proc->start(TDEProcess::Block);
 	  }
 	}
 	setCursor(TQCursor(Qt::ArrowCursor));

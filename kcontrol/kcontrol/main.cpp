@@ -56,7 +56,7 @@ KControlApp::KControlApp()
   toplevel = new TopLevel();
 
   setMainWidget(toplevel);
-  KGlobal::setActiveInstance(this);
+  TDEGlobal::setActiveInstance(this);
 
   // KUniqueApplication does dcop regitration for us
   ModuleIface *modIface = new ModuleIface(TQT_TQOBJECT(toplevel), "moduleIface");
@@ -64,8 +64,8 @@ KControlApp::KControlApp()
   connect (modIface, TQT_SIGNAL(helpClicked()), toplevel, TQT_SLOT(slotHelpRequest()));
   connect (modIface, TQT_SIGNAL(handbookClicked()), toplevel, TQT_SLOT(slotHandbookRequest()));
 
-  TQRect desk = KGlobalSettings::desktopGeometry(toplevel);
-  KConfig *config = KGlobal::config();
+  TQRect desk = TDEGlobalSettings::desktopGeometry(toplevel);
+  KConfig *config = TDEGlobal::config();
   config->setGroup("General");
   // Initial size is:
   // never bigger than workspace as reported by desk
@@ -88,7 +88,7 @@ KControlApp::~KControlApp()
 {
   if (toplevel)
     {
-      KConfig *config = KGlobal::config();
+      KConfig *config = TDEGlobal::config();
       config->setGroup("General");
       TQWidget *desk = TQT_TQWIDGET(TQApplication::desktop());
       config->writeEntry(TQString::fromLatin1("InitialWidth %1").arg(desk->width()), toplevel->width());

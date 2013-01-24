@@ -47,7 +47,7 @@ private:
 private slots:
 	void slotSendPassword();
 	void slotCancel();
-	void ejectFinished(KProcess* proc);
+	void ejectFinished(TDEProcess* proc);
 	void error();
 
 signals:

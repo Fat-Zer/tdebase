@@ -66,8 +66,8 @@ KWrited::KWrited() : TQTextEdit()
 {
   int pref_width, pref_height;
 
-  setFont(KGlobalSettings::fixedFont());
-  pref_width = (2 * KGlobalSettings::desktopGeometry(0).width()) / 3;
+  setFont(TDEGlobalSettings::fixedFont());
+  pref_width = (2 * TDEGlobalSettings::desktopGeometry(0).width()) / 3;
   pref_height = fontMetrics().lineSpacing() * 10;
   setMinimumWidth(pref_width);
   setMinimumHeight(pref_height);
@@ -125,14 +125,14 @@ TQPopupMenu *KWrited::createPopupMenu( const TQPoint &pos )
 KWritedModule::KWritedModule( const TQCString& obj )
     : KDEDModule( obj )
 {
-    KGlobal::locale()->insertCatalogue("konsole");
+    TDEGlobal::locale()->insertCatalogue("konsole");
     pro = new KWrited;
 }
 
 KWritedModule::~KWritedModule()
 {
     delete pro;
-    KGlobal::locale()->removeCatalogue("konsole");
+    TDEGlobal::locale()->removeCatalogue("konsole");
 }
 
 extern "C"

@@ -167,7 +167,7 @@ KFMsgBox::KFMsgBox( TQWidget *parent, TQMessageBox::Icon type, const TQString &t
 	TQLabel *label1 = new TQLabel( this );
 	label1->setPixmap( TQMessageBox::standardIcon( type ) );
 	TQLabel *label2 = new TQLabel( text, this );
-	TQRect d = KGlobalSettings::desktopGeometry(this);
+	TQRect d = TDEGlobalSettings::desktopGeometry(this);
 	if ( label2->fontMetrics().size( 0, text).width() > d.width() * 3 / 5) 
 		label2->setAlignment(TQt::WordBreak | TQt::AlignAuto );
 	KPushButton *button = new KPushButton( KStdGuiItem::ok(), this );

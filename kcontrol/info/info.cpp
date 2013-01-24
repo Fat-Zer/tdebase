@@ -73,7 +73,7 @@ static bool	sorting_allowed;	/* is sorting allowed by user ? */
 
 static const TQString Value( int val, int numbers=1 )
 {
-  return KGlobal::locale()->formatNumber(val, 0).rightJustify(numbers);
+  return TDEGlobal::locale()->formatNumber(val, 0).rightJustify(numbers);
 }
 
 static const TQString HexStr(unsigned long val, int digits )
@@ -189,8 +189,8 @@ static TQListViewItem* XServer_fill_screen_info( TQListViewItem *lBox, TQListVie
 		Value((int)DisplayCells(dpy, scr)));
     last = new TQListViewItem(item, last, i18n("Preallocated Pixels"),
 		i18n("Black %1, White %2")
-		.arg(KGlobal::locale()->formatNumber(BlackPixel(dpy,scr), 0))
-		.arg(KGlobal::locale()->formatNumber(WhitePixel(dpy,scr), 0)));
+		.arg(TDEGlobal::locale()->formatNumber(BlackPixel(dpy,scr), 0))
+		.arg(TDEGlobal::locale()->formatNumber(WhitePixel(dpy,scr), 0)));
 
     TQString YES(i18n("Yes"));
     TQString NO(i18n("No"));
@@ -239,7 +239,7 @@ static const TQString ByteString( unsigned long n )
 	return i18n("1 Byte"); // singular form: "1 Byte" (yes, it's "1", not "%1"!)
 
     return i18n("%1 Bytes")  // plural form: "%1 Bytes"
-		.arg(KGlobal::locale()->formatNumber(n,0));
+		.arg(TDEGlobal::locale()->formatNumber(n,0));
 }
 
 static bool GetInfo_XServer_Generic( TQListView *lBox )
@@ -370,7 +370,7 @@ void KInfoListWidget::load()
 
     /* is the user allowed to use sorting ? */
     lBox->header()->setClickEnabled(sorting_allowed);
-    lBox->header()->setFont(KGlobalSettings::generalFont());
+    lBox->header()->setFont(TDEGlobalSettings::generalFont());
     lBox->setShowSortIndicator(sorting_allowed);
 
     if (ok)
@@ -420,7 +420,7 @@ KInfoListWidget::KInfoListWidget(const TQString &_title, TQWidget *parent, const
     lBox 	= new TQListView(widgetStack);
     widgetStack->addWidget(lBox, 0);
     lBox->setMinimumSize(200,120);
-    lBox->setFont(KGlobalSettings::generalFont()); /* default font */
+    lBox->setFont(TDEGlobalSettings::generalFont()); /* default font */
     lBox->setAllColumnsShowFocus(true);
     TQWhatsThis::add( lBox, i18n( "This list displays system information on the selected category." ) );
     NoInfoText  = new TQLabel(widgetStack);

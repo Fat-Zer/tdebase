@@ -62,7 +62,7 @@ extern "C" KDE_EXPORT int kdemain( int argc, char **argv )
   KonquerorIface *kiface = new KonquerorIface;
   app.dcopClient()->setDefaultObject( kiface->objId() );
 
-  KGlobal::locale()->insertCatalogue("libkonq"); // needed for apps using libkonq
+  TDEGlobal::locale()->insertCatalogue("libkonq"); // needed for apps using libkonq
   KImageIO::registerFormats();
 
   TDECmdLineArgs *args = TDECmdLineArgs::parsedArgs();
@@ -87,7 +87,7 @@ extern "C" KDE_EXPORT int kdemain( int argc, char **argv )
   {
      if (args->isSet("profiles"))
      {
-       TQStringList profiles = KGlobal::dirs()->findAllResources("data", "konqueror/profiles/*", false, true);
+       TQStringList profiles = TDEGlobal::dirs()->findAllResources("data", "konqueror/profiles/*", false, true);
        profiles.sort();
        for(TQStringList::ConstIterator it = profiles.begin();
            it != profiles.end(); ++it)

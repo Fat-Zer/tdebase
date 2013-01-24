@@ -1078,7 +1078,7 @@ void KonqViewManager::saveViewProfile( const TQString & fileName, const TQString
 {
 
   TQString path = locateLocal( "data", TQString::fromLatin1( "konqueror/profiles/" ) +
-                                          fileName, KGlobal::instance() );
+                                          fileName, TDEGlobal::instance() );
 
   if ( TQFile::exists( path ) )
     TQFile::remove( path );
@@ -1299,7 +1299,7 @@ void KonqViewManager::loadViewProfile( KConfig &cfg, const TQString & filename,
 
   if( resetWindow )
   { // force default settings for the GUI
-     m_pMainWindow->applyMainWindowSettings( KGlobal::config(), "KonqMainWindow", true );
+     m_pMainWindow->applyMainWindowSettings( TDEGlobal::config(), "KonqMainWindow", true );
   }
 
   // Apply menu/toolbar settings saved in profile. Read from a separate group
@@ -1411,7 +1411,7 @@ TQSize KonqViewManager::readConfigSize( KConfig &cfg, TQWidget *widget )
     int width = -1;
     int height = -1;
 
-    TQRect geom = KGlobalSettings::desktopGeometry(widget);
+    TQRect geom = TDEGlobalSettings::desktopGeometry(widget);
 
     if ( widthStr.contains( '%' ) == 1 )
     {
@@ -1755,15 +1755,15 @@ void KonqViewManager::setLoading( KonqView *view, bool loading )
     TQColor color;
     KonqFrameTabs* konqframetabs = static_cast<KonqFrameTabs*>( parentContainer );
     if ( loading )
-      color = TQColor( (KGlobalSettings::linkColor().red()  + KGlobalSettings::inactiveTextColor().red())/2,
-                      (KGlobalSettings::linkColor().green()+ KGlobalSettings::inactiveTextColor().green())/2,
-                      (KGlobalSettings::linkColor().blue() + KGlobalSettings::inactiveTextColor().blue())/2 );
+      color = TQColor( (TDEGlobalSettings::linkColor().red()  + TDEGlobalSettings::inactiveTextColor().red())/2,
+                      (TDEGlobalSettings::linkColor().green()+ TDEGlobalSettings::inactiveTextColor().green())/2,
+                      (TDEGlobalSettings::linkColor().blue() + TDEGlobalSettings::inactiveTextColor().blue())/2 );
     else
     {
       if ( konqframetabs->currentPage() != view->frame() )
-        color = KGlobalSettings::linkColor();
+        color = TDEGlobalSettings::linkColor();
       else
-        color = KGlobalSettings::textColor();
+        color = TDEGlobalSettings::textColor();
     }
     konqframetabs->setTabColor( view->frame(), color );
   }

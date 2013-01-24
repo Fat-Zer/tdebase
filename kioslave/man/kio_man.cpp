@@ -116,7 +116,7 @@ MANProtocol::MANProtocol(const TQCString &pool_socket, const TQCString &app_sock
 {
     assert(!_self);
     _self = this;
-    const TQString common_dir = KGlobal::dirs()->findResourceDir( "html", "en/common/kde-common.css" );
+    const TQString common_dir = TDEGlobal::dirs()->findResourceDir( "html", "en/common/kde-common.css" );
     const TQString strPath=TQString( "file:%1/en/common" ).arg( common_dir );
     m_htmlPath=strPath.local8Bit(); // ### TODO encode for HTML
     m_cssPath=strPath.local8Bit(); // ### TODO encode for CSS
@@ -195,12 +195,12 @@ TQMap<TQString, TQString> MANProtocol::buildIndexMap(const TQString &section)
 		    break;
 	    }
             if ( it_name == names.end() ) {
-                KProcess proc;
+                TDEProcess proc;
                 proc << "whatis" << "-M" << (*it_dir) << "-w" << "*";
                 myStdStream = TQString::null;
-                connect( &proc, TQT_SIGNAL( receivedStdout(KProcess *, char *, int ) ),
-                         TQT_SLOT( slotGetStdOutput( KProcess *, char *, int ) ) );
-                proc.start( KProcess::Block, KProcess::Stdout );
+                connect( &proc, TQT_SIGNAL( receivedStdout(TDEProcess *, char *, int ) ),
+                         TQT_SLOT( slotGetStdOutput( TDEProcess *, char *, int ) ) );
+                proc.start( TDEProcess::Block, TDEProcess::Stdout );
                 TQTextStream t( &myStdStream, IO_ReadOnly );
                 parseWhatIs( i, t, mark );
             }
@@ -223,7 +223,7 @@ TQStringList MANProtocol::manDirectories()
     {
         // Translated pages in "<mandir>/<lang>" if the directory
         // exists
-        TQStringList languages = KGlobal::locale()->languageList();
+        TQStringList languages = TDEGlobal::locale()->languageList();
 
         for (TQStringList::ConstIterator it_lang = languages.begin();
              it_lang != languages.end();
@@ -512,12 +512,12 @@ void MANProtocol::get(const KURL& url )
     finished();
 }
 
-void MANProtocol::slotGetStdOutput(KProcess* /* p */, char *s, int len)
+void MANProtocol::slotGetStdOutput(TDEProcess* /* p */, char *s, int len)
 {
   myStdStream += TQString::fromLocal8Bit(s, len);
 }
 
-void MANProtocol::slotGetStdOutputUtf8(KProcess* /* p */, char *s, int len)
+void MANProtocol::slotGetStdOutputUtf8(TDEProcess* /* p */, char *s, int len)
 {
   myStdStream += TQString::fromUtf8(s, len);
 }
@@ -537,15 +537,15 @@ char *MANProtocol::readManPage(const char *_filename)
     if (filename.contains("sman", false)) //file_mimetype == "text/html" || )
     {
         myStdStream =TQString::null;
-	KProcess proc;
+	TDEProcess proc;
 
 	/* Determine path to sgml2roff, if not already done. */
 	getProgramPath();
 	proc << mySgml2RoffPath << filename;
 
-	TQApplication::connect(&proc, TQT_SIGNAL(receivedStdout (KProcess *, char *, int)),
-			      this, TQT_SLOT(slotGetStdOutput(KProcess *, char *, int)));
-	proc.start(KProcess::Block, KProcess::All);
+	TQApplication::connect(&proc, TQT_SIGNAL(receivedStdout (TDEProcess *, char *, int)),
+			      this, TQT_SLOT(slotGetStdOutput(TDEProcess *, char *, int)));
+	proc.start(TDEProcess::Block, TDEProcess::All);
 
         const TQCString cstr=myStdStream.latin1();
         const int len = cstr.size()-1;
@@ -570,14 +570,14 @@ char *MANProtocol::readManPage(const char *_filename)
         lastdir = filename.left(filename.findRev('/'));
     
         myStdStream = TQString::null;
-        KProcess proc;
+        TDEProcess proc;
         /* TODO: detect availability of 'man --recode' so that this can go
          * upstream */
         proc << "man" << "--recode" << "UTF-8" << filename;
 
-        TQApplication::connect(&proc, TQT_SIGNAL(receivedStdout (KProcess *, char *, int)),
-                              this, TQT_SLOT(slotGetStdOutputUtf8(KProcess *, char *, int)));
-        proc.start(KProcess::Block, KProcess::All);
+        TQApplication::connect(&proc, TQT_SIGNAL(receivedStdout (TDEProcess *, char *, int)),
+                              this, TQT_SLOT(slotGetStdOutputUtf8(TDEProcess *, char *, int)));
+        proc.start(TDEProcess::Block, TDEProcess::All);
 
         const TQCString cstr=myStdStream.utf8();
         const int len = cstr.size()-1;
@@ -1517,12 +1517,12 @@ void MANProtocol::getProgramPath()
   if (!mySgml2RoffPath.isEmpty())
     return;
 
-  mySgml2RoffPath = KGlobal::dirs()->findExe("sgml2roff");
+  mySgml2RoffPath = TDEGlobal::dirs()->findExe("sgml2roff");
   if (!mySgml2RoffPath.isEmpty())
     return;
 
   /* sgml2roff isn't found in PATH. Check some possible locations where it may be found. */
-  mySgml2RoffPath = KGlobal::dirs()->findExe("sgml2roff", TQString(SGML2ROFF_DIRS));
+  mySgml2RoffPath = TDEGlobal::dirs()->findExe("sgml2roff", TQString(SGML2ROFF_DIRS));
   if (!mySgml2RoffPath.isEmpty())
     return;
 

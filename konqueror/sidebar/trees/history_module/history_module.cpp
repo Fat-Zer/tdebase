@@ -56,7 +56,7 @@ KonqSidebarHistoryModule::KonqSidebarHistoryModule( KonqSidebarTree * parentTree
     m_dict.setAutoDelete( true );
     m_currentTime = TQDateTime::currentDateTime();
 
-    KConfig *kc = KGlobal::config();
+    KConfig *kc = TDEGlobal::config();
     KConfigGroupSaver cs( kc, "HistorySettings" );
     m_sortsByName = kc->readEntry( "SortHistory", "byDate" ) == "byName";
 
@@ -111,7 +111,7 @@ KonqSidebarHistoryModule::~KonqSidebarHistoryModule()
 	++it;
     }
 
-    KConfig *kc = KGlobal::config();
+    KConfig *kc = TDEGlobal::config();
     KConfigGroupSaver cs( kc, "HistorySettings" );
     kc->writeEntry("OpenGroups", openGroups);
     kc->sync();
@@ -143,7 +143,7 @@ void KonqSidebarHistoryModule::slotCreateItems()
 	++it;
     }
 
-    KConfig *kc = KGlobal::config();
+    KConfig *kc = TDEGlobal::config();
     KConfigGroupSaver cs( kc, "HistorySettings" );
     TQStringList openGroups = kc->readListEntry("OpenGroups");
     TQStringList::Iterator it2 = openGroups.begin();
@@ -297,7 +297,7 @@ void KonqSidebarHistoryModule::sortingChanged()
 {
     m_topLevelItem->sort();
 
-    KConfig *kc = KGlobal::config();
+    KConfig *kc = TDEGlobal::config();
     KConfigGroupSaver cs( kc, "HistorySettings" );
     kc->writeEntry( "SortHistory", m_sortsByName ? "byName" : "byDate" );
     kc->sync();

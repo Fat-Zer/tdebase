@@ -460,7 +460,7 @@ void BasicTab::slotExecSelected()
 {
     TQString path = _execEdit->lineEdit()->text();
     if (!path.startsWith("'"))
-        _execEdit->lineEdit()->setText(KProcess::quote(path));
+        _execEdit->lineEdit()->setText(TDEProcess::quote(path));
 }
 
 void BasicTab::slotCapturedShortcut(const KShortcut& cut)

@@ -199,7 +199,7 @@ bool MediaNotifier::execAutorun( const KFileItem &medium, const TQString &path,
 		// confirmed its execution the autostart file MUST be executed
 		// with the current working directory ( CWD ) set to the root
 		// directory of the medium.
-		KProcess proc;
+		TDEProcess proc;
 		proc << "sh" << autorunFile;
 		proc.setWorkingDirectory( path );
 		proc.start();
@@ -313,7 +313,7 @@ extern "C"
 {
 	KDE_EXPORT KDEDModule *create_medianotifier(const TQCString &name)
 	{
-		KGlobal::locale()->insertCatalogue("kay");
+		TDEGlobal::locale()->insertCatalogue("kay");
 		return new MediaNotifier(name);
 	}
 }

@@ -26,7 +26,7 @@
 #include <tqlistview.h>
 #include <tqobject.h>
 
-class KProcess;
+class TDEProcess;
 
 namespace KHC {
 
@@ -47,7 +47,7 @@ class TOC : public QObject
 
 	private slots:
 		void slotItemSelected( TQListViewItem *item );
-		void meinprocExited( KProcess *meinproc );
+		void meinprocExited( TDEProcess *meinproc );
 
 	private:
 		enum CacheStatus { NeedRebuild, CacheOk };

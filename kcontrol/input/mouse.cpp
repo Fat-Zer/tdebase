@@ -639,7 +639,7 @@ void MouseSettings::load(KConfig *config)
 
   handedEnabled = true;
 
-  // ## keep this in sync with KGlobalSettings::mouseSettings
+  // ## keep this in sync with TDEGlobalSettings::mouseSettings
   if( num_buttons == 1 )
   {
       /* disable button remapping */

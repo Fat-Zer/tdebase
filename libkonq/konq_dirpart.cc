@@ -64,7 +64,7 @@ public:
 
 void KonqDirPart::KonqDirPartPrivate::findAvailableIconSizes(void)
 {
-    KIconTheme *root = KGlobal::instance()->iconLoader()->theme();
+    KIconTheme *root = TDEGlobal::instance()->iconLoader()->theme();
     iconSize.resize(1);
     if (root) {
 	TQValueList<int> avSizes = root->querySizes(KIcon::Desktop);
@@ -106,7 +106,7 @@ void KonqDirPart::KonqDirPartPrivate::findAvailableIconSizes(void)
 int KonqDirPart::KonqDirPartPrivate::findNearestIconSize(int preferred)
 {
     int s1 = iconSize[1];
-    if (preferred == 0) return KGlobal::iconLoader()->currentSize(KIcon::Desktop);
+    if (preferred == 0) return TDEGlobal::iconLoader()->currentSize(KIcon::Desktop);
     if (preferred <= s1) return s1;
     for (uint i = 2; i <= iconSize.count(); i++) {
         if (preferred <= iconSize[i]) {
@@ -183,7 +183,7 @@ KonqDirPart::KonqDirPart( TQObject *parent, const char *name )
     d->iconSize[6] = KIcon::SizeEnormous; // 128
     d->iconSize[7] = 192;
     d->iconSize[8] = 256;
-    KIconTheme *root = KGlobal::instance()->iconLoader()->theme();
+    KIconTheme *root = TDEGlobal::instance()->iconLoader()->theme();
     if (root)
     {
       TQValueList<int> avSizes = root->querySizes(KIcon::Desktop);
@@ -280,7 +280,7 @@ TQScrollView * KonqDirPart::scrollWidget()
 void KonqDirPart::slotBackgroundSettings()
 {
     TQColor bgndColor = m_pProps->bgColor( widget() );
-    TQColor defaultColor = KGlobalSettings::baseColor();
+    TQColor defaultColor = TDEGlobalSettings::baseColor();
     // dlg must be created on the heap as widget() can get deleted while dlg.exec(),
     // trying to delete dlg as its child then (#124210) - Frank Osterfeld
     TQGuardedPtr<KonqBgndDialog> dlg = new KonqBgndDialog( widget(), 
@@ -571,7 +571,7 @@ void KonqDirPart::slotIconSizeToggled( bool toggleOn )
 void KonqDirPart::slotIncIconSize()
 {
     int s = m_pProps->iconSize();
-    s = s ? s : KGlobal::iconLoader()->currentSize( KIcon::Desktop );
+    s = s ? s : TDEGlobal::iconLoader()->currentSize( KIcon::Desktop );
     uint sizeIndex = 0;
     for ( uint idx = 1; idx < d->iconSize.count() ; ++idx )
         if (s == d->iconSize[idx]) {
@@ -587,7 +587,7 @@ void KonqDirPart::slotIncIconSize()
 void KonqDirPart::slotDecIconSize()
 {
     int s = m_pProps->iconSize();
-    s = s ? s : KGlobal::iconLoader()->currentSize( KIcon::Desktop );
+    s = s ? s : TDEGlobal::iconLoader()->currentSize( KIcon::Desktop );
     uint sizeIndex = 0;
     for ( uint idx = 1; idx < d->iconSize.count() ; ++idx )
         if (s == d->iconSize[idx]) {
@@ -603,7 +603,7 @@ void KonqDirPart::slotDecIconSize()
 // Only updates Actions, a GUI update is done in the views by reimplementing this
 void KonqDirPart::newIconSize( int size /*0=default, or 16,32,48....*/ )
 {
-    int realSize = (size==0) ? KGlobal::iconLoader()->currentSize( KIcon::Desktop ) : size;
+    int realSize = (size==0) ? TDEGlobal::iconLoader()->currentSize( KIcon::Desktop ) : size;
     m_paDecIconSize->setEnabled(realSize > d->iconSize[1]);
     m_paIncIconSize->setEnabled(realSize < d->iconSize.back());
 

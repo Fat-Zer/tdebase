@@ -174,7 +174,7 @@ void TESession::run()
   TQString exec = TQFile::encodeName(pgm);
   exec = KRun::binaryName(exec, false);
   exec = KShell::tildeExpand(exec);
-  TQString pexec = KGlobal::dirs()->findExe(exec);
+  TQString pexec = TDEGlobal::dirs()->findExe(exec);
   if ( pexec.isEmpty() ) {
     kdError()<<"can not execute "<<exec<<endl;
     TQTimer::singleShot(1, this, TQT_SLOT(done()));
@@ -633,12 +633,12 @@ void TESession::startZModem(const TQString &zmodem, const TQString &dir, const T
   zmodemProc->start(KProcIO::NotifyOnExit, false);
 
   // Override the read-processing of KProcIO
-  disconnect(zmodemProc,TQT_SIGNAL (receivedStdout (KProcess *, char *, int)), 0, 0);
-  connect(zmodemProc,TQT_SIGNAL (receivedStdout (KProcess *, char *, int)),
-          this, TQT_SLOT(zmodemSendBlock(KProcess *, char *, int)));
-  connect(zmodemProc,TQT_SIGNAL (receivedStderr (KProcess *, char *, int)),
-          this, TQT_SLOT(zmodemStatus(KProcess *, char *, int)));
-  connect(zmodemProc,TQT_SIGNAL (processExited(KProcess *)),
+  disconnect(zmodemProc,TQT_SIGNAL (receivedStdout (TDEProcess *, char *, int)), 0, 0);
+  connect(zmodemProc,TQT_SIGNAL (receivedStdout (TDEProcess *, char *, int)),
+          this, TQT_SLOT(zmodemSendBlock(TDEProcess *, char *, int)));
+  connect(zmodemProc,TQT_SIGNAL (receivedStderr (TDEProcess *, char *, int)),
+          this, TQT_SLOT(zmodemStatus(TDEProcess *, char *, int)));
+  connect(zmodemProc,TQT_SIGNAL (processExited(TDEProcess *)),
           this, TQT_SLOT(zmodemDone()));
 
   disconnect( sh,TQT_SIGNAL(block_in(const char*,int)), this, TQT_SLOT(onRcvBlock(const char*,int)) );
@@ -654,7 +654,7 @@ void TESession::startZModem(const TQString &zmodem, const TQString &dir, const T
   zmodemProgress->show();
 }
 
-void TESession::zmodemSendBlock(KProcess *, char *data, int len)
+void TESession::zmodemSendBlock(TDEProcess *, char *data, int len)
 {
   sh->send_bytes(data, len);
 //  tqWarning("<-- %d bytes", len);
@@ -671,7 +671,7 @@ void TESession::zmodemContinue()
 //  tqWarning("ZModem resume");
 }
 
-void TESession::zmodemStatus(KProcess *, char *data, int len)
+void TESession::zmodemStatus(TDEProcess *, char *data, int len)
 {
   TQCString msg(data, len+1);
   while(!msg.isEmpty())

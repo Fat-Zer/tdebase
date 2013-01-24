@@ -57,10 +57,10 @@ int main(int argc, char **argv)
         return(2);
     }
 
-    TQStringList appDirs = KGlobal::dirs()->findDirs("data", "twin");
+    TQStringList appDirs = TDEGlobal::dirs()->findDirs("data", "twin");
     TQString localDirStr = *(appDirs.end());
     if(localDirStr.isEmpty()){
-        localDirStr = KGlobal::dirs()->saveLocation("data", "twin");
+        localDirStr = TDEGlobal::dirs()->saveLocation("data", "twin");
     }
     localDirStr += "/pics/";
     if(!TQFile::exists(localDirStr))
@@ -69,7 +69,7 @@ int main(int argc, char **argv)
     TQFileInfo fi(f);
     KSimpleConfig input(fi.absFilePath());
     srcStr = fi.dirPath(true) + "/";
-    KConfig *output = KGlobal::config();
+    KConfig *output = TDEGlobal::config();
     input.setGroup("Window Border");
     output->setGroup("General");
 

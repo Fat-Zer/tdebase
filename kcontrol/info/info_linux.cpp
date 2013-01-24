@@ -140,7 +140,7 @@ bool GetInfo_CPU(TQListView * lBox)
 
 bool GetInfo_IRQ(TQListView * lBox)
 {
-    lBox->setFont(KGlobalSettings::fixedFont());
+    lBox->setFont(TDEGlobalSettings::fixedFont());
     return GetInfo_ReadfromFile(lBox, INFO_IRQ, 0);
 }
 

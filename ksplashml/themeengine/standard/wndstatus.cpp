@@ -47,7 +47,7 @@ WndStatus::WndStatus( TQPalette /*pal*/,
   setSpacing( 5 );
 
   const TQRect rect = kapp->desktop()->screenGeometry( xineramaScreen );
-  // KGlobalSettings::splashScreenDesktopGeometry(); cannot be used here.
+  // TDEGlobalSettings::splashScreenDesktopGeometry(); cannot be used here.
 
   TQLabel *pix = new TQLabel( this );
   TQPixmap _icon( SmallIcon(icon.isNull()||icon.isEmpty()?TQString("run"):icon) );

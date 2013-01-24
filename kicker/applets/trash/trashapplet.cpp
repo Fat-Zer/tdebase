@@ -33,7 +33,7 @@ extern "C"
 {
 	KDE_EXPORT KPanelApplet* init( TQWidget *parent, const TQString& configFile)
 	{
-		KGlobal::locale()->insertCatalogue("trashapplet");
+		TDEGlobal::locale()->insertCatalogue("trashapplet");
 		return new TrashApplet(configFile, KPanelApplet::Normal,
 			KPanelApplet::About, parent, "trashapplet");
 	}
@@ -70,7 +70,7 @@ TrashApplet::~TrashApplet()
 	disconnect( mpDirLister, TQT_SIGNAL( clear() ),
 	            this, TQT_SLOT( slotClear() ) );
 	delete mpDirLister;
-	KGlobal::locale()->removeCatalogue("trashapplet");
+	TDEGlobal::locale()->removeCatalogue("trashapplet");
 }
 
 void TrashApplet::about()

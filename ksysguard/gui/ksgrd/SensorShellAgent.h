@@ -29,7 +29,7 @@
 
 class TQString;
 
-class KProcess;
+class TDEProcess;
 
 namespace KSGRD {
 
@@ -57,16 +57,16 @@ class SensorShellAgent : public SensorAgent
     void hostInfo( TQString &shell, TQString &command, int &port) const;
 
   private slots:
-    void msgSent( KProcess* );
-    void msgRcvd( KProcess*, char *buffer, int buflen );
-    void errMsgRcvd( KProcess*, char *buffer, int buflen );
-    void daemonExited( KProcess* );
+    void msgSent( TDEProcess* );
+    void msgRcvd( TDEProcess*, char *buffer, int buflen );
+    void errMsgRcvd( TDEProcess*, char *buffer, int buflen );
+    void daemonExited( TDEProcess* );
 
   private:
     bool writeMsg( const char *msg, int len );
     bool txReady();
 
-    TQGuardedPtr<KProcess> mDaemon;
+    TQGuardedPtr<TDEProcess> mDaemon;
     TQString mShell;
     TQString mCommand;
     int mRetryCount;

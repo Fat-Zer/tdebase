@@ -92,7 +92,7 @@ void KonqSidebarDirTreeItem::setOpen( bool open )
         MYMODULE->openSubFolder( this );
     else if ( hasStandardIcon() )
     {
-        int size = KGlobal::iconLoader()->currentSize( KIcon::Small );
+        int size = TDEGlobal::iconLoader()->currentSize( KIcon::Small );
         if ( open )
             setPixmap( 0, DesktopIcon( "folder_open", size ) );
         else
@@ -159,7 +159,7 @@ void KonqSidebarDirTreeItem::itemSelected()
 {
     bool bInTrash = false;
 
-    if ( m_fileItem->url().directory(false) == KGlobalSettings::trashPath() )
+    if ( m_fileItem->url().directory(false) == TDEGlobalSettings::trashPath() )
         bInTrash = true;
 
     TQMimeSource *data = TQApplication::clipboard()->data();

@@ -1342,9 +1342,9 @@ bool KonqView::eventFilter( TQObject *obj, TQEvent *e )
 void KonqView::setActiveInstance()
 {
   if ( m_bBuiltinView || !m_pPart->instance() /*never!*/)
-      KGlobal::_activeInstance = KGlobal::instance();
+      TDEGlobal::_activeInstance = TDEGlobal::instance();
   else
-      KGlobal::_activeInstance = m_pPart->instance();
+      TDEGlobal::_activeInstance = m_pPart->instance();
 }
 
 bool KonqView::prepareReload( KParts::URLArgs& args )

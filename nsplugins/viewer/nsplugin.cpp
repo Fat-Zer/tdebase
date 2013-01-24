@@ -514,20 +514,20 @@ void g_NPN_ReloadPlugins(NPBool reloadPages)
 {
    // http://devedge.netscape.com/library/manuals/2002/plugin/1.0/npn_api15.html#999713
    kdDebug(1431) << "g_NPN_ReloadPlugins()" << endl;
-   KProcess p;
-   p << KGlobal::dirs()->findExe("nspluginscan");
+   TDEProcess p;
+   p << TDEGlobal::dirs()->findExe("nspluginscan");
 
    if (reloadPages) {
       // This is the proper way, but it cannot be done because we have no
       // handle to the caller!  How stupid!  We cannot force all konqi windows
       // to reload - that would be evil.
-      //p.start(KProcess::Block);
+      //p.start(TDEProcess::Block);
       // Let's only allow the caller to be reloaded, not everything.
       //if (_callback)
       //   _callback->reloadPage();
-      p.start(KProcess::DontCare);
+      p.start(TDEProcess::DontCare);
    } else {
-      p.start(KProcess::DontCare);
+      p.start(TDEProcess::DontCare);
    }
 }
 

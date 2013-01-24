@@ -356,7 +356,7 @@ void KonqPopupMenu::setup(KonqPopupFlags kpf)
     bool isTrashLink     = false;
     m_lstPopupURLs.clear();
     int id = 0;
-    setFont(KGlobalSettings::menuFont());
+    setFont(TDEGlobalSettings::menuFont());
     m_pluginList.setAutoDelete( true );
     m_ownActions.setHighlightingEnabled( true );
 
@@ -706,7 +706,7 @@ void KonqPopupMenu::setup(KonqPopupFlags kpf)
         }
 
         // findAllResources() also removes duplicates
-        const TQStringList entries = KGlobal::dirs()->findAllResources("data",
+        const TQStringList entries = TDEGlobal::dirs()->findAllResources("data",
                                                                       "konqueror/servicemenus/*.desktop",
                                                                       false /* recursive */,
                                                                       true /* unique */);

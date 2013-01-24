@@ -41,7 +41,7 @@ extern "C"
     KDE_EXPORT KPanelApplet* init( TQWidget *parent, const TQString& configFile )
     {
         // FIXME: what about two taskbars? perhaps this should be inserted just once
-        KGlobal::locale()->insertCatalogue( "ktaskbarapplet" );
+        TDEGlobal::locale()->insertCatalogue( "ktaskbarapplet" );
         int options = 0;
         if (kapp->authorizeControlModule("tde-kcmtaskbar.desktop"))
            options = KPanelApplet::Preferences;
@@ -67,7 +67,7 @@ TaskbarApplet::TaskbarApplet( const TQString& configFile, Type type, int actions
 TaskbarApplet::~TaskbarApplet()
 {
     // FIXME: what about TWO taskbars?
-    KGlobal::locale()->removeCatalogue( "ktaskbarapplet" );
+    TDEGlobal::locale()->removeCatalogue( "ktaskbarapplet" );
 }
 
 int TaskbarApplet::widthForHeight(int h) const

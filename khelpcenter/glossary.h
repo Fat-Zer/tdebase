@@ -27,7 +27,7 @@
 #include <tqstringlist.h>
 
 class KConfig;
-class KProcess;
+class TDEProcess;
 
 class EntryItem;
 
@@ -117,7 +117,7 @@ class Glossary : public KListView
 		void entrySelected( const GlossaryEntry &entry );
 		
 	private slots:
-		void meinprocExited( KProcess *meinproc );
+		void meinprocExited( TDEProcess *meinproc );
 		void treeItemSelected( TQListViewItem *item );
 
 	private:

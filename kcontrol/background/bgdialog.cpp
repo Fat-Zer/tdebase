@@ -69,8 +69,8 @@
 BGDialog::BGDialog(TQWidget* parent, KConfig* _config, bool _multidesktop)
   : BGDialog_UI(parent, "BGDialog")
 {
-   m_pGlobals = new KGlobalBackgroundSettings(_config);
-   m_pDirs = KGlobal::dirs();
+   m_pGlobals = new TDEGlobalBackgroundSettings(_config);
+   m_pDirs = TDEGlobal::dirs();
    m_multidesktop = _multidesktop;
    m_previewUpdates = true;
    
@@ -246,7 +246,7 @@ BGDialog::BGDialog(TQWidget* parent, KConfig* _config, bool _multidesktop)
    if (m_wallpaperPos == KBackgroundSettings::NoWallpaper)
       m_wallpaperPos = KBackgroundSettings::Centred; // Default
 
-   if (KGlobal::dirs()->isRestrictedResource("wallpaper"))
+   if (TDEGlobal::dirs()->isRestrictedResource("wallpaper"))
    {
       m_urlWallpaperButton->hide();
       m_buttonSetupWallpapers->hide();
@@ -407,7 +407,7 @@ void BGDialog::slotIdentifyScreens()
    {
       TQLabel *screenLabel = new TQLabel(0,"Screen Identify", (WFlags)(WDestructiveClose | WStyle_Customize | WX11BypassWM));
 
-      TQFont identifyFont(KGlobalSettings::generalFont());
+      TQFont identifyFont(TDEGlobalSettings::generalFont());
       identifyFont.setPixelSize(100);
       screenLabel->setFont(identifyFont);
 
@@ -1244,7 +1244,7 @@ void BGDialog::slotGetNewStuff()
    //FIXME set this to a server when we get one
    //should really be in a .rc file but could be either
    //kcmshellrc or kcontrolrc
-   KConfig* config = KGlobal::config();
+   KConfig* config = TDEGlobal::config();
    config->setGroup("KNewStuff");
    config->writeEntry( "ProvidersUrl", "http://download.kde.org/khotnewstuff/wallpaper-providers.xml" );
    config->writeEntry( "StandardResource", "wallpaper" );

@@ -44,7 +44,7 @@ extern "C"
 {
   KDE_EXPORT KPanelApplet* init(TQWidget *parent, const TQString& configFile)
   {
-    KGlobal::locale()->insertCatalogue("krunapplet");
+    TDEGlobal::locale()->insertCatalogue("krunapplet");
     return new RunApplet(configFile, KPanelApplet::Stretch, 0, parent, "krunapplet");
   }
 }
@@ -87,8 +87,8 @@ RunApplet::RunApplet(const TQString& configFile, Type type, int actions,
     _input->completionObject()->setItems(list);
     list = c->readListEntry("History list");
     _input->setHistoryItems(list);
-    int mode = c->readNumEntry( "CompletionMode", KGlobalSettings::completionMode() );
-    _input->setCompletionMode( (KGlobalSettings::Completion) mode );
+    int mode = c->readNumEntry( "CompletionMode", TDEGlobalSettings::completionMode() );
+    _input->setCompletionMode( (TDEGlobalSettings::Completion) mode );
 
     _filterData = new KURIFilterData();
 
@@ -110,7 +110,7 @@ RunApplet::~RunApplet()
     c->sync();
 
     delete _filterData;
-    KGlobal::locale()->removeCatalogue("krunapplet");
+    TDEGlobal::locale()->removeCatalogue("krunapplet");
 }
 
 void RunApplet::resizeEvent(TQResizeEvent*)

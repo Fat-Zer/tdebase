@@ -139,7 +139,7 @@ void KMenuItem::setDescription(const TQString& txt)
 void KMenuItem::setIcon(const TQString& icon, int size)
 {
     m_icon = icon;
-    TQListViewItem::setPixmap(0, KGlobal::iconLoader()->loadIcon(icon, KIcon::Panel, size ));
+    TQListViewItem::setPixmap(0, TDEGlobal::iconLoader()->loadIcon(icon, KIcon::Panel, size ));
 }
 
 void KMenuItem::setHasChildren( bool flag )
@@ -152,7 +152,7 @@ void KMenuItem::setup()
 {
     // if someone configured a larger generalFont than 10pt, he might have a _real_ problem with 7pt
     // the 7pt could be read out of konquerorrc I guess
-    float min_font_size = 7. * TQMAX(1., KGlobalSettings::generalFont().pointSizeFloat() / 10.);
+    float min_font_size = 7. * TQMAX(1., TDEGlobalSettings::generalFont().pointSizeFloat() / 10.);
 
     const int expected_height = 38;
     description_font_size = TQMAX( pointSize( expected_height * .3, TQT_TQPAINTDEVICE(listView()) ) + KickerSettings::kickoffFontPointSizeOffset(), min_font_size ) ;
@@ -1013,8 +1013,8 @@ TQDragObject * ItemView::dragObject()
         return 0;
 
       o = new KMultipleDrag(viewport());
-      TQPixmap pix = KGlobal::iconLoader()->loadIcon( kitem->icon(), KIcon::Panel, m_iconSize);
-      TQPixmap add = KGlobal::iconLoader()->loadIcon( "add", KIcon::Small );
+      TQPixmap pix = TDEGlobal::iconLoader()->loadIcon( kitem->icon(), KIcon::Panel, m_iconSize);
+      TQPixmap add = TDEGlobal::iconLoader()->loadIcon( "add", KIcon::Small );
 
       TQPainter p( &pix );
       p.drawPixmap(pix.height()-add.height(), pix.width()-add.width(), add);

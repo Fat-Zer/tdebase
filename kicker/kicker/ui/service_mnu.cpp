@@ -330,7 +330,7 @@ void PanelServiceMenu::fillMenu(KServiceGroup::Ptr& _root,
     // menus. We can't update the menu while torn off, and we don't know
     // when it is torn off.
     if ( count() > 0  && !relPath_.isEmpty() )
-      if (KGlobalSettings::insertTearOffHandle())
+      if (TDEGlobalSettings::insertTearOffHandle())
         insertTearOffHandle();
 #endif
 }
@@ -662,7 +662,7 @@ extern int kicker_screen_number;
 
 void PanelServiceMenu::slotContextMenu(int selected)
 {
-    KProcess *proc;
+    TDEProcess *proc;
     KService::Ptr service;
     KServiceGroup::Ptr g;
     TQByteArray ba;
@@ -676,8 +676,8 @@ void PanelServiceMenu::slotContextMenu(int selected)
         case AddItemToDesktop:
 	    service = static_cast<KService *>(contextKSycocaEntry_);
 
-	    src.setPath( KGlobal::dirs()->findResource( "apps", service->desktopEntryPath() ) );
-	    dest.setPath( KGlobalSettings::desktopPath() );
+	    src.setPath( TDEGlobal::dirs()->findResource( "apps", service->desktopEntryPath() ) );
+	    dest.setPath( TDEGlobalSettings::desktopPath() );
 	    dest.setFileName( src.fileName() );
 
             job = KIO::copyAs( src, dest );
@@ -694,7 +694,7 @@ void PanelServiceMenu::slotContextMenu(int selected)
         }
 
 	case EditItem:
-            proc = new KProcess(TQT_TQOBJECT(this));
+            proc = new TDEProcess(TQT_TQOBJECT(this));
             *proc << KStandardDirs::findExe(TQString::fromLatin1("kmenuedit"));
             *proc << "/"+relPath_ << static_cast<KService *>(contextKSycocaEntry_)->menuId();
             proc->start();
@@ -713,7 +713,7 @@ void PanelServiceMenu::slotContextMenu(int selected)
 
 	case AddMenuToDesktop:
 	    g = static_cast<KServiceGroup *>(contextKSycocaEntry_);
-            dest.setPath( KGlobalSettings::desktopPath() );
+            dest.setPath( TDEGlobalSettings::desktopPath() );
 	    dest.setFileName( g->caption() );
 
 	    df = new KDesktopFile( dest.path() );
@@ -738,7 +738,7 @@ void PanelServiceMenu::slotContextMenu(int selected)
         }
 
         case EditMenu:
-            proc = new KProcess(TQT_TQOBJECT(this));
+            proc = new TDEProcess(TQT_TQOBJECT(this));
             *proc << KStandardDirs::findExe(TQString::fromLatin1("kmenuedit"));
             *proc << "/"+static_cast<KServiceGroup *>(contextKSycocaEntry_)->relPath();
             proc->start();
@@ -795,7 +795,7 @@ void PanelServiceMenu::mouseMoveEvent(TQMouseEvent * ev)
 
         case KST_KServiceGroup:
         {
-            icon = KGlobal::iconLoader()
+            icon = TDEGlobal::iconLoader()
                    ->loadIcon(static_cast<KServiceGroup *>(e)->icon(), KIcon::Small);
             url = "programs:/" + static_cast<KServiceGroup *>(e)->relPath();
             break;

@@ -83,7 +83,7 @@ protected slots:
 
 protected:
    void getEScreen();
-   KGlobalBackgroundSettings *m_pGlobals;
+   TDEGlobalBackgroundSettings *m_pGlobals;
    KStandardDirs *m_pDirs;
    bool m_multidesktop;
    bool m_useViewports;

@@ -169,7 +169,7 @@ void CfgEmailClient::selectEmailClient()
 	TQString client = dlg.text();
 
 	// get the preferred Terminal Application 
-	KConfigGroup confGroup( KGlobal::config(), TQString::fromLatin1("General") );
+	KConfigGroup confGroup( TDEGlobal::config(), TQString::fromLatin1("General") );
 	TQString preferredTerminal = confGroup.readPathEntry("TerminalApplication", TQString::fromLatin1("konsole"));
 	preferredTerminal += TQString::fromLatin1(" -e ");
 	
@@ -198,7 +198,7 @@ void CfgEmailClient::save(KConfig *)
 	}
 
 	// insure proper permissions -- contains sensitive data
-	TQString cfgName(KGlobal::dirs()->findResource("config", "emails"));
+	TQString cfgName(TDEGlobal::dirs()->findResource("config", "emails"));
 	if (!cfgName.isEmpty())
 		::chmod(TQFile::encodeName(cfgName), 0600);
 
@@ -386,7 +386,7 @@ ComponentChooser::ComponentChooser(TQWidget *parent, const char *name):
 	latestEditedService="";
 
 	TQStringList dummy;
-	TQStringList services=KGlobal::dirs()->findAllResources( "data","kcm_componentchooser/*.desktop",false,true,dummy);
+	TQStringList services=TDEGlobal::dirs()->findAllResources( "data","kcm_componentchooser/*.desktop",false,true,dummy);
 	for (TQStringList::Iterator it=services.begin();it!=services.end();++it)
 	{
 		KSimpleConfig cfg(*it);

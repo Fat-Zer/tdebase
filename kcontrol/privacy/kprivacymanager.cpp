@@ -110,9 +110,9 @@ bool KPrivacyManager::clearFormCompletion() const
 
 bool KPrivacyManager::clearWebCache() const
 {
-    KProcess process;
+    TDEProcess process;
     process << "kio_http_cache_cleaner" << "--clear-all";
-    return process.start(KProcess::DontCare);
+    return process.start(TDEProcess::DontCare);
 }
 
 bool KPrivacyManager::clearRecentDocuments() const
@@ -143,7 +143,7 @@ bool KPrivacyManager::clearWebHistory()
 
 bool KPrivacyManager::clearFavIcons()
 {
-  TQDir favIconDir(KGlobal::dirs()->saveLocation( "cache", "favicons/" ));
+  TQDir favIconDir(TDEGlobal::dirs()->saveLocation( "cache", "favicons/" ));
   favIconDir.setFilter( TQDir::Files );
   
   TQStringList entries = favIconDir.entryList();

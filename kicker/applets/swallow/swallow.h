@@ -28,7 +28,7 @@
 
 class TQBoxLayout;
 class KConfig;
-class KProcess;
+class TDEProcess;
 class KWinModule;
 
 class SwallowApp;
@@ -61,7 +61,7 @@ public: // for KPanelApplet
     int heightForWidth( int h );
 
     void windowAdded(WId win);
-    void processExited(KProcess *proc);
+    void processExited(TDEProcess *proc);
 
 public slots:
     virtual void preferences();
@@ -102,10 +102,10 @@ signals:
 
 protected slots:
     void windowAdded(WId win);
-    void processExited(KProcess *proc);
+    void processExited(TDEProcess *proc);
 
 private:
-    KProcess   	*process;
+    TDEProcess   	*process;
     TQString  	winTitle;
     float 	wh_ratio;
 

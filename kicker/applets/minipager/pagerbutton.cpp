@@ -576,7 +576,7 @@ void KMiniPagerButton::mouseMoveEvent(TQMouseEvent* e)
     }
 
     if (m_currentWindow && !m_pager->clickPos.isNull() &&
-        (m_pager->clickPos - e->pos()).manhattanLength() > KGlobalSettings::dndEventDelay())
+        (m_pager->clickPos - e->pos()).manhattanLength() > TDEGlobalSettings::dndEventDelay())
     {
         TQRect r = m_currentWindow->geometry();
 

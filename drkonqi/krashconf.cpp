@@ -88,7 +88,7 @@ void KrashConfig :: readConfig()
     KStartupInfo::sendFinish( id );
   }
 
-  KConfig *config = KGlobal::config();
+  KConfig *config = TDEGlobal::config();
   config->setGroup("drkonqi");
 
   // maybe we should check if it's relative?

@@ -56,8 +56,8 @@ SessionEditor::SessionEditor(TQWidget * parent, const char *name)
   oldSession=-1;
   loaded=false;
 
-  KGlobal::locale()->insertCatalogue("konsole"); // For schema and keytab translations
-  KGlobal::iconLoader()->addAppDir( "konsole" );
+  TDEGlobal::locale()->insertCatalogue("konsole"); // For schema and keytab translations
+  TDEGlobal::iconLoader()->addAppDir( "konsole" );
 
   directoryLine->setMode(KFile::Directory);
   connect(sessionList, TQT_SIGNAL(highlighted(int)), this, TQT_SLOT(readSession(int)));
@@ -97,7 +97,7 @@ void SessionEditor::show()
 
 void SessionEditor::loadAllKeytab()
 {
-  TQStringList lst = KGlobal::dirs()->findAllResources("data", "konsole/*.keytab");
+  TQStringList lst = TDEGlobal::dirs()->findAllResources("data", "konsole/*.keytab");
   keytabCombo->clear();
   keytabFilename.clear();
 
@@ -159,7 +159,7 @@ TQString SessionEditor::readKeymapTitle(const TQString & file)
 
 void SessionEditor::loadAllSession(TQString currentFile)
 {
-  TQStringList list = KGlobal::dirs()->findAllResources("data", "konsole/*.desktop", false, true);
+  TQStringList list = TDEGlobal::dirs()->findAllResources("data", "konsole/*.desktop", false, true);
   sessionList->clear();
 
   TQListBoxItem* currentItem = 0;
@@ -296,7 +296,7 @@ void SessionEditor::saveCurrent()
       exec = exec.mid( 7, exec.length() - 8 );
     exec = KRun::binaryName( exec, false );
     exec = KShell::tildeExpand( exec );
-    TQString pexec = KGlobal::dirs()->findExe( exec );
+    TQString pexec = TDEGlobal::dirs()->findExe( exec );
 
     if ( pexec.isEmpty() )
     {
@@ -326,7 +326,7 @@ void SessionEditor::saveCurrent()
   }
 
   if (fullpath[0] != '/')
-    fullpath = KGlobal::dirs()->saveLocation("data", "konsole/") + fullpath;
+    fullpath = TDEGlobal::dirs()->saveLocation("data", "konsole/") + fullpath;
 
   KSimpleConfig* co = new KSimpleConfig(fullpath);
   co->setDesktopGroup();

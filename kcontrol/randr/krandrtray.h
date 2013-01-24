@@ -36,7 +36,7 @@ class KRandRSystemTray :  public KSystemTray, public KRandrSimpleAPI
 
 public:
 	KRandRSystemTray(TQWidget* parent = 0, const char *name = 0);
-	KGlobalAccel *globalKeys;
+	TDEGlobalAccel *globalKeys;
 
 	virtual void contextMenuAboutToShow(KPopupMenu* menu);
 

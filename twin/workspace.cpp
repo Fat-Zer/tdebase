@@ -55,7 +55,7 @@ extern int screen_number;
 
 Workspace *Workspace::_self = 0;
 
-KProcess* kompmgr = 0;
+TDEProcess* kompmgr = 0;
 KSelectionOwner* kompmgr_selection;
 
 bool allowKompmgrRestart = TRUE;
@@ -202,7 +202,7 @@ Workspace::Workspace( bool restore )
       1
     );
 
-    client_keys = new KGlobalAccel( this );
+    client_keys = new TDEGlobalAccel( this );
     initShortcuts();
     tab_box = new TabBox( this );
     popupinfo = new PopupInfo( this );
@@ -219,8 +219,8 @@ Workspace::Workspace( bool restore )
     // start kompmgr - i wanted to put this into main.cpp, but that would prevent dcop support, as long as Application was no dcop_object
     if (options->useTranslucency)
         {
-        kompmgr = new KProcess;
-        connect(kompmgr, TQT_SIGNAL(receivedStderr(KProcess*, char*, int)), TQT_SLOT(handleKompmgrOutput(KProcess*, char*, int)));
+        kompmgr = new TDEProcess;
+        connect(kompmgr, TQT_SIGNAL(receivedStderr(TDEProcess*, char*, int)), TQT_SLOT(handleKompmgrOutput(TDEProcess*, char*, int)));
         *kompmgr << "kompmgr";
         startKompmgr();
         }
@@ -523,7 +523,7 @@ Workspace::~Workspace()
         XDeleteProperty(tqt_xdisplay(), tqt_xrootwin(), atoms->twin_running);
 
     writeWindowRules();
-    KGlobal::config()->sync();
+    TDEGlobal::config()->sync();
 
     delete rootInfo;
     delete supportWindow;
@@ -1013,7 +1013,7 @@ void Workspace::slotReconfigure()
     kdDebug(1212) << "Workspace::slotReconfigure()" << endl;
     reconfigureTimer.stop();
 
-    KGlobal::config()->reparseConfiguration();
+    TDEGlobal::config()->reparseConfiguration();
     unsigned long changed = options->updateSettings();
     tab_box->reconfigure();
     popupinfo->reconfigure();
@@ -1146,7 +1146,7 @@ void Workspace::slotReconfigure()
 
 void Workspace::loadDesktopSettings()
     {
-    KConfig* c = KGlobal::config();
+    KConfig* c = TDEGlobal::config();
     TQCString groupname;
     if (screen_number == 0)
         groupname = "Desktops";
@@ -1175,7 +1175,7 @@ void Workspace::loadDesktopSettings()
 
 void Workspace::saveDesktopSettings()
     {
-    KConfig* c = KGlobal::config();
+    KConfig* c = TDEGlobal::config();
     TQCString groupname;
     if (screen_number == 0)
         groupname = "Desktops";
@@ -2761,7 +2761,7 @@ void Workspace::helperDialog( const TQString& message, const Client* c )
         }
     else
         assert( false );
-    KProcess proc;
+    TDEProcess proc;
     proc << "kdialog" << args;
     if( !type.isEmpty())
         {
@@ -2773,7 +2773,7 @@ void Workspace::helperDialog( const TQString& message, const Client* c )
         }
     if( c != NULL )
         proc << "--embed" << TQString::number( c->window());
-    proc.start( KProcess::DontCare );
+    proc.start( TDEProcess::DontCare );
     }
 
 
@@ -2800,14 +2800,14 @@ void Workspace::startKompmgr()
         kompmgrReloadSettings();
         return;
     }
-    if (!kompmgr->start(KProcess::OwnGroup, KProcess::Stderr))
+    if (!kompmgr->start(TDEProcess::OwnGroup, TDEProcess::Stderr))
     {
         options->useTranslucency = FALSE;
-        KProcess proc;
+        TDEProcess proc;
         proc << "kdialog" << "--error"
             << i18n("The Composite Manager could not be started.\\nMake sure you have \"kompmgr\" in a $PATH directory.")
             << "--title" << "Composite Manager Failure";
-        proc.start(KProcess::DontCare);
+        proc.start(TDEProcess::DontCare);
     }
     else
     {
@@ -2817,7 +2817,7 @@ void Workspace::startKompmgr()
         kompmgr_selection = new KSelectionOwner( selection_name );
         connect( kompmgr_selection, TQT_SIGNAL( lostOwnership()), TQT_SLOT( stopKompmgr()));
         kompmgr_selection->claim( true );
-        connect(kompmgr, TQT_SIGNAL(processExited(KProcess*)), TQT_SLOT(restartKompmgr(KProcess*)));
+        connect(kompmgr, TQT_SIGNAL(processExited(TDEProcess*)), TQT_SLOT(restartKompmgr(TDEProcess*)));
         options->useTranslucency = TRUE;
         //allowKompmgrRestart = FALSE;
         //TQTimer::singleShot( 60000, this, TQT_SLOT(unblockKompmgrRestart()) );
@@ -2836,7 +2836,7 @@ void Workspace::stopKompmgr()
     }
     delete kompmgr_selection;
     kompmgr_selection = NULL;
-    kompmgr->disconnect(this, TQT_SLOT(restartKompmgr(KProcess*)));
+    kompmgr->disconnect(this, TQT_SLOT(restartKompmgr(TDEProcess*)));
     options->useTranslucency = FALSE;
     if (popup){ delete popup; popup = 0L; } // to add/remove opacity slider
     kompmgr->kill(SIGKILL);
@@ -2864,7 +2864,7 @@ void Workspace::unblockKompmgrRestart()
     allowKompmgrRestart = TRUE;
 }
 
-void Workspace::restartKompmgr( KProcess *proc )
+void Workspace::restartKompmgr( TDEProcess *proc )
 // this is for inernal purpose (crashhandling) only, usually you want to use workspace->stopKompmgr(); TQTimer::singleShot(200, workspace, TQT_SLOT(startKompmgr()));
 {
     bool crashed;
@@ -2882,11 +2882,11 @@ void Workspace::restartKompmgr( KProcess *proc )
           kompmgr_selection = NULL;
           options->useTranslucency = FALSE;
           if (crashed) {
-            KProcess proc;
+            TDEProcess proc;
             proc << "kdialog" << "--error"
                 << i18n( "The Composite Manager crashed twice within a minute and is therefore disabled for this session.")
                 << "--title" << i18n("Composite Manager Failure");
-            proc.start(KProcess::DontCare);
+            proc.start(TDEProcess::DontCare);
           }
           return;
       }
@@ -2895,21 +2895,21 @@ void Workspace::restartKompmgr( KProcess *proc )
 // this should be useless, i keep it for maybe future need
 //         if (!kcompmgr)
 //             {
-//             kompmgr = new KProcess;
+//             kompmgr = new TDEProcess;
 //             kompmgr->clearArguments();
 //             *kompmgr << "kompmgr";
 //             }
 // -------------------
-        if (!kompmgr->start(KProcess::NotifyOnExit, KProcess::Stderr))
+        if (!kompmgr->start(TDEProcess::NotifyOnExit, TDEProcess::Stderr))
         {
             delete kompmgr_selection;
             kompmgr_selection = NULL;
             options->useTranslucency = FALSE;
-            KProcess proc;
+            TDEProcess proc;
             proc << "kdialog" << "--error"
                 << i18n("The Composite Manager could not be started.\\nMake sure you have \"kompmgr\" in a $PATH directory.")
                 << "--title" << i18n("Composite Manager Failure");
-            proc.start(KProcess::DontCare);
+            proc.start(TDEProcess::DontCare);
         }
         else
         {
@@ -2919,7 +2919,7 @@ void Workspace::restartKompmgr( KProcess *proc )
     }
 }
 
-void Workspace::handleKompmgrOutput( KProcess* , char *buffer, int buflen)
+void Workspace::handleKompmgrOutput( TDEProcess* , char *buffer, int buflen)
 {
     TQString message;
     TQString output = TQString::fromLocal8Bit( buffer, buflen );
@@ -2941,14 +2941,14 @@ void Workspace::handleKompmgrOutput( KProcess* , char *buffer, int buflen)
     else return; //skip others
     // kompmgr startup failed or succeeded, release connection
     kompmgr->closeStderr();
-    disconnect(kompmgr, TQT_SIGNAL(receivedStderr(KProcess*, char*, int)), this, TQT_SLOT(handleKompmgrOutput(KProcess*, char*, int)));
+    disconnect(kompmgr, TQT_SIGNAL(receivedStderr(TDEProcess*, char*, int)), this, TQT_SLOT(handleKompmgrOutput(TDEProcess*, char*, int)));
     if( !message.isEmpty())
         {
-        KProcess proc;
+        TDEProcess proc;
         proc << "kdialog" << "--error"
             << message
             << "--title" << i18n("Composite Manager Failure");
-        proc.start(KProcess::DontCare);
+        proc.start(TDEProcess::DontCare);
         }
 }
     

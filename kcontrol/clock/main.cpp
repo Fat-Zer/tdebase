@@ -57,7 +57,7 @@ KclockModule::KclockModule(TQWidget *parent, const char *name, const TQStringLis
     " the root password, but feel the system time should be corrected, please contact your system"
     " administrator."));
 
-  KGlobal::locale()->insertCatalogue("timezones"); // For time zone translations
+  TDEGlobal::locale()->insertCatalogue("timezones"); // For time zone translations
 
   TQVBoxLayout *layout = new TQVBoxLayout(this, 0, KDialog::spacingHint());
 

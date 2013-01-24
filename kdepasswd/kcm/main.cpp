@@ -107,8 +107,8 @@ KCMUserAccount::KCMUserAccount( TQWidget *parent, const char *name,
 
 void KCMUserAccount::slotChangePassword()
 {
-	KProcess *proc = new KProcess;
-	TQString bin = KGlobal::dirs()->findExe("kdepasswd");
+	TDEProcess *proc = new TDEProcess;
+	TQString bin = TDEGlobal::dirs()->findExe("kdepasswd");
 	if ( !bin )
 	{
 		kdDebug() << "kcm_useraccount: kdepasswd was not found." << endl;
@@ -122,7 +122,7 @@ void KCMUserAccount::slotChangePassword()
 	}
 
 	*proc << bin << _ku->loginName() ;
-	proc->start(KProcess::DontCare);
+	proc->start(TDEProcess::DontCare);
 
 	delete proc;
 
@@ -147,7 +147,7 @@ void KCMUserAccount::load()
 	_mw->leSMTP->setText( _kes->getSetting( KEMailSettings::OutServer ));
 
 	TQString _userPicsDir = KCFGUserAccount::faceDir() +  
-		KGlobal::dirs()->resourceDirs("data").last() + "tdm/faces/";
+		TDEGlobal::dirs()->resourceDirs("data").last() + "tdm/faces/";
 
 	TQString fs = KCFGUserAccount::faceSource();
 	if (fs == TQString::fromLatin1("UserOnly"))
@@ -270,7 +270,7 @@ void KCMUserAccount::slotFaceButtonClicked()
     return;
   }
 
-  ChFaceDlg* pDlg = new ChFaceDlg( KGlobal::dirs()->resourceDirs("data").last() +
+  ChFaceDlg* pDlg = new ChFaceDlg( TDEGlobal::dirs()->resourceDirs("data").last() +
 	"/tdm/pics/users/" );
 
   if ( pDlg->exec() == TQDialog::Accepted && !pDlg->getFaceImage().isNull() )

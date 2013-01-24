@@ -191,7 +191,7 @@ void IconThemesConfig::installNewTheme()
 
   KIO::NetAccess::removeTempFile(themeTmpFile);
 
-  KGlobal::instance()->newIconLoader();
+  TDEGlobal::instance()->newIconLoader();
   loadThemes();
 
   TQListViewItem *item=iconThemeItem(KIconTheme::current());
@@ -302,7 +302,7 @@ void IconThemesConfig::removeSelectedTheme()
   unlink(TQFile::encodeName(icontheme.dir()+"/index.desktop").data());
   KIO::del(KURL( icontheme.dir() ));
 
-  KGlobal::instance()->newIconLoader();
+  TDEGlobal::instance()->newIconLoader();
 
   loadThemes();
 

@@ -78,7 +78,7 @@ void TOC::build( const TQString &file )
 {
 	TQFileInfo fileInfo( file );
 	TQString fileName = fileInfo.absFilePath();
-	const TQStringList resourceDirs = KGlobal::dirs()->resourceDirs( "html" );
+	const TQStringList resourceDirs = TDEGlobal::dirs()->resourceDirs( "html" );
 	TQStringList::ConstIterator it = resourceDirs.begin();
 	TQStringList::ConstIterator end = resourceDirs.end();
 	for ( ; it != end; ++it ) {
@@ -132,19 +132,19 @@ int TOC::cachedCTime() const
 
 void TOC::buildCache()
 {
-	KProcess *meinproc = new KProcess;
-	connect( meinproc, TQT_SIGNAL( processExited( KProcess * ) ),
-	         this, TQT_SLOT( meinprocExited( KProcess * ) ) );
+	TDEProcess *meinproc = new TDEProcess;
+	connect( meinproc, TQT_SIGNAL( processExited( TDEProcess * ) ),
+	         this, TQT_SLOT( meinprocExited( TDEProcess * ) ) );
 
 	*meinproc << locate( "exe", "meinproc" );
 	*meinproc << "--stylesheet" << locate( "data", "khelpcenter/table-of-contents.xslt" );
 	*meinproc << "--output" << m_cacheFile;
 	*meinproc << m_sourceFile;
 
-	meinproc->start( KProcess::NotifyOnExit );
+	meinproc->start( TDEProcess::NotifyOnExit );
 }
 
-void TOC::meinprocExited( KProcess *meinproc )
+void TOC::meinprocExited( TDEProcess *meinproc )
 {
 	if ( !meinproc->normalExit() || meinproc->exitStatus() != 0 ) {
 		delete meinproc;

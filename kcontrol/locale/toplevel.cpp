@@ -172,8 +172,8 @@ void KLocaleApplication::load( bool useDefaults )
 void KLocaleApplication::save()
 {
   // temperary use of our locale as the global locale
-  KLocale *lsave = KGlobal::_locale;
-  KGlobal::_locale = m_locale;
+  KLocale *lsave = TDEGlobal::_locale;
+  TDEGlobal::_locale = m_locale;
   KMessageBox::information(this, m_locale->translate
                            ("Changed language settings apply only to "
                             "newly started applications.\nTo change the "
@@ -182,9 +182,9 @@ void KLocaleApplication::save()
                            m_locale->translate("Applying Language Settings"),
                            TQString::fromLatin1("LanguageChangesApplyOnlyToNewlyStartedPrograms"));
   // restore the old global locale
-  KGlobal::_locale = lsave;
+  TDEGlobal::_locale = lsave;
 
-  KConfig *config = KGlobal::config();
+  KConfig *config = TDEGlobal::config();
   KConfigGroupSaver saver(config, "Locale");
 
   // ##### this doesn't make sense

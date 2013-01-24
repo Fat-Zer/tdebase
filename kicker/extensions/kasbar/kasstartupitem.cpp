@@ -98,33 +98,33 @@ TQPixmap KasStartupItem::icon() const
    switch( kasbar()->itemSize() ) {
    case KasBar::Small:
      /* ***** NOP ******
-	pixmap = KGlobal::iconLoader()->loadIcon( startup_->icon(),
+	pixmap = TDEGlobal::iconLoader()->loadIcon( startup_->icon(),
 						  KIcon::NoGroup,
 						  KIcon::SizeSmall );
      */
       break;
    case KasBar::Medium:
-	pixmap = KGlobal::iconLoader()->loadIcon( startup_->icon(),
+	pixmap = TDEGlobal::iconLoader()->loadIcon( startup_->icon(),
 						  KIcon::NoGroup,
 						  KIcon::SizeMedium );
       break;
    case KasBar::Large:
-	pixmap = KGlobal::iconLoader()->loadIcon( startup_->icon(),
+	pixmap = TDEGlobal::iconLoader()->loadIcon( startup_->icon(),
 						  KIcon::NoGroup,
 						  KIcon::SizeLarge );
       break;
    case KasBar::Huge:
-	pixmap = KGlobal::iconLoader()->loadIcon( startup_->icon(),
+	pixmap = TDEGlobal::iconLoader()->loadIcon( startup_->icon(),
 						  KIcon::NoGroup,
 						  KIcon::SizeHuge );
       break;
    case KasBar::Enormous:
-	pixmap = KGlobal::iconLoader()->loadIcon( startup_->icon(),
+	pixmap = TDEGlobal::iconLoader()->loadIcon( startup_->icon(),
 						  KIcon::NoGroup,
 						  KIcon::SizeEnormous );
       break;
    default:
-	pixmap = KGlobal::iconLoader()->loadIcon( "error",
+	pixmap = TDEGlobal::iconLoader()->loadIcon( "error",
 						  KIcon::NoGroup,
 						  KIcon::SizeSmall );
    }

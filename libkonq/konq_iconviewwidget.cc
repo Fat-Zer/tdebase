@@ -227,7 +227,7 @@ void KonqIconViewWidget::slotIconChanged( int group )
 
 void KonqIconViewWidget::readAnimatedIconsConfig()
 {
-    KConfigGroup cfgGroup( KGlobal::config(), "DesktopIcons" );
+    KConfigGroup cfgGroup( TDEGlobal::config(), "DesktopIcons" );
     d->doAnimations = cfgGroup.readBoolEntry( "Animated", true /*default*/ );
 }
 
@@ -292,7 +292,7 @@ void KonqIconViewWidget::slotOnItem( TQIconViewItem *_item )
                 else
 #endif
                 {
-                    TQMovie movie = KGlobal::iconLoader()->loadMovie( d->pActiveItem->mouseOverAnimation(), KIcon::Desktop, d->pActiveItem->iconSize() );
+                    TQMovie movie = TDEGlobal::iconLoader()->loadMovie( d->pActiveItem->mouseOverAnimation(), KIcon::Desktop, d->pActiveItem->iconSize() );
                     if ( !movie.isNull() )
                     {
                         delete d->m_movie;
@@ -348,7 +348,7 @@ void KonqIconViewWidget::slotOnItem( TQIconViewItem *_item )
     if (d->bSoundPreviews && d->pSoundPlayer &&
         d->pSoundPlayer->mimeTypes().contains(
             item->item()->mimetype())
-        && KGlobalSettings::showFilePreview(item->item()->url())
+        && TDEGlobalSettings::showFilePreview(item->item()->url())
         && topLevelWidget() == kapp->activeWindow())
     {
         d->pSoundItem = item;
@@ -467,7 +467,7 @@ void KonqIconViewWidget::slotMovieUpdate( const TQRect& rect )
         // This can happen if the icon was scaled to the desired size, so KIconLoader
         // will happily return a movie with different dimensions than the icon
         int iconSize=d->pActiveItem->iconSize();
-        if (iconSize==0) iconSize = KGlobal::iconLoader()->currentSize( KIcon::Desktop );
+        if (iconSize==0) iconSize = TDEGlobal::iconLoader()->currentSize( KIcon::Desktop );
         if ( frame.width() != iconSize || frame.height() != iconSize ) {
             d->pActiveItem->setAnimated( false );
             d->m_movie->pause();
@@ -607,7 +607,7 @@ bool KonqIconViewWidget::boostPreview() const
 {
     if ( m_bDesktop ) return false;
 
-    KConfigGroup group( KGlobal::config(), "PreviewSettings" );
+    KConfigGroup group( TDEGlobal::config(), "PreviewSettings" );
     return group.readBoolEntry( "BoostSize", false );
 }
 
@@ -636,7 +636,7 @@ void KonqIconViewWidget::setIcons( int size, const TQStringList& stopImagePrevie
 
     if ( sizeChanged || previewSizeChanged )
     {
-        int realSize = size ? size : KGlobal::iconLoader()->currentSize( KIcon::Desktop );
+        int realSize = size ? size : TDEGlobal::iconLoader()->currentSize( KIcon::Desktop );
         // choose spacing depending on font, but min 5 (due to KFileIVI  move limit)
         setSpacing( ( m_bDesktop || ( realSize > KIcon::SizeSmall ) ) ?
                     QMAX( 5, TQFontMetrics(font()).width('n') ) : 0 );
@@ -707,7 +707,7 @@ bool KonqIconViewWidget::mimeTypeMatch( const TQString& mimeType, const TQString
 void KonqIconViewWidget::setItemTextPos( ItemTextPos pos )
 {
     // can't call gridXValue() because this already would need the new itemTextPos()
-    int sz = m_size ? m_size : KGlobal::iconLoader()->currentSize( KIcon::Desktop );
+    int sz = m_size ? m_size : TDEGlobal::iconLoader()->currentSize( KIcon::Desktop );
 
     if ( m_bSetGridX )
         if ( pos == TQIconView::Bottom )
@@ -725,7 +725,7 @@ void KonqIconViewWidget::gridValues( int* x, int* y, int* dx, int* dy,
                                      int* nx, int* ny )
 {
     int previewSize = previewIconSize( m_size );
-    int iconSize = m_size ? m_size : KGlobal::iconLoader()->currentSize( KIcon::Desktop );
+    int iconSize = m_size ? m_size : TDEGlobal::iconLoader()->currentSize( KIcon::Desktop );
 
     // Grid size
     // as KFileIVI limits to move an icon to x >= 5, y >= 5, we define a grid cell as:
@@ -786,7 +786,7 @@ void KonqIconViewWidget::calculateGridX()
 int KonqIconViewWidget::gridXValue() const
 {
     // this method is only used in konqi as filemanager (not desktop)
-    int sz = m_size ? m_size : KGlobal::iconLoader()->currentSize( KIcon::Desktop );
+    int sz = m_size ? m_size : TDEGlobal::iconLoader()->currentSize( KIcon::Desktop );
     int newGridX;
 
     if ( itemTextPos() == TQIconView::Bottom )
@@ -811,7 +811,7 @@ void KonqIconViewWidget::setURL( const KURL &kurl )
     stopImagePreview();
     m_url = kurl;
 
-    d->pFileTip->setPreview( KGlobalSettings::showFilePreview(m_url) );
+    d->pFileTip->setPreview( TDEGlobalSettings::showFilePreview(m_url) );
 
     if ( m_url.isLocalFile() )
         m_dotDirectoryPath = m_url.path(1).append( ".directory" );
@@ -824,7 +824,7 @@ void KonqIconViewWidget::startImagePreview( const TQStringList &, bool force )
     stopImagePreview(); // just in case
 
     // Check config
-    if ( !KGlobalSettings::showFilePreview( url() ) ) {
+    if ( !TDEGlobalSettings::showFilePreview( url() ) ) {
         kdDebug(1203) << "Previews disabled for protocol " << url().protocol() << endl;
         emit imagePreviewFinished();
         return;
@@ -858,7 +858,7 @@ void KonqIconViewWidget::startImagePreview( const TQStringList &, bool force )
         return; // don't start the preview job if not really necessary
     }
 
-    int iconSize = m_size ? m_size : KGlobal::iconLoader()->currentSize( KIcon::Desktop );
+    int iconSize = m_size ? m_size : TDEGlobal::iconLoader()->currentSize( KIcon::Desktop );
     int size;
 
     d->bBoostPreview = boostPreview();
@@ -1099,7 +1099,7 @@ void KonqIconViewWidget::slotSelectionChanged()
             KURL url = item->url();
             TQString local_path = item->localPath();
 
-            if ( url.directory(false) == KGlobalSettings::trashPath() )
+            if ( url.directory(false) == TDEGlobalSettings::trashPath() )
                 bInTrash = true;
             if ( KProtocolInfo::supportsDeleting( url ) )
                 canDel++;
@@ -1287,7 +1287,7 @@ void KonqIconViewWidget::doubleClickTimeout()
         {
             url= ( static_cast<KFileIVI *>( item ) )->item()->url();
             bool brenameTrash =false;
-            if ( url.isLocalFile() && (url.directory(false) == KGlobalSettings::trashPath() || url.path(1).startsWith(KGlobalSettings::trashPath())))
+            if ( url.isLocalFile() && (url.directory(false) == TDEGlobalSettings::trashPath() || url.path(1).startsWith(TDEGlobalSettings::trashPath())))
                 brenameTrash = true;
 
             if ( url.isLocalFile() && !brenameTrash && d->renameItem && m_pSettings->renameIconDirectly() && e.button() == Qt::LeftButton && item->textRect( false ).contains(e.pos()))
@@ -1366,9 +1366,9 @@ void KonqIconViewWidget::contentsMousePressEvent( TQMouseEvent *e )
      {
          url = ( static_cast<KFileIVI *>( item ) )->item()->url();
          bool brenameTrash =false;
-         if ( url.isLocalFile() && (url.directory(false) == KGlobalSettings::trashPath() || url.path(1).startsWith(KGlobalSettings::trashPath())))
+         if ( url.isLocalFile() && (url.directory(false) == TDEGlobalSettings::trashPath() || url.path(1).startsWith(TDEGlobalSettings::trashPath())))
              brenameTrash = true;
-         if ( !brenameTrash && !KGlobalSettings::singleClick() && m_pSettings->renameIconDirectly() && e->button() == Qt::LeftButton && item->textRect( false ).contains(e->pos())&& !d->firstClick &&  url.isLocalFile() && (!url.protocol().find("device", 0, false)==0))
+         if ( !brenameTrash && !TDEGlobalSettings::singleClick() && m_pSettings->renameIconDirectly() && e->button() == Qt::LeftButton && item->textRect( false ).contains(e->pos())&& !d->firstClick &&  url.isLocalFile() && (!url.protocol().find("device", 0, false)==0))
          {
              d->firstClick = true;
              d->mousePos = e->pos();
@@ -1564,7 +1564,7 @@ void KonqIconViewWidget::lineupIcons()
         return;
     }
 
-    int iconSize = m_size ? m_size : KGlobal::iconLoader()->currentSize( KIcon::Desktop );
+    int iconSize = m_size ? m_size : TDEGlobal::iconLoader()->currentSize( KIcon::Desktop );
 
     typedef TQValueList<TQIconViewItem*> Bin;
     Bin*** bins = new Bin**[nx];
@@ -1809,7 +1809,7 @@ void KonqIconViewWidget::lineupIcons( TQIconView::Arrangement arrangement )
 
 int KonqIconViewWidget::largestPreviewIconSize( int size ) const
 {
-    int iconSize = size ? size : KGlobal::iconLoader()->currentSize( KIcon::Desktop );
+    int iconSize = size ? size : TDEGlobal::iconLoader()->currentSize( KIcon::Desktop );
 
     if (iconSize < 28)
         return 48;
@@ -1825,7 +1825,7 @@ int KonqIconViewWidget::largestPreviewIconSize( int size ) const
 
 int KonqIconViewWidget::previewIconSize( int size ) const
 {
-    int iconSize = size ? size : KGlobal::iconLoader()->currentSize( KIcon::Desktop );
+    int iconSize = size ? size : TDEGlobal::iconLoader()->currentSize( KIcon::Desktop );
 
     if (!d->bBoostPreview)
         return iconSize;
@@ -1848,7 +1848,7 @@ void KonqIconViewWidget::visualActivate(TQIconViewItem * item)
     // Adjust for scrolling (David)
     rect.moveBy( -contentsX(), -contentsY() );
 
-    if (KGlobalSettings::showKonqIconActivationEffect() == true) {
+    if (TDEGlobalSettings::showKonqIconActivationEffect() == true) {
         KIconEffect::visualActivate(viewport(), rect, item->pixmap());
     }
 }
@@ -1895,7 +1895,7 @@ bool KonqIconViewWidget::caseInsensitiveSort() const
 
 bool KonqIconViewWidget::canPreview( KFileItem* item )
 {
-    if ( !KGlobalSettings::showFilePreview( url() ) )
+    if ( !TDEGlobalSettings::showFilePreview( url() ) )
         return false;
 
     if ( d->pPreviewMimeTypes == 0L )

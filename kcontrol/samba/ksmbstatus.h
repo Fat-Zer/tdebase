@@ -30,7 +30,7 @@
 
 class TQListView;
 class TQListViewItem;
-class KProcess;
+class TDEProcess;
 
 class NetMon : public TQWidget
 {
@@ -41,7 +41,7 @@ public:
    void loadSettings() {};
 private:
    KConfig *configFile;
-   KProcess *showmountProc;
+   TDEProcess *showmountProc;
    TQListView *list;
    TQLabel *version;
    TQTimer *timer;
@@ -59,7 +59,7 @@ private:
 private slots:
    void killShowmount();
    void update();
-   void slotReceivedData(KProcess *proc, char *buffer, int buflen);
+   void slotReceivedData(TDEProcess *proc, char *buffer, int buflen);
 };
 
 #endif // main_included

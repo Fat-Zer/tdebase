@@ -81,7 +81,7 @@ void ThemeUnified::_initUi()
 
   // Center the dialog
   TQSize sh = sizeHint();
-  TQRect rect1 = KGlobalSettings::desktopGeometry(TQCursor::pos());
+  TQRect rect1 = TDEGlobalSettings::desktopGeometry(TQCursor::pos());
   move(rect1.x() + (rect1.width() - sh.width())/2, rect1.y() + (rect1.height() - sh.height())/2);
 }
 

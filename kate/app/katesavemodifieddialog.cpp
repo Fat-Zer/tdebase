@@ -48,7 +48,7 @@ public:
 	STATE state() const { return m_state;}
 	void setState(enum STATE state) {
 		m_state=state;
-		KIconLoader *loader = KGlobal::instance()->iconLoader();
+		KIconLoader *loader = TDEGlobal::instance()->iconLoader();
 		switch (state) {
 			case InitialState:
 				setPixmap(0,TQPixmap());

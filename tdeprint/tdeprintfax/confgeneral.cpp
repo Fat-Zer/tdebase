@@ -69,7 +69,7 @@ ConfGeneral::ConfGeneral(TQWidget *parent, const char *name)
 
 void ConfGeneral::load()
 {
-	KConfig	*conf = KGlobal::config();
+	KConfig	*conf = TDEGlobal::config();
 	conf->setGroup("Personal");
 	m_name->setText(conf->readEntry("Name", getenv("USER")));
 	m_number->setText(conf->readEntry("Number"));
@@ -80,7 +80,7 @@ void ConfGeneral::load()
 
 void ConfGeneral::save()
 {
-	KConfig	*conf = KGlobal::config();
+	KConfig	*conf = TDEGlobal::config();
 	conf->setGroup("Personal");
 	conf->writeEntry("Name", m_name->text());
 	conf->writeEntry("Number", m_number->text());

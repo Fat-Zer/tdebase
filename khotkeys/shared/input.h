@@ -21,7 +21,7 @@
 #include <X11/X.h>
 #include <fixx11h.h>
 
-class KGlobalAccel;
+class TDEGlobalAccel;
 
 namespace KHotKeys
 {
@@ -60,7 +60,7 @@ class Kbd
             };
         TQMap< Kbd_receiver*, Receiver_data > receivers;
         TQMap< KShortcut, int > grabs;
-        KGlobalAccel* kga;
+        TDEGlobalAccel* kga;
     };
 
 class Mouse

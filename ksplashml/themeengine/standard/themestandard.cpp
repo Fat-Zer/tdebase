@@ -76,7 +76,7 @@ void ThemeStandard::_initUi()
   }
 
   const TQRect rect = kapp->desktop()->screenGeometry( mTheme->xineramaScreen() );
-  // KGlobalSettings::splashScreenDesktopGeometry(); cannot be used here.
+  // TDEGlobalSettings::splashScreenDesktopGeometry(); cannot be used here.
 
   move( rect.x() + (rect.width() - size().width())/2,
         rect.y() + (rect.height() - size().height())/2 );

@@ -200,7 +200,7 @@ private:
     bool copyFile( const TQString & from, const TQString & to );
 
     /**
-     * Wrapper around KGlobal::dirs()->findResource()
+     * Wrapper around TDEGlobal::dirs()->findResource()
      * @param section Section to work on (desktop, sounds, panel etc)
      * @param path The file to find
      */

@@ -77,7 +77,7 @@ KonqOperations::~KonqOperations()
 void KonqOperations::editMimeType( const TQString & mimeType )
 {
   TQString keditfiletype = TQString::fromLatin1("keditfiletype");
-  KRun::runCommand( keditfiletype + " " + KProcess::quote(mimeType),
+  KRun::runCommand( keditfiletype + " " + TDEProcess::quote(mimeType),
                     keditfiletype, keditfiletype /*unused*/);
 }
 
@@ -474,7 +474,7 @@ void KonqOperations::asyncDrop( const KFileItem * destItem )
         // (If this fails, there is a bug in KFileItem::acceptsDrops)
         kdDebug(1203) << "KonqOperations::doDrop " << m_destURL.path() << "should be an executable" << endl;
         Q_ASSERT ( access( TQFile::encodeName(m_destURL.path()), X_OK ) == 0 );
-        KProcess proc;
+        TDEProcess proc;
         proc << m_destURL.path() ;
         // Launch executable for each of the files
         KURL::List lst = m_info->lst;
@@ -482,7 +482,7 @@ void KonqOperations::asyncDrop( const KFileItem * destItem )
         for ( ; it != lst.end() ; it++ )
             proc << (*it).path(); // assume local files
         kdDebug(1203) << "starting " << m_destURL.path() << " with " << lst.count() << " arguments" << endl;
-        proc.start( KProcess::DontCare );
+        proc.start( TDEProcess::DontCare );
     }
     delete this;
 }
@@ -503,7 +503,7 @@ void KonqOperations::doFileCopy()
             mlst.append(*it);
         if ( local && KDesktopFile::isDesktopFile((*it).path()))
             isDesktopFile = true;
-        if ( local && (*it).path().startsWith(KGlobalSettings::desktopPath()))
+        if ( local && (*it).path().startsWith(TDEGlobalSettings::desktopPath()))
             itemIsOnDesktop = true;
         if ( local || (*it).protocol() != "trash" )
             allItemsAreFromTrash = false;
@@ -511,7 +511,7 @@ void KonqOperations::doFileCopy()
 
     bool linkOnly = false;
     if (isDesktopFile && !kapp->authorize("run_desktop_files") &&
-        (m_destURL.path(1) == KGlobalSettings::desktopPath()) )
+        (m_destURL.path(1) == TDEGlobalSettings::desktopPath()) )
     {
        linkOnly = true;
     }
@@ -638,10 +638,10 @@ void KonqOperations::rename( TQWidget * parent, const KURL & oldurl, const KURL&
     op->setOperation( job, MOVE, lst, newurl );
     (void) new KonqCommandRecorder( KonqCommand::MOVE, lst, newurl, job );
     // if moving the desktop then update config file and emit
-    if ( oldurl.isLocalFile() && oldurl.path(1) == KGlobalSettings::desktopPath() )
+    if ( oldurl.isLocalFile() && oldurl.path(1) == TDEGlobalSettings::desktopPath() )
     {
         kdDebug(1203) << "That rename was the Desktop path, updating config files" << endl;
-        KConfig *globalConfig = KGlobal::config();
+        KConfig *globalConfig = TDEGlobal::config();
         KConfigGroupSaver cgs( globalConfig, "Paths" );
         globalConfig->writePathEntry("Desktop" , newurl.path(), true, true );
         globalConfig->sync();

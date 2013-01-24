@@ -319,7 +319,7 @@ void LookAndFeelTab::fillTileCombos()
   m_tilename.clear();
   m_tilename << "" << "Colorize";
 
-  TQStringList list = KGlobal::dirs()->findAllResources("tiles","*_tiny_up.png");
+  TQStringList list = TDEGlobal::dirs()->findAllResources("tiles","*_tiny_up.png");
   int minHeight = 0;
 
   for (TQStringList::Iterator it = list.begin(); it != list.end(); ++it)

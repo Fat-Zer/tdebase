@@ -716,7 +716,7 @@ void KeyTrans::loadAll()
   KeyTrans* sc = new KeyTrans("[buildin]");
   sc->addKeyTrans();
 
-  TQStringList lst = KGlobal::dirs()->findAllResources("data", "konsole/*.keytab");
+  TQStringList lst = TDEGlobal::dirs()->findAllResources("data", "konsole/*.keytab");
 
   for(TQStringList::Iterator it = lst.begin(); it != lst.end(); ++it )
   {

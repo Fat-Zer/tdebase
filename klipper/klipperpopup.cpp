@@ -107,7 +107,7 @@ KlipperPopup::KlipperPopup( History* history, TQWidget* parent, const char* name
 {
     KWin::WindowInfo i = KWin::windowInfo( winId(), NET::WMGeometry );
     TQRect g = i.geometry();
-    TQRect screen = KGlobalSettings::desktopGeometry(g.center());
+    TQRect screen = TDEGlobalSettings::desktopGeometry(g.center());
     int menu_height = ( screen.height() ) * 3/4;
     int menu_width = ( screen.width() )  * 1/3;
 
@@ -167,7 +167,7 @@ void KlipperPopup::buildFromScratch() {
         action->plug( this,  -1 );
     }
 
-    if ( KGlobalSettings::insertTearOffHandle() ) {
+    if ( TDEGlobalSettings::insertTearOffHandle() ) {
         insertTearOffHandle();
     }
 

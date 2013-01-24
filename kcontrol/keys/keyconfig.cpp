@@ -226,7 +226,7 @@ void KKeyModule::defaults()
 /*void KKeyModule::slotRemove()
 {
   TQString kksPath =
-        KGlobal::dirs()->saveLocation("data", "kcmkeys/" + KeyType);
+        TDEGlobal::dirs()->saveLocation("data", "kcmkeys/" + KeyType);
 
   TQDir d( kksPath );
   if (!d.exists()) // what can we do?
@@ -360,7 +360,7 @@ void KKeyModule::readScheme( int index )
               TQT_SLOT( slotPreviewScheme( int ) ) );
 
 
-  TQString kksPath = KGlobal::dirs()->saveLocation("data", "kcmkeys/");
+  TQString kksPath = TDEGlobal::dirs()->saveLocation("data", "kcmkeys/");
 
   TQDir d( kksPath );
   if ( !d.exists() )
@@ -426,7 +426,7 @@ void KKeyModule::readScheme( int index )
 
 /*void KKeyModule::readSchemeNames( )
 {
-  TQStringList schemes = KGlobal::dirs()->findAllResources("data", "kcmkeys/" + KeyType + "/*.kksrc");
+  TQStringList schemes = TDEGlobal::dirs()->findAllResources("data", "kcmkeys/" + KeyType + "/*.kksrc");
   //TQRegExp r( "-kde[34].kksrc$" );
   TQRegExp r( "-trinity.kksrc$" );
 
@@ -472,11 +472,11 @@ void KKeyModule::init()
   kdDebug(125) << "KKeyModule::init()\n";
 
   /*kdDebug(125) << "KKeyModule::init() - Initialize # Modifier Keys Settings\n";
-  KConfigGroupSaver cgs( KGlobal::config(), "Keyboard" );
-  TQString fourMods = KGlobal::config()->readEntry( "Use Four Modifier Keys", KAccel::keyboardHasMetaKey() ? "true" : "false" );
+  KConfigGroupSaver cgs( TDEGlobal::config(), "Keyboard" );
+  TQString fourMods = TDEGlobal::config()->readEntry( "Use Four Modifier Keys", KAccel::keyboardHasMetaKey() ? "true" : "false" );
   KAccel::useFourModifierKeys( fourMods == "true" );
   bool bUseFourModifierKeys = KAccel::useFourModifierKeys();
-  KGlobal::config()->writeEntry( "User Four Modifier Keys", bUseFourModifierKeys ? "true" : "false", true, true );
+  TDEGlobal::config()->writeEntry( "User Four Modifier Keys", bUseFourModifierKeys ? "true" : "false", true, true );
   */
   KAccelActions* keys = new KAccelActions();
 

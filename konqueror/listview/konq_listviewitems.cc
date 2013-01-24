@@ -119,7 +119,7 @@ void KonqListViewItem::updateContents()
             break;
          case KIO::UDS_SIZE:
             if ( m_pListViewWidget->m_pSettings->fileSizeInBytes() )
-                setText(tmpColumn->displayInColumn,KGlobal::locale()->formatNumber( m_fileitem->size(),0)+" ");
+                setText(tmpColumn->displayInColumn,TDEGlobal::locale()->formatNumber( m_fileitem->size(),0)+" ");
             else
                 setText(tmpColumn->displayInColumn,KIO::convertSize(m_fileitem->size())+" ");
             break;
@@ -135,7 +135,7 @@ void KonqListViewItem::updateContents()
                if ( _time != 0 )
                {
                    dt.setTime_t( _time );
-                   setText(tmpColumn->displayInColumn,KGlobal::locale()->formatDateTime(dt));
+                   setText(tmpColumn->displayInColumn,TDEGlobal::locale()->formatDateTime(dt));
                }
             }
             break;
@@ -146,7 +146,7 @@ void KonqListViewItem::updateContents()
              {
                  TQDateTime dt = TQT_TQDATETIME_OBJECT(TQDateTime::fromString( entryStr, Qt::ISODate ));
                  setText(tmpColumn->displayInColumn,
-                         KGlobal::locale()->formatDateTime(dt));
+                         TDEGlobal::locale()->formatDateTime(dt));
              }
              else // if ( tmpColumn->type == TQVariant::String )
                  setText(tmpColumn->displayInColumn, entryStr);
@@ -164,7 +164,7 @@ void KonqListViewItem::setDisabled( bool disabled )
 {
     KonqBaseListViewItem::setDisabled( disabled );
     int iconSize = m_pListViewWidget->iconSize();
-    iconSize = iconSize ? iconSize : KGlobal::iconLoader()->currentSize( KIcon::Small ); // Default = small
+    iconSize = iconSize ? iconSize : TDEGlobal::iconLoader()->currentSize( KIcon::Small ); // Default = small
     setPixmap( 0, m_fileitem->pixmap( iconSize, state() ) );
 }
 
@@ -176,7 +176,7 @@ void KonqListViewItem::setActive( bool active )
     //#### Optimize away repaint if possible, like the iconview does?
     KonqBaseListViewItem::setActive( active );
     int iconSize = m_pListViewWidget->iconSize();
-    iconSize = iconSize ? iconSize : KGlobal::iconLoader()->currentSize( KIcon::Small ); // Default = small
+    iconSize = iconSize ? iconSize : TDEGlobal::iconLoader()->currentSize( KIcon::Small ); // Default = small
     setPixmap( 0, m_fileitem->pixmap( iconSize, state() ) );
 }
 

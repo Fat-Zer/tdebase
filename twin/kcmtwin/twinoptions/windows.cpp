@@ -1708,9 +1708,9 @@ void KTranslucencyConfig::defaults()
 bool KTranslucencyConfig::kompmgrAvailable()
 {
     bool ret;
-    KProcess proc;
+    TDEProcess proc;
     proc << "kompmgr" << "-v";
-    ret = proc.start(KProcess::DontCare, KProcess::AllOutput);
+    ret = proc.start(TDEProcess::DontCare, TDEProcess::AllOutput);
     proc.detach();
     return ret;
 }

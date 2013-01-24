@@ -261,7 +261,7 @@ konsolePart::~konsolePart()
     se->closeSession();
 
     // Wait a bit for all childs to clean themselves up.
-    while(se && KProcessController::theKProcessController->waitForProcessExit(1))
+    while(se && TDEProcessController::theTDEProcessController->waitForProcessExit(1))
         ;
 
     disconnect( se, TQT_SIGNAL( destroyed() ), this, TQT_SLOT( sessionDestroyed() ) );
@@ -370,7 +370,7 @@ void konsolePart::makeGUI()
 
       // encoding menu, start with default checked !
       selectSetEncoding = new KSelectAction( i18n( "&Encoding" ), SmallIconSet("charset" ), 0, this, TQT_SLOT(slotSetEncoding()), settingsActions, "set_encoding" );
-      TQStringList list = KGlobal::charsets()->descriptiveEncodingNames();
+      TQStringList list = TDEGlobal::charsets()->descriptiveEncodingNames();
       list.prepend( i18n( "Default" ) );
       selectSetEncoding->setItems(list);
       selectSetEncoding->setCurrentItem (0);
@@ -447,7 +447,7 @@ void konsolePart::makeGUI()
      KAction *saveSettings = new KAction(i18n("&Save as Default"), "filesave", 0, this, 
                     TQT_SLOT(saveProperties()), actions, "save_default");
      saveSettings->plug(m_options);
-     if (KGlobalSettings::insertTearOffHandle())
+     if (TDEGlobalSettings::insertTearOffHandle())
         m_options->insertTearOffHandle();
   }
 
@@ -480,7 +480,7 @@ void konsolePart::makeGUI()
   KAction *closeSession = new KAction(i18n("&Close Terminal Emulator"), "fileclose", 0, this,
                                       TQT_SLOT(closeCurrentSession()), actions, "close_session");
   closeSession->plug(m_popupMenu);
-  if (KGlobalSettings::insertTearOffHandle())
+  if (TDEGlobalSettings::insertTearOffHandle())
     m_popupMenu->insertTearOffHandle();
 }
 
@@ -569,7 +569,7 @@ void konsolePart::readProperties()
 
   n_encoding = config->readNumEntry("encoding",0);
 
-  TQFont tmpFont = KGlobalSettings::fixedFont();
+  TQFont tmpFont = TDEGlobalSettings::fixedFont();
   defaultFont = config->readFontEntry("defaultfont", &tmpFont);
 
   TQString schema = config->readEntry("Schema");
@@ -891,8 +891,8 @@ void konsolePart::slotSetEncoding()
   if (!se) return;
 
   bool found;
-  TQString enc = KGlobal::charsets()->encodingForName(selectSetEncoding->currentText());
-  TQTextCodec * qtc = KGlobal::charsets()->codecForName(enc, found);
+  TQString enc = TDEGlobal::charsets()->encodingForName(selectSetEncoding->currentText());
+  TQTextCodec * qtc = TDEGlobal::charsets()->codecForName(enc, found);
   if(!found)
   {
     kdDebug() << "Codec " << selectSetEncoding->currentText() << " not found!" << endl;
@@ -1098,8 +1098,8 @@ void konsolePart::newSession()
            this, TQT_SLOT( updateTitle(TESession*) ) );
   connect( se, TQT_SIGNAL(enableMasterModeConnections()),
            this, TQT_SLOT(enableMasterModeConnections()) );
-  connect( se, TQT_SIGNAL( processExited(KProcess *) ),
-           this, TQT_SIGNAL( processExited(KProcess *) ) );
+  connect( se, TQT_SIGNAL( processExited(TDEProcess *) ),
+           this, TQT_SIGNAL( processExited(TDEProcess *) ) );
   connect( se, TQT_SIGNAL( receivedData( const TQString& ) ),
            this, TQT_SIGNAL( receivedData( const TQString& ) ) );
   connect( se, TQT_SIGNAL( forkedChild() ),

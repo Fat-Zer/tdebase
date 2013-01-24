@@ -135,7 +135,7 @@ static void removeDir( const TQString& trashDir, const TQString& dirName )
 
 void TestTrash::setup()
 {
-    m_trashDir = KGlobal::dirs()->localxdgdatadir() + "Trash";
+    m_trashDir = TDEGlobal::dirs()->localxdgdatadir() + "Trash";
     kdDebug() << "setup: using trash directory " << m_trashDir << endl;
 
     // Look for another writable partition than $HOME (not mandatory)
@@ -380,7 +380,7 @@ static void checkInfoFile( const TQString& infoPath, const TQString& origFilePat
     infoFile.setGroup( "Trash Info" );
     const TQString origPath = infoFile.readEntry( "Path" );
     assert( !origPath.isEmpty() );
-    assert( origPath == KURL::encode_string( origFilePath, KGlobal::locale()->fileEncodingMib() ) );
+    assert( origPath == KURL::encode_string( origFilePath, TDEGlobal::locale()->fileEncodingMib() ) );
     const TQString date = infoFile.readEntry( "DeletionDate" );
     assert( !date.isEmpty() );
     assert( date.contains( "T" ) );

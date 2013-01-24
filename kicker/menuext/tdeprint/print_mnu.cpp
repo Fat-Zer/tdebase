@@ -45,7 +45,7 @@ PrintMenu::PrintMenu(TQWidget *parent, const char *name, const TQStringList & /*
 {
     static bool tdeprintIconsInitialized = false;
     if ( !tdeprintIconsInitialized ) {
-        KGlobal::iconLoader()->addAppDir("tdeprint");
+        TDEGlobal::iconLoader()->addAppDir("tdeprint");
         tdeprintIconsInitialized = true;
     }
 }

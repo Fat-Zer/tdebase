@@ -42,7 +42,7 @@ KBackgroundPattern::KBackgroundPattern(TQString name)
     dirty = false;
     hashdirty = true;
 
-    m_pDirs = KGlobal::dirs();
+    m_pDirs = TDEGlobal::dirs();
     m_pDirs->addResourceType("dtop_pattern", m_pDirs->kde_default("data") +
                              "kdesktop/patterns");
     m_pConfig = 0L;
@@ -182,7 +182,7 @@ int KBackgroundPattern::hash()
 /* static */
 TQStringList KBackgroundPattern::list()
 {
-    KStandardDirs *dirs = KGlobal::dirs();
+    KStandardDirs *dirs = TDEGlobal::dirs();
     dirs->addResourceType("dtop_pattern", dirs->kde_default("data") +
                           "kdesktop/patterns");
     TQStringList lst = dirs->findAllResources("dtop_pattern", "*.desktop",
@@ -209,7 +209,7 @@ KBackgroundProgram::KBackgroundProgram(TQString name)
     dirty = false;
     hashdirty = true;
 
-    m_pDirs = KGlobal::dirs();
+    m_pDirs = TDEGlobal::dirs();
     m_pDirs->addResourceType("dtop_program", m_pDirs->kde_default("data") +
                              "kdesktop/programs");
     m_pConfig = 0L;
@@ -393,7 +393,7 @@ int KBackgroundProgram::hash()
 /* static */
 TQStringList KBackgroundProgram::list()
 {
-    KStandardDirs *dirs = KGlobal::dirs();
+    KStandardDirs *dirs = TDEGlobal::dirs();
     dirs->addResourceType("dtop_program", dirs->kde_default("data") +
                           "kdesktop/programs");
     TQStringList lst = dirs->findAllResources("dtop_program", "*.desktop",
@@ -489,7 +489,7 @@ KBackgroundSettings::KBackgroundSettings(int desk, int screen, bool drawBackgrou
     ADD_STRING(NoMultiRandom)
     #undef ADD_STRING
 
-    m_pDirs = KGlobal::dirs();
+    m_pDirs = TDEGlobal::dirs();
 
     if (!config) {
         int screen_number = 0;
@@ -651,7 +651,7 @@ void KBackgroundSettings::setWallpaperMode(int mode)
 
 void KBackgroundSettings::setWallpaperList(TQStringList list)
 {
-    KStandardDirs *d = KGlobal::dirs();
+    KStandardDirs *d = TDEGlobal::dirs();
     if (m_WallpaperList == list)
 	return;
 
@@ -1029,7 +1029,7 @@ TQString KBackgroundSettings::fingerprint()
     s += TQString("wm:%1;").arg(m_WallpaperMode);
     if (m_WallpaperMode != NoWallpaper)
     {
-        TQ_UINT32 rh = KGlobal::dirs()->calcResourceHash("wallpaper", currentWallpaper(), false);
+        TQ_UINT32 rh = TDEGlobal::dirs()->calcResourceHash("wallpaper", currentWallpaper(), false);
         s += TQString("wp:%2:%1;").arg(rh).arg(currentWallpaper());
         
     }
@@ -1063,9 +1063,9 @@ void KBackgroundSettings::setEnabled(const bool enable)
   hashdirty = true;
 }
 
-/**** KGlobalBackgroundSettings ****/
+/**** TDEGlobalBackgroundSettings ****/
 
-KGlobalBackgroundSettings::KGlobalBackgroundSettings(KConfig *_config)
+TDEGlobalBackgroundSettings::TDEGlobalBackgroundSettings(KConfig *_config)
 {
     m_pConfig = _config;
 
@@ -1073,14 +1073,14 @@ KGlobalBackgroundSettings::KGlobalBackgroundSettings(KConfig *_config)
 }
 
 
-TQString KGlobalBackgroundSettings::deskName(int desk)
+TQString TDEGlobalBackgroundSettings::deskName(int desk)
 {
     return m_Names[desk];
 }
 
 
 /*
-void KGlobalBackgroundSettings::setDeskName(int desk, TQString name)
+void TDEGlobalBackgroundSettings::setDeskName(int desk, TQString name)
 {
     if (name == m_Names[desk])
 	return;
@@ -1090,7 +1090,7 @@ void KGlobalBackgroundSettings::setDeskName(int desk, TQString name)
 */
 
 
-void KGlobalBackgroundSettings::setCacheSize(int size)
+void TDEGlobalBackgroundSettings::setCacheSize(int size)
 {
     if (size == m_CacheSize)
 	return;
@@ -1099,7 +1099,7 @@ void KGlobalBackgroundSettings::setCacheSize(int size)
 }
 
 
-void KGlobalBackgroundSettings::setLimitCache(bool limit)
+void TDEGlobalBackgroundSettings::setLimitCache(bool limit)
 {
     if (limit == m_bLimitCache)
 	return;
@@ -1108,7 +1108,7 @@ void KGlobalBackgroundSettings::setLimitCache(bool limit)
 }
 
 
-bool KGlobalBackgroundSettings::drawBackgroundPerScreen(int desk) const
+bool TDEGlobalBackgroundSettings::drawBackgroundPerScreen(int desk) const
 {
     if ( desk > int(m_bDrawBackgroundPerScreen.size()) )
         return _defDrawBackgroundPerScreen;
@@ -1116,7 +1116,7 @@ bool KGlobalBackgroundSettings::drawBackgroundPerScreen(int desk) const
 }
 
 
-void KGlobalBackgroundSettings::setDrawBackgroundPerScreen(int desk, bool perScreen)
+void TDEGlobalBackgroundSettings::setDrawBackgroundPerScreen(int desk, bool perScreen)
 {
     if ( desk >= int(m_bDrawBackgroundPerScreen.size()) )
         return;
@@ -1129,7 +1129,7 @@ void KGlobalBackgroundSettings::setDrawBackgroundPerScreen(int desk, bool perScr
 }
 
 
-void KGlobalBackgroundSettings::setCommonScreenBackground(bool common)
+void TDEGlobalBackgroundSettings::setCommonScreenBackground(bool common)
 {
     if (common == m_bCommonScreen)
 	return;
@@ -1138,7 +1138,7 @@ void KGlobalBackgroundSettings::setCommonScreenBackground(bool common)
 }
 
 
-void KGlobalBackgroundSettings::setCommonDeskBackground(bool common)
+void TDEGlobalBackgroundSettings::setCommonDeskBackground(bool common)
 {
     if (common == m_bCommonDesk)
 	return;
@@ -1147,7 +1147,7 @@ void KGlobalBackgroundSettings::setCommonDeskBackground(bool common)
 }
 
 
-void KGlobalBackgroundSettings::setDockPanel(bool dock)
+void TDEGlobalBackgroundSettings::setDockPanel(bool dock)
 {
     if (dock == m_bDock)
         return;
@@ -1156,7 +1156,7 @@ void KGlobalBackgroundSettings::setDockPanel(bool dock)
 }
 
 
-void KGlobalBackgroundSettings::setExportBackground(bool _export)
+void TDEGlobalBackgroundSettings::setExportBackground(bool _export)
 {
     if (_export == m_bExport)
         return;
@@ -1164,7 +1164,7 @@ void KGlobalBackgroundSettings::setExportBackground(bool _export)
     m_bExport = _export;
 }
 
-void KGlobalBackgroundSettings::setTextColor(TQColor _color)
+void TDEGlobalBackgroundSettings::setTextColor(TQColor _color)
 {
     if (_color == m_TextColor)
         return;
@@ -1172,7 +1172,7 @@ void KGlobalBackgroundSettings::setTextColor(TQColor _color)
     m_TextColor = _color;
 }
 
-void KGlobalBackgroundSettings::setTextBackgroundColor(TQColor _color)
+void TDEGlobalBackgroundSettings::setTextBackgroundColor(TQColor _color)
 {
     if (_color == m_TextBackgroundColor)
         return;
@@ -1180,7 +1180,7 @@ void KGlobalBackgroundSettings::setTextBackgroundColor(TQColor _color)
     m_TextBackgroundColor = _color;
 }
 
-void KGlobalBackgroundSettings::setShadowEnabled(bool enabled)
+void TDEGlobalBackgroundSettings::setShadowEnabled(bool enabled)
 {
     if (enabled == m_shadowEnabled)
         return;
@@ -1188,7 +1188,7 @@ void KGlobalBackgroundSettings::setShadowEnabled(bool enabled)
     m_shadowEnabled = enabled;
 }
 
-void KGlobalBackgroundSettings::setTextLines(int lines)
+void TDEGlobalBackgroundSettings::setTextLines(int lines)
 {
     if (lines == m_textLines)
         return;
@@ -1196,7 +1196,7 @@ void KGlobalBackgroundSettings::setTextLines(int lines)
     m_textLines = lines;
 }
 
-void KGlobalBackgroundSettings::setTextWidth(int width)
+void TDEGlobalBackgroundSettings::setTextWidth(int width)
 {
     if (width == m_textWidth)
         return;
@@ -1204,7 +1204,7 @@ void KGlobalBackgroundSettings::setTextWidth(int width)
     m_textWidth = width;
 }
 
-void KGlobalBackgroundSettings::readSettings()
+void TDEGlobalBackgroundSettings::readSettings()
 {
     m_pConfig->setGroup("Background Common");
     m_bCommonScreen = m_pConfig->readBoolEntry("CommonScreen", _defCommonScreen);
@@ -1220,7 +1220,7 @@ void KGlobalBackgroundSettings::readSettings()
     for ( int i = 0 ; i < info.numberOfDesktops() ; ++i )
         m_bDrawBackgroundPerScreen[i] = m_pConfig->readBoolEntry( TQString("DrawBackgroundPerScreen_%1").arg(i), _defDrawBackgroundPerScreen );
 
-    m_TextColor = KGlobalSettings::textColor();
+    m_TextColor = TDEGlobalSettings::textColor();
     m_pConfig->setGroup("FMSettings");
     m_TextColor = m_pConfig->readColorEntry("NormalTextColor", &m_TextColor);
     m_TextBackgroundColor = m_pConfig->readColorEntry("ItemTextBackground");
@@ -1234,7 +1234,7 @@ void KGlobalBackgroundSettings::readSettings()
     dirty = false;
 }
 
-void KGlobalBackgroundSettings::writeSettings()
+void TDEGlobalBackgroundSettings::writeSettings()
 {
     if (!dirty)
         return;

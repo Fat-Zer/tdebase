@@ -55,7 +55,7 @@ KrashDebugger :: KrashDebugger (const KrashConfig *krashconf, TQWidget *parent, 
 
   m_backtrace = new KTextBrowser(this);
   m_backtrace->setTextFormat(TQt::PlainText);
-  m_backtrace->setFont(KGlobalSettings::fixedFont());
+  m_backtrace->setFont(TDEGlobalSettings::fixedFont());
 
   TQWidget *w = new TQWidget( this );
   ( new TQHBoxLayout( w, 0, KDialog::marginHint() ) )->setAutoAdd( true );

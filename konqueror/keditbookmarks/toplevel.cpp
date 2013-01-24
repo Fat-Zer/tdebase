@@ -185,8 +185,8 @@ TQString CurrentMgr::makeTimeStr(int b)
     TQDateTime dt;
     dt.setTime_t(b);
     return (dt.daysTo(TQDateTime::currentDateTime()) > 31)
-        ? KGlobal::locale()->formatDate(TQT_TQDATE_OBJECT(dt.date()), false)
-        : KGlobal::locale()->formatDateTime(dt, false);
+        ? TDEGlobal::locale()->formatDate(TQT_TQDATE_OBJECT(dt.date()), false)
+        : TDEGlobal::locale()->formatDateTime(dt, false);
 }
 
 /* -------------------------- */
@@ -252,7 +252,7 @@ KEBApp::KEBApp(
 
     ListView::self()->connectSignals();
 
-    KGlobal::locale()->insertCatalogue("libkonq");
+    TDEGlobal::locale()->insertCatalogue("libkonq");
 
     m_canPaste = false;
 
@@ -337,7 +337,7 @@ void KEBApp::notifyCommandExecuted() {
 /* -------------------------- */
 
 void KEBApp::slotConfigureToolbars() {
-    saveMainWindowSettings(KGlobal::config(), "MainWindow");
+    saveMainWindowSettings(TDEGlobal::config(), "MainWindow");
     KEditToolbar dlg(actionCollection());
     connect(&dlg, TQT_SIGNAL( newToolbarConfig() ),
                   TQT_SLOT( slotNewToolbarConfig() ));
@@ -347,7 +347,7 @@ void KEBApp::slotConfigureToolbars() {
 void KEBApp::slotNewToolbarConfig() {
     // called when OK or Apply is clicked
     createGUI();
-    applyMainWindowSettings(KGlobal::config(), "MainWindow");
+    applyMainWindowSettings(TDEGlobal::config(), "MainWindow");
 }
 
 /* -------------------------- */

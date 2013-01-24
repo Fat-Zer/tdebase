@@ -125,17 +125,17 @@ SAKDlg::SAKDlg(TQWidget *parent)
 
     installEventFilter(this);
 
-    mSAKProcess = new KProcess;
-    *mSAKProcess << "tdmtsak" << "dm";
-    connect(mSAKProcess, TQT_SIGNAL(processExited(KProcess*)), this, TQT_SLOT(slotSAKProcessExited()));
-    mSAKProcess->start();
+    mSATDEProcess = new TDEProcess;
+    *mSATDEProcess << "tdmtsak" << "dm";
+    connect(mSATDEProcess, TQT_SIGNAL(processExited(TDEProcess*)), this, TQT_SLOT(slotSATDEProcessExited()));
+    mSATDEProcess->start();
 
     TQTimer::singleShot( 0, this, TQT_SLOT(handleInputPipe()) );
 }
 
-void SAKDlg::slotSAKProcessExited()
+void SAKDlg::slotSATDEProcessExited()
 {
-    int retcode = mSAKProcess->exitStatus();
+    int retcode = mSATDEProcess->exitStatus();
     if (retcode != 0) trinity_desktop_lock_use_sak = false;
     closingDown = true;
     hide();
@@ -207,7 +207,7 @@ void SAKDlg::handleInputPipe(void) {
 	inputcommand = inputcommand.replace('\n', "");
 	TQStringList commandList = TQStringList::split('\t', inputcommand, false);
 	if ((*(commandList.at(0))) == "CLOSE") {
-		mSAKProcess->kill();
+		mSATDEProcess->kill();
 	}
 	if (!closingDown) {
 		TQTimer::singleShot( 0, this, TQT_SLOT(handleInputPipe()) );
@@ -221,9 +221,9 @@ void SAKDlg::handleInputPipe(void) {
 
 SAKDlg::~SAKDlg()
 {
-    if ((mSAKProcess) && (mSAKProcess->isRunning())) {
-        mSAKProcess->kill(SIGTERM);
-        delete mSAKProcess;
+    if ((mSATDEProcess) && (mSATDEProcess->isRunning())) {
+        mSATDEProcess->kill(SIGTERM);
+        delete mSATDEProcess;
     }
     if (mPipe_fd != -1) {
         closingDown = true;

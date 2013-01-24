@@ -42,10 +42,10 @@ RemoteMenu::RemoteMenu(TQWidget *parent, const char *name,
                        const TQStringList &/*args*/)
   : KPanelMenu(parent, name), KDirNotify()
 {
-    KGlobal::dirs()->addResourceType("remote_entries",
+    TDEGlobal::dirs()->addResourceType("remote_entries",
     KStandardDirs::kde_default("data") + "remoteview");
 
-    TQString path = KGlobal::dirs()->saveLocation("remote_entries");
+    TQString path = TDEGlobal::dirs()->saveLocation("remote_entries");
 
     TQDir dir = path;
     if (!dir.exists())
@@ -76,7 +76,7 @@ void RemoteMenu::initialize()
 
     m_desktopMap.clear();
     TQStringList names_found;
-    TQStringList dirList = KGlobal::dirs()->resourceDirs("remote_entries");
+    TQStringList dirList = TDEGlobal::dirs()->resourceDirs("remote_entries");
 
     TQStringList::ConstIterator dirpath = dirList.begin();
     TQStringList::ConstIterator end = dirList.end();

@@ -130,11 +130,11 @@ TQColor KonqBgndDialog::color() const
 
 void KonqBgndDialog::initPictures()
 {
-    KGlobal::dirs()->addResourceType( "tiles",
-        KGlobal::dirs()->kde_default("data") + "konqueror/tiles/");
-    kdDebug(1203) << KGlobal::dirs()->kde_default("data") + "konqueror/tiles/" << endl;
+    TDEGlobal::dirs()->addResourceType( "tiles",
+        TDEGlobal::dirs()->kde_default("data") + "konqueror/tiles/");
+    kdDebug(1203) << TDEGlobal::dirs()->kde_default("data") + "konqueror/tiles/" << endl;
 
-    TQStringList list = KGlobal::dirs()->findAllResources("tiles");
+    TQStringList list = TDEGlobal::dirs()->findAllResources("tiles");
 
     if ( list.isEmpty() )
         m_comboPicture->comboBox()->insertItem( i18n("None") );

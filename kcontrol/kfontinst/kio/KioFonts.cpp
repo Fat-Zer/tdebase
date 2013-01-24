@@ -1127,15 +1127,15 @@ void CKioFonts::put(const KURL &u, int mode, bool overwrite, bool resume)
             if(!Misc::dExists(itsFolders[destFolder].location))
             {
                 cmd+="mkdir ";
-                cmd+=TQFile::encodeName(KProcess::quote(itsFolders[destFolder].location));
+                cmd+=TQFile::encodeName(TDEProcess::quote(itsFolders[destFolder].location));
                 cmd+=" && chmod 0755 ";
-                cmd+=TQFile::encodeName(KProcess::quote(itsFolders[destFolder].location));
+                cmd+=TQFile::encodeName(TDEProcess::quote(itsFolders[destFolder].location));
                 cmd+=" && ";
             }
             cmd+="cp -f ";
-            cmd+=TQFile::encodeName(KProcess::quote(tmpFileC));
+            cmd+=TQFile::encodeName(TDEProcess::quote(tmpFileC));
             cmd+=" ";
-            cmd+=TQFile::encodeName(KProcess::quote(destC));
+            cmd+=TQFile::encodeName(TDEProcess::quote(destC));
             cmd+=" && chmod 0644 ";
             cmd+=destC;
 
@@ -1351,9 +1351,9 @@ void CKioFonts::copy(const KURL &src, const KURL &d, int mode, bool overwrite)
                     if(!Misc::dExists(itsFolders[destFolder].location))
                     {
                         cmd+="mkdir ";
-                        cmd+=TQFile::encodeName(KProcess::quote(itsFolders[destFolder].location));
+                        cmd+=TQFile::encodeName(TDEProcess::quote(itsFolders[destFolder].location));
                         cmd+=" && chmod 0755 ";
-                        cmd+=TQFile::encodeName(KProcess::quote(itsFolders[destFolder].location));
+                        cmd+=TQFile::encodeName(TDEProcess::quote(itsFolders[destFolder].location));
                         cmd+=" && ";
                     }
 
@@ -1363,9 +1363,9 @@ void CKioFonts::copy(const KURL &src, const KURL &d, int mode, bool overwrite)
                     for(; fIt!=fEnd; ++fIt)
                     {
                         cmd+="cp -f ";
-                        cmd+=TQFile::encodeName(KProcess::quote(fIt.key()));
+                        cmd+=TQFile::encodeName(TDEProcess::quote(fIt.key()));
                         cmd+=" ";
-                        cmd+=TQFile::encodeName(KProcess::quote(itsFolders[destFolder].location+modifyName(fIt.data())));
+                        cmd+=TQFile::encodeName(TDEProcess::quote(itsFolders[destFolder].location+modifyName(fIt.data())));
                         int s=getSize(TQFile::encodeName(fIt.key()));
                         if(s>0)
                             size+=s;
@@ -1540,7 +1540,7 @@ void CKioFonts::rename(const KURL &src, const KURL &d, bool overwrite)
                                                  toSys=FOLDER_SYS==destFolder;
                 TQCString                         userId,
                                                  groupId,
-                                                 destDir(TQFile::encodeName(KProcess::quote(itsFolders[destFolder].location)));
+                                                 destDir(TQFile::encodeName(TDEProcess::quote(itsFolders[destFolder].location)));
 
                 userId.setNum(toSys ? 0 : getuid());
                 groupId.setNum(toSys ? 0 : getgid());
@@ -1548,7 +1548,7 @@ void CKioFonts::rename(const KURL &src, const KURL &d, bool overwrite)
                 for(; fIt!=fEnd; ++fIt)
                 {
                     TQCString cmd,
-                             destFile(TQFile::encodeName(KProcess::quote(itsFolders[destFolder].location+fIt.data())));
+                             destFile(TQFile::encodeName(TDEProcess::quote(itsFolders[destFolder].location+fIt.data())));
 
                     if(toSys && !Misc::dExists(itsFolders[destFolder].location))
                     {
@@ -1558,7 +1558,7 @@ void CKioFonts::rename(const KURL &src, const KURL &d, bool overwrite)
                     }
 
                     cmd+="mv -f ";
-                    cmd+=TQFile::encodeName(KProcess::quote(fIt.key()));
+                    cmd+=TQFile::encodeName(TDEProcess::quote(fIt.key()));
                     cmd+=" ";
                     cmd+=destFile;
                     cmd+=" && chmod -f 0644 ";
@@ -1631,7 +1631,7 @@ void CKioFonts::del(const KURL &url, bool)
 
                 modifiedDirs.add(Misc::getDir(file));
                 cmd+=" ";
-                cmd+=TQFile::encodeName(KProcess::quote(file));
+                cmd+=TQFile::encodeName(TDEProcess::quote(file));
 
                 KURL::List urls;
 
@@ -1645,7 +1645,7 @@ void CKioFonts::del(const KURL &url, bool)
                     for(uIt=urls.begin(); uIt!=uEnd; ++uIt)
                     {
                         cmd+=" ";
-                        cmd+=TQFile::encodeName(KProcess::quote((*uIt).path()));
+                        cmd+=TQFile::encodeName(TDEProcess::quote((*uIt).path()));
                     }
                 }
             }
@@ -1800,7 +1800,7 @@ void CKioFonts::createRootRefreshCmd(TQCString &cmd, const CDirList &dirs, bool 
                 cmd+=" && kfontinst ";
                 cmd+=tmpCmd;
                 cmd+=" ";
-                cmd+=TQFile::encodeName(KProcess::quote(*it));
+                cmd+=TQFile::encodeName(TDEProcess::quote(*it));
             }
         }
     }
@@ -1809,7 +1809,7 @@ void CKioFonts::createRootRefreshCmd(TQCString &cmd, const CDirList &dirs, bool 
         cmd+=" && kfontinst ";
         cmd+=itsNrsKfiParams;
         cmd+=" ";
-        cmd+=TQFile::encodeName(KProcess::quote(itsFolders[FOLDER_SYS].location));
+        cmd+=TQFile::encodeName(TDEProcess::quote(itsFolders[FOLDER_SYS].location));
     }
 }
 
@@ -2437,7 +2437,7 @@ void CKioFonts::createAfm(const TQString &file, bool nrs, const TQString &passwd
                 if(nrs)
                 {
                     TQCString cmd("pf2afm ");
-                    cmd+=TQFile::encodeName(KProcess::quote(name));
+                    cmd+=TQFile::encodeName(TDEProcess::quote(name));
                     doRootCmd(cmd, passwd);
                 }
                 else

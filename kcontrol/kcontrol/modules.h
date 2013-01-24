@@ -30,7 +30,7 @@ class TQStringList;
 class TDEAboutData;
 class KCModule;
 class ProxyWidget;
-class KProcess;
+class TDEProcess;
 class QXEmbed;
 class TQVBoxLayout;
 class TQVBox;
@@ -63,7 +63,7 @@ private slots:
   void clientClosed();
   void clientChanged(bool state);
   void runAsRoot();
-  void rootExited(KProcess *proc);
+  void rootExited(TDEProcess *proc);
   void embedded();
 
 
@@ -80,7 +80,7 @@ private:
   bool         _changed;
   ProxyWidget *_module;
   QXEmbed     *_embedWidget;
-  KProcess    *_rootProcess;
+  TDEProcess    *_rootProcess;
   TQVBoxLayout *_embedLayout;
   TQVBox       *_embedFrame;
   TQWidgetStack *_embedStack;

@@ -109,8 +109,8 @@ void createMaxButtonPixmaps()
     "..............."},
   };
 
-  TQString baseColor(". c " + KGlobalSettings::baseColor().name());
-  TQString textColor("# c " + KGlobalSettings::textColor().name());
+  TQString baseColor(". c " + TDEGlobalSettings::baseColor().name());
+  TQString textColor("# c " + TDEGlobalSettings::textColor().name());
   for (int t = 0; t < 3; ++t)
   {
     maxButtonXpms[t][0] = "15 13 2 1";
@@ -143,7 +143,7 @@ KTitleBarActionsConfig::KTitleBarActionsConfig (bool _standAlone, KConfig *_conf
   TQString strMouseButton1, strMouseButton3, strMouseWheel;
   TQString txtButton1, txtButton3, txtButton4;
   TQStringList items;
-  bool leftHandedMouse = ( KGlobalSettings::mouseSettings().handed == KGlobalSettings::KMouseSettings::LeftHanded);
+  bool leftHandedMouse = ( TDEGlobalSettings::mouseSettings().handed == TDEGlobalSettings::KMouseSettings::LeftHanded);
 
 /** Titlebar doubleclick ************/
 
@@ -595,7 +595,7 @@ KWindowActionsConfig::KWindowActionsConfig (bool _standAlone, KConfig *_config, 
   TQString strMouseButton1, strMouseButton3;
   TQString txtButton1, txtButton3;
   TQStringList items;
-  bool leftHandedMouse = ( KGlobalSettings::mouseSettings().handed == KGlobalSettings::KMouseSettings::LeftHanded);
+  bool leftHandedMouse = ( TDEGlobalSettings::mouseSettings().handed == TDEGlobalSettings::KMouseSettings::LeftHanded);
 
 /**  Inactive inner window ******************/
 

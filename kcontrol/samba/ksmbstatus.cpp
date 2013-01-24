@@ -130,7 +130,7 @@ void NetMon::processSambaLine(char *bufline, int)
 // called when we get some data from smbstatus
 // can be called for any size of buffer (one line, several lines,
 // half of one ...)
-void NetMon::slotReceivedData(KProcess *, char *buffer, int )
+void NetMon::slotReceivedData(TDEProcess *, char *buffer, int )
 {
    //kdDebug()<<"received stuff"<<endl;
    char s[250],*start,*end;
@@ -161,7 +161,7 @@ void NetMon::slotReceivedData(KProcess *, char *buffer, int )
 
 void NetMon::update()
 {
-   KProcess * process = new KProcess();
+   TDEProcess * process = new TDEProcess();
 
    memset(&lo, 0, sizeof(lo));
    list->clear();
@@ -175,10 +175,10 @@ void NetMon::update()
    nrpid=0;
    process->setEnvironment("PATH", path);
    connect(process,
-           TQT_SIGNAL(receivedStdout(KProcess *, char *, int)),
-           TQT_SLOT(slotReceivedData(KProcess *, char *, int)));
+           TQT_SIGNAL(receivedStdout(TDEProcess *, char *, int)),
+           TQT_SLOT(slotReceivedData(TDEProcess *, char *, int)));
    *process << "smbstatus";
-   if (!process->start(KProcess::Block,KProcess::Stdout))
+   if (!process->start(TDEProcess::Block,TDEProcess::Stdout))
       version->setText(i18n("Error: Unable to run smbstatus"));
    else if (rownumber==0) // empty result
       version->setText(i18n("Error: Unable to open configuration file \"smb.conf\""));
@@ -197,16 +197,16 @@ void NetMon::update()
 
    readingpart=nfs;
    delete showmountProc;
-   showmountProc=new KProcess();
+   showmountProc=new TDEProcess();
    showmountProc->setEnvironment("PATH", path);
    *showmountProc<<"showmount"<<"-a"<<"localhost";
-   connect(showmountProc,TQT_SIGNAL(receivedStdout(KProcess *, char *, int)),TQT_SLOT(slotReceivedData(KProcess *, char *, int)));
+   connect(showmountProc,TQT_SIGNAL(receivedStdout(TDEProcess *, char *, int)),TQT_SLOT(slotReceivedData(TDEProcess *, char *, int)));
    //without this timer showmount hangs up to 5 minutes
    //if the portmapper daemon isn't running
    TQTimer::singleShot(5000,this,TQT_SLOT(killShowmount()));
    //kdDebug()<<"starting kill timer with 5 seconds"<<endl;
-   connect(showmountProc,TQT_SIGNAL(processExited(KProcess*)),this,TQT_SLOT(killShowmount()));
-   if (!showmountProc->start(KProcess::NotifyOnExit,KProcess::Stdout)) // run showmount
+   connect(showmountProc,TQT_SIGNAL(processExited(TDEProcess*)),this,TQT_SLOT(killShowmount()));
+   if (!showmountProc->start(TDEProcess::NotifyOnExit,TDEProcess::Stdout)) // run showmount
    {
       delete showmountProc;
       showmountProc=0;

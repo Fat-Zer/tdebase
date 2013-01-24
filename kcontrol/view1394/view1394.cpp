@@ -325,7 +325,7 @@ extern "C"
 
    KDE_EXPORT KCModule *create_view1394(TQWidget *parent, const char *name)
    {
-      KGlobal::locale()->insertCatalogue("kcmview1394");
+      TDEGlobal::locale()->insertCatalogue("kcmview1394");
       return new View1394(parent, name);
    }
 }

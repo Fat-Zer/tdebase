@@ -54,7 +54,7 @@ ServiceButton::ServiceButton(const KService::Ptr &service, TQWidget* parent)
 {
     if (_id.startsWith("/"))
     {
-       TQString tmp = KGlobal::dirs()->relativeLocation("appdata", _id);
+       TQString tmp = TDEGlobal::dirs()->relativeLocation("appdata", _id);
        if (!tmp.startsWith("/"))
           _id = ":"+tmp;
     }
@@ -112,7 +112,7 @@ void ServiceButton::loadServiceFromId(const TQString &id)
 
     if (_id.startsWith("/"))
     {
-       TQString tmp = KGlobal::dirs()->relativeLocation("appdata", _id);
+       TQString tmp = TDEGlobal::dirs()->relativeLocation("appdata", _id);
        if (!tmp.startsWith("/"))
           _id = ":"+tmp;
     }

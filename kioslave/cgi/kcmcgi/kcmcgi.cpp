@@ -35,7 +35,7 @@ extern "C"
 {
   KDE_EXPORT KCModule *create_cgi( TQWidget *parent, const char * )
   {
-    KGlobal::locale()->insertCatalogue("kcmcgi");
+    TDEGlobal::locale()->insertCatalogue("kcmcgi");
     return new KCMCgi( parent, "kcmcgi" );
   }
 }

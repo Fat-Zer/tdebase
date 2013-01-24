@@ -118,7 +118,7 @@ void KStylePage::saveKWin(bool curSettings){
 	TQString twin = origKWinStyle;
 	if(curSettings) {
 		KDesktopFile* kdf = 0L;
-		KStandardDirs* kstd = KGlobal::dirs();
+		KStandardDirs* kstd = TDEGlobal::dirs();
 		if (cde->isSelected() && twin_cde_exist)
 			kdf = new KDesktopFile(kstd->findResource("data", "twin/cde.desktop"));
 		else if (win->isSelected() && twin_win_exist)
@@ -160,7 +160,7 @@ void KStylePage::saveColors(bool curSettings){
 
 	// the GLOBAL config entries must be taken from the kcsrc file and written to it. Use the default values
 	// equals that the file is <default> which is no file. TODO: use the default values in that case (kde selected)
-	KConfig *config = KGlobal::config();
+	KConfig *config = TDEGlobal::config();
 	config->setGroup( "General" );
 	config->writeEntry("foreground", toSave->foreground, true, true);
 	config->writeEntry("background", toSave->background, true, true);
@@ -173,7 +173,7 @@ void KStylePage::saveColors(bool curSettings){
 	config->writeEntry("linkColor", toSave->linkColor, true, true);
 	config->writeEntry("visitedLinkColor", toSave->visitedLinkColor, true, true);
 
-	// set to the WM group, *only* the KGlobal one, a kcsrc file only has the group "Color Scheme"  hmpf...
+	// set to the WM group, *only* the TDEGlobal one, a kcsrc file only has the group "Color Scheme"  hmpf...
 	config->setGroup( "WM" );
 	config->writeEntry("activeForeground", toSave->activeForeground, true, true);
 	config->writeEntry("inactiveForeground", toSave->inactiveForeground, true, true);
@@ -231,17 +231,17 @@ void KStylePage::saveIcons(bool curSettings) {
 				theme = "Locolor";
 	}
 	// save, what we got
-	KGlobal::config()->setGroup("Icons");
-	KGlobal::config()->writeEntry("Theme", theme, true, true);
+	TDEGlobal::config()->setGroup("Icons");
+	TDEGlobal::config()->writeEntry("Theme", theme, true, true);
 	KIconTheme icontheme(theme);
 	const char * const groups[] = { "Desktop", "Toolbar", "MainToolbar", "Small", 0L };
 	for (KIcon::Group i=KIcon::FirstGroup; i<KIcon::LastGroup; i++) {
 		if (groups[i] == 0L)
 			break;
-		KGlobal::config()->setGroup(TQString::fromLatin1(groups[i]) + "Icons");
-		KGlobal::config()->writeEntry("Size", icontheme.defaultSize(i));
+		TDEGlobal::config()->setGroup(TQString::fromLatin1(groups[i]) + "Icons");
+		TDEGlobal::config()->writeEntry("Size", icontheme.defaultSize(i));
 	}
-	KGlobal::config()->sync();
+	TDEGlobal::config()->sync();
 	kdDebug() << "KStylePage::saveIcons(): " << theme << endl;
 }
 
@@ -324,7 +324,7 @@ void KStylePage::getColors(colorSet *set, bool colorfile ){
 	bool deleteConfig = false;
 	// get the color scheme file and go to the color scheme group
 	if(colorfile){
-		KGlobal::dirs()->addResourceType("colors", KStandardDirs::kde_default("data")+"kdisplay/color-schemes");
+		TDEGlobal::dirs()->addResourceType("colors", KStandardDirs::kde_default("data")+"kdisplay/color-schemes");
 		// set the style
 		if (kde->isSelected()) {
 			set->bgMode="Flat";
@@ -378,7 +378,7 @@ void KStylePage::getColors(colorSet *set, bool colorfile ){
 		set->usrCol1=kdesktop.readColorEntry("Color1", &tmp1);
 		set->usrCol2=kdesktop.readColorEntry("Color2", &tmp2);
 		// write the color scheme filename and the contrast, default 7, otherwise from file
-		config=KGlobal::config();
+		config=TDEGlobal::config();
 		config->setGroup("KDE");
 		set->colorFile=config->readEntry("colorScheme", "<default>");
 		set->contrast=config->readNumEntry("contrast", 7);
@@ -439,7 +439,7 @@ void KStylePage::getAvailability() {
 	twin_keramik_exist = twin_system_exist = twin_plastik_exist
 			= twin_default_exist = twin_win_exist
 			= twin_cde_exist = twin_quartz_exist = false;
-	KStandardDirs* kstd = KGlobal::dirs();
+	KStandardDirs* kstd = TDEGlobal::dirs();
 	if (!kstd->findResource("data", "twin/keramik.desktop").isNull())
 		twin_keramik_exist = true;
 	if (!kstd->findResource("data", "twin/plastik.desktop").isNull())
@@ -469,8 +469,8 @@ void KStylePage::getAvailability() {
 /** get the user's former settings */
 void KStylePage::getUserDefaults() {
 	// Get the user's current widget-style
-	KGlobal::config()->setGroup("General");
-	origStyle = KGlobal::config()->readEntry( "widgetStyle", KStyle::defaultStyle() );
+	TDEGlobal::config()->setGroup("General");
+	origStyle = TDEGlobal::config()->readEntry( "widgetStyle", KStyle::defaultStyle() );
 
 	// get the user's current KWin-style
 	ctwin = new KConfig("twinrc");
@@ -481,8 +481,8 @@ void KStylePage::getUserDefaults() {
 	getColors(&usrColors, false);
 
 	// Get the user's current iconset
-	KGlobal::config()->setGroup("Icons");
-	origIcons = KGlobal::config()->readEntry("Theme");
+	TDEGlobal::config()->setGroup("Icons");
+	origIcons = TDEGlobal::config()->readEntry("Theme");
 
 	kdDebug() << "KStylePage::getUserDefaults(): style: " << origStyle << endl;
 	kdDebug() << "KStylePage::getUserDefaults(): KWinStyle: " << origKWinStyle << endl;

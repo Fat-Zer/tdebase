@@ -594,7 +594,7 @@
 
 2002-08-30 Friday 10:37  pfeiffer
 
-	* use KGlobal::taskbarFont(), patch by CCMAIL: Luciano Montanaro
+	* use TDEGlobal::taskbarFont(), patch by CCMAIL: Luciano Montanaro
 	  <mikelima@virgilio.it>
 
 2002-08-29 Thursday 17:38  mueller
@@ -656,7 +656,7 @@
 
 	* grrr, I fixed that before 2.2.2 and it's back :(
 
-	  + KGlobal::locale()->insertCatalogue("kasbarextension");
+	  + TDEGlobal::locale()->insertCatalogue("kasbarextension");
 
 2002-02-26 Tuesday 17:04  elter
 

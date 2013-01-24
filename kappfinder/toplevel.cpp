@@ -161,9 +161,9 @@ TQListViewItem* TopLevel::addGroupItem( TQListViewItem *parent, const TQString &
 
 void TopLevel::slotScan()
 {
-  KIconLoader* loader = KGlobal::iconLoader();
+  KIconLoader* loader = TDEGlobal::iconLoader();
 
-  mTemplates = KGlobal::dirs()->findAllResources( "data", "kappfinder/apps/*.desktop", true );
+  mTemplates = TDEGlobal::dirs()->findAllResources( "data", "kappfinder/apps/*.desktop", true );
 
   mAppCache.clear();
 

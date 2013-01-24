@@ -105,7 +105,7 @@ void BaseContainer::slotRemoved(KConfig* config)
 {
     if (!config)
     {
-        config = KGlobal::config();
+        config = TDEGlobal::config();
     }
 
     config->deleteGroup(appletId().latin1());

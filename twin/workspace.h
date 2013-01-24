@@ -28,14 +28,14 @@ License. See the file "COPYING" for the exact licensing terms.
 
 class TQPopupMenu;
 class KConfig;
-class KGlobalAccel;
+class TDEGlobalAccel;
 class KShortcutDialog;
 class KStartupInfo;
 class KStartupInfoId;
 class KStartupInfoData;
 class TQSlider;
 class TQPushButton;
-class KProcess;
+class TDEProcess;
 
 namespace KWinInternal
 {
@@ -411,8 +411,8 @@ class Workspace : public TQObject, public KWinInterface, public KDecorationDefin
         void resetClientOpacity();
         void setTransButtonText(int value);
         void unblockKompmgrRestart();
-        void restartKompmgr( KProcess *proc );
-        void handleKompmgrOutput( KProcess *proc, char *buffer, int buflen);
+        void restartKompmgr( TDEProcess *proc );
+        void handleKompmgrOutput( TDEProcess *proc, char *buffer, int buflen);
         void stopKompmgr();
         void kompmgrReloadSettings();
         // end
@@ -584,11 +584,11 @@ class Workspace : public TQObject, public KWinInterface, public KDecorationDefin
         TQPopupMenu *desk_popup;
         int desk_popup_index;
 
-        KGlobalAccel *keys;
-        KGlobalAccel *client_keys;
+        TDEGlobalAccel *keys;
+        TDEGlobalAccel *client_keys;
         ShortcutDialog* client_keys_dialog;
         Client* client_keys_client;
-        KGlobalAccel *disable_shortcuts_keys;
+        TDEGlobalAccel *disable_shortcuts_keys;
         bool global_shortcuts_disabled;
         bool global_shortcuts_disabled_for_client;
 

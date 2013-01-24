@@ -331,17 +331,17 @@ bool NSPluginLoader::loadViewer(const TQString &mimeType)
    kdDebug() << "NSPluginLoader::loadViewer" << endl;
 
    _running = false;
-   _process = new KProcess;
+   _process = new TDEProcess;
 
    // get the dcop app id
    int pid = (int)getpid();
    _dcopid.sprintf("nspluginviewer-%d", pid);
 
-   connect( _process, TQT_SIGNAL(processExited(KProcess*)),
-            this, TQT_SLOT(processTerminated(KProcess*)) );
+   connect( _process, TQT_SIGNAL(processExited(TDEProcess*)),
+            this, TQT_SLOT(processTerminated(TDEProcess*)) );
 
    // find the external viewer process
-   TQString viewer = KGlobal::dirs()->findExe("nspluginviewer");
+   TQString viewer = TDEGlobal::dirs()->findExe("nspluginviewer");
    if (!viewer)
    {
       kdDebug() << "can't find nspluginviewer" << endl;
@@ -352,7 +352,7 @@ bool NSPluginLoader::loadViewer(const TQString &mimeType)
    // find the external artsdsp process
    if( _useArtsdsp && mimeType != "application/pdf" ) {
        kdDebug() << "trying to use artsdsp" << endl;
-       TQString artsdsp = KGlobal::dirs()->findExe("artsdsp");
+       TQString artsdsp = TDEGlobal::dirs()->findExe("artsdsp");
        if (!artsdsp)
        {
            kdDebug() << "can't find artsdsp" << endl;
@@ -441,7 +441,7 @@ void NSPluginLoader::applicationRegistered( const TQCString& appId )
 }
 
 
-void NSPluginLoader::processTerminated(KProcess *proc)
+void NSPluginLoader::processTerminated(TDEProcess *proc)
 {
    if ( _process == proc)
    {

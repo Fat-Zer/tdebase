@@ -182,19 +182,19 @@ MountHelper::MountHelper() : TDEApplication()
 
 void MountHelper::invokeEject(const TQString &device, bool quiet)
 {
-	KProcess *proc = new KProcess(TQT_TQOBJECT(this));
+	TDEProcess *proc = new TDEProcess(TQT_TQOBJECT(this));
 	*proc << "kdeeject";
 	if (quiet)
 	{
 		*proc << "-q";
 	}
 	*proc << device;
-	connect( proc, TQT_SIGNAL(processExited(KProcess *)),
-		this, TQT_SLOT( ejectFinished(KProcess *) ) );
+	connect( proc, TQT_SIGNAL(processExited(TDEProcess *)),
+		this, TQT_SLOT( ejectFinished(TDEProcess *) ) );
 	proc->start();
 }
 
-void MountHelper::ejectFinished(KProcess* proc)
+void MountHelper::ejectFinished(TDEProcess* proc)
 {
 	/*
 	* If eject failed, report the error stored in m_errorStr
@@ -268,7 +268,7 @@ int main(int argc, char **argv)
 	                   "0.1");
 
 	TDECmdLineArgs::addCmdLineOptions( options );
-	KGlobal::locale()->setMainCatalogue("kio_media");
+	TDEGlobal::locale()->setMainCatalogue("kio_media");
 	TDEApplication::addCmdLineOptions();
 
 	if (TDECmdLineArgs::parsedArgs()->count()==0) TDECmdLineArgs::usage();

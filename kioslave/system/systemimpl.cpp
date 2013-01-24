@@ -33,7 +33,7 @@
 
 SystemImpl::SystemImpl() : TQObject()
 {
-	KGlobal::dirs()->addResourceType("system_entries",
+	TDEGlobal::dirs()->addResourceType("system_entries",
 		KStandardDirs::kde_default("data") + "systemview");
 }
 
@@ -42,7 +42,7 @@ bool SystemImpl::listRoot(TQValueList<KIO::UDSEntry> &list)
 	kdDebug() << "SystemImpl::listRoot" << endl;
 
 	TQStringList names_found;
-	TQStringList dirList = KGlobal::dirs()->resourceDirs("system_entries");
+	TQStringList dirList = TDEGlobal::dirs()->resourceDirs("system_entries");
 
 	TQStringList::ConstIterator dirpath = dirList.begin();
 	TQStringList::ConstIterator end = dirList.end();
@@ -114,7 +114,7 @@ bool SystemImpl::statByName(const TQString &filename, KIO::UDSEntry& entry)
 {
 	kdDebug() << "SystemImpl::statByName" << endl;
 
-	TQStringList dirList = KGlobal::dirs()->resourceDirs("system_entries");
+	TQStringList dirList = TDEGlobal::dirs()->resourceDirs("system_entries");
 
 	TQStringList::ConstIterator dirpath = dirList.begin();
 	TQStringList::ConstIterator end = dirList.end();
@@ -147,7 +147,7 @@ KURL SystemImpl::findBaseURL(const TQString &filename) const
 {
 	kdDebug() << "SystemImpl::findBaseURL" << endl;
 
-	TQStringList dirList = KGlobal::dirs()->resourceDirs("system_entries");
+	TQStringList dirList = TDEGlobal::dirs()->resourceDirs("system_entries");
 
 	TQStringList::ConstIterator dirpath = dirList.begin();
 	TQStringList::ConstIterator end = dirList.end();

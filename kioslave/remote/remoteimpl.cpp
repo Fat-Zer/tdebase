@@ -36,10 +36,10 @@
 
 RemoteImpl::RemoteImpl()
 {
-	KGlobal::dirs()->addResourceType("remote_entries",
+	TDEGlobal::dirs()->addResourceType("remote_entries",
 		KStandardDirs::kde_default("data") + "remoteview");
 
-	TQString path = KGlobal::dirs()->saveLocation("remote_entries");
+	TQString path = TDEGlobal::dirs()->saveLocation("remote_entries");
 
 	TQDir dir = path;
 	if (!dir.exists())
@@ -54,7 +54,7 @@ void RemoteImpl::listRoot(TQValueList<KIO::UDSEntry> &list) const
 	kdDebug(1220) << "RemoteImpl::listRoot" << endl;
 
 	TQStringList names_found;
-	TQStringList dirList = KGlobal::dirs()->resourceDirs("remote_entries");
+	TQStringList dirList = TDEGlobal::dirs()->resourceDirs("remote_entries");
 
 	TQStringList::ConstIterator dirpath = dirList.begin();
 	TQStringList::ConstIterator end = dirList.end();
@@ -89,7 +89,7 @@ bool RemoteImpl::findDirectory(const TQString &filename, TQString &directory) co
 {
 	kdDebug(1220) << "RemoteImpl::findDirectory" << endl;
 
-	TQStringList dirList = KGlobal::dirs()->resourceDirs("remote_entries");
+	TQStringList dirList = TDEGlobal::dirs()->resourceDirs("remote_entries");
 
 	TQStringList::ConstIterator dirpath = dirList.begin();
 	TQStringList::ConstIterator end = dirList.end();

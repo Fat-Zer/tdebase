@@ -42,7 +42,7 @@ KeramikStyleConfig::KeramikStyleConfig(TQWidget* parent): TQWidget(parent)
 {
 	//Should have no margins here, the dialog provides them
 	TQVBoxLayout* layout = new TQVBoxLayout(this, 0, 0);
-	KGlobal::locale()->insertCatalogue("kstyle_keramik_config");
+	TDEGlobal::locale()->insertCatalogue("kstyle_keramik_config");
 
 	//highlightLineEdits = new TQCheckBox(i18n("Highlight active lineedits"), this);
 	highlightScrollBar = new TQCheckBox(i18n("Highlight scroll bar handles"), this);
@@ -70,7 +70,7 @@ KeramikStyleConfig::KeramikStyleConfig(TQWidget* parent): TQWidget(parent)
 
 KeramikStyleConfig::~KeramikStyleConfig()
 {
-	KGlobal::locale()->removeCatalogue("kstyle_keramik_config");
+	TDEGlobal::locale()->removeCatalogue("kstyle_keramik_config");
 }
 
 

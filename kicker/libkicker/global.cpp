@@ -326,7 +326,7 @@ TQPoint popupPosition(KPanelApplet::Direction d,
 
 void colorize(TQImage& image)
 {
-    KConfig *config = KGlobal::config();
+    KConfig *config = TDEGlobal::config();
     config->setGroup("WM");
     TQColor color = TQApplication::palette().active().highlight();
     TQColor activeTitle = config->readColorEntry("activeBackground", &color);
@@ -414,20 +414,20 @@ TQIconSet menuIconSet(const TQString& icon)
     {
         if (iconSize > 0)
         {
-            iconset = KGlobal::iconLoader()->loadIconSet(icon,
+            iconset = TDEGlobal::iconLoader()->loadIconSet(icon,
                                                      KIcon::NoGroup,
                                                      iconSize, true);
         }
         else if (iconSize == 0)
         {
-            TQPixmap normal = KGlobal::iconLoader()->loadIcon(icon,
+            TQPixmap normal = TDEGlobal::iconLoader()->loadIcon(icon,
                                                          KIcon::Small,
                                                          0,
                                                          KIcon::DefaultState,
                                                          0,
                                                          true);
 
-            TQPixmap active = KGlobal::iconLoader()->loadIcon(icon,
+            TQPixmap active = TDEGlobal::iconLoader()->loadIcon(icon,
                                                          KIcon::Small,
                                                          0,
                                                          KIcon::ActiveState,

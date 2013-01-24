@@ -324,23 +324,23 @@ void KEyeCandyPage::enableDesktopWindowMovingContents(bool enable, bool restore)
 // see /tdebase/kcontrol/kwm module, KAdvancedConfig class. Used are:
 // -Display content in moving window
 // -Display content in resizing window
-// And KGlobalSettings::opaqueResize() for QSplitters
+// And TDEGlobalSettings::opaqueResize() for QSplitters
 
 	twinconf->setGroup( "Windows" );
-	KGlobal::config()->setGroup("KDE");
+	TDEGlobal::config()->setGroup("KDE");
 	if (enable){
 		twinconf->writeEntry("ResizeMode","Opaque");
 		twinconf->writeEntry("MoveMode","Opaque");
-		KGlobal::config()->writeEntry("OpaqueResize", true, true, true);
+		TDEGlobal::config()->writeEntry("OpaqueResize", true, true, true);
 	} else {
 		twinconf->writeEntry("ResizeMode","Transparent");
 		twinconf->writeEntry("MoveMode","Transparent");
-		KGlobal::config()->writeEntry("OpaqueResize", false, true, true);
+		TDEGlobal::config()->writeEntry("OpaqueResize", false, true, true);
 	}
 	if(restore){
 		twinconf->writeEntry("ResizeMode",s_ResizeMode);
 		twinconf->writeEntry("MoveMode",s_MoveMode);
-		KGlobal::config()->writeEntry("OpaqueResize", b_OpaqueResize, true, true);
+		TDEGlobal::config()->writeEntry("OpaqueResize", b_OpaqueResize, true, true);
 	}
 }
 
@@ -378,32 +378,32 @@ void KEyeCandyPage::enableIconZoomingPanel(bool enable){
 /** enable Icon highlighting,  Level 3 */
 void KEyeCandyPage::enableIconEffectGamma(bool enable, bool user){
 	if(enable){
-		KGlobal::config()->setGroup("DesktopIcons");
-		KGlobal::config()->writeEntry("ActiveEffect", "togamma", true, true);
-		KGlobal::config()->writeEntry("ActiveValue", "0.7", true, true);
-		KGlobal::config()->setGroup("PanelIcons");
-		KGlobal::config()->writeEntry("ActiveEffect", "togamma", true, true);
-		KGlobal::config()->writeEntry("ActiveValue", "0.7", true, true);
+		TDEGlobal::config()->setGroup("DesktopIcons");
+		TDEGlobal::config()->writeEntry("ActiveEffect", "togamma", true, true);
+		TDEGlobal::config()->writeEntry("ActiveValue", "0.7", true, true);
+		TDEGlobal::config()->setGroup("PanelIcons");
+		TDEGlobal::config()->writeEntry("ActiveEffect", "togamma", true, true);
+		TDEGlobal::config()->writeEntry("ActiveValue", "0.7", true, true);
 	} else {
 		if(user){
-			KGlobal::config()->setGroup("DesktopIcons");
-			KGlobal::config()->writeEntry("ActiveEffect", st_UserGamma.EffectDesktop, true, true);
-			KGlobal::config()->writeEntry("ActiveValue", st_UserGamma.ValueDesktop, true, true);
-			KGlobal::config()->setGroup("PanelIcons");
-			KGlobal::config()->writeEntry("ActiveEffect", st_UserGamma.EffectPanel, true, true);
-			KGlobal::config()->writeEntry("ActiveValue", st_UserGamma.ValuePanel, true, true);
+			TDEGlobal::config()->setGroup("DesktopIcons");
+			TDEGlobal::config()->writeEntry("ActiveEffect", st_UserGamma.EffectDesktop, true, true);
+			TDEGlobal::config()->writeEntry("ActiveValue", st_UserGamma.ValueDesktop, true, true);
+			TDEGlobal::config()->setGroup("PanelIcons");
+			TDEGlobal::config()->writeEntry("ActiveEffect", st_UserGamma.EffectPanel, true, true);
+			TDEGlobal::config()->writeEntry("ActiveValue", st_UserGamma.ValuePanel, true, true);
 		} else {
-			KGlobal::config()->setGroup("DesktopIcons");
-			KGlobal::config()->writeEntry("ActiveEffect", "none", true, true);
-			KGlobal::config()->setGroup("PanelIcons");
-			KGlobal::config()->writeEntry("ActiveEffect", "none", true, true);
+			TDEGlobal::config()->setGroup("DesktopIcons");
+			TDEGlobal::config()->writeEntry("ActiveEffect", "none", true, true);
+			TDEGlobal::config()->setGroup("PanelIcons");
+			TDEGlobal::config()->writeEntry("ActiveEffect", "none", true, true);
 		}
 	}
 }
 
 void KEyeCandyPage::enableIconMngAnimation(bool enable) {
-	KGlobal::config()->setGroup("DesktopIcons");
-	KGlobal::config()->writeEntry("Animated", enable, true, true);
+	TDEGlobal::config()->setGroup("DesktopIcons");
+	TDEGlobal::config()->writeEntry("Animated", enable, true, true);
 }
 
 /** No descriptions */
@@ -421,11 +421,11 @@ void KEyeCandyPage::enableIconEffectSizePanel(bool enable){
 
 /** No descriptions */
 void KEyeCandyPage::enableIconEffectSizeDesktop(bool enable){
-	KGlobal::config()->setGroup("DesktopIcons");
+	TDEGlobal::config()->setGroup("DesktopIcons");
 	if( enable ) {	// use 48x48 icons
-		KGlobal::config()->writeEntry("Size", 48, true, true);
+		TDEGlobal::config()->writeEntry("Size", 48, true, true);
 	} else {
-		KGlobal::config()->writeEntry("Size", desktopiconsize, true, true);
+		TDEGlobal::config()->writeEntry("Size", desktopiconsize, true, true);
 	}
 }
 //----------------------------ICON STUFF-------------------------------------------------
@@ -435,33 +435,33 @@ void KEyeCandyPage::enableIconEffectSizeDesktop(bool enable){
 
 /** Enable fading tooltips in Level 7 */
 void KEyeCandyPage::enableFadingToolTips(bool enable){
-	KGlobal::config()->setGroup("KDE");
-	KGlobal::config()->writeEntry( "EffectFadeTooltip", enable, true, true);
+	TDEGlobal::config()->setGroup("KDE");
+	TDEGlobal::config()->writeEntry( "EffectFadeTooltip", enable, true, true);
 }
 
 /** enables/disables fading menus which are off by default in KDE. Enable this in Level 9 */
 void KEyeCandyPage::enableFadingMenus(bool enable){
-	KGlobal::config()->setGroup("KDE");
-	KGlobal::config()->writeEntry("EffectFadeMenu", enable,true, true);
+	TDEGlobal::config()->setGroup("KDE");
+	TDEGlobal::config()->writeEntry("EffectFadeMenu", enable,true, true);
 }
 
 /** enables/disables icons on pushbuttons, which are off by default in KDE. Enable this in Level 5 */
 void KEyeCandyPage::enablePushButtonIcons(bool enable){
-	KGlobal::config()->setGroup("KDE");
-	KGlobal::config()->writeEntry("ShowIconsOnPushButtons", enable,true, true);
+	TDEGlobal::config()->setGroup("KDE");
+	TDEGlobal::config()->writeEntry("ShowIconsOnPushButtons", enable,true, true);
 }
 
 /** Enable animated combo boxes, see styles kcontrol module. Enable in Level 6 (disabled by default anyway, so doesn't need to be
 disabled in levels below 4) */
 void KEyeCandyPage::enableAnimatedCombo(bool enable){
-	KGlobal::config()->setGroup("KDE");
-	KGlobal::config()->writeEntry("EffectAnimateCombo", enable, true, true);
+	TDEGlobal::config()->setGroup("KDE");
+	TDEGlobal::config()->writeEntry("EffectAnimateCombo", enable, true, true);
 }
 
 /** generally enable/disable style-Effects, depending on if one of the three is enabled. */
 void KEyeCandyPage::enableEffects(bool enable){
-	KGlobal::config()->setGroup("KDE");
-	KGlobal::config()->writeEntry("EffectsEnabled", enable, true, true);
+	TDEGlobal::config()->setGroup("KDE");
+	TDEGlobal::config()->writeEntry("EffectsEnabled", enable, true, true);
 }
 //----------------------------STYLE EFFECTS-------------------------------------------------
 
@@ -621,7 +621,7 @@ void KEyeCandyPage::save(bool currSettings){
 	konqiconconf->sync();
 	kickerconf->sync();
 	kdesktopconf->sync();
-	KGlobal::config()->sync();
+	TDEGlobal::config()->sync();
 	// restart twin  for window effects
 	kapp->dcopClient()->send("knotify", "Notify", "reconfigure()", TQString(""));
 	kapp->dcopClient()->send("twin*", "", "reconfigure()", TQString(""));
@@ -683,7 +683,7 @@ void KEyeCandyPage::getUserDefaults(){
 
 	// Wallpaper-User-Defaults
 	kdesktopconf->setGroup("FMSettings");
-	TQColor tempcolor=KGlobalSettings::textColor();
+	TQColor tempcolor=TDEGlobalSettings::textColor();
 	desktopTextColor = kdesktopconf->readColorEntry("NormalTextColor", &tempcolor );
 	kdesktopconf->setGroup("Background Common");
 	st_UserWallpaper.CommonDesktop = kdesktopconf->readBoolEntry("CommonDesktop", true);
@@ -694,29 +694,29 @@ void KEyeCandyPage::getUserDefaults(){
 	deskbgimage = kdesktopconf->readPathEntry("Wallpaper", DEFAULT_WALLPAPER);
 	// Wallpaper-User-Defaults (END)
 
-	KGlobal::config()->setGroup("KDE");
+	TDEGlobal::config()->setGroup("KDE");
 
 	// Font-User-Defaults
 	b_useXft=TQSettings().readBoolEntry("/qt/useXft");
 	b_enableXft=TQSettings().readBoolEntry("/qt/enableXft");
 
-	KGlobal::config()->setGroup("PanelIcons");
-	st_UserGamma.EffectPanel=KGlobal::config()->readEntry("ActiveEffect", "none");
-	st_UserGamma.ValuePanel=KGlobal::config()->readEntry("ActiveValue", "0.7");
+	TDEGlobal::config()->setGroup("PanelIcons");
+	st_UserGamma.EffectPanel=TDEGlobal::config()->readEntry("ActiveEffect", "none");
+	st_UserGamma.ValuePanel=TDEGlobal::config()->readEntry("ActiveValue", "0.7");
 
-	KGlobal::config()->setGroup("DesktopIcons");
-	st_UserGamma.EffectDesktop=KGlobal::config()->readEntry("ActiveEffect", "none");
-	st_UserGamma.ValueDesktop=KGlobal::config()->readEntry("ActiveValue", "0.7");
-	desktopiconsize=KGlobal::config()->readNumEntry("Size", 32);
-	b_iconMngAnim = KGlobal::config()->readBoolEntry( "Animated", true );
+	TDEGlobal::config()->setGroup("DesktopIcons");
+	st_UserGamma.EffectDesktop=TDEGlobal::config()->readEntry("ActiveEffect", "none");
+	st_UserGamma.ValueDesktop=TDEGlobal::config()->readEntry("ActiveValue", "0.7");
+	desktopiconsize=TDEGlobal::config()->readNumEntry("Size", 32);
+	b_iconMngAnim = TDEGlobal::config()->readBoolEntry( "Animated", true );
 
-	KGlobal::config()->setGroup("KDE");
-	b_EffectFadeTooltip=KGlobal::config()->readBoolEntry( "EffectFadeTooltip", false );
-	b_PushButtonIcons=KGlobal::config()->readBoolEntry("ShowIconsOnPushButtons", false);
-	b_EffectFadeMenu=KGlobal::config()->readBoolEntry("EffectFadeMenu", false);
-	b_EffectAnimateCombo=KGlobal::config()->readBoolEntry("EffectAnimateCombo", false);
-	b_EffectsEnabled=KGlobal::config()->readBoolEntry("EffectsEnabled", false);
-	b_OpaqueResize=KGlobal::config()->readBoolEntry("OpaqueResize", true);
+	TDEGlobal::config()->setGroup("KDE");
+	b_EffectFadeTooltip=TDEGlobal::config()->readBoolEntry( "EffectFadeTooltip", false );
+	b_PushButtonIcons=TDEGlobal::config()->readBoolEntry("ShowIconsOnPushButtons", false);
+	b_EffectFadeMenu=TDEGlobal::config()->readBoolEntry("EffectFadeMenu", false);
+	b_EffectAnimateCombo=TDEGlobal::config()->readBoolEntry("EffectAnimateCombo", false);
+	b_EffectsEnabled=TDEGlobal::config()->readBoolEntry("EffectsEnabled", false);
+	b_OpaqueResize=TDEGlobal::config()->readBoolEntry("OpaqueResize", true);
 
 	kickerconf->setGroup("buttons");
 	b_EnableIconZoom=kickerconf->readBoolEntry("EnableIconZoom", true);

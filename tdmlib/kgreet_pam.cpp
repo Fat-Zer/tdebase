@@ -223,7 +223,7 @@ KPamGreeter::loadUsers( const TQStringList &users )
 	userNamesCompletion->setItems( users );
 	loginEdit->setCompletionObject( userNamesCompletion );
 	loginEdit->setAutoDeleteCompletionObject( true );
-	loginEdit->setCompletionMode( KGlobalSettings::CompletionAuto );
+	loginEdit->setCompletionMode( TDEGlobalSettings::CompletionAuto );
 }
 
 void // virtual
@@ -643,13 +643,13 @@ static bool init( const TQString &,
                   void *ctx )
 {
 	echoMode = (KPasswordEdit::EchoModes) getConf( ctx, "EchoMode", TQVariant( -1 ) ).toInt();
-	KGlobal::locale()->insertCatalogue( "kgreet_pam" );
+	TDEGlobal::locale()->insertCatalogue( "kgreet_pam" );
 	return true;
 }
 
 static void done( void )
 {
-	KGlobal::locale()->removeCatalogue( "kgreet_pam" );
+	TDEGlobal::locale()->removeCatalogue( "kgreet_pam" );
         if (log && log != stderr)
 	    fclose(log);
         log = 0;

@@ -59,7 +59,7 @@ FaviconsModule::FaviconsModule(const TQCString &obj)
 {
     // create our favicons folder so that KIconLoader knows about it
     d = new FaviconsModulePrivate;
-    d->faviconsDir = KGlobal::dirs()->saveLocation( "cache", "favicons/" );
+    d->faviconsDir = TDEGlobal::dirs()->saveLocation( "cache", "favicons/" );
     d->faviconsDir.truncate(d->faviconsDir.length()-9); // Strip off "favicons/"
     d->metaData.insert("ssl_no_client_cert", "TRUE");
     d->metaData.insert("ssl_militant", "TRUE");

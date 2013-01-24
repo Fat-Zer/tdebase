@@ -135,7 +135,7 @@ IndexProgressDialog::IndexProgressDialog( TQWidget *parent )
 IndexProgressDialog::~IndexProgressDialog()
 {
   if ( !mLogView->isHidden() ) {
-    KConfig *cfg = KGlobal::config();
+    KConfig *cfg = TDEGlobal::config();
     cfg->setGroup( "indexprogressdialog" );
     cfg->writeEntry( "size", size() );
   }
@@ -196,7 +196,7 @@ void IndexProgressDialog::slotEnd()
 
 void IndexProgressDialog::toggleDetails()
 {
-  KConfig *cfg = KGlobal::config();
+  KConfig *cfg = TDEGlobal::config();
   cfg->setGroup( "indexprogressdialog" );
   if ( mLogView->isHidden() ) {
     mLogLabel->show();
@@ -234,7 +234,7 @@ KCMHelpCenter::KCMHelpCenter( KHC::SearchEngine *engine, TQWidget *parent,
 
   setButtonOK( i18n("Build Index") );
 
-  mConfig = KGlobal::config();
+  mConfig = TDEGlobal::config();
 
   DocMetaInfo::self()->scanMetaInfo();
 
@@ -465,7 +465,7 @@ void KCMHelpCenter::startIndexProcess()
 {
   kdDebug() << "KCMHelpCenter::startIndexProcess()" << endl;
 
-  mProcess = new KProcess;
+  mProcess = new TDEProcess;
 
   if ( mRunAsRoot ) {
     *mProcess << "tdesu" << "--nonewdcop";
@@ -476,14 +476,14 @@ void KCMHelpCenter::startIndexProcess()
   *mProcess << mCmdFile->name();
   *mProcess << Prefs::indexDirectory();
 
-  connect( mProcess, TQT_SIGNAL( processExited( KProcess * ) ),
-           TQT_SLOT( slotIndexFinished( KProcess * ) ) );
-  connect( mProcess, TQT_SIGNAL( receivedStdout( KProcess *, char *, int ) ),
-           TQT_SLOT( slotReceivedStdout(KProcess *, char *, int ) ) );
-  connect( mProcess, TQT_SIGNAL( receivedStderr( KProcess *, char *, int ) ),
-           TQT_SLOT( slotReceivedStderr( KProcess *, char *, int ) ) );
+  connect( mProcess, TQT_SIGNAL( processExited( TDEProcess * ) ),
+           TQT_SLOT( slotIndexFinished( TDEProcess * ) ) );
+  connect( mProcess, TQT_SIGNAL( receivedStdout( TDEProcess *, char *, int ) ),
+           TQT_SLOT( slotReceivedStdout(TDEProcess *, char *, int ) ) );
+  connect( mProcess, TQT_SIGNAL( receivedStderr( TDEProcess *, char *, int ) ),
+           TQT_SLOT( slotReceivedStderr( TDEProcess *, char *, int ) ) );
 
-  if ( !mProcess->start( KProcess::NotifyOnExit, KProcess::AllOutput ) ) {
+  if ( !mProcess->start( TDEProcess::NotifyOnExit, TDEProcess::AllOutput ) ) {
     kdError() << "KCMHelpcenter::startIndexProcess(): Failed to start process."
       << endl;
   }
@@ -502,7 +502,7 @@ void KCMHelpCenter::cancelBuildIndex()
   }
 }
 
-void KCMHelpCenter::slotIndexFinished( KProcess *proc )
+void KCMHelpCenter::slotIndexFinished( TDEProcess *proc )
 {
   kdDebug() << "KCMHelpCenter::slotIndexFinished()" << endl;
 
@@ -527,7 +527,7 @@ void KCMHelpCenter::slotIndexFinished( KProcess *proc )
       return;
     }
   } else if ( !mProcess->normalExit() || mProcess->exitStatus() != 0 ) {
-    kdDebug() << "KProcess reported an error." << endl;
+    kdDebug() << "TDEProcess reported an error." << endl;
     KMessageBox::error( this, i18n("Failed to build index.") );
   } else {
     mConfig->setGroup( "Search" );
@@ -608,7 +608,7 @@ void KCMHelpCenter::advanceProgress()
   }
 }
 
-void KCMHelpCenter::slotReceivedStdout( KProcess *, char *buffer, int buflen )
+void KCMHelpCenter::slotReceivedStdout( TDEProcess *, char *buffer, int buflen )
 {
   TQString text = TQString::fromLocal8Bit( buffer, buflen );
   int pos = text.findRev( '\n' );
@@ -622,7 +622,7 @@ void KCMHelpCenter::slotReceivedStdout( KProcess *, char *buffer, int buflen )
   }
 }
 
-void KCMHelpCenter::slotReceivedStderr( KProcess *, char *buffer, int buflen )
+void KCMHelpCenter::slotReceivedStderr( TDEProcess *, char *buffer, int buflen )
 {
   TQString text = TQString::fromLocal8Bit( buffer, buflen );
   int pos = text.findRev( '\n' );
@@ -680,7 +680,7 @@ void KCMHelpCenter::findWriteableIndexDir()
 {
   TQFileInfo currentDir( Prefs::indexDirectory() );
   if ( !currentDir.isWritable() )
-    Prefs::setIndexDirectory( KGlobal::dirs()->saveLocation("data", "khelpcenter/index/") );
+    Prefs::setIndexDirectory( TDEGlobal::dirs()->saveLocation("data", "khelpcenter/index/") );
 }
 #include "kcmhelpcenter.moc"
 

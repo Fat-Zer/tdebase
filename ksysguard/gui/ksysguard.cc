@@ -77,7 +77,7 @@ TopLevel::TopLevel( const char *name )
 
   mSplitter = new TQSplitter( this );
   mSplitter->setOrientation( Qt::Horizontal );
-  mSplitter->setOpaqueResize( KGlobalSettings::opaqueResize() );
+  mSplitter->setOpaqueResize( TDEGlobalSettings::opaqueResize() );
   setCentralWidget( mSplitter );
 
   mSensorBrowser = new SensorBrowser( mSplitter, KSGRD::SensorMgr );
@@ -162,7 +162,7 @@ void TopLevel::resetWorkSheets()
 
   mWorkSpace->removeAllWorkSheets();
 
-  KStandardDirs* kstd = KGlobal::dirs();
+  KStandardDirs* kstd = TDEGlobal::dirs();
   kstd->addResourceType( "data", "share/apps/ksysguard" );
 
   TQString workDir = kstd->saveLocation( "data", "ksysguard" );
@@ -444,8 +444,8 @@ void TopLevel::answerReceived( int id, const TQString &answer )
     case 2:
       mUsed = answer.toLong();
       s = i18n( "Memory: %1 %2 used, %3 %4 free" )
-              .arg( KGlobal::locale()->formatNumber( mUsed, 0 ) ).arg( unit )
-              .arg( KGlobal::locale()->formatNumber( mFree, 0 ) ).arg( unit );
+              .arg( TDEGlobal::locale()->formatNumber( mUsed, 0 ) ).arg( unit )
+              .arg( TDEGlobal::locale()->formatNumber( mFree, 0 ) ).arg( unit );
       statusBar()->changeItem( s, 1 );
       break;
 
@@ -504,8 +504,8 @@ void TopLevel::setSwapInfo( long used, long free, const TQString &unit )
     msg = i18n( "No swap space available" );
   else {
     msg = i18n( "Swap: %1 %2 used, %3 %4 free" )
-              .arg( KGlobal::locale()->formatNumber( used, 0 ) ).arg( unit )
-              .arg( KGlobal::locale()->formatNumber( free, 0 ) ).arg( unit );
+              .arg( TDEGlobal::locale()->formatNumber( used, 0 ) ).arg( unit )
+              .arg( TDEGlobal::locale()->formatNumber( free, 0 ) ).arg( unit );
   }
 
   statusBar()->changeItem( msg, 2 );

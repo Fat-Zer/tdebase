@@ -120,7 +120,7 @@ void AppletTab::load( bool useDefaults )
 
   list_group->setEnabled(trusted_rb->isChecked());
 
-  TQStringList list = KGlobal::dirs()->findAllResources("applets", "*.desktop");
+  TQStringList list = TDEGlobal::dirs()->findAllResources("applets", "*.desktop");
   for ( TQStringList::Iterator it = list.begin(); it != list.end(); ++it )
     {
       TQFileInfo fi(*it);

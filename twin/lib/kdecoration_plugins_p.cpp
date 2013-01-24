@@ -168,13 +168,13 @@ bool KDecorationPlugins::loadPlugin( TQString nameStr )
     // For clients in tdeartwork    
     TQString catalogue = nameStr;
     catalogue.replace( "twin3_", "twin_" );
-    KGlobal::locale()->insertCatalogue( catalogue );
+    TDEGlobal::locale()->insertCatalogue( catalogue );
     // For KCommonDecoration based clients
-    KGlobal::locale()->insertCatalogue( "twin_lib" );
+    TDEGlobal::locale()->insertCatalogue( "twin_lib" );
     // For clients in tdebase
-    KGlobal::locale()->insertCatalogue( "twin_clients" );
+    TDEGlobal::locale()->insertCatalogue( "twin_clients" );
     // For clients in tdeartwork
-    KGlobal::locale()->insertCatalogue( "twin_art_clients" );
+    TDEGlobal::locale()->insertCatalogue( "twin_art_clients" );
 
     old_library = oldLibrary; // save for delayed destroying
     old_fact = oldFactory;

@@ -95,7 +95,7 @@ int main( int argc, char *argv[] )
   // Read the command
   TQString command;
   for ( int i = 0; i < args->count(); i++ )
-    command += KProcess::quote(TQString::fromLocal8Bit( args->arg(i) )) + " ";
+    command += TDEProcess::quote(TQString::fromLocal8Bit( args->arg(i) )) + " ";
   if ( !command.isEmpty() )
       cmd.setCommand( command );
 

@@ -10,7 +10,7 @@ class TQWidget;
 class TQProgressDialog;
 
 
-class KProcess;
+class TDEProcess;
 
 
 class ProgressDialog;
@@ -32,11 +32,11 @@ public:
 
 protected slots:
 
-  void htdigStdout(KProcess *proc, char *buffer, int buflen);
-  void htdigExited(KProcess *proc);
-  void htmergeExited(KProcess *proc);
-  void htsearchStdout(KProcess *proc, char *buffer, int buflen);
-  void htsearchExited(KProcess *proc);
+  void htdigStdout(TDEProcess *proc, char *buffer, int buflen);
+  void htdigExited(TDEProcess *proc);
+  void htmergeExited(TDEProcess *proc);
+  void htsearchStdout(TDEProcess *proc, char *buffer, int buflen);
+  void htsearchExited(TDEProcess *proc);
 
 
 protected:
@@ -52,7 +52,7 @@ protected:
 private:
 
   TQStringList   _files;
-  KProcess      *_proc;
+  TDEProcess      *_proc;
   int           _filesToDig, _filesDigged, _filesScanned;
   volatile bool _htdigRunning, _htmergeRunning, _htsearchRunning;
   TQString       _searchResult;

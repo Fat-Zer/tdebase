@@ -148,7 +148,7 @@ void KDEDConfig::load( bool useDefaults ) {
 	_lvLoD->clear();
 
 	TQStringList files;
-	KGlobal::dirs()->findAllResources( "services",
+	TDEGlobal::dirs()->findAllResources( "services",
 			TQString::fromLatin1( "kded/*.desktop" ),
 			true, true, files );
 
@@ -186,7 +186,7 @@ void KDEDConfig::save() {
 	TQCheckListItem* item = 0L;
 
 	TQStringList files;
-	KGlobal::dirs()->findAllResources( "services",
+	TDEGlobal::dirs()->findAllResources( "services",
 			TQString::fromLatin1( "kded/*.desktop" ),
 			true, true, files );
 

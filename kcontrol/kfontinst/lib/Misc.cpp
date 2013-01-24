@@ -133,7 +133,7 @@ bool createDir(const TQString &dir)
 
 bool doCmd(const TQString &cmd, const TQString &p1, const TQString &p2, const TQString &p3)
 {
-    KProcess proc;
+    TDEProcess proc;
 
     proc << cmd;
 
@@ -144,7 +144,7 @@ bool doCmd(const TQString &cmd, const TQString &p1, const TQString &p2, const TQ
     if(!p3.isEmpty())
         proc << p3;
 
-    proc.start(KProcess::Block);
+    proc.start(TDEProcess::Block);
 
     return proc.normalExit() && proc.exitStatus()==0;
 }

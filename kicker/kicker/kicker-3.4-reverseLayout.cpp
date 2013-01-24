@@ -143,9 +143,9 @@ int main(int argc, char** argv)
         tempFile.close();
 
         // Run kconf_update on the childpanel config files.
-        KProcess kconf_update;
+        TDEProcess kconf_update;
         kconf_update << "kconf_update" << tempFile.name();
-        kconf_update.start(KProcess::Block);
+        kconf_update.start(TDEProcess::Block);
 
         tempFile.unlink();
     }

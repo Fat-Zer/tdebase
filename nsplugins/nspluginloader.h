@@ -39,7 +39,7 @@
 
 #define EMBEDCLASS QXEmbed
 
-class KProcess;
+class TDEProcess;
 class TQPushButton;
 class TQGridLayout;
 
@@ -106,13 +106,13 @@ protected:
 
 protected slots:
   void applicationRegistered( const TQCString& appId );
-  void processTerminated( KProcess *proc );
+  void processTerminated( TDEProcess *proc );
 
 private:
   TQStringList _searchPaths;
   TQDict<TQString> _mapping, _filetype;
 
-  KProcess *_process;
+  TDEProcess *_process;
   bool _running;
   TQCString _dcopid;
   NSPluginViewerIface_stub *_viewer;

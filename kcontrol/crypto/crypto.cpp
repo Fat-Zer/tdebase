@@ -1227,7 +1227,7 @@ void KCryptoConfig::save()
   authcfg->sync();
 
   // insure proper permissions -- contains sensitive data
-  TQString cfgName(KGlobal::dirs()->findResource("config", "cryptodefaults"));
+  TQString cfgName(TDEGlobal::dirs()->findResource("config", "cryptodefaults"));
   if (!cfgName.isEmpty())
     ::chmod(TQFile::encodeName(cfgName), 0600);
 
@@ -1471,7 +1471,7 @@ TQDateTime qdt = x->getExpires();
    int rc = kdtd.exec();
    if (rc == KDialog::Accepted) {
       x->setExpires(kdtd.getDateTime());
-      untilDate->setText(KGlobal::locale()->formatDateTime(x->getExpires()));
+      untilDate->setText(TDEGlobal::locale()->formatDateTime(x->getExpires()));
       configChanged();
    }
 }
@@ -1517,8 +1517,8 @@ TQString iss = TQString();
 
          validFrom->setText(cert->getNotBefore());
          validUntil->setText(cert->getNotAfter());
-         untilDate->setText(x ? KGlobal::locale()->formatDateTime(x->getExpires())
-                              : KGlobal::locale()->formatDateTime(TQDateTime::currentDateTime(Qt::UTC)));
+         untilDate->setText(x ? TDEGlobal::locale()->formatDateTime(x->getExpires())
+                              : TDEGlobal::locale()->formatDateTime(TQDateTime::currentDateTime(Qt::UTC)));
          untilDate->setEnabled(x && !x->isPermanent());
          pHash->setText(cert->getMD5DigestText());
          delete cert;
@@ -2024,11 +2024,11 @@ void KCryptoConfig::slotCAImport() {
 void KCryptoConfig::offerImportToKMail( const TQString& certFile )
 {
     if ( KMessageBox::questionYesNo( this, i18n( "Do you want to make this certificate available to KMail as well?" ), TQString(), i18n("Make Available"), i18n("Do Not Make Available") ) == KMessageBox::Yes ) {
-       KProcess proc;
+       TDEProcess proc;
        proc << "kleopatra";
        proc << "--import-certificate";
        proc << certFile;
-       if ( !proc.start( KProcess::DontCare ) )
+       if ( !proc.start( TDEProcess::DontCare ) )
            KMessageBox::error( this, i18n( "Could not execute Kleopatra. You might have to install or update the tdepim package." ) );
    }
 }
@@ -2054,7 +2054,7 @@ void KCryptoConfig::slotCARestore() {
 
 // For now, we just rm the existing file and rebuild
 
-   TQString path = KGlobal::dirs()->saveLocation("config");
+   TQString path = TDEGlobal::dirs()->saveLocation("config");
 
    path += "/ksslcalist";
 

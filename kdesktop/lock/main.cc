@@ -231,7 +231,7 @@ int main( int argc, char **argv )
         int parent_connection = 0; // socket to the parent saver
         TQValueList<int> child_sockets;
 
-        if (KGlobalSettings::isMultiHead())
+        if (TDEGlobalSettings::isMultiHead())
         {
             Display *dpy = XOpenDisplay(NULL);
             if (! dpy) {
@@ -290,7 +290,7 @@ int main( int argc, char **argv )
         MyApp app;
         kdDebug() << "app " << kdesktop_screen_number << " " << starting_screen << " " << child << " " << child_sockets.count() << " " << parent_connection << endl;
         app.disableSessionManagement();
-        KGlobal::locale()->insertCatalogue("libdmctl");
+        TDEGlobal::locale()->insertCatalogue("libdmctl");
 
         struct stat st;
         KSimpleConfig* tdmconfig;

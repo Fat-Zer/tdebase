@@ -742,7 +742,7 @@ void KDisplayConfig::setRealResolutionSliderValue(int index) {
 KDisplayConfig::KDisplayConfig(TQWidget *parent, const char *name, const TQStringList &)
   : KCModule(KDisplayCFactory::instance(), parent, name), iccTab(0), numberOfProfiles(0), numberOfScreens(0), m_randrsimple(0), activeProfileName(""), m_gammaApplyTimer(0)
 {
-	TDEHardwareDevices *hwdevices = KGlobal::hardwareDevices();
+	TDEHardwareDevices *hwdevices = TDEGlobal::hardwareDevices();
 	connect(hwdevices, TQT_SIGNAL(hardwareUpdated(TDEGenericDevice*)), this, TQT_SLOT(deviceChanged(TDEGenericDevice*)));
 
 	m_randrsimple = new KRandrSimpleAPI();

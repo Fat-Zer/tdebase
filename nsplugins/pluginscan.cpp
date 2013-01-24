@@ -121,7 +121,7 @@ bool isPluginMimeType( TQString fname )
 void deletePluginMimeTypes()
 {
     // iterate through local mime type directories
-    TQString dir = KGlobal::dirs()->saveLocation( "mime" );
+    TQString dir = TDEGlobal::dirs()->saveLocation( "mime" );
     kdDebug(1433) << "Removing nsplugin MIME types in " << dir << endl;
     TQDir dirs( dir, TQString::null, TQDir::Name|TQDir::IgnoreCase, TQDir::Dirs );
     if ( !dirs.exists() ) {
@@ -168,7 +168,7 @@ void generateMimeType( TQString mime, TQString extensions, TQString pluginName, 
         kdDebug(1433) << "<- generateMimeType" << endl;
         return;
     }
-    dir = KGlobal::dirs()->saveLocation( "mime", mime.left(pos) );
+    dir = TDEGlobal::dirs()->saveLocation( "mime", mime.left(pos) );
     name = mime.mid(pos);
 
     // create mimelnk file
@@ -455,7 +455,7 @@ void scanDirectory( TQString dir, TQStringList &mimeInfoList,
 
 void writeServicesFile( TQStringList mimeTypes )
 {
-    TQString fname = KGlobal::dirs()->saveLocation("services", "")
+    TQString fname = TDEGlobal::dirs()->saveLocation("services", "")
                     + "/nsplugin.desktop";
     kdDebug(1433) << "Creating services file " << fname << endl;
 
@@ -566,12 +566,12 @@ int main( int argc, char **argv )
     TQStringList searchPaths = getSearchPaths();
     TQStringList mimeInfoList;
 
-    infoConfig = new KConfig( KGlobal::dirs()->saveLocation("data", "nsplugins") +
+    infoConfig = new KConfig( TDEGlobal::dirs()->saveLocation("data", "nsplugins") +
                               "/pluginsinfo" );
     infoConfig->writeEntry( "number", 0 );
 
     // open the cache file for the mime information
-    TQString cacheName = KGlobal::dirs()->saveLocation("data", "nsplugins")+"/cache";
+    TQString cacheName = TDEGlobal::dirs()->saveLocation("data", "nsplugins")+"/cache";
     kdDebug(1433) << "Creating MIME cache file " << cacheName << endl;
     TQFile cachef(cacheName);
     if (!cachef.open(IO_WriteOnly))
@@ -625,7 +625,7 @@ int main( int argc, char **argv )
               mimeTypes.append( type );
 
               // check mimelnk file
-              TQString fname = KGlobal::dirs()->findResource("mime", type+".desktop");
+              TQString fname = TDEGlobal::dirs()->findResource("mime", type+".desktop");
               if ( fname.isEmpty() || isPluginMimeType(fname) ) {
                   kdDebug(1433) << " - creating MIME type description" << endl;
                   removeExistingExtensions( extension );

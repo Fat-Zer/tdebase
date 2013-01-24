@@ -288,7 +288,7 @@ void TDMAppearanceWidget::makeReadOnly()
 
 void TDMAppearanceWidget::loadLanguageList(KLanguageButton *combo)
 {
-  TQStringList langlist = KGlobal::dirs()->findAllResources("locale",
+  TQStringList langlist = TDEGlobal::dirs()->findAllResources("locale",
 			TQString::fromLatin1("*/entry.desktop"));
   langlist.sort();
   for ( TQStringList::ConstIterator it = langlist.begin();
@@ -308,7 +308,7 @@ void TDMAppearanceWidget::loadLanguageList(KLanguageButton *combo)
 void TDMAppearanceWidget::loadColorSchemes(KBackedComboBox *combo)
 {
   // XXX: Global + local schemes
-  TQStringList list = KGlobal::dirs()->
+  TQStringList list = TDEGlobal::dirs()->
       findAllResources("data", "kdisplay/color-schemes/*.kcsrc", false, true);
   for (TQStringList::ConstIterator it = list.begin(); it != list.end(); ++it)
   {
@@ -329,7 +329,7 @@ void TDMAppearanceWidget::loadColorSchemes(KBackedComboBox *combo)
 void TDMAppearanceWidget::loadGuiStyles(KBackedComboBox *combo)
 {
   // XXX: Global + local schemes
-  TQStringList list = KGlobal::dirs()->
+  TQStringList list = TDEGlobal::dirs()->
       findAllResources("data", "kstyle/themes/*.themerc", false, true);
   for (TQStringList::ConstIterator it = list.begin(); it != list.end(); ++it)
   {
@@ -429,7 +429,7 @@ void TDMAppearanceWidget::iconLoaderDropEvent(TQDropEvent *e)
 
 	// we gotta check if it is a non-local file and make a tmp copy at the hd.
 	if(!url->isLocalFile()) {
-	    pixurl.setPath(KGlobal::dirs()->resourceDirs("data").last() +
+	    pixurl.setPath(TDEGlobal::dirs()->resourceDirs("data").last() +
 		     "tdm/pics/" + url->fileName());
 	    KIO::NetAccess::copy(*url, pixurl, parentWidget());
 	    istmp = true;
@@ -462,7 +462,7 @@ void TDMAppearanceWidget::save()
   config->writeEntry("LogoArea", noneRadio->isChecked() ? "None" :
 			    logoRadio->isChecked() ? "Logo" : "Clock" );
 
-  config->writeEntry("LogoPixmap", KGlobal::iconLoader()->iconPath(logopath, KIcon::Desktop, true));
+  config->writeEntry("LogoPixmap", TDEGlobal::iconLoader()->iconPath(logopath, KIcon::Desktop, true));
 
   config->writeEntry("Compositor", compositorcombo->currentId());
 

@@ -39,7 +39,7 @@ PlastikConfig::PlastikConfig(KConfig* config, TQWidget* parent)
 {
     // create the configuration object
     m_config = new KConfig("twinplastikrc");
-    KGlobal::locale()->insertCatalogue("twin_clients");
+    TDEGlobal::locale()->insertCatalogue("twin_clients");
 
     // create and show the configuration dialog
     m_dialog = new ConfigDialog(parent);

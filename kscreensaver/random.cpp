@@ -128,13 +128,13 @@ int main(int argc, char *argv[])
 		windowId = RootWindow(tqt_xdisplay(), tqt_xscreen());
 	}
 
-	KGlobal::dirs()->addResourceType("scrsav",
-			KGlobal::dirs()->kde_default("apps") +
+	TDEGlobal::dirs()->addResourceType("scrsav",
+			TDEGlobal::dirs()->kde_default("apps") +
 			"apps/ScreenSavers/");
-	KGlobal::dirs()->addResourceType("scrsav",
-			KGlobal::dirs()->kde_default("apps") +
+	TDEGlobal::dirs()->addResourceType("scrsav",
+			TDEGlobal::dirs()->kde_default("apps") +
 			"System/ScreenSavers/");
-	TQStringList tempSaverFileList = KGlobal::dirs()->findAllResources("scrsav",
+	TQStringList tempSaverFileList = TDEGlobal::dirs()->findAllResources("scrsav",
 			"*.desktop", false, true);
 
 	TQStringList saverFileList;

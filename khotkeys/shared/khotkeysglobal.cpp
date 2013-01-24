@@ -61,7 +61,7 @@ bool khotkeys_active()
 // "/opt/kde2/share/applnk/System/konsole.desktop" -> "System/konsole.desktop"
 TQString get_menu_entry_from_path( const TQString& path_P )
     {
-    TQStringList dirs = KGlobal::dirs()->resourceDirs( "apps" );
+    TQStringList dirs = TDEGlobal::dirs()->resourceDirs( "apps" );
     for( TQStringList::ConstIterator it = dirs.begin();
          it != dirs.end();
          ++it )

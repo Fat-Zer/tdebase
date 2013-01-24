@@ -172,7 +172,7 @@ void SimpleButton::slotSettingsChanged(int category)
 
     bool changeCursor;
     if (m_forceStandardCursor == FALSE)
-        changeCursor = KGlobalSettings::changeCursorOverIcon();
+        changeCursor = TDEGlobalSettings::changeCursorOverIcon();
     else
         changeCursor = FALSE;
 

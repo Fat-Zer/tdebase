@@ -52,7 +52,7 @@
 KRandRSystemTray::KRandRSystemTray(TQWidget* parent, const char *name)
 	: KSystemTray(parent, name)
 	, m_popupUp(false)
-	, m_help(new KHelpMenu(this, KGlobal::instance()->aboutData(), false, actionCollection()))
+	, m_help(new KHelpMenu(this, TDEGlobal::instance()->aboutData(), false, actionCollection()))
 {
 	setPixmap(KSystemTray::loadSizedIcon("randr", width()));
 	setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
@@ -61,8 +61,8 @@ KRandRSystemTray::KRandRSystemTray(TQWidget* parent, const char *name)
 	my_parent = parent;
 
 	//printf("Reading configuration...\n\r");
-	globalKeys = new KGlobalAccel(TQT_TQOBJECT(this));
-	KGlobalAccel* keys = globalKeys;
+	globalKeys = new TDEGlobalAccel(TQT_TQOBJECT(this));
+	TDEGlobalAccel* keys = globalKeys;
 #include "krandrbindings.cpp"
 	// the keys need to be read from kdeglobals, not kickerrc
 	globalKeys->readSettings();
@@ -90,7 +90,7 @@ KRandRSystemTray::KRandRSystemTray(TQWidget* parent, const char *name)
 		applyIccConfiguration(cur_profile, NULL);
 	}
 
-	TDEHardwareDevices *hwdevices = KGlobal::hardwareDevices();
+	TDEHardwareDevices *hwdevices = TDEGlobal::hardwareDevices();
 	connect(hwdevices, TQT_SIGNAL(hardwareUpdated(TDEGenericDevice*)), this, TQT_SLOT(deviceChanged(TDEGenericDevice*)));
 }
 

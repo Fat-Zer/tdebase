@@ -568,7 +568,7 @@ void KonqCombo::mouseMoveEvent( TQMouseEvent *e )
 
     if ( e->state() & Qt::LeftButton &&
          (e->pos() - m_dragStart).manhattanLength() >
-         KGlobalSettings::dndEventDelay() )
+         TDEGlobalSettings::dndEventDelay() )
     {
         KURL url = KURL::fromPathOrURL( currentText() );
         if ( url.isValid() )
@@ -733,7 +733,7 @@ void KonqComboListBoxPixmap::paint( TQPainter *painter )
         painter->drawText( pmWidth, 0, urlWidth + pmWidth, itemHeight, 
                            Qt::AlignLeft | Qt::AlignTop, squeezedText );
 
-        //painter->setPen( KGlobalSettings::inactiveTextColor() );
+        //painter->setPen( TDEGlobalSettings::inactiveTextColor() );
         squeezedText = KStringHandler::rPixelSqueeze( title, listBox()->fontMetrics(), titleWidth );
         TQFont font = painter->font();
         font.setItalic( true );

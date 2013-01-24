@@ -176,7 +176,7 @@ TQPixmap KonqPixmapProvider::loadIcon( const TQString& url, const TQString& icon
     // favicon? => blend the favicon in the large
     if ( url.startsWith( "http:/" ) && icon.startsWith("favicons/") ) {
 	TQPixmap small = SmallIcon( icon, size );
-	big = KGlobal::iconLoader()->loadIcon( KProtocolInfo::icon("http"),
+	big = TDEGlobal::iconLoader()->loadIcon( KProtocolInfo::icon("http"),
 					       KIcon::Panel, size );
 
 	int x = big.width()  - small.width();
@@ -195,7 +195,7 @@ TQPixmap KonqPixmapProvider::loadIcon( const TQString& url, const TQString& icon
     }
 
     else // not a favicon..
-	big = KGlobal::iconLoader()->loadIcon( icon, KIcon::Panel, size );
+	big = TDEGlobal::iconLoader()->loadIcon( icon, KIcon::Panel, size );
 
     return big;
 }

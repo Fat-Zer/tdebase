@@ -49,12 +49,12 @@ KDateCombo::~KDateCombo()
 
 TQString KDateCombo::date2String(const TQDate & date)
 {
-  return(KGlobal::locale()->formatDate(date, true));
+  return(TDEGlobal::locale()->formatDate(date, true));
 }
 
 TQDate & KDateCombo::string2Date(const TQString & str, TQDate *qd)
 {
-  return *qd = KGlobal::locale()->readDate(str);
+  return *qd = TDEGlobal::locale()->readDate(str);
 }
 
 TQDate & KDateCombo::getDate(TQDate *currentDate)

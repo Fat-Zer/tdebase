@@ -35,7 +35,7 @@
 
 #include "urlgrabber.h"
 
-class KGlobalAccel;
+class TDEGlobalAccel;
 class KKeyChooser;
 class KListView;
 class TQPushButton;
@@ -137,7 +137,7 @@ class ConfigDialog : public KDialogBase
     Q_OBJECT
 
 public:
-    ConfigDialog( const ActionList *list, KGlobalAccel *accel, bool isApplet );
+    ConfigDialog( const ActionList *list, TDEGlobalAccel *accel, bool isApplet );
     ~ConfigDialog();
 
     ActionList * actionList() const { return actionWidget->actionList(); }

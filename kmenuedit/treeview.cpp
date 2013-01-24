@@ -134,7 +134,7 @@ void TreeItem::setup()
 
 static TQPixmap appIcon(const TQString &iconName)
 {
-    TQPixmap normal = KGlobal::iconLoader()->loadIcon(iconName, KIcon::Small, 0, KIcon::DefaultState, 0L, true);
+    TQPixmap normal = TDEGlobal::iconLoader()->loadIcon(iconName, KIcon::Small, 0, KIcon::DefaultState, 0L, true);
     // make sure they are not larger than 20x20
     if (normal.width() > 20 || normal.height() > 20)
     {
@@ -329,7 +329,7 @@ TQString TreeView::findName(KDesktopFile *df, bool deleted)
           TQString res = df->resource();
 
           bool isLocal = true;
-          TQStringList files = KGlobal::dirs()->findAllResources(res.latin1(), file);
+          TQStringList files = TDEGlobal::dirs()->findAllResources(res.latin1(), file);
           for(TQStringList::ConstIterator it = files.begin();
               it != files.end();
               ++it)
@@ -598,7 +598,7 @@ TQStringList TreeView::fileList(const TQString& rPath)
     TQStringList filelist;
 
     // loop through all resource dirs and build a file list
-    TQStringList resdirlist = KGlobal::dirs()->resourceDirs("apps");
+    TQStringList resdirlist = TDEGlobal::dirs()->resourceDirs("apps");
     for (TQStringList::ConstIterator it = resdirlist.begin(); it != resdirlist.end(); ++it)
     {
         TQDir dir((*it) + "/" + relativePath);
@@ -637,7 +637,7 @@ TQStringList TreeView::dirList(const TQString& rPath)
     TQStringList dirlist;
 
     // loop through all resource dirs and build a subdir list
-    TQStringList resdirlist = KGlobal::dirs()->resourceDirs("apps");
+    TQStringList resdirlist = TDEGlobal::dirs()->resourceDirs("apps");
     for (TQStringList::ConstIterator it = resdirlist.begin(); it != resdirlist.end(); ++it)
     {
         TQDir dir((*it) + "/" + relativePath);

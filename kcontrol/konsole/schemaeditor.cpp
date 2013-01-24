@@ -93,7 +93,7 @@ SchemaEditor::SchemaEditor(TQWidget * parent, const char *name)
     transparencyCheck->setChecked(false);
 
 
-    KGlobal::locale()->insertCatalogue("konsole"); // For schema translations
+    TDEGlobal::locale()->insertCatalogue("konsole"); // For schema translations
     connect(imageBrowse, TQT_SIGNAL(clicked()), this, TQT_SLOT(imageSelect()));
     connect(saveButton, TQT_SIGNAL(clicked()), this, TQT_SLOT(saveCurrent()));
     connect(removeButton, TQT_SIGNAL(clicked()), this, TQT_SLOT(removeCurrent()));
@@ -228,7 +228,7 @@ void SchemaEditor::show()
 
 void SchemaEditor::loadAllSchema(TQString currentFile)
 {
-    TQStringList list = KGlobal::dirs()->findAllResources("data", "konsole/*.schema");
+    TQStringList list = TDEGlobal::dirs()->findAllResources("data", "konsole/*.schema");
     TQStringList::ConstIterator it;
     disconnect(schemaList, TQT_SIGNAL(highlighted(int)), this, TQT_SLOT(readSchema(int)));
     schemaList->clear();
@@ -263,7 +263,7 @@ void SchemaEditor::imageSelect()
     start = backgndLine->text();
     if (start.isEmpty())
     {
-        TQStringList list=KGlobal::dirs()->resourceDirs("wallpaper");
+        TQStringList list=TDEGlobal::dirs()->resourceDirs("wallpaper");
         if(list.count()>0)
             start= list.last();
     }
@@ -361,7 +361,7 @@ void SchemaEditor::saveCurrent()
     }
 
     if (fullpath[0] != '/')
-        fullpath = KGlobal::dirs()->saveLocation("data", "konsole/") + fullpath;
+        fullpath = TDEGlobal::dirs()->saveLocation("data", "konsole/") + fullpath;
 
     TQFile f(fullpath);
     if (f.open(IO_WriteOnly)) {

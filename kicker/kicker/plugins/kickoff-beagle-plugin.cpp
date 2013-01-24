@@ -407,7 +407,7 @@ HitMenuItem *KickoffBeaglePlugin::hitToHitMenuItem (int category, Hit *hit)
 	        title = i18n("Conversation With %1").arg(title.isEmpty() ? i18n("Unknown Person") : title);
 	        TQDateTime datetime;
 	        datetime = datetimeFromString((*hit) [fixme_starttime]);
-                info=i18n("Date: %1").arg(KGlobal::locale()->formatDateTime(datetime,false));
+                info=i18n("Date: %1").arg(TDEGlobal::locale()->formatDateTime(datetime,false));
 	        if (hit->getMimeType()=="beagle/x-kopete-log")
                    icon="kopete";
                 else

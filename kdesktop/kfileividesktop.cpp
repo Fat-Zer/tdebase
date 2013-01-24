@@ -139,7 +139,7 @@ bool KFileIVIDesktop::shouldUpdateShadow(bool selected)
 
 void KFileIVIDesktop::drawShadowedText( TQPainter *p, const TQColorGroup &cg )
 {
-  bool drawRoundedRect = KGlobalSettings::iconUseRoundedRect();
+  bool drawRoundedRect = TDEGlobalSettings::iconUseRoundedRect();
 
   int textX;
   if (drawRoundedRect == true)

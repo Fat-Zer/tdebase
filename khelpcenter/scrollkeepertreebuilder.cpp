@@ -54,7 +54,7 @@ void ScrollKeeperTreeBuilder::loadConfig()
 NavigatorItem *ScrollKeeperTreeBuilder::build( NavigatorItem *parent,
                                                NavigatorItem *after )
 {
-  TQString lang = KGlobal::locale()->language();
+  TQString lang = TDEGlobal::locale()->language();
 
   kdDebug(1400) << "ScrollKeeper language: " << lang << endl;
 
@@ -62,7 +62,7 @@ NavigatorItem *ScrollKeeperTreeBuilder::build( NavigatorItem *parent,
   proc << "scrollkeeper-get-content-list";
   proc << lang;
   connect(&proc,TQT_SIGNAL(readReady(KProcIO *)),TQT_SLOT(getContentsList(KProcIO *)));
-  if (!proc.start(KProcess::Block)) {
+  if (!proc.start(TDEProcess::Block)) {
     kdDebug(1400) << "Could not execute scrollkeeper-get-content-list" << endl;
     return 0;
   }

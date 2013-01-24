@@ -32,7 +32,7 @@ class TQProgressBar;
 class TQTextEdit;
 class TQLabel;
 
-class KProcess;
+class TDEProcess;
 class KConfig;
 class TDEAboutData;
 class KTempFile;
@@ -123,11 +123,11 @@ class KCMHelpCenter : public KDialogBase, virtual public KCMHelpCenterIface
   protected slots:
     bool buildIndex();
     void cancelBuildIndex();
-    void slotIndexFinished( KProcess * );
+    void slotIndexFinished( TDEProcess * );
     void slotIndexProgress();
     void slotIndexError( const TQString & );
-    void slotReceivedStdout(KProcess *proc, char *buffer, int buflen);
-    void slotReceivedStderr(KProcess *proc, char *buffer, int buflen);
+    void slotReceivedStdout(TDEProcess *proc, char *buffer, int buflen);
+    void slotReceivedStderr(TDEProcess *proc, char *buffer, int buflen);
     void slotProgressClosed();
 
     void slotOk();
@@ -171,7 +171,7 @@ class KCMHelpCenter : public KDialogBase, virtual public KCMHelpCenterIface
 
     KTempFile *mCmdFile;
 
-    KProcess *mProcess;
+    TDEProcess *mProcess;
 
     bool mIsClosing;
 

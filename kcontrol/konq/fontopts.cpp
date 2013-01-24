@@ -246,11 +246,11 @@ void KonqFontOptions::load( bool useDefaults )
     if ( m_fSize == -1 )
         m_fSize = TQFontInfo(stdFont).pointSize();
 
-    normalTextColor = KGlobalSettings::textColor();
+    normalTextColor = TDEGlobalSettings::textColor();
     normalTextColor = g_pConfig->readColorEntry( "NormalTextColor", &normalTextColor );
     m_pNormalText->setColor( normalTextColor );
 
-    /* highlightedTextColor = KGlobalSettings::highlightedTextColor();
+    /* highlightedTextColor = TDEGlobalSettings::highlightedTextColor();
     highlightedTextColor = g_pConfig->readColorEntry( "HighlightedTextColor", &highlightedTextColor );
     m_pHighlightedText->setColor( highlightedTextColor );
     */
@@ -298,7 +298,7 @@ void KonqFontOptions::defaults()
 void KonqFontOptions::updateGUI()
 {
     if ( m_stdName.isEmpty() )
-        m_stdName = KGlobalSettings::generalFont().family();
+        m_stdName = TDEGlobalSettings::generalFont().family();
 
     m_pStandard->setCurrentFont( m_stdName );
     m_pSize->setValue( m_fSize );

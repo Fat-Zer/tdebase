@@ -43,7 +43,7 @@ Kbd::Kbd( bool grabbing_enabled_P, TQObject* parent_P )
     {
     assert( keyboard_handler == NULL );
     keyboard_handler = this;
-    kga = new KGlobalAccel( NULL );
+    kga = new TDEGlobalAccel( NULL );
     kga->setEnabled( grabbing_enabled_P );
     }
     
@@ -122,7 +122,7 @@ void Kbd::ungrab_shortcut( const KShortcut& shortcut_P )
     if( --grabs[ shortcut_P ] == 0 )
         {
 #if 0
-        // CHECKME workaround for KGlobalAccel::disconnectItem() not working
+        // CHECKME workaround for TDEGlobalAccel::disconnectItem() not working
         kga->setItemEnabled( ' ' + TQString::number( keycode_P ), false );
         // kga->disconnectItem( ' ' + TQString::number( keycode_P ), NULL, NULL );
         kga->removeItem( ' ' + TQString::number( keycode_P ));

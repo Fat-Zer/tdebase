@@ -32,7 +32,7 @@
 
 // some globals
 
-static KProcess proc;
+static TDEProcess proc;
 static TQCString windowtitle = 0;
 static TQCString windowclass = 0;
 static int desktop = 0;
@@ -65,7 +65,7 @@ KStart::KStart()
     id.setupStartupEnv();
 
     //finally execute the comand
-    if( proc.start(KProcess::DontCare) ) {
+    if( proc.start(TDEProcess::DontCare) ) {
         KStartupInfoData data;
         data.addPid( proc.pid() );
         TQCString bin = proc.args().first();

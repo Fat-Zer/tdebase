@@ -156,7 +156,7 @@ void CgiProtocol::get( const KURL& url )
   } else {
     kdDebug(7124) << "Cmd: " << cmd << endl;
 
-    fd = popen( TQFile::encodeName(KProcess::quote( cmd )).data(), "r" );
+    fd = popen( TQFile::encodeName(TDEProcess::quote( cmd )).data(), "r" );
 
     if ( !fd ) {
       kdDebug(7124) << "Error running '" << cmd << "'" << endl;

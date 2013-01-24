@@ -33,7 +33,7 @@ extern "C"
 B2Config::B2Config( KConfig* conf, TQWidget* parent )
 	: TQObject( parent )
 {
-	KGlobal::locale()->insertCatalogue("twin_b2_config");
+	TDEGlobal::locale()->insertCatalogue("twin_b2_config");
 	b2Config = new KConfig("twinb2rc");
 	gb = new TQVBox(parent);
 

@@ -308,9 +308,9 @@ bool clientApp::createNewWindow(const KURL & url, bool newTab, bool tempFile, co
     {
         if ( tempFile )
             kdWarning() << "kfmclient used with --tempfile but is passing to an external browser! Tempfile will never be deleted" << endl;
-        KProcess proc;
+        TDEProcess proc;
         proc << strBrowser << url.url();
-        proc.start( KProcess::DontCare );
+        proc.start( TDEProcess::DontCare );
         return true;
     }
 
@@ -370,16 +370,16 @@ bool clientApp::createNewWindow(const KURL & url, bool newTab, bool tempFile, co
             KStartupInfoId id;
             id.initId( startup_id_str );
             id.setupStartupEnv();
-            KProcess proc;
+            TDEProcess proc;
             proc << "kshell" << "konqueror";
             if ( !mimetype.isEmpty() )
                 proc << "-mimetype" << mimetype;
             if ( tempFile )
                 proc << "-tempfile";
             proc << url.url();
-            proc.start( KProcess::DontCare );
+            proc.start( TDEProcess::DontCare );
             KStartupInfo::resetStartupEnv();
-            kdDebug( 1202 ) << "clientApp::createNewWindow KProcess started" << endl;
+            kdDebug( 1202 ) << "clientApp::createNewWindow TDEProcess started" << endl;
         //}
     }
     return true;
@@ -422,7 +422,7 @@ bool clientApp::openProfile( const TQString & profileName, const TQString & url,
 void clientApp::delayedQuit()
 {
     // Quit in 2 seconds. This leaves time for KRun to pop up
-    // "app not found" in KProcessRunner, if that was the case.
+    // "app not found" in TDEProcessRunner, if that was the case.
     TQTimer::singleShot( 2000, this, TQT_SLOT(deref()) );
     // don't access the KRun instance later, it will be deleted after calling slots
     if( static_cast< const KRun* >( sender())->hasError())

@@ -130,7 +130,7 @@ Minicli::Minicli( TQWidget *parent, const char *name)
   m_systempathAutocomplete = 0;
   m_pURLCompletion = new KURLCompletion(KURLCompletion::FileCompletion);
   m_pEXECompletion = new KURLCompletion(KURLCompletion::SystemExeCompletion);
-  //m_pURLCompletion->setCompletionMode( KGlobalSettings::completionMode() );
+  //m_pURLCompletion->setCompletionMode( TDEGlobalSettings::completionMode() );
   connect( m_pURLCompletion, TQT_SIGNAL( match(const TQString&) ), TQT_SLOT( slotMatch(const TQString&) ));
   connect( m_pEXECompletion, TQT_SIGNAL( match(const TQString&) ), TQT_SLOT( slotEXEMatch(const TQString&) ));
 
@@ -241,7 +241,7 @@ void Minicli::loadConfig()
     m_dlg->cbCommand->completionObject()->setItems( compList );
 
   int mode = KDesktopSettings::completionMode();
-  m_dlg->cbCommand->setCompletionMode( (KGlobalSettings::Completion) mode );
+  m_dlg->cbCommand->setCompletionMode( (TDEGlobalSettings::Completion) mode );
 
   KCompletionBox* box = m_dlg->cbCommand->completionBox();
   if (box)
@@ -268,7 +268,7 @@ void Minicli::loadConfig()
   completion->insertItems (users);
 
   m_dlg->leUsername->setCompletionObject(completion, true);
-  m_dlg->leUsername->setCompletionMode(KGlobalSettings::completionMode());
+  m_dlg->leUsername->setCompletionMode(TDEGlobalSettings::completionMode());
   m_dlg->leUsername->setAutoDeleteCompletionObject( true );
 
 }
@@ -1074,7 +1074,7 @@ TQString Minicli::calculate(const TQString &exp)
    TQString result, cmd;
    const TQString bc = KStandardDirs::findExe("bc");
    if ( !bc.isEmpty() )
-      cmd = TQString("echo %1 | %2").arg(KProcess::quote(TQString("scale=8; ")+exp), KProcess::quote(bc));
+      cmd = TQString("echo %1 | %2").arg(TDEProcess::quote(TQString("scale=8; ")+exp), TDEProcess::quote(bc));
    else
       cmd = TQString("echo $((%1))").arg(exp);
    FILE *fs = popen(TQFile::encodeName(cmd).data(), "r");

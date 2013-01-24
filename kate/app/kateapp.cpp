@@ -60,7 +60,7 @@ KateApp::KateApp (TDECmdLineArgs *args)
   dcopClient()->suspend();
 
   // insert right translations for the katepart
-  KGlobal::locale()->insertCatalogue("katepart");
+  TDEGlobal::locale()->insertCatalogue("katepart");
 
   // some global default
   Kate::Document::setFileChangedDialogsActivated (true);

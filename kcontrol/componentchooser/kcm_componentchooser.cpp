@@ -57,7 +57,7 @@ extern "C"
 {
     KDE_EXPORT KCModule *create_componentchooser( TQWidget *parent, const char * )
     {
-        KGlobal::locale()->insertCatalogue("kcmcomponentchooser");
+        TDEGlobal::locale()->insertCatalogue("kcmcomponentchooser");
         return new KCMComponentChooser( parent, "kcmcomponentchooser" );
     }
 }

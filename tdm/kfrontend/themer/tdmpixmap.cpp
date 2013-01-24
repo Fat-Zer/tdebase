@@ -72,7 +72,7 @@ KdmPixmap::KdmPixmap( KdmItem *parent, const TQDomNode &node, const char *name )
 				if ((_compositor.isEmpty()) || (!argb_visual_available)) {
 					// Software blend only (no compositing support)
 					// Use the preset TDM background...
-					KStandardDirs *m_pDirs = KGlobal::dirs();
+					KStandardDirs *m_pDirs = TDEGlobal::dirs();
 					KSimpleConfig *config = new KSimpleConfig( TQFile::decodeName( _backgroundCfg ) );
 					config->setGroup("Desktop0");
 					pixmap.normal.fullpath = m_pDirs->findResource("wallpaper", config->readPathEntry("Wallpaper"));

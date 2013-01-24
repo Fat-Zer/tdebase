@@ -41,7 +41,7 @@ public:
   virtual void get(const KURL& url);
 
 private slots:
-  void       slotGetStdOutput(KProcess*, char*, int);
+  void       slotGetStdOutput(TDEProcess*, char*, int);
 
 private:
   KURL                  *myURL;
@@ -54,7 +54,7 @@ private:
   QString		*myStdStream;
 
 
-  KProcess	        *myKProcess;
+  TDEProcess	        *myTDEProcess;
 
   void       getProgramPath();
   void       parseCommandLine(const KURL& url);

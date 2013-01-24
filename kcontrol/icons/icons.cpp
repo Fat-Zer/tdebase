@@ -135,8 +135,8 @@ TQPushButton *KIconConfig::addPreviewIcon(int i, const TQString &str, TQWidget *
 
 void KIconConfig::init()
 {
-    mpLoader = KGlobal::iconLoader();
-    mpConfig = KGlobal::config();
+    mpLoader = TDEGlobal::iconLoader();
+    mpConfig = TDEGlobal::config();
     mpEffect = new KIconEffect;
     mpTheme = mpLoader->theme();
     mUsage = 0;
@@ -289,7 +289,7 @@ void KIconConfig::read()
     mpKickerConfig->setGroup("General");
     mQuickLaunchSize = mpKickerConfig->readNumEntry("panelIconWidth", KIcon::SizeLarge);
 
-    KConfigGroup g( KGlobal::config(), "KDE" );
+    KConfigGroup g( TDEGlobal::config(), "KDE" );
     mpRoundedCheck->setChecked(g.readBoolEntry("IconUseRoundedRect", KDE_DEFAULT_ICONTEXTROUNDED));
     mpActiveEffectCheck->setChecked(g.readBoolEntry("ShowKonqIconActivationEffect", KDE_DEFAULT_KONQ_ACTIVATION_EFFECT));
 }
@@ -410,7 +410,7 @@ void KIconConfig::load()
 
 void KIconConfig::load( bool useDefaults )
 {
-    mpConfig = KGlobal::config();
+    mpConfig = TDEGlobal::config();
     mpConfig->setReadDefaults( useDefaults );
     read();
     apply();
@@ -473,7 +473,7 @@ void KIconConfig::save()
     mpKickerConfig->setGroup("General");
     mpKickerConfig->writeEntry("panelIconWidth", mQuickLaunchSize);
 
-    KConfigGroup g( KGlobal::config(), "KDE" );
+    KConfigGroup g( TDEGlobal::config(), "KDE" );
     g.writeEntry("IconUseRoundedRect", mpRoundedCheck->isChecked(), true, true);
     g.writeEntry("ShowKonqIconActivationEffect", mpActiveEffectCheck->isChecked(), true, true);
 

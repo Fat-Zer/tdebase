@@ -255,7 +255,7 @@ void TaskLMBMenu::mouseMoveEvent(TQMouseEvent* e)
         return;
     }
 
-    int delay = KGlobalSettings::dndEventDelay();
+    int delay = TDEGlobalSettings::dndEventDelay();
     TQPoint newPos(e->pos());
 
     if ((m_dragStartPos - newPos).manhattanLength() > delay)

@@ -100,7 +100,7 @@ void KickerConfig::init()
     }
 
     TQString configname = configName();
-    TQString configpath = KGlobal::dirs()->findResource("config", configname);
+    TQString configpath = TDEGlobal::dirs()->findResource("config", configname);
     if (configpath.isEmpty())
        configpath = locateLocal("config", configname);
     KSharedConfig::Ptr config = KSharedConfig::openConfig(configname);
@@ -195,9 +195,9 @@ void KickerConfig::setupExtensionInfo(KConfig& config, bool checkExists, bool re
         // set config group
         config.setGroup(group);
 
-        TQString df = KGlobal::dirs()->findResource("extensions", config.readEntry("DesktopFile"));
+        TQString df = TDEGlobal::dirs()->findResource("extensions", config.readEntry("DesktopFile"));
         TQString configname = config.readEntry("ConfigFile");
-        TQString configpath = KGlobal::dirs()->findResource("config", configname);
+        TQString configpath = TDEGlobal::dirs()->findResource("config", configname);
 
         if (checkExists)
         {
@@ -383,14 +383,14 @@ extern "C"
 
     KDE_EXPORT KCModule *create_kicker_arrangement(TQWidget *parent, const char * /*name*/)
     {
-        KGlobal::dirs()->addResourceType("extensions", KStandardDirs::kde_default("data") +
+        TDEGlobal::dirs()->addResourceType("extensions", KStandardDirs::kde_default("data") +
                                          "kicker/extensions");
         return new PositionConfig(parent, "kcmkicker");
     }
 
     KDE_EXPORT KCModule *create_kicker_hiding(TQWidget *parent, const char * /*name*/)
     {
-        KGlobal::dirs()->addResourceType("extensions", KStandardDirs::kde_default("data") +
+        TDEGlobal::dirs()->addResourceType("extensions", KStandardDirs::kde_default("data") +
                                          "kicker/extensions");
         return new HidingConfig(parent, "kcmkicker");
     }
@@ -403,9 +403,9 @@ extern "C"
     KDE_EXPORT KCModule *create_kicker_appearance(TQWidget *parent, const char * /*name*/)
     {
         KImageIO::registerFormats();
-        KGlobal::dirs()->addResourceType("tiles", KStandardDirs::kde_default("data") +
+        TDEGlobal::dirs()->addResourceType("tiles", KStandardDirs::kde_default("data") +
                 "kicker/tiles");
-        KGlobal::dirs()->addResourceType("hb_pics", KStandardDirs::kde_default("data") +
+        TDEGlobal::dirs()->addResourceType("hb_pics", KStandardDirs::kde_default("data") +
                 "kcmkicker/pics");
         return new LookAndFeelConfig(parent, "kcmkicker");
     }

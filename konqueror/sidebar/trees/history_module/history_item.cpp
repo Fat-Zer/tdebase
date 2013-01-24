@@ -119,7 +119,7 @@ TQString KonqSidebarHistoryItem::toolTipText() const
         // .arg() calls. So to fix this, we first substitute the last items
         // and then put in the url.
 	TQString tip = i18n("<qt><center><b>%4</b></center><hr>Last visited: %1<br>First visited: %2<br>Number of times visited: %3</qt>");
-	return tip.arg( KGlobal::locale()->formatDateTime( m_entry->lastVisited ) ).arg( KGlobal::locale()->formatDateTime( m_entry->firstVisited ) ).arg( m_entry->numberOfTimesVisited ).arg( m_entry->url.url() );
+	return tip.arg( TDEGlobal::locale()->formatDateTime( m_entry->lastVisited ) ).arg( TDEGlobal::locale()->formatDateTime( m_entry->firstVisited ) ).arg( m_entry->numberOfTimesVisited ).arg( m_entry->url.url() );
     }
 
     return m_entry->url.url();

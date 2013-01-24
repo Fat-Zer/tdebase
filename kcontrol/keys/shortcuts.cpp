@@ -69,10 +69,10 @@ void ShortcutsModule::save()
 
 	// FIXME: This isn't working.  Why? -- ellis, 2002/01/27
 	// Check for old group,
-	if( KGlobal::config()->hasGroup( "Keys" ) ) {
-		KGlobal::config()->deleteGroup( "Keys", true, true );
+	if( TDEGlobal::config()->hasGroup( "Keys" ) ) {
+		TDEGlobal::config()->deleteGroup( "Keys", true, true );
 	}
-	KGlobal::config()->sync();
+	TDEGlobal::config()->sync();
 
 	m_pkcGeneral->commitChanges();
 	m_pkcSequence->commitChanges();
@@ -104,7 +104,7 @@ TQString ShortcutsModule::quickHelp() const
 
 void ShortcutsModule::initGUI()
 {
-	TQString kde_winkeys_env_dir = KGlobal::dirs()->localtdedir() + "/env/";
+	TQString kde_winkeys_env_dir = TDEGlobal::dirs()->localtdedir() + "/env/";
 
 	kdDebug(125) << "A-----------" << endl;
 	KAccelActions* keys = &m_actionsGeneral;
@@ -264,7 +264,7 @@ void ShortcutsModule::createActionsSequence()
 
 void ShortcutsModule::readSchemeNames()
 {
-	TQStringList schemes = KGlobal::dirs()->findAllResources("data", "kcmkeys/*.kksrc");
+	TQStringList schemes = TDEGlobal::dirs()->findAllResources("data", "kcmkeys/*.kksrc");
 
 	m_pcbSchemes->clear();
 	m_rgsSchemeFiles.clear();
@@ -406,7 +406,7 @@ void ShortcutsModule::slotSaveSchemeAs()
 
 	disconnect( m_pcbSchemes, TQT_SIGNAL(activated(int)), this, TQT_SLOT(slotSelectScheme(int)) );
 
-	TQString kksPath = KGlobal::dirs()->saveLocation( "data", "kcmkeys/" );
+	TQString kksPath = TDEGlobal::dirs()->saveLocation( "data", "kcmkeys/" );
 
 	TQDir dir( kksPath );
 	if( !dir.exists() && !dir.mkdir( kksPath ) ) {
@@ -458,7 +458,7 @@ void ShortcutsModule::slotRemoveScheme()
 
 void ShortcutsModule::slotUseRmWinKeysClicked()
 {
-	TQString kde_winkeys_env_dir = KGlobal::dirs()->localtdedir() + "/env/";
+	TQString kde_winkeys_env_dir = TDEGlobal::dirs()->localtdedir() + "/env/";
 
 	// See if ~/.trinity/env/win-key.sh exists
 	TQFile f( kde_winkeys_env_dir + "win-key.sh" );

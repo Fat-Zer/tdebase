@@ -16,7 +16,7 @@
 
 class KSimpleConfig;
 class BGDialog;
-class KGlobalBackgroundSettings;
+class TDEGlobalBackgroundSettings;
 class TQCheckBox;
 class TQLabel;
 

@@ -172,7 +172,7 @@ void ExtensionContainer::init()
     updateHighlightColor();
 
     // if we were hidden when kicker quit, let's start out hidden as well!
-    KConfig *config = KGlobal::config();
+    KConfig *config = TDEGlobal::config();
     config->setGroup(extensionId());
     int tmp = config->readNumEntry("UserHidden", Unhidden);
     if (tmp > Unhidden && tmp <= RightBottom)
@@ -359,7 +359,7 @@ void ExtensionContainer::readConfig()
 void ExtensionContainer::writeConfig()
 {
 //    kdDebug(1210) << "ExtensionContainer::writeConfig()" << endl;
-    KConfig *config = KGlobal::config();
+    KConfig *config = TDEGlobal::config();
     config->setGroup(extensionId());
 
     config->writePathEntry("ConfigFile", _info.configFile());
@@ -387,7 +387,7 @@ void ExtensionContainer::showPanelMenu( const TQPoint& globalPos )
 
     if (!_opMnu)
     {
-        KDesktopFile f(KGlobal::dirs()->findResource("extensions", _info.desktopFile()));
+        KDesktopFile f(TDEGlobal::dirs()->findResource("extensions", _info.desktopFile()));
         _opMnu = new PanelExtensionOpMenu(f.readName(),
                                           m_extension ? m_extension->actions() : 0,
                                           this);
@@ -984,7 +984,7 @@ void ExtensionContainer::animatedHide(bool left)
 
     // save our hidden status so that when kicker starts up again
     // we'll come back in the same state
-    KConfig *config = KGlobal::config();
+    KConfig *config = TDEGlobal::config();
     config->setGroup(extensionId());
     config->writeEntry("UserHidden", userHidden());
 
@@ -1385,7 +1385,7 @@ void ExtensionContainer::positionChange(KPanelExtension::Position p)
 
 void ExtensionContainer::updateHighlightColor()
 {
-    KConfig *config = KGlobal::config();
+    KConfig *config = TDEGlobal::config();
     config->setGroup("WM");
     TQColor color = TQApplication::palette().active().highlight();
     m_highlightColor = config->readColorEntry("activeBackground", &color);

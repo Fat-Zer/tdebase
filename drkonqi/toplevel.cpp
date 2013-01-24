@@ -176,10 +176,10 @@ void Toplevel :: slotUser2()
   TQString str = m_krashconf->debugger();
   m_krashconf->expandString(str, true);
 
-  KProcess proc;
+  TDEProcess proc;
   proc.setUseShell(true);
   proc << str;
-  proc.start(KProcess::DontCare);
+  proc.start(TDEProcess::DontCare);
 }
 
 void Toplevel :: slotNewDebuggingApp(const TQString& launchName)

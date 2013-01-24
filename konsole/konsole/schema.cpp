@@ -530,7 +530,7 @@ bool ColorSchemaList::updateAllSchemaTimes(const TQDateTime& now)
 //  KONSOLEDEBUG << "Updating time stamps" << endl;
 
   TQStringList list;
-  KGlobal::dirs()->findAllResources("data", "konsole/*.schema", false, true, list);
+  TDEGlobal::dirs()->findAllResources("data", "konsole/*.schema", false, true, list);
   TQStringList::ConstIterator it;
   bool r = false;
 

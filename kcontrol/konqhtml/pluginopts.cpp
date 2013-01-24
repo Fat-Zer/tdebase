@@ -292,7 +292,7 @@ void KPluginOptions::scan()
     }
 
     m_nspluginscan = new KProcIO;
-    TQString scanExe = KGlobal::dirs()->findExe("nspluginscan");
+    TQString scanExe = TDEGlobal::dirs()->findExe("nspluginscan");
     if (!scanExe) {
         kdDebug() << "can't find nspluginviewer" << endl;
         delete m_nspluginscan; 
@@ -314,7 +314,7 @@ void KPluginOptions::scan()
     kdDebug() << "Running nspluginscan" << endl;
     connect(m_nspluginscan, TQT_SIGNAL(readReady(KProcIO*)),
             this, TQT_SLOT(progress(KProcIO*)));
-    connect(m_nspluginscan, TQT_SIGNAL(processExited(KProcess *)),
+    connect(m_nspluginscan, TQT_SIGNAL(processExited(TDEProcess *)),
             this, TQT_SLOT(scanDone()));
     connect(m_progress, TQT_SIGNAL(cancelled()), this, TQT_SLOT(scanDone()));
 

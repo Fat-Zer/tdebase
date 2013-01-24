@@ -212,7 +212,7 @@ KAppearanceOptions::KAppearanceOptions(KConfig *config, TQString group, TQWidget
 
   m_pEncoding = new TQComboBox( false, this );
   label->setBuddy( m_pEncoding );
-  encodings = KGlobal::charsets()->availableEncodingNames();
+  encodings = TDEGlobal::charsets()->availableEncodingNames();
   encodings.prepend(i18n("Use Language Encoding"));
   m_pEncoding->insertStringList( encodings );
   lay->addMultiCellWidget(m_pEncoding,r, r, M, W);
@@ -337,8 +337,8 @@ void KAppearanceOptions::load( bool useDefaults )
       fSize = fMinSize;
 
     defaultFonts = TQStringList();
-    defaultFonts.append( READ_ENTRY( "StandardFont", KGlobalSettings::generalFont().family() ) );
-    defaultFonts.append( READ_ENTRY( "FixedFont", KGlobalSettings::fixedFont().family() ) );
+    defaultFonts.append( READ_ENTRY( "StandardFont", TDEGlobalSettings::generalFont().family() ) );
+    defaultFonts.append( READ_ENTRY( "FixedFont", TDEGlobalSettings::fixedFont().family() ) );
     defaultFonts.append( READ_ENTRY( "SerifFont", HTML_DEFAULT_VIEW_SERIF_FONT ) );
     defaultFonts.append( READ_ENTRY( "SansSerifFont", HTML_DEFAULT_VIEW_SANSSERIF_FONT ) );
     defaultFonts.append( READ_ENTRY( "CursiveFont", HTML_DEFAULT_VIEW_CURSIVE_FONT ) );

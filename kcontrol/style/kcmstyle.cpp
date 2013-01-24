@@ -75,7 +75,7 @@ extern "C"
 {
     KDE_EXPORT KCModule *create_style(TQWidget *parent, const char*)
     {
-        KGlobal::locale()->insertCatalogue("kcmstyle");
+        TDEGlobal::locale()->insertCatalogue("kcmstyle");
         return new KCMStyle(parent, "kcmstyle");
     }
 
@@ -96,7 +96,7 @@ extern "C"
         TQByteArray properties;
         TQDataStream d(properties, IO_WriteOnly);
         d.setVersion( 3 );      // Qt2 apps need this.
-        d << kapp->palette() << KGlobalSettings::generalFont();
+        d << kapp->palette() << TDEGlobalSettings::generalFont();
         Atom a = XInternAtom(tqt_xdisplay(), "_QT_DESKTOP_PROPERTIES", false);
 
         // do it for all root windows - multihead support
@@ -127,7 +127,7 @@ KCMStyle::KCMStyle( TQWidget* parent, const char* name )
 	m_bStyleDirty= false;
 	m_bToolbarsDirty = false;
 
-	KGlobal::dirs()->addResourceType("themes",
+	TDEGlobal::dirs()->addResourceType("themes",
 		KStandardDirs::kde_default("data") + "kstyle/themes");
 
 	TDEAboutData *about =
@@ -727,7 +727,7 @@ void KCMStyle::loadStyle( KConfig& config )
 	styleEntries.setAutoDelete(true);
 
 	TQString strWidgetStyle;
-	TQStringList list = KGlobal::dirs()->findAllResources("themes", "*.themerc", true, true);
+	TQStringList list = TDEGlobal::dirs()->findAllResources("themes", "*.themerc", true, true);
 	for (TQStringList::iterator it = list.begin(); it != list.end(); ++it)
 	{
 		KSimpleConfig config( *it, true );

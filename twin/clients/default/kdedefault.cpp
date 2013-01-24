@@ -192,7 +192,7 @@ bool KDEDefaultHandler::reset( unsigned long changed )
 unsigned long KDEDefaultHandler::readConfig( bool update )
 {
         unsigned long changed = 0;
-	KConfig* conf = KGlobal::config();
+	KConfig* conf = TDEGlobal::config();
 	conf->setGroup("KDEDefault");
 
         bool new_showGrabBar 		= conf->readBoolEntry("ShowGrabBar", true);

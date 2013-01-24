@@ -259,7 +259,7 @@ void KPersonalizer::setPosition() {
 		hint.setHeight(refine_size.height());
 
 	// set the position
-	TQRect rect = KGlobalSettings::desktopGeometry(TQCursor::pos());
+	TQRect rect = TDEGlobalSettings::desktopGeometry(TQCursor::pos());
 	int w = rect.x() + (rect.width() - hint.width())/2 - 9;
 	int h = rect.y() + (rect.height() - hint.height())/2;
 	move(w, h);

@@ -57,7 +57,7 @@ TQPixmap NotifierAction::pixmap() const
 	}
 	else
 	{
-		TQString path = KGlobal::iconLoader()->iconPath( m_iconName, -32 );
+		TQString path = TDEGlobal::iconLoader()->iconPath( m_iconName, -32 );
 		return TQPixmap( path );
 	}
 }

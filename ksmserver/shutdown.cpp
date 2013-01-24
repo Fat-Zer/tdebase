@@ -125,7 +125,7 @@ bool KSMServer::checkStatus( bool &logoutConfirmed, bool &maysd,
         return false;
     }
 
-    KConfig *config = KGlobal::config();
+    KConfig *config = TDEGlobal::config();
     config->reparseConfiguration(); // config may have changed in the KControl module
 
     config->setGroup("General" );
@@ -156,7 +156,7 @@ void KSMServer::shutdownInternal( TDEApplication::ShutdownConfirm confirm,
     if ( !checkStatus( logoutConfirmed, maysd, confirm, sdtype, sdmode ) )
         return;
 
-    KConfig *config = KGlobal::config();
+    KConfig *config = TDEGlobal::config();
 
     config->setGroup("General" );
     if (!maysd) {
@@ -168,7 +168,7 @@ void KSMServer::shutdownInternal( TDEApplication::ShutdownConfirm confirm,
         sdmode = TDEApplication::ShutdownModeInteractive;
 
     // shall we show a logout status dialog box?
-    bool showLogoutStatusDlg = KConfigGroup(KGlobal::config(), "Logout").readBoolEntry("showLogoutStatusDlg", true);
+    bool showLogoutStatusDlg = KConfigGroup(TDEGlobal::config(), "Logout").readBoolEntry("showLogoutStatusDlg", true);
 
     if (showLogoutStatusDlg) {
         KSMShutdownIPFeedback::start();
@@ -294,7 +294,7 @@ void KSMServer::logoutTimed( int sdtype, int sdmode, TQString bootOption )
 {
     int confirmDelay;
 
-    KConfig* config = KGlobal::config();
+    KConfig* config = TDEGlobal::config();
     config->setGroup( "General" );
 
     if ( sdtype == TDEApplication::ShutdownTypeHalt )
@@ -525,7 +525,7 @@ void KSMServer::completeShutdownOrCheckpoint()
     if ( waitForPhase2 )
         return;
 
-    bool showLogoutStatusDlg = KConfigGroup(KGlobal::config(), "Logout").readBoolEntry("showLogoutStatusDlg", true);
+    bool showLogoutStatusDlg = KConfigGroup(TDEGlobal::config(), "Logout").readBoolEntry("showLogoutStatusDlg", true);
     if (showLogoutStatusDlg && state != Checkpoint) {
         KSMShutdownIPFeedback::showit(); // hide the UGLY logout process from the user
         shutdownNotifierIPDlg = KSMShutdownIPDlg::showShutdownIP();

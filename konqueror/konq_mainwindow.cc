@@ -202,7 +202,7 @@ KonqMainWindow::KonqMainWindow( const KURL &initialURL, bool openInitialURL, con
     // setup the completion object before createGUI(), so that the combo
     // picks up the correct mode from the HistoryManager (in slotComboPlugged)
     int mode = KonqSettings::settingsCompletionMode();
-    s_pCompletion->setCompletionMode( (KGlobalSettings::Completion) mode );
+    s_pCompletion->setCompletionMode( (TDEGlobalSettings::Completion) mode );
   }
   connect(KParts::HistoryProvider::self(), TQT_SIGNAL(cleared()), TQT_SLOT(slotClearComboHistory()));
 
@@ -218,7 +218,7 @@ KonqMainWindow::KonqMainWindow( const KURL &initialURL, bool openInitialURL, con
   initCombo();
   initActions();
 
-  setInstance( KGlobal::instance() );
+  setInstance( TDEGlobal::instance() );
 
   connect( KSycoca::self(), TQT_SIGNAL( databaseChanged() ),
            this, TQT_SLOT( slotDatabaseChanged() ) );
@@ -1455,7 +1455,7 @@ void KonqMainWindow::slotOpenTerminal()
       }
   }
 
-  KProcess cmd;
+  TDEProcess cmd;
   cmd.setWorkingDirectory(dir);
 
   // Compensate for terminal having arguments.
@@ -1465,7 +1465,7 @@ void KonqMainWindow::slotOpenTerminal()
 
   kdDebug(1202) << "slotOpenTerminal: directory " << dir
 		<< ", terminal:" << term << endl;
-  cmd.start(KProcess::DontCare);
+  cmd.start(TDEProcess::DontCare);
 }
 
 void KonqMainWindow::slotOpenLocation()
@@ -1945,7 +1945,7 @@ void KonqMainWindow::slotGoTrash()
 void KonqMainWindow::slotGoAutostart()
 {
   KURL u;
-  u.setPath( KGlobalSettings::autostartPath() );
+  u.setPath( TDEGlobalSettings::autostartPath() );
   openURL( 0L, u );
 }
 
@@ -2022,7 +2022,7 @@ void KonqMainWindow::slotConfigureSpellChecking()
 void KonqMainWindow::slotConfigureToolbars()
 {
   if ( autoSaveSettings() )
-    saveMainWindowSettings( KGlobal::config(), "KonqMainWindow" );
+    saveMainWindowSettings( TDEGlobal::config(), "KonqMainWindow" );
   KEditToolbar dlg(factory());
   connect(&dlg,TQT_SIGNAL(newToolbarConfig()),this,TQT_SLOT(slotNewToolbarConfig()));
   connect(&dlg,TQT_SIGNAL(newToolbarConfig()),this,TQT_SLOT(initBookmarkBar()));
@@ -2038,7 +2038,7 @@ void KonqMainWindow::slotNewToolbarConfig() // This is called when OK or Apply i
 
     plugViewModeActions();
 
-    applyMainWindowSettings( KGlobal::config(), "KonqMainWindow" );
+    applyMainWindowSettings( TDEGlobal::config(), "KonqMainWindow" );
 }
 
 void KonqMainWindow::slotUndoAvailable( bool avail )
@@ -2728,7 +2728,7 @@ void KonqMainWindow::slotPopupThisWindow()
 
 void KonqMainWindow::slotPopupNewTabAtFront()
 {
-    KConfig *config = KGlobal::config();
+    KConfig *config = TDEGlobal::config();
     KConfigGroupSaver cs( config, TQString::fromLatin1("FMSettings") );
     bool openAfterCurrentPage = config->readBoolEntry( "OpenAfterCurrentPage", false );
     popupNewTab(true, openAfterCurrentPage);
@@ -3281,8 +3281,8 @@ void KonqMainWindow::initCombo()
   // We do want completion of user names, right?
   //m_pURLCompletion->setReplaceHome( false );  // Leave ~ alone! Will be taken care of by filters!!
 
-  connect( m_combo, TQT_SIGNAL(completionModeChanged(KGlobalSettings::Completion)),
-           TQT_SLOT( slotCompletionModeChanged( KGlobalSettings::Completion )));
+  connect( m_combo, TQT_SIGNAL(completionModeChanged(TDEGlobalSettings::Completion)),
+           TQT_SLOT( slotCompletionModeChanged( TDEGlobalSettings::Completion )));
   connect( m_combo, TQT_SIGNAL( completion( const TQString& )),
            TQT_SLOT( slotMakeCompletion( const TQString& )));
   connect( m_combo, TQT_SIGNAL( substringCompletion( const TQString& )),
@@ -3312,7 +3312,7 @@ void KonqMainWindow::bookmarksIntoCompletion()
 }
 
 // the user changed the completion mode in the combo
-void KonqMainWindow::slotCompletionModeChanged( KGlobalSettings::Completion m )
+void KonqMainWindow::slotCompletionModeChanged( TDEGlobalSettings::Completion m )
 {
   s_pCompletion->setCompletionMode( m );
 
@@ -3350,8 +3350,8 @@ void KonqMainWindow::slotMakeCompletion( const TQString& text )
       completion = s_pCompletion->makeCompletion( text );
 
       // some special handling necessary for CompletionPopup
-      if ( m_combo->completionMode() == KGlobalSettings::CompletionPopup ||
-           m_combo->completionMode() == KGlobalSettings::CompletionPopupAuto )
+      if ( m_combo->completionMode() == TDEGlobalSettings::CompletionPopup ||
+           m_combo->completionMode() == TDEGlobalSettings::CompletionPopupAuto )
         m_combo->setCompletedItems( historyPopupCompletionItems( text ) );
 
       else if ( !completion.isNull() )
@@ -3414,8 +3414,8 @@ void KonqMainWindow::slotMatch( const TQString &match )
     m_urlCompletionStarted = false;
 
     // some special handling necessary for CompletionPopup
-    if ( m_combo->completionMode() == KGlobalSettings::CompletionPopup ||
-         m_combo->completionMode() == KGlobalSettings::CompletionPopupAuto ) {
+    if ( m_combo->completionMode() == TDEGlobalSettings::CompletionPopup ||
+         m_combo->completionMode() == TDEGlobalSettings::CompletionPopupAuto ) {
       TQStringList items = m_pURLCompletion->allMatches();
       items += historyPopupCompletionItems( m_combo->currentText() );
       // items.sort(); // should we?
@@ -3599,8 +3599,8 @@ void KonqMainWindow::slotForceSaveMainWindowSettings()
 //  kdDebug(1202)<<"slotForceSaveMainWindowSettings()"<<endl;
   if ( autoSaveSettings() ) // don't do it on e.g. JS window.open windows with no toolbars!
   {
-      saveMainWindowSettings( KGlobal::config(), "KonqMainWindow" );
-      KGlobal::config()->sync();
+      saveMainWindowSettings( TDEGlobal::config(), "KonqMainWindow" );
+      TDEGlobal::config()->sync();
   }
 }
 
@@ -5107,7 +5107,7 @@ void KonqMainWindow::updateViewModeActions()
   // Another temporary map, the preferred service for each library (2 entries in our example)
   TQMap<TQString,TQString> preferredServiceMap;
 
-  KConfig * config = KGlobal::config();
+  KConfig * config = TDEGlobal::config();
   config->setGroup( "ModeToolBarServices" );
 
   KTrader::OfferList::ConstIterator it = services.begin();
@@ -5243,7 +5243,7 @@ void KonqMainWindow::saveToolBarServicesMap()
 {
     TQMap<TQString,KService::Ptr>::ConstIterator serviceIt = m_viewModeToolBarServices.begin();
     TQMap<TQString,KService::Ptr>::ConstIterator serviceEnd = m_viewModeToolBarServices.end();
-    KConfig * config = KGlobal::config();
+    KConfig * config = TDEGlobal::config();
     config->setGroup( "ModeToolBarServices" );
     for ( ; serviceIt != serviceEnd ; ++serviceIt )
         config->writeEntry( serviceIt.key(), serviceIt.data()->desktopEntryName() );
@@ -5295,7 +5295,7 @@ void KonqMainWindow::closeEvent( TQCloseEvent *e )
       KonqFrameTabs* tabContainer = static_cast<KonqFrameTabs*>(viewManager()->docContainer());
       if ( tabContainer->count() > 1 )
       {
-        KConfig *config = KGlobal::config();
+        KConfig *config = TDEGlobal::config();
         KConfigGroupSaver cs( config, TQString::fromLatin1("Notification Messages") );
 
         if ( !config->hasKey( "MultipleTabConfirm" ) )
@@ -5481,8 +5481,8 @@ void KonqMainWindow::slotAddWebSideBar(const KURL& url, const TQString& name)
 
 void KonqMainWindow::bookmarksIntoCompletion( const KBookmarkGroup& group )
 {
-    static const TQString& http = KGlobal::staticQString( "http" );
-    static const TQString& ftp = KGlobal::staticQString( "ftp" );
+    static const TQString& http = TDEGlobal::staticQString( "http" );
+    static const TQString& ftp = TDEGlobal::staticQString( "ftp" );
 
     if ( group.isNull() )
         return;
@@ -5990,23 +5990,23 @@ static int current_memory_usage( int* limit )
 
 void KonqMainWindow::saveWindowSize() const
 {
-    TQString savedGroup = KGlobal::config()->group();
-    KGlobal::config()->setGroup( "KonqMainWindow_Size" );
+    TQString savedGroup = TDEGlobal::config()->group();
+    TDEGlobal::config()->setGroup( "KonqMainWindow_Size" );
 
-    KParts::MainWindow::saveWindowSize( KGlobal::config() );
+    KParts::MainWindow::saveWindowSize( TDEGlobal::config() );
 
-    KGlobal::config()->setGroup( savedGroup );
-    KGlobal::config()->sync();
+    TDEGlobal::config()->setGroup( savedGroup );
+    TDEGlobal::config()->sync();
 }
 
 void KonqMainWindow::restoreWindowSize()
 {
-    TQString savedGroup = KGlobal::config()->group();
-    KGlobal::config()->setGroup( "KonqMainWindow_Size" );
+    TQString savedGroup = TDEGlobal::config()->group();
+    TDEGlobal::config()->setGroup( "KonqMainWindow_Size" );
 
-    KParts::MainWindow::restoreWindowSize( KGlobal::config() );
+    KParts::MainWindow::restoreWindowSize( TDEGlobal::config() );
 
-    KGlobal::config()->setGroup( savedGroup );
+    TDEGlobal::config()->setGroup( savedGroup );
 }
 
 

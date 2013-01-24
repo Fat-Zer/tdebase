@@ -50,7 +50,7 @@ SearchProviderDialog::SearchProviderDialog(SearchProvider *provider,
     connect(m_dlg->leShortcut, TQT_SIGNAL(textChanged(const TQString &)), TQT_SLOT(slotChanged()));
 
     // Data init
-    TQStringList charsets = KGlobal::charsets()->availableEncodingNames();
+    TQStringList charsets = TDEGlobal::charsets()->availableEncodingNames();
     charsets.prepend(i18n("Default"));
     m_dlg->cbCharset->insertStringList(charsets);
 

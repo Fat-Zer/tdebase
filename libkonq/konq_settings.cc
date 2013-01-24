@@ -48,7 +48,7 @@ KonqFMSettings * KonqFMSettings::settings()
 {
   if (!s_pSettings)
   {
-    KConfig *config = KGlobal::config();
+    KConfig *config = TDEGlobal::config();
     KConfigGroupSaver cgs(config, "FMSettings");
     s_pSettings = new KonqFMSettings(config);
   }
@@ -60,7 +60,7 @@ void KonqFMSettings::reparseConfiguration()
 {
   if (s_pSettings)
   {
-    KConfig *config = KGlobal::config();
+    KConfig *config = TDEGlobal::config();
     KConfigGroupSaver cgs(config, "FMSettings");
     s_pSettings->init( config );
   }
@@ -82,9 +82,9 @@ void KonqFMSettings::init( KConfig * config )
   // Fonts and colors
   m_standardFont = config->readFontEntry( "StandardFont" );
 
-  m_normalTextColor = KGlobalSettings::textColor();
+  m_normalTextColor = TDEGlobalSettings::textColor();
   m_normalTextColor = config->readColorEntry( "NormalTextColor", &m_normalTextColor );
-  m_highlightedTextColor = KGlobalSettings::highlightedTextColor();
+  m_highlightedTextColor = TDEGlobalSettings::highlightedTextColor();
   m_highlightedTextColor = config->readColorEntry( "HighlightedTextColor", &m_highlightedTextColor );
   m_itemTextBackground = config->readColorEntry( "ItemTextBackground" );
 

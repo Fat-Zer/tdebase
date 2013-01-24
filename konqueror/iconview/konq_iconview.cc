@@ -1059,7 +1059,7 @@ void KonqKfmIconView::showDirectoryOverlay(KFileIVI* item)
 {
     KFileItem* fileItem = item->item();
 
-    if ( KGlobalSettings::showFilePreview( fileItem->url() ) ) {
+    if ( TDEGlobalSettings::showFilePreview( fileItem->url() ) ) {
         m_paOutstandingOverlays.append(item);
         if (m_paOutstandingOverlays.count() == 1)
         {

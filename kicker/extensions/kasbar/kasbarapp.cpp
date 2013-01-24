@@ -77,7 +77,7 @@ int main( int argc, char **argv )
 {
   TDECmdLineArgs::init( argc, argv, "kasbar", "KasBar", I18N_NOOP( "An alternative task manager" ), VERSION_STRING );
   TDECmdLineArgs::addCmdLineOptions( options );
-  KGlobal::locale()->setMainCatalogue( "kasbarextension" );
+  TDEGlobal::locale()->setMainCatalogue( "kasbarextension" );
   TDEApplication app;
   TDECmdLineArgs *args = TDECmdLineArgs::parsedArgs();
 

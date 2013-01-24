@@ -78,7 +78,7 @@ KBackgroundManager::KBackgroundManager(TQWidget *desktop, KWinModule* twinModule
     m_Cache.resize( 1 );
 
     m_Serial = 0; m_Hash = 0;
-    m_pConfig = KGlobal::config();
+    m_pConfig = TDEGlobal::config();
     m_bExport = m_bCommon = m_bInit = false;
     m_pKwinmodule = twinModule;
     m_pPixmapServer = new KPixmapServer();
@@ -136,7 +136,7 @@ KBackgroundManager::~KBackgroundManager()
     for (unsigned i=0; i<m_Renderer.size(); i++)
         delete m_Renderer[i];
 
-    //delete m_pConfig; Very bad idea, this is KGlobal::config !
+    //delete m_pConfig; Very bad idea, this is TDEGlobal::config !
     delete m_pPixmapServer;
     delete m_pTimer;
 

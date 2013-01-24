@@ -29,7 +29,7 @@
 #include <tqvaluelist.h>
 #include <tqmemarray.h>
 
-class TEPty: public KProcess
+class TEPty: public TDEProcess
 {
 Q_OBJECT
 
@@ -94,12 +94,12 @@ Q_OBJECT
     void send_string(const char* s);
     bool buffer_full() { return m_bufferFull; }
 
-    // override from KProcess to allow the client of konsolePart
+    // override from TDEProcess to allow the client of konsolePart
     // to set up things after fork() but before exec()
     virtual int commSetupDoneC();
 
   protected slots:
-      void dataReceived(KProcess *, char *buf, int len);
+      void dataReceived(TDEProcess *, char *buf, int len);
   public slots:
       void donePty();
       
