@@ -16,7 +16,7 @@
 #include "domainlistview.h"
 #include "policies.h"
 
-class KConfig;
+class TDEConfig;
 class TQCheckBox;
 
 #include <kcmodule.h>
@@ -44,7 +44,7 @@ public:
    * @param domain name of the domain this instance is used to configure the
    *	policies for (case insensitive, ignored if global == true)
    */
-  PluginPolicies(KConfig* config, const TQString &group, bool global,
+  PluginPolicies(TDEConfig* config, const TQString &group, bool global,
   		const TQString &domain = TQString::null);
 
   virtual ~PluginPolicies();
@@ -55,7 +55,7 @@ public:
 class PluginDomainListView : public DomainListView {
   Q_OBJECT
 public:
-  PluginDomainListView(KConfig *config,const TQString &group,KPluginOptions *opt,
+  PluginDomainListView(TDEConfig *config,const TQString &group,KPluginOptions *opt,
   		TQWidget *parent,const char *name = 0);
   virtual ~PluginDomainListView();
 
@@ -90,12 +90,12 @@ private:
   TQBoxLayout *thisLayout;
 };
 
-class KPluginOptions : public KCModule
+class KPluginOptions : public TDECModule
 {
     Q_OBJECT
 
 public:
-    KPluginOptions( KConfig* config, TQString group, TQWidget* parent = 0, const char* name = 0 );
+    KPluginOptions( TDEConfig* config, TQString group, TQWidget* parent = 0, const char* name = 0 );
 	~KPluginOptions();
 
     virtual void load();
@@ -111,7 +111,7 @@ private slots:
 
 private:
 
-    KConfig* m_pConfig;
+    TDEConfig* m_pConfig;
     TQString  m_groupname;
 
     TQCheckBox *enablePluginsGloballyCB, *enableHTTPOnly, *enableUserDemand;
@@ -140,8 +140,8 @@ private:
 /******************************************************************************/
  protected:
   void dirInit();
-  void dirLoad( KConfig *config, bool useDefault = false );
-  void dirSave( KConfig *config );
+  void dirLoad( TDEConfig *config, bool useDefault = false );
+  void dirSave( TDEConfig *config );
 
  protected slots:
   void dirNew();
@@ -154,8 +154,8 @@ private:
 /******************************************************************************/
  protected:
   void pluginInit();
-  void pluginLoad( KConfig *config );
-  void pluginSave( KConfig *config );
+  void pluginLoad( TDEConfig *config );
+  void pluginSave( TDEConfig *config );
 
   friend class PluginDomainListView;
 };

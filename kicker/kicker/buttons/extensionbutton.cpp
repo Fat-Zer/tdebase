@@ -39,7 +39,7 @@ ExtensionButton::ExtensionButton( const TQString& desktopFile, TQWidget* parent 
     initialize( desktopFile );
 }
 
-ExtensionButton::ExtensionButton( const KConfigGroup& config, TQWidget* parent )
+ExtensionButton::ExtensionButton( const TDEConfigGroup& config, TQWidget* parent )
     : PanelPopupButton( parent, "extensionbuttton" )
 {
     initialize( config.readPathEntry("DesktopFile") );
@@ -66,7 +66,7 @@ ExtensionButton::~ExtensionButton()
     delete info;
 }
 
-void ExtensionButton::saveConfig( KConfigGroup& config ) const
+void ExtensionButton::saveConfig( TDEConfigGroup& config ) const
 {
     config.writePathEntry("DesktopFile", info->desktopFile());
 }

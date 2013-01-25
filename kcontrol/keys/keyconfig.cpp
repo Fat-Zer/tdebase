@@ -179,7 +179,7 @@ KKeyModule::~KKeyModule (){
     delete sFileList;
 }
 
-bool KKeyModule::writeSettings( const TQString& sGroup, KConfig* pConfig )
+bool KKeyModule::writeSettings( const TQString& sGroup, TDEConfig* pConfig )
 {
 	kc->commitChanges();
 	actions.writeActions( sGroup, pConfig, true, false );
@@ -279,8 +279,8 @@ void KKeyModule::readScheme( int index )
   //else if( index == 2 )
   //  kc->allDefault( true );
   else {
-    KConfigBase* config = 0;
-    if( index == 0 )	config = new KConfig( "kdeglobals" );
+    TDEConfigBase* config = 0;
+    if( index == 0 )	config = new TDEConfig( "kdeglobals" );
     //else		config = new KSimpleConfig( *sFileList->at( index ), true );
 
     actions.readActions( (index == 0) ? KeySet : KeyScheme, config );
@@ -472,7 +472,7 @@ void KKeyModule::init()
   kdDebug(125) << "KKeyModule::init()\n";
 
   /*kdDebug(125) << "KKeyModule::init() - Initialize # Modifier Keys Settings\n";
-  KConfigGroupSaver cgs( TDEGlobal::config(), "Keyboard" );
+  TDEConfigGroupSaver cgs( TDEGlobal::config(), "Keyboard" );
   TQString fourMods = TDEGlobal::config()->readEntry( "Use Four Modifier Keys", KAccel::keyboardHasMetaKey() ? "true" : "false" );
   KAccel::useFourModifierKeys( fourMods == "true" );
   bool bUseFourModifierKeys = KAccel::useFourModifierKeys();

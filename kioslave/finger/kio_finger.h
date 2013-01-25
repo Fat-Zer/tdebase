@@ -28,7 +28,7 @@
 #include <kio/global.h>
 #include <kio/slavebase.h>
 
-class FingerProtocol : public TQObject, public KIO::SlaveBase
+class FingerProtocol : public TQObject, public TDEIO::SlaveBase
 {
   Q_OBJECT
 

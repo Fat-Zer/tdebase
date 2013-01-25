@@ -42,7 +42,7 @@ Formatter:: ~Formatter()
 
 bool Formatter::readTemplates()
 {
-  KConfig *cfg = TDEGlobal::config();
+  TDEConfig *cfg = TDEGlobal::config();
   cfg->setGroup( "Templates" );
   TQString mainTemplate = cfg->readEntry( "MainTemplate" );
 

@@ -221,7 +221,7 @@ static int directCommand(TDECmdLineArgs *args)
 
     if ( !option.isEmpty() )
     {
-        KConfig* dontagaincfg = NULL;
+        TDEConfig* dontagaincfg = NULL;
         // --dontagain
         TQString dontagain; // TQString::null
         if (args->isSet("dontagain"))
@@ -230,7 +230,7 @@ static int directCommand(TDECmdLineArgs *args)
           TQStringList values = TQStringList::split( ':', value );
           if( values.count() == 2 )
           {
-            dontagaincfg = new KConfig( values[ 0 ] );
+            dontagaincfg = new TDEConfig( values[ 0 ] );
             KMessageBox::setDontShowAskAgainConfig( dontagaincfg );
             dontagain = values[ 1 ];
           }

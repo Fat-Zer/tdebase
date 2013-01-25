@@ -27,7 +27,7 @@ Lots happened here...
 - Added checks for new schema files when accessing the schema menu.
 - When schema files are removed the corresponding schemas are removed too.
 - Fixed some i18n problems in schema.C.
-- Laid groundwork for switch to KConfig (from schema files).
+- Laid groundwork for switch to TDEConfig (from schema files).
 - Check for new schema's every time the schema menu is accessed. I realise
   this may be resource intensive on some people's machines. Maybe we need
   a little timeout mechanism to prevent checks all too often.

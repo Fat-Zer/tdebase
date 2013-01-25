@@ -61,7 +61,7 @@ ModifiersModule::ModifiersModule( TQWidget *parent, const char *name )
 
 void ModifiersModule::load( bool useDefaults )
 {
-   KConfig *c = TDEGlobal::config();
+   TDEConfig *c = TDEGlobal::config();
 
    c->setReadDefaults( useDefaults );
 
@@ -82,7 +82,7 @@ void ModifiersModule::save()
 {
 	kdDebug(125) << "ModifiersModule::save()" << endl;
 
-	KConfigGroupSaver cgs( TDEGlobal::config(), "Keyboard" );
+	TDEConfigGroupSaver cgs( TDEGlobal::config(), "Keyboard" );
 
 	if( m_plblCtrl->text() != "Ctrl" )
 		TDEGlobal::config()->writeEntry( "Label Ctrl", m_plblCtrl->text(), true, true );

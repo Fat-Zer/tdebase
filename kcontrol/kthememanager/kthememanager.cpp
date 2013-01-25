@@ -43,7 +43,7 @@
 #include "config.h"
 
 kthememanager::kthememanager( TQWidget *parent, const char *name )
-    : KCModule( parent, name ), m_theme( 0 ), m_origTheme( 0 )
+    : TDECModule( parent, name ), m_theme( 0 ), m_origTheme( 0 )
 {
 
     TDEAboutData *about = new TDEAboutData("kthememanager", I18N_NOOP("TDE Theme Manager"),
@@ -56,7 +56,7 @@ kthememanager::kthememanager( TQWidget *parent, const char *name )
     setQuickHelp( i18n("This control module handles installing, removing and "
                 "creating visual TDE themes."));
 
-    setButtons( KCModule::Default|KCModule::Apply|KCModule::Help );
+    setButtons( TDECModule::Default|TDECModule::Apply|TDECModule::Help );
 
     setAcceptDrops( true );
     init();
@@ -130,7 +130,7 @@ void kthememanager::load(bool useDefaults)
     listThemes();
 
     // Load the current theme name
-    KConfig conf("kcmthememanagerrc", false, false);
+    TDEConfig conf("kcmthememanagerrc", false, false);
 
 	 conf.setReadDefaults( useDefaults );
 
@@ -164,7 +164,7 @@ void kthememanager::save()
         m_theme->apply();
 
         // Save the current theme name
-        KConfig conf("kcmthememanagerrc", false, false);
+        TDEConfig conf("kcmthememanagerrc", false, false);
         conf.setGroup( "General" );
         conf.writeEntry( "CurrentTheme", themeName );
         conf.sync();
@@ -415,7 +415,7 @@ void kthememanager::updatePreview( const TQString & pixFile )
 
 extern "C"
 {
-    KDE_EXPORT KCModule *create_kthememanager(TQWidget *parent, const char *)
+    KDE_EXPORT TDECModule *create_kthememanager(TQWidget *parent, const char *)
     {
         TDEGlobal::locale()->insertCatalogue( "kthememanager" );
         return new kthememanager( parent, "kthememanager" );

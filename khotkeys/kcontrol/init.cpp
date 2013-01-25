@@ -24,7 +24,7 @@ extern "C"
 {
     KDE_EXPORT void init_khotkeys()
     {
-    KConfig cfg( "khotkeysrc", true );
+    TDEConfig cfg( "khotkeysrc", true );
     cfg.setGroup( "Main" );
     if( !cfg.readBoolEntry( "Autostart", false ))
         return;

@@ -96,7 +96,7 @@ public:
 
 private:
   void getServiceOffers( TQStringList & appServices, TQStringList & embedServices ) const;
-  void saveServices( KConfig & profile, TQStringList services, const TQString & servicetype2 );
+  void saveServices( TDEConfig & profile, TQStringList services, const TQString & servicetype2 );
   void initMeta( const TQString & major );
   void init(KMimeType::Ptr mimetype);
   static int readAutoEmbed( KMimeType::Ptr mimetype );

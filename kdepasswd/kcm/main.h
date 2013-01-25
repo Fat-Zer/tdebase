@@ -34,7 +34,7 @@ class Config;
 /**
  * Please see the README
  */
-class KCMUserAccount : public KCModule
+class KCMUserAccount : public TDECModule
 {
 	Q_OBJECT
 

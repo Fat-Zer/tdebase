@@ -82,7 +82,7 @@ Unnasigned
       - Space activates focused control (on panel or within an applet)
 
 +++++ Settings dialog fix up
-***   Now that we have KConfigXT, use it in the settings dialogs
+***   Now that we have TDEConfigXT, use it in the settings dialogs
       Convert the "Arrangement" and "Hiding" modules. "Menus" and
       "Appearance" are done as far as possible.
 

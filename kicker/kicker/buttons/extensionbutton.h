@@ -35,10 +35,10 @@ class ExtensionButton : public PanelPopupButton
 
 public:
     ExtensionButton( const TQString& desktopFile, TQWidget* parent );
-    ExtensionButton( const KConfigGroup& config, TQWidget* parent );
+    ExtensionButton( const TDEConfigGroup& config, TQWidget* parent );
     ~ExtensionButton();
 
-    void saveConfig( KConfigGroup& config ) const;
+    void saveConfig( TDEConfigGroup& config ) const;
 
 protected:
     void initialize( const TQString& desktopFile );

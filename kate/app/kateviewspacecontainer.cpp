@@ -602,7 +602,7 @@ void KateViewSpaceContainer::setShowFullPath( bool enable )
  * session config functions
  */
 
-void KateViewSpaceContainer::saveViewConfiguration(KConfig *config,const TQString& group)
+void KateViewSpaceContainer::saveViewConfiguration(TDEConfig *config,const TQString& group)
 {
   bool weHaveSplittersAlive (viewSpaceCount() > 1);
 
@@ -629,7 +629,7 @@ void KateViewSpaceContainer::saveViewConfiguration(KConfig *config,const TQStrin
   delete l;
 }
 
-void KateViewSpaceContainer::restoreViewConfiguration (KConfig *config, const TQString& group)
+void KateViewSpaceContainer::restoreViewConfiguration (TDEConfig *config, const TQString& group)
 {
   config->setGroup(group);
   //config->setGroup ("View Configuration");
@@ -665,7 +665,7 @@ void KateViewSpaceContainer::restoreViewConfiguration (KConfig *config, const TQ
 }
 
 
-void KateViewSpaceContainer::saveSplitterConfig( KateMDI::Splitter* s, int idx, KConfig* config, const TQString& viewConfGrp )
+void KateViewSpaceContainer::saveSplitterConfig( KateMDI::Splitter* s, int idx, TDEConfig* config, const TQString& viewConfGrp )
 {
   TQString grp = TQString(viewConfGrp+"-Splitter %1").arg(idx);
   config->setGroup(grp);
@@ -712,7 +712,7 @@ void KateViewSpaceContainer::saveSplitterConfig( KateMDI::Splitter* s, int idx, 
   config->writeEntry("Children", childList);
 }
 
-void KateViewSpaceContainer::restoreSplitter( KConfig* config, const TQString &group, TQWidget* parent, const TQString& viewConfGrp)
+void KateViewSpaceContainer::restoreSplitter( TDEConfig* config, const TQString &group, TQWidget* parent, const TQString& viewConfGrp)
 {
   config->setGroup( group );
 

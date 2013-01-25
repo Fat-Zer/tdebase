@@ -87,10 +87,10 @@ bool KPrivacyManager::clearSavedClipboardContents()
 {
   if(!isApplicationRegistered("klipper"))
   {
-    KConfig *c = new KConfig("klipperrc", false, false);
+    TDEConfig *c = new TDEConfig("klipperrc", false, false);
 
     {
-      KConfigGroupSaver saver(c, "General");
+      TDEConfigGroupSaver saver(c, "General");
       c->deleteEntry("ClipboardData");
       c->sync();
     }

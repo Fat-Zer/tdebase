@@ -158,7 +158,7 @@ ColorSchema::ColorSchema()
   m_numb = 0;
 }
 
-ColorSchema::ColorSchema(KConfig& c)
+ColorSchema::ColorSchema(TDEConfig& c)
 :m_fileRead(false)
 ,fRelPath(TQString::null)
 ,lastRead(0L)
@@ -240,22 +240,22 @@ void ColorSchema::setDefaultSchema()
   return TQString(colornames[i]);
 }
 
-void ColorSchema::writeConfigColor(KConfig& c,
+void ColorSchema::writeConfigColor(TDEConfig& c,
   const TQString& name,
   const ColorEntry& e) const
 {
-  KConfigGroupSaver(&c,name);
+  TDEConfigGroupSaver(&c,name);
   c.setGroup(name);
   c.writeEntry("Color",e.color);
   c.writeEntry("Transparency",(bool) e.transparent);
   c.writeEntry("Bold",(bool) e.bold);
 }
 
-void ColorSchema::readConfigColor(KConfig& c,
+void ColorSchema::readConfigColor(TDEConfig& c,
   const TQString& name,
   ColorEntry& e)
 {
-  KConfigGroupSaver(&c,name);
+  TDEConfigGroupSaver(&c,name);
   c.setGroup(name);
 
   e.color = c.readColorEntry("Color");
@@ -268,7 +268,7 @@ void ColorSchema::writeConfig(const TQString& path) const
 {
 //  KONSOLEDEBUG << "Writing schema " << relPath << " to file " << path << endl;
 
-  KConfig c(path,false,false);
+  TDEConfig c(path,false,false);
 
   c.setGroup("SchemaGeneral");
   c.writeEntry("Title",m_title);

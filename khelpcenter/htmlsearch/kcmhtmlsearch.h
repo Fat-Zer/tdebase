@@ -33,7 +33,7 @@ class TDEProcess;
 class KLanguageCombo;
 class KURLRequester;
 
-class KHTMLSearchConfig : public KCModule
+class KHTMLSearchConfig : public TDECModule
 {
   Q_OBJECT
 

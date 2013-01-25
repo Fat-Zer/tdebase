@@ -21,7 +21,7 @@ class B2Config: public TQObject
 	Q_OBJECT
 
 	public:
-		B2Config( KConfig* conf, TQWidget* parent );
+		B2Config( TDEConfig* conf, TQWidget* parent );
 		~B2Config();
 
 	// These public signals/slots work similar to KCM modules
@@ -29,15 +29,15 @@ class B2Config: public TQObject
 		void changed();
 
 	public slots:
-		void load( KConfig* conf );	
-		void save( KConfig* conf );
+		void load( TDEConfig* conf );	
+		void save( TDEConfig* conf );
 		void defaults();
 
 	protected slots:
 		void slotSelectionChanged();	// Internal use
 
 	private:
-		KConfig*   b2Config;
+		TDEConfig*   b2Config;
 		TQCheckBox* cbColorBorder;
 		TQCheckBox*  showGrabHandleCb;
 		TQHGroupBox* actionsGB;

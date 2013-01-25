@@ -134,7 +134,7 @@ static sasl_callback_t callbacks[] = {
     // "command not {recognized,implemented}" response:
     if ( r.code() == 500 || r.code() == 502 ) {
       if ( mEHLONotSupported ) { // HELO failed...
-	mSMTP->error( KIO::ERR_INTERNAL_SERVER,
+	mSMTP->error( TDEIO::ERR_INTERNAL_SERVER,
 		      i18n("The server rejected both EHLO and HELO commands "
 			   "as unknown or unimplemented.\n"
 			   "Please contact the server's system administrator.") );
@@ -148,7 +148,7 @@ static sasl_callback_t callbacks[] = {
       parseFeatures( r );
       return true;
     }
-    mSMTP->error( KIO::ERR_UNKNOWN,
+    mSMTP->error( TDEIO::ERR_UNKNOWN,
 		  i18n("Unexpected server response to %1 command.\n%2")
 		  .arg( mEHLONotSupported ? "HELO" : "EHLO" )
 		  .arg( r.errorMessage() ) );
@@ -182,7 +182,7 @@ static sasl_callback_t callbacks[] = {
 
     if ( tlsrc != -3 )
       //kdDebug(7112) << "TLS negotiation failed!" << endl;
-      mSMTP->messageBox(KIO::SlaveBase::Information,
+      mSMTP->messageBox(TDEIO::SlaveBase::Information,
 			i18n("Your SMTP server claims to "
 			     "support TLS, but negotiation "
 			     "was unsuccessful.\nYou can "
@@ -193,7 +193,7 @@ static sasl_callback_t callbacks[] = {
   }
 
 
-#define SASLERROR mSMTP->error(KIO::ERR_COULD_NOT_AUTHENTICATE, \
+#define SASLERROR mSMTP->error(TDEIO::ERR_COULD_NOT_AUTHENTICATE, \
   i18n("An error occured during authentication: %1").arg \
   ( TQString::fromUtf8( sasl_errdetail( conn ) )));
 
@@ -203,7 +203,7 @@ static sasl_callback_t callbacks[] = {
   AuthCommand::AuthCommand( SMTPProtocol * smtp,
 			    const char *mechanisms,
           const TQString &aFQDN,
-			    KIO::AuthInfo &ai )
+			    TDEIO::AuthInfo &ai )
     : Command( smtp, CloseConnectionOnError|OnlyLastInPipeline ),
       mAi( &ai ),
       mFirstTime( true )
@@ -238,7 +238,7 @@ static sasl_callback_t callbacks[] = {
     if ( result == SASL_OK ) mOneStep = true;
     kdDebug(7112) << "Mechanism: " << mMechusing << " one step: " << mOneStep << endl;
 #else
-  mSMTP->error(KIO::ERR_COULD_NOT_AUTHENTICATE,
+  mSMTP->error(TDEIO::ERR_COULD_NOT_AUTHENTICATE,
       i18n("Authentication support is not compiled into kio_smtp."));
 #endif
   }
@@ -268,7 +268,7 @@ static sasl_callback_t callbacks[] = {
 
         if ( mAi->username.isEmpty() || mAi->password.isEmpty()) {
           if (!mSMTP->openPassDlg(*mAi)) {
-            mSMTP->error(KIO::ERR_ABORTED, i18n("No authentication details supplied."));
+            mSMTP->error(TDEIO::ERR_ABORTED, i18n("No authentication details supplied."));
             return false;
           }
         }
@@ -370,15 +370,15 @@ static sasl_callback_t callbacks[] = {
     if ( !r.isOk() ) {
       if ( mFirstTime )
 	      if ( haveCapability( "AUTH" ) )
-          mSMTP->error( KIO::ERR_COULD_NOT_LOGIN,
+          mSMTP->error( TDEIO::ERR_COULD_NOT_LOGIN,
             i18n("Your SMTP server does not support %1.\nChoose a different authentication method.\n%2")
               .arg( mMechusing ).arg( r.errorMessage() ) );
 	      else
-	        mSMTP->error( KIO::ERR_COULD_NOT_LOGIN,
+	        mSMTP->error( TDEIO::ERR_COULD_NOT_LOGIN,
 			      i18n("Your SMTP server does not support authentication.\n"
 			     "  %2").arg( r.errorMessage() ) );
       else
-	      mSMTP->error( KIO::ERR_COULD_NOT_LOGIN,
+	      mSMTP->error( TDEIO::ERR_COULD_NOT_LOGIN,
 		      i18n("Authentication failed.\n"
 			   "Most likely the password is wrong.\n"
 			   "%1").arg( r.errorMessage() ) );
@@ -516,7 +516,7 @@ static sasl_callback_t callbacks[] = {
     if ( result > 0 )
       return prepare( ba );
     else if ( result < 0 ) {
-      ts->setFailedFatally( KIO::ERR_INTERNAL,
+      ts->setFailedFatally( TDEIO::ERR_INTERNAL,
 			    i18n("Could not read data from application.") );
       mComplete = true;
       mNeedResponse = true;

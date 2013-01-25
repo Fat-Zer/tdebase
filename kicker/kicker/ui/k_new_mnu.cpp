@@ -1206,7 +1206,7 @@ void KMenu::initialize()
    /*
        If  the user configured ksmserver to
      */
-    KConfig ksmserver("ksmserverrc", false, false);
+    TDEConfig ksmserver("ksmserverrc", false, false);
     ksmserver.setGroup("General");
     connect( m_branding, TQT_SIGNAL(clicked()), TQT_SLOT(slotOpenHomepage()));
     m_tabBar->setTabEnabled(LeaveTab, kapp->authorize("logout"));
@@ -1289,7 +1289,7 @@ void KMenu::insertStaticExitItems()
        m_exitView->leftView()->insertItem( "lock", i18n( "Lock" ),
                                    i18n( "Lock screen" ), "kicker:/lock", nId++, index++ );
 
-    KConfig ksmserver("ksmserverrc", false, false);
+    TDEConfig ksmserver("ksmserverrc", false, false);
     ksmserver.setGroup("General");
     if (ksmserver.readEntry( "loginMode" ) == "restoreSavedSession")
     {
@@ -2890,7 +2890,7 @@ void KMenu::slotContextMenu(int selected)
     TQDataStream ds(ba, IO_WriteOnly);
 
     KURL src,dest;
-    KIO::CopyJob *job;
+    TDEIO::CopyJob *job;
 
     TDEProcess *proc;
 
@@ -2904,7 +2904,7 @@ void KMenu::slotContextMenu(int selected)
 	        dest.setPath( TDEGlobalSettings::desktopPath() );
 	        dest.setFileName( src.fileName() );
 
-                job = KIO::copyAs( src, dest );
+                job = TDEIO::copyAs( src, dest );
                 job->setDefaultPermissions( true );
  	    }
             else {
@@ -3492,7 +3492,7 @@ void KMenu::updateMedia()
                 uint64_t total = ( uint64_t )sfs.f_blocks * sfs.f_bsize;
                 uint64_t avail = ( uint64_t )( getuid() ? sfs.f_bavail : sfs.f_bfree ) * sfs.f_bsize;
                 if ( avail < total && avail > 1024 ) {
-                    label += " " + i18n( "(%1 available)" ).arg( KIO::convertSize(avail) );
+                    label += " " + i18n( "(%1 available)" ).arg( TDEIO::convertSize(avail) );
                 }
             }
         }

@@ -47,7 +47,7 @@ template class TQPtrList<ConfigModule>;
 
 
 ConfigModule::ConfigModule(const KService::Ptr &s)
-  : KCModuleInfo(s), _changed(false), _module(0), _embedWidget(0),
+  : TDECModuleInfo(s), _changed(false), _module(0), _embedWidget(0),
     _rootProcess(0), _embedLayout(0), _embedFrame(0), _embedStack(0)
 {
 }
@@ -64,12 +64,12 @@ ProxyWidget *ConfigModule::module()
 
   bool run_as_root = needsRootPrivileges() && (getuid() != 0);
 
-  KCModule *modWidget = 0;
+  TDECModule *modWidget = 0;
 
   if (run_as_root && isHiddenByDefault())
      modWidget = new KCRootOnly(0, "root_only");
   else
-      modWidget = KCModuleLoader::loadModule(*this);
+      modWidget = TDECModuleLoader::loadModule(*this);
 
   if (modWidget)
     {
@@ -110,7 +110,7 @@ void ConfigModule::deleteClient()
   delete _embedLayout;
   _embedLayout = 0;
 
-  KCModuleLoader::unloadModule(*this);
+  TDECModuleLoader::unloadModule(*this);
   _changed = false;
 }
 

@@ -94,7 +94,7 @@ KMiniPager::KMiniPager(const TQString& configFile, Type type, int actions,
     TQRect desk = TQApplication::desktop()->screenGeometry(scnum);
     if (desk.width() <= 800)
     {
-        KConfigSkeleton::ItemBool* item = dynamic_cast<KConfigSkeleton::ItemBool*>(m_settings->findItem("Preview"));
+        TDEConfigSkeleton::ItemBool* item = dynamic_cast<TDEConfigSkeleton::ItemBool*>(m_settings->findItem("Preview"));
         if (item)
         {
             item->setDefaultValue(false);

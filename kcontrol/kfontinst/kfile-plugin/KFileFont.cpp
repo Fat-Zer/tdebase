@@ -327,7 +327,7 @@ bool KFileFontPlugin::readInfo(KFileMetaInfo& info, uint what)
 
     what=0;
 
-    if(!fontsProt && !fileProt && KIO::NetAccess::download(url, fName, NULL))
+    if(!fontsProt && !fileProt && TDEIO::NetAccess::download(url, fName, NULL))
     {
         downloaded=true;
         url=KURL(fName);
@@ -413,7 +413,7 @@ bool KFileFontPlugin::readInfo(KFileMetaInfo& info, uint what)
         }
 
         if(downloaded)
-            KIO::NetAccess::removeTempFile(fName);
+            TDEIO::NetAccess::removeTempFile(fName);
     }
 
     return status;

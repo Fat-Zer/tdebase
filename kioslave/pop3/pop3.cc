@@ -73,7 +73,7 @@ extern "C" {
   int KDE_EXPORT kdemain(int argc, char **argv);
 }
 
-using namespace KIO;
+using namespace TDEIO;
 
 #ifdef HAVE_LIBSASL2
 static sasl_callback_t callbacks[] = {
@@ -349,7 +349,7 @@ void POP3Protocol::closeConnection()
   opened = false;
 }
 
-int POP3Protocol::loginAPOP( char *challenge, KIO::AuthInfo &ai )
+int POP3Protocol::loginAPOP( char *challenge, TDEIO::AuthInfo &ai )
 {
   char buf[512];
 
@@ -457,7 +457,7 @@ bool POP3Protocol::saslInteract( void *in, AuthInfo &ai )
 error(ERR_COULD_NOT_AUTHENTICATE, i18n("An error occured during authentication: %1").arg \
 ( TQString::fromUtf8( sasl_errdetail( conn ) ))); \
 
-int POP3Protocol::loginSASL( KIO::AuthInfo &ai )
+int POP3Protocol::loginSASL( TDEIO::AuthInfo &ai )
 {
 #ifdef HAVE_LIBSASL2
   char buf[512];
@@ -606,7 +606,7 @@ int POP3Protocol::loginSASL( KIO::AuthInfo &ai )
 #endif
 }
 
-bool POP3Protocol::loginPASS( KIO::AuthInfo &ai )
+bool POP3Protocol::loginPASS( TDEIO::AuthInfo &ai )
 {
   char buf[512];
 
@@ -749,7 +749,7 @@ bool POP3Protocol::pop3_open()
       return false;
     }
 
-    KIO::AuthInfo authInfo;
+    TDEIO::AuthInfo authInfo;
     authInfo.username = m_sUser;
     authInfo.password = m_sPass;
     authInfo.prompt = i18n("Username and password for your POP3 account:");
@@ -1191,7 +1191,7 @@ void POP3Protocol::listDir(const KURL &)
     atom.m_long = realGetSize(i + 1);
     entry.append(atom);
 
-    atom.m_uds = KIO::UDS_ACCESS;
+    atom.m_uds = TDEIO::UDS_ACCESS;
     atom.m_long = S_IRUSR | S_IXUSR | S_IWUSR;
     entry.append (atom);
 

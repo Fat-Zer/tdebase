@@ -24,7 +24,7 @@
 #include <tqlistview.h>
 #include <tqhbox.h>
 
-class KCModuleInfo;
+class TDECModuleInfo;
 class TQPixmap;
 class KPixmap;
 class ConfigModule;

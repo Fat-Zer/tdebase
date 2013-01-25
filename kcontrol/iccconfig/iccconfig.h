@@ -31,11 +31,11 @@
 
 #include "iccconfigbase.h"
 
-class KConfig;
+class TDEConfig;
 class KPopupMenu;
 class KListViewItem;
 
-class KICCConfig : public KCModule, public DCOPObject
+class KICCConfig : public TDECModule, public DCOPObject
 {
   K_DCOP
     Q_OBJECT
@@ -59,7 +59,7 @@ public:
 
 private:
 
-  KConfig *config;
+  TDEConfig *config;
   bool _ok;
   Display *randr_display;
   ScreenInfo *randr_screen_info;

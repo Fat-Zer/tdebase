@@ -67,36 +67,36 @@ void KonqInfoListViewItem::updateContents()
       {
          switch (tmpColumn->udsId)
          {
-         case KIO::UDS_USER:
+         case TDEIO::UDS_USER:
             setText(tmpColumn->displayInColumn,m_fileitem->user());
             break;
-         case KIO::UDS_GROUP:
+         case TDEIO::UDS_GROUP:
             setText(tmpColumn->displayInColumn,m_fileitem->group());
             break;
-         case KIO::UDS_FILE_TYPE:
+         case TDEIO::UDS_FILE_TYPE:
             setText(tmpColumn->displayInColumn,m_fileitem->mimeComment());
             break;
-         case KIO::UDS_MIME_TYPE:
+         case TDEIO::UDS_MIME_TYPE:
             setText(tmpColumn->displayInColumn,m_fileitem->mimetype());
             break;
-         case KIO::UDS_URL:
+         case TDEIO::UDS_URL:
             setText(tmpColumn->displayInColumn,m_fileitem->url().prettyURL());
             break;
-         case KIO::UDS_LINK_DEST:
+         case TDEIO::UDS_LINK_DEST:
             setText(tmpColumn->displayInColumn,m_fileitem->linkDest());
             break;
-         case KIO::UDS_SIZE:
+         case TDEIO::UDS_SIZE:
             if ( static_cast<KonqBaseListViewWidget *>(listView())->m_pSettings->fileSizeInBytes() )
                 setText(tmpColumn->displayInColumn,TDEGlobal::locale()->formatNumber( m_fileitem->size(),0)+" ");
             else
-                setText(tmpColumn->displayInColumn,KIO::convertSize(m_fileitem->size())+" ");
+                setText(tmpColumn->displayInColumn,TDEIO::convertSize(m_fileitem->size())+" ");
             break;
-         case KIO::UDS_ACCESS:
+         case TDEIO::UDS_ACCESS:
             setText(tmpColumn->displayInColumn,m_fileitem->permissionsString());
             break;
-         case KIO::UDS_MODIFICATION_TIME:
-         case KIO::UDS_ACCESS_TIME:
-         case KIO::UDS_CREATION_TIME:
+         case TDEIO::UDS_MODIFICATION_TIME:
+         case TDEIO::UDS_ACCESS_TIME:
+         case TDEIO::UDS_CREATION_TIME:
             {
                TQDateTime dt;
                time_t _time = m_fileitem->time( tmpColumn->udsId );
@@ -265,12 +265,12 @@ void KonqBaseListViewItem::mimetypeFound()
     for (unsigned int i=0; i<KonqBaseListViewWidget::NumberOfAtoms && done < 2; i++)
     {
         ColumnInfo *tmpColumn=&lv->columnConfigInfo()[i];
-        if (lv->columnConfigInfo()[i].udsId==KIO::UDS_FILE_TYPE && tmpColumn->displayThisOne)
+        if (lv->columnConfigInfo()[i].udsId==TDEIO::UDS_FILE_TYPE && tmpColumn->displayThisOne)
         {
             setText(tmpColumn->displayInColumn, m_fileitem->mimeComment());
             done++;
         }
-        if (lv->columnConfigInfo()[i].udsId==KIO::UDS_MIME_TYPE && tmpColumn->displayThisOne)
+        if (lv->columnConfigInfo()[i].udsId==TDEIO::UDS_MIME_TYPE && tmpColumn->displayThisOne)
         {
             setText(tmpColumn->displayInColumn, m_fileitem->mimetype());
             done++;

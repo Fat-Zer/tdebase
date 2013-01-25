@@ -83,9 +83,9 @@ class KateFileSelector : public TQVBox
                       TQWidget * parent = 0, const char * name = 0 );
     ~KateFileSelector();
 
-    void readConfig( KConfig *, const TQString & );
-    void writeConfig( KConfig *, const TQString & );
-    void setupToolbar( KConfig * );
+    void readConfig( TDEConfig *, const TQString & );
+    void writeConfig( TDEConfig *, const TQString & );
+    void setupToolbar( TDEConfig * );
     void setView( KFile::FileView );
     KDirOperator *dirOperator(){ return dir; }
     KActionCollection *actionCollection() { return mActionCollection; };

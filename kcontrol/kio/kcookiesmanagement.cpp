@@ -100,7 +100,7 @@ TQString CookieListViewItem::text(int f) const
 }
 
 KCookiesManagement::KCookiesManagement(TQWidget *parent)
-                   : KCModule(parent, "kcmkio")
+                   : TDECModule(parent, "kcmkio")
 {
   // Toplevel layout
   TQVBoxLayout* mainLayout = new TQVBoxLayout(this, KDialog::marginHint(),

@@ -34,11 +34,11 @@
 #include "config.h"
 #include "configdialog.h"
 
-PlastikConfig::PlastikConfig(KConfig* config, TQWidget* parent)
+PlastikConfig::PlastikConfig(TDEConfig* config, TQWidget* parent)
     : TQObject(parent), m_config(0), m_dialog(0)
 {
     // create the configuration object
-    m_config = new KConfig("twinplastikrc");
+    m_config = new TDEConfig("twinplastikrc");
     TDEGlobal::locale()->insertCatalogue("twin_clients");
 
     // create and show the configuration dialog
@@ -67,7 +67,7 @@ PlastikConfig::~PlastikConfig()
     if (m_config) delete m_config;
 }
 
-void PlastikConfig::load(KConfig*)
+void PlastikConfig::load(TDEConfig*)
 {
     m_config->setGroup("General");
 
@@ -85,7 +85,7 @@ void PlastikConfig::load(KConfig*)
     m_dialog->coloredBorder->setChecked(coloredBorder);
 }
 
-void PlastikConfig::save(KConfig*)
+void PlastikConfig::save(TDEConfig*)
 {
     m_config->setGroup("General");
 
@@ -115,7 +115,7 @@ void PlastikConfig::defaults()
 
 extern "C"
 {
-    KDE_EXPORT TQObject* allocate_config(KConfig* config, TQWidget* parent) {
+    KDE_EXPORT TQObject* allocate_config(TDEConfig* config, TQWidget* parent) {
         return (new PlastikConfig(config, parent));
     }
 }

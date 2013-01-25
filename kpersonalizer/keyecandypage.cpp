@@ -49,12 +49,12 @@
 
 KEyeCandyPage::KEyeCandyPage(TQWidget *parent, const char *name ) : KEyeCandyPageDlg(parent,name) {
 
-	twinconf = new KConfig("twinrc", false, true);
-	twineventconf = new KConfig("twin.eventsrc", false, false);
-	kickerconf =  new KConfig("kickerrc",false, false);
-	konquerorconf =  new KConfig("konquerorrc",false, false);
-	konqiconconf = new KConfig("konqiconviewrc",false,false);
-	kdesktopconf = new KConfig("kdesktoprc", false, false);
+	twinconf = new TDEConfig("twinrc", false, true);
+	twineventconf = new TDEConfig("twin.eventsrc", false, false);
+	kickerconf =  new TDEConfig("kickerrc",false, false);
+	konquerorconf =  new TDEConfig("konquerorrc",false, false);
+	konqiconconf = new TDEConfig("konqiconviewrc",false,false);
+	kdesktopconf = new TDEConfig("kdesktoprc", false, false);
 
 	sys = new KSysInfo();
 
@@ -614,7 +614,7 @@ void KEyeCandyPage::save(bool currSettings){
 	kdDebug() << "KEyeCandyPage::save()" << endl;
 	// currSettings==true: save selections. currSettings==false: save user-def.
 	saveCheckState(currSettings);
-	// save all the KConfig-objects to their respective files
+	// save all the TDEConfig-objects to their respective files
 	twinconf->sync();
 	twineventconf->sync();
 	konquerorconf->sync();

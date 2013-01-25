@@ -94,7 +94,7 @@ void TrashProtocol::restore( const KURL& trashURL )
     TQString fileId, relativePath;
     bool ok = TrashImpl::parseURL( trashURL, trashId, fileId, relativePath );
     if ( !ok ) {
-        error( KIO::ERR_SLAVE_DEFINED, i18n( "Malformed URL %1" ).arg( trashURL.prettyURL() ) );
+        error( TDEIO::ERR_SLAVE_DEFINED, i18n( "Malformed URL %1" ).arg( trashURL.prettyURL() ) );
         return;
     }
     TrashedFileInfo info;
@@ -112,7 +112,7 @@ void TrashProtocol::restore( const KURL& trashURL )
     const TQString destDir = dest.directory();
     KDE_struct_stat buff;
     if ( KDE_lstat( TQFile::encodeName( destDir ), &buff ) == -1 ) {
-        error( KIO::ERR_SLAVE_DEFINED,
+        error( TDEIO::ERR_SLAVE_DEFINED,
                i18n( "The directory %1 does not exist anymore, so it is not possible to restore this item to its original location. "
                      "You can either recreate that directory and use the restore operation again, or drag the item anywhere else to restore it." ).arg( destDir ) );
         return;
@@ -128,7 +128,7 @@ void TrashProtocol::rename( const KURL &oldURL, const KURL &newURL, bool overwri
     kdDebug()<<"TrashProtocol::rename(): old="<<oldURL<<" new="<<newURL<<" overwrite=" << overwrite<<endl;
 
     if ( oldURL.protocol() == "trash" && newURL.protocol() == "trash" ) {
-        error( KIO::ERR_CANNOT_RENAME, oldURL.prettyURL() );
+        error( TDEIO::ERR_CANNOT_RENAME, oldURL.prettyURL() );
         return;
     }
 
@@ -142,7 +142,7 @@ void TrashProtocol::copy( const KURL &src, const KURL &dest, int /*permissions*/
     kdDebug()<<"TrashProtocol::copy(): " << src << " " << dest << endl;
 
     if ( src.protocol() == "trash" && dest.protocol() == "trash" ) {
-        error( KIO::ERR_UNSUPPORTED_ACTION, i18n( "This file is already in the trash bin." ) );
+        error( TDEIO::ERR_UNSUPPORTED_ACTION, i18n( "This file is already in the trash bin." ) );
         return;
     }
 
@@ -157,7 +157,7 @@ void TrashProtocol::copyOrMove( const KURL &src, const KURL &dest, bool overwrit
         TQString fileId, relativePath;
         bool ok = TrashImpl::parseURL( src, trashId, fileId, relativePath );
         if ( !ok ) {
-            error( KIO::ERR_SLAVE_DEFINED, i18n( "Malformed URL %1" ).arg( src.prettyURL() ) );
+            error( TDEIO::ERR_SLAVE_DEFINED, i18n( "Malformed URL %1" ).arg( src.prettyURL() ) );
             return;
         }
         const TQString destPath = dest.path();
@@ -166,7 +166,7 @@ void TrashProtocol::copyOrMove( const KURL &src, const KURL &dest, bool overwrit
                 ok = TQFile::remove( destPath );
                 Q_ASSERT( ok ); // ### TODO
             } else {
-                error( KIO::ERR_FILE_ALREADY_EXIST, destPath );
+                error( TDEIO::ERR_FILE_ALREADY_EXIST, destPath );
                 return;
             }
         }
@@ -224,33 +224,33 @@ void TrashProtocol::copyOrMove( const KURL &src, const KURL &dest, bool overwrit
             }
             return;
         } else {
-            kdDebug() << "returning KIO::ERR_ACCESS_DENIED, it's not allowed to add a file to an existing trash directory" << endl;
+            kdDebug() << "returning TDEIO::ERR_ACCESS_DENIED, it's not allowed to add a file to an existing trash directory" << endl;
             // It's not allowed to add a file to an existing trash directory.
-            error( KIO::ERR_ACCESS_DENIED, dest.prettyURL() );
+            error( TDEIO::ERR_ACCESS_DENIED, dest.prettyURL() );
             return;
         }
     } else
-        error( KIO::ERR_UNSUPPORTED_ACTION, "should never happen" );
+        error( TDEIO::ERR_UNSUPPORTED_ACTION, "should never happen" );
 }
 
-static void addAtom(KIO::UDSEntry& entry, unsigned int ID, long long l, const TQString& s = TQString::null)
+static void addAtom(TDEIO::UDSEntry& entry, unsigned int ID, long long l, const TQString& s = TQString::null)
 {
-    KIO::UDSAtom atom;
+    TDEIO::UDSAtom atom;
     atom.m_uds = ID;
     atom.m_long = l;
     atom.m_str = s;
     entry.append(atom);
 }
 
-void TrashProtocol::createTopLevelDirEntry(KIO::UDSEntry& entry)
+void TrashProtocol::createTopLevelDirEntry(TDEIO::UDSEntry& entry)
 {
     entry.clear();
-    addAtom(entry, KIO::UDS_NAME, 0, ".");
-    addAtom(entry, KIO::UDS_FILE_TYPE, S_IFDIR);
-    addAtom(entry, KIO::UDS_ACCESS, 0700);
-    addAtom(entry, KIO::UDS_MIME_TYPE, 0, "inode/directory");
-    addAtom(entry, KIO::UDS_USER, 0, m_userName);
-    addAtom(entry, KIO::UDS_GROUP, 0, m_groupName);
+    addAtom(entry, TDEIO::UDS_NAME, 0, ".");
+    addAtom(entry, TDEIO::UDS_FILE_TYPE, S_IFDIR);
+    addAtom(entry, TDEIO::UDS_ACCESS, 0700);
+    addAtom(entry, TDEIO::UDS_MIME_TYPE, 0, "inode/directory");
+    addAtom(entry, TDEIO::UDS_USER, 0, m_userName);
+    addAtom(entry, TDEIO::UDS_GROUP, 0, m_groupName);
 }
 
 void TrashProtocol::stat(const KURL& url)
@@ -259,7 +259,7 @@ void TrashProtocol::stat(const KURL& url)
     const TQString path = url.path();
     if( path.isEmpty() || path == "/" ) {
         // The root is "virtual" - it's not a single physical directory
-        KIO::UDSEntry entry;
+        TDEIO::UDSEntry entry;
         createTopLevelDirEntry( entry );
         statEntry( entry );
         finished();
@@ -274,8 +274,8 @@ void TrashProtocol::stat(const KURL& url)
             kdDebug() << k_funcinfo << url << " looks fishy, returning does-not-exist" << endl;
             // A URL like trash:/file simply means that CopyJob is trying to see if
             // the destination exists already (it made up the URL by itself).
-            error( KIO::ERR_DOES_NOT_EXIST, url.prettyURL() );
-            //error( KIO::ERR_SLAVE_DEFINED, i18n( "Malformed URL %1" ).arg( url.prettyURL() ) );
+            error( TDEIO::ERR_DOES_NOT_EXIST, url.prettyURL() );
+            //error( TDEIO::ERR_SLAVE_DEFINED, i18n( "Malformed URL %1" ).arg( url.prettyURL() ) );
             return;
         }
 
@@ -292,14 +292,14 @@ void TrashProtocol::stat(const KURL& url)
             fileURL = url.url();
         }
 
-        KIO::UDSEntry entry;
+        TDEIO::UDSEntry entry;
         TrashedFileInfo info;
         ok = impl.infoForFile( trashId, fileId, info );
         if ( ok )
             ok = createUDSEntry( filePath, fileName, fileURL, entry, info );
 
         if ( !ok ) {
-            error( KIO::ERR_COULD_NOT_STAT, url.prettyURL() );
+            error( TDEIO::ERR_COULD_NOT_STAT, url.prettyURL() );
         }
 
         statEntry( entry );
@@ -314,13 +314,13 @@ void TrashProtocol::del( const KURL &url, bool /*isfile*/ )
 
     bool ok = TrashImpl::parseURL( url, trashId, fileId, relativePath );
     if ( !ok ) {
-        error( KIO::ERR_SLAVE_DEFINED, i18n( "Malformed URL %1" ).arg( url.prettyURL() ) );
+        error( TDEIO::ERR_SLAVE_DEFINED, i18n( "Malformed URL %1" ).arg( url.prettyURL() ) );
         return;
     }
 
     ok = relativePath.isEmpty();
     if ( !ok ) {
-        error( KIO::ERR_ACCESS_DENIED, url.prettyURL() );
+        error( TDEIO::ERR_ACCESS_DENIED, url.prettyURL() );
         return;
     }
 
@@ -346,7 +346,7 @@ void TrashProtocol::listDir(const KURL& url)
     TQString relativePath;
     bool ok = TrashImpl::parseURL( url, trashId, fileId, relativePath );
     if ( !ok ) {
-        error( KIO::ERR_SLAVE_DEFINED, i18n( "Malformed URL %1" ).arg( url.prettyURL() ) );
+        error( TDEIO::ERR_SLAVE_DEFINED, i18n( "Malformed URL %1" ).arg( url.prettyURL() ) );
         return;
     }
     //was: const TQString physicalPath = impl.physicalPath( trashId, fileId, relativePath );
@@ -368,7 +368,7 @@ void TrashProtocol::listDir(const KURL& url)
     kdDebug() << k_funcinfo << "listing " << info.physicalPath << endl;
     TQStrList entryNames = impl.listDir( info.physicalPath );
     totalSize( entryNames.count() );
-    KIO::UDSEntry entry;
+    TDEIO::UDSEntry entry;
     TQStrListIterator entryIt( entryNames );
     for (; entryIt.current(); ++entryIt) {
         TQString fileName = TQFile::decodeName( entryIt.current() );
@@ -390,7 +390,7 @@ void TrashProtocol::listDir(const KURL& url)
     finished();
 }
 
-bool TrashProtocol::createUDSEntry( const TQString& physicalPath, const TQString& fileName, const TQString& url, KIO::UDSEntry& entry, const TrashedFileInfo& info )
+bool TrashProtocol::createUDSEntry( const TQString& physicalPath, const TQString& fileName, const TQString& url, TDEIO::UDSEntry& entry, const TrashedFileInfo& info )
 {
     TQCString physicalPath_c = TQFile::encodeName( physicalPath );
     KDE_struct_stat buff;
@@ -405,7 +405,7 @@ bool TrashProtocol::createUDSEntry( const TQString& physicalPath, const TQString
             buffer2[ n ] = 0;
         }
 
-        addAtom( entry, KIO::UDS_LINK_DEST, 0, TQFile::decodeName( buffer2 ) );
+        addAtom( entry, TDEIO::UDS_LINK_DEST, 0, TQFile::decodeName( buffer2 ) );
         // Follow symlink
         // That makes sense in kio_file, but not in the trash, especially for the size
         // #136876
@@ -422,21 +422,21 @@ bool TrashProtocol::createUDSEntry( const TQString& physicalPath, const TQString
     mode_t type = buff.st_mode & S_IFMT; // extract file type
     mode_t access = buff.st_mode & 07777; // extract permissions
     access &= 07555; // make it readonly, since it's in the trashcan
-    addAtom( entry, KIO::UDS_NAME, 0, fileName );
-    addAtom( entry, KIO::UDS_FILE_TYPE, type );
+    addAtom( entry, TDEIO::UDS_NAME, 0, fileName );
+    addAtom( entry, TDEIO::UDS_FILE_TYPE, type );
     if ( !url.isEmpty() )
-        addAtom( entry, KIO::UDS_URL, 0, url );
+        addAtom( entry, TDEIO::UDS_URL, 0, url );
 
     KMimeType::Ptr mt = KMimeType::findByPath( physicalPath, buff.st_mode );
-    addAtom( entry, KIO::UDS_MIME_TYPE, 0, mt->name() );
-    addAtom( entry, KIO::UDS_ACCESS, access );
-    addAtom( entry, KIO::UDS_SIZE, buff.st_size );
-    addAtom( entry, KIO::UDS_USER, 0, m_userName ); // assumption
-    addAtom( entry, KIO::UDS_GROUP, 0, m_groupName ); // assumption
-    addAtom( entry, KIO::UDS_MODIFICATION_TIME, buff.st_mtime );
-    addAtom( entry, KIO::UDS_ACCESS_TIME, buff.st_atime ); // ## or use it for deletion time?
-    addAtom( entry, KIO::UDS_EXTRA, 0, info.origPath );
-    addAtom( entry, KIO::UDS_EXTRA, 0, info.deletionDate.toString( Qt::ISODate ) );
+    addAtom( entry, TDEIO::UDS_MIME_TYPE, 0, mt->name() );
+    addAtom( entry, TDEIO::UDS_ACCESS, access );
+    addAtom( entry, TDEIO::UDS_SIZE, buff.st_size );
+    addAtom( entry, TDEIO::UDS_USER, 0, m_userName ); // assumption
+    addAtom( entry, TDEIO::UDS_GROUP, 0, m_groupName ); // assumption
+    addAtom( entry, TDEIO::UDS_MODIFICATION_TIME, buff.st_mtime );
+    addAtom( entry, TDEIO::UDS_ACCESS_TIME, buff.st_atime ); // ## or use it for deletion time?
+    addAtom( entry, TDEIO::UDS_EXTRA, 0, info.origPath );
+    addAtom( entry, TDEIO::UDS_EXTRA, 0, info.deletionDate.toString( Qt::ISODate ) );
     return true;
 }
 
@@ -445,7 +445,7 @@ void TrashProtocol::listRoot()
     INIT_IMPL;
     const TrashedFileInfoList lst = impl.list();
     totalSize( lst.count() );
-    KIO::UDSEntry entry;
+    TDEIO::UDSEntry entry;
     createTopLevelDirEntry( entry );
     listEntry( entry, false );
     for ( TrashedFileInfoList::ConstIterator it = lst.begin(); it != lst.end(); ++it ) {
@@ -488,7 +488,7 @@ void TrashProtocol::special( const TQByteArray & data )
     }
     default:
         kdWarning(7116) << "Unknown command in special(): " << cmd << endl;
-        error( KIO::ERR_UNSUPPORTED_ACTION, TQString::number(cmd) );
+        error( TDEIO::ERR_UNSUPPORTED_ACTION, TQString::number(cmd) );
         break;
     }
 }
@@ -499,7 +499,7 @@ void TrashProtocol::put( const KURL& url, int /*permissions*/, bool /*overwrite*
     kdDebug() << "put: " << url << endl;
     // create deleted file. We need to get the mtime and original location from metadata...
     // Maybe we can find the info file for url.fileName(), in case ::rename() was called first, and failed...
-    error( KIO::ERR_ACCESS_DENIED, url.prettyURL() );
+    error( TDEIO::ERR_ACCESS_DENIED, url.prettyURL() );
 }
 
 void TrashProtocol::get( const KURL& url )
@@ -508,11 +508,11 @@ void TrashProtocol::get( const KURL& url )
     kdDebug() << "get() : " << url << endl;
     if ( !url.isValid() ) {
         kdDebug() << kdBacktrace() << endl;
-        error( KIO::ERR_SLAVE_DEFINED, i18n( "Malformed URL %1" ).arg( url.url() ) );
+        error( TDEIO::ERR_SLAVE_DEFINED, i18n( "Malformed URL %1" ).arg( url.url() ) );
         return;
     }
     if ( url.path().length() <= 1 ) {
-        error( KIO::ERR_IS_DIRECTORY, url.prettyURL() );
+        error( TDEIO::ERR_IS_DIRECTORY, url.prettyURL() );
         return;
     }
     int trashId;
@@ -520,7 +520,7 @@ void TrashProtocol::get( const KURL& url )
     TQString relativePath;
     bool ok = TrashImpl::parseURL( url, trashId, fileId, relativePath );
     if ( !ok ) {
-        error( KIO::ERR_SLAVE_DEFINED, i18n( "Malformed URL %1" ).arg( url.prettyURL() ) );
+        error( TDEIO::ERR_SLAVE_DEFINED, i18n( "Malformed URL %1" ).arg( url.prettyURL() ) );
         return;
     }
     const TQString physicalPath = impl.physicalPath( trashId, fileId, relativePath );
@@ -533,27 +533,27 @@ void TrashProtocol::get( const KURL& url )
     // But for this one we wouldn't use DCOP for every bit of data...
     KURL fileURL;
     fileURL.setPath( physicalPath );
-    KIO::Job* job = KIO::get( fileURL );
-    connect( job, TQT_SIGNAL( data( KIO::Job*, const TQByteArray& ) ),
-             this, TQT_SLOT( slotData( KIO::Job*, const TQByteArray& ) ) );
-    connect( job, TQT_SIGNAL( mimetype( KIO::Job*, const TQString& ) ),
-             this, TQT_SLOT( slotMimetype( KIO::Job*, const TQString& ) ) );
-    connect( job, TQT_SIGNAL( result(KIO::Job *) ),
-             this, TQT_SLOT( jobFinished(KIO::Job *) ) );
+    TDEIO::Job* job = TDEIO::get( fileURL );
+    connect( job, TQT_SIGNAL( data( TDEIO::Job*, const TQByteArray& ) ),
+             this, TQT_SLOT( slotData( TDEIO::Job*, const TQByteArray& ) ) );
+    connect( job, TQT_SIGNAL( mimetype( TDEIO::Job*, const TQString& ) ),
+             this, TQT_SLOT( slotMimetype( TDEIO::Job*, const TQString& ) ) );
+    connect( job, TQT_SIGNAL( result(TDEIO::Job *) ),
+             this, TQT_SLOT( jobFinished(TDEIO::Job *) ) );
     tqApp->eventLoop()->enterLoop();
 }
 
-void TrashProtocol::slotData( KIO::Job*, const TQByteArray&arr )
+void TrashProtocol::slotData( TDEIO::Job*, const TQByteArray&arr )
 {
     data( arr );
 }
 
-void TrashProtocol::slotMimetype( KIO::Job*, const TQString& mt )
+void TrashProtocol::slotMimetype( TDEIO::Job*, const TQString& mt )
 {
     mimeType( mt );
 }
 
-void TrashProtocol::jobFinished( KIO::Job* job )
+void TrashProtocol::jobFinished( TDEIO::Job* job )
 {
     if ( job->error() )
         error( job->error(), job->errorText() );
@@ -588,7 +588,7 @@ void TrashProtocol::mkdir( const KURL& url, int /*permissions*/ )
         }
     } else {
         // Well it's not allowed to add a directory to an existing deleted directory.
-        error( KIO::ERR_ACCESS_DENIED, url.prettyURL() );
+        error( TDEIO::ERR_ACCESS_DENIED, url.prettyURL() );
     }
 }
 #endif

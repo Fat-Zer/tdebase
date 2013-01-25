@@ -41,7 +41,7 @@
 
 
 KCMXinerama::KCMXinerama(TQWidget *parent, const char *name)
-  : KCModule(parent, name) {
+  : TDECModule(parent, name) {
 	_indicators.setAutoDelete(true);
 
 	TDEAboutData *about =
@@ -56,8 +56,8 @@ KCMXinerama::KCMXinerama(TQWidget *parent, const char *name)
 	setQuickHelp( i18n("<h1>Multiple Monitors</h1> This module allows you to configure TDE support"
      " for multiple monitors."));
 
-	config = new KConfig("kdeglobals", false, false);
-	ksplashrc = new KConfig("ksplashrc", false, false);
+	config = new TDEConfig("kdeglobals", false, false);
+	ksplashrc = new TDEConfig("ksplashrc", false, false);
 
 	connect(&_timer, TQT_SIGNAL(timeout()), this, TQT_SLOT(clearIndicator()));
 
@@ -239,7 +239,7 @@ void KCMXinerama::clearIndicator() {
 }
 
 extern "C" {
-        KDE_EXPORT KCModule *create_xinerama(TQWidget *parent, const char *name) {
+        KDE_EXPORT TDECModule *create_xinerama(TQWidget *parent, const char *name) {
    	    TDEGlobal::locale()->insertCatalogue("kcmxinerama");
 	    return new KCMXinerama(parent, name);
         }

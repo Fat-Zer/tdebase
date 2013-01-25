@@ -26,7 +26,7 @@
 
 #include "tar.h"
 
-using namespace KIO;
+using namespace TDEIO;
 
 extern "C" { int KDE_EXPORT kdemain(int argc, char **argv); }
 
@@ -60,7 +60,7 @@ ArchiveProtocol::~ArchiveProtocol()
     delete m_archiveFile;
 }
 
-bool ArchiveProtocol::checkNewFile( const KURL & url, TQString & path, KIO::Error& errorNum )
+bool ArchiveProtocol::checkNewFile( const KURL & url, TQString & path, TDEIO::Error& errorNum )
 {
     TQString fullPath = url.path();
     kdDebug(7109) << "ArchiveProtocol::checkNewFile " << fullPath << endl;
@@ -137,10 +137,10 @@ bool ArchiveProtocol::checkNewFile( const KURL & url, TQString & path, KIO::Erro
         {
             // Too bad, it is a directory, not an archive.
             kdDebug(7109) << "Path is a directory, not an archive." << endl;
-            errorNum = KIO::ERR_IS_DIRECTORY;
+            errorNum = TDEIO::ERR_IS_DIRECTORY;
         }
         else
-            errorNum = KIO::ERR_DOES_NOT_EXIST;
+            errorNum = TDEIO::ERR_DOES_NOT_EXIST;
         return false;
     }
 
@@ -156,7 +156,7 @@ bool ArchiveProtocol::checkNewFile( const KURL & url, TQString & path, KIO::Erro
         m_archiveFile = new KZip( archiveFile );
     } else {
         kdWarning(7109) << "Protocol " << url.protocol() << " not supported by this IOSlave" << endl;
-        errorNum = KIO::ERR_UNSUPPORTED_PROTOCOL;
+        errorNum = TDEIO::ERR_UNSUPPORTED_PROTOCOL;
         return false;
     }
 
@@ -165,7 +165,7 @@ bool ArchiveProtocol::checkNewFile( const KURL & url, TQString & path, KIO::Erro
         kdDebug(7109) << "Opening " << archiveFile << "failed." << endl;
         delete m_archiveFile;
         m_archiveFile = 0L;
-        errorNum = KIO::ERR_CANNOT_OPEN_FOR_READING;
+        errorNum = TDEIO::ERR_CANNOT_OPEN_FOR_READING;
         return false;
     }
 
@@ -216,14 +216,14 @@ void ArchiveProtocol::listDir( const KURL & url )
     kdDebug( 7109 ) << "ArchiveProtocol::listDir " << url << endl;
 
     TQString path;
-    KIO::Error errorNum;
+    TDEIO::Error errorNum;
     if ( !checkNewFile( url, path, errorNum ) )
     {
-        if ( errorNum == KIO::ERR_CANNOT_OPEN_FOR_READING )
+        if ( errorNum == TDEIO::ERR_CANNOT_OPEN_FOR_READING )
         {
             // If we cannot open, it might be a problem with the archive header (e.g. unsupported format)
             // Therefore give a more specific error message
-            error( KIO::ERR_SLAVE_DEFINED,
+            error( TDEIO::ERR_SLAVE_DEFINED,
                    i18n( "Could not open the file, probably due to an unsupported file format.\n%1")
                            .arg( url.prettyURL() ) );
             return;
@@ -268,12 +268,12 @@ void ArchiveProtocol::listDir( const KURL & url )
         const KArchiveEntry* e = root->entry( path );
         if ( !e )
         {
-            error( KIO::ERR_DOES_NOT_EXIST, url.prettyURL() );
+            error( TDEIO::ERR_DOES_NOT_EXIST, url.prettyURL() );
             return;
         }
         if ( ! e->isDirectory() )
         {
-            error( KIO::ERR_IS_FILE, url.prettyURL() );
+            error( TDEIO::ERR_IS_FILE, url.prettyURL() );
             return;
         }
         dir = (KArchiveDirectory*)e;
@@ -307,16 +307,16 @@ void ArchiveProtocol::stat( const KURL & url )
 {
     TQString path;
     UDSEntry entry;
-    KIO::Error errorNum;
+    TDEIO::Error errorNum;
     if ( !checkNewFile( url, path, errorNum ) )
     {
         // We may be looking at a real directory - this happens
         // when pressing up after being in the root of an archive
-        if ( errorNum == KIO::ERR_CANNOT_OPEN_FOR_READING )
+        if ( errorNum == TDEIO::ERR_CANNOT_OPEN_FOR_READING )
         {
             // If we cannot open, it might be a problem with the archive header (e.g. unsupported format)
             // Therefore give a more specific error message
-            error( KIO::ERR_SLAVE_DEFINED,
+            error( TDEIO::ERR_SLAVE_DEFINED,
                    i18n( "Could not open the file, probably due to an unsupported file format.\n%1")
                            .arg( url.prettyURL() ) );
             return;
@@ -329,7 +329,7 @@ void ArchiveProtocol::stat( const KURL & url )
         }
         // Real directory. Return just enough information for KRun to work
         UDSAtom atom;
-        atom.m_uds = KIO::UDS_NAME;
+        atom.m_uds = TDEIO::UDS_NAME;
         atom.m_str = url.fileName();
         entry.append( atom );
         kdDebug( 7109 ) << "ArchiveProtocol::stat returning name=" << url.fileName() << endl;
@@ -338,11 +338,11 @@ void ArchiveProtocol::stat( const KURL & url )
         if ( KDE_stat( TQFile::encodeName( url.path() ), &buff ) == -1 )
         {
             // Should not happen, as the file was already stated by checkNewFile
-            error( KIO::ERR_COULD_NOT_STAT, url.prettyURL() );
+            error( TDEIO::ERR_COULD_NOT_STAT, url.prettyURL() );
             return;
         }
 
-        atom.m_uds = KIO::UDS_FILE_TYPE;
+        atom.m_uds = TDEIO::UDS_FILE_TYPE;
         atom.m_long = buff.st_mode & S_IFMT;
         entry.append( atom );
 
@@ -368,7 +368,7 @@ void ArchiveProtocol::stat( const KURL & url )
     }
     if ( !archiveEntry )
     {
-        error( KIO::ERR_DOES_NOT_EXIST, url.prettyURL() );
+        error( TDEIO::ERR_DOES_NOT_EXIST, url.prettyURL() );
         return;
     }
 
@@ -383,14 +383,14 @@ void ArchiveProtocol::get( const KURL & url )
     kdDebug( 7109 ) << "ArchiveProtocol::get " << url << endl;
 
     TQString path;
-    KIO::Error errorNum;
+    TDEIO::Error errorNum;
     if ( !checkNewFile( url, path, errorNum ) )
     {
-        if ( errorNum == KIO::ERR_CANNOT_OPEN_FOR_READING )
+        if ( errorNum == TDEIO::ERR_CANNOT_OPEN_FOR_READING )
         {
             // If we cannot open, it might be a problem with the archive header (e.g. unsupported format)
             // Therefore give a more specific error message
-            error( KIO::ERR_SLAVE_DEFINED,
+            error( TDEIO::ERR_SLAVE_DEFINED,
                    i18n( "Could not open the file, probably due to an unsupported file format.\n%1")
                            .arg( url.prettyURL() ) );
             return;
@@ -410,12 +410,12 @@ void ArchiveProtocol::get( const KURL & url )
 
     if ( !archiveEntry )
     {
-        error( KIO::ERR_DOES_NOT_EXIST, url.prettyURL() );
+        error( TDEIO::ERR_DOES_NOT_EXIST, url.prettyURL() );
         return;
     }
     if ( archiveEntry->isDirectory() )
     {
-        error( KIO::ERR_IS_DIRECTORY, url.prettyURL() );
+        error( TDEIO::ERR_IS_DIRECTORY, url.prettyURL() );
         return;
     }
     const KArchiveFile* archiveFileEntry = static_cast<const KArchiveFile *>(archiveEntry);
@@ -461,13 +461,13 @@ void ArchiveProtocol::get( const KURL & url )
     {
         // Wrong protocol? Why was this not catched by checkNewFile?
         kdWarning(7109) << "Protocol " << url.protocol() << " not supported by this IOSlave; " << k_funcinfo << endl;
-        error( KIO::ERR_UNSUPPORTED_PROTOCOL, url.protocol() );
+        error( TDEIO::ERR_UNSUPPORTED_PROTOCOL, url.protocol() );
         return;
     }
 
     if (!io)
     {
-        error( KIO::ERR_SLAVE_DEFINED,
+        error( TDEIO::ERR_SLAVE_DEFINED,
             i18n( "The archive file could not be opened, perhaps because the format is unsupported.\n%1" )
                     .arg( url.prettyURL() ) );
         return;
@@ -475,7 +475,7 @@ void ArchiveProtocol::get( const KURL & url )
     
     if ( !io->open( IO_ReadOnly ) )
     {
-        error( KIO::ERR_CANNOT_OPEN_FOR_READING, url.prettyURL() );
+        error( TDEIO::ERR_CANNOT_OPEN_FOR_READING, url.prettyURL() );
         return;
     }
     
@@ -489,7 +489,7 @@ void ArchiveProtocol::get( const KURL & url )
     if ( buffer.isEmpty() && bufferSize > 0 )
     {
         // Something went wrong
-        error( KIO::ERR_OUT_OF_MEMORY, url.prettyURL() );
+        error( TDEIO::ERR_OUT_OF_MEMORY, url.prettyURL() );
         return;
     }
 
@@ -497,7 +497,7 @@ void ArchiveProtocol::get( const KURL & url )
 
     // How much file do we still have to process?
     int fileSize = archiveFileEntry->size();
-    KIO::filesize_t processed = 0;
+    TDEIO::filesize_t processed = 0;
 
     while ( !io->atEnd() && fileSize > 0 )
     {
@@ -510,7 +510,7 @@ void ArchiveProtocol::get( const KURL & url )
         if ( read != bufferSize )
         {
             kdWarning(7109) << "Read " << read << " bytes but expected " << bufferSize << endl;
-            error( KIO::ERR_COULD_NOT_READ, url.prettyURL() );
+            error( TDEIO::ERR_COULD_NOT_READ, url.prettyURL() );
             return;
         }
         if ( firstRead )

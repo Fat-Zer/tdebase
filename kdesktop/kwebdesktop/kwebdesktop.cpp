@@ -51,16 +51,16 @@ KWebDesktopRun::KWebDesktopRun( KWebDesktop* webDesktop, const KURL & url )
     : m_webDesktop(webDesktop), m_url(url)
 {
     kdDebug() << "KWebDesktopRun::KWebDesktopRun starting get" << endl;
-    KIO::Job * job = KIO::get(m_url, false, false);
-    connect( job, TQT_SIGNAL( result( KIO::Job *)),
-             this, TQT_SLOT( slotFinished(KIO::Job *)));
-    connect( job, TQT_SIGNAL( mimetype( KIO::Job *, const TQString &)),
-             this, TQT_SLOT( slotMimetype(KIO::Job *, const TQString &)));
+    TDEIO::Job * job = TDEIO::get(m_url, false, false);
+    connect( job, TQT_SIGNAL( result( TDEIO::Job *)),
+             this, TQT_SLOT( slotFinished(TDEIO::Job *)));
+    connect( job, TQT_SIGNAL( mimetype( TDEIO::Job *, const TQString &)),
+             this, TQT_SLOT( slotMimetype(TDEIO::Job *, const TQString &)));
 }
 
-void KWebDesktopRun::slotMimetype( KIO::Job *job, const TQString &_type )
+void KWebDesktopRun::slotMimetype( TDEIO::Job *job, const TQString &_type )
 {
-    KIO::SimpleJob *sjob = static_cast<KIO::SimpleJob *>(job);
+    TDEIO::SimpleJob *sjob = static_cast<TDEIO::SimpleJob *>(job);
     // Update our URL in case of a redirection
     m_url = sjob->url();
     TQString type = _type; // necessary copy if we plan to use it
@@ -73,7 +73,7 @@ void KWebDesktopRun::slotMimetype( KIO::Job *job, const TQString &_type )
         part->openURL( m_url );
 }
 
-void KWebDesktopRun::slotFinished( KIO::Job * job )
+void KWebDesktopRun::slotFinished( TDEIO::Job * job )
 {
     // The whole point of all this is to abort silently on error
     if (job->error())
@@ -126,7 +126,7 @@ int main( int argc, char **argv )
 
     int ret = app.exec();
 
-    KIO::SimpleJob::removeOnHold(); // Kill any slave that was put on hold.
+    TDEIO::SimpleJob::removeOnHold(); // Kill any slave that was put on hold.
     delete webDesktop;
     delete run;
     //khtml::Cache::clear();

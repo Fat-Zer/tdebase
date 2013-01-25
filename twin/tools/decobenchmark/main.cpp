@@ -49,7 +49,7 @@ DecoBenchApplication::DecoBenchApplication(const TQString &library, Tests tests,
 		m_tests(tests),
 		m_count(count)
 {
-	KConfig twinConfig("twinrc");
+	TDEConfig twinConfig("twinrc");
 	twinConfig.setGroup("Style");
 
 	plugins = new KDecorationPreviewPlugins( &twinConfig );

@@ -42,7 +42,7 @@ public:
     BookmarksButton(TQWidget* parent);
     ~BookmarksButton();
 
-    void loadConfig(const KConfigGroup& config);
+    void loadConfig(const TDEConfigGroup& config);
     virtual void properties();
 
 protected:

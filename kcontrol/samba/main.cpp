@@ -29,7 +29,7 @@
 #include "kcmsambastatistics.h"
 #include "ksmbstatus.h"
 
-class SambaContainer:public KCModule
+class SambaContainer:public TDECModule
 {
    public:
       SambaContainer(TQWidget *parent=0, const char * name=0, const TQStringList &list = TQStringList() );
@@ -38,7 +38,7 @@ class SambaContainer:public KCModule
       virtual void save();
 
    private:
-      KConfig config;
+      TDEConfig config;
       TQTabWidget tabs;
       NetMon status;
       ImportsView imports;
@@ -50,7 +50,7 @@ typedef KGenericFactory<SambaContainer, TQWidget > SambaFactory;
 K_EXPORT_COMPONENT_FACTORY (kcm_samba, SambaFactory("kcmsamba") )
 
 SambaContainer::SambaContainer(TQWidget *parent, const char* name, const TQStringList&)
-:KCModule(SambaFactory::instance(), parent,name)
+:TDECModule(SambaFactory::instance(), parent,name)
 ,config("kcmsambarc",false,true)
 ,tabs(this)
 ,status(&tabs,&config)

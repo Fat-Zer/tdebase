@@ -24,7 +24,7 @@
 
 class TQTabWidget;
 
-class KCMDisplay : public KCModule
+class KCMDisplay : public TDECModule
 {
   Q_OBJECT
 
@@ -40,7 +40,7 @@ class KCMDisplay : public KCModule
     void addTab( const TQString &name, const TQString &label );
     
     TQTabWidget *m_tabs;
-    TQMap<KCModule*, bool> m_modules;
+    TQMap<TDECModule*, bool> m_modules;
     bool m_changed;
 };
 

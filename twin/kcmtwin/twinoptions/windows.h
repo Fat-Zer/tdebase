@@ -68,11 +68,11 @@ class KIntNumInput;
 
 class TQSpinBox;
 
-class KFocusConfig : public KCModule
+class KFocusConfig : public TDECModule
 {
   Q_OBJECT
 public:
-  KFocusConfig( bool _standAlone, KConfig *_config, TQWidget *parent=0, const char* name=0 );
+  KFocusConfig( bool _standAlone, TDEConfig *_config, TQWidget *parent=0, const char* name=0 );
   ~KFocusConfig();
 
   void load();
@@ -87,7 +87,7 @@ private slots:
   void clickRaiseOnTog(bool);
   void updateAltTabMode();
   void updateActiveMouseScreen();
-	void changed() { emit KCModule::changed(true); }
+	void changed() { emit TDECModule::changed(true); }
 
 
 private:
@@ -127,15 +127,15 @@ private:
   TQCheckBox    *rollOverDesktops;
   TQCheckBox    *showPopupinfo;
 
-  KConfig *config;
+  TDEConfig *config;
   bool     standAlone;
 };
 
-class KMovingConfig : public KCModule
+class KMovingConfig : public TDECModule
 {
   Q_OBJECT
 public:
-  KMovingConfig( bool _standAlone, KConfig *config, TQWidget *parent=0, const char* name=0 );
+  KMovingConfig( bool _standAlone, TDEConfig *config, TQWidget *parent=0, const char* name=0 );
   ~KMovingConfig();
 
   void load();
@@ -145,7 +145,7 @@ public:
 private slots:
   void setMinimizeAnim( bool );
   void setMinimizeAnimSpeed( int );
-	void changed() { emit KCModule::changed(true); }
+	void changed() { emit TDECModule::changed(true); }
   void slotBrdrSnapChanged( int );
   void slotWndwSnapChanged( int );
 
@@ -174,7 +174,7 @@ private:
 
   TQComboBox *placementCombo;
 
-  KConfig *config;
+  TDEConfig *config;
   bool     standAlone;
 
   int getBorderSnapZone();
@@ -188,11 +188,11 @@ private:
 
 };
 
-class KAdvancedConfig : public KCModule
+class KAdvancedConfig : public TDECModule
 {
   Q_OBJECT
 public:
-  KAdvancedConfig( bool _standAlone, KConfig *config, TQWidget *parent=0, const char* name=0 );
+  KAdvancedConfig( bool _standAlone, TDEConfig *config, TQWidget *parent=0, const char* name=0 );
   ~KAdvancedConfig();
 
   void load();
@@ -205,7 +205,7 @@ private slots:
   //copied from kcontrol/konq/twindesktop, aleXXX
   void setEBorders();
 
-  void changed() { emit KCModule::changed(true); }
+  void changed() { emit TDECModule::changed(true); }
 
 private:
 
@@ -219,7 +219,7 @@ private:
   TQCheckBox *shadeHoverOn;
   KIntNumInput *shadeHover;
 
-  KConfig *config;
+  TDEConfig *config;
   bool     standAlone;
 
   int getElectricBorders( void );
@@ -239,11 +239,11 @@ private:
 };
 
 class TDEProcess;
-class KTranslucencyConfig : public KCModule
+class KTranslucencyConfig : public TDECModule
 {
   Q_OBJECT
 public:
-  KTranslucencyConfig( bool _standAlone, KConfig *config, TQWidget *parent=0, const char* name=0 );
+  KTranslucencyConfig( bool _standAlone, TDEConfig *config, TQWidget *parent=0, const char* name=0 );
   ~KTranslucencyConfig();
   
   void load();
@@ -281,7 +281,7 @@ private:
   KIntNumInput *fadeInSpeed;
   KIntNumInput *fadeOutSpeed;
   KColorButton *shadowColor;
-  KConfig *config;
+  TDEConfig *config;
   bool     standAlone;
   bool alphaActivated;
   bool resetKompmgr_;

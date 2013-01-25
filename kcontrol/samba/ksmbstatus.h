@@ -36,11 +36,11 @@ class NetMon : public TQWidget
 {
 Q_OBJECT
 public:
-   NetMon(TQWidget *parent, KConfig * config=0, const char * name=0);
+   NetMon(TQWidget *parent, TDEConfig * config=0, const char * name=0);
    void saveSettings() {};
    void loadSettings() {};
 private:
-   KConfig *configFile;
+   TDEConfig *configFile;
    TDEProcess *showmountProc;
    TQListView *list;
    TQLabel *version;

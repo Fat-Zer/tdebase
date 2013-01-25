@@ -45,7 +45,7 @@ BrowserButton::BrowserButton( const TQString& icon, const TQString& startDir, TQ
     initialize( icon, startDir );
 }
 
-BrowserButton::BrowserButton( const KConfigGroup& config, TQWidget* parent )
+BrowserButton::BrowserButton( const TDEConfigGroup& config, TQWidget* parent )
     : PanelPopupButton( parent, "BrowserButton" )
     , topMenu( 0 )
 {
@@ -73,7 +73,7 @@ void BrowserButton::initialize( const TQString& icon, const TQString& path )
     setIcon ( _icon );
 }
 
-void BrowserButton::saveConfig( KConfigGroup& config ) const
+void BrowserButton::saveConfig( TDEConfigGroup& config ) const
 {
     config.writeEntry("Icon", _icon);
     config.writePathEntry("Path", topMenu->path());

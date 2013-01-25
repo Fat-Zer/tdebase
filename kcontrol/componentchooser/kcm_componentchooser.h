@@ -22,7 +22,7 @@
 
 class TDEAboutData;
 
-class KCMComponentChooser : public KCModule
+class KCMComponentChooser : public TDECModule
 {
     Q_OBJECT
 public:

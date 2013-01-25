@@ -39,16 +39,16 @@ Settings::Settings()
     
 bool Settings::read_settings( bool include_disabled_P )
     {
-    KConfig cfg( KHOTKEYS_CONFIG_FILE, true );
+    TDEConfig cfg( KHOTKEYS_CONFIG_FILE, true );
     return read_settings( cfg, include_disabled_P, ImportNone );
     }
 
-bool Settings::import( KConfig& cfg_P, bool ask_P )
+bool Settings::import( TDEConfig& cfg_P, bool ask_P )
     {
     return read_settings( cfg_P, true, ask_P ? ImportAsk : ImportSilent );
     }
 
-bool Settings::read_settings( KConfig& cfg_P, bool include_disabled_P, ImportType import_P )
+bool Settings::read_settings( TDEConfig& cfg_P, bool include_disabled_P, ImportType import_P )
     {
     if( actions == NULL )
         actions = new Action_data_group( NULL, "should never see", "should never see",
@@ -120,7 +120,7 @@ bool Settings::read_settings( KConfig& cfg_P, bool include_disabled_P, ImportTyp
 
 void Settings::write_settings()
     {
-    KConfig cfg( KHOTKEYS_CONFIG_FILE, false );
+    TDEConfig cfg( KHOTKEYS_CONFIG_FILE, false );
 // CHECKME    smazat stare sekce ?
     TQStringList groups = cfg.groupList();
     for( TQStringList::ConstIterator it = groups.begin();
@@ -154,7 +154,7 @@ void Settings::write_settings()
 
 // return value means the number of enabled actions written in the cfg file
 // i.e. 'Autostart' for value > 0 should be on
-int Settings::write_actions_recursively_v2( KConfig& cfg_P, Action_data_group* parent_P, bool enabled_P )
+int Settings::write_actions_recursively_v2( TDEConfig& cfg_P, Action_data_group* parent_P, bool enabled_P )
     {
     int enabled_cnt = 0;
     TQString save_cfg_group = cfg_P.group();
@@ -177,13 +177,13 @@ int Settings::write_actions_recursively_v2( KConfig& cfg_P, Action_data_group* p
     return enabled_cnt;
     }
 
-void Settings::read_settings_v2( KConfig& cfg_P, bool include_disabled_P  )
+void Settings::read_settings_v2( TDEConfig& cfg_P, bool include_disabled_P  )
     {
     cfg_P.setGroup( "Data" );
     read_actions_recursively_v2( cfg_P, actions, include_disabled_P );    
     }
     
-void Settings::read_actions_recursively_v2( KConfig& cfg_P, Action_data_group* parent_P,
+void Settings::read_actions_recursively_v2( TDEConfig& cfg_P, Action_data_group* parent_P,
     bool include_disabled_P )
     {
     TQString save_cfg_group = cfg_P.group();
@@ -205,7 +205,7 @@ void Settings::read_actions_recursively_v2( KConfig& cfg_P, Action_data_group* p
     }
 
 // backward compatibility
-void Settings::read_settings_v1( KConfig& cfg_P )
+void Settings::read_settings_v1( TDEConfig& cfg_P )
     {    
     int sections = cfg_P.readNumEntry( "Num_Sections", 0 );
     Action_data_group* menuentries = NULL;

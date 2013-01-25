@@ -533,7 +533,7 @@ bool KShortURIFilter::filterURI( KURIFilterData& data ) const
   return false;
 }
 
-KCModule* KShortURIFilter::configModule( TQWidget*, const char* ) const
+TDECModule* KShortURIFilter::configModule( TQWidget*, const char* ) const
 {
     return 0; //new KShortURIOptions( parent, name );
 }
@@ -545,7 +545,7 @@ TQString KShortURIFilter::configName() const
 
 void KShortURIFilter::configure()
 {
-  KConfig config( name() + QFL1("rc"), false, false );
+  TDEConfig config( name() + QFL1("rc"), false, false );
   m_bVerbose = config.readBoolEntry( "Verbose", false );
 
   if ( m_bVerbose )

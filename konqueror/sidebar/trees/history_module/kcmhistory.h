@@ -27,7 +27,7 @@ class KonqHistoryManager;
 class KonqSidebarHistorySettings;
 class KonqSidebarHistoryDlg;
 
-class HistorySidebarConfig : public KCModule
+class HistorySidebarConfig : public TDECModule
 {
   Q_OBJECT
 

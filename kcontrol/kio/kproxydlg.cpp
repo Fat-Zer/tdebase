@@ -41,7 +41,7 @@
 #include "kproxydlg_ui.h"
 
 KProxyOptions::KProxyOptions (TQWidget* parent )
-              :KCModule (parent, "kcmkio")
+              :TDECModule (parent, "kcmkio")
 {
   TQVBoxLayout *layout = new TQVBoxLayout(this);
   
@@ -85,9 +85,9 @@ TQString KProxyOptions::quickHelp() const
 {
   TQWidget *w = mTab->currentPage();
   
-  if (w && w->inherits("KCModule"))
+  if (w && w->inherits("TDECModule"))
   {
-     KCModule *m = static_cast<KCModule *>(w);
+     TDECModule *m = static_cast<TDECModule *>(w);
      return m->quickHelp();
   }
   
@@ -96,7 +96,7 @@ TQString KProxyOptions::quickHelp() const
 
 
 KProxyDialog::KProxyDialog( TQWidget* parent)
-             :KCModule( parent, "kcmkio" )
+             :TDECModule( parent, "kcmkio" )
 {
   TQVBoxLayout* mainLayout = new TQVBoxLayout( this, KDialog::marginHint(),
                                               KDialog::spacingHint() );

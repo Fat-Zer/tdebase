@@ -33,7 +33,7 @@
 
 extern "C"
 {
-  KDE_EXPORT KCModule *create_cgi( TQWidget *parent, const char * )
+  KDE_EXPORT TDECModule *create_cgi( TQWidget *parent, const char * )
   {
     TDEGlobal::locale()->insertCatalogue("kcmcgi");
     return new KCMCgi( parent, "kcmcgi" );
@@ -42,7 +42,7 @@ extern "C"
 
 
 KCMCgi::KCMCgi(TQWidget *parent, const char *name)
-  : KCModule(parent, name)
+  : TDECModule(parent, name)
 {
   setButtons(Default|Apply);
 
@@ -63,7 +63,7 @@ KCMCgi::KCMCgi(TQWidget *parent, const char *name)
   connect( mRemoveButton, TQT_SIGNAL( clicked() ), TQT_SLOT( removePath() ) );
   connect( mListBox, TQT_SIGNAL( clicked ( TQListBoxItem * )),this, TQT_SLOT( slotItemSelected( TQListBoxItem *)));
 
-  mConfig = new KConfig("kcmcgirc");
+  mConfig = new TDEConfig("kcmcgirc");
 
   load();
   updateButton();

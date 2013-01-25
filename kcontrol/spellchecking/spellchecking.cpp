@@ -32,7 +32,7 @@ K_EXPORT_COMPONENT_FACTORY (kcm_spellchecking, SpellFactory("kcmspellchecking") 
 
 
 KSpellCheckingConfig::KSpellCheckingConfig(TQWidget *parent, const char *name, const TQStringList &):
-    KCModule(SpellFactory::instance(), parent, name)
+    TDECModule(SpellFactory::instance(), parent, name)
 {
   TQBoxLayout *layout = new TQVBoxLayout(this, 0, KDialog::spacingHint());
   TQGroupBox *box = new TQVGroupBox( i18n("Spell Checking Settings"), this );

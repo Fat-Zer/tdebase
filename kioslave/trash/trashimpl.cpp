@@ -97,7 +97,7 @@ int TrashImpl::testDir( const TQString &_name ) const
                 ok = false;
             }
             if ( !ok ) {
-                return KIO::ERR_DIR_ALREADY_EXIST;
+                return TDEIO::ERR_DIR_ALREADY_EXIST;
             }
 #if 0
         //} else {
@@ -109,7 +109,7 @@ int TrashImpl::testDir( const TQString &_name ) const
     {
         //KMessageBox::sorry( 0, i18n( "Couldn't create directory %1. Check for permissions." ).arg( name ) );
         kdWarning() << "could not create " << name << endl;
-        return KIO::ERR_COULD_NOT_MKDIR;
+        return TDEIO::ERR_COULD_NOT_MKDIR;
     } else {
         kdDebug() << name << " created." << endl;
     }
@@ -201,9 +201,9 @@ bool TrashImpl::createInfo( const TQString& origPath, int& trashId, TQString& fi
     KDE_struct_stat buff_src;
     if ( KDE_lstat( origPath_c.data(), &buff_src ) == -1 ) {
         if ( errno == EACCES )
-           error( KIO::ERR_ACCESS_DENIED, origPath );
+           error( TDEIO::ERR_ACCESS_DENIED, origPath );
         else
-           error( KIO::ERR_DOES_NOT_EXIST, origPath );
+           error( TDEIO::ERR_DOES_NOT_EXIST, origPath );
         return false;
     }
 
@@ -231,10 +231,10 @@ bool TrashImpl::createInfo( const TQString& origPath, int& trashId, TQString& fi
         fd = ::open( TQFile::encodeName( url.path() ), O_WRONLY | O_CREAT | O_EXCL, 0600 );
         if ( fd < 0 ) {
             if ( errno == EEXIST ) {
-                url.setFileName( KIO::RenameDlg::suggestName( baseDirectory, url.fileName() ) );
+                url.setFileName( TDEIO::RenameDlg::suggestName( baseDirectory, url.fileName() ) );
                 // and try again on the next iteration
             } else {
-                error( KIO::ERR_COULD_NOT_WRITE, url.path() );
+                error( TDEIO::ERR_COULD_NOT_WRITE, url.path() );
                 return false;
             }
         }
@@ -246,7 +246,7 @@ bool TrashImpl::createInfo( const TQString& origPath, int& trashId, TQString& fi
 
     FILE* file = ::fdopen( fd, "w" );
     if ( !file ) { // can't see how this would happen
-        error( KIO::ERR_COULD_NOT_WRITE, infoPath );
+        error( TDEIO::ERR_COULD_NOT_WRITE, infoPath );
         return false;
     }
 
@@ -270,7 +270,7 @@ bool TrashImpl::createInfo( const TQString& origPath, int& trashId, TQString& fi
     if ( written != sz ) {
         ::fclose( file );
         TQFile::remove( infoPath );
-        error( KIO::ERR_DISK_FULL, infoPath );
+        error( TDEIO::ERR_DISK_FULL, infoPath );
         return false;
     }
 
@@ -351,7 +351,7 @@ bool TrashImpl::moveFromTrash( const TQString& dest, int trashId, const TQString
 bool TrashImpl::move( const TQString& src, const TQString& dest )
 {
     if ( directRename( src, dest ) ) {
-        // This notification is done by KIO::moveAs when using the code below
+        // This notification is done by TDEIO::moveAs when using the code below
         // But if we do a direct rename we need to do the notification ourselves
         KDirNotify_stub allDirNotify( "*", "KDirNotify*" );
         KURL urlDest; urlDest.setPath( dest );
@@ -359,25 +359,25 @@ bool TrashImpl::move( const TQString& src, const TQString& dest )
         allDirNotify.FilesAdded( urlDest );
         return true;
     }
-    if ( m_lastErrorCode != KIO::ERR_UNSUPPORTED_ACTION )
+    if ( m_lastErrorCode != TDEIO::ERR_UNSUPPORTED_ACTION )
         return false;
 
     KURL urlSrc, urlDest;
     urlSrc.setPath( src );
     urlDest.setPath( dest );
     kdDebug() << k_funcinfo << urlSrc << " -> " << urlDest << endl;
-    KIO::CopyJob* job = KIO::moveAs( urlSrc, urlDest, false );
+    TDEIO::CopyJob* job = TDEIO::moveAs( urlSrc, urlDest, false );
 #ifdef KIO_COPYJOB_HAS_SETINTERACTIVE
     job->setInteractive( false );
 #endif
-    connect( job, TQT_SIGNAL( result(KIO::Job *) ),
-             this, TQT_SLOT( jobFinished(KIO::Job *) ) );
+    connect( job, TQT_SIGNAL( result(TDEIO::Job *) ),
+             this, TQT_SLOT( jobFinished(TDEIO::Job *) ) );
     tqApp->eventLoop()->enterLoop();
 
     return m_lastErrorCode == 0;
 }
 
-void TrashImpl::jobFinished(KIO::Job* job)
+void TrashImpl::jobFinished(TDEIO::Job* job)
 {
     kdDebug() << k_funcinfo << " error=" << job->error() << endl;
     error( job->error(), job->errorText() );
@@ -413,12 +413,12 @@ bool TrashImpl::copy( const TQString& src, const TQString& dest )
     KURL urlDest;
     urlDest.setPath( dest );
     kdDebug() << k_funcinfo << "copying " << src << " to " << dest << endl;
-    KIO::CopyJob* job = KIO::copyAs( urlSrc, urlDest, false );
+    TDEIO::CopyJob* job = TDEIO::copyAs( urlSrc, urlDest, false );
 #ifdef KIO_COPYJOB_HAS_SETINTERACTIVE
     job->setInteractive( false );
 #endif
-    connect( job, TQT_SIGNAL( result( KIO::Job* ) ),
-             this, TQT_SLOT( jobFinished( KIO::Job* ) ) );
+    connect( job, TQT_SIGNAL( result( TDEIO::Job* ) ),
+             this, TQT_SLOT( jobFinished( TDEIO::Job* ) ) );
     tqApp->eventLoop()->enterLoop();
 
     return m_lastErrorCode == 0;
@@ -429,14 +429,14 @@ bool TrashImpl::directRename( const TQString& src, const TQString& dest )
     kdDebug() << k_funcinfo << src << " -> " << dest << endl;
     if ( ::rename( TQFile::encodeName( src ), TQFile::encodeName( dest ) ) != 0 ) {
         if (errno == EXDEV) {
-            error( KIO::ERR_UNSUPPORTED_ACTION, TQString::fromLatin1("rename") );
+            error( TDEIO::ERR_UNSUPPORTED_ACTION, TQString::fromLatin1("rename") );
         } else {
             if (( errno == EACCES ) || (errno == EPERM)) {
-                error( KIO::ERR_ACCESS_DENIED, dest );
+                error( TDEIO::ERR_ACCESS_DENIED, dest );
             } else if (errno == EROFS) { // The file is on a read-only filesystem
-                error( KIO::ERR_CANNOT_DELETE, src );
+                error( TDEIO::ERR_CANNOT_DELETE, src );
             } else {
-                error( KIO::ERR_CANNOT_RENAME, src );
+                error( TDEIO::ERR_CANNOT_RENAME, src );
             }
         }
         return false;
@@ -450,13 +450,13 @@ bool TrashImpl::mkdir( int trashId, const TQString& fileId, int permissions )
     const TQString path = filesPath( trashId, fileId );
     if ( ::mkdir( TQFile::encodeName( path ), permissions ) != 0 ) {
         if ( errno == EACCES ) {
-            error( KIO::ERR_ACCESS_DENIED, path );
+            error( TDEIO::ERR_ACCESS_DENIED, path );
             return false;
         } else if ( errno == ENOSPC ) {
-            error( KIO::ERR_DISK_FULL, path );
+            error( TDEIO::ERR_DISK_FULL, path );
             return false;
         } else {
-            error( KIO::ERR_COULD_NOT_MKDIR, path );
+            error( TDEIO::ERR_COULD_NOT_MKDIR, path );
             return false;
         }
     } else {
@@ -477,9 +477,9 @@ bool TrashImpl::del( int trashId, const TQString& fileId )
     KDE_struct_stat buff;
     if ( KDE_lstat( info_c.data(), &buff ) == -1 ) {
         if ( errno == EACCES )
-            error( KIO::ERR_ACCESS_DENIED, file );
+            error( TDEIO::ERR_ACCESS_DENIED, file );
         else
-            error( KIO::ERR_DOES_NOT_EXIST, file );
+            error( TDEIO::ERR_DOES_NOT_EXIST, file );
         return false;
     }
 
@@ -505,16 +505,16 @@ bool TrashImpl::synchronousDel( const TQString& path, bool setLastErrorCode, boo
         KFileItem fileItem( url, "inode/directory", KFileItem::Unknown );
         KFileItemList fileItemList;
         fileItemList.append( &fileItem );
-        KIO::ChmodJob* chmodJob = KIO::chmod( fileItemList, 0200, 0200, TQString::null, TQString::null, true /*recursive*/, false /*showProgressInfo*/ );
-        connect( chmodJob, TQT_SIGNAL( result(KIO::Job *) ),
-                 this, TQT_SLOT( jobFinished(KIO::Job *) ) );
+        TDEIO::ChmodJob* chmodJob = TDEIO::chmod( fileItemList, 0200, 0200, TQString::null, TQString::null, true /*recursive*/, false /*showProgressInfo*/ );
+        connect( chmodJob, TQT_SIGNAL( result(TDEIO::Job *) ),
+                 this, TQT_SLOT( jobFinished(TDEIO::Job *) ) );
         tqApp->eventLoop()->enterLoop();
     }
 
     kdDebug() << k_funcinfo << "deleting " << url << endl;
-    KIO::DeleteJob *job = KIO::del( url, false, false );
-    connect( job, TQT_SIGNAL( result(KIO::Job *) ),
-             this, TQT_SLOT( jobFinished(KIO::Job *) ) );
+    TDEIO::DeleteJob *job = TDEIO::del( url, false, false );
+    connect( job, TQT_SIGNAL( result(TDEIO::Job *) ),
+             this, TQT_SLOT( jobFinished(TDEIO::Job *) ) );
     tqApp->eventLoop()->enterLoop();
     bool ok = m_lastErrorCode == 0;
     if ( !setLastErrorCode ) {
@@ -615,7 +615,7 @@ bool TrashImpl::readInfoFile( const TQString& infoPath, TrashedFileInfo& info, i
 {
     KSimpleConfig cfg( infoPath, true );
     if ( !cfg.hasGroup( "Trash Info" ) ) {
-        error( KIO::ERR_CANNOT_OPEN_FOR_READING, infoPath );
+        error( TDEIO::ERR_CANNOT_OPEN_FOR_READING, infoPath );
         return false;
     }
     cfg.setGroup( "Trash Info" );
@@ -713,7 +713,7 @@ int TrashImpl::findTrashDirectory( const TQString& origPath )
          && buff.st_dev == m_homeDevice )
         return 0;
 
-    TQString mountPoint = KIO::findPathMountPoint( origPath );
+    TQString mountPoint = TDEIO::findPathMountPoint( origPath );
     const TQString trashDir = trashForMountPoint( mountPoint, true );
     kdDebug() << "mountPoint=" << mountPoint << " trashDir=" << trashDir << endl;
     if ( trashDir.isEmpty() )

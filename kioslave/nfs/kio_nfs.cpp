@@ -68,7 +68,7 @@
 #define NFSPROG ((u_long)100003)
 #define NFSVERS ((u_long)2)
 
-using namespace KIO;
+using namespace TDEIO;
 using namespace std;
 
 //this is taken from tdelibs/tdecore/fakes.cpp
@@ -144,23 +144,23 @@ static void createVirtualDirEntry(UDSEntry & entry)
 {
    UDSAtom atom;
 
-   atom.m_uds = KIO::UDS_FILE_TYPE;
+   atom.m_uds = TDEIO::UDS_FILE_TYPE;
    atom.m_long = S_IFDIR;
    entry.append( atom );
 
-   atom.m_uds = KIO::UDS_ACCESS;
+   atom.m_uds = TDEIO::UDS_ACCESS;
    atom.m_long = S_IRUSR | S_IXUSR | S_IRGRP | S_IXGRP | S_IROTH | S_IXOTH;
    entry.append( atom );
 
-   atom.m_uds = KIO::UDS_USER;
+   atom.m_uds = TDEIO::UDS_USER;
    atom.m_str = "root";
    entry.append( atom );
-   atom.m_uds = KIO::UDS_GROUP;
+   atom.m_uds = TDEIO::UDS_GROUP;
    atom.m_str = "root";
    entry.append( atom );
 
    //a dummy size
-   atom.m_uds = KIO::UDS_SIZE;
+   atom.m_uds = TDEIO::UDS_SIZE;
    atom.m_long = 1024;
    entry.append( atom );
 }
@@ -468,9 +468,9 @@ void NFSProtocol::openConnection()
          fh=fhStatus.fhstatus_u.fhs_fhandle;
          TQString fname;
          if ( exportlist->ex_dir[0] == '/' )
-            fname = KIO::encodeFileName(exportlist->ex_dir + 1);
+            fname = TDEIO::encodeFileName(exportlist->ex_dir + 1);
          else
-            fname = KIO::encodeFileName(exportlist->ex_dir);
+            fname = TDEIO::encodeFileName(exportlist->ex_dir);
          m_handleCache.insert(TQString("/")+fname,fh);
          m_exportedDirs.append(fname);
          // kdDebug() <<"appending file -"<<fname<<"- with FH: -"<<fhStatus.fhstatus_u.fhs_fhandle<<"-"<<endl;
@@ -534,7 +534,7 @@ void NFSProtocol::listDir( const KURL& _url)
       {
          UDSAtom atom;
          entry.clear();
-         atom.m_uds = KIO::UDS_NAME;
+         atom.m_uds = TDEIO::UDS_NAME;
          atom.m_str = (*it);
          kdDebug(7121)<<"listing "<<(*it)<<endl;
          entry.append( atom );
@@ -599,7 +599,7 @@ void NFSProtocol::listDir( const KURL& _url)
 
       entry.clear();
 
-      atom.m_uds = KIO::UDS_NAME;
+      atom.m_uds = TDEIO::UDS_NAME;
       atom.m_str = (*it);
       entry.append( atom );
 
@@ -620,7 +620,7 @@ void NFSProtocol::listDir( const KURL& _url)
          if (!checkForError(clnt_stat,readLinkRes.status,(*it))) return;
          kdDebug(7121)<<"link dest is -"<<readLinkRes.readlinkres_u.data<<"-"<<endl;
          TQCString linkDest(readLinkRes.readlinkres_u.data);
-         atom.m_uds = KIO::UDS_LINK_DEST;
+         atom.m_uds = TDEIO::UDS_LINK_DEST;
          atom.m_str = linkDest;
          entry.append( atom );
 
@@ -675,7 +675,7 @@ void NFSProtocol::stat( const KURL & url)
       UDSEntry entry;
       UDSAtom atom;
 
-      atom.m_uds = KIO::UDS_NAME;
+      atom.m_uds = TDEIO::UDS_NAME;
       atom.m_str = path;
       entry.append( atom );
       createVirtualDirEntry(entry);
@@ -714,7 +714,7 @@ void NFSProtocol::stat( const KURL & url)
    getLastPart(path, fileName, parentDir);
    stripTrailingSlash(parentDir);
 
-   atom.m_uds = KIO::UDS_NAME;
+   atom.m_uds = TDEIO::UDS_NAME;
    atom.m_str = fileName;
    entry.append( atom );
 
@@ -735,7 +735,7 @@ void NFSProtocol::stat( const KURL & url)
       if (!checkForError(clnt_stat,readLinkRes.status,path)) return;
       kdDebug(7121)<<"link dest is -"<<readLinkRes.readlinkres_u.data<<"-"<<endl;
       TQCString linkDest(readLinkRes.readlinkres_u.data);
-      atom.m_uds = KIO::UDS_LINK_DEST;
+      atom.m_uds = TDEIO::UDS_LINK_DEST;
       atom.m_str = linkDest;
       entry.append( atom );
 
@@ -782,23 +782,23 @@ void NFSProtocol::completeAbsoluteLinkUDSEntry(UDSEntry& entry, const TQCString&
    if ( ::stat( path.data(), &buff ) == -1 ) return;
 
    UDSAtom atom;
-	atom.m_uds = KIO::UDS_FILE_TYPE;
+	atom.m_uds = TDEIO::UDS_FILE_TYPE;
 	atom.m_long = buff.st_mode & S_IFMT; // extract file type
 	entry.append( atom );
 
-	atom.m_uds = KIO::UDS_ACCESS;
+	atom.m_uds = TDEIO::UDS_ACCESS;
 	atom.m_long = buff.st_mode & 07777; // extract permissions
 	entry.append( atom );
 
-	atom.m_uds = KIO::UDS_SIZE;
+	atom.m_uds = TDEIO::UDS_SIZE;
 	atom.m_long = buff.st_size;
 	entry.append( atom );
 
-   atom.m_uds = KIO::UDS_MODIFICATION_TIME;
+   atom.m_uds = TDEIO::UDS_MODIFICATION_TIME;
    atom.m_long = buff.st_mtime;
    entry.append( atom );
 
-   atom.m_uds = KIO::UDS_USER;
+   atom.m_uds = TDEIO::UDS_USER;
    uid_t uid = buff.st_uid;
    TQString *temp = m_usercache.find( uid );
 
@@ -817,7 +817,7 @@ void NFSProtocol::completeAbsoluteLinkUDSEntry(UDSEntry& entry, const TQCString&
       atom.m_str = *temp;
    entry.append( atom );
 
-   atom.m_uds = KIO::UDS_GROUP;
+   atom.m_uds = TDEIO::UDS_GROUP;
    gid_t gid = buff.st_gid;
    temp = m_groupcache.find( gid );
    if ( !temp )
@@ -835,11 +835,11 @@ void NFSProtocol::completeAbsoluteLinkUDSEntry(UDSEntry& entry, const TQCString&
       atom.m_str = *temp;
    entry.append( atom );
 
-   atom.m_uds = KIO::UDS_ACCESS_TIME;
+   atom.m_uds = TDEIO::UDS_ACCESS_TIME;
    atom.m_long = buff.st_atime;
    entry.append( atom );
 
-   atom.m_uds = KIO::UDS_CREATION_TIME;
+   atom.m_uds = TDEIO::UDS_CREATION_TIME;
    atom.m_long = buff.st_ctime;
    entry.append( atom );
 }
@@ -850,15 +850,15 @@ void NFSProtocol::completeBadLinkUDSEntry(UDSEntry& entry, fattr& attributes)
    completeUDSEntry(entry,attributes);
 
    UDSAtom atom;
-   atom.m_uds = KIO::UDS_FILE_TYPE;
+   atom.m_uds = TDEIO::UDS_FILE_TYPE;
    atom.m_long = S_IFMT - 1;
    entry.append( atom );
 
-   atom.m_uds = KIO::UDS_ACCESS;
+   atom.m_uds = TDEIO::UDS_ACCESS;
    atom.m_long = S_IRWXU | S_IRWXG | S_IRWXO;
    entry.append( atom );
 
-   atom.m_uds = KIO::UDS_SIZE;
+   atom.m_uds = TDEIO::UDS_SIZE;
    atom.m_long = 0L;
    entry.append( atom );
 }
@@ -867,31 +867,31 @@ void NFSProtocol::completeUDSEntry(UDSEntry& entry, fattr& attributes)
 {
    UDSAtom atom;
 
-   atom.m_uds = KIO::UDS_SIZE;
+   atom.m_uds = TDEIO::UDS_SIZE;
    atom.m_long = attributes.size;
    entry.append(atom);
 
-   atom.m_uds = KIO::UDS_MODIFICATION_TIME;
+   atom.m_uds = TDEIO::UDS_MODIFICATION_TIME;
    atom.m_long = attributes.mtime.seconds;
    entry.append( atom );
 
-   atom.m_uds = KIO::UDS_ACCESS_TIME;
+   atom.m_uds = TDEIO::UDS_ACCESS_TIME;
    atom.m_long = attributes.atime.seconds;
    entry.append( atom );
 
-   atom.m_uds = KIO::UDS_CREATION_TIME;
+   atom.m_uds = TDEIO::UDS_CREATION_TIME;
    atom.m_long = attributes.ctime.seconds;
    entry.append( atom );
 
-   atom.m_uds = KIO::UDS_ACCESS;
+   atom.m_uds = TDEIO::UDS_ACCESS;
    atom.m_long = (attributes.mode & 07777);
    entry.append( atom );
 
-   atom.m_uds = KIO::UDS_FILE_TYPE;
+   atom.m_uds = TDEIO::UDS_FILE_TYPE;
    atom.m_long =attributes.mode & S_IFMT; // extract file type
    entry.append( atom );
 
-   atom.m_uds = KIO::UDS_USER;
+   atom.m_uds = TDEIO::UDS_USER;
    uid_t uid = attributes.uid;
    TQString *temp = m_usercache.find( uid );
    if ( !temp )
@@ -909,7 +909,7 @@ void NFSProtocol::completeUDSEntry(UDSEntry& entry, fattr& attributes)
       atom.m_str = *temp;
    entry.append( atom );
 
-   atom.m_uds = KIO::UDS_GROUP;
+   atom.m_uds = TDEIO::UDS_GROUP;
    gid_t gid = attributes.gid;
    temp = m_groupcache.find( gid );
    if ( !temp )
@@ -927,32 +927,32 @@ void NFSProtocol::completeUDSEntry(UDSEntry& entry, fattr& attributes)
       atom.m_str = *temp;
    entry.append( atom );
 
-/*   KIO::UDSEntry::ConstIterator it = entry.begin();
+/*   TDEIO::UDSEntry::ConstIterator it = entry.begin();
    for( ; it != entry.end(); it++ ) {
       switch ((*it).m_uds) {
-      case KIO::UDS_FILE_TYPE:
+      case TDEIO::UDS_FILE_TYPE:
          kdDebug(7121) << "File Type : " << (mode_t)((*it).m_long) << endl;
          break;
-      case KIO::UDS_ACCESS:
+      case TDEIO::UDS_ACCESS:
          kdDebug(7121) << "Access permissions : " << (mode_t)((*it).m_long) << endl;
          break;
-      case KIO::UDS_USER:
+      case TDEIO::UDS_USER:
          kdDebug(7121) << "User : " << ((*it).m_str.ascii() ) << endl;
          break;
-      case KIO::UDS_GROUP:
+      case TDEIO::UDS_GROUP:
          kdDebug(7121) << "Group : " << ((*it).m_str.ascii() ) << endl;
          break;
-      case KIO::UDS_NAME:
+      case TDEIO::UDS_NAME:
          kdDebug(7121) << "Name : " << ((*it).m_str.ascii() ) << endl;
          //m_strText = decodeFileName( (*it).m_str );
          break;
-      case KIO::UDS_URL:
+      case TDEIO::UDS_URL:
          kdDebug(7121) << "URL : " << ((*it).m_str.ascii() ) << endl;
          break;
-      case KIO::UDS_MIME_TYPE:
+      case TDEIO::UDS_MIME_TYPE:
          kdDebug(7121) << "MimeType : " << ((*it).m_str.ascii() ) << endl;
          break;
-      case KIO::UDS_LINK_DEST:
+      case TDEIO::UDS_LINK_DEST:
          kdDebug(7121) << "LinkDest : " << ((*it).m_str.ascii() ) << endl;
          break;
       }

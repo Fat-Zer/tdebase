@@ -40,7 +40,7 @@
 
 extern "C"
 {
-  KDE_EXPORT KCModule *create_bell(TQWidget *parent, const char *)
+  KDE_EXPORT TDECModule *create_bell(TQWidget *parent, const char *)
   {
     return new KBellConfig(parent, "kcmbell");
   }
@@ -52,7 +52,7 @@ extern "C"
 
     XGetKeyboardControl(kapp->getDisplay(), &kbd);
 
-    KConfig config("kcmbellrc", true, false);
+    TDEConfig config("kcmbellrc", true, false);
     config.setGroup("General");
 
     kbdc.bell_percent = config.readNumEntry("Volume", kbd.bell_percent);
@@ -65,7 +65,7 @@ extern "C"
 }
 
 KBellConfig::KBellConfig(TQWidget *parent, const char *name):
-    KCModule(parent, name)
+    TDECModule(parent, name)
 {
   TQBoxLayout *layout = new TQVBoxLayout(this, 0, KDialog::spacingHint());
 
@@ -160,7 +160,7 @@ void KBellConfig::load( bool useDefaults )
   m_pitch->setValue(kbd.bell_pitch);
   m_duration->setValue(kbd.bell_duration);
 
-  KConfig cfg("kdeglobals", false, false);
+  TDEConfig cfg("kdeglobals", false, false);
   cfg.setReadDefaults(  useDefaults );
   cfg.setGroup("General");
   m_useBell->setChecked(cfg.readBoolEntry("UseSystemBell", false));
@@ -183,7 +183,7 @@ void KBellConfig::save()
                          KBBellPercent | KBBellPitch | KBBellDuration,
                          &kbd);
 
-  KConfig config("kcmbellrc", false, false);
+  TDEConfig config("kcmbellrc", false, false);
   config.setGroup("General");
   config.writeEntry("Volume",bellVolume);
   config.writeEntry("Pitch",bellPitch);
@@ -191,14 +191,14 @@ void KBellConfig::save()
 
   config.sync();
 
-  KConfig cfg("kdeglobals", false, false);
+  TDEConfig cfg("kdeglobals", false, false);
   cfg.setGroup("General");
   cfg.writeEntry("UseSystemBell", m_useBell->isChecked());
   cfg.sync();
   
   if (!m_useBell->isChecked())
   {
-    KConfig config("kaccessrc", false);
+    TDEConfig config("kaccessrc", false);
 
     config.setGroup("Bell");
     config.writeEntry("SystemBell", false);

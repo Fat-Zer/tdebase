@@ -62,7 +62,7 @@ NET::WindowType txtToWindowType( const char* txt )
     return static_cast< NET::WindowType >( -2 ); // undefined
     }
 
-void loadFakeSessionInfo( KConfig* config )
+void loadFakeSessionInfo( TDEConfig* config )
     {
     fakeSession.clear();
     config->setGroup("FakeSession" );
@@ -97,7 +97,7 @@ void loadFakeSessionInfo( KConfig* config )
     config->deleteGroup( "FakeSession" );
     }
 
-void writeRules( KConfig& cfg )
+void writeRules( TDEConfig& cfg )
     {
     cfg.setGroup( "General" );
     int pos = cfg.readNumEntry( "count" );
@@ -156,8 +156,8 @@ void writeRules( KConfig& cfg )
 int main()
     {
     TDEInstance inst( "twin_update_window_settings" );
-    KConfig src_cfg( "twinrc" );
-    KConfig dest_cfg( "twinrulesrc" );
+    TDEConfig src_cfg( "twinrc" );
+    TDEConfig dest_cfg( "twinrulesrc" );
     loadFakeSessionInfo( &src_cfg );
     writeRules( dest_cfg );
     src_cfg.sync();

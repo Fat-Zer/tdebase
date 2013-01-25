@@ -53,7 +53,7 @@ KMenuEdit::KMenuEdit (bool controlCenter, TQWidget *, const char *name)
 
 KMenuEdit::~KMenuEdit()
 {
-    KConfig *config = TDEGlobal::config();
+    TDEConfig *config = TDEGlobal::config();
     config->setGroup("General");
     config->writeEntry("SplitterSizes", m_splitter->sizes());
 
@@ -101,7 +101,7 @@ void KMenuEdit::setupView()
             m_tree, TQT_SLOT(findServiceShortcut(const KShortcut&, KService::Ptr &)));
 
     // restore splitter sizes
-    KConfig* config = TDEGlobal::config();
+    TDEConfig* config = TDEGlobal::config();
     TQValueList<int> sizes = config->readIntListEntry("SplitterSizes");
 
     if (sizes.isEmpty())

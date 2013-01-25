@@ -33,7 +33,7 @@
 #define KIO_SFTP_DB 7120
 
 
-class sftpProtocol : public KIO::SlaveBase
+class sftpProtocol : public TDEIO::SlaveBase
 {
 
 public:
@@ -86,7 +86,7 @@ private: // Private variables
   struct Status 
   {
     int code;
-    KIO::filesize_t size;
+    TDEIO::filesize_t size;
     TQString text;
   };
 
@@ -133,9 +133,9 @@ private: // private methods
   /** No descriptions */
   int sftpOpen(const KURL& url, const TQ_UINT32 pflags, const sftpFileAttr& attr, TQByteArray& handle);
   /** No descriptions */
-  int sftpRead(const TQByteArray& handle, KIO::filesize_t offset, TQ_UINT32 len, TQByteArray& data);
+  int sftpRead(const TQByteArray& handle, TDEIO::filesize_t offset, TQ_UINT32 len, TQByteArray& data);
   /** No descriptions */
-  int sftpWrite(const TQByteArray& handle, KIO::filesize_t offset, const TQByteArray& data);
+  int sftpWrite(const TQByteArray& handle, TDEIO::filesize_t offset, const TQByteArray& data);
   
   /** Performs faster upload when the source is a local file... */
   void sftpCopyPut(const KURL& src, const KURL& dest, int mode, bool overwrite);
@@ -143,7 +143,7 @@ private: // private methods
   void sftpCopyGet(const KURL& dest, const KURL& src, int mode, bool overwrite);
   
   /** */
-  Status sftpGet( const KURL& src, KIO::filesize_t offset = 0, int fd = -1);
+  Status sftpGet( const KURL& src, TDEIO::filesize_t offset = 0, int fd = -1);
   void sftpPut( const KURL& dest, int permissions, bool resume, bool overwrite, int fd = -1);
 };
 #endif

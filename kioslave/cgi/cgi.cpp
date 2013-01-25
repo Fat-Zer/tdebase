@@ -31,14 +31,14 @@
 
 #include "cgi.h"
 
-using namespace KIO;
+using namespace TDEIO;
 
 CgiProtocol::CgiProtocol( const TQCString &pool, const TQCString &app )
     : SlaveBase( "cgi", pool, app )
 {
   kdDebug(7124) << "CgiProtocol::CgiProtocol" << endl;
 
-  KConfig cfg( "kcmcgirc" );
+  TDEConfig cfg( "kcmcgirc" );
   cfg.setGroup( "General" );
   mCgiPaths = cfg.readListEntry( "Paths" );
 }
@@ -150,7 +150,7 @@ void CgiProtocol::get( const KURL& url )
 
     if ( !fd ) {
       kdDebug(7124) << "Error opening '" << filepath << "'" << endl;
-      error( KIO::ERR_CANNOT_OPEN_FOR_READING, filepath );
+      error( TDEIO::ERR_CANNOT_OPEN_FOR_READING, filepath );
       return;
     }
   } else {
@@ -160,7 +160,7 @@ void CgiProtocol::get( const KURL& url )
 
     if ( !fd ) {
       kdDebug(7124) << "Error running '" << cmd << "'" << endl;
-      error( KIO::ERR_CANNOT_OPEN_FOR_READING, cmd );
+      error( TDEIO::ERR_CANNOT_OPEN_FOR_READING, cmd );
       return;
     }
   }

@@ -150,7 +150,7 @@ konsolePart::konsolePart(TQWidget *_parentWidget, const char *widgetName, TQObje
   colors->sort();
 
   // Check to see which config file we use: konsolepartrc or konsolerc
-  KConfig* config = new KConfig("konsolepartrc", true);
+  TDEConfig* config = new TDEConfig("konsolepartrc", true);
   config->setDesktopGroup();
   b_useKonsoleSettings = config->readBoolEntry("use_konsole_settings", false);
   delete config;
@@ -524,7 +524,7 @@ void konsolePart::applyProperties()
    se->setKeymapNo( n_keytab );
 
    // FIXME:  Move this somewhere else...
-   KConfig* config = new KConfig("konsolerc",true);
+   TDEConfig* config = new TDEConfig("konsolerc",true);
    config->setGroup("UTMP");
    se->setAddToUtmp( config->readBoolEntry("AddToUtmp",true));
    delete config;
@@ -550,12 +550,12 @@ void konsolePart::setSettingsMenuEnabled( bool enable )
 
 void konsolePart::readProperties()
 {
-  KConfig* config;
+  TDEConfig* config;
 
   if ( b_useKonsoleSettings )
-    config = new KConfig( "konsolerc", true );
+    config = new TDEConfig( "konsolerc", true );
   else
-    config = new KConfig( "konsolepartrc", true );
+    config = new TDEConfig( "konsolepartrc", true );
 
   config->setDesktopGroup();
 
@@ -616,7 +616,7 @@ void konsolePart::readProperties()
 
   delete config;
 
-  config = new KConfig("konsolerc",true);
+  config = new TDEConfig("konsolerc",true);
   config->setDesktopGroup();
   te->setTerminalSizeHint( config->readBoolEntry("TerminalSizeHint",true) );
   delete config;
@@ -624,7 +624,7 @@ void konsolePart::readProperties()
 
 void konsolePart::saveProperties()
 {
-  KConfig* config = new KConfig("konsolepartrc");
+  TDEConfig* config = new TDEConfig("konsolepartrc");
   config->setDesktopGroup();
 
   if ( b_useKonsoleSettings ) { // Don't save Settings if using konsolerc

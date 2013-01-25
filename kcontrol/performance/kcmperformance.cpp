@@ -28,12 +28,12 @@
 
 extern "C"
 {
-    KDE_EXPORT KCModule* create_performance( TQWidget* parent_P, const char* name_P )
+    KDE_EXPORT TDECModule* create_performance( TQWidget* parent_P, const char* name_P )
     {
     return new KCMPerformance::Config( parent_P, name_P );
     }
 
-    KDE_EXPORT KCModule* create_konqueror( TQWidget* parent_P, const char* name_P )
+    KDE_EXPORT TDECModule* create_konqueror( TQWidget* parent_P, const char* name_P )
     {
     return new KCMPerformance::KonquerorConfig( parent_P, name_P );
     }
@@ -43,7 +43,7 @@ namespace KCMPerformance
 {
 
 Config::Config( TQWidget* parent_P, const char* )
-    : KCModule( parent_P, "kcmperformance" )
+    : TDECModule( parent_P, "kcmperformance" )
     {
     setQuickHelp( i18n( "<h1>TDE Performance</h1>"
         " You can configure settings that improve TDE performance here." ));
@@ -86,7 +86,7 @@ void Config::defaults()
     }
 
 KonquerorConfig::KonquerorConfig( TQWidget* parent_P, const char* )
-    : KCModule( parent_P, "kcmperformance" )
+    : TDECModule( parent_P, "kcmperformance" )
     {
     setQuickHelp( i18n( "<h1>Konqueror Performance</h1>"
         " You can configure several settings that improve Konqueror performance here."

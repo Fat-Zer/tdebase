@@ -48,8 +48,8 @@ KonqFMSettings * KonqFMSettings::settings()
 {
   if (!s_pSettings)
   {
-    KConfig *config = TDEGlobal::config();
-    KConfigGroupSaver cgs(config, "FMSettings");
+    TDEConfig *config = TDEGlobal::config();
+    TDEConfigGroupSaver cgs(config, "FMSettings");
     s_pSettings = new KonqFMSettings(config);
   }
   return s_pSettings;
@@ -60,13 +60,13 @@ void KonqFMSettings::reparseConfiguration()
 {
   if (s_pSettings)
   {
-    KConfig *config = TDEGlobal::config();
-    KConfigGroupSaver cgs(config, "FMSettings");
+    TDEConfig *config = TDEGlobal::config();
+    TDEConfigGroupSaver cgs(config, "FMSettings");
     s_pSettings->init( config );
   }
 }
 
-KonqFMSettings::KonqFMSettings( KConfig * config )
+KonqFMSettings::KonqFMSettings( TDEConfig * config )
 {
   d = new KonqFMSettingsPrivate;
   init( config );
@@ -77,7 +77,7 @@ KonqFMSettings::~KonqFMSettings()
   delete d;
 }
 
-void KonqFMSettings::init( KConfig * config )
+void KonqFMSettings::init( TDEConfig * config )
 {
   // Fonts and colors
   m_standardFont = config->readFontEntry( "StandardFont" );

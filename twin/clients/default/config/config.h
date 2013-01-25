@@ -22,7 +22,7 @@ class KDEDefaultConfig: public TQObject
 	Q_OBJECT
 
 	public:
-		KDEDefaultConfig( KConfig* conf, TQWidget* parent );
+		KDEDefaultConfig( TDEConfig* conf, TQWidget* parent );
 		~KDEDefaultConfig();
 
 	// These public signals/slots work similar to KCM modules
@@ -30,8 +30,8 @@ class KDEDefaultConfig: public TQObject
 		void changed();
 
 	public slots:
-		void load( KConfig* conf );
-		void save( KConfig* conf );
+		void load( TDEConfig* conf );
+		void save( TDEConfig* conf );
 		void defaults();
 
 	protected slots:

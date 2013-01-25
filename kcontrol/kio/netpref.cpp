@@ -15,7 +15,7 @@
 #define MAX_TIMEOUT_VALUE  3600
 
 KIOPreferences::KIOPreferences( TQWidget* parent )
-               :KCModule( parent, "kcmkio" )
+               :TDECModule( parent, "kcmkio" )
 {
     TQVBoxLayout* mainLayout = new TQVBoxLayout( this, 0,
                                                KDialog::spacingHint() );
@@ -90,7 +90,7 @@ void KIOPreferences::load()
   sb_serverConnect->setValue( proto.connectTimeout() );
   sb_proxyConnect->setValue( proto.proxyConnectTimeout() );
 
-  KConfig config( "kio_ftprc", true, false );
+  TDEConfig config( "kio_ftprc", true, false );
   cb_ftpEnablePasv->setChecked( !config.readBoolEntry( "DisablePassiveMode", false ) );
   cb_ftpMarkPartial->setChecked( config.readBoolEntry( "MarkPartial", true ) );
   emit changed( false );
@@ -103,7 +103,7 @@ void KIOPreferences::save()
   KSaveIOConfig::setConnectTimeout( sb_serverConnect->value() );
   KSaveIOConfig::setProxyConnectTimeout( sb_proxyConnect->value() );
 
-  KConfig config( "kio_ftprc", false, false );
+  TDEConfig config( "kio_ftprc", false, false );
   config.writeEntry( "DisablePassiveMode", !cb_ftpEnablePasv->isChecked() );
   config.writeEntry( "MarkPartial", cb_ftpMarkPartial->isChecked() );
   config.sync();

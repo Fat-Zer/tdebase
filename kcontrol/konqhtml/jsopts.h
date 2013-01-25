@@ -16,7 +16,7 @@
 #include "jspolicies.h"
 
 class KColorButton;
-class KConfig;
+class TDEConfig;
 class KURLRequester;
 class TQCheckBox;
 class TQComboBox;
@@ -35,7 +35,7 @@ class KJavaScriptOptions;
 class JSDomainListView : public DomainListView {
   Q_OBJECT
 public:
-  JSDomainListView(KConfig *config,const TQString &group,KJavaScriptOptions *opt,
+  JSDomainListView(TDEConfig *config,const TQString &group,KJavaScriptOptions *opt,
   		TQWidget *parent,const char *name = 0);
   virtual ~JSDomainListView();
 
@@ -54,11 +54,11 @@ private:
   KJavaScriptOptions *options;
 };
 
-class KJavaScriptOptions : public KCModule
+class KJavaScriptOptions : public TDECModule
 {
   Q_OBJECT
 public:
-  KJavaScriptOptions( KConfig* config, TQString group, TQWidget* parent = 0, const char* name = 0 );
+  KJavaScriptOptions( TDEConfig* config, TQString group, TQWidget* parent = 0, const char* name = 0 );
 
   virtual void load();
   virtual void load( bool useDefaults );
@@ -72,7 +72,7 @@ private slots:
 
 private:
 
-  KConfig *m_pConfig;
+  TDEConfig *m_pConfig;
   TQString m_groupname;
   JSPolicies js_global_policies;
   TQCheckBox *enableJavaScriptGloballyCB;

@@ -89,7 +89,7 @@ bool KTheme::load( const KURL & url )
     kdDebug() << "Loading theme from URL: " << url << endl;
 
     TQString tmpFile;
-    if ( !KIO::NetAccess::download( url, tmpFile, 0L ) )
+    if ( !TDEIO::NetAccess::download( url, tmpFile, 0L ) )
         return false;
 
     kdDebug() << "Theme is in temp file: " << tmpFile << endl;
@@ -111,7 +111,7 @@ bool KTheme::load( const KURL & url )
     file.close();
 
     // remove the temp file
-    KIO::NetAccess::removeTempFile( tmpFile );
+    TDEIO::NetAccess::removeTempFile( tmpFile );
 
     return true;
 }
@@ -125,13 +125,13 @@ TQString KTheme::createYourself( bool pack )
     // 1. General stuff set by methods setBlah()
 
     // 2. Background theme
-    KConfig * globalConf = TDEGlobal::config();
+    TDEConfig * globalConf = TDEGlobal::config();
 
-    KConfig twinConf( "twinrc", true );
+    TDEConfig twinConf( "twinrc", true );
     twinConf.setGroup( "Desktops" );
     uint numDesktops = twinConf.readUnsignedNumEntry( "Number", 4 );
 
-    KConfig desktopConf( "kdesktoprc", true );
+    TDEConfig desktopConf( "kdesktoprc", true );
     desktopConf.setGroup( "Background Common" );
     bool common = desktopConf.readBoolEntry( "CommonDesktop", true );
 
@@ -197,7 +197,7 @@ TQString KTheme::createYourself( bool pack )
 
     // 4. Sounds
     // 4.1 Global sounds
-    KConfig * soundConf = new KConfig( "knotify.eventsrc", true );
+    TDEConfig * soundConf = new TDEConfig( "knotify.eventsrc", true );
     TQStringList stdEvents;
     stdEvents << "cannotopenfile" << "catastrophe" << "exitkde" << "fatalerror"
               << "notification" << "printerror" << "starttde" << "warning"
@@ -205,7 +205,7 @@ TQString KTheme::createYourself( bool pack )
               << "messageboxQuestion";
 
     // 4.2 KWin sounds
-    KConfig * twinSoundConf = new KConfig( "twin.eventsrc", true );
+    TDEConfig * twinSoundConf = new TDEConfig( "twin.eventsrc", true );
     TQStringList twinEvents;
     twinEvents << "activate" << "close" << "delete" <<
         "desktop1" << "desktop2" << "desktop3" << "desktop4" <<
@@ -247,7 +247,7 @@ TQString KTheme::createYourself( bool pack )
     m_root.appendChild( colorsElem );
 
     // 6. Cursors
-    KConfig* mouseConf = new KConfig( "kcminputrc", true );
+    TDEConfig* mouseConf = new TDEConfig( "kcminputrc", true );
     mouseConf->setGroup( "Mouse" );
     TQDomElement cursorsElem = m_dom.createElement( "cursors" );
     cursorsElem.setAttribute( "name", mouseConf->readEntry( "cursorTheme" ) );
@@ -273,7 +273,7 @@ TQString KTheme::createYourself( bool pack )
     m_root.appendChild( wmElem );
 
     // 8. Konqueror
-    KConfig konqConf( "konquerorrc", true );
+    TDEConfig konqConf( "konquerorrc", true );
     konqConf.setGroup( "Settings" );
     TQDomElement konqElem = m_dom.createElement( "konqueror" );
     TQDomElement konqWallElem = m_dom.createElement( "wallpaper" );
@@ -286,7 +286,7 @@ TQString KTheme::createYourself( bool pack )
     m_root.appendChild( konqElem );
 
     // 9. Kicker (aka TDE Panel)
-    KConfig kickerConf( "kickerrc", true );
+    TDEConfig kickerConf( "kickerrc", true );
     kickerConf.setGroup( "General" );
 
     TQDomElement panelElem = m_dom.createElement( "panel" );
@@ -396,7 +396,7 @@ void KTheme::apply()
     // 2. Background theme
 
     TQDomNodeList desktopList = m_dom.elementsByTagName( "desktop" );
-    KConfig desktopConf( "kdesktoprc" );
+    TDEConfig desktopConf( "kdesktoprc" );
     desktopConf.setGroup( "Background Common" );
 
     for ( uint i = 0; i <= desktopList.count(); i++ )
@@ -448,7 +448,7 @@ void KTheme::apply()
     TQDomElement iconElem = m_dom.elementsByTagName( "icons" ).item( 0 ).toElement();
     if ( !iconElem.isNull() )
     {
-        KConfig * iconConf = TDEGlobal::config();
+        TDEConfig * iconConf = TDEGlobal::config();
         iconConf->setGroup( "Icons" );
         iconConf->writeEntry( "Theme", iconElem.attribute( "name", "crystalsvg" ), true, true );
 
@@ -492,8 +492,8 @@ void KTheme::apply()
     TQDomElement soundsElem = m_dom.elementsByTagName( "sounds" ).item( 0 ).toElement();
     if ( !soundsElem.isNull() )
     {
-        KConfig soundConf( "knotify.eventsrc" );
-        KConfig twinSoundConf( "twin.eventsrc" );
+        TDEConfig soundConf( "knotify.eventsrc" );
+        TDEConfig twinSoundConf( "twin.eventsrc" );
         TQDomNodeList eventList = soundsElem.elementsByTagName( "event" );
         for ( uint i = 0; i < eventList.count(); i++ )
         {
@@ -526,7 +526,7 @@ void KTheme::apply()
     if ( !colorsElem.isNull() )
     {
         TQDomNodeList colorList = colorsElem.childNodes();
-        KConfig * colorConf = TDEGlobal::config();
+        TDEConfig * colorConf = TDEGlobal::config();
 
         TQString sCurrentScheme = locateLocal("data", "kdisplay/color-schemes/thememgr.kcsrc");
         KSimpleConfig *colorScheme = new KSimpleConfig( sCurrentScheme );
@@ -562,7 +562,7 @@ void KTheme::apply()
 
     if ( !cursorsElem.isNull() )
     {
-        KConfig mouseConf( "kcminputrc" );
+        TDEConfig mouseConf( "kcminputrc" );
         mouseConf.setGroup( "Mouse" );
         mouseConf.writeEntry( "cursorTheme", cursorsElem.attribute( "name" ));
         // FIXME is there a way to notify KDE of cursor changes?
@@ -573,7 +573,7 @@ void KTheme::apply()
 
     if ( !wmElem.isNull() )
     {
-        KConfig twinConf( "twinrc" );
+        TDEConfig twinConf( "twinrc" );
         twinConf.setGroup( "Style" );
         TQString type = wmElem.attribute( "type" );
         if ( type == "builtin" )
@@ -601,7 +601,7 @@ void KTheme::apply()
 
     if ( !konqElem.isNull() )
     {
-        KConfig konqConf( "konquerorrc" );
+        TDEConfig konqConf( "konquerorrc" );
         konqConf.setGroup( "Settings" );
         konqConf.writeEntry( "BgImage", unprocessFilePath( "konqueror", getProperty( konqElem, "wallpaper", "url" ) ) );
         konqConf.writeEntry( "BgColor", TQColor( getProperty( konqElem, "bgcolor", "rgb" ) ) );
@@ -615,7 +615,7 @@ void KTheme::apply()
 
     if ( !panelElem.isNull() )
     {
-        KConfig kickerConf( "kickerrc" );
+        TDEConfig kickerConf( "kickerrc" );
         kickerConf.setGroup( "General" );
         TQString kickerBgUrl = getProperty( panelElem, "background", "url" );
         if ( !kickerBgUrl.isEmpty() )
@@ -643,7 +643,7 @@ void KTheme::apply()
 
     if ( !widgetsElem.isNull() )
     {
-        KConfig * widgetConf = TDEGlobal::config();
+        TDEConfig * widgetConf = TDEGlobal::config();
         widgetConf->setGroup( "General" );
         widgetConf->writeEntry( "widgetStyle", widgetsElem.attribute( "name" ), true, true );
         widgetConf->sync();
@@ -654,8 +654,8 @@ void KTheme::apply()
     TQDomElement fontsElem = m_dom.elementsByTagName( "fonts" ).item( 0 ).toElement();
     if ( !fontsElem.isNull() )
     {
-        KConfig * fontsConf = TDEGlobal::config();
-        KConfig * kde1xConf = new KSimpleConfig( TQDir::homeDirPath() + "/.kderc" );
+        TDEConfig * fontsConf = TDEGlobal::config();
+        TDEConfig * kde1xConf = new KSimpleConfig( TQDir::homeDirPath() + "/.kderc" );
         kde1xConf->setGroup( "General" );
 
         TQDomNodeList fontList = fontsElem.childNodes();
@@ -688,7 +688,7 @@ void KTheme::apply()
 bool KTheme::remove( const TQString & name )
 {
     kdDebug() << "Going to remove theme: " << name << endl;
-    return KIO::NetAccess::del( TDEGlobal::dirs()->saveLocation( "themes", name + "/" ), 0L );
+    return TDEIO::NetAccess::del( TDEGlobal::dirs()->saveLocation( "themes", name + "/" ), 0L );
 }
 
 void KTheme::setProperty( const TQString & name, const TQString & value, TQDomElement parent )
@@ -726,7 +726,7 @@ TQString KTheme::getProperty( TQDomElement parent, const TQString & tag,
 }
 
 void KTheme::createIconElems( const TQString & group, const TQString & object,
-                              TQDomElement parent, KConfig * cfg )
+                              TQDomElement parent, TDEConfig * cfg )
 {
     cfg->setGroup( group );
     TQStringList elemNames;
@@ -759,7 +759,7 @@ void KTheme::createIconElems( const TQString & group, const TQString & object,
 }
 
 void KTheme::createColorElem( const TQString & name, const TQString & object,
-                              TQDomElement parent, KConfig * cfg )
+                              TQDomElement parent, TDEConfig * cfg )
 {
     TQColor color = cfg->readColorEntry( name );
     if ( color.isValid() )
@@ -772,7 +772,7 @@ void KTheme::createColorElem( const TQString & name, const TQString & object,
 }
 
 void KTheme::createSoundList( const TQStringList & events, const TQString & object,
-                              TQDomElement parent, KConfig * cfg )
+                              TQDomElement parent, TDEConfig * cfg )
 {
     for ( TQStringList::ConstIterator it = events.begin(); it != events.end(); ++it )
     {
@@ -876,7 +876,7 @@ void KTheme::addPreview()
 bool KTheme::copyFile( const TQString & from, const TQString & to )
 {
     // we overwrite b/c of restoring the "original" theme
-    return KIO::NetAccess::file_copy( from, to, -1, true /*overwrite*/ );
+    return TDEIO::NetAccess::file_copy( from, to, -1, true /*overwrite*/ );
 }
 
 TQString KTheme::findResource( const TQString & section, const TQString & path )

@@ -77,7 +77,7 @@ bool KURISearchFilter::filterURI( KURIFilterData &data ) const
   return false;
 }
 
-KCModule *KURISearchFilter::configModule(TQWidget *parent, const char *) const
+TDECModule *KURISearchFilter::configModule(TQWidget *parent, const char *) const
 {
   return new FilterOptions( KURISearchFilterFactory::instance(), parent, "kcmkurifilt");
 }

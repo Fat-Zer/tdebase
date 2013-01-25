@@ -12,7 +12,7 @@
 
 class TQWidget;
 class TDEProcess;
-class KConfig;
+class TDEConfig;
 class KHTMLPart;
 
 namespace KHC {

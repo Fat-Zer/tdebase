@@ -65,7 +65,7 @@ KControlApp::KControlApp()
   connect (modIface, TQT_SIGNAL(handbookClicked()), toplevel, TQT_SLOT(slotHandbookRequest()));
 
   TQRect desk = TDEGlobalSettings::desktopGeometry(toplevel);
-  KConfig *config = TDEGlobal::config();
+  TDEConfig *config = TDEGlobal::config();
   config->setGroup("General");
   // Initial size is:
   // never bigger than workspace as reported by desk
@@ -88,7 +88,7 @@ KControlApp::~KControlApp()
 {
   if (toplevel)
     {
-      KConfig *config = TDEGlobal::config();
+      TDEConfig *config = TDEGlobal::config();
       config->setGroup("General");
       TQWidget *desk = TQT_TQWIDGET(TQApplication::desktop());
       config->writeEntry(TQString::fromLatin1("InitialWidth %1").arg(desk->width()), toplevel->width());

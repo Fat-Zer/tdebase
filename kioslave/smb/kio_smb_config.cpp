@@ -37,7 +37,7 @@
 //===========================================================================
 void SMBSlave::reparseConfiguration()
 {
-  KConfig *cfg = new KConfig("kioslaverc", true);
+  TDEConfig *cfg = new TDEConfig("kioslaverc", true);
   cfg->setGroup("Browser Settings/SMBro");
   m_default_user=cfg->readEntry("User");
 //  m_default_workgroup=cfg->readEntry("Workgroup");

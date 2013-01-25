@@ -119,41 +119,41 @@ namespace KioSMTP {
     case 454: // TLS not available due to temporary reason
               // Temporary authentication failure
     case 554: // Transaction failed / No SMTP service here / No valid recipients
-      return KIO::ERR_SERVICE_NOT_AVAILABLE;
+      return TDEIO::ERR_SERVICE_NOT_AVAILABLE;
 
     case 451: // Requested action aborted: local error in processing
-      return KIO::ERR_INTERNAL_SERVER;
+      return TDEIO::ERR_INTERNAL_SERVER;
 
     case 452: // Requested action not taken: insufficient system storage
     case 552: // Requested mail action aborted: exceeded storage allocation
-	return KIO::ERR_DISK_FULL;
+	return TDEIO::ERR_DISK_FULL;
 
     case 500: // Syntax error, command unrecognized
     case 501: // Syntax error in parameters or arguments
     case 502: // Command not implemented
     case 503: // Bad sequence of commands
     case 504: // Command parameter not implemented
-      return KIO::ERR_INTERNAL;
+      return TDEIO::ERR_INTERNAL;
 
     case 450: // Requested mail action not taken: mailbox unavailable
     case 550: // Requested action not taken: mailbox unavailable
     case 551: // User not local; please try <forward-path>
     case 553: // Requested action not taken: mailbox name not allowed
-      return KIO::ERR_DOES_NOT_EXIST;
+      return TDEIO::ERR_DOES_NOT_EXIST;
 
     case 530: // {STARTTLS,Authentication} required
     case 538: // Encryption required for requested authentication mechanism
     case 534: // Authentication mechanism is too weak
-      return KIO::ERR_UPGRADE_REQUIRED;
+      return TDEIO::ERR_UPGRADE_REQUIRED;
 
     case 432: // A password transition is needed
-      return KIO::ERR_COULD_NOT_AUTHENTICATE;
+      return TDEIO::ERR_COULD_NOT_AUTHENTICATE;
 
     default:
       if ( isPositive() )
 	return 0;
       else
-	return KIO::ERR_UNKNOWN;
+	return TDEIO::ERR_UNKNOWN;
     }
   }
 

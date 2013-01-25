@@ -52,7 +52,7 @@ public:
     LogitechMouse( struct usb_device *usbDev, int mouseCapabilityFlags, TQWidget* parent = 0, const char* name = 0 );
     ~LogitechMouse();
     void applyChanges();
-    void save(KConfig *config);
+    void save(TDEConfig *config);
 
 protected slots:
     void setChannel1();

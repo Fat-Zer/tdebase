@@ -40,7 +40,7 @@ struct StatInfo
 };
 
 
-class FloppyProtocol : public KIO::SlaveBase
+class FloppyProtocol : public TDEIO::SlaveBase
 {
    public:
       FloppyProtocol (const TQCString &pool, const TQCString &app );
@@ -60,7 +60,7 @@ class FloppyProtocol : public KIO::SlaveBase
       int readStderr();
 
       StatInfo createStatInfo(const TQString line, bool makeStat=false, const TQString& dirName="");
-      void createUDSEntry(const StatInfo& info, KIO::UDSEntry& entry);
+      void createUDSEntry(const StatInfo& info, TDEIO::UDSEntry& entry);
       StatInfo _stat(const KURL& _url);
       int freeSpace(const KURL& url);
 

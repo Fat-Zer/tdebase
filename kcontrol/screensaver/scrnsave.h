@@ -31,7 +31,7 @@ class KIntNumInput;
 class TDEProcess;
 
 //===========================================================================
-class KScreenSaver : public KCModule
+class KScreenSaver : public TDECModule
 {
     Q_OBJECT
 public:

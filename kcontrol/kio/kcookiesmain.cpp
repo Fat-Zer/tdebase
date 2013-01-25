@@ -17,7 +17,7 @@
 #include "kcookiesmanagement.h"
 
 KCookiesMain::KCookiesMain(TQWidget *parent)
-  : KCModule(parent, "kcmkio")
+  : TDECModule(parent, "kcmkio")
 {
     management = 0;
     bool managerOK = true;
@@ -70,7 +70,7 @@ void KCookiesMain::save()
 
 void KCookiesMain::defaults()
 {
-  KCModule* module = static_cast<KCModule*>(tab->currentPage());
+  TDECModule* module = static_cast<TDECModule*>(tab->currentPage());
   
   if ( module == policies )
     policies->defaults();

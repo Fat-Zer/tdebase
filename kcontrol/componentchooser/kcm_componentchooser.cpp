@@ -23,7 +23,7 @@
 
 
 KCMComponentChooser::KCMComponentChooser( TQWidget *parent, const char *name ):
-	KCModule(parent,name) {
+	TDECModule(parent,name) {
 
 	(new TQVBoxLayout(this))->setAutoAdd(true);
 	m_chooser=new ComponentChooser(this,"ComponentChooser");
@@ -55,7 +55,7 @@ void KCMComponentChooser::defaults(){
 
 extern "C"
 {
-    KDE_EXPORT KCModule *create_componentchooser( TQWidget *parent, const char * )
+    KDE_EXPORT TDECModule *create_componentchooser( TQWidget *parent, const char * )
     {
         TDEGlobal::locale()->insertCatalogue("kcmcomponentchooser");
         return new KCMComponentChooser( parent, "kcmcomponentchooser" );

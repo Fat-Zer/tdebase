@@ -86,14 +86,14 @@ bool TestLinkItr::isApplicable(const KBookmark &bk) const {
 void TestLinkItr::doAction() {
     m_errSet = false;
 
-    m_job = KIO::get(curBk().url(), true, false);
+    m_job = TDEIO::get(curBk().url(), true, false);
     m_job->addMetaData("errorPage", "true");
     m_job->addMetaData( TQString("cookies"), TQString("none") );
 
-    connect(m_job, TQT_SIGNAL( result( KIO::Job *)),
-            this, TQT_SLOT( slotJobResult(KIO::Job *)));
-    connect(m_job, TQT_SIGNAL( data( KIO::Job *,  const TQByteArray &)),
-            this, TQT_SLOT( slotJobData(KIO::Job *, const TQByteArray &)));
+    connect(m_job, TQT_SIGNAL( result( TDEIO::Job *)),
+            this, TQT_SLOT( slotJobResult(TDEIO::Job *)));
+    connect(m_job, TQT_SIGNAL( data( TDEIO::Job *,  const TQByteArray &)),
+            this, TQT_SLOT( slotJobData(TDEIO::Job *, const TQByteArray &)));
 
     curItem()->setTmpStatus(i18n("Checking..."));
     TQString oldModDate = TestLinkItrHolder::self()->getMod(curBk().url().url());
@@ -101,8 +101,8 @@ void TestLinkItr::doAction() {
     TestLinkItrHolder::self()->setMod(curBk().url().url(), i18n("Checking..."));
 }
 
-void TestLinkItr::slotJobData(KIO::Job *job, const TQByteArray &data) {
-    KIO::TransferJob *transfer = (KIO::TransferJob *)job;
+void TestLinkItr::slotJobData(TDEIO::Job *job, const TQByteArray &data) {
+    TDEIO::TransferJob *transfer = (TDEIO::TransferJob *)job;
 
     if (transfer->isErrorPage()) {
         TQStringList lines = TQStringList::split('\n', data);
@@ -132,11 +132,11 @@ void TestLinkItr::slotJobData(KIO::Job *job, const TQByteArray &data) {
     transfer->kill(false);
 }
 
-void TestLinkItr::slotJobResult(KIO::Job *job) {
+void TestLinkItr::slotJobResult(TDEIO::Job *job) {
     m_job = 0;
     if ( !curItem() ) return;
 
-    KIO::TransferJob *transfer = (KIO::TransferJob *)job;
+    TDEIO::TransferJob *transfer = (TDEIO::TransferJob *)job;
     TQString modDate = transfer->queryMetaData("modified");
 
     bool chkErr = true;

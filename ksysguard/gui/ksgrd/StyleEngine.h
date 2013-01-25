@@ -30,7 +30,7 @@
 
 #include <kdemacros.h>
 
-class KConfig;
+class TDEConfig;
 
 class TQListBoxItem;
 
@@ -46,8 +46,8 @@ class KDE_EXPORT StyleEngine : public QObject
     StyleEngine();
     ~StyleEngine();
 
-    void readProperties( KConfig* );
-    void saveProperties( KConfig* );
+    void readProperties( TDEConfig* );
+    void saveProperties( TDEConfig* );
 
     const TQColor& firstForegroundColor() const;
     const TQColor& secondForegroundColor() const;

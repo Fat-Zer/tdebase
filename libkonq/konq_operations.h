@@ -25,7 +25,7 @@
 #include <tqobject.h>
 #include <tqevent.h>
 
-namespace KIO { class Job; class CopyInfo; }
+namespace TDEIO { class Job; class CopyInfo; }
 class TQWidget;
 class KFileItem;
 class KonqMainWindow;
@@ -139,7 +139,7 @@ public:
 
 signals:
     void statFinished( const KFileItem * item );
-    void aboutToCreate(const TQPoint &pos, const TQValueList<KIO::CopyInfo> &files);
+    void aboutToCreate(const TQPoint &pos, const TQValueList<TDEIO::CopyInfo> &files);
 
 protected:
     void _del( int method, const KURL::List & selectedURLs, ConfirmationType confirmation );
@@ -147,7 +147,7 @@ protected:
     void _statURL( const KURL & url, const TQObject *receiver, const char *member );
 
     // internal, for COPY/MOVE/LINK/MKDIR
-    void setOperation( KIO::Job * job, int method, const KURL::List & src, const KURL & dest );
+    void setOperation( TDEIO::Job * job, int method, const KURL::List & src, const KURL & dest );
 
     struct DropInfo
     {
@@ -177,9 +177,9 @@ private:
 
 protected slots:
 
-    void slotAboutToCreate(KIO::Job *job, const TQValueList<KIO::CopyInfo> &files);
-    void slotResult( KIO::Job * job );
-    void slotStatResult( KIO::Job * job );
+    void slotAboutToCreate(TDEIO::Job *job, const TQValueList<TDEIO::CopyInfo> &files);
+    void slotResult( TDEIO::Job * job );
+    void slotStatResult( TDEIO::Job * job );
     void asyncDrop( const KFileItem * item );
     void doFileCopy();
 
@@ -195,7 +195,7 @@ private:
 #include <kio/job.h>
 
 /// Restore multiple trashed files
-class KonqMultiRestoreJob : public KIO::Job
+class KonqMultiRestoreJob : public TDEIO::Job
 {
     Q_OBJECT
 
@@ -204,7 +204,7 @@ public:
 
 protected slots:
     virtual void slotStart();
-    virtual void slotResult( KIO::Job *job );
+    virtual void slotResult( TDEIO::Job *job );
 
 private:
     const KURL::List m_urls;

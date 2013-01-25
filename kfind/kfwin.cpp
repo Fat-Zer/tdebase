@@ -64,7 +64,7 @@ KfFileLVI::KfFileLVI(KfindWindow* lv, const KFileItem &item, const TQString& mat
   TQString size = TDEGlobal::locale()->formatNumber(item.size(), 0);
 
   TQDateTime dt;
-  dt.setTime_t(item.time(KIO::UDS_MODIFICATION_TIME));
+  dt.setTime_t(item.time(TDEIO::UDS_MODIFICATION_TIME));
   TQString date = TDEGlobal::locale()->formatDateTime(dt);
 
   int perm_index;
@@ -98,7 +98,7 @@ TQString KfFileLVI::key(int column, bool) const
     return TQString().sprintf("%010d", fileInfo->size());
   case 3:
     // Returns time in secs from 1/1/1970. Used for sorting
-    return TQString().sprintf("%010ld", fileitem.time(KIO::UDS_MODIFICATION_TIME));
+    return TQString().sprintf("%010ld", fileitem.time(TDEIO::UDS_MODIFICATION_TIME));
   }
 
   return text(column);
@@ -296,7 +296,7 @@ void KfindWindow::deleteFiles()
     KfFileLVI *item = (KfFileLVI *) selected.at(i);
     KFileItem file = item->fileitem;
 
-    KIO::NetAccess::del(file.url(), this);
+    TDEIO::NetAccess::del(file.url(), this);
   }
   selected.setAutoDelete(true);
 }

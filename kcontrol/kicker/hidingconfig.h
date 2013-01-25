@@ -22,7 +22,7 @@
 
 class HidingTab;
 
-class HidingConfig : public KCModule
+class HidingConfig : public TDECModule
 {
     Q_OBJECT
 

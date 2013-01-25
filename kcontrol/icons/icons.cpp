@@ -35,7 +35,7 @@
 /**** KIconConfig ****/
 
 KIconConfig::KIconConfig(TQWidget *parent, const char *name)
-    : KCModule(parent, name)
+    : TDECModule(parent, name)
 {
 
     TQGridLayout *top = new TQGridLayout(this, 4, 2,
@@ -289,7 +289,7 @@ void KIconConfig::read()
     mpKickerConfig->setGroup("General");
     mQuickLaunchSize = mpKickerConfig->readNumEntry("panelIconWidth", KIcon::SizeLarge);
 
-    KConfigGroup g( TDEGlobal::config(), "KDE" );
+    TDEConfigGroup g( TDEGlobal::config(), "KDE" );
     mpRoundedCheck->setChecked(g.readBoolEntry("IconUseRoundedRect", KDE_DEFAULT_ICONTEXTROUNDED));
     mpActiveEffectCheck->setChecked(g.readBoolEntry("ShowKonqIconActivationEffect", KDE_DEFAULT_KONQ_ACTIVATION_EFFECT));
 }
@@ -473,7 +473,7 @@ void KIconConfig::save()
     mpKickerConfig->setGroup("General");
     mpKickerConfig->writeEntry("panelIconWidth", mQuickLaunchSize);
 
-    KConfigGroup g( TDEGlobal::config(), "KDE" );
+    TDEConfigGroup g( TDEGlobal::config(), "KDE" );
     g.writeEntry("IconUseRoundedRect", mpRoundedCheck->isChecked(), true, true);
     g.writeEntry("ShowKonqIconActivationEffect", mpActiveEffectCheck->isChecked(), true, true);
 

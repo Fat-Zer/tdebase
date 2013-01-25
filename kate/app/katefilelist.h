@@ -102,8 +102,8 @@ class KateFileList : public KListView
     TQColor viewShade() const { return m_viewShade; }
     bool shadingEnabled() { return m_enableBgShading; }
 
-    void readConfig( class KConfig *config, const TQString &group );
-    void writeConfig( class KConfig *config, const TQString &group );
+    void readConfig( class TDEConfig *config, const TQString &group );
+    void writeConfig( class TDEConfig *config, const TQString &group );
 
     /**
      * reimplemented to remove the item from the history stacks

@@ -49,7 +49,7 @@ o Pre-set scheme   <Remove Scheme>
 Global Shortcuts
 */
 KeyModule::KeyModule( TQWidget *parent, const char *name )
-: KCModule( parent, name )
+: TDECModule( parent, name )
 {
     setQuickHelp( i18n("<h1>Keyboard Shortcuts</h1> Using shortcuts you can configure certain actions to be"
     " triggered when you press a key or a combination of keys, e.g. Ctrl+C is normally bound to"
@@ -129,7 +129,7 @@ void KeyModule::resizeEvent( TQResizeEvent * )
 
 extern "C"
 {
-  KDE_EXPORT KCModule *create_keys(TQWidget *parent, const char * /*name*/)
+  KDE_EXPORT TDECModule *create_keys(TQWidget *parent, const char * /*name*/)
   {
 	// What does this do?  Why not insert klipper and kxkb, too? --ellis, 2002/01/15
 	TDEGlobal::locale()->insertCatalogue("twin");
@@ -142,7 +142,7 @@ extern "C"
   {
 	kdDebug(125) << "KeyModule::initModifiers()" << endl;
 
-	KConfigGroupSaver cgs( TDEGlobal::config(), "Keyboard" );
+	TDEConfigGroupSaver cgs( TDEGlobal::config(), "Keyboard" );
 	bool bMacSwap = TDEGlobal::config()->readBoolEntry( "Mac Modifier Swap", false );
 	if( bMacSwap )
 		ModifiersModule::setupMacModifierKeys();
@@ -153,7 +153,7 @@ extern "C"
 	kdDebug(125) << "KeyModule::init()\n";
 
 	/*kdDebug(125) << "KKeyModule::init() - Initialize # Modifier Keys Settings\n";
-	KConfigGroupSaver cgs( TDEGlobal::config(), "Keyboard" );
+	TDEConfigGroupSaver cgs( TDEGlobal::config(), "Keyboard" );
 	TQString fourMods = TDEGlobal::config()->readEntry( "Use Four Modifier Keys", KAccel::keyboardHasMetaKey() ? "true" : "false" );
 	KAccel::useFourModifierKeys( fourMods == "true" );
 	bool bUseFourModifierKeys = KAccel::useFourModifierKeys();
@@ -179,7 +179,7 @@ extern "C"
   // This is needed to be able to check for conflicts with global keys in app's keyconfig
   // dialogs, kdeglobals is empty as long as you don't apply any change in controlcenter/keys.
   // However, avoid writing at every KDE startup, just update them after every rebuild of this file.
-        KConfigGroup group( TDEGlobal::config(), "Global Shortcuts" );
+        TDEConfigGroup group( TDEGlobal::config(), "Global Shortcuts" );
         if( group.readEntry( "Defaults timestamp" ) != __DATE__ __TIME__ ) {
 	    kdDebug(125) << "KeyModule::init() - Read Config Bindings\n";
 	    // Check for old group,

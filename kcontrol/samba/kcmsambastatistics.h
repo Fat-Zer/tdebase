@@ -33,7 +33,7 @@ class TQCheckBox;
 class TQLineEdit;
 class TQPushButton;
 
-class KConfig;
+class TDEConfig;
 
 class SmallLogItem
 {
@@ -79,14 +79,14 @@ class StatisticsView: public TQWidget
 {
   Q_OBJECT
 public:
-  StatisticsView(TQWidget *parent=0, KConfig *config=0, const char *name=0);
+  StatisticsView(TQWidget *parent=0, TDEConfig *config=0, const char *name=0);
   virtual ~StatisticsView() {};
   void saveSettings() {};
   void loadSettings() {};
   public slots:
 	void setListInfo(TQListView *list, int nrOfFiles, int nrOfConnections);
 private:
-  KConfig *configFile;
+  TDEConfig *configFile;
   TQListView *dataList;
   TQListView* viewStatistics;
   TQLabel* connectionsL, *filesL;

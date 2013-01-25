@@ -10,7 +10,7 @@ using namespace KHC;
 
 HTMLSearch::HTMLSearch()
 {
-  mConfig = new KConfig("khelpcenterrc", true);
+  mConfig = new TDEConfig("khelpcenterrc", true);
   mConfig->setGroup( "htdig" );
 }
 

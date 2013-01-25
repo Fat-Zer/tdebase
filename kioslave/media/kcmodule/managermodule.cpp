@@ -34,7 +34,7 @@
 #include "mediamanagersettings.h"
 
 ManagerModule::ManagerModule( TQWidget* parent, const char* name )
-	: KCModule( parent, name )
+	: TDECModule( parent, name )
 {
 	view = new ManagerModuleView( this );
 
@@ -71,9 +71,9 @@ ManagerModule::ManagerModule( TQWidget* parent, const char* name )
 
 void ManagerModule::load()
 {
-	KCModule::load();
+	TDECModule::load();
 	
-	KConfig config("mediamanagerrc");
+	TDEConfig config("mediamanagerrc");
 	config.setGroup("DefaultOptions");
 	
 	view->option_automount->setChecked( config.readBoolEntry("automount", false) );
@@ -109,9 +109,9 @@ void ManagerModule::load()
 
 void ManagerModule::save()
 {
-	KCModule::save();
+	TDECModule::save();
 	
-	KConfig config("mediamanagerrc");
+	TDEConfig config("mediamanagerrc");
 	config.setGroup("DefaultOptions");
 	
 	config.writeEntry("automount", view->option_automount->isChecked());
@@ -152,7 +152,7 @@ void ManagerModule::save()
 
 void ManagerModule::defaults()
 {
-	KCModule::defaults();
+	TDECModule::defaults();
 	
 	view->option_automount->setChecked(false);
 	view->option_ro->setChecked(false);

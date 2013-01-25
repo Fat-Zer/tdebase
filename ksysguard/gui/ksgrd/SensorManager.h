@@ -80,8 +80,8 @@ class KDE_EXPORT SensorManager : public QObject
     const TQString& translateSensorType( const TQString &type ) const;
     TQString translateSensor(const TQString& u) const;
 
-    void readProperties( KConfig *cfg );
-    void saveProperties( KConfig *cfg );
+    void readProperties( TDEConfig *cfg );
+    void saveProperties( TDEConfig *cfg );
 
     void disconnectClient( SensorClient *client );
 	

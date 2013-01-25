@@ -296,7 +296,7 @@ void SystemTrayApplet::applySettings()
 
     m_showClockInTray = m_showClockSettingCB->isChecked();
 
-    KConfig *conf = config();
+    TDEConfig *conf = config();
 
     // Save the sort order and hidden status using the window class (WM_CLASS) rather
     // than window name (caption) - window name is i18n-ed, so it's for example
@@ -485,7 +485,7 @@ void SystemTrayApplet::loadSettings()
     setFrameStyle(NoFrame);
     m_showFrame = KickerSettings::showDeepButtons()?true:false;
 
-    KConfig *conf = config();
+    TDEConfig *conf = config();
     conf->reparseConfiguration();
     conf->setGroup("General");
 

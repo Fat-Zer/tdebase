@@ -22,7 +22,7 @@ License. See the file "COPYING" for the exact licensing terms.
 #include "options.h"
 #include "utils.h"
 
-class KConfig;
+class TDEConfig;
 
 namespace KWinInternal
 {
@@ -83,9 +83,9 @@ class Rules
     {
     public:
         Rules();
-        Rules( KConfig& );
+        Rules( TDEConfig& );
         Rules( const TQString&, bool temporary );
-        void write( KConfig& ) const;
+        void write( TDEConfig& ) const;
         bool isEmpty() const;
 #ifndef KCMRULES
         void discardUsed( bool withdrawn );
@@ -160,10 +160,10 @@ class Rules
             RegExpMatch,
             LastStringMatch = RegExpMatch
             };
-        void readFromCfg( KConfig& cfg );
-        static SetRule readSetRule( KConfig&, const TQString& key );
-        static ForceRule readForceRule( KConfig&, const TQString& key );
-        static NET::WindowType readType( KConfig&, const TQString& key );
+        void readFromCfg( TDEConfig& cfg );
+        static SetRule readSetRule( TDEConfig&, const TQString& key );
+        static ForceRule readForceRule( TDEConfig&, const TQString& key );
+        static NET::WindowType readType( TDEConfig&, const TQString& key );
 #ifndef KCMRULES
         static bool checkSetRule( SetRule rule, bool init );
         static bool checkForceRule( ForceRule rule );

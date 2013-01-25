@@ -39,7 +39,7 @@
 
 #define MAX_PACKET_LEN 4096
 
-class POP3Protocol:public KIO::TCPSlaveBase {
+class POP3Protocol:public TDEIO::TCPSlaveBase {
 public:
   POP3Protocol(const TQCString & pool, const TQCString & app, bool SSL);
   virtual ~ POP3Protocol();
@@ -107,17 +107,17 @@ protected:
   /**
    * Authenticate via APOP
    */  
-  int loginAPOP( char *challenge, KIO::AuthInfo &ai );
+  int loginAPOP( char *challenge, TDEIO::AuthInfo &ai );
 
-  bool saslInteract( void *in, KIO::AuthInfo &ai );
+  bool saslInteract( void *in, TDEIO::AuthInfo &ai );
   /**
    * Authenticate via SASL
    */  
-  int loginSASL( KIO::AuthInfo &ai );
+  int loginSASL( TDEIO::AuthInfo &ai );
   /**
    * Authenticate via traditional USER/PASS
    */  
-  bool loginPASS( KIO::AuthInfo &ai );
+  bool loginPASS( TDEIO::AuthInfo &ai );
 
   int m_cmd;
   unsigned short int m_iOldPort;

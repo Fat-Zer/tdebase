@@ -95,8 +95,8 @@ bool trinity_startup_main_sequence_done = FALSE;
  */
 void KSMServer::restoreSession( TQString sessionName )
 {
-    showFancyLogin = KConfigGroup(TDEGlobal::config(), "Login").readBoolEntry("showFancyLogin", true);
-    KConfig ksplashcfg( "ksplashrc", true );
+    showFancyLogin = TDEConfigGroup(TDEGlobal::config(), "Login").readBoolEntry("showFancyLogin", true);
+    TDEConfig ksplashcfg( "ksplashrc", true );
     ksplashcfg.setGroup( "KSplash" );
     if ( ksplashcfg.readEntry( "Theme", "Default" ) != TQString("Unified") )
         showFancyLogin = false;
@@ -107,7 +107,7 @@ void KSMServer::restoreSession( TQString sessionName )
 
     kdDebug( 1218 ) << "KSMServer::restoreSession " << sessionName << endl;
     upAndRunning( "restore session");
-    KConfig* config = TDEGlobal::config();
+    TDEConfig* config = TDEGlobal::config();
 
     sessionGroup = "Session: " + sessionName;
 
@@ -161,8 +161,8 @@ void KSMServer::restoreSession( TQString sessionName )
  */
 void KSMServer::startDefaultSession()
 {
-    showFancyLogin = KConfigGroup(TDEGlobal::config(), "Login").readBoolEntry("showFancyLogin", true);
-    KConfig ksplashcfg( "ksplashrc", true );
+    showFancyLogin = TDEConfigGroup(TDEGlobal::config(), "Login").readBoolEntry("showFancyLogin", true);
+    TDEConfig ksplashcfg( "ksplashrc", true );
     ksplashcfg.setGroup( "KSplash" );
     if ( ksplashcfg.readEntry( "Theme", "Default" ) != TQString("None") )
         showFancyLogin = false;
@@ -286,7 +286,7 @@ void KSMServer::tryRestoreNext()
     if( state != Restoring )
         return;
     restoreTimer.stop();
-    KConfig* config = TDEGlobal::config();
+    TDEConfig* config = TDEGlobal::config();
     config->setGroup( sessionGroup );
 
     while ( lastAppStarted < appsToStart ) {

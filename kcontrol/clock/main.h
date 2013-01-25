@@ -28,7 +28,7 @@ class Tzone;
 class TQTabWidget;
 
 
-class KclockModule : public KCModule
+class KclockModule : public TDECModule
 {
   Q_OBJECT
 

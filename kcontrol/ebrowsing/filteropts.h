@@ -27,7 +27,7 @@
 
 class TQListBox;
 
-class FilterOptions : public KCModule
+class FilterOptions : public TDECModule
 {
     Q_OBJECT
 

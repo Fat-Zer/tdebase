@@ -44,7 +44,7 @@
 //-----------------------------------------------------------------------------
 
 DesktopPathConfig::DesktopPathConfig(TQWidget *parent, const char * )
-    : KCModule( parent, "kcmkonq" )
+    : TDECModule( parent, "kcmkonq" )
 {
   TQLabel * tmpLabel;
 
@@ -127,13 +127,13 @@ void DesktopPathConfig::load()
 
 void DesktopPathConfig::load( bool useDefaults )
 {
-    KConfig config("kdeglobals", true, false);
+    TDEConfig config("kdeglobals", true, false);
     // Desktop Paths
 	config.setReadDefaults( useDefaults );
     config.setGroup("Paths");
     urAutostart->setURL( config.readPathEntry( "Autostart" , TDEGlobalSettings::autostartPath() ));
 
-    KConfig xdguserconfig( TQDir::homeDirPath()+"/.config/user-dirs.dirs" );
+    TDEConfig xdguserconfig( TQDir::homeDirPath()+"/.config/user-dirs.dirs" );
      
     urDesktop->setURL( xdguserconfig.readPathEntry( "XDG_DESKTOP_DIR" , TQDir::homeDirPath() + "/Desktop" ).remove(  "\"" ));
     urDocument->setURL( xdguserconfig.readPathEntry( "XDG_DOCUMENTS_DIR", TQDir::homeDirPath()).remove(  "\"" ));
@@ -148,9 +148,9 @@ void DesktopPathConfig::defaults()
 
 void DesktopPathConfig::save()
 {
-    KConfig *config = TDEGlobal::config();
-    KConfig *xdgconfig = new KConfig( TQDir::homeDirPath()+"/.config/user-dirs.dirs" );
-    KConfigGroupSaver cgs( config, "Paths" );
+    TDEConfig *config = TDEGlobal::config();
+    TDEConfig *xdgconfig = new TDEConfig( TQDir::homeDirPath()+"/.config/user-dirs.dirs" );
+    TDEConfigGroupSaver cgs( config, "Paths" );
 
     bool pathChanged = false;
     bool autostartMoved = false;
@@ -232,7 +232,7 @@ void DesktopPathConfig::save()
         {
             if (!KStandardDirs::makeDir(path))
             {
-                KMessageBox::sorry(this, KIO::buildErrorString(KIO::ERR_COULD_NOT_MKDIR, path));
+                KMessageBox::sorry(this, TDEIO::buildErrorString(TDEIO::ERR_COULD_NOT_MKDIR, path));
                 urDocument->setURL(documentURL.path());
                 pathOk = false;
             }
@@ -283,20 +283,20 @@ bool DesktopPathConfig::moveDir( const KURL & src, const KURL & dest, const TQSt
         {
             m_copyToDest = dest;
             m_copyFromSrc = src;
-            KIO::ListJob* job = KIO::listDir( src );
-            connect( job, TQT_SIGNAL( entries( KIO::Job *, const KIO::UDSEntryList& ) ),
-                     this, TQT_SLOT( slotEntries( KIO::Job *, const KIO::UDSEntryList& ) ) );
+            TDEIO::ListJob* job = TDEIO::listDir( src );
+            connect( job, TQT_SIGNAL( entries( TDEIO::Job *, const TDEIO::UDSEntryList& ) ),
+                     this, TQT_SLOT( slotEntries( TDEIO::Job *, const TDEIO::UDSEntryList& ) ) );
             tqApp->enter_loop();
 
             if (m_ok)
             {
-                KIO::del( src );
+                TDEIO::del( src );
             }
         }
         else
         {
-            KIO::Job * job = KIO::move( src, dest );
-            connect( job, TQT_SIGNAL( result( KIO::Job * ) ), this, TQT_SLOT( slotResult( KIO::Job * ) ) );
+            TDEIO::Job * job = TDEIO::move( src, dest );
+            connect( job, TQT_SIGNAL( result( TDEIO::Job * ) ), this, TQT_SLOT( slotResult( TDEIO::Job * ) ) );
             // wait for job
             tqApp->enter_loop();
         }
@@ -305,7 +305,7 @@ bool DesktopPathConfig::moveDir( const KURL & src, const KURL & dest, const TQSt
     return m_ok;
 }
 
-void DesktopPathConfig::slotEntries( KIO::Job * job, const KIO::UDSEntryList& list)
+void DesktopPathConfig::slotEntries( TDEIO::Job * job, const TDEIO::UDSEntryList& list)
 {
     if (job->error())
     {
@@ -313,8 +313,8 @@ void DesktopPathConfig::slotEntries( KIO::Job * job, const KIO::UDSEntryList& li
         return;
     }
 
-    KIO::UDSEntryListConstIterator it = list.begin();
-    KIO::UDSEntryListConstIterator end = list.end();
+    TDEIO::UDSEntryListConstIterator it = list.begin();
+    TDEIO::UDSEntryListConstIterator end = list.end();
     for (; it != end; ++it)
     {
         KFileItem file(*it, m_copyFromSrc, true, true);
@@ -323,18 +323,18 @@ void DesktopPathConfig::slotEntries( KIO::Job * job, const KIO::UDSEntryList& li
             continue;
         }
 
-        KIO::Job * moveJob = KIO::move( file.url(), m_copyToDest );
-        connect( moveJob, TQT_SIGNAL( result( KIO::Job * ) ), this, TQT_SLOT( slotResult( KIO::Job * ) ) );
+        TDEIO::Job * moveJob = TDEIO::move( file.url(), m_copyToDest );
+        connect( moveJob, TQT_SIGNAL( result( TDEIO::Job * ) ), this, TQT_SLOT( slotResult( TDEIO::Job * ) ) );
         tqApp->enter_loop();
     }
     tqApp->exit_loop();
 }
 
-void DesktopPathConfig::slotResult( KIO::Job * job )
+void DesktopPathConfig::slotResult( TDEIO::Job * job )
 {
     if (job->error())
     {
-        if ( job->error() != KIO::ERR_DOES_NOT_EXIST )
+        if ( job->error() != TDEIO::ERR_DOES_NOT_EXIST )
             m_ok = false;
         // If the source doesn't exist, no wonder we couldn't move the dir.
         // In that case, trust the user and set the new setting in any case.

@@ -44,7 +44,7 @@ private:
 	TQString origIcons;
 	TQString defaultKWinStyle;
 	TQString currentStyle;
-	KConfig* ctwin;
+	TDEConfig* ctwin;
 	struct colorSet {
 		TQString colorFile, bgMode;
 		int contrast;

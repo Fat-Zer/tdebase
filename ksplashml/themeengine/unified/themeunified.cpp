@@ -32,7 +32,7 @@
 #include "themeunified.h"
 #include "themeunified.moc"
 
-UnifiedConfig::UnifiedConfig( TQWidget *parent, KConfig *config )
+UnifiedConfig::UnifiedConfig( TQWidget *parent, TDEConfig *config )
     :ThemeEngineConfig( parent, config )
 {
   mConfig->setGroup( TQString("KSplash Theme: Default") );
@@ -91,7 +91,7 @@ void ThemeUnified::_readSettings()
   if( !mTheme )
     return;
 
-  KConfig *cfg = mTheme->themeConfig();
+  TDEConfig *cfg = mTheme->themeConfig();
   if( !cfg )
     return;
 

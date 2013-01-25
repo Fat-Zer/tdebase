@@ -59,7 +59,7 @@ private:
  * @brief The Theme Manager config module.
  * @author Lukas Tinkl <lukas@kde.org>
  */
-class kthememanager: public KCModule
+class kthememanager: public TDECModule
 {
     Q_OBJECT
 public:

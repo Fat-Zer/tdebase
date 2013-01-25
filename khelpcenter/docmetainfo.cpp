@@ -132,7 +132,7 @@ void DocMetaInfo::scanMetaInfo( bool force )
     mLanguageNames.insert( *it, languageName( *it ) );
   }
 
-  KConfig config( "khelpcenterrc" );
+  TDEConfig config( "khelpcenterrc" );
   config.setGroup( "General" );
   TQStringList metaInfos = config.readListEntry( "MetaInfoDirs" );
 

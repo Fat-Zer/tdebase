@@ -24,7 +24,7 @@
 
 class KMMainView;
 
-class KCMPrintMgr : public KCModule
+class KCMPrintMgr : public TDECModule
 {
 public:
 	KCMPrintMgr(TQWidget *parent, const char *name, const TQStringList &);

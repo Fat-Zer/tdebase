@@ -63,7 +63,7 @@ class KDesktopShadowSettings : public KShadowSettings
      * Constructor
      * @param cfg the configuration file
      */
-    KDesktopShadowSettings(KConfig *cfg = NULL);
+    KDesktopShadowSettings(TDEConfig *cfg = NULL);
     
     virtual ~KDesktopShadowSettings();
     
@@ -71,7 +71,7 @@ class KDesktopShadowSettings : public KShadowSettings
      * Sets a specific configuration file after the object's creation
      * @param config new configuration object
      */
-    void setConfig(KConfig *);
+    void setConfig(TDEConfig *);
     
     /**
      * Returns the text color as definied in the configuraiton
@@ -104,7 +104,7 @@ class KDesktopShadowSettings : public KShadowSettings
     void setUID(unsigned long val = 0L);
     
  private:
-    KConfig *config;
+    TDEConfig *config;
     TQColor m_textColor;
     TQColor m_bgColor;
     bool m_isEnabled;

@@ -34,9 +34,9 @@
 
 // == class KJavaScriptOptions =====
 
-KJavaScriptOptions::KJavaScriptOptions( KConfig* config, TQString group, TQWidget *parent,
+KJavaScriptOptions::KJavaScriptOptions( TDEConfig* config, TQString group, TQWidget *parent,
 										const char *name ) :
-  KCModule( parent, name ),
+  TDECModule( parent, name ),
   _removeJavaScriptDomainAdvice(false),
    m_pConfig( config ), m_groupname( group ),
   js_global_policies(config,group,true,TQString::null),
@@ -165,7 +165,7 @@ void KJavaScriptOptions::slotChangeJSEnabled() {
 
 // == class JSDomainListView =====
 
-JSDomainListView::JSDomainListView(KConfig *config,const TQString &group,
+JSDomainListView::JSDomainListView(TDEConfig *config,const TQString &group,
 	KJavaScriptOptions *options, TQWidget *parent,const char *name)
 	: DomainListView(config,i18n( "Do&main-Specific" ), parent, name),
 	group(group), options(options) {

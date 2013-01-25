@@ -46,7 +46,7 @@ KSplash::KSplash(const char *name)
   mSessMgrCalled = false;
   mTimeToGo = false;
 
-  KConfig * config = kapp->config();
+  TDEConfig * config = kapp->config();
   slotReadProperties(config);
 
   prepareSplashScreen();
@@ -88,7 +88,7 @@ KSplash::~KSplash()
     KLibLoader::self()->unloadLibrary( mThemeLibName.latin1() );
 }
 
-void KSplash::slotReadProperties( KConfig *config )
+void KSplash::slotReadProperties( TDEConfig *config )
 {
   TDECmdLineArgs *arg = TDECmdLineArgs::parsedArgs();
   mTheme = arg->getOption("theme");

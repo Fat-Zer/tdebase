@@ -66,7 +66,7 @@ class TOM : public KPanelMenu
     protected:
         void reload();
 
-        int  appendTaskGroup(KConfig& config, bool inSubMenu = true );
+        int  appendTaskGroup(TDEConfig& config, bool inSubMenu = true );
         void initializeRecentApps(TQPopupMenu* menu);
         //int  insertTOMTitle(TQPopupMenu* menu, const TQString &text, int id = -1, int index = -1);
 

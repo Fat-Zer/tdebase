@@ -22,7 +22,7 @@
 
 #include <kdialog.h>
 
-class KConfig;
+class TDEConfig;
 class TQVBoxLayout;
 class KPushButton;
 
@@ -37,14 +37,14 @@ public:
   virtual void buildButtons(TQVBoxLayout * topLayout);
 
   virtual void save() = 0;
-  KConfig * config() { return pConfig; }
+  TDEConfig * config() { return pConfig; }
 
 protected slots:
   void slotShowHelp();
   void slotApply();
 
 protected:
-  KConfig* pConfig;
+  TDEConfig* pConfig;
   KPushButton* pOKButton;
   KPushButton* pCancelButton;
   KPushButton* pHelpButton;

@@ -28,7 +28,7 @@ class Action_data_base;
 class Main_buttons_widget;
 
 class Module
-    : public KCModule
+    : public TDECModule
     {
     Q_OBJECT
     public:

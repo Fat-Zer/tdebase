@@ -88,7 +88,7 @@ public:
     void emptyTrash();
 
 private slots:
-    void slotEntries( KIO::Job*, const KIO::UDSEntryList& );
+    void slotEntries( TDEIO::Job*, const TDEIO::UDSEntryList& );
 
 private:
     void trashFile( const TQString& origFilePath, const TQString& fileId );

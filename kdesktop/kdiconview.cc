@@ -278,7 +278,7 @@ void KDIconView::initConfig( bool init )
         KDesktopSettings::self()->readConfig();
     }
 
-    KConfig * config = TDEGlobal::config();
+    TDEConfig * config = TDEGlobal::config();
 
     if ( !init ) {
       KDesktopShadowSettings *shadowSettings = static_cast<KDesktopShadowSettings *>(m_shadowEngine->shadowSettings());
@@ -444,7 +444,7 @@ void KDIconView::createActions()
         connect( trash, TQT_SIGNAL( activated( KAction::ActivationReason, TQt::ButtonState ) ),
                  this, TQT_SLOT( slotTrashActivated( KAction::ActivationReason, TQt::ButtonState ) ) );
 
-        KConfig config("kdeglobals", true, false);
+        TDEConfig config("kdeglobals", true, false);
         config.setGroup( "KDE" );
         (void) new KAction( i18n( "&Delete" ), "editdelete", SHIFT+Key_Delete, TQT_TQOBJECT(this), TQT_SLOT( slotDelete() ), &m_actionCollection, "del" );
 
@@ -748,7 +748,7 @@ private:
 
 void KDIconView::fillMediaListView()
 {
-    g_pConfig = new KConfig("kdesktoprc");
+    g_pConfig = new TDEConfig("kdesktoprc");
     mMediaListView->hide();
     mMediaListView->clear();
     KMimeType::List mimetypes = KMimeType::allMimeTypes();
@@ -767,7 +767,7 @@ void KDIconView::fillMediaListView()
 
 void KDIconView::saveMediaListView()
 {
-    g_pConfig = new KConfig("kdesktoprc");
+    g_pConfig = new TDEConfig("kdesktoprc");
     g_pConfig->setGroup( "Media" );
     TQStringList exclude;
     for (DesktopBehaviorMediaItem *it=static_cast<DesktopBehaviorMediaItem *>(mMediaListView->firstChild());
@@ -1406,7 +1406,7 @@ void KDIconView::slotClipboardDataChanged()
 
     disableIcons( lst );
 
-    TQString actionText = KIO::pasteActionText();
+    TQString actionText = TDEIO::pasteActionText();
     bool paste = !actionText.isEmpty();
     if ( paste ) {
         KAction* pasteAction = m_actionCollection.action( "paste" );
@@ -1480,7 +1480,7 @@ void KDIconView::slotItemRenamed(TQIconViewItem* _item, const TQString &name)
    KonqIconViewWidget::slotItemRenamed(_item, newName);
 }
 
-void KDIconView::slotAboutToCreate(const TQPoint &pos, const TQValueList<KIO::CopyInfo> &files)
+void KDIconView::slotAboutToCreate(const TQPoint &pos, const TQValueList<TDEIO::CopyInfo> &files)
 {
    if (pos.isNull())
       return;
@@ -1493,7 +1493,7 @@ void KDIconView::slotAboutToCreate(const TQPoint &pos, const TQValueList<KIO::Co
 
     TQString dir = url().path(-1); // Strip trailing /
 
-    TQValueList<KIO::CopyInfo>::ConstIterator it = files.begin();
+    TQValueList<TDEIO::CopyInfo>::ConstIterator it = files.begin();
     int gridX = gridXValue();
     int gridY = 120; // 120 pixels should be enough for everyone (tm)
 
@@ -1704,7 +1704,7 @@ void KDIconView::setupSortKeys()
                 strKey = it->text().lower();
                 break;
             case Size:
-                strKey = KIO::number(static_cast<KFileIVI *>( it )->item()->size()).rightJustify(20, '0');
+                strKey = TDEIO::number(static_cast<KFileIVI *>( it )->item()->size()).rightJustify(20, '0');
                 break;
             case Type:
                 // Sort by Type + Name (#17014)
@@ -1713,7 +1713,7 @@ void KDIconView::setupSortKeys()
             case Date:
                 TQDateTime dayt;
                 dayt.setTime_t( static_cast<KFileIVI *>( it )->
-                    item()->time( KIO::UDS_MODIFICATION_TIME ) );
+                    item()->time( TDEIO::UDS_MODIFICATION_TIME ) );
                 strKey = dayt.toString( "yyyyMMddhhmmss" );
                 break;
             }

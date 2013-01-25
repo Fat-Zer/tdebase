@@ -39,12 +39,12 @@ public:
 	bool parseURL(const KURL &url, TQString &name, TQString &path) const;
 	bool realURL(const TQString &name, const TQString &path, KURL &url);
 
-	bool statMedium(const TQString &name, KIO::UDSEntry &entry);
-	bool statMediumByLabel(const TQString &label, KIO::UDSEntry &entry);
-	bool listMedia(TQValueList<KIO::UDSEntry> &list);
+	bool statMedium(const TQString &name, TDEIO::UDSEntry &entry);
+	bool statMediumByLabel(const TQString &label, TDEIO::UDSEntry &entry);
+	bool listMedia(TQValueList<TDEIO::UDSEntry> &list);
 	bool setUserLabel(const TQString &name, const TQString &label);
 
-	void createTopLevelEntry(KIO::UDSEntry& entry) const;
+	void createTopLevelEntry(TDEIO::UDSEntry& entry) const;
 
 	int lastErrorCode() const { return m_lastErrorCode; }
 	TQString lastErrorMessage() const { return m_lastErrorMessage; }
@@ -56,18 +56,18 @@ signals:
 	void warning(const TQString &msg);
 
 private slots:
-	void slotWarning(KIO::Job *job, const TQString &msg);
-	void slotMountResult(KIO::Job *job);
-	void slotStatResult(KIO::Job *job);
+	void slotWarning(TDEIO::Job *job, const TQString &msg);
+	void slotMountResult(TDEIO::Job *job);
+	void slotStatResult(TDEIO::Job *job);
 
 private:
 	const Medium findMediumByName(const TQString &name, bool &ok);
 	bool ensureMediumMounted(Medium &medium);
 
-	KIO::UDSEntry extractUrlInfos(const KURL &url);
-	KIO::UDSEntry m_entryBuffer;
+	TDEIO::UDSEntry extractUrlInfos(const KURL &url);
+	TDEIO::UDSEntry m_entryBuffer;
 
-	void createMediumEntry(KIO::UDSEntry& entry,
+	void createMediumEntry(TDEIO::UDSEntry& entry,
 	                       const Medium &medium);
 
 	Medium *mp_mounting;

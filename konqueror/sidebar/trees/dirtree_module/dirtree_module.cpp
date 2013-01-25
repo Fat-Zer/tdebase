@@ -42,7 +42,7 @@ KonqSidebarDirTreeModule::KonqSidebarDirTreeModule( KonqSidebarTree * parentTree
         universalMode = ksi ? ksi->universalMode() : false;
     } */
 
-    KConfig * config = new KConfig( universalMode ? "konqsidebartng_kicker.rc" : "konqsidebartng.rc" );
+    TDEConfig * config = new TDEConfig( universalMode ? "konqsidebartng_kicker.rc" : "konqsidebartng.rc" );
     config->setGroup("");
     m_showArchivesAsFolders = config->readBoolEntry("ShowArchivesAsFolders",true);
     delete config;
@@ -90,7 +90,7 @@ void KonqSidebarDirTreeModule::addTopLevelItem( KonqSidebarTreeTopLevelItem * it
 		TQString configured = cfg.readEntry("X-TDE-ConfiguredURL");
 		if (!configured.isEmpty()) {
 			TQStringList list = TQStringList::split(':', configured);
-			KConfig config(list[0]);
+			TDEConfig config(list[0]);
 			if (list[1] != "noGroup") config.setGroup(list[1]);
 			TQString conf_url = config.readEntry(list[2]);
 			if (!conf_url.isEmpty()) {
@@ -378,7 +378,7 @@ void KonqSidebarDirTreeModule::listDirectory( KonqSidebarTreeItem *item )
 
           KonqSidebarDirTreeItem *dirTreeItem = new KonqSidebarDirTreeItem( parentItem, m_topLevelItem, fileItem );
           dirTreeItem->setPixmap( 0, fileItem->pixmap( size ) );
-          dirTreeItem->setText( 0, KIO::decodeFileName( fileItem->name() ) );
+          dirTreeItem->setText( 0, TDEIO::decodeFileName( fileItem->name() ) );
 
           oldItem = static_cast<KonqSidebarDirTreeItem *> (oldItem->nextSibling());
        }
@@ -447,7 +447,7 @@ void KonqSidebarDirTreeModule::slotNewItems( const KFileItemList& entries )
 
             KonqSidebarDirTreeItem *dirTreeItem = new KonqSidebarDirTreeItem( parentItem, m_topLevelItem, fileItem );
             dirTreeItem->setPixmap( 0, fileItem->pixmap( size ) );
-            dirTreeItem->setText( 0, KIO::decodeFileName( fileItem->name() ) );
+            dirTreeItem->setText( 0, TDEIO::decodeFileName( fileItem->name() ) );
         }
         
     } while ((parentItem = parentItemList ? parentItemList->take(0) : 0));
@@ -494,7 +494,7 @@ void KonqSidebarDirTreeModule::slotRefreshItems( const KFileItemList &entries )
 
                 dirTreeItem->reset(); // Reset id
                 dirTreeItem->setPixmap( 0, fileItem->pixmap( size ) );
-                dirTreeItem->setText( 0, KIO::decodeFileName( fileItem->name() ) );
+                dirTreeItem->setText( 0, TDEIO::decodeFileName( fileItem->name() ) );
 
                 // Make sure the item doesn't get inserted twice!
                 // dirTreeItem->id points to the new name
@@ -504,7 +504,7 @@ void KonqSidebarDirTreeModule::slotRefreshItems( const KFileItemList &entries )
             else
             {
                 dirTreeItem->setPixmap( 0, fileItem->pixmap( size ) );
-                dirTreeItem->setText( 0, KIO::decodeFileName( fileItem->name() ) );
+                dirTreeItem->setText( 0, TDEIO::decodeFileName( fileItem->name() ) );
             }
 
         } while ((item = itemList ? itemList->take(0) : 0));

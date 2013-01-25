@@ -103,13 +103,13 @@ RootInfoWidget::RootInfoWidget(TQWidget *parent, const char *name = 0)
 class ProxyView : public TQScrollView
 {
 public:
-    ProxyView(KCModule *client, const TQString& title, TQWidget *parent, bool run_as_root, const char *name);
+    ProxyView(TDECModule *client, const TQString& title, TQWidget *parent, bool run_as_root, const char *name);
 
 private:
     virtual void resizeEvent(TQResizeEvent *);
 
     TQWidget *contentWidget;
-    KCModule    *client;
+    TDECModule    *client;
     bool scroll;
 };
 
@@ -124,7 +124,7 @@ public:
 };
 
 
-ProxyView::ProxyView(KCModule *_client, const TQString&, TQWidget *parent, bool run_as_root, const char *name)
+ProxyView::ProxyView(TDECModule *_client, const TQString&, TQWidget *parent, bool run_as_root, const char *name)
     : TQScrollView(parent, name), client(_client)
 {
   setResizePolicy(TQScrollView::AutoOneFit);
@@ -157,7 +157,7 @@ void ProxyView::resizeEvent(TQResizeEvent *e)
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-ProxyWidget::ProxyWidget(KCModule *client, TQString title, const char *name,
+ProxyWidget::ProxyWidget(TDECModule *client, TQString title, const char *name,
              bool run_as_root)
   : TQWidget(0, name)
   , _client(client)
@@ -215,10 +215,10 @@ ProxyWidget::ProxyWidget(KCModule *client, TQString title, const char *name,
 
   // only enable the requested buttons
   int b = _client->buttons();
-  trinity_setVisible(_handbook, (b & KCModule::Help));
-  trinity_setVisible(_default, mayModify && (b & KCModule::Default));
-  trinity_setVisible(_apply, mayModify && (b & KCModule::Apply));
-  trinity_setVisible(_reset, mayModify && (b & KCModule::Apply));
+  trinity_setVisible(_handbook, (b & TDECModule::Help));
+  trinity_setVisible(_default, mayModify && (b & TDECModule::Default));
+  trinity_setVisible(_apply, mayModify && (b & TDECModule::Apply));
+  trinity_setVisible(_reset, mayModify && (b & TDECModule::Apply));
   trinity_setVisible(_root, run_as_root);
 
   // disable initial buttons

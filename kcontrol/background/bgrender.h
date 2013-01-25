@@ -23,7 +23,7 @@ class TQRect;
 class TQString;
 class TQTimer;
 
-class KConfig;
+class TDEConfig;
 class TDEProcess;
 class KTempFile;
 class KShellProcess;
@@ -42,7 +42,7 @@ class KBackgroundRenderer:
     Q_OBJECT
 
 public:
-    KBackgroundRenderer(int desk, int screen, bool drawBackgroundPerScreen, KConfig *config=0);
+    KBackgroundRenderer(int desk, int screen, bool drawBackgroundPerScreen, TDEConfig *config=0);
     ~KBackgroundRenderer();
     
     void load(int desk, int screen, bool drawBackgroundPerScreen, bool reparseConfig=true);
@@ -124,7 +124,7 @@ class KVirtualBGRenderer : public QObject
 {
     Q_OBJECT
 public:
-    KVirtualBGRenderer(int desk, KConfig *config=0l);
+    KVirtualBGRenderer(int desk, TDEConfig *config=0l);
     ~KVirtualBGRenderer();
     
     KBackgroundRenderer * renderer(unsigned screen);
@@ -162,7 +162,7 @@ private:
     TQSize renderSize(int screen); // the size the renderer should be
     void initRenderers();
     
-    KConfig *m_pConfig;
+    TDEConfig *m_pConfig;
     float m_scaleX;
     float m_scaleY;
     int m_desk;

@@ -49,12 +49,12 @@ typedef KGenericFactory<KCMIOSlaveInfo, TQWidget> SlaveFactory;
 K_EXPORT_COMPONENT_FACTORY( kcm_ioslaveinfo, SlaveFactory("kcmioslaveinfo") )
 
 KCMIOSlaveInfo::KCMIOSlaveInfo(TQWidget *parent, const char *name, const TQStringList &)
-               :KCModule(SlaveFactory::instance(), parent,name),m_ioslavesLb(0),m_tfj(0)
+               :TDECModule(SlaveFactory::instance(), parent,name),m_ioslavesLb(0),m_tfj(0)
 {
    TQVBoxLayout *layout=new TQVBoxLayout(this, 0, KDialog::spacingHint());
 
    setQuickHelp( i18n("<h1>IO slaves</h1> Gives you an overview of the installed ioslaves."));
-   setButtons( KCModule::Help );
+   setButtons( TDECModule::Help );
 
    TQLabel* label=new TQLabel(i18n("Available IO slaves:"),this);
    TQHBox *hbox=new TQHBox(this);
@@ -80,7 +80,7 @@ KCMIOSlaveInfo::KCMIOSlaveInfo(TQWidget *parent, const char *name, const TQStrin
    m_ioslavesLb->sort();
    m_ioslavesLb->setSelected(0, true);
 
-   setButtons(KCModule::Help);
+   setButtons(TDECModule::Help);
 
    TDEAboutData *about =
    new TDEAboutData(I18N_NOOP("kcmioslaveinfo"),
@@ -94,7 +94,7 @@ KCMIOSlaveInfo::KCMIOSlaveInfo(TQWidget *parent, const char *name, const TQStrin
 
 }
 
-void KCMIOSlaveInfo::slaveHelp( KIO::Job *, const TQByteArray &data)
+void KCMIOSlaveInfo::slaveHelp( TDEIO::Job *, const TQByteArray &data)
 {
     if ( data.size() == 0 ) { // EOF
         int index = helpData.find( "<meta http-equiv=\"Content-Type\"" );
@@ -111,7 +111,7 @@ void KCMIOSlaveInfo::slaveHelp( KIO::Job *, const TQByteArray &data)
     helpData += data;
 }
 
-void KCMIOSlaveInfo::slotResult(KIO::Job *)
+void KCMIOSlaveInfo::slotResult(TDEIO::Job *)
 {
    m_tfj = 0;
 }
@@ -129,9 +129,9 @@ void KCMIOSlaveInfo::showInfo(const TQString& protocol)
    if (!file.isEmpty())
    {
        helpData.truncate( 0 );
-       m_tfj = KIO::get( KURL( TQString("help:/kioslave/%1.html").arg( protocol ) ), true, false );
-       connect( m_tfj, TQT_SIGNAL( data( KIO::Job *, const TQByteArray &) ), TQT_SLOT( slaveHelp( KIO::Job *, const TQByteArray &) ) );
-       connect( m_tfj, TQT_SIGNAL( result( KIO::Job * ) ), TQT_SLOT( slotResult( KIO::Job * ) ) );
+       m_tfj = TDEIO::get( KURL( TQString("help:/kioslave/%1.html").arg( protocol ) ), true, false );
+       connect( m_tfj, TQT_SIGNAL( data( TDEIO::Job *, const TQByteArray &) ), TQT_SLOT( slaveHelp( TDEIO::Job *, const TQByteArray &) ) );
+       connect( m_tfj, TQT_SIGNAL( result( TDEIO::Job * ) ), TQT_SLOT( slotResult( TDEIO::Job * ) ) );
        return;
    }
    m_info->setText(i18n("Some info about protocol %1:/ ...").arg(protocol));

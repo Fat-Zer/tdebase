@@ -44,9 +44,9 @@ KonsoleBookmarkHandler::KonsoleBookmarkHandler( Konsole *konsole, bool toplevel 
         TQString old_bm_file = locateLocal( "data", "kfile/bookmarks.xml" );
         if ( TQFile::exists( old_bm_file ) )
             // We want sync here... 
-            if ( !KIO::NetAccess::copy( KURL( old_bm_file ), 
+            if ( !TDEIO::NetAccess::copy( KURL( old_bm_file ), 
                                    KURL ( new_bm_file ), 0 ) ) {
-                kdWarning()<<KIO::NetAccess::lastErrorString()<<endl;
+                kdWarning()<<TDEIO::NetAccess::lastErrorString()<<endl;
             }
     }
 

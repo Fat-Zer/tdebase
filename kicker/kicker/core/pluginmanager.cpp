@@ -113,7 +113,7 @@ AppletInfo::List PluginManager::plugins(const TQStringList& desktopFiles,
 
 PluginManager::PluginManager()
 {
-    KConfigGroup generalGroup(TDEGlobal::config(), "General");
+    TDEConfigGroup generalGroup(TDEGlobal::config(), "General");
     m_untrustedApplets = generalGroup.readListEntry("UntrustedApplets");
     m_untrustedExtensions = generalGroup.readListEntry("UntrustedExtensions");
 }
@@ -282,7 +282,7 @@ AppletContainer* PluginManager::createAppletContainer(
     {
         // we haven't loaded this puppy before and we're not in the untrusted list
         m_untrustedApplets.append(desktopFile);
-        KConfigGroup generalGroup(TDEGlobal::config(), "General");
+        TDEConfigGroup generalGroup(TDEGlobal::config(), "General");
         generalGroup.writeEntry("UntrustedApplets", m_untrustedApplets);
         generalGroup.sync();
     }
@@ -335,7 +335,7 @@ ExtensionContainer* PluginManager::createExtensionContainer(const TQString& desk
         {
             // we don't have an instance around and we're not in the untrusted list!
             m_untrustedExtensions.append(desktopFile);
-            KConfigGroup generalGroup(TDEGlobal::config(), "General");
+            TDEConfigGroup generalGroup(TDEGlobal::config(), "General");
             generalGroup.writeEntry("UntrustedExtensions", m_untrustedExtensions);
             generalGroup.sync();
         }
@@ -349,7 +349,7 @@ void PluginManager::clearUntrustedLists()
     m_untrustedExtensions.clear();
     m_untrustedApplets.clear();
 
-    KConfigGroup generalGroup(TDEGlobal::config(), "General");
+    TDEConfigGroup generalGroup(TDEGlobal::config(), "General");
     generalGroup.writeEntry("UntrustedApplets", m_untrustedApplets);
     generalGroup.writeEntry("UntrustedExtensions", m_untrustedExtensions);
     generalGroup.sync();

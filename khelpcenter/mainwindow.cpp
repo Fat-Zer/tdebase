@@ -97,8 +97,8 @@ MainWindow::MainWindow()
              TQT_SLOT( statusBarMessage( const TQString & ) ) );
     connect( mDoc, TQT_SIGNAL( onURL( const TQString & ) ),
              TQT_SLOT( statusBarMessage( const TQString & ) ) );
-    connect( mDoc, TQT_SIGNAL( started( KIO::Job * ) ),
-             TQT_SLOT( slotStarted( KIO::Job * ) ) );
+    connect( mDoc, TQT_SIGNAL( started( TDEIO::Job * ) ),
+             TQT_SLOT( slotStarted( TDEIO::Job * ) ) );
     connect( mDoc, TQT_SIGNAL( completed() ),
              TQT_SLOT( documentCompleted() ) );
     connect( mDoc, TQT_SIGNAL( searchResultCacheAvailable() ),
@@ -130,11 +130,11 @@ MainWindow::MainWindow()
     mSplitter->setSizes(sizes);
     setGeometry(366, 0, 800, 600);
 
-    KConfig *cfg = kapp->config();
+    TDEConfig *cfg = kapp->config();
     {
-      KConfigGroupSaver groupSaver( cfg, "General" );
+      TDEConfigGroupSaver groupSaver( cfg, "General" );
       if ( cfg->readBoolEntry( "UseKonqSettings", true ) ) {
-        KConfig konqCfg( "konquerorrc" );
+        TDEConfig konqCfg( "konquerorrc" );
         const_cast<KHTMLSettings *>( mDoc->settings() )->init( &konqCfg );
       }
       const int zoomFactor = cfg->readNumEntry( "Font zoom factor", 100 );
@@ -171,21 +171,21 @@ void MainWindow::enableCopyTextAction()
     mCopyText->setEnabled( mDoc->hasSelection() );
 }
 
-void MainWindow::saveProperties( KConfig *config )
+void MainWindow::saveProperties( TDEConfig *config )
 {
-    kdDebug()<<"void MainWindow::saveProperties( KConfig *config )" << endl;
+    kdDebug()<<"void MainWindow::saveProperties( TDEConfig *config )" << endl;
     config->writePathEntry( "URL" , mDoc->baseURL().url() );
 }
 
-void MainWindow::readProperties( KConfig *config )
+void MainWindow::readProperties( TDEConfig *config )
 {
-    kdDebug()<<"void MainWindow::readProperties( KConfig *config )" << endl;
+    kdDebug()<<"void MainWindow::readProperties( TDEConfig *config )" << endl;
     mDoc->slotReload( KURL( config->readPathEntry( "URL" ) ) );
 }
 
 void MainWindow::readConfig()
 {
-    KConfig *config = TDEGlobal::config();
+    TDEConfig *config = TDEGlobal::config();
     config->setGroup( "MainWindowState" );
     TQValueList<int> sizes = config->readIntListEntry( "Splitter" );
     if ( sizes.count() == 2 ) {
@@ -197,7 +197,7 @@ void MainWindow::readConfig()
 
 void MainWindow::writeConfig()
 {
-    KConfig *config = TDEGlobal::config();
+    TDEConfig *config = TDEGlobal::config();
     config->setGroup( "MainWindowState" );
     config->writeEntry( "Splitter", mSplitter->sizes() );
 
@@ -237,7 +237,7 @@ void MainWindow::setupActions()
     KStdAction::keyBindings( guiFactory(), TQT_SLOT( configureShortcuts() ),
       actionCollection() );
 
-    KConfig *cfg = TDEGlobal::config();
+    TDEConfig *cfg = TDEGlobal::config();
     cfg->setGroup( "Debug" );
     if ( cfg->readBoolEntry( "SearchErrorLog", false ) ) {
       new KAction( i18n("Show Search Error Log"), 0, TQT_TQOBJECT(this),
@@ -262,11 +262,11 @@ void MainWindow::print()
     mDoc->view()->print();
 }
 
-void MainWindow::slotStarted(KIO::Job *job)
+void MainWindow::slotStarted(TDEIO::Job *job)
 {
     if (job)
-       connect(job, TQT_SIGNAL(infoMessage( KIO::Job *, const TQString &)),
-               TQT_SLOT(slotInfoMessage(KIO::Job *, const TQString &)));
+       connect(job, TQT_SIGNAL(infoMessage( TDEIO::Job *, const TQString &)),
+               TQT_SLOT(slotInfoMessage(TDEIO::Job *, const TQString &)));
 
     History::self().updateActions();
 }
@@ -342,7 +342,7 @@ void MainWindow::documentCompleted()
     History::self().updateActions();
 }
 
-void MainWindow::slotInfoMessage(KIO::Job *, const TQString &m)
+void MainWindow::slotInfoMessage(TDEIO::Job *, const TQString &m)
 {
     statusBarMessage(m);
 }
@@ -447,9 +447,9 @@ void MainWindow::updateZoomActions()
   actionCollection()->action( "incFontSizes" )->setEnabled( mDoc->zoomFactor() + mDoc->zoomStepping() <= 300 );
   actionCollection()->action( "decFontSizes" )->setEnabled( mDoc->zoomFactor() - mDoc->zoomStepping() >= 20 );
 
-  KConfig *cfg = kapp->config();
+  TDEConfig *cfg = kapp->config();
   {
-    KConfigGroupSaver groupSaver( cfg, "General" );
+    TDEConfigGroupSaver groupSaver( cfg, "General" );
     cfg->writeEntry( "Font zoom factor", mDoc->zoomFactor() );
     cfg->sync();
   }

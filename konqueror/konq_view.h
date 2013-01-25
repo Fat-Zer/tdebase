@@ -358,18 +358,18 @@ public slots:
 
   void setPageSecurity( int );
 
-  // connected to the KROP's KIO::Job
+  // connected to the KROP's TDEIO::Job
   // but also to KonqRun's job
-  void slotInfoMessage( KIO::Job *, const TQString &msg );
+  void slotInfoMessage( TDEIO::Job *, const TQString &msg );
 
 protected slots:
-  // connected to the KROP's KIO::Job
-  void slotStarted( KIO::Job * job );
+  // connected to the KROP's TDEIO::Job
+  void slotStarted( TDEIO::Job * job );
   void slotCompleted();
   void slotCompleted( bool );
   void slotCanceled( const TQString & errMsg );
-  void slotPercent( KIO::Job *, unsigned long percent );
-  void slotSpeed( KIO::Job *, unsigned long bytesPerSecond );
+  void slotPercent( TDEIO::Job *, unsigned long percent );
+  void slotSpeed( TDEIO::Job *, unsigned long bytesPerSecond );
 
   /**
    * Connected to the BrowserExtension

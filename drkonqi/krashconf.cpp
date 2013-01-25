@@ -88,7 +88,7 @@ void KrashConfig :: readConfig()
     KStartupInfo::sendFinish( id );
   }
 
-  KConfig *config = TDEGlobal::config();
+  TDEConfig *config = TDEGlobal::config();
   config->setGroup("drkonqi");
 
   // maybe we should check if it's relative?
@@ -98,7 +98,7 @@ void KrashConfig :: readConfig()
   TQString debuggername = config->readEntry("Debugger",
                                            TQString::fromLatin1("gdb"));
 
-  KConfig debuggers(TQString::fromLatin1("debuggers/%1rc").arg(debuggername),
+  TDEConfig debuggers(TQString::fromLatin1("debuggers/%1rc").arg(debuggername),
                     true, false, "appdata");
 
   debuggers.setGroup("General");
@@ -112,7 +112,7 @@ void KrashConfig :: readConfig()
   m_neededInValidBacktraceRegExp = debuggers.readEntry("NeededInValidBacktraceRegExp");
   m_kcrashRegExp = debuggers.readEntry("KCrashRegExp");
 
-  KConfig preset(TQString::fromLatin1("presets/%1rc").arg(configname),
+  TDEConfig preset(TQString::fromLatin1("presets/%1rc").arg(configname),
                  true, false, "appdata");
 
   preset.setGroup("ErrorDescription");

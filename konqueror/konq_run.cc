@@ -130,7 +130,7 @@ void KonqRun::foundMimeType( const TQString & _type )
   KRun::foundMimeType( mimeType );
 }
 
-void KonqRun::handleError( KIO::Job *job )
+void KonqRun::handleError( TDEIO::Job *job )
 {
   kdDebug(1202) << "KonqRun::handleError error:" << job->errorString() << endl;
   if (!m_mailto.isEmpty())
@@ -148,10 +148,10 @@ void KonqRun::init()
     KParts::BrowserRun::init();
     // Maybe init went to the "let's try stat'ing" part. Then connect to info messages.
     // (in case it goes to scanFile, this will be done below)
-    KIO::StatJob *job = tqt_dynamic_cast<KIO::StatJob*>( m_job );
+    TDEIO::StatJob *job = tqt_dynamic_cast<TDEIO::StatJob*>( m_job );
     if ( job && !job->error() && m_pView ) {
-        connect( job, TQT_SIGNAL( infoMessage( KIO::Job*, const TQString& ) ),
-                 m_pView, TQT_SLOT( slotInfoMessage(KIO::Job*, const TQString& ) ) );
+        connect( job, TQT_SIGNAL( infoMessage( TDEIO::Job*, const TQString& ) ),
+                 m_pView, TQT_SLOT( slotInfoMessage(TDEIO::Job*, const TQString& ) ) );
     }
 }
 
@@ -160,20 +160,20 @@ void KonqRun::scanFile()
     KParts::BrowserRun::scanFile();
     // could be a static cast as of now, but who would notify when
     // BrowserRun changes
-    KIO::TransferJob *job = tqt_dynamic_cast<KIO::TransferJob*>( m_job );
+    TDEIO::TransferJob *job = tqt_dynamic_cast<TDEIO::TransferJob*>( m_job );
     if ( job && !job->error() ) {
-        connect( job, TQT_SIGNAL( redirection( KIO::Job *, const KURL& )),
-                 TQT_SLOT( slotRedirection( KIO::Job *, const KURL& ) ));
+        connect( job, TQT_SIGNAL( redirection( TDEIO::Job *, const KURL& )),
+                 TQT_SLOT( slotRedirection( TDEIO::Job *, const KURL& ) ));
         if ( m_pView && m_pView->service()->desktopEntryName() != "konq_sidebartng") {
-            connect( job, TQT_SIGNAL( infoMessage( KIO::Job*, const TQString& ) ),
-                     m_pView, TQT_SLOT( slotInfoMessage(KIO::Job*, const TQString& ) ) );
+            connect( job, TQT_SIGNAL( infoMessage( TDEIO::Job*, const TQString& ) ),
+                     m_pView, TQT_SLOT( slotInfoMessage(TDEIO::Job*, const TQString& ) ) );
 	}
     }
 }
 
-void KonqRun::slotRedirection( KIO::Job *job, const KURL& redirectedToURL )
+void KonqRun::slotRedirection( TDEIO::Job *job, const KURL& redirectedToURL )
 {
-    KURL redirectFromURL = static_cast<KIO::TransferJob *>(job)->url();
+    KURL redirectFromURL = static_cast<TDEIO::TransferJob *>(job)->url();
     kdDebug(1202) << "KonqRun::slotRedirection from " <<
         redirectFromURL.prettyURL() << " to " << redirectedToURL.prettyURL() << endl;
     KonqHistoryManager::kself()->confirmPending( redirectFromURL );

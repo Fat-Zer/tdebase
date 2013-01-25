@@ -76,7 +76,7 @@ void SMBSlave::auth_smbc_get_data(const char *server,const char *share,
     password[pwmaxlen - 1] = 0;
     TQString s_password = TQString::fromUtf8(password);
 
-    KIO::AuthInfo info;
+    TDEIO::AuthInfo info;
     info.url = KURL("smb:///");
     info.url.setHost(s_server);
     info.url.setPath("/" + s_share);
@@ -113,7 +113,7 @@ bool SMBSlave::checkPassword(SMBUrl &url)
 {
     kdDebug(KIO_SMB) << "checkPassword for " << url << endl;
 
-    KIO::AuthInfo info;
+    TDEIO::AuthInfo info;
     info.url = KURL("smb:///");
     info.url.setHost(url.host());
 

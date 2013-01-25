@@ -33,7 +33,7 @@
 
 // == class PluginPolicies =====
 
-PluginPolicies::PluginPolicies(KConfig* config, const TQString &group, bool global,
+PluginPolicies::PluginPolicies(TDEConfig* config, const TQString &group, bool global,
   		const TQString &domain) :
 	Policies(config,group,global,domain,"plugins.","EnablePlugins") {
 }
@@ -43,9 +43,9 @@ PluginPolicies::~PluginPolicies() {
 
 // == class KPluginOptions =====
 
-KPluginOptions::KPluginOptions( KConfig* config, TQString group, TQWidget *parent,
+KPluginOptions::KPluginOptions( TDEConfig* config, TQString group, TQWidget *parent,
                             const char *)
-    : KCModule( parent, "kcmkonqhtml" ),
+    : TDECModule( parent, "kcmkonqhtml" ),
       m_pConfig( config ),
       m_groupname( group ),
       m_nspluginscan (0),
@@ -190,7 +190,7 @@ void KPluginOptions::load( bool useDefaults )
 
 /****************************************************************************/
 
-  KConfig *config = new KConfig("kcmnspluginrc", true);
+  TDEConfig *config = new TDEConfig("kcmnspluginrc", true);
 
   config->setReadDefaults( useDefaults );
 
@@ -236,7 +236,7 @@ void KPluginOptions::save()
 
 /*****************************************************************************/
 
-    KConfig *config= new KConfig("kcmnspluginrc", false);
+    TDEConfig *config= new TDEConfig("kcmnspluginrc", false);
 
     dirSave( config );
     pluginSave( config );
@@ -364,7 +364,7 @@ void KPluginOptions::dirInit()
 }
 
 
-void KPluginOptions::dirLoad( KConfig *config, bool useDefault )
+void KPluginOptions::dirLoad( TDEConfig *config, bool useDefault )
 {
     TQStringList paths;
 
@@ -406,7 +406,7 @@ void KPluginOptions::dirLoad( KConfig *config, bool useDefault )
 }
 
 
-void KPluginOptions::dirSave( KConfig *config )
+void KPluginOptions::dirSave( TDEConfig *config )
 {
     // create stringlist
     TQStringList paths;
@@ -506,7 +506,7 @@ void KPluginOptions::pluginInit()
 }
 
 
-void KPluginOptions::pluginLoad( KConfig* /*config*/ )
+void KPluginOptions::pluginLoad( TDEConfig* /*config*/ )
 {
     kdDebug() << "-> KPluginOptions::fillPluginList" << endl;
     m_widget->pluginList->clear();
@@ -583,7 +583,7 @@ void KPluginOptions::pluginLoad( KConfig* /*config*/ )
 }
 
 
-void KPluginOptions::pluginSave( KConfig* /*config*/ )
+void KPluginOptions::pluginSave( TDEConfig* /*config*/ )
 {
 
 }
@@ -623,7 +623,7 @@ void PluginDomainDialog::slotClose() {
 
 // == class PluginDomainListView =====
 
-PluginDomainListView::PluginDomainListView(KConfig *config,const TQString &group,
+PluginDomainListView::PluginDomainListView(TDEConfig *config,const TQString &group,
 	KPluginOptions *options,TQWidget *parent,const char *name)
 	: DomainListView(config,i18n( "Doma&in-Specific" ), parent, name),
 	group(group), options(options) {

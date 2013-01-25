@@ -216,7 +216,7 @@ KateFileSelector::~KateFileSelector()
 
 //BEGIN Public Methods
 
-void KateFileSelector::readConfig(KConfig *config, const TQString & name)
+void KateFileSelector::readConfig(TDEConfig *config, const TQString & name)
 {
   dir->setViewConfig( config, name + ":view" );
   dir->readConfig(config, name + ":dir");
@@ -258,7 +258,7 @@ void KateFileSelector::initialDirChangeHack()
   setDir( waitingDir );
 }
 
-void KateFileSelector::setupToolbar( KConfig *config )
+void KateFileSelector::setupToolbar( TDEConfig *config )
 {
   toolbar->clear();
   TQStringList tbactions = config->readListEntry( "toolbar actions", ',' );
@@ -279,7 +279,7 @@ void KateFileSelector::setupToolbar( KConfig *config )
   }
 }
 
-void KateFileSelector::writeConfig(KConfig *config, const TQString & name)
+void KateFileSelector::writeConfig(TDEConfig *config, const TQString & name)
 {
   dir->writeConfig(config,name + ":dir");
 
@@ -630,7 +630,7 @@ void KFSConfigPage::apply()
 
   m_changed = false;
 
-  KConfig *config = kapp->config();
+  TDEConfig *config = kapp->config();
   config->setGroup( "fileselector" );
   // toolbar
   TQStringList l;
@@ -672,7 +672,7 @@ void KFSConfigPage::reload()
 }
 void KFSConfigPage::init()
 {
-  KConfig *config = kapp->config();
+  TDEConfig *config = kapp->config();
   config->setGroup( "fileselector" );
   // toolbar
   TQStringList l = config->readListEntry( "toolbar actions", ',' );

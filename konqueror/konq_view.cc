@@ -372,8 +372,8 @@ bool KonqView::changeViewMode( const TQString &serviceType,
 void KonqView::connectPart(  )
 {
   //kdDebug(1202) << "KonqView::connectPart" << endl;
-  connect( m_pPart, TQT_SIGNAL( started( KIO::Job * ) ),
-           this, TQT_SLOT( slotStarted( KIO::Job * ) ) );
+  connect( m_pPart, TQT_SIGNAL( started( TDEIO::Job * ) ),
+           this, TQT_SLOT( slotStarted( TDEIO::Job * ) ) );
   connect( m_pPart, TQT_SIGNAL( completed() ),
            this, TQT_SLOT( slotCompleted() ) );
   connect( m_pPart, TQT_SIGNAL( completed(bool) ),
@@ -518,7 +518,7 @@ void KonqView::slotResizeTopLevelWidget( int w, int h )
     m_pMainWindow->resize( w, h );
 }
 
-void KonqView::slotStarted( KIO::Job * job )
+void KonqView::slotStarted( TDEIO::Job * job )
 {
   //kdDebug(1202) << "KonqView::slotStarted"  << job << endl;
   setLoading( true );
@@ -532,9 +532,9 @@ void KonqView::slotStarted( KIO::Job * job )
         job->setWindow (m_pMainWindow->topLevelWidget ());
       }
 
-      connect( job, TQT_SIGNAL( percent( KIO::Job *, unsigned long ) ), this, TQT_SLOT( slotPercent( KIO::Job *, unsigned long ) ) );
-      connect( job, TQT_SIGNAL( speed( KIO::Job *, unsigned long ) ), this, TQT_SLOT( slotSpeed( KIO::Job *, unsigned long ) ) );
-      connect( job, TQT_SIGNAL( infoMessage( KIO::Job *, const TQString & ) ), this, TQT_SLOT( slotInfoMessage( KIO::Job *, const TQString & ) ) );
+      connect( job, TQT_SIGNAL( percent( TDEIO::Job *, unsigned long ) ), this, TQT_SLOT( slotPercent( TDEIO::Job *, unsigned long ) ) );
+      connect( job, TQT_SIGNAL( speed( TDEIO::Job *, unsigned long ) ), this, TQT_SLOT( slotSpeed( TDEIO::Job *, unsigned long ) ) );
+      connect( job, TQT_SIGNAL( infoMessage( TDEIO::Job *, const TQString & ) ), this, TQT_SLOT( slotInfoMessage( TDEIO::Job *, const TQString & ) ) );
   }
 }
 
@@ -554,17 +554,17 @@ void KonqView::setLoading( bool loading, bool hasPending /*= false*/)
     m_pMainWindow->viewManager()->setLoading( this, loading || hasPending );
 }
 
-void KonqView::slotPercent( KIO::Job *, unsigned long percent )
+void KonqView::slotPercent( TDEIO::Job *, unsigned long percent )
 {
   m_pKonqFrame->statusbar()->slotLoadingProgress( percent );
 }
 
-void KonqView::slotSpeed( KIO::Job *, unsigned long bytesPerSecond )
+void KonqView::slotSpeed( TDEIO::Job *, unsigned long bytesPerSecond )
 {
   m_pKonqFrame->statusbar()->slotSpeedProgress( bytesPerSecond );
 }
 
-void KonqView::slotInfoMessage( KIO::Job *, const TQString &msg )
+void KonqView::slotInfoMessage( TDEIO::Job *, const TQString &msg )
 {
   m_pKonqFrame->statusbar()->message( msg );
 }

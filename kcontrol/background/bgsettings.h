@@ -19,7 +19,7 @@
 template <class TQString, class T> class TQMap;
 class KStandardDirs;
 class KSimpleConfig;
-class KConfig;
+class TDEConfig;
 class TQString;
 class TQImage;
 
@@ -156,7 +156,7 @@ public:
      * mode) will be treated as one big display, and the "screen" paramater
      * will be ignored.
      */
-    KBackgroundSettings(int desk, int screen, bool drawBackgroundPerScreen, KConfig *config);
+    KBackgroundSettings(int desk, int screen, bool drawBackgroundPerScreen, TDEConfig *config);
     ~KBackgroundSettings();
 
     void copyConfig(const KBackgroundSettings*);
@@ -282,7 +282,7 @@ private:
     int m_CurrentWallpaper;
     TQString m_CurrentWallpaperName;
 
-    KConfig *m_pConfig;
+    TDEConfig *m_pConfig;
     KStandardDirs *m_pDirs;
     bool m_bDeleteConfig;
     bool m_bEnabled;
@@ -305,7 +305,7 @@ public:
 class TDEGlobalBackgroundSettings
 {
 public:
-    TDEGlobalBackgroundSettings(KConfig *config);
+    TDEGlobalBackgroundSettings(TDEConfig *config);
 
     TQString deskName(int desk);
     //void setDeskName(int desk, TQString name);
@@ -347,7 +347,7 @@ public:
 
     void readSettings();
     void writeSettings();
-    KConfig* getConfig() { return m_pConfig; }
+    TDEConfig* getConfig() { return m_pConfig; }
 
 private:
     bool dirty;
@@ -363,7 +363,7 @@ private:
     bool m_shadowEnabled;
     int m_textLines;
     int m_textWidth;
-    KConfig *m_pConfig;
+    TDEConfig *m_pConfig;
     bool m_bDeleteConfig;
     TQValueVector<bool> m_bDrawBackgroundPerScreen; // m_bDrawBackgroundPerScreen[desk]
 };

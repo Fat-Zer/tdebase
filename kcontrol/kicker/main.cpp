@@ -171,7 +171,7 @@ void KickerConfig::notifyKicker()
     kapp->dcopClient()->send(appname, appname, "configure()", data);
 }
 
-void KickerConfig::setupExtensionInfo(KConfig& config, bool checkExists, bool reloadIfExists)
+void KickerConfig::setupExtensionInfo(TDEConfig& config, bool checkExists, bool reloadIfExists)
 {
     config.setGroup("General");
     TQStringList elist = config.readListEntry("Extensions2");
@@ -353,7 +353,7 @@ TQString KickerConfig::quickHelp() const
 
 TDEAboutData *KickerConfig::aboutData()
 {
-    // the TDEAboutDatas are deleted by the KCModules
+    // the TDEAboutDatas are deleted by the TDECModules
     TDEAboutData *about
           = new TDEAboutData(I18N_NOOP("kcmkicker"),
                            I18N_NOOP("TDE Panel Control Module"),
@@ -371,9 +371,9 @@ TDEAboutData *KickerConfig::aboutData()
 
 extern "C"
 {
-    KDE_EXPORT KCModule *create_kicker(TQWidget *parent, const char *name)
+    KDE_EXPORT TDECModule *create_kicker(TQWidget *parent, const char *name)
     {
-        KCModuleContainer *container = new KCModuleContainer(parent, "kcmkicker");
+        TDECModuleContainer *container = new TDECModuleContainer(parent, "kcmkicker");
         container->addModule("kicker_config_arrangement");
         container->addModule("kicker_config_hiding");
         container->addModule("kicker_config_menus");
@@ -381,26 +381,26 @@ extern "C"
         return container;
     }
 
-    KDE_EXPORT KCModule *create_kicker_arrangement(TQWidget *parent, const char * /*name*/)
+    KDE_EXPORT TDECModule *create_kicker_arrangement(TQWidget *parent, const char * /*name*/)
     {
         TDEGlobal::dirs()->addResourceType("extensions", KStandardDirs::kde_default("data") +
                                          "kicker/extensions");
         return new PositionConfig(parent, "kcmkicker");
     }
 
-    KDE_EXPORT KCModule *create_kicker_hiding(TQWidget *parent, const char * /*name*/)
+    KDE_EXPORT TDECModule *create_kicker_hiding(TQWidget *parent, const char * /*name*/)
     {
         TDEGlobal::dirs()->addResourceType("extensions", KStandardDirs::kde_default("data") +
                                          "kicker/extensions");
         return new HidingConfig(parent, "kcmkicker");
     }
 
-    KDE_EXPORT KCModule *create_kicker_menus(TQWidget *parent, const char * /*name*/)
+    KDE_EXPORT TDECModule *create_kicker_menus(TQWidget *parent, const char * /*name*/)
     {
         return new MenuConfig(parent, "kcmkicker");
     }
 
-    KDE_EXPORT KCModule *create_kicker_appearance(TQWidget *parent, const char * /*name*/)
+    KDE_EXPORT TDECModule *create_kicker_appearance(TQWidget *parent, const char * /*name*/)
     {
         KImageIO::registerFormats();
         TDEGlobal::dirs()->addResourceType("tiles", KStandardDirs::kde_default("data") +

@@ -12,7 +12,7 @@
 #include <ldap.h>
 #include <kabc/ldapurl.h>
 
-class LDAPProtocol : public KIO::SlaveBase
+class LDAPProtocol : public TDEIO::SlaveBase
 {
   public:
     LDAPProtocol( const TQCString &protocol, const TQCString &pool, const TQCString &app );
@@ -51,7 +51,7 @@ class LDAPProtocol : public KIO::SlaveBase
       const TQByteArray &value, bool critical );
     void addModOp( LDAPMod ***pmods, int mod_type, 
       const TQString &attr, const TQByteArray &value );
-    void LDAPEntry2UDSEntry( const TQString &dn, KIO::UDSEntry &entry, 
+    void LDAPEntry2UDSEntry( const TQString &dn, TDEIO::UDSEntry &entry, 
       const KABC::LDAPUrl &usrc, bool dir=false );
     int asyncSearch( KABC::LDAPUrl &usrc );
     
@@ -59,7 +59,7 @@ class LDAPProtocol : public KIO::SlaveBase
     void LDAPErr( const KURL &url, int err = LDAP_SUCCESS );
     void changeCheck( KABC::LDAPUrl &url );
 
-    void fillAuthInfo( KIO::AuthInfo &info );
+    void fillAuthInfo( TDEIO::AuthInfo &info );
 };
 
 #endif

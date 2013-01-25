@@ -35,7 +35,7 @@
 class TQString;
 class TQStringList;
 class TQTimer;
-class KConfig;
+class TDEConfig;
 class KonqMainWindow;
 class KonqFrameBase;
 class KonqFrameContainer;
@@ -178,7 +178,7 @@ public:
    * @param saveURLs whether to save the URLs in the profile
    * @param saveWindowSize whether to save the size of the window in the profile
    */
-  void saveViewProfile( KConfig & cfg, bool saveURLs, bool saveWindowSize );
+  void saveViewProfile( TDEConfig & cfg, bool saveURLs, bool saveWindowSize );
 
   /**
    * Saves the current view layout to a config file.
@@ -201,7 +201,7 @@ public:
    * @param resetWindow if the profile doesn't have attributes like size or toolbar
    * settings, they will be reset to the defaults
    */
-  void loadViewProfile( KConfig &cfg, const TQString & filename,
+  void loadViewProfile( TDEConfig &cfg, const TQString & filename,
                         const KURL & forcedURL = KURL(),
                         const KonqOpenURLRequest &req = KonqOpenURLRequest(),
                         bool resetWindow = false, bool openURL = true );
@@ -274,7 +274,7 @@ public:
   /**
    *   The widget is the one which you are referring to.
    */
-  static TQSize readConfigSize( KConfig &cfg, TQWidget *widget = NULL);
+  static TQSize readConfigSize( TDEConfig &cfg, TQWidget *widget = NULL);
 
 #ifndef NDEBUG
   void printFullHierarchy( KonqFrameContainerBase * container );
@@ -309,7 +309,7 @@ protected:
    * @param openURL whether to open urls at all (from the profile or using @p defaultURL).
    *  (this is set to false when we have a forcedURL to open)
    */
-  void loadItem( KConfig &cfg, KonqFrameContainerBase *parent,
+  void loadItem( TDEConfig &cfg, KonqFrameContainerBase *parent,
                  const TQString &name, const KURL & defaultURL, bool openURL, bool openAfterCurrentPage = false );
 
   // Disabled - we do it ourselves

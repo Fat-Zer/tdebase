@@ -39,7 +39,7 @@
 #include "cache_ui.h"
 
 KCacheConfigDialog::KCacheConfigDialog( TQWidget* parent )
-                   :KCModule( parent, "kcmkio" )
+                   :TDECModule( parent, "kcmkio" )
 {
   TQVBoxLayout* mainLayout = new TQVBoxLayout(this, 0, 0);
   m_dlg = new CacheDlgUI(this);
@@ -54,15 +54,15 @@ void KCacheConfigDialog::load()
   m_dlg->cbUseCache->setChecked(KProtocolManager::useCache());
   m_dlg->sbMaxCacheSize->setValue( KProtocolManager::maxCacheSize() );
 
-  KIO::CacheControl cc = KProtocolManager::cacheControl();
+  TDEIO::CacheControl cc = KProtocolManager::cacheControl();
 
-  if (cc==KIO::CC_Verify)
+  if (cc==TDEIO::CC_Verify)
       m_dlg->rbVerifyCache->setChecked( true );
-  else if (cc==KIO::CC_Refresh)
+  else if (cc==TDEIO::CC_Refresh)
       m_dlg->rbVerifyCache->setChecked( true );
-  else if (cc==KIO::CC_CacheOnly)
+  else if (cc==TDEIO::CC_CacheOnly)
       m_dlg->rbOfflineMode->setChecked( true );
-  else if (cc==KIO::CC_Cache)
+  else if (cc==TDEIO::CC_Cache)
       m_dlg->rbCacheIfPossible->setChecked( true );
 
   // Config changed notifications...
@@ -79,13 +79,13 @@ void KCacheConfigDialog::save()
   KSaveIOConfig::setMaxCacheSize( m_dlg->sbMaxCacheSize->value() );
 
   if ( !m_dlg->cbUseCache->isChecked() )
-      KSaveIOConfig::setCacheControl(KIO::CC_Refresh);
+      KSaveIOConfig::setCacheControl(TDEIO::CC_Refresh);
   else if ( m_dlg->rbVerifyCache->isChecked() )
-      KSaveIOConfig::setCacheControl(KIO::CC_Refresh);
+      KSaveIOConfig::setCacheControl(TDEIO::CC_Refresh);
   else if ( m_dlg->rbOfflineMode->isChecked() )
-      KSaveIOConfig::setCacheControl(KIO::CC_CacheOnly);
+      KSaveIOConfig::setCacheControl(TDEIO::CC_CacheOnly);
   else if ( m_dlg->rbCacheIfPossible->isChecked() )
-      KSaveIOConfig::setCacheControl(KIO::CC_Cache);
+      KSaveIOConfig::setCacheControl(TDEIO::CC_Cache);
 
   // Update running io-slaves...
   KSaveIOConfig::updateRunningIOSlaves (this);

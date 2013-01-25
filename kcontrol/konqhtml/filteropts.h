@@ -26,13 +26,13 @@ class TQLineEdit;
 class TQListBoxItem;
 class TQCheckBox;
 
-class KConfig;
+class TDEConfig;
 
-class KCMFilter : public KCModule
+class KCMFilter : public TDECModule
 {
     Q_OBJECT
 public:
-    KCMFilter( KConfig* config, TQString group, TQWidget* parent = 0, const char* name = 0 );
+    KCMFilter( TDEConfig* config, TQString group, TQWidget* parent = 0, const char* name = 0 );
     ~KCMFilter();
     
     void load();
@@ -66,7 +66,7 @@ private:
     TQPushButton *mImportButton;
     TQPushButton *mExportButton;
 
-    KConfig *mConfig;
+    TDEConfig *mConfig;
     TQString mGroupname;
     int mSelCount;
 };

@@ -171,10 +171,10 @@ void SplashInstaller::addNewTheme(const KURL &srcURL)
   url.setPath(locateLocal("tmp",filename));
 
   // Remove file from temporary directory if it aleady exists - usually the result of a failed install.
-  if ( KIO::NetAccess::exists( url, true, 0 ) )
-    KIO::NetAccess::del( url, 0 );
+  if ( TDEIO::NetAccess::exists( url, true, 0 ) )
+    TDEIO::NetAccess::del( url, 0 );
 
-  bool rc = KIO::NetAccess::copy(srcURL, url, 0);
+  bool rc = TDEIO::NetAccess::copy(srcURL, url, 0);
   if (!rc)
   {
     kdWarning() << "Failed to copy theme " << srcURL.fileName()
@@ -208,7 +208,7 @@ void SplashInstaller::addNewTheme(const KURL &srcURL)
   // TODO: Warn the user if we overwrite something.
   ad->copyTo(locateLocal("ksplashthemes","/"));
   tarFile.close();
-  KIO::NetAccess::del( url, 0 );
+  TDEIO::NetAccess::del( url, 0 );
 
   // TODO: Update only the entries from this installation.
   readThemesList();
@@ -258,7 +258,7 @@ void SplashInstaller::load()
 
 void SplashInstaller::load( bool useDefaults )
 {
-  KConfig cnf("ksplashrc");
+  TDEConfig cnf("ksplashrc");
   cnf.setReadDefaults( useDefaults );
   cnf.setGroup("KSplash");
   TQString curTheme = cnf.readEntry("Theme","Default");
@@ -269,7 +269,7 @@ void SplashInstaller::load( bool useDefaults )
 //-----------------------------------------------------------------------------
 void SplashInstaller::save()
 {
-  KConfig cnf("ksplashrc");
+  TDEConfig cnf("ksplashrc");
   cnf.setGroup("KSplash");
   int cur = mThemesList->currentItem();
   if (cur < 0)
@@ -298,7 +298,7 @@ void SplashInstaller::slotRemove()
      KURL url;
      url.setPath(themeDir);
      if (KMessageBox::warningContinueCancel(this,i18n("Delete folder %1 and its contents?").arg(themeDir),"",KGuiItem(i18n("&Delete"),"editdelete"))==KMessageBox::Continue)
-       rc = KIO::NetAccess::del(url,this);
+       rc = TDEIO::NetAccess::del(url,this);
      else
        return;
   }
@@ -343,19 +343,19 @@ void SplashInstaller::slotSetTheme(int id)
       if (i >= 0)
         themeName = path.mid(i+1);
       url.setPath( path + "/Theme.rc" );
-      if (!KIO::NetAccess::exists(url, true, 0))
+      if (!TDEIO::NetAccess::exists(url, true, 0))
       {
         url.setPath( path + "/Theme.RC" );
-        if (!KIO::NetAccess::exists(url, true, 0))
+        if (!TDEIO::NetAccess::exists(url, true, 0))
         {
           url.setPath( path + "/theme.rc" );
-          if (!KIO::NetAccess::exists(url, true, 0))
+          if (!TDEIO::NetAccess::exists(url, true, 0))
             url.setPath( path + "/" + themeName + ".rc" );
         }
       }
-      if (KIO::NetAccess::exists(url, true, 0))
+      if (TDEIO::NetAccess::exists(url, true, 0))
       {
-        KConfig cnf(url.path());
+        TDEConfig cnf(url.path());
         cnf.setGroup( TQString("KSplash Theme: %1").arg(themeName) );
 
         // Get theme information.
@@ -391,7 +391,7 @@ void SplashInstaller::slotSetTheme(int id)
     if (!enabled)
     {
       url.setPath( path + "/" + "Preview.png" );
-      if (KIO::NetAccess::exists(url, true, 0))
+      if (TDEIO::NetAccess::exists(url, true, 0))
         mPreview->setPixmap(TQPixmap(url.path()));
       else
         mPreview->setText(i18n("(Could not load theme)"));
@@ -400,7 +400,7 @@ void SplashInstaller::slotSetTheme(int id)
     else
     {
       url.setPath( path + "/" + "Preview.png" );
-      if (KIO::NetAccess::exists(url, true, 0))
+      if (TDEIO::NetAccess::exists(url, true, 0))
         mPreview->setPixmap(TQPixmap(url.path()));
       else
         mPreview->setText(i18n("No preview available."));

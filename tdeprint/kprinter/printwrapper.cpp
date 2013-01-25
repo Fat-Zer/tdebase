@@ -306,7 +306,7 @@ void PrintWrapper::slotPrintRequested(KPrinter *kprinter)
 		TQString	tmpFile;
 		KURL	url = KURL::fromPathOrURL(*it);
 		kdDebug( 500 ) << url.url() << endl;
-		if (KIO::NetAccess::download(url, tmpFile, this))
+		if (TDEIO::NetAccess::download(url, tmpFile, this))
 		{
 			filestoprint << tmpFile;
 			kprinter->setDocName(url.fileName());

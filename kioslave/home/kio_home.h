@@ -23,7 +23,7 @@
 #include <kio/forwardingslavebase.h>
 #include "homeimpl.h"
 
-class HomeProtocol : public KIO::ForwardingSlaveBase
+class HomeProtocol : public TDEIO::ForwardingSlaveBase
 {
 public:
 	HomeProtocol(const TQCString &protocol, const TQCString &pool,

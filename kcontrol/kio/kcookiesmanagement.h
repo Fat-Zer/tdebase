@@ -59,7 +59,7 @@ private:
     bool mCookiesLoaded;
 };
 
-class KCookiesManagement : public KCModule
+class KCookiesManagement : public TDECModule
 {
     Q_OBJECT
 

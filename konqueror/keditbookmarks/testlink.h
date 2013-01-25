@@ -61,14 +61,14 @@ public:
    virtual TestLinkItrHolder* holder() const { return TestLinkItrHolder::self(); }
 
 public slots:
-   void slotJobResult(KIO::Job *job);
-   void slotJobData(KIO::Job *job, const TQByteArray &data);
+   void slotJobResult(TDEIO::Job *job);
+   void slotJobData(TDEIO::Job *job, const TQByteArray &data);
 
 private:
    virtual void doAction();
    virtual bool isApplicable(const KBookmark &bk) const;
 
-   KIO::TransferJob *m_job;
+   TDEIO::TransferJob *m_job;
    bool m_errSet;
 };
 

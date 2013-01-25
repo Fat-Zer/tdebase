@@ -96,7 +96,7 @@ void Konqueror::preload_count_changed( int count )
 
 void Konqueror::load( bool useDefaults )
     {
-    KConfig cfg( "konquerorrc", true );
+    TDEConfig cfg( "konquerorrc", true );
 	 cfg.setReadDefaults( useDefaults );
     cfg.setGroup( "Reusing" );
     allowed_parts = cfg.readEntry( "SafeParts", "SAFE" );
@@ -113,7 +113,7 @@ void Konqueror::load( bool useDefaults )
 
 void Konqueror::save()
     {
-    KConfig cfg( "konquerorrc" );
+    TDEConfig cfg( "konquerorrc" );
     cfg.setGroup( "Reusing" );
     if( rb_always_reuse->isChecked())
         allowed_parts = "ALL";

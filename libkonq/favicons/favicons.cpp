@@ -45,11 +45,11 @@ struct FaviconsModulePrivate
         bool isHost;
         TQByteArray iconData;
     };
-    TQMap<KIO::Job *, DownloadInfo> downloads;
+    TQMap<TDEIO::Job *, DownloadInfo> downloads;
     TQStringList failedDownloads;
     KSimpleConfig *config;
-    TQPtrList<KIO::Job> killJobs;
-    KIO::MetaData metaData;
+    TQPtrList<TDEIO::Job> killJobs;
+    TDEIO::MetaData metaData;
     TQString faviconsDir;
     TQCache<TQString> faviconsCache;
 };
@@ -184,18 +184,18 @@ void FaviconsModule::startDownload(const TQString &hostOrURL, bool isHost, const
     if (d->failedDownloads.contains(iconURL.url()))
         return;
 
-    KIO::Job *job = KIO::get(iconURL, false, false);
+    TDEIO::Job *job = TDEIO::get(iconURL, false, false);
     job->addMetaData(d->metaData);
-    connect(job, TQT_SIGNAL(data(KIO::Job *, const TQByteArray &)), TQT_SLOT(slotData(KIO::Job *, const TQByteArray &)));
-    connect(job, TQT_SIGNAL(result(KIO::Job *)), TQT_SLOT(slotResult(KIO::Job *)));
-    connect(job, TQT_SIGNAL(infoMessage(KIO::Job *, const TQString &)), TQT_SLOT(slotInfoMessage(KIO::Job *, const TQString &)));
+    connect(job, TQT_SIGNAL(data(TDEIO::Job *, const TQByteArray &)), TQT_SLOT(slotData(TDEIO::Job *, const TQByteArray &)));
+    connect(job, TQT_SIGNAL(result(TDEIO::Job *)), TQT_SLOT(slotResult(TDEIO::Job *)));
+    connect(job, TQT_SIGNAL(infoMessage(TDEIO::Job *, const TQString &)), TQT_SLOT(slotInfoMessage(TDEIO::Job *, const TQString &)));
     FaviconsModulePrivate::DownloadInfo download;
     download.hostOrURL = hostOrURL;
     download.isHost = isHost;
     d->downloads.insert(job, download);
 }
 
-void FaviconsModule::slotData(KIO::Job *job, const TQByteArray &data)
+void FaviconsModule::slotData(TDEIO::Job *job, const TQByteArray &data)
 {
     FaviconsModulePrivate::DownloadInfo &download = d->downloads[job];
     unsigned int oldSize = download.iconData.size();
@@ -208,11 +208,11 @@ void FaviconsModule::slotData(KIO::Job *job, const TQByteArray &data)
     memcpy(download.iconData.data() + oldSize, data.data(), data.size());
 }
 
-void FaviconsModule::slotResult(KIO::Job *job)
+void FaviconsModule::slotResult(TDEIO::Job *job)
 {
     FaviconsModulePrivate::DownloadInfo download = d->downloads[job];
     d->downloads.remove(job);
-    KURL iconURL = static_cast<KIO::TransferJob *>(job)->url();
+    KURL iconURL = static_cast<TDEIO::TransferJob *>(job)->url();
     TQString iconName;
     if (!job->error())
     {
@@ -254,9 +254,9 @@ void FaviconsModule::slotResult(KIO::Job *job)
     emit iconChanged(download.isHost, download.hostOrURL, iconName);
 }
 
-void FaviconsModule::slotInfoMessage(KIO::Job *job, const TQString &msg)
+void FaviconsModule::slotInfoMessage(TDEIO::Job *job, const TQString &msg)
 {
-    emit infoMessage(static_cast<KIO::TransferJob *>( job )->url(), msg);
+    emit infoMessage(static_cast<TDEIO::TransferJob *>( job )->url(), msg);
 }
 
 void FaviconsModule::slotKill()

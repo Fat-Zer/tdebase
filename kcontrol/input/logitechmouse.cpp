@@ -233,7 +233,7 @@ void LogitechMouse::applyChanges()
     }
 }
 
-void LogitechMouse::save(KConfig * /*config*/)
+void LogitechMouse::save(TDEConfig * /*config*/)
 {
     kdDebug() << "Logitech mouse settings not saved - not implemented yet" << endl;
 }

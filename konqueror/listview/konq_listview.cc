@@ -264,18 +264,18 @@ KonqListView::KonqListView( TQWidget *parentWidget, TQObject *parent, const char
    setupActions();
 
    m_pListView->confColumns.resize( 11 );
-   m_pListView->confColumns[0].setData(I18N_NOOP("MimeType"),"Type",KIO::UDS_MIME_TYPE,m_paShowMimeType);
-   m_pListView->confColumns[1].setData(I18N_NOOP("Size"),"Size",KIO::UDS_SIZE,m_paShowSize);
-   m_pListView->confColumns[2].setData(I18N_NOOP("Modified"),"Date",KIO::UDS_MODIFICATION_TIME,m_paShowTime);
-   m_pListView->confColumns[3].setData(I18N_NOOP("Accessed"),"AccessDate",KIO::UDS_ACCESS_TIME,m_paShowAccessTime);
-   m_pListView->confColumns[4].setData(I18N_NOOP("Created"),"CreationDate",KIO::UDS_CREATION_TIME,m_paShowCreateTime);
-   m_pListView->confColumns[5].setData(I18N_NOOP("Permissions"),"Access",KIO::UDS_ACCESS,m_paShowPermissions);
-   m_pListView->confColumns[6].setData(I18N_NOOP("Owner"),"Owner",KIO::UDS_USER,m_paShowOwner);
-   m_pListView->confColumns[7].setData(I18N_NOOP("Group"),"Group",KIO::UDS_GROUP,m_paShowGroup);
-   m_pListView->confColumns[8].setData(I18N_NOOP("Link"),"Link",KIO::UDS_LINK_DEST,m_paShowLinkDest);
-   m_pListView->confColumns[9].setData(I18N_NOOP("URL"),"URL",KIO::UDS_URL,m_paShowURL);
+   m_pListView->confColumns[0].setData(I18N_NOOP("MimeType"),"Type",TDEIO::UDS_MIME_TYPE,m_paShowMimeType);
+   m_pListView->confColumns[1].setData(I18N_NOOP("Size"),"Size",TDEIO::UDS_SIZE,m_paShowSize);
+   m_pListView->confColumns[2].setData(I18N_NOOP("Modified"),"Date",TDEIO::UDS_MODIFICATION_TIME,m_paShowTime);
+   m_pListView->confColumns[3].setData(I18N_NOOP("Accessed"),"AccessDate",TDEIO::UDS_ACCESS_TIME,m_paShowAccessTime);
+   m_pListView->confColumns[4].setData(I18N_NOOP("Created"),"CreationDate",TDEIO::UDS_CREATION_TIME,m_paShowCreateTime);
+   m_pListView->confColumns[5].setData(I18N_NOOP("Permissions"),"Access",TDEIO::UDS_ACCESS,m_paShowPermissions);
+   m_pListView->confColumns[6].setData(I18N_NOOP("Owner"),"Owner",TDEIO::UDS_USER,m_paShowOwner);
+   m_pListView->confColumns[7].setData(I18N_NOOP("Group"),"Group",TDEIO::UDS_GROUP,m_paShowGroup);
+   m_pListView->confColumns[8].setData(I18N_NOOP("Link"),"Link",TDEIO::UDS_LINK_DEST,m_paShowLinkDest);
+   m_pListView->confColumns[9].setData(I18N_NOOP("URL"),"URL",TDEIO::UDS_URL,m_paShowURL);
    // Note: File Type is in fact the mimetype comment. We use UDS_FILE_TYPE but that's not what we show in fact :/
-   m_pListView->confColumns[10].setData(I18N_NOOP("File Type"),"Type",KIO::UDS_FILE_TYPE,m_paShowType);
+   m_pListView->confColumns[10].setData(I18N_NOOP("File Type"),"Type",TDEIO::UDS_FILE_TYPE,m_paShowType);
 
 
    connect( m_pListView, TQT_SIGNAL( selectionChanged() ),

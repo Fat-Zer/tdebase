@@ -45,7 +45,7 @@
 #include <kurl.h>
 
 #include "chfacedlg.h"
-#include "settings.h" // KConfigXT
+#include "settings.h" // TDEConfigXT
 
 
 

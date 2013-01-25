@@ -41,7 +41,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <time.h>
 #include <stdlib.h> // for getenv()
 
-Zone::Zone(KConfig* conf):
+Zone::Zone(TDEConfig* conf):
     config(conf),
     _zoneIndex(0)
 {

@@ -20,7 +20,7 @@
 #ifndef __konq_settings_h__
 #define __konq_settings_h__
 
-class KConfig;
+class TDEConfig;
 #include <tqcolor.h>
 #include <tqstring.h>
 #include <tqfont.h>
@@ -48,7 +48,7 @@ protected:
    * @internal
    * Constructs a KonqFMSettings instance from a config file.
    */
-  KonqFMSettings( KConfig * config );
+  KonqFMSettings( TDEConfig * config );
 
   /** Destructor. Don't delete any instance by yourself. */
   virtual ~KonqFMSettings();
@@ -128,7 +128,7 @@ private:
   int m_iconTransparency;
 
   /** Called by constructor and reparseConfiguration */
-  void init( KConfig * config );
+  void init( TDEConfig * config );
 
   struct KonqFMSettingsPrivate * d;
 

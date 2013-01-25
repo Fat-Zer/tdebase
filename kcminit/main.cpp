@@ -175,7 +175,7 @@ KCMInit::KCMInit( TDECmdLineArgs* args )
     kapp->dcopClient()->attach();
 
   // This key has no GUI apparently
-  KConfig config("kcmdisplayrc", true );
+  TDEConfig config("kcmdisplayrc", true );
   config.setGroup("X11");
   bool multihead = !config.readBoolEntry( "disableMultihead", false) &&
                     (ScreenCount(tqt_xdisplay()) > 1);

@@ -27,7 +27,7 @@ class TQStringList;
 class TQPushButton;
 class TQListView;
 
-class KCMNic:public KCModule
+class KCMNic:public TDECModule
 {
    Q_OBJECT
    public:

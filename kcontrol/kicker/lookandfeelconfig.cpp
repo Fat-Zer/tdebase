@@ -29,7 +29,7 @@
 #include "lookandfeelconfig.moc"
 
 LookAndFeelConfig::LookAndFeelConfig(TQWidget *parent, const char *name)
-  : KCModule(parent, name)
+  : TDECModule(parent, name)
 {
     TQVBoxLayout *layout = new TQVBoxLayout(this);
     m_widget = new LookAndFeelTab(this);
@@ -57,7 +57,7 @@ void LookAndFeelConfig::notChanged()
 
 void LookAndFeelConfig::load()
 {
-    KCModule::load();
+    TDECModule::load();
     m_widget->load();
 }
 
@@ -68,7 +68,7 @@ void LookAndFeelConfig::aboutToNotifyKicker()
     // This slot is triggered by the signal,
     // which is send before Kicker is notified.
     // See comment in save().
-    KCModule::save();
+    TDECModule::save();
     m_widget->save();
 }
 
@@ -84,10 +84,10 @@ void LookAndFeelConfig::save()
 
 void LookAndFeelConfig::defaults()
 {
-    KCModule::defaults();
+    TDECModule::defaults();
     m_widget->defaults();
 
-    // KConfigDialogManager may queue an changed(false) signal,
+    // TDEConfigDialogManager may queue an changed(false) signal,
     // so we make sure, that the module is labeled as changed,
     // while we manage some of the widgets ourselves
     TQTimer::singleShot(0, this, TQT_SLOT(changed()));

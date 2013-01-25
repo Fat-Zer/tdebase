@@ -238,7 +238,7 @@ void KonqBaseListViewWidget::readProtocolConfig( const KURL & url )
           t = TQVariant::DateTime;
       else
           kdWarning() << "Unsupported ExtraType '" << type << "'" << endl;
-      confColumns[extraIndex++].setData( column, TQString("Extra%1").arg(num), KIO::UDS_EXTRA, t, 0);
+      confColumns[extraIndex++].setData( column, TQString("Extra%1").arg(num), TDEIO::UDS_EXTRA, t, 0);
    }
 
    //disable everything
@@ -275,24 +275,24 @@ void KonqBaseListViewWidget::readProtocolConfig( const KURL & url )
                ColumnInfo *tmpColumn = &confColumns[j];
                TQString str;
 
-               if ( tmpColumn->udsId == KIO::UDS_SIZE )
+               if ( tmpColumn->udsId == TDEIO::UDS_SIZE )
                   str = TDEGlobal::locale()->formatNumber( 888888888, 0 ) + "  ";
-               else if ( tmpColumn->udsId == KIO::UDS_ACCESS )
+               else if ( tmpColumn->udsId == TDEIO::UDS_ACCESS )
                   str = "--Permissions--";
-               else if ( tmpColumn->udsId == KIO::UDS_USER )
+               else if ( tmpColumn->udsId == TDEIO::UDS_USER )
                   str = "a_long_username";
-               else if ( tmpColumn->udsId == KIO::UDS_GROUP )
+               else if ( tmpColumn->udsId == TDEIO::UDS_GROUP )
                   str = "a_groupname";
-               else if ( tmpColumn->udsId == KIO::UDS_LINK_DEST )
+               else if ( tmpColumn->udsId == TDEIO::UDS_LINK_DEST )
                   str = "a_quite_long_filename_for_link_dest";
-               else if ( tmpColumn->udsId == KIO::UDS_FILE_TYPE )
+               else if ( tmpColumn->udsId == TDEIO::UDS_FILE_TYPE )
                   str = "a_long_comment_for_mimetype";
-               else if ( tmpColumn->udsId == KIO::UDS_MIME_TYPE )
+               else if ( tmpColumn->udsId == TDEIO::UDS_MIME_TYPE )
                   str = "_a_long_/_mimetype_";
-               else if ( tmpColumn->udsId == KIO::UDS_URL )
+               else if ( tmpColumn->udsId == TDEIO::UDS_URL )
                   str = "a_long_lonq_long_very_long_url";
-               else if ( (tmpColumn->udsId & KIO::UDS_TIME)
-                         || (tmpColumn->udsId == KIO::UDS_EXTRA &&
+               else if ( (tmpColumn->udsId & TDEIO::UDS_TIME)
+                         || (tmpColumn->udsId == TDEIO::UDS_EXTRA &&
                              (tmpColumn->type & TQVariant::DateTime)) )
                {
                   TQDateTime dt( TQDate( 2000, 10, 10 ), TQTime( 20, 20, 20 ) );
@@ -318,8 +318,8 @@ void KonqBaseListViewWidget::readProtocolConfig( const KURL & url )
    listingList.append( "MimeType" );
    for ( unsigned int i = 0; i < NumberOfAtoms; i++ )
    {
-      if ( confColumns[i].udsId == KIO::UDS_URL ||
-           confColumns[i].udsId == KIO::UDS_MIME_TYPE ||
+      if ( confColumns[i].udsId == TDEIO::UDS_URL ||
+           confColumns[i].udsId == TDEIO::UDS_MIME_TYPE ||
            !confColumns[i].displayThisOne )
       {
          continue;
@@ -364,7 +364,7 @@ void KonqBaseListViewWidget::createColumns()
          addColumn( i18n(confColumns[i].name.utf8()), confColumns[i].width );
          if ( sortedByColumn == confColumns[i].desktopFileName )
             setSorting( currentColumn, m_bAscending );
-         if ( confColumns[i].udsId == KIO::UDS_SIZE )
+         if ( confColumns[i].udsId == TDEIO::UDS_SIZE )
              setColumnAlignment( currentColumn, AlignRight );
          i = -1;
          currentColumn++;
@@ -870,7 +870,7 @@ void KonqBaseListViewWidget::slotItemRenamed( TQListViewItem *item, const TQStri
    if( !name.isEmpty() )
    {
       // Actually attempt the rename. If it succeeds, KDirLister will update the name.
-      KonqOperations::rename( this, renamedItem->item()->url(), KIO::encodeFileName( name ) );
+      KonqOperations::rename( this, renamedItem->item()->url(), TDEIO::encodeFileName( name ) );
    }
 
    // When the KListViewLineEdit loses focus, focus tends to go to the location bar...

@@ -42,14 +42,14 @@ Condition::Condition( Condition_list_base* parent_P )
         _parent->append( this );
     }
 
-Condition::Condition( KConfig&, Condition_list_base* parent_P )
+Condition::Condition( TDEConfig&, Condition_list_base* parent_P )
     : _parent( parent_P )
     {
     if( _parent )
         _parent->append( this );
     }
 
-Condition* Condition::create_cfg_read( KConfig& cfg_P, Condition_list_base* parent_P )
+Condition* Condition::create_cfg_read( TDEConfig& cfg_P, Condition_list_base* parent_P )
     {
     TQString type = cfg_P.readEntry( "Type" );
     if( type == "ACTIVE_WINDOW" )
@@ -73,7 +73,7 @@ Condition::~Condition()
     }
 
 
-void Condition::cfg_write( KConfig& cfg_P ) const
+void Condition::cfg_write( TDEConfig& cfg_P ) const
     {
     cfg_P.writeEntry( "Type", "ERROR" );
     }
@@ -118,7 +118,7 @@ void Condition::debug_list( const TQPtrList< Condition >& list_P, int depth_P )
 
 // Condition_list_base
 
-Condition_list_base::Condition_list_base( KConfig& cfg_P, Condition_list_base* parent_P )
+Condition_list_base::Condition_list_base( TDEConfig& cfg_P, Condition_list_base* parent_P )
     : Condition( parent_P )
     {
     TQString save_cfg_group = cfg_P.group();
@@ -143,7 +143,7 @@ Condition_list_base::~Condition_list_base()
         }
     }
     
-void Condition_list_base::cfg_write( KConfig& cfg_P ) const
+void Condition_list_base::cfg_write( TDEConfig& cfg_P ) const
     {
     TQString save_cfg_group = cfg_P.group();
     int i = 0;
@@ -180,13 +180,13 @@ void Condition_list_base::debug( int depth_P )
 
 // Condition_list
 
-Condition_list::Condition_list( KConfig& cfg_P, Action_data_base* data_P )
+Condition_list::Condition_list( TDEConfig& cfg_P, Action_data_base* data_P )
     : Condition_list_base( cfg_P, NULL ), data( data_P )
     {
     _comment = cfg_P.readEntry( "Comment" );
     }
 
-void Condition_list::cfg_write( KConfig& cfg_P ) const
+void Condition_list::cfg_write( TDEConfig& cfg_P ) const
     {
     base::cfg_write( cfg_P );
     cfg_P.writeEntry( "Comment", comment());
@@ -244,7 +244,7 @@ Condition_list* Condition_list::copy( Condition_list_base* ) const
 
 // Active_window_condition
 
-Active_window_condition::Active_window_condition( KConfig& cfg_P, Condition_list_base* parent_P )
+Active_window_condition::Active_window_condition( TDEConfig& cfg_P, Condition_list_base* parent_P )
     : Condition( cfg_P, parent_P )
     {
     TQString save_cfg_group = cfg_P.group();
@@ -273,7 +273,7 @@ void Active_window_condition::set_match()
     updated();
     }
 
-void Active_window_condition::cfg_write( KConfig& cfg_P ) const
+void Active_window_condition::cfg_write( TDEConfig& cfg_P ) const
     {
     base::cfg_write( cfg_P );
     TQString save_cfg_group = cfg_P.group();
@@ -310,7 +310,7 @@ Active_window_condition::~Active_window_condition()
 
 // Existing_window_condition
 
-Existing_window_condition::Existing_window_condition( KConfig& cfg_P, Condition_list_base* parent_P )
+Existing_window_condition::Existing_window_condition( TDEConfig& cfg_P, Condition_list_base* parent_P )
     : Condition( cfg_P, parent_P )
     {
     TQString save_cfg_group = cfg_P.group();
@@ -342,7 +342,7 @@ void Existing_window_condition::set_match( WId w_P )
     updated();
     }
 
-void Existing_window_condition::cfg_write( KConfig& cfg_P ) const
+void Existing_window_condition::cfg_write( TDEConfig& cfg_P ) const
     {
     base::cfg_write( cfg_P );
     TQString save_cfg_group = cfg_P.group();
@@ -384,7 +384,7 @@ Existing_window_condition::~Existing_window_condition()
 
 // Not_condition
 
-Not_condition::Not_condition( KConfig& cfg_P, Condition_list_base* parent_P )
+Not_condition::Not_condition( TDEConfig& cfg_P, Condition_list_base* parent_P )
     : Condition_list_base( cfg_P, parent_P )
     {
     // CHECKME kontrola poctu ?
@@ -395,7 +395,7 @@ bool Not_condition::match() const
     return condition() ? !condition()->match() : false;
     }
 
-void Not_condition::cfg_write( KConfig& cfg_P ) const
+void Not_condition::cfg_write( TDEConfig& cfg_P ) const
     {
     base::cfg_write( cfg_P );
     cfg_P.writeEntry( "Type", "NOT" ); // overwrites value set in base::cfg_write()
@@ -421,7 +421,7 @@ bool Not_condition::accepts_children() const
 
 // And_condition
 
-And_condition::And_condition( KConfig& cfg_P, Condition_list_base* parent_P )
+And_condition::And_condition( TDEConfig& cfg_P, Condition_list_base* parent_P )
     : Condition_list_base( cfg_P, parent_P )
     {
     // CHECKME kontrola poctu ?
@@ -437,7 +437,7 @@ bool And_condition::match() const
     return true; // all true (or empty)
     }
 
-void And_condition::cfg_write( KConfig& cfg_P ) const
+void And_condition::cfg_write( TDEConfig& cfg_P ) const
     {
     base::cfg_write( cfg_P );
     cfg_P.writeEntry( "Type", "AND" ); // overwrites value set in base::cfg_write()
@@ -460,7 +460,7 @@ const TQString And_condition::description() const
 
 // Or_condition
 
-Or_condition::Or_condition( KConfig& cfg_P, Condition_list_base* parent_P )
+Or_condition::Or_condition( TDEConfig& cfg_P, Condition_list_base* parent_P )
     : Condition_list_base( cfg_P, parent_P )
     {
     // CHECKME kontrola poctu ?
@@ -478,7 +478,7 @@ bool Or_condition::match() const
     return false;
     }
 
-void Or_condition::cfg_write( KConfig& cfg_P ) const
+void Or_condition::cfg_write( TDEConfig& cfg_P ) const
     {
     base::cfg_write( cfg_P );
     cfg_P.writeEntry( "Type", "OR" ); // overwrites value set in base::cfg_write()

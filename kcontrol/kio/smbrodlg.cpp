@@ -36,7 +36,7 @@
 
 
 SMBRoOptions::SMBRoOptions(TQWidget *parent)
-  : KCModule(parent, "kcmkio")
+  : TDECModule(parent, "kcmkio")
 {
    TQGridLayout *layout = new TQGridLayout(this,2,-1,KDialog::marginHint(),
          KDialog::spacingHint());
@@ -91,7 +91,7 @@ SMBRoOptions::~SMBRoOptions()
 
 void SMBRoOptions::load()
 {
-   KConfig *cfg = new KConfig("kioslaverc");
+   TDEConfig *cfg = new TDEConfig("kioslaverc");
 
    TQString tmp;
    cfg->setGroup( "Browser Settings/SMBro" );
@@ -124,7 +124,7 @@ void SMBRoOptions::load()
 
 void SMBRoOptions::save()
 {
-   KConfig *cfg = new KConfig("kioslaverc");
+   TDEConfig *cfg = new TDEConfig("kioslaverc");
 
    cfg->setGroup( "Browser Settings/SMBro" );
    cfg->writeEntry( "User", m_userLe->text());
@@ -163,7 +163,7 @@ void SMBRoOptions::defaults()
 
 void SMBRoOptions::changed()
 {
-   emit KCModule::changed(true);
+   emit TDECModule::changed(true);
 }
 
 TQString SMBRoOptions::quickHelp() const

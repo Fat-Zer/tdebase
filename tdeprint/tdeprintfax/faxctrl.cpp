@@ -75,14 +75,14 @@ char const* pageSizeText(int size)
  */
 static TQString pageSize()
 {
-	KConfig	*conf = TDEGlobal::config();
+	TDEConfig	*conf = TDEGlobal::config();
 	conf->setGroup("Fax");
 	return conf->readEntry("Page", pageSizeText(TDEGlobal::locale()->pageSize()));
 }
 
 static TQString stripNumber( const TQString& s )
 {
-	KConfig *conf = TDEGlobal::config();
+	TDEConfig *conf = TDEGlobal::config();
 	conf->setGroup( "Personal" );
 
 	// removes any non-numeric character, except ('+','*','#') (hope it's supported by faxing tools)
@@ -193,7 +193,7 @@ static TQString replaceTags( const TQString& s, const TQString& tags, KdeprintFa
 	// unquote variables (they will be replaced with quoted values later)
 
 	TQValueStack<bool> stack;
-	KConfig	*conf = TDEGlobal::config();
+	TDEConfig	*conf = TDEGlobal::config();
 
 	TQString cmd = s;
 
@@ -426,7 +426,7 @@ void FaxCtrl::slotProcessExited(TDEProcess*)
 
 TQString FaxCtrl::faxCommand()
 {
-	KConfig	*conf = TDEGlobal::config();
+	TDEConfig	*conf = TDEGlobal::config();
 	conf->setGroup("System");
 	TQString	sys = conf->readPathEntry("System", "efax");
 	TQString cmd;
@@ -576,7 +576,7 @@ void FaxCtrl::addLog(const TQString& s, bool isTitle)
 
 TQString FaxCtrl::faxSystem()
 {
-	KConfig	*conf = TDEGlobal::config();
+	TDEConfig	*conf = TDEGlobal::config();
 	conf->setGroup("System");
 	TQString	s = conf->readEntry("System", "efax");
 	s[0] = s[0].upper();

@@ -26,7 +26,7 @@ class TQGroupBox;
 
 class KIntNumInput;
 
-class LaunchConfig : public KCModule
+class LaunchConfig : public TDECModule
 {
   Q_OBJECT
 

@@ -687,7 +687,7 @@ bool CFcEngine::draw(const KURL &url, int w, int h, TQPixmap &pix, int faceNo, b
 
 TQString CFcEngine::getPreviewString()
 {
-    KConfig cfg(KFI_UI_CFG_FILE);
+    TDEConfig cfg(KFI_UI_CFG_FILE);
 
     cfg.setGroup(KFI_PREVIEW_GROUP);
 
@@ -700,7 +700,7 @@ TQString CFcEngine::getPreviewString()
 
 void CFcEngine::setPreviewString(const TQString &str)
 {
-    KConfig cfg(KFI_UI_CFG_FILE);
+    TDEConfig cfg(KFI_UI_CFG_FILE);
 
     cfg.setGroup(KFI_PREVIEW_GROUP);
     cfg.writeEntry(KFI_PREVIEW_STRING_KEY, str);
@@ -911,17 +911,17 @@ bool CFcEngine::parseUrl(const KURL &url, int faceNo, bool all)
     //
     if(KFI_KIO_FONTS_PROTOCOL==url.protocol())
     {
-        KIO::UDSEntry udsEntry;
+        TDEIO::UDSEntry udsEntry;
         TQString       name;
 
         FcInitReinitialize();
-        if(KIO::NetAccess::stat(url, udsEntry, NULL))  // Need to stat the url to get its font name...
+        if(TDEIO::NetAccess::stat(url, udsEntry, NULL))  // Need to stat the url to get its font name...
         {
-            KIO::UDSEntry::Iterator it(udsEntry.begin()),
+            TDEIO::UDSEntry::Iterator it(udsEntry.begin()),
                                     end(udsEntry.end());
 
             for( ; it != end; ++it)
-                if (KIO::UDS_NAME==(*it).m_uds)
+                if (TDEIO::UDS_NAME==(*it).m_uds)
                 {
                     name=(*it).m_str;
                     break;

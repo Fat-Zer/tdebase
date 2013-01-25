@@ -32,12 +32,12 @@ class ImportsView: public TQWidget
 {
    Q_OBJECT
    public:
-      ImportsView(TQWidget *parent, KConfig *config=0, const char * name=0);
+      ImportsView(TQWidget *parent, TDEConfig *config=0, const char * name=0);
       virtual ~ImportsView() {};
       void saveSettings() {};
       void loadSettings() {};
 private:
-   KConfig *configFile;
+   TDEConfig *configFile;
    TQListView list;
    TQTimer timer;
 private slots:

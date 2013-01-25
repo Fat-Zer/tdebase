@@ -17,7 +17,7 @@
 KDEsuDialog::KDEsuDialog(TQCString user, TQCString auth_user, bool enableKeep,const TQString& icon, bool withIgnoreButton, int timeout)
      : KPasswordDialog(Password, enableKeep, (withIgnoreButton ? User1:NoDefault), icon)
 {
-    KConfig* config = TDEGlobal::config();
+    TDEConfig* config = TDEGlobal::config();
     config->setGroup("super-user-command");
     TQString superUserCommand = config->readEntry("super-user-command", DEFAULT_SUPER_USER_COMMAND);
     if ( superUserCommand != "sudo" && superUserCommand != "su" ) {

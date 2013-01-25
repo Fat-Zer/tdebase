@@ -25,7 +25,7 @@
 #include <tqobject.h>
 #include <tqstringlist.h>
 
-namespace KIO {
+namespace TDEIO {
 class Job;
 }
 
@@ -39,7 +39,7 @@ class SearchJob
     DocEntry *mEntry;
   
     TDEProcess *mProcess;
-    KIO::Job *mKioJob;
+    TDEIO::Job *mKioJob;
     
     TQString mCmd;
     
@@ -75,8 +75,8 @@ class SearchHandler : public QObject
     void searchStderr( TDEProcess *proc, char *buffer, int buflen );
     void searchExited( TDEProcess *proc ); 
 
-    void slotJobResult( KIO::Job *job );
-    void slotJobData( KIO::Job *, const TQByteArray &data );
+    void slotJobResult( TDEIO::Job *job );
+    void slotJobData( TDEIO::Job *, const TQByteArray &data );
 
   private:
     SearchHandler();
@@ -89,7 +89,7 @@ class SearchHandler : public QObject
     TQStringList mDocumentTypes;
 
     TQMap<TDEProcess *,SearchJob *> mProcessJobs;
-    TQMap<KIO::Job *,SearchJob *> mKioJobs;
+    TQMap<TDEIO::Job *,SearchJob *> mKioJobs;
 };
 
 }

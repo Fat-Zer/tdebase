@@ -22,12 +22,12 @@
 
 #include <kio/slavebase.h>
 #include "trashimpl.h"
-namespace KIO { class Job; }
+namespace TDEIO { class Job; }
 
 typedef TrashImpl::TrashedFileInfo TrashedFileInfo;
 typedef TrashImpl::TrashedFileInfoList TrashedFileInfoList;
 
-class TrashProtocol : public TQObject, public KIO::SlaveBase
+class TrashProtocol : public TQObject, public TDEIO::SlaveBase
 {
     Q_OBJECT
 public:
@@ -50,16 +50,16 @@ public:
     virtual void special( const TQByteArray & data );
 
 private slots:
-    void slotData( KIO::Job*, const TQByteArray& );
-    void slotMimetype( KIO::Job*, const TQString& );
-    void jobFinished( KIO::Job* job );
+    void slotData( TDEIO::Job*, const TQByteArray& );
+    void slotMimetype( TDEIO::Job*, const TQString& );
+    void jobFinished( TDEIO::Job* job );
 
 private:
     typedef enum CopyOrMove { Copy, Move };
     void copyOrMove( const KURL& src, const KURL& dest, bool overwrite, CopyOrMove action );
-    void createTopLevelDirEntry(KIO::UDSEntry& entry);
+    void createTopLevelDirEntry(TDEIO::UDSEntry& entry);
     bool createUDSEntry( const TQString& physicalPath, const TQString& fileName, const TQString& url,
-                         KIO::UDSEntry& entry, const TrashedFileInfo& info );
+                         TDEIO::UDSEntry& entry, const TrashedFileInfo& info );
     void listRoot();
     void restore( const KURL& trashURL );
 

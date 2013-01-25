@@ -30,7 +30,7 @@ class UnifiedConfig: public ThemeEngineConfig
 {
   Q_OBJECT
 public:
-  UnifiedConfig( TQWidget *, KConfig * );
+  UnifiedConfig( TQWidget *, TDEConfig * );
   void save();
 protected:
   TQCheckBox *mAlwaysShow;
@@ -47,7 +47,7 @@ public:
   ThemeUnified( TQWidget *, const char *, const TQStringList& );
    virtual ~ThemeUnified();
 
-  inline const UnifiedConfig *config( TQWidget *p, KConfig *c )
+  inline const UnifiedConfig *config( TQWidget *p, TDEConfig *c )
   {
     return new UnifiedConfig( p, c );
   };

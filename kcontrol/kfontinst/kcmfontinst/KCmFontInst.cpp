@@ -76,7 +76,7 @@ namespace KFI
 {
 
 CKCmFontInst::CKCmFontInst(TQWidget *parent, const char *, const TQStringList&)
-            : KCModule(parent, "kfontinst"),
+            : TDECModule(parent, "kfontinst"),
 #ifdef HAVE_XFT
               itsPreview(NULL),
 #endif
@@ -464,8 +464,8 @@ void CKCmFontInst::removeFonts()
 
         if(doIt)
         {
-            KIO::DeleteJob *job = KIO::del(urls, false, true);
-            connect(job, TQT_SIGNAL(result(KIO::Job *)), this, TQT_SLOT(delResult(KIO::Job *)));
+            TDEIO::DeleteJob *job = TDEIO::del(urls, false, true);
+            connect(job, TQT_SIGNAL(result(TDEIO::Job *)), this, TQT_SLOT(delResult(TDEIO::Job *)));
             job->setWindow(this);
             job->setAutoErrorHandlingEnabled(true, this);
         }
@@ -558,7 +558,7 @@ static TQString family(const TQString &name)
 
 void CKCmFontInst::updateInformation(int, int fonts)
 {
-    KIO::filesize_t size=0;
+    TDEIO::filesize_t size=0;
     TQString         text(i18n("One Font", "%n Fonts", fonts));
     TQStringList     families;
 
@@ -579,14 +579,14 @@ void CKCmFontInst::updateInformation(int, int fonts)
     if(fonts>0)
     {
         text+=" ";
-        text+=i18n("(%1 Total)").arg(KIO::convertSize(size));
+        text+=i18n("(%1 Total)").arg(TDEIO::convertSize(size));
     }
     text+=" - ";
     text+=i18n("One Family", "%n Families", families.count());
     itsStatusLabel->setText(text);
 }
 
-void CKCmFontInst::delResult(KIO::Job *job)
+void CKCmFontInst::delResult(TDEIO::Job *job)
 {
     //
     // To speed up font deletion, we dont rescan font list each time - so after this has completed, we need
@@ -596,11 +596,11 @@ void CKCmFontInst::delResult(KIO::Job *job)
 
     stream << KFI::SPECIAL_RESCAN;
 
-    KIO::NetAccess::synchronousRun(KIO::special(KFI_KIO_FONTS_PROTOCOL ":/", packedArgs), this);
+    TDEIO::NetAccess::synchronousRun(TDEIO::special(KFI_KIO_FONTS_PROTOCOL ":/", packedArgs), this);
     jobResult(job);
 }
 
-void CKCmFontInst::jobResult(KIO::Job *job)
+void CKCmFontInst::jobResult(TDEIO::Job *job)
 {
     //
     // Force an update of the view. For some reason the view is not automatically updated when
@@ -636,8 +636,8 @@ void CKCmFontInst::addFonts(const KURL::List &src, const KURL &dest)
             copy+=associatedUrls;
         }
 
-        KIO::CopyJob *job=KIO::copy(copy, dest, true);
-        connect(job, TQT_SIGNAL(result(KIO::Job *)), this, TQT_SLOT(jobResult(KIO::Job *)));
+        TDEIO::CopyJob *job=TDEIO::copy(copy, dest, true);
+        connect(job, TQT_SIGNAL(result(TDEIO::Job *)), this, TQT_SLOT(jobResult(TDEIO::Job *)));
         job->setWindow(this);
         job->setAutoErrorHandlingEnabled(true, this);
     }

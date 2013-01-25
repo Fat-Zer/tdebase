@@ -170,7 +170,7 @@ void SMTPProtocol::special( const TQByteArray & aData ) {
     if ( !execute( Command::NOOP ) )
       return;
   } else {
-    error( KIO::ERR_INTERNAL,
+    error( TDEIO::ERR_INTERNAL,
 	   i18n("The application sent an invalid request.") );
     return;
   }
@@ -233,14 +233,14 @@ void SMTPProtocol::put(const KURL & url, int /*permissions */ ,
     if ( !from.isNull() )
       request.setFromAddress( from );
     else if ( request.emitHeaders() ) {
-      error(KIO::ERR_NO_CONTENT, i18n("The sender address is missing."));
+      error(TDEIO::ERR_NO_CONTENT, i18n("The sender address is missing."));
       return;
     }
   }
 
   if ( !smtp_open( request.heloHostname() ) )
   {
-    error(KIO::ERR_SERVICE_NOT_AVAILABLE,
+    error(TDEIO::ERR_SERVICE_NOT_AVAILABLE,
           i18n("SMTPProtocol::smtp_open failed (%1)") // ### better error message?
               .arg(open_url.path()));
     return;
@@ -248,7 +248,7 @@ void SMTPProtocol::put(const KURL & url, int /*permissions */ ,
 
   if ( request.is8BitBody()
        && !haveCapability("8BITMIME") && metaData("8bitmime") != "on" ) {
-    error( KIO::ERR_SERVICE_NOT_AVAILABLE,
+    error( TDEIO::ERR_SERVICE_NOT_AVAILABLE,
 	   i18n("Your server does not support sending of 8-bit messages.\n"
 		"Please use base64 or quoted-printable encoding.") );
     return;
@@ -290,7 +290,7 @@ bool SMTPProtocol::sendCommandLine( const TQCString & cmdline ) {
   kdDebug( 7112) << "C: <" << cmdline.length() << " bytes>" << endl;
   ssize_t cmdline_len = cmdline.length();
   if ( write( cmdline.data(), cmdline_len ) != cmdline_len ) {
-    error( KIO::ERR_COULD_NOT_WRITE, m_sServer );
+    error( TDEIO::ERR_COULD_NOT_WRITE, m_sServer );
     return false;
   }
   return true;
@@ -308,14 +308,14 @@ Response SMTPProtocol::getResponse( bool * ok ) {
   do {
     // wait for data...
     if ( !waitForResponse( 600 ) ) {
-      error( KIO::ERR_SERVER_TIMEOUT, m_sServer );
+      error( TDEIO::ERR_SERVER_TIMEOUT, m_sServer );
       return response;
     }
 
     // ...read data...
     recv_len = readLine( buf, sizeof(buf) - 1 );
     if ( recv_len < 1 && !isConnectionValid() ) {
-      error( KIO::ERR_CONNECTION_BROKEN, m_sServer );
+      error( TDEIO::ERR_CONNECTION_BROKEN, m_sServer );
       return response;
     }
 
@@ -328,7 +328,7 @@ Response SMTPProtocol::getResponse( bool * ok ) {
   } while ( !response.isComplete() && response.isWellFormed() );
 
   if ( !response.isValid() ) {
-    error( KIO::ERR_NO_CONTENT, i18n("Invalid SMTP response (%1) received.").arg(response.code()) );
+    error( TDEIO::ERR_NO_CONTENT, i18n("Invalid SMTP response (%1) received.").arg(response.code()) );
     return response;
   }
 
@@ -514,7 +514,7 @@ bool SMTPProtocol::smtp_open(const TQString& fakeHostname)
   if ( !ok || !greeting.isOk() )
   {
     if ( ok )
-      error( KIO::ERR_COULD_NOT_LOGIN, 
+      error( TDEIO::ERR_COULD_NOT_LOGIN, 
              i18n("The server did not accept the connection.\n"
 		  "%1").arg( greeting.errorMessage() ) );
     smtp_close();
@@ -528,7 +528,7 @@ bool SMTPProtocol::smtp_open(const TQString& fakeHostname)
   else
   { 
     TQString tmpPort;
-    KSocketAddress* addr = KExtendedSocket::localAddress(m_iSock);
+    TDESocketAddress* addr = KExtendedSocket::localAddress(m_iSock);
     // perform name lookup. NI_NAMEREQD means: don't return a numeric
     // value (we need to know when we get have the IP address, so we
     // can enclose it in sqaure brackets (domain-literal). Failure to
@@ -587,7 +587,7 @@ bool SMTPProtocol::authenticate()
   if ( (m_sUser.isEmpty() || !haveCapability( "AUTH" )) && 
     metaData( "sasl" ).isEmpty() ) return true;
 
-  KIO::AuthInfo authInfo;
+  TDEIO::AuthInfo authInfo;
   authInfo.username = m_sUser;
   authInfo.password = m_sPass;
   authInfo.prompt = i18n("Username and password for your SMTP account:");
@@ -642,6 +642,6 @@ void SMTPProtocol::smtp_close( bool nice ) {
 void SMTPProtocol::stat(const KURL & url)
 {
   TQString path = url.path();
-  error(KIO::ERR_DOES_NOT_EXIST, url.path());
+  error(TDEIO::ERR_DOES_NOT_EXIST, url.path());
 }
 

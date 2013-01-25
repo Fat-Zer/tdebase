@@ -76,7 +76,7 @@ bool MediaProtocol::rewriteURL(const KURL &url, KURL &newUrl)
 
 	if ( !m_impl.parseURL(url, name, path) )
 	{
-		error(KIO::ERR_MALFORMED_URL, url.prettyURL());
+		error(TDEIO::ERR_MALFORMED_URL, url.prettyURL());
 		return false;
 	}
 
@@ -100,7 +100,7 @@ void MediaProtocol::put(const KURL &url, int permissions,
 
 	if ( ok && path.isEmpty() )
 	{
-		error(KIO::ERR_CANNOT_OPEN_FOR_WRITING, url.prettyURL());
+		error(TDEIO::ERR_CANNOT_OPEN_FOR_WRITING, url.prettyURL());
 	}
 	else
 	{
@@ -145,7 +145,7 @@ void MediaProtocol::mkdir(const KURL &url, int permissions)
 
 	if ( ok && path.isEmpty() )
 	{
-		error(KIO::ERR_COULD_NOT_MKDIR, url.prettyURL());
+		error(TDEIO::ERR_COULD_NOT_MKDIR, url.prettyURL());
 	}
 	else
 	{
@@ -162,7 +162,7 @@ void MediaProtocol::del(const KURL &url, bool isFile)
 
 	if ( ok && path.isEmpty() )
 	{
-		error(KIO::ERR_CANNOT_DELETE, url.prettyURL());
+		error(TDEIO::ERR_CANNOT_DELETE, url.prettyURL());
 	}
 	else
 	{
@@ -177,7 +177,7 @@ void MediaProtocol::stat(const KURL &url)
 	if( path.isEmpty() || path == "/" )
 	{
 		// The root is "virtual" - it's not a single physical directory
-		KIO::UDSEntry entry;
+		TDEIO::UDSEntry entry;
 		m_impl.createTopLevelEntry( entry );
 		statEntry( entry );
 		finished();
@@ -189,13 +189,13 @@ void MediaProtocol::stat(const KURL &url)
 
 	if ( !ok )
 	{
-		error(KIO::ERR_MALFORMED_URL, url.prettyURL());
+		error(TDEIO::ERR_MALFORMED_URL, url.prettyURL());
 		return;
 	}
 
 	if( path.isEmpty() )
 	{
-		KIO::UDSEntry entry;
+		TDEIO::UDSEntry entry;
 
 		if ( m_impl.statMedium(name, entry)
 		  || m_impl.statMediumByLabel(name, entry) )
@@ -205,7 +205,7 @@ void MediaProtocol::stat(const KURL &url)
 		}
 		else
 		{
-			error(KIO::ERR_DOES_NOT_EXIST, url.prettyURL());
+			error(TDEIO::ERR_DOES_NOT_EXIST, url.prettyURL());
 		}
 	}
 	else
@@ -229,7 +229,7 @@ void MediaProtocol::listDir(const KURL &url)
 
 	if ( !ok )
 	{
-		error(KIO::ERR_MALFORMED_URL, url.prettyURL());
+		error(TDEIO::ERR_MALFORMED_URL, url.prettyURL());
 		return;
 	}
 
@@ -238,9 +238,9 @@ void MediaProtocol::listDir(const KURL &url)
 
 void MediaProtocol::listRoot()
 {
-	KIO::UDSEntry entry;
+	TDEIO::UDSEntry entry;
 
-	KIO::UDSEntryList media_entries;
+	TDEIO::UDSEntryList media_entries;
 	bool ok = m_impl.listMedia(media_entries);
 
 	if (!ok)
@@ -254,8 +254,8 @@ void MediaProtocol::listRoot()
 	m_impl.createTopLevelEntry(entry);
 	listEntry(entry, false);
 
-	KIO::UDSEntryListIterator it = media_entries.begin();
-	KIO::UDSEntryListIterator end = media_entries.end();
+	TDEIO::UDSEntryListIterator it = media_entries.begin();
+	TDEIO::UDSEntryListIterator end = media_entries.end();
 
 	for(; it!=end; ++it)
 	{

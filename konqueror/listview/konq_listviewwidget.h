@@ -30,7 +30,7 @@
 #include <konq_propsview.h>
 #include "konq_listviewitems.h"
 
-namespace KIO { class Job; }
+namespace TDEIO { class Job; }
 
 class TQCursor;
 class TQRect;

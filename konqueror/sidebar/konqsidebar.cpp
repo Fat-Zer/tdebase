@@ -32,8 +32,8 @@ KonqSidebar::KonqSidebar( TQWidget *parentWidget, const char *widgetName,
 	// this should be your custom internal widget
 	m_widget = new Sidebar_Widget( parentWidget, this, widgetName ,universalMode, parentWidget->topLevelWidget()->property("currentProfile").toString() );
 	m_extension = new KonqSidebarBrowserExtension( this, m_widget,"KonqSidebar::BrowserExtension" );
-	connect(m_widget,TQT_SIGNAL(started(KIO::Job *)),
-		this, TQT_SIGNAL(started(KIO::Job*)));
+	connect(m_widget,TQT_SIGNAL(started(TDEIO::Job *)),
+		this, TQT_SIGNAL(started(TDEIO::Job*)));
 	connect(m_widget,TQT_SIGNAL(completed()),this,TQT_SIGNAL(completed()));
 	connect(m_extension, TQT_SIGNAL(addWebSideBar(const KURL&, const TQString&)),
 		m_widget, TQT_SLOT(addWebSideBar(const KURL&, const TQString&)));

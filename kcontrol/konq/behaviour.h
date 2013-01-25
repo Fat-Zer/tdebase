@@ -27,17 +27,17 @@ class TQRadioButton;
 class TQSpinBox;
 class TQVButtonGroup;
 
-class KConfig;
+class TDEConfig;
 class KURLRequester;
 
 //-----------------------------------------------------------------------------
 
 
-class KBehaviourOptions : public KCModule
+class KBehaviourOptions : public TDECModule
 {
   Q_OBJECT
 public:
-  KBehaviourOptions(KConfig *config, TQString group, TQWidget *parent=0, const char *name=0);
+  KBehaviourOptions(TDEConfig *config, TQString group, TQWidget *parent=0, const char *name=0);
     ~KBehaviourOptions();
   virtual void load();
   virtual void load( bool useDefaults );
@@ -50,7 +50,7 @@ protected slots:
   void slotShowTips(bool);
 private:
 
-  KConfig *g_pConfig;
+  TDEConfig *g_pConfig;
   TQString groupname;
 
   TQCheckBox *cbNewWin;

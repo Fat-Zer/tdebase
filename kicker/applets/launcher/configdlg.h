@@ -29,13 +29,13 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 class ConfigDlgBase;
 class Prefs;
 
-class ConfigDlg : public KConfigDialog
+class ConfigDlg : public TDEConfigDialog
 {
     Q_OBJECT
 
 public:
     ConfigDlg(TQWidget *parent, const char *name, Prefs *config, int autoSize,
-        KConfigDialog::DialogType dialogType, int dialogButtons);
+        TDEConfigDialog::DialogType dialogType, int dialogButtons);
 
 protected:
     virtual bool hasChanged();

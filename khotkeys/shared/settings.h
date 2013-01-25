@@ -14,7 +14,7 @@
 #include "actions.h"
 #include <kshortcut.h>
 
-class KConfig;
+class TDEConfig;
 
 namespace KHotKeys
 {
@@ -32,7 +32,7 @@ class KDE_EXPORT Settings
         Settings();
         bool read_settings( bool include_disabled_P );
         void write_settings();
-        bool import( KConfig& cfg_P, bool ask_P );
+        bool import( TDEConfig& cfg_P, bool ask_P );
         Action_data_group* actions;
         bool gestures_disabled_globally;
         int gesture_mouse_button;
@@ -41,11 +41,11 @@ class KDE_EXPORT Settings
         Windowdef_list* gestures_exclude;
 		KShortcut voice_shortcut;
     protected:
-        bool read_settings( KConfig& cfg_P, bool include_disabled_P, ImportType import_P );
-        void read_settings_v1( KConfig& cfg_P );
-        void read_settings_v2( KConfig& cfg_P, bool include_disabled_P );
-        int write_actions_recursively_v2( KConfig& cfg_P, Action_data_group* parent_P, bool enabled_P );
-        void read_actions_recursively_v2( KConfig& cfg_P, Action_data_group* parent_P,
+        bool read_settings( TDEConfig& cfg_P, bool include_disabled_P, ImportType import_P );
+        void read_settings_v1( TDEConfig& cfg_P );
+        void read_settings_v2( TDEConfig& cfg_P, bool include_disabled_P );
+        int write_actions_recursively_v2( TDEConfig& cfg_P, Action_data_group* parent_P, bool enabled_P );
+        void read_actions_recursively_v2( TDEConfig& cfg_P, Action_data_group* parent_P,
             bool include_disabled_P );
     private:
         TQStringList already_imported;

@@ -149,7 +149,7 @@ private:
     static TQString makeRelativePath( const TQString& topdir, const TQString& path );
 
 private slots:
-    void jobFinished(KIO::Job *job);
+    void jobFinished(TDEIO::Job *job);
 
 private:
     /// Last error code stored in class to simplify API.

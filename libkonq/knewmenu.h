@@ -28,7 +28,7 @@
 #include <kurl.h>
 #include <libkonq_export.h>
 
-namespace KIO { class Job; }
+namespace TDEIO { class Job; }
 
 class KDirWatch;
 class KLineEdit;
@@ -96,9 +96,9 @@ protected slots:
      */
     void slotFillTemplates();
 
-    void slotResult( KIO::Job * );
+    void slotResult( TDEIO::Job * );
     // Special case (filename conflict when creating a link=url file)
-    void slotRenamed( KIO::Job *, const KURL&, const KURL& );
+    void slotRenamed( TDEIO::Job *, const KURL&, const KURL& );
 
 private:
 

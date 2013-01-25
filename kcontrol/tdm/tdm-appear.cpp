@@ -431,7 +431,7 @@ void TDMAppearanceWidget::iconLoaderDropEvent(TQDropEvent *e)
 	if(!url->isLocalFile()) {
 	    pixurl.setPath(TDEGlobal::dirs()->resourceDirs("data").last() +
 		     "tdm/pics/" + url->fileName());
-	    KIO::NetAccess::copy(*url, pixurl, parentWidget());
+	    TDEIO::NetAccess::copy(*url, pixurl, parentWidget());
 	    istmp = true;
 	} else {
 	    pixurl = *url;
@@ -440,7 +440,7 @@ void TDMAppearanceWidget::iconLoaderDropEvent(TQDropEvent *e)
 
 	// By now url should be "file:/..."
 	if (!setLogo(pixurl.path())) {
-	    KIO::NetAccess::del(pixurl, parentWidget());
+	    TDEIO::NetAccess::del(pixurl, parentWidget());
 	    TQString msg = i18n("There was an error loading the image:\n"
 			       "%1\n"
 			       "It will not be saved.")

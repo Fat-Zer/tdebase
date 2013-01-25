@@ -273,9 +273,9 @@ void TypesListItem::sync()
 
   if (isMimeTypeDirty())
   {
-    // We must use KConfig otherwise config.deleteEntry doesn't
+    // We must use TDEConfig otherwise config.deleteEntry doesn't
     // properly cancel out settings already present in system files.
-    KConfig config( m_mimetype->desktopEntryPath(), false, false, "mime" );
+    TDEConfig config( m_mimetype->desktopEntryPath(), false, false, "mime" );
     config.setDesktopGroup();
 
     config.writeEntry("Type", "MimeType");
@@ -293,7 +293,7 @@ void TypesListItem::sync()
     m_bNewItem = false;
   }
 
-  KConfig profile("profilerc", false, false);
+  TDEConfig profile("profilerc", false, false);
 
   // Deleting current contents in profilerc relating to
   // this service type
@@ -357,15 +357,15 @@ void TypesListItem::sync()
         if ( mimeTypeList.contains( name() ) ) {
           // The mimetype is listed explicitly in the .desktop files, so
           // just remove it and we're done
-          KConfig *desktop;
+          TDEConfig *desktop;
           if ( !isApplication )
           {
-            desktop = new KConfig(pService->desktopEntryPath(), false, false, "services");
+            desktop = new TDEConfig(pService->desktopEntryPath(), false, false, "services");
           }
           else
           {
             TQString path = pService->locateLocal();
-            KConfig orig(pService->desktopEntryPath(), true, false, "apps");
+            TDEConfig orig(pService->desktopEntryPath(), true, false, "apps");
             desktop = orig.copyTo(path);
           }
           desktop->setDesktopGroup();
@@ -452,7 +452,7 @@ KMimeType::Ptr TypesListItem::findImplicitAssociation(const TQString &desktop)
     return 0;
 }
 
-void TypesListItem::saveServices( KConfig & profile, TQStringList services, const TQString & genericServiceType )
+void TypesListItem::saveServices( TDEConfig & profile, TQStringList services, const TQString & genericServiceType )
 {
   TQStringList::Iterator it(services.begin());
   for (int i = services.count(); it != services.end(); ++it, i--) {
@@ -482,15 +482,15 @@ void TypesListItem::saveServices( KConfig & profile, TQStringList services, cons
 
     if (!mimeTypeList.contains(name()) && !inheritsMimetype(m_mimetype, mimeTypeList))
     {
-      KConfig *desktop;
+      TDEConfig *desktop;
       if ( pService->type() == TQString("Service") )
       {
-        desktop = new KConfig(pService->desktopEntryPath(), false, false, "services");
+        desktop = new TDEConfig(pService->desktopEntryPath(), false, false, "services");
       }
       else
       {
         TQString path = pService->locateLocal();
-        KConfig orig(pService->desktopEntryPath(), true, false, "apps");
+        TDEConfig orig(pService->desktopEntryPath(), true, false, "apps");
         desktop = orig.copyTo(path);
       }
 

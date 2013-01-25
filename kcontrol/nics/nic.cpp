@@ -85,7 +85,7 @@ typedef TQPtrList<MyNIC> NICList;
 NICList* findNICs();
 
 KCMNic::KCMNic(TQWidget *parent, const char * name, const TQStringList &)
-   :KCModule(KCMNicFactory::instance(), parent,name)
+   :TDECModule(KCMNicFactory::instance(), parent,name)
 {
    TQVBoxLayout *box=new TQVBoxLayout(this, 0, KDialog::spacingHint());
    m_list=new TQListView(this);

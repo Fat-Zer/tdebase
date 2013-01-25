@@ -18,7 +18,7 @@ void KNetAttach::init()
     finishButton()->setText(i18n("Save && C&onnect"));
     //setResizeMode(Fixed); FIXME: make the wizard fixed-geometry
     setFinishEnabled(_folderParameters, false);
-    KConfig recent("krecentconnections", true, false);
+    TDEConfig recent("krecentconnections", true, false);
     recent.setGroup("General");
     TQStringList idx = recent.readListEntry("Index");
     if (idx.isEmpty()) {
@@ -75,7 +75,7 @@ void KNetAttach::showPage( TQWidget *page )
 	    setInformationText("SMB");
 	    updateForProtocol("SMB");
 	} else { //if (_recent->isChecked()) {
-	    KConfig recent("krecentconnections", true, false);
+	    TDEConfig recent("krecentconnections", true, false);
 	    if (!recent.hasGroup(_recentConnectionName->currentText())) {
 		recent.setGroup("General");
 		TQStringList idx = recent.readListEntry("Index");
@@ -186,7 +186,7 @@ void KNetAttach::finished()
     }
 
     if (!name.isEmpty()) {
-	KConfig recent("krecentconnections", false, false);
+	TDEConfig recent("krecentconnections", false, false);
 	recent.setGroup("General");
 	TQStringList idx = recent.readListEntry("Index");
 	recent.deleteGroup(name); // erase anything stale
@@ -232,8 +232,8 @@ void KNetAttach::updatePort(bool encryption)
 
 bool KNetAttach::doConnectionTest(const KURL& url)
 {
-    KIO::UDSEntry entry;
-    if (KIO::NetAccess::stat(url, entry, this)) {
+    TDEIO::UDSEntry entry;
+    if (TDEIO::NetAccess::stat(url, entry, this)) {
 	// Anything to test here?
 	return true;
     }

@@ -41,7 +41,7 @@ K_EXPORT_COMPONENT_FACTORY( kcm_kurifilt, KURIFactory("kcmkurifilt") )
 class FilterOptions;
 
 KURIFilterModule::KURIFilterModule(TQWidget *parent, const char *name, const TQStringList &)
-                 :KCModule(KURIFactory::instance(), parent, name)
+                 :TDECModule(KURIFactory::instance(), parent, name)
 {
 
     filter = KURIFilter::self();
@@ -66,11 +66,11 @@ KURIFilterModule::KURIFilterModule(TQWidget *parent, const char *name, const TQS
 
     modules.setAutoDelete(true);
 
-    TQMap<TQString,KCModule*> helper;
+    TQMap<TQString,TDECModule*> helper;
     TQPtrListIterator<KURIFilterPlugin> it = filter->pluginsIterator();
     for (; it.current(); ++it)
     {
-        KCModule *module = it.current()->configModule(this, 0);
+        TDECModule *module = it.current()->configModule(this, 0);
         if (module)
         {
             modules.append(module);
@@ -83,7 +83,7 @@ KURIFilterModule::KURIFilterModule(TQWidget *parent, const char *name, const TQS
     {
         TQTabWidget *tab = new TQTabWidget(this);
 
-        TQMapIterator<TQString,KCModule*> it2;
+        TQMapIterator<TQString,TDECModule*> it2;
         for (it2 = helper.begin(); it2 != helper.end(); ++it2)
         {
             tab->addTab(it2.data(), it2.key());
@@ -103,7 +103,7 @@ KURIFilterModule::KURIFilterModule(TQWidget *parent, const char *name, const TQS
 
 void KURIFilterModule::load()
 {
-    TQPtrListIterator<KCModule> it(modules);
+    TQPtrListIterator<TDECModule> it(modules);
     for (; it.current(); ++it)
     {
 	  it.current()->load();
@@ -112,7 +112,7 @@ void KURIFilterModule::load()
 
 void KURIFilterModule::save()
 {
-    TQPtrListIterator<KCModule> it(modules);
+    TQPtrListIterator<TDECModule> it(modules);
     for (; it.current(); ++it)
     {
 	  it.current()->save();
@@ -121,7 +121,7 @@ void KURIFilterModule::save()
 
 void KURIFilterModule::defaults()
 {
-    TQPtrListIterator<KCModule> it(modules);
+    TQPtrListIterator<TDECModule> it(modules);
     for (; it.current(); ++it)
     {
 	  it.current()->defaults();

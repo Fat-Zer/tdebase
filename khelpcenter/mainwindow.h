@@ -61,8 +61,8 @@ class MainWindow : public KMainWindow, public DCOPObject
   protected:
     void setupActions();
 
-    virtual void saveProperties( KConfig *config );
-    virtual void readProperties( KConfig *config );
+    virtual void saveProperties( TDEConfig *config );
+    virtual void readProperties( TDEConfig *config );
 
     void readConfig();
     void writeConfig();
@@ -76,8 +76,8 @@ class MainWindow : public KMainWindow, public DCOPObject
 
   private slots:
     void slotGlossSelected(const GlossaryEntry &entry);
-    void slotStarted(KIO::Job *job);
-    void slotInfoMessage(KIO::Job *, const TQString &);
+    void slotStarted(TDEIO::Job *job);
+    void slotInfoMessage(TDEIO::Job *, const TQString &);
     void goInternalUrl( const KURL & );
     /**
       This function is called when the user clicks on a link in the viewer part.

@@ -28,7 +28,7 @@
 #include "ruleslist.h"
 
 extern "C"
-    KDE_EXPORT KCModule *create_twinrules( TQWidget *parent, const char *name )
+    KDE_EXPORT TDECModule *create_twinrules( TQWidget *parent, const char *name )
     {
     //CT there's need for decision: kwm or twin?
     TDEGlobal::locale()->insertCatalogue( "kcmtwinrules" );
@@ -39,7 +39,7 @@ namespace KWinInternal
 {
 
 KCMRules::KCMRules( TQWidget *parent, const char *name )
-: KCModule( parent, name )
+: TDECModule( parent, name )
 , config( "twinrulesrc" )
     {
     TQVBoxLayout *layout = new TQVBoxLayout( this );
@@ -57,13 +57,13 @@ void KCMRules::load()
     {
     config.reparseConfiguration();
     widget->load();
-    emit KCModule::changed( false );
+    emit TDECModule::changed( false );
     }
 
 void KCMRules::save()
     {
     widget->save();
-    emit KCModule::changed( false );
+    emit TDECModule::changed( false );
     // Send signal to twin
     config.sync();
     if( !kapp->dcopClient()->isAttached())
@@ -87,7 +87,7 @@ TQString KCMRules::quickHelp() const
 
 void KCMRules::moduleChanged( bool state )
     {
-    emit KCModule::changed( state );
+    emit TDECModule::changed( state );
     }
 
 }

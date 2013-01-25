@@ -415,7 +415,7 @@ TQStringList KBackgroundProgram::list()
 /**** KBackgroundSettings ****/
 
 
-KBackgroundSettings::KBackgroundSettings(int desk, int screen, bool drawBackgroundPerScreen, KConfig *config)
+KBackgroundSettings::KBackgroundSettings(int desk, int screen, bool drawBackgroundPerScreen, TDEConfig *config)
     : KBackgroundPattern(),
       KBackgroundProgram()
 {
@@ -501,7 +501,7 @@ KBackgroundSettings::KBackgroundSettings(int desk, int screen, bool drawBackgrou
         else
             configname.sprintf("kdesktop-screen-%drc", screen_number);
 
-        m_pConfig = new KConfig(configname, false, false);
+        m_pConfig = new TDEConfig(configname, false, false);
         m_bDeleteConfig = true;
     } else {
         m_pConfig = config;
@@ -1065,7 +1065,7 @@ void KBackgroundSettings::setEnabled(const bool enable)
 
 /**** TDEGlobalBackgroundSettings ****/
 
-TDEGlobalBackgroundSettings::TDEGlobalBackgroundSettings(KConfig *_config)
+TDEGlobalBackgroundSettings::TDEGlobalBackgroundSettings(TDEConfig *_config)
 {
     m_pConfig = _config;
 

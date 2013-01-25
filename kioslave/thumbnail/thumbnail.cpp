@@ -81,7 +81,7 @@
 //                    int depth
 //                Otherwise, the data returned is the image in PNG format.
  
-using namespace KIO;
+using namespace TDEIO;
 
 extern "C"
 {
@@ -148,19 +148,19 @@ void ThumbnailProtocol::get(const KURL &url)
         if (info.isDir())
         {
             // We cannot process a directory
-            error(KIO::ERR_IS_DIRECTORY,url.path());
+            error(TDEIO::ERR_IS_DIRECTORY,url.path());
             return;
         }
         else if (!info.exists())
         {
             // The file does not exist
-            error(KIO::ERR_DOES_NOT_EXIST,url.path());
+            error(TDEIO::ERR_DOES_NOT_EXIST,url.path());
             return;
         }
         else if (!info.isReadable())
         {
             // The file is not readable!
-            error(KIO::ERR_COULD_NOT_READ,url.path());
+            error(TDEIO::ERR_COULD_NOT_READ,url.path());
             return;
         }
         m_mimeType = KMimeType::findByURL(url)->name();
@@ -171,7 +171,7 @@ void ThumbnailProtocol::get(const KURL &url)
 
     if (m_mimeType.isEmpty())
     {
-        error(KIO::ERR_INTERNAL, i18n("No MIME Type specified."));
+        error(TDEIO::ERR_INTERNAL, i18n("No MIME Type specified."));
         return;
     }
 
@@ -181,7 +181,7 @@ void ThumbnailProtocol::get(const KURL &url)
 
     if (m_width < 0 || m_height < 0)
     {
-        error(KIO::ERR_INTERNAL, i18n("No or invalid size specified."));
+        error(TDEIO::ERR_INTERNAL, i18n("No or invalid size specified."));
         return;
     }
 #ifdef THUMBNAIL_HACK
@@ -206,7 +206,7 @@ void ThumbnailProtocol::get(const KURL &url)
 
     TQImage img;
 
-    KConfigGroup group( TDEGlobal::config(), "PreviewSettings" );
+    TDEConfigGroup group( TDEGlobal::config(), "PreviewSettings" );
 
     
     // ### KFMI
@@ -262,7 +262,7 @@ void ThumbnailProtocol::get(const KURL &url)
 #endif
         if (plugin.isEmpty())
         {
-            error(KIO::ERR_INTERNAL, i18n("No plugin specified."));
+            error(TDEIO::ERR_INTERNAL, i18n("No plugin specified."));
             return;
         }
         
@@ -280,7 +280,7 @@ void ThumbnailProtocol::get(const KURL &url)
             }
             if (!creator)
             {
-                error(KIO::ERR_INTERNAL, i18n("Cannot load ThumbCreator %1").arg(plugin));
+                error(TDEIO::ERR_INTERNAL, i18n("Cannot load ThumbCreator %1").arg(plugin));
                 return;
             }
             m_creators.insert(plugin, creator);
@@ -288,7 +288,7 @@ void ThumbnailProtocol::get(const KURL &url)
 
         if (!creator->create(url.path(), m_width, m_height, img))
         {
-            error(KIO::ERR_INTERNAL, i18n("Cannot create thumbnail for %1").arg(url.path()));
+            error(TDEIO::ERR_INTERNAL, i18n("Cannot create thumbnail for %1").arg(url.path()));
             return;
         }
         flags = creator->flags();
@@ -355,7 +355,7 @@ void ThumbnailProtocol::get(const KURL &url)
 
     if (img.isNull())
     {
-        error(KIO::ERR_INTERNAL, i18n("Failed to create a thumbnail."));
+        error(TDEIO::ERR_INTERNAL, i18n("Failed to create a thumbnail."));
         return;
     }
 
@@ -370,7 +370,7 @@ void ThumbnailProtocol::get(const KURL &url)
             TQBuffer buf;
             if (!buf.open(IO_WriteOnly))
             {
-                error(KIO::ERR_INTERNAL, i18n("Could not write image."));
+                error(TDEIO::ERR_INTERNAL, i18n("Could not write image."));
                 return;
             }
             img.save(&buf,"PNG");
@@ -395,16 +395,16 @@ void ThumbnailProtocol::get(const KURL &url)
         void *shmaddr = shmat(shmid.toInt(), 0, 0);
         if (shmaddr == (void *)-1)
         {
-            error(KIO::ERR_INTERNAL, i18n("Failed to attach to shared memory segment %1").arg(shmid));
+            error(TDEIO::ERR_INTERNAL, i18n("Failed to attach to shared memory segment %1").arg(shmid));
             return;
         }
         if (img.width() * img.height() > m_width * m_height)
         {
-            error(KIO::ERR_INTERNAL, i18n("Image is too big for the shared memory segment"));
+            error(TDEIO::ERR_INTERNAL, i18n("Image is too big for the shared memory segment"));
             shmdt((char*)shmaddr);
             return;
         }
-        if( img.depth() != 32 )           // KIO::PreviewJob and this code below completely
+        if( img.depth() != 32 )           // TDEIO::PreviewJob and this code below completely
             img = img.convertDepth( 32 ); // ignores colortable :-/, so make sure there is none
         stream << img.width() << img.height() << img.depth()
                << img.hasAlphaBuffer();

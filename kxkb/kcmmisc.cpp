@@ -51,7 +51,7 @@
 #include <X11/Xlib.h>
 
 KeyboardConfig::KeyboardConfig (TQWidget * parent, const char *)
-    : KCModule (parent, "kcmlayout")
+    : TDECModule (parent, "kcmlayout")
 {
   TQString wtstr;
   TQBoxLayout* lay = new TQVBoxLayout(this, 0, KDialog::spacingHint());
@@ -129,7 +129,7 @@ void KeyboardConfig::setNumLockState( int s )
 
 void KeyboardConfig::load()
 {
-  KConfig config("kcminputrc");
+  TDEConfig config("kcminputrc");
 
   XKeyboardState kbd;
 
@@ -150,7 +150,7 @@ void KeyboardConfig::load()
 
 void KeyboardConfig::save()
 {
-  KConfig config("kcminputrc");
+  TDEConfig config("kcminputrc");
 
   XKeyboardControl kbd;
 
@@ -201,7 +201,7 @@ void KeyboardConfig::delaySliderChanged (int value) {
 
 	ui->delay->setValue((int)floor(0.5 + linearValue));
 
-	emit KCModule::changed(true);
+	emit TDECModule::changed(true);
 }
 
 void KeyboardConfig::delaySpinboxChanged (int value) {
@@ -210,24 +210,24 @@ void KeyboardConfig::delaySpinboxChanged (int value) {
 
 	ui->delaySlider->setValue ((int)floor (0.5 + logVal));
 
-	emit KCModule::changed(true);
+	emit TDECModule::changed(true);
 }
 
 void KeyboardConfig::rateSliderChanged (int value) {
 	ui->rate->setValue(value/100.0);
 
-	emit KCModule::changed(true);
+	emit TDECModule::changed(true);
 }
 
 void KeyboardConfig::rateSpinboxChanged (double value) {
 	ui->rateSlider->setValue ((int)(value*100));
 
-	emit KCModule::changed(true);
+	emit TDECModule::changed(true);
 }
 
 void KeyboardConfig::changed()
 {
-  emit KCModule::changed(true);
+  emit TDECModule::changed(true);
 }
 
 /*
@@ -541,7 +541,7 @@ void set_repeatrate(int delay, double rate)
 
 void KeyboardConfig::init_keyboard()
 {
-	KConfig *config = new KConfig("kcminputrc", true); // Read-only, no globals
+	TDEConfig *config = new TDEConfig("kcminputrc", true); // Read-only, no globals
 	config->setGroup("Keyboard");
 
 	XKeyboardState   kbd;

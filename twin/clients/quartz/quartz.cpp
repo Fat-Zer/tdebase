@@ -201,7 +201,7 @@ bool QuartzHandler::supports( Ability ability )
 
 void QuartzHandler::readConfig()
 {
-	KConfig conf("twinquartzrc");
+	TDEConfig conf("twinquartzrc");
 	conf.setGroup("General");
 	coloredFrame = conf.readBoolEntry( "UseTitleBarBorderColors", true );
 	extraSlim    = conf.readBoolEntry( "UseQuartzExtraSlim", false );

@@ -27,26 +27,26 @@
 
 class TQButtonGroup;
 class TQGroupBox;
-class KConfig;
+class TDEConfig;
 class ConfigDialog;
 
 class PlastikConfig : public TQObject
 {
     Q_OBJECT
 public:
-    PlastikConfig(KConfig* config, TQWidget* parent);
+    PlastikConfig(TDEConfig* config, TQWidget* parent);
     ~PlastikConfig();
 
 signals:
     void changed();
 
 public slots:
-    void load(KConfig *config);
-    void save(KConfig *config);
+    void load(TDEConfig *config);
+    void save(TDEConfig *config);
     void defaults();
 
 private:
-    KConfig *m_config;
+    TDEConfig *m_config;
     ConfigDialog *m_dialog;
 };
 

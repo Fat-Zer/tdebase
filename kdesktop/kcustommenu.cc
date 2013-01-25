@@ -37,7 +37,7 @@ KCustomMenu::KCustomMenu(const TQString &configfile, TQWidget *parent)
 {
   d = new KCustomMenuPrivate; 
   
-  KConfig cfg(configfile, true, false);
+  TDEConfig cfg(configfile, true, false);
   int count = cfg.readNumEntry("NrOfItems");
   for(int i = 0; i < count; i++)
   {

@@ -75,7 +75,7 @@ bool MediaImpl::realURL(const TQString &name, const TQString &path, KURL &url)
 }
 
 
-bool MediaImpl::statMedium(const TQString &name, KIO::UDSEntry &entry)
+bool MediaImpl::statMedium(const TQString &name, TDEIO::UDSEntry &entry)
 {
 	kdDebug(1219) << "MediaImpl::statMedium: " << name << endl;
 
@@ -84,7 +84,7 @@ bool MediaImpl::statMedium(const TQString &name, KIO::UDSEntry &entry)
 
 	if ( !reply.isValid() )
 	{
-		m_lastErrorCode = KIO::ERR_SLAVE_DEFINED;
+		m_lastErrorCode = TDEIO::ERR_SLAVE_DEFINED;
 		m_lastErrorMessage = i18n("The TDE mediamanager is not running.");
 		return false;
 	}
@@ -102,7 +102,7 @@ bool MediaImpl::statMedium(const TQString &name, KIO::UDSEntry &entry)
 	return true;
 }
 
-bool MediaImpl::statMediumByLabel(const TQString &label, KIO::UDSEntry &entry)
+bool MediaImpl::statMediumByLabel(const TQString &label, TDEIO::UDSEntry &entry)
 {
 	kdDebug(1219) << "MediaImpl::statMediumByLabel: " << label << endl;
 
@@ -111,7 +111,7 @@ bool MediaImpl::statMediumByLabel(const TQString &label, KIO::UDSEntry &entry)
 
 	if ( !reply.isValid() )
 	{
-		m_lastErrorCode = KIO::ERR_SLAVE_DEFINED;
+		m_lastErrorCode = TDEIO::ERR_SLAVE_DEFINED;
 		m_lastErrorMessage = i18n("The TDE mediamanager is not running.");
 		return false;
 	}
@@ -128,7 +128,7 @@ bool MediaImpl::statMediumByLabel(const TQString &label, KIO::UDSEntry &entry)
 }
 
 
-bool MediaImpl::listMedia(TQValueList<KIO::UDSEntry> &list)
+bool MediaImpl::listMedia(TQValueList<TDEIO::UDSEntry> &list)
 {
 	kdDebug(1219) << "MediaImpl::listMedia" << endl;
 
@@ -137,14 +137,14 @@ bool MediaImpl::listMedia(TQValueList<KIO::UDSEntry> &list)
 
 	if ( !reply.isValid() )
 	{
-		m_lastErrorCode = KIO::ERR_SLAVE_DEFINED;
+		m_lastErrorCode = TDEIO::ERR_SLAVE_DEFINED;
 		m_lastErrorMessage = i18n("The TDE mediamanager is not running.");
 		return false;
 	}
 
 	const Medium::MList media = Medium::createList(reply);
 
-	KIO::UDSEntry entry;
+	TDEIO::UDSEntry entry;
 
 	Medium::MList::const_iterator it = media.begin();
 	Medium::MList::const_iterator end = media.end();
@@ -173,7 +173,7 @@ bool MediaImpl::setUserLabel(const TQString &name, const TQString &label)
 
 	if ( !reply.isValid() )
 	{
-		m_lastErrorCode = KIO::ERR_SLAVE_DEFINED;
+		m_lastErrorCode = TDEIO::ERR_SLAVE_DEFINED;
 		m_lastErrorMessage = i18n("The TDE mediamanager is not running.");
 		return false;
 	}
@@ -183,7 +183,7 @@ bool MediaImpl::setUserLabel(const TQString &name, const TQString &label)
 		if (!returned_name.isEmpty()
 		 && returned_name!=name)
 		{
-			m_lastErrorCode = KIO::ERR_DIR_ALREADY_EXIST;
+			m_lastErrorCode = TDEIO::ERR_DIR_ALREADY_EXIST;
 			m_lastErrorMessage = i18n("This media name already exists.");
 			return false;
 		}
@@ -193,7 +193,7 @@ bool MediaImpl::setUserLabel(const TQString &name, const TQString &label)
 
 	if ( !reply.isValid() )
 	{
-		m_lastErrorCode = KIO::ERR_SLAVE_DEFINED;
+		m_lastErrorCode = TDEIO::ERR_SLAVE_DEFINED;
 		m_lastErrorMessage = i18n("The TDE mediamanager is not running.");
 		return false;
 	}
@@ -214,7 +214,7 @@ const Medium MediaImpl::findMediumByName(const TQString &name, bool &ok)
 	}
 	else
 	{
-		m_lastErrorCode = KIO::ERR_SLAVE_DEFINED;
+		m_lastErrorCode = TDEIO::ERR_SLAVE_DEFINED;
 		m_lastErrorMessage = i18n("The TDE mediamanager is not running.");
 		ok = false;
 	}
@@ -226,7 +226,7 @@ bool MediaImpl::ensureMediumMounted(Medium &medium)
 {
 	if (medium.id().isEmpty())
 	{
-		m_lastErrorCode = KIO::ERR_COULD_NOT_MOUNT;
+		m_lastErrorCode = TDEIO::ERR_COULD_NOT_MOUNT;
 		m_lastErrorMessage = i18n("No such medium.");
 		return false;
 	}
@@ -234,7 +234,7 @@ bool MediaImpl::ensureMediumMounted(Medium &medium)
 #ifdef COMPILE_HALBACKEND
 	if ( medium.isEncrypted() && medium.clearDeviceUdi().isEmpty() )
 	{
-		m_lastErrorCode = KIO::ERR_COULD_NOT_MOUNT;
+		m_lastErrorCode = TDEIO::ERR_COULD_NOT_MOUNT;
 		m_lastErrorMessage = i18n("The drive is encrypted.");
 		return false;
 	}
@@ -248,14 +248,14 @@ bool MediaImpl::ensureMediumMounted(Medium &medium)
 		
 		
 		/*
-		KIO::Job* job = KIO::mount(false, 0,
+		TDEIO::Job* job = TDEIO::mount(false, 0,
 		                           medium.deviceNode(),
 		                           medium.mountPoint());
 		job->setAutoWarningHandlingEnabled(false);
-		connect( job, TQT_SIGNAL( result( KIO::Job * ) ),
-		         this, TQT_SLOT( slotMountResult( KIO::Job * ) ) );
-		connect( job, TQT_SIGNAL( warning( KIO::Job *, const TQString & ) ),
-		         this, TQT_SLOT( slotWarning( KIO::Job *, const TQString & ) ) );
+		connect( job, TQT_SIGNAL( result( TDEIO::Job * ) ),
+		         this, TQT_SLOT( slotMountResult( TDEIO::Job * ) ) );
+		connect( job, TQT_SIGNAL( warning( TDEIO::Job *, const TQString & ) ),
+		         this, TQT_SLOT( slotWarning( TDEIO::Job *, const TQString & ) ) );
 		*/
 		kapp->dcopClient()
 		->connectDCOPSignal("kded", "mediamanager",
@@ -271,7 +271,7 @@ bool MediaImpl::ensureMediumMounted(Medium &medium)
 		else
 		  m_lastErrorMessage = i18n("Internal Error");
 		if (!m_lastErrorMessage.isEmpty())
-		  m_lastErrorCode = KIO::ERR_SLAVE_DEFINED;
+		  m_lastErrorCode = TDEIO::ERR_SLAVE_DEFINED;
 		else {
 		  tqApp->eventLoop()->enterLoop();
 		}
@@ -289,7 +289,7 @@ bool MediaImpl::ensureMediumMounted(Medium &medium)
 
 	if (medium.id().isEmpty())
 	{
-		m_lastErrorCode = KIO::ERR_COULD_NOT_MOUNT;
+		m_lastErrorCode = TDEIO::ERR_COULD_NOT_MOUNT;
 		m_lastErrorMessage = i18n("No such medium.");
 		return false;
 	}
@@ -297,12 +297,12 @@ bool MediaImpl::ensureMediumMounted(Medium &medium)
 	return true;
 }
 
-void MediaImpl::slotWarning( KIO::Job * /*job*/, const TQString &msg )
+void MediaImpl::slotWarning( TDEIO::Job * /*job*/, const TQString &msg )
 {
 	emit warning( msg );
 }
 
-void MediaImpl::slotMountResult(KIO::Job *job)
+void MediaImpl::slotMountResult(TDEIO::Job *job)
 {
 	kdDebug(1219) << "MediaImpl::slotMountResult" << endl;
 	
@@ -327,10 +327,10 @@ void MediaImpl::slotMediumChanged(const TQString &name)
 	}
 }
 
-static void addAtom(KIO::UDSEntry &entry, unsigned int ID, long l,
+static void addAtom(TDEIO::UDSEntry &entry, unsigned int ID, long l,
                     const TQString &s = TQString::null)
 {
-	KIO::UDSAtom atom;
+	TDEIO::UDSAtom atom;
 	atom.m_uds = ID;
 	atom.m_long = l;
 	atom.m_str = s;
@@ -338,55 +338,55 @@ static void addAtom(KIO::UDSEntry &entry, unsigned int ID, long l,
 }
 
 
-void MediaImpl::createTopLevelEntry(KIO::UDSEntry& entry) const
+void MediaImpl::createTopLevelEntry(TDEIO::UDSEntry& entry) const
 {
 	entry.clear();
-	addAtom(entry, KIO::UDS_URL, 0, "media:/");
-	addAtom(entry, KIO::UDS_NAME, 0, ".");
-	addAtom(entry, KIO::UDS_FILE_TYPE, S_IFDIR);
-	addAtom(entry, KIO::UDS_ACCESS, 0555);
-	addAtom(entry, KIO::UDS_MIME_TYPE, 0, "inode/directory");
-	addAtom(entry, KIO::UDS_ICON_NAME, 0, "blockdevice");
+	addAtom(entry, TDEIO::UDS_URL, 0, "media:/");
+	addAtom(entry, TDEIO::UDS_NAME, 0, ".");
+	addAtom(entry, TDEIO::UDS_FILE_TYPE, S_IFDIR);
+	addAtom(entry, TDEIO::UDS_ACCESS, 0555);
+	addAtom(entry, TDEIO::UDS_MIME_TYPE, 0, "inode/directory");
+	addAtom(entry, TDEIO::UDS_ICON_NAME, 0, "blockdevice");
 }
 
-void MediaImpl::slotStatResult(KIO::Job *job)
+void MediaImpl::slotStatResult(TDEIO::Job *job)
 {
 	if ( job->error() == 0)
 	{
-		KIO::StatJob *stat_job = static_cast<KIO::StatJob *>(job);
+		TDEIO::StatJob *stat_job = static_cast<TDEIO::StatJob *>(job);
 		m_entryBuffer = stat_job->statResult();
 	}
 
 	tqApp->eventLoop()->exitLoop();
 }
 
-KIO::UDSEntry MediaImpl::extractUrlInfos(const KURL &url)
+TDEIO::UDSEntry MediaImpl::extractUrlInfos(const KURL &url)
 {
 	m_entryBuffer.clear();
 
-	KIO::StatJob *job = KIO::stat(url, false);
+	TDEIO::StatJob *job = TDEIO::stat(url, false);
 	job->setAutoWarningHandlingEnabled( false );
-	connect( job, TQT_SIGNAL( result(KIO::Job *) ),
-	         this, TQT_SLOT( slotStatResult(KIO::Job *) ) );
-	connect( job, TQT_SIGNAL( warning( KIO::Job *, const TQString & ) ),
-	         this, TQT_SLOT( slotWarning( KIO::Job *, const TQString & ) ) );
+	connect( job, TQT_SIGNAL( result(TDEIO::Job *) ),
+	         this, TQT_SLOT( slotStatResult(TDEIO::Job *) ) );
+	connect( job, TQT_SIGNAL( warning( TDEIO::Job *, const TQString & ) ),
+	         this, TQT_SLOT( slotWarning( TDEIO::Job *, const TQString & ) ) );
 	tqApp->eventLoop()->enterLoop();
 
-	KIO::UDSEntry::iterator it = m_entryBuffer.begin();
-	KIO::UDSEntry::iterator end = m_entryBuffer.end();
+	TDEIO::UDSEntry::iterator it = m_entryBuffer.begin();
+	TDEIO::UDSEntry::iterator end = m_entryBuffer.end();
 
-	KIO::UDSEntry infos;
+	TDEIO::UDSEntry infos;
 
 	for(; it!=end; ++it)
 	{
 		switch( (*it).m_uds )
 		{
-		case KIO::UDS_ACCESS:
-		case KIO::UDS_USER:
-		case KIO::UDS_GROUP:
-		case KIO::UDS_CREATION_TIME:
-		case KIO::UDS_MODIFICATION_TIME:
-		case KIO::UDS_ACCESS_TIME:
+		case TDEIO::UDS_ACCESS:
+		case TDEIO::UDS_USER:
+		case TDEIO::UDS_GROUP:
+		case TDEIO::UDS_CREATION_TIME:
+		case TDEIO::UDS_MODIFICATION_TIME:
+		case TDEIO::UDS_ACCESS_TIME:
 			infos.append(*it);
 			break;
 		default:
@@ -396,14 +396,14 @@ KIO::UDSEntry MediaImpl::extractUrlInfos(const KURL &url)
 
 	if (url.isLocalFile())
 	{
-		addAtom(infos, KIO::UDS_LOCAL_PATH, 0, url.path());
+		addAtom(infos, TDEIO::UDS_LOCAL_PATH, 0, url.path());
 	}
 	
 	return infos;
 }
 
 
-void MediaImpl::createMediumEntry(KIO::UDSEntry& entry,
+void MediaImpl::createMediumEntry(TDEIO::UDSEntry& entry,
                                   const Medium &medium)
 {
 	kdDebug(1219) << "MediaProtocol::createMedium" << endl;
@@ -414,30 +414,30 @@ void MediaImpl::createMediumEntry(KIO::UDSEntry& entry,
 
 	entry.clear();
 
-	addAtom(entry, KIO::UDS_URL, 0, url);
+	addAtom(entry, TDEIO::UDS_URL, 0, url);
 
-	TQString label = KIO::encodeFileName( medium.prettyLabel() );
-	addAtom(entry, KIO::UDS_NAME, 0, label);
+	TQString label = TDEIO::encodeFileName( medium.prettyLabel() );
+	addAtom(entry, TDEIO::UDS_NAME, 0, label);
 
-	addAtom(entry, KIO::UDS_FILE_TYPE, S_IFDIR);
+	addAtom(entry, TDEIO::UDS_FILE_TYPE, S_IFDIR);
 
-	addAtom(entry, KIO::UDS_MIME_TYPE, 0, medium.mimeType());
-	addAtom(entry, KIO::UDS_GUESSED_MIME_TYPE, 0, "inode/directory");
+	addAtom(entry, TDEIO::UDS_MIME_TYPE, 0, medium.mimeType());
+	addAtom(entry, TDEIO::UDS_GUESSED_MIME_TYPE, 0, "inode/directory");
 
 	if (!medium.iconName().isEmpty())
 	{
-		addAtom(entry, KIO::UDS_ICON_NAME, 0, medium.iconName());
+		addAtom(entry, TDEIO::UDS_ICON_NAME, 0, medium.iconName());
 	}
 	else
 	{
 		TQString mime = medium.mimeType();
 		TQString icon = KMimeType::mimeType(mime)->icon(mime, false);
-		addAtom(entry, KIO::UDS_ICON_NAME, 0, icon);
+		addAtom(entry, TDEIO::UDS_ICON_NAME, 0, icon);
 	}
 
 	if (medium.needMounting())
 	{
-		addAtom(entry, KIO::UDS_ACCESS, 0400);
+		addAtom(entry, TDEIO::UDS_ACCESS, 0400);
 	}
 	else
 	{

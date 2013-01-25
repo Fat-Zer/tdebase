@@ -240,7 +240,7 @@ void Dtime::configChanged(){
 
 void Dtime::load()
 {
-  KConfig config("kcmclockrc", true, false);
+  TDEConfig config("kcmclockrc", true, false);
   config.setGroup("NTP");
   timeServerList->insertStringList(TQStringList::split(',', config.readEntry("servers",
     i18n("Public Time Server (pool.ntp.org),\
@@ -263,7 +263,7 @@ oceania.pool.ntp.org"))));
 
 void Dtime::save()
 {
-  KConfig config("kcmclockrc", false, false);
+  TDEConfig config("kcmclockrc", false, false);
   config.setGroup("NTP");
 
   // Save the order, but don't duplicate!

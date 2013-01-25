@@ -539,7 +539,7 @@ void KasTasker::setStandAlone( bool enable )
 // Configuration Loader
 //
 
-void KasTasker::setConfig( KConfig *conf )
+void KasTasker::setConfig( TDEConfig *conf )
 {
     this->conf = conf;
 }
@@ -559,10 +559,10 @@ void KasTasker::writeConfig()
    writeConfig(conf);
 }
 
-void KasTasker::readConfig( KConfig *conf )
+void KasTasker::readConfig( TDEConfig *conf )
 {
     if ( !conf ) {
-	kdWarning() << "KasTasker::readConfig() got a null KConfig" << endl;
+	kdWarning() << "KasTasker::readConfig() got a null TDEConfig" << endl;
 	return;
     }
 
@@ -578,7 +578,7 @@ void KasTasker::readConfig( KConfig *conf )
    //
    // Appearance Settings.
    //
-   KConfigGroupSaver saver( conf, "Appearance" );
+   TDEConfigGroupSaver saver( conf, "Appearance" );
 
    int ext = conf->readNumEntry( "ItemExtent", -1 );
    if ( ext > 0 )
@@ -657,10 +657,10 @@ void KasTasker::readConfig( KConfig *conf )
    emit configChanged();
 }
 
-void KasTasker::writeConfig( KConfig *conf )
+void KasTasker::writeConfig( TDEConfig *conf )
 {
     if ( !conf ) {
-	kdWarning() << "KasTasker::writeConfig() got a null KConfig" << endl;
+	kdWarning() << "KasTasker::writeConfig() got a null TDEConfig" << endl;
 	return;
     }
 

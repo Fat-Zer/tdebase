@@ -55,12 +55,12 @@ public:
 
 protected:
   virtual void foundMimeType( const TQString & _type );
-  virtual void handleError( KIO::Job * job );
+  virtual void handleError( TDEIO::Job * job );
   virtual void init();
   virtual void scanFile();
 
 protected slots:
-  void slotRedirection( KIO::Job *, const KURL& );
+  void slotRedirection( TDEIO::Job *, const KURL& );
 
 protected:
   TQGuardedPtr<KonqMainWindow> m_pMainWindow;

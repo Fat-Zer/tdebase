@@ -197,7 +197,7 @@ void Kicker::slotSettingsChanged(int category)
 
 void Kicker::paletteChanged()
 {
-    KConfigGroup c(TDEGlobal::config(), "General");
+    TDEConfigGroup c(TDEGlobal::config(), "General");
     KickerSettings::setTintColor(c.readColorEntry("TintColor",
                                            &palette().active().mid()));
     KickerSettings::self()->writeConfig();
@@ -227,7 +227,7 @@ void Kicker::configure()
 {
     static bool notFirstConfig = false;
 
-    KConfig* c = TDEGlobal::config();
+    TDEConfig* c = TDEGlobal::config();
     c->reparseConfiguration();
     c->setGroup("General");
     m_canAddContainers = !c->entryIsImmutable("Applets2");

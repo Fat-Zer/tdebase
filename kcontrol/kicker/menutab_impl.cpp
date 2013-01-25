@@ -93,8 +93,8 @@ MenuTab::MenuTab( TQWidget *parent, const char* name )
     kmenu_icon = ldr->loadIcon(m_kmenu_icon, KIcon::Small, KIcon::SizeSmall);
     btnCustomKMenuIcon->setPixmap(kmenu_icon);
 
-    KConfig *config;
-    config = new KConfig(TQString::fromLatin1("kdeglobals"), false, false);
+    TDEConfig *config;
+    config = new TDEConfig(TQString::fromLatin1("kdeglobals"), false, false);
     config->setGroup(TQString::fromLatin1("RecentDocuments"));
     maxrecentdocs->setValue(config->readNumEntry(TQString::fromLatin1("MaxEntries"), 10));
 
@@ -267,8 +267,8 @@ void MenuTab::save()
     c->sync();
 
     // Save recent documents
-    KConfig *config;
-    config = new KConfig(TQString::fromLatin1("kdeglobals"), false, false);
+    TDEConfig *config;
+    config = new TDEConfig(TQString::fromLatin1("kdeglobals"), false, false);
     config->setGroup(TQString::fromLatin1("RecentDocuments"));
     config->writeEntry("MaxEntries", maxrecentdocs->value());
     config->sync();

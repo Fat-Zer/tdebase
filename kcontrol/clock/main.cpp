@@ -40,7 +40,7 @@ typedef KGenericFactory<KclockModule, TQWidget> KlockModuleFactory;
 K_EXPORT_COMPONENT_FACTORY( kcm_clock, KlockModuleFactory("kcmkclock"))
 
 KclockModule::KclockModule(TQWidget *parent, const char *name, const TQStringList &)
-  : KCModule(KlockModuleFactory::instance(), parent, name)
+  : TDECModule(KlockModuleFactory::instance(), parent, name)
 {
   TDEAboutData *about =
   new TDEAboutData(I18N_NOOP("kcmclock"), I18N_NOOP("TDE Clock Control Module"),

@@ -43,7 +43,7 @@ KScreenSaverAdvancedDialog::KScreenSaverAdvancedDialog(TQWidget *parent, const c
 
 void KScreenSaverAdvancedDialog::readSettings()
 {
-	KConfig *config = new KConfig("kdesktoprc");
+	TDEConfig *config = new TDEConfig("kdesktoprc");
 	config->setGroup("ScreenSaver");
 	
 	mPriority = config->readNumEntry("Priority", 19);
@@ -100,7 +100,7 @@ void KScreenSaverAdvancedDialog::slotOk()
 {
 	if (mChanged)
 	{
-		KConfig *config = new KConfig("kdesktoprc");
+		TDEConfig *config = new TDEConfig("kdesktoprc");
 		config->setGroup( "ScreenSaver" );
 	
 		config->writeEntry("Priority", mPriority);

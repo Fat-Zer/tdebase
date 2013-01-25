@@ -62,8 +62,8 @@ class TQTabWidget;
 class MouseSettings
 {
 public:
-  void save(KConfig *);
-  void load(KConfig *);
+  void save(TDEConfig *);
+  void load(TDEConfig *);
   void apply(bool force=false);
 public:
  int num_buttons;
@@ -89,7 +89,7 @@ public:
  #endif
 };
 
-class MouseConfig : public KCModule
+class MouseConfig : public TDECModule
 {
   Q_OBJECT
 public:

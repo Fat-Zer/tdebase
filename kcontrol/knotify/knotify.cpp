@@ -48,7 +48,7 @@ K_EXPORT_COMPONENT_FACTORY( kcm_knotify, NotifyFactory("kcmnotify") )
 using namespace KNotify;
 
 KCMKNotify::KCMKNotify(TQWidget *parent, const char *name, const TQStringList & )
-    : KCModule(NotifyFactory::instance(), parent, name),
+    : TDECModule(NotifyFactory::instance(), parent, name),
       m_playerSettings( 0L )
 {
     setButtons( Help | Default | Apply );
@@ -98,7 +98,7 @@ KCMKNotify::KCMKNotify(TQWidget *parent, const char *name, const TQStringList & 
 
 KCMKNotify::~KCMKNotify()
 {
-    KConfig config( "knotifyrc", false, false );
+    TDEConfig config( "knotifyrc", false, false );
     config.setGroup( "Misc" );
     ApplicationList allApps = m_notifyWidget->allApps();
     ApplicationListIterator appIt( allApps );
@@ -173,7 +173,7 @@ void KCMKNotify::load( bool useDefaults )
     allApps.sort();
     m_notifyWidget->setEnabled( !allApps.isEmpty() );
 
-    KConfig config( "knotifyrc", true, false );
+    TDEConfig config( "knotifyrc", true, false );
 	 config.setReadDefaults( useDefaults );
     config.setGroup( "Misc" );
     TQString select = config.readEntry( "LastConfiguredApp" );
@@ -239,7 +239,7 @@ PlayerSettingsDialog::PlayerSettingsDialog( TQWidget *parent, bool modal )
 
 void PlayerSettingsDialog::load( bool useDefaults )
 {
-    KConfig config( "knotifyrc", true, false );
+    TDEConfig config( "knotifyrc", true, false );
 	 config.setReadDefaults( useDefaults );
     config.setGroup( "Misc" );
     bool useExternal = config.readBoolEntry( "Use external player", false );
@@ -264,7 +264,7 @@ void PlayerSettingsDialog::load( bool useDefaults )
 void PlayerSettingsDialog::save()
 {
     // see tdelibs/arts/knotify/knotify.cpp
-    KConfig config( "knotifyrc", false, false );
+    TDEConfig config( "knotifyrc", false, false );
     config.setGroup( "Misc" );
 
     config.writePathEntry( "External player", m_ui->reqExternal->url() );

@@ -59,7 +59,7 @@ struct DecorationInfo
 };
 
 
-class KWinDecorationModule : public KCModule, virtual public KWinDecorationIface, public KDecorationDefines
+class KWinDecorationModule : public TDECModule, virtual public KWinDecorationIface, public KDecorationDefines
 {
 	Q_OBJECT
 
@@ -76,8 +76,8 @@ class KWinDecorationModule : public KCModule, virtual public KWinDecorationIface
 		virtual void dcopUpdateClientList();
 
 	signals:
-		void pluginLoad( KConfig* conf );
-		void pluginSave( KConfig* conf );
+		void pluginLoad( TDEConfig* conf );
+		void pluginSave( TDEConfig* conf );
 		void pluginDefaults();
 
 	protected slots:
@@ -88,8 +88,8 @@ class KWinDecorationModule : public KCModule, virtual public KWinDecorationIface
 		void slotButtonsChanged();
 
 	private:
-		void readConfig( KConfig* conf );
-		void writeConfig( KConfig* conf );
+		void readConfig( TDEConfig* conf );
+		void writeConfig( TDEConfig* conf );
 		void findDecorations();
 		void createDecorationList();
 		void createThirdPartyWMList();
@@ -98,7 +98,7 @@ class KWinDecorationModule : public KCModule, virtual public KWinDecorationIface
 		TQString decorationLibName( const TQString& name );
 		TQString decorationName ( TQString& libName );
 		static TQString styleToConfigLib( TQString& styleLib );
-		void resetPlugin( KConfig* conf, const TQString& currentDecoName = TQString::null );
+		void resetPlugin( TDEConfig* conf, const TQString& currentDecoName = TQString::null );
 		void resetKWin();
 		void checkSupportedBorderSizes();
 		static int borderSizeToIndex( BorderSize size, TQValueList< BorderSize > sizes );
@@ -117,7 +117,7 @@ class KWinDecorationModule : public KCModule, virtual public KWinDecorationIface
 
 		KDecorationPreview* preview;
 		KDecorationPlugins* plugins;
-		KConfig twinConfig;
+		TDEConfig twinConfig;
 
 		TQCheckBox* cbUseCustomButtonPositions;
 	//	TQCheckBox* cbUseMiniWindows;
@@ -130,7 +130,7 @@ class KWinDecorationModule : public KCModule, virtual public KWinDecorationIface
 		TQWidget* pluginConfigWidget;
 		TQString  currentLibraryName;
 		TQString  oldLibraryName;
-		TQObject* (*allocatePlugin)( KConfig* conf, TQWidget* parent );
+		TQObject* (*allocatePlugin)( TDEConfig* conf, TQWidget* parent );
 
 		// Page 2
 		ButtonPositionWidget *buttonPositionWidget;

@@ -32,7 +32,7 @@ bool GetInfo_XServer_and_Video( TQListView *lBox );
 bool GetInfo_CD_ROM( TQListView *lBox ); /* New CD-ROM Info */
 extern bool GetInfo_OpenGL( TQListView *lBox );
 
-class KInfoListWidget : public KCModule
+class KInfoListWidget : public TDECModule
 {
 public:
   KInfoListWidget(const TQString &_title, TQWidget *parent, const char *name=0, bool _getlistbox (TQListView *)=0);

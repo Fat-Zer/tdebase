@@ -75,7 +75,7 @@
 #undef Below
 
 MouseConfig::MouseConfig (TQWidget * parent, const char *name)
-  : KCModule(parent, name)
+  : TDECModule(parent, name)
 {
 
 
@@ -483,7 +483,7 @@ void MouseConfig::load()
 void MouseConfig::load( bool useDefaults )
 {
 
-  KConfig config( "kcminputrc", true );
+  TDEConfig config( "kcminputrc", true );
 
   config.setReadDefaults( useDefaults );
 
@@ -516,7 +516,7 @@ void MouseConfig::load( bool useDefaults )
   slotClick();
 
 
-  KConfig ac("kaccessrc", true);
+  TDEConfig ac("kaccessrc", true);
 
   ac.setGroup("Mouse");
   mouseKeys->setChecked(ac.readBoolEntry("MouseKeys", false));
@@ -568,10 +568,10 @@ void MouseConfig::save()
   settings->reverseScrollPolarity = tab1->cbScrollPolarity->isChecked();
 
   settings->apply();
-  KConfig config( "kcminputrc" );
+  TDEConfig config( "kcminputrc" );
   settings->save(&config);
 
-  KConfig ac("kaccessrc", false);
+  TDEConfig ac("kaccessrc", false);
 
   ac.setGroup("Mouse");
 
@@ -593,7 +593,7 @@ void MouseConfig::save()
   // restart kaccess
   kapp->startServiceByDesktopName("kaccess");
 
-  KCModule::changed(false);
+  TDECModule::changed(false);
 
 }
 
@@ -624,7 +624,7 @@ void MouseConfig::slotHandedChanged(int val){
   settings->m_handedNeedsApply = true;
 }
 
-void MouseSettings::load(KConfig *config)
+void MouseSettings::load(TDEConfig *config)
 {
   int accel_num, accel_den, threshold;
   double accel;
@@ -799,7 +799,7 @@ void MouseSettings::apply(bool force)
   #endif
 }
 
-void MouseSettings::save(KConfig *config)
+void MouseSettings::save(TDEConfig *config)
 {
   config->setGroup("Mouse");
   config->writeEntry("Acceleration",accelRate);

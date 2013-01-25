@@ -13,7 +13,7 @@ class ModernSysConfig : public TQObject
 	Q_OBJECT
 
 	public:
-		ModernSysConfig(KConfig* conf, TQWidget* parent);
+		ModernSysConfig(TDEConfig* conf, TQWidget* parent);
 		~ModernSysConfig();
 
 	// These public signals/slots work similar to KCM modules
@@ -21,15 +21,15 @@ class ModernSysConfig : public TQObject
 		void		changed();
 
 	public slots:
-		void		load(KConfig* conf);	
-		void		save(KConfig* conf);
+		void		load(TDEConfig* conf);	
+		void		save(TDEConfig* conf);
 		void		defaults();
 
 	protected slots:
 		void		slotSelectionChanged();	// Internal use
 
 	private:
-		KConfig   	*clientrc;
+		TDEConfig   	*clientrc;
 		TQWidget		*mainw;
 		TQVBoxLayout	*vbox;
 		TQWidget         *handleBox;

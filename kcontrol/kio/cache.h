@@ -26,7 +26,7 @@
 
 class CacheDlgUI;
 
-class KCacheConfigDialog : public KCModule
+class KCacheConfigDialog : public TDECModule
 {
   Q_OBJECT
   

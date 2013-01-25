@@ -50,7 +50,7 @@ public:
 
   static void setMaxCacheSize( int );
 
-  static void setCacheControl( KIO::CacheControl );
+  static void setCacheControl( TDEIO::CacheControl );
 
 
   /** Proxy Settings */
@@ -86,8 +86,8 @@ public:
   static void updateProxyScout( TQWidget * parent = 0L );
 
 protected:
-  static KConfig* config ();
-  static KConfig* http_config ();
+  static TDEConfig* config ();
+  static TDEConfig* http_config ();
   KSaveIOConfig ();
 
 private:

@@ -22,7 +22,7 @@
 #include <kdedmodule.h>
 #include <kurl.h>
 
-namespace KIO { class Job; }
+namespace TDEIO { class Job; }
 
 /**
  * KDED Module to handle shortcut icons ("favicons")
@@ -91,9 +91,9 @@ private:
     bool isIconOld(const TQString &);
 
 private slots:
-    void slotData(KIO::Job *, const TQByteArray &);
-    void slotResult(KIO::Job *);
-    void slotInfoMessage(KIO::Job *, const TQString &);
+    void slotData(TDEIO::Job *, const TQByteArray &);
+    void slotResult(TDEIO::Job *);
+    void slotInfoMessage(TDEIO::Job *, const TQString &);
     void slotKill();
 
 private:

@@ -19,14 +19,14 @@
 
 class TQCheckBox;
 class KIntNumInput;
-class KConfig;
+class TDEConfig;
 
 extern "C" void init_energy();
 
 /**
  * The Desktop/Energy tab in kcontrol.
  */
-class KEnergy: public KCModule
+class KEnergy: public TDECModule
 {
     Q_OBJECT
 
@@ -62,7 +62,7 @@ private:
     KIntNumInput *m_pStandbySlider;
     KIntNumInput *m_pSuspendSlider;
     KIntNumInput *m_pOffSlider;
-    KConfig *m_pConfig;
+    TDEConfig *m_pConfig;
 };
 
 #endif // __Energy_h_Included__

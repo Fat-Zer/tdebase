@@ -57,7 +57,7 @@ SystemWidget::SystemWidget( TQWidget* parent_P )
 
 void SystemWidget::load(bool useDefaults )
     {
-    KConfig cfg( "kdedrc", true );
+    TDEConfig cfg( "kdedrc", true );
 	 cfg.setReadDefaults( useDefaults );
     cfg.setGroup( "General" );
     cb_disable_kbuildsycoca->setChecked( cfg.readBoolEntry( "DelayedCheck", false ));
@@ -65,7 +65,7 @@ void SystemWidget::load(bool useDefaults )
 
 void SystemWidget::save()
     {
-    KConfig cfg( "kdedrc" );
+    TDEConfig cfg( "kdedrc" );
     cfg.setGroup( "General" );
     cfg.writeEntry( "DelayedCheck", cb_disable_kbuildsycoca->isChecked());
     }

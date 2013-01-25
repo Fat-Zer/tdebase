@@ -30,7 +30,7 @@ class TQCheckBox;
 class TQStringList;
 
 
-class IconThemesConfig : public KCModule
+class IconThemesConfig : public TDECModule
 {
   Q_OBJECT
 

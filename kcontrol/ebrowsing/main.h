@@ -29,7 +29,7 @@
 
 class KURIFilter;
 
-class KURIFilterModule : public KCModule {
+class KURIFilterModule : public TDECModule {
     Q_OBJECT
 
 public:
@@ -45,7 +45,7 @@ private:
 
     TQWidget *widget;
     FilterOptions *opts;
-    TQPtrList<KCModule> modules;
+    TQPtrList<TDECModule> modules;
 };
 
 #endif

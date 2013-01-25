@@ -35,7 +35,7 @@ class KeramikConfig: public TQObject
 	
 
 	public:
-		KeramikConfig( KConfig* conf, TQWidget* parent );
+		KeramikConfig( TDEConfig* conf, TQWidget* parent );
 		~KeramikConfig();
 
 	// These public signals/slots work similar to KCM modules
@@ -43,13 +43,13 @@ class KeramikConfig: public TQObject
 		void changed();
 
 	public slots:
-		void load( KConfig* conf );	
-		void save( KConfig* conf );
+		void load( TDEConfig* conf );	
+		void save( TDEConfig* conf );
 		void defaults();
 
 	private:
 		KeramikConfigUI *ui;
-		KConfig *c;
+		TDEConfig *c;
 };
 
 

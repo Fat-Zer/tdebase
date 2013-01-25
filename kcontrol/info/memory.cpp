@@ -88,7 +88,7 @@ static TQString formatted_unit(t_memsize value)
 }
 
 KMemoryWidget::KMemoryWidget(TQWidget * parent, const char *name)
-:  KCModule(parent, name)
+:  TDECModule(parent, name)
 {
 
     TDEAboutData *about =

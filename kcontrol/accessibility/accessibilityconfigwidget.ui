@@ -1,7 +1,7 @@
 <!DOCTYPE UI><UI version="3.1" stdsetdef="1">
 <class>AccessibilityConfigWidget</class>
 <author>José Pablo Ezequiel Fernández &lt;pupeno@kde.org&gt;</author>
-<widget class="KCModule">
+<widget class="TDECModule">
     <property name="name">
         <cstring>AccessibilityConfigWidget</cstring>
     </property>

@@ -178,7 +178,7 @@ protected:
   KActionCollection m_ownActions;
 
 private slots:
-  void slotLocalURL( KIO::Job *, const KURL&, bool );
+  void slotLocalURL( TDEIO::Job *, const KURL&, bool );
   void slotLocalURLKIODestroyed( );
 
 private:
@@ -187,7 +187,7 @@ private:
   void addPlugins( );
   int  insertServicesSubmenus(const TQMap<TQString, ServiceList>& list, TQDomElement& menu, bool isBuiltin);
   int  insertServices(const ServiceList& list, TQDomElement& menu, bool isBuiltin);
-  bool KIOSKAuthorizedAction(KConfig& cfg);
+  bool KIOSKAuthorizedAction(TDEConfig& cfg);
   KPropertiesDialog* showPropertiesDialog();
 
   class KonqPopupMenuPrivate;

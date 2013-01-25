@@ -36,7 +36,7 @@
 
 namespace KParts { class Factory; }
 
-class KConfig;
+class TDEConfig;
 class DCOPObject;
 
 class KateDocumentInfo
@@ -104,8 +104,8 @@ class KateDocManager : public TQObject
     TQPtrList<Kate::Document> modifiedDocumentList();
     bool queryCloseDocuments(KateMainWindow *w);
 
-    void saveDocumentList (class KConfig *config);
-    void restoreDocumentList (class KConfig *config);
+    void saveDocumentList (class TDEConfig *config);
+    void restoreDocumentList (class TDEConfig *config);
 
     DCOPObject *dcopObject () { return m_dcop; };
 
@@ -143,7 +143,7 @@ class KateDocManager : public TQObject
     TQPtrDict<KateDocumentInfo> m_docInfos;
     TQMap<uint,TPair> m_tempFiles;
     TQGuardedPtr<Kate::Document> m_currentDoc;
-    KConfig *m_metaInfos;
+    TDEConfig *m_metaInfos;
     bool m_saveMetaInfos;
     int m_daysMetaInfos;
 

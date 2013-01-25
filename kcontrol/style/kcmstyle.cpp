@@ -73,7 +73,7 @@
 // Danimo: Why do we use the old interface?!
 extern "C"
 {
-    KDE_EXPORT KCModule *create_style(TQWidget *parent, const char*)
+    KDE_EXPORT TDECModule *create_style(TQWidget *parent, const char*)
     {
         TDEGlobal::locale()->insertCatalogue("kcmstyle");
         return new KCMStyle(parent, "kcmstyle");
@@ -82,7 +82,7 @@ extern "C"
     KDE_EXPORT void init_style()
     {
         uint flags = KRdbExportQtSettings | KRdbExportQtColors | KRdbExportXftSettings;
-        KConfig config("kcmdisplayrc", true /*readonly*/, false /*don't read kdeglobals etc.*/);
+        TDEConfig config("kcmdisplayrc", true /*readonly*/, false /*don't read kdeglobals etc.*/);
         config.setGroup("X11");
 
         // This key is written by the "colors" module.
@@ -116,7 +116,7 @@ K_EXPORT_COMPONENT_FACTORY( kcm_kcmstyle, GeneralFactory )
 
 
 KCMStyle::KCMStyle( TQWidget* parent, const char* name )
-	: KCModule( parent, name ), appliedStyle(NULL)
+	: TDECModule( parent, name ), appliedStyle(NULL)
 {
     setQuickHelp( i18n("<h1>Style</h1>"
 			"This module allows you to modify the visual appearance "
@@ -489,7 +489,7 @@ void KCMStyle::load()
 
 void KCMStyle::load(bool useDefaults)
 {
-	KConfig config( "kdeglobals", true, false );
+	TDEConfig config( "kdeglobals", true, false );
 
 	config.setReadDefaults( useDefaults );
 
@@ -562,7 +562,7 @@ void KCMStyle::save()
 
 
 	// Save effects.
-	KConfig config( "kdeglobals" );
+	TDEConfig config( "kdeglobals" );
 	config.setGroup("KDE");
 
 	config.writeEntry( "EffectsEnabled", cbEnableEffects->isChecked());
@@ -634,7 +634,7 @@ void KCMStyle::save()
 	if (m_bStyleDirty | m_bEffectsDirty)	// Export only if necessary
 	{
 		uint flags = KRdbExportQtSettings;
-		KConfig kconfig("kcmdisplayrc", true /*readonly*/, false /*no globals*/);
+		TDEConfig kconfig("kcmdisplayrc", true /*readonly*/, false /*no globals*/);
 		kconfig.setGroup("X11");
 		bool exportKDEColors = kconfig.readBoolEntry("exportKDEColors", true);
 		if (exportKDEColors)
@@ -717,7 +717,7 @@ void KCMStyle::setStyleDirty()
 // All the Style Switching / Preview stuff
 // ----------------------------------------------------------------
 
-void KCMStyle::loadStyle( KConfig& config )
+void KCMStyle::loadStyle( TDEConfig& config )
 {
 	cbStyle->clear();
 
@@ -894,7 +894,7 @@ void KCMStyle::setStyleRecursive(TQWidget* w, TQStyle* s)
 // All the Effects stuff
 // ----------------------------------------------------------------
 
-void KCMStyle::loadEffects( KConfig& config )
+void KCMStyle::loadEffects( TDEConfig& config )
 {
 	// Load effects.
 	config.setGroup("KDE");
@@ -1011,9 +1011,9 @@ void KCMStyle::menuEffectChanged( bool enabled )
 // All the Miscellaneous stuff
 // ----------------------------------------------------------------
 
-void KCMStyle::loadMisc( KConfig& config )
+void KCMStyle::loadMisc( TDEConfig& config )
 {
-	// TDE's Part via KConfig
+	// TDE's Part via TDEConfig
 	config.setGroup("Toolbar style");
 	cbHoverButtons->setChecked(config.readBoolEntry("Highlighting", true));
 	cbTransparentToolbars->setChecked(config.readBoolEntry("TransparentMoving", true));

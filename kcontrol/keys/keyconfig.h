@@ -41,7 +41,7 @@ public:
         virtual void defaults();
         static void init();
 
-	bool writeSettings( const TQString& sGroup, KConfig* pConfig );
+	bool writeSettings( const TQString& sGroup, TDEConfig* pConfig );
 	bool writeSettingsGlobal( const TQString& sGroup );
 
 public slots:

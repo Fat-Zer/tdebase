@@ -26,11 +26,11 @@
 #include <tqbuffer.h>
 
 class KMPrinter;
-namespace KIO {
+namespace TDEIO {
 	class Job;
 }
 
-class KIO_Print : public TQObject, public KIO::SlaveBase
+class KIO_Print : public TQObject, public TDEIO::SlaveBase
 {
 	Q_OBJECT
 public:
@@ -41,10 +41,10 @@ public:
 	void stat(const KURL& url);
 
 protected slots:
-	void slotResult( KIO::Job* );
-	void slotData( KIO::Job*, const TQByteArray& );
-	void slotTotalSize( KIO::Job*, KIO::filesize_t );
-	void slotProcessedSize( KIO::Job*, KIO::filesize_t );
+	void slotResult( TDEIO::Job* );
+	void slotData( TDEIO::Job*, const TQByteArray& );
+	void slotTotalSize( TDEIO::Job*, TDEIO::filesize_t );
+	void slotProcessedSize( TDEIO::Job*, TDEIO::filesize_t );
 
 private:
 	void listRoot();

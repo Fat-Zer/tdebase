@@ -21,7 +21,7 @@
 #define KFI_DEFAULT_CFG_X            true
 #define KFI_DEFAULT_CFG_GS           false
 
-// KIO::special
+// TDEIO::special
 
 namespace KFI
 {

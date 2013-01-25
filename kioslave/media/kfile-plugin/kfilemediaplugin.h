@@ -39,9 +39,9 @@ private:
 	void addMimeType(const char *mimeType);
 	const Medium askMedium(KFileMetaInfo &info);
 
-	KIO::filesize_t m_total;
-	KIO::filesize_t m_used;
-	KIO::filesize_t m_free;
+	TDEIO::filesize_t m_total;
+	TDEIO::filesize_t m_used;
+	TDEIO::filesize_t m_free;
 };
 
 #endif

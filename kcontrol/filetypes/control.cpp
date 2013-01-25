@@ -2,7 +2,7 @@
 
 extern "C"
 {
-	  KDE_EXPORT KCModule *create_filetypes(TQWidget *parent, const char *)
+	  KDE_EXPORT TDECModule *create_filetypes(TQWidget *parent, const char *)
           {
         return new FileTypesView(parent, "filetypes");
 	  }

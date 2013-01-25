@@ -47,7 +47,7 @@
 #include "useragentdlg_ui.h"
 
 UserAgentDlg::UserAgentDlg( TQWidget * parent )
-             :KCModule( parent, "kcmkio" )
+             :TDECModule( parent, "kcmkio" )
 {
   TQVBoxLayout *mainLayout = new TQVBoxLayout(this, 0, KDialog::spacingHint());
 
@@ -87,7 +87,7 @@ void UserAgentDlg::load()
   d_itemsSelected = 0;
   dlg->lvDomainPolicyList->clear();
 
-  m_config = new KConfig("kio_httprc", false, false);
+  m_config = new TDEConfig("kio_httprc", false, false);
   m_provider = new FakeUASProvider();
 
   TQStringList list = m_config->groupList();

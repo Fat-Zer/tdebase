@@ -52,7 +52,7 @@
 #include "iconthemes.h"
 
 IconThemesConfig::IconThemesConfig(TQWidget *parent, const char *name)
-  : KCModule(parent, name)
+  : TDECModule(parent, name)
 {
   TQVBoxLayout *topLayout = new TQVBoxLayout(this, KDialog::marginHint(),
                                            KDialog::spacingHint());
@@ -160,7 +160,7 @@ void IconThemesConfig::installNewTheme()
   TQString themeTmpFile;
   // themeTmpFile contains the name of the downloaded file
 
-  if (!KIO::NetAccess::download(themeURL, themeTmpFile, this)) {
+  if (!TDEIO::NetAccess::download(themeURL, themeTmpFile, this)) {
     TQString sorryText;
     if (themeURL.isLocalFile())
        sorryText = i18n("Unable to find the icon theme archive %1.");
@@ -176,7 +176,7 @@ void IconThemesConfig::installNewTheme()
     TQString invalidArch(i18n("The file is not a valid icon theme archive."));
     KMessageBox::error(this, invalidArch);
 
-    KIO::NetAccess::removeTempFile(themeTmpFile);
+    TDEIO::NetAccess::removeTempFile(themeTmpFile);
     return;
   }
 
@@ -189,7 +189,7 @@ void IconThemesConfig::installNewTheme()
     KMessageBox::error(this, somethingWrong);
   }
 
-  KIO::NetAccess::removeTempFile(themeTmpFile);
+  TDEIO::NetAccess::removeTempFile(themeTmpFile);
 
   TDEGlobal::instance()->newIconLoader();
   loadThemes();
@@ -296,11 +296,11 @@ void IconThemesConfig::removeSelectedTheme()
 
   KIconTheme icontheme(m_themeNames[selected->text(0)]);
 
-  // delete the index file before the async KIO::del so loadThemes() will
+  // delete the index file before the async TDEIO::del so loadThemes() will
   // ignore that dir.
   unlink(TQFile::encodeName(icontheme.dir()+"/index.theme").data());
   unlink(TQFile::encodeName(icontheme.dir()+"/index.desktop").data());
-  KIO::del(KURL( icontheme.dir() ));
+  TDEIO::del(KURL( icontheme.dir() ));
 
   TDEGlobal::instance()->newIconLoader();
 

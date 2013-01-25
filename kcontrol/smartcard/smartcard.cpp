@@ -44,11 +44,11 @@
 #include "smartcard.h"
 
 KSmartcardConfig::KSmartcardConfig(TQWidget *parent, const char *name)
-  : KCModule(parent, name),DCOPObject(name)
+  : TDECModule(parent, name),DCOPObject(name)
 {
 
   TQVBoxLayout *layout = new TQVBoxLayout(this, KDialog::marginHint(), KDialog::spacingHint());
-  config = new KConfig("ksmartcardrc", false, false);
+  config = new TDEConfig("ksmartcardrc", false, false);
 
   DCOPClient *dc = TDEApplication::kApplication()->dcopClient();
 
@@ -372,14 +372,14 @@ TQString KSmartcardConfig::quickHelp() const
 
 extern "C"
 {
-  KDE_EXPORT KCModule *create_smartcard(TQWidget *parent, const char *)
+  KDE_EXPORT TDECModule *create_smartcard(TQWidget *parent, const char *)
   {
     return new KSmartcardConfig(parent, "kcmsmartcard");
   }
 
   KDE_EXPORT void init_smartcard()
   {
-    KConfig *config = new KConfig("ksmartcardrc", false, false);
+    TDEConfig *config = new TDEConfig("ksmartcardrc", false, false);
     bool start = config->readBoolEntry("Enable Support", false);
     delete config;
 

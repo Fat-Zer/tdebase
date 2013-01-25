@@ -41,13 +41,13 @@
 #include "kio_smb.h"
 #include "kio_smb_internal.h"
 
-using namespace KIO;
+using namespace TDEIO;
 
 int SMBSlave::cache_stat(const SMBUrl &url, struct stat* st )
 {
     int result = smbc_stat( url.toSmbcUrl(), st);
     kdDebug(KIO_SMB) << "smbc_stat " << url << " " << errno << " " << result << endl;
-    kdDebug(KIO_SMB) << "size " << (KIO::filesize_t)st->st_size << endl;
+    kdDebug(KIO_SMB) << "size " << (TDEIO::filesize_t)st->st_size << endl;
     return result;
 }
 
@@ -69,15 +69,15 @@ bool SMBSlave::browse_stat_path(const SMBUrl& _url, UDSEntry& udsentry, bool ign
          return false;
       }
 
-      udsatom.m_uds  = KIO::UDS_FILE_TYPE;
+      udsatom.m_uds  = TDEIO::UDS_FILE_TYPE;
       udsatom.m_long = st.st_mode & S_IFMT;
       udsentry.append(udsatom);
 
-      udsatom.m_uds  = KIO::UDS_SIZE;
+      udsatom.m_uds  = TDEIO::UDS_SIZE;
       udsatom.m_long = st.st_size;
       udsentry.append(udsatom);
 
-      udsatom.m_uds  = KIO::UDS_USER;
+      udsatom.m_uds  = TDEIO::UDS_USER;
       uid_t uid = st.st_uid;
       struct passwd *user = getpwuid( uid );
       if ( user )
@@ -86,7 +86,7 @@ bool SMBSlave::browse_stat_path(const SMBUrl& _url, UDSEntry& udsentry, bool ign
           udsatom.m_str = TQString::number( uid );
       udsentry.append(udsatom);
 
-      udsatom.m_uds  = KIO::UDS_GROUP;
+      udsatom.m_uds  = TDEIO::UDS_GROUP;
       gid_t gid = st.st_gid;
       struct group *grp = getgrgid( gid );
       if ( grp )
@@ -95,7 +95,7 @@ bool SMBSlave::browse_stat_path(const SMBUrl& _url, UDSEntry& udsentry, bool ign
           udsatom.m_str = TQString::number( gid );
       udsentry.append(udsatom);
 
-      udsatom.m_uds  = KIO::UDS_ACCESS;
+      udsatom.m_uds  = TDEIO::UDS_ACCESS;
       udsatom.m_long = st.st_mode & 07777;
       udsentry.append(udsatom);
 
@@ -153,7 +153,7 @@ void SMBSlave::stat( const KURL& kurl )
     UDSAtom     udsatom;
     UDSEntry    udsentry;
     // Set name
-    udsatom.m_uds = KIO::UDS_NAME;
+    udsatom.m_uds = TDEIO::UDS_NAME;
     udsatom.m_str = kurl.fileName();
     udsentry.append( udsatom );
 
@@ -166,7 +166,7 @@ void SMBSlave::stat( const KURL& kurl )
 
     case SMBURLTYPE_ENTIRE_NETWORK:
     case SMBURLTYPE_WORKGROUP_OR_SERVER:
-        udsatom.m_uds = KIO::UDS_FILE_TYPE;
+        udsatom.m_uds = TDEIO::UDS_FILE_TYPE;
         udsatom.m_long = S_IFDIR;
         udsentry.append(udsatom);
         break;
@@ -342,7 +342,7 @@ void SMBSlave::listDir( const KURL& kurl )
                break;
 
            // Set name
-           atom.m_uds = KIO::UDS_NAME;
+           atom.m_uds = TDEIO::UDS_NAME;
            TQString dirpName = TQString::fromUtf8( dirp->name );
            // We cannot trust dirp->commentlen has it might be with or without the NUL character
            // See KDE bug #111430 and Samba bug #3030
@@ -387,17 +387,17 @@ void SMBSlave::listDir( const KURL& kurl )
                    dirp->smbc_type == SMBC_FILE_SHARE)
            {
                // Set type
-               atom.m_uds = KIO::UDS_FILE_TYPE;
+               atom.m_uds = TDEIO::UDS_FILE_TYPE;
                atom.m_long = S_IFDIR;
                udsentry.append( atom );
 
                // Set permissions
-               atom.m_uds  = KIO::UDS_ACCESS;
+               atom.m_uds  = TDEIO::UDS_ACCESS;
                atom.m_long = (S_IRUSR | S_IRGRP | S_IROTH | S_IXUSR | S_IXGRP | S_IXOTH);
                udsentry.append(atom);
 
                if (dirp->smbc_type == SMBC_SERVER) {
-                   atom.m_uds = KIO::UDS_URL;
+                   atom.m_uds = TDEIO::UDS_URL;
                    // TQString workgroup = m_current_url.host().upper();
                    KURL u("smb:/");
                    u.setHost(dirpName);
@@ -408,7 +408,7 @@ void SMBSlave::listDir( const KURL& kurl )
                    kdDebug(KIO_SMB) << "list item " << atom.m_str << endl;
                    udsentry.append(atom);
 
-                   atom.m_uds = KIO::UDS_MIME_TYPE;
+                   atom.m_uds = TDEIO::UDS_MIME_TYPE;
                    atom.m_str = TQString::fromLatin1("application/x-smb-server");
                    udsentry.append(atom);
                }
@@ -419,20 +419,20 @@ void SMBSlave::listDir( const KURL& kurl )
            else if(dirp->smbc_type == SMBC_WORKGROUP)
            {
                // Set type
-               atom.m_uds = KIO::UDS_FILE_TYPE;
+               atom.m_uds = TDEIO::UDS_FILE_TYPE;
                atom.m_long = S_IFDIR;
                udsentry.append( atom );
 
                // Set permissions
-               atom.m_uds  = KIO::UDS_ACCESS;
+               atom.m_uds  = TDEIO::UDS_ACCESS;
                atom.m_long = (S_IRUSR | S_IRGRP | S_IROTH | S_IXUSR | S_IXGRP | S_IXOTH);
                udsentry.append(atom);
 
-               atom.m_uds = KIO::UDS_MIME_TYPE;
+               atom.m_uds = TDEIO::UDS_MIME_TYPE;
                atom.m_str = TQString::fromLatin1("application/x-smb-workgroup");
                udsentry.append(atom);
 
-               atom.m_uds = KIO::UDS_URL;
+               atom.m_uds = TDEIO::UDS_URL;
                // TQString workgroup = m_current_url.host().upper();
                KURL u("smb:/");
                u.setHost(dirpName);

@@ -28,7 +28,7 @@ class TQWidget;
 class TQPushButton;
 class TQFrame;
 
-class KCModule;
+class TDECModule;
 class TDEAboutData;
 
 #include "dockcontainer.h"
@@ -42,7 +42,7 @@ class ProxyWidget : public TQWidget
 
 public:
 
-  ProxyWidget(KCModule *client, TQString title, const char *name=0, bool run_as_root = false);
+  ProxyWidget(TDECModule *client, TQString title, const char *name=0, bool run_as_root = false);
   ~ProxyWidget();
 
   TQString quickHelp() const;
@@ -73,7 +73,7 @@ private:
 
   TQPushButton *_handbook, *_default, *_apply, *_reset, *_root;
   TQFrame      *_sep;
-  KCModule    *_client;
+  TDECModule    *_client;
     ProxyView *view;
 
 };

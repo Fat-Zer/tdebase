@@ -35,7 +35,7 @@
 
 
 KHTMLSearchConfig::KHTMLSearchConfig(TQWidget *parent, const char *name)
-  : KCModule(parent, name), indexProc(0)
+  : TDECModule(parent, name), indexProc(0)
 {
   TQVBoxLayout *vbox = new TQVBoxLayout(this, 5);
 
@@ -253,7 +253,7 @@ void KHTMLSearchConfig::configChanged()
 
 void KHTMLSearchConfig::load()
 {
-  KConfig *config = new KConfig("khelpcenterrc", true);
+  TDEConfig *config = new TDEConfig("khelpcenterrc", true);
 
   config->setGroup("htdig");
   htdigBin->lineEdit()->setText(config->readPathEntry("htdig", kapp->dirs()->findExe("htdig")));
@@ -281,7 +281,7 @@ void KHTMLSearchConfig::load()
 
 void KHTMLSearchConfig::save()
 {
-  KConfig *config= new KConfig("khelpcenterrc", false);
+  TDEConfig *config= new TDEConfig("khelpcenterrc", false);
 
   config->setGroup("htdig");
   config->writePathEntry("htdig", htdigBin->lineEdit()->text());
@@ -362,7 +362,7 @@ void KHTMLSearchConfig::indexTerminated(TDEProcess *)
 
 extern "C"
 {
-  KDE_EXPORT KCModule *create_htmlsearch(TQWidget *parent, const char *name)
+  KDE_EXPORT TDECModule *create_htmlsearch(TQWidget *parent, const char *name)
   {
     TDEGlobal::locale()->insertCatalogue("kcmhtmlsearch");
     return new KHTMLSearchConfig(parent, name);

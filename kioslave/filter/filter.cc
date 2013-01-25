@@ -54,7 +54,7 @@ int kdemain( int argc, char ** argv)
 }
 
 FilterProtocol::FilterProtocol( const TQCString & protocol, const TQCString &pool, const TQCString &app )
- : KIO::SlaveBase( protocol, pool, app )
+ : TDEIO::SlaveBase( protocol, pool, app )
 {
     TQString mimetype = TQString::fromLatin1("application/x-") + TQString::fromLatin1(protocol);
     filter = KFilterBase::findFilterByMimeType( mimetype );
@@ -65,12 +65,12 @@ void FilterProtocol::get( const KURL & )
 {
   if (subURL.isEmpty())
   {
-     error( KIO::ERR_NO_SOURCE_PROTOCOL, mProtocol );
+     error( TDEIO::ERR_NO_SOURCE_PROTOCOL, mProtocol );
      return;
   }
   if (!filter)
   {
-      error( KIO::ERR_INTERNAL, mProtocol );
+      error( TDEIO::ERR_INTERNAL, mProtocol );
       return;
   }
   needSubURLData();
@@ -146,7 +146,7 @@ void FilterProtocol::get( const KURL & )
 
   if (bError)
   {
-     error(KIO::ERR_COULD_NOT_READ, subURL.url());
+     error(TDEIO::ERR_COULD_NOT_READ, subURL.url());
      subURL = KURL(); // Clear subURL
      return;
   }
@@ -157,7 +157,7 @@ void FilterProtocol::get( const KURL & )
 
 void FilterProtocol::put( const KURL &/*url*/, int, bool /*_overwrite*/, bool /*_resume*/ )
 {
-  error( KIO::ERR_UNSUPPORTED_ACTION, TQString::fromLatin1("put"));
+  error( TDEIO::ERR_UNSUPPORTED_ACTION, TQString::fromLatin1("put"));
 }
 
 void FilterProtocol::setSubURL(const KURL &url)

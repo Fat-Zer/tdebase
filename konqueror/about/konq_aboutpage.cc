@@ -119,7 +119,7 @@ TQString KonqAboutPageFactory::launch()
   // Try to split page in three. If it succeeds, insert the default search into the middle part.
   TQStringList parts = TQStringList::split( "<!--search bar splitter-->", res );
   if ( parts.count() == 3 ) {
-    KConfig config( "kuriikwsfilterrc", true /*read-only*/, false /*no KDE globals*/ );
+    TDEConfig config( "kuriikwsfilterrc", true /*read-only*/, false /*no KDE globals*/ );
     config.setGroup( "General" );
     TQString name = config.readEntry("DefaultSearchEngine");
     KService::Ptr service =

@@ -728,7 +728,7 @@ TQStringList TDEBackend::mountoptions(const TQString &name)
 
 	TQString drive_udi = driveUDIFromDeviceUID(medium->id());
 
-	KConfig config("mediamanagerrc");
+	TDEConfig config("mediamanagerrc");
 
 	bool use_defaults = true;
 	if (config.hasGroup(drive_udi)) {
@@ -893,7 +893,7 @@ bool TDEBackend::setMountoptions(const TQString &name, const TQStringList &optio
 
 	kdDebug(1219) << "setMountoptions " << name << " " << options << endl;
 	
-	KConfig config("mediamanagerrc");
+	TDEConfig config("mediamanagerrc");
 	config.setGroup(drive_udi);
 	
 	TQMap<TQString,TQString> valids = MediaManagerUtils::splitOptions(options);
@@ -948,8 +948,8 @@ TQString TDEBackend::mount(const Medium *medium)
 		data.completed = false;
 		data.medium = medium;
 		
-		KIO::Job *job = KIO::mount( false, 0, medium->deviceNode(), mountPoint );
-		connect(job, TQT_SIGNAL( result (KIO::Job *)), TQT_SLOT( slotResult( KIO::Job *)));
+		TDEIO::Job *job = TDEIO::mount( false, 0, medium->deviceNode(), mountPoint );
+		connect(job, TQT_SIGNAL( result (TDEIO::Job *)), TQT_SLOT( slotResult( TDEIO::Job *)));
 		mount_jobs[job] = &data;
 		// The caller expects the device to be mounted when the function
 		// completes. Thus block until the job completes.
@@ -1148,8 +1148,8 @@ TQString TDEBackend::unmount(const TQString &_udi)
 		data.completed = false;
 		data.medium = medium;
 		
-		KIO::Job *job = KIO::unmount( medium->mountPoint(), false );
-		connect(job, TQT_SIGNAL( result (KIO::Job *)), TQT_SLOT( slotResult( KIO::Job *)));
+		TDEIO::Job *job = TDEIO::unmount( medium->mountPoint(), false );
+		connect(job, TQT_SIGNAL( result (TDEIO::Job *)), TQT_SLOT( slotResult( TDEIO::Job *)));
 		mount_jobs[job] = &data;
 		// The caller expects the device to be unmounted when the function
 		// completes. Thus block until the job completes.

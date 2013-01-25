@@ -111,7 +111,7 @@ SwallowApplet::~SwallowApplet()
 SwallowCommandList* SwallowApplet::readConfig()
 {
     m_swcList->clear();
-    KConfig *kc = config();
+    TDEConfig *kc = config();
 
     kc->setGroup("General");
     int count = kc->readNumEntry("Number of apps");

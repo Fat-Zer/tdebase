@@ -27,7 +27,7 @@
 #include <kio/global.h>
 #include <kremoteencoding.h>
 
-using namespace KIO;
+using namespace TDEIO;
 
 sftpFileAttr::sftpFileAttr(){
     clear();

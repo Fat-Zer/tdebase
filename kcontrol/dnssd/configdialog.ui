@@ -1,6 +1,6 @@
 <!DOCTYPE UI><UI version="3.3" stdsetdef="1">
 <class>ConfigDialog</class>
-<widget class="KCModule">
+<widget class="TDECModule">
     <property name="name">
         <cstring>ConfigDialog</cstring>
     </property>

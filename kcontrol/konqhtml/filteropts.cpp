@@ -38,9 +38,9 @@
 #include "filteropts.h"
 #include "filteropts.moc"
 
-KCMFilter::KCMFilter(KConfig *config, TQString group,
+KCMFilter::KCMFilter(TDEConfig *config, TQString group,
                      TQWidget *parent, const char * )
-    : KCModule( parent, "kcmkonqhtml" ),
+    : TDECModule( parent, "kcmkonqhtml" ),
       mConfig( config ),
       mGroupname( group ),
       mSelCount(0)

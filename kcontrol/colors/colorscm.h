@@ -27,14 +27,14 @@ class KLineEdit;
 class TQPalette;
 class KListBox;
 class KColorButton;
-class KConfig;
+class TDEConfig;
 class KStdDirs;
 class KColorSchemeList;
 
 /**
  * The Desktop/Colors tab in kcontrol.
  */
-class KColorScheme: public KCModule
+class KColorScheme: public TDECModule
 {
     Q_OBJECT
 

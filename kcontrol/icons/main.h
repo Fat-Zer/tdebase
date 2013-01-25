@@ -29,7 +29,7 @@
 #include <tqtabwidget.h>
 #include <kcmodule.h>
 
-class IconModule : public KCModule
+class IconModule : public TDECModule
 {
   Q_OBJECT
 
@@ -47,8 +47,8 @@ protected slots:
 private:
   TQTabWidget   *tab;
 
-  KCModule *tab1;
-  KCModule *tab2;
+  TDECModule *tab1;
+  TDECModule *tab2;
 };
 
 

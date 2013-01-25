@@ -40,13 +40,13 @@
 #include "monitorworkspace.h"
 #include "displayconfigbase.h"
 
-class KConfig;
+class TDEConfig;
 class KPopupMenu;
 class KListViewItem;
 
 typedef TQMap< TQString, TQPtrList< SingleScreenData > > ScreenConfigurationMap;
 
-class KDisplayConfig : public KCModule, public DCOPObject
+class KDisplayConfig : public TDECModule, public DCOPObject
 {
   K_DCOP
   Q_OBJECT
@@ -70,8 +70,8 @@ k_dcop:
 
 private:
 
-	KConfig *config;
-	KCModule *iccTab;
+	TDEConfig *config;
+	TDECModule *iccTab;
 	bool _ok;
 	Display *randr_display;
 	ScreenInfo *randr_screen_info;
@@ -91,7 +91,7 @@ private:
 	TQString startupProfileName;
 	int realResolutionSliderValue();
 	void setRealResolutionSliderValue(int index);
-	KCModule* addTab( const TQString name, const TQString label );
+	TDECModule* addTab( const TQString name, const TQString label );
 	void moveMonitor(DraggableMonitor* monitor, int realx, int realy);
 	bool applyMonitorLayoutRules(void);
 	bool applyMonitorLayoutRules(DraggableMonitor* primary_monitor);

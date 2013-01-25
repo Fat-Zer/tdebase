@@ -47,7 +47,7 @@
 
 KLocaleApplication::KLocaleApplication(TQWidget *parent, const char* /*name*/, 
                                        const TQStringList &args)
-  : KCModule( KLocaleFactory::instance(), parent, args)
+  : TDECModule( KLocaleFactory::instance(), parent, args)
 {
   TDEAboutData* aboutData = new TDEAboutData("kcmlocale",
         I18N_NOOP("KCMLocale"),
@@ -59,8 +59,8 @@ KLocaleApplication::KLocaleApplication(TQWidget *parent, const char* /*name*/,
         0, 0, "bieker@kde.org");
   setAboutData( aboutData );
 
-  m_nullConfig = new KConfig(TQString::null, false, false);
-  m_globalConfig = new KConfig(TQString::null, false, true);
+  m_nullConfig = new TDEConfig(TQString::null, false, false);
+  m_globalConfig = new TDEConfig(TQString::null, false, true);
 
   m_locale = new KLocale(TQString::fromLatin1("kcmlocale"), m_nullConfig);
   TQVBoxLayout *l = new TQVBoxLayout(this, 0, KDialog::spacingHint());
@@ -184,8 +184,8 @@ void KLocaleApplication::save()
   // restore the old global locale
   TDEGlobal::_locale = lsave;
 
-  KConfig *config = TDEGlobal::config();
-  KConfigGroupSaver saver(config, "Locale");
+  TDEConfig *config = TDEGlobal::config();
+  TDEConfigGroupSaver saver(config, "Locale");
 
   // ##### this doesn't make sense
   bool langChanged = config->readEntry("Language")

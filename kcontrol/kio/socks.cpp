@@ -35,7 +35,7 @@
 #include <kaboutdata.h>
 
 KSocksConfig::KSocksConfig(TQWidget *parent)
-  : KCModule(parent, "kcmkio")
+  : TDECModule(parent, "kcmkio")
 {
 
   TDEAboutData *about =
@@ -194,7 +194,7 @@ void KSocksConfig::libSelection()
 
 void KSocksConfig::load()
 {
-  KConfigGroup config(kapp->config(), "Socks");
+  TDEConfigGroup config(kapp->config(), "Socks");
   base->_c_enableSocks->setChecked(config.readBoolEntry("SOCKS_enable", false));
   int id = config.readNumEntry("SOCKS_method", 1);
   base->bg->setButton(id);
@@ -228,7 +228,7 @@ void KSocksConfig::load()
 
 void KSocksConfig::save()
 {
-  KConfigGroup config(kapp->config(), "Socks");
+  TDEConfigGroup config(kapp->config(), "Socks");
   config.writeEntry("SOCKS_enable",base-> _c_enableSocks->isChecked(), true, true);
   config.writeEntry("SOCKS_method", base->bg->id(base->bg->selected()), true, true);
   config.writePathEntry("SOCKS_lib", base->_c_customPath->url(), true, true);

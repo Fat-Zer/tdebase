@@ -23,7 +23,7 @@
 #include <kcmodule.h>
 #include <kconfig.h>
 
-class KConfig;
+class TDEConfig;
 class TDEAboutData;
 
 namespace KWinInternal
@@ -32,7 +32,7 @@ namespace KWinInternal
 class KCMRulesList;
 
 class KCMRules
-    : public KCModule
+    : public TDECModule
     {
     Q_OBJECT
     public:
@@ -45,7 +45,7 @@ class KCMRules
         void moduleChanged( bool state );
     private:
         KCMRulesList* widget;
-        KConfig config;
+        TDEConfig config;
     };
 
 } // namespace

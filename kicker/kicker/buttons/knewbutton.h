@@ -42,7 +42,7 @@ public:
     ~KNewButton();
 
     static KNewButton *self() { return m_self; }
-    void loadConfig( const KConfigGroup& config );
+    void loadConfig( const TDEConfigGroup& config );
     TQColor borderColor() const;
     //virtual void setPopupDirection(KPanelApplet::Direction d);
 

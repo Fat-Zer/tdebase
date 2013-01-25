@@ -420,7 +420,7 @@ void KonqViewManager::duplicateTab( KonqFrameBase* tab, bool openAfterCurrentPag
 
   KTempFile tempFile;
   tempFile.setAutoDelete( true );
-  KConfig config( tempFile.name() );
+  TDEConfig config( tempFile.name() );
   config.setGroup( "View Profile" );
 
   TQString prefix = TQString::fromLatin1( currentFrame->frameType() ) + TQString::number(0);
@@ -490,7 +490,7 @@ void KonqViewManager::breakOffTab( KonqFrameBase* tab )
 
   KTempFile tempFile;
   tempFile.setAutoDelete( true );
-  KConfig config( tempFile.name() );
+  TDEConfig config( tempFile.name() );
   config.setGroup( "View Profile" );
 
   TQString prefix = TQString::fromLatin1( currentFrame->frameType() ) + TQString::number(0);
@@ -1092,7 +1092,7 @@ void KonqViewManager::saveViewProfile( const TQString & fileName, const TQString
 
 }
 
-void KonqViewManager::saveViewProfile( KConfig & cfg, bool saveURLs, bool saveWindowSize )
+void KonqViewManager::saveViewProfile( TDEConfig & cfg, bool saveURLs, bool saveWindowSize )
 {
   //kdDebug(1202) << "KonqViewManager::saveViewProfile" << endl;
   if( m_pMainWindow->childFrame() != 0L ) {
@@ -1126,13 +1126,13 @@ void KonqViewManager::loadViewProfile( const TQString & path, const TQString & f
                                        const KURL & forcedURL, const KonqOpenURLRequest &req,
                                        bool resetWindow, bool openURL )
 {
-  KConfig cfg( path, true );
+  TDEConfig cfg( path, true );
   cfg.setDollarExpansion( true );
   cfg.setGroup( "Profile" );
   loadViewProfile( cfg, filename, forcedURL, req, resetWindow, openURL );
 }
 
-void KonqViewManager::loadViewProfile( KConfig &cfg, const TQString & filename,
+void KonqViewManager::loadViewProfile( TDEConfig &cfg, const TQString & filename,
                                        const KURL & forcedURL, const KonqOpenURLRequest &req,
                                        bool resetWindow, bool openURL )
 {
@@ -1401,7 +1401,7 @@ void KonqViewManager::emitActivePartChanged()
 }
 
 
-TQSize KonqViewManager::readConfigSize( KConfig &cfg, TQWidget *widget )
+TQSize KonqViewManager::readConfigSize( TDEConfig &cfg, TQWidget *widget )
 {
     bool ok;
 
@@ -1446,7 +1446,7 @@ TQSize KonqViewManager::readConfigSize( KConfig &cfg, TQWidget *widget )
     return TQSize( width, height );
 }
 
-void KonqViewManager::loadItem( KConfig &cfg, KonqFrameContainerBase *parent,
+void KonqViewManager::loadItem( TDEConfig &cfg, KonqFrameContainerBase *parent,
                                 const TQString &name, const KURL & defaultURL, bool openURL, bool openAfterCurrentPage )
 {
   TQString prefix;

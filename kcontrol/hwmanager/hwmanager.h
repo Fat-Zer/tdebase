@@ -34,11 +34,11 @@
 #include "devicepropsdlg.h"
 #include "deviceiconview.h"
 
-class KConfig;
+class TDEConfig;
 class KPopupMenu;
 class KListViewItem;
 
-class TDEHWManager : public KCModule, public DCOPObject
+class TDEHWManager : public TDECModule, public DCOPObject
 {
 	K_DCOP
 	Q_OBJECT
@@ -65,7 +65,7 @@ private slots:
 private:
 	TDEHWManagerBase *base;
 
-	KConfig *config;
+	TDEConfig *config;
 };
 
 #endif

@@ -46,7 +46,7 @@ Options::~Options()
 
 unsigned long Options::updateSettings()
     {
-    KConfig *config = TDEGlobal::config();
+    TDEConfig *config = TDEGlobal::config();
     unsigned long changed = 0;
     changed |= d->updateKWinSettings( config ); // read decoration settings
 
@@ -84,7 +84,7 @@ unsigned long Options::updateSettings()
     if( !focusPolicyIsReasonable()) // #48786, comments #7 and later
         focusStealingPreventionLevel = 0;
 
-    KConfig *gc = new KConfig("kdeglobals", false, false);
+    TDEConfig *gc = new TDEConfig("kdeglobals", false, false);
     gc->setGroup("Windows");
     xineramaEnabled = gc->readBoolEntry ("XineramaEnabled", true );
     xineramaPlacementEnabled = gc->readBoolEntry ("XineramaPlacementEnabled", true);
@@ -218,11 +218,11 @@ unsigned long Options::updateSettings()
     // Since we want to allow users to enable window decoration tooltips
     // and not kstyle tooltips and vise-versa, we don't read the
     // "EffectNoTooltip" setting from kdeglobals.
-    KConfig globalConfig("kdeglobals");
+    TDEConfig globalConfig("kdeglobals");
     globalConfig.setGroup("KDE");
     topmenus = globalConfig.readBoolEntry( "macStyle", false );
 
-    KConfig kdesktopcfg( "kdesktoprc", true );
+    TDEConfig kdesktopcfg( "kdesktoprc", true );
     kdesktopcfg.setGroup( "Menubar" );
     desktop_topmenu = kdesktopcfg.readBoolEntry( "ShowMenubar", false );
     if( desktop_topmenu )

@@ -587,8 +587,8 @@
 
 	* This took me 2 hours to find...
 
-	  -   KConfigGroupSaver( conf, "Appearance" ); +
-	  KConfigGroupSaver saver( conf, "Appearance" );
+	  -   TDEConfigGroupSaver( conf, "Appearance" ); +
+	  TDEConfigGroupSaver saver( conf, "Appearance" );
 
 	  Finally the size is restored correctly.
 

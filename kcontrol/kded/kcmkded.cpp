@@ -47,7 +47,7 @@ K_EXPORT_COMPONENT_FACTORY( kcm_kded, KDEDFactory( "kcmkded" ) )
 
 
 KDEDConfig::KDEDConfig(TQWidget* parent, const char* name, const TQStringList &) :
-	KCModule( KDEDFactory::instance(), parent, name )
+	TDECModule( KDEDFactory::instance(), parent, name )
 {
 	TDEAboutData *about =
 		new TDEAboutData( I18N_NOOP( "kcmkded" ), I18N_NOOP( "TDE Service Manager" ),
@@ -110,7 +110,7 @@ KDEDConfig::KDEDConfig(TQWidget* parent, const char* name, const TQStringList &)
 	load();
 }
 
-void setModuleGroup(KConfig *config, const TQString &filename)
+void setModuleGroup(TDEConfig *config, const TQString &filename)
 {
 	TQString module = filename;
 	int i = module.findRev('/');
@@ -123,13 +123,13 @@ void setModuleGroup(KConfig *config, const TQString &filename)
 	config->setGroup(TQString("Module-%1").arg(module));
 }
 
-bool KDEDConfig::autoloadEnabled(KConfig *config, const TQString &filename)
+bool KDEDConfig::autoloadEnabled(TDEConfig *config, const TQString &filename)
 {
 	setModuleGroup(config, filename);
 	return config->readBoolEntry("autoload", true);
 }
 
-void KDEDConfig::setAutoloadEnabled(KConfig *config, const TQString &filename, bool b)
+void KDEDConfig::setAutoloadEnabled(TDEConfig *config, const TQString &filename, bool b)
 {
 	setModuleGroup(config, filename);
 	return config->writeEntry("autoload", b);
@@ -141,7 +141,7 @@ void KDEDConfig::load() {
 
 
 void KDEDConfig::load( bool useDefaults ) {
-	KConfig kdedrc("kdedrc", true, false);
+	TDEConfig kdedrc("kdedrc", true, false);
    kdedrc.setReadDefaults( useDefaults );
 
 	_lvStartup->clear();
@@ -190,13 +190,13 @@ void KDEDConfig::save() {
 			TQString::fromLatin1( "kded/*.desktop" ),
 			true, true, files );
 
-	KConfig kdedrc("kdedrc", false, false);
+	TDEConfig kdedrc("kdedrc", false, false);
 
 	for ( TQStringList::ConstIterator it = files.begin(); it != files.end(); ++it ) {
 
 		if ( KDesktopFile::isDesktopFile( *it ) ) {
 
-			KConfig file( *it, false, false, "services" );
+			TDEConfig file( *it, false, false, "services" );
 			file.setGroup("Desktop Entry");
 
 			if (file.readBoolEntry("X-TDE-Kded-autoload")){

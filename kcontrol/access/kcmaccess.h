@@ -57,7 +57,7 @@ class ExtendedIntNumInput : public KIntNumInput
 		int sliderMax;
 };
 
-class KAccessConfig : public KCModule
+class KAccessConfig : public TDECModule
 {
   Q_OBJECT
 

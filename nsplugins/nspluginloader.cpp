@@ -64,7 +64,7 @@ void NSPluginInstance::init(const TQCString& app, const TQCString& obj)
 {
     stub = new NSPluginInstanceIface_stub( app, obj );
     TQGridLayout *_layout = new TQGridLayout(this, 1, 1);
-    KConfig cfg("kcmnspluginrc", false);
+    TDEConfig cfg("kcmnspluginrc", false);
     cfg.setGroup("Misc");
     if (cfg.readBoolEntry("demandLoad", false)) {
         _button = new TQPushButton(i18n("Start Plugin"), dynamic_cast<EMBEDCLASS*>(this));
@@ -207,7 +207,7 @@ NSPluginLoader::NSPluginLoader()
                    this, TQT_SLOT(applicationRegistered(const TQCString&)));
 
   // load configuration
-  KConfig cfg("kcmnspluginrc", false);
+  TDEConfig cfg("kcmnspluginrc", false);
   cfg.setGroup("Misc");
   _useArtsdsp = cfg.readBoolEntry( "useArtsdsp", false );
 }

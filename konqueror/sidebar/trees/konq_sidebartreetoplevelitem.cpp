@@ -169,7 +169,7 @@ void KonqSidebarTreeTopLevelItem::paste()
     else
         destURL = m_externalURL;
 
-    KIO::pasteClipboard( destURL, move );
+    TDEIO::pasteClipboard( destURL, move );
 }
 
 void KonqSidebarTreeTopLevelItem::rename()

@@ -12,13 +12,13 @@
 
 #include <kcmodule.h>
 
-class KConfig;
+class TDEConfig;
 class BGDialog;
 
 /**
  * The Desktop/Background tab in kcontrol.
  */
-class KBackground: public KCModule
+class KBackground: public TDECModule
 {
     Q_OBJECT
 
@@ -33,7 +33,7 @@ public:
 
 private:
     BGDialog      *m_base;
-    KConfig       *m_pConfig;
+    TDEConfig       *m_pConfig;
 };
 
 

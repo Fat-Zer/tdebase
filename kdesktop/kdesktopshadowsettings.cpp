@@ -28,7 +28,7 @@
 
 //#define DEBUG
 
-KDesktopShadowSettings::KDesktopShadowSettings(KConfig *cfg) : 
+KDesktopShadowSettings::KDesktopShadowSettings(TDEConfig *cfg) : 
     KShadowSettings(),
     m_textColor(TQColor("#FFFFFF")),
     _UID(0L)
@@ -59,7 +59,7 @@ unsigned long KDesktopShadowSettings::UID()
 /**
  * Loads a new configuration
  */
-void KDesktopShadowSettings::setConfig(KConfig *val)
+void KDesktopShadowSettings::setConfig(TDEConfig *val)
 {
     config = val;
 

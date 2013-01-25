@@ -64,7 +64,7 @@ extern "C"
 
 void KRandRModule::performApplyOnStartup()
 {
-	KConfig config("kcmrandrrc", true);
+	TDEConfig config("kcmrandrrc", true);
 	if (RandRDisplay::applyOnStartup(config))
 	{
 		// Load settings and apply appropriate config
@@ -75,7 +75,7 @@ void KRandRModule::performApplyOnStartup()
 }
 
 KRandRModule::KRandRModule(TQWidget *parent, const char *name, const TQStringList&)
-    : KCModule(parent, name)
+    : TDECModule(parent, name)
 	, m_changed(false)
 {
 	if (!isValid()) {
@@ -146,7 +146,7 @@ KRandRModule::KRandRModule(TQWidget *parent, const char *name, const TQStringLis
 
 	slotScreenChanged(TQApplication::desktop()->primaryScreen());
 
-	setButtons(KCModule::Apply);
+	setButtons(TDECModule::Apply);
 }
 
 void KRandRModule::addRotationButton(int thisRotation, bool checkbox)
@@ -272,7 +272,7 @@ void KRandRModule::load( bool useDefaults )
 	// It will be correct already if they wanted to retain their settings over TDE restarts,
 	// and if it isn't correct they have changed a) their X configuration, b) the screen
 	// with another program, or c) their hardware.
-	KConfig config("kcmrandrrc", true);
+	TDEConfig config("kcmrandrrc", true);
 
    config.setReadDefaults( useDefaults );
 
@@ -294,7 +294,7 @@ void KRandRModule::save()
 
 	m_oldApply = m_applyOnStartup->isChecked();
 	m_oldSyncTrayApp = m_syncTrayApp->isChecked();
-	KConfig config("kcmrandrrc");
+	TDEConfig config("kcmrandrrc");
 	saveDisplay(config, m_oldApply, m_oldSyncTrayApp);
 
 	setChanged();

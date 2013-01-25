@@ -1,4 +1,4 @@
-/* Read KConfig() entries - for use in shell scripts.
+/* Read TDEConfig() entries - for use in shell scripts.
  * (c) 2001 Red Hat, Inc.
  * Programmed by Bernhard Rosenkraenzer <bero@redhat.com>
  *
@@ -45,7 +45,7 @@ int main(int argc, char **argv)
 {
 	TDEAboutData aboutData("kreadconfig", I18N_NOOP("KReadConfig"),
 		"1.0.1",
-		I18N_NOOP("Read KConfig entries - for use in shell scripts"),
+		I18N_NOOP("Read TDEConfig entries - for use in shell scripts"),
 		TDEAboutData::License_GPL,
 		"(c) 2001 Red Hat, Inc.");
 	aboutData.addAuthor("Bernhard Rosenkraenzer", 0, "bero@redhat.com");
@@ -67,13 +67,13 @@ int main(int argc, char **argv)
 	TDEInstance inst(&aboutData);
 	TDEGlobal::config();
 
-	KConfig *konfig;
+	TDEConfig *konfig;
         bool configMustDeleted = false;
 	if (file.isEmpty())
 	   konfig = TDEGlobal::config();
 	else
         {
-	   konfig = new KConfig(file, true, false);
+	   konfig = new TDEConfig(file, true, false);
            configMustDeleted=true;
         }
 	konfig->setGroup(group);

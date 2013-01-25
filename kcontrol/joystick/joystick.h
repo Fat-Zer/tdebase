@@ -25,7 +25,7 @@
 
 class JoyWidget;
 
-class joystick: public KCModule
+class joystick: public TDECModule
 {
   Q_OBJECT
 

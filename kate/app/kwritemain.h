@@ -91,21 +91,21 @@ class KWrite : public KParts::MainWindow
 
   //config file functions
   public:
-    void readConfig (KConfig *);
-    void writeConfig (KConfig *);
+    void readConfig (TDEConfig *);
+    void writeConfig (TDEConfig *);
 
     void readConfig ();
     void writeConfig ();
 
   //session management
   public:
-    void restore(KConfig *,int);
+    void restore(TDEConfig *,int);
     static void restore();
 
   private:
-    void readProperties(KConfig *);
-    void saveProperties(KConfig *);
-    void saveGlobalProperties(KConfig *);
+    void readProperties(TDEConfig *);
+    void saveProperties(TDEConfig *);
+    void saveGlobalProperties(TDEConfig *);
 
   private:
     KTextEditor::View * m_view;

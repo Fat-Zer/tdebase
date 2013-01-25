@@ -136,7 +136,7 @@ int main( int argc, char **argv)
 							while (xdgModifiedDirectory.endsWith("/")) {
 								xdgModifiedDirectory.truncate(xdgModifiedDirectory.length()-1);
 							}
-							KConfig config(TQDir::homeDirPath() + "/.config/user-dirs.dirs", false, false);
+							TDEConfig config(TQDir::homeDirPath() + "/.config/user-dirs.dirs", false, false);
 							config.writeEntry("XDG_DOCUMENTS_DIR", TQString("\"") + xdgModifiedDirectory + TQString("\""), true);
 							config.sync();
 							if (args->isSet( "getpath" ) == true) {

@@ -79,7 +79,7 @@ RunApplet::RunApplet(const TQString& configFile, Type type, int actions,
     connect(_input, TQT_SIGNAL(activated(const TQString&)),
 	    TQT_SLOT(run_command(const TQString&)));
 
-    KConfig *c = config();
+    TDEConfig *c = config();
     c->setGroup("General");
 
     // restore history and completion list
@@ -98,7 +98,7 @@ RunApplet::RunApplet(const TQString& configFile, Type type, int actions,
 
 RunApplet::~RunApplet()
 {
-    KConfig *c = config();
+    TDEConfig *c = config();
     c->setGroup("General");
 
     // save history and completion list

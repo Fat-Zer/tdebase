@@ -31,12 +31,12 @@ class RemoteImpl
 public:
 	RemoteImpl();
 
-	void createTopLevelEntry(KIO::UDSEntry &entry) const;
-	bool createWizardEntry(KIO::UDSEntry &entry) const;
+	void createTopLevelEntry(TDEIO::UDSEntry &entry) const;
+	bool createWizardEntry(TDEIO::UDSEntry &entry) const;
 	bool isWizardURL(const KURL &url) const;
-	bool statNetworkFolder(KIO::UDSEntry &entry, const TQString &filename) const;
+	bool statNetworkFolder(TDEIO::UDSEntry &entry, const TQString &filename) const;
 
-	void listRoot(TQValueList<KIO::UDSEntry> &list) const;
+	void listRoot(TQValueList<TDEIO::UDSEntry> &list) const;
 
 	KURL findBaseURL(const TQString &filename) const;
 	TQString findDesktopFile(const TQString &filename) const;
@@ -47,7 +47,7 @@ public:
 
 private:
 	bool findDirectory(const TQString &filename, TQString &directory) const;
-	void createEntry(KIO::UDSEntry& entry, const TQString &directory,
+	void createEntry(TDEIO::UDSEntry& entry, const TQString &directory,
 	                 const TQString &file) const;
 };
 

@@ -148,9 +148,9 @@ void FontDialog::setupFontEncodingBox()
 
 void FontDialog::load()
 {
-	KConfig *cfg = kapp->config();
+	TDEConfig *cfg = kapp->config();
 	{
-		KConfigGroupSaver groupSaver( cfg, "HTML Settings" );
+		TDEConfigGroupSaver groupSaver( cfg, "HTML Settings" );
 
 		m_minFontSize->setValue( cfg->readNumEntry( "MinimumFontSize", HTML_DEFAULT_MIN_FONT_SIZE ) );
 		m_medFontSize->setValue( cfg->readNumEntry( "MediumFontSize", 10 ) );
@@ -178,13 +178,13 @@ void FontDialog::load()
 
 void FontDialog::save()
 {
-	KConfig *cfg = kapp->config();
+	TDEConfig *cfg = kapp->config();
 	{
-		KConfigGroupSaver groupSaver( cfg, "General" );
+		TDEConfigGroupSaver groupSaver( cfg, "General" );
 		cfg->writeEntry( "UseKonqSettings", false );
 	}
 	{
-		KConfigGroupSaver groupSaver( cfg, "HTML Settings" );
+		TDEConfigGroupSaver groupSaver( cfg, "HTML Settings" );
 
 		cfg->writeEntry( "MinimumFontSize", m_minFontSize->value() );
 		cfg->writeEntry( "MediumFontSize", m_medFontSize->value() );

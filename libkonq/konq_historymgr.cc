@@ -40,8 +40,8 @@ KonqHistoryManager::KonqHistoryManager( TQObject *parent, const char *name )
     m_updateTimer = new TQTimer( this );
 
     // defaults
-    KConfig *config = TDEGlobal::config();
-    KConfigGroupSaver cs( config, "HistorySettings" );
+    TDEConfig *config = TDEGlobal::config();
+    TDEConfigGroupSaver cs( config, "HistorySettings" );
     m_maxCount = config->readNumEntry( "Maximum of History entries", 500 );
     m_maxCount = TQMAX( 1, m_maxCount );
     m_maxAgeDays = config->readNumEntry( "Maximum age of History entries", 90);
@@ -493,8 +493,8 @@ void KonqHistoryManager::notifyMaxCount( TQ_UINT32 count, TQCString )
     clearPending();
     adjustSize();
 
-    KConfig *config = TDEGlobal::config();
-    KConfigGroupSaver cs( config, "HistorySettings" );
+    TDEConfig *config = TDEGlobal::config();
+    TDEConfigGroupSaver cs( config, "HistorySettings" );
     config->writeEntry( "Maximum of History entries", m_maxCount );
 
     if ( isSenderOfBroadcast() ) { 
@@ -509,8 +509,8 @@ void KonqHistoryManager::notifyMaxAge( TQ_UINT32 days, TQCString  )
     clearPending();
     adjustSize();
 
-    KConfig *config = TDEGlobal::config();
-    KConfigGroupSaver cs( config, "HistorySettings" );
+    TDEConfig *config = TDEGlobal::config();
+    TDEConfigGroupSaver cs( config, "HistorySettings" );
     config->writeEntry( "Maximum age of History entries", m_maxAgeDays );
 
     if ( isSenderOfBroadcast() ) { 

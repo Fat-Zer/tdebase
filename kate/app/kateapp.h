@@ -140,7 +140,7 @@ class KDE_EXPORT KateApp : public TDEApplication
      * @param sgroup session group for this window
      * @return new constructed main window
      */
-    KateMainWindow *newMainWindow (KConfig *sconfig = 0, const TQString &sgroup = "");
+    KateMainWindow *newMainWindow (TDEConfig *sconfig = 0, const TQString &sgroup = "");
 
     /**
      * removes the mainwindow given, DOES NOT DELETE IT

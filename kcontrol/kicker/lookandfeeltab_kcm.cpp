@@ -29,7 +29,7 @@
 #include <kdialog.h>
 
 LookAndFeelConfig::LookAndFeelConfig(TQWidget *parent, const char *name)
-  : KCModule(parent, name)
+  : TDECModule(parent, name)
 {
 
     TDEAboutData *about =

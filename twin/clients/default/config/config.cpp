@@ -17,7 +17,7 @@
 
 extern "C"
 {
-	KDE_EXPORT TQObject* allocate_config( KConfig* conf, TQWidget* parent )
+	KDE_EXPORT TQObject* allocate_config( TDEConfig* conf, TQWidget* parent )
 	{
 		return(new KDEDefaultConfig(conf, parent));
 	}
@@ -29,7 +29,7 @@ extern "C"
 // 'parent' is the parent of the TQObject, which is a VBox inside the
 //		  Configure tab in twindecoration
 
-KDEDefaultConfig::KDEDefaultConfig( KConfig* conf, TQWidget* parent )
+KDEDefaultConfig::KDEDefaultConfig( TDEConfig* conf, TQWidget* parent )
 	: TQObject( parent )
 {
 	TDEGlobal::locale()->insertCatalogue("twin_clients");
@@ -88,7 +88,7 @@ void KDEDefaultConfig::slotSelectionChanged()
 
 // Loads the configurable options from the twinrc config file
 // It is passed the open config from twindecoration to improve efficiency
-void KDEDefaultConfig::load( KConfig* conf )
+void KDEDefaultConfig::load( TDEConfig* conf )
 {
 	conf->setGroup("KDEDefault");
 	bool override = conf->readBoolEntry( "ShowTitleBarStipple", true );
@@ -105,7 +105,7 @@ void KDEDefaultConfig::load( KConfig* conf )
 
 
 // Saves the configurable options to the twinrc config file
-void KDEDefaultConfig::save( KConfig* conf )
+void KDEDefaultConfig::save( TDEConfig* conf )
 {
 	conf->setGroup("KDEDefault");
 	conf->writeEntry( "ShowTitleBarStipple", cbShowStipple->isChecked() );

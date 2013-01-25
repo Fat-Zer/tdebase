@@ -41,15 +41,15 @@ KOSPage::KOSPage(TQWidget *parent, const char *name ) : KOSPageDlg(parent,name) 
 	// initialize the textview with the default description - Trinity of course
 	slotKDEDescription();
 	// Set the configfiles
-	cglobal = new KConfig("kdeglobals");
-	claunch = new KConfig("klaunchrc", false, false);
-	cwin = new KConfig("twinrc");
-	cdesktop = new KConfig("kdesktoprc");
-	ckcminput = new KConfig("kcminputrc");
-	ckcmdisplay = new KConfig("kcmdisplayrc");
-	ckonqueror = new KConfig("konquerorrc");
-	cklipper = new KConfig("klipperrc", false, false);
-	ckaccess = new KConfig("kaccessrc");
+	cglobal = new TDEConfig("kdeglobals");
+	claunch = new TDEConfig("klaunchrc", false, false);
+	cwin = new TDEConfig("twinrc");
+	cdesktop = new TDEConfig("kdesktoprc");
+	ckcminput = new TDEConfig("kcminputrc");
+	ckcmdisplay = new TDEConfig("kcmdisplayrc");
+	ckonqueror = new TDEConfig("konquerorrc");
+	cklipper = new TDEConfig("klipperrc", false, false);
+	ckaccess = new TDEConfig("kaccessrc");
 	// Save the current user defaults
 	getUserDefaults();
 	// set default-selections for this page

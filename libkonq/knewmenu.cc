@@ -422,9 +422,9 @@ void KNewMenu::slotNewFile()
                 text.replace( "...", TQString() ); // the ... is fine for the menu item but not for the default filename
                 
 		KURL defaultFile( *it );
-		defaultFile.addPath( KIO::encodeFileName( text ) );
+		defaultFile.addPath( TDEIO::encodeFileName( text ) );
 		if ( defaultFile.isLocalFile() && TQFile::exists( defaultFile.path() ) )
-		    text = KIO::RenameDlg::suggestName( *it, text);
+		    text = TDEIO::RenameDlg::suggestName( *it, text);
 
                 KURL templateURL;
                 templateURL.setPath( entry.templatePath );
@@ -442,9 +442,9 @@ void KNewMenu::slotNewFile()
         text.replace( "...", TQString() ); // the ... is fine for the menu item but not for the default filename
         
 	KURL defaultFile( *(popupFiles.begin()) );
-	defaultFile.addPath( KIO::encodeFileName( text ) );
+	defaultFile.addPath( TDEIO::encodeFileName( text ) );
 	if ( defaultFile.isLocalFile() && TQFile::exists( defaultFile.path() ) )
-	    text = KIO::RenameDlg::suggestName( *(popupFiles.begin()), text);
+	    text = TDEIO::RenameDlg::suggestName( *(popupFiles.begin()), text);
 
         name = KInputDialog::getText( TQString::null, entry.comment,
     	text, &ok, d->m_parentWidget );
@@ -460,19 +460,19 @@ void KNewMenu::slotNewFile()
     for ( ; it != popupFiles.end(); ++it )
     {
         KURL dest( *it );
-        dest.addPath( KIO::encodeFileName(name) ); // Chosen destination file name
+        dest.addPath( TDEIO::encodeFileName(name) ); // Chosen destination file name
         d->m_destPath = dest.path(); // will only be used if m_isURLDesktopFile and dest is local
 
         KURL uSrc;
         uSrc.setPath( src );
-        //kdDebug(1203) << "KNewMenu : KIO::copyAs( " << uSrc.url() << ", " << dest.url() << ")" << endl;
-        KIO::CopyJob * job = KIO::copyAs( uSrc, dest );
+        //kdDebug(1203) << "KNewMenu : TDEIO::copyAs( " << uSrc.url() << ", " << dest.url() << ")" << endl;
+        TDEIO::CopyJob * job = TDEIO::copyAs( uSrc, dest );
         job->setDefaultPermissions( true );
-        connect( job, TQT_SIGNAL( result( KIO::Job * ) ),
-                TQT_SLOT( slotResult( KIO::Job * ) ) );
+        connect( job, TQT_SIGNAL( result( TDEIO::Job * ) ),
+                TQT_SLOT( slotResult( TDEIO::Job * ) ) );
         if ( m_isURLDesktopFile )
-		connect( job, TQT_SIGNAL( renamed( KIO::Job *, const KURL&, const KURL& ) ),
-        	     TQT_SLOT( slotRenamed( KIO::Job *, const KURL&, const KURL& ) ) );
+		connect( job, TQT_SIGNAL( renamed( TDEIO::Job *, const KURL&, const KURL& ) ),
+        	     TQT_SLOT( slotRenamed( TDEIO::Job *, const KURL&, const KURL& ) ) );
     	KURL::List lst;
     	lst.append( uSrc );
     	(void)new KonqCommandRecorder( KonqCommand::COPY, lst, dest, job );
@@ -481,7 +481,7 @@ void KNewMenu::slotNewFile()
 
 // Special case (filename conflict when creating a link=url file)
 // We need to update m_destURL
-void KNewMenu::slotRenamed( KIO::Job *, const KURL& from , const KURL& to )
+void KNewMenu::slotRenamed( TDEIO::Job *, const KURL& from , const KURL& to )
 {
     if ( from.isLocalFile() )
     {
@@ -491,13 +491,13 @@ void KNewMenu::slotRenamed( KIO::Job *, const KURL& from , const KURL& to )
     }
 }
 
-void KNewMenu::slotResult( KIO::Job * job )
+void KNewMenu::slotResult( TDEIO::Job * job )
 {
     if (job->error())
         job->showErrorDialog();
     else
     {
-        KURL destURL = static_cast<KIO::CopyJob*>(job)->destURL();
+        KURL destURL = static_cast<TDEIO::CopyJob*>(job)->destURL();
         if ( destURL.isLocalFile() )
         {
             if ( m_isURLDesktopFile )

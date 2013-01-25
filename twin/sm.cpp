@@ -67,7 +67,7 @@ bool SessionManaged::commitData( TQSessionManager& sm )
 
   \sa loadSessionInfo()
  */
-void Workspace::storeSession( KConfig* config, SMSavePhase phase )
+void Workspace::storeSession( TDEConfig* config, SMSavePhase phase )
     {
     config->setGroup("Session" );
     int count =  0;
@@ -149,7 +149,7 @@ void Workspace::storeSession( KConfig* config, SMSavePhase phase )
 void Workspace::loadSessionInfo()
     {
     session.clear();
-    KConfig* config = kapp->sessionConfig();
+    TDEConfig* config = kapp->sessionConfig();
     config->setGroup("Session" );
     int count =  config->readNumEntry( "count" );
     int active_client = config->readNumEntry( "active" );

@@ -25,7 +25,7 @@
 #include <kinstance.h>
 #include <kurl.h>
 
-using namespace KIO;
+using namespace TDEIO;
 
 AboutProtocol::AboutProtocol(const TQCString &pool_socket, const TQCString &app_socket)
     : SlaveBase("about", pool_socket, app_socket)

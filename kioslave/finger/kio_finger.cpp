@@ -37,7 +37,7 @@
 #include "kio_finger.h"
 
 
-using namespace KIO;
+using namespace TDEIO;
 
 static const TQString defaultRefreshRate = "60";
 

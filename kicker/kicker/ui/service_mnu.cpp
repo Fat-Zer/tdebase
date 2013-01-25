@@ -669,7 +669,7 @@ void PanelServiceMenu::slotContextMenu(int selected)
     TQDataStream ds(ba, IO_WriteOnly);
 
     KURL src,dest;
-    KIO::CopyJob *job;
+    TDEIO::CopyJob *job;
     KDesktopFile *df;
 
     switch (selected) {
@@ -680,7 +680,7 @@ void PanelServiceMenu::slotContextMenu(int selected)
 	    dest.setPath( TDEGlobalSettings::desktopPath() );
 	    dest.setFileName( src.fileName() );
 
-            job = KIO::copyAs( src, dest );
+            job = TDEIO::copyAs( src, dest );
             job->setDefaultPermissions( true );
 	    break;
 

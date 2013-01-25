@@ -135,7 +135,7 @@ IndexProgressDialog::IndexProgressDialog( TQWidget *parent )
 IndexProgressDialog::~IndexProgressDialog()
 {
   if ( !mLogView->isHidden() ) {
-    KConfig *cfg = TDEGlobal::config();
+    TDEConfig *cfg = TDEGlobal::config();
     cfg->setGroup( "indexprogressdialog" );
     cfg->writeEntry( "size", size() );
   }
@@ -196,7 +196,7 @@ void IndexProgressDialog::slotEnd()
 
 void IndexProgressDialog::toggleDetails()
 {
-  KConfig *cfg = TDEGlobal::config();
+  TDEConfig *cfg = TDEGlobal::config();
   cfg->setGroup( "indexprogressdialog" );
   if ( mLogView->isHidden() ) {
     mLogLabel->show();

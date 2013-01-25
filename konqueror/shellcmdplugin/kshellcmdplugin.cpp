@@ -45,7 +45,7 @@ void KShellCmdPlugin::slotExecuteShellCommand()
       KMessageBox::sorry(0L, "KShellCmdPlugin::slotExecuteShellCommand: Program error, please report a bug.");
       return;
    }
-   KURL url = KIO::NetAccess::mostLocalURL(part->url(),NULL);
+   KURL url = TDEIO::NetAccess::mostLocalURL(part->url(),NULL);
    if ( !url.isLocalFile() )
    {
       KMessageBox::sorry(part->widget(),i18n("Executing shell commands works only on local directories."));

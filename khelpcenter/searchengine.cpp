@@ -293,7 +293,7 @@ bool SearchEngine::search( TQString words, TQString method, int matches,
   if ( method == "or" ) mOperation = Or;
   else mOperation = And;
 
-  KConfig *cfg = TDEGlobal::config();
+  TDEConfig *cfg = TDEGlobal::config();
   cfg->setGroup( "Search" );
   TQString commonSearchProgram = cfg->readPathEntry( "CommonProgram" );
   bool useCommon = cfg->readBoolEntry( "UseCommonProgram", false );

@@ -142,8 +142,8 @@ class CKFileFontView : public KListView, public KFileView
     virtual KFileItem * prevItem(const KFileItem *i) const;
     virtual void        insertItem( KFileItem *i);
 
-    void                readConfig(KConfig *kc, const TQString &group);
-    void                writeConfig(KConfig *kc, const TQString &group);
+    void                readConfig(TDEConfig *kc, const TQString &group);
+    void                writeConfig(TDEConfig *kc, const TQString &group);
 
     // implemented to get noticed about sorting changes (for sortingIndicator)
     virtual void        setSorting(TQDir::SortSpec s);

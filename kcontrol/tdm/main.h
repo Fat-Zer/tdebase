@@ -36,7 +36,7 @@ class TDMUsersWidget;
 class TDMConvenienceWidget;
 class KBackground;
 
-class TDModule : public KCModule
+class TDModule : public TDECModule
 {
   Q_OBJECT
 

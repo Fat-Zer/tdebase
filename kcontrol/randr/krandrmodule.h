@@ -25,7 +25,7 @@ class TQButtonGroup;
 class KComboBox;
 class TQCheckBox;
 
-class KRandRModule : public KCModule, public KRandrSimpleAPI
+class KRandRModule : public TDECModule, public KRandrSimpleAPI
 {
 	Q_OBJECT
 

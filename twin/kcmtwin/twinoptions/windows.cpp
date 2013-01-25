@@ -101,8 +101,8 @@ KFocusConfig::~KFocusConfig ()
 }
 
 // removed the LCD display over the slider - this is not good GUI design :) RNolden 051701
-KFocusConfig::KFocusConfig (bool _standAlone, KConfig *_config, TQWidget * parent, const char *)
-    : KCModule(parent, "kcmkwm"), config(_config), standAlone(_standAlone)
+KFocusConfig::KFocusConfig (bool _standAlone, TDEConfig *_config, TQWidget * parent, const char *)
+    : TDECModule(parent, "kcmkwm"), config(_config), standAlone(_standAlone)
 {
     TQString wtstr;
     TQBoxLayout *lay = new TQVBoxLayout (this, 0, KDialog::spacingHint());
@@ -437,7 +437,7 @@ void KFocusConfig::setActiveMouseScreen(bool a) {
 void KFocusConfig::updateActiveMouseScreen()
 {
     // on by default for non click to focus policies
-    KConfigGroup cfg( config, "Windows" );
+    TDEConfigGroup cfg( config, "Windows" );
     if( !cfg.hasKey( KWIN_ACTIVE_MOUSE_SCREEN ))
         setActiveMouseScreen( focusCombo->currentItem() != 0 );
 }
@@ -514,7 +514,7 @@ void KFocusConfig::load( void )
     setTraverseAll( config->readBoolEntry(KWIN_TRAVERSE_ALL, false ));
 
     config->setGroup("Desktops");
-    emit KCModule::changed(false);
+    emit TDECModule::changed(false);
 }
 
 void KFocusConfig::save( void )
@@ -583,7 +583,7 @@ void KFocusConfig::save( void )
             kapp->dcopClient()->attach();
         kapp->dcopClient()->send("twin*", "", "reconfigure()", TQString(""));
     }
-    emit KCModule::changed(false);
+    emit TDECModule::changed(false);
 }
 
 void KFocusConfig::defaults()
@@ -604,7 +604,7 @@ void KFocusConfig::defaults()
     // setFocusStealing(2);
     // TODO default to low for now
     setFocusStealing(1);
-    emit KCModule::changed(true);
+    emit TDECModule::changed(true);
 }
 
 KAdvancedConfig::~KAdvancedConfig ()
@@ -613,8 +613,8 @@ KAdvancedConfig::~KAdvancedConfig ()
         delete config;
 }
 
-KAdvancedConfig::KAdvancedConfig (bool _standAlone, KConfig *_config, TQWidget *parent, const char *)
-    : KCModule(parent, "kcmkwm"), config(_config), standAlone(_standAlone)
+KAdvancedConfig::KAdvancedConfig (bool _standAlone, TDEConfig *_config, TQWidget *parent, const char *)
+    : TDECModule(parent, "kcmkwm"), config(_config), standAlone(_standAlone)
 {
     TQString wtstr;
     TQBoxLayout *lay = new TQVBoxLayout (this, 0, KDialog::spacingHint());
@@ -741,7 +741,7 @@ void KAdvancedConfig::load( void )
 
     setHideUtilityWindowsForInactive( config->readBoolEntry( KWIN_HIDE_UTILITY, true ));
 
-    emit KCModule::changed(false);
+    emit TDECModule::changed(false);
 }
 
 void KAdvancedConfig::save( void )
@@ -771,7 +771,7 @@ void KAdvancedConfig::save( void )
             kapp->dcopClient()->attach();
         kapp->dcopClient()->send("twin*", "", "reconfigure()", TQString(""));
     }
-    emit KCModule::changed(false);
+    emit TDECModule::changed(false);
 }
 
 void KAdvancedConfig::defaults()
@@ -782,7 +782,7 @@ void KAdvancedConfig::defaults()
     setElectricBorders(0);
     setElectricBorderDelay(150);
     setHideUtilityWindowsForInactive( true );
-    emit KCModule::changed(true);
+    emit TDECModule::changed(true);
 }
 
 void KAdvancedConfig::setEBorders()
@@ -826,8 +826,8 @@ KMovingConfig::~KMovingConfig ()
         delete config;
 }
 
-KMovingConfig::KMovingConfig (bool _standAlone, KConfig *_config, TQWidget *parent, const char *)
-    : KCModule(parent, "kcmkwm"), config(_config), standAlone(_standAlone)
+KMovingConfig::KMovingConfig (bool _standAlone, TDEConfig *_config, TQWidget *parent, const char *)
+    : TDECModule(parent, "kcmkwm"), config(_config), standAlone(_standAlone)
 {
     TQString wtstr;
     TQBoxLayout *lay = new TQVBoxLayout (this, 0, KDialog::spacingHint());
@@ -1163,7 +1163,7 @@ void KMovingConfig::load( void )
     else setWindowSnapZone(v);
 
     OverlapSnap->setChecked(config->readBoolEntry("SnapOnlyWhenOverlapping",false));
-    emit KCModule::changed(false);
+    emit TDECModule::changed(false);
 }
 
 void KMovingConfig::save( void )
@@ -1225,7 +1225,7 @@ void KMovingConfig::save( void )
             kapp->dcopClient()->attach();
         kapp->dcopClient()->send("twin*", "", "reconfigure()", TQString(""));
     }
-    emit KCModule::changed(false);
+    emit TDECModule::changed(false);
 }
 
 void KMovingConfig::defaults()
@@ -1243,7 +1243,7 @@ void KMovingConfig::defaults()
 
     setMinimizeAnim( true );
     setMinimizeAnimSpeed( 5 );
-    emit KCModule::changed(true);
+    emit TDECModule::changed(true);
 }
 
 int KMovingConfig::getBorderSnapZone() {
@@ -1270,8 +1270,8 @@ KTranslucencyConfig::~KTranslucencyConfig ()
         kompmgr->detach();
 }
 
-KTranslucencyConfig::KTranslucencyConfig (bool _standAlone, KConfig *_config, TQWidget *parent, const char *)
-    : KCModule(parent, "kcmkwm"), config(_config), standAlone(_standAlone)
+KTranslucencyConfig::KTranslucencyConfig (bool _standAlone, TDEConfig *_config, TQWidget *parent, const char *)
+    : TDECModule(parent, "kcmkwm"), config(_config), standAlone(_standAlone)
 {
   kompmgr = 0L;
   resetKompmgr_ = FALSE;
@@ -1558,7 +1558,7 @@ void KTranslucencyConfig::load( void )
   movingWindowOpacity->setEnabled(movingWindowTransparency->isChecked());
   dockWindowOpacity->setEnabled(dockWindowTransparency->isChecked());
 
-  KConfig conf_(TQDir::homeDirPath() + "/.xcompmgrrc");
+  TDEConfig conf_(TQDir::homeDirPath() + "/.xcompmgrrc");
   conf_.setGroup("xcompmgr");
 
   disableARGB->setChecked(conf_.readBoolEntry("DisableARGB",FALSE));
@@ -1589,7 +1589,7 @@ void KTranslucencyConfig::load( void )
   fadeInSpeed->setValue((int)(conf_.readDoubleNumEntry("FadeInStep",0.070)*1000.0));
   fadeOutSpeed->setValue((int)(conf_.readDoubleNumEntry("FadeOutStep",0.070)*1000.0));
 
-  emit KCModule::changed(false);
+  emit TDECModule::changed(false);
 }
 
 void KTranslucencyConfig::save( void )
@@ -1625,7 +1625,7 @@ void KTranslucencyConfig::save( void )
   config->writeEntry("OnlyDecoTranslucent", onlyDecoTranslucent->isChecked());
   config->writeEntry("ResetKompmgr",resetKompmgr_);
 
-  KConfig *conf_ = new KConfig(TQDir::homeDirPath() + "/.xcompmgrrc");
+  TDEConfig *conf_ = new TDEConfig(TQDir::homeDirPath() + "/.xcompmgrrc");
   conf_->setGroup("xcompmgr");
 
   conf_->writeEntry("Compmode",useShadows->isChecked()?"CompClientShadows":"");
@@ -1659,7 +1659,7 @@ void KTranslucencyConfig::save( void )
     startKompmgr();
   else
     stopKompmgr();
-  emit KCModule::changed(false);
+  emit TDECModule::changed(false);
 }
 
 void KTranslucencyConfig::defaults()
@@ -1701,7 +1701,7 @@ void KTranslucencyConfig::defaults()
   fadeOnOpacityChange->setChecked(FALSE);
   fadeInSpeed->setValue(70);
   fadeOutSpeed->setValue(70);
-  emit KCModule::changed(true);
+  emit TDECModule::changed(true);
 }
 
 

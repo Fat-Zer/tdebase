@@ -114,7 +114,7 @@ void ButtonContainer::configure()
     }
 }
 
-void ButtonContainer::doSaveConfiguration(KConfigGroup& config, bool layoutOnly) const
+void ButtonContainer::doSaveConfiguration(TDEConfigGroup& config, bool layoutOnly) const
 {
     // immutability is checked by ContainerBase
     if (_button && !layoutOnly)
@@ -315,7 +315,7 @@ void ButtonContainer::slotMenuClosed()
         _button->setDown(false);
 }
 
-void ButtonContainer::checkImmutability(const KConfigGroup& config)
+void ButtonContainer::checkImmutability(const TDEConfigGroup& config)
 {
     m_immutable = config.groupIsImmutable() ||
                   config.entryIsImmutable("ConfigFile") ||
@@ -323,7 +323,7 @@ void ButtonContainer::checkImmutability(const KConfigGroup& config)
 }
 
 // KMenuButton containerpan
-KMenuButtonContainer::KMenuButtonContainer(const KConfigGroup& config, TQPopupMenu *opMenu, TQWidget* parent)
+KMenuButtonContainer::KMenuButtonContainer(const TDEConfigGroup& config, TQPopupMenu *opMenu, TQWidget* parent)
   : ButtonContainer(opMenu, parent)
 {
     checkImmutability(config);
@@ -359,7 +359,7 @@ DesktopButtonContainer::DesktopButtonContainer(TQPopupMenu *opMenu, TQWidget* pa
     embedButton( new DesktopButton(this) );
 }
 
-DesktopButtonContainer::DesktopButtonContainer(const KConfigGroup& config,
+DesktopButtonContainer::DesktopButtonContainer(const TDEConfigGroup& config,
                                                TQPopupMenu *opMenu, TQWidget* parent)
   : ButtonContainer(opMenu, parent)
 {
@@ -384,7 +384,7 @@ ServiceButtonContainer::ServiceButtonContainer( const KService::Ptr &service,
     _actions = KPanelApplet::Preferences;
 }
 
-ServiceButtonContainer::ServiceButtonContainer( const KConfigGroup& config,
+ServiceButtonContainer::ServiceButtonContainer( const TDEConfigGroup& config,
                                                 TQPopupMenu* opMenu, TQWidget* parent)
   : ButtonContainer(opMenu, parent)
 {
@@ -411,7 +411,7 @@ URLButtonContainer::URLButtonContainer( const TQString& url, TQPopupMenu* opMenu
     _actions = KPanelApplet::Preferences;
 }
 
-URLButtonContainer::URLButtonContainer( const KConfigGroup& config, TQPopupMenu* opMenu, TQWidget* parent)
+URLButtonContainer::URLButtonContainer( const TDEConfigGroup& config, TQPopupMenu* opMenu, TQWidget* parent)
   : ButtonContainer(opMenu, parent)
 {
     checkImmutability(config);
@@ -437,7 +437,7 @@ BrowserButtonContainer::BrowserButtonContainer(const TQString &startDir, TQPopup
     _actions = KPanelApplet::Preferences;
 }
 
-BrowserButtonContainer::BrowserButtonContainer( const KConfigGroup& config, TQPopupMenu* opMenu, TQWidget* parent)
+BrowserButtonContainer::BrowserButtonContainer( const TDEConfigGroup& config, TQPopupMenu* opMenu, TQWidget* parent)
   : ButtonContainer(opMenu, parent)
 {
     checkImmutability(config);
@@ -452,7 +452,7 @@ ServiceMenuButtonContainer::ServiceMenuButtonContainer(const TQString& relPath, 
     embedButton( new ServiceMenuButton(relPath, this) );
 }
 
-ServiceMenuButtonContainer::ServiceMenuButtonContainer( const KConfigGroup& config, TQPopupMenu* opMenu, TQWidget* parent)
+ServiceMenuButtonContainer::ServiceMenuButtonContainer( const TDEConfigGroup& config, TQPopupMenu* opMenu, TQWidget* parent)
   : ButtonContainer(opMenu, parent)
 {
     checkImmutability(config);
@@ -470,7 +470,7 @@ TQString ServiceMenuButtonContainer::visibleName() const
 }
 
 // WindowListButton container
-WindowListButtonContainer::WindowListButtonContainer(const KConfigGroup& config, TQPopupMenu *opMenu, TQWidget* parent)
+WindowListButtonContainer::WindowListButtonContainer(const TDEConfigGroup& config, TQPopupMenu *opMenu, TQWidget* parent)
   : ButtonContainer(opMenu, parent)
 {
     checkImmutability(config);
@@ -484,7 +484,7 @@ WindowListButtonContainer::WindowListButtonContainer(TQPopupMenu *opMenu, TQWidg
 }
 
 // BookmarkButton container
-BookmarksButtonContainer::BookmarksButtonContainer(const KConfigGroup& config, TQPopupMenu *opMenu, TQWidget* parent)
+BookmarksButtonContainer::BookmarksButtonContainer(const TDEConfigGroup& config, TQPopupMenu *opMenu, TQWidget* parent)
   : ButtonContainer(opMenu, parent)
 {
     checkImmutability(config);
@@ -515,7 +515,7 @@ NonKDEAppButtonContainer::NonKDEAppButtonContainer(const TQString &name,
     _actions = KPanelApplet::Preferences;
 }
 
-NonKDEAppButtonContainer::NonKDEAppButtonContainer( const KConfigGroup& config, TQPopupMenu* opMenu, TQWidget *parent)
+NonKDEAppButtonContainer::NonKDEAppButtonContainer( const TDEConfigGroup& config, TQPopupMenu* opMenu, TQWidget *parent)
   : ButtonContainer(opMenu, parent)
 {
     checkImmutability(config);
@@ -530,7 +530,7 @@ ExtensionButtonContainer::ExtensionButtonContainer(const TQString& df, TQPopupMe
     embedButton( new ExtensionButton(df, this) );
 }
 
-ExtensionButtonContainer::ExtensionButtonContainer( const KConfigGroup& config, TQPopupMenu* opMenu, TQWidget *parent)
+ExtensionButtonContainer::ExtensionButtonContainer( const TDEConfigGroup& config, TQPopupMenu* opMenu, TQWidget *parent)
   : ButtonContainer(opMenu, parent)
 {
     checkImmutability(config);

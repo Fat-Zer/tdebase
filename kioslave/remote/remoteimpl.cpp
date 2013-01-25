@@ -49,7 +49,7 @@ RemoteImpl::RemoteImpl()
 	}
 }
 
-void RemoteImpl::listRoot(TQValueList<KIO::UDSEntry> &list) const
+void RemoteImpl::listRoot(TQValueList<TDEIO::UDSEntry> &list) const
 {
 	kdDebug(1220) << "RemoteImpl::listRoot" << endl;
 
@@ -67,7 +67,7 @@ void RemoteImpl::listRoot(TQValueList<KIO::UDSEntry> &list) const
 			= dir.entryList( TQDir::Files | TQDir::Readable );
 
 
-		KIO::UDSEntry entry;
+		TDEIO::UDSEntry entry;
 
 		TQStringList::ConstIterator name = filenames.begin();
 		TQStringList::ConstIterator endf = filenames.end();
@@ -102,7 +102,7 @@ bool RemoteImpl::findDirectory(const TQString &filename, TQString &directory) co
 			= dir.entryList( TQDir::Files | TQDir::Readable );
 
 
-		KIO::UDSEntry entry;
+		TDEIO::UDSEntry entry;
 
 		TQStringList::ConstIterator name = filenames.begin();
 		TQStringList::ConstIterator endf = filenames.end();
@@ -148,10 +148,10 @@ KURL RemoteImpl::findBaseURL(const TQString &filename) const
 }
 
 
-static void addAtom(KIO::UDSEntry &entry, unsigned int ID, long l,
+static void addAtom(TDEIO::UDSEntry &entry, unsigned int ID, long l,
                     const TQString &s = TQString::null)
 {
-	KIO::UDSAtom atom;
+	TDEIO::UDSAtom atom;
 	atom.m_uds = ID;
 	atom.m_long = l;
 	atom.m_str = s;
@@ -159,14 +159,14 @@ static void addAtom(KIO::UDSEntry &entry, unsigned int ID, long l,
 }
 
 
-void RemoteImpl::createTopLevelEntry(KIO::UDSEntry &entry) const
+void RemoteImpl::createTopLevelEntry(TDEIO::UDSEntry &entry) const
 {
 	entry.clear();
-	addAtom(entry, KIO::UDS_NAME, 0, ".");
-	addAtom(entry, KIO::UDS_FILE_TYPE, S_IFDIR);
-	addAtom(entry, KIO::UDS_ACCESS, 0555);
-	addAtom(entry, KIO::UDS_MIME_TYPE, 0, "inode/directory");
-	addAtom(entry, KIO::UDS_ICON_NAME, 0, "network");
+	addAtom(entry, TDEIO::UDS_NAME, 0, ".");
+	addAtom(entry, TDEIO::UDS_FILE_TYPE, S_IFDIR);
+	addAtom(entry, TDEIO::UDS_ACCESS, 0555);
+	addAtom(entry, TDEIO::UDS_MIME_TYPE, 0, "inode/directory");
+	addAtom(entry, TDEIO::UDS_ICON_NAME, 0, "network");
 }
 
 static KURL findWizardRealURL()
@@ -184,7 +184,7 @@ static KURL findWizardRealURL()
 	return url;
 }
 
-bool RemoteImpl::createWizardEntry(KIO::UDSEntry &entry) const
+bool RemoteImpl::createWizardEntry(TDEIO::UDSEntry &entry) const
 {
 	entry.clear();
 
@@ -195,13 +195,13 @@ bool RemoteImpl::createWizardEntry(KIO::UDSEntry &entry) const
 		return false;
 	}
 
-	addAtom(entry, KIO::UDS_NAME, 0, i18n("Add a Network Folder"));
-	addAtom(entry, KIO::UDS_FILE_TYPE, S_IFREG);
-	addAtom(entry, KIO::UDS_URL, 0, WIZARD_URL);
-	addAtom(entry, KIO::UDS_LOCAL_PATH, 0, url.path());
-	addAtom(entry, KIO::UDS_ACCESS, 0500);
-	addAtom(entry, KIO::UDS_MIME_TYPE, 0, "application/x-desktop");
-	addAtom(entry, KIO::UDS_ICON_NAME, 0, "wizard");
+	addAtom(entry, TDEIO::UDS_NAME, 0, i18n("Add a Network Folder"));
+	addAtom(entry, TDEIO::UDS_FILE_TYPE, S_IFREG);
+	addAtom(entry, TDEIO::UDS_URL, 0, WIZARD_URL);
+	addAtom(entry, TDEIO::UDS_LOCAL_PATH, 0, url.path());
+	addAtom(entry, TDEIO::UDS_ACCESS, 0500);
+	addAtom(entry, TDEIO::UDS_MIME_TYPE, 0, "application/x-desktop");
+	addAtom(entry, TDEIO::UDS_ICON_NAME, 0, "wizard");
 
 	return true;
 }
@@ -212,7 +212,7 @@ bool RemoteImpl::isWizardURL(const KURL &url) const
 }
 
 
-void RemoteImpl::createEntry(KIO::UDSEntry &entry,
+void RemoteImpl::createEntry(TDEIO::UDSEntry &entry,
                              const TQString &directory,
                              const TQString &file) const
 {
@@ -227,19 +227,19 @@ void RemoteImpl::createEntry(KIO::UDSEntry &entry,
 	TQString new_filename = file;
 	new_filename.truncate( file.length()-8);
 	
-	addAtom(entry, KIO::UDS_NAME, 0, desktop.readName());
-	addAtom(entry, KIO::UDS_URL, 0, "remote:/"+new_filename);
+	addAtom(entry, TDEIO::UDS_NAME, 0, desktop.readName());
+	addAtom(entry, TDEIO::UDS_URL, 0, "remote:/"+new_filename);
 
-	addAtom(entry, KIO::UDS_FILE_TYPE, S_IFDIR);
-	addAtom(entry, KIO::UDS_MIME_TYPE, 0, "inode/directory");
+	addAtom(entry, TDEIO::UDS_FILE_TYPE, S_IFDIR);
+	addAtom(entry, TDEIO::UDS_MIME_TYPE, 0, "inode/directory");
 
 	TQString icon = desktop.readIcon();
 
-	addAtom(entry, KIO::UDS_ICON_NAME, 0, icon);
-	addAtom(entry, KIO::UDS_LINK_DEST, 0, desktop.readURL());
+	addAtom(entry, TDEIO::UDS_ICON_NAME, 0, icon);
+	addAtom(entry, TDEIO::UDS_LINK_DEST, 0, desktop.readURL());
 }
 
-bool RemoteImpl::statNetworkFolder(KIO::UDSEntry &entry, const TQString &filename) const
+bool RemoteImpl::statNetworkFolder(TDEIO::UDSEntry &entry, const TQString &filename) const
 {
 	kdDebug(1220) << "RemoteImpl::statNetworkFolder: " << filename << endl;
 

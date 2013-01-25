@@ -23,7 +23,7 @@
 
 class KSpellConfig;
 
-class KSpellCheckingConfig  : public KCModule
+class KSpellCheckingConfig  : public TDECModule
 {
   Q_OBJECT
 

@@ -87,7 +87,7 @@ ExtensionManager::~ExtensionManager()
 void ExtensionManager::initialize()
 {
 //    kdDebug(1210) << "ExtensionManager::loadContainerConfig()" << endl;
-    KConfig* config = TDEGlobal::config();
+    TDEConfig* config = TDEGlobal::config();
     PluginManager* pm = PluginManager::the();
 
     // set up the "main" panel
@@ -175,9 +175,9 @@ void ExtensionManager::initialize()
 
 void ExtensionManager::configureMenubar(bool duringInit)
 {
-    KConfig menuConfig( "kdesktoprc", true );
-    if( KConfigGroup( &menuConfig, "KDE" ).readBoolEntry("macStyle", false)
-        || KConfigGroup( &menuConfig, "Menubar" ).readBoolEntry( "ShowMenubar", false ))
+    TDEConfig menuConfig( "kdesktoprc", true );
+    if( TDEConfigGroup( &menuConfig, "KDE" ).readBoolEntry("macStyle", false)
+        || TDEConfigGroup( &menuConfig, "Menubar" ).readBoolEntry( "ShowMenubar", false ))
     {
         if (TDEGlobal::dirs()->findResource("applets", "menuapplet.desktop").isEmpty() ||
             m_menubarPanel)
@@ -239,7 +239,7 @@ void ExtensionManager::migrateMenubar()
     // panel, meaning kickerrc itself would have to be vastly modified
     // with lots of complications. not work it IMHO.
 
-    KConfig* config = TDEGlobal::config();
+    TDEConfig* config = TDEGlobal::config();
     config->setGroup("General");
 
     if (config->readBoolEntry("CheckedForMenubar", false))
@@ -272,7 +272,7 @@ void ExtensionManager::migrateMenubar()
 
         config->setGroup(extensionId);
         TQString extension = config->readPathEntry("ConfigFile");
-        KConfig extensionConfig(locate("config", extension));
+        TDEConfig extensionConfig(locate("config", extension));
         extensionConfig.setGroup("General");
 
         if (extensionConfig.hasKey("Applets2"))
@@ -290,7 +290,7 @@ void ExtensionManager::migrateMenubar()
                     continue;
                 }
 
-                KConfigGroup group(&extensionConfig, appletId.latin1());
+                TDEConfigGroup group(&extensionConfig, appletId.latin1());
                 TQString appletType = appletId.left(appletId.findRev('_'));
 
                 if (appletType == "Applet")
@@ -299,7 +299,7 @@ void ExtensionManager::migrateMenubar()
                     if (appletFile.find("menuapplet.desktop") != -1)
                     {
                         TQString menubarConfig = locate("config", extension);
-                        KIO::NetAccess::copy(menubarConfig,
+                        TDEIO::NetAccess::copy(menubarConfig,
                                              locateLocal("config",
                                              "kicker_menubarpanelrc"), 0);
                         elist.remove(it);
@@ -322,7 +322,7 @@ void ExtensionManager::saveContainerConfig()
 {
 //    kdDebug(1210) << "ExtensionManager::saveContainerConfig()" << endl;
 
-    KConfig *config = TDEGlobal::config();
+    TDEConfig *config = TDEGlobal::config();
 
     // build the extension list
     TQStringList elist;

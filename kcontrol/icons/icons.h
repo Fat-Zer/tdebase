@@ -35,7 +35,7 @@ class TQTabWidget;
 class TQWidget;
 
 class KColorButton;
-class KConfig;
+class TDEConfig;
 class KIconEffect;
 class KIconLoader;
 class KIconTheme;
@@ -53,7 +53,7 @@ struct Effect
 /**
  * The General Icons tab in kcontrol.
  */
-class KIconConfig: public KCModule
+class KIconConfig: public TDECModule
 {
     Q_OBJECT
 
@@ -106,7 +106,7 @@ private:
     KIconEffect *mpEffect;
     KIconTheme *mpTheme;
     KIconLoader *mpLoader;
-    KConfig *mpConfig;
+    TDEConfig *mpConfig;
     KSimpleConfig *mpSystrayConfig;
     KSimpleConfig *mpKickerConfig;
 

@@ -27,7 +27,7 @@
 class ThumbCreator;
 class TQImage;
 
-class ThumbnailProtocol : public KIO::SlaveBase
+class ThumbnailProtocol : public TDEIO::SlaveBase
 {
 public:
     ThumbnailProtocol(const TQCString &pool, const TQCString &app);

@@ -36,19 +36,19 @@ public:
 	bool parseURL(const KURL &url, TQString &name, TQString &path) const;
 	bool realURL(const TQString &name, const TQString &path, KURL &url);
 		
-	bool statHome(const TQString &name, KIO::UDSEntry &entry);
-	bool listHomes(TQValueList<KIO::UDSEntry> &list);
+	bool statHome(const TQString &name, TDEIO::UDSEntry &entry);
+	bool listHomes(TQValueList<TDEIO::UDSEntry> &list);
 	
-	void createTopLevelEntry(KIO::UDSEntry &entry) const;
+	void createTopLevelEntry(TDEIO::UDSEntry &entry) const;
 
 private slots:
-	void slotStatResult(KIO::Job *job);
+	void slotStatResult(TDEIO::Job *job);
 	
 private:
-	void createHomeEntry(KIO::UDSEntry& entry, const KUser &user);
+	void createHomeEntry(TDEIO::UDSEntry& entry, const KUser &user);
 
-	KIO::UDSEntry extractUrlInfos(const KURL &url);
-	KIO::UDSEntry m_entryBuffer;
+	TDEIO::UDSEntry extractUrlInfos(const KURL &url);
+	TDEIO::UDSEntry m_entryBuffer;
 		
 	
 	long m_effectiveUid;

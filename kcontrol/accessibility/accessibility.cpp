@@ -38,8 +38,8 @@ K_EXPORT_COMPONENT_FACTORY( kcm_accessibility, AccessibilityFactory("kcmaccessib
  * This function checks if the kaccess daemon needs to be run
  * This function will be deprecated since the kaccess daemon will be part of kded
  */
-// static bool needToRunKAccessDaemon( KConfig *config ){
-//    KConfigGroup group( config, "Bell" );
+// static bool needToRunKAccessDaemon( TDEConfig *config ){
+//    TDEConfigGroup group( config, "Bell" );
 //
 //    if(!group.readBoolEntry("SystemBell", true)){
 //       return true;
@@ -85,7 +85,7 @@ void AccessibilityConfig::load( bool useDefaults )
 {
    kdDebug() << "Running: AccessibilityConfig::load()" << endl;
    
-   KConfig *bell = new KConfig("bellrc", true);
+   TDEConfig *bell = new TDEConfig("bellrc", true);
   
    bell->setReadDefaults( useDefaults );
 
@@ -114,7 +114,7 @@ void AccessibilityConfig::load( bool useDefaults )
 void AccessibilityConfig::save(){
    kdDebug() << "Running: AccessibilityConfig::save()" << endl;
    
-   KConfig *bell = new KConfig("bellrc");
+   TDEConfig *bell = new TDEConfig("bellrc");
    
    bell->setGroup("General");
    bell->writeEntry("SystemBell", systemBell->isChecked());

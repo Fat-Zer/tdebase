@@ -66,7 +66,7 @@
 
 #define NR_PREDEF_PATTERNS 6
 
-BGDialog::BGDialog(TQWidget* parent, KConfig* _config, bool _multidesktop)
+BGDialog::BGDialog(TQWidget* parent, TDEConfig* _config, bool _multidesktop)
   : BGDialog_UI(parent, "BGDialog")
 {
    m_pGlobals = new TDEGlobalBackgroundSettings(_config);
@@ -1244,7 +1244,7 @@ void BGDialog::slotGetNewStuff()
    //FIXME set this to a server when we get one
    //should really be in a .rc file but could be either
    //kcmshellrc or kcontrolrc
-   KConfig* config = TDEGlobal::config();
+   TDEConfig* config = TDEGlobal::config();
    config->setGroup("KNewStuff");
    config->writeEntry( "ProvidersUrl", "http://download.kde.org/khotnewstuff/wallpaper-providers.xml" );
    config->writeEntry( "StandardResource", "wallpaper" );

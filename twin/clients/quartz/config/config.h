@@ -19,7 +19,7 @@ class QuartzConfig: public TQObject
 	Q_OBJECT
 
 	public:
-		QuartzConfig( KConfig* conf, TQWidget* parent );
+		QuartzConfig( TDEConfig* conf, TQWidget* parent );
 		~QuartzConfig();
 
 	// These public signals/slots work similar to KCM modules
@@ -27,15 +27,15 @@ class QuartzConfig: public TQObject
 		void changed();
 
 	public slots:
-		void load( KConfig* conf );	
-		void save( KConfig* conf );
+		void load( TDEConfig* conf );	
+		void save( TDEConfig* conf );
 		void defaults();
 
 	protected slots:
 		void slotSelectionChanged();	// Internal use
 
 	private:
-		KConfig*   quartzConfig;
+		TDEConfig*   quartzConfig;
 		TQCheckBox* cbColorBorder;
 		TQCheckBox* cbExtraSmall;
 		TQVBox* gb;

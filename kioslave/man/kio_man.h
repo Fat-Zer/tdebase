@@ -32,7 +32,7 @@
 #include <kio/slavebase.h>
 
 
-class MANProtocol : public TQObject, public KIO::SlaveBase
+class MANProtocol : public TQObject, public TDEIO::SlaveBase
 {
     Q_OBJECT
 

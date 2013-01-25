@@ -21,7 +21,7 @@ class TQListViewItem;
 class TQTextView;
 
 
-class USBViewer : public KCModule
+class USBViewer : public TDECModule
 {
   Q_OBJECT
 

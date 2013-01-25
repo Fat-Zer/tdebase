@@ -69,7 +69,7 @@ int main(int argc, char **argv)
     TQFileInfo fi(f);
     KSimpleConfig input(fi.absFilePath());
     srcStr = fi.dirPath(true) + "/";
-    KConfig *output = TDEGlobal::config();
+    TDEConfig *output = TDEGlobal::config();
     input.setGroup("Window Border");
     output->setGroup("General");
 

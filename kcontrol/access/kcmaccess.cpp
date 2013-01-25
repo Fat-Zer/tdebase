@@ -101,7 +101,7 @@ void ExtendedIntNumInput::slotSliderValueChanged(int val)
 	m_spin->setValue ((int)floor(0.5 + linearVal));
 }
 
-static bool needToRunKAccessDaemon( KConfig *config )
+static bool needToRunKAccessDaemon( TDEConfig *config )
 {
 	// We always start the KAccess Daemon, if it is not needed,
 	// it will terminate itself after configuring the AccessX
@@ -222,7 +222,7 @@ TQString mouseKeysShortcut (Display *display) {
 }
 
 KAccessConfig::KAccessConfig(TQWidget *parent, const char *)
-  : KCModule(parent, "kcmaccess")
+  : TDECModule(parent, "kcmaccess")
 {
 
   TDEAboutData *about =
@@ -602,7 +602,7 @@ void KAccessConfig::load()
 
 void KAccessConfig::load( bool useDefaults )
 {
-  KConfig *config = new KConfig("kaccessrc", true, false);
+  TDEConfig *config = new TDEConfig("kaccessrc", true, false);
 
   config->setGroup("Bell");
   config->setReadDefaults( useDefaults );
@@ -657,7 +657,7 @@ void KAccessConfig::load( bool useDefaults )
 
 void KAccessConfig::save()
 {
-  KConfig *config= new KConfig("kaccessrc", false);
+  TDEConfig *config= new TDEConfig("kaccessrc", false);
 
   config->setGroup("Bell");
 
@@ -707,7 +707,7 @@ void KAccessConfig::save()
       customBell->isChecked() ||
       visibleBell->isChecked())
   {
-    KConfig cfg("kdeglobals", false, false);
+    TDEConfig cfg("kdeglobals", false, false);
     cfg.setGroup("General");
     cfg.writeEntry("UseSystemBell", true);
     cfg.sync();
@@ -783,7 +783,7 @@ void KAccessConfig::checkAccess()
 
 extern "C"
 {
-  KDE_EXPORT KCModule *create_access(TQWidget *parent, const char *name)
+  KDE_EXPORT TDECModule *create_access(TQWidget *parent, const char *name)
   {
     return new KAccessConfig(parent, name);
   }
@@ -793,7 +793,7 @@ extern "C"
    */
   KDE_EXPORT void init_access()
   {
-    KConfig *config = new KConfig("kaccessrc", true, false);
+    TDEConfig *config = new TDEConfig("kaccessrc", true, false);
     bool run = needToRunKAccessDaemon( config );
 
     delete config;

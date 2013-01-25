@@ -109,7 +109,7 @@ class KateSession  : public KShared
      * return 0 if we have no file to read config from atm
      * @return config to read from
      */
-    KConfig *configRead ();
+    TDEConfig *configRead ();
 
     /**
      * config to write
@@ -117,7 +117,7 @@ class KateSession  : public KShared
      * return 0 if we have no file to write config to atm
      * @return config to write from
      */
-    KConfig *configWrite ();
+    TDEConfig *configWrite ();
 
     /**
      * count of documents in this session

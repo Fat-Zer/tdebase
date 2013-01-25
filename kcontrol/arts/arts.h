@@ -46,7 +46,7 @@
 class TDEProcess;
 class DeviceManager;
 
-class KArtsModule : public KCModule
+class KArtsModule : public TDECModule
 {
   Q_OBJECT
 
@@ -90,7 +90,7 @@ private:
   KIntNumInput *suspendTime;
   generalTab *general;
   hardwareTab *hardware;
-  KConfig *config;
+  TDEConfig *config;
   DeviceManager *deviceManager;
   int latestProcessStatus;
   int fragmentCount;

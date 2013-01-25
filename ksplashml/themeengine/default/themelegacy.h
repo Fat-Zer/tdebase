@@ -28,7 +28,7 @@ class DefaultConfig: public ThemeEngineConfig
 {
   Q_OBJECT
 public:
-  DefaultConfig( TQWidget *, KConfig * );
+  DefaultConfig( TQWidget *, TDEConfig * );
   void save();
 protected:
   TQCheckBox *mFlash, *mAlwaysShow;
@@ -45,7 +45,7 @@ public:
   ThemeDefault( TQWidget *, const char *, const TQStringList& );
    virtual ~ThemeDefault();
 
-  inline const DefaultConfig *config( TQWidget *p, KConfig *c )
+  inline const DefaultConfig *config( TQWidget *p, TDEConfig *c )
   {
     return new DefaultConfig( p, c );
   };

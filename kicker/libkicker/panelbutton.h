@@ -35,7 +35,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include "kickertip.h"
 
 class TQPopupMenu;
-class KConfigGroup;
+class TDEConfigGroup;
 class KShadowEngine;
 
 /**
@@ -66,9 +66,9 @@ public:
 
     /**
      * Prompts the button to save it's configuration. Subclass specific
-     * settings should be saved in this method to the KConfigGroup passed in.
+     * settings should be saved in this method to the TDEConfigGroup passed in.
      */
-    virtual void saveConfig(KConfigGroup&) const {}
+    virtual void saveConfig(TDEConfigGroup&) const {}
 
     /**
      * Reimplement this to display a properties dialog for your button.

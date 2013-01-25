@@ -27,8 +27,8 @@
 #include <libkonq_export.h>
 
 class TDEInstance;
-class KConfigBase;
-class KConfig;
+class TDEConfigBase;
+class TDEConfig;
 
 /**
  * The class KonqPropsView holds the properties for a Konqueror View
@@ -126,10 +126,10 @@ protected:
   TQPixmap loadPixmap() const;
 
   // Current config object for _saving_
-  KConfigBase * currentConfig();
+  TDEConfigBase * currentConfig();
 
   // Current config object for _saving_ settings related to colors
-  KConfigBase * currentColorConfig();
+  TDEConfigBase * currentColorConfig();
 
   TQString currentGroup() const {
       return isDefaultProperties() ? 
@@ -160,8 +160,8 @@ private:
   // save-view-properties-locally mode, otherwise to the global config
   // It is set to 0L to mark it as "needs to be constructed".
   // This is to be used for SAVING only.
-  // Can be a KConfig or a KSimpleConfig
-  KConfigBase * m_currentConfig;
+  // Can be a TDEConfig or a KSimpleConfig
+  TDEConfigBase * m_currentConfig;
 
   // If this is not a "default properties" instance (but one used by a view)
   // then m_defaultProps points to the "default properties" instance

@@ -25,7 +25,7 @@
 #include <ksycoca.h>
 
 FileTypesView::FileTypesView(TQWidget *p, const char *name)
-  : KCModule(p, name)
+  : TDECModule(p, name)
 {
   m_konqConfig = KSharedConfig::openConfig("konquerorrc", false, false);
 

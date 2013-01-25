@@ -109,7 +109,7 @@ void KonqOperations::restoreTrashedItems( const KURL::List& urls )
 
 void KonqOperations::mkdir( TQWidget *parent, const KURL & url )
 {
-    KIO::Job * job = KIO::mkdir( url );
+    TDEIO::Job * job = TDEIO::mkdir( url );
     KonqOperations * op = new KonqOperations( parent );
     op->setOperation( job, MKDIR, KURL::List(), url );
     (void) new KonqCommandRecorder( KonqCommand::MKDIR, KURL(), url, job ); // no support yet, apparently
@@ -130,11 +130,11 @@ void KonqOperations::doPaste( TQWidget * parent, const KURL & destURL, const TQP
       kdDebug(1203) << "move (from clipboard data) = " << move << endl;
     }
 
-    KIO::Job *job = KIO::pasteClipboard( destURL, move );
+    TDEIO::Job *job = TDEIO::pasteClipboard( destURL, move );
     if ( job )
     {
         KonqOperations * op = new KonqOperations( parent );
-        KIO::CopyJob * copyJob = static_cast<KIO::CopyJob *>(job);
+        TDEIO::CopyJob * copyJob = static_cast<TDEIO::CopyJob *>(job);
         KIOPasteInfo * pi = new KIOPasteInfo;
         pi->mousePos = pos;
         op->setPasteInfo( pi );
@@ -158,13 +158,13 @@ void KonqOperations::copy( TQWidget * parent, int method, const KURL::List & sel
   }
 
   KonqOperations * op = new KonqOperations( parent );
-  KIO::Job* job(0);
+  TDEIO::Job* job(0);
   if (method==LINK)
-     job= KIO::link( selectedURLs, destUrl);
+     job= TDEIO::link( selectedURLs, destUrl);
   else if (method==MOVE)
-     job= KIO::move( selectedURLs, destUrl);
+     job= TDEIO::move( selectedURLs, destUrl);
   else
-     job= KIO::copy( selectedURLs, destUrl);
+     job= TDEIO::copy( selectedURLs, destUrl);
 
   op->setOperation( job, method, selectedURLs, destUrl );
 
@@ -188,13 +188,13 @@ void KonqOperations::_del( int method, const KURL::List & _selectedURLs, Confirm
     if ( askDeleteConfirmation( selectedURLs, method, confirmation, parentWidget() ) )
     {
         //m_srcURLs = selectedURLs;
-        KIO::Job *job;
+        TDEIO::Job *job;
         m_method = method;
         switch( method )
         {
         case TRASH:
         {
-            job = KIO::trash( selectedURLs );
+            job = TDEIO::trash( selectedURLs );
             (void) new KonqCommandRecorder( KonqCommand::TRASH, selectedURLs, "trash:/", job );
             break;
         }
@@ -204,23 +204,23 @@ void KonqOperations::_del( int method, const KURL::List & _selectedURLs, Confirm
             TQByteArray packedArgs;
             TQDataStream stream( packedArgs, IO_WriteOnly );
             stream << (int)1;
-            job = KIO::special( "trash:/", packedArgs );
+            job = TDEIO::special( "trash:/", packedArgs );
             KNotifyClient::event(0, "Trash: emptied");
             break;
         }
         case DEL:
-            job = KIO::del( selectedURLs );
+            job = TDEIO::del( selectedURLs );
             break;
         case SHRED:
-            job = KIO::del( selectedURLs, true );
+            job = TDEIO::del( selectedURLs, true );
             break;
         default:
             kdWarning() << "Unknown operation: " << method << endl;
             delete this;
             return;
         }
-        connect( job, TQT_SIGNAL( result( KIO::Job * ) ),
-                 TQT_SLOT( slotResult( KIO::Job * ) ) );
+        connect( job, TQT_SIGNAL( result( TDEIO::Job * ) ),
+                 TQT_SLOT( slotResult( TDEIO::Job * ) ) );
     } else
         delete this;
 }
@@ -229,8 +229,8 @@ void KonqOperations::_restoreTrashedItems( const KURL::List& urls )
 {
     m_method = RESTORE;
     KonqMultiRestoreJob* job = new KonqMultiRestoreJob( urls, true );
-    connect( job, TQT_SIGNAL( result( KIO::Job * ) ),
-             TQT_SLOT( slotResult( KIO::Job * ) ) );
+    connect( job, TQT_SIGNAL( result( TDEIO::Job * ) ),
+             TQT_SLOT( slotResult( TDEIO::Job * ) ) );
 }
 
 bool KonqOperations::askDeleteConfirmation( const KURL::List & selectedURLs, int method, ConfirmationType confirmation, TQWidget* widget )
@@ -241,7 +241,7 @@ bool KonqOperations::askDeleteConfirmation( const KURL::List & selectedURLs, int
     bool ask = ( confirmation == FORCE_CONFIRMATION );
     if ( !ask )
     {
-        KConfig config("konquerorrc", true, false);
+        TDEConfig config("konquerorrc", true, false);
         config.setGroup( "Trash" );
         keyName = ( method == DEL ? "ConfirmDelete" : method == SHRED ? "ConfirmShred" : "ConfirmTrash" );
         bool defaultValue = ( method == DEL ? DEFAULT_CONFIRMDELETE : method == SHRED ? DEFAULT_CONFIRMSHRED : DEFAULT_CONFIRMTRASH );
@@ -294,13 +294,13 @@ bool KonqOperations::askDeleteConfirmation( const KURL::List & selectedURLs, int
       if (!keyName.isEmpty())
       {
          // Check kmessagebox setting... erase & copy to konquerorrc.
-         KConfig *config = kapp->config();
-         KConfigGroupSaver saver(config, "Notification Messages");
+         TDEConfig *config = kapp->config();
+         TDEConfigGroupSaver saver(config, "Notification Messages");
          if (!config->readBoolEntry(keyName, true))
          {
             config->writeEntry(keyName, true);
             config->sync();
-            KConfig konq_config("konquerorrc", false);
+            TDEConfig konq_config("konquerorrc", false);
             konq_config.setGroup( "Trash" );
             konq_config.writeEntry( keyName, false );
          }
@@ -384,7 +384,7 @@ void KonqOperations::doDrop( const KFileItem * destItem, const KURL & dest, TQDr
     {
         //kdDebug(1203) << "Pasting to " << dest.url() << endl;
         KonqOperations * op = new KonqOperations(parent);
-        KIO::CopyJob* job = KIO::pasteMimeSource( ev, dest,
+        TDEIO::CopyJob* job = TDEIO::pasteMimeSource( ev, dest,
                                                   i18n( "File name for dropped contents:" ),
                                                   parent );
         if ( job ) // 0 if canceled by user
@@ -447,7 +447,7 @@ void KonqOperations::asyncDrop( const KFileItem * destItem )
                 TQString point = desktopFile.readEntry( "MountPoint" );
                 m_destURL.setPath( point );
                 TQString dev = desktopFile.readDevice();
-                TQString mp = KIO::findDeviceMountPoint( dev );
+                TQString mp = TDEIO::findDeviceMountPoint( dev );
                 // Is the device already mounted ?
                 if ( !mp.isNull() )
                     doFileCopy();
@@ -597,10 +597,10 @@ void KonqOperations::doFileCopy()
         }
     }
 
-    KIO::Job * job = 0;
+    TDEIO::Job * job = 0;
     switch ( action ) {
     case TQDropEvent::Move :
-        job = KIO::move( lst, m_destURL );
+        job = TDEIO::move( lst, m_destURL );
         job->setMetaData( m_info->metaData );
         setOperation( job, m_method == TRASH ? TRASH : MOVE, lst, m_destURL );
         (void) new KonqCommandRecorder(
@@ -608,14 +608,14 @@ void KonqOperations::doFileCopy()
             lst, m_destURL, job );
         return; // we still have stuff to do -> don't delete ourselves
     case TQDropEvent::Copy :
-        job = KIO::copy( lst, m_destURL );
+        job = TDEIO::copy( lst, m_destURL );
         job->setMetaData( m_info->metaData );
         setOperation( job, COPY, lst, m_destURL );
         (void) new KonqCommandRecorder( KonqCommand::COPY, lst, m_destURL, job );
         return;
     case TQDropEvent::Link :
         kdDebug(1203) << "KonqOperations::asyncDrop lst.count=" << lst.count() << endl;
-        job = KIO::link( lst, m_destURL );
+        job = TDEIO::link( lst, m_destURL );
         job->setMetaData( m_info->metaData );
         setOperation( job, LINK, lst, m_destURL );
         (void) new KonqCommandRecorder( KonqCommand::LINK, lst, m_destURL, job );
@@ -633,7 +633,7 @@ void KonqOperations::rename( TQWidget * parent, const KURL & oldurl, const KURL&
 
     KURL::List lst;
     lst.append(oldurl);
-    KIO::Job * job = KIO::moveAs( oldurl, newurl, !oldurl.isLocalFile() );
+    TDEIO::Job * job = TDEIO::moveAs( oldurl, newurl, !oldurl.isLocalFile() );
     KonqOperations * op = new KonqOperations( parent );
     op->setOperation( job, MOVE, lst, newurl );
     (void) new KonqCommandRecorder( KonqCommand::MOVE, lst, newurl, job );
@@ -641,38 +641,38 @@ void KonqOperations::rename( TQWidget * parent, const KURL & oldurl, const KURL&
     if ( oldurl.isLocalFile() && oldurl.path(1) == TDEGlobalSettings::desktopPath() )
     {
         kdDebug(1203) << "That rename was the Desktop path, updating config files" << endl;
-        KConfig *globalConfig = TDEGlobal::config();
-        KConfigGroupSaver cgs( globalConfig, "Paths" );
+        TDEConfig *globalConfig = TDEGlobal::config();
+        TDEConfigGroupSaver cgs( globalConfig, "Paths" );
         globalConfig->writePathEntry("Desktop" , newurl.path(), true, true );
         globalConfig->sync();
         KIPC::sendMessageAll(KIPC::SettingsChanged, TDEApplication::SETTINGS_PATHS);
     }
 }
 
-void KonqOperations::setOperation( KIO::Job * job, int method, const KURL::List & /*src*/, const KURL & dest )
+void KonqOperations::setOperation( TDEIO::Job * job, int method, const KURL::List & /*src*/, const KURL & dest )
 {
     m_method = method;
     //m_srcURLs = src;
     m_destURL = dest;
     if ( job )
     {
-        connect( job, TQT_SIGNAL( result( KIO::Job * ) ),
-                 TQT_SLOT( slotResult( KIO::Job * ) ) );
-        KIO::CopyJob *copyJob = tqt_dynamic_cast<KIO::CopyJob*>(job);
+        connect( job, TQT_SIGNAL( result( TDEIO::Job * ) ),
+                 TQT_SLOT( slotResult( TDEIO::Job * ) ) );
+        TDEIO::CopyJob *copyJob = tqt_dynamic_cast<TDEIO::CopyJob*>(job);
         KonqIconViewWidget *iconView = tqt_dynamic_cast<KonqIconViewWidget*>(parent());
         if (copyJob && iconView)
         {
-            connect(copyJob, TQT_SIGNAL(aboutToCreate(KIO::Job *,const TQValueList<KIO::CopyInfo> &)),
-                 this, TQT_SLOT(slotAboutToCreate(KIO::Job *,const TQValueList<KIO::CopyInfo> &)));
-            connect(this, TQT_SIGNAL(aboutToCreate(const TQPoint &, const TQValueList<KIO::CopyInfo> &)),
-                 iconView, TQT_SLOT(slotAboutToCreate(const TQPoint &, const TQValueList<KIO::CopyInfo> &)));
+            connect(copyJob, TQT_SIGNAL(aboutToCreate(TDEIO::Job *,const TQValueList<TDEIO::CopyInfo> &)),
+                 this, TQT_SLOT(slotAboutToCreate(TDEIO::Job *,const TQValueList<TDEIO::CopyInfo> &)));
+            connect(this, TQT_SIGNAL(aboutToCreate(const TQPoint &, const TQValueList<TDEIO::CopyInfo> &)),
+                 iconView, TQT_SLOT(slotAboutToCreate(const TQPoint &, const TQValueList<TDEIO::CopyInfo> &)));
         }
     }
     else // for link
         slotResult( 0L );
 }
 
-void KonqOperations::slotAboutToCreate(KIO::Job *, const TQValueList<KIO::CopyInfo> &files)
+void KonqOperations::slotAboutToCreate(TDEIO::Job *, const TQValueList<TDEIO::CopyInfo> &files)
 {
     emit aboutToCreate( m_info ? m_info->mousePos : m_pasteInfo ? m_pasteInfo->mousePos : TQPoint(), files);
 }
@@ -687,18 +687,18 @@ void KonqOperations::statURL( const KURL & url, const TQObject *receiver, const 
 void KonqOperations::_statURL( const KURL & url, const TQObject *receiver, const char *member )
 {
     connect( this, TQT_SIGNAL( statFinished( const KFileItem * ) ), receiver, member );
-    KIO::StatJob * job = KIO::stat( url /*, false?*/ );
-    connect( job, TQT_SIGNAL( result( KIO::Job * ) ),
-             TQT_SLOT( slotStatResult( KIO::Job * ) ) );
+    TDEIO::StatJob * job = TDEIO::stat( url /*, false?*/ );
+    connect( job, TQT_SIGNAL( result( TDEIO::Job * ) ),
+             TQT_SLOT( slotStatResult( TDEIO::Job * ) ) );
 }
 
-void KonqOperations::slotStatResult( KIO::Job * job )
+void KonqOperations::slotStatResult( TDEIO::Job * job )
 {
     if ( job->error())
         job->showErrorDialog( (TQWidget*)parent() );
     else
     {
-        KIO::StatJob * statJob = static_cast<KIO::StatJob*>(job);
+        TDEIO::StatJob * statJob = static_cast<TDEIO::StatJob*>(job);
         KFileItem * item = new KFileItem( statJob->statResult(), statJob->url() );
         emit statFinished( item );
         delete item;
@@ -708,7 +708,7 @@ void KonqOperations::slotStatResult( KIO::Job * job )
         delete this;
 }
 
-void KonqOperations::slotResult( KIO::Job * job )
+void KonqOperations::slotResult( TDEIO::Job * job )
 {
     if (job && job->error())
         job->showErrorDialog( (TQWidget*)parent() );
@@ -733,7 +733,7 @@ void KonqOperations::newDir( TQWidget * parent, const KURL & baseURL )
     bool ok;
     TQString name = i18n( "New Folder" );
     if ( baseURL.isLocalFile() && TQFileInfo( baseURL.path(+1) + name ).exists() )
-        name = KIO::RenameDlg::suggestName( baseURL, i18n( "New Folder" ) );
+        name = TDEIO::RenameDlg::suggestName( baseURL, i18n( "New Folder" ) );
 
     name = KInputDialog::getText ( i18n( "New Folder" ),
         i18n( "Enter folder name:" ), name, &ok, parent );
@@ -746,7 +746,7 @@ void KonqOperations::newDir( TQWidget * parent, const KURL & baseURL )
         }
         else
         {
-           name = KIO::encodeFileName( name );
+           name = TDEIO::encodeFileName( name );
            url = baseURL;
            url.addPath( name );
         }
@@ -757,7 +757,7 @@ void KonqOperations::newDir( TQWidget * parent, const KURL & baseURL )
 ////
 
 KonqMultiRestoreJob::KonqMultiRestoreJob( const KURL::List& urls, bool showProgressInfo )
-    : KIO::Job( showProgressInfo ),
+    : TDEIO::Job( showProgressInfo ),
       m_urls( urls ), m_urlsIterator( m_urls.begin() ),
       m_progress( 0 )
 {
@@ -788,7 +788,7 @@ void KonqMultiRestoreJob::slotStart()
         TQByteArray packedArgs;
         TQDataStream stream( packedArgs, IO_WriteOnly );
         stream << (int)3 << new_url;
-        KIO::Job* job = KIO::special( new_url, packedArgs );
+        TDEIO::Job* job = TDEIO::special( new_url, packedArgs );
         addSubjob( job );
     }
     else // done!
@@ -799,11 +799,11 @@ void KonqMultiRestoreJob::slotStart()
     }
 }
 
-void KonqMultiRestoreJob::slotResult( KIO::Job *job )
+void KonqMultiRestoreJob::slotResult( TDEIO::Job *job )
 {
     if ( job->error() )
     {
-        KIO::Job::slotResult( job ); // will set the error and emit result(this)
+        TDEIO::Job::slotResult( job ); // will set the error and emit result(this)
         return;
     }
     subjobs.remove( job );

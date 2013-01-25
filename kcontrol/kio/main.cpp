@@ -40,37 +40,37 @@
 extern "C"
 {
 
-  KDE_EXPORT KCModule *create_cookie(TQWidget *parent, const char /**name*/)
+  KDE_EXPORT TDECModule *create_cookie(TQWidget *parent, const char /**name*/)
   {
     return new KCookiesMain(parent);
   }
 
-  KDE_EXPORT KCModule *create_smb(TQWidget *parent, const char /**name*/)
+  KDE_EXPORT TDECModule *create_smb(TQWidget *parent, const char /**name*/)
   {
     return new SMBRoOptions(parent);
   }
 
-  KDE_EXPORT KCModule *create_useragent(TQWidget *parent, const char /**name*/)
+  KDE_EXPORT TDECModule *create_useragent(TQWidget *parent, const char /**name*/)
   {
     return new UserAgentDlg(parent);
   }
 
-  KDE_EXPORT KCModule *create_proxy(TQWidget *parent, const char /**name*/)
+  KDE_EXPORT TDECModule *create_proxy(TQWidget *parent, const char /**name*/)
   {
     return new KProxyOptions(parent);
   }
 
-  KDE_EXPORT KCModule *create_cache(TQWidget *parent, const char /**name*/)
+  KDE_EXPORT TDECModule *create_cache(TQWidget *parent, const char /**name*/)
   {
     return new KCacheConfigDialog( parent );
   }
 
-  KDE_EXPORT KCModule *create_netpref(TQWidget *parent, const char /**name*/)
+  KDE_EXPORT TDECModule *create_netpref(TQWidget *parent, const char /**name*/)
   {
     return new KIOPreferences(parent);
   }
 
-  KDE_EXPORT KCModule *create_lanbrowser(TQWidget *parent, const char *)
+  KDE_EXPORT TDECModule *create_lanbrowser(TQWidget *parent, const char *)
   {
     return new LanBrowser(parent);
   }
@@ -78,7 +78,7 @@ extern "C"
 }
 
 LanBrowser::LanBrowser(TQWidget *parent)
-:KCModule(parent,"kcmkio")
+:TDECModule(parent,"kcmkio")
 ,layout(this)
 ,tabs(this)
 {
@@ -105,21 +105,21 @@ LanBrowser::LanBrowser(TQWidget *parent)
    tabs.addTab(smbPage, i18n("&Windows Shares"));
    connect(smbPage,TQT_SIGNAL(changed(bool)), TQT_SLOT( changed() ));
 
-   lisaPage = KCModuleLoader::loadModule("kcmlisa", KCModuleLoader::None, &tabs);
+   lisaPage = TDECModuleLoader::loadModule("kcmlisa", TDECModuleLoader::None, &tabs);
    if (lisaPage)
    {
      tabs.addTab(lisaPage,i18n("&LISa Daemon"));
      connect(lisaPage,TQT_SIGNAL(changed()), TQT_SLOT( changed() ));
    }
 
-//   resLisaPage = KCModuleLoader::loadModule("kcmreslisa", &tabs);
+//   resLisaPage = TDECModuleLoader::loadModule("kcmreslisa", &tabs);
 //   if (resLisaPage)
 //   {
 //     tabs.addTab(resLisaPage,i18n("R&esLISa Daemon"));
 //     connect(resLisaPage,TQT_SIGNAL(changed()), TQT_SLOT( changed() ));
 //   }
 
-   kioLanPage = KCModuleLoader::loadModule("kcmkiolan",  KCModuleLoader::None, &tabs);
+   kioLanPage = TDECModuleLoader::loadModule("kcmkiolan",  TDECModuleLoader::None, &tabs);
    if (kioLanPage)
    {
      tabs.addTab(kioLanPage,i18n("lan:/ Iosla&ve"));

@@ -46,7 +46,7 @@
 #define DO_NOTHING_ITEM 11
 #define DISABLE_POPUP 12
 
-URLGrabber::URLGrabber( KConfig* config )
+URLGrabber::URLGrabber( TDEConfig* config )
  : m_config( config )
 {
     if( m_config == NULL )
@@ -291,7 +291,7 @@ void URLGrabber::editData()
 }
 
 
-void URLGrabber::readConfiguration( KConfig *kc )
+void URLGrabber::readConfiguration( TDEConfig *kc )
 {
     myActions->clear();
     kc->setGroup( "General" );
@@ -308,7 +308,7 @@ void URLGrabber::readConfiguration( KConfig *kc )
 }
 
 
-void URLGrabber::writeConfiguration( KConfig *kc )
+void URLGrabber::writeConfiguration( TDEConfig *kc )
 {
     kc->setGroup( "General" );
     kc->writeEntry( "Number of Actions", myActions->count() );
@@ -439,7 +439,7 @@ ClipAction::ClipAction( const ClipAction& action )
 }
 
 
-ClipAction::ClipAction( KConfig *kc )
+ClipAction::ClipAction( TDEConfig *kc )
     : myRegExp( kc->readEntry( "Regexp" ) ),
       myDescription( kc->readEntry( "Description" ) )
 {
@@ -477,8 +477,8 @@ void ClipAction::addCommand( const TQString& command,
 }
 
 
-// precondition: we're in the correct action's group of the KConfig object
-void ClipAction::save( KConfig *kc ) const
+// precondition: we're in the correct action's group of the TDEConfig object
+void ClipAction::save( TDEConfig *kc ) const
 {
     kc->writeEntry( "Description", description() );
     kc->writeEntry( "Regexp", regExp() );

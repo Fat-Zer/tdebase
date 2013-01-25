@@ -68,7 +68,7 @@ KateConfigDialog::KateConfigDialog ( KateMainWindow *parent, Kate::View *view )
                  parent,
                  "configdialog" )
 {
-  KConfig *config = KateApp::self()->config();
+  TDEConfig *config = KateApp::self()->config();
 
   KWin::setIcons( winId(), KateApp::self()->icon(), KateApp::self()->miniIcon() );
 
@@ -372,7 +372,7 @@ void KateConfigDialog::slotOk()
 
 void KateConfigDialog::slotApply()
 {
-  KConfig *config = KateApp::self()->config();
+  TDEConfig *config = KateApp::self()->config();
 
   // if data changed apply the kate app stuff
   if( dataChanged )

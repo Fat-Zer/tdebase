@@ -26,7 +26,7 @@ typedef KGenericFactory<CSSConfig, TQWidget> CSSFactory;
 K_EXPORT_COMPONENT_FACTORY( kcm_css, CSSFactory("kcmcss") )
 
 CSSConfig::CSSConfig(TQWidget *parent, const char *name, const TQStringList &)
-  : KCModule(CSSFactory::instance(), parent, name)
+  : TDECModule(CSSFactory::instance(), parent, name)
 {
   customDialogBase = new KDialogBase(this, "customCSSDialog", true, TQString::null, 
         KDialogBase::Close, KDialogBase::Close, true );
@@ -104,7 +104,7 @@ void CSSConfig::load()
 
 void CSSConfig::load( bool useDefaults )
 {
-  KConfig *c = new KConfig("kcmcssrc", false, false);
+  TDEConfig *c = new TDEConfig("kcmcssrc", false, false);
   c->setReadDefaults( useDefaults );
 
   c->setGroup("Stylesheet");
@@ -151,7 +151,7 @@ void CSSConfig::load( bool useDefaults )
 void CSSConfig::save()
 {
   // write to config file
-  KConfig *c = new KConfig("kcmcssrc", false, false);
+  TDEConfig *c = new TDEConfig("kcmcssrc", false, false);
 
   c->setGroup("Stylesheet");
   if (configDialog->useDefault->isChecked())
@@ -200,7 +200,7 @@ void CSSConfig::save()
     }
 
   // make konqueror use the right stylesheet
-  c = new KConfig("konquerorrc", false, false);
+  c = new TDEConfig("konquerorrc", false, false);
 
   c->setGroup("HTML Settings");
   c->writeEntry("UserStyleSheetEnabled", !configDialog->useDefault->isChecked());

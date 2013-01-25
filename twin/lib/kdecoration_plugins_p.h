@@ -37,7 +37,7 @@ DEALINGS IN THE SOFTWARE.
 #include "kdecoration.h"
 
 class KLibrary;
-class KConfig;
+class TDEConfig;
 class KDecoration;
 class KDecorationBridge;
 class KDecorationFactory;
@@ -46,7 +46,7 @@ class KWIN_EXPORT KDecorationPlugins
     : public KDecorationProvides
     {
     public:
-        KDecorationPlugins( KConfig* cfg );
+        KDecorationPlugins( TDEConfig* cfg );
         virtual ~KDecorationPlugins();
         bool loadPlugin( TQString name );
         void destroyPreviousPlugin();
@@ -64,7 +64,7 @@ class KWIN_EXPORT KDecorationPlugins
         KLibrary *old_library;
         KDecorationFactory* old_fact;
         TQString pluginStr;
-        KConfig* config;
+        TDEConfig* config;
     };
 
 /*

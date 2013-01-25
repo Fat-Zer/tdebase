@@ -35,12 +35,12 @@ Configuration of the maximum image size
 
 #include <kcmodule.h>
 
-class KConfig;
+class TDEConfig;
 class TQCheckBox;
 class TQCheckListItem;
 class KDoubleNumInput;
 
-class KPreviewOptions : public KCModule
+class KPreviewOptions : public TDECModule
 {
     Q_OBJECT
 public:

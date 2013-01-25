@@ -235,10 +235,10 @@ void KonqInfoListViewWidget::slotNewItems( const KFileItemList& list)
     }
     else
     {
-        m_metaInfoJob = KIO::fileMetaInfo(list);
+        m_metaInfoJob = TDEIO::fileMetaInfo(list);
         connect( m_metaInfoJob, TQT_SIGNAL( gotMetaInfo( const KFileItem*)),
              this, TQT_SLOT( slotMetaInfo( const KFileItem*)));
-        connect( m_metaInfoJob, TQT_SIGNAL( result( KIO::Job*)),
+        connect( m_metaInfoJob, TQT_SIGNAL( result( TDEIO::Job*)),
              this, TQT_SLOT( slotMetaInfoResult()));
     }
 }
@@ -255,10 +255,10 @@ void KonqInfoListViewWidget::slotRefreshItems( const KFileItemList& list)
     }
     else
     {
-        m_metaInfoJob = KIO::fileMetaInfo(list);
+        m_metaInfoJob = TDEIO::fileMetaInfo(list);
         connect( m_metaInfoJob, TQT_SIGNAL( gotMetaInfo( const KFileItem*)),
              this, TQT_SLOT( slotMetaInfo( const KFileItem*)));
-        connect( m_metaInfoJob, TQT_SIGNAL( result( KIO::Job*)),
+        connect( m_metaInfoJob, TQT_SIGNAL( result( TDEIO::Job*)),
              this, TQT_SLOT( slotMetaInfoResult()));
     }
     KonqBaseListViewWidget::slotRefreshItems(list);
@@ -311,10 +311,10 @@ void KonqInfoListViewWidget::slotMetaInfoResult()
     }
     else
     {
-        m_metaInfoJob = KIO::fileMetaInfo(m_metaInfoTodo);
+        m_metaInfoJob = TDEIO::fileMetaInfo(m_metaInfoTodo);
         connect( m_metaInfoJob, TQT_SIGNAL( gotMetaInfo( const KFileItem*)),
              this, TQT_SLOT( slotMetaInfo( const KFileItem*)));
-        connect( m_metaInfoJob, TQT_SIGNAL( result( KIO::Job*)),
+        connect( m_metaInfoJob, TQT_SIGNAL( result( TDEIO::Job*)),
              this, TQT_SLOT( slotMetaInfoResult()));
         m_metaInfoTodo.clear();
     }

@@ -37,7 +37,7 @@ typedef KGenericFactory<SMServerConfig, TQWidget > SMSFactory;
 K_EXPORT_COMPONENT_FACTORY (kcm_smserver, SMSFactory("kcmsmserver") )
 
 SMServerConfig::SMServerConfig( TQWidget *parent, const char* name, const TQStringList & )
-  : KCModule (SMSFactory::instance(), parent, name)
+  : TDECModule (SMSFactory::instance(), parent, name)
 {
     setQuickHelp( i18n("<h1>Session Manager</h1>"
     " You can configure the session manager here."
@@ -63,7 +63,7 @@ void SMServerConfig::load()
 
 void SMServerConfig::load(bool useDefaults )
 {
-  KConfig *c = new KConfig("ksmserverrc", false, false);
+  TDEConfig *c = new TDEConfig("ksmserverrc", false, false);
   c->setReadDefaults( useDefaults );
   c->setGroup("General");
   dialog->confirmLogoutCheck->setChecked(c->readBoolEntry("confirmLogout", true));
@@ -102,7 +102,7 @@ void SMServerConfig::load(bool useDefaults )
 
 void SMServerConfig::save()
 {
-  KConfig *c = new KConfig("ksmserverrc", false, false);
+  TDEConfig *c = new TDEConfig("ksmserverrc", false, false);
   c->setGroup("General");
   c->writeEntry( "confirmLogout", dialog->confirmLogoutCheck->isChecked());
   c->writeEntry( "offerShutdown", dialog->offerShutdownCheck->isChecked());

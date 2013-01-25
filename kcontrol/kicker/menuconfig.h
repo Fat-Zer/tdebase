@@ -22,7 +22,7 @@
 
 class MenuTab;
 
-class MenuConfig : public KCModule
+class MenuConfig : public TDECModule
 {
     Q_OBJECT
 

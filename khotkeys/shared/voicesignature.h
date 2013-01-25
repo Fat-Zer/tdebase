@@ -26,7 +26,7 @@
 #include <kdemacros.h>
 
 class Sound;
-class KConfigBase;
+class TDEConfigBase;
 
 
 #define WINDOW_MINIMUM 0.10
@@ -87,8 +87,8 @@ public:
 	static TQMemArray<double> fft(const Sound& sound, unsigned int start, unsigned int stop);
 	static bool window(const Sound& sound, unsigned int *start, unsigned int *stop);
 
-	void write(KConfigBase *cfg, const TQString &key) const;
-	void read(KConfigBase *cfg, const TQString &key);
+	void write(TDEConfigBase *cfg, const TQString &key) const;
+	void read(TDEConfigBase *cfg, const TQString &key);
 	
 	inline bool isNull() const
 	{

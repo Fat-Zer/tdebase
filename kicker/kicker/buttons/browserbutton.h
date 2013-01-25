@@ -37,10 +37,10 @@ class BrowserButton : public PanelPopupButton
 
 public:
     BrowserButton( const TQString& icon, const TQString& startDir, TQWidget* parent );
-    BrowserButton( const KConfigGroup& config, TQWidget* parent );
+    BrowserButton( const TDEConfigGroup& config, TQWidget* parent );
     virtual ~BrowserButton();
 
-    void saveConfig( KConfigGroup& config ) const;
+    void saveConfig( TDEConfigGroup& config ) const;
 
     virtual void properties();
 

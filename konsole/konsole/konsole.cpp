@@ -297,7 +297,7 @@ Konsole::Konsole(const char* name, int histon, bool menubaron, bool tabbaron, bo
   // read and apply default values ///////////////////////////////////////////
   resize(321, 321); // Dummy.
   TQSize currentSize = size();
-  KConfig * config = TDEGlobal::config();
+  TDEConfig * config = TDEGlobal::config();
   config->setDesktopGroup();
   applyMainWindowSettings(config);
   if (currentSize != size())
@@ -316,7 +316,7 @@ Konsole::Konsole(const char* name, int histon, bool menubaron, bool tabbaron, bo
 
   if (isRestored) {
     n_tabbar = wanted_tabbar;
-    KConfig *c = TDEApplication::kApplication()->sessionConfig();
+    TDEConfig *c = TDEApplication::kApplication()->sessionConfig();
 //    c->setDesktopGroup();      // Reads from wrong group
     b_dynamicTabHide = c->readBoolEntry("DynamicTabHide", false);
   }
@@ -1167,7 +1167,7 @@ void Konsole::makeBasicGUI()
   new KAction(i18n("Toggle Bidi"), Qt::CTRL+Qt::ALT+Qt::Key_B, TQT_TQOBJECT(this), TQT_SLOT(toggleBidi()), m_shortcuts, "toggle_bidi");
 
   // Should we load all *.desktop files now?  Required for Session shortcuts.
-  if ( KConfigGroup(TDEGlobal::config(), "General").readBoolEntry("SessionShortcutsEnabled", false) ) {
+  if ( TDEConfigGroup(TDEGlobal::config(), "General").readBoolEntry("SessionShortcutsEnabled", false) ) {
     b_sessionShortcutsEnabled = true;
     loadSessionCommands();
     loadScreenSessions();
@@ -1449,7 +1449,7 @@ void Konsole::slotSaveSessionsProfile()
   }
 }
 
-void Konsole::saveProperties(KConfig* config) {
+void Konsole::saveProperties(TDEConfig* config) {
   uint counter=0;
   uint active=0;
   TQString key;
@@ -1554,7 +1554,7 @@ void Konsole::saveProperties(KConfig* config) {
 // Called by constructor (with config = TDEGlobal::config())
 // and by session-management (with config = sessionconfig).
 // So it has to apply the settings when reading them.
-void Konsole::readProperties(KConfig* config)
+void Konsole::readProperties(TDEConfig* config)
 {
     readProperties(config, TQString::null, false);
 }
@@ -1564,7 +1564,7 @@ void Konsole::readProperties(KConfig* config)
 //
 // When globalConfigOnly is true only the options that are shared among all
 // konsoles are being read.
-void Konsole::readProperties(KConfig* config, const TQString &schema, bool globalConfigOnly)
+void Konsole::readProperties(TDEConfig* config, const TQString &schema, bool globalConfigOnly)
 {
 
    if (config==TDEGlobal::config())
@@ -1840,7 +1840,7 @@ void Konsole::slotInstallBitmapFonts()
                   it != sl_installFonts.end(); ++it )
             {
                 TQString sf = "fonts/" + *it;
-                if ( KIO::NetAccess::copy( locate( "appdata", sf ),
+                if ( TDEIO::NetAccess::copy( locate( "appdata", sf ),
                                             "fonts:/Personal/", 0 ) )
                 {
                     b_installBitmapFonts = false;
@@ -2013,7 +2013,7 @@ void Konsole::slotSelectTabbar() {
 
 void Konsole::slotSaveSettings()
 {
-  KConfig *config = TDEGlobal::config();
+  TDEConfig *config = TDEGlobal::config();
   config->setDesktopGroup();
   saveProperties(config);
   saveMainWindowSettings(config);
@@ -2047,7 +2047,7 @@ void Konsole::slotConfigureKeys()
          m_shortcuts->action( i )->shortcut().count() &&
          TQString(m_shortcuts->action( i )->name()).startsWith("SSC_") ) {
       b_sessionShortcutsEnabled = true;
-      KConfigGroup group(TDEGlobal::config(), "General");
+      TDEConfigGroup group(TDEGlobal::config(), "General");
       group.writeEntry("SessionShortcutsEnabled", true);
     }
   }
@@ -2727,7 +2727,7 @@ void Konsole::allowPrevNext()
 KSimpleConfig *Konsole::defaultSession()
 {
   if (!m_defaultSession) {
-    KConfig * config = TDEGlobal::config();
+    TDEConfig * config = TDEGlobal::config();
     config->setDesktopGroup();
     setDefaultSession(config->readEntry("DefaultSession","shell.desktop"));
   }
@@ -4086,7 +4086,7 @@ void Konsole::slotSaveHistory()
   KURL s_url = KFileDialog::getSaveURL(TQString::null, TQString::null, 0L, i18n("Save History"));
   if( s_url.isEmpty())
       return;
-  KURL url = KIO::NetAccess::mostLocalURL( s_url, 0 );
+  KURL url = TDEIO::NetAccess::mostLocalURL( s_url, 0 );
 
   if( !url.isLocalFile() ) {
     KMessageBox::sorry(this, i18n("This is not a local file.\n"));

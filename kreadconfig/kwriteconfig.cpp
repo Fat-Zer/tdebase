@@ -1,4 +1,4 @@
-/* Write KConfig() entries - for use in shell scripts.
+/* Write TDEConfig() entries - for use in shell scripts.
  * (c) 2001 Red Hat, Inc. & Lu�s Pedro Coelho
  * Programmed by Lu�s Pedro Coelho <luis_pedro@netcabo.pt>
  *  based on kreadconfig by Bernhard Rosenkraenzer <bero@redhat.com>
@@ -27,7 +27,7 @@ int main(int argc, char **argv)
 {
 	TDEAboutData aboutData("kwriteconfig", I18N_NOOP("KWriteConfig"),
 		"1.0.0",
-		I18N_NOOP("Write KConfig entries - for use in shell scripts"),
+		I18N_NOOP("Write TDEConfig entries - for use in shell scripts"),
 		TDEAboutData::License_GPL,
 		"(c) 2001 Red Hat, Inc. & Lu�s Pedro Coelho");
 	aboutData.addAuthor("Lu�s Pedro Coelho", 0, "luis_pedro@netcabo.pt");
@@ -50,14 +50,14 @@ int main(int argc, char **argv)
 
 	TDEInstance inst(&aboutData);
 
-	KConfig *konfig;
+	TDEConfig *konfig;
 	if (file.isEmpty())
-	   konfig = new KConfig(TQString::fromLatin1("kdeglobals"), false, false);
+	   konfig = new TDEConfig(TQString::fromLatin1("kdeglobals"), false, false);
 	else
-	   konfig = new KConfig(file, false, false);
+	   konfig = new TDEConfig(file, false, false);
 
 	konfig->setGroup(group);
-	if ( konfig->getConfigState() != KConfig::ReadWrite || konfig->entryIsImmutable( key ) ) return 2;
+	if ( konfig->getConfigState() != TDEConfig::ReadWrite || konfig->entryIsImmutable( key ) ) return 2;
 
 	if(type=="bool") {
 		// For symmetry with kreadconfig we accept a wider range of values as true than Qt

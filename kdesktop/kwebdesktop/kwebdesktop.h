@@ -24,7 +24,7 @@
 #include <kparts/browserextension.h>
 #include <khtml_part.h>
 
-namespace KIO { class Job; }
+namespace TDEIO { class Job; }
 
 class KWebDesktop : public TQObject
 {
@@ -59,8 +59,8 @@ public:
     ~KWebDesktopRun() {}
 
 protected slots:
-    void slotMimetype( KIO::Job *job, const TQString &_type );
-    void slotFinished( KIO::Job * job );
+    void slotMimetype( TDEIO::Job *job, const TQString &_type );
+    void slotFinished( TDEIO::Job * job );
 
 private:
     KWebDesktop* m_webDesktop;

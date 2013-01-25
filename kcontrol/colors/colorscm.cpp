@@ -93,7 +93,7 @@ TQPixmap mkColorPreview(const WidgetCanvas *cs)
 /**** KColorScheme ****/
 
 KColorScheme::KColorScheme(TQWidget *parent, const char *name, const TQStringList &)
-    : KCModule(KolorFactory::instance(), parent, name)
+    : TDECModule(KolorFactory::instance(), parent, name)
 {
     nSysSchemes = 2;
 
@@ -110,7 +110,7 @@ KColorScheme::KColorScheme(TQWidget *parent, const char *name, const TQStringLis
        " Non-TDE applications may also obey some or all of the color"
        " settings, if this option is enabled."));
 
-    KConfig *cfg = new KConfig("kcmdisplayrc");
+    TDEConfig *cfg = new TDEConfig("kcmdisplayrc");
     cfg->setGroup("X11");
     useRM = cfg->readBoolEntry("useResourceManager", true);
     delete cfg;
@@ -308,7 +308,7 @@ void KColorScheme::load()
 }
 void KColorScheme::load( bool useDefaults )
 {
-    KConfig *config = TDEGlobal::config();
+    TDEConfig *config = TDEGlobal::config();
     config->setReadDefaults(  useDefaults );
     config->setGroup("KDE");
     sCurrentScheme = config->readEntry("colorScheme");
@@ -324,7 +324,7 @@ void KColorScheme::load( bool useDefaults )
     sb->setValue(cs->contrast);
     sb->blockSignals(false);
 
-    KConfig cfg("kcmdisplayrc", true, false);
+    TDEConfig cfg("kcmdisplayrc", true, false);
     cfg.setGroup("X11");
     bool exportColors = cfg.readBoolEntry("exportKDEColors", true);
     cbExportColors->setChecked(exportColors);
@@ -335,7 +335,7 @@ void KColorScheme::load( bool useDefaults )
 
 void KColorScheme::save()
 {
-    KConfig *cfg = TDEGlobal::config();
+    TDEConfig *cfg = TDEGlobal::config();
     cfg->setGroup( "General" );
     cfg->writeEntry("background", cs->back, true, true);
     cfg->writeEntry("selectBackground", cs->select, true, true);
@@ -383,7 +383,7 @@ void KColorScheme::save()
     config->sync();
     delete config;
 
-    KConfig cfg2("kcmdisplayrc", false, false);
+    TDEConfig cfg2("kcmdisplayrc", false, false);
     cfg2.setGroup("X11");
     bool exportColors = cbExportColors->isChecked();
     cfg2.writeEntry("exportKDEColors", exportColors);
@@ -587,9 +587,9 @@ void KColorScheme::slotImport()
 		return;
 
 	//kdDebug() << "Location: " << location << endl;
-	if (!KIO::NetAccess::file_copy(file, KURL( location+file.fileName( false ) ) ) )
+	if (!TDEIO::NetAccess::file_copy(file, KURL( location+file.fileName( false ) ) ) )
 	{
-		KMessageBox::error(this, KIO::NetAccess::lastErrorString(),i18n("Import failed."));
+		KMessageBox::error(this, TDEIO::NetAccess::lastErrorString(),i18n("Import failed."));
 		return;
 	}
 	else
@@ -700,7 +700,7 @@ void KColorScheme::slotWidgetColor(int indx)
     if (wcCombo->currentItem() != indx)
         wcCombo->setCurrentItem( indx );
 
-    // Do not emit KCModule::changed()
+    // Do not emit TDECModule::changed()
     colorButton->blockSignals( true );
 
     TQColor col = color(indx);
@@ -734,7 +734,7 @@ void KColorScheme::slotShadeSortColumnChanged(bool b)
  */
 void KColorScheme::readScheme( int index )
 {
-    KConfigBase* config;
+    TDEConfigBase* config;
 
     TQColor widget(239, 239, 239);
     TQColor trinity4Blue(103,141,178);

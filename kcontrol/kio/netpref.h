@@ -12,7 +12,7 @@ class TQGridLayout;
 
 class KIntNumInput;
 
-class KIOPreferences : public KCModule
+class KIOPreferences : public TDECModule
 {
     Q_OBJECT
 

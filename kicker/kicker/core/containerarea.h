@@ -34,7 +34,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include "panner.h"
 #include "container_base.h"
 
-class KConfig;
+class TDEConfig;
 class DragIndicator;
 class PanelContainer;
 class KRootPixmap;
@@ -48,7 +48,7 @@ class ContainerArea : public Panner
     Q_OBJECT
 
 public:
-    ContainerArea( KConfig* config, TQWidget* parent, TQPopupMenu* opMenu, const char* name = 0 );
+    ContainerArea( TDEConfig* config, TQWidget* parent, TQPopupMenu* opMenu, const char* name = 0 );
     ~ContainerArea();
 
     void initialize(bool useDefaultConfig);
@@ -150,7 +150,7 @@ private:
     BaseContainer::List   m_containers;
     BaseContainer*  _moveAC;
     KPanelExtension::Position	    _pos;
-    KConfig*	    _config;
+    TDEConfig*	    _config;
     DragIndicator*  _dragIndicator;
     BaseContainer*  _dragMoveAC;
     TQPoint	    _dragMoveOffset;

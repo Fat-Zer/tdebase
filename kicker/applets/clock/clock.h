@@ -52,7 +52,7 @@ class KPopupMenu;
 class Prefs;
 class ClockApplet;
 
-namespace KIO
+namespace TDEIO
 {
   class Job;
 }
@@ -61,7 +61,7 @@ class DigitalWidget;
 class AnalogWidget;
 class FuzzyWidget;
 class ClockApplet;
-class KConfigDialogManager;
+class TDEConfigDialogManager;
 class SettingsWidgetImp;
 
 class SettingsWidgetImp : public SettingsWidget
@@ -82,12 +82,12 @@ class SettingsWidgetImp : public SettingsWidget
         Zone *zone;
 };
 
-class KConfigDialogSingle : public KConfigDialog
+class TDEConfigDialogSingle : public TDEConfigDialog
 {
     Q_OBJECT
     
     public:
-        KConfigDialogSingle(Zone *zone,
+        TDEConfigDialogSingle(Zone *zone,
                 TQWidget *parent=0,
                 const char *name=0,
                 Prefs *prefs=0,

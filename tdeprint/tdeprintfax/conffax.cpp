@@ -61,7 +61,7 @@ ConfFax::ConfFax(TQWidget *parent, const char *name)
 
 void ConfFax::load()
 {
-	KConfig	*conf = TDEGlobal::config();
+	TDEConfig	*conf = TDEGlobal::config();
 	conf->setGroup("Fax");
 	TQString	v = conf->readEntry("Page", TDEGlobal::locale()->pageSize() == TQPrinter::A4 ? "a4" : "letter");
 	if (v == "letter") m_pagesize->setCurrentItem(1);
@@ -73,7 +73,7 @@ void ConfFax::load()
 
 void ConfFax::save()
 {
-	KConfig	*conf = TDEGlobal::config();
+	TDEConfig	*conf = TDEGlobal::config();
 	conf->setGroup("Fax");
 	conf->writeEntry("Resolution", (m_resolution->currentItem() == 0 ? "High" : "Low"));
 	conf->writeEntry("Page", (m_pagesize->currentItem() == 0 ? "a4" : (m_pagesize->currentItem() == 1 ? "letter" : "legal")));

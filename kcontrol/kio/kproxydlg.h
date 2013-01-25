@@ -31,7 +31,7 @@ class TQTabWidget;
 class KProxyData;
 class KProxyDialogUI;
 
-class KProxyOptions : public KCModule
+class KProxyOptions : public TDECModule
 {
   Q_OBJECT
 
@@ -45,12 +45,12 @@ public:
   virtual TQString quickHelp() const;
 
 private:
-  KCModule* mProxy;
-  KCModule* mSocks;
+  TDECModule* mProxy;
+  TDECModule* mSocks;
   TQTabWidget* mTab;
 };
 
-class KProxyDialog : public KCModule
+class KProxyDialog : public TDECModule
 {
   Q_OBJECT
 

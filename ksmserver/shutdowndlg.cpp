@@ -119,14 +119,14 @@ void KSMShutdownFeedback::fadeBack( void )
 void KSMShutdownFeedback::slotPaintEffect()
 {
 	// determine which fade to use
-   if (KConfigGroup(TDEGlobal::config(), "Logout").readBoolEntry("doFancyLogout", true))
+   if (TDEConfigGroup(TDEGlobal::config(), "Logout").readBoolEntry("doFancyLogout", true))
 	{
 
-	float doFancyLogoutAdditionalDarkness  = (float)KConfigGroup(TDEGlobal::config(), "Logout").readDoubleNumEntry("doFancyLogoutAdditionalDarkness", 0.6);
+	float doFancyLogoutAdditionalDarkness  = (float)TDEConfigGroup(TDEGlobal::config(), "Logout").readDoubleNumEntry("doFancyLogoutAdditionalDarkness", 0.6);
 
-	float doFancyLogoutFadeTime = (float)KConfigGroup(TDEGlobal::config(), "Logout").readDoubleNumEntry("doFancyLogoutFadeTime", 4000);
+	float doFancyLogoutFadeTime = (float)TDEConfigGroup(TDEGlobal::config(), "Logout").readDoubleNumEntry("doFancyLogoutFadeTime", 4000);
 
-	float doFancyLogoutFadeBackTime = (float)KConfigGroup(TDEGlobal::config(), "Logout").readDoubleNumEntry("doFancyLogoutFadeBackTime", 1000);
+	float doFancyLogoutFadeBackTime = (float)TDEConfigGroup(TDEGlobal::config(), "Logout").readDoubleNumEntry("doFancyLogoutFadeBackTime", 1000);
 
 	if (kapp->isX11CompositionAvailable()) {
 		// We can do this in a different (simpler) manner because we have compositing support!
@@ -697,7 +697,7 @@ KSMShutdownDlg::KSMShutdownDlg( TQWidget* parent,
 							2 * KDialog::spacingHint() );
 
 	// default factor
-	bool doUbuntuLogout = KConfigGroup(TDEGlobal::config(), "Logout").readBoolEntry("doUbuntuLogout", false);
+	bool doUbuntuLogout = TDEConfigGroup(TDEGlobal::config(), "Logout").readBoolEntry("doUbuntuLogout", false);
 
 	// slighty more space for the new logout
 	int factor = 2;
@@ -775,7 +775,7 @@ KSMShutdownDlg::KSMShutdownDlg( TQWidget* parent,
 
 		// respect lock on resume & disable suspend/hibernate settings
 		// from power-manager
-		KConfig config("power-managerrc");
+		TDEConfig config("power-managerrc");
 		bool disableSuspend = config.readBoolEntry("disableSuspend", false);
 		bool disableHibernate = config.readBoolEntry("disableHibernate", false);
 		m_lockOnResume = config.readBoolEntry("lockOnResume", true);

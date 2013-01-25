@@ -34,7 +34,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 class TQHBox;
 class QXEmbed;
 class TQBoxLayout;
-class KConfig;
+class TDEConfig;
 
 class AppletHandle;
 
@@ -72,7 +72,7 @@ signals:
     void updateLayout();
 
 public slots:
-    virtual void slotRemoved(KConfig* config);
+    virtual void slotRemoved(TDEConfig* config);
     virtual void setPopupDirection(KPanelApplet::Direction d);
     virtual void setOrientation(KPanelExtension::Orientation o);
     virtual void setImmutable(bool immutable);
@@ -82,8 +82,8 @@ public slots:
     void activateWindow();
 
 protected:
-    virtual void doLoadConfiguration( KConfigGroup& );
-    virtual void doSaveConfiguration( KConfigGroup&, bool layoutOnly ) const;
+    virtual void doLoadConfiguration( TDEConfigGroup& );
+    virtual void doSaveConfiguration( TDEConfigGroup&, bool layoutOnly ) const;
     virtual void alignmentChange(KPanelExtension::Alignment a);
 
     virtual TQPopupMenu* createOpMenu();

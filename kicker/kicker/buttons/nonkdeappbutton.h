@@ -47,10 +47,10 @@ public:
                     const TQString& cmdLine, bool inTerm, TQWidget* parent);
 
     // ... and once for restoring them at start up
-    NonKDEAppButton(const KConfigGroup& config, TQWidget* parent);
+    NonKDEAppButton(const TDEConfigGroup& config, TQWidget* parent);
 
     // reimplemented from PanelButton
-    virtual void saveConfig(KConfigGroup& config) const;
+    virtual void saveConfig(TDEConfigGroup& config) const;
     virtual void properties();
 
 protected slots:

@@ -19,7 +19,7 @@
 #define COMPOSITE
 #endif
 
-class KConfig;
+class TDEConfig;
 class TQTimer;
 class TQPixmap;
 class KPopupMenu;
@@ -118,7 +118,7 @@ private:
     int m_CacheLimit;
     int m_Serial, m_Hash, m_Current;
 
-    KConfig *m_pConfig;
+    TDEConfig *m_pConfig;
     TQWidget *m_pDesktop;
     TQTimer *m_pTimer;
 

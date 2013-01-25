@@ -62,7 +62,7 @@
 #include <kdemacros.h>
 #include <taskmanager.h>
 
-class KConfig;
+class TDEConfig;
 class KPixmap;
 class KPopupMenu;
 class KAction;
@@ -220,18 +220,18 @@ public slots:
     void showPreferences();
     void showAbout();
 
-    /** Sets the current KConfig object. */
-    void setConfig( KConfig *config );
-    KConfig *config() const { return conf; }
+    /** Sets the current TDEConfig object. */
+    void setConfig( TDEConfig *config );
+    TDEConfig *config() const { return conf; }
 
-    /** Reads the settings from the current KConfig. */
+    /** Reads the settings from the current TDEConfig. */
     void readConfig();
     void writeConfig();
     void writeConfigLater();
     void writeLayout();
 
-    /** Writes the settings of this bar to the specified KConfig. */
-    void writeConfig( KConfig *conf );
+    /** Writes the settings of this bar to the specified TDEConfig. */
+    void writeConfig( TDEConfig *conf );
 
     void setStandAlone( bool enable );
 
@@ -243,11 +243,11 @@ signals:
 
 protected slots:
     /** Load settings from the specified configuration. */
-    void readConfig( KConfig *conf );
+    void readConfig( TDEConfig *conf );
 
 private:
     KPopupMenu *menu;
-    KConfig *conf;
+    TDEConfig *conf;
     KasGrouper *grouper;
     KToggleAction *toggleDetachedAction;
     KToggleAction *showAllWindowsAction;

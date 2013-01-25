@@ -814,7 +814,7 @@ class Cfg2k: public ThemeEngineConfig
 {
   Q_OBJECT
 public:
-  Cfg2k( KConfig * );
+  Cfg2k( TDEConfig * );
 };
 
 class ObjKsTheme;
@@ -828,7 +828,7 @@ public:
   {
     return( QString("KSplash2k") );
   }
-  inline const KDialogBase *config( KConfig *kc )
+  inline const KDialogBase *config( TDEConfig *kc )
   {
     return new Cfg2k( kc );
   }
@@ -924,7 +924,7 @@ void Theme2k::readSettings()
   if( !mTheme )
     return;
 
-  KConfig *cfg = mTheme-&gt;themeConfig();
+  TDEConfig *cfg = mTheme-&gt;themeConfig();
   if( !cfg )
     return;
 
@@ -1099,7 +1099,7 @@ appropriate plugin.</para>
 
 K_EXPORT_COMPONENT_FACTORY( ksplash2k, KGenericFactory&lt;Theme2k&gt; );
 
-Cfg2k::Cfg2k( KConfig * )
+Cfg2k::Cfg2k( TDEConfig * )
 {}
 
 Theme2k::Theme2k( QWidget *parent, const char *name, const QStringList &amp;args
@@ -1164,7 +1164,7 @@ void Theme2k::readSettings()
   if( !mTheme )
     return;
 
-  KConfig *cfg = mTheme-&gt;themeConfig();
+  TDEConfig *cfg = mTheme-&gt;themeConfig();
   if( !cfg )
     return;
 

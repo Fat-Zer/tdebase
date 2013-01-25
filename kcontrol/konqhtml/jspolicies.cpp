@@ -33,7 +33,7 @@
 
 // == class JSPolicies ==
 
-JSPolicies::JSPolicies(KConfig* config,const TQString &group,
+JSPolicies::JSPolicies(TDEConfig* config,const TQString &group,
 		bool global,const TQString &domain) :
 	Policies(config,group,global,domain,"javascript.","EnableJavaScript") {
 }

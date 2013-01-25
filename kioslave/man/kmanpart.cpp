@@ -94,18 +94,18 @@ bool KManPart::openFile()
    url.setProtocol( "man" );
    url.setPath( m_file );
 
-   m_job = KIO::get( url, true, false );
-   connect( m_job, TQT_SIGNAL( data( KIO::Job *, const TQByteArray &) ), TQT_SLOT( readData( KIO::Job *, const TQByteArray &) ) );
-   connect( m_job, TQT_SIGNAL( result( KIO::Job * ) ), TQT_SLOT( jobDone( KIO::Job * ) ) );
+   m_job = TDEIO::get( url, true, false );
+   connect( m_job, TQT_SIGNAL( data( TDEIO::Job *, const TQByteArray &) ), TQT_SLOT( readData( TDEIO::Job *, const TQByteArray &) ) );
+   connect( m_job, TQT_SIGNAL( result( TDEIO::Job * ) ), TQT_SLOT( jobDone( TDEIO::Job * ) ) );
    return true;
 }
 
-void KManPart::readData(KIO::Job * , const TQByteArray & data)
+void KManPart::readData(TDEIO::Job * , const TQByteArray & data)
 {
    write(data,data.size());
 }
 
-void KManPart::jobDone( KIO::Job *)
+void KManPart::jobDone( TDEIO::Job *)
 {
    m_job=0;
    end();

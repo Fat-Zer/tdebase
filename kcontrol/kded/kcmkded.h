@@ -28,7 +28,7 @@ class KListView;
 class TQStringList;
 class TQPushButton;
 
-class KDEDConfig : public KCModule
+class KDEDConfig : public TDECModule
 {
 Q_OBJECT
 public:
@@ -49,8 +49,8 @@ protected slots:
 	void slotItemChecked(TQCheckListItem *item);
 	void getServiceStatus();
 
-        bool autoloadEnabled(KConfig *config, const TQString &filename);
-        void setAutoloadEnabled(KConfig *config, const TQString &filename, bool b);
+        bool autoloadEnabled(TDEConfig *config, const TQString &filename);
+        void setAutoloadEnabled(TDEConfig *config, const TQString &filename, bool b);
 
 private:
 	KListView *_lvLoD;

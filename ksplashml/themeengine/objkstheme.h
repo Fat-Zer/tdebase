@@ -17,7 +17,7 @@
 #include <tqstring.h>
 #include <tqstringlist.h>
 
-class KConfig;
+class TDEConfig;
 /**
  * @short Theme reader.
  * A Theme is read in from the file
@@ -37,7 +37,7 @@ public:
 
   TQString theme() const      { return( mActiveTheme ); }
   TQString themeEngine() const { return( mThemeEngine ); }
-  KConfig *themeConfig() const { return( mThemeConfig ); }
+  TDEConfig *themeConfig() const { return( mThemeConfig ); }
   TQString themeDir() const   { return( mThemeDir );    }
   bool loColor() const       { return( mLoColor );     }
   bool testing() const       { return( mTesting );     }
@@ -50,11 +50,11 @@ public:
 protected:
   bool loadThemeRc( const TQString&, bool );
   bool loadLocalConfig( const TQString&, bool );
-  bool loadKConfig( KConfig *, const TQString&, bool );
+  bool loadTDEConfig( TDEConfig *, const TQString&, bool );
 
 private:
   TQString mActiveTheme, mThemeDir;
-  KConfig *mThemeConfig;
+  TDEConfig *mThemeConfig;
 
   int mXineramaScreen;
   bool mLoColor, mTesting, mManagedMode;

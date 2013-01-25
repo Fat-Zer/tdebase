@@ -14,7 +14,7 @@
 - prevent application/window list from growing endlessly
 
 - bug 59203: call kcontrol/keys/modifiers.cpp: 
-	KConfigGroupSaver cgs( TDEGlobal::config(), "Keyboard" );
+	TDEConfigGroupSaver cgs( TDEGlobal::config(), "Keyboard" );
 	bool bMacSwap = TDEGlobal::config()->readBoolEntry( "Mac Modifier Swap", false );
 	if( bMacSwap )
 		ModifiersModule::setupMacModifierKeys();

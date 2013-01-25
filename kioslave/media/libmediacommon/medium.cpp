@@ -147,7 +147,7 @@ void Medium::setHidden(bool state)
 
 void Medium::setUserLabel(const TQString &label)
 {
-	KConfig cfg("mediamanagerrc");
+	TDEConfig cfg("mediamanagerrc");
 	cfg.setGroup("UserLabels");
 
 	TQString entry_name = m_properties[UUID];
@@ -166,7 +166,7 @@ void Medium::setUserLabel(const TQString &label)
 
 void Medium::loadUserLabel()
 {
-	KConfig cfg("mediamanagerrc");
+	TDEConfig cfg("mediamanagerrc");
 	cfg.setGroup("UserLabels");
 
 	TQString entry_name = m_properties[UUID];

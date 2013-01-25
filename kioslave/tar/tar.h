@@ -25,7 +25,7 @@
 #include <kio/global.h>
 #include <kio/slavebase.h>
 
-class ArchiveProtocol : public KIO::SlaveBase
+class ArchiveProtocol : public TDEIO::SlaveBase
 {
 public:
     ArchiveProtocol( const TQCString &pool, const TQCString &app );
@@ -36,7 +36,7 @@ public:
     virtual void get( const KURL & url );
 
 protected:
-    void createUDSEntry( const KArchiveEntry * tarEntry, KIO::UDSEntry & entry );
+    void createUDSEntry( const KArchiveEntry * tarEntry, TDEIO::UDSEntry & entry );
 
     /**
      * \brief find, check and open the archive file
@@ -45,7 +45,7 @@ protected:
      * \param errNum KIO error number (undefined if the function returns true)
      * \return true if file was found, false if there was an error
      */
-    bool checkNewFile( const KURL & url, TQString & path, KIO::Error& errorNum );
+    bool checkNewFile( const KURL & url, TQString & path, TDEIO::Error& errorNum );
 
     KArchive * m_archiveFile;
     TQString m_archiveName;

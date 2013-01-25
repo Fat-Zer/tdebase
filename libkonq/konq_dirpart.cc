@@ -430,7 +430,7 @@ void KonqDirPart::slotClipboardDataChanged()
 
 void KonqDirPart::updatePasteAction() // KDE4: merge into method above
 {
-    TQString actionText = KIO::pasteActionText();
+    TQString actionText = TDEIO::pasteActionText();
     bool paste = !actionText.isEmpty();
     if ( paste )
       emit m_extension->setActionText( "paste", actionText );
@@ -476,7 +476,7 @@ void KonqDirPart::emitTotalCount()
     }
 
     TQString summary =
-        KIO::itemsSummaryString(m_lFileCount + m_lDirCount,
+        TDEIO::itemsSummaryString(m_lFileCount + m_lDirCount,
                                 m_lFileCount,
                                 m_lDirCount,
                                 m_lDirSize,
@@ -513,7 +513,7 @@ void KonqDirPart::emitCounts( const KFileItemList & lst )
             }
         }
 
-        emit setStatusBarText( KIO::itemsSummaryString( fileCount + dirCount,
+        emit setStatusBarText( TDEIO::itemsSummaryString( fileCount + dirCount,
                                                         fileCount, dirCount,
                                                         fileSizeSum, true ) );
     }

@@ -34,7 +34,7 @@ typedef struct
 class WndStatus;
 class ObjKsTheme;
 class ThemeEngine;
-class KConfig;
+class TDEConfig;
 
 class KSplash: public TQWidget, virtual public KSplashIface
 {
@@ -87,7 +87,7 @@ private slots:
   void slotExec();
   void nextIcon();
   void slotInsertAction( const TQString&, const TQString& );
-  void slotReadProperties( KConfig * );
+  void slotReadProperties( TDEConfig * );
 
   void slotSetText( const TQString& );
   void slotSetTextIndex( const int );

@@ -40,7 +40,7 @@ namespace KHotKeys
 
 // Action
     
-Action* Action::create_cfg_read( KConfig& cfg_P, Action_data* data_P )
+Action* Action::create_cfg_read( TDEConfig& cfg_P, Action_data* data_P )
     {
     TQString type = cfg_P.readEntry( "Type" );
     if( type == "COMMAND_URL" )
@@ -57,14 +57,14 @@ Action* Action::create_cfg_read( KConfig& cfg_P, Action_data* data_P )
     return NULL;
     }
 
-void Action::cfg_write( KConfig& cfg_P ) const
+void Action::cfg_write( TDEConfig& cfg_P ) const
     {
     cfg_P.writeEntry( "Type", "ERROR" ); // derived classes should call with their type
     }
 
 // Action_list
 
-Action_list::Action_list( KConfig& cfg_P, Action_data* data_P )
+Action_list::Action_list( TDEConfig& cfg_P, Action_data* data_P )
     : TQPtrList< Action >()
     {
     setAutoDelete( true );
@@ -82,7 +82,7 @@ Action_list::Action_list( KConfig& cfg_P, Action_data* data_P )
     cfg_P.setGroup( save_cfg_group );
     }
     
-void Action_list::cfg_write( KConfig& cfg_P ) const
+void Action_list::cfg_write( TDEConfig& cfg_P ) const
     {
     TQString save_cfg_group = cfg_P.group();
     int i = 0;
@@ -99,13 +99,13 @@ void Action_list::cfg_write( KConfig& cfg_P ) const
 
 // Command_url_action
 
-Command_url_action::Command_url_action( KConfig& cfg_P, Action_data* data_P )
+Command_url_action::Command_url_action( TDEConfig& cfg_P, Action_data* data_P )
     : Action( cfg_P, data_P )
     {
     _command_url = cfg_P.readEntry( "CommandURL" );
     }
 
-void Command_url_action::cfg_write( KConfig& cfg_P ) const
+void Command_url_action::cfg_write( TDEConfig& cfg_P ) const
     {
     base::cfg_write( cfg_P );
     cfg_P.writeEntry( "CommandURL", command_url());    
@@ -188,7 +188,7 @@ Action* Command_url_action::copy( Action_data* data_P ) const
 
 // Menuentry_action
 
-void Menuentry_action::cfg_write( KConfig& cfg_P ) const
+void Menuentry_action::cfg_write( TDEConfig& cfg_P ) const
     {
     base::cfg_write( cfg_P );
     cfg_P.writeEntry( "Type", "MENUENTRY" ); // overwrites value set in base::cfg_write()
@@ -225,7 +225,7 @@ Action* Menuentry_action::copy( Action_data* data_P ) const
 
 // Dcop_action
 
-Dcop_action::Dcop_action( KConfig& cfg_P, Action_data* data_P )
+Dcop_action::Dcop_action( TDEConfig& cfg_P, Action_data* data_P )
     : Action( cfg_P, data_P )
     {
     app = cfg_P.readEntry( "RemoteApp" );
@@ -234,7 +234,7 @@ Dcop_action::Dcop_action( KConfig& cfg_P, Action_data* data_P )
     args = cfg_P.readEntry( "Arguments" );
     }
     
-void Dcop_action::cfg_write( KConfig& cfg_P ) const
+void Dcop_action::cfg_write( TDEConfig& cfg_P ) const
     {
     base::cfg_write( cfg_P );
     cfg_P.writeEntry( "Type", "DCOP" ); // overwrites value set in base::cfg_write()
@@ -311,7 +311,7 @@ Action* Dcop_action::copy( Action_data* data_P ) const
 
 // Keyboard_input_action
 
-Keyboard_input_action::Keyboard_input_action( KConfig& cfg_P, Action_data* data_P )
+Keyboard_input_action::Keyboard_input_action( TDEConfig& cfg_P, Action_data* data_P )
     : Action( cfg_P, data_P )
     {
     _input = cfg_P.readEntry( "Input" );
@@ -335,7 +335,7 @@ Keyboard_input_action::~Keyboard_input_action()
     delete _dest_window;
     }
     
-void Keyboard_input_action::cfg_write( KConfig& cfg_P ) const
+void Keyboard_input_action::cfg_write( TDEConfig& cfg_P ) const
     {
     base::cfg_write( cfg_P );
     cfg_P.writeEntry( "Type", "KEYBOARD_INPUT" ); // overwrites value set in base::cfg_write()
@@ -404,7 +404,7 @@ Action* Keyboard_input_action::copy( Action_data* data_P ) const
 
 // Activate_window_action
 
-Activate_window_action::Activate_window_action( KConfig& cfg_P, Action_data* data_P )
+Activate_window_action::Activate_window_action( TDEConfig& cfg_P, Action_data* data_P )
     : Action( cfg_P, data_P )
     {
     TQString save_cfg_group = cfg_P.group();
@@ -418,7 +418,7 @@ Activate_window_action::~Activate_window_action()
     delete _window;
     }
 
-void Activate_window_action::cfg_write( KConfig& cfg_P ) const
+void Activate_window_action::cfg_write( TDEConfig& cfg_P ) const
     {
     base::cfg_write( cfg_P );
     cfg_P.writeEntry( "Type", "ACTIVATE_WINDOW" ); // overwrites value set in base::cfg_write()

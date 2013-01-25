@@ -4,7 +4,7 @@
 
 #include <kcmodule.h>
 
-class KCRootOnly: public KCModule {
+class KCRootOnly: public TDECModule {
 public:
 	KCRootOnly(TQWidget *parent, const char *name);
 };

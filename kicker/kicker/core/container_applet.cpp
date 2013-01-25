@@ -255,7 +255,7 @@ void AppletContainer::showAppletMenu()
     clearOpMenu();
 }
 
-void AppletContainer::slotRemoved(KConfig* config)
+void AppletContainer::slotRemoved(TDEConfig* config)
 {
     BaseContainer::slotRemoved(config);
 
@@ -288,13 +288,13 @@ void AppletContainer::focusRequested(bool focus)
     emit maintainFocus(focus);
 }
 
-void AppletContainer::doLoadConfiguration( KConfigGroup& config )
+void AppletContainer::doLoadConfiguration( TDEConfigGroup& config )
 {
     setWidthForHeightHint(config.readNumEntry("WidthForHeightHint", 0));
     setHeightForWidthHint(config.readNumEntry("HeightForWidthHint", 0));
 }
 
-void AppletContainer::doSaveConfiguration( KConfigGroup& config,
+void AppletContainer::doSaveConfiguration( TDEConfigGroup& config,
                                            bool layoutOnly ) const
 {
     // immutability is checked by ContainerBase

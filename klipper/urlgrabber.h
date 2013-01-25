@@ -31,7 +31,7 @@
 
 class TQTimer;
 
-class KConfig;
+class TDEConfig;
 class KPopupMenu;
 
 class ClipAction;
@@ -44,7 +44,7 @@ class URLGrabber : public TQObject
   Q_OBJECT
 
 public:
-  URLGrabber( KConfig* config );
+  URLGrabber( TDEConfig* config );
   ~URLGrabber();
 
   /**
@@ -58,8 +58,8 @@ public:
 
   const ActionList * actionList() const { return myActions; }
   void setActionList( ActionList * );
-  void readConfiguration( KConfig * );
-  void writeConfiguration( KConfig * );
+  void readConfiguration( TDEConfig * );
+  void writeConfiguration( TDEConfig * );
 
   int popupTimeout() const { return myPopupKillTimeout; }
   void setPopupTimeout( int timeout ) { myPopupKillTimeout = timeout; }
@@ -89,7 +89,7 @@ private:
   TQTimer *myPopupKillTimer;
   int myPopupKillTimeout;
   bool m_stripWhiteSpace;
-  KConfig* m_config;
+  TDEConfig* m_config;
 
 private slots:
   void slotActionMenu() { actionMenu( true ); }
@@ -124,7 +124,7 @@ class ClipAction
 public:
   ClipAction( const TQString& regExp, const TQString& description );
   ClipAction( const ClipAction& );
-  ClipAction( KConfig *kc );
+  ClipAction( TDEConfig *kc );
   ~ClipAction();
 
   void  setRegExp( const TQString& r) 	      { myRegExp = TQRegExp( r ); }
@@ -150,9 +150,9 @@ public:
   const TQPtrList<ClipCommand>& commands() 	const { return myCommands; }
 
   /**
-   * Saves this action to a a given KConfig object
+   * Saves this action to a a given TDEConfig object
    */
-  void save( KConfig * ) const;
+  void save( TDEConfig * ) const;
 
   /**
    * Returns the most recent list of matched group backreferences.

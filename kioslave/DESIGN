@@ -23,7 +23,7 @@ Any time you'd like to use non blocking IO over a high level protocol
 
 That's nice, but how do I use it?
 
-Basically, you create "jobs" by calling a public KIO::blah method
+Basically, you create "jobs" by calling a public TDEIO::blah method
 (the correct prototypes, etc, are in kio/job.h). Once this is done, you
 connect to the result() signal, and wait for the result. There are
 other signals emitted by jobs, see kio/jobclasses.h. Once again,

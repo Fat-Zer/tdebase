@@ -26,7 +26,7 @@
 #include <tqfile.h>
 #include <tqtextstream.h>
 
-class MacProtocol : public TQObject, public KIO::SlaveBase
+class MacProtocol : public TQObject, public TDEIO::SlaveBase
 {
     Q_OBJECT
 public:
@@ -40,12 +40,12 @@ protected slots:
     void slotSetDataStdOutput(TDEProcess*, char *s, int len);
 protected:
     TQString prepareHP(const KURL& _url);
-    TQValueList<KIO::UDSAtom> makeUDS(const TQString& _line);
+    TQValueList<TDEIO::UDSAtom> makeUDS(const TQString& _line);
     int makeTime(TQString mday, TQString mon, TQString third);
     TQString getMimetype(TQString type, TQString app);
-    TQValueList<KIO::UDSAtom> doStat(const KURL& url);
+    TQValueList<TDEIO::UDSAtom> doStat(const KURL& url);
 
-    KIO::filesize_t processedBytes;
+    TDEIO::filesize_t processedBytes;
     TQString standardOutputStream;
     TDEProcess* myTDEProcess;
 

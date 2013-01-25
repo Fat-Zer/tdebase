@@ -33,8 +33,8 @@
 class KAccelBase;
 
 class TQObject;
-class KConfig;
-class KConfigBase;
+class TDEConfig;
+class TDEConfigBase;
 
 /*
 	KAccelAction holds information an a given action, such as "Run Command"
@@ -156,7 +156,7 @@ class KAccelActions
 
 	void clear();
 	bool init( const KAccelActions& );
-	bool init( KConfigBase& config, const TQString& sGroup );
+	bool init( TDEConfigBase& config, const TQString& sGroup );
 
 	void updateShortcuts( KAccelActions& );
 
@@ -176,8 +176,8 @@ class KAccelActions
 	KAccelAction* insert( const TQString& sName, const TQString& sLabel );
 	bool remove( const TQString& sAction );
 
-	bool readActions( const TQString& sConfigGroup = "Shortcuts", KConfigBase* pConfig = 0 );
-	bool writeActions( const TQString& sConfigGroup = "Shortcuts", KConfigBase* pConfig = 0,
+	bool readActions( const TQString& sConfigGroup = "Shortcuts", TDEConfigBase* pConfig = 0 );
+	bool writeActions( const TQString& sConfigGroup = "Shortcuts", TDEConfigBase* pConfig = 0,
 			bool bWriteAll = false, bool bGlobal = false ) const;
 
 	void emitKeycodeChanged();

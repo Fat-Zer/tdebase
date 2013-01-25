@@ -23,7 +23,7 @@
 #include <kio/slavebase.h>
 #include "remoteimpl.h"
 
-class RemoteProtocol : public KIO::SlaveBase
+class RemoteProtocol : public TDEIO::SlaveBase
 {
 public:
 	RemoteProtocol(const TQCString &protocol, const TQCString &pool,

@@ -183,7 +183,7 @@ WebClient::init()
   if (0 != titleHeight_ % 2)
     titleHeight_ += 1;
 
-  KConfig c("twinwebrc");
+  TDEConfig c("twinwebrc");
   c.setGroup("General");
   shape_ = c.readBoolEntry("Shape", true);
 

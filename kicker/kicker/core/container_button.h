@@ -32,7 +32,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 class TQLayout;
 class PanelButton;
-class KConfigGroup;
+class TDEConfigGroup;
 
 class ButtonContainer : public BaseContainer
 {
@@ -68,10 +68,10 @@ protected slots:
     void dragButton(const TQPixmap icon);
 
 protected:
-    virtual void doSaveConfiguration( KConfigGroup&, bool layoutOnly ) const;
+    virtual void doSaveConfiguration( TDEConfigGroup&, bool layoutOnly ) const;
     void embedButton(PanelButton* p);
     TQPopupMenu* createOpMenu();
-    void checkImmutability(const KConfigGroup&);
+    void checkImmutability(const TDEConfigGroup&);
 
 protected:
     PanelButton  *_button;
@@ -82,7 +82,7 @@ protected:
 class KMenuButtonContainer : public ButtonContainer
 {
 public:
-    KMenuButtonContainer(const KConfigGroup& config, TQPopupMenu* opMenu, TQWidget* parent = 0);
+    KMenuButtonContainer(const TDEConfigGroup& config, TQPopupMenu* opMenu, TQWidget* parent = 0);
     KMenuButtonContainer(TQPopupMenu* opMenu, TQWidget* parent = 0);
     virtual TQString appletType() const { return "KMenuButton"; }
     virtual TQString icon() const { return "kmenu"; }
@@ -95,7 +95,7 @@ public:
 class DesktopButtonContainer : public ButtonContainer
 {
 public:
-    DesktopButtonContainer(const KConfigGroup& config, TQPopupMenu* opMenu, TQWidget* parent = 0);
+    DesktopButtonContainer(const TDEConfigGroup& config, TQPopupMenu* opMenu, TQWidget* parent = 0);
     DesktopButtonContainer(TQPopupMenu* opMenu, TQWidget* parent = 0);
     TQString appletType() const { return "DesktopButton"; }
     virtual TQString icon() const { return "desktop"; }
@@ -105,7 +105,7 @@ public:
 class ServiceButtonContainer : public ButtonContainer
 {
 public:
-    ServiceButtonContainer(const KConfigGroup& config, TQPopupMenu* opMenu, TQWidget* parent = 0);
+    ServiceButtonContainer(const TDEConfigGroup& config, TQPopupMenu* opMenu, TQWidget* parent = 0);
     ServiceButtonContainer(const KService::Ptr & service,  TQPopupMenu* opMenu,TQWidget* parent = 0);
     ServiceButtonContainer(const TQString& desktopFile,  TQPopupMenu* opMenu,TQWidget* parent = 0);
     TQString appletType() const { return "ServiceButton"; }
@@ -116,7 +116,7 @@ public:
 class URLButtonContainer : public ButtonContainer
 {
 public:
-    URLButtonContainer(const KConfigGroup& config, TQPopupMenu* opMenu, TQWidget* parent = 0);
+    URLButtonContainer(const TDEConfigGroup& config, TQPopupMenu* opMenu, TQWidget* parent = 0);
     URLButtonContainer(const TQString& url, TQPopupMenu* opMenu, TQWidget* parent = 0);
     TQString appletType() const { return "URLButton"; }
     virtual TQString icon() const;
@@ -126,7 +126,7 @@ public:
 class BrowserButtonContainer : public ButtonContainer
 {
 public:
-    BrowserButtonContainer(const KConfigGroup& config, TQPopupMenu* opMenu, TQWidget* parent = 0);
+    BrowserButtonContainer(const TDEConfigGroup& config, TQPopupMenu* opMenu, TQWidget* parent = 0);
     BrowserButtonContainer(const TQString& startDir, TQPopupMenu* opMenu, const TQString& icon = "kdisknav", TQWidget* parent = 0);
     TQString appletType() const { return "BrowserButton"; }
     virtual TQString icon() const { return "kdisknav"; }
@@ -137,7 +137,7 @@ public:
 class ServiceMenuButtonContainer : public ButtonContainer
 {
 public:
-    ServiceMenuButtonContainer(const KConfigGroup& config, TQPopupMenu* opMenu, TQWidget* parent = 0);
+    ServiceMenuButtonContainer(const TDEConfigGroup& config, TQPopupMenu* opMenu, TQWidget* parent = 0);
     ServiceMenuButtonContainer(const TQString& relPath, TQPopupMenu* opMenu, TQWidget* parent = 0);
     TQString appletType() const { return "ServiceMenuButton"; }
     virtual TQString icon() const;
@@ -148,7 +148,7 @@ public:
 class WindowListButtonContainer : public ButtonContainer
 {
 public:
-    WindowListButtonContainer(const KConfigGroup& config, TQPopupMenu* opMenu, TQWidget* parent = 0);
+    WindowListButtonContainer(const TDEConfigGroup& config, TQPopupMenu* opMenu, TQWidget* parent = 0);
     WindowListButtonContainer(TQPopupMenu* opMenu, TQWidget* parent = 0);
     TQString appletType() const { return "WindowListButton"; }
     virtual TQString icon() const { return "window_list"; }
@@ -159,7 +159,7 @@ public:
 class BookmarksButtonContainer : public ButtonContainer
 {
 public:
-    BookmarksButtonContainer(const KConfigGroup& config, TQPopupMenu* opMenu, TQWidget* parent = 0);
+    BookmarksButtonContainer(const TDEConfigGroup& config, TQPopupMenu* opMenu, TQWidget* parent = 0);
     BookmarksButtonContainer(TQPopupMenu* opMenu, TQWidget* parent = 0);
     TQString appletType() const { return "BookmarksButton"; }
     virtual TQString icon() const { return "bookmark"; }
@@ -170,7 +170,7 @@ public:
 class NonKDEAppButtonContainer : public ButtonContainer
 {
 public:
-    NonKDEAppButtonContainer(const KConfigGroup& config, TQPopupMenu* opMenu, TQWidget *parent=0);
+    NonKDEAppButtonContainer(const TDEConfigGroup& config, TQPopupMenu* opMenu, TQWidget *parent=0);
     NonKDEAppButtonContainer(const TQString &name, const TQString &description,
                              const TQString &filePath, const TQString &icon,
                              const TQString &cmdLine, bool inTerm,
@@ -183,7 +183,7 @@ public:
 class ExtensionButtonContainer : public ButtonContainer
 {
 public:
-    ExtensionButtonContainer(const KConfigGroup& config, TQPopupMenu* opMenu, TQWidget *parent=0);
+    ExtensionButtonContainer(const TDEConfigGroup& config, TQPopupMenu* opMenu, TQWidget *parent=0);
     ExtensionButtonContainer(const TQString& desktopFile, TQPopupMenu* opMenu, TQWidget *parent= 0);
     TQString appletType() const { return "ExtensionButton"; }
     virtual TQString icon() const;

@@ -31,7 +31,7 @@
 class KonqFMSettings;
 class KFileIVI;
 class KonqIconDrag;
-namespace KIO { class Job; }
+namespace TDEIO { class Job; }
 
 /**
  * A file-aware icon view, implementing drag'n'drop, KDE icon sizes,
@@ -299,7 +299,7 @@ protected slots:
     void slotMovieStatus( int status );
     void slotReenableAnimation();
 
-    void slotAboutToCreate(const TQPoint &pos, const TQValueList<KIO::CopyInfo> &files);
+    void slotAboutToCreate(const TQPoint &pos, const TQValueList<TDEIO::CopyInfo> &files);
     void doubleClickTimeout();
 
 protected:

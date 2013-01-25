@@ -696,7 +696,7 @@ void KDesktop::slotWindowAdded(WId w)
     if ((windowType == NET::Normal || windowType == NET::Unknown) &&
         inf.mappingState() == NET::Visible)
     {
-        KConfig twincfg( "twinrc", true ); // see in twin
+        TDEConfig twincfg( "twinrc", true ); // see in twin
         twincfg.setGroup( "Windows" );
         if( twincfg.readBoolEntry( "ShowDesktopIsMinimizeAll", false ))
         {
@@ -983,7 +983,7 @@ void KDesktop::handleImageDropEvent(TQDropEvent * e)
         src.setPath( tmpFile.name() );
         KURL dest( KDIconView::desktopURL() );
         dest.addPath( filename );
-        KIO::NetAccess::copy( src, dest, 0 );
+        TDEIO::NetAccess::copy( src, dest, 0 );
         tmpFile.unlink();
     }
     else if (result == 2)
@@ -1013,7 +1013,7 @@ void KDesktop::slotNewWallpaper(const KURL &url)
         KTempFile tmpFile( TDEGlobal::dirs()->saveLocation("wallpaper"), "." + ext );
         KURL localURL; localURL.setPath( tmpFile.name() );
         // We pass 0 as parent window because passing the desktop is not a good idea
-        KIO::NetAccess::file_copy( url, localURL, -1, true /*overwrite*/ );
+        TDEIO::NetAccess::file_copy( url, localURL, -1, true /*overwrite*/ );
         bgMgr->setWallpaper( localURL.path() );
     }
 }
@@ -1162,14 +1162,14 @@ void KDesktop::addIcon(const TQString & _url, const TQString & _dest, int x, int
 {
     TQString filename = _url.mid(_url.findRev('/') + 1);
 
-    TQValueList<KIO::CopyInfo> files;
-    KIO::CopyInfo i;
+    TQValueList<TDEIO::CopyInfo> files;
+    TDEIO::CopyInfo i;
     i.uSource = KURL::fromPathOrURL( _url );
     i.uDest   = KURL::fromPathOrURL( _dest );
     i.uDest.addPath( filename );
     files.append(i);
     if (!TQFile::exists(i.uDest.prettyURL().replace("file://",TQString()))) { m_pIconView->slotAboutToCreate( TQPoint( x, y ), files );
-    KIO::copy( i.uSource, i.uDest, false ); }
+    TDEIO::copy( i.uSource, i.uDest, false ); }
 
 //    m_pIconView->addFuturePosition(filename, x, y);
     // tqDebug("addIcon %s %s %d %d", _url.latin1(), _dest.latin1(), x, y);

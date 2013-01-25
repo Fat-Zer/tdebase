@@ -312,7 +312,7 @@ protected:
 
     // Remove all those in KDE4
     int m_iIconSize[5];
-    KIO::filesize_t m_lDirSize;
+    TDEIO::filesize_t m_lDirSize;
     uint m_lFileCount;
     uint m_lDirCount;
 

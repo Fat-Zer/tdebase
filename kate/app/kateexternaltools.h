@@ -171,7 +171,7 @@ class KateExternalToolsConfigWidget : public Kate::ConfigPage
     class KListBox *lbTools;
     class TQPushButton *btnNew, *btnRemove, *btnEdit, *btnMoveUp, *btnMoveDwn;
 
-    class KConfig *config;
+    class TDEConfig *config;
 
     bool m_changed;
 };

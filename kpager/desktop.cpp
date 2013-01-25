@@ -62,7 +62,7 @@ Desktop::Desktop( int desk, TQString desktopName, TQWidget *parent, const char *
   setBackgroundMode(NoBackground);
 
   if (m_desk==1) Desktop::m_windowPixmaps.setAutoDelete(true);
-  KConfig *cfg= TDEGlobal::config();
+  TDEConfig *cfg= TDEGlobal::config();
   m_transparentMode=static_cast<WindowTransparentMode>
       (cfg->readNumEntry("windowTransparentMode", c_defWindowTransparentMode));
   resize(67, 50);

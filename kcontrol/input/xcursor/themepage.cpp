@@ -139,7 +139,7 @@ void ThemePage::save()
 	if ( currentTheme == selectedTheme )
 		return;
 
-	KConfig c( "kcminputrc" );
+	TDEConfig c( "kcminputrc" );
 	c.setGroup( "Mouse" );
 	c.writeEntry( "cursorTheme", selectedTheme != "system" ? selectedTheme : TQString::null );
 
@@ -162,7 +162,7 @@ void ThemePage::load( bool useDefaults )
 	currentTheme = theme;
 
 	// Get the name of the theme TDE is configured to use
-	KConfig c( "kcminputrc" );
+	TDEConfig c( "kcminputrc" );
 	c.setReadDefaults( useDefaults );
 	c.setGroup( "Mouse" );
 	currentTheme = c.readEntry( "cursorTheme", currentTheme );
@@ -221,7 +221,7 @@ void ThemePage::installClicked()
 		return;
 
 	TQString tmpFile;
-	if ( !KIO::NetAccess::download( url, tmpFile, this ) ) {
+	if ( !TDEIO::NetAccess::download( url, tmpFile, this ) ) {
 		TQString text;
 
 		if ( url.isLocalFile() )
@@ -238,7 +238,7 @@ void ThemePage::installClicked()
 		KMessageBox::error( this, i18n( "The file %1 does not appear to be a valid "
 				"cursor theme archive.").arg( url.fileName() ) );
 
-	KIO::NetAccess::removeTempFile( tmpFile );
+	TDEIO::NetAccess::removeTempFile( tmpFile );
 }
 
 
@@ -257,7 +257,7 @@ void ThemePage::removeClicked()
 	// Delete the theme from the harddrive
         KURL u;
         u.setPath( themeInfo[  selectedTheme ]->path );
-	KIO::del( u );
+	TDEIO::del( u );
 
 	// Remove the theme from the listview and from the themeinfo dict
 	delete listview->findItem( selectedTheme, DirColumn );
@@ -268,7 +268,7 @@ void ThemePage::removeClicked()
 	//  Since it's possible to substitute cursors in a system theme by adding a local
 	//  theme with the same name, we shouldn't remove the theme from the list if it's
 	//  still available elsewhere. This could be solved by calling insertThemes() here,
-	//  but since KIO::del() is an asynchronos operation, the theme we're deleting will
+	//  but since TDEIO::del() is an asynchronos operation, the theme we're deleting will
 	//  be readded to the list again before KIO has removed it.
 }
 

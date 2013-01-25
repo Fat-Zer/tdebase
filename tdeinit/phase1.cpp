@@ -56,7 +56,7 @@ int main(int argc, char **argv)
 	TDEApplication::disableAutoDcopRegistration();
 	TDEApplication app;
 
-	KConfig config("twinrc", true);
+	TDEConfig config("twinrc", true);
 	config.setGroup( "ThirdPartyWM" );
 	TQString wmToLaunch = config.readEntry("WMExecutable", "");
 	TQString wmArguments = config.readEntry("WMAdditionalArguments", "");

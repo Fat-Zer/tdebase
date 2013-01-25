@@ -33,13 +33,13 @@ class KJavaScriptOptions;
 
 class TQTabWidget;
 
-class KJSParts : public KCModule
+class KJSParts : public TDECModule
 {
   Q_OBJECT
 
 public:
 
-  KJSParts(KConfig *config,TQWidget *parent, const char *name);
+  KJSParts(TDEConfig *config,TQWidget *parent, const char *name);
   virtual ~KJSParts();
 
   void load();
@@ -54,7 +54,7 @@ private:
   KJavaScriptOptions *javascript;
   KJavaOptions       *java;
 
-  KConfig *mConfig;
+  TDEConfig *mConfig;
 };
 
 #endif

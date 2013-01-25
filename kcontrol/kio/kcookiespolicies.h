@@ -36,7 +36,7 @@ class TQListViewItem;
 class DCOPClient;
 class KCookiesPolicyDlgUI;
 
-class KCookiesPolicies : public KCModule
+class KCookiesPolicies : public TDECModule
 {
     Q_OBJECT
 

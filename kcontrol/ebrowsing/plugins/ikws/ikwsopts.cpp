@@ -76,7 +76,7 @@ private:
 };
 
 FilterOptions::FilterOptions(TDEInstance *instance, TQWidget *parent, const char *name)
-              :KCModule(instance, parent, name)
+              :TDECModule(instance, parent, name)
 {
     TQVBoxLayout *mainLayout = new TQVBoxLayout( this, KDialog::marginHint(),
         KDialog::spacingHint());
@@ -114,7 +114,7 @@ void FilterOptions::load( bool useDefaults )
     // Clear state first.
     m_dlg->lvSearchProviders->clear();
 
-    KConfig config( KURISearchFilterEngine::self()->name() + "rc", false, false );
+    TDEConfig config( KURISearchFilterEngine::self()->name() + "rc", false, false );
 
     config.setReadDefaults( useDefaults );
 
@@ -207,7 +207,7 @@ void FilterOptions::setDelimiter (char sep)
 
 void FilterOptions::save()
 {
-  KConfig config( KURISearchFilterEngine::self()->name() + "rc", false, false );
+  TDEConfig config( KURISearchFilterEngine::self()->name() + "rc", false, false );
 
   config.setGroup("General");
   config.writeEntry("EnableWebShortcuts", m_dlg->cbEnableShortcuts->isChecked());

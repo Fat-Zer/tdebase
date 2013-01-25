@@ -135,7 +135,7 @@ KRemoteEncodingPlugin::updateMenu()
   for (unsigned i =  0; i < m_menu->popupMenu()->count(); i++)
     m_menu->popupMenu()->setItemChecked(m_menu->popupMenu()->idAt(i), false);
 
-  TQString charset = KIO::SlaveConfig::self()->configData(m_currentURL.protocol(), m_currentURL.host(),
+  TQString charset = TDEIO::SlaveConfig::self()->configData(m_currentURL.protocol(), m_currentURL.host(),
 							 DATA_KEY);
   if (!charset.isEmpty())
     {
@@ -167,7 +167,7 @@ KRemoteEncodingPlugin::slotAboutToShow()
 void
 KRemoteEncodingPlugin::slotItemSelected(int id)
 {
-  KConfig config(("kio_" + m_currentURL.protocol() + "rc").latin1());
+  TDEConfig config(("kio_" + m_currentURL.protocol() + "rc").latin1());
   TQString host = m_currentURL.host();
 
   if (!m_menu->popupMenu()->isItemChecked(id))
@@ -188,7 +188,7 @@ KRemoteEncodingPlugin::slotDefault()
 {
   // We have no choice but delete all higher domain level
   // settings here since it affects what will be matched.
-  KConfig config(("kio_" + m_currentURL.protocol() + "rc").latin1());
+  TDEConfig config(("kio_" + m_currentURL.protocol() + "rc").latin1());
 
   TQStringList partList = TQStringList::split('.', m_currentURL.host(), false);
   if (!partList.isEmpty())
@@ -248,7 +248,7 @@ KRemoteEncodingPlugin::updateBrowser()
     {
       TQCString rtype;
       TQByteArray rdata;
-      client->call( *it, "KIO::Scheduler", "reparseSlaveConfiguration(TQString)",
+      client->call( *it, "TDEIO::Scheduler", "reparseSlaveConfiguration(TQString)",
 	       data, rtype, rdata);
     }
   delete client;

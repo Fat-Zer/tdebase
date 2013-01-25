@@ -254,7 +254,7 @@ int main(int argc, char** argv)
 #endif
 
    {
-      KConfig cfg("kcmnspluginrc", true);
+      TDEConfig cfg("kcmnspluginrc", true);
       cfg.setGroup("Misc");
       int v = KCLAMP(cfg.readNumEntry("Nice Level", 0), 0, 19);
       if (v > 0) {

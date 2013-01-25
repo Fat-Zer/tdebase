@@ -158,14 +158,14 @@ void FontUseItem::setDefault()
 
 void FontUseItem::readFont( bool useDefaults )
 {
-  KConfigBase *config;
+  TDEConfigBase *config;
 
   bool deleteme = false;
   if (_rcfile.isEmpty())
     config = TDEGlobal::config();
   else
   {
-    config = new KConfig(_rcfile, true);
+    config = new TDEConfig(_rcfile, true);
     deleteme = true;
   }
 
@@ -179,7 +179,7 @@ void FontUseItem::readFont( bool useDefaults )
 
 void FontUseItem::writeFont()
 {
-  KConfigBase *config;
+  TDEConfigBase *config;
 
   if (_rcfile.isEmpty()) {
     config = TDEGlobal::config();
@@ -326,7 +326,7 @@ bool FontAASettings::load( bool useDefaults )
 
   if(!xft.getHintStyle(hStyle) || KXftConfig::Hint::NotSet==hStyle)
   {
-    KConfig kglobals("kdeglobals", false, false);
+    TDEConfig kglobals("kdeglobals", false, false);
 
     kglobals.setReadDefaults( useDefaults );
 
@@ -350,7 +350,7 @@ bool FontAASettings::load( bool useDefaults )
 bool FontAASettings::save( bool useAA )
 {
   KXftConfig xft(KXftConfig::constStyleSettings);
-  KConfig    kglobals("kdeglobals", false, false);
+  TDEConfig    kglobals("kdeglobals", false, false);
 
   kglobals.setGroup("General");
 
@@ -507,7 +507,7 @@ static TQCString desktopConfigName()
 }
 
 KFonts::KFonts(TQWidget *parent, const char *name, const TQStringList &)
-    :   KCModule(FontFactory::instance(), parent, name)
+    :   TDECModule(FontFactory::instance(), parent, name)
 {
   TQStringList nameGroupKeyRc;
 
@@ -693,7 +693,7 @@ void KFonts::load( bool useDefaults )
   useAA_original = useAA = aaSettings->load( useDefaults ) ? AAEnabled : AADisabled;
   cbAA->setCurrentItem( useAA );
 
-  KConfig cfgfonts("kcmfonts", true);
+  TDEConfig cfgfonts("kcmfonts", true);
   cfgfonts.setGroup("General");
   int dpicfg = cfgfonts.readNumEntry( "forceFontDPI", 0 );
   DPISetting dpi = dpicfg == 120 ? DPI120 : dpicfg == 96 ? DPI96 : DPINone;
@@ -715,7 +715,7 @@ void KFonts::save()
       i->writeFont();
   TDEGlobal::config()->sync();
 
-  KConfig cfgfonts("kcmfonts");
+  TDEConfig cfgfonts("kcmfonts");
   cfgfonts.setGroup("General");
   DPISetting dpi = static_cast< DPISetting >( comboForceDpi->currentItem());
   const int dpi2value[] = { 0, 96, 120 };

@@ -125,15 +125,15 @@ public:
   bool post(const TQString& url, const TQByteArray& data, const TQString& mimeType, void *notifyData, const KParts::URLArgs& args);
 
 protected slots:
-  void data(KIO::Job *job, const TQByteArray &data);
-  void totalSize(KIO::Job *job, KIO::filesize_t size);
-  void mimetype(KIO::Job * job, const TQString &mimeType);
-  void result(KIO::Job *job);
-  void redirection(KIO::Job *job, const KURL& url);
+  void data(TDEIO::Job *job, const TQByteArray &data);
+  void totalSize(TDEIO::Job *job, TDEIO::filesize_t size);
+  void mimetype(TDEIO::Job * job, const TQString &mimeType);
+  void result(TDEIO::Job *job);
+  void redirection(TDEIO::Job *job, const KURL& url);
   void resume();
 
 protected:
-  TQGuardedPtr<KIO::TransferJob> _job;
+  TQGuardedPtr<TDEIO::TransferJob> _job;
   TQTimer *_resumeTimer;
 };
 

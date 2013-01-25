@@ -849,7 +849,7 @@ void NSPluginInstance::timer()
 TQString NSPluginInstance::normalizedURL(const TQString& url) const {
     KURL bu( _baseURL );
     KURL inURL(bu, url);
-    KConfig cfg("kcmnspluginrc", true);
+    TDEConfig cfg("kcmnspluginrc", true);
     cfg.setGroup("Misc");
 
     if (!cfg.readBoolEntry("HTTP URLs Only", false) ||
@@ -1896,22 +1896,22 @@ bool NSPluginStream::get( const TQString& url, const TQString& mimeType,
     // create new stream
     if ( create( url, mimeType, notify ) ) {
         // start the kio job
-        _job = KIO::get(KURL( url ), false, false);
+        _job = TDEIO::get(KURL( url ), false, false);
         _job->addMetaData("errorPage", "false");
         _job->addMetaData("AllowCompressedPage", "false");
         _job->addMetaData("PropagateHttpHeader", "true");
         if (reload) {
             _job->addMetaData("cache", "reload");
         }
-        connect(_job, TQT_SIGNAL(data(KIO::Job *, const TQByteArray &)),
-                TQT_SLOT(data(KIO::Job *, const TQByteArray &)));
-        connect(_job, TQT_SIGNAL(result(KIO::Job *)), TQT_SLOT(result(KIO::Job *)));
-        connect(_job, TQT_SIGNAL(totalSize(KIO::Job *, KIO::filesize_t )),
-                TQT_SLOT(totalSize(KIO::Job *, KIO::filesize_t)));
-        connect(_job, TQT_SIGNAL(mimetype(KIO::Job *, const TQString &)),
-                TQT_SLOT(mimetype(KIO::Job *, const TQString &)));
-        connect(_job, TQT_SIGNAL(redirection(KIO::Job *, const KURL&)),
-                TQT_SLOT(redirection(KIO::Job *, const KURL&)));
+        connect(_job, TQT_SIGNAL(data(TDEIO::Job *, const TQByteArray &)),
+                TQT_SLOT(data(TDEIO::Job *, const TQByteArray &)));
+        connect(_job, TQT_SIGNAL(result(TDEIO::Job *)), TQT_SLOT(result(TDEIO::Job *)));
+        connect(_job, TQT_SIGNAL(totalSize(TDEIO::Job *, TDEIO::filesize_t )),
+                TQT_SLOT(totalSize(TDEIO::Job *, TDEIO::filesize_t)));
+        connect(_job, TQT_SIGNAL(mimetype(TDEIO::Job *, const TQString &)),
+                TQT_SLOT(mimetype(TDEIO::Job *, const TQString &)));
+        connect(_job, TQT_SIGNAL(redirection(TDEIO::Job *, const KURL&)),
+                TQT_SLOT(redirection(TDEIO::Job *, const KURL&)));
     }
 
     return false;
@@ -1924,27 +1924,27 @@ bool NSPluginStream::post( const TQString& url, const TQByteArray& data,
     // create new stream
     if ( create( url, mimeType, notify ) ) {
         // start the kio job
-        _job = KIO::http_post(KURL( url ), data, false);
+        _job = TDEIO::http_post(KURL( url ), data, false);
         _job->addMetaData("content-type", args.contentType());
         _job->addMetaData("errorPage", "false");
         _job->addMetaData("PropagateHttpHeader", "true");
         _job->addMetaData("AllowCompressedPage", "false");
-        connect(_job, TQT_SIGNAL(data(KIO::Job *, const TQByteArray &)),
-                TQT_SLOT(data(KIO::Job *, const TQByteArray &)));
-        connect(_job, TQT_SIGNAL(result(KIO::Job *)), TQT_SLOT(result(KIO::Job *)));
-        connect(_job, TQT_SIGNAL(totalSize(KIO::Job *, KIO::filesize_t )),
-                TQT_SLOT(totalSize(KIO::Job *, KIO::filesize_t)));
-        connect(_job, TQT_SIGNAL(mimetype(KIO::Job *, const TQString &)),
-                TQT_SLOT(mimetype(KIO::Job *, const TQString &)));
-        connect(_job, TQT_SIGNAL(redirection(KIO::Job *, const KURL&)),
-                TQT_SLOT(redirection(KIO::Job *, const KURL&)));
+        connect(_job, TQT_SIGNAL(data(TDEIO::Job *, const TQByteArray &)),
+                TQT_SLOT(data(TDEIO::Job *, const TQByteArray &)));
+        connect(_job, TQT_SIGNAL(result(TDEIO::Job *)), TQT_SLOT(result(TDEIO::Job *)));
+        connect(_job, TQT_SIGNAL(totalSize(TDEIO::Job *, TDEIO::filesize_t )),
+                TQT_SLOT(totalSize(TDEIO::Job *, TDEIO::filesize_t)));
+        connect(_job, TQT_SIGNAL(mimetype(TDEIO::Job *, const TQString &)),
+                TQT_SLOT(mimetype(TDEIO::Job *, const TQString &)));
+        connect(_job, TQT_SIGNAL(redirection(TDEIO::Job *, const KURL&)),
+                TQT_SLOT(redirection(TDEIO::Job *, const KURL&)));
     }
 
     return false;
 }
 
 
-void NSPluginStream::data(KIO::Job * job, const TQByteArray &data)
+void NSPluginStream::data(TDEIO::Job * job, const TQByteArray &data)
 {
     //kdDebug(1431) << "NSPluginStream::data - job=" << (void*)job << " data size=" << data.size() << endl;
     queue( data );
@@ -1954,18 +1954,18 @@ void NSPluginStream::data(KIO::Job * job, const TQByteArray &data)
     }
 }
 
-void NSPluginStream::redirection(KIO::Job * /*job*/, const KURL& url)
+void NSPluginStream::redirection(TDEIO::Job * /*job*/, const KURL& url)
 {
     updateURL( url );
 }
 
-void NSPluginStream::totalSize(KIO::Job * job, KIO::filesize_t size)
+void NSPluginStream::totalSize(TDEIO::Job * job, TDEIO::filesize_t size)
 {
-    kdDebug(1431) << "NSPluginStream::totalSize - job=" << (void*)job << " size=" << KIO::number(size) << endl;
+    kdDebug(1431) << "NSPluginStream::totalSize - job=" << (void*)job << " size=" << TDEIO::number(size) << endl;
     _stream->end = size;
 }
 
-void NSPluginStream::mimetype(KIO::Job * job, const TQString &mimeType)
+void NSPluginStream::mimetype(TDEIO::Job * job, const TQString &mimeType)
 {
     kdDebug(1431) << "NSPluginStream::mimetype - job=" << (void*)job << " mimeType=" << mimeType << endl;
     _mimeType = mimeType;
@@ -1992,7 +1992,7 @@ void NSPluginStream::resume()
 }
 
 
-void NSPluginStream::result(KIO::Job *job)
+void NSPluginStream::result(TDEIO::Job *job)
 {
    int err = job->error();
    _job = 0;

@@ -26,7 +26,7 @@ class TQFont;
 class TQStringList;
 
 class KCMKonsole
-	: public KCModule
+	: public TDECModule
 {
 	Q_OBJECT
 

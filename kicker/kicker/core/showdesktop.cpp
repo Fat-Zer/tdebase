@@ -74,7 +74,7 @@ void ShowDesktop::slotWindowAdded(WId w)
     if ((windowType == NET::Normal || windowType == NET::Unknown) &&
         inf.mappingState() == NET::Visible)
     {
-        KConfig twincfg( "twinrc", true ); // see in twin
+        TDEConfig twincfg( "twinrc", true ); // see in twin
         twincfg.setGroup( "Windows" );
         if( twincfg.readBoolEntry( "ShowDesktopIsMinimizeAll", false ))
         {

@@ -67,7 +67,7 @@ extern "C"
 //---------------------------------------------------------------------------------------------
 
 joystick::joystick(TQWidget *parent, const char *name, const TQStringList &)
-  : KCModule(JoystickFactory::instance(), parent, name)
+  : TDECModule(JoystickFactory::instance(), parent, name)
 {
   setAboutData( new TDEAboutData("kcmjoystick", I18N_NOOP("TDE Joystick Control Module"), "1.0",
                                I18N_NOOP("TDE Control Center Module to test Joysticks"),
@@ -97,7 +97,7 @@ joystick::joystick(TQWidget *parent, const char *name, const TQStringList &)
 
   setMinimumSize(joyWidget->minimumSize());
 
-  setButtons(KCModule::Default);
+  setButtons(TDECModule::Default);
 }
 
 //---------------------------------------------------------------------------------------------

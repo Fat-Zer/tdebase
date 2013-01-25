@@ -32,7 +32,7 @@
 
 #include "kio_mac.moc"
 
-using namespace KIO;
+using namespace TDEIO;
 
 extern "C" {
     int KDE_EXPORT kdemain(int, char **argv) {
@@ -76,10 +76,10 @@ void MacProtocol::get(const KURL& url) {
     UDSEntry entry = doStat(url);
     UDSEntry::Iterator it;
     for(it = entry.begin(); it != entry.end(); ++it) {
-        if ((*it).m_uds == KIO::UDS_MIME_TYPE) {
+        if ((*it).m_uds == TDEIO::UDS_MIME_TYPE) {
             mime = (*it).m_str;
         }
-        if ((*it).m_uds == KIO::UDS_SIZE) {
+        if ((*it).m_uds == TDEIO::UDS_SIZE) {
             totalSize((*it).m_long);
         }
     }
@@ -180,7 +180,7 @@ void MacProtocol::stat(const KURL& url) {
 //doStat(), does all the work that stat() needs
 //it's been separated out so it can be called from get() which
 //also need information
-TQValueList<KIO::UDSAtom> MacProtocol::doStat(const KURL& url) {
+TQValueList<TDEIO::UDSAtom> MacProtocol::doStat(const KURL& url) {
     TQString filename = prepareHP(url);
 
     if (filename.isNull()) {
@@ -225,7 +225,7 @@ TQValueList<KIO::UDSAtom> MacProtocol::doStat(const KURL& url) {
             return entry;
     }//if filename == null
 
-    return TQValueList<KIO::UDSAtom>();
+    return TQValueList<TDEIO::UDSAtom>();
 }
 
 //prepareHP() called from get() listDir() and stat()
@@ -239,7 +239,7 @@ TQString MacProtocol::prepareHP(const KURL& url) {
     //find out if a device has been specified in the query e.g. ?dev=/dev/fd0
     //or in the config file (query device entries are saved to config file)
     TQString device;
-    KConfig* config = new KConfig("macrc");
+    TDEConfig* config = new TDEConfig("macrc");
 
     TQString query = url.query();
     int modepos = query.find("dev=");
@@ -333,7 +333,7 @@ TQString MacProtocol::prepareHP(const KURL& url) {
 //makeUDS()  takes a line of output from hpls -l and converts it into
 // one of these UDSEntrys to return
 //called from listDir() and stat()
-TQValueList<KIO::UDSAtom> MacProtocol::makeUDS(const TQString& _line) {
+TQValueList<TDEIO::UDSAtom> MacProtocol::makeUDS(const TQString& _line) {
     TQString line(_line);
     UDSEntry entry;
 
@@ -342,38 +342,38 @@ TQValueList<KIO::UDSAtom> MacProtocol::makeUDS(const TQString& _line) {
     TQRegExp fileRE("^([f|F]). +(....)/(....) +([^ ]+) +([^ ]+) +([^ ]+) +([^ ]+) +([^ ]+) +(.*)");
     if (dirRE.exactMatch(line)) {
         UDSAtom atom;
-        atom.m_uds = KIO::UDS_NAME;
+        atom.m_uds = TDEIO::UDS_NAME;
         atom.m_str = dirRE.cap(6);
         entry.append(atom);
 
-        atom.m_uds = KIO::UDS_MODIFICATION_TIME;
+        atom.m_uds = TDEIO::UDS_MODIFICATION_TIME;
         atom.m_long = makeTime(dirRE.cap(4), dirRE.cap(3), dirRE.cap(5));
         entry.append(atom);
 
-        atom.m_uds = KIO::UDS_FILE_TYPE;
+        atom.m_uds = TDEIO::UDS_FILE_TYPE;
         atom.m_long = S_IFDIR;
         entry.append(atom);
 
-        atom.m_uds = KIO::UDS_ACCESS;
+        atom.m_uds = TDEIO::UDS_ACCESS;
         atom.m_long = 0755;
         entry.append(atom);
 
     } else if (fileRE.exactMatch(line)) {
         UDSAtom atom;
-        atom.m_uds = KIO::UDS_NAME;
+        atom.m_uds = TDEIO::UDS_NAME;
         atom.m_str = fileRE.cap(9);
         entry.append(atom);
 
-        atom.m_uds = KIO::UDS_SIZE;
+        atom.m_uds = TDEIO::UDS_SIZE;
         TQString theSize(fileRE.cap(4)); //TODO: this is data size, what about  resource size?
         atom.m_long = theSize.toLong();
         entry.append(atom);
 
-        atom.m_uds = KIO::UDS_MODIFICATION_TIME;
+        atom.m_uds = TDEIO::UDS_MODIFICATION_TIME;
         atom.m_long = makeTime(fileRE.cap(7), fileRE.cap(6), fileRE.cap(8));
         entry.append(atom);
 
-        atom.m_uds = KIO::UDS_ACCESS;
+        atom.m_uds = TDEIO::UDS_ACCESS;
         if (TQString(fileRE.cap(1)) == TQString("F")) { //if locked then read only
             atom.m_long = 0444;
         } else {
@@ -381,7 +381,7 @@ TQValueList<KIO::UDSAtom> MacProtocol::makeUDS(const TQString& _line) {
         }
         entry.append(atom);
 
-        atom.m_uds = KIO::UDS_MIME_TYPE;
+        atom.m_uds = TDEIO::UDS_MIME_TYPE;
         TQString mimetype = getMimetype(fileRE.cap(2),fileRE.cap(3));
         atom.m_str = mimetype.local8Bit();
         entry.append(atom);
@@ -389,17 +389,17 @@ TQValueList<KIO::UDSAtom> MacProtocol::makeUDS(const TQString& _line) {
         // Is it a file or a link/alias, just make aliases link to themselves
         if (TQString(fileRE.cap(2)) == TQString("adrp") ||
             TQString(fileRE.cap(2)) == TQString("fdrp")) {
-            atom.m_uds = KIO::UDS_FILE_TYPE;
+            atom.m_uds = TDEIO::UDS_FILE_TYPE;
             atom.m_long = S_IFREG;
             entry.append(atom);
 
-            atom.m_uds = KIO::UDS_LINK_DEST;
+            atom.m_uds = TDEIO::UDS_LINK_DEST;
             atom.m_str = fileRE.cap(9); //I have a file called "Mozilla alias" the name
                                           // of which displays funny because of this.
                                           // No idea why.  Same for other kioslaves. A font thing?
             entry.append(atom);
             } else {
-            atom.m_uds = KIO::UDS_FILE_TYPE;
+            atom.m_uds = TDEIO::UDS_FILE_TYPE;
             atom.m_long = S_IFREG;
             entry.append(atom);
         }

@@ -40,7 +40,7 @@ LayoutUnit KxkbConfig::getDefaultLayout()
 
 bool KxkbConfig::load(int loadMode) 
 {
-	KConfig *config = new KConfig("kxkbrc", true, false);
+	TDEConfig *config = new TDEConfig("kxkbrc", true, false);
 	config->setGroup("Layout");
 
 // Even if the layouts have been disabled we still want to set Xkb options
@@ -171,7 +171,7 @@ bool KxkbConfig::load(int loadMode)
 
 void KxkbConfig::save() 
 {
-	KConfig *config = new KConfig("kxkbrc", false, false);
+	TDEConfig *config = new TDEConfig("kxkbrc", false, false);
 	config->setGroup("Layout");
 
 	config->writeEntry("Model", m_model);

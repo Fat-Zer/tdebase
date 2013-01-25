@@ -413,7 +413,7 @@ void KLocaleConfig::readLocale(const TQString &path, TQString &name,
 
 void KLocaleConfig::save()
 {
-  KConfigBase *config = TDEGlobal::config();
+  TDEConfigBase *config = TDEGlobal::config();
 
   config->setGroup("Locale");
 

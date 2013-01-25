@@ -134,7 +134,7 @@ static TQString realDesktopPath()
  */
 static void copyDesktopLinks()
 {
-    KConfig *config = kapp->config();
+    TDEConfig *config = kapp->config();
     config->setGroup("General");
     if (!config->readBoolEntry("CopyDesktopLinks", true))
        return;
@@ -230,8 +230,8 @@ void testLocalInstallation()
         TQByteArray packedArgs;
         TQDataStream stream( packedArgs, IO_WriteOnly );
         stream << (int)2;
-        KIO::Job* job = KIO::special( "trash:/", packedArgs );
-        (void)KIO::NetAccess::synchronousRun( job, 0 );
+        TDEIO::Job* job = TDEIO::special( "trash:/", packedArgs );
+        (void)TDEIO::NetAccess::synchronousRun( job, 0 );
 
         // OK the only thing missing is to convert the icon position...
         KSimpleConfig cfg( locateLocal("appdata", "IconPositions") );

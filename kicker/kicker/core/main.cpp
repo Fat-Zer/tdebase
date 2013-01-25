@@ -122,7 +122,7 @@ extern "C" KDE_EXPORT int kdemain( int argc, char ** argv )
     aboutData.addAuthor("John Firebaugh",0, "jfirebaugh@kde.org");
     aboutData.addAuthor("Waldo Bastian", I18N_NOOP("Kiosk mode"), "bastian@kde.org");
 
-    aboutData.addCredit("Jessica Hall", /* I18N_NOOP("KConfigXT") */ 0, "jes.hall@kdemail.net");
+    aboutData.addCredit("Jessica Hall", /* I18N_NOOP("TDEConfigXT") */ 0, "jes.hall@kdemail.net");
     aboutData.addCredit("Stefan Nikolaus", /* I18N_NOOP("Bug fixes") */ 0, "stefan.nikolaus@kdemail.net");
     aboutData.addCredit("Benoît Minisini", /* I18N_NOOP("Bug fixes") */ 0, "gambas@users.sourceforge.net");
     TDECmdLineArgs::init( argc, argv, &aboutData );

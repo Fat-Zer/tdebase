@@ -15,11 +15,11 @@
 *  Dialog for configuring HTTP Options like charset and language negotiation
 *  and assuming that file got from HTTP is HTML if no Content-Type is given
 */
-class KHTTPOptions : public KCModule
+class KHTTPOptions : public TDECModule
 {
 Q_OBJECT
   public:
-    KHTTPOptions(KConfig *config, TQString group, TQWidget *parent = 0L, const char *name = 0L);
+    KHTTPOptions(TDEConfig *config, TQString group, TQWidget *parent = 0L, const char *name = 0L);
 
     virtual void load();
     virtual void load( bool useDefaults );
@@ -28,7 +28,7 @@ Q_OBJECT
 
   private:
 
-    KConfig *m_pConfig;
+    TDEConfig *m_pConfig;
     TQString m_groupname;
 
     // Acceptable languages "LANG" - locale selected languages

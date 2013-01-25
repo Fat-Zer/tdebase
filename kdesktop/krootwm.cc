@@ -530,7 +530,7 @@ void KRootWm::slotToggleAutoAlign( bool b )
     else
         cfilename.sprintf("kdesktop-screen-%drc", desktop);
 
-    KConfig *kdg_config = new KConfig(cfilename, false, false);
+    TDEConfig *kdg_config = new TDEConfig(cfilename, false, false);
     kdg_config->setGroup( "General" );
     kdg_config->writeEntry( "AutoLineUpIcons", b );
     kdg_config->sync();
@@ -757,7 +757,7 @@ void KRootWm::slotOpenTerminal()
     TDEProcess* p = new TDEProcess;
     TQ_CHECK_PTR(p);
 
-    KConfigGroupSaver gs(TDEGlobal::config(), "General");
+    TDEConfigGroupSaver gs(TDEGlobal::config(), "General");
     TQString terminal = TDEGlobal::config()->readPathEntry("TerminalApplication", "konsole");
 
     *p << terminal << "--workdir=" + TDEGlobalSettings::desktopPath() + "/";

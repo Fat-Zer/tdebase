@@ -28,14 +28,14 @@
 #include <tqtabwidget.h>
 #include <kcmodule.h>
 
-class KConfig;
+class TDEConfig;
 class KFocusConfig;
 class KTitleBarActionsConfig;
 class KWindowActionsConfig;
 class KAdvancedConfig;
 class KTranslucencyConfig;
 
-class KWinOptions : public KCModule
+class KWinOptions : public TDECModule
 {
   Q_OBJECT
 
@@ -66,10 +66,10 @@ private:
   KAdvancedConfig *mAdvanced;
   KTranslucencyConfig *mTranslucency;
 
-  KConfig *mConfig;
+  TDEConfig *mConfig;
 };
 
-class KActionsOptions : public KCModule
+class KActionsOptions : public TDECModule
 {
   Q_OBJECT
 
@@ -94,7 +94,7 @@ private:
   KTitleBarActionsConfig *mTitleBarActions;
   KWindowActionsConfig *mWindowActions;
 
-  KConfig *mConfig;
+  TDEConfig *mConfig;
 };
 
 #endif

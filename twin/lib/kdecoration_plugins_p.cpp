@@ -36,7 +36,7 @@ DEALINGS IN THE SOFTWARE.
 
 #include "kdecorationfactory.h"
 
-KDecorationPlugins::KDecorationPlugins( KConfig* cfg )
+KDecorationPlugins::KDecorationPlugins( TDEConfig* cfg )
     :   create_ptr( NULL ),
         library( NULL ),
         fact( NULL ),
@@ -95,7 +95,7 @@ bool KDecorationPlugins::loadPlugin( TQString nameStr )
     {
     if( nameStr.isEmpty())
         {
-        KConfigGroupSaver saver( config, "Style" );
+        TDEConfigGroupSaver saver( config, "Style" );
         nameStr = config->readEntry("PluginLib", defaultPlugin );
         }
     // make sure people can switch between HEAD and twin_iii branch

@@ -31,7 +31,7 @@
 class KateMainWindow;
 class KateViewSpaceContainer;
 
-class KConfig;
+class TDEConfig;
 class KAction;
 
 class TQToolButton;
@@ -60,10 +60,10 @@ class KateViewManager : public TQObject
 
   public:
     /* This will save the splitter configuration */
-    void saveViewConfiguration(KConfig *config,const TQString& group);
+    void saveViewConfiguration(TDEConfig *config,const TQString& group);
 
     /* restore it */
-    void restoreViewConfiguration (KConfig *config,const TQString& group);
+    void restoreViewConfiguration (TDEConfig *config,const TQString& group);
 
     uint openURL (const KURL &url, const TQString& encoding, bool activate = true, bool isTempFile=false);
 

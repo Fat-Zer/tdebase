@@ -380,7 +380,7 @@ void KonqSidebarTree::addURL(KonqSidebarTreeTopLevelItem* item, const KURL & url
     {
        TQString filename = findUniqueFilename(path, url.fileName());
        destUrl.setPath(filename);
-       KIO::NetAccess::copy(url, destUrl, this);
+       TDEIO::NetAccess::copy(url, destUrl, this);
     }
     else
     {
@@ -760,7 +760,7 @@ void KonqSidebarTree::loadTopLevelItem( KonqSidebarTreeItem *parent,  const TQSt
     TQFileInfo inf( filename );
 
     TQString path = filename;
-    TQString name = KIO::decodeFileName( inf.fileName() );
+    TQString name = TDEIO::decodeFileName( inf.fileName() );
     if ( name.length() > 8 && name.right( 8 ) == ".desktop" )
         name.truncate( name.length() - 8 );
     if ( name.length() > 7 && name.right( 7 ) == ".kdelnk" )

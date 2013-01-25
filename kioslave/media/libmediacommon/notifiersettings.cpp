@@ -227,7 +227,7 @@ void NotifierSettings::reload()
 	m_actions.append( nothing );
 	m_idMap[ nothing->id() ] = nothing;
 
-	KConfig config( "medianotifierrc", true );
+	TDEConfig config( "medianotifierrc", true );
 	TQMap<TQString,TQString> auto_actions_map = config.entryMap( "Auto Actions" );
 
 	TQMap<TQString,TQString>::iterator auto_it = auto_actions_map.begin();

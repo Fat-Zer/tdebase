@@ -44,16 +44,16 @@ int KonqTextViewItem::compare( TQListViewItem *item, int col, bool ascending ) c
          ColumnInfo *cInfo=&lv->columnConfigInfo()[i];
          if (_column==cInfo->displayInColumn)
          {
-            if ((cInfo->udsId==KIO::UDS_MODIFICATION_TIME)
-                || (cInfo->udsId==KIO::UDS_ACCESS_TIME)
-                || (cInfo->udsId==KIO::UDS_CREATION_TIME))
+            if ((cInfo->udsId==TDEIO::UDS_MODIFICATION_TIME)
+                || (cInfo->udsId==TDEIO::UDS_ACCESS_TIME)
+                || (cInfo->udsId==TDEIO::UDS_CREATION_TIME))
             {
                tmp += TQString::number( m_fileitem->time(cInfo->udsId) ).rightJustify( 14, '0' );
                return tmp;
             }
-            else if (cInfo->udsId==KIO::UDS_SIZE)
+            else if (cInfo->udsId==TDEIO::UDS_SIZE)
             {
-               tmp += KIO::number( m_fileitem->size() ).rightJustify( 20, '0' );
+               tmp += TDEIO::number( m_fileitem->size() ).rightJustify( 20, '0' );
                return tmp;
             }
             else break;
@@ -68,7 +68,7 @@ int KonqTextViewItem::compare( TQListViewItem *item, int col, bool ascending ) c
 void KonqTextViewItem::updateContents()
 {
    TQString tmp;
-   KIO::filesize_t size=m_fileitem->size();
+   TDEIO::filesize_t size=m_fileitem->size();
    mode_t m=m_fileitem->mode();
 
    // The order is: .dir (0), dir (1), .file (2), file (3)
@@ -151,37 +151,37 @@ void KonqTextViewItem::updateContents()
       {
          switch (tmpColumn->udsId)
          {
-         case KIO::UDS_USER:
+         case TDEIO::UDS_USER:
             setText(tmpColumn->displayInColumn,m_fileitem->user());
             break;
-         case KIO::UDS_GROUP:
+         case TDEIO::UDS_GROUP:
             setText(tmpColumn->displayInColumn,m_fileitem->group());
             break;
-         case KIO::UDS_LINK_DEST:
+         case TDEIO::UDS_LINK_DEST:
             setText(tmpColumn->displayInColumn,m_fileitem->linkDest());
             break;
-         case KIO::UDS_FILE_TYPE:
+         case TDEIO::UDS_FILE_TYPE:
             setText(tmpColumn->displayInColumn,m_fileitem->mimeComment());
             break;
-         case KIO::UDS_MIME_TYPE:
+         case TDEIO::UDS_MIME_TYPE:
             setText(tmpColumn->displayInColumn,m_fileitem->mimetype());
             break;
-         case KIO::UDS_URL:
+         case TDEIO::UDS_URL:
             setText(tmpColumn->displayInColumn,m_fileitem->url().prettyURL());
             break;
-         case KIO::UDS_SIZE:
+         case TDEIO::UDS_SIZE:
             if ( static_cast<KonqBaseListViewWidget *>(listView())->m_pSettings->fileSizeInBytes() )
                 setText(tmpColumn->displayInColumn,TDEGlobal::locale()->formatNumber(size, 0)+" ");
             else
-                setText(tmpColumn->displayInColumn,KIO::convertSize(size)+" ");
+                setText(tmpColumn->displayInColumn,TDEIO::convertSize(size)+" ");
             break;
-         case KIO::UDS_ACCESS:
+         case TDEIO::UDS_ACCESS:
             setText(tmpColumn->displayInColumn,m_fileitem->permissionsString());
             break;
-         case KIO::UDS_MODIFICATION_TIME:
-         case KIO::UDS_ACCESS_TIME:
-         case KIO::UDS_CREATION_TIME:
-            for( KIO::UDSEntry::ConstIterator it = m_fileitem->entry().begin(); it != m_fileitem->entry().end(); it++ )
+         case TDEIO::UDS_MODIFICATION_TIME:
+         case TDEIO::UDS_ACCESS_TIME:
+         case TDEIO::UDS_CREATION_TIME:
+            for( TDEIO::UDSEntry::ConstIterator it = m_fileitem->entry().begin(); it != m_fileitem->entry().end(); it++ )
             {
                if ((*it).m_uds==(unsigned int)tmpColumn->udsId)
                {

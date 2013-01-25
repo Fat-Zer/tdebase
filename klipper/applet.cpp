@@ -102,7 +102,7 @@ void KlipperApplet::about()
 
 KlipperAppletWidget::KlipperAppletWidget( TQWidget* parent )
 // init() is called first, before KlipperWidget is called with ( parent, kconfig )
-    : KlipperWidget( ( init(), parent ), new KConfig( "klipperrc" ))
+    : KlipperWidget( ( init(), parent ), new TDEConfig( "klipperrc" ))
 {
 }
 

@@ -25,7 +25,7 @@
 #include <tqmap.h>
 #include <tqpair.h>
 
-namespace KIO {class MetaInfoJob;}
+namespace TDEIO {class MetaInfoJob;}
 class KonqListView;
 class KSelectAction;
 
@@ -82,7 +82,7 @@ class KonqInfoListViewWidget : public KonqBaseListViewWidget
       KonqILVMimeType                 m_favorite;
       
       KSelectAction*                  m_mtSelector;
-      KIO::MetaInfoJob*               m_metaInfoJob;
+      TDEIO::MetaInfoJob*               m_metaInfoJob;
       KFileItemList                   m_metaInfoTodo;
 };
 

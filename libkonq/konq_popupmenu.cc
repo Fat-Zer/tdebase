@@ -306,7 +306,7 @@ int KonqPopupMenu::insertServices(const ServiceList& list,
     return count;
 }
 
-bool KonqPopupMenu::KIOSKAuthorizedAction(KConfig& cfg)
+bool KonqPopupMenu::KIOSKAuthorizedAction(TDEConfig& cfg)
 {
     if ( !cfg.hasKey( "X-TDE-AuthorizeAction") )
     {
@@ -423,9 +423,9 @@ void KonqPopupMenu::setup(KonqPopupFlags kpf)
     // If a local path is available, monitor that instead of the given remote URL...
     KURL realURL = m_sViewURL;
     if (!realURL.isLocalFile()) {
-        KIO::LocalURLJob* localURLJob = KIO::localURL(m_sViewURL);
+        TDEIO::LocalURLJob* localURLJob = TDEIO::localURL(m_sViewURL);
         if (localURLJob) {
-            connect(localURLJob, TQT_SIGNAL(localURL(KIO::Job*, const KURL&, bool)), this, TQT_SLOT(slotLocalURL(KIO::Job*, const KURL&, bool)));
+            connect(localURLJob, TQT_SIGNAL(localURL(TDEIO::Job*, const KURL&, bool)), this, TQT_SLOT(slotLocalURL(TDEIO::Job*, const KURL&, bool)));
             connect(localURLJob, TQT_SIGNAL(destroyed()), this, TQT_SLOT(slotLocalURLKIODestroyed()));
             d->localURLSlotFired = false;
             while (!d->localURLSlotFired) {
@@ -593,7 +593,7 @@ void KonqPopupMenu::setup(KonqPopupFlags kpf)
                     addDel = true;
                 }
                 else {
-                    KConfigGroup configGroup( kapp->config(), "KDE" );
+                    TDEConfigGroup configGroup( kapp->config(), "KDE" );
                     if ( configGroup.readBoolEntry( "ShowDeleteCommand", false ) )
                         addDel = true;
                 }
@@ -1226,7 +1226,7 @@ KURL::List KonqPopupMenu::popupURLList() const
   return m_lstPopupURLs;
 }
 
-void KonqPopupMenu::slotLocalURL(KIO::Job *job, const KURL& url, bool isLocal)
+void KonqPopupMenu::slotLocalURL(TDEIO::Job *job, const KURL& url, bool isLocal)
 {
   d->localURLSlotFired = true;
   d->localURLResultURL = url;

@@ -60,7 +60,7 @@ KonqExtensionManager::KonqExtensionManager(TQWidget *parent, KonqMainWindow *mai
 	d->activePart = activePart;
 
 	// There's a limitation of KPluginSelector here... It assumes that all plugins in a given widget (as created by addPlugins)
-	// have their config in the same KConfig[Group]. So we can't show konqueror extensions and khtml extensions in the same tab.
+	// have their config in the same TDEConfig[Group]. So we can't show konqueror extensions and khtml extensions in the same tab.
 	d->pluginSelector->addPlugins("konqueror", i18n("Extensions"), "Extensions", TDEGlobal::config());
 	if ( activePart ) {
 		TDEInstance* instance = activePart->instance();

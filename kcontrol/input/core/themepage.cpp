@@ -93,7 +93,7 @@ void ThemePage::save()
 	bool whiteCursor = selectedTheme.right( 5 ) == "White";
 	bool largeCursor = selectedTheme.left( 5 ) == "Large";
 
-	KConfig c( "kcminputrc" );
+	TDEConfig c( "kcminputrc" );
 	c.setGroup( "Mouse" );
 	c.writeEntry( "LargeCursor", largeCursor );
 	c.writeEntry( "WhiteCursor", whiteCursor );
@@ -116,7 +116,7 @@ void ThemePage::load( bool useDefaults )
 {
 	bool largeCursor, whiteCursor;
 
-	KConfig c( "kcminputrc" );
+	TDEConfig c( "kcminputrc" );
 
 	c.setReadDefaults( useDefaults );
 
@@ -179,14 +179,14 @@ void ThemePage::fixCursorFile()
 	// Run mkfontdir to update fonts.dir in that dir.
 
 	TDEGlobal::dirs()->addResourceType( "font", "share/fonts/" );
-	KIO::mkdir( KURL::fromPathOrURL(TQDir::homeDirPath() + "/.fonts/kde-override") );
+	TDEIO::mkdir( KURL::fromPathOrURL(TQDir::homeDirPath() + "/.fonts/kde-override") );
 	TQString overrideDir = TQDir::homeDirPath() + "/.fonts/kde-override/";
 
 	KURL installedFont;
 	installedFont.setPath( overrideDir + "cursor.pcf.gz" );
 
 	if ( currentTheme == "SmallBlack" )
-		KIO::NetAccess::del( installedFont, this );
+		TDEIO::NetAccess::del( installedFont, this );
 	else {
 		KURL source;
 
@@ -197,7 +197,7 @@ void ThemePage::fixCursorFile()
 		else if ( currentTheme == "SmallWhite" )
 			source.setPath( locate("data", "kcminput/cursor_small_white.pcf.gz") );
 
-		KIO::NetAccess::file_copy( source, installedFont, -1, true );
+		TDEIO::NetAccess::file_copy( source, installedFont, -1, true );
 	}
 
 	TQString cmd = TDEGlobal::dirs()->findExe( "mkfontdir" );

@@ -14,7 +14,7 @@ class OptionListItem;
 class LayoutConfigWidget;
 class XkbRules;
 
-class LayoutConfig : public KCModule
+class LayoutConfig : public TDECModule
 {
   Q_OBJECT
 

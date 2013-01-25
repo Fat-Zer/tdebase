@@ -8,8 +8,8 @@
 #include "khttpoptdlg.h"
 
 
-KHTTPOptions::KHTTPOptions(KConfig *config, TQString group, TQWidget *parent, const char *name)
-  : KCModule( parent, name ), m_pConfig(config), m_groupname(group)
+KHTTPOptions::KHTTPOptions(TDEConfig *config, TQString group, TQWidget *parent, const char *name)
+  : TDECModule( parent, name ), m_pConfig(config), m_groupname(group)
 {
   TQVBoxLayout *lay = new TQVBoxLayout(this, 10, 5);
 

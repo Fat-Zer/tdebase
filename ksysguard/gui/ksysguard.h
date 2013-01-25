@@ -49,8 +49,8 @@ class TopLevel : public KMainWindow, public KSGRD::SensorClient, public DCOPObje
   public:
     TopLevel( const char *name = 0 );
 
-  virtual void saveProperties( KConfig* );
-  virtual void readProperties( KConfig* );
+  virtual void saveProperties( TDEConfig* );
+  virtual void readProperties( TDEConfig* );
 
   virtual void answerReceived( int id, const TQString& );
 

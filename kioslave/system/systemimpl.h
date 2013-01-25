@@ -35,10 +35,10 @@ Q_OBJECT
 public:
 	SystemImpl();
 
-	void createTopLevelEntry(KIO::UDSEntry& entry) const;
-	bool statByName(const TQString &filename, KIO::UDSEntry& entry);
+	void createTopLevelEntry(TDEIO::UDSEntry& entry) const;
+	bool statByName(const TQString &filename, TDEIO::UDSEntry& entry);
 
-	bool listRoot(TQValueList<KIO::UDSEntry> &list);
+	bool listRoot(TQValueList<TDEIO::UDSEntry> &list);
 
 	bool parseURL(const KURL &url, TQString &name, TQString &path) const;
 	bool realURL(const TQString &name, const TQString &path, KURL &url) const;
@@ -48,11 +48,11 @@ public:
 
 private slots:
 	KURL findBaseURL(const TQString &filename) const;
-	void slotEntries(KIO::Job *job, const KIO::UDSEntryList &list);
-	void slotResult(KIO::Job *job);
+	void slotEntries(TDEIO::Job *job, const TDEIO::UDSEntryList &list);
+	void slotResult(TDEIO::Job *job);
 
 private:
-	void createEntry(KIO::UDSEntry& entry, const TQString &directory,
+	void createEntry(TDEIO::UDSEntry& entry, const TQString &directory,
 	                 const TQString &file);
 
 	bool m_lastListingEmpty;

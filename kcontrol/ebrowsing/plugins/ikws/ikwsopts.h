@@ -30,7 +30,7 @@ class FilterOptionsUI;
 class SearchProvider;
 class SearchProviderItem;
 
-class FilterOptions : public KCModule
+class FilterOptions : public TDECModule
 {
     Q_OBJECT
 

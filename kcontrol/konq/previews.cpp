@@ -58,7 +58,7 @@ class PreviewCheckListItem : public TQCheckListItem
 };
 
 KPreviewOptions::KPreviewOptions( TQWidget *parent, const char */*name*/ )
-    : KCModule( parent, "kcmkonq" )
+    : TDECModule( parent, "kcmkonq" )
 {
     TQVBoxLayout *lay = new TQVBoxLayout(this, 0, KDialog::spacingHint());
 
@@ -159,7 +159,7 @@ void KPreviewOptions::load(bool useDefaults)
 {
     // *** load and apply to GUI ***
     TDEGlobal::config()->setReadDefaults(useDefaults);
-    KConfigGroup group( TDEGlobal::config(), "PreviewSettings" );
+    TDEConfigGroup group( TDEGlobal::config(), "PreviewSettings" );
     TQPtrListIterator<TQCheckListItem> it( m_items );
 
     for ( ; it.current() ; ++it ) {
@@ -191,7 +191,7 @@ void KPreviewOptions::defaults()
 
 void KPreviewOptions::save()
 {
-    KConfigGroup group( TDEGlobal::config(), "PreviewSettings" );
+    TDEConfigGroup group( TDEGlobal::config(), "PreviewSettings" );
     TQPtrListIterator<TQCheckListItem> it( m_items );
     for ( ; it.current() ; ++it ) {
         TQString protocol( it.current()->text() );
@@ -213,7 +213,7 @@ void KPreviewOptions::save()
 
 void KPreviewOptions::changed()
 {
-    emit KCModule::changed(true);
+    emit TDECModule::changed(true);
 }
 
 #include "previews.moc"

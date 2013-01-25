@@ -29,7 +29,7 @@
 
 #include "katemdi.h"
 
-class KConfig;
+class TDEConfig;
 class KateMainWindow;
 
 class KateViewSpaceContainer: public TQVBox
@@ -48,10 +48,10 @@ class KateViewSpaceContainer: public TQVBox
 
   public:
     /* This will save the splitter configuration */
-    void saveViewConfiguration(KConfig *config,const TQString& group);
+    void saveViewConfiguration(TDEConfig *config,const TQString& group);
 
     /* restore it */
-    void restoreViewConfiguration (KConfig *config,const TQString& group);
+    void restoreViewConfiguration (TDEConfig *config,const TQString& group);
 
   private:
     /**
@@ -69,12 +69,12 @@ class KateViewSpaceContainer: public TQVBox
      * If child splitters are found, it calls it self with those as the argument.
      * If a viewspace child is found, it is asked to save its filelist.
      */
-    void saveSplitterConfig(KateMDI::Splitter* s, int idx=0, KConfig* config=0L, const TQString& viewConfGrp="");
+    void saveSplitterConfig(KateMDI::Splitter* s, int idx=0, TDEConfig* config=0L, const TQString& viewConfGrp="");
 
     /** Restore a single splitter.
      * This is all the work is done for @see saveSplitterConfig()
      */
-    void restoreSplitter ( KConfig* config, const TQString &group, TQWidget* parent , const TQString& viewConfGrp);
+    void restoreSplitter ( TDEConfig* config, const TQString &group, TQWidget* parent , const TQString& viewConfGrp);
 
     void removeViewSpace (KateViewSpace *viewspace);
 

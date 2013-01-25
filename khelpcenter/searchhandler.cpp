@@ -138,11 +138,11 @@ void SearchHandler::search( DocEntry *entry, const TQStringList &words,
   
     kdDebug() << "SearchHandler::search() URL: " << urlString << endl;
   
-    KIO::TransferJob *job = KIO::get( KURL( urlString ) );
-    connect( job, TQT_SIGNAL( result( KIO::Job * ) ),
-             TQT_SLOT( slotJobResult( KIO::Job * ) ) );
-    connect( job, TQT_SIGNAL( data( KIO::Job *, const TQByteArray & ) ),
-             TQT_SLOT( slotJobData( KIO::Job *, const TQByteArray & ) ) );
+    TDEIO::TransferJob *job = TDEIO::get( KURL( urlString ) );
+    connect( job, TQT_SIGNAL( result( TDEIO::Job * ) ),
+             TQT_SLOT( slotJobResult( TDEIO::Job * ) ) );
+    connect( job, TQT_SIGNAL( data( TDEIO::Job *, const TQByteArray & ) ),
+             TQT_SLOT( slotJobData( TDEIO::Job *, const TQByteArray & ) ) );
 
     SearchJob *searchJob = new SearchJob;
     searchJob->mEntry = entry;
@@ -213,12 +213,12 @@ void SearchHandler::searchExited( TDEProcess *proc )
   }
 }
 
-void SearchHandler::slotJobResult( KIO::Job *job )
+void SearchHandler::slotJobResult( TDEIO::Job *job )
 {
   TQString result;
   DocEntry *entry = 0;
 
-  TQMap<KIO::Job *, SearchJob *>::ConstIterator it = mKioJobs.find( job );
+  TQMap<TDEIO::Job *, SearchJob *>::ConstIterator it = mKioJobs.find( job );
   if ( it != mKioJobs.end() ) {
     SearchJob *j = *it;
 
@@ -236,11 +236,11 @@ void SearchHandler::slotJobResult( KIO::Job *job )
   }
 }
  
-void SearchHandler::slotJobData( KIO::Job *job, const TQByteArray &data )
+void SearchHandler::slotJobData( TDEIO::Job *job, const TQByteArray &data )
 {
 //  kdDebug() << "SearchHandler::slotJobData()" << endl;
 
-  TQMap<KIO::Job *, SearchJob *>::ConstIterator it = mKioJobs.find( job );
+  TQMap<TDEIO::Job *, SearchJob *>::ConstIterator it = mKioJobs.find( job );
   if ( it != mKioJobs.end() ) {
     (*it)->mResult += data.data();
   }

@@ -28,7 +28,7 @@
 KAbstractDebugDialog::KAbstractDebugDialog( TQWidget *parent, const char *name, bool modal )
     : KDialog( parent, name, modal )
 {
-    pConfig = new KConfig( "kdebugrc" );
+    pConfig = new TDEConfig( "kdebugrc" );
 }
 
 KAbstractDebugDialog::~KAbstractDebugDialog()

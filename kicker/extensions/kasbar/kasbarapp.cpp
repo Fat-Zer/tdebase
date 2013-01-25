@@ -85,7 +85,7 @@ int main( int argc, char **argv )
 
   int wflags = TQt::WStyle_Customize | TQt::WX11BypassWM | TQt::WStyle_DialogBorder | TQt::WStyle_StaysOnTop;
   KasBar *kasbar;
-  KConfig conf( "kasbarrc" );
+  TDEConfig conf( "kasbarrc" );
 
   if ( args->isSet("test") ) {
       kasbar = new KasBar( Qt::Vertical, 0, "testkas", (TQ_WFlags)wflags );

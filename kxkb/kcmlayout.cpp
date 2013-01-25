@@ -95,7 +95,7 @@ static TQListViewItem* copyLVI(const TQListViewItem* src, TQListView* parent)
 
 
 LayoutConfig::LayoutConfig(TQWidget *parent, const char *name)
-  : KCModule(parent, name), 
+  : TDECModule(parent, name), 
     m_rules(NULL)
 {
   TQVBoxLayout *main = new TQVBoxLayout(this, 0, KDialog::spacingHint());
@@ -263,7 +263,7 @@ void LayoutConfig::initUI() {
 	}
 
 	updateOptionsCommand();
-	emit KCModule::changed( false );
+	emit TDECModule::changed( false );
 }
 
 
@@ -325,7 +325,7 @@ void LayoutConfig::save()
 	m_kxkbConfig.save();
 	
 	kapp->tdeinitExec("kxkb");
-	emit KCModule::changed( false );
+	emit TDECModule::changed( false );
 }
 
 
@@ -672,7 +672,7 @@ void LayoutConfig::updateLayoutCommand()
 void LayoutConfig::changed()
 {
   updateLayoutCommand();
-  emit KCModule::changed( true );
+  emit TDECModule::changed( true );
 }
 
 
@@ -762,7 +762,7 @@ void LayoutConfig::defaults()
 
 	initUI();
 
-	emit KCModule::changed( true );
+	emit TDECModule::changed( true );
 }
 
 
@@ -795,12 +795,12 @@ OptionListItem * OptionListItem::findChildItem( const TQString& optionName )
 
 extern "C"
 {
-	KDE_EXPORT KCModule *create_keyboard_layout(TQWidget *parent, const char *)
+	KDE_EXPORT TDECModule *create_keyboard_layout(TQWidget *parent, const char *)
 	{
 		return new LayoutConfig(parent, "kcmlayout");
 	}
 	
-	KDE_EXPORT KCModule *create_keyboard(TQWidget *parent, const char *)
+	KDE_EXPORT TDECModule *create_keyboard(TQWidget *parent, const char *)
 	{
 		return new KeyboardConfig(parent, "kcmlayout");
 	}

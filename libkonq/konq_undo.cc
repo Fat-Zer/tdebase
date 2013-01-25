@@ -63,13 +63,13 @@ inline const char *dcopTypeName( const KonqCommand::Stack & ) { return "KonqComm
  * move files -> rename -> works
  */
 
-class KonqUndoJob : public KIO::Job
+class KonqUndoJob : public TDEIO::Job
 {
 public:
-    KonqUndoJob() : KIO::Job( true ) { KonqUndoManager::incRef(); };
+    KonqUndoJob() : TDEIO::Job( true ) { KonqUndoManager::incRef(); };
     virtual ~KonqUndoJob() { KonqUndoManager::decRef(); }
 
-    virtual void kill( bool q) { KonqUndoManager::self()->stopUndo( true ); KIO::Job::kill( q ); }
+    virtual void kill( bool q) { KonqUndoManager::self()->stopUndo( true ); TDEIO::Job::kill( q ); }
 };
 
 class KonqCommandRecorder::KonqCommandRecorderPrivate
@@ -85,7 +85,7 @@ public:
   KonqCommand m_cmd;
 };
 
-KonqCommandRecorder::KonqCommandRecorder( KonqCommand::Type op, const KURL::List &src, const KURL &dst, KIO::Job *job )
+KonqCommandRecorder::KonqCommandRecorder( KonqCommand::Type op, const KURL::List &src, const KURL &dst, TDEIO::Job *job )
   : TQObject( job, "konqcmdrecorder" )
 {
   d = new KonqCommandRecorderPrivate;
@@ -93,14 +93,14 @@ KonqCommandRecorder::KonqCommandRecorder( KonqCommand::Type op, const KURL::List
   d->m_cmd.m_valid = true;
   d->m_cmd.m_src = src;
   d->m_cmd.m_dst = dst;
-  connect( job, TQT_SIGNAL( result( KIO::Job * ) ),
-           this, TQT_SLOT( slotResult( KIO::Job * ) ) );
+  connect( job, TQT_SIGNAL( result( TDEIO::Job * ) ),
+           this, TQT_SLOT( slotResult( TDEIO::Job * ) ) );
 
   if ( op != KonqCommand::MKDIR ) {
-      connect( job, TQT_SIGNAL( copyingDone( KIO::Job *, const KURL &, const KURL &, bool, bool ) ),
-               this, TQT_SLOT( slotCopyingDone( KIO::Job *, const KURL &, const KURL &, bool, bool ) ) );
-      connect( job, TQT_SIGNAL( copyingLinkDone( KIO::Job *, const KURL &, const TQString &, const KURL & ) ),
-               this, TQT_SLOT( slotCopyingLinkDone( KIO::Job *, const KURL &, const TQString &, const KURL & ) ) );
+      connect( job, TQT_SIGNAL( copyingDone( TDEIO::Job *, const KURL &, const KURL &, bool, bool ) ),
+               this, TQT_SLOT( slotCopyingDone( TDEIO::Job *, const KURL &, const KURL &, bool, bool ) ) );
+      connect( job, TQT_SIGNAL( copyingLinkDone( TDEIO::Job *, const KURL &, const TQString &, const KURL & ) ),
+               this, TQT_SLOT( slotCopyingLinkDone( TDEIO::Job *, const KURL &, const TQString &, const KURL & ) ) );
   }
 
   KonqUndoManager::incRef();
@@ -112,7 +112,7 @@ KonqCommandRecorder::~KonqCommandRecorder()
   delete d;
 }
 
-void KonqCommandRecorder::slotResult( KIO::Job *job )
+void KonqCommandRecorder::slotResult( TDEIO::Job *job )
 {
   if ( job->error() )
     return;
@@ -120,7 +120,7 @@ void KonqCommandRecorder::slotResult( KIO::Job *job )
   KonqUndoManager::self()->addCommand( d->m_cmd );
 }
 
-void KonqCommandRecorder::slotCopyingDone( KIO::Job *job, const KURL &from, const KURL &to, bool directory, bool renamed )
+void KonqCommandRecorder::slotCopyingDone( TDEIO::Job *job, const KURL &from, const KURL &to, bool directory, bool renamed )
 {
   KonqBasicOperation op;
   op.m_valid = true;
@@ -145,7 +145,7 @@ void KonqCommandRecorder::slotCopyingDone( KIO::Job *job, const KURL &from, cons
   d->m_cmd.m_opStack.prepend( op );
 }
 
-void KonqCommandRecorder::slotCopyingLinkDone( KIO::Job *, const KURL &from, const TQString &target, const KURL &to )
+void KonqCommandRecorder::slotCopyingLinkDone( TDEIO::Job *, const KURL &from, const TQString &target, const KURL &to )
 {
   KonqBasicOperation op;
   op.m_valid = true;
@@ -179,7 +179,7 @@ public:
   KonqCommand::Stack m_commands;
 
   KonqCommand m_current;
-  KIO::Job *m_currentJob;
+  TDEIO::Job *m_currentJob;
   UndoState m_undoState;
   TQValueStack<KURL> m_dirStack;
   TQValueStack<KURL> m_dirCleanupStack;
@@ -369,7 +369,7 @@ void KonqUndoManager::stopUndo( bool step )
         undoStep();
 }
 
-void KonqUndoManager::slotResult( KIO::Job *job )
+void KonqUndoManager::slotResult( TDEIO::Job *job )
 {
   d->m_uiserver->jobFinished( d->m_uiserverJobId );
   if ( job->error() )
@@ -411,8 +411,8 @@ void KonqUndoManager::undoStep()
       undoRemovingDirectories();
 
   if ( d->m_currentJob )
-    connect( d->m_currentJob, TQT_SIGNAL( result( KIO::Job * ) ),
-             this, TQT_SLOT( slotResult( KIO::Job * ) ) );
+    connect( d->m_currentJob, TQT_SIGNAL( result( TDEIO::Job * ) ),
+             this, TQT_SLOT( slotResult( TDEIO::Job * ) ) );
 }
 
 void KonqUndoManager::undoMakingDirectories()
@@ -420,7 +420,7 @@ void KonqUndoManager::undoMakingDirectories()
     if ( !d->m_dirStack.isEmpty() ) {
       KURL dir = d->m_dirStack.pop();
       kdDebug(1203) << "KonqUndoManager::undoStep creatingDir " << dir.prettyURL() << endl;
-      d->m_currentJob = KIO::mkdir( dir );
+      d->m_currentJob = TDEIO::mkdir( dir );
       d->m_uiserver->creatingDir( d->m_uiserverJobId, dir );
     }
     else
@@ -439,7 +439,7 @@ void KonqUndoManager::undoMovingFiles()
         if ( op.m_renamed )
         {
           kdDebug(1203) << "KonqUndoManager::undoStep rename " << op.m_dst.prettyURL() << " " << op.m_src.prettyURL() << endl;
-          d->m_currentJob = KIO::rename( op.m_dst, op.m_src, false );
+          d->m_currentJob = TDEIO::rename( op.m_dst, op.m_src, false );
           d->m_uiserver->moving( d->m_uiserverJobId, op.m_dst, op.m_src );
         }
         else
@@ -448,19 +448,19 @@ void KonqUndoManager::undoMovingFiles()
       else if ( op.m_link )
       {
         kdDebug(1203) << "KonqUndoManager::undoStep symlink " << op.m_target << " " << op.m_src.prettyURL() << endl;
-        d->m_currentJob = KIO::symlink( op.m_target, op.m_src, true, false );
+        d->m_currentJob = TDEIO::symlink( op.m_target, op.m_src, true, false );
       }
       else if ( d->m_current.m_type == KonqCommand::COPY )
       {
         kdDebug(1203) << "KonqUndoManager::undoStep file_delete " << op.m_dst.prettyURL() << endl;
-        d->m_currentJob = KIO::file_delete( op.m_dst );
+        d->m_currentJob = TDEIO::file_delete( op.m_dst );
         d->m_uiserver->deleting( d->m_uiserverJobId, op.m_dst );
       }
       else if ( d->m_current.m_type == KonqCommand::MOVE
                 || d->m_current.m_type == KonqCommand::TRASH )
       {
         kdDebug(1203) << "KonqUndoManager::undoStep file_move " << op.m_dst.prettyURL() << " " << op.m_src.prettyURL() << endl;
-        d->m_currentJob = KIO::file_move( op.m_dst, op.m_src, -1, true );
+        d->m_currentJob = TDEIO::file_move( op.m_dst, op.m_src, -1, true );
         d->m_uiserver->moving( d->m_uiserverJobId, op.m_dst, op.m_src );
       }
 
@@ -485,7 +485,7 @@ void KonqUndoManager::undoRemovingFiles()
     {
       KURL file = d->m_fileCleanupStack.pop();
       kdDebug(1203) << "KonqUndoManager::undoStep file_delete " << file.prettyURL() << endl;
-      d->m_currentJob = KIO::file_delete( file );
+      d->m_currentJob = TDEIO::file_delete( file );
       d->m_uiserver->deleting( d->m_uiserverJobId, file );
 
       KURL url( file );
@@ -507,7 +507,7 @@ void KonqUndoManager::undoRemovingDirectories()
     {
       KURL dir = d->m_dirCleanupStack.pop();
       kdDebug(1203) << "KonqUndoManager::undoStep rmdir " << dir.prettyURL() << endl;
-      d->m_currentJob = KIO::rmdir( dir );
+      d->m_currentJob = TDEIO::rmdir( dir );
       d->m_uiserver->deleting( d->m_uiserverJobId, dir );
       addDirToUpdate( dir );
     }

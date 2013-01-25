@@ -66,13 +66,13 @@ class KManPart : public KHTMLPart
    public slots:
       virtual bool openURL( const KURL &url );
    protected slots:
-      void readData(KIO::Job * , const TQByteArray & data);
-      void jobDone( KIO::Job *);
+      void readData(TDEIO::Job * , const TQByteArray & data);
+      void jobDone( TDEIO::Job *);
    protected:
       virtual bool openFile();
       TDEInstance *m_instance;
       KParts::BrowserExtension * m_extension;
-      KIO::TransferJob *m_job;
+      TDEIO::TransferJob *m_job;
 };
 
 #endif

@@ -472,7 +472,7 @@ TDMSlimShutdown::TDMSlimShutdown( TQWidget *_parent )
 {
 	setCaption(i18n("Shutdown TDE"));
 
-	bool doUbuntuLogout = KConfigGroup(TDEGlobal::config(), "Shutdown").readBoolEntry("doUbuntuLogout", false);
+	bool doUbuntuLogout = TDEConfigGroup(TDEGlobal::config(), "Shutdown").readBoolEntry("doUbuntuLogout", false);
 
 	TQFrame* lfrm = new TQFrame( this );
 	TQHBoxLayout* hbuttonbox;

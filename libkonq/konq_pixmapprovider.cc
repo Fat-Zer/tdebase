@@ -93,7 +93,7 @@ TQPixmap KonqPixmapProvider::pixmapFor( const TQString& url, int size )
     return loadIcon( url, iconNameFor( url ), size );
 }
 
-void KonqPixmapProvider::load( KConfig *kc, const TQString& key )
+void KonqPixmapProvider::load( TDEConfig *kc, const TQString& key )
 {
     iconMap.clear();
     TQStringList list;
@@ -113,7 +113,7 @@ void KonqPixmapProvider::load( KConfig *kc, const TQString& key )
 
 // only saves the cache for the given list of items to prevent the cache
 // from growing forever.
-void KonqPixmapProvider::save( KConfig *kc, const TQString& key,
+void KonqPixmapProvider::save( TDEConfig *kc, const TQString& key,
 			       const TQStringList& items )
 {
     TQStringList list;

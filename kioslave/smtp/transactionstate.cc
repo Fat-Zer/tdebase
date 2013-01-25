@@ -48,7 +48,7 @@ namespace KioSMTP {
 
   void TransactionState::setMailFromFailed( const TQString & addr, const Response & r ) {
     setFailed();
-    mErrorCode = KIO::ERR_NO_CONTENT;
+    mErrorCode = TDEIO::ERR_NO_CONTENT;
     if ( addr.isEmpty() )
       mErrorMessage = i18n("The server did not accept a blank sender address.\n"
 			   "%1").arg( r.errorMessage() );
@@ -81,9 +81,9 @@ namespace KioSMTP {
     if ( mErrorCode )
       return mErrorCode;
     if ( haveRejectedRecipients() || !dataCommandSucceeded() )
-      return KIO::ERR_NO_CONTENT;
+      return TDEIO::ERR_NO_CONTENT;
     // ### what else?
-    return KIO::ERR_INTERNAL;
+    return TDEIO::ERR_INTERNAL;
   }
 
   TQString TransactionState::errorMessage() const {

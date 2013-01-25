@@ -40,8 +40,8 @@
 
 //-----------------------------------------------------------------------------
 
-KonqFontOptions::KonqFontOptions(KConfig *config, TQString group, bool desktop, TQWidget *parent, const char* /*name*/)
-    : KCModule( parent, "kcmkonq" ), g_pConfig(config), groupname(group), m_bDesktop(desktop)
+KonqFontOptions::KonqFontOptions(TDEConfig *config, TQString group, bool desktop, TQWidget *parent, const char* /*name*/)
+    : TDECModule( parent, "kcmkonq" ), g_pConfig(config), groupname(group), m_bDesktop(desktop)
 {
     TQLabel *label;
     TQString wtstr;
@@ -283,7 +283,7 @@ void KonqFontOptions::load( bool useDefaults )
     }
     cbUnderline->setChecked( g_pConfig->readBoolEntry("UnderlineLinks", DEFAULT_UNDERLINELINKS ) );
 
-    KConfig cfg("kdeglobals");
+    TDEConfig cfg("kdeglobals");
     cfg.setGroup("DesktopIcons");
 
     updateGUI();
@@ -324,7 +324,7 @@ void KonqFontOptions::save()
     g_pConfig->writeEntry( "UnderlineLinks", cbUnderline->isChecked() );
     g_pConfig->sync();
 
-    KConfig cfg("kdeglobals");
+    TDEConfig cfg("kdeglobals");
     cfg.setGroup("DesktopIcons");
 
     // Send signal to konqueror

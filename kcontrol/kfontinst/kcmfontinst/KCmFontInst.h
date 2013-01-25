@@ -56,7 +56,7 @@ class KFileItem;
 namespace KFI
 {
 
-class CKCmFontInst : public KCModule
+class CKCmFontInst : public TDECModule
 {
     Q_OBJECT
 
@@ -84,8 +84,8 @@ class CKCmFontInst : public KCModule
     void    dropped(const KFileItem *i, TQDropEvent *e, const KURL::List &urls);
     void    infoMessage(const TQString &msg);
     void    updateInformation(int dirs, int fonts);
-    void    delResult(KIO::Job *job);
-    void    jobResult(KIO::Job *job);
+    void    delResult(TDEIO::Job *job);
+    void    jobResult(TDEIO::Job *job);
 
     private:
 
@@ -106,7 +106,7 @@ class CKCmFontInst : public KCModule
     KParts::ReadOnlyPart *itsPreview;
 #endif
     TQSplitter            *itsSplitter;
-    KConfig              itsConfig;
+    TDEConfig              itsConfig;
     bool                 itsEmbeddedAdmin;
     TQLabel               *itsStatusLabel;
 };

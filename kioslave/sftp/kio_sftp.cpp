@@ -74,7 +74,7 @@ So we can't connect.
 #include "ksshprocess.h"
 
 
-using namespace KIO;
+using namespace TDEIO;
 extern "C"
 {
   int KDE_EXPORT kdemain( int argc, char **argv )
@@ -234,7 +234,7 @@ void sftpProtocol::sftpCopyGet(const KURL& dest, const KURL& src, int mode, bool
         }
     }
 
-    KIO::filesize_t offset = 0;
+    TDEIO::filesize_t offset = 0;
     TQCString dest_part ( dest_orig + ".part" );
 
     int fd = -1;
@@ -295,7 +295,7 @@ void sftpProtocol::sftpCopyGet(const KURL& dest, const KURL& src, int mode, bool
     if ( info.code != 0 )
     {
       // Should we keep the partially downloaded file ??
-      KIO::filesize_t size = config()->readNumEntry("MinimumKeepSize", DEFAULT_MINIMUM_KEEP_SIZE);
+      TDEIO::filesize_t size = config()->readNumEntry("MinimumKeepSize", DEFAULT_MINIMUM_KEEP_SIZE);
       if (info.size < size)
         ::remove(dest_part.data());
 
@@ -324,7 +324,7 @@ void sftpProtocol::sftpCopyGet(const KURL& dest, const KURL& src, int mode, bool
     finished();
 }
 
-sftpProtocol::Status sftpProtocol::sftpGet( const KURL& src, KIO::filesize_t offset, int fd )
+sftpProtocol::Status sftpProtocol::sftpGet( const KURL& src, TDEIO::filesize_t offset, int fd )
 {
     int code;
     sftpFileAttr attr(remoteEncoding());
@@ -347,7 +347,7 @@ sftpProtocol::Status sftpProtocol::sftpGet( const KURL& src, KIO::filesize_t off
         return res;
     }
 
-    KIO::filesize_t fileSize = attr.fileSize();
+    TDEIO::filesize_t fileSize = attr.fileSize();
     TQ_UINT32 pflags = SSH2_FXF_READ;
     attr.clear();
 
@@ -1103,22 +1103,22 @@ void sftpProtocol::stat ( const KURL& url ){
         UDSEntry entry;
         UDSAtom atom;
 
-        atom.m_uds = KIO::UDS_NAME;
+        atom.m_uds = TDEIO::UDS_NAME;
         atom.m_str = TQString::null;
         entry.append( atom );
 
-        atom.m_uds = KIO::UDS_FILE_TYPE;
+        atom.m_uds = TDEIO::UDS_FILE_TYPE;
         atom.m_long = S_IFDIR;
         entry.append( atom );
 
-        atom.m_uds = KIO::UDS_ACCESS;
+        atom.m_uds = TDEIO::UDS_ACCESS;
         atom.m_long = S_IRUSR | S_IXUSR | S_IRGRP | S_IXGRP | S_IROTH | S_IXOTH;
         entry.append( atom );
 
-        atom.m_uds = KIO::UDS_USER;
+        atom.m_uds = TDEIO::UDS_USER;
         atom.m_str = mUsername;
         entry.append( atom );
-        atom.m_uds = KIO::UDS_GROUP;
+        atom.m_uds = TDEIO::UDS_GROUP;
         entry.append( atom );
 
         // no size
@@ -1331,9 +1331,9 @@ void sftpProtocol::rename(const KURL& src, const KURL& dest, bool overwrite){
       if (!overwrite)
       {
         if ( S_ISDIR(attr.permissions()) )
-          error( KIO::ERR_DIR_ALREADY_EXIST, dest.url() );
+          error( TDEIO::ERR_DIR_ALREADY_EXIST, dest.url() );
         else
-          error( KIO::ERR_FILE_ALREADY_EXIST, dest.url() );
+          error( TDEIO::ERR_FILE_ALREADY_EXIST, dest.url() );
         return;
         }
 
@@ -2184,7 +2184,7 @@ int sftpProtocol::sftpOpen(const KURL& url, const TQ_UINT32 pflags,
 }
 
 
-int sftpProtocol::sftpRead(const TQByteArray& handle, KIO::filesize_t offset, TQ_UINT32 len, TQByteArray& data)
+int sftpProtocol::sftpRead(const TQByteArray& handle, TDEIO::filesize_t offset, TQ_UINT32 len, TQByteArray& data)
 {
  //   kdDebug(KIO_SFTP_DB) << "sftpRead( offset = " << offset << ", len = " << len << ")" << endl;
     TQByteArray p;
@@ -2231,7 +2231,7 @@ int sftpProtocol::sftpRead(const TQByteArray& handle, KIO::filesize_t offset, TQ
 }
 
 
-int sftpProtocol::sftpWrite(const TQByteArray& handle, KIO::filesize_t offset, const TQByteArray& data){
+int sftpProtocol::sftpWrite(const TQByteArray& handle, TDEIO::filesize_t offset, const TQByteArray& data){
 //    kdDebug(KIO_SFTP_DB) << "sftpWrite( offset = " << offset <<
 //        ", data sz = " << data.size() << ")" << endl;
     TQByteArray p;

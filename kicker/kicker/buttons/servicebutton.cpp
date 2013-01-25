@@ -61,7 +61,7 @@ ServiceButton::ServiceButton(const KService::Ptr &service, TQWidget* parent)
     initialize();
 }
 
-ServiceButton::ServiceButton( const KConfigGroup& config, TQWidget* parent )
+ServiceButton::ServiceButton( const TDEConfigGroup& config, TQWidget* parent )
   : PanelButton(parent, "ServiceButton"),
     _service(0)
 {
@@ -149,7 +149,7 @@ void ServiceButton::readDesktopFile()
     setIcon( _service->icon() );
 }
 
-void ServiceButton::saveConfig( KConfigGroup& config ) const
+void ServiceButton::saveConfig( TDEConfigGroup& config ) const
 {
     config.writePathEntry("StorageId", _id );
     if (!config.hasKey("DesktopFile") && _service)

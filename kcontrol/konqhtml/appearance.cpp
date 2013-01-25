@@ -25,8 +25,8 @@
 
 #include "appearance.moc"
 
-KAppearanceOptions::KAppearanceOptions(KConfig *config, TQString group, TQWidget *parent, const char *)
-    : KCModule( parent, "kcmkonqhtml" ), m_pConfig(config), m_groupname(group),
+KAppearanceOptions::KAppearanceOptions(TDEConfig *config, TQString group, TQWidget *parent, const char *)
+    : TDECModule( parent, "kcmkonqhtml" ), m_pConfig(config), m_groupname(group),
       fSize( 10 ), fMinSize( HTML_DEFAULT_MIN_FONT_SIZE )
 
 {
@@ -320,7 +320,7 @@ void KAppearanceOptions::load()
 
 void KAppearanceOptions::load( bool useDefaults )
 {
-    KConfig khtmlrc("khtmlrc", true, false);
+    TDEConfig khtmlrc("khtmlrc", true, false);
 	 m_pConfig->setReadDefaults( useDefaults );
 
 	 khtmlrc.setReadDefaults( useDefaults );

@@ -47,7 +47,7 @@
 #include "kcookiespoliciesdlg_ui.h"
 
 KCookiesPolicies::KCookiesPolicies(TQWidget *parent)
-                 :KCModule(parent, "kcmkio")
+                 :TDECModule(parent, "kcmkio")
 {
     TQVBoxLayout *mainLayout = new TQVBoxLayout(this, 0, 0);
 
@@ -283,7 +283,7 @@ void KCookiesPolicies::load()
   d_itemsSelected = 0;
   d_configChanged = false;
 
-  KConfig cfg ("kcookiejarrc", true);
+  TDEConfig cfg ("kcookiejarrc", true);
   cfg.setGroup ("Cookie Policy");
 
   bool enableCookies = cfg.readBoolEntry("Cookies", true);
@@ -365,7 +365,7 @@ void KCookiesPolicies::save()
   if (!d_configChanged)
     return;
 
-  KConfig cfg ( "kcookiejarrc" );
+  TDEConfig cfg ( "kcookiejarrc" );
   cfg.setGroup( "Cookie Policy" );
 
   bool state = dlg->cbEnableCookies->isChecked();

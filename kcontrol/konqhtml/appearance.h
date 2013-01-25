@@ -19,11 +19,11 @@
 class TQSpinBox;
 class KFontCombo;
 
-class KAppearanceOptions : public KCModule
+class KAppearanceOptions : public TDECModule
 {
   Q_OBJECT
 public:
-  KAppearanceOptions(KConfig *config, TQString group, TQWidget *parent=0, const char *name=0);
+  KAppearanceOptions(TDEConfig *config, TQString group, TQWidget *parent=0, const char *name=0);
   ~KAppearanceOptions();
 
   virtual void load();
@@ -48,7 +48,7 @@ private:
 
 private:
 
-  KConfig *m_pConfig;
+  TDEConfig *m_pConfig;
   TQString m_groupname;
   TQStringList m_families;
 

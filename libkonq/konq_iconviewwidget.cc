@@ -101,7 +101,7 @@ struct KonqIconViewWidgetPrivate
     int m_movieBlocked;
     TQString movieFileName;
 
-    KIO::PreviewJob *pPreviewJob;
+    TDEIO::PreviewJob *pPreviewJob;
     KonqFileTip* pFileTip;
     TQStringList previewSettings;
     bool renameItem;
@@ -206,7 +206,7 @@ void KonqIconViewWidget::slotItemRenamed(TQIconViewItem *item, const TQString &n
         // Actually attempt the rename. If it succeeds, KDirLister will update the name.
         KURL oldurl( fileItem->url() );
         KURL newurl( oldurl );
-        newurl.setPath( newurl.directory(false) + KIO::encodeFileName( name ) );
+        newurl.setPath( newurl.directory(false) + TDEIO::encodeFileName( name ) );
         kdDebug(1203)<<" newurl :"<<newurl<<endl;
         // We use url()+name so that it also works if the name is a relative path (#51176)
         KonqOperations::rename( this, oldurl, newurl );
@@ -227,7 +227,7 @@ void KonqIconViewWidget::slotIconChanged( int group )
 
 void KonqIconViewWidget::readAnimatedIconsConfig()
 {
-    KConfigGroup cfgGroup( TDEGlobal::config(), "DesktopIcons" );
+    TDEConfigGroup cfgGroup( TDEGlobal::config(), "DesktopIcons" );
     d->doAnimations = cfgGroup.readBoolEntry( "Animated", true /*default*/ );
 }
 
@@ -607,7 +607,7 @@ bool KonqIconViewWidget::boostPreview() const
 {
     if ( m_bDesktop ) return false;
 
-    KConfigGroup group( TDEGlobal::config(), "PreviewSettings" );
+    TDEConfigGroup group( TDEGlobal::config(), "PreviewSettings" );
     return group.readBoolEntry( "BoostSize", false );
 }
 
@@ -684,7 +684,7 @@ void KonqIconViewWidget::setIcons( int size, const TQStringList& stopImagePrevie
 
 bool KonqIconViewWidget::mimeTypeMatch( const TQString& mimeType, const TQStringList& mimeList ) const
 {
-    // Code duplication from KIO::PreviewJob
+    // Code duplication from TDEIO::PreviewJob
     KMimeType::Ptr mime = KMimeType::mimeType( mimeType );
     for (TQStringList::ConstIterator mt = mimeList.begin(); mt != mimeList.end(); ++mt)
     {
@@ -867,12 +867,12 @@ void KonqIconViewWidget::startImagePreview( const TQStringList &, bool force )
     if ( !d->bBoostPreview )
          iconSize /= 2;
 
-    d->pPreviewJob = KIO::filePreview( items, size, size, iconSize,
+    d->pPreviewJob = TDEIO::filePreview( items, size, size, iconSize,
         m_pSettings->textPreviewIconTransparency(), true /* scale */,
         true /* save */, &(d->previewSettings) );
     connect( d->pPreviewJob, TQT_SIGNAL( gotPreview( const KFileItem *, const TQPixmap & ) ),
              this, TQT_SLOT( slotPreview( const KFileItem *, const TQPixmap & ) ) );
-    connect( d->pPreviewJob, TQT_SIGNAL( result( KIO::Job * ) ),
+    connect( d->pPreviewJob, TQT_SIGNAL( result( TDEIO::Job * ) ),
              this, TQT_SLOT( slotPreviewResult() ) );
 }
 
@@ -916,7 +916,7 @@ void KonqIconViewWidget::slotDropped( TQDropEvent *ev, const TQValueList<TQIconD
     KonqOperations::doDrop( m_rootItem /* may be 0L */, dirURL, ev, this );
 }
 
-void KonqIconViewWidget::slotAboutToCreate(const TQPoint &, const TQValueList<KIO::CopyInfo> &)
+void KonqIconViewWidget::slotAboutToCreate(const TQPoint &, const TQValueList<TDEIO::CopyInfo> &)
 {
    // Do nothing :-)
 }

@@ -78,7 +78,7 @@ advancedDialog::~advancedDialog()
 
 void advancedDialog::load()
 {
-    KConfig c(KickerConfig::the()->configName(), false, false);
+    TDEConfig c(KickerConfig::the()->configName(), false, false);
     c.setGroup("General");
 
     bool fadedOut = c.readBoolEntry("FadeOutAppletHandles", true);
@@ -112,7 +112,7 @@ void advancedDialog::load()
 
 void advancedDialog::save()
 {
-    KConfig c(KickerConfig::the()->configName(), false, false);
+    TDEConfig c(KickerConfig::the()->configName(), false, false);
 
     c.setGroup("General");
     c.writeEntry("FadeOutAppletHandles",
@@ -149,7 +149,7 @@ void advancedDialog::save()
 
         // set config group
         c.setGroup(group);
-        KConfig extConfig(c.readEntry("ConfigFile"));
+        TDEConfig extConfig(c.readEntry("ConfigFile"));
         extConfig.setGroup("General");
         extConfig.writeEntry("FadeOutAppletHandles",
                              m_advancedWidget->fadeOutHandles->isChecked());

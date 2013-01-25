@@ -31,7 +31,7 @@
 
 #include <stdio.h>
 
-ImportsView::ImportsView(TQWidget * parent, KConfig *config, const char * name )
+ImportsView::ImportsView(TQWidget * parent, TDEConfig *config, const char * name )
    : TQWidget (parent, name)
    ,configFile(config)
    ,list(this)

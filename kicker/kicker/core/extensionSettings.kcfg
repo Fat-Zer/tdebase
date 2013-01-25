@@ -11,7 +11,7 @@
 <group name="General">
 
 <entry name="IExist" type="Bool">
-    <label>Whether this panel actually exists or not. Primarily to work around the fact that KConfigXT won't write a config file unless there is at least one non-default entry.</label>
+    <label>Whether this panel actually exists or not. Primarily to work around the fact that TDEConfigXT won't write a config file unless there is at least one non-default entry.</label>
     <default>false</default>
 </entry>
 <entry name="Position" type="Int" >

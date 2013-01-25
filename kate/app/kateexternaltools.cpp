@@ -151,7 +151,7 @@ void KateExternalToolsCommand::reload () {
   m_list.clear();
   m_map.clear();
 
-  KConfig config("externaltools", false, false, "appdata");
+  TDEConfig config("externaltools", false, false, "appdata");
   config.setGroup("Global");
   TQStringList tools = config.readListEntry("tools");
 
@@ -312,7 +312,7 @@ void KateExternalToolsMenuAction::reload()
   popupMenu()->clear();
 
   // load all the tools, and create a action for each of them
-  KConfig *config = new KConfig( "externaltools", false, false, "appdata" );
+  TDEConfig *config = new TDEConfig( "externaltools", false, false, "appdata" );
   config->setGroup( "Global" );
   TQStringList tools = config->readListEntry( "tools" );
 
@@ -601,7 +601,7 @@ KateExternalToolsConfigWidget::KateExternalToolsConfigWidget( TQWidget *parent, 
   TQWhatsThis::add( lbTools, i18n(
       "This list shows all the configured tools, represented by their menu text.") );
 
-  config = new KConfig("externaltools", false, false, "appdata");
+  config = new TDEConfig("externaltools", false, false, "appdata");
   reload();
   slotSelectionChanged();
 }
@@ -616,7 +616,7 @@ void KateExternalToolsConfigWidget::reload()
   //m_tools.clear();
   lbTools->clear();
 
-  // load the files from a KConfig
+  // load the files from a TDEConfig
   config->setGroup( "Global" );
   TQStringList tools = config->readListEntry("tools");
 

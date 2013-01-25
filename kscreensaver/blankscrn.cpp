@@ -75,7 +75,7 @@ KBlankSetup::KBlankSetup( TQWidget *parent, const char *name )
 // read settings from config file
 void KBlankSetup::readSettings()
 {
-	KConfig *config = TDEGlobal::config();
+	TDEConfig *config = TDEGlobal::config();
 	config->setGroup( "Settings" );
 
 	color = config->readColorEntry( "Color", &black );
@@ -90,7 +90,7 @@ void KBlankSetup::slotColor( const TQColor &col )
 // Ok pressed - save settings and exit
 void KBlankSetup::slotOk()
 {
-	KConfig *config = TDEGlobal::config();
+	TDEConfig *config = TDEGlobal::config();
 	config->setGroup( "Settings" );
 	config->writeEntry( "Color", color );
 	config->sync();
@@ -121,7 +121,7 @@ void KBlankSaver::setColor( const TQColor &col )
 // read configuration settings from config file
 void KBlankSaver::readSettings()
 {
-	KConfig *config = TDEGlobal::config();
+	TDEConfig *config = TDEGlobal::config();
 	config->setGroup( "Settings" );
 
 	color = config->readColorEntry( "Color", &black );

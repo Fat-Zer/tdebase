@@ -33,7 +33,7 @@ class TQTextEdit;
 class TQLabel;
 
 class TDEProcess;
-class KConfig;
+class TDEConfig;
 class TDEAboutData;
 class KTempFile;
 class KURLRequester;
@@ -162,7 +162,7 @@ class KCMHelpCenter : public KDialogBase, virtual public KCMHelpCenterIface
     TQValueList<KHC::DocEntry *> mIndexQueue;
     TQValueList<KHC::DocEntry *>::ConstIterator mCurrentEntry;
     
-    KConfig *mConfig;
+    TDEConfig *mConfig;
     
     TDEAboutData *mAboutData;
 

@@ -89,14 +89,14 @@ void RemoteProtocol::listDir(const KURL &url)
 		return;
 	}
 
-	error(KIO::ERR_MALFORMED_URL, url.prettyURL());
+	error(TDEIO::ERR_MALFORMED_URL, url.prettyURL());
 }
 
 void RemoteProtocol::listRoot()
 {
-	KIO::UDSEntry entry;
+	TDEIO::UDSEntry entry;
 
-	KIO::UDSEntryList remote_entries;
+	TDEIO::UDSEntryList remote_entries;
         m_impl.listRoot(remote_entries);
 
 	totalSize(remote_entries.count()+2);
@@ -107,8 +107,8 @@ void RemoteProtocol::listRoot()
 	m_impl.createWizardEntry(entry);
 	listEntry(entry, false);
 
-	KIO::UDSEntryListIterator it = remote_entries.begin();
-	KIO::UDSEntryListIterator end = remote_entries.end();
+	TDEIO::UDSEntryListIterator it = remote_entries.begin();
+	TDEIO::UDSEntryListIterator end = remote_entries.end();
 
 	for(; it!=end; ++it)
 	{
@@ -129,7 +129,7 @@ void RemoteProtocol::stat(const KURL &url)
 	if ( path.isEmpty() || path == "/" )
 	{
 		// The root is "virtual" - it's not a single physical directory
-		KIO::UDSEntry entry;
+		TDEIO::UDSEntry entry;
 		m_impl.createTopLevelEntry( entry );
 		statEntry( entry );
 		finished();
@@ -138,7 +138,7 @@ void RemoteProtocol::stat(const KURL &url)
 
 	if (m_impl.isWizardURL(url))
 	{
-		KIO::UDSEntry entry;
+		TDEIO::UDSEntry entry;
 		if (m_impl.createWizardEntry(entry))
 		{
 			statEntry(entry);
@@ -146,7 +146,7 @@ void RemoteProtocol::stat(const KURL &url)
 		}
 		else
 		{
-			error(KIO::ERR_DOES_NOT_EXIST, url.prettyURL());
+			error(TDEIO::ERR_DOES_NOT_EXIST, url.prettyURL());
 		}
 		return;
 	}
@@ -156,7 +156,7 @@ void RemoteProtocol::stat(const KURL &url)
 	
 	if ( second_slash_idx==-1 || ( (int)url.path().length() )==second_slash_idx+1 )
 	{
-		KIO::UDSEntry entry;
+		TDEIO::UDSEntry entry;
 		if (m_impl.statNetworkFolder(entry, root_dirname))
 		{
 			statEntry(entry);
@@ -177,7 +177,7 @@ void RemoteProtocol::stat(const KURL &url)
 		}
 	}
 	
-	error(KIO::ERR_MALFORMED_URL, url.prettyURL());
+	error(TDEIO::ERR_MALFORMED_URL, url.prettyURL());
 }
 
 void RemoteProtocol::del(const KURL &url, bool /*isFile*/)
@@ -191,7 +191,7 @@ void RemoteProtocol::del(const KURL &url, bool /*isFile*/)
 		return;
 	}
 
-	error(KIO::ERR_CANNOT_DELETE, url.prettyURL());
+	error(TDEIO::ERR_CANNOT_DELETE, url.prettyURL());
 }
 
 void RemoteProtocol::get(const KURL &url)
@@ -211,7 +211,7 @@ void RemoteProtocol::get(const KURL &url)
 		return;
 	}
 
-	error(KIO::ERR_MALFORMED_URL, url.prettyURL());
+	error(TDEIO::ERR_MALFORMED_URL, url.prettyURL());
 }
 
 void RemoteProtocol::rename(const KURL &src, const KURL &dest,
@@ -220,7 +220,7 @@ void RemoteProtocol::rename(const KURL &src, const KURL &dest,
 	if (src.protocol()!="remote" || dest.protocol()!="remote"
          || m_impl.isWizardURL(src) || m_impl.isWizardURL(dest))
 	{
-		error(KIO::ERR_UNSUPPORTED_ACTION, src.prettyURL());
+		error(TDEIO::ERR_UNSUPPORTED_ACTION, src.prettyURL());
 		return;
 	}
 
@@ -230,5 +230,5 @@ void RemoteProtocol::rename(const KURL &src, const KURL &dest,
 		return;
 	}
 
-	error(KIO::ERR_CANNOT_RENAME, src.prettyURL());
+	error(TDEIO::ERR_CANNOT_RENAME, src.prettyURL());
 }

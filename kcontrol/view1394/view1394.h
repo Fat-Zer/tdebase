@@ -43,7 +43,7 @@ class OuiDb
       TQMap<TQString, TQString> m_vendorIds;
 };
 
-class View1394: public KCModule
+class View1394: public TDECModule
 {
    Q_OBJECT
    public:

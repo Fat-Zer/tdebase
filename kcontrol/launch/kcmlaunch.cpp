@@ -37,7 +37,7 @@ K_EXPORT_COMPONENT_FACTORY( kcm_launch, LaunchFactory("kcmlaunch") )
 
 
 LaunchConfig::LaunchConfig(TQWidget * parent, const char * name, const TQStringList &)
-  : KCModule(LaunchFactory::instance(), parent, name)
+  : TDECModule(LaunchFactory::instance(), parent, name)
 {
     TQVBoxLayout* Form1Layout = new TQVBoxLayout( this, 0, 
         KDialog::spacingHint() );
@@ -155,7 +155,7 @@ LaunchConfig::load()
 void
 LaunchConfig::load(bool useDefaults)
 {
-  KConfig c("klaunchrc", false, false);
+  TDEConfig c("klaunchrc", false, false);
 
   c.setReadDefaults( useDefaults );
 
@@ -194,7 +194,7 @@ LaunchConfig::load(bool useDefaults)
   void
 LaunchConfig::save()
 {
-  KConfig c("klaunchrc", false, false);
+  TDEConfig c("klaunchrc", false, false);
 
   c.setGroup("FeedbackStyle");
   c.writeEntry("BusyCursor",    cb_busyCursor->currentItem() != 0);
@@ -228,7 +228,7 @@ LaunchConfig::defaults()
   void
 LaunchConfig::checkChanged()
 {
-  KConfig c("klaunchrc", false, false);
+  TDEConfig c("klaunchrc", false, false);
 
   c.setGroup("FeedbackStyle");
 

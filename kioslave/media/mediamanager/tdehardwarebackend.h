@@ -36,7 +36,7 @@
 
 #include <tdehardwaredevices.h>
 
-namespace KIO {
+namespace TDEIO {
 	class Job;
 }
 
@@ -157,13 +157,13 @@ private:
 		const Medium* medium;
 		// [in,out] Should be set to true when the job completes
 		bool completed;
-		// [out] KIO::Error if an error occured during operation. Otherwise, 0
+		// [out] TDEIO::Error if an error occured during operation. Otherwise, 0
 		int error;
 		// [out] Error message to be displayed to the user
 		TQString errorMessage;
 	};
 
-	TQMap<KIO::Job *, struct mount_job_data*> mount_jobs;
+	TQMap<TDEIO::Job *, struct mount_job_data*> mount_jobs;
 
 	TQStringList m_ignoreDeviceChangeEvents;
 };

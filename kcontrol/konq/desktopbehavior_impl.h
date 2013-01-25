@@ -30,7 +30,7 @@ class DesktopBehavior : public DesktopBehaviorBase
 {
         Q_OBJECT
 public:
-        DesktopBehavior(KConfig *config, TQWidget *parent = 0L, const char *name = 0L );
+        DesktopBehavior(TDEConfig *config, TQWidget *parent = 0L, const char *name = 0L );
         virtual void load();
         virtual void load( bool useDefaults );
         virtual void save();
@@ -49,7 +49,7 @@ private slots:
 	void mediaListViewChanged(TQListViewItem * item);
 
 private:
-        KConfig *g_pConfig;
+        TDEConfig *g_pConfig;
 
 	void fillMediaListView();
 	void saveMediaListView();
@@ -62,15 +62,15 @@ private:
         bool m_bHasMedia;
 };
 
-class DesktopBehaviorModule : public KCModule
+class DesktopBehaviorModule : public TDECModule
 {
         Q_OBJECT
 
 public:
-        DesktopBehaviorModule(KConfig *config, TQWidget *parent = 0L, const char *name = 0L );
-        virtual void load() { m_behavior->load(); emit KCModule::changed( false ); }
-        virtual void save() { m_behavior->save(); emit KCModule::changed( false ); }
-        virtual void defaults() { m_behavior->defaults(); emit KCModule::changed( true ); }
+        DesktopBehaviorModule(TDEConfig *config, TQWidget *parent = 0L, const char *name = 0L );
+        virtual void load() { m_behavior->load(); emit TDECModule::changed( false ); }
+        virtual void save() { m_behavior->save(); emit TDECModule::changed( false ); }
+        virtual void defaults() { m_behavior->defaults(); emit TDECModule::changed( true ); }
 
 private slots:
         void changed();

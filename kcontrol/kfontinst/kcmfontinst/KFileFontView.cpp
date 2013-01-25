@@ -614,13 +614,13 @@ void CKFileFontView::contentsDropEvent(TQDropEvent *e)
     }
 }
 
-void CKFileFontView::readConfig(KConfig *kc, const TQString &group)
+void CKFileFontView::readConfig(TDEConfig *kc, const TQString &group)
 {
     restoreLayout(kc, group.isEmpty() ? TQString("CFileFontView") : group);
     slotSortingChanged(sortColumn());
 }
 
-void CKFileFontView::writeConfig(KConfig *kc, const TQString &group)
+void CKFileFontView::writeConfig(TDEConfig *kc, const TQString &group)
 {
     saveLayout(kc, group.isEmpty() ? TQString("CFileFontView") : group);
 }

@@ -33,7 +33,7 @@ class TQListViewItem;
 class TQComboBox;
 
 class KLanguageCombo;
-class KConfig;
+class TDEConfig;
 
 class KCMHelpCenter;
 
@@ -64,8 +64,8 @@ class SearchWidget : public TQWidget, public DCOPObject
 
     TQString scopeSelectionLabel( int ) const;
 
-    void readConfig( KConfig * );
-    void writeConfig( KConfig * );
+    void readConfig( TDEConfig * );
+    void writeConfig( TDEConfig * );
 
     int scopeCount() const;
 

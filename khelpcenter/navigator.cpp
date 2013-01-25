@@ -80,7 +80,7 @@ Navigator::Navigator( View *view, TQWidget *parent, const char *name )
    : TQWidget( parent, name ), mIndexDialog( 0 ),
      mView( view ), mSelected( false )
 {
-    KConfig *config = kapp->config();
+    TDEConfig *config = kapp->config();
     config->setGroup("General");
     mShowMissingDocs = config->readBoolEntry("ShowMissingDocs",false);
 
@@ -591,7 +591,7 @@ void Navigator::hideSearch()
 
 bool Navigator::checkSearchIndex()
 {
-  KConfig *cfg = TDEGlobal::config();
+  TDEConfig *cfg = TDEGlobal::config();
   cfg->setGroup( "Search" );
   if ( cfg->readBoolEntry( "IndexExists", false ) ) return true;
 
@@ -626,7 +626,7 @@ KURL Navigator::homeURL()
 {
   if ( !mHomeUrl.isEmpty() ) return mHomeUrl;
 
-  KConfig *cfg = TDEGlobal::config();
+  TDEConfig *cfg = TDEGlobal::config();
   // We have to reparse the configuration here in order to get a
   // language-specific StartUrl, e.g. "StartUrl[de]".
   cfg->reparseConfiguration();

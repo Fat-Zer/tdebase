@@ -222,7 +222,7 @@ public:
 
     /** Returns a UDSEntry describing the file.
        The UDSEntry is generated from the sftp file attributes. */
-    KIO::UDSEntry entry();
+    TDEIO::UDSEntry entry();
 
     /** Use to output the file attributes to a sftp packet
         This will only write the sftp ATTR structure to the stream.

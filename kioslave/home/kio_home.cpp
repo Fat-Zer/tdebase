@@ -72,14 +72,14 @@ bool HomeProtocol::rewriteURL(const KURL &url, KURL &newUrl)
 
 	if ( !m_impl.parseURL(url, name, path) )
 	{
-		error(KIO::ERR_MALFORMED_URL, url.prettyURL());
+		error(TDEIO::ERR_MALFORMED_URL, url.prettyURL());
 		return false;
 	}
 
 
 	if ( !m_impl.realURL(name, path, newUrl) )
 	{
-		error(KIO::ERR_MALFORMED_URL, url.prettyURL());
+		error(TDEIO::ERR_MALFORMED_URL, url.prettyURL());
 		return false;
 	}
 
@@ -102,7 +102,7 @@ void HomeProtocol::listDir(const KURL &url)
 
 	if ( !ok )
 	{
-		error(KIO::ERR_MALFORMED_URL, url.prettyURL());
+		error(TDEIO::ERR_MALFORMED_URL, url.prettyURL());
 		return;
 	}
 	
@@ -111,14 +111,14 @@ void HomeProtocol::listDir(const KURL &url)
 
 void HomeProtocol::listRoot()
 {
-	KIO::UDSEntry entry;
+	TDEIO::UDSEntry entry;
 
-	KIO::UDSEntryList home_entries;
+	TDEIO::UDSEntryList home_entries;
 	bool ok = m_impl.listHomes(home_entries);
 
 	if (!ok) // can't happen
 	{
-		error(KIO::ERR_UNKNOWN, "");
+		error(TDEIO::ERR_UNKNOWN, "");
 		return;
 	}
 
@@ -127,8 +127,8 @@ void HomeProtocol::listRoot()
 	m_impl.createTopLevelEntry(entry);
 	listEntry(entry, false);
 
-	KIO::UDSEntryListIterator it = home_entries.begin();
-	KIO::UDSEntryListIterator end = home_entries.end();
+	TDEIO::UDSEntryListIterator it = home_entries.begin();
+	TDEIO::UDSEntryListIterator end = home_entries.end();
 
 	for(; it!=end; ++it)
 	{
@@ -149,7 +149,7 @@ void HomeProtocol::stat(const KURL &url)
 	if ( path.isEmpty() || path == "/" )
 	{
 		// The root is "virtual" - it's not a single physical directory
-		KIO::UDSEntry entry;
+		TDEIO::UDSEntry entry;
 		m_impl.createTopLevelEntry( entry );
 		statEntry( entry );
 		finished();
@@ -161,13 +161,13 @@ void HomeProtocol::stat(const KURL &url)
 
 	if ( !ok )
 	{
-		error(KIO::ERR_MALFORMED_URL, url.prettyURL());
+		error(TDEIO::ERR_MALFORMED_URL, url.prettyURL());
 		return;
 	}
 
 	if( path.isEmpty() )
 	{
-		KIO::UDSEntry entry;
+		TDEIO::UDSEntry entry;
 
 		if ( m_impl.statHome(name, entry) )
 		{
@@ -176,7 +176,7 @@ void HomeProtocol::stat(const KURL &url)
 		}
 		else
 		{
-			error(KIO::ERR_DOES_NOT_EXIST, url.prettyURL());
+			error(TDEIO::ERR_DOES_NOT_EXIST, url.prettyURL());
 		}
 	}
 	else

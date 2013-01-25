@@ -32,8 +32,8 @@ public:
   KSaveIOConfigPrivate ();
   ~KSaveIOConfigPrivate ();
 
-  KConfig* config;
-  KConfig* http_config;
+  TDEConfig* config;
+  TDEConfig* http_config;
 };
 
 static KSaveIOConfigPrivate *ksiocpref = 0;
@@ -51,24 +51,24 @@ KSaveIOConfigPrivate::~KSaveIOConfigPrivate ()
 
 KSaveIOConfigPrivate* KSaveIOConfig::d = 0;
 
-KConfig* KSaveIOConfig::config()
+TDEConfig* KSaveIOConfig::config()
 {
   if (!d)
      d = new KSaveIOConfigPrivate;
 
   if (!d->config)
-     d->config = new KConfig("kioslaverc", false, false);
+     d->config = new TDEConfig("kioslaverc", false, false);
 
   return d->config;
 }
 
-KConfig* KSaveIOConfig::http_config()
+TDEConfig* KSaveIOConfig::http_config()
 {
   if (!d)
      d = new KSaveIOConfigPrivate;
 
   if (!d->http_config)
-     d->http_config = new KConfig("kio_httprc", false, false);
+     d->http_config = new TDEConfig("kio_httprc", false, false);
 
   return d->http_config;
 }
@@ -81,7 +81,7 @@ void KSaveIOConfig::reparseConfiguration ()
 
 void KSaveIOConfig::setReadTimeout( int _timeout )
 {
-  KConfig* cfg = config ();
+  TDEConfig* cfg = config ();
   cfg->setGroup( TQString() );
   cfg->writeEntry("ReadTimeout", QMAX(MIN_TIMEOUT_VALUE,_timeout));
   cfg->sync();
@@ -89,7 +89,7 @@ void KSaveIOConfig::setReadTimeout( int _timeout )
 
 void KSaveIOConfig::setConnectTimeout( int _timeout )
 {
-  KConfig* cfg = config ();
+  TDEConfig* cfg = config ();
   cfg->setGroup( TQString() );
   cfg->writeEntry("ConnectTimeout", QMAX(MIN_TIMEOUT_VALUE,_timeout));
   cfg->sync();
@@ -97,7 +97,7 @@ void KSaveIOConfig::setConnectTimeout( int _timeout )
 
 void KSaveIOConfig::setProxyConnectTimeout( int _timeout )
 {
-  KConfig* cfg = config ();
+  TDEConfig* cfg = config ();
   cfg->setGroup( TQString() );
   cfg->writeEntry("ProxyConnectTimeout", QMAX(MIN_TIMEOUT_VALUE,_timeout));
   cfg->sync();
@@ -105,7 +105,7 @@ void KSaveIOConfig::setProxyConnectTimeout( int _timeout )
 
 void KSaveIOConfig::setResponseTimeout( int _timeout )
 {
-  KConfig* cfg = config ();
+  TDEConfig* cfg = config ();
   cfg->setGroup( TQString() );
   cfg->writeEntry("ResponseTimeout", QMAX(MIN_TIMEOUT_VALUE,_timeout));
   cfg->sync();
@@ -114,7 +114,7 @@ void KSaveIOConfig::setResponseTimeout( int _timeout )
 
 void KSaveIOConfig::setMarkPartial( bool _mode )
 {
-  KConfig* cfg = config ();
+  TDEConfig* cfg = config ();
   cfg->setGroup( TQString() );
   cfg->writeEntry( "MarkPartial", _mode );
   cfg->sync();
@@ -122,7 +122,7 @@ void KSaveIOConfig::setMarkPartial( bool _mode )
 
 void KSaveIOConfig::setMinimumKeepSize( int _size )
 {
-  KConfig* cfg = config ();
+  TDEConfig* cfg = config ();
   cfg->setGroup( TQString() );
   cfg->writeEntry( "MinimumKeepSize", _size );
   cfg->sync();
@@ -130,7 +130,7 @@ void KSaveIOConfig::setMinimumKeepSize( int _size )
 
 void KSaveIOConfig::setAutoResume( bool _mode )
 {
-  KConfig* cfg = config ();
+  TDEConfig* cfg = config ();
   cfg->setGroup( TQString() );
   cfg->writeEntry( "AutoResume", _mode );
   cfg->sync();
@@ -138,36 +138,36 @@ void KSaveIOConfig::setAutoResume( bool _mode )
 
 void KSaveIOConfig::setUseCache( bool _mode )
 {
-  KConfig* cfg = http_config ();
+  TDEConfig* cfg = http_config ();
   cfg->writeEntry( "UseCache", _mode );
   cfg->sync();
 }
 
 void KSaveIOConfig::setMaxCacheSize( int cache_size )
 {
-  KConfig* cfg = http_config ();
+  TDEConfig* cfg = http_config ();
   cfg->writeEntry( "MaxCacheSize", cache_size );
   cfg->sync();
 }
 
-void KSaveIOConfig::setCacheControl(KIO::CacheControl policy)
+void KSaveIOConfig::setCacheControl(TDEIO::CacheControl policy)
 {
-  KConfig* cfg = http_config ();
-  TQString tmp = KIO::getCacheControlString(policy);
+  TDEConfig* cfg = http_config ();
+  TQString tmp = TDEIO::getCacheControlString(policy);
   cfg->writeEntry("cache", tmp);
   cfg->sync();
 }
 
 void KSaveIOConfig::setMaxCacheAge( int cache_age )
 {
-  KConfig* cfg = http_config ();
+  TDEConfig* cfg = http_config ();
   cfg->writeEntry( "MaxCacheAge", cache_age );
   cfg->sync();
 }
 
 void KSaveIOConfig::setUseReverseProxy( bool mode )
 {
-  KConfig* cfg = config ();
+  TDEConfig* cfg = config ();
   cfg->setGroup( "Proxy Settings" );
   cfg->writeEntry("ReversedException", mode);
   cfg->sync();
@@ -175,7 +175,7 @@ void KSaveIOConfig::setUseReverseProxy( bool mode )
 
 void KSaveIOConfig::setProxyType(KProtocolManager::ProxyType type)
 {
-  KConfig* cfg = config ();
+  TDEConfig* cfg = config ();
   cfg->setGroup( "Proxy Settings" );
   cfg->writeEntry( "ProxyType", static_cast<int>(type) );
   cfg->sync();
@@ -183,7 +183,7 @@ void KSaveIOConfig::setProxyType(KProtocolManager::ProxyType type)
 
 void KSaveIOConfig::setProxyAuthMode(KProtocolManager::ProxyAuthMode mode)
 {
-  KConfig* cfg = config ();
+  TDEConfig* cfg = config ();
   cfg->setGroup( "Proxy Settings" );
   cfg->writeEntry( "AuthMode", static_cast<int>(mode) );
   cfg->sync();
@@ -191,7 +191,7 @@ void KSaveIOConfig::setProxyAuthMode(KProtocolManager::ProxyAuthMode mode)
 
 void KSaveIOConfig::setNoProxyFor( const TQString& _noproxy )
 {
-  KConfig* cfg = config ();
+  TDEConfig* cfg = config ();
   cfg->setGroup( "Proxy Settings" );
   cfg->writeEntry( "NoProxyFor", _noproxy );
   cfg->sync();
@@ -200,7 +200,7 @@ void KSaveIOConfig::setNoProxyFor( const TQString& _noproxy )
 void KSaveIOConfig::setProxyFor( const TQString& protocol,
                                  const TQString& _proxy )
 {
-  KConfig* cfg = config ();
+  TDEConfig* cfg = config ();
   cfg->setGroup( "Proxy Settings" );
   cfg->writeEntry( protocol.lower() + "Proxy", _proxy );
   cfg->sync();
@@ -208,7 +208,7 @@ void KSaveIOConfig::setProxyFor( const TQString& protocol,
 
 void KSaveIOConfig::setProxyConfigScript( const TQString& _url )
 {
-  KConfig* cfg = config ();
+  TDEConfig* cfg = config ();
   cfg->setGroup( "Proxy Settings" );
   cfg->writeEntry( "Proxy Config Script", _url );
   cfg->sync();
@@ -216,7 +216,7 @@ void KSaveIOConfig::setProxyConfigScript( const TQString& _url )
 
 void KSaveIOConfig::setPersistentProxyConnection( bool enable )
 {
-  KConfig* cfg = config ();
+  TDEConfig* cfg = config ();
   cfg->setGroup( TQString() );
   cfg->writeEntry( "PersistentProxyConnection", enable );
   cfg->sync();
@@ -224,7 +224,7 @@ void KSaveIOConfig::setPersistentProxyConnection( bool enable )
 
 void KSaveIOConfig::setPersistentConnections( bool enable )
 {
-  KConfig* cfg = config ();
+  TDEConfig* cfg = config ();
   cfg->setGroup( TQString() );
   cfg->writeEntry( "PersistentConnections", enable );
   cfg->sync();
@@ -234,7 +234,7 @@ void KSaveIOConfig::updateRunningIOSlaves (TQWidget *parent)
 {
   // Inform all running io-slaves about the changes...
   // if we cannot update, ioslaves inform the end user...
-  if (!DCOPRef("*", "KIO::Scheduler").send("reparseSlaveConfiguration", TQString()))
+  if (!DCOPRef("*", "TDEIO::Scheduler").send("reparseSlaveConfiguration", TQString()))
   {
     TQString caption = i18n("Update Failed");
     TQString message = i18n("You have to restart the running applications "

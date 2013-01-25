@@ -208,7 +208,7 @@ void KrashDebugger :: startDebugger()
 bool KrashDebugger::performChecks( TQString* msg )
 {
   bool ret = true;
-  KConfig kdedcfg( TQString::fromLatin1( "kdedrc" ), true );
+  TDEConfig kdedcfg( TQString::fromLatin1( "kdedrc" ), true );
   kdedcfg.setGroup( "General" );
   if( kdedcfg.readBoolEntry( "DelayedCheck", false ))
   {

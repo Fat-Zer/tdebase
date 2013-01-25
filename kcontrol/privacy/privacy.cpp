@@ -38,12 +38,12 @@
 #include "privacy.h"
 
 Privacy::Privacy(TQWidget *parent, const char *name)
-    : KCModule(parent, name)
+    : TDECModule(parent, name)
 {
   setQuickHelp( i18n("The privacy module allows a user to erase traces which TDE leaves on "
               "the system, such as command histories or browser caches."));
 
-  setButtons( KCModule::Default|KCModule::Apply|KCModule::Help );
+  setButtons( TDECModule::Default|TDECModule::Apply|TDECModule::Help );
 
   TDEAboutData *about =
     new TDEAboutData(I18N_NOOP("kcm_privacy"), I18N_NOOP("TDE Privacy Control Module"),
@@ -157,13 +157,13 @@ void Privacy::load()
 
 void Privacy::load(bool useDefaults)
 {
-  KConfig *c = new KConfig("kprivacyrc", false, false);
+  TDEConfig *c = new TDEConfig("kprivacyrc", false, false);
 
   c->setReadDefaults( useDefaults );
 
   // get general privacy settings
   {
-    KConfigGroupSaver saver(c, "Cleaning");
+    TDEConfigGroupSaver saver(c, "Cleaning");
 
     clearThumbnails->setOn(c->readBoolEntry("ClearThumbnails", true));
     clearRunCommandHistory->setOn(c->readBoolEntry("ClearRunCommandHistory", true));
@@ -178,7 +178,7 @@ void Privacy::load(bool useDefaults)
   }
 
   {
-    KConfigGroupSaver saver(c, "P3P");
+    TDEConfigGroupSaver saver(c, "P3P");
 
     // TODO: add P3P settings here
   }
@@ -196,9 +196,9 @@ void Privacy::defaults()
 
 void Privacy::save()
 {
-  KConfig *c = new KConfig("kprivacyrc", false, false);
+  TDEConfig *c = new TDEConfig("kprivacyrc", false, false);
   {
-    KConfigGroupSaver saver(c, "Cleaning");
+    TDEConfigGroupSaver saver(c, "Cleaning");
 
     c->writeEntry("ClearThumbnails", clearThumbnails->isOn());
     c->writeEntry("ClearRunCommandHistory", clearRunCommandHistory->isOn());
@@ -213,7 +213,7 @@ void Privacy::save()
   }
 
   {
-    KConfigGroupSaver saver(c, "P3P");
+    TDEConfigGroupSaver saver(c, "P3P");
 
     // TODO: add settings for P3P
   }
@@ -309,7 +309,7 @@ void Privacy::cleanup()
 extern "C"
 {
 
-  KDE_EXPORT KCModule *create_privacy(TQWidget *parent, const char * /*name*/)
+  KDE_EXPORT TDECModule *create_privacy(TQWidget *parent, const char * /*name*/)
   {
     TDEGlobal::locale()->insertCatalogue("privacy");
     return new Privacy(parent, "Privacy");

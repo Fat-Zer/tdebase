@@ -31,7 +31,7 @@ public:
   TQByteArray nextData;
   int nextDataReturnCode;
   TQStringList caps;
-  KIO::MetaData metadata;
+  TDEIO::MetaData metadata;
 
   void clear() {
     startTLSReturnCode = 1;
@@ -161,7 +161,7 @@ int main( int, char** ) {
   assert( ehlo3.processResponse( r, 0 ) == false );
   assert( ehlo3.isComplete() );
   assert( !ehlo3.needsResponse() );
-  assert( smtp.lastErrorCode == KIO::ERR_UNKNOWN );
+  assert( smtp.lastErrorCode == TDEIO::ERR_UNKNOWN );
 
   // dynamics 4: EHLO _and_ HELO fail with "command unknown"
   smtp.clear();
@@ -176,7 +176,7 @@ int main( int, char** ) {
   assert( ehlo4.processResponse( r, 0 ) == false );
   assert( ehlo4.isComplete() );
   assert( !ehlo4.needsResponse() );
-  assert( smtp.lastErrorCode == KIO::ERR_INTERNAL_SERVER );
+  assert( smtp.lastErrorCode == TDEIO::ERR_INTERNAL_SERVER );
   
   //
   // STARTTLS
@@ -218,7 +218,7 @@ int main( int, char** ) {
   smtp.startTLSReturnCode = 1;
   assert( tls2.processResponse( r, &ts ) == false );
   assert( !tls2.needsResponse() );
-  assert( smtp.lastErrorCode == KIO::ERR_SERVICE_NOT_AVAILABLE );
+  assert( smtp.lastErrorCode == TDEIO::ERR_SERVICE_NOT_AVAILABLE );
   
   // dynamics 3: ok from server, TLS negotiation unsuccessful
   smtp.clear();
@@ -710,7 +710,7 @@ void checkSuccessfulTransferCommand( bool error, bool preload, bool ungetLast,
     assert( !xfer.needsResponse() );
     assert( ts.complete() );
     assert( ts.failed() );
-    assert( smtp.lastErrorCode == KIO::ERR_DISK_FULL );
+    assert( smtp.lastErrorCode == TDEIO::ERR_DISK_FULL );
   } else {
     r.parseLine( "250 Message accepted" );
     assert( xfer.processResponse( r, &ts ) == true );

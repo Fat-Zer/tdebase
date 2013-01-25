@@ -40,12 +40,12 @@ class LogView: public TQWidget
 {
    Q_OBJECT
    public:
-      LogView(TQWidget *parent=0, KConfig *config=0, const char *name=0);
+      LogView(TQWidget *parent=0, TDEConfig *config=0, const char *name=0);
       virtual ~LogView() {};
       void saveSettings();
       void loadSettings();
    private:
-      KConfig *configFile;
+      TDEConfig *configFile;
       int filesCount, connectionsCount;
       KURLRequester logFileName;
       TQLabel label;

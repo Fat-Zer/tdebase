@@ -25,7 +25,7 @@ class CfgRedmond: public ThemeEngineConfig
 {
   Q_OBJECT
 public:
-  CfgRedmond( TQWidget *, KConfig * );
+  CfgRedmond( TQWidget *, TDEConfig * );
 
 protected:
   TQCheckBox *mShowUsername;

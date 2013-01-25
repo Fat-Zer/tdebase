@@ -48,7 +48,7 @@ KonqProfileMap KonqProfileDlg::readAllProfiles()
   for (; pIt != pEnd; ++pIt )
   {
     TQFileInfo info( *pIt );
-    TQString profileName = KIO::decodeFileName( info.baseName() );
+    TQString profileName = TDEIO::decodeFileName( info.baseName() );
     KSimpleConfig cfg( *pIt, true );
     if ( cfg.hasGroup( "Profile" ) )
     {
@@ -156,7 +156,7 @@ void KonqProfileDlg::loadAllProfiles(const TQString & preselectProfile)
 
 void KonqProfileDlg::slotUser3() // Save button
 {
-  TQString name = KIO::encodeFileName( m_pProfileNameLineEdit->text() ); // in case of '/'
+  TQString name = TDEIO::encodeFileName( m_pProfileNameLineEdit->text() ); // in case of '/'
 
   // Reuse filename of existing item, if any
   if ( m_pListView->selectedItem() )

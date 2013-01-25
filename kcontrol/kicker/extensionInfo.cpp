@@ -121,7 +121,7 @@ void ExtensionInfo::load()
     if (_customSizeMax < _customSizeMin) _customSizeMax = _customSizeMin;
     if (_customSize < _customSizeMin) _customSize = _customSizeMin;
 
-    KConfig c(_configFile);
+    TDEConfig c(_configFile);
     c.setGroup("General");
 
     _position           = c.readNumEntry ("Position",            _position);
@@ -159,7 +159,7 @@ void ExtensionInfo::load()
 
 void ExtensionInfo::configChanged()
 {
-    KConfig c(_configFile);
+    TDEConfig c(_configFile);
     c.setGroup("General");
 
     // check to see if the new value is different from both
@@ -223,7 +223,7 @@ void ExtensionInfo::setDefaults()
 
 void ExtensionInfo::save()
 {
-    KConfig c(_configFile);
+    TDEConfig c(_configFile);
     c.setGroup("General");
 
     c.writeEntry("Position",            _position);

@@ -59,7 +59,7 @@ struct StyleEntry {
 	bool hidden;
 };
 
-class KCMStyle : public KCModule
+class KCMStyle : public TDECModule
 {
 	Q_OBJECT
 
@@ -77,9 +77,9 @@ protected:
 	void switchStyle(const TQString& styleName, bool force = false);
 	void setStyleRecursive(TQWidget* w, TQStyle* s);
 
-	void loadStyle( KConfig& config );
-	void loadEffects( KConfig& config );
-	void loadMisc( KConfig& config );
+	void loadStyle( TDEConfig& config );
+	void loadEffects( TDEConfig& config );
+	void loadMisc( TDEConfig& config );
 	void addWhatsThis();
 
 protected slots:

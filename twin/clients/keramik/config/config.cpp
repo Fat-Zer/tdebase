@@ -33,7 +33,7 @@
 
 extern "C"
 {
-	KDE_EXPORT TQObject* allocate_config( KConfig* conf, TQWidget* parent )
+	KDE_EXPORT TQObject* allocate_config( TDEConfig* conf, TQWidget* parent )
 	{
 		return ( new KeramikConfig( conf, parent ) );
 	}
@@ -48,11 +48,11 @@ extern "C"
  *			Configure tab in twindecoration
  */
 
-KeramikConfig::KeramikConfig( KConfig* conf, TQWidget* parent )
+KeramikConfig::KeramikConfig( TDEConfig* conf, TQWidget* parent )
 	: TQObject( parent )
 {
 	TDEGlobal::locale()->insertCatalogue("twin_clients");
-	c = new KConfig( "twinkeramikrc" );
+	c = new TDEConfig( "twinkeramikrc" );
 	
 	ui = new KeramikConfigUI( parent );
 	connect( ui->showAppIcons,    TQT_SIGNAL(clicked()), TQT_SIGNAL(changed()) );
@@ -74,7 +74,7 @@ KeramikConfig::~KeramikConfig()
 
 // Loads the configurable options from the twinrc config file
 // It is passed the open config from twindecoration to improve efficiency
-void KeramikConfig::load( KConfig* )
+void KeramikConfig::load( TDEConfig* )
 {
 	c->setGroup("General");
 	ui->showAppIcons->setChecked( c->readBoolEntry("ShowAppIcons", true) );
@@ -85,7 +85,7 @@ void KeramikConfig::load( KConfig* )
 
 
 // Saves the configurable options to the twinrc config file
-void KeramikConfig::save( KConfig* )
+void KeramikConfig::save( TDEConfig* )
 {
 	c->setGroup( "General" );
 	c->writeEntry( "ShowAppIcons", ui->showAppIcons->isChecked() );

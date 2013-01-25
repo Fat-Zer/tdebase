@@ -63,7 +63,7 @@ CSettingsDialog::CSettingsDialog(TQWidget *parent)
                                   "that this will also slow down the installation process.</p><p>As most applications can, and do, embed "
                                   "the fonts into the PostScript before sending this to Ghostscript, this option can safely be disabled."));
 
-    KConfig cfg(Misc::root() ? KFI_ROOT_CFG_FILE : KFI_CFG_FILE);
+    TDEConfig cfg(Misc::root() ? KFI_ROOT_CFG_FILE : KFI_CFG_FILE);
 
     itsDoX->setChecked(cfg.readBoolEntry(KFI_CFG_X_KEY, KFI_DEFAULT_CFG_X));
     itsDoGs->setChecked(cfg.readBoolEntry(KFI_CFG_GS_KEY, KFI_DEFAULT_CFG_GS));
@@ -71,7 +71,7 @@ CSettingsDialog::CSettingsDialog(TQWidget *parent)
 
 void CSettingsDialog::slotOk()
 {
-    KConfig cfg(Misc::root() ? KFI_ROOT_CFG_FILE : KFI_CFG_FILE);
+    TDEConfig cfg(Misc::root() ? KFI_ROOT_CFG_FILE : KFI_CFG_FILE);
 
     bool oldDoX=cfg.readBoolEntry(KFI_CFG_X_KEY, KFI_DEFAULT_CFG_X),
          oldDoGs=cfg.readBoolEntry(KFI_CFG_GS_KEY, KFI_DEFAULT_CFG_GS);
@@ -90,7 +90,7 @@ void CSettingsDialog::slotOk()
 
         stream << KFI::SPECIAL_RECONFIG;
 
-        KIO::NetAccess::synchronousRun(KIO::special(KFI_KIO_FONTS_PROTOCOL ":/", packedArgs), this);
+        TDEIO::NetAccess::synchronousRun(TDEIO::special(KFI_KIO_FONTS_PROTOCOL ":/", packedArgs), this);
     }
 
     hide();

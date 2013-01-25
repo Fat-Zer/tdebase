@@ -480,7 +480,7 @@ void KateFileList::updateSort ()
   updateFileListLocations();
 }
 
-void KateFileList::readConfig( KConfig *config, const TQString &group )
+void KateFileList::readConfig( TDEConfig *config, const TQString &group )
 {
   TQString oldgroup = config->group();
   config->setGroup( group );
@@ -495,7 +495,7 @@ void KateFileList::readConfig( KConfig *config, const TQString &group )
   config->setGroup( oldgroup );
 }
 
-void KateFileList::writeConfig( KConfig *config, const TQString &group )
+void KateFileList::writeConfig( TDEConfig *config, const TQString &group )
 {
   TQString oldgroup = config->group();
   config->setGroup( group );
@@ -715,7 +715,7 @@ void KFLConfigPage::apply()
 void KFLConfigPage::reload()
 {
   // read in from config file
-  KConfig *config = kapp->config();
+  TDEConfig *config = kapp->config();
   config->setGroup( "Filelist" );
   cbEnableShading->setChecked( config->readBoolEntry("Shading Enabled", &m_filelist->m_enableBgShading ) );
   kcbViewShade->setColor( config->readColorEntry("View Shade", &m_filelist->m_viewShade ) );

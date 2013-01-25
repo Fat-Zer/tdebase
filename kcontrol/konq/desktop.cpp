@@ -40,7 +40,7 @@
 
 extern "C"
 {
-  KDE_EXPORT KCModule *create_virtualdesktops(TQWidget *parent, const char * /*name*/)
+  KDE_EXPORT TDECModule *create_virtualdesktops(TQWidget *parent, const char * /*name*/)
   {
     return new KDesktopConfig(parent, "kcmkonq");
   }
@@ -52,7 +52,7 @@ extern "C"
 // asking why I did not implement a more intelligent/smaller GUI.
 
 KDesktopConfig::KDesktopConfig(TQWidget *parent, const char * /*name*/)
-  : KCModule(parent, "kcmkonq")
+  : TDECModule(parent, "kcmkonq")
 {
 
   setQuickHelp( i18n("<h1>Multiple Desktops</h1>In this module, you can configure how many virtual desktops you want and how these should be labeled."));
@@ -141,7 +141,7 @@ void KDesktopConfig::load( bool useDefaults )
   else
      groupname.sprintf("Desktops-screen-%d", konq_screen_number);
 
-  KConfig * twinconfig = new KConfig("twinrc");
+  TDEConfig * twinconfig = new TDEConfig("twinrc");
 
   twinconfig->setReadDefaults( useDefaults );
 
@@ -172,7 +172,7 @@ void KDesktopConfig::load( bool useDefaults )
   else
       configfile.sprintf("kdesktop-screen-%drc", konq_screen_number);
 
-  KConfig *config = new KConfig(configfile, false, false);
+  TDEConfig *config = new TDEConfig(configfile, false, false);
 
   config->setReadDefaults( useDefaults );
 
@@ -216,7 +216,7 @@ void KDesktopConfig::save()
   else
       appname.sprintf("kdesktop-screen-%d", konq_screen_number);
 
-  KConfig *config = new KConfig(appname + "rc");
+  TDEConfig *config = new TDEConfig(appname + "rc");
   config->setGroup("Mouse Buttons");
   config->writeEntry("WheelSwitchesWorkspace", _wheelOption->isChecked());
   delete config;

@@ -56,7 +56,7 @@ extern "C"
 Lockout::Lockout( const TQString& configFile, TQWidget *parent, const char *name)
     : KPanelApplet( configFile, KPanelApplet::Normal, 0, parent, name ), bTransparent( false )
 {
-    KConfig *conf = config();
+    TDEConfig *conf = config();
     conf->setGroup("lockout");
 
     //setFrameStyle(Panel | Sunken);
@@ -190,7 +190,7 @@ bool Lockout::eventFilter( TQObject *o, TQEvent *e )
 
     if( e->type() == TQEvent::MouseButtonPress )
     {
-        KConfig *conf = config();
+        TDEConfig *conf = config();
         conf->setGroup("lockout");
 
         TQMouseEvent *me = TQT_TQMOUSEEVENT( e );
@@ -257,7 +257,7 @@ void Lockout::slotTransparent()
 {
     bTransparent = !bTransparent;
 
-    KConfig* conf = config();
+    TDEConfig* conf = config();
     conf->setGroup("lockout");
     conf->writeEntry( "Transparent", bTransparent );
     conf->sync();

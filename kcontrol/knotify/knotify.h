@@ -44,7 +44,7 @@ namespace KNotify
     class KNotifyWidget;
 }
 
-class KCMKNotify : public KCModule
+class KCMKNotify : public TDECModule
 {
     Q_OBJECT
 

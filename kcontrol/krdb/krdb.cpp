@@ -99,7 +99,7 @@ static void applyGtkStyles(bool active, int version)
 
 // -----------------------------------------------------------------------------
 
-static void applyQtColors( KConfig& kglobals, TQSettings& settings, TQPalette& newPal )
+static void applyQtColors( TDEConfig& kglobals, TQSettings& settings, TQPalette& newPal )
 {
   TQStringList actcg, inactcg, discg;
 
@@ -162,7 +162,7 @@ static void applyQtColors( KConfig& kglobals, TQSettings& settings, TQPalette& n
 
 // -----------------------------------------------------------------------------
 
-static void applyQtSettings( KConfig& kglobals, TQSettings& settings )
+static void applyQtSettings( TDEConfig& kglobals, TQSettings& settings )
 {
   /* export kde's plugin library path to qtrc */
 
@@ -428,7 +428,7 @@ void runRdb( uint flags )
   bool exportQtSettings  = flags & KRdbExportQtSettings;
   bool exportXftSettings = flags & KRdbExportXftSettings;
 
-  KConfig kglobals("kdeglobals", true, false);
+  TDEConfig kglobals("kdeglobals", true, false);
   kglobals.setGroup("KDE");
 
   KTempFile tmpFile;
@@ -497,7 +497,7 @@ void runRdb( uint flags )
     copyFile(tmp, homeDir + "/.Xdefaults", true);
 
   // Export the Xcursor theme & size settings
-  KConfig mousecfg( "kcminputrc" );
+  TDEConfig mousecfg( "kcminputrc" );
   mousecfg.setGroup( "Mouse" );
   TQString theme = mousecfg.readEntry("cursorTheme", TQString());
   TQString size  = mousecfg.readEntry("cursorSize", TQString());
@@ -545,7 +545,7 @@ void runRdb( uint flags )
         contents += "Xft.rgba: " + subPixel + '\n';
     }
 
-    KConfig cfgfonts("kcmfonts", true);
+    TDEConfig cfgfonts("kcmfonts", true);
     cfgfonts.setGroup("General");
     if( cfgfonts.readNumEntry( "forceFontDPI", 0 ) != 0 )
       contents += "Xft.dpi: " + cfgfonts.readEntry( "forceFontDPI" ) + '\n';

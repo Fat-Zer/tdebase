@@ -28,7 +28,7 @@ class TQGroupBox;
 class TQCheckBox;
 class TQPushButton;
 
-class KConfig;
+class TDEConfig;
 
 /**
  * Control debug/warning/error/fatal output of TDE applications

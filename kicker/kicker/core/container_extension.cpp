@@ -172,7 +172,7 @@ void ExtensionContainer::init()
     updateHighlightColor();
 
     // if we were hidden when kicker quit, let's start out hidden as well!
-    KConfig *config = TDEGlobal::config();
+    TDEConfig *config = TDEGlobal::config();
     config->setGroup(extensionId());
     int tmp = config->readNumEntry("UserHidden", Unhidden);
     if (tmp > Unhidden && tmp <= RightBottom)
@@ -187,7 +187,7 @@ void ExtensionContainer::init()
         // defaults in the settings object since the extension may differ
         // from the "normal" panels. for example, the universal sidebar's
         // preferred position is the left, not the bottom/top
-        KConfigSkeleton::ItemInt* item = dynamic_cast<KConfigSkeleton::ItemInt*>(m_settings.findItem("Position"));
+        TDEConfigSkeleton::ItemInt* item = dynamic_cast<TDEConfigSkeleton::ItemInt*>(m_settings.findItem("Position"));
         if (item)
         {
             KPanelExtension::Position p = m_extension->preferedPosition();
@@ -195,13 +195,13 @@ void ExtensionContainer::init()
             item->readConfig(m_settings.config());
         }
 
-        item = dynamic_cast<KConfigSkeleton::ItemInt*>(m_settings.findItem("Size"));
+        item = dynamic_cast<TDEConfigSkeleton::ItemInt*>(m_settings.findItem("Size"));
         if (item)
         {
             item->setDefaultValue(m_extension->sizeSetting());
         }
 
-        item = dynamic_cast<KConfigSkeleton::ItemInt*>(m_settings.findItem("CustomSize"));
+        item = dynamic_cast<TDEConfigSkeleton::ItemInt*>(m_settings.findItem("CustomSize"));
         if (item)
         {
             item->setDefaultValue(m_extension->customSize());
@@ -359,7 +359,7 @@ void ExtensionContainer::readConfig()
 void ExtensionContainer::writeConfig()
 {
 //    kdDebug(1210) << "ExtensionContainer::writeConfig()" << endl;
-    KConfig *config = TDEGlobal::config();
+    TDEConfig *config = TDEGlobal::config();
     config->setGroup(extensionId());
 
     config->writePathEntry("ConfigFile", _info.configFile());
@@ -984,7 +984,7 @@ void ExtensionContainer::animatedHide(bool left)
 
     // save our hidden status so that when kicker starts up again
     // we'll come back in the same state
-    KConfig *config = TDEGlobal::config();
+    TDEConfig *config = TDEGlobal::config();
     config->setGroup(extensionId());
     config->writeEntry("UserHidden", userHidden());
 
@@ -998,7 +998,7 @@ bool ExtensionContainer::reserveStrut() const
 
 KPanelExtension::Alignment ExtensionContainer::alignment() const
 {
-    // KConfigXT really needs to get support for vars that are enums that
+    // TDEConfigXT really needs to get support for vars that are enums that
     // are defined in other classes
     return static_cast<KPanelExtension::Alignment>(m_settings.alignment());
 }
@@ -1385,7 +1385,7 @@ void ExtensionContainer::positionChange(KPanelExtension::Position p)
 
 void ExtensionContainer::updateHighlightColor()
 {
-    KConfig *config = TDEGlobal::config();
+    TDEConfig *config = TDEGlobal::config();
     config->setGroup("WM");
     TQColor color = TQApplication::palette().active().highlight();
     m_highlightColor = config->readColorEntry("activeBackground", &color);
@@ -1470,7 +1470,7 @@ void ExtensionContainer::setSize(KPanelExtension::Size size, int custom)
 
 KPanelExtension::Size ExtensionContainer::size() const
 {
-    // KConfigXT really needs to get support for vars that are enums that
+    // TDEConfigXT really needs to get support for vars that are enums that
     // are defined in other classes
     return static_cast<KPanelExtension::Size>(m_settings.size());
 }
@@ -1592,7 +1592,7 @@ KPanelExtension::Orientation ExtensionContainer::orientation() const
 
 KPanelExtension::Position ExtensionContainer::position() const
 {
-    // KConfigXT really needs to get support for vars that are enums that
+    // TDEConfigXT really needs to get support for vars that are enums that
     // are defined in other classes
     return static_cast<KPanelExtension::Position>(m_settings.position());
 }

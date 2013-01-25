@@ -30,7 +30,7 @@ class KIntNumInput;
 // if you change this, update also the number of keyboard shortcuts in twin/twinbindings.cpp
 static const int maxDesktops = 20;
 
-class KDesktopConfig : public KCModule
+class KDesktopConfig : public TDECModule
 {
   Q_OBJECT
 

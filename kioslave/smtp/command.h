@@ -176,7 +176,7 @@ namespace KioSMTP {
   class AuthCommand : public Command {
   public:
     AuthCommand( SMTPProtocol * smtp, const char *mechanisms,
-      const TQString &aFQDN, KIO::AuthInfo &ai );
+      const TQString &aFQDN, TDEIO::AuthInfo &ai );
     ~AuthCommand();
     bool doNotExecute( const TransactionState * ts ) const;
     TQCString nextCommandLine( TransactionState * );
@@ -193,7 +193,7 @@ namespace KioSMTP {
     uint mOutlen;
     bool mOneStep;
 
-    KIO::AuthInfo *mAi;
+    TDEIO::AuthInfo *mAi;
     TQCString mLastChallenge;
     TQCString mUngetSASLResponse;
     bool mFirstTime;

@@ -118,7 +118,7 @@ public:
   virtual bool processDynamic(const TQCString &fun, const TQByteArray &data, TQCString& replyType, TQByteArray &replyData);
   virtual QCStringList functionsDynamic();
 
-  void callReadPropertiesInternal(KConfig *config, int number) { readPropertiesInternal(config,number); }
+  void callReadPropertiesInternal(TDEConfig *config, int number) { readPropertiesInternal(config,number); }
 
   enum TabPosition { TabNone, TabTop, TabBottom };
   enum TabViewModes { ShowIconAndText = 0, ShowTextOnly = 1, ShowIconOnly = 2 };
@@ -138,8 +138,8 @@ public slots:
 protected:
 
  bool queryClose();
- void saveProperties(KConfig* config);
- void readProperties(KConfig* config);
+ void saveProperties(TDEConfig* config);
+ void readProperties(TDEConfig* config);
 
 private slots:
   void configureRequest(TEWidget*,int,int,int);
@@ -260,7 +260,7 @@ private:
   TQString newSession(KSimpleConfig *co, TQString pgm = TQString::null, const TQStrList &args = TQStrList(),
                      const TQString &_term = TQString::null, const TQString &_icon = TQString::null,
                      const TQString &_title = TQString::null, const TQString &_cwd = TQString::null);
-  void readProperties(KConfig *config, const TQString &schema, bool globalConfigOnly);
+  void readProperties(TDEConfig *config, const TQString &schema, bool globalConfigOnly);
   void applySettingsToGUI();
   void makeTabWidget();
   void makeBasicGUI();

@@ -43,7 +43,7 @@ class TQTimer;
 class TQVBox;
 class QXEmbed;
 class HideButton;
-class KConfig;
+class TDEConfig;
 class KWinModule;
 class PopupWidgetFilter;
 class PanelExtensionOpMenu;

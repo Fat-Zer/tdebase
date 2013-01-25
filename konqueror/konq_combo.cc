@@ -36,7 +36,7 @@
 
 #include "konq_combo.h"
 
-KConfig * KonqCombo::s_config = 0L;
+TDEConfig * KonqCombo::s_config = 0L;
 const int KonqCombo::temporary = 0;
 
 static TQString titleOfURL( const TQString& urlStr )
@@ -103,7 +103,7 @@ KonqCombo::KonqCombo( TQWidget *parent, const char *name )
 
     Q_ASSERT( s_config );
 
-    KConfigGroupSaver cs( s_config, "Location Bar" );
+    TDEConfigGroupSaver cs( s_config, "Location Bar" );
     setMaxCount( s_config->readNumEntry("Maximum of URLs in combo", 20 ));
 
     // We should also connect the completionBox' highlighted signal to
@@ -594,7 +594,7 @@ void KonqCombo::slotActivated( const TQString& text )
     m_modifier = Qt::NoButton;
 }
 
-void KonqCombo::setConfig( KConfig *kc )
+void KonqCombo::setConfig( TDEConfig *kc )
 {
     s_config = kc;
 }

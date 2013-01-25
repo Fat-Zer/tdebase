@@ -990,7 +990,7 @@ void KonqKfmIconView::slotNewItems( const KFileItemList& entries )
             case Date:
             {
                 TQDateTime dayt;
-                dayt.setTime_t(item->item()->time(KIO::UDS_MODIFICATION_TIME ));
+                dayt.setTime_t(item->item()->time(TDEIO::UDS_MODIFICATION_TIME ));
                 key = dayt.toString("yyyyMMddhhmmss");
                 break;
             }
@@ -1403,7 +1403,7 @@ void KonqKfmIconView::setupSortKeys()
         TQDateTime dayt;
         for ( TQIconViewItem *it = m_pIconView->firstItem(); it; it = it->nextItem() )
         {
-            dayt.setTime_t(static_cast<KFileIVI *>( it )->item()->time(KIO::UDS_MODIFICATION_TIME));
+            dayt.setTime_t(static_cast<KFileIVI *>( it )->item()->time(TDEIO::UDS_MODIFICATION_TIME));
             it->setKey(dayt.toString("yyyyMMddhhmmss"));
         }
         break;
@@ -1413,7 +1413,7 @@ void KonqKfmIconView::setupSortKeys()
 
 TQString KonqKfmIconView::makeSizeKey( KFileIVI *item )
 {
-    return KIO::number( item->item()->size() ).rightJustify( 20, '0' );
+    return TDEIO::number( item->item()->size() ).rightJustify( 20, '0' );
 }
 
 void KonqKfmIconView::disableIcons( const KURL::List & lst )

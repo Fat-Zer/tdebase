@@ -13,7 +13,7 @@ class DCOPClient;
 class KCookiesPolicies;
 class KCookiesManagement;
 
-class KCookiesMain : public KCModule
+class KCookiesMain : public TDECModule
 {
     Q_OBJECT
 public:

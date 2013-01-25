@@ -562,7 +562,7 @@ void KeramikHandler::pretile( TQPixmap *&pix, int size, Qt::Orientation dir )
 
 void KeramikHandler::readConfig()
 {
-	KConfig *c = new KConfig( "twinkeramikrc" );
+	TDEConfig *c = new TDEConfig( "twinkeramikrc" );
 
 	c->setGroup( "General" );
 	showIcons = c->readBoolEntry( "ShowAppIcons", true );

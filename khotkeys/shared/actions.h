@@ -18,7 +18,7 @@
 
 #include <kservice.h>
 
-class KConfig;
+class TDEConfig;
 
 #include "khotkeysglobal.h"
 
@@ -34,13 +34,13 @@ class KDE_EXPORT Action
     {
     public:
         Action( Action_data* data_P );
-        Action( KConfig& cfg_P, Action_data* data_P );
+        Action( TDEConfig& cfg_P, Action_data* data_P );
         virtual ~Action();
         virtual void execute() = 0;
         virtual TQString description() const = 0;
-        virtual void cfg_write( KConfig& cfg_P ) const;
+        virtual void cfg_write( TDEConfig& cfg_P ) const;
         virtual Action* copy( Action_data* data_P ) const = 0;
-        static Action* create_cfg_read( KConfig& cfg_P, Action_data* data_P );
+        static Action* create_cfg_read( TDEConfig& cfg_P, Action_data* data_P );
     protected:
         Action_data* const data;
     KHOTKEYS_DISABLE_COPY( Action );
@@ -51,8 +51,8 @@ class KDE_EXPORT Action_list
     {
     public:
         Action_list( const TQString& comment_P ); // CHECKME nebo i data ?
-        Action_list( KConfig& cfg_P, Action_data* data_P );
-        void cfg_write( KConfig& cfg_P ) const;
+        Action_list( TDEConfig& cfg_P, Action_data* data_P );
+        void cfg_write( TDEConfig& cfg_P ) const;
         typedef TQPtrListIterator< Action > Iterator;
         const TQString& comment() const;
     private:
@@ -66,8 +66,8 @@ class KDE_EXPORT Command_url_action
     typedef Action base;
     public:
         Command_url_action( Action_data* data_P, const TQString& command_url_P );
-        Command_url_action( KConfig& cfg_P, Action_data* data_P );
-        virtual void cfg_write( KConfig& cfg_P ) const;
+        Command_url_action( TDEConfig& cfg_P, Action_data* data_P );
+        virtual void cfg_write( TDEConfig& cfg_P ) const;
         virtual void execute();
         virtual TQString description() const;
         const TQString& command_url() const;
@@ -84,8 +84,8 @@ class KDE_EXPORT Menuentry_action
     typedef Command_url_action base;
     public:
         Menuentry_action( Action_data* data_P, const TQString& menuentry_P );
-        Menuentry_action( KConfig& cfg_P, Action_data* data_P );
-        virtual void cfg_write( KConfig& cfg_P ) const;
+        Menuentry_action( TDEConfig& cfg_P, Action_data* data_P );
+        virtual void cfg_write( TDEConfig& cfg_P ) const;
         virtual void execute();
         virtual TQString description() const;
         virtual Action* copy( Action_data* data_P ) const;
@@ -101,8 +101,8 @@ class KDE_EXPORT Dcop_action
     public:
         Dcop_action( Action_data* data_P, const TQString& app_P, const TQString& obj_P,
             const TQString& call_P, const TQString& args_P );
-        Dcop_action( KConfig& cfg_P, Action_data* data_P );
-        virtual void cfg_write( KConfig& cfg_P ) const;
+        Dcop_action( TDEConfig& cfg_P, Action_data* data_P );
+        virtual void cfg_write( TDEConfig& cfg_P ) const;
         virtual void execute();
         const TQString& remote_application() const;
         const TQString& remote_object() const;
@@ -124,9 +124,9 @@ class KDE_EXPORT Keyboard_input_action
     public:
         Keyboard_input_action( Action_data* data_P, const TQString& input_P, 
             const Windowdef_list* dest_window_P, bool active_window_P );
-        Keyboard_input_action( KConfig& cfg_P, Action_data* data_P );
+        Keyboard_input_action( TDEConfig& cfg_P, Action_data* data_P );
         virtual ~Keyboard_input_action();
-        virtual void cfg_write( KConfig& cfg_P ) const;
+        virtual void cfg_write( TDEConfig& cfg_P ) const;
         virtual void execute();
         const TQString& input() const;
         // send to specific window: dest_window != NULL
@@ -148,9 +148,9 @@ class KDE_EXPORT Activate_window_action
     typedef Action base;
     public:
         Activate_window_action( Action_data* data_P, const Windowdef_list* window_P );
-        Activate_window_action( KConfig& cfg_P, Action_data* data_P );
+        Activate_window_action( TDEConfig& cfg_P, Action_data* data_P );
         virtual ~Activate_window_action();
-        virtual void cfg_write( KConfig& cfg_P ) const;
+        virtual void cfg_write( TDEConfig& cfg_P ) const;
         virtual void execute();
         const Windowdef_list* window() const;
         virtual TQString description() const;
@@ -172,7 +172,7 @@ Action::Action( Action_data* data_P )
     }
     
 inline
-Action::Action( KConfig&, Action_data* data_P )
+Action::Action( TDEConfig&, Action_data* data_P )
     : data( data_P )
     {
     }
@@ -220,7 +220,7 @@ Menuentry_action::Menuentry_action( Action_data* data_P, const TQString& menuent
     }
     
 inline
-Menuentry_action::Menuentry_action( KConfig& cfg_P, Action_data* data_P )
+Menuentry_action::Menuentry_action( TDEConfig& cfg_P, Action_data* data_P )
     : Command_url_action( cfg_P, data_P )
     {
     }

@@ -35,8 +35,8 @@ public:
     ~FavIconWebGrabber() {}
 
 protected slots:
-    void slotMimetype(KIO::Job *job, const TQString &_type);
-    void slotFinished(KIO::Job *job);
+    void slotMimetype(TDEIO::Job *job, const TQString &_type);
+    void slotFinished(TDEIO::Job *job);
 
 private:
     KParts::ReadOnlyPart *m_part;

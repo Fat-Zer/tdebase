@@ -740,7 +740,7 @@ void KDisplayConfig::setRealResolutionSliderValue(int index) {
 /**** KDisplayConfig ****/
 
 KDisplayConfig::KDisplayConfig(TQWidget *parent, const char *name, const TQStringList &)
-  : KCModule(KDisplayCFactory::instance(), parent, name), iccTab(0), numberOfProfiles(0), numberOfScreens(0), m_randrsimple(0), activeProfileName(""), m_gammaApplyTimer(0)
+  : TDECModule(KDisplayCFactory::instance(), parent, name), iccTab(0), numberOfProfiles(0), numberOfScreens(0), m_randrsimple(0), activeProfileName(""), m_gammaApplyTimer(0)
 {
 	TDEHardwareDevices *hwdevices = TDEGlobal::hardwareDevices();
 	connect(hwdevices, TQT_SIGNAL(hardwareUpdated(TDEGenericDevice*)), this, TQT_SLOT(deviceChanged(TDEGenericDevice*)));
@@ -1905,13 +1905,13 @@ void KDisplayConfig::processLockoutControls() {
 	base->loadExistingProfile->hide();		// Same as above
 }
 
-KCModule* KDisplayConfig::addTab( const TQString name, const TQString label )
+TDECModule* KDisplayConfig::addTab( const TQString name, const TQString label )
 {
 	// [FIXME] This is incomplete...Apply may not work...
 	TQWidget *page = new TQWidget( base->mainTabContainerWidget, name.latin1() );
 	TQVBoxLayout *top = new TQVBoxLayout( page, KDialog::marginHint() );
 
-	KCModule *kcm = KCModuleLoader::loadModule( name, page );
+	TDECModule *kcm = TDECModuleLoader::loadModule( name, page );
 
 	if ( kcm )
 	{

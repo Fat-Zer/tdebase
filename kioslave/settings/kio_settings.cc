@@ -31,7 +31,7 @@
 #include <kservicegroup.h>
 #include <kstandarddirs.h>
 
-class SettingsProtocol : public KIO::SlaveBase
+class SettingsProtocol : public TDEIO::SlaveBase
 {
 public:
 	enum RunMode { SettingsMode, ProgramsMode, ApplicationsMode };
@@ -60,40 +60,40 @@ extern "C" {
 }
 
 
-static void addAtom(KIO::UDSEntry& entry, unsigned int ID, long l, const TQString& s = TQString::null)
+static void addAtom(TDEIO::UDSEntry& entry, unsigned int ID, long l, const TQString& s = TQString::null)
 {
-	KIO::UDSAtom atom;
+	TDEIO::UDSAtom atom;
 	atom.m_uds = ID;
 	atom.m_long = l;
 	atom.m_str = s;
 	entry.append(atom);
 }
 
-static void createFileEntry(KIO::UDSEntry& entry, const TQString& name, const TQString& url, const TQString& mime, const TQString& iconName, const TQString& localPath)
+static void createFileEntry(TDEIO::UDSEntry& entry, const TQString& name, const TQString& url, const TQString& mime, const TQString& iconName, const TQString& localPath)
 {
 	entry.clear();
-	addAtom(entry, KIO::UDS_NAME, 0, KIO::encodeFileName(name));
-	addAtom(entry, KIO::UDS_FILE_TYPE, S_IFREG);
-	addAtom(entry, KIO::UDS_URL, 0, url);
-	addAtom(entry, KIO::UDS_ACCESS, 0500);
-	addAtom(entry, KIO::UDS_MIME_TYPE, 0, mime);
-	addAtom(entry, KIO::UDS_SIZE, 0);
-	addAtom(entry, KIO::UDS_LOCAL_PATH, 0, localPath);
-	addAtom(entry, KIO::UDS_CREATION_TIME, 1);
-	addAtom(entry, KIO::UDS_MODIFICATION_TIME, time(0));
-	addAtom(entry, KIO::UDS_ICON_NAME, 0, iconName);
+	addAtom(entry, TDEIO::UDS_NAME, 0, TDEIO::encodeFileName(name));
+	addAtom(entry, TDEIO::UDS_FILE_TYPE, S_IFREG);
+	addAtom(entry, TDEIO::UDS_URL, 0, url);
+	addAtom(entry, TDEIO::UDS_ACCESS, 0500);
+	addAtom(entry, TDEIO::UDS_MIME_TYPE, 0, mime);
+	addAtom(entry, TDEIO::UDS_SIZE, 0);
+	addAtom(entry, TDEIO::UDS_LOCAL_PATH, 0, localPath);
+	addAtom(entry, TDEIO::UDS_CREATION_TIME, 1);
+	addAtom(entry, TDEIO::UDS_MODIFICATION_TIME, time(0));
+	addAtom(entry, TDEIO::UDS_ICON_NAME, 0, iconName);
 }
 
-static void createDirEntry(KIO::UDSEntry& entry, const TQString& name, const TQString& url, const TQString& mime,const TQString& iconName)
+static void createDirEntry(TDEIO::UDSEntry& entry, const TQString& name, const TQString& url, const TQString& mime,const TQString& iconName)
 {
 	entry.clear();
-	addAtom(entry, KIO::UDS_NAME, 0, name);
-	addAtom(entry, KIO::UDS_FILE_TYPE, S_IFDIR);
-	addAtom(entry, KIO::UDS_ACCESS, 0500);
-	addAtom(entry, KIO::UDS_MIME_TYPE, 0, mime);
-	addAtom(entry, KIO::UDS_URL, 0, url);
-	addAtom(entry, KIO::UDS_SIZE, 0);
-	addAtom(entry, KIO::UDS_ICON_NAME, 0, iconName);
+	addAtom(entry, TDEIO::UDS_NAME, 0, name);
+	addAtom(entry, TDEIO::UDS_FILE_TYPE, S_IFDIR);
+	addAtom(entry, TDEIO::UDS_ACCESS, 0500);
+	addAtom(entry, TDEIO::UDS_MIME_TYPE, 0, mime);
+	addAtom(entry, TDEIO::UDS_URL, 0, url);
+	addAtom(entry, TDEIO::UDS_SIZE, 0);
+	addAtom(entry, TDEIO::UDS_ICON_NAME, 0, iconName);
 }
 
 SettingsProtocol::SettingsProtocol( const TQCString &protocol, const TQCString &pool, const TQCString &app): SlaveBase( protocol, pool, app )
@@ -173,14 +173,14 @@ void SettingsProtocol::get( const KURL & url )
 		redirection(redirUrl);
 		finished();
 	} else {
-		error( KIO::ERR_IS_DIRECTORY, url.prettyURL() );
+		error( TDEIO::ERR_IS_DIRECTORY, url.prettyURL() );
 	}
 }
 
 
 void SettingsProtocol::stat(const KURL& url)
 {
-	KIO::UDSEntry entry;
+	TDEIO::UDSEntry entry;
 
 	TQString servicePath( url.path(1) );
 	servicePath.remove(0, 1); // remove starting '/'
@@ -203,7 +203,7 @@ void SettingsProtocol::stat(const KURL& url)
 			createFileEntry(entry, service->name(), url.url(1)+service->desktopEntryName(),
                             "application/x-desktop", service->icon(), locate("apps", service->desktopEntryPath()) );
 		} else {
-			error(KIO::ERR_SLAVE_DEFINED,i18n("Unknown settings folder"));
+			error(TDEIO::ERR_SLAVE_DEFINED,i18n("Unknown settings folder"));
 			return;
 		}
 	}
@@ -227,13 +227,13 @@ void SettingsProtocol::listDir(const KURL& url)
 	if (!grp || !grp->isValid()) {
 		grp = findGroup(groupPath);
 		if (!grp || !grp->isValid()) {
-		    error(KIO::ERR_SLAVE_DEFINED,i18n("Unknown settings folder"));
+		    error(TDEIO::ERR_SLAVE_DEFINED,i18n("Unknown settings folder"));
 		    return;
 		}
 	}
 
 	unsigned int count = 0;
-	KIO::UDSEntry entry;
+	TDEIO::UDSEntry entry;
 
 	KServiceGroup::List list = grp->entries(true, true);
 	KServiceGroup::List::ConstIterator it;

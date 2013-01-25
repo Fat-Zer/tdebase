@@ -28,7 +28,7 @@
 
 class TQListBoxItem;
 class KEMailSettings;
-class KConfig;
+class TDEConfig;
 
 /* The CfgPlugin  class is an exception. It is LGPL. It will be parted of the plugin interface
 	which I plan for KDE 3.2.
@@ -38,8 +38,8 @@ class CfgPlugin
 public:
 	CfgPlugin(){};
 	virtual ~CfgPlugin(){};
-	virtual void load(KConfig *cfg)=0;
-	virtual void save(KConfig *cfg)=0;
+	virtual void load(TDEConfig *cfg)=0;
+	virtual void save(TDEConfig *cfg)=0;
 	virtual void defaults()=0;
 };
 
@@ -50,8 +50,8 @@ Q_OBJECT
 public:
 	CfgComponent(TQWidget *parent);
 	virtual ~CfgComponent();
-	virtual void load(KConfig *cfg);
-	virtual void save(KConfig *cfg);
+	virtual void load(TDEConfig *cfg);
+	virtual void save(TDEConfig *cfg);
 	virtual void defaults();
 
 protected:
@@ -70,8 +70,8 @@ Q_OBJECT
 public:
 	CfgEmailClient(TQWidget *parent);
 	virtual ~CfgEmailClient();
-	virtual void load(KConfig *cfg);
-	virtual void save(KConfig *cfg);
+	virtual void load(TDEConfig *cfg);
+	virtual void save(TDEConfig *cfg);
 	virtual void defaults();
 
 private:
@@ -90,8 +90,8 @@ Q_OBJECT
 public:
 	CfgTerminalEmulator(TQWidget *parent);
 	virtual ~CfgTerminalEmulator();
-	virtual void load(KConfig *cfg);
-	virtual void save(KConfig *cfg);
+	virtual void load(TDEConfig *cfg);
+	virtual void save(TDEConfig *cfg);
 	virtual void defaults();
 
 protected slots:
@@ -108,8 +108,8 @@ Q_OBJECT
 public:
 	CfgBrowser(TQWidget *parent);
 	virtual ~CfgBrowser();
-	virtual void load(KConfig *cfg);
-	virtual void save(KConfig *cfg);
+	virtual void load(TDEConfig *cfg);
+	virtual void save(TDEConfig *cfg);
 	virtual void defaults();
 
 protected slots:

@@ -5,7 +5,7 @@
 #include "kcmstyle.h"
 
 extern "C" {
-    KCModule *create_style(TQWidget *parent, const char *) {
+    TDECModule *create_style(TQWidget *parent, const char *) {
       return new KCMStyle(parent, "kcmstyle");
     }
 }

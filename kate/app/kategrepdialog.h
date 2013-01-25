@@ -31,7 +31,7 @@ class TQListBox;
 class KPushButton;
 class TQLabel;
 class TDEProcess;
-class KConfig;
+class TDEConfig;
 class KURLRequester;
 class TQEvent;
 
@@ -85,7 +85,7 @@ private:
     TDEProcess *childproc;
     TQString buf;
     TQString errbuf;
-    KConfig* config;
+    TDEConfig* config;
     TQStringList lastSearchItems;
     TQStringList lastSearchPaths;
     TQStringList lastSearchFiles;

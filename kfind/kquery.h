@@ -23,7 +23,7 @@ class KQuery : public TQObject
   KQuery(TQObject *parent = 0, const char * name = 0);
   ~KQuery();
 
-  void setSizeRange( int mode, KIO::filesize_t value1, KIO::filesize_t value2 );
+  void setSizeRange( int mode, TDEIO::filesize_t value1, TDEIO::filesize_t value2 );
   void setTimeRange( time_t from, time_t to );
   void setRegExp( const TQString &regexp, bool caseSensitive );
   void setRecursive( bool recursive );
@@ -50,9 +50,9 @@ class KQuery : public TQObject
   void slotListEntries(TQStringList);
  protected slots:
   /* List of files found using KIO */
-  void slotListEntries(KIO::Job *, const KIO::UDSEntryList &);
-  void slotResult(KIO::Job *);
-  void slotCanceled(KIO::Job *);
+  void slotListEntries(TDEIO::Job *, const TDEIO::UDSEntryList &);
+  void slotResult(TDEIO::Job *);
+  void slotCanceled(TDEIO::Job *);
   void slotreceivedSdtout(TDEProcess*,char*,int);
   void slotreceivedSdterr(TDEProcess*,char*,int);
   void slotendProcessLocate(TDEProcess*);
@@ -66,8 +66,8 @@ class KQuery : public TQObject
 
   int m_filetype;
   int m_sizemode;
-  KIO::filesize_t m_sizeboundary1;
-  KIO::filesize_t m_sizeboundary2;
+  TDEIO::filesize_t m_sizeboundary1;
+  TDEIO::filesize_t m_sizeboundary2;
   KURL m_url;
   time_t m_timeFrom;
   time_t m_timeTo;
@@ -89,7 +89,7 @@ class KQuery : public TQObject
   TDEProcess *processLocate;
   TQPtrList<TQRegExp> m_regexps;// regexps for file name
 //  TQValueList<bool> m_regexpsContainsGlobs;  // what should this be good for ? Alex
-  KIO::ListJob *job;
+  TDEIO::ListJob *job;
   bool m_insideCheckEntries;
   TQPtrQueue<KFileItem> m_fileItems;
   TQRegExp* metaKeyRx;

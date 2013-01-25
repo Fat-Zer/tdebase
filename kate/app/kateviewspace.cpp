@@ -233,7 +233,7 @@ void KateViewSpace::slotStatusChanged (Kate::View *view, int r, int c, int ovr, 
   mStatusBar->setStatus( r, c, ovr, block, mod, msg );
 }
 
-void KateViewSpace::saveConfig ( KConfig* config, int myIndex ,const TQString& viewConfGrp)
+void KateViewSpace::saveConfig ( TDEConfig* config, int myIndex ,const TQString& viewConfGrp)
 {
 //   kdDebug()<<"KateViewSpace::saveConfig("<<myIndex<<", "<<viewConfGrp<<") - currentView: "<<currentView()<<")"<<endl;
   TQString group = TQString(viewConfGrp+"-ViewSpace %1").arg( myIndex );
@@ -272,7 +272,7 @@ void KateViewSpace::modifiedOnDisc(Kate::Document *, bool, unsigned char)
     mStatusBar->updateMod( currentView()->getDoc()->isModified() );
 }
 
-void KateViewSpace::restoreConfig ( KateViewSpaceContainer *viewMan, KConfig* config, const TQString &group )
+void KateViewSpace::restoreConfig ( KateViewSpaceContainer *viewMan, TDEConfig* config, const TQString &group )
 {
   config->setGroup (group);
   TQString fn = config->readEntry( "Active View" );

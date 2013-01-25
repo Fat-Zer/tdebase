@@ -58,7 +58,7 @@ int my_reset_handler(raw1394handle_t handle, unsigned int )
 
 
 View1394::View1394(TQWidget *parent, const char *name)
-:KCModule(parent,name)
+:TDECModule(parent,name)
 ,m_insideRescanBus(false)
 {
    setQuickHelp( i18n("On the right hand side you can see some information about "
@@ -75,7 +75,7 @@ View1394::View1394(TQWidget *parent, const char *name)
                "<b>Acc</b>: the cycle clock accuracy of the node, valid from 0 to 100<br>"
                "<b>Speed</b>: the speed of the node<br>"));
 
-   setButtons( KCModule::Help );
+   setButtons( TDECModule::Help );
 
    m_ouiDb=new OuiDb();
    TQVBoxLayout *box=new TQVBoxLayout(this, 0, KDialog::spacingHint());
@@ -323,7 +323,7 @@ TQString OuiDb::vendor(octlet_t guid)
 extern "C"
 {
 
-   KDE_EXPORT KCModule *create_view1394(TQWidget *parent, const char *name)
+   KDE_EXPORT TDECModule *create_view1394(TQWidget *parent, const char *name)
    {
       TDEGlobal::locale()->insertCatalogue("kcmview1394");
       return new View1394(parent, name);

@@ -388,7 +388,7 @@ void Workspace::init()
         initial_desktop = client_info.currentDesktop();
     else
         {
-        KConfigGroupSaver saver( kapp->sessionConfig(), "Session" );
+        TDEConfigGroupSaver saver( kapp->sessionConfig(), "Session" );
         initial_desktop = kapp->sessionConfig()->readNumEntry( "desktop", 1 );
         }
     if( !setCurrentDesktop( initial_desktop ))
@@ -1146,13 +1146,13 @@ void Workspace::slotReconfigure()
 
 void Workspace::loadDesktopSettings()
     {
-    KConfig* c = TDEGlobal::config();
+    TDEConfig* c = TDEGlobal::config();
     TQCString groupname;
     if (screen_number == 0)
         groupname = "Desktops";
     else
         groupname.sprintf("Desktops-screen-%d", screen_number);
-    KConfigGroupSaver saver(c,groupname);
+    TDEConfigGroupSaver saver(c,groupname);
 
     int n = c->readNumEntry("Number", 4);
     number_of_desktops = n;
@@ -1175,13 +1175,13 @@ void Workspace::loadDesktopSettings()
 
 void Workspace::saveDesktopSettings()
     {
-    KConfig* c = TDEGlobal::config();
+    TDEConfig* c = TDEGlobal::config();
     TQCString groupname;
     if (screen_number == 0)
         groupname = "Desktops";
     else
         groupname.sprintf("Desktops-screen-%d", screen_number);
-    KConfigGroupSaver saver(c,groupname);
+    TDEConfigGroupSaver saver(c,groupname);
 
     c->writeEntry("Number", number_of_desktops );
     for(int i = 1; i <= number_of_desktops; i++) 
@@ -2765,7 +2765,7 @@ void Workspace::helperDialog( const TQString& message, const Client* c )
     proc << "kdialog" << args;
     if( !type.isEmpty())
         {
-        KConfig cfg( "twin_dialogsrc" );
+        TDEConfig cfg( "twin_dialogsrc" );
         cfg.setGroup( "Notification Messages" ); // this depends on KMessageBox
         if( !cfg.readBoolEntry( type, true )) // has don't show again checked
             return;                           // save launching kdialog

@@ -24,7 +24,7 @@
 #include "kcrootonly.h"
 
 KCRootOnly::KCRootOnly(TQWidget *parent, const char *name)
-  : KCModule(parent, name)
+  : TDECModule(parent, name)
 {
    TQVBoxLayout *layout=new TQVBoxLayout(this);
    TQLabel *label = new TQLabel(i18n("<big>You need super user privileges to run this control module.</big><br>"

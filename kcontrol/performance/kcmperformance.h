@@ -28,7 +28,7 @@ class Konqueror;
 class SystemWidget;
 
 class Config
-    : public KCModule
+    : public TDECModule
     {
     Q_OBJECT
     public:
@@ -43,7 +43,7 @@ class Config
     };
 
 class KonquerorConfig
-    : public KCModule
+    : public TDECModule
     {
     Q_OBJECT
     public:

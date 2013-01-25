@@ -399,7 +399,7 @@ TQString KInfoListWidget::quickHelp() const
 
 KInfoListWidget::KInfoListWidget(const TQString &_title, TQWidget *parent, const char *name,
                                  bool _getlistbox(TQListView *lbox))
-    : KCModule(parent, name),
+    : TDECModule(parent, name),
       title(_title)
 {
     TDEAboutData *about =
@@ -411,7 +411,7 @@ KInfoListWidget::KInfoListWidget(const TQString &_title, TQWidget *parent, const
     about->addAuthor("Helge Deller", 0, "deller@kde.org");
     setAboutData( about );
 
-    setButtons(KCModule::Help);
+    setButtons(TDECModule::Help);
     getlistbox 	= _getlistbox;
     GetInfo_ErrorString = 0;
     TQHBoxLayout *layout = new TQHBoxLayout(this, 0, KDialog::spacingHint());

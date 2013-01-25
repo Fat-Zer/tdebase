@@ -20,7 +20,7 @@
 
 extern "C"
 {
-  ThemeEngineConfig *KsThemeConfig( TQWidget *parent, KConfig *config )
+  ThemeEngineConfig *KsThemeConfig( TQWidget *parent, TDEConfig *config )
   {
     return new CfgRedmond( parent, config );
   }

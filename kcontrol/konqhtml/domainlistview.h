@@ -29,7 +29,7 @@ class TQListViewItem;
 class TQPushButton;
 class TQStringList;
 
-class KConfig;
+class TDEConfig;
 class KListView;
 
 class Policies;
@@ -67,7 +67,7 @@ public:
    * @param parent parent widget
    * @param name internal name for debugging
    */
-  DomainListView(KConfig *config,const TQString &title,TQWidget *parent,
+  DomainListView(TDEConfig *config,const TQString &title,TQWidget *parent,
   		const char *name = 0);
 
   virtual ~DomainListView();
@@ -191,7 +191,7 @@ private slots:
 
 protected:
 
-    KConfig *config;
+    TDEConfig *config;
 
   KListView *domainSpecificLV;
 

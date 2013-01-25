@@ -65,7 +65,7 @@ signals:
 
 protected:
     void init();
-    void setupExtensionInfo(KConfig& c, bool checkExists, bool reloadIfExists = false);
+    void setupExtensionInfo(TDEConfig& c, bool checkExists, bool reloadIfExists = false);
 
 protected slots:
     void configChanged(const TQString&);

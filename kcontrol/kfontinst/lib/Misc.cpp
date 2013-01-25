@@ -190,11 +190,11 @@ void getAssociatedUrls(const KURL &url, KURL::List &list, bool afmAndPfm, TQWidg
     for(e=0; afm[e]; ++e)
     {
         KURL statUrl(url);
-        KIO::UDSEntry uds;
+        TDEIO::UDSEntry uds;
 
         statUrl.setPath(changeExt(url.path(), afm[e]));
 
-        if(localFile ? fExists(statUrl.path()) : KIO::NetAccess::stat(statUrl, uds, widget))
+        if(localFile ? fExists(statUrl.path()) : TDEIO::NetAccess::stat(statUrl, uds, widget))
         {
             list.append(statUrl);
             gotAfm=true;
@@ -206,10 +206,10 @@ void getAssociatedUrls(const KURL &url, KURL::List &list, bool afmAndPfm, TQWidg
         for(e=0; pfm[e]; ++e)
         {
             KURL          statUrl(url);
-            KIO::UDSEntry uds;
+            TDEIO::UDSEntry uds;
 
             statUrl.setPath(changeExt(url.path(), pfm[e]));
-            if(localFile ? fExists(statUrl.path()) : KIO::NetAccess::stat(statUrl, uds, widget))
+            if(localFile ? fExists(statUrl.path()) : TDEIO::NetAccess::stat(statUrl, uds, widget))
             {
                 list.append(statUrl);
                 break;

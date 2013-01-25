@@ -43,40 +43,40 @@
 
 extern "C"
 {
-	KDE_EXPORT KCModule *create_khtml_behavior(TQWidget *parent, const char *name)
+	KDE_EXPORT TDECModule *create_khtml_behavior(TQWidget *parent, const char *name)
 	{
-		KConfig *c = new KConfig( "konquerorrc", false, false );
+		TDEConfig *c = new TDEConfig( "konquerorrc", false, false );
 		return new KMiscHTMLOptions(c, "HTML Settings", parent, name);
 	}
 
-	KDE_EXPORT KCModule *create_khtml_fonts(TQWidget *parent, const char *name)
+	KDE_EXPORT TDECModule *create_khtml_fonts(TQWidget *parent, const char *name)
 	{
-		KConfig *c = new KConfig( "konquerorrc", false, false );
+		TDEConfig *c = new TDEConfig( "konquerorrc", false, false );
 		return new KAppearanceOptions(c, "HTML Settings", parent, name);
 	}
 
-	KDE_EXPORT KCModule *create_khtml_java_js(TQWidget *parent, const char* /*name*/)
+	KDE_EXPORT TDECModule *create_khtml_java_js(TQWidget *parent, const char* /*name*/)
 	{
-		KConfig *c = new KConfig( "konquerorrc", false, false );
+		TDEConfig *c = new TDEConfig( "konquerorrc", false, false );
 		return new KJSParts(c, parent, "kcmkonqhtml");
 	}
 
-	KDE_EXPORT KCModule *create_khtml_plugins(TQWidget *parent, const char *name)
+	KDE_EXPORT TDECModule *create_khtml_plugins(TQWidget *parent, const char *name)
 	{
-		KConfig *c = new KConfig( "konquerorrc", false, false );
+		TDEConfig *c = new TDEConfig( "konquerorrc", false, false );
 		return new KPluginOptions(c, "Java/JavaScript Settings", parent, name);
 	}
 
-        KDE_EXPORT KCModule *create_khtml_filter(TQWidget *parent, const char *name )
+        KDE_EXPORT TDECModule *create_khtml_filter(TQWidget *parent, const char *name )
         {
-	    KConfig *c = new KConfig( "khtmlrc", false, false );
+	    TDEConfig *c = new TDEConfig( "khtmlrc", false, false );
             return new KCMFilter(c, "Filter Settings", parent, name);
         }
 }
 
 
-KJSParts::KJSParts(KConfig *config, TQWidget *parent, const char *name)
-	: KCModule(parent, name), mConfig(config)
+KJSParts::KJSParts(TDEConfig *config, TQWidget *parent, const char *name)
+	: TDECModule(parent, name), mConfig(config)
 {
   TDEAboutData *about =
   new TDEAboutData(I18N_NOOP("kcmkonqhtml"), I18N_NOOP("Konqueror Browsing Control Module"),

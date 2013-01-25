@@ -38,11 +38,11 @@ class URLButton : public PanelButton
 
 public:
     URLButton( const TQString& url, TQWidget* parent );
-    URLButton( const KConfigGroup& config, TQWidget* parent );
+    URLButton( const TDEConfigGroup& config, TQWidget* parent );
 
     virtual ~URLButton();
 
-    void saveConfig( KConfigGroup& config ) const;
+    void saveConfig( TDEConfigGroup& config ) const;
 
     virtual void properties();
 

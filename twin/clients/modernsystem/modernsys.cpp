@@ -217,7 +217,7 @@ void ModernSysFactory::read_config()
     bool showh;
     int hsize, hwidth, bwidth, theight;
 
-    KConfig c("twinmodernsysrc");
+    TDEConfig c("twinmodernsysrc");
     c.setGroup("General");
     showh = c.readBoolEntry("ShowHandle", true);
 

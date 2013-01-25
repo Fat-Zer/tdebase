@@ -366,13 +366,13 @@ extern "C" int KDE_EXPORT kdemain(int argc, char* argv[])
   if (args->isSet("schema"))
     schema = args->getOption("schema");
 
-  KConfig * sessionconfig = 0;
+  TDEConfig * sessionconfig = 0;
   TQString profile = "";
   if (args->isSet("profile")) {
     profile = args->getOption("profile");
     TQString path = locate( "data", "konsole/profiles/" + profile );
     if ( TQFile::exists( path ) )
-      sessionconfig=new KConfig( path, true );
+      sessionconfig=new TDEConfig( path, true );
     else
       profile = "";
   }

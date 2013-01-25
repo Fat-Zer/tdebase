@@ -61,7 +61,7 @@ KSimpleConfig *systemconfig;
 /**** TDEHWManager ****/
 
 TDEHWManager::TDEHWManager(TQWidget *parent, const char *name, const TQStringList &)
-  : KCModule(TDEHWManagerFactory::instance(), parent, name)
+  : TDECModule(TDEHWManagerFactory::instance(), parent, name)
 {
 	TQVBoxLayout *layout = new TQVBoxLayout(this, KDialog::marginHint(), KDialog::spacingHint());
 	config = new KSimpleConfig( TQString::fromLatin1( "hwmanagerrc" ));

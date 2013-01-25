@@ -79,7 +79,7 @@ KURL *decodeImgDrop(TQDropEvent *e, TQWidget *wdg)
 KSimpleConfig *config;
 
 TDModule::TDModule(TQWidget *parent, const char *name, const TQStringList &)
-  : KCModule(TDMFactory::instance(), parent, name)
+  : TDECModule(TDMFactory::instance(), parent, name)
   , minshowuid(0)
   , maxshowuid(0)
   , updateOK(false)

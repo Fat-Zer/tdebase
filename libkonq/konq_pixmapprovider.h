@@ -27,7 +27,7 @@
 
 #include <libkonq_export.h>
 
-class KConfig;
+class TDEConfig;
 
 class LIBKONQ_EXPORT KonqPixmapProvider : public KonqFavIconMgr, virtual public KPixmapProvider
 {
@@ -42,14 +42,14 @@ public:
     virtual TQPixmap pixmapFor( const TQString& url, int size = 0 );
 
     /**
-     * Loads the cache to @p kc from the current KConfig-group from key @p key.
+     * Loads the cache to @p kc from the current TDEConfig-group from key @p key.
      */
-    void load( KConfig * kc, const TQString& key );
+    void load( TDEConfig * kc, const TQString& key );
     /**
-     * Saves the cache to @p kc into the current KConfig-group as key @p key.
+     * Saves the cache to @p kc into the current TDEConfig-group as key @p key.
      * Only those @p items are saved, otherwise the cache would grow forever.
      */
-    void save( KConfig *, const TQString& key, const TQStringList& items );
+    void save( TDEConfig *, const TQString& key, const TQStringList& items );
 
     /**
      * Clears the pixmap cache

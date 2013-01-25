@@ -32,7 +32,7 @@ TQStringList getSearchPaths()
 {
     TQStringList searchPaths;
 
-    KConfig *config = new KConfig("kcmnspluginrc", false);
+    TDEConfig *config = new TDEConfig("kcmnspluginrc", false);
     config->setGroup("Misc");
 
     // setup default paths

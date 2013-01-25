@@ -26,7 +26,7 @@
 #include "notifiersettings.h"
 #include "notifiermoduleview.h"
 
-class NotifierModule : public KCModule
+class NotifierModule : public TDECModule
 {
 	Q_OBJECT
 

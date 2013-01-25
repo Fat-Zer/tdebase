@@ -65,7 +65,7 @@ NonKDEAppButton::NonKDEAppButton(const TQString& name,
 }
 
 // this constructor is used when restoring a button, usually at startup
-NonKDEAppButton::NonKDEAppButton( const KConfigGroup& config, TQWidget* parent )
+NonKDEAppButton::NonKDEAppButton( const TDEConfigGroup& config, TQWidget* parent )
   : PanelButton(parent, "NonKDEAppButton") // call our superclass's constructor
 {
     // call the initialization method, this time with values from a config file
@@ -129,7 +129,7 @@ void NonKDEAppButton::initialize(const TQString& name,
     setIcon(iconStr);
 }
 
-void NonKDEAppButton::saveConfig( KConfigGroup& config ) const
+void NonKDEAppButton::saveConfig( TDEConfigGroup& config ) const
 {
     // this is called whenever we change something
     // the config object sent in will already be set to the
@@ -223,7 +223,7 @@ void NonKDEAppButton::runCommand(const TQString& execStr)
         // run in a terminal? ok! we find this in the config file in the
         // [misc] group (this will usually be in kdeglobal, actually, which
         // get merged into the application config automagically for us
-        KConfig *config = TDEGlobal::config();
+        TDEConfig *config = TDEGlobal::config();
         config->setGroup("misc");
         TQString termStr = config->readPathEntry("Terminal", "konsole");
 

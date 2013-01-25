@@ -32,7 +32,7 @@
 #include "mimetypelistboxitem.h"
 
 NotifierModule::NotifierModule(TQWidget *parent, const char *name)
-	: KCModule(parent, name)
+	: TDECModule(parent, name)
 {
 	TQBoxLayout *layout = new TQVBoxLayout( this, 0, KDialog::spacingHint() );
 	

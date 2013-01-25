@@ -85,7 +85,7 @@ KCMDnssd::~KCMDnssd()
 void KCMDnssd::save()
 {
 	setCursor(TQCursor(Qt::BusyCursor));
-	KCModule::save();
+	TDECModule::save();
 	if (geteuid()==0 && m_wdchanged) saveMdnsd(); 
 	domain->setFileWriteMode(0644); // this should be readable for everyone
 	domain->writeEntry("PublishDomain",domainedit->text());
@@ -132,7 +132,7 @@ void KCMDnssd::load()
 	} else if (exitStatus == 2) { // custom setup
 	  enableZeroconf->setEnabled(false);
 	}
-	KCModule::load();
+	TDECModule::load();
 }
 
 // hack to work around not working isModified() for KPasswordEdit

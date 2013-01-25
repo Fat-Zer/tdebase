@@ -26,7 +26,7 @@
 #include <kio/slavebase.h>
 
 
-class AboutProtocol : public KIO::SlaveBase
+class AboutProtocol : public TDEIO::SlaveBase
 {
 public:
     AboutProtocol(const TQCString &pool_socket, const TQCString &app_socket);

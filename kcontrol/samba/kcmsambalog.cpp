@@ -34,7 +34,7 @@
 
 #define LOG_SCREEN_XY_OFFSET 10
 
-LogView::LogView(TQWidget *parent,KConfig *config, const char *name)
+LogView::LogView(TQWidget *parent,TDEConfig *config, const char *name)
 : TQWidget (parent, name)
 ,configFile(config)
 ,filesCount(0)

@@ -129,7 +129,7 @@ void LookAndFeelTab::previewBackground(const TQString& themepath, bool isNew)
             KickerLib::colorize(tmpImg);
         theme_preview.convertFromImage(tmpImg);
         if(!theme_preview.isNull()) {
-            // avoid getting changed(true) from KConfigDialogManager for the default value
+            // avoid getting changed(true) from TDEConfigDialogManager for the default value
             if( KickerSettings::backgroundTheme() == themepath )
                 KickerSettings::setBackgroundTheme( theme );
             kcfg_BackgroundTheme->lineEdit()->setText(theme);
@@ -154,7 +154,7 @@ void LookAndFeelTab::load()
 
 void LookAndFeelTab::load(bool useDefaults)
 {
-    KConfig config(KickerConfig::the()->configName(), false, false);
+    TDEConfig config(KickerConfig::the()->configName(), false, false);
 
     config.setReadDefaults( useDefaults );
 
@@ -227,7 +227,7 @@ void LookAndFeelTab::load(bool useDefaults)
 
 void LookAndFeelTab::save()
 {
-    KConfig config(KickerConfig::the()->configName(), false, false);
+    TDEConfig config(KickerConfig::the()->configName(), false, false);
 
     config.setGroup("General");
 

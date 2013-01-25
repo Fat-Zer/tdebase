@@ -139,7 +139,7 @@ int main(int argc, char *argv[])
 
 	TQStringList saverFileList;
 
-	KConfig type("krandom.kssrc");
+	TDEConfig type("krandom.kssrc");
 	type.setGroup("Settings");
 	bool opengl = type.readBoolEntry("OpenGL", hasDirectRendering());
         kdDebug() << "hasOPEN " << opengl << endl;
@@ -273,7 +273,7 @@ KRandomSetup::KRandomSetup( TQWidget *parent, const char *name )
 
 	setMinimumSize( sizeHint() );
 
-	KConfig config("krandom.kssrc");
+	TDEConfig config("krandom.kssrc");
 	config.setGroup("Settings");
 	openGL->setChecked(config.readBoolEntry("OpenGL", hasDirectRendering()));
 	manipulateScreen->setChecked(config.readBoolEntry("ManipulateScreen", true));
@@ -281,7 +281,7 @@ KRandomSetup::KRandomSetup( TQWidget *parent, const char *name )
 
 void KRandomSetup::slotOk()
 {
-	KConfig config("krandom.kssrc");
+	TDEConfig config("krandom.kssrc");
 	config.setGroup("Settings");
 	config.writeEntry("OpenGL", openGL->isChecked());
 	config.writeEntry("ManipulateScreen", manipulateScreen->isChecked());

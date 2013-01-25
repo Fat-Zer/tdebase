@@ -130,7 +130,7 @@ protected slots:
 	void saveConfig();
 
 signals:
-	void started(KIO::Job *);
+	void started(TDEIO::Job *);
 	void completed();
 	void fileSelection(const KFileItemList& iems);
 	void fileMouseOver(const KFileItem& item);
@@ -191,7 +191,7 @@ private:
 	TQGuardedPtr<ButtonInfo> m_activeModule;
 	TQGuardedPtr<ButtonInfo> m_currentButton;
 	
-	KConfig *m_config;
+	TDEConfig *m_config;
 	TQTimer m_configTimer;
 	
 	KURL m_storedUrl;

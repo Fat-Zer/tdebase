@@ -71,7 +71,7 @@ static TQString findExe(const TQString &exe) {
 }
 
 KScreenSaver::KScreenSaver(TQWidget *parent, const char *name, const TQStringList&)
-    : KCModule(KSSFactory::instance(), parent, name)
+    : TDECModule(KSSFactory::instance(), parent, name)
 {
     mSetupProc = 0;
     mPreviewProc = 0;
@@ -96,7 +96,7 @@ KScreenSaver::KScreenSaver(TQWidget *parent, const char *name, const TQStringLis
        " the \"Require password\" feature of the screen saver; if you do not, you can still"
        " explicitly lock the session using the desktop's \"Lock Session\" action."));
 
-    setButtons( KCModule::Help | KCModule::Default | KCModule::Apply );
+    setButtons( TDECModule::Help | TDECModule::Default | TDECModule::Apply );
 
     // Add KDE specific screensaver path
     TQString relPath="System/ScreenSavers/";
@@ -384,7 +384,7 @@ void KScreenSaver::load( bool useDefaults )
 //
 void KScreenSaver::readSettings( bool useDefaults )
 {
-    KConfig *config = new KConfig( "kdesktoprc");
+    TDEConfig *config = new TDEConfig( "kdesktoprc");
 
 	 config->setReadDefaults( useDefaults );
 
@@ -437,7 +437,7 @@ void KScreenSaver::save()
     if ( !mChanged )
         return;
 
-    KConfig *config = new KConfig( "kdesktoprc");
+    TDEConfig *config = new TDEConfig( "kdesktoprc");
     config->setGroup( "ScreenSaver" );
 
     config->writeEntry("Enabled", mEnabled);

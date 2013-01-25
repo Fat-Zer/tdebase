@@ -58,7 +58,7 @@ class NFSFileHandle
 typedef TQMap<TQString,NFSFileHandle> NFSFileHandleMap;
 
 
-class NFSProtocol : public KIO::SlaveBase
+class NFSProtocol : public TDEIO::SlaveBase
 {
    public:
       NFSProtocol (const TQCString &pool, const TQCString &app );
@@ -80,12 +80,12 @@ class NFSProtocol : public KIO::SlaveBase
       virtual void rename(const KURL &src, const KURL &dest, bool overwrite);
       virtual void copy( const KURL& src, const KURL &dest, int mode, bool overwrite );
    protected:
-//      void createVirtualDirEntry(KIO::UDSEntry & entry);
+//      void createVirtualDirEntry(TDEIO::UDSEntry & entry);
       bool checkForError(int clientStat, int nfsStat, const TQString& text);
       bool isExportedDir(const TQString& path);
-      void completeUDSEntry(KIO::UDSEntry& entry, fattr& attributes);
-      void completeBadLinkUDSEntry(KIO::UDSEntry& entry, fattr& attributes);
-      void completeAbsoluteLinkUDSEntry(KIO::UDSEntry& entry, const TQCString& path);
+      void completeUDSEntry(TDEIO::UDSEntry& entry, fattr& attributes);
+      void completeBadLinkUDSEntry(TDEIO::UDSEntry& entry, fattr& attributes);
+      void completeAbsoluteLinkUDSEntry(TDEIO::UDSEntry& entry, const TQCString& path);
       bool isValidLink(const TQString& parentDir, const TQString& linkDest);
 //      bool isAbsoluteLink(const TQString& path);
       

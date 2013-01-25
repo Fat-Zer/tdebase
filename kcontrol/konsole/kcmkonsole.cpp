@@ -37,7 +37,7 @@ typedef KGenericFactory<KCMKonsole, TQWidget> ModuleFactory;
 K_EXPORT_COMPONENT_FACTORY( kcm_konsole, ModuleFactory("kcmkonsole") )
 
 KCMKonsole::KCMKonsole(TQWidget * parent, const char *name, const TQStringList&)
-:KCModule(ModuleFactory::instance(), parent, name)
+:TDECModule(ModuleFactory::instance(), parent, name)
 {
     
     setQuickHelp( i18n("<h1>Konsole</h1> With this module you can configure Konsole, the KDE terminal"
@@ -87,7 +87,7 @@ void KCMKonsole::load()
 
 void KCMKonsole::load(bool useDefaults)
 {
-    KConfig config("konsolerc", true);
+    TDEConfig config("konsolerc", true);
     config.setDesktopGroup();
     config.setReadDefaults(useDefaults);
 
@@ -126,7 +126,7 @@ void KCMKonsole::save()
        dialog->SessionEditor1->querySave();
     }
 
-    KConfig config("konsolerc");
+    TDEConfig config("konsolerc");
     config.setDesktopGroup();
 
     config.writeEntry("TerminalSizeHint", dialog->terminalSizeHintCB->isChecked());

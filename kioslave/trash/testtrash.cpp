@@ -197,12 +197,12 @@ void TestTrash::setup()
 
     // Start with a clean base dir
     if ( TQFileInfo( homeTmpDir() ).exists() ) {
-        bool ok = KIO::NetAccess::del( homeTmpDir(), 0 );
+        bool ok = TDEIO::NetAccess::del( homeTmpDir(), 0 );
         if ( !ok )
             kdFatal() << "Couldn't delete " << homeTmpDir() << endl;
     }
     if ( TQFileInfo( otherTmpDir() ).exists() ) {
-        bool ok = KIO::NetAccess::del( otherTmpDir(), 0 );
+        bool ok = TDEIO::NetAccess::del( otherTmpDir(), 0 );
         if ( !ok )
             kdFatal() << "Couldn't delete " << otherTmpDir() << endl;
     }
@@ -249,11 +249,11 @@ void TestTrash::cleanTrash()
     removeFile( m_trashDir, "/info/trashDirFromOther.trashinfo" );
     removeFile( m_trashDir, "/files/trashDirFromOther/testfile" );
     removeDir( m_trashDir, "/files/trashDirFromOther" );
-    KIO::NetAccess::del( m_trashDir + "/files/readonly", 0 );
+    TDEIO::NetAccess::del( m_trashDir + "/files/readonly", 0 );
     // for trashDirectoryOwnedByRoot
-    KIO::NetAccess::del( m_trashDir + "/files/cups", 0 );
-    KIO::NetAccess::del( m_trashDir + "/files/boot", 0 );
-    KIO::NetAccess::del( m_trashDir + "/files/etc", 0 );
+    TDEIO::NetAccess::del( m_trashDir + "/files/cups", 0 );
+    TDEIO::NetAccess::del( m_trashDir + "/files/boot", 0 );
+    TDEIO::NetAccess::del( m_trashDir + "/files/etc", 0 );
 
     //system( "find ~/.local-testtrash/share/Trash" );
 }
@@ -405,12 +405,12 @@ void TestTrash::trashFile( const TQString& origFilePath, const TQString& fileId 
     u.setPath( origFilePath );
 
     // test
-    KIO::Job* job = KIO::move( u, "trash:/" );
+    TDEIO::Job* job = TDEIO::move( u, "trash:/" );
     TQMap<TQString, TQString> metaData;
-    //bool ok = KIO::NetAccess::move( u, "trash:/" );
-    bool ok = KIO::NetAccess::synchronousRun( job, 0, 0, 0, &metaData );
+    //bool ok = TDEIO::NetAccess::move( u, "trash:/" );
+    bool ok = TDEIO::NetAccess::synchronousRun( job, 0, 0, 0, &metaData );
     if ( !ok )
-        kdError() << "moving " << u << " to trash failed with error " << KIO::NetAccess::lastError() << " " << KIO::NetAccess::lastErrorString() << endl;
+        kdError() << "moving " << u << " to trash failed with error " << TDEIO::NetAccess::lastError() << " " << TDEIO::NetAccess::lastErrorString() << endl;
     assert( ok );
     if ( origFilePath.startsWith( "/tmp" ) && m_tmpIsWritablePartition ) {
         kdDebug() << " TESTS SKIPPED" << endl;
@@ -512,9 +512,9 @@ void TestTrash::trashFileIntoOtherPartition()
     u.setPath( origFilePath );
 
     // test
-    KIO::Job* job = KIO::move( u, "trash:/" );
+    TDEIO::Job* job = TDEIO::move( u, "trash:/" );
     TQMap<TQString, TQString> metaData;
-    bool ok = KIO::NetAccess::synchronousRun( job, 0, 0, 0, &metaData );
+    bool ok = TDEIO::NetAccess::synchronousRun( job, 0, 0, 0, &metaData );
     assert( ok );
     // Note that the Path stored in the info file is relative, on other partitions (#95652)
     checkInfoFile( m_otherPartitionTrashDir + "/info/" + fileId + ".trashinfo", fileName );
@@ -550,13 +550,13 @@ void TestTrash::trashFileOwnedByRoot()
     u.setPath( "/etc/passwd" );
     const TQString fileId = "passwd";
 
-    KIO::CopyJob* job = KIO::move( u, "trash:/" );
+    TDEIO::CopyJob* job = TDEIO::move( u, "trash:/" );
     job->setInteractive( false ); // no skip dialog, thanks
     TQMap<TQString, TQString> metaData;
-    //bool ok = KIO::NetAccess::move( u, "trash:/" );
-    bool ok = KIO::NetAccess::synchronousRun( job, 0, 0, 0, &metaData );
+    //bool ok = TDEIO::NetAccess::move( u, "trash:/" );
+    bool ok = TDEIO::NetAccess::synchronousRun( job, 0, 0, 0, &metaData );
     assert( !ok );
-    assert( KIO::NetAccess::lastError() == KIO::ERR_ACCESS_DENIED );
+    assert( TDEIO::NetAccess::lastError() == TDEIO::ERR_ACCESS_DENIED );
     const TQString infoPath( m_trashDir + "/info/" + fileId + ".trashinfo" );
     assert( !TQFile::exists( infoPath ) );
 
@@ -577,7 +577,7 @@ void TestTrash::trashSymlink( const TQString& origFilePath, const TQString& file
     u.setPath( origFilePath );
 
     // test
-    ok = KIO::NetAccess::move( u, "trash:/" );
+    ok = TDEIO::NetAccess::move( u, "trash:/" );
     assert( ok );
     if ( origFilePath.startsWith( "/tmp" ) && m_tmpIsWritablePartition ) {
         kdDebug() << " TESTS SKIPPED" << endl;
@@ -625,7 +625,7 @@ void TestTrash::trashDirectory( const TQString& origPath, const TQString& fileId
     KURL u; u.setPath( origPath );
 
     // test
-    bool ok = KIO::NetAccess::move( u, "trash:/" );
+    bool ok = TDEIO::NetAccess::move( u, "trash:/" );
     assert( ok );
     if ( origPath.startsWith( "/tmp" ) && m_tmpIsWritablePartition ) {
         kdDebug() << " TESTS SKIPPED" << endl;
@@ -678,14 +678,14 @@ void TestTrash::trashDirectoryFromOther()
 void TestTrash::tryRenameInsideTrash()
 {
     kdDebug() << k_funcinfo << " with file_move" << endl;
-    bool worked = KIO::NetAccess::file_move( "trash:/0-tryRenameInsideTrash", "trash:/foobar" );
+    bool worked = TDEIO::NetAccess::file_move( "trash:/0-tryRenameInsideTrash", "trash:/foobar" );
     assert( !worked );
-    assert( KIO::NetAccess::lastError() == KIO::ERR_CANNOT_RENAME );
+    assert( TDEIO::NetAccess::lastError() == TDEIO::ERR_CANNOT_RENAME );
 
     kdDebug() << k_funcinfo << " with move" << endl;
-    worked = KIO::NetAccess::move( "trash:/0-tryRenameInsideTrash", "trash:/foobar" );
+    worked = TDEIO::NetAccess::move( "trash:/0-tryRenameInsideTrash", "trash:/foobar" );
     assert( !worked );
-    assert( KIO::NetAccess::lastError() == KIO::ERR_CANNOT_RENAME );
+    assert( TDEIO::NetAccess::lastError() == TDEIO::ERR_CANNOT_RENAME );
 }
 
 void TestTrash::delRootFile()
@@ -693,7 +693,7 @@ void TestTrash::delRootFile()
     kdDebug() << k_funcinfo << endl;
 
     // test deleting a trashed file
-    bool ok = KIO::NetAccess::del( "trash:/0-fileFromHome", 0L );
+    bool ok = TDEIO::NetAccess::del( "trash:/0-fileFromHome", 0L );
     assert( ok );
 
     TQFileInfo file( m_trashDir + "/files/fileFromHome" );
@@ -711,9 +711,9 @@ void TestTrash::delFileInDirectory()
     kdDebug() << k_funcinfo << endl;
 
     // test deleting a file inside a trashed directory -> not allowed
-    bool ok = KIO::NetAccess::del( "trash:/0-trashDirFromHome/testfile", 0L );
+    bool ok = TDEIO::NetAccess::del( "trash:/0-trashDirFromHome/testfile", 0L );
     assert( !ok );
-    assert( KIO::NetAccess::lastError() == KIO::ERR_ACCESS_DENIED );
+    assert( TDEIO::NetAccess::lastError() == TDEIO::ERR_ACCESS_DENIED );
 
     TQFileInfo dir( m_trashDir + "/files/trashDirFromHome" );
     assert( dir.exists() );
@@ -728,7 +728,7 @@ void TestTrash::delDirectory()
     kdDebug() << k_funcinfo << endl;
 
     // test deleting a trashed directory
-    bool ok = KIO::NetAccess::del( "trash:/0-trashDirFromHome", 0L );
+    bool ok = TDEIO::NetAccess::del( "trash:/0-trashDirFromHome", 0L );
     assert( ok );
 
     TQFileInfo dir( m_trashDir + "/files/trashDirFromHome" );
@@ -747,8 +747,8 @@ void TestTrash::statRoot()
 {
     kdDebug() << k_funcinfo << endl;
     KURL url( "trash:/" );
-    KIO::UDSEntry entry;
-    bool ok = KIO::NetAccess::stat( url, entry, 0 );
+    TDEIO::UDSEntry entry;
+    bool ok = TDEIO::NetAccess::stat( url, entry, 0 );
     assert( ok );
     KFileItem item( entry, url );
     assert( item.isDir() );
@@ -764,8 +764,8 @@ void TestTrash::statFileInRoot()
 {
     kdDebug() << k_funcinfo << endl;
     KURL url( "trash:/0-fileFromHome" );
-    KIO::UDSEntry entry;
-    bool ok = KIO::NetAccess::stat( url, entry, 0 );
+    TDEIO::UDSEntry entry;
+    bool ok = TDEIO::NetAccess::stat( url, entry, 0 );
     assert( ok );
     KFileItem item( entry, url );
     assert( item.isFile() );
@@ -782,8 +782,8 @@ void TestTrash::statDirectoryInRoot()
 {
     kdDebug() << k_funcinfo << endl;
     KURL url( "trash:/0-trashDirFromHome" );
-    KIO::UDSEntry entry;
-    bool ok = KIO::NetAccess::stat( url, entry, 0 );
+    TDEIO::UDSEntry entry;
+    bool ok = TDEIO::NetAccess::stat( url, entry, 0 );
     assert( ok );
     KFileItem item( entry, url );
     assert( item.isDir() );
@@ -799,8 +799,8 @@ void TestTrash::statSymlinkInRoot()
 {
     kdDebug() << k_funcinfo << endl;
     KURL url( "trash:/0-symlinkFromHome" );
-    KIO::UDSEntry entry;
-    bool ok = KIO::NetAccess::stat( url, entry, 0 );
+    TDEIO::UDSEntry entry;
+    bool ok = TDEIO::NetAccess::stat( url, entry, 0 );
     assert( ok );
     KFileItem item( entry, url );
     assert( item.isLink() );
@@ -816,8 +816,8 @@ void TestTrash::statFileInDirectory()
 {
     kdDebug() << k_funcinfo << endl;
     KURL url( "trash:/0-trashDirFromHome/testfile" );
-    KIO::UDSEntry entry;
-    bool ok = KIO::NetAccess::stat( url, entry, 0 );
+    TDEIO::UDSEntry entry;
+    bool ok = TDEIO::NetAccess::stat( url, entry, 0 );
     assert( ok );
     KFileItem item( entry, url );
     assert( item.isFile() );
@@ -837,12 +837,12 @@ void TestTrash::copyFromTrash( const TQString& fileId, const TQString& destPath,
     KURL dest;
     dest.setPath( destPath );
 
-    assert( KIO::NetAccess::exists( src, true, (TQWidget*)0 ) );
+    assert( TDEIO::NetAccess::exists( src, true, (TQWidget*)0 ) );
 
     // A dnd would use copy(), but we use copyAs to ensure the final filename
     //kdDebug() << k_funcinfo << "copyAs:" << src << " -> " << dest << endl;
-    KIO::Job* job = KIO::copyAs( src, dest );
-    bool ok = KIO::NetAccess::synchronousRun( job, 0 );
+    TDEIO::Job* job = TDEIO::copyAs( src, dest );
+    bool ok = TDEIO::NetAccess::synchronousRun( job, 0 );
     assert( ok );
     TQString infoFile( m_trashDir + "/info/" + fileId + ".trashinfo" );
     assert( TQFile::exists( infoFile ) );
@@ -895,11 +895,11 @@ void TestTrash::moveFromTrash( const TQString& fileId, const TQString& destPath,
     KURL dest;
     dest.setPath( destPath );
 
-    assert( KIO::NetAccess::exists( src, true, (TQWidget*)0 ) );
+    assert( TDEIO::NetAccess::exists( src, true, (TQWidget*)0 ) );
 
     // A dnd would use move(), but we use moveAs to ensure the final filename
-    KIO::Job* job = KIO::moveAs( src, dest );
-    bool ok = KIO::NetAccess::synchronousRun( job, 0 );
+    TDEIO::Job* job = TDEIO::moveAs( src, dest );
+    bool ok = TDEIO::NetAccess::synchronousRun( job, 0 );
     assert( ok );
     TQString infoFile( m_trashDir + "/info/" + fileId + ".trashinfo" );
     assert( !TQFile::exists( infoFile ) );
@@ -956,14 +956,14 @@ void TestTrash::trashDirectoryOwnedByRoot()
     const TQString fileId = u.path();
     kdDebug() << k_funcinfo << "fileId=" << fileId << endl;
 
-    KIO::CopyJob* job = KIO::move( u, "trash:/" );
+    TDEIO::CopyJob* job = TDEIO::move( u, "trash:/" );
     job->setInteractive( false ); // no skip dialog, thanks
     TQMap<TQString, TQString> metaData;
-    bool ok = KIO::NetAccess::synchronousRun( job, 0, 0, 0, &metaData );
+    bool ok = TDEIO::NetAccess::synchronousRun( job, 0, 0, 0, &metaData );
     assert( !ok );
-    const int err = KIO::NetAccess::lastError();
-    assert( err == KIO::ERR_ACCESS_DENIED
-            || err == KIO::ERR_CANNOT_OPEN_FOR_READING );
+    const int err = TDEIO::NetAccess::lastError();
+    assert( err == TDEIO::ERR_ACCESS_DENIED
+            || err == TDEIO::ERR_CANNOT_OPEN_FOR_READING );
 
     const TQString infoPath( m_trashDir + "/info/" + fileId + ".trashinfo" );
     assert( !TQFile::exists( infoPath ) );
@@ -988,7 +988,7 @@ void TestTrash::getFile()
     const TQString fileId = "fileFromHome_1";
     const KURL url = TrashImpl::makeURL( 0, fileId, TQString::null );
     TQString tmpFile;
-    bool ok = KIO::NetAccess::download( url, tmpFile, 0 );
+    bool ok = TDEIO::NetAccess::download( url, tmpFile, 0 );
     assert( ok );
     TQFile file( tmpFile );
     ok = file.open( IO_ReadOnly );
@@ -998,7 +998,7 @@ void TestTrash::getFile()
     if ( cstr != "Hello world\n" )
         kdFatal() << "get() returned the following data:" << cstr << endl;
     file.close();
-    KIO::NetAccess::removeTempFile( tmpFile );
+    TDEIO::NetAccess::removeTempFile( tmpFile );
 }
 
 void TestTrash::restoreFile()
@@ -1015,8 +1015,8 @@ void TestTrash::restoreFile()
     TQByteArray packedArgs;
     TQDataStream stream( packedArgs, IO_WriteOnly );
     stream << (int)3 << url;
-    KIO::Job* job = KIO::special( url, packedArgs );
-    bool ok = KIO::NetAccess::synchronousRun( job, 0 );
+    TDEIO::Job* job = TDEIO::special( url, packedArgs );
+    bool ok = TDEIO::NetAccess::synchronousRun( job, 0 );
     assert( ok );
 
     assert( !TQFile::exists( infoFile ) );
@@ -1042,11 +1042,11 @@ void TestTrash::restoreFileFromSubDir()
     TQByteArray packedArgs;
     TQDataStream stream( packedArgs, IO_WriteOnly );
     stream << (int)3 << url;
-    KIO::Job* job = KIO::special( url, packedArgs );
-    bool ok = KIO::NetAccess::synchronousRun( job, 0 );
+    TDEIO::Job* job = TDEIO::special( url, packedArgs );
+    bool ok = TDEIO::NetAccess::synchronousRun( job, 0 );
     assert( !ok );
     // dest dir doesn't exist -> error message
-    assert( KIO::NetAccess::lastError() == KIO::ERR_SLAVE_DEFINED );
+    assert( TDEIO::NetAccess::lastError() == TDEIO::ERR_SLAVE_DEFINED );
 
     // check that nothing happened
     assert( TQFile::exists( infoFile ) );
@@ -1062,7 +1062,7 @@ void TestTrash::restoreFileToDeletedDirectory()
     removeFile( m_trashDir, "/files/fileFromHome" );
     trashFileFromHome();
     // Delete orig dir
-    bool delOK = KIO::NetAccess::del( homeTmpDir(), 0 );
+    bool delOK = TDEIO::NetAccess::del( homeTmpDir(), 0 );
     assert( delOK );
 
     const TQString fileId = "fileFromHome";
@@ -1076,11 +1076,11 @@ void TestTrash::restoreFileToDeletedDirectory()
     TQByteArray packedArgs;
     TQDataStream stream( packedArgs, IO_WriteOnly );
     stream << (int)3 << url;
-    KIO::Job* job = KIO::special( url, packedArgs );
-    bool ok = KIO::NetAccess::synchronousRun( job, 0 );
+    TDEIO::Job* job = TDEIO::special( url, packedArgs );
+    bool ok = TDEIO::NetAccess::synchronousRun( job, 0 );
     assert( !ok );
     // dest dir doesn't exist -> error message
-    assert( KIO::NetAccess::lastError() == KIO::ERR_SLAVE_DEFINED );
+    assert( TDEIO::NetAccess::lastError() == TDEIO::ERR_SLAVE_DEFINED );
 
     // check that nothing happened
     assert( TQFile::exists( infoFile ) );
@@ -1095,10 +1095,10 @@ void TestTrash::listRootDir()
     kdDebug() << k_funcinfo << endl;
     m_entryCount = 0;
     m_listResult.clear();
-    KIO::ListJob* job = KIO::listDir( "trash:/" );
-    connect( job, TQT_SIGNAL( entries( KIO::Job*, const KIO::UDSEntryList& ) ),
-             TQT_SLOT( slotEntries( KIO::Job*, const KIO::UDSEntryList& ) ) );
-    bool ok = KIO::NetAccess::synchronousRun( job, 0 );
+    TDEIO::ListJob* job = TDEIO::listDir( "trash:/" );
+    connect( job, TQT_SIGNAL( entries( TDEIO::Job*, const TDEIO::UDSEntryList& ) ),
+             TQT_SLOT( slotEntries( TDEIO::Job*, const TDEIO::UDSEntryList& ) ) );
+    bool ok = TDEIO::NetAccess::synchronousRun( job, 0 );
     assert( ok );
     kdDebug() << "listDir done - m_entryCount=" << m_entryCount << endl;
     assert( m_entryCount > 1 );
@@ -1112,10 +1112,10 @@ void TestTrash::listRecursiveRootDir()
     kdDebug() << k_funcinfo << endl;
     m_entryCount = 0;
     m_listResult.clear();
-    KIO::ListJob* job = KIO::listRecursive( "trash:/" );
-    connect( job, TQT_SIGNAL( entries( KIO::Job*, const KIO::UDSEntryList& ) ),
-             TQT_SLOT( slotEntries( KIO::Job*, const KIO::UDSEntryList& ) ) );
-    bool ok = KIO::NetAccess::synchronousRun( job, 0 );
+    TDEIO::ListJob* job = TDEIO::listRecursive( "trash:/" );
+    connect( job, TQT_SIGNAL( entries( TDEIO::Job*, const TDEIO::UDSEntryList& ) ),
+             TQT_SLOT( slotEntries( TDEIO::Job*, const TDEIO::UDSEntryList& ) ) );
+    bool ok = TDEIO::NetAccess::synchronousRun( job, 0 );
     assert( ok );
     kdDebug() << "listDir done - m_entryCount=" << m_entryCount << endl;
     assert( m_entryCount > 1 );
@@ -1129,10 +1129,10 @@ void TestTrash::listSubDir()
     kdDebug() << k_funcinfo << endl;
     m_entryCount = 0;
     m_listResult.clear();
-    KIO::ListJob* job = KIO::listDir( "trash:/0-trashDirFromHome" );
-    connect( job, TQT_SIGNAL( entries( KIO::Job*, const KIO::UDSEntryList& ) ),
-             TQT_SLOT( slotEntries( KIO::Job*, const KIO::UDSEntryList& ) ) );
-    bool ok = KIO::NetAccess::synchronousRun( job, 0 );
+    TDEIO::ListJob* job = TDEIO::listDir( "trash:/0-trashDirFromHome" );
+    connect( job, TQT_SIGNAL( entries( TDEIO::Job*, const TDEIO::UDSEntryList& ) ),
+             TQT_SLOT( slotEntries( TDEIO::Job*, const TDEIO::UDSEntryList& ) ) );
+    bool ok = TDEIO::NetAccess::synchronousRun( job, 0 );
     assert( ok );
     kdDebug() << "listDir done - m_entryCount=" << m_entryCount << endl;
     assert( m_entryCount == 2 );
@@ -1142,18 +1142,18 @@ void TestTrash::listSubDir()
     assert( m_listResult.contains( "testfile" ) == 1 ); // found it, and only once
 }
 
-void TestTrash::slotEntries( KIO::Job*, const KIO::UDSEntryList& lst )
+void TestTrash::slotEntries( TDEIO::Job*, const TDEIO::UDSEntryList& lst )
 {
-    for( KIO::UDSEntryList::ConstIterator it = lst.begin(); it != lst.end(); ++it ) {
-        KIO::UDSEntry::ConstIterator it2 = (*it).begin();
+    for( TDEIO::UDSEntryList::ConstIterator it = lst.begin(); it != lst.end(); ++it ) {
+        TDEIO::UDSEntry::ConstIterator it2 = (*it).begin();
         TQString displayName;
         KURL url;
         for( ; it2 != (*it).end(); it2++ ) {
             switch ((*it2).m_uds) {
-            case KIO::UDS_NAME:
+            case TDEIO::UDS_NAME:
                 displayName = (*it2).m_str;
                 break;
-            case KIO::UDS_URL:
+            case TDEIO::UDS_URL:
                 url = (*it2).m_str;
                 break;
             }
@@ -1177,8 +1177,8 @@ void TestTrash::emptyTrash()
     TQByteArray packedArgs;
     TQDataStream stream( packedArgs, IO_WriteOnly );
     stream << (int)1;
-    KIO::Job* job = KIO::special( "trash:/", packedArgs );
-    bool ok = KIO::NetAccess::synchronousRun( job, 0 );
+    TDEIO::Job* job = TDEIO::special( "trash:/", packedArgs );
+    bool ok = TDEIO::NetAccess::synchronousRun( job, 0 );
     assert( ok );
 
     KSimpleConfig cfg( "trashrc", true );

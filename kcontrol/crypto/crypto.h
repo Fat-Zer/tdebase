@@ -215,7 +215,7 @@ private:
 
 
 
-class KCryptoConfig : public KCModule
+class KCryptoConfig : public TDECModule
 {
   Q_OBJECT
 public:
@@ -352,9 +352,9 @@ private:
   KSSLSigners *_signers;
   TQLabel *cHash;
 
-  KConfig *config;
+  TDEConfig *config;
   KSimpleConfig *policies, *pcerts, *authcfg;
-  KConfig *cacfg;
+  TDEConfig *cacfg;
 
   bool ___lehack;       // to hack around a lineedit problem
 };

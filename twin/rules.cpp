@@ -107,7 +107,7 @@ Rules::Rules( const TQString& str, bool temporary )
     var##rule = readForceRule( cfg, #var "rule" );
 
 
-Rules::Rules( KConfig& cfg )
+Rules::Rules( TDEConfig& cfg )
     : temporary_state( 0 )
     {
     readFromCfg( cfg );
@@ -115,7 +115,7 @@ Rules::Rules( KConfig& cfg )
 
 static int limit0to4( int i ) { return QMAX( 0, QMIN( 4, i )); }
 
-void Rules::readFromCfg( KConfig& cfg )
+void Rules::readFromCfg( TDEConfig& cfg )
     {
     description = cfg.readEntry( "Description" );
     if( description.isEmpty()) // capitalized first, lowercase for backwards compatibility
@@ -216,7 +216,7 @@ void Rules::readFromCfg( KConfig& cfg )
         cfg.deleteEntry( #var );
 
 
-void Rules::write( KConfig& cfg ) const
+void Rules::write( TDEConfig& cfg ) const
     {
     cfg.writeEntry( "Description", description );
     // always write wmclass
@@ -293,7 +293,7 @@ bool Rules::isEmpty() const
         && disableglobalshortcutsrule == UnusedForceRule );
     }
 
-Rules::SetRule Rules::readSetRule( KConfig& cfg, const TQString& key )
+Rules::SetRule Rules::readSetRule( TDEConfig& cfg, const TQString& key )
     {
     int v = cfg.readNumEntry( key );
     if( v >= DontAffect && v <= ForceTemporarily )
@@ -301,7 +301,7 @@ Rules::SetRule Rules::readSetRule( KConfig& cfg, const TQString& key )
     return UnusedSetRule;
     }
 
-Rules::ForceRule Rules::readForceRule( KConfig& cfg, const TQString& key )
+Rules::ForceRule Rules::readForceRule( TDEConfig& cfg, const TQString& key )
     {
     int v = cfg.readNumEntry( key );
     if( v == DontAffect || v == Force || v == ForceTemporarily )
@@ -309,7 +309,7 @@ Rules::ForceRule Rules::readForceRule( KConfig& cfg, const TQString& key )
     return UnusedForceRule;
     }
 
-NET::WindowType Rules::readType( KConfig& cfg, const TQString& key )
+NET::WindowType Rules::readType( TDEConfig& cfg, const TQString& key )
     {
     int v = cfg.readNumEntry( key );
     if( v >= NET::Normal && v <= NET::Splash )
@@ -960,7 +960,7 @@ void Workspace::loadWindowRules()
         delete rules.front();
         rules.pop_front();
         }
-    KConfig cfg( "twinrulesrc", true );
+    TDEConfig cfg( "twinrulesrc", true );
     cfg.setGroup( "General" );
     int count = cfg.readNumEntry( "count" );
     for( int i = 1;
@@ -976,7 +976,7 @@ void Workspace::loadWindowRules()
 void Workspace::writeWindowRules()
     {
     rulesUpdatedTimer.stop();
-    KConfig cfg( "twinrulesrc" );
+    TDEConfig cfg( "twinrulesrc" );
     TQStringList groups = cfg.groupList();
     for( TQStringList::ConstIterator it = groups.begin();
          it != groups.end();

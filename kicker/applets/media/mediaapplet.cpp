@@ -368,7 +368,7 @@ void MediaApplet::positionChange(Position)
 
 void MediaApplet::loadConfig()
 {
-    KConfig *c = config();
+    TDEConfig *c = config();
     c->setGroup("General");
     
     if(c->hasKey("ExcludedTypes"))
@@ -398,7 +398,7 @@ void MediaApplet::loadConfig()
 
 void MediaApplet::saveConfig()
 {
-    KConfig *c = config();
+    TDEConfig *c = config();
     c->setGroup("General");
     
     c->writeEntry("ExcludedTypes", mExcludedTypesList, ';');

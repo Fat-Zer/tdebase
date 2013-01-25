@@ -26,7 +26,7 @@
 #include <tqdom.h>
 #include <tqstringlist.h>
 
-class KConfig;
+class TDEConfig;
 class TDEProcess;
 
 class EntryItem;
@@ -129,7 +129,7 @@ class Glossary : public KListView
 		void buildGlossaryTree();
 		TQDomElement childElement( const TQDomElement &e, const TQString &name );
 
-		KConfig *m_config;
+		TDEConfig *m_config;
 		TQListViewItem *m_byTopicItem;
 		TQListViewItem *m_alphabItem;
 		TQString m_sourceFile;

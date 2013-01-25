@@ -123,10 +123,10 @@ extern bool tqt_qclipboard_bailout_hack;
 #error Check status of #80072 with Qt4.
 #endif
 
-static void ensureGlobalSyncOff(KConfig* config);
+static void ensureGlobalSyncOff(TDEConfig* config);
 
 // config == kapp->config for process, otherwise applet
-KlipperWidget::KlipperWidget( TQWidget *parent, KConfig* config )
+KlipperWidget::KlipperWidget( TQWidget *parent, TDEConfig* config )
     : TQWidget( parent )
     , DCOPObject( "klipper" )
     , m_overflowCounter( 0 )
@@ -182,7 +182,7 @@ KlipperWidget::KlipperWidget( TQWidget *parent, KConfig* config )
                               "quitAction" );
     quitAction->setGroup( "exit" );
     myURLGrabber = 0L;
-    KConfig *kc = m_config;
+    TDEConfig *kc = m_config;
     readConfiguration( kc );
     setURLGrabberEnabled( bURLGrabber );
 
@@ -448,7 +448,7 @@ void KlipperWidget::saveHistory() {
     *history_file.dataStream() << crc << data;
 }
 
-void KlipperWidget::readProperties(KConfig *kc)
+void KlipperWidget::readProperties(TDEConfig *kc)
 {
     TQStringList dataList;
 
@@ -458,7 +458,7 @@ void KlipperWidget::readProperties(KConfig *kc)
         if ( !loadHistory() ) {
             // Try to load from the old config file.
             // Remove this at some point.
-            KConfigGroupSaver groupSaver(kc, "General");
+            TDEConfigGroupSaver groupSaver(kc, "General");
             dataList = kc->readListEntry("ClipboardData");
 
             for (TQStringList::ConstIterator it = dataList.end();
@@ -480,7 +480,7 @@ void KlipperWidget::readProperties(KConfig *kc)
 }
 
 
-void KlipperWidget::readConfiguration( KConfig *kc )
+void KlipperWidget::readConfiguration( TDEConfig *kc )
 {
     kc->setGroup("General");
     bPopupAtMouse = kc->readBoolEntry("PopupAtMousePosition", false);
@@ -496,7 +496,7 @@ void KlipperWidget::readConfiguration( KConfig *kc )
     bIgnoreImages = kc->readBoolEntry("IgnoreImages",true);
 }
 
-void KlipperWidget::writeConfiguration( KConfig *kc )
+void KlipperWidget::writeConfiguration( TDEConfig *kc )
 {
     kc->setGroup("General");
     kc->writeEntry("PopupAtMousePosition", bPopupAtMouse);
@@ -606,7 +606,7 @@ void KlipperWidget::slotQuit()
     saveSession();
     int autoStart = KMessageBox::questionYesNoCancel( 0L, i18n("Should Klipper start automatically\nwhen you login?"), i18n("Automatically Start Klipper?"), i18n("Start"), i18n("Do Not Start") );
 
-    KConfig *config = TDEGlobal::config();
+    TDEConfig *config = TDEGlobal::config();
     config->setGroup("General");
     if ( autoStart == KMessageBox::Yes ) {
         config->writeEntry("AutoStart", true);
@@ -647,7 +647,7 @@ void KlipperWidget::setURLGrabberEnabled( bool enable )
 {
     if (enable != bURLGrabber) {
       bURLGrabber = enable;
-      KConfig *kc = m_config;
+      TDEConfig *kc = m_config;
       kc->setGroup("General");
       kc->writeEntry("URLGrabberEnabled", bURLGrabber);
       m_lastURLGrabberTextSelection = TQString();
@@ -1167,7 +1167,7 @@ void Klipper::quitProcess()
     kapp->quit();
 }
 
-static void ensureGlobalSyncOff(KConfig* config) {
+static void ensureGlobalSyncOff(TDEConfig* config) {
     config->setGroup("General");
     if ( config->readBoolEntry( "SynchronizeClipboardAndSelection" ) ) {
         kdDebug() << "Shutting off global synchronization" << endl;

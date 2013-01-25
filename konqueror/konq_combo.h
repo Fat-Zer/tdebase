@@ -26,7 +26,7 @@
 #include <konq_historymgr.h>
 
 class KCompletion;
-class KConfig;
+class TDEConfig;
 
 // we use KHistoryCombo _only_ for the up/down keyboard handling, otherwise
 // KComboBox would do fine.
@@ -56,7 +56,7 @@ public:
     void loadItems();
     void saveItems();
 
-    static void setConfig( KConfig * );
+    static void setConfig( TDEConfig * );
 
     virtual void popup();
 
@@ -109,7 +109,7 @@ private:
     TQPoint m_dragStart;
     int m_pageSecurity;
 
-    static KConfig *s_config;
+    static TDEConfig *s_config;
     static const int temporary; // the index of our temporary item
 };
 

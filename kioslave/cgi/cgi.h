@@ -28,7 +28,7 @@ class TDEProcess;
   This class implements an ioslave for viewing CGI script output without the
   need to run a web server.
 */
-class CgiProtocol : public KIO::SlaveBase
+class CgiProtocol : public TDEIO::SlaveBase
 {
   public:
     CgiProtocol( const TQCString &pool, const TQCString &app );

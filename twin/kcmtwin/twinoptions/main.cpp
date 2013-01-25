@@ -36,46 +36,46 @@
 
 extern "C"
 {
-	KDE_EXPORT KCModule *create_twinfocus(TQWidget *parent, const char *name)
+	KDE_EXPORT TDECModule *create_twinfocus(TQWidget *parent, const char *name)
 	{
 		//CT there's need for decision: kwm or twin?
 		TDEGlobal::locale()->insertCatalogue("kcmkwm");
-		KConfig *c = new KConfig("twinrc", false, true);
+		TDEConfig *c = new TDEConfig("twinrc", false, true);
 		return new KFocusConfig(true, c, parent, name);
 	}
 
-	KDE_EXPORT KCModule *create_twinactions(TQWidget *parent, const char *name)
+	KDE_EXPORT TDECModule *create_twinactions(TQWidget *parent, const char *name)
 	{
 		//CT there's need for decision: kwm or twin?
 		TDEGlobal::locale()->insertCatalogue("kcmkwm");
 		return new KActionsOptions( parent, name);
 	}
 
-	KDE_EXPORT KCModule *create_twinmoving(TQWidget *parent, const char *name)
+	KDE_EXPORT TDECModule *create_twinmoving(TQWidget *parent, const char *name)
 	{
 		//CT there's need for decision: kwm or twin?
 		TDEGlobal::locale()->insertCatalogue("kcmkwm");
-		KConfig *c = new KConfig("twinrc", false, true);
+		TDEConfig *c = new TDEConfig("twinrc", false, true);
 		return new KMovingConfig(true, c, parent, name);
 	}
 
-	KDE_EXPORT KCModule *create_twinadvanced(TQWidget *parent, const char *name)
+	KDE_EXPORT TDECModule *create_twinadvanced(TQWidget *parent, const char *name)
 	{
 		//CT there's need for decision: kwm or twin?
 		TDEGlobal::locale()->insertCatalogue("kcmkwm");
-		KConfig *c = new KConfig("twinrc", false, true);
+		TDEConfig *c = new TDEConfig("twinrc", false, true);
 		return new KAdvancedConfig(true, c, parent, name);
 	}
         
-	KDE_EXPORT KCModule *create_twintranslucency(TQWidget *parent, const char *name)
+	KDE_EXPORT TDECModule *create_twintranslucency(TQWidget *parent, const char *name)
 	{
 		//CT there's need for decision: kwm or twin?
 		TDEGlobal::locale()->insertCatalogue("kcmkwm");
-		KConfig *c = new KConfig("twinrc", false, true);
+		TDEConfig *c = new TDEConfig("twinrc", false, true);
 		return new KTranslucencyConfig(true, c, parent, name);
 	}
 
-	KDE_EXPORT KCModule *create_twinoptions ( TQWidget *parent, const char* name)
+	KDE_EXPORT TDECModule *create_twinoptions ( TQWidget *parent, const char* name)
 	{
 		//CT there's need for decision: kwm or twin?
 		TDEGlobal::locale()->insertCatalogue("kcmkwm");
@@ -84,9 +84,9 @@ extern "C"
 }
 
 KWinOptions::KWinOptions(TQWidget *parent, const char *name)
-  : KCModule(parent, name)
+  : TDECModule(parent, name)
 {
-  mConfig = new KConfig("twinrc", false, true);
+  mConfig = new TDEConfig("twinrc", false, true);
 
   TQVBoxLayout *layout = new TQVBoxLayout(this);
   tab = new TQTabWidget(this);
@@ -153,7 +153,7 @@ void KWinOptions::load()
   mMoving->load();
   mAdvanced->load();
   mTranslucency->load();
-  emit KCModule::changed( false );
+  emit TDECModule::changed( false );
 }
 
 
@@ -166,7 +166,7 @@ void KWinOptions::save()
   mAdvanced->save();
   mTranslucency->save();
 
-  emit KCModule::changed( false );
+  emit TDECModule::changed( false );
   // Send signal to twin
   mConfig->sync();
   if ( !kapp->dcopClient()->isAttached() )
@@ -197,14 +197,14 @@ TQString KWinOptions::quickHelp() const
 
 void KWinOptions::moduleChanged(bool state)
 {
-  emit KCModule::changed(state);
+  emit TDECModule::changed(state);
 }
 
 
 KActionsOptions::KActionsOptions(TQWidget *parent, const char *name)
-  : KCModule(parent, name)
+  : TDECModule(parent, name)
 {
-  mConfig = new KConfig("twinrc", false, true);
+  mConfig = new TDEConfig("twinrc", false, true);
 
   TQVBoxLayout *layout = new TQVBoxLayout(this);
   tab = new TQTabWidget(this);
@@ -230,7 +230,7 @@ void KActionsOptions::load()
 {
   mTitleBarActions->load();
   mWindowActions->load();
-  emit KCModule::changed( false );
+  emit TDECModule::changed( false );
 }
 
 
@@ -239,7 +239,7 @@ void KActionsOptions::save()
   mTitleBarActions->save();
   mWindowActions->save();
 
-  emit KCModule::changed( false );
+  emit TDECModule::changed( false );
   // Send signal to twin
   mConfig->sync();
   if ( !kapp->dcopClient()->isAttached() )
@@ -256,7 +256,7 @@ void KActionsOptions::defaults()
 
 void KActionsOptions::moduleChanged(bool state)
 {
-  emit KCModule::changed(state);
+  emit TDECModule::changed(state);
 }
 
 #include "main.moc"

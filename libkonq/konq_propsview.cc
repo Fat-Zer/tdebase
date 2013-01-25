@@ -80,8 +80,8 @@ KonqPropsView::KonqPropsView( TDEInstance * instance, KonqPropsView * defaultPro
     m_defaultProps( defaultProps )
 {
 
-  KConfig *config = instance->config();
-  KConfigGroupSaver cgs(config, "Settings");
+  TDEConfig *config = instance->config();
+  TDEConfigGroupSaver cgs(config, "Settings");
 
   d = new Private;
   d->previewsToShow = 0;
@@ -121,7 +121,7 @@ KonqPropsView::KonqPropsView( TDEInstance * instance, KonqPropsView * defaultPro
   // So now we read the settings from the app global file, if this is the default props
   if (!defaultProps)
   {
-      KConfigGroupSaver cgs2(TDEGlobal::config(), "Settings");
+      TDEConfigGroupSaver cgs2(TDEGlobal::config(), "Settings");
       m_textColor = TDEGlobal::config()->readColorEntry( "TextColor", &m_textColor );
       m_bgColor = TDEGlobal::config()->readColorEntry( "BgColor", &m_bgColor );
       m_bgPixmapFile = TDEGlobal::config()->readPathEntry( "BgImage", m_bgPixmapFile );
@@ -147,7 +147,7 @@ bool KonqPropsView::isDescending() const
    return d->descending;
 }
 
-KConfigBase * KonqPropsView::currentConfig()
+TDEConfigBase * KonqPropsView::currentConfig()
 {
     if ( !m_currentConfig )
     {
@@ -162,7 +162,7 @@ KConfigBase * KonqPropsView::currentConfig()
     return m_currentConfig;
 }
 
-KConfigBase * KonqPropsView::currentColorConfig()
+TDEConfigBase * KonqPropsView::currentColorConfig()
 {
     // Saving locally ?
     if ( m_bSaveViewPropertiesLocally && !isDefaultProperties() )
@@ -281,7 +281,7 @@ void KonqPropsView::setIconSize( int size )
         m_defaultProps->setIconSize( size );
     else if (currentConfig())
     {
-        KConfigGroupSaver cgs(currentConfig(), currentGroup());
+        TDEConfigGroupSaver cgs(currentConfig(), currentGroup());
         currentConfig()->writeEntry( "IconSize", m_iIconSize );
         currentConfig()->sync();
     }
@@ -294,7 +294,7 @@ void KonqPropsView::setItemTextPos( int pos )
         m_defaultProps->setItemTextPos( pos );
     else if (currentConfig())
     {
-        KConfigGroupSaver cgs(currentConfig(), currentGroup());
+        TDEConfigGroupSaver cgs(currentConfig(), currentGroup());
         currentConfig()->writeEntry( "ItemTextPos", m_iItemTextPos );
         currentConfig()->sync();
     }
@@ -307,7 +307,7 @@ void KonqPropsView::setSortCriterion( const TQString &criterion )
         m_defaultProps->setSortCriterion( criterion );
     else if (currentConfig())
     {
-        KConfigGroupSaver cgs(currentConfig(), currentGroup());
+        TDEConfigGroupSaver cgs(currentConfig(), currentGroup());
         currentConfig()->writeEntry( "SortingCriterion", d->sortcriterion );
         currentConfig()->sync();
     }
@@ -320,7 +320,7 @@ void KonqPropsView::setDirsFirst( bool first)
         m_defaultProps->setDirsFirst( first );
     else if (currentConfig())
     {
-        KConfigGroupSaver cgs(currentConfig(), currentGroup());
+        TDEConfigGroupSaver cgs(currentConfig(), currentGroup());
         currentConfig()->writeEntry( "SortDirsFirst", d->dirsfirst );
         currentConfig()->sync();
     }
@@ -333,7 +333,7 @@ void KonqPropsView::setDescending( bool descend)
         m_defaultProps->setDescending( descend );
     else if (currentConfig())
     {
-        KConfigGroupSaver cgs(currentConfig(), currentGroup());
+        TDEConfigGroupSaver cgs(currentConfig(), currentGroup());
         currentConfig()->writeEntry( "SortDescending", d->descending );
         currentConfig()->sync();
     }
@@ -351,7 +351,7 @@ void KonqPropsView::setShowingDotFiles( bool show )
     else if (currentConfig())
     {
         kdDebug(1203) << "Saving in current config" << endl;
-        KConfigGroupSaver cgs(currentConfig(), currentGroup());
+        TDEConfigGroupSaver cgs(currentConfig(), currentGroup());
         currentConfig()->writeEntry( "ShowDotFiles", m_bShowDot );
         currentConfig()->sync();
     }
@@ -369,7 +369,7 @@ void KonqPropsView::setCaseInsensitiveSort( bool on )
     else if (currentConfig())
     {
         kdDebug(1203) << "Saving in current config" << endl;
-        KConfigGroupSaver cgs(currentConfig(), currentGroup());
+        TDEConfigGroupSaver cgs(currentConfig(), currentGroup());
         currentConfig()->writeEntry( "CaseInsensitiveSort", d->caseInsensitiveSort );
         currentConfig()->sync();
     }
@@ -387,7 +387,7 @@ void KonqPropsView::setShowingDirectoryOverlays( bool show )
     else if (currentConfig())
     {
         kdDebug(1203) << "Saving in current config" << endl;
-        KConfigGroupSaver cgs(currentConfig(), currentGroup());
+        TDEConfigGroupSaver cgs(currentConfig(), currentGroup());
         currentConfig()->writeEntry( "ShowDirectoryOverlays", m_bShowDirectoryOverlays );
         currentConfig()->sync();
     }
@@ -405,7 +405,7 @@ void KonqPropsView::setShowingPreview( const TQString &preview, bool show )
         m_defaultProps->setShowingPreview( preview, show );
     else if (currentConfig())
     {
-        KConfigGroupSaver cgs(currentConfig(), currentGroup());
+        TDEConfigGroupSaver cgs(currentConfig(), currentGroup());
 
         //Audio is special-cased, as we use a binary setting
         //for it to get it to follow the defaults right.
@@ -438,7 +438,7 @@ void KonqPropsView::setShowingPreview( bool show )
     else if (currentConfig())
     {
         kdDebug(1203) << "Saving in current config" << endl;
-        KConfigGroupSaver cgs(currentConfig(), currentGroup());
+        TDEConfigGroupSaver cgs(currentConfig(), currentGroup());
         currentConfig()->writeEntry( "PreviewsEnabled", d->previewsEnabled );
         currentConfig()->sync();
     }
@@ -461,10 +461,10 @@ void KonqPropsView::setBgColor( const TQColor & color )
     }
     else
     {
-        KConfigBase * colorConfig = currentColorConfig();
+        TDEConfigBase * colorConfig = currentColorConfig();
         if (colorConfig) // 0L when saving locally but remote URL
         {
-            KConfigGroupSaver cgs(colorConfig, currentGroup());
+            TDEConfigGroupSaver cgs(colorConfig, currentGroup());
             colorConfig->writeEntry( "BgColor", m_bgColor );
             colorConfig->sync();
         }
@@ -488,10 +488,10 @@ void KonqPropsView::setTextColor( const TQColor & color )
     }
     else
     {
-        KConfigBase * colorConfig = currentColorConfig();
+        TDEConfigBase * colorConfig = currentColorConfig();
         if (colorConfig) // 0L when saving locally but remote URL
         {
-            KConfigGroupSaver cgs(colorConfig, currentGroup());
+            TDEConfigGroupSaver cgs(colorConfig, currentGroup());
             colorConfig->writeEntry( "TextColor", m_textColor );
             colorConfig->sync();
         }
@@ -516,10 +516,10 @@ void KonqPropsView::setBgPixmapFile( const TQString & file )
     }
     else
     {
-        KConfigBase * colorConfig = currentColorConfig();
+        TDEConfigBase * colorConfig = currentColorConfig();
         if (colorConfig) // 0L when saving locally but remote URL
         {
-            KConfigGroupSaver cgs(colorConfig, currentGroup());
+            TDEConfigGroupSaver cgs(colorConfig, currentGroup());
             colorConfig->writePathEntry( "BgImage", file );
             colorConfig->sync();
         }

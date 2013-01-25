@@ -69,7 +69,7 @@ bool HomeImpl::realURL(const TQString &name, const TQString &path, KURL &url)
 }
 
 
-bool HomeImpl::listHomes(TQValueList<KIO::UDSEntry> &list)
+bool HomeImpl::listHomes(TQValueList<TDEIO::UDSEntry> &list)
 {
 	kdDebug() << "HomeImpl::listHomes" << endl;
 
@@ -93,7 +93,7 @@ bool HomeImpl::listHomes(TQValueList<KIO::UDSEntry> &list)
 			 && !uid_list.contains( (*it).uid() ) )
 			{
 				uid_list.append( (*it).uid() );
-				KIO::UDSEntry entry;
+				TDEIO::UDSEntry entry;
 				createHomeEntry(entry, *it);
 				list.append(entry);
 			}
@@ -103,10 +103,10 @@ bool HomeImpl::listHomes(TQValueList<KIO::UDSEntry> &list)
 	return true;
 }
 
-static void addAtom(KIO::UDSEntry &entry, unsigned int ID, long l,
+static void addAtom(TDEIO::UDSEntry &entry, unsigned int ID, long l,
                     const TQString &s = TQString::null)
 {
-	KIO::UDSAtom atom;
+	TDEIO::UDSAtom atom;
 	atom.m_uds = ID;
 	atom.m_long = l;
 	atom.m_str = s;
@@ -114,19 +114,19 @@ static void addAtom(KIO::UDSEntry &entry, unsigned int ID, long l,
 }
 
 
-void HomeImpl::createTopLevelEntry(KIO::UDSEntry &entry) const
+void HomeImpl::createTopLevelEntry(TDEIO::UDSEntry &entry) const
 {
 	entry.clear();
-	addAtom(entry, KIO::UDS_NAME, 0, ".");
-	addAtom(entry, KIO::UDS_FILE_TYPE, S_IFDIR);
-	addAtom(entry, KIO::UDS_ACCESS, 0555);
-	addAtom(entry, KIO::UDS_MIME_TYPE, 0, "inode/directory");
-	addAtom(entry, KIO::UDS_ICON_NAME, 0, "kfm_home");
-	addAtom(entry, KIO::UDS_USER, 0, "root");
-	addAtom(entry, KIO::UDS_GROUP, 0, "root");
+	addAtom(entry, TDEIO::UDS_NAME, 0, ".");
+	addAtom(entry, TDEIO::UDS_FILE_TYPE, S_IFDIR);
+	addAtom(entry, TDEIO::UDS_ACCESS, 0555);
+	addAtom(entry, TDEIO::UDS_MIME_TYPE, 0, "inode/directory");
+	addAtom(entry, TDEIO::UDS_ICON_NAME, 0, "kfm_home");
+	addAtom(entry, TDEIO::UDS_USER, 0, "root");
+	addAtom(entry, TDEIO::UDS_GROUP, 0, "root");
 }
 
-void HomeImpl::createHomeEntry(KIO::UDSEntry &entry,
+void HomeImpl::createHomeEntry(TDEIO::UDSEntry &entry,
                                const KUser &user)
 {
 	kdDebug() << "HomeImpl::createHomeEntry" << endl;
@@ -140,13 +140,13 @@ void HomeImpl::createHomeEntry(KIO::UDSEntry &entry,
 		full_name = user.fullName()+" ("+user.loginName()+")";
 	}
 	
-	full_name = KIO::encodeFileName( full_name );
+	full_name = TDEIO::encodeFileName( full_name );
 	
-	addAtom(entry, KIO::UDS_NAME, 0, full_name);
-	addAtom(entry, KIO::UDS_URL, 0, "home:/"+user.loginName());
+	addAtom(entry, TDEIO::UDS_NAME, 0, full_name);
+	addAtom(entry, TDEIO::UDS_URL, 0, "home:/"+user.loginName());
 	
-	addAtom(entry, KIO::UDS_FILE_TYPE, S_IFDIR);
-	addAtom(entry, KIO::UDS_MIME_TYPE, 0, "inode/directory");
+	addAtom(entry, TDEIO::UDS_FILE_TYPE, S_IFDIR);
+	addAtom(entry, TDEIO::UDS_MIME_TYPE, 0, "inode/directory");
 
 	TQString icon_name = "folder_home2";
 
@@ -155,14 +155,14 @@ void HomeImpl::createHomeEntry(KIO::UDSEntry &entry,
 		icon_name = "folder_home";
 	}
 	
-	addAtom(entry, KIO::UDS_ICON_NAME, 0, icon_name);
+	addAtom(entry, TDEIO::UDS_ICON_NAME, 0, icon_name);
 
 	KURL url;
 	url.setPath(user.homeDir());
 	entry += extractUrlInfos(url);
 }
 
-bool HomeImpl::statHome(const TQString &name, KIO::UDSEntry &entry)
+bool HomeImpl::statHome(const TQString &name, TDEIO::UDSEntry &entry)
 {
 	kdDebug() << "HomeImpl::statHome: " << name << endl;
 
@@ -177,41 +177,41 @@ bool HomeImpl::statHome(const TQString &name, KIO::UDSEntry &entry)
 	return false;
 }
 
-void HomeImpl::slotStatResult(KIO::Job *job)
+void HomeImpl::slotStatResult(TDEIO::Job *job)
 {
 	if ( job->error() == 0)
 	{
-		KIO::StatJob *stat_job = static_cast<KIO::StatJob *>(job);
+		TDEIO::StatJob *stat_job = static_cast<TDEIO::StatJob *>(job);
 		m_entryBuffer = stat_job->statResult();
 	}
 
 	tqApp->eventLoop()->exitLoop();
 }
 
-KIO::UDSEntry HomeImpl::extractUrlInfos(const KURL &url)
+TDEIO::UDSEntry HomeImpl::extractUrlInfos(const KURL &url)
 {
 	m_entryBuffer.clear();
 
-	KIO::StatJob *job = KIO::stat(url, false);
-	connect( job, TQT_SIGNAL( result(KIO::Job *) ),
-	         this, TQT_SLOT( slotStatResult(KIO::Job *) ) );
+	TDEIO::StatJob *job = TDEIO::stat(url, false);
+	connect( job, TQT_SIGNAL( result(TDEIO::Job *) ),
+	         this, TQT_SLOT( slotStatResult(TDEIO::Job *) ) );
 	tqApp->eventLoop()->enterLoop();
 
-	KIO::UDSEntry::iterator it = m_entryBuffer.begin();
-	KIO::UDSEntry::iterator end = m_entryBuffer.end();
+	TDEIO::UDSEntry::iterator it = m_entryBuffer.begin();
+	TDEIO::UDSEntry::iterator end = m_entryBuffer.end();
 
-	KIO::UDSEntry infos;
+	TDEIO::UDSEntry infos;
 
 	for(; it!=end; ++it)
 	{
 		switch( (*it).m_uds )
 		{
-		case KIO::UDS_ACCESS:
-		case KIO::UDS_USER:
-		case KIO::UDS_GROUP:
-		case KIO::UDS_CREATION_TIME:
-		case KIO::UDS_MODIFICATION_TIME:
-		case KIO::UDS_ACCESS_TIME:
+		case TDEIO::UDS_ACCESS:
+		case TDEIO::UDS_USER:
+		case TDEIO::UDS_GROUP:
+		case TDEIO::UDS_CREATION_TIME:
+		case TDEIO::UDS_MODIFICATION_TIME:
+		case TDEIO::UDS_ACCESS_TIME:
 			infos.append(*it);
 			break;
 		default:
@@ -219,7 +219,7 @@ KIO::UDSEntry HomeImpl::extractUrlInfos(const KURL &url)
 		}
 	}
 	
-	addAtom(infos, KIO::UDS_LOCAL_PATH, 0, url.path());
+	addAtom(infos, TDEIO::UDS_LOCAL_PATH, 0, url.path());
 
 	return infos;
 }

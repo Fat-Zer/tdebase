@@ -23,7 +23,7 @@
 
 #include "installer.h"
 
-class KSplashThemeMgr : public KCModule
+class KSplashThemeMgr : public TDECModule
 {
 public:
   KSplashThemeMgr( TQWidget *parent, const char *name, const TQStringList &/*unused*/);
@@ -46,7 +46,7 @@ K_EXPORT_COMPONENT_FACTORY( kcm_ksplashthemes, KSplashThemeMgrFactory("ksplashth
 // -----------------------------------------------------------------------------------------
 
 KSplashThemeMgr::KSplashThemeMgr( TQWidget *parent, const char *name, const TQStringList &)
-  : KCModule( KSplashThemeMgrFactory::instance(), parent, name ), mInstaller(new SplashInstaller(this))
+  : TDECModule( KSplashThemeMgrFactory::instance(), parent, name ), mInstaller(new SplashInstaller(this))
 {
   init();
 

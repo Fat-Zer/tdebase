@@ -29,7 +29,7 @@
 
 #include "policies.h"
 
-class KConfig;
+class TDEConfig;
 class TQRadioButton;
 class TQButtonGroup;
 
@@ -63,7 +63,7 @@ public:
    * @param domain name of the domain this instance is used to configure the
    *	policies for (case insensitive, ignored if global == true)
    */
-  JSPolicies(KConfig* config, const TQString &group, bool global,
+  JSPolicies(TDEConfig* config, const TQString &group, bool global,
   		const TQString &domain = TQString::null);
 		
   /**

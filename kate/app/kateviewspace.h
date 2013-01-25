@@ -33,7 +33,7 @@
 
 class KVSSBSep;
 
-class KConfig;
+class TDEConfig;
 class KSqueezedTextLabel;
 class KateViewSpaceContainer;
 
@@ -88,8 +88,8 @@ class KateViewSpace : public TQVBox
     Kate::View* currentView();
     int viewCount() const { return mViewList.count(); }
 
-    void saveConfig (KConfig* config, int myIndex,const TQString& viewConfGrp);
-    void restoreConfig ( class KateViewSpaceContainer *viewMan, KConfig* config, const TQString &group );
+    void saveConfig (TDEConfig* config, int myIndex,const TQString& viewConfGrp);
+    void restoreConfig ( class KateViewSpaceContainer *viewMan, TDEConfig* config, const TQString &group );
 
 
   protected:

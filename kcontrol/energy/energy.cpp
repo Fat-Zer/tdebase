@@ -85,13 +85,13 @@ static const int DFLT_OFF   = 60;
 
 extern "C" {
 
-    KDE_EXPORT KCModule *create_energy(TQWidget *parent, char *) {
+    KDE_EXPORT TDECModule *create_energy(TQWidget *parent, char *) {
 	return new KEnergy(parent, "kcmenergy");
     }
 
     KDE_EXPORT void init_energy() {
 #ifdef HAVE_DPMS
-        KConfig *cfg = new KConfig("kcmdisplayrc", true /*readonly*/, false /*no globals*/);
+        TDEConfig *cfg = new TDEConfig("kcmdisplayrc", true /*readonly*/, false /*no globals*/);
         cfg->setGroup("DisplayEnergy");
 
 	Display *dpy = tqt_xdisplay();
@@ -132,7 +132,7 @@ extern "C" {
 /**** KEnergy ****/
 
 KEnergy::KEnergy(TQWidget *parent, const char *name)
-    : KCModule(parent, name)
+    : TDECModule(parent, name)
 {
     m_bChanged = false;
     m_bEnabled = false;
@@ -221,11 +221,11 @@ connect(logo, TQT_SIGNAL(leftClickedURL(const TQString&)), TQT_SLOT(openURL(cons
     top->addStretch();
 
     if (m_bDPMS)
-       setButtons( KCModule::Help | KCModule::Default | KCModule::Apply );
+       setButtons( TDECModule::Help | TDECModule::Default | TDECModule::Apply );
     else
-       setButtons( KCModule::Help );
+       setButtons( TDECModule::Help );
 
-    m_pConfig = new KConfig("kcmdisplayrc", false /*readwrite*/, false /*no globals*/);
+    m_pConfig = new TDEConfig("kcmdisplayrc", false /*readwrite*/, false /*no globals*/);
     m_pConfig->setGroup("DisplayEnergy");
 
     load();

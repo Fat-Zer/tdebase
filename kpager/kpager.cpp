@@ -67,7 +67,7 @@ KPagerMainWindow::KPagerMainWindow(TQWidget *parent, const char *name)
     m_pPager = new KPager(this, 0);
     setCentralWidget(m_pPager);
 
-    KConfig *cfg = kapp->config();
+    TDEConfig *cfg = kapp->config();
     cfg->setGroup("KPager");
 
     // Update the last used geometry
@@ -122,7 +122,7 @@ extern bool closed_by_sm;
 
 bool KPagerMainWindow::queryClose()
 {
-    KConfig *cfg=TDEGlobal::config();
+    TDEConfig *cfg=TDEGlobal::config();
 
     cfg->setGroup("KPager");
     cfg->writeEntry("layoutType", static_cast<int>(m_pPager->m_layoutType));
@@ -195,7 +195,7 @@ KPager::KPager(KPagerMainWindow *parent, const char *name)
 
     KPagerConfigDialog::initConfiguration();
 
-    KConfig *cfg = kapp->config();
+    TDEConfig *cfg = kapp->config();
     cfg->setGroup("KPager");
     m_showStickyOption=cfg->readBoolEntry("ShowStickyOption",false);
 
@@ -356,7 +356,7 @@ void KPager::configureDialog()
     if (dialog->exec())
     {
         m_layoutType=static_cast<enum KPager::LayoutTypes>(KPagerConfigDialog::m_layoutType);
-	KConfig *cfg=TDEGlobal::config();
+	TDEConfig *cfg=TDEGlobal::config();
 	int nWd = (parent() ? ((TQWidget *)parent())->width() : width());
 	int nHg = (parent() ? ((TQWidget *)parent())->width() : width());
 

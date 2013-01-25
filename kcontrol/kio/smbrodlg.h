@@ -29,7 +29,7 @@
 
 class KComboBox;
 
-class SMBRoOptions : public KCModule
+class SMBRoOptions : public TDECModule
 {
    Q_OBJECT
    public:

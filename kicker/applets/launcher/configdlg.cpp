@@ -31,9 +31,9 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include "configdlgbase.h"
 
 ConfigDlg::ConfigDlg(TQWidget *parent, const char *name, Prefs *config,
-                     int autoSize, KConfigDialog::DialogType dialogType,
+                     int autoSize, TDEConfigDialog::DialogType dialogType,
                      int dialogButtons) :
-    KConfigDialog(parent, name, config, dialogType, dialogButtons),
+    TDEConfigDialog(parent, name, config, dialogType, dialogButtons),
     m_settings(config),
     m_autoSize(autoSize)
 {
@@ -57,7 +57,7 @@ ConfigDlg::ConfigDlg(TQWidget *parent, const char *name, Prefs *config,
 void ConfigDlg::updateSettings()
 {
     kdDebug() << "updateSettings" << endl;
-    KConfigDialog::updateSettings();
+    TDEConfigDialog::updateSettings();
     if (!hasChanged())
     {
         return;
@@ -76,7 +76,7 @@ void ConfigDlg::updateSettings()
 
 void ConfigDlg::updateWidgets()
 {
-    KConfigDialog::updateWidgets();
+    TDEConfigDialog::updateWidgets();
     if (m_settings->iconDim() == m_autoSize)
     {
         m_ui->iconDim->setEditText(i18n("Automatic"));
@@ -89,13 +89,13 @@ void ConfigDlg::updateWidgets()
 
 void ConfigDlg::updateWidgetsDefault()
 {
-    KConfigDialog::updateWidgetsDefault();
+    TDEConfigDialog::updateWidgetsDefault();
 }
 
 bool ConfigDlg::hasChanged()
 {
     return m_oldIconDimText != m_ui->iconDim->currentText() ||
-        KConfigDialog::hasChanged();
+        TDEConfigDialog::hasChanged();
 }
 
 #include "configdlg.moc"

@@ -21,7 +21,7 @@
 #include "policies.h"
 
 class KColorButton;
-class KConfig;
+class TDEConfig;
 class KListView;
 class KURLRequester;
 class KIntNumInput;
@@ -48,7 +48,7 @@ public:
    * @param domain name of the domain this instance is used to configure the
    *	policies for (case insensitive, ignored if global == true)
    */
-  JavaPolicies(KConfig* config, const TQString &group, bool global,
+  JavaPolicies(TDEConfig* config, const TQString &group, bool global,
   		const TQString &domain = TQString::null);
 
   /** empty constructur to make TQMap happy
@@ -65,7 +65,7 @@ public:
 class JavaDomainListView : public DomainListView {
   Q_OBJECT
 public:
-  JavaDomainListView(KConfig *config,const TQString &group,KJavaOptions *opt,
+  JavaDomainListView(TDEConfig *config,const TQString &group,KJavaOptions *opt,
   		TQWidget *parent,const char *name = 0);
   virtual ~JavaDomainListView();
 
@@ -84,12 +84,12 @@ private:
   KJavaOptions *options;
 };
 
-class KJavaOptions : public KCModule
+class KJavaOptions : public TDECModule
 {
     Q_OBJECT
 
 public:
-    KJavaOptions( KConfig* config, TQString group, TQWidget* parent = 0, const char* name = 0 );
+    KJavaOptions( TDEConfig* config, TQString group, TQWidget* parent = 0, const char* name = 0 );
 
     virtual void load();
     virtual void load( bool useDefaults );
@@ -104,7 +104,7 @@ private slots:
 
 private:
 
-    KConfig* m_pConfig;
+    TDEConfig* m_pConfig;
     TQString  m_groupname;
     JavaPolicies java_global_policies;
 

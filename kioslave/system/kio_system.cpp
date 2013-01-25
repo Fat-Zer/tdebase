@@ -73,7 +73,7 @@ bool SystemProtocol::rewriteURL(const KURL &url, KURL &newUrl)
 
 	if ( !m_impl.parseURL(url, name, path) )
 	{
-		error(KIO::ERR_MALFORMED_URL, url.prettyURL());
+		error(TDEIO::ERR_MALFORMED_URL, url.prettyURL());
 		return false;
 	}
 
@@ -95,7 +95,7 @@ void SystemProtocol::stat(const KURL &url)
 	if ( path.isEmpty() || path == "/" )
 	{
 		// The root is "virtual" - it's not a single physical directory
-		KIO::UDSEntry entry;
+		TDEIO::UDSEntry entry;
 		m_impl.createTopLevelEntry( entry );
 		statEntry( entry );
 		finished();
@@ -107,13 +107,13 @@ void SystemProtocol::stat(const KURL &url)
 
 	if ( !ok )
 	{
-		error(KIO::ERR_MALFORMED_URL, url.prettyURL());
+		error(TDEIO::ERR_MALFORMED_URL, url.prettyURL());
 		return;
 	}
 
 	if( path.isEmpty() )
 	{
-		KIO::UDSEntry entry;
+		TDEIO::UDSEntry entry;
 
 		if ( m_impl.statByName(name, entry) )
 		{
@@ -122,7 +122,7 @@ void SystemProtocol::stat(const KURL &url)
 		}
 		else
 		{
-			error(KIO::ERR_DOES_NOT_EXIST, url.prettyURL());
+			error(TDEIO::ERR_DOES_NOT_EXIST, url.prettyURL());
 		}
 	}
 	else
@@ -146,7 +146,7 @@ void SystemProtocol::listDir(const KURL &url)
 
 	if ( !ok )
 	{
-		error(KIO::ERR_MALFORMED_URL, url.prettyURL());
+		error(TDEIO::ERR_MALFORMED_URL, url.prettyURL());
 		return;
 	}
 
@@ -155,9 +155,9 @@ void SystemProtocol::listDir(const KURL &url)
 
 void SystemProtocol::listRoot()
 {
-	KIO::UDSEntry entry;
+	TDEIO::UDSEntry entry;
 
-	KIO::UDSEntryList system_entries;
+	TDEIO::UDSEntryList system_entries;
 	bool ok = m_impl.listRoot(system_entries);
 
 	if (!ok)
@@ -171,8 +171,8 @@ void SystemProtocol::listRoot()
 	m_impl.createTopLevelEntry(entry);
 	listEntry(entry, false);
 
-	KIO::UDSEntryListIterator it = system_entries.begin();
-	KIO::UDSEntryListIterator end = system_entries.end();
+	TDEIO::UDSEntryListIterator it = system_entries.begin();
+	TDEIO::UDSEntryListIterator end = system_entries.end();
 
 	for(; it!=end; ++it)
 	{

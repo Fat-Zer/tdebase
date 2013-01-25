@@ -149,7 +149,7 @@ void KCountryPage::fillLanguageMenu(KLanguageButton *combo) {
 /** No descriptions */
 bool KCountryPage::save(KLanguageButton *comboCountry, KLanguageButton *comboLang) {
 	kdDebug() << "KCountryPage::save()" << endl;
-	KConfigBase *config = TDEGlobal::config();
+	TDEConfigBase *config = TDEGlobal::config();
 
 	config->setGroup(TQString::fromLatin1("Locale"));
 	config->writeEntry(TQString::fromLatin1("Country"), comboCountry->current(), true, true);

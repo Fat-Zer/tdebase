@@ -48,48 +48,48 @@ static TQCString configname()
 
 extern "C"
 {
-  KDE_EXPORT KCModule *create_browser(TQWidget *parent, const char *name)
+  KDE_EXPORT TDECModule *create_browser(TQWidget *parent, const char *name)
   {
-    KConfig *config = new KConfig("konquerorrc", false, true);
+    TDEConfig *config = new TDEConfig("konquerorrc", false, true);
     return new KBrowserOptions(config, "FMSettings", parent, name);
   }
 
-  KDE_EXPORT KCModule *create_behavior(TQWidget *parent, const char *name)
+  KDE_EXPORT TDECModule *create_behavior(TQWidget *parent, const char *name)
   {
-    KConfig *config = new KConfig("konquerorrc", false, true);
+    TDEConfig *config = new TDEConfig("konquerorrc", false, true);
     return new KBehaviourOptions(config, "FMSettings", parent, name);
   }
 
-  KDE_EXPORT KCModule *create_appearance(TQWidget *parent, const char *name)
+  KDE_EXPORT TDECModule *create_appearance(TQWidget *parent, const char *name)
   {
-    KConfig *config = new KConfig("konquerorrc", false, true);
+    TDEConfig *config = new TDEConfig("konquerorrc", false, true);
     return new KonqFontOptions(config, "FMSettings", false, parent, name);
   }
 
-  KDE_EXPORT KCModule *create_previews(TQWidget *parent, const char *name)
+  KDE_EXPORT TDECModule *create_previews(TQWidget *parent, const char *name)
   {
     return new KPreviewOptions(parent, name);
   }
 
-  KDE_EXPORT KCModule *create_dbehavior(TQWidget *parent, const char* /*name*/)
+  KDE_EXPORT TDECModule *create_dbehavior(TQWidget *parent, const char* /*name*/)
   {
-    KConfig *config = new KConfig(configname(), false, false);
+    TDEConfig *config = new TDEConfig(configname(), false, false);
     return new DesktopBehaviorModule(config, parent);
   }
 
-  KDE_EXPORT KCModule *create_dappearance(TQWidget *parent, const char* /*name*/)
+  KDE_EXPORT TDECModule *create_dappearance(TQWidget *parent, const char* /*name*/)
   {
-    KConfig *config = new KConfig(configname(), false, false);
+    TDEConfig *config = new TDEConfig(configname(), false, false);
     return new KonqFontOptions(config, "FMSettings", true, parent);
   }
 
-  KDE_EXPORT KCModule *create_dpath(TQWidget *parent, const char* /*name*/)
+  KDE_EXPORT TDECModule *create_dpath(TQWidget *parent, const char* /*name*/)
   {
-    //KConfig *config = new KConfig(configname(), false, false);
+    //TDEConfig *config = new TDEConfig(configname(), false, false);
     return new DesktopPathConfig(parent);
   }
 
-  KDE_EXPORT KCModule *create_ddesktop(TQWidget *parent, const char* /*name*/)
+  KDE_EXPORT TDECModule *create_ddesktop(TQWidget *parent, const char* /*name*/)
   {
     return new KDesktopConfig(parent, "VirtualDesktops");
   }

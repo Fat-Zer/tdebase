@@ -27,7 +27,7 @@ typedef KGenericFactory<USBViewer, TQWidget > USBFactory;
 K_EXPORT_COMPONENT_FACTORY (kcm_usb, USBFactory("kcmusb") )
 
 USBViewer::USBViewer(TQWidget *parent, const char *name, const TQStringList &)
-  : KCModule(USBFactory::instance(), parent, name)
+  : TDECModule(USBFactory::instance(), parent, name)
 {
   setButtons(Help);
 

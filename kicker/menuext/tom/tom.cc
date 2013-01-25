@@ -180,7 +180,7 @@ TOM::TOM(TQWidget *parent, const char *name)
     setCaption(i18n("Task-Oriented Menu"));
 
     // KMenu legacy: support some menu config options
-    KConfig* config = TDEGlobal::config();
+    TDEConfig* config = TDEGlobal::config();
     config->setGroup("menus");
     m_detailedTaskEntries = config->readBoolEntry("DetailedMenuEntries", false);
     if (m_detailedTaskEntries)
@@ -244,7 +244,7 @@ void TOM::initializeRecentDocs()
     }
 }
 
-int TOM::appendTaskGroup(KConfig& config, bool inSubMenu)
+int TOM::appendTaskGroup(TDEConfig& config, bool inSubMenu)
 {
     if (!config.hasGroup("General"))
     {
@@ -452,7 +452,7 @@ void TOM::initialize()
 
         for (; eIt != eEnd; ++eIt )
         {
-            KConfig config(*dIt + *eIt);
+            TDEConfig config(*dIt + *eIt);
             appendTaskGroup(config);
         }
     }
@@ -476,7 +476,7 @@ void TOM::initialize()
 
     if (!destinationsConfig.isEmpty() && TQFile::exists(destinationsConfig))
     {
-        KConfig config(destinationsConfig);
+        TDEConfig config(destinationsConfig);
         numDests = appendTaskGroup(config, false);
     }
 
@@ -516,7 +516,7 @@ void TOM::initialize()
     }
 
 
-    KConfig* config = TDEGlobal::config();
+    TDEConfig* config = TDEGlobal::config();
     TQStringList menu_ext = config->readListEntry("Extensions");
     if (!menu_ext.isEmpty())
     {
@@ -628,7 +628,7 @@ void TOM::removeTask()
  *
 bool TOM::loadSidePixmap()
 {
-  KConfig *config = TDEGlobal::config();
+  TDEConfig *config = TDEGlobal::config();
   TQColor color = palette().active().highlight();
   TQImage image;
 

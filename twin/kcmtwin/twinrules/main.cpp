@@ -34,7 +34,7 @@ namespace KWinInternal
 
 static void loadRules( TQValueList< Rules* >& rules )
     {
-    KConfig cfg( "twinrulesrc", true );
+    TDEConfig cfg( "twinrulesrc", true );
     cfg.setGroup( "General" );
     int count = cfg.readNumEntry( "count" );
     for( int i = 1;
@@ -49,7 +49,7 @@ static void loadRules( TQValueList< Rules* >& rules )
 
 static void saveRules( const TQValueList< Rules* >& rules )
     {
-    KConfig cfg( "twinrulesrc" );
+    TDEConfig cfg( "twinrulesrc" );
     TQStringList groups = cfg.groupList();
     for( TQStringList::ConstIterator it = groups.begin();
          it != groups.end();

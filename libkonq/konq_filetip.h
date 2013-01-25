@@ -89,7 +89,7 @@ class LIBKONQ_EXPORT KonqFileTip : public TQFrame
     int        m_num;
     TQScrollView* m_view;
     KFileItem* m_item;
-    KIO::PreviewJob* m_previewJob;
+    TDEIO::PreviewJob* m_previewJob;
     TQRect      m_rect;
     TQTimer*    m_timer;
 };

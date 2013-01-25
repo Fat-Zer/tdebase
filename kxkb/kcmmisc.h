@@ -30,7 +30,7 @@
 
 class KeyboardConfigWidget;
 
-class KeyboardConfig : public KCModule
+class KeyboardConfig : public TDECModule
 {
   Q_OBJECT
 public:

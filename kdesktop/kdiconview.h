@@ -124,7 +124,7 @@ protected slots:
     void slotContextMenuRequested(TQIconViewItem* _item, const TQPoint& _global);
     void slotEnableAction( const char * name, bool enabled );
 public slots:
-    void slotAboutToCreate(const TQPoint &pos, const TQValueList<KIO::CopyInfo> &files);
+    void slotAboutToCreate(const TQPoint &pos, const TQValueList<TDEIO::CopyInfo> &files);
 protected slots:
     void slotItemRenamed(TQIconViewItem*, const TQString &name);
 
@@ -270,7 +270,7 @@ private:
     bool m_needDesktopAlign;
 
     TQListView *mMediaListView;
-    KConfig *g_pConfig;
+    TDEConfig *g_pConfig;
 };
 
 #endif

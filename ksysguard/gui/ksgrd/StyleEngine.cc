@@ -59,7 +59,7 @@ StyleEngine::~StyleEngine()
 {
 }
 
-void StyleEngine::readProperties( KConfig *cfg )
+void StyleEngine::readProperties( TDEConfig *cfg )
 {
   mFirstForegroundColor = cfg->readColorEntry( "fgColor1", &mFirstForegroundColor );
   mSecondForegroundColor = cfg->readColorEntry( "fgColor2", &mSecondForegroundColor );
@@ -76,7 +76,7 @@ void StyleEngine::readProperties( KConfig *cfg )
   }
 }
 
-void StyleEngine::saveProperties( KConfig *cfg )
+void StyleEngine::saveProperties( TDEConfig *cfg )
 {
   cfg->writeEntry( "fgColor1", mFirstForegroundColor );
   cfg->writeEntry( "fgColor2", mSecondForegroundColor );

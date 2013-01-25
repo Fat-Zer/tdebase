@@ -4,7 +4,7 @@
 #include <tqobject.h>
 #include <tqstring.h>
 
-class KConfig;
+class TDEConfig;
 
 namespace KHC {
 
@@ -24,7 +24,7 @@ class HTMLSearch : public QObject
     TQString defaultIndexTestFile( KHC::DocEntry * );
 
   private:
-    KConfig *mConfig;
+    TDEConfig *mConfig;
 };
 
 }

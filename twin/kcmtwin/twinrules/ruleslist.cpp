@@ -150,7 +150,7 @@ void KCMRulesList::load()
          ++it )
         delete *it;
     rules.clear();
-    KConfig cfg( "twinrulesrc", true );
+    TDEConfig cfg( "twinrulesrc", true );
     cfg.setGroup( "General" );
     int count = cfg.readNumEntry( "count" );
     rules.reserve( count );
@@ -171,7 +171,7 @@ void KCMRulesList::load()
 
 void KCMRulesList::save()
     {
-    KConfig cfg( "twinrulesrc" );
+    TDEConfig cfg( "twinrulesrc" );
     TQStringList groups = cfg.groupList();
     for( TQStringList::ConstIterator it = groups.begin();
          it != groups.end();

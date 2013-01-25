@@ -24,7 +24,7 @@
 #include <tqwidget.h>
 
 class KURLRequester;
-class KConfig;
+class TDEConfig;
 
 namespace KHC {
 
@@ -35,8 +35,8 @@ class HtmlSearchConfig : public TQWidget
     HtmlSearchConfig(TQWidget *parent = 0L, const char *name = 0L);
     virtual ~HtmlSearchConfig();
 
-    void load( KConfig * );
-    void save( KConfig * );
+    void load( TDEConfig * );
+    void save( TDEConfig * );
     void defaults();
     void makeReadOnly();
 

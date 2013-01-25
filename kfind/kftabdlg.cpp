@@ -380,7 +380,7 @@ KfindTabWidget::~KfindTabWidget()
 
 void KfindTabWidget::setURL( const KURL & url )
 {
-  KConfig *conf = TDEGlobal::config();
+  TDEConfig *conf = TDEGlobal::config();
   conf->setGroup("History");
   m_url = url;
   TQStringList sl = conf->readPathListEntry("Directories");
@@ -459,7 +459,7 @@ void KfindTabWidget::saveHistory()
 void KfindTabWidget::loadHistory()
 {
   // Load pattern history
-  KConfig *conf = TDEGlobal::config();
+  TDEConfig *conf = TDEGlobal::config();
   conf->setGroup("History");
   TQStringList sl = conf->readListEntry("Patterns");
   if(!sl.isEmpty())
@@ -575,8 +575,8 @@ bool KfindTabWidget::isDateValid()
 
 void KfindTabWidget::setQuery(KQuery *query)
 {
-  KIO::filesize_t size;
-  KIO::filesize_t sizeunit;
+  TDEIO::filesize_t size;
+  TDEIO::filesize_t sizeunit;
   bool itemAlreadyContained(false);
   // only start if we have valid dates
   if (!isDateValid()) return;
@@ -849,7 +849,7 @@ static void save_pattern(TQComboBox *obj,
     }
   }
 
-  KConfig *conf = TDEGlobal::config();
+  TDEConfig *conf = TDEGlobal::config();
   conf->setGroup(group);
   conf->writePathEntry(entry, sl);
 }

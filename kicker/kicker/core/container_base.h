@@ -31,7 +31,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <kpanelextension.h>
 #include <kpanelapplet.h>
 
-class KConfigGroup;
+class TDEConfigGroup;
 class TQPopupMenu;
 
 class BaseContainer : public TQWidget
@@ -80,8 +80,8 @@ public:
     TQPopupMenu* opMenu();
     void clearOpMenu();
 
-    void loadConfiguration( KConfigGroup& );
-    void saveConfiguration( KConfigGroup&, bool layoutOnly = false ) const;
+    void loadConfiguration( TDEConfigGroup& );
+    void saveConfiguration( TDEConfigGroup&, bool layoutOnly = false ) const;
 
     void configure(KPanelExtension::Orientation, KPanelApplet::Direction);
     virtual void configure() {}
@@ -93,7 +93,7 @@ public:
     virtual TQString visibleName() const = 0;
 
 public slots:
-    virtual void slotRemoved(KConfig* config);
+    virtual void slotRemoved(TDEConfig* config);
     virtual void setPopupDirection(KPanelApplet::Direction d) { _dir = d; }
     virtual void setOrientation(KPanelExtension::Orientation o) { _orient = o; }
 
@@ -108,8 +108,8 @@ signals:
     void focusReqested(bool);
 
 protected:
-    virtual void doLoadConfiguration( KConfigGroup& ) {}
-    virtual void doSaveConfiguration( KConfigGroup&,
+    virtual void doLoadConfiguration( TDEConfigGroup& ) {}
+    virtual void doSaveConfiguration( TDEConfigGroup&,
                                       bool /* layoutOnly */ ) const {}
     virtual void alignmentChange(KPanelExtension::Alignment) {}
 

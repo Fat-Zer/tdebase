@@ -68,11 +68,11 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 // Settings
 
-KConfigDialogSingle::KConfigDialogSingle(Zone *zone, TQWidget *parent,
+TDEConfigDialogSingle::TDEConfigDialogSingle(Zone *zone, TQWidget *parent,
                                          const char *name, Prefs * prefs,
                                          KDialogBase::DialogType dialogType,
                                          bool modal) :
-    KConfigDialog(parent, name, prefs, dialogType,
+    TDEConfigDialog(parent, name, prefs, dialogType,
                   KDialogBase::Default | KDialogBase::Ok |
                   KDialogBase::Apply | KDialogBase::Cancel,
                   KDialogBase::Ok,
@@ -126,19 +126,19 @@ KConfigDialogSingle::KConfigDialogSingle(Zone *zone, TQWidget *parent,
     addPage(settings, i18n("General"), TQString::fromLatin1("package_settings"));
 }
 
-void KConfigDialogSingle::updateSettings()
+void TDEConfigDialogSingle::updateSettings()
 {
     settings->OkApply();
 }
 
-void KConfigDialogSingle::updateWidgets()
+void TDEConfigDialogSingle::updateWidgets()
 {
     selectPage( _prefs->type() );
 }
 
-void KConfigDialogSingle::updateWidgetsDefault()
+void TDEConfigDialogSingle::updateWidgetsDefault()
 {
-    KConfigSkeletonItem *item = _prefs->findItem("Type");
+    TDEConfigSkeletonItem *item = _prefs->findItem("Type");
     item->swapDefault();
     selectPage( _prefs->type() );
     item->swapDefault();
@@ -147,13 +147,13 @@ void KConfigDialogSingle::updateWidgetsDefault()
     TQTimer::singleShot(0, this, TQT_SLOT(dateToggled()));
 }
 
-void KConfigDialogSingle::selectPage(int p)
+void TDEConfigDialogSingle::selectPage(int p)
 {
     settings->widgetStack->raiseWidget( p );
     dateToggled();
 }
 
-void KConfigDialogSingle::dateToggled()
+void TDEConfigDialogSingle::dateToggled()
 {
     bool showDate;
     switch( settings->kcfg_Type->currentItem() )
@@ -1151,11 +1151,11 @@ void ClockApplet::preferences()
 
 void ClockApplet::preferences(bool timezone)
 {
-  KConfigDialogSingle *dialog = dynamic_cast<KConfigDialogSingle*>(KConfigDialog::exists(configFileName));
+  TDEConfigDialogSingle *dialog = dynamic_cast<TDEConfigDialogSingle*>(TDEConfigDialog::exists(configFileName));
 
   if (!dialog)
   {
-    dialog = new KConfigDialogSingle(zone, this, configFileName, _prefs, KDialogBase::Swallow);
+    dialog = new TDEConfigDialogSingle(zone, this, configFileName, _prefs, KDialogBase::Swallow);
     connect(dialog, TQT_SIGNAL(settingsChanged()), this, TQT_SLOT(slotReconfigure()));
   }
 

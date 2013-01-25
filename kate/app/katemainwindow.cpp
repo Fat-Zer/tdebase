@@ -86,7 +86,7 @@
 
 uint KateMainWindow::uniqueID = 1;
 
-KateMainWindow::KateMainWindow (KConfig *sconfig, const TQString &sgroup)
+KateMainWindow::KateMainWindow (TDEConfig *sconfig, const TQString &sgroup)
   : KateMDI::MainWindow (0,(TQString(TQString("__KateMainWindow#%1").arg(uniqueID))).latin1())
 {
   // first the very important id
@@ -402,7 +402,7 @@ void KateMainWindow::slotFileQuit()
 
 void KateMainWindow::readOptions ()
 {
-  KConfig *config = KateApp::self()->config ();
+  TDEConfig *config = KateApp::self()->config ();
 
   config->setGroup("General");
   syncKonsole =  config->readBoolEntry("Sync Konsole", true);
@@ -420,7 +420,7 @@ void KateMainWindow::readOptions ()
 
 void KateMainWindow::saveOptions ()
 {
-  KConfig *config = KateApp::self()->config ();
+  TDEConfig *config = KateApp::self()->config ();
 
   config->setGroup("General");
 
@@ -553,7 +553,7 @@ void KateMainWindow::editKeys()
     }
   }
 
-  externalTools->actionCollection()->writeShortcutSettings( "Shortcuts", new KConfig("externaltools", false, false, "appdata") );
+  externalTools->actionCollection()->writeShortcutSettings( "Shortcuts", new TDEConfig("externaltools", false, false, "appdata") );
 }
 
 void KateMainWindow::openURL (const TQString &name)
@@ -823,7 +823,7 @@ void KateMainWindow::updateCaption (Kate::Document *doc)
       m_viewManager->activeView()->getDoc()->isModified());
 }
 
-void KateMainWindow::saveProperties(KConfig *config)
+void KateMainWindow::saveProperties(TDEConfig *config)
 {
   TQString grp=config->group();
 
@@ -833,7 +833,7 @@ void KateMainWindow::saveProperties(KConfig *config)
   config->setGroup(grp);
 }
 
-void KateMainWindow::readProperties(KConfig *config)
+void KateMainWindow::readProperties(TDEConfig *config)
 {
   TQString grp=config->group();
 
@@ -844,7 +844,7 @@ void KateMainWindow::readProperties(KConfig *config)
   config->setGroup(grp);
 }
 
-void KateMainWindow::saveGlobalProperties( KConfig* sessionConfig )
+void KateMainWindow::saveGlobalProperties( TDEConfig* sessionConfig )
 {
   KateDocManager::self()->saveDocumentList (sessionConfig);
 

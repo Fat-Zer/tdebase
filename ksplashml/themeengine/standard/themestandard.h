@@ -45,7 +45,7 @@ class ThemeStandard: public ThemeEngine
   Q_OBJECT
 public:
   ThemeStandard( TQWidget *, const char*, const TQStringList& );
-  //inline const ThemeEngineConfig *config( TQWidget *p, KConfig *kc ) { return 0L; }
+  //inline const ThemeEngineConfig *config( TQWidget *p, TDEConfig *kc ) { return 0L; }
 
 public slots:
   inline void slotUpdateProgress( int i )

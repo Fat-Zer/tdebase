@@ -24,7 +24,7 @@
 
 #include <tqstring.h>
 
-class KConfig;
+class TDEConfig;
 
 // special value for inheriting a global policy
 #define INHERIT_POLICY		32767
@@ -54,7 +54,7 @@ public:
    * @param feature_key key of the "feature enabled" policy. The final
    *	key the policy is stored under will be prefix + featureKey.
    */
-  Policies(KConfig* config, const TQString &group, bool global,
+  Policies(TDEConfig* config, const TQString &group, bool global,
   		const TQString &domain, const TQString &prefix,
 		const TQString &feature_key);
 
@@ -123,7 +123,7 @@ protected:
   unsigned int feature_enabled;
 
   bool is_global;
-  KConfig *config;
+  TDEConfig *config;
   TQString groupname;
   TQString domain;
   TQString prefix;

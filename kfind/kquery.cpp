@@ -83,17 +83,17 @@ void KQuery::start()
   }
 
   if (m_recursive)
-    job = KIO::listRecursive( m_url, false );
+    job = TDEIO::listRecursive( m_url, false );
   else
-    job = KIO::listDir( m_url, false );
+    job = TDEIO::listDir( m_url, false );
 
-  connect(job, TQT_SIGNAL(entries(KIO::Job *, const KIO::UDSEntryList &)),
-	  TQT_SLOT(slotListEntries(KIO::Job *, const KIO::UDSEntryList &)));
-  connect(job, TQT_SIGNAL(result(KIO::Job *)), TQT_SLOT(slotResult(KIO::Job *)));
-  connect(job, TQT_SIGNAL(canceled(KIO::Job *)), TQT_SLOT(slotCanceled(KIO::Job *)));
+  connect(job, TQT_SIGNAL(entries(TDEIO::Job *, const TDEIO::UDSEntryList &)),
+	  TQT_SLOT(slotListEntries(TDEIO::Job *, const TDEIO::UDSEntryList &)));
+  connect(job, TQT_SIGNAL(result(TDEIO::Job *)), TQT_SLOT(slotResult(TDEIO::Job *)));
+  connect(job, TQT_SIGNAL(canceled(TDEIO::Job *)), TQT_SLOT(slotCanceled(TDEIO::Job *)));
 }
 
-void KQuery::slotResult( KIO::Job * _job )
+void KQuery::slotResult( TDEIO::Job * _job )
 {
   if (job != _job) return;
   job = 0;
@@ -102,21 +102,21 @@ void KQuery::slotResult( KIO::Job * _job )
   checkEntries();
 }
 
-void KQuery::slotCanceled( KIO::Job * _job )
+void KQuery::slotCanceled( TDEIO::Job * _job )
 {
   if (job != _job) return;
   job = 0;
 
   m_fileItems.clear();
-  m_result=KIO::ERR_USER_CANCELED;
+  m_result=TDEIO::ERR_USER_CANCELED;
   checkEntries();
 }
 
-void KQuery::slotListEntries(KIO::Job*, const KIO::UDSEntryList& list)
+void KQuery::slotListEntries(TDEIO::Job*, const TDEIO::UDSEntryList& list)
 {
   KFileItem * file = 0;
-  KIO::UDSEntryListConstIterator end = list.end();
-  for (KIO::UDSEntryListConstIterator it = list.begin(); it != end; ++it)
+  TDEIO::UDSEntryListConstIterator end = list.end();
+  for (TDEIO::UDSEntryListConstIterator it = list.begin(); it != end; ++it)
   {
     file = new KFileItem(*it, m_url, true, true);
     m_fileItems.enqueue(file);
@@ -200,9 +200,9 @@ void KQuery::processQuery( KFileItem* file)
 
     // make sure it's in the correct date range
     // what about 0 times?
-    if ( m_timeFrom && m_timeFrom > file->time(KIO::UDS_MODIFICATION_TIME) )
+    if ( m_timeFrom && m_timeFrom > file->time(TDEIO::UDS_MODIFICATION_TIME) )
       return;
-    if ( m_timeTo && m_timeTo < file->time(KIO::UDS_MODIFICATION_TIME) )
+    if ( m_timeTo && m_timeTo < file->time(TDEIO::UDS_MODIFICATION_TIME) )
       return;
 
     // username / group match
@@ -423,7 +423,7 @@ void KQuery::setFileType(int filetype)
   m_filetype = filetype;
 }
 
-void KQuery::setSizeRange(int mode, KIO::filesize_t value1, KIO::filesize_t value2)
+void KQuery::setSizeRange(int mode, TDEIO::filesize_t value1, TDEIO::filesize_t value2)
 {
   m_sizemode = mode;
   m_sizeboundary1 = value1;

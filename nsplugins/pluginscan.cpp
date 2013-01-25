@@ -107,7 +107,7 @@ void pullInXt()
     XtFree( NULL );
 }
 
-KConfig *infoConfig = 0;
+TDEConfig *infoConfig = 0;
 
 
 bool isPluginMimeType( TQString fname )
@@ -566,7 +566,7 @@ int main( int argc, char **argv )
     TQStringList searchPaths = getSearchPaths();
     TQStringList mimeInfoList;
 
-    infoConfig = new KConfig( TDEGlobal::dirs()->saveLocation("data", "nsplugins") +
+    infoConfig = new TDEConfig( TDEGlobal::dirs()->saveLocation("data", "nsplugins") +
                               "/pluginsinfo" );
     infoConfig->writeEntry( "number", 0 );
 

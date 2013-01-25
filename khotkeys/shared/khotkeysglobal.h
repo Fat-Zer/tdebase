@@ -22,7 +22,7 @@
 
 #include <klocale.h>
 
-class KConfig;
+class TDEConfig;
 class TQObject;
 
 namespace KHotKeys

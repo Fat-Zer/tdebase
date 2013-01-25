@@ -32,7 +32,7 @@ ObjKsTheme::ObjKsTheme( const TQString& theme )
   :mActiveTheme (theme), mThemeDir("/"), mThemeConfig (0L), mThemePrefix( "Themes/" ), d(0)
 {
   // Get Xinerama config.
-  KConfig *config = kapp->config();
+  TDEConfig *config = kapp->config();
   config->setGroup( "Xinerama" );
   TQDesktopWidget *desktop = kapp->desktop();
   mXineramaScreen = config->readNumEntry("KSplashScreen", desktop->primaryScreen());
@@ -63,7 +63,7 @@ bool ObjKsTheme::loadThemeRc( const TQString& activeTheme, bool force )
   //kdDebug() << "ObjKsTheme::loadThemeRc: " << activeTheme << endl;
   TQString prefix("Themes/");
   TQString themeFile;
-  KConfig *cf = 0L;
+  TDEConfig *cf = 0L;
 
   // Try our best to find a theme file.
   themeFile = locate( "appdata", prefix + activeTheme + "/" + TQString("Theme.rc") );
@@ -72,13 +72,13 @@ bool ObjKsTheme::loadThemeRc( const TQString& activeTheme, bool force )
   themeFile = themeFile.isEmpty() ? locate("appdata",prefix+activeTheme+"/"+activeTheme+TQString(".rc")):themeFile;
 
   if( !themeFile.isEmpty() )
-     cf = new KConfig( themeFile );
+     cf = new TDEConfig( themeFile );
 
   if( cf )
   {
     mActiveTheme = activeTheme;
     mThemeDir = prefix + activeTheme+"/";
-    if( loadKConfig( cf, activeTheme, force ) )
+    if( loadTDEConfig( cf, activeTheme, force ) )
     {
       mThemeConfig = cf;
       return true;
@@ -92,14 +92,14 @@ bool ObjKsTheme::loadThemeRc( const TQString& activeTheme, bool force )
 bool ObjKsTheme::loadLocalConfig( const TQString& activeTheme, bool force )
 {
   //kdDebug() << "ObjKsTheme::loadLocalConfig" << endl;
-  KConfig *cfg = kapp->config();
-  return( loadKConfig( cfg, activeTheme, force ) );
+  TDEConfig *cfg = kapp->config();
+  return( loadTDEConfig( cfg, activeTheme, force ) );
 }
 
-// ObjKsConfig::loadKConfig(): Load our settings from a KConfig object.
-bool ObjKsTheme::loadKConfig( KConfig *cfg, const TQString& activeTheme, bool force )
+// ObjKsConfig::loadTDEConfig(): Load our settings from a TDEConfig object.
+bool ObjKsTheme::loadTDEConfig( TDEConfig *cfg, const TQString& activeTheme, bool force )
 {
-  //kdDebug() << "ObjKsTheme::loadKConfig" << endl;
+  //kdDebug() << "ObjKsTheme::loadTDEConfig" << endl;
   if( !cfg )
     return false;
 

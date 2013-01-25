@@ -398,7 +398,7 @@ TQMap<int, TQMap<int, double> > VoiceSignature::pond;
 
 
 
-void VoiceSignature::write(KConfigBase *cfg, const TQString &key) const
+void VoiceSignature::write(TDEConfigBase *cfg, const TQString &key) const
 {
 	TQStringList sl;
 	for(int x=0;x<WINDOW_NUMBER;x++)
@@ -409,7 +409,7 @@ void VoiceSignature::write(KConfigBase *cfg, const TQString &key) const
 	cfg->writeEntry(key,sl);
 }
 
-void VoiceSignature::read(KConfigBase *cfg, const TQString &key)
+void VoiceSignature::read(TDEConfigBase *cfg, const TQString &key)
 {
 	TQStringList sl=cfg->readListEntry(key);
 	for(int x=0;x<WINDOW_NUMBER;x++)

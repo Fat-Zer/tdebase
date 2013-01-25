@@ -51,7 +51,7 @@ class KDE_EXPORT KonqSidebarPlugin : public TQObject
 
 	signals:
 		void requestURL(KURL&);
-		void started(KIO::Job *);
+		void started(TDEIO::Job *);
 		void completed();
 		void setIcon(const TQString& icon);
 		void setCaption(const TQString& caption);

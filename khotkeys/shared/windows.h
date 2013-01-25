@@ -21,7 +21,7 @@
 
 #include "khotkeysglobal.h"
 
-class KConfig;
+class TDEConfig;
 class KWinModule;
 
 namespace KHotKeys
@@ -80,12 +80,12 @@ class KDE_EXPORT Windowdef
     {
     public:
         Windowdef( const TQString& comment_P );
-        Windowdef( KConfig& cfg_P );
+        Windowdef( TDEConfig& cfg_P );
         virtual ~Windowdef();
         const TQString& comment() const;
         virtual bool match( const Window_data& window_P ) = 0;
-        static Windowdef* create_cfg_read( KConfig& cfg_P/*, Action_data_base* data_P*/ );
-        virtual void cfg_write( KConfig& cfg_P ) const = 0;
+        static Windowdef* create_cfg_read( TDEConfig& cfg_P/*, Action_data_base* data_P*/ );
+        virtual void cfg_write( TDEConfig& cfg_P ) const = 0;
         virtual Windowdef* copy( /*Action_data_base* data_P*/ ) const = 0;
         virtual const TQString description() const = 0;
     private:
@@ -98,8 +98,8 @@ class KDE_EXPORT Windowdef_list
     {
     public:
         Windowdef_list( const TQString& comment_P );
-        Windowdef_list( KConfig& cfg_P/*, Action_data_base* data_P*/ );
-        void cfg_write( KConfig& cfg_P ) const;
+        Windowdef_list( TDEConfig& cfg_P/*, Action_data_base* data_P*/ );
+        void cfg_write( TDEConfig& cfg_P ) const;
         bool match( const Window_data& window_P ) const;
         Windowdef_list* copy( /*Action_data_base* data_P*/ ) const;
         typedef TQPtrListIterator< Windowdef > Iterator;
@@ -136,9 +136,9 @@ class KDE_EXPORT Windowdef_simple
         Windowdef_simple( const TQString& comment_P, const TQString& title_P,
             substr_type_t title_type_P, const TQString& wclass_P, substr_type_t wclass_type_P,
             const TQString& role_P, substr_type_t role_type_P, int window_types_P );
-        Windowdef_simple( KConfig& cfg_P );
+        Windowdef_simple( TDEConfig& cfg_P );
         virtual bool match( const Window_data& window_P );
-        virtual void cfg_write( KConfig& cfg_P ) const;
+        virtual void cfg_write( TDEConfig& cfg_P ) const;
         const TQString& title() const;
         substr_type_t title_match_type() const;
         const TQString& wclass() const;

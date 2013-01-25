@@ -70,7 +70,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 // for multihead
 extern int kicker_screen_number;
 
-ContainerArea::ContainerArea(KConfig* _c,
+ContainerArea::ContainerArea(TDEConfig* _c,
                              TQWidget* parent,
                              TQPopupMenu* opMenu,
                              const char* name)
@@ -310,7 +310,7 @@ void ContainerArea::loadContainers(const TQStringList& containers)
             continue;
         }
 
-        KConfigGroup group(_config, appletId.latin1());
+        TDEConfigGroup group(_config, appletId.latin1());
 
         BaseContainer* a = 0;
 
@@ -395,13 +395,13 @@ void ContainerArea::saveContainerConfig(bool layoutOnly)
         BaseContainer* a = dynamic_cast<BaseContainer*>(it2.current()->widget());
         if (a)
         {
-            KConfigGroup group(_config, a->appletId().latin1());
+            TDEConfigGroup group(_config, a->appletId().latin1());
             a->saveConfiguration(group, layoutOnly);
             alist.append(a->appletId());
         }
     }
 
-    KConfigGroup group( _config, "General" );
+    TDEConfigGroup group( _config, "General" );
     group.writeEntry("Applets2", alist);
 
     _config->sync();

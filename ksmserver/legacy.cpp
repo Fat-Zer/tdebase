@@ -209,11 +209,11 @@ void KSMServer::performLegacySessionSave()
 /*!
   Stores legacy session management data
 */
-void KSMServer::storeLegacySession( KConfig* config )
+void KSMServer::storeLegacySession( TDEConfig* config )
 {
     // Write LegacySession data
     config->deleteGroup( "Legacy" + sessionGroup );
-    KConfigGroupSaver saver( config, "Legacy" + sessionGroup );
+    TDEConfigGroupSaver saver( config, "Legacy" + sessionGroup );
     int count = 0;
     for (WindowMap::ConstIterator it = legacyWindows.begin(); it != legacyWindows.end(); ++it) {
         if ( (*it).type != SM_ERROR) {
@@ -234,13 +234,13 @@ void KSMServer::storeLegacySession( KConfig* config )
 /*!
   Restores legacy session management data (i.e. restart applications)
 */
-void KSMServer::restoreLegacySession( KConfig* config )
+void KSMServer::restoreLegacySession( TDEConfig* config )
 {
     if( config->hasGroup( "Legacy" + sessionGroup )) {
-        KConfigGroupSaver saver( config, "Legacy" + sessionGroup );
+        TDEConfigGroupSaver saver( config, "Legacy" + sessionGroup );
         restoreLegacySessionInternal( config );
     } else if( wm == "twin" ) { // backwards comp. - get it from twinrc
-	KConfigGroupSaver saver( config, sessionGroup );
+	TDEConfigGroupSaver saver( config, sessionGroup );
 	int count =  config->readNumEntry( "count", 0 );
 	for ( int i = 1; i <= count; i++ ) {
     	    TQString n = TQString::number(i);
@@ -254,7 +254,7 @@ void KSMServer::restoreLegacySession( KConfig* config )
 		if( (*it) == "-session" ) {
 		    ++it;
 		    if( it != restartCommand.end()) {
-			KConfig cfg( "session/" + wm + "_" + (*it), true );
+			TDEConfig cfg( "session/" + wm + "_" + (*it), true );
 			cfg.setGroup( "LegacySession" );
 			restoreLegacySessionInternal( &cfg, ' ' );
 		    }
@@ -264,7 +264,7 @@ void KSMServer::restoreLegacySession( KConfig* config )
     }
 }
 
-void KSMServer::restoreLegacySessionInternal( KConfig* config, char sep )
+void KSMServer::restoreLegacySessionInternal( TDEConfig* config, char sep )
 {
     int count = config->readNumEntry( "count" );
     for ( int i = 1; i <= count; i++ ) {

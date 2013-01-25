@@ -10,7 +10,7 @@ namespace KParts
   class ReadOnlyPart;
 }
 
-class KConfig;
+class TDEConfig;
 class KFileItem;
 typedef TQPtrList<KFileItem> KFileItemList;
 
@@ -51,9 +51,9 @@ private:
 class LIBKONQ_EXPORT KonqConfigEvent : public KParts::Event
 {
 public:
-  KonqConfigEvent( KConfig *config, const TQString &prefix, bool save ) : KParts::Event( s_configEventName ), m_config( config ), m_prefix( prefix ), m_save( save ) {}
+  KonqConfigEvent( TDEConfig *config, const TQString &prefix, bool save ) : KParts::Event( s_configEventName ), m_config( config ), m_prefix( prefix ), m_save( save ) {}
 
-  KConfig * config() const { return m_config; }
+  TDEConfig * config() const { return m_config; }
   TQString prefix() const { return m_prefix; }
   bool save() const { return m_save; }
 
@@ -62,7 +62,7 @@ public:
 private:
   static const char *s_configEventName;
 
-  KConfig *m_config;
+  TDEConfig *m_config;
   TQString m_prefix;
   bool m_save;
 };

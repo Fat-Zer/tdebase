@@ -27,7 +27,7 @@ License. See the file "COPYING" for the exact licensing terms.
 #include <X11/Xlib.h>
 
 class TQPopupMenu;
-class KConfig;
+class TDEConfig;
 class TDEGlobalAccel;
 class KShortcutDialog;
 class KStartupInfo;
@@ -222,7 +222,7 @@ class Workspace : public TQObject, public KWinInterface, public KDecorationDefin
 
         void performWindowOperation( Client* c, WindowOperation op );
 
-        void storeSession( KConfig* config, SMSavePhase phase );
+        void storeSession( TDEConfig* config, SMSavePhase phase );
 
         SessionInfo* takeSessionInfo( Client* );
         WindowRules findWindowRules( const Client*, bool );

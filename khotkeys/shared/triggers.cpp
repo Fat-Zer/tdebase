@@ -39,12 +39,12 @@ namespace KHotKeys
 
 // Trigger
 
-void Trigger::cfg_write( KConfig& cfg_P ) const
+void Trigger::cfg_write( TDEConfig& cfg_P ) const
     {
     cfg_P.writeEntry( "Type", "ERROR" );
     }
 
-Trigger* Trigger::create_cfg_read( KConfig& cfg_P, Action_data* data_P )
+Trigger* Trigger::create_cfg_read( TDEConfig& cfg_P, Action_data* data_P )
     {
     TQString type = cfg_P.readEntry( "Type" );
     if( type == "SHORTCUT" || type == "SINGLE_SHORTCUT" )
@@ -62,7 +62,7 @@ Trigger* Trigger::create_cfg_read( KConfig& cfg_P, Action_data* data_P )
 
 // Trigger_list
 
-Trigger_list::Trigger_list( KConfig& cfg_P, Action_data* data_P )
+Trigger_list::Trigger_list( TDEConfig& cfg_P, Action_data* data_P )
     : TQPtrList< Trigger >()
     {
     setAutoDelete( true );
@@ -81,7 +81,7 @@ Trigger_list::Trigger_list( KConfig& cfg_P, Action_data* data_P )
     cfg_P.setGroup( save_cfg_group );
     }
 
-void Trigger_list::cfg_write( KConfig& cfg_P ) const
+void Trigger_list::cfg_write( TDEConfig& cfg_P ) const
     {
     cfg_P.writeEntry( "Comment", comment());
     TQString save_cfg_group = cfg_P.group();
@@ -123,7 +123,7 @@ Shortcut_trigger::Shortcut_trigger( Action_data* data_P, const KShortcut& shortc
     keyboard_handler->insert_item( shortcut(), this );
     }
 
-Shortcut_trigger::Shortcut_trigger( KConfig& cfg_P, Action_data* data_P )
+Shortcut_trigger::Shortcut_trigger( TDEConfig& cfg_P, Action_data* data_P )
     : Trigger( cfg_P, data_P ), _shortcut( cfg_P.readEntry( "Key", 0 ))
     {
     keyboard_handler->insert_item( shortcut(), this );
@@ -134,7 +134,7 @@ Shortcut_trigger::~Shortcut_trigger()
     keyboard_handler->remove_item( shortcut(), this );
     }
 
-void Shortcut_trigger::cfg_write( KConfig& cfg_P ) const
+void Shortcut_trigger::cfg_write( TDEConfig& cfg_P ) const
     {
     base::cfg_write( cfg_P );
     cfg_P.writeEntry( "Key", _shortcut.toStringInternal());
@@ -175,7 +175,7 @@ void Shortcut_trigger::activate( bool activate_P )
 
 // Window_trigger
 
-Window_trigger::Window_trigger( KConfig& cfg_P, Action_data* data_P )
+Window_trigger::Window_trigger( TDEConfig& cfg_P, Action_data* data_P )
     : Trigger( cfg_P, data_P ), active( false )
     {
 //    kdDebug( 1217 ) << "Window_trigger" << endl;
@@ -290,7 +290,7 @@ void Window_trigger::window_changed( WId window_P, unsigned int dirty_P )
     kdDebug( 1217 ) << "Window_trigger::w_changed() : " << was_match << "|" << matches << endl;
     }
 
-void Window_trigger::cfg_write( KConfig& cfg_P ) const
+void Window_trigger::cfg_write( TDEConfig& cfg_P ) const
     {
     base::cfg_write( cfg_P );
     TQString save_cfg_group = cfg_P.group();
@@ -325,7 +325,7 @@ Gesture_trigger::Gesture_trigger( Action_data* data_P, const TQString &gestureco
     {
     }
 
-Gesture_trigger::Gesture_trigger( KConfig& cfg_P, Action_data* data_P )
+Gesture_trigger::Gesture_trigger( TDEConfig& cfg_P, Action_data* data_P )
     : Trigger( cfg_P, data_P )
     {
     _gesturecode = cfg_P.readEntry( "Gesture" );
@@ -336,7 +336,7 @@ Gesture_trigger::~Gesture_trigger()
     gesture_handler->unregister_handler( this, TQT_SLOT( handle_gesture( const TQString&, WId )));
     }
 
-void Gesture_trigger::cfg_write( KConfig& cfg_P ) const
+void Gesture_trigger::cfg_write( TDEConfig& cfg_P ) const
     {
     base::cfg_write( cfg_P );
     cfg_P.writeEntry( "Gesture", gesturecode());
@@ -381,7 +381,7 @@ void Gesture_trigger::activate( bool activate_P )
 		_voicesignature[1]=signature2_P;
     }
 
-Voice_trigger::Voice_trigger( KConfig& cfg_P, Action_data* data_P )
+Voice_trigger::Voice_trigger( TDEConfig& cfg_P, Action_data* data_P )
 	: Trigger( cfg_P, data_P )
     {
     _voicecode = cfg_P.readEntry( "Name" );
@@ -394,7 +394,7 @@ Voice_trigger::~Voice_trigger()
     voice_handler->unregister_handler( this );
     }
 
-void Voice_trigger::cfg_write( KConfig& cfg_P ) const
+void Voice_trigger::cfg_write( TDEConfig& cfg_P ) const
     {
     base::cfg_write( cfg_P );
     cfg_P.writeEntry( "Name", voicecode());

@@ -41,7 +41,7 @@
 
 K_EXPORT_COMPONENT_FACTORY( ksplashredmond, KGenericFactory<ThemeRedmond>( "ksplash" ) )
 
-CfgRedmond::CfgRedmond( TQWidget *p, KConfig *c )
+CfgRedmond::CfgRedmond( TQWidget *p, TDEConfig *c )
   :ThemeEngineConfig( p, c )
 {
   TQVBox *vbox = new TQVBox( this );
@@ -195,7 +195,7 @@ void ThemeRedmond::_initUi()
     const int fUserOnly   = fUserFirst+1;
 
     int faceSource = fAdminOnly;
-    KConfig *tdmconfig = new KConfig("tdm/tdmrc", true);
+    TDEConfig *tdmconfig = new TDEConfig("tdm/tdmrc", true);
     tdmconfig->setGroup("X-*-Greeter");
     TQString userPicsDir = tdmconfig->readEntry( "FaceDir", TDEGlobal::dirs()->resourceDirs("data").last() + "tdm/faces" ) + '/';
     TQString fs = tdmconfig->readEntry( "FaceSource" );
@@ -313,7 +313,7 @@ void ThemeRedmond::_readSettings()
 
   if( !mTheme )
     return;
-  KConfig *cfg = mTheme->themeConfig();
+  TDEConfig *cfg = mTheme->themeConfig();
   if( !cfg )
     return;
 

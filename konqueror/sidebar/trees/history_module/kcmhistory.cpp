@@ -49,7 +49,7 @@ typedef KGenericFactory<HistorySidebarConfig, TQWidget > KCMHistoryFactory;
 K_EXPORT_COMPONENT_FACTORY (kcm_history, KCMHistoryFactory("kcmhistory") )
 
 HistorySidebarConfig::HistorySidebarConfig( TQWidget *parent, const char* name, const TQStringList & )
-    : KCModule (KCMHistoryFactory::instance(), parent, name)
+    : TDECModule (KCMHistoryFactory::instance(), parent, name)
 {
     TDEGlobal::locale()->insertCatalogue("konqueror");
 
@@ -115,7 +115,7 @@ void HistorySidebarConfig::configChanged()
 
 void HistorySidebarConfig::load()
 {
-    KConfig config("konquerorrc");
+    TDEConfig config("konquerorrc");
     config.setGroup("HistorySettings");
     dialog->spinExpire->setValue( config.readNumEntry( "Maximum age of History entries", 90) );
     dialog->spinEntries->setValue( config.readNumEntry( "Maximum of History entries", 500 ) );
@@ -147,7 +147,7 @@ void HistorySidebarConfig::save()
     TQ_UINT32 age   = dialog->cbExpire->isChecked() ? dialog->spinExpire->value() : 0;
     TQ_UINT32 count = dialog->spinEntries->value();
 
-    KConfig config("konquerorrc");
+    TDEConfig config("konquerorrc");
     config.setGroup("HistorySettings");
     config.writeEntry( "Maximum of History entries", count );
     config.writeEntry( "Maximum age of History entries", age );

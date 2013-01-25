@@ -193,15 +193,15 @@ void MenuFolderInfo::save(MenuFile *menuFile)
    {
       TQString local = KDesktopFile::locateLocal(directoryFile);
 
-      KConfig *df = 0;
+      TDEConfig *df = 0;
       if (directoryFile != local)
       {
-         KConfig orig(directoryFile, true, false, "apps");
+         TDEConfig orig(directoryFile, true, false, "apps");
          df = orig.copyTo(local);
       }
       else
       {
-         df = new KConfig(directoryFile, false, false, "apps");
+         df = new TDEConfig(directoryFile, false, false, "apps");
       }
 
       df->setDesktopGroup();

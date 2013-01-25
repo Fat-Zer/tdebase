@@ -27,11 +27,11 @@
 
 #include <kcmodule.h>
 
-class KConfig;
+class TDEConfig;
 class FakeUASProvider;
 class UserAgentDlgUI;
 
-class UserAgentDlg : public KCModule
+class UserAgentDlg : public TDECModule
 {
   Q_OBJECT
 
@@ -76,7 +76,7 @@ private:
   //
   int d_itemsSelected;
 
-  KConfig *m_config;
+  TDEConfig *m_config;
   UserAgentDlgUI* dlg;
 };
 

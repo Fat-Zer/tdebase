@@ -46,8 +46,8 @@
 const int customMenu1ID = 5;
 const int customMenu2ID = 6;
 
-DesktopBehaviorModule::DesktopBehaviorModule(KConfig *config, TQWidget *parent, const char * )
-    : KCModule( parent, "kcmkonq" )
+DesktopBehaviorModule::DesktopBehaviorModule(TDEConfig *config, TQWidget *parent, const char * )
+    : TDECModule( parent, "kcmkonq" )
 {
     TQVBoxLayout* layout = new TQVBoxLayout(this);
     m_behavior = new DesktopBehavior(config, this);
@@ -57,7 +57,7 @@ DesktopBehaviorModule::DesktopBehaviorModule(KConfig *config, TQWidget *parent, 
 
 void DesktopBehaviorModule::changed()
 {
-    emit KCModule::changed( true );
+    emit TDECModule::changed( true );
 }
 
 class DesktopBehaviorPreviewItem : public TQCheckListItem
@@ -112,7 +112,7 @@ private:
 static const int choiceCount=7;
 static const char * s_choices[7] = { "", "WindowListMenu", "DesktopMenu", "AppMenu", "BookmarksMenu", "CustomMenu1", "CustomMenu2" };
 
-DesktopBehavior::DesktopBehavior(KConfig *config, TQWidget *parent, const char * )
+DesktopBehavior::DesktopBehavior(TDEConfig *config, TQWidget *parent, const char * )
     : DesktopBehaviorBase( parent, "kcmkonq" ), g_pConfig(config)
 {
   TQString strMouseButton1, strMouseButton3, strButtonTxt1, strButtonTxt3;
@@ -315,7 +315,7 @@ void DesktopBehavior::load( bool useDefaults )
     g_pConfig->setGroup( "FMSettings" );
     toolTipBox->setChecked(g_pConfig->readBoolEntry( "ShowFileTips", true ) );
     g_pConfig->setGroup( "Menubar" );
-    KConfig config( "kdeglobals" );
+    TDEConfig config( "kdeglobals" );
     config.setGroup("KDE");
     bool globalMenuBar = config.readBoolEntry("macStyle", false);
     bool desktopMenuBar = g_pConfig->readBoolEntry("ShowMenubar", false);
@@ -373,7 +373,7 @@ void DesktopBehavior::save()
     g_pConfig->writeEntry( "ShowFileTips", toolTipBox->isChecked() );
     g_pConfig->setGroup( "Menubar" );
     g_pConfig->writeEntry("ShowMenubar", desktopMenuGroup->selectedId() == 1);
-    KConfig config( "kdeglobals" );
+    TDEConfig config( "kdeglobals" );
     config.setGroup("KDE");
     bool globalMenuBar = desktopMenuGroup->selectedId() == 2;
     if ( globalMenuBar != config.readBoolEntry("macStyle", false) )
@@ -460,7 +460,7 @@ void DesktopBehavior::editButtonPressed()
       return;
 
    KCustomMenuEditor editor(this);
-   KConfig cfg(cfgFile, false, false);
+   TDEConfig cfg(cfgFile, false, false);
 
    editor.load(&cfg);
    if (editor.exec())

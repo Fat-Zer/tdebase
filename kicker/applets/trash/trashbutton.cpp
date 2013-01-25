@@ -35,8 +35,8 @@ TrashButton::TrashButton(TQWidget *parent)
 	: PanelPopupButton(parent), mActions(TQT_TQWIDGET(this), TQT_TQOBJECT(this)),
 	  mFileItem(KFileItem::Unknown, KFileItem::Unknown, "trash:/")
 {
-	KIO::UDSEntry entry;
-	KIO::NetAccess::stat("trash:/", entry, 0L);
+	TDEIO::UDSEntry entry;
+	TDEIO::NetAccess::stat("trash:/", entry, 0L);
 	mFileItem.assign(KFileItem(entry, "trash:/"));
 
 	KAction *a = KStdAction::paste(TQT_TQOBJECT(this), TQT_SLOT(slotPaste()),

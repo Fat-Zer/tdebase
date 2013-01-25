@@ -25,7 +25,7 @@
 
 class ManagerModuleView;
 
-class ManagerModule : public KCModule
+class ManagerModule : public TDECModule
 {
 	Q_OBJECT
 

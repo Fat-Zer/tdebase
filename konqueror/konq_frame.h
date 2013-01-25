@@ -46,7 +46,7 @@ class KonqFrame;
 class KonqFrameContainerBase;
 class KonqFrameContainer;
 class KonqFrameTabs;
-class KConfig;
+class TDEConfig;
 class KSeparator;
 class KProgress;
 class KAction;
@@ -154,7 +154,7 @@ class KonqFrameBase
  public:
   virtual ~KonqFrameBase() {}
 
-  virtual void saveConfig( KConfig* config, const TQString &prefix, bool saveURLs, KonqFrameBase* docContainer, int id = 0, int depth = 0) = 0;
+  virtual void saveConfig( TDEConfig* config, const TQString &prefix, bool saveURLs, KonqFrameBase* docContainer, int id = 0, int depth = 0) = 0;
 
   virtual void copyHistory( KonqFrameBase *other ) = 0;
 
@@ -242,7 +242,7 @@ public:
   void setView( KonqView* child );
   virtual void listViews( ChildViewList *viewList );
 
-  virtual void saveConfig( KConfig* config, const TQString &prefix, bool saveURLs, KonqFrameBase* docContainer, int id = 0, int depth = 0 );
+  virtual void saveConfig( TDEConfig* config, const TQString &prefix, bool saveURLs, KonqFrameBase* docContainer, int id = 0, int depth = 0 );
   virtual void copyHistory( KonqFrameBase *other );
 
   virtual void printFrameInfo( const TQString& spaces );
@@ -357,7 +357,7 @@ public:
 
   virtual void listViews( ChildViewList *viewList );
 
-  virtual void saveConfig( KConfig* config, const TQString &prefix, bool saveURLs, KonqFrameBase* docContainer, int id = 0, int depth = 0 );
+  virtual void saveConfig( TDEConfig* config, const TQString &prefix, bool saveURLs, KonqFrameBase* docContainer, int id = 0, int depth = 0 );
   virtual void copyHistory( KonqFrameBase *other );
 
   KonqFrameBase* firstChild() { return m_pFirstChild; }

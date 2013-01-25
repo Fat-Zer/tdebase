@@ -24,7 +24,7 @@
 
 #include "mediaimpl.h"
 
-class MediaProtocol : public KIO::ForwardingSlaveBase
+class MediaProtocol : public TDEIO::ForwardingSlaveBase
 {
 Q_OBJECT
 public:

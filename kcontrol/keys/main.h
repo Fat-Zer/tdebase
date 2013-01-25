@@ -31,7 +31,7 @@ class CommandShortcutsModule;
 class ShortcutsModule;
 class ModifiersModule;
 
-class KeyModule : public KCModule
+class KeyModule : public TDECModule
 {
 	Q_OBJECT
  public:

@@ -44,7 +44,7 @@
 namespace KFI
 {
 
-class CKioFonts : public KIO::SlaveBase
+class CKioFonts : public TDEIO::SlaveBase
 {
     private:
 
@@ -101,7 +101,7 @@ class CKioFonts : public KIO::SlaveBase
 
     void listDir(const KURL &url);
     void stat(const KURL &url);
-    bool createStatEntry(KIO::UDSEntry &entry, const KURL &url, EFolder folder);
+    bool createStatEntry(TDEIO::UDSEntry &entry, const KURL &url, EFolder folder);
     void get(const KURL &url);
     void put(const KURL &url, int mode, bool overwrite, bool resume);
     void copy(const KURL &src, const KURL &dest, int mode, bool overwrite);

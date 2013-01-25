@@ -48,7 +48,7 @@
 
 extern "C"
 {
-    KDE_EXPORT KCModule* create_khotkeys( TQWidget* parent_P, const char* name_P )
+    KDE_EXPORT TDECModule* create_khotkeys( TQWidget* parent_P, const char* name_P )
     {
 //    sleep( 20 ); // CHECKME DEBUG
     TDEGlobal::locale()->insertCatalogue("khotkeys");
@@ -62,7 +62,7 @@ namespace KHotKeys
 {
 
 Module::Module( TQWidget* parent_P, const char* )
-    : KCModule( parent_P, "khotkeys" ), _actions_root( NULL ), _current_action_data( NULL ),
+    : TDECModule( parent_P, "khotkeys" ), _actions_root( NULL ), _current_action_data( NULL ),
         listview_is_changed( false ), deleting_action( false )
     {
     setButtons( Help | Cancel | Apply | Ok );
@@ -114,7 +114,7 @@ void Module::load()
     kdDebug( 1217 ) << "actions_root:" << _actions_root << endl;
     actions_listview_widget->build_up();
     tab_widget->load_current_action();
-    emit KCModule::changed( false ); // HACK otherwise the module would be changed from the very beginning
+    emit TDECModule::changed( false ); // HACK otherwise the module would be changed from the very beginning
     }
 
 void Module::save()
@@ -142,7 +142,7 @@ void Module::save()
             kdDebug( 1217 ) << "telling khotkeys daemon to reread configuration" << endl;
             }
         }
-    emit KCModule::changed( false );
+    emit TDECModule::changed( false );
     }
 
 
@@ -287,12 +287,12 @@ void Module::import()
     actions_listview_widget->clear();
     actions_listview_widget->build_up();
     tab_widget->load_current_action();
-    emit KCModule::changed( true );
+    emit TDECModule::changed( true );
     }
     
 void Module::changed()
     {
-    emit KCModule::changed( true );
+    emit TDECModule::changed( true );
     }
 
 void Module::init_arts()

@@ -86,13 +86,13 @@ extern "C"
 #define MAX_XFER_BUF_SIZE           16348
 #define KIO_SMB                     7106
 
-using namespace KIO;
+using namespace TDEIO;
 class TDEProcess;
 
 //===========================================================================
 
 
-class SMBSlave : public TQObject, public KIO::SlaveBase
+class SMBSlave : public TQObject, public TDEIO::SlaveBase
 {
     Q_OBJECT
 

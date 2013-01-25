@@ -667,7 +667,7 @@ void TabBox::hide()
 
 void TabBox::reconfigure()
     {
-    KConfig * c(TDEGlobal::config());
+    TDEConfig * c(TDEGlobal::config());
     c->setGroup("TabBox");
     options_traverse_all = c->readBoolEntry("TraverseAll", false );
     }
@@ -692,7 +692,7 @@ void TabBox::reconfigure()
  */
 void TabBox::delayedShow()
     {
-    KConfig * c(TDEGlobal::config());
+    TDEConfig * c(TDEGlobal::config());
     c->setGroup("TabBox");
     bool delay = c->readBoolEntry("ShowDelay", true);
 
@@ -1060,7 +1060,7 @@ void Workspace::CDEWalkThroughWindows( bool forward )
     Client* nc = c;
     bool options_traverse_all;
         {
-        KConfigGroupSaver saver( TDEGlobal::config(), "TabBox" );
+        TDEConfigGroupSaver saver( TDEGlobal::config(), "TabBox" );
         options_traverse_all = TDEGlobal::config()->readBoolEntry("TraverseAll", false );
         }
 

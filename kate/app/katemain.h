@@ -38,7 +38,7 @@ class TQWidgetStack;
 
 class KAction;
 class KActionMenu;
-class KConfig;
+class TDEConfig;
 class KDirOperator;
 class KEditToolbar;
 class KFileViewItem;

@@ -43,17 +43,17 @@ class TQCheckBox;
 class TQRadioButton;
 
 class KColorButton;
-class KConfig;
+class TDEConfig;
 class KFontCombo;
 
 
 //-----------------------------------------------------------------------------
 
-class KonqFontOptions : public KCModule
+class KonqFontOptions : public TDECModule
 {
   Q_OBJECT
 public:
-  KonqFontOptions(KConfig *config, TQString group, bool desktop, TQWidget *parent=0, const char *name=0);
+  KonqFontOptions(TDEConfig *config, TQString group, bool desktop, TQWidget *parent=0, const char *name=0);
   TQString quickHelp() const;
 
   virtual void load();
@@ -79,7 +79,7 @@ private:
 
 private:
 
-  KConfig *g_pConfig;
+  TDEConfig *g_pConfig;
   TQString groupname;
   bool m_bDesktop;
 

@@ -36,9 +36,9 @@
 class KIOTimeoutControl;
 class TQTabWidget;
 class TQSpinBox;
-class KConfig;
+class TDEConfig;
 
-class KCMIOSlaveInfo : public KCModule
+class KCMIOSlaveInfo : public TDECModule
 {
     Q_OBJECT
 public:
@@ -48,14 +48,14 @@ protected:
     KListBox *m_ioslavesLb;
     KTextBrowser *m_info;
     TQCString helpData;
-    KIO::Job *m_tfj;
+    TDEIO::Job *m_tfj;
 
 protected slots:
 
     void showInfo(const TQString& protocol);
     void showInfo(TQListBoxItem *item);
-    void slaveHelp( KIO::Job *, const TQByteArray &data);
-    void slotResult( KIO::Job * );
+    void slaveHelp( TDEIO::Job *, const TQByteArray &data);
+    void slotResult( TDEIO::Job * );
 
 };
 #endif

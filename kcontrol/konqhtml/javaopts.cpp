@@ -31,7 +31,7 @@
 
 // == class JavaPolicies =====
 
-JavaPolicies::JavaPolicies(KConfig* config, const TQString &group, bool global,
+JavaPolicies::JavaPolicies(TDEConfig* config, const TQString &group, bool global,
   		const TQString &domain) :
 	Policies(config,group,global,domain,"java.","EnableJava") {
 }
@@ -45,9 +45,9 @@ JavaPolicies::~JavaPolicies() {
 
 // == class KJavaOptions =====
 
-KJavaOptions::KJavaOptions( KConfig* config, TQString group,
+KJavaOptions::KJavaOptions( TDEConfig* config, TQString group,
                             TQWidget *parent, const char *name )
-    : KCModule( parent, name ),
+    : TDECModule( parent, name ),
       _removeJavaScriptDomainAdvice(false),
       m_pConfig( config ),
       m_groupname( group ),
@@ -278,7 +278,7 @@ void KJavaOptions::toggleJavaControls()
 
 // == class JavaDomainListView =====
 
-JavaDomainListView::JavaDomainListView(KConfig *config,const TQString &group,
+JavaDomainListView::JavaDomainListView(TDEConfig *config,const TQString &group,
 	KJavaOptions *options,TQWidget *parent,const char *name)
 	: DomainListView(config,i18n( "Doma&in-Specific" ), parent, name),
 	group(group), options(options) {

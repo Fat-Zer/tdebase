@@ -405,7 +405,7 @@ void PluginPart::changeSrc(const TQString& url) {
 
 void PluginPart::saveAs() {
     KURL savefile = KFileDialog::getSaveURL(TQString::null, TQString::null, _widget);
-    KIO::NetAccess::copy(m_url, savefile, _widget);
+    TDEIO::NetAccess::copy(m_url, savefile, _widget);
 }
 
 

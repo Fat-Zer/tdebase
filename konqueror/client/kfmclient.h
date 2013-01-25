@@ -37,7 +37,7 @@ public:
   static bool openProfile(const TQString & profile, const TQString & url, const TQString & mimetype = TQString::null);
 
 protected slots:
-  void slotResult( KIO::Job * );
+  void slotResult( TDEIO::Job * );
   void delayedQuit();
   void slotDialogCanceled();
 

@@ -39,7 +39,7 @@ public:
     ~KURISearchFilter();
 
     virtual bool filterURI( KURIFilterData& ) const;
-    virtual KCModule *configModule(TQWidget *parent = 0, const char *name = 0) const;
+    virtual TDECModule *configModule(TQWidget *parent = 0, const char *name = 0) const;
     virtual TQString configName() const;
 
 k_dcop:

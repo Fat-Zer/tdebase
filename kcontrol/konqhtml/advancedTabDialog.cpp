@@ -34,7 +34,7 @@
 #include "advancedTabOptions.h"
 #include "main.h"
 
-advancedTabDialog::advancedTabDialog(TQWidget* parent, KConfig* config, const char* name)
+advancedTabDialog::advancedTabDialog(TQWidget* parent, TDEConfig* config, const char* name)
     : KDialogBase(KDialogBase::Plain,
                   i18n("Advanced Options"),
                   KDialogBase::Ok |

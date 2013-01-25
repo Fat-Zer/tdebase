@@ -26,7 +26,7 @@
 
 // == class Policies ==
 
-Policies::Policies(KConfig* config,const TQString &group,
+Policies::Policies(TDEConfig* config,const TQString &group,
 		bool global,const TQString &domain, const TQString &prefix,
 		const TQString &feature_key) :
 	is_global(global), config(config), groupname(group),

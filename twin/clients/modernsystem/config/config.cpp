@@ -12,7 +12,7 @@
 
 extern "C"
 {
-	KDE_EXPORT TQObject* allocate_config(KConfig* conf, TQWidget* parent)
+	KDE_EXPORT TQObject* allocate_config(TDEConfig* conf, TQWidget* parent)
 	{
 		return(new ModernSysConfig(conf, parent));
 	}
@@ -25,9 +25,9 @@ extern "C"
 // 'parent'	is the parent of the TQObject, which is a VBox inside the
 //		Configure tab in twindecoration
 
-ModernSysConfig::ModernSysConfig(KConfig* conf, TQWidget* parent) : TQObject(parent)
+ModernSysConfig::ModernSysConfig(TDEConfig* conf, TQWidget* parent) : TQObject(parent)
 {	
-	clientrc = new KConfig("twinmodernsysrc");
+	clientrc = new TDEConfig("twinmodernsysrc");
 	TDEGlobal::locale()->insertCatalogue("twin_clients");
 	mainw = new TQWidget(parent);
 	vbox = new TQVBoxLayout(mainw);
@@ -95,7 +95,7 @@ void ModernSysConfig::slotSelectionChanged()
 }
 
 
-void ModernSysConfig::load(KConfig* /*conf*/)
+void ModernSysConfig::load(TDEConfig* /*conf*/)
 {
 	clientrc->setGroup("General");
 	bool i = clientrc->readBoolEntry("ShowHandle", true );
@@ -109,7 +109,7 @@ void ModernSysConfig::load(KConfig* /*conf*/)
 }
 
 
-void ModernSysConfig::save(KConfig* /*conf*/)
+void ModernSysConfig::save(TDEConfig* /*conf*/)
 {
 	clientrc->setGroup("General");
 	clientrc->writeEntry("ShowHandle", cbShowHandle->isChecked());

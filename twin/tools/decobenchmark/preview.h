@@ -125,11 +125,11 @@ class KDecorationPreviewPlugins
     : public KDecorationPlugins
     {
     public:
-        KDecorationPreviewPlugins( KConfig* cfg );
+        KDecorationPreviewPlugins( TDEConfig* cfg );
         virtual bool provides( Requirement );
     };
 
-inline KDecorationPreviewPlugins::KDecorationPreviewPlugins( KConfig* cfg )
+inline KDecorationPreviewPlugins::KDecorationPreviewPlugins( TDEConfig* cfg )
     : KDecorationPlugins( cfg )
     {
     }

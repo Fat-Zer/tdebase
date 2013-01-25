@@ -31,7 +31,7 @@
 class TQTabWidget;
 class TQGroupBox;
 
-class KConfig;
+class TDEConfig;
 class KLocale;
 class KLocaleConfig;
 class KLocaleConfigMoney;
@@ -40,7 +40,7 @@ class KLocaleConfigTime;
 class KLocaleConfigOther;
 class KLocaleSample;
 
-class KLocaleApplication : public KCModule
+class KLocaleApplication : public TDECModule
 {
   Q_OBJECT
 
@@ -78,8 +78,8 @@ private:
   TQGroupBox           *m_gbox;
   KLocaleSample       *m_sample;
 
-  KConfig * m_globalConfig;
-  KConfig * m_nullConfig;
+  TDEConfig * m_globalConfig;
+  TDEConfig * m_nullConfig;
 };
 
 typedef KGenericFactory<KLocaleApplication, TQWidget > KLocaleFactory;

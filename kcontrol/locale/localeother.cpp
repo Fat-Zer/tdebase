@@ -76,8 +76,8 @@ KLocaleConfigOther::~KLocaleConfigOther()
 
 void KLocaleConfigOther::save()
 {
-  KConfig *config = TDEGlobal::config();
-  KConfigGroupSaver saver(config, "Locale");
+  TDEConfig *config = TDEGlobal::config();
+  TDEConfigGroupSaver saver(config, "Locale");
 
   KSimpleConfig ent(locate("locale",
                            TQString::fromLatin1("l10n/%1/entry.desktop")

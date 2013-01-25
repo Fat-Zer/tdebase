@@ -22,7 +22,7 @@
 
 #include <kcmodule.h>
 
-class MediaModule : public KCModule
+class MediaModule : public TDECModule
 {
 	Q_OBJECT
 
@@ -38,8 +38,8 @@ protected slots:
 	void moduleChanged( bool state );
 	
 private:
-	KCModule *m_notifierModule;
-	KCModule *m_managerModule;
+	TDECModule *m_notifierModule;
+	TDECModule *m_managerModule;
 };
 
 #endif

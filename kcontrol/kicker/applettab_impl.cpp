@@ -94,7 +94,7 @@ void AppletTab::load()
 
 void AppletTab::load( bool useDefaults )
 {
-  KConfig c(KickerConfig::the()->configName(), false, false);
+  TDEConfig c(KickerConfig::the()->configName(), false, false);
   c.setReadDefaults( useDefaults );
   c.setGroup("General");
 
@@ -153,7 +153,7 @@ void AppletTab::load( bool useDefaults )
 
 void AppletTab::save()
 {
-    KConfig c(KickerConfig::the()->configName(), false, false);
+    TDEConfig c(KickerConfig::the()->configName(), false, false);
   c.setGroup("General");
 
   int level = 0;

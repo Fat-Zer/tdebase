@@ -32,8 +32,8 @@ enum AnimationsType { AnimationsAlways=0, AnimationsNever=1, AnimationsLoopOnce=
 enum SmoothScrollingType { SmoothScrollingAlways=0, SmoothScrollingNever=1, SmoothScrollingWhenEfficient=2 };
 //-----------------------------------------------------------------------------
 
-KMiscHTMLOptions::KMiscHTMLOptions(KConfig *config, TQString group, TQWidget *parent, const char *)
-    : KCModule( parent, "kcmkonqhtml" ), m_pConfig(config), m_groupname(group)
+KMiscHTMLOptions::KMiscHTMLOptions(TDEConfig *config, TQString group, TQWidget *parent, const char *)
+    : TDECModule( parent, "kcmkonqhtml" ), m_pConfig(config), m_groupname(group)
 {
     int row = 0;
     TQGridLayout *lay = new TQGridLayout(this, 10, 2, 0, KDialog::spacingHint());
@@ -230,7 +230,7 @@ void KMiscHTMLOptions::load()
 
 void KMiscHTMLOptions::load( bool useDefaults )
 {
-    KConfig khtmlrc("khtmlrc", true, false);
+    TDEConfig khtmlrc("khtmlrc", true, false);
     khtmlrc.setReadDefaults( useDefaults );
 	 m_pConfig->setReadDefaults( useDefaults );
 
@@ -290,13 +290,13 @@ void KMiscHTMLOptions::load( bool useDefaults )
     m_pShowMMBInTabs->setChecked( m_pConfig->readBoolEntry( "MMBOpensTab", false ) );
     m_pDynamicTabbarHide->setChecked( ! (m_pConfig->readBoolEntry( "AlwaysTabbedMode", false )) );
 
-    KConfig config("kbookmarkrc", true, false);
+    TDEConfig config("kbookmarkrc", true, false);
     config.setReadDefaults( useDefaults );
 	 config.setGroup("Bookmarks");
     m_pAdvancedAddBookmarkCheckBox->setChecked( config.readBoolEntry("AdvancedAddBookmarkDialog", false) );
     m_pOnlyMarkedBookmarksCheckBox->setChecked( config.readBoolEntry("FilteredToolbar", false) );
 
-    KConfig kdeglobals("kdeglobals", true, false);
+    TDEConfig kdeglobals("kdeglobals", true, false);
     kdeglobals.setReadDefaults( useDefaults );
 	 kdeglobals.setGroup("KDE");
     bool smoothScrolling = kdeglobals.readBoolEntry("SmoothScrolling", DEFAULT_SMOOTHSCROLL);
@@ -363,13 +363,13 @@ void KMiscHTMLOptions::save()
     m_pConfig->writeEntry( "AlwaysTabbedMode", !(m_pDynamicTabbarHide->isChecked()) );
     m_pConfig->sync();
 
-    KConfig config("kbookmarkrc", false, false);
+    TDEConfig config("kbookmarkrc", false, false);
     config.setGroup("Bookmarks");
     config.writeEntry("AdvancedAddBookmarkDialog", m_pAdvancedAddBookmarkCheckBox->isChecked());
     config.writeEntry("FilteredToolbar", m_pOnlyMarkedBookmarksCheckBox->isChecked());
     config.sync();
 
-    KConfig kdeglobals("kdeglobals", false, false);
+    TDEConfig kdeglobals("kdeglobals", false, false);
     kdeglobals.setGroup("KDE");
     switch(m_pSmoothScrollingCombo->currentItem())
     {

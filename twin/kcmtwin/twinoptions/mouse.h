@@ -22,7 +22,7 @@
 #ifndef __KKWMMOUSECONFIG_H__
 #define __KKWMMOUSECONFIG_H__
 
-class KConfig;
+class TDEConfig;
 
 #include <tqwidget.h>
 #include <kcmodule.h>
@@ -48,13 +48,13 @@ protected:
 
 
 
-class KTitleBarActionsConfig : public KCModule
+class KTitleBarActionsConfig : public TDECModule
 {
   Q_OBJECT
 
 public:
 
-  KTitleBarActionsConfig( bool _standAlone, KConfig *_config, TQWidget *parent=0, const char* name=0 );
+  KTitleBarActionsConfig( bool _standAlone, TDEConfig *_config, TQWidget *parent=0, const char* name=0 );
   ~KTitleBarActionsConfig( );
 
   void load();
@@ -62,7 +62,7 @@ public:
   void defaults();
 
 public slots:
-	void changed() { emit KCModule::changed(true); }
+	void changed() { emit TDECModule::changed(true); }
 
 private:
   TQComboBox* coTiDbl;
@@ -77,7 +77,7 @@ private:
 
   ToolTipComboBox * coMax[3];
 
-  KConfig *config;
+  TDEConfig *config;
   bool standAlone;
 
   const char* functionTiDbl(int);
@@ -94,13 +94,13 @@ private slots:
 
 };
 
-class KWindowActionsConfig : public KCModule
+class KWindowActionsConfig : public TDECModule
 {
   Q_OBJECT
 
 public:
 
-  KWindowActionsConfig( bool _standAlone, KConfig *_config, TQWidget *parent=0, const char* name=0 );
+  KWindowActionsConfig( bool _standAlone, TDEConfig *_config, TQWidget *parent=0, const char* name=0 );
   ~KWindowActionsConfig( );
 
   void load();
@@ -108,7 +108,7 @@ public:
   void defaults();
 
 public slots:
-	void changed() { emit KCModule::changed(true); }
+	void changed() { emit TDECModule::changed(true); }
 
 private:
   TQComboBox* coWin1;
@@ -121,7 +121,7 @@ private:
   TQComboBox* coAll3;
   TQComboBox* coAllW;
 
-  KConfig *config;
+  TDEConfig *config;
   bool standAlone;
 
   const char* functionWin(int);

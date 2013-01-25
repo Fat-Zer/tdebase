@@ -22,7 +22,7 @@
 
 class LookAndFeelTab;
 
-class LookAndFeelConfig : public KCModule
+class LookAndFeelConfig : public TDECModule
 {
     Q_OBJECT
 

@@ -43,7 +43,7 @@ TQPalette ModuleIface::getPalette(){
 }
 
 TQString ModuleIface::getStyle() {
-	KConfig config(  "kdeglobals" );
+	TDEConfig config(  "kdeglobals" );
 	config.setGroup( "General" );
 	return config.readEntry("widgetStyle");
 }

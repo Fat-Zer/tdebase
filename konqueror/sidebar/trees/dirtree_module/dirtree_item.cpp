@@ -203,7 +203,7 @@ void KonqSidebarDirTreeItem::paste()
         kdDebug(1201) << "move (from clipboard data) = " << move << endl;
     }
 
-    KIO::pasteClipboard( m_fileItem->url(), move );
+    TDEIO::pasteClipboard( m_fileItem->url(), move );
 }
 
 void KonqSidebarDirTreeItem::trash()

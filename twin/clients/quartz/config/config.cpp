@@ -15,7 +15,7 @@
 
 extern "C"
 {
-	KDE_EXPORT TQObject* allocate_config( KConfig* conf, TQWidget* parent )
+	KDE_EXPORT TQObject* allocate_config( TDEConfig* conf, TQWidget* parent )
 	{
 		return(new QuartzConfig(conf, parent));
 	}
@@ -30,10 +30,10 @@ extern "C"
  *			Configure tab in twindecoration
  */
 
-QuartzConfig::QuartzConfig( KConfig* conf, TQWidget* parent )
+QuartzConfig::QuartzConfig( TDEConfig* conf, TQWidget* parent )
 	: TQObject( parent )
 {
-	quartzConfig = new KConfig("twinquartzrc");
+	quartzConfig = new TDEConfig("twinquartzrc");
 	TDEGlobal::locale()->insertCatalogue("twin_clients");
 	gb = new TQVBox( parent );
 	cbColorBorder = new TQCheckBox( 
@@ -72,7 +72,7 @@ void QuartzConfig::slotSelectionChanged()
 
 // Loads the configurable options from the twinrc config file
 // It is passed the open config from twindecoration to improve efficiency
-void QuartzConfig::load( KConfig* /*conf*/ )
+void QuartzConfig::load( TDEConfig* /*conf*/ )
 {
 	quartzConfig->setGroup("General");
 	bool override = quartzConfig->readBoolEntry( "UseTitleBarBorderColors", true );
@@ -83,7 +83,7 @@ void QuartzConfig::load( KConfig* /*conf*/ )
 
 
 // Saves the configurable options to the twinrc config file
-void QuartzConfig::save( KConfig* /*conf*/ )
+void QuartzConfig::save( TDEConfig* /*conf*/ )
 {
 	quartzConfig->setGroup("General");
 	quartzConfig->writeEntry( "UseTitleBarBorderColors", cbColorBorder->isChecked() );

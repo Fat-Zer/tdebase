@@ -106,7 +106,7 @@ void KStylePage::save(bool curSettings){
 /** save the widget-style */
 void KStylePage::saveStyle(bool curSettings){
 	TQString style = curSettings ? currentStyle : origStyle;
-	KConfig cfg( "kdeglobals" );
+	TDEConfig cfg( "kdeglobals" );
 	cfg.setGroup("General");
 	cfg.writeEntry( "widgetStyle", style, true, true );
 	cfg.sync();
@@ -160,7 +160,7 @@ void KStylePage::saveColors(bool curSettings){
 
 	// the GLOBAL config entries must be taken from the kcsrc file and written to it. Use the default values
 	// equals that the file is <default> which is no file. TODO: use the default values in that case (kde selected)
-	KConfig *config = TDEGlobal::config();
+	TDEConfig *config = TDEGlobal::config();
 	config->setGroup( "General" );
 	config->writeEntry("foreground", toSave->foreground, true, true);
 	config->writeEntry("background", toSave->background, true, true);
@@ -206,7 +206,7 @@ void KStylePage::saveColors(bool curSettings){
 	config->sync();
 
 	// background color changes
-	KConfig kdesktop("kdesktoprc");
+	TDEConfig kdesktop("kdesktoprc");
 	kdesktop.setGroup("Desktop0"); // we only need to set one desktop
 
 	kdesktop.writeEntry("BackgroundMode", toSave->bgMode);
@@ -320,7 +320,7 @@ void KStylePage::setDefaults(){
 
 /** Fill a colorSet with a colorfile, or the default. */
 void KStylePage::getColors(colorSet *set, bool colorfile ){
-	KConfig* config;
+	TDEConfig* config;
 	bool deleteConfig = false;
 	// get the color scheme file and go to the color scheme group
 	if(colorfile){
@@ -369,7 +369,7 @@ void KStylePage::getColors(colorSet *set, bool colorfile ){
                 deleteConfig = true;
 	}
 	else {
-		KConfig kdesktop("kdesktoprc");
+		TDEConfig kdesktop("kdesktoprc");
 		kdesktop.setGroup("Desktop0");
 		// set Background (userSettings if available, else default)
 		set->bgMode=kdesktop.readEntry("BackgroundMode", "Flat");
@@ -473,7 +473,7 @@ void KStylePage::getUserDefaults() {
 	origStyle = TDEGlobal::config()->readEntry( "widgetStyle", KStyle::defaultStyle() );
 
 	// get the user's current KWin-style
-	ctwin = new KConfig("twinrc");
+	ctwin = new TDEConfig("twinrc");
 	ctwin->setGroup("Style");
 	origKWinStyle = ctwin->readEntry("PluginLib", defaultKWinStyle);
 

@@ -23,9 +23,9 @@
 class TQListBox;
 class TQPushButton;
 
-class KConfig;
+class TDEConfig;
 
-class KCMCgi : public KCModule
+class KCMCgi : public TDECModule
 {
     Q_OBJECT
   public:
@@ -49,7 +49,7 @@ class KCMCgi : public KCModule
     TQPushButton *mAddButton;
     TQPushButton *mRemoveButton;
 
-    KConfig *mConfig;
+    TDEConfig *mConfig;
 };
 
 #endif

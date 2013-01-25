@@ -332,7 +332,7 @@ static int startApp()
     }
 
     // Read configuration
-    KConfig *config = TDEGlobal::config();
+    TDEConfig *config = TDEGlobal::config();
     config->setGroup("Passwords");
     int timeout = config->readNumEntry("Timeout", defTimeout);
 
@@ -383,7 +383,7 @@ static int startApp()
             change_uid = false;
         password = dlg.password();
         keep = dlg.keep();
-        KConfigGroup(config,"Passwords").writeEntry("Keep", keep);
+        TDEConfigGroup(config,"Passwords").writeEntry("Keep", keep);
         data.setSilent( KStartupInfoData::No );
         KStartupInfo::sendChange( id, data );
     }

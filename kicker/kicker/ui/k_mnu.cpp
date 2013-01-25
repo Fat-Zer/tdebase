@@ -383,7 +383,7 @@ void PanelKMenu::initialize()
     /*
       If  the user configured ksmserver to
     */
-    KConfig ksmserver("ksmserverrc", false, false);
+    TDEConfig ksmserver("ksmserverrc", false, false);
     ksmserver.setGroup("General");
     if (ksmserver.readEntry( "loginMode" ) == "restoreSavedSession")
     {

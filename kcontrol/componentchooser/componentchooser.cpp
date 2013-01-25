@@ -61,13 +61,13 @@ void CfgComponent::slotComponentChanged(const TQString&) {
 	emit changed(true);
 }
 
-void CfgComponent::save(KConfig *cfg) {
+void CfgComponent::save(TDEConfig *cfg) {
 		// yes, this can happen if there are NO KTrader offers for this component
 		if (!m_lookupDict[ComponentSelector->currentText()])
 			return;
 
 		TQString ServiceTypeToConfigure=cfg->readEntry("ServiceTypeToConfigure");
-		KConfig *store = new KConfig(cfg->readPathEntry("storeInFile","null"));
+		TDEConfig *store = new TDEConfig(cfg->readPathEntry("storeInFile","null"));
 		store->setGroup(cfg->readEntry("valueSection"));
 		store->writePathEntry(cfg->readEntry("valueName","kcm_componenchooser_null"),*m_lookupDict[ComponentSelector->currentText()]);
 		store->sync();
@@ -75,7 +75,7 @@ void CfgComponent::save(KConfig *cfg) {
 		emit changed(false);
 }
 
-void CfgComponent::load(KConfig *cfg) {
+void CfgComponent::load(TDEConfig *cfg) {
 
 	ComponentSelector->clear();
 	m_lookupDict.clear();
@@ -93,7 +93,7 @@ void CfgComponent::load(KConfig *cfg) {
 		m_revLookupDict.insert((*tit)->desktopEntryName(),new TQString((*tit)->name()));
 	}
 
-	KConfig *store = new KConfig(cfg->readPathEntry("storeInFile","null"));
+	TDEConfig *store = new TDEConfig(cfg->readPathEntry("storeInFile","null"));
         store->setGroup(cfg->readEntry("valueSection"));
 	TQString setting=store->readEntry(cfg->readEntry("valueName","kcm_componenchooser_null"));
         delete store;
@@ -139,7 +139,7 @@ void CfgEmailClient::defaults()
     load(0L);
 }
 
-void CfgEmailClient::load(KConfig *)
+void CfgEmailClient::load(TDEConfig *)
 {
 	TQString emailClient = pSettings->getSetting(KEMailSettings::ClientProgram);
 	bool useKMail = (emailClient.isEmpty());
@@ -169,7 +169,7 @@ void CfgEmailClient::selectEmailClient()
 	TQString client = dlg.text();
 
 	// get the preferred Terminal Application 
-	KConfigGroup confGroup( TDEGlobal::config(), TQString::fromLatin1("General") );
+	TDEConfigGroup confGroup( TDEGlobal::config(), TQString::fromLatin1("General") );
 	TQString preferredTerminal = confGroup.readPathEntry("TerminalApplication", TQString::fromLatin1("konsole"));
 	preferredTerminal += TQString::fromLatin1(" -e ");
 	
@@ -184,7 +184,7 @@ void CfgEmailClient::selectEmailClient()
 }
 
 
-void CfgEmailClient::save(KConfig *)
+void CfgEmailClient::save(TDEConfig *)
 {
 	if (kmailCB->isChecked())
 	{
@@ -234,8 +234,8 @@ void CfgTerminalEmulator::defaults()
 }
 
 
-void CfgTerminalEmulator::load(KConfig *) {
-	KConfig *config = new KConfig("kdeglobals", true);
+void CfgTerminalEmulator::load(TDEConfig *) {
+	TDEConfig *config = new TDEConfig("kdeglobals", true);
 	config->setGroup("General");
 	TQString terminal = config->readPathEntry("TerminalApplication","konsole");
 	if (terminal == "konsole")
@@ -253,9 +253,9 @@ void CfgTerminalEmulator::load(KConfig *) {
 	emit changed(false);
 }
 
-void CfgTerminalEmulator::save(KConfig *) {
+void CfgTerminalEmulator::save(TDEConfig *) {
 
-	KConfig *config = new KConfig("kdeglobals");
+	TDEConfig *config = new TDEConfig("kdeglobals");
 	config->setGroup("General");
 	config->writePathEntry("TerminalApplication",terminalCB->isChecked()?"konsole":terminalLE->text(), true, true);
 	config->sync();
@@ -306,8 +306,8 @@ void CfgBrowser::defaults()
 }
 
 
-void CfgBrowser::load(KConfig *) {
-	KConfig *config = new KConfig("kdeglobals", true);
+void CfgBrowser::load(TDEConfig *) {
+	TDEConfig *config = new TDEConfig("kdeglobals", true);
 	config->setGroup("General");
 	TQString exec = config->readEntry("BrowserApplication");
 	if (exec.isEmpty())
@@ -340,9 +340,9 @@ void CfgBrowser::load(KConfig *) {
 	emit changed(false);
 }
 
-void CfgBrowser::save(KConfig *) {
+void CfgBrowser::save(TDEConfig *) {
 
-	KConfig *config = new KConfig("kdeglobals");
+	TDEConfig *config = new TDEConfig("kdeglobals");
 	config->setGroup("General");
 	TQString exec;
 	if (radioExec->isChecked())

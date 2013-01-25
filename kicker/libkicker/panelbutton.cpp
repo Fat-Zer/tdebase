@@ -108,7 +108,7 @@ void PanelButton::configure()
         return;
     }
 
-    KConfigGroup tilesGroup( TDEGlobal::config(), "button_tiles" );
+    TDEConfigGroup tilesGroup( TDEGlobal::config(), "button_tiles" );
     if( !tilesGroup.readBoolEntry( "Enable" + name + "Tiles", true ) ) {
             setTile( TQString::null );
         return;

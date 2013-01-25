@@ -28,7 +28,7 @@
 template<class ConfigModule> class TQPtrList;
 class TQStringList;
 class TDEAboutData;
-class KCModule;
+class TDECModule;
 class ProxyWidget;
 class TDEProcess;
 class QXEmbed;
@@ -36,7 +36,7 @@ class TQVBoxLayout;
 class TQVBox;
 class TQWidgetStack;
 
-class ConfigModule : public TQObject, public KCModuleInfo
+class ConfigModule : public TQObject, public TDECModuleInfo
 {
   Q_OBJECT
 

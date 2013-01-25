@@ -248,7 +248,7 @@ void KWrite::slotOpen( const KURL& url )
 {
   if (url.isEmpty()) return;
 
-  if (!KIO::NetAccess::exists(url, true, this))
+  if (!TDEIO::NetAccess::exists(url, true, this))
   {
     KMessageBox::error (this, i18n("The given file could not be read, check if it exists or if it is readable for the current user."));
     return;
@@ -395,7 +395,7 @@ void KWrite::slotEnableActions( bool enable )
 }
 
 //common config
-void KWrite::readConfig(KConfig *config)
+void KWrite::readConfig(TDEConfig *config)
 {
   config->setGroup("General Options");
 
@@ -413,7 +413,7 @@ void KWrite::readConfig(KConfig *config)
     statusBar()->hide();
 }
 
-void KWrite::writeConfig(KConfig *config)
+void KWrite::writeConfig(TDEConfig *config)
 {
   config->setGroup("General Options");
 
@@ -431,23 +431,23 @@ void KWrite::writeConfig(KConfig *config)
 //config file
 void KWrite::readConfig()
 {
-  KConfig *config = kapp->config();
+  TDEConfig *config = kapp->config();
   readConfig(config);
 }
 
 void KWrite::writeConfig()
 {
-  KConfig *config = kapp->config();
+  TDEConfig *config = kapp->config();
   writeConfig(config);
 }
 
 // session management
-void KWrite::restore(KConfig *config, int n)
+void KWrite::restore(TDEConfig *config, int n)
 {
   readPropertiesInternal(config, n);
 }
 
-void KWrite::readProperties(KConfig *config)
+void KWrite::readProperties(TDEConfig *config)
 {
   readConfig(config);
 
@@ -455,7 +455,7 @@ void KWrite::readProperties(KConfig *config)
     KTextEditor::sessionConfigInterface(m_view)->readSessionConfig(config);
 }
 
-void KWrite::saveProperties(KConfig *config)
+void KWrite::saveProperties(TDEConfig *config)
 {
   writeConfig(config);
   config->writeEntry("DocumentNumber",docList.find(m_view->document()) + 1);
@@ -464,7 +464,7 @@ void KWrite::saveProperties(KConfig *config)
     KTextEditor::sessionConfigInterface(m_view)->writeSessionConfig(config);
 }
 
-void KWrite::saveGlobalProperties(KConfig *config) //save documents
+void KWrite::saveGlobalProperties(TDEConfig *config) //save documents
 {
   config->setGroup("Number");
   config->writeEntry("NumberOfDocuments",docList.count());
@@ -492,7 +492,7 @@ void KWrite::saveGlobalProperties(KConfig *config) //save documents
 //restore session
 void KWrite::restore()
 {
-  KConfig *config = kapp->sessionConfig();
+  TDEConfig *config = kapp->sessionConfig();
 
   if (!config)
     return;

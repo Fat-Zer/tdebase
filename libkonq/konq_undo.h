@@ -28,7 +28,7 @@
 #include <kurl.h>
 #include <libkonq_export.h>
 
-namespace KIO
+namespace TDEIO
 {
   class Job;
 }
@@ -72,14 +72,14 @@ class KonqCommandRecorder : public TQObject
 {
   Q_OBJECT
 public:
-  KonqCommandRecorder( KonqCommand::Type op, const KURL::List &src, const KURL &dst, KIO::Job *job );
+  KonqCommandRecorder( KonqCommand::Type op, const KURL::List &src, const KURL &dst, TDEIO::Job *job );
   virtual ~KonqCommandRecorder();
 
 private slots:
-  void slotResult( KIO::Job *job );
+  void slotResult( TDEIO::Job *job );
 
-  void slotCopyingDone( KIO::Job *, const KURL &from, const KURL &to, bool directory, bool renamed );
-  void slotCopyingLinkDone( KIO::Job *, const KURL &from, const TQString &target, const KURL &to );
+  void slotCopyingDone( TDEIO::Job *, const KURL &from, const KURL &to, bool directory, bool renamed );
+  void slotCopyingLinkDone( TDEIO::Job *, const KURL &from, const TQString &target, const KURL &to );
 
 private:
   class KonqCommandRecorderPrivate;
@@ -129,7 +129,7 @@ k_dcop:
   virtual KonqCommand::Stack get() const;
 
 private slots:
-  void slotResult( KIO::Job *job );
+  void slotResult( TDEIO::Job *job );
 
 private:
   void undoStep();

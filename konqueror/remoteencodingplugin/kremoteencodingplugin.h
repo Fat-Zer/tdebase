@@ -27,7 +27,7 @@
 #include <kparts/plugin.h>
 
 class KActionMenu;
-class KConfig;
+class TDEConfig;
 class KonqDirPart;
 
 class KRemoteEncodingPlugin: public KParts::Plugin

@@ -37,7 +37,7 @@ public:
     KButton( TQWidget *parent );
     ~KButton();
 
-    void loadConfig( const KConfigGroup& config );
+    void loadConfig( const TDEConfigGroup& config );
 
     virtual void properties();
 

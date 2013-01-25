@@ -144,7 +144,7 @@ KonqMainWindow * KonqMisc::createBrowserWindowFromProfile( const TQString &path,
   }
   else
   {
-      KConfig cfg( path, true );
+      TDEConfig cfg( path, true );
       cfg.setDollarExpansion( true );
       cfg.setGroup( "Profile" );
       TQString xmluiFile=cfg.readEntry("XMLUIFile","konqueror.rc");

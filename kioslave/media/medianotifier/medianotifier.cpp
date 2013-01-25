@@ -80,25 +80,25 @@ void MediaNotifier::onMediumChange( const TQString &name, bool allowNotification
 
 	KURL url(  "system:/media/"+name );
 
-	KIO::SimpleJob *job = KIO::stat( url, false );
+	TDEIO::SimpleJob *job = TDEIO::stat( url, false );
 	job->setInteractive( false );
 
 	m_allowNotificationMap[job] = allowNotification;
 	
-	connect( job, TQT_SIGNAL( result( KIO::Job * ) ),
-	         this, TQT_SLOT( slotStatResult( KIO::Job * ) ) );
+	connect( job, TQT_SIGNAL( result( TDEIO::Job * ) ),
+	         this, TQT_SLOT( slotStatResult( TDEIO::Job * ) ) );
 }
 
-void MediaNotifier::slotStatResult( KIO::Job *job )
+void MediaNotifier::slotStatResult( TDEIO::Job *job )
 {
 	bool allowNotification = m_allowNotificationMap[job];
 	m_allowNotificationMap.remove( job );
 	
 	if ( job->error() != 0 ) return;
 	
-	KIO::StatJob *stat_job = static_cast<KIO::StatJob *>( job );
+	TDEIO::StatJob *stat_job = static_cast<TDEIO::StatJob *>( job );
 	
-	KIO::UDSEntry entry = stat_job->statResult();
+	TDEIO::UDSEntry entry = stat_job->statResult();
 	KURL url = stat_job->url();
 	
 	KFileItem medium( entry, url );

@@ -36,7 +36,7 @@ class KonqFrameBase;
 class KonqFrame;
 class KonqFrameContainerBase;
 class KonqFrameContainer;
-class KConfig;
+class TDEConfig;
 class KSeparator;
 class KProgress;
 class KAction;
@@ -53,7 +53,7 @@ public:
 
   virtual void listViews( ChildViewList *viewList );
 
-  virtual void saveConfig( KConfig* config, const TQString &prefix, bool saveURLs,
+  virtual void saveConfig( TDEConfig* config, const TQString &prefix, bool saveURLs,
 			   KonqFrameBase* docContainer, int id = 0, int depth = 0 );
   virtual void copyHistory( KonqFrameBase *other );
 

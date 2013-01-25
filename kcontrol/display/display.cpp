@@ -31,7 +31,7 @@ typedef KGenericFactory<KCMDisplay, TQWidget> DisplayFactory;
 K_EXPORT_COMPONENT_FACTORY ( kcm_display, DisplayFactory( "display" ) )
 
 KCMDisplay::KCMDisplay( TQWidget *parent, const char *name, const TQStringList& )
-    : KCModule( parent, name )
+    : TDECModule( parent, name )
     , m_changed(false)
 {
   m_tabs = new TQTabWidget( this );
@@ -56,7 +56,7 @@ void KCMDisplay::addTab( const TQString &name, const TQString &label )
   TQWidget *page = new TQWidget( m_tabs, name.latin1() );
   TQVBoxLayout *top = new TQVBoxLayout( page, KDialog::marginHint() );
 
-  KCModule *kcm = KCModuleLoader::loadModule( name, page );
+  TDECModule *kcm = TDECModuleLoader::loadModule( name, page );
 
   if ( kcm )
   {
@@ -72,20 +72,20 @@ void KCMDisplay::addTab( const TQString &name, const TQString &label )
 
 void KCMDisplay::load()
 {
-  for (TQMap<KCModule*, bool>::ConstIterator it = m_modules.begin(); it != m_modules.end(); ++it)
+  for (TQMap<TDECModule*, bool>::ConstIterator it = m_modules.begin(); it != m_modules.end(); ++it)
     it.key()->load();
 }
 
 void KCMDisplay::save()
 {
-  for (TQMap<KCModule*, bool>::Iterator it = m_modules.begin(); it != m_modules.end(); ++it)
+  for (TQMap<TDECModule*, bool>::Iterator it = m_modules.begin(); it != m_modules.end(); ++it)
     if (it.data())
       it.key()->save();
 }
 
 void KCMDisplay::moduleChanged( bool isChanged )
 {
-  TQMap<KCModule*, bool>::Iterator currentModule = m_modules.find(static_cast<KCModule*>(TQT_TQWIDGET(const_cast<TQObject*>(TQT_TQOBJECT_CONST(sender())))));
+  TQMap<TDECModule*, bool>::Iterator currentModule = m_modules.find(static_cast<TDECModule*>(TQT_TQWIDGET(const_cast<TQObject*>(TQT_TQOBJECT_CONST(sender())))));
   Q_ASSERT(currentModule != m_modules.end());
   if (currentModule.data() == isChanged)
     return;
@@ -94,7 +94,7 @@ void KCMDisplay::moduleChanged( bool isChanged )
 
   bool c = false;
   
-  for (TQMap<KCModule*, bool>::ConstIterator it = m_modules.begin(); it != m_modules.end(); ++it) {
+  for (TQMap<TDECModule*, bool>::ConstIterator it = m_modules.begin(); it != m_modules.end(); ++it) {
     if (it.data()) {
       c = true;
       break;

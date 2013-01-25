@@ -16,7 +16,7 @@
 
 #include "info.h"
 
-using namespace KIO;
+using namespace TDEIO;
 
 InfoProtocol::InfoProtocol( const TQCString &pool, const TQCString &app )
     : SlaveBase( "info", pool, app )
@@ -39,7 +39,7 @@ InfoProtocol::InfoProtocol( const TQCString &pool, const TQCString &app )
 		errorStr = "kde-info2html" + i18n( "\nUnable to locate file %1 which is necessary to run this service. "
 				"Please check your software installation" ).arg( missing );
 	}
-	error( KIO::ERR_CANNOT_LAUNCH_PROCESS, errorStr );
+	error( TDEIO::ERR_CANNOT_LAUNCH_PROCESS, errorStr );
 	exit();
     }
 
@@ -230,7 +230,7 @@ void InfoProtocol::stat( const KURL & )
 	UDSAtom  uds_atom;
 
 	// Regular file with rwx permission for all
-	uds_atom.m_uds = KIO::UDS_FILE_TYPE;
+	uds_atom.m_uds = TDEIO::UDS_FILE_TYPE;
 	uds_atom.m_long = S_IFREG | S_IRWXU | S_IRWXG | S_IRWXO;
 
 	uds_entry.append( uds_atom );

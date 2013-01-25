@@ -63,7 +63,7 @@ void KonquerorProfilesMenu::initialize()
    for (TQStringList::ConstIterator pIt = profiles.begin(); pIt != pEnd; ++pIt )
    {
       TQFileInfo info( *pIt );
-      TQString profileName = KIO::decodeFileName( info.baseName() );
+      TQString profileName = TDEIO::decodeFileName( info.baseName() );
       TQString niceName=profileName;
       KSimpleConfig cfg( *pIt, true );
       if ( cfg.hasGroup( "Profile" ) )

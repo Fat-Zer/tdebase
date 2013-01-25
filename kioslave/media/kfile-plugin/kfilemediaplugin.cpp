@@ -121,8 +121,8 @@ bool KFileMediaPlugin::readInfo(KFileMetaInfo &info, uint /*what*/)
 
 		if ( ::statvfs(TQFile::encodeName(mount_point), &vfs) != -1 )
 		{
-			m_total = static_cast<KIO::filesize_t>(vfs.f_blocks) * static_cast<KIO::filesize_t>(vfs.f_frsize);
-			m_free = static_cast<KIO::filesize_t>(vfs.f_bavail) * static_cast<KIO::filesize_t>(vfs.f_frsize);
+			m_total = static_cast<TDEIO::filesize_t>(vfs.f_blocks) * static_cast<TDEIO::filesize_t>(vfs.f_frsize);
+			m_free = static_cast<TDEIO::filesize_t>(vfs.f_bavail) * static_cast<TDEIO::filesize_t>(vfs.f_frsize);
 			m_used = m_total - m_free;
 
 			int percent = 0;

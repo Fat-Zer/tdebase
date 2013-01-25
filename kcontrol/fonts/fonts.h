@@ -89,7 +89,7 @@ private:
 /**
  * The Desktop/fonts tab in kcontrol.
  */
-class KFonts : public KCModule
+class KFonts : public TDECModule
 {
     Q_OBJECT
 

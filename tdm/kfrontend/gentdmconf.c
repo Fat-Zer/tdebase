@@ -1014,7 +1014,7 @@ ReadWord( File *file, int EOFatEOL )
 	goto mloop;
 }
 
-/* backslashes are double-escaped - for KConfig and for parseArgs */
+/* backslashes are double-escaped - for TDEConfig and for parseArgs */
 static const char *
 joinArgs( StrList *argv )
 {

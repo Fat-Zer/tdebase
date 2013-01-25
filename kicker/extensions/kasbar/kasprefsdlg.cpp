@@ -164,7 +164,7 @@ void KasPrefsDialog::addLookPage()
 			  "available space will be used." ) );
    TQLabel *maxBoxesLabel = new TQLabel( i18n("Bo&xes per line: "), maxBoxesBox );
 
-   KConfig *conf = kasbar->config();
+   TDEConfig *conf = kasbar->config();
    if ( conf )
        conf->setGroup( "Layout" );
    maxBoxesSpin = new KIntSpinBox( 0, 50, 1,
@@ -447,7 +447,7 @@ void KasPrefsDialog::customSizeChanged ( int value )
 
 void KasPrefsDialog::accept()
 {
-   KConfig *conf = kasbar->config();
+   TDEConfig *conf = kasbar->config();
    if ( conf ) {
        kasbar->writeConfig( conf );
 

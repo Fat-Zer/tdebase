@@ -27,7 +27,7 @@ class TQCheckBox;
 class KIntNumInput;
 class TQPushButton;
 
-class KBellConfig : public KCModule
+class KBellConfig : public TDECModule
 {
   Q_OBJECT
 

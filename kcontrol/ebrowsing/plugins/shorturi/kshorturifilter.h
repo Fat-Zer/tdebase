@@ -84,7 +84,7 @@ public:
          *
          * @return the config module
          */
-    virtual KCModule* configModule( TQWidget*, const char* ) const;
+    virtual TDECModule* configModule( TQWidget*, const char* ) const;
 
 public:
 k_dcop:

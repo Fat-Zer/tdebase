@@ -27,7 +27,7 @@
 #include <kpanelapplet.h>
 
 class TQBoxLayout;
-class KConfig;
+class TDEConfig;
 class TDEProcess;
 class KWinModule;
 

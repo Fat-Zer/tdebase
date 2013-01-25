@@ -57,7 +57,7 @@ K_EXPORT_COMPONENT_FACTORY( kcm_useraccount, Factory("useraccount") )
 
 KCMUserAccount::KCMUserAccount( TQWidget *parent, const char *name,
 	const TQStringList &)
-	: KCModule( parent, name)
+	: TDECModule( parent, name)
 {
 	TQVBoxLayout *topLayout = new TQVBoxLayout(this);
 	_mw = new MainWidget(this);
@@ -192,13 +192,13 @@ void KCMUserAccount::load()
 		_mw->btnChangeFace->setPixmap( _facePixmap );
 	}
 
-	KCModule::load(); /* KConfigXT */
+	TDECModule::load(); /* TDEConfigXT */
 
 }
 
 void KCMUserAccount::save()
 {
-	KCModule::save(); /* KConfigXT */
+	TDECModule::save(); /* TDEConfigXT */
 
 	/* Save KDE's homebrewn settings */
 	_kes->setSetting( KEMailSettings::RealName, _mw->leRealname->text() );
@@ -305,9 +305,9 @@ bool KCMUserAccount::eventFilter(TQObject *, TQEvent *e)
 		if (url)
 		{
 			TQString pixPath;
-			KIO::NetAccess::download(*url, pixPath, this);
+			TDEIO::NetAccess::download(*url, pixPath, this);
 			changeFace( TQPixmap( pixPath ) );
-			KIO::NetAccess::removeTempFile(pixPath);
+			TDEIO::NetAccess::removeTempFile(pixPath);
 			delete url;
 		}
 		return true;

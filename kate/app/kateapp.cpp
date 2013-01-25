@@ -352,7 +352,7 @@ bool KateApp::openInput (const TQString &text)
   return true;
 }
 
-KateMainWindow *KateApp::newMainWindow (KConfig *sconfig, const TQString &sgroup)
+KateMainWindow *KateApp::newMainWindow (TDEConfig *sconfig, const TQString &sgroup)
 {
   KateMainWindow *mainWindow = new KateMainWindow (sconfig, sgroup);
   m_mainWindows.push_back (mainWindow);

@@ -50,7 +50,7 @@ class TaskbarAppearance
         TaskBarSettings* m_settingsObject;
 };
 
-class TaskbarConfig : public KCModule
+class TaskbarConfig : public TDECModule
 {
     Q_OBJECT
 

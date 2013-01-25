@@ -69,7 +69,7 @@ bool HTMLSearch::saveFilesList(const TQString& _lang)
     _files.clear();
 
     // open config file
-    KConfig *config = new KConfig("khelpcenterrc");
+    TDEConfig *config = new TDEConfig("khelpcenterrc");
     config->setGroup("Scope");
 
     // add KDE help dirs
@@ -241,8 +241,8 @@ bool HTMLSearch::generateIndex(TQString _lang, TQWidget *parent)
     progress->setState(1);
 
     // run htdig ------------------------------------------------------
-    KConfig *config = new KConfig("khelpcenterrc", true);
-    KConfigGroupSaver saver(config, "htdig");
+    TDEConfig *config = new TDEConfig("khelpcenterrc", true);
+    TDEConfigGroupSaver saver(config, "htdig");
     TQString exe = config->readPathEntry("htdig", kapp->dirs()->findExe("htdig"));
 
     if (exe.isEmpty())
@@ -430,8 +430,8 @@ TQString HTMLSearch::search(TQString _lang, TQString words, TQString method, int
   TQString result = dataPath(_lang)+"/result.html";
 
   // run htsearch ----------------------------------------------------
-  KConfig *config = new KConfig("khelpcenterrc", true);
-  KConfigGroupSaver saver(config, "htdig");
+  TDEConfig *config = new TDEConfig("khelpcenterrc", true);
+  TDEConfigGroupSaver saver(config, "htdig");
   TQString exe = config->readPathEntry("htsearch", kapp->dirs()->findExe("htsearch"));
   if (exe.isEmpty())
   {

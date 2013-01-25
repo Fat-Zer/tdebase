@@ -39,7 +39,7 @@ ServiceMenuButton::ServiceMenuButton( const TQString& relPath, TQWidget* parent 
     initialize( relPath );
 }
 
-ServiceMenuButton::ServiceMenuButton( const KConfigGroup& config, TQWidget* parent )
+ServiceMenuButton::ServiceMenuButton( const TDEConfigGroup& config, TQWidget* parent )
   : PanelPopupButton( parent, "ServiceMenuButton" )
   , topMenu( 0 )
 {
@@ -75,7 +75,7 @@ void ServiceMenuButton::initialize( const TQString& relPath )
     setIcon(group->icon());
 }
 
-void ServiceMenuButton::saveConfig( KConfigGroup& config ) const
+void ServiceMenuButton::saveConfig( TDEConfigGroup& config ) const
 {
     if (topMenu)
         config.writePathEntry("RelPath", topMenu->relPath());

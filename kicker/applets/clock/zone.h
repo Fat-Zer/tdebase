@@ -27,13 +27,13 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <ktimezones.h>
 #include <tqstringlist.h>
 
-class KConfig;
+class TDEConfig;
 class KListView;
 
 class Zone {
 
 public:
-	Zone(KConfig* conf);
+	Zone(TDEConfig* conf);
 	~Zone();
 
 	void writeSettings();
@@ -54,7 +54,7 @@ public:
 protected:
         KTimezones m_zoneDb;
 	TQStringList _remotezonelist;
-	KConfig *config;
+	TDEConfig *config;
         TQString _defaultTZ;
 	unsigned int _zoneIndex;
 };

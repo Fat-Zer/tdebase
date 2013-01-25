@@ -260,10 +260,10 @@ void KonqFileTip::startDelayed()
         KFileItemList oneItem;
         oneItem.append( m_item );
 
-        m_previewJob = KIO::filePreview( oneItem, 256, 256, 64, 70, true, true, 0);
+        m_previewJob = TDEIO::filePreview( oneItem, 256, 256, 64, 70, true, true, 0);
         connect( m_previewJob, TQT_SIGNAL( gotPreview( const KFileItem *, const TQPixmap & ) ),
                  this, TQT_SLOT( gotPreview( const KFileItem *, const TQPixmap & ) ) );
-        connect( m_previewJob, TQT_SIGNAL( result( KIO::Job * ) ),
+        connect( m_previewJob, TQT_SIGNAL( result( TDEIO::Job * ) ),
                  this, TQT_SLOT( gotPreviewResult() ) );
     }
 

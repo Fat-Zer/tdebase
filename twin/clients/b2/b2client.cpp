@@ -103,7 +103,7 @@ static void read_config(B2ClientFactory *f)
     buttonSize = (TQFontMetrics(options()->font(true)).height() + 1) & 0x3e;
     if (buttonSize < 16) buttonSize = 16;
 
-    KConfig conf("twinb2rc");
+    TDEConfig conf("twinb2rc");
     conf.setGroup("General");
     colored_frame = conf.readBoolEntry("UseTitleBarBorderColors", false);
     do_draw_handle = conf.readBoolEntry("DrawGrabHandle", true);

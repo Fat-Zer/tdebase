@@ -46,7 +46,7 @@
 #include <kfilterbase.h>
 #include <kfilterdev.h>
 
-using namespace KIO;
+using namespace TDEIO;
 
 MANProtocol *MANProtocol::_self = 0;
 
@@ -649,7 +649,7 @@ void MANProtocol::stat( const KURL& url)
 
     if (!parseUrl(url.path(), title, section))
     {
-        error(KIO::ERR_MALFORMED_URL, url.url());
+        error(TDEIO::ERR_MALFORMED_URL, url.url());
         return;
     }
 
@@ -1485,7 +1485,7 @@ void MANProtocol::listDir(const KURL &url)
     TQString section;
 
     if ( !parseUrl(url.path(), title, section) ) {
-        error( KIO::ERR_MALFORMED_URL, url.url() );
+        error( TDEIO::ERR_MALFORMED_URL, url.url() );
         return;
     }
 
@@ -1495,7 +1495,7 @@ void MANProtocol::listDir(const KURL &url)
     UDSEntry     uds_entry;
     UDSAtom      uds_atom;
 
-    uds_atom.m_uds = KIO::UDS_NAME; // we only do names...
+    uds_atom.m_uds = TDEIO::UDS_NAME; // we only do names...
     uds_entry.append( uds_atom );
 
     TQStringList::Iterator it = list.begin();

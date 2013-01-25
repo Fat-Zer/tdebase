@@ -23,17 +23,17 @@ class TQCheckBox;
 class TQComboBox;
 class TQPushButton;
 
-class KConfig;
+class TDEConfig;
 class KListView;
 class KURLRequester;
 
-namespace KIO { class Job; }
+namespace TDEIO { class Job; }
 
 //-----------------------------------------------------------------------------
 // The "Path" Tab contains :
 // The paths for Desktop, Autostart and Documents
 
-class DesktopPathConfig : public KCModule
+class DesktopPathConfig : public TDECModule
 {
         Q_OBJECT
 public:
@@ -44,7 +44,7 @@ public:
         virtual void defaults();
 
 private slots:
-    void slotEntries( KIO::Job * job, const KIO::UDSEntryList& list);
+    void slotEntries( TDEIO::Job * job, const TDEIO::UDSEntryList& list);
 
 private:
         // Desktop Paths
@@ -58,7 +58,7 @@ private:
         KURL m_copyFromSrc;
 
 private slots:
-        void slotResult( KIO::Job * job );
+        void slotResult( TDEIO::Job * job );
 };
 
 #endif // __ROOT_OPTIONS_H

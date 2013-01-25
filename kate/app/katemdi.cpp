@@ -167,7 +167,7 @@ void GUIClient::registerToolView (ToolView *tv)
 
   // try to read the action shortcut
   KShortcut sc;
-  KConfig *cfg = kapp->config();
+  TDEConfig *cfg = kapp->config();
   TQString _grp = cfg->group();
   cfg->setGroup("Shortcuts");
   sc = KShortcut( cfg->readEntry( aname, "" ) );
@@ -542,7 +542,7 @@ class TmpToolViewSorter
     unsigned int pos;
 };
 
-void Sidebar::restoreSession (KConfig *config)
+void Sidebar::restoreSession (TDEConfig *config)
 {
   // get the last correct placed toolview
   unsigned int firstWrong = 0;
@@ -637,7 +637,7 @@ void Sidebar::restoreSession (KConfig *config)
     m_ownSplit->hide();
 }
 
-void Sidebar::saveSession (KConfig *config)
+void Sidebar::saveSession (TDEConfig *config)
 {
   // store the own splitter sizes
   TQValueList<int> s = m_ownSplit->sizes();
@@ -847,7 +847,7 @@ bool MainWindow::hideToolView (ToolView *widget)
   return widget->sidebar()->hideWidget (widget);
 }
 
-void MainWindow::startRestore (KConfig *config, const TQString &group)
+void MainWindow::startRestore (TDEConfig *config, const TQString &group)
 {
   // first save this stuff
   m_restoreConfig = config;
@@ -929,7 +929,7 @@ void MainWindow::finishRestore ()
   m_restoreGroup = "";
 }
 
-void MainWindow::saveSession (KConfig *config, const TQString &group)
+void MainWindow::saveSession (TDEConfig *config, const TQString &group)
 {
   if (!config)
     return;

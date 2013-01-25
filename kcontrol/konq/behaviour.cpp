@@ -38,8 +38,8 @@
 
 #include "behaviour.h"
 
-KBehaviourOptions::KBehaviourOptions(KConfig *config, TQString group, TQWidget *parent, const char * )
-    : KCModule(parent, "kcmkonq"), g_pConfig(config), groupname(group)
+KBehaviourOptions::KBehaviourOptions(TDEConfig *config, TQString group, TQWidget *parent, const char * )
+    : TDECModule(parent, "kcmkonq"), g_pConfig(config), groupname(group)
 {
     TQLabel * label;
 
@@ -203,7 +203,7 @@ void KBehaviourOptions::load( bool useDefaults )
 
     cbRenameDirectlyIcon->setChecked( g_pConfig->readBoolEntry("RenameIconDirectly",  DEFAULT_RENAMEICONDIRECTLY ) );
     
-    KConfig globalconfig("kdeglobals", true, false);
+    TDEConfig globalconfig("kdeglobals", true, false);
     globalconfig.setGroup( "KDE" );
     cbShowDeleteCommand->setChecked( globalconfig.readBoolEntry("ShowDeleteCommand", false) );
 
@@ -212,7 +212,7 @@ void KBehaviourOptions::load( bool useDefaults )
 
 //    sbToolTip->setValue( g_pConfig->readNumEntry( "FileTipItems", 6 ) );
 
-    KConfig config("uiserverrc");
+    TDEConfig config("uiserverrc");
     config.setGroup( "UIServer" );
 
     cbListProgress->setChecked( config.readBoolEntry( "ShowList", false ) );
@@ -242,7 +242,7 @@ void KBehaviourOptions::save()
 
     g_pConfig->writeEntry( "RenameIconDirectly", cbRenameDirectlyIcon->isChecked());
     
-    KConfig globalconfig("kdeglobals", false, false);
+    TDEConfig globalconfig("kdeglobals", false, false);
     globalconfig.setGroup( "KDE" );
     globalconfig.writeEntry( "ShowDeleteCommand", cbShowDeleteCommand->isChecked());
     globalconfig.sync();
@@ -253,7 +253,7 @@ void KBehaviourOptions::save()
     g_pConfig->sync();
 
     // UIServer setting
-    KConfig config("uiserverrc");
+    TDEConfig config("uiserverrc");
     config.setGroup( "UIServer" );
     config.writeEntry( "ShowList", cbListProgress->isChecked() );
     config.sync();

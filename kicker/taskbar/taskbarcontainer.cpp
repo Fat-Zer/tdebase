@@ -62,8 +62,8 @@ TaskBarContainer::TaskBarContainer( bool enableFrame, TQString configFileOverrid
     TQFile configFileObject(locateLocal("config", configFile));
     if (!configFileObject.exists())
     {
-        KConfig globalConfig(GLOBAL_TASKBAR_CONFIG_FILE_NAME, TRUE, TRUE);
-        KConfig localConfig(configFile);
+        TDEConfig globalConfig(GLOBAL_TASKBAR_CONFIG_FILE_NAME, TRUE, TRUE);
+        TDEConfig localConfig(configFile);
         globalConfig.copyTo(configFile, &localConfig);
         localConfig.sync();
     }

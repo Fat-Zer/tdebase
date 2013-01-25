@@ -52,15 +52,15 @@ signals: // Signals
 	on the selection made by the user. */
 	void selectedOS(const TQString&);
 private:
-	KConfig* cglobal;
-	KConfig* claunch;
-	KConfig* cwin;
-	KConfig* cdesktop;
-	KConfig* ckcminput;
-	KConfig* ckcmdisplay;
-	KConfig* ckonqueror;
-	KConfig* cklipper;
-	KConfig* ckaccess;
+	TDEConfig* cglobal;
+	TDEConfig* claunch;
+	TDEConfig* cwin;
+	TDEConfig* cdesktop;
+	TDEConfig* ckcminput;
+	TDEConfig* ckcmdisplay;
+	TDEConfig* ckonqueror;
+	TDEConfig* cklipper;
+	TDEConfig* ckaccess;
 	// DEFAULT VALUES SET BY USER
 	bool b_Gestures, b_MacMenuBar, b_SingleClick, b_BusyCursor, b_ShowMenuBar,
 		 b_DesktopUnderline, b_KonqUnderline, b_ChangeCursor, b_syncClipboards;

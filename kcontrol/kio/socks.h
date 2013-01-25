@@ -33,7 +33,7 @@
 
 class TQVButtonGroup;
 
-class KSocksConfig : public KCModule
+class KSocksConfig : public TDECModule
 {
   Q_OBJECT
 public:

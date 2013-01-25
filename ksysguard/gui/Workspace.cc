@@ -66,7 +66,7 @@ Workspace::~Workspace()
               TQT_SLOT( updateCaption( TQWidget* ) ) );
 }
 
-void Workspace::saveProperties( KConfig *cfg )
+void Workspace::saveProperties( TDEConfig *cfg )
 {
   cfg->writePathEntry( "WorkDir", mWorkDir );
   cfg->writeEntry( "CurrentSheet", tabLabel( currentPage() ) );
@@ -81,7 +81,7 @@ void Workspace::saveProperties( KConfig *cfg )
   cfg->writePathEntry( "Sheets", list );
 }
 
-void Workspace::readProperties( KConfig *cfg )
+void Workspace::readProperties( TDEConfig *cfg )
 {
   TQString currentSheet;
 
@@ -195,7 +195,7 @@ void Workspace::loadWorkSheet( const KURL &url )
    * transparent. Unless s/o beats me up I use this pseudo transparent
    * code. */
   TQString tmpFile;
-  KIO::NetAccess::download( url, tmpFile, this );
+  TDEIO::NetAccess::download( url, tmpFile, this );
   mWorkDir = tmpFile.left( tmpFile.findRev( '/' ) );
 
   // Load sheet from file.
@@ -208,7 +208,7 @@ void Workspace::loadWorkSheet( const KURL &url )
   tmpFileUrl.setPath( tmpFile );
   if ( tmpFileUrl != url.url() )
     mSheetList.last()->setFileName( TQString::null );
-  KIO::NetAccess::removeTempFile( tmpFile );
+  TDEIO::NetAccess::removeTempFile( tmpFile );
 
   emit announceRecentURL( KURL( url ) );
 }

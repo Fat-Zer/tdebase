@@ -592,7 +592,7 @@ KSMServer::KSMServer( const TQString& windowManager, const TQString& windowManag
     dialogActive = false;
     saveSession = false;
     wmPhase1WaitingCount = 0;
-    KConfig* config = TDEGlobal::config();
+    TDEConfig* config = TDEGlobal::config();
     config->setGroup("General" );
     clientInteracting = 0;
     xonCommand = config->readEntry( "xonCommand", "xon" );
@@ -802,12 +802,12 @@ TQString KSMServer::currentSession()
 {
     if ( sessionGroup.startsWith( "Session: " ) )
         return sessionGroup.mid( 9 );
-    return ""; // empty, not null, since used for KConfig::setGroup
+    return ""; // empty, not null, since used for TDEConfig::setGroup
 }
 
 void KSMServer::discardSession()
 {
-    KConfig* config = TDEGlobal::config();
+    TDEConfig* config = TDEGlobal::config();
     config->setGroup( sessionGroup );
     int count =  config->readNumEntry( "count", 0 );
     for ( KSMClient* c = clients.first(); c; c = clients.next() ) {
@@ -828,7 +828,7 @@ void KSMServer::discardSession()
 
 void KSMServer::storeSession()
 {
-    KConfig* config = TDEGlobal::config();
+    TDEConfig* config = TDEGlobal::config();
     config->reparseConfiguration(); // config may have changed in the KControl module
     config->setGroup("General" );
     excludeApps = TQStringList::split( TQRegExp( "[,:]" ), config->readEntry( "excludeApps" ).lower()); 
@@ -895,7 +895,7 @@ void KSMServer::storeSession()
 TQStringList KSMServer::sessionList()
 {
     TQStringList sessions = "default";
-    KConfig* config = TDEGlobal::config();
+    TDEConfig* config = TDEGlobal::config();
     TQStringList groups = config->groupList();
     for ( TQStringList::ConstIterator it = groups.begin(); it != groups.end(); it++ )
         if ( (*it).startsWith( "Session: " ) )

@@ -95,7 +95,7 @@ void InfoTree::build( NavigatorItem *parent )
   m_categoryItem = new NavigatorItem( entry, parent );
   m_categoryItem->setAutoDeleteDocEntry( true );
 
-  KConfig *cfg = kapp->config();
+  TDEConfig *cfg = kapp->config();
   cfg->setGroup( "Info pages" );
   TQStringList infoDirFiles = cfg->readListEntry( "Search paths" );
   // Default paths taken fron tdebase/kioslave/info/kde-info2html.conf

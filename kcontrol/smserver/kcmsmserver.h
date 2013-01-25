@@ -26,7 +26,7 @@
 class SMServerConfigImpl;
 
 
-class SMServerConfig : public KCModule
+class SMServerConfig : public TDECModule
 {
   Q_OBJECT
 

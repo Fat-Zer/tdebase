@@ -141,7 +141,7 @@ bool CFontViewPart::openURL(const KURL &url)
 
 bool CFontViewPart::openFile()
 {
-    // NOTE: Cant do the real open here, as dont seem to be able to use KIO::NetAccess functions during initial start-up.
+    // NOTE: Cant do the real open here, as dont seem to be able to use TDEIO::NetAccess functions during initial start-up.
     // Bug report 111535 indicates that calling "konqueror <font>" crashes.
     TQTimer::singleShot(0, this, TQT_SLOT(timeout()));
     return true;
@@ -165,17 +165,17 @@ void CFontViewPart::timeout()
         if(Misc::root())
         {
             destUrl=TQString("fonts:/")+itsPreview->engine().getName(m_url);
-            itsShowInstallButton=!KIO::NetAccess::exists(destUrl, true, itsFrame->parentWidget());
+            itsShowInstallButton=!TDEIO::NetAccess::exists(destUrl, true, itsFrame->parentWidget());
         }
         else
         {
             destUrl=TQString("fonts:/")+i18n(KFI_KIO_FONTS_SYS)+TQChar('/')+itsPreview->engine().getName(m_url);
-            if(KIO::NetAccess::exists(destUrl, true, itsFrame->parentWidget()))
+            if(TDEIO::NetAccess::exists(destUrl, true, itsFrame->parentWidget()))
                 itsShowInstallButton=false;
             else
             {
                 destUrl=TQString("fonts:/")+i18n(KFI_KIO_FONTS_USER)+TQChar('/')+itsPreview->engine().getName(m_url);
-                itsShowInstallButton=!KIO::NetAccess::exists(destUrl, true, itsFrame->parentWidget());
+                itsShowInstallButton=!TDEIO::NetAccess::exists(destUrl, true, itsFrame->parentWidget());
             }
         }
     }
@@ -220,7 +220,7 @@ void CFontViewPart::install()
     {
         KURL destUrl(getDest(m_url, KMessageBox::No==resp));
 
-        if(KIO::NetAccess::copy(m_url, destUrl, itsFrame->parentWidget()))
+        if(TDEIO::NetAccess::copy(m_url, destUrl, itsFrame->parentWidget()))
         {
             //
             // OK file copied, now look for any AFM or PFM file...
@@ -236,7 +236,7 @@ void CFontViewPart::install()
                 for(it=urls.begin(); it!=end; ++it)
                 {
                     destUrl=getDest(*it, KMessageBox::No==resp);
-                    KIO::NetAccess::copy(*it, destUrl, itsFrame->parentWidget());
+                    TDEIO::NetAccess::copy(*it, destUrl, itsFrame->parentWidget());
                 }
             }
 

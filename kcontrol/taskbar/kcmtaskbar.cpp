@@ -151,7 +151,7 @@ TQStringList TaskbarConfig::i18nShowTaskStatesList()
 }
 
 TaskbarConfig::TaskbarConfig(TQWidget *parent, const char* name, const TQStringList& args)
-  : KCModule(TaskBarFactory::instance(), parent, name),
+  : TDECModule(TaskBarFactory::instance(), parent, name),
     m_settingsObject(NULL)
 {
     TQVBoxLayout *layout = new TQVBoxLayout(this, 0, KDialog::spacingHint());
@@ -175,8 +175,8 @@ TaskbarConfig::TaskbarConfig(TQWidget *parent, const char* name, const TQStringL
     TQFile configFile(locateLocal("config", m_configFileName));
     if (!configFile.exists())
     {
-        KConfig globalConfig(GLOBAL_TASKBAR_CONFIG_FILE_NAME, TRUE, TRUE);
-        KConfig localConfig(m_configFileName);
+        TDEConfig globalConfig(GLOBAL_TASKBAR_CONFIG_FILE_NAME, TRUE, TRUE);
+        TDEConfig localConfig(m_configFileName);
         globalConfig.copyTo(m_configFileName, &localConfig);
         localConfig.sync();
     }
@@ -243,7 +243,7 @@ TaskbarConfig::TaskbarConfig(TQWidget *parent, const char* name, const TQStringL
                                        I18N_NOOP("(c) 2000 - 2001 Matthias Elter"));
 
     about->addAuthor("Matthias Elter", 0, "elter@kde.org");
-    about->addCredit("Stefan Nikolaus", I18N_NOOP("KConfigXT conversion"),
+    about->addCredit("Stefan Nikolaus", I18N_NOOP("TDEConfigXT conversion"),
                      "stefan.nikolaus@kdemail.net");
     setAboutData(about);
 
@@ -261,8 +261,8 @@ TaskbarConfig::~TaskbarConfig()
 
 void TaskbarConfig::slotReloadConfigurationFromGlobals()
 {
-    KConfig globalConfig(GLOBAL_TASKBAR_CONFIG_FILE_NAME, TRUE, TRUE);
-    KConfig localConfig(m_configFileName);
+    TDEConfig globalConfig(GLOBAL_TASKBAR_CONFIG_FILE_NAME, TRUE, TRUE);
+    TDEConfig localConfig(m_configFileName);
     globalConfig.copyTo(m_configFileName, &localConfig);
     localConfig.sync();
     m_settingsObject->readConfig();
@@ -338,7 +338,7 @@ void TaskbarConfig::appearanceChanged(int selected)
 
 void TaskbarConfig::load()
 {
-    KCModule::load();
+    TDECModule::load();
     slotUpdateComboBox();
     updateAppearanceCombo();
     m_widget->showAllScreens->setChecked(!m_settingsObject->showCurrentScreenOnly());
@@ -354,7 +354,7 @@ void TaskbarConfig::save()
         m_settingsObject->writeConfig();
     }
 
-    KCModule::save();
+    TDECModule::save();
 
     TQByteArray data;
     kapp->dcopClient()->emitDCOPSignal("kdeTaskBarConfigChanged()", data);
@@ -362,7 +362,7 @@ void TaskbarConfig::save()
 
 void TaskbarConfig::defaults()
 {
-    KCModule::defaults();
+    TDECModule::defaults();
     slotUpdateComboBox();
     updateAppearanceCombo();
 }

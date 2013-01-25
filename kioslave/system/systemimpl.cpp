@@ -37,7 +37,7 @@ SystemImpl::SystemImpl() : TQObject()
 		KStandardDirs::kde_default("data") + "systemview");
 }
 
-bool SystemImpl::listRoot(TQValueList<KIO::UDSEntry> &list)
+bool SystemImpl::listRoot(TQValueList<TDEIO::UDSEntry> &list)
 {
 	kdDebug() << "SystemImpl::listRoot" << endl;
 
@@ -55,7 +55,7 @@ bool SystemImpl::listRoot(TQValueList<KIO::UDSEntry> &list)
 			= dir.entryList( TQDir::Files | TQDir::Readable );
 
 
-		KIO::UDSEntry entry;
+		TDEIO::UDSEntry entry;
 
 		TQStringList::ConstIterator filename = filenames.begin();
 		TQStringList::ConstIterator endf = filenames.end();
@@ -110,7 +110,7 @@ bool SystemImpl::realURL(const TQString &name, const TQString &path,
 	return true;
 }
 
-bool SystemImpl::statByName(const TQString &filename, KIO::UDSEntry& entry)
+bool SystemImpl::statByName(const TQString &filename, TDEIO::UDSEntry& entry)
 {
 	kdDebug() << "SystemImpl::statByName" << endl;
 
@@ -160,7 +160,7 @@ KURL SystemImpl::findBaseURL(const TQString &filename) const
 			= dir.entryList( TQDir::Files | TQDir::Readable );
 
 
-		KIO::UDSEntry entry;
+		TDEIO::UDSEntry entry;
 
 		TQStringList::ConstIterator name = filenames.begin();
 		TQStringList::ConstIterator endf = filenames.end();
@@ -186,10 +186,10 @@ KURL SystemImpl::findBaseURL(const TQString &filename) const
 }
 
 
-static void addAtom(KIO::UDSEntry &entry, unsigned int ID, long l,
+static void addAtom(TDEIO::UDSEntry &entry, unsigned int ID, long l,
                     const TQString &s = TQString::null)
 {
-	KIO::UDSAtom atom;
+	TDEIO::UDSAtom atom;
 	atom.m_uds = ID;
 	atom.m_long = l;
 	atom.m_str = s;
@@ -197,14 +197,14 @@ static void addAtom(KIO::UDSEntry &entry, unsigned int ID, long l,
 }
 
 
-void SystemImpl::createTopLevelEntry(KIO::UDSEntry &entry) const
+void SystemImpl::createTopLevelEntry(TDEIO::UDSEntry &entry) const
 {
 	entry.clear();
-	addAtom(entry, KIO::UDS_NAME, 0, ".");
-	addAtom(entry, KIO::UDS_FILE_TYPE, S_IFDIR);
-	addAtom(entry, KIO::UDS_ACCESS, 0555);
-	addAtom(entry, KIO::UDS_MIME_TYPE, 0, "inode/system_directory");
-	addAtom(entry, KIO::UDS_ICON_NAME, 0, "system");
+	addAtom(entry, TDEIO::UDS_NAME, 0, ".");
+	addAtom(entry, TDEIO::UDS_FILE_TYPE, S_IFDIR);
+	addAtom(entry, TDEIO::UDS_ACCESS, 0555);
+	addAtom(entry, TDEIO::UDS_MIME_TYPE, 0, "inode/system_directory");
+	addAtom(entry, TDEIO::UDS_ICON_NAME, 0, "system");
 }
 
 TQString SystemImpl::readPathINL(TQString filename)
@@ -234,7 +234,7 @@ TQString SystemImpl::readPathINL(TQString filename)
 	}
 }
 
-void SystemImpl::createEntry(KIO::UDSEntry &entry,
+void SystemImpl::createEntry(TDEIO::UDSEntry &entry,
                              const TQString &directory,
                              const TQString &file)
 {
@@ -252,22 +252,22 @@ void SystemImpl::createEntry(KIO::UDSEntry &entry,
 		return;
 	}
 	
-	addAtom(entry, KIO::UDS_NAME, 0, desktop.readName());
+	addAtom(entry, TDEIO::UDS_NAME, 0, desktop.readName());
 	
 	TQString new_filename = file;
 	new_filename.truncate(file.length()-8);
 
 	if ( desktop.readURL().isEmpty() )
 	{
-		addAtom(entry, KIO::UDS_URL, 0, readPathINL(directory+file));
+		addAtom(entry, TDEIO::UDS_URL, 0, readPathINL(directory+file));
 	}
 	else
 	{
-		addAtom(entry, KIO::UDS_URL, 0, "system:/"+new_filename);
+		addAtom(entry, TDEIO::UDS_URL, 0, "system:/"+new_filename);
 	}
 	
-	addAtom(entry, KIO::UDS_FILE_TYPE, S_IFDIR);
-	addAtom(entry, KIO::UDS_MIME_TYPE, 0, "inode/directory");
+	addAtom(entry, TDEIO::UDS_FILE_TYPE, S_IFDIR);
+	addAtom(entry, TDEIO::UDS_MIME_TYPE, 0, "inode/directory");
 
 	TQString icon = desktop.readIcon();
 	TQString empty_icon = desktop.readEntry("EmptyIcon");
@@ -278,22 +278,22 @@ void SystemImpl::createEntry(KIO::UDSEntry &entry,
 
 		m_lastListingEmpty = true;
 
-		KIO::ListJob *job = KIO::listDir(url, false, false);
-		connect( job, TQT_SIGNAL( entries(KIO::Job *,
-		                      const KIO::UDSEntryList &) ),
-		         this, TQT_SLOT( slotEntries(KIO::Job *,
-			             const KIO::UDSEntryList &) ) );
-		connect( job, TQT_SIGNAL( result(KIO::Job *) ),
-		         this, TQT_SLOT( slotResult(KIO::Job *) ) );
+		TDEIO::ListJob *job = TDEIO::listDir(url, false, false);
+		connect( job, TQT_SIGNAL( entries(TDEIO::Job *,
+		                      const TDEIO::UDSEntryList &) ),
+		         this, TQT_SLOT( slotEntries(TDEIO::Job *,
+			             const TDEIO::UDSEntryList &) ) );
+		connect( job, TQT_SIGNAL( result(TDEIO::Job *) ),
+		         this, TQT_SLOT( slotResult(TDEIO::Job *) ) );
 		tqApp->eventLoop()->enterLoop();
 
 		if (m_lastListingEmpty) icon = empty_icon;
 	}
 
-	addAtom(entry, KIO::UDS_ICON_NAME, 0, icon);
+	addAtom(entry, TDEIO::UDS_ICON_NAME, 0, icon);
 }
 
-void SystemImpl::slotEntries(KIO::Job *job, const KIO::UDSEntryList &list)
+void SystemImpl::slotEntries(TDEIO::Job *job, const TDEIO::UDSEntryList &list)
 {
 	if (list.size()>0)
 	{
@@ -303,7 +303,7 @@ void SystemImpl::slotEntries(KIO::Job *job, const KIO::UDSEntryList &list)
 	}
 }
 
-void SystemImpl::slotResult(KIO::Job *)
+void SystemImpl::slotResult(TDEIO::Job *)
 {
 	tqApp->eventLoop()->exitLoop();
 }

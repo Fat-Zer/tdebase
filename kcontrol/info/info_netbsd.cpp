@@ -43,7 +43,7 @@
 #include <tqtextstream.h>
 
 #include <kdebug.h>
-#include <kio/global.h> /* for KIO::convertSize() */
+#include <kio/global.h> /* for TDEIO::convertSize() */
 
 typedef struct
   {
@@ -295,9 +295,9 @@ bool GetInfo_Partitions (TQListView *lbox)
 		big[1] *= mnt->f_bavail; // FIXME: use f_bfree if root?
 
 		// convert to strings
-		vv[0] = KIO::convertSize(big[0]);
+		vv[0] = TDEIO::convertSize(big[0]);
 		vv[1] = TQString::fromLatin1("%1 (%2%%)")
-				.arg(KIO::convertSize(big[1]))
+				.arg(TDEIO::convertSize(big[1]))
 				.arg(mnt->f_blocks ? mnt->f_bavail*100/mnt->f_blocks : 0);
 
 		// FIXME: these two are large enough to punctuate

@@ -117,7 +117,7 @@ void HtmlSearchConfig::makeReadOnly()
     mDbDir->setEnabled( false );
 }
 
-void HtmlSearchConfig::load( KConfig *config )
+void HtmlSearchConfig::load( TDEConfig *config )
 {
   config->setGroup("htdig");
 
@@ -126,7 +126,7 @@ void HtmlSearchConfig::load( KConfig *config )
   mDbDir->lineEdit()->setText(config->readPathEntry("dbdir", "/opt/www/htdig/db/" ) );
 }
 
-void HtmlSearchConfig::save( KConfig *config )
+void HtmlSearchConfig::save( TDEConfig *config )
 {
   config->setGroup("htdig");
 

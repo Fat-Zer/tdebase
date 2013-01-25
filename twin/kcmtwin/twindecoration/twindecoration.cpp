@@ -62,14 +62,14 @@
 #include <kdecoration_plugins_p.h>
 #include <kdecorationfactory.h>
 
-// KCModule plugin interface
+// TDECModule plugin interface
 // =========================
 typedef KGenericFactory<KWinDecorationModule, TQWidget> KWinDecoFactory;
 K_EXPORT_COMPONENT_FACTORY( kcm_twindecoration, KWinDecoFactory("kcmtwindecoration") )
 
 KWinDecorationModule::KWinDecorationModule(TQWidget* parent, const char* name, const TQStringList &)
 	: DCOPObject("KWinClientDecoration"),
-	  KCModule(KWinDecoFactory::instance(), parent, name),
+	  TDECModule(KWinDecoFactory::instance(), parent, name),
           twinConfig("twinrc"),
           pluginObject(0)
 {
@@ -477,7 +477,7 @@ void KWinDecorationModule::createThirdPartyWMList()
 // Reset the decoration plugin to what the user just selected
 void KWinDecorationModule::slotChangeDecoration( const TQString & text)
 {
-	KConfig twinConfig("twinrc");
+	TDEConfig twinConfig("twinrc");
 	twinConfig.setGroup("Style");
 
 	// Let the user see config options for the currently selected decoration
@@ -488,7 +488,7 @@ void KWinDecorationModule::slotChangeDecoration( const TQString & text)
 // This is the selection handler setting
 void KWinDecorationModule::slotSelectionChanged()
 {
-	emit KCModule::changed(true);
+	emit TDECModule::changed(true);
 
 	processEnabledDisabledTabs();
 }
@@ -555,7 +555,7 @@ void KWinDecorationModule::slotBorderChanged( int size )
 {
         if( lBorder->isHidden())
             return;
-        emit KCModule::changed( true );
+        emit TDECModule::changed( true );
         TQValueList< BorderSize > sizes;
         if( plugins->factory() != NULL )
             sizes = plugins->factory()->borderSizes();
@@ -611,7 +611,7 @@ TQString KWinDecorationModule::decorationLibName( const TQString& name )
 
 // Loads/unloads and inserts the decoration config plugin into the
 // pluginConfigWidget, allowing for dynamic configuration of decorations
-void KWinDecorationModule::resetPlugin( KConfig* conf, const TQString& currentDecoName )
+void KWinDecorationModule::resetPlugin( TDEConfig* conf, const TQString& currentDecoName )
 {
 	// Config names are "twin_icewm_config"
 	// for "twin3_icewm" twin client
@@ -656,13 +656,13 @@ void KWinDecorationModule::resetPlugin( KConfig* conf, const TQString& currentDe
 
 		if (alloc_ptr != NULL)
 		{
-			allocatePlugin = (TQObject* (*)(KConfig* conf, TQWidget* parent))alloc_ptr;
+			allocatePlugin = (TQObject* (*)(TDEConfig* conf, TQWidget* parent))alloc_ptr;
 			pluginObject = (TQObject*)(allocatePlugin( conf, pluginConfigWidget ));
 
 			// connect required signals and slots together...
 			connect( pluginObject, TQT_SIGNAL(changed()), this, TQT_SLOT(slotSelectionChanged()) );
-			connect( this, TQT_SIGNAL(pluginLoad(KConfig*)), pluginObject, TQT_SLOT(load(KConfig*)) );
-			connect( this, TQT_SIGNAL(pluginSave(KConfig*)), pluginObject, TQT_SLOT(save(KConfig*)) );
+			connect( this, TQT_SIGNAL(pluginLoad(TDEConfig*)), pluginObject, TQT_SLOT(load(TDEConfig*)) );
+			connect( this, TQT_SIGNAL(pluginSave(TDEConfig*)), pluginObject, TQT_SLOT(save(TDEConfig*)) );
 			connect( this, TQT_SIGNAL(pluginDefaults()), pluginObject, TQT_SLOT(defaults()) );
 			pluginConfigWidget->show();
 			return;
@@ -675,7 +675,7 @@ void KWinDecorationModule::resetPlugin( KConfig* conf, const TQString& currentDe
 
 // Reads the twin config settings, and sets all UI controls to those settings
 // Updating the config plugin if required
-void KWinDecorationModule::readConfig( KConfig* conf )
+void KWinDecorationModule::readConfig( TDEConfig* conf )
 {
 	// General tab
 	// ============
@@ -767,17 +767,17 @@ void KWinDecorationModule::readConfig( KConfig* conf )
 
 	processEnabledDisabledTabs();
 
-	emit KCModule::changed(false);
+	emit TDECModule::changed(false);
 }
 
 
 // Writes the selected user configuration to the twin config file
-void KWinDecorationModule::writeConfig( KConfig* conf )
+void KWinDecorationModule::writeConfig( TDEConfig* conf )
 {
 	TQString name = decorationList->currentText();
 	TQString libName = decorationLibName( name );
 
-	KConfig twinConfig("twinrc");
+	TDEConfig twinConfig("twinrc");
 	twinConfig.setGroup("Style");
 
 	// General settings
@@ -835,7 +835,7 @@ void KWinDecorationModule::writeConfig( KConfig* conf )
 	currentLibraryName = libName;
 
 	// We saved, so tell kcmodule that there have been  no new user changes made.
-	emit KCModule::changed(false);
+	emit TDECModule::changed(false);
 }
 
 
@@ -843,7 +843,7 @@ void KWinDecorationModule::dcopUpdateClientList()
 {
 	// Changes the current active ListBox item, and
 	// Loads a new plugin configuration tab if required.
-	KConfig twinConfig("twinrc");
+	TDEConfig twinConfig("twinrc");
 	twinConfig.setGroup("Style");
 
 	readConfig( &twinConfig );
@@ -851,10 +851,10 @@ void KWinDecorationModule::dcopUpdateClientList()
 }
 
 
-// Virutal functions required by KCModule
+// Virutal functions required by TDECModule
 void KWinDecorationModule::load()
 {
-	KConfig twinConfig("twinrc");
+	TDEConfig twinConfig("twinrc");
 	twinConfig.setGroup("Style");
 
 	// Reset by re-reading the config
@@ -865,7 +865,7 @@ void KWinDecorationModule::load()
 
 void KWinDecorationModule::save()
 {
-	KConfig twinConfig("twinrc");
+	TDEConfig twinConfig("twinrc");
 	twinConfig.setGroup("Style");
 
 	writeConfig( &twinConfig );

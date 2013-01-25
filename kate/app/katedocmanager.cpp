@@ -60,7 +60,7 @@ KateDocManager::KateDocManager (TQObject *parent)
 
   m_dcop = new KateDocManagerDCOPIface (this);
 
-  m_metaInfos = new KConfig("metainfos", false, false, "appdata");
+  m_metaInfos = new TDEConfig("metainfos", false, false, "appdata");
 
   createDoc ();
 }
@@ -315,7 +315,7 @@ bool KateDocManager::closeDocument(class Kate::Document *doc,bool closeURL)
                 "Do you want to delete it anyway?").arg(m_tempFiles[ documentNumber ].first.prettyURL()),
             i18n("Delete File?") ) == KMessageBox::Yes*/ )
     {
-      KIO::del( m_tempFiles[ documentNumber ].first, false, false );
+      TDEIO::del( m_tempFiles[ documentNumber ].first, false, false );
       kdDebug(13001)<<"Deleted temporary file "<<m_tempFiles[ documentNumber ].first<<endl;
       m_tempFiles.remove( documentNumber );
     }
@@ -444,7 +444,7 @@ void KateDocManager::saveAll()
       ((Kate::View*)it.current()->views().first())->save();
 }
 
-void KateDocManager::saveDocumentList (KConfig* config)
+void KateDocManager::saveDocumentList (TDEConfig* config)
 {
   TQString prevGrp=config->group();
   config->setGroup ("Open Documents");
@@ -466,7 +466,7 @@ void KateDocManager::saveDocumentList (KConfig* config)
   config->setGroup(prevGrp);
 }
 
-void KateDocManager::restoreDocumentList (KConfig* config)
+void KateDocManager::restoreDocumentList (TDEConfig* config)
 {
   TQString prevGrp=config->group();
   config->setGroup ("Open Documents");

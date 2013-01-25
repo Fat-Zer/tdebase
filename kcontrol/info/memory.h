@@ -27,7 +27,7 @@ typedef unsigned long t_memsize;
 #define COLOR_USED_RAM    TQColor(220,200,88)
 #define COLOR_FREE_MEMORY TQColor(127,255,212)
 
-class KMemoryWidget:public KCModule {
+class KMemoryWidget:public TDECModule {
   Q_OBJECT 
 	  
   public:

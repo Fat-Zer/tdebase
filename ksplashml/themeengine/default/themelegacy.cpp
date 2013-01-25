@@ -31,7 +31,7 @@
 #include "themelegacy.h"
 #include "themelegacy.moc"
 
-DefaultConfig::DefaultConfig( TQWidget *parent, KConfig *config )
+DefaultConfig::DefaultConfig( TQWidget *parent, TDEConfig *config )
     :ThemeEngineConfig( parent, config )
 {
   mConfig->setGroup( TQString("KSplash Theme: Default") );
@@ -200,7 +200,7 @@ void ThemeDefault::_readSettings()
   if( !mTheme )
     return;
 
-  KConfig *cfg = mTheme->themeConfig();
+  TDEConfig *cfg = mTheme->themeConfig();
   if( !cfg )
     return;
 

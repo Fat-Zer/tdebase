@@ -42,7 +42,7 @@ KBackground::~KBackground( )
 }
 
 KBackground::KBackground(TQWidget *parent, const char *name, const TQStringList &/* */)
-    : KCModule(KBackGndFactory::instance(), parent, name)
+    : TDECModule(KBackGndFactory::instance(), parent, name)
 {
     int screen_number = 0;
     if (tqt_xdisplay())
@@ -52,7 +52,7 @@ KBackground::KBackground(TQWidget *parent, const char *name, const TQStringList 
 	configname = "kdesktoprc";
     else
 	configname.sprintf("kdesktop-screen-%drc", screen_number);
-    m_pConfig = new KConfig(configname, false, false);
+    m_pConfig = new TDEConfig(configname, false, false);
 
     TQVBoxLayout *layout = new TQVBoxLayout(this);
     m_base = new BGDialog(this, m_pConfig);

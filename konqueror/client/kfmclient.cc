@@ -178,7 +178,7 @@ extern "C" KDE_EXPORT int kdemain( int argc, char **argv )
 */
 static bool startNewKonqueror( TQString url, TQString mimetype, const TQString& profile )
 {
-    KConfig cfg( TQString::fromLatin1( "konquerorrc" ), true );
+    TDEConfig cfg( TQString::fromLatin1( "konquerorrc" ), true );
     cfg.setGroup( "Reusing" );
     TQStringList allowed_parts;
     // is duplicated in ../KonquerorIface.cc
@@ -200,7 +200,7 @@ static bool startNewKonqueror( TQString url, TQString mimetype, const TQString& 
 	TQString profilepath = locate( "data", TQString::fromLatin1("konqueror/profiles/") + profile );
 	if( profilepath.isEmpty())
 	    return true;
-	KConfig cfg( profilepath, true );
+	TDEConfig cfg( profilepath, true );
 	cfg.setDollarExpansion( true );
         cfg.setGroup( "Profile" );
 	TQMap< TQString, TQString > entries = cfg.entryMap( TQString::fromLatin1( "Profile" ));
@@ -248,7 +248,7 @@ static int currentScreen()
 // when reusing a preloaded konqy, make sure your always use a DCOP call which opens a profile !
 static TQCString getPreloadedKonqy()
 {
-    KConfig cfg( TQString::fromLatin1( "konquerorrc" ), true );
+    TDEConfig cfg( TQString::fromLatin1( "konquerorrc" ), true );
     cfg.setGroup( "Reusing" );
     if( cfg.readNumEntry( "MaxPreloadCount", 1 ) == 0 )
         return "";
@@ -301,7 +301,7 @@ bool clientApp::createNewWindow(const KURL & url, bool newTab, bool tempFile, co
     // check if user wants to use external browser
     // ###### this option seems to have no GUI and to be redundant with BrowserApplication now.
     // ###### KDE4: remove
-    KConfig config( TQString::fromLatin1("kfmclientrc"));
+    TDEConfig config( TQString::fromLatin1("kfmclientrc"));
     config.setGroup( TQString::fromLatin1("Settings"));
     TQString strBrowser = config.readPathEntry("ExternalBrowser");
     if (!strBrowser.isEmpty())
@@ -330,7 +330,7 @@ bool clientApp::createNewWindow(const KURL & url, bool newTab, bool tempFile, co
         }
     }
 
-    KConfig cfg( TQString::fromLatin1( "konquerorrc" ), true );
+    TDEConfig cfg( TQString::fromLatin1( "konquerorrc" ), true );
     cfg.setGroup( "FMSettings" );
     if ( newTab || cfg.readBoolEntry( "KonquerorTabforExternalURL", false ) )
     {
@@ -550,10 +550,10 @@ bool clientApp::doIt()
     for ( int i = 1; i <= argc - 2; i++ )
       srcLst.append( args->url(i) );
 
-    KIO::Job * job = KIO::move( srcLst, args->url(argc - 1) );
+    TDEIO::Job * job = TDEIO::move( srcLst, args->url(argc - 1) );
     if ( !s_interactive )
         job->setInteractive( false );
-    connect( job, TQT_SIGNAL( result( KIO::Job * ) ), &app, TQT_SLOT( slotResult( KIO::Job * ) ) );
+    connect( job, TQT_SIGNAL( result( TDEIO::Job * ) ), &app, TQT_SLOT( slotResult( TDEIO::Job * ) ) );
     app.exec();
     return m_ok;
   }
@@ -585,10 +585,10 @@ bool clientApp::doIt()
        return m_ok; // AK - really okay?
     KURL dsturl;
     dsturl.setPath( dst );
-    KIO::Job * job = KIO::copy( srcLst, dsturl );
+    TDEIO::Job * job = TDEIO::copy( srcLst, dsturl );
     if ( !s_interactive )
         job->setInteractive( false );
-    connect( job, TQT_SIGNAL( result( KIO::Job * ) ), &app, TQT_SLOT( slotResult( KIO::Job * ) ) );
+    connect( job, TQT_SIGNAL( result( TDEIO::Job * ) ), &app, TQT_SLOT( slotResult( TDEIO::Job * ) ) );
     app.exec();
     return m_ok;
   }
@@ -599,10 +599,10 @@ bool clientApp::doIt()
     for ( int i = 1; i <= argc - 2; i++ )
       srcLst.append( args->url(i) );
 
-    KIO::Job * job = KIO::copy( srcLst, args->url(argc - 1) );
+    TDEIO::Job * job = TDEIO::copy( srcLst, args->url(argc - 1) );
     if ( !s_interactive )
         job->setInteractive( false );
-    connect( job, TQT_SIGNAL( result( KIO::Job * ) ), &app, TQT_SLOT( slotResult( KIO::Job * ) ) );
+    connect( job, TQT_SIGNAL( result( TDEIO::Job * ) ), &app, TQT_SLOT( slotResult( TDEIO::Job * ) ) );
     app.exec();
     return m_ok;
   }
@@ -636,7 +636,7 @@ bool clientApp::doIt()
   return true;
 }
 
-void clientApp::slotResult( KIO::Job * job )
+void clientApp::slotResult( TDEIO::Job * job )
 {
   if (job->error() && s_interactive)
     job->showErrorDialog();

@@ -408,14 +408,14 @@ TQString SensorManager::translateSensor( const TQString &sensor ) const
   return out;
 }
 
-void SensorManager::readProperties( KConfig *cfg )
+void SensorManager::readProperties( TDEConfig *cfg )
 {
   mHostConnector->setHostNames( cfg->readListEntry( "HostList" ) );
   mHostConnector->setCommands( cfg->readListEntry( "CommandList" ) );
 }
 
 void
-SensorManager::saveProperties( KConfig *cfg )
+SensorManager::saveProperties( TDEConfig *cfg )
 {
   cfg->writeEntry( "HostList", mHostConnector->hostNames() );
   cfg->writeEntry( "CommandList", mHostConnector->commands() );

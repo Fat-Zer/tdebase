@@ -58,7 +58,7 @@ class KateMainWindow : public KateMDI::MainWindow, virtual public KParts::PartBa
      * @param sconfig session config for this window, 0 if none
      * @param sgroup session config group to use
      */
-    KateMainWindow (KConfig *sconfig, const TQString &sgroup);
+    KateMainWindow (TDEConfig *sconfig, const TQString &sgroup);
 
     /**
      * Destruct the nice window
@@ -102,9 +102,9 @@ class KateMainWindow : public KateMDI::MainWindow, virtual public KParts::PartBa
     KateTabWidget *tabWidget ();
 
   public:
-    void readProperties(KConfig *config);
-    void saveProperties(KConfig *config);
-    void saveGlobalProperties( KConfig* sessionConfig );
+    void readProperties(TDEConfig *config);
+    void saveProperties(TDEConfig *config);
+    void saveGlobalProperties( TDEConfig* sessionConfig );
 
   public:
     bool queryClose_internal();

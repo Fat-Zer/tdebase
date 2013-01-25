@@ -29,7 +29,7 @@ class CSSCustomDialog;
 class KDialogBase;
 
 
-class CSSConfig : public KCModule
+class CSSConfig : public TDECModule
 {
   Q_OBJECT
 

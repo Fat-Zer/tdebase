@@ -100,19 +100,19 @@ void SensorSocketAgent::connectionClosed()
 void SensorSocketAgent::error( int id )
 {
   switch ( id ) {
-    case KNetwork::KSocketBase::ConnectionRefused:
+    case KNetwork::TDESocketBase::ConnectionRefused:
       SensorMgr->notify( i18n( "Connection to %1 refused" )
                          .arg( hostName() ) );
       break;
-    case  KNetwork::KSocketBase::LookupFailure:
+    case  KNetwork::TDESocketBase::LookupFailure:
       SensorMgr->notify( i18n( "Host %1 not found" )
                          .arg( hostName() ) );
       break;
-    case  KNetwork::KSocketBase::Timeout:
+    case  KNetwork::TDESocketBase::Timeout:
       SensorMgr->notify( i18n( "Timeout at host %1")
                          .arg( hostName() ) );
       break;
-    case  KNetwork::KSocketBase::NetFailure:
+    case  KNetwork::TDESocketBase::NetFailure:
       SensorMgr->notify( i18n( "Network failure host %1")
                          .arg( hostName() ) );
       break;

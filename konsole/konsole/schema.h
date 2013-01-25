@@ -56,7 +56,7 @@
 #endif
 
 class TQDateTime;
-class KConfig;
+class TDEConfig;
 
 class ColorSchema
 {
@@ -76,7 +76,7 @@ public:
 	* because that reads the hackneyed schema file syntax and
 	* this is a KDE config file)
 	*/
-	ColorSchema(KConfig&);
+	ColorSchema(TDEConfig&);
 
 	/**
 	* Constructor for the default schema (with no path).
@@ -136,13 +136,13 @@ protected:
 	* Write a single ColorEntry to the config file
 	* under the given name (ie. in the group name).
 	*/
-	void writeConfigColor(KConfig& c,
+	void writeConfigColor(TDEConfig& c,
 		const TQString& name,
 		const ColorEntry& e) const;
 	/**
 	* Read a single ColorEntry from the config file.
 	*/
-	void readConfigColor(KConfig& c,
+	void readConfigColor(TDEConfig& c,
 		const TQString& name,
 		ColorEntry& e) ;
 

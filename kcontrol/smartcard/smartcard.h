@@ -32,12 +32,12 @@
 #include "smartcardbase.h"
 #include "nosmartcardbase.h"
 
-class KConfig;
+class TDEConfig;
 class KCardDB;
 class KPopupMenu;
 class KListViewItem;
 
-class KSmartcardConfig : public KCModule, public DCOPObject
+class KSmartcardConfig : public TDECModule, public DCOPObject
 {
   K_DCOP
     Q_OBJECT
@@ -74,7 +74,7 @@ public:
 
 private:
 
-  KConfig *config;
+  TDEConfig *config;
   bool _ok;
   KCardDB * _cardDB;
   KPopupMenu * _popUpKardChooser;

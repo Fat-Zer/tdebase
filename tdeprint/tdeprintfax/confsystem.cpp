@@ -97,7 +97,7 @@ ConfSystem::ConfSystem(TQWidget *parent, const char *name)
  
 void ConfSystem::load() 
 { 
-	KConfig	*conf = TDEGlobal::config(); 
+	TDEConfig	*conf = TDEGlobal::config(); 
 	conf->setGroup("System");
 	m_commands << conf->readPathEntry("EFax", defaultCommand(efax_default_cmd)); 
 	m_commands << conf->readPathEntry("HylaFax", defaultCommand(hylafax_default_cmd));
@@ -130,7 +130,7 @@ void ConfSystem::load()
 void ConfSystem::save()
 {
 	m_commands[ m_current ] = m_command->text();
-	KConfig	*conf = TDEGlobal::config();
+	TDEConfig	*conf = TDEGlobal::config();
 	conf->setGroup("System");
 	if (m_commands[EFAX_ID] != defaultCommand(efax_default_cmd))
 		conf->writePathEntry("EFax", m_commands[EFAX_ID]);

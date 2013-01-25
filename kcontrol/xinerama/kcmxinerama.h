@@ -27,10 +27,10 @@
 
 #include "xineramawidget.h"
 
-class KConfig;
+class TDEConfig;
 class TQWidget;
 
-class KCMXinerama : public KCModule {
+class KCMXinerama : public TDECModule {
 	Q_OBJECT
 public:
 	KCMXinerama(TQWidget *parent = 0L, const char *name = 0L);
@@ -49,7 +49,7 @@ public slots:
 
 private:
 	TQWidget* indicator(int dpy);
-	KConfig *config, *ksplashrc;
+	TDEConfig *config, *ksplashrc;
 	XineramaWidget *xw;
 	TQTimer _timer;
 	TQPtrList<TQWidget> _indicators;

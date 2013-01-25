@@ -55,7 +55,7 @@ k_dcop:
     TQString getClipboardHistoryItem(int i);
 
 public:
-    KlipperWidget( TQWidget *parent, KConfig* config );
+    KlipperWidget( TQWidget *parent, TDEConfig* config );
     ~KlipperWidget();
 
     virtual void adjustSize();
@@ -88,8 +88,8 @@ protected:
 
     void paintEvent(TQPaintEvent *);
     void mousePressEvent(TQMouseEvent *);
-    void readProperties(KConfig *);
-    void readConfiguration(KConfig *);
+    void readProperties(TDEConfig *);
+    void readConfiguration(TDEConfig *);
 
     /**
      * Loads history from disk.
@@ -101,7 +101,7 @@ protected:
      */
     void saveHistory();
 
-    void writeConfiguration(KConfig *);
+    void writeConfiguration(TDEConfig *);
     /**
      * @returns the contents of the selection or, if empty, the contents of
      * the clipboard.
@@ -127,7 +127,7 @@ protected:
     void setClipboard( const HistoryItem& item, int mode );
     bool ignoreClipboardChanges() const;
 
-    KConfig* config() const { return m_config; }
+    TDEConfig* config() const { return m_config; }
     bool isApplet() const { return m_config != kapp->config(); }
 
 protected slots:
@@ -199,7 +199,7 @@ private:
     URLGrabber *myURLGrabber;
     TQString m_lastURLGrabberTextSelection;
     TQString m_lastURLGrabberTextClipboard;
-    KConfig* m_config;
+    TDEConfig* m_config;
     TQTimer m_overflowClearTimer;
     TQTimer m_pendingCheckTimer;
     bool m_pendingContentsCheck;

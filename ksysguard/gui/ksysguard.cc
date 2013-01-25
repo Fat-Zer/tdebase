@@ -378,7 +378,7 @@ bool TopLevel::queryClose()
   return true;
 }
 
-void TopLevel::readProperties( KConfig *cfg )
+void TopLevel::readProperties( TDEConfig *cfg )
 {
   /* we can ignore 'isMaximized' because we can't set the window
      maximized, so we save the coordinates instead */
@@ -403,7 +403,7 @@ void TopLevel::readProperties( KConfig *cfg )
   applyMainWindowSettings( cfg );
 }
 
-void TopLevel::saveProperties( KConfig *cfg )
+void TopLevel::saveProperties( TDEConfig *cfg )
 {
   mActionOpenRecent->saveEntries( cfg );
 

@@ -43,7 +43,7 @@ k_dcop:
 	void onMediumChange( const TQString &name, bool allowNotification );
 
 private slots:
-	void slotStatResult( KIO::Job *job );
+	void slotStatResult( TDEIO::Job *job );
 	void checkFreeDiskSpace();
 	void slotFreeFinished( KMessageBox::ButtonCode );
 	void slotFreeContinue();
@@ -58,7 +58,7 @@ private:
 	bool execAutoopen( const KFileItem &medium, const TQString &path,
 	                   const TQString &autoopenFile );
 
-	TQMap<KIO::Job*,bool> m_allowNotificationMap;
+	TQMap<TDEIO::Job*,bool> m_allowNotificationMap;
 	TQTimer * m_freeTimer;
 	KDialogBase * m_freeDialog;
 };

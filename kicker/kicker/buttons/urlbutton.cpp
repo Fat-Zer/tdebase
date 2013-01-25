@@ -52,7 +52,7 @@ URLButton::URLButton( const TQString& url, TQWidget* parent )
     initialize( url );
 }
 
-URLButton::URLButton( const KConfigGroup& config, TQWidget* parent )
+URLButton::URLButton( const TDEConfigGroup& config, TQWidget* parent )
   : PanelButton( parent, "URLButton" )
   , fileItem( 0 )
   , pDlg( 0 )
@@ -99,7 +99,7 @@ void URLButton::initialize( const TQString& _url )
     }
 }
 
-void URLButton::saveConfig( KConfigGroup& config ) const
+void URLButton::saveConfig( TDEConfigGroup& config ) const
 {
     config.writePathEntry("URL", fileItem->url().prettyURL());
 }

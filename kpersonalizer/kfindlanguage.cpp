@@ -29,7 +29,7 @@
 #include "kfindlanguage.h"
 
 KFindLanguage::KFindLanguage() {
-	KConfig *config = TDEGlobal::config();
+	TDEConfig *config = TDEGlobal::config();
 	config->setGroup("Locale");
 
 	m_oldlang = config->readEntry("Language");

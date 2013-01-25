@@ -339,7 +339,7 @@ void Applet::lostSelection()
 
 void Applet::readSettings()
     {
-    KConfig cfg( "kdesktoprc", true );
+    TDEConfig cfg( "kdesktoprc", true );
     cfg.setGroup( "Menubar" );
     desktop_menu = cfg.readBoolEntry( "ShowMenubar", false );
     cfg.setGroup( "KDE" );

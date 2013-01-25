@@ -114,7 +114,7 @@ static int isNXFish = 0;
 
 #define E(x) ((const char*)remoteEncoding()->encode(x).data())
 
-using namespace KIO;
+using namespace TDEIO;
 extern "C" {
 
 static void ripper(int)
@@ -310,7 +310,7 @@ void fishProtocol::openConnection() {
 
     if (connectionHost.isEmpty() && !isNXFish)
     {
-       error( KIO::ERR_UNKNOWN_HOST, TQString::null );
+       error( TDEIO::ERR_UNKNOWN_HOST, TQString::null );
        return;
     }
 
@@ -532,7 +532,7 @@ bool fishProtocol::connectionStart() {
 /**
 writes one chunk of data to stdin of child process
 */
-void fishProtocol::writeChild(const char *buf, KIO::fileoffset_t len) {
+void fishProtocol::writeChild(const char *buf, TDEIO::fileoffset_t len) {
     if (outBufPos >= 0 && outBuf) {
 #if 0
         TQString debug;
@@ -549,7 +549,7 @@ void fishProtocol::writeChild(const char *buf, KIO::fileoffset_t len) {
 /**
 manages initial communication setup including password queries
 */
-int fishProtocol::establishConnection(char *buffer, KIO::fileoffset_t len) {
+int fishProtocol::establishConnection(char *buffer, TDEIO::fileoffset_t len) {
     TQString buf;
     buf.setLatin1(buffer,len);
     int pos;
@@ -812,7 +812,7 @@ void fishProtocol::manageConnection(const TQString &l) {
     int rc = handleResponse(line);
     UDSAtom atom;
     TQDateTime dt;
-    KIO::filesize_t fsize;
+    TDEIO::filesize_t fsize;
     int pos, pos2, pos3;
     bool isOk = false;
     if (!rc) {
@@ -1158,7 +1158,7 @@ void fishProtocol::manageConnection(const TQString &l) {
         } else if (fishCommand == FISH_STAT) {
             UDSAtom atom;
 
-            atom.m_uds = KIO::UDS_NAME;
+            atom.m_uds = TDEIO::UDS_NAME;
             atom.m_str = url.fileName();
             udsStatEntry.append( atom );
             statEntry(udsStatEntry);
@@ -1225,7 +1225,7 @@ void fishProtocol::sent()
     }
 }
 
-int fishProtocol::received(const char *buffer, KIO::fileoffset_t buflen)
+int fishProtocol::received(const char *buffer, TDEIO::fileoffset_t buflen)
 {
     int pos = 0;
     do {

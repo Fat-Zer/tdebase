@@ -187,7 +187,7 @@ void KonqFrameTabs::listViews( ChildViewList *viewList ) {
     it.current()->listViews(viewList);
 }
 
-void KonqFrameTabs::saveConfig( KConfig* config, const TQString &prefix, bool saveURLs,
+void KonqFrameTabs::saveConfig( TDEConfig* config, const TQString &prefix, bool saveURLs,
                                 KonqFrameBase* docContainer, int id, int depth )
 {
   //write children

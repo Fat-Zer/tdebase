@@ -232,7 +232,7 @@ void KonqFrameStatusBar::slotSpeedProgress( int bytesPerSecond )
   TQString sizeStr;
 
   if ( bytesPerSecond > 0 )
-    sizeStr = i18n( "%1/s" ).arg( KIO::convertSize( bytesPerSecond ) );
+    sizeStr = i18n( "%1/s" ).arg( TDEIO::convertSize( bytesPerSecond ) );
   else
     sizeStr = i18n( "Stalled" );
 
@@ -324,7 +324,7 @@ void KonqFrame::listViews( ChildViewList *viewList )
   viewList->append( childView() );
 }
 
-void KonqFrame::saveConfig( KConfig* config, const TQString &prefix, bool saveURLs, KonqFrameBase* docContainer, int /*id*/, int /*depth*/ )
+void KonqFrame::saveConfig( TDEConfig* config, const TQString &prefix, bool saveURLs, KonqFrameBase* docContainer, int /*id*/, int /*depth*/ )
 {
   if (saveURLs)
     config->writePathEntry( TQString::fromLatin1( "URL" ).prepend( prefix ),
@@ -516,7 +516,7 @@ void KonqFrameContainer::listViews( ChildViewList *viewList )
       m_pSecondChild->listViews( viewList );
 }
 
-void KonqFrameContainer::saveConfig( KConfig* config, const TQString &prefix, bool saveURLs, KonqFrameBase* docContainer, int id, int depth )
+void KonqFrameContainer::saveConfig( TDEConfig* config, const TQString &prefix, bool saveURLs, KonqFrameBase* docContainer, int id, int depth )
 {
   int idSecond = id + (int)pow( 2.0, depth );
 

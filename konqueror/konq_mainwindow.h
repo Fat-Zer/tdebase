@@ -142,8 +142,8 @@ public:
   virtual TQWidget *createContainer( TQWidget *parent, int index, const TQDomElement &element, int &id );
   virtual void removeContainer( TQWidget *container, TQWidget *parent, TQDomElement &element, int id );
 
-  virtual void saveProperties( KConfig *config );
-  virtual void readProperties( KConfig *config );
+  virtual void saveProperties( TDEConfig *config );
+  virtual void readProperties( TDEConfig *config );
 
   void setInitialFrameName( const TQString &name );
 
@@ -275,7 +275,7 @@ public:
    */
   void removeChildFrame( KonqFrameBase * frame );
 
-  void saveConfig( KConfig* config, const TQString &prefix, bool saveURLs, KonqFrameBase* docContainer, int id = 0, int depth = 0 );
+  void saveConfig( TDEConfig* config, const TQString &prefix, bool saveURLs, KonqFrameBase* docContainer, int id = 0, int depth = 0 );
 
   void copyHistory( KonqFrameBase *other );
 
@@ -727,7 +727,7 @@ private:
 
   TQLabel* m_locationLabel;
   TQGuardedPtr<KonqCombo> m_combo;
-  static KConfig *s_comboConfig;
+  static TDEConfig *s_comboConfig;
   KURLCompletion *m_pURLCompletion;
   // just a reference to KonqHistoryManager's completionObject
   static KCompletion *s_pCompletion;

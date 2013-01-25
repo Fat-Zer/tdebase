@@ -30,12 +30,12 @@
 class TQRadioButton;
 class KIntNumInput;
 
-class KMiscHTMLOptions : public KCModule
+class KMiscHTMLOptions : public TDECModule
 {
     Q_OBJECT
 
 public:
-    KMiscHTMLOptions(KConfig *config, TQString group, TQWidget *parent = 0L, const char *name = 0L );
+    KMiscHTMLOptions(TDEConfig *config, TQString group, TQWidget *parent = 0L, const char *name = 0L );
 	~KMiscHTMLOptions();
     virtual void load();
     virtual void load( bool useDefaults );
@@ -47,7 +47,7 @@ private slots:
     void launchAdvancedTabDialog();
 
 private:
-    KConfig* m_pConfig;
+    TDEConfig* m_pConfig;
     TQString  m_groupname;
 
     TQComboBox* m_pUnderlineCombo;

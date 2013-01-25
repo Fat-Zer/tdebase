@@ -217,7 +217,7 @@ TQString CAItem::configName() const
 
 
 KCryptoConfig::KCryptoConfig(TQWidget *parent, const char *name, const TQStringList &)
-  : KCModule(KryptoFactory::instance(), parent, name)
+  : TDECModule(KryptoFactory::instance(), parent, name)
 {
 TQGridLayout *grid;
 TQBoxLayout *top = new TQVBoxLayout(this);
@@ -307,7 +307,7 @@ TQString whatstr;
 #endif
 
   // no need to parse kdeglobals.
-  config = new KConfig("cryptodefaults", false, false);
+  config = new TDEConfig("cryptodefaults", false, false);
   policies = new KSimpleConfig("ksslpolicies", false);
   pcerts = new KSimpleConfig("ksslcertificates", false);
   authcfg = new KSimpleConfig("ksslauthmap", false);
@@ -1009,7 +1009,7 @@ void KCryptoConfig::load( bool useDefaults )
   }
 
   groups = _signers->list();
-  KConfig sigcfg("ksslcalist", true, false);
+  TDEConfig sigcfg("ksslcalist", true, false);
   caList->clear();
   for (TQStringList::Iterator i = groups.begin();
                              i != groups.end();
@@ -2066,7 +2066,7 @@ void KCryptoConfig::slotCARestore() {
 
 
   TQStringList groups = _signers->list();
-  KConfig sigcfg("ksslcalist", true, false);
+  TDEConfig sigcfg("ksslcalist", true, false);
 
   for (TQStringList::Iterator i = groups.begin();
                              i != groups.end();

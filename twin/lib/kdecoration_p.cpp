@@ -63,7 +63,7 @@ void KDecorationOptionsPrivate::defaultKWinSettings()
     OpMaxButtonLeftClick = HMaximizeOp;
     }
 
-unsigned long KDecorationOptionsPrivate::updateKWinSettings( KConfig* config )
+unsigned long KDecorationOptionsPrivate::updateKWinSettings( TDEConfig* config )
     {
     unsigned long changed = 0;
     TQString old_group = config->group();

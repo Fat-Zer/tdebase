@@ -67,7 +67,7 @@ static bool checkSearchPathTimestamps( TQStringList paths, TQStringList timestam
          ++it, ++t )
     {
         TQDateTime current = lastChanged( *it );
-        // store non-existent directory as "N" string rather than empty string, KConfig
+        // store non-existent directory as "N" string rather than empty string, TDEConfig
         // has a bug with storing a list of empty items
         if( *t == "N" ? !current.isNull() : current != TQDateTime::fromString( *t, Qt::ISODate ))
             changed = true;
@@ -75,7 +75,7 @@ static bool checkSearchPathTimestamps( TQStringList paths, TQStringList timestam
     }
     if( changed )
     {
-        KConfig config("kcmnspluginrc");
+        TDEConfig config("kcmnspluginrc");
         config.setGroup("Misc");
         config.writeEntry( "lastSearchPaths", paths );
         config.writeEntry( "lastSearchTimestamps", currentTimestamps );
@@ -88,7 +88,7 @@ extern "C"
 {
     KDE_EXPORT void init_nsplugin()
     {
-        KConfig *config = new KConfig("kcmnspluginrc", true /* readonly */, false /* no globals*/);
+        TDEConfig *config = new TDEConfig("kcmnspluginrc", true /* readonly */, false /* no globals*/);
         config->setGroup("Misc");
         bool scan = config->readBoolEntry( "starttdeScan", false );
         bool firstTime = config->readBoolEntry( "firstTime", true );
@@ -120,7 +120,7 @@ extern "C"
         }
 
         if (firstTime) {
-            config= new KConfig("kcmnspluginrc", false);
+            config= new TDEConfig("kcmnspluginrc", false);
             config->setGroup("Misc");
             config->writeEntry( "firstTime", false );
             config->sync();

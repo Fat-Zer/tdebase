@@ -55,7 +55,7 @@
 extern "C" {
 	KDE_EXPORT void init_arts();
 
-    KDE_EXPORT KCModule *create_arts(TQWidget *parent, const char* /*name*/)
+    KDE_EXPORT TDECModule *create_arts(TQWidget *parent, const char* /*name*/)
 	{
 		TDEGlobal::locale()->insertCatalogue("kcmarts");
 		return new KArtsModule(parent, "kcmarts" );
@@ -64,7 +64,7 @@ extern "C" {
 
 static bool startArts()
 {
-	KConfig *config = new KConfig("kcmartsrc", true, false);
+	TDEConfig *config = new TDEConfig("kcmartsrc", true, false);
 
 	config->setGroup("Arts");
 	bool startServer = config->readBoolEntry("StartServer",true);
@@ -139,7 +139,7 @@ void KArtsModule::slotProcessArtsdOutput(TDEProcess*, char* buf, int len)
 }
 
 KArtsModule::KArtsModule(TQWidget *parent, const char *name)
-  : KCModule(parent, name), configChanged(false)
+  : TDECModule(parent, name), configChanged(false)
 {
 	setButtons(Default|Apply);
 
@@ -157,7 +157,7 @@ KArtsModule::KArtsModule(TQWidget *parent, const char *name)
 
 	general = new generalTab(tab);
 	hardware = new hardwareTab(tab);
-	//mixer = KCModuleLoader::loadModule("kmixcfg", tab);
+	//mixer = TDECModuleLoader::loadModule("kmixcfg", tab);
 	//midi = new KMidConfig(tab, "kmidconfig");
 
 	general->layout()->setMargin( KDialog::marginHint() );
@@ -211,7 +211,7 @@ KArtsModule::KArtsModule(TQWidget *parent, const char *name)
 
 	};
 
-	config = new KConfig("kcmartsrc");
+	config = new TDEConfig("kcmartsrc");
 	load();
 
 	suspendTime->setRange( 1, 999, 1, true );
@@ -306,7 +306,7 @@ void KArtsModule::load( bool useDefaults )
 //	config->setGroup( "Mixer" );
 //	general->volumeSystray->setChecked( config->readBoolEntry( "VolumeControlOnSystray", true ) );
 
-	KConfig *midiConfig = new KConfig( "kcmmidirc", true );
+	TDEConfig *midiConfig = new TDEConfig( "kcmmidirc", true );
 
 	midiConfig->setGroup( "Configuration" );
 	hardware->midiDevice->setCurrentItem( midiConfig->readNumEntry( "midiDevice", 0 ) );
@@ -376,7 +376,7 @@ void KArtsModule::saveParams( void )
 //	config->setGroup( "Mixer" );
 //	config->writeEntry( "VolumeControlOnSystray", general->volumeSystray->isChecked() );
 
-	KConfig *midiConfig = new KConfig( "kcmmidirc", false );
+	TDEConfig *midiConfig = new TDEConfig( "kcmmidirc", false );
 
 	midiConfig->setGroup( "Configuration" );
 	midiConfig->writeEntry( "midiDevice", hardware->midiDevice->currentItem() );
@@ -385,7 +385,7 @@ void KArtsModule::saveParams( void )
 
 	delete midiConfig;
     
-    KConfig *knotifyConfig = new KConfig(  "knotifyrc", false );
+    TDEConfig *knotifyConfig = new TDEConfig(  "knotifyrc", false );
     
     knotifyConfig->setGroup(  "StartProgress" );
     knotifyConfig->writeEntry(  "Arts Init", startServer->isChecked() );

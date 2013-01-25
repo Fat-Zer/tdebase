@@ -35,11 +35,11 @@ class ServiceButton : public PanelButton
 public:
     ServiceButton( const TQString& desktopFile, TQWidget* parent );
     ServiceButton( const KService::Ptr& service, TQWidget* parent );
-    ServiceButton( const KConfigGroup& config, TQWidget* parent );
+    ServiceButton( const TDEConfigGroup& config, TQWidget* parent );
 
     ~ServiceButton();
 
-    virtual void saveConfig(KConfigGroup& config) const;
+    virtual void saveConfig(TDEConfigGroup& config) const;
     virtual void properties();
 
 protected slots:

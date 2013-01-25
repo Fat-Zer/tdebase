@@ -49,7 +49,7 @@ int main( int argc, char* argv[] )
     init_global_data( false, TQT_TQOBJECT(&app) );
     Settings settings;
     settings.read_settings( true );
-    KConfig cfg( file, true );
+    TDEConfig cfg( file, true );
     if( !settings.import( cfg, false ))
         {
         kdWarning() << "Import of " << id << " failed!" << endl;

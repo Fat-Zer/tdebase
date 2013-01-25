@@ -28,7 +28,7 @@
 #include "kprivacymanager.h"
 #include "kprivacysettings.h"
 
-class Privacy: public KCModule
+class Privacy: public TDECModule
 {
     Q_OBJECT
 

@@ -80,7 +80,7 @@ The desktop file is called "kcm_fonts" with "Name=Fonts" and "Categories=X-TDE-s
 
 * Remove old categories, for example X-TDE-settings-peripherals.
 
-* Convert all options in "Internet & Network/Preferences" to KConfigXT and then remove the KCM.
+* Convert all options in "Internet & Network/Preferences" to TDEConfigXT and then remove the KCM.
 
 * Remove "KDE Components" and put the KCMs elsewhere, most of them in "System". Wake up: a non KDE hacker can't differentiate between KDE and other parts of the system.
 
@@ -112,12 +112,12 @@ The desktop file is called "kcm_fonts" with "Name=Fonts" and "Categories=X-TDE-s
 * A lot, perhaps even the majority, violate the HIG by not displaying 
 properly in 800x600 (is it 800x600 or 1024x768?). For a start, someone needs to iterate through all KCMs and file bug reports for each missbehaving. See the KDE UI Guidelines.
 
-* KCMs needs to be converted to KConfigXT and use the global kdeglobals KConfigXT object.
+* KCMs needs to be converted to TDEConfigXT and use the global kdeglobals TDEConfigXT object.
 
 * Tons of KCMs and applications have options for selecting binaries which they use(frontends etc.). We need to be a little consistent here and adopt a general policy in this issue.
 If a binary is not in $PATH it is the distributors fault and not KDE. The reason we have a GUI is so people don't have to know about this kinds of internals. The options doesn't mean anything because users use KDE, they're not in run level 3("WTF? cdparanoia? diff? What's that?"). PATH options("Where to search for X") should be removed - it is up to the distributor. Options for selecting what binary to use should be moved out to KConfEdit - they have a use but are very rarely used.
 
-* Rewrite kcmshell to the new KCModuleProxy and fix bugs. Move it to tdelibs.
+* Rewrite kcmshell to the new TDECModuleProxy and fix bugs. Move it to tdelibs.
 
 --------------------------------------------------------------------------
 

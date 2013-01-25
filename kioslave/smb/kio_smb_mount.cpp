@@ -65,7 +65,7 @@ void SMBSlave::special( const TQByteArray & data)
 
          if (tmp==3) {
              if (!KStandardDirs::makeDir(mountPoint)) {
-                 error(KIO::ERR_COULD_NOT_MKDIR, mountPoint);
+                 error(TDEIO::ERR_COULD_NOT_MKDIR, mountPoint);
                  return;
              }
          }
@@ -121,7 +121,7 @@ void SMBSlave::special( const TQByteArray & data)
 
          if (!proc.start( TDEProcess::Block, TDEProcess::AllOutput ))
          {
-            error(KIO::ERR_CANNOT_LAUNCH_PROCESS,
+            error(TDEIO::ERR_CANNOT_LAUNCH_PROCESS,
                   "smbmount"+i18n("\nMake sure that the samba package is installed properly on your system."));
             return;
          }
@@ -131,7 +131,7 @@ void SMBSlave::special( const TQByteArray & data)
 
          if (proc.exitStatus() != 0)
          {
-           error( KIO::ERR_COULD_NOT_MOUNT,
+           error( TDEIO::ERR_COULD_NOT_MOUNT,
                i18n("Mounting of share \"%1\" from host \"%2\" by user \"%3\" failed.\n%4")
                .arg(share).arg(host).arg(user).arg(mybuf + "\n" + mystderr));
            return;
@@ -162,7 +162,7 @@ void SMBSlave::special( const TQByteArray & data)
 
          if ( !proc.start( TDEProcess::Block, TDEProcess::AllOutput ) )
          {
-           error(KIO::ERR_CANNOT_LAUNCH_PROCESS,
+           error(TDEIO::ERR_CANNOT_LAUNCH_PROCESS,
                  "smbumount"+i18n("\nMake sure that the samba package is installed properly on your system."));
            return;
          }
@@ -172,7 +172,7 @@ void SMBSlave::special( const TQByteArray & data)
 
          if (proc.exitStatus() != 0)
          {
-           error(KIO::ERR_COULD_NOT_UNMOUNT,
+           error(TDEIO::ERR_COULD_NOT_UNMOUNT,
                i18n("Unmounting of mountpoint \"%1\" failed.\n%2")
                .arg(mountPoint).arg(mybuf + "\n" + mystderr));
            return;
@@ -194,7 +194,7 @@ void SMBSlave::special( const TQByteArray & data)
 
            if ( !ok )
            {
-             error(KIO::ERR_COULD_NOT_RMDIR, mountPoint);
+             error(TDEIO::ERR_COULD_NOT_RMDIR, mountPoint);
              return;
            }
          }

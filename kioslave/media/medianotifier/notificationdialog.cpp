@@ -37,7 +37,7 @@ NotificationDialog::NotificationDialog( KFileItem medium, NotifierSettings *sett
 	: KDialogBase( parent, name, false, i18n( "Medium Detected" ), Ok|Cancel|User1, Ok, true),
 	  m_medium(medium), m_settings( settings )
 {
-	setCaption( KIO::decodeFileName(m_medium.name()) );
+	setCaption( TDEIO::decodeFileName(m_medium.name()) );
 	clearWState( WState_Polished );
 
 	TQWidget *page = new TQWidget( this );

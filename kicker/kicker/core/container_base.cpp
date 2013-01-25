@@ -72,13 +72,13 @@ void BaseContainer::setImmutable(bool immutable)
     clearOpMenu();
 }
 
-void BaseContainer::loadConfiguration( KConfigGroup& group )
+void BaseContainer::loadConfiguration( TDEConfigGroup& group )
 {
     setFreeSpace( TQMIN( group.readDoubleNumEntry( "FreeSpace2", 0 ), 1 ) );
     doLoadConfiguration( group );
 }
 
-void BaseContainer::saveConfiguration(KConfigGroup& group,
+void BaseContainer::saveConfiguration(TDEConfigGroup& group,
                                       bool layoutOnly) const
 {
     if (isImmutable())
@@ -101,7 +101,7 @@ void BaseContainer::configure(KPanelExtension::Orientation o,
     configure();
 }
 
-void BaseContainer::slotRemoved(KConfig* config)
+void BaseContainer::slotRemoved(TDEConfig* config)
 {
     if (!config)
     {

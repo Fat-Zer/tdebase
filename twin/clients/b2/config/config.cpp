@@ -15,7 +15,7 @@
 
 extern "C"
 {
-	KDE_EXPORT TQObject* allocate_config( KConfig* conf, TQWidget* parent )
+	KDE_EXPORT TQObject* allocate_config( TDEConfig* conf, TQWidget* parent )
 	{
 		return(new B2Config(conf, parent));
 	}
@@ -30,11 +30,11 @@ extern "C"
  *			Configure tab in twindecoration
  */
 
-B2Config::B2Config( KConfig* conf, TQWidget* parent )
+B2Config::B2Config( TDEConfig* conf, TQWidget* parent )
 	: TQObject( parent )
 {
 	TDEGlobal::locale()->insertCatalogue("twin_b2_config");
-	b2Config = new KConfig("twinb2rc");
+	b2Config = new TDEConfig("twinb2rc");
 	gb = new TQVBox(parent);
 
 	cbColorBorder = new TQCheckBox(
@@ -96,7 +96,7 @@ void B2Config::slotSelectionChanged()
 
 // Loads the configurable options from the twinrc config file
 // It is passed the open config from twindecoration to improve efficiency
-void B2Config::load(KConfig * /*conf*/)
+void B2Config::load(TDEConfig * /*conf*/)
 {
 	b2Config->setGroup("General");
 
@@ -141,7 +141,7 @@ static TQString opToString(int op)
 
 
 // Saves the configurable options to the twinrc config file
-void B2Config::save(KConfig * /*conf*/)
+void B2Config::save(TDEConfig * /*conf*/)
 {
 	b2Config->setGroup("General");
 	b2Config->writeEntry("UseTitleBarBorderColors", cbColorBorder->isChecked());

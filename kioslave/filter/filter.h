@@ -28,7 +28,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <kio/global.h>
 #include <kio/slavebase.h>
 
-class FilterProtocol : public TQObject, public KIO::SlaveBase
+class FilterProtocol : public TQObject, public TDEIO::SlaveBase
 {
 public:
   FilterProtocol( const TQCString & protocol, const TQCString &pool, const TQCString &app );

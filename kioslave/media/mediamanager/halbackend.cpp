@@ -927,7 +927,7 @@ TQStringList HALBackend::mountoptions(const TQString &name)
 	}
     }
 
-    KConfig config("mediamanagerrc");
+    TDEConfig config("mediamanagerrc");
     
     bool use_defaults = true;    
     if (config.hasGroup(name)) 
@@ -1097,7 +1097,7 @@ bool HALBackend::setMountoptions(const TQString &name, const TQStringList &optio
 {
     kdDebug() << "setMountoptions " << name << " " << options << endl;
 
-    KConfig config("mediamanagerrc");
+    TDEConfig config("mediamanagerrc");
     config.setGroup(name);
 
     TQMap<TQString,TQString> valids = MediaManagerUtils::splitOptions(options);
@@ -1368,7 +1368,7 @@ TQString HALBackend::killUsingProcesses(const Medium* medium)
     }
 }
 
-void HALBackend::slotResult(KIO::Job *job)
+void HALBackend::slotResult(TDEIO::Job *job)
 {
     kdDebug() << "slotResult " << mount_jobs[job] << endl;
 
@@ -1376,7 +1376,7 @@ void HALBackend::slotResult(KIO::Job *job)
     TQString& qerror = data->errorMessage;
     const Medium* medium = data->medium;
 
-    if (job->error() == KIO::ERR_COULD_NOT_UNMOUNT) {
+    if (job->error() == TDEIO::ERR_COULD_NOT_UNMOUNT) {
         TQString proclist(listUsingProcesses(medium));
 
         qerror = "<qt>";
@@ -1443,9 +1443,9 @@ TQString HALBackend::mount(const Medium *medium)
         data.medium = medium;
 
         kdDebug() << "triggering user mount " << medium->deviceNode() << " " << mountPoint << " " << medium->id() << endl;
-        KIO::Job *job = KIO::mount( false, 0, medium->deviceNode(), mountPoint );
-        connect(job, TQT_SIGNAL( result (KIO::Job *)),
-                TQT_SLOT( slotResult( KIO::Job *)));
+        TDEIO::Job *job = TDEIO::mount( false, 0, medium->deviceNode(), mountPoint );
+        connect(job, TQT_SIGNAL( result (TDEIO::Job *)),
+                TQT_SLOT( slotResult( TDEIO::Job *)));
         mount_jobs[job] = &data;
         // The caller expects the device to be mounted when the function
         // completes. Thus block until the job completes.
@@ -1608,9 +1608,9 @@ TQString HALBackend::unmount(const TQString &_udi)
         data.medium = medium;
 
         kdDebug() << "triggering user unmount " << medium->deviceNode() << " " << mountPoint << endl;
-        KIO::Job *job = KIO::unmount( medium->mountPoint(), false );
-        connect(job, TQT_SIGNAL( result (KIO::Job *)),
-                TQT_SLOT( slotResult( KIO::Job *)));
+        TDEIO::Job *job = TDEIO::unmount( medium->mountPoint(), false );
+        connect(job, TQT_SIGNAL( result (TDEIO::Job *)),
+                TQT_SLOT( slotResult( TDEIO::Job *)));
         mount_jobs[job] = &data;
         // The caller expects the device to be unmounted when the function
         // completes. Thus block until the job completes.

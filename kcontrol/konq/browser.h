@@ -22,16 +22,16 @@
 
 #include <kcmodule.h>
 
-class KConfig;
+class TDEConfig;
 class TQTabWidget;
 
 //-----------------------------------------------------------------------------
 
-class KBrowserOptions : public KCModule
+class KBrowserOptions : public TDECModule
 {
   Q_OBJECT
 public:
-  KBrowserOptions(KConfig *config, TQString group, TQWidget *parent=0, const char *name=0);
+  KBrowserOptions(TDEConfig *config, TQString group, TQWidget *parent=0, const char *name=0);
 
   virtual void load();
   virtual void save();
@@ -40,10 +40,10 @@ public:
 
 private:
    
-  KCModule *appearance;
-  KCModule *behavior;
-  KCModule *previews;
-  KCModule *kuick;
+  TDECModule *appearance;
+  TDECModule *behavior;
+  TDECModule *previews;
+  TDECModule *kuick;
   TQTabWidget *m_tab;
 };
 

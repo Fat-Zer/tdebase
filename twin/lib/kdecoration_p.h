@@ -33,7 +33,7 @@ DEALINGS IN THE SOFTWARE.
 #include <tqwidget.h>
 #include <tqvaluelist.h>
 
-class KConfig;
+class TDEConfig;
 
 class KWIN_EXPORT KDecorationOptionsPrivate : public KDecorationDefines
     {
@@ -41,7 +41,7 @@ class KWIN_EXPORT KDecorationOptionsPrivate : public KDecorationDefines
         KDecorationOptionsPrivate();
         virtual ~KDecorationOptionsPrivate();
         void defaultKWinSettings(); // shared implementation
-        unsigned long updateKWinSettings( KConfig* ); // shared implementation
+        unsigned long updateKWinSettings( TDEConfig* ); // shared implementation
         BorderSize findPreferredBorderSize( BorderSize size, TQValueList< BorderSize > ) const; // shared implementation
 
         TQColor colors[NUM_COLORS*2];

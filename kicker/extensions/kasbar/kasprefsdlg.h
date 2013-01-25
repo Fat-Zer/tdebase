@@ -65,7 +65,7 @@ class TQCheckBox;
 class TQSlider;
 class TQSpinBox;
 class KColorButton;
-class KConfig;
+class TDEConfig;
 class KIntSpinBox;
 
 class KasTasker;

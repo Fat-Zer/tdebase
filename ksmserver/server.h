@@ -156,9 +156,9 @@ private:
 			   TQString bootOption = TQString::null );
 
     void performLegacySessionSave();
-    void storeLegacySession( KConfig* config );
-    void restoreLegacySession( KConfig* config );
-    void restoreLegacySessionInternal( KConfig* config, char sep = ',' );
+    void storeLegacySession( TDEConfig* config );
+    void restoreLegacySession( TDEConfig* config );
+    void restoreLegacySessionInternal( TDEConfig* config, char sep = ',' );
     TQStringList windowWmCommand(WId w);
     TQString windowWmClientMachine(WId w);
     WId windowWmClientLeader(WId w);

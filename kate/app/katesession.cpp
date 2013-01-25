@@ -169,7 +169,7 @@ bool KateSession::rename (const TQString &name)
 
   m_sessionName = name;
 
-  KConfig config (sessionFile (), false, false);
+  TDEConfig config (sessionFile (), false, false);
   config.setGroup ("General");
   config.writeEntry ("Name", m_sessionName);
   config.sync ();
@@ -177,7 +177,7 @@ bool KateSession::rename (const TQString &name)
   return true;
 }
 
-KConfig *KateSession::configRead ()
+TDEConfig *KateSession::configRead ()
 {
   if (m_sessionFileRel.isEmpty())
     return 0;
@@ -188,7 +188,7 @@ KConfig *KateSession::configRead ()
   return m_readConfig = new KSimpleConfig (sessionFile (), true);
 }
 
-KConfig *KateSession::configWrite ()
+TDEConfig *KateSession::configWrite ()
 {
   if (m_sessionFileRel.isEmpty())
     return 0;
@@ -288,7 +288,7 @@ void KateSessionManager::activateSession (KateSession::Ptr session, bool closeLa
     // open the new session
     Kate::Document::setOpenErrorDialogsActivated (false);
 
-    KConfig *sc = activeSession()->configRead();
+    TDEConfig *sc = activeSession()->configRead();
 
     if (sc)
       KateApp::self()->documentManager()->restoreDocumentList (sc);
@@ -301,7 +301,7 @@ void KateSessionManager::activateSession (KateSession::Ptr session, bool closeLa
     // window config
     if (sc)
     {
-      KConfig *c = KateApp::self()->config();
+      TDEConfig *c = KateApp::self()->config();
       c->setGroup("General");
 
       if (c->readBoolEntry("Restore Window Configuration", true))
@@ -371,7 +371,7 @@ bool KateSessionManager::saveActiveSession (bool tryAsk, bool rememberAsLast)
   if (tryAsk)
   {
     // app config
-    KConfig *c = KateApp::self()->config();
+    TDEConfig *c = KateApp::self()->config();
     c->setGroup("General");
 
     TQString sesExit (c->readEntry ("Session Exit", "save"));
@@ -407,7 +407,7 @@ bool KateSessionManager::saveActiveSession (bool tryAsk, bool rememberAsLast)
     }
   }
 
-  KConfig *sc = activeSession()->configWrite();
+  TDEConfig *sc = activeSession()->configWrite();
 
   if (!sc)
     return false;
@@ -428,7 +428,7 @@ bool KateSessionManager::saveActiveSession (bool tryAsk, bool rememberAsLast)
 
   if (rememberAsLast)
   {
-    KConfig *c = KateApp::self()->config();
+    TDEConfig *c = KateApp::self()->config();
     c->setGroup("General");
     c->writeEntry ("Last Session", activeSession()->sessionFileRelative());
     c->sync ();
@@ -442,7 +442,7 @@ bool KateSessionManager::chooseSession ()
   bool success = true;
 
   // app config
-  KConfig *c = KateApp::self()->config();
+  TDEConfig *c = KateApp::self()->config();
   c->setGroup("General");
 
   // get last used session, default to default session

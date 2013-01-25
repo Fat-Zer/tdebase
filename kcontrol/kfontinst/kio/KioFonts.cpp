@@ -231,16 +231,16 @@ static int getSize(TQValueList<FcPattern *> &patterns)
     return size;
 }
 
-static void addAtom(KIO::UDSEntry &entry, unsigned int ID, long l, const TQString &s=TQString::null)
+static void addAtom(TDEIO::UDSEntry &entry, unsigned int ID, long l, const TQString &s=TQString::null)
 {
-    KIO::UDSAtom atom;
+    TDEIO::UDSAtom atom;
     atom.m_uds = ID;
     atom.m_long = l;
     atom.m_str = s;
     entry.append(atom);
 }
 
-static bool createFolderUDSEntry(KIO::UDSEntry &entry, const TQString &name, const TQString &path, bool sys)
+static bool createFolderUDSEntry(TDEIO::UDSEntry &entry, const TQString &name, const TQString &path, bool sys)
 {
     KFI_DBUG << "createFolderUDSEntry " << name << ' ' << path << ' ' << sys << ' ' << endl;
 
@@ -251,7 +251,7 @@ static bool createFolderUDSEntry(KIO::UDSEntry &entry, const TQString &name, con
 
     if(-1!=KDE_lstat(cPath, &buff))
     {
-        addAtom(entry, KIO::UDS_NAME, 0, name);
+        addAtom(entry, TDEIO::UDS_NAME, 0, name);
 
         if (S_ISLNK(buff.st_mode))
         {
@@ -262,49 +262,49 @@ static bool createFolderUDSEntry(KIO::UDSEntry &entry, const TQString &name, con
             if(n!= -1)
                 buffer2[n]='\0';
 
-            addAtom(entry, KIO::UDS_LINK_DEST, 0, TQString::fromLocal8Bit(buffer2));
+            addAtom(entry, TDEIO::UDS_LINK_DEST, 0, TQString::fromLocal8Bit(buffer2));
 
             if(-1==KDE_stat(cPath, &buff))
             {
                 // It is a link pointing to nowhere
-                addAtom(entry, KIO::UDS_FILE_TYPE, S_IFMT - 1);
-                addAtom(entry, KIO::UDS_ACCESS, S_IRWXU | S_IRWXG | S_IRWXO);
-                addAtom(entry, KIO::UDS_SIZE, 0);
+                addAtom(entry, TDEIO::UDS_FILE_TYPE, S_IFMT - 1);
+                addAtom(entry, TDEIO::UDS_ACCESS, S_IRWXU | S_IRWXG | S_IRWXO);
+                addAtom(entry, TDEIO::UDS_SIZE, 0);
                 goto notype;
             }
         }
 
-        addAtom(entry, KIO::UDS_FILE_TYPE, buff.st_mode&S_IFMT);
-        addAtom(entry, KIO::UDS_ACCESS, buff.st_mode&07777);
-        addAtom(entry, KIO::UDS_SIZE, buff.st_size);
+        addAtom(entry, TDEIO::UDS_FILE_TYPE, buff.st_mode&S_IFMT);
+        addAtom(entry, TDEIO::UDS_ACCESS, buff.st_mode&07777);
+        addAtom(entry, TDEIO::UDS_SIZE, buff.st_size);
 
         notype:
-        addAtom(entry, KIO::UDS_MODIFICATION_TIME, buff.st_mtime);
+        addAtom(entry, TDEIO::UDS_MODIFICATION_TIME, buff.st_mtime);
 
         struct passwd *user = getpwuid(buff.st_uid);
-        addAtom(entry, KIO::UDS_USER, 0, user ? user->pw_name : TQString::number(buff.st_uid).latin1());
+        addAtom(entry, TDEIO::UDS_USER, 0, user ? user->pw_name : TQString::number(buff.st_uid).latin1());
 
         struct group *grp = getgrgid(buff.st_gid);
-        addAtom(entry, KIO::UDS_GROUP, 0, grp ? grp->gr_name : TQString::number(buff.st_gid).latin1());
+        addAtom(entry, TDEIO::UDS_GROUP, 0, grp ? grp->gr_name : TQString::number(buff.st_gid).latin1());
 
-        addAtom(entry, KIO::UDS_ACCESS_TIME, buff.st_atime);
-        addAtom(entry, KIO::UDS_MIME_TYPE, 0, sys
+        addAtom(entry, TDEIO::UDS_ACCESS_TIME, buff.st_atime);
+        addAtom(entry, TDEIO::UDS_MIME_TYPE, 0, sys
                                                 ? KFI_KIO_FONTS_PROTOCOL"/system-folder" 
                                                 : KFI_KIO_FONTS_PROTOCOL"/folder");
-        addAtom(entry, KIO::UDS_GUESSED_MIME_TYPE, 0, "application/octet-stream");
+        addAtom(entry, TDEIO::UDS_GUESSED_MIME_TYPE, 0, "application/octet-stream");
         TQString url(KFI_KIO_FONTS_PROTOCOL+TQString::fromLatin1(":/"));
         return true;
     }
     else if (sys && !Misc::root())   // Default system fonts folder does not actually exist yet!
     {
         KFI_DBUG << "Default system folder (" << path << ") does not yet exist, so create dummy entry" << endl;
-        addAtom(entry, KIO::UDS_NAME, 0, name);
-        addAtom(entry, KIO::UDS_FILE_TYPE, S_IFDIR);
-        addAtom(entry, KIO::UDS_ACCESS, 0744);
-        addAtom(entry, KIO::UDS_USER, 0, "root");
-        addAtom(entry, KIO::UDS_GROUP, 0, "root");
-        addAtom(entry, KIO::UDS_MIME_TYPE, 0, KFI_KIO_FONTS_PROTOCOL"/system-folder");
-        addAtom(entry, KIO::UDS_GUESSED_MIME_TYPE, 0, "application/octet-stream");
+        addAtom(entry, TDEIO::UDS_NAME, 0, name);
+        addAtom(entry, TDEIO::UDS_FILE_TYPE, S_IFDIR);
+        addAtom(entry, TDEIO::UDS_ACCESS, 0744);
+        addAtom(entry, TDEIO::UDS_USER, 0, "root");
+        addAtom(entry, TDEIO::UDS_GROUP, 0, "root");
+        addAtom(entry, TDEIO::UDS_MIME_TYPE, 0, KFI_KIO_FONTS_PROTOCOL"/system-folder");
+        addAtom(entry, TDEIO::UDS_GUESSED_MIME_TYPE, 0, "application/octet-stream");
 
         return true;
     }
@@ -313,7 +313,7 @@ static bool createFolderUDSEntry(KIO::UDSEntry &entry, const TQString &name, con
     return false;
 }
 
-static bool createFontUDSEntry(KIO::UDSEntry &entry, const TQString &name, TQValueList<FcPattern *> &patterns, bool sys)
+static bool createFontUDSEntry(TDEIO::UDSEntry &entry, const TQString &name, TQValueList<FcPattern *> &patterns, bool sys)
 {
     KFI_DBUG << "createFontUDSEntry " << name << ' ' << patterns.count() << endl;
 
@@ -344,7 +344,7 @@ static bool createFontUDSEntry(KIO::UDSEntry &entry, const TQString &name, TQVal
 
     end=sortedPatterns.end();
     entry.clear();
-    addAtom(entry, KIO::UDS_SIZE, getSize(patterns));
+    addAtom(entry, TDEIO::UDS_SIZE, getSize(patterns));
 
     for(it=sortedPatterns.begin(); it!=end; ++it)
     {
@@ -354,7 +354,7 @@ static bool createFontUDSEntry(KIO::UDSEntry &entry, const TQString &name, TQVal
 
         if(-1!=KDE_lstat(cPath, &buff))
         {
-            addAtom(entry, KIO::UDS_NAME, 0, name);
+            addAtom(entry, TDEIO::UDS_NAME, 0, name);
 
             if (S_ISLNK(buff.st_mode))
             {
@@ -366,32 +366,32 @@ static bool createFontUDSEntry(KIO::UDSEntry &entry, const TQString &name, TQVal
                 if(n!= -1)
                     buffer2[n]='\0';
 
-                addAtom(entry, KIO::UDS_LINK_DEST, 0, TQString::fromLocal8Bit(buffer2));
+                addAtom(entry, TDEIO::UDS_LINK_DEST, 0, TQString::fromLocal8Bit(buffer2));
 
                 if(-1==KDE_stat(cPath, &buff))
                 {
                     // It is a link pointing to nowhere
-                    addAtom(entry, KIO::UDS_FILE_TYPE, S_IFMT - 1);
-                    addAtom(entry, KIO::UDS_ACCESS, S_IRWXU | S_IRWXG | S_IRWXO);
+                    addAtom(entry, TDEIO::UDS_FILE_TYPE, S_IFMT - 1);
+                    addAtom(entry, TDEIO::UDS_ACCESS, S_IRWXU | S_IRWXG | S_IRWXO);
                     goto notype;
                 }
             }
 
-            addAtom(entry, KIO::UDS_FILE_TYPE, buff.st_mode&S_IFMT);
-            addAtom(entry, KIO::UDS_ACCESS, buff.st_mode&07777);
+            addAtom(entry, TDEIO::UDS_FILE_TYPE, buff.st_mode&S_IFMT);
+            addAtom(entry, TDEIO::UDS_ACCESS, buff.st_mode&07777);
 
             notype:
-            addAtom(entry, KIO::UDS_MODIFICATION_TIME, buff.st_mtime);
+            addAtom(entry, TDEIO::UDS_MODIFICATION_TIME, buff.st_mtime);
 
             struct passwd *user = getpwuid(buff.st_uid);
-            addAtom(entry, KIO::UDS_USER, 0, user ? user->pw_name : TQString::number(buff.st_uid).latin1());
+            addAtom(entry, TDEIO::UDS_USER, 0, user ? user->pw_name : TQString::number(buff.st_uid).latin1());
 
             struct group *grp = getgrgid(buff.st_gid);
-            addAtom(entry, KIO::UDS_GROUP, 0, grp ? grp->gr_name : TQString::number(buff.st_gid).latin1());
+            addAtom(entry, TDEIO::UDS_GROUP, 0, grp ? grp->gr_name : TQString::number(buff.st_gid).latin1());
 
-            addAtom(entry, KIO::UDS_ACCESS_TIME, buff.st_atime);
-            addAtom(entry, KIO::UDS_MIME_TYPE, 0, KMimeType::findByPath(path, 0, true)->name());
-            addAtom(entry, KIO::UDS_GUESSED_MIME_TYPE, 0, "application/octet-stream");
+            addAtom(entry, TDEIO::UDS_ACCESS_TIME, buff.st_atime);
+            addAtom(entry, TDEIO::UDS_MIME_TYPE, 0, KMimeType::findByPath(path, 0, true)->name());
+            addAtom(entry, TDEIO::UDS_GUESSED_MIME_TYPE, 0, "application/octet-stream");
 
             TQString url(KFI_KIO_FONTS_PROTOCOL+TQString::fromLatin1(":/"));
 
@@ -404,7 +404,7 @@ static bool createFontUDSEntry(KIO::UDSEntry &entry, const TQString &name, TQVal
                 url+=name+TQString::fromLatin1(constMultipleExtension);
             else
                 url+=Misc::getFile(path);
-            addAtom(entry, KIO::UDS_URL, 0, url);
+            addAtom(entry, TDEIO::UDS_URL, 0, url);
             return true;  // This file was OK, so use its values...
         }
     }
@@ -706,7 +706,7 @@ static bool getFontList(const TQStringList &files, TQMap<TQString, TQString> &ma
 }
 
 CKioFonts::CKioFonts(const TQCString &pool, const TQCString &app)
-         : KIO::SlaveBase(KFI_KIO_FONTS_PROTOCOL, pool, app),
+         : TDEIO::SlaveBase(KFI_KIO_FONTS_PROTOCOL, pool, app),
            itsRoot(Misc::root()),
            itsUsingFcFpe(false),
            itsUsingXfsFpe(false),
@@ -830,7 +830,7 @@ void CKioFonts::listDir(const KURL &url)
 
     if(updateFontList() && checkUrl(url, true))
     {
-        KIO::UDSEntry entry;
+        TDEIO::UDSEntry entry;
         int           size=0;
 
         if(itsRoot || TQStringList::split('/', url.path(), false).count()!=0)
@@ -861,7 +861,7 @@ void CKioFonts::listDir(const KURL &url)
             listEntry(entry, false);
         }
 
-        listEntry(size ? entry : KIO::UDSEntry(), true);
+        listEntry(size ? entry : TDEIO::UDSEntry(), true);
         finished();
     }
 
@@ -878,12 +878,12 @@ void CKioFonts::stat(const KURL &url)
 
         if(path.isEmpty())
         {
-            error(KIO::ERR_COULD_NOT_STAT, url.prettyURL());
+            error(TDEIO::ERR_COULD_NOT_STAT, url.prettyURL());
             return;
         }
 
         TQStringList   pathList(TQStringList::split('/', path, false));
-        KIO::UDSEntry entry;
+        TDEIO::UDSEntry entry;
         bool          err=false;
 
         switch(pathList.count())
@@ -901,7 +901,7 @@ void CKioFonts::stat(const KURL &url)
                         err=!createFolderUDSEntry(entry, i18n(KFI_KIO_FONTS_SYS), itsFolders[FOLDER_USER].location, true);
                     else
                     {
-                        error(KIO::ERR_SLAVE_DEFINED,
+                        error(TDEIO::ERR_SLAVE_DEFINED,
                               i18n("Please specify \"%1\" or \"%2\".").arg(i18n(KFI_KIO_FONTS_USER)).arg(i18n(KFI_KIO_FONTS_SYS)));
                         return;
                     }
@@ -912,7 +912,7 @@ void CKioFonts::stat(const KURL &url)
 
         if(err)
         {
-            error(KIO::ERR_DOES_NOT_EXIST, url.prettyURL());
+            error(TDEIO::ERR_DOES_NOT_EXIST, url.prettyURL());
             return;
         }
 
@@ -921,7 +921,7 @@ void CKioFonts::stat(const KURL &url)
     }
 }
 
-bool CKioFonts::createStatEntry(KIO::UDSEntry &entry, const KURL &url, EFolder folder)
+bool CKioFonts::createStatEntry(TDEIO::UDSEntry &entry, const KURL &url, EFolder folder)
 {
     KFI_DBUG << "createStatEntry " << url.path() << endl;
 
@@ -1003,17 +1003,17 @@ void CKioFonts::get(const KURL &url)
         KFI_DBUG << "real: " << realPathC << endl;
     
         if (-2==KDE_stat(realPathC.data(), &buff))
-            error(EACCES==errno ? KIO::ERR_ACCESS_DENIED : KIO::ERR_DOES_NOT_EXIST, url.prettyURL());
+            error(EACCES==errno ? TDEIO::ERR_ACCESS_DENIED : TDEIO::ERR_DOES_NOT_EXIST, url.prettyURL());
         else if (S_ISDIR(buff.st_mode))
-            error(KIO::ERR_IS_DIRECTORY, url.prettyURL());
+            error(TDEIO::ERR_IS_DIRECTORY, url.prettyURL());
         else if (!S_ISREG(buff.st_mode))
-            error(KIO::ERR_CANNOT_OPEN_FOR_READING, url.prettyURL());
+            error(TDEIO::ERR_CANNOT_OPEN_FOR_READING, url.prettyURL());
         else
         {
             int fd = KDE_open(realPathC.data(), O_RDONLY);
 
             if (fd < 0)
-                error(KIO::ERR_CANNOT_OPEN_FOR_READING, url.prettyURL());
+                error(TDEIO::ERR_CANNOT_OPEN_FOR_READING, url.prettyURL());
             else
             {
                 // Determine the mimetype of the file to be retrieved, and emit it.
@@ -1022,7 +1022,7 @@ void CKioFonts::get(const KURL &url)
     
                 totalSize(buff.st_size);
     
-                KIO::filesize_t processed=0;
+                TDEIO::filesize_t processed=0;
                 char            buffer[MAX_IPC_SIZE];
                 TQByteArray      array;
     
@@ -1033,7 +1033,7 @@ void CKioFonts::get(const KURL &url)
                     {
 			if (errno == EINTR)
 				continue;
-                        error(KIO::ERR_COULD_NOT_READ, url.prettyURL());
+                        error(TDEIO::ERR_COULD_NOT_READ, url.prettyURL());
                         close(fd);
                         if(multiple)
                             ::unlink(realPathC);
@@ -1068,7 +1068,7 @@ void CKioFonts::put(const KURL &u, int mode, bool overwrite, bool resume)
 
     if(isHidden(u))
     {
-        error(KIO::ERR_WRITE_ACCESS_DENIED, u.prettyURL());
+        error(TDEIO::ERR_WRITE_ACCESS_DENIED, u.prettyURL());
         return;
     }
 
@@ -1088,7 +1088,7 @@ void CKioFonts::put(const KURL &u, int mode, bool overwrite, bool resume)
 
     if (destExists && !overwrite && !resume)
     {
-        error(KIO::ERR_FILE_ALREADY_EXIST, url.prettyURL());
+        error(TDEIO::ERR_FILE_ALREADY_EXIST, url.prettyURL());
         return;
     }
 
@@ -1098,7 +1098,7 @@ void CKioFonts::put(const KURL &u, int mode, bool overwrite, bool resume)
  
         if(passwd.isEmpty())
         {
-            error(KIO::ERR_SLAVE_DEFINED, i18n("Could not access \"%1\" folder.").arg(i18n(KFI_KIO_FONTS_SYS)));
+            error(TDEIO::ERR_SLAVE_DEFINED, i18n("Could not access \"%1\" folder.").arg(i18n(KFI_KIO_FONTS_SYS)));
             return;
         }
     }
@@ -1150,7 +1150,7 @@ void CKioFonts::put(const KURL &u, int mode, bool overwrite, bool resume)
             }
             else
             {
-                error(KIO::ERR_SLAVE_DEFINED, i18n("Could not access \"%1\" folder.").arg(i18n(KFI_KIO_FONTS_SYS)));
+                error(TDEIO::ERR_SLAVE_DEFINED, i18n("Could not access \"%1\" folder.").arg(i18n(KFI_KIO_FONTS_SYS)));
                 return;
             }
         }
@@ -1165,7 +1165,7 @@ void CKioFonts::put(const KURL &u, int mode, bool overwrite, bool resume)
             }
             else
             {
-                error(KIO::ERR_SLAVE_DEFINED, i18n("Could not access \"%1\" folder.").arg(i18n(KFI_KIO_FONTS_USER)));
+                error(TDEIO::ERR_SLAVE_DEFINED, i18n("Could not access \"%1\" folder.").arg(i18n(KFI_KIO_FONTS_USER)));
                 return;
             }
         }
@@ -1205,7 +1205,7 @@ bool CKioFonts::putReal(const TQString &destOrig, const TQCString &destOrigC, bo
                      partExists = false;
                  else
                  {
-                     error(KIO::ERR_CANNOT_DELETE_PARTIAL, destPart);
+                     error(TDEIO::ERR_CANNOT_DELETE_PARTIAL, destPart);
                      return false;
                  }
         }
@@ -1236,7 +1236,7 @@ bool CKioFonts::putReal(const TQString &destOrig, const TQCString &destOrigC, bo
 
     if (fd < 0)
     {
-        error(EACCES==errno ? KIO::ERR_WRITE_ACCESS_DENIED : KIO::ERR_CANNOT_OPEN_FOR_WRITING, dest);
+        error(EACCES==errno ? TDEIO::ERR_WRITE_ACCESS_DENIED : TDEIO::ERR_CANNOT_OPEN_FOR_WRITING, dest);
         return false;
     }
 
@@ -1252,12 +1252,12 @@ bool CKioFonts::putReal(const TQString &destOrig, const TQCString &destOrigC, bo
         {
             if(ENOSPC==errno) // disk full
             {
-                error(KIO::ERR_DISK_FULL, destOrig);
+                error(TDEIO::ERR_DISK_FULL, destOrig);
                 result = -2; // means: remove dest file
             }
             else
             {
-                error(KIO::ERR_COULD_NOT_WRITE, destOrig);
+                error(TDEIO::ERR_COULD_NOT_WRITE, destOrig);
                 result = -1;
             }
         }
@@ -1288,14 +1288,14 @@ bool CKioFonts::putReal(const TQString &destOrig, const TQCString &destOrigC, bo
 
     if (close(fd))
     {
-        error(KIO::ERR_COULD_NOT_WRITE, destOrig);
+        error(TDEIO::ERR_COULD_NOT_WRITE, destOrig);
         return false;
     }
 
     // after full download rename the file back to original name
     if (markPartial && ::rename(destC.data(), destOrigC.data()))
     {
-        error(KIO::ERR_CANNOT_RENAME_PARTIAL, destOrig);
+        error(TDEIO::ERR_CANNOT_RENAME_PARTIAL, destOrig);
         return false;
     }
 
@@ -1313,7 +1313,7 @@ void CKioFonts::copy(const KURL &src, const KURL &d, int mode, bool overwrite)
 
     if(isHidden(d))
     {
-        error(KIO::ERR_WRITE_ACCESS_DENIED, d.prettyURL());
+        error(TDEIO::ERR_WRITE_ACCESS_DENIED, d.prettyURL());
         return;
     }
 
@@ -1390,7 +1390,7 @@ void CKioFonts::copy(const KURL &src, const KURL &d, int mode, bool overwrite)
                     }
                     else
                     {
-                        error(KIO::ERR_SLAVE_DEFINED, i18n("Could not access \"%1\" folder.").arg(i18n(KFI_KIO_FONTS_SYS)));
+                        error(TDEIO::ERR_SLAVE_DEFINED, i18n("Could not access \"%1\" folder.").arg(i18n(KFI_KIO_FONTS_SYS)));
                         return;
                     }
                 }
@@ -1407,7 +1407,7 @@ void CKioFonts::copy(const KURL &src, const KURL &d, int mode, bool overwrite)
 
                         if(-1==KDE_stat(realSrc.data(), &buffSrc))
                         {
-                            error(EACCES==errno ? KIO::ERR_ACCESS_DENIED : KIO::ERR_DOES_NOT_EXIST, src.prettyURL());
+                            error(EACCES==errno ? TDEIO::ERR_ACCESS_DENIED : TDEIO::ERR_DOES_NOT_EXIST, src.prettyURL());
                             return;
                         }
 
@@ -1415,7 +1415,7 @@ void CKioFonts::copy(const KURL &src, const KURL &d, int mode, bool overwrite)
     
                         if (srcFd<0)
                         {
-                            error(KIO::ERR_CANNOT_OPEN_FOR_READING, src.prettyURL());
+                            error(TDEIO::ERR_CANNOT_OPEN_FOR_READING, src.prettyURL());
                             return;
                         }
     
@@ -1428,14 +1428,14 @@ void CKioFonts::copy(const KURL &src, const KURL &d, int mode, bool overwrite)
     
                         if (destFd<0)
                         {
-                            error(EACCES==errno ? KIO::ERR_WRITE_ACCESS_DENIED : KIO::ERR_CANNOT_OPEN_FOR_WRITING, dest.prettyURL());
+                            error(EACCES==errno ? TDEIO::ERR_WRITE_ACCESS_DENIED : TDEIO::ERR_CANNOT_OPEN_FOR_WRITING, dest.prettyURL());
                             close(srcFd);
                             return;
                         }
     
                         totalSize(buffSrc.st_size);
 
-                        KIO::filesize_t processed = 0;
+                        TDEIO::filesize_t processed = 0;
                         char            buffer[MAX_IPC_SIZE];
                         TQByteArray      array;
     
@@ -1447,7 +1447,7 @@ void CKioFonts::copy(const KURL &src, const KURL &d, int mode, bool overwrite)
                             {
 				if (errno == EINTR)
 					continue;
-                                error(KIO::ERR_COULD_NOT_READ, src.prettyURL());
+                                error(TDEIO::ERR_COULD_NOT_READ, src.prettyURL());
                                 close(srcFd);
                                 close(destFd);
                                 return;
@@ -1461,11 +1461,11 @@ void CKioFonts::copy(const KURL &src, const KURL &d, int mode, bool overwrite)
                                 close(destFd);
                                 if (ENOSPC==errno) // disk full
                                 {
-                                    error(KIO::ERR_DISK_FULL, dest.prettyURL());
+                                    error(TDEIO::ERR_DISK_FULL, dest.prettyURL());
                                     remove(realDest.data());
                                 }
                                 else
-                                    error(KIO::ERR_COULD_NOT_WRITE, dest.prettyURL());
+                                    error(TDEIO::ERR_COULD_NOT_WRITE, dest.prettyURL());
                                 return;
                             }
     
@@ -1477,7 +1477,7 @@ void CKioFonts::copy(const KURL &src, const KURL &d, int mode, bool overwrite)
     
                         if(close(destFd))
                         {
-                            error(KIO::ERR_COULD_NOT_WRITE, dest.prettyURL());
+                            error(TDEIO::ERR_COULD_NOT_WRITE, dest.prettyURL());
                             return;
                         }
     
@@ -1512,9 +1512,9 @@ void CKioFonts::rename(const KURL &src, const KURL &d, bool overwrite)
     KFI_DBUG << "rename " << src.prettyURL() << " - " << d.prettyURL() << ", " << overwrite << endl;
 
     if(src.directory()==d.directory())
-        error(KIO::ERR_SLAVE_DEFINED, i18n("Sorry, fonts cannot be renamed."));
+        error(TDEIO::ERR_SLAVE_DEFINED, i18n("Sorry, fonts cannot be renamed."));
     else if(itsRoot) // Should never happen...
-        error(KIO::ERR_UNSUPPORTED_ACTION, unsupportedActionErrorString(mProtocol, KIO::CMD_RENAME));
+        error(TDEIO::ERR_UNSUPPORTED_ACTION, unsupportedActionErrorString(mProtocol, TDEIO::CMD_RENAME));
     else
     {
         //
@@ -1595,7 +1595,7 @@ void CKioFonts::rename(const KURL &src, const KURL &d, bool overwrite)
                     }
                     else
                     {
-                        error(KIO::ERR_SLAVE_DEFINED, i18n("Could not access \"%1\" folder.").arg(i18n(KFI_KIO_FONTS_SYS)));
+                        error(TDEIO::ERR_SLAVE_DEFINED, i18n("Could not access \"%1\" folder.").arg(i18n(KFI_KIO_FONTS_SYS)));
                         return;
                     }
                 }
@@ -1656,7 +1656,7 @@ void CKioFonts::del(const KURL &url, bool)
             if(doRootCmd(cmd))
                 modified(FOLDER_SYS, clearList, modifiedDirs);
             else
-                error(KIO::ERR_SLAVE_DEFINED, i18n("Could not access \"%1\" folder.").arg(i18n(KFI_KIO_FONTS_SYS)));
+                error(TDEIO::ERR_SLAVE_DEFINED, i18n("Could not access \"%1\" folder.").arg(i18n(KFI_KIO_FONTS_SYS)));
         }
         else
         {
@@ -1666,10 +1666,10 @@ void CKioFonts::del(const KURL &url, bool)
 
                 if (0!=unlink(TQFile::encodeName(file).data()))
                     error(EACCES==errno || EPERM==errno
-                            ? KIO::ERR_ACCESS_DENIED
+                            ? TDEIO::ERR_ACCESS_DENIED
                             : EISDIR==errno
-                                    ? KIO::ERR_IS_DIRECTORY
-                                    : KIO::ERR_CANNOT_DELETE,
+                                    ? TDEIO::ERR_IS_DIRECTORY
+                                    : TDEIO::ERR_CANNOT_DELETE,
                           file);
                 else
                 {
@@ -1760,7 +1760,7 @@ void CKioFonts::special(const TQByteArray &a)
                 finished();
                 break;
             default:
-                error( KIO::ERR_UNSUPPORTED_ACTION, TQString::number(cmd));
+                error( TDEIO::ERR_UNSUPPORTED_ACTION, TQString::number(cmd));
         }
     }
     else
@@ -1899,7 +1899,7 @@ void CKioFonts::doModified()
 TQString CKioFonts::getRootPasswd(bool askPasswd)
 {
     KFI_DBUG << "getRootPasswd" << endl;
-    KIO::AuthInfo authInfo;
+    TDEIO::AuthInfo authInfo;
     SuProcess     proc(SYS_USER);
     bool          error=false;
     int           attempts=0;
@@ -2064,7 +2064,7 @@ bool CKioFonts::updateFontList()
 
     if(NULL==itsFontList)
     {
-        error(KIO::ERR_SLAVE_DEFINED, i18n("Internal fontconfig error."));
+        error(TDEIO::ERR_SLAVE_DEFINED, i18n("Internal fontconfig error."));
         return false;
     }
 
@@ -2099,7 +2099,7 @@ TQValueList<FcPattern *> * CKioFonts::getEntries(const KURL &url)
     if(it!=itsFolders[getFolder(url)].fontMap.end())
         return &(it.data());
 
-    error(KIO::ERR_SLAVE_DEFINED, i18n("Could not access \"%1\".").arg(url.prettyURL()));
+    error(TDEIO::ERR_SLAVE_DEFINED, i18n("Could not access \"%1\".").arg(url.prettyURL()));
     return NULL;
 }
 
@@ -2143,7 +2143,7 @@ bool CKioFonts::checkFile(const TQString &file)
         return true;
     }
 
-    error(KIO::ERR_SLAVE_DEFINED, i18n("<p>Only fonts may be installed.</p><p>If installing a fonts package (*%1), then "
+    error(TDEIO::ERR_SLAVE_DEFINED, i18n("<p>Only fonts may be installed.</p><p>If installing a fonts package (*%1), then "
                                        "extract the components, and install individually.</p>").arg(constMultipleExtension));
     return false;
 }
@@ -2205,24 +2205,24 @@ bool CKioFonts::getSourceFiles(const KURL &src, TQStringList &files)
 
             if (-1==KDE_stat(realSrc.data(), &buffSrc))
             {
-                error(EACCES==errno ? KIO::ERR_ACCESS_DENIED : KIO::ERR_DOES_NOT_EXIST, src.prettyURL());
+                error(EACCES==errno ? TDEIO::ERR_ACCESS_DENIED : TDEIO::ERR_DOES_NOT_EXIST, src.prettyURL());
                 return false;
             }
             if(S_ISDIR(buffSrc.st_mode))
             {
-                error(KIO::ERR_IS_DIRECTORY, src.prettyURL());
+                error(TDEIO::ERR_IS_DIRECTORY, src.prettyURL());
                 return false;
             }
             if(S_ISFIFO(buffSrc.st_mode) || S_ISSOCK(buffSrc.st_mode))
             {
-                error(KIO::ERR_CANNOT_OPEN_FOR_READING, src.prettyURL());
+                error(TDEIO::ERR_CANNOT_OPEN_FOR_READING, src.prettyURL());
                 return false;
             }
         }
     }
     else
     {
-        error(KIO::ERR_DOES_NOT_EXIST, src.prettyURL());
+        error(TDEIO::ERR_DOES_NOT_EXIST, src.prettyURL());
         return false;
     }
 
@@ -2234,7 +2234,7 @@ bool CKioFonts::checkDestFile(const KURL &src, const KURL &dest, EFolder destFol
     if(!overwrite && (Misc::fExists(itsFolders[destFolder].location+src.fileName()) ||
                       Misc::fExists(itsFolders[destFolder].location+modifyName(src.fileName())) ) )
     {
-        error(KIO::ERR_FILE_ALREADY_EXIST, dest.prettyURL());
+        error(TDEIO::ERR_FILE_ALREADY_EXIST, dest.prettyURL());
         return false;
     }
 
@@ -2250,7 +2250,7 @@ bool CKioFonts::checkDestFiles(const KURL &src, TQMap<TQString, TQString> &map, 
        dest.directory()==src.directory())  // Check whether confirmUrl changed a "cp fonts:/System fonts:/"
                                            // to "cp fonts:/System fonts:/System"
     {
-        error(KIO::ERR_FILE_ALREADY_EXIST, dest.prettyURL());
+        error(TDEIO::ERR_FILE_ALREADY_EXIST, dest.prettyURL());
         return false;
     }
 
@@ -2262,7 +2262,7 @@ bool CKioFonts::checkDestFiles(const KURL &src, TQMap<TQString, TQString> &map, 
         for(; fIt!=fEnd; ++fIt)
             if(NULL!=getEntry(destFolder, fIt.data()) || NULL!=getEntry(destFolder, modifyName(fIt.data())))
             {
-                error(KIO::ERR_FILE_ALREADY_EXIST, dest.prettyURL());
+                error(TDEIO::ERR_FILE_ALREADY_EXIST, dest.prettyURL());
                 return false;
             }
     }
@@ -2320,7 +2320,7 @@ bool CKioFonts::confirmMultiple(const KURL &url, const TQStringList &files, EFol
                                                        "The other affected fonts are:</p><ul>%1</ul><p>\n Do you wish to "
                                                        "delete all of these?</p>").arg(out)))
         {
-            error(KIO::ERR_USER_CANCELED, url.prettyURL());
+            error(TDEIO::ERR_USER_CANCELED, url.prettyURL());
             return false;
         }
     }
@@ -2368,7 +2368,7 @@ bool CKioFonts::checkUrl(const KURL &u, bool rootOk)
         else
             if(!isSysFolder(sect) && !isUserFolder(sect))
             {
-                error(KIO::ERR_SLAVE_DEFINED, i18n("Please specify \"%1\" or \"%2\".")
+                error(TDEIO::ERR_SLAVE_DEFINED, i18n("Please specify \"%1\" or \"%2\".")
                       .arg(i18n(KFI_KIO_FONTS_USER)).arg(i18n(KFI_KIO_FONTS_SYS)));
                 return false;
             }
@@ -2388,7 +2388,7 @@ bool CKioFonts::checkAllowed(const KURL &u)
            ds==TQString(TQChar('/')+TQString::fromLatin1(KFI_KIO_FONTS_USER)+TQChar('/')) ||
            ds==TQString(TQChar('/')+TQString::fromLatin1(KFI_KIO_FONTS_SYS)+TQChar('/')))
         {
-            error(KIO::ERR_SLAVE_DEFINED, i18n("Sorry, you cannot rename, move, copy, or delete either \"%1\" or \"%2\".")
+            error(TDEIO::ERR_SLAVE_DEFINED, i18n("Sorry, you cannot rename, move, copy, or delete either \"%1\" or \"%2\".")
                   .arg(i18n(KFI_KIO_FONTS_USER)).arg(i18n(KFI_KIO_FONTS_SYS))); \
             return false;
         }
@@ -2460,7 +2460,7 @@ void CKioFonts::reparseConfig()
 
     if(itsRoot)
     {
-        KConfig cfg(KFI_ROOT_CFG_FILE);
+        TDEConfig cfg(KFI_ROOT_CFG_FILE);
         bool    doX=cfg.readBoolEntry(KFI_CFG_X_KEY, KFI_DEFAULT_CFG_X),
                 doGs=cfg.readBoolEntry(KFI_CFG_GS_KEY, KFI_DEFAULT_CFG_GS);
 
@@ -2483,7 +2483,7 @@ void CKioFonts::reparseConfig()
     }
     else
     {
-        KConfig rootCfg(KFI_ROOT_CFG_FILE);
+        TDEConfig rootCfg(KFI_ROOT_CFG_FILE);
         bool    rootDoX=rootCfg.readBoolEntry(KFI_CFG_X_KEY, KFI_DEFAULT_CFG_X),
                 rootDoGs=rootCfg.readBoolEntry(KFI_CFG_GS_KEY, KFI_DEFAULT_CFG_GS);
 
@@ -2517,7 +2517,7 @@ void CKioFonts::reparseConfig()
         if(0==itsNrsKfiParams[1])
             itsNrsKfiParams[0]=0;
 
-        KConfig cfg(KFI_CFG_FILE);
+        TDEConfig cfg(KFI_CFG_FILE);
         bool    doX=cfg.readBoolEntry(KFI_CFG_X_KEY, KFI_DEFAULT_CFG_X),
                 doGs=cfg.readBoolEntry(KFI_CFG_GS_KEY, KFI_DEFAULT_CFG_GS);
 

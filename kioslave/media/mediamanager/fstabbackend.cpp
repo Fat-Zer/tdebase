@@ -102,8 +102,8 @@ TQString FstabBackend::mount( const TQString &_udi )
     const Medium* medium = m_mediaList.findById(_udi);
     if (!medium)
         return i18n("No such medium: %1").arg(_udi);
-    KIO::Job* job = KIO::mount( false, 0, medium->deviceNode(), medium->mountPoint());
-    KIO::NetAccess::synchronousRun( job, 0 );
+    TDEIO::Job* job = TDEIO::mount( false, 0, medium->deviceNode(), medium->mountPoint());
+    TDEIO::NetAccess::synchronousRun( job, 0 );
     return TQString::null;
 }
 
@@ -112,8 +112,8 @@ TQString FstabBackend::unmount( const TQString &_udi )
     const Medium* medium = m_mediaList.findById(_udi);
     if (!medium)
         return i18n("No such medium: %1").arg(_udi);
-    KIO::Job* job = KIO::unmount( medium->mountPoint(),  false);
-    KIO::NetAccess::synchronousRun( job, 0 );
+    TDEIO::Job* job = TDEIO::unmount( medium->mountPoint(),  false);
+    TDEIO::NetAccess::synchronousRun( job, 0 );
     return TQString::null;
 }
 

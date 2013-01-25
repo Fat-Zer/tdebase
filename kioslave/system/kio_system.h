@@ -24,7 +24,7 @@
 
 #include "systemimpl.h"
 
-class SystemProtocol : public KIO::ForwardingSlaveBase
+class SystemProtocol : public TDEIO::ForwardingSlaveBase
 {
 public:
 	SystemProtocol(const TQCString &protocol, const TQCString &pool,

@@ -132,8 +132,8 @@ void KTitleBarActionsConfig::paletteChanged()
 
 }
 
-KTitleBarActionsConfig::KTitleBarActionsConfig (bool _standAlone, KConfig *_config, TQWidget * parent, const char *)
-  : KCModule(parent, "kcmkwm"), config(_config), standAlone(_standAlone)
+KTitleBarActionsConfig::KTitleBarActionsConfig (bool _standAlone, TDEConfig *_config, TQWidget * parent, const char *)
+  : TDECModule(parent, "kcmkwm"), config(_config), standAlone(_standAlone)
 {
   TQString strWin1, strWin2, strWin3, strAllKey, strAll1, strAll2, strAll3;
   TQVBoxLayout *layout = new TQVBoxLayout(this, 0, KDialog::spacingHint());
@@ -584,8 +584,8 @@ void KTitleBarActionsConfig::defaults()
 }
 
 
-KWindowActionsConfig::KWindowActionsConfig (bool _standAlone, KConfig *_config, TQWidget * parent, const char *)
-  : KCModule(parent, "kcmkwm"), config(_config), standAlone(_standAlone)
+KWindowActionsConfig::KWindowActionsConfig (bool _standAlone, TDEConfig *_config, TQWidget * parent, const char *)
+  : TDECModule(parent, "kcmkwm"), config(_config), standAlone(_standAlone)
 {
   TQString strWin1, strWin2, strWin3, strAllKey, strAll1, strAll2, strAll3, strAllW;
   TQVBoxLayout *layout = new TQVBoxLayout(this, 0, KDialog::spacingHint());

@@ -30,8 +30,8 @@
 #include "previews.h"
 #include "browser.h"
 
-KBrowserOptions::KBrowserOptions(KConfig *config, TQString group, TQWidget *parent, const char *name)
-    : KCModule( parent, "kcmkonq" ) 
+KBrowserOptions::KBrowserOptions(TDEConfig *config, TQString group, TQWidget *parent, const char *name)
+    : TDECModule( parent, "kcmkonq" ) 
 {
   TQVBoxLayout *layout = new TQVBoxLayout(this);
   TQTabWidget *tab = new TQTabWidget(this);
@@ -46,7 +46,7 @@ KBrowserOptions::KBrowserOptions(KConfig *config, TQString group, TQWidget *pare
   previews = new KPreviewOptions(tab, name);
   previews->layout()->setMargin( KDialog::marginHint() );
 
-  kuick = KCModuleLoader::loadModule("kcmkuick", tab);
+  kuick = TDECModuleLoader::loadModule("kcmkuick", tab);
 
   tab->addTab(appearance, i18n("&Appearance"));
   tab->addTab(behavior, i18n("&Behavior"));
@@ -98,9 +98,9 @@ void KBrowserOptions::save()
 TQString KBrowserOptions::quickHelp() const
 {
   TQWidget *w = m_tab->currentPage();
-  if (w->inherits("KCModule"))
+  if (w->inherits("TDECModule"))
   {
-     KCModule *m = static_cast<KCModule *>(w);
+     TDECModule *m = static_cast<TDECModule *>(w);
      return m->quickHelp();
   }
   return TQString::null;

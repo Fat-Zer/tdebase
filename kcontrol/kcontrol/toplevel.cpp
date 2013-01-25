@@ -57,7 +57,7 @@ TopLevel::TopLevel(const char* name)
   report_bug = 0;
 
   // read settings
-  KConfig *config = TDEGlobal::config();
+  TDEConfig *config = TDEGlobal::config();
   config->setGroup("Index");
   TQString viewmode = config->readEntry("ViewMode", "Tree");
 
@@ -196,7 +196,7 @@ TopLevel::TopLevel(const char* name)
 
 TopLevel::~TopLevel()
 {
-  KConfig *config = TDEGlobal::config();
+  TDEConfig *config = TDEGlobal::config();
   config->setGroup("Index");
   if (KCGlobal::viewMode() == Tree)
     config->writeEntry("ViewMode", "Tree");

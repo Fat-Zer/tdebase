@@ -32,7 +32,7 @@
 #include "policies.h"
 #include "policydlg.h"
 
-DomainListView::DomainListView(KConfig *config,const TQString &title,
+DomainListView::DomainListView(TDEConfig *config,const TQString &title,
 		TQWidget *parent,const char *name) :
 	TQGroupBox(title, parent, name), config(config) {
   setColumnLayout(0, Qt::Vertical);

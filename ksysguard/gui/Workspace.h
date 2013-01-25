@@ -27,7 +27,7 @@
 #include <tqptrlist.h>
 #include <tqtabwidget.h>
 
-class KConfig;
+class TDEConfig;
 class KURL;
 class TQString;
 class WorkSheet;
@@ -40,8 +40,8 @@ class Workspace : public TQTabWidget
     Workspace( TQWidget* parent, const char* name = 0 );
     ~Workspace();
 
-    void saveProperties( KConfig* );
-    void readProperties( KConfig* );
+    void saveProperties( TDEConfig* );
+    void readProperties( TDEConfig* );
 
     bool saveOnQuit();
 

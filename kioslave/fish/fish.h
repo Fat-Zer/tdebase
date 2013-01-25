@@ -29,7 +29,7 @@
 
 #define FISH_EXEC_CMD 'X'
 
-class fishProtocol : public KIO::SlaveBase
+class fishProtocol : public TDEIO::SlaveBase
 {
 public:
   fishProtocol(const TQCString &pool_socket, const TQCString &app_socket);
@@ -90,9 +90,9 @@ private: // Private attributes
   /** buffer for data to be written */
   const char *outBuf;
   /** current write position in buffer */
-  KIO::fileoffset_t outBufPos;
+  TDEIO::fileoffset_t outBufPos;
   /** length of buffer */
-  KIO::fileoffset_t outBufLen;
+  TDEIO::fileoffset_t outBufLen;
   /** use su if true else use ssh */
   bool local;
   /**  // FIXME: just a workaround for konq deficiencies */
@@ -102,13 +102,13 @@ private: // Private attributes
 
 protected: // Protected attributes
   /** for LIST/STAT */
-  KIO::UDSEntry udsEntry;
+  TDEIO::UDSEntry udsEntry;
   /** for LIST/STAT */
-  KIO::UDSEntry udsStatEntry;
+  TDEIO::UDSEntry udsStatEntry;
   /** for LIST/STAT */
-  KIO::UDSAtom typeAtom;
+  TDEIO::UDSAtom typeAtom;
   /** for LIST/STAT */
-  KIO::UDSAtom mimeAtom;
+  TDEIO::UDSAtom mimeAtom;
   /** for LIST/STAT */
   TQString thisFn;
   /** for STAT */
@@ -127,7 +127,7 @@ protected: // Protected attributes
   /** password of current connection */
   TQString connectionPassword;
   /** AuthInfo object used for logging in */
-  KIO::AuthInfo connectionAuth;
+  TDEIO::AuthInfo connectionAuth;
   /** number of lines received, == 0 -> everything went ok */
   int errorCount;
   /** queue for lines to be sent */
@@ -137,13 +137,13 @@ protected: // Protected attributes
   /** queue for commands to be sent */
   TQValueList<int> commandCodes;
   /** bytes still to be read in raw mode */
-  KIO::fileoffset_t rawRead;
+  TDEIO::fileoffset_t rawRead;
   /** bytes still to be written in raw mode */
-  KIO::fileoffset_t rawWrite;
+  TDEIO::fileoffset_t rawWrite;
   /** data bytes to read in next read command */
-  KIO::fileoffset_t recvLen;
+  TDEIO::fileoffset_t recvLen;
   /** data bytes to write in next write command */
-  KIO::fileoffset_t sendLen;
+  TDEIO::fileoffset_t sendLen;
   /** true if the last write operation was finished */
   bool writeReady;
   /** true if a command stack is currently executing */
@@ -157,7 +157,7 @@ protected: // Protected attributes
   /** true if file may be overwritten */
   bool checkOverwrite;
   /** current position of write */
-  KIO::fileoffset_t putPos;
+  TDEIO::fileoffset_t putPos;
   /** true if file already existed */
   bool checkExist;
   /** true if this is the first login attempt (== use cached password) */
@@ -169,7 +169,7 @@ protected: // Protected attributes
   /** whther the mimetype has been sent already */
   bool mimeTypeSent;
   /** number of bytes read so far */
-  KIO::fileoffset_t dataRead;
+  TDEIO::fileoffset_t dataRead;
   /** details about each fishCommand */
   static const struct fish_info {
       const char *command;
@@ -186,8 +186,8 @@ protected: // Protected attributes
   int fishCodeLen;
 protected: // Protected methods
   /** manages initial communication setup including password queries */
-  int establishConnection(char *buffer, KIO::fileoffset_t buflen);
-  int received(const char *buffer, KIO::fileoffset_t buflen);
+  int establishConnection(char *buffer, TDEIO::fileoffset_t buflen);
+  int received(const char *buffer, TDEIO::fileoffset_t buflen);
   void sent();
   /** builds each FISH request and sets the error counter */
   bool sendCommand(fish_command_type cmd, ...);
@@ -200,7 +200,7 @@ protected: // Protected methods
   /** creates the subprocess */
   bool connectionStart();
   /** writes one chunk of data to stdin of child process */
-  void writeChild(const char *buf, KIO::fileoffset_t len);
+  void writeChild(const char *buf, TDEIO::fileoffset_t len);
   /** parses response from server and acts accordingly */
   void manageConnection(const TQString &line);
   /** writes to process */

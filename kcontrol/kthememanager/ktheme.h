@@ -28,7 +28,7 @@
 #include <kurl.h>
 
 class KStandardDirs;
-class KConfig;
+class TDEConfig;
 
 /// defines the syntax version used by the XML
 #define SYNTAX_VERSION 1
@@ -153,30 +153,30 @@ private:
 
     /**
      * Creates a list of "icon" elements based on:
-     * @param group The group in the KConfig object @p cfg
+     * @param group The group in the TDEConfig object @p cfg
      * @param object Specifier (similiar, but not identical to @p group)
      * @param parent Parent element to append to
-     * @param cfg The KConfig object to work with
+     * @param cfg The TDEConfig object to work with
      */
     void createIconElems( const TQString & group, const TQString & object,
-                          TQDomElement parent, KConfig * cfg );
+                          TQDomElement parent, TDEConfig * cfg );
 
     /**
      * Creates a color DOM element @p name, with a specifier @p object,
      * appends it to @p parent; used when creating themes
-     * @param cfg The KConfig object to work with
+     * @param cfg The TDEConfig object to work with
      */
     void createColorElem( const TQString & name, const TQString & object,
-                          TQDomElement parent, KConfig * cfg );
+                          TQDomElement parent, TDEConfig * cfg );
     /**
      * Creates a list of "event" elements based on:
      * @param events The list of events to work on
      * @param object Specifier (currently "global" or "twin")
      * @param parent Parent element to append to
-     * @param cfg The KConfig object to work with
+     * @param cfg The TDEConfig object to work with
      */
     void createSoundList( const TQStringList & events, const TQString & object,
-                          TQDomElement parent, KConfig * cfg );
+                          TQDomElement parent, TDEConfig * cfg );
 
     /**
      * Tries to find out absolute path to a resource and copy it to the theme's temp dir;
@@ -195,7 +195,7 @@ private:
     TQString unprocessFilePath( const TQString & section, TQString path );
 
     /**
-     * Wrapper around KIO::NetAccess::file_copy
+     * Wrapper around TDEIO::NetAccess::file_copy
      */
     bool copyFile( const TQString & from, const TQString & to );
 

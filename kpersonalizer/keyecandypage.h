@@ -179,13 +179,13 @@ private:
 	} st_UserSnd;
   // DEFAULT VALLUES SET BY USER (END)
 
-	KConfig* twinconf;
-	KConfig* twineventconf;
-	KConfig* kickerconf;
-	KConfig* konquerorconf;
-	KConfig* konqiconconf;
-	KConfig* kdesktopconf;
-	KConfig* kdeglobals;
+	TDEConfig* twinconf;
+	TDEConfig* twineventconf;
+	TDEConfig* kickerconf;
+	TDEConfig* konquerorconf;
+	TDEConfig* konqiconconf;
+	TDEConfig* kdesktopconf;
+	TDEConfig* kdeglobals;
 
 	KSysInfo* sys;
 

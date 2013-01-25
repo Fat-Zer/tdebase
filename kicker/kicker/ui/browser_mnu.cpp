@@ -149,7 +149,7 @@ void PanelBrowserMenu::initialize()
     // only the first part menu got them
     if(_startid == 0 && !_filesOnly) {
        insertTitle(path());
-       KConfig *c = TDEGlobal::config();
+       TDEConfig *c = TDEGlobal::config();
        c->setGroup("menus");
        insertItem(CICON("kfm"), i18n("Open in File Manager"), this, TQT_SLOT(slotOpenFileManager()));
 	if (kapp->authorize("shell_access") && c->readBoolEntry("kickerOpenInTerminalIsVisible",false)) 
@@ -229,7 +229,7 @@ void PanelBrowserMenu::initialize()
         else if(fi->isFile())
         {
             TQString name = fi->fileName();
-            TQString title = KIO::decodeFileName(name);
+            TQString title = TDEIO::decodeFileName(name);
 
             TQPixmap icon;
             TQString path = fi->absFilePath();
@@ -449,7 +449,7 @@ void PanelBrowserMenu::slotExec(int id)
 
 void PanelBrowserMenu::slotOpenTerminal()
 {
-    KConfig * config = kapp->config();
+    TDEConfig * config = kapp->config();
     config->setGroup("General");
     TQString term = config->readPathEntry("TerminalApplication", "konsole");
 

@@ -115,7 +115,7 @@ SearchWidget::~SearchWidget()
 }
 
 
-void SearchWidget::readConfig( KConfig *cfg )
+void SearchWidget::readConfig( TDEConfig *cfg )
 {
   cfg->setGroup( "Search" );
 
@@ -142,7 +142,7 @@ void SearchWidget::readConfig( KConfig *cfg )
   checkScope();
 }
 
-void SearchWidget::writeConfig( KConfig *cfg )
+void SearchWidget::writeConfig( TDEConfig *cfg )
 {
   cfg->setGroup( "Search" );
   

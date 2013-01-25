@@ -22,7 +22,7 @@
 
 class PositionTab;
 
-class PositionConfig : public KCModule
+class PositionConfig : public TDECModule
 {
     Q_OBJECT
 

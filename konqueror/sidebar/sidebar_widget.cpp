@@ -130,7 +130,7 @@ void addBackEnd::doRollBack()
 		dirEntries.remove("..");
 		for ( TQStringList::Iterator it = dirEntries.begin(); it != dirEntries.end(); ++it ) {
 			if ((*it)!="add")
-				 KIO::NetAccess::del(KURL( loc+(*it) ), m_parent);
+				 TDEIO::NetAccess::del(KURL( loc+(*it) ), m_parent);
 		}
 		emit initialCopyNeeded();
 	}
@@ -303,11 +303,11 @@ Sidebar_Widget::Sidebar_Widget(TQWidget *parent, KParts::ReadOnlyPart *par, cons
 
         if (universalMode)
         {
-                m_config = new KConfig("konqsidebartng_kicker.rc");
+                m_config = new TDEConfig("konqsidebartng_kicker.rc");
         }
         else
         {
-                m_config = new KConfig("konqsidebartng.rc");
+                m_config = new TDEConfig("konqsidebartng.rc");
                 m_config->setGroup(currentProfile);
         }
         readConfig();
@@ -1195,8 +1195,8 @@ void Sidebar_Widget::popupMenu( KXMLGUIClient *client,
 
 void Sidebar_Widget::connectModule(TQObject *mod)
 {
-	if (mod->metaObject()->findSignal("started(KIO::Job*)") != -1) {
-		connect(mod,TQT_SIGNAL(started(KIO::Job *)),this, TQT_SIGNAL(started(KIO::Job*)));
+	if (mod->metaObject()->findSignal("started(TDEIO::Job*)") != -1) {
+		connect(mod,TQT_SIGNAL(started(TDEIO::Job *)),this, TQT_SIGNAL(started(TDEIO::Job*)));
 	}
 
 	if (mod->metaObject()->findSignal("completed()") != -1) {

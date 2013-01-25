@@ -26,7 +26,7 @@
 
 class TQTabWidget;
 
-class LanBrowser:public KCModule
+class LanBrowser:public TDECModule
 {
    Q_OBJECT
    public:
@@ -37,10 +37,10 @@ class LanBrowser:public KCModule
    private:
       TQVBoxLayout layout;
       TQTabWidget tabs;
-      KCModule *smbPage;
-      KCModule *lisaPage;
-//      KCModule *resLisaPage;
-      KCModule *kioLanPage;
+      TDECModule *smbPage;
+      TDECModule *lisaPage;
+//      TDECModule *resLisaPage;
+      TDECModule *kioLanPage;
 };
 #endif
 

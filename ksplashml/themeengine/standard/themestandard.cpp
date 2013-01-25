@@ -135,7 +135,7 @@ void ThemeStandard::_readSettings()
   if ( !mTheme )
     return;
 
-  KConfig *cfg = mTheme->themeConfig();
+  TDEConfig *cfg = mTheme->themeConfig();
   if ( !cfg )
     return;
 

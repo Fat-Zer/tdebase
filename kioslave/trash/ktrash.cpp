@@ -53,8 +53,8 @@ int main(int argc, char *argv[])
         TQByteArray packedArgs;
         TQDataStream stream( packedArgs, IO_WriteOnly );
         stream << (int)1;
-        KIO::Job* job = KIO::special( "trash:/", packedArgs );
-        (void)KIO::NetAccess::synchronousRun( job, 0 );
+        TDEIO::Job* job = TDEIO::special( "trash:/", packedArgs );
+        (void)TDEIO::NetAccess::synchronousRun( job, 0 );
 
         // Update konq windows opened on trash:/
         KDirNotify_stub allDirNotify("*", "KDirNotify*");
@@ -68,8 +68,8 @@ int main(int argc, char *argv[])
         TQByteArray packedArgs;
         TQDataStream stream( packedArgs, IO_WriteOnly );
         stream << (int)2;
-        KIO::Job* job = KIO::special( "trash:/", packedArgs );
-        (void)KIO::NetAccess::synchronousRun( job, 0 );
+        TDEIO::Job* job = TDEIO::special( "trash:/", packedArgs );
+        (void)TDEIO::NetAccess::synchronousRun( job, 0 );
         return 0;
     }
 #endif
@@ -91,10 +91,10 @@ int main(int argc, char *argv[])
         TQByteArray packedArgs;
         TQDataStream stream( packedArgs, IO_WriteOnly );
         stream << (int)3 << trashURL;
-        KIO::Job* job = KIO::special( trashURL, packedArgs );
-        bool ok = KIO::NetAccess::synchronousRun( job, 0 );
+        TDEIO::Job* job = TDEIO::special( trashURL, packedArgs );
+        bool ok = TDEIO::NetAccess::synchronousRun( job, 0 );
         if ( !ok )
-            kdError() << KIO::NetAccess::lastErrorString() << endl;
+            kdError() << TDEIO::NetAccess::lastErrorString() << endl;
         return 0;
     }
 

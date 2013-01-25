@@ -7,7 +7,7 @@
 
 class TDEProcess;
 
-class InfoProtocol : public KIO::SlaveBase
+class InfoProtocol : public TDEIO::SlaveBase
 {
 public:
 

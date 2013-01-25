@@ -34,7 +34,7 @@
 #define Before(ttf,in) in.left(in.find(ttf))
 #define After(ttf,in)  (in.contains(ttf)?TQString(in.mid(in.find(ttf)+TQString(ttf).length())):TQString(""))
 
-NetMon::NetMon( TQWidget * parent, KConfig *config, const char * name )
+NetMon::NetMon( TQWidget * parent, TDEConfig *config, const char * name )
    : TQWidget(parent, name)
    ,configFile(config)
    ,showmountProc(0)

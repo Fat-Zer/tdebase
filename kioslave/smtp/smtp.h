@@ -49,7 +49,7 @@ namespace KioSMTP {
   class Command;
 }
 
-class SMTPProtocol : public KIO::TCPSlaveBase {
+class SMTPProtocol : public TDEIO::TCPSlaveBase {
   friend class KioSMTP::Command;
 public:
   SMTPProtocol(const TQCString & pool, const TQCString & app, bool useSSL);

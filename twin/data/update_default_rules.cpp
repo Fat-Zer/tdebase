@@ -27,8 +27,8 @@ int main( int argc, char* argv[] )
         kdWarning() << "File " << argv[ 1 ] << " not found!" << endl;
         return 1;
         }
-    KConfig src_cfg( file );
-    KConfig dest_cfg( "twinrulesrc" );
+    TDEConfig src_cfg( file );
+    TDEConfig dest_cfg( "twinrulesrc" );
     src_cfg.setGroup( "General" );
     dest_cfg.setGroup( "General" );
     int count = src_cfg.readNumEntry( "count", 0 );

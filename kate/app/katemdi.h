@@ -207,13 +207,13 @@ class Sidebar : public KMultiTabBar
      * restore the current session config from given object, use current group
      * @param config config object to use
      */
-    void restoreSession (KConfig *config);
+    void restoreSession (TDEConfig *config);
 
      /**
      * save the current session config to given object, use current group
      * @param config config object to use
      */
-    void saveSession (KConfig *config);
+    void saveSession (TDEConfig *config);
 
   public slots:
     // reimplemented, to block a show() call if we have no children or if
@@ -370,7 +370,7 @@ class MainWindow : public KParts::MainWindow
      * @param config config object to use
      * @param group config group to use
      */
-    void startRestore (KConfig *config, const TQString &group);
+    void startRestore (TDEConfig *config, const TQString &group);
 
     /**
      * finish the restore
@@ -382,7 +382,7 @@ class MainWindow : public KParts::MainWindow
      * @param config config object to use
      * @param group config group to use
      */
-    void saveSession (KConfig *config, const TQString &group);
+    void saveSession (TDEConfig *config, const TQString &group);
 
   /**
    * internal data ;)
@@ -428,7 +428,7 @@ class MainWindow : public KParts::MainWindow
      * config object for session restore, only valid between
      * start and finish restore calls
      */
-    KConfig *m_restoreConfig;
+    TDEConfig *m_restoreConfig;
 
     /**
      * restore group

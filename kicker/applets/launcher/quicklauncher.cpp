@@ -833,7 +833,7 @@ public:
 void QuickLauncher::loadConfig()
 {
     DEBUGSTR << "QuickLauncher::loadConfig()" << endl << flush;
-    //KConfig *c = config();
+    //TDEConfig *c = config();
     //c->setGroup("General");
     setConserveSpace(m_settings->conserveSpace());
     setDragEnabled(m_settings->dragEnabled());

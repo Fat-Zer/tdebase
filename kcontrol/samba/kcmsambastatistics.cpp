@@ -37,7 +37,7 @@
 #include <kdebug.h>
 #include <kdialog.h>
 
-StatisticsView::StatisticsView(TQWidget *parent,KConfig *config, const char *name)
+StatisticsView::StatisticsView(TQWidget *parent,TDEConfig *config, const char *name)
    :TQWidget (parent, name)
    ,configFile(config)
    ,dataList(0)

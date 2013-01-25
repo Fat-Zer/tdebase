@@ -30,7 +30,7 @@
 #include "filteropts.h"
 
 FilterOptions::FilterOptions(TQWidget *parent, const char *name)
-    		  :KCModule(parent, name)
+    		  :TDECModule(parent, name)
 {
 
     TQGridLayout *lay = new TQGridLayout(this, 1, 1, 10, 5);

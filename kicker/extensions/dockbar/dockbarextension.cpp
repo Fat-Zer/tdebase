@@ -273,7 +273,7 @@ void DockBarExtension::settingsChanged(DockContainer *)
 void DockBarExtension::saveContainerConfig()
 {
     TQStringList applet_list;
-    KConfig *conf = config();
+    TDEConfig *conf = config();
     unsigned count = 0;
 
     for (DockContainer::Vector::const_iterator it = containers.constBegin();
@@ -300,7 +300,7 @@ void DockBarExtension::saveContainerConfig()
 
 void DockBarExtension::loadContainerConfig()
 {
-    KConfig *conf = config();
+    TDEConfig *conf = config();
     conf->setGroup("General");
     TQStringList applets = conf->readListEntry("Applets");
     

@@ -18,7 +18,7 @@
 
 #include <kdemacros.h>
 
-class KConfig;
+class TDEConfig;
 class ObjKsTheme;
 class TQMouseEvent;
 
@@ -30,18 +30,18 @@ class KDE_EXPORT ThemeEngineConfig: public TQVBox
   Q_OBJECT
 public:
 
-  ThemeEngineConfig( TQWidget *p, KConfig *c )
+  ThemeEngineConfig( TQWidget *p, TDEConfig *c )
       :TQVBox( p ), mConfig( c )
   {}
 
-  KConfig* config()const { return mConfig; }
+  TDEConfig* config()const { return mConfig; }
 
 public slots:
   virtual void load() {}
   virtual void save() {}
 
 protected:
-  KConfig *mConfig;
+  TDEConfig *mConfig;
 };
 
 /**
@@ -54,7 +54,7 @@ class KDE_EXPORT ThemeEngine: public TQVBox
 public:
   ThemeEngine( TQWidget *parent, const char *name, const TQStringList &args );
   virtual ~ThemeEngine() = 0;
-  virtual const ThemeEngineConfig *config( TQWidget *, KConfig * ) { return 0L; }
+  virtual const ThemeEngineConfig *config( TQWidget *, TDEConfig * ) { return 0L; }
   virtual ObjKsTheme *ksTheme() { return mTheme; }
   virtual bool eventFilter( TQObject* o, TQEvent* e );
 

@@ -37,9 +37,9 @@ class ServiceMenuButton : public PanelPopupButton
 
 public:
     ServiceMenuButton( const TQString& relPath, TQWidget* parent );
-    ServiceMenuButton( const KConfigGroup& config, TQWidget* parent );
+    ServiceMenuButton( const TDEConfigGroup& config, TQWidget* parent );
 
-    void saveConfig( KConfigGroup& config ) const;
+    void saveConfig( TDEConfigGroup& config ) const;
 
 protected:
     void initialize( const TQString& relPath );

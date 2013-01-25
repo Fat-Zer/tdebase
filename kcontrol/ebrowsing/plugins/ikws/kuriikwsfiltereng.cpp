@@ -521,7 +521,7 @@ void KURISearchFilterEngine::loadConfig()
   PIDDBG << "Keywords Engine: Loading config..." << endl;
 
   // Load the config.
-  KConfig config( name() + "rc", false, false );
+  TDEConfig config( name() + "rc", false, false );
   config.setGroup( "General" );
 
   m_cKeywordDelimiter = config.readNumEntry("KeywordDelimiter", ':');

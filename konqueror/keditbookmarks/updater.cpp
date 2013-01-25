@@ -145,20 +145,20 @@ void FavIconUpdater::notifyChange(bool isHost, TQString hostOrURL, TQString icon
 FavIconWebGrabber::FavIconWebGrabber(KParts::ReadOnlyPart *part, const KURL &url)
     : m_part(part), m_url(url) {
 
-    // kdDebug() << "FavIconWebGrabber::FavIconWebGrabber starting KIO::get() " << url << endl;
+    // kdDebug() << "FavIconWebGrabber::FavIconWebGrabber starting TDEIO::get() " << url << endl;
 
 //     the use of KIO rather than directly using KHTML is to allow silently abort on error
 
-    KIO::Job *job = KIO::get(m_url, false, false);
+    TDEIO::Job *job = TDEIO::get(m_url, false, false);
     job->addMetaData( TQString("cookies"), TQString("none") );
-    connect(job, TQT_SIGNAL( result( KIO::Job *)),
-            this, TQT_SLOT( slotFinished(KIO::Job *) ));
-    connect(job, TQT_SIGNAL( mimetype( KIO::Job *, const TQString &) ),
-            this, TQT_SLOT( slotMimetype(KIO::Job *, const TQString &) ));
+    connect(job, TQT_SIGNAL( result( TDEIO::Job *)),
+            this, TQT_SLOT( slotFinished(TDEIO::Job *) ));
+    connect(job, TQT_SIGNAL( mimetype( TDEIO::Job *, const TQString &) ),
+            this, TQT_SLOT( slotMimetype(TDEIO::Job *, const TQString &) ));
 }
 
-void FavIconWebGrabber::slotMimetype(KIO::Job *job, const TQString & /*type*/) {
-    KIO::SimpleJob *sjob = static_cast<KIO::SimpleJob *>(job);
+void FavIconWebGrabber::slotMimetype(TDEIO::Job *job, const TQString & /*type*/) {
+    TDEIO::SimpleJob *sjob = static_cast<TDEIO::SimpleJob *>(job);
     m_url = sjob->url(); // allow for redirection
     sjob->putOnHold();
 
@@ -171,7 +171,7 @@ void FavIconWebGrabber::slotMimetype(KIO::Job *job, const TQString & /*type*/) {
     m_part->openURL(m_url);
 }
 
-void FavIconWebGrabber::slotFinished(KIO::Job *job) {
+void FavIconWebGrabber::slotFinished(TDEIO::Job *job) {
     if (job->error()) {
         // kdDebug() << "FavIconWebGrabber::slotFinished() " << job->errorString() << endl;
     }

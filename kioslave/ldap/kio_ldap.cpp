@@ -24,7 +24,7 @@
 
 #include "kio_ldap.h"
 
-using namespace KIO;
+using namespace TDEIO;
 using namespace KABC;
 
 extern "C" { int KDE_EXPORT kdemain(int argc, char **argv); }

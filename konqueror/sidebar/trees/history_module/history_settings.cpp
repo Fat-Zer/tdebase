@@ -42,7 +42,7 @@ KonqSidebarHistorySettings::~KonqSidebarHistorySettings()
 
 void KonqSidebarHistorySettings::readSettings(bool global)
 {
-    KConfig *config;
+    TDEConfig *config;
     TQString oldgroup;
 
     if (global) {
@@ -50,7 +50,7 @@ void KonqSidebarHistorySettings::readSettings(bool global)
       oldgroup= config->group();
     }
     else
-      config = new KConfig("konquerorrc");
+      config = new TDEConfig("konquerorrc");
 
     config->setGroup("HistorySettings");
     m_valueYoungerThan = config->readNumEntry("Value youngerThan", 1 );
@@ -77,7 +77,7 @@ void KonqSidebarHistorySettings::readSettings(bool global)
 
 void KonqSidebarHistorySettings::applySettings()
 {
-    KConfig *config = new KConfig("konquerorrc");
+    TDEConfig *config = new TDEConfig("konquerorrc");
     config->setGroup("HistorySettings");
 
     config->writeEntry("Value youngerThan", m_valueYoungerThan );

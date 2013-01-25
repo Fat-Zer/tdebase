@@ -21,7 +21,7 @@ class FileTypeDetails;
 class FileGroupDetails;
 class TQWidgetStack;
 
-class FileTypesView : public KCModule
+class FileTypesView : public TDECModule
 {
   Q_OBJECT
 public:

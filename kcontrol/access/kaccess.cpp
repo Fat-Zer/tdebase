@@ -122,7 +122,7 @@ int KAccessApp::newInstance()
 
 void KAccessApp::readSettings()
 {
-  KConfig *config = TDEGlobal::config();
+  TDEConfig *config = TDEGlobal::config();
 
   // bell ---------------------------------------------------------------
 
@@ -790,7 +790,7 @@ void KAccessApp::applyChanges() {
    unsigned int enabled  = requestedFeatures & ~features;
    unsigned int disabled = features & ~requestedFeatures;
 
-   KConfig *config = TDEGlobal::config();
+   TDEConfig *config = TDEGlobal::config();
    config->setGroup("Keyboard");
 
    if (enabled & XkbSlowKeysMask)
@@ -823,7 +823,7 @@ void KAccessApp::yesClicked() {
       dialog->deleteLater();
    dialog = 0;
 
-   KConfig *config = TDEGlobal::config();
+   TDEConfig *config = TDEGlobal::config();
    config->setGroup("Keyboard");
    switch (showModeCombobox->currentItem()) {
       case 0:
@@ -854,7 +854,7 @@ void KAccessApp::noClicked() {
    dialog = 0;
    requestedFeatures = features;
 
-   KConfig *config = TDEGlobal::config();
+   TDEConfig *config = TDEGlobal::config();
    config->setGroup("Keyboard");
    switch (showModeCombobox->currentItem()) {
       case 0:

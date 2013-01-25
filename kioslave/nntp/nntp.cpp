@@ -33,7 +33,7 @@
 #define WRN kdWarning(DBG_AREA)
 #define FAT kdFatal(DBG_AREA)
 
-using namespace KIO;
+using namespace TDEIO;
 
 extern "C" { int KDE_EXPORT kdemain(int argc, char **argv); }
 
@@ -768,7 +768,7 @@ int NNTPProtocol::sendCommand( const TQString &cmd )
     DBG << "auth needed, sending user info" << endl;
 
     if ( mUser.isEmpty() || mPass.isEmpty() ) {
-      KIO::AuthInfo authInfo;
+      TDEIO::AuthInfo authInfo;
       authInfo.username = mUser;
       authInfo.password = mPass;
       if ( openPassDlg( authInfo ) ) {
@@ -842,7 +842,7 @@ int NNTPProtocol::evalResponse ( char *data, ssize_t &len )
 }
 
 /* not really necessary, because the slave has to
-   use the KIO::Error's instead, but let this here for
+   use the TDEIO::Error's instead, but let this here for
    documentation of the NNTP response codes and may
    by later use.
 TQString& NNTPProtocol::errorStr(int resp_code) {

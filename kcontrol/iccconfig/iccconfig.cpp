@@ -61,7 +61,7 @@ KSimpleConfig *systemconfig;
 /**** KICCConfig ****/
 
 KICCConfig::KICCConfig(TQWidget *parent, const char *name, const TQStringList &)
-  : KCModule(KICCCFactory::instance(), parent, name), iccFileArray(NULL)
+  : TDECModule(KICCCFactory::instance(), parent, name), iccFileArray(NULL)
 {
 
   TQVBoxLayout *layout = new TQVBoxLayout(this, KDialog::marginHint(), KDialog::spacingHint());

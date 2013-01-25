@@ -53,38 +53,38 @@ extern "C"
 	int KDE_EXPORT kdemain(int argc, char **argv);
 }
 
-void addAtom(KIO::UDSEntry& entry, unsigned int ID, long l, const TQString& s = TQString())
+void addAtom(TDEIO::UDSEntry& entry, unsigned int ID, long l, const TQString& s = TQString())
 {
-	KIO::UDSAtom	atom;
+	TDEIO::UDSAtom	atom;
 	atom.m_uds = ID;
 	atom.m_long = l;
 	atom.m_str = s;
 	entry.append(atom);
 }
 
-static void createDirEntry(KIO::UDSEntry& entry, const TQString& name, const TQString& url, const TQString& mime)
+static void createDirEntry(TDEIO::UDSEntry& entry, const TQString& name, const TQString& url, const TQString& mime)
 {
 	entry.clear();
-	addAtom(entry, KIO::UDS_NAME, 0, name);
-	addAtom(entry, KIO::UDS_FILE_TYPE, S_IFDIR);
-	addAtom(entry, KIO::UDS_ACCESS, 0500);
-	addAtom(entry, KIO::UDS_MIME_TYPE, 0, mime);
-	addAtom(entry, KIO::UDS_URL, 0, url);
+	addAtom(entry, TDEIO::UDS_NAME, 0, name);
+	addAtom(entry, TDEIO::UDS_FILE_TYPE, S_IFDIR);
+	addAtom(entry, TDEIO::UDS_ACCESS, 0500);
+	addAtom(entry, TDEIO::UDS_MIME_TYPE, 0, mime);
+	addAtom(entry, TDEIO::UDS_URL, 0, url);
 	PRINT_DEBUG << "creating dir entry url=" << url << " mimetype=" << mime << endl;
-	addAtom(entry, KIO::UDS_SIZE, 0);
-	//addAtom(entry, KIO::UDS_GUESSED_MIME_TYPE, 0, "application/octet-stream");
+	addAtom(entry, TDEIO::UDS_SIZE, 0);
+	//addAtom(entry, TDEIO::UDS_GUESSED_MIME_TYPE, 0, "application/octet-stream");
 }
 
-static void createFileEntry(KIO::UDSEntry& entry, const TQString& name, const TQString& url, const TQString& mime)
+static void createFileEntry(TDEIO::UDSEntry& entry, const TQString& name, const TQString& url, const TQString& mime)
 {
 	entry.clear();
-	addAtom(entry, KIO::UDS_NAME, 0, name);
-	addAtom(entry, KIO::UDS_FILE_TYPE, S_IFREG);
-	addAtom(entry, KIO::UDS_URL, 0, url);
-	addAtom(entry, KIO::UDS_ACCESS, 0400);
-	addAtom(entry, KIO::UDS_MIME_TYPE, 0, mime);
-	addAtom(entry, KIO::UDS_SIZE, 0);
-	addAtom(entry, KIO::UDS_GUESSED_MIME_TYPE, 0, "application/octet-stream");
+	addAtom(entry, TDEIO::UDS_NAME, 0, name);
+	addAtom(entry, TDEIO::UDS_FILE_TYPE, S_IFREG);
+	addAtom(entry, TDEIO::UDS_URL, 0, url);
+	addAtom(entry, TDEIO::UDS_ACCESS, 0400);
+	addAtom(entry, TDEIO::UDS_MIME_TYPE, 0, mime);
+	addAtom(entry, TDEIO::UDS_SIZE, 0);
+	addAtom(entry, TDEIO::UDS_GUESSED_MIME_TYPE, 0, "application/octet-stream");
 }
 
 TQString buildMenu(const TQStringList& items, const TQStringList& links, int active)
@@ -158,7 +158,7 @@ int kdemain(int argc, char **argv)
 }
 
 KIO_Print::KIO_Print(const TQCString& pool, const TQCString& app)
-: KIO::SlaveBase("print", pool, app)
+: TDEIO::SlaveBase("print", pool, app)
 {
 }
 
@@ -182,7 +182,7 @@ void KIO_Print::listDir(const KURL& url)
 
 		int	mask;
 		TQString	mimeType;
-		KIO::UDSEntry	entry;
+		TDEIO::UDSEntry	entry;
 
 		if (group == "printers")
 		{
@@ -201,7 +201,7 @@ void KIO_Print::listDir(const KURL& url)
 		}
 		else
 		{
-			error(KIO::ERR_DOES_NOT_EXIST, url.url());
+			error(TDEIO::ERR_DOES_NOT_EXIST, url.url());
 			return;
 		}
 
@@ -220,14 +220,14 @@ void KIO_Print::listDir(const KURL& url)
 			listEntry(entry, false);
 		}
 
-		listEntry(KIO::UDSEntry(), true);
+		listEntry(TDEIO::UDSEntry(), true);
 		finished();
 	}
 	else
 	{
-		//error(KIO::ERR_UNSUPPORTED_ACTION, i18n("Unsupported path %1").arg(url.path()));
+		//error(TDEIO::ERR_UNSUPPORTED_ACTION, i18n("Unsupported path %1").arg(url.path()));
 		// better do nothing
-		listEntry(KIO::UDSEntry(), true);
+		listEntry(TDEIO::UDSEntry(), true);
 		totalSize(0);
 		finished();
 	}
@@ -237,7 +237,7 @@ void KIO_Print::listRoot()
 {
 	PRINT_DEBUG << "listing root entry" << endl;
 
-	KIO::UDSEntry	entry;
+	TDEIO::UDSEntry	entry;
 
 	// Classes entry
 	createDirEntry(entry, i18n("Classes"), "print:/classes", "print/folder");
@@ -291,7 +291,7 @@ void KIO_Print::listDirDB( const KURL& url )
 			remUrl.addQueryItem( "printer", pathComps[ 1 ] );
 			break;
 		default:
-			error( KIO::ERR_UNSUPPORTED_ACTION, "Not implemented" );
+			error( TDEIO::ERR_UNSUPPORTED_ACTION, "Not implemented" );
 			return;
 	}
 	remUrl.addQueryItem( "format", "xml" );
@@ -302,7 +302,7 @@ void KIO_Print::listDirDB( const KURL& url )
 		if ( doc.setContent( &m_httpBuffer, false ) )
 		{
 			TQDomNodeList l;
-			KIO::UDSEntry entry;
+			TDEIO::UDSEntry entry;
 			switch ( pathComps.size() )
 			{
 				case 0:
@@ -353,18 +353,18 @@ void KIO_Print::listDirDB( const KURL& url )
 					}
 					break;
 				default:
-					error( KIO::ERR_UNSUPPORTED_ACTION, "Not implemented" );
+					error( TDEIO::ERR_UNSUPPORTED_ACTION, "Not implemented" );
 					return;
 			}
-			listEntry( KIO::UDSEntry(), true );
+			listEntry( TDEIO::UDSEntry(), true );
 			finished();
 		}
 		else
 		{
 			if ( m_httpBuffer.buffer().size() == 0 )
-				error( KIO::ERR_INTERNAL, i18n( "Empty data received (%1)." ).arg( url.host() ) );
+				error( TDEIO::ERR_INTERNAL, i18n( "Empty data received (%1)." ).arg( url.host() ) );
 			else
-				error( KIO::ERR_INTERNAL, i18n( "Corrupted/incomplete data or server error (%1)." ).arg( url.host() ) );
+				error( TDEIO::ERR_INTERNAL, i18n( "Corrupted/incomplete data or server error (%1)." ).arg( url.host() ) );
 		}
 	}
 	/*
@@ -383,7 +383,7 @@ void KIO_Print::stat(const KURL& url)
 
 	PRINT_DEBUG << "stat: " << url.url() << endl;
 	TQStringList	path = TQStringList::split('/', url.encodedPathAndQuery(-1), false);
-	KIO::UDSEntry	entry;
+	TDEIO::UDSEntry	entry;
 	TQString	mime;
 	bool err(false);
 
@@ -427,13 +427,13 @@ void KIO_Print::stat(const KURL& url)
 		finished();
 	}
 	else
-		error(KIO::ERR_DOES_NOT_EXIST, url.path());
+		error(TDEIO::ERR_DOES_NOT_EXIST, url.path());
 }
 
 void KIO_Print::statDB( const KURL& url )
 {
 	PRINT_DEBUG << "statDB: " << url << endl;
-	KIO::UDSEntry entry;
+	TDEIO::UDSEntry entry;
 	TQStringList pathComps = TQStringList::split( '/', url.path(), false );
 	if ( pathComps.size() == 3 )
 		createFileEntry( entry, i18n( "Printer driver" ), url.url(), "print/driver" );
@@ -454,11 +454,11 @@ bool KIO_Print::getDBFile( const KURL& src )
 	m_httpBuffer.open( IO_WriteOnly|IO_Truncate ); // be sure to erase the existing data
 
 	/* start the transfer job */
-	KIO::TransferJob *job = KIO::get( src, false, false );
-	connect( job, TQT_SIGNAL( result( KIO::Job* ) ), TQT_SLOT( slotResult( KIO::Job* ) ) );
-	connect( job, TQT_SIGNAL( data( KIO::Job*, const TQByteArray& ) ), TQT_SLOT( slotData( KIO::Job*, const TQByteArray& ) ) );
-	connect( job, TQT_SIGNAL( totalSize( KIO::Job*, KIO::filesize_t ) ), TQT_SLOT( slotTotalSize( KIO::Job*, KIO::filesize_t ) ) );
-	connect( job, TQT_SIGNAL( processedSize( KIO::Job*, KIO::filesize_t ) ), TQT_SLOT( slotProcessedSize( KIO::Job*, KIO::filesize_t ) ) );
+	TDEIO::TransferJob *job = TDEIO::get( src, false, false );
+	connect( job, TQT_SIGNAL( result( TDEIO::Job* ) ), TQT_SLOT( slotResult( TDEIO::Job* ) ) );
+	connect( job, TQT_SIGNAL( data( TDEIO::Job*, const TQByteArray& ) ), TQT_SLOT( slotData( TDEIO::Job*, const TQByteArray& ) ) );
+	connect( job, TQT_SIGNAL( totalSize( TDEIO::Job*, TDEIO::filesize_t ) ), TQT_SLOT( slotTotalSize( TDEIO::Job*, TDEIO::filesize_t ) ) );
+	connect( job, TQT_SIGNAL( processedSize( TDEIO::Job*, TDEIO::filesize_t ) ), TQT_SLOT( slotProcessedSize( TDEIO::Job*, TDEIO::filesize_t ) ) );
 	kapp->enter_loop();
 	m_httpBuffer.close();
 
@@ -474,7 +474,7 @@ void KIO_Print::getDB( const KURL& url )
 
 	TQStringList pathComps = TQStringList::split( '/', url.path(), false );
 	if ( pathComps.size() != 3 )
-		error( KIO::ERR_MALFORMED_URL, url.url() );
+		error( TDEIO::ERR_MALFORMED_URL, url.url() );
 	else
 	{
 		KURL remUrl;
@@ -498,7 +498,7 @@ void KIO_Print::getDB( const KURL& url )
 	}
 }
 
-void KIO_Print::slotResult( KIO::Job *j )
+void KIO_Print::slotResult( TDEIO::Job *j )
 {
 	/*
 	 * store slave results for later user (job gets deleted 
@@ -513,7 +513,7 @@ void KIO_Print::slotResult( KIO::Job *j )
 	kapp->exit_loop();
 }
 
-void KIO_Print::slotData( KIO::Job *j, const TQByteArray& d )
+void KIO_Print::slotData( TDEIO::Job *j, const TQByteArray& d )
 {
 	PRINT_DEBUG << "HTTP data received (size=" << d.size() << ")" << endl;
 	if ( d.size() > 0 )
@@ -521,19 +521,19 @@ void KIO_Print::slotData( KIO::Job *j, const TQByteArray& d )
 		int len = m_httpBuffer.writeBlock( d );
 		if ( len == -1 || len != ( int )d.size() )
 		{
-			m_httpError = KIO::ERR_INTERNAL;
+			m_httpError = TDEIO::ERR_INTERNAL;
 			m_httpErrorTxt = "Unable to write to the internal buffer.";
 			j->kill( false );
 		}
 	}
 }
 
-void KIO_Print::slotTotalSize( KIO::Job*, KIO::filesize_t sz )
+void KIO_Print::slotTotalSize( TDEIO::Job*, TDEIO::filesize_t sz )
 {
 	totalSize( sz );
 }
 
-void KIO_Print::slotProcessedSize( KIO::Job*, KIO::filesize_t sz )
+void KIO_Print::slotProcessedSize( TDEIO::Job*, TDEIO::filesize_t sz )
 {
 	processedSize( sz );
 }
@@ -568,7 +568,7 @@ void KIO_Print::get(const KURL& url)
 			query = group.mid(p+1);
 		if (!query.isEmpty() && query != "jobs" && query != "completed_jobs")
 		{
-			error(KIO::ERR_MALFORMED_URL, TQString());
+			error(TDEIO::ERR_MALFORMED_URL, TQString());
 			return;
 		}
 		PRINT_DEBUG << "listing jobs for all printers" << endl;
@@ -594,7 +594,7 @@ void KIO_Print::get(const KURL& url)
 	if (elems.count() > 2 || (path.isEmpty() && group != "printers" && group != "classes" && group != "specials")
 	    || (mprinter == 0 && path.isEmpty()))
 	{
-		error(KIO::ERR_DOES_NOT_EXIST, url.path());
+		error(TDEIO::ERR_DOES_NOT_EXIST, url.path());
 		return;
 	}
 
@@ -609,7 +609,7 @@ void KIO_Print::get(const KURL& url)
 			else if (query == "driver")
 				showDriver(mprinter);
 			else
-				error(KIO::ERR_MALFORMED_URL, KURL::decode_string(elems[1]));
+				error(TDEIO::ERR_MALFORMED_URL, KURL::decode_string(elems[1]));
 		}
 		else if (group == "printers" && mprinter->isPrinter())
 			showPrinterInfo(mprinter);
@@ -618,18 +618,18 @@ void KIO_Print::get(const KURL& url)
 		else if (group == "specials" && mprinter->isSpecial())
 			showSpecialInfo(mprinter);
 		else
-			error(KIO::ERR_INTERNAL, i18n("Unable to determine object type for %1.").arg(printer));
+			error(TDEIO::ERR_INTERNAL, i18n("Unable to determine object type for %1.").arg(printer));
 	}
 	else if (!path.isEmpty())
 		showData(path);
 	else
-		error(KIO::ERR_INTERNAL, i18n("Unable to determine source type for %1.").arg(printer));
+		error(TDEIO::ERR_INTERNAL, i18n("Unable to determine source type for %1.").arg(printer));
 }
 
 void KIO_Print::showPrinterInfo(KMPrinter *printer)
 {
 	if (!KMManager::self()->completePrinter(printer))
-		error(KIO::ERR_INTERNAL, i18n("Unable to retrieve printer information for %1.").arg(printer->name()));
+		error(TDEIO::ERR_INTERNAL, i18n("Unable to retrieve printer information for %1.").arg(printer->name()));
 	else
 	{
 		mimeType("text/html");
@@ -637,7 +637,7 @@ void KIO_Print::showPrinterInfo(KMPrinter *printer)
 		TQString	content;
 		if (!loadTemplate(TQString::fromLatin1("printer.template"), content))
 		{
-			error(KIO::ERR_INTERNAL, i18n("Unable to load template %1").arg("printer.template"));
+			error(TDEIO::ERR_INTERNAL, i18n("Unable to load template %1").arg("printer.template"));
 			return;
 		}
 
@@ -670,7 +670,7 @@ void KIO_Print::showPrinterInfo(KMPrinter *printer)
 void KIO_Print::showClassInfo(KMPrinter *printer)
 {
 	if (!KMManager::self()->completePrinter(printer))
-		error(KIO::ERR_INTERNAL, i18n("Unable to retrieve class information for %1.").arg(printer->name()));
+		error(TDEIO::ERR_INTERNAL, i18n("Unable to retrieve class information for %1.").arg(printer->name()));
 	else
 	{
 		mimeType("text/html");
@@ -678,7 +678,7 @@ void KIO_Print::showClassInfo(KMPrinter *printer)
 		TQString	content;
 		if (!loadTemplate(TQString::fromLatin1("class.template"), content))
 		{
-			error(KIO::ERR_INTERNAL, i18n("Unable to load template %1").arg("class.template"));
+			error(TDEIO::ERR_INTERNAL, i18n("Unable to load template %1").arg("class.template"));
 			return;
 		}
 
@@ -721,7 +721,7 @@ void KIO_Print::showSpecialInfo(KMPrinter *printer)
 	TQString	content;
 	if (!loadTemplate(TQString::fromLatin1("pseudo.template"), content))
 	{
-		error(KIO::ERR_INTERNAL, i18n("Unable to load template %1").arg("pseudo.template"));
+		error(TDEIO::ERR_INTERNAL, i18n("Unable to load template %1").arg("pseudo.template"));
 		return;
 	}
 
@@ -783,7 +783,7 @@ void KIO_Print::showData(const TQString& pathname)
 	else
 	{
 		PRINT_DEBUG << "file not found" << endl;
-		error(KIO::ERR_DOES_NOT_EXIST, pathname);
+		error(TDEIO::ERR_DOES_NOT_EXIST, pathname);
 	}
 }
 
@@ -822,7 +822,7 @@ void KIO_Print::showJobs(KMPrinter *prt, bool completed)
 	TQString	content;
 	if (!loadTemplate(TQString::fromLatin1("jobs.template"), content))
 	{
-		error(KIO::ERR_INTERNAL, i18n("Unable to load template %1").arg("pseudo.template"));
+		error(TDEIO::ERR_INTERNAL, i18n("Unable to load template %1").arg("pseudo.template"));
 		return;
 	}
 
@@ -893,7 +893,7 @@ void KIO_Print::showDriver(KMPrinter *prt)
 	TQString	content;
 	if (!loadTemplate(TQString::fromLatin1("driver.template"), content))
 	{
-		error(KIO::ERR_INTERNAL, i18n("Unable to load template %1").arg("pseudo.template"));
+		error(TDEIO::ERR_INTERNAL, i18n("Unable to load template %1").arg("pseudo.template"));
 		return;
 	}
 

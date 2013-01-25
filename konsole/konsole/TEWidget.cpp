@@ -2238,7 +2238,7 @@ void TEWidget::dropEvent(TQDropEvent* event)
           dropText += " ";
 	  m_drop->setItemEnabled(cd,false);
         }
-        KURL url = KIO::NetAccess::mostLocalURL( *it, 0 );
+        KURL url = TDEIO::NetAccess::mostLocalURL( *it, 0 );
         TQString tmp;
         if (url.isLocalFile()) {
           tmp = url.path(); // local URL : remove protocol. This helps "ln" & "cd" and doesn't harm the others

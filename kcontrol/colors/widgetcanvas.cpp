@@ -278,7 +278,7 @@ void WidgetCanvas::drawSampleWidgets()
     int textLen, tmp;
     int highlightVal, lowlightVal;
 
-    KConfig * c = new KConfig("kcmfonts");
+    TDEConfig * c = new TDEConfig("kcmfonts");
 
     // Keep in sync with kglobalsettings.
 

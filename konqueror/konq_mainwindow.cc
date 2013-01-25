@@ -122,7 +122,7 @@ template class TQPtrList<TQPixmap>;
 template class TQPtrList<KToggleAction>;
 
 TQPtrList<KonqMainWindow> *KonqMainWindow::s_lstViews = 0;
-KConfig * KonqMainWindow::s_comboConfig = 0;
+TDEConfig * KonqMainWindow::s_comboConfig = 0;
 KCompletion * KonqMainWindow::s_pCompletion = 0;
 TQFile * KonqMainWindow::s_crashlog_file = 0;
 bool KonqMainWindow::s_preloaded = false;
@@ -208,7 +208,7 @@ KonqMainWindow::KonqMainWindow( const KURL &initialURL, bool openInitialURL, con
 
   KonqPixmapProvider *prov = KonqPixmapProvider::self();
   if ( !s_comboConfig ) {
-      s_comboConfig = new KConfig( "konq_history", false, false );
+      s_comboConfig = new TDEConfig( "konq_history", false, false );
       KonqCombo::setConfig( s_comboConfig );
       s_comboConfig->setGroup( "Location Bar" );
       prov->load( s_comboConfig, "ComboIconCache" );
@@ -429,7 +429,7 @@ static TQString detectNameFilter( KURL & url )
         if ( fileName.find( '*' ) != -1 || fileName.find( '[' ) != -1 || fileName.find( '?' ) != -1 )
         {
             // Check that a file or dir with all the special chars in the filename doesn't exist
-            if ( url.isLocalFile() ? !TQFile::exists( path ) : !KIO::NetAccess::exists( url, false, 0 ) )
+            if ( url.isLocalFile() ? !TQFile::exists( path ) : !TDEIO::NetAccess::exists( url, false, 0 ) )
             {
                 nameFilter = fileName;
                 url.setFileName( TQString::null );
@@ -711,7 +711,7 @@ bool KonqMainWindow::openView( TQString serviceType, const KURL &_url, KonqView 
   // Second argument is referring URL
   if ( !kapp->authorizeURLAction("open", childView ? childView->url() : KURL(), _url) )
   {
-     TQString msg = KIO::buildErrorString(KIO::ERR_ACCESS_DENIED, _url.prettyURL());
+     TQString msg = TDEIO::buildErrorString(TDEIO::ERR_ACCESS_DENIED, _url.prettyURL());
      KMessageBox::queuedMessageBox( this, KMessageBox::Error, msg );
      return true; // Nothing else to do.
   }
@@ -1349,7 +1349,7 @@ void KonqMainWindow::slotDuplicateWindow()
 {
   KTempFile tempFile;
   tempFile.setAutoDelete( true );
-  KConfig config( tempFile.name() );
+  TDEConfig config( tempFile.name() );
   config.setGroup( "View Profile" );
   m_pViewManager->saveViewProfile( config, true, true );
 
@@ -1442,7 +1442,7 @@ void KonqMainWindow::slotOpenTerminal()
 
       // If the given directory is not local, it can still be the URL of an
       // ioslave using UDS_LOCAL_PATH which to be converted first.
-      u = KIO::NetAccess::mostLocalURL(u, this);
+      u = TDEIO::NetAccess::mostLocalURL(u, this);
 
       //If the URL is local after the above conversion, set the directory.
       if ( u.isLocalFile() )
@@ -2728,8 +2728,8 @@ void KonqMainWindow::slotPopupThisWindow()
 
 void KonqMainWindow::slotPopupNewTabAtFront()
 {
-    KConfig *config = TDEGlobal::config();
-    KConfigGroupSaver cs( config, TQString::fromLatin1("FMSettings") );
+    TDEConfig *config = TDEGlobal::config();
+    TDEConfigGroupSaver cs( config, TQString::fromLatin1("FMSettings") );
     bool openAfterCurrentPage = config->readBoolEntry( "OpenAfterCurrentPage", false );
     popupNewTab(true, openAfterCurrentPage);
 }
@@ -4981,14 +4981,14 @@ void KonqMainWindow::reparseConfiguration()
       (*it)->reparseConfiguration();
 }
 
-void KonqMainWindow::saveProperties( KConfig *config )
+void KonqMainWindow::saveProperties( TDEConfig *config )
 {
   m_pViewManager->saveViewProfile( *config, true /* save URLs */, false );
 }
 
-void KonqMainWindow::readProperties( KConfig *config )
+void KonqMainWindow::readProperties( TDEConfig *config )
 {
-  kdDebug(1202) << "KonqMainWindow::readProperties( KConfig *config )" << endl;
+  kdDebug(1202) << "KonqMainWindow::readProperties( TDEConfig *config )" << endl;
   m_pViewManager->loadViewProfile( *config, TQString::null /*no profile name*/ );
 }
 
@@ -5107,7 +5107,7 @@ void KonqMainWindow::updateViewModeActions()
   // Another temporary map, the preferred service for each library (2 entries in our example)
   TQMap<TQString,TQString> preferredServiceMap;
 
-  KConfig * config = TDEGlobal::config();
+  TDEConfig * config = TDEGlobal::config();
   config->setGroup( "ModeToolBarServices" );
 
   KTrader::OfferList::ConstIterator it = services.begin();
@@ -5225,7 +5225,7 @@ void KonqMainWindow::updateViewModeActions()
 
 #ifndef NDEBUG
   // Note that this can happen (map not empty) when a inode/directory view is removed,
-  // and remains in the KConfig file.
+  // and remains in the TDEConfig file.
   Q_ASSERT( preferredServiceMap.isEmpty() );
   TQMap<TQString,TQString>::Iterator debugIt = preferredServiceMap.begin();
   TQMap<TQString,TQString>::Iterator debugEnd = preferredServiceMap.end();
@@ -5243,7 +5243,7 @@ void KonqMainWindow::saveToolBarServicesMap()
 {
     TQMap<TQString,KService::Ptr>::ConstIterator serviceIt = m_viewModeToolBarServices.begin();
     TQMap<TQString,KService::Ptr>::ConstIterator serviceEnd = m_viewModeToolBarServices.end();
-    KConfig * config = TDEGlobal::config();
+    TDEConfig * config = TDEGlobal::config();
     config->setGroup( "ModeToolBarServices" );
     for ( ; serviceIt != serviceEnd ; ++serviceIt )
         config->writeEntry( serviceIt.key(), serviceIt.data()->desktopEntryName() );
@@ -5295,8 +5295,8 @@ void KonqMainWindow::closeEvent( TQCloseEvent *e )
       KonqFrameTabs* tabContainer = static_cast<KonqFrameTabs*>(viewManager()->docContainer());
       if ( tabContainer->count() > 1 )
       {
-        KConfig *config = TDEGlobal::config();
-        KConfigGroupSaver cs( config, TQString::fromLatin1("Notification Messages") );
+        TDEConfig *config = TDEGlobal::config();
+        TDEConfigGroupSaver cs( config, TQString::fromLatin1("Notification Messages") );
 
         if ( !config->hasKey( "MultipleTabConfirm" ) )
         {
@@ -5742,7 +5742,7 @@ void KonqMainWindow::removeChildFrame( KonqFrameBase * /*frame*/ )
   m_pActiveChild = 0L;
 }
 
-void KonqMainWindow::saveConfig( KConfig* config, const TQString &prefix, bool saveURLs, KonqFrameBase* docContainer, int id, int depth ) { if( m_pChildFrame ) m_pChildFrame->saveConfig( config, prefix, saveURLs, docContainer, id, depth); }
+void KonqMainWindow::saveConfig( TDEConfig* config, const TQString &prefix, bool saveURLs, KonqFrameBase* docContainer, int id, int depth ) { if( m_pChildFrame ) m_pChildFrame->saveConfig( config, prefix, saveURLs, docContainer, id, depth); }
 
 void KonqMainWindow::copyHistory( KonqFrameBase *other ) { if( m_pChildFrame ) m_pChildFrame->copyHistory( other ); }
 
@@ -5807,7 +5807,7 @@ void KonqMainWindow::setPreloadedWindow( KonqMainWindow* window )
     if( window == NULL )
         return;
     window->viewManager()->clear();
-    KIO::Scheduler::unregisterWindow( TQT_TQOBJECT(window) );
+    TDEIO::Scheduler::unregisterWindow( TQT_TQOBJECT(window) );
 }
 
 // used by preloading - this KonqMainWindow will be reused, reset everything

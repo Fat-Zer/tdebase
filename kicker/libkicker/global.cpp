@@ -196,7 +196,7 @@ TQString copyDesktopFile(const KURL& url)
    TQString file = newDesktopFile(url);
    KURL dest;
    dest.setPath(file);
-   KIO::NetAccess::upload(url.path(), dest, 0);
+   TDEIO::NetAccess::upload(url.path(), dest, 0);
    return file;
 }
 
@@ -326,7 +326,7 @@ TQPoint popupPosition(KPanelApplet::Direction d,
 
 void colorize(TQImage& image)
 {
-    KConfig *config = TDEGlobal::config();
+    TDEConfig *config = TDEGlobal::config();
     config->setGroup("WM");
     TQColor color = TQApplication::palette().active().highlight();
     TQColor activeTitle = config->readColorEntry("activeBackground", &color);
