@@ -20,7 +20,7 @@
 #ifndef DISPLAY_H
 #define DISPLAY_H
 
-#include <kcmodule.h>
+#include <tdecmodule.h>
 
 class TQTabWidget;
 

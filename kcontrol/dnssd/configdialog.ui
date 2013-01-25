@@ -316,11 +316,11 @@ is configured with 'Browse local network' option above.</string>
     <slot>radioButton2_2_toggled(bool)</slot>
 </Q_SLOTS>
 <includes>
-    <include location="global" impldecl="in declaration">kcmodule.h</include>
+    <include location="global" impldecl="in declaration">tdecmodule.h</include>
 </includes>
 <layoutdefaults spacing="6" margin="11"/>
 <includehints>
-    <includehint>kcmodule.h</includehint>
+    <includehint>tdecmodule.h</includehint>
     <includehint>keditlistbox.h</includehint>
     <includehint>klineedit.h</includehint>
     <includehint>klineedit.h</includehint>

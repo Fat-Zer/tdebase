@@ -19,7 +19,7 @@
 #ifndef MAIN_H
 #define MAIN_H
 
-#include <kcmodule.h>
+#include <tdecmodule.h>
 
 #include "main_widget.h"
 

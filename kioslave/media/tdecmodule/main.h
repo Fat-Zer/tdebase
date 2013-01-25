@@ -1,6 +1,6 @@
 /* This file is part of the KDE Project
    Copyright (c) 2005 Jean-Remy Falleri <jr.falleri@laposte.net>
-   Copyright (c) 2005 Kï¿½vin Ottens <ervin ipsquad net>
+   Copyright (c) 2005 Kévin Ottens <ervin ipsquad net>
 
    This library is free software; you can redistribute it and/or
    modify it under the terms of the GNU Library General Public
@@ -17,42 +17,29 @@
    Boston, MA 02110-1301, USA.
 */
 
-#ifndef _NOTIFIERMODULE_H_
-#define _NOTIFIERMODULE_H_
+#ifndef _MAIN_H_
+#define _MAIN_H_
 
-#include <kcmodule.h>
-#include <tqlistbox.h>
+#include <tdecmodule.h>
 
-#include "notifiersettings.h"
-#include "notifiermoduleview.h"
-
-class NotifierModule : public TDECModule
+class MediaModule : public TDECModule
 {
 	Q_OBJECT
 
 public:
-	NotifierModule( TQWidget* parent = 0, const char* name = 0);
-	~NotifierModule();
+	MediaModule( TQWidget *parent, const char *name, const TQStringList& );
 
-	void load();
-	void save();
-	void defaults();
+	virtual void load();
+	virtual void save();
+	virtual void defaults();
+	virtual TQString quickHelp() const;
 
-private slots:
-	void slotAdd();
-	void slotDelete();
-	void slotEdit();
-	void slotToggleAuto();
-
-	void slotActionSelected( TQListBoxItem * item );
-	void slotMimeTypeChanged( int index );
-
+protected slots:
+	void moduleChanged( bool state );
+	
 private:
-	void updateListBox();
-
-	TQString m_mimetype;
-	NotifierSettings m_settings;
-	NotifierModuleView *m_view;
+	TDECModule *m_notifierModule;
+	TDECModule *m_managerModule;
 };
 
 #endif

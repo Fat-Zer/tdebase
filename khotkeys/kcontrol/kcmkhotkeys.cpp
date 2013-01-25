@@ -22,7 +22,7 @@
 #include <tqlayout.h>
 #include <tqsplitter.h>
 
-#include <kcmodule.h>
+#include <tdecmodule.h>
 #include <kaboutdata.h>
 #include <klocale.h>
 #include <kapplication.h>

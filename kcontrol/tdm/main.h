@@ -27,7 +27,7 @@
 #include <tqtabwidget.h>
 #include <tqmap.h>
 
-#include <kcmodule.h>
+#include <tdecmodule.h>
 
 class TDMAppearanceWidget;
 class TDMFontWidget;

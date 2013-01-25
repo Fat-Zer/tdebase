@@ -25,7 +25,7 @@
 class TDEConfig;
 
 #include <tqwidget.h>
-#include <kcmodule.h>
+#include <tdecmodule.h>
 #include <tqcombobox.h>
 #include <tqtooltip.h>
 

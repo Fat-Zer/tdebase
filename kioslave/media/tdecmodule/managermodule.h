@@ -21,7 +21,7 @@
 #define _MANAGERMODULE_H_
 
 #include <tqmap.h>
-#include <kcmodule.h>
+#include <tdecmodule.h>
 
 class ManagerModuleView;
 

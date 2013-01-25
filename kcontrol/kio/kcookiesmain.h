@@ -6,7 +6,7 @@
 #ifndef __KCOOKIESMAIN_H
 #define __KCOOKIESMAIN_H
 
-#include <kcmodule.h>
+#include <tdecmodule.h>
 
 class TQTabWidget;
 class DCOPClient;

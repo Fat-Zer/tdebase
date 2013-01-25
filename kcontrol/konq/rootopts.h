@@ -15,7 +15,7 @@
 
 #include <tqstring.h>
 
-#include <kcmodule.h>
+#include <tdecmodule.h>
 #include <kio/global.h>
 #include <kurl.h>
 

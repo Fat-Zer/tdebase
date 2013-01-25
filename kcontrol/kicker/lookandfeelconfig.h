@@ -18,7 +18,7 @@
 #ifndef __lookandfeelconfig_h__
 #define __lookandfeelconfig_h__
 
-#include <kcmodule.h>
+#include <tdecmodule.h>
 
 class LookAndFeelTab;
 

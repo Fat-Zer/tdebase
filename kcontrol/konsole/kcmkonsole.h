@@ -18,7 +18,7 @@
 #ifndef KCMKONSOLE_H
 #define KCMKONSOLE_H
 
-#include <kcmodule.h>
+#include <tdecmodule.h>
 
 #include "kcmkonsoledialog.h"
 

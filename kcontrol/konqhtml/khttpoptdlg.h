@@ -7,7 +7,7 @@
 #include <tqcheckbox.h>
 #include <tqstring.h>
 
-#include <kcmodule.h>
+#include <tdecmodule.h>
 #include <kconfig.h>
 
 

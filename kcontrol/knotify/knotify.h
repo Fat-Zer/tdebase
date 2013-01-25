@@ -25,7 +25,7 @@
 
 #include <tqstring.h>
 
-#include <kcmodule.h>
+#include <tdecmodule.h>
 #include <kdialogbase.h>
 
 class TQCheckBox;

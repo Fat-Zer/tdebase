@@ -24,7 +24,7 @@
 #include "desktopbehavior.h"
 #include "tqlistview.h"
 #include <kconfig.h>
-#include <kcmodule.h>
+#include <tdecmodule.h>
 
 class DesktopBehavior : public DesktopBehaviorBase
 {

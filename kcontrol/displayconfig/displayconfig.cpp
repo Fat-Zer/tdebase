@@ -41,7 +41,7 @@
 #include <kpopupmenu.h>
 #include <kinputdialog.h>
 #include <kurlrequester.h>
-#include <kcmoduleloader.h>
+#include <tdecmoduleloader.h>
 #include <kgenericfactory.h>
 #include <kstandarddirs.h>
 

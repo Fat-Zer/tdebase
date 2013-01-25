@@ -20,7 +20,7 @@
 #ifndef __KCM_H__
 #define __KCM_H__
 
-#include <kcmodule.h>
+#include <tdecmodule.h>
 #include <kconfig.h>
 
 class TDEConfig;

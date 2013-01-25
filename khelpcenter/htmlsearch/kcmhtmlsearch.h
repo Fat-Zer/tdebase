@@ -22,7 +22,7 @@
 #define __kcmhtmlsearch_h__
 
 
-#include <kcmodule.h>
+#include <tdecmodule.h>
 
 
 class TQLineEdit;

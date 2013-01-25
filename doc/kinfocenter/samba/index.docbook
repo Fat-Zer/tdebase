@@ -190,7 +190,7 @@ often, or which user opened the most files or whatever.</para>
 <para>&Matthias.Hoelzer-Kluepfel; &Matthias.Hoelzer-Kluepfel.mail;</para></listitem>
 <listitem><para>Use of <classname>TDEProcess</classname> instead of popen, and more error checking:</para>
 <para>&David.Faure; &David.Faure.mail;</para></listitem>
-<listitem><para>Conversion to kcmodule, added tab pages 2,3,4, bug
+<listitem><para>Conversion to tdecmodule, added tab pages 2,3,4, bug
 fixed:</para>
 <para>&Alexander.Neundorf; &Alexander.Neundorf.mail;</para></listitem>
 </itemizedlist>

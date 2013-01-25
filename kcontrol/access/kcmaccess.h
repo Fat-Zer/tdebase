@@ -9,7 +9,7 @@
 #define __kcmaccess_h__
 
 
-#include <kcmodule.h>
+#include <tdecmodule.h>
 #include <knuminput.h>
 
 

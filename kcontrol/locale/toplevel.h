@@ -25,7 +25,7 @@
 #ifndef __TOPLEVEL_H__
 #define __TOPLEVEL_H__
 
-#include <kcmodule.h>
+#include <tdecmodule.h>
 #include <kgenericfactory.h>
 
 class TQTabWidget;

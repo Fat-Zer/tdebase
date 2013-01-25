@@ -20,7 +20,7 @@
 #ifndef __KBROWSER_OPTIONS_H__
 #define __KBROWSER_OPTIONS_H__
 
-#include <kcmodule.h>
+#include <tdecmodule.h>
 
 class TDEConfig;
 class TQTabWidget;

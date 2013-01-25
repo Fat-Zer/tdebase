@@ -11,7 +11,7 @@
 #ifndef _KCMKHOTKEYS_H_
 #define _KCMKHOTKEYS_H_
 
-#include <kcmodule.h>
+#include <tdecmodule.h>
 #include <kshortcut.h>
 
 #include <actions.h>

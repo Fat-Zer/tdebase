@@ -26,7 +26,7 @@
 #include <config.h>
 #endif
 
-#include <kcmodule.h>
+#include <tdecmodule.h>
 
 #include "socksbase.h"
 

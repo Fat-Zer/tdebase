@@ -27,7 +27,7 @@
 #define __KCOOKIESPOLICIES_H
 
 #include <tqmap.h>
-#include <kcmodule.h>
+#include <tdecmodule.h>
 
 #include "policydlg.h"
 

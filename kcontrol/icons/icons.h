@@ -16,7 +16,7 @@
 #include <tqimage.h>
 #include <tqvaluelist.h>
 
-#include <kcmodule.h>
+#include <tdecmodule.h>
 #include <kdialogbase.h>
 #include <ksimpleconfig.h>
 

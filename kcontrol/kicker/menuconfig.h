@@ -18,7 +18,7 @@
 #ifndef __menuconfig_h__
 #define __menuconfig_h__
 
-#include <kcmodule.h>
+#include <tdecmodule.h>
 
 class MenuTab;
 

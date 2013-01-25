@@ -18,7 +18,7 @@
 #ifndef KCMCGI_H
 #define KCMCGI_H
 
-#include <kcmodule.h>
+#include <tdecmodule.h>
 
 class TQListBox;
 class TQPushButton;

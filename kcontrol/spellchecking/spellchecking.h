@@ -19,7 +19,7 @@
 #ifndef __spellchecking_h__
 #define __spellchecking_h__ 
 
-#include "kcmodule.h"
+#include "tdecmodule.h"
 
 class KSpellConfig;
 

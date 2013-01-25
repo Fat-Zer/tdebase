@@ -19,7 +19,7 @@
 #ifndef __desktop_h__
 #define __desktop_h__
 
-#include <kcmodule.h>
+#include <tdecmodule.h>
 
 class TQSpinBox;
 class TQLabel;

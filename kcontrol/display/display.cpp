@@ -21,7 +21,7 @@
 #include <tqlayout.h>
 #include <tqtabwidget.h>
 
-#include <kcmoduleloader.h>
+#include <tdecmoduleloader.h>
 #include <kdialog.h>
 #include <kgenericfactory.h>
 

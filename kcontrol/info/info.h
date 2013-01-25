@@ -12,7 +12,7 @@
 #include <tqfile.h>
 #include <tqevent.h>
 
-#include <kcmodule.h>
+#include <tdecmodule.h>
 #include <kaboutdata.h>
 
 #include "config.h"

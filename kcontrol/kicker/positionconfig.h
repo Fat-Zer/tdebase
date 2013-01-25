@@ -18,7 +18,7 @@
 #ifndef __positionconfig_h__
 #define __positionconfig_h__
 
-#include <kcmodule.h>
+#include <tdecmodule.h>
 
 class PositionTab;
 

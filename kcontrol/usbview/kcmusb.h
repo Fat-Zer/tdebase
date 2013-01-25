@@ -14,7 +14,7 @@
 
 #include <tqintdict.h>
 
-#include <kcmodule.h>
+#include <tdecmodule.h>
 
 class TQListView;
 class TQListViewItem;

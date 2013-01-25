@@ -27,7 +27,7 @@
 
 
 #include <tqtabwidget.h>
-#include <kcmodule.h>
+#include <tdecmodule.h>
 
 class IconModule : public TDECModule
 {

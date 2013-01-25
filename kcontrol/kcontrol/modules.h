@@ -20,7 +20,7 @@
 #ifndef MODULES_H
 #define MODULES_H
 
-#include <kcmoduleinfo.h>
+#include <tdecmoduleinfo.h>
 #include <tqobject.h>
 #include <tqdict.h>
 #include <qxembed.h>

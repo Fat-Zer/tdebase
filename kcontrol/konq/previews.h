@@ -33,7 +33,7 @@ Configuration of the maximum image size
 
 #include <tqstring.h>
 
-#include <kcmodule.h>
+#include <tdecmodule.h>
 
 class TDEConfig;
 class TQCheckBox;

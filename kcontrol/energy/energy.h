@@ -15,7 +15,7 @@
 #define __Energy_h_Included__
 
 #include <tqobject.h>
-#include <kcmodule.h>
+#include <tdecmodule.h>
 
 class TQCheckBox;
 class KIntNumInput;

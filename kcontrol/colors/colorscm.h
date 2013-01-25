@@ -13,7 +13,7 @@
 #include <tqstring.h>
 #include <tqstringlist.h>
 
-#include <kcmodule.h>
+#include <tdecmodule.h>
 #include <kdialogbase.h>
 
 #include "widgetcanvas.h"

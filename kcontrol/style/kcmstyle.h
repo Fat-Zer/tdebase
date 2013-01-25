@@ -30,7 +30,7 @@
 #include <tqstring.h>
 #include <tqtimer.h>
 
-#include <kcmodule.h>
+#include <tdecmodule.h>
 
 #include "stylepreview.h"
 #include "menupreview.h"

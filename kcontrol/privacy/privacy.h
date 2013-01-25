@@ -21,7 +21,7 @@
 #ifndef _PRIVACY_H_
 #define _PRIVACY_H_
 
-#include <kcmodule.h>
+#include <tdecmodule.h>
 #include <klistview.h>
 
 #include "kcmprivacydialog.h"

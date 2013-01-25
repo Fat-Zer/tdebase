@@ -33,7 +33,7 @@
 #include <tqtabwidget.h>
 #include <tqvbuttongroup.h>
 
-#include <kcmodule.h>
+#include <tdecmodule.h>
 #include <ksimpleconfig.h>
 
 class TQGridLayout;

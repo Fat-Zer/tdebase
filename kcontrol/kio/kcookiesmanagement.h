@@ -28,7 +28,7 @@
 #include <tqstringlist.h>
 #include <tqlistview.h>
 
-#include <kcmodule.h>
+#include <tdecmodule.h>
 
 
 class DCOPClient;

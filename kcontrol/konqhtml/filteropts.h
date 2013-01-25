@@ -18,7 +18,7 @@
 #ifndef FILTEROPTS_H
 #define FILTEROPTS_H
 
-#include <kcmodule.h>
+#include <tdecmodule.h>
 
 class TQListBox;
 class TQPushButton;

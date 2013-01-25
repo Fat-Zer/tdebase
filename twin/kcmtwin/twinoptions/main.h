@@ -26,7 +26,7 @@
 #define __MAIN_H__
 
 #include <tqtabwidget.h>
-#include <kcmodule.h>
+#include <tdecmodule.h>
 
 class TDEConfig;
 class KFocusConfig;

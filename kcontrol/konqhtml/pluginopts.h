@@ -19,7 +19,7 @@
 class TDEConfig;
 class TQCheckBox;
 
-#include <kcmodule.h>
+#include <tdecmodule.h>
 #include "nsconfigwidget.h"
 
 class TQBoxLayout;

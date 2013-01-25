@@ -1,7 +1,7 @@
 #ifndef KIOPREFERENCES_H
 #define KIOPREFERENCES_H
 
-#include <kcmodule.h>
+#include <tdecmodule.h>
 
 class TQLabel;
 class TQVGroupBox;

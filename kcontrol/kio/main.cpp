@@ -25,7 +25,7 @@
 #include <tqlayout.h>
 #include <tqtabwidget.h>
 
-#include <kcmoduleloader.h>
+#include <tdecmoduleloader.h>
 #include <klocale.h>
 
 #include "kcookiesmain.h"

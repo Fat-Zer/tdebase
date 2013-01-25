@@ -25,7 +25,7 @@
 #include <config.h>
 #endif
 
-#include <kcmodule.h>
+#include <tdecmodule.h>
 #include <klistviewsearchline.h>
 
 #include <dcopobject.h>

@@ -23,7 +23,7 @@
 #define __KWINDOWCONFIG_H__
 
 #include <tqwidget.h>
-#include <kcmodule.h>
+#include <tdecmodule.h>
 #include <config.h>
 
 class TQRadioButton;

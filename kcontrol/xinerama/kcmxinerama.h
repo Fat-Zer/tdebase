@@ -21,7 +21,7 @@
 #ifndef _KCM_XINERAMA_H
 #define _KCM_XINERAMA_H
 
-#include <kcmodule.h>
+#include <tdecmodule.h>
 #include <tqptrlist.h>
 #include <tqtimer.h>
 

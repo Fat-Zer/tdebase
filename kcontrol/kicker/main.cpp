@@ -20,7 +20,7 @@
 #include <dcopclient.h>
 #include <kaboutdata.h>
 #include <kapplication.h>
-#include <kcmodulecontainer.h>
+#include <tdecmodulecontainer.h>
 #include <kdirwatch.h>
 #include <kimageio.h>
 #include <klistview.h>

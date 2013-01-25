@@ -19,7 +19,7 @@
 #ifndef _KCM_PERF_SYSTEM_H
 #define _KCM_PERF_SYSTEM_H
 
-#include <kcmodule.h>
+#include <tdecmodule.h>
 
 #include "system_ui.h"
 

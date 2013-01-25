@@ -16,7 +16,7 @@
 #ifndef _KCM_KTEXTEDITORCHOOSER_H_
 #define _KCM_KTEXTEDITORCHOOSER_H_
 
-#include <kcmodule.h>
+#include <tdecmodule.h>
 
 #include "componentchooser.h"
 

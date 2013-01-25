@@ -25,7 +25,7 @@
 #include <tqlineedit.h>
 #include <tqcheckbox.h>
 
-#include <kcmodule.h>
+#include <tdecmodule.h>
 
 class KComboBox;
 

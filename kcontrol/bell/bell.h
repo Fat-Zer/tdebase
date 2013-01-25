@@ -21,7 +21,7 @@
 #ifndef __bell_h__
 #define __bell_h__
 
-#include "kcmodule.h"
+#include "tdecmodule.h"
 
 class TQCheckBox;
 class KIntNumInput;

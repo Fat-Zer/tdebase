@@ -35,7 +35,7 @@
 #include <tqradiobutton.h>
 #include <tqtimer.h>
 
-#include <kcmodule.h>
+#include <tdecmodule.h>
 #include <knuminput.h>
 #include <kprogress.h>
 

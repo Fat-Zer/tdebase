@@ -19,7 +19,7 @@
 #ifndef _KCM_PERFORMANCE_H
 #define _KCM_PERFORMANCE_H
 
-#include <kcmodule.h>
+#include <tdecmodule.h>
 
 namespace KCMPerformance
 {

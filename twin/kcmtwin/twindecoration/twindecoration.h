@@ -30,7 +30,7 @@
 #ifndef KWINDECORATION_H
 #define KWINDECORATION_H
 
-#include <kcmodule.h>
+#include <tdecmodule.h>
 #include <dcopobject.h>
 #include <buttons.h>
 #include <kconfig.h>

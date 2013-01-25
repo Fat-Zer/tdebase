@@ -834,7 +834,7 @@ void KWinDecorationModule::writeConfig( TDEConfig* conf )
 	oldLibraryName = currentLibraryName;
 	currentLibraryName = libName;
 
-	// We saved, so tell kcmodule that there have been  no new user changes made.
+	// We saved, so tell tdecmodule that there have been  no new user changes made.
 	emit TDECModule::changed(false);
 }
 

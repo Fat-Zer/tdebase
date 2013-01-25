@@ -21,7 +21,7 @@
 #ifndef MYMAIN_H
 #define MYMAIN_H
 
-#include <kcmodule.h>
+#include <tdecmodule.h>
 #include <kglobal.h>
 
 class TQTabWidget;

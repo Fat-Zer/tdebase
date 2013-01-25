@@ -13,7 +13,7 @@
 
 #include <kaccel.h>
 #include <kkeydialog.h>
-//#include <kcmodule.h>
+//#include <tdecmodule.h>
 #include <tqdict.h>
 
 class TQCheckBox;

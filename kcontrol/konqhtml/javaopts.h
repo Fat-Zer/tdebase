@@ -15,7 +15,7 @@
 #ifndef __JAVAOPTS_H__
 #define __JAVAOPTS_H__
 
-#include <kcmodule.h>
+#include <tdecmodule.h>
 
 #include "domainlistview.h"
 #include "policies.h"

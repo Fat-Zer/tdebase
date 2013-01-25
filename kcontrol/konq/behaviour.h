@@ -19,7 +19,7 @@
 #ifndef __BEHAVIOUR_H__
 #define __BEHAVIOUR_H__
 
-#include <kcmodule.h>
+#include <tdecmodule.h>
 
 class TQCheckBox;
 class TQLabel;

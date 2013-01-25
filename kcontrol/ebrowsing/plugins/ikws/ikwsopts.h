@@ -23,7 +23,7 @@
 #include <tqlayout.h>
 #include <tqtabwidget.h>
 
-#include <kcmodule.h>
+#include <tdecmodule.h>
 #include <kservice.h>
 
 class FilterOptionsUI;

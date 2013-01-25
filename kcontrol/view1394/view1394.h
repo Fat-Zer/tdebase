@@ -21,7 +21,7 @@
 #ifndef VIEW1394_H_
 #define VIEW1394_H_
 
-#include <kcmodule.h>
+#include <tdecmodule.h>
 
 #include <tqmap.h>
 #include <tqsocketnotifier.h>

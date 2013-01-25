@@ -24,7 +24,7 @@
 
 #include <tqstring.h>
 
-#include <kcmodule.h>
+#include <tdecmodule.h>
 
 class TQTabWidget;
 

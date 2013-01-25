@@ -26,7 +26,7 @@
 
 #include <tqstring.h>
 #include <kconfig.h>
-#include <kcmodule.h>
+#include <tdecmodule.h>
 class TQRadioButton;
 class KIntNumInput;
 

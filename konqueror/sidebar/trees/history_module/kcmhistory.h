@@ -21,7 +21,7 @@
 #ifndef __kcmhistory_h__
 #define __kcmhistory_h__
 
-#include <kcmodule.h>
+#include <tdecmodule.h>
 
 class KonqHistoryManager;
 class KonqSidebarHistorySettings;

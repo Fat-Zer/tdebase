@@ -38,7 +38,7 @@
 
 #include <kaboutdata.h>
 #include <kapplication.h>
-#include <kcmoduleloader.h>
+#include <tdecmoduleloader.h>
 #include <kdebug.h>
 #include <kdialog.h>
 #include <klineedit.h>

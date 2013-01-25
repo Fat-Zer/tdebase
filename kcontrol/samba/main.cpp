@@ -20,7 +20,7 @@
 #include <tqtabwidget.h>
 
 #include <kaboutdata.h>
-#include <kcmodule.h>
+#include <tdecmodule.h>
 #include <kdialog.h>
 #include <kgenericfactory.h>
 

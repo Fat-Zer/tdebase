@@ -25,7 +25,7 @@
 #define __keys_main_h
 
 #include <tqtabwidget.h>
-#include <kcmodule.h>
+#include <tdecmodule.h>
 
 class CommandShortcutsModule;
 class ShortcutsModule;

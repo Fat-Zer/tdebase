@@ -22,7 +22,7 @@
 #ifndef CACHE_H
 #define CACHE_H
 
-#include <kcmodule.h>
+#include <tdecmodule.h>
 
 class CacheDlgUI;
 

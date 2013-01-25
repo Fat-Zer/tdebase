@@ -48,7 +48,7 @@
 #include "logitechmouse.h"
 #endif
 
-#include <kcmodule.h>
+#include <tdecmodule.h>
 #include "kmousedlg.h"
 #include "themepage.h"
 

@@ -34,7 +34,7 @@
 #endif
 
 #include <tqstringlist.h>
-#include <kcmodule.h>
+#include <tdecmodule.h>
 #include <kurl.h>
 #include <kconfig.h>
 #include <kio/job.h>

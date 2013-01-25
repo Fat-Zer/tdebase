@@ -14,7 +14,7 @@
 #include <tqwidget.h>
 #include <tqmap.h>
 
-#include <kcmodule.h>
+#include <tdecmodule.h>
 
 class TQSpinBox;
 class KFontCombo;

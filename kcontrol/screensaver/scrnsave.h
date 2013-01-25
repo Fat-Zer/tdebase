@@ -10,7 +10,7 @@
 #define __SCRNSAVE_H__
 
 #include <tqwidget.h>
-#include <kcmodule.h>
+#include <tdecmodule.h>
 
 #include "kssmonitor.h"
 #include "saverconfig.h"

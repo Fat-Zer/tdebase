@@ -2,7 +2,7 @@
 #ifndef _kcontrol_kcrootonly_
 #define _kcontrol_kcrootonly_
 
-#include <kcmodule.h>
+#include <tdecmodule.h>
 
 class KCRootOnly: public TDECModule {
 public:

@@ -18,7 +18,7 @@
 #ifndef __hidingconfig_h__
 #define __hidingconfig_h__
 
-#include <kcmodule.h>
+#include <tdecmodule.h>
 
 class HidingTab;
 

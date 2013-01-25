@@ -37,7 +37,7 @@
 #include <tqstringlist.h>
 #include <tqspinbox.h>
 
-#include <kcmodule.h>
+#include <tdecmodule.h>
 
 class TQCheckBox;
 class TQRadioButton;

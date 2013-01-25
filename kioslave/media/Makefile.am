@@ -3,7 +3,7 @@ PROPSDLGPLUGINDIR = propsdlgplugin
 endif
 
 SUBDIRS = libmediacommon . mediamanager medianotifier mounthelper \
-          kfile-plugin kcmodule mimetypes services $(PROPSDLGPLUGINDIR)
+          kfile-plugin tdecmodule mimetypes services $(PROPSDLGPLUGINDIR)
 
 INCLUDES = -I$(srcdir)/libmediacommon $(all_includes)
 METASOURCES = AUTO

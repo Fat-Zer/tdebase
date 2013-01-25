@@ -28,7 +28,7 @@
 #include <tqvbuttongroup.h>
 #include <tqwhatsthis.h>
 
-#include <kcmodule.h>
+#include <tdecmodule.h>
 #include <kcombobox.h>
 #include <kdebug.h>
 #include <kdialog.h>

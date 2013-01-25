@@ -21,7 +21,7 @@
 
 #include <tqlistview.h>
 
-#include <kcmodule.h>
+#include <tdecmodule.h>
 
 class KListView;
 

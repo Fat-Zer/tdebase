@@ -19,7 +19,7 @@
 #ifndef KTHEMEMANAGER_H
 #define KTHEMEMANAGER_H
 
-#include <kcmodule.h>
+#include <tdecmodule.h>
 #include <krun.h>
 #include <kservice.h>
 #include <kurl.h>

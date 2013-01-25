@@ -10,7 +10,7 @@
 
 #include <tqobject.h>
 
-#include <kcmodule.h>
+#include <tdecmodule.h>
 #include <kdialogbase.h>
 #include <kfontdialog.h>
 #include <kfontrequester.h>

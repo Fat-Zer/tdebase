@@ -27,7 +27,7 @@
 
 #include <dcopobject.h>
 
-#include <kcmodule.h>
+#include <tdecmodule.h>
 
 #include "smartcardbase.h"
 #include "nosmartcardbase.h"

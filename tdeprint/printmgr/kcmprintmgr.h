@@ -20,7 +20,7 @@
 #ifndef KCMPRINTMGR_H
 #define KCMPRINTMGR_H
 
-#include <kcmodule.h>
+#include <tdecmodule.h>
 
 class KMMainView;
 

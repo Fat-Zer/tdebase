@@ -10,7 +10,7 @@
 #ifndef __Bgnd_h_Included__
 #define __Bgnd_h_Included__
 
-#include <kcmodule.h>
+#include <tdecmodule.h>
 
 class TDEConfig;
 class BGDialog;

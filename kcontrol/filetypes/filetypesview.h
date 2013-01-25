@@ -5,7 +5,7 @@
 #include <tqmap.h>
 
 #include <kconfig.h>
-#include <kcmodule.h>
+#include <tdecmodule.h>
 
 #include "typeslistitem.h"
 

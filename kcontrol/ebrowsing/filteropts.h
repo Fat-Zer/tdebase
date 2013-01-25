@@ -23,7 +23,7 @@
 #ifndef __FILTEROPTS_H___
 #define __FILTEROPTS_H___
 
-#include <kcmodule.h>
+#include <tdecmodule.h>
 
 class TQListBox;
 

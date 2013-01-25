@@ -21,7 +21,7 @@
 
 #include <tqvaluelist.h>
 
-#include <kcmodule.h>
+#include <tdecmodule.h>
 
 class TaskbarConfigUI;
 class TaskBarSettings;

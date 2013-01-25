@@ -18,7 +18,7 @@
 #ifndef __kcmlaunch_h__
 #define __kcmlaunch_h__
 
-#include <kcmodule.h>
+#include <tdecmodule.h>
 
 class TQCheckBox;
 class TQComboBox;

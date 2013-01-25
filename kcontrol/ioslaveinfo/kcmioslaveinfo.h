@@ -28,7 +28,7 @@
 #include <tqstring.h>
 
 #include <kaboutdata.h>
-#include <kcmodule.h>
+#include <tdecmodule.h>
 #include <kio/job.h>
 #include <klistbox.h>
 #include <ktextbrowser.h>

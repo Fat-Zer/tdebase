@@ -8,7 +8,7 @@
 #include <tqpushbutton.h>
 #include <tqtimer.h>
 
-#include <kcmodule.h>
+#include <tdecmodule.h>
 #include <kaboutdata.h>
 #include <config.h>
 

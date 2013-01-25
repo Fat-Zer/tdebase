@@ -23,7 +23,7 @@
 #include <tqlayout.h>
 #include <klocale.h>
 #include <kapplication.h>
-#include <kcmodule.h>
+#include <tdecmodule.h>
 #include <kseparator.h>
 #include <kdialog.h>
 #include <kstdguiitem.h>

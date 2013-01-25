@@ -26,7 +26,7 @@
 
 
 #include <kapplication.h>
-#include <kcmodule.h>
+#include <tdecmodule.h>
 
 class KeyboardConfigWidget;
 

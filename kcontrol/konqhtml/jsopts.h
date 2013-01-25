@@ -10,7 +10,7 @@
 #ifndef __JSOPTS_H__
 #define __JSOPTS_H__
 
-#include <kcmodule.h>
+#include <tdecmodule.h>
 
 #include "domainlistview.h"
 #include "jspolicies.h"
