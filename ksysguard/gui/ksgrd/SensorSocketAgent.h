@@ -62,7 +62,7 @@ class SensorSocketAgent : public SensorAgent
     bool writeMsg( const char *msg, int len );
     bool txReady();
 
-    KNetwork::KBufferedSocket mSocket;
+    KNetwork::TDEBufferedSocket mSocket;
     int mPort;
 };
 
