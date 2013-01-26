@@ -88,7 +88,7 @@
 // kcontrol/energy
 #cmakedefine HAVE_DPMS 1
 
-// kdesktop, kcontrol/screensaver, kscreensaver
+// kdesktop, kcontrol/screensaver, tdescreensaver
 #cmakedefine HAVE_GLXCHOOSEVISUAL 1
 
 // kcontrol/crypto

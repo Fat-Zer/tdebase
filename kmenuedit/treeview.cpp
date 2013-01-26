@@ -46,7 +46,7 @@
 #include <kapplication.h>
 #include <kservice.h>
 #include <kservicegroup.h>
-#include <kmultipledrag.h>
+#include <tdemultipledrag.h>
 #include <kurldrag.h>
 
 #include "treeview.h"

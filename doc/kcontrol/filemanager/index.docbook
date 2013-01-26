@@ -29,7 +29,7 @@
 &konqueror;'s file manager functionality.</para>
 
 <note><para>&konqueror;'s web browser functionality has its <ulink
-url="help:/kcontrol/khtml/index.html">own configuration
+url="help:/kcontrol/tdehtml/index.html">own configuration
 modules</ulink>.</para></note>
 
 <sect2 id="fileman-use">

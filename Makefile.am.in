@@ -11,7 +11,7 @@ AUTOMAKE_OPTIONS = foreign 1.6.1
 
 bin_SCRIPTS = starttde trinity migratekde3 r14-xdg-update
 
-EXTRA_DIST = admin bsd-port debian tdebase.spec.in README.pam kde.pamd kscreensaver.pamd mkpamserv
+EXTRA_DIST = admin bsd-port debian tdebase.spec.in README.pam kde.pamd tdescreensaver.pamd mkpamserv
 
 dist-hook:
 	cd $(top_distdir) && perl $(top_srcdir)/admin/am_edit -padmin

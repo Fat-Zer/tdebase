@@ -24,9 +24,9 @@
 #include <kaboutdata.h>
 #include <kglobal.h>
 
-#include "krandrapp.h"
+#include "tderandrapp.h"
 
-static const char krandrtrayVersion[] = "0.5";
+static const char tderandrtrayVersion[] = "0.5";
 static const KCmdLineOptions options[] =
 {
 	{ "login", I18N_NOOP("Application is being auto-started at TDE session start"), 0L },
@@ -35,12 +35,12 @@ static const KCmdLineOptions options[] =
 
 int main(int argc, char **argv)
 {
-	TDEAboutData aboutData("randr", I18N_NOOP("Resize and Rotate"), krandrtrayVersion, I18N_NOOP("Resize and Rotate System Tray App"), TDEAboutData::License_GPL, "(c) 2009,2010 Timothy Pearson", 0L, "");
+	TDEAboutData aboutData("randr", I18N_NOOP("Resize and Rotate"), tderandrtrayVersion, I18N_NOOP("Resize and Rotate System Tray App"), TDEAboutData::License_GPL, "(c) 2009,2010 Timothy Pearson", 0L, "");
 	aboutData.addAuthor("Timothy Pearson",I18N_NOOP("Developer and maintainer"), "kb9vqf@pearsoncomputing.net");
 	aboutData.addAuthor("Hamish Rodda",I18N_NOOP("Original developer and maintainer"), "rodda@kde.org");
 	aboutData.addCredit("Lubos Lunak",I18N_NOOP("Many fixes"), "l.lunak@suse.cz");
-	aboutData.setProductName("krandr/krandrtray");
-	TDEGlobal::locale()->setMainCatalogue("krandr");
+	aboutData.setProductName("tderandr/tderandrtray");
+	TDEGlobal::locale()->setMainCatalogue("tderandr");
 
 	TDECmdLineArgs::init(argc,argv,&aboutData);
 	TDECmdLineArgs::addCmdLineOptions(options);

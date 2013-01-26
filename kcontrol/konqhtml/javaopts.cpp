@@ -17,7 +17,7 @@
 #include <kdebug.h>
 #include <klineedit.h>
 #include <klocale.h>
-#include <khtml_settings.h>
+#include <tdehtml_settings.h>
 #include <knuminput.h>
 
 #include <tqlayout.h>

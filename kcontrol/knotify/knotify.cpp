@@ -31,7 +31,7 @@
 #include <kcombobox.h>
 #include <kconfig.h>
 #include <knotifydialog.h>
-#include <kparts/genericfactory.h>
+#include <tdeparts/genericfactory.h>
 #include <kstandarddirs.h>
 #include <kurlcompletion.h>
 #include <kurlrequester.h>

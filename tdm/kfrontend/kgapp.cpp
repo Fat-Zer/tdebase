@@ -42,7 +42,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include <klocale.h>
 #include <kdebug.h>
 #ifdef WITH_XRANDR
-#include <libkrandr/libkrandr.h>
+#include <libtderandr/libtderandr.h>
 #endif
 
 #include <tqtimer.h>

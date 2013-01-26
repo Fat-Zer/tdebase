@@ -5,7 +5,7 @@ bin_PROGRAMS = kdialog
 
 kdialog_SOURCES = kdialog.cpp widgets.cpp klistboxdialog.cpp progressdialog.cpp progressdialogiface.skel
 kdialog_LDADD = $(LIB_KIO)
-kdialog_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_TDECORE) $(LIB_TDEUI) -ltdefx $(LIB_KIO) -lktexteditor
+kdialog_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_TDECORE) $(LIB_TDEUI) -ltdefx $(LIB_KIO) -ltdetexteditor
 
 METASOURCES = AUTO
 

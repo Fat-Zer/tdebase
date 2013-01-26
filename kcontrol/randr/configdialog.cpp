@@ -31,7 +31,7 @@
 #include <kpopupmenu.h>
 #include <twinmodule.h>
 #include <kregexpeditorinterface.h>
-#include <kparts/componentfactory.h>
+#include <tdeparts/componentfactory.h>
 
 #include "configdialog.h"
 
@@ -42,7 +42,7 @@ ConfigDialog::ConfigDialog(TDEGlobalAccel *accel,
                     Ok, 0L, "config dialog" )
 {
     if ( isApplet )
-        setHelp( TQString::null, "krandrtray" );
+        setHelp( TQString::null, "tderandrtray" );
 
     TQFrame *w = 0L; // the parent for the widgets
 

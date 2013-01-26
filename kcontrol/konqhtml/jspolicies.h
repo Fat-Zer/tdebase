@@ -25,7 +25,7 @@
 #include <tqgroupbox.h>
 #include <tqstring.h>
 
-#include <khtml_settings.h>
+#include <tdehtml_settings.h>
 
 #include "policies.h"
 

@@ -9,8 +9,8 @@
 #include <kactioncollection.h>
 #include <kapplication.h>
 #include <kdebug.h>
-#include <khtml_settings.h>
-#include <khtmlview.h>
+#include <tdehtml_settings.h>
+#include <tdehtmlview.h>
 #include <klocale.h>
 #include <kpopupmenu.h>
 #include <kstandarddirs.h>

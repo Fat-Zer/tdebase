@@ -29,8 +29,8 @@
 #include "konq_viewmgr.h"
 #include "konq_tabs.h"
 #include "konq_browseriface.h"
-#include <kparts/statusbarextension.h>
-#include <kparts/browserextension.h>
+#include <tdeparts/statusbarextension.h>
+#include <tdeparts/browserextension.h>
 
 #include <konq_historymgr.h>
 #include <konq_pixmapprovider.h>

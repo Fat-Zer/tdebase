@@ -1134,7 +1134,7 @@ now.
 				address gives administrative access to TDEPrint. Konqueror uses &tde;'s
 				famous "KParts" technology to achieve that.</para>
                                 <glossseealso otherterm="gloss-ioslave">IO Slave</glossseealso>
-                                <glossseealso otherterm="gloss-kparts">KParts</glossseealso>
+                                <glossseealso otherterm="gloss-tdeparts">KParts</glossseealso>
                         </glossdef>
                 </glossentry>
 

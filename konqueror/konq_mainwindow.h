@@ -30,7 +30,7 @@
 #include <kfileitem.h>
 #include "konq_openurlrequest.h"
 
-#include <kparts/mainwindow.h>
+#include <tdeparts/mainwindow.h>
 #include <kbookmarkmanager.h>
 #include <kcompletion.h>
 #include <kurlcompletion.h>

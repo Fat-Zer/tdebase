@@ -30,7 +30,7 @@
 <title>Spell Checker</title>
 
 <para>The configuration options available here are used by all &tde;
-applications that use &kspell;, which is a front end to
+applications that use &tdespell;, which is a front end to
 <command>ispell</command> or <command>aspell</command>.</para>
 
 <variablelist>
@@ -57,7 +57,7 @@ error.</para></listitem>
 <term><guilabel>Dictionary:</guilabel></term>
 <listitem>
 <para>Choose from the available dictionaries, which one to use for
-&kspell;.</para>
+&tdespell;.</para>
 </listitem>
 </varlistentry>
 

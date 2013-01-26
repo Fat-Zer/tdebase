@@ -506,7 +506,7 @@ void KScreenSaver::findSavers()
                 TQListViewItem *categoryItem = mSaverListView->findItem( s->category(), 0 );
                 if ( !categoryItem ) {
                     categoryItem = new TQListViewItem ( mSaverListView, s->category(), "1" + s->category() );
-                    categoryItem->setPixmap ( 0, SmallIcon ( "kscreensaver" ) );
+                    categoryItem->setPixmap ( 0, SmallIcon ( "tdescreensaver" ) );
                 }
                 item = new TQListViewItem ( categoryItem, s->name(), s->name() );
                 categoryCount++;
@@ -712,7 +712,7 @@ void KScreenSaver::slotSetup()
             (*mSetupProc) << word;
             word = "-icon";
             (*mSetupProc) << word;
-            word = "kscreensaver";
+            word = "tdescreensaver";
             (*mSetupProc) << word;
         }
 

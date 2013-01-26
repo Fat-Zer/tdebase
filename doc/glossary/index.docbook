@@ -33,7 +33,7 @@ Slave</glossseealso>
 				<glossseealso otherterm="gloss-kde">&tde;</glossseealso>
 			</glossdef>
 		</glossentry>
-		<glossentry id="gloss-kparts">
+		<glossentry id="gloss-tdeparts">
 			<glossterm>KParts</glossterm>
 			<glossdef><para>KParts is an embedding technology which allows &tde;
 				applications to embed other &tde; applications. For example, the text
@@ -41,7 +41,7 @@ Slave</glossseealso>
 				<glossseealso otherterm="gloss-konqueror">&konqueror;</glossseealso>
 			</glossdef>
 		</glossentry>
-		<glossentry id="gloss-ksycoca">
+		<glossentry id="gloss-tdesycoca">
 			<glossterm><acronym>KSycoca</acronym></glossterm>
 			<glossdef><para><acronym>KSycoca</acronym> (&tde; <emphasis>Sy</emphasis>stem
 				<emphasis>Co</emphasis>nfiguration <emphasis>Ca</emphasis>che) is a
@@ -88,7 +88,7 @@ program and regenerates the
 or all modules in
 				&kcontrol; are missing.</para>
 				<glossseealso 
-otherterm="gloss-ksycoca"><acronym>KSycoca</acronym></glossseealso>
+otherterm="gloss-tdesycoca"><acronym>KSycoca</acronym></glossseealso>
 				<glossseealso otherterm="gloss-kcontrol">&kcontrol;</glossseealso>
 			</glossdef>
 		</glossentry>

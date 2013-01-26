@@ -15,7 +15,7 @@ static KCmdLineOptions options[] =
 
 int main(int argc, char *argv[])
 {
-  TDEAboutData aboutData( "khtmlindex", I18N_NOOP("KHtmlIndex"),
+  TDEAboutData aboutData( "tdehtmlindex", I18N_NOOP("KHtmlIndex"),
 	"",
 	I18N_NOOP("TDE Index generator for help files."));
 

@@ -40,8 +40,8 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <kprocess.h>
 #include <krun.h>
 #include <kservicegroup.h>
-#include <ksycoca.h>
-#include <ksycocaentry.h>
+#include <tdesycoca.h>
+#include <tdesycocaentry.h>
 #include <kservice.h>
 #include <kurldrag.h>
 #include <kio/job.h>

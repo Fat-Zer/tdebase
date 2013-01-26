@@ -24,7 +24,7 @@
 #include <tqstringlist.h>
 #include <kurl.h>
 #include <klibloader.h>
-#include <kparts/plugin.h>
+#include <tdeparts/plugin.h>
 
 class KActionMenu;
 class TDEConfig;

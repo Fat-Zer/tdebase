@@ -21,10 +21,10 @@
 #ifndef __KWRITE_MAIN_H__
 #define __KWRITE_MAIN_H__
 
-#include <ktexteditor/view.h>
-#include <ktexteditor/document.h>
+#include <tdetexteditor/view.h>
+#include <tdetexteditor/document.h>
 
-#include <kparts/mainwindow.h>
+#include <tdeparts/mainwindow.h>
 
 #include <kdialogbase.h>
 

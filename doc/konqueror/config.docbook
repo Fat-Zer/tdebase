@@ -48,7 +48,7 @@ position and icon size</para>
 Toolbars...</guimenuitem></menuchoice> option, which brings up the 
 <guilabel>Configure Toolbars</guilabel> dialog box. The Main and Extra Toolbars
 are divided into sections, such as Main Toolbar &lt;&konqueror;&gt;, Main
-Toolbar &lt;khtmlpart&gt; and Extra Toolbar &lt;khtmlsettingsplugin&gt;. The
+Toolbar &lt;tdehtmlpart&gt; and Extra Toolbar &lt;tdehtmlsettingsplugin&gt;. The
 number and type of these sections will depend on whether &konqueror; is in Web
 Browser or File Manager mode and whether you have &konqueror; plugins
 installed.</para>

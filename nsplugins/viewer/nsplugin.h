@@ -41,7 +41,7 @@
 #include <tqintdict.h>
 #include <tqguardedptr.h>
 
-#include <kparts/browserextension.h>  // for URLArgs
+#include <tdeparts/browserextension.h>  // for URLArgs
 #include <kio/job.h>
 
 

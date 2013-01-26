@@ -651,7 +651,7 @@ void KonqCombo::setPageSecurity( int pageSecurity )
 
 bool KonqCombo::hasSufficientContrast(const TQColor &c1, const TQColor &c2)
 {
-    // Taken from khtml/misc/helper.cc
+    // Taken from tdehtml/misc/helper.cc
 #define HUE_DISTANCE 40
 #define CONTRAST_DISTANCE 10
 

@@ -23,7 +23,7 @@
 #include <kapplication.h>
 #include <kdialog.h>
 #include <kgenericfactory.h>
-#include <kspell.h>
+#include <tdespell.h>
 
 #include "spellchecking.h"
 

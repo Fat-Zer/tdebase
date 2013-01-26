@@ -30,7 +30,7 @@
 #include <kpixmapeffect.h>
 #include <kcursor.h>
 #include <kglobalsettings.h>
-#include <khtml_part.h>
+#include <tdehtml_part.h>
 #include <kapplication.h>
 #include <kiconloader.h>
 

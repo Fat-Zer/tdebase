@@ -20,8 +20,8 @@
 #ifndef kfindpart__h
 #define kfindpart__h
 
-#include <kparts/browserextension.h>
-#include <kparts/part.h>
+#include <tdeparts/browserextension.h>
+#include <tdeparts/part.h>
 #include <kfileitem.h>
 #include <kdebug.h>
 #include <tqptrlist.h>

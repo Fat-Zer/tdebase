@@ -39,7 +39,7 @@
 #include <kconfig.h>
 #include <kio/job.h>
 #ifdef HAVE_XFT
-#include <kparts/part.h>
+#include <tdeparts/part.h>
 #endif
 
 class KDirOperator;

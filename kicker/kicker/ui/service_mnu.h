@@ -28,7 +28,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <set>
 #include <tqvaluevector.h>
 
-#include <ksycocaentry.h>
+#include <tdesycocaentry.h>
 #include <kservice.h>
 #include <kpanelmenu.h>
 #include <kservicegroup.h>

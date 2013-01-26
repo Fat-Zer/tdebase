@@ -26,7 +26,7 @@
 #include <kurl.h>
 #include <kfileitem.h>
 #include <klistview.h>
-#include <kparts/browserextension.h>
+#include <tdeparts/browserextension.h>
 #include <konq_propsview.h>
 #include "konq_listviewitems.h"
 

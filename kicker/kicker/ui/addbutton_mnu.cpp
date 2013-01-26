@@ -23,7 +23,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #include <tqdragobject.h>
 
-#include <ksycocaentry.h>
+#include <tdesycocaentry.h>
 #include <kservice.h>
 #include <kservicegroup.h>
 #include <kstandarddirs.h>

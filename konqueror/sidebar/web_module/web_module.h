@@ -20,7 +20,7 @@
 #define web_module_h
 
 #include <assert.h>
-#include <khtml_part.h>
+#include <tdehtml_part.h>
 #include <kiconloader.h>
 #include <klocale.h>
 #include <konqsidebarplugin.h>

@@ -32,7 +32,7 @@
 #include <kmessagebox.h>
 #include <kdebug.h>
 #include <kencodingfiledialog.h>
-#include <ktexteditor/encodinginterface.h>
+#include <tdetexteditor/encodinginterface.h>
 
 class AbstractKateSaveModifiedDialogCheckListItem:public TQCheckListItem {
 public:

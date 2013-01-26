@@ -77,6 +77,6 @@ set( ${target}_SRCS
 
 tde_add_kpart( ${target} AUTOMOC
   SOURCES ${${target}_SRCS}
-  LINK bgnd-static kickermain-shared kutils-shared
+  LINK bgnd-static kickermain-shared tdeutils-shared
   DESTINATION ${PLUGIN_INSTALL_DIR}
 )

@@ -3,7 +3,7 @@
       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xsi:schemaLocation="http://www.kde.org/standards/kcfg/1.0
                           http://www.kde.org/standards/kcfg/1.0/kcfg.xsd" >
-  <include>khtmldefaults.h</include>
+  <include>tdehtmldefaults.h</include>
   <kcfgfile name="konquerorrc" />
 
 
@@ -283,18 +283,18 @@
       <whatsthis></whatsthis>
       <!-- Can't find writeEntry -->
     </entry>
-<!-- KDELIBS/khtml_part.cpp -->
+<!-- KDELIBS/tdehtml_part.cpp -->
     <entry key="AutomaticDetectionLanguage" type="Int"> <!--KHTML-->
       <label></label>
       <whatsthis></whatsthis>
     </entry>
-<!-- KDELIBS/khtml_settings.cpp -->
+<!-- KDELIBS/tdehtml_settings.cpp -->
     <entry key="EnforceDefaultCharset" type="Bool"> <!--KHTML-->
       <label></label>
       <whatsthis></whatsthis>
       <!-- Can't find writeEntry -->
     </entry>
-<!-- kcmcss.cpp   KDELIBS/khtml_settings.cpp -->
+<!-- kcmcss.cpp   KDELIBS/tdehtml_settings.cpp -->
     <entry key="UserStyleSheetEnabled" type="Bool"> <!--KHTML-->
       <label></label>
       <whatsthis></whatsthis>

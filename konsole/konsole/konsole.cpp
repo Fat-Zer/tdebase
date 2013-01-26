@@ -135,7 +135,7 @@ Time to start a requirement list.
 #include <kprocctrl.h>
 #include <ktabwidget.h>
 #include <kregexpeditorinterface.h>
-#include <kparts/componentfactory.h>
+#include <tdeparts/componentfactory.h>
 #include <kcharsets.h>
 #include <kcolordialog.h>
 #include <kio/netaccess.h>

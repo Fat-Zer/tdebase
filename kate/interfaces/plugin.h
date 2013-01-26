@@ -56,7 +56,7 @@ KDE_EXPORT Plugin *createPlugin ( const char* libname, Application *application 
 
 /*
  * view plugin class
- * this plugin will be bound to a ktexteditor::view
+ * this plugin will be bound to a tdetexteditor::view
  */
 class KDE_EXPORT PluginViewInterface
 {

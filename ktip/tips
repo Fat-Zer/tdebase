@@ -1076,7 +1076,7 @@ password.</p>
 <p>KWallet can be accessed from kcontrol, TDE's Control Center; from
 there, simply go to Security &amp; Privacy->TDE Wallet. For more
 information on KWallet and on how to use it, check <a
-href="help:/kwallet" title="kwallet">the handbook</a>.</p>
+href="help:/tdewallet" title="tdewallet">the handbook</a>.</p>
 
 </html>
 </tip>

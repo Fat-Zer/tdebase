@@ -27,7 +27,7 @@
 #include <kiconloader.h>
 #include <kaboutdata.h>
 #include <kdebug.h>
-#include <kparts/genericfactory.h>
+#include <tdeparts/genericfactory.h>
 #include <tqwidget.h>
 
 typedef KParts::GenericFactory<PrintPart> PrintPartFactory;

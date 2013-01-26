@@ -5,7 +5,7 @@
       - set the position of the picture on the site and something like that
    - printing html (homepges)
       - print the html code like for the textprinting
-      - print the html file like it was parsed with khtml
+      - print the html file like it was parsed with tdehtml
    - printing TeX documents with a action on the TeX source
       - I don't know at the moment options for that
    - ...

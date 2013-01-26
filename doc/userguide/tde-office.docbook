@@ -128,7 +128,7 @@ actually use the OASIS OpenDocument file format.
 <!-- comment out for final commit before freeze
 <chapter id="tde-office-embedding">
 <title>Component Embedding</title>
-<sect1 id="tde-office-kparts">
+<sect1 id="tde-office-tdeparts">
 <title>KParts and &koffice;</title>
 <para>To be written</para>
 </sect1>

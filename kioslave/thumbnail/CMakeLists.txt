@@ -85,7 +85,7 @@ set( target htmlthumbnail )
 
 tde_add_kpart( ${target} AUTOMOC
   SOURCES htmlcreator.cpp
-  LINK khtml-shared
+  LINK tdehtml-shared
   DESTINATION ${PLUGIN_INSTALL_DIR}
 )
 

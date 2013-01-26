@@ -31,7 +31,7 @@
  *	Christian Esken <esken@kde.org>   Shadow and /etc/passwd support
  *	Oswald Buddenhagen <ossi@kde.org> Binary server mode
  *
- *      Other parts were taken from kscreensaver's passwd.cpp
+ *      Other parts were taken from tdescreensaver's passwd.cpp
  *****************************************************************/
 
 #ifndef KCHECKPASS_H_

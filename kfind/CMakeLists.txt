@@ -57,5 +57,5 @@ tde_add_executable( kfind AUTOMOC
 
 tde_add_library( kfind_common STATIC_PIC AUTOMOC
   SOURCES kftabdlg.cpp kfind.cpp kquery.cpp kdatecombo.cpp
-  LINK kparts-shared
+  LINK tdeparts-shared
 )

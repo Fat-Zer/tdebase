@@ -311,7 +311,7 @@ wp_load:
 	    goto wp_out;
 	}
 
-        // _Don't_ use KMimeType, as it relies on ksycoca which we really
+        // _Don't_ use KMimeType, as it relies on tdesycoca which we really
         // don't want in krootimage (tdm context).
         //if ( KMimeType::findByPath( file )->is( "image/svg+xml" ) ) {
         if (file.endsWith(".svg") || file.endsWith(".svgz")) {
@@ -399,7 +399,7 @@ wp_load:
 	}
 
 	// HACK: Use KFileMetaInfo only when we're attached to DCOP.
-	// KFileMetaInfo needs ksycoca and so on, but this code is
+	// KFileMetaInfo needs tdesycoca and so on, but this code is
 	// used also in krootimage (which in turn is used by tdm).
 	if( kapp->dcopClient()->isAttached()) {
 	    KFileMetaInfo metaInfo(file);

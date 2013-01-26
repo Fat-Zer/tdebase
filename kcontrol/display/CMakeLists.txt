@@ -28,6 +28,6 @@ install( FILES display.desktop DESTINATION ${XDG_APPS_INSTALL_DIR} )
 
 tde_add_kpart( kcm_display AUTOMOC
   SOURCES display.cpp
-  LINK kutils-shared
+  LINK tdeutils-shared
   DESTINATION ${PLUGIN_INSTALL_DIR}
 )

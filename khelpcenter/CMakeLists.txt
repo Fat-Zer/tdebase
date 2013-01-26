@@ -50,7 +50,7 @@ tde_add_tdeinit_executable( khelpcenter AUTOMOC
     kcmhelpcenter.cpp htmlsearchconfig.cpp kcmhelpcenter.skel
     fontdialog.cpp plugintraverser.cpp scrollkeepertreebuilder.cpp
     prefs.kcfgc searchhandler.cpp
-  LINK khtml-shared
+  LINK tdehtml-shared
 )
 
 

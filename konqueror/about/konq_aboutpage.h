@@ -1,8 +1,8 @@
 #ifndef __konq_aboutpage_h__
 #define __konq_aboutpage_h__
 
-#include <kparts/factory.h>
-#include <khtml_part.h>
+#include <tdeparts/factory.h>
+#include <tdehtml_part.h>
 
 class KHTMLPart;
 class TDEInstance;

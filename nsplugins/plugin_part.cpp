@@ -28,8 +28,8 @@
 #include <kfiledialog.h>
 #include <kio/netaccess.h>
 #include <klocale.h>
-#include <kparts/browserinterface.h>
-#include <kparts/browserextension.h>
+#include <tdeparts/browserinterface.h>
+#include <tdeparts/browserextension.h>
 
 #include <tqlabel.h>
 
@@ -210,7 +210,7 @@ PluginPart::PluginPart(TQWidget *parentWidget, const char *widgetName, TQObject 
     kdDebug(1432) << "PluginPart::PluginPart" << endl;
 
     // we have to keep the class name of KParts::PluginBrowserExtension
-    // to let khtml find it
+    // to let tdehtml find it
     _extension = static_cast<PluginBrowserExtension*>(new KParts::BrowserExtension(this));
     _liveconnect = new PluginLiveConnectExtension(this);
 
@@ -277,7 +277,7 @@ bool PluginPart::openURL(const KURL &url)
             kdDebug(1432) << "name=" << name << " value=" << value << endl;
 
             if (!name.isEmpty()) {
-                // hack to pass view mode from khtml
+                // hack to pass view mode from tdehtml
                 if ( name=="__KHTML__PLUGINEMBED" ) {
                     embed = true;
                     kdDebug(1432) << "__KHTML__PLUGINEMBED found" << endl;

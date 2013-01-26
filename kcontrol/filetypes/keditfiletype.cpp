@@ -26,7 +26,7 @@
 #include <kaboutdata.h>
 #include <kdebug.h>
 #include <kcmdlineargs.h>
-#include <ksycoca.h>
+#include <tdesycoca.h>
 #include <kstandarddirs.h>
 
 #ifdef Q_WS_X11

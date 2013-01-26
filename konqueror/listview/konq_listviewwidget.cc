@@ -840,7 +840,7 @@ void KonqBaseListViewWidget::startDrag()
    {
       int iconSize = m_pBrowserView->m_pProps->iconSize();
       iconSize = iconSize ? iconSize : TDEGlobal::iconLoader()->currentSize( KIcon::Small ); // Default = small
-      pixmap2 = DesktopIcon( "kmultiple", iconSize );
+      pixmap2 = DesktopIcon( "tdemultiple", iconSize );
       if ( pixmap2.isNull() )
           kdWarning(1202) << "Could not find multiple pixmap" << endl;
    }

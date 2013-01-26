@@ -21,14 +21,14 @@ noinst_HEADERS = kcmhtmlsearch.h htmlsearch.h
 
 xdg_apps_DATA = htmlsearch.desktop
 
-bin_PROGRAMS = khtmlindex
+bin_PROGRAMS = tdehtmlindex
 
 wrapperdir = $(kde_datadir)/khelpcenter/
 wrapper_SCRIPTS = meinproc_wrapper
 
-khtmlindex_SOURCES = index.cpp
-khtmlindex_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_TDECORE) $(LIB_TDEUI) -ltdefx $(LIB_KIO) -lktexteditor
-khtmlindex_LDADD = libhtmlsearch.la $(LIB_TDEUI)
+tdehtmlindex_SOURCES = index.cpp
+tdehtmlindex_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_TDECORE) $(LIB_TDEUI) -ltdefx $(LIB_KIO) -ltdetexteditor
+tdehtmlindex_LDADD = libhtmlsearch.la $(LIB_TDEUI)
 
 xpm_DATA = unchecked.xpm checked.xpm
 xpmdir = $(kde_datadir)/khelpcenter/pics

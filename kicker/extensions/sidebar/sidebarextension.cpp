@@ -20,8 +20,8 @@
 #include <kmessagebox.h>
 #include <kglobal.h>
 #include <klocale.h>
-#include <kparts/part.h>
-#include <kparts/componentfactory.h>
+#include <tdeparts/part.h>
+#include <tdeparts/componentfactory.h>
 #include <tqlayout.h>
 #include <konq_historymgr.h>
 #include <krun.h>

@@ -46,7 +46,7 @@ tde_add_library( ${target} SHARED AUTOMOC
   SOURCES ${${target}_SRCS}
   VERSION 0.0.0
   EMBED kateinterfacesprivate-static
-  LINK kutils-shared
+  LINK tdeutils-shared
   DESTINATION ${LIB_INSTALL_DIR}
 )
 

@@ -14,7 +14,7 @@
 #include <kdialog.h>
 #include <kfontcombo.h>
 #include <kglobal.h>
-#include <khtmldefaults.h>
+#include <tdehtmldefaults.h>
 #include <klocale.h>
 #include <knuminput.h>
 
@@ -320,15 +320,15 @@ void KAppearanceOptions::load()
 
 void KAppearanceOptions::load( bool useDefaults )
 {
-    TDEConfig khtmlrc("khtmlrc", true, false);
+    TDEConfig tdehtmlrc("tdehtmlrc", true, false);
 	 m_pConfig->setReadDefaults( useDefaults );
 
-	 khtmlrc.setReadDefaults( useDefaults );
+	 tdehtmlrc.setReadDefaults( useDefaults );
 
-#define SET_GROUP(x) m_pConfig->setGroup(x); khtmlrc.setGroup(x)
-#define READ_NUM(x,y) m_pConfig->readNumEntry(x, khtmlrc.readNumEntry(x, y))
-#define READ_ENTRY(x,y) m_pConfig->readEntry(x, khtmlrc.readEntry(x, y))
-#define READ_LIST(x) m_pConfig->readListEntry(x, khtmlrc.readListEntry(x))
+#define SET_GROUP(x) m_pConfig->setGroup(x); tdehtmlrc.setGroup(x)
+#define READ_NUM(x,y) m_pConfig->readNumEntry(x, tdehtmlrc.readNumEntry(x, y))
+#define READ_ENTRY(x,y) m_pConfig->readEntry(x, tdehtmlrc.readEntry(x, y))
+#define READ_LIST(x) m_pConfig->readListEntry(x, tdehtmlrc.readListEntry(x))
 
     SET_GROUP(m_groupname);
     fSize = READ_NUM( "MediumFontSize", 12 );
@@ -348,7 +348,7 @@ void KAppearanceOptions::load( bool useDefaults )
     if (m_pConfig->hasKey("Fonts"))
        fonts = m_pConfig->readListEntry( "Fonts" );
     else
-       fonts = khtmlrc.readListEntry( "Fonts" );
+       fonts = tdehtmlrc.readListEntry( "Fonts" );
     while (fonts.count() < 7)
        fonts.append(TQString::null);
 

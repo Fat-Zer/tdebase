@@ -858,7 +858,7 @@ also unique per X-server display. The processes are:</para>
 <varlistentry>
 <term><command>kded</command></term>
 <listitem><para>Generic service daemon.</para>
-<para>Triggers <link linkend="ksycoca">Sycoca</link> database updates when
+<para>Triggers <link linkend="tdesycoca">Sycoca</link> database updates when
 needed</para>
 </listitem>
 </varlistentry>
@@ -1819,14 +1819,14 @@ class="directory">$<envar>HOME</envar>/.trinity/share/applnk</filename>
 (user specific). This is observed unless the <literal role="extension">.desktop</literal> file has a  <varname>Categories</varname>= line. In that case the categories determine the location in the menu.</para>
 </sect2>
 
-<sect2 id="ksycoca">
+<sect2 id="tdesycoca">
 <title><application>KSycoca</application></title>
 <para><application>KSycoca</application> caches menu structure and
 information about all available applications. You can rebuild the
 database with
 <userinput><command>kbuildsycoca</command></userinput>. The database
 which is built lives in <filename
-class="directory">/var/tmp/tdecache-${<envar>USER</envar>}/ksycoca</filename>.
+class="directory">/var/tmp/tdecache-${<envar>USER</envar>}/tdesycoca</filename>.
 It is automatically updated by <application>KDED</application>,
 checked during &tde; login, and <application>KDED</application>
 watches for changes while logged in.</para>
@@ -1839,7 +1839,7 @@ CheckSycoca=false
 </programlisting>
 </para>
 
-<para>To force regeneration, run <userinput><command>touch $<envar>TDEDIR</envar>/share/services/update_ksycoca</command></userinput>.</para>
+<para>To force regeneration, run <userinput><command>touch $<envar>TDEDIR</envar>/share/services/update_tdesycoca</command></userinput>.</para>
 
 </sect2>
 
@@ -2031,7 +2031,7 @@ shell_access=false</screen>
 <para>Since this affects the &tde; menu and the available applications, we
 must force an update of the sycoca database:</para>
 
-<screen><userinput><command>touch</command> <filename>$<envar>TDEDIR</envar>/share/services/update_ksycoca</filename></userinput></screen>
+<screen><userinput><command>touch</command> <filename>$<envar>TDEDIR</envar>/share/services/update_tdesycoca</filename></userinput></screen>
 
 <para>Now re-login to &tde; and check the following points:</para>
 
@@ -2488,7 +2488,7 @@ KDebug
 MainApplication-Interface
 konsole (default)
 konsole-mainwindow#1
-ksycoca
+tdesycoca
 session-1
 session-2
 session-3

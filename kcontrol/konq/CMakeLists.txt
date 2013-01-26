@@ -45,6 +45,6 @@ tde_add_kpart( kcm_konq AUTOMOC
     behaviour.cpp desktop.cpp desktopbehavior_impl.cpp
     previews.cpp browser.cpp main.cpp rootopts.cpp
     fontopts.cpp  desktopbehavior.ui
-  LINK kio-shared kutils-shared
+  LINK kio-shared tdeutils-shared
   DESTINATION ${PLUGIN_INSTALL_DIR}
 )

@@ -58,7 +58,7 @@ tde_add_executable( tdm_config
 
 ##### tdm_greet (executable) ####################
 if( WITH_XRANDR )
-  set( TDMGREET_OPTIONAL_LINK "krandr-shared" )
+  set( TDMGREET_OPTIONAL_LINK "tderandr-shared" )
 endif ( )
 
 tde_add_executable( tdm_greet AUTOMOC

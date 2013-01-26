@@ -45,7 +45,7 @@
 #include <kglobalsettings.h>
 #include <kstdaccel.h>
 
-#include <ktexteditor/encodinginterface.h>
+#include <tdetexteditor/encodinginterface.h>
 
 #include <tqobjectlist.h>
 #include <tqstringlist.h>

@@ -17,7 +17,7 @@ the .h file additionally should go to include/private .
 
 v kded nesmi byt nic, co znovu vstupuje do event loop
     - udelat na to test
-    - spravit kwallet
+    - spravit tdewallet
 
 blokovat uzivatelsky vstup, jako to dela kapp pro dcop
 

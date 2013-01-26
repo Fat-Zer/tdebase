@@ -75,7 +75,7 @@
 #include <dcopref.h>
 #include <konq_popupmenu.h>
 #include <konqbookmarkmanager.h>
-#include <kparts/componentfactory.h>
+#include <tdeparts/componentfactory.h>
 
 #include "client_mnu.h"
 #include "container_base.h"

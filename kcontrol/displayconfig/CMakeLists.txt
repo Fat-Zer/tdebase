@@ -36,6 +36,6 @@ set_source_files_properties( displayconfig.cpp PROPERTIES COMPILE_FLAGS -DKDE_CO
 tde_add_kpart( kcm_displayconfig AUTOMOC
   SOURCES
     monitorworkspace.cpp displayconfig.cpp displayconfigbase.ui displayconfig.skel
-  LINK kio-shared krandr-shared kutils-shared
+  LINK kio-shared tderandr-shared tdeutils-shared
   DESTINATION ${PLUGIN_INSTALL_DIR}
 )

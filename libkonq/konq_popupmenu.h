@@ -33,7 +33,7 @@
 #include <kmimetype.h> // for KDEDesktopMimeType
 #include <libkonq_export.h>
 
-#include <kparts/browserextension.h>
+#include <tdeparts/browserextension.h>
 
 #include "konq_xmlguiclient.h"
 

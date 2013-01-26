@@ -21,8 +21,8 @@
 
 #include <tqobject.h>
 #include <tqcstring.h>
-#include <kparts/browserextension.h>
-#include <khtml_part.h>
+#include <tdeparts/browserextension.h>
+#include <tdehtml_part.h>
 
 namespace TDEIO { class Job; }
 

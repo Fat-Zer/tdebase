@@ -336,7 +336,7 @@ void KHTMLSearchConfig::generateIndex()
 {
   save();
 
-  TQString exe = kapp->dirs()->findExe("khtmlindex");
+  TQString exe = kapp->dirs()->findExe("tdehtmlindex");
   if (exe.isEmpty())
     return;
 

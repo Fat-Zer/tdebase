@@ -38,7 +38,7 @@ METASOURCES = AUTO
 
 KDE_ICON= AUTO
 # the library search path. 
-kpersonalizer_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_TDECORE) $(LIB_TDEUI) -ltdefx $(LIB_KIO) -lktexteditor
+kpersonalizer_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_TDECORE) $(LIB_TDEUI) -ltdefx $(LIB_KIO) -ltdetexteditor
 
 # Uncomment the following two lines if you add a ui.rc file for your application to make use of
 # KDE´s XML GUI builing

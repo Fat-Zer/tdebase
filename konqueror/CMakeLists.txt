@@ -108,7 +108,7 @@ set( ${target}_SRCS
 
 tde_add_tdeinit_executable( ${target} AUTOMOC
   SOURCES ${${target}_SRCS}
-  LINK konqueror_intern-static konq-shared kutils-shared
+  LINK konqueror_intern-static konq-shared tdeutils-shared
 )
 
 

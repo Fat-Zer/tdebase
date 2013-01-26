@@ -24,13 +24,13 @@
 #include <kate/document.h>
 #include <kate/view.h>
 
-#include <ktexteditor/configinterface.h>
-#include <ktexteditor/sessionconfiginterface.h>
-#include <ktexteditor/viewcursorinterface.h>
-#include <ktexteditor/printinterface.h>
-#include <ktexteditor/encodinginterface.h>
-#include <ktexteditor/editorchooser.h>
-#include <ktexteditor/popupmenuinterface.h>
+#include <tdetexteditor/configinterface.h>
+#include <tdetexteditor/sessionconfiginterface.h>
+#include <tdetexteditor/viewcursorinterface.h>
+#include <tdetexteditor/printinterface.h>
+#include <tdetexteditor/encodinginterface.h>
+#include <tdetexteditor/editorchooser.h>
+#include <tdetexteditor/popupmenuinterface.h>
 
 #include <kio/netaccess.h>
 
@@ -54,7 +54,7 @@
 #include <kmessagebox.h>
 #include <kkeydialog.h>
 #include <kedittoolbar.h>
-#include <kparts/event.h>
+#include <tdeparts/event.h>
 #include <kmenubar.h>
 
 #include <tqdropsite.h>
@@ -108,7 +108,7 @@ KWrite::KWrite (KTextEditor::Document *doc)
 
   // install a working kate part popup dialog thingy
   if (static_cast<Kate::View*>(m_view->tqt_cast("Kate::View")))
-    static_cast<Kate::View*>(m_view->tqt_cast("Kate::View"))->installPopup ((TQPopupMenu*)(factory()->container("ktexteditor_popup", this)) );
+    static_cast<Kate::View*>(m_view->tqt_cast("Kate::View"))->installPopup ((TQPopupMenu*)(factory()->container("tdetexteditor_popup", this)) );
 
   // init with more usefull size, stolen from konq :)
   if (!initialGeometrySet())

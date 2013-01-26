@@ -27,7 +27,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <tqmap.h>
 
 #include <kpanelmenu.h>
-#include <ksycocaentry.h>
+#include <tdesycocaentry.h>
 
 typedef TQMap<int, KSycocaEntry::Ptr> EntryMap;
 typedef TQPtrList<TQPopupMenu> PopupMenuList;

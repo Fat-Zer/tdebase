@@ -1,7 +1,7 @@
 #ifndef __konq_browseriface_h__
 #define __konq_browseriface_h__
 
-#include <kparts/browserinterface.h>
+#include <tdeparts/browserinterface.h>
 
 class KonqView;
 

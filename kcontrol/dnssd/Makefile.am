@@ -1,12 +1,12 @@
 INCLUDES = $(all_includes)
 METASOURCES = AUTO
-kde_module_LTLIBRARIES =  kcm_kdnssd.la
-kcm_kdnssd_la_LDFLAGS = -avoid-version -module -no-undefined $(all_libraries)
-kcm_kdnssd_la_SOURCES = configdialog.ui kcmdnssd.cpp kcmdnssd.h
+kde_module_LTLIBRARIES =  kcm_tdednssd.la
+kcm_tdednssd_la_LDFLAGS = -avoid-version -module -no-undefined $(all_libraries)
+kcm_tdednssd_la_SOURCES = configdialog.ui kcmdnssd.cpp kcmdnssd.h
 
-xdg_apps_DATA = kcm_kdnssd.desktop
-kcm_kdnssd_la_LIBADD = $(LIB_KDNSSD) $(LIB_TDEUI)
+xdg_apps_DATA = kcm_tdednssd.desktop
+kcm_tdednssd_la_LIBADD = $(LIB_KDNSSD) $(LIB_TDEUI)
 
 messages: rc.cpp
 	$(EXTRACTRC) *.ui *.rc >> rc.cpp
-	$(XGETTEXT) $(kcm_kdnssd_la_SOURCES) rc.cpp -o $(podir)/kcmkdnssd.pot
+	$(XGETTEXT) $(kcm_tdednssd_la_SOURCES) rc.cpp -o $(podir)/kcmtdednssd.pot

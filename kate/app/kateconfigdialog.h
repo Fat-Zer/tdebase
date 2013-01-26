@@ -27,7 +27,7 @@
 #include "../interfaces/pluginconfiginterfaceextension.h"
 
 #include <kate/document.h>
-#include <ktexteditor/configinterfaceextension.h>
+#include <tdetexteditor/configinterfaceextension.h>
 
 #include <kdialogbase.h>
 

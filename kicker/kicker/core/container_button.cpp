@@ -29,7 +29,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <kconfig.h>
 #include <kdebug.h>
 #include <kglobal.h>
-#include <kmultipledrag.h>
+#include <tdemultipledrag.h>
 #include <kpanelapplet.h>
 #include <kurldrag.h>
 

@@ -32,6 +32,6 @@ install( FILES tdeprint_part.desktop DESTINATION ${SERVICES_INSTALL_DIR} )
 
 tde_add_kpart( libtdeprint_part AUTOMOC
   SOURCES printpart.cpp
-  LINK tdeprint_management-shared kparts-shared
+  LINK tdeprint_management-shared tdeparts-shared
   DESTINATION ${PLUGIN_INSTALL_DIR}
 )

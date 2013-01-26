@@ -24,7 +24,7 @@
 #include <kcombobox.h>
 #include <kconfig.h>
 #include <kfontcombo.h>
-#include <khtmldefaults.h>
+#include <tdehtmldefaults.h>
 #include <klocale.h>
 #include <knuminput.h>
 

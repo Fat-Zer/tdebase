@@ -32,7 +32,7 @@
 #include <klocale.h>
 #include <kmessagebox.h>
 #include <konq_drag.h>
-#include <kparts/browserextension.h>
+#include <tdeparts/browserextension.h>
 #include <kurldrag.h>
 #include <kuserprofile.h>
 #include <kurifilter.h>

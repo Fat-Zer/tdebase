@@ -32,9 +32,9 @@
 
 #include <kio/job.h>
 
-#include <kparts/part.h>
-#include <kparts/componentfactory.h>
-#include <kparts/browserextension.h>
+#include <tdeparts/part.h>
+#include <tdeparts/componentfactory.h>
+#include <tdeparts/browserextension.h>
 
 FavIconUpdater::FavIconUpdater(TQObject *parent, const char *name)
     : KonqFavIconMgr(parent, name) {
@@ -123,7 +123,7 @@ void FavIconUpdater::downloadIconActual(const KBookmark &bk) {
     m_webGrabber = new FavIconWebGrabber(m_part, bk.url());
 }
 
-// khtml callback
+// tdehtml callback
 void FavIconUpdater::setIconURL(const KURL &iconURL) {
     setIconForURL(m_bk.url(), iconURL);
 }

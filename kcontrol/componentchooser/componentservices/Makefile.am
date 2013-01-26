@@ -1,3 +1,3 @@
-kcm_ktexteditor_DATA = kcm_kemail.desktop kcm_terminal.desktop kcm_browser.desktop
-kcm_ktexteditordir = $(kde_datadir)/kcm_componentchooser
+kcm_tdetexteditor_DATA = kcm_kemail.desktop kcm_terminal.desktop kcm_browser.desktop
+kcm_tdetexteditordir = $(kde_datadir)/kcm_componentchooser
 

@@ -48,7 +48,7 @@
 #include <ksimpleconfig.h>
 #include <kstandarddirs.h>
 #include <kurlrequester.h>
-#include <libkmid/deviceman.h>
+#include <libtdemid/deviceman.h>
 
 #include "arts.h"
 
@@ -158,7 +158,7 @@ KArtsModule::KArtsModule(TQWidget *parent, const char *name)
 	general = new generalTab(tab);
 	hardware = new hardwareTab(tab);
 	//mixer = TDECModuleLoader::loadModule("kmixcfg", tab);
-	//midi = new KMidConfig(tab, "kmidconfig");
+	//midi = new KMidConfig(tab, "tdemidconfig");
 
 	general->layout()->setMargin( KDialog::marginHint() );
 	hardware->layout()->setMargin( KDialog::marginHint() );

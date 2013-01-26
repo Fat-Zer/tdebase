@@ -9,7 +9,7 @@
 #
 #################################################
 
-# FIXME: KSCREENSAVER_PAM_SERVICE should be "kde" or "kscreensaver"?
+# FIXME: KSCREENSAVER_PAM_SERVICE should be "kde" or "tdescreensaver"?
 
 if( WITH_PAM AND (NOT DEFINED KSCREENSAVER_PAM_SERVICE) )
   set( KSCREENSAVER_PAM_SERVICE "kde" CACHE INTERNAL "" )

@@ -37,6 +37,6 @@ set( ${target}_SRCS
 
 tde_add_executable( ${target} AUTOMOC
   SOURCES ${${target}_SRCS}
-  LINK khtml-shared
+  LINK tdehtml-shared
   DESTINATION ${BIN_INSTALL_DIR}
 )

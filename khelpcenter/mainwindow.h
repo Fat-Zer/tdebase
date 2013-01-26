@@ -6,7 +6,7 @@
 #include <kmainwindow.h>
 #include <kio/job.h>
 #include <kurl.h>
-#include <kparts/browserextension.h>
+#include <tdeparts/browserextension.h>
 #include <dcopclient.h>
 #include <dcopobject.h>
 

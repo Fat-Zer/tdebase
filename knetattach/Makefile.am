@@ -2,7 +2,7 @@ INCLUDES= $(all_includes)
 
 bin_PROGRAMS = knetattach
 knetattach_SOURCES = knetattach.ui main.cpp
-knetattach_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_TDECORE) $(LIB_TDEUI) -ltdefx $(LIB_KIO) -lktexteditor
+knetattach_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_TDECORE) $(LIB_TDEUI) -ltdefx $(LIB_KIO) -ltdetexteditor
 knetattach_LDADD   = $(LIB_KIO)
 METASOURCES = AUTO
 xdg_apps_DATA = knetattach.desktop

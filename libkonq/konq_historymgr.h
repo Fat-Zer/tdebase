@@ -31,7 +31,7 @@
 
 #include <kcompletion.h>
 #include <kurl.h>
-#include <kparts/historyprovider.h>
+#include <tdeparts/historyprovider.h>
 
 #include "konq_historycomm.h"
 
@@ -327,7 +327,7 @@ protected:
 private slots:
     /**
      * Called by the updateTimer to emit the KParts::HistoryProvider::updated()
-     * signal so that khtml can repaint the updated links.
+     * signal so that tdehtml can repaint the updated links.
      */
     void slotEmitUpdated();
 

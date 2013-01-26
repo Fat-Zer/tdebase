@@ -11,7 +11,7 @@ libnsplugin_la_SOURCES = plugin_part.cpp nspluginloader.cpp		\
 			NSPluginCallbackIface.skel
 
 libnsplugin_la_LDFLAGS = $(all_libraries) -avoid-version -module $(KDE_PLUGIN) -no-undefined
-libnsplugin_la_LIBADD  = -lkparts
+libnsplugin_la_LIBADD  = -ltdeparts
 
 bin_PROGRAMS = nspluginscan
 nspluginscan_SOURCES = pluginscan.cpp 
@@ -25,7 +25,7 @@ kcm_nsplugins_la_LIBADD = $(LIB_TDECORE) libpluginpaths.la
 noinst_LTLIBRARIES = libpluginpaths.la
 libpluginpaths_la_SOURCES = plugin_paths.cpp
 
-xdg_apps_DATA = khtml_plugins.desktop
+xdg_apps_DATA = tdehtml_plugins.desktop
 
 partrcdir = $(kde_datadir)/plugin
 partrc_DATA = nspluginpart.rc

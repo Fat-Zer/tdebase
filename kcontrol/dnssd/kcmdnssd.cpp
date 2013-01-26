@@ -34,7 +34,7 @@
 
 #include <klocale.h>
 #include <kglobal.h>
-#include <kparts/genericfactory.h>
+#include <tdeparts/genericfactory.h>
 #include <kprocess.h>
 #include <klineedit.h>
 #include <kpassdlg.h>
@@ -51,12 +51,12 @@
 #define MDNSD_PID "/var/run/mdnsd.pid"
 
 typedef KGenericFactory<KCMDnssd, TQWidget> KCMDnssdFactory;
-K_EXPORT_COMPONENT_FACTORY( kcm_kdnssd, KCMDnssdFactory("kcmkdnssd"))
+K_EXPORT_COMPONENT_FACTORY( kcm_tdednssd, KCMDnssdFactory("kcmtdednssd"))
 
 KCMDnssd::KCMDnssd(TQWidget *parent, const char *name, const TQStringList&)
 		: ConfigDialog(parent, name), m_wdchanged(false)
 {
-	setAboutData(new TDEAboutData(I18N_NOOP("kcm_kdnssd"),
+	setAboutData(new TDEAboutData(I18N_NOOP("kcm_tdednssd"),
 	                            I18N_NOOP("ZeroConf configuration"),0,0,TDEAboutData::License_GPL,
 	                            I18N_NOOP("(C) 2004,2005 Jakub Stachowski")));
 	setQuickHelp(i18n("Setup services browsing with ZeroConf"));
@@ -65,7 +65,7 @@ KCMDnssd::KCMDnssd(TQWidget *parent, const char *name, const TQStringList&)
 		else if (getenv("TDESU_USER")!=0) tabs->removePage(tab); 
 	addConfig(DNSSD::Configuration::self(),this);
 	// it is host-wide setting so it has to be in global config file
-	domain = new KSimpleConfig( TQString::fromLatin1( KDE_CONFDIR "/kdnssdrc" ));
+	domain = new KSimpleConfig( TQString::fromLatin1( KDE_CONFDIR "/tdednssdrc" ));
 	domain->setGroup("publishing");
 	load();
 	connect(hostedit,TQT_SIGNAL(textChanged(const TQString&)),this,TQT_SLOT(wdchanged()));

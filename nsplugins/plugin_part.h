@@ -24,9 +24,9 @@
 #ifndef __plugin_part_h__
 #define __plugin_part_h__
 
-#include <kparts/browserextension.h>
-#include <kparts/factory.h>
-#include <kparts/part.h>
+#include <tdeparts/browserextension.h>
+#include <tdeparts/factory.h>
+#include <tdeparts/part.h>
 #include <klibloader.h>
 #include <tqwidget.h>
 #include <tqguardedptr.h>

@@ -1,7 +1,7 @@
 #ifndef __view_h__
 #define __view_h__
 
-#include <khtml_part.h>
+#include <tdehtml_part.h>
 
 #include "glossary.h"
 #include "navigator.h"

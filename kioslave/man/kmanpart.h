@@ -21,10 +21,10 @@
 #ifndef KMANPART_H
 #define KMANPART_H
 
-#include <kparts/factory.h>
-#include <kparts/part.h>
-#include <kparts/browserextension.h>
-#include <khtml_part.h>
+#include <tdeparts/factory.h>
+#include <tdeparts/part.h>
+#include <tdeparts/browserextension.h>
+#include <tdehtml_part.h>
 #include <kio/job.h>
 #include <kio/jobclasses.h>
 

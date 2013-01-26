@@ -17,10 +17,10 @@
 #ifndef KONQSIDEBARPART_H
 #define KONQSIDEBARPART_H
 
-#include <kparts/part.h>
-#include <kparts/factory.h>
-#include <kparts/event.h>
-#include <kparts/browserextension.h>
+#include <tdeparts/part.h>
+#include <tdeparts/factory.h>
+#include <tdeparts/event.h>
+#include <tdeparts/browserextension.h>
 #include <tqguardedptr.h>
 #include "sidebar_widget.h"
 #include "konqsidebariface_p.h"

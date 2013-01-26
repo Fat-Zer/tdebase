@@ -21,7 +21,7 @@
 #include "plugin.h"
 #include "plugin.moc"
 
-#include <kparts/componentfactory.h>
+#include <tdeparts/componentfactory.h>
 
 namespace Kate
 {

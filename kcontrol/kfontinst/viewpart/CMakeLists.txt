@@ -33,7 +33,7 @@ install( FILES kfontviewpart.rc kfontviewui.rc DESTINATION ${DATA_INSTALL_DIR}/k
 
 tde_add_kpart( libkfontviewpart AUTOMOC
   SOURCES FontViewPart.cpp FontViewPartFactory.cpp FontPreview.cpp
-  LINK kfontinstprint-static kfontinst-shared kparts-shared
+  LINK kfontinstprint-static kfontinst-shared tdeparts-shared
   DESTINATION ${PLUGIN_INSTALL_DIR}
 )
 
@@ -42,7 +42,7 @@ tde_add_kpart( libkfontviewpart AUTOMOC
 
 tde_add_executable( kfontview AUTOMOC
   SOURCES FontViewerApp.cpp
-  LINK kparts-shared
+  LINK tdeparts-shared
   DESTINATION ${BIN_INSTALL_DIR}
 )
 

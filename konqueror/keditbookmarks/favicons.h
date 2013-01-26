@@ -24,8 +24,8 @@
 #include <kbookmark.h>
 #include <konq_faviconmgr.h>
 
-#include <kparts/part.h>
-#include <kparts/browserinterface.h>
+#include <tdeparts/part.h>
+#include <tdeparts/browserinterface.h>
 
 #include "bookmarkiterator.h"
 

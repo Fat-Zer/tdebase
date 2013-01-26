@@ -41,7 +41,7 @@
  *	Roberto Teixeira <maragato@kde.org>  other user (-U) support
  *	Oswald Buddenhagen <ossi@kde.org>    Binary server mode
  *
- *      Other parts were taken from kscreensaver's passwd.cpp.
+ *      Other parts were taken from tdescreensaver's passwd.cpp.
  *
  *****************************************************************/
 

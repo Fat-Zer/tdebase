@@ -292,8 +292,8 @@ fi
 # Remember that this script may be run more than once. The new directory
 # might already exist.
 if [ -n "$CACHE_DIR" ] && [ -d "$CACHE_DIR" ]; then
-  # Flush the old ksycoca cache files. This is safe at any time.
-  rm -f ${CACHE_DIR}/ksycoca* 2>/dev/null
+  # Flush the old tdesycoca cache files. This is safe at any time.
+  rm -f ${CACHE_DIR}/tdesycoca* 2>/dev/null
   # Old cache directory: /var/tmp/kde*cache-$USER
   # New cache directory: /var/tmp/tdecache-$USER
   # Rename/move the directory name but only when the new name does not exist.

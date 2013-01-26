@@ -51,7 +51,7 @@ tde_add_executable( ksysguard AUTOMOC
   SOURCES
     SensorBrowser.cc WorkSheet.cc WorkSheetSettings.cc
     Workspace.cc ksysguard.cc ksysguard.skel
-  LINK sensordisplays-static ksgrd-shared kdnssd-shared
+  LINK sensordisplays-static ksgrd-shared tdednssd-shared
   DESTINATION ${BIN_INSTALL_DIR}
 )
 

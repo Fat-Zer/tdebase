@@ -33,7 +33,7 @@
 #include <kstandarddirs.h>
 #include <kxmlguifactory.h>
 #include <kxmlguibuilder.h>
-#include <kparts/componentfactory.h>
+#include <tdeparts/componentfactory.h>
 
 #include <assert.h>
 
@@ -56,11 +56,11 @@
   iconview trash:/
   sidebar directory tree
   sidebar Devices / Hard Disc
-  khtml background
-  khtml link
-  khtml image (www.kde.org RMB on K logo)
-  khtmlimage (same as above, then choose View image, then RMB)
-  selected text in khtml
+  tdehtml background
+  tdehtml link
+  tdehtml image (www.kde.org RMB on K logo)
+  tdehtmlimage (same as above, then choose View image, then RMB)
+  selected text in tdehtml
   embedded katepart
   kdesktop folder
   trash link on desktop

@@ -22,8 +22,8 @@
 #include <tqobject.h>
 #include <kurl.h>
 #include <tqstring.h>
-#include <kparts/part.h>
-#include <kparts/browserextension.h>
+#include <tdeparts/part.h>
+#include <tdeparts/browserextension.h>
 #include <kio/job.h>
 #include <tqguardedptr.h>
 #include <kfileitem.h>

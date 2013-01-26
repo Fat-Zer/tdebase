@@ -89,7 +89,7 @@ public:
   bool isDirty() const;
   void sync();
   void setup();
-  void refresh(); // update m_mimetype from ksycoca when Apply is pressed
+  void refresh(); // update m_mimetype from tdesycoca when Apply is pressed
 
   static bool defaultEmbeddingSetting(  const TQString& major );
   static void reset();

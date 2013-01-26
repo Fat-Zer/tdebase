@@ -1,6 +1,6 @@
 KDE can be configured to support the PAM ("Pluggable Authentication 
 Modules") system for password checking by the display manager tdm and 
-by the screen saver kscreensaver (for unlocking the display).
+by the screen saver tdescreensaver (for unlocking the display).
 
 PAM is a flexible application-transparent configurable user-authentication 
 system found on FreeBSD, Solaris, and Linux (and maybe other unixes).
@@ -27,26 +27,26 @@ By default, PAM is automatically used, if it is found. Use
 If PAM is found, KDE usually uses the PAM service "kde". You may
 override it for all KDE programs by using --with-pam=<service> and/or
 individually by using --with-<prog>-pam=<service>, where <prog> is
-one of tdm, kcp and kss (for tdm, kcheckpass and kscreensaver).
+one of tdm, kcp and kss (for tdm, kcheckpass and tdescreensaver).
 
 "make install" will attempt to create suitable service definitions; either
 by putting files into /etc/pam.d/ or by adding text to /etc/pam.conf. The
 services are just copies of the "login" service. 
 You may want to edit these definitions to meet your needs.
 There are also two example service definitions in this directory -
-kde.pamd and kscreensaver.pamd - but don't just copy them!
+kde.pamd and tdescreensaver.pamd - but don't just copy them!
 If the services are misconfigured, you will NOT be able to login via TDM
 and/or unlock a locked screen!
 
 If there is ever any doubt about which PAM service a program was
 compiled with, it can be determined by examining the PAM-generated 
-entries in the system log associated with tdm logins or kscreensaver
+entries in the system log associated with tdm logins or tdescreensaver
 authentication failures.
 
 
 PAM configuration files have four types of entries for each service:
 
-type		used by tdm		used by kscreensaver
+type		used by tdm		used by tdescreensaver
 ----		-----------		--------------------
 auth		    x				x
 account		    x				

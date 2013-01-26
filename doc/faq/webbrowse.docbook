@@ -206,7 +206,7 @@ text->html in the tree view.</para>
 <listitem><para>Click on the
 <guilabel>Embedding</guilabel> tab. Make sure that <guilabel>Left Click
 Action</guilabel> is set to <guilabel>Show file in embedded
-viewer</guilabel>, and that <guilabel>KHTML (khtml)</guilabel> is at the top
+viewer</guilabel>, and that <guilabel>KHTML (tdehtml)</guilabel> is at the top
 of <guilabel>Services Preference Order</guilabel>.</para></listitem>
 </orderedlist>
 </para>

@@ -19,7 +19,7 @@
 
 #include <kpanelextension.h>
 #include <kurl.h>
-#include <kparts/browserextension.h>
+#include <tdeparts/browserextension.h>
 
 class TQHBoxLayout;
 class TQVBox;

@@ -24,7 +24,7 @@
 // konq_main.cc
 
 #include <krun.h>
-#include <kparts/browserextension.h>
+#include <tdeparts/browserextension.h>
 class KonqMainWindow;
 class KonqView;
 

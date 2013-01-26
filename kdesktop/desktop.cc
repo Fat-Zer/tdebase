@@ -51,7 +51,7 @@
 #include <klocale.h>
 #include <kio/netaccess.h>
 #include <kprocess.h>
-#include <ksycoca.h>
+#include <tdesycoca.h>
 #include <ktempfile.h>
 #include <kmessagebox.h>
 #include <kglobalaccel.h>

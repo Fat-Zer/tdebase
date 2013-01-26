@@ -230,13 +230,13 @@ void KMiscHTMLOptions::load()
 
 void KMiscHTMLOptions::load( bool useDefaults )
 {
-    TDEConfig khtmlrc("khtmlrc", true, false);
-    khtmlrc.setReadDefaults( useDefaults );
+    TDEConfig tdehtmlrc("tdehtmlrc", true, false);
+    tdehtmlrc.setReadDefaults( useDefaults );
 	 m_pConfig->setReadDefaults( useDefaults );
 
-#define SET_GROUP(x) m_pConfig->setGroup(x); khtmlrc.setGroup(x)
-#define READ_BOOL(x,y) m_pConfig->readBoolEntry(x, khtmlrc.readBoolEntry(x, y))
-#define READ_ENTRY(x) m_pConfig->readEntry(x, khtmlrc.readEntry(x))
+#define SET_GROUP(x) m_pConfig->setGroup(x); tdehtmlrc.setGroup(x)
+#define READ_BOOL(x,y) m_pConfig->readBoolEntry(x, tdehtmlrc.readBoolEntry(x, y))
+#define READ_ENTRY(x) m_pConfig->readEntry(x, tdehtmlrc.readEntry(x))
 
 
     // *** load ***

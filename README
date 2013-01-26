@@ -106,7 +106,7 @@ libraries. Here is an overview of the directories:
 * krichtexteditor
     A embeddable rich text editor and a wrapper application for it.
 
-* kscreensaver
+* tdescreensaver
     The KDE screensaver environment and some basic screensavers. More
     of them are in the tdeartwork package.
 

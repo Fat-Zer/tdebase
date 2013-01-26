@@ -22,15 +22,15 @@ link_directories(
 
 ##### other data ################################
 
-install( FILES kcm_kdnssd.desktop DESTINATION ${XDG_APPS_INSTALL_DIR} )
+install( FILES kcm_tdednssd.desktop DESTINATION ${XDG_APPS_INSTALL_DIR} )
 
 
-##### kcm_kdnssd (module) #######################
+##### kcm_tdednssd (module) #######################
 
 set_source_files_properties( kcmdnssd.cpp PROPERTIES COMPILE_FLAGS -DKDE_CONFDIR=\\"${TDE_CONFIG_DIR}\\" )
 
-tde_add_kpart( kcm_kdnssd AUTOMOC
+tde_add_kpart( kcm_tdednssd AUTOMOC
   SOURCES configdialog.ui kcmdnssd.cpp
-  LINK kdnssd-shared tdeui-shared
+  LINK tdednssd-shared tdeui-shared
   DESTINATION ${PLUGIN_INSTALL_DIR}
 )

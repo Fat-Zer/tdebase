@@ -35,8 +35,8 @@
 #include <krun.h>
 #include <kaboutdata.h>
 #include <kdebug.h>
-#include <khtmlview.h>
-#include <khtml_settings.h>
+#include <tdehtmlview.h>
+#include <tdehtml_settings.h>
 #include <kaction.h>
 #include <kstatusbar.h>
 #include <kstdaccel.h>

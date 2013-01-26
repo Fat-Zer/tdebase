@@ -88,7 +88,7 @@
 #include <kstdaccel.h>
 #include <kstdaction.h>
 #include <kstandarddirs.h>
-#include <ksycoca.h>
+#include <tdesycoca.h>
 #include <ktempfile.h>
 #include <kurlrequesterdlg.h>
 #include <kurlrequester.h>
@@ -3875,13 +3875,13 @@ void KonqMainWindow::initActions()
 
   m_configureModules << "kde-filebehavior.desktop" << "kde-fileappearance.desktop" <<
       "kde-filepreviews.desktop" << "tde-filetypes.desktop" <<
-      "tde-khtml_behavior.desktop" << "tde-khtml_java_js.desktop" <<
-      "tde-khtml_filter.desktop" <<
-      "tde-khtml_fonts.desktop" << "tde-ebrowsing.desktop" <<
+      "tde-tdehtml_behavior.desktop" << "tde-tdehtml_java_js.desktop" <<
+      "tde-tdehtml_filter.desktop" <<
+      "tde-tdehtml_fonts.desktop" << "tde-ebrowsing.desktop" <<
       "tde-kcmhistory.desktop" << "tde-cookies.desktop" <<
       "tde-cache.desktop" << "tde-proxy.desktop" << "tde-kcmcss.desktop" <<
       "tde-crypto.desktop" << "tde-useragent.desktop" <<
-      "tde-khtml_plugins.desktop" << "kde-kcmkonqyperformance.desktop";
+      "tde-tdehtml_plugins.desktop" << "kde-kcmkonqyperformance.desktop";
 
 
   if (!kapp->authorizeControlModules(configModules()).isEmpty())

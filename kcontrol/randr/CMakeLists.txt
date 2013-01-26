@@ -22,26 +22,26 @@ link_directories(
 
 ##### other data ################################
 
-install( FILES krandrtray.desktop DESTINATION ${XDG_APPS_INSTALL_DIR} )
+install( FILES tderandrtray.desktop DESTINATION ${XDG_APPS_INSTALL_DIR} )
 install( FILES randr.desktop DESTINATION ${APPS_INSTALL_DIR}/.hidden )
-install( FILES krandrtray-autostart.desktop DESTINATION ${AUTOSTART_INSTALL_DIR} )
+install( FILES tderandrtray-autostart.desktop DESTINATION ${AUTOSTART_INSTALL_DIR} )
 
 
 ##### kcm_randr (module) ########################
 
 tde_add_kpart( kcm_randr AUTOMOC
-  SOURCES krandrmodule.cpp
-  LINK tdeui-shared krandr-shared
+  SOURCES tderandrmodule.cpp
+  LINK tdeui-shared tderandr-shared
   DESTINATION ${PLUGIN_INSTALL_DIR}
 )
 
 
-##### krandrtray (executable) ###################
+##### tderandrtray (executable) ###################
 
-tde_add_executable( krandrtray AUTOMOC
+tde_add_executable( tderandrtray AUTOMOC
   SOURCES
-    main.cpp krandrtray.cpp krandrapp.cpp
-    krandrpassivepopup.cpp configdialog.cpp
-  LINK kutils-shared krandr-shared
+    main.cpp tderandrtray.cpp tderandrapp.cpp
+    tderandrpassivepopup.cpp configdialog.cpp
+  LINK tdeutils-shared tderandr-shared
   DESTINATION ${BIN_INSTALL_DIR}
 )

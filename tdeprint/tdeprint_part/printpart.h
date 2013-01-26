@@ -20,8 +20,8 @@
 #ifndef PRINTPART_H
 #define PRINTPART_H
 
-#include <kparts/part.h>
-#include <kparts/browserextension.h>
+#include <tdeparts/part.h>
+#include <tdeparts/browserextension.h>
 
 class PrintPartExtension;
 class KMMainView;

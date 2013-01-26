@@ -35,6 +35,6 @@ set( target konqsidebar_web )
 
 tde_add_kpart( ${target} AUTOMOC
   SOURCES web_module.cpp
-  LINK konqsidebarplugin-shared konq-shared khtml-shared
+  LINK konqsidebarplugin-shared konq-shared tdehtml-shared
   DESTINATION ${PLUGIN_INSTALL_DIR}
 )

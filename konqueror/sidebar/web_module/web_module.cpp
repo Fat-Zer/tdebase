@@ -28,7 +28,7 @@
 #include <kglobal.h>
 #include <klocale.h>
 #include <konq_pixmapprovider.h>
-#include <kparts/browserextension.h>
+#include <tdeparts/browserextension.h>
 #include <kstandarddirs.h>
 
 

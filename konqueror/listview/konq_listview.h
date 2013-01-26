@@ -20,10 +20,10 @@
 #ifndef __konq_listview_h__
 #define __konq_listview_h__
 
-#include <kparts/browserextension.h>
+#include <tdeparts/browserextension.h>
 #include <kglobalsettings.h>
 #include <konq_operations.h>
-#include <kparts/factory.h>
+#include <tdeparts/factory.h>
 #include <konq_dirpart.h>
 #include <kmimetyperesolver.h>
 

@@ -49,7 +49,7 @@ using namespace std;
 #include <kservicegroup.h>
 #include <kstandarddirs.h>
 #include <kstdaction.h>
-#include <ksycocaentry.h>
+#include <tdesycocaentry.h>
 
 #include "menuinfo.h"
 #include "service_mnu.h"

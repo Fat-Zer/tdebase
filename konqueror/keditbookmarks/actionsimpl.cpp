@@ -55,8 +55,8 @@
 #include <ktempfile.h>
 #include <kstandarddirs.h>
 
-#include <kparts/part.h>
-#include <kparts/componentfactory.h>
+#include <tdeparts/part.h>
+#include <tdeparts/componentfactory.h>
 
 #include <kicondialog.h>
 #include <kiconloader.h>

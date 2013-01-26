@@ -37,7 +37,7 @@
 #include <kprotocolinfo.h>
 #include <kio/slaveconfig.h>
 #include <konq_dirpart.h>
-#include <kparts/browserextension.h>
+#include <tdeparts/browserextension.h>
 
 #include "kremoteencodingplugin.h"
 

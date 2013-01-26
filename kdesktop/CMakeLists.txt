@@ -69,7 +69,7 @@ tde_add_executable( kcheckrunning
 
 tde_add_executable( kxdglauncher
   SOURCES kxdglauncher.cpp
-  LINK kutils-shared
+  LINK tdeutils-shared
   DESTINATION ${BIN_INSTALL_DIR}
 )
 
@@ -92,7 +92,7 @@ tde_add_tdeinit_executable( ${target} AUTOMOC
   SOURCES ${${target}_SRCS}
   LINK
     kdesktopsettings-static bgnd-static dmctl-static
-    konq-shared kutils-shared
+    konq-shared tdeutils-shared
     ${XRENDER_LIBRARIES} ${XCURSOR_LIBRARIES} Xext dl
     ${XSS_LIBRARIES}
 )

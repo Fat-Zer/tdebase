@@ -51,7 +51,7 @@ set( ${target}_SRCS
 tde_add_library( ${target} SHARED AUTOMOC
   SOURCES ${${target}_SRCS}
   VERSION 1.2.0
-  LINK kparts-shared
+  LINK tdeparts-shared
   DESTINATION ${LIB_INSTALL_DIR}
 )
 
@@ -66,6 +66,6 @@ set( ${target}_SRCS
 
 tde_add_kpart( ${target} AUTOMOC
   SOURCES ${${target}_SRCS}
-  LINK konqsidebarplugin-shared konq-shared kio-shared kutils-shared
+  LINK konqsidebarplugin-shared konq-shared kio-shared tdeutils-shared
   DESTINATION ${PLUGIN_INSTALL_DIR}
 )

@@ -36,7 +36,7 @@
 #include <konq_settings.h>
 #include <kpropertiesdialog.h>
 #include <kstdaction.h>
-#include <kparts/factory.h>
+#include <tdeparts/factory.h>
 #include <ktrader.h>
 #include <klocale.h>
 #include <kivdirectoryoverlay.h>

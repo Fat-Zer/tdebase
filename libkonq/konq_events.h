@@ -1,7 +1,7 @@
 #ifndef __konq_events_h__
 #define __konq_events_h__
 
-#include <kparts/event.h>
+#include <tdeparts/event.h>
 #include <tqptrlist.h>
 #include <libkonq_export.h>
 

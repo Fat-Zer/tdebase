@@ -103,7 +103,7 @@ bool KPrivacyManager::clearSavedClipboardContents()
 
 bool KPrivacyManager::clearFormCompletion() const
 {
-  TQFile completionFile(locateLocal("data", "khtml/formcompletions"));
+  TQFile completionFile(locateLocal("data", "tdehtml/formcompletions"));
 
   return completionFile.remove();
 }

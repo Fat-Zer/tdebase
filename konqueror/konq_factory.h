@@ -28,7 +28,7 @@
 #include <klibloader.h>
 #include <ktrader.h>
 
-#include <kparts/part.h>
+#include <tdeparts/part.h>
 
 class BrowserView;
 class KonqMainWindow;

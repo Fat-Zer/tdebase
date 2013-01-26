@@ -55,6 +55,6 @@ set( target libkmanpart )
 
 tde_add_kpart( ${target} AUTOMOC
   SOURCES kmanpart.cpp
-  LINK khtml-shared kparts-shared
+  LINK tdehtml-shared tdeparts-shared
   DESTINATION ${PLUGIN_INSTALL_DIR}
 )

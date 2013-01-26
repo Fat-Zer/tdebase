@@ -378,7 +378,7 @@ bool NSPluginLoader::loadViewer(const TQString &mimeType)
    int cnt = 0;
    while (!kapp->dcopClient()->isApplicationRegistered(_dcopid))
    {
-       //kapp->processEvents(); // would lead to recursive calls in khtml
+       //kapp->processEvents(); // would lead to recursive calls in tdehtml
 #ifdef HAVE_USLEEP
        usleep( 50*1000 );
 #else

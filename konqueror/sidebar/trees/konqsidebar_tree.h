@@ -3,9 +3,9 @@
 #include <konqsidebarplugin.h>
 #include <tqlabel.h>
 #include <tqlayout.h>
-#include <kparts/part.h>
-#include <kparts/factory.h>
-#include <kparts/browserextension.h>
+#include <tdeparts/part.h>
+#include <tdeparts/factory.h>
+#include <tdeparts/browserextension.h>
 #include <kdialogbase.h>
 #include <tqcombobox.h>
 #include <tqstringlist.h>

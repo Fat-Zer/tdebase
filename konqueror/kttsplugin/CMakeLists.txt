@@ -24,16 +24,16 @@ link_directories(
 ##### other data ################################
 
 install( FILES
-    khtmlkttsd.rc khtmlkttsd.desktop
-  DESTINATION ${DATA_INSTALL_DIR}/khtml/kpartplugins )
+    tdehtmlkttsd.rc tdehtmlkttsd.desktop
+  DESTINATION ${DATA_INSTALL_DIR}/tdehtml/kpartplugins )
 
 
-##### libkhtmlkttsdplugin (module) ##############
+##### libtdehtmlkttsdplugin (module) ##############
 
-set( target libkhtmlkttsdplugin )
+set( target libtdehtmlkttsdplugin )
 
 tde_add_kpart( ${target} AUTOMOC
-  SOURCES khtmlkttsd.cpp
-  LINK khtml-shared
+  SOURCES tdehtmlkttsd.cpp
+  LINK tdehtml-shared
   DESTINATION ${PLUGIN_INSTALL_DIR}
 )

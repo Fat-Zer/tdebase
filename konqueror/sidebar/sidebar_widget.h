@@ -25,8 +25,8 @@
 #include <kdockwidget.h>
 #include <kurl.h>
 #include <ktoolbar.h>
-#include <kparts/part.h>
-#include <kmultitabbar.h>
+#include <tdeparts/part.h>
+#include <tdemultitabbar.h>
 
 #include "konqsidebarplugin.h"
 #include "konqsidebariface_p.h"

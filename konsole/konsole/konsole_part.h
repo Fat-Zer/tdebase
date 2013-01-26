@@ -21,8 +21,8 @@
 #ifndef KONSOLE_PART_H
 #define KONSOLE_PART_H
 
-#include <kparts/browserextension.h>
-#include <kparts/factory.h>
+#include <tdeparts/browserextension.h>
+#include <tdeparts/factory.h>
 
 
 #include <kdialogbase.h>

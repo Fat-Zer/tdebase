@@ -27,7 +27,7 @@ builtin (to view READMEs) but c++, h, java, ... to my editor.
 
 And one that doesn't like embedded viewers (like Martin ;)) can set
 defaults to 'no' without having to change all mimetypes (text, c, c++, ...)
-but still use libkhtml for HTML pages, by setting 'use builtin' in the
+but still use libtdehtml for HTML pages, by setting 'use builtin' in the
 mimetype text/html - this is the way to keep the exact (though
 inconsistent) behaviour of 1.1-kfm.
 

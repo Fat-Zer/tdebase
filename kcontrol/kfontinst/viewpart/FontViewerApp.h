@@ -30,8 +30,8 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <kapplication.h>
-#include <kparts/part.h>
-#include <kparts/mainwindow.h>
+#include <tdeparts/part.h>
+#include <tdeparts/mainwindow.h>
 
 namespace KFI
 {

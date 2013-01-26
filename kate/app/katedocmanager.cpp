@@ -28,9 +28,9 @@
 
 #include <kate/view.h>
 
-#include <ktexteditor/encodinginterface.h>
+#include <tdetexteditor/encodinginterface.h>
 
-#include <kparts/factory.h>
+#include <tdeparts/factory.h>
 
 #include <klocale.h>
 #include <kdebug.h>

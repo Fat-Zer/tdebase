@@ -7,7 +7,7 @@ KDE_PASSWDLIBS
 
 DEF_PAM_SERVICE(tdm, tdm, TDM)
 DEF_PAM_SERVICE(kcp, kcheckpass, KCHECKPASS)
-DEF_PAM_SERVICE(kss, kscreensaver, KSCREENSAVER)
+DEF_PAM_SERVICE(kss, tdescreensaver, KSCREENSAVER)
 
 dnl Checks for header files.
 AC_HEADER_DIRENT

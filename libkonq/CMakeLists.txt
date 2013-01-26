@@ -60,7 +60,7 @@ tde_add_library( konq SHARED AUTOMOC
     konq_pixmapprovider.cc kivdirectoryoverlay.cc konq_faviconmgr.cc
     konq_faviconmgr.skel konq_filetip.cc
   VERSION 4.2.0
-  LINK kparts-shared
+  LINK tdeparts-shared
   DESTINATION ${LIB_INSTALL_DIR}
 )
 

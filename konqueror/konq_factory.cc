@@ -19,7 +19,7 @@
 
 */
 
-#include <kparts/factory.h>
+#include <tdeparts/factory.h>
 #include "konq_factory.h"
 #include "version.h"
 

@@ -24,8 +24,8 @@ link_directories(
 ##### other data ################################
 
 install( FILES
-    khtml_behavior.desktop khtml_java_js.desktop
-    khtml_fonts.desktop khtml_filter.desktop
+    tdehtml_behavior.desktop tdehtml_java_js.desktop
+    tdehtml_fonts.desktop tdehtml_filter.desktop
   DESTINATION ${XDG_APPS_INSTALL_DIR} )
 
 install(
@@ -36,7 +36,7 @@ install(
 install(
   FILES uninstall.desktop
   DESTINATION ${APPS_INSTALL_DIR}/Settings/WebBrowsing
-  RENAME khtml_appearance.desktop )
+  RENAME tdehtml_appearance.desktop )
 
 ##### kcm_konqhtml (module) #####################
 
@@ -48,6 +48,6 @@ tde_add_kpart( kcm_konqhtml AUTOMOC
     jspolicies.cpp nsconfigwidget.ui policies.cpp
     domainlistview.cpp advancedTabOptions.ui
     filteropts.cpp
-  LINK khtml-shared
+  LINK tdehtml-shared
   DESTINATION ${PLUGIN_INSTALL_DIR}
 )

@@ -44,7 +44,7 @@ set( ${target}_SRCS
 
 tde_add_tdeinit_executable( ${target} AUTOMOC
   SOURCES ${${target}_SRCS}
-  LINK khtml-shared
+  LINK tdehtml-shared
 )
 
 tde_install_symlink( kcontrol ${BIN_INSTALL_DIR}/kinfocenter )

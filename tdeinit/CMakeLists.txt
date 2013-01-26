@@ -31,7 +31,7 @@ tde_add_executable( tdeinit_phase1
 
 ##### tdeinit_displayconfig (executable) #######################
 if( WITH_XRANDR )
-  set( TDEINIT_DISPLAYCONFIG_OPTIONAL_LINK "krandr-shared" )
+  set( TDEINIT_DISPLAYCONFIG_OPTIONAL_LINK "tderandr-shared" )
 endif ( )
 
 tde_add_executable( tdeinit_displayconfig

@@ -19,7 +19,7 @@
 */
 #include "historyurlitem.h"
 
-#include <kmultipledrag.h>
+#include <tdemultipledrag.h>
 #include <kurldrag.h>
 
 HistoryURLItem::HistoryURLItem( const KURL::List &_urls, TQMap<TQString, TQString> _metaData, bool _cut )

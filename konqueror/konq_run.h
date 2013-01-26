@@ -20,7 +20,7 @@
 #ifndef __kfm_run_h__
 #define __kfm_run_h__
 
-#include <kparts/browserrun.h>
+#include <tdeparts/browserrun.h>
 #include <tqguardedptr.h>
 #include <kservice.h>
 #include "konq_openurlrequest.h"

@@ -22,7 +22,7 @@
 #include "filetypedetails.h"
 #include "filegroupdetails.h"
 #include "filetypesview.h"
-#include <ksycoca.h>
+#include <tdesycoca.h>
 
 FileTypesView::FileTypesView(TQWidget *p, const char *name)
   : TDECModule(p, name)
@@ -418,7 +418,7 @@ void FileTypesView::slotDatabaseChanged()
 {
   if ( KSycoca::self()->isChanged( "mime" ) )
   {
-    // ksycoca has new KMimeTypes objects for us, make sure to update
+    // tdesycoca has new KMimeTypes objects for us, make sure to update
     // our 'copies' to be in sync with it. Not important for OK, but
     // important for Apply (how to differentiate those 2?).
     // See BR 35071.

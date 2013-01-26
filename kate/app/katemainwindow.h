@@ -27,7 +27,7 @@
 #include <kate/view.h>
 #include <kate/document.h>
 
-#include <kparts/part.h>
+#include <tdeparts/part.h>
 
 #include <kaction.h>
 

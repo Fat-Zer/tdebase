@@ -242,7 +242,7 @@ class="username">groupware</systemitem> user (already previously
 done!)</para></step>
 
 <step><para>Create/configure an <acronym>IMAP</acronym> account in &kmail;
-for login as that user</para></step> <step><para>Use kresources to make
+for login as that user</para></step> <step><para>Use tderesources to make
 &kontact; components work with data taken from <acronym>IMAP</acronym>
 source</para></step>
 
@@ -336,7 +336,7 @@ slow data updates.</para>
 <para>Now we have to tell &kontact; to use <acronym>IMAP</acronym> as the
 data source for it's various components. From the &kmenu;, choose
 <guimenuitem>Run command</guimenuitem>, run <userinput><command>kcmshell
-kresources</command></userinput>. In the combo box select
+tderesources</command></userinput>. In the combo box select
 <guilabel>Contacts</guilabel>, then press the <guibutton>Add...</guibutton>
 button, and choose <guilabel>Addressbook on IMAP Server via KMail</guilabel>. Then select that new line and
 press <guibutton>Use as Standard</guibutton> button. Do the same for

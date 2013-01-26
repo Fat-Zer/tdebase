@@ -21,7 +21,7 @@
 #include "kfindpart.h"
 #include "kquery.h"
 
-#include <kparts/genericfactory.h>
+#include <tdeparts/genericfactory.h>
 #include <kdebug.h>
 #include <klocale.h>
 

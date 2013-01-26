@@ -36,6 +36,6 @@ install( FILES ksplash.desktop DESTINATION ${SERVICES_INSTALL_DIR} )
 
 tde_add_executable( ksplash AUTOMOC
   SOURCES wndmain.cpp ksplashiface.skel main.cpp
-  LINK themedefault-static kparts-shared
+  LINK themedefault-static tdeparts-shared
   DESTINATION ${BIN_INSTALL_DIR}
 )

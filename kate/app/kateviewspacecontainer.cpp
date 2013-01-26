@@ -46,7 +46,7 @@
 #include <kglobalsettings.h>
 #include <kstringhandler.h>
 
-#include <ktexteditor/encodinginterface.h>
+#include <tdetexteditor/encodinginterface.h>
 
 #include <tqlayout.h>
 #include <tqobjectlist.h>
@@ -120,7 +120,7 @@ bool KateViewSpaceContainer::createView ( Kate::Document *doc )
   view->actionCollection()->remove (view->actionCollection()->action( "set_confdlg" ));
 
   // popup menu
-  view->installPopup ((TQPopupMenu*)(mainWindow()->factory()->container("ktexteditor_popup", mainWindow())) );
+  view->installPopup ((TQPopupMenu*)(mainWindow()->factory()->container("tdetexteditor_popup", mainWindow())) );
 
   connect(view->getDoc(),TQT_SIGNAL(nameChanged(Kate::Document *)),this,TQT_SLOT(statusMsg()));
   connect(view,TQT_SIGNAL(cursorPositionChanged()),this,TQT_SLOT(statusMsg()));

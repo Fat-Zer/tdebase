@@ -165,7 +165,7 @@ bool KCountryPage::save(KLanguageButton *comboCountry, KLanguageButton *comboLan
 		stream << comboLang->current();
 		if ( !kapp->dcopClient()->isAttached() )
 			kapp->dcopClient()->attach();
-		// ksycoca needs to be rebuilt
+		// tdesycoca needs to be rebuilt
 		TDEProcess proc;
 		proc << TQString::fromLatin1("kbuildsycoca");
 		proc.start(TDEProcess::DontCare);

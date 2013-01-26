@@ -19,7 +19,7 @@
 #ifndef kshellcmdplugin_h
 #define kshellcmdplugin_h
 
-#include <kparts/plugin.h>
+#include <tdeparts/plugin.h>
 #include <klibloader.h>
 
 class KShellCmdPlugin : public KParts::Plugin

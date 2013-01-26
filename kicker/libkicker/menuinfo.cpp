@@ -31,7 +31,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <klibloader.h>
 #include <kstandarddirs.h>
 #include <kpanelmenu.h>
-#include <kparts/componentfactory.h>
+#include <tdeparts/componentfactory.h>
 
 MenuInfo::MenuInfo(const TQString& desktopFile)
 {

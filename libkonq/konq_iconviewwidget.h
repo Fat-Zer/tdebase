@@ -260,7 +260,7 @@ public slots:
 
 signals:
     /**
-     * For cut/copy/paste/move/delete (see kparts/browserextension.h)
+     * For cut/copy/paste/move/delete (see tdeparts/browserextension.h)
      */
     void enableAction( const char * name, bool enabled );
 

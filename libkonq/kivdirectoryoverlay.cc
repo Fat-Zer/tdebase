@@ -97,7 +97,7 @@ void KIVDirectoryOverlay::slotCompleted()
     }
     
     if ( best * 2 < total ) {
-        m_bestIcon = "kmultiple";
+        m_bestIcon = "tdemultiple";
     }
 
     if (!m_bestIcon.isNull()) {

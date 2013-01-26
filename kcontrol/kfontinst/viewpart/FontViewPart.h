@@ -29,7 +29,7 @@
 // (C) Craig Drummond, 2002, 2003, 2004
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <kparts/part.h>
+#include <tdeparts/part.h>
 
 class TQPushButton;
 class TQFrame;

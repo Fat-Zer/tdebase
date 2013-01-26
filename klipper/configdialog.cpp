@@ -31,7 +31,7 @@
 #include <kpopupmenu.h>
 #include <twinmodule.h>
 #include <kregexpeditorinterface.h>
-#include <kparts/componentfactory.h>
+#include <tdeparts/componentfactory.h>
 
 #include "configdialog.h"
 

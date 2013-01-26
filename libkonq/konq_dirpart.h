@@ -21,8 +21,8 @@
 #define __konqdirpart_h
 
 #include <tqstring.h>
-#include <kparts/part.h>
-#include <kparts/browserextension.h>
+#include <tdeparts/part.h>
+#include <tdeparts/browserextension.h>
 #include <kfileitem.h>
 #include <kdatastream.h>
 #include <kio/global.h>

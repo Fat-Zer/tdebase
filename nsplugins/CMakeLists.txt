@@ -25,7 +25,7 @@ link_directories(
 
 ##### other data ################################
 
-install( FILES khtml_plugins.desktop DESTINATION ${XDG_APPS_INSTALL_DIR} )
+install( FILES tdehtml_plugins.desktop DESTINATION ${XDG_APPS_INSTALL_DIR} )
 install( FILES nspluginpart.rc DESTINATION ${DATA_INSTALL_DIR}/plugin )
 
 
@@ -36,7 +36,7 @@ tde_add_kpart( libnsplugin AUTOMOC
     viewer/NSPluginClassIface.stub
     NSPluginCallbackIface.skel
     plugin_part.cpp nspluginloader.cpp
-  LINK kparts-shared
+  LINK tdeparts-shared
   DESTINATION ${PLUGIN_INSTALL_DIR}
 )
 

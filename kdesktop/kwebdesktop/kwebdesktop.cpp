@@ -33,7 +33,7 @@
 #include <tqscrollview.h>
 #include "kwebdesktop.h"
 #include <kmimetype.h>
-#include <kparts/componentfactory.h>
+#include <tdeparts/componentfactory.h>
 #include "kwebdesktopsettings.h"
 
 #include "kwebdesktop.moc"
@@ -129,7 +129,7 @@ int main( int argc, char **argv )
     TDEIO::SimpleJob::removeOnHold(); // Kill any slave that was put on hold.
     delete webDesktop;
     delete run;
-    //khtml::Cache::clear();
+    //tdehtml::Cache::clear();
 
     return ret;
 }

@@ -39,7 +39,7 @@ set( ${target}_SRCS
 
 tde_add_kpart( ${target} AUTOMOC
   SOURCES ${${target}_SRCS}
-  LINK kparts-shared
+  LINK tdeparts-shared
   DESTINATION ${PLUGIN_INSTALL_DIR}
 )
 

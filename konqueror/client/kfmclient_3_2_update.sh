@@ -5,7 +5,7 @@ while read ln; do
         continue
     fi
     if test "$ln" = "StartNewKonqueror=Local only"; then
-        echo "SafeParts=khtml.desktop"
+        echo "SafeParts=tdehtml.desktop"
     elif test "$ln" = "StartNewKonqueror=Web only"; then
         echo "SafeParts=SAFE"
     elif test "$ln" = "StartNewKonqueror=Always" \

@@ -29,7 +29,7 @@
 
 #include <ktrader.h>
 
-#include <kparts/partmanager.h>
+#include <tdeparts/partmanager.h>
 #include "konq_openurlrequest.h"
 
 class TQString;

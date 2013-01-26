@@ -27,7 +27,7 @@
 
 #include <dcopobject.h>
 
-#include <libkrandr/libkrandr.h>
+#include <libtderandr/libtderandr.h>
 
 #include "iccconfigbase.h"
 

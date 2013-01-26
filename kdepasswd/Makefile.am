@@ -3,7 +3,7 @@ SUBDIRS = kcm
 
 bin_PROGRAMS = kdepasswd
 kdepasswd_SOURCES = kdepasswd.cpp passwd.cpp passwddlg.cpp
-kdepasswd_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_TDECORE) $(LIB_TDEUI) -ltdefx $(LIB_KIO) -lktexteditor
+kdepasswd_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_TDECORE) $(LIB_TDEUI) -ltdefx $(LIB_KIO) -ltdetexteditor
 kdepasswd_LDADD = $(LIB_KIO)
 
 METASOURCES =  AUTO

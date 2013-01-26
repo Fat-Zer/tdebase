@@ -45,7 +45,7 @@ Olaf Kirch <okir@caldera.de>      General Framework and PAM support
 Christian Esken <esken@kde.org>   Shadow and /etc/passwd support
 Oswald Buddenhagen <ossi@kde.org> Binary conversation interface, etc.
 
-Some parts were taken from kscreensaver's passwd.cpp
+Some parts were taken from tdescreensaver's passwd.cpp
 
 Currently this software is maintained by Oswald Buddenhagen <ossi@kde.org>.
 Please send new authentication modules (checkpass_*.c) to me.

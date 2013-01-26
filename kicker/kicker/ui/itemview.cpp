@@ -62,7 +62,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <twin.h>
 #include <kdebug.h>
 #include <kmimetype.h>
-#include <kmultipledrag.h>
+#include <tdemultipledrag.h>
 
 #include "client_mnu.h"
 #include "container_base.h"

@@ -73,7 +73,7 @@
 #include <kurldrag.h>
 #include <kdesktopfile.h>
 #include <khelpmenu.h>
-#include <kmultitabbar.h>
+#include <tdemultitabbar.h>
 #include <ktip.h>
 #include <kmenubar.h>
 #include <kstringhandler.h>
@@ -209,7 +209,7 @@ void KateMainWindow::setupMainWindow ()
 
   m_viewManager = new KateViewManager (this);
 
-  KateMDI::ToolView *ft = createToolView("kate_filelist", KMultiTabBar::Left, SmallIcon("kmultiple"), i18n("Documents"));
+  KateMDI::ToolView *ft = createToolView("kate_filelist", KMultiTabBar::Left, SmallIcon("tdemultiple"), i18n("Documents"));
   filelist = new KateFileList (this, m_viewManager, ft, "filelist");
   filelist->readConfig(KateApp::self()->config(), "Filelist");
 

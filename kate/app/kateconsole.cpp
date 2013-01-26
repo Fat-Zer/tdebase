@@ -31,7 +31,7 @@
 
 #include <kde_terminal_interface.h>
 
-#include <kparts/part.h>
+#include <tdeparts/part.h>
 
 #include <kurl.h>
 #include <klibloader.h>

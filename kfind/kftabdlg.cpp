@@ -24,7 +24,7 @@
 #include <kmessagebox.h>
 #include <kfiledialog.h>
 #include <kregexpeditorinterface.h>
-#include <kparts/componentfactory.h>
+#include <tdeparts/componentfactory.h>
 #include <kstandarddirs.h>
 
 #include "kquery.h"

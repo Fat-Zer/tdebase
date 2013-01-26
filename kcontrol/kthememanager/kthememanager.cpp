@@ -398,7 +398,7 @@ void kthememanager::queryLNFModules()
     dlg->btnStyle->setIconSet( il->loadIconSet( "style", KIcon::Desktop, 32 ) );
     dlg->btnIcons->setIconSet( il->loadIconSet( "icons", KIcon::Desktop, 32 ) );
     dlg->btnFonts->setIconSet( il->loadIconSet( "fonts", KIcon::Desktop, 32 ) );
-    dlg->btnSaver->setIconSet( il->loadIconSet( "kscreensaver", KIcon::Desktop, 32 ) );
+    dlg->btnSaver->setIconSet( il->loadIconSet( "tdescreensaver", KIcon::Desktop, 32 ) );
 }
 
 void kthememanager::updatePreview( const TQString & pixFile )

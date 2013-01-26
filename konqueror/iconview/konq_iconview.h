@@ -19,7 +19,7 @@
 #ifndef __konq_iconview_h__
 #define __konq_iconview_h__
 
-#include <kparts/browserextension.h>
+#include <tdeparts/browserextension.h>
 #include <konq_iconviewwidget.h>
 #include <konq_operations.h>
 #include <konq_dirpart.h>

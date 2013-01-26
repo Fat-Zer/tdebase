@@ -5,32 +5,32 @@ kde_module_LTLIBRARIES = kcm_randr.la
 
 METASOURCES = AUTO
 
-kcm_randr_la_SOURCES = krandrmodule.cpp
+kcm_randr_la_SOURCES = tderandrmodule.cpp
 kcm_randr_la_LDFLAGS = -module -avoid-version $(all_libraries) -no-undefined
 kcm_randr_la_LIBADD = $(LIB_TDEUI) $(LIB_XRANDR)
 
-noinst_HEADERS = krandrmodule.h krandrtray.h krandrapp.h \
-    krandrpassivepopup.h configdialog.h
+noinst_HEADERS = tderandrmodule.h tderandrtray.h tderandrapp.h \
+    tderandrpassivepopup.h configdialog.h
 
-xdg_apps_DATA = krandrtray.desktop
+xdg_apps_DATA = tderandrtray.desktop
 
-krandr_data_DATA = randr.desktop
-krandr_datadir = $(kde_appsdir)/.hidden
+tderandr_data_DATA = randr.desktop
+tderandr_datadir = $(kde_appsdir)/.hidden
 
 # Autostart
 autostartdir = $(prefix)/share/autostart
-autostart_DATA = krandrtray-autostart.desktop
+autostart_DATA = tderandrtray-autostart.desktop
 
 #install-data-local: uninstall.desktop
 #	$(mkinstalldirs) $(DESTDIR)$(kde_appsdir)/Settings/Desktop
 #	$(INSTALL_DATA) $(srcdir)/uninstall.desktop
-#	$(DESTDIR)$(kde_appsdir)/Settings/Desktop/krandrmodule.desktop
+#	$(DESTDIR)$(kde_appsdir)/Settings/Desktop/tderandrmodule.desktop
 
-bin_PROGRAMS = krandrtray
+bin_PROGRAMS = tderandrtray
 
-krandrtray_SOURCES = main.cpp krandrtray.cpp krandrapp.cpp krandrpassivepopup.cpp configdialog.cpp
-krandrtray_LDFLAGS = $(all_libraries) $(KDE_RPATH) -lkrandr
-krandrtray_LDADD = $(LIB_KFILE) $(LIB_KUTILS) $(LIB_XRANDR)
+tderandrtray_SOURCES = main.cpp tderandrtray.cpp tderandrapp.cpp tderandrpassivepopup.cpp configdialog.cpp
+tderandrtray_LDFLAGS = $(all_libraries) $(KDE_RPATH) -ltderandr
+tderandrtray_LDADD = $(LIB_KFILE) $(LIB_KUTILS) $(LIB_XRANDR)
 
 messages: rc.cpp
-	$(XGETTEXT) *.cpp -o $(podir)/krandr.pot
+	$(XGETTEXT) *.cpp -o $(podir)/tderandr.pot

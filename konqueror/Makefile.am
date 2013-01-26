@@ -60,7 +60,7 @@ konqueror_la_LIBADD = ../libkonq/libkonq.la libkonqueror_intern.la $(LIBMALLOC) 
 #check_PROGRAMS = konqueror_static
 #
 #konqueror_static_SOURCES = dummy.cc
-#konqueror_static_LDADD = konqueror.la *view/*.la dirtree/*.la $(libdir)/libkhtml.la
+#konqueror_static_LDADD = konqueror.la *view/*.la dirtree/*.la $(libdir)/libtdehtml.la
 #konqueror_static_LDFLAGS = $(all_libraries) -static
 
 messages: rc.cpp

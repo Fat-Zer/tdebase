@@ -45,7 +45,7 @@ tuned for accessibility purposes, especially for people with reduced
 vision.</para>
 
 <para>Your choices here affect every &tde; application that renders HTML
-with &tde;'s own renderer, which is called khtml.  These include
+with &tde;'s own renderer, which is called tdehtml.  These include
 &kmail;, &khelpcenter; and of course &konqueror;.  Choices here do not
 affect other browsers such as &Netscape;.</para>
 

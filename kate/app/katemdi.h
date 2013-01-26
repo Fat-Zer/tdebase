@@ -21,9 +21,9 @@
 #ifndef __KATE_MDI_H__
 #define __KATE_MDI_H__
 
-#include <kparts/mainwindow.h>
+#include <tdeparts/mainwindow.h>
 
-#include <kmultitabbar.h>
+#include <tdemultitabbar.h>
 #include <kxmlguiclient.h>
 #include <kaction.h>
 

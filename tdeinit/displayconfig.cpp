@@ -35,7 +35,7 @@
 #include <signal.h>
 
 #ifdef WITH_XRANDR
-#include <libkrandr/libkrandr.h>
+#include <libtderandr/libtderandr.h>
 #endif
 
 static const char description[] = I18N_NOOP("TDE Initialization Display Configuration");

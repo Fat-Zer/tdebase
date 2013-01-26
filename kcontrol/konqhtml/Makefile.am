@@ -13,9 +13,9 @@ kcm_konqhtml_la_SOURCES = advancedTabDialog.cpp htmlopts.cpp jsopts.cpp \
 			     filteropts.cpp
 
 kcm_konqhtml_la_LDFLAGS  = $(all_libraries) -module -avoid-version -no-undefined
-kcm_konqhtml_la_LIBADD = -lkhtml -ltdeui
+kcm_konqhtml_la_LIBADD = -ltdehtml -ltdeui
 
-xdg_apps_DATA = khtml_behavior.desktop khtml_java_js.desktop khtml_fonts.desktop khtml_filter.desktop
+xdg_apps_DATA = tdehtml_behavior.desktop tdehtml_java_js.desktop tdehtml_fonts.desktop tdehtml_filter.desktop
 
 messages: rc.cpp
 	$(XGETTEXT) *.cpp -o $(podir)/kcmkonqhtml.pot
@@ -23,4 +23,4 @@ messages: rc.cpp
 install-data-local: uninstall.desktop
 	$(mkinstalldirs) $(DESTDIR)$(kde_appsdir)/Settings/WebBrowsing
 	$(INSTALL_DATA) $(srcdir)/uninstall.desktop $(DESTDIR)$(kde_appsdir)/Settings/WebBrowsing/nsplugin.desktop
-	$(INSTALL_DATA) $(srcdir)/uninstall.desktop $(DESTDIR)$(kde_appsdir)/Settings/WebBrowsing/khtml_appearance.desktop
+	$(INSTALL_DATA) $(srcdir)/uninstall.desktop $(DESTDIR)$(kde_appsdir)/Settings/WebBrowsing/tdehtml_appearance.desktop

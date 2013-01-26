@@ -3,7 +3,7 @@
 
 #include <tqstringlist.h>
 
-#include <kparts/browserextension.h>
+#include <tdeparts/browserextension.h>
 
 struct KonqOpenURLRequest {
 

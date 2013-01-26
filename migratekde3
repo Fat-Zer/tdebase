@@ -253,10 +253,10 @@ if [ -n "$KDE3_PROFILE" ] && [ -d "$KDE3_PROFILE" ]; then
   if [ "$TMP_DIR" != "" ]; then
     rm -fr $TMP_DIR 2>/dev/null
   fi
-  # Remove the ksycoca files from the cache directory. The KDE3 and Trinity
+  # Remove the tdesycoca files from the cache directory. The KDE3 and Trinity
   # cache directories will be linked to the same location, but deleting the
-  # ksycoca files is non-destructive.
-  rm -f $HOME/.trinity/cache-`uname -n`/ksycoca* 2>/dev/null
+  # tdesycoca files is non-destructive.
+  rm -f $HOME/.trinity/cache-`uname -n`/tdesycoca* 2>/dev/null
 
   # Fix config files.
   # Exclude KMail mail files --- we don't want to touch those files.
