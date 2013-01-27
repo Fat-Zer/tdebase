@@ -17,7 +17,7 @@
 #include "triggers.h"
 
 #include <kglobalaccel.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <kdebug.h>
 #include <twinmodule.h>
 #include <klocale.h>

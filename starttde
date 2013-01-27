@@ -98,7 +98,7 @@ fi
 # tdeinit is used to fork off processes which improves memory usage
 # and startup time.
 #
-# * tdeinit starts the dcopserver and klauncher first.
+# * tdeinit starts the dcopserver and tdelauncher first.
 # * Then kded is started. kded is responsible for keeping the sycoca
 #   database up to date. When an up to date database is present it goes
 #   into the background and the startup continues.
@@ -274,7 +274,7 @@ if [ -d "$tdehome" ]; then
 else
   echo "[starttde] Creating $tdehome" 1>&2
 fi
-# Please see kstartupconfig source for usage.
+# Please see tdestartupconfig source for usage.
 mkdir -m 700 -p "$tdehome"
 mkdir -m 700 -p "$tdehome/share"
 mkdir -m 700 -p "$tdehome/share/config"
@@ -290,9 +290,9 @@ kcmrandrrc [Screen2]
 kcmrandrrc [Screen3]
 kcmfonts General forceFontDPI 0
 EOF
-$TDEDIR/bin/kstartupconfig
+$TDEDIR/bin/tdestartupconfig
 if test $? -ne 0; then
-  xmessage -center -geometry 500x100 "Could not start kstartupconfig. Check your installation."
+  xmessage -center -geometry 500x100 "Could not start tdestartupconfig. Check your installation."
 fi
 # $tdehome/share/config/startupconfig should exist but avoid script failure if not.
 if [ -r "$tdehome/share/config/startupconfig" ]; then

@@ -76,7 +76,7 @@ tde_add_executable( tdm_greet AUTOMOC
 
 tde_add_executable( krootimage AUTOMOC
   SOURCES krootimage.cpp
-  LINK bgnd-static kio-shared
+  LINK bgnd-static tdeio-shared
   DESTINATION ${BIN_INSTALL_DIR}
 )
 

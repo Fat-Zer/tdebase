@@ -26,7 +26,7 @@
 #include <kcombobox.h>
 #include <kstandarddirs.h>
 #include <kcolorbutton.h>
-#include <kfiledialog.h>
+#include <tdefiledialog.h>
 #include <kapplication.h>
 #include <kaboutdata.h>
 #include <kshortcut.h>

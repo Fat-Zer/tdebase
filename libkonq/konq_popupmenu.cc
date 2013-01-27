@@ -37,7 +37,7 @@
 
 #include <assert.h>
 
-#include <kfileshare.h>
+#include <tdefileshare.h>
 #include <kprocess.h>
 
 #include "kpropertiesdialog.h"
@@ -1130,7 +1130,7 @@ void KonqPopupMenu::slotPopupProperties()
 
 KPropertiesDialog* KonqPopupMenu::showPropertiesDialog()
 {
-    // It may be that the kfileitem was created by hand
+    // It may be that the tdefileitem was created by hand
     // (see KonqKfmIconView::slotMouseButtonPressed)
     // In that case, we can get more precise info in the properties
     // (like permissions) if we stat the URL.

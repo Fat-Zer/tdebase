@@ -33,7 +33,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <kapplication.h>
 #include <kglobal.h>
 #include <kiconloader.h>
-#include <kio/global.h>
+#include <tdeio/global.h>
 #include <klocale.h>
 #include <krun.h>
 #include <kshell.h>

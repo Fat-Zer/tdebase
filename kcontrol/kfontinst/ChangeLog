@@ -118,11 +118,11 @@ KDE3.1 -> KDE3.2
 4.  Settings are saved on "Apply".
 5.  Settings tab simplified - some uneccesary settings removed.
 6.  Removal of Anti-Alias tab - relevant settings moved to kcmfonts.
-7.  Add kfile-plugin to display Meta data for fonts.
+7.  Add tdefile-plugin to display Meta data for fonts.
 8.  Remove settings wizard.
 9.  Drop use of internal version numbering - not tagging CVS anyway, so whats the point?
 10. DCOP interface.
-11. Remember size of main window when run via kcmshell.
+11. Remember size of main window when run via tdecmshell.
 
 0.10->0.11 (KDE3.0)
 ===================

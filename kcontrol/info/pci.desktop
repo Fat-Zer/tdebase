@@ -1,5 +1,5 @@
 [Desktop Entry]
-Exec=kcmshell pci
+Exec=tdecmshell pci
 Icon=kcmpci
 Type=Application
 DocPath=kinfocenter/pci/index.html

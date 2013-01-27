@@ -24,7 +24,7 @@ DEALINGS IN THE SOFTWARE.
 
 #include "kdecoration_p.h"
 
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <kglobalsettings.h>
 #include <tqpalette.h>
 #include <tqapplication.h>

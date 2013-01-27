@@ -4,7 +4,7 @@
 #include <tqptrlist.h>
 
 #include <kmainwindow.h>
-#include <kio/job.h>
+#include <tdeio/job.h>
 #include <kurl.h>
 #include <tdeparts/browserextension.h>
 #include <dcopclient.h>

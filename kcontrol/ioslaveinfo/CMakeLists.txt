@@ -29,6 +29,6 @@ tde_install_empty_directory( ${DATA_INSTALL_DIR}/Settings/Information )
 
 tde_add_kpart( kcm_ioslaveinfo AUTOMOC
   SOURCES kcmioslaveinfo.cpp
-  LINK kio-shared
+  LINK tdeio-shared
   DESTINATION ${PLUGIN_INSTALL_DIR}
 )

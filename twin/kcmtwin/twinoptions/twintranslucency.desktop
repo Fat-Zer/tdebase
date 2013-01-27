@@ -1,7 +1,7 @@
 [Desktop Entry]
 Icon=kcmkwm
 Type=Application
-Exec=kcmshell twintranslucency
+Exec=tdecmshell twintranslucency
 DocPath=kcontrol/windowmanagement/index.html#action-translucency
 
 X-TDE-ModuleType=Library

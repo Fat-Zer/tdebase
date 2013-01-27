@@ -27,7 +27,7 @@
 #include <tqvbox.h>
 #include <tqfileinfo.h>
 
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <kglobal.h>
 #include <klocale.h>
 #include <kdialog.h>
@@ -137,7 +137,7 @@ void AppletTab::load( bool useDefaults )
         }
     }
   else
-      l_trusted << "clockapplet" << "ksystemtrayapplet" << "krunapplet" << "quicklauncher"
+      l_trusted << "clockapplet" << "ksystemtrayapplet" << "krunapplet" << "quictdelauncher"
                 << "kminipagerapplet" << "ktaskbarapplet" << "eyesapplet" << "kmixapplet";
 
   for ( TQStringList::Iterator it = available.begin(); it != available.end(); ++it )

@@ -39,7 +39,7 @@
 #include <kdebug.h>
 #include <kstandarddirs.h>
 #include <kglobalsettings.h>
-#include <kio/netaccess.h>
+#include <tdeio/netaccess.h>
 #include <kmessagebox.h>
 
 #include <config.h>

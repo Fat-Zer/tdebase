@@ -20,7 +20,7 @@
 #ifndef _KIVDIRECTORYOVERLAY_H_
 #define _KIVDIRECTORYOVERLAY_H_
 
-#include <kfileitem.h>
+#include <tdefileitem.h>
 #include <libkonq_export.h>
 
 #include <tqdict.h>

@@ -34,10 +34,10 @@
 #include <tqvbox.h>
 #include <tqwhatsthis.h>
 #include <klocale.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <kmessagebox.h>
-#include <kio/job.h>
-#include <kio/netaccess.h>
+#include <tdeio/job.h>
+#include <tdeio/netaccess.h>
 
 namespace KFI
 {

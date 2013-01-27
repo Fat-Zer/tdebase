@@ -30,17 +30,17 @@
 // libart
 #cmakedefine HAVE_LIBART 1
 
-// tdm, kioslave
+// tdm, tdeioslave
 #cmakedefine HAVE_TERMIOS_H 1
 
-// kioslave/media
+// tdeioslave/media
 #cmakedefine WITH_HAL 1
 #ifdef WITH_HAL
 #define COMPILE_HALBACKEND
 #define COMPILE_LINUXCDPOLLING
 #endif
 
-// kioslave/media
+// tdeioslave/media
 #cmakedefine WITH_TDEHWLIB 1
 #ifdef WITH_TDEHWLIB
 // forcibly deactivate HAL support and substitute TDE hardware library support
@@ -48,10 +48,10 @@
 #define COMPILE_TDEHARDWAREBACKEND
 #endif
 
-// kioslave/fish, kcontrol/info
+// tdeioslave/fish, kcontrol/info
 #cmakedefine HAVE_SYS_IOCTL_H 1
 
-// kioslave/smtp, kioslave/pop3
+// tdeioslave/smtp, tdeioslave/pop3
 #cmakedefine HAVE_LIBSASL2 1
 
 // tdm, kcontrol
@@ -71,7 +71,7 @@
 // kio_smtp, ksysguard
 #cmakedefine kde_socklen_t @kde_socklen_t@
 
-// kfile_media
+// tdefile_media
 #cmakedefine HAVE_STATVFS
 
 // taskmanager
@@ -121,7 +121,6 @@
 
 // kdesktop
 #cmakedefine KSCREENSAVER_PAM_SERVICE "@KSCREENSAVER_PAM_SERVICE@"
-#cmakedefine WITH_KDESKTOP_LOCK_BACKTRACE 1
 
 // tdm
 #cmakedefine XBINDIR "@XBINDIR@"

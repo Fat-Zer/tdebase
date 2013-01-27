@@ -3,7 +3,7 @@
 
 #include <kdialogbase.h>
 #include <tqwidget.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <tqlabel.h>
 #include <tqlayout.h>
 #include <tqwhatsthis.h>

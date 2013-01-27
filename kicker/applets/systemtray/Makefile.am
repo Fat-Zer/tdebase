@@ -21,4 +21,4 @@ messages:
 	$(XGETTEXT)  *.cpp *.h -o $(podir)/ksystemtrayapplet.pot
 
 srcdoc:
-	kdoc -a -p -H -d $$HOME/web/src/ksystemtrayapplet ksystemtrayapplet *.h -lqt -ltdecore -ltdeui -lkfile
+	kdoc -a -p -H -d $$HOME/web/src/ksystemtrayapplet ksystemtrayapplet *.h -lqt -ltdecore -ltdeui -ltdefile

@@ -22,7 +22,7 @@ Copyright (C) 2000 Matthias Ettrich <ettrich@kde.org>
 #include <kdebug.h>
 #include <klocale.h>
 #include <kglobal.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include "server.h"
 
 

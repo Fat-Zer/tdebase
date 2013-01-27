@@ -2,7 +2,7 @@
 Type=Application
 DocPath=kcontrol/desktopbehavior/index.html
 Icon=desktop
-Exec=kcmshell desktopbehavior
+Exec=tdecmshell desktopbehavior
 
 
 X-TDE-Library=konq

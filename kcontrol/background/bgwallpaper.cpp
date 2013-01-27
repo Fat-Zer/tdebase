@@ -27,7 +27,7 @@
 #include <tqpushbutton.h>
 #include <tqspinbox.h>
 
-#include <kfiledialog.h>
+#include <tdefiledialog.h>
 #include <kimageio.h>
 #include <klocale.h>
 #include <kstandarddirs.h>

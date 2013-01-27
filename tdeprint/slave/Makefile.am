@@ -19,4 +19,4 @@ servicesdir = $(kde_servicesdir)
 services_DATA = print.protocol printdb.protocol
 
 messages: rc.cpp
-	$(XGETTEXT) *.cpp -o $(podir)/kio_print.pot
+	$(XGETTEXT) *.cpp -o $(podir)/tdeio_print.pot

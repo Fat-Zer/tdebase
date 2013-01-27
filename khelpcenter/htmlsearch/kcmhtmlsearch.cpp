@@ -25,7 +25,7 @@
 #include <kapplication.h>
 #include <tqcheckbox.h>
 #include <tqwhatsthis.h>
-#include <kfiledialog.h>
+#include <tdefiledialog.h>
 #include <kprocess.h>
 #include "klangcombo.h"
 #include <kurlrequester.h>

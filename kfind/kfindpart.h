@@ -22,7 +22,7 @@
 
 #include <tdeparts/browserextension.h>
 #include <tdeparts/part.h>
-#include <kfileitem.h>
+#include <tdefileitem.h>
 #include <kdebug.h>
 #include <tqptrlist.h>
 #include <konq_dirpart.h>

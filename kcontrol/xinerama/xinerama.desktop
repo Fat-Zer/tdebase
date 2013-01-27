@@ -1,7 +1,7 @@
 [Desktop Entry]
 Icon=identity
 Type=Application
-Exec=kcmshell xinerama
+Exec=tdecmshell xinerama
 DocPath=kcontrol/multiplemonitors.html
 
 X-TDE-Library=xinerama

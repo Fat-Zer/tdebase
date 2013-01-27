@@ -19,7 +19,7 @@ clock_panelapplet_la_LDFLAGS = -module $(KDE_PLUGIN) $(all_libraries)
 clock_panelapplet_la_LIBADD =  ../../libkicker/libkickermain.la $(LIB_TDEUI)
 
 srcdoc:
-	kdoc -a -p -H -d $$HOME/web/src/clockapplet clockapplet *.h -lqt -ltdecore -ltdeui -lkfile
+	kdoc -a -p -H -d $$HOME/web/src/clockapplet clockapplet *.h -lqt -ltdecore -ltdeui -ltdefile
 
 messages: rc.cpp
 	$(XGETTEXT) *.cpp *.h -o $(podir)/clockapplet.pot

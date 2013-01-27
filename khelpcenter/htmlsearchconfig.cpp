@@ -26,7 +26,7 @@
 #include <klocale.h>
 #include <kurllabel.h>
 #include <kapplication.h>
-#include <kfiledialog.h>
+#include <tdefiledialog.h>
 #include <kurlrequester.h>
 #include <klineedit.h>
 

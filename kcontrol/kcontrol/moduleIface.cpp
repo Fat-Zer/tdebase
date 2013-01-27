@@ -21,7 +21,7 @@
 #include "moduleIface.moc"
 
 #include <kdebug.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 
 ModuleIface::ModuleIface(TQObject *parent, const char *name) 
 	: TQObject(parent, name), DCOPObject(name) {

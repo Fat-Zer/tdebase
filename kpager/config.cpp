@@ -31,7 +31,7 @@
 
 #include <kdialogbase.h>
 #include <klocale.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <kseparator.h>
 #include <kapplication.h>
 #include <kdebug.h>

@@ -2,7 +2,7 @@
 Type=Application
 DocPath=kcontrol/tdehtml/index.html#tdehtml-adblock
 Icon=filter
-Exec=kcmshell tdehtml_filter
+Exec=tdecmshell tdehtml_filter
 
 X-TDE-Library=konqhtml
 X-TDE-FactoryName=tdehtml_filter

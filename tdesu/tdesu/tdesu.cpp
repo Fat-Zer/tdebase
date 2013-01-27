@@ -31,7 +31,7 @@
 #include <kglobal.h>
 #include <kapplication.h>
 #include <kstandarddirs.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <klocale.h>
 #include <kaboutdata.h>
 #include <kcmdlineargs.h>

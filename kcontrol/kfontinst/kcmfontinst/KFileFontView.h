@@ -30,7 +30,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 //
-// NOTE: HEAVILY copied from kfiledetailview.cpp...
+// NOTE: HEAVILY copied from tdefiledetailview.cpp...
 //
 //   Copyright (C) 1997 Stephan Kulow <coolo@kde.org>
 //                 2000, 2001 Carste
@@ -42,7 +42,7 @@ class TQKeyEvent;
 #include <klistview.h>
 #include <kmimetyperesolver.h>
 
-#include "kfileview.h"
+#include "tdefileview.h"
 
 /**
  * An item for the listiew, that has a reference to its corresponding

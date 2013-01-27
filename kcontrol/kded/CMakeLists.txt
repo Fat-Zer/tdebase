@@ -28,6 +28,6 @@ install( FILES kcmkded.desktop DESTINATION ${XDG_APPS_INSTALL_DIR} )
 
 tde_add_kpart( kcm_kded AUTOMOC
   SOURCES kcmkded.cpp
-  LINK kio-shared
+  LINK tdeio-shared
   DESTINATION ${PLUGIN_INSTALL_DIR}
 )

@@ -29,7 +29,7 @@ Copyright (C) 2000 Matthias Ettrich <ettrich@kde.org>
 #include <tqeventloop.h>
 
 #include <klocale.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <kapplication.h>
 #include <kdebug.h>
 #include <kpushbutton.h>
@@ -43,7 +43,7 @@ Copyright (C) 2000 Matthias Ettrich <ettrich@kde.org>
 #include <kimageeffect.h>
 #include <kdialog.h>
 #include <kseparator.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 
 #include <dcopclient.h>
 #include <dcopref.h>

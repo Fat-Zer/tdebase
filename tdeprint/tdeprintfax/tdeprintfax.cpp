@@ -43,9 +43,9 @@
 #include <tqheader.h>
 #include <klocale.h>
 #include <kiconloader.h>
-#include <kio/netaccess.h>
+#include <tdeio/netaccess.h>
 #include <kmessagebox.h>
-#include <kfiledialog.h>
+#include <tdefiledialog.h>
 #include <kmimetype.h>
 #include <kseparator.h>
 #include <ksystemtray.h>

@@ -1,4 +1,4 @@
-// Born as tdelibs/kio/kfile/kfilebookmarkhandler.h
+// Born as tdelibs/tdeio/tdefile/tdefilebookmarkhandler.h
 
 #ifndef KONSOLEBOOKMARKHANDLER_H
 #define KONSOLEBOOKMARKHANDLER_H

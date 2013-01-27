@@ -2,7 +2,7 @@
 Icon=kcmkicker
 Type=Application
 DocPath=kcontrol/panel/index.html#panel-hiding
-Exec=kcmshell kicker_hiding
+Exec=tdecmshell kicker_hiding
 
 X-TDE-Library=kicker
 X-TDE-FactoryName=kicker_hiding

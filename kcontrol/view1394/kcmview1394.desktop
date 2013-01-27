@@ -2,7 +2,7 @@
 Icon=ieee1394
 Type=Application
 DocPath=kinfocenter/view1394/index.html
-Exec=kcmshell kcmview1394
+Exec=tdecmshell kcmview1394
 
 X-TDE-Library=view1394
 X-TDE-ParentApp=kinfocenter

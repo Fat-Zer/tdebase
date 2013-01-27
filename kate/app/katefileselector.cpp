@@ -53,7 +53,7 @@
 #include <kurlcompletion.h>
 #include <kprotocolinfo.h>
 #include <kdiroperator.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <klocale.h>
 #include <kcombobox.h>
 #include <kaction.h>
@@ -66,7 +66,7 @@
 //END Includes
 
 //BEGIN Toolbar
- // from kfiledialog.cpp - avoid qt warning in STDERR (~/.xsessionerrors)
+ // from tdefiledialog.cpp - avoid qt warning in STDERR (~/.xsessionerrors)
 static void silenceQToolBar(TQtMsgType, const char *){}
 
 // helper classes to be able to have a toolbar without move handle

@@ -22,7 +22,7 @@
 #include <klineedit.h>
 #include <klocale.h>
 #include <kmessagebox.h>
-#include <kfiledialog.h>
+#include <tdefiledialog.h>
 #include <kregexpeditorinterface.h>
 #include <tdeparts/componentfactory.h>
 #include <kstandarddirs.h>

@@ -40,7 +40,7 @@ tde_add_kpart( kcm_keyboard AUTOMOC
     extension.cpp x11helper.cpp rules.cpp kxkbconfig.cpp
     pixmap.cpp kcmlayout.cpp kcmlayoutwidget.ui
     kcmmisc.cpp kcmmiscwidget.ui
-  LINK kio-shared xkbfile ${XTEST_LIBRARIES}
+  LINK tdeio-shared xkbfile ${XTEST_LIBRARIES}
   DESTINATION ${PLUGIN_INSTALL_DIR}
 )
 

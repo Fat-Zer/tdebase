@@ -34,7 +34,7 @@
 #include <kapplication.h>
 #include <kaccelmanager.h>
 #include <kbuttonbox.h>
-#include <kfiledialog.h>
+#include <tdefiledialog.h>
 #include <kprocess.h>
 #include <kapplication.h>
 #include <klocale.h>

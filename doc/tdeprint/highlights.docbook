@@ -369,7 +369,7 @@ functions that were provided by <application>qtcups</application> and
 <para>Instead of <command>qtcups</command> you can now use the
 <command>kprinter</command> command.  And in place of
 <command>kups</command> you will probably use
-<command>kcmshell printers</command> from now on.
+<command>tdecmshell printers</command> from now on.
 </para>
 
 <para>The &tdeprint; module for &CUPS; also lets you fully administer

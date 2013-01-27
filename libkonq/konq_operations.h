@@ -192,7 +192,7 @@ private:
     KIOPasteInfo * m_pasteInfo;
 };
 
-#include <kio/job.h>
+#include <tdeio/job.h>
 
 /// Restore multiple trashed files
 class KonqMultiRestoreJob : public TDEIO::Job

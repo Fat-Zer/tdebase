@@ -27,7 +27,7 @@
 
 #include <klocale.h>
 #include <kglobal.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <dcopref.h>
 #include <tqfile.h>
 
@@ -80,13 +80,13 @@ extern "C"
     XDefineCursor(tqt_xdisplay(), tqt_xrootwin(), handle);
     XFreeCursor(tqt_xdisplay(), handle); // Don't leak the cursor
 
-    // Tell klauncher to set the XCURSOR_THEME and XCURSOR_SIZE environment
+    // Tell tdelauncher to set the XCURSOR_THEME and XCURSOR_SIZE environment
     // variables when launching applications.
-    DCOPRef klauncher("klauncher");
+    DCOPRef tdelauncher("tdelauncher");
     if( !theme.isEmpty())
-        klauncher.send("setLaunchEnv", TQCString("XCURSOR_THEME"), theme);
+        tdelauncher.send("setLaunchEnv", TQCString("XCURSOR_THEME"), theme);
     if( !size.isEmpty())
-        klauncher.send("setLaunchEnv", TQCString("XCURSOR_SIZE"), size);
+        tdelauncher.send("setLaunchEnv", TQCString("XCURSOR_SIZE"), size);
 #endif
 
     delete config;

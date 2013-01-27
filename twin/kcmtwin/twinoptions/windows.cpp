@@ -37,7 +37,7 @@
 #include <kactivelabel.h>
 #include <klocale.h>
 #include <kcolorbutton.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <knuminput.h>
 #include <kapplication.h>
 #include <kdialog.h>

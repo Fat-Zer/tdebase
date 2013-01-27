@@ -85,7 +85,7 @@ set( ${target}_SRCS
   pixmapserver.cc kcustommenu.cc startupid.cpp minicli_ui.ui
   xautolock_diy.c xautolock_engine.c kshadowengine.cpp
   kshadowsettings.cpp kdesktopshadowsettings.cpp
-  kfileividesktop.cpp kdesktopapp.cpp
+  tdefileividesktop.cpp kdesktopapp.cpp
 )
 
 tde_add_tdeinit_executable( ${target} AUTOMOC

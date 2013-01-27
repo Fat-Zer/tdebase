@@ -29,6 +29,6 @@ install( FILES template.css DESTINATION ${DATA_INSTALL_DIR}/kcmcss )
 
 tde_add_kpart( kcm_css AUTOMOC
   SOURCES template.cpp cssconfig.ui csscustom.ui kcmcss.cpp preview.ui
-  LINK kio-shared
+  LINK tdeio-shared
   DESTINATION ${PLUGIN_INSTALL_DIR}
 )

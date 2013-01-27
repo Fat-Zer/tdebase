@@ -28,7 +28,7 @@ install( FILES filetypes.desktop DESTINATION ${XDG_APPS_INSTALL_DIR} )
 
 tde_add_kpart( kcm_filetypes AUTOMOC
   SOURCES control.cpp
-  LINK filetypes-static kio-shared
+  LINK filetypes-static tdeio-shared
   DESTINATION ${PLUGIN_INSTALL_DIR}
 )
 
@@ -46,6 +46,6 @@ tde_add_library( filetypes STATIC_PIC AUTOMOC
 
 tde_add_executable( keditfiletype AUTOMOC
   SOURCES keditfiletype.cpp
-  LINK filetypes-static kio-shared
+  LINK filetypes-static tdeio-shared
   DESTINATION ${BIN_INSTALL_DIR}
 )

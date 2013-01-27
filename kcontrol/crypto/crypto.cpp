@@ -50,11 +50,11 @@
 
 #include <kaboutdata.h>
 #include <kcombobox.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <kdatepicker.h>
 #include <kdebug.h>
 #include <kdialog.h>
-#include <kfiledialog.h>
+#include <tdefiledialog.h>
 #include <kgenericfactory.h>
 #include <kglobal.h>
 #include <klineedit.h>

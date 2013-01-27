@@ -21,7 +21,7 @@
 #include "kprivacymanager.h"
 #include <kapplication.h>
 #include <dcopclient.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <ksimpleconfig.h>
 #include <kprocess.h>
 #include <kglobal.h>

@@ -22,7 +22,7 @@
 #include <tqscrollview.h>
 
 #include <kiconloader.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <twin.h>
 #include <kapplication.h>
 #include <kdebug.h>

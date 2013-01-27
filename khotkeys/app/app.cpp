@@ -17,7 +17,7 @@
 #include "app.h"
 
 #include <kcmdlineargs.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <klocale.h>
 
 #include <stdio.h>

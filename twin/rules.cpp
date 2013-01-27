@@ -11,7 +11,7 @@ License. See the file "COPYING" for the exact licensing terms.
 #include "rules.h"
 
 #include <fixx11h.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <tqregexp.h>
 #include <ktempfile.h>
 #include <ksimpleconfig.h>

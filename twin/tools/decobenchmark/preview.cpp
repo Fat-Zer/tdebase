@@ -23,7 +23,7 @@
 
 #include <kapplication.h>
 #include <klocale.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <kglobal.h>
 #include <tqlabel.h>
 #include <tqstyle.h>

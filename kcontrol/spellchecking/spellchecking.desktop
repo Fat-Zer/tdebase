@@ -1,5 +1,5 @@
 [Desktop Entry]
-Exec=kcmshell spellchecking
+Exec=tdecmshell spellchecking
 Icon=spellcheck
 Type=Application
 DocPath=kcontrol/spellchecking/index.html

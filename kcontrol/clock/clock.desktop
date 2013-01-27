@@ -1,6 +1,6 @@
 [Desktop Entry]
 Type=Application
-Exec=kcmshell tde-clock.desktop
+Exec=tdecmshell tde-clock.desktop
 Icon=date
 DocPath=kcontrol/clock/index.html
 

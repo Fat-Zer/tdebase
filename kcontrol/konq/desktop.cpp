@@ -31,7 +31,7 @@
 #include <kdialog.h>
 #include <klineedit.h>
 #include <knuminput.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 
 #include <netwm.h>
 

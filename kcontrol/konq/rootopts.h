@@ -16,7 +16,7 @@
 #include <tqstring.h>
 
 #include <tdecmodule.h>
-#include <kio/global.h>
+#include <tdeio/global.h>
 #include <kurl.h>
 
 class TQCheckBox;

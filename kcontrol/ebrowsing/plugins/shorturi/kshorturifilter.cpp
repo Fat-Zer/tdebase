@@ -33,7 +33,7 @@
 #include <kdebug.h>
 #include <kprotocolinfo.h>
 #include <kstandarddirs.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <kmimetype.h>
 
 #include "kshorturifilter.h"
@@ -48,10 +48,10 @@
  /**
   * IMPORTANT:
   *  If you change anything here, please run the regression test
-  *  tdelibs/kio/tests/kurifiltertest.
+  *  tdelibs/tdeio/tests/kurifiltertest.
   *
   *  If you add anything here, make sure to add a corresponding
-  *  test code to tdelibs/kio/tests/kurifiltertest.
+  *  test code to tdelibs/tdeio/tests/kurifiltertest.
   */
 
 typedef TQMap<TQString,TQString> EntryMap;

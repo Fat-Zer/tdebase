@@ -33,6 +33,6 @@ tde_add_kpart( kcm_kthememanager AUTOMOC
   SOURCES
     kthemedlg.ui newthemewidget.ui knewthemedlg.cpp
     ktheme.cpp kthememanager.cpp
-  LINK kio-shared
+  LINK tdeio-shared
   DESTINATION ${PLUGIN_INSTALL_DIR}
 )

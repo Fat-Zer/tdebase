@@ -8,7 +8,7 @@
 #define KFIND_H
 
 #include <tqwidget.h>
-#include <kfileitem.h>
+#include <tdefileitem.h>
 #include <kdirlister.h>
 
 class TQString;

@@ -1,5 +1,5 @@
 [Desktop Entry]
-Exec=kcmshell mouse
+Exec=tdecmshell mouse
 Icon=mouse
 Type=Application
 DocPath=kcontrol/mouse/index.html

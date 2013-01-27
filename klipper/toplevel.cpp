@@ -34,7 +34,7 @@
 #include <kaboutdata.h>
 #include <kaction.h>
 #include <kapplication.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <kglobal.h>
 #include <kipc.h>
 #include <kkeydialog.h>

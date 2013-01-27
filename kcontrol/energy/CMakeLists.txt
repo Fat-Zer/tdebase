@@ -60,6 +60,6 @@ install( FILES energy.desktop DESTINATION ${APPS_INSTALL_DIR}/.hidden )
 
 tde_add_kpart( kcm_energy AUTOMOC
   SOURCES energy.cpp
-  LINK kio-shared ${XEXT_LIBRARY}
+  LINK tdeio-shared ${XEXT_LIBRARY}
   DESTINATION ${PLUGIN_INSTALL_DIR}
 )

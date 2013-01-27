@@ -34,7 +34,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <kglobal.h>
 #include <kpopupmenu.h>
 #include <kiconloader.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <kstdguiitem.h>
 
 #include "container_applet.h"

@@ -2,7 +2,7 @@
 Type=Application
 DocPath=kcontrol/tdehtml/index.html#kbrowse-plugins
 Icon=konqueror
-Exec=kcmshell tdehtml_plugins
+Exec=tdecmshell tdehtml_plugins
 
 X-TDE-ModuleType=Library
 X-TDE-Library=konqhtml

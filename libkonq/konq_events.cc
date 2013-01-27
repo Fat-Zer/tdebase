@@ -1,5 +1,5 @@
 
-#include <kfileitem.h>
+#include <tdefileitem.h>
 
 #include "konq_events.h"
 

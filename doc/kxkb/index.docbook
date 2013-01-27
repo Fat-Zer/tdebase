@@ -83,7 +83,7 @@ list.</para>
 configuration by selecting <guimenuitem>Configure...</guimenuitem> or
 by opening <application>Control Center</application> and selecting
 Localization/Keyboard Layout. Alternatively, you can start it by
-typing <command>kcmshell keyboard_layout</command> in a
+typing <command>tdecmshell keyboard_layout</command> in a
 terminal.</para>
 
 </sect1>

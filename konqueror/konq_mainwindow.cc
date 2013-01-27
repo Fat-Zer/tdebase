@@ -94,13 +94,13 @@
 #include <kurlrequester.h>
 #include <kuserprofile.h>
 #include <twin.h>
-#include <kfiledialog.h>
+#include <tdefiledialog.h>
 #include <klocale.h>
 #include <kiconloader.h>
 #include <kpopupmenu.h>
 #include <kprocess.h>
-#include <kio/scheduler.h>
-#include <kio/netaccess.h>
+#include <tdeio/scheduler.h>
+#include <tdeio/netaccess.h>
 #include <kaccelmanager.h>
 #include <kstringhandler.h>
 #include <kuser.h>

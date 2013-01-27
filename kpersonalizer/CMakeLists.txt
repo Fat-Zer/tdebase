@@ -40,6 +40,6 @@ tde_add_executable( kpersonalizer AUTOMOC
     kpersonalizer.cpp main.cpp kfindlanguage.cpp
     kcountrypagedlg.ui kospagedlg.ui keyecandypagedlg.ui
     kstylepagedlg.ui krefinepagedlg.ui ksysinfo.cpp
-  LINK kio-shared
+  LINK tdeio-shared
   DESTINATION ${BIN_INSTALL_DIR}
 )

@@ -22,4 +22,4 @@ messages: rc.cpp
 	$(XGETTEXT) *.cpp *.h -o $(podir)/kminipagerapplet.pot
 
 srcdoc:
-	kdoc -a -p -H -d $$HOME/web/src/kminipagerapplet kminipagerapplet *.h -lqt -ltdecore -ltdeui -lkfile
+	kdoc -a -p -H -d $$HOME/web/src/kminipagerapplet kminipagerapplet *.h -lqt -ltdecore -ltdeui -ltdefile

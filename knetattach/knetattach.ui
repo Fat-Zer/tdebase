@@ -406,7 +406,7 @@
     <tabstop>_useEncryption</tabstop>
 </tabstops>
 <includes>
-    <include location="global" impldecl="in implementation">kio/netaccess.h</include>
+    <include location="global" impldecl="in implementation">tdeio/netaccess.h</include>
     <include location="global" impldecl="in implementation">kmessagebox.h</include>
     <include location="global" impldecl="in implementation">kiconloader.h</include>
     <include location="global" impldecl="in implementation">klocale.h</include>

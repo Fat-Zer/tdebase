@@ -27,7 +27,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <tqevent.h>
-#include <kfileitem.h>
+#include <tdefileitem.h>
 #include <kurldrag.h>
 #include "KFileFontIconView.h"
 

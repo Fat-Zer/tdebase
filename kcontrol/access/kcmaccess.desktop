@@ -1,7 +1,7 @@
 [Desktop Entry]
 Icon=access
 Type=Application
-Exec=kcmshell kcmaccess
+Exec=tdecmshell kcmaccess
 DocPath=kcontrol/kcmaccess/index.html
 
 

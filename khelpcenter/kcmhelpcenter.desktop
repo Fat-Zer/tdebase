@@ -1,6 +1,6 @@
 [Desktop Entry]
 Type=Application
-Exec=kcmshell kcmhelpcenter
+Exec=tdecmshell kcmhelpcenter
 Icon=help
 
 X-TDE-SubstituteUID=true

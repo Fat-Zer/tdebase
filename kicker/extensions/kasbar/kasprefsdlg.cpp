@@ -63,7 +63,7 @@
 #include <tqwhatsthis.h>
 
 #include <kcolorbutton.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <kdialogbase.h>
 #include <kglobal.h>
 #include <kiconloader.h>

@@ -21,7 +21,7 @@
 #include <tqtimer.h>
 
 #include <kdebug.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <kdecoration_plugins_p.h>
 #include <kdecorationfactory.h>
 

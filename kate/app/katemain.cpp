@@ -24,7 +24,7 @@
 #include <kcmdlineargs.h>
 #include <kaboutdata.h>
 #include <kglobal.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <kinstance.h>
 #include <kstartupinfo.h>
 #include <dcopclient.h>

@@ -17,7 +17,7 @@
 #include <kapplication.h>
 #include <kcmdlineargs.h>
 #include <kstandarddirs.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <kdebug.h>
 #include <dcopclient.h>
 

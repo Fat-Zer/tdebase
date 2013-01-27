@@ -26,7 +26,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <assert.h>
 #include <algorithm>
 #include <iterator>
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <kdebug.h>
 #include <list>
 #include <set>

@@ -1,5 +1,5 @@
 libkonq is the construction kit for a file manager 
-(together with libkio, which is at a lower level)
+(together with libtdeio, which is at a lower level)
 
 It is used by konqueror, of course, but also by kdesktop, which is 
 another file manager in fact, and by apps that want to use
@@ -23,7 +23,7 @@ konq_operations.*: common operations to all views, like deleting files, and
 konq_undo.*     : undo feature for file operations
 
 3) icons
-kfileivi.*      : icon representing a file (inherits QListViewItem and 
+tdefileivi.*      : icon representing a file (inherits QListViewItem and 
                   uses KFileItem for holding file information)
 konq_iconviewwidget.* : the specialisation of QIconView that knows about files.
                   Basic widget for icon views in konqueror and kdesktop.

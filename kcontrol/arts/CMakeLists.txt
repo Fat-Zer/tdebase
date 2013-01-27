@@ -29,6 +29,6 @@ install( FILES arts.desktop DESTINATION ${XDG_APPS_INSTALL_DIR} )
 
 tde_add_kpart( kcm_arts AUTOMOC
   SOURCES arts.cpp generaltab.ui hardwaretab.ui krichtextlabel.cpp
-  LINK kio-shared tdemid-shared
+  LINK tdeio-shared tdemid-shared
   DESTINATION ${PLUGIN_INSTALL_DIR}
 )

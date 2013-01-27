@@ -1,5 +1,5 @@
 [Desktop Entry]
-Exec=kcmshell twindecoration
+Exec=tdecmshell twindecoration
 Icon=kcmkwm
 Type=Application
 DocPath=kcontrol/twindecoration/index.html

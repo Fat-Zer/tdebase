@@ -24,7 +24,7 @@
 
 #include <konq_iconviewwidget.h>
 #include <kaction.h>
-#include <kfileitem.h>
+#include <tdefileitem.h>
 #include <kdirnotify.h>
 #include <kmessagebox.h>
 

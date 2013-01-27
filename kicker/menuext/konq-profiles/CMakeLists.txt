@@ -28,6 +28,6 @@ install( FILES konquerormenu.desktop DESTINATION ${DATA_INSTALL_DIR}/kicker/menu
 
 tde_add_kpart( kickermenu_konqueror AUTOMOC
   SOURCES konqy_menu.cpp
-  LINK kio-shared
+  LINK tdeio-shared
   DESTINATION ${PLUGIN_INSTALL_DIR}
 )

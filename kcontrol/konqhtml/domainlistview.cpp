@@ -23,7 +23,7 @@
 #include <tqpushbutton.h>
 #include <tqwhatsthis.h>
 
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <klistview.h>
 #include <klocale.h>
 #include <kmessagebox.h>

@@ -19,7 +19,7 @@
 
 
 #include "klistdebugdialog.h"
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <kapplication.h>
 #include <kdebug.h>
 #include <tqlayout.h>

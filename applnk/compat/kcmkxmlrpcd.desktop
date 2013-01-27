@@ -75,6 +75,6 @@ Name[zu]=TDE XML RPC Daemon
 X-TDE-ModuleType=Library
 X-TDE-Library=kded
 X-TDE-Factoryname=kded
-Exec=kcmshell kcmkded
+Exec=tdecmshell kcmkded
 Icon=kded
 Type=Application

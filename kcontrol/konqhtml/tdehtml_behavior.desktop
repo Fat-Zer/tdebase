@@ -2,7 +2,7 @@
 Type=Application
 DocPath=kcontrol/tdehtml/index.html#kbrowse-html
 Icon=konqueror
-Exec=kcmshell tdehtml_behavior
+Exec=tdecmshell tdehtml_behavior
 
 
 X-TDE-Library=konqhtml

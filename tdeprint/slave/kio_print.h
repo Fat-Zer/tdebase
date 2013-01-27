@@ -20,8 +20,8 @@
 #ifndef KIO_PRINT_H
 #define KIO_PRINT_H
 
-#include <kio/slavebase.h>
-#include <kio/global.h>
+#include <tdeio/slavebase.h>
+#include <tdeio/global.h>
 #include <tqstring.h>
 #include <tqbuffer.h>
 

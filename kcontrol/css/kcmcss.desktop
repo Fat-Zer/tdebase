@@ -1,7 +1,7 @@
 [Desktop Entry]
 Icon=stylesheet
 Type=Application
-Exec=kcmshell kcmcss
+Exec=tdecmshell kcmcss
 DocPath=kcontrol/kcmcss/index.html
 
 

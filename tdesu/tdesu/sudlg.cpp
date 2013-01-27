@@ -6,7 +6,7 @@
 
 #include <config.h>
 #include <tqstring.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <kdebug.h>
 #include <klocale.h>
 #include <kmessagebox.h>

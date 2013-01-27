@@ -11,7 +11,7 @@ License. See the file "COPYING" for the exact licensing terms.
 // updates per-window settings from KDE3.2 to KDE3.3
 
 #include <netwm_def.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <kinstance.h>
 #include <dcopclient.h>
 

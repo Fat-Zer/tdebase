@@ -14,7 +14,7 @@ messages:
 
 update_DATA = kaccel.upd
 update_SCRIPTS = convertShortcuts.pl
-updatedir = $(kde_datadir)/kconf_update
+updatedir = $(kde_datadir)/tdeconf_update
 
 xdg_apps_DATA = keys.desktop
 

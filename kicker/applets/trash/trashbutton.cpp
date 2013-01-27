@@ -26,7 +26,7 @@
 #include <krun.h>
 #include <kpopupmenu.h>
 
-#include <kio/netaccess.h>
+#include <tdeio/netaccess.h>
 
 #include <konq_operations.h>
 #include <konq_popupmenu.h>

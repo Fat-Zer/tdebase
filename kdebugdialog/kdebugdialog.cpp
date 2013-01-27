@@ -33,7 +33,7 @@
 #include <kglobal.h>
 #include <klocale.h>
 #include <kdialog.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <kseparator.h>
 #include <kapplication.h>
 #include <dcopclient.h>

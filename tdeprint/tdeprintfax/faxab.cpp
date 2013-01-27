@@ -32,7 +32,7 @@
 #include <krun.h>
 #include <kstdguiitem.h>
 #include <kglobal.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 
 FaxAB::FaxAB(TQWidget *parent, const char *name)
 : KDialog(parent, name, true)

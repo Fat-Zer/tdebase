@@ -24,7 +24,7 @@
 #include <kglobal.h>
 #include <klocale.h>
 #include <dcopclient.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 
 #include "toplevel.h"
 #include "history.h"
@@ -101,7 +101,7 @@ void KlipperApplet::about()
 }
 
 KlipperAppletWidget::KlipperAppletWidget( TQWidget* parent )
-// init() is called first, before KlipperWidget is called with ( parent, kconfig )
+// init() is called first, before KlipperWidget is called with ( parent, tdeconfig )
     : KlipperWidget( ( init(), parent ), new TDEConfig( "klipperrc" ))
 {
 }

@@ -55,13 +55,13 @@
 #include <tqtimer.h>
 
 #include <kactionclasses.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <kdebug.h>
 #include <klocale.h>
 #include <kpopupmenu.h>
 #include <kiconloader.h>
 
-//#include <kconfiggroupsaver.h>
+//#include <tdeconfiggroupsaver.h>
 
 #include <taskmanager.h>
 

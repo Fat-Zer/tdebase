@@ -36,7 +36,7 @@
 #include <kmessagebox.h>
 #include <kiconloader.h>
 #include <kinputdialog.h>
-#include <kio/ioslave_defaults.h>
+#include <tdeio/ioslave_defaults.h>
 
 #include "manualproxy_ui.h"
 #include "kmanualproxydlg.h"

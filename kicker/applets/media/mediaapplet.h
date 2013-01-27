@@ -26,9 +26,9 @@
 
 #include <kpanelapplet.h>
 #include <tqstring.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <kurl.h>
-#include <kfileitem.h>
+#include <tdefileitem.h>
 #include <kdirlister.h>
 
 #include <tqptrlist.h>

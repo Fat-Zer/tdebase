@@ -27,7 +27,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 //
-// NOTE: HEAVILY copied from kfiledetailview.cpp...
+// NOTE: HEAVILY copied from tdefiledetailview.cpp...
 //
 //   Copyright (C) 1997 Stephan Kulow <coolo@kde.org>
 //                 2000, 2001 Carsten Pfeiffer <pfeiffer@kde.org>
@@ -39,7 +39,7 @@
 #include <tqpainter.h>
 #include <tqpixmap.h>
 #include <kapplication.h>
-#include <kfileitem.h>
+#include <tdefileitem.h>
 #include <kglobal.h>
 #include <kglobalsettings.h>
 #include <kicontheme.h>

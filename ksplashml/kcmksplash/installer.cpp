@@ -20,7 +20,7 @@
 #include "installer.h"
 
 #include <kdebug.h>
-#include <kfiledialog.h>
+#include <tdefiledialog.h>
 #include <kglobalsettings.h>
 #include <klocale.h>
 #include <kmessagebox.h>
@@ -30,7 +30,7 @@
 #include <ktar.h>
 #include <ktrader.h>
 #include <kurldrag.h>
-#include <kio/netaccess.h>
+#include <tdeio/netaccess.h>
 
 ThemeListBox::ThemeListBox(TQWidget *parent)
   : KListBox(parent)

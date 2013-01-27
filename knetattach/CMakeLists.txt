@@ -30,6 +30,6 @@ install( FILES knetattach.desktop DESTINATION ${XDG_APPS_INSTALL_DIR} )
 
 tde_add_executable( knetattach AUTOMOC
   SOURCES knetattach.ui main.cpp
-  LINK kio-shared
+  LINK tdeio-shared
   DESTINATION ${BIN_INSTALL_DIR}
 )

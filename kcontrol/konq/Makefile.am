@@ -21,7 +21,7 @@ kcmkonq_datadir = $(kde_appsdir)/.hidden
 
 xdg_apps_DATA = desktopbehavior.desktop desktop.desktop desktoppath.desktop filebrowser.desktop
 
-uiserver_DIR = $(kde_includes)/kio
+uiserver_DIR = $(kde_includes)/tdeio
 
 EXTRA_DIST = $(kcm_konq_la_DATA) $(kcmkonq_data_DATA)
 

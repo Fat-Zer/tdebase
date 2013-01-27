@@ -25,7 +25,7 @@
 
 #include <tqcolor.h>
 #include <kstandarddirs.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 
 #include <kshadowsettings.h>
 

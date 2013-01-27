@@ -32,6 +32,6 @@ install( FILES kdepasswd.desktop DESTINATION ${XDG_APPS_INSTALL_DIR} )
 
 tde_add_executable( kdepasswd AUTOMOC
   SOURCES kdepasswd.cpp passwd.cpp passwddlg.cpp
-  LINK kio-shared
+  LINK tdeio-shared
   DESTINATION ${BIN_INSTALL_DIR}
 )

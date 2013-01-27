@@ -18,5 +18,5 @@ install( FILES
   applets.desktop contact.desktop faq.desktop info.desktop
   links.desktop support.desktop userguide.desktop welcome.desktop
   hardwaremodules.desktop kcontrolmodules.desktop konqplugins.desktop
-  kioslaves.desktop quickstart.desktop visualdict.desktop
+  tdeioslaves.desktop quickstart.desktop visualdict.desktop
   DESTINATION ${DATA_INSTALL_DIR}/khelpcenter/plugins )

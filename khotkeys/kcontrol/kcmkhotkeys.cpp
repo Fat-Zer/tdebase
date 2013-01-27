@@ -26,14 +26,14 @@
 #include <kaboutdata.h>
 #include <klocale.h>
 #include <kapplication.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <kapplication.h>
 #include <dcopclient.h>
 #include <kdebug.h>
 #include <kmessagebox.h>
 #include <kglobal.h>
 #include <ksimpleconfig.h>
-#include <kfiledialog.h>
+#include <tdefiledialog.h>
 #include <dcopref.h>
 #include <klibloader.h>
 

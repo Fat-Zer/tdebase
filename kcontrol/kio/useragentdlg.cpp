@@ -32,12 +32,12 @@
 #include <tqvbuttongroup.h>
 
 #include <kdebug.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <klocale.h>
 #include <klistview.h>
 #include <kmessagebox.h>
 #include <ksimpleconfig.h>
-#include <kio/http_slave_defaults.h>
+#include <tdeio/http_slave_defaults.h>
 
 #include "ksaveioconfig.h"
 #include "fakeuaprovider.h"

@@ -1,5 +1,5 @@
 [Desktop Entry]
-Exec=kcmshell printers
+Exec=tdecmshell printers
 Icon=printmgr
 Type=Application
 DocPath=tdeprint/index.html

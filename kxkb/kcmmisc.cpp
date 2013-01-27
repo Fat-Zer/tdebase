@@ -38,7 +38,7 @@
 #include <tqradiobutton.h>
 
 #include <klocale.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <knuminput.h>
 #include <kapplication.h>
 #include <kglobal.h>

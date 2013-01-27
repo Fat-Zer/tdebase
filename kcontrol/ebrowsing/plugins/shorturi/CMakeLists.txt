@@ -29,6 +29,6 @@ install( FILES kshorturifilterrc DESTINATION ${CONFIG_INSTALL_DIR} )
 
 tde_add_kpart( libkshorturifilter AUTOMOC
   SOURCES kshorturifilter.cpp kshorturifilter.skel
-  LINK kio-shared
+  LINK tdeio-shared
   DESTINATION ${PLUGIN_INSTALL_DIR}
 )

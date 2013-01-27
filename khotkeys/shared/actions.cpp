@@ -17,7 +17,7 @@
 #include "actions.h"
 
 #include <krun.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <kdebug.h>
 #include <kurifilter.h>
 #include <kglobal.h>

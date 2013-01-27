@@ -31,7 +31,7 @@
 #include <dcopclient.h>
 #include <klocale.h>
 #include <kapplication.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <kdialog.h>
 #include <kglobalsettings.h>
 #include <kseparator.h>

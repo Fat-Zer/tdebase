@@ -32,6 +32,6 @@ tde_add_kpart( kcm_konsole AUTOMOC
   SOURCES
     schemaeditor.cpp sessioneditor.cpp kcmkonsole.cpp
     schemadialog.ui sessiondialog.ui kcmkonsoledialog.ui
-  LINK kio-shared
+  LINK tdeio-shared
   DESTINATION ${PLUGIN_INSTALL_DIR}
 )

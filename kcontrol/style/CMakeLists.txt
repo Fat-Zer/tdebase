@@ -33,6 +33,6 @@ tde_add_kpart( kcm_style AUTOMOC
   SOURCES
     kcmstyle.cpp stylepreview.ui menupreview.cpp
     styleconfdialog.cpp
-  LINK krdb-static kio-shared
+  LINK krdb-static tdeio-shared
   DESTINATION ${PLUGIN_INSTALL_DIR}
 )

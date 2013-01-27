@@ -2,7 +2,7 @@
 Icon=kcmkicker
 Type=Application
 DocPath=kcontrol/panel/index.html#panel-position
-Exec=kcmshell kicker_arrangement
+Exec=tdecmshell kicker_arrangement
 
 X-TDE-Library=kicker
 X-TDE-FactoryName=kicker_arrangement

@@ -3,13 +3,13 @@ INCLUDES = -I$(top_srcdir)/kicker/libkicker -I$(top_srcdir)/kicker/kicker/ui $(a
 
 kde_module_LTLIBRARIES = launcher_panelapplet.la
 
-launcher_panelapplet_la_SOURCES = quicklauncher.skel quicklauncher.cpp quickbutton.cpp quickaddappsmenu.cpp flowgridmanager.cpp popularity.cpp configdlgbase.ui prefs.kcfgc configdlg.cpp
+launcher_panelapplet_la_SOURCES = quictdelauncher.skel quictdelauncher.cpp quickbutton.cpp quickaddappsmenu.cpp flowgridmanager.cpp popularity.cpp configdlgbase.ui prefs.kcfgc configdlg.cpp
 
 METASOURCES = AUTO
-noinst_HEADERS = quicklauncher.h quickbutton.h quickaddappsmenu.h easyvector.h quickbuttongroup.h flowgridmanager.h popularity.h configdlg.h
+noinst_HEADERS = quictdelauncher.h quickbutton.h quickaddappsmenu.h easyvector.h quickbuttongroup.h flowgridmanager.h popularity.h configdlg.h
 
 lnkdir = $(kde_datadir)/kicker/applets
-lnk_DATA = quicklauncher.desktop
+lnk_DATA = quictdelauncher.desktop
 
 EXTRA_DIST = $(lnk_DATA)
 
@@ -21,7 +21,7 @@ launcher_panelapplet_la_LIBADD = ../../kicker/core/libkicker_core.la  ../../kick
 kde_kcfg_DATA = launcherapplet.kcfg
 
 messages: rc.cpp
-	$(XGETTEXT) *.cpp *.h -o $(podir)/quicklauncher.pot
+	$(XGETTEXT) *.cpp *.h -o $(podir)/quictdelauncher.pot
 
 srcdoc:
-	kdoc -a -p -H -d $$HOME/web/src/quicklauncher quicklauncher *.h -lqt -ltdecore -ltdeui
+	kdoc -a -p -H -d $$HOME/web/src/quictdelauncher quictdelauncher *.h -lqt -ltdecore -ltdeui

@@ -1,5 +1,5 @@
-kconf_PROGRAMS = khotkeys_update
-kconfdir = $(libdir)/kconf_update_bin
+tdeconf_PROGRAMS = khotkeys_update
+tdeconfdir = $(libdir)/tdeconf_update_bin
 
 khotkeys_update_SOURCES = update.cpp
 

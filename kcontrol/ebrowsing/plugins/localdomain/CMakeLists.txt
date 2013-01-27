@@ -29,7 +29,7 @@ install( FILES localdomainurifilter.desktop DESTINATION ${SERVICES_INSTALL_DIR} 
 
 tde_add_kpart( liblocaldomainurifilter AUTOMOC
   SOURCES localdomainurifilter.cpp localdomainurifilter.skel
-  LINK kio-shared
+  LINK tdeio-shared
   DESTINATION ${PLUGIN_INSTALL_DIR}
 )
 

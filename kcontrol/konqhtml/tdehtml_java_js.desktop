@@ -2,7 +2,7 @@
 Type=Application
 DocPath=kcontrol/tdehtml/index.html#kbrowse-java
 Icon=konqueror
-Exec=kcmshell tdehtml_java_js
+Exec=tdecmshell tdehtml_java_js
 
 
 X-TDE-Library=konqhtml

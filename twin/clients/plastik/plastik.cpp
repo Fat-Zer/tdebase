@@ -24,7 +24,7 @@
 #include <tqpainter.h>
 #include <tqimage.h>
 
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <kpixmap.h>
 #include <kpixmapeffect.h>
 

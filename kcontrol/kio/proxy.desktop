@@ -2,7 +2,7 @@
 Type=Application
 DocPath=kcontrol/proxy/index.html
 Icon=proxy
-Exec=kcmshell proxy
+Exec=tdecmshell proxy
 
 
 X-TDE-Library=kio

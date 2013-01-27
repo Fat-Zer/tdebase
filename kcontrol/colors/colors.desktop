@@ -1,5 +1,5 @@
 [Desktop Entry]
-Exec=kcmshell colors
+Exec=tdecmshell colors
 Icon=colorscm
 Type=Application
 DocPath=kcontrol/colors/index.html

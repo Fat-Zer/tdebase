@@ -38,7 +38,7 @@
 #include <kiconloader.h>
 #include <kmessagebox.h>
 #include <kmimetypechooser.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <krun.h>
 #include <kicondialog.h>
 #include <kpopupmenu.h>

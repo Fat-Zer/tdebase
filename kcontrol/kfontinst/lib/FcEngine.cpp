@@ -4,9 +4,9 @@
 #include <tqfile.h>
 #include <tqtextstream.h>
 #include <kurl.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <kglobalsettings.h>
-#include <kio/netaccess.h>
+#include <tdeio/netaccess.h>
 #include <math.h>
 #include "FcEngine.h"
 #include "KfiConstants.h"

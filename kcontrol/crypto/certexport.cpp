@@ -26,7 +26,7 @@
 #include "certexport.h"
 #include <tqpushbutton.h>
 #include <klineedit.h>
-#include <kfiledialog.h>
+#include <tdefiledialog.h>
 #include <tqradiobutton.h>
 #include <tqvbuttongroup.h>
 #include <tqlayout.h>

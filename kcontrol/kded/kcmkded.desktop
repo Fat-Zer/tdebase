@@ -1,5 +1,5 @@
 [Desktop Entry]
-Exec=kcmshell kcmkded
+Exec=tdecmshell kcmkded
 Icon=services
 Type=Application
 

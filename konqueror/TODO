@@ -34,7 +34,7 @@ dirtree:
 
 - Create dynamic items when browsing non-local URLs (FTP etc.)
 
-kpropsdlg (kfile):
+kpropsdlg (tdefile):
 ======
 
 - Maybe add GUI (in kpropertiesdialog probably) for user defined actions in .desktop

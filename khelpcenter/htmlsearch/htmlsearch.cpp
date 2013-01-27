@@ -7,7 +7,7 @@
 #include <kstandarddirs.h>
 #include <kprocess.h>
 #include <klocale.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 
 
 #include "progressdialog.h"

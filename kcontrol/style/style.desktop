@@ -1,5 +1,5 @@
 [Desktop Entry]
-Exec=kcmshell style
+Exec=tdecmshell style
 Icon=style
 Type=Application
 DocPath=kcontrol/kcmstyle/index.html

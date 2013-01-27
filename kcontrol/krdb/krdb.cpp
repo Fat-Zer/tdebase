@@ -30,7 +30,7 @@
 #include <dcopclient.h>
 
 #include <kapplication.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <kdebug.h>
 #include <kglobalsettings.h>
 #include <kstandarddirs.h>
@@ -94,7 +94,7 @@ static void applyGtkStyles(bool active, int version)
    TQByteArray params;
    TQDataStream stream(params, IO_WriteOnly);
    stream << name << value;
-   kapp->dcopClient()->send("klauncher", "klauncher", "setLaunchEnv(TQCString,TQCString)", params);
+   kapp->dcopClient()->send("tdelauncher", "tdelauncher", "setLaunchEnv(TQCString,TQCString)", params);
 }
 
 // -----------------------------------------------------------------------------
@@ -261,7 +261,7 @@ static void applyQtSettings( TDEConfig& kglobals, TQSettings& settings )
 
   /* ##### looks like kcmfonts skips this, so we don't do this here */
 /*bool usexft = kglobals.readBoolEntry("AntiAliasing", false);
-  kconfig.setGroup("General");
+  tdeconfig.setGroup("General");
   settings.writeEntry("/qt/enableXft", usexft);
   settings.writeEntry("/qt/useXft", usexft); */
 

@@ -30,7 +30,7 @@
 #include <ktempfile.h>
 #include <kcursor.h>
 #include <kmimetype.h>
-#include <kfilemetainfo.h>
+#include <tdefilemetainfo.h>
 
 #ifdef HAVE_LIBART
 #include <ksvgiconengine.h>

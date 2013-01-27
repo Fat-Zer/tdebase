@@ -28,7 +28,7 @@
 #include <kdebug.h>
 #include <kdialog.h>
 #include <kemailsettings.h>
-#include <kfiledialog.h>
+#include <tdefiledialog.h>
 #include <kglobal.h>
 #include <kiconloader.h>
 #include <klistview.h>

@@ -26,7 +26,7 @@
 #include <klocale.h>
 #include <kdebug.h>
 #include <kuniqueapplication.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 
 #include <tqfile.h>
 

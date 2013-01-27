@@ -36,5 +36,5 @@ tde_add_library( sensordisplays STATIC_PIC AUTOMOC
     ListViewSettings.cc SignalPlotter.cc ListViewSettingsWidget.ui
     LogFileSettings.ui MultiMeterSettingsWidget.ui SensorLoggerDlgWidget.ui
     SensorLoggerSettingsWidget.ui
-  LINK ksgrd-shared kio-shared
+  LINK ksgrd-shared tdeio-shared
 )

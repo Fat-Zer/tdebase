@@ -21,7 +21,7 @@
 
 #undef Always
 
-#include <kio/uiserver_stub.h>
+#include <tdeio/uiserver_stub.h>
 #include "konq_operations.h"
 
 #include <assert.h>
@@ -34,10 +34,10 @@
 #include <kdebug.h>
 #include <klocale.h>
 #include <kglobalsettings.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <kipc.h>
 
-#include <kio/job.h>
+#include <tdeio/job.h>
 #include <kdirnotify_stub.h>
 
 inline const char *dcopTypeName( const KonqCommand & ) { return "KonqCommand"; }
@@ -166,7 +166,7 @@ class KonqUndoManager::KonqUndoManagerPrivate
 public:
   KonqUndoManagerPrivate()
   {
-      m_uiserver = new UIServer_stub( "kio_uiserver", "UIServer" );
+      m_uiserver = new UIServer_stub( "tdeio_uiserver", "UIServer" );
       m_undoJob = 0;
   }
   ~KonqUndoManagerPrivate()

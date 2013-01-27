@@ -13,7 +13,7 @@
 #include <kiconloader.h>
 #include <kurifilter.h>
 #include <ktrader.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 
 #include <assert.h>
 #include <tqfile.h>
@@ -281,12 +281,12 @@ TQString KonqAboutPageFactory::specs()
           .arg( i18n("<A HREF=\"%1\">Cascading Style Sheets</A> (CSS 1, partially CSS 2)").arg("http://www.w3.org/Style/CSS/") )
           .arg( i18n("built-in") )
           .arg( i18n("<A HREF=\"%1\">ECMA-262</A> Edition 3 (roughly equals JavaScript 1.5)").arg("http://www.ecma.ch/ecma1/STAND/ECMA-262.HTM") )
-          .arg( i18n("JavaScript disabled (globally). Enable JavaScript <A HREF=\"%1\">here</A>.").arg("exec:/kcmshell tdehtml_java_js") )
-          .arg( i18n("JavaScript enabled (globally). Configure JavaScript <A HREF=\\\"%1\\\">here</A>.").arg("exec:/kcmshell tdehtml_java_js") ) // leave the double backslashes here, they are necessary for javascript !
+          .arg( i18n("JavaScript disabled (globally). Enable JavaScript <A HREF=\"%1\">here</A>.").arg("exec:/tdecmshell tdehtml_java_js") )
+          .arg( i18n("JavaScript enabled (globally). Configure JavaScript <A HREF=\\\"%1\\\">here</A>.").arg("exec:/tdecmshell tdehtml_java_js") ) // leave the double backslashes here, they are necessary for javascript !
           .arg( i18n("Secure <A HREF=\"%1\">Java</A><SUP>&reg;</SUP> support").arg("http://java.sun.com") )
           .arg( i18n("JDK 1.2.0 (Java 2) compatible VM (<A HREF=\"%1\">Blackdown</A>, <A HREF=\"%2\">IBM</A> or <A HREF=\"%3\">Sun</A>)")
                       .arg("http://www.blackdown.org").arg("http://www.ibm.com").arg("http://java.sun.com") )
-          .arg( i18n("Enable Java (globally) <A HREF=\"%1\">here</A>.").arg("exec:/kcmshell tdehtml_java_js") ) // TODO Maybe test if Java is enabled ?
+          .arg( i18n("Enable Java (globally) <A HREF=\"%1\">here</A>.").arg("exec:/tdecmshell tdehtml_java_js") ) // TODO Maybe test if Java is enabled ?
           .arg( i18n("Netscape Communicator<SUP>&reg;</SUP> <A HREF=\"%4\">plugins</A> (for viewing <A HREF=\"%1\">Flash<SUP>&reg;</SUP></A>, <A HREF=\"%2\">Real<SUP>&reg;</SUP></A>Audio, <A HREF=\"%3\">Real<SUP>&reg;</SUP></A>Video, etc.)")
                       .arg("http://www.macromedia.com/shockwave/download/index.cgi?P1_Prod_Version=ShockwaveFlash")
                       .arg("http://www.real.com").arg("http://www.real.com")
@@ -306,7 +306,7 @@ TQString KonqAboutPageFactory::specs()
           .arg( i18n("Transfer protocols") )
           .arg( i18n("HTTP 1.1 (including gzip/bzip2 compression)") )
           .arg( i18n("FTP") )
-          .arg( i18n("and <A HREF=\"%1\">many more...</A>").arg("exec:/kcmshell ioslaveinfo") )
+          .arg( i18n("and <A HREF=\"%1\">many more...</A>").arg("exec:/tdecmshell ioslaveinfo") )
           .arg( i18n("URL-Completion") )
           .arg( i18n("Manual"))
 	  .arg( i18n("Popup"))
@@ -366,7 +366,7 @@ TQString KonqAboutPageFactory::tips()
 		      "using Google, for the search phrase \"KDE\". There are a lot of "
 		      "Web-Shortcuts predefined to make searching for software or looking "
 		      "up certain words in an encyclopedia a breeze. You can even "
-                      "<a href=\"%1\">create your own</a> Web-Shortcuts." ).arg("exec:/kcmshell ebrowsing") )
+                      "<a href=\"%1\">create your own</a> Web-Shortcuts." ).arg("exec:/tdecmshell ebrowsing") )
 	  .arg( i18n( "Use the magnifier button <img width='16' height='16' src=\"%1\"> in the"
 		      " toolbar to increase the font size on your web page.").arg(viewmag_icon_path) )
 	  .arg( i18n( "When you want to paste a new address into the Location toolbar you might want to "
@@ -386,11 +386,11 @@ TQString KonqAboutPageFactory::tips()
 		      ", or create your own ones." ).arg(view_left_right_icon_path))
 	  .arg( i18n( "Use the <a href=\"%1\">user-agent</a> feature if the website you are visiting "
                       "asks you to use a different browser "
-		      "(and do not forget to send a complaint to the webmaster!)" ).arg("exec:/kcmshell useragent") )
+		      "(and do not forget to send a complaint to the webmaster!)" ).arg("exec:/tdecmshell useragent") )
 	  .arg( i18n( "The <img width='16' height='16' src=\"%1\"> History in your SideBar ensures "
 		      "that you can keep track of the pages you have visited recently.").arg(history_icon_path) )
 	  .arg( i18n( "Use a caching <a href=\"%1\">proxy</a> to speed up your"
-		      " Internet connection.").arg("exec:/kcmshell proxy") )
+		      " Internet connection.").arg("exec:/tdecmshell proxy") )
 	  .arg( i18n( "Advanced users will appreciate the Konsole which you can embed into "
 		      "Konqueror (Window -> <img width='16' height='16' SRC=\"%1\"> Show "
  		      "Terminal Emulator).").arg(openterm_icon_path))
@@ -437,7 +437,7 @@ KonqAboutPage::KonqAboutPage( //KonqMainWindow *
 	setCharset(codec->name(), true);
     else
 	setCharset("iso-8859-1", true);
-    // about:blah isn't a kioslave -> disable View source
+    // about:blah isn't a tdeioslave -> disable View source
     KAction * act = actionCollection()->action("viewDocumentSource");
     if ( act )
       act->setEnabled( false );

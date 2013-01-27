@@ -20,7 +20,7 @@
 #define dirtree_module_h
 
 #include <konq_sidebartreemodule.h>
-#include <kfileitem.h>
+#include <tdefileitem.h>
 #include <tqpixmap.h>
 #include <tqdict.h>
 #include <tqptrdict.h>

@@ -141,7 +141,7 @@ void ConfigModule::runAsRoot()
   delete _embedStack;
 
   // create an embed widget that will embed the
-  // kcmshell running as root
+  // tdecmshell running as root
   _embedLayout = new TQVBoxLayout(_module->parentWidget());
   _embedFrame = new TQVBox( _module->parentWidget() );
   _embedFrame->setFrameStyle( TQFrame::Box | TQFrame::Raised );
@@ -165,7 +165,7 @@ void ConfigModule::runAsRoot()
   _embedStack->raiseWidget(_busy);
   connect(_embedWidget, TQT_SIGNAL( windowEmbedded(WId)), TQT_SLOT( embedded()));
 
-  // prepare the process to run the kcmshell
+  // prepare the process to run the tdecmshell
   TQString cmd = service()->exec().stripWhiteSpace();
   bool kdeshell = false;
   if (cmd.left(5) == "tdesu")
@@ -179,7 +179,7 @@ void ConfigModule::runAsRoot()
         }
     }
 
-  if (cmd.left(8) == "kcmshell")
+  if (cmd.left(8) == "tdecmshell")
     {
       cmd = TQString(cmd.remove(0,8)).stripWhiteSpace();
       kdeshell = true;
@@ -198,7 +198,7 @@ void ConfigModule::runAsRoot()
       // We also don't have a way to close the module in that case.
       *_rootProcess << "--n"; // Don't keep password.
       if (kdeshell) {
-         *_rootProcess << TQString("%1 %2 --embed %3 --lang %4").arg(locate("exe", "kcmshell")).arg(cmd).arg(_embedWidget->winId()).arg(TDEGlobal::locale()->language());
+         *_rootProcess << TQString("%1 %2 --embed %3 --lang %4").arg(locate("exe", "tdecmshell")).arg(cmd).arg(_embedWidget->winId()).arg(TDEGlobal::locale()->language());
       }
       else {
          *_rootProcess << TQString("%1 --embed %2 --lang %3").arg(cmd).arg(_embedWidget->winId()).arg( TDEGlobal::locale()->language() );

@@ -25,7 +25,7 @@
 #include <tqstyle.h>
 #include <tqobjectlist.h>
 
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <kstandarddirs.h>
 #include <kapplication.h>
 #include <kglobal.h>
@@ -187,17 +187,17 @@ void KStylePage::saveColors(bool curSettings){
 
 	////////////////////////////////////////////////////
 	// KDE-1.x support
-	KSimpleConfig *kconfig =
+	KSimpleConfig *tdeconfig =
 	new KSimpleConfig( TQDir::homeDirPath() + "/.kderc" );
-	kconfig->setGroup( "General" );
-	kconfig->writeEntry("background", toSave->background );
-	kconfig->writeEntry("selectBackground", toSave->selectBackground );
-	kconfig->writeEntry("foreground", toSave->foreground );
-	kconfig->writeEntry("windowForeground", toSave->windowForeground );
-	kconfig->writeEntry("windowBackground", toSave->windowBackground );
-	kconfig->writeEntry("selectForeground", toSave->selectForeground );
-	kconfig->sync();
-	delete kconfig;
+	tdeconfig->setGroup( "General" );
+	tdeconfig->writeEntry("background", toSave->background );
+	tdeconfig->writeEntry("selectBackground", toSave->selectBackground );
+	tdeconfig->writeEntry("foreground", toSave->foreground );
+	tdeconfig->writeEntry("windowForeground", toSave->windowForeground );
+	tdeconfig->writeEntry("windowBackground", toSave->windowBackground );
+	tdeconfig->writeEntry("selectForeground", toSave->selectForeground );
+	tdeconfig->sync();
+	delete tdeconfig;
 
 	config->setGroup("KDE");
 	// write the color scheme filename and the contrast, default 7, otherwise from file

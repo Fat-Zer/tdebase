@@ -21,7 +21,7 @@
 #include <tqpixmap.h>
 #include <tqdragobject.h>
 
-#include <kfiledialog.h>
+#include <tdefiledialog.h>
 #include <klocale.h>
 #include <kapplication.h>
 #include <krun.h>
@@ -32,7 +32,7 @@
 #include <kmimetype.h>
 #include <kglobal.h>
 #include <kpopupmenu.h>
-#include <kio/netaccess.h>
+#include <tdeio/netaccess.h>
 #include <kurldrag.h>
 #include <tqptrlist.h>
 #include <kdebug.h>

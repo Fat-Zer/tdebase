@@ -78,7 +78,7 @@ libraries. Here is an overview of the directories:
 * kicker
     The panel at the botton with the K start button and the taskbar etc.
 
-* kioslave
+* tdeioslave
     Infrastructure that helps make every application internet enabled
     e.g. to directly save a file to ftp://place.org/dir/file.txt
 

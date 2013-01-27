@@ -1,7 +1,7 @@
 [Desktop Entry]
 Icon=randr
 Type=Application
-Exec=kcmshell randr
+Exec=tdecmshell randr
 X-TDE-Library=randr
 #X-TDE-Init=randr
 X-TDE-Test-Module=true

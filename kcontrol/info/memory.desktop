@@ -1,5 +1,5 @@
 [Desktop Entry]
-Exec=kcmshell memory
+Exec=tdecmshell memory
 Icon=kcmmemory
 Type=Application
 DocPath=kinfocenter/memory/index.html

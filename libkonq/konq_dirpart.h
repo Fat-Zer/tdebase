@@ -23,9 +23,9 @@
 #include <tqstring.h>
 #include <tdeparts/part.h>
 #include <tdeparts/browserextension.h>
-#include <kfileitem.h>
+#include <tdefileitem.h>
 #include <kdatastream.h>
-#include <kio/global.h>
+#include <tdeio/global.h>
 #include <libkonq_export.h>
 
 class KDirLister;

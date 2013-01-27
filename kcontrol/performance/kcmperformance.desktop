@@ -1,7 +1,7 @@
 [Desktop Entry]
 Icon=launch
 Type=Application
-Exec=kcmshell kcmperformance
+Exec=tdecmshell kcmperformance
 
 
 X-TDE-Library=performance

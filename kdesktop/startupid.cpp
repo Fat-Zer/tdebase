@@ -27,7 +27,7 @@
 #include <kapplication.h>
 #include <tqimage.h>
 #include <tqbitmap.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <X11/Xlib.h>
 
 #define KDE_STARTUP_ICON "kmenu"

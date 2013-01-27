@@ -2,7 +2,7 @@
 
 #include <tqstylesheet.h>
 #include <kapplication.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <kdebug.h>
 #include <kstandarddirs.h>
 #include <kprocess.h>

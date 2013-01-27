@@ -24,7 +24,7 @@
 
 #include "commands.h"
 #include <klocale.h>
-#include <kio/job.h>
+#include <tdeio/job.h>
 
 #include <kcommand.h>
 #include <kbookmark.h>

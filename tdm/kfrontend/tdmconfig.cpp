@@ -64,7 +64,7 @@ GetCfgQStrList( int id )
 	return qsl;
 }
 
-// Based on kconfigbase.cpp
+// Based on tdeconfigbase.cpp
 static TQFont
 Str2Font( const TQString &aValue )
 {

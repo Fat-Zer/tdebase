@@ -1,6 +1,6 @@
 [Desktop Entry]
 Type=Application
-Exec=kcmshell kcm_useraccount
+Exec=tdecmshell kcm_useraccount
 Icon=tdmconfig
 DocPath=kcontrol/userinfo/index.html
 

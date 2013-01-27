@@ -22,7 +22,7 @@
 #include "desktop.h"
 #include "kdesktopsettings.h"
 
-#include <kio/paste.h>
+#include <tdeio/paste.h>
 #include <kaccel.h>
 #include <kapplication.h>
 #include <kcolordrag.h>
@@ -57,7 +57,7 @@
 
 #include "kshadowengine.h"
 #include "kdesktopshadowsettings.h"
-#include "kfileividesktop.h"
+#include "tdefileividesktop.h"
 
 // for multihead
 extern int kdesktop_screen_number;

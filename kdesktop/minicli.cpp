@@ -60,7 +60,7 @@
 #include <twin.h>
 #include <tdesu/su.h>
 #include <kstandarddirs.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <kiconloader.h>
 #include <kpushbutton.h>
 #include <kguiitem.h>

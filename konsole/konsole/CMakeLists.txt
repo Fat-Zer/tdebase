@@ -74,5 +74,5 @@ set( ${target}_SRCS
 
 tde_add_tdeinit_executable( ${target} AUTOMOC
   SOURCES ${${target}_SRCS}
-  LINK tdeprint-shared kio-shared ${XRENDER_LIBRARIES} dl
+  LINK tdeprint-shared tdeio-shared ${XRENDER_LIBRARIES} dl
 )

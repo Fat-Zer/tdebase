@@ -22,7 +22,6 @@ set( VERSION "R14" )
 
 include( FindPkgConfig )
 include( CheckIncludeFile )
-include( CheckIncludeFiles )
 include( CheckCSourceRuns )
 include( CheckCXXSourceRuns )
 include( CheckCXXSourceCompiles )
@@ -85,16 +84,15 @@ option( WITH_HAL "Enable HAL support" ${WITH_ALL_OPTIONS} )
 option( WITH_TDEHWLIB "Enable TDE hardware library support" OFF )
 option( WITH_UPOWER "Enable UPOWER support" ${WITH_ALL_OPTIONS} )
 option( WITH_GCC_VISIBILITY "Enable fvisibility and fvisibility-inlines-hidden" ${WITH_ALL_OPTIONS} )
-option( WITH_KDESKTOP_LOCK_BACKTRACE "Enable backtrace in kdesktop_lock exception handler"  ${WITH_ALL_OPTIONS} )
 
 ##### options comments ##########################
 
-# WITH_SASL         affects kioslaves(kio_ldap kio_smtp kio_pop3)
-# WITH_LDAP         affects kioslaves(kio_ldap)
-# WITH_SAMBA        affects kioslaves(kio_samba) kcontrol
-# WITH_OPENEXR      affects kioslaves(thumbnail)
+# WITH_SASL         affects tdeioslaves(kio_ldap kio_smtp kio_pop3)
+# WITH_LDAP         affects tdeioslaves(kio_ldap)
+# WITH_SAMBA        affects tdeioslaves(kio_samba) kcontrol
+# WITH_OPENEXR      affects tdeioslaves(thumbnail)
 # WITH_XCOMPOSITE   affects twin kicker(taskmanager) tdm
-# WITH_XCURSOR      affects kioslaves(thumbnail), kcontrol(input), kdesktop
+# WITH_XCURSOR      affects tdeioslaves(thumbnail), kcontrol(input), kdesktop
 # WITH_XFIXES       affects twin klipper kicker(taskmanager)
 # WITH_XDAMAGE      affects <nothing>
 # WITH_XEXT         affects <nothing>
@@ -113,8 +111,8 @@ option( WITH_KDESKTOP_LOCK_BACKTRACE "Enable backtrace in kdesktop_lock exceptio
 # WITH_XINERAMA     affects ksplashml
 # WITH_ARTS         affects libkonq khotkeys
 # WITH_I8K          affects ksysguard
-# WITH_HAL          affects kioslaves(media) ksmserver
-# WITH_TDEHWLIB     affects kioslaves(media), replaces WITH_HAL on systems without HAL
+# WITH_HAL          affects tdeioslaves(media) ksmserver
+# WITH_TDEHWLIB     affects tdeioslaves(media), replaces WITH_HAL on systems without HAL
 # WITH_LIBRAW1394   affects kcontrol(view1394)
 # WITH_PAM          affects tdm kdesktop kcheckpass
 # WITH_SHADOW       affects tdm kcheckpass
@@ -145,7 +143,7 @@ option( BUILD_KCONTROL "Build kcontrol" ${BUILD_ALL} )
 option( BUILD_TWIN "Build twin" ${BUILD_ALL} )
 option( BUILD_KATE "Build kate" ${BUILD_ALL} )
 option( BUILD_KONQUEROR "Build konqueror" ${BUILD_ALL} )
-option( BUILD_KIOSLAVES "Build kioslaves" ${BUILD_ALL} )
+option( BUILD_KIOSLAVES "Build tdeioslaves" ${BUILD_ALL} )
 option( BUILD_KICKER "Build kicker" ${BUILD_ALL} )
 option( BUILD_KDESKTOP "Build kdesktop" ${BUILD_ALL} )
 option( BUILD_KONSOLE "Build konsole" ${BUILD_ALL} )
@@ -223,7 +221,7 @@ add_subdirectory( kcontrol )
 tde_conditional_add_subdirectory( BUILD_TWIN twin )
 tde_conditional_add_subdirectory( BUILD_KATE kate )
 tde_conditional_add_subdirectory( BUILD_KONQUEROR konqueror )
-tde_conditional_add_subdirectory( BUILD_KIOSLAVES kioslave )
+tde_conditional_add_subdirectory( BUILD_KIOSLAVES tdeioslave )
 tde_conditional_add_subdirectory( BUILD_KICKER kicker )
 tde_conditional_add_subdirectory( BUILD_KDESKTOP kdesktop )
 tde_conditional_add_subdirectory( BUILD_KONSOLE konsole )

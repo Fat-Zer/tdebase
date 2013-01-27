@@ -6,7 +6,7 @@
 #include <tqstring.h>
 
 #include <kpixmap.h>
-#include <kio/job.h>
+#include <tdeio/job.h>
 
 #include "docentrytraverser.h"
 

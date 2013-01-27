@@ -29,6 +29,6 @@ install( FILES runapplet.desktop DESTINATION ${DATA_INSTALL_DIR}/kicker/applets 
 
 tde_add_kpart( run_panelapplet AUTOMOC
   SOURCES runapplet.cpp
-  LINK kio-shared
+  LINK tdeio-shared
   DESTINATION ${PLUGIN_INSTALL_DIR}
 )

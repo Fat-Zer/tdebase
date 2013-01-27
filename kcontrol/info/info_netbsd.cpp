@@ -43,7 +43,7 @@
 #include <tqtextstream.h>
 
 #include <kdebug.h>
-#include <kio/global.h> /* for TDEIO::convertSize() */
+#include <tdeio/global.h> /* for TDEIO::convertSize() */
 
 typedef struct
   {

@@ -1,5 +1,5 @@
 [Desktop Entry]
-Exec=kcmshell sound
+Exec=tdecmshell sound
 Icon=kcmsound
 Type=Application
 DocPath=kinfocenter/sound/index.html

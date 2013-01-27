@@ -32,7 +32,7 @@
 #include <tdetexteditor/editorchooser.h>
 #include <tdetexteditor/popupmenuinterface.h>
 
-#include <kio/netaccess.h>
+#include <tdeio/netaccess.h>
 
 #include <tdeversion.h>
 #include <dcopclient.h>
@@ -49,7 +49,7 @@
 #include <kapplication.h>
 #include <klocale.h>
 #include <kurl.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <kcmdlineargs.h>
 #include <kmessagebox.h>
 #include <kkeydialog.h>

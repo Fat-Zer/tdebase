@@ -13,7 +13,7 @@ add_subdirectory( lib )
 add_subdirectory( thumbnail )
 add_subdirectory( viewpart )
 add_subdirectory( kcmfontinst )
-add_subdirectory( kfile-plugin )
+add_subdirectory( tdefile-plugin )
 add_subdirectory( kfontinst )
 add_subdirectory( kio )
 

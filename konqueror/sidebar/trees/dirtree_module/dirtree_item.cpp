@@ -27,7 +27,7 @@
 #include <kuserprofile.h>
 #include <tqapplication.h>
 #include <tqclipboard.h>
-#include <kio/paste.h>
+#include <tdeio/paste.h>
 #include <tqfile.h>
 #include <tqpainter.h>
 #include <kiconloader.h>

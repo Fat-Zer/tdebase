@@ -30,7 +30,7 @@
 #include <klocale.h>
 
 #include <kmessagebox.h>
-#include <kfiledialog.h>
+#include <tdefiledialog.h>
 
 #include <kbookmarkmanager.h>
 

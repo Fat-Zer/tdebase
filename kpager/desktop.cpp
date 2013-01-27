@@ -32,7 +32,7 @@
 #include <kglobalsettings.h>
 #include <twinmodule.h>
 #include <twin.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <kglobal.h>
 #include <kdebug.h>
 #include <ksharedpixmap.h>

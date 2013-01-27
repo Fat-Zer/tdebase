@@ -44,6 +44,6 @@ install( FILES crypto.desktop DESTINATION ${XDG_APPS_INSTALL_DIR} )
 
 tde_add_kpart( kcm_crypto AUTOMOC
   SOURCES crypto.cpp certexport.cpp kdatetimedlg.cpp
-  LINK kio-shared ${SSL_LIBRARIES}
+  LINK tdeio-shared ${SSL_LIBRARIES}
   DESTINATION ${PLUGIN_INSTALL_DIR}
 )

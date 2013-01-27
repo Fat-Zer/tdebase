@@ -23,7 +23,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #include <tqtooltip.h>
 
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <kservicegroup.h>
 #include <klocale.h>
 

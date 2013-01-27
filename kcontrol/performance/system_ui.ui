@@ -29,7 +29,7 @@
                 </property>
                 <widget class="TQCheckBox">
                     <property name="name">
-                        <cstring>cb_disable_kbuildsycoca</cstring>
+                        <cstring>cb_disable_tdebuildsycoca</cstring>
                     </property>
                     <property name="text">
                         <string>Disable &amp;system configuration startup check</string>
@@ -37,7 +37,7 @@
                 </widget>
                 <widget class="TQLabel">
                     <property name="name">
-                        <cstring>label_kbuildsycoca</cstring>
+                        <cstring>label_tdebuildsycoca</cstring>
                     </property>
                     <property name="text">
                         <string>&lt;b&gt;WARNING:&lt;/b&gt; This option may in rare cases lead to various problems. Consult the What's This? (Shift+F1) help for details.</string>

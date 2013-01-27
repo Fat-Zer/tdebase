@@ -25,7 +25,7 @@
 
 #include <kcolorbutton.h>
 #include <kdebug.h>
-#include <kfiledialog.h>
+#include <tdefiledialog.h>
 #include <kiconeffect.h>
 #include <kimageio.h>
 #include <klineedit.h>

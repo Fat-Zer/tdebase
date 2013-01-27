@@ -7,7 +7,7 @@ kde_servicetypes_DATA = terminalemulator.desktop
 
 update_DATA = konsole.upd
 update_SCRIPTS = schemaStrip.pl
-updatedir = $(kde_datadir)/kconf_update
+updatedir = $(kde_datadir)/tdeconf_update
 
 servicesdir = $(kde_servicesdir)/kded
 services_DATA = kwrited.desktop

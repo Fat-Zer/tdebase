@@ -293,7 +293,7 @@ void Workspace::activateClient( Client* c, bool force )
     // As they usually belong to the current active window but fail to provide
     // this information, updating their user time would make the user time
     // of the currently active window old, and reject further activation for it.
-    // E.g. typing URL in minicli which will show kio_uiserver dialog (with workaround),
+    // E.g. typing URL in minicli which will show tdeio_uiserver dialog (with workaround),
     // and then kdesktop shows dialog about SSL certificate.
     // This needs also avoiding user creation time in Client::readUserTimeMapTimestamp().
     if( !c->ignoreFocusStealing())

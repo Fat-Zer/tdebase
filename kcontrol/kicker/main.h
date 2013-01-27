@@ -19,7 +19,7 @@
 #define __main_h__
 
 #include <dcopobject.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 
 #include "extensionInfo.h"
 

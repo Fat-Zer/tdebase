@@ -28,14 +28,14 @@
 #include <kaction.h>
 #include <klocale.h>
 #include <kglobal.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <kcharsets.h>
 #include <kpopupmenu.h>
 #include <dcopclient.h>
 #include <kgenericfactory.h>
 #include <kprotocolmanager.h>
 #include <kprotocolinfo.h>
-#include <kio/slaveconfig.h>
+#include <tdeio/slaveconfig.h>
 #include <konq_dirpart.h>
 #include <tdeparts/browserextension.h>
 

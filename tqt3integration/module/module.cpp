@@ -24,7 +24,7 @@
 #include <dcopclient.h>
 #include <kapplication.h>
 #include <kdebug.h>
-#include <kfiledialog.h>
+#include <tdefiledialog.h>
 #include <kglobalsettings.h>
 #include <klocale.h>
 #include <krecentdocument.h>

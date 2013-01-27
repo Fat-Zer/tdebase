@@ -25,7 +25,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "tdmclock.h"
 
 //#include <kapplication.h>
-//#include <kconfig.h>
+//#include <tdeconfig.h>
 
 #include <tqdatetime.h>
 #include <tqpixmap.h>

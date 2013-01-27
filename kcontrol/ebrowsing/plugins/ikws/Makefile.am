@@ -22,7 +22,7 @@ libkurisearchfilter_la_SOURCES = kurisearchfilter.cpp kurisearchfilter.skel \
       searchproviderdlg_ui.ui ikwsopts_ui.ui
 
 update_DATA = kuriikwsfilter.upd
-updatedir = $(kde_datadir)/kconf_update
+updatedir = $(kde_datadir)/tdeconf_update
 
 service_DATA = kuriikwsfilter.desktop kurisearchfilter.desktop
 servicedir = $(kde_servicesdir)

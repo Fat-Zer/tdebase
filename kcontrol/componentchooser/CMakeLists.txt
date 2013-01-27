@@ -33,6 +33,6 @@ tde_add_kpart( kcm_componentchooser AUTOMOC
     componentchooser_ui.ui componentconfig_ui.ui
     emailclientconfig_ui.ui terminalemulatorconfig_ui.ui
     browserconfig_ui.ui componentchooser.cpp kcm_componentchooser.cpp
-  LINK kio-shared
+  LINK tdeio-shared
   DESTINATION ${PLUGIN_INSTALL_DIR}
 )

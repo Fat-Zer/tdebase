@@ -23,7 +23,7 @@
 #include <dcopclient.h>
 
 #include <kaboutdata.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <kdebug.h>
 #include <kfontdialog.h>
 #include <kgenericfactory.h>
@@ -154,7 +154,7 @@ void KCMKonsole::save()
     DCOPClient *dcc = kapp->dcopClient();
     dcc->send("konsole-*", "konsole", "reparseConfiguration()", TQByteArray());
     dcc->send("kdesktop", "default", "configure()", TQByteArray());
-    dcc->send("klauncher", "klauncher", "reparseConfiguration()", TQByteArray());
+    dcc->send("tdelauncher", "tdelauncher", "reparseConfiguration()", TQByteArray());
 
     if (xonXoffOrig != xonXoffNew)
     {

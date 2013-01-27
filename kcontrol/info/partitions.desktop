@@ -1,5 +1,5 @@
 [Desktop Entry]
-Exec=kcmshell partitions
+Exec=tdecmshell partitions
 Icon=kcmpartitions
 Type=Application
 DocPath=kinfocenter/partitions/index.html

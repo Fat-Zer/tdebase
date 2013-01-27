@@ -53,7 +53,7 @@ tde_add_kpart( kcm_input AUTOMOC
   SOURCES
     mouse.cpp kmousedlg.ui main.cpp logitechmouse.cpp
     logitechmouse_base.ui
-  LINK themepage-static kio-shared ${XCURSOR_LIBRARIES} ${LIBUSB_LIBRARIES}
+  LINK themepage-static tdeio-shared ${XCURSOR_LIBRARIES} ${LIBUSB_LIBRARIES}
   DESTINATION ${PLUGIN_INSTALL_DIR}
 )
 

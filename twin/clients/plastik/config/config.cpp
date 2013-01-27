@@ -27,7 +27,7 @@
 #include <tqspinbox.h>
 #include <tqwhatsthis.h>
 
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <klocale.h>
 #include <kglobal.h>
 

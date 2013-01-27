@@ -47,10 +47,10 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <klocale.h>
 #include <kpopupmenu.h>
 #include <kstringhandler.h>
-#include <kfiledialog.h>
+#include <tdefiledialog.h>
 #include <kfontrequester.h>
 #include <kglobalsettings.h>
-#include <kconfigdialogmanager.h>
+#include <tdeconfigdialogmanager.h>
 #include <kcalendarsystem.h>
 #include <kicontheme.h>
 #include <kiconloader.h>

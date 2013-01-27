@@ -18,7 +18,7 @@
 #include <tqpushbutton.h>
 
 #include <krun.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <kapplication.h>
 #include <kglobal.h>
 #include <kiconloader.h>

@@ -31,6 +31,6 @@ install( FILES play.png DESTINATION ${DATA_INSTALL_DIR}/kcontrol/pics )
 
 tde_add_kpart( kcm_knotify AUTOMOC
   SOURCES knotify.cpp playersettings.ui
-  LINK kio-shared
+  LINK tdeio-shared
   DESTINATION ${PLUGIN_INSTALL_DIR}
 )

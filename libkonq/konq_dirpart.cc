@@ -22,7 +22,7 @@
 #include "konq_propsview.h"
 #include "konq_settings.h"
 
-#include <kio/paste.h>
+#include <tdeio/paste.h>
 #include <kapplication.h>
 #include <kaction.h>
 #include <kdatastream.h>

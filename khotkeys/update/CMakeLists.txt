@@ -27,5 +27,5 @@ link_directories(
 tde_add_executable( khotkeys_update
   SOURCES update.cpp
   LINK khotkeys_shared-shared
-  DESTINATION ${LIB_INSTALL_DIR}/kconf_update_bin
+  DESTINATION ${LIB_INSTALL_DIR}/tdeconf_update_bin
 )

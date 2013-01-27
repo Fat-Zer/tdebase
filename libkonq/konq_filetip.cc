@@ -21,7 +21,7 @@
 
 #include <konq_filetip.h>
 
-#include <kfileitem.h>
+#include <tdefileitem.h>
 #include <kglobalsettings.h>
 #include <kstandarddirs.h>
 #include <kapplication.h>

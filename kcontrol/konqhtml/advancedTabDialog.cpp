@@ -28,7 +28,7 @@
 #include <dcopclient.h>
 #include <kcolorbutton.h>
 #include <klocale.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 
 #include "advancedTabDialog.h"
 #include "advancedTabOptions.h"

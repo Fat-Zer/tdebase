@@ -51,12 +51,12 @@
 #include <ktoolbar.h>
 #include <ktoolbarbutton.h>
 #include <kstdaccel.h>
-#include <kfiledialog.h>
+#include <tdefiledialog.h>
 #include <kmessagebox.h>
 #include <kcmdlineargs.h>
 #include <kapplication.h>
-#include <kio/job.h>
-#include <kio/netaccess.h>
+#include <tdeio/job.h>
+#include <tdeio/netaccess.h>
 #include <kdirlister.h>
 #include <kpushbutton.h>
 #include <kguiitem.h>

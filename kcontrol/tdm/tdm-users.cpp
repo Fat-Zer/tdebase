@@ -29,10 +29,10 @@
 #include <tqvgroupbox.h>
 #include <tqpushbutton.h>
 
-#include <kfiledialog.h>
+#include <tdefiledialog.h>
 #include <kimageio.h>
 #include <kimagefilepreview.h>
-#include <kio/netaccess.h>
+#include <tdeio/netaccess.h>
 #include <klocale.h>
 #include <kstandarddirs.h>
 #include <kmessagebox.h>

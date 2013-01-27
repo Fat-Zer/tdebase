@@ -48,7 +48,7 @@ Slave</glossseealso>
 				configuration cache which, for example, guarantees fast access to the menu
 				entries.</para>
 				<glossseealso 
-otherterm="gloss-kbuildsycoca"><application>KBuildSycoca</application></glossseealso>
+otherterm="gloss-tdebuildsycoca"><application>KBuildSycoca</application></glossseealso>
 			</glossdef>
 		</glossentry>
 	</glossdiv>
@@ -80,7 +80,7 @@ otherterm="gloss-kbuildsycoca"><application>KBuildSycoca</application></glosssee
 
 	<glossdiv id="glossdiv-applications">
 		<title>Applications</title>
-		<glossentry id="gloss-kbuildsycoca">
+		<glossentry id="gloss-tdebuildsycoca">
 			<glossterm><application>KBuildSycoca</application></glossterm>
 			<glossdef><para><application>KBuildSycoca</application> is a command line 
 program and regenerates the

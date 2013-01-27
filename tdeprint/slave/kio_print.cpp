@@ -29,11 +29,11 @@
 #include <klocale.h>
 #include <kdebug.h>
 #include <kinstance.h>
-#include <kio/global.h>
+#include <tdeio/global.h>
 #include <kstandarddirs.h>
 #include <kiconloader.h>
 #include <kmimetype.h>
-#include <kio/job.h>
+#include <tdeio/job.h>
 #include <kapplication.h>
 #include <kcmdlineargs.h>
 #include <kaboutdata.h>

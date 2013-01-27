@@ -1,5 +1,5 @@
 [Desktop Entry]
-Exec=kcmshell arts
+Exec=tdecmshell arts
 Icon=arts
 Type=Application
 DocPath=kcontrol/arts/index.html

@@ -29,6 +29,6 @@ install( FILES clock.desktop DESTINATION ${XDG_APPS_INSTALL_DIR} )
 
 tde_add_kpart( kcm_clock AUTOMOC
   SOURCES dtime.cpp tzone.cpp main.cpp
-  LINK kio-shared
+  LINK tdeio-shared
   DESTINATION ${PLUGIN_INSTALL_DIR}
 )

@@ -65,7 +65,7 @@
       <label>Sort directories first</label>
       <whatsthis></whatsthis>
       <!-- krootwm.cc:251 -->
-      <!--         aSortDirsFirst->setChecked( kconfig->readBoolEntry("SortDirectoriesFirst", true)); -->
+      <!--         aSortDirsFirst->setChecked( tdeconfig->readBoolEntry("SortDirectoriesFirst", true)); -->
       <!-- krootwm.cc:496 -->
       <!--     config->writeEntry( "SortDirectoriesFirst", b ); -->
     </entry>

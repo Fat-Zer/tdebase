@@ -12,7 +12,7 @@ rckwrite_DATA = kwriteui.rc
 tipdir = $(kde_datadir)/kate
 tip_DATA = tips
 
-updatedir = $(kde_datadir)/kconf_update
+updatedir = $(kde_datadir)/tdeconf_update
 update_DATA = kate-2.4.upd
 
 kde_conf_DATA = katerc

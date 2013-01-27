@@ -2,7 +2,7 @@
 Icon=kcmkicker
 Type=Application
 DocPath=kcontrol/panel/index.html
-Exec=kcmshell panel
+Exec=tdecmshell panel
 
 
 X-TDE-Library=kicker

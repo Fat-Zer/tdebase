@@ -22,7 +22,7 @@
 #include <kpushbutton.h>
 #include <assert.h>
 #include <kdebug.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 
 #include "ruleswidget.h"
 

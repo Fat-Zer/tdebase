@@ -155,7 +155,7 @@ download.</para>
 <screenshot>
   <screeninfo>Download Dialog Box</screeninfo>
   <mediaobject>
-  <imageobject><imagedata fileref="kfileman2.png"
+  <imageobject><imagedata fileref="tdefileman2.png"
  format="PNG"/></imageobject>
   <textobject> <phrase>Download Dialog Box</phrase> </textobject>
   <caption>
@@ -173,7 +173,7 @@ together under a single dialog box.</para>
 <screenshot>
   <screeninfo>Download Dialog Box</screeninfo>
   <mediaobject>
-  <imageobject><imagedata fileref="kfileman1.png"
+  <imageobject><imagedata fileref="tdefileman1.png"
  format="PNG"/></imageobject>
   <textobject><phrase>Download Dialog Box</phrase></textobject>
   <caption>

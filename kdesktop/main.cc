@@ -28,7 +28,7 @@
 #include <kdebug.h>
 #include <kglobalsettings.h>
 #include <kglobal.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <kmanagerselection.h>
 
 #include "desktop.h"

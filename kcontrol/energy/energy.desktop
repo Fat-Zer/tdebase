@@ -1,5 +1,5 @@
 [Desktop Entry]
-Exec=kcmshell energy
+Exec=tdecmshell energy
 Icon=energy_star
 DocPath=kcontrol/energy/index.html
 Type=Application

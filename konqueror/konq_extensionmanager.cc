@@ -17,7 +17,7 @@
 #include <tqlayout.h>
 #include <tqtimer.h>
 
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <kdebug.h>
 #include <klocale.h>
 #include <tdeparts/componentfactory.h>

@@ -22,7 +22,7 @@
 
 #include <tqlistview.h>
 #include <tqstring.h>
-#include <kio/global.h>
+#include <tdeio/global.h>
 #include <klocale.h>
 #include "konq_listviewitems.h"
 #include "konq_textviewwidget.h"

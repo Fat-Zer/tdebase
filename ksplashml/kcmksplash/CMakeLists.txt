@@ -33,6 +33,6 @@ install( FILES ksplashthememgr.desktop DESTINATION ${XDG_APPS_INSTALL_DIR} )
 
 tde_add_kpart( kcm_ksplashthemes AUTOMOC
   SOURCES installer.cpp main.cpp
-  LINK kio-shared
+  LINK tdeio-shared
   DESTINATION ${PLUGIN_INSTALL_DIR}
 )

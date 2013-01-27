@@ -19,7 +19,7 @@
  ***************************************************************************/
 #include "voicesignature.h"
 #include "sound.h"
-#include <kconfig.h>
+#include <tdeconfig.h>
 
 #include <math.h>
 #ifdef PI

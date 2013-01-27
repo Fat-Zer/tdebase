@@ -1,7 +1,7 @@
 [Desktop Entry]
 Icon=kcmkwm
 Type=Application
-Exec=kcmshell twinfocus
+Exec=tdecmshell twinfocus
 DocPath=kcontrol/windowmanagement/index.html#action-focus
 
 X-TDE-ModuleType=Library

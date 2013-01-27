@@ -38,7 +38,7 @@ pics_DATA = shutdownkonq.png
 
 update_DATA = ksmserver.upd
 update_SCRIPTS = move_session_config.sh
-updatedir = $(kde_datadir)/kconf_update
+updatedir = $(kde_datadir)/tdeconf_update
 
 
 EXTRA_PROGRAMS = testsh

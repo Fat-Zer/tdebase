@@ -28,6 +28,6 @@ install( FILES recentdocs.desktop DESTINATION ${DATA_INSTALL_DIR}/kicker/menuext
 
 tde_add_kpart( kickermenu_recentdocs AUTOMOC
   SOURCES recentdocsmenu.cpp
-  LINK kio-shared
+  LINK tdeio-shared
   DESTINATION ${PLUGIN_INSTALL_DIR}
 )

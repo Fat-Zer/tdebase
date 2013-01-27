@@ -69,6 +69,6 @@ Name[zu]=Ikhomputha ephathwayo eyisicaba
 X-TDE-ModuleType=Library
 X-TDE-Library=laptop
 X-TDE-FactoryName=battery
-Exec=kcmshell laptop
+Exec=tdecmshell laptop
 Icon=laptop_battery
 Type=Application

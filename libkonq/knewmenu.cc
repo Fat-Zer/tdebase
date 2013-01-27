@@ -31,8 +31,8 @@
 #include <kpopupmenu.h>
 #include <krun.h>
 
-#include <kio/job.h>
-#include <kio/renamedlg.h>
+#include <tdeio/job.h>
+#include <tdeio/renamedlg.h>
 
 #include <kpropertiesdialog.h>
 #include "konq_operations.h"

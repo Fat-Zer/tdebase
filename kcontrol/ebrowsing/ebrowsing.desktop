@@ -2,7 +2,7 @@
 Type=Application
 DocPath=kcontrol/ebrowsing/index.html
 Icon=enhanced_browsing
-Exec=kcmshell ebrowsing
+Exec=tdecmshell ebrowsing
 
 
 X-TDE-Library=kurifilt

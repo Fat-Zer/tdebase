@@ -1,5 +1,5 @@
 [Desktop Entry]
-Exec=kcmshell htmlsearch
+Exec=tdecmshell htmlsearch
 Icon=help_index
 Type=Application
 DocPath=kcontrol/help-index.html

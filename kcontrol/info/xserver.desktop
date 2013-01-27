@@ -1,5 +1,5 @@
 [Desktop Entry]
-Exec=kcmshell xserver
+Exec=tdecmshell xserver
 Icon=kcmx
 Type=Application
 DocPath=kinfocenter/xserver/index.html

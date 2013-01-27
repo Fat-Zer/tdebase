@@ -39,7 +39,7 @@
 #include <tqwhatsthis.h>
 
 #include <kiconloader.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <klocale.h>
 #include <kglobalsettings.h>
 #include <kpassivepopup.h>

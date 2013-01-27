@@ -1,5 +1,5 @@
 [Desktop Entry]
-Exec=kcmshell cdinfo
+Exec=tdecmshell cdinfo
 Icon=kcmdevices
 Type=Application
 DocPath=kinfocenter/cdinfo/index.html

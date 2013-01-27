@@ -21,7 +21,7 @@
 #ifndef KSG_SENSORMANAGER_H
 #define KSG_SENSORMANAGER_H
 
-#include <kconfig.h>
+#include <tdeconfig.h>
 
 #include <tqdict.h>
 #include <tqobject.h>

@@ -25,7 +25,7 @@ DEALINGS IN THE SOFTWARE.
 
 #include "kdecoration_plugins_p.h"
 
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <kdebug.h>
 #include <klocale.h>
 #include <klibloader.h>

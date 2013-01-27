@@ -7,7 +7,7 @@
 
 #include <kapplication.h>
 #include <kcolorbutton.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <kdialogbase.h>
 #include <kfontdialog.h>
 #include <kgenericfactory.h>

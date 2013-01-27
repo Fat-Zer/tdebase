@@ -27,7 +27,7 @@
 #include <tqtimer.h>
 #include <tqguardedptr.h>
 
-#include <kfileitem.h>
+#include <tdefileitem.h>
 #include "konq_openurlrequest.h"
 
 #include <tdeparts/mainwindow.h>

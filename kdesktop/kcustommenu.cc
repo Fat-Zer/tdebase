@@ -20,7 +20,7 @@
 #include <tqimage.h>
 #include <tqregexp.h>
 
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <kiconloader.h>
 #include <kapplication.h>
 

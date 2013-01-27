@@ -33,6 +33,6 @@ set_source_files_properties( iccconfig.cpp PROPERTIES COMPILE_FLAGS -DKDE_CONFDI
 tde_add_kpart( kcm_iccconfig AUTOMOC
   SOURCES
     iccconfig.cpp iccconfigbase.ui iccconfig.skel
-  LINK kio-shared tderandr-shared
+  LINK tdeio-shared tderandr-shared
   DESTINATION ${PLUGIN_INSTALL_DIR}
 )

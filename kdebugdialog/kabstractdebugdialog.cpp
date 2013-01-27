@@ -18,7 +18,7 @@
 */
 
 #include "kabstractdebugdialog.h"
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <kpushbutton.h>
 #include <tqlayout.h>
 #include <kapplication.h>

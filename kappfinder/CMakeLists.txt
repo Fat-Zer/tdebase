@@ -33,7 +33,7 @@ install( FILES uninstall.desktop DESTINATION ${APPS_INSTALL_DIR}/System RENAME k
 
 tde_add_executable( kappfinder AUTOMOC
   SOURCES main.cpp toplevel.cpp common.cpp
-  LINK kio-shared
+  LINK tdeio-shared
   DESTINATION ${BIN_INSTALL_DIR}
 )
 

@@ -1,7 +1,7 @@
 [Desktop Entry]
 Icon=filetypes
 Type=Application
-Exec=kcmshell filetypes
+Exec=tdecmshell filetypes
 DocPath=kcontrol/filetypes/index.html
 Categories=Qt;TDE;X-TDE-settings-components;
 

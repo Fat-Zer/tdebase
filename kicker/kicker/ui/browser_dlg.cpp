@@ -28,7 +28,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <kglobal.h>
 #include <klocale.h>
 #include <kicondialog.h>
-#include <kfiledialog.h>
+#include <tdefiledialog.h>
 #include <klineedit.h>
 #include <kmessagebox.h>
 

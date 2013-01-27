@@ -10,7 +10,7 @@
 #include <kapplication.h>
 #include <klocale.h>
 #include <kglobalsettings.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <kiconloader.h>
 #include <kdebug.h>
 #include <dcopref.h>

@@ -33,7 +33,7 @@
 #include <tdecmodule.h>
 #include <dcopobject.h>
 #include <buttons.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <klineedit.h>
 #include <klibloader.h>
 

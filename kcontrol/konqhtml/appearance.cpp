@@ -9,7 +9,7 @@
 
 #include <kapplication.h>
 #include <kcharsets.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <kdebug.h>
 #include <kdialog.h>
 #include <kfontcombo.h>

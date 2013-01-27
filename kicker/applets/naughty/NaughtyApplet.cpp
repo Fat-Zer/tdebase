@@ -28,7 +28,7 @@
 
 #include <kiconloader.h>
 #include <kglobal.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <kaboutapplication.h>
 #include <kaboutdata.h>
 #include <klocale.h>

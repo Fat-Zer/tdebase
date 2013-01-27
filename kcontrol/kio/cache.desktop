@@ -2,7 +2,7 @@
 Type=Application
 DocPath=kcontrol/cache/index.html
 Icon=cache
-Exec=kcmshell cache
+Exec=tdecmshell cache
 
 
 X-TDE-Library=kio

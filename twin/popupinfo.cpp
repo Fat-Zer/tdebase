@@ -20,7 +20,7 @@ License. See the file "COPYING" for the exact licensing terms.
 #include <tqstyle.h>
 #include <kglobal.h>
 #include <fixx11h.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <kdebug.h>
 #include <klocale.h>
 #include <tqapplication.h>

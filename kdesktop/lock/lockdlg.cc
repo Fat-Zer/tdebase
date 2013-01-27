@@ -21,7 +21,7 @@
 #include <kseparator.h>
 #include <kstandarddirs.h>
 #include <kglobalsettings.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <kiconloader.h>
 #include <tdesu/defaults.h>
 #include <kpassdlg.h>

@@ -30,7 +30,7 @@
 #include "browser.h"
 #include "desktopbehavior_impl.h"
 
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <kapplication.h>
 
 static TQCString configname()

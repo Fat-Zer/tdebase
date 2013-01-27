@@ -2,7 +2,7 @@
 Type=Application
 DocPath=kcontrol/desktop/index.html#desktop-number
 Icon=desktop
-Exec=kcmshell desktop
+Exec=tdecmshell desktop
 
 
 X-TDE-Library=konq

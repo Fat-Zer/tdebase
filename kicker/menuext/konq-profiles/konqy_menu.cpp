@@ -28,7 +28,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <kapplication.h>
 #include <krun.h>
 #include <kstandarddirs.h>
-#include <kio/global.h>
+#include <tdeio/global.h>
 #include <ksimpleconfig.h>
 
 #include <tqregexp.h>

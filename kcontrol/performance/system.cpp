@@ -18,7 +18,7 @@
 
 #include "system.h"
 
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <tqwhatsthis.h>
 #include <tqcheckbox.h>
 #include <tqlabel.h>
@@ -49,9 +49,9 @@ SystemWidget::SystemWidget( TQWidget* parent_P )
               " handler will refuse to provide backtrace for the bugreport with this option"
               " turned on (you will need to reproduce it again with this option turned off,"
               " or turn on the developer mode for the crash handler).</p>" );
-    TQWhatsThis::add( cb_disable_kbuildsycoca, tmp );
-    TQWhatsThis::add( label_kbuildsycoca, tmp );
-    connect( cb_disable_kbuildsycoca, TQT_SIGNAL( clicked()), TQT_SIGNAL( changed()));
+    TQWhatsThis::add( cb_disable_tdebuildsycoca, tmp );
+    TQWhatsThis::add( label_tdebuildsycoca, tmp );
+    connect( cb_disable_tdebuildsycoca, TQT_SIGNAL( clicked()), TQT_SIGNAL( changed()));
     defaults();
     }
 
@@ -60,14 +60,14 @@ void SystemWidget::load(bool useDefaults )
     TDEConfig cfg( "kdedrc", true );
 	 cfg.setReadDefaults( useDefaults );
     cfg.setGroup( "General" );
-    cb_disable_kbuildsycoca->setChecked( cfg.readBoolEntry( "DelayedCheck", false ));
+    cb_disable_tdebuildsycoca->setChecked( cfg.readBoolEntry( "DelayedCheck", false ));
     }
 
 void SystemWidget::save()
     {
     TDEConfig cfg( "kdedrc" );
     cfg.setGroup( "General" );
-    cfg.writeEntry( "DelayedCheck", cb_disable_kbuildsycoca->isChecked());
+    cfg.writeEntry( "DelayedCheck", cb_disable_tdebuildsycoca->isChecked());
     }
 
 void SystemWidget::defaults()

@@ -47,7 +47,7 @@
 #include <kaction.h>
 #include <kstdaction.h>
 #include <kglobal.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <kdebug.h>
 #include <klocale.h>
 #include <twin.h>

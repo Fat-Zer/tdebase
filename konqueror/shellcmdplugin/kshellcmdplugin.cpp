@@ -24,7 +24,7 @@
 #include <kapplication.h>
 #include "kshellcmddialog.h"
 #include <kgenericfactory.h>
-#include <kio/netaccess.h>
+#include <tdeio/netaccess.h>
 
 KShellCmdPlugin::KShellCmdPlugin( TQObject* parent, const char* name,
 	                          const TQStringList & )

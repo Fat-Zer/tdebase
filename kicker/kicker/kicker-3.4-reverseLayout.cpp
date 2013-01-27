@@ -130,7 +130,7 @@ int main(int argc, char** argv)
 
     if (!childPanelConfigFiles.isEmpty())
     {
-        // Create a temporary kconf_update .upd file for updating the childpanels
+        // Create a temporary tdeconf_update .upd file for updating the childpanels
         KTempFile tempFile(TQString::null, ".upd");
         TQTextStream* upd = tempFile.textStream();
         for (it = childPanelConfigFiles.begin(); it != childPanelConfigFiles.end(); ++it)
@@ -142,10 +142,10 @@ int main(int argc, char** argv)
         }
         tempFile.close();
 
-        // Run kconf_update on the childpanel config files.
-        TDEProcess kconf_update;
-        kconf_update << "kconf_update" << tempFile.name();
-        kconf_update.start(TDEProcess::Block);
+        // Run tdeconf_update on the childpanel config files.
+        TDEProcess tdeconf_update;
+        tdeconf_update << "tdeconf_update" << tempFile.name();
+        tdeconf_update.start(TDEProcess::Block);
 
         tempFile.unlink();
     }

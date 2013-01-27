@@ -22,7 +22,7 @@
 
 #include <tqpainter.h>
 
-#include <kconfig.h>
+#include <tdeconfig.h>
 
 #include "Web.h"
 #include "WebButton.h"

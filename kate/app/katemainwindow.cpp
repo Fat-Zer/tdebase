@@ -53,7 +53,7 @@
 #include <kdiroperator.h>
 #include <kdockwidget.h>
 #include <kedittoolbar.h>
-#include <kfiledialog.h>
+#include <tdefiledialog.h>
 #include <kglobalaccel.h>
 #include <kglobal.h>
 #include <kglobalsettings.h>

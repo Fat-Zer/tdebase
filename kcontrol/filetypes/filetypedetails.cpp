@@ -5,7 +5,7 @@
 #include <tqwhatsthis.h>
 
 #include <kapplication.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <kdebug.h>
 #include <kicondialog.h>
 #include <klineedit.h>

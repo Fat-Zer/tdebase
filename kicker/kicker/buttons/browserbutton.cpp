@@ -25,10 +25,10 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <tqtooltip.h>
 #include <tqdragobject.h>
 
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <klocale.h>
 #include <konq_operations.h>
-#include <kfileitem.h>
+#include <tdefileitem.h>
 
 #include "kicker.h"
 #include "browser_mnu.h"

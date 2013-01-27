@@ -8,7 +8,7 @@
 #define KFWIN_H
 
 #include <klistview.h>
-#include <kfileitem.h>
+#include <tdefileitem.h>
 #include <kurl.h>
 
 class KfArchiver;

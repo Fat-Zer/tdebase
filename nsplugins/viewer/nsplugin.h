@@ -42,7 +42,7 @@
 #include <tqguardedptr.h>
 
 #include <tdeparts/browserextension.h>  // for URLArgs
-#include <kio/job.h>
+#include <tdeio/job.h>
 
 
 #define XP_UNIX

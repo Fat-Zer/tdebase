@@ -24,7 +24,7 @@
  *		rm someFile
  *	fi
  */
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <kglobal.h>
 #include <kapplication.h>
 #include <kcmdlineargs.h>

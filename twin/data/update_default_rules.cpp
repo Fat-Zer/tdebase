@@ -11,7 +11,7 @@ License. See the file "COPYING" for the exact licensing terms.
 // read addtional window rules and add them to twinrulesrc
 
 #include <dcopclient.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <kdebug.h>
 #include <kinstance.h>
 #include <kstandarddirs.h>

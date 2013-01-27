@@ -1,5 +1,5 @@
 [Desktop Entry]
-Exec=kcmshell dma
+Exec=tdecmshell dma
 Icon=kcmmemory
 Type=Application
 DocPath=kinfocenter/dma/index.html

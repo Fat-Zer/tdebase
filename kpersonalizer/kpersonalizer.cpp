@@ -34,7 +34,7 @@
 #include <klistview.h>
 #include <krun.h>
 #include <kmessagebox.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 
 #include <stdlib.h>
 

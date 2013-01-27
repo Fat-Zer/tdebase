@@ -20,7 +20,7 @@
 
 #include <kapplication.h>
 #include <kcolorbutton.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <kdebug.h>
 #include <kiconeffect.h>
 #include <kiconloader.h>

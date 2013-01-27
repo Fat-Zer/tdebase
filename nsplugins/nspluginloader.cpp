@@ -33,7 +33,7 @@
 #include <kglobal.h>
 #include <klocale.h>
 #include <kstandarddirs.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <dcopclient.h>
 #include <dcopstub.h>
 #include <tqlayout.h>

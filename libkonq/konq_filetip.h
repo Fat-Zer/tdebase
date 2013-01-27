@@ -24,7 +24,7 @@
 
 #include <tqframe.h>
 #include <tqpixmap.h>
-#include <kio/previewjob.h>
+#include <tdeio/previewjob.h>
 
 #include <libkonq_export.h>
 

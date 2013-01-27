@@ -37,8 +37,8 @@ lock* : screen saver/locker
 Libs used by KDesktop
 ======================
  
-tdecore, tdeui, kfile  - usual stuff :)
-libkio - I/O stuff, mimetypes, services, registry
+tdecore, tdeui, tdefile  - usual stuff :)
+libtdeio - I/O stuff, mimetypes, services, registry
 libkonq - properties dialog, templates ("new") menu, dir lister, settings
 
 Screensaver

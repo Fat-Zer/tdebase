@@ -25,7 +25,7 @@ The KonqView contains the child part, which can be :
 Where to find those classes
 ===========================
 
-konq_run.* : Re-implementation of KRun (see libkio) for konqueror.
+konq_run.* : Re-implementation of KRun (see libtdeio) for konqueror.
 	   Responsible for finding appropriate view<->mimetype bindings.
 konq_view.* : KonqView, class used by KonqMainView to handle child views
 konq_frame.* : KonqFrame and KonqFrameHeader (handles view-statusbar).
@@ -39,8 +39,8 @@ dirtree/*  : KonqDirTree, the directory tree
 Libs used by konqueror
 ======================
 
-tdecore, tdeui, kfile, tdehtml, tdeparts - usual stuff :)
-libkio - I/O stuff, mimetypes, services
+tdecore, tdeui, tdefile, tdehtml, tdeparts - usual stuff :)
+libtdeio - I/O stuff, mimetypes, services
 libkonq - bookmarks, properties dialog, templates ("new") menu, icon view widget
 
 How konqueror opens URLs

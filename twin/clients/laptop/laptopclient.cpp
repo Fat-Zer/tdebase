@@ -6,7 +6,7 @@
  * Copyright (c) 2003 Luciano Montanaro <mikelima@cirulla.net>
  */
 
-#include <kconfig.h> // up here to avoid X11 header conflict :P
+#include <tdeconfig.h> // up here to avoid X11 header conflict :P
 #include "laptopclient.h"
 #include <tqdrawutil.h>
 #include <kpixmapeffect.h>

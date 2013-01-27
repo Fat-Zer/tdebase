@@ -34,7 +34,7 @@ tde_add_kpart( libkuriikwsfilter AUTOMOC
   SOURCES
     kuriikwsfiltereng.cpp kuriikwsfilter.skel
     kuriikwsfilter.cpp searchprovider.cpp
-  LINK kio-shared
+  LINK tdeio-shared
   DESTINATION ${PLUGIN_INSTALL_DIR}
 )
 
@@ -46,6 +46,6 @@ tde_add_kpart( libkurisearchfilter AUTOMOC
     kurisearchfilter.cpp kurisearchfilter.skel
     kuriikwsfiltereng.cpp ikwsopts.cpp searchproviderdlg.cpp
     searchprovider.cpp searchproviderdlg_ui.ui ikwsopts_ui.ui
-  LINK kio-shared
+  LINK tdeio-shared
   DESTINATION ${PLUGIN_INSTALL_DIR}
 )

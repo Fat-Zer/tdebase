@@ -45,7 +45,7 @@
 #include <kaction.h>
 #include <kstdaction.h>
 #include <kedittoolbar.h>
-#include <kfiledialog.h>
+#include <tdefiledialog.h>
 #include <kkeydialog.h>
 #include <kmessagebox.h>
 #include <kinputdialog.h>

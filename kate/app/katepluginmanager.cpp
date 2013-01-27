@@ -26,7 +26,7 @@
 
 #include "../interfaces/application.h"
 
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <tqstringlist.h>
 #include <kmessagebox.h>
 #include <kdebug.h>

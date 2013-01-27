@@ -29,6 +29,6 @@ install( FILES colors.desktop DESTINATION ${XDG_APPS_INSTALL_DIR} )
 
 tde_add_kpart( kcm_colors AUTOMOC
   SOURCES colorscm.cpp widgetcanvas.cpp
-  LINK krdb-static kio-shared
+  LINK krdb-static tdeio-shared
   DESTINATION ${PLUGIN_INSTALL_DIR}
 )

@@ -11,7 +11,7 @@
 #include <kpopupmenu.h>
 #include <kprocess.h>
 #include <twinmodule.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <ksystemtray.h>
 
 #include <netwm.h>

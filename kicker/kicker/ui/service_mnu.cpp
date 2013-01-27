@@ -44,7 +44,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <tdesycocaentry.h>
 #include <kservice.h>
 #include <kurldrag.h>
-#include <kio/job.h>
+#include <tdeio/job.h>
 
 #include "global.h"
 #include "kicker.h"

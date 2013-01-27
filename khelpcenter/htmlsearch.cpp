@@ -1,5 +1,5 @@
 #include <kdebug.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 
 #include "docentry.h"
 

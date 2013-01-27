@@ -37,7 +37,7 @@
 
 #include <kprocess.h>
 #include <kglobal.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <klocale.h>
 #include <kdialogbase.h>
 #include <kmimetype.h>
@@ -47,7 +47,7 @@
 #include <kemailsettings.h>
 #include <kdebug.h>
 #include <kstdguiitem.h>
-#include <kfiledialog.h>
+#include <tdefiledialog.h>
 #include <kmessagebox.h>
 
 #include <stdlib.h>

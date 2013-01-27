@@ -37,7 +37,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <dcopobject.h>
 #include <kpanelapplet.h>
 #include <kdirwatch.h>
-#include <kconfigdialog.h>
+#include <tdeconfigdialog.h>
 
 #include <kickertip.h>
 #include "settings.h"

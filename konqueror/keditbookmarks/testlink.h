@@ -22,7 +22,7 @@
 
 #include <tqobject.h>
 
-#include <kio/job.h>
+#include <tdeio/job.h>
 #include <kbookmark.h>
 
 #include "listview.h"

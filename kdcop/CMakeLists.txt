@@ -31,6 +31,6 @@ install( FILES kdcopui.rc DESTINATION ${DATA_INSTALL_DIR}/kdcop )
 tde_add_executable( kdcop AUTOMOC
   SOURCES
     kdcop.cpp kdcopwindow.cpp kdcoplistview.cpp kdcopview.ui
-  LINK kio-shared
+  LINK tdeio-shared
   DESTINATION ${BIN_INSTALL_DIR}
 )

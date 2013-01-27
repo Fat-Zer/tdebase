@@ -22,7 +22,7 @@
 #include <kapplication.h>
 #include <kcharsets.h>
 #include <kcombobox.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <kfontcombo.h>
 #include <tdehtmldefaults.h>
 #include <klocale.h>

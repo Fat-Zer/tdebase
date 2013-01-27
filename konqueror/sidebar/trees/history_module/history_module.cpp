@@ -23,7 +23,7 @@
 #include <kapplication.h>
 #include <kaction.h>
 #include <kcursor.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <kdebug.h>
 #include <kiconloader.h>
 #include <kmessagebox.h>
@@ -278,7 +278,7 @@ void KonqSidebarHistoryModule::slotRemoveEntry()
 void KonqSidebarHistoryModule::slotPreferences()
 {
     // Run the history sidebar settings.
-    KRun::run( "kcmshell kcmhistory", KURL::List() );
+    KRun::run( "tdecmshell kcmhistory", KURL::List() );
 }
 
 void KonqSidebarHistoryModule::slotSortByName()

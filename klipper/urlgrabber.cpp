@@ -22,7 +22,7 @@
 #include <tqtimer.h>
 
 #include <kapplication.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <kdialogbase.h>
 #include <ktextedit.h>
 #include <klocale.h>

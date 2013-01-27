@@ -12,7 +12,7 @@
 
 #include <tqcheckbox.h>
 #include <tqgroupbox.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <tqhbox.h>
 #include <tqlabel.h>
 #include <tqvbox.h>

@@ -23,8 +23,8 @@
 #include <tqbitmap.h>
 #include <tqimage.h>
 
-#include <kfileivi.h>
-#include <kfileitem.h>
+#include <tdefileivi.h>
+#include <tdefileitem.h>
 #include <kapplication.h>
 #include <kdirlister.h>
 #include <kstandarddirs.h>

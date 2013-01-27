@@ -26,6 +26,6 @@ tde_add_executable( kdialog AUTOMOC
   SOURCES
     kdialog.cpp widgets.cpp klistboxdialog.cpp
     progressdialog.cpp progressdialogiface.skel
-  LINK kio-shared
+  LINK tdeio-shared
   DESTINATION ${BIN_INSTALL_DIR}
 )

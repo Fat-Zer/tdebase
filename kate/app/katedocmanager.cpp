@@ -34,12 +34,12 @@
 
 #include <klocale.h>
 #include <kdebug.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <klibloader.h>
 #include <kmdcodec.h>
 #include <kmessagebox.h>
 #include <kencodingfiledialog.h>
-#include <kio/job.h>
+#include <tdeio/job.h>
 #include <twin.h>
 
 #include <tqdatetime.h>

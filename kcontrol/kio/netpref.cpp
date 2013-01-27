@@ -3,11 +3,11 @@
 #include <tqwhatsthis.h>
 #include <tqvgroupbox.h>
 
-#include <kio/ioslave_defaults.h>
+#include <tdeio/ioslave_defaults.h>
 #include <knuminput.h>
 #include <klocale.h>
 #include <kdialog.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 
 #include "ksaveioconfig.h"
 #include "netpref.h"

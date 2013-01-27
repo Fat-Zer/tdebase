@@ -14,7 +14,7 @@
 #include <tqhgroupbox.h>
 #include <tqlabel.h>
 #include <tqcombobox.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 
 class B2Config: public TQObject
 {

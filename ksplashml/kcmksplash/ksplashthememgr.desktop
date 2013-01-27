@@ -1,6 +1,6 @@
 [Desktop Entry]
 Icon=ksplash
-Exec=kcmshell ksplashthememgr
+Exec=tdecmshell ksplashthememgr
 DocPath=ksplashml/themes.html
 
 X-TDE-ModuleType=Library

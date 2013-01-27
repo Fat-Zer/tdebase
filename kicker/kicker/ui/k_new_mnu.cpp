@@ -48,7 +48,7 @@
 #include <kaboutkde.h>
 #include <kaction.h>
 #include <kbookmarkmenu.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <kdebug.h>
 #include <kglobal.h>
 #include <kglobalsettings.h>
@@ -70,8 +70,8 @@
 #include <kbookmarkmanager.h>
 #include <kbookmark.h>
 #include <kprocess.h>
-#include <kio/jobclasses.h>
-#include <kio/job.h>
+#include <tdeio/jobclasses.h>
+#include <tdeio/job.h>
 #include <dcopref.h>
 #include <konq_popupmenu.h>
 #include <konqbookmarkmanager.h>
@@ -3512,16 +3512,16 @@ bool KMenu::ensureServiceRunning(const TQString & service)
     TQDataStream arg(data, IO_WriteOnly);
     arg << service << URLs;
 
-    if ( !kapp->dcopClient()->call( "klauncher", "klauncher", "start_service_by_desktop_name(TQString,TQStringList)",
+    if ( !kapp->dcopClient()->call( "tdelauncher", "tdelauncher", "start_service_by_desktop_name(TQString,TQStringList)",
                       data, replyType, replyData) ) {
-        tqWarning( "call to klauncher failed.");
+        tqWarning( "call to tdelauncher failed.");
         return false;
     }
     TQDataStream reply(replyData, IO_ReadOnly);
 
     if ( replyType != "serviceResult" )
     {
-        tqWarning( "unexpected result '%s' from klauncher.", replyType.data());
+        tqWarning( "unexpected result '%s' from tdelauncher.", replyType.data());
         return false;
     }
     int result;

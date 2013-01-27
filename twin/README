@@ -160,7 +160,7 @@ mainwindow should in the cookie dialog case point to the Konqueror window
 for which it has been shown. This is solved in kcookiejar by including
 the window id in the DCOP call. When the cookie dialog is shown, its
 WM_TRANSIENT_FOR property is manually set using the XSetTransientForHint()
-call (see tdelibs/kioslave/http/kcookiejar/kcookiewin.cpp). The arguments
+call (see tdelibs/tdeioslave/http/kcookiejar/kcookiewin.cpp). The arguments
 to XSetTransientForHint() call are the X display (i.e. qt_xdisplay()),
 the window id on which the WM_TRANSIENT_FOR property is to be set
 (i.e. use QWidget::winId()), and the window id of the mainwindow.

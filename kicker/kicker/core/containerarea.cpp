@@ -45,7 +45,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <krootpixmap.h>
 #include <kpixmap.h>
 #include <klocale.h>
-#include <kio/netaccess.h>
+#include <tdeio/netaccess.h>
 #include <kservice.h>
 #include <kurldrag.h>
 

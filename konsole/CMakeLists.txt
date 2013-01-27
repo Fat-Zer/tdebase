@@ -34,12 +34,12 @@ install( FILES
 
 install( FILES
     konsole.upd
-  DESTINATION ${DATA_INSTALL_DIR}/kconf_update )
+  DESTINATION ${DATA_INSTALL_DIR}/tdeconf_update )
 
 
 install( PROGRAMS
     schemaStrip.pl
-  DESTINATION ${DATA_INSTALL_DIR}/kconf_update )
+  DESTINATION ${DATA_INSTALL_DIR}/tdeconf_update )
 
 
 install( FILES

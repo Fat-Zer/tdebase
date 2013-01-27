@@ -46,7 +46,7 @@ save these options to .dmrc?
 
 - make config position independent
 - parse /etc/kderc?
-- merge multiple tdmrcs in the style of kconfig. how to set section priorities?
+- merge multiple tdmrcs in the style of tdeconfig. how to set section priorities?
 - gentdmconf: treat backgroundrc as an ini file, not as a text blob
 - add proper quoting and dequoting to gentdmconf ini parser & writer
 

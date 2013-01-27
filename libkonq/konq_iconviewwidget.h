@@ -24,8 +24,8 @@
 #include <kiconview.h>
 #include <kurl.h>
 #include <tqguardedptr.h>
-#include <kfileitem.h>
-#include <kio/jobclasses.h>
+#include <tdefileitem.h>
+#include <tdeio/jobclasses.h>
 #include <libkonq_export.h>
 
 class KonqFMSettings;

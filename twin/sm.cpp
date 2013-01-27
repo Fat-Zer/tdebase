@@ -18,7 +18,7 @@ License. See the file "COPYING" for the exact licensing terms.
 #include <stdlib.h>
 #include <pwd.h>
 #include <fixx11h.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <kglobal.h>
 
 #include "workspace.h"
@@ -101,7 +101,7 @@ void Workspace::storeSession( TDEConfig* config, SMSavePhase phase )
             config->writeEntry( TQString("fullscreen")+n, (int) c->fullScreenMode() );
             config->writeEntry( TQString("desktop")+n, c->desktop() );
     	    // the config entry is called "iconified" for back. comp. reasons
-            // (kconf_update script for updating session files would be too complicated)
+            // (tdeconf_update script for updating session files would be too complicated)
             config->writeEntry( TQString("iconified")+n, c->isMinimized() );
             // the config entry is called "sticky" for back. comp. reasons
             config->writeEntry( TQString("sticky")+n, c->isOnAllDesktops() );

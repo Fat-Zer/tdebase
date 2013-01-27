@@ -335,7 +335,7 @@ slow data updates.</para>
 
 <para>Now we have to tell &kontact; to use <acronym>IMAP</acronym> as the
 data source for it's various components. From the &kmenu;, choose
-<guimenuitem>Run command</guimenuitem>, run <userinput><command>kcmshell
+<guimenuitem>Run command</guimenuitem>, run <userinput><command>tdecmshell
 tderesources</command></userinput>. In the combo box select
 <guilabel>Contacts</guilabel>, then press the <guibutton>Add...</guibutton>
 button, and choose <guilabel>Addressbook on IMAP Server via KMail</guilabel>. Then select that new line and

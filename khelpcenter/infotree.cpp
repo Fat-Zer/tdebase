@@ -24,7 +24,7 @@
 #include "docentry.h"
 
 #include <kapplication.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <kdebug.h>
 #include <kiconloader.h>
 #include <klistview.h>
@@ -98,7 +98,7 @@ void InfoTree::build( NavigatorItem *parent )
   TDEConfig *cfg = kapp->config();
   cfg->setGroup( "Info pages" );
   TQStringList infoDirFiles = cfg->readListEntry( "Search paths" );
-  // Default paths taken fron tdebase/kioslave/info/kde-info2html.conf
+  // Default paths taken fron tdebase/tdeioslave/info/kde-info2html.conf
   if ( infoDirFiles.isEmpty() ) { 
     infoDirFiles << "/usr/share/info";
     infoDirFiles << "/usr/info";

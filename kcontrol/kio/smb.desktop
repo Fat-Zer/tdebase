@@ -2,7 +2,7 @@
 Type=Application
 DocPath=kcontrol/smb/index.html
 Icon=samba
-Exec=kcmshell smb
+Exec=tdecmshell smb
 
 
 X-TDE-Library=kio

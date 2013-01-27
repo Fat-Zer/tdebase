@@ -31,6 +31,6 @@ install( FILES uninstall.desktop DESTINATION ${APPS_INSTALL_DIR}/Settings/LookNF
 
 tde_add_kpart( kcm_icons AUTOMOC
   SOURCES iconthemes.cpp icons.cpp main.cpp
-  LINK kio-shared ${LIBART_LIBRARIES}
+  LINK tdeio-shared ${LIBART_LIBRARIES}
   DESTINATION ${PLUGIN_INSTALL_DIR}
 )

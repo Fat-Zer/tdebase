@@ -29,7 +29,7 @@
 #include <tqtooltip.h>
 
 #include <dcopclient.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <kcmdlineargs.h>
 #include <kcmultidialog.h>
 #include <kcrash.h>

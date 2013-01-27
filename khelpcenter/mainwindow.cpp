@@ -28,7 +28,7 @@
 #include "prefs.h"
 
 #include <kapplication.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <dcopclient.h>
 #include <kiconloader.h>
 #include <kmimemagic.h>

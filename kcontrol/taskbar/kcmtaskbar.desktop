@@ -2,7 +2,7 @@
 Icon=kmenu
 Type=Application
 DocPath=kcontrol/kcmtaskbar/index.html
-Exec=kcmshell kcmtaskbar
+Exec=tdecmshell kcmtaskbar
 
 
 X-TDE-Library=taskbar

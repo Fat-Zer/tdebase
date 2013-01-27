@@ -27,7 +27,7 @@
 #include <dcopclient.h>
 
 #include <kapplication.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <kdialog.h>
 #include <kglobal.h>
 #include <klistview.h>

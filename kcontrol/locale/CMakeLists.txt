@@ -33,6 +33,6 @@ tde_add_kpart( kcm_locale AUTOMOC
   SOURCES
     main.cpp toplevel.cpp kcmlocale.cpp klocalesample.cpp
     localenum.cpp localemon.cpp localetime.cpp localeother.cpp
-  LINK kio-shared
+  LINK tdeio-shared
   DESTINATION ${PLUGIN_INSTALL_DIR}
 )

@@ -1,5 +1,5 @@
 [Desktop Entry]
-Exec=kcmshell tdm
+Exec=tdecmshell tdm
 Icon=tdmconfig
 Type=Application
 DocPath=tdm/index.html#configuring-tdm

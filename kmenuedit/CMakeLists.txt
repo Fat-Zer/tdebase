@@ -54,5 +54,5 @@ tde_add_library( kmenueditcommon STATIC_PIC AUTOMOC
   SOURCES
     basictab.cpp treeview.cpp kmenuedit.cpp
     khotkeys.cpp menufile.cpp menuinfo.cpp
-  LINK kio-shared
+  LINK tdeio-shared
 )

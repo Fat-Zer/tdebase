@@ -1,5 +1,5 @@
 [Desktop Entry]
-Exec=kcmshell screensaver
+Exec=tdecmshell screensaver
 Icon=tdescreensaver
 Type=Application
 DocPath=kcontrol/screensaver/index.html

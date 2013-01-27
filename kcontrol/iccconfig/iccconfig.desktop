@@ -1,5 +1,5 @@
 [Desktop Entry]
-Exec=kcmshell iccconfig
+Exec=tdecmshell iccconfig
 Icon=background
 Type=Application
 DocPath=kcontrol/iccconfig/index.html

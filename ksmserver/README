@@ -54,7 +54,7 @@ follow the startup order (but note that this is just a documentation
 which may get outdated, so in case of doubts the source wins ;) ).
 
 The starttde scripts already launches tdeinit, which in turns launches
-TDE daemons like dcopserver, klauncher and kded. Kded loads autoloaded
+TDE daemons like dcopserver, tdelauncher and kded. Kded loads autoloaded
 kded modules, i.e. those that have X-TDE-Kded-autoload=true in .desktop
 files. The exact way autoloading works is controlled by X-TDE-Kded-phase=,
 which may be 0, 1 or 2 (the default). Kded phase 0 means the module is
@@ -68,13 +68,13 @@ Startkde also launches kcminit, which performs initialization done by kcontrol
 modules. There are three kcminit phases, 0, 1 and 2, controlled
 by X-TDE-Init-Phase= in the .desktop file, which defaults to 1. Phase 0 kcminit
 modules should be only those that really need to be run early in the startup
-process (and those should probably actually use kstartupconfig in starttde
+process (and those should probably actually use tdestartupconfig in starttde
 to be done even before tdeinit and daemons). After executing phase 0
 modules kcminit returns and waits.
 
 When ksmserver is launched, the first thing it does is launching
 the window manager, as the WM is necessary before any windows are possibly
-shown. When the WM is ready, ksmserver tells klauncher to perform autostart
+shown. When the WM is ready, ksmserver tells tdelauncher to perform autostart
 phase 0 ($TDEHOME/share/autostart). There are 3 autostart phases, 0, 1 and 2,
 defined by X-TDE-autostart-phase, defaulting to 2. Phase 0 is reserved only
 for the actual visible base components of TDE, i.e. KDesktop and Kicker,
@@ -84,7 +84,7 @@ waiting for autostart phase 0 until both KDesktop and Kicker are ready.
 
 Next step is telling the waiting kcminit to perform phase 1 - all kcminit
 modules that should be executed before TDE startup is considered done.
-After that ksmserver tells klauncher to perform autostart phase 1,
+After that ksmserver tells tdelauncher to perform autostart phase 1,
 i.e. launching normal components of TDE that should be available right
 after TDE startup, and after this session restore is performed,
 i.e. launching all applications that were running during last session
@@ -92,7 +92,7 @@ saving (usually logout).
 
 By this time TDE session is considered to be more or less ready and
 ksmserver does the knotify starttde event (i.e. plays the login sound).
-It also tells klauncher to perform autostart phase 2, kded to load all
+It also tells tdelauncher to perform autostart phase 2, kded to load all
 remaining autoload (i.e. kded phase 2) modules, kcminit to execute
 kcminit phase 2 (kcontrol modules that do initialization that can wait,
 like launching daemons) and kdesktop to execute the user Autostart folder.

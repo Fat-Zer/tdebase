@@ -28,6 +28,6 @@ install( FILES privacy.desktop DESTINATION ${XDG_APPS_INSTALL_DIR} )
 
 tde_add_kpart( kcm_privacy AUTOMOC
   SOURCES privacy.cpp kprivacysettings.ui kcmprivacydialog.ui kprivacymanager.cpp
-  LINK kio-shared
+  LINK tdeio-shared
   DESTINATION ${PLUGIN_INSTALL_DIR}
 )

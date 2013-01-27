@@ -1,4 +1,4 @@
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include "kwmthemeclient.h"
 #include <kglobal.h>
 #include <tqlayout.h>

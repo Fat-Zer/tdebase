@@ -1,5 +1,5 @@
 SUBDIRS= . componentservices
-AM_CPPFLAGS  = -I../ -I$(top_srcdir)/kio -I$(top_srcdir) $(all_includes)
+AM_CPPFLAGS  = -I../ -I$(top_srcdir)/tdeio -I$(top_srcdir) $(all_includes)
 
 METASOURCES = AUTO 
 

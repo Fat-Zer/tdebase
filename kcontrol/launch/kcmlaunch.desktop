@@ -2,7 +2,7 @@
 Icon=launch
 Type=Application
 DocPath=kcontrol/kcmlaunch/index.html
-Exec=kcmshell kcmlaunch
+Exec=tdecmshell kcmlaunch
 
 
 X-TDE-Library=launch

@@ -45,7 +45,7 @@
 #include <kglobal.h>
 #include <kstandarddirs.h>
 #include <klibloader.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <kcrash.h>
 #include <kdesktopfile.h>
 #include <kservicetype.h>
@@ -657,5 +657,5 @@ int main( int argc, char **argv )
     if ( !dcc->isAttached() )
         dcc->attach();
     // Tel kded to update sycoca database.
-    dcc->send("kded", "kbuildsycoca", "recreate()", TQByteArray());
+    dcc->send("kded", "tdebuildsycoca", "recreate()", TQByteArray());
 }

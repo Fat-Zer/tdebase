@@ -33,6 +33,6 @@ install( FILES ksplashredmond.desktop DESTINATION ${SERVICES_INSTALL_DIR} )
 
 tde_add_kpart( ksplashredmond AUTOMOC
   SOURCES previewredmond.cpp themeredmond.cpp
-  LINK ksplashthemes-shared kio-shared
+  LINK ksplashthemes-shared tdeio-shared
   DESTINATION ${PLUGIN_INSTALL_DIR}
 )

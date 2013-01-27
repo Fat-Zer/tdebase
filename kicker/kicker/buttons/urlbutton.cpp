@@ -25,7 +25,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <tqfile.h>
 
 #include <kdesktopfile.h>
-#include <kfileitem.h>
+#include <tdefileitem.h>
 #include <konq_operations.h>
 #include <kicontheme.h>
 #include <kglobal.h>

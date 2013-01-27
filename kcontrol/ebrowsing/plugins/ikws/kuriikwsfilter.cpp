@@ -32,7 +32,7 @@
 
 /**
  * IMPORTANT: If you change anything here, please run the regression test
- * tdelibs/kio/tests/kurifiltertest
+ * tdelibs/tdeio/tests/kurifiltertest
  */
 
 typedef KGenericFactory<KAutoWebSearch> KAutoWebSearchFactory;

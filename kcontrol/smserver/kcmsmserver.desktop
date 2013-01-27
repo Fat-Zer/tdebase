@@ -2,7 +2,7 @@
 Icon=exit
 Type=Application
 DocPath=kcontrol/kcmsmserver/index.html
-Exec=kcmshell kcmsmserver
+Exec=tdecmshell kcmsmserver
 
 
 X-TDE-Library=smserver

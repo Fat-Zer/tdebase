@@ -27,10 +27,10 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <stdlib.h>
 
 #include <kaboutdata.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <kdebug.h>
 #include <kglobal.h>
-#include <kio/netaccess.h>
+#include <tdeio/netaccess.h>
 #include <klocale.h>
 #include <kmenubar.h>
 #include <kmessagebox.h>
@@ -233,7 +233,7 @@ void ExtensionManager::migrateMenubar()
     // will have a menubar in it, and if so, abort creating one of our
     // own.
     //
-    // the reason i didn't do this as a kconfig_update script is that
+    // the reason i didn't do this as a tdeconfig_update script is that
     // most people don't use this feature, so no reason to penalize
     // everyone, and moreover the user may added this to their main
     // panel, meaning kickerrc itself would have to be vastly modified

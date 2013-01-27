@@ -15,7 +15,7 @@
 #include <tqstringlist.h>
 #include <tqdict.h>
 
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <kdebug.h>
 
 #include "kxkbconfig.h"

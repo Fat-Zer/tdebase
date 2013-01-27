@@ -1,7 +1,7 @@
 [Desktop Entry]
 Icon=identity
 Type=Application
-Exec=kcmshell smartcard
+Exec=tdecmshell smartcard
 DocPath=kcontrol/smartcard.html
 
 X-TDE-Library=smartcard

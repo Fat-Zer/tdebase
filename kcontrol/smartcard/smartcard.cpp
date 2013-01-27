@@ -32,7 +32,7 @@
 #include <kcarddb.h>
 #include <kcardfactory.h>
 #include <kcardgsm_impl.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <kdebug.h>
 #include <kdialog.h>
 #include <kglobal.h>

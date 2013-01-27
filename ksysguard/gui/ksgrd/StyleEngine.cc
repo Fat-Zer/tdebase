@@ -25,7 +25,7 @@
 #include <tqpushbutton.h>
 #include <tqspinbox.h>
 
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <klocale.h>
 
 #include "StyleSettings.h"

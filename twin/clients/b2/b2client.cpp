@@ -20,7 +20,7 @@
 #include <kiconeffect.h>
 #include <kdrawutil.h>
 #include <klocale.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <tqbitmap.h>
 #include <tqlabel.h>
 #include <tqtooltip.h>

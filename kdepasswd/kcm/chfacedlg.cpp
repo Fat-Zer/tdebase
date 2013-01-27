@@ -36,7 +36,7 @@
 
 #include <kdialogbase.h>
 #include <klocale.h>
-#include <kfiledialog.h>
+#include <tdefiledialog.h>
 #include <kiconview.h>
 #include <kimagefilepreview.h>
 #include <kimageio.h>

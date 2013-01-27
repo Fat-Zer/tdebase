@@ -170,7 +170,7 @@ signals:
 
     TQString     pmPath; // pixmap path
     TQString     s_schema;
-    TQString     s_kconfigSchema;
+    TQString     s_tdeconfigSchema;
     TQString     s_word_seps;			// characters that are considered part of a word
 
     bool        b_framevis:1;

@@ -24,7 +24,7 @@
 #include <kprocess.h>
 #include <tqcstring.h>
 #include <tqlistview.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 
 #define SCREEN_XY_OFFSET 20
 

@@ -36,7 +36,7 @@
 #include <kicondialog.h>
 #include <kdesktopfile.h>
 #include <kurlrequester.h>
-#include <kfiledialog.h>
+#include <tdefiledialog.h>
 #include <kcombobox.h>
 #include <kkeydialog.h>
 #include <kprocess.h>

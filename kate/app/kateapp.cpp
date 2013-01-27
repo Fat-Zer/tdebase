@@ -32,7 +32,7 @@
 #include <tdeversion.h>
 #include <kcmdlineargs.h>
 #include <dcopclient.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <twin.h>
 #include <ktip.h>
 #include <kdebug.h>

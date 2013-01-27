@@ -2,7 +2,7 @@
 Type=Application
 DocPath=kcontrol/filemanager/index.html
 Icon=kfm
-Exec=kcmshell filepreviews
+Exec=tdecmshell filepreviews
 
 
 X-TDE-Library=konq

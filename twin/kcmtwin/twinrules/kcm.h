@@ -21,7 +21,7 @@
 #define __KCM_H__
 
 #include <tdecmodule.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 
 class TDEConfig;
 class TDEAboutData;

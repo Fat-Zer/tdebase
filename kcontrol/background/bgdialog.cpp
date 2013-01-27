@@ -40,10 +40,10 @@
 #include <tqwhatsthis.h>
 #include <tqapplication.h>
 
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <kdebug.h>
-#include <kfiledialog.h>
-#include <kfilemetainfo.h>
+#include <tdefiledialog.h>
+#include <tdefilemetainfo.h>
 #include <kglobal.h>
 #include <kiconloader.h>
 #include <kimageio.h>
@@ -1243,10 +1243,10 @@ void BGDialog::slotGetNewStuff()
 {
    //FIXME set this to a server when we get one
    //should really be in a .rc file but could be either
-   //kcmshellrc or kcontrolrc
+   //tdecmshellrc or kcontrolrc
    TDEConfig* config = TDEGlobal::config();
    config->setGroup("KNewStuff");
-   config->writeEntry( "ProvidersUrl", "http://download.kde.org/khotnewstuff/wallpaper-providers.xml" );
+   config->writeEntry( "ProvidersUrl", "http://download.kde.org/tdehotnewstuff/wallpaper-providers.xml" );
    config->writeEntry( "StandardResource", "wallpaper" );
    config->sync();
 

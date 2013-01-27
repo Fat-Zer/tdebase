@@ -20,7 +20,7 @@
 # If KDialog is unavailable until after $HOME/.trinity exists, such
 # as after running KPersonalizer, then this script will not help.
 # Also, KPersonalizer automatically creates a skeleton profile directory
-# when launched, as does some command line tools such as kconf_update.
+# when launched, as does some command line tools such as tdeconf_update.
 #
 # Additionally, this script was written mainly from a command line
 # login perspective. This script and concept needs testing and
@@ -443,7 +443,7 @@ if [ -n "$KDE3_PROFILE" ] && [ -d "$KDE3_PROFILE" ]; then
     mv $HOME/.trinity/share/config/kritarc $HOME/.trinity/share/config/chalkrc 2>/dev/null
     mv $HOME/.trinity/share/apps/krita $HOME/.trinity/share/apps/chalk 2>/dev/null
   fi
-  # Note: Don't run kconf_update, which is run automatically when starting TDE.
+  # Note: Don't run tdeconf_update, which is run automatically when starting TDE.
   # Note: Don't run any profile R14 updates: starttde does that through the r14-xdg-update script.
   echo
   echo "Done!" 1>&2

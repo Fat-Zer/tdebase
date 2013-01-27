@@ -31,7 +31,7 @@
 
 #include <kurl.h>
 #include <kdebug.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <kapplication.h>
 #include <kstandarddirs.h>
 #include <kprotocolinfo.h>
@@ -46,7 +46,7 @@
 
 /**
  * IMPORTANT: If you change anything here, please run the regression test
- * tdelibs/kio/tests/kurifiltertest
+ * tdelibs/tdeio/tests/kurifiltertest
  */
 
 KURISearchFilterEngine *KURISearchFilterEngine::s_pSelf = 0;

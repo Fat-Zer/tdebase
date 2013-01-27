@@ -12,7 +12,7 @@
 
 #include "kdedefault.h"
 
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <kglobal.h>
 #include <kpixmapeffect.h>
 #include <kimageeffect.h>

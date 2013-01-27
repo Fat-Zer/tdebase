@@ -19,7 +19,7 @@
 #include "konqueror.h"
 
 #include <dcopref.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <tqwhatsthis.h>
 #include <tqradiobutton.h>
 #include <tqspinbox.h>

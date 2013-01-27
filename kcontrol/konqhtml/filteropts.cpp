@@ -16,11 +16,11 @@
    Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <klocale.h>
 #include <kglobal.h>
 #include <kaboutdata.h>
-#include <kfiledialog.h>
+#include <tdefiledialog.h>
 #include <dcopclient.h>
 
 #include <tqlayout.h>

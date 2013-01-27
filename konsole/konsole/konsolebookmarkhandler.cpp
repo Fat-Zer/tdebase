@@ -16,13 +16,13 @@
     Boston, MA 02110-1301, USA.
 */
 
-// Born as tdelibs/kio/kfile/kfilebookmarkhandler.cpp
+// Born as tdelibs/tdeio/tdefile/tdefilebookmarkhandler.cpp
 
 #include <kpopupmenu.h>
 #include <kstandarddirs.h>
 #include <kshell.h>
-#include <kio/job.h>
-#include <kio/netaccess.h>
+#include <tdeio/job.h>
+#include <tdeio/netaccess.h>
 #include <kdebug.h>
 #include <tqfile.h>
 
@@ -41,7 +41,7 @@ KonsoleBookmarkHandler::KonsoleBookmarkHandler( Konsole *konsole, bool toplevel 
     // TODO: Consider removing for KDE4
     TQString new_bm_file = locateLocal( "data", "konsole/bookmarks.xml" );
     if ( !TQFile::exists( new_bm_file ) ) {
-        TQString old_bm_file = locateLocal( "data", "kfile/bookmarks.xml" );
+        TQString old_bm_file = locateLocal( "data", "tdefile/bookmarks.xml" );
         if ( TQFile::exists( old_bm_file ) )
             // We want sync here... 
             if ( !TDEIO::NetAccess::copy( KURL( old_bm_file ), 

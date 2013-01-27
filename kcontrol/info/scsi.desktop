@@ -1,5 +1,5 @@
 [Desktop Entry]
-Exec=kcmshell scsi
+Exec=tdecmshell scsi
 Icon=kcmscsi
 Type=Application
 DocPath=kinfocenter/scsi/index.html

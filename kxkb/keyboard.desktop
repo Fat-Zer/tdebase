@@ -1,5 +1,5 @@
 [Desktop Entry]
-Exec=kcmshell keyboard
+Exec=tdecmshell keyboard
 Icon=keyboard
 Type=Application
 DocPath=kcontrol/keyboard/index.html

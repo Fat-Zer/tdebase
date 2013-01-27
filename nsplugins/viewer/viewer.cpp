@@ -44,7 +44,7 @@
 #ifdef Bool
 #undef Bool
 #endif
-#include <kconfig.h>
+#include <tdeconfig.h>
 
 #if TQT_VERSION < 0x030100
 #include "kxt.h"

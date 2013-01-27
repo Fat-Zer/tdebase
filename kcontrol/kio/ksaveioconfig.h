@@ -29,7 +29,7 @@ class KSaveIOConfig
 {
 public:
 
-  /* Reload config file (kioslaverc) */
+  /* Reload config file (tdeioslaverc) */
   static void reparseConfiguration();
 
 

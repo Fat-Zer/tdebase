@@ -44,11 +44,11 @@
 #include <sys/resource.h>
 #include <unistd.h>
 #include <fcntl.h>
-#include <kio/global.h>
-#include <kio/ioslave_defaults.h>
-#include <kio/netaccess.h>
-#include <kio/slaveinterface.h>
-#include <kio/connection.h>
+#include <tdeio/global.h>
+#include <tdeio/ioslave_defaults.h>
+#include <tdeio/netaccess.h>
+#include <tdeio/slaveinterface.h>
+#include <tdeio/connection.h>
 #include <tqtextstream.h>
 #include <kmimetype.h>
 #include <kmessagebox.h>

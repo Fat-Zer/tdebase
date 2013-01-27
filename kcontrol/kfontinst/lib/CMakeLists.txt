@@ -28,6 +28,6 @@ link_directories(
 tde_add_library( kfontinst SHARED
   SOURCES Misc.cpp FcEngine.cpp
   VERSION 0.0.0
-  LINK kio-shared ${XFT_LIBRARIES}
+  LINK tdeio-shared ${XFT_LIBRARIES}
   DESTINATION ${LIB_INSTALL_DIR}
 )

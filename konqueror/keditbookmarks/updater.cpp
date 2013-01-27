@@ -30,7 +30,7 @@
 #include <klocale.h>
 #include <kapplication.h>
 
-#include <kio/job.h>
+#include <tdeio/job.h>
 
 #include <tdeparts/part.h>
 #include <tdeparts/componentfactory.h>

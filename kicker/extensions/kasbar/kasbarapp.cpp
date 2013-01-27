@@ -53,7 +53,7 @@
 */
 #include <kapplication.h>
 #include <kcmdlineargs.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <kdebug.h>
 #include <dcopclient.h>
 #include <twin.h>

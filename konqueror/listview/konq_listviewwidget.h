@@ -24,7 +24,7 @@
 #include <tqvaluevector.h>
 
 #include <kurl.h>
-#include <kfileitem.h>
+#include <tdefileitem.h>
 #include <klistview.h>
 #include <tdeparts/browserextension.h>
 #include <konq_propsview.h>

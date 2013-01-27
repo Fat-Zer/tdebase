@@ -2,7 +2,7 @@
 Icon=kcmkicker
 Type=Application
 DocPath=kcontrol/panel/index.html#panel-looknfeel
-Exec=kcmshell kicker_appearance
+Exec=tdecmshell kicker_appearance
 
 
 X-TDE-Library=kicker

@@ -28,6 +28,6 @@ install( FILES konsolemenu.desktop DESTINATION ${DATA_INSTALL_DIR}/kicker/menuex
 
 tde_add_kpart( kickermenu_konsole AUTOMOC
   SOURCES konsole_mnu.cpp konsolebookmarkhandler.cpp konsolebookmarkmenu.cpp
-  LINK kio-shared
+  LINK tdeio-shared
   DESTINATION ${PLUGIN_INSTALL_DIR}
 )

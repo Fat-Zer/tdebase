@@ -36,7 +36,7 @@
 #include <kstandarddirs.h>
 #include <kpopupmenu.h>
 #include <kapplication.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <kcmultidialog.h>
 #include <kbookmarkmenu.h>
 #include <konqbookmarkmanager.h>

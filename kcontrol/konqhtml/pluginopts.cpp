@@ -17,7 +17,7 @@
 #include <dcopclient.h>
 #include <kapplication.h>
 #include <kdebug.h>
-#include <kfiledialog.h>
+#include <tdefiledialog.h>
 #include <kiconloader.h>
 #include <klistview.h>
 #include <klocale.h>

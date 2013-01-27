@@ -41,7 +41,7 @@
 #include <kcombobox.h>
 #include <kmessagebox.h>
 #include <kstandarddirs.h>
-#include <kio/netaccess.h>
+#include <tdeio/netaccess.h>
 #include <kiconloader.h>
 #include <kurldrag.h>
 #include <kimagefilepreview.h>

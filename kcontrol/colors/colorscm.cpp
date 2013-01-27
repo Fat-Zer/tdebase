@@ -24,11 +24,11 @@
 
 #include <kcolorbutton.h>
 #include <kcursor.h>
-#include <kfiledialog.h>
+#include <tdefiledialog.h>
 #include <kgenericfactory.h>
 #include <kglobalsettings.h>
 #include <kinputdialog.h>
-#include <kio/netaccess.h>
+#include <tdeio/netaccess.h>
 #include <kipc.h>
 #include <kmessagebox.h>
 #include <kprocess.h>

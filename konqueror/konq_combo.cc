@@ -20,7 +20,7 @@
 #include <tqpainter.h>
 #include <tqstyle.h>
 #include <kapplication.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <kcompletionbox.h>
 #include <kdebug.h>
 #include <kiconloader.h>

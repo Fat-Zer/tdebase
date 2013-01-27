@@ -25,7 +25,7 @@
 #include <tqradiobutton.h>
 #include <tqwhatsthis.h>
 
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <kdebug.h>
 #include <klocale.h>
 

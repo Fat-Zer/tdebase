@@ -31,7 +31,7 @@ tde_add_executable( drkonqi AUTOMOC
   SOURCES
     krashdcopinterface.skel main.cpp debugger.cpp
     krashconf.cpp drbugreport.cpp backtrace.cpp toplevel.cpp
-  LINK kio-shared
+  LINK tdeio-shared
   DESTINATION ${BIN_INSTALL_DIR}
 )
 
@@ -41,7 +41,7 @@ if( BUILD_CRASHTEST )
   tde_add_executable( crashtest AUTOMOC
     SOURCES
       crashtest.cpp
-    LINK kio-shared
+    LINK tdeio-shared
     DESTINATION ${BIN_INSTALL_DIR}
   )
 endif( BUILD_CRASHTEST )

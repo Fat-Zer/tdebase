@@ -49,7 +49,7 @@
 #include <kedittoolbar.h>
 #include <kmessagebox.h>
 #include <klineedit.h>
-#include <kfiledialog.h>
+#include <tdefiledialog.h>
 
 #include <kdebug.h>
 

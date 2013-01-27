@@ -36,8 +36,8 @@ install( FILES konqsidebarplugin.h DESTINATION ${INCLUDE_INSTALL_DIR} )
 install( FILES konqsidebartng.rc DESTINATION ${CONFIG_INSTALL_DIR} )
 install( FILES konq_sidebartng.desktop DESTINATION ${SERVICES_INSTALL_DIR} )
 install( FILES .version DESTINATION ${DATA_INSTALL_DIR}/konqsidebartng/entries )
-install( FILES konqsidebartng.upd DESTINATION ${DATA_INSTALL_DIR}/kconf_update )
-install( PROGRAMS move_konqsidebartng_entries.sh DESTINATION ${DATA_INSTALL_DIR}/kconf_update )
+install( FILES konqsidebartng.upd DESTINATION ${DATA_INSTALL_DIR}/tdeconf_update )
+install( PROGRAMS move_konqsidebartng_entries.sh DESTINATION ${DATA_INSTALL_DIR}/tdeconf_update )
 
 
 ##### konqsidebarplugin (lib) ###################
@@ -66,6 +66,6 @@ set( ${target}_SRCS
 
 tde_add_kpart( ${target} AUTOMOC
   SOURCES ${${target}_SRCS}
-  LINK konqsidebarplugin-shared konq-shared kio-shared tdeutils-shared
+  LINK konqsidebarplugin-shared konq-shared tdeio-shared tdeutils-shared
   DESTINATION ${PLUGIN_INSTALL_DIR}
 )

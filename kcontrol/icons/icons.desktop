@@ -2,7 +2,7 @@
 Type=Application
 DocPath=kcontrol/icons/index.html
 Icon=icons
-Exec=kcmshell icons
+Exec=tdecmshell icons
 
 
 X-TDE-Library=icons

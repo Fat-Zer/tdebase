@@ -44,10 +44,10 @@
 #endif
 
 #include <dcopclient.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <kdebug.h>
 #include <kglobal.h>
-#include <kio/netaccess.h>
+#include <tdeio/netaccess.h>
 #include <klibloader.h>
 #include <klocale.h>
 #include <kprocess.h>

@@ -26,7 +26,7 @@
 #include <kate/document.h>
 
 #include <tqvbox.h>
-#include <kfile.h>
+#include <tdefile.h>
 #include <kurl.h>
 #include <ktoolbar.h>
 #include <tqframe.h>

@@ -4,7 +4,7 @@
 #include <tqptrlist.h>
 #include <tqmap.h>
 
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <tdecmodule.h>
 
 #include "typeslistitem.h"

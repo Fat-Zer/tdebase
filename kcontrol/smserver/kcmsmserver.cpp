@@ -26,7 +26,7 @@
 #include <dcopclient.h>
 
 #include <kapplication.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <kgenericfactory.h>
 #include <klineedit.h>
 

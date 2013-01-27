@@ -1,7 +1,7 @@
 [Desktop Entry]
 Icon=kcmkwm
 Type=Application
-Exec=kcmshell twinactions
+Exec=tdecmshell twinactions
 DocPath=kcontrol/windowmanagement/index.html#action-actions
 
 X-TDE-ModuleType=Library

@@ -45,7 +45,7 @@ dummy.cpp:
 	echo > dummy.cpp
 
 # update script:
-updatedir = $(kde_datadir)/kconf_update
+updatedir = $(kde_datadir)/tdeconf_update
 update_DATA = klipperrc.upd klippershortcuts.upd
 update_SCRIPTS = klipper-1-2.pl klipper-trinity1.sh
 

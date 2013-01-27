@@ -25,7 +25,7 @@
 
 #include <tqdir.h>
 
-#include <kio/job.h>
+#include <tdeio/job.h>
 #include <kcmdlineargs.h>
 #include <kpropertiesdialog.h>
 #include <klocale.h>
@@ -35,7 +35,7 @@
 #include <kopenwith.h>
 #include <kurlrequesterdlg.h>
 #include <kmessagebox.h>
-#include <kfiledialog.h>
+#include <tdefiledialog.h>
 #include <kdebug.h>
 #include <dcopclient.h>
 #include <kservice.h>

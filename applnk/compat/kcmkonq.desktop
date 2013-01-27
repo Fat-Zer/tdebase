@@ -88,4 +88,4 @@ X-TDE-Library=konq
 X-TDE-FactoryName=browser
 Type=Application
 Icon=kfm
-Exec=kcmshell filebrowser
+Exec=tdecmshell filebrowser

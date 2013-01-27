@@ -25,7 +25,7 @@
 #include <kstandarddirs.h>
 #include <klocale.h>
 #include <kiconloader.h>
-#include <kfiledialog.h>
+#include <tdefiledialog.h>
 #include <kurlrequester.h>
 
 #include <tqwhatsthis.h>

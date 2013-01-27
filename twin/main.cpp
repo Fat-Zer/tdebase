@@ -10,7 +10,7 @@ License. See the file "COPYING" for the exact licensing terms.
 ******************************************************************/
 
 //#define QT_CLEAN_NAMESPACE
-#include <kconfig.h>
+#include <tdeconfig.h>
 
 #include "main.h"
 

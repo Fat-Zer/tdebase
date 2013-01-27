@@ -36,7 +36,7 @@
 #include <kcmdlineargs.h>
 #include <klocale.h>
 #include <kstandarddirs.h>
-#include <kio/netaccess.h>
+#include <tdeio/netaccess.h>
 #include <kurl.h>
 #include <kdebug.h>
 #include <ktempfile.h>

@@ -29,7 +29,7 @@
 #include <dcopclient.h>
 #include <dcopref.h>
 #include <kapplication.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <kdialog.h>
 #include <kfontdialog.h>
 #include <kgenericfactory.h>

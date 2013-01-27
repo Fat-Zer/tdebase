@@ -1,5 +1,5 @@
 [Desktop Entry]
-Exec=kcmshell ioports
+Exec=tdecmshell ioports
 Icon=kcmmemory
 Type=Application
 DocPath=kinfocenter/ioports/index.html

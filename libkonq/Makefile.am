@@ -25,7 +25,7 @@ libkonq_la_LIBADD = $(LIB_KPARTS)
 
 libkonq_la_SOURCES = konq_popupmenu.cc knewmenu.cc \
    konq_xmlguiclient.cc\
-   kfileivi.cc konq_iconviewwidget.cc konq_settings.cc konq_drag.cc  \
+   tdefileivi.cc konq_iconviewwidget.cc konq_settings.cc konq_drag.cc  \
    konq_operations.cc \
    konq_dirpart.cc konq_propsview.cc konq_events.cc konq_bgnddlg.cc \
    konq_undo.cc konq_undo.skel \
@@ -43,7 +43,7 @@ servicetypedir = $(kde_servicetypesdir)
 METASOURCES = AUTO
 
 include_HEADERS = konq_popupmenu.h knewmenu.h \
-    kfileivi.h konq_drag.h konq_iconviewwidget.h \
+    tdefileivi.h konq_drag.h konq_iconviewwidget.h \
     konq_defaults.h konq_settings.h \
     konq_operations.h libkonq_export.h \
     konq_dirpart.h konq_propsview.h konq_events.h \
@@ -67,6 +67,6 @@ noinst_HEADERS = konq_sound.h
 messages:
 	$(XGETTEXT) *.cc *.h -o $(podir)/libkonq.pot
 
-DOXYGEN_REFERENCES = dcop tdecore kio/bookmarks
+DOXYGEN_REFERENCES = dcop tdecore tdeio/bookmarks
 include ../admin/Doxyfile.am
 

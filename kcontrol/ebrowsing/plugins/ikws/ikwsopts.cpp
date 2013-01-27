@@ -32,7 +32,7 @@
 #include <dcopref.h>
 #include <kapplication.h>
 #include <kcombobox.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <kiconloader.h>
 #include <klistview.h>
 #include <klocale.h>

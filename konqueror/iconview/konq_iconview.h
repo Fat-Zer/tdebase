@@ -26,7 +26,7 @@
 #include <kmimetyperesolver.h>
 #include <tqptrdict.h>
 #include <tqptrlist.h>
-#include <kfileivi.h>
+#include <tdefileivi.h>
 
 class KonqPropsView;
 class KFileItem;

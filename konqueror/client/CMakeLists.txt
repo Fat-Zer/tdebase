@@ -23,8 +23,8 @@ link_directories(
 
 ##### other data ################################
 
-install( FILES kfmclient_3_2.upd DESTINATION ${DATA_INSTALL_DIR}/kconf_update )
-install( PROGRAMS kfmclient_3_2_update.sh DESTINATION ${DATA_INSTALL_DIR}/kconf_update )
+install( FILES kfmclient_3_2.upd DESTINATION ${DATA_INSTALL_DIR}/tdeconf_update )
+install( PROGRAMS kfmclient_3_2_update.sh DESTINATION ${DATA_INSTALL_DIR}/tdeconf_update )
 
 
 ##### kfmclient (tdeinit) #######################
@@ -39,5 +39,5 @@ set( ${target}_SRCS
 
 tde_add_tdeinit_executable( ${target} AUTOMOC
   SOURCES ${${target}_SRCS}
-  LINK kio-shared
+  LINK tdeio-shared
 )

@@ -35,7 +35,7 @@
 
 #include <tqslider.h>
 #include <klocale.h>
-#include <kfiledialog.h>
+#include <tdefiledialog.h>
 #include <kinputdialog.h>
 #include <tqtoolbutton.h>
 #include <kmessagebox.h>

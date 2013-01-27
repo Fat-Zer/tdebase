@@ -26,11 +26,11 @@
 #include <kapplication.h>
 #include <kcustommenueditor.h>
 #include <kdebug.h>
-#include <kfileitem.h>
+#include <tdefileitem.h>
 #include <kglobalsettings.h>
 #include <kipc.h>
 #include <klistview.h>
-#include <kio/job.h>
+#include <tdeio/job.h>
 #include <klocale.h>
 #include <kmessagebox.h>
 #include <kmimetype.h>

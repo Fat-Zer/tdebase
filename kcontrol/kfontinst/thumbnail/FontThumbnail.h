@@ -29,7 +29,7 @@
 // (C) Craig Drummond, 2003, 2004
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <kio/thumbcreator.h>
+#include <tdeio/thumbcreator.h>
 #include "FcEngine.h"
 
 namespace KFI

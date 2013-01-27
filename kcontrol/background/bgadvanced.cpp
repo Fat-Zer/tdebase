@@ -32,7 +32,7 @@
 #include <tqspinbox.h>
 #include <tqwhatsthis.h>
 
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <kcolorbutton.h>
 #include <klocale.h>
 #include <kmessagebox.h>

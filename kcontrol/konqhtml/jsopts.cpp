@@ -14,7 +14,7 @@
 #include <tqlayout.h>
 #include <tqwhatsthis.h>
 #include <tqvgroupbox.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <klistview.h>
 #include <kdebug.h>
 #include <kurlrequester.h>

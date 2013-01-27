@@ -94,7 +94,7 @@ Time to start a requirement list.
 #include <stdio.h>
 #include <stdlib.h>
 
-#include <kfiledialog.h>
+#include <tdefiledialog.h>
 #include <kurlrequesterdlg.h>
 
 #include <kfontdialog.h>
@@ -138,7 +138,7 @@ Time to start a requirement list.
 #include <tdeparts/componentfactory.h>
 #include <kcharsets.h>
 #include <kcolordialog.h>
-#include <kio/netaccess.h>
+#include <tdeio/netaccess.h>
 
 #include "konsole.h"
 #include <netwm.h>
@@ -247,7 +247,7 @@ Konsole::Konsole(const char* name, int histon, bool menubaron, bool tabbaron, bo
 ,wallpaperSource(0)
 ,sessionIdCounter(0)
 ,monitorSilenceSeconds(10)
-,s_kconfigSchema("")
+,s_tdeconfigSchema("")
 ,m_tabViewMode(ShowIconAndText)
 ,b_dynamicTabHide(false)
 ,b_autoResizeTabs(false)
@@ -1512,8 +1512,8 @@ void Konsole::saveProperties(TDEConfig* config) {
   }
   config->writeEntry("Fullscreen",b_fullscreen);
   config->writeEntry("defaultfont", (se->widget())->getVTFont());
-  s_kconfigSchema = colors->find( se->schemaNo() )->relPath();
-  config->writeEntry("schema",s_kconfigSchema);
+  s_tdeconfigSchema = colors->find( se->schemaNo() )->relPath();
+  config->writeEntry("schema",s_tdeconfigSchema);
   config->writeEntry("scrollbar",n_scroll);
   config->writeEntry("tabbar",n_tabbar);
   config->writeEntry("bellmode",n_bell);
@@ -1618,13 +1618,13 @@ void Konsole::readProperties(TDEConfig* config, const TQString &schema, bool glo
       defaultFont = config->readFontEntry("defaultfont", &tmpFont);
 
       //set the schema
-      s_kconfigSchema=config->readEntry("schema");
-      ColorSchema* sch = colors->find(schema.isEmpty() ? s_kconfigSchema : schema);
+      s_tdeconfigSchema=config->readEntry("schema");
+      ColorSchema* sch = colors->find(schema.isEmpty() ? s_tdeconfigSchema : schema);
       if (!sch)
       {
          sch = (ColorSchema*)colors->at(0);  //the default one
-         kdWarning() << "Could not find schema named " <<s_kconfigSchema<<"; using "<<sch->relPath()<<endl;
-         s_kconfigSchema = sch->relPath();
+         kdWarning() << "Could not find schema named " <<s_tdeconfigSchema<<"; using "<<sch->relPath()<<endl;
+         s_tdeconfigSchema = sch->relPath();
       }
       if (sch->hasSchemaFileChanged()) sch->rereadSchemaFile();
       s_schema = sch->relPath();
@@ -2073,7 +2073,7 @@ void Konsole::slotConfigure()
 {
   TQStringList args;
   args << "kcmkonsole";
-  TDEApplication::tdeinitExec( "kcmshell", args );
+  TDEApplication::tdeinitExec( "tdecmshell", args );
 }
 
 void Konsole::reparseConfiguration()
@@ -2125,13 +2125,13 @@ void Konsole::reparseConfiguration()
   m_shortcuts->readShortcutSettings();
 
   // User may have changed Schema->Set as default schema
-  s_kconfigSchema = TDEGlobal::config()->readEntry("schema");
-  ColorSchema* sch = colors->find(s_kconfigSchema);
+  s_tdeconfigSchema = TDEGlobal::config()->readEntry("schema");
+  ColorSchema* sch = colors->find(s_tdeconfigSchema);
   if (!sch)
   {
      sch = (ColorSchema*)colors->at(0);  //the default one
-     kdWarning() << "Could not find schema named " <<s_kconfigSchema<<"; using "<<sch->relPath()<<endl;
-     s_kconfigSchema = sch->relPath();
+     kdWarning() << "Could not find schema named " <<s_tdeconfigSchema<<"; using "<<sch->relPath()<<endl;
+     s_tdeconfigSchema = sch->relPath();
   }
   if (sch->hasSchemaFileChanged()) sch->rereadSchemaFile();
   s_schema = sch->relPath();
@@ -2819,7 +2819,7 @@ TQString Konsole::newSession(KSimpleConfig *co, TQString program, const TQStrLis
   TQString emu = "xterm";
   TQString icon = "konsole";
   TQString key;
-  TQString sch = s_kconfigSchema;
+  TQString sch = s_tdeconfigSchema;
   TQString txt;
   TQString cwd;
   TQFont font = defaultFont;
@@ -3572,7 +3572,7 @@ void Konsole::setSchema(int numb, TEWidget* tewidget)
   {
     s = (ColorSchema*)colors->at(0);
     kdWarning() << "No schema with serial #"<<numb<<", using "<<s->relPath()<<" (#"<<s->numb()<<")." << endl;
-    s_kconfigSchema = s->relPath();
+    s_tdeconfigSchema = s->relPath();
   }
 
   if (s->hasSchemaFileChanged())
@@ -3589,7 +3589,7 @@ void Konsole::setSchema(const TQString & path)
   {
      s = (ColorSchema*)colors->at(0);  //the default one
      kdWarning() << "No schema with the name " <<path<<", using "<<s->relPath()<<endl;
-     s_kconfigSchema = s->relPath();
+     s_tdeconfigSchema = s->relPath();
   }
   if (s->hasSchemaFileChanged())
   {

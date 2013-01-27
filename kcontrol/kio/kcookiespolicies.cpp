@@ -38,7 +38,7 @@
 #include <klistview.h>
 #include <klistviewsearchline.h>
 #include <klocale.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <dcopref.h>
 
 #include "ksaveioconfig.h"

@@ -186,8 +186,8 @@ ProcessList::ProcessList(TQWidget *parent, const char* name)
 		aliases.insert("tdm", new TQString("kdeapp"));
 		aliases.insert("khotkeys", new TQString("kdeapp"));
 		aliases.insert("kio_file", new TQString("kdeapp"));
-		aliases.insert("kio_uiserver", new TQString("kdeapp"));
-		aliases.insert("klauncher", new TQString("kdeapp"));
+		aliases.insert("tdeio_uiserver", new TQString("kdeapp"));
+		aliases.insert("tdelauncher", new TQString("kdeapp"));
 		aliases.insert("ksmserver", new TQString("kdeapp"));
 		aliases.insert("kwrapper", new TQString("kdeapp"));
 		aliases.insert("kwrited", new TQString("kdeapp"));

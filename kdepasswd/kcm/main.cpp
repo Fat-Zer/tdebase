@@ -42,7 +42,7 @@
 #include <kgenericfactory.h>
 #include <kmessagebox.h>
 #include <kprocess.h>
-#include <kio/netaccess.h>
+#include <tdeio/netaccess.h>
 #include <kurl.h>
 #include <kurldrag.h>
 

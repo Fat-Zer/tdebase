@@ -2,7 +2,7 @@
 Type=Application
 DocPath=kcontrol/cookies/index.html
 Icon=cookie
-Exec=kcmshell cookies
+Exec=tdecmshell cookies
 
 
 X-TDE-Library=kio

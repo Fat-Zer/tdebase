@@ -29,7 +29,7 @@
 // (C) Craig Drummond, 2003, 2004
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <kfileiconview.h>
+#include <tdefileiconview.h>
 
 namespace KFI
 {

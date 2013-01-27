@@ -19,7 +19,7 @@
 #include <kcmdlineargs.h>
 #include <kapplication.h>
 #include <dcopclient.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <klocale.h>
 #include <twin.h>
 

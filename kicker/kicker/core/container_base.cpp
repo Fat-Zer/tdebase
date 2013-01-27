@@ -24,7 +24,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <tqpopupmenu.h>
 
 #include <kglobal.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <kdebug.h>
 
 #include "global.h"

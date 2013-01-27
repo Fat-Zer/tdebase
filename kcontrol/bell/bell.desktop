@@ -1,5 +1,5 @@
 [Desktop Entry]
-Exec=kcmshell bell
+Exec=tdecmshell bell
 Icon=bell
 Type=Application
 DocPath=kcontrol/bell/index.html

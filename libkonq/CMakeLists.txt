@@ -33,7 +33,7 @@ link_directories(
 ##### headers ###################################
 
 install( FILES
-    konq_popupmenu.h knewmenu.h kfileivi.h konq_drag.h
+    konq_popupmenu.h knewmenu.h tdefileivi.h konq_drag.h
     konq_iconviewwidget.h konq_defaults.h konq_settings.h
     konq_operations.h libkonq_export.h konq_dirpart.h
     konq_propsview.h konq_events.h konq_undo.h
@@ -53,7 +53,7 @@ install( FILES konqpopupmenuplugin.desktop DESTINATION ${SERVICETYPES_INSTALL_DI
 
 tde_add_library( konq SHARED AUTOMOC
   SOURCES
-    konq_popupmenu.cc knewmenu.cc konq_xmlguiclient.cc kfileivi.cc
+    konq_popupmenu.cc knewmenu.cc konq_xmlguiclient.cc tdefileivi.cc
     konq_iconviewwidget.cc konq_settings.cc konq_drag.cc konq_operations.cc
     konq_dirpart.cc konq_propsview.cc konq_events.cc konq_bgnddlg.cc konq_undo.cc
     konq_undo.skel konq_historymgr.cc konq_historycomm.cc konq_historycomm.skel

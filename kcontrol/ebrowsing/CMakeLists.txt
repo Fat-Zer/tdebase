@@ -30,6 +30,6 @@ install( FILES ebrowsing.desktop DESTINATION ${XDG_APPS_INSTALL_DIR} )
 
 tde_add_kpart( kcm_kurifilt AUTOMOC
   SOURCES filteropts.cpp main.cpp
-  LINK kio-shared
+  LINK tdeio-shared
   DESTINATION ${PLUGIN_INSTALL_DIR}
 )

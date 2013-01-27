@@ -9,7 +9,7 @@
 #include <tqdir.h>
 #include <tqstringlist.h>
 
-#include <kio/job.h>
+#include <tdeio/job.h>
 #include <kurl.h>
 #include <kprocess.h>
 

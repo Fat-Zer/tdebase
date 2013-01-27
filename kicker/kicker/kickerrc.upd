@@ -14,9 +14,9 @@ Group=General
 Options=overwrite
 Script=kicker-3.5-taskbarEnums.pl,perl
 
-Id=kde_3_5_kconfigXTize
+Id=kde_3_5_tdeconfigXTize
 File=kickerrc
 Group=menus
-Script=kicker-3.5-kconfigXTize.pl,perl
+Script=kicker-3.5-tdeconfigXTize.pl,perl
 RemoveKey=DetailedEntriesNamesFirst
 RemoveKey=DetailedMenuEntries

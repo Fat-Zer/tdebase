@@ -830,7 +830,7 @@ Running...</computeroutput>. The arguments after <command>tdeinit</command>
 are the names of additional processes to be started.  The <token>+</token>
 indicates that <command>tdeinit</command> needs to wait till the process has
 finished.  <command>tdeinit</command> also starts
-<command>dcopserver</command>, <command>klauncher</command> and
+<command>dcopserver</command>, <command>tdelauncher</command> and
 <command>kded</command>.</para>
 
 <para>The second of the two lines asks <command>tdeinit</command> to start
@@ -871,11 +871,11 @@ needed</para>
 </varlistentry>
 
 <varlistentry>
-<term><command>klauncher</command></term>
+<term><command>tdelauncher</command></term>
 <listitem><para>Program launch (this is <emphasis>not</emphasis> the
 <keycombo action="simul">&Alt;<keycap>F2</keycap>
 </keycombo>dialog!)</para>
-<para>See <xref linkend="klauncher"/> for more information.</para>
+<para>See <xref linkend="tdelauncher"/> for more information.</para>
 </listitem>
 </varlistentry>
 
@@ -916,7 +916,7 @@ to see the actual program name:</para>
 <computeroutput>
 waba     23184  0.2  2.1 23428 11124 ?	S    21:41   0:00 tdeinit: Running...
 waba     23187  0.1  2.1 23200 11124 ?	S    21:41   0:00 tdeinit: dcopserver --nosid
-waba     23189  0.2  2.4 25136 12496 ?	S    21:41   0:00 tdeinit: klauncher
+waba     23189  0.2  2.4 25136 12496 ?	S    21:41   0:00 tdeinit: tdelauncher
 waba     23192  0.7  2.8 25596 14772 ?	S    21:41   0:00 tdeinit: kded
 waba     23203  0.8  3.4 31516 17892 ?	S    21:41   0:00 tdeinit:
 knotify
@@ -928,7 +928,7 @@ master <command>tdeinit</command> process. The other processes listed are
 programs started as <acronym>KLM</acronym>s.</para>
 
 <para>When <command>tdeinit</command> starts for the first time it will
-launch <command>dcopserver</command>, <command>klauncher</command>, and
+launch <command>dcopserver</command>, <command>tdelauncher</command>, and
 <command>kded</command>, as well as any additional programs specified on its
 command line in the <command>starttde</command> script, normally
 <command>kcminit</command> and <command>knotify</command>.</para>
@@ -980,7 +980,7 @@ applications or services via the <varname>X-TDE-Init</varname> line:</para>
 <programlisting>
 [Desktop Entry]
 Encoding=UTF-8
-Exec=kcmshell energy
+Exec=tdecmshell energy
 Icon=energy_star
 Type=Application
 X-TDE-Library=energy
@@ -999,21 +999,21 @@ startup problems.</para>
 
 </sect2>
 
-<sect2 id="klauncher">
-<title><command>klauncher</command></title>
+<sect2 id="tdelauncher">
+<title><command>tdelauncher</command></title>
 
-<para><command>klauncher</command> is a daemon which is responsible for
+<para><command>tdelauncher</command> is a daemon which is responsible for
 service activation within &tde;. It operates in close connection with the
 <command>tdeinit</command> master process to start new processes. &tde;
-applications communicate with <command>klauncher</command> over &DCOP; in
+applications communicate with <command>tdelauncher</command> over &DCOP; in
 order to start new applications or services.</para>
 
 <para>Best known from the error message: <computeroutput><errortext>
 KLauncher could not be reached via DCOP </errortext></computeroutput> which
 either indicates a serious problem with the <command>dcopserver</command> or
-that <command>klauncher</command> crashed.</para>
+that <command>tdelauncher</command> crashed.</para>
 
-<para><command>klauncher</command> can be restarted by restarting
+<para><command>tdelauncher</command> can be restarted by restarting
 <command>tdeinit</command> from a console window. Make sure that
 $<envar>HOME</envar>, $<envar>DISPLAY</envar> and the various
 $<envar>TDEDIR(S)</envar> are set correctly when doing so!</para>
@@ -1190,7 +1190,7 @@ on a multi-head system.</para>
 <listitem><para>Set this variable to spawn
 <acronym>KIO</acronym>-slaves directly from the application process
 itself. By default <acronym>KIO</acronym>-slaves are spawned using
-<command>klauncher</command>/<command>tdeinit</command>. This option is
+<command>tdelauncher</command>/<command>tdeinit</command>. This option is
 useful if the <acronym>KIO</acronym>-slave should run in the same
 environment as the application. This can be the case with
 <application>Clearcase</application>.</para>
@@ -1323,7 +1323,7 @@ output of <command>top</command> and <command>ps</command>. Use
 <computeroutput>
 bastian  26061  0.0  2.2 24284 11492 ?       S    21:27   0:00 tdeinit: Running...
 bastian  26064  0.0  2.2 24036 11524 ?       S    21:27   0:00 tdeinit: dcopserver
-bastian  26066  0.1  2.5 26056 12988 ?       S    21:27   0:00 tdeinit: klauncher
+bastian  26066  0.1  2.5 26056 12988 ?       S    21:27   0:00 tdeinit: tdelauncher
 bastian  26069  0.4  3.2 27356 16744 ?       S    21:27   0:00 tdeinit: kded
 bastian  26161  0.2  2.7 25344 14096 ?       S    21:27   0:00 tdeinit: ksmserver
 bastian  26179  1.1  3.4 29716 17812 ?       S    21:27   0:00 tdeinit: kicker
@@ -1619,7 +1619,7 @@ class="directory">/opt/trinity/share/config/SuSE/default/</filename></para></lis
 </sect2>
 </sect1>
 
-<sect1 id="kde-menu">
+<sect1 id="tde-menu">
 <title>&tde; Menu</title>
 
 <sect2 id="how-it-works">
@@ -1824,7 +1824,7 @@ class="directory">$<envar>HOME</envar>/.trinity/share/applnk</filename>
 <para><application>KSycoca</application> caches menu structure and
 information about all available applications. You can rebuild the
 database with
-<userinput><command>kbuildsycoca</command></userinput>. The database
+<userinput><command>tdebuildsycoca</command></userinput>. The database
 which is built lives in <filename
 class="directory">/var/tmp/tdecache-${<envar>USER</envar>}/tdesycoca</filename>.
 It is automatically updated by <application>KDED</application>,
@@ -2281,13 +2281,13 @@ as part of the <guilabel>Configure Konqueror</guilabel> dialog in
 &konqueror;</para>
 
 <para>Individual configuration modules can be started with
-<command>kcmshell</command> <replaceable>module</replaceable></para>
+<command>tdecmshell</command> <replaceable>module</replaceable></para>
 
 <para>To start the Proxy module use:</para>
 <itemizedlist>
-<listitem><para><command>kcmshell</command>
+<listitem><para><command>tdecmshell</command>
 <filename>tde-proxy.desktop</filename></para></listitem>
-<listitem><para><command>kcmshell</command> proxy</para></listitem>
+<listitem><para><command>tdecmshell</command> proxy</para></listitem>
 </itemizedlist>
 
 <para><note><para>Not all applications use configuration modules, often the
@@ -2306,14 +2306,14 @@ class="directory">$<envar>TDEDIR</envar>/share/applications/tde</filename>
 and are sorted under the hidden <guimenu>Settings-Modules</guimenu> menu by
 the <filename>kde-settings.menu</filename>, included from
 <filename>kde-essential.menu</filename></para>
-<screen><userinput><command>kbuildsycoca</command> <option>--menutest</option> 2&gt; /dev/null | <command>grep</command> Settings-Modules</userinput></screen>
+<screen><userinput><command>tdebuildsycoca</command> <option>--menutest</option> 2&gt; /dev/null | <command>grep</command> Settings-Modules</userinput></screen>
 </listitem>
 <listitem>
 <para>Application specific modules normally have a <literal role="extension">.desktop</literal> file under
 <filename>$<envar>TDEDIR</envar>/share/applnk/.hidden</filename> which
 corresponds to the hidden .hidden menu, included as a result of
 <markup>&lt;KDELegacyDirs/&gt;</markup></para>
-<screen><userinput><command>kbuildsycoca</command> <option>--menutest</option> 2&gt; /dev/null | <command>grep</command> .hidden</userinput></screen>
+<screen><userinput><command>tdebuildsycoca</command> <option>--menutest</option> 2&gt; /dev/null | <command>grep</command> .hidden</userinput></screen>
 </listitem>
 <listitem><para>In &tde; 3.3 it is possible to edit the Control Center with
 <application>kcontroledit</application>.
@@ -2481,7 +2481,7 @@ konsole-8954
 <para>One &konsole; is running with a <acronym>PID</acronym> of 8954.</para>
 
 <screen><prompt>&percnt; </prompt><userinput><command>dcop</command><option> konsole-8954</option></userinput>
-KBookmarkManager-.../share/apps/kfile/bookmarks.xml
+KBookmarkManager-.../share/apps/tdefile/bookmarks.xml
 KBookmarkManager-.../share/apps/konqueror/bookmarks.xml
 KBookmarkNotifier
 KDebug

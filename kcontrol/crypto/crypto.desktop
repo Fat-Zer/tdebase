@@ -1,7 +1,7 @@
 [Desktop Entry]
 Icon=encrypted
 Type=Application
-Exec=kcmshell crypto
+Exec=tdecmshell crypto
 DocPath=kcontrol/crypto/index.html
 
 X-TDE-Library=crypto

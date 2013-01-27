@@ -17,8 +17,8 @@
    Boston, MA 02110-1301, USA.
 */
 
-#include <kio/job.h>
-#include <kio/netaccess.h>
+#include <tdeio/job.h>
+#include <tdeio/netaccess.h>
 #include <kstandarddirs.h>
 #include <kdesktopfile.h>
 #include <kglobalsettings.h>

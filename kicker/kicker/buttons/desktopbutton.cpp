@@ -27,7 +27,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <klocale.h>
 #include <kglobalsettings.h>
 #include <konq_operations.h>
-#include <kfileitem.h>
+#include <tdefileitem.h>
 
 #include "showdesktop.h"
 #include "kicker.h"

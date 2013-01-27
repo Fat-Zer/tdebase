@@ -262,7 +262,7 @@ void CfgTerminalEmulator::save(TDEConfig *) {
 	delete config;
 
 	KIPC::sendMessageAll(KIPC::SettingsChanged);
-	kapp->dcopClient()->send("klauncher", "klauncher","reparseConfiguration()", TQString::null);
+	kapp->dcopClient()->send("tdelauncher", "tdelauncher","reparseConfiguration()", TQString::null);
 
 	emit changed(false);
 }

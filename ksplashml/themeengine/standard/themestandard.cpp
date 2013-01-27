@@ -16,7 +16,7 @@
 #include <kiconloader.h>
 #include <klocale.h>
 #include <kstandarddirs.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 
 #include <tqdesktopwidget.h>
 #include <tqlabel.h>

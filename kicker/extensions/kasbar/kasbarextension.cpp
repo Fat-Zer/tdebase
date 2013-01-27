@@ -59,7 +59,7 @@
 #include <kglobal.h>
 #include <kiconloader.h>
 #include <klocale.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 
 #include <kmessagebox.h>
 

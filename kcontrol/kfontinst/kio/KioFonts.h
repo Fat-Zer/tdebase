@@ -31,7 +31,7 @@
 
 #include <fontconfig/fontconfig.h>
 #include <time.h>
-#include <kio/slavebase.h>
+#include <tdeio/slavebase.h>
 #include <kurl.h>
 #include <klocale.h>
 #include <tqstring.h>

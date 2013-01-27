@@ -22,12 +22,12 @@
 #include "konq_listview.h"
 
 #include <klocale.h>
-#include <kfilemetainfo.h>
+#include <tdefilemetainfo.h>
 #include <kdebug.h>
 #include <kaction.h>
 #include <kservicetype.h>
 #include <kuserprofile.h>
-#include <kio/metainfojob.h>
+#include <tdeio/metainfojob.h>
 
 #include <tqstringlist.h>
 
@@ -349,7 +349,7 @@ void KonqInfoListViewWidget::determineCounts(const KFileItemList& list)
 #warning ### change this
 #endif
         // this will load the plugin which we don't need because we delegate
-        // the job to the kioslave
+        // the job to the tdeioslave
         (*it).hasPlugin = prov->plugin(it.key());
 
         if ( (*it).hasPlugin)

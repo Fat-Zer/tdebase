@@ -1,5 +1,5 @@
 [Desktop Entry]
-Exec=kcmshell smbstatus
+Exec=tdecmshell smbstatus
 Icon=samba
 Type=Application
 DocPath=kinfocenter/samba/index.html

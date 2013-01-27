@@ -25,7 +25,7 @@
 
 #include "plugin_paths.h"
 
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <stdlib.h>
 
 TQStringList getSearchPaths()

@@ -30,7 +30,7 @@
 #include <kiconloader.h>
 #include <klocale.h>
 #include <ksqueezedtextlabel.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <kdebug.h>
 
 #include <tqwidgetstack.h>

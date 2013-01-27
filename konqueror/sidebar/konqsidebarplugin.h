@@ -24,9 +24,9 @@
 #include <tqstring.h>
 #include <tdeparts/part.h>
 #include <tdeparts/browserextension.h>
-#include <kio/job.h>
+#include <tdeio/job.h>
 #include <tqguardedptr.h>
-#include <kfileitem.h>
+#include <tdefileitem.h>
 
 class KonqSidebarPluginPrivate;
 

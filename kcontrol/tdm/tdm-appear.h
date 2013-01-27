@@ -29,7 +29,7 @@
 
 #include <kcolorbutton.h>
 #include <kurl.h>
-#include <kfiledialog.h>
+#include <tdefiledialog.h>
 
 
 #include "klanguagebutton.h"

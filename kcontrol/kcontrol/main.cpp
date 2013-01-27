@@ -38,7 +38,7 @@
 #include <dcopclient.h>
 #include <kaboutdata.h>
 #include <kglobalsettings.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <kdebug.h>
 
 #include "main.h"

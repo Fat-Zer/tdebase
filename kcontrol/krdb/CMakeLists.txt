@@ -27,7 +27,7 @@ link_directories(
 
 ##### other data ################################
 
-install( FILES kcmdisplayrc.upd DESTINATION ${DATA_INSTALL_DIR}/kconf_update )
+install( FILES kcmdisplayrc.upd DESTINATION ${DATA_INSTALL_DIR}/tdeconf_update )
 
 
 ##### krdb (static) #############################

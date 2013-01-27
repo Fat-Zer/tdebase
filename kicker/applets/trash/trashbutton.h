@@ -26,7 +26,7 @@
 #include <tqpixmap.h>
 #include <tqcursor.h>
 #include <tqtimer.h>
-#include <kfileitem.h>
+#include <tdefileitem.h>
 #include <kpanelapplet.h>
 #include <kactioncollection.h>
 

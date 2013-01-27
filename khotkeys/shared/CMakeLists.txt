@@ -37,6 +37,6 @@ set( ${target}_SRCS
 tde_add_library( ${target} SHARED AUTOMOC
   SOURCES ${${target}_SRCS}
   VERSION 1.0.0
-  LINK kio-shared ${XTEST_LIBRARIES}
+  LINK tdeio-shared ${XTEST_LIBRARIES}
   DESTINATION ${LIB_INSTALL_DIR}
 )

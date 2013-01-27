@@ -27,7 +27,7 @@
 #include <tqlayout.h>
 #include <tqwhatsthis.h>
 
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <kcursor.h>
 #include <kdialog.h>
 #include <kiconloader.h>

@@ -29,7 +29,7 @@
 
 #include <tqstringlist.h>
 
-#include <kfileitem.h>
+#include <tdefileitem.h>
 #include <kmimetype.h> // for KDEDesktopMimeType
 #include <libkonq_export.h>
 

@@ -16,7 +16,7 @@
 
 #include "action_data.h"
 
-#include <kconfig.h>
+#include <tdeconfig.h>
 
 #include "actions.h"
 

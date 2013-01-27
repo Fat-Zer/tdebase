@@ -20,7 +20,7 @@
 #include "preloader.h"
 #include "konq_settingsxt.h"
 
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <dcopref.h>
 #include <kapplication.h>
 #include <dcopclient.h>

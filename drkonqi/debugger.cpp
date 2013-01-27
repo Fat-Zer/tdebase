@@ -33,7 +33,7 @@
 #include <klocale.h>
 #include <kglobal.h>
 #include <kglobalsettings.h>
-#include <kfiledialog.h>
+#include <tdefiledialog.h>
 #include <kmessagebox.h>
 #include <kpushbutton.h>
 #include <kstdguiitem.h>

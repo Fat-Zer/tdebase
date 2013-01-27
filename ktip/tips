@@ -924,7 +924,7 @@ increase the speed, or any other key to stop the scrolling.
 
 <tip category="General|Help">
 <html>
-<p>You can use Konqueror's help:/ kioslave to have quick and easy
+<p>You can use Konqueror's help:/ tdeioslave to have quick and easy
 access to an application's handbook by typing <b>help:/</b>, directly
 followed by the application name, in the Location bar. So, for example
 to view the handbook for kwrite simply type help:/kwrite.</p>

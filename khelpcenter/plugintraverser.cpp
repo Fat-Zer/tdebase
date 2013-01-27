@@ -24,7 +24,7 @@
 #include "navigatoritem.h"
 
 #include <kapplication.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <kdebug.h>
 #include <kiconloader.h>
 
@@ -94,7 +94,7 @@ void PluginTraverser::process( DocEntry *entry )
                 entry->khelpcenterSpecial() == "kcontrol" ||
                 entry->khelpcenterSpecial() == "konqueror" ) {
       mNavigator->insertParentAppDocs( entry->khelpcenterSpecial(), mCurrentItem );
-    } else if ( entry->khelpcenterSpecial() == "kioslave" ) {
+    } else if ( entry->khelpcenterSpecial() == "tdeioslave" ) {
       mNavigator->insertIOSlaveDocs( entry->khelpcenterSpecial(), mCurrentItem );
     } else if ( entry->khelpcenterSpecial() == "info" ) {
       mNavigator->insertInfoDocs( mCurrentItem );

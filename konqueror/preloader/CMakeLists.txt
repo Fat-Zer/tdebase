@@ -40,6 +40,6 @@ set( ${target}_SRCS
 
 tde_add_kpart( ${target} AUTOMOC
   SOURCES ${${target}_SRCS}
-  LINK konqueror_intern-static kio-shared tdeinit_kded-shared
+  LINK konqueror_intern-static tdeio-shared tdeinit_kded-shared
   DESTINATION ${PLUGIN_INSTALL_DIR}
 )

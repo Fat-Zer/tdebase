@@ -23,7 +23,7 @@
 #include <klocale.h>
 #include <kglobal.h>
 #include <kdebug.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <kstandarddirs.h>
 
 #include <tqfile.h>

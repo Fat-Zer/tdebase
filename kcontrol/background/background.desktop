@@ -1,5 +1,5 @@
 [Desktop Entry]
-Exec=kcmshell background
+Exec=tdecmshell background
 Icon=background
 Type=Application
 DocPath=kcontrol/background/index.html

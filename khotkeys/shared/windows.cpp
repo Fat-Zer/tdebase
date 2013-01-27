@@ -19,7 +19,7 @@
 #include <assert.h>
 #include <tqregexp.h>
 
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <kdebug.h>
 #include <twinmodule.h>
 #include <twin.h>

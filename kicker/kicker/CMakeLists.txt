@@ -30,12 +30,12 @@ link_directories( ${TQT_LIBRARY_DIRS} )
 
 install( FILES panel.desktop DESTINATION ${AUTOSTART_INSTALL_DIR} )
 install( FILES kcmkicker.desktop DESTINATION ${XDG_APPS_INSTALL_DIR} )
-install( FILES kickerrc.upd DESTINATION ${DATA_INSTALL_DIR}/kconf_update )
+install( FILES kickerrc.upd DESTINATION ${DATA_INSTALL_DIR}/tdeconf_update )
 
 install( PROGRAMS
     kicker-3.1-properSizeSetting.pl kicker-3.5-taskbarEnums.pl
-    kicker-3.5-kconfigXTize.pl
-  DESTINATION ${DATA_INSTALL_DIR}/kconf_update )
+    kicker-3.5-tdeconfigXTize.pl
+  DESTINATION ${DATA_INSTALL_DIR}/tdeconf_update )
 
 
 ##### kicker-3.4-reverseLayout (executable) #####
@@ -43,7 +43,7 @@ install( PROGRAMS
 tde_add_executable( kicker-3.4-reverseLayout
   SOURCES kicker-3.4-reverseLayout.cpp
   LINK tdecore-shared
-  DESTINATION ${LIB_INSTALL_DIR}/kconf_update_bin
+  DESTINATION ${LIB_INSTALL_DIR}/tdeconf_update_bin
 )
 
 

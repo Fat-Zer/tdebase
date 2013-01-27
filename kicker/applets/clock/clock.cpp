@@ -47,10 +47,10 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <klocale.h>
 #include <kpopupmenu.h>
 #include <kstringhandler.h>
-#include <kfiledialog.h>
+#include <tdefiledialog.h>
 #include <kfontrequester.h>
 #include <kglobalsettings.h>
-#include <kconfigdialogmanager.h>
+#include <tdeconfigdialogmanager.h>
 #include <kcalendarsystem.h>
 #include <kicontheme.h>
 #include <kiconloader.h>
@@ -1518,12 +1518,12 @@ void ClockApplet::contextMenuActivated(int result)
             proc << locate("exe", "tdesu");
             proc << "--nonewdcop";
             proc << TQString("%1 tde-clock.desktop --lang %2")
-                .arg(locate("exe", "kcmshell"))
+                .arg(locate("exe", "tdecmshell"))
                 .arg(TDEGlobal::locale()->language());
             proc.start(TDEProcess::DontCare);
             break;
         case 104:
-            proc << locate("exe", "kcmshell");
+            proc << locate("exe", "tdecmshell");
             proc << "tde-language.desktop";
             proc.start(TDEProcess::DontCare);
             break;

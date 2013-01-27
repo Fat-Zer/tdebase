@@ -30,7 +30,7 @@
 #include <kglobalsettings.h>
 #include <kinputdialog.h>
 #include <kmessagebox.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 
 #include <stdlib.h>
 

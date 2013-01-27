@@ -1,7 +1,7 @@
 Fri Jul 30 22:33:25 1999  Carsten Pfeiffer  <pfeiffer@kde.org>
 
 	* kfwin.cpp, kfwin.h: The listview items show a mini-pixmap, like those
-	in kfiledialog. For now, they're static icons (only folder and document
+	in tdefiledialog. For now, they're static icons (only folder and document
 	icons), maybe we can show the correct icons for the mimetypes, later.
 
 	Also introduced drag-support, you can drag files from the list.

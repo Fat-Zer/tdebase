@@ -1,0 +1,27 @@
+## Makfile.am for kio_finger
+## Edit from Makefile.am of tdebase/tdeioslave/man
+
+INCLUDES= $(all_includes)
+AM_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_TDECORE) $(LIB_TDEUI) -ltdefx $(LIB_KIO) -ltdetexteditor
+
+####### Files
+
+kde_module_LTLIBRARIES = kio_finger.la
+
+kio_finger_la_SOURCES = kio_finger.cpp 
+kio_finger_la_LIBADD = -lkio
+kio_finger_la_LDFLAGS = $(all_libraries) -module $(KDE_PLUGIN)
+
+noinst_HEADERS = kio_finger.h 
+
+kdelnk_DATA = finger.protocol
+kdelnkdir = $(kde_servicesdir)
+
+kio_finger_data_DATA = kio_finger.pl kio_finger.css
+kio_finger_datadir = $(kde_datadir)/tdeio_finger
+EXTRA_DIST=$(kio_finger_data_DATA)   
+
+METASOURCES = AUTO
+
+messages:
+	$(XGETTEXT) *.cpp -o $(podir)/tdeio_finger.pot

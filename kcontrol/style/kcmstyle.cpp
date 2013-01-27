@@ -634,9 +634,9 @@ void KCMStyle::save()
 	if (m_bStyleDirty | m_bEffectsDirty)	// Export only if necessary
 	{
 		uint flags = KRdbExportQtSettings;
-		TDEConfig kconfig("kcmdisplayrc", true /*readonly*/, false /*no globals*/);
-		kconfig.setGroup("X11");
-		bool exportKDEColors = kconfig.readBoolEntry("exportKDEColors", true);
+		TDEConfig tdeconfig("kcmdisplayrc", true /*readonly*/, false /*no globals*/);
+		tdeconfig.setGroup("X11");
+		bool exportKDEColors = tdeconfig.readBoolEntry("exportKDEColors", true);
 		if (exportKDEColors)
 			flags |= KRdbExportColors;
 		runRdb( flags );

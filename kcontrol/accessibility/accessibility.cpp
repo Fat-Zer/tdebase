@@ -24,7 +24,7 @@
 
 #include <kaboutdata.h>
 #include <kcolorbutton.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <kgenericfactory.h>
 #include <knuminput.h>
 #include <kurlrequester.h>

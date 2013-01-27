@@ -11,13 +11,13 @@
 
 tde_setup_architecture_flags( )
 
-# termios.h (tdm, kioslave)
+# termios.h (tdm, tdeioslave)
 if( BUILD_TDM OR BUILD_KIOSLAVES )
   check_include_file( termios.h HAVE_TERMIOS_H )
 endif( )
 
 
-# sys/ioctl.h (kioslave/fish, kcontrol/info)
+# sys/ioctl.h (tdeioslave/fish, kcontrol/info)
 if( BUILD_KIOSLAVES OR BUILD_KCONTROL )
   check_include_file( sys/ioctl.h HAVE_SYS_IOCTL_H )
 endif( )
@@ -37,7 +37,7 @@ if( WITH_PAM AND (BUILD_KCHECKPASS OR BUILD_TDM) )
 endif( )
 
 
-# hal (ksmserver, kioslaves)
+# hal (ksmserver, tdeioslaves)
 if( WITH_HAL )
   pkg_search_module( HAL hal )
   if( NOT HAL_FOUND )
@@ -80,7 +80,7 @@ if( WITH_XRENDER OR BUILD_KDESKTOP OR BUILD_KONSOLE OR BUILD_KCONTROL OR BUILD_K
 endif( )
 
 
-# xcursor (kioslave, kcontrol)
+# xcursor (tdeioslave, kcontrol)
 if( WITH_XCURSOR )
   pkg_search_module( XCURSOR xcursor )
   if( XCURSOR_FOUND )
@@ -259,7 +259,7 @@ if( BUILD_TDM OR BUILD_KSMSERVER )
 endif( )
 
 
-# dbus-tqt (tdm, ksmserver, kioslaves(media))
+# dbus-tqt (tdm, ksmserver, tdeioslaves(media))
 if( BUILD_TDM OR BUILD_KSMSERVER OR (BUILD_KIOSLAVES AND WITH_HAL) )
 
   if( BUILD_KSMSERVER AND WITH_UPOWER )

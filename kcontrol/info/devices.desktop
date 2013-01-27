@@ -1,5 +1,5 @@
 [Desktop Entry]
-Exec=kcmshell devices
+Exec=tdecmshell devices
 Icon=kcmdevices
 Type=Application
 DocPath=kinfocenter/devices/index.html

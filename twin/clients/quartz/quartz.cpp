@@ -14,7 +14,7 @@
  *
  */
 
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <kdrawutil.h>
 #include <kglobal.h>
 #include <klocale.h>

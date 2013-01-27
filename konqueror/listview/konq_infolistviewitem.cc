@@ -19,7 +19,7 @@
 
 #include "konq_listview.h"
 #include <konq_settings.h>
-#include <kfilemetainfo.h>
+#include <tdefilemetainfo.h>
 #include <kdebug.h>
 #include <klocale.h>
 #include <assert.h>

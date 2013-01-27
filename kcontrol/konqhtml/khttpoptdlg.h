@@ -8,7 +8,7 @@
 #include <tqstring.h>
 
 #include <tdecmodule.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 
 
 /**

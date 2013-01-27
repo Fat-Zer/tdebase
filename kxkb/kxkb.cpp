@@ -46,7 +46,7 @@ DESCRIPTION
 #include <kaction.h>
 #include <kpopupmenu.h>
 #include <kdebug.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 
 #include "x11helper.h"
 #include "kxkb.h"
@@ -269,7 +269,7 @@ void KXKBApp::menuActivated(int id)
 	else if (id == KxkbLabelController::CONFIG_MENU_ID)
     {
         TDEProcess p;
-        p << "kcmshell" << "keyboard_layout";
+        p << "tdecmshell" << "keyboard_layout";
         p.start(TDEProcess::DontCare);
 	}
 	else if (id == KxkbLabelController::HELP_MENU_ID)

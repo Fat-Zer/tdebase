@@ -220,7 +220,7 @@ you switch to other parts of the &kcontrol;</para></listitem>
 
 <listitem><para>from a command line (&konsole; or
 mini-<acronym>CLI</acronym>) type <userinput>
-<command>kcmshell</command> <option>printers</option></userinput>.
+<command>tdecmshell</command> <option>printers</option></userinput>.
 This opens just the &tdeprint; part of &kcontrol; to change your settings
 </para></listitem>
 </itemizedlist>

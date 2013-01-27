@@ -25,9 +25,9 @@
 #ifndef __KWIN_KERAMIK_CONFIG_H
 #define __KWIN_KERAMIK_CONFIG_H
 
-#include <kconfig.h>
+#include <tdeconfig.h>
 
-#include "keramikconfig.h"
+#include "keramitdeconfig.h"
 
 class KeramikConfig: public TQObject
 {

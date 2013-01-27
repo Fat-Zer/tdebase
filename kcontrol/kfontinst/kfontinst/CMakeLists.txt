@@ -31,6 +31,6 @@ tde_add_executable( kfontinst
   SOURCES
     Main.cpp FontEngine.cpp Fontmap.cpp GetPid.c
     XConfig.cpp
-  LINK kxftconfig-static kfontinst-shared kio-shared
+  LINK kxftconfig-static kfontinst-shared tdeio-shared
   DESTINATION ${BIN_INSTALL_DIR}
 )

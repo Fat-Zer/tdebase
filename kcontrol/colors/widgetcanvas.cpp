@@ -16,7 +16,7 @@
 #include <kcolordrag.h>
 #include <kpixmapeffect.h>
 #include <kglobalsettings.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <klocale.h>
 #include <kpixmap.h>
 

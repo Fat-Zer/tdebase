@@ -18,11 +18,11 @@
 */
 
 #include <dcopref.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <klocale.h>
 #include <kmessagebox.h>
 #include <kstaticdeleter.h>
-#include <kio/ioslave_defaults.h>
+#include <tdeio/ioslave_defaults.h>
 
 #include "ksaveioconfig.h"
 
@@ -57,7 +57,7 @@ TDEConfig* KSaveIOConfig::config()
      d = new KSaveIOConfigPrivate;
 
   if (!d->config)
-     d->config = new TDEConfig("kioslaverc", false, false);
+     d->config = new TDEConfig("tdeioslaverc", false, false);
 
   return d->config;
 }

@@ -2,7 +2,7 @@
 Type=Application
 DocPath=kcontrol/tdehtml/index.html#kbrowse-appearance
 Icon=fonts
-Exec=kcmshell tdehtml_fonts
+Exec=tdecmshell tdehtml_fonts
 
 
 X-TDE-Library=konqhtml

@@ -37,7 +37,7 @@ set( target kbookmarkmerger )
 
 tde_add_executable( ${target}
   SOURCES kbookmarkmerger.cpp
-  LINK kio-shared
+  LINK tdeio-shared
   DESTINATION ${BIN_INSTALL_DIR}
 )
 

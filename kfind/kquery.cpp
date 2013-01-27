@@ -2,8 +2,8 @@
 
 #include <tqfileinfo.h>
 #include <kdebug.h>
-#include <kfileitem.h>
-#include <kfilemetainfo.h>
+#include <tdefileitem.h>
+#include <tdefilemetainfo.h>
 #include <kapplication.h>
 #include <kmessagebox.h>
 #include <klocale.h>

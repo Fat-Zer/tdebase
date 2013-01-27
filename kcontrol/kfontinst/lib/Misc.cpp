@@ -31,7 +31,7 @@
 #include <kprocess.h> 
 #include <kstandarddirs.h>
 #include <klargefile.h>
-#include <kio/netaccess.h>
+#include <tdeio/netaccess.h>
 #include <unistd.h>
 
 namespace KFI

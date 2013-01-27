@@ -12,7 +12,7 @@
 
 #include <tqcheckbox.h>
 #include <tqvbox.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 
 class QuartzConfig: public TQObject
 {

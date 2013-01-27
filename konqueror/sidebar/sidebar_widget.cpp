@@ -36,13 +36,13 @@
 #include <kmessagebox.h>
 #include <kinputdialog.h>
 #include <konq_events.h>
-#include <kfileitem.h>
-#include <kio/netaccess.h>
+#include <tdefileitem.h>
+#include <tdeio/netaccess.h>
 #include <kpopupmenu.h>
 #include <kprocess.h>
 #include <kurlrequesterdlg.h>
 #include <kinputdialog.h>
-#include <kfiledialog.h>
+#include <tdefiledialog.h>
 #include <kdesktopfile.h>
 #include "konqsidebar.h"
 

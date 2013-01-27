@@ -12,4 +12,4 @@ messages:
 	$(XGETTEXT) *.cpp -o $(podir)/krdb.pot
 
 update_DATA = kcmdisplayrc.upd
-updatedir = $(kde_datadir)/kconf_update
+updatedir = $(kde_datadir)/tdeconf_update

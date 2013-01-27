@@ -50,6 +50,6 @@ tde_add_kpart( kcm_kio AUTOMOC
       kproxydlg_ui.ui kcookiesmanagementdlg_ui.ui kcookiespoliciesdlg_ui.ui
       policydlg_ui.ui useragentdlg_ui.ui uagentproviderdlg_ui.ui
       manualproxy_ui.ui envvarproxy_ui.ui cache_ui.ui
-  LINK kio-shared tdeutils-shared
+  LINK tdeio-shared tdeutils-shared
   DESTINATION ${PLUGIN_INSTALL_DIR}
 )

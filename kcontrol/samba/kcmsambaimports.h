@@ -26,7 +26,7 @@
  
 #include <tqtimer.h>
 #include <tqlistview.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 
 class ImportsView: public TQWidget
 {

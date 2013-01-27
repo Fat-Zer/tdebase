@@ -32,7 +32,7 @@
 #include <klocale.h>
 #include <kmessagebox.h>
 #include <kdialog.h>
-#include <kio/netaccess.h>
+#include <tdeio/netaccess.h>
 
 //#include "xpm/world.xpm"
 #include "tzone.h"

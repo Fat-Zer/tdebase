@@ -29,7 +29,7 @@
 
 #include <kaboutdata.h>
 #include <tdecmodule.h>
-#include <kio/job.h>
+#include <tdeio/job.h>
 #include <klistbox.h>
 #include <ktextbrowser.h>
 

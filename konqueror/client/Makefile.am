@@ -18,6 +18,6 @@ KDesktopIface_DIR = $(top_srcdir)/kdesktop
 messages:
 	$(XGETTEXT) -kaliasLocal *.h *.cc -o $(podir)/kfmclient.pot
 
-updatedir = $(kde_datadir)/kconf_update
+updatedir = $(kde_datadir)/tdeconf_update
 update_DATA = kfmclient_3_2.upd
 update_SCRIPTS = kfmclient_3_2_update.sh

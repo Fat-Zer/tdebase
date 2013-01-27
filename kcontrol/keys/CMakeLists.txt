@@ -38,6 +38,6 @@ tde_add_kpart( kcm_keys AUTOMOC
   SOURCES
     shortcuts.cpp modifiers.cpp main.cpp khotkeys.cpp
     treeview.cpp commandShortcuts.cpp
-  LINK kio-shared
+  LINK tdeio-shared
   DESTINATION ${PLUGIN_INSTALL_DIR}
 )

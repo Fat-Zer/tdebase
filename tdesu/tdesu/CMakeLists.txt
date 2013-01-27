@@ -25,6 +25,6 @@ link_directories(
 
 tde_add_executable( tdesu AUTOMOC
   SOURCES tdesu.cpp sudlg.cpp
-  LINK tdesu-shared kio-shared
+  LINK tdesu-shared tdeio-shared
   DESTINATION ${BIN_INSTALL_DIR}
 )

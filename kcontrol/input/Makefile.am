@@ -37,7 +37,7 @@ EXTRA_DIST = $(font_DATA)
 
 update_DATA = mouse_cursor_theme.upd
 
-updatedir = $(kde_datadir)/kconf_update
+updatedir = $(kde_datadir)/tdeconf_update
 
 install-data-hook:
 	$(mkinstalldirs) $(DESTDIR)$(datadir)/fonts/override

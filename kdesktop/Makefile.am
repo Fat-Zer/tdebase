@@ -23,7 +23,7 @@ kdesktop_la_SOURCES = main.cc krootwm.cc xautolock.cc kdiconview.cc desktop.cc \
 	minicli.cpp KBackgroundIface.skel pixmapserver.cc kcustommenu.cc \
 	startupid.cpp minicli_ui.ui xautolock_diy.c xautolock_engine.c \
 	kshadowengine.cpp kshadowsettings.cpp \
-	kdesktopshadowsettings.cpp kfileividesktop.cpp \
+	kdesktopshadowsettings.cpp tdefileividesktop.cpp \
 	kdesktopapp.cpp
 
 include_HEADERS = KDesktopIface.h KScreensaverIface.h KBackgroundIface.h

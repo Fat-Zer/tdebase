@@ -117,7 +117,7 @@ properly in 800x600 (is it 800x600 or 1024x768?). For a start, someone needs to 
 * Tons of KCMs and applications have options for selecting binaries which they use(frontends etc.). We need to be a little consistent here and adopt a general policy in this issue.
 If a binary is not in $PATH it is the distributors fault and not KDE. The reason we have a GUI is so people don't have to know about this kinds of internals. The options doesn't mean anything because users use KDE, they're not in run level 3("WTF? cdparanoia? diff? What's that?"). PATH options("Where to search for X") should be removed - it is up to the distributor. Options for selecting what binary to use should be moved out to KConfEdit - they have a use but are very rarely used.
 
-* Rewrite kcmshell to the new TDECModuleProxy and fix bugs. Move it to tdelibs.
+* Rewrite tdecmshell to the new TDECModuleProxy and fix bugs. Move it to tdelibs.
 
 --------------------------------------------------------------------------
 

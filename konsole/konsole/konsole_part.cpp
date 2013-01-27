@@ -46,7 +46,7 @@
 #include <tqpushbutton.h>
 #include <kpopupmenu.h>
 #include <krootpixmap.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <kaction.h>
 
 // We can't use the ARGB32 visual when embedded in another application
@@ -574,8 +574,8 @@ void konsolePart::readProperties()
 
   TQString schema = config->readEntry("Schema");
 
-  s_kconfigSchema=config->readEntry("schema");
-  ColorSchema* sch = colors->find(schema.isEmpty() ? s_kconfigSchema : schema);
+  s_tdeconfigSchema=config->readEntry("schema");
+  ColorSchema* sch = colors->find(schema.isEmpty() ? s_tdeconfigSchema : schema);
   if (!sch) {
     sch=(ColorSchema*)colors->at(0);  //the default one
   }
@@ -638,7 +638,7 @@ void konsolePart::saveProperties()
     config->writeEntry("keytab",n_keytab);
     config->writeEntry("has frame",b_framevis);
     config->writeEntry("LineSpacing", te->lineSpacing());
-    config->writeEntry("schema",s_kconfigSchema);
+    config->writeEntry("schema",s_tdeconfigSchema);
     config->writeEntry("scrollbar",n_scroll);
     config->writeEntry("wordseps",s_word_seps);
     config->writeEntry("encoding",n_encoding);
@@ -720,7 +720,7 @@ void konsolePart::keytab_menu_activated(int item)
 void konsolePart::schema_menu_activated(int item)
 {
   setSchema(item);
-  s_kconfigSchema = s_schema; // This is the new default
+  s_tdeconfigSchema = s_schema; // This is the new default
 }
 
 void konsolePart::schema_menu_check()

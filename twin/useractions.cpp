@@ -25,7 +25,7 @@ License. See the file "COPYING" for the exact licensing terms.
 #include <kglobalsettings.h>
 #include <kiconloader.h>
 #include <klocale.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <kglobalaccel.h>
 #include <kapplication.h>
 #include <tqregexp.h>

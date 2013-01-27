@@ -20,7 +20,7 @@
 
 #include <kapplication.h>
 #include <kstandarddirs.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <kbugreport.h>
 #include <kaboutapplication.h>
 #include <kmessagebox.h>

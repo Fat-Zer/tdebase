@@ -26,8 +26,8 @@
 #include <tqwhatsthis.h>
 
 #include <kdebug.h>
-#include <kfiledialog.h>
-#include <kio/netaccess.h>
+#include <tdefiledialog.h>
+#include <tdeio/netaccess.h>
 #include <klocale.h>
 #include <kmessagebox.h>
 #include <kstandarddirs.h>

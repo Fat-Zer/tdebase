@@ -22,13 +22,13 @@
 #include <config.h>
 
 #include <kapplication.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <kdebug.h>
 #include <klocale.h>
 #include <kcmdlineargs.h>
 #include <kaboutdata.h>
 #include <kurifilter.h>
-#include <kio/job.h>
+#include <tdeio/job.h>
 
 #include <tqscrollview.h>
 #include "kwebdesktop.h"

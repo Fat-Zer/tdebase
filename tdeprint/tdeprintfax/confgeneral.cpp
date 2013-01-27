@@ -26,7 +26,7 @@
 #include <tqcheckbox.h>
 
 #include <kglobal.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <klocale.h>
 #include <kseparator.h>
 

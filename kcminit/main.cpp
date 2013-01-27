@@ -33,7 +33,7 @@
 #include <klibloader.h>
 #include <kdebug.h>
 #include <dcopclient.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 
 #include <X11/Xlib.h>
 
@@ -185,7 +185,7 @@ KCMInit::KCMInit( TDECmdLineArgs* args )
   TQByteArray params;
   TQDataStream stream(params, IO_WriteOnly);
   stream << name << value;
-  kapp->dcopClient()->send("klauncher", "klauncher", "setLaunchEnv(TQCString,TQCString)", params);
+  kapp->dcopClient()->send("tdelauncher", "tdelauncher", "setLaunchEnv(TQCString,TQCString)", params);
   setenv( name, value, 1 ); // apply effect also to itself
 
   if( startup )

@@ -22,7 +22,7 @@
 
 #include <tqwidget.h>
 #include <kdialogbase.h>
-#include <kfileitem.h>
+#include <tdefileitem.h>
 
 /**
   *@author ervin

@@ -29,7 +29,7 @@
 
 #include <kapplication.h>
 #include <kcombobox.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <knotifydialog.h>
 #include <tdeparts/genericfactory.h>
 #include <kstandarddirs.h>
@@ -135,7 +135,7 @@ void KCMKNotify::slotAppActivated( const TQString& text )
 
 void KCMKNotify::slotPlayerSettings()
 {
-    // kcmshell is a modal dialog, and apparently, we can't put a non-modal
+    // tdecmshell is a modal dialog, and apparently, we can't put a non-modal
     // dialog besides a modal dialog. sigh.
     if ( !m_playerSettings )
         m_playerSettings = new PlayerSettingsDialog( this, true );

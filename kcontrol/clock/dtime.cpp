@@ -37,7 +37,7 @@
 #include <kprocess.h>
 #include <kmessagebox.h>
 #include <kdialog.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 
 #include "dtime.h"
 #include "dtime.moc"

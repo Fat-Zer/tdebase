@@ -31,6 +31,6 @@ tde_add_kpart( kcm_samba AUTOMOC
   SOURCES
     main.cpp ksmbstatus.cpp kcmsambaimports.cpp kcmsambalog.cpp
     kcmsambastatistics.cpp
-  LINK kio-shared
+  LINK tdeio-shared
   DESTINATION ${PLUGIN_INSTALL_DIR}
 )

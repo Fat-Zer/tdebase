@@ -1,7 +1,7 @@
 // Melchior FRANZ  <mfranz@kde.org>	-- 2001-04-22
 
 #include <kapplication.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <kdialog.h>
 #include <klocale.h>
 #include <kglobal.h>

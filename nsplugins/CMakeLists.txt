@@ -54,7 +54,7 @@ tde_add_kpart( kcm_nsplugins AUTOMOC
 
 tde_add_executable( nspluginscan AUTOMOC
   SOURCES pluginscan.cpp
-  LINK pluginpaths-static kio-shared Xt
+  LINK pluginpaths-static tdeio-shared Xt
   DESTINATION ${BIN_INSTALL_DIR}
 )
 

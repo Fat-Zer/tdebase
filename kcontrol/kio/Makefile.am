@@ -23,7 +23,7 @@ messages: rc.cpp
 	$(XGETTEXT) *.cpp -o $(podir)/kcmkio.pot
 
 update_DATA = socks.upd
-updatedir = $(kde_datadir)/kconf_update
+updatedir = $(kde_datadir)/tdeconf_update
 
 servicetypes_DATA = uasprovider.desktop
 servicetypesdir = $(kde_servicetypesdir)

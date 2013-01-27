@@ -33,7 +33,7 @@
 #include <kcolordrag.h>
 #include <kurldrag.h>
 #include <stdlib.h>
-#include <kio/job.h>
+#include <tdeio/job.h>
 #include <tqfile.h>
 
 #include <tqdir.h>
@@ -49,7 +49,7 @@
 #include <kinputdialog.h>
 #include <kipc.h>
 #include <klocale.h>
-#include <kio/netaccess.h>
+#include <tdeio/netaccess.h>
 #include <kprocess.h>
 #include <tdesycoca.h>
 #include <ktempfile.h>

@@ -24,7 +24,7 @@
 #include <kcolordialog.h>
 #include <kdedmodule.h>
 #include <kdirselectdialog.h>
-#include <kfiledialog.h>
+#include <tdefiledialog.h>
 #include <kfontdialog.h>
 #include <kdialogbase.h>
 

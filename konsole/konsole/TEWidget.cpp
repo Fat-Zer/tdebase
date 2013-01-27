@@ -81,7 +81,7 @@
 #include <kglobalsettings.h>
 #include <kshortcut.h>
 #include <kurldrag.h>
-#include <kio/netaccess.h>
+#include <tdeio/netaccess.h>
 #include <tqlabel.h>
 #include <tqtimer.h>
 

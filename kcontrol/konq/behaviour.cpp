@@ -29,8 +29,8 @@
 #include <dcopclient.h>
 
 #include <kapplication.h>
-#include <kconfig.h>
-#include <kio/uiserver_stub.h>
+#include <tdeconfig.h>
+#include <tdeio/uiserver_stub.h>
 #include <klocale.h>
 #include <konq_defaults.h>
 #include <kstandarddirs.h>
@@ -258,9 +258,9 @@ void KBehaviourOptions::save()
     config.writeEntry( "ShowList", cbListProgress->isChecked() );
     config.sync();
     // Tell the running server
-    if ( kapp->dcopClient()->isApplicationRegistered( "kio_uiserver" ) )
+    if ( kapp->dcopClient()->isApplicationRegistered( "tdeio_uiserver" ) )
     {
-      UIServer_stub uiserver( "kio_uiserver", "UIServer" );
+      UIServer_stub uiserver( "tdeio_uiserver", "UIServer" );
       uiserver.setListMode( cbListProgress->isChecked() );
     }
 

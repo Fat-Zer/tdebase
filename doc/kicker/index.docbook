@@ -2346,7 +2346,7 @@ Why is my <guisubmenu>Settings</guisubmenu> menu not working?
 <answer>
 <para>
 Your menu entries may be mixed up for some reason. Simply run
-<command>kbuildsycoca</command> on a commandline.
+<command>tdebuildsycoca</command> on a commandline.
 </para>
 </answer>
 </qandaentry>

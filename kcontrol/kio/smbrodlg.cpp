@@ -23,7 +23,7 @@
 #include <tqtextcodec.h>
 
 #include <klocale.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <kglobal.h>
 #include <kcharsets.h>
 #include <kcombobox.h>
@@ -91,7 +91,7 @@ SMBRoOptions::~SMBRoOptions()
 
 void SMBRoOptions::load()
 {
-   TDEConfig *cfg = new TDEConfig("kioslaverc");
+   TDEConfig *cfg = new TDEConfig("tdeioslaverc");
 
    TQString tmp;
    cfg->setGroup( "Browser Settings/SMBro" );
@@ -124,7 +124,7 @@ void SMBRoOptions::load()
 
 void SMBRoOptions::save()
 {
-   TDEConfig *cfg = new TDEConfig("kioslaverc");
+   TDEConfig *cfg = new TDEConfig("tdeioslaverc");
 
    cfg->setGroup( "Browser Settings/SMBro" );
    cfg->writeEntry( "User", m_userLe->text());

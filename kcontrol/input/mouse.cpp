@@ -58,7 +58,7 @@
 
 #include <klocale.h>
 #include <kdialog.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <kstandarddirs.h>
 #include <kdebug.h>
 #include <kaboutdata.h>

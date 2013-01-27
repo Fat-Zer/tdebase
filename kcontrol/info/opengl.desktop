@@ -1,6 +1,6 @@
 [Desktop Entry]
 NoDisplay=true
-Exec=kcmshell opengl
+Exec=tdecmshell opengl
 Icon=kcmopengl
 Type=Application
 DocPath=kinfocenter/opengl/index.html

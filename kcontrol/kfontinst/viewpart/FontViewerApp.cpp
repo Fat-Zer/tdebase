@@ -33,8 +33,8 @@
 #include <klibloader.h>
 #include <klocale.h>
 #include <kglobal.h>
-#include <kfiledialog.h>
-#include <kconfig.h>
+#include <tdefiledialog.h>
+#include <tdeconfig.h>
 
 #define CFG_GROUP    "FontViewer Settings"
 #define CFG_SIZE_KEY "Window Size"

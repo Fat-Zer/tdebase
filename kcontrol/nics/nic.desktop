@@ -1,5 +1,5 @@
 [Desktop Entry]
-Exec=kcmshell nic
+Exec=tdecmshell nic
 Type=Application
 DocPath=kinfocenter/nics/index.html
 Icon=network

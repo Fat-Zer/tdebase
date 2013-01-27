@@ -31,7 +31,7 @@
 #include <dcopclient.h>
 #include <kprocess.h>
 #include <kstandarddirs.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 
 #include <tqfile.h>
 #include <tqfileinfo.h>

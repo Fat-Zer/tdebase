@@ -36,8 +36,8 @@
 #include <tqstringlist.h>
 #include <tdecmodule.h>
 #include <kurl.h>
-#include <kconfig.h>
-#include <kio/job.h>
+#include <tdeconfig.h>
+#include <tdeio/job.h>
 #ifdef HAVE_XFT
 #include <tdeparts/part.h>
 #endif

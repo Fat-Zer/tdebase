@@ -18,7 +18,7 @@
 #include <tqlayout.h>
 #include <kapplication.h>
 #include <kaboutdata.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <kdebug.h>
 #include <dcopclient.h>
 #include <kimageio.h>

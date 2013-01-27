@@ -24,7 +24,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #ifndef CONFIG_DLG_H
 #define CONFIG_DLG_H
 
-#include <kconfigdialog.h>
+#include <tdeconfigdialog.h>
 
 class ConfigDlgBase;
 class Prefs;

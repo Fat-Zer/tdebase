@@ -16,7 +16,7 @@ License. See the file "COPYING" for the exact licensing terms.
 #include <kapplication.h>
 #include <kstartupinfo.h>
 #include <fixx11h.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <kglobal.h>
 #include <tqpopupmenu.h>
 #include <klocale.h>
@@ -1220,7 +1220,7 @@ TQStringList Workspace::configModules(bool controlCenter)
 
 void Workspace::configureWM()
     {
-    TDEApplication::tdeinitExec( "kcmshell", configModules(false) );
+    TDEApplication::tdeinitExec( "tdecmshell", configModules(false) );
     }
 
 /*!

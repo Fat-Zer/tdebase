@@ -23,7 +23,7 @@
 #include <kpanelmenu.h>
 #include <kurl.h>
 #include <kdirlister.h>
-#include <kfileitem.h>
+#include <tdefileitem.h>
 
 class SystemMenu : public KPanelMenu
 {

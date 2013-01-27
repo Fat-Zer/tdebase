@@ -1,4 +1,4 @@
-// Born as tdelibs/kio/kfile/kfilebookmarkhandler.cpp
+// Born as tdelibs/tdeio/tdefile/tdefilebookmarkhandler.cpp
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -29,7 +29,7 @@ KonsoleBookmarkHandler::KonsoleBookmarkHandler( KonsoleMenu *konsole, bool )
 
     // import old bookmarks
     if ( !KStandardDirs::exists( file ) ) {
-        TQString oldFile = locate( "data", "kfile/bookmarks.html" );
+        TQString oldFile = locate( "data", "tdefile/bookmarks.html" );
         if ( !oldFile.isEmpty() )
             importOldBookmarks( oldFile, file );
     }

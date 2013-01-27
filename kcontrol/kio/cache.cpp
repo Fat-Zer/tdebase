@@ -33,7 +33,7 @@
 #include <knuminput.h>
 
 #include "ksaveioconfig.h"
-#include <kio/http_slave_defaults.h>
+#include <tdeio/http_slave_defaults.h>
 
 #include "cache.h"
 #include "cache_ui.h"

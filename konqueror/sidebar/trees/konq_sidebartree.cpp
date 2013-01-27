@@ -38,7 +38,7 @@
 #include <kglobalsettings.h>
 #include <kiconloader.h>
 #include <kinputdialog.h>
-#include <kio/netaccess.h>
+#include <tdeio/netaccess.h>
 #include <kmimetype.h>
 #include <kprocess.h>
 #include <kpropertiesdialog.h>

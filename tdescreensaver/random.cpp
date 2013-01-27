@@ -30,7 +30,7 @@
 #include <kdebug.h>
 #include <kcmdlineargs.h>
 #include <kdialogbase.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 
 #include "tdescreensaver_vroot.h"
 #include "random.h"

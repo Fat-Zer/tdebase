@@ -30,7 +30,7 @@
 #include <tqlistview.h>
 #include <tqevent.h>
 #include <tqapplication.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 
 #include <kurlrequester.h>
 

@@ -35,8 +35,8 @@
 
 #include <kapplication.h>
 #include <kdebug.h>
-#include <kio/previewjob.h>
-#include <kfileivi.h>
+#include <tdeio/previewjob.h>
+#include <tdefileivi.h>
 #include <konq_settings.h>
 #include <konq_drag.h>
 #include <kglobalsettings.h>

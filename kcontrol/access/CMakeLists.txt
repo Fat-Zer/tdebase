@@ -31,7 +31,7 @@ install( FILES eventsrc DESTINATION ${DATA_INSTALL_DIR}/kaccess )
 
 tde_add_kpart( kcm_access AUTOMOC
   SOURCES kcmaccess.cpp
-  LINK kio-shared
+  LINK tdeio-shared
   DESTINATION ${PLUGIN_INSTALL_DIR}
 )
 

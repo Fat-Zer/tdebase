@@ -29,7 +29,7 @@
 #include <kglobalsettings.h>
 #include <kapplication.h>
 #include <klocale.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <kiconloader.h>
 #include <kpopupmenu.h>
 #include <kmessagebox.h>
