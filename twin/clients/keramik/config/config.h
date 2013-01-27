@@ -27,7 +27,7 @@
 
 #include <tdeconfig.h>
 
-#include "keramitdeconfig.h"
+#include "keramikconfig.h"
 
 class KeramikConfig: public TQObject
 {
