@@ -2,11 +2,11 @@ SUBDIRS = kcmcgi
 
 INCLUDES = $(all_includes)
 
-kde_module_LTLIBRARIES = kio_cgi.la
+kde_module_LTLIBRARIES = tdeio_cgi.la
 
-kio_cgi_la_SOURCES = cgi.cpp
-kio_cgi_la_LIBADD = $(LIB_KIO)
-kio_cgi_la_LDFLAGS = $(all_libraries) -module $(KDE_PLUGIN)
+tdeio_cgi_la_SOURCES = cgi.cpp
+tdeio_cgi_la_LIBADD = $(LIB_KIO)
+tdeio_cgi_la_LDFLAGS = $(all_libraries) -module $(KDE_PLUGIN)
 
 noinst_HEADERS = cgi.h
 

@@ -30,7 +30,7 @@ HomeDirNotifyModule::HomeDirNotifyModule(const TQCString &obj)
 extern "C" {
 	KDE_EXPORT KDEDModule *create_homedirnotify(const TQCString &obj)
 	{
-		TDEGlobal::locale()->insertCatalogue("kio_home");
+		TDEGlobal::locale()->insertCatalogue("tdeio_home");
 		return new HomeDirNotifyModule(obj);
 	}
 }

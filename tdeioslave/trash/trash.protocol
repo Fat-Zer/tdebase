@@ -1,5 +1,5 @@
 [Protocol]
-exec=kio_trash
+exec=tdeio_trash
 protocol=trash
 input=none
 output=filesystem

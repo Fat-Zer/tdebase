@@ -27,24 +27,24 @@ link_directories(
 install( FILES remote.protocol DESTINATION ${SERVICES_INSTALL_DIR} )
 
 
-##### kioremote (static) ########################
+##### tdeioremote (static) ########################
 
-set( target kioremote )
+set( target tdeioremote )
 
 tde_add_library( ${target} STATIC_PIC AUTOMOC
-  SOURCES kio_remote.cpp remoteimpl.cpp
+  SOURCES tdeio_remote.cpp remoteimpl.cpp
 )
 
 
-##### kio_remote (module) #######################
+##### tdeio_remote (module) #######################
 
-set( target kio_remote )
+set( target tdeio_remote )
 
 configure_file( ${CMAKE_SOURCE_DIR}/cmake/modules/template_dummy_cpp.cmake dummy.cpp COPYONLY )
 
 tde_add_kpart( ${target}
   SOURCES dummy.cpp
-  EMBED kioremote-static
+  EMBED tdeioremote-static
   LINK tdeio-shared
   DESTINATION ${PLUGIN_INSTALL_DIR}
 )

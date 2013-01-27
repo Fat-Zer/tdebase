@@ -1,10 +1,10 @@
 DESIGN
 ======
-kio_trash implements the XDG trash standard currently at http://www.ramendik.ru/docs/trashspec.html
+tdeio_trash implements the XDG trash standard currently at http://www.ramendik.ru/docs/trashspec.html
 
-In case race conditions between the various instances of kio_trash
+In case race conditions between the various instances of tdeio_trash
 are a problem, trashimpl could be moved to a kded module, and
-kio_trash would use DCOP to talk to it. It's a bit hard to come up
+tdeio_trash would use DCOP to talk to it. It's a bit hard to come up
 with use cases where the race conditions would matter though.
 
 BUGS
@@ -31,7 +31,7 @@ TODO
 
 * Deleting oldest files when size is bigger than a certain configurable amount (#79553)
 
-Bugs closed by kio_trash
+Bugs closed by tdeio_trash
 ========================
 #79826 (3.3 only)
 #62848 (configurable trash location)

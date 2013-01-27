@@ -74,7 +74,7 @@ $TDEDIR/share/config/kdebugrc.
        InfoOutput=0
        InfoFilename=/tmp/http 
 
-This redirects all debug info for areas 7103 and 7113 (as used by kio_http) 
+This redirects all debug info for areas 7103 and 7113 (as used by tdeio_http) 
 to the file /tmp/http.
 
 To get debug information from the SMB slave you can add the following to

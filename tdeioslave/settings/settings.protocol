@@ -1,5 +1,5 @@
 [Protocol]
-exec=kio_settings
+exec=tdeio_settings
 protocol=settings
 input=none
 output=filesystem

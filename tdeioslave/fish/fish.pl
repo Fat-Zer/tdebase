@@ -3,9 +3,9 @@
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, version 2 of the License
 =pod
-This file was transferred by kio_fish, a network client part of the
+This file was transferred by tdeio_fish, a network client part of the
 KDE project. You may safely delete it, it will be transferred again
-when needed. It's only purpose is to make kio_fish access faster and
+when needed. It's only purpose is to make tdeio_fish access faster and
 more reliable.
 =cut
 

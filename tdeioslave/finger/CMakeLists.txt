@@ -23,15 +23,15 @@ link_directories(
 ##### other data ################################
 
 install( FILES finger.protocol DESTINATION ${SERVICES_INSTALL_DIR} )
-install( FILES kio_finger.pl kio_finger.css DESTINATION ${DATA_INSTALL_DIR}/tdeio_finger )
+install( FILES tdeio_finger.pl tdeio_finger.css DESTINATION ${DATA_INSTALL_DIR}/tdeio_finger )
 
 
-##### kio_finger (module) #######################
+##### tdeio_finger (module) #######################
 
-set( target kio_finger )
+set( target tdeio_finger )
 
 tde_add_kpart( ${target} AUTOMOC
-  SOURCES kio_finger.cpp
+  SOURCES tdeio_finger.cpp
   LINK tdeio-shared
   DESTINATION ${PLUGIN_INSTALL_DIR}
 )

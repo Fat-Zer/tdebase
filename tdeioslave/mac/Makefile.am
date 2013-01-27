@@ -1,17 +1,17 @@
-## Makfile.am for kio_mac
+## Makfile.am for tdeio_mac
 
 INCLUDES= $(all_includes)
 AM_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_TDECORE) $(LIB_TDEUI) -ltdefx $(LIB_KIO) -ltdetexteditor
 
 ####### Files
 
-kde_module_LTLIBRARIES = kio_mac.la
+kde_module_LTLIBRARIES = tdeio_mac.la
 
-kio_mac_la_SOURCES = kio_mac.cpp
-kio_mac_la_LIBADD = -lkio
-kio_mac_la_LDFLAGS = $(all_libraries) -module $(KDE_PLUGIN)
+tdeio_mac_la_SOURCES = tdeio_mac.cpp
+tdeio_mac_la_LIBADD = -ltdeio
+tdeio_mac_la_LDFLAGS = $(all_libraries) -module $(KDE_PLUGIN)
 
-noinst_HEADERS = kio_mac.h
+noinst_HEADERS = tdeio_mac.h
 
 kdelnk_DATA = mac.protocol
 kdelnkdir = $(kde_servicesdir)

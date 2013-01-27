@@ -34,7 +34,7 @@ K_EXPORT_COMPONENT_FACTORY(tdefile_trash, TrashFactory("tdefile_trash"))
 KTrashPlugin::KTrashPlugin(TQObject *parent, const char *name,
         const TQStringList &args) : KFilePlugin(parent, name, args)
 {
-    TDEGlobal::locale()->insertCatalogue( "kio_trash" );
+    TDEGlobal::locale()->insertCatalogue( "tdeio_trash" );
 
     kdDebug(7034) << "Trash file meta info plugin\n";
 

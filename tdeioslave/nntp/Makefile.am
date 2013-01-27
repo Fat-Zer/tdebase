@@ -2,11 +2,11 @@ INCLUDES= -I$(srcdir)/../.. -I$(srcdir)/.. $(all_includes)
 
 ####### Files
 
-kde_module_LTLIBRARIES = kio_nntp.la
+kde_module_LTLIBRARIES = tdeio_nntp.la
 
-kio_nntp_la_SOURCES = nntp.cpp
-kio_nntp_la_LIBADD  = $(LIB_KIO)
-kio_nntp_la_LDFLAGS = $(all_libraries) -module $(KDE_PLUGIN)
+tdeio_nntp_la_SOURCES = nntp.cpp
+tdeio_nntp_la_LIBADD  = $(LIB_KIO)
+tdeio_nntp_la_LDFLAGS = $(all_libraries) -module $(KDE_PLUGIN)
 
 METASOURCES = AUTO
 

@@ -9,7 +9,7 @@
 #
 #################################################
 
-# FIXME not built: man2html, kio_man_test
+# FIXME not built: man2html, tdeio_man_test
 
 
 ##### system checks #############################
@@ -35,15 +35,15 @@ link_directories(
 ##### other data ################################
 
 install( FILES man.protocol kmanpart.desktop DESTINATION ${SERVICES_INSTALL_DIR} )
-install( FILES kio_man.css DESTINATION ${DATA_INSTALL_DIR}/tdeio_man )
+install( FILES tdeio_man.css DESTINATION ${DATA_INSTALL_DIR}/tdeio_man )
 
 
-##### kio_man (module) ##########################
+##### tdeio_man (module) ##########################
 
-set( target kio_man )
+set( target tdeio_man )
 
 tde_add_kpart( ${target} AUTOMOC
-  SOURCES man2html.cpp kio_man.cpp
+  SOURCES man2html.cpp tdeio_man.cpp
   LINK tdeio-shared
   DESTINATION ${PLUGIN_INSTALL_DIR}
 )

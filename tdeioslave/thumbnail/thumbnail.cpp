@@ -96,7 +96,7 @@ int kdemain(int argc, char **argv)
 #endif
 
 #ifdef USE_KINSTANCE
-    TDEInstance instance("kio_thumbnail");
+    TDEInstance instance("tdeio_thumbnail");
 #else
     // creating TDEApplication in a slave in not a very good idea,
     // as dispatchLoop() doesn't allow it to process its messages,
@@ -107,12 +107,12 @@ int kdemain(int argc, char **argv)
     putenv(strdup("SESSION_MANAGER="));
     TDEApplication::disableAutoDcopRegistration();
 
-    TDEApplication app(argc, argv, "kio_thumbnail", false, true);
+    TDEApplication app(argc, argv, "tdeio_thumbnail", false, true);
 #endif
 
     if (argc != 4)
     {
-        kdError(7115) << "Usage: kio_thumbnail protocol domain-socket1 domain-socket2" << endl;
+        kdError(7115) << "Usage: tdeio_thumbnail protocol domain-socket1 domain-socket2" << endl;
         exit(-1);
     }
 

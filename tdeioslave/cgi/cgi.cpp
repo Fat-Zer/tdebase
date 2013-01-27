@@ -257,13 +257,13 @@ extern "C" { int KDE_EXPORT kdemain( int argc, char **argv ); }
 
 int kdemain( int argc, char **argv )
 {
-  TDEInstance instance( "kio_cgi" );
+  TDEInstance instance( "tdeio_cgi" );
 
-  kdDebug(7124) << "kio_cgi starting " << getpid() << endl;
+  kdDebug(7124) << "tdeio_cgi starting " << getpid() << endl;
 
   if (argc != 4)
   {
-     fprintf(stderr, "Usage: kio_cgi protocol domain-socket1 domain-socket2\n");
+     fprintf(stderr, "Usage: tdeio_cgi protocol domain-socket1 domain-socket2\n");
      exit(-1);
   }
 

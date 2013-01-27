@@ -26,9 +26,9 @@ link_directories(
 install( FILES smtp.protocol smtps.protocol DESTINATION ${SERVICES_INSTALL_DIR} )
 
 
-##### kio_smtp (module) #########################
+##### tdeio_smtp (module) #########################
 
-set( target kio_smtp )
+set( target tdeio_smtp )
 
 tde_add_kpart( ${target} AUTOMOC
   SOURCES smtp.cc request.cc response.cc capabilities.cc command.cc transactionstate.cc

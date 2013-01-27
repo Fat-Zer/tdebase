@@ -18,7 +18,7 @@
 	- Converts some HFS+ file types and application labels into mimetypes
 	- Added a SuSE Makefile
 	- Hopefully managed to get the SuSE RPMs working
-	- When copying files kio-mac now reports the amount progressed so
+	- When copying files tdeio-mac now reports the amount progressed so
   	  you can see how much has been copied
 	- Text files are now copies over in text mode by default
 

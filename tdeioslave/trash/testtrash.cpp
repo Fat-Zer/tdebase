@@ -21,7 +21,7 @@
 #undef NDEBUG
 #undef NO_DEBUG
 
-#include "kio_trash.h"
+#include "tdeio_trash.h"
 #include "testtrash.h"
 
 #include <config.h>

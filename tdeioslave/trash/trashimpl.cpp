@@ -57,7 +57,7 @@ TrashImpl::TrashImpl() :
     m_homeDevice( 0 ),
     m_trashDirectoriesScanned( false ),
     m_mibEnum( TDEGlobal::locale()->fileEncodingMib() ),
-    // not using kio_trashrc since KIO uses that one already for kio_trash
+    // not using tdeio_trashrc since KIO uses that one already for tdeio_trash
     // so better have a separate one, for faster parsing by e.g. kmimetype.cpp
     m_config( "trashrc" )
 {
@@ -406,7 +406,7 @@ bool TrashImpl::copyFromTrash( const TQString& dest, int trashId, const TQString
 
 bool TrashImpl::copy( const TQString& src, const TQString& dest )
 {
-    // kio_file's copy() method is quite complex (in order to be fast), let's just call it...
+    // tdeio_file's copy() method is quite complex (in order to be fast), let's just call it...
     m_lastErrorCode = 0;
     KURL urlSrc;
     urlSrc.setPath( src );
@@ -561,7 +561,7 @@ TrashImpl::TrashedFileInfoList TrashImpl::list()
         const int trashId = it.key();
         TQString infoPath = it.data();
         infoPath += "/info";
-        // Code taken from kio_file
+        // Code taken from tdeio_file
         TQStrList entryNames = listDir( infoPath );
         //char path_buffer[PATH_MAX];
         //getcwd(path_buffer, PATH_MAX - 1);
@@ -725,7 +725,7 @@ int TrashImpl::findTrashDirectory( const TQString& origPath )
     }
     // new trash dir found, register it
     // but we need stability in the trash IDs, so that restoring or asking
-    // for properties works even kio_trash gets killed because idle.
+    // for properties works even tdeio_trash gets killed because idle.
 #if 0
     kdDebug() << k_funcinfo << "found " << trashDir << endl;
     m_trashDirectories.insert( ++m_lastId, trashDir );
@@ -894,7 +894,7 @@ bool TrashImpl::checkTrashSubdirs( const TQCString& trashDir_c ) const
 
 TQString TrashImpl::trashDirectoryPath( int trashId ) const
 {
-    // Never scanned for trash dirs? (This can happen after killing kio_trash
+    // Never scanned for trash dirs? (This can happen after killing tdeio_trash
     // and reusing a directory listing from the earlier instance.)
     if ( !m_trashDirectoriesScanned )
         scanTrashDirectories();

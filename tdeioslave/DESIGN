@@ -10,7 +10,7 @@ Well, that's nice.  How do they work?
 
 To understand it, you'll need two ice cubes, a pair of handcuffs, and a
 ferret.  Some Crisco (or other shortening) is optional.  Well, that aside,
-this document focuses on the business end of the whole kio library.  The
+this document focuses on the business end of the whole tdeio library.  The
 ioslave. See the documentation of the SlaveBase class for the methods
 you need to reimplement, and see 
 http://developer.kde.org/documentation/design/kde/ioslaves/ for more docu

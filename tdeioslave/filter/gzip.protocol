@@ -1,5 +1,5 @@
 [Protocol]
-exec=kio_filter
+exec=tdeio_filter
 protocol=gzip
 mimetype=application/gzip
 input=stream

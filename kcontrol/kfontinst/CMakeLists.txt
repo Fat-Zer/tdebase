@@ -15,6 +15,6 @@ add_subdirectory( viewpart )
 add_subdirectory( kcmfontinst )
 add_subdirectory( tdefile-plugin )
 add_subdirectory( kfontinst )
-add_subdirectory( kio )
+add_subdirectory( tdeio )
 
 install( FILES installfont.desktop DESTINATION ${DATA_INSTALL_DIR}/konqueror/servicemenus )

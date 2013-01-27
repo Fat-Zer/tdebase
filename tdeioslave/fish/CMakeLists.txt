@@ -28,7 +28,7 @@ link_directories(
 install( FILES fish.protocol nxfish.protocol DESTINATION ${SERVICES_INSTALL_DIR} )
 
 
-##### kio_fish (module) #########################
+##### tdeio_fish (module) #########################
 
 add_custom_command( OUTPUT fishcode.h
   COMMAND ${CMAKE_CURRENT_SOURCE_DIR}/genfishcode.pl ${CMAKE_CURRENT_SOURCE_DIR}/fish.pl > fishcode.h
@@ -36,7 +36,7 @@ add_custom_command( OUTPUT fishcode.h
 
 set_property( SOURCE fish.cpp APPEND PROPERTY OBJECT_DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/fishcode.h )
 
-set( target kio_fish )
+set( target tdeio_fish )
 
 tde_add_kpart( ${target} AUTOMOC
   SOURCES fish.cpp

@@ -25,12 +25,12 @@ link_directories(
 install( FILES about.protocol DESTINATION ${SERVICES_INSTALL_DIR} )
 
 
-##### kio_about (module) ########################
+##### tdeio_about (module) ########################
 
-set( target kio_about )
+set( target tdeio_about )
 
 tde_add_kpart( ${target} AUTOMOC
-  SOURCES kio_about.cpp
+  SOURCES tdeio_about.cpp
   LINK tdeio-shared
   DESTINATION ${PLUGIN_INSTALL_DIR}
 )

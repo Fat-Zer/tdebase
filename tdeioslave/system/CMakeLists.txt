@@ -29,22 +29,22 @@ link_directories(
 install( FILES system.protocol DESTINATION ${SERVICES_INSTALL_DIR} )
 
 
-##### kiosystem (static) ########################
+##### tdeiosystem (static) ########################
 
-set( target kiosystem )
+set( target tdeiosystem )
 
 tde_add_library( ${target} STATIC_PIC AUTOMOC
-  SOURCES kio_system.cpp systemimpl.cpp
+  SOURCES tdeio_system.cpp systemimpl.cpp
 )
 
 
-##### kio_system (module) #######################
+##### tdeio_system (module) #######################
 
-set( target kio_system )
+set( target tdeio_system )
 
 tde_add_kpart( ${target} AUTOMOC
   SOURCES dummy.cpp
-  EMBED kiosystem-static
+  EMBED tdeiosystem-static
   LINK tdeio-shared
   DESTINATION ${PLUGIN_INSTALL_DIR}
 )

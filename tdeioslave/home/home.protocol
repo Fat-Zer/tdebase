@@ -1,5 +1,5 @@
 [Protocol]
-exec=kio_home
+exec=tdeio_home
 protocol=home
 input=none
 output=filesystem

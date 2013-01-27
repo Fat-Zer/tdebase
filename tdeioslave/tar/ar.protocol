@@ -1,5 +1,5 @@
 [Protocol]
-exec=kio_tar
+exec=tdeio_tar
 protocol=ar
 mimetype=application/x-archive
 input=filesystem

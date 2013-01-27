@@ -4,11 +4,11 @@ INCLUDES = $(all_includes)
 AM_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_TDECORE) $(LIB_TDEUI) -ltdefx $(LIB_KIO) -ltdetexteditor
 METASOURCES = AUTO
 
-kde_module_LTLIBRARIES = kio_tar.la
+kde_module_LTLIBRARIES = tdeio_tar.la
 
-kio_tar_la_SOURCES = tar.cc
-kio_tar_la_LIBADD = $(LIB_KSYCOCA)
-kio_tar_la_LDFLAGS = $(all_libraries) -module $(KDE_PLUGIN)
+tdeio_tar_la_SOURCES = tar.cc
+tdeio_tar_la_LIBADD = $(LIB_KSYCOCA)
+tdeio_tar_la_LDFLAGS = $(all_libraries) -module $(KDE_PLUGIN)
 
 check_PROGRAMS = ktartest
 

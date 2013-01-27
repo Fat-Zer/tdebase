@@ -39,7 +39,7 @@
 #endif
 
 typedef KGenericFactory<KFileMediaPlugin> KFileMediaPluginFactory;
-K_EXPORT_COMPONENT_FACTORY(tdefile_media, KFileMediaPluginFactory("kio_media"))
+K_EXPORT_COMPONENT_FACTORY(tdefile_media, KFileMediaPluginFactory("tdeio_media"))
 
 KFileMediaPlugin::KFileMediaPlugin(TQObject *parent, const char *name,
 		                     const TQStringList& args)

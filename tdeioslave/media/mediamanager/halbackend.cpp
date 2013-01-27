@@ -377,7 +377,7 @@ void HALBackend::DeviceCondition(const char* udi, const char* condition)
         }
         if (medium) {
 	    TDEProcess p;
-	    p << "kio_media_mounthelper" << "-e" << medium->name();
+	    p << "tdeio_media_mounthelper" << "-e" << medium->name();
 	    p.start(TDEProcess::DontCare);
         }
     }

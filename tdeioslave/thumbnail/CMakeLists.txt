@@ -46,9 +46,9 @@ install( FILES
 install( FILES thumbcreator.desktop DESTINATION ${SERVICETYPES_INSTALL_DIR} )
 
 
-##### kio_thumbnail (module) ####################
+##### tdeio_thumbnail (module) ####################
 
-set( target kio_thumbnail )
+set( target tdeio_thumbnail )
 
 tde_add_kpart( ${target} AUTOMOC
   SOURCES thumbnail.cpp

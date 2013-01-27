@@ -27,22 +27,22 @@ link_directories(
 install( FILES home.protocol DESTINATION ${SERVICES_INSTALL_DIR} )
 
 
-##### kiohome (static) ##########################
+##### tdeiohome (static) ##########################
 
-set( target kiohome )
+set( target tdeiohome )
 
 tde_add_library( ${target} STATIC_PIC AUTOMOC
-  SOURCES kio_home.cpp homeimpl.cpp
+  SOURCES tdeio_home.cpp homeimpl.cpp
 )
 
 
-##### kio_home (module) #########################
+##### tdeio_home (module) #########################
 
-set( target kio_home )
+set( target tdeio_home )
 
 tde_add_kpart( ${target}
   SOURCES dummy.cpp
-  EMBED kiohome-static
+  EMBED tdeiohome-static
   LINK tdeio-shared
   DESTINATION ${PLUGIN_INSTALL_DIR}
 )

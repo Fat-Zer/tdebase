@@ -17,7 +17,7 @@
    Boston, MA 02110-1301, USA.
 */
 
-#include "kio_home.h"
+#include "tdeio_home.h"
 #include "testhome.h"
 
 #include <config.h>

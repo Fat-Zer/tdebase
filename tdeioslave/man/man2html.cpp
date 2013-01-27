@@ -4073,7 +4073,7 @@ static char *scan_request(char *c)
                             // Most English man pages are in ISO-8859-1
                             out_html("<meta http-equiv=\"Content-Type\" content=\"text/html; charset=ISO-8859-1\">\n");
 #else
-                            // kio_man transforms from local to UTF-8
+                            // tdeio_man transforms from local to UTF-8
                             out_html("<meta http-equiv=\"Content-Type\" content=\"text/html; charset=");
                             out_html(TQTextCodec::codecForLocale()->mimeName());
                             out_html("\">\n");

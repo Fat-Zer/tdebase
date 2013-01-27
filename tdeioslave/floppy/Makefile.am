@@ -5,11 +5,11 @@ AM_LDFLAGS = $(all_libraries)
 
 ####### Files
 
-kde_module_LTLIBRARIES = kio_floppy.la
+kde_module_LTLIBRARIES = tdeio_floppy.la
 
-kio_floppy_la_SOURCES = kio_floppy.cpp program.cpp
-kio_floppy_la_LIBADD = $(LIB_KIO)
-kio_floppy_la_LDFLAGS = $(all_libraries) -module $(KDE_PLUGIN)
+tdeio_floppy_la_SOURCES = tdeio_floppy.cpp program.cpp
+tdeio_floppy_la_LIBADD = $(LIB_KIO)
+tdeio_floppy_la_LDFLAGS = $(all_libraries) -module $(KDE_PLUGIN)
 
 kdelnk_DATA = floppy.protocol
 kdelnkdir = $(kde_servicesdir)

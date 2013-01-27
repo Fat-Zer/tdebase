@@ -26,9 +26,9 @@ link_directories(
 install( FILES pop3.protocol pop3s.protocol DESTINATION ${SERVICES_INSTALL_DIR} )
 
 
-##### kio_pop3 (module) #########################
+##### tdeio_pop3 (module) #########################
 
-set( target kio_pop3 )
+set( target tdeio_pop3 )
 
 tde_add_kpart( ${target} AUTOMOC
   SOURCES pop3.cc

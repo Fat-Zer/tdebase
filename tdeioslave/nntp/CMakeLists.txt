@@ -25,9 +25,9 @@ link_directories(
 install( FILES nntp.protocol nntps.protocol DESTINATION ${SERVICES_INSTALL_DIR} )
 
 
-##### kio_nntp (module) #########################
+##### tdeio_nntp (module) #########################
 
-set( target kio_nntp )
+set( target tdeio_nntp )
 
 tde_add_kpart( ${target} AUTOMOC
   SOURCES nntp.cpp

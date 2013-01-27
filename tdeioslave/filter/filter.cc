@@ -36,13 +36,13 @@ extern "C" { KDE_EXPORT int kdemain(int argc, char **argv); }
 
 int kdemain( int argc, char ** argv)
 {
-  TDEInstance instance( "kio_filter" );
+  TDEInstance instance( "tdeio_filter" );
 
   kdDebug(7110) << "Starting " << getpid() << endl;
 
   if (argc != 4)
   {
-     fprintf(stderr, "Usage: kio_filter protocol domain-socket1 domain-socket2\n");
+     fprintf(stderr, "Usage: tdeio_filter protocol domain-socket1 domain-socket2\n");
      exit(-1);
   }
 

@@ -92,7 +92,7 @@ int kdemain(int argc, char **argv)
 {
 
   if (argc != 4) {
-    POP3_DEBUG << "Usage: kio_pop3 protocol domain-socket1 domain-socket2"
+    POP3_DEBUG << "Usage: tdeio_pop3 protocol domain-socket1 domain-socket2"
         << endl;
     return -1;
   }
@@ -104,7 +104,7 @@ int kdemain(int argc, char **argv)
   }
 #endif
 
-  TDEInstance instance("kio_pop3");
+  TDEInstance instance("tdeio_pop3");
   POP3Protocol *slave;
 
   // Are we looking to use SSL?
@@ -599,7 +599,7 @@ int POP3Protocol::loginSASL( TDEIO::AuthInfo &ai )
 #else
   if (metaData("auth") == "SASL") {
     closeConnection();
-    error(ERR_COULD_NOT_LOGIN, i18n("SASL authentication is not compiled into kio_pop3."));
+    error(ERR_COULD_NOT_LOGIN, i18n("SASL authentication is not compiled into tdeio_pop3."));
     return -1;
   }
   return 1; //if SASL not explicitly required, try another method (USER/PASS)

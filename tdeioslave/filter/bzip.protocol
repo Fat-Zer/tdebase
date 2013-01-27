@@ -1,5 +1,5 @@
 [Protocol]
-exec=kio_filter
+exec=tdeio_filter
 protocol=bzip
 mimetype=application/x-bzip
 input=stream

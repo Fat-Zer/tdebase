@@ -27,12 +27,12 @@ install( FILES
   DESTINATION ${SERVICES_INSTALL_DIR} )
 
 
-##### kio_settings (module) #####################
+##### tdeio_settings (module) #####################
 
-set( target kio_settings )
+set( target tdeio_settings )
 
 tde_add_kpart( ${target} AUTOMOC
-  SOURCES kio_settings.cc
+  SOURCES tdeio_settings.cc
   LINK tdeio-shared
   DESTINATION ${PLUGIN_INSTALL_DIR}
 )

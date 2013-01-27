@@ -1,5 +1,5 @@
 [Protocol]
-exec=kio_smb
+exec=tdeio_smb
 protocol=smb
 input=none
 output=filesystem

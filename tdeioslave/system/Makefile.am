@@ -3,11 +3,11 @@ SUBDIRS= . kdedmodule entries mimetypes
 INCLUDES = $(all_includes)
 METASOURCES = AUTO
 
-kde_module_LTLIBRARIES = kio_system.la
+kde_module_LTLIBRARIES = tdeio_system.la
 
-kio_system_la_SOURCES = dummy.cpp
-kio_system_la_LIBADD  = libtdeiosystem.la $(LIB_KIO)
-kio_system_la_LDFLAGS = $(all_libraries) -module $(KDE_PLUGIN) -no-undefined
+tdeio_system_la_SOURCES = dummy.cpp
+tdeio_system_la_LIBADD  = libtdeiosystem.la $(LIB_KIO)
+tdeio_system_la_LDFLAGS = $(all_libraries) -module $(KDE_PLUGIN) -no-undefined
 
 dummy.cpp:
 	echo > dummy.cpp
@@ -15,7 +15,7 @@ dummy.cpp:
 kde_services_DATA = system.protocol
 
 noinst_LTLIBRARIES = libtdeiosystem.la
-libtdeiosystem_la_SOURCES = kio_system.cpp systemimpl.cpp
+libtdeiosystem_la_SOURCES = tdeio_system.cpp systemimpl.cpp
 
 check_PROGRAMS = testsystem
 testsystem_SOURCES = testsystem.cpp

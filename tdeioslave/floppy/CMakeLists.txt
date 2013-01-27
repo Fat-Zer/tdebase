@@ -26,12 +26,12 @@ link_directories(
 install( FILES floppy.protocol DESTINATION ${SERVICES_INSTALL_DIR} )
 
 
-##### kio_floppy (module) #######################
+##### tdeio_floppy (module) #######################
 
-set( target kio_floppy )
+set( target tdeio_floppy )
 
 set( ${target}_SRCS
-  kio_floppy.cpp program.cpp
+  tdeio_floppy.cpp program.cpp
 )
 
 tde_add_kpart( ${target} AUTOMOC

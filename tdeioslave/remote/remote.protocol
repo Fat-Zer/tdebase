@@ -1,5 +1,5 @@
 [Protocol]
-exec=kio_remote
+exec=tdeio_remote
 protocol=remote
 input=none
 output=filesystem

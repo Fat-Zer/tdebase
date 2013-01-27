@@ -32,7 +32,7 @@
 7-22-2001 - probable solution to getting password prompt -- open with controlling
             but don't connect stdin/out to terminal. duh!
 8-9-2001  - Doh! I haven't kept very good logs. Look at the cvs logs for better info.
-          - At this point kio_sftp is using KSshProcess which I wrote in order to make
+          - At this point tdeio_sftp is using KSshProcess which I wrote in order to make
             a standard interface to the various version of ssh out there. So far it is
             working fairly well.  We also now report host key changes to the user and
             allow them to choose whether or not to continue. This is a big improvement.

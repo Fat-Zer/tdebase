@@ -26,12 +26,12 @@ link_directories(
 install( FILES sftp.protocol DESTINATION ${SERVICES_INSTALL_DIR} )
 
 
-##### kio_sftp (module) #########################
+##### tdeio_sftp (module) #########################
 
-set( target kio_sftp )
+set( target tdeio_sftp )
 
 tde_add_kpart( ${target} AUTOMOC
-  SOURCES process.cpp atomicio.cpp kio_sftp.cpp sftpfileattr.cpp ksshprocess.cpp
+  SOURCES process.cpp atomicio.cpp tdeio_sftp.cpp sftpfileattr.cpp ksshprocess.cpp
   LINK tdeio-shared
   DESTINATION ${PLUGIN_INSTALL_DIR}
 )

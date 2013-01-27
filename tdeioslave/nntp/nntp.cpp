@@ -39,9 +39,9 @@ extern "C" { int KDE_EXPORT kdemain(int argc, char **argv); }
 
 int kdemain(int argc, char **argv) {
 
-  TDEInstance instance ("kio_nntp");
+  TDEInstance instance ("tdeio_nntp");
   if (argc != 4) {
-    fprintf(stderr, "Usage: kio_nntp protocol domain-socket1 domain-socket2\n");
+    fprintf(stderr, "Usage: tdeio_nntp protocol domain-socket1 domain-socket2\n");
     exit(-1);
   }
 

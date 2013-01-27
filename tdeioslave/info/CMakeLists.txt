@@ -27,9 +27,9 @@ install( FILES kde-info2html.conf DESTINATION ${DATA_INSTALL_DIR}/tdeio_info )
 install( PROGRAMS kde-info2html DESTINATION ${DATA_INSTALL_DIR}/tdeio_info )
 
 
-##### kio_info (module) #########################
+##### tdeio_info (module) #########################
 
-set( target kio_info )
+set( target tdeio_info )
 
 tde_add_kpart( ${target} AUTOMOC
   SOURCES info.cc

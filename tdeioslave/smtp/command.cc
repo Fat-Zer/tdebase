@@ -1,7 +1,7 @@
 /*  -*- c++ -*-
     command.cc
 
-    This file is part of kio_smtp, the KDE SMTP tdeioslave.
+    This file is part of tdeio_smtp, the KDE SMTP tdeioslave.
     Copyright (c) 2003 Marc Mutz <mutz@kde.org>
 
     This program is free software; you can redistribute it and/or modify it
@@ -239,7 +239,7 @@ static sasl_callback_t callbacks[] = {
     kdDebug(7112) << "Mechanism: " << mMechusing << " one step: " << mOneStep << endl;
 #else
   mSMTP->error(TDEIO::ERR_COULD_NOT_AUTHENTICATE,
-      i18n("Authentication support is not compiled into kio_smtp."));
+      i18n("Authentication support is not compiled into tdeio_smtp."));
 #endif
   }
 

@@ -25,9 +25,9 @@ link_directories(
 install( FILES gzip.protocol bzip.protocol bzip2.protocol DESTINATION ${SERVICES_INSTALL_DIR} )
 
 
-##### kio_filter (module) #######################
+##### tdeio_filter (module) #######################
 
-set( target kio_filter )
+set( target tdeio_filter )
 
 tde_add_kpart( ${target} AUTOMOC
   SOURCES filter.cc

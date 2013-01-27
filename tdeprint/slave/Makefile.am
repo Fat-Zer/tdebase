@@ -4,15 +4,15 @@ SUBDIRS = mimetypes templates
 
 INCLUDES= $(all_includes)
 
-kde_module_LTLIBRARIES = kio_print.la
+kde_module_LTLIBRARIES = tdeio_print.la
 
-kio_print_la_SOURCES = kio_print.cpp
-kio_print_la_LIBADD = $(LIB_KIO) -ltdeprint
-kio_print_la_LDFLAGS = $(all_libraries) -module $(KDE_PLUGIN)
+tdeio_print_la_SOURCES = tdeio_print.cpp
+tdeio_print_la_LIBADD = $(LIB_KIO) -ltdeprint
+tdeio_print_la_LDFLAGS = $(all_libraries) -module $(KDE_PLUGIN)
 
 METASOURCES = AUTO
 
-noinst_HEADERS = kio_print.h
+noinst_HEADERS = tdeio_print.h
 
 # Services
 servicesdir = $(kde_servicesdir)

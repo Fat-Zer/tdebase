@@ -1,5 +1,5 @@
 [Desktop Action Decrypt]
-Exec=kio_media_mounthelper -d %u
+Exec=tdeio_media_mounthelper -d %u
 Icon=decrypted
 Name=Decrypt
 Name[de]=Entschlüsseln

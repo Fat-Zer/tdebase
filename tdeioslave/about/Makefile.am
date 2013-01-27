@@ -5,12 +5,12 @@ AM_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_TDECORE) $(LIB
 
 ####### Files
 
-kde_module_LTLIBRARIES = kio_about.la
+kde_module_LTLIBRARIES = tdeio_about.la
 
-kio_about_la_SOURCES = kio_about.cpp
-kio_about_la_LIBADD = $(LIB_KSYCOCA)
-kio_about_la_LDFLAGS = $(all_libraries) -module $(KDE_PLUGIN)
-noinst_HEADERS = kio_about.h
+tdeio_about_la_SOURCES = tdeio_about.cpp
+tdeio_about_la_LIBADD = $(LIB_KSYCOCA)
+tdeio_about_la_LDFLAGS = $(all_libraries) -module $(KDE_PLUGIN)
+noinst_HEADERS = tdeio_about.h
 
 kdelnk_DATA = about.protocol
 kdelnkdir = $(kde_servicesdir)

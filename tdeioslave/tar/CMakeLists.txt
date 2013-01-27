@@ -26,9 +26,9 @@ link_directories(
 install( FILES tar.protocol ar.protocol zip.protocol DESTINATION ${SERVICES_INSTALL_DIR} )
 
 
-##### kio_tar (module) #######################
+##### tdeio_tar (module) #######################
 
-set( target kio_tar )
+set( target tdeio_tar )
 
 tde_add_kpart( ${target} AUTOMOC
   SOURCES tar.cc

@@ -14,14 +14,14 @@ EXR_MODULE = exrthumbnail.la
 EXR_DATAFILE = exrthumbnail.desktop
 endif
 
-kde_module_LTLIBRARIES = kio_thumbnail.la imagethumbnail.la \
+kde_module_LTLIBRARIES = tdeio_thumbnail.la imagethumbnail.la \
 	textthumbnail.la htmlthumbnail.la \
 	djvuthumbnail.la $(CURSOR_MODULE) \
 	$(EXR_MODULE)
 
-kio_thumbnail_la_SOURCES = thumbnail.cpp
-kio_thumbnail_la_LIBADD = $(LIB_KIO)
-kio_thumbnail_la_LDFLAGS = $(all_libraries) -module $(KDE_PLUGIN)
+tdeio_thumbnail_la_SOURCES = thumbnail.cpp
+tdeio_thumbnail_la_LIBADD = $(LIB_KIO)
+tdeio_thumbnail_la_LDFLAGS = $(all_libraries) -module $(KDE_PLUGIN)
 
 imagethumbnail_la_SOURCES = imagecreator.cpp
 imagethumbnail_la_LIBADD = $(LIB_KIO) # for kimageio

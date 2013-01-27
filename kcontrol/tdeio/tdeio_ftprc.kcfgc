@@ -1,0 +1,5 @@
+File=tdeio_ftprc.kcfg
+ClassName=KioFtp
+Singleton=true
+Mutators=true
+

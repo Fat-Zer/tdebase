@@ -26,8 +26,8 @@ InfoProtocol::InfoProtocol( const TQCString &pool, const TQCString &app )
     kdDebug( 7108 ) << "InfoProtocol::InfoProtocol" << endl;
 
     m_perl = TDEGlobal::dirs()->findExe( "perl" );
-    m_infoScript = locate( "data", "kio_info/kde-info2html" );
-    m_infoConf = locate("data", "kio_info/kde-info2html.conf");
+    m_infoScript = locate( "data", "tdeio_info/kde-info2html" );
+    m_infoConf = locate("data", "tdeio_info/kde-info2html.conf");
 
     if( m_perl.isNull() || m_infoScript.isNull() || m_infoConf.isNull() ) {
 	kdError( 7108 ) << "Critical error: Cannot locate files for HTML-conversion" << endl;
@@ -35,7 +35,7 @@ InfoProtocol::InfoProtocol( const TQCString &pool, const TQCString &app )
 	if ( m_perl.isNull() ) {
 		errorStr = "perl.";
 	} else {
-		TQString missing =m_infoScript.isNull() ?  "kio_info/kde-info2html" : "kio_info/kde-info2html.conf";
+		TQString missing =m_infoScript.isNull() ?  "tdeio_info/kde-info2html" : "tdeio_info/kde-info2html.conf";
 		errorStr = "kde-info2html" + i18n( "\nUnable to locate file %1 which is necessary to run this service. "
 				"Please check your software installation" ).arg( missing );
 	}
@@ -244,13 +244,13 @@ extern "C" { int KDE_EXPORT kdemain( int argc, char **argv ); }
 
 int kdemain( int argc, char **argv )
 {
-  TDEInstance instance( "kio_info" );
+  TDEInstance instance( "tdeio_info" );
 
-  kdDebug() << "kio_info starting " << getpid() << endl;
+  kdDebug() << "tdeio_info starting " << getpid() << endl;
 
   if (argc != 4)
   {
-     fprintf(stderr, "Usage: kio_info protocol domain-socket1 domain-socket2\n");
+     fprintf(stderr, "Usage: tdeio_info protocol domain-socket1 domain-socket2\n");
      exit(-1);
   }
 

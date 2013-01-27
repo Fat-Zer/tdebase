@@ -4,11 +4,11 @@ SUBDIRS= . kdedmodule
 INCLUDES = $(all_includes)
 METASOURCES = AUTO
 
-kde_module_LTLIBRARIES = kio_home.la
+kde_module_LTLIBRARIES = tdeio_home.la
 
-kio_home_la_SOURCES = dummy.cpp
-kio_home_la_LIBADD  = libtdeiohome.la $(LIB_KIO)
-kio_home_la_LDFLAGS = $(all_libraries) -module $(KDE_PLUGIN) -no-undefined
+tdeio_home_la_SOURCES = dummy.cpp
+tdeio_home_la_LIBADD  = libtdeiohome.la $(LIB_KIO)
+tdeio_home_la_LDFLAGS = $(all_libraries) -module $(KDE_PLUGIN) -no-undefined
 
 dummy.cpp:
 	echo > dummy.cpp
@@ -16,7 +16,7 @@ dummy.cpp:
 kde_services_DATA = home.protocol
 
 noinst_LTLIBRARIES = libtdeiohome.la
-libtdeiohome_la_SOURCES = kio_home.cpp homeimpl.cpp
+libtdeiohome_la_SOURCES = tdeio_home.cpp homeimpl.cpp
 
 check_PROGRAMS = testhome
 testhome_SOURCES = testhome.cpp

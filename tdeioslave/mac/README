@@ -7,7 +7,7 @@ From the hfsplus man page:
        2^64  blocks,  resulting in much more efficient storage of
        many small files on large disks."
 
-This kio slave lets you read an HFS+ partition from konqueror
+This tdeio slave lets you read an HFS+ partition from konqueror
 or any other KDE file dialogue.  It uses hfsplus tools so you will
 need these installed for it to work.
 
@@ -52,7 +52,7 @@ For some reason some directories in MacOS end in a funny tall f
 character.  This seems to confuse hfstools.
 
 You can't easiily use the command line tools while you are browsing
-using kio-mac in Konqueror.  Konqueror continuously refreshes it's
+using tdeio-mac in Konqueror.  Konqueror continuously refreshes it's
 view which mean hpmount is being called every few seconds.  Click on
 Konqueror's home button before using the tools yourself on the command
 line.

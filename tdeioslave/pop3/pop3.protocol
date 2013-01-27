@@ -1,5 +1,5 @@
 [Protocol]
-exec=kio_pop3
+exec=tdeio_pop3
 protocol=pop3
 Capabilities=SASL
 input=none

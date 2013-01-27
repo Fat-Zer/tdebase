@@ -1,5 +1,5 @@
 [Protocol]
-exec=kio_floppy
+exec=tdeio_floppy
 protocol=floppy
 input=none
 output=filesystem

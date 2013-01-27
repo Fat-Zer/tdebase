@@ -21,12 +21,12 @@ link_directories(
 )
 
 
-##### kio_media_mounthelper (executable) ########
+##### tdeio_media_mounthelper (executable) ########
 
-set( target kio_media_mounthelper )
+set( target tdeio_media_mounthelper )
 
 set( ${target}_SRCS
-  kio_media_mounthelper.cpp decryptdialog.ui dialog.cpp
+  tdeio_media_mounthelper.cpp decryptdialog.ui dialog.cpp
 )
 
 tde_add_executable( ${target} AUTOMOC

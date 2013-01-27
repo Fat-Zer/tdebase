@@ -30,10 +30,10 @@ link_directories(
 install( FILES print.protocol printdb.protocol DESTINATION ${SERVICES_INSTALL_DIR} )
 
 
-##### kio_print (module) ########################
+##### tdeio_print (module) ########################
 
-tde_add_kpart( kio_print AUTOMOC
-  SOURCES kio_print.cpp
+tde_add_kpart( tdeio_print AUTOMOC
+  SOURCES tdeio_print.cpp
   LINK tdeprint-shared
   DESTINATION ${PLUGIN_INSTALL_DIR}
 )

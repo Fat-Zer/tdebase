@@ -1,4 +1,4 @@
-## Makfile.am for kio_finger
+## Makfile.am for tdeio_finger
 ## Edit from Makefile.am of tdebase/tdeioslave/man
 
 INCLUDES= $(all_includes)
@@ -6,20 +6,20 @@ AM_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_TDECORE) $(LIB
 
 ####### Files
 
-kde_module_LTLIBRARIES = kio_finger.la
+kde_module_LTLIBRARIES = tdeio_finger.la
 
-kio_finger_la_SOURCES = kio_finger.cpp 
-kio_finger_la_LIBADD = -lkio
-kio_finger_la_LDFLAGS = $(all_libraries) -module $(KDE_PLUGIN)
+tdeio_finger_la_SOURCES = tdeio_finger.cpp 
+tdeio_finger_la_LIBADD = -ltdeio
+tdeio_finger_la_LDFLAGS = $(all_libraries) -module $(KDE_PLUGIN)
 
-noinst_HEADERS = kio_finger.h 
+noinst_HEADERS = tdeio_finger.h 
 
 kdelnk_DATA = finger.protocol
 kdelnkdir = $(kde_servicesdir)
 
-kio_finger_data_DATA = kio_finger.pl kio_finger.css
-kio_finger_datadir = $(kde_datadir)/tdeio_finger
-EXTRA_DIST=$(kio_finger_data_DATA)   
+tdeio_finger_data_DATA = tdeio_finger.pl tdeio_finger.css
+tdeio_finger_datadir = $(kde_datadir)/tdeio_finger
+EXTRA_DIST=$(tdeio_finger_data_DATA)   
 
 METASOURCES = AUTO
 

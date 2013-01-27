@@ -83,5 +83,5 @@ Name[xh]=Sukuyilayisha
 Name[zh_CN]=卸载
 Name[zh_TW]=卸載
 Name[zu]=Yehlisa
-Exec=kio_media_mounthelper -u %u
+Exec=tdeio_media_mounthelper -u %u
 

@@ -17,7 +17,7 @@
    Boston, MA 02110-1301, USA.
 */
 
-#include "kio_remote.h"
+#include "tdeio_remote.h"
 #include "testremote.h"
 
 #include <config.h>

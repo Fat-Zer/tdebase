@@ -28,9 +28,9 @@ link_directories(
 install( FILES cgi.protocol DESTINATION ${SERVICES_INSTALL_DIR} )
 
 
-##### kio_cgi (module) ##########################
+##### tdeio_cgi (module) ##########################
 
-set( target kio_cgi )
+set( target tdeio_cgi )
 
 tde_add_kpart( ${target} AUTOMOC
   SOURCES cgi.cpp

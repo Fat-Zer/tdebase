@@ -71,5 +71,5 @@ Name[vi]=Gỡ ra An toàn
 Name[wa]=Ositer e såvrité
 Name[zh_CN]=安全删除
 Name[zh_TW]=安全的移除
-Exec=kio_media_mounthelper -s %u
+Exec=tdeio_media_mounthelper -s %u
 

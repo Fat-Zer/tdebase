@@ -1,5 +1,5 @@
 [Protocol]
-exec=kio_fish
+exec=tdeio_fish
 protocol=nxfish
 input=none
 output=filesystem

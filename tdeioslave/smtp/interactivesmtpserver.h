@@ -6,7 +6,7 @@
 
     Code based on the serverSocket example by Jesper Pedersen.
 
-    This file is part of the testsuite of kio_smtp, the KDE SMTP tdeioslave.
+    This file is part of the testsuite of tdeio_smtp, the KDE SMTP tdeioslave.
     Copyright (c) 2004 Marc Mutz <mutz@kde.org>
 
     This program is free software; you can redistribute it and/or modify it

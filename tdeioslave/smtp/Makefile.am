@@ -1,11 +1,11 @@
 
 INCLUDES= -I$(srcdir)/../.. -I$(srcdir)/.. $(SSL_INCLUDES) $(all_includes)
 
-kde_module_LTLIBRARIES = kio_smtp.la
+kde_module_LTLIBRARIES = tdeio_smtp.la
 
-kio_smtp_la_SOURCES = smtp.cc request.cc response.cc capabilities.cc command.cc transactionstate.cc
-kio_smtp_la_LIBADD  = $(LIB_KIO) $(SASL2_LIBS)
-kio_smtp_la_LDFLAGS = $(all_libraries) -module $(KDE_PLUGIN)
+tdeio_smtp_la_SOURCES = smtp.cc request.cc response.cc capabilities.cc command.cc transactionstate.cc
+tdeio_smtp_la_LIBADD  = $(LIB_KIO) $(SASL2_LIBS)
+tdeio_smtp_la_LDFLAGS = $(all_libraries) -module $(KDE_PLUGIN)
 
 noinst_HEADERS = smtp.h request.h response.h capabilities.h command.h transactionstate.h
 
@@ -25,7 +25,7 @@ test_responseparser_LDADD =  $(LIB_TDECORE)
 test_responseparser_LDFLAGS = $(all_libraries)
 
 test_commands_SOURCES = test_commands.cc
-test_commands_LDADD =  $(kio_smtp_la_LIBADD)
+test_commands_LDADD =  $(tdeio_smtp_la_LIBADD)
 test_commands_LDFLAGS = $(all_libraries)
 
 interactivesmtpserver_SOURCES = interactivesmtpserver.cc

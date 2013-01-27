@@ -39,7 +39,7 @@ K_EXPORT_COMPONENT_FACTORY( kcm_media, MediaFactory( "kcmmedia" ) )
 MediaModule::MediaModule( TQWidget *parent, const char *name, const TQStringList& )
 	: TDECModule(MediaFactory::instance(), parent, name )
 {
-	TDEGlobal::locale()->insertCatalogue("kio_media");
+	TDEGlobal::locale()->insertCatalogue("tdeio_media");
 	TQVBoxLayout *layout = new TQVBoxLayout( this, 0, KDialog::spacingHint() );
 	TQTabWidget *tab = new TQTabWidget( this );
 	

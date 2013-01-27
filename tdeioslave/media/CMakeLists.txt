@@ -38,22 +38,22 @@ link_directories(
 install( FILES media.protocol DESTINATION ${SERVICES_INSTALL_DIR} )
 
 
-##### kiomedia (static) #########################
+##### tdeiomedia (static) #########################
 
-set( target kiomedia )
+set( target tdeiomedia )
 
 tde_add_library( ${target} STATIC_PIC AUTOMOC
-  SOURCES kio_media.cpp mediaimpl.cpp mediaimpl.skel
+  SOURCES tdeio_media.cpp mediaimpl.cpp mediaimpl.skel
 )
 
 
-##### kio_media (module) ########################
+##### tdeio_media (module) ########################
 
-set( target kio_media )
+set( target tdeio_media )
 
 tde_add_kpart( ${target} AUTOMOC
   SOURCES dummy.cpp
-  EMBED kiomedia-static
+  EMBED tdeiomedia-static
   LINK mediacommon-static tdeio-shared
   DESTINATION ${PLUGIN_INSTALL_DIR}
 )

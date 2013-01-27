@@ -1,5 +1,5 @@
 [Protocol]
-exec=kio_finger
+exec=tdeio_finger
 protocol=finger
 input=none
 output=stream

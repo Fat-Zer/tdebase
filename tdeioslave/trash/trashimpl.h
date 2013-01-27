@@ -31,7 +31,7 @@
 #include <assert.h>
 
 /**
- * Implementation of all low-level operations done by kio_trash
+ * Implementation of all low-level operations done by tdeio_trash
  * The structure of the trash directory follows the freedesktop.org standard <TODO URL>
  */
 class TrashImpl : public TQObject

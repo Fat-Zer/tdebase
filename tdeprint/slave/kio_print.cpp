@@ -17,7 +17,7 @@
  *  Boston, MA 02110-1301, USA.
  **/
 
-#include "kio_print.h"
+#include "tdeio_print.h"
 #include <tdeprint/kmprinter.h>
 #include <tdeprint/kmmanager.h>
 #include <tdeprint/kmjobmanager.h>
@@ -46,7 +46,7 @@
 #include <stdlib.h>
 #include <sys/stat.h>
 
-#define	PRINT_DEBUG	kdDebug(7019) << "kio_print: "
+#define	PRINT_DEBUG	kdDebug(7019) << "tdeio_print: "
 
 extern "C"
 {
@@ -135,17 +135,17 @@ TQString buildGroupTable(DrGroup *grp, bool showHeader = true)
 
 int kdemain(int argc, char **argv)
 {
-	TDEInstance  instance("kio_print");
+	TDEInstance  instance("tdeio_print");
 
 	PRINT_DEBUG << "starting ioslave" << endl;
 	if (argc != 4)
 	{
-		fprintf(stderr, "Usage: kio_print protocol domain-socket1 domain-socket2\n");
+		fprintf(stderr, "Usage: tdeio_print protocol domain-socket1 domain-socket2\n");
 		exit(-1);
 	}
 
 	/* create fake KApplicatiom object, needed for job stuffs */
-	TDEAboutData about( "kio_print", "kio_print", "fake_version", 
+	TDEAboutData about( "tdeio_print", "tdeio_print", "fake_version", 
 			"TDEPrint IO slave", TDEAboutData::License_GPL, "(c) 2003, Michael Goffioul" );
 	TDECmdLineArgs::init( &about );
 	TDEApplication app;
@@ -917,4 +917,4 @@ void KIO_Print::showDriver(KMPrinter *prt)
 	finished();
 }
 
-#include "kio_print.moc"
+#include "tdeio_print.moc"

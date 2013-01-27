@@ -48,7 +48,7 @@ int main(int argc, char *argv[])
 
     TDECmdLineArgs* args = TDECmdLineArgs::parsedArgs();
     if ( args->isSet( "empty" ) ) {
-        // We use a kio job instead of linking to TrashImpl, for a smaller binary
+        // We use a tdeio job instead of linking to TrashImpl, for a smaller binary
         // (and the possibility of a central service at some point)
         TQByteArray packedArgs;
         TQDataStream stream( packedArgs, IO_WriteOnly );

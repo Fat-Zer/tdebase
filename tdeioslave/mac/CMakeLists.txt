@@ -26,12 +26,12 @@ install( FILES mac.protocol DESTINATION ${SERVICES_INSTALL_DIR} )
 tde_install_icons( )
 
 
-##### kio_mac (module) ##########################
+##### tdeio_mac (module) ##########################
 
-set( target kio_mac )
+set( target tdeio_mac )
 
 tde_add_kpart( ${target} AUTOMOC
-  SOURCES kio_mac.cpp
+  SOURCES tdeio_mac.cpp
   LINK tdeio-shared
   DESTINATION ${PLUGIN_INSTALL_DIR}
 )

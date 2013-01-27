@@ -1,5 +1,5 @@
 [Protocol]
-exec=kio_mac
+exec=tdeio_mac
 protocol=mac
 input=none
 output=filesystem

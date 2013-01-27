@@ -83,5 +83,5 @@ Name[xh]=Layisha
 Name[zh_CN]=挂载
 Name[zh_TW]=掛載
 Name[zu]=Yenyusa
-Exec=kio_media_mounthelper -m %u
+Exec=tdeio_media_mounthelper -m %u
 

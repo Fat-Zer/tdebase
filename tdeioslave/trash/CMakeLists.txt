@@ -37,12 +37,12 @@ tde_add_library( ${target} STATIC_PIC AUTOMOC
 )
 
 
-##### kio_trash (module) ########################
+##### tdeio_trash (module) ########################
 
-set( target kio_trash )
+set( target tdeio_trash )
 
 tde_add_kpart( ${target} AUTOMOC
-  SOURCES kio_trash.cpp
+  SOURCES tdeio_trash.cpp
   LINK trashcommon-static tdeio-shared
   DESTINATION ${PLUGIN_INSTALL_DIR}
 )

@@ -1,5 +1,5 @@
 [Protocol]
-exec=kio_media
+exec=tdeio_media
 protocol=media
 input=none
 output=filesystem

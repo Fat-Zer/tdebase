@@ -1,5 +1,5 @@
 [Protocol]
-exec=kio_ldap
+exec=tdeio_ldap
 protocol=ldaps
 input=none
 output=filesystem

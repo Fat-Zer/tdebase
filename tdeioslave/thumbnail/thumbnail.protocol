@@ -1,5 +1,5 @@
 [Protocol]
-exec=kio_thumbnail
+exec=tdeio_thumbnail
 protocol=thumbnail
 input=stream
 output=stream

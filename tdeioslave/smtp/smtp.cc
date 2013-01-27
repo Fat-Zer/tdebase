@@ -95,11 +95,11 @@ extern "C" {
 
 int kdemain(int argc, char **argv)
 {
-  TDEInstance instance("kio_smtp");
+  TDEInstance instance("tdeio_smtp");
 
   if (argc != 4) {
     fprintf(stderr,
-            "Usage: kio_smtp protocol domain-socket1 domain-socket2\n");
+            "Usage: tdeio_smtp protocol domain-socket1 domain-socket2\n");
     exit(-1);
   }
 
@@ -199,7 +199,7 @@ void SMTPProtocol::put(const KURL & url, int /*permissions */ ,
   KEMailSettings mset;
   KURL open_url = url;
   if ( !request.hasProfile() ) {
-    //kdDebug(7112) << "kio_smtp: Profile is null" << endl;
+    //kdDebug(7112) << "tdeio_smtp: Profile is null" << endl;
     bool hasProfile = mset.profiles().contains( open_url.host() );
     if ( hasProfile ) {
       mset.setProfile(open_url.host());

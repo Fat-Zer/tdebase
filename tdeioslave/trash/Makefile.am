@@ -3,11 +3,11 @@ METASOURCES = AUTO
 
 SUBDIRS = . tdefile-plugin
 
-kde_module_LTLIBRARIES = kio_trash.la
+kde_module_LTLIBRARIES = tdeio_trash.la
 
-kio_trash_la_SOURCES = kio_trash.cpp
-kio_trash_la_LIBADD  = libtrashcommon.la $(LIB_KIO)
-kio_trash_la_LDFLAGS = $(all_libraries) -module $(KDE_PLUGIN) -no-undefined
+tdeio_trash_la_SOURCES = tdeio_trash.cpp
+tdeio_trash_la_LIBADD  = libtrashcommon.la $(LIB_KIO)
+tdeio_trash_la_LDFLAGS = $(all_libraries) -module $(KDE_PLUGIN) -no-undefined
 
 bin_PROGRAMS = ktrash
 ktrash_SOURCES = ktrash.cpp

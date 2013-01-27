@@ -28,10 +28,10 @@ link_directories(
 install( FILES ldap.protocol ldaps.protocol DESTINATION ${SERVICES_INSTALL_DIR} )
 
 
-##### kio_ldap (module) #########################
+##### tdeio_ldap (module) #########################
 
-tde_add_kpart( kio_ldap AUTOMOC
-  SOURCES kio_ldap.cpp
+tde_add_kpart( tdeio_ldap AUTOMOC
+  SOURCES tdeio_ldap.cpp
   LINK kabc-shared ${LDAP_LIBRARIES}
   DESTINATION ${PLUGIN_INSTALL_DIR}
 )

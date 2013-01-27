@@ -4,11 +4,11 @@ SUBDIRS= . kdedmodule
 INCLUDES = $(all_includes)
 METASOURCES = AUTO
 
-kde_module_LTLIBRARIES = kio_remote.la
+kde_module_LTLIBRARIES = tdeio_remote.la
 
-kio_remote_la_SOURCES = dummy.cpp
-kio_remote_la_LIBADD  = libtdeioremote.la $(LIB_KIO)
-kio_remote_la_LDFLAGS = $(all_libraries) -module $(KDE_PLUGIN) -no-undefined
+tdeio_remote_la_SOURCES = dummy.cpp
+tdeio_remote_la_LIBADD  = libtdeioremote.la $(LIB_KIO)
+tdeio_remote_la_LDFLAGS = $(all_libraries) -module $(KDE_PLUGIN) -no-undefined
 
 dummy.cpp:
 	echo > dummy.cpp
@@ -16,7 +16,7 @@ dummy.cpp:
 kde_services_DATA = remote.protocol
 
 noinst_LTLIBRARIES = libtdeioremote.la
-libtdeioremote_la_SOURCES = kio_remote.cpp remoteimpl.cpp
+libtdeioremote_la_SOURCES = tdeio_remote.cpp remoteimpl.cpp
 
 check_PROGRAMS = testremote
 testremote_SOURCES = testremote.cpp

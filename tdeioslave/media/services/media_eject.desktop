@@ -86,5 +86,5 @@ Name[xh]=Khuphela ngaphandle
 Name[zh_CN]=弹出
 Name[zh_TW]=退出
 Name[zu]=Khipha
-Exec=kio_media_mounthelper -e %u
+Exec=tdeio_media_mounthelper -e %u
 

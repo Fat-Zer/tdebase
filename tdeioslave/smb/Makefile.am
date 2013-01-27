@@ -2,21 +2,21 @@
 
 INCLUDES=$(all_includes)
 
-kde_module_LTLIBRARIES = kio_smb.la
-kio_smb_la_SOURCES = kio_smb.cpp \
-             kio_smb_auth.cpp \
-             kio_smb_browse.cpp \
-             kio_smb_config.cpp \
-             kio_smb_dir.cpp \
-             kio_smb_file.cpp \
-             kio_smb_internal.cpp \
-	     kio_smb_mount.cpp
+kde_module_LTLIBRARIES = tdeio_smb.la
+tdeio_smb_la_SOURCES = tdeio_smb.cpp \
+             tdeio_smb_auth.cpp \
+             tdeio_smb_browse.cpp \
+             tdeio_smb_config.cpp \
+             tdeio_smb_dir.cpp \
+             tdeio_smb_file.cpp \
+             tdeio_smb_internal.cpp \
+	     tdeio_smb_mount.cpp
 
-kio_smb_la_LIBADD = -lkio -lsmbclient $(SMBCLIENT_EXTRA_LIBS)
+tdeio_smb_la_LIBADD = -ltdeio -lsmbclient $(SMBCLIENT_EXTRA_LIBS)
 
-kio_smb_la_LDFLAGS = $(all_libraries) -module $(KDE_PLUGIN)
+tdeio_smb_la_LDFLAGS = $(all_libraries) -module $(KDE_PLUGIN)
 
-noinst_HEADERS = kio_smb.h kio_smb_internal.h
+noinst_HEADERS = tdeio_smb.h tdeio_smb_internal.h
 
 kdelnk_DATA = smb.protocol
 
