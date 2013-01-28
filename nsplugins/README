@@ -25,7 +25,7 @@ Parts
 =====
 
 The Netscape(R) browser plugin support consists of 3 parts:
-- "PluginPart" KPart which is embedded into KHTML pages
+- "PluginPart" KPart which is embedded into TDEHTML pages
   (alone, it looks no different than a gray rectangle)
 - "nspluginviewer", a separate application which is capable of
   actually loading and playing the various Netscape(R) plugins.
@@ -144,7 +144,7 @@ Viewer
 Implemented in: viewer/
 
 The viewer is a KDE component used to embed Netscape(R) plugins
-into KDE applications (such as KHTML / Konqueror). To the plugin, it
+into KDE applications (such as TDEHTML / Konqueror). To the plugin, it
 emulates a Netscape(R) browser, while outside - it offers a standard KParts
 object.
 
@@ -216,7 +216,7 @@ browser plugin execution environment, it still lacks the following features:
   Support for LiveConnect (for JavaScript support) requires:
   - Reimplementation of Netscape's JRI functions (see sdk/jri.h)
     to communicate back (via DCOP?) with the PluginPart, which'll
-    signal them to KHTML's KJS interpretor. KParts::BrowserExtension
+    signal them to TDEHTML's KJS interpretor. KParts::BrowserExtension
     should be extended to support those signals. Of course, only
     JRI calls in the "netscape.javascript" namespace should be handled.
   - Implementation of g_NPN_GetJavaEnv and g_NPN_GetJavaPeer
@@ -224,7 +224,7 @@ browser plugin execution environment, it still lacks the following features:
   - Implementing g_NPN_GetValue(NPNVjavascriptEnabledBool, ...)
     (currently always returns "false").
     Should involve adding a slot to KParts::BrowserExtension
-    and making KHTML signal it whenever JS gets enabled or disabled.
+    and making TDEHTML signal it whenever JS gets enabled or disabled.
 
   LiveConnect will probably never be supported due to JRE ABI issues, and
   the fact that we need to have a JRE with JNI inside the nspluginviewer.

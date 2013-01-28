@@ -88,8 +88,8 @@ public:
    * This will return an illegal value if isWindowOpenPolicyInherited is
    * true.
    */
-  KHTMLSettings::KJSWindowOpenPolicy windowOpenPolicy() const {
-    return (KHTMLSettings::KJSWindowOpenPolicy)window_open;
+  TDEHTMLSettings::KJSWindowOpenPolicy windowOpenPolicy() const {
+    return (TDEHTMLSettings::KJSWindowOpenPolicy)window_open;
   }
 
   /**
@@ -104,8 +104,8 @@ public:
    * This will return an illegal value if isWindowResizePolicyInherited is
    * true.
    */
-  KHTMLSettings::KJSWindowResizePolicy windowResizePolicy() const {
-    return (KHTMLSettings::KJSWindowResizePolicy)window_resize;
+  TDEHTMLSettings::KJSWindowResizePolicy windowResizePolicy() const {
+    return (TDEHTMLSettings::KJSWindowResizePolicy)window_resize;
   }
 
   /**
@@ -120,8 +120,8 @@ public:
    * This will return an illegal value if isWindowMovePolicyInherited is
    * true.
    */
-  KHTMLSettings::KJSWindowMovePolicy windowMovePolicy() const {
-    return (KHTMLSettings::KJSWindowMovePolicy)window_move;
+  TDEHTMLSettings::KJSWindowMovePolicy windowMovePolicy() const {
+    return (TDEHTMLSettings::KJSWindowMovePolicy)window_move;
   }
 
   /**
@@ -136,8 +136,8 @@ public:
    * This will return an illegal value if isWindowFocusPolicyInherited is
    * true.
    */
-  KHTMLSettings::KJSWindowFocusPolicy windowFocusPolicy() const {
-    return (KHTMLSettings::KJSWindowFocusPolicy)window_focus;
+  TDEHTMLSettings::KJSWindowFocusPolicy windowFocusPolicy() const {
+    return (TDEHTMLSettings::KJSWindowFocusPolicy)window_focus;
   }
 
   /**
@@ -152,8 +152,8 @@ public:
    * This will return an illegal value if isWindowStatusPolicyInherited is
    * true.
    */
-  KHTMLSettings::KJSWindowStatusPolicy windowStatusPolicy() const {
-    return (KHTMLSettings::KJSWindowStatusPolicy)window_status;
+  TDEHTMLSettings::KJSWindowStatusPolicy windowStatusPolicy() const {
+    return (TDEHTMLSettings::KJSWindowStatusPolicy)window_status;
   }
 
   /**
@@ -170,15 +170,15 @@ public:
   virtual void defaults();
 
 private:
-  // one of KHTMLSettings::KJSWindowOpenPolicy or INHERIT_POLICY
+  // one of TDEHTMLSettings::KJSWindowOpenPolicy or INHERIT_POLICY
   unsigned int window_open;
-  // one of KHTMLSettings::KJSWindowResizePolicy or INHERIT_POLICY
+  // one of TDEHTMLSettings::KJSWindowResizePolicy or INHERIT_POLICY
   unsigned int window_resize;
-  // one of KHTMLSettings::KJSWindowMovePolicy or INHERIT_POLICY
+  // one of TDEHTMLSettings::KJSWindowMovePolicy or INHERIT_POLICY
   unsigned int window_move;
-  // one of KHTMLSettings::KJSWindowFocusPolicy or INHERIT_POLICY
+  // one of TDEHTMLSettings::KJSWindowFocusPolicy or INHERIT_POLICY
   unsigned int window_focus;
-  // one of KHTMLSettings::KJSWindowStatusPolicy or INHERIT_POLICY
+  // one of TDEHTMLSettings::KJSWindowStatusPolicy or INHERIT_POLICY
   unsigned int window_status;
 
   friend class JSPoliciesFrame;	// for changing policies

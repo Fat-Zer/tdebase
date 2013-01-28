@@ -182,16 +182,16 @@ void JSDomainListView::updateDomainListLegacy(const TQStringList &domainConfig)
     for (TQStringList::ConstIterator it = domainConfig.begin();
          it != domainConfig.end(); ++it) {
       TQString domain;
-      KHTMLSettings::KJavaScriptAdvice javaAdvice;
-      KHTMLSettings::KJavaScriptAdvice javaScriptAdvice;
-      KHTMLSettings::splitDomainAdvice(*it, domain, javaAdvice, javaScriptAdvice);
-      if (javaScriptAdvice != KHTMLSettings::KJavaScriptDunno) {
+      TDEHTMLSettings::KJavaScriptAdvice javaAdvice;
+      TDEHTMLSettings::KJavaScriptAdvice javaScriptAdvice;
+      TDEHTMLSettings::splitDomainAdvice(*it, domain, javaAdvice, javaScriptAdvice);
+      if (javaScriptAdvice != TDEHTMLSettings::KJavaScriptDunno) {
         TQListViewItem *index =
           new TQListViewItem( domainSpecificLV, domain,
-                i18n(KHTMLSettings::adviceToStr(javaScriptAdvice)) );
+                i18n(TDEHTMLSettings::adviceToStr(javaScriptAdvice)) );
 
         pol.setDomain(domain);
-        pol.setFeatureEnabled(javaScriptAdvice != KHTMLSettings::KJavaScriptReject);
+        pol.setFeatureEnabled(javaScriptAdvice != TDEHTMLSettings::KJavaScriptReject);
         domainPolicies[index] = new JSPolicies(pol);
       }
     }

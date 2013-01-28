@@ -1,7 +1,7 @@
 
 When making changes to nsplugin.cpp or related areas, please try to test as
 many, if not all of the following plugins before and after the changes.  It
-is also useful to test in embedded mode in KHTML, as well as with kfmclient
+is also useful to test in embedded mode in TDEHTML, as well as with kfmclient
 loading it into a clean konqueror pane.
 
 LiveConnect is not particularily supported, and probably never will be.  Most

@@ -296,14 +296,14 @@ void JavaDomainListView::updateDomainListLegacy(const TQStringList &domainConfig
           it != domainConfig.end(); ++it)
     {
         TQString domain;
-        KHTMLSettings::KJavaScriptAdvice javaAdvice;
-        KHTMLSettings::KJavaScriptAdvice javaScriptAdvice;
-        KHTMLSettings::splitDomainAdvice(*it, domain, javaAdvice, javaScriptAdvice);
-	if (javaAdvice != KHTMLSettings::KJavaScriptDunno) {
+        TDEHTMLSettings::KJavaScriptAdvice javaAdvice;
+        TDEHTMLSettings::KJavaScriptAdvice javaScriptAdvice;
+        TDEHTMLSettings::splitDomainAdvice(*it, domain, javaAdvice, javaScriptAdvice);
+	if (javaAdvice != TDEHTMLSettings::KJavaScriptDunno) {
           TQListViewItem* index = new TQListViewItem( domainSpecificLV, domain,
-                                                  i18n(KHTMLSettings::adviceToStr(javaAdvice))  );
+                                                  i18n(TDEHTMLSettings::adviceToStr(javaAdvice))  );
           pol.setDomain(domain);
-          pol.setFeatureEnabled(javaAdvice != KHTMLSettings::KJavaScriptReject);
+          pol.setFeatureEnabled(javaAdvice != TDEHTMLSettings::KJavaScriptReject);
           domainPolicies[index] = new JavaPolicies(pol);
 	}
     }

@@ -4815,7 +4815,7 @@ void KonqMainWindow::slotPopupMenu( KXMLGUIClient *client, const TQPoint &_globa
       viewURL,
       popupMenuCollection,
       m_pMenuNew,
-      // This parent ensures that if the part destroys itself (e.g. KHTML redirection),
+      // This parent ensures that if the part destroys itself (e.g. TDEHTML redirection),
       // it will close the popupmenu
       currentView->part()->widget(),
       kpf,

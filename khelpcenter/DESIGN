@@ -220,9 +220,9 @@ regexp' or 'Search case sensitive'.
 # being represented by a checkable listview item. So, we just let the user
 # enter a term, replace the \{@} placeholder in the URIs specified in the
 # selected .desktop files with that term, send out a request via KIO and show
-# the results in our KHTMLPart (after all KHC::View is a KHTMLPart already). A
+# the results in our TDEHTMLPart (after all KHC::View is a TDEHTMLPart already). A
 # problem with this: How to display the multiple HTML pages returned by the
-# selected search engines? Using a QSplitter to split multiple KHTMLParts?
+# selected search engines? Using a QSplitter to split multiple TDEHTMLParts?
 # Hmm... just wondered... perhaps we can work around that by not showing the
 # returned HTML data at all but rather use a XSLT script (that is, one XSLT
 # script per web search) which transforms the returned search results into a
@@ -243,8 +243,8 @@ regexp' or 'Search case sensitive'.
 # can nicely drop duplicate hits, for example, or create a list of hits in the
 # sidebar (much like http://www.copernic.com does). After that, we can use
 # another XSLT stylesheet to transform that cleaned XML tree into HTML which
-# we then feed to our KHTMLView. Since we then have one unified output, we don't
-# need to worry about having multiple KHTMLParts, and it's also nice because
+# we then feed to our TDEHTMLView. Since we then have one unified output, we don't
+# need to worry about having multiple TDEHTMLParts, and it's also nice because
 # the user doesn't see which search engine returned which hit.
 
 # A problem with this would be that we cannot tell how a particular search
@@ -274,7 +274,7 @@ regexp' or 'Search case sensitive'.
 
 KHC::View
 ---------
-KHC::View inherits KHTMLPart and does the actual job of showing some sort of
+KHC::View inherits TDEHTMLPart and does the actual job of showing some sort of
 document. Most importantly, it has a slot which passes it a KURL pointing to a
 document to show. KHC::View will invoke kio_help if necessary (if the URL's
 protocol == "help") by itself and otherwise use the plain URL.
@@ -326,7 +326,7 @@ protocol == "help") by itself and otherwise use the plain URL.
 ## demand.
 
 # My perception is that filling the Navigator's listview takes a significant
-# amount of time, just like setting up the KHTML view (loading the stylesheet,
+# amount of time, just like setting up the TDEHTML view (loading the stylesheet,
 # showing the welcome page). We could easily do taht in the background - show
 # the mainwindow, then tell the TreeBuilders to start populating (using a
 # QTimer with a timeout of 0, for a snappy GUI). Since they're collapsed at
@@ -409,7 +409,7 @@ protocol == "help") by itself and otherwise use the plain URL.
 Font Configuration
 ------------------
 
-### Many bug reports on KHelpCenter not honouring KHTML font settings,
+### Many bug reports on KHelpCenter not honouring TDEHTML font settings,
 ### which is odd, because the stylesheet is intentionally loose,
 ### specifying only "sans-serif" as the font face.
 
@@ -423,7 +423,7 @@ Font Configuration
 
 ### Or, fix whatever is the reason KHC doesn't follow the rules.  It could
 ### be encoding related, the help pages specify utf-8 as the encoding, and
-### previous incarnations of the KHTML settings allowed fonts set on a 
+### previous incarnations of the TDEHTML settings allowed fonts set on a 
 ### per-encoding basis (at which time, this was apparently working, the bug 
 ### reports dropped off, and only returned post KDE 3.0
 

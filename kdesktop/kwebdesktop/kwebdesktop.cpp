@@ -154,7 +154,7 @@ KParts::ReadOnlyPart* KWebDesktop::createPart( const TQString& mimeType )
         return 0;
     if ( mime->is( "text/html" ) || mime->is( "text/xml" ) || mime->is( "application/xhtml+xml" ) )
     {
-        KHTMLPart* htmlPart = new KHTMLPart;
+        TDEHTMLPart* htmlPart = new TDEHTMLPart;
         htmlPart->widget()->resize(m_width,m_height);
 
         htmlPart->setMetaRefreshEnabled(false);

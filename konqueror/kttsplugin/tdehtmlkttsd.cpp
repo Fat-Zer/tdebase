@@ -33,7 +33,7 @@
 #include <dcopclient.h>
 #include <ktrader.h>
 
-KHTMLPluginKTTSD::KHTMLPluginKTTSD( TQObject* parent, const char* name, const TQStringList& )
+TDEHTMLPluginKTTSD::TDEHTMLPluginKTTSD( TQObject* parent, const char* name, const TQStringList& )
     : Plugin( parent, name )
 {
     // If KTTSD is not installed, hide action.
@@ -46,17 +46,17 @@ KHTMLPluginKTTSD::KHTMLPluginKTTSD( TQObject* parent, const char* name, const TQ
             actionCollection(), "tools_kttsd" );
     }
     else
-        kdDebug() << "KHTMLPLuginKTTSD::KHTMLPluginKTTSD: KTrader did not find KTTSD." << endl;
+        kdDebug() << "TDEHTMLPLuginKTTSD::TDEHTMLPluginKTTSD: KTrader did not find KTTSD." << endl;
 }
 
-KHTMLPluginKTTSD::~KHTMLPluginKTTSD()
+TDEHTMLPluginKTTSD::~TDEHTMLPluginKTTSD()
 {
 }
 
-void KHTMLPluginKTTSD::slotReadOut()
+void TDEHTMLPluginKTTSD::slotReadOut()
 {
-    // The parent is assumed to be a KHTMLPart
-    if ( !parent()->inherits("KHTMLPart") )
+    // The parent is assumed to be a TDEHTMLPart
+    if ( !parent()->inherits("TDEHTMLPart") )
        TQMessageBox::warning( 0, i18n( "Cannot Read source" ),
                                 i18n( "You cannot read anything except web pages with\n"
                                       "this plugin, sorry." ));
@@ -91,7 +91,7 @@ void KHTMLPluginKTTSD::slotReadOut()
             reply >> supportsXhtml;
         }
 
-        KHTMLPart *part = (KHTMLPart *) parent();
+        TDEHTMLPart *part = (TDEHTMLPart *) parent();
 
         TQString query;
         if (supportsXhtml)
@@ -116,7 +116,7 @@ void KHTMLPluginKTTSD::slotReadOut()
             else
                 query = part->htmlDocument().body().innerText().string();
         }
-        // kdDebug() << "KHTMLPluginKTTSD::slotReadOut: query = " << query << endl;
+        // kdDebug() << "TDEHTMLPluginKTTSD::slotReadOut: query = " << query << endl;
 
         dataBuf.at(0);  // reset data
         arg << query << "";
@@ -133,6 +133,6 @@ void KHTMLPluginKTTSD::slotReadOut()
     }
 }
 
-K_EXPORT_COMPONENT_FACTORY( libtdehtmlkttsdplugin, KGenericFactory<KHTMLPluginKTTSD>("tdehtmlkttsd") )
+K_EXPORT_COMPONENT_FACTORY( libtdehtmlkttsdplugin, KGenericFactory<TDEHTMLPluginKTTSD>("tdehtmlkttsd") )
 
 #include "tdehtmlkttsd.moc"

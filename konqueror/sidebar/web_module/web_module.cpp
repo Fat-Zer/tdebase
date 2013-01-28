@@ -35,7 +35,7 @@
 KonqSideBarWebModule::KonqSideBarWebModule(TDEInstance *instance, TQObject *parent, TQWidget *widgetParent, TQString &desktopName, const char* name)
 	: KonqSidebarPlugin(instance, parent, widgetParent, desktopName, name)
 {
-	_htmlPart = new KHTMLSideBar(universalMode());
+	_htmlPart = new TDEHTMLSideBar(universalMode());
 	connect(_htmlPart, TQT_SIGNAL(reload()), this, TQT_SLOT(reload()));
 	connect(_htmlPart, TQT_SIGNAL(completed()), this, TQT_SLOT(pageLoaded()));
 	connect(_htmlPart,

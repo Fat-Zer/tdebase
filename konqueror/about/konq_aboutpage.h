@@ -4,7 +4,7 @@
 #include <tdeparts/factory.h>
 #include <tdehtml_part.h>
 
-class KHTMLPart;
+class TDEHTMLPart;
 class TDEInstance;
 
 class KonqAboutPageFactory : public KParts::Factory
@@ -32,7 +32,7 @@ private:
     static TQString *s_launch_html, *s_intro_html, *s_specs_html, *s_tips_html, *s_plugins_html;
 };
 
-class KonqAboutPage : public KHTMLPart
+class KonqAboutPage : public TDEHTMLPart
 {
     Q_OBJECT
 public:
@@ -54,7 +54,7 @@ protected:
 private:
     void serve( const TQString&, const TQString& );
 
-    KHTMLPart *m_doc;
+    TDEHTMLPart *m_doc;
     //KonqMainWindow *m_mainWindow;
     TQString m_htmlDoc;
     TQString m_what;

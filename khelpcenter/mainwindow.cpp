@@ -90,7 +90,7 @@ MainWindow::MainWindow()
 {
     mSplitter = new TQSplitter( this );
 
-    mDoc = new View( mSplitter, 0, TQT_TQOBJECT(this), 0, KHTMLPart::DefaultGUI, actionCollection() );
+    mDoc = new View( mSplitter, 0, TQT_TQOBJECT(this), 0, TDEHTMLPart::DefaultGUI, actionCollection() );
     connect( mDoc, TQT_SIGNAL( setWindowCaption( const TQString & ) ),
              TQT_SLOT( setCaption( const TQString & ) ) );
     connect( mDoc, TQT_SIGNAL( setStatusBarText( const TQString & ) ),
@@ -135,7 +135,7 @@ MainWindow::MainWindow()
       TDEConfigGroupSaver groupSaver( cfg, "General" );
       if ( cfg->readBoolEntry( "UseKonqSettings", true ) ) {
         TDEConfig konqCfg( "konquerorrc" );
-        const_cast<KHTMLSettings *>( mDoc->settings() )->init( &konqCfg );
+        const_cast<TDEHTMLSettings *>( mDoc->settings() )->init( &konqCfg );
       }
       const int zoomFactor = cfg->readNumEntry( "Font zoom factor", 100 );
       mDoc->setZoomFactor( zoomFactor );

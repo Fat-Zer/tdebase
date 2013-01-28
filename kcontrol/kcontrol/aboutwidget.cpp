@@ -81,7 +81,7 @@ AboutWidget::AboutWidget(TQWidget *parent , const char *name, TQListViewItem* ca
 
     // set qwhatsthis help
     TQWhatsThis::add(this, i18n(intro_text));
-    _viewer = new KHTMLPart( this, "_viewer" );
+    _viewer = new TDEHTMLPart( this, "_viewer" );
     _viewer->widget()->setSizePolicy( TQSizePolicy::Ignored, TQSizePolicy::Ignored );
     connect( _viewer->browserExtension(),
              TQT_SIGNAL(openURLRequest(const KURL&, const KParts::URLArgs&)),

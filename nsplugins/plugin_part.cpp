@@ -278,9 +278,9 @@ bool PluginPart::openURL(const KURL &url)
 
             if (!name.isEmpty()) {
                 // hack to pass view mode from tdehtml
-                if ( name=="__KHTML__PLUGINEMBED" ) {
+                if ( name=="__TDEHTML__PLUGINEMBED" ) {
                     embed = true;
-                    kdDebug(1432) << "__KHTML__PLUGINEMBED found" << endl;
+                    kdDebug(1432) << "__TDEHTML__PLUGINEMBED found" << endl;
                 } else {
                     argn << name;
                     argv << value;

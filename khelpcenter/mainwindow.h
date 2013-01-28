@@ -13,7 +13,7 @@
 #include "navigator.h"
 #include "glossary.h"
 
-class KHTMLPart;
+class TDEHTMLPart;
 class TQSplitter;
 
 class LogDialog;

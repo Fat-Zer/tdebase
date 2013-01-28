@@ -33,14 +33,14 @@ class TDEProcess;
 class KLanguageCombo;
 class KURLRequester;
 
-class KHTMLSearchConfig : public TDECModule
+class TDEHTMLSearchConfig : public TDECModule
 {
   Q_OBJECT
 
 public:
 
-  KHTMLSearchConfig(TQWidget *parent = 0L, const char *name = 0L);
-  virtual ~KHTMLSearchConfig();
+  TDEHTMLSearchConfig(TQWidget *parent = 0L, const char *name = 0L);
+  virtual ~TDEHTMLSearchConfig();
   
   void load();
   void save();

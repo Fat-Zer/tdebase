@@ -21,8 +21,8 @@
 using namespace KHC;
 
 View::View( TQWidget *parentWidget, const char *widgetName,
-                  TQObject *parent, const char *name, KHTMLPart::GUIProfile prof, KActionCollection *col )
-    : KHTMLPart( parentWidget, widgetName, parent, name, prof ), mState( Docu ), mActionCollection(col)
+                  TQObject *parent, const char *name, TDEHTMLPart::GUIProfile prof, KActionCollection *col )
+    : TDEHTMLPart( parentWidget, widgetName, parent, name, prof ), mState( Docu ), mActionCollection(col)
 {
     setJScriptEnabled(false);
     setJavaEnabled(false);
@@ -73,21 +73,21 @@ bool View::openURL( const KURL &url )
         return true;
     }
     mState = Docu;
-    return KHTMLPart::openURL( url );
+    return TDEHTMLPart::openURL( url );
 }
 
 void View::saveState( TQDataStream &stream )
 {
     stream << mState;
     if ( mState == Docu )
-        KHTMLPart::saveState( stream );
+        TDEHTMLPart::saveState( stream );
 }
 
 void View::restoreState( TQDataStream &stream )
 {
     stream >> mState;
     if ( mState == Docu )
-        KHTMLPart::restoreState( stream );
+        TDEHTMLPart::restoreState( stream );
     else if ( mState == About )
         showAboutPage();
 }
@@ -327,13 +327,13 @@ bool View::eventFilter( TQObject *o, TQEvent *e )
 {
   if ( e->type() != TQEvent::KeyPress ||
        htmlDocument().links().length() == 0 )
-    return KHTMLPart::eventFilter( o, e );
+    return TDEHTMLPart::eventFilter( o, e );
 
   TQKeyEvent *ke = TQT_TQKEYEVENT( e );
   if ( ke->state() & TQt::ShiftButton && ke->key() == Key_Space ) {
     // If we're on the first page, it does not make sense to go back.
     if ( baseURL().path().endsWith( "/index.html" ) )
-      return KHTMLPart::eventFilter( o, e );
+      return TDEHTMLPart::eventFilter( o, e );
 
     const TQScrollBar * const scrollBar = view()->verticalScrollBar();
     if ( scrollBar->value() == scrollBar->minValue() ) {
@@ -347,7 +347,7 @@ bool View::eventFilter( TQObject *o, TQEvent *e )
         return true;
     }
   }
-  return KHTMLPart::eventFilter( o, e );
+  return TDEHTMLPart::eventFilter( o, e );
 }
 
 KURL View::urlFromLinkNode( const DOM::Node &n ) const
@@ -374,7 +374,7 @@ KURL View::urlFromLinkNode( const DOM::Node &n ) const
 
 void View::slotReload( const KURL &url )
 {
-  const_cast<KHTMLSettings *>( settings() )->init( kapp->config() );
+  const_cast<TDEHTMLSettings *>( settings() )->init( kapp->config() );
   KParts::URLArgs args = browserExtension()->urlArgs();
   args.reload = true;
   browserExtension()->setURLArgs( args );

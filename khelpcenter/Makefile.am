@@ -13,7 +13,7 @@ khc_indexbuilder_SOURCES = khc_indexbuilder.cpp
 tdeinit_LTLIBRARIES = khelpcenter.la
 
 khelpcenter_la_LDFLAGS = $(all_libraries) -module $(KDE_PLUGIN)
-khelpcenter_la_LIBADD = $(LIB_KHTML)
+khelpcenter_la_LIBADD = $(LIB_TDEHTML)
 khelpcenter_la_SOURCES = navigator.cpp \
 	navigatoritem.cpp navigatorappitem.cpp view.cpp \
 	searchwidget.cpp searchengine.cpp \

@@ -54,23 +54,23 @@ void JSPolicies::load() {
 //  enableDebugOutputCB->setChecked( m_pConfig->readBoolEntry("EnableJSDebugOutput") );
   key = prefix + "WindowOpenPolicy";
   window_open = config->readUnsignedNumEntry(key,
-  	is_global ? KHTMLSettings::KJSWindowOpenSmart : INHERIT_POLICY);
+  	is_global ? TDEHTMLSettings::KJSWindowOpenSmart : INHERIT_POLICY);
 
   key = prefix + "WindowResizePolicy";
   window_resize = config->readUnsignedNumEntry(key,
-  	is_global ? KHTMLSettings::KJSWindowResizeAllow : INHERIT_POLICY);
+  	is_global ? TDEHTMLSettings::KJSWindowResizeAllow : INHERIT_POLICY);
 
   key = prefix + "WindowMovePolicy";
   window_move = config->readUnsignedNumEntry(key,
-  	is_global ? KHTMLSettings::KJSWindowMoveAllow : INHERIT_POLICY);
+  	is_global ? TDEHTMLSettings::KJSWindowMoveAllow : INHERIT_POLICY);
 
   key = prefix + "WindowFocusPolicy";
   window_focus = config->readUnsignedNumEntry(key,
-  	is_global ? KHTMLSettings::KJSWindowFocusAllow : INHERIT_POLICY);
+  	is_global ? TDEHTMLSettings::KJSWindowFocusAllow : INHERIT_POLICY);
 
   key = prefix + "WindowStatusPolicy";
   window_status = config->readUnsignedNumEntry(key,
-  	is_global ? KHTMLSettings::KJSWindowStatusAllow : INHERIT_POLICY);
+  	is_global ? TDEHTMLSettings::KJSWindowStatusAllow : INHERIT_POLICY);
 }
 
 void JSPolicies::defaults() {
@@ -79,11 +79,11 @@ void JSPolicies::defaults() {
 //  enableJavaScriptDebugCB->setChecked( false );
 //  js_popup->setButton(0);
  // enableDebugOutputCB->setChecked( false );
-  window_open = is_global ? KHTMLSettings::KJSWindowOpenSmart : INHERIT_POLICY;
-  window_resize = is_global ? KHTMLSettings::KJSWindowResizeAllow : INHERIT_POLICY;
-  window_move = is_global ? KHTMLSettings::KJSWindowMoveAllow : INHERIT_POLICY;
-  window_focus = is_global ? KHTMLSettings::KJSWindowFocusAllow : INHERIT_POLICY;
-  window_status = is_global ? KHTMLSettings::KJSWindowStatusAllow : INHERIT_POLICY;
+  window_open = is_global ? TDEHTMLSettings::KJSWindowOpenSmart : INHERIT_POLICY;
+  window_resize = is_global ? TDEHTMLSettings::KJSWindowResizeAllow : INHERIT_POLICY;
+  window_move = is_global ? TDEHTMLSettings::KJSWindowMoveAllow : INHERIT_POLICY;
+  window_focus = is_global ? TDEHTMLSettings::KJSWindowFocusAllow : INHERIT_POLICY;
+  window_status = is_global ? TDEHTMLSettings::KJSWindowStatusAllow : INHERIT_POLICY;
 }
 
 void JSPolicies::save() {
@@ -163,19 +163,19 @@ JSPoliciesFrame::JSPoliciesFrame(JSPolicies *policies, const TQString &title,
 
   policy_btn = new TQRadioButton(i18n("Allow"), this);
   TQWhatsThis::add(policy_btn,i18n("Accept all popup window requests."));
-  js_popup->insert(policy_btn,KHTMLSettings::KJSWindowOpenAllow);
+  js_popup->insert(policy_btn,TDEHTMLSettings::KJSWindowOpenAllow);
   this_layout->addWidget(policy_btn,0,colIdx++);
   this_layout->addItem(new TQSpacerItem(10,0),0,colIdx++);
 
   policy_btn = new TQRadioButton(i18n("Ask"), this);
   TQWhatsThis::add(policy_btn,i18n("Prompt every time a popup window is requested."));
-  js_popup->insert(policy_btn,KHTMLSettings::KJSWindowOpenAsk);
+  js_popup->insert(policy_btn,TDEHTMLSettings::KJSWindowOpenAsk);
   this_layout->addWidget(policy_btn,0,colIdx++);
   this_layout->addItem(new TQSpacerItem(10,0),0,colIdx++);
 
   policy_btn = new TQRadioButton(i18n("Deny"), this);
   TQWhatsThis::add(policy_btn,i18n("Reject all popup window requests."));
-  js_popup->insert(policy_btn,KHTMLSettings::KJSWindowOpenDeny);
+  js_popup->insert(policy_btn,TDEHTMLSettings::KJSWindowOpenDeny);
   this_layout->addWidget(policy_btn,0,colIdx++);
   this_layout->addItem(new TQSpacerItem(10,0),0,colIdx++);
 
@@ -183,7 +183,7 @@ JSPoliciesFrame::JSPoliciesFrame(JSPolicies *policies, const TQString &title,
   TQWhatsThis::add(policy_btn, i18n("Accept popup window requests only when "
                                    "links are activated through an explicit "
                                    "mouse click or keyboard operation."));
-  js_popup->insert(policy_btn,KHTMLSettings::KJSWindowOpenSmart);
+  js_popup->insert(policy_btn,TDEHTMLSettings::KJSWindowOpenSmart);
   this_layout->addWidget(policy_btn,0,colIdx++);
   this_layout->addItem(new TQSpacerItem(10,0),0,colIdx++);
 
@@ -218,7 +218,7 @@ JSPoliciesFrame::JSPoliciesFrame(JSPolicies *policies, const TQString &title,
 
   policy_btn = new TQRadioButton(i18n("Allow"), this);
   TQWhatsThis::add(policy_btn,i18n("Allow scripts to change the window size."));
-  js_resize->insert(policy_btn,KHTMLSettings::KJSWindowResizeAllow);
+  js_resize->insert(policy_btn,TDEHTMLSettings::KJSWindowResizeAllow);
   this_layout->addWidget(policy_btn,1,colIdx++);
   this_layout->addItem(new TQSpacerItem(10,0),0,colIdx++);
 
@@ -226,7 +226,7 @@ JSPoliciesFrame::JSPoliciesFrame(JSPolicies *policies, const TQString &title,
   TQWhatsThis::add( policy_btn,i18n("Ignore attempts of scripts to change the window size. "
   				"The web page will <i>think</i> it changed the "
 				"size but the actual window is not affected."));
-  js_resize->insert(policy_btn,KHTMLSettings::KJSWindowResizeIgnore);
+  js_resize->insert(policy_btn,TDEHTMLSettings::KJSWindowResizeIgnore);
   this_layout->addWidget(policy_btn,1,colIdx++);
   this_layout->addItem(new TQSpacerItem(10,0),0,colIdx++);
 
@@ -256,7 +256,7 @@ JSPoliciesFrame::JSPoliciesFrame(JSPolicies *policies, const TQString &title,
 
   policy_btn = new TQRadioButton(i18n("Allow"), this);
   TQWhatsThis::add(policy_btn,i18n("Allow scripts to change the window position."));
-  js_move->insert(policy_btn,KHTMLSettings::KJSWindowMoveAllow);
+  js_move->insert(policy_btn,TDEHTMLSettings::KJSWindowMoveAllow);
   this_layout->addWidget(policy_btn,2,colIdx++);
   this_layout->addItem(new TQSpacerItem(10,0),0,colIdx++);
 
@@ -264,7 +264,7 @@ JSPoliciesFrame::JSPoliciesFrame(JSPolicies *policies, const TQString &title,
   TQWhatsThis::add(policy_btn,i18n("Ignore attempts of scripts to change the window position. "
   				"The web page will <i>think</i> it moved the "
 				"window but the actual position is not affected."));
-  js_move->insert(policy_btn,KHTMLSettings::KJSWindowMoveIgnore);
+  js_move->insert(policy_btn,TDEHTMLSettings::KJSWindowMoveIgnore);
   this_layout->addWidget(policy_btn,2,colIdx++);
   this_layout->addItem(new TQSpacerItem(10,0),0,colIdx++);
 
@@ -294,7 +294,7 @@ JSPoliciesFrame::JSPoliciesFrame(JSPolicies *policies, const TQString &title,
 
   policy_btn = new TQRadioButton(i18n("Allow"), this);
   TQWhatsThis::add( policy_btn,i18n("Allow scripts to focus the window.") );
-  js_focus->insert(policy_btn,KHTMLSettings::KJSWindowFocusAllow);
+  js_focus->insert(policy_btn,TDEHTMLSettings::KJSWindowFocusAllow);
   this_layout->addWidget(policy_btn,3,colIdx++);
   this_layout->addItem(new TQSpacerItem(10,0),0,colIdx++);
 
@@ -303,7 +303,7 @@ JSPoliciesFrame::JSPoliciesFrame(JSPolicies *policies, const TQString &title,
   				"The web page will <i>think</i> it brought "
 				"the focus to the window but the actual "
 				"focus will remain unchanged.") );
-  js_focus->insert(policy_btn,KHTMLSettings::KJSWindowFocusIgnore);
+  js_focus->insert(policy_btn,TDEHTMLSettings::KJSWindowFocusIgnore);
   this_layout->addWidget(policy_btn,3,colIdx++);
   this_layout->addItem(new TQSpacerItem(10,0),0,colIdx++);
 
@@ -335,7 +335,7 @@ JSPoliciesFrame::JSPoliciesFrame(JSPolicies *policies, const TQString &title,
 
   policy_btn = new TQRadioButton(i18n("Allow"), this);
   TQWhatsThis::add(policy_btn,i18n("Allow scripts to change the text of the status bar."));
-  js_statusbar->insert(policy_btn,KHTMLSettings::KJSWindowStatusAllow);
+  js_statusbar->insert(policy_btn,TDEHTMLSettings::KJSWindowStatusAllow);
   this_layout->addWidget(policy_btn,4,colIdx++);
   this_layout->addItem(new TQSpacerItem(10,0),0,colIdx++);
 
@@ -344,7 +344,7 @@ JSPoliciesFrame::JSPoliciesFrame(JSPolicies *policies, const TQString &title,
   				"The web page will <i>think</i> it changed "
 				"the text but the actual text will remain "
 				"unchanged.") );
-  js_statusbar->insert(policy_btn,KHTMLSettings::KJSWindowStatusIgnore);
+  js_statusbar->insert(policy_btn,TDEHTMLSettings::KJSWindowStatusIgnore);
   this_layout->addWidget(policy_btn,4,colIdx++);
   this_layout->addItem(new TQSpacerItem(10,0),0,colIdx++);
 

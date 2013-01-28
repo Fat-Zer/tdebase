@@ -23,7 +23,7 @@
 
 #include <tdeio/thumbcreator.h>
 
-class KHTMLPart;
+class TDEHTMLPart;
 
 class HTMLCreator : public TQObject, public ThumbCreator
 {
@@ -41,7 +41,7 @@ private slots:
     void slotCompleted();
 
 private:
-    KHTMLPart *m_html;
+    TDEHTMLPart *m_html;
 };
 
 #endif

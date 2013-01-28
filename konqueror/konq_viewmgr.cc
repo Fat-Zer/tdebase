@@ -1460,7 +1460,7 @@ void KonqViewManager::loadItem( TDEConfig &cfg, KonqFrameContainerBase *parent,
     TQString serviceType;
     TQString serviceName;
     if ( name == "empty" ) {
-        // An empty profile is an empty KHTML part. Makes all KHTML actions available, avoids crashes,
+        // An empty profile is an empty TDEHTML part. Makes all TDEHTML actions available, avoids crashes,
         // makes it easy to DND a URL onto it, and makes it fast to load a website from there.
         serviceType = "text/html";
         serviceName = "html";

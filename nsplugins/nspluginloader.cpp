@@ -75,7 +75,7 @@ void NSPluginInstance::init(const TQCString& app, const TQCString& obj)
         _button = 0L;
         // Protection against repeated NPSetWindow() - Flash v9,0,115,0 doesn't handle
         // repeated NPSetWindow() calls properly, which happens when NSPluginInstance is first
-        // shown and then resized. Which is what happens with KHTML. Therefore use 'shown'
+        // shown and then resized. Which is what happens with TDEHTML. Therefore use 'shown'
         // to detect whether the widget is shown and drop all resize events before that,
         // and use 'resize_count' to wait for that one more resize to come (plus a timer
         // for a possible timeout). Only then flash is actually initialized ('inited' is true).

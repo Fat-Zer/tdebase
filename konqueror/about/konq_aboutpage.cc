@@ -429,7 +429,7 @@ TQString KonqAboutPageFactory::plugins()
 KonqAboutPage::KonqAboutPage( //KonqMainWindow *
                               TQWidget *parentWidget, const char *widgetName,
                               TQObject *parent, const char *name )
-    : KHTMLPart( parentWidget, widgetName, parent, name, BrowserViewGUI )
+    : TDEHTMLPart( parentWidget, widgetName, parent, name, BrowserViewGUI )
 {
     //m_mainWindow = mainWindow;
     TQTextCodec* codec = TDEGlobal::locale()->codecForEncoding();
@@ -552,7 +552,7 @@ void KonqAboutPage::urlSelected( const TQString &url, int button, int state, con
 	return;
     }
 
-    KHTMLPart::urlSelected( url, button, state, target, _args );
+    TDEHTMLPart::urlSelected( url, button, state, target, _args );
 }
 
 #include "konq_aboutpage.moc"

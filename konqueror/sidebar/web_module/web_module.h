@@ -28,18 +28,18 @@
 #include <tqobject.h>
 
 
-// A wrapper for KHTMLPart to make it behave the way we want it to.
-class KHTMLSideBar : public KHTMLPart
+// A wrapper for TDEHTMLPart to make it behave the way we want it to.
+class TDEHTMLSideBar : public TDEHTMLPart
 {
 	Q_OBJECT
 	public:
-		KHTMLSideBar(bool universal) : KHTMLPart() {
+		TDEHTMLSideBar(bool universal) : TDEHTMLPart() {
 			setStatusMessagesEnabled(false);
 			setMetaRefreshEnabled(true);
 			setJavaEnabled(false);
 			setPluginsEnabled(false);
 
-			setFormNotification(KHTMLPart::Only);
+			setFormNotification(TDEHTMLPart::Only);
 			connect(this,
 				TQT_SIGNAL(formSubmitNotification(const char*,const TQString&,const TQByteArray&,const TQString&,const TQString&,const TQString&)),
 				this,
@@ -69,7 +69,7 @@ class KHTMLSideBar : public KHTMLPart
 				TQT_SLOT(showMenu(const TQString&, const TQPoint&)));
 
 		}
-		virtual ~KHTMLSideBar() {}
+		virtual ~TDEHTMLSideBar() {}
 
 	signals:
 		void submitFormRequest(const char*,const TQString&,const TQByteArray&,const TQString&,const TQString&,const TQString&);
@@ -102,7 +102,7 @@ class KHTMLSideBar : public KHTMLPart
 				openURL(completeURL(url));
 				return;
 			}
-			KHTMLPart::urlSelected(url,button,state,_target,args);
+			TDEHTMLPart::urlSelected(url,button,state,_target,args);
 		}
 
 	protected slots:
@@ -149,10 +149,10 @@ class KHTMLSideBar : public KHTMLPart
 				emit submitFormRequest(action, u, formData,
 						target, contentType, boundary);
 			} else if (t.isEmpty() || t == "_self") {
-				setFormNotification(KHTMLPart::NoNotification);
+				setFormNotification(TDEHTMLPart::NoNotification);
 				submitFormProxy(action, u, formData, target,
 						contentType, boundary);
-				setFormNotification(KHTMLPart::Only);
+				setFormNotification(TDEHTMLPart::Only);
 			}
 		}
 	private:
@@ -192,7 +192,7 @@ class KonqSideBarWebModule : public KonqSidebarPlugin
 		void reload();
 
 	private:
-		KHTMLSideBar *_htmlPart;
+		TDEHTMLSideBar *_htmlPart;
 		KURL _url;
 		int reloadTimeout;
 		TQString _desktopName;

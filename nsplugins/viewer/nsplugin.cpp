@@ -1510,7 +1510,7 @@ DCOPRef NSPluginClass::newInstance( TQString url, TQString mimeType, TQ_INT8 emb
 
       if (!strcasecmp(_argn[i], "WIDTH")) width = argv[i].toInt();
       if (!strcasecmp(_argn[i], "HEIGHT")) height = argv[i].toInt();
-      if (!strcasecmp(_argn[i], "__KHTML__PLUGINBASEURL")) baseURL = _argv[i];
+      if (!strcasecmp(_argn[i], "__TDEHTML__PLUGINBASEURL")) baseURL = _argv[i];
       kdDebug(1431) << "argn=" << _argn[i] << " argv=" << _argv[i] << endl;
    }
 

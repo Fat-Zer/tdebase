@@ -5,7 +5,7 @@ METASOURCES = AUTO
 kde_module_LTLIBRARIES = libtdehtmlkttsdplugin.la
 
 libtdehtmlkttsdplugin_la_SOURCES = tdehtmlkttsd.cpp
-libtdehtmlkttsdplugin_la_LIBADD  = $(LIB_KHTML)
+libtdehtmlkttsdplugin_la_LIBADD  = $(LIB_TDEHTML)
 libtdehtmlkttsdplugin_la_LDFLAGS = -module $(KDE_PLUGIN) $(all_libraries)
 
 pluginsdir = $(kde_datadir)/tdehtml/kpartplugins

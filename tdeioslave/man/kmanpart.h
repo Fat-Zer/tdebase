@@ -35,7 +35,7 @@ class TDEAboutData;
 
 /**
  * Man Page Viewer
- * \todo: Why is it needed? Why is KHTML alone not possible?
+ * \todo: Why is it needed? Why is TDEHTML alone not possible?
  */
 class KManPartFactory: public KParts::Factory
 {
@@ -56,7 +56,7 @@ class KManPartFactory: public KParts::Factory
 
 };
 
-class KManPart : public KHTMLPart
+class KManPart : public TDEHTMLPart
 {
    Q_OBJECT
    public:

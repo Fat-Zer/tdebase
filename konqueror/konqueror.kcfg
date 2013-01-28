@@ -205,55 +205,55 @@
 
   <group name="HTML Settings" >
 <!-- appearance.cpp -->
-    <entry key="MediumFontSize" type="Int"> <!--KHTML-->
+    <entry key="MediumFontSize" type="Int"> <!--TDEHTML-->
       <default>12</default>
       <label></label>
       <whatsthis></whatsthis>
       <!-- checked -->
     </entry>
-    <entry key="MinimumFontSize" type="Int"> <!--KHTML-->
+    <entry key="MinimumFontSize" type="Int"> <!--TDEHTML-->
       <default code="true">HTML_DEFAULT_MIN_FONT_SIZE</default>
       <label></label>
       <whatsthis></whatsthis>
       <!-- checked -->
     </entry>
-    <entry key="Fonts" type="StringList"> <!--KHTML-->
+    <entry key="Fonts" type="StringList"> <!--TDEHTML-->
       <label></label>
       <whatsthis></whatsthis>
       <!-- checked -->
     </entry>
-    <entry key="DefaultEncoding" type="String"> <!--KHTML-->
+    <entry key="DefaultEncoding" type="String"> <!--TDEHTML-->
       <default code="true">TQString()</default> 
       <label></label>
       <whatsthis></whatsthis>
       <!-- checked -->
     </entry>
 <!-- htmlopts.cpp -->
-    <entry key="ChangeCursor" type="Bool"> <!--KHTML-->
+    <entry key="ChangeCursor" type="Bool"> <!--TDEHTML-->
       <default>true</default> 
       <label></label>
       <whatsthis></whatsthis>
       <!-- checked -->
     </entry>
-    <entry name="HtmlUnderlineLinks" key="UnderlineLinks" type="Bool"> <!--KHTML-->
+    <entry name="HtmlUnderlineLinks" key="UnderlineLinks" type="Bool"> <!--TDEHTML-->
       <default>true</default> 
       <label></label>
       <whatsthis></whatsthis>
       <!-- checked -->
     </entry>
-    <entry key="HoverLinks" type="Bool"> <!--KHTML-->
+    <entry key="HoverLinks" type="Bool"> <!--TDEHTML-->
       <default>true</default> 
       <label></label>
       <whatsthis></whatsthis>
       <!-- checked -->
     </entry>
-    <entry key="AutoLoadImages" type="Bool"> <!--KHTML-->
+    <entry key="AutoLoadImages" type="Bool"> <!--TDEHTML-->
       <default>true</default> 
       <label></label>
       <whatsthis></whatsthis>
       <!-- checked -->
     </entry>
-    <entry key="ShowAnimations" type="String"> <!--KHTML-->
+    <entry key="ShowAnimations" type="String"> <!--TDEHTML-->
       <label></label>
       <whatsthis></whatsthis>
       <!-- checked -->
@@ -264,13 +264,13 @@
       <whatsthis></whatsthis>
       <!-- checked -->
     </entry>
-    <entry key="FormCompletion" type="Bool"> <!--KHTML-->
+    <entry key="FormCompletion" type="Bool"> <!--TDEHTML-->
       <default>true</default> 
       <label></label>
       <whatsthis></whatsthis>
       <!-- checked -->
     </entry>
-    <entry key="MaxFormCompletionItems" type="Int"> <!--KHTML-->
+    <entry key="MaxFormCompletionItems" type="Int"> <!--TDEHTML-->
       <default>10</default> 
       <label></label>
       <whatsthis></whatsthis>
@@ -284,18 +284,18 @@
       <!-- Can't find writeEntry -->
     </entry>
 <!-- KDELIBS/tdehtml_part.cpp -->
-    <entry key="AutomaticDetectionLanguage" type="Int"> <!--KHTML-->
+    <entry key="AutomaticDetectionLanguage" type="Int"> <!--TDEHTML-->
       <label></label>
       <whatsthis></whatsthis>
     </entry>
 <!-- KDELIBS/tdehtml_settings.cpp -->
-    <entry key="EnforceDefaultCharset" type="Bool"> <!--KHTML-->
+    <entry key="EnforceDefaultCharset" type="Bool"> <!--TDEHTML-->
       <label></label>
       <whatsthis></whatsthis>
       <!-- Can't find writeEntry -->
     </entry>
 <!-- kcmcss.cpp   KDELIBS/tdehtml_settings.cpp -->
-    <entry key="UserStyleSheetEnabled" type="Bool"> <!--KHTML-->
+    <entry key="UserStyleSheetEnabled" type="Bool"> <!--TDEHTML-->
       <label></label>
       <whatsthis></whatsthis>
     </entry>
@@ -324,13 +324,13 @@
 
   <group name="MainView Settings" >
 <!-- htmlopts.cpp --> 
-    <entry key="OpenMiddleClick" type="Bool"> <!--KHTML-->
+    <entry key="OpenMiddleClick" type="Bool"> <!--TDEHTML-->
       <default>true</default> 
       <label></label>
       <whatsthis></whatsthis>
       <!-- checked -->
     </entry>
-    <entry key="BackRightClick" type="Bool"> <!--KHTML-->
+    <entry key="BackRightClick" type="Bool"> <!--TDEHTML-->
       <default>false</default> 
       <label></label>
       <whatsthis></whatsthis>
@@ -414,7 +414,7 @@ PATH_JAVA
       <whatsthis></whatsthis>
       <!-- checked -->
     </entry>
-    <entry key="JavaDomains" type="StringList"> <!--KHTML-->
+    <entry key="JavaDomains" type="StringList"> <!--TDEHTML-->
       <label></label>
       <whatsthis></whatsthis>
       <!-- checked -->
@@ -435,61 +435,61 @@ PATH_JAVA
       <!-- checked -->
     </entry>
 <!-- jsopts.cpp -->
-    <entry key="ECMADomains" type="StringList"> <!--KHTML-->
+    <entry key="ECMADomains" type="StringList"> <!--TDEHTML-->
       <default>true</default>
       <label></label>
       <whatsthis></whatsthis>
       <!-- checked -->
     </entry>
-    <entry key="ECMADomainSettings" type="StringList"> <!--KHTML-->
+    <entry key="ECMADomainSettings" type="StringList"> <!--TDEHTML-->
       <label></label>
       <whatsthis></whatsthis>
       <!-- checked -->
     </entry>
-    <entry key="ReportJavaScriptErrors" type="Bool"> <!--KHTML-->
+    <entry key="ReportJavaScriptErrors" type="Bool"> <!--TDEHTML-->
       <default>false</default> 
       <label></label>
       <whatsthis></whatsthis>
       <!-- checked -->
     </entry>
-    <entry key="EnableJavaScriptDebug" type="Bool"> <!--KHTML-->
+    <entry key="EnableJavaScriptDebug" type="Bool"> <!--TDEHTML-->
       <default>false</default> 
       <label></label>
       <whatsthis></whatsthis>
       <!-- checked -->
     </entry>
 <!-- jspolicies.cpp -->
-    <entry key="EnableJavaScript" type="Bool"> <!--KHTML-->
+    <entry key="EnableJavaScript" type="Bool"> <!--TDEHTML-->
       <label></label>
       <whatsthis></whatsthis>
     </entry>
-    <entry key="WindowOpenPolicy" type="UInt"> <!--KHTML-->
+    <entry key="WindowOpenPolicy" type="UInt"> <!--TDEHTML-->
       <label></label>
       <whatsthis></whatsthis>
     </entry>
-    <entry key="WindowResizePolicy" type="UInt"> <!--KHTML-->
+    <entry key="WindowResizePolicy" type="UInt"> <!--TDEHTML-->
       <label></label>
       <whatsthis></whatsthis>
     </entry>
-    <entry key="WindowMovePolicy" type="UInt"> <!--KHTML-->
+    <entry key="WindowMovePolicy" type="UInt"> <!--TDEHTML-->
       <label></label>
       <whatsthis></whatsthis>
     </entry>
-    <entry key="WindowFocusPolicy" type="UInt"> <!--KHTML-->
+    <entry key="WindowFocusPolicy" type="UInt"> <!--TDEHTML-->
       <label></label>
       <whatsthis></whatsthis>
     </entry>
-    <entry key="WindowStatusPolicy" type="UInt"> <!--KHTML-->
+    <entry key="WindowStatusPolicy" type="UInt"> <!--TDEHTML-->
       <label></label>
       <whatsthis></whatsthis>
     </entry>
 <!-- pluginopts.cpp -->    
-    <entry key="EnablePlugins" type="Bool"> <!--KHTML-->
+    <entry key="EnablePlugins" type="Bool"> <!--TDEHTML-->
       <default>true</default>
       <label></label>
       <whatsthis></whatsthis>
     </entry>
-    <entry key="PluginDomains" type="StringList"> <!--KHTML-->
+    <entry key="PluginDomains" type="StringList"> <!--TDEHTML-->
       <label></label>
       <whatsthis></whatsthis>
     </entry>

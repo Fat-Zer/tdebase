@@ -14,8 +14,8 @@
  ***************************************************************************/
 
 
-#ifndef KHTMLKTTSD_H
-#define KHTMLKTTSD_H
+#ifndef TDEHTMLKTTSD_H
+#define TDEHTMLKTTSD_H
 
 #include <tdeparts/plugin.h>
 
@@ -23,9 +23,9 @@ class KURL;
 class TDEInstance;
 
 /**
- * KHTML KParts Plugin
+ * TDEHTML KParts Plugin
  */
-class KHTMLPluginKTTSD : public KParts::Plugin
+class TDEHTMLPluginKTTSD : public KParts::Plugin
 {
     Q_OBJECT
 public:
@@ -33,12 +33,12 @@ public:
     /**
      * Construct a new KParts plugin.
      */
-    KHTMLPluginKTTSD( TQObject* parent, const char* name, const TQStringList& );
+    TDEHTMLPluginKTTSD( TQObject* parent, const char* name, const TQStringList& );
 
     /**
      * Destructor.
      */
-    virtual ~KHTMLPluginKTTSD();
+    virtual ~TDEHTMLPluginKTTSD();
 public slots:
     void slotReadOut();
 };

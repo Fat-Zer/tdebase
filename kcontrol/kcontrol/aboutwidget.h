@@ -28,7 +28,7 @@ class TDECModuleInfo;
 class TQPixmap;
 class KPixmap;
 class ConfigModule;
-class KHTMLPart;
+class TDEHTMLPart;
 class KURL;
 
 class AboutWidget : public TQHBox
@@ -61,7 +61,7 @@ private:
     TQListViewItem* _category;
     TQString _icon;
     TQString _caption;
-    KHTMLPart *_viewer;
+    TDEHTMLPart *_viewer;
     TQMap<TQString,ConfigModule*> _moduleMap;
 };
 

@@ -32,7 +32,7 @@ textthumbnail_la_LIBADD = $(LIB_KIO) # for kmimetype
 textthumbnail_la_LDFLAGS = $(all_libraries) -module $(KDE_PLUGIN)
 
 htmlthumbnail_la_SOURCES = htmlcreator.cpp
-htmlthumbnail_la_LIBADD = $(LIB_KHTML)
+htmlthumbnail_la_LIBADD = $(LIB_TDEHTML)
 htmlthumbnail_la_LDFLAGS = $(all_libraries) -module $(KDE_PLUGIN)
 
 djvuthumbnail_la_SOURCES = djvucreator.cpp

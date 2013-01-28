@@ -1,6 +1,6 @@
 
 INCLUDES= $(all_includes)
-LDADD = $(LIB_KHTML)
+LDADD = $(LIB_TDEHTML)
 
 bin_PROGRAMS = 	kwebdesktop
 

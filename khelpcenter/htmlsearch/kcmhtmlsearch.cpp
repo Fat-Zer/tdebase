@@ -34,7 +34,7 @@
 #include "kcmhtmlsearch.moc"
 
 
-KHTMLSearchConfig::KHTMLSearchConfig(TQWidget *parent, const char *name)
+TDEHTMLSearchConfig::TDEHTMLSearchConfig(TQWidget *parent, const char *name)
   : TDECModule(parent, name), indexProc(0)
 {
   TQVBoxLayout *vbox = new TQVBoxLayout(this, 5);
@@ -172,7 +172,7 @@ KHTMLSearchConfig::KHTMLSearchConfig(TQWidget *parent, const char *name)
 }
 
 
-void KHTMLSearchConfig::loadLanguages()
+void TDEHTMLSearchConfig::loadLanguages()
 {
   // clear the list
   language->clear();
@@ -198,26 +198,26 @@ void KHTMLSearchConfig::loadLanguages()
 }
 
 
-TQString KHTMLSearchConfig::quickHelp() const
+TQString TDEHTMLSearchConfig::quickHelp() const
 {
     return i18n( "<h1>Help Index</h1> This configuration module lets you configure the ht://dig engine which can be used for fulltext search in the TDE documentation as well as other system documentation like man and info pages." );
 }
 
 
-void KHTMLSearchConfig::pathSelected(const TQString &)
+void TDEHTMLSearchConfig::pathSelected(const TQString &)
 {
   checkButtons();
 }
 
 
-void KHTMLSearchConfig::checkButtons()
+void TDEHTMLSearchConfig::checkButtons()
 {
 
   delButton->setEnabled(searchPaths->currentItem() >= 0);
 }
 
 
-void KHTMLSearchConfig::addClicked()
+void TDEHTMLSearchConfig::addClicked()
 {
   TQString dir = KFileDialog::getExistingDirectory();
 
@@ -232,7 +232,7 @@ void KHTMLSearchConfig::addClicked()
 }
 
 
-void KHTMLSearchConfig::delClicked()
+void TDEHTMLSearchConfig::delClicked()
 {
   searchPaths->removeItem(searchPaths->currentItem());
   checkButtons();
@@ -240,18 +240,18 @@ void KHTMLSearchConfig::delClicked()
 }
 
 
-KHTMLSearchConfig::~KHTMLSearchConfig()
+TDEHTMLSearchConfig::~TDEHTMLSearchConfig()
 {
 }
 
 
-void KHTMLSearchConfig::configChanged()
+void TDEHTMLSearchConfig::configChanged()
 {
   emit changed(true);
 }
 
 
-void KHTMLSearchConfig::load()
+void TDEHTMLSearchConfig::load()
 {
   TDEConfig *config = new TDEConfig("khelpcenterrc", true);
 
@@ -279,7 +279,7 @@ void KHTMLSearchConfig::load()
 }
 
 
-void KHTMLSearchConfig::save()
+void TDEHTMLSearchConfig::save()
 {
   TDEConfig *config= new TDEConfig("khelpcenterrc", false);
 
@@ -308,7 +308,7 @@ void KHTMLSearchConfig::save()
 }
 
 
-void KHTMLSearchConfig::defaults()
+void TDEHTMLSearchConfig::defaults()
 {
   htdigBin->lineEdit()->setText(kapp->dirs()->findExe("htdig"));
   htsearchBin->lineEdit()->setText(kapp->dirs()->findExe("htsearch"));
@@ -326,13 +326,13 @@ void KHTMLSearchConfig::defaults()
 }
 
 
-void KHTMLSearchConfig::urlClicked(const TQString &url)
+void TDEHTMLSearchConfig::urlClicked(const TQString &url)
 {
   kapp->invokeBrowser(url);
 }
 
 
-void KHTMLSearchConfig::generateIndex()
+void TDEHTMLSearchConfig::generateIndex()
 {
   save();
 
@@ -354,7 +354,7 @@ void KHTMLSearchConfig::generateIndex()
 }
 
 
-void KHTMLSearchConfig::indexTerminated(TDEProcess *)
+void TDEHTMLSearchConfig::indexTerminated(TDEProcess *)
 {
   runButton->setEnabled(true);
 }
@@ -365,6 +365,6 @@ extern "C"
   KDE_EXPORT TDECModule *create_htmlsearch(TQWidget *parent, const char *name)
   {
     TDEGlobal::locale()->insertCatalogue("kcmhtmlsearch");
-    return new KHTMLSearchConfig(parent, name);
+    return new TDEHTMLSearchConfig(parent, name);
   };
 }

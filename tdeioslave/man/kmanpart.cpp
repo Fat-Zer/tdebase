@@ -70,7 +70,7 @@ TDEInstance* KManPartFactory::instance()
 
 
 KManPart::KManPart( TQWidget * parent, const char * name )
-: KHTMLPart( parent, name )
+: TDEHTMLPart( parent, name )
 ,m_job(0)
 {
    TDEInstance * instance = new TDEInstance( "kmanpart" );
