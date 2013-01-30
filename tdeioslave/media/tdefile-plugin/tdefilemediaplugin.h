@@ -17,8 +17,8 @@
    Boston, MA 02110-1301, USA.
 */
 
-#ifndef _KFILE_MEDIA_H_
-#define _KFILE_MEDIA_H_
+#ifndef _TDEFILE_MEDIA_H_
+#define _TDEFILE_MEDIA_H_
 
 #include <tdefilemetainfo.h>
 #include <kurl.h>

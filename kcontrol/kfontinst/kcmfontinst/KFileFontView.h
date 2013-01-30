@@ -1,5 +1,5 @@
-#ifndef __KFILE_FONT_VIEW_H__
-#define __KFILE_FONT_VIEW_H__
+#ifndef __TDEFILE_FONT_VIEW_H__
+#define __TDEFILE_FONT_VIEW_H__
 
 ////////////////////////////////////////////////////////////////////////////////
 //

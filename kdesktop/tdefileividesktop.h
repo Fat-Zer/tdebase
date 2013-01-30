@@ -21,8 +21,8 @@
  * Boston, MA 02110-1301, USA.
  */
 
-#ifndef KFILE_IVI_DESKTOP
-#define KFILE_IVI_DESKTOP
+#ifndef TDEFILE_IVI_DESKTOP
+#define TDEFILE_IVI_DESKTOP
 
 #include <tqcolor.h>
 #include <tqpixmap.h>

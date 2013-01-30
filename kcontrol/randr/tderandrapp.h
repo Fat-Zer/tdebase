@@ -16,8 +16,8 @@
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
-#ifndef KRANDRAPP_H
-#define KRANDRAPP_H
+#ifndef TDERANDRAPP_H
+#define TDERANDRAPP_H
 
 #include <tqtimer.h>
 #include <kuniqueapplication.h>

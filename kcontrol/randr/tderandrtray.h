@@ -16,8 +16,8 @@
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
-#ifndef KRANDRTRAY_H
-#define KRANDRTRAY_H
+#ifndef TDERANDRTRAY_H
+#define TDERANDRTRAY_H
 
 #include <tqptrlist.h>
 

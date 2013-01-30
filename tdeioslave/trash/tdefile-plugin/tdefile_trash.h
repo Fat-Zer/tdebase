@@ -18,8 +18,8 @@
  *
  */
 
-#ifndef __KFILE_TRASH_H_
-#define __KFILE_TRASH_H_
+#ifndef __TDEFILE_TRASH_H_
+#define __TDEFILE_TRASH_H_
 
 #include <tdefilemetainfo.h>
 #include "../trashimpl.h"

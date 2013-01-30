@@ -1308,7 +1308,7 @@ StartClient()
 		env = setEnv (env, "TDM_AUTOLOGIN", curuser);
 #if !defined(USE_PAM) && !defined(_AIX) && defined(KERBEROS)
 	if (krbttdefile[0] != '\0')
-		env = setEnv( env, "KRBTKFILE", krbttdefile );
+		env = setEnv( env, "KRBTTDEFILE", krbttdefile );
 #endif
 #ifdef WITH_CONSOLE_KIT
 	if (ck_session_cookie != NULL) {

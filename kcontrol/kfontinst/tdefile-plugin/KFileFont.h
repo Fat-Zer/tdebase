@@ -1,5 +1,5 @@
-#ifndef __KFILE_FONT_H__
-#define __KFILE_FONT_H__
+#ifndef __TDEFILE_FONT_H__
+#define __TDEFILE_FONT_H__
 
 ////////////////////////////////////////////////////////////////////////////////
 //
