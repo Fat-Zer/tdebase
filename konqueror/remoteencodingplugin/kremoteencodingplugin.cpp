@@ -167,7 +167,7 @@ KRemoteEncodingPlugin::slotAboutToShow()
 void
 KRemoteEncodingPlugin::slotItemSelected(int id)
 {
-  TDEConfig config(("kio_" + m_currentURL.protocol() + "rc").latin1());
+  TDEConfig config(("tdeio_" + m_currentURL.protocol() + "rc").latin1());
   TQString host = m_currentURL.host();
 
   if (!m_menu->popupMenu()->isItemChecked(id))
@@ -188,7 +188,7 @@ KRemoteEncodingPlugin::slotDefault()
 {
   // We have no choice but delete all higher domain level
   // settings here since it affects what will be matched.
-  TDEConfig config(("kio_" + m_currentURL.protocol() + "rc").latin1());
+  TDEConfig config(("tdeio_" + m_currentURL.protocol() + "rc").latin1());
 
   TQStringList partList = TQStringList::split('.', m_currentURL.host(), false);
   if (!partList.isEmpty())

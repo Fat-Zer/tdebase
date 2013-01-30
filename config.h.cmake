@@ -57,18 +57,18 @@
 // tdm, kcontrol
 #cmakedefine HAVE_GETIFADDRS 1
 
-// kio_fish
+// tdeio_fish
 #cmakedefine HAVE_STROPTS 1
 #cmakedefine HAVE_LIBUTIL_H 1
 #cmakedefine HAVE_UTIL_H 1
 #cmakedefine HAVE_PTY_H 1
 #cmakedefine HAVE_OPENPTY 1
 
-// kio_man
+// tdeio_man
 #cmakedefine HAVE_UNISTD_H 1
 #cmakedefine HAVE_STRING_H 1
 
-// kio_smtp, ksysguard
+// tdeio_smtp, ksysguard
 #cmakedefine kde_socklen_t @kde_socklen_t@
 
 // tdefile_media

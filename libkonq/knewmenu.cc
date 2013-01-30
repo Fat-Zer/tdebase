@@ -512,7 +512,7 @@ void KNewMenu::slotResult( TDEIO::Job * job )
             }
             else
             {
-                // Normal (local) file. Need to "touch" it, kio_file copied the mtime.
+                // Normal (local) file. Need to "touch" it, tdeio_file copied the mtime.
                 (void) ::utime( TQFile::encodeName( destURL.path() ), 0 );
             }
         }

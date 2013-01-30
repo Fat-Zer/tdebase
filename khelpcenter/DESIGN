@@ -276,7 +276,7 @@ KHC::View
 ---------
 KHC::View inherits TDEHTMLPart and does the actual job of showing some sort of
 document. Most importantly, it has a slot which passes it a KURL pointing to a
-document to show. KHC::View will invoke kio_help if necessary (if the URL's
+document to show. KHC::View will invoke tdeio_help if necessary (if the URL's
 protocol == "help") by itself and otherwise use the plain URL.
 
 # TODO: Things I didn't really think about yet: the interface between the

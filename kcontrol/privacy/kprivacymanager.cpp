@@ -111,7 +111,7 @@ bool KPrivacyManager::clearFormCompletion() const
 bool KPrivacyManager::clearWebCache() const
 {
     TDEProcess process;
-    process << "kio_http_cache_cleaner" << "--clear-all";
+    process << "tdeio_http_cache_cleaner" << "--clear-all";
     return process.start(TDEProcess::DontCare);
 }
 
