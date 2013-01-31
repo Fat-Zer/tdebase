@@ -73,7 +73,7 @@ SchemaEditor::SchemaEditor(TQWidget * parent, const char *name)
     bold.resize(20);
     transparent.resize(20);
     defaultSchema = "";
-    spix = new KSharedPixmap;
+    spix = new TDESharedPixmap;
 
     connect(spix, TQT_SIGNAL(done(bool)), TQT_SLOT(previewLoaded(bool)));
 

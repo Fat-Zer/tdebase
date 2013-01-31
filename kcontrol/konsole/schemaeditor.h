@@ -25,7 +25,7 @@
 #include <kapplication.h>
 #include <tqwidget.h>
 class TQPixmap;
-class KSharedPixmap;
+class TDESharedPixmap;
 
 #include "schemadialog.h"
 
@@ -69,7 +69,7 @@ class SchemaEditor : public SchemaDialog
 	TQMemArray<bool> transparent;
 	TQMemArray<bool> bold;
 	TQPixmap pix;
-	KSharedPixmap *spix;
+	TDESharedPixmap *spix;
 	TQString defaultSchema;	
 	bool loaded;
 	bool schemaLoaded;

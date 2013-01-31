@@ -29,7 +29,7 @@
 #include <tqintdict.h>
 #include <twin.h>
 
-class KSharedPixmap;
+class TDESharedPixmap;
 class KPopupMenu;
 
 class TQPainter;
@@ -101,7 +101,7 @@ protected:
 
   int m_desk;
   TQString m_name;
-  KSharedPixmap *m_bgPixmap;
+  TDESharedPixmap *m_bgPixmap;
   bool m_bgDirty;
   TQPixmap *m_bgSmallPixmap;
   static TQPixmap *m_bgCommonSmallPixmap;

@@ -55,7 +55,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #undef FocusOut
 #endif
 
-KSharedPixmap* KMiniPagerButton::s_commonSharedPixmap;
+TDESharedPixmap* KMiniPagerButton::s_commonSharedPixmap;
 KPixmap* KMiniPagerButton::s_commonBgPixmap;
 
 KMiniPagerButton::KMiniPagerButton(int desk, bool useViewPorts, const TQPoint& viewport,
@@ -257,7 +257,7 @@ void KMiniPagerButton::loadBgPixmap()
     {
         if (!s_commonSharedPixmap)
         {
-            s_commonSharedPixmap = new KSharedPixmap;
+            s_commonSharedPixmap = new TDESharedPixmap;
             connect(s_commonSharedPixmap, TQT_SIGNAL(done(bool)),
                     TQT_SLOT(backgroundLoaded(bool)));
         }
@@ -273,7 +273,7 @@ void KMiniPagerButton::loadBgPixmap()
     {
         if (!m_sharedPixmap)
         {
-            m_sharedPixmap = new KSharedPixmap;
+            m_sharedPixmap = new TDESharedPixmap;
             connect(m_sharedPixmap, TQT_SIGNAL(done(bool)),
                     TQT_SLOT(backgroundLoaded(bool)));
         }

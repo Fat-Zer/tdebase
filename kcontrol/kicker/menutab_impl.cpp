@@ -109,7 +109,7 @@ void MenuTab::load()
 
 void MenuTab::load( bool useDefaults )
 {
-    KSharedConfig::Ptr c = KSharedConfig::openConfig(KickerConfig::the()->configName());
+    TDESharedConfig::Ptr c = TDESharedConfig::openConfig(KickerConfig::the()->configName());
     
     c->setReadDefaults( useDefaults );
 
@@ -201,7 +201,7 @@ void MenuTab::save()
 {
     bool forceRestart = false;
 
-    KSharedConfig::Ptr c = KSharedConfig::openConfig(KickerConfig::the()->configName());
+    TDESharedConfig::Ptr c = TDESharedConfig::openConfig(KickerConfig::the()->configName());
 
     c->setGroup("menus");
 

@@ -67,7 +67,7 @@ private:
 
   TQValueList<TypesListItem *> m_itemsModified;
 
-  KSharedConfig::Ptr m_konqConfig;
+  TDESharedConfig::Ptr m_konqConfig;
 };
 
 #endif

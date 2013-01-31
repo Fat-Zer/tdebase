@@ -995,8 +995,8 @@ void KMenu::fillMenu(KServiceGroup::Ptr&
     bool separatorNeeded = false;
     KServiceGroup::List::ConstIterator it = _list.begin();
 #ifdef KDELIBS_SUSE
-    KSortableValueList<KSharedPtr<KSycocaEntry>,TQCString> slist;
-    KSortableValueList<KSharedPtr<KSycocaEntry>,TQCString> glist;
+    KSortableValueList<TDESharedPtr<KSycocaEntry>,TQCString> slist;
+    KSortableValueList<TDESharedPtr<KSycocaEntry>,TQCString> glist;
     TQMap<TQString,TQString> specialTitle;
     TQMap<TQString,TQString> categoryIcon;
     TQMap<TQString,TQString> shortenedMenuPath;

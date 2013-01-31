@@ -32,7 +32,7 @@
 class TQRect;
 class TQWidget;
 class TQTimer;
-class KSharedPixmap;
+class TDESharedPixmap;
 class KRootBackingData;
 
 /**
@@ -128,7 +128,7 @@ public slots:
     void repaint();
 
     /**
-     * Asks KDesktop to export the desktop background as a KSharedPixmap.
+     * Asks KDesktop to export the desktop background as a TDESharedPixmap.
      * This method uses DCOP to call KBackgroundIface/setExport(int).
      */
     void enableExports();
@@ -152,7 +152,7 @@ protected:
      * applies the fade effect, then sets the target's background, or emits
      * backgroundUpdated(const TQPixmap &) depending on the painting mode.
      */
-    virtual void updateBackground( KSharedPixmap * );
+    virtual void updateBackground( TDESharedPixmap * );
 
 private slots:
     void slotBackgroundChanged(int);
@@ -168,7 +168,7 @@ private:
 
     TQRect m_Rect;
     TQTimer *m_pTimer;
-    KSharedPixmap *m_pPixmap;
+    TDESharedPixmap *m_pPixmap;
     KRootBackingData *d;
 
     void init();

@@ -68,7 +68,7 @@ typedef TQValueList<WId> WindowList;
  * @see TaskManager
  * @see KWinModule
  */
-class KDE_EXPORT Task: public TQObject, public KShared
+class KDE_EXPORT Task: public TQObject, public TDEShared
 {
     Q_OBJECT
     TQ_PROPERTY( TQString visibleIconicName READ visibleIconicName )
@@ -95,7 +95,7 @@ class KDE_EXPORT Task: public TQObject, public KShared
     TQ_PROPERTY( TQPixmap thumbnail READ thumbnail )
 
 public:
-    typedef KSharedPtr<Task> Ptr;
+    typedef TDESharedPtr<Task> Ptr;
     typedef TQValueVector<Task::Ptr> List;
     typedef TQMap<WId, Task::Ptr> Dict;
 
@@ -511,7 +511,7 @@ public:
  *
  * @see TaskManager
  */
-class KDE_EXPORT Startup: public TQObject, public KShared
+class KDE_EXPORT Startup: public TQObject, public TDEShared
 {
     Q_OBJECT
     TQ_PROPERTY( TQString text READ text )
@@ -519,7 +519,7 @@ class KDE_EXPORT Startup: public TQObject, public KShared
     TQ_PROPERTY( TQString icon READ icon )
 
 public:
-    typedef KSharedPtr<Startup> Ptr;
+    typedef TDESharedPtr<Startup> Ptr;
     typedef TQValueVector<Startup::Ptr> List;
 
     Startup( const KStartupInfoId& id, const KStartupInfoData& data, TQObject * parent,

@@ -104,7 +104,7 @@ public slots:
 
 private:
 	/**
-	* Asks KDesktop to export the desktop background as a KSharedPixmap.
+	* Asks KDesktop to export the desktop background as a TDESharedPixmap.
 	* This method uses DCOP to call KBackgroundIface/setExport(int).
 	*/
 	void enableExports();

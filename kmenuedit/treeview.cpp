@@ -187,7 +187,7 @@ TreeView::TreeView( bool controlCenter, KActionCollection *ac, TQWidget *parent,
     m_drag = 0;
 
     //	Read menu format configuration information
-    KSharedConfig::Ptr		pConfig = KSharedConfig::openConfig("kickerrc");
+    TDESharedConfig::Ptr		pConfig = TDESharedConfig::openConfig("kickerrc");
 	
     pConfig->setGroup("menus");
     m_detailedMenuEntries = pConfig->readBoolEntry("DetailedMenuEntries",true);

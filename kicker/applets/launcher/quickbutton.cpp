@@ -96,7 +96,7 @@ QuickURL::QuickURL(const TQString &u)
    if (_service) {
       if (!_service->isValid()) {
          DEBUGSTR << "QuickURL: _service is not valid"<<endl<<flush;
-         // _service is a KShared pointer, don't try to delete it!
+         // _service is a TDEShared pointer, don't try to delete it!
          _service = 0;
       } else {
          DEBUGSTR << "QuickURL: _service='"<<_service<<"' _service->desktopEntryPath()="<<_service->desktopEntryPath()<<endl<<flush;

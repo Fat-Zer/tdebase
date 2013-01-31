@@ -67,7 +67,7 @@ TaskBarContainer::TaskBarContainer( bool enableFrame, TQString configFileOverrid
         globalConfig.copyTo(configFile, &localConfig);
         localConfig.sync();
     }
-    settingsObject = new TaskBarSettings(KSharedConfig::openConfig(configFile));
+    settingsObject = new TaskBarSettings(TDESharedConfig::openConfig(configFile));
 
     setBackgroundOrigin( AncestorOrigin );
 

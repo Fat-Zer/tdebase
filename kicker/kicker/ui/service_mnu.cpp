@@ -114,8 +114,8 @@ void PanelServiceMenu::fillMenu(KServiceGroup::Ptr& _root,
     TQStringList suppressGenericNames = _root->suppressGenericNames();
 
     KServiceGroup::List::ConstIterator it = _list.begin();
-    KSortableValueList<KSharedPtr<KSycocaEntry>,TQCString> slist;
-    KSortableValueList<KSharedPtr<KSycocaEntry>,TQCString> glist;
+    KSortableValueList<TDESharedPtr<KSycocaEntry>,TQCString> slist;
+    KSortableValueList<TDESharedPtr<KSycocaEntry>,TQCString> glist;
     TQMap<TQString,TQString> specialTitle;
     TQMap<TQString,TQString> categoryIcon;
 

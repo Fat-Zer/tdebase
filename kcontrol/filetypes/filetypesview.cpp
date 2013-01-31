@@ -27,7 +27,7 @@
 FileTypesView::FileTypesView(TQWidget *p, const char *name)
   : TDECModule(p, name)
 {
-  m_konqConfig = KSharedConfig::openConfig("konquerorrc", false, false);
+  m_konqConfig = TDESharedConfig::openConfig("konquerorrc", false, false);
 
   setQuickHelp( i18n("<h1>File Associations</h1>"
     " This module allows you to choose which applications are associated"

@@ -103,7 +103,7 @@ void KickerConfig::init()
     TQString configpath = TDEGlobal::dirs()->findResource("config", configname);
     if (configpath.isEmpty())
        configpath = locateLocal("config", configname);
-    KSharedConfig::Ptr config = KSharedConfig::openConfig(configname);
+    TDESharedConfig::Ptr config = TDESharedConfig::openConfig(configname);
 
     if (m_extensionInfo.isEmpty())
     {
@@ -249,7 +249,7 @@ void KickerConfig::configChanged(const TQString& configPath)
 {
     if (configPath.endsWith(configName()))
     {
-        KSharedConfig::Ptr config = KSharedConfig::openConfig(configName());
+        TDESharedConfig::Ptr config = TDESharedConfig::openConfig(configName());
         config->reparseConfiguration();
         setupExtensionInfo(*config, true);
     }

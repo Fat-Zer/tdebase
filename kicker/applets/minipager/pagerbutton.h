@@ -32,7 +32,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 class KPixmap;
 class KWinModule;
 class KMiniPager;
-class KSharedPixmap;
+class TDESharedPixmap;
 class TQLineEdit;
 
 class KMiniPagerButton : public TQButton, public KickerTip::Client
@@ -98,9 +98,9 @@ private:
 
     TQLineEdit* m_lineEdit;
 
-    KSharedPixmap *m_sharedPixmap;
+    TDESharedPixmap *m_sharedPixmap;
     KPixmap *m_bgPixmap;
-    static KSharedPixmap *s_commonSharedPixmap;
+    static TDESharedPixmap *s_commonSharedPixmap;
     static KPixmap *s_commonBgPixmap;
     bool m_isCommon;
 

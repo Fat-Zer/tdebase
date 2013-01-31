@@ -181,7 +181,7 @@ TaskbarConfig::TaskbarConfig(TQWidget *parent, const char* name, const TQStringL
         localConfig.sync();
     }
 
-    m_settingsObject = new TaskBarSettings(KSharedConfig::openConfig(m_configFileName));
+    m_settingsObject = new TaskBarSettings(TDESharedConfig::openConfig(m_configFileName));
     m_settingsObject->readConfig();
 
     // TODO: Load these from .desktop files?

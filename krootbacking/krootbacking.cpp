@@ -63,7 +63,7 @@ void KRootBacking::init()
 {
     d = new KRootBackingData;
     m_Fade = 0;
-    m_pPixmap = new KSharedPixmap; //ordinary KPixmap on win32
+    m_pPixmap = new TDESharedPixmap; //ordinary KPixmap on win32
     m_pTimer = new TQTimer( this );
     m_bInit = false;
     m_bActive = false;
@@ -156,7 +156,7 @@ void KRootBacking::repaint(bool force)
 #ifdef Q_WS_X11
     m_Desk = currentDesktop();
 
-    // KSharedPixmap will correctly generate a tile for us.
+    // TDESharedPixmap will correctly generate a tile for us.
     m_pPixmap->loadFromShared(pixmapName(m_Desk), m_Rect);
 #else
     m_Desk = currentDesktop();
@@ -230,7 +230,7 @@ void KRootBacking::slotDone(bool success)
 	updateBackground( m_pPixmap );
 }
 
-void KRootBacking::updateBackground( KSharedPixmap *spm )
+void KRootBacking::updateBackground( TDESharedPixmap *spm )
 {
     TQPixmap pm = *spm;
 

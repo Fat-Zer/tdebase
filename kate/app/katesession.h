@@ -37,13 +37,13 @@ class KPushButton;
 
 class TQCheckBox;
 
-class KateSession  : public KShared
+class KateSession  : public TDEShared
 {
   public:
     /**
      * Define a Shared-Pointer type
      */
-    typedef KSharedPtr<KateSession> Ptr;
+    typedef TDESharedPtr<KateSession> Ptr;
 
   public:
     /**

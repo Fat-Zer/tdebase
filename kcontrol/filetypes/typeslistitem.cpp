@@ -66,7 +66,7 @@ void TypesListItem::initMeta( const TQString & major )
   m_bFullInit = true;
   m_mimetype = 0L;
   m_major = major;
-  KSharedConfig::Ptr config = KSharedConfig::openConfig("konquerorrc", false, false);
+  TDESharedConfig::Ptr config = TDESharedConfig::openConfig("konquerorrc", false, false);
   config->setGroup("EmbedSettings");
   bool defaultValue = defaultEmbeddingSetting( major );
   m_autoEmbed = config->readBoolEntry( TQString::fromLatin1("embed-")+m_major, defaultValue ) ? 0 : 1;
@@ -227,7 +227,7 @@ bool TypesListItem::isDirty() const
   }
   else
   {
-    KSharedConfig::Ptr config = KSharedConfig::openConfig("konquerorrc", false, false);
+    TDESharedConfig::Ptr config = TDESharedConfig::openConfig("konquerorrc", false, false);
     config->setGroup("EmbedSettings");
     bool defaultValue = defaultEmbeddingSetting(m_major);
     unsigned int oldAutoEmbed = config->readBoolEntry( TQString::fromLatin1("embed-")+m_major, defaultValue ) ? 0 : 1;
@@ -247,7 +247,7 @@ void TypesListItem::sync()
   Q_ASSERT(m_bFullInit);
   if ( isMeta() )
   {
-    KSharedConfig::Ptr config = KSharedConfig::openConfig("konquerorrc", false, false);
+    TDESharedConfig::Ptr config = TDESharedConfig::openConfig("konquerorrc", false, false);
     config->setGroup("EmbedSettings");
     config->writeEntry( TQString::fromLatin1("embed-")+m_major, m_autoEmbed == 0 );
     return;
@@ -255,7 +255,7 @@ void TypesListItem::sync()
 
   if (m_askSave != 2)
   {
-    KSharedConfig::Ptr config = KSharedConfig::openConfig("konquerorrc", false, false);
+    TDESharedConfig::Ptr config = TDESharedConfig::openConfig("konquerorrc", false, false);
     config->setGroup("Notification Messages");
     if (m_askSave == 0)
     {
