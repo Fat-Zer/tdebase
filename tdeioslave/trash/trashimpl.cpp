@@ -133,7 +133,7 @@ bool TrashImpl::init()
     m_initStatus = InitError;
     // $XDG_DATA_HOME/Trash, i.e. ~/.local/share/Trash by default.
     const TQString xdgDataDir = TDEGlobal::dirs()->localxdgdatadir();
-    if ( !KStandardDirs::makeDir( xdgDataDir, 0700 ) ) {
+    if ( !TDEStandardDirs::makeDir( xdgDataDir, 0700 ) ) {
         kdWarning() << "failed to create " << xdgDataDir << endl;
         return false;
     }
@@ -282,7 +282,7 @@ bool TrashImpl::createInfo( const TQString& origPath, int& trashId, TQString& fi
 
 TQString TrashImpl::makeRelativePath( const TQString& topdir, const TQString& path )
 {
-    const TQString realPath = KStandardDirs::realFilePath( path );
+    const TQString realPath = TDEStandardDirs::realFilePath( path );
     // topdir ends with '/'
     if ( realPath.startsWith( topdir ) ) {
         const TQString rel = realPath.mid( topdir.length() );

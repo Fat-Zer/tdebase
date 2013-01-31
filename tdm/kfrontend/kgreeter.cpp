@@ -641,7 +641,7 @@ KGreeter::insertSessions()
 				            dsk.readEntry( "Name" ),
 				            (dsk.readBoolEntry( "Hidden", false ) ||
 				             (dsk.hasKey( "TryExec" ) &&
-				              KStandardDirs::findExe( dsk.readEntry( "TryExec" ) ).isEmpty())),
+				              TDEStandardDirs::findExe( dsk.readEntry( "TryExec" ) ).isEmpty())),
 				            dsk.readEntry( "Exec" ).latin1() );
 			}
 	}

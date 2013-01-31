@@ -996,9 +996,9 @@ bool KDIconView::makeFriendlyText( KFileIVI *fileIVI )
     {
         KURL u( item->url() );
         u.addPath( ".directory" );
-        // using KStandardDirs as this one checks for path being
+        // using TDEStandardDirs as this one checks for path being
         // a file instead of a directory
-        if ( KStandardDirs::exists( u.path() ) )
+        if ( TDEStandardDirs::exists( u.path() ) )
             desktopFile = u.path();
     }
     else if ( isDesktopFile( item ) )
@@ -1029,7 +1029,7 @@ bool KDIconView::makeFriendlyText( KFileIVI *fileIVI )
         }
         if (cfg.hasKey("TryExec"))
         {
-            if (KStandardDirs::findExe( cfg.readEntry( "TryExec" ) ).isEmpty())
+            if (TDEStandardDirs::findExe( cfg.readEntry( "TryExec" ) ).isEmpty())
                 return false;
         }
 

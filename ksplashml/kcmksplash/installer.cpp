@@ -88,7 +88,7 @@ void ThemeListBox::mouseMoveEvent(TQMouseEvent *e)
 SplashInstaller::SplashInstaller (TQWidget *aParent, const char *aName, bool aInit)
   : TQWidget(aParent, aName), mGui(!aInit)
 {
-  TDEGlobal::dirs()->addResourceType("ksplashthemes", KStandardDirs::kde_default("data") + "ksplash/Themes");
+  TDEGlobal::dirs()->addResourceType("ksplashthemes", TDEStandardDirs::kde_default("data") + "ksplash/Themes");
 
   if (!mGui)
     return;

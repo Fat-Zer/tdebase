@@ -122,7 +122,7 @@
 static TQString calculate(const TQString &exp)
 {
    TQString result, cmd;
-   const TQString bc = KStandardDirs::findExe("bc");
+   const TQString bc = TDEStandardDirs::findExe("bc");
    if ( !bc.isEmpty() )
       cmd = TQString("echo %1 | %2").arg(TDEProcess::quote(exp), TDEProcess::quote(bc));
    else
@@ -302,7 +302,7 @@ KMenu::KMenu()
     m_searchInternet->setPixmap(0,icon);
     setTabOrder(m_kcommand, m_searchResultsWidget);
 
-    m_kerryInstalled = !KStandardDirs::findExe(TQString::fromLatin1("kerry")).isEmpty();
+    m_kerryInstalled = !TDEStandardDirs::findExe(TQString::fromLatin1("kerry")).isEmpty();
     m_isShowing = false;
 
     if (!m_kerryInstalled) {
@@ -1353,7 +1353,7 @@ void KMenu::insertStaticItems()
     m_systemView->insertItem( "folder_home", i18n( "Home Folder" ),
                               TQDir::homeDirPath(), "file://"+TQDir::homeDirPath(), nId++, index++ );
 
-    if ( KStandardDirs::exists( TDEGlobalSettings::documentPath() + "/" ) )
+    if ( TDEStandardDirs::exists( TDEGlobalSettings::documentPath() + "/" ) )
     {
         TQString documentPath = TDEGlobalSettings::documentPath();
         if ( documentPath.endsWith( "/" ) )
@@ -2934,7 +2934,7 @@ void KMenu::slotContextMenu(int selected)
         case EditMenu:
 	    accept();
             proc = new TDEProcess(TQT_TQOBJECT(this));
-            *proc << KStandardDirs::findExe(TQString::fromLatin1("kmenuedit"));
+            *proc << TDEStandardDirs::findExe(TQString::fromLatin1("kmenuedit"));
             *proc << "/"+m_popupPath.menuPath.section('/',-200,-2) << m_popupPath.menuPath.section('/', -1);
             proc->start();
 	    break;

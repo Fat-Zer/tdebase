@@ -64,7 +64,7 @@ void SMBSlave::special( const TQByteArray & data)
          kdDebug(KIO_SMB) << "mounting: " << remotePath.local8Bit() << " to " << mountPoint.local8Bit() << endl;
 
          if (tmp==3) {
-             if (!KStandardDirs::makeDir(mountPoint)) {
+             if (!TDEStandardDirs::makeDir(mountPoint)) {
                  error(TDEIO::ERR_COULD_NOT_MKDIR, mountPoint);
                  return;
              }

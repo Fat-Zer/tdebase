@@ -264,7 +264,7 @@ int MyPtyProcess::exec(TQCString command, QCStringList args)
 	    path = command;
     else 
     {
-	    TQString file = KStandardDirs::findExe(command);
+	    TQString file = TDEStandardDirs::findExe(command);
     	if (file.isEmpty())
 	    {
 	        kdError(PTYPROC) << k_lineinfo << command << " not found\n";

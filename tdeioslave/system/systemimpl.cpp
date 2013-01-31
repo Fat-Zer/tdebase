@@ -34,7 +34,7 @@
 SystemImpl::SystemImpl() : TQObject()
 {
 	TDEGlobal::dirs()->addResourceType("system_entries",
-		KStandardDirs::kde_default("data") + "systemview");
+		TDEStandardDirs::kde_default("data") + "systemview");
 }
 
 bool SystemImpl::listRoot(TQValueList<TDEIO::UDSEntry> &list)

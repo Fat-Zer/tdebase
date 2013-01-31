@@ -128,7 +128,7 @@ void PanelExeDialog::updateIcon()
 void PanelExeDialog::fillCompletion()
 {
     KCompletion *comp = ui->m_exec->completionObject();
-    TQStringList exePaths = KStandardDirs::systemPaths();
+    TQStringList exePaths = TDEStandardDirs::systemPaths();
 
     for (TQStringList::ConstIterator it = exePaths.begin(); it != exePaths.end(); it++)
     {

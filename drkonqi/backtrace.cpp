@@ -70,7 +70,7 @@ BackTrace::~BackTrace()
 void BackTrace::start()
 {
   TQString exec = m_krashconf->tryExec();
-  if ( !exec.isEmpty() && KStandardDirs::findExe(exec).isEmpty() )
+  if ( !exec.isEmpty() && TDEStandardDirs::findExe(exec).isEmpty() )
   {
     TQObject * o = parent();
 

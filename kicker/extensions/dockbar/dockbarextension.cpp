@@ -205,7 +205,7 @@ void DockBarExtension::embedWindow(WId win, TQString command, TQString resName, 
     
     if (container == 0) {
 	TQString cmd = command.isNull() ? resClass : command;
-	if (KStandardDirs::findExe(KShell::splitArgs(cmd).front()).isEmpty())
+	if (TDEStandardDirs::findExe(KShell::splitArgs(cmd).front()).isEmpty())
 	    ncmd = true;
 	container = new DockContainer(cmd, this, resName, resClass);
 	addContainer(container);

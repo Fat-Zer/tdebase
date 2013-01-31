@@ -134,7 +134,7 @@ extern "C"
 {
    KDE_EXPORT bool add_konqsidebar_tree(TQString* fn, TQString*, TQMap<TQString,TQString> *map)
    {
-	  KStandardDirs *dirs=TDEGlobal::dirs();
+	  TDEStandardDirs *dirs=TDEGlobal::dirs();
 	  TQStringList list=dirs->findAllResources("data","konqsidebartng/dirtree/*.desktop",false,true);
 	  TQStringList names;
 	  for (TQStringList::ConstIterator it=list.begin();it!=list.end();++it)

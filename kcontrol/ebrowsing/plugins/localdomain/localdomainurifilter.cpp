@@ -76,7 +76,7 @@ bool LocalDomainURIFilter::isLocalDomainHost( TQString& cmd ) const
 
     if( !(host == last_host && last_time > time( NULL ) - 5 ) ) {
 
-        TQString helper = KStandardDirs::findExe(TQString::fromLatin1( "klocaldomainurifilterhelper" ));
+        TQString helper = TDEStandardDirs::findExe(TQString::fromLatin1( "klocaldomainurifilterhelper" ));
         if( helper.isEmpty())
             return last_result = false;
 

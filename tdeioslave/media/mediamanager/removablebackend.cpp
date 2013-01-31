@@ -166,7 +166,7 @@ void RemovableBackend::handleMtabChange()
 
 TQString RemovableBackend::generateId(const TQString &devNode)
 {
-	TQString dev = KStandardDirs::realFilePath(devNode);
+	TQString dev = TDEStandardDirs::realFilePath(devNode);
 
 	return "/org/kde/mediamanager/removable/"
 	      +dev.replace("/", "");

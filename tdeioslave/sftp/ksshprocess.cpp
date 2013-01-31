@@ -206,7 +206,7 @@ void KSshProcess::removeSignalHandlers() {
 KSshProcess::KSshProcess() 
             : mVersion(UNKNOWN_VER), mConnected(false), 
         mRunning(false), mConnectState(0) {
-    mSshPath = KStandardDirs::findExe(TQString::fromLatin1("ssh"));
+    mSshPath = TDEStandardDirs::findExe(TQString::fromLatin1("ssh"));
     kdDebug(KSSHPROC) << "KSshProcess::KSshProcess(): ssh path [" << 
 		mSshPath << "]" << endl;
         

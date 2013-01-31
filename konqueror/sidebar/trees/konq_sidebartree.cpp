@@ -87,7 +87,7 @@ void KonqSidebarTree::loadModuleFactories()
 {
   pluginFactories.clear();
   pluginInfo.clear();
-  KStandardDirs *dirs=TDEGlobal::dirs();
+  TDEStandardDirs *dirs=TDEGlobal::dirs();
   TQStringList list=dirs->findAllResources("data","konqsidebartng/dirtree/*.desktop",false,true);
 
 

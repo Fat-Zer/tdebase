@@ -37,7 +37,7 @@
 RemoteImpl::RemoteImpl()
 {
 	TDEGlobal::dirs()->addResourceType("remote_entries",
-		KStandardDirs::kde_default("data") + "remoteview");
+		TDEStandardDirs::kde_default("data") + "remoteview");
 
 	TQString path = TDEGlobal::dirs()->saveLocation("remote_entries");
 

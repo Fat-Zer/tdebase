@@ -313,8 +313,8 @@ void FstabBackend::handleFstabChange(bool allowNotification)
 TQString FstabBackend::generateId(const TQString &devNode,
                                  const TQString &mountPoint)
 {
-	TQString d = KStandardDirs::realFilePath(devNode);
-	TQString m = KStandardDirs::realPath(mountPoint);
+	TQString d = TDEStandardDirs::realFilePath(devNode);
+	TQString m = TDEStandardDirs::realPath(mountPoint);
 
 	return "/org/kde/mediamanager/fstab/"
 	      +d.replace("/", "")

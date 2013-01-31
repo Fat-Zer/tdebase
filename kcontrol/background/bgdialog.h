@@ -30,7 +30,7 @@
 #include "bgdefaults.h"
 
 class BGMonitorArrangement;
-class KStandardDirs;
+class TDEStandardDirs;
 
 class BGDialog : public BGDialog_UI
 {
@@ -84,7 +84,7 @@ protected slots:
 protected:
    void getEScreen();
    TDEGlobalBackgroundSettings *m_pGlobals;
-   KStandardDirs *m_pDirs;
+   TDEStandardDirs *m_pDirs;
    bool m_multidesktop;
    bool m_useViewports;
    int m_curDesk;

@@ -1586,7 +1586,7 @@ bool LockProcess::startHack()
     TQTextStream ts(&mSaverExec, IO_ReadOnly);
     TQString word;
     ts >> word;
-    TQString path = KStandardDirs::findExe(word);
+    TQString path = TDEStandardDirs::findExe(word);
 
     if (!path.isEmpty())
     {
@@ -2345,7 +2345,7 @@ void LockProcess::showVkbd()
         int status = system( "hal-find-by-property --key system.formfactor.subtype --string tabletpc" );
 //        status = 0; // enable for testing
         run_vkbd = ( WIFEXITED( status ) && WEXITSTATUS( status ) == 0
-            && !KStandardDirs::findExe( "xvkbd" ).isEmpty()) ? 1 : 0;
+            && !TDEStandardDirs::findExe( "xvkbd" ).isEmpty()) ? 1 : 0;
     }
     if( run_vkbd ) {
         mVkbdWindows.clear();

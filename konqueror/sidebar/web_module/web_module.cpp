@@ -191,7 +191,7 @@ extern "C" {
 extern "C" {
 	KDE_EXPORT bool add_konqsidebar_web(TQString* fn, TQString* param, TQMap<TQString,TQString> *map) {
 		Q_UNUSED(param);
-		TDEGlobal::dirs()->addResourceType("websidebardata", KStandardDirs::kde_default("data") + "konqsidebartng/websidebar");
+		TDEGlobal::dirs()->addResourceType("websidebardata", TDEStandardDirs::kde_default("data") + "konqsidebartng/websidebar");
 		KURL url;
 		url.setProtocol("file");
 		TQStringList paths = TDEGlobal::dirs()->resourceDirs("websidebardata");

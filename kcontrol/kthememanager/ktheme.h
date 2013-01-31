@@ -27,7 +27,7 @@
 
 #include <kurl.h>
 
-class KStandardDirs;
+class TDEStandardDirs;
 class TDEConfig;
 
 /// defines the syntax version used by the XML
@@ -216,7 +216,7 @@ private:
     /// "general" section
     TQDomElement m_general;
 
-    KStandardDirs * m_kgd;
+    TDEStandardDirs * m_kgd;
 
     TQGuardedPtr<TQWidget> m_parent;
 };

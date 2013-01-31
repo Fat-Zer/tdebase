@@ -118,7 +118,7 @@ void KStylePage::saveKWin(bool curSettings){
 	TQString twin = origKWinStyle;
 	if(curSettings) {
 		KDesktopFile* kdf = 0L;
-		KStandardDirs* kstd = TDEGlobal::dirs();
+		TDEStandardDirs* kstd = TDEGlobal::dirs();
 		if (cde->isSelected() && twin_cde_exist)
 			kdf = new KDesktopFile(kstd->findResource("data", "twin/cde.desktop"));
 		else if (win->isSelected() && twin_win_exist)
@@ -324,7 +324,7 @@ void KStylePage::getColors(colorSet *set, bool colorfile ){
 	bool deleteConfig = false;
 	// get the color scheme file and go to the color scheme group
 	if(colorfile){
-		TDEGlobal::dirs()->addResourceType("colors", KStandardDirs::kde_default("data")+"kdisplay/color-schemes");
+		TDEGlobal::dirs()->addResourceType("colors", TDEStandardDirs::kde_default("data")+"kdisplay/color-schemes");
 		// set the style
 		if (kde->isSelected()) {
 			set->bgMode="Flat";
@@ -439,7 +439,7 @@ void KStylePage::getAvailability() {
 	twin_keramik_exist = twin_system_exist = twin_plastik_exist
 			= twin_default_exist = twin_win_exist
 			= twin_cde_exist = twin_quartz_exist = false;
-	KStandardDirs* kstd = TDEGlobal::dirs();
+	TDEStandardDirs* kstd = TDEGlobal::dirs();
 	if (!kstd->findResource("data", "twin/keramik.desktop").isNull())
 		twin_keramik_exist = true;
 	if (!kstd->findResource("data", "twin/plastik.desktop").isNull())

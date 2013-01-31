@@ -298,7 +298,7 @@ bool ThemePage::installThemes( const TQString &file )
 		return false;
 
 	const TQString destDir = TQDir::homeDirPath() + "/.icons/";
-	KStandardDirs::makeDir( destDir ); // Make sure the directory exists
+	TDEStandardDirs::makeDir( destDir ); // Make sure the directory exists
 
 	for ( TQStringList::ConstIterator it = themeDirs.begin(); it != themeDirs.end(); ++it )
 	{

@@ -95,7 +95,7 @@ SaverEngine::SaverEngine()
     configure();
 
     mLockProcess.clearArguments();
-    TQString path = KStandardDirs::findExe( "kdesktop_lock" );
+    TQString path = TDEStandardDirs::findExe( "kdesktop_lock" );
     if( path.isEmpty())
     {
 	kdDebug( 1204 ) << "Can't find kdesktop_lock!" << endl;
@@ -361,7 +361,7 @@ bool SaverEngine::startLockProcess( LockType lock_type )
 
     if (!mLockProcess.isRunning()) {
 	mLockProcess.clearArguments();
-	TQString path = KStandardDirs::findExe( "kdesktop_lock" );
+	TQString path = TDEStandardDirs::findExe( "kdesktop_lock" );
 	if( path.isEmpty())
 	{
 	    kdDebug( 1204 ) << "Can't find kdesktop_lock!" << endl;
@@ -467,7 +467,7 @@ void SaverEngine::lockProcessExited()
         // Restart the lock process
         if (!mLockProcess.isRunning()) {
             mLockProcess.clearArguments();
-            TQString path = KStandardDirs::findExe( "kdesktop_lock" );
+            TQString path = TDEStandardDirs::findExe( "kdesktop_lock" );
             if( path.isEmpty())
             {
                 kdDebug( 1204 ) << "Can't find kdesktop_lock!" << endl;

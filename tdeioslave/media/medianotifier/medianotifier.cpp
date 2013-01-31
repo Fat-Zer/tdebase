@@ -230,7 +230,7 @@ bool MediaNotifier::execAutoopen( const KFileItem &medium, const TQString &path,
 	// The desktop environment MUST verify that the relative path points
 	// to a file that is actually located on the medium [...]
 	TQString resolved_path
-		= KStandardDirs::realFilePath( path+"/"+relative_path );
+		= TDEStandardDirs::realFilePath( path+"/"+relative_path );
 
 	if ( !resolved_path.startsWith( path ) )
 	{

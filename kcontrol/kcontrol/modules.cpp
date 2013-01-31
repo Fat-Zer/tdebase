@@ -186,7 +186,7 @@ void ConfigModule::runAsRoot()
     }
 
   // run the process
-  TQString tdesu = KStandardDirs::findExe("tdesu");
+  TQString tdesu = TDEStandardDirs::findExe("tdesu");
   if (!tdesu.isEmpty())
     {
       _rootProcess = new TDEProcess;

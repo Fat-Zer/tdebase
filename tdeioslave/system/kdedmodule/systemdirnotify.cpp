@@ -42,7 +42,7 @@ void SystemDirNotify::init()
 		return;
 	mInited = true;
 	TDEGlobal::dirs()->addResourceType("system_entries",
-		KStandardDirs::kde_default("data") + "systemview");
+		TDEStandardDirs::kde_default("data") + "systemview");
 
 	TQStringList names_found;
 	TQStringList dirList = TDEGlobal::dirs()->resourceDirs("system_entries");

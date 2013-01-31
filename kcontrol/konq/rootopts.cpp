@@ -230,7 +230,7 @@ void DesktopPathConfig::save()
         TQString path = urDocument->url();
         if (!TQDir(path).exists())
         {
-            if (!KStandardDirs::makeDir(path))
+            if (!TDEStandardDirs::makeDir(path))
             {
                 KMessageBox::sorry(this, TDEIO::buildErrorString(TDEIO::ERR_COULD_NOT_MKDIR, path));
                 urDocument->setURL(documentURL.path());

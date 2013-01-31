@@ -27,7 +27,7 @@ class TDEConfig;
 class TDEProcess;
 class KTempFile;
 class KShellProcess;
-class KStandardDirs;
+class TDEStandardDirs;
 
 /**
  * This class renders a desktop background to a TQImage. The operation is
@@ -109,7 +109,7 @@ private:
     TQPixmap m_Pixmap;
     TQTimer *m_pTimer;
 
-    KStandardDirs *m_pDirs;
+    TDEStandardDirs *m_pDirs;
     KShellProcess *m_pProc;
     
 };

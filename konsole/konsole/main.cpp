@@ -255,7 +255,7 @@ extern "C" int KDE_EXPORT kdemain(int argc, char* argv[])
   a = new TDEApplication;
 #endif
 
-  TQString dataPathBase = KStandardDirs::kde_default("data").append("konsole/");
+  TQString dataPathBase = TDEStandardDirs::kde_default("data").append("konsole/");
   TDEGlobal::dirs()->addResourceType("wallpaper", dataPathBase + "wallpapers");
 
   KImageIO::registerFormats(); // add io for additional image formats

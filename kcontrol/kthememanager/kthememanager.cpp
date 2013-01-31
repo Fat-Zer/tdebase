@@ -106,7 +106,7 @@ kthememanager::~kthememanager()
 
 void kthememanager::init()
 {
-    TDEGlobal::dirs()->addResourceType( "themes", KStandardDirs::kde_default("data") +
+    TDEGlobal::dirs()->addResourceType( "themes", TDEStandardDirs::kde_default("data") +
                                       "kthememanager/themes/" );
 }
 

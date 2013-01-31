@@ -83,7 +83,7 @@ bool parseUrl(const TQString& _url, TQString &title, TQString &section)
 
     TQString url = _url;
     if (url.at(0) == '/') {
-        if (KStandardDirs::exists(url)) {
+        if (TDEStandardDirs::exists(url)) {
             title = url;
             return true;
         } else
@@ -559,7 +559,7 @@ char *MANProtocol::readManPage(const char *_filename)
         if (TQDir::isRelativePath(filename)) {
             kdDebug(7107) << "relative " << filename << endl;
             filename = TQDir::cleanDirPath(lastdir + "/" + filename).utf8();
-            if (!KStandardDirs::exists(filename)) { // exists perhaps with suffix
+            if (!TDEStandardDirs::exists(filename)) { // exists perhaps with suffix
                 lastdir = filename.left(filename.findRev('/'));
                 TQDir mandir(lastdir);
                 mandir.setNameFilter(filename.mid(filename.findRev('/') + 1) + ".*");

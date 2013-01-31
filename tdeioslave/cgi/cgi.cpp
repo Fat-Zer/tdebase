@@ -132,7 +132,7 @@ void CgiProtocol::get( const KURL& url )
     if ( !(*it).endsWith("/") )
         cmd += "/";
     cmd += file;
-    if ( KStandardDirs::exists( cmd ) ) {
+    if ( TDEStandardDirs::exists( cmd ) ) {
       forwardFile = false;
       stripHeader = true;
       break;

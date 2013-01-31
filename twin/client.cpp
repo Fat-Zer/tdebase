@@ -1829,7 +1829,7 @@ void Client::killProcess( bool ask, Time timestamp )
     else
         { // SELI TODO handle the window created by handler specially (on top,urgent?)
         process_killer = new TDEProcess( this );
-        *process_killer << KStandardDirs::findExe( "twin_killer_helper" )
+        *process_killer << TDEStandardDirs::findExe( "twin_killer_helper" )
             << "--pid" << TQCString().setNum( pid ) << "--hostname" << machine
             << "--windowname" << caption().utf8()
             << "--applicationname" << resourceClass()
@@ -1958,7 +1958,7 @@ bool Client::queryUserSuspendedResume()
                 }
             // FIXME We should display a busy cursor until twin_resumer_helper loads
             process_resumer = new TDEProcess( this );
-            *process_resumer << KStandardDirs::findExe( "twin_resumer_helper" )
+            *process_resumer << TDEStandardDirs::findExe( "twin_resumer_helper" )
                 << "--pid" << TQCString().setNum( info->pid() ) << "--hostname" << wmClientMachine( true )
                 << "--windowname" << caption().utf8()
                 << "--applicationname" << resourceClass()

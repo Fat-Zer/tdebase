@@ -144,7 +144,7 @@ int main(int argc, char *argv[])
 	bool opengl = type.readBoolEntry("OpenGL", hasDirectRendering());
         kdDebug() << "hasOPEN " << opengl << endl;
 	bool manipulatescreen = type.readBoolEntry("ManipulateScreen");
-        bool fortune = !KStandardDirs::findExe("fortune").isEmpty();
+        bool fortune = !TDEStandardDirs::findExe("fortune").isEmpty();
         TQStringList defaults = type.readListEntry( "Defaults" );
         TQMap<TQString, int> def_numbers;
         for ( TQStringList::ConstIterator it = defaults.begin(); it != defaults.end(); ++it ) {
@@ -219,7 +219,7 @@ int main(int argc, char *argv[])
 	TQTextStream ts(&cmd, IO_ReadOnly);
 	TQString word;
 	ts >> word;
-	TQString exeFile = KStandardDirs::findExe(word);
+	TQString exeFile = TDEStandardDirs::findExe(word);
 
 	if (!exeFile.isEmpty())
 	{

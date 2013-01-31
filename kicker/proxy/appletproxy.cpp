@@ -84,7 +84,7 @@ extern "C" KDE_EXPORT int kdemain( int argc, char ** argv )
     TDEApplication a;
     a.disableSessionManagement();
 
-    TDEGlobal::dirs()->addResourceType("applets", KStandardDirs::kde_default("data") +
+    TDEGlobal::dirs()->addResourceType("applets", TDEStandardDirs::kde_default("data") +
 				     "kicker/applets");
 
     // setup proxy object

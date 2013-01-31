@@ -17,7 +17,7 @@
 #include <tqvaluevector.h>
 
 template <class TQString, class T> class TQMap;
-class KStandardDirs;
+class TDEStandardDirs;
 class KSimpleConfig;
 class TDEConfig;
 class TQString;
@@ -66,7 +66,7 @@ private:
     int m_Hash;
     TQString m_Name, m_Comment;
     TQString m_Pattern, m_File;
-    KStandardDirs *m_pDirs;
+    TDEStandardDirs *m_pDirs;
     KSimpleConfig *m_pConfig;
 };
 
@@ -137,7 +137,7 @@ private:
     TQString m_Name, m_Command;
     TQString m_PreviewCommand, m_Comment;
     TQString m_Executable, m_File;
-    KStandardDirs *m_pDirs;
+    TDEStandardDirs *m_pDirs;
     KSimpleConfig *m_pConfig;
 };
 
@@ -283,7 +283,7 @@ private:
     TQString m_CurrentWallpaperName;
 
     TDEConfig *m_pConfig;
-    KStandardDirs *m_pDirs;
+    TDEStandardDirs *m_pDirs;
     bool m_bDeleteConfig;
     bool m_bEnabled;
 

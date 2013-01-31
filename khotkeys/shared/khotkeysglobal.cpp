@@ -57,7 +57,7 @@ bool khotkeys_active()
     return _khotkeys_active;
     }
     
-// does the opposite of KStandardDirs::findResource() i.e. e.g.
+// does the opposite of TDEStandardDirs::findResource() i.e. e.g.
 // "/opt/kde2/share/applnk/System/konsole.desktop" -> "System/konsole.desktop"
 TQString get_menu_entry_from_path( const TQString& path_P )
     {

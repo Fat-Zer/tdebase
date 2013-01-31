@@ -68,7 +68,7 @@ int main(int argc, char **argv)
 	}
 
 	// Make sure the specified WM exists
-	if (KStandardDirs::findExe(wmToLaunch) == TQString::null) {
+	if (TDEStandardDirs::findExe(wmToLaunch) == TQString::null) {
 		wmToLaunch = "";
 		
 	}

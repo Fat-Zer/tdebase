@@ -188,7 +188,7 @@ TQStringList MediaManager::properties(const TQString &name)
 
                 for (; it!=end; ++it)
                 {
-                    path = KStandardDirs::realFilePath(u.path());
+                    path = TDEStandardDirs::realFilePath(u.path());
                     kdDebug() << "comparing " << (*it)->mountPoint()  << " " << path << " " <<  (*it)->deviceNode() << endl;
                     if ((*it)->mountPoint() == path || (*it)->deviceNode() == path) {
 			m = *it;

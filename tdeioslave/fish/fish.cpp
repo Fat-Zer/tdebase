@@ -254,12 +254,12 @@ fishProtocol::fishProtocol(const TQCString &pool_socket, const TQCString &app_so
         // disabled: currently not needed. Didn't work reliably.
         // isOpenSSH = !system("ssh -V 2>&1 | grep OpenSSH > /dev/null");
 	if (isNXFish)
-            sshPath = strdup(TQFile::encodeName(KStandardDirs::findExe("nxfish")));
+            sshPath = strdup(TQFile::encodeName(TDEStandardDirs::findExe("nxfish")));
 	else
-            sshPath = strdup(TQFile::encodeName(KStandardDirs::findExe("ssh")));
+            sshPath = strdup(TQFile::encodeName(TDEStandardDirs::findExe("ssh")));
     }
     if (suPath == NULL) {
-        suPath = strdup(TQFile::encodeName(KStandardDirs::findExe("su")));
+        suPath = strdup(TQFile::encodeName(TDEStandardDirs::findExe("su")));
     }
     childPid = 0;
     connectionPort = 0;

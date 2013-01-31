@@ -182,7 +182,7 @@ int KBackgroundPattern::hash()
 /* static */
 TQStringList KBackgroundPattern::list()
 {
-    KStandardDirs *dirs = TDEGlobal::dirs();
+    TDEStandardDirs *dirs = TDEGlobal::dirs();
     dirs->addResourceType("dtop_pattern", dirs->kde_default("data") +
                           "kdesktop/patterns");
     TQStringList lst = dirs->findAllResources("dtop_pattern", "*.desktop",
@@ -393,7 +393,7 @@ int KBackgroundProgram::hash()
 /* static */
 TQStringList KBackgroundProgram::list()
 {
-    KStandardDirs *dirs = TDEGlobal::dirs();
+    TDEStandardDirs *dirs = TDEGlobal::dirs();
     dirs->addResourceType("dtop_program", dirs->kde_default("data") +
                           "kdesktop/programs");
     TQStringList lst = dirs->findAllResources("dtop_program", "*.desktop",
@@ -651,7 +651,7 @@ void KBackgroundSettings::setWallpaperMode(int mode)
 
 void KBackgroundSettings::setWallpaperList(TQStringList list)
 {
-    KStandardDirs *d = TDEGlobal::dirs();
+    TDEStandardDirs *d = TDEGlobal::dirs();
     if (m_WallpaperList == list)
 	return;
 

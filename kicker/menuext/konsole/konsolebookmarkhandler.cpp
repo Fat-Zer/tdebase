@@ -28,7 +28,7 @@ KonsoleBookmarkHandler::KonsoleBookmarkHandler( KonsoleMenu *konsole, bool )
         file = locateLocal( "data", "konsole/bookmarks.xml" );
 
     // import old bookmarks
-    if ( !KStandardDirs::exists( file ) ) {
+    if ( !TDEStandardDirs::exists( file ) ) {
         TQString oldFile = locate( "data", "tdefile/bookmarks.html" );
         if ( !oldFile.isEmpty() )
             importOldBookmarks( oldFile, file );

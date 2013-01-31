@@ -162,7 +162,7 @@ void TopLevel::resetWorkSheets()
 
   mWorkSpace->removeAllWorkSheets();
 
-  KStandardDirs* kstd = TDEGlobal::dirs();
+  TDEStandardDirs* kstd = TDEGlobal::dirs();
   kstd->addResourceType( "data", "share/apps/ksysguard" );
 
   TQString workDir = kstd->saveLocation( "data", "ksysguard" );

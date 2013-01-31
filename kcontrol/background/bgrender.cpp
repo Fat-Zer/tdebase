@@ -990,7 +990,7 @@ void KBackgroundRenderer::saveCacheFile()
     if( m_Image.isNull())
         fullWallpaperBlend(); // generate from m_Pixmap
     TQString f = cacheFileName();
-    if( KStandardDirs::exists( f ) || m_Cached )
+    if( TDEStandardDirs::exists( f ) || m_Cached )
         utime( TQFile::encodeName( f ), NULL );
     else {
         m_Image.save( f, "PNG" );

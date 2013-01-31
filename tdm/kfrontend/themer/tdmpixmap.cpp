@@ -72,7 +72,7 @@ KdmPixmap::KdmPixmap( KdmItem *parent, const TQDomNode &node, const char *name )
 				if ((_compositor.isEmpty()) || (!argb_visual_available)) {
 					// Software blend only (no compositing support)
 					// Use the preset TDM background...
-					KStandardDirs *m_pDirs = TDEGlobal::dirs();
+					TDEStandardDirs *m_pDirs = TDEGlobal::dirs();
 					KSimpleConfig *config = new KSimpleConfig( TQFile::decodeName( _backgroundCfg ) );
 					config->setGroup("Desktop0");
 					pixmap.normal.fullpath = m_pDirs->findResource("wallpaper", config->readPathEntry("Wallpaper"));
@@ -179,7 +179,7 @@ KdmPixmap::loadPixmap( PixmapStruct::PixmapClass *pClass )
   kdDebug() << timestamp() << " ext " << ext << " " << fullpath << endl;
   TQString testpath = TQString("-%1x%2").arg(area.width()).arg(area.height()) + ext;
   kdDebug() << timestamp() << " testing for " << fullpath + testpath << endl;
-  if (KStandardDirs::exists(fullpath + testpath)) 
+  if (TDEStandardDirs::exists(fullpath + testpath)) 
     pClass->pixmap.load(fullpath + testpath);
   else
     pClass->pixmap.load( fullpath + ext );

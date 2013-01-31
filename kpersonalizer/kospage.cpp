@@ -105,7 +105,7 @@ void KOSPage::save(bool currSettings){
 void KOSPage::saveCheckState(bool currSettings){
 	if(currSettings){
 		// Set the path for the keysscheme resource files
-		TDEGlobal::dirs()->addResourceType("keys", KStandardDirs::kde_default("data")+"kcmkeys");
+		TDEGlobal::dirs()->addResourceType("keys", TDEStandardDirs::kde_default("data")+"kcmkeys");
 		// write the settings to the configfiles, depending on wich radiobutton is checked
 		if(rb_kde->isChecked()){
 			writeKDE();

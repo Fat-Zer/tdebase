@@ -29,7 +29,7 @@ TQString defaultCommand(const TQString& cmd)
 	int	p(-1);
 	if ((p=r.search(str)) != -1)
 	{
-		TQString	exe = KStandardDirs::findExe(r.cap(1));
+		TQString	exe = TDEStandardDirs::findExe(r.cap(1));
 		if (exe.isEmpty())
 			exe = "/usr/bin/"+r.cap(1);
 		str.replace(p, r.matchedLength(), exe);

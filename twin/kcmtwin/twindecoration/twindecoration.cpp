@@ -465,7 +465,7 @@ void KWinDecorationModule::createThirdPartyWMList()
 		if (descStart >= 0) {
 			wmExecutable.truncate(descStart);
 		}
-		if (KStandardDirs::findExe(wmExecutable) != TQString::null) {
+		if (TDEStandardDirs::findExe(wmExecutable) != TQString::null) {
 			wmAvailableNames.append(*it);
 		}
 	}

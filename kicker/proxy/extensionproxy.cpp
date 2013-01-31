@@ -70,7 +70,7 @@ extern "C" KDE_EXPORT int kdemain( int argc, char ** argv )
     TDEApplication a;
     a.disableSessionManagement();
 
-    TDEGlobal::dirs()->addResourceType("extensions", KStandardDirs::kde_default("data") +
+    TDEGlobal::dirs()->addResourceType("extensions", TDEStandardDirs::kde_default("data") +
 				     "kicker/extensions");
 
     // setup proxy object

@@ -67,7 +67,7 @@ void addBackEnd::aboutToShowAddMenu()
 {
 	if (!menu)
 		return;
-	KStandardDirs *dirs = TDEGlobal::dirs();
+	TDEStandardDirs *dirs = TDEGlobal::dirs();
 	TQStringList list = dirs->findAllResources("data","konqsidebartng/add/*.desktop",true,true);
 	libNames.setAutoDelete(true);
 	libNames.resize(0);
@@ -122,7 +122,7 @@ void addBackEnd::doRollBack()
 {
 	if (KMessageBox::warningContinueCancel(m_parent, i18n("<qt>This removes all your entries from the sidebar and adds the system default ones.<BR><B>This procedure is irreversible</B><BR>Do you want to proceed?</qt>"))==KMessageBox::Continue)
 	{
-		KStandardDirs *dirs = TDEGlobal::dirs();
+		TDEStandardDirs *dirs = TDEGlobal::dirs();
 		TQString loc=dirs->saveLocation("data","konqsidebartng/" + m_currentProfile + "/",true);
 		TQDir dir(loc);
 		TQStringList dirEntries = dir.entryList( TQDir::Dirs | TQDir::NoSymLinks );
@@ -139,7 +139,7 @@ void addBackEnd::doRollBack()
 
 static TQString findFileName(const TQString* tmpl,bool universal, const TQString &profile) {
 	TQString myFile, filename;
-	KStandardDirs *dirs = TDEGlobal::dirs();
+	TDEStandardDirs *dirs = TDEGlobal::dirs();
 	TQString tmp = *tmpl;
 
 	if (universal) {
@@ -331,7 +331,7 @@ void Sidebar_Widget::addWebSideBar(const KURL& url, const TQString& /*name*/) {
 	//	<< " [" << name << "]" << endl;
 
 	// Look for existing ones with this URL
-	KStandardDirs *dirs = TDEGlobal::dirs();
+	TDEStandardDirs *dirs = TDEGlobal::dirs();
 	TQString list;
 	dirs->saveLocation("data", m_relPath, true);
 	list = locateLocal("data", m_relPath);

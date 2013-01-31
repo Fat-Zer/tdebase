@@ -32,7 +32,7 @@ void HTMLSearch::scanDir(const TQString& dir)
 
     TQStringList::ConstIterator it;
 
-    if ( KStandardDirs::exists( dir + "index.docbook" ) ) {
+    if ( TDEStandardDirs::exists( dir + "index.docbook" ) ) {
         _files.append(dir + "index.docbook");
         progress->setFilesScanned(++_filesScanned);
     } else {

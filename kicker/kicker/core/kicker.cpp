@@ -95,7 +95,7 @@ Kicker::Kicker()
 
     dcopClient()->setDefaultObject("Panel");
     disableSessionManagement();
-    TQString dataPathBase = KStandardDirs::kde_default("data").append("kicker/");
+    TQString dataPathBase = TDEStandardDirs::kde_default("data").append("kicker/");
     TDEGlobal::dirs()->addResourceType("mini", dataPathBase + "pics/mini");
     TDEGlobal::dirs()->addResourceType("icon", dataPathBase + "pics");
     TDEGlobal::dirs()->addResourceType("builtinbuttons", dataPathBase + "builtins");

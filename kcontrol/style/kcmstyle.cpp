@@ -128,7 +128,7 @@ KCMStyle::KCMStyle( TQWidget* parent, const char* name )
 	m_bToolbarsDirty = false;
 
 	TDEGlobal::dirs()->addResourceType("themes",
-		KStandardDirs::kde_default("data") + "kstyle/themes");
+		TDEStandardDirs::kde_default("data") + "kstyle/themes");
 
 	TDEAboutData *about =
 		new TDEAboutData( I18N_NOOP("kcmstyle"),

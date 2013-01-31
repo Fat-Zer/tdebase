@@ -87,7 +87,7 @@ bool SearchHandler::checkBinary( const TQString &cmd ) const
   if ( pos < 0 ) binary = cmd;
   else binary = cmd.left( pos );
 
-  return !KStandardDirs::findExe( binary ).isEmpty();
+  return !TDEStandardDirs::findExe( binary ).isEmpty();
 }
 
 void SearchHandler::search( DocEntry *entry, const TQStringList &words,

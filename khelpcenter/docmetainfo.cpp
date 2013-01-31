@@ -137,7 +137,7 @@ void DocMetaInfo::scanMetaInfo( bool force )
   TQStringList metaInfos = config.readListEntry( "MetaInfoDirs" );
 
   if ( metaInfos.isEmpty() ) {
-    KStandardDirs* kstd = TDEGlobal::dirs();
+    TDEStandardDirs* kstd = TDEGlobal::dirs();
     kstd->addResourceType( "data", "share/apps/khelpcenter" );
     metaInfos = kstd->findDirs( "data", "plugins" );
   }

@@ -125,7 +125,7 @@ bool createDir(const TQString &dir)
     //
     // Clear any umask before dir is created
     mode_t oldMask=umask(0000);
-    bool   status=KStandardDirs::makeDir(dir, DIR_PERMS);
+    bool   status=TDEStandardDirs::makeDir(dir, DIR_PERMS);
     // Reset umask
     ::umask(oldMask);
     return status;

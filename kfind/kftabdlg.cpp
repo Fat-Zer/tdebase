@@ -76,7 +76,7 @@ KfindTabWidget::KfindTabWidget(TQWidget *parent, const char *name)
     subdirsCb->setChecked(true);
     caseSensCb->setChecked(false);
     useLocateCb->setChecked(false);
-    if(KStandardDirs::findExe("locate")==NULL)
+    if(TDEStandardDirs::findExe("locate")==NULL)
     	useLocateCb->setEnabled(false);
 
     nameBox->setDuplicatesEnabled(FALSE);

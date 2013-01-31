@@ -66,7 +66,7 @@ K_EXPORT_COMPONENT_FACTORY (kcm_screensaver, KSSFactory("kcmscreensaver") )
 static TQString findExe(const TQString &exe) {
     TQString result = locate("exe", exe);
     if (result.isEmpty())
-        result = KStandardDirs::findExe(exe);
+        result = TDEStandardDirs::findExe(exe);
     return result;
 }
 

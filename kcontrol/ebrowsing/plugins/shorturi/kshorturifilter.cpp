@@ -441,7 +441,7 @@ bool KShortURIFilter::filterURI( KURIFilterData& data ) const
   // line arguments or options that might have been supplied.
   TQString exe = removeArgs( cmd );
   //kdDebug() << k_funcinfo << "findExe with " << exe << endl;
-  if( data.checkForExecutables() && !KStandardDirs::findExe( exe ).isNull() )
+  if( data.checkForExecutables() && !TDEStandardDirs::findExe( exe ).isNull() )
   {
     //kdDebug() << "EXECUTABLE  exe=" << exe << endl;
     setFilteredURI( data, KURL( exe ));

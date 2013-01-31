@@ -383,14 +383,14 @@ extern "C"
 
     KDE_EXPORT TDECModule *create_kicker_arrangement(TQWidget *parent, const char * /*name*/)
     {
-        TDEGlobal::dirs()->addResourceType("extensions", KStandardDirs::kde_default("data") +
+        TDEGlobal::dirs()->addResourceType("extensions", TDEStandardDirs::kde_default("data") +
                                          "kicker/extensions");
         return new PositionConfig(parent, "kcmkicker");
     }
 
     KDE_EXPORT TDECModule *create_kicker_hiding(TQWidget *parent, const char * /*name*/)
     {
-        TDEGlobal::dirs()->addResourceType("extensions", KStandardDirs::kde_default("data") +
+        TDEGlobal::dirs()->addResourceType("extensions", TDEStandardDirs::kde_default("data") +
                                          "kicker/extensions");
         return new HidingConfig(parent, "kcmkicker");
     }
@@ -403,9 +403,9 @@ extern "C"
     KDE_EXPORT TDECModule *create_kicker_appearance(TQWidget *parent, const char * /*name*/)
     {
         KImageIO::registerFormats();
-        TDEGlobal::dirs()->addResourceType("tiles", KStandardDirs::kde_default("data") +
+        TDEGlobal::dirs()->addResourceType("tiles", TDEStandardDirs::kde_default("data") +
                 "kicker/tiles");
-        TDEGlobal::dirs()->addResourceType("hb_pics", KStandardDirs::kde_default("data") +
+        TDEGlobal::dirs()->addResourceType("hb_pics", TDEStandardDirs::kde_default("data") +
                 "kcmkicker/pics");
         return new LookAndFeelConfig(parent, "kcmkicker");
     }

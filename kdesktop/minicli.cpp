@@ -1072,7 +1072,7 @@ void Minicli::slotPriority(int priority)
 TQString Minicli::calculate(const TQString &exp)
 {
    TQString result, cmd;
-   const TQString bc = KStandardDirs::findExe("bc");
+   const TQString bc = TDEStandardDirs::findExe("bc");
    if ( !bc.isEmpty() )
       cmd = TQString("echo %1 | %2").arg(TDEProcess::quote(TQString("scale=8; ")+exp), TDEProcess::quote(bc));
    else

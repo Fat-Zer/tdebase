@@ -309,7 +309,7 @@ void KSysGuardApplet::resizeDocks( uint newDockCount )
 
 bool KSysGuardApplet::load()
 {
-  KStandardDirs* kstd = TDEGlobal::dirs();
+  TDEStandardDirs* kstd = TDEGlobal::dirs();
   kstd->addResourceType( "data", "share/apps/ksysguard" );
   TQString fileName = kstd->findResource( "data", "KSysGuardApplet.xml" );
 
@@ -458,7 +458,7 @@ bool KSysGuardApplet::save()
       ((KSGRD::SensorDisplay*)mDockList[ i ])->saveSettings( doc, element );
     }
 
-  KStandardDirs* kstd = TDEGlobal::dirs();
+  TDEStandardDirs* kstd = TDEGlobal::dirs();
   kstd->addResourceType( "data", "share/apps/ksysguard" );
   TQString fileName = kstd->saveLocation( "data", "ksysguard" );
   fileName += "/KSysGuardApplet.xml";

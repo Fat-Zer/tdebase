@@ -1164,12 +1164,12 @@ TQString startPrivilegedProcess(const TQString& command, const TQString& dialogC
 {
     TQString error;
 
-    TQString tdesudoPath = KStandardDirs::findExe("tdesudo");
+    TQString tdesudoPath = TDEStandardDirs::findExe("tdesudo");
 
     if (!tdesudoPath.isEmpty())
         error = startKdeSudoProcess(tdesudoPath, command, dialogCaption, dialogComment);
     else {
-        TQString tdesuPath = KStandardDirs::findExe("tdesu");
+        TQString tdesuPath = TDEStandardDirs::findExe("tdesu");
 
         if (!tdesuPath.isEmpty())
             error = startKdeSuProcess(tdesuPath, command, dialogCaption);
@@ -1184,7 +1184,7 @@ TQString privilegedMount(const char* udi, const char* mountPoint, const char** o
  
     kdDebug() << "run privileged mount for " << udi << endl;
 
-    TQString dbusSendPath = KStandardDirs::findExe("dbus-send");
+    TQString dbusSendPath = TDEStandardDirs::findExe("dbus-send");
 
     // @todo return error message
     if (dbusSendPath.isEmpty())
@@ -1219,7 +1219,7 @@ TQString privilegedUnmount(const char* udi)
  
     kdDebug() << "run privileged unmount for " << udi << endl;
 
-    TQString dbusSendPath = KStandardDirs::findExe("dbus-send");
+    TQString dbusSendPath = TDEStandardDirs::findExe("dbus-send");
 
     // @todo return error message
     if (dbusSendPath.isEmpty())
