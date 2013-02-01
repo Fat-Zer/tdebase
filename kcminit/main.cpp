@@ -233,7 +233,7 @@ extern "C" KDE_EXPORT int kdemain(int argc, char *argv[])
 
   startup = ( strcmp( argv[ 0 ], "kcminit_startup" ) == 0 ); // started from starttde?
 
-  KLocale::setMainCatalogue("kcontrol");
+  TDELocale::setMainCatalogue("kcontrol");
   TDEAboutData aboutData( "kcminit", I18N_NOOP("KCMInit"),
 	"",
 	I18N_NOOP("KCMInit - runs startups initialization for Control Modules."));
@@ -243,7 +243,7 @@ extern "C" KDE_EXPORT int kdemain(int argc, char *argv[])
 
   TDEApplication app;
   app.dcopClient()->registerAs( "kcminit", false );
-  KLocale::setMainCatalogue(0);
+  TDELocale::setMainCatalogue(0);
   KCMInit kcminit( TDECmdLineArgs::parsedArgs());
   return 0;
 }

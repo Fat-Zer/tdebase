@@ -100,7 +100,7 @@ KControlApp::~KControlApp()
 
 extern "C" KDE_EXPORT int kdemain(int argc, char *argv[])
 {
-  KLocale::setMainCatalogue("kcontrol");
+  TDELocale::setMainCatalogue("kcontrol");
   TDEAboutData aboutKControl( "kcontrol", I18N_NOOP("Trinity Control Center"),
     KCONTROL_VERSION, I18N_NOOP("The Trinity Control Center"), TDEAboutData::License_GPL,
     I18N_NOOP("(c) 1998-2004, The TDE Control Center Developers"));

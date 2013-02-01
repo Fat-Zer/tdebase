@@ -240,13 +240,13 @@ int main(int argc, char** argv)
    _notifiers[2].setAutoDelete( TRUE );
 
    kdDebug(1430) << "4 - KXtApplication app" << endl;
-   KLocale::setMainCatalogue("nsplugin");
+   TDELocale::setMainCatalogue("nsplugin");
    KXtApplication app(dpy, argc, argv, "nspluginviewer");
 #else
    kdDebug(1430) << "3 - create QXtEventLoop" << endl;
    QXtEventLoop integrator( "nspluginviewer" );
    parseCommandLine(argc, argv);
-   KLocale::setMainCatalogue("nsplugin");
+   TDELocale::setMainCatalogue("nsplugin");
 
    kdDebug(1430) << "4 - create TDEApplication" << endl;
    TDEApplication app( argc,  argv, "nspluginviewer" );

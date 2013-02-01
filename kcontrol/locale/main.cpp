@@ -23,16 +23,16 @@
 
 extern "C" {
   KDE_EXPORT void *init_kcm_locale() {
-    KLocale::setMainCatalogue("kcmlocale");
-    return new KLocaleFactory("kcmlocale");
+    TDELocale::setMainCatalogue("kcmlocale");
+    return new TDELocaleFactory("kcmlocale");
   }
 }
 
 /*
 extern "C" {
   TDECModule *create_locale(TQWidget *parent, const char* name) {
-    KLocale::setMainCatalogue("kcmlocale");
-    return new KLocaleApplication(parent, "kcmlocale");
+    TDELocale::setMainCatalogue("kcmlocale");
+    return new TDELocaleApplication(parent, "kcmlocale");
   }
 }
 */

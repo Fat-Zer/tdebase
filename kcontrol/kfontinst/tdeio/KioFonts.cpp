@@ -108,7 +108,7 @@ int kdemain(int argc, char **argv)
         exit(-1);
     }
 
-    KLocale::setMainCatalogue(KFI_CATALOGUE);
+    TDELocale::setMainCatalogue(KFI_CATALOGUE);
 
     TDEInstance instance("tdeio_" KFI_KIO_FONTS_PROTOCOL);
     KFI::CKioFonts slave(argv[2], argv[3]);

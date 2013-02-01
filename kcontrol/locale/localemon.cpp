@@ -41,7 +41,7 @@
 #include "localemon.h"
 #include "localemon.moc"
 
-KLocaleConfigMoney::KLocaleConfigMoney(KLocale *locale,
+TDELocaleConfigMoney::TDELocaleConfigMoney(TDELocale *locale,
                                        TQWidget *parent, const char*name)
   : TQWidget(parent, name),
     m_locale(locale)
@@ -121,11 +121,11 @@ KLocaleConfigMoney::KLocaleConfigMoney(KLocale *locale,
   adjustSize();
 }
 
-KLocaleConfigMoney::~KLocaleConfigMoney()
+TDELocaleConfigMoney::~TDELocaleConfigMoney()
 {
 }
 
-void KLocaleConfigMoney::save()
+void TDELocaleConfigMoney::save()
 {
   TDEConfig *config = TDEGlobal::config();
   TDEConfigGroupSaver saver(config, "Locale");
@@ -178,7 +178,7 @@ void KLocaleConfigMoney::save()
                        m_locale->negativePrefixCurrencySymbol(), true, true);
 
   i = ent.readNumEntry("PositiveMonetarySignPosition",
-                       (int)KLocale::BeforeQuantityMoney);
+                       (int)TDELocale::BeforeQuantityMoney);
   config->deleteEntry("PositiveMonetarySignPosition", false, true);
   if (i != m_locale->positiveMonetarySignPosition())
     config->writeEntry("PositiveMonetarySignPosition",
@@ -186,7 +186,7 @@ void KLocaleConfigMoney::save()
                        true, true);
 
   i = ent.readNumEntry("NegativeMonetarySignPosition",
-                       (int)KLocale::ParensAround);
+                       (int)TDELocale::ParensAround);
   config->deleteEntry("NegativeMonetarySignPosition", false, true);
   if (i != m_locale->negativeMonetarySignPosition())
     config->writeEntry("NegativeMonetarySignPosition",
@@ -196,7 +196,7 @@ void KLocaleConfigMoney::save()
   config->sync();
 }
 
-void KLocaleConfigMoney::slotLocaleChanged()
+void TDELocaleConfigMoney::slotLocaleChanged()
 {
   m_edMonCurSym->setText( m_locale->currencySymbol() );
   m_edMonDecSym->setText( m_locale->monetaryDecimalSymbol() );
@@ -209,55 +209,55 @@ void KLocaleConfigMoney::slotLocaleChanged()
   m_cmbMonNegMonSignPos->setCurrentItem( m_locale->negativeMonetarySignPosition() );
 }
 
-void KLocaleConfigMoney::slotMonCurSymChanged(const TQString &t)
+void TDELocaleConfigMoney::slotMonCurSymChanged(const TQString &t)
 {
   m_locale->setCurrencySymbol(t);
   emit localeChanged();
 }
 
-void KLocaleConfigMoney::slotMonDecSymChanged(const TQString &t)
+void TDELocaleConfigMoney::slotMonDecSymChanged(const TQString &t)
 {
   m_locale->setMonetaryDecimalSymbol(t);
   emit localeChanged();
 }
 
-void KLocaleConfigMoney::slotMonThoSepChanged(const TQString &t)
+void TDELocaleConfigMoney::slotMonThoSepChanged(const TQString &t)
 {
   m_locale->setMonetaryThousandsSeparator(t);
   emit localeChanged();
 }
 
-void KLocaleConfigMoney::slotMonFraDigChanged(int value)
+void TDELocaleConfigMoney::slotMonFraDigChanged(int value)
 {
   m_locale->setFracDigits(value);
   emit localeChanged();
 }
 
-void KLocaleConfigMoney::slotMonPosPreCurSymChanged()
+void TDELocaleConfigMoney::slotMonPosPreCurSymChanged()
 {
   m_locale->setPositivePrefixCurrencySymbol(m_chMonPosPreCurSym->isChecked());
   emit localeChanged();
 }
 
-void KLocaleConfigMoney::slotMonNegPreCurSymChanged()
+void TDELocaleConfigMoney::slotMonNegPreCurSymChanged()
 {
   m_locale->setNegativePrefixCurrencySymbol(m_chMonNegPreCurSym->isChecked());
   emit localeChanged();
 }
 
-void KLocaleConfigMoney::slotMonPosMonSignPosChanged(int i)
+void TDELocaleConfigMoney::slotMonPosMonSignPosChanged(int i)
 {
-  m_locale->setPositiveMonetarySignPosition((KLocale::SignPosition)i);
+  m_locale->setPositiveMonetarySignPosition((TDELocale::SignPosition)i);
   emit localeChanged();
 }
 
-void KLocaleConfigMoney::slotMonNegMonSignPosChanged(int i)
+void TDELocaleConfigMoney::slotMonNegMonSignPosChanged(int i)
 {
-  m_locale->setNegativeMonetarySignPosition((KLocale::SignPosition)i);
+  m_locale->setNegativeMonetarySignPosition((TDELocale::SignPosition)i);
   emit localeChanged();
 }
 
-void KLocaleConfigMoney::slotTranslate()
+void TDELocaleConfigMoney::slotTranslate()
 {
   TQObjectList list;
   list.append(TQT_TQOBJECT(m_cmbMonPosMonSignPos));

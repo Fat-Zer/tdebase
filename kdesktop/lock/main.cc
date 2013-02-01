@@ -205,7 +205,7 @@ static int trapXErrors(Display *, XErrorEvent *)
 
 int main( int argc, char **argv )
 {
-    KLocale::setMainCatalogue("kdesktop");
+    TDELocale::setMainCatalogue("kdesktop");
 
     TDECmdLineArgs::init( argc, argv, "kdesktop_lock", I18N_NOOP("KDesktop Locker"), I18N_NOOP("Session Locker for KDesktop"), "2.1" );
     TDECmdLineArgs::addCmdLineOptions( options );

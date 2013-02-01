@@ -45,9 +45,9 @@
 #include "kcmlocale.h"
 #include "toplevel.moc"
 
-KLocaleApplication::KLocaleApplication(TQWidget *parent, const char* /*name*/, 
+TDELocaleApplication::TDELocaleApplication(TQWidget *parent, const char* /*name*/, 
                                        const TQStringList &args)
-  : TDECModule( KLocaleFactory::instance(), parent, args)
+  : TDECModule( TDELocaleFactory::instance(), parent, args)
 {
   TDEAboutData* aboutData = new TDEAboutData("kcmlocale",
         I18N_NOOP("KCMLocale"),
@@ -62,26 +62,26 @@ KLocaleApplication::KLocaleApplication(TQWidget *parent, const char* /*name*/,
   m_nullConfig = new TDEConfig(TQString::null, false, false);
   m_globalConfig = new TDEConfig(TQString::null, false, true);
 
-  m_locale = new KLocale(TQString::fromLatin1("kcmlocale"), m_nullConfig);
+  m_locale = new TDELocale(TQString::fromLatin1("kcmlocale"), m_nullConfig);
   TQVBoxLayout *l = new TQVBoxLayout(this, 0, KDialog::spacingHint());
   l->setAutoAdd(TRUE);
 
   m_tab = new TQTabWidget(this);
 
-  m_localemain = new KLocaleConfig(m_locale, this);
+  m_localemain = new TDELocaleConfig(m_locale, this);
   m_tab->addTab( m_localemain, TQString::null);
-  m_localenum = new KLocaleConfigNumber(m_locale, this);
+  m_localenum = new TDELocaleConfigNumber(m_locale, this);
   m_tab->addTab( m_localenum, TQString::null );
-  m_localemon = new KLocaleConfigMoney(m_locale, this);
+  m_localemon = new TDELocaleConfigMoney(m_locale, this);
   m_tab->addTab( m_localemon, TQString::null );
-  m_localetime = new KLocaleConfigTime(m_locale, this);
+  m_localetime = new TDELocaleConfigTime(m_locale, this);
   m_tab->addTab( m_localetime, TQString::null );
-  m_localeother = new KLocaleConfigOther(m_locale, this);
+  m_localeother = new TDELocaleConfigOther(m_locale, this);
   m_tab->addTab( m_localeother, TQString::null );
 
   // Examples
   m_gbox = new TQVGroupBox(this);
-  m_sample = new KLocaleSample(m_locale, m_gbox);
+  m_sample = new TDELocaleSample(m_locale, m_gbox);
 
   // getting signals from childs
   connect(m_localemain, TQT_SIGNAL(localeChanged()),
@@ -146,33 +146,33 @@ KLocaleApplication::KLocaleApplication(TQWidget *parent, const char* /*name*/,
   load();
 }
 
-KLocaleApplication::~KLocaleApplication()
+TDELocaleApplication::~TDELocaleApplication()
 {
   delete m_locale;
   delete m_globalConfig;
   delete m_nullConfig;
 }
 
-void KLocaleApplication::load()
+void TDELocaleApplication::load()
 {
 	load( false );
 }
 
-void KLocaleApplication::load( bool useDefaults )
+void TDELocaleApplication::load( bool useDefaults )
 {
 	m_globalConfig->setReadDefaults( useDefaults );
 	m_globalConfig->reparseConfiguration();
-	*m_locale = KLocale(TQString::fromLatin1("kcmlocale"), m_globalConfig);
+	*m_locale = TDELocale(TQString::fromLatin1("kcmlocale"), m_globalConfig);
 	
 	emit localeChanged();
 	emit languageChanged();
 	emit changed(useDefaults);
 }
 
-void KLocaleApplication::save()
+void TDELocaleApplication::save()
 {
   // temperary use of our locale as the global locale
-  KLocale *lsave = TDEGlobal::_locale;
+  TDELocale *lsave = TDEGlobal::_locale;
   TDEGlobal::_locale = m_locale;
   KMessageBox::information(this, m_locale->translate
                            ("Changed language settings apply only to "
@@ -206,12 +206,12 @@ void KLocaleApplication::save()
   emit changed(false);
 }
 
-void KLocaleApplication::defaults()
+void TDELocaleApplication::defaults()
 {
 	load( true );
 }
 
-TQString KLocaleApplication::quickHelp() const
+TQString TDELocaleApplication::quickHelp() const
 {
   return m_locale->translate("<h1>Country/Region & Language</h1>\n"
           "<p>From here you can configure language, numeric, and time \n"
@@ -222,7 +222,7 @@ TQString KLocaleApplication::quickHelp() const
           "to use 24 hours and and use comma as decimal separator.</p>\n");
 }
 
-void KLocaleApplication::slotTranslate()
+void TDELocaleApplication::slotTranslate()
 {
   // The untranslated string for TQLabel are stored in
   // the name() so we use that when retranslating
@@ -269,7 +269,7 @@ void KLocaleApplication::slotTranslate()
   // not retranslated.
 }
 
-void KLocaleApplication::slotChanged()
+void TDELocaleApplication::slotChanged()
 {
   emit changed(true);
 }

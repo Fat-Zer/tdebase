@@ -35,7 +35,7 @@
 #include "localenum.h"
 #include "localenum.moc"
 
-KLocaleConfigNumber::KLocaleConfigNumber(KLocale *locale,
+TDELocaleConfigNumber::TDELocaleConfigNumber(TDELocale *locale,
 					 TQWidget *parent, const char*name)
   : TQWidget(parent, name),
     m_locale(locale)
@@ -75,14 +75,14 @@ KLocaleConfigNumber::KLocaleConfigNumber(KLocale *locale,
 	  TQT_SLOT(slotLocaleChanged()));
 }
 
-KLocaleConfigNumber::~KLocaleConfigNumber()
+TDELocaleConfigNumber::~TDELocaleConfigNumber()
 {
 }
 
-void KLocaleConfigNumber::save()
+void TDELocaleConfigNumber::save()
 {
   // temperary use of our locale as the global locale
-  KLocale *lsave = TDEGlobal::_locale;
+  TDELocale *lsave = TDEGlobal::_locale;
   TDEGlobal::_locale = m_locale;
 
   TDEConfig *config = TDEGlobal::config();
@@ -125,7 +125,7 @@ void KLocaleConfigNumber::save()
   TDEGlobal::_locale = lsave;
 }
 
-void KLocaleConfigNumber::slotLocaleChanged()
+void TDELocaleConfigNumber::slotLocaleChanged()
 {
   // #### load all settings here
   m_edDecSym->setText( m_locale->decimalSymbol() );
@@ -134,31 +134,31 @@ void KLocaleConfigNumber::slotLocaleChanged()
   m_edMonNegSign->setText( m_locale->negativeSign() );
 }
 
-void KLocaleConfigNumber::slotDecSymChanged(const TQString &t)
+void TDELocaleConfigNumber::slotDecSymChanged(const TQString &t)
 {
   m_locale->setDecimalSymbol(t);
   emit localeChanged();
 }
 
-void KLocaleConfigNumber::slotThoSepChanged(const TQString &t)
+void TDELocaleConfigNumber::slotThoSepChanged(const TQString &t)
 {
   m_locale->setThousandsSeparator(t);
   emit localeChanged();
 }
 
-void KLocaleConfigNumber::slotMonPosSignChanged(const TQString &t)
+void TDELocaleConfigNumber::slotMonPosSignChanged(const TQString &t)
 {
   m_locale->setPositiveSign(t);
   emit localeChanged();
 }
 
-void KLocaleConfigNumber::slotMonNegSignChanged(const TQString &t)
+void TDELocaleConfigNumber::slotMonNegSignChanged(const TQString &t)
 {
   m_locale->setNegativeSign(t);
   emit localeChanged();
 }
 
-void KLocaleConfigNumber::slotTranslate()
+void TDELocaleConfigNumber::slotTranslate()
 {
   TQString str;
 

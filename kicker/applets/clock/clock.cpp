@@ -1540,7 +1540,7 @@ void ClockApplet::aboutToShowContextMenu()
     menu->clear();
     menu->insertTitle( SmallIcon( "clock" ), i18n( "Clock" ) );
 
-    KLocale *loc = TDEGlobal::locale();
+    TDELocale *loc = TDEGlobal::locale();
     TQDateTime dt = TQDateTime::currentDateTime();
     dt = TQT_TQDATETIME_OBJECT(dt.addSecs(TZoffset));
 

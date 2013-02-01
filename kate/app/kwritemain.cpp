@@ -540,7 +540,7 @@ extern "C" KDE_EXPORT int kdemain(int argc, char **argv)
 {
   Kate::Document::setFileChangedDialogsActivated (true);
 
-  KLocale::setMainCatalogue("kate");         //lukas: set this to have the kwritepart translated using kate message catalog
+  TDELocale::setMainCatalogue("kate");         //lukas: set this to have the kwritepart translated using kate message catalog
 
   // here we go, construct the KWrite version
   // TQString kWriteVersion  = TQString ("%1.%2.%3").arg(KDE::versionMajor() + 1).arg(KDE::versionMinor()).arg(KDE::versionRelease());

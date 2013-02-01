@@ -275,7 +275,7 @@ static const KCmdLineOptions options[] =
 extern "C"
 KDE_EXPORT int kdemain( int argc, char* argv[] )
     {
-    KLocale::setMainCatalogue( "kcmtwinrules" );
+    TDELocale::setMainCatalogue( "kcmtwinrules" );
     TDECmdLineArgs::init( argc, argv, "twin_rules_dialog", I18N_NOOP( "TWin" ),
 	I18N_NOOP( "TWin helper utility" ), "1.0" );
     TDECmdLineArgs::addCmdLineOptions( options );

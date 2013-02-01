@@ -529,7 +529,7 @@ int main( int argc, char **argv )
                           "0.3", "nspluginscan", TDEAboutData::License_GPL,
                           "(c) 2000,2001 by Stefan Schimanski" );
 
-    KLocale::setMainCatalogue("nsplugin");
+    TDELocale::setMainCatalogue("nsplugin");
     TDECmdLineArgs::init( argc, argv, &aboutData );
     TDECmdLineArgs::addCmdLineOptions( options );
     TDECmdLineArgs *args = TDECmdLineArgs::parsedArgs();

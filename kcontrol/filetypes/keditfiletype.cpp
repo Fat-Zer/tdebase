@@ -110,7 +110,7 @@ static KCmdLineOptions options[] =
 
 int main(int argc, char ** argv)
 {
-  KLocale::setMainCatalogue("filetypes");
+  TDELocale::setMainCatalogue("filetypes");
   TDEAboutData aboutData( "keditfiletype", I18N_NOOP("KEditFileType"), "1.0",
                         I18N_NOOP("TDE file type editor - simplified version for editing a single file type"),
                         TDEAboutData::License_GPL,

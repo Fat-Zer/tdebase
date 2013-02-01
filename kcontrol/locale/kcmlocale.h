@@ -31,19 +31,19 @@
 
 class KAddButton;
 class KLanguageButton;
-class KLocale;
-class KLocaleSample;
+class TDELocale;
+class TDELocaleSample;
 
 class TQLabel;
 class TQListBox;
 class TQPushButton;
 
-class KLocaleConfig : public TQWidget
+class TDELocaleConfig : public TQWidget
 {
   Q_OBJECT
 
 public:
-  KLocaleConfig( KLocale *_locale,
+  TDELocaleConfig( TDELocale *_locale,
                  TQWidget *parent = 0, const char *name = 0);
 
   void save();
@@ -84,7 +84,7 @@ private slots:
 private:
   TQStringList languageList() const;
 
-  KLocale *m_locale;
+  TDELocale *m_locale;
 
   KLanguageButton *m_comboCountry;
 

@@ -44,7 +44,7 @@ static const KCmdLineOptions options[] =
 
 int main( int argc, char* argv[] )
     {
-    KLocale::setMainCatalogue( "twin" ); // the messages are in twin's .po file
+    TDELocale::setMainCatalogue( "twin" ); // the messages are in twin's .po file
     TDECmdLineArgs::init( argc, argv, "twin_resume_helper", I18N_NOOP( "TWin" ),
 	I18N_NOOP( "TWin helper utility" ), "1.0" );
     TDECmdLineArgs::addCmdLineOptions( options );

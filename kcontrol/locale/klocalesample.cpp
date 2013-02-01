@@ -36,7 +36,7 @@
 #include "klocalesample.h"
 #include "klocalesample.moc"
 
-KLocaleSample::KLocaleSample(KLocale *locale,
+TDELocaleSample::TDELocaleSample(TDELocale *locale,
                              TQWidget *parent, const char*name)
   : TQWidget(parent, name),
     m_locale(locale)
@@ -82,11 +82,11 @@ KLocaleSample::KLocaleSample(KLocale *locale,
   timer->start(1000);
 }
 
-KLocaleSample::~KLocaleSample()
+TDELocaleSample::~TDELocaleSample()
 {
 }
 
-void KLocaleSample::slotUpdateTime()
+void TDELocaleSample::slotUpdateTime()
 {
   TQDateTime dt = TQDateTime::currentDateTime();
 
@@ -95,7 +95,7 @@ void KLocaleSample::slotUpdateTime()
   m_timeSample->setText(m_locale->formatTime(TQT_TQTIME_OBJECT(dt.time()), true));
 }
 
-void KLocaleSample::slotLocaleChanged()
+void TDELocaleSample::slotLocaleChanged()
 {
   m_numberSample->setText(m_locale->formatNumber(1234567.89) +
                           TQString::fromLatin1(" / ") +

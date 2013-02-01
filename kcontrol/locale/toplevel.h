@@ -32,21 +32,21 @@ class TQTabWidget;
 class TQGroupBox;
 
 class TDEConfig;
-class KLocale;
-class KLocaleConfig;
-class KLocaleConfigMoney;
-class KLocaleConfigNumber;
-class KLocaleConfigTime;
-class KLocaleConfigOther;
-class KLocaleSample;
+class TDELocale;
+class TDELocaleConfig;
+class TDELocaleConfigMoney;
+class TDELocaleConfigNumber;
+class TDELocaleConfigTime;
+class TDELocaleConfigOther;
+class TDELocaleSample;
 
-class KLocaleApplication : public TDECModule
+class TDELocaleApplication : public TDECModule
 {
   Q_OBJECT
 
 public:
-  KLocaleApplication(TQWidget *parent, const char *name, const TQStringList &);
-  virtual ~KLocaleApplication();
+  TDELocaleApplication(TQWidget *parent, const char *name, const TQStringList &);
+  virtual ~TDELocaleApplication();
 
   virtual void load();
   virtual void load(bool useDefault);
@@ -66,22 +66,22 @@ public slots:
   void slotChanged();
 
 private:
-  KLocale *m_locale;
+  TDELocale *m_locale;
 
   TQTabWidget          *m_tab;
-  KLocaleConfig       *m_localemain;
-  KLocaleConfigNumber *m_localenum;
-  KLocaleConfigMoney  *m_localemon;
-  KLocaleConfigTime   *m_localetime;
-  KLocaleConfigOther  *m_localeother;
+  TDELocaleConfig       *m_localemain;
+  TDELocaleConfigNumber *m_localenum;
+  TDELocaleConfigMoney  *m_localemon;
+  TDELocaleConfigTime   *m_localetime;
+  TDELocaleConfigOther  *m_localeother;
 
   TQGroupBox           *m_gbox;
-  KLocaleSample       *m_sample;
+  TDELocaleSample       *m_sample;
 
   TDEConfig * m_globalConfig;
   TDEConfig * m_nullConfig;
 };
 
-typedef KGenericFactory<KLocaleApplication, TQWidget > KLocaleFactory;
+typedef KGenericFactory<TDELocaleApplication, TQWidget > TDELocaleFactory;
 
 #endif

@@ -80,7 +80,7 @@ bool operator>= (const StringPair &p1, const StringPair &p2)
   return ! (p1.userName>=p2.userName);
 }
 
-StringPair KLocaleConfigTime::buildStringPair(const TQChar &c, const TQString &s) const
+StringPair TDELocaleConfigTime::buildStringPair(const TQChar &c, const TQString &s) const
 {
   StringPair pair;
   pair.storeName=c;
@@ -88,7 +88,7 @@ StringPair KLocaleConfigTime::buildStringPair(const TQChar &c, const TQString &s
   return pair;
 }
 
-TQValueList<StringPair> KLocaleConfigTime::timeMap() const
+TQValueList<StringPair> TDELocaleConfigTime::timeMap() const
 {
   TQValueList < StringPair > list;
   list+=buildStringPair('H',m_locale->translate("HH"));
@@ -104,7 +104,7 @@ TQValueList<StringPair> KLocaleConfigTime::timeMap() const
   return list;
 }
 
-TQValueList <StringPair> KLocaleConfigTime::dateMap() const
+TQValueList <StringPair> TDELocaleConfigTime::dateMap() const
 {
   TQValueList < StringPair > list;
   list+=buildStringPair('Y',m_locale->translate("YYYY"));
@@ -123,7 +123,7 @@ TQValueList <StringPair> KLocaleConfigTime::dateMap() const
   return list;
 }
 
-TQString KLocaleConfigTime::userToStore(const TQValueList<StringPair> & list,
+TQString TDELocaleConfigTime::userToStore(const TQValueList<StringPair> & list,
 		    const TQString & userFormat) const
 {
   TQString result;
@@ -161,7 +161,7 @@ TQString KLocaleConfigTime::userToStore(const TQValueList<StringPair> & list,
   return result;
 }
 
-TQString KLocaleConfigTime::storeToUser(const TQValueList<StringPair> & list,
+TQString TDELocaleConfigTime::storeToUser(const TQValueList<StringPair> & list,
 				       const TQString & storeFormat) const
 {
   TQString result;
@@ -189,7 +189,7 @@ TQString KLocaleConfigTime::storeToUser(const TQValueList<StringPair> & list,
   return result;
 }
 
-KLocaleConfigTime::KLocaleConfigTime(KLocale *_locale,
+TDELocaleConfigTime::TDELocaleConfigTime(TDELocale *_locale,
 				     TQWidget *parent, const char*name)
  : TQWidget(parent, name),
    m_locale(_locale)
@@ -239,14 +239,14 @@ KLocaleConfigTime::KLocaleConfigTime(KLocale *_locale,
   lay->setColStretch(1, 1);
 }
 
-KLocaleConfigTime::~KLocaleConfigTime()
+TDELocaleConfigTime::~TDELocaleConfigTime()
 {
 }
 
-void KLocaleConfigTime::save()
+void TDELocaleConfigTime::save()
 {
   // temperary use of our locale as the global locale
-  KLocale *lsave = TDEGlobal::_locale;
+  TDELocale *lsave = TDEGlobal::_locale;
   TDEGlobal::_locale = m_locale;
 
   TDEConfig *config = TDEGlobal::config();
@@ -302,7 +302,7 @@ void KLocaleConfigTime::save()
   TDEGlobal::_locale = lsave;
 }
 
-void KLocaleConfigTime::showEvent( TQShowEvent *e )
+void TDELocaleConfigTime::showEvent( TQShowEvent *e )
 {
   // This option makes sense only for languages where nouns are declined
    if ( !m_locale->nounDeclension() )
@@ -310,7 +310,7 @@ void KLocaleConfigTime::showEvent( TQShowEvent *e )
    TQWidget::showEvent( e );
 }
 
-void KLocaleConfigTime::slotCalendarSystemChanged(int calendarSystem)
+void TDELocaleConfigTime::slotCalendarSystemChanged(int calendarSystem)
 {
   kdDebug() << "CalendarSystem: " << calendarSystem << endl;
 
@@ -333,7 +333,7 @@ void KLocaleConfigTime::slotCalendarSystemChanged(int calendarSystem)
   emit localeChanged();
 }
 
-void KLocaleConfigTime::slotLocaleChanged()
+void TDELocaleConfigTime::slotLocaleChanged()
 {
   typedef TQValueVector<TQString> CalendarVector;
   CalendarVector calendars(4);
@@ -375,7 +375,7 @@ calendarType);
 
 }
 
-void KLocaleConfigTime::slotTimeFmtChanged(const TQString &t)
+void TDELocaleConfigTime::slotTimeFmtChanged(const TQString &t)
 {
   //  m_locale->setTimeFormat(t);
   m_locale->setTimeFormat( userToStore( timeMap(), t ) );
@@ -383,27 +383,27 @@ void KLocaleConfigTime::slotTimeFmtChanged(const TQString &t)
   emit localeChanged();
 }
 
-void KLocaleConfigTime::slotDateFmtChanged(const TQString &t)
+void TDELocaleConfigTime::slotDateFmtChanged(const TQString &t)
 {
   // m_locale->setDateFormat(t);
   m_locale->setDateFormat( userToStore( dateMap(), t ) );
   emit localeChanged();
 }
 
-void KLocaleConfigTime::slotDateFmtShortChanged(const TQString &t)
+void TDELocaleConfigTime::slotDateFmtShortChanged(const TQString &t)
 {
   //m_locale->setDateFormatShort(t);
   m_locale->setDateFormatShort( userToStore( dateMap(), t ) );
   emit localeChanged();
 }
 
-void KLocaleConfigTime::slotWeekStartDayChanged(int firstDay) {
+void TDELocaleConfigTime::slotWeekStartDayChanged(int firstDay) {
     kdDebug(173) << k_funcinfo << "first day is now: " << firstDay << endl;
     m_locale->setWeekStartDay(m_comboWeekStartDay->currentItem() + 1);
     emit localeChanged();
 }
 
-void KLocaleConfigTime::slotDateMonthNamePossChanged()
+void TDELocaleConfigTime::slotDateMonthNamePossChanged()
 {
   if (m_locale->nounDeclension())
   {
@@ -412,7 +412,7 @@ void KLocaleConfigTime::slotDateMonthNamePossChanged()
   }
 }
 
-void KLocaleConfigTime::slotTranslate()
+void TDELocaleConfigTime::slotTranslate()
 {
   TQString str;
 
@@ -531,7 +531,7 @@ void KLocaleConfigTime::slotTranslate()
   }
 }
 
-void KLocaleConfigTime::updateWeekDayNames()
+void TDELocaleConfigTime::updateWeekDayNames()
 {
   const KCalendarSystem * calendar = m_locale->calendar();
 

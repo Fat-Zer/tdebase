@@ -45,7 +45,7 @@ int main(int argc, char *argv[])
 	TDECmdLineArgs::init( argc, argv, &aboutData );
 	TDECmdLineArgs::addCmdLineOptions( options ); // Add our own options.
 
-	KLocale::setMainCatalogue("kpersonalizer");
+	TDELocale::setMainCatalogue("kpersonalizer");
 
 	TDEApplication a;
 	if ( !kapp->dcopClient()->isAttached() )

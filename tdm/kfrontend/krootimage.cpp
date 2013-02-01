@@ -117,7 +117,7 @@ main( int argc, char *argv[] )
 {
 	TDEApplication::disableAutoDcopRegistration();
 
-	KLocale::setMainCatalogue( "kdesktop" );
+	TDELocale::setMainCatalogue( "kdesktop" );
 	TDECmdLineArgs::init( argc, argv, "krootimage", I18N_NOOP( "KRootImage" ), description, version );
 	TDECmdLineArgs::addCmdLineOptions( options );
 

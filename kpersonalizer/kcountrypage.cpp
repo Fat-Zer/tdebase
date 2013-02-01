@@ -169,7 +169,7 @@ bool KCountryPage::save(KLanguageButton *comboCountry, KLanguageButton *comboLan
 		TDEProcess proc;
 		proc << TQString::fromLatin1("tdebuildsycoca");
 		proc.start(TDEProcess::DontCare);
-		kdDebug() << "KLocaleConfig::save : sending signal to kdesktop" << endl;
+		kdDebug() << "TDELocaleConfig::save : sending signal to kdesktop" << endl;
 		// inform kicker and kdeskop about the new language
 		kapp->dcopClient()->send( "kicker", "Panel", "restart()", TQString::null);
 		// call, not send, so that we know it's done before coming back

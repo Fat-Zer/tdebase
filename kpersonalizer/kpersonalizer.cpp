@@ -87,8 +87,8 @@ KPersonalizer::KPersonalizer(TQWidget *parent, const char *name)
 
 	setFinishEnabled(TQWizard::page(4), true);
 
-	locale = new KLocale("kpersonalizer");
-	locale->setLanguage(KLocale::defaultLanguage());
+	locale = new TDELocale("kpersonalizer");
+	locale->setLanguage(TDELocale::defaultLanguage());
 
 	connect(ospage, TQT_SIGNAL(selectedOS(const TQString&)), stylepage, TQT_SLOT(presetStyle(const TQString&)));
 	connect(ospage, TQT_SIGNAL(selectedOS(const TQString&)), eyecandy, TQT_SLOT(slotPresetSlider(const TQString&)));

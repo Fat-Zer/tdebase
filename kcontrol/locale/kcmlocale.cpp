@@ -43,7 +43,7 @@
 #include "kcmlocale.moc"
 #include "toplevel.h"
 
-KLocaleConfig::KLocaleConfig(KLocale *locale,
+TDELocaleConfig::TDELocaleConfig(TDELocale *locale,
                              TQWidget *parent, const char *name)
   : TQWidget (parent, name),
     m_locale(locale)
@@ -120,7 +120,7 @@ KLocaleConfig::KLocaleConfig(KLocale *locale,
 
 }
 
-void KLocaleConfig::slotInstallLanguage()
+void TDELocaleConfig::slotInstallLanguage()
 {
   TDEProcess *proc = new TDEProcess;
 
@@ -132,7 +132,7 @@ void KLocaleConfig::slotInstallLanguage()
   proc->start();
 }
 
-void KLocaleConfig::slotUninstallLanguage()
+void TDELocaleConfig::slotUninstallLanguage()
 {
   TDEProcess *proc = new TDEProcess;
 
@@ -144,7 +144,7 @@ void KLocaleConfig::slotUninstallLanguage()
   proc->start();
 }
 
-void KLocaleConfig::slotSelectLanguage()
+void TDELocaleConfig::slotSelectLanguage()
 {
   TDEProcess *proc = new TDEProcess;
 
@@ -156,14 +156,14 @@ void KLocaleConfig::slotSelectLanguage()
   proc->start();
 }
 
-void KLocaleConfig::slotLanguageSelectorExited(TDEProcess *)
+void TDELocaleConfig::slotLanguageSelectorExited(TDEProcess *)
 {
   //reload here
   loadLanguageList();
   setEnabled(true);
 }
 
-void KLocaleConfig::slotAddLanguage(const TQString & code)
+void TDELocaleConfig::slotAddLanguage(const TQString & code)
 {
   TQStringList languageList = m_locale->languageList();
 
@@ -190,7 +190,7 @@ void KLocaleConfig::slotAddLanguage(const TQString & code)
     emit languageChanged();
 }
 
-void KLocaleConfig::slotRemoveLanguage()
+void TDELocaleConfig::slotRemoveLanguage()
 {
   TQStringList languageList = m_locale->languageList();
   int pos = m_languages->currentItem();
@@ -209,7 +209,7 @@ void KLocaleConfig::slotRemoveLanguage()
     }
 }
 
-void KLocaleConfig::slotLanguageUp()
+void TDELocaleConfig::slotLanguageUp()
 {
   TQStringList languageList = m_locale->languageList();
   int pos = m_languages->currentItem();
@@ -231,7 +231,7 @@ void KLocaleConfig::slotLanguageUp()
   }
 }
 
-void KLocaleConfig::slotLanguageDown()
+void TDELocaleConfig::slotLanguageDown()
 {
   TQStringList languageList = m_locale->languageList();
   int pos = m_languages->currentItem();
@@ -253,10 +253,10 @@ void KLocaleConfig::slotLanguageDown()
     }
 }
 
-void KLocaleConfig::loadLanguageList()
+void TDELocaleConfig::loadLanguageList()
 {
   // temperary use of our locale as the global locale
-  KLocale *lsave = TDEGlobal::_locale;
+  TDELocale *lsave = TDEGlobal::_locale;
   TDEGlobal::_locale = m_locale;
 
   // clear the list
@@ -316,10 +316,10 @@ void KLocaleConfig::loadLanguageList()
   TDEGlobal::_locale = lsave;
 }
 
-void KLocaleConfig::loadCountryList()
+void TDELocaleConfig::loadCountryList()
 {
   // temperary use of our locale as the global locale
-  KLocale *lsave = TDEGlobal::_locale;
+  TDELocale *lsave = TDEGlobal::_locale;
   TDEGlobal::_locale = m_locale;
 
   TQString sub = TQString::fromLatin1("l10n/");
@@ -391,11 +391,11 @@ void KLocaleConfig::loadCountryList()
   TDEGlobal::_locale = lsave;
 }
 
-void KLocaleConfig::readLocale(const TQString &path, TQString &name,
+void TDELocaleConfig::readLocale(const TQString &path, TQString &name,
                                const TQString &sub) const
 {
   // temperary use of our locale as the global locale
-  KLocale *lsave = TDEGlobal::_locale;
+  TDELocale *lsave = TDEGlobal::_locale;
   TDEGlobal::_locale = m_locale;
 
   // read the name
@@ -411,7 +411,7 @@ void KLocaleConfig::readLocale(const TQString &path, TQString &name,
   TDEGlobal::_locale = lsave;
 }
 
-void KLocaleConfig::save()
+void TDELocaleConfig::save()
 {
   TDEConfigBase *config = TDEGlobal::config();
 
@@ -427,7 +427,7 @@ void KLocaleConfig::save()
   config->sync();
 }
 
-void KLocaleConfig::slotCheckButtons()
+void TDELocaleConfig::slotCheckButtons()
 {
   m_removeLanguage->setEnabled( m_languages->currentItem() != -1 );
   m_upButton->setEnabled( m_languages->currentItem() > 0 );
@@ -435,7 +435,7 @@ void KLocaleConfig::slotCheckButtons()
                             m_languages->currentItem() < (signed)(m_languages->count() - 1) );
 }
 
-void KLocaleConfig::slotLocaleChanged()
+void TDELocaleConfig::slotLocaleChanged()
 {
   loadLanguageList();
   loadCountryList();
@@ -457,7 +457,7 @@ void KLocaleConfig::slotLocaleChanged()
   m_comboCountry->setCurrentItem( m_locale->country() );
 }
 
-void KLocaleConfig::slotTranslate()
+void TDELocaleConfig::slotTranslate()
 {
   kdDebug() << "slotTranslate()" << endl;
 
@@ -499,7 +499,7 @@ void KLocaleConfig::slotTranslate()
   TQWhatsThis::add( m_removeLanguage, str );
 }
 
-TQStringList KLocaleConfig::languageList() const
+TQStringList TDELocaleConfig::languageList() const
 {
   TQString fileName = locate("locale",
                             TQString::fromLatin1("l10n/%1/entry.desktop")
@@ -511,7 +511,7 @@ TQStringList KLocaleConfig::languageList() const
   return entry.readListEntry("Languages");
 }
 
-void KLocaleConfig::changedCountry(const TQString & code)
+void TDELocaleConfig::changedCountry(const TQString & code)
 {
   m_locale->setCountry(code);
 

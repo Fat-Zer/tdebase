@@ -29,15 +29,15 @@
 class TQLabel;
 class TQComboBox;
 
-class KLocale;
+class TDELocale;
 
-class KLocaleConfigOther : public TQWidget
+class TDELocaleConfigOther : public TQWidget
 {
   Q_OBJECT
 
 public:
-  KLocaleConfigOther(KLocale *locale, TQWidget *parent = 0, const char *name = 0);
-  virtual ~KLocaleConfigOther();
+  TDELocaleConfigOther(TDELocale *locale, TQWidget *parent = 0, const char *name = 0);
+  virtual ~TDELocaleConfigOther();
 
   void save();
 
@@ -59,7 +59,7 @@ private slots:
   void slotMeasureSystemChanged(int i);
 
 private:
-  KLocale *m_locale;
+  TDELocale *m_locale;
 
   TQLabel *m_labMeasureSystem;
   TQComboBox *m_combMeasureSystem;

@@ -28,7 +28,7 @@
 
 /** prototypes */
 class KLanguageCombo;
-class KLocale;
+class TDELocale;
 class KCountryPage;
 class KOSPage;
 class KEyeCandyPage;
@@ -79,7 +79,7 @@ private:
 	KEyeCandyPage* eyecandy;
 	KStylePage* stylepage;
 	KRefinePage* refinepage;
-	KLocale* locale;
+	TDELocale* locale;
 	bool os_dirty, eye_dirty, style_dirty;
 	static bool before_session;
 

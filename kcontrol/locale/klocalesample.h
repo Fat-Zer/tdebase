@@ -30,15 +30,15 @@
 class TQLabel;
 class TQResizeEvent;
 
-class KLocale;
+class TDELocale;
 
-class KLocaleSample : public TQWidget
+class TDELocaleSample : public TQWidget
 {
   Q_OBJECT
 public:
-  KLocaleSample(KLocale *_locale,
+  TDELocaleSample(TDELocale *_locale,
                 TQWidget *parent = 0, const char*name = 0);
-  virtual ~KLocaleSample();
+  virtual ~TDELocaleSample();
 
 public slots:
   void slotLocaleChanged();
@@ -47,7 +47,7 @@ protected slots:
   void slotUpdateTime();
 
 private:
-  KLocale *m_locale;
+  TDELocale *m_locale;
   TQLabel *m_numberSample, *m_labNumber;
   TQLabel *m_moneySample, *m_labMoney;
   TQLabel *m_timeSample, *m_labTime;

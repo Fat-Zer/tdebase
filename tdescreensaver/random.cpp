@@ -100,7 +100,7 @@ bool hasDirectRendering () {
 
 int main(int argc, char *argv[])
 {
-	KLocale::setMainCatalogue("tdescreensaver");
+	TDELocale::setMainCatalogue("tdescreensaver");
 	TDECmdLineArgs::init(argc, argv, appName, I18N_NOOP("Random screen saver"), description, version);
 
 	TDECmdLineArgs::addCmdLineOptions(options);

@@ -32,16 +32,16 @@ class TQComboBox;
 class TQLineEdit;
 
 class KIntNumInput;
-class KLocale;
+class TDELocale;
 class KLanguageCombo;
 
-class KLocaleConfigMoney : public TQWidget
+class TDELocaleConfigMoney : public TQWidget
 {
   Q_OBJECT
 
 public:
-  KLocaleConfigMoney(KLocale *locale, TQWidget *parent = 0, const char *name = 0);
-  virtual ~KLocaleConfigMoney();
+  TDELocaleConfigMoney(TDELocale *locale, TQWidget *parent = 0, const char *name = 0);
+  virtual ~TDELocaleConfigMoney();
 
   void save();
 
@@ -70,7 +70,7 @@ private slots:
   void slotMonNegMonSignPosChanged(int i);
 
 private:
-  KLocale *m_locale;
+  TDELocale *m_locale;
 
   // Money
   TQLabel *m_labMonCurSym;

@@ -31,18 +31,18 @@
 class TQCheckBox;
 class TQComboBox;
 
-class KLocale;
+class TDELocale;
 class KLanguageCombo;
 
 class StringPair;
 
-class KLocaleConfigTime : public TQWidget
+class TDELocaleConfigTime : public TQWidget
 {
   Q_OBJECT
 
 public:
-  KLocaleConfigTime( KLocale *_locale, TQWidget *parent=0, const char *name=0);
-  virtual ~KLocaleConfigTime( );
+  TDELocaleConfigTime( TDELocale *_locale, TQWidget *parent=0, const char *name=0);
+  virtual ~TDELocaleConfigTime( );
 
   void save();
 
@@ -83,7 +83,7 @@ private:
 		      const TQString & userFormat) const;
   StringPair buildStringPair(const TQChar &storeName, const TQString &userName) const;
 
-  KLocale *m_locale;
+  TDELocale *m_locale;
 
   // Time & dates
   TQLabel *m_labTimeFmt;

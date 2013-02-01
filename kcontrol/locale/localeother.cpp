@@ -35,7 +35,7 @@
 #include "localeother.moc"
 
 
-KLocaleConfigOther::KLocaleConfigOther(KLocale *locale,
+TDELocaleConfigOther::TDELocaleConfigOther(TDELocale *locale,
                                        TQWidget *parent, const char*name)
   : TQWidget(parent, name),
     m_locale(locale)
@@ -70,11 +70,11 @@ KLocaleConfigOther::KLocaleConfigOther(KLocale *locale,
   adjustSize();
 }
 
-KLocaleConfigOther::~KLocaleConfigOther()
+TDELocaleConfigOther::~TDELocaleConfigOther()
 {
 }
 
-void KLocaleConfigOther::save()
+void TDELocaleConfigOther::save()
 {
   TDEConfig *config = TDEGlobal::config();
   TDEConfigGroupSaver saver(config, "Locale");
@@ -92,7 +92,7 @@ void KLocaleConfigOther::save()
     config->writeEntry("PageSize",
                        m_locale->pageSize(), true, true);
 
-  i = ent.readNumEntry("MeasureSystem", (int)KLocale::Metric);
+  i = ent.readNumEntry("MeasureSystem", (int)TDELocale::Metric);
   config->deleteEntry("MeasureSystem", false, true);
   if (i != m_locale->measureSystem())
     config->writeEntry("MeasureSystem",
@@ -101,7 +101,7 @@ void KLocaleConfigOther::save()
   config->sync();
 }
 
-void KLocaleConfigOther::slotLocaleChanged()
+void TDELocaleConfigOther::slotLocaleChanged()
 {
   m_combMeasureSystem->setCurrentItem(m_locale->measureSystem());
 
@@ -113,7 +113,7 @@ void KLocaleConfigOther::slotLocaleChanged()
   m_combPageSize->setCurrentItem(i);
 }
 
-void KLocaleConfigOther::slotTranslate()
+void TDELocaleConfigOther::slotTranslate()
 {
   m_combMeasureSystem->changeItem( m_locale->translate("The Metric System",
                                                        "Metric"), 0 );
@@ -124,7 +124,7 @@ void KLocaleConfigOther::slotTranslate()
   m_combPageSize->changeItem( m_locale->translate("US Letter"), 1 );
 }
 
-void KLocaleConfigOther::slotPageSizeChanged(int i)
+void TDELocaleConfigOther::slotPageSizeChanged(int i)
 {
   TQPrinter::PageSize pageSize = TQPrinter::A4;
 
@@ -135,8 +135,8 @@ void KLocaleConfigOther::slotPageSizeChanged(int i)
   emit localeChanged();
 }
 
-void KLocaleConfigOther::slotMeasureSystemChanged(int i)
+void TDELocaleConfigOther::slotMeasureSystemChanged(int i)
 {
-  m_locale->setMeasureSystem((KLocale::MeasureSystem)i);
+  m_locale->setMeasureSystem((TDELocale::MeasureSystem)i);
   emit localeChanged();
 }

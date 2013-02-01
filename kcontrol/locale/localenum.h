@@ -31,17 +31,17 @@ class TQCheckBox;
 class TQComboBox;
 class TQLineEdit;
 
-class KLocale;
+class TDELocale;
 class KLanguageCombo;
 
-class KLocaleConfigNumber : public TQWidget
+class TDELocaleConfigNumber : public TQWidget
 {
   Q_OBJECT
 
 public:
-  KLocaleConfigNumber( KLocale *_locale,
+  TDELocaleConfigNumber( TDELocale *_locale,
 		       TQWidget *parent=0, const char *name=0);
-  virtual ~KLocaleConfigNumber( );
+  virtual ~TDELocaleConfigNumber( );
 
   void save();
 
@@ -66,7 +66,7 @@ private slots:
   void slotThoSepChanged(const TQString &t);
 
 private:
-  KLocale *m_locale;
+  TDELocale *m_locale;
 
   // Numbers
   TQLabel *m_labDecSym;
