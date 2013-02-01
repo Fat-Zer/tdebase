@@ -109,7 +109,7 @@ class ButtonSourceItem : public TQListViewItem
 /**
  * Implements the button drag source list view
  */
-class ButtonSource : public KListView
+class ButtonSource : public TDEListView
 {
 	Q_OBJECT
 

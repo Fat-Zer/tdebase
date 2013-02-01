@@ -29,7 +29,7 @@ License. See the file "COPYING" for the exact licensing terms.
 class TQPopupMenu;
 class TDEConfig;
 class TDEGlobalAccel;
-class KShortcutDialog;
+class TDEShortcutDialog;
 class TDEStartupInfo;
 class TDEStartupInfoId;
 class TDEStartupInfoData;
@@ -276,7 +276,7 @@ class Workspace : public TQObject, public KWinInterface, public KDecorationDefin
         
         bool forcedGlobalMouseGrab() const;
         void clientShortcutUpdated( Client* c );
-        bool shortcutAvailable( const KShortcut& cut, Client* ignore = NULL ) const;
+        bool shortcutAvailable( const TDEShortcut& cut, Client* ignore = NULL ) const;
         bool globalShortcutsDisabled() const;
         void disableGlobalShortcuts( bool disable );
         void disableGlobalShortcutsForClient( bool disable );
@@ -567,10 +567,10 @@ class Workspace : public TQObject, public KWinInterface, public KDecorationDefin
     //KKeyNative walkThroughDesktopsKeycode, walkBackThroughDesktopsKeycode;
     //KKeyNative walkThroughDesktopListKeycode, walkBackThroughDesktopListKeycode;
     //KKeyNative walkThroughWindowsKeycode, walkBackThroughWindowsKeycode;
-        KShortcut cutWalkThroughDesktops, cutWalkThroughDesktopsReverse;
-        KShortcut cutWalkThroughDesktopList, cutWalkThroughDesktopListReverse;
-        KShortcut cutWalkThroughWindows, cutWalkThroughWindowsReverse;
-        KShortcut cutWalkThroughApps, cutWalkThroughAppsReverse;
+        TDEShortcut cutWalkThroughDesktops, cutWalkThroughDesktopsReverse;
+        TDEShortcut cutWalkThroughDesktopList, cutWalkThroughDesktopListReverse;
+        TDEShortcut cutWalkThroughWindows, cutWalkThroughWindowsReverse;
+        TDEShortcut cutWalkThroughApps, cutWalkThroughAppsReverse;
         bool mouse_emulation;
         unsigned int mouse_emulation_state;
         WId mouse_emulation_window;
@@ -641,8 +641,8 @@ class Workspace : public TQObject, public KWinInterface, public KDecorationDefin
         TQRect** screenarea; // array of workareas per xinerama screen for all virtual desktops
 
         bool managing_topmenus;
-        KSelectionOwner* topmenu_selection;
-        KSelectionWatcher* topmenu_watcher;
+        TDESelectionOwner* topmenu_selection;
+        TDESelectionWatcher* topmenu_watcher;
         ClientList topmenus; // doesn't own them
         mutable int topmenu_height;
         TQWidget* topmenu_space;

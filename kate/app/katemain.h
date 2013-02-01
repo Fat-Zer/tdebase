@@ -36,21 +36,21 @@ class TQVBoxLayout;
 class TQString;
 class TQWidgetStack;
 
-class KAction;
-class KActionMenu;
+class TDEAction;
+class TDEActionMenu;
 class TDEConfig;
 class KDirOperator;
 class KEditToolbar;
 class KFileViewItem;
 class KHistoryCombo;
 class KLineEdit;
-class KListBox;
+class TDEListBox;
 class TDEProcess;
 class KPushButton;
-class KRecentFilesAction;
-class KSelectAction;
+class TDERecentFilesAction;
+class TDESelectAction;
 class KStatusBar;
-class KToggleAction;
+class TDEToggleAction;
 class KURL;
 class KURLComboBox;
 

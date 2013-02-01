@@ -69,7 +69,7 @@ KSmartcardConfig::KSmartcardConfig(TQWidget *parent, const char *name)
      base = new SmartcardBase(this);
      layout->add(base);
 
-     _popUpKardChooser = new KPopupMenu(this,"KpopupKardChooser");
+     _popUpKardChooser = new TDEPopupMenu(this,"KpopupKardChooser");
      _popUpKardChooser->insertItem(i18n("Change Module..."),
 				   this,
 				   TQT_SLOT(slotLaunchChooser()));
@@ -145,16 +145,16 @@ void KSmartcardConfig::updateReadersState (TQString readerName,
                                            bool isCardPresent,
                                            TQString atr) {
 
-    KListViewItem * tID=(KListViewItem *) base->_readerHostsListView->findItem(readerName, 0);
+    TDEListViewItem * tID=(TDEListViewItem *) base->_readerHostsListView->findItem(readerName, 0);
     if (tID==0) return;
 
-    KListViewItem * tIDChild=(KListViewItem*) tID->firstChild();
+    TDEListViewItem * tIDChild=(TDEListViewItem*) tID->firstChild();
     if (tIDChild==NULL) return;
 
     delete tIDChild;
 
     if (!isCardPresent)
-                (void) new KListViewItem(tID,i18n("No card inserted"));
+                (void) new TDEListViewItem(tID,i18n("No card inserted"));
     else{
 
         getSupportingModule(tID,atr);
@@ -175,7 +175,7 @@ void KSmartcardConfig::loadReadersTab( TQStringList lr){
   arg << modName;
 
   //  New view items
-  KListViewItem * temp;
+  TDEListViewItem * temp;
 
   //If the smartcard support is disabled we unload the kardsvc KDED module
   //  and return
@@ -188,11 +188,11 @@ void KSmartcardConfig::loadReadersTab( TQStringList lr){
 
 
     //  New view items
-    KListViewItem * temp;
+    TDEListViewItem * temp;
     kapp->dcopClient()->call("kded", "kded", "unloadModule(TQCString)",
 			     data, rettype, retval);
 
-    (void) new KListViewItem(base->_readerHostsListView,
+    (void) new TDEListViewItem(base->_readerHostsListView,
 			     i18n("Smart card support disabled"));
 
 
@@ -203,14 +203,14 @@ void KSmartcardConfig::loadReadersTab( TQStringList lr){
   if (lr.isEmpty()){
 
 
-    (void) new KListViewItem(base->_readerHostsListView,
+    (void) new TDEListViewItem(base->_readerHostsListView,
 			     i18n("No readers found. Check 'pcscd' is running"));
     return;
   }
 
   for (TQStringList::Iterator _slot=lr.begin();_slot!=lr.end();++_slot){
 
-   temp= new KListViewItem(base->_readerHostsListView,*_slot);
+   temp= new TDEListViewItem(base->_readerHostsListView,*_slot);
 
 
    TQByteArray dataATR;
@@ -227,7 +227,7 @@ void KSmartcardConfig::loadReadersTab( TQStringList lr){
 
    if (cardATR.isNull()){
 
-     (void) new KListViewItem(temp,i18n("NO ATR or no card inserted"));
+     (void) new TDEListViewItem(temp,i18n("NO ATR or no card inserted"));
      continue;
    }
 
@@ -241,13 +241,13 @@ void KSmartcardConfig::loadReadersTab( TQStringList lr){
 }
 
 
-void KSmartcardConfig::getSupportingModule( KListViewItem * ant,
+void KSmartcardConfig::getSupportingModule( TDEListViewItem * ant,
                                             TQString & cardATR) const{
 
 
     if (cardATR.isNull()){
 
-        (void) new KListViewItem(ant,i18n("NO ATR or no card inserted"));
+        (void) new TDEListViewItem(ant,i18n("NO ATR or no card inserted"));
         return;
     }
 
@@ -258,7 +258,7 @@ void KSmartcardConfig::getSupportingModule( KListViewItem * ant,
         TQString type=mng[0];
         TQString subType=mng[1];
         TQString subSubType=mng[2];
-        KListViewItem * hil =new KListViewItem(ant,
+        TDEListViewItem * hil =new TDEListViewItem(ant,
                                                i18n("Managed by: "),
                                                type,
                                                subType,
@@ -268,7 +268,7 @@ void KSmartcardConfig::getSupportingModule( KListViewItem * ant,
     else{
 
 
-        KListViewItem * hil =new KListViewItem(ant,
+        TDEListViewItem * hil =new TDEListViewItem(ant,
                                                i18n("No module managing this card"));
         hil->setSelectable(FALSE);
     }

@@ -131,7 +131,7 @@ private slots:
 private:
     enum ContextMenuEntry { AddItemToPanel, EditItem, AddMenuToPanel, EditMenu,
                             AddItemToDesktop, AddMenuToDesktop, PutIntoRunDialog };
-    KPopupMenu* popupMenu_;
+    TDEPopupMenu* popupMenu_;
     KSycocaEntry* contextKSycocaEntry_;
     void readConfig();
  };

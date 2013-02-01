@@ -66,17 +66,17 @@ class KDE_EXPORT Shortcut_trigger
     {
     typedef Trigger base;
     public:
-        Shortcut_trigger( Action_data* data_P, const KShortcut& shortcut_P );
+        Shortcut_trigger( Action_data* data_P, const TDEShortcut& shortcut_P );
         Shortcut_trigger( TDEConfig& cfg_P, Action_data* data_P );
         virtual ~Shortcut_trigger();
         virtual void cfg_write( TDEConfig& cfg_P ) const;
         virtual Shortcut_trigger* copy( Action_data* data_P ) const;
         virtual const TQString description() const;
-        const KShortcut& shortcut() const;
-        virtual bool handle_key( const KShortcut& shortcut_P );
+        const TDEShortcut& shortcut() const;
+        virtual bool handle_key( const TDEShortcut& shortcut_P );
         virtual void activate( bool activate_P );
     private:
-        KShortcut _shortcut;
+        TDEShortcut _shortcut;
     };
 
 class KDE_EXPORT Window_trigger
@@ -206,7 +206,7 @@ const TQString& Trigger_list::comment() const
 // Shortcut_trigger
 
 inline
-const KShortcut& Shortcut_trigger::shortcut() const
+const TDEShortcut& Shortcut_trigger::shortcut() const
     {
     return _shortcut;
     }

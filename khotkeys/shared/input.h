@@ -29,7 +29,7 @@ namespace KHotKeys
 class Kbd_receiver
     {
     public:
-        virtual bool handle_key( const KShortcut& shortcut_P ) = 0;
+        virtual bool handle_key( const TDEShortcut& shortcut_P ) = 0;
     };
 
 class Kbd
@@ -39,15 +39,15 @@ class Kbd
     public:
 	Kbd( bool grabbing_enabled_P, TQObject* parent_P );
         virtual ~Kbd();
-	void insert_item( const KShortcut& shortcut_P, Kbd_receiver* receiver_P );
-        void remove_item( const KShortcut& shortcut_P, Kbd_receiver* receiver_P );
+	void insert_item( const TDEShortcut& shortcut_P, Kbd_receiver* receiver_P );
+        void remove_item( const TDEShortcut& shortcut_P, Kbd_receiver* receiver_P );
         void activate_receiver( Kbd_receiver* receiver_P );
         void deactivate_receiver( Kbd_receiver* receiver_P );
         static bool send_macro_key( const KKey& key, Window window_P = InputFocus );
     protected:
         bool x11EventFilter( const XEvent* );                                                              
-        void grab_shortcut( const KShortcut& shortcut_P );
-        void ungrab_shortcut( const KShortcut& shortcut_P );
+        void grab_shortcut( const TDEShortcut& shortcut_P );
+        void ungrab_shortcut( const TDEShortcut& shortcut_P );
     private slots:
         void key_slot( TQString key_P );
         void update_connections();
@@ -55,11 +55,11 @@ class Kbd
         struct Receiver_data
             {
             Receiver_data();
-            TQValueList< KShortcut > shortcuts;
+            TQValueList< TDEShortcut > shortcuts;
             bool active;
             };
         TQMap< Kbd_receiver*, Receiver_data > receivers;
-        TQMap< KShortcut, int > grabs;
+        TQMap< TDEShortcut, int > grabs;
         TDEGlobalAccel* kga;
     };
 

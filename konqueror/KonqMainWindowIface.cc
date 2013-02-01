@@ -35,7 +35,7 @@ KonqMainWindowIface::KonqMainWindowIface( KonqMainWindow * mainWindow )
     :
     // ARGL I hate this "virtual public DCOPObject" stuff!
     DCOPObject( mainWindow->name() ),
-    KMainWindowInterface( mainWindow ), m_pMainWindow( mainWindow )
+    TDEMainWindowInterface( mainWindow ), m_pMainWindow( mainWindow )
 {
   m_dcopActionProxy = new KDCOPActionProxy( mainWindow->actionCollection(), this );
 }
@@ -137,9 +137,9 @@ DCOPRef KonqMainWindowIface::action( const TQCString &name )
 QCStringList KonqMainWindowIface::actions()
 {
   QCStringList res;
-  TQValueList<KAction *> lst = m_dcopActionProxy->actions();
-  TQValueList<KAction *>::ConstIterator it = lst.begin();
-  TQValueList<KAction *>::ConstIterator end = lst.end();
+  TQValueList<TDEAction *> lst = m_dcopActionProxy->actions();
+  TQValueList<TDEAction *>::ConstIterator it = lst.begin();
+  TQValueList<TDEAction *>::ConstIterator end = lst.end();
   for (; it != end; ++it )
     res.append( (*it)->name() );
 

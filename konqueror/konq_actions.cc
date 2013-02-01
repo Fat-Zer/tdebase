@@ -81,7 +81,7 @@ void KonqBidiHistoryAction::fillHistoryPopup( const TQPtrList<HistoryEntry> &his
 ///////////////////////////////
 
 KonqBidiHistoryAction::KonqBidiHistoryAction ( const TQString & text, TQObject* parent, const char* name )
-  : KAction( text, 0, parent, name )
+  : TDEAction( text, 0, parent, name )
 {
   setShortcutConfigurable(false);
   m_firstIndex = 0;
@@ -90,7 +90,7 @@ KonqBidiHistoryAction::KonqBidiHistoryAction ( const TQString & text, TQObject* 
 
 int KonqBidiHistoryAction::plug( TQWidget *widget, int index )
 {
-  if (kapp && !kapp->authorizeKAction(name()))
+  if (kapp && !kapp->authorizeTDEAction(name()))
     return -1;
 
   // Go menu
@@ -108,7 +108,7 @@ int KonqBidiHistoryAction::plug( TQWidget *widget, int index )
     m_firstIndex = m_goMenu->count();
     return m_goMenu->count(); // hmmm, what should this be ?
   }
-  return KAction::plug( widget, index );
+  return TDEAction::plug( widget, index );
 }
 
 void KonqBidiHistoryAction::fillGoMenu( const TQPtrList<HistoryEntry> & history )
@@ -169,30 +169,30 @@ void KonqBidiHistoryAction::slotActivated( int id )
 ///////////////////////////////
 
 KonqLogoAction::KonqLogoAction( const TQString& text, int accel, TQObject* parent, const char* name )
-  : KAction( text, accel, parent, name )
+  : TDEAction( text, accel, parent, name )
 {
 }
 
 KonqLogoAction::KonqLogoAction( const TQString& text, int accel,
                                TQObject* receiver, const char* slot, TQObject* parent, const char* name )
-  : KAction( text, accel, receiver, slot, parent, name )
+  : TDEAction( text, accel, receiver, slot, parent, name )
 {
 }
 
 KonqLogoAction::KonqLogoAction( const TQString& text, const TQIconSet& pix, int accel, TQObject* parent, const char* name )
-  : KAction( text, pix, accel, parent, name )
+  : TDEAction( text, pix, accel, parent, name )
 {
 }
 
 KonqLogoAction::KonqLogoAction( const TQString& text, const TQIconSet& pix,int accel, TQObject* receiver, const char* slot, TQObject* parent, const char* name )
-  : KAction( text, pix, accel, receiver, slot, parent, name )
+  : TDEAction( text, pix, accel, receiver, slot, parent, name )
 {
 }
 
 KonqLogoAction::KonqLogoAction( const TQStringList& icons, TQObject* receiver,
                                 const char* slot, TQObject* parent,
                                 const char* name )
-    : KAction( 0L, 0, receiver, slot, parent, name ) // text missing !
+    : TDEAction( 0L, 0, receiver, slot, parent, name ) // text missing !
 {
   iconList = icons;
 }
@@ -204,9 +204,9 @@ void KonqLogoAction::start()
   {
     TQWidget *w = container( i );
 
-    if ( w->inherits( "KToolBar" ) )
+    if ( w->inherits( "TDEToolBar" ) )
     {
-      KAnimWidget *anim = ((KToolBar *)w)->animatedWidget( menuId( i ) );
+      KAnimWidget *anim = ((TDEToolBar *)w)->animatedWidget( menuId( i ) );
       anim->start();
     }
   }
@@ -219,9 +219,9 @@ void KonqLogoAction::stop()
   {
     TQWidget *w = container( i );
 
-    if ( w->inherits( "KToolBar" ) )
+    if ( w->inherits( "TDEToolBar" ) )
     {
-      KAnimWidget *anim = ((KToolBar *)w)->animatedWidget( menuId( i ) );
+      KAnimWidget *anim = ((TDEToolBar *)w)->animatedWidget( menuId( i ) );
       anim->stop();
     }
   }
@@ -231,9 +231,9 @@ void KonqLogoAction::updateIcon(int id)
 {
     TQWidget *w = container( id );
 
-    if ( w->inherits( "KToolBar" ) )
+    if ( w->inherits( "TDEToolBar" ) )
     {
-      KAnimWidget *anim = ((KToolBar *)w)->animatedWidget( menuId( id ) );
+      KAnimWidget *anim = ((TDEToolBar *)w)->animatedWidget( menuId( id ) );
       anim->setIcons(icon());
     }
 }
@@ -242,22 +242,22 @@ void KonqLogoAction::updateIcon(int id)
 
 int KonqLogoAction::plug( TQWidget *widget, int index )
 {
-  if (kapp && !kapp->authorizeKAction(name()))
+  if (kapp && !kapp->authorizeTDEAction(name()))
     return -1;
 
 /*
-  if ( widget->inherits( "KMainWindow" ) )
+  if ( widget->inherits( "TDEMainWindow" ) )
   {
-    ((KMainWindow*)widget)->setIndicatorWidget(m_logoLabel);
+    ((TDEMainWindow*)widget)->setIndicatorWidget(m_logoLabel);
 
     addContainer( widget, -1 );
 
     return containerCount() - 1;
   }
 */
-  if ( widget->inherits( "KToolBar" ) )
+  if ( widget->inherits( "TDEToolBar" ) )
   {
-    KToolBar *bar = (KToolBar *)widget;
+    TDEToolBar *bar = (TDEToolBar *)widget;
 
     int id_ = getToolButtonID();
 
@@ -271,7 +271,7 @@ int KonqLogoAction::plug( TQWidget *widget, int index )
     return containerCount() - 1;
   }
 
-  int containerId = KAction::plug( widget, index );
+  int containerId = TDEAction::plug( widget, index );
 
   return containerId;
 }
@@ -280,7 +280,7 @@ int KonqLogoAction::plug( TQWidget *widget, int index )
 
 KonqViewModeAction::KonqViewModeAction( const TQString &text, const TQString &icon,
                                         TQObject *parent, const char *name )
-    : KRadioAction( text, icon, 0, parent, name )
+    : TDERadioAction( text, icon, 0, parent, name )
 {
     m_menu = new TQPopupMenu;
 
@@ -299,13 +299,13 @@ KonqViewModeAction::~KonqViewModeAction()
 
 int KonqViewModeAction::plug( TQWidget *widget, int index )
 {
-    int res = KRadioAction::plug( widget, index );
+    int res = TDERadioAction::plug( widget, index );
 
-    if ( widget->inherits( "KToolBar" ) && (res != -1) )
+    if ( widget->inherits( "TDEToolBar" ) && (res != -1) )
     {
-        KToolBar *toolBar = static_cast<KToolBar *>( widget );
+        TDEToolBar *toolBar = static_cast<TDEToolBar *>( widget );
 
-        KToolBarButton *button = toolBar->getButton( itemId( res ) );
+        TDEToolBarButton *button = toolBar->getButton( itemId( res ) );
 
         if ( m_menu->count() > 1 )
             button->setDelayedPopup( m_menu, false );
@@ -332,12 +332,12 @@ void KonqViewModeAction::slotPopupAboutToHide()
         for (; i < containerCount(); ++i )
         {
             TQWidget *widget = container( i );
-            if ( !widget->inherits( "KToolBar" ) )
+            if ( !widget->inherits( "TDEToolBar" ) )
                 continue;
 
-            KToolBar *tb = static_cast<KToolBar *>( widget );
+            TDEToolBar *tb = static_cast<TDEToolBar *>( widget );
 
-            KToolBarButton *button = tb->getButton( itemId( i ) );
+            TDEToolBarButton *button = tb->getButton( itemId( i ) );
 
             button->setDown( isChecked() );
         }
@@ -351,7 +351,7 @@ uint KonqMostOftenURLSAction::s_maxEntries = 0;
 KonqMostOftenURLSAction::KonqMostOftenURLSAction( const TQString& text,
 						  TQObject *parent,
 						  const char *name )
-    : KActionMenu( text, "goto", parent, name )
+    : TDEActionMenu( text, "goto", parent, name )
 {
     setDelayed( false );
 

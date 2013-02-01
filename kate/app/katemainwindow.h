@@ -40,7 +40,7 @@ namespace Kate {
 }
 
 class KFileItem;
-class KRecentFilesAction;
+class TDERecentFilesAction;
 class DCOPObject;
 
 class KateExternalToolsMenuAction;
@@ -192,17 +192,17 @@ class KateMainWindow : public KateMDI::MainWindow, virtual public KParts::PartBa
     // management items
     KateViewManager *m_viewManager;
 
-    KRecentFilesAction *fileOpenRecent;
+    TDERecentFilesAction *fileOpenRecent;
 
     KateFileList *filelist;
     KateFileSelector *fileselector;
 
-    KActionMenu* documentOpenWith;
+    TDEActionMenu* documentOpenWith;
 
     TQPopupMenu *documentMenu;
 
-    KToggleAction* settingsShowFilelist;
-    KToggleAction* settingsShowFileselector;
+    TDEToggleAction* settingsShowFilelist;
+    TDEToggleAction* settingsShowFileselector;
 
     KateExternalToolsMenuAction *externalTools;
     GrepTool * greptool;

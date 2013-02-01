@@ -239,7 +239,7 @@ class Client : public TQObject, public KDecorationDefines
         void shrinkVertical();
 
         bool providesContextHelp() const;
-        KShortcut shortcut() const;
+        TDEShortcut shortcut() const;
         void setShortcut( const TQString& cut );
 
         bool performMouseCommand( Options::MouseCommand, TQPoint globalPos, bool handled = false );
@@ -419,7 +419,7 @@ class Client : public TQObject, public KDecorationDefines
         void setCaption( const TQString& s, bool force = false );
         bool hasTransientInternal( const Client* c, bool indirect, ConstClientList& set ) const;
         void finishWindowRules();
-        void setShortcutInternal( const KShortcut& cut );
+        void setShortcutInternal( const TDEShortcut& cut );
 
         void updateWorkareaDiffs();
         void checkDirection( int new_diff, int old_diff, TQRect& rect, const TQRect& area );
@@ -584,7 +584,7 @@ class Client : public TQObject, public KDecorationDefines
 
         TQRegion _mask;
         static bool check_active_modal; // see Client::checkActiveModal()
-        KShortcut _shortcut;
+        TDEShortcut _shortcut;
         friend struct FetchNameInternalPredicate;
         friend struct CheckIgnoreFocusStealingProcedure;
         friend struct ResetupRulesProcedure;
@@ -964,7 +964,7 @@ inline Window Client::moveResizeGrabWindow() const
     return move_resize_grab_window;
     }
 
-inline KShortcut Client::shortcut() const
+inline TDEShortcut Client::shortcut() const
     {
     return _shortcut;
     }

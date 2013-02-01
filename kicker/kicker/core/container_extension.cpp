@@ -371,7 +371,7 @@ void ExtensionContainer::writeConfig()
 
 void ExtensionContainer::showPanelMenu( const TQPoint& globalPos )
 {
-    if (!kapp->authorizeKAction("kicker_rmb"))
+    if (!kapp->authorizeTDEAction("kicker_rmb"))
     {
         return;
     }

@@ -66,9 +66,9 @@ int Splitter::idAfter ( TQWidget * w ) const
 
 //BEGIN TOGGLETOOLVIEWACTION
 
-ToggleToolViewAction::ToggleToolViewAction ( const TQString& text, const KShortcut& cut, ToolView *tv,
+ToggleToolViewAction::ToggleToolViewAction ( const TQString& text, const TDEShortcut& cut, ToolView *tv,
                                              TQObject* parent, const char* name )
- : KToggleAction(text,cut,parent,name)
+ : TDEToggleAction(text,cut,parent,name)
  , m_tv(tv)
 {
   connect(this,TQT_SIGNAL(toggled(bool)),this,TQT_SLOT(slotToggled(bool)));
@@ -137,8 +137,8 @@ GUIClient::GUIClient ( MainWindow *mw )
   if (actionCollection()->kaccel()==0)
     actionCollection()->setWidget(m_mw);
 
-  m_toolMenu = new KActionMenu(i18n("Tool &Views"),actionCollection(),"kate_mdi_toolview_menu");
-  m_showSidebarsAction = new KToggleAction( i18n("Show Side&bars"),
+  m_toolMenu = new TDEActionMenu(i18n("Tool &Views"),actionCollection(),"kate_mdi_toolview_menu");
+  m_showSidebarsAction = new TDEToggleAction( i18n("Show Side&bars"),
                                             CTRL|ALT|SHIFT|Key_F, actionCollection(), "kate_mdi_sidebar_visibility" );
   m_showSidebarsAction->setCheckedState(i18n("Hide Side&bars"));
   m_showSidebarsAction->setChecked( m_mw->sidebarsVisible() );
@@ -146,7 +146,7 @@ GUIClient::GUIClient ( MainWindow *mw )
            m_mw, TQT_SLOT( setSidebarsVisible( bool ) ) );
 
   m_toolMenu->insert( m_showSidebarsAction );
-  m_toolMenu->insert( new KActionSeparator( m_toolMenu ) );
+  m_toolMenu->insert( new TDEActionSeparator( m_toolMenu ) );
 
   // read shortcuts
   actionCollection()->readShortcutSettings( "Shortcuts", kapp->config() );
@@ -166,14 +166,14 @@ void GUIClient::registerToolView (ToolView *tv)
   TQString aname = TQString("kate_mdi_toolview_") + tv->id;
 
   // try to read the action shortcut
-  KShortcut sc;
+  TDEShortcut sc;
   TDEConfig *cfg = kapp->config();
   TQString _grp = cfg->group();
   cfg->setGroup("Shortcuts");
-  sc = KShortcut( cfg->readEntry( aname, "" ) );
+  sc = TDEShortcut( cfg->readEntry( aname, "" ) );
   cfg->setGroup( _grp );
 
-  KToggleAction *a = new ToggleToolViewAction(i18n("Show %1").arg(tv->text),
+  TDEToggleAction *a = new ToggleToolViewAction(i18n("Show %1").arg(tv->text),
     sc,tv, actionCollection(), aname.latin1() );
 
   a->setCheckedState(TQString(i18n("Hide %1").arg(tv->text)));
@@ -188,7 +188,7 @@ void GUIClient::registerToolView (ToolView *tv)
 
 void GUIClient::unregisterToolView (ToolView *tv)
 {
-  KAction *a = m_toolToAction[tv];
+  TDEAction *a = m_toolToAction[tv];
 
   if (!a)
     return;
@@ -214,7 +214,7 @@ void GUIClient::updateActions()
 
   unplugActionList( actionListName );
 
-  TQPtrList<KAction> addList;
+  TQPtrList<TDEAction> addList;
   addList.append(m_toolMenu);
 
   plugActionList( actionListName, addList );
@@ -460,7 +460,7 @@ bool Sidebar::eventFilter(TQObject *obj, TQEvent *ev)
 
       if (w)
       {
-        KPopupMenu *p = new KPopupMenu (this);
+        TDEPopupMenu *p = new TDEPopupMenu (this);
 
         p->insertTitle(SmallIcon("view_remove"), i18n("Behavior"), 50);
 

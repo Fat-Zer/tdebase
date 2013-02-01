@@ -26,7 +26,7 @@
 #include <kdialogbase.h>
 class KonqSidebarBookmarkItem;
 
-class KActionCollection;
+class TDEActionCollection;
 class KLineEdit;
 
 /**
@@ -49,7 +49,7 @@ public:
 protected slots:
     void slotBookmarksChanged( const TQString & );
     void slotMoved(TQListViewItem*,TQListViewItem*,TQListViewItem*);
-    void slotDropped(KListView*,TQDropEvent*,TQListViewItem*,TQListViewItem*);
+    void slotDropped(TDEListView*,TQDropEvent*,TQListViewItem*,TQListViewItem*);
     void slotCreateFolder();
     void slotDelete();
     void slotProperties(KonqSidebarBookmarkItem *bi = 0);
@@ -69,7 +69,7 @@ private:
     KonqSidebarTreeTopLevelItem * m_topLevelItem;
     KonqSidebarBookmarkItem * m_rootItem;
 
-    KActionCollection *m_collection;
+    TDEActionCollection *m_collection;
 
     bool m_ignoreOpenChange;
     TQMap<TQString, bool> m_folderOpenState;

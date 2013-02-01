@@ -37,7 +37,7 @@ class TQRect;
 class KDirLister;
 class KonqFMSettings;
 class ListViewPropertiesExtension;
-class KToggleAction;
+class TDEToggleAction;
 class KonqListView;
 class KonqFileTip;
 class ListViewBrowserExtension;
@@ -56,24 +56,24 @@ class ColumnInfo
 public:
    ColumnInfo();
    void setData( const TQString& n, const TQString& desktopName, int kioUds,
-                 KToggleAction *someAction, int theWith = -1 );
+                 TDEToggleAction *someAction, int theWith = -1 );
    void setData( const TQString& n, const TQString& desktopName, int kioUds /* UDS_EXTRA */,
-                 TQVariant::Type type, KToggleAction *someAction, int theWith = -1 );
+                 TQVariant::Type type, TDEToggleAction *someAction, int theWith = -1 );
    int displayInColumn;
    TQString name;
    TQString desktopFileName;
    int udsId;
    TQVariant::Type type; // only used if udsId == UDS_EXTRA
    bool displayThisOne;
-   KToggleAction *toggleThisOne;
+   TDEToggleAction *toggleThisOne;
    int width;
 };
 
 /**
- * The tree view widget (based on KListView).
+ * The tree view widget (based on TDEListView).
  * Most of the functionality is here.
  */
-class KonqBaseListViewWidget : public KListView
+class KonqBaseListViewWidget : public TDEListView
 {
    friend class KonqBaseListViewItem;
    friend class KonqListView;
@@ -154,7 +154,7 @@ signals:
 
 public slots:
    //virtual void slotOnItem( KonqBaseListViewItem* _item );
-   // The '2' was added to differentiate it from KListView::slotMouseButtonClicked()
+   // The '2' was added to differentiate it from TDEListView::slotMouseButtonClicked()
    void slotMouseButtonClicked2( int _button, TQListViewItem *_item, const TQPoint& pos, int );
    virtual void slotExecuted( TQListViewItem *_item );
    void slotItemRenamed( TQListViewItem *, const TQString &, int );
@@ -222,7 +222,7 @@ protected:
    //so the position of the mouse pointer doesn't matter when using keyboard, aleXXX
    virtual void popupMenu( const TQPoint& _global, bool alwaysForSelectedFiles = false );
 
-   //this one is called only by KListView, and this is friend anyways (Alex)
+   //this one is called only by TDEListView, and this is friend anyways (Alex)
    //KDirLister *dirLister() const { return m_dirLister; }
 
 protected:

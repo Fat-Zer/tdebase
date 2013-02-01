@@ -64,7 +64,7 @@ void KatePluginListItem::stateChange(bool b)
 }
 
 KatePluginListView::KatePluginListView(TQWidget *parent, const char *name)
-  : KListView(parent, name)
+  : TDEListView(parent, name)
 {
 }
 

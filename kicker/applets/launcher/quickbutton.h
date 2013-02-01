@@ -40,8 +40,8 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include "simplebutton.h"
 
 class TQPopupMenu;
-class KAction;
-class KToggleAction;
+class TDEAction;
+class TDEToggleAction;
 
 class QuickURL {
 public:
@@ -71,7 +71,7 @@ class QuickButton: public SimpleButton, public KickerTip::Client {
 public:
     enum { DEFAULT_ICON_DIM = 16 };
     enum { ICON_MARGIN = 1 };
-    QuickButton(const TQString &u, KAction* configAction,
+    QuickButton(const TQString &u, TDEAction* configAction,
                 TQWidget *parent=0, const char *name=0);
     ~QuickButton();
     TQString url() const;
@@ -116,7 +116,7 @@ private:
     bool _highlight, _changeCursorOverItem, _dragEnabled;
     int _iconDim;
     bool m_sticky;
-    KToggleAction *m_stickyAction;
+    TDEToggleAction *m_stickyAction;
     int m_stickyId;
     KPanelApplet::Direction m_popupDirection;
 };

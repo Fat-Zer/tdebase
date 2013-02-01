@@ -35,8 +35,8 @@
 
 class KateMainWindow;
 
-class KAction;
-class KSelectAction;
+class TDEAction;
+class TDESelectAction;
 
 class KateFileListItem : public TQListViewItem
 {
@@ -74,7 +74,7 @@ class KateFileListItem : public TQListViewItem
     uint m_docNumber;
 };
 
-class KateFileList : public KListView
+class KateFileList : public TDEListView
 {
   Q_OBJECT
 
@@ -152,11 +152,11 @@ class KateFileList : public KListView
     int m_sort;
     bool notify;
 
-    KAction* windowNext;
-    KAction* windowPrev;
-    KSelectAction* sortAction;
-    KAction* listMoveFileUp;
-    KAction* listMoveFileDown;
+    TDEAction* windowNext;
+    TDEAction* windowPrev;
+    TDESelectAction* sortAction;
+    TDEAction* listMoveFileUp;
+    TDEAction* listMoveFileDown;
 
     TQPtrList<KateFileListItem> m_viewHistory;
     TQPtrList<KateFileListItem> m_editHistory;

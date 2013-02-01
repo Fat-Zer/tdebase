@@ -6,7 +6,7 @@
 class TQCheckBox;
 class TQLabel;
 class KComboBox;
-class KListView;
+class TDEListView;
 
 class ModifiersModule : public TQWidget
 {
@@ -30,7 +30,7 @@ class ModifiersModule : public TQWidget
 	TQLabel* m_plblCtrl, * m_plblAlt, * m_plblWin;
 	TQLabel* m_plblWinModX;
 	TQCheckBox* m_pchkMacKeyboard;
-	KListView* m_plstXMods;
+	TDEListView* m_plstXMods;
 	TQCheckBox* m_pchkMacSwap;
 
 	void initGUI();

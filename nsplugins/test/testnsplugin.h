@@ -32,7 +32,7 @@
 class NSPluginLoader;
 class NSPluginInstance;
 
-class TestNSPlugin : public KMainWindow
+class TestNSPlugin : public TDEMainWindow
 {
   Q_OBJECT
 

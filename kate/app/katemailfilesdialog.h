@@ -49,7 +49,7 @@ class KateMailDialog : public KDialogBase {
   private slots:
     void slotShowButton();
   private:
-    class KListView *list;
+    class TDEListView *list;
     class TQLabel *lInfo;
     KateMainWindow *mainWindow;
     class TQVBox *mw;

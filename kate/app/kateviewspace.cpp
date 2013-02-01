@@ -397,7 +397,7 @@ void KateVSStatusBar::modifiedChanged()
 
 void KateVSStatusBar::showMenu()
 {
-   KMainWindow* mainWindow = static_cast<KMainWindow*>( topLevelWidget() );
+   TDEMainWindow* mainWindow = static_cast<TDEMainWindow*>( topLevelWidget() );
    TQPopupMenu* menu = static_cast<TQPopupMenu*>( mainWindow->factory()->container("viewspace_popup", mainWindow ) );
 
    if (menu)

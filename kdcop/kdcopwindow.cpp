@@ -280,7 +280,7 @@ DCOPBrowserFunctionItem::setOpen(bool o)
 // ------------------------------------------------------------------------
 
 KDCOPWindow::KDCOPWindow(TQWidget *parent, const char * name)
-  : KMainWindow(parent, name)
+  : TDEMainWindow(parent, name)
 {
   dcopClient = kapp->dcopClient();
   dcopClient->attach();
@@ -317,10 +317,10 @@ KDCOPWindow::KDCOPWindow(TQWidget *parent, const char * name)
   KStdAction::keyBindings( guiFactory(), TQT_SLOT( configureShortcuts() ), actionCollection() );
 
 
-  (void) new KAction( i18n( "&Reload" ), "reload", KStdAccel::shortcut(KStdAccel::Reload), TQT_TQOBJECT(this), TQT_SLOT( slotReload() ), actionCollection(), "reload" );
+  (void) new TDEAction( i18n( "&Reload" ), "reload", TDEStdAccel::shortcut(TDEStdAccel::Reload), TQT_TQOBJECT(this), TQT_SLOT( slotReload() ), actionCollection(), "reload" );
 
   exeaction =
-    new KAction
+    new TDEAction
     (
      i18n("&Execute"),
       "exec",
@@ -334,7 +334,7 @@ KDCOPWindow::KDCOPWindow(TQWidget *parent, const char * name)
   exeaction->setEnabled(false);
   exeaction->setToolTip(i18n("Execute the selected DCOP call."));
 
-  langmode = new KSelectAction ( i18n("Language Mode"),
+  langmode = new TDESelectAction ( i18n("Language Mode"),
   		CTRL + Key_M,
 		TQT_TQOBJECT(this),
 		TQT_SLOT(slotMode()),

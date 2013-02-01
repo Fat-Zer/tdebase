@@ -32,7 +32,7 @@
 class TQTimer;
 
 class TDEConfig;
-class KPopupMenu;
+class TDEPopupMenu;
 
 class ClipAction;
 struct ClipCommand;
@@ -85,7 +85,7 @@ private:
   ClipAction *myCurrentAction;
   TQIntDict<ClipCommand> myCommandMapper;
   TQIntDict<TQStringList> myGroupingMapper;
-  KPopupMenu *myMenu;
+  TDEPopupMenu *myMenu;
   TQTimer *myPopupKillTimer;
   int myPopupKillTimeout;
   bool m_stripWhiteSpace;

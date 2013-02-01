@@ -22,7 +22,7 @@
 
 #include <tqwidget.h>
 
-class KFontRequester;
+class TDEFontRequester;
 class TQCheckBox;
 
 class TDMFontWidget : public TQWidget
@@ -46,9 +46,9 @@ protected slots:
 
 private:
 	TQCheckBox	*aacb;
-        KFontRequester *greetingFontChooser;
-        KFontRequester *failFontChooser;
-        KFontRequester *stdFontChooser;
+        TDEFontRequester *greetingFontChooser;
+        TDEFontRequester *failFontChooser;
+        TDEFontRequester *stdFontChooser;
 };
 
 

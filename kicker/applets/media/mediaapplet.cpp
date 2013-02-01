@@ -427,7 +427,7 @@ void MediaApplet::mousePressEvent(TQMouseEvent *e)
 {
     if(e->button()==Qt::RightButton)
     {
-        KPopupMenu menu(this);
+        TDEPopupMenu menu(this);
     
         menu.insertTitle(i18n("Media"));
         menu.insertItem(SmallIcon("configure"), i18n("&Configure..."), 1);

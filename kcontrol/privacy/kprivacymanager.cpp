@@ -117,8 +117,8 @@ bool KPrivacyManager::clearWebCache() const
 
 bool KPrivacyManager::clearRecentDocuments() const
 {
-  KRecentDocument::clear();
-  return KRecentDocument::recentDocuments().isEmpty();
+  TDERecentDocument::clear();
+  return TDERecentDocument::recentDocuments().isEmpty();
 }
 
 bool KPrivacyManager::clearQuickStartMenu() const

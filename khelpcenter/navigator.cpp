@@ -160,7 +160,7 @@ bool Navigator::showMissingDocs() const
 
 void Navigator::setupContentsTab()
 {
-    mContentsTree = new KListView( mTabWidget );
+    mContentsTree = new TDEListView( mTabWidget );
     mContentsTree->setFrameStyle(TQFrame::Panel | TQFrame::Sunken);
     mContentsTree->addColumn(TQString::null);
     mContentsTree->setAllColumnsShowFocus(true);

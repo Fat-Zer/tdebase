@@ -38,7 +38,7 @@ class TQHBoxLayout;
 class TQCheckBox;
 class TQComboBox;
 class KPushButton;
-class KListViewSearchLineWidget;
+class TDEListViewSearchLineWidget;
 
 extern TDEApplication* Kapp;
 
@@ -133,7 +133,7 @@ private:
 	ProcessList* pList;
 	///Layout for the search line and process filter combo box
 	TQHBoxLayout* gmSearch;
-	KListViewSearchLineWidget *pListSearchLine;
+	TDEListViewSearchLineWidget *pListSearchLine;
 	
 	TQHBoxLayout* gm1;
 

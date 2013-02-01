@@ -1212,7 +1212,7 @@ void TaskContainer::popupMenu(int action)
     }
     else if (action == m_settingsObject->ShowOperationsMenu)
     {
-        if (!kapp->authorizeKAction("twin_rmb"))
+        if (!kapp->authorizeTDEAction("twin_rmb"))
         {
             return;
         }

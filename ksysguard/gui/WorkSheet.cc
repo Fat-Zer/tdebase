@@ -327,7 +327,7 @@ KSGRD::SensorDisplay *WorkSheet::addDisplay( const TQString &hostName,
      * type we popup a menu so the user can select what display is
      * wanted. */
     if ( sensorType == "integer" || sensorType == "float" ) {
-      KPopupMenu pm;
+      TDEPopupMenu pm;
       pm.insertTitle( i18n( "Select Display Type" ) );
       pm.insertItem( i18n( "&Signal Plotter" ), 1 );
       pm.insertItem( i18n( "&Multimeter" ), 2 );

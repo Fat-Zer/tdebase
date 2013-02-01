@@ -51,7 +51,7 @@
  *       hidden if the current file is not of one of the indicated types.
  *
  */
-class KateExternalToolsMenuAction : public KActionMenu
+class KateExternalToolsMenuAction : public TDEActionMenu
 {
   friend class KateExternalToolAction;
 
@@ -65,20 +65,20 @@ class KateExternalToolsMenuAction : public KActionMenu
      */
     void reload();
 
-    class KActionCollection *actionCollection() { return m_actionCollection; }
+    class TDEActionCollection *actionCollection() { return m_actionCollection; }
 
   private slots:
     void slotDocumentChanged();
 
   private:
-    class KActionCollection *m_actionCollection;
+    class TDEActionCollection *m_actionCollection;
     class KateMainWindow *mainwindow; // for the actions to access view/doc managers
 };
 
 /**
  * This Action contains a KateExternalTool
  */
-class KateExternalToolAction : public KAction, public KWordMacroExpander
+class KateExternalToolAction : public TDEAction, public KWordMacroExpander
 {
   Q_OBJECT
   public:
@@ -168,7 +168,7 @@ class KateExternalToolsConfigWidget : public Kate::ConfigPage
 
     TQStringList m_removed;
 
-    class KListBox *lbTools;
+    class TDEListBox *lbTools;
     class TQPushButton *btnNew, *btnRemove, *btnEdit, *btnMoveUp, *btnMoveDwn;
 
     class TDEConfig *config;

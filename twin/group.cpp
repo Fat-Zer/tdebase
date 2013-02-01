@@ -479,8 +479,8 @@ bool Client::belongToSameApplication( const Client* c1, const Client* c2, bool a
 
 // Non-transient windows with window role containing '#' are always
 // considered belonging to different applications (unless
-// the window role is exactly the same). KMainWindow sets
-// window role this way by default, and different KMainWindow
+// the window role is exactly the same). TDEMainWindow sets
+// window role this way by default, and different TDEMainWindow
 // usually "are" different application from user's point of view.
 // This help with no-focus-stealing for e.g. konqy reusing.
 // On the other hand, if one of the windows is active, they are

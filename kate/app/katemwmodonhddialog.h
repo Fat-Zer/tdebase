@@ -52,7 +52,7 @@ class KateMwModOnHdDialog : public KDialogBase
   private:
     enum Action { Ignore, Overwrite, Reload };
     void handleSelected( int action );
-    class KListView *lvDocuments;
+    class TDEListView *lvDocuments;
     class TQPushButton *btnDiff;
     class KTempFile *m_tmpfile;
 };

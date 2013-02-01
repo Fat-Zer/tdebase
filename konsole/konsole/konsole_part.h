@@ -36,12 +36,12 @@ class TDEInstance;
 class konsoleBrowserExtension;
 class TQPushButton;
 class TQSpinBox;
-class KPopupMenu;
-class KActionMenu;
+class TDEPopupMenu;
+class TDEActionMenu;
 class TQCheckBox;
 class KRootPixmap;
-class KToggleAction;
-class KSelectAction;
+class TDEToggleAction;
+class TDESelectAction;
 
 namespace KParts { class GUIActivateEvent; }
 
@@ -146,25 +146,25 @@ signals:
     ColorSchemaList* colors;
     KRootPixmap* rootxpm;
 
-    KActionCollection* actions;
-    KActionCollection* settingsActions;
+    TDEActionCollection* actions;
+    TDEActionCollection* settingsActions;
 
-    KToggleAction* blinkingCursor;
-    KToggleAction* showFrame;
-    KToggleAction* m_useKonsoleSettings;
+    TDEToggleAction* blinkingCursor;
+    TDEToggleAction* showFrame;
+    TDEToggleAction* m_useKonsoleSettings;
 
-    KSelectAction* selectBell;
-    KSelectAction* selectLineSpacing;
-    KSelectAction* selectScrollbar;
-    KSelectAction* selectSetEncoding;
+    TDESelectAction* selectBell;
+    TDESelectAction* selectLineSpacing;
+    TDESelectAction* selectScrollbar;
+    TDESelectAction* selectSetEncoding;
 
-    KActionMenu* m_fontsizes;
+    TDEActionMenu* m_fontsizes;
 
-    KPopupMenu* m_keytab;
-    KPopupMenu* m_schema;
-    KPopupMenu* m_signals;
-    KPopupMenu* m_options;
-    KPopupMenu* m_popupMenu;
+    TDEPopupMenu* m_keytab;
+    TDEPopupMenu* m_schema;
+    TDEPopupMenu* m_signals;
+    TDEPopupMenu* m_options;
+    TDEPopupMenu* m_popupMenu;
 
     TQFont       defaultFont;
 

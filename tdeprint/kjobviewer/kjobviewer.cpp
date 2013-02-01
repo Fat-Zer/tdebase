@@ -52,7 +52,7 @@ void JobTray::mousePressEvent(TQMouseEvent *e)
 		KSystemTray::mousePressEvent(e);
 	else if (m_app->m_views.count() > 0)
 	{
-		KPopupMenu	menu;
+		TDEPopupMenu	menu;
 		TQDictIterator<KMJobViewer>	it(m_app->m_views);
 		TQPtrList<KMJobViewer>	list;
 		list.setAutoDelete(false);

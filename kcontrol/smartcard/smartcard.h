@@ -34,8 +34,8 @@
 
 class TDEConfig;
 class KCardDB;
-class KPopupMenu;
-class KListViewItem;
+class TDEPopupMenu;
+class TDEListViewItem;
 
 class KSmartcardConfig : public TDECModule, public DCOPObject
 {
@@ -77,9 +77,9 @@ private:
   TDEConfig *config;
   bool _ok;
   KCardDB * _cardDB;
-  KPopupMenu * _popUpKardChooser;
+  TDEPopupMenu * _popUpKardChooser;
   
-  void getSupportingModule( KListViewItem * ant,
+  void getSupportingModule( TDEListViewItem * ant,
                             TQString & cardATR) const ;
 
 

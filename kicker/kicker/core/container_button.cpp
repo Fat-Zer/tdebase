@@ -244,7 +244,7 @@ bool ButtonContainer::eventFilter(TQObject *o, TQEvent *e)
 
         case Qt::RightButton:
         {
-            if (!kapp->authorizeKAction("kicker_rmb") ||
+            if (!kapp->authorizeTDEAction("kicker_rmb") ||
                 isImmutable())
             {
                 break;

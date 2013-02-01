@@ -121,7 +121,7 @@ TQPixmap bitmapPixmap(const TQBitmap& bm, const TQColor& color)
 
 
 ButtonSource::ButtonSource(TQWidget *parent, const char* name)
-	: KListView(parent, name)
+	: TDEListView(parent, name)
 {
 	setSizePolicy(TQSizePolicy::Expanding, TQSizePolicy::Expanding);
 

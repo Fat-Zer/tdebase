@@ -115,21 +115,21 @@ class KColorDialog
         virtual void done( int r ) { ::KColorDialog::done( r ); emit dialogDone( r ); } // hmm?
     };
 
-class KFontDialog
-    : public ::KFontDialog
+class TDEFontDialog
+    : public ::TDEFontDialog
     {
     Q_OBJECT
   
     public:
-        KFontDialog( TQWidget *parent, const char *name, bool onlyFixed, bool modal,
+        TDEFontDialog( TQWidget *parent, const char *name, bool onlyFixed, bool modal,
             const TQStringList &fontlist = TQStringList(), bool makeFrame = true,
             bool diff = false, TQButton::ToggleState *sizeIsRelativeState = 0L )
-            : ::KFontDialog( parent, name, onlyFixed, modal, fontlist, makeFrame, diff, sizeIsRelativeState )
+            : ::TDEFontDialog( parent, name, onlyFixed, modal, fontlist, makeFrame, diff, sizeIsRelativeState )
             {}
     signals:
         void dialogDone( int result );
     protected:
-        virtual void done( int r ) { ::KFontDialog::done( r ); emit dialogDone( r ); }
+        virtual void done( int r ) { ::TDEFontDialog::done( r ); emit dialogDone( r ); }
     };
 
 class KDialogBase

@@ -51,7 +51,7 @@ class MenuEmbed;
  *
  * @description All status change, such as when an window is activated,
  * a new window popped up, etc, is received via @ref KWin::WindowInfo and @ref
- * NETWinInfo. Status changes for X selections are done via KSelectionWatcher.
+ * NETWinInfo. Status changes for X selections are done via TDESelectionWatcher.
  *
  * How it works in broad terms:  KickerMenuApplet gets notified as soon a window
  * changes(a new pops up etc.) and accordingly updates the list @ref menus,
@@ -158,12 +158,12 @@ private:
      */
     MenuEmbed* active_menu;
     
-    KSelectionOwner* selection;
+    TDESelectionOwner* selection;
     
     /**
      * Only the messenger. Dispatches signals to  claimSelection().
      */
-    KSelectionWatcher* selection_watcher;
+    TDESelectionWatcher* selection_watcher;
     
     /**
      * Whether the Desktop menu should be used, when a window

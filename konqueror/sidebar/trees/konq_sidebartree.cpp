@@ -115,7 +115,7 @@ public:
 
 
 KonqSidebarTree::KonqSidebarTree( KonqSidebar_Tree *parent, TQWidget *parentWidget, int virt, const TQString& path )
-    : KListView( parentWidget ),
+    : TDEListView( parentWidget ),
       m_currentTopLevelItem( 0 ),
       m_toolTip( this ),
       m_scrollingLocked( false ),
@@ -303,8 +303,8 @@ void KonqSidebarTree::contentsDragMoveEvent( TQDragMoveEvent *e )
             m_autoOpenTimer->start( autoOpenTimeout );
         }
     } else {
-        d->m_dropMode = KListViewMode;
-        KListView::contentsDragMoveEvent(e);
+        d->m_dropMode = TDEListViewMode;
+        TDEListView::contentsDragMoveEvent(e);
     }
 }
 
@@ -319,8 +319,8 @@ void KonqSidebarTree::contentsDragLeaveEvent( TQDragLeaveEvent *ev )
     m_dropItem = 0;
     m_lstDropFormats.clear();
 
-    if (d->m_dropMode == KListViewMode) {
-        KListView::contentsDragLeaveEvent(ev);
+    if (d->m_dropMode == TDEListViewMode) {
+        TDEListView::contentsDragLeaveEvent(ev);
     }
 }
 
@@ -348,7 +348,7 @@ void KonqSidebarTree::contentsDropEvent( TQDropEvent *ev )
             selection->drop( ev );
         }
     } else {
-        KListView::contentsDropEvent(ev);
+        TDEListView::contentsDropEvent(ev);
     }
 }
 
@@ -415,7 +415,7 @@ void KonqSidebarTree::addURL(KonqSidebarTreeTopLevelItem* item, const KURL & url
 
 bool KonqSidebarTree::acceptDrag(TQDropEvent* e) const
 {
-    // for KListViewMode...
+    // for TDEListViewMode...
     for( int i = 0; e->format( i ); i++ )
         if ( d->m_dropFormats.contains(e->format( i ) ) )
             return true;
@@ -441,7 +441,7 @@ TQDragObject* KonqSidebarTree::dragObject()
 
 void KonqSidebarTree::leaveEvent( TQEvent *e )
 {
-    KListView::leaveEvent( e );
+    TDEListView::leaveEvent( e );
 //    emitStatusBarText( TQString::null );
 }
 
@@ -855,7 +855,7 @@ KonqSidebarTreeItem * KonqSidebarTree::currentItem() const
 void KonqSidebarTree::setContentsPos( int x, int y )
 {
     if ( !m_scrollingLocked )
-	KListView::setContentsPos( x, y );
+	TDEListView::setContentsPos( x, y );
 }
 
 void KonqSidebarTree::slotItemRenamed(TQListViewItem* item, const TQString &name, int col)
@@ -906,22 +906,22 @@ void KonqSidebarTree::showToplevelContextMenu()
 
     if (!m_collection)
     {
-        m_collection = new KActionCollection( this, "bookmark actions" );
-        (void) new KAction( i18n("&Create New Folder..."), "folder_new", 0, TQT_TQOBJECT(this),
+        m_collection = new TDEActionCollection( this, "bookmark actions" );
+        (void) new TDEAction( i18n("&Create New Folder..."), "folder_new", 0, TQT_TQOBJECT(this),
                             TQT_SLOT( slotCreateFolder() ), m_collection, "create_folder");
-        (void) new KAction( i18n("Delete Folder"), "editdelete", 0, TQT_TQOBJECT(this),
+        (void) new TDEAction( i18n("Delete Folder"), "editdelete", 0, TQT_TQOBJECT(this),
                             TQT_SLOT( slotDelete() ), m_collection, "delete_folder");
-        (void) new KAction( i18n("Rename"), 0, TQT_TQOBJECT(this),
+        (void) new TDEAction( i18n("Rename"), 0, TQT_TQOBJECT(this),
                             TQT_SLOT( slotRename() ), m_collection, "rename");
-        (void) new KAction( i18n("Delete Link"), "editdelete", 0, TQT_TQOBJECT(this),
+        (void) new TDEAction( i18n("Delete Link"), "editdelete", 0, TQT_TQOBJECT(this),
                             TQT_SLOT( slotDelete() ), m_collection, "delete_link");
-        (void) new KAction( i18n("Properties"), "edit", 0, TQT_TQOBJECT(this),
+        (void) new TDEAction( i18n("Properties"), "edit", 0, TQT_TQOBJECT(this),
                             TQT_SLOT( slotProperties() ), m_collection, "item_properties");
-        (void) new KAction( i18n("Open in New Window"), "window_new", 0, TQT_TQOBJECT(this),
+        (void) new TDEAction( i18n("Open in New Window"), "window_new", 0, TQT_TQOBJECT(this),
                             TQT_SLOT( slotOpenNewWindow() ), m_collection, "open_window");
-        (void) new KAction( i18n("Open in New Tab"), "tab_new", 0, TQT_TQOBJECT(this),
+        (void) new TDEAction( i18n("Open in New Tab"), "tab_new", 0, TQT_TQOBJECT(this),
                             TQT_SLOT( slotOpenTab() ), m_collection, "open_tab");
-        (void) new KAction( i18n("Copy Link Address"), "editcopy", 0, TQT_TQOBJECT(this),
+        (void) new TDEAction( i18n("Copy Link Address"), "editcopy", 0, TQT_TQOBJECT(this),
                             TQT_SLOT( slotCopyLocation() ), m_collection, "copy_location");
     }
 

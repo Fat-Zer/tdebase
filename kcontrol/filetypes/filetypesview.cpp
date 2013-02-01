@@ -75,7 +75,7 @@ FileTypesView::FileTypesView(TQWidget *p, const char *name)
   TQWhatsThis::add( patternFilterLE, wtstr );
   TQWhatsThis::add( patternFilterLBL, wtstr );
 
-  typesLV = new KListView(this);
+  typesLV = new TDEListView(this);
   typesLV->setRootIsDecorated(true);
   typesLV->setFullWidth(true);
 

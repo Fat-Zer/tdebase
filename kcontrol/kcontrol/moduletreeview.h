@@ -64,7 +64,7 @@ private:
   TQString       _icon;
 };
 
-class ModuleTreeView : public KListView
+class ModuleTreeView : public TDEListView
 {
   Q_OBJECT
 

@@ -30,7 +30,7 @@ class KColorButton;
 class KDoubleSpinBox;
 class KIntNumInput;
 class KLineEdit;
-class KListView;
+class TDEListView;
 
 class TQCheckBox;
 class TQListViewItem;
@@ -94,7 +94,7 @@ class DancingBarsSettings : public KDialogBase
     KDoubleSpinBox *mLowerLimit;
     KDoubleSpinBox *mUpperLimit;
     KLineEdit *mTitle;
-    KListView *mSensorView;
+    TDEListView *mSensorView;
     KIntNumInput *mFontSize;
 
     TQCheckBox *mUseLowerLimit;

@@ -39,7 +39,7 @@ class KonqFrameContainer;
 class TDEConfig;
 class KSeparator;
 class KProgress;
-class KAction;
+class TDEAction;
 
 class KonqFrameTabs : public KTabWidget, public KonqFrameContainerBase
 {

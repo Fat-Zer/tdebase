@@ -63,7 +63,7 @@ KonqProfileMap KonqProfileDlg::readAllProfiles()
   return mapProfiles;
 }
 
-KonqProfileItem::KonqProfileItem( KListView *parent, const TQString & text )
+KonqProfileItem::KonqProfileItem( TDEListView *parent, const TQString & text )
     : TQListViewItem( parent, text ), m_profileName( text )
 {
 }
@@ -92,7 +92,7 @@ KonqProfileDlg::KonqProfileDlg( KonqViewManager *manager, const TQString & prese
 
   lblName->setBuddy( m_pProfileNameLineEdit );
 
-  m_pListView = new KListView( box );
+  m_pListView = new TDEListView( box );
   m_pListView->setAllColumnsShowFocus(true);
   m_pListView->header()->hide();
   m_pListView->addColumn("");

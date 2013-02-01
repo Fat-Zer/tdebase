@@ -63,7 +63,7 @@ PreferencesDialog::PreferencesDialog(KFileItemList media, TQWidget *parent,
 	  mMedia(media)
 {
 	TQVBox *types_page = addVBoxPage( i18n("Medium Types") );
-	mpMediumTypesListView = new KListView(types_page);
+	mpMediumTypesListView = new TDEListView(types_page);
 
 	//mpMediumTypesListView->setFullWidth(true);
 	mpMediumTypesListView->addColumn( i18n("Types to Display") );
@@ -72,7 +72,7 @@ PreferencesDialog::PreferencesDialog(KFileItemList media, TQWidget *parent,
 
 
 	TQVBox *media_page = addVBoxPage( i18n("Media") );
-	mpMediaListView = new KListView(media_page);
+	mpMediaListView = new TDEListView(media_page);
 
 	//mpMediaListView->setFullWidth(true);
 	mpMediaListView->addColumn( i18n("Media to Display") );

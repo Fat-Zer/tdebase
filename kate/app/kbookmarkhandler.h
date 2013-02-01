@@ -25,24 +25,24 @@
 
 class KateFileSelector;
 
-class KActionMenu;
+class TDEActionMenu;
 
 class TQTextStream;
-class KPopupMenu;
+class TDEPopupMenu;
 
 class KBookmarkHandler : public TQObject, public KBookmarkOwner
 {
     Q_OBJECT
 
 public:
-    KBookmarkHandler( KateFileSelector *parent, KPopupMenu *kpopupmenu=0 );
+    KBookmarkHandler( KateFileSelector *parent, TDEPopupMenu *kpopupmenu=0 );
     ~KBookmarkHandler();
 
     // KBookmarkOwner interface:
     virtual void openBookmarkURL( const TQString& url ) { emit openURL( url ); }
     virtual TQString currentURL() const;
 
-    KPopupMenu *menu() const { return m_menu; }
+    TDEPopupMenu *menu() const { return m_menu; }
 
 signals:
     void openURL( const TQString& url );
@@ -60,7 +60,7 @@ protected:
 
 private:
     KateFileSelector *mParent;
-    KPopupMenu *m_menu;
+    TDEPopupMenu *m_menu;
     KBookmarkMenu *m_bookmarkMenu;
 
     TQTextStream *m_importStream;

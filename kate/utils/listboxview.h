@@ -21,7 +21,7 @@
 
 #include "dockviewbase.h"
 
-class KListBox;
+class TDEListBox;
 
 namespace Kate
 {
@@ -33,7 +33,7 @@ class ListboxView : public DockViewBase {
     ListboxView( const TQString &titlePrefix, const TQString &title, TQWidget *parent=0, const char *name=0 );
     ~ListboxView();
     
-    KListBox * listbox();
+    TDEListBox * listbox();
   
   private:
     class ListboxViewPrivate *d;

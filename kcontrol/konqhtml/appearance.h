@@ -17,7 +17,7 @@
 #include <tdecmodule.h>
 
 class TQSpinBox;
-class KFontCombo;
+class TDEFontCombo;
 
 class KAppearanceOptions : public TDECModule
 {
@@ -55,7 +55,7 @@ private:
   KIntNumInput* m_minSize;
   KIntNumInput* m_MedSize;
   KIntNumInput* m_pageDPI;
-  KFontCombo* m_pFonts[6];
+  TDEFontCombo* m_pFonts[6];
   TQComboBox* m_pEncoding;
   TQSpinBox *m_pFontSizeAdjust;
 

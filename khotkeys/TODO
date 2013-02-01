@@ -73,7 +73,7 @@ akce : kdyz se objevi okno, aplikovat na nej veci, ktere dela kstart ( sticky, a
 strokes : kdyz X bere mys pres gpmdata, gpm pekne zasekava u vstupu pri prostrednim tlacitku dole => strokes pak za moc nestoji
 paste pri MMB volitelne jen kdyz MMB neni stisknuto napr. pres 500ms ( kvuli strokes )
 akce : kdyz se stiskne nejaka shortcut a nejaka aplikace nebezi, tak se spusti a pak se ji ta shortcut preda ( napr. pro klipper ? )
-odstranit tu KAccel zmenu, kterou v CVS udelal Coolo - stejne netusim, jestli to ma nebo nema byt i18n, tak at je aspon default
+odstranit tu TDEAccel zmenu, kterou v CVS udelal Coolo - stejne netusim, jestli to ma nebo nema byt i18n, tak at je aspon default
 skupine akci 'KMenuedit entries' by asi nemelo jit zmenit jmeno
 kdyz se v KMenuEdit udela polozka a pak se ten menuentry smaze, asi by se ta shortcut mela aspon disablovat ?!
 at dokaze zvetsovat vsechna 'File Open Dialog' okna

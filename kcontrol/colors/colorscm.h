@@ -25,7 +25,7 @@ class TQCheckBox;
 class TQResizeEvent;
 class KLineEdit;
 class TQPalette;
-class KListBox;
+class TDEListBox;
 class KColorButton;
 class TDEConfig;
 class KStdDirs;
@@ -76,7 +76,7 @@ private:
     TQSlider *sb;
     TQComboBox *wcCombo;
     TQPushButton *addBt, *removeBt, *importBt;
-    KListBox *sList;
+    TDEListBox *sList;
     KColorSchemeList *mSchemeList;
     TQString sCurrentScheme;
 

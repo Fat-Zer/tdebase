@@ -847,7 +847,7 @@ static bool areModKeysDepressed( const KKeySequence& seq )
     return areKeySymXsDepressed( false, rgKeySyms, nKeySyms );
     }
 
-static bool areModKeysDepressed( const KShortcut& cut )
+static bool areModKeysDepressed( const TDEShortcut& cut )
     {
     for( unsigned int i = 0;
 	 i < cut.count();

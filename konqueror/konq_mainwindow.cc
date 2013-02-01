@@ -119,7 +119,7 @@
 #include <fixx11h.h>
 
 template class TQPtrList<TQPixmap>;
-template class TQPtrList<KToggleAction>;
+template class TQPtrList<TDEToggleAction>;
 
 TQPtrList<KonqMainWindow> *KonqMainWindow::s_lstViews = 0;
 TDEConfig * KonqMainWindow::s_comboConfig = 0;
@@ -245,10 +245,10 @@ KonqMainWindow::KonqMainWindow( const KURL &initialURL, bool openInitialURL, con
   // Those menus are created by konqueror.rc so their address will never change
   TQPopupMenu *popup = static_cast<TQPopupMenu*>(factory()->container("edit",this));
   if (popup)
-    KAcceleratorManager::manage(popup);
+    TDEAcceleratorManager::manage(popup);
   popup = static_cast<TQPopupMenu*>(factory()->container("tools",this));
   if (popup)
-    KAcceleratorManager::manage(popup);
+    TDEAcceleratorManager::manage(popup);
 
   m_bSaveViewPropertiesLocally = KonqSettings::saveViewPropertiesLocally();
   m_bHTMLAllowed = KonqSettings::htmlAllowed();
@@ -349,8 +349,8 @@ TQWidget * KonqMainWindow::createContainer( TQWidget *parent, int index, const T
 
   if ( res && (element.tagName() == tagToolBar) && (element.attribute( "name" ) == nameBookmarkBar) )
   {
-    assert( res->inherits( "KToolBar" ) );
-    if (!kapp->authorizeKAction("bookmarks"))
+    assert( res->inherits( "TDEToolBar" ) );
+    if (!kapp->authorizeTDEAction("bookmarks"))
     {
         delete res;
         return 0;
@@ -360,7 +360,7 @@ TQWidget * KonqMainWindow::createContainer( TQWidget *parent, int index, const T
     {
         // The actual menu needs a different action collection, so that the bookmarks
         // don't appear in kedittoolbar
-        m_bookmarkBarActionCollection = new KActionCollection( this );
+        m_bookmarkBarActionCollection = new TDEActionCollection( this );
         m_bookmarkBarActionCollection->setHighlightingEnabled( true );
         connectActionCollection( m_bookmarkBarActionCollection );
         DelayedInitializer *initializer = new DelayedInitializer( TQEvent::Show, TQT_TQOBJECT(res) );
@@ -373,7 +373,7 @@ TQWidget * KonqMainWindow::createContainer( TQWidget *parent, int index, const T
 
 void KonqMainWindow::initBookmarkBar()
 {
-  KToolBar * bar = static_cast<KToolBar *>( TQT_TQWIDGET(child( "bookmarkToolBar", "KToolBar" )) );
+  TDEToolBar * bar = static_cast<TDEToolBar *>( TQT_TQWIDGET(child( "bookmarkToolBar", "TDEToolBar" )) );
 
   if (!bar) return;
 
@@ -398,7 +398,7 @@ void KonqMainWindow::removeContainer( TQWidget *container, TQWidget *parent, TQD
 
   if ( element.tagName() == tagToolBar && element.attribute( "name" ) == nameBookmarkBar )
   {
-    assert( container->inherits( "KToolBar" ) );
+    assert( container->inherits( "TDEToolBar" ) );
     if (m_paBookmarkBar)
       m_paBookmarkBar->clear();
   }
@@ -407,7 +407,7 @@ void KonqMainWindow::removeContainer( TQWidget *container, TQWidget *parent, TQD
 }
 
 // Detect a name filter (e.g. *.txt) in the url.
-// Note that KShortURIFilter does the same, but we have no way of getting it from there
+// Note that TDEShortURIFilter does the same, but we have no way of getting it from there
 //
 // Note: this removes the filter from the URL.
 static TQString detectNameFilter( KURL & url )
@@ -1269,7 +1269,7 @@ void KonqMainWindow::slotCreateNewWindow( const KURL &url, const KParts::URLArgs
 
     if ( !windowArgs.toolBarsVisible )
     {
-      for ( TQPtrListIterator<KToolBar> it( mainWindow->toolBarIterator() ); it.current(); ++it )
+      for ( TQPtrListIterator<TDEToolBar> it( mainWindow->toolBarIterator() ); it.current(); ++it )
       {
         (*it)->hide();
       }
@@ -1520,7 +1520,7 @@ void KonqMainWindow::slotToolFind()
     connect( dirPart, TQT_SIGNAL( findClosed(KonqDirPart *) ),
              this, TQT_SLOT( slotFindClosed(KonqDirPart *) ) );
   }
-  else if ( TQT_TQOBJECT_CONST(sender())->inherits( "KAction" ) ) // don't go there if called by the singleShot below
+  else if ( TQT_TQOBJECT_CONST(sender())->inherits( "TDEAction" ) ) // don't go there if called by the singleShot below
   {
       KURL url;
       if ( m_currentView && m_currentView->url().isLocalFile() )
@@ -1650,7 +1650,7 @@ void KonqMainWindow::slotViewModeToggle( bool toggle )
               // quick viewmode change (iconview) -> find the iconview-konqviewmode
               // action and set new text,icon,etc. properties, to show the new
               // current viewmode
-              TQPtrListIterator<KAction> it( m_toolBarViewModeActions );
+              TQPtrListIterator<TDEAction> it( m_toolBarViewModeActions );
               for (; it.current(); ++it )
                   if ( TQString::fromLatin1( it.current()->name() ) == oldService->desktopEntryName() )
                   {
@@ -1846,14 +1846,14 @@ void KonqMainWindow::slotReloadStop() {
 }
 
 void KonqMainWindow::toggleReloadStopButton(bool isReload) {
-  //m_paStop = new KAction( i18n( "&Stop" ), "stop", Key_Escape, this, TQT_SLOT( slotStop() ), actionCollection(), "stop" );
+  //m_paStop = new TDEAction( i18n( "&Stop" ), "stop", Key_Escape, this, TQT_SLOT( slotStop() ), actionCollection(), "stop" );
   if (isReload) {
     m_paReloadStop->setIcon("stop");
     m_paReloadStop->setWhatsThis( i18n( "Stop loading the document<p>"
                                         "All network transfers will be stopped and Konqueror will display the content "
                                         "that has been received so far." ) );
     m_paReloadStop->setToolTip( i18n( "Stop loading the document" ) );
-  //m_paReloadStop = new KAction( i18n( "&Reload" ), "reload", reloadShortcut, this, TQT_SLOT( slotReloadStop() ), actionCollection(), "reload" );
+  //m_paReloadStop = new TDEAction( i18n( "&Reload" ), "reload", reloadShortcut, this, TQT_SLOT( slotReloadStop() ), actionCollection(), "reload" );
   } else {
     m_paReloadStop->setIcon("reload");
     m_paReloadStop->setWhatsThis( i18n( "Reload the currently displayed document<p>"
@@ -1869,7 +1869,7 @@ void KonqMainWindow::slotReloadPopup()
     slotReload( m_pWorkingTab->activeChildView() );
 }
 
-void KonqMainWindow::slotHome(KAction::ActivationReason, TQt::ButtonState state)
+void KonqMainWindow::slotHome(TDEAction::ActivationReason, TQt::ButtonState state)
 {
     TQString homeURL = m_pViewManager->profileHomeURL();
 
@@ -1902,7 +1902,7 @@ void KonqMainWindow::slotHome(KAction::ActivationReason, TQt::ButtonState state)
 
 void KonqMainWindow::slotHome()
 {
-    slotHome(KAction::UnknownActivation, Qt::LeftButton);
+    slotHome(TDEAction::UnknownActivation, Qt::LeftButton);
 }
 
 void KonqMainWindow::slotGoSystem()
@@ -1951,14 +1951,14 @@ void KonqMainWindow::slotGoAutostart()
 
 void KonqMainWindow::slotGoHistory()
 {
-  KAction *a = m_toggleViewGUIClient->action("konq_sidebartng");
+  TDEAction *a = m_toggleViewGUIClient->action("konq_sidebartng");
   if (!a) {
     KMessageBox::sorry(0L, i18n("Your sidebar is not functional or unavailable."), i18n("Show History Sidebar"));
     return;
   }
 
   // Show the sidebar
-  if (!static_cast<KToggleAction*>(a)->isChecked()) {
+  if (!static_cast<TDEToggleAction*>(a)->isChecked()) {
     a->activate();
     TQTimer::singleShot( 0, this, TQT_SLOT(slotGoHistory()));
     return;
@@ -2141,8 +2141,8 @@ void KonqMainWindow::applyKonqMainWindowSettings()
   for ( ; togIt != togEnd ; ++togIt )
   {
     // Find the action by name
-  //    KAction * act = m_toggleViewGUIClient->actionCollection()->action( (*togIt).latin1() );
-    KAction *act = m_toggleViewGUIClient->action( *togIt );
+  //    TDEAction * act = m_toggleViewGUIClient->actionCollection()->action( (*togIt).latin1() );
+    TDEAction *act = m_toggleViewGUIClient->action( *togIt );
     if ( act )
       act->activate();
     else
@@ -2207,7 +2207,7 @@ void KonqMainWindow::slotPartActivated( KParts::Part *part )
 
     if ( oldView->part() )
     {
-      KActionCollection *coll = oldView->part()->actionCollection();
+      TDEActionCollection *coll = oldView->part()->actionCollection();
       if ( coll )
           disconnectActionCollection( coll );
     }
@@ -2242,7 +2242,7 @@ void KonqMainWindow::slotPartActivated( KParts::Part *part )
 
     for ( ; it != itEnd ; ++it )
     {
-      KAction * act = actionCollection()->action( static_cast<const char *>(it.key()) );
+      TDEAction * act = actionCollection()->action( static_cast<const char *>(it.key()) );
       Q_ASSERT(act);
       if (act)
         act->setEnabled( false );
@@ -2257,7 +2257,7 @@ void KonqMainWindow::slotPartActivated( KParts::Part *part )
   }
   createGUI( part );
 
-  KActionCollection *coll = m_currentView->part()->actionCollection();
+  TDEActionCollection *coll = m_currentView->part()->actionCollection();
   if ( coll )
       connectActionCollection( coll );
 
@@ -2274,7 +2274,7 @@ void KonqMainWindow::slotPartActivated( KParts::Part *part )
       // if we just toggled the view mode via the view mode actions, then
       // we don't need to do all the time-taking stuff below (Simon)
       const TQString currentServiceDesktopEntryName = m_currentView->service()->desktopEntryName();
-      TQPtrListIterator<KRadioAction> it( m_viewModeActions );
+      TQPtrListIterator<TDERadioAction> it( m_viewModeActions );
       for (; it.current(); ++it ) {
           if ( it.current()->name() == currentServiceDesktopEntryName ) {
               it.current()->setChecked( true );
@@ -2282,11 +2282,11 @@ void KonqMainWindow::slotPartActivated( KParts::Part *part )
           }
       }
       const TQString currentServiceLibrary = viewModeActionKey( m_currentView->service() );
-      TQPtrListIterator<KAction> ittb( m_toolBarViewModeActions );
+      TQPtrListIterator<TDEAction> ittb( m_toolBarViewModeActions );
       for (; ittb.current(); ++ittb ) {
           KService::Ptr serv = KService::serviceByDesktopName( ittb.current()->name() );
           if ( serv && viewModeActionKey( serv ) == currentServiceLibrary ) {
-              KToggleAction* ta = static_cast<KToggleAction*>( ittb.current() );
+              TDEToggleAction* ta = static_cast<TDEToggleAction*>( ittb.current() );
               ta->setChecked( false );
 	      TQString servicename = m_currentView->service()->genericName();
 	      if (servicename.isEmpty())
@@ -3110,7 +3110,7 @@ void KonqMainWindow::slotUpAboutToShow()
   }
 }
 
-void KonqMainWindow::slotUp(KAction::ActivationReason, TQt::ButtonState state)
+void KonqMainWindow::slotUp(TDEAction::ActivationReason, TQt::ButtonState state)
 {
     m_goState = state;
     TQTimer::singleShot( 0, this, TQT_SLOT( slotUpDelayed() ) );
@@ -3231,7 +3231,7 @@ void KonqMainWindow::slotBack()
   slotGoHistoryActivated(-1);
 }
 
-void KonqMainWindow::slotBack(KAction::ActivationReason, TQt::ButtonState state)
+void KonqMainWindow::slotBack(TDEAction::ActivationReason, TQt::ButtonState state)
 {
   slotGoHistoryActivated( -1, state );
 }
@@ -3253,7 +3253,7 @@ void KonqMainWindow::slotForward()
   slotGoHistoryActivated( 1 );
 }
 
-void KonqMainWindow::slotForward(KAction::ActivationReason, TQt::ButtonState state)
+void KonqMainWindow::slotForward(TDEAction::ActivationReason, TQt::ButtonState state)
 {
     slotGoHistoryActivated( 1, state );
 }
@@ -3484,7 +3484,7 @@ bool KonqMainWindow::eventFilter(TQObject*obj,TQEvent *ev)
       // but the duplicate_window action also has Ctrl-D as accel and
       // prevents the lineedit from getting this event. IMHO the accel
       // should be disabled in favor of the focus-widget.
-      KAction *duplicate = actionCollection()->action("duplicate_window");
+      TDEAction *duplicate = actionCollection()->action("duplicate_window");
       if ( duplicate->shortcut() == TQKeySequence(CTRL+Key_D) )
           duplicate->setEnabled( false );
 
@@ -3496,8 +3496,8 @@ bool KonqMainWindow::eventFilter(TQObject*obj,TQEvent *ev)
         disconnect( m_paPaste, TQT_SIGNAL( activated() ), ext, TQT_SLOT( paste() ) );
       if (slotNames.contains("del()"))
         disconnect( m_paDelete, TQT_SIGNAL( activated() ), ext, TQT_SLOT( del() ) );
-      disconnect( m_paTrash, TQT_SIGNAL( activated( KAction::ActivationReason, TQt::ButtonState ) ),
-                  this, TQT_SLOT( slotTrashActivated( KAction::ActivationReason, TQt::ButtonState ) ) );
+      disconnect( m_paTrash, TQT_SIGNAL( activated( TDEAction::ActivationReason, TQt::ButtonState ) ),
+                  this, TQT_SLOT( slotTrashActivated( TDEAction::ActivationReason, TQt::ButtonState ) ) );
 
       connect( m_paCut, TQT_SIGNAL( activated() ), m_combo->lineEdit(), TQT_SLOT( cut() ) );
       connect( m_paCopy, TQT_SIGNAL( activated() ), m_combo->lineEdit(), TQT_SLOT( copy() ) );
@@ -3525,7 +3525,7 @@ bool KonqMainWindow::eventFilter(TQObject*obj,TQEvent *ev)
       // see above in FocusIn for explanation
       // we use new_window as reference, as it's always in the same state
       // as duplicate_window
-      KAction *duplicate = actionCollection()->action("duplicate_window");
+      TDEAction *duplicate = actionCollection()->action("duplicate_window");
       if ( duplicate->shortcut() == TQKeySequence(CTRL+Key_D) )
           duplicate->setEnabled( actionCollection()->action("new_window")->isEnabled() );
 
@@ -3537,8 +3537,8 @@ bool KonqMainWindow::eventFilter(TQObject*obj,TQEvent *ev)
         connect( m_paPaste, TQT_SIGNAL( activated() ), ext, TQT_SLOT( paste() ) );
       if (slotNames.contains("del()"))
         connect( m_paDelete, TQT_SIGNAL( activated() ), ext, TQT_SLOT( del() ) );
-      connect( m_paTrash, TQT_SIGNAL( activated( KAction::ActivationReason, TQt::ButtonState ) ),
-               this, TQT_SLOT( slotTrashActivated( KAction::ActivationReason, TQt::ButtonState ) ) );
+      connect( m_paTrash, TQT_SIGNAL( activated( TDEAction::ActivationReason, TQt::ButtonState ) ),
+               this, TQT_SLOT( slotTrashActivated( TDEAction::ActivationReason, TQt::ButtonState ) ) );
 
       disconnect( m_paCut, TQT_SIGNAL( activated() ), m_combo->lineEdit(), TQT_SLOT( cut() ) );
       disconnect( m_paCopy, TQT_SIGNAL( activated() ), m_combo->lineEdit(), TQT_SLOT( copy() ) );
@@ -3584,7 +3584,7 @@ void KonqMainWindow::slotCheckComboSelection()
   m_paCut->setEnabled( hasSelection );
 }
 
-void KonqMainWindow::slotClearLocationBar( KAction::ActivationReason, TQt::ButtonState state )
+void KonqMainWindow::slotClearLocationBar( TDEAction::ActivationReason, TQt::ButtonState state )
 {
   kdDebug(1202) << "slotClearLocationBar" << endl;
   slotStop();
@@ -3624,7 +3624,7 @@ void KonqMainWindow::slotUpdateFullScreen( bool set )
     bool haveFullScreenButton = false;
 
     //Walk over the toolbars and check whether there is a show fullscreen button in any of them
-    TQPtrListIterator<KToolBar> barIt = toolBarIterator();
+    TQPtrListIterator<TDEToolBar> barIt = toolBarIterator();
     for (; barIt.current(); ++barIt )
     {
         //Are we plugged here, in a visible toolbar?
@@ -3638,7 +3638,7 @@ void KonqMainWindow::slotUpdateFullScreen( bool set )
 
     if (!haveFullScreenButton)
     {
-        TQPtrList<KAction> lst;
+        TQPtrList<TDEAction> lst;
         lst.append( m_ptaFullScreen );
         plugActionList( "fullscreen", lst );
     }
@@ -3707,7 +3707,7 @@ void KonqMainWindow::setPageSecurity( PageSecurity pageSecurity )
 void KonqMainWindow::showPageSecurity()
 {
     if ( m_currentView && m_currentView->part() ) {
-      KAction *act = m_currentView->part()->action( "security" );
+      TDEAction *act = m_currentView->part()->action( "security" );
       if ( act )
         act->activate();
     }
@@ -3803,44 +3803,44 @@ void KonqMainWindow::initActions()
   TQObject::connect( m_pMenuNew->popupMenu(), TQT_SIGNAL(aboutToShow()),
                     this, TQT_SLOT(slotFileNewAboutToShow()) );
 
-  (void) new KAction( i18n( "&Edit File Type..." ), 0, actionCollection(), "editMimeType" );
-  (void) new KAction( i18n( "Properties" ), ALT+Key_Return, actionCollection(), "properties" );
-  (void) new KAction( i18n( "New &Window" ), "window_new", KStdAccel::shortcut(KStdAccel::New), TQT_TQOBJECT(this), TQT_SLOT( slotNewWindow() ), actionCollection(), "new_window" );
-  (void) new KAction( i18n( "&Duplicate Window" ), "window_duplicate", CTRL+Key_D, TQT_TQOBJECT(this), TQT_SLOT( slotDuplicateWindow() ), actionCollection(), "duplicate_window" );
-  (void) new KAction( i18n( "Send &Link Address..." ), "mail_generic", 0, TQT_TQOBJECT(this), TQT_SLOT( slotSendURL() ), actionCollection(), "sendURL" );
-  (void) new KAction( i18n( "S&end File..." ), "mail_generic", 0, TQT_TQOBJECT(this), TQT_SLOT( slotSendFile() ), actionCollection(), "sendPage" );
+  (void) new TDEAction( i18n( "&Edit File Type..." ), 0, actionCollection(), "editMimeType" );
+  (void) new TDEAction( i18n( "Properties" ), ALT+Key_Return, actionCollection(), "properties" );
+  (void) new TDEAction( i18n( "New &Window" ), "window_new", TDEStdAccel::shortcut(TDEStdAccel::New), TQT_TQOBJECT(this), TQT_SLOT( slotNewWindow() ), actionCollection(), "new_window" );
+  (void) new TDEAction( i18n( "&Duplicate Window" ), "window_duplicate", CTRL+Key_D, TQT_TQOBJECT(this), TQT_SLOT( slotDuplicateWindow() ), actionCollection(), "duplicate_window" );
+  (void) new TDEAction( i18n( "Send &Link Address..." ), "mail_generic", 0, TQT_TQOBJECT(this), TQT_SLOT( slotSendURL() ), actionCollection(), "sendURL" );
+  (void) new TDEAction( i18n( "S&end File..." ), "mail_generic", 0, TQT_TQOBJECT(this), TQT_SLOT( slotSendFile() ), actionCollection(), "sendPage" );
   if (kapp->authorize("shell_access"))
   {
-     (void) new KAction( i18n( "Open &Terminal" ), "openterm", Key_F4, TQT_TQOBJECT(this), TQT_SLOT( slotOpenTerminal() ), actionCollection(), "open_terminal" );
+     (void) new TDEAction( i18n( "Open &Terminal" ), "openterm", Key_F4, TQT_TQOBJECT(this), TQT_SLOT( slotOpenTerminal() ), actionCollection(), "open_terminal" );
   }
-  (void) new KAction( i18n( "&Open Location..." ), "fileopen", KStdAccel::shortcut(KStdAccel::Open), TQT_TQOBJECT(this), TQT_SLOT( slotOpenLocation() ), actionCollection(), "open_location" );
+  (void) new TDEAction( i18n( "&Open Location..." ), "fileopen", TDEStdAccel::shortcut(TDEStdAccel::Open), TQT_TQOBJECT(this), TQT_SLOT( slotOpenLocation() ), actionCollection(), "open_location" );
 
-  m_paFindFiles = new KToggleAction( i18n( "&Find File..." ), "filefind", KStdAccel::shortcut(KStdAccel::Find), TQT_TQOBJECT(this), TQT_SLOT( slotToolFind() ), actionCollection(), "findfile" );
+  m_paFindFiles = new TDEToggleAction( i18n( "&Find File..." ), "filefind", TDEStdAccel::shortcut(TDEStdAccel::Find), TQT_TQOBJECT(this), TQT_SLOT( slotToolFind() ), actionCollection(), "findfile" );
 
   m_paPrint = KStdAction::print( 0, 0, actionCollection(), "print" );
   (void) KStdAction::quit( TQT_TQOBJECT(this), TQT_SLOT( close() ), actionCollection(), "quit" );
 
-  m_ptaUseHTML = new KToggleAction( i18n( "&Use index.html" ), 0, TQT_TQOBJECT(this), TQT_SLOT( slotShowHTML() ), actionCollection(), "usehtml" );
-  m_paLockView = new KToggleAction( i18n( "Lock to Current Location"), 0, TQT_TQOBJECT(this), TQT_SLOT( slotLockView() ), actionCollection(), "lock" );
-  m_paLinkView = new KToggleAction( i18n( "Lin&k View"), 0, TQT_TQOBJECT(this), TQT_SLOT( slotLinkView() ), actionCollection(), "link" );
+  m_ptaUseHTML = new TDEToggleAction( i18n( "&Use index.html" ), 0, TQT_TQOBJECT(this), TQT_SLOT( slotShowHTML() ), actionCollection(), "usehtml" );
+  m_paLockView = new TDEToggleAction( i18n( "Lock to Current Location"), 0, TQT_TQOBJECT(this), TQT_SLOT( slotLockView() ), actionCollection(), "lock" );
+  m_paLinkView = new TDEToggleAction( i18n( "Lin&k View"), 0, TQT_TQOBJECT(this), TQT_SLOT( slotLinkView() ), actionCollection(), "link" );
 
   // Go menu
-  m_paUp = new KToolBarPopupAction( i18n( "&Up" ), "up", KStdAccel::shortcut(KStdAccel::Up), actionCollection(), "up" );
-  connect( m_paUp, TQT_SIGNAL( activated( KAction::ActivationReason, TQt::ButtonState) ), TQT_TQOBJECT(this),
-	   TQT_SLOT( slotUp(KAction::ActivationReason, TQt::ButtonState) ) );
+  m_paUp = new TDEToolBarPopupAction( i18n( "&Up" ), "up", TDEStdAccel::shortcut(TDEStdAccel::Up), actionCollection(), "up" );
+  connect( m_paUp, TQT_SIGNAL( activated( TDEAction::ActivationReason, TQt::ButtonState) ), TQT_TQOBJECT(this),
+	   TQT_SLOT( slotUp(TDEAction::ActivationReason, TQt::ButtonState) ) );
   connect( m_paUp->popupMenu(), TQT_SIGNAL( aboutToShow() ), TQT_TQOBJECT(this), TQT_SLOT( slotUpAboutToShow() ) );
   connect( m_paUp->popupMenu(), TQT_SIGNAL( activated( int ) ), TQT_TQOBJECT(this), TQT_SLOT( slotUpActivated( int ) ) );
 
   TQPair< KGuiItem, KGuiItem > backForward = KStdGuiItem::backAndForward();
-  m_paBack = new KToolBarPopupAction( backForward.first, KStdAccel::shortcut(KStdAccel::Back), 0, "", actionCollection(), "back" );
-  connect( m_paBack, TQT_SIGNAL( activated( KAction::ActivationReason, TQt::ButtonState) ), TQT_TQOBJECT(this),
-	   TQT_SLOT( slotBack(KAction::ActivationReason, TQt::ButtonState) ) );
+  m_paBack = new TDEToolBarPopupAction( backForward.first, TDEStdAccel::shortcut(TDEStdAccel::Back), 0, "", actionCollection(), "back" );
+  connect( m_paBack, TQT_SIGNAL( activated( TDEAction::ActivationReason, TQt::ButtonState) ), TQT_TQOBJECT(this),
+	   TQT_SLOT( slotBack(TDEAction::ActivationReason, TQt::ButtonState) ) );
   connect( m_paBack->popupMenu(), TQT_SIGNAL( aboutToShow() ), TQT_TQOBJECT(this), TQT_SLOT( slotBackAboutToShow() ) );
   connect( m_paBack->popupMenu(), TQT_SIGNAL( activated( int ) ), TQT_TQOBJECT(this), TQT_SLOT( slotBackActivated( int ) ) );
 
-  m_paForward = new KToolBarPopupAction( backForward.second, KStdAccel::shortcut(KStdAccel::Forward), 0, "", actionCollection(), "forward" );
-  connect( m_paForward, TQT_SIGNAL( activated( KAction::ActivationReason, TQt::ButtonState) ), TQT_TQOBJECT(this),
-	   TQT_SLOT( slotForward(KAction::ActivationReason, TQt::ButtonState) ) );
+  m_paForward = new TDEToolBarPopupAction( backForward.second, TDEStdAccel::shortcut(TDEStdAccel::Forward), 0, "", actionCollection(), "forward" );
+  connect( m_paForward, TQT_SIGNAL( activated( TDEAction::ActivationReason, TQt::ButtonState) ), TQT_TQOBJECT(this),
+	   TQT_SLOT( slotForward(TDEAction::ActivationReason, TQt::ButtonState) ) );
   connect( m_paForward->popupMenu(), TQT_SIGNAL( aboutToShow() ), TQT_TQOBJECT(this), TQT_SLOT( slotForwardAboutToShow() ) );
   connect( m_paForward->popupMenu(), TQT_SIGNAL( activated( int ) ), TQT_TQOBJECT(this), TQT_SLOT( slotForwardActivated( int ) ) );
 
@@ -3848,29 +3848,29 @@ void KonqMainWindow::initActions()
   connect( m_paHistory, TQT_SIGNAL( menuAboutToShow() ), TQT_TQOBJECT(this), TQT_SLOT( slotGoMenuAboutToShow() ) );
   connect( m_paHistory, TQT_SIGNAL( activated( int ) ), TQT_TQOBJECT(this), TQT_SLOT( slotGoHistoryActivated( int ) ) );
 
-  m_paHome = new KAction( i18n( "Home" ), "gohome", KStdAccel::shortcut(KStdAccel::Home), actionCollection(), "home" );
-  connect( m_paHome, TQT_SIGNAL( activated( KAction::ActivationReason, TQt::ButtonState) ), TQT_TQOBJECT(this),
-	   TQT_SLOT( slotHome(KAction::ActivationReason, TQt::ButtonState) ) );
+  m_paHome = new TDEAction( i18n( "Home" ), "gohome", TDEStdAccel::shortcut(TDEStdAccel::Home), actionCollection(), "home" );
+  connect( m_paHome, TQT_SIGNAL( activated( TDEAction::ActivationReason, TQt::ButtonState) ), TQT_TQOBJECT(this),
+	   TQT_SLOT( slotHome(TDEAction::ActivationReason, TQt::ButtonState) ) );
 
-  (void) new KAction( i18n( "S&ystem" ), "system", 0, TQT_TQOBJECT(this), TQT_SLOT( slotGoSystem() ), actionCollection(), "go_system" );
-  (void) new KAction( i18n( "App&lications" ), "kmenu", 0, TQT_TQOBJECT(this), TQT_SLOT( slotGoApplications() ), actionCollection(), "go_applications" );
-  (void) new KAction( i18n( "&Storage Media" ), "system", 0, TQT_TQOBJECT(this), TQT_SLOT( slotGoMedia() ), actionCollection(), "go_media" );
-  (void) new KAction( i18n( "&Network Folders" ), "network", 0, TQT_TQOBJECT(this), TQT_SLOT( slotGoNetworkFolders() ), actionCollection(), "go_network_folders" );
-  (void) new KAction( i18n( "Sett&ings" ), "kcontrol", 0, TQT_TQOBJECT(this), TQT_SLOT( slotGoSettings() ), actionCollection(), "go_settings" );
-  //(void) new KAction( i18n( "Sidebar Configuration" ), 0, this, TQT_SLOT( slotGoDirTree() ), actionCollection(), "go_dirtree" );
-  (void) new KAction( i18n( "Trash" ), "trashcan_full", 0, TQT_TQOBJECT(this), TQT_SLOT( slotGoTrash() ), actionCollection(), "go_trash" );
-  (void) new KAction( i18n( "Autostart" ), 0, TQT_TQOBJECT(this), TQT_SLOT( slotGoAutostart() ), actionCollection(), "go_autostart" );
+  (void) new TDEAction( i18n( "S&ystem" ), "system", 0, TQT_TQOBJECT(this), TQT_SLOT( slotGoSystem() ), actionCollection(), "go_system" );
+  (void) new TDEAction( i18n( "App&lications" ), "kmenu", 0, TQT_TQOBJECT(this), TQT_SLOT( slotGoApplications() ), actionCollection(), "go_applications" );
+  (void) new TDEAction( i18n( "&Storage Media" ), "system", 0, TQT_TQOBJECT(this), TQT_SLOT( slotGoMedia() ), actionCollection(), "go_media" );
+  (void) new TDEAction( i18n( "&Network Folders" ), "network", 0, TQT_TQOBJECT(this), TQT_SLOT( slotGoNetworkFolders() ), actionCollection(), "go_network_folders" );
+  (void) new TDEAction( i18n( "Sett&ings" ), "kcontrol", 0, TQT_TQOBJECT(this), TQT_SLOT( slotGoSettings() ), actionCollection(), "go_settings" );
+  //(void) new TDEAction( i18n( "Sidebar Configuration" ), 0, this, TQT_SLOT( slotGoDirTree() ), actionCollection(), "go_dirtree" );
+  (void) new TDEAction( i18n( "Trash" ), "trashcan_full", 0, TQT_TQOBJECT(this), TQT_SLOT( slotGoTrash() ), actionCollection(), "go_trash" );
+  (void) new TDEAction( i18n( "Autostart" ), 0, TQT_TQOBJECT(this), TQT_SLOT( slotGoAutostart() ), actionCollection(), "go_autostart" );
   KonqMostOftenURLSAction *mostOften = new KonqMostOftenURLSAction( i18n("Most Often Visited"), actionCollection(), "go_most_often" );
   connect( mostOften, TQT_SIGNAL( activated( const KURL& )),
 	   TQT_SLOT( slotOpenURL( const KURL& )));
-  (void) new KAction( i18n( "History" ), "history", 0, TQT_TQOBJECT(this), TQT_SLOT( slotGoHistory() ), actionCollection(), "go_history" );
+  (void) new TDEAction( i18n( "History" ), "history", 0, TQT_TQOBJECT(this), TQT_SLOT( slotGoHistory() ), actionCollection(), "go_history" );
 
   // Settings menu
 
-  m_paSaveViewProfile = new KAction( i18n( "&Save View Profile..." ), 0, TQT_TQOBJECT(this), TQT_SLOT( slotSaveViewProfile() ), actionCollection(), "saveviewprofile" );
-  m_paSaveViewPropertiesLocally = new KToggleAction( i18n( "Save View Changes per &Folder" ), 0, TQT_TQOBJECT(this), TQT_SLOT( slotSaveViewPropertiesLocally() ), actionCollection(), "saveViewPropertiesLocally" );
+  m_paSaveViewProfile = new TDEAction( i18n( "&Save View Profile..." ), 0, TQT_TQOBJECT(this), TQT_SLOT( slotSaveViewProfile() ), actionCollection(), "saveviewprofile" );
+  m_paSaveViewPropertiesLocally = new TDEToggleAction( i18n( "Save View Changes per &Folder" ), 0, TQT_TQOBJECT(this), TQT_SLOT( slotSaveViewPropertiesLocally() ), actionCollection(), "saveViewPropertiesLocally" );
    // "Remove" ? "Reset" ? The former is more correct, the latter is more kcontrol-like...
-  m_paRemoveLocalProperties = new KAction( i18n( "Remove Folder Properties" ), 0, TQT_TQOBJECT(this), TQT_SLOT( slotRemoveLocalProperties() ), actionCollection(), "removeLocalProperties" );
+  m_paRemoveLocalProperties = new TDEAction( i18n( "Remove Folder Properties" ), 0, TQT_TQOBJECT(this), TQT_SLOT( slotRemoveLocalProperties() ), actionCollection(), "removeLocalProperties" );
 
 
   m_configureModules << "kde-filebehavior.desktop" << "kde-fileappearance.desktop" <<
@@ -3890,52 +3890,52 @@ void KonqMainWindow::initActions()
   KStdAction::keyBindings( guiFactory(), TQT_SLOT( configureShortcuts() ), actionCollection() );
   KStdAction::configureToolbars( TQT_TQOBJECT(this), TQT_SLOT( slotConfigureToolbars() ), actionCollection() );
 
-  m_paConfigureExtensions = new KAction( i18n("Configure Extensions..."), 0, TQT_TQOBJECT(this), TQT_SLOT( slotConfigureExtensions()), actionCollection(), "options_configure_extensions");
-  m_paConfigureSpellChecking = new KAction( i18n("Configure Spell Checking..."), "spellcheck", 0,TQT_TQOBJECT(this), TQT_SLOT( slotConfigureSpellChecking()), actionCollection(), "configurespellcheck");
+  m_paConfigureExtensions = new TDEAction( i18n("Configure Extensions..."), 0, TQT_TQOBJECT(this), TQT_SLOT( slotConfigureExtensions()), actionCollection(), "options_configure_extensions");
+  m_paConfigureSpellChecking = new TDEAction( i18n("Configure Spell Checking..."), "spellcheck", 0,TQT_TQOBJECT(this), TQT_SLOT( slotConfigureSpellChecking()), actionCollection(), "configurespellcheck");
 
   // Window menu
-  m_paSplitViewHor = new KAction( i18n( "Split View &Left/Right" ), "view_left_right", CTRL+SHIFT+Key_L, TQT_TQOBJECT(this), TQT_SLOT( slotSplitViewHorizontal() ), actionCollection(), "splitviewh" );
-  m_paSplitViewVer = new KAction( i18n( "Split View &Top/Bottom" ), "view_top_bottom", CTRL+SHIFT+Key_T, TQT_TQOBJECT(this), TQT_SLOT( slotSplitViewVertical() ), actionCollection(), "splitviewv" );
-  m_paAddTab = new KAction( i18n( "&New Tab" ), "tab_new", "CTRL+SHIFT+N;CTRL+T", TQT_TQOBJECT(this), TQT_SLOT( slotAddTab() ), actionCollection(), "newtab" );
-  m_paDuplicateTab = new KAction( i18n( "&Duplicate Current Tab" ), "tab_duplicate", CTRL+SHIFT+Key_D, TQT_TQOBJECT(this), TQT_SLOT( slotDuplicateTab() ), actionCollection(), "duplicatecurrenttab" );
-  m_paBreakOffTab = new KAction( i18n( "Detach Current Tab" ), "tab_breakoff", CTRL+SHIFT+Key_B, TQT_TQOBJECT(this), TQT_SLOT( slotBreakOffTab() ), actionCollection(), "breakoffcurrenttab" );
-  m_paRemoveView = new KAction( i18n( "&Close Active View" ),"view_remove", CTRL+SHIFT+Key_R, TQT_TQOBJECT(this), TQT_SLOT( slotRemoveView() ), actionCollection(), "removeview" );
-  m_paRemoveTab = new KAction( i18n( "Close Current Tab" ), "tab_remove", CTRL+Key_W, TQT_TQOBJECT(this), TQT_SLOT( slotRemoveTab() ), actionCollection(), "removecurrenttab" );
-  m_paRemoveOtherTabs = new KAction( i18n( "Close &Other Tabs" ), "tab_remove_other", 0, TQT_TQOBJECT(this), TQT_SLOT( slotRemoveOtherTabsPopup() ), actionCollection(), "removeothertabs" );
+  m_paSplitViewHor = new TDEAction( i18n( "Split View &Left/Right" ), "view_left_right", CTRL+SHIFT+Key_L, TQT_TQOBJECT(this), TQT_SLOT( slotSplitViewHorizontal() ), actionCollection(), "splitviewh" );
+  m_paSplitViewVer = new TDEAction( i18n( "Split View &Top/Bottom" ), "view_top_bottom", CTRL+SHIFT+Key_T, TQT_TQOBJECT(this), TQT_SLOT( slotSplitViewVertical() ), actionCollection(), "splitviewv" );
+  m_paAddTab = new TDEAction( i18n( "&New Tab" ), "tab_new", "CTRL+SHIFT+N;CTRL+T", TQT_TQOBJECT(this), TQT_SLOT( slotAddTab() ), actionCollection(), "newtab" );
+  m_paDuplicateTab = new TDEAction( i18n( "&Duplicate Current Tab" ), "tab_duplicate", CTRL+SHIFT+Key_D, TQT_TQOBJECT(this), TQT_SLOT( slotDuplicateTab() ), actionCollection(), "duplicatecurrenttab" );
+  m_paBreakOffTab = new TDEAction( i18n( "Detach Current Tab" ), "tab_breakoff", CTRL+SHIFT+Key_B, TQT_TQOBJECT(this), TQT_SLOT( slotBreakOffTab() ), actionCollection(), "breakoffcurrenttab" );
+  m_paRemoveView = new TDEAction( i18n( "&Close Active View" ),"view_remove", CTRL+SHIFT+Key_R, TQT_TQOBJECT(this), TQT_SLOT( slotRemoveView() ), actionCollection(), "removeview" );
+  m_paRemoveTab = new TDEAction( i18n( "Close Current Tab" ), "tab_remove", CTRL+Key_W, TQT_TQOBJECT(this), TQT_SLOT( slotRemoveTab() ), actionCollection(), "removecurrenttab" );
+  m_paRemoveOtherTabs = new TDEAction( i18n( "Close &Other Tabs" ), "tab_remove_other", 0, TQT_TQOBJECT(this), TQT_SLOT( slotRemoveOtherTabsPopup() ), actionCollection(), "removeothertabs" );
 
-  m_paActivateNextTab = new KAction( i18n( "Activate Next Tab" ), "tab_next", TQApplication::reverseLayout() ? KStdAccel::tabPrev() : KStdAccel::tabNext(), TQT_TQOBJECT(this), TQT_SLOT( slotActivateNextTab() ), actionCollection(), "activatenexttab" );
-  m_paActivatePrevTab = new KAction( i18n( "Activate Previous Tab" ), "tab_previous", TQApplication::reverseLayout() ? KStdAccel::tabNext() : KStdAccel::tabPrev(), TQT_TQOBJECT(this), TQT_SLOT( slotActivatePrevTab() ), actionCollection(), "activateprevtab" );
+  m_paActivateNextTab = new TDEAction( i18n( "Activate Next Tab" ), "tab_next", TQApplication::reverseLayout() ? TDEStdAccel::tabPrev() : TDEStdAccel::tabNext(), TQT_TQOBJECT(this), TQT_SLOT( slotActivateNextTab() ), actionCollection(), "activatenexttab" );
+  m_paActivatePrevTab = new TDEAction( i18n( "Activate Previous Tab" ), "tab_previous", TQApplication::reverseLayout() ? TDEStdAccel::tabNext() : TDEStdAccel::tabPrev(), TQT_TQOBJECT(this), TQT_SLOT( slotActivatePrevTab() ), actionCollection(), "activateprevtab" );
 
   TQCString actionname;
   for (int i=1;i<13;i++) {
     actionname.sprintf("activate_tab_%02d", i);
-    new KAction(i18n("Activate Tab %1").arg(i), 0, TQT_TQOBJECT(this), TQT_SLOT(slotActivateTab()), actionCollection(), actionname);
+    new TDEAction(i18n("Activate Tab %1").arg(i), 0, TQT_TQOBJECT(this), TQT_SLOT(slotActivateTab()), actionCollection(), actionname);
   }
 
-  m_paMoveTabLeft = new KAction( i18n("Move Tab Left"), 0 , CTRL+SHIFT+Key_Left,TQT_TQOBJECT(this), TQT_SLOT( slotMoveTabLeft()),actionCollection(),"tab_move_left");
-  m_paMoveTabRight = new KAction( i18n("Move Tab Right"), 0 , CTRL+SHIFT+Key_Right,TQT_TQOBJECT(this), TQT_SLOT( slotMoveTabRight()),actionCollection(),"tab_move_right");
+  m_paMoveTabLeft = new TDEAction( i18n("Move Tab Left"), 0 , CTRL+SHIFT+Key_Left,TQT_TQOBJECT(this), TQT_SLOT( slotMoveTabLeft()),actionCollection(),"tab_move_left");
+  m_paMoveTabRight = new TDEAction( i18n("Move Tab Right"), 0 , CTRL+SHIFT+Key_Right,TQT_TQOBJECT(this), TQT_SLOT( slotMoveTabRight()),actionCollection(),"tab_move_right");
 
 #ifndef NDEBUG
-  (void) new KAction( i18n( "Dump Debug Info" ), "view_dump_debug_info", 0, TQT_TQOBJECT(this), TQT_SLOT( slotDumpDebugInfo() ), actionCollection(), "dumpdebuginfo" );
+  (void) new TDEAction( i18n( "Dump Debug Info" ), "view_dump_debug_info", 0, TQT_TQOBJECT(this), TQT_SLOT( slotDumpDebugInfo() ), actionCollection(), "dumpdebuginfo" );
 #endif
 
-  m_paSaveRemoveViewProfile = new KAction( i18n( "C&onfigure View Profiles..." ), 0, m_pViewManager, TQT_SLOT( slotProfileDlg() ), actionCollection(), "saveremoveviewprofile" );
-  m_pamLoadViewProfile = new KActionMenu( i18n( "Load &View Profile" ), actionCollection(), "loadviewprofile" );
+  m_paSaveRemoveViewProfile = new TDEAction( i18n( "C&onfigure View Profiles..." ), 0, m_pViewManager, TQT_SLOT( slotProfileDlg() ), actionCollection(), "saveremoveviewprofile" );
+  m_pamLoadViewProfile = new TDEActionMenu( i18n( "Load &View Profile" ), actionCollection(), "loadviewprofile" );
 
   m_pViewManager->setProfiles( m_pamLoadViewProfile );
 
   m_ptaFullScreen = KStdAction::fullScreen( 0, 0, actionCollection(), this );
-  KShortcut fullScreenShortcut = m_ptaFullScreen->shortcut();
+  TDEShortcut fullScreenShortcut = m_ptaFullScreen->shortcut();
   fullScreenShortcut.append( KKey( Key_F11 ) );
   m_ptaFullScreen->setShortcut( fullScreenShortcut );
   connect( m_ptaFullScreen, TQT_SIGNAL( toggled( bool )), TQT_TQOBJECT(this), TQT_SLOT( slotUpdateFullScreen( bool )));
 
-  KShortcut reloadShortcut = KStdAccel::shortcut(KStdAccel::Reload);
+  TDEShortcut reloadShortcut = TDEStdAccel::shortcut(TDEStdAccel::Reload);
   reloadShortcut.append(KKey(CTRL + Key_R));
-  m_paReload = new KAction( i18n( "&Reload" ), "reload", reloadShortcut, TQT_TQOBJECT(this), TQT_SLOT( slotReload() ), actionCollection(), "reload" );
-  m_paReloadAllTabs = new KAction( i18n( "&Reload All Tabs" ), "reload_all_tabs", SHIFT+Key_F5, TQT_TQOBJECT(this), TQT_SLOT( slotReloadAllTabs() ), actionCollection(), "reload_all_tabs" );
+  m_paReload = new TDEAction( i18n( "&Reload" ), "reload", reloadShortcut, TQT_TQOBJECT(this), TQT_SLOT( slotReload() ), actionCollection(), "reload" );
+  m_paReloadAllTabs = new TDEAction( i18n( "&Reload All Tabs" ), "reload_all_tabs", SHIFT+Key_F5, TQT_TQOBJECT(this), TQT_SLOT( slotReloadAllTabs() ), actionCollection(), "reload_all_tabs" );
   
-  m_paReloadStop = new KAction( i18n( "&Reload/Stop" ), "reload", 0, TQT_TQOBJECT(this), TQT_SLOT( slotReloadStop() ), actionCollection(), "reload_stop" );
+  m_paReloadStop = new TDEAction( i18n( "&Reload/Stop" ), "reload", 0, TQT_TQOBJECT(this), TQT_SLOT( slotReloadStop() ), actionCollection(), "reload_stop" );
 
   m_paUndo = KStdAction::undo( KonqUndoManager::self(), TQT_SLOT( undo() ), actionCollection(), "undo" );
   //m_paUndo->setEnabled( KonqUndoManager::self()->undoAvailable() );
@@ -3944,20 +3944,20 @@ void KonqMainWindow::initActions()
 
   // Those are connected to the browserextension directly
   m_paCut = KStdAction::cut( 0, 0, actionCollection(), "cut" );
-  KShortcut cutShortCut = m_paCut->shortcut();
+  TDEShortcut cutShortCut = m_paCut->shortcut();
   cutShortCut.remove( KKey( SHIFT + Key_Delete ) ); // used for deleting files
   m_paCut->setShortcut( cutShortCut );
 
   m_paCopy = KStdAction::copy( 0, 0, actionCollection(), "copy" );
   m_paPaste = KStdAction::paste( 0, 0, actionCollection(), "paste" );
-  m_paStop = new KAction( i18n( "&Stop" ), "stop", Key_Escape, TQT_TQOBJECT(this), TQT_SLOT( slotStop() ), actionCollection(), "stop" );
+  m_paStop = new TDEAction( i18n( "&Stop" ), "stop", Key_Escape, TQT_TQOBJECT(this), TQT_SLOT( slotStop() ), actionCollection(), "stop" );
 
-  m_paRename = new KAction( i18n( "&Rename" ), /*"editrename",*/ Key_F2, actionCollection(), "rename" );
-  m_paTrash = new KAction( i18n( "&Move to Trash" ), "edittrash", Key_Delete, actionCollection(), "trash" );
-  connect( m_paTrash, TQT_SIGNAL( activated( KAction::ActivationReason, TQt::ButtonState ) ),
-           TQT_TQOBJECT(this), TQT_SLOT( slotTrashActivated( KAction::ActivationReason, TQt::ButtonState ) ) );
+  m_paRename = new TDEAction( i18n( "&Rename" ), /*"editrename",*/ Key_F2, actionCollection(), "rename" );
+  m_paTrash = new TDEAction( i18n( "&Move to Trash" ), "edittrash", Key_Delete, actionCollection(), "trash" );
+  connect( m_paTrash, TQT_SIGNAL( activated( TDEAction::ActivationReason, TQt::ButtonState ) ),
+           TQT_TQOBJECT(this), TQT_SLOT( slotTrashActivated( TDEAction::ActivationReason, TQt::ButtonState ) ) );
 
-  m_paDelete = new KAction( i18n( "&Delete" ), "editdelete", SHIFT+Key_Delete, actionCollection(), "del" );
+  m_paDelete = new TDEAction( i18n( "&Delete" ), "editdelete", SHIFT+Key_Delete, actionCollection(), "del" );
 
   m_paAnimatedLogo = new KonqLogoAction( i18n("Animated Logo"), 0, TQT_TQOBJECT(this), TQT_SLOT( slotDuplicateWindow() ), actionCollection(), "animated_logo" );
 
@@ -3974,21 +3974,21 @@ void KonqMainWindow::initActions()
   TQWhatsThis::add( m_combo, i18n( "Location Bar<p>"
 				  "Enter a web address or search term." ) );
 
-  KAction *clearLocation = new KAction( i18n( "Clear Location Bar" ),
+  TDEAction *clearLocation = new TDEAction( i18n( "Clear Location Bar" ),
 					TQApplication::reverseLayout() ? "clear_left" : "locationbar_erase",
 					CTRL+Key_L, actionCollection(), "clear_location" );
-  connect( clearLocation, TQT_SIGNAL( activated( KAction::ActivationReason, TQt::ButtonState ) ),
-           TQT_SLOT( slotClearLocationBar( KAction::ActivationReason, TQt::ButtonState ) ) );
+  connect( clearLocation, TQT_SIGNAL( activated( TDEAction::ActivationReason, TQt::ButtonState ) ),
+           TQT_SLOT( slotClearLocationBar( TDEAction::ActivationReason, TQt::ButtonState ) ) );
   clearLocation->setWhatsThis( i18n( "Clear Location bar<p>"
 				     "Clears the content of the location bar." ) );
 
   // Bookmarks menu
-  m_pamBookmarks = new KActionMenu( i18n( "&Bookmarks" ), "bookmark", actionCollection(), "bookmarks" );
+  m_pamBookmarks = new TDEActionMenu( i18n( "&Bookmarks" ), "bookmark", actionCollection(), "bookmarks" );
   m_pamBookmarks->setDelayed( false );
 
   // The actual menu needs a different action collection, so that the bookmarks
   // don't appear in kedittoolbar
-  m_bookmarksActionCollection = new KActionCollection( this );
+  m_bookmarksActionCollection = new TDEActionCollection( this );
   m_bookmarksActionCollection->setHighlightingEnabled( true );
   connectActionCollection( m_bookmarksActionCollection );
 
@@ -4000,15 +4000,15 @@ void KonqMainWindow::initActions()
 	   TQT_SIGNAL( openBookmark(const TQString &, TQt::ButtonState) ),
 	   this, TQT_SLOT( slotOpenBookmarkURL(const TQString &, TQt::ButtonState) ));
 
-  KAction *addBookmark = actionCollection()->action("add_bookmark");
+  TDEAction *addBookmark = actionCollection()->action("add_bookmark");
   if (addBookmark)
      addBookmark->setText(i18n("Bookmark This Location"));
 
   m_paShowMenuBar = KStdAction::showMenubar( TQT_TQOBJECT(this), TQT_SLOT( slotShowMenuBar() ), actionCollection() );
 
-  (void) new KAction( i18n( "Kon&queror Introduction" ), 0, TQT_TQOBJECT(this), TQT_SLOT( slotIntro() ), actionCollection(), "konqintro" );
+  (void) new TDEAction( i18n( "Kon&queror Introduction" ), 0, TQT_TQOBJECT(this), TQT_SLOT( slotIntro() ), actionCollection(), "konqintro" );
 
-  KAction *goUrl = new KAction( i18n( "Go" ), "key_enter", 0, TQT_TQOBJECT(this), TQT_SLOT( goURL() ), actionCollection(), "go_url" );
+  TDEAction *goUrl = new TDEAction( i18n( "Go" ), "key_enter", 0, TQT_TQOBJECT(this), TQT_SLOT( goURL() ), actionCollection(), "go_url" );
   goUrl->setWhatsThis( i18n( "Go<p>"
 			     "Goes to the page that has been entered into the location bar." ) );
 
@@ -4276,15 +4276,15 @@ void KonqMainWindow::updateViewActions()
     {
       // F5 is the default key binding for Reload.... a la Windows.
       // mc users want F5 for Copy and F6 for move, but I can't make that default.
-      m_paCopyFiles = new KAction( i18n("Copy &Files..."), Key_F7, TQT_TQOBJECT(this), TQT_SLOT( slotCopyFiles() ), actionCollection(), "copyfiles" );
-      m_paMoveFiles = new KAction( i18n("M&ove Files..."), Key_F8, TQT_TQOBJECT(this), TQT_SLOT( slotMoveFiles() ), actionCollection(), "movefiles" );
+      m_paCopyFiles = new TDEAction( i18n("Copy &Files..."), Key_F7, TQT_TQOBJECT(this), TQT_SLOT( slotCopyFiles() ), actionCollection(), "copyfiles" );
+      m_paMoveFiles = new TDEAction( i18n("M&ove Files..."), Key_F8, TQT_TQOBJECT(this), TQT_SLOT( slotMoveFiles() ), actionCollection(), "movefiles" );
 
       // This action doesn't appear in the GUI, it's for the shortcut only.
       // KNewMenu takes care of the GUI stuff.
-      m_paNewDir = new KAction( i18n("Create Folder..." ), Key_F10, TQT_TQOBJECT(this), TQT_SLOT( slotNewDir() ),
+      m_paNewDir = new TDEAction( i18n("Create Folder..." ), Key_F10, TQT_TQOBJECT(this), TQT_SLOT( slotNewDir() ),
                                 actionCollection(), "konq_create_dir" );
 
-      TQPtrList<KAction> lst;
+      TQPtrList<TDEAction> lst;
       lst.append( m_paCopyFiles );
       lst.append( m_paMoveFiles );
       m_paCopyFiles->setEnabled( false );
@@ -4339,7 +4339,7 @@ void KonqMainWindow::connectExtension( KParts::BrowserExtension *ext )
 
   for ( ; it != itEnd ; ++it )
   {
-    KAction * act = actionCollection()->action( static_cast<const char *>(it.key()) );
+    TDEAction * act = actionCollection()->action( static_cast<const char *>(it.key()) );
     //kdDebug(1202) << it.key() << endl;
     if ( act )
     {
@@ -4373,7 +4373,7 @@ void KonqMainWindow::disconnectExtension( KParts::BrowserExtension *ext )
 
   for ( ; it != itEnd ; ++it )
   {
-    KAction * act = actionCollection()->action( static_cast<const char *>(it.key()) );
+    TDEAction * act = actionCollection()->action( static_cast<const char *>(it.key()) );
     //kdDebug(1202) << it.key() << endl;
     if ( act && slotNames.contains( it.key()+"()" ) )
     {
@@ -4383,11 +4383,11 @@ void KonqMainWindow::disconnectExtension( KParts::BrowserExtension *ext )
   }
 }
 
-void KonqMainWindow::slotTrashActivated( KAction::ActivationReason reason, TQt::ButtonState state )
+void KonqMainWindow::slotTrashActivated( TDEAction::ActivationReason reason, TQt::ButtonState state )
 {
   if ( !m_currentView )
     return;
-  if ( reason == KAction::PopupMenuActivation && ( state & TQt::ShiftButton ) )
+  if ( reason == TDEAction::PopupMenuActivation && ( state & TQt::ShiftButton ) )
       m_currentView->callExtensionMethod( "del()" );
   else
       m_currentView->callExtensionMethod( "trash()" );
@@ -4395,7 +4395,7 @@ void KonqMainWindow::slotTrashActivated( KAction::ActivationReason reason, TQt::
 
 void KonqMainWindow::enableAction( const char * name, bool enabled )
 {
-  KAction * act = actionCollection()->action( name );
+  TDEAction * act = actionCollection()->action( name );
   if (!act)
     kdWarning(1202) << "Unknown action " << name << " - can't enable" << endl;
   else
@@ -4421,7 +4421,7 @@ void KonqMainWindow::enableAction( const char * name, bool enabled )
 
 void KonqMainWindow::setActionText( const char * name, const TQString& text )
 {
-  KAction * act = actionCollection()->action( name );
+  TDEAction * act = actionCollection()->action( name );
   if (!act)
     kdWarning(1202) << "Unknown action " << name << " - can't enable" << endl;
   else
@@ -4444,12 +4444,12 @@ void KonqMainWindow::enableAllActions( bool enable )
   kdDebug(1202) << "KonqMainWindow::enableAllActions " << enable << endl;
   KParts::BrowserExtension::ActionSlotMap * actionSlotMap = KParts::BrowserExtension::actionSlotMapPtr();
 
-  TQValueList<KAction *> actions = actionCollection()->actions();
-  TQValueList<KAction *>::Iterator it = actions.begin();
-  TQValueList<KAction *>::Iterator end = actions.end();
+  TQValueList<TDEAction *> actions = actionCollection()->actions();
+  TQValueList<TDEAction *>::Iterator it = actions.begin();
+  TQValueList<TDEAction *>::Iterator end = actions.end();
   for (; it != end; ++it )
   {
-    KAction *act = *it;
+    TDEAction *act = *it;
     if ( !TQString(act->name()).startsWith("options_configure") /* do not touch the configureblah actions */
          && ( !enable || !actionSlotMap->contains( act->name() ) ) ) /* don't enable BE actions */
       act->setEnabled( enable );
@@ -4476,8 +4476,8 @@ void KonqMainWindow::enableAllActions( bool enable )
 
       if (m_toggleViewGUIClient)
       {
-          TQPtrList<KAction> actions = m_toggleViewGUIClient->actions();
-          for ( KAction * it = actions.first(); it ; it = actions.next() )
+          TQPtrList<TDEAction> actions = m_toggleViewGUIClient->actions();
+          for ( TDEAction * it = actions.first(); it ; it = actions.next() )
               it->setEnabled( true );
       }
 
@@ -4503,8 +4503,8 @@ void KonqMainWindow::disableActionsNoView()
     m_paLinkView->setEnabled( false );
     if (m_toggleViewGUIClient)
     {
-        TQPtrList<KAction> actions = m_toggleViewGUIClient->actions();
-        for ( KAction * it = actions.first(); it ; it = actions.next() )
+        TQPtrList<TDEAction> actions = m_toggleViewGUIClient->actions();
+        for ( TDEAction * it = actions.first(); it ; it = actions.next() )
             it->setEnabled( false );
     }
     // There are things we can do, though : bookmarks, view profile, location bar, new window,
@@ -4518,7 +4518,7 @@ void KonqMainWindow::disableActionsNoView()
                                          "go_url", "go_media", "go_history", "options_configure_extensions", 0 };
     for ( int i = 0 ; s_enActions[i] ; ++i )
     {
-        KAction * act = action(s_enActions[i]);
+        TDEAction * act = action(s_enActions[i]);
         if (act)
             act->setEnabled( true );
     }
@@ -4684,9 +4684,9 @@ void KonqMainWindow::slotPopupMenu( KXMLGUIClient *client, const TQPoint &_globa
   //kdDebug(1202) << "KonqMainWindow::slotPopupMenu( " << client << "...)" << " current view=" << m_currentView << " " << m_currentView->part()->className() << endl;
 
   // This action collection is used to pass actions to KonqPopupMenu.
-  // It has to be a KActionCollection instead of a KActionPtrList because we need
+  // It has to be a TDEActionCollection instead of a TDEActionPtrList because we need
   // the actionStatusText signal...
-  KActionCollection popupMenuCollection( (TQWidget*)0 );
+  TDEActionCollection popupMenuCollection( (TQWidget*)0 );
   popupMenuCollection.insert( m_paBack );
   popupMenuCollection.insert( m_paForward );
   popupMenuCollection.insert( m_paUp );
@@ -4703,7 +4703,7 @@ void KonqMainWindow::slotPopupMenu( KXMLGUIClient *client, const TQPoint &_globa
   popupMenuCollection.insert( m_paDelete );
 
   // The pasteto action is used when clicking on a dir, to paste into it.
-  KAction *actPaste = KStdAction::paste( TQT_TQOBJECT(this), TQT_SLOT( slotPopupPasteTo() ), &popupMenuCollection, "pasteto" );
+  TDEAction *actPaste = KStdAction::paste( TQT_TQOBJECT(this), TQT_SLOT( slotPopupPasteTo() ), &popupMenuCollection, "pasteto" );
   actPaste->setEnabled( m_paPaste->isEnabled() );
   popupMenuCollection.insert( actPaste );
 
@@ -4772,14 +4772,14 @@ void KonqMainWindow::slotPopupMenu( KXMLGUIClient *client, const TQPoint &_globa
 
 
   // Those actions go into the PopupMenuGUIClient, since that's the one defining them.
-  KAction *actNewWindow = 0L, *actNewTab = 0L;
+  TDEAction *actNewWindow = 0L, *actNewTab = 0L;
   if( doTabHandling )
   {
       if (_args.forcesNewWindow()) {
-        actNewWindow = new KAction( i18n( "Open in T&his Window" ), 0, TQT_TQOBJECT(this), TQT_SLOT( slotPopupThisWindow() ), konqyMenuClient->actionCollection(), "sameview" );
+        actNewWindow = new TDEAction( i18n( "Open in T&his Window" ), 0, TQT_TQOBJECT(this), TQT_SLOT( slotPopupThisWindow() ), konqyMenuClient->actionCollection(), "sameview" );
         actNewWindow->setToolTip( i18n( "Open the document in current window" ) );
       }
-      actNewWindow = new KAction( i18n( "Open in New &Window" ), "window_new", 0, TQT_TQOBJECT(this), TQT_SLOT( slotPopupNewWindow() ), konqyMenuClient->actionCollection(), "newview" );
+      actNewWindow = new TDEAction( i18n( "Open in New &Window" ), "window_new", 0, TQT_TQOBJECT(this), TQT_SLOT( slotPopupNewWindow() ), konqyMenuClient->actionCollection(), "newview" );
       actNewWindow->setToolTip( i18n( "Open the document in a new window" ) );
 
       //Set tab_new_x to point to the correct icon based on NewTabsInFront
@@ -4790,12 +4790,12 @@ void KonqMainWindow::slotPopupMenu( KXMLGUIClient *client, const TQPoint &_globa
       else
         tab_new_x = "tab_new_bg" ;
 
-      KAction *actNewTab = new KAction( i18n( "Open in &Background Tab" ), "tab_new_bg", 0, TQT_TQOBJECT(this), TQT_SLOT( slotPopupNewTab() ), actionCollection(), "openintab" );
+      TDEAction *actNewTab = new TDEAction( i18n( "Open in &Background Tab" ), "tab_new_bg", 0, TQT_TQOBJECT(this), TQT_SLOT( slotPopupNewTab() ), actionCollection(), "openintab" );
       actNewTab->setStatusText( i18n( "Open the document in a new background tab" ) );
-      KAction *actNewTabFront = new KAction( i18n( "Open in &New Tab" ), "tab_new", 0, TQT_TQOBJECT(this), TQT_SLOT( slotPopupNewTabAtFront() ), actionCollection(), "openintabfront" );
+      TDEAction *actNewTabFront = new TDEAction( i18n( "Open in &New Tab" ), "tab_new", 0, TQT_TQOBJECT(this), TQT_SLOT( slotPopupNewTabAtFront() ), actionCollection(), "openintabfront" );
       actNewTabFront->setStatusText( i18n( "Open the document in a new foreground tab" ) );
-      actNewTab = new KAction( i18n( "Open in &Background Tab" ), tab_new_x, 0, TQT_TQOBJECT(this), TQT_SLOT( slotPopupNewTab() ), konqyMenuClient->actionCollection(), "openintab" );
-      actNewTabFront = new KAction( i18n( "Open in &New Tab" ), tab_new_x, 0, TQT_TQOBJECT(this), TQT_SLOT( slotPopupNewTabAtFront() ), konqyMenuClient->actionCollection(), "openintabfront" );
+      actNewTab = new TDEAction( i18n( "Open in &Background Tab" ), tab_new_x, 0, TQT_TQOBJECT(this), TQT_SLOT( slotPopupNewTab() ), konqyMenuClient->actionCollection(), "openintab" );
+      actNewTabFront = new TDEAction( i18n( "Open in &New Tab" ), tab_new_x, 0, TQT_TQOBJECT(this), TQT_SLOT( slotPopupNewTabAtFront() ), konqyMenuClient->actionCollection(), "openintabfront" );
       actNewTab->setToolTip( i18n( "Open the document in a new background tab" ) );
       actNewTabFront->setToolTip( i18n( "Open the document in a new foreground tab" ) );
       doTabHandling = true;
@@ -4853,11 +4853,11 @@ void KonqMainWindow::slotPopupMenu( KXMLGUIClient *client, const TQPoint &_globa
 
   delete pPopupMenu;
 
-  // We're sort of misusing KActionCollection here, but we need it for the actionStatusText signal...
-  // Anyway. If the action belonged to the view, and the view got deleted, we don't want ~KActionCollection
+  // We're sort of misusing TDEActionCollection here, but we need it for the actionStatusText signal...
+  // Anyway. If the action belonged to the view, and the view got deleted, we don't want ~TDEActionCollection
   // to iterate over those deleted actions
-  KActionPtrList lst = popupMenuCollection.actions();
-  KActionPtrList::iterator it = lst.begin();
+  TDEActionPtrList lst = popupMenuCollection.actions();
+  TDEActionPtrList::iterator it = lst.begin();
   for ( ; it != lst.end() ; ++it )
       popupMenuCollection.take( *it );
 
@@ -5029,7 +5029,7 @@ void KonqMainWindow::updateOpenWithActions()
 
   m_openWithActions.clear();
 
-  if (!kapp->authorizeKAction("openwith"))
+  if (!kapp->authorizeTDEAction("openwith"))
      return;
 
   const TDETrader::OfferList & services = m_currentView->appServiceOffers();
@@ -5037,7 +5037,7 @@ void KonqMainWindow::updateOpenWithActions()
   TDETrader::OfferList::ConstIterator end = services.end();
   for (; it != end; ++it )
   {
-    KAction *action = new KAction( i18n( "Open with %1" ).arg( (*it)->name() ), 0, 0, (*it)->desktopEntryName().latin1() );
+    TDEAction *action = new TDEAction( i18n( "Open with %1" ).arg( (*it)->name() ), 0, 0, (*it)->desktopEntryName().latin1() );
     action->setIcon( (*it)->icon() );
 
     connect( action, TQT_SIGNAL( activated() ),
@@ -5047,7 +5047,7 @@ void KonqMainWindow::updateOpenWithActions()
   }
   if ( services.count() > 0 )
   {
-      m_openWithActions.append( new KActionSeparator );
+      m_openWithActions.append( new TDEActionSeparator );
       plugActionList( "openwith", m_openWithActions );
   }
 }
@@ -5067,7 +5067,7 @@ void KonqMainWindow::updateViewModeActions()
   unplugViewModeActions();
   if ( m_viewModeMenu )
   {
-    TQPtrListIterator<KRadioAction> it( m_viewModeActions );
+    TQPtrListIterator<TDERadioAction> it( m_viewModeActions );
     for (; it.current(); ++it )
       it.current()->unplugAll();
     delete m_viewModeMenu;
@@ -5094,7 +5094,7 @@ void KonqMainWindow::updateViewModeActions()
   if ( services.count() <= 1 )
     return;
 
-  m_viewModeMenu = new KActionMenu( i18n( "&View Mode" ), TQT_TQOBJECT(this) );
+  m_viewModeMenu = new TDEActionMenu( i18n( "&View Mode" ), TQT_TQOBJECT(this) );
 
   // a temporary map, just like the m_viewModeToolBarServices map, but
   // mapping to a KonqViewModeAction object. It's just temporary as we
@@ -5118,7 +5118,7 @@ void KonqMainWindow::updateViewModeActions()
       if ( prop.isValid() && prop.toBool() ) // No toggable views in view mode
           continue;
 
-      KRadioAction *action;
+      TDERadioAction *action;
 
       TQString itname = (*it)->genericName();
       if (itname.isEmpty())
@@ -5127,9 +5127,9 @@ void KonqMainWindow::updateViewModeActions()
       TQString icon = (*it)->icon();
       if ( icon != TQString::fromLatin1( "unknown" ) )
           // we *have* to specify a parent qobject, otherwise the exclusive group stuff doesn't work!(Simon)
-          action = new KRadioAction( itname, icon, 0, TQT_TQOBJECT(this), (*it)->desktopEntryName().ascii() );
+          action = new TDERadioAction( itname, icon, 0, TQT_TQOBJECT(this), (*it)->desktopEntryName().ascii() );
       else
-          action = new KRadioAction( itname, 0, TQT_TQOBJECT(this), (*it)->desktopEntryName().ascii() );
+          action = new TDERadioAction( itname, 0, TQT_TQOBJECT(this), (*it)->desktopEntryName().ascii() );
 
       action->setExclusiveGroup( "KonqMainWindow_ViewModes" );
 
@@ -5252,7 +5252,7 @@ void KonqMainWindow::saveToolBarServicesMap()
 
 void KonqMainWindow::plugViewModeActions()
 {
-  TQPtrList<KAction> lst;
+  TQPtrList<TDEAction> lst;
   lst.append( m_viewModeMenu );
   plugActionList( "viewmode", lst );
   // display the toolbar viewmode icons only for inode/directory, as here we have dedicated icons
@@ -5273,7 +5273,7 @@ KonqMainWindowIface* KonqMainWindow::dcopObject()
 
 void KonqMainWindow::updateBookmarkBar()
 {
-  KToolBar * bar = static_cast<KToolBar *>( TQT_TQWIDGET(child( "bookmarkToolBar", "KToolBar" )) );
+  TDEToolBar * bar = static_cast<TDEToolBar *>( TQT_TQWIDGET(child( "bookmarkToolBar", "TDEToolBar" )) );
 
   if (!bar) return;
 
@@ -5436,8 +5436,8 @@ void KonqMainWindow::slotOpenURL( const KURL& url )
 
 bool KonqMainWindow::sidebarVisible() const
 {
-KAction *a = m_toggleViewGUIClient->action("konq_sidebartng");
-return (a && static_cast<KToggleAction*>(a)->isChecked());
+TDEAction *a = m_toggleViewGUIClient->action("konq_sidebartng");
+return (a && static_cast<TDEToggleAction*>(a)->isChecked());
 }
 
 void KonqMainWindow::slotAddWebSideBar(const KURL& url, const TQString& name)
@@ -5447,7 +5447,7 @@ void KonqMainWindow::slotAddWebSideBar(const KURL& url, const TQString& name)
 
     kdDebug(1202) << "Requested to add URL " << url << " [" << name << "] to the sidebar!" << endl;
 
-    KAction *a = m_toggleViewGUIClient->action("konq_sidebartng");
+    TDEAction *a = m_toggleViewGUIClient->action("konq_sidebartng");
     if (!a) {
         KMessageBox::sorry(0L, i18n("Your sidebar is not functional or unavailable. A new entry cannot be added."), i18n("Web Sidebar"));
         return;
@@ -5460,7 +5460,7 @@ void KonqMainWindow::slotAddWebSideBar(const KURL& url, const TQString& name)
 
     if (rc == KMessageBox::Yes) {
         // Show the sidebar
-        if (!static_cast<KToggleAction*>(a)->isChecked()) {
+        if (!static_cast<TDEToggleAction*>(a)->isChecked()) {
             a->activate();
         }
 
@@ -5511,7 +5511,7 @@ void KonqMainWindow::bookmarksIntoCompletion( const KBookmarkGroup& group )
     }
 }
 
-void KonqMainWindow::connectActionCollection( KActionCollection *coll )
+void KonqMainWindow::connectActionCollection( TDEActionCollection *coll )
 {
     connect( coll, TQT_SIGNAL( actionStatusText( const TQString & ) ),
              this, TQT_SLOT( slotActionStatusText( const TQString & ) ) );
@@ -5519,7 +5519,7 @@ void KonqMainWindow::connectActionCollection( KActionCollection *coll )
              this, TQT_SLOT( slotClearStatusText() ) );
 }
 
-void KonqMainWindow::disconnectActionCollection( KActionCollection *coll )
+void KonqMainWindow::disconnectActionCollection( TDEActionCollection *coll )
 {
     disconnect( coll, TQT_SIGNAL( actionStatusText( const TQString & ) ),
                 this, TQT_SLOT( slotActionStatusText( const TQString & ) ) );

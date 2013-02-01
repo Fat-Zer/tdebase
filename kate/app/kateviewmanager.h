@@ -32,7 +32,7 @@ class KateMainWindow;
 class KateViewSpaceContainer;
 
 class TDEConfig;
-class KAction;
+class TDEAction;
 
 class TQToolButton;
 
@@ -143,12 +143,12 @@ class KateViewManager : public TQObject
     bool m_init;
 
     TQToolButton *m_closeTabButton;
-    KAction *m_closeView;
-    KAction *m_closeTab;
-    KAction *m_activateNextTab;
-    KAction *m_activatePrevTab;
-    KAction *goNext;
-    KAction *goPrev;
+    TDEAction *m_closeView;
+    TDEAction *m_closeTab;
+    TDEAction *m_activateNextTab;
+    TDEAction *m_activatePrevTab;
+    TDEAction *goNext;
+    TDEAction *goPrev;
 };
 
 #endif

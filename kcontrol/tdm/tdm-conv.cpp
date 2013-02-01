@@ -134,7 +134,7 @@ TDMConvenienceWidget::TDMConvenienceWidget(TQWidget *parent, const char *name)
     connect(npGroup, TQT_SIGNAL(toggled(bool)), TQT_SLOT(slotChanged()));
 
     pl_label = new TQLabel(i18n("No password re&quired for:"), npGroup);
-    npuserlv = new KListView(npGroup);
+    npuserlv = new TDEListView(npGroup);
     pl_label->setBuddy(npuserlv);
     npuserlv->addColumn(TQString::null);
     npuserlv->header()->hide();

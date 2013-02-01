@@ -30,10 +30,10 @@
 
 namespace KTextEditor { class EditorChooser; }
 
-class KAction;
-class KToggleAction;
-class KSelectAction;
-class KRecentFilesAction;
+class TDEAction;
+class TDEToggleAction;
+class TDESelectAction;
+class TDERecentFilesAction;
 
 class KWrite : public KParts::MainWindow
 {
@@ -110,9 +110,9 @@ class KWrite : public KParts::MainWindow
   private:
     KTextEditor::View * m_view;
 
-    KRecentFilesAction * m_recentFiles;
-    KToggleAction * m_paShowPath;
-    KToggleAction * m_paShowStatusBar;
+    TDERecentFilesAction * m_recentFiles;
+    TDEToggleAction * m_paShowPath;
+    TDEToggleAction * m_paShowStatusBar;
 
     TQString encoding;
 

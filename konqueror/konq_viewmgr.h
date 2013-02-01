@@ -43,7 +43,7 @@ class KonqFrameContainerBase;
 class KonqFrameTabs;
 class KonqView;
 class BrowserView;
-class KActionMenu;
+class TDEActionMenu;
 
 namespace KParts
 {
@@ -248,7 +248,7 @@ public:
    */
   void viewCountChanged();
 
-  void setProfiles( KActionMenu *profiles );
+  void setProfiles( TDEActionMenu *profiles );
 
   void profileListDirty( bool broadcast = true );
 
@@ -352,7 +352,7 @@ private:
 
   KonqFrameBase *m_pDocContainer;
 
-  TQGuardedPtr<KActionMenu> m_pamProfiles;
+  TQGuardedPtr<TDEActionMenu> m_pamProfiles;
   bool m_bProfileListDirty;
   bool m_bLoadingProfile;
   TQString m_currentProfile;

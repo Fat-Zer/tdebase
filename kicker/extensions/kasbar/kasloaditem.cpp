@@ -125,6 +125,6 @@ void KasLoadItem::showMenuAt( TQPoint p )
     if ( !bar )
 	return;
 
-    KPopupMenu *menu = bar->contextMenu();
+    TDEPopupMenu *menu = bar->contextMenu();
     menu->exec( p );
 }

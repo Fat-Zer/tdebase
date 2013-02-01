@@ -24,7 +24,7 @@
 #include <kbookmarkmanager.h>
 #include "konsolebookmarkmenu.h"
 
-class KPopupMenu;
+class TDEPopupMenu;
 class KonsoleBookmarkMenu;
 class KBookmarkManager;
 
@@ -44,7 +44,7 @@ public:
     virtual TQString currentURL() const;
     virtual TQString currentTitle() const;
 
-    KPopupMenu *menu() const { return m_menu; }
+    TDEPopupMenu *menu() const { return m_menu; }
 
 private slots:
     void slotBookmarksChanged( const TQString &, const TQString & caller );
@@ -54,7 +54,7 @@ signals:
 
 private:
     Konsole *m_konsole;
-    KPopupMenu *m_menu;
+    TDEPopupMenu *m_menu;
     KonsoleBookmarkMenu *m_bookmarkMenu;
     TQString m_file;
 };

@@ -37,7 +37,7 @@
 
 class TDEGlobalAccel;
 class KKeyChooser;
-class KListView;
+class TDEListView;
 class TQPushButton;
 class TQDialog;
 class ConfigDialog;
@@ -106,11 +106,11 @@ private slots:
     void slotDeleteAction();
     void slotItemChanged( TQListViewItem *, const TQPoint& , int );
     void slotAdvanced();
-    void slotContextMenu( KListView *, TQListViewItem *, const TQPoint& );
+    void slotContextMenu( TDEListView *, TQListViewItem *, const TQPoint& );
     void selectionChanged ( TQListViewItem *);
 
 private:
-    KListView *listView;
+    TDEListView *listView;
     TQStringList m_wmClasses;
     AdvancedWidget *advancedWidget;
     TQPushButton *delActionButton;
@@ -124,7 +124,7 @@ private:
     friend class ConfigDialog;
 
 public:
-    KeysWidget( KAccelActions &keyMap, TQWidget *parent, const char *name );
+    KeysWidget( TDEAccelActions &keyMap, TQWidget *parent, const char *name );
     ~KeysWidget();
 
 private:
@@ -231,11 +231,11 @@ private:
 
 };
 
-class ListView : public KListView
+class ListView : public TDEListView
 {
 public:
     ListView( ConfigDialog* configWidget, TQWidget *parent, const char *name )
-	: KListView( parent, name ), _configWidget( configWidget ),
+	: TDEListView( parent, name ), _configWidget( configWidget ),
           _regExpEditor(0L) {}
     // TQListView has a weird idea of a sizeHint...
     virtual TQSize sizeHint () const {

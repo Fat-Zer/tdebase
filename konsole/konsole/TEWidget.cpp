@@ -2206,7 +2206,7 @@ void TEWidget::dropEvent(TQDropEvent* event)
 {
    if (m_drop==0)
    {
-      m_drop = new KPopupMenu(this);
+      m_drop = new TDEPopupMenu(this);
       m_drop->insertItem( i18n("Paste"), paste );
       m_drop->insertSeparator();
       m_drop->insertItem( "cd", cd );

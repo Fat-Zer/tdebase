@@ -26,9 +26,9 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #include "panelbutton.h"
 
-class KPopupMenu;
+class TDEPopupMenu;
 class KBookmarkMenu;
-class KActionCollection;
+class TDEActionCollection;
 class KBookmarkOwner;
 
 /**
@@ -49,9 +49,9 @@ protected:
     virtual TQString tileName() { return "WindowList"; }
     virtual void initPopup();
 
-    KPopupMenu*          bookmarkParent;
+    TDEPopupMenu*          bookmarkParent;
     KBookmarkMenu*       bookmarkMenu;
-    KActionCollection*   actionCollection;
+    TDEActionCollection*   actionCollection;
     KBookmarkOwner*      bookmarkOwner;
 };
 

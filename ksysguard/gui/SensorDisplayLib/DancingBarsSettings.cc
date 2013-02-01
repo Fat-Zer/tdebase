@@ -162,7 +162,7 @@ DancingBarsSettings::DancingBarsSettings( TQWidget* parent, const char* name )
   pageLayout = new TQGridLayout( page, 3, 2, 0, spacingHint() );
   pageLayout->setRowStretch( 2, 1 );
 
-  mSensorView = new KListView( page );
+  mSensorView = new TDEListView( page );
   mSensorView->addColumn( i18n( "Host" ) );
   mSensorView->addColumn( i18n( "Sensor" ) );
   mSensorView->addColumn( i18n( "Label" ) );
@@ -191,7 +191,7 @@ DancingBarsSettings::DancingBarsSettings( TQWidget* parent, const char* name )
   connect( mEditButton, TQT_SIGNAL( clicked() ), TQT_SLOT( editSensor() ) );
   connect( mRemoveButton, TQT_SIGNAL( clicked() ), TQT_SLOT( removeSensor() ) );
 
-  KAcceleratorManager::manage( this );
+  TDEAcceleratorManager::manage( this );
 
   mTitle->setFocus();
 }

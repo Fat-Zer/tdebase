@@ -58,7 +58,7 @@ KCMIOSlaveInfo::KCMIOSlaveInfo(TQWidget *parent, const char *name, const TQStrin
 
    TQLabel* label=new TQLabel(i18n("Available IO slaves:"),this);
    TQHBox *hbox=new TQHBox(this);
-   m_ioslavesLb=new KListBox(hbox);
+   m_ioslavesLb=new TDEListBox(hbox);
    m_ioslavesLb->setMinimumSize(fontMetrics().width("blahfaselwhatever----"),10);
    connect( m_ioslavesLb, TQT_SIGNAL( selectionChanged( TQListBoxItem * ) ), TQT_SLOT( showInfo( TQListBoxItem * ) ) );
    //TODO make something useful after 2.1 is released

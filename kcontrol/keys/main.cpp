@@ -154,12 +154,12 @@ extern "C"
 
 	/*kdDebug(125) << "KKeyModule::init() - Initialize # Modifier Keys Settings\n";
 	TDEConfigGroupSaver cgs( TDEGlobal::config(), "Keyboard" );
-	TQString fourMods = TDEGlobal::config()->readEntry( "Use Four Modifier Keys", KAccel::keyboardHasMetaKey() ? "true" : "false" );
-	KAccel::useFourModifierKeys( fourMods == "true" );
-	bool bUseFourModifierKeys = KAccel::useFourModifierKeys();
+	TQString fourMods = TDEGlobal::config()->readEntry( "Use Four Modifier Keys", TDEAccel::keyboardHasMetaKey() ? "true" : "false" );
+	TDEAccel::useFourModifierKeys( fourMods == "true" );
+	bool bUseFourModifierKeys = TDEAccel::useFourModifierKeys();
 	TDEGlobal::config()->writeEntry( "User Four Modifier Keys", bUseFourModifierKeys ? "true" : "false", true, true );
 	*/
-	KAccelActions* keys = new KAccelActions();
+	TDEAccelActions* keys = new TDEAccelActions();
 
 	kdDebug(125) << "KeyModule::init() - Load Included Bindings\n";
 // this should match the included files above

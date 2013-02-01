@@ -28,7 +28,7 @@
 
 #include "modules.h"
 
-class KListBox;
+class TDEListBox;
 class KLineEdit;
 class TQListBoxItem;
 
@@ -71,7 +71,7 @@ protected slots:
   void slotModuleClicked(TQListBoxItem *item);
 
 private:
-  KListBox  *_keyList, *_resultList;
+  TDEListBox  *_keyList, *_resultList;
   TQPtrList<KeywordListEntry> _keywords;
 };
 

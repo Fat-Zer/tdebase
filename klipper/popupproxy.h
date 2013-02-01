@@ -81,7 +81,7 @@ private:
     void deleteMoreMenus();
 
 private:
-    KPopupMenu* proxy_for_menu;
+    TDEPopupMenu* proxy_for_menu;
     History::iterator spillPointer;
     TQRegExp m_filter;
     int m_menu_height;

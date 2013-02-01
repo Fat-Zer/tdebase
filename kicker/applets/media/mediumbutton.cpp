@@ -48,7 +48,7 @@ MediumButton::MediumButton(TQWidget *parent, const KFileItem &fileItem)
 	: PanelPopupButton(parent), mActions(TQT_TQWIDGET(this), TQT_TQOBJECT(this)), mFileItem(fileItem), mOpenTimer(0,
                 "MediumButton::mOpenTimer")
 {
-    KAction *a = KStdAction::paste(TQT_TQOBJECT(this), TQT_SLOT(slotPaste()),
+    TDEAction *a = KStdAction::paste(TQT_TQOBJECT(this), TQT_SLOT(slotPaste()),
                                     &mActions, "pasteto");
     a->setShortcut(0);
     a = KStdAction::copy(TQT_TQOBJECT(this), TQT_SLOT(slotCopy()), &mActions, "copy");
@@ -110,7 +110,7 @@ void MediumButton::initPopup()
 	KonqPopupMenu *new_popup = new KonqPopupMenu(0L, items,
 	                                   KURL("media:/"), mActions, 0L,
 	                                   this, kpf, bef);
-	KPopupTitle *title = new KPopupTitle(new_popup);
+	TDEPopupTitle *title = new TDEPopupTitle(new_popup);
 	title->setTitle(mFileItem.text());
 
 	new_popup->insertItem(title, -1, 0);

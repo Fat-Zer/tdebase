@@ -713,7 +713,7 @@ void Client::demandAttention( bool set )
         // e.g. the passive popup next to it. So wait up to 1 second for the icon geometry
         // to be set.
         // Delayed call to KNotify also solves the problem of having X server grab in manage(),
-        // which may deadlock when KNotify (or KLauncher when launching KNotify) need to access X.
+        // which may deadlock when KNotify (or TDELauncher when launching KNotify) need to access X.
         Notify::Event e = isOnCurrentDesktop() ? Notify::DemandAttentionCurrent : Notify::DemandAttentionOther;
         // Setting the demands attention state needs to be done directly in KWin, because
         // KNotify would try to set it, resulting in a call to KNotify again, etc.

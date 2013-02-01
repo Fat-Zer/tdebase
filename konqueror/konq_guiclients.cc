@@ -134,9 +134,9 @@ PopupMenuGUIClient::~PopupMenuGUIClient()
 {
 }
 
-KAction *PopupMenuGUIClient::action( const TQDomElement &element ) const
+TDEAction *PopupMenuGUIClient::action( const TQDomElement &element ) const
 {
-  KAction *res = KXMLGUIClient::action( element );
+  TDEAction *res = KXMLGUIClient::action( element );
 
   if ( !res )
     res = m_mainWindow->action( element );
@@ -156,7 +156,7 @@ void PopupMenuGUIClient::addEmbeddingService( TQDomElement &menu, int idx, const
 
   action.setAttribute( "group", "preview" );
 
-  (void)new KAction( name, service->pixmap( KIcon::Small ), 0,
+  (void)new TDEAction( name, service->pixmap( KIcon::Small ), 0,
                      TQT_TQOBJECT(m_mainWindow), TQT_SLOT( slotOpenEmbedded() ), actionCollection(), actName );
 }
 
@@ -195,7 +195,7 @@ ToggleViewGUIClient::ToggleViewGUIClient( KonqMainWindow *mainWindow )
     TQString description = i18n( "Show %1" ).arg( (*cIt)->name() );
     TQString name = (*cIt)->desktopEntryName();
     //kdDebug(1202) << "ToggleViewGUIClient: name=" << name << endl;
-    KToggleAction *action = new KToggleAction( description, 0, mainWindow->actionCollection(), name.latin1() );
+    TDEToggleAction *action = new TDEToggleAction( description, 0, mainWindow->actionCollection(), name.latin1() );
     action->setCheckedState( i18n( "Hide %1" ).arg( (*cIt)->name() ) );
 
     // HACK
@@ -222,11 +222,11 @@ ToggleViewGUIClient::~ToggleViewGUIClient()
 {
 }
 
-TQPtrList<KAction> ToggleViewGUIClient::actions() const
+TQPtrList<TDEAction> ToggleViewGUIClient::actions() const
 {
-  TQPtrList<KAction> res;
+  TQPtrList<TDEAction> res;
 
-  TQDictIterator<KAction> it( m_actions );
+  TQDictIterator<TDEAction> it( m_actions );
   for (; it.current(); ++it )
     res.append( it.current() );
 
@@ -322,11 +322,11 @@ void ToggleViewGUIClient::slotViewAdded( KonqView *view )
 {
   TQString name = view->service()->desktopEntryName();
 
-  KAction *action = m_actions[ name ];
+  TDEAction *action = m_actions[ name ];
 
   if ( action )
   {
-    static_cast<KToggleAction *>( action )->setChecked( true );
+    static_cast<TDEToggleAction *>( action )->setChecked( true );
     saveConfig( true, name );
 
     // KonqView::isToggleView() is not set yet.. so just check for the orientation
@@ -351,11 +351,11 @@ void ToggleViewGUIClient::slotViewRemoved( KonqView *view )
 {
   TQString name = view->service()->desktopEntryName();
 
-  KAction *action = m_actions[ name ];
+  TDEAction *action = m_actions[ name ];
 
   if ( action )
   {
-    static_cast<KToggleAction *>( action )->setChecked( false );
+    static_cast<TDEToggleAction *>( action )->setChecked( false );
     saveConfig( false, name );
   }
 }

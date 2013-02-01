@@ -37,7 +37,7 @@ class TDEInstance;
 * @author Dawit Alemayehu <adawit@kde.org>
 * @author Malte Starostik <starosti@zedat.fu-berlin.de>
 */
-class KShortURIFilter : public KURIFilterPlugin , public DCOPObject
+class TDEShortURIFilter : public KURIFilterPlugin , public DCOPObject
 {
     K_DCOP
     Q_OBJECT
@@ -49,13 +49,13 @@ public:
      * @param parent the parent of this class.
      * @param name the internal name for this object.
      */
-    KShortURIFilter( TQObject *parent = 0, const char *name = 0,
+    TDEShortURIFilter( TQObject *parent = 0, const char *name = 0,
 	             const TQStringList &args = TQStringList() );
 
     /**
      * Destructor
      */
-    virtual ~KShortURIFilter() {};
+    virtual ~TDEShortURIFilter() {};
 
     /**
      * Converts short URIs into fully qualified valid URIs

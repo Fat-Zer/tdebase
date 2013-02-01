@@ -39,7 +39,7 @@ class KDE_EXPORT Settings
         int gesture_timeout;
         bool daemon_disabled;
         Windowdef_list* gestures_exclude;
-		KShortcut voice_shortcut;
+		TDEShortcut voice_shortcut;
     protected:
         bool read_settings( TDEConfig& cfg_P, bool include_disabled_P, ImportType import_P );
         void read_settings_v1( TDEConfig& cfg_P );

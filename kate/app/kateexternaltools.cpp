@@ -204,7 +204,7 @@ bool KateExternalToolsCommand::exec (Kate::View *view, const TQString &cmd, TQSt
 		tqt_dynamic_cast<KateExternalToolsMenuAction*>(dmw->action("tools_external"));
 	if (!a) return false;
 // 	kdDebug(13001)<<"trying to find action"<<endl;
-	KAction *a1=a->actionCollection()->action(static_cast<const char *>(actionName.utf8()));
+	TDEAction *a1=a->actionCollection()->action(static_cast<const char *>(actionName.utf8()));
 	if (!a1) return false;
 // 	kdDebug(13001)<<"activating action"<<endl;
 	a1->activate();
@@ -219,7 +219,7 @@ bool KateExternalToolsCommand::help (Kate::View *, const TQString &, TQString &)
 //BEGIN KateExternalToolAction
 KateExternalToolAction::KateExternalToolAction( TQObject *parent,
              const char *name, KateExternalTool *t)
-  : KAction( parent, name ),
+  : TDEAction( parent, name ),
     tool ( t )
 {
   setText( t->name );
@@ -295,11 +295,11 @@ KateExternalToolsMenuAction::KateExternalToolsMenuAction( const TQString &text,
                                                TQObject *parent,
                                                const char* name,
                                                KateMainWindow *mw )
-    : KActionMenu( text, parent, name ),
+    : TDEActionMenu( text, parent, name ),
       mainwindow( mw )
 {
 
-  m_actionCollection = new KActionCollection( mainwindow );
+  m_actionCollection = new TDEActionCollection( mainwindow );
 
   connect(KateDocManager::self(),TQT_SIGNAL(documentChanged()),this,TQT_SLOT(slotDocumentChanged()));
 
@@ -387,8 +387,8 @@ void KateExternalToolsMenuAction::slotDocumentChanged()
     TQStringList l;
     bool b;
 
-    KActionPtrList actions = m_actionCollection->actions();
-    for (KActionPtrList::iterator it = actions.begin(); it != actions.end(); ++it )
+    TDEActionPtrList actions = m_actionCollection->actions();
+    for (TDEActionPtrList::iterator it = actions.begin(); it != actions.end(); ++it )
     {
       KateExternalToolAction *action = tqt_dynamic_cast<KateExternalToolAction*>(*it);
       if ( action )
@@ -561,7 +561,7 @@ KateExternalToolsConfigWidget::KateExternalToolsConfigWidget( TQWidget *parent, 
 {
   TQGridLayout *lo = new TQGridLayout( this, 5, 5, 0, KDialog::spacingHint() );
 
-  lbTools = new KListBox( this );
+  lbTools = new TDEListBox( this );
   lo->addMultiCellWidget( lbTools, 1, 4, 0, 3 );
   connect( lbTools, TQT_SIGNAL(selectionChanged()), this, TQT_SLOT(slotSelectionChanged()) );
 

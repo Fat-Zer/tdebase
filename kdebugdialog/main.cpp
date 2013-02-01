@@ -94,7 +94,7 @@ int main(int argc, char ** argv)
       dialog = new KDebugDialog(areaList, 0L);
   else
   {
-      KListDebugDialog * listdialog = new KListDebugDialog(areaList, 0L);
+      TDEListDebugDialog * listdialog = new TDEListDebugDialog(areaList, 0L);
       if (args->isSet("on"))
       {
           listdialog->activateArea( args->getOption("on"), true );

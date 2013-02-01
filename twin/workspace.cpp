@@ -56,7 +56,7 @@ extern int screen_number;
 Workspace *Workspace::_self = 0;
 
 TDEProcess* kompmgr = 0;
-KSelectionOwner* kompmgr_selection;
+TDESelectionOwner* kompmgr_selection;
 
 bool allowKompmgrRestart = TRUE;
 
@@ -416,8 +416,8 @@ void Workspace::init()
     char nm[ 100 ];
     sprintf( nm, "_KDE_TOPMENU_OWNER_S%d", DefaultScreen( tqt_xdisplay()));
     Atom topmenu_atom = XInternAtom( tqt_xdisplay(), nm, False );
-    topmenu_selection = new KSelectionOwner( topmenu_atom );
-    topmenu_watcher = new KSelectionWatcher( topmenu_atom );
+    topmenu_selection = new TDESelectionOwner( topmenu_atom );
+    topmenu_watcher = new TDESelectionWatcher( topmenu_atom );
 // TODO grabXServer(); - where exactly put this? topmenu selection claiming down belong must be before
 
         { // begin updates blocker block
@@ -2814,7 +2814,7 @@ void Workspace::startKompmgr()
         delete kompmgr_selection;
         char selection_name[ 100 ];
         sprintf( selection_name, "_NET_WM_CM_S%d", DefaultScreen( tqt_xdisplay()));
-        kompmgr_selection = new KSelectionOwner( selection_name );
+        kompmgr_selection = new TDESelectionOwner( selection_name );
         connect( kompmgr_selection, TQT_SIGNAL( lostOwnership()), TQT_SLOT( stopKompmgr()));
         kompmgr_selection->claim( true );
         connect(kompmgr, TQT_SIGNAL(processExited(TDEProcess*)), TQT_SLOT(restartKompmgr(TDEProcess*)));

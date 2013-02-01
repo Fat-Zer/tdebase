@@ -38,7 +38,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 class KickerClientMenu;
 class KBookmarkMenu;
-class KActionCollection;
+class TDEActionCollection;
 class KBookmarkOwner;
 class Panel;
 class TQWidgetStack;
@@ -152,7 +152,7 @@ public:
     void setHeight(int);
 };
 
-class ItemView : public KListView
+class ItemView : public TDEListView
 {
     friend class KMenuItem;
 

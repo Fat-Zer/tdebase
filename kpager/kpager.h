@@ -34,7 +34,7 @@
 class KPager;
 class TQPopupMenu;
 
-class KPagerMainWindow : public KMainWindow, public virtual KPagerIface
+class KPagerMainWindow : public TDEMainWindow, public virtual KPagerIface
 {
     Q_OBJECT
 
@@ -122,10 +122,10 @@ protected:
     LayoutTypes m_layoutType;
 
     class TQGridLayout *m_layout;
-    KPopupMenu *m_mnu;
+    TDEPopupMenu *m_mnu;
     TQPopupMenu *m_smnu, *m_dmnu;
-    KAction *m_quit_action;
-    KAction *m_prefs_action;
+    TDEAction *m_quit_action;
+    TDEAction *m_prefs_action;
     KWin::WindowInfo m_winfo;
     bool m_showStickyOption; // To be removed after the message freeze
 

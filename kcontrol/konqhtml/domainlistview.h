@@ -30,7 +30,7 @@ class TQPushButton;
 class TQStringList;
 
 class TDEConfig;
-class KListView;
+class TDEListView;
 
 class Policies;
 class PolicyDialog;
@@ -80,7 +80,7 @@ public:
   /**
    * returns the list view displaying the domains
    */
-  KListView *listView() const { return domainSpecificLV; }
+  TDEListView *listView() const { return domainSpecificLV; }
 
   /**
    * returns the add push-button.
@@ -193,7 +193,7 @@ protected:
 
     TDEConfig *config;
 
-  KListView *domainSpecificLV;
+  TDEListView *domainSpecificLV;
 
   TQPushButton* addDomainPB;
   TQPushButton* changeDomainPB;

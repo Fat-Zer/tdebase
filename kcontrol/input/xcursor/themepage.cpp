@@ -94,7 +94,7 @@ ThemePage::ThemePage( TQWidget* parent, const char* name )
 	preview = new PreviewWidget( new TQHBox( this ) );
 
 	// Create the theme list view
-	listview = new KListView( this );
+	listview = new TDEListView( this );
 	listview->setFullWidth( true );
 	listview->setAllColumnsShowFocus( true );
 	listview->addColumn( i18n("Name") );
@@ -374,7 +374,7 @@ void ThemePage::insertTheme( const TQString &path )
 	delete listview->findItem( dirName, DirColumn );
 
 	// Create the listview item and insert it into the list.
-	KListViewItem *item = new KListViewItem( listview, name, desc, /*hidden*/ dirName );
+	TDEListViewItem *item = new TDEListViewItem( listview, name, desc, /*hidden*/ dirName );
 	item->setPixmap( NameColumn, createIcon( dirName, sample ) );
 	listview->insertItem( item );
 }
@@ -529,7 +529,7 @@ void ThemePage::insertThemes()
 			themeInfo.insert( *it, info );
 
 			// Create the listview item and insert it into the list.
-			KListViewItem *item = new KListViewItem( listview, name, desc, /*hidden*/ *it );
+			TDEListViewItem *item = new TDEListViewItem( listview, name, desc, /*hidden*/ *it );
 			item->setPixmap( NameColumn, createIcon( *it, sample ) );
 			listview->insertItem( item );
 		}
@@ -541,9 +541,9 @@ void ThemePage::insertThemes()
 	// Sort the theme list
 	listview->sort();
 
-	KListViewItem *item = new KListViewItem( listview, ' ' + i18n( "No theme" ), i18n( "The old classic X cursors") , /*hidden*/ "none" );
+	TDEListViewItem *item = new TDEListViewItem( listview, ' ' + i18n( "No theme" ), i18n( "The old classic X cursors") , /*hidden*/ "none" );
 	listview->insertItem( item );
-	item = new KListViewItem( listview, ' ' + i18n( "System theme" ), i18n( "Do not change cursor theme") , /*hidden*/ "system" );
+	item = new TDEListViewItem( listview, ' ' + i18n( "System theme" ), i18n( "Do not change cursor theme") , /*hidden*/ "system" );
 	listview->insertItem( item );
         // no ThemeInfo object for this one
 }

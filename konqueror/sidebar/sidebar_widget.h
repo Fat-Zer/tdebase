@@ -186,7 +186,7 @@ private:
 	KMultiTabBar *m_buttonBar;
         TQPtrVector<ButtonInfo> m_buttons;
 	TQHBoxLayout *m_layout;
-	KPopupMenu *m_buttonPopup;
+	TDEPopupMenu *m_buttonPopup;
 	TQPopupMenu *m_menu;
 	TQGuardedPtr<ButtonInfo> m_activeModule;
 	TQGuardedPtr<ButtonInfo> m_currentButton;

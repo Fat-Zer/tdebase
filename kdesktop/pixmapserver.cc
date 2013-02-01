@@ -72,7 +72,7 @@ void KPixmapServer::add(TQString name, TQPixmap *pm, bool overwrite)
     pi.selection = sel;
     m_Names[name] = pi;
 
-    KSelectionInode si;
+    TDESelectionInode si;
     si.name = name;
     si.handle = pm->handle();
     m_Selections[sel] = si;
@@ -163,7 +163,7 @@ bool KPixmapServer::x11Event(XEvent *event)
 	SelectionIterator it = m_Selections.find(sel);
 	if (it == m_Selections.end())
 	    return false;
-	KSelectionInode si = it.data();
+	TDESelectionInode si = it.data();
 
 	// Only convert to pixmap
 	if (ev->target != pixmap) 

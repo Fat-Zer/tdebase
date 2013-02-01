@@ -33,7 +33,7 @@
 #include <tdeio/netaccess.h>
 
 ThemeListBox::ThemeListBox(TQWidget *parent)
-  : KListBox(parent)
+  : TDEListBox(parent)
 {
    setAcceptDrops(true);
    connect(this, TQT_SIGNAL(mouseButtonPressed(int, TQListBoxItem *, const TQPoint &)),
@@ -81,7 +81,7 @@ void ThemeListBox::mouseMoveEvent(TQMouseEvent *e)
          d->dragCopy();
       }
    }
-   KListBox::mouseMoveEvent(e);
+   TDEListBox::mouseMoveEvent(e);
 }
 
 //-----------------------------------------------------------------------------

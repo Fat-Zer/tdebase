@@ -25,8 +25,8 @@
 #include <tqdict.h>
 #include <ktrader.h>
 
-class KAction;
-class KActionCollection;
+class TDEAction;
+class TDEActionCollection;
 class KonqMainWindow;
 class KonqView;
 
@@ -59,7 +59,7 @@ public:
                       bool isIntoTrash, bool doTabHandling );
   virtual ~PopupMenuGUIClient();
 
-  virtual KAction *action( const TQDomElement &element ) const;
+  virtual TDEAction *action( const TQDomElement &element ) const;
 
 private:
   void addEmbeddingService( TQDomElement &menu, int idx, const TQString &name, const KService::Ptr &service );
@@ -78,8 +78,8 @@ public:
 
   bool empty() const { return m_empty; }
 
-  TQPtrList<KAction> actions() const;
-  KAction *action( const TQString &name ) { return m_actions[ name ]; }
+  TQPtrList<TDEAction> actions() const;
+  TDEAction *action( const TQString &name ) { return m_actions[ name ]; }
 
   void saveConfig( bool add, const TQString &serviceName );
 
@@ -89,7 +89,7 @@ private slots:
   void slotViewRemoved( KonqView *view );
 private:
   KonqMainWindow *m_mainWindow;
-  TQDict<KAction> m_actions;
+  TQDict<TDEAction> m_actions;
   bool m_empty;
   TQMap<TQString,bool> m_mapOrientation;
 };

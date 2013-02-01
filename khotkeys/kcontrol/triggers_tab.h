@@ -20,7 +20,7 @@
 #include <window_trigger_widget.h>
 
 class KKeyButton;
-class KShortcut;
+class TDEShortcut;
 
 namespace KHotKeys
 {
@@ -90,7 +90,7 @@ class Shortcut_trigger_widget
     public slots:
         void clear_data();
     private slots:
-        void capturedShortcut( const KShortcut& );
+        void capturedShortcut( const TDEShortcut& );
     private:
         KKeyButton* bt;
     };

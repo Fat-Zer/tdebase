@@ -27,7 +27,7 @@
 class History;
 class KlipperWidget;
 class KHelpMenu;
-class KAction;
+class TDEAction;
 class PopupProxy;
 class KLineEdit;
 
@@ -35,14 +35,14 @@ class KLineEdit;
  * Default view of clipboard history.
  *
  */
-class KlipperPopup : public KPopupMenu
+class KlipperPopup : public TDEPopupMenu
 {
     Q_OBJECT
 
 public:
     KlipperPopup( History* history, TQWidget* parent=0, const char* name=0 );
     ~KlipperPopup();
-    void plugAction( KAction* action );
+    void plugAction( TDEAction* action );
 
     /**
      * Normally, the popupmenu is only rebuilt just before showing.
@@ -95,7 +95,7 @@ private:
     /**
      * (unowned) actions to plug into the primary popup menu
      */
-    TQPtrList<KAction> m_actions;
+    TQPtrList<TDEAction> m_actions;
 
     /**
      * Proxy helper object used to track history items

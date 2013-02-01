@@ -26,7 +26,7 @@
 #include <klibloader.h>
 #include <tdeparts/plugin.h>
 
-class KActionMenu;
+class TDEActionMenu;
 class TDEConfig;
 class KonqDirPart;
 
@@ -52,7 +52,7 @@ private:
   void updateMenu();
 
   KonqDirPart *m_part;
-  KActionMenu *m_menu;
+  TDEActionMenu *m_menu;
   TQStringList m_encodingDescriptions;
   KURL m_currentURL;
 

@@ -30,7 +30,7 @@
 #include <twin.h>
 
 class TDESharedPixmap;
-class KPopupMenu;
+class TDEPopupMenu;
 
 class TQPainter;
 class TQPoint;

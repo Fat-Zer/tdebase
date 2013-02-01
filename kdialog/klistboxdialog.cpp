@@ -26,7 +26,7 @@
 
 #include "klocale.h"
 
-KListBoxDialog::KListBoxDialog(TQString text, TQWidget *parent)
+TDEListBoxDialog::TDEListBoxDialog(TQString text, TQWidget *parent)
     : KDialogBase( parent, 0, true, TQString::null, Ok|Cancel, Ok, true )
 {
   TQVBox *page = makeVBoxMainWidget();
@@ -38,13 +38,13 @@ KListBoxDialog::KListBoxDialog(TQString text, TQWidget *parent)
   table->setFocus();
 }
 
-void KListBoxDialog::insertItem(const TQString& item)
+void TDEListBoxDialog::insertItem(const TQString& item)
 {
   table->insertItem(item);
   table->setCurrentItem(0);
 }
 
-void KListBoxDialog::setCurrentItem(const TQString& item)
+void TDEListBoxDialog::setCurrentItem(const TQString& item)
 {
   for ( int i=0; i < (int) table->count(); i++ ) {
     if ( table->text(i) == item ) {
@@ -54,7 +54,7 @@ void KListBoxDialog::setCurrentItem(const TQString& item)
   }
 }
 
-int KListBoxDialog::currentItem()
+int TDEListBoxDialog::currentItem()
 {
   return table->currentItem();
 }

@@ -30,13 +30,13 @@
 #include <tqtimer.h>
 
 class TQClipboard;
-class KToggleAction;
+class TDEToggleAction;
 class TDEAboutData;
 class URLGrabber;
 class ClipboardPoll;
 class TQTime;
 class History;
-class KAction;
+class TDEAction;
 class TQMimeSource;
 class HistoryItem;
 class KlipperSessionManaged;
@@ -168,10 +168,10 @@ private:
     int m_lastSelection;
     History* m_history;
     int m_overflowCounter;
-    KToggleAction *toggleURLGrabAction;
-    KAction* clearHistoryAction;
-    KAction* configureAction;
-    KAction* quitAction;
+    TDEToggleAction *toggleURLGrabAction;
+    TDEAction* clearHistoryAction;
+    TDEAction* configureAction;
+    TDEAction* quitAction;
     TQPixmap m_pixmap;
     TQPixmap m_scaledpixmap;
     int m_iconOrigWidth;

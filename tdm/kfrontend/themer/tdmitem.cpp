@@ -290,12 +290,12 @@ KdmItem::paint( TQPainter *p, const TQRect &rect )
 		return;
 
 	if (myWidget || (myLayoutItem && myLayoutItem->widget())) {
-            // KListView because it's missing a Q_OBJECT'
+            // TDEListView because it's missing a Q_OBJECT'
             // FIXME: This is a nice idea in theory, but in practice it is
             // very confusing for the user not to see the empty list box
             // delineated from the rest of the greeter.
             // Maybe set a darker version of the background instead of an exact copy?
-            if ( myWidget && myWidget->isA( "KListView" ) ) {
+            if ( myWidget && myWidget->isA( "TDEListView" ) ) {
               if ((_compositor.isEmpty()) || (!argb_visual_available)) {
                 // Software blend only (no compositing support)
                 TQPixmap copy( myWidget->size() );

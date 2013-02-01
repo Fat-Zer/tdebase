@@ -292,7 +292,7 @@ void Applet::setBackground()
 void Applet::claimSelection()
     {
     assert( selection == NULL );
-    selection = new KSelectionOwner( makeSelectionAtom(), DefaultScreen( tqt_xdisplay()));
+    selection = new TDESelectionOwner( makeSelectionAtom(), DefaultScreen( tqt_xdisplay()));
 // force taking the selection, but don't kill previous owner
     if( selection->claim( true, false ))
 	{
@@ -327,7 +327,7 @@ void Applet::lostSelection()
     active_menu = NULL;
     if( selection_watcher == NULL )
         {
-        selection_watcher = new KSelectionWatcher( makeSelectionAtom(), DefaultScreen( tqt_xdisplay()));
+        selection_watcher = new TDESelectionWatcher( makeSelectionAtom(), DefaultScreen( tqt_xdisplay()));
         connect( selection_watcher, TQT_SIGNAL( lostOwner()), this, TQT_SLOT( claimSelection()));
         }
     delete module;

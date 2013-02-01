@@ -25,10 +25,10 @@
 
 class BasicTab;
 class TQSplitter;
-class KAction;
-class KToggleAction;
+class TDEAction;
+class TDEToggleAction;
 
-class KMenuEdit : public KMainWindow
+class KMenuEdit : public TDEMainWindow
 {
     Q_OBJECT
 
@@ -54,8 +54,8 @@ protected:
     BasicTab           *m_basicTab;
     TQSplitter          *m_splitter;
 
-    KAction *m_actionDelete;
-    KToggleAction *m_actionShowHidden;
+    TDEAction *m_actionDelete;
+    TDEToggleAction *m_actionShowHidden;
     bool m_showHidden;
     bool m_controlCenter;
 };

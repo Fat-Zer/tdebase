@@ -217,7 +217,7 @@ void KonqInfoListViewItem::paintCell( TQPainter *_painter, const TQColorGroup & 
 
     cg.setColor( TQColorGroup::Text, m_pListViewWidget->itemColor() );
 
-    KListView *lv = static_cast< KListView* >( listView() );
+    TDEListView *lv = static_cast< TDEListView* >( listView() );
     const TQPixmap *pm = TQT_TQPIXMAP_CONST(lv->viewport()->paletteBackgroundPixmap());
     if ( _column == 0 && isSelected() && !lv->allColumnsShowFocus() )
     {
@@ -242,7 +242,7 @@ void KonqInfoListViewItem::paintCell( TQPainter *_painter, const TQColorGroup & 
         _width = newWidth;
     }
 
-    KListViewItem::paintCell( _painter, cg, _column, _width, _alignment );
+    TDEListViewItem::paintCell( _painter, cg, _column, _width, _alignment );
 }
 
 void KonqInfoListViewItem::paintFocus( TQPainter * _painter, const TQColorGroup & cg, const TQRect & _r )

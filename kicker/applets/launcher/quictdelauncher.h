@@ -39,7 +39,7 @@ class ConfigDlg;
 class TQPopupMenu;
 class QuickButtonGroup;
 class PopularityStatistics;
-class KAction;
+class TDEAction;
 
 typedef QuickButtonGroup ButtonGroup;
 
@@ -128,7 +128,7 @@ protected:
     bool m_dragAccepted, m_refreshEnabled, m_needsSave, m_needsRefresh;
     std::map<TQString, int> m_appOrdering;
     Prefs* m_settings;
-    KAction *m_configAction;
+    TDEAction *m_configAction;
     ConfigDlg *m_configDialog;
     PopularityStatistics* m_popularity;
     TQImage m_stickyHighlightLayer;

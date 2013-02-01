@@ -107,8 +107,8 @@ void ShortcutsModule::initGUI()
 	TQString kde_winkeys_env_dir = TDEGlobal::dirs()->localtdedir() + "/env/";
 
 	kdDebug(125) << "A-----------" << endl;
-	KAccelActions* keys = &m_actionsGeneral;
-// see also KShortcutsModule::init() below !!!
+	TDEAccelActions* keys = &m_actionsGeneral;
+// see also TDEShortcutsModule::init() below !!!
 #define NOSLOTS
 #define KICKER_ALL_BINDINGS
 #include "../../twin/twinbindings.cpp"
@@ -187,7 +187,7 @@ void ShortcutsModule::initGUI()
 		// Yes, it does, so Win is a key
 		m_bUseRmWinKeys = false;
 	}
-	m_pListGeneral = new KAccelShortcutList( m_actionsGeneral, true );
+	m_pListGeneral = new TDEAccelShortcutList( m_actionsGeneral, true );
 
 	m_pkcGeneral = new KKeyChooser( m_pListGeneral, this, KKeyChooser::Global, false );
 	m_pkcGeneral->resize (m_pkcGeneral->sizeHint() );
@@ -201,12 +201,12 @@ void ShortcutsModule::initGUI()
 	m_pTab->addTab( m_pkcGeneral, i18n("&Global Shortcuts") );
 	connect( m_pkcGeneral, TQT_SIGNAL(keyChange()), TQT_SLOT(slotKeyChange()) );
 
-	m_pListSequence = new KAccelShortcutList( m_actionsSequence, true );
+	m_pListSequence = new TDEAccelShortcutList( m_actionsSequence, true );
 	m_pkcSequence = new KKeyChooser( m_pListSequence, this, KKeyChooser::Global, false );
 	m_pTab->addTab( m_pkcSequence, i18n("Shortcut Se&quences") );
 	connect( m_pkcSequence, TQT_SIGNAL(keyChange()), TQT_SLOT(slotKeyChange()) );
 
-	m_pListApplication = new KStdAccel::ShortcutList;
+	m_pListApplication = new TDEStdAccel::ShortcutList;
 	m_pkcApplication = new KKeyChooser( m_pListApplication, this, KKeyChooser::Standard, false );
 	m_pTab->addTab( m_pkcApplication, i18n("App&lication Shortcuts") );
 	connect( m_pkcApplication, TQT_SIGNAL(keyChange()), TQT_SLOT(slotKeyChange()) );
@@ -222,7 +222,7 @@ void ShortcutsModule::initGUI()
 
 void ShortcutsModule::createActionsGeneral()
 {
-	KAccelActions& actions = m_actionsGeneral;
+	TDEAccelActions& actions = m_actionsGeneral;
 
 	for( uint i = 0; i < actions.count(); i++ ) {
 		TQString sConfigKey = actions[i].name();
@@ -243,7 +243,7 @@ void ShortcutsModule::createActionsGeneral()
 
 void ShortcutsModule::createActionsSequence()
 {
-	KAccelActions& actions = m_actionsSequence;
+	TDEAccelActions& actions = m_actionsSequence;
 
 	for( uint i = 0; i < actions.count(); i++ ) {
 		TQString sConfigKey = actions[i].name();
@@ -410,7 +410,7 @@ void ShortcutsModule::slotSaveSchemeAs()
 
 	TQDir dir( kksPath );
 	if( !dir.exists() && !dir.mkdir( kksPath ) ) {
-		tqWarning("KShortcutsModule: Could not make directory to store user info.");
+		tqWarning("TDEShortcutsModule: Could not make directory to store user info.");
 		return;
 	}
 

@@ -39,7 +39,7 @@ class TQTimer;
 class StartupId;
 class KDIconView;
 class Minicli;
-class KActionCollection;
+class TDEActionCollection;
 
 class KRootWidget : public TQObject
 {
@@ -99,7 +99,7 @@ public:
   KWinModule* twinModule() const { return m_pKwinmodule; }
 
   // The action collection of the active widget
-  KActionCollection *actionCollection();
+  TDEActionCollection *actionCollection();
 
   // The URL (for the File/New menu)
   KURL url() const;

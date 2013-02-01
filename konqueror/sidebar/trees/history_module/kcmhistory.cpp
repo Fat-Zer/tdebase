@@ -243,15 +243,15 @@ void HistorySidebarConfig::slotOlderChanged( int value )
 
 void HistorySidebarConfig::slotGetFontNewer()
 {
-    int result = KFontDialog::getFont( m_fontNewer, false, this );
-    if ( result == KFontDialog::Accepted )
+    int result = TDEFontDialog::getFont( m_fontNewer, false, this );
+    if ( result == TDEFontDialog::Accepted )
         configChanged();
 }
 
 void HistorySidebarConfig::slotGetFontOlder()
 {
-    int result = KFontDialog::getFont( m_fontOlder, false, this );
-    if ( result == KFontDialog::Accepted )
+    int result = TDEFontDialog::getFont( m_fontOlder, false, this );
+    if ( result == TDEFontDialog::Accepted )
         configChanged();
 }
 

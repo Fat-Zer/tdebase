@@ -406,8 +406,8 @@ bool KonqCombo::eventFilter( TQObject *o, TQEvent *ev )
                 return false;
             }
 
-            if ( KKey( e ) == KKey( int( KStdAccel::deleteWordBack() ) ) ||
-                 KKey( e ) == KKey( int( KStdAccel::deleteWordForward() ) ) ||
+            if ( KKey( e ) == KKey( int( TDEStdAccel::deleteWordBack() ) ) ||
+                 KKey( e ) == KKey( int( TDEStdAccel::deleteWordForward() ) ) ||
                  ((e->state() & ControlButton) &&
                    (e->key() == Key_Left || e->key() == Key_Right) ) ) {
                 selectWord(e);
@@ -429,8 +429,8 @@ void KonqCombo::keyPressEvent( TQKeyEvent *e )
     KHistoryCombo::keyPressEvent( e );
     // we have to set it as temporary, otherwise we wouldn't get our nice
     // pixmap. Yes, TQComboBox still sucks.
-    if ( KKey( e ) == KKey( int( KStdAccel::rotateUp() ) ) ||
-         KKey( e ) == KKey( int( KStdAccel::rotateDown() ) ) )
+    if ( KKey( e ) == KKey( int( TDEStdAccel::rotateUp() ) ) ||
+         KKey( e ) == KKey( int( TDEStdAccel::rotateDown() ) ) )
          setTemporary( currentText() );
 }
 

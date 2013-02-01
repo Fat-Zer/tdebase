@@ -223,7 +223,7 @@ void KRandRSystemTray::reloadDisplayConfiguration()
 	}
 }
 
-void KRandRSystemTray::contextMenuAboutToShow(KPopupMenu* menu)
+void KRandRSystemTray::contextMenuAboutToShow(TDEPopupMenu* menu)
 {
 	int lastIndex = 0;
 
@@ -247,7 +247,7 @@ void KRandRSystemTray::contextMenuAboutToShow(KPopupMenu* menu)
 				/*lastIndex = menu->insertItem(i18n("Screen %1").arg(s+1));
 				menu->setItemEnabled(lastIndex, false);*/
 			} else {
-				KPopupMenu* subMenu = new KPopupMenu(menu, TQString("screen%1").arg(s+1).latin1());
+				TDEPopupMenu* subMenu = new TDEPopupMenu(menu, TQString("screen%1").arg(s+1).latin1());
 				m_screenPopups.append(subMenu);
 				populateMenu(subMenu);
 				lastIndex = menu->insertItem(i18n("Screen %1").arg(s+1), subMenu);
@@ -293,23 +293,23 @@ void KRandRSystemTray::contextMenuAboutToShow(KPopupMenu* menu)
 
 	menu->insertTitle(SmallIcon("randr"), i18n("Global Configuation"));
 
-	KAction *actColors = new KAction( i18n( "Configure Displays..." ),
-		SmallIconSet( "configure" ), KShortcut(), TQT_TQOBJECT(this), TQT_SLOT( slotDisplayConfig() ),
+	TDEAction *actColors = new TDEAction( i18n( "Configure Displays..." ),
+		SmallIconSet( "configure" ), TDEShortcut(), TQT_TQOBJECT(this), TQT_SLOT( slotDisplayConfig() ),
 		actionCollection() );
 	actColors->plug( menu );
 
-// 	KAction *actPrefs = new KAction( i18n( "Configure Display..." ),
-// 		SmallIconSet( "configure" ), KShortcut(), this, TQT_SLOT( slotPrefs() ),
+// 	TDEAction *actPrefs = new TDEAction( i18n( "Configure Display..." ),
+// 		SmallIconSet( "configure" ), TDEShortcut(), this, TQT_SLOT( slotPrefs() ),
 // 		actionCollection() );
 // 	actPrefs->plug( menu );
 
-	KAction *actSKeys = new KAction( i18n( "Configure Shortcut Keys..." ),
-		SmallIconSet( "configure" ), KShortcut(), TQT_TQOBJECT(this), TQT_SLOT( slotSKeys() ),
+	TDEAction *actSKeys = new TDEAction( i18n( "Configure Shortcut Keys..." ),
+		SmallIconSet( "configure" ), TDEShortcut(), TQT_TQOBJECT(this), TQT_SLOT( slotSKeys() ),
 		actionCollection() );
 	actSKeys->plug( menu );
 
 	menu->insertItem(SmallIcon("help"),KStdGuiItem::help().text(), m_help->menu());
-	KAction *quitAction = actionCollection()->action(KStdAction::name(KStdAction::Quit));
+	TDEAction *quitAction = actionCollection()->action(KStdAction::name(KStdAction::Quit));
 	quitAction->plug(menu);
 
 	m_menu = menu;
@@ -317,7 +317,7 @@ void KRandRSystemTray::contextMenuAboutToShow(KPopupMenu* menu)
 
 void KRandRSystemTray::slotScreenActivated()
 {
-	setCurrentScreen(m_screenPopups.find(static_cast<const KPopupMenu*>(sender())));
+	setCurrentScreen(m_screenPopups.find(static_cast<const TDEPopupMenu*>(sender())));
 }
 
 void KRandRSystemTray::configChanged()
@@ -391,7 +391,7 @@ int KRandRSystemTray::GetHackResolutionParameter() {
 	return resparm;
 }
 
-void KRandRSystemTray::populateMenu(KPopupMenu* menu)
+void KRandRSystemTray::populateMenu(TDEPopupMenu* menu)
 {
 	int lastIndex = 0;
 
@@ -718,7 +718,7 @@ void KRandRSystemTray::findPrimaryDisplay()
 	}
 }
 
-void KRandRSystemTray::addOutputMenu(KPopupMenu* menu)
+void KRandRSystemTray::addOutputMenu(TDEPopupMenu* menu)
 {
 	XRROutputInfo *output_info;
 	char *output_name;

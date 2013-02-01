@@ -32,7 +32,7 @@ KonqSidebar_Tree::KonqSidebar_Tree(TDEInstance *instance,TQObject *parent,TQWidg
 			clearSearch->setTextLabel(i18n("Clear Search"), true);
 			clearSearch->setIconSet(SmallIconSet(TQApplication::reverseLayout() ? "clear_left" : "locationbar_erase"));
 			TQLabel* slbl = new TQLabel(i18n("Se&arch:"), searchline);
-			KListViewSearchLine* listViewSearch = new KListViewSearchLine(searchline,tree);
+			TDEListViewSearchLine* listViewSearch = new TDEListViewSearchLine(searchline,tree);
 			slbl->setBuddy(listViewSearch);
 			connect(clearSearch, TQT_SIGNAL(pressed()), listViewSearch, TQT_SLOT(clear()));
 		}

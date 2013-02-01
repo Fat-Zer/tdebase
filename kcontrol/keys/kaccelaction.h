@@ -30,30 +30,30 @@
 
 #include <kshortcut.h>
 
-class KAccelBase;
+class TDEAccelBase;
 
 class TQObject;
 class TDEConfig;
 class TDEConfigBase;
 
 /*
-	KAccelAction holds information an a given action, such as "Run Command"
+	TDEAccelAction holds information an a given action, such as "Run Command"
 
-	1) KAccelAction = "Run Command"
+	1) TDEAccelAction = "Run Command"
 		Default3 = "Alt+F2"
 		Default4 = "Meta+Enter;Alt+F2"
-		1) KShortcut = "Meta+Enter"
+		1) TDEShortcut = "Meta+Enter"
 			1) KKeySequence = "Meta+Enter"
 				1) KKey = "Meta+Enter"
 					1) Meta+Enter
 					2) Meta+Keypad_Enter
-		2) KShortcut = "Alt+F2"
+		2) TDEShortcut = "Alt+F2"
 			1) KKeySequence = "Alt+F2"
 				1) Alt+F2
-	2) KAccelAction = "Something"
+	2) TDEAccelAction = "Something"
 		Default3 = ""
 		Default4 = ""
-		1) KShortcut = "Meta+X,Asterisk"
+		1) TDEShortcut = "Meta+X,Asterisk"
 			1) KKeySequence = "Meta+X,Asterisk"
 				1) KKey = "Meta+X"
 					1) Meta+X
@@ -63,35 +63,35 @@ class TDEConfigBase;
 */
 
 //---------------------------------------------------------------------
-// KAccelAction
+// TDEAccelAction
 //---------------------------------------------------------------------
 
-class KAccelAction
+class TDEAccelAction
 {
  public:
-	KAccelAction();
-	KAccelAction( const KAccelAction& );
-	KAccelAction( const TQString& sName, const TQString& sLabel, const TQString& sWhatsThis,
-			const KShortcut& cutDef3, const KShortcut& cutDef4,
+	TDEAccelAction();
+	TDEAccelAction( const TDEAccelAction& );
+	TDEAccelAction( const TQString& sName, const TQString& sLabel, const TQString& sWhatsThis,
+			const TDEShortcut& cutDef3, const TDEShortcut& cutDef4,
 			const TQObject* pObjSlot, const char* psMethodSlot,
 			bool bConfigurable, bool bEnabled );
-	~KAccelAction();
+	~TDEAccelAction();
 
 	void clear();
 	bool init( const TQString& sName, const TQString& sLabel, const TQString& sWhatsThis,
-			const KShortcut& cutDef3, const KShortcut& cutDef4,
+			const TDEShortcut& cutDef3, const TDEShortcut& cutDef4,
 			const TQObject* pObjSlot, const char* psMethodSlot,
 			bool bConfigurable, bool bEnabled );
 
-	KAccelAction& operator=( const KAccelAction& );
+	TDEAccelAction& operator=( const TDEAccelAction& );
 
 	const TQString& name() const                { return m_sName; }
 	const TQString& label() const               { return m_sLabel; }
 	const TQString& whatsThis() const           { return m_sWhatsThis; }
-	const KShortcut& shortcut() const          { return m_cut; }
-	const KShortcut& shortcutDefault() const;
-	const KShortcut& shortcutDefault3() const  { return m_cutDefault3; }
-	const KShortcut& shortcutDefault4() const  { return m_cutDefault4; }
+	const TDEShortcut& shortcut() const          { return m_cut; }
+	const TDEShortcut& shortcutDefault() const;
+	const TDEShortcut& shortcutDefault3() const  { return m_cutDefault3; }
+	const TDEShortcut& shortcutDefault4() const  { return m_cutDefault4; }
 	const TQObject* objSlotPtr() const          { return m_pObjSlot; }
 	const char* methodSlotPtr() const          { return m_psMethodSlot; }
 	bool isConfigurable() const                { return m_bConfigurable; }
@@ -100,7 +100,7 @@ class KAccelAction
 	void setName( const TQString& );
 	void setLabel( const TQString& );
 	void setWhatsThis( const TQString& );
-	bool setShortcut( const KShortcut& rgCuts );
+	bool setShortcut( const TDEShortcut& rgCuts );
 	void setSlot( const TQObject* pObjSlot, const char* psMethodSlot );
 	void setConfigurable( bool );
 	void setEnabled( bool );
@@ -123,8 +123,8 @@ class KAccelAction
 	TQString m_sName,
 	        m_sLabel,
 	        m_sWhatsThis;
-	KShortcut m_cut;
-	KShortcut m_cutDefault3, m_cutDefault4;
+	TDEShortcut m_cut;
+	TDEShortcut m_cutDefault3, m_cutDefault4;
 	const TQObject* m_pObjSlot;
 	const char* m_psMethodSlot;
 	bool m_bConfigurable,
@@ -137,43 +137,43 @@ class KAccelAction
 
  private:
 	static int g_bUseFourModifierKeys;
-	class KAccelActionPrivate* d;
+	class TDEAccelActionPrivate* d;
 
-	friend class KAccelActions;
-	friend class KAccelBase;
+	friend class TDEAccelActions;
+	friend class TDEAccelBase;
 };
 
 //---------------------------------------------------------------------
-// KAccelActions
+// TDEAccelActions
 //---------------------------------------------------------------------
 
-class KAccelActions
+class TDEAccelActions
 {
  public:
-	KAccelActions();
-	KAccelActions( const KAccelActions& );
-	virtual ~KAccelActions();
+	TDEAccelActions();
+	TDEAccelActions( const TDEAccelActions& );
+	virtual ~TDEAccelActions();
 
 	void clear();
-	bool init( const KAccelActions& );
+	bool init( const TDEAccelActions& );
 	bool init( TDEConfigBase& config, const TQString& sGroup );
 
-	void updateShortcuts( KAccelActions& );
+	void updateShortcuts( TDEAccelActions& );
 
 	int actionIndex( const TQString& sAction ) const;
-	KAccelAction* actionPtr( uint );
-	const KAccelAction* actionPtr( uint ) const;
-	KAccelAction* actionPtr( const TQString& sAction );
-	const KAccelAction* actionPtr( const TQString& sAction ) const;
-	KAccelAction* actionPtr( KKeySequence cut );
-	KAccelAction& operator []( uint );
-	const KAccelAction& operator []( uint ) const;
+	TDEAccelAction* actionPtr( uint );
+	const TDEAccelAction* actionPtr( uint ) const;
+	TDEAccelAction* actionPtr( const TQString& sAction );
+	const TDEAccelAction* actionPtr( const TQString& sAction ) const;
+	TDEAccelAction* actionPtr( KKeySequence cut );
+	TDEAccelAction& operator []( uint );
+	const TDEAccelAction& operator []( uint ) const;
 
-	KAccelAction* insert( const TQString& sAction, const TQString& sLabel, const TQString& sWhatsThis,
-			const KShortcut& rgCutDefaults3, const KShortcut& rgCutDefaults4,
+	TDEAccelAction* insert( const TQString& sAction, const TQString& sLabel, const TQString& sWhatsThis,
+			const TDEShortcut& rgCutDefaults3, const TDEShortcut& rgCutDefaults4,
 			const TQObject* pObjSlot = 0, const char* psMethodSlot = 0,
 			bool bConfigurable = true, bool bEnabled = true );
-	KAccelAction* insert( const TQString& sName, const TQString& sLabel );
+	TDEAccelAction* insert( const TQString& sName, const TQString& sLabel );
 	bool remove( const TQString& sAction );
 
 	bool readActions( const TQString& sConfigGroup = "Shortcuts", TDEConfigBase* pConfig = 0 );
@@ -185,21 +185,21 @@ class KAccelActions
 	uint count() const;
 
  protected:
-	KAccelBase* m_pKAccelBase;
-	KAccelAction** m_prgActions;
+	TDEAccelBase* m_pTDEAccelBase;
+	TDEAccelAction** m_prgActions;
 	uint m_nSizeAllocated, m_nSize;
 
 	void resize( uint );
-	void insertPtr( KAccelAction* );
+	void insertPtr( TDEAccelAction* );
 
  private:
-	class KAccelActionsPrivate* d;
+	class TDEAccelActionsPrivate* d;
 
-	KAccelActions( KAccelBase* );
-	void initPrivate( KAccelBase* );
-	KAccelActions& operator =( KAccelActions& );
+	TDEAccelActions( TDEAccelBase* );
+	void initPrivate( TDEAccelBase* );
+	TDEAccelActions& operator =( TDEAccelActions& );
 
-	friend class KAccelBase;
+	friend class TDEAccelBase;
 };
 
 #endif // _KACCELACTION_H

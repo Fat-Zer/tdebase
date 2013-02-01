@@ -58,7 +58,7 @@ protected slots:
 private:
   TQListViewItem *iconThemeItem(const TQString &name);
 
-  KListView *m_iconThemes;
+  TDEListView *m_iconThemes;
   TQPushButton *m_removeButton;
 
   TQLabel *m_previewExec;

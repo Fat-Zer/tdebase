@@ -38,7 +38,7 @@ class ConfigModule;
 class ConfigModuleList;
 
 
-class ModuleMenu : public KPopupMenu
+class ModuleMenu : public TDEPopupMenu
 {
   Q_OBJECT
 
@@ -52,7 +52,7 @@ private slots:
   void moduleSelected(int id);
 
 protected:
-  void fill(KPopupMenu *parentMenu, const TQString &parentPath);
+  void fill(TDEPopupMenu *parentMenu, const TQString &parentPath);
 
 private:
   int id;

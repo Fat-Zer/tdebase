@@ -320,7 +320,7 @@ void Workspace::setupWindowShortcutDone( bool ok )
     client_keys->suspend( false );
     if( ok )
         {
-        client_keys_client->setShortcut( KShortcut( client_keys_dialog->shortcut()).toString());
+        client_keys_client->setShortcut( TDEShortcut( client_keys_dialog->shortcut()).toString());
         }
     closeActivePopup();
     delete client_keys_dialog;
@@ -1053,7 +1053,7 @@ void Workspace::slotWindowOperations()
 
 void Workspace::showWindowMenu( const TQRect &pos, Client* cl )
     {
-    if (!kapp->authorizeKAction("twin_rmb"))
+    if (!kapp->authorizeTDEAction("twin_rmb"))
         return;
     if( !cl )
         return;
@@ -1120,19 +1120,19 @@ void Client::setShortcut( const TQString& _cut )
     {
     TQString cut = rules()->checkShortcut( _cut );
     if( cut.isEmpty())
-        return setShortcutInternal( KShortcut());
+        return setShortcutInternal( TDEShortcut());
 // Format:
 // base+(abcdef)<space>base+(abcdef)
 // E.g. Alt+Ctrl+(ABCDEF) Win+X,Win+(ABCDEF)
     if( !cut.contains( '(' ) && !cut.contains( ')' ) && !cut.contains( ' ' ))
         {
-        if( workspace()->shortcutAvailable( KShortcut( cut ), this ))
-            setShortcutInternal( KShortcut( cut ));
+        if( workspace()->shortcutAvailable( TDEShortcut( cut ), this ))
+            setShortcutInternal( TDEShortcut( cut ));
         else
-            setShortcutInternal( KShortcut());
+            setShortcutInternal( TDEShortcut());
         return;
         }
-    TQValueList< KShortcut > keys;
+    TQValueList< TDEShortcut > keys;
     TQStringList groups = TQStringList::split( ' ', cut );
     for( TQStringList::ConstIterator it = groups.begin();
          it != groups.end();
@@ -1147,20 +1147,20 @@ void Client::setShortcut( const TQString& _cut )
                  i < list.length();
                  ++i )
                 {
-                KShortcut c( base + list[ i ] );
+                TDEShortcut c( base + list[ i ] );
                 if( !c.isNull())
                     keys.append( c );
                 }
             }
         }
-    for( TQValueList< KShortcut >::ConstIterator it = keys.begin();
+    for( TQValueList< TDEShortcut >::ConstIterator it = keys.begin();
          it != keys.end();
          ++it )
         {
         if( _shortcut == *it ) // current one is in the list
             return;
         }
-    for( TQValueList< KShortcut >::ConstIterator it = keys.begin();
+    for( TQValueList< TDEShortcut >::ConstIterator it = keys.begin();
          it != keys.end();
          ++it )
         {
@@ -1170,10 +1170,10 @@ void Client::setShortcut( const TQString& _cut )
             return;
             }
         }
-    setShortcutInternal( KShortcut());
+    setShortcutInternal( TDEShortcut());
     }
 
-void Client::setShortcutInternal( const KShortcut& cut )
+void Client::setShortcutInternal( const TDEShortcut& cut )
     {
     if( _shortcut == cut )
         return;
@@ -1182,7 +1182,7 @@ void Client::setShortcutInternal( const KShortcut& cut )
     workspace()->clientShortcutUpdated( this );
     }
 
-bool Workspace::shortcutAvailable( const KShortcut& cut, Client* ignore ) const
+bool Workspace::shortcutAvailable( const TDEShortcut& cut, Client* ignore ) const
     {
     // TODO check global shortcuts etc.
     for( ClientList::ConstIterator it = clients.begin();

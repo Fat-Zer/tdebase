@@ -246,8 +246,8 @@ void SystemTrayApplet::preferences()
     m_showClockSettingCB = new TQCheckBox("Show Clock in Tray", settingsGrid);
     m_showClockSettingCB->setChecked(m_showClockInTray);
 
-    //m_iconSelector = new KActionSelector(m_settingsDialog);
-    m_iconSelector = new KActionSelector(settingsGrid);
+    //m_iconSelector = new TDEActionSelector(m_settingsDialog);
+    m_iconSelector = new TDEActionSelector(settingsGrid);
     m_iconSelector->setAvailableLabel(i18n("Hidden icons:"));
     m_iconSelector->setSelectedLabel(i18n("Visible icons:"));
     //m_settingsDialog->setMainWidget(m_iconSelector);

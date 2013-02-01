@@ -33,7 +33,7 @@
 #include "deviceiconview.moc"
 
 DeviceIconView::DeviceIconView(TQWidget * parent, const char * name)
-	: KListView(parent, name)
+	: TDEListView(parent, name)
 {
 	setSorting(0, true);
 	addColumn(TQString::null);
@@ -88,7 +88,7 @@ void DeviceIconView::keyPressEvent(TQKeyEvent *e)
 		}
 	}
 	else {
-		KListView::keyPressEvent(e);
+		TDEListView::keyPressEvent(e);
 	}
 }
 

@@ -23,14 +23,14 @@
 
 #include <kdialogbase.h>
 
-class KListBoxDialog : public KDialogBase
+class TDEListBoxDialog : public KDialogBase
 {
   Q_OBJECT
 
 public:
 
-  KListBoxDialog(TQString text, TQWidget *parent=0);
-  ~KListBoxDialog() {};
+  TDEListBoxDialog(TQString text, TQWidget *parent=0);
+  ~TDEListBoxDialog() {};
 
   TQListBox &getTable() { return *table; };
 

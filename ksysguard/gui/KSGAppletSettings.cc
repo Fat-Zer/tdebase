@@ -67,7 +67,7 @@ KSGAppletSettings::KSGAppletSettings( TQWidget *parent, const char *name )
 
   resize( TQSize( 250, 130 ).expandedTo( minimumSizeHint() ) );
 
-  KAcceleratorManager::manage( page );
+  TDEAcceleratorManager::manage( page );
 }
 
 KSGAppletSettings::~KSGAppletSettings()

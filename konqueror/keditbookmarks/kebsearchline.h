@@ -22,11 +22,11 @@
 #include <klistviewsearchline.h>
 #include <tqobject.h>
 
-class KEBSearchLine : public KListViewSearchLine
+class KEBSearchLine : public TDEListViewSearchLine
 {
     Q_OBJECT
 public:
-    KEBSearchLine(TQWidget *parent = 0, KListView *listView = 0, const char *name = 0);
+    KEBSearchLine(TQWidget *parent = 0, TDEListView *listView = 0, const char *name = 0);
 
     KEBSearchLine(TQWidget *parent, const char *name);
 

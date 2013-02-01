@@ -152,7 +152,7 @@ void* Module::getColor( const TQColor& color, long parent, const TQCString& name
 void* Module::getFont( bool /*ok*/, const TQFont& def, long parent, const TQCString& name,
     const TQCString& wmclass1, const TQCString& wmclass2 )
     {
-    KFontDialog* dlg = new KFontDialog( NULL, name.isEmpty() ? name : "Font Selector", false, false );
+    TDEFontDialog* dlg = new TDEFontDialog( NULL, name.isEmpty() ? name : "Font Selector", false, false );
     dlg->setFont( def, false );
     prepareDialog( dlg, parent, wmclass1, wmclass2 );
     dlg->setPlainCaption( i18n( "Select Font" ));
@@ -301,7 +301,7 @@ void Module::dialogDone( int result )
             KFileDialog* dlg = static_cast< KFileDialog* >( handle );
             TQString filename = result == TQDialog::Accepted ? dlg->selectedFile() : TQString();
             if (!filename.isEmpty())
-                KRecentDocument::add(filename);
+                TDERecentDocument::add(filename);
             post_getSaveFileName( dlg, filename, dlg->baseURL().path(), dlg->currentFilter());
             dlg->deleteLater();
           break;
@@ -322,7 +322,7 @@ void Module::dialogDone( int result )
             }
         case JobData::GetFont:
             {
-            KFontDialog* dlg = static_cast< KFontDialog* >( handle );
+            TDEFontDialog* dlg = static_cast< TDEFontDialog* >( handle );
             post_getFont( dlg, result == TQDialog::Accepted ? dlg->font() : TQFont(), result == TQDialog::Accepted );
             dlg->deleteLater();
           break;

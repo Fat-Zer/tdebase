@@ -35,8 +35,8 @@
 #include "deviceiconview.h"
 
 class TDEConfig;
-class KPopupMenu;
-class KListViewItem;
+class TDEPopupMenu;
+class TDEListViewItem;
 
 class TDEHWManager : public TDECModule, public DCOPObject
 {

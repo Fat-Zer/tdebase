@@ -13,7 +13,7 @@
 
 
 KDCOPListView::KDCOPListView ( TQWidget *parent, const char *name)
-    : KListView(parent, name)
+    : TDEListView(parent, name)
 {
 	kdDebug() << "Building new list." << endl;
 	setDragEnabled(true);

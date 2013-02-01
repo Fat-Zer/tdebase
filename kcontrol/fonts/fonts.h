@@ -22,7 +22,7 @@ class TQComboBox;
 class KDoubleNumInput;
 class FontAASettings;
 
-class FontUseItem : public KFontRequester
+class FontUseItem : public TDEFontRequester
 {
   Q_OBJECT
 
@@ -89,13 +89,13 @@ private:
 /**
  * The Desktop/fonts tab in kcontrol.
  */
-class KFonts : public TDECModule
+class TDEFonts : public TDECModule
 {
     Q_OBJECT
 
 public:
-    KFonts(TQWidget *parent, const char *name, const TQStringList &);
-    ~KFonts();
+    TDEFonts(TQWidget *parent, const char *name, const TQStringList &);
+    ~TDEFonts();
 
     virtual void load();
     virtual void load( bool useDefaults );

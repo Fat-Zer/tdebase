@@ -60,7 +60,7 @@ KonqFrameTabs::KonqFrameTabs(TQWidget* parent, KonqFrameContainerBase* parentCon
   : KTabWidget(parent, name), m_rightWidget(0), m_leftWidget(0), m_alwaysTabBar(false),
     m_closeOtherTabsId(0)
 {
-  KAcceleratorManager::setNoAccel(this);
+  TDEAcceleratorManager::setNoAccel(this);
 
   TQWhatsThis::add( tabBar(), i18n( "This bar contains the list of currently open tabs. Click on a tab to make it "
 			  "active. The option to show a close button instead of the website icon in the left "

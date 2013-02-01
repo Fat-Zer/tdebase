@@ -288,7 +288,7 @@ private:
     TQTimer* blinkT;  // active when hasBlinker
     TQTimer* blinkCursorT;  // active when hasBlinkingCursor
 
-    KPopupMenu* m_drop;
+    TDEPopupMenu* m_drop;
     TQString dropText;
     int m_dnd_file_count;
 

@@ -165,7 +165,7 @@ class KDE_EXPORT Command_url_shortcut_action_data
         Command_url_shortcut_action_data( Action_data_group* parent_P, const TQString& name_P,
             const TQString& comment_P, bool enabled_P = true );
         Command_url_shortcut_action_data( Action_data_group* parent_P, const TQString& name_P,
-            const TQString& comment_P, const KShortcut& shortcut_P, const TQString& command_url_P,
+            const TQString& comment_P, const TDEShortcut& shortcut_P, const TQString& command_url_P,
             bool enabled_P = true );    
         Command_url_shortcut_action_data( TDEConfig& cfg_P, Action_data_group* parent_P );
     };
@@ -178,7 +178,7 @@ class KDE_EXPORT Menuentry_shortcut_action_data
         Menuentry_shortcut_action_data( Action_data_group* parent_P, const TQString& name_P,
             const TQString& comment_P, bool enabled_P = true );
         Menuentry_shortcut_action_data( Action_data_group* parent_P, const TQString& name_P,
-            const TQString& comment_P, const KShortcut& shortcut_P, const TQString& command_url_P,
+            const TQString& comment_P, const TDEShortcut& shortcut_P, const TQString& command_url_P,
             bool enabled_P = true );    
         Menuentry_shortcut_action_data( TDEConfig& cfg_P, Action_data_group* parent_P );
     };

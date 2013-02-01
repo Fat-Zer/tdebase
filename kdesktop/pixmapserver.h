@@ -35,7 +35,7 @@ struct KPixmapData
     int refcount;
 };
 
-struct KSelectionInode
+struct TDESelectionInode
 {
     Qt::HANDLE handle;
     TQString name;
@@ -110,12 +110,12 @@ private:
     Atom pixmap;
 
     TQMap<TQString,KPixmapInode> m_Names;
-    TQMap<Atom,KSelectionInode> m_Selections;
+    TQMap<Atom,TDESelectionInode> m_Selections;
     TQMap<HANDLE,KPixmapData> m_Data;
     TQMap<Atom,HANDLE> m_Active;
 
     typedef TQMap<TQString,KPixmapInode>::Iterator NameIterator;
-    typedef TQMap<Atom,KSelectionInode>::Iterator SelectionIterator;
+    typedef TQMap<Atom,TDESelectionInode>::Iterator SelectionIterator;
     typedef TQMap<HANDLE,KPixmapData>::Iterator DataIterator;
     typedef TQMap<Atom,HANDLE>::Iterator AtomIterator;
 };

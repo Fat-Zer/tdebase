@@ -45,8 +45,8 @@ protected slots:
 	void slotDefault();
 
 private:
-	KListView *mpMediumTypesListView;
-	KListView *mpMediaListView;
+	TDEListView *mpMediumTypesListView;
+	TDEListView *mpMediaListView;
 	KFileItemList mMedia;
 };
 

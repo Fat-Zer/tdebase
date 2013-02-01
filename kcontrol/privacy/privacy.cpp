@@ -71,7 +71,7 @@ Privacy::Privacy(TQWidget *parent, const char *name)
   //privacyTabs->addTab(p3pSettings, i18n("Privacy Settings"));
 
 
-  KListView *sw = cleaningDialog->privacyListView;
+  TDEListView *sw = cleaningDialog->privacyListView;
 
   sw->addColumn(i18n("Privacy Settings"));
   sw->addColumn(i18n("Description"));
@@ -82,8 +82,8 @@ Privacy::Privacy(TQWidget *parent, const char *name)
 
 
 
-  generalCLI     = new KListViewItem(sw, i18n("General") );
-  webbrowsingCLI = new KListViewItem(sw, i18n("Web Browsing") );
+  generalCLI     = new TDEListViewItem(sw, i18n("General") );
+  webbrowsingCLI = new TDEListViewItem(sw, i18n("Web Browsing") );
 
   generalCLI->setOpen(true);
   webbrowsingCLI->setOpen(true);

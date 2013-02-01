@@ -28,7 +28,7 @@
 class TQLineEdit;
 class TQCheckBox;
 class TQPushButton;
-class KListBox;
+class TDEListBox;
 class TDEProcess;
 class KLanguageCombo;
 class KURLRequester;
@@ -71,7 +71,7 @@ private:
   KURLRequester *htdigBin, *htsearchBin, *htmergeBin;
   TQCheckBox *indexKDE, *indexMan, *indexInfo;
   TQPushButton *addButton, *delButton, *runButton;
-  KListBox *searchPaths;
+  TDEListBox *searchPaths;
   KLanguageCombo *language;
 
   TDEProcess *indexProc;

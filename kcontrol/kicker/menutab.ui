@@ -193,7 +193,7 @@
 					</spacer>
 				</vbox>
 			</widget>
-			<widget class="KListView">
+			<widget class="TDEListView">
 				<column>
 					<property name="text">
 					<string>Optional Menus</string>
@@ -366,7 +366,7 @@
 								<string>Font:</string>
 							</property>
 						</widget>
-						<widget class="KFontRequester" row="2" column="1" rowspan="1" colspan="3">
+						<widget class="TDEFontRequester" row="2" column="1" rowspan="1" colspan="3">
 							<property name="name">
 								<cstring>kcfg_ButtonFont</cstring>
 							</property>

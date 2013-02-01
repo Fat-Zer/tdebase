@@ -14,7 +14,7 @@
 class KfArchiver;
 class TQPixmap;
 class TQFileInfo;
-class KPopupMenu;
+class TDEPopupMenu;
 class KfindWindow;
 
 class KfFileLVI : public TQListViewItem
@@ -29,7 +29,7 @@ class KfFileLVI : public TQListViewItem
   KFileItem fileitem;
 };
 
-class KfindWindow: public   KListView
+class KfindWindow: public   TDEListView
 {
   Q_OBJECT
 public:
@@ -44,7 +44,7 @@ public:
 
 public slots:
   void copySelection();
-  void slotContextMenu(KListView *,TQListViewItem *item,const TQPoint&p);
+  void slotContextMenu(TDEListView *,TQListViewItem *item,const TQPoint&p);
 
 private slots:
   void deleteFiles();
@@ -66,7 +66,7 @@ signals:
 
 private:
   TQString m_baseDir;
-  KPopupMenu *m_menu;
+  TDEPopupMenu *m_menu;
   bool haveSelection;
   bool m_pressed;
   void resetColumns(bool init);

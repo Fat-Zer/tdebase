@@ -32,7 +32,7 @@ class KDCOPActionProxy;
 /**
  * DCOP interface for a konqueror main window
  */
-class KonqMainWindowIface : public KMainWindowInterface
+class KonqMainWindowIface : public TDEMainWindowInterface
 {
   K_DCOP
 public:

@@ -31,14 +31,14 @@ class TQGridLayout;
 class TQCheckBox;
 class TQLineEdit;
 class KPushButton;
-class KListView;
+class TDEListView;
 
 typedef TQMap<TQString, TQString> KonqProfileMap;
 
 class KonqProfileItem : public TQListViewItem
 {
 public:
-  KonqProfileItem( KListView *, const TQString & );
+  KonqProfileItem( TDEListView *, const TQString & );
   ~KonqProfileItem() {}
 
   TQString m_profileName;
@@ -77,7 +77,7 @@ private:
   TQCheckBox *m_cbSaveURLs;
   TQCheckBox *m_cbSaveSize;
 
-  KListView *m_pListView;
+  TDEListView *m_pListView;
 };
 
 #endif

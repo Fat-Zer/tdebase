@@ -34,7 +34,7 @@ class UserListView;
 class KdmThemer;
 class KdmItem;
 
-class KListView;
+class TDEListView;
 class KSimpleConfig;
 
 class TQLabel;

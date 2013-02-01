@@ -36,7 +36,7 @@
 
 class TQPushButton;
 
-class KListView;
+class TDEListView;
 class KService;
 class TDEProcess;
 class KProcIO;
@@ -118,7 +118,7 @@ class Navigator : public TQWidget
     void insertPlugins();
     void hideSearch();
 
-    KListView *mContentsTree;
+    TDEListView *mContentsTree;
     Glossary *mGlossaryTree;
 
     SearchWidget *mSearchWidget;

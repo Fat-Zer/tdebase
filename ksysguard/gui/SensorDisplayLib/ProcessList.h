@@ -42,11 +42,11 @@ typedef const char* (*KeyFunc)(const char*);
  * To support bi-directional sorting, and sorting of text, integers etc. we
  * need a specialized version of TQListViewItem.
  */
-class ProcessLVI : public KListViewItem
+class ProcessLVI : public TDEListViewItem
 {
 public:
-	ProcessLVI(TQListView* lv) : KListViewItem(lv) { }
-	ProcessLVI(TQListViewItem* lvi) : KListViewItem(lvi) { }
+	ProcessLVI(TQListView* lv) : TDEListViewItem(lv) { }
+	ProcessLVI(TQListViewItem* lvi) : TDEListViewItem(lvi) { }
 
 	virtual int compare( TQListViewItem *item, int column, bool ) const;
 };
@@ -57,7 +57,7 @@ class TQPopupMenu;
  * This class implementes a table filled with information about the running
  * processes. The table is derived from TQListView.
  */
-class ProcessList : public KListView
+class ProcessList : public TDEListView
 {
     Q_OBJECT
 

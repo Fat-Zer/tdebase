@@ -74,23 +74,23 @@ KonqSidebarHistoryModule::KonqSidebarHistoryModule( KonqSidebarTree * parentTree
     connect( parentTree, TQT_SIGNAL( expanded( TQListViewItem * )),
 	     TQT_SLOT( slotItemExpanded( TQListViewItem * )));
 
-    m_collection = new KActionCollection( this, "history actions" );
-    (void) new KAction( i18n("New &Window"), "window_new", 0, this,
+    m_collection = new TDEActionCollection( this, "history actions" );
+    (void) new TDEAction( i18n("New &Window"), "window_new", 0, this,
  			TQT_SLOT( slotNewWindow() ), m_collection, "open_new");
-    (void) new KAction( i18n("&Remove Entry"), "editdelete", 0, this,
+    (void) new TDEAction( i18n("&Remove Entry"), "editdelete", 0, this,
 			TQT_SLOT( slotRemoveEntry() ), m_collection, "remove");
-    (void) new KAction( i18n("C&lear History"), "history_clear", 0, this,
+    (void) new TDEAction( i18n("C&lear History"), "history_clear", 0, this,
 			TQT_SLOT( slotClearHistory() ), m_collection, "clear");
-    (void) new KAction( i18n("&Preferences..."), "configure", 0, this,
+    (void) new TDEAction( i18n("&Preferences..."), "configure", 0, this,
 			TQT_SLOT( slotPreferences()), m_collection, "preferences");
 
-    KRadioAction *sort;
-    sort = new KRadioAction( i18n("By &Name"), 0, this,
+    TDERadioAction *sort;
+    sort = new TDERadioAction( i18n("By &Name"), 0, this,
 			     TQT_SLOT( slotSortByName() ), m_collection, "byName");
     sort->setExclusiveGroup("SortGroup");
     sort->setChecked( m_sortsByName );
 
-    sort = new KRadioAction( i18n("By &Date"), 0, this,
+    sort = new TDERadioAction( i18n("By &Date"), 0, this,
 			     TQT_SLOT( slotSortByDate() ), m_collection, "byDate");
     sort->setExclusiveGroup("SortGroup");
     sort->setChecked( !m_sortsByName );

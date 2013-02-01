@@ -30,7 +30,7 @@
 
 #include "history_item.h"
 
-class KActionCollection;
+class TDEActionCollection;
 class KDialogBase;
 class KonqSidebarHistorySettings;
 class KonqSidebarTree;
@@ -94,7 +94,7 @@ private:
 
     KonqSidebarTreeTopLevelItem * m_topLevelItem;
 
-    KActionCollection *m_collection;
+    TDEActionCollection *m_collection;
 
     KDialogBase *m_dlg;
     TQPixmap m_folderClosed;

@@ -24,8 +24,8 @@
 #include <kmainwindow.h>
 #include <kurl.h>
 
-class KListBox;
-class KListView;
+class TDEListBox;
+class TDEListView;
 class TQLineEdit;
 class TQTextEdit;
 class FaxCtrl;
@@ -36,7 +36,7 @@ class TQComboBox;
 class TQPushButton;
 class TQListViewItem;
 
-class KdeprintFax : public KMainWindow
+class KdeprintFax : public TDEMainWindow
 {
 	Q_OBJECT
 public:
@@ -98,8 +98,8 @@ protected:
 	//TQListViewItem* faxItem( int i = 0 ) const;
 
 private:
-	KListBox	*m_files;
-	KListView   *m_numbers;
+	TDEListBox	*m_files;
+	TDEListView   *m_numbers;
 	TQLineEdit	*m_subject;
 	TQTextEdit	*m_comment;
 	FaxCtrl		*m_faxctrl;

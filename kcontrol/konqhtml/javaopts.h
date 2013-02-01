@@ -22,7 +22,7 @@
 
 class KColorButton;
 class TDEConfig;
-class KListView;
+class TDEListView;
 class KURLRequester;
 class KIntNumInput;
 

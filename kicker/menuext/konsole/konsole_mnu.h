@@ -54,8 +54,8 @@ private:
     TQStringList sessionList;
     TQStringList screenList;
     TQValueVector<TQString> m_profiles;
-    KPopupMenu* m_profileMenu;
-    KPopupMenu* m_bookmarksSession;
+    TDEPopupMenu* m_profileMenu;
+    TDEPopupMenu* m_bookmarksSession;
 
     KonsoleBookmarkHandler *m_bookmarkHandlerSession;
 };

@@ -29,7 +29,7 @@
 
 class KatePluginListItem;
 
-class KatePluginListView : public KListView
+class KatePluginListView : public TDEListView
 {
   Q_OBJECT
 

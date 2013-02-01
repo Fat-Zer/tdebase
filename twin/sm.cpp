@@ -251,7 +251,7 @@ bool Workspace::sessionInfoWindowTypeMatch( Client* c, SessionInfo* info )
 
 // maybe needed later
 #if 0
-// KMainWindow's without name() given have WM_WINDOW_ROLE in the form
+// TDEMainWindow's without name() given have WM_WINDOW_ROLE in the form
 // of <appname>-mainwindow#<number>
 // when comparing them for fake session info, it's probably better to check
 // them without the trailing number

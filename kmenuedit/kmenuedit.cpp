@@ -38,7 +38,7 @@
 #include "kmenuedit.moc"
 
 KMenuEdit::KMenuEdit (bool controlCenter, TQWidget *, const char *name)
-  : KMainWindow (0, name), m_tree(0), m_basicTab(0), m_splitter(0), m_controlCenter(controlCenter)
+  : TDEMainWindow (0, name), m_tree(0), m_basicTab(0), m_splitter(0), m_controlCenter(controlCenter)
 {
 #if 0
     m_showHidden = config->readBoolEntry("ShowHidden");
@@ -62,12 +62,12 @@ KMenuEdit::~KMenuEdit()
 
 void KMenuEdit::setupActions()
 {
-    (void)new KAction(i18n("&New Submenu..."), "menu_new", 0, actionCollection(), "newsubmenu");
-    (void)new KAction(i18n("New &Item..."), "filenew", KStdAccel::openNew(), actionCollection(), "newitem");
+    (void)new TDEAction(i18n("&New Submenu..."), "menu_new", 0, actionCollection(), "newsubmenu");
+    (void)new TDEAction(i18n("New &Item..."), "filenew", TDEStdAccel::openNew(), actionCollection(), "newitem");
     if (!m_controlCenter)
-       (void)new KAction(i18n("New S&eparator"), "menu_new_sep", 0, actionCollection(), "newsep");
+       (void)new TDEAction(i18n("New S&eparator"), "menu_new_sep", 0, actionCollection(), "newsep");
 
-    (void)new KAction(i18n("Save && Quit"), "filesave_and_close", 0, TQT_TQOBJECT(this), TQT_SLOT( slotSave_and_close()), actionCollection(), "file_save_and_quit");
+    (void)new TDEAction(i18n("Save && Quit"), "filesave_and_close", 0, TQT_TQOBJECT(this), TQT_SLOT( slotSave_and_close()), actionCollection(), "file_save_and_quit");
 
     m_actionDelete = 0;
 
@@ -97,8 +97,8 @@ void KMenuEdit::setupView()
     connect(m_basicTab, TQT_SIGNAL(changed(MenuEntryInfo *)),
             m_tree, TQT_SLOT(currentChanged(MenuEntryInfo *)));
 
-    connect(m_basicTab, TQT_SIGNAL(findServiceShortcut(const KShortcut&, KService::Ptr &)),
-            m_tree, TQT_SLOT(findServiceShortcut(const KShortcut&, KService::Ptr &)));
+    connect(m_basicTab, TQT_SIGNAL(findServiceShortcut(const TDEShortcut&, KService::Ptr &)),
+            m_tree, TQT_SLOT(findServiceShortcut(const TDEShortcut&, KService::Ptr &)));
 
     // restore splitter sizes
     TDEConfig* config = TDEGlobal::config();
@@ -126,14 +126,14 @@ void KMenuEdit::slotChangeView()
 
     delete m_actionDelete;
 
-    m_actionDelete = new KAction(i18n("&Delete"), "editdelete", Key_Delete, actionCollection(), "delete");
+    m_actionDelete = new TDEAction(i18n("&Delete"), "editdelete", Key_Delete, actionCollection(), "delete");
 
     if (!m_splitter)
        setupView();
     if (m_controlCenter)
-       setupGUI(KMainWindow::ToolBar|Keys|Save|Create, "kcontroleditui.rc");
+       setupGUI(TDEMainWindow::ToolBar|Keys|Save|Create, "kcontroleditui.rc");
     else
-       setupGUI(KMainWindow::ToolBar|Keys|Save|Create, "kmenueditui.rc");
+       setupGUI(TDEMainWindow::ToolBar|Keys|Save|Create, "kmenueditui.rc");
 
     m_tree->setViewMode(m_showHidden);
 }

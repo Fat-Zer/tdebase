@@ -28,7 +28,7 @@
 
 	keys->insert( "Program:tderandrtray", i18n("Display Control") );
 
-	DEF( I18N_NOOP("Switch Displays"), KShortcut(TQString("XF86Display")), KShortcut(TQString("XF86Display")), slotCycleDisplays() );
+	DEF( I18N_NOOP("Switch Displays"), TDEShortcut(TQString("XF86Display")), TDEShortcut(TQString("XF86Display")), slotCycleDisplays() );
 
 #undef DEF
 #undef WIN

@@ -99,7 +99,7 @@ StyleSettings::StyleSettings( TQWidget *parent, const char *name )
   connect( mEditColorButton, TQT_SIGNAL( clicked() ),
            TQT_SLOT( editSensorColor() ) );
 
-  KAcceleratorManager::manage( this );
+  TDEAcceleratorManager::manage( this );
 }
 
 StyleSettings::~StyleSettings()

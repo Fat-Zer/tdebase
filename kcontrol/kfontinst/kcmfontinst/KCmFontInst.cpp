@@ -137,7 +137,7 @@ CKCmFontInst::CKCmFontInst(TQWidget *parent, const char *, const TQStringList&)
 
     TQGridLayout *fontsLayout=new TQGridLayout(fontsFrame, 1, 1, 0, 1);
     TQVBoxLayout *layout=new TQVBoxLayout(this, 0, KDialog::spacingHint());
-    KToolBar    *toolbar=new KToolBar(this);
+    TDEToolBar    *toolbar=new TDEToolBar(this);
     bool        showBitmap(itsConfig.readBoolEntry(CFG_SHOW_BITMAP, false));
 
     fontsFrame->setLineWidth(0);
@@ -177,10 +177,10 @@ CKCmFontInst::CKCmFontInst(TQWidget *parent, const char *, const TQStringList&)
 
     //
     // Now for the hack!
-    KAction     *act;
-    KActionMenu *topMnu=dynamic_cast<KActionMenu *>(itsDirOp->actionCollection()->action("popupMenu"));
+    TDEAction     *act;
+    TDEActionMenu *topMnu=dynamic_cast<TDEActionMenu *>(itsDirOp->actionCollection()->action("popupMenu"));
 
-    itsViewMenuAct=dynamic_cast<KActionMenu *>(itsDirOp->actionCollection()->action("view menu"));
+    itsViewMenuAct=dynamic_cast<TDEActionMenu *>(itsDirOp->actionCollection()->action("view menu"));
     topMnu->popupMenu()->clear();
     connect(topMnu->popupMenu(), TQT_SIGNAL(aboutToShow()), TQT_SLOT(setupMenu()));
     if((act=itsDirOp->actionCollection()->action("up")))
@@ -197,28 +197,28 @@ CKCmFontInst::CKCmFontInst(TQWidget *parent, const char *, const TQStringList&)
 
     topMnu->insert(itsViewMenuAct);
 
-    if((itsIconAct=dynamic_cast<KRadioAction *>(itsDirOp->actionCollection()->action("short view"))))
+    if((itsIconAct=dynamic_cast<TDERadioAction *>(itsDirOp->actionCollection()->action("short view"))))
     {
         disconnect(itsIconAct, TQT_SIGNAL(activated()), itsDirOp, TQT_SLOT(slotSimpleView()));
         connect(itsIconAct, TQT_SIGNAL(activated()), TQT_SLOT(iconView()));
         itsIconAct->plug(toolbar);
     }
 
-    if((itsListAct=dynamic_cast<KRadioAction *>(itsDirOp->actionCollection()->action("detailed view"))))
+    if((itsListAct=dynamic_cast<TDERadioAction *>(itsDirOp->actionCollection()->action("detailed view"))))
     {
         disconnect(itsListAct, TQT_SIGNAL(activated()), itsDirOp, TQT_SLOT(slotDetailedView()));
         connect(itsListAct, TQT_SIGNAL(activated()), TQT_SLOT(listView()));
         itsListAct->plug(toolbar);
     }
 
-    itsShowBitmapAct=new KToggleAction(i18n("Show Bitmap Fonts"), "font_bitmap", 0, TQT_TQOBJECT(this), TQT_SLOT(filterFonts()), 
+    itsShowBitmapAct=new TDEToggleAction(i18n("Show Bitmap Fonts"), "font_bitmap", 0, TQT_TQOBJECT(this), TQT_SLOT(filterFonts()), 
                                        itsDirOp->actionCollection(), "showbitmap");
     itsShowBitmapAct->setChecked(showBitmap);
     itsShowBitmapAct->plug(toolbar);
 
     toolbar->insertLineSeparator();
 
-    act=new KAction(i18n("Add Fonts..."), "newfont", 0, TQT_TQOBJECT(this), TQT_SLOT(addFonts()), itsDirOp->actionCollection(), "addfonts");
+    act=new TDEAction(i18n("Add Fonts..."), "newfont", 0, TQT_TQOBJECT(this), TQT_SLOT(addFonts()), itsDirOp->actionCollection(), "addfonts");
     act->plug(toolbar);
     topMnu->insert(act);
 
@@ -232,11 +232,11 @@ CKCmFontInst::CKCmFontInst(TQWidget *parent, const char *, const TQStringList&)
     }
 
     toolbar->insertLineSeparator();
-    act=new KAction(i18n("Configure..."), "configure", 0, TQT_TQOBJECT(this), TQT_SLOT(configure()), itsDirOp->actionCollection(), "configure");
+    act=new TDEAction(i18n("Configure..."), "configure", 0, TQT_TQOBJECT(this), TQT_SLOT(configure()), itsDirOp->actionCollection(), "configure");
     act->plug(toolbar);
 #ifdef HAVE_XFT
     toolbar->insertLineSeparator();
-    act=new KAction(i18n("Print..."), "fileprint", 0, TQT_TQOBJECT(this), TQT_SLOT(print()), itsDirOp->actionCollection(), "print");
+    act=new TDEAction(i18n("Print..."), "fileprint", 0, TQT_TQOBJECT(this), TQT_SLOT(print()), itsDirOp->actionCollection(), "print");
     act->plug(toolbar);
 #endif
 
@@ -251,7 +251,7 @@ CKCmFontInst::CKCmFontInst(TQWidget *parent, const char *, const TQStringList&)
 #ifdef HAVE_XFT
     if(itsPreview)
     {
-        KActionCollection *previewCol=itsPreview->actionCollection();
+        TDEActionCollection *previewCol=itsPreview->actionCollection();
 
         if(previewCol && previewCol->count()>0 && (act=previewCol->action("changeText")))
             act->plug(toolbar);
@@ -616,7 +616,7 @@ void CKCmFontInst::jobResult(TDEIO::Job *job)
                                  i18n("Please note that any open applications will need to be restarted in order "
                                       "for any changes to be noticed."),
 #endif
-                                 i18n("Success"), "KFontinst_WarnAboutFontChangesAndOpenApps");
+                                 i18n("Success"), "TDEFontinst_WarnAboutFontChangesAndOpenApps");
 }
 
 void CKCmFontInst::addFonts(const KURL::List &src, const KURL &dest)

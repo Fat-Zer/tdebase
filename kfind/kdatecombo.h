@@ -16,7 +16,7 @@
   */
 
 class KDatePicker;
-class KPopupFrame;
+class TDEPopupFrame;
 
 class KDateCombo : public TQComboBox  {
    Q_OBJECT
@@ -30,7 +30,7 @@ public:
 	bool setDate(const TQDate & newDate);
 
 private:
-   KPopupFrame * popupFrame;
+   TDEPopupFrame * popupFrame;
    KDatePicker * datePicker;
 
    void initObject(const TQDate & date, TQWidget *parent, const char *name);

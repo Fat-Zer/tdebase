@@ -21,7 +21,7 @@
 
 #include <tqwidget.h>
 
-class KListView;
+class TDEListView;
 class TQListViewItem;
 
 class ThemePage : public TQWidget
@@ -49,7 +49,7 @@ class ThemePage : public TQWidget
 		void insertThemes();
 		void fixCursorFile();
 
-		KListView *listview;
+		TDEListView *listview;
 		TQString currentTheme, selectedTheme;
 };
 

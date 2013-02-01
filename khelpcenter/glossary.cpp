@@ -36,29 +36,29 @@
 
 using namespace KHC;
 
-class SectionItem : public KListViewItem
+class SectionItem : public TDEListViewItem
 {
 	public:
 		SectionItem( TQListViewItem *parent, const TQString &text )
-			: KListViewItem( parent, text )
+			: TDEListViewItem( parent, text )
 		{
 			setOpen( false );
 		}
 		
 		virtual void setOpen( bool open )
 		{
-				KListViewItem::setOpen(open);
+				TDEListViewItem::setOpen(open);
 				
 				setPixmap( 0, SmallIcon( TQString::fromLatin1( open ? "contents" : "contents2" ) ) );
 
 		}
 };
 
-class EntryItem : public KListViewItem
+class EntryItem : public TDEListViewItem
 {
 	public:
 		EntryItem( SectionItem *parent, const TQString &term, const TQString &id )
-			: KListViewItem( parent, term ),
+			: TDEListViewItem( parent, term ),
 			m_id( id )
 		{
 		}
@@ -69,7 +69,7 @@ class EntryItem : public KListViewItem
 		TQString m_id;
 };
 
-Glossary::Glossary( TQWidget *parent ) : KListView( parent )
+Glossary::Glossary( TQWidget *parent ) : TDEListView( parent )
 {
 	m_initialized = false;
 
@@ -84,10 +84,10 @@ Glossary::Glossary( TQWidget *parent ) : KListView( parent )
 	setAllColumnsShowFocus( true );
 	setRootIsDecorated( true );
 
-	m_byTopicItem = new KListViewItem( this, i18n( "By Topic" ) );
+	m_byTopicItem = new TDEListViewItem( this, i18n( "By Topic" ) );
 	m_byTopicItem->setPixmap( 0, SmallIcon( "help" ) );
 
-	m_alphabItem = new KListViewItem( this, i18n( "Alphabetically" ) );
+	m_alphabItem = new TDEListViewItem( this, i18n( "Alphabetically" ) );
 	m_alphabItem->setPixmap( 0, SmallIcon( "charset" ) );
 
 	m_cacheFile = locateLocal( "cache", "help/glossary.xml" );
@@ -108,7 +108,7 @@ void Glossary::show()
 			buildGlossaryTree();
 		m_initialized = true;
 	}
-	KListView::show();
+	TDEListView::show();
 }
 
 Glossary::~Glossary()
@@ -142,7 +142,7 @@ int Glossary::glossaryCTime() const
 
 void Glossary::rebuildGlossaryCache()
 {
-	KMainWindow *mainWindow = dynamic_cast<KMainWindow *>( kapp->mainWidget() );
+	TDEMainWindow *mainWindow = dynamic_cast<TDEMainWindow *>( kapp->mainWidget() );
 	Q_ASSERT( mainWindow );
 	mainWindow->statusBar()->message( i18n( "Rebuilding cache..." ) );
 
@@ -172,7 +172,7 @@ void Glossary::meinprocExited( TDEProcess *meinproc )
 	
 	m_status = CacheOk;
 
-	KMainWindow *mainWindow = dynamic_cast<KMainWindow *>( kapp->mainWidget() );
+	TDEMainWindow *mainWindow = dynamic_cast<TDEMainWindow *>( kapp->mainWidget() );
 	Q_ASSERT( mainWindow );
 	mainWindow->statusBar()->message( i18n( "Rebuilding cache... done." ), 2000 );
 

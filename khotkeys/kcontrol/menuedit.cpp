@@ -288,9 +288,9 @@ TQString khotkeys_change_menu_entry_shortcut( const TQString& entry_P,
         }
     TQString shortcut = "";
     // make sure the shortcut is valid
-    shortcut = (KShortcut( shortcut_P )).toStringInternal();
+    shortcut = (TDEShortcut( shortcut_P )).toStringInternal();
     if( !shortcut.isEmpty())
-        entry->set_trigger( new Shortcut_trigger( entry, KShortcut( shortcut )));
+        entry->set_trigger( new Shortcut_trigger( entry, TDEShortcut( shortcut )));
     if( shortcut.isEmpty())
         {
         delete entry;

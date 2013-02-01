@@ -175,7 +175,7 @@ bool Widgets::comboBox(TQWidget *parent, const TQString& title, const TQString& 
 bool Widgets::listBox(TQWidget *parent, const TQString& title, const TQString& text, const TQStringList& args, 
 		      const TQString& defaultEntry, TQString &result)
 {
-  KListBoxDialog box(text,parent);
+  TDEListBoxDialog box(text,parent);
 
   kapp->setTopWidget( &box );
   box.setCaption(title);
@@ -201,7 +201,7 @@ bool Widgets::checkList(TQWidget *parent, const TQString& title, const TQString&
 
   result.clear();
 
-  KListBoxDialog box(text,parent);
+  TDEListBoxDialog box(text,parent);
 
   TQListBox &table = box.getTable();
 
@@ -245,7 +245,7 @@ bool Widgets::radioBox(TQWidget *parent, const TQString& title, const TQString& 
 {
   TQStringList entries, tags;
 
-  KListBoxDialog box(text,parent);
+  TDEListBoxDialog box(text,parent);
 
   TQListBox &table = box.getTable();
 

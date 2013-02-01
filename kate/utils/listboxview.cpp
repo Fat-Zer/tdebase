@@ -26,7 +26,7 @@ namespace Kate {
 // private storage
 class ListboxViewPrivate {
   public:
-    KListBox *listbox;
+    TDEListBox *listbox;
 };
 
 }
@@ -35,14 +35,14 @@ Kate::ListboxView::ListboxView( TQWidget *parent, const char *name )
   : Kate::DockViewBase( parent, name),
     d( new Kate::ListboxViewPrivate)
 {
-  d->listbox = new KListBox( this );
+  d->listbox = new TDEListBox( this );
 }
 
 Kate::ListboxView::ListboxView( const TQString &titlePrefix, const TQString &title, TQWidget *parent, const char *name )
   : Kate::DockViewBase( titlePrefix, title, parent, name),
     d( new Kate::ListboxViewPrivate)
 {
-  d->listbox = new KListBox( this );
+  d->listbox = new TDEListBox( this );
 }
 
 Kate::ListboxView::~ListboxView()
@@ -50,7 +50,7 @@ Kate::ListboxView::~ListboxView()
   delete d;
 }
 
-KListBox *Kate::ListboxView::listbox()
+TDEListBox *Kate::ListboxView::listbox()
 {
   return d->listbox;
 }

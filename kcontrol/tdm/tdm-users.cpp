@@ -127,7 +127,7 @@ TDMUsersWidget::TDMUsersWidget(TQWidget *parent, const char *name)
 
     wstack = new TQWidgetStack( this );
     s_label = new TQLabel( wstack, i18n("S&elect users and groups:"), this );
-    optinlv = new KListView( this );
+    optinlv = new TDEListView( this );
     optinlv->addColumn( i18n("Selected Users") );
     optinlv->setResizeMode( TQListView::LastColumn );
     TQWhatsThis::add( optinlv, i18n("TDM will show all checked users. Entries denoted with '@' are user groups. Checking a group is like checking all users in that group.") );
@@ -136,7 +136,7 @@ TDMUsersWidget::TDMUsersWidget(TQWidget *parent, const char *name)
 	     TQT_SLOT(slotUpdateOptIn( TQListViewItem * )) );
     connect( optinlv, TQT_SIGNAL(clicked( TQListViewItem * )),
 	     TQT_SLOT(slotChanged()) );
-    optoutlv = new KListView( this );
+    optoutlv = new TDEListView( this );
     optoutlv->addColumn( i18n("Hidden Users") );
     optoutlv->setResizeMode( TQListView::LastColumn );
     TQWhatsThis::add( optoutlv, i18n("TDM will show all non-checked non-system users. Entries denoted with '@' are user groups. Checking a group is like checking all users in that group.") );

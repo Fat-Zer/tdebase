@@ -105,7 +105,7 @@ TQString KfFileLVI::key(int column, bool) const
 }
 
 KfindWindow::KfindWindow( TQWidget *parent, const char *name )
-  : KListView( parent, name )
+  : TDEListView( parent, name )
 ,m_baseDir("")
 ,m_menu(0)
 {
@@ -134,8 +134,8 @@ KfindWindow::KfindWindow( TQWidget *parent, const char *name )
   connect( this, TQT_SIGNAL(selectionChanged()),
 	   this, TQT_SLOT( selectionHasChanged() ));
 
-  connect(this, TQT_SIGNAL(contextMenu(KListView *, TQListViewItem*,const TQPoint&)),
-	  this, TQT_SLOT(slotContextMenu(KListView *,TQListViewItem*,const TQPoint&)));
+  connect(this, TQT_SIGNAL(contextMenu(TDEListView *, TQListViewItem*,const TQPoint&)),
+	  this, TQT_SLOT(slotContextMenu(TDEListView *,TQListViewItem*,const TQPoint&)));
 
   connect(this, TQT_SIGNAL(executed(TQListViewItem*)),
 	  this, TQT_SLOT(slotExecute(TQListViewItem*)));
@@ -330,10 +330,10 @@ void KfindWindow::slotExecute(TQListViewItem* item)
   ((KfFileLVI*)item)->fileitem.run();
 }
 
-// Resizes KListView to occupy all visible space
+// Resizes TDEListView to occupy all visible space
 void KfindWindow::resizeEvent(TQResizeEvent *e)
 {
-  KListView::resizeEvent(e);
+  TDEListView::resizeEvent(e);
   resetColumns(false);
   clipper()->repaint();
 }
@@ -390,7 +390,7 @@ void KfindWindow::resetColumns(bool init)
   setColumnWidth(1, dir_w);
 }
 
-void KfindWindow::slotContextMenu(KListView *,TQListViewItem *item,const TQPoint&p)
+void KfindWindow::slotContextMenu(TDEListView *,TQListViewItem *item,const TQPoint&p)
 {
   if (!item) return;
   int count = selectedItems().count();
@@ -401,13 +401,13 @@ void KfindWindow::slotContextMenu(KListView *,TQListViewItem *item,const TQPoint
   };
 
   if (m_menu==0)
-     m_menu = new KPopupMenu(this);
+     m_menu = new TDEPopupMenu(this);
   else
      m_menu->clear();
 
   if (count == 1)
   {
-     //menu = new KPopupMenu(item->text(0), this);
+     //menu = new TDEPopupMenu(item->text(0), this);
      m_menu->insertTitle(item->text(0));
      m_menu->insertItem(SmallIcon("fileopen"),i18n("Menu item", "Open"), this, TQT_SLOT(openBinding()));
      m_menu->insertItem(SmallIcon("window_new"),i18n("Open Folder"), this, TQT_SLOT(openFolder()));

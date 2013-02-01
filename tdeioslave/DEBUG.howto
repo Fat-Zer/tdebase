@@ -48,7 +48,7 @@ time.
 Debugging io-slaves with valgrind
 =================================
 
-KLauncher can be told to run certain io-slaves through valgrind. The following
+TDELauncher can be told to run certain io-slaves through valgrind. The following
 command can be used to let tdelauncher run all https io-slaves via valgrind:
 
 	TDE_SLAVE_VALGRIND=https tdeinit

@@ -97,7 +97,7 @@ inline TQDataStream &operator>>( TQDataStream &stream, GlossaryEntry &e )
 	return stream >> e.m_term >> e.m_definition >> e.m_seeAlso;
 }
 
-class Glossary : public KListView
+class Glossary : public TDEListView
 {
 	Q_OBJECT
 	public:

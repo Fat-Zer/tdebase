@@ -377,7 +377,7 @@ void KasTaskItem::showPropertiesDialog()
     //
     // Title
     //
-    KPopupTitle *title = new KPopupTitle( dlg, "title" );
+    TDEPopupTitle *title = new TDEPopupTitle( dlg, "title" );
     dlg->setCaption( i18n("Task Properties") );
     title->setText( i18n("Task Properties") );
     title->setIcon( icon() );
@@ -415,7 +415,7 @@ TQWidget *KasTaskItem::createTaskProps( TQObject *target, TQWidget *parent, bool
     vb->setMargin( KDialog::marginHint() );
 
     // Create List View
-    KListView *taskprops = new KListView( vb, "props_view" );
+    TDEListView *taskprops = new TDEListView( vb, "props_view" );
     taskprops->setResizeMode( TQListView::LastColumn );
     taskprops->addColumn( i18n("Property"), 0 );
     taskprops->addColumn( i18n("Type"), 0 );
@@ -426,7 +426,7 @@ TQWidget *KasTaskItem::createTaskProps( TQObject *target, TQWidget *parent, bool
     for ( int i = 0; i < mo->numProperties( recursive ); i++ ) {
 	const TQMetaProperty *p = mo->property(i, recursive);
 
-	(void) new KListViewItem( taskprops,
+	(void) new TDEListViewItem( taskprops,
 				  p->name(), p->type(),
 				  target->property( p->name() ).toString() );
     }

@@ -57,7 +57,7 @@ KonsoleMenu::~KonsoleMenu()
     TDEGlobal::locale()->removeCatalogue("libkickermenu_konsole");
 }
 
-static void insertItemSorted(KPopupMenu *menu,
+static void insertItemSorted(TDEPopupMenu *menu,
                              const TQIconSet &iconSet,
                              const TQString &txt, int id)
 {
@@ -196,7 +196,7 @@ void KonsoleMenu::initialize()
     id = 0;
 
     delete m_profileMenu;
-    m_profileMenu = new KPopupMenu(this);
+    m_profileMenu = new TDEPopupMenu(this);
     TQStringList profiles = TDEGlobal::dirs()->findAllResources("data",
                                                            "konsole/profiles/*",
                                                            false, true );

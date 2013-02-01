@@ -287,7 +287,7 @@ void Generic_action_data::cfg_write( TDEConfig& cfg_P ) const
 
 Command_url_shortcut_action_data::Command_url_shortcut_action_data( Action_data_group* parent_P,
     const TQString& name_P, const TQString& comment_P,
-    const KShortcut& shortcut_P, const TQString& command_url_P, bool enabled_P )
+    const TDEShortcut& shortcut_P, const TQString& command_url_P, bool enabled_P )
     : Simple_action_data< Shortcut_trigger, Command_url_action >( parent_P, name_P,
         comment_P, enabled_P )
     {
@@ -307,7 +307,7 @@ void Simple_action_data< Shortcut_trigger, Command_url_action >
 
 Menuentry_shortcut_action_data::Menuentry_shortcut_action_data( Action_data_group* parent_P,
     const TQString& name_P, const TQString& comment_P,
-    const KShortcut& shortcut_P, const TQString& menuentry_P, bool enabled_P )
+    const TDEShortcut& shortcut_P, const TQString& menuentry_P, bool enabled_P )
     : Simple_action_data< Shortcut_trigger, Menuentry_action >( parent_P, name_P,
         comment_P, enabled_P )
     {

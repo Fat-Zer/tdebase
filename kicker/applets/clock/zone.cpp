@@ -91,7 +91,7 @@ int Zone::calc_TZ_offset(const TQString& zone, bool /* reset */)
   return 0;
 }
 
-void Zone::readZoneList(KListView *listView )
+void Zone::readZoneList(TDEListView *listView )
 {
   const KTimezones::ZoneMap zones = m_zoneDb.allZones();
   TQMap<TQString, TQListViewItem*> KontinentMap;
@@ -130,7 +130,7 @@ void Zone::readZoneList(KListView *listView )
   }
 }
 
-void Zone::getSelectedZonelist(KListView *listView)
+void Zone::getSelectedZonelist(TDEListView *listView)
 {
      _remotezonelist.clear();
 

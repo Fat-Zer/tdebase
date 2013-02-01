@@ -924,9 +924,9 @@ ClockApplet::ClockApplet(const TQString& configFile, Type t, int actions,
     reconfigure();    // initialize clock widget
     slotUpdate();
 
-    if (kapp->authorizeKAction("kicker_rmb"))
+    if (kapp->authorizeTDEAction("kicker_rmb"))
     {
-        menu = new KPopupMenu();
+        menu = new TDEPopupMenu();
         connect(menu, TQT_SIGNAL(aboutToShow()), TQT_SLOT(aboutToShowContextMenu()));
         connect(menu, TQT_SIGNAL(activated(int)), TQT_SLOT(contextMenuActivated(int)));
         setCustomMenu(menu);
@@ -1485,7 +1485,7 @@ void ClockApplet::toggleCalendar()
 
 void ClockApplet::openContextMenu()
 {
-    if (!menu || !kapp->authorizeKAction("kicker_rmb"))
+    if (!menu || !kapp->authorizeTDEAction("kicker_rmb"))
         return;
 
     menu->exec( TQCursor::pos() );
@@ -1544,7 +1544,7 @@ void ClockApplet::aboutToShowContextMenu()
     TQDateTime dt = TQDateTime::currentDateTime();
     dt = TQT_TQDATETIME_OBJECT(dt.addSecs(TZoffset));
 
-    KPopupMenu *copyMenu = new KPopupMenu( menu );
+    TDEPopupMenu *copyMenu = new TDEPopupMenu( menu );
     copyMenu->insertItem(loc->formatDateTime(dt), 201);
     copyMenu->insertItem(loc->formatDate(TQT_TQDATE_OBJECT(dt.date())), 202);
     copyMenu->insertItem(loc->formatDate(TQT_TQDATE_OBJECT(dt.date()), true), 203);
@@ -1558,7 +1558,7 @@ void ClockApplet::aboutToShowContextMenu()
 
     if (!bImmutable)
     {
-        KPopupMenu *zoneMenu = new KPopupMenu( menu );
+        TDEPopupMenu *zoneMenu = new TDEPopupMenu( menu );
         connect(zoneMenu, TQT_SIGNAL(activated(int)), TQT_SLOT(contextMenuActivated(int)));
         for (int i = 0; i <= zone->remoteZoneCount(); i++)
         {
@@ -1575,7 +1575,7 @@ void ClockApplet::aboutToShowContextMenu()
         zoneMenu->insertSeparator();
         zoneMenu->insertItem(SmallIcon("configure"), i18n("&Configure Timezones..."), 110);
 
-        KPopupMenu *type_menu = new KPopupMenu(menu);
+        TDEPopupMenu *type_menu = new TDEPopupMenu(menu);
         connect(type_menu, TQT_SIGNAL(activated(int)), TQT_SLOT(contextMenuActivated(int)));
         type_menu->insertItem(i18n("&Plain"), Prefs::EnumType::Plain, 1);
         type_menu->insertItem(i18n("&Digital"), Prefs::EnumType::Digital, 2);

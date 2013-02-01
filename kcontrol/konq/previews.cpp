@@ -77,7 +77,7 @@ KPreviewOptions::KPreviewOptions( TQWidget *parent, const char */*name*/ )
                 "no preview will be generated for files bigger than 10 MB, for speed reasons."));
 
     // Listview containing checkboxes for all protocols that support listing
-    KListView *listView = new KListView( this, "listView" );
+    TDEListView *listView = new TDEListView( this, "listView" );
     listView->addColumn( i18n( "Select Protocols" ) );
     listView->setFullWidth( true );
 

@@ -25,9 +25,9 @@
 #include <tqobject.h>
 #include <tqptrlist.h>
 
-class KActionCollection;
-class KMainWindow;
-class KToolBarPopupAction;
+class TDEActionCollection;
+class TDEMainWindow;
+class TDEToolBarPopupAction;
 class TQPopupMenu;
 
 namespace KHC {
@@ -52,10 +52,10 @@ class History : public TQObject
 
     static History &self();
 
-    void setupActions( KActionCollection *coll );
+    void setupActions( TDEActionCollection *coll );
     void updateActions();
 
-    void installMenuBarHook( KMainWindow *mainWindow );
+    void installMenuBarHook( TDEMainWindow *mainWindow );
 
     void createEntry();
     void updateCurrentEntry( KHC::View *view );
@@ -97,8 +97,8 @@ class History : public TQObject
     int m_goMenuHistoryStartPos;
     int m_goMenuHistoryCurrentPos;
   public:
-    KToolBarPopupAction *m_backAction;
-    KToolBarPopupAction *m_forwardAction;
+    TDEToolBarPopupAction *m_backAction;
+    TDEToolBarPopupAction *m_forwardAction;
 };
 
 }

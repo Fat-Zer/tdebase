@@ -20,7 +20,7 @@ namespace KHotKeys
 {
 
 class KDE_EXPORT KHListView
-    : public KListView
+    : public TDEListView
     {
     Q_OBJECT
     TQ_PROPERTY( bool forceSelect READ forceSelect WRITE setForceSelect )

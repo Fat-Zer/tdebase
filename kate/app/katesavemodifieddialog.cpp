@@ -140,7 +140,7 @@ KateSaveModifiedDialog::KateSaveModifiedDialog(TQWidget *parent, TQPtrList<Kate:
 
 	TQVBox *box=makeVBoxMainWidget();
 	new KActiveLabel(i18n("<qt>The following documents have been modified. Do you want to save them before closing?</qt>"),box);
-	m_list=new KListView(box);
+	m_list=new TDEListView(box);
 	m_list->addColumn(i18n("Title"));
 	m_list->addColumn(i18n("Location"));
 	m_list->setRootIsDecorated(true);

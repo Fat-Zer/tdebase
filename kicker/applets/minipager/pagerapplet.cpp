@@ -143,7 +143,7 @@ KMiniPager::KMiniPager(const TQString& configFile, Type type, int actions,
     connect( m_twin, TQT_SIGNAL( desktopNamesChanged() ), this, TQT_SLOT( slotDesktopNamesChanged() ) );
     connect( kapp, TQT_SIGNAL(backgroundChanged(int)), TQT_SLOT(slotBackgroundChanged(int)) );
 
-    if (kapp->authorizeKAction("kicker_rmb") && kapp->authorizeControlModule("tde-kcmtaskbar.desktop"))
+    if (kapp->authorizeTDEAction("kicker_rmb") && kapp->authorizeControlModule("tde-kcmtaskbar.desktop"))
     {
         m_contextMenu = new TQPopupMenu();
         connect(m_contextMenu, TQT_SIGNAL(aboutToShow()), TQT_SLOT(aboutToShowContextMenu()));
@@ -365,7 +365,7 @@ void KMiniPager::updateDesktopLayout(int o, int x, int y)
     if( m_desktopLayoutOwner == NULL )
     { // must own manager selection before setting global desktop layout
         int screen = DefaultScreen( tqt_xdisplay());
-        m_desktopLayoutOwner = new KSelectionOwner( TQString( "_NET_DESKTOP_LAYOUT_S%1" ).arg( screen ).latin1(),
+        m_desktopLayoutOwner = new TDESelectionOwner( TQString( "_NET_DESKTOP_LAYOUT_S%1" ).arg( screen ).latin1(),
             screen, TQT_TQOBJECT(this) );
         if( !m_desktopLayoutOwner->claim( false ))
         {
@@ -717,7 +717,7 @@ void KMiniPager::aboutToShowContextMenu()
                                    .arg(twin()->desktopName(m_rmbDesk)), RenameDesktop);
     m_contextMenu->insertSeparator();
 
-    KPopupMenu* showMenu = new KPopupMenu(m_contextMenu);
+    TDEPopupMenu* showMenu = new TDEPopupMenu(m_contextMenu);
     showMenu->setCheckable(true);
     showMenu->insertTitle(i18n("Pager Layout"));
 

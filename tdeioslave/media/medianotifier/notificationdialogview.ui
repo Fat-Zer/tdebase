@@ -90,7 +90,7 @@
                 <string>...</string>
             </property>
         </widget>
-        <widget class="KListBox">
+        <widget class="TDEListBox">
             <property name="name">
                 <cstring>actionsList</cstring>
             </property>

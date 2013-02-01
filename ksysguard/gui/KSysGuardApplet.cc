@@ -203,7 +203,7 @@ void KSysGuardApplet::dropEvent( TQDropEvent *e )
     int dock = findDock( e->pos() );
     if ( mDockList[ dock ]->isA( TQFRAME_OBJECT_NAME_STRING ) ) {
       if ( sensorType == "integer" || sensorType == "float" ) {
-        KPopupMenu popup;
+        TDEPopupMenu popup;
         TQWidget *wdg = 0;
 
         popup.insertTitle( i18n( "Select Display Type" ) );

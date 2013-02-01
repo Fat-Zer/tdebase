@@ -1,10 +1,10 @@
 [Desktop Entry]
-Name=KFontView
+Name=TDEFontView
 Name[be]=Прагляд шрыфтоў
 Name[bn]=কে-ফন্ট-ভিউ
 Name[cs]=Prohlížeč písem
 Name[eo]=Tiparorigardilo
-Name[eu]=KFontWiew
+Name[eu]=TDEFontWiew
 Name[he]=מציג גופנים
 Name[hi]=के-फ़ॉन्ट-व्यू
 Name[mk]=КФонтПреглед
@@ -18,7 +18,7 @@ Name[sk]=Prehliadač písiem
 Name[sv]=Kfontview
 Name[tg]=Намоишгари КҲарф
 Name[vi]=Trình xem phông chữ TDE
-Name[wa]=Håyneu di fontes (KFontView)
+Name[wa]=Håyneu di fontes (TDEFontView)
 Name[zh_CN]=字体预览
 Exec=kfontview %i %u
 Icon=fonts

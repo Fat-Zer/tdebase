@@ -145,7 +145,7 @@
                                 </size>
                             </property>
                         </spacer>
-                        <widget class="KListBox" row="0" column="0" rowspan="2" colspan="1">
+                        <widget class="TDEListBox" row="0" column="0" rowspan="2" colspan="1">
                             <property name="name">
                                 <cstring>actionsList</cstring>
                             </property>

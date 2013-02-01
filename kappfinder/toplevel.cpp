@@ -107,7 +107,7 @@ TopLevel::TopLevel( const TQString &destDir, TQWidget *parent, const char *name 
   TQAccel *accel = new TQAccel( this );
   accel->connectItem( accel->insertItem( Key_Q + CTRL ), kapp, TQT_SLOT( quit() ) );
 
-  KAcceleratorManager::manage( this );
+  TDEAcceleratorManager::manage( this );
 }
 
 

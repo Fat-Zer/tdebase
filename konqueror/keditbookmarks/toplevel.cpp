@@ -58,7 +58,7 @@
 
 CmdHistory* CmdHistory::s_self = 0;
 
-CmdHistory::CmdHistory(KActionCollection *collection)
+CmdHistory::CmdHistory(TDEActionCollection *collection)
     : m_commandHistory(collection) {
     connect(&m_commandHistory, TQT_SIGNAL( commandExecuted(KCommand *) ),
             TQT_SLOT( slotCommandExecuted(KCommand *) ));
@@ -196,7 +196,7 @@ KEBApp *KEBApp::s_topLevel = 0;
 KEBApp::KEBApp(
     const TQString &bookmarksFile, bool readonly,
     const TQString &address, bool browser, const TQString &caption
-) : KMainWindow(), m_dcopIface(0), m_bookmarksFilename(bookmarksFile),
+) : TDEMainWindow(), m_dcopIface(0), m_bookmarksFilename(bookmarksFile),
     m_caption(caption), m_readOnly(readonly), m_browser(browser) {
 
     m_cmdHistory = new CmdHistory(actionCollection());
@@ -207,9 +207,9 @@ KEBApp::KEBApp(
 
     TQSplitter *vsplitter = new TQSplitter(this);
 
-    KToolBar *quicksearch = new KToolBar(vsplitter, "search toolbar");
+    TDEToolBar *quicksearch = new TDEToolBar(vsplitter, "search toolbar");
 
-    KAction *resetQuickSearch = new KAction( i18n( "Reset Quick Search" ),
+    TDEAction *resetQuickSearch = new TDEAction( i18n( "Reset Quick Search" ),
         TQApplication::reverseLayout() ? "clear_left" : "locationbar_erase",
         0, actionCollection(), "reset_quicksearch" );
     resetQuickSearch->setWhatsThis( i18n( "<b>Reset Quick Search</b><br>"
@@ -218,7 +218,7 @@ KEBApp::KEBApp(
 
     TQLabel *lbl = new TQLabel(i18n("Se&arch:"), quicksearch, "kde toolbar widget");
 
-    KListViewSearchLine *searchLineEdit = new KEBSearchLine(quicksearch, 0, "KListViewSearchLine");
+    TDEListViewSearchLine *searchLineEdit = new KEBSearchLine(quicksearch, 0, "TDEListViewSearchLine");
     quicksearch->setStretchableWidget(searchLineEdit);
     lbl->setBuddy(searchLineEdit);
     connect(resetQuickSearch, TQT_SIGNAL(activated()), searchLineEdit, TQT_SLOT(clear()));
@@ -226,7 +226,7 @@ KEBApp::KEBApp(
 
     ListView::createListViews(vsplitter);
     ListView::self()->initListViews();
-    searchLineEdit->setListView(static_cast<KListView*>(ListView::self()->widget()));
+    searchLineEdit->setListView(static_cast<TDEListView*>(ListView::self()->widget()));
     ListView::self()->setSearchLine(searchLineEdit);
 
     m_bkinfo = new BookmarkInfoWidget(vsplitter);
@@ -290,8 +290,8 @@ KEBApp::~KEBApp() {
     delete ListView::self();
 }
 
-KToggleAction* KEBApp::getToggleAction(const char *action) const {
-    return static_cast<KToggleAction*>(actionCollection()->action(action));
+TDEToggleAction* KEBApp::getToggleAction(const char *action) const {
+    return static_cast<TDEToggleAction*>(actionCollection()->action(action));
 }
 
 void KEBApp::resetActions() {

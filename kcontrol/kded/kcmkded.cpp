@@ -75,7 +75,7 @@ KDEDConfig::KDEDConfig(TQWidget* parent, const char* name, const TQStringList &)
 			"cannot manipulate these services."));
 	lay->addWidget( gb );
 
-	_lvLoD = new KListView( gb );
+	_lvLoD = new TDEListView( gb );
 	_lvLoD->addColumn(i18n("Service"));
 	_lvLoD->addColumn(i18n("Description"));
 	_lvLoD->addColumn(i18n("Status"));
@@ -88,7 +88,7 @@ KDEDConfig::KDEDConfig(TQWidget* parent, const char* name, const TQStringList &)
 				"Be careful with deactivation of unknown services."));
 	lay->addWidget( gb );
 
-	_lvStartup = new KListView( gb );
+	_lvStartup = new TDEListView( gb );
 	_lvStartup->addColumn(i18n("Use"));
 	_lvStartup->addColumn(i18n("Service"));
 	_lvStartup->addColumn(i18n("Description"));

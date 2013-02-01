@@ -599,7 +599,7 @@ void KateSessionManager::sessionManage ()
 class KateSessionChooserItem : public TQListViewItem
 {
   public:
-    KateSessionChooserItem (KListView *lv, KateSession::Ptr s)
+    KateSessionChooserItem (TDEListView *lv, KateSession::Ptr s)
      : TQListViewItem (lv, s->sessionName())
      , session (s)
     {
@@ -638,7 +638,7 @@ KateSessionChooser::KateSessionChooser (TQWidget *parent, const TQString &lastSe
   TQVBox *vb = new TQVBox (hb);
   vb->setSpacing (KDialog::spacingHint());
 
-  m_sessions = new KListView (vb);
+  m_sessions = new TDEListView (vb);
   m_sessions->addColumn (i18n("Session Name"));
   m_sessions->addColumn (i18n("Open Documents"));
   m_sessions->setResizeMode (TQListView::AllColumns);
@@ -728,7 +728,7 @@ KateSessionOpenDialog::KateSessionOpenDialog (TQWidget *parent)
 
   TQVBox *vb = new TQVBox (hb);
 
-  m_sessions = new KListView (vb);
+  m_sessions = new TDEListView (vb);
   m_sessions->addColumn (i18n("Session Name"));
   m_sessions->addColumn (i18n("Open Documents"));
   m_sessions->setResizeMode (TQListView::AllColumns);
@@ -792,7 +792,7 @@ KateSessionManageDialog::KateSessionManageDialog (TQWidget *parent)
   TQHBox *hb = new TQHBox (page);
   hb->setSpacing (KDialog::spacingHint());
 
-  m_sessions = new KListView (hb);
+  m_sessions = new TDEListView (hb);
   m_sessions->addColumn (i18n("Session Name"));
   m_sessions->addColumn (i18n("Open Documents"));
   m_sessions->setResizeMode (TQListView::AllColumns);
@@ -889,7 +889,7 @@ void KateSessionManageDialog::updateSessionList ()
 
 
 KateSessionsAction::KateSessionsAction(const TQString& text, TQObject* parent, const char* name )
-  : KActionMenu(text, parent, name)
+  : TDEActionMenu(text, parent, name)
 {
   connect(popupMenu(),TQT_SIGNAL(aboutToShow()),this,TQT_SLOT(slotAboutToShow()));
 }

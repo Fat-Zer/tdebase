@@ -176,7 +176,7 @@ KMenu::KMenu()
     // set the first client id to some arbitrarily large value.
     client_id = 10000;
     // Don't automatically clear the main menu.
-    actionCollection = new KActionCollection(this);
+    actionCollection = new TDEActionCollection(this);
 
     connect(Kicker::the(), TQT_SIGNAL(configurationChanged()),
             this, TQT_SLOT(configChanged()));
@@ -1825,7 +1825,7 @@ void KMenu::createRecentMenuItems()
 
     m_recentlyView->insertSeparator( nId++, i18n( "Documents" ), -1 );
 
-    TQStringList fileList = KRecentDocument::recentDocuments();
+    TQStringList fileList = TDERecentDocument::recentDocuments();
     kdDebug() << "createRecentMenuItems=" << fileList << endl;
     for (TQStringList::ConstIterator it = fileList.begin();
          it != fileList.end();
@@ -1876,7 +1876,7 @@ void KMenu::clearRecentAppsItems()
 
 void KMenu::clearRecentDocsItems()
 {
-    KRecentDocument::clear();
+    TDERecentDocument::clear();
     updateRecent();
 }
 
@@ -2748,7 +2748,7 @@ void KMenu::slotContextMenuRequested( TQListViewItem * item, const TQPoint & pos
         }
     }
 
-    m_popupMenu = new KPopupMenu(this);
+    m_popupMenu = new TDEPopupMenu(this);
     connect(m_popupMenu, TQT_SIGNAL(activated(int)), TQT_SLOT(slotContextMenu(int)));
     bool hasEntries = false;
 
@@ -2801,7 +2801,7 @@ void KMenu::slotContextMenuRequested( TQListViewItem * item, const TQPoint & pos
                   m_popupMenu->insertItem(SmallIconSet("desktop"),
                       i18n("Add Item to Desktop"), AddItemToDesktop);
             }
-            if (kapp->authorizeKAction("kicker_rmb") && !Kicker::the()->isImmutable())
+            if (kapp->authorizeTDEAction("kicker_rmb") && !Kicker::the()->isImmutable())
             {
                 hasEntries = true;
                 if (m_popupPath.menuPath.endsWith("/"))
@@ -2811,7 +2811,7 @@ void KMenu::slotContextMenuRequested( TQListViewItem * item, const TQPoint & pos
                    m_popupMenu->insertItem(SmallIconSet("kicker"),
                       i18n("Add Item to Main Panel"), AddItemToPanel);
             }
-            if (kapp->authorizeKAction("menuedit") && !kitem->menuPath().isEmpty())
+            if (kapp->authorizeTDEAction("menuedit") && !kitem->menuPath().isEmpty())
             {
                 hasEntries = true;
                 if (kitem->menuPath().endsWith("/"))
@@ -2841,7 +2841,7 @@ void KMenu::slotContextMenuRequested( TQListViewItem * item, const TQPoint & pos
             _items.append( item );
 
             const KURL kurl(uri);
-            KActionCollection act(this);
+            TDEActionCollection act(this);
 
             KonqPopupMenu * konqPopupMenu = new KonqPopupMenu( KonqBookmarkManager::self(), _items,
                                                    kurl, act, (KNewMenu*)NULL, this,
@@ -2855,7 +2855,7 @@ void KMenu::slotContextMenuRequested( TQListViewItem * item, const TQPoint & pos
                 }
                 else {
                     delete m_popupMenu;
-                    m_popupMenu = (KPopupMenu*)konqPopupMenu;
+                    m_popupMenu = (TDEPopupMenu*)konqPopupMenu;
                     m_popupMenu->insertTitle(SmallIcon(kitem->icon()),kitem->title(),-1,0);
                 }
                 hasEntries = true;

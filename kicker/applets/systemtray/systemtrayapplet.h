@@ -44,7 +44,7 @@ class TQTimer;
 class KWinModule;
 class TrayEmbed;
 class KDialogBase;
-class KActionSelector;
+class TDEActionSelector;
 
 class SystemTrayApplet : public KPanelApplet, public DCOPObject
 {
@@ -114,7 +114,7 @@ private:
     TQWidget *m_rightSpacer;
     ClockApplet *m_clockApplet;
     KDialogBase* m_settingsDialog;
-    KActionSelector* m_iconSelector;
+    TDEActionSelector* m_iconSelector;
     TQTimer* m_autoRetractTimer;
     bool m_autoRetract;
     int m_iconSize;

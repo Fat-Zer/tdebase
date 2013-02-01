@@ -57,14 +57,14 @@ class KNewMenu::KNewMenuPrivate
 {
 public:
     KNewMenuPrivate() : m_parentWidget(0) {}
-    KActionCollection * m_actionCollection;
+    TDEActionCollection * m_actionCollection;
     TQString m_destPath;
     TQWidget *m_parentWidget;
-    KActionMenu *m_menuDev;
+    TDEActionMenu *m_menuDev;
 };
 
-KNewMenu::KNewMenu( KActionCollection * _collec, const char *name ) :
-  KActionMenu( i18n( "Create New" ), "filenew", _collec, name ),
+KNewMenu::KNewMenu( TDEActionCollection * _collec, const char *name ) :
+  TDEActionMenu( i18n( "Create New" ), "filenew", _collec, name ),
   menuItemsVersion( 0 )
 {
     //kdDebug(1203) << "KNewMenu::KNewMenu " << this << endl;
@@ -75,8 +75,8 @@ KNewMenu::KNewMenu( KActionCollection * _collec, const char *name ) :
     makeMenus();
 }
 
-KNewMenu::KNewMenu( KActionCollection * _collec, TQWidget *parentWidget, const char *name ) :
-  KActionMenu( i18n( "Create New" ), "filenew", _collec, name ),
+KNewMenu::KNewMenu( TDEActionCollection * _collec, TQWidget *parentWidget, const char *name ) :
+  TDEActionMenu( i18n( "Create New" ), "filenew", _collec, name ),
   menuItemsVersion( 0 )
 {
     d = new KNewMenuPrivate;
@@ -93,7 +93,7 @@ KNewMenu::~KNewMenu()
 
 void KNewMenu::makeMenus()
 {
-    d->m_menuDev = new KActionMenu( i18n( "Link to Device" ), "kcmdevices", d->m_actionCollection, "devnew" );
+    d->m_menuDev = new TDEActionMenu( i18n( "Link to Device" ), "kcmdevices", d->m_actionCollection, "devnew" );
 }
 
 void KNewMenu::slotCheckUpToDate( )
@@ -106,8 +106,8 @@ void KNewMenu::slotCheckUpToDate( )
         //kdDebug(1203) << "KNewMenu::slotCheckUpToDate() : recreating actions" << endl;
         // We need to clean up the action collection
         // We look for our actions using the group
-        TQValueList<KAction*> actions = d->m_actionCollection->actions( "KNewMenu" );
-        for( TQValueListIterator<KAction*> it = actions.begin(); it != actions.end(); ++it )
+        TQValueList<TDEAction*> actions = d->m_actionCollection->actions( "KNewMenu" );
+        for( TQValueListIterator<TDEAction*> it = actions.begin(); it != actions.end(); ++it )
         {
             remove( *it );
             d->m_actionCollection->remove( *it );
@@ -204,7 +204,7 @@ void KNewMenu::fillMenu()
     popupMenu()->clear();
     d->m_menuDev->popupMenu()->clear();
 
-    KAction *linkURL = 0, *linkApp = 0;  // these shall be put at special positions
+    TDEAction *linkURL = 0, *linkApp = 0;  // these shall be put at special positions
 
     int i = 1; // was 2 when there was Folder
     TQValueList<Entry>::Iterator templ = s_templatesList->begin();
@@ -220,8 +220,8 @@ void KNewMenu::fillMenu()
 
             bool bSkip = false;
 
-            TQValueList<KAction*> actions = d->m_actionCollection->actions();
-            TQValueListIterator<KAction*> it = actions.begin();
+            TQValueList<TDEAction*> actions = d->m_actionCollection->actions();
+            TQValueListIterator<TDEAction*> it = actions.begin();
             for( ; it != actions.end() && !bSkip; ++it )
             {
                 if ( (*it)->text() == (*templ).text )
@@ -238,17 +238,17 @@ void KNewMenu::fillMenu()
                 // The best way to identify the "Create Directory", "Link to Location", "Link to Application" was the template
                 if ( (*templ).templatePath.endsWith( "emptydir" ) )
                 {
-                    KAction * act = new KAction( (*templ).text, (*templ).icon, 0, this, TQT_SLOT( slotNewDir() ),
+                    TDEAction * act = new TDEAction( (*templ).text, (*templ).icon, 0, this, TQT_SLOT( slotNewDir() ),
                                      d->m_actionCollection, TQCString().sprintf("newmenu%d", i ) );
                     act->setGroup( "KNewMenu" );
                     act->plug( popupMenu() );
 
-                    KActionSeparator *sep = new KActionSeparator();
+                    TDEActionSeparator *sep = new TDEActionSeparator();
                     sep->plug( popupMenu() );
                 }
                 else
                 {
-                    KAction * act = new KAction( (*templ).text, (*templ).icon, 0, this, TQT_SLOT( slotNewFile() ),
+                    TDEAction * act = new TDEAction( (*templ).text, (*templ).icon, 0, this, TQT_SLOT( slotNewFile() ),
                                              d->m_actionCollection, TQCString().sprintf("newmenu%d", i ) );
                     act->setGroup( "KNewMenu" );
 
@@ -277,12 +277,12 @@ void KNewMenu::fillMenu()
         } else { // Separate system from personal templates
             Q_ASSERT( (*templ).entryType != 0 );
 
-            KActionSeparator * act = new KActionSeparator();
+            TDEActionSeparator * act = new TDEActionSeparator();
             act->plug( popupMenu() );
         }
     }
 
-    KActionSeparator * act = new KActionSeparator();
+    TDEActionSeparator * act = new TDEActionSeparator();
     act->plug( popupMenu() );
     if ( linkURL ) linkURL->plug( popupMenu() );
     if ( linkApp ) linkApp->plug( popupMenu() );

@@ -199,7 +199,7 @@ void Voice::slot_sound_recorded(const Sound &sound_P)
 */
 
 
-void Voice::set_shortcut( const KShortcut &shortcut)
+void Voice::set_shortcut( const TDEShortcut &shortcut)
 {
     _shortcut = shortcut;
     if( !_enabled )

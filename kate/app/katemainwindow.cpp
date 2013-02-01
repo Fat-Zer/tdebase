@@ -237,7 +237,7 @@ void KateMainWindow::setupMainWindow ()
 
 void KateMainWindow::setupActions()
 {
-  KAction *a;
+  TDEAction *a;
 
   KStdAction::openNew( TQT_TQOBJECT(m_viewManager), TQT_SLOT( slotDocumentNew() ), actionCollection(), "file_new" )->setWhatsThis(i18n("Create a new document"));
   KStdAction::open( TQT_TQOBJECT(m_viewManager), TQT_SLOT( slotDocumentOpen() ), actionCollection(), "file_open" )->setWhatsThis(i18n("Open an existing document for editing"));
@@ -245,19 +245,19 @@ void KateMainWindow::setupActions()
   fileOpenRecent = KStdAction::openRecent (TQT_TQOBJECT(m_viewManager), TQT_SLOT(openURL (const KURL&)), actionCollection());
   fileOpenRecent->setWhatsThis(i18n("This lists files which you have opened recently, and allows you to easily open them again."));
 
-  a=new KAction( i18n("Save A&ll"),"save_all", CTRL+Key_L, KateDocManager::self(), TQT_SLOT( saveAll() ), actionCollection(), "file_save_all" );
+  a=new TDEAction( i18n("Save A&ll"),"save_all", CTRL+Key_L, KateDocManager::self(), TQT_SLOT( saveAll() ), actionCollection(), "file_save_all" );
   a->setWhatsThis(i18n("Save all open, modified documents to disk."));
 
   KStdAction::close( TQT_TQOBJECT(m_viewManager), TQT_SLOT( slotDocumentClose() ), actionCollection(), "file_close" )->setWhatsThis(i18n("Close the current document."));
 
-  a=new KAction( i18n( "Clos&e All" ), 0, TQT_TQOBJECT(this), TQT_SLOT( slotDocumentCloseAll() ), actionCollection(), "file_close_all" );
+  a=new TDEAction( i18n( "Clos&e All" ), 0, TQT_TQOBJECT(this), TQT_SLOT( slotDocumentCloseAll() ), actionCollection(), "file_close_all" );
   a->setWhatsThis(i18n("Close all open documents."));
 
   KStdAction::mail( TQT_TQOBJECT(this), TQT_SLOT(slotMail()), actionCollection() )->setWhatsThis(i18n("Send one or more of the open documents as email attachments."));
 
   KStdAction::quit( TQT_TQOBJECT(this), TQT_SLOT( slotFileQuit() ), actionCollection(), "file_quit" )->setWhatsThis(i18n("Close this window"));
 
-  a=new KAction(i18n("&New Window"), "window_new", 0, TQT_TQOBJECT(this), TQT_SLOT(newWindow()), actionCollection(), "view_new_view");
+  a=new TDEAction(i18n("&New Window"), "window_new", 0, TQT_TQOBJECT(this), TQT_SLOT(newWindow()), actionCollection(), "view_new_view");
   a->setWhatsThis(i18n("Create a new Kate view (a new window with the same document list)."));
 
   if ( KateApp::self()->authorize("shell_access") )
@@ -266,10 +266,10 @@ void KateMainWindow::setupActions()
     externalTools->setWhatsThis( i18n("Launch external helper applications") );
   }
 
-  KToggleAction* showFullScreenAction = KStdAction::fullScreen( 0, 0, actionCollection(),this);
+  TDEToggleAction* showFullScreenAction = KStdAction::fullScreen( 0, 0, actionCollection(),this);
   connect( showFullScreenAction,TQT_SIGNAL(toggled(bool)), this,TQT_SLOT(slotFullScreen(bool)));
 
-  documentOpenWith = new KActionMenu(i18n("Open W&ith"), actionCollection(), "file_open_with");
+  documentOpenWith = new TDEActionMenu(i18n("Open W&ith"), actionCollection(), "file_open_with");
   documentOpenWith->setWhatsThis(i18n("Open the current document using another application registered for its file type, or an application of your choice."));
   connect(documentOpenWith->popupMenu(), TQT_SIGNAL(aboutToShow()), this, TQT_SLOT(mSlotFixOpenWithMenu()));
   connect(documentOpenWith->popupMenu(), TQT_SIGNAL(activated(int)), this, TQT_SLOT(slotOpenWithMenuAction(int)));
@@ -280,19 +280,19 @@ void KateMainWindow::setupActions()
   a=KStdAction::configureToolbars(TQT_TQOBJECT(this), TQT_SLOT(slotEditToolbars()), actionCollection());
   a->setWhatsThis(i18n("Configure which items should appear in the toolbar(s)."));
 
-  KAction* settingsConfigure = KStdAction::preferences(TQT_TQOBJECT(this), TQT_SLOT(slotConfigure()), actionCollection(), "settings_configure");
+  TDEAction* settingsConfigure = KStdAction::preferences(TQT_TQOBJECT(this), TQT_SLOT(slotConfigure()), actionCollection(), "settings_configure");
   settingsConfigure->setWhatsThis(i18n("Configure various aspects of this application and the editing component."));
 
   // pipe to terminal action
   if (KateApp::self()->authorize("shell_access"))
-    new KAction(i18n("&Pipe to Console"), "pipe", 0, TQT_TQOBJECT(console), TQT_SLOT(slotPipeToConsole()), actionCollection(), "tools_pipe_to_terminal");
+    new TDEAction(i18n("&Pipe to Console"), "pipe", 0, TQT_TQOBJECT(console), TQT_SLOT(slotPipeToConsole()), actionCollection(), "tools_pipe_to_terminal");
 
   // tip of the day :-)
   KStdAction::tipOfDay( TQT_TQOBJECT(this), TQT_SLOT( tipOfTheDay() ), actionCollection() )->setWhatsThis(i18n("This shows useful tips on the use of this application."));
 
   if (KatePluginManager::self()->pluginList().count() > 0)
   {
-    a=new KAction(i18n("&Plugins Handbook"), 0, TQT_TQOBJECT(this), TQT_SLOT(pluginHelp()), actionCollection(), "help_plugins_contents");
+    a=new TDEAction(i18n("&Plugins Handbook"), 0, TQT_TQOBJECT(this), TQT_SLOT(pluginHelp()), actionCollection(), "help_plugins_contents");
     a->setWhatsThis(i18n("This shows help files for various available plugins."));
   }
 
@@ -302,11 +302,11 @@ void KateMainWindow::setupActions()
   slotWindowActivated ();
 
   // session actions
-  new KAction(i18n("Menu entry Session->New", "&New"), "filenew", 0, TQT_TQOBJECT(KateSessionManager::self()), TQT_SLOT(sessionNew()), actionCollection(), "sessions_new");
-  new KAction(i18n("&Open..."), "fileopen", 0, TQT_TQOBJECT(KateSessionManager::self()), TQT_SLOT(sessionOpen()), actionCollection(), "sessions_open");
-  new KAction(i18n("&Save"), "filesave", 0, TQT_TQOBJECT(KateSessionManager::self()), TQT_SLOT(sessionSave()), actionCollection(), "sessions_save");
-  new KAction(i18n("Save &As..."), "filesaveas", 0, TQT_TQOBJECT(KateSessionManager::self()), TQT_SLOT(sessionSaveAs()), actionCollection(), "sessions_save_as");
-  new KAction(i18n("&Manage..."), "view_choose", 0, TQT_TQOBJECT(KateSessionManager::self()), TQT_SLOT(sessionManage()), actionCollection(), "sessions_manage");
+  new TDEAction(i18n("Menu entry Session->New", "&New"), "filenew", 0, TQT_TQOBJECT(KateSessionManager::self()), TQT_SLOT(sessionNew()), actionCollection(), "sessions_new");
+  new TDEAction(i18n("&Open..."), "fileopen", 0, TQT_TQOBJECT(KateSessionManager::self()), TQT_SLOT(sessionOpen()), actionCollection(), "sessions_open");
+  new TDEAction(i18n("&Save"), "filesave", 0, TQT_TQOBJECT(KateSessionManager::self()), TQT_SLOT(sessionSave()), actionCollection(), "sessions_save");
+  new TDEAction(i18n("Save &As..."), "filesaveas", 0, TQT_TQOBJECT(KateSessionManager::self()), TQT_SLOT(sessionSaveAs()), actionCollection(), "sessions_save_as");
+  new TDEAction(i18n("&Manage..."), "view_choose", 0, TQT_TQOBJECT(KateSessionManager::self()), TQT_SLOT(sessionManage()), actionCollection(), "sessions_manage");
 
   // quick open menu ;)
   new KateSessionsAction (i18n("&Quick Open"), actionCollection(), "sessions_list");

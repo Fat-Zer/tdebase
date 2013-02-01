@@ -54,11 +54,11 @@ class KRootPixmap;
 class TQLabel;
 class TQCheckBox;
 class KonsoleFind;
-class KPopupMenu;
-class KAction;
-class KToggleAction;
-class KSelectAction;
-class KRadioAction;
+class TDEPopupMenu;
+class TDEAction;
+class TDEToggleAction;
+class TDESelectAction;
+class TDERadioAction;
 class KTabWidget;
 class TQToolButton;
 class KURIFilterData;
@@ -66,7 +66,7 @@ class KURIFilterData;
 // Defined in main.C
 const char *konsole_shell(TQStrList &args);
 
-class Konsole : public KMainWindow, virtual public KonsoleIface
+class Konsole : public TDEMainWindow, virtual public KonsoleIface
 {
     Q_OBJECT
 
@@ -292,7 +292,7 @@ private:
   TQPtrList<TEWidget> activeTEs();
 
   TQPtrDict<TESession> action2session;
-  TQPtrDict<KRadioAction> session2action;
+  TQPtrDict<TDERadioAction> session2action;
   TQPtrList<TESession> sessions;
 
   TQIntDict<KSimpleConfig> no2command;     //QT4 - convert to QList
@@ -314,61 +314,61 @@ private:
   KMenuBar*   menubar;
   KStatusBar* statusbar;
 
-  KPopupMenu* m_session;
-  KPopupMenu* m_edit;
-  KPopupMenu* m_view;
-  KPopupMenu* m_bookmarks;
-  KPopupMenu* m_bookmarksSession;
-  KPopupMenu* m_options;
-  KPopupMenu* m_schema;
-  KPopupMenu* m_keytab;
-  KPopupMenu* m_tabbarSessionsCommands;
-  KPopupMenu* m_signals;
-  KPopupMenu* m_help;
-  KPopupMenu* m_rightButton;
-  KPopupMenu* m_sessionList;
-  KPopupMenu* m_tabPopupMenu;
-  KPopupMenu* m_tabPopupTabsMenu;
-  KPopupMenu* m_tabbarPopupMenu;
+  TDEPopupMenu* m_session;
+  TDEPopupMenu* m_edit;
+  TDEPopupMenu* m_view;
+  TDEPopupMenu* m_bookmarks;
+  TDEPopupMenu* m_bookmarksSession;
+  TDEPopupMenu* m_options;
+  TDEPopupMenu* m_schema;
+  TDEPopupMenu* m_keytab;
+  TDEPopupMenu* m_tabbarSessionsCommands;
+  TDEPopupMenu* m_signals;
+  TDEPopupMenu* m_help;
+  TDEPopupMenu* m_rightButton;
+  TDEPopupMenu* m_sessionList;
+  TDEPopupMenu* m_tabPopupMenu;
+  TDEPopupMenu* m_tabPopupTabsMenu;
+  TDEPopupMenu* m_tabbarPopupMenu;
 
-  KAction *m_zmodemUpload;
-  KToggleAction *monitorActivity, *m_tabMonitorActivity;
-  KToggleAction *monitorSilence, *m_tabMonitorSilence;
-  KToggleAction *masterMode, *m_tabMasterMode;
-  KToggleAction *showMenubar;
-  KToggleAction *m_fullscreen;
+  TDEAction *m_zmodemUpload;
+  TDEToggleAction *monitorActivity, *m_tabMonitorActivity;
+  TDEToggleAction *monitorSilence, *m_tabMonitorSilence;
+  TDEToggleAction *masterMode, *m_tabMasterMode;
+  TDEToggleAction *showMenubar;
+  TDEToggleAction *m_fullscreen;
 
-  KSelectAction *selectSize;
-  KSelectAction *selectFont;
-  KSelectAction *selectScrollbar;
-  KSelectAction *selectTabbar;
-  KSelectAction *selectBell;
-  KSelectAction *selectSetEncoding;
+  TDESelectAction *selectSize;
+  TDESelectAction *selectFont;
+  TDESelectAction *selectScrollbar;
+  TDESelectAction *selectTabbar;
+  TDESelectAction *selectBell;
+  TDESelectAction *selectSetEncoding;
 
-  KAction       *m_clearHistory;
-  KAction       *m_findHistory;
-  KAction       *m_findNext;
-  KAction       *m_findPrevious;
-  KAction       *m_saveHistory;
-  KAction       *m_detachSession;
-  KAction       *m_moveSessionLeft;
-  KAction       *m_moveSessionRight;
+  TDEAction       *m_clearHistory;
+  TDEAction       *m_findHistory;
+  TDEAction       *m_findNext;
+  TDEAction       *m_findPrevious;
+  TDEAction       *m_saveHistory;
+  TDEAction       *m_detachSession;
+  TDEAction       *m_moveSessionLeft;
+  TDEAction       *m_moveSessionRight;
 
-  KAction       *m_copyClipboard;
-  KAction       *m_pasteClipboard;
-  KAction       *m_pasteSelection;
-  KAction       *m_clearTerminal;
-  KAction       *m_resetClearTerminal;
-  KAction       *m_clearAllSessionHistories;
-  KAction       *m_renameSession;
-  KAction       *m_saveProfile;
-  KAction       *m_closeSession;
-  KAction       *m_print;
-  KAction       *m_quit;
-  KAction       *m_tabDetachSession;
-  KPopupMenu    *m_openSelection;
+  TDEAction       *m_copyClipboard;
+  TDEAction       *m_pasteClipboard;
+  TDEAction       *m_pasteSelection;
+  TDEAction       *m_clearTerminal;
+  TDEAction       *m_resetClearTerminal;
+  TDEAction       *m_clearAllSessionHistories;
+  TDEAction       *m_renameSession;
+  TDEAction       *m_saveProfile;
+  TDEAction       *m_closeSession;
+  TDEAction       *m_print;
+  TDEAction       *m_quit;
+  TDEAction       *m_tabDetachSession;
+  TDEPopupMenu    *m_openSelection;
 
-  KActionCollection *m_shortcuts;
+  TDEActionCollection *m_shortcuts;
 
   KonsoleBookmarkHandler *bookmarkHandler;
   KonsoleBookmarkHandler *bookmarkHandlerSession;

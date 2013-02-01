@@ -314,16 +314,16 @@ void konsolePart::emitOpenURLRequest(const TQString &cwd)
 
 void konsolePart::makeGUI()
 {
-  if (!kapp->authorizeKAction("konsole_rmb"))
+  if (!kapp->authorizeTDEAction("konsole_rmb"))
      return;
 
-  actions = new KActionCollection( (KMainWindow*)parentWidget );
-  settingsActions = new KActionCollection( (KMainWindow*)parentWidget );
+  actions = new TDEActionCollection( (TDEMainWindow*)parentWidget );
+  settingsActions = new TDEActionCollection( (TDEMainWindow*)parentWidget );
 
   // Send Signal Menu -------------------------------------------------------------
-  if (kapp->authorizeKAction("send_signal"))
+  if (kapp->authorizeTDEAction("send_signal"))
   {
-     m_signals = new KPopupMenu((KMainWindow*)parentWidget);
+     m_signals = new TDEPopupMenu((TDEMainWindow*)parentWidget);
      m_signals->insertItem( i18n( "&Suspend Task" )   + " (STOP)", SIGSTOP);
      m_signals->insertItem( i18n( "&Continue Task" )  + " (CONT)", SIGCONT);
      m_signals->insertItem( i18n( "&Hangup" )         + " (HUP)",   SIGHUP);
@@ -336,12 +336,12 @@ void konsolePart::makeGUI()
   }
 
   // Settings Menu ----------------------------------------------------------------
-  if (kapp->authorizeKAction("settings"))
+  if (kapp->authorizeTDEAction("settings"))
   {
-     m_options = new KPopupMenu((KMainWindow*)parentWidget);
+     m_options = new TDEPopupMenu((TDEMainWindow*)parentWidget);
 
      // Scrollbar
-     selectScrollbar = new KSelectAction(i18n("Sc&rollbar"), 0, this,
+     selectScrollbar = new TDESelectAction(i18n("Sc&rollbar"), 0, this,
                                       TQT_SLOT(slotSelectScrollbar()), settingsActions);
 
      TQStringList scrollitems;
@@ -351,7 +351,7 @@ void konsolePart::makeGUI()
 
      // Select Bell
      m_options->insertSeparator();
-     selectBell = new KSelectAction(i18n("&Bell"), SmallIconSet( "bell"), 0 , this,
+     selectBell = new TDESelectAction(i18n("&Bell"), SmallIconSet( "bell"), 0 , this,
                                  TQT_SLOT(slotSelectBell()), settingsActions, "bell");
 
      TQStringList bellitems;
@@ -362,14 +362,14 @@ void konsolePart::makeGUI()
      selectBell->setItems(bellitems);
      selectBell->plug(m_options);
 
-      m_fontsizes = new KActionMenu( i18n( "Font" ), SmallIconSet( "text" ), settingsActions, 0L );
-      m_fontsizes->insert( new KAction( i18n( "&Enlarge Font" ), SmallIconSet( "viewmag+" ), 0, this, TQT_SLOT( biggerFont() ), settingsActions, "enlarge_font" ) );
-      m_fontsizes->insert( new KAction( i18n( "&Shrink Font" ), SmallIconSet( "viewmag-" ), 0, this, TQT_SLOT( smallerFont() ), settingsActions, "shrink_font" ) );
-      m_fontsizes->insert( new KAction( i18n( "Se&lect..." ), SmallIconSet( "font" ), 0, this, TQT_SLOT( slotSelectFont() ), settingsActions, "select_font" ) );
+      m_fontsizes = new TDEActionMenu( i18n( "Font" ), SmallIconSet( "text" ), settingsActions, 0L );
+      m_fontsizes->insert( new TDEAction( i18n( "&Enlarge Font" ), SmallIconSet( "viewmag+" ), 0, this, TQT_SLOT( biggerFont() ), settingsActions, "enlarge_font" ) );
+      m_fontsizes->insert( new TDEAction( i18n( "&Shrink Font" ), SmallIconSet( "viewmag-" ), 0, this, TQT_SLOT( smallerFont() ), settingsActions, "shrink_font" ) );
+      m_fontsizes->insert( new TDEAction( i18n( "Se&lect..." ), SmallIconSet( "font" ), 0, this, TQT_SLOT( slotSelectFont() ), settingsActions, "select_font" ) );
       m_fontsizes->plug(m_options);
 
       // encoding menu, start with default checked !
-      selectSetEncoding = new KSelectAction( i18n( "&Encoding" ), SmallIconSet("charset" ), 0, this, TQT_SLOT(slotSetEncoding()), settingsActions, "set_encoding" );
+      selectSetEncoding = new TDESelectAction( i18n( "&Encoding" ), SmallIconSet("charset" ), 0, this, TQT_SLOT(slotSetEncoding()), settingsActions, "set_encoding" );
       TQStringList list = TDEGlobal::charsets()->descriptiveEncodingNames();
       list.prepend( i18n( "Default" ) );
       selectSetEncoding->setItems(list);
@@ -377,18 +377,18 @@ void konsolePart::makeGUI()
       selectSetEncoding->plug(m_options);
 
      // Keyboard Options Menu ---------------------------------------------------
-     if (kapp->authorizeKAction("keyboard"))
+     if (kapp->authorizeTDEAction("keyboard"))
      {
-        m_keytab = new KPopupMenu((KMainWindow*)parentWidget);
+        m_keytab = new TDEPopupMenu((TDEMainWindow*)parentWidget);
         m_keytab->setCheckable(true);
         connect(m_keytab, TQT_SIGNAL(activated(int)), TQT_SLOT(keytab_menu_activated(int)));
         m_options->insertItem( SmallIconSet( "key_bindings" ), i18n( "&Keyboard" ), m_keytab );
      }
 
      // Schema Options Menu -----------------------------------------------------
-     if (kapp->authorizeKAction("schema"))
+     if (kapp->authorizeTDEAction("schema"))
      {
-        m_schema = new KPopupMenu((KMainWindow*)parentWidget);
+        m_schema = new TDEPopupMenu((TDEMainWindow*)parentWidget);
         m_schema->setCheckable(true);
         connect(m_schema, TQT_SIGNAL(activated(int)), TQT_SLOT(schema_menu_activated(int)));
         connect(m_schema, TQT_SIGNAL(aboutToShow()), TQT_SLOT(schema_menu_check()));
@@ -396,13 +396,13 @@ void konsolePart::makeGUI()
      }
 
 
-     KAction *historyType = new KAction(i18n("&History..."), "history", 0, this,
+     TDEAction *historyType = new TDEAction(i18n("&History..."), "history", 0, this,
                                         TQT_SLOT(slotHistoryType()), settingsActions, "history");
      historyType->plug(m_options);
      m_options->insertSeparator();
 
      // Select line spacing
-     selectLineSpacing = new KSelectAction(i18n("Li&ne Spacing"),
+     selectLineSpacing = new TDESelectAction(i18n("Li&ne Spacing"),
         SmallIconSet("leftjust"), 0, this,
         TQT_SLOT(slotSelectLineSpacing()), settingsActions );
 
@@ -421,30 +421,30 @@ void konsolePart::makeGUI()
      selectLineSpacing->plug(m_options);
 
      // Blinking Cursor
-     blinkingCursor = new KToggleAction (i18n("Blinking &Cursor"),
+     blinkingCursor = new TDEToggleAction (i18n("Blinking &Cursor"),
                                       0, this,TQT_SLOT(slotBlinkingCursor()), settingsActions);
      blinkingCursor->plug(m_options);
 
      // Frame on/off
-     showFrame = new KToggleAction(i18n("Show Fr&ame"), 0,
+     showFrame = new TDEToggleAction(i18n("Show Fr&ame"), 0,
                                 this, TQT_SLOT(slotToggleFrame()), settingsActions);
      showFrame->setCheckedState(i18n("Hide Fr&ame"));
      showFrame->plug(m_options);
 
      // Word Connectors
-     KAction *WordSeps = new KAction(i18n("Wor&d Connectors..."), 0, this,
+     TDEAction *WordSeps = new TDEAction(i18n("Wor&d Connectors..."), 0, this,
                                   TQT_SLOT(slotWordSeps()), settingsActions);
      WordSeps->plug(m_options);
 
      // Use Konsole's Settings
      m_options->insertSeparator();
-     m_useKonsoleSettings = new KToggleAction( i18n("&Use Konsole's Settings"),
+     m_useKonsoleSettings = new TDEToggleAction( i18n("&Use Konsole's Settings"),
                           0, this, TQT_SLOT(slotUseKonsoleSettings()), 0, "use_konsole_settings" );
      m_useKonsoleSettings->plug(m_options);
 
      // Save Settings
      m_options->insertSeparator();
-     KAction *saveSettings = new KAction(i18n("&Save as Default"), "filesave", 0, this, 
+     TDEAction *saveSettings = new TDEAction(i18n("&Save as Default"), "filesave", 0, this, 
                     TQT_SLOT(saveProperties()), actions, "save_default");
      saveSettings->plug(m_options);
      if (TDEGlobalSettings::insertTearOffHandle())
@@ -452,16 +452,16 @@ void konsolePart::makeGUI()
   }
 
   // Popup Menu -------------------------------------------------------------------
-  m_popupMenu = new KPopupMenu((KMainWindow*)parentWidget);
-  KAction* selectionEnd = new KAction(i18n("Set Selection End"), 0, TQT_TQOBJECT(te),
+  m_popupMenu = new TDEPopupMenu((TDEMainWindow*)parentWidget);
+  TDEAction* selectionEnd = new TDEAction(i18n("Set Selection End"), 0, TQT_TQOBJECT(te),
                                TQT_SLOT(setSelectionEnd()), actions, "selection_end");
   selectionEnd->plug(m_popupMenu);
 
-  KAction *copyClipboard = new KAction(i18n("&Copy"), "editcopy", 0,
+  TDEAction *copyClipboard = new TDEAction(i18n("&Copy"), "editcopy", 0,
                                         TQT_TQOBJECT(te), TQT_SLOT(copyClipboard()), actions, "edit_copy");
   copyClipboard->plug(m_popupMenu);
 
-  KAction *pasteClipboard = new KAction(i18n("&Paste"), "editpaste", 0,
+  TDEAction *pasteClipboard = new TDEAction(i18n("&Paste"), "editpaste", 0,
                                         TQT_TQOBJECT(te), TQT_SLOT(pasteClipboard()), actions, "edit_paste");
   pasteClipboard->plug(m_popupMenu);
 
@@ -477,7 +477,7 @@ void konsolePart::makeGUI()
      m_popupMenu->insertSeparator();
   }
 
-  KAction *closeSession = new KAction(i18n("&Close Terminal Emulator"), "fileclose", 0, this,
+  TDEAction *closeSession = new TDEAction(i18n("&Close Terminal Emulator"), "fileclose", 0, this,
                                       TQT_SLOT(closeCurrentSession()), actions, "close_session");
   closeSession->plug(m_popupMenu);
   if (TDEGlobalSettings::insertTearOffHandle())
@@ -676,7 +676,7 @@ void konsolePart::slotSelectFont() {
    if ( !se ) return;
 
    TQFont font = se->widget()->getVTFont();
-   if ( KFontDialog::getFont( font, true ) != TQDialog::Accepted )
+   if ( TDEFontDialog::getFont( font, true ) != TQDialog::Accepted )
       return;
 
    se->widget()->setVTFont( font );
@@ -859,7 +859,7 @@ void konsolePart::pixmap_menu_activated(int item)
 void konsolePart::slotHistoryType()
 {
   if ( ! se ) return;
-  HistoryTypeDialog dlg(se->history(), m_histSize, (KMainWindow*)parentWidget);
+  HistoryTypeDialog dlg(se->history(), m_histSize, (TDEMainWindow*)parentWidget);
   if (dlg.exec()) {
     if (dlg.isOn()) {
       if (dlg.nbLines() > 0) {

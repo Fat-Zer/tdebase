@@ -143,7 +143,7 @@ TQPixmap QuickURL::pixmap( mode_t _mode, KIcon::Group _group,
 }
 
 
-QuickButton::QuickButton(const TQString &u, KAction* configAction, 
+QuickButton::QuickButton(const TQString &u, TDEAction* configAction, 
                          TQWidget *parent, const char *name) : 
      SimpleButton(parent, name, KickerSettings::showDeepButtons()),
      m_flashCounter(0),
@@ -174,8 +174,8 @@ QuickButton::QuickButton(const TQString &u, KAction* configAction,
     _popup->insertItem(SmallIcon("remove"), i18n("Remove Application"), 
             this, TQT_SLOT(removeApp()));
 
-    m_stickyAction = new KToggleAction(i18n("Never Remove Automatically"),
-        KShortcut(), TQT_TQOBJECT(this));
+    m_stickyAction = new TDEToggleAction(i18n("Never Remove Automatically"),
+        TDEShortcut(), TQT_TQOBJECT(this));
     connect(m_stickyAction, TQT_SIGNAL(toggled(bool)), 
         this, TQT_SLOT(slotStickyToggled(bool)));
     m_stickyAction->plug(_popup, 2);

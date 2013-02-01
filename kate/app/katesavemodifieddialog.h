@@ -23,7 +23,7 @@
 #include <kate/document.h>
 
 class TQListViewItem;
-class KListView;
+class TDEListView;
 
 class KateSaveModifiedDialog: public KDialogBase {
 	Q_OBJECT
@@ -42,7 +42,7 @@ protected slots:
 private:
 	TQListViewItem *m_projectRoot;
 	TQListViewItem *m_documentRoot;
-	KListView *m_list;
+	TDEListView *m_list;
 };
 
 #endif

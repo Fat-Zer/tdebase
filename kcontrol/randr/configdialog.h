@@ -35,7 +35,7 @@
 
 class TDEGlobalAccel;
 class KKeyChooser;
-class KListView;
+class TDEListView;
 class TQPushButton;
 class TQDialog;
 class ConfigDialog;
@@ -56,11 +56,11 @@ private:
 
 };
 
-class ListView : public KListView
+class ListView : public TDEListView
 {
 public:
     ListView( ConfigDialog* configWidget, TQWidget *parent, const char *name )
-	: KListView( parent, name ), _configWidget( configWidget ),
+	: TDEListView( parent, name ), _configWidget( configWidget ),
           _regExpEditor(0L) {}
     // TQListView has a weird idea of a sizeHint...
     virtual TQSize sizeHint () const {

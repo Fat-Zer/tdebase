@@ -24,8 +24,8 @@ class KKeyModule : public TQWidget
 {
 	Q_OBJECT
 public:
-	KAccelActions actions;
-        //KAccelActions dict;
+	TDEAccelActions actions;
+        //TDEAccelActions dict;
         KeyChooserSpec *kc;
 
 	KKeyModule( TQWidget *parent, bool isGlobal, bool bSeriesOnly, bool bSeriesNone, const char *name = 0 );
@@ -51,12 +51,12 @@ public slots:
 	//void slotRemove();
 	void slotKeyChange();
 	void slotPreferMeta();
-        //void updateKeys( const KAccelActions* map_P );
+        //void updateKeys( const TDEAccelActions* map_P );
 	//void readSchemeNames();
 
 signals:
 	void keyChange();
-        //void keysChanged( const KAccelActions* map_P );
+        //void keysChanged( const TDEAccelActions* map_P );
 
 protected:
 	TQListBox *sList;
@@ -79,9 +79,9 @@ class KeyChooserSpec : public KKeyChooser
 {
         Q_OBJECT
 public:
-        KeyChooserSpec( KAccelActions& actions, TQWidget* parent,
+        KeyChooserSpec( TDEAccelActions& actions, TQWidget* parent,
                  bool bGlobal );
-        //void updateKeys( const KAccelActions* map_P );
+        //void updateKeys( const TDEAccelActions* map_P );
 protected:
         bool m_bGlobal;
 };

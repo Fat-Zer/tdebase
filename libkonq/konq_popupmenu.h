@@ -45,7 +45,7 @@ class KService;
 class KonqPopupMenuPlugin;
 class KBookmarkManager;
 
-// TODO KDE4: change base class to KPopupMenu, see KAction::slotPopupActivated()
+// TODO KDE4: change base class to TDEPopupMenu, see TDEAction::slotPopupActivated()
 /**
  * This class implements the popup menu for URLs in konqueror and kdesktop
  * It's usage is very simple : on right click, create the KonqPopupMenu instance
@@ -76,7 +76,7 @@ public:
   KonqPopupMenu( KBookmarkManager* manager,
                  const KFileItemList &items,
                  KURL viewURL,
-                 KActionCollection & actions,
+                 TDEActionCollection & actions,
                  KNewMenu * newMenu,
                  bool showPropertiesAndFileType = true ) KDE_DEPRECATED;
 
@@ -87,7 +87,7 @@ public:
   KonqPopupMenu( KBookmarkManager* manager,
                  const KFileItemList &items,
                  KURL viewURL,
-                 KActionCollection & actions,
+                 TDEActionCollection & actions,
                  KNewMenu * newMenu,
 		 TQWidget * parentWidget,
 		 bool showPropertiesAndFileType = true ) KDE_DEPRECATED;
@@ -115,7 +115,7 @@ public:
   KonqPopupMenu( KBookmarkManager* manager,
                  const KFileItemList &items,
                  const KURL& viewURL,
-                 KActionCollection & actions,
+                 TDEActionCollection & actions,
                  KNewMenu * newMenu,
                  TQWidget * parentWidget,
                  KonqPopupFlags kpf,
@@ -151,10 +151,10 @@ public:
   /**
    * Reimplemented for internal purpose
    */
-  virtual KAction *action( const TQDomElement &element ) const;
+  virtual TDEAction *action( const TQDomElement &element ) const;
 
 
-  virtual KActionCollection *actionCollection() const;
+  virtual TDEActionCollection *actionCollection() const;
   TQString mimeType( ) const;
   KURL url( ) const;
   KFileItemList fileItemList() const;
@@ -174,8 +174,8 @@ public slots: // KDE4: why public?
   void slotOpenShareFileDialog();
 
 protected:
-  KActionCollection &m_actions;
-  KActionCollection m_ownActions;
+  TDEActionCollection &m_actions;
+  TDEActionCollection m_ownActions;
 
 private slots:
   void slotLocalURL( TDEIO::Job *, const KURL&, bool );
@@ -215,7 +215,7 @@ public:
   * Constructor
   * If you want to insert a dynamic item or menu to konqpopupmenu
   * this class is the right choice.
-  * Create a KAction and use _popup->addAction(new KAction );
+  * Create a TDEAction and use _popup->addAction(new TDEAction );
   * If you want to create a submenu use _popup->addGroup( );
   */
   KonqPopupMenuPlugin( KonqPopupMenu *_popup, const char *name ); // this should also be the parent

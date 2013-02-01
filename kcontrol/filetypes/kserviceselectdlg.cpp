@@ -33,7 +33,7 @@ KServiceSelectDlg::KServiceSelectDlg( const TQString& /*serviceType*/, const TQS
 
     vbox->setSpacing( KDialog::spacingHint() );
     new TQLabel( i18n( "Select service:" ), vbox );
-    m_listbox=new KListBox( vbox );
+    m_listbox=new TDEListBox( vbox );
 
     // Can't make a TDETrader query since we don't have a servicetype to give,
     // we want all services that are not applications.......

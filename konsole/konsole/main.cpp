@@ -412,7 +412,7 @@ extern "C" int KDE_EXPORT kdemain(int argc, char* argv[])
     }
   }
 
-  if (!kapp->authorizeKAction("size"))
+  if (!kapp->authorizeTDEAction("size"))
     fixed_size = true;
 
   // ///////////////////////////////////////////////
@@ -444,7 +444,7 @@ extern "C" int KDE_EXPORT kdemain(int argc, char* argv[])
 
     // TODO: Session management stores everything in same group,
     // should use one group / mainwindow
-    while (KMainWindow::canBeRestored(n) || !profile.isEmpty())
+    while (TDEMainWindow::canBeRestored(n) || !profile.isEmpty())
     {
         sessionconfig->setGroup(TQString("%1").arg(n));
         if (!sessionconfig->hasKey("Pgm0"))

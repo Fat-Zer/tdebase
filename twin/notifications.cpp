@@ -105,9 +105,9 @@ bool Notify::raise( Event e, const TQString& message, Client* c )
         return false;
 
 // There may be a deadlock if KNotify event is sent while KWin has X grabbed.
-// If KNotify is not running, KLauncher may do X requests (startup notification, whatever)
+// If KNotify is not running, TDELauncher may do X requests (startup notification, whatever)
 // that will block it. And KNotifyClient waits for the launch to succeed, which means
-// KLauncher waits for X and KWin waits for KLauncher. So postpone events in such case.
+// TDELauncher waits for X and KWin waits for TDELauncher. So postpone events in such case.
     if( grabbedXServer())
         {
         EventData data;

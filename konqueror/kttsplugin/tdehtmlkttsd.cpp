@@ -40,7 +40,7 @@ TDEHTMLPluginKTTSD::TDEHTMLPluginKTTSD( TQObject* parent, const char* name, cons
     TDETrader::OfferList offers = TDETrader::self()->query("DCOP/Text-to-Speech", "Name == 'KTTSD'");
     if (offers.count() > 0)
     {
-        (void) new KAction( i18n("&Speak Text"),
+        (void) new TDEAction( i18n("&Speak Text"),
             "kttsd", 0,
             this, TQT_SLOT(slotReadOut()),
             actionCollection(), "tools_kttsd" );

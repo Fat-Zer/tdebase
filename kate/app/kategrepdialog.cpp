@@ -195,7 +195,7 @@ GrepTool::GrepTool(TQWidget *parent, const char *name)
 
   layout->activate();
 
-  KAcceleratorManager::manage( this );
+  TDEAcceleratorManager::manage( this );
 
   TQWhatsThis::add(lPattern,
     i18n("<p>Enter the expression you want to search for here."

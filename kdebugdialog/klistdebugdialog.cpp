@@ -30,7 +30,7 @@
 #include <klineedit.h>
 #include <dcopclient.h>
 
-KListDebugDialog::KListDebugDialog( TQStringList areaList, TQWidget *parent, const char *name, bool modal )
+TDEListDebugDialog::TDEListDebugDialog( TQStringList areaList, TQWidget *parent, const char *name, bool modal )
   : KAbstractDebugDialog( parent, name, modal ),
   m_areaList( areaList )
 {
@@ -65,7 +65,7 @@ KListDebugDialog::KListDebugDialog( TQStringList areaList, TQWidget *parent, con
   resize( 350, 400 );
 }
 
-void KListDebugDialog::generateCheckBoxes( const TQString& filter )
+void TDEListDebugDialog::generateCheckBoxes( const TQString& filter )
 {
   TQPtrListIterator<TQCheckBox> cb_it ( boxes );
   for( ; cb_it.current() ; ++cb_it )
@@ -102,7 +102,7 @@ void KListDebugDialog::generateCheckBoxes( const TQString& filter )
   load();
 }
 
-void KListDebugDialog::selectAll()
+void TDEListDebugDialog::selectAll()
 {
   TQPtrListIterator<TQCheckBox> it ( boxes );
   for ( ; it.current() ; ++it ) {
@@ -111,7 +111,7 @@ void KListDebugDialog::selectAll()
   }
 }
 
-void KListDebugDialog::deSelectAll()
+void TDEListDebugDialog::deSelectAll()
 {
   TQPtrListIterator<TQCheckBox> it ( boxes );
   for ( ; it.current() ; ++it ) {
@@ -120,7 +120,7 @@ void KListDebugDialog::deSelectAll()
   }
 }
 
-void KListDebugDialog::load()
+void TDEListDebugDialog::load()
 {
   TQPtrListIterator<TQCheckBox> it ( boxes );
   for ( ; it.current() ; ++it )
@@ -152,7 +152,7 @@ void KListDebugDialog::load()
   }
 }
 
-void KListDebugDialog::save()
+void TDEListDebugDialog::save()
 {
   TQPtrListIterator<TQCheckBox> it ( boxes );
   for ( ; it.current() ; ++it )
@@ -176,7 +176,7 @@ void KListDebugDialog::save()
   m_changes.clear();
 }
 
-void KListDebugDialog::activateArea( TQCString area, bool activate )
+void TDEListDebugDialog::activateArea( TQCString area, bool activate )
 {
   TQPtrListIterator<TQCheckBox> it ( boxes );
   for ( ; it.current() ; ++it )

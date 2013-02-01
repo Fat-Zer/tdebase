@@ -35,13 +35,13 @@ class KLineEdit;
  *
  * @author David Faure <faure@kde.org>
  */
-class KListDebugDialog : public KAbstractDebugDialog
+class TDEListDebugDialog : public KAbstractDebugDialog
 {
   Q_OBJECT
 
 public:
-  KListDebugDialog( TQStringList areaList, TQWidget *parent=0, const char *name=0, bool modal=true );
-  virtual ~KListDebugDialog() {}
+  TDEListDebugDialog( TQStringList areaList, TQWidget *parent=0, const char *name=0, bool modal=true );
+  virtual ~TDEListDebugDialog() {}
 
   void activateArea( TQCString area, bool activate );
 

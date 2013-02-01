@@ -83,7 +83,7 @@ class ToolTip : public TQToolTip
 KateFileList::KateFileList (KateMainWindow *main,
                             KateViewManager *_viewManager,
                             TQWidget * parent, const char * name )
-    :  KListView (parent, name)
+    :  TDEListView (parent, name)
     , m_sort( KateFileList::sortByID )
 {
   m_main = main;
@@ -138,12 +138,12 @@ void KateFileList::setupActions ()
 {
   windowNext = KStdAction::back(TQT_TQOBJECT(this), TQT_SLOT(slotPrevDocument()), m_main->actionCollection());
   windowPrev = KStdAction::forward(TQT_TQOBJECT(this), TQT_SLOT(slotNextDocument()), m_main->actionCollection());
-  sortAction = new KSelectAction( i18n("Sort &By"), 0,
+  sortAction = new TDESelectAction( i18n("Sort &By"), 0,
       m_main->actionCollection(), "filelist_sortby"  );
-  listMoveFileUp = new KAction( i18n("Move File Up"), 0, m_main->actionCollection(), "filelist_move_up" );
-  //listMoveFileUp->setShortcut(KShortcut(CTRL + SHIFT + Key_Comma));
-  listMoveFileDown = new KAction( i18n("Move File Down"), 0, m_main->actionCollection(), "filelist_move_down" );
-  //listMoveFileDown->setShortcut(KShortcut(CTRL + SHIFT + Key_Period));
+  listMoveFileUp = new TDEAction( i18n("Move File Up"), 0, m_main->actionCollection(), "filelist_move_up" );
+  //listMoveFileUp->setShortcut(TDEShortcut(CTRL + SHIFT + Key_Comma));
+  listMoveFileDown = new TDEAction( i18n("Move File Down"), 0, m_main->actionCollection(), "filelist_move_down" );
+  //listMoveFileDown->setShortcut(TDEShortcut(CTRL + SHIFT + Key_Period));
   connect( listMoveFileUp, TQT_SIGNAL(activated()), TQT_TQOBJECT(this), TQT_SLOT(moveFileUp()) );
   connect( listMoveFileDown, TQT_SIGNAL(activated()), TQT_TQOBJECT(this), TQT_SLOT(moveFileDown()) );
   TQStringList l;
@@ -166,7 +166,7 @@ void KateFileList::keyPressEvent(TQKeyEvent *e) {
   }
   else
   {
-    KListView::keyPressEvent(e);
+    TDEListView::keyPressEvent(e);
   }
 }
 
@@ -179,12 +179,12 @@ void KateFileList::contentsMousePressEvent( TQMouseEvent *e )
   if ( ! itemAt( contentsToViewport( e->pos() ) ) )
   return;
 
-  KListView::contentsMousePressEvent( e );
+  TDEListView::contentsMousePressEvent( e );
 }
 
 void KateFileList::resizeEvent( TQResizeEvent *e )
 {
-  KListView::resizeEvent( e );
+  TDEListView::resizeEvent( e );
 
   // ### We may want to actually calculate the widest field,
   // since it's not automatically scrinked. If I add support for

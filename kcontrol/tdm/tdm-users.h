@@ -84,7 +84,7 @@ private:
 
 	TQLabel		*s_label; // middle
 	TQWidgetStack	*wstack;
-	KListView	*optoutlv, *optinlv;
+	TDEListView	*optoutlv, *optinlv;
 
 	TQButtonGroup	*faceGroup; // right
 	TQRadioButton	*rbadmonly, *rbprefadm, *rbprefusr, *rbusronly;

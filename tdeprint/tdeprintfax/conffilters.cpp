@@ -38,7 +38,7 @@
 ConfFilters::ConfFilters(TQWidget *parent, const char *name)
 : TQWidget(parent, name)
 {
-	m_filters = new KListView(this);
+	m_filters = new TDEListView(this);
 	m_filters->addColumn(i18n("Mime Type"));
 	m_filters->addColumn(i18n("Command"));
 	m_filters->setFrameStyle(TQFrame::WinPanel|TQFrame::Sunken);

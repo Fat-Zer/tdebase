@@ -58,13 +58,13 @@ class Splitter : public TQSplitter
     int idAfter ( TQWidget * w ) const;
 };
 
-class ToggleToolViewAction : public KToggleAction
+class ToggleToolViewAction : public TDEToggleAction
 {
   Q_OBJECT
   
 
   public:
-    ToggleToolViewAction ( const TQString& text, const KShortcut& cut,
+    ToggleToolViewAction ( const TQString& text, const TDEShortcut& cut,
                            class ToolView *tv, TQObject* parent = 0, const char* name = 0 );
 
     virtual ~ToggleToolViewAction();
@@ -96,10 +96,10 @@ class GUIClient : public TQObject, public KXMLGUIClient
 
   private:
     MainWindow *m_mw;
-    KToggleAction *m_showSidebarsAction;
-    TQPtrList<KAction> m_toolViewActions;
-    TQMap<ToolView*, KAction*> m_toolToAction;
-    KActionMenu *m_toolMenu;
+    TDEToggleAction *m_showSidebarsAction;
+    TQPtrList<TDEAction> m_toolViewActions;
+    TQMap<ToolView*, TDEAction*> m_toolToAction;
+    TDEActionMenu *m_toolMenu;
 };
 
 class ToolView : public TQVBox

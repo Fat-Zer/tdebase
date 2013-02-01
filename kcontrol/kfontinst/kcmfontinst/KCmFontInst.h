@@ -43,10 +43,10 @@
 #endif
 
 class KDirOperator;
-class KAction;
-class KRadioAction;
-class KActionMenu;
-class KToggleAction;
+class TDEAction;
+class TDERadioAction;
+class TDEActionMenu;
+class TDEToggleAction;
 class KFileItem;
 class TQLabel;
 class TQSplitter;
@@ -95,13 +95,13 @@ class CKCmFontInst : public TDECModule
 
     KDirOperator         *itsDirOp;
     KURL                 itsTop;
-    KToggleAction        *itsShowBitmapAct;
-    KAction              *itsSepDirsAct,
+    TDEToggleAction        *itsShowBitmapAct;
+    TDEAction              *itsSepDirsAct,
                          *itsShowHiddenAct,
                          *itsDeleteAct;
-    KRadioAction         *itsListAct,
+    TDERadioAction         *itsListAct,
                          *itsIconAct;
-    KActionMenu          *itsViewMenuAct;
+    TDEActionMenu          *itsViewMenuAct;
 #ifdef HAVE_XFT
     KParts::ReadOnlyPart *itsPreview;
 #endif

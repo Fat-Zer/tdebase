@@ -107,7 +107,7 @@ CFontViewPart::CFontViewPart(TQWidget *parent, const char *name)
     connect(itsInstallButton, TQT_SIGNAL(clicked()), TQT_SLOT(install()));
     connect(itsFaceSelector, TQT_SIGNAL(valueChanged(int)), itsPreview, TQT_SLOT(showFace(int)));
 
-    itsChangeTextAction=new KAction(i18n("Change Text..."), "text", KShortcut(),
+    itsChangeTextAction=new TDEAction(i18n("Change Text..."), "text", TDEShortcut(),
                                     this, TQT_SLOT(changeText()), actionCollection(), "changeText");
     itsChangeTextAction->setEnabled(false);
     itsPrintAction=KStdAction::print(this, TQT_SLOT(print()), actionCollection(), "print");

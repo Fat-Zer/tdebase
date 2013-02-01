@@ -28,8 +28,8 @@
 class TQSplitter;
 class TQWidgetStack;
 
-class KToggleAction;
-class KAction;
+class TDEToggleAction;
+class TDEAction;
 
 class DockContainer;
 class IndexWidget;
@@ -39,7 +39,7 @@ class ConfigModule;
 class ConfigModuleList;
 class ModuleTitle;
 
-class TopLevel : public KMainWindow
+class TopLevel : public TDEMainWindow
 {
   Q_OBJECT
 
@@ -84,9 +84,9 @@ private:
   DockContainer  *_dock;
   ModuleTitle    *_title;
 
-  KToggleAction *tree_view, *icon_view;
-  KToggleAction *icon_small, *icon_medium, *icon_large, *icon_huge;
-  KAction *report_bug, *about_module;
+  TDEToggleAction *tree_view, *icon_view;
+  TDEToggleAction *icon_small, *icon_medium, *icon_large, *icon_huge;
+  TDEAction *report_bug, *about_module;
 
   IndexWidget  *_index;
   SearchWidget *_search;

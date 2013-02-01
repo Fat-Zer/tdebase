@@ -273,7 +273,7 @@ void KCMHelpCenter::setupMainWidget( TQWidget *parent )
   TQLabel *label = new TQLabel( helpText, parent );
   topLayout->addWidget( label );
 
-  mListView = new KListView( parent );
+  mListView = new TDEListView( parent );
   mListView->setFullWidth( true );
   mListView->addColumn( i18n("Search Scope") );
   mListView->addColumn( i18n("Status") );

@@ -67,7 +67,7 @@ KAppearanceOptions::KAppearanceOptions(TDEConfig *config, TQString group, TQWidg
   TQLabel* label = new TQLabel( i18n("S&tandard font:"), this );
   lay->addWidget( label , ++r, E);
 
-  m_pFonts[0] = new KFontCombo( emptyList, this );
+  m_pFonts[0] = new TDEFontCombo( emptyList, this );
 
   label->setBuddy( m_pFonts[0] );
   lay->addMultiCellWidget(m_pFonts[0], r, r, M, W);
@@ -88,7 +88,7 @@ KAppearanceOptions::KAppearanceOptions(TDEConfig *config, TQString group, TQWidg
   label = new TQLabel( i18n( "&Fixed font:"), this );
   lay->addWidget( label, ++r, E );
 
-  m_pFonts[1] = new KFontCombo( emptyList, this );
+  m_pFonts[1] = new TDEFontCombo( emptyList, this );
 
   label->setBuddy( m_pFonts[1] );
   lay->addMultiCellWidget(m_pFonts[1], r, r, M, W);
@@ -109,7 +109,7 @@ KAppearanceOptions::KAppearanceOptions(TDEConfig *config, TQString group, TQWidg
   label = new TQLabel( i18n( "S&erif font:" ), this );
   lay->addWidget( label, ++r, E );
 
-  m_pFonts[2] = new KFontCombo( emptyList, this );
+  m_pFonts[2] = new TDEFontCombo( emptyList, this );
 
   label->setBuddy( m_pFonts[2] );
   lay->addMultiCellWidget( m_pFonts[2], r, r, M, W );
@@ -130,7 +130,7 @@ KAppearanceOptions::KAppearanceOptions(TDEConfig *config, TQString group, TQWidg
   label = new TQLabel( i18n( "Sa&ns serif font:" ), this );
   lay->addWidget( label, ++r, E );
 
-  m_pFonts[3] = new KFontCombo( emptyList, this );
+  m_pFonts[3] = new TDEFontCombo( emptyList, this );
 
   label->setBuddy( m_pFonts[3] );
   lay->addMultiCellWidget( m_pFonts[3], r, r, M, W );
@@ -152,7 +152,7 @@ KAppearanceOptions::KAppearanceOptions(TDEConfig *config, TQString group, TQWidg
   label = new TQLabel( i18n( "C&ursive font:" ), this );
   lay->addWidget( label, ++r, E );
 
-  m_pFonts[4] = new KFontCombo( emptyList, this );
+  m_pFonts[4] = new TDEFontCombo( emptyList, this );
 
   label->setBuddy( m_pFonts[4] );
   lay->addMultiCellWidget( m_pFonts[4], r, r, M, W );
@@ -174,7 +174,7 @@ KAppearanceOptions::KAppearanceOptions(TDEConfig *config, TQString group, TQWidg
   label = new TQLabel( i18n( "Fantas&y font:" ), this );
   lay->addWidget( label, ++r, E );
 
-  m_pFonts[5] = new KFontCombo( emptyList, this );
+  m_pFonts[5] = new TDEFontCombo( emptyList, this );
 
   label->setBuddy( m_pFonts[5] );
   lay->addMultiCellWidget( m_pFonts[5], r, r, M, W );

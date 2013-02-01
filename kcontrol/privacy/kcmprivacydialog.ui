@@ -50,7 +50,7 @@
             <property name="orientation">
                 <enum>Vertical</enum>
             </property>
-            <widget class="KListView">
+            <widget class="TDEListView">
                 <property name="name">
                     <cstring>privacyListView</cstring>
                 </property>

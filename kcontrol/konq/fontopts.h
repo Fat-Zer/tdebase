@@ -44,7 +44,7 @@ class TQRadioButton;
 
 class KColorButton;
 class TDEConfig;
-class KFontCombo;
+class TDEFontCombo;
 
 
 //-----------------------------------------------------------------------------
@@ -88,7 +88,7 @@ private:
   TQRadioButton* m_pMedium;
   TQRadioButton* m_pLarge;
   */
-  KFontCombo* m_pStandard;
+  TDEFontCombo* m_pStandard;
   TQSpinBox* m_pSize;
 
   int m_fSize;

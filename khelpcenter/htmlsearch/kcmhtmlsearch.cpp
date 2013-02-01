@@ -135,7 +135,7 @@ TDEHTMLSearchConfig::TDEHTMLSearchConfig(TQWidget *parent, const char *name)
   delButton = new TQPushButton(i18n("Delete"), gb);
   grid->addWidget(delButton, 2,0);
 
-  searchPaths = new KListBox(gb);
+  searchPaths = new TDEListBox(gb);
   grid->addMultiCellWidget(searchPaths, 1,3, 1,1);
   grid->setRowStretch(2,2);
 

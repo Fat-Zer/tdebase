@@ -25,10 +25,10 @@
 #include <klistview.h>
 
 class TQPopupMenu;
-class KActionCollection;
+class TDEActionCollection;
 class KDesktopFile;
 
-class AppTreeItem : public KListViewItem
+class AppTreeItem : public TDEListViewItem
 {
 
 public:
@@ -58,7 +58,7 @@ private:
     TQString m_accel;
 };
 
-class AppTreeView : public KListView
+class AppTreeView : public TDEListView
 {
     friend class AppTreeItem;
     Q_OBJECT

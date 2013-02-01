@@ -209,49 +209,49 @@ KonqKfmIconView::KonqKfmIconView( TQWidget *parentWidget, TQObject *parent, cons
     // Don't repaint on configuration changes during construction
     m_bInit = true;
 
-    m_paDotFiles = new KToggleAction( i18n( "Show &Hidden Files" ), 0, this, TQT_SLOT( slotShowDot() ),
+    m_paDotFiles = new TDEToggleAction( i18n( "Show &Hidden Files" ), 0, this, TQT_SLOT( slotShowDot() ),
                                       actionCollection(), "show_dot" );
 //    m_paDotFiles->setCheckedState(i18n("Hide &Hidden Files"));
     m_paDotFiles->setToolTip( i18n( "Toggle displaying of hidden dot files" ) );
 
-    m_paDirectoryOverlays = new KToggleAction( i18n( "&Folder Icons Reflect Contents" ), 0, this, TQT_SLOT( slotShowDirectoryOverlays() ),
+    m_paDirectoryOverlays = new TDEToggleAction( i18n( "&Folder Icons Reflect Contents" ), 0, this, TQT_SLOT( slotShowDirectoryOverlays() ),
                                       actionCollection(), "show_directory_overlays" );
 
-    m_pamPreview = new KActionMenu( i18n( "&Preview" ), actionCollection(), "iconview_preview" );
+    m_pamPreview = new TDEActionMenu( i18n( "&Preview" ), actionCollection(), "iconview_preview" );
 
-    m_paEnablePreviews = new KToggleAction( i18n("Enable Previews"), 0, actionCollection(), "iconview_preview_all" );
+    m_paEnablePreviews = new TDEToggleAction( i18n("Enable Previews"), 0, actionCollection(), "iconview_preview_all" );
     m_paEnablePreviews->setCheckedState( i18n("Disable Previews") );
     connect( m_paEnablePreviews, TQT_SIGNAL( toggled( bool ) ), this, TQT_SLOT( slotPreview( bool ) ) );
     m_paEnablePreviews->setIcon("thumbnail");
     m_pamPreview->insert( m_paEnablePreviews );
-    m_pamPreview->insert( new KActionSeparator(this) );
+    m_pamPreview->insert( new TDEActionSeparator(this) );
 
     TDETrader::OfferList plugins = TDETrader::self()->query( "ThumbCreator" );
-    TQMap< TQString, KToggleAction* > previewActions;
+    TQMap< TQString, TDEToggleAction* > previewActions;
     for ( TDETrader::OfferList::ConstIterator it = plugins.begin(); it != plugins.end(); ++it )
     {
-        if ( KToggleAction*& preview = previewActions[ ( *it )->name() ] )
+        if ( TDEToggleAction*& preview = previewActions[ ( *it )->name() ] )
             preview->setName( TQCString( preview->name() ) + ',' + ( *it )->desktopEntryName().latin1() );
         else
         {
-            preview = new KToggleAction( (*it)->name(), 0, actionCollection(), (*it)->desktopEntryName().latin1() );
+            preview = new TDEToggleAction( (*it)->name(), 0, actionCollection(), (*it)->desktopEntryName().latin1() );
             connect( preview, TQT_SIGNAL( toggled( bool ) ), this, TQT_SLOT( slotPreview( bool ) ) );
             m_pamPreview->insert( preview );
             m_paPreviewPlugins.append( preview );
         }
     }
-    KToggleAction *soundPreview = new KToggleAction( i18n("Sound Files"), 0, actionCollection(), "audio/" );
+    TDEToggleAction *soundPreview = new TDEToggleAction( i18n("Sound Files"), 0, actionCollection(), "audio/" );
     connect( soundPreview, TQT_SIGNAL( toggled( bool ) ), this, TQT_SLOT( slotPreview( bool ) ) );
     m_pamPreview->insert( soundPreview );
     m_paPreviewPlugins.append( soundPreview );
 
-    //    m_pamSort = new KActionMenu( i18n( "Sort..." ), actionCollection(), "sort" );
+    //    m_pamSort = new TDEActionMenu( i18n( "Sort..." ), actionCollection(), "sort" );
 
-    KToggleAction *aSortByNameCS = new KRadioAction( i18n( "By Name (Case Sensitive)" ), 0, actionCollection(), "sort_nc" );
-    KToggleAction *aSortByNameCI = new KRadioAction( i18n( "By Name (Case Insensitive)" ), 0, actionCollection(), "sort_nci" );
-    KToggleAction *aSortBySize = new KRadioAction( i18n( "By Size" ), 0, actionCollection(), "sort_size" );
-    KToggleAction *aSortByType = new KRadioAction( i18n( "By Type" ), 0, actionCollection(), "sort_type" );
-    KToggleAction *aSortByDate = new KRadioAction( i18n( "By Date" ), 0, actionCollection(), "sort_date" );
+    TDEToggleAction *aSortByNameCS = new TDERadioAction( i18n( "By Name (Case Sensitive)" ), 0, actionCollection(), "sort_nc" );
+    TDEToggleAction *aSortByNameCI = new TDERadioAction( i18n( "By Name (Case Insensitive)" ), 0, actionCollection(), "sort_nci" );
+    TDEToggleAction *aSortBySize = new TDERadioAction( i18n( "By Size" ), 0, actionCollection(), "sort_size" );
+    TDEToggleAction *aSortByType = new TDERadioAction( i18n( "By Type" ), 0, actionCollection(), "sort_type" );
+    TDEToggleAction *aSortByDate = new TDERadioAction( i18n( "By Date" ), 0, actionCollection(), "sort_date" );
 
     aSortByNameCS->setExclusiveGroup( "sorting" );
     aSortByNameCI->setExclusiveGroup( "sorting" );
@@ -273,11 +273,11 @@ KonqKfmIconView::KonqKfmIconView( TQWidget *parentWidget, TQObject *parent, cons
 
     //enable menu item representing the saved sorting criterion
     TQString sortcrit = KonqIconViewFactory::defaultViewProps()->sortCriterion();
-    KRadioAction *sort_action = tqt_dynamic_cast<KRadioAction *>(actionCollection()->action(sortcrit.latin1()));
+    TDERadioAction *sort_action = tqt_dynamic_cast<TDERadioAction *>(actionCollection()->action(sortcrit.latin1()));
     if(sort_action!=NULL) sort_action->activate();
 
-    m_paSortDirsFirst = new KToggleAction( i18n( "Folders First" ), 0, actionCollection(), "sort_directoriesfirst" );
-    KToggleAction *aSortDescending = new KToggleAction( i18n( "Descending" ), 0, actionCollection(), "sort_descend" );
+    m_paSortDirsFirst = new TDEToggleAction( i18n( "Folders First" ), 0, actionCollection(), "sort_directoriesfirst" );
+    TDEToggleAction *aSortDescending = new TDEToggleAction( i18n( "Descending" ), 0, actionCollection(), "sort_descend" );
 
     m_paSortDirsFirst->setChecked( KonqIconViewFactory::defaultViewProps()->isDirsFirst() );
 
@@ -302,14 +302,14 @@ KonqKfmIconView::KonqKfmIconView( TQWidget *parentWidget, TQObject *parent, cons
 
     m_pamSort->insert( aSortDescending );
     */
-    m_paSelect = new KAction( i18n( "Se&lect..." ), CTRL+Key_Plus, this, TQT_SLOT( slotSelect() ),
+    m_paSelect = new TDEAction( i18n( "Se&lect..." ), CTRL+Key_Plus, this, TQT_SLOT( slotSelect() ),
                               actionCollection(), "select" );
-    m_paUnselect = new KAction( i18n( "Unselect..." ), CTRL+Key_Minus, this, TQT_SLOT( slotUnselect() ),
+    m_paUnselect = new TDEAction( i18n( "Unselect..." ), CTRL+Key_Minus, this, TQT_SLOT( slotUnselect() ),
                                 actionCollection(), "unselect" );
     m_paSelectAll = KStdAction::selectAll( this, TQT_SLOT( slotSelectAll() ), actionCollection(), "selectall" );
-    m_paUnselectAll = new KAction( i18n( "Unselect All" ), CTRL+Key_U, this, TQT_SLOT( slotUnselectAll() ),
+    m_paUnselectAll = new TDEAction( i18n( "Unselect All" ), CTRL+Key_U, this, TQT_SLOT( slotUnselectAll() ),
                                    actionCollection(), "unselectall" );
-    m_paInvertSelection = new KAction( i18n( "&Invert Selection" ), CTRL+Key_Asterisk,
+    m_paInvertSelection = new TDEAction( i18n( "&Invert Selection" ), CTRL+Key_Asterisk,
                                        this, TQT_SLOT( slotInvertSelection() ),
                                        actionCollection(), "invertselection" );
 
@@ -319,8 +319,8 @@ KonqKfmIconView::KonqKfmIconView( TQWidget *parentWidget, TQObject *parent, cons
     m_paUnselectAll->setToolTip( i18n( "Unselects all selected items" ) );
     m_paInvertSelection->setToolTip( i18n( "Inverts the current selection of items" ) );
 
-    //m_paBottomText = new KToggleAction( i18n( "Text at &Bottom" ), 0, actionCollection(), "textbottom" );
-    //m_paRightText = new KToggleAction( i18n( "Text at &Right" ), 0, actionCollection(), "textright" );
+    //m_paBottomText = new TDEToggleAction( i18n( "Text at &Bottom" ), 0, actionCollection(), "textbottom" );
+    //m_paRightText = new TDEToggleAction( i18n( "Text at &Right" ), 0, actionCollection(), "textright" );
     //m_paBottomText->setExclusiveGroup( "TextPos" );
     //m_paRightText->setExclusiveGroup( "TextPos" );
     //connect( m_paBottomText, TQT_SIGNAL( toggled( bool ) ), this, TQT_SLOT( slotTextBottom( bool ) ) );

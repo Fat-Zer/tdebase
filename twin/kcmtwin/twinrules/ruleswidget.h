@@ -135,11 +135,11 @@ class EditShortcutDialog
 
 // slightly duped from utils.cpp
 class ShortcutDialog
-    : public KShortcutDialog
+    : public TDEShortcutDialog
     {
     Q_OBJECT
     public:
-        ShortcutDialog( const KShortcut& cut, TQWidget* parent = NULL, const char* name = NULL );
+        ShortcutDialog( const TDEShortcut& cut, TQWidget* parent = NULL, const char* name = NULL );
         virtual void accept();
     };
 

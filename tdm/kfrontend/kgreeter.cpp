@@ -92,10 +92,10 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #define FIFO_FILE "/tmp/tdesocket-global/tdm/tdmctl-%1"
 #define FIFO_SAK_FILE "/tmp/tdesocket-global/tdm/tdmctl-sak-%1"
 
-class UserListView : public KListView {
+class UserListView : public TDEListView {
   public:
         UserListView( bool _them, TQWidget *parent = 0, const char *name = 0 )
-		: KListView( parent, name )
+		: TDEListView( parent, name )
 		, themed(_them), cachedSizeHint( -1, 0 )
 	{
 		setSizePolicy( TQSizePolicy::Preferred, TQSizePolicy::Ignored );
@@ -127,7 +127,7 @@ public:
 	virtual TQSize sizeHint() const
 	{
 	  if (themed)
-            return KListView::sizeHint();
+            return TDEListView::sizeHint();
 
 		if (!cachedSizeHint.isValid()) {
 			constPolish();
@@ -146,11 +146,11 @@ public:
     virtual void paintEmptyArea ( TQPainter * p, const TQRect & rect )
     {
       if (!themed)
-        return KListView::paintEmptyArea(p, rect );
+        return TDEListView::paintEmptyArea(p, rect );
 
         // FIXME: This must be configurable, so disable
         // painting of list background for now.
-        return KListView::paintEmptyArea(p, rect );
+        return TDEListView::paintEmptyArea(p, rect );
 
         const TQPixmap *pm = TQT_TQPIXMAP_CONST(paletteBackgroundPixmap());
         if (!pm || pm->isNull())
@@ -337,11 +337,11 @@ void KGreeter::readFacesList()
     }
 }
 
-class UserListViewItem : public KListViewItem {
+class UserListViewItem : public TDEListViewItem {
   public:
 	UserListViewItem( UserListView *parent, const TQString &text,
 	                  const TQPixmap &pixmap, const TQString &username )
-		: KListViewItem( parent )
+		: TDEListViewItem( parent )
 		, login( username )
 	{
 		setPixmap( 0, pixmap );
@@ -355,7 +355,7 @@ class UserListViewItem : public KListViewItem {
       if (((UserListView*)listView())->themed)
         TQListViewItem::paintCell(p, cg, column, width, alignment);
       else
-	KListViewItem::paintCell(p, cg, column, width, alignment);
+	TDEListViewItem::paintCell(p, cg, column, width, alignment);
     }
 
 	TQString login;

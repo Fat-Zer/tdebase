@@ -1009,7 +1009,7 @@ applications communicate with <command>tdelauncher</command> over &DCOP; in
 order to start new applications or services.</para>
 
 <para>Best known from the error message: <computeroutput><errortext>
-KLauncher could not be reached via DCOP </errortext></computeroutput> which
+TDELauncher could not be reached via DCOP </errortext></computeroutput> which
 either indicates a serious problem with the <command>dcopserver</command> or
 that <command>tdelauncher</command> crashed.</para>
 

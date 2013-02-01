@@ -34,7 +34,7 @@
 #include "toplevel.h"
 
 class TQSplitter;
-class KListViewSearchLine;
+class TDEListViewSearchLine;
 
 class KEBListViewItem : public TQListViewItem
 {
@@ -80,7 +80,7 @@ private:
    void boldStyle(TQPainter *);
 };
 
-class KEBListView : public KListView
+class KEBListView : public TDEListView
 {
    Q_OBJECT
 public:
@@ -92,7 +92,7 @@ public:
       AddressColumn = 4
    };
    KEBListView(TQWidget *parent, bool folderList) 
-      : KListView(parent), m_folderList(folderList) {}
+      : TDEListView(parent), m_folderList(folderList) {}
    virtual ~KEBListView() {}
 
    void init();
@@ -111,7 +111,7 @@ public:
 public slots:
    virtual void rename(TQListViewItem *item, int c);
    void slotMoved();
-   void slotContextMenu(KListView *, TQListViewItem *, const TQPoint &);
+   void slotContextMenu(TDEListView *, TQListViewItem *, const TQPoint &);
    void slotItemRenamed(TQListViewItem *, const TQString &, int);
    void slotDoubleClicked(TQListViewItem *, const TQPoint &, int);
    void slotDropped(TQDropEvent*, TQListViewItem*, TQListViewItem*);
@@ -135,7 +135,7 @@ public:
    void initListViews();
    void updateListViewSetup(bool readOnly);
    void connectSignals();
-   void setSearchLine(KListViewSearchLine * searchline) { m_searchline = searchline; };
+   void setSearchLine(TDEListViewSearchLine * searchline) { m_searchline = searchline; };
 
    // selected item stuff
    void selected(KEBListViewItem * item, bool s);
@@ -179,7 +179,7 @@ public:
 
    void handleMoved(KEBListView *);
    void handleDropped(KEBListView *, TQDropEvent *, TQListViewItem *, TQListViewItem *);
-   void handleContextMenu(KEBListView *, KListView *, TQListViewItem *, const TQPoint &);
+   void handleContextMenu(KEBListView *, TDEListView *, TQListViewItem *, const TQPoint &);
    void handleDoubleClicked(KEBListView *, TQListViewItem *, const TQPoint &, int);
    void handleItemRenamed(KEBListView *, TQListViewItem *, const TQString &, int);
 
@@ -200,7 +200,7 @@ private:
    ListView();
 
    KEBListView *m_listView;
-   KListViewSearchLine * m_searchline;
+   TDEListViewSearchLine * m_searchline;
 
 //  Actually this is a std:set, the bool is ignored
    TQMap<KEBListViewItem *, bool> mSelectedItems;

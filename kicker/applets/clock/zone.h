@@ -28,7 +28,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <tqstringlist.h>
 
 class TDEConfig;
-class KListView;
+class TDEListView;
 
 class Zone {
 
@@ -48,8 +48,8 @@ public:
 	void nextZone();
 	void prevZone();
 	int calc_TZ_offset(const TQString& zone, bool reset=false);
-	void readZoneList(KListView *listView);
-	void getSelectedZonelist(KListView *listView);
+	void readZoneList(TDEListView *listView);
+	void getSelectedZonelist(TDEListView *listView);
 
 protected:
         KTimezones m_zoneDb;

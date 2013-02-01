@@ -21,7 +21,7 @@
 using namespace KHC;
 
 View::View( TQWidget *parentWidget, const char *widgetName,
-                  TQObject *parent, const char *name, TDEHTMLPart::GUIProfile prof, KActionCollection *col )
+                  TQObject *parent, const char *name, TDEHTMLPart::GUIProfile prof, TDEActionCollection *col )
     : TDEHTMLPart( parentWidget, widgetName, parent, name, prof ), mState( Docu ), mActionCollection(col)
 {
     setJScriptEnabled(false);
@@ -246,10 +246,10 @@ void View::slotDecFontSizes()
 
 void View::showMenu( const TQString& url, const TQPoint& pos)
 {
-  KPopupMenu* pop = new KPopupMenu(view());
+  TDEPopupMenu* pop = new TDEPopupMenu(view());
   if (url.isEmpty())
   {
-    KAction *action;
+    TDEAction *action;
     action = mActionCollection->action("go_home");
     if (action) action->plug(pop);
 

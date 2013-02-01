@@ -185,7 +185,7 @@ void Lockout::propagateMouseEvent(TQMouseEvent* e)
 
 bool Lockout::eventFilter( TQObject *o, TQEvent *e )
 {
-    if (!kapp->authorizeKAction("kicker_rmb"))
+    if (!kapp->authorizeTDEAction("kicker_rmb"))
         return false;     // Process event normally:
 
     if( e->type() == TQEvent::MouseButtonPress )

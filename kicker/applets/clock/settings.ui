@@ -291,7 +291,7 @@
                                                 </size>
                                             </property>
                                         </spacer>
-                                        <widget class="KFontRequester" row="2" column="1" rowspan="1" colspan="3">
+                                        <widget class="TDEFontRequester" row="2" column="1" rowspan="1" colspan="3">
                                             <property name="name">
                                                 <cstring>kcfg_PlainFont</cstring>
                                             </property>
@@ -394,7 +394,7 @@
                                             <string>Font:</string>
                                         </property>
                                     </widget>
-                                    <widget class="KFontRequester">
+                                    <widget class="TDEFontRequester">
                                         <property name="name">
                                             <cstring>kcfg_DateFont</cstring>
                                         </property>
@@ -441,7 +441,7 @@
                     <property name="name">
                         <cstring>unnamed</cstring>
                     </property>
-                    <widget class="KListView">
+                    <widget class="TDEListView">
                         <column>
                             <property name="text">
                                 <string>City</string>

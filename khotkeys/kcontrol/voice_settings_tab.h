@@ -13,7 +13,7 @@
 
 #include <voice_settings_tab_ui.h>
 
-class KShortcut;
+class TDEShortcut;
 
 namespace KHotKeys
 {
@@ -29,7 +29,7 @@ class Voice_settings_tab
     public slots:
         void clear_data();
     private slots:
-		void slotCapturedKey( const KShortcut& );
+		void slotCapturedKey( const TDEShortcut& );
     };
 
 //***************************************************************************

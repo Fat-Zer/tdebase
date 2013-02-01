@@ -31,7 +31,7 @@ class TQPopupMenu;
  * Plug this action into a menu to get a bidirectional history
  * (both back and forward, including current location)
  */
-class KonqBidiHistoryAction : public KAction
+class KonqBidiHistoryAction : public TDEAction
 {
   Q_OBJECT
 public:
@@ -68,7 +68,7 @@ private:
 
 /////
 
-class KonqLogoAction : public KAction
+class KonqLogoAction : public TDEAction
 {
   Q_OBJECT
 public:
@@ -93,7 +93,7 @@ private:
     TQStringList iconList;
 };
 
-class KonqViewModeAction : public KRadioAction
+class KonqViewModeAction : public TDERadioAction
 {
     Q_OBJECT
 public:
@@ -124,7 +124,7 @@ protected:
     virtual int compareItems( TQPtrCollection::Item, TQPtrCollection::Item );
 };
 
-class KonqMostOftenURLSAction : public KActionMenu
+class KonqMostOftenURLSAction : public TDEActionMenu
 {
     Q_OBJECT
 

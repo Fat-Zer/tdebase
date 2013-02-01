@@ -28,7 +28,7 @@ class TQGroupBox;
 class TQButtonGroup;
 class TQRadioButton;
 class TQPushButton;
-class KListView;
+class TDEListView;
 class TQListViewItem;
 
 class AppletTab : public AppletTabBase

@@ -101,7 +101,7 @@ int ProcessLVI::compare( TQListViewItem *item, int col, bool ascending ) const
 }
 
 ProcessList::ProcessList(TQWidget *parent, const char* name)
-	: KListView(parent, name)
+	: TDEListView(parent, name)
 {
 	iconCache.setAutoDelete(true);
 
@@ -952,7 +952,7 @@ ProcessList::keyPressEvent(TQKeyEvent *e)
 	if (e->key() == Key_Control) {
 		ctrlKeyDown = true;
 	}
-	KListView::keyPressEvent(e);
+	TDEListView::keyPressEvent(e);
 }
 
 void
@@ -964,7 +964,7 @@ ProcessList::keyReleaseEvent(TQKeyEvent *e)
 	if (e->key() == Key_Control) {
 		ctrlKeyDown = false;
 	}
-	KListView::keyReleaseEvent(e);
+	TDEListView::keyReleaseEvent(e);
 }
 
 #include "ProcessList.moc"

@@ -47,7 +47,7 @@ CSSConfig::CSSConfig(TQWidget *parent, const char *name, const TQStringList &)
 
 
   TQStringList fonts;
-  KFontChooser::getFontList(fonts, 0);
+  TDEFontChooser::getFontList(fonts, 0);
   customDialog->fontFamily->insertStringList(fonts);
 
   connect(configDialog->useDefault, TQT_SIGNAL(clicked()),

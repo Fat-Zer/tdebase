@@ -49,7 +49,7 @@ public:
 signals:
     void changed( MenuFolderInfo * );
     void changed( MenuEntryInfo * );
-    void findServiceShortcut(const KShortcut&, KService::Ptr &);
+    void findServiceShortcut(const TDEShortcut&, KService::Ptr &);
 
 public slots:
     void setFolderInfo(MenuFolderInfo *folderInfo);
@@ -61,7 +61,7 @@ protected slots:
     void systraycb_clicked();
     void termcb_clicked();
     void uidcb_clicked();
-    void slotCapturedShortcut(const KShortcut&);
+    void slotCapturedShortcut(const TDEShortcut&);
     void slotExecSelected();
 
 protected:

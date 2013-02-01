@@ -46,7 +46,7 @@
 class KickerClientMenu;
 class KickoffTabBar;
 class KBookmarkMenu;
-class KActionCollection;
+class TDEActionCollection;
 class KBookmarkOwner;
 class Panel;
 class TQWidgetStack;
@@ -210,7 +210,7 @@ private:
     int                         client_id;
     bool                        delay_init;
     TQIntDict<KickerClientMenu>  clients;
-    KActionCollection          *actionCollection;
+    TDEActionCollection          *actionCollection;
     PopupMenuList               dynamicSubMenus;
 
     TQTimer                       m_sloppyTimer;
@@ -290,7 +290,7 @@ private:
     enum KickoffTabEntry { FavoriteTab, ApplicationsTab, ComputerTab,
         HistoryTab, LeaveTab, SearchTab, NumTabs };
 
-    KPopupMenu* m_popupMenu;
+    TDEPopupMenu* m_popupMenu;
     KService* m_popupService;
     PopupPath m_popupPath;
 

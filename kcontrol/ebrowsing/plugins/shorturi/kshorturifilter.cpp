@@ -69,7 +69,7 @@ static bool isValidShortURL( const TQString& cmd, bool verbose = false )
   if ( cmd.contains( exp ) )
   {
     if (verbose)
-      kdDebug() << "KShortURIFilter::isValidShortURL: " << cmd
+      kdDebug() << "TDEShortURIFilter::isValidShortURL: " << cmd
                 << " matches FQDN_PATTERN" << endl;
 
     // bug 133687
@@ -88,7 +88,7 @@ static bool isValidShortURL( const TQString& cmd, bool verbose = false )
   if ( cmd.contains( exp ) )
   {
     if (verbose)
-      kdDebug() << "KShortURIFilter::isValidShortURL: " << cmd
+      kdDebug() << "TDEShortURIFilter::isValidShortURL: " << cmd
                 << " matches IPv4_PATTERN" << endl;
     return true;
   }
@@ -98,13 +98,13 @@ static bool isValidShortURL( const TQString& cmd, bool verbose = false )
   if ( cmd.contains( exp ) )
   {
     if (verbose)
-      kdDebug() << "KShortURIFilter::isValidShortURL: " << cmd
+      kdDebug() << "TDEShortURIFilter::isValidShortURL: " << cmd
                 << " matches IPv6_PATTERN" << endl;
     return true;
   }
 
   if (verbose)
-    kdDebug() << "KShortURIFilter::isValidShortURL: '" << cmd
+    kdDebug() << "TDEShortURIFilter::isValidShortURL: '" << cmd
               << "' is not a short URL." << endl;
 
   return false;
@@ -134,15 +134,15 @@ static TQString removeArgs( const TQString& _cmd )
   return cmd;
 }
 
-KShortURIFilter::KShortURIFilter( TQObject *parent, const char *name,
+TDEShortURIFilter::TDEShortURIFilter( TQObject *parent, const char *name,
                                   const TQStringList & /*args*/ )
                 :KURIFilterPlugin( parent, name ? name : "kshorturifilter", 1.0),
-                 DCOPObject("KShortURIFilterIface")
+                 DCOPObject("TDEShortURIFilterIface")
 {
     configure();
 }
 
-bool KShortURIFilter::filterURI( KURIFilterData& data ) const
+bool TDEShortURIFilter::filterURI( KURIFilterData& data ) const
 {
  /*
   * Here is a description of how the shortURI deals with the supplied
@@ -533,23 +533,23 @@ bool KShortURIFilter::filterURI( KURIFilterData& data ) const
   return false;
 }
 
-TDECModule* KShortURIFilter::configModule( TQWidget*, const char* ) const
+TDECModule* TDEShortURIFilter::configModule( TQWidget*, const char* ) const
 {
-    return 0; //new KShortURIOptions( parent, name );
+    return 0; //new TDEShortURIOptions( parent, name );
 }
 
-TQString KShortURIFilter::configName() const
+TQString TDEShortURIFilter::configName() const
 {
     return i18n("&ShortURLs");
 }
 
-void KShortURIFilter::configure()
+void TDEShortURIFilter::configure()
 {
   TDEConfig config( name() + QFL1("rc"), false, false );
   m_bVerbose = config.readBoolEntry( "Verbose", false );
 
   if ( m_bVerbose )
-    kdDebug() << "KShortURIFilter::configure: Config reload request..." << endl;
+    kdDebug() << "TDEShortURIFilter::configure: Config reload request..." << endl;
 
   m_strDefaultProtocol = config.readEntry( "DefaultProtocol", QFL1("http://") );
   EntryMap patterns = config.entryMap( QFL1("Pattern") );
@@ -571,6 +571,6 @@ void KShortURIFilter::configure()
 }
 
 K_EXPORT_COMPONENT_FACTORY( libkshorturifilter,
-                            KGenericFactory<KShortURIFilter>( "kcmkurifilt" ) )
+                            KGenericFactory<TDEShortURIFilter>( "kcmkurifilt" ) )
 
 #include "kshorturifilter.moc"

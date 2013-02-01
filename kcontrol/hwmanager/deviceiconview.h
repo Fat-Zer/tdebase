@@ -29,18 +29,18 @@
 class ConfigModule;
 class ConfigModuleList;
 
-class DeviceIconItem : public KListViewItem
+class DeviceIconItem : public TDEListViewItem
 {
 public:
 	DeviceIconItem(TQListViewItem *parent, const TQString& text, const TQPixmap& pm, TDEGenericDevice *d = 0)
-		: KListViewItem(parent, text)
+		: TDEListViewItem(parent, text)
 		, _tag(TQString::null)
 		, _device(d)
 		{
 			setPixmap(0, pm);
 		}
 	DeviceIconItem(TQListView *parent, const TQString& text, const TQPixmap& pm, TDEGenericDevice *d = 0)
-		: KListViewItem(parent, text)
+		: TDEListViewItem(parent, text)
 		, _tag(TQString::null)
 		, _device(d)
 		{
@@ -59,7 +59,7 @@ private:
 		TDEGenericDevice *_device;
 };
 
-class DeviceIconView : public KListView
+class DeviceIconView : public TDEListView
 {
 	Q_OBJECT
 

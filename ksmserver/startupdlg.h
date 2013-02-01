@@ -24,7 +24,7 @@ class TQPopupMenu;
 class TQTimer;
 class TQPainter;
 class TQString;
-class KAction;
+class TDEAction;
 
 #include "timed.h"
 #include <kapplication.h>

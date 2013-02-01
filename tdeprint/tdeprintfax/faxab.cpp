@@ -37,7 +37,7 @@
 FaxAB::FaxAB(TQWidget *parent, const char *name)
 : KDialog(parent, name, true)
 {
-	m_list = new KListView( this );
+	m_list = new TDEListView( this );
 	m_list->addColumn( i18n( "Name" ) );
 	m_list->addColumn( i18n( "Fax Number" ) );
 	m_list->header()->setStretchEnabled( true, 0 );

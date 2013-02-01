@@ -10,7 +10,7 @@
 #include "typeslistitem.h"
 
 class TQLabel;
-class KListView;
+class TDEListView;
 class TQListViewItem;
 class TQListBox;
 class TQPushButton;
@@ -51,7 +51,7 @@ protected:
   bool sync( TQValueList<TypesListItem *>& itemsModified );
 
 private:
-  KListView *typesLV;
+  TDEListView *typesLV;
   TQPushButton *m_removeTypeB;
 
   TQWidgetStack * m_widgetStack;

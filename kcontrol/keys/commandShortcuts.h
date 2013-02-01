@@ -55,7 +55,7 @@ class CommandShortcutsModule : public TQWidget
 
     protected slots:
         void commandSelected(const TQString&, const TQString &, bool);
-        void shortcutChanged(const KShortcut& shortcut);
+        void shortcutChanged(const TDEShortcut& shortcut);
         void shortcutRadioToggled(bool remove);
         void commandDoubleClicked(TQListViewItem *item, const TQPoint &, int);
         void launchMenuEditor();

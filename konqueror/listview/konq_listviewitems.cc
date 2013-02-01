@@ -305,7 +305,7 @@ void KonqListViewItem::paintCell( TQPainter *_painter, const TQColorGroup & _cg,
 
     cg.setColor( TQColorGroup::Text, m_pListViewWidget->itemColor() );
 
-    KListView *lv = static_cast< KListView* >( listView() );
+    TDEListView *lv = static_cast< TDEListView* >( listView() );
     const TQPixmap *pm = TQT_TQPIXMAP_CONST(lv->viewport()->paletteBackgroundPixmap());
     if ( _column == 0 && isSelected() && !lv->allColumnsShowFocus() )
     {
@@ -330,7 +330,7 @@ void KonqListViewItem::paintCell( TQPainter *_painter, const TQColorGroup & _cg,
         _width = newWidth;
     }
 
-    KListViewItem::paintCell( _painter, cg, _column, _width, _alignment );
+    TDEListViewItem::paintCell( _painter, cg, _column, _width, _alignment );
 }
 
 void KonqListViewItem::paintFocus( TQPainter * _painter, const TQColorGroup & cg, const TQRect & _r )
@@ -391,7 +391,7 @@ const char* KonqBaseListViewItem::makeAccessString( const mode_t mode)
 }
 
 KonqBaseListViewItem::KonqBaseListViewItem(KonqBaseListViewWidget *_listViewWidget, KFileItem* _fileitem)
-:KListViewItem(_listViewWidget)
+:TDEListViewItem(_listViewWidget)
 ,sortChar(0)
 ,m_bDisabled(false)
 ,m_bActive(false)
@@ -400,7 +400,7 @@ KonqBaseListViewItem::KonqBaseListViewItem(KonqBaseListViewWidget *_listViewWidg
 {}
 
 KonqBaseListViewItem::KonqBaseListViewItem(KonqBaseListViewWidget *_listViewWidget, KonqBaseListViewItem *_parent, KFileItem* _fileitem)
-:KListViewItem(_parent)
+:TDEListViewItem(_parent)
 ,sortChar(0)
 ,m_bDisabled(false)
 ,m_bActive(false)

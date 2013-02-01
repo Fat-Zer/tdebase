@@ -1661,7 +1661,7 @@ void KonqViewManager::loadItem( TDEConfig &cfg, KonqFrameContainerBase *parent,
   //kdDebug(1202) << "KonqViewManager::loadItem: end" << name << endl;
 }
 
-void KonqViewManager::setProfiles( KActionMenu *profiles )
+void KonqViewManager::setProfiles( TDEActionMenu *profiles )
 {
   m_pamProfiles = profiles;
 
@@ -1735,7 +1735,7 @@ void KonqViewManager::slotProfileListAboutToShow()
 
   // Generate accelerators
   TQStringList accel_strings;
-  KAccelGen::generateFromKeys(m_mapProfileNames, accel_strings);
+  TDEAccelGen::generateFromKeys(m_mapProfileNames, accel_strings);
 
   // Store menu items
   TQValueListIterator<TQString> iter = accel_strings.begin();

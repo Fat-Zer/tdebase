@@ -31,7 +31,7 @@
 
 class KonqSidebarTreeModule;
 class KonqSidebarTreeItem;
-class KActionCollection;
+class TDEActionCollection;
 
 class TQTimer;
 
@@ -64,7 +64,7 @@ private:
 
 typedef enum {
     SidebarTreeMode, // used if the drop is accepted by a KonqSidebarTreeItem. otherwise
-    KListViewMode    // use KListView's dnd implementation. accepts mime types set with setDropFormats()
+    TDEListViewMode    // use TDEListView's dnd implementation. accepts mime types set with setDropFormats()
 } DropAcceptType;
 
 /**
@@ -73,7 +73,7 @@ typedef enum {
  * a toplevel item, and creates the modules that will handle the contents
  * of those items.
  */
-class KonqSidebarTree : public KListView, public KDirNotify
+class KonqSidebarTree : public TDEListView, public KDirNotify
 {
     Q_OBJECT
 public:
@@ -106,7 +106,7 @@ public:
 
     void itemDestructed( KonqSidebarTreeItem *item );
 
-    void setDropFormats( const TQStringList &formats ); // used in KListView mode
+    void setDropFormats( const TQStringList &formats ); // used in TDEListView mode
     
     // Show context menu for toplevel items
     void showToplevelContextMenu();
@@ -125,7 +125,7 @@ protected:
     virtual void contentsDragMoveEvent( TQDragMoveEvent *e );
     virtual void contentsDragLeaveEvent( TQDragLeaveEvent *e );
     virtual void contentsDropEvent( TQDropEvent *ev );
-    virtual bool acceptDrag(TQDropEvent* e) const; // used in KListView mode
+    virtual bool acceptDrag(TQDropEvent* e) const; // used in TDEListView mode
 
     virtual void leaveEvent( TQEvent * );
 
@@ -205,7 +205,7 @@ private:
     TQMap<TQString, getModule> pluginFactories;
 
     bool m_bOpeningFirstChild;
-    KActionCollection *m_collection;
+    TDEActionCollection *m_collection;
 
     KonqSidebarTree_Internal *d;
 

@@ -29,7 +29,7 @@
 class KColorButton;
 class KIntNumInput;
 class KLineEdit;
-class KListView;
+class TDEListView;
 
 class TQCheckBox;
 class TQListViewItem;
@@ -121,7 +121,7 @@ class FancyPlotterSettings : public KDialogBase
     KIntNumInput *mVerticalLinesDistance;
     KIntNumInput *mHorizontalLinesCount;
     KIntNumInput *mFontSize;
-    KListView *mSensorView;
+    TDEListView *mSensorView;
 
     TQCheckBox *mShowVerticalLines;
     TQCheckBox *mShowHorizontalLines;

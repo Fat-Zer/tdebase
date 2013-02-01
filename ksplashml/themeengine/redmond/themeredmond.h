@@ -18,7 +18,7 @@
 
 #include <themeengine.h>
 
-class KFontCombo;
+class TDEFontCombo;
 class TQCheckBox;
 
 class CfgRedmond: public ThemeEngineConfig
@@ -31,9 +31,9 @@ protected:
   TQCheckBox *mShowUsername;
   TQCheckBox *mShowIcon;
   TQCheckBox *mShowWelcome;
-  KFontCombo *mWelcomeFont;
-  KFontCombo *mUsernameFont;
-  KFontCombo *mActionFont;
+  TDEFontCombo *mWelcomeFont;
+  TDEFontCombo *mUsernameFont;
+  TDEFontCombo *mActionFont;
 };
 
 class ObjKsTheme;

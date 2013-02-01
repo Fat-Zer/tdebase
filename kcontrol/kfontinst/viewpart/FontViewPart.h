@@ -35,7 +35,7 @@ class TQPushButton;
 class TQFrame;
 class TQLabel;
 class KIntNumInput;
-class KAction;
+class TDEAction;
 class KURL;
 
 namespace KFI
@@ -74,7 +74,7 @@ class CFontViewPart : public KParts::ReadOnlyPart
                   *itsToolsFrame;
     TQLabel        *itsFaceLabel;
     KIntNumInput  *itsFaceSelector;
-    KAction       *itsChangeTextAction,
+    TDEAction       *itsChangeTextAction,
                   *itsPrintAction;
     bool          itsShowInstallButton;
     int           itsFace;

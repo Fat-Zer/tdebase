@@ -71,8 +71,8 @@ class ShortcutsModule : public TQWidget
 	TQPushButton* m_pbtnSave, * m_pbtnRemove;
 	int m_nSysSchemes;
 	TQStringList m_rgsSchemeFiles;
-	KAccelActions m_actionsGeneral, m_actionsSequence;//, m_actionsApplication;
-	KShortcutList* m_pListGeneral, * m_pListSequence, * m_pListApplication;
+	TDEAccelActions m_actionsGeneral, m_actionsSequence;//, m_actionsApplication;
+	TDEShortcutList* m_pListGeneral, * m_pListSequence, * m_pListApplication;
 	KKeyChooser* m_pkcGeneral, * m_pkcSequence, * m_pkcApplication;
 	TQCheckBox* m_useRmWinKeys;
 	bool m_bUseRmWinKeys;

@@ -40,7 +40,7 @@ class TQTimer;
 class TDEProcess;
 class KWinModule;
 class KTextShadowEngine;
-class KSelectionOwner;
+class TDESelectionOwner;
 
 class PagerSettings;
 
@@ -128,7 +128,7 @@ private:
     int desktopLayoutOrientation;
     int desktopLayoutX;
     int desktopLayoutY;
-    KSelectionOwner* m_desktopLayoutOwner;
+    TDESelectionOwner* m_desktopLayoutOwner;
 
     KWinModule *m_twin;
     KTextShadowEngine* m_shadowEngine;

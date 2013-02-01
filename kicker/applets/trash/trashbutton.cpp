@@ -39,7 +39,7 @@ TrashButton::TrashButton(TQWidget *parent)
 	TDEIO::NetAccess::stat("trash:/", entry, 0L);
 	mFileItem.assign(KFileItem(entry, "trash:/"));
 
-	KAction *a = KStdAction::paste(TQT_TQOBJECT(this), TQT_SLOT(slotPaste()),
+	TDEAction *a = KStdAction::paste(TQT_TQOBJECT(this), TQT_SLOT(slotPaste()),
 	                               &mActions, "paste");
 	a->setShortcut(0);
 
@@ -93,7 +93,7 @@ void TrashButton::initPopup()
 	KonqPopupMenu *new_popup = new KonqPopupMenu(0L, items,
 	                                   KURL("trash:/"), mActions, 0L,
 	                                   this, kpf, bef);
-	KPopupTitle *title = new KPopupTitle(new_popup);
+	TDEPopupTitle *title = new TDEPopupTitle(new_popup);
 	title->setTitle(i18n("Trash"));
 
 	new_popup->insertItem(title, -1, 0);

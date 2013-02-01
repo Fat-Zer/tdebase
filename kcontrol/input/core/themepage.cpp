@@ -60,7 +60,7 @@ ThemePage::ThemePage( TQWidget* parent, const char* name )
 	new TQLabel( i18n("Select the cursor theme you want to use:"), this );
 
 	// Create the theme list view
-	listview = new KListView( this );
+	listview = new TDEListView( this );
 	listview->setFullWidth( true );
 	listview->setAllColumnsShowFocus( true );
 	listview->addColumn( i18n("Name") );
@@ -143,24 +143,24 @@ void ThemePage::defaults()
 
 void ThemePage::insertThemes()
 {
-	KListViewItem *item;
+	TDEListViewItem *item;
 
-	item = new KListViewItem( listview, i18n("Small black"),
+	item = new TDEListViewItem( listview, i18n("Small black"),
 			i18n("Small black cursors"), "SmallBlack" );
 	item->setPixmap( 0, TQPixmap( arrow_small_black_xpm ) );
 	listview->insertItem( item );
 
-	item = new KListViewItem( listview, i18n("Large black"),
+	item = new TDEListViewItem( listview, i18n("Large black"),
 			i18n("Large black cursors"), "LargeBlack" );
 	item->setPixmap( 0, TQPixmap( arrow_large_black_xpm ) );
 	listview->insertItem( item );
 
-	item = new KListViewItem( listview, i18n("Small white"),
+	item = new TDEListViewItem( listview, i18n("Small white"),
 			i18n("Small white cursors"), "SmallWhite" );
 	item->setPixmap( 0, TQPixmap( arrow_small_white_xpm ) );
 	listview->insertItem( item );
 
-	item = new KListViewItem( listview, i18n("Large white"),
+	item = new TDEListViewItem( listview, i18n("Large white"),
 			i18n("Large white cursors"), "LargeWhite" );
 	item->setPixmap( 0, TQPixmap( arrow_large_white_xpm ) );
 	listview->insertItem( item );

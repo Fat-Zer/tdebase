@@ -45,7 +45,7 @@ public:
     KCMIOSlaveInfo(TQWidget *parent = 0L, const char *name = 0L, const TQStringList &lits=TQStringList() );
 
 protected:
-    KListBox *m_ioslavesLb;
+    TDEListBox *m_ioslavesLb;
     KTextBrowser *m_info;
     TQCString helpData;
     TDEIO::Job *m_tfj;

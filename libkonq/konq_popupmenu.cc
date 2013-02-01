@@ -190,7 +190,7 @@ ServiceList* PopupServices::selectList( const TQString& priority, const TQString
 
 KonqPopupMenu::KonqPopupMenu( KBookmarkManager *mgr, const KFileItemList &items,
                               KURL viewURL,
-                              KActionCollection & actions,
+                              TDEActionCollection & actions,
                               KNewMenu * newMenu,
                               bool showProperties )
     : TQPopupMenu( 0L, "konq_popupmenu" ),
@@ -203,7 +203,7 @@ KonqPopupMenu::KonqPopupMenu( KBookmarkManager *mgr, const KFileItemList &items,
 
 KonqPopupMenu::KonqPopupMenu( KBookmarkManager *mgr, const KFileItemList &items,
                               KURL viewURL,
-                              KActionCollection & actions,
+                              TDEActionCollection & actions,
                               KNewMenu * newMenu,
                               TQWidget * parentWidget,
                               bool showProperties )
@@ -215,7 +215,7 @@ KonqPopupMenu::KonqPopupMenu( KBookmarkManager *mgr, const KFileItemList &items,
 
 KonqPopupMenu::KonqPopupMenu( KBookmarkManager *mgr, const KFileItemList &items,
                               const KURL& viewURL,
-                              KActionCollection & actions,
+                              TDEActionCollection & actions,
                               KNewMenu * newMenu,
                               TQWidget * parentWidget,
                               KonqPopupFlags kpf,
@@ -286,7 +286,7 @@ int KonqPopupMenu::insertServices(const ServiceList& list,
             TQCString name;
             name.setNum( id );
             name.prepend( isBuiltin ? "builtinservice_" : "userservice_" );
-            KAction * act = new KAction( TQString((*it).m_strName).replace('&',"&&"), 0,
+            TDEAction * act = new TDEAction( TQString((*it).m_strName).replace('&',"&&"), 0,
                                          TQT_TQOBJECT(this), TQT_SLOT( slotRunService() ),
                                          &m_ownActions, name );
 
@@ -481,13 +481,13 @@ void KonqPopupMenu::setup(KonqPopupFlags kpf)
 
     //////////////////////////////////////////////////////////////////////////
 
-    KAction * act;
+    TDEAction * act;
 
     if (!isCurrentTrash)
         addMerge( "konqueror" );
 
     bool isKDesktop = TQCString( kapp->name() ) == "kdesktop";
-    KAction *actNewWindow = 0;
+    TDEAction *actNewWindow = 0;
 
     if (( kpf & ShowProperties ) && isKDesktop &&
         !kapp->authorize("editable_desktop_icons"))
@@ -500,7 +500,7 @@ void KonqPopupMenu::setup(KonqPopupFlags kpf)
     if ( ((kpf & ShowNewWindow) != 0) && sReading )
     {
         TQString openStr = isKDesktop ? i18n( "&Open" ) : i18n( "Open in New &Window" );
-        actNewWindow = new KAction( openStr, "window_new", 0, TQT_TQOBJECT(this), TQT_SLOT( slotPopupNewView() ), &m_ownActions, "newview" );
+        actNewWindow = new TDEAction( openStr, "window_new", 0, TQT_TQOBJECT(this), TQT_SLOT( slotPopupNewView() ), &m_ownActions, "newview" );
     }
 
     if ( actNewWindow && !isKDesktop )
@@ -529,14 +529,14 @@ void KonqPopupMenu::setup(KonqPopupFlags kpf)
         {
             if (d->m_itemFlags & KParts::BrowserExtension::ShowCreateDirectory)
             {
-                KAction *actNewDir = new KAction( i18n( "Create &Folder..." ), "folder_new", 0, TQT_TQOBJECT(this), TQT_SLOT( slotPopupNewDir() ), &m_ownActions, "newdir" );
+                TDEAction *actNewDir = new TDEAction( i18n( "Create &Folder..." ), "folder_new", 0, TQT_TQOBJECT(this), TQT_SLOT( slotPopupNewDir() ), &m_ownActions, "newdir" );
                 addAction( actNewDir );
                 addSeparator();
             }
         }
     } else if ( isIntoTrash ) {
         // Trashed item, offer restoring
-        act = new KAction( i18n( "&Restore" ), 0, TQT_TQOBJECT(this), TQT_SLOT( slotPopupRestoreTrashedItems() ), &m_ownActions, "restore" );
+        act = new TDEAction( i18n( "&Restore" ), 0, TQT_TQOBJECT(this), TQT_SLOT( slotPopupRestoreTrashedItems() ), &m_ownActions, "restore" );
         addAction( act );
     }
 
@@ -607,7 +607,7 @@ void KonqPopupMenu::setup(KonqPopupFlags kpf)
     }
     if ( isCurrentTrash )
     {
-        act = new KAction( i18n( "&Empty Trash Bin" ), "emptytrash", 0, TQT_TQOBJECT(this), TQT_SLOT( slotPopupEmptyTrashBin() ), &m_ownActions, "empytrash" );
+        act = new TDEAction( i18n( "&Empty Trash Bin" ), "emptytrash", 0, TQT_TQOBJECT(this), TQT_SLOT( slotPopupEmptyTrashBin() ), &m_ownActions, "empytrash" );
         KSimpleConfig trashConfig( "trashrc", true );
         trashConfig.setGroup( "Status" );
         act->setEnabled( !trashConfig.readBoolEntry( "Empty", true ) );
@@ -640,10 +640,10 @@ void KonqPopupMenu::setup(KonqPopupFlags kpf)
         else
            caption = i18n("&Bookmark This File");
 
-        act = new KAction( caption, "bookmark_add", 0, TQT_TQOBJECT(this), TQT_SLOT( slotPopupAddToBookmark() ), &m_ownActions, "bookmark_add" );
+        act = new TDEAction( caption, "bookmark_add", 0, TQT_TQOBJECT(this), TQT_SLOT( slotPopupAddToBookmark() ), &m_ownActions, "bookmark_add" );
         if (m_lstItems.count() > 1)
             act->setEnabled(false);
-        if (kapp->authorizeKAction("bookmarks"))
+        if (kapp->authorizeTDEAction("bookmarks"))
             addAction( act );
         if (bIsLink)
             addGroup( "linkactions" );
@@ -849,7 +849,7 @@ void KonqPopupMenu::setup(KonqPopupFlags kpf)
 
         TDETrader::OfferList offers;
 
-        if (kapp->authorizeKAction("openwith"))
+        if (kapp->authorizeTDEAction("openwith"))
         {
             TQString constraint = "Type == 'Application' and DesktopEntryName != 'kfmclient' and DesktopEntryName != 'kfmclient_dir' and DesktopEntryName != 'kfmclient_html'";
             TQString subConstraint = " and '%1' in ServiceTypes";
@@ -924,7 +924,7 @@ void KonqPopupMenu::setup(KonqPopupFlags kpf)
                     if ( menu == m_menuElement ) // no submenu -> prefix single offer
                         actionName = i18n( "Open with %1" ).arg( actionName );
 
-                    act = new KAction( actionName, (*it)->pixmap( KIcon::Small ), 0,
+                    act = new TDEAction( actionName, (*it)->pixmap( KIcon::Small ), 0,
                                        TQT_TQOBJECT(this), TQT_SLOT( slotRunService() ),
                                        &m_ownActions, nam.prepend( "appservice_" ) );
                     addAction( act, menu );
@@ -942,12 +942,12 @@ void KonqPopupMenu::setup(KonqPopupFlags kpf)
                 {
                     openWithActionName = i18n( "&Open With..." );
                 }
-                KAction *openWithAct = new KAction( openWithActionName, 0, TQT_TQOBJECT(this), TQT_SLOT( slotPopupOpenWith() ), &m_ownActions, "openwith" );
+                TDEAction *openWithAct = new TDEAction( openWithActionName, 0, TQT_TQOBJECT(this), TQT_SLOT( slotPopupOpenWith() ), &m_ownActions, "openwith" );
                 addAction( openWithAct, menu );
             }
             else // no app offers -> Open With...
             {
-                act = new KAction( i18n( "&Open With..." ), 0, TQT_TQOBJECT(this), TQT_SLOT( slotPopupOpenWith() ), &m_ownActions, "openwith" );
+                act = new TDEAction( i18n( "&Open With..." ), 0, TQT_TQOBJECT(this), TQT_SLOT( slotPopupOpenWith() ), &m_ownActions, "openwith" );
                 addAction( act );
             }
 
@@ -1001,7 +1001,7 @@ void KonqPopupMenu::setup(KonqPopupFlags kpf)
 
     if ( KPropertiesDialog::canDisplay( m_lstItems ) && (kpf & ShowProperties) )
     {
-        act = new KAction( i18n( "&Properties" ), 0, TQT_TQOBJECT(this), TQT_SLOT( slotPopupProperties() ),
+        act = new TDEAction( i18n( "&Properties" ), 0, TQT_TQOBJECT(this), TQT_SLOT( slotPopupProperties() ),
                            &m_ownActions, "properties" );
         addAction( act );
     }
@@ -1015,7 +1015,7 @@ void KonqPopupMenu::setup(KonqPopupFlags kpf)
         if ( KFileShare::authorization() == KFileShare::Authorized )
         {
             addSeparator();
-            act = new KAction( i18n("Share"), 0, TQT_TQOBJECT(this), TQT_SLOT( slotOpenShareFileDialog() ),
+            act = new TDEAction( i18n("Share"), 0, TQT_TQOBJECT(this), TQT_SLOT( slotOpenShareFileDialog() ),
                                &m_ownActions, "sharefile" );
             addAction( act );
         }
@@ -1146,10 +1146,10 @@ KPropertiesDialog* KonqPopupMenu::showPropertiesDialog()
     return new KPropertiesDialog( m_lstItems, d->m_parentWidget );
 }
 
-KAction *KonqPopupMenu::action( const TQDomElement &element ) const
+TDEAction *KonqPopupMenu::action( const TQDomElement &element ) const
 {
   TQCString name = element.attribute( attrName ).ascii();
-  KAction *res = m_ownActions.action( static_cast<const char *>(name) );
+  TDEAction *res = m_ownActions.action( static_cast<const char *>(name) );
 
   if ( !res )
     res = m_actions.action( static_cast<const char *>(name) );
@@ -1160,9 +1160,9 @@ KAction *KonqPopupMenu::action( const TQDomElement &element ) const
   return res;
 }
 
-KActionCollection *KonqPopupMenu::actionCollection() const
+TDEActionCollection *KonqPopupMenu::actionCollection() const
 {
-    return const_cast<KActionCollection *>( &m_ownActions );
+    return const_cast<TDEActionCollection *>( &m_ownActions );
 }
 
 TQString KonqPopupMenu::mimeType() const

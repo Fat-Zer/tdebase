@@ -248,7 +248,7 @@ KDE3.1 -> KDE3.2
 6. Advanced editing of XftConfig.
 7. Added help on XftConfig - from Danny Tholen (obiwan@mailmij.org) 
 8. Removed some memory leaks
-10. Default folders changed for non-root users. KFontinst will now (upon initial start-up) select the following:
+10. Default folders changed for non-root users. TDEFontinst will now (upon initial start-up) select the following:
 
      X fonts dir:    $TDEHOME/share/fonts
      XConfig file:   $TDEHOME/share/fonts/fontpaths
@@ -261,7 +261,7 @@ KDE3.1 -> KDE3.2
 
    ...Also to accomplish this, some changes are needed to 'starttde' - see file README.starttde
 
-11. Because of the above, when started as non-root, KFontinst will create Type1 and TrueType sub-folders in
+11. Because of the above, when started as non-root, TDEFontinst will create Type1 and TrueType sub-folders in
     $TDEHOME/share/fonts - if they do not already exist.
 12. Moved XftConfig stuff from a sub-page of settings tab into its own tab.
 13. Added question dialog if module is unloaded before system has been configured.
@@ -301,23 +301,23 @@ KDE3.1 -> KDE3.2
 11. Support more encodings - encodings combos now list standard encodings as well as those read from
     .enc(.gz) files.
 12. Internal AMF creator for Type1 and TrueType fonts - ttf2pt1 and pf2afm.ps are no longer used/supplied.
-13. Removed the 'Process AFMs' & 'Delete AFMs' options - all AFMs are created be KFontinst, therefore they
+13. Removed the 'Process AFMs' & 'Delete AFMs' options - all AFMs are created be TDEFontinst, therefore they
     should be OK for StarOffice and AbiWord.
 14. If a writable XF86Config file is found - then complete folders may be installed, and folders in the X11
     directory may be uninstalled or disabled (i.e. the folder is not deleted, but it's entry is removed from
     the XF86Config file).
-15. No longer supply .enc files with KFontinst - they should be provided by the distro.
+15. No longer supply .enc files with TDEFontinst - they should be provided by the distro.
 
 0.9.1->0.9.2
 ============
 1. Removed a bug where the "Configure System" menu entry was always disabled!
 2. Spelling error in Settings dialog.
 3. t1lib has problems with some of the fonts supplied with Adobe acrobat - therefore, if t1lib fails to load the
-   font, then KFontinst itself will try to read the header information (although no preview will be available,
+   font, then TDEFontinst itself will try to read the header information (although no preview will be available,
    everything else should still work).
-4. Fixed multiple installing of programs in other/ directory. For instance KFontinst's version of ttmkfdir
+4. Fixed multiple installing of programs in other/ directory. For instance TDEFontinst's version of ttmkfdir
    was being installed into $(PREFIX) (usually /usr/bin) as well as $(KDE_DATADIR)/kfontinst - this was incorrect
-   as KFontinst will only use the version in $(KDE_DATADIR)/kfontinst, and it was possible that a previous version
+   as TDEFontinst will only use the version in $(KDE_DATADIR)/kfontinst, and it was possible that a previous version
    of ttmkfdir (such as that supplied with XFree86) would have been overwritten.
 5. Fixed bug where the user was allowed to select (and subsequently install) fonts which could not be loaded correctly.
 6. Added the ability to enter a custom preview string.

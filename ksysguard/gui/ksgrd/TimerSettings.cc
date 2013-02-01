@@ -58,7 +58,7 @@ TimerSettings::TimerSettings( TQWidget *parent, const char *name )
 
   mUseGlobalUpdate->setChecked( true );
 
-  KAcceleratorManager::manage( this );
+  TDEAcceleratorManager::manage( this );
 }
 
 TimerSettings::~TimerSettings()

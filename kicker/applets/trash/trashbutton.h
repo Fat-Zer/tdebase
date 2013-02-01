@@ -53,7 +53,7 @@ protected slots:
 	void slotPaste();
 
 private:
-	KActionCollection mActions;
+	TDEActionCollection mActions;
 	KFileItem mFileItem;
 };
 

@@ -118,7 +118,7 @@ HostConnector::HostConnector( TQWidget *parent, const char *name )
   connect( mHostNames->lineEdit(),  TQT_SIGNAL( textChanged ( const TQString & ) ),
            this, TQT_SLOT(  slotHostNameChanged( const TQString & ) ) );
   enableButtonOK( !mHostNames->lineEdit()->text().isEmpty() );
-  KAcceleratorManager::manage( this );
+  TDEAcceleratorManager::manage( this );
 }
 
 HostConnector::~HostConnector()

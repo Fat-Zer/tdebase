@@ -146,8 +146,8 @@ static TQPixmap appIcon(const TQString &iconName)
 }
 
 
-TreeView::TreeView( bool controlCenter, KActionCollection *ac, TQWidget *parent, const char *name )
-    : KListView(parent, name), m_ac(ac), m_rmb(0), m_clipboard(0),
+TreeView::TreeView( bool controlCenter, TDEActionCollection *ac, TQWidget *parent, const char *name )
+    : TDEListView(parent, name), m_ac(ac), m_rmb(0), m_clipboard(0),
       m_clipboardFolderInfo(0), m_clipboardEntryInfo(0),
       m_controlCenter(controlCenter), m_layoutDirty(false)
 {
@@ -209,7 +209,7 @@ void TreeView::setViewMode(bool showHidden)
 
     // setup rmb menu
     m_rmb = new TQPopupMenu(this);
-    KAction *action;
+    TDEAction *action;
 
     action = m_ac->action("edit_cut");
     if(action) {
@@ -1574,7 +1574,7 @@ bool TreeView::dirty()
     return m_layoutDirty || m_rootFolder->hasDirt() || m_menuFile->dirty() || isLayoutDirty();
 }
 
-void TreeView::findServiceShortcut(const KShortcut&cut, KService::Ptr &service)
+void TreeView::findServiceShortcut(const TDEShortcut&cut, KService::Ptr &service)
 {
     service = m_rootFolder->findServiceShortcut(cut);
 }

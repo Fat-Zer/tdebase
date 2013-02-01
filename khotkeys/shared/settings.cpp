@@ -114,7 +114,7 @@ bool Settings::read_settings( TDEConfig& cfg_P, bool include_disabled_P, ImportT
     delete gestures_exclude;
     gestures_exclude = new Windowdef_list( cfg_P );
 	cfg_P.setGroup( "Voice" );
-	voice_shortcut=KShortcut( cfg_P.readEntry("Shortcut" , "")  );
+	voice_shortcut=TDEShortcut( cfg_P.readEntry("Shortcut" , "")  );
     return true;
     }
 
@@ -252,12 +252,12 @@ void Settings::read_settings_v1( TDEConfig& cfg_P )
                 menuentries->set_conditions( new Condition_list( "", menuentries ));
                 }
             ( void ) new Menuentry_shortcut_action_data( menuentries, name, "",
-                KShortcut( shortcut ), run );
+                TDEShortcut( shortcut ), run );
             }
         else
             {
             ( void ) new Command_url_shortcut_action_data( actions, name, "",
-                KShortcut( shortcut ), run );
+                TDEShortcut( shortcut ), run );
             }
         }
     }

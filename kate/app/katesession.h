@@ -32,7 +32,7 @@
 class KateSessionManager;
 
 class KDirWatch;
-class KListView;
+class TDEListView;
 class KPushButton;
 
 class TQCheckBox;
@@ -326,7 +326,7 @@ class KateSessionChooser : public KDialogBase
     void selectionChanged ();
 
   private:
-    KListView *m_sessions;
+    TDEListView *m_sessions;
     TQCheckBox *m_useLast;
 };
 
@@ -357,7 +357,7 @@ class KateSessionOpenDialog : public KDialogBase
     void slotUser2 ();
 
   private:
-    KListView *m_sessions;
+    TDEListView *m_sessions;
 };
 
 class KateSessionManageDialog : public KDialogBase
@@ -396,12 +396,12 @@ class KateSessionManageDialog : public KDialogBase
     void updateSessionList ();
 
   private:
-    KListView *m_sessions;
+    TDEListView *m_sessions;
     KPushButton *m_rename;
     KPushButton *m_del;
 };
 
-class KateSessionsAction : public KActionMenu
+class KateSessionsAction : public TDEActionMenu
 {
   Q_OBJECT
 

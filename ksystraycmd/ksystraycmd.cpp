@@ -230,7 +230,7 @@ void KSysTrayCmd::quit()
 
 void KSysTrayCmd::execContextMenu( const TQPoint &pos )
 {
-    KPopupMenu *menu = new KPopupMenu();
+    TDEPopupMenu *menu = new TDEPopupMenu();
     menu->insertTitle( *pixmap(), i18n( "KSysTrayCmd" ) );
     int hideShowId = menu->insertItem( isVisible ? i18n( "&Hide" ) : i18n( "&Restore" ) );
     int undockId = menu->insertItem( SmallIcon("close"), i18n( "&Undock" ) );

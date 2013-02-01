@@ -41,7 +41,7 @@ K_EXPORT_KICKER_MENUEXT(recentdocs, RecentDocsMenu)
 
 RecentDocsMenu::RecentDocsMenu(TQWidget *parent, const char *name,
                                const TQStringList &/*args*/)
-    : KPanelMenu(KRecentDocument::recentDocumentDirectory(), parent, name)
+    : KPanelMenu(TDERecentDocument::recentDocumentDirectory(), parent, name)
 {
 }
 
@@ -55,7 +55,7 @@ void RecentDocsMenu::initialize() {
 	insertItem(SmallIconSet("history_clear"), i18n("Clear History"), this, TQT_SLOT(slotClearHistory()));
 	insertSeparator();
 
-	_fileList = KRecentDocument::recentDocuments();
+	_fileList = TDERecentDocument::recentDocuments();
 
 	if (_fileList.isEmpty()) {
 		insertItem(i18n("No Entries"), 0);
@@ -90,7 +90,7 @@ void RecentDocsMenu::initialize() {
 }
 
 void RecentDocsMenu::slotClearHistory() {
-    KRecentDocument::clear();
+    TDERecentDocument::clear();
     reinitialize();
 }
 

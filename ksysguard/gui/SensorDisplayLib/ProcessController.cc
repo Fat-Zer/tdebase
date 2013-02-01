@@ -78,7 +78,7 @@ ProcessController::ProcessController(TQWidget* parent, const char* name, const T
 	pList = new ProcessList(this, "pList");
 	TQ_CHECK_PTR(pList);
 	pList->setShowSortIndicator(true);
-	pListSearchLine = new KListViewSearchLineWidget(pList, this, "process_list_search_line");
+	pListSearchLine = new TDEListViewSearchLineWidget(pList, this, "process_list_search_line");
 	gmSearch->addWidget(pListSearchLine, 1);
 
 	connect(pList, TQT_SIGNAL(killProcess(int, int)),

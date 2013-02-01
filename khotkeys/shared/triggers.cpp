@@ -117,7 +117,7 @@ void Trigger_list::activate( bool activate_P )
 
 // Shortcut_trigger
 
-Shortcut_trigger::Shortcut_trigger( Action_data* data_P, const KShortcut& shortcut_P )
+Shortcut_trigger::Shortcut_trigger( Action_data* data_P, const TDEShortcut& shortcut_P )
     : Trigger( data_P ), _shortcut( shortcut_P )
     {
     keyboard_handler->insert_item( shortcut(), this );
@@ -154,7 +154,7 @@ const TQString Shortcut_trigger::description() const
     // CHECKME i18n pro toString() ?
     }
 
-bool Shortcut_trigger::handle_key( const KShortcut& shortcut_P )
+bool Shortcut_trigger::handle_key( const TDEShortcut& shortcut_P )
     {
     if( shortcut() == shortcut_P )
         {

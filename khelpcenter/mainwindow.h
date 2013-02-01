@@ -22,7 +22,7 @@ namespace KHC {
 
 class View;
 
-class MainWindow : public KMainWindow, public DCOPObject
+class MainWindow : public TDEMainWindow, public DCOPObject
 {
     Q_OBJECT
     K_DCOP
@@ -97,8 +97,8 @@ private:
     View *mDoc;
     Navigator *mNavigator;
 
-    KAction *mLastSearchAction;
-    KAction *mCopyText;
+    TDEAction *mLastSearchAction;
+    TDEAction *mCopyText;
     LogDialog *mLogDialog;
 };
 

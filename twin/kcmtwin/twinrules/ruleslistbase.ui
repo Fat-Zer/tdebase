@@ -19,7 +19,7 @@
         <property name="margin">
             <number>0</number>
         </property>
-        <widget class="KListBox" row="0" column="0" rowspan="6" colspan="1">
+        <widget class="TDEListBox" row="0" column="0" rowspan="6" colspan="1">
             <property name="name">
                 <cstring>rules_listbox</cstring>
             </property>

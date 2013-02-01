@@ -32,8 +32,8 @@
 #include "iccconfigbase.h"
 
 class TDEConfig;
-class KPopupMenu;
-class KListViewItem;
+class TDEPopupMenu;
+class TDEListViewItem;
 
 class KICCConfig : public TDECModule, public DCOPObject
 {

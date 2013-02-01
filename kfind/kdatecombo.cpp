@@ -30,7 +30,7 @@ KDateCombo::KDateCombo(const TQDate & date, TQWidget *parent, const char *name) 
 void KDateCombo::initObject(const TQDate & date, TQWidget *, const char *)
 {
   clearValidator();
-  popupFrame = new KPopupFrame(this, "popupFrame");
+  popupFrame = new TDEPopupFrame(this, "popupFrame");
   popupFrame->installEventFilter(this);
   datePicker = new KDatePicker(popupFrame, date, "datePicker");
   datePicker->setMinimumSize(datePicker->sizeHint());

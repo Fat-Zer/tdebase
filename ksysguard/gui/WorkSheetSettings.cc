@@ -99,7 +99,7 @@ WorkSheetSettings::WorkSheetSettings( TQWidget* parent, const char* name )
   TQWhatsThis::add( mInterval, i18n( "All displays of the sheet are updated at the rate specified here." ) );
   TQToolTip::add( mSheetTitle, i18n( "Enter the title of the worksheet here." ) );
 
-  KAcceleratorManager::manage( page );
+  TDEAcceleratorManager::manage( page );
 
   mSheetTitle->setFocus();
 

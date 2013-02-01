@@ -43,7 +43,7 @@ DomainListView::DomainListView(TDEConfig *config,const TQString &title,
   thisLayout->setSpacing(KDialog::spacingHint());
   thisLayout->setMargin(KDialog::marginHint());
 
-  domainSpecificLV = new KListView(this);
+  domainSpecificLV = new TDEListView(this);
   domainSpecificLV->addColumn(i18n("Host/Domain"));
   domainSpecificLV->addColumn(i18n("Policy"), 100);
   connect(domainSpecificLV,TQT_SIGNAL(doubleClicked(TQListViewItem *)), TQT_SLOT(changePressed()));

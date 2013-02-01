@@ -219,8 +219,8 @@ BasicTab::BasicTab( TQWidget *parent, const char *name )
     //connect( _keyButton, TQT_SIGNAL( clicked()), this, TQT_SLOT( keyButtonPressed()));
     _keyEdit = new KKeyButton(general_group_keybind);
     grid_keybind->addWidget(new TQLabel(_keyEdit, i18n("Current shortcut &key:"), general_group_keybind), 0, 0);
-    connect( _keyEdit, TQT_SIGNAL(capturedShortcut(const KShortcut&)),
-             this, TQT_SLOT(slotCapturedShortcut(const KShortcut&)));
+    connect( _keyEdit, TQT_SIGNAL(capturedShortcut(const TDEShortcut&)),
+             this, TQT_SLOT(slotCapturedShortcut(const TDEShortcut&)));
     grid_keybind->addWidget(_keyEdit, 0, 1);
     //grid_keybind->addWidget(_keyButton, 0, 2 );
 
@@ -321,7 +321,7 @@ void BasicTab::setEntryInfo(MenuEntryInfo *entryInfo)
        _iconButton->setIcon(TQString::null);
 
        // key binding part
-       _keyEdit->setShortcut( KShortcut(), false );
+       _keyEdit->setShortcut( TDEShortcut(), false );
        _execEdit->lineEdit()->setText(TQString::null);
        _systrayCB->setChecked(false);
 
@@ -463,7 +463,7 @@ void BasicTab::slotExecSelected()
         _execEdit->lineEdit()->setText(TDEProcess::quote(path));
 }
 
-void BasicTab::slotCapturedShortcut(const KShortcut& cut)
+void BasicTab::slotCapturedShortcut(const TDEShortcut& cut)
 {
     if (signalsBlocked())
        return;

@@ -23,7 +23,7 @@
 
 #include <tdecmodule.h>
 
-class KListView;
+class TDEListView;
 
 class TQStringList;
 class TQPushButton;
@@ -53,8 +53,8 @@ protected slots:
         void setAutoloadEnabled(TDEConfig *config, const TQString &filename, bool b);
 
 private:
-	KListView *_lvLoD;
-	KListView *_lvStartup;
+	TDEListView *_lvLoD;
+	TDEListView *_lvStartup;
 	TQPushButton *_pbStart;
 	TQPushButton *_pbStop;
 	

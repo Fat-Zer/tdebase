@@ -36,7 +36,7 @@ class KFileItem;
 class KonqBaseListViewWidget;
 
 
-class KonqBaseListViewItem : public KListViewItem
+class KonqBaseListViewItem : public TDEListViewItem
 {
    public:
       KonqBaseListViewItem( KonqBaseListViewWidget *_listViewWidget, 

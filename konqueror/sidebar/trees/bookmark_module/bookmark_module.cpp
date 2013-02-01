@@ -47,30 +47,30 @@ KonqSidebarBookmarkModule::KonqSidebarBookmarkModule( KonqSidebarTree * parentTr
 
     connect(tree(), TQT_SIGNAL(moved(TQListViewItem*,TQListViewItem*,TQListViewItem*)),
             this,   TQT_SLOT(slotMoved(TQListViewItem*,TQListViewItem*,TQListViewItem*)));
-    connect(tree(), TQT_SIGNAL(dropped(KListView*,TQDropEvent*,TQListViewItem*,TQListViewItem*)),
-            this,   TQT_SLOT(slotDropped(KListView*,TQDropEvent*,TQListViewItem*,TQListViewItem*)));
+    connect(tree(), TQT_SIGNAL(dropped(TDEListView*,TQDropEvent*,TQListViewItem*,TQListViewItem*)),
+            this,   TQT_SLOT(slotDropped(TDEListView*,TQDropEvent*,TQListViewItem*,TQListViewItem*)));
 
     connect(tree(), TQT_SIGNAL(expanded(TQListViewItem*)),
             this,   TQT_SLOT(slotOpenChange(TQListViewItem*)));
     connect(tree(), TQT_SIGNAL(collapsed(TQListViewItem*)),
             this,   TQT_SLOT(slotOpenChange(TQListViewItem*)));
 
-    m_collection = new KActionCollection( this, "bookmark actions" );
-    (void) new KAction( i18n("&Create New Folder"), "folder_new", 0, this,
+    m_collection = new TDEActionCollection( this, "bookmark actions" );
+    (void) new TDEAction( i18n("&Create New Folder"), "folder_new", 0, this,
                         TQT_SLOT( slotCreateFolder() ), m_collection, "create_folder");
-    (void) new KAction( i18n("Delete Folder"), "editdelete", 0, this,
+    (void) new TDEAction( i18n("Delete Folder"), "editdelete", 0, this,
                         TQT_SLOT( slotDelete() ), m_collection, "delete_folder");
-    (void) new KAction( i18n("Delete Bookmark"), "editdelete", 0, this,
+    (void) new TDEAction( i18n("Delete Bookmark"), "editdelete", 0, this,
                         TQT_SLOT( slotDelete() ), m_collection, "delete_bookmark");
-    (void) new KAction( i18n("Properties"), "edit", 0, this,
+    (void) new TDEAction( i18n("Properties"), "edit", 0, this,
                         TQT_SLOT( slotProperties() ), m_collection, "item_properties");
-    (void) new KAction( i18n("Open in New Window"), "window_new", 0, this,
+    (void) new TDEAction( i18n("Open in New Window"), "window_new", 0, this,
                         TQT_SLOT( slotOpenNewWindow() ), m_collection, "open_window");
-    (void) new KAction( i18n("Open in New Tab"), "tab_new", 0, this,
+    (void) new TDEAction( i18n("Open in New Tab"), "tab_new", 0, this,
                         TQT_SLOT( slotOpenTab() ), m_collection, "open_tab");
-    (void) new KAction( i18n("Open Folder in Tabs"), "tab_new", 0, this,
+    (void) new TDEAction( i18n("Open Folder in Tabs"), "tab_new", 0, this,
                         TQT_SLOT( slotOpenTab() ), m_collection, "folder_open_tabs");
-    (void) new KAction( i18n("Copy Link Address"), "editcopy", 0, this,
+    (void) new TDEAction( i18n("Copy Link Address"), "editcopy", 0, this,
                         TQT_SLOT( slotCopyLocation() ), m_collection, "copy_location");
 
     KStdAction::editBookmarks( KonqBookmarkManager::self(), TQT_SLOT( slotEditBookmarks() ),
@@ -159,7 +159,7 @@ void KonqSidebarBookmarkModule::slotMoved(TQListViewItem *i, TQListViewItem*, TQ
 
     KBookmarkGroup oldParentGroup = bookmark.parentGroup();
     KBookmarkGroup parentGroup;
-    // try to get the parent group (assume that the TQListViewItem has been reparented by KListView)...
+    // try to get the parent group (assume that the TQListViewItem has been reparented by TDEListView)...
     // if anything goes wrong, use the root.
     if (item->parent()) {
         bool error = false;
@@ -178,7 +178,7 @@ void KonqSidebarBookmarkModule::slotMoved(TQListViewItem *i, TQListViewItem*, TQ
             parentGroup = KonqBookmarkManager::self()->root();
     } else {
         // No parent! This means the user dropped it before the top level item
-        // And KListView has moved the item there, we need to correct it
+        // And TDEListView has moved the item there, we need to correct it
         tree()->moveItem(item, m_topLevelItem, 0L);
         parentGroup = KonqBookmarkManager::self()->root();
     }
@@ -223,7 +223,7 @@ void KonqSidebarBookmarkModule::slotMoved(TQListViewItem *i, TQListViewItem*, TQ
     }
 }
 
-void KonqSidebarBookmarkModule::slotDropped(KListView *, TQDropEvent *e, TQListViewItem *parent, TQListViewItem *after)
+void KonqSidebarBookmarkModule::slotDropped(TDEListView *, TQDropEvent *e, TQListViewItem *parent, TQListViewItem *after)
 {
     if (!KBookmarkDrag::canDecode(e))
         return;

@@ -60,7 +60,7 @@
 #include <assert.h>
 
 KPagerMainWindow::KPagerMainWindow(TQWidget *parent, const char *name)
-	: DCOPObject("KPagerIface"), KMainWindow(parent, name)
+	: DCOPObject("KPagerIface"), TDEMainWindow(parent, name)
 {
     m_reallyClose=false;
 
@@ -144,7 +144,7 @@ bool KPagerMainWindow::queryClose()
 void KPagerMainWindow::showEvent( TQShowEvent *ev )
 {
   timeout->stop();
-  KMainWindow::showEvent(ev); 
+  TDEMainWindow::showEvent(ev); 
 }
 
 void KPagerMainWindow::reallyClose()
@@ -319,7 +319,7 @@ void KPager::showPopupMenu( WId wid, TQPoint pos)
         m_winfo = KWin::windowInfo(wid);
 
         if (!m_mnu) {
-            m_mnu = new KPopupMenu(this);
+            m_mnu = new TDEPopupMenu(this);
 
             m_mnu->insertTitle( TQString::fromUtf8("KPager"), 1);
             m_mnu->setCheckable(true);

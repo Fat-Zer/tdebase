@@ -26,7 +26,7 @@
 #include <tqstringlist.h>
 #include <kabc/phonenumber.h>
 
-class KListView;
+class TDEListView;
 class AddressBook;
 class TQPushButton;
 
@@ -56,7 +56,7 @@ private:
 		TQString           m_enterprise;
 	};
 
-	KListView*                  m_list;
+	TDEListView*                  m_list;
 	TQMap<TQString,FaxABEntry>    m_entries;
 	TQPushButton*                m_ok;
 };

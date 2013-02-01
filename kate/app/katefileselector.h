@@ -33,8 +33,8 @@
 
 class KateMainWindow;
 class KateViewManager;
-class KActionCollection;
-class KActionSelector;
+class TDEActionCollection;
+class TDEActionSelector;
 class KFileView;
 
 /*
@@ -46,7 +46,7 @@ class KFileView;
 */
 
 /* I think this fix for not moving toolbars is better */
-class KateFileSelectorToolBar: public KToolBar
+class KateFileSelectorToolBar: public TDEToolBar
 {
 	Q_OBJECT
 public:
@@ -88,7 +88,7 @@ class KateFileSelector : public TQVBox
     void setupToolbar( TDEConfig * );
     void setView( KFile::FileView );
     KDirOperator *dirOperator(){ return dir; }
-    KActionCollection *actionCollection() { return mActionCollection; };
+    TDEActionCollection *actionCollection() { return mActionCollection; };
 
   public slots:
     void slotFilterChange(const TQString&);
@@ -113,11 +113,11 @@ class KateFileSelector : public TQVBox
 
   private:
     class KateFileSelectorToolBar *toolbar;
-    KActionCollection *mActionCollection;
+    TDEActionCollection *mActionCollection;
     class KBookmarkHandler *bookmarkHandler;
     KURLComboBox *cmbPath;
     KDirOperator * dir;
-    class KAction *acSyncDir;
+    class TDEAction *acSyncDir;
     KHistoryCombo * filter;
     class TQToolButton *btnFilter;
 
@@ -159,7 +159,7 @@ class KFSConfigPage : public Kate::ConfigPage {
     void init();
 
     KateFileSelector *fileSelector;
-    KActionSelector *acSel;
+    TDEActionSelector *acSel;
     class TQSpinBox *sbPathHistLength, *sbFilterHistLength;
     class TQCheckBox *cbSyncActive, *cbSyncShow;
     class TQCheckBox *cbSesLocation, *cbSesFilter;

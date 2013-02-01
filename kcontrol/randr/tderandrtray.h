@@ -28,7 +28,7 @@
 #include <tdehardwaredevices.h>
 
 class KHelpMenu;
-class KPopupMenu;
+class TDEPopupMenu;
 
 class KRandRSystemTray :  public KSystemTray, public KRandrSimpleAPI
 {
@@ -38,7 +38,7 @@ public:
 	KRandRSystemTray(TQWidget* parent = 0, const char *name = 0);
 	TDEGlobalAccel *globalKeys;
 
-	virtual void contextMenuAboutToShow(KPopupMenu* menu);
+	virtual void contextMenuAboutToShow(TDEPopupMenu* menu);
 
 	void configChanged();
 
@@ -64,8 +64,8 @@ protected:
 	void resizeEvent ( TQResizeEvent * );
 
 private:
-	void populateMenu(KPopupMenu* menu);
-	void addOutputMenu(KPopupMenu* menu);
+	void populateMenu(TDEPopupMenu* menu);
+	void addOutputMenu(TDEPopupMenu* menu);
 	int GetDefaultResolutionParameter();
 	int GetHackResolutionParameter();
 	void findPrimaryDisplay();
@@ -73,7 +73,7 @@ private:
 
 	bool m_popupUp;
 	KHelpMenu* m_help;
-	TQPtrList<KPopupMenu> m_screenPopups;
+	TQPtrList<TDEPopupMenu> m_screenPopups;
 
 	Display *randr_display;
 	ScreenInfo *randr_screen_info;
@@ -82,7 +82,7 @@ private:
 	int last_known_x;
 	int last_known_y;
 
-	KPopupMenu* m_menu;
+	TDEPopupMenu* m_menu;
 	KSimpleConfig *r_config;
 	KSimpleConfig *t_config;
 

@@ -40,7 +40,7 @@ class KDE_EXPORT Voice  : public TQObject
 		void unregister_handler( Voice_trigger* );
 //		bool x11Event( XEvent* e );
 		
-		void set_shortcut( const KShortcut &k);
+		void set_shortcut( const TDEShortcut &k);
 		
 		/**
 		 * return TQString::null is a new signature is far enough from others signature
@@ -69,7 +69,7 @@ class KDE_EXPORT Voice  : public TQObject
 		TQValueList<Voice_trigger *> _references;
 		SoundRecorder *_recorder;
 		
-		KShortcut _shortcut;
+		TDEShortcut _shortcut;
 		TDEGlobalAccel *_kga;
 		
 		TQTimer *_timer;

@@ -35,7 +35,7 @@
 
 
 ModuleIconView::ModuleIconView(ConfigModuleList *list, TQWidget * parent, const char * name)
-  : KListView(parent, name)
+  : TDEListView(parent, name)
   , _path(KCGlobal::baseGroup())
   , _modules(list)
 {
@@ -155,7 +155,7 @@ void ModuleIconView::keyPressEvent(TQKeyEvent *e)
   }
   else
   {
-     KListView::keyPressEvent(e);
+     TDEListView::keyPressEvent(e);
   }
 }
 

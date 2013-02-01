@@ -44,7 +44,7 @@ TDMFontWidget::TDMFontWidget(TQWidget *parent, const char *name)
 {
   TQGridLayout *ml = new TQGridLayout(this, 5, 2, KDialog::marginHint(), KDialog::spacingHint());
   TQLabel *label = new TQLabel(i18n("&General:"), this);
-  stdFontChooser = new KFontRequester(this);
+  stdFontChooser = new TDEFontRequester(this);
   label->setBuddy(stdFontChooser);
   TQWhatsThis::add( stdFontChooser, i18n("This changes the font which is used for all the text in the login manager except for the greeting and failure messages.") );
   connect(stdFontChooser, TQT_SIGNAL(fontSelected(const TQFont&)),this,TQT_SLOT(configChanged()));
@@ -52,7 +52,7 @@ TDMFontWidget::TDMFontWidget(TQWidget *parent, const char *name)
   ml->addWidget(stdFontChooser, 1, 1);
 
   label = new TQLabel(i18n("&Failures:"), this);
-  failFontChooser = new KFontRequester(this);
+  failFontChooser = new TDEFontRequester(this);
   label->setBuddy(failFontChooser);
   TQWhatsThis::add( failFontChooser, i18n("This changes the font which is used for failure messages in the login manager.") );
   connect(failFontChooser, TQT_SIGNAL(fontSelected(const TQFont&)),this,TQT_SLOT(configChanged()));
@@ -60,7 +60,7 @@ TDMFontWidget::TDMFontWidget(TQWidget *parent, const char *name)
   ml->addWidget(failFontChooser, 2, 1);
 
   label = new TQLabel(i18n("Gree&ting:"), this);
-  greetingFontChooser = new KFontRequester(this);
+  greetingFontChooser = new TDEFontRequester(this);
   label->setBuddy(greetingFontChooser);
   TQWhatsThis::add( greetingFontChooser, i18n("This changes the font which is used for the login manager's greeting.") );
   connect(greetingFontChooser, TQT_SIGNAL(fontSelected(const TQFont&)),this,TQT_SLOT(configChanged()));

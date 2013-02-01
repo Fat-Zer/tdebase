@@ -161,7 +161,7 @@
                                     <string>&amp;Up</string>
                                 </property>
                             </widget>
-                            <widget class="KListBox" row="1" column="0" rowspan="4" colspan="2">
+                            <widget class="TDEListBox" row="1" column="0" rowspan="4" colspan="2">
                                 <property name="name">
                                     <cstring>dirList</cstring>
                                 </property>

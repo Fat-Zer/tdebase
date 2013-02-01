@@ -41,7 +41,7 @@ that is intentional :-]
 
 
 ModuleMenu::ModuleMenu(ConfigModuleList *list, TQWidget * parent, const char * name)
-  : KPopupMenu(parent, name)
+  : TDEPopupMenu(parent, name)
   , _modules(list)
 {
   // use large id's to start with...
@@ -52,7 +52,7 @@ ModuleMenu::ModuleMenu(ConfigModuleList *list, TQWidget * parent, const char * n
   connect(this, TQT_SIGNAL(activated(int)), this, TQT_SLOT(moduleSelected(int)));
 }
 
-void ModuleMenu::fill(KPopupMenu *parentMenu, const TQString &parentPath)
+void ModuleMenu::fill(TDEPopupMenu *parentMenu, const TQString &parentPath)
 {
   TQStringList subMenus = _modules->submenus(parentPath);
   for(TQStringList::ConstIterator it = subMenus.begin();
@@ -64,7 +64,7 @@ void ModuleMenu::fill(KPopupMenu *parentMenu, const TQString &parentPath)
         continue;
      
      // create new menu
-     KPopupMenu *menu = new KPopupMenu(parentMenu);
+     TDEPopupMenu *menu = new TDEPopupMenu(parentMenu);
      connect(menu, TQT_SIGNAL(activated(int)), this, TQT_SLOT(moduleSelected(int)));
 
      // Item names may contain ampersands. To avoid them being converted to 

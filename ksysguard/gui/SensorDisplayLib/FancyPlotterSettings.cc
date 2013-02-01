@@ -226,7 +226,7 @@ FancyPlotterSettings::FancyPlotterSettings( TQWidget* parent, const char* name )
   pageLayout->setRowStretch( 2, 1 );
   pageLayout->setRowStretch( 5, 1 );
 
-  mSensorView = new KListView( page );
+  mSensorView = new TDEListView( page );
   mSensorView->addColumn("" , 0);
   mSensorView->addColumn( i18n( "Host" ) );
   mSensorView->addColumn( i18n( "Sensor" ) );
@@ -282,7 +282,7 @@ FancyPlotterSettings::FancyPlotterSettings( TQWidget* parent, const char* name )
   connect( mMoveDownButton, TQT_SIGNAL( clicked() ), TQT_SLOT( moveDownSensor() ) );
   connect ( mSensorView, TQT_SIGNAL( doubleClicked( TQListViewItem *, const TQPoint &, int )), TQT_SLOT(editSensor()));
 
-  KAcceleratorManager::manage( this );
+  TDEAcceleratorManager::manage( this );
 }
 
 FancyPlotterSettings::~FancyPlotterSettings()

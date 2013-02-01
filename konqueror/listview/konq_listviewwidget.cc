@@ -58,7 +58,7 @@ ColumnInfo::ColumnInfo()
 
 
 void ColumnInfo::setData(const TQString& n, const TQString& desktopName, int kioUds,
-                         KToggleAction* someAction, int theWidth)
+                         TDEToggleAction* someAction, int theWidth)
 {
    displayInColumn=-1;
    name=n;
@@ -71,7 +71,7 @@ void ColumnInfo::setData(const TQString& n, const TQString& desktopName, int kio
 }
 
 void ColumnInfo::setData(const TQString& n, const TQString& desktopName, int kioUds,
-                         TQVariant::Type t, KToggleAction* someAction, int theWidth)
+                         TQVariant::Type t, TDEToggleAction* someAction, int theWidth)
 {
    displayInColumn=-1;
    name=n;
@@ -85,7 +85,7 @@ void ColumnInfo::setData(const TQString& n, const TQString& desktopName, int kio
 
 
 KonqBaseListViewWidget::KonqBaseListViewWidget( KonqListView *parent, TQWidget *parentWidget)
-   : KListView(parentWidget)
+   : TDEListView(parentWidget)
    ,sortedByColumn(0)
    ,m_pBrowserView(parent)
    ,m_dirLister(new KDirLister( true /*m_showIcons==false*/))
@@ -111,7 +111,7 @@ KonqBaseListViewWidget::KonqBaseListViewWidget( KonqListView *parent, TQWidget *
 
    m_bTopLevelComplete  = true;
 
-   //Adjust KListView behaviour
+   //Adjust TDEListView behaviour
    setMultiSelection(true);
    setSelectionModeExt( FileManager );
    setDragEnabled(true);
@@ -421,7 +421,7 @@ void KonqBaseListViewWidget::contentsMousePressEvent( TQMouseEvent *e )
          static_cast<KonqBaseListViewItem*>( itemAt( vp ) ) : 0L;
 
    if ( item ) {
-      KListView::contentsMousePressEvent( e );
+      TDEListView::contentsMousePressEvent( e );
       }
    else {
       if ( e->button() == Qt::LeftButton )
@@ -461,7 +461,7 @@ void KonqBaseListViewWidget::contentsMouseReleaseEvent( TQMouseEvent *e )
    }
 
    delete m_selected; m_selected = 0;
-   KListView::contentsMouseReleaseEvent( e );
+   TDEListView::contentsMouseReleaseEvent( e );
 }
 
 void KonqBaseListViewWidget::contentsMouseMoveEvent( TQMouseEvent *e )
@@ -505,7 +505,7 @@ void KonqBaseListViewWidget::contentsMouseMoveEvent( TQMouseEvent *e )
       }
    }
 
-   KListView::contentsMouseMoveEvent( e );
+   TDEListView::contentsMouseMoveEvent( e );
 }
 
 void KonqBaseListViewWidget::contentsWheelEvent( TQWheelEvent *e )
@@ -521,7 +521,7 @@ void KonqBaseListViewWidget::contentsWheelEvent( TQWheelEvent *e )
 
    reportItemCounts();
    m_pBrowserView->emitMouseOver( 0 );
-   KListView::contentsWheelEvent( e );
+   TDEListView::contentsWheelEvent( e );
 }
 
 void KonqBaseListViewWidget::leaveEvent( TQEvent *e )
@@ -537,7 +537,7 @@ void KonqBaseListViewWidget::leaveEvent( TQEvent *e )
 
    m_fileTip->setItem( 0 );
 
-   KListView::leaveEvent( e );
+   TDEListView::leaveEvent( e );
 }
 
 void KonqBaseListViewWidget::drawRubber( TQPainter *p )
@@ -742,7 +742,7 @@ void KonqBaseListViewWidget::slotAutoScroll()
 void KonqBaseListViewWidget::viewportPaintEvent( TQPaintEvent *e )
 {
    
-   KListView::viewportPaintEvent( e );
+   TDEListView::viewportPaintEvent( e );
    
    TQPainter p( viewport() );
    drawRubber( &p );
@@ -751,7 +751,7 @@ void KonqBaseListViewWidget::viewportPaintEvent( TQPaintEvent *e )
 
 void KonqBaseListViewWidget::viewportResizeEvent(TQResizeEvent * e)
 {
-   KListView::viewportResizeEvent(e);
+   TDEListView::viewportResizeEvent(e);
    emit viewportAdjusted();
 }
 
@@ -861,7 +861,7 @@ void KonqBaseListViewWidget::slotItemRenamed( TQListViewItem *item, const TQStri
    Q_ASSERT( item != 0 );
 
    // The correct behavior is to show the old name until the rename has successfully
-   // completed. Unfortunately, KListView forces us to allow the text to be changed
+   // completed. Unfortunately, TDEListView forces us to allow the text to be changed
    // before we try the rename, so set it back to the pre-rename state.
    KonqBaseListViewItem *renamedItem = static_cast<KonqBaseListViewItem*>(item);
    renamedItem->updateContents();
@@ -873,7 +873,7 @@ void KonqBaseListViewWidget::slotItemRenamed( TQListViewItem *item, const TQStri
       KonqOperations::rename( this, renamedItem->item()->url(), TDEIO::encodeFileName( name ) );
    }
 
-   // When the KListViewLineEdit loses focus, focus tends to go to the location bar...
+   // When the TDEListViewLineEdit loses focus, focus tends to go to the location bar...
    setFocus();
 }
 

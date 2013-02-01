@@ -49,7 +49,7 @@
 #include "toplevel.moc"
 
 TopLevel::TopLevel(const char* name)
-  : KMainWindow( 0, name, (WFlags)WStyle_ContextHelp  )
+  : TDEMainWindow( 0, name, (WFlags)WStyle_ContextHelp  )
   , _active(0), dummyAbout(0)
 {
   setCaption(TQString::null);
@@ -237,37 +237,37 @@ void TopLevel::setupActions()
   KStdAction::quit(TQT_TQOBJECT(this), TQT_SLOT(close()), actionCollection());
   KStdAction::keyBindings(guiFactory(), TQT_SLOT(configureShortcuts()),
 actionCollection());
-  icon_view = new KRadioAction
+  icon_view = new TDERadioAction
     (i18n("&Icon View"), 0, TQT_TQOBJECT(this), TQT_SLOT(activateIconView()),
      actionCollection(), "activate_iconview");
   icon_view->setExclusiveGroup( "viewmode" );
 
-  tree_view = new KRadioAction
+  tree_view = new TDERadioAction
     (i18n("&Tree View"), 0, TQT_TQOBJECT(this), TQT_SLOT(activateTreeView()),
      actionCollection(), "activate_treeview");
   tree_view->setExclusiveGroup( "viewmode" );
 
-  icon_small = new KRadioAction
+  icon_small = new TDERadioAction
     (i18n("&Small"), 0, TQT_TQOBJECT(this), TQT_SLOT(activateSmallIcons()),
      actionCollection(), "activate_smallicons");
   icon_small->setExclusiveGroup( "iconsize" );
 
-  icon_medium = new KRadioAction
+  icon_medium = new TDERadioAction
     (i18n("&Medium"), 0, TQT_TQOBJECT(this), TQT_SLOT(activateMediumIcons()),
      actionCollection(), "activate_mediumicons");
   icon_medium->setExclusiveGroup( "iconsize" );
 
-  icon_large = new KRadioAction
+  icon_large = new TDERadioAction
     (i18n("&Large"), 0, TQT_TQOBJECT(this), TQT_SLOT(activateLargeIcons()),
      actionCollection(), "activate_largeicons");
   icon_large->setExclusiveGroup( "iconsize" );
 
-  icon_huge = new KRadioAction
+  icon_huge = new TDERadioAction
     (i18n("&Huge"), 0, TQT_TQOBJECT(this), TQT_SLOT(activateHugeIcons()),
      actionCollection(), "activate_hugeicons");
   icon_huge->setExclusiveGroup( "iconsize" );
 
-  about_module = new KAction(i18n("About Current Module"), 0, TQT_TQOBJECT(this), TQT_SLOT(aboutModule()), actionCollection(), "help_about_module");
+  about_module = new TDEAction(i18n("About Current Module"), 0, TQT_TQOBJECT(this), TQT_SLOT(aboutModule()), actionCollection(), "help_about_module");
   about_module->setEnabled(false);
 
   // I need to add this so that each module can get a bug reported,

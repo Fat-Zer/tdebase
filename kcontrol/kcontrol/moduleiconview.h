@@ -25,12 +25,12 @@
 class ConfigModule;
 class ConfigModuleList;
 
-class ModuleIconItem : public KListViewItem
+class ModuleIconItem : public TDEListViewItem
 {
 
 public:
   ModuleIconItem(TQListView *parent, const TQString& text, const TQPixmap& pm, ConfigModule *m = 0)
-	: KListViewItem(parent, text)
+	: TDEListViewItem(parent, text)
 	, _tag(TQString::null)
 	, _module(m)
 	{
@@ -54,7 +54,7 @@ private:
   ConfigModule *_module;
 };
 
-class ModuleIconView : public KListView
+class ModuleIconView : public TDEListView
 {
   Q_OBJECT
 

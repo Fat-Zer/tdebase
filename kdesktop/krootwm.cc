@@ -72,7 +72,7 @@ extern TQCString kdesktop_name, kicker_name, twin_name;
 KRootWm::KRootWm(KDesktop* _desktop) : TQObject(_desktop), startup(FALSE)
 {
   s_rootWm = this;
-  m_actionCollection = new KActionCollection(_desktop, this, "KRootWm::m_actionCollection");
+  m_actionCollection = new TDEActionCollection(_desktop, this, "KRootWm::m_actionCollection");
   m_pDesktop = _desktop;
   m_bDesktopEnabled = (m_pDesktop->iconView() != 0);
   customMenu1 = 0;
@@ -92,9 +92,9 @@ KRootWm::KRootWm(KDesktop* _desktop) : TQObject(_desktop), startup(FALSE)
               m_pDesktop->iconView(), TQT_SLOT( slotNewMenuActivated() ) );
   }
 
-  if (kapp->authorizeKAction("bookmarks"))
+  if (kapp->authorizeTDEAction("bookmarks"))
   {
-     bookmarks = new KActionMenu( i18n("Bookmarks"), "bookmark", m_actionCollection, "bookmarks" );
+     bookmarks = new TDEActionMenu( i18n("Bookmarks"), "bookmark", m_actionCollection, "bookmarks" );
      // The KBookmarkMenu is needed to fill the Bookmarks menu in the desktop menubar.
      bookmarkMenu = new KBookmarkMenu( KonqBookmarkManager::self(), new KBookmarkOwner(),
                                     bookmarks->popupMenu(),
@@ -119,8 +119,8 @@ KRootWm::KRootWm(KDesktop* _desktop) : TQObject(_desktop), startup(FALSE)
   if (m_bDesktopEnabled)
   {
       // Don't do that! One action in two parent collections means some invalid write
-      // during the second ~KActionCollection.
-     KAction *action = m_pDesktop->actionCollection()->action( "paste" );
+      // during the second ~TDEActionCollection.
+     TDEAction *action = m_pDesktop->actionCollection()->action( "paste" );
      if (action)
         m_actionCollection->insert( action );
      action = m_pDesktop->actionCollection()->action( "undo" );
@@ -131,79 +131,79 @@ KRootWm::KRootWm(KDesktop* _desktop) : TQObject(_desktop), startup(FALSE)
 
   if (kapp->authorize("run_command"))
   {
-     new KAction(i18n("Run Command..."), "run", 0, TQT_TQOBJECT(m_pDesktop), TQT_SLOT( slotExecuteCommand() ), m_actionCollection, "exec" );
-     new KAction(i18n("Open Terminal Here..." ), "terminal", CTRL+Key_T, this, TQT_SLOT( slotOpenTerminal() ),
+     new TDEAction(i18n("Run Command..."), "run", 0, TQT_TQOBJECT(m_pDesktop), TQT_SLOT( slotExecuteCommand() ), m_actionCollection, "exec" );
+     new TDEAction(i18n("Open Terminal Here..." ), "terminal", CTRL+Key_T, this, TQT_SLOT( slotOpenTerminal() ),
 	m_actionCollection, "open_terminal" );
   }
 
   if (!TDEGlobal::config()->isImmutable())
   {
-     new KAction(i18n("Configure Desktop..."), "configure", 0, this, TQT_SLOT( slotConfigureDesktop() ),
+     new TDEAction(i18n("Configure Desktop..."), "configure", 0, this, TQT_SLOT( slotConfigureDesktop() ),
                  m_actionCollection, "configdesktop" );
-     new KAction(i18n("Disable Desktop Menu"), 0, this, TQT_SLOT( slotToggleDesktopMenu() ),
+     new TDEAction(i18n("Disable Desktop Menu"), 0, this, TQT_SLOT( slotToggleDesktopMenu() ),
                  m_actionCollection, "togglemenubar" );
   }
 
-  new KAction(i18n("Unclutter Windows"), 0, this, TQT_SLOT( slotUnclutterWindows() ),
+  new TDEAction(i18n("Unclutter Windows"), 0, this, TQT_SLOT( slotUnclutterWindows() ),
               m_actionCollection, "unclutter" );
-  new KAction(i18n("Cascade Windows"), 0, this, TQT_SLOT( slotCascadeWindows() ),
+  new TDEAction(i18n("Cascade Windows"), 0, this, TQT_SLOT( slotCascadeWindows() ),
               m_actionCollection, "cascade" );
 
   // arrange menu actions
   if (m_bDesktopEnabled && kapp->authorize("editable_desktop_icons"))
   {
-     new KAction(i18n("By Name (Case Sensitive)"), 0, this, TQT_SLOT( slotArrangeByNameCS() ),
+     new TDEAction(i18n("By Name (Case Sensitive)"), 0, this, TQT_SLOT( slotArrangeByNameCS() ),
                  m_actionCollection, "sort_ncs");
-     new KAction(i18n("By Name (Case Insensitive)"), 0, this, TQT_SLOT( slotArrangeByNameCI() ),
+     new TDEAction(i18n("By Name (Case Insensitive)"), 0, this, TQT_SLOT( slotArrangeByNameCI() ),
                  m_actionCollection, "sort_nci");
-     new KAction(i18n("By Size"), 0, this, TQT_SLOT( slotArrangeBySize() ),
+     new TDEAction(i18n("By Size"), 0, this, TQT_SLOT( slotArrangeBySize() ),
                  m_actionCollection, "sort_size");
-     new KAction(i18n("By Type"), 0, this, TQT_SLOT( slotArrangeByType() ),
+     new TDEAction(i18n("By Type"), 0, this, TQT_SLOT( slotArrangeByType() ),
                  m_actionCollection, "sort_type");
-     new KAction(i18n("By Date"), 0, this, TQT_SLOT( slotArrangeByDate() ),
+     new TDEAction(i18n("By Date"), 0, this, TQT_SLOT( slotArrangeByDate() ),
                  m_actionCollection, "sort_date");
 
-     KToggleAction *aSortDirsFirst = new KToggleAction( i18n("Directories First"), 0, m_actionCollection, "sort_directoriesfirst" );
+     TDEToggleAction *aSortDirsFirst = new TDEToggleAction( i18n("Directories First"), 0, m_actionCollection, "sort_directoriesfirst" );
      connect( aSortDirsFirst, TQT_SIGNAL( toggled( bool ) ),
               this, TQT_SLOT( slotToggleDirFirst( bool ) ) );
-     new KAction(i18n("Line Up Horizontally"), 0,
+     new TDEAction(i18n("Line Up Horizontally"), 0,
                  this, TQT_SLOT( slotLineupIconsHoriz() ),
                  m_actionCollection, "lineupHoriz" );
-     new KAction(i18n("Line Up Vertically"), 0,
+     new TDEAction(i18n("Line Up Vertically"), 0,
                  this, TQT_SLOT( slotLineupIconsVert() ),
                  m_actionCollection, "lineupVert" );
-     KToggleAction *aAutoAlign = new KToggleAction(i18n("Align to Grid"), 0,
+     TDEToggleAction *aAutoAlign = new TDEToggleAction(i18n("Align to Grid"), 0,
                  m_actionCollection, "realign" );
      connect( aAutoAlign, TQT_SIGNAL( toggled( bool ) ),
               this, TQT_SLOT( slotToggleAutoAlign( bool ) ) );
-     KToggleAction *aLockIcons = new KToggleAction(i18n("Lock in Place"), 0, m_actionCollection, "lock_icons");
+     TDEToggleAction *aLockIcons = new TDEToggleAction(i18n("Lock in Place"), 0, m_actionCollection, "lock_icons");
      connect( aLockIcons, TQT_SIGNAL( toggled( bool ) ),
               this, TQT_SLOT( slotToggleLockIcons( bool ) ) );
   }
   if (m_bDesktopEnabled)
   {
-     new KAction(i18n("Refresh Desktop"), "desktop", 0, this, TQT_SLOT( slotRefreshDesktop() ),
+     new TDEAction(i18n("Refresh Desktop"), "desktop", 0, this, TQT_SLOT( slotRefreshDesktop() ),
                  m_actionCollection, "refresh" );
   }
   // Icons in sync with kicker
   if (kapp->authorize("lock_screen"))
   {
-      new KAction(i18n("Lock Session"), "lock", 0, this, TQT_SLOT( slotLock() ),
+      new TDEAction(i18n("Lock Session"), "lock", 0, this, TQT_SLOT( slotLock() ),
                   m_actionCollection, "lock" );
   }
   if (kapp->authorize("logout"))
   {
-      new KAction(i18n("Log Out \"%1\"...").arg(KUser().loginName()), "exit", 0,
+      new TDEAction(i18n("Log Out \"%1\"...").arg(KUser().loginName()), "exit", 0,
                   this, TQT_SLOT( slotLogout() ), m_actionCollection, "logout" );
   }
 
   if (kapp->authorize("start_new_session") && DM().isSwitchable())
   {
-      new KAction(i18n("Start New Session"), "fork", 0, this,
+      new TDEAction(i18n("Start New Session"), "fork", 0, this,
                   TQT_SLOT( slotNewSession() ), m_actionCollection, "newsession" );
       if (kapp->authorize("lock_screen"))
       {
-          new KAction(i18n("Lock Current && Start New Session"), "lock", 0, this,
+          new TDEAction(i18n("Lock Current && Start New Session"), "lock", 0, this,
                       TQT_SLOT( slotLockNNewSession() ), m_actionCollection, "lockNnewsession" );
       }
   }
@@ -248,14 +248,14 @@ void KRootWm::initConfig()
     m_pDesktop->iconView()->setAutoAlign( KDesktopSettings::autoLineUpIcons() );
     if ( kapp->authorize( "editable_desktop_icons" ) ) {
         m_pDesktop->iconView()->setItemsMovable( !KDesktopSettings::lockIcons() );
-        KToggleAction *aLockIcons = static_cast<KToggleAction*>(m_actionCollection->action("lock_icons"));
+        TDEToggleAction *aLockIcons = static_cast<TDEToggleAction*>(m_actionCollection->action("lock_icons"));
         if (aLockIcons)
             aLockIcons->setChecked( KDesktopSettings::lockIcons()  );
     }
-    KToggleAction *aAutoAlign = static_cast<KToggleAction*>(m_actionCollection->action("realign"));
+    TDEToggleAction *aAutoAlign = static_cast<TDEToggleAction*>(m_actionCollection->action("realign"));
     if (aAutoAlign)
         aAutoAlign->setChecked( KDesktopSettings::autoLineUpIcons() );
-    KToggleAction *aSortDirsFirst = static_cast<KToggleAction*>(m_actionCollection->action("sort_directoriesfirst"));
+    TDEToggleAction *aSortDirsFirst = static_cast<TDEToggleAction*>(m_actionCollection->action("sort_directoriesfirst"));
     if (aSortDirsFirst)
         aSortDirsFirst->setChecked( KDesktopSettings::sortDirectoriesFirst() );
   }
@@ -285,7 +285,7 @@ void KRootWm::buildMenus()
     // create Arrange menu
     TQPopupMenu *pArrangeMenu = 0;
     TQPopupMenu *pLineupMenu = 0;
-    KAction *action;
+    TDEAction *action;
     help = new KHelpMenu(0, 0, false);
     help->menu()->removeItem( KHelpMenu::menuAboutApp );
 
@@ -437,7 +437,7 @@ void KRootWm::buildMenus()
        m_actionCollection->action( "lineupVert" )->plug( pIconOperationsMenu );
        pIconOperationsMenu->insertSeparator();
        m_actionCollection->action( "realign" )->plug( pIconOperationsMenu );
-       KAction *aLockIcons = m_actionCollection->action( "lock_icons" );
+       TDEAction *aLockIcons = m_actionCollection->action( "lock_icons" );
        if ( aLockIcons )
            aLockIcons->plug( pIconOperationsMenu );
 
@@ -665,7 +665,7 @@ void KRootWm::slotArrangeByNameCS()
 {
     if (m_bDesktopEnabled)
     {
-        bool b = static_cast<KToggleAction *>(m_actionCollection->action("sort_directoriesfirst"))->isChecked();
+        bool b = static_cast<TDEToggleAction *>(m_actionCollection->action("sort_directoriesfirst"))->isChecked();
         m_pDesktop->iconView()->rearrangeIcons( KDIconView::NameCaseSensitive, b);
     }
 }
@@ -674,7 +674,7 @@ void KRootWm::slotArrangeByNameCI()
 {
     if (m_bDesktopEnabled)
     {
-        bool b = static_cast<KToggleAction *>(m_actionCollection->action("sort_directoriesfirst"))->isChecked();
+        bool b = static_cast<TDEToggleAction *>(m_actionCollection->action("sort_directoriesfirst"))->isChecked();
         m_pDesktop->iconView()->rearrangeIcons( KDIconView::NameCaseInsensitive, b);
     }
 }
@@ -683,7 +683,7 @@ void KRootWm::slotArrangeBySize()
 {
     if (m_bDesktopEnabled)
     {
-        bool b = static_cast<KToggleAction *>(m_actionCollection->action("sort_directoriesfirst"))->isChecked();
+        bool b = static_cast<TDEToggleAction *>(m_actionCollection->action("sort_directoriesfirst"))->isChecked();
         m_pDesktop->iconView()->rearrangeIcons( KDIconView::Size, b);
     }
 }
@@ -692,7 +692,7 @@ void KRootWm::slotArrangeByDate()
 {
     if (m_bDesktopEnabled)
     {
-        bool b = static_cast<KToggleAction *>( m_actionCollection->action( "sort_directoriesfirst" ) )->isChecked();
+        bool b = static_cast<TDEToggleAction *>( m_actionCollection->action( "sort_directoriesfirst" ) )->isChecked();
         m_pDesktop->iconView()->rearrangeIcons( KDIconView::Date, b );
     }
 }
@@ -701,7 +701,7 @@ void KRootWm::slotArrangeByType()
 {
     if (m_bDesktopEnabled)
     {
-        bool b = static_cast<KToggleAction *>(m_actionCollection->action("sort_directoriesfirst"))->isChecked();
+        bool b = static_cast<TDEToggleAction *>(m_actionCollection->action("sort_directoriesfirst"))->isChecked();
         m_pDesktop->iconView()->rearrangeIcons( KDIconView::Type, b);
     }
 }
@@ -835,7 +835,7 @@ void KRootWm::slotLogout() {
 
 void KRootWm::slotPopulateSessions()
 {
-    KAction *action;
+    TDEAction *action;
     int p;
     DM dm;
 

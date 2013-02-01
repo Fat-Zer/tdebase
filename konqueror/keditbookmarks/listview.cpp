@@ -546,7 +546,7 @@ void ListView::slotBkInfoUpdateListViewItem() {
     i->setText(KEBListView::CommentColumn, commentStr);
 }
 
-void ListView::handleContextMenu(KEBListView *, KListView *, TQListViewItem *qitem, const TQPoint &p) {
+void ListView::handleContextMenu(KEBListView *, TDEListView *, TQListViewItem *qitem, const TQPoint &p) {
     KEBListViewItem *item = static_cast<KEBListViewItem *>(qitem);
     const char *type = ( !item
             || (item == m_listView->rootItem()) 
@@ -716,7 +716,7 @@ void KEBListView::init() {
     setTabOrderedRenaming(false);
     setSorting(-1, false);
     setDragEnabled(true);
-    setSelectionModeExt((!m_folderList) ? KListView::Extended: KListView::Single);
+    setSelectionModeExt((!m_folderList) ? TDEListView::Extended: TDEListView::Single);
     setAllColumnsShowFocus(true);
     connect(header(), TQT_SIGNAL(sizeChange(int, int, int)),
             this, TQT_SLOT(slotColumnSizeChanged(int, int, int)));
@@ -725,8 +725,8 @@ void KEBListView::init() {
 void KEBListView::makeConnections() {
     connect(this, TQT_SIGNAL( moved() ),
             TQT_SLOT( slotMoved() ));
-    connect(this, TQT_SIGNAL( contextMenu(KListView *, TQListViewItem*, const TQPoint &) ),
-            TQT_SLOT( slotContextMenu(KListView *, TQListViewItem *, const TQPoint &) ));
+    connect(this, TQT_SIGNAL( contextMenu(TDEListView *, TQListViewItem*, const TQPoint &) ),
+            TQT_SLOT( slotContextMenu(TDEListView *, TQListViewItem *, const TQPoint &) ));
     connect(this, TQT_SIGNAL( itemRenamed(TQListViewItem *, const TQString &, int) ),
             TQT_SLOT( slotItemRenamed(TQListViewItem *, const TQString &, int) ));
     connect(this, TQT_SIGNAL( doubleClicked(TQListViewItem *, const TQPoint &, int) ),
@@ -744,7 +744,7 @@ void KEBListView::readonlyFlagInit(bool readonly) {
 
 void KEBListView::slotMoved() 
 { ListView::self()->handleMoved(this); }
-void KEBListView::slotContextMenu(KListView *a, TQListViewItem *b, const TQPoint &c) 
+void KEBListView::slotContextMenu(TDEListView *a, TQListViewItem *b, const TQPoint &c) 
 { ListView::self()->handleContextMenu(this, a,b,c); }
 void KEBListView::slotItemRenamed(TQListViewItem *a, const TQString &b, int c) 
 { ListView::self()->handleItemRenamed(this, a,b,c); }
@@ -768,7 +768,7 @@ void KEBListView::rename(TQListViewItem *qitem, int column) {
     ListView::startRename(column, item);
     KeyPressEater *keyPressEater = new KeyPressEater(this);
     renameLineEdit()->installEventFilter(keyPressEater);
-    KListView::rename(item, column);
+    TDEListView::rename(item, column);
 }
 
 KEBListViewItem* KEBListView::rootItem() const {

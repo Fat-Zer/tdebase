@@ -57,17 +57,17 @@ void KKeyModule::init( bool isGlobal, bool _bSeriesOnly, bool bSeriesNone )
 
   kdDebug(125) << "KKeyModule::init() - Get default key bindings." << endl;
   if ( KeyType == "global" ) {
-    KAccelActions* keys = &actions;
+    TDEAccelActions* keys = &actions;
 // see also KKeyModule::init() below !!!
 #define NOSLOTS
-#define KShortcuts KAccelShortcuts
+#define TDEShortcuts TDEAccelShortcuts
 #include "../../twin/twinbindings.cpp"
 #include "../../kicker/kicker/core/kickerbindings.cpp"
 #include "../../kicker/taskbar/taskbarbindings.cpp"
 #include "../../kdesktop/kdesktopbindings.cpp"
 #include "../../klipper/klipperbindings.cpp"
 #include "../../kxkb/kxkbbindings.cpp"
-#undef KShortcuts
+#undef TDEShortcuts
     KeyScheme = "Global Key Scheme";
     KeySet    = "Global Keys";
     // Sorting Hack: I'll re-write the module once feature-adding begins again.
@@ -92,12 +92,12 @@ void KKeyModule::init( bool isGlobal, bool _bSeriesOnly, bool bSeriesNone )
   }
 
   if ( KeyType == "standard" ) {
-    for(uint i=0; i<KStdAccel::NB_STD_ACCELS; i++) {
-      KStdAccel::StdAccel id = (KStdAccel::StdAccel)i;
-      actions.insertAction( KStdAccel::action(id),
-                          KStdAccel::description(id),
-                          KStdAccel::defaultKey3(id),
-                          KStdAccel::defaultKey4(id) );
+    for(uint i=0; i<TDEStdAccel::NB_STD_ACCELS; i++) {
+      TDEStdAccel::StdAccel id = (TDEStdAccel::StdAccel)i;
+      actions.insertAction( TDEStdAccel::action(id),
+                          TDEStdAccel::description(id),
+                          TDEStdAccel::defaultKey3(id),
+                          TDEStdAccel::defaultKey4(id) );
     }
 
     KeyScheme = "Standard Key Scheme";
@@ -459,7 +459,7 @@ void KKeyModule::readScheme( int index )
   }
 }*/
 
-/*void KKeyModule::updateKeys( const KAccelActions* map_P )
+/*void KKeyModule::updateKeys( const TDEAccelActions* map_P )
     {
     kc->updateKeys( map_P );
     }*/
@@ -473,24 +473,24 @@ void KKeyModule::init()
 
   /*kdDebug(125) << "KKeyModule::init() - Initialize # Modifier Keys Settings\n";
   TDEConfigGroupSaver cgs( TDEGlobal::config(), "Keyboard" );
-  TQString fourMods = TDEGlobal::config()->readEntry( "Use Four Modifier Keys", KAccel::keyboardHasMetaKey() ? "true" : "false" );
-  KAccel::useFourModifierKeys( fourMods == "true" );
-  bool bUseFourModifierKeys = KAccel::useFourModifierKeys();
+  TQString fourMods = TDEGlobal::config()->readEntry( "Use Four Modifier Keys", TDEAccel::keyboardHasMetaKey() ? "true" : "false" );
+  TDEAccel::useFourModifierKeys( fourMods == "true" );
+  bool bUseFourModifierKeys = TDEAccel::useFourModifierKeys();
   TDEGlobal::config()->writeEntry( "User Four Modifier Keys", bUseFourModifierKeys ? "true" : "false", true, true );
   */
-  KAccelActions* keys = new KAccelActions();
+  TDEAccelActions* keys = new TDEAccelActions();
 
   kdDebug(125) << "KKeyModule::init() - Load Included Bindings\n";
 // this should match the included files above
 #define NOSLOTS
-#define KShortcuts KAccelShortcuts
+#define TDEShortcuts TDEAccelShortcuts
 #include "../../klipper/klipperbindings.cpp"
 #include "../../twin/twinbindings.cpp"
 #include "../../kicker/kicker/core/kickerbindings.cpp"
 #include "../../kicker/taskbar/taskbarbindings.cpp"
 #include "../../kdesktop/kdesktopbindings.cpp"
 #include "../../kxkb/kxkbbindings.cpp"
-#undef KShortcuts
+#undef TDEShortcuts
 
   kdDebug(125) << "KKeyModule::init() - Read Config Bindings\n";
   keys->readActions( "Global Keys" );
@@ -508,19 +508,19 @@ void KKeyModule::init()
 // KeyChooserSpec
 //-----------------------------------------------------------------
 
-KeyChooserSpec::KeyChooserSpec( KAccelActions& actions, TQWidget* parent, bool bGlobal )
+KeyChooserSpec::KeyChooserSpec( TDEAccelActions& actions, TQWidget* parent, bool bGlobal )
     : KKeyChooser( actions, parent, bGlobal, false, true ), m_bGlobal( bGlobal )
     {
     //if( global )
     //    globalDict()->clear(); // don't check against global keys twice
     }
 
-/*void KeyChooserSpec::updateKeys( const KAccelActions* map_P )
+/*void KeyChooserSpec::updateKeys( const TDEAccelActions* map_P )
     {
     if( global )
         {
         stdDict()->clear();
-        for( KAccelActions::ConstIterator gIt( map_P->begin());
+        for( TDEAccelActions::ConstIterator gIt( map_P->begin());
              gIt != map_P->end();
              ++gIt )
             {
@@ -532,7 +532,7 @@ KeyChooserSpec::KeyChooserSpec( KAccelActions& actions, TQWidget* parent, bool b
     else
         {
         globalDict()->clear();
-        for( KAccelActions::ConstIterator gIt( map_P->begin());
+        for( TDEAccelActions::ConstIterator gIt( map_P->begin());
              gIt != map_P->end();
              ++gIt )
             {

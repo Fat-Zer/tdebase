@@ -33,7 +33,7 @@
 class KDirLister;
 class KonqSettings;
 class KSimpleConfig;
-class KAccel;
+class TDEAccel;
 class KShadowEngine;
 class KDesktopShadowSettings;
 
@@ -60,7 +60,7 @@ public:
      */
     void start();
 
-    KActionCollection *actionCollection() { return &m_actionCollection; }
+    TDEActionCollection *actionCollection() { return &m_actionCollection; }
 
     enum SortCriterion {
         NameCaseSensitive = 0, NameCaseInsensitive, Size, Type, Date };
@@ -138,7 +138,7 @@ protected slots:
     // slots connected to the popupmenu (actions)
     void slotCut();
     void slotCopy();
-    void slotTrashActivated( KAction::ActivationReason reason, TQt::ButtonState state );
+    void slotTrashActivated( TDEAction::ActivationReason reason, TQt::ButtonState state );
     void slotDelete();
     void slotPopupPasteTo();
     void slotProperties();
@@ -200,10 +200,10 @@ private:
     static void readIconPosition(KSimpleConfig *config, int &x, int &y);
 
     /** Our action collection, parent of all our actions */
-    KActionCollection m_actionCollection;
+    TDEActionCollection m_actionCollection;
 
-    /** KAccel object, to make the actions shortcuts work */
-    KAccel *m_accel;
+    /** TDEAccel object, to make the actions shortcuts work */
+    TDEAccel *m_accel;
 
     bool m_bNeedRepaint;
     bool m_bNeedSave;

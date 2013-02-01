@@ -42,7 +42,7 @@
 Workspace::Workspace( TQWidget* parent, const char* name )
   : TQTabWidget( parent, name )
 {
-  KAcceleratorManager::setNoAccel(this);
+  TDEAcceleratorManager::setNoAccel(this);
  
   mSheetList.setAutoDelete( true );
   mAutoSave = true;

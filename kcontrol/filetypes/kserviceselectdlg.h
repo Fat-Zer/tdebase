@@ -41,7 +41,7 @@ public:
      */
     KService::Ptr service();
 private:
-    KListBox * m_listbox;
+    TDEListBox * m_listbox;
 };
 
 #endif

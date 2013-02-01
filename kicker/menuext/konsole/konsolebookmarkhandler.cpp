@@ -21,7 +21,7 @@ KonsoleBookmarkHandler::KonsoleBookmarkHandler( KonsoleMenu *konsole, bool )
       m_konsole( konsole ),
       m_importStream( 0L )
 {
-    m_menu = new KPopupMenu( konsole, "bookmark menu" );
+    m_menu = new TDEPopupMenu( konsole, "bookmark menu" );
 
     TQString file = locate( "data", "konsole/bookmarks.xml" );
     if ( file.isEmpty() )

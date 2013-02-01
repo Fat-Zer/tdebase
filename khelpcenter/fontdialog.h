@@ -26,7 +26,7 @@ class TQBoxLayout;
 class TQSpinBox;
 
 class KComboBox;
-class KFontCombo;
+class TDEFontCombo;
 class KIntNumInput;
 
 namespace KHC {
@@ -50,12 +50,12 @@ class FontDialog : public KDialogBase
 
 		KIntNumInput *m_minFontSize;
 		KIntNumInput *m_medFontSize;
-		KFontCombo *m_standardFontCombo;
-		KFontCombo *m_fixedFontCombo;
-		KFontCombo *m_serifFontCombo;
-		KFontCombo *m_sansSerifFontCombo;
-		KFontCombo *m_italicFontCombo;
-		KFontCombo *m_fantasyFontCombo;
+		TDEFontCombo *m_standardFontCombo;
+		TDEFontCombo *m_fixedFontCombo;
+		TDEFontCombo *m_serifFontCombo;
+		TDEFontCombo *m_sansSerifFontCombo;
+		TDEFontCombo *m_italicFontCombo;
+		TDEFontCombo *m_fantasyFontCombo;
 		KComboBox *m_defaultEncoding;
 		TQSpinBox *m_fontSizeAdjustement;
 };

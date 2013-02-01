@@ -192,7 +192,7 @@ void KXKBApp::initTray()
 	if( !m_tray )
 	{
 		KSystemTray* sysTray = new KxkbSystemTray();
-		KPopupMenu* popupMenu = sysTray->contextMenu();
+		TDEPopupMenu* popupMenu = sysTray->contextMenu();
 	//	popupMenu->insertTitle( kapp->miniIcon(), kapp->caption() );
 
 		m_tray = new KxkbLabelController(sysTray, popupMenu);

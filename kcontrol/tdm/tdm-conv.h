@@ -73,7 +73,7 @@ private:
 	TQRadioButton	*npRadio, *ppRadio, *spRadio;
 	KComboBox	*userlb, *puserlb;
 	TQSpinBox	*delaysb;
-	KListView	*npuserlv;
+	TDEListView	*npuserlv;
 	TQLabel		*u_label, *d_label, *pu_label, *w_label, *n_label, *pl_label;
 	TQString	autoUser, preselUser;
 	TQStringList	noPassUsers;

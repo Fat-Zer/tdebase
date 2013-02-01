@@ -62,7 +62,7 @@
 #include <kpopupmenu.h>
 #include <kapplication.h>
 #include <kdirlister.h>
-// Create the equivalent of KAccelBase::connectItem
+// Create the equivalent of TDEAccelBase::connectItem
 // and then remove this include and fix reconnects in initRoot() -- ellis
 //#include <kaccelbase.h>
 
@@ -454,8 +454,8 @@ void KDesktop::initConfig()
         keys->updateConnections();
     }
 
-    KLaunchSettings::self()->readConfig();
-    if( !KLaunchSettings::busyCursor() )
+    TDELaunchSettings::self()->readConfig();
+    if( !TDELaunchSettings::busyCursor() )
     {
         delete startup_id;
         startup_id = NULL;
@@ -748,7 +748,7 @@ void KDesktop::toggleShowDesktop()
     setShowDesktop(!showDesktopState());
 }
 
-KActionCollection * KDesktop::actionCollection()
+TDEActionCollection * KDesktop::actionCollection()
 {
     if (!m_pIconView)
        return 0;
@@ -929,7 +929,7 @@ void KDesktop::slotSwitchDesktops(int delta)
 
 void KDesktop::handleColorDropEvent(TQDropEvent * e)
 {
-    KPopupMenu popup;
+    TDEPopupMenu popup;
     popup.insertItem(SmallIconSet("colors"),i18n("Set as Primary Background Color"), 1);
     popup.insertItem(SmallIconSet("colors"),i18n("Set as Secondary Background Color"), 2);
     int result = popup.exec(e->pos());
@@ -946,7 +946,7 @@ void KDesktop::handleColorDropEvent(TQDropEvent * e)
 
 void KDesktop::handleImageDropEvent(TQDropEvent * e)
 {
-    KPopupMenu popup;
+    TDEPopupMenu popup;
     if ( m_pIconView )
     popup.insertItem(SmallIconSet("filesave"),i18n("&Save to Desktop..."), 1);
     if ( ( m_pIconView && m_pIconView->maySetWallpaper() ) || m_pRootWidget )

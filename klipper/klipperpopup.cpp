@@ -94,7 +94,7 @@ protected:
 };
 
 KlipperPopup::KlipperPopup( History* history, TQWidget* parent, const char* name )
-    : KPopupMenu( parent, name ),
+    : TDEPopupMenu( parent, name ),
       m_dirty( true ),
       QSempty( i18n( "<empty clipboard>" ) ),
       QSnomatch( i18n( "<no matches>" ) ),
@@ -155,7 +155,7 @@ void KlipperPopup::buildFromScratch() {
     //    Insert Help-menu at the butttom of the "default" group.
     TQString group;
     TQString defaultGroup( "default" );
-    for ( KAction* action = m_actions.first(); action; action = m_actions.next() ) {
+    for ( TDEAction* action = m_actions.first(); action; action = m_actions.next() ) {
         group = action->group();
         if ( group != lastGroup ) {
             if ( lastGroup == defaultGroup ) {
@@ -213,7 +213,7 @@ void KlipperPopup::rebuild( const TQString& filter ) {
 
 }
 
-void KlipperPopup::plugAction( KAction* action ) {
+void KlipperPopup::plugAction( TDEAction* action ) {
     m_actions.append( action );
 }
 
@@ -233,9 +233,9 @@ void KlipperPopup::keyPressEvent( TQKeyEvent* e ) {
                       e->text(),
                       e->isAutoRepeat(),
                       e->count() );
-        KPopupMenu::keyPressEvent( &ke );
+        TDEPopupMenu::keyPressEvent( &ke );
 #ifdef DEBUG_EVENTS__
-        kdDebug() << "Passing this event to ancestor (KPopupMenu): " << e "->" << ke << endl;
+        kdDebug() << "Passing this event to ancestor (TDEPopupMenu): " << e "->" << ke << endl;
 #endif
         if ( ke.isAccepted() ) {
             e->accept();
@@ -260,9 +260,9 @@ void KlipperPopup::keyPressEvent( TQKeyEvent* e ) {
     case Qt::Key_Enter:
     {
 #ifdef DEBUG_EVENTS__
-        kdDebug() << "Passing this event to ancestor (KPopupMenu): " << e << endl;
+        kdDebug() << "Passing this event to ancestor (TDEPopupMenu): " << e << endl;
 #endif
-        KPopupMenu::keyPressEvent( e );
+        TDEPopupMenu::keyPressEvent( e );
         if ( isItemActive( m_filterWidgetId ) ) {
             setActiveItem( TOP_HISTORY_ITEM_INDEX );
         }

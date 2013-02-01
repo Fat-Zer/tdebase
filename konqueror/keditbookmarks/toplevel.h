@@ -27,7 +27,7 @@
 #include <kbookmark.h>
 
 class KBookmarkManager;
-class KToggleAction;
+class TDEToggleAction;
 class KBookmarkEditorIface;
 class ImportCommand;
 class BookmarkInfoWidget;
@@ -48,7 +48,7 @@ struct SelcAbilities {
 class CmdHistory : public TQObject {
     Q_OBJECT
 public:
-    CmdHistory(KActionCollection *collection);
+    CmdHistory(TDEActionCollection *collection);
     virtual ~CmdHistory() { ; }
 
     void notifyDocSaved();
@@ -108,7 +108,7 @@ private:
     uint ignorenext;
 };
 
-class KEBApp : public KMainWindow {
+class KEBApp : public TDEMainWindow {
     Q_OBJECT
 public:
     static KEBApp* self() { return s_topLevel; }
@@ -129,7 +129,7 @@ public:
         return factory()->container(type, this); 
     }
 
-    KToggleAction* getToggleAction(const char *) const;
+    TDEToggleAction* getToggleAction(const char *) const;
 
     TQString caption() const { return m_caption; }
     bool readonly() const { return m_readOnly; }

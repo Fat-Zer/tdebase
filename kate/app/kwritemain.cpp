@@ -150,11 +150,11 @@ void KWrite::setupActions()
                                          actionCollection());
   m_recentFiles->setWhatsThis(i18n("This lists files which you have opened recently, and allows you to easily open them again."));
 
-  KAction *a=new KAction(i18n("&New Window"), "window_new", 0, TQT_TQOBJECT(this), TQT_SLOT(newView()),
+  TDEAction *a=new TDEAction(i18n("&New Window"), "window_new", 0, TQT_TQOBJECT(this), TQT_SLOT(newView()),
               actionCollection(), "view_new_view");
   a->setWhatsThis(i18n("Create another view containing the current document"));
 
-  a=new KAction(i18n("Choose Editor Component..."),0,TQT_TQOBJECT(this),TQT_SLOT(changeEditor()),
+  a=new TDEAction(i18n("Choose Editor Component..."),0,TQT_TQOBJECT(this),TQT_SLOT(changeEditor()),
 		actionCollection(),"settings_choose_editor");
   a->setWhatsThis(i18n("Override the system wide setting for the default editing component"));
 
@@ -166,7 +166,7 @@ void KWrite::setupActions()
   m_paShowStatusBar = KStdAction::showStatusbar(TQT_TQOBJECT(this), TQT_SLOT(toggleStatusBar()), actionCollection(), "settings_show_statusbar");
   m_paShowStatusBar->setWhatsThis(i18n("Use this command to show or hide the view's statusbar"));
 
-  m_paShowPath = new KToggleAction(i18n("Sho&w Path"), 0, TQT_TQOBJECT(this), TQT_SLOT(newCaption()),
+  m_paShowPath = new TDEToggleAction(i18n("Sho&w Path"), 0, TQT_TQOBJECT(this), TQT_SLOT(newCaption()),
                     actionCollection(), "set_showPath");
   m_paShowPath->setCheckedState(i18n("Hide Path"));
   m_paShowPath->setWhatsThis(i18n("Show the complete document path in the window caption"));
@@ -379,9 +379,9 @@ void KWrite::slotDropEvent( TQDropEvent *event )
 
 void KWrite::slotEnableActions( bool enable )
 {
-  TQValueList<KAction *> actions = actionCollection()->actions();
-  TQValueList<KAction *>::ConstIterator it = actions.begin();
-  TQValueList<KAction *>::ConstIterator end = actions.end();
+  TQValueList<TDEAction *> actions = actionCollection()->actions();
+  TQValueList<TDEAction *>::ConstIterator it = actions.begin();
+  TQValueList<TDEAction *>::ConstIterator end = actions.end();
 
   for (; it != end; ++it )
       (*it)->setEnabled( enable );

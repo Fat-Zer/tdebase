@@ -22,7 +22,7 @@
 #include <tqdict.h>
 
 
-class KListView;
+class TDEListView;
 class TQString;
 class PreviewWidget;
 class TQStringList;
@@ -62,7 +62,7 @@ class ThemePage : public TQWidget
 		void insertThemes();
 		TQPixmap createIcon( const TQString &, const TQString & ) const;
 
-		KListView *listview;
+		TDEListView *listview;
 		PreviewWidget *preview;
 		TQPushButton *installButton, *removeButton;
 		TQString selectedTheme;

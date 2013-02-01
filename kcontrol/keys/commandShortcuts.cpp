@@ -121,8 +121,8 @@ void CommandShortcutsModule::initGUI()
                          "to the currently selected command."));
     buttonLayout->addSpacing(KDialog::spacingHint() * 2);
     buttonLayout->addWidget(m_shortcutButton);
-    connect(m_shortcutButton, TQT_SIGNAL(capturedShortcut(const KShortcut&)),
-            this, TQT_SLOT(shortcutChanged(const KShortcut&)));
+    connect(m_shortcutButton, TQT_SIGNAL(capturedShortcut(const TDEShortcut&)),
+            this, TQT_SLOT(shortcutChanged(const TDEShortcut&)));
     connect(m_customRadio, TQT_SIGNAL(toggled(bool)), m_shortcutButton, TQT_SLOT(setEnabled(bool)));
     connect(m_noneRadio, TQT_SIGNAL(toggled(bool)), this, TQT_SLOT(shortcutRadioToggled(bool)));
     buttonLayout->addStretch(1);
@@ -170,7 +170,7 @@ void CommandShortcutsModule::shortcutRadioToggled(bool remove)
     }
 }
 
-void CommandShortcutsModule::shortcutChanged(const KShortcut& shortcut)
+void CommandShortcutsModule::shortcutChanged(const TDEShortcut& shortcut)
 {
     AppTreeItem *item = static_cast<AppTreeItem*>(m_tree->currentItem());
     if (!item || item->isDirectory())

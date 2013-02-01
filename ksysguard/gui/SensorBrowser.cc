@@ -64,7 +64,7 @@ class HostItem : public TQListViewItem
 
 SensorBrowser::SensorBrowser( TQWidget* parent, KSGRD::SensorManager* sm,
                               const char* name)
-  : KListView( parent, name ), mSensorManager( sm )
+  : TDEListView( parent, name ), mSensorManager( sm )
 {
   mHostInfoList.setAutoDelete(true);
 

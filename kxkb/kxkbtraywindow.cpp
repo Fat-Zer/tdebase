@@ -66,7 +66,7 @@ void KxkbLabelController::setError(const TQString& layoutInfo)
 
 void KxkbLabelController::initLayoutList(const TQValueList<LayoutUnit>& layouts, const XkbRules& rules)
 {
-//	KPopupMenu* menu = contextMenu();
+//	TDEPopupMenu* menu = contextMenu();
 	TQPopupMenu* menu = contextMenu;
 //	int index = menu->indexOf(0);
 
@@ -114,7 +114,7 @@ void KxkbLabelController::initLayoutList(const TQValueList<LayoutUnit>& layouts,
 
 /*    if( index != -1 ) { //not first start
 		menu->insertSeparator();
-		KAction* quitAction = KStdAction::quit(this, TQT_SIGNAL(quitSelected()), actionCollection());
+		TDEAction* quitAction = KStdAction::quit(this, TQT_SIGNAL(quitSelected()), actionCollection());
         if (quitAction)
     	    quitAction->plug(menu);
     }*/

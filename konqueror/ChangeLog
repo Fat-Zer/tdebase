@@ -20,7 +20,7 @@
 2001-04-28  Simon Hausmann  <simon@kde.org>
 
 	* konq_actions.h (class KonqGoURLAction): new class, derived
-	from KAction, used for the 'go url' action. when plugging the
+	from TDEAction, used for the 'go url' action. when plugging the
 	action into a toolbar make sure to align the button right.
 	Otherwise the toolbar layout completely fucks up and QToolBar
 	starts flickering like mad, when the window width is getting
@@ -74,7 +74,7 @@
 
 2001-01-28  Stephan Kulow  <coolo@kde.org>
 
-	* konq_mainwindow.cc (initActions): Plug the actions into a KAccel to
+	* konq_mainwindow.cc (initActions): Plug the actions into a TDEAccel to
 	fix short cuts in full screen mode
 
 2001-01-16  Simon Hausmann  <simon@kde.org>
@@ -158,8 +158,8 @@
 2000-12-27  Simon Hausmann  <simon@kde.org>
 
 	* konq_mainwindow.cc (enableAllActions): for iterating over all actions
-	don't use the action( int index ) method of KActionCollection but instead
-	retrieve a QValueList<KAction *> and iterate over that, as the =+(int)
+	don't use the action( int index ) method of TDEActionCollection but instead
+	retrieve a QValueList<TDEAction *> and iterate over that, as the =+(int)
 	operator of QDictIterator isn't really fast
 
 	          ----- KDE 2.1 BETA 1 RELEASE ----
@@ -190,7 +190,7 @@
 
 2000-12-09  Simon Hausmann  <simon@kde.org>
 
-	* konq_actions.{cc,h}: Added KonqViewModeAction, a KRadioAction
+	* konq_actions.{cc,h}: Added KonqViewModeAction, a TDERadioAction
 	with an additional delayed popupmenu
 
 	* konq_mainwindow.{cc,h}: Changed the toolbar viewmode buttons to
@@ -244,7 +244,7 @@
 	* konq_actions.cc: Accel (Alt+O in English) to give focus to location bar,
 	shown by the label.
 
-	* konq_profiledlg.cc: Ported to KListView to fix problems with selection.
+	* konq_profiledlg.cc: Ported to TDEListView to fix problems with selection.
 
 2000-11-26  David Faure  <faure@kde.org>
 
@@ -258,7 +258,7 @@
 	
 	* konq_mainwindow.cc : Icons for the configure submenu.
 
-	* konq_actions.cc : KonqHistoryAction turned into KToolBarPopupAction.
+	* konq_actions.cc : KonqHistoryAction turned into TDEToolBarPopupAction.
 	Drag the "Location" label to start a drag with the current URL.
 
 2000-11-25  Simon Hausmann  <simon@kde.org>
@@ -319,7 +319,7 @@ Sat Nov 25 17:38:27 2000  Carsten Pfeiffer  <pfeiffer@kde.org>
 
 	* konq_drag.cc: Export URLs as text/plain as well.
 
-	* konq_mainwindow.cc: Implemented auto-saving of toolbars (KMainWindow),
+	* konq_mainwindow.cc: Implemented auto-saving of toolbars (TDEMainWindow),
 	removed "Save Settings".
 	Fixed "clicking on directory in dirtree uses wrong view mode for dirs".
 	* konq_iconview.cc: Added +/- buttons for changing the icon size.
@@ -398,7 +398,7 @@ Sat Nov 25 17:38:27 2000  Carsten Pfeiffer  <pfeiffer@kde.org>
 
 	* listview/konq_textviewwidget.cc: Only the Name column is now
 	selected, and used as a drop area - like in other listviews.
-	This requires the fix in KListView to work properly.
+	This requires the fix in TDEListView to work properly.
 
 2000-10-21  David Faure  <faure@kde.org>
 

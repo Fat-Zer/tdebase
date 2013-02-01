@@ -125,7 +125,7 @@ void Triggers_tab::new_selected( int type_P )
         {
         case TYPE_SHORTCUT_TRIGGER: // Shortcut_trigger
             dlg = new Shortcut_trigger_dialog(
-                new Shortcut_trigger( NULL, KShortcut())); // CHECKME NULL ?
+                new Shortcut_trigger( NULL, TDEShortcut())); // CHECKME NULL ?
           break;
         case TYPE_GESTURE_TRIGGER: // Gesture trigger
             dlg = new Gesture_trigger_dialog(
@@ -230,16 +230,16 @@ Shortcut_trigger_widget::Shortcut_trigger_widget( TQWidget* parent_P, const char
     lay->addWidget( bt, 0 , Qt::AlignHCenter );
     lay->addStretch();
     clear_data();
-    connect( bt, TQT_SIGNAL( capturedShortcut( const KShortcut& )),
-        this, TQT_SLOT( capturedShortcut( const KShortcut& )));
+    connect( bt, TQT_SIGNAL( capturedShortcut( const TDEShortcut& )),
+        this, TQT_SLOT( capturedShortcut( const TDEShortcut& )));
     }
 
 void Shortcut_trigger_widget::clear_data()
     {
-    bt->setShortcut( KShortcut(), false );
+    bt->setShortcut( TDEShortcut(), false );
     }
 
-void Shortcut_trigger_widget::capturedShortcut( const KShortcut& s_P )
+void Shortcut_trigger_widget::capturedShortcut( const TDEShortcut& s_P )
     {
     if( KKeyChooser::checkGlobalShortcutsConflict( s_P, true, topLevelWidget())
         || KKeyChooser::checkStandardShortcutsConflict( s_P, true, topLevelWidget()))

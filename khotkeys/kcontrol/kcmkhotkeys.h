@@ -54,8 +54,8 @@ class Module
         void set_daemon_disabled( bool disable );
         bool daemon_disabled() const;
         void import();
-		KShortcut voice_shortcut() const;
-		void set_voice_shortcut( const KShortcut&) ;
+		TDEShortcut voice_shortcut() const;
+		void set_voice_shortcut( const TDEShortcut&) ;
     public slots:
         void changed();
     protected:
@@ -153,13 +153,13 @@ bool Module::daemon_disabled() const
 
 
 inline
-void Module::set_voice_shortcut( const KShortcut& cut)
+void Module::set_voice_shortcut( const TDEShortcut& cut)
    {
     settings.voice_shortcut=cut;
    }
 
 inline 
-KShortcut Module::voice_shortcut() const
+TDEShortcut Module::voice_shortcut() const
    {
 	return settings.voice_shortcut;
    }

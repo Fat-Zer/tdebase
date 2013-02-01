@@ -126,7 +126,7 @@ static const char *aa_vbgr_xpm[]={
 static const char** aaPixmaps[]={ aa_rgb_xpm, aa_bgr_xpm, aa_vrgb_xpm, aa_vbgr_xpm };
 
 /**** DLL Interface ****/
-typedef KGenericFactory<KFonts, TQWidget> FontFactory;
+typedef KGenericFactory<TDEFonts, TQWidget> FontFactory;
 K_EXPORT_COMPONENT_FACTORY( kcm_fonts, FontFactory("kcmfonts") )
 
 /**** FontUseItem ****/
@@ -140,13 +140,13 @@ FontUseItem::FontUseItem(
   const TQFont &default_fnt,
   bool f
 )
-  : KFontRequester(parent, 0L, f),
+  : TDEFontRequester(parent, 0L, f),
     _rcfile(rc),
     _rcgroup(grp),
     _rckey(key),
     _default(default_fnt)
 {
-  KAcceleratorManager::setNoAccel( this );
+  TDEAcceleratorManager::setNoAccel( this );
   setTitle( name );
   readFont( false );
 }
@@ -198,13 +198,13 @@ void FontUseItem::applyFontDiff( const TQFont &fnt, int fontDiffFlags )
 {
   TQFont _font( font() );
 
-  if (fontDiffFlags & KFontChooser::FontDiffSize) {
+  if (fontDiffFlags & TDEFontChooser::FontDiffSize) {
     _font.setPointSize( fnt.pointSize() );
   }
-  if (fontDiffFlags & KFontChooser::FontDiffFamily) {
+  if (fontDiffFlags & TDEFontChooser::FontDiffFamily) {
     if (!isFixedOnly()) _font.setFamily( fnt.family() );
   }
-  if (fontDiffFlags & KFontChooser::FontDiffStyle) {
+  if (fontDiffFlags & TDEFontChooser::FontDiffStyle) {
     _font.setBold( fnt.bold() );
     _font.setItalic( fnt.italic() );
     _font.setUnderline( fnt.underline() );
@@ -490,7 +490,7 @@ int FontAASettings::exec()
     return i && changesMade;
 }
 
-/**** KFonts ****/
+/**** TDEFonts ****/
 
 static TQCString desktopConfigName()
 {
@@ -506,7 +506,7 @@ static TQCString desktopConfigName()
   return name;
 }
 
-KFonts::KFonts(TQWidget *parent, const char *name, const TQStringList &)
+TDEFonts::TDEFonts(TQWidget *parent, const char *name, const TQStringList &)
     :   TDECModule(FontFactory::instance(), parent, name)
 {
   TQStringList nameGroupKeyRc;
@@ -662,30 +662,30 @@ KFonts::KFonts(TQWidget *parent, const char *name, const TQStringList &)
    load();
 }
 
-KFonts::~KFonts()
+TDEFonts::~TDEFonts()
 {
   fontUseList.setAutoDelete(true);
   fontUseList.clear();
 }
 
-void KFonts::fontSelected()
+void TDEFonts::fontSelected()
 {
   emit changed(true);
 }
 
-void KFonts::defaults()
+void TDEFonts::defaults()
 {
   load( true );
   aaSettings->defaults();
 }
 
-void KFonts::load()
+void TDEFonts::load()
 {
   load( false );
 }
 
 
-void KFonts::load( bool useDefaults )
+void TDEFonts::load( bool useDefaults )
 {
   for ( uint i = 0; i < fontUseList.count(); i++ )
     fontUseList.at( i )->readFont( useDefaults );
@@ -708,7 +708,7 @@ void KFonts::load( bool useDefaults )
   emit changed( useDefaults );
 }
 
-void KFonts::save()
+void TDEFonts::save()
 {
 
   for ( FontUseItem* i = fontUseList.first(); i; i = fontUseList.next() )
@@ -770,11 +770,11 @@ void KFonts::save()
 }
 
 
-void KFonts::slotApplyFontDiff()
+void TDEFonts::slotApplyFontDiff()
 {
   TQFont font = TQFont(fontUseList.first()->font());
   int fontDiffFlags = 0;
-  int ret = KFontDialog::getFontDiff(font,fontDiffFlags);
+  int ret = TDEFontDialog::getFontDiff(font,fontDiffFlags);
 
   if (ret == KDialog::Accepted && fontDiffFlags)
   {
@@ -784,14 +784,14 @@ void KFonts::slotApplyFontDiff()
   }
 }
 
-void KFonts::slotUseAntiAliasing()
+void TDEFonts::slotUseAntiAliasing()
 {
     useAA = static_cast< AASetting >( cbAA->currentItem());
     aaSettingsButton->setEnabled( cbAA->currentItem() == AAEnabled );
     emit changed(true);
 }
 
-void KFonts::slotCfgAa()
+void TDEFonts::slotCfgAa()
 {
   if(aaSettings->exec())
   {

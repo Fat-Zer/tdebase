@@ -58,7 +58,7 @@
 						<string>Filter by Name:</string>
 					</property>
 				</widget>
-				<widget class="KListViewSearchLine" row="2" column="1" colspan="3">
+				<widget class="TDEListViewSearchLine" row="2" column="1" colspan="3">
 					<property name="name">
 						<cstring>deviceFilter</cstring>
 					</property>

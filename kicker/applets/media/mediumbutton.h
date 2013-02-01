@@ -58,7 +58,7 @@ protected slots:
 	void slotDragOpen();
 
 private:
-	KActionCollection mActions;
+	TDEActionCollection mActions;
 	KFileItem mFileItem;
 	TQTimer mOpenTimer;
 };

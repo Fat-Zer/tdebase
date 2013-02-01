@@ -21,8 +21,8 @@
 
 
 KonsoleBookmarkMenu::KonsoleBookmarkMenu( KBookmarkManager* mgr,
-                     KonsoleBookmarkHandler * _owner, KPopupMenu * _parentMenu,
-                     KActionCollection *collec, bool _isRoot, bool _add,
+                     KonsoleBookmarkHandler * _owner, TDEPopupMenu * _parentMenu,
+                     TDEActionCollection *collec, bool _isRoot, bool _add,
                      const TQString & parentAddress )
 : KBookmarkMenu( mgr, _owner, _parentMenu, collec, _isRoot, _add,
                  parentAddress),
@@ -47,7 +47,7 @@ KonsoleBookmarkMenu::KonsoleBookmarkMenu( KBookmarkManager* mgr,
  *
  * Why did I do this?
  *   - when KBookmarkMenu::fillbBookmarkMenu() creates sub-KBookmarkMenus.
- *   - when ... adds KActions, it uses KBookmarkMenu::slotBookmarkSelected()
+ *   - when ... adds TDEActions, it uses KBookmarkMenu::slotBookmarkSelected()
  *     instead of KonsoleBookmarkMenu::slotBookmarkSelected().
  */
 void KonsoleBookmarkMenu::slotAboutToShow2()
@@ -64,7 +64,7 @@ void KonsoleBookmarkMenu::refill()
 {
   //kdDebug(1203) << "KBookmarkMenu::refill()" << endl;
   m_lstSubMenus.clear();
-  TQPtrListIterator<KAction> it( m_actions );
+  TQPtrListIterator<TDEAction> it( m_actions );
   for (; it.current(); ++it )
     it.current()->unplug( m_parentMenu );
   m_parentMenu->clear();
@@ -90,7 +90,7 @@ void KonsoleBookmarkMenu::fillBookmarkMenu()
     {
       m_parentMenu->insertSeparator();
 
-      KActionMenu * actionMenu = new KActionMenu( i18n("Netscape Bookmarks"),
+      TDEActionMenu * actionMenu = new TDEActionMenu( i18n("Netscape Bookmarks"),
                                                   "netscape",
                                                   m_actionCollection, 0L );
       actionMenu->plug( m_parentMenu );
@@ -127,7 +127,7 @@ void KonsoleBookmarkMenu::fillBookmarkMenu()
       {
         // kdDebug(1203) << "Creating URL bookmark menu item for " << bm.text() << endl;
         // create a normal URL item, with ID as a name
-        KAction * action = new KAction( text, bm.icon(), 0,
+        TDEAction * action = new TDEAction( text, bm.icon(), 0,
                                         this, TQT_SLOT( slotBookmarkSelected() ),
                                         m_actionCollection, bm.url().url().utf8() );
 
@@ -140,7 +140,7 @@ void KonsoleBookmarkMenu::fillBookmarkMenu()
     else
     {
       // kdDebug(1203) << "Creating bookmark submenu named " << bm.text() << endl;
-      KActionMenu * actionMenu = new KActionMenu( text, bm.icon(),
+      TDEActionMenu * actionMenu = new TDEActionMenu( text, bm.icon(),
                                                   m_actionCollection, 0L );
       actionMenu->plug( m_parentMenu );
       m_actions.append( actionMenu );
@@ -162,26 +162,26 @@ void KonsoleBookmarkMenu::fillBookmarkMenu()
 
 void KonsoleBookmarkMenu::slotBookmarkSelected()
 {
-    KAction * a;
+    TDEAction * a;
     TQString b;
 
     if ( !m_pOwner ) return; // this view doesn't handle bookmarks...
-    a = (KAction*)sender();
+    a = (TDEAction*)sender();
     b = a->text();
     m_kOwner->openBookmarkURL( TQString::fromUtf8(TQT_TQOBJECT_CONST(sender())->name()), /* URL */
-                               ( (KAction *)sender() )->text() /* Title */ );
+                               ( (TDEAction *)sender() )->text() /* Title */ );
 }
 
 void KonsoleBookmarkMenu::slotNSBookmarkSelected()
 {
-    KAction *a;
+    TDEAction *a;
     TQString b;
 
     TQString link(TQT_TQOBJECT_CONST(sender())->name()+8);
-    a = (KAction*)sender();
+    a = (TDEAction*)sender();
     b = a->text();
     m_kOwner->openBookmarkURL( link, /*URL */
-                               ( (KAction *)sender() )->text()  /* Title */ );
+                               ( (TDEAction *)sender() )->text()  /* Title */ );
 }
 
 #include "konsolebookmarkmenu.moc"

@@ -70,7 +70,7 @@ TQDomDocument KonqXMLGUIClient::domDocument() const
   return m_doc;
 }
 
-void KonqXMLGUIClient::addAction( KAction *act, const TQDomElement &menu )
+void KonqXMLGUIClient::addAction( TDEAction *act, const TQDomElement &menu )
 {
   addAction( act->name(), menu );
 }
@@ -79,7 +79,7 @@ void KonqXMLGUIClient::addAction( const char *name, const TQDomElement &menu )
 {
   static const TQString& tagAction = TDEGlobal::staticQString( "action" );
 
-  if (!kapp->authorizeKAction(name))
+  if (!kapp->authorizeTDEAction(name))
      return;
 
   handlePendingSeparator();

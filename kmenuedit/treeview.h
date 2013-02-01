@@ -28,13 +28,13 @@
 #include <kservicegroup.h>
 
 class TQPopupMenu;
-class KActionCollection;
+class TDEActionCollection;
 class KDesktopFile;
 class MenuFile;
 class MenuFolderInfo;
 class MenuEntryInfo;
 class MenuSeparatorInfo;
-class KShortcut;
+class TDEShortcut;
 
 class TreeItem : public TQListViewItem
 {
@@ -85,12 +85,12 @@ private:
     MenuEntryInfo *m_entryInfo;
 };
 
-class TreeView : public KListView
+class TreeView : public TDEListView
 {
     friend class TreeItem;
     Q_OBJECT
 public:
-    TreeView(bool controlCenter, KActionCollection *ac, TQWidget *parent=0, const char *name=0);
+    TreeView(bool controlCenter, TDEActionCollection *ac, TQWidget *parent=0, const char *name=0);
     ~TreeView();
 
     void readMenuFolderInfo(MenuFolderInfo *folderInfo=0, KServiceGroup::Ptr folder=0, const TQString &prefix=TQString::null);
@@ -105,7 +105,7 @@ public:
 public slots:
     void currentChanged(MenuFolderInfo *folderInfo);
     void currentChanged(MenuEntryInfo *entryInfo);
-    void findServiceShortcut(const KShortcut&, KService::Ptr &);
+    void findServiceShortcut(const TDEShortcut&, KService::Ptr &);
 
 signals:
     void entrySelected(MenuFolderInfo *folderInfo);
@@ -154,7 +154,7 @@ protected:
     virtual void startDrag();
 
 private:
-    KActionCollection *m_ac;
+    TDEActionCollection *m_ac;
     TQPopupMenu        *m_rmb;
     int                m_clipboard;
     MenuFolderInfo    *m_clipboardFolderInfo;

@@ -648,7 +648,7 @@ void KCMStyle::save()
 
 	if ( m_bToolbarsDirty )
 		// ##### FIXME - Doesn't apply all settings correctly due to bugs in
-		// TDEApplication/KToolbar
+		// TDEApplication/TDEToolbar
 		KIPC::sendMessageAll(KIPC::ToolbarStyleChanged);
 
 	if (m_bEffectsDirty) {

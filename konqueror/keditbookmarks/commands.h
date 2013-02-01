@@ -204,7 +204,7 @@ class MoveCommand : public KCommand, public IKEBCommand
 {
 public:
    // "Create it with itemsAlreadyMoved=true since 
-   // "KListView moves the item before telling us about it."
+   // "TDEListView moves the item before telling us about it."
    MoveCommand(const TQString &from, const TQString &to, const TQString &name = TQString::null)
       : KCommand(), m_from(from), m_to(to), m_mytext(name)
    { ; }

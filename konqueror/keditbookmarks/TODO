@@ -64,19 +64,19 @@ on startup:
    ==31246==    at 0x4026A4DF: KEBListViewItem::paintCell(QPainter*, QColorGroup const&, int, int, int) (listview.cpp:786)
    ==31246==    by 0x40FD9CA7: QListView::drawContentsOffset(QPainter*, int, int, int, int, int, int) (qlistview.cpp:2905)
    ==31246==    by 0x41013A5D: QScrollView::viewportPaintEvent(QPaintEvent*) (qscrollview.cpp:1702)
-   ==31246==    by 0x407E7051: KListView::viewportPaintEvent(QPaintEvent*) (klistview.cpp:1872)
+   ==31246==    by 0x407E7051: TDEListView::viewportPaintEvent(QPaintEvent*) (klistview.cpp:1872)
    ==31246==
    ==31246== Conditional jump or move depends on uninitialised value(s)
    ==31246==    at 0x4026A4E4: KEBListViewItem::paintCell(QPainter*, QColorGroup const&, int, int, int) (listview.cpp:786)
    ==31246==    by 0x40FD9CA7: QListView::drawContentsOffset(QPainter*, int, int, int, int, int, int) (qlistview.cpp:2905)
    ==31246==    by 0x41013A5D: QScrollView::viewportPaintEvent(QPaintEvent*) (qscrollview.cpp:1702)
-   ==31246==    by 0x407E7051: KListView::viewportPaintEvent(QPaintEvent*) (klistview.cpp:1872)
+   ==31246==    by 0x407E7051: TDEListView::viewportPaintEvent(QPaintEvent*) (klistview.cpp:1872)
    ==31246==
    ==31246== Conditional jump or move depends on uninitialised value(s)
    ==31246==    at 0x4026A4E8: KEBListViewItem::paintCell(QPainter*, QColorGroup const&, int, int, int) (listview.cpp:786)
    ==31246==    by 0x40FD9CA7: QListView::drawContentsOffset(QPainter*, int, int, int, int, int, int) (qlistview.cpp:2905)
    ==31246==    by 0x41013A5D: QScrollView::viewportPaintEvent(QPaintEvent*) (qscrollview.cpp:1702)
-   ==31246==    by 0x407E7051: KListView::viewportPaintEvent(QPaintEvent*) (klistview.cpp:1872)
+   ==31246==    by 0x407E7051: TDEListView::viewportPaintEvent(QPaintEvent*) (klistview.cpp:1872)
    ==31246==
 
 lots of crap when using file->open

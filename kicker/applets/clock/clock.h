@@ -48,7 +48,7 @@ class TQBoxLayout;
 class DatePicker;
 class TQPixmap;
 class Zone;
-class KPopupMenu;
+class TDEPopupMenu;
 class Prefs;
 class ClockApplet;
 
@@ -342,7 +342,7 @@ class ClockApplet : public KPanelApplet, public KickerTip::Client, public DCOPOb
         bool showDayOfWeek;
         bool m_updateOnTheMinute;
         TQStringList _remotezonelist;
-        KPopupMenu* menu;
+        TDEPopupMenu* menu;
         ClockAppletToolTip m_tooltip;
         KTextShadowEngine *m_shadowEngine;
 };

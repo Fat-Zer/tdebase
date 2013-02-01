@@ -35,7 +35,7 @@
 #include "kbookmarkhandler.moc"
 
 
-KBookmarkHandler::KBookmarkHandler( KateFileSelector *parent, KPopupMenu* kpopupmenu )
+KBookmarkHandler::KBookmarkHandler( KateFileSelector *parent, TDEPopupMenu* kpopupmenu )
     : TQObject( parent, "KBookmarkHandler" ),
       KBookmarkOwner(),
       mParent( parent ),
@@ -43,7 +43,7 @@ KBookmarkHandler::KBookmarkHandler( KateFileSelector *parent, KPopupMenu* kpopup
       m_importStream( 0L )
 {
     if (!m_menu)
-      m_menu = new KPopupMenu( parent, "bookmark menu" );
+      m_menu = new TDEPopupMenu( parent, "bookmark menu" );
 
     TQString file = locate( "data", "kate/fsbookmarks.xml" );
     if ( file.isEmpty() )

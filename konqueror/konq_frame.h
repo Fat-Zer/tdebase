@@ -49,7 +49,7 @@ class KonqFrameTabs;
 class TDEConfig;
 class KSeparator;
 class KProgress;
-class KAction;
+class TDEAction;
 class KSqueezedTextLabel;
 
 namespace KParts

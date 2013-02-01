@@ -56,7 +56,7 @@ KonqFontOptions::KonqFontOptions(TDEConfig *config, TQString group, bool desktop
 
     row++;
 
-    m_pStandard = new KFontCombo( this );
+    m_pStandard = new TDEFontCombo( this );
     label = new TQLabel( m_pStandard, i18n("&Standard font:"), this );
     lay->addWidget(label,row,0);
     lay->addMultiCellWidget(m_pStandard,row,row,1,1);

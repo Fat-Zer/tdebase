@@ -8,7 +8,7 @@
 
 
 class TQTextStream;
-class KPopupMenu;
+class TDEPopupMenu;
 class KonsoleBookmarkMenu;
 class KonsoleMenu;
 
@@ -26,7 +26,7 @@ public:
                                 { emit openURL( url, title ); }
     virtual TQString currentURL() const;
 
-    KPopupMenu *menu() const { return m_menu; }
+    TDEPopupMenu *menu() const { return m_menu; }
 
 signals:
     void openURL( const TQString& url, const TQString& title );
@@ -45,7 +45,7 @@ private:
     void importOldBookmarks( const TQString& path, const TQString& destinationPath );
 
     KonsoleMenu *m_konsole;
-    KPopupMenu *m_menu;
+    TDEPopupMenu *m_menu;
     KonsoleBookmarkMenu *m_bookmarkMenu;
     TQTextStream *m_importStream;
 

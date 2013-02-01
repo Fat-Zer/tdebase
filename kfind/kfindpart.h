@@ -31,9 +31,9 @@ class KQuery;
 class TDEAboutData;
 //added
 class KonqPropsView;
-class KAction;
-class KToggleAction;
-class KActionMenu;
+class TDEAction;
+class TDEToggleAction;
+class TDEActionMenu;
 class TQIconViewItem;
 class IconViewBrowserExtension;
 //end added

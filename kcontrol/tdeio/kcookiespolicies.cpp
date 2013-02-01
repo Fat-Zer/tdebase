@@ -53,8 +53,8 @@ KCookiesPolicies::KCookiesPolicies(TQWidget *parent)
 
     dlg = new KCookiesPolicyDlgUI (this);
     dlg->lvDomainPolicy->header()->setStretchEnabled(true, 0);
-    dlg->lvDomainPolicy->setColumnWidthMode(0, KListView::Manual);
-    dlg->lvDomainPolicy->setColumnWidthMode(1, KListView::Maximum);
+    dlg->lvDomainPolicy->setColumnWidthMode(0, TDEListView::Manual);
+    dlg->lvDomainPolicy->setColumnWidthMode(1, TDEListView::Maximum);
     dlg->tbClearSearchLine->setIconSet(SmallIconSet(TQApplication::reverseLayout() ? "clear_left" : "locationbar_erase"));
     dlg->kListViewSearchLine->setListView(dlg->lvDomainPolicy);
     TQValueList<int> columns;

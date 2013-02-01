@@ -31,9 +31,9 @@
 class KonqPropsView;
 class KFileItem;
 class KDirLister;
-class KAction;
-class KToggleAction;
-class KActionMenu;
+class TDEAction;
+class TDEToggleAction;
+class TDEActionMenu;
 class TQIconViewItem;
 class IconViewBrowserExtension;
 
@@ -194,25 +194,25 @@ protected:
   
   SortCriterion m_eSortCriterion;
 
-  KToggleAction *m_paDotFiles;
-  KToggleAction *m_paDirectoryOverlays;
-  KToggleAction *m_paEnablePreviews;
+  TDEToggleAction *m_paDotFiles;
+  TDEToggleAction *m_paDirectoryOverlays;
+  TDEToggleAction *m_paEnablePreviews;
   TQPtrList<KFileIVI> m_paOutstandingOverlays;
   TQTimer *m_paOutstandingOverlaysTimer;
-/*  KToggleAction *m_paImagePreview;
-  KToggleAction *m_paTextPreview;
-  KToggleAction *m_paHTMLPreview;*/
-  KActionMenu *m_pamPreview;
-  TQPtrList<KToggleAction> m_paPreviewPlugins;
-  KActionMenu *m_pamSort;
+/*  TDEToggleAction *m_paImagePreview;
+  TDEToggleAction *m_paTextPreview;
+  TDEToggleAction *m_paHTMLPreview;*/
+  TDEActionMenu *m_pamPreview;
+  TQPtrList<TDEToggleAction> m_paPreviewPlugins;
+  TDEActionMenu *m_pamSort;
 
-  KAction *m_paSelect;
-  KAction *m_paUnselect;
-  KAction *m_paSelectAll;
-  KAction *m_paUnselectAll;
-  KAction *m_paInvertSelection;
+  TDEAction *m_paSelect;
+  TDEAction *m_paUnselect;
+  TDEAction *m_paSelectAll;
+  TDEAction *m_paUnselectAll;
+  TDEAction *m_paInvertSelection;
 
-  KToggleAction *m_paSortDirsFirst;
+  TDEToggleAction *m_paSortDirsFirst;
 
   KonqIconViewWidget *m_pIconView;
 

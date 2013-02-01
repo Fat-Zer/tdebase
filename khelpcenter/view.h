@@ -6,7 +6,7 @@
 #include "glossary.h"
 #include "navigator.h"
 
-class KActionCollection;
+class TDEActionCollection;
 
 namespace DOM {
   class Node;
@@ -22,7 +22,7 @@ class View : public TDEHTMLPart
   public:
     View( TQWidget *parentWidget, const char *widgetName,
           TQObject *parent, const char *name, TDEHTMLPart::GUIProfile prof,
-          KActionCollection *col );
+          TDEActionCollection *col );
 
     ~View();
 
@@ -83,7 +83,7 @@ class View : public TDEHTMLPart
     int m_zoomStepping;
 
     Formatter *mFormatter;
-    KActionCollection *mActionCollection;
+    TDEActionCollection *mActionCollection;
     TQString mCopyURL;
 };
 

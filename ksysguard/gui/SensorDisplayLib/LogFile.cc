@@ -115,7 +115,7 @@ void LogFile::settingsFontSelection()
 {
 	TQFont tmpFont = lfs->fontButton->font();
 
-	if (KFontDialog::getFont(tmpFont) == KFontDialog::Accepted) {
+	if (TDEFontDialog::getFont(tmpFont) == TDEFontDialog::Accepted) {
 		lfs->fontButton->setFont(tmpFont);
 	}
 }

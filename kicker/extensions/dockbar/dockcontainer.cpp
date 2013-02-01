@@ -170,7 +170,7 @@ void DockContainer::popupMenu(TQPoint p)
 {
     int r;
     {
-        KPopupMenu pm(this);
+        TDEPopupMenu pm(this);
         pm.insertItem( i18n("Kill This Applet"), 0);
         pm.insertItem( i18n("Change Command"), 1);
         r = pm.exec(p);

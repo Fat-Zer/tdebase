@@ -74,14 +74,14 @@ SearchWidget::SearchWidget(TQWidget *parent , const char *name)
   TQVBoxLayout * l = new TQVBoxLayout(this, 0, 2);
 
   // keyword list
-  _keyList = new KListBox(this);
+  _keyList = new TDEListBox(this);
   TQLabel *keyl = new TQLabel(_keyList, i18n("&Keywords:"), this);
 
   l->addWidget(keyl);
   l->addWidget(_keyList);
 
   // result list
-  _resultList = new KListBox(this);
+  _resultList = new TDEListBox(this);
   TQLabel *resultl = new TQLabel(_resultList, i18n("&Results:"), this);
 
   l->addWidget(resultl);

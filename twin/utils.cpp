@@ -137,7 +137,7 @@ void Motif::readFlags( WId w, bool& noborder, bool& resize, bool& move,
 //************************************
 
 KWinSelectionOwner::KWinSelectionOwner( int screen_P )
-    : KSelectionOwner( make_selection_atom( screen_P ), screen_P )
+    : TDESelectionOwner( make_selection_atom( screen_P ), screen_P )
     {
     }
 
@@ -152,7 +152,7 @@ Atom KWinSelectionOwner::make_selection_atom( int screen_P )
 
 void KWinSelectionOwner::getAtoms()
     {
-    KSelectionOwner::getAtoms();
+    TDESelectionOwner::getAtoms();
     if( xa_version == None )
         {
         Atom atoms[ 1 ];
@@ -165,7 +165,7 @@ void KWinSelectionOwner::getAtoms()
 
 void KWinSelectionOwner::replyTargets( Atom property_P, Window requestor_P )
     {
-    KSelectionOwner::replyTargets( property_P, requestor_P );
+    TDESelectionOwner::replyTargets( property_P, requestor_P );
     Atom atoms[ 1 ] = { xa_version };
     // PropModeAppend !
     XChangeProperty( tqt_xdisplay(), requestor_P, property_P, XA_ATOM, 32, PropModeAppend,
@@ -181,7 +181,7 @@ bool KWinSelectionOwner::genericReply( Atom target_P, Atom property_P, Window re
             PropModeReplace, reinterpret_cast< unsigned char* >( &version ), 2 );
         }
     else
-        return KSelectionOwner::genericReply( target_P, property_P, requestor_P );
+        return TDESelectionOwner::genericReply( target_P, property_P, requestor_P );
     return true;    
     }
 
@@ -351,8 +351,8 @@ bool isLocalMachine( const TQCString& host )
     }
 
 #ifndef KCMRULES
-ShortcutDialog::ShortcutDialog( const KShortcut& cut )
-    : KShortcutDialog( cut, false /*TODO???*/ )
+ShortcutDialog::ShortcutDialog( const TDEShortcut& cut )
+    : TDEShortcutDialog( cut, false /*TODO???*/ )
     {
     // make it a popup, so that it has the grab
     XSetWindowAttributes attrs;
@@ -377,19 +377,19 @@ void ShortcutDialog::accept()
             }
         if( seq.key( 0 ) == Key_Space )
             { // clear
-            setShortcut( KShortcut());
-            KShortcutDialog::accept();
+            setShortcut( TDEShortcut());
+            TDEShortcutDialog::accept();
             return;
             }
         if( seq.key( 0 ).modFlags() == 0 )
             { // no shortcuts without modifiers
-            KShortcut cut = shortcut();
+            TDEShortcut cut = shortcut();
             cut.setSeq( i, KKeySequence());
             setShortcut( cut );
             return;
             }
         }
-    KShortcutDialog::accept();
+    TDEShortcutDialog::accept();
     }
 
 // Workaround for Qt bug causing #119142 - wheel event causes only calling
@@ -399,7 +399,7 @@ void ShortcutDialog::accept()
 void ShortcutDialog::hide()
     {
     close();
-    return KShortcutDialog::hide();
+    return TDEShortcutDialog::hide();
     }
 
 #endif

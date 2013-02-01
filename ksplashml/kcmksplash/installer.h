@@ -60,7 +60,7 @@ private:
   TQLabel *mPreview;
 };
 
-class ThemeListBox: public KListBox
+class ThemeListBox: public TDEListBox
 {
   Q_OBJECT
 public:

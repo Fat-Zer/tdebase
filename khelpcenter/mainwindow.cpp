@@ -85,7 +85,7 @@ class LogDialog : public KDialogBase
 
 
 MainWindow::MainWindow()
-    : KMainWindow(0, "MainWindow"), DCOPObject( "KHelpCenterIface" ),
+    : TDEMainWindow(0, "MainWindow"), DCOPObject( "KHelpCenterIface" ),
       mLogDialog( 0 )
 {
     mSplitter = new TQSplitter( this );
@@ -212,27 +212,27 @@ void MainWindow::setupActions()
     KStdAction::print( TQT_TQOBJECT(this), TQT_SLOT( print() ), actionCollection(),
                        "printFrame" );
 
-    KAction *prevPage  = new KAction( i18n( "Previous Page" ), CTRL+Key_PageUp, mDoc, TQT_SLOT( prevPage() ),
+    TDEAction *prevPage  = new TDEAction( i18n( "Previous Page" ), CTRL+Key_PageUp, mDoc, TQT_SLOT( prevPage() ),
                          actionCollection(), "prevPage" );
     prevPage->setWhatsThis( i18n( "Moves to the previous page of the document" ) );
 
-    KAction *nextPage  = new KAction( i18n( "Next Page" ), CTRL + Key_PageDown, mDoc, TQT_SLOT( nextPage() ),
+    TDEAction *nextPage  = new TDEAction( i18n( "Next Page" ), CTRL + Key_PageDown, mDoc, TQT_SLOT( nextPage() ),
                          actionCollection(), "nextPage" );
     nextPage->setWhatsThis( i18n( "Moves to the next page of the document" ) );
 
-    KAction *home = KStdAction::home( TQT_TQOBJECT(this), TQT_SLOT( slotShowHome() ), actionCollection() );
+    TDEAction *home = KStdAction::home( TQT_TQOBJECT(this), TQT_SLOT( slotShowHome() ), actionCollection() );
     home->setText(i18n("Table of &Contents"));
     home->setToolTip(i18n("Table of contents"));
     home->setWhatsThis(i18n("Go back to the table of contents"));
 
     mCopyText = KStdAction::copy( TQT_TQOBJECT(this), TQT_SLOT(slotCopySelectedText()), actionCollection(), "copy_text");
 
-    mLastSearchAction = new KAction( i18n("&Last Search Result"), 0, TQT_TQOBJECT(this),
+    mLastSearchAction = new TDEAction( i18n("&Last Search Result"), 0, TQT_TQOBJECT(this),
                                      TQT_SLOT( slotLastSearch() ),
                                      actionCollection(), "lastsearch" );
     mLastSearchAction->setEnabled( false );
 
-    new KAction( i18n("Build Search Index..."), 0, TQT_TQOBJECT(mNavigator),
+    new TDEAction( i18n("Build Search Index..."), 0, TQT_TQOBJECT(mNavigator),
       TQT_SLOT( showIndexDialog() ), actionCollection(), "build_index" );
     KStdAction::keyBindings( guiFactory(), TQT_SLOT( configureShortcuts() ),
       actionCollection() );
@@ -240,16 +240,16 @@ void MainWindow::setupActions()
     TDEConfig *cfg = TDEGlobal::config();
     cfg->setGroup( "Debug" );
     if ( cfg->readBoolEntry( "SearchErrorLog", false ) ) {
-      new KAction( i18n("Show Search Error Log"), 0, TQT_TQOBJECT(this),
+      new TDEAction( i18n("Show Search Error Log"), 0, TQT_TQOBJECT(this),
                    TQT_SLOT( showSearchStderr() ), actionCollection(),
                    "show_search_stderr" );
     }
 
     History::self().setupActions( actionCollection() );
 
-    new KAction( i18n( "Configure Fonts..." ), KShortcut(), TQT_TQOBJECT(this), TQT_SLOT( slotConfigureFonts() ), actionCollection(), "configure_fonts" );
-    new KAction( i18n( "Increase Font Sizes" ), "viewmag+", KShortcut(), TQT_TQOBJECT(this), TQT_SLOT( slotIncFontSizes() ), actionCollection(), "incFontSizes" );
-    new KAction( i18n( "Decrease Font Sizes" ), "viewmag-", KShortcut(), TQT_TQOBJECT(this), TQT_SLOT( slotDecFontSizes() ), actionCollection(), "decFontSizes" );
+    new TDEAction( i18n( "Configure Fonts..." ), TDEShortcut(), TQT_TQOBJECT(this), TQT_SLOT( slotConfigureFonts() ), actionCollection(), "configure_fonts" );
+    new TDEAction( i18n( "Increase Font Sizes" ), "viewmag+", TDEShortcut(), TQT_TQOBJECT(this), TQT_SLOT( slotIncFontSizes() ), actionCollection(), "incFontSizes" );
+    new TDEAction( i18n( "Decrease Font Sizes" ), "viewmag-", TDEShortcut(), TQT_TQOBJECT(this), TQT_SLOT( slotDecFontSizes() ), actionCollection(), "decFontSizes" );
 }
 
 void MainWindow::slotCopySelectedText()

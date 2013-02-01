@@ -587,7 +587,7 @@ void PanelServiceMenu::mouseReleaseEvent(TQMouseEvent * ev)
         contextKSycocaEntry_ = entryMap_[id];
 
         delete popupMenu_;
-        popupMenu_ = new KPopupMenu(this);
+        popupMenu_ = new TDEPopupMenu(this);
         connect(popupMenu_, TQT_SIGNAL(activated(int)), TQT_SLOT(slotContextMenu(int)));
         bool hasEntries = false;
 
@@ -600,13 +600,13 @@ void PanelServiceMenu::mouseReleaseEvent(TQMouseEvent * ev)
                 popupMenu_->insertItem(SmallIconSet("desktop"),
                     i18n("Add Item to Desktop"), AddItemToDesktop);
             }
-            if (kapp->authorizeKAction("kicker_rmb") && !Kicker::the()->isImmutable())
+            if (kapp->authorizeTDEAction("kicker_rmb") && !Kicker::the()->isImmutable())
             {
                 hasEntries = true;
                 popupMenu_->insertItem(SmallIconSet("kicker"),
                     i18n("Add Item to Main Panel"), AddItemToPanel);
             }
-            if (kapp->authorizeKAction("menuedit"))
+            if (kapp->authorizeTDEAction("menuedit"))
             {
                 hasEntries = true;
                 popupMenu_->insertItem(SmallIconSet("kmenuedit"),
@@ -627,13 +627,13 @@ void PanelServiceMenu::mouseReleaseEvent(TQMouseEvent * ev)
                 popupMenu_->insertItem(SmallIconSet("desktop"),
                     i18n("Add Menu to Desktop"), AddMenuToDesktop);
             }
-            if (kapp->authorizeKAction("kicker_rmb") && !Kicker::the()->isImmutable())
+            if (kapp->authorizeTDEAction("kicker_rmb") && !Kicker::the()->isImmutable())
             {
                 hasEntries = true;
                 popupMenu_->insertItem(SmallIconSet("kicker"),
                     i18n("Add Menu to Main Panel"), AddMenuToPanel);
             }
-            if (kapp->authorizeKAction("menuedit"))
+            if (kapp->authorizeTDEAction("menuedit"))
             {
                 hasEntries = true;
                 popupMenu_->insertItem(SmallIconSet("kmenuedit"),

@@ -175,7 +175,7 @@ PanelAppletOpMenu::PanelAppletOpMenu(int actions, TQPopupMenu *opMenu, const TQP
           insertItem(SmallIcon("about_kde"), i18n("Switch to Trinity Classic Menu Style"), this, TQT_SLOT(toggleLegacy()));
     }
 
-    if ((actions & PanelAppletOpMenu::KMenuEditor) && kapp->authorizeKAction("menuedit"))
+    if ((actions & PanelAppletOpMenu::KMenuEditor) && kapp->authorizeTDEAction("menuedit"))
     {
         if (needSeparator)
         {
@@ -187,7 +187,7 @@ PanelAppletOpMenu::PanelAppletOpMenu(int actions, TQPopupMenu *opMenu, const TQP
     }
 
     if ((actions & PanelAppletOpMenu::BookmarkEditor) &&
-        kapp->authorizeKAction("edit_bookmarks"))
+        kapp->authorizeTDEAction("edit_bookmarks"))
     {
         if (needSeparator)
         {

@@ -24,7 +24,7 @@
 #include <kpanelmenu.h>
 #include <klibloader.h>
 
-class KPopupMenu;
+class TDEPopupMenu;
 class TQPopupMenu;
 
 typedef TQPtrList<TQPopupMenu> PopupMenuList;
@@ -49,7 +49,7 @@ class TOM : public KPanelMenu
         void slotExec(int);
         //void configChanged();
         void initialize();
-        void contextualizeRMBmenu(KPopupMenu* menu, int menuItem, TQPopupMenu* ctxMenu);
+        void contextualizeRMBmenu(TDEPopupMenu* menu, int menuItem, TQPopupMenu* ctxMenu);
         //void paletteChanged();
         void clearRecentDocHistory();
         void runCommand();
@@ -91,7 +91,7 @@ class TOM : public KPanelMenu
         bool m_detailedTaskEntries;
         bool m_detailedNamesFirst;
         TaskMap m_tasks;
-        KPopupMenu* m_recentDocsMenu;
+        TDEPopupMenu* m_recentDocsMenu;
         TQStringList m_recentDocURLs;
 };
 

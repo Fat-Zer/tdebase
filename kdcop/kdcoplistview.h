@@ -11,7 +11,7 @@
 #include <klistview.h>
 class TQDragObject;
 
-class KDCOPListView : public KListView
+class KDCOPListView : public TDEListView
 {
   Q_OBJECT
 

@@ -254,7 +254,7 @@ bool MenuFolderInfo::hasDirt()
    return false;
 }
 
-KService::Ptr MenuFolderInfo::findServiceShortcut(const KShortcut&cut)
+KService::Ptr MenuFolderInfo::findServiceShortcut(const TDEShortcut&cut)
 {
    KService::Ptr result;
    // Check sub-menus
@@ -382,7 +382,7 @@ void MenuEntryInfo::setIcon(const TQString &_icon)
    desktopFile()->writeEntry("Icon", icon);
 }
 
-KShortcut MenuEntryInfo::shortcut()
+TDEShortcut MenuEntryInfo::shortcut()
 {
    if (!shortcutLoaded)
    {
@@ -395,7 +395,7 @@ KShortcut MenuEntryInfo::shortcut()
    return shortCut;
 }
 
-static bool isEmpty(const KShortcut &shortCut)
+static bool isEmpty(const TDEShortcut &shortCut)
 {
    for(int i = shortCut.count(); i--;)
    {
@@ -405,7 +405,7 @@ static bool isEmpty(const KShortcut &shortCut)
    return true;
 }
 
-static void freeShortcut(const KShortcut &shortCut)
+static void freeShortcut(const TDEShortcut &shortCut)
 {
    if (!isEmpty(shortCut))
    {
@@ -420,7 +420,7 @@ static void freeShortcut(const KShortcut &shortCut)
    }
 }
 
-static void allocateShortcut(const KShortcut &shortCut)
+static void allocateShortcut(const TDEShortcut &shortCut)
 {
    if (!isEmpty(shortCut))
    {
@@ -435,7 +435,7 @@ static void allocateShortcut(const KShortcut &shortCut)
    }
 }
 
-void MenuEntryInfo::setShortcut(const KShortcut &_shortcut)
+void MenuEntryInfo::setShortcut(const TDEShortcut &_shortcut)
 {
    if (shortCut == _shortcut)
       return;
@@ -445,7 +445,7 @@ void MenuEntryInfo::setShortcut(const KShortcut &_shortcut)
 
    shortCut = _shortcut;
    if (isEmpty(shortCut))
-      shortCut = KShortcut(); // Normalize
+      shortCut = TDEShortcut(); // Normalize
 
    shortcutLoaded = true;
    shortcutDirty = true;
@@ -455,8 +455,8 @@ void MenuEntryInfo::setInUse(bool inUse)
 {
    if (inUse)
    {
-      KShortcut temp = shortcut();
-      shortCut = KShortcut();
+      TDEShortcut temp = shortcut();
+      shortCut = TDEShortcut();
       if (isShortcutAvailable(temp))
          shortCut = temp;
       else
@@ -478,7 +478,7 @@ void MenuEntryInfo::setInUse(bool inUse)
    }
 }
 
-bool MenuEntryInfo::isShortcutAvailable(const KShortcut &_shortcut)
+bool MenuEntryInfo::isShortcutAvailable(const TDEShortcut &_shortcut)
 {
    if (shortCut == _shortcut)
       return true;

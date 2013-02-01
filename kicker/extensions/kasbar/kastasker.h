@@ -64,9 +64,9 @@
 
 class TDEConfig;
 class KPixmap;
-class KPopupMenu;
-class KAction;
-class KToggleAction;
+class TDEPopupMenu;
+class TDEAction;
+class TDEToggleAction;
 
 class Task;
 class Startup;
@@ -105,7 +105,7 @@ public:
     virtual ~KasTasker();
 
     /** Factory method that returns the default menu for items in the bar. */
-    virtual KPopupMenu *contextMenu();
+    virtual TDEPopupMenu *contextMenu();
 
     virtual KasTasker *createChildBar( Qt::Orientation o, TQWidget *parent, const char *name=0 );
 
@@ -246,15 +246,15 @@ protected slots:
     void readConfig( TDEConfig *conf );
 
 private:
-    KPopupMenu *menu;
+    TDEPopupMenu *menu;
     TDEConfig *conf;
     KasGrouper *grouper;
-    KToggleAction *toggleDetachedAction;
-    KToggleAction *showAllWindowsAction;
-    KToggleAction *groupWindowsAction;
-    KToggleAction *showClockAction;
-    KToggleAction *showLoadAction;
-    KAction *rotateBarAction;
+    TDEToggleAction *toggleDetachedAction;
+    TDEToggleAction *showAllWindowsAction;
+    TDEToggleAction *groupWindowsAction;
+    TDEToggleAction *showClockAction;
+    TDEToggleAction *showLoadAction;
+    TDEAction *rotateBarAction;
     bool standalone_;
 
     bool passive_;

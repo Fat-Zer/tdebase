@@ -37,7 +37,7 @@ class TDEConfig;
 class TDEAboutData;
 class KTempFile;
 class KURLRequester;
-class KListView;
+class TDEListView;
 
 namespace KHC {
 class HtmlSearchConfig;
@@ -154,7 +154,7 @@ class KCMHelpCenter : public KDialogBase, virtual public KCMHelpCenterIface
   private:
     KHC::SearchEngine *mEngine;
   
-    KListView *mListView;
+    TDEListView *mListView;
     TQLabel *mIndexDirLabel;
     TQPushButton *mBuildButton;
     IndexProgressDialog *mProgressDialog;

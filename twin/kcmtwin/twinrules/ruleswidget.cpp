@@ -735,7 +735,7 @@ EditShortcut::EditShortcut( TQWidget* parent, const char* name )
 
 void EditShortcut::editShortcut()
     {
-    ShortcutDialog dlg( KShortcut( shortcut->text()), topLevelWidget());
+    ShortcutDialog dlg( TDEShortcut( shortcut->text()), topLevelWidget());
     if( dlg.exec() == TQDialog::Accepted )
         shortcut->setText( dlg.shortcut().toString());
     }
@@ -762,8 +762,8 @@ TQString EditShortcutDialog::shortcut() const
     return widget->shortcut->text();
     }
 
-ShortcutDialog::ShortcutDialog( const KShortcut& cut, TQWidget* parent, const char* name )
-    : KShortcutDialog( cut, false /*TODO???*/, parent, name )
+ShortcutDialog::ShortcutDialog( const TDEShortcut& cut, TQWidget* parent, const char* name )
+    : TDEShortcutDialog( cut, false /*TODO???*/, parent, name )
     {
     }
 
@@ -783,19 +783,19 @@ void ShortcutDialog::accept()
             }
         if( seq.key( 0 ) == Key_Space )
             { // clear
-            setShortcut( KShortcut());
-            KShortcutDialog::accept();
+            setShortcut( TDEShortcut());
+            TDEShortcutDialog::accept();
             return;
             }
         if( seq.key( 0 ).modFlags() == 0 )
             { // no shortcuts without modifiers
-            KShortcut cut = shortcut();
+            TDEShortcut cut = shortcut();
             cut.setSeq( i, KKeySequence());
             setShortcut( cut );
             return;
             }
         }
-    KShortcutDialog::accept();
+    TDEShortcutDialog::accept();
     }
 
 } // namespace

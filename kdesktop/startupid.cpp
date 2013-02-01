@@ -75,9 +75,9 @@ StartupId::~StartupId()
     
 void StartupId::configure()
     {
-    startup_info.setTimeout( KLaunchSettings::timeout());
-    blinking = KLaunchSettings::blinking();
-    bouncing = KLaunchSettings::bouncing();
+    startup_info.setTimeout( TDELaunchSettings::timeout());
+    blinking = TDELaunchSettings::blinking();
+    bouncing = TDELaunchSettings::bouncing();
     }
 
 void StartupId::gotNewStartup( const TDEStartupInfoId& id_P, const TDEStartupInfoData& data_P )

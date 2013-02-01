@@ -13,12 +13,12 @@
 
 class TQString;
 class KBookmark;
-class KAction;
-class KActionMenu;
-class KActionCollection;
+class TDEAction;
+class TDEActionMenu;
+class TDEActionCollection;
 class KBookmarkOwner;
 class KBookmarkMenu;
-class KPopupMenu;
+class TDEPopupMenu;
 class KonsoleBookmarkMenu;
 
 class KonsoleBookmarkMenu : public KBookmarkMenu
@@ -27,8 +27,8 @@ class KonsoleBookmarkMenu : public KBookmarkMenu
 
 public:
     KonsoleBookmarkMenu( KBookmarkManager* mgr,
-                         KonsoleBookmarkHandler * _owner, KPopupMenu * _parentMenu,
-                         KActionCollection *collec, bool _isRoot,
+                         KonsoleBookmarkHandler * _owner, TDEPopupMenu * _parentMenu,
+                         TDEActionCollection *collec, bool _isRoot,
                          bool _add = true, const TQString & parentAddress = "");
 
     void fillBookmarkMenu();

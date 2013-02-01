@@ -83,7 +83,7 @@ PanelKMenu::PanelKMenu()
     client_id = 10000;
     // Don't automatically clear the main menu.
     disableAutoClear();
-    actionCollection = new KActionCollection(this);
+    actionCollection = new TDEActionCollection(this);
     setCaption(i18n("TDE Menu"));
     connect(Kicker::the(), TQT_SIGNAL(configurationChanged()),
             this, TQT_SLOT(configChanged()));
@@ -263,7 +263,7 @@ void PanelKMenu::initialize()
     // Insert search field
     if (KickerSettings::useSearchBar()) {
         TQHBox* hbox = new TQHBox( this );
-        KToolBarButton *clearButton = new KToolBarButton( "locationbar_erase", 0, hbox );
+        TDEToolBarButton *clearButton = new TDEToolBarButton( "locationbar_erase", 0, hbox );
         searchEdit = new KPIM::ClickLineEdit(hbox, " "+i18n("Press '/' to search..."));
         hbox->setFocusPolicy(TQ_StrongFocus);
         hbox->setFocusProxy(searchEdit);
@@ -295,10 +295,10 @@ void PanelKMenu::initialize()
     bool need_separator = false;
 
     // insert bookmarks
-    if (KickerSettings::useBookmarks() && kapp->authorizeKAction("bookmarks"))
+    if (KickerSettings::useBookmarks() && kapp->authorizeTDEAction("bookmarks"))
     {
         // Need to create a new popup each time, it's deleted by subMenus.clear()
-        KPopupMenu * bookmarkParent = new KPopupMenu( this, "bookmarks" );
+        TDEPopupMenu * bookmarkParent = new TDEPopupMenu( this, "bookmarks" );
         if(!bookmarkOwner)
             bookmarkOwner = new KBookmarkOwner;
         delete bookmarkMenu; // can't reuse old one, the popup has been deleted

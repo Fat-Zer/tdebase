@@ -50,8 +50,8 @@ class KonqDirPart::KonqDirPartPrivate
 public:
     KonqDirPartPrivate() : dirLister( 0 ) {}
     TQStringList mimeFilters;
-    KToggleAction *aEnormousIcons;
-    KToggleAction *aSmallMediumIcons;
+    TDEToggleAction *aEnormousIcons;
+    TDEToggleAction *aSmallMediumIcons;
     TQValueVector<int> iconSize;
             
     KDirLister* dirLister;
@@ -137,18 +137,18 @@ KonqDirPart::KonqDirPart( TQObject *parent, const char *name )
 
     actionCollection()->setHighlightingEnabled( true );
 
-    m_paIncIconSize = new KAction( i18n( "Enlarge Icons" ), "viewmag+", 0, this, TQT_SLOT( slotIncIconSize() ), actionCollection(), "incIconSize" );
-    m_paDecIconSize = new KAction( i18n( "Shrink Icons" ), "viewmag-", 0, this, TQT_SLOT( slotDecIconSize() ), actionCollection(), "decIconSize" );
+    m_paIncIconSize = new TDEAction( i18n( "Enlarge Icons" ), "viewmag+", 0, this, TQT_SLOT( slotIncIconSize() ), actionCollection(), "incIconSize" );
+    m_paDecIconSize = new TDEAction( i18n( "Shrink Icons" ), "viewmag-", 0, this, TQT_SLOT( slotDecIconSize() ), actionCollection(), "decIconSize" );
 
-    m_paDefaultIcons = new KRadioAction( i18n( "&Default Size" ), 0, actionCollection(), "modedefault" );
-    d->aEnormousIcons = new KRadioAction( i18n( "&Huge" ), 0,
+    m_paDefaultIcons = new TDERadioAction( i18n( "&Default Size" ), 0, actionCollection(), "modedefault" );
+    d->aEnormousIcons = new TDERadioAction( i18n( "&Huge" ), 0,
 	    actionCollection(), "modeenormous" );
-    m_paHugeIcons = new KRadioAction( i18n( "&Very Large" ), 0, actionCollection(), "modehuge" );
-    m_paLargeIcons = new KRadioAction( i18n( "&Large" ), 0, actionCollection(), "modelarge" );
-    m_paMediumIcons = new KRadioAction( i18n( "&Medium" ), 0, actionCollection(), "modemedium" );
-    d->aSmallMediumIcons = new KRadioAction( i18n( "&Small" ), 0,
+    m_paHugeIcons = new TDERadioAction( i18n( "&Very Large" ), 0, actionCollection(), "modehuge" );
+    m_paLargeIcons = new TDERadioAction( i18n( "&Large" ), 0, actionCollection(), "modelarge" );
+    m_paMediumIcons = new TDERadioAction( i18n( "&Medium" ), 0, actionCollection(), "modemedium" );
+    d->aSmallMediumIcons = new TDERadioAction( i18n( "&Small" ), 0,
 	    actionCollection(), "modesmallmedium" );
-    m_paSmallIcons = new KRadioAction( i18n( "&Tiny" ), 0, actionCollection(), "modesmall" );
+    m_paSmallIcons = new TDERadioAction( i18n( "&Tiny" ), 0, actionCollection(), "modesmall" );
 
     m_paDefaultIcons->setExclusiveGroup( "ViewMode" );
     d->aEnormousIcons->setExclusiveGroup( "ViewMode" );
@@ -219,7 +219,7 @@ KonqDirPart::KonqDirPart( TQObject *parent, const char *name )
     m_iIconSize[4] = KIcon::SizeHuge;
     // ... up to here
 
-    KAction *a = new KAction( i18n( "Configure Background..." ), "background", 0, this, TQT_SLOT( slotBackgroundSettings() ),
+    TDEAction *a = new TDEAction( i18n( "Configure Background..." ), "background", 0, this, TQT_SLOT( slotBackgroundSettings() ),
                               actionCollection(), "bgsettings" );
 
     a->setToolTip( i18n( "Allows choosing of background settings for this view" ) );

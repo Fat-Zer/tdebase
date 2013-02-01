@@ -72,7 +72,7 @@ private:
 };
 
 ModuleTreeView::ModuleTreeView(ConfigModuleList *list, TQWidget * parent, const char * name)
-  : KListView(parent, name)
+  : TDEListView(parent, name)
   , _modules(list)
 {
   addColumn(TQString::null);
@@ -262,7 +262,7 @@ void ModuleTreeView::keyPressEvent(TQKeyEvent *e)
       slotItemSelected(currentItem());
     }
   else
-    KListView::keyPressEvent(e);
+    TDEListView::keyPressEvent(e);
 }
 
 

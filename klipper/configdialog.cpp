@@ -214,7 +214,7 @@ void ListView::rename( TQListViewItem* item, int c )
 
   }
   else
-    KListView::rename( item ,c );
+    TDEListView::rename( item ,c );
 }
 
 
@@ -250,8 +250,8 @@ ActionWidget::ActionWidget( const ActionList *list, ConfigDialog* configWidget, 
     connect( listView, TQT_SIGNAL( selectionChanged ( TQListViewItem * )),
              TQT_SLOT(selectionChanged ( TQListViewItem * )));
     connect(listView,
-            TQT_SIGNAL(contextMenu(KListView *, TQListViewItem *, const TQPoint&)),
-            TQT_SLOT( slotContextMenu(KListView*, TQListViewItem*, const TQPoint&)));
+            TQT_SIGNAL(contextMenu(TDEListView *, TQListViewItem *, const TQPoint&)),
+            TQT_SLOT( slotContextMenu(TDEListView*, TQListViewItem*, const TQPoint&)));
 
     ClipAction *action   = 0L;
     ClipCommand *command = 0L;
@@ -321,14 +321,14 @@ void ActionWidget::selectionChanged ( TQListViewItem * item)
     delActionButton->setEnabled(item!=0);
 }
 
-void ActionWidget::slotContextMenu( KListView *, TQListViewItem *item,
+void ActionWidget::slotContextMenu( TDEListView *, TQListViewItem *item,
                                     const TQPoint& pos )
 {
     if ( !item )
         return;
 
     int addCmd = 0, rmCmd = 0;
-    KPopupMenu *menu = new KPopupMenu;
+    TDEPopupMenu *menu = new TDEPopupMenu;
     addCmd = menu->insertItem( i18n("Add Command") );
     rmCmd = menu->insertItem( i18n("Remove Command") );
     if ( !item->parent() ) {// no "command" item
@@ -451,7 +451,7 @@ void AdvancedWidget::setWMClasses( const TQStringList& items )
 //////////
 
 /*
-KeysWidget::KeysWidget( KAccelActions &keyMap, TQWidget *parent, const char *name)
+KeysWidget::KeysWidget( TDEAccelActions &keyMap, TQWidget *parent, const char *name)
     : TQVBox( parent, name )
 {
     keyChooser = new KKeyChooser( keyMap, this );

@@ -24,7 +24,7 @@ class TQComboBox;
 class TQPushButton;
 
 class TDEConfig;
-class KListView;
+class TDEListView;
 class KURLRequester;
 
 namespace TDEIO { class Job; }

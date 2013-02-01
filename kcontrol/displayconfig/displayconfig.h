@@ -41,8 +41,8 @@
 #include "displayconfigbase.h"
 
 class TDEConfig;
-class KPopupMenu;
-class KListViewItem;
+class TDEPopupMenu;
+class TDEListViewItem;
 
 typedef TQMap< TQString, TQPtrList< SingleScreenData > > ScreenConfigurationMap;
 

@@ -34,8 +34,8 @@
 #include <konq_propsview.h>
 #include "konq_listviewwidget.h"
 
-class KAction;
-class KToggleAction;
+class TDEAction;
+class TDEToggleAction;
 class ListViewBrowserExtension;
 
 class KonqListViewFactory : public KParts::Factory
@@ -147,26 +147,26 @@ private:
   KMimeTypeResolver<KonqBaseListViewItem,KonqListView> *m_mimeTypeResolver;
   TQTimer *m_headerTimer;
 
-  KAction *m_paSelect;
-  KAction *m_paUnselect;
-  KAction *m_paSelectAll;
-  KAction *m_paUnselectAll;
-  KAction *m_paInvertSelection;
+  TDEAction *m_paSelect;
+  TDEAction *m_paUnselect;
+  TDEAction *m_paSelectAll;
+  TDEAction *m_paUnselectAll;
+  TDEAction *m_paInvertSelection;
 
-  KToggleAction *m_paCaseInsensitive;
+  TDEToggleAction *m_paCaseInsensitive;
 
-  KToggleAction *m_paShowDot;
-  KToggleAction *m_paShowTime;
-  KToggleAction *m_paShowType;
-  KToggleAction *m_paShowMimeType;
-  KToggleAction *m_paShowAccessTime;
-  KToggleAction *m_paShowCreateTime;
-  KToggleAction *m_paShowLinkDest;
-  KToggleAction *m_paShowSize;
-  KToggleAction *m_paShowOwner;
-  KToggleAction *m_paShowGroup;
-  KToggleAction *m_paShowPermissions;
-  KToggleAction *m_paShowURL;
+  TDEToggleAction *m_paShowDot;
+  TDEToggleAction *m_paShowTime;
+  TDEToggleAction *m_paShowType;
+  TDEToggleAction *m_paShowMimeType;
+  TDEToggleAction *m_paShowAccessTime;
+  TDEToggleAction *m_paShowCreateTime;
+  TDEToggleAction *m_paShowLinkDest;
+  TDEToggleAction *m_paShowSize;
+  TDEToggleAction *m_paShowOwner;
+  TDEToggleAction *m_paShowGroup;
+  TDEToggleAction *m_paShowPermissions;
+  TDEToggleAction *m_paShowURL;
 };
 
 class ListViewBrowserExtension : public KonqDirPartBrowserExtension

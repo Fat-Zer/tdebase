@@ -87,7 +87,7 @@ TQObject* TOMFactory::createObject(TQObject *parent, const char *name, const cha
 class runMenuWidget : public TQWidget, public QMenuItem
 {
     public:
-        runMenuWidget(KPopupMenu* parent, int index)
+        runMenuWidget(TDEPopupMenu* parent, int index)
             : TQWidget (parent),
               m_menu(parent),
               m_index(index)
@@ -164,7 +164,7 @@ class runMenuWidget : public TQWidget, public QMenuItem
         }
 
     private:
-        KPopupMenu* m_menu;
+        TDEPopupMenu* m_menu;
         KHistoryCombo* m_runEdit;
         TQPixmap icon;
         TQRect textRect;
@@ -220,7 +220,7 @@ void TOM::initializeRecentDocs()
                                  this, TQT_SLOT(clearRecentDocHistory()));
     m_recentDocsMenu->insertSeparator();
 
-    m_recentDocURLs = KRecentDocument::recentDocuments();
+    m_recentDocURLs = TDERecentDocument::recentDocuments();
 
     if (m_recentDocURLs.isEmpty())
     {
@@ -267,10 +267,10 @@ int TOM::appendTaskGroup(TDEConfig& config, bool inSubMenu)
         return 0;
     }
 
-    KPopupMenu* taskGroup;
+    TDEPopupMenu* taskGroup;
     if( inSubMenu )
     {
-        taskGroup = new KPopupMenu(this);
+        taskGroup = new TDEPopupMenu(this);
 
         if (icon != TQString::null)
         {
@@ -370,8 +370,8 @@ int TOM::appendTaskGroup(TDEConfig& config, bool inSubMenu)
 
     if (inSubMenu)
     {
-        TQObject::connect(taskGroup, TQT_SIGNAL(aboutToShowContextMenu(KPopupMenu*, int, TQPopupMenu*)),
-                         this, TQT_SLOT(contextualizeRMBmenu(KPopupMenu*, int, TQPopupMenu*)));
+        TQObject::connect(taskGroup, TQT_SIGNAL(aboutToShowContextMenu(TDEPopupMenu*, int, TQPopupMenu*)),
+                         this, TQT_SLOT(contextualizeRMBmenu(TDEPopupMenu*, int, TQPopupMenu*)));
 
         m_submenus.append(taskGroup);
 
@@ -384,7 +384,7 @@ int TOM::appendTaskGroup(TDEConfig& config, bool inSubMenu)
             taskGroup->insertItem("Modify These Tasks", configureMenuID);
             TQPopupMenu* rmbMenu = taskGroup->contextMenu();
             rmbMenu->setFont(m_largerFont);
-            KPopupTitle* title = new KPopupTitle();
+            TDEPopupTitle* title = new TDEPopupTitle();
             title->setText(i18n("%1 Menu Editor").arg(name));
             rmbMenu->insertItem(title, contextMenuTitleID);
             rmbMenu->insertItem(i18n("Add This Task to Panel"));
@@ -492,14 +492,14 @@ void TOM::initialize()
     // RECENTLY USED ITEMS
     insertTitle(i18n("Recently Used Items"), contextMenuTitleID);
 
-    m_recentDocsMenu = new KPopupMenu(this, "recentDocs");
+    m_recentDocsMenu = new TDEPopupMenu(this, "recentDocs");
     m_recentDocsMenu->setFont(m_largerFont);
     connect(m_recentDocsMenu, TQT_SIGNAL(aboutToShow()), this, TQT_SLOT(initializeRecentDocs()));
     connect(m_recentDocsMenu, TQT_SIGNAL(activated(int)), this, TQT_SLOT(openRecentDocument(int)));
     insertItem(DesktopIcon("document", KIcon::SizeMedium), i18n("Recent Documents"), m_recentDocsMenu);
     m_submenus.append(m_recentDocsMenu);
 
-    KPopupMenu* recentApps = new KPopupMenu(this, "recentApps");
+    TDEPopupMenu* recentApps = new TDEPopupMenu(this, "recentApps");
     recentApps->setFont(m_largerFont);
     recentApps->setKeyboardShortcutsEnabled(true);
     initializeRecentApps(recentApps);
@@ -573,7 +573,7 @@ void TOM::reload()
     initialize();
 }
 
-void TOM::contextualizeRMBmenu(KPopupMenu* menu, int menuItem, TQPopupMenu* ctxMenu)
+void TOM::contextualizeRMBmenu(TDEPopupMenu* menu, int menuItem, TQPopupMenu* ctxMenu)
 {
     if (menuItem == configureMenuID)
     {
@@ -588,7 +588,7 @@ void TOM::contextualizeRMBmenu(KPopupMenu* menu, int menuItem, TQPopupMenu* ctxM
     {
         text = text.left(parens);
     }
-    KPopupTitle* title = new KPopupTitle();
+    TDEPopupTitle* title = new TDEPopupTitle();
     title->setText(i18n("The \"%2\" Task").arg(text));
     ctxMenu->insertItem(title, contextMenuTitleID, 0);
 }
@@ -608,14 +608,14 @@ void TOM::slotExec(int /* id */)
 void TOM::removeTask()
 {
     // TODO: write this change out to the appropriate config file
-    TQString task = KPopupMenu::contextMenuFocus()->text(KPopupMenu::contextMenuFocusItem());
+    TQString task = TDEPopupMenu::contextMenuFocus()->text(TDEPopupMenu::contextMenuFocusItem());
     if (KMessageBox::warningContinueCancel(this,
                                   i18n("<qt>Are you sure you want to remove the <strong>%1</strong> task?<p>"
                                         "<em>Tip: You can restore the task after it has been removed by selecting the &quot;Modify These Tasks&quot; entry</em></qt>").arg(task),
                                   i18n("Remove Task?"),KStdGuiItem::del()) == KMessageBox::Continue)
     {
-        m_tasks.remove(KPopupMenu::contextMenuFocusItem());
-        KPopupMenu::contextMenuFocus()->removeItem(KPopupMenu::contextMenuFocusItem());
+        m_tasks.remove(TDEPopupMenu::contextMenuFocusItem());
+        TDEPopupMenu::contextMenuFocus()->removeItem(TDEPopupMenu::contextMenuFocusItem());
     }
 }
 
@@ -833,7 +833,7 @@ void TOM::runTask(int id)
 
 void TOM::clearRecentDocHistory()
 {
-    KRecentDocument::clear();
+    TDERecentDocument::clear();
 }
 
 void TOM::openRecentDocument(int id)

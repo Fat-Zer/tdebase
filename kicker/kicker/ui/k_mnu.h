@@ -39,7 +39,7 @@ namespace KPIM {
 
 class KickerClientMenu;
 class KBookmarkMenu;
-class KActionCollection;
+class TDEActionCollection;
 class KBookmarkOwner;
 class Panel;
 
@@ -112,7 +112,7 @@ private:
     bool                        delay_init;
     TQIntDict<KickerClientMenu>  clients;
     KBookmarkMenu              *bookmarkMenu;
-    KActionCollection          *actionCollection;
+    TDEActionCollection          *actionCollection;
     KBookmarkOwner             *bookmarkOwner;
     PopupMenuList               dynamicSubMenus;
     KPIM::ClickLineEdit        *searchEdit;

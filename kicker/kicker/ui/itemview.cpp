@@ -618,7 +618,7 @@ void ItemViewTip::maybeTip( const TQPoint &pos )
 // --------------------------------------------------------------------------
 
 ItemView::ItemView(TQWidget* parent, const char* name)
-    : KListView(parent, name), m_spacer( 0 ),
+    : TDEListView(parent, name), m_spacer( 0 ),
       m_mouseMoveSelects(true), m_iconSize(32)
 {
     setHScrollBarMode( TQScrollView::AlwaysOff );
@@ -746,7 +746,7 @@ void ItemView::moveItemToIndex(KMenuItem* item, int nIndex)
 
     if (nIndex <= 0) {
           takeItem(item);
-          KListView::insertItem(item);
+          TDEListView::insertItem(item);
     }
     else {
         item->moveItem(itemAtIndex(nIndex));
@@ -909,7 +909,7 @@ void ItemView::slotItemClicked(TQListViewItem* item)
 
 void ItemView::contentsMousePressEvent ( TQMouseEvent * e )
 {
-    KListView::contentsMousePressEvent( e );
+    TDEListView::contentsMousePressEvent( e );
 
     TQPoint vp = contentsToViewport(e->pos());
     KMenuItemSeparator *si = dynamic_cast<KMenuItemSeparator*>( itemAt( vp ) );
@@ -936,15 +936,15 @@ void ItemView::contentsMouseMoveEvent(TQMouseEvent *e)
       return;
     }
 
-    KListView::contentsMouseMoveEvent(e);
+    TDEListView::contentsMouseMoveEvent(e);
 
     if (m_mouseMoveSelects) {
       if(i && i->isEnabled() && !i->isSelected() &&
          // FIXME: This is wrong if you drag over the items.
          (e->state() & (Qt::LeftButton|Qt::MidButton|Qt::RightButton)) == 0)
-          KListView::setSelected(i, true);
+          TDEListView::setSelected(i, true);
       else if (!i && selectedItem())
-          KListView::setSelected(selectedItem(), false);
+          TDEListView::setSelected(selectedItem(), false);
     }
 
     if ( link_cursor )
@@ -956,14 +956,14 @@ void ItemView::contentsMouseMoveEvent(TQMouseEvent *e)
 
 void ItemView::leaveEvent(TQEvent* e)
 {
-    KListView::leaveEvent(e);
+    TDEListView::leaveEvent(e);
 
     clearSelection();
 }
 
 void ItemView::resizeEvent ( TQResizeEvent * e )
 {
-    KListView::resizeEvent( e );
+    TDEListView::resizeEvent( e );
 //    if ( m_lastOne )
 //        int diff = itemRect( m_lastOne ).bottom() - viewport()->height();
 }
@@ -971,7 +971,7 @@ void ItemView::resizeEvent ( TQResizeEvent * e )
 void ItemView::viewportPaintEvent ( TQPaintEvent * pe )
 {
     //kdDebug() << "viewportPaintEvent " << pe->rect() << " " << contentsY () << " " << m_old_contentY << endl;
-    KListView::viewportPaintEvent( pe );
+    TDEListView::viewportPaintEvent( pe );
 
     if ( m_lastOne && m_old_contentY != contentsY() ) {
         m_old_contentY = contentsY();
@@ -981,7 +981,7 @@ void ItemView::viewportPaintEvent ( TQPaintEvent * pe )
 
 void ItemView::clear()
 {
-    KListView::clear();
+    TDEListView::clear();
     m_lastOne = 0;
     m_old_contentY = -1;
     m_back_url = TQString();
@@ -989,7 +989,7 @@ void ItemView::clear()
 
 void ItemView::contentsWheelEvent(TQWheelEvent *e)
 {
-    KListView::contentsWheelEvent(e);
+    TDEListView::contentsWheelEvent(e);
 
     TQPoint vp = contentsToViewport(e->pos());
     TQListViewItem * i = itemAt( vp );
@@ -997,9 +997,9 @@ void ItemView::contentsWheelEvent(TQWheelEvent *e)
     if(i && i->isEnabled() && !i->isSelected() &&
        // FIXME: This is wrong if you drag over the items.
        (e->state() & (Qt::LeftButton|Qt::MidButton|Qt::RightButton)) == 0)
-        KListView::setSelected(i, true);
+        TDEListView::setSelected(i, true);
     else if (!i && selectedItem())
-        KListView::setSelected(selectedItem(), false);
+        TDEListView::setSelected(selectedItem(), false);
 }
 
 TQDragObject * ItemView::dragObject()

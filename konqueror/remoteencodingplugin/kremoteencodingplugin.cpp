@@ -48,7 +48,7 @@ KRemoteEncodingPlugin::KRemoteEncodingPlugin(TQObject * parent,
 					     const TQStringList &)
   : KParts::Plugin(parent, name), m_loaded(false), m_idDefault(0)
 {
-  m_menu = new KActionMenu(i18n("Select Remote Charset"), "charset",
+  m_menu = new TDEActionMenu(i18n("Select Remote Charset"), "charset",
 			   actionCollection(), "changeremoteencoding");
   connect(m_menu->popupMenu(), TQT_SIGNAL(aboutToShow()),
 	  this, TQT_SLOT(slotAboutToShow()));
@@ -111,7 +111,7 @@ KRemoteEncodingPlugin::slotAboutToOpenURL()
 void
 KRemoteEncodingPlugin::fillMenu()
 {
-  KPopupMenu *menu = m_menu->popupMenu();
+  TDEPopupMenu *menu = m_menu->popupMenu();
   menu->clear();
 
   TQStringList::ConstIterator it;

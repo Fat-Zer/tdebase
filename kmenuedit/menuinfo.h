@@ -119,7 +119,7 @@ public:
     void save(MenuFile *);
 
     // Search service by shortcut
-    KService::Ptr findServiceShortcut(const KShortcut&);
+    KService::Ptr findServiceShortcut(const TDEShortcut&);
 
     // Set whether the entry is in active use (as opposed to in the clipboard/deleted)
     void setInUse(bool inUse);
@@ -160,9 +160,9 @@ public:
     
     TQString file() const { return service->desktopEntryPath(); }
     
-    KShortcut shortcut();
-    void setShortcut(const KShortcut &_shortcut);
-    bool isShortcutAvailable(const KShortcut &_shortcut);
+    TDEShortcut shortcut();
+    void setShortcut(const TDEShortcut &_shortcut);
+    bool isShortcutAvailable(const TDEShortcut &_shortcut);
     
     void setDirty();
 
@@ -182,7 +182,7 @@ public:
     TQString icon;
     KService::Ptr service;
     KDesktopFile *df;
-    KShortcut shortCut;
+    TDEShortcut shortCut;
     bool shortcutLoaded;
     bool shortcutDirty;
     bool dirty;

@@ -145,7 +145,7 @@ KColorScheme::KColorScheme(TQWidget *parent, const char *name, const TQStringLis
     TQGroupBox *group = new TQVGroupBox( i18n("Color Scheme"), this );
     topLayout->addWidget( group, 1, 0 );
 
-    sList = new KListBox( group );
+    sList = new TDEListBox( group );
     mSchemeList = new KColorSchemeList();
     readSchemeNames();
     sList->setCurrentItem( 0 );

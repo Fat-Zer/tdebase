@@ -22,7 +22,7 @@
 class TDEConfig;
 class TQTimer;
 class TQPixmap;
-class KPopupMenu;
+class TDEPopupMenu;
 class KWinModule;
 class KPixmap;
 class KVirtualBGRenderer;

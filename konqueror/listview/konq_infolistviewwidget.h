@@ -27,7 +27,7 @@
 
 namespace TDEIO {class MetaInfoJob;}
 class KonqListView;
-class KSelectAction;
+class TDESelectAction;
 
 /**
  * The info list view
@@ -81,7 +81,7 @@ class KonqInfoListViewWidget : public KonqBaseListViewWidget
 
       KonqILVMimeType                 m_favorite;
       
-      KSelectAction*                  m_mtSelector;
+      TDESelectAction*                  m_mtSelector;
       TDEIO::MetaInfoJob*               m_metaInfoJob;
       KFileItemList                   m_metaInfoTodo;
 };

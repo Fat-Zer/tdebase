@@ -51,11 +51,11 @@ History::~History()
 {
 }
 
-void History::setupActions( KActionCollection *coll )
+void History::setupActions( TDEActionCollection *coll )
 {
   TQPair<KGuiItem, KGuiItem> backForward = KStdGuiItem::backAndForward();
 
-  m_backAction = new KToolBarPopupAction( backForward.first, ALT+Key_Left,
+  m_backAction = new TDEToolBarPopupAction( backForward.first, ALT+Key_Left,
       this, TQT_SLOT( back() ), coll, "back" );
   connect( m_backAction->popupMenu(), TQT_SIGNAL( activated( int ) ),
            TQT_SLOT( backActivated( int ) ) );
@@ -63,7 +63,7 @@ void History::setupActions( KActionCollection *coll )
            TQT_SLOT( fillBackMenu() ) );
   m_backAction->setEnabled( false );
 
-  m_forwardAction = new KToolBarPopupAction( backForward.second, ALT+Key_Right,
+  m_forwardAction = new TDEToolBarPopupAction( backForward.second, ALT+Key_Right,
       this, TQT_SLOT( forward() ), coll,
       "forward" );
   connect( m_forwardAction->popupMenu(), TQT_SIGNAL( activated( int ) ),
@@ -73,7 +73,7 @@ void History::setupActions( KActionCollection *coll )
   m_forwardAction->setEnabled( false );
 }
 
-void History::installMenuBarHook( KMainWindow *mainWindow )
+void History::installMenuBarHook( TDEMainWindow *mainWindow )
 {
   TQPopupMenu *goMenu = dynamic_cast<TQPopupMenu *>(
       mainWindow->guiFactory()->container( "go_web", mainWindow ) );
@@ -256,7 +256,7 @@ void History::fillForwardMenu()
 
 void History::fillGoMenu()
 {
-  KMainWindow *mainWindow = static_cast<KMainWindow *>( kapp->mainWidget() );
+  TDEMainWindow *mainWindow = static_cast<TDEMainWindow *>( kapp->mainWidget() );
   TQPopupMenu *goMenu = dynamic_cast<TQPopupMenu *>( mainWindow->guiFactory()->container( TQString::fromLatin1( "go" ), mainWindow ) );
   if ( !goMenu || m_goMenuIndex == -1 )
     return;
@@ -289,7 +289,7 @@ void History::fillGoMenu()
 
 void History::goMenuActivated( int id )
 {
-  KMainWindow *mainWindow = static_cast<KMainWindow *>( kapp->mainWidget() );
+  TDEMainWindow *mainWindow = static_cast<TDEMainWindow *>( kapp->mainWidget() );
   TQPopupMenu *goMenu = dynamic_cast<TQPopupMenu *>( mainWindow->guiFactory()->container( TQString::fromLatin1( "go" ), mainWindow ) );
   if ( !goMenu )
     return;

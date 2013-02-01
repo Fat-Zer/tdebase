@@ -154,7 +154,7 @@ void KateApp::restoreKate ()
   Kate::Document::setOpenErrorDialogsActivated (true);
 
   // restore all windows ;)
-  for (int n=1; KMainWindow::canBeRestored(n); n++)
+  for (int n=1; TDEMainWindow::canBeRestored(n); n++)
     newMainWindow(sessionConfig(), TQString ("%1").arg(n));
 
   // oh, no mainwindow, create one, should not happen, but make sure ;)

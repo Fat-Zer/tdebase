@@ -69,14 +69,14 @@ private:
   TDEConfig *mConfig;
 };
 
-class KActionsOptions : public TDECModule
+class TDEActionsOptions : public TDECModule
 {
   Q_OBJECT
 
 public:
 
-  KActionsOptions(TQWidget *parent, const char *name);
-  virtual ~KActionsOptions();
+  TDEActionsOptions(TQWidget *parent, const char *name);
+  virtual ~TDEActionsOptions();
 
   void load();
   void save();

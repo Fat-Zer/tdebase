@@ -32,8 +32,8 @@ class KDirLister;
 namespace KParts { class BrowserExtension; }
 class KonqPropsView;
 class TQScrollView;
-class KAction;
-class KToggleAction;
+class TDEAction;
+class TDEToggleAction;
 class KonqDirPartBrowserExtension;
 
 class LIBKONQ_EXPORT KonqDirPart: public KParts::ReadOnlyPart
@@ -299,13 +299,13 @@ protected:
 
     KonqPropsView * m_pProps;
 
-    KAction *m_paIncIconSize;
-    KAction *m_paDecIconSize;
-    KToggleAction *m_paDefaultIcons;
-    KToggleAction *m_paHugeIcons;
-    KToggleAction *m_paLargeIcons;
-    KToggleAction *m_paMediumIcons;
-    KToggleAction *m_paSmallIcons;
+    TDEAction *m_paIncIconSize;
+    TDEAction *m_paDecIconSize;
+    TDEToggleAction *m_paDefaultIcons;
+    TDEToggleAction *m_paHugeIcons;
+    TDEToggleAction *m_paLargeIcons;
+    TDEToggleAction *m_paMediumIcons;
+    TDEToggleAction *m_paSmallIcons;
 
     KParts::ReadOnlyPart * m_findPart;
     KonqDirPartBrowserExtension * m_extension;

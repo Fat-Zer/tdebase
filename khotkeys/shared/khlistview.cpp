@@ -22,7 +22,7 @@ namespace KHotKeys
 {
 
 KHListView::KHListView( TQWidget* parent_P, const char* name_P )
-    : KListView( parent_P, name_P ), saved_current_item( NULL ),
+    : TDEListView( parent_P, name_P ), saved_current_item( NULL ),
         in_clear( false ), ignore( false ), force_select( false )
     {
     connect( this, TQT_SIGNAL( selectionChanged( TQListViewItem* )),
@@ -72,7 +72,7 @@ void KHListView::slot_current_changed( TQListViewItem* item_P )
 void KHListView::clear()
     {
     in_clear = true;
-    KListView::clear();
+    TDEListView::clear();
     in_clear = false;
     slot_selection_changed( NULL );
     }
@@ -82,7 +82,7 @@ void KHListView::insertItem( TQListViewItem* item_P )
     bool set = false;
     if( !in_clear )
         set = childCount() == 0;
-    KListView::insertItem( item_P );
+    TDEListView::insertItem( item_P );
     if( set && force_select )
         {
         bool block = signalsBlocked();
@@ -96,7 +96,7 @@ void KHListView::insertItem( TQListViewItem* item_P )
 
 void KHListView::clearSelection()
     {
-    KListView::clearSelection();
+    TDEListView::clearSelection();
     slot_current_changed( currentItem());
     }
 
@@ -113,7 +113,7 @@ void KHListView::contentsDropEvent( TQDropEvent* e )
     {
     bool save_ignore = ignore;
     ignore = true;
-    KListView::contentsDropEvent( e );
+    TDEListView::contentsDropEvent( e );
     ignore = save_ignore;
     }
 

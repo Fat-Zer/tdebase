@@ -35,16 +35,16 @@
 #include "khotkeys.h"
 
 AppTreeItem::AppTreeItem(TQListViewItem *parent, const TQString& storageId)
-    : KListViewItem(parent), m_init(false), m_storageId(storageId) {}
+    : TDEListViewItem(parent), m_init(false), m_storageId(storageId) {}
 
 AppTreeItem::AppTreeItem(TQListViewItem *parent, TQListViewItem *after, const TQString& storageId)
-    : KListViewItem(parent, after), m_init(false), m_storageId(storageId) {}
+    : TDEListViewItem(parent, after), m_init(false), m_storageId(storageId) {}
 
 AppTreeItem::AppTreeItem(TQListView *parent, const TQString& storageId)
-    : KListViewItem(parent), m_init(false), m_storageId(storageId) {}
+    : TDEListViewItem(parent), m_init(false), m_storageId(storageId) {}
 
 AppTreeItem::AppTreeItem(TQListView *parent, TQListViewItem *after, const TQString& storageId)
-    : KListViewItem(parent, after), m_init(false), m_storageId(storageId) {}
+    : TDEListViewItem(parent, after), m_init(false), m_storageId(storageId) {}
 
 void AppTreeItem::setName(const TQString &name)
 {
@@ -94,7 +94,7 @@ static TQPixmap appIcon(const TQString &iconName)
 
 
 AppTreeView::AppTreeView( TQWidget *parent, const char *name )
-    : KListView(parent, name)
+    : TDEListView(parent, name)
 {
     setFrameStyle(TQFrame::WinPanel | TQFrame::Sunken);
     setAllColumnsShowFocus(true);

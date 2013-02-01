@@ -153,7 +153,7 @@ class Motif
     };
 
 class KWinSelectionOwner
-    : public KSelectionOwner
+    : public TDESelectionOwner
     {
     Q_OBJECT
     public:
@@ -254,17 +254,17 @@ void checkNonExistentClients();
 #ifndef KCMRULES
 // Qt dialogs emit no signal when closed :(
 class ShortcutDialog
-    : public KShortcutDialog
+    : public TDEShortcutDialog
     {
     Q_OBJECT
     public:
-        ShortcutDialog( const KShortcut& cut );
+        ShortcutDialog( const TDEShortcut& cut );
         virtual void accept();
         virtual void hide();
     signals:
         void dialogDone( bool ok );
     protected:
-        virtual void done( int r ) { KShortcutDialog::done( r ); emit dialogDone( r == Accepted ); }
+        virtual void done( int r ) { TDEShortcutDialog::done( r ); emit dialogDone( r == Accepted ); }
     };
 #endif
 

@@ -48,12 +48,12 @@ class TQKeyEvent;
  * An item for the listiew, that has a reference to its corresponding
  * @ref KFileItem.
  */
-class CFontListViewItem : public KListViewItem
+class CFontListViewItem : public TDEListViewItem
 {
     public:
 
     CFontListViewItem(TQListView *parent, const TQString &text, const TQPixmap &icon, KFileItem *fi)
-	: KListViewItem(parent, text),
+	: TDEListViewItem(parent, text),
           itsInf(fi)
     {
         setPixmap(0, icon);
@@ -61,14 +61,14 @@ class CFontListViewItem : public KListViewItem
     }
 
     CFontListViewItem(TQListView *parent, KFileItem *fi)
-        : KListViewItem(parent),
+        : TDEListViewItem(parent),
           itsInf(fi)
     {
         init();
     }
 
     CFontListViewItem(TQListView *parent, const TQString &text, const TQPixmap &icon, KFileItem *fi, TQListViewItem *after)
-	: KListViewItem(parent, after),
+	: TDEListViewItem(parent, after),
           itsInf(fi)
     {
         setPixmap(0, icon);
@@ -113,7 +113,7 @@ class CFontListViewItem : public KListViewItem
  * @see KCombiView
  * @see KFileIconView
  */
-class CKFileFontView : public KListView, public KFileView
+class CKFileFontView : public TDEListView, public KFileView
 {
     Q_OBJECT
 
@@ -192,9 +192,9 @@ class CKFileFontView : public KListView, public KFileView
 
     private:
 
-    virtual void        insertItem(TQListViewItem *i)          { KListView::insertItem(i); }
-    virtual void        setSorting(int i, bool b)             { KListView::setSorting(i, b); }
-    virtual void        setSelected(TQListViewItem *i, bool b) { KListView::setSelected(i, b); }
+    virtual void        insertItem(TQListViewItem *i)          { TDEListView::insertItem(i); }
+    virtual void        setSorting(int i, bool b)             { TDEListView::setSorting(i, b); }
+    virtual void        setSelected(TQListViewItem *i, bool b) { TDEListView::setSelected(i, b); }
 
     inline CFontListViewItem * viewItem( const KFileItem *item ) const
     {

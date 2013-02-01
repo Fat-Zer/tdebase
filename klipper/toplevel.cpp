@@ -150,13 +150,13 @@ KlipperWidget::KlipperWidget( TQWidget *parent, TDEConfig* config )
 
     m_history = new History( this, "main_history" );
 
-    // we need that collection, otherwise KToggleAction is not happy :}
+    // we need that collection, otherwise TDEToggleAction is not happy :}
     TQString defaultGroup( "default" );
-    KActionCollection *collection = new KActionCollection( this, "my collection" );
-    toggleURLGrabAction = new KToggleAction( collection, "toggleUrlGrabAction" );
+    TDEActionCollection *collection = new TDEActionCollection( this, "my collection" );
+    toggleURLGrabAction = new TDEToggleAction( collection, "toggleUrlGrabAction" );
     toggleURLGrabAction->setEnabled( true );
     toggleURLGrabAction->setGroup( defaultGroup );
-    clearHistoryAction = new KAction( i18n("C&lear Clipboard History"),
+    clearHistoryAction = new TDEAction( i18n("C&lear Clipboard History"),
                                       "history_clear",
                                       0,
                                       TQT_TQOBJECT(history()),
@@ -165,7 +165,7 @@ KlipperWidget::KlipperWidget( TQWidget *parent, TDEConfig* config )
                                       "clearHistoryAction" );
     connect( clearHistoryAction, TQT_SIGNAL( activated() ), TQT_SLOT( slotClearClipboard() ) );
     clearHistoryAction->setGroup( defaultGroup );
-    configureAction = new KAction( i18n("&Configure Klipper..."),
+    configureAction = new TDEAction( i18n("&Configure Klipper..."),
                                    "configure",
                                    0,
                                    TQT_TQOBJECT(this),
@@ -173,7 +173,7 @@ KlipperWidget::KlipperWidget( TQWidget *parent, TDEConfig* config )
                                    collection,
                                    "configureAction" );
     configureAction->setGroup( defaultGroup );
-    quitAction = new KAction( i18n("&Quit"),
+    quitAction = new TDEAction( i18n("&Quit"),
                               "exit",
                               0,
                               TQT_TQOBJECT(this),

@@ -48,7 +48,7 @@ extern "C"
 	{
 		//CT there's need for decision: kwm or twin?
 		TDEGlobal::locale()->insertCatalogue("kcmkwm");
-		return new KActionsOptions( parent, name);
+		return new TDEActionsOptions( parent, name);
 	}
 
 	KDE_EXPORT TDECModule *create_twinmoving(TQWidget *parent, const char *name)
@@ -201,7 +201,7 @@ void KWinOptions::moduleChanged(bool state)
 }
 
 
-KActionsOptions::KActionsOptions(TQWidget *parent, const char *name)
+TDEActionsOptions::TDEActionsOptions(TQWidget *parent, const char *name)
   : TDECModule(parent, name)
 {
   mConfig = new TDEConfig("twinrc", false, true);
@@ -221,12 +221,12 @@ KActionsOptions::KActionsOptions(TQWidget *parent, const char *name)
   connect(mWindowActions, TQT_SIGNAL(changed(bool)), this, TQT_SLOT(moduleChanged(bool)));
 }
 
-KActionsOptions::~KActionsOptions()
+TDEActionsOptions::~TDEActionsOptions()
 {
   delete mConfig;
 }
 
-void KActionsOptions::load()
+void TDEActionsOptions::load()
 {
   mTitleBarActions->load();
   mWindowActions->load();
@@ -234,7 +234,7 @@ void KActionsOptions::load()
 }
 
 
-void KActionsOptions::save()
+void TDEActionsOptions::save()
 {
   mTitleBarActions->save();
   mWindowActions->save();
@@ -248,13 +248,13 @@ void KActionsOptions::save()
 }
 
 
-void KActionsOptions::defaults()
+void TDEActionsOptions::defaults()
 {
   mTitleBarActions->defaults();
   mWindowActions->defaults();
 }
 
-void KActionsOptions::moduleChanged(bool state)
+void TDEActionsOptions::moduleChanged(bool state)
 {
   emit TDECModule::changed(state);
 }

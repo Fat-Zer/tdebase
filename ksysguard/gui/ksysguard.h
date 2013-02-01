@@ -34,14 +34,14 @@
 
 #include <ksgrd/SensorClient.h>
 
-class KRecentFilesAction;
-class KToggleAction;
+class TDERecentFilesAction;
+class TDEToggleAction;
 
 class TQSplitter;
 class SensorBrowser;
 class Workspace;
 
-class TopLevel : public KMainWindow, public KSGRD::SensorClient, public DCOPObject
+class TopLevel : public TDEMainWindow, public KSGRD::SensorClient, public DCOPObject
 {
   Q_OBJECT
   K_DCOP
@@ -93,7 +93,7 @@ class TopLevel : public KMainWindow, public KSGRD::SensorClient, public DCOPObje
     TQPtrList<DCOPClientTransaction> mDCopFIFO;
 
     TQSplitter* mSplitter;
-    KRecentFilesAction* mActionOpenRecent;
+    TDERecentFilesAction* mActionOpenRecent;
 
     SensorBrowser* mSensorBrowser;
     Workspace* mWorkSpace;

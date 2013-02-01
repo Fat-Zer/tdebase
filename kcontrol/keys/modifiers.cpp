@@ -229,20 +229,20 @@ void ModifiersModule::initGUI()
 	pGroup = new TQGroupBox( 1, Qt::Horizontal, i18n("X Modifier Mapping"), this );
 	pLayoutTop->addWidget( pGroup, 4, 0 );
 
-	m_plstXMods = new KListView( pGroup );
+	m_plstXMods = new TDEListView( pGroup );
 	m_plstXMods->setSorting( -1 );
 	m_plstXMods->setSelectionMode( TQListView::NoSelection );
 	m_plstXMods->setAllColumnsShowFocus( true );
 	m_plstXMods->addColumn( i18n("X11-Mod") );
 
-	new KListViewItem( m_plstXMods, "mod5" );
-	new KListViewItem( m_plstXMods, "mod4" );
-	new KListViewItem( m_plstXMods, "mod3" );
-	new KListViewItem( m_plstXMods, "mod2" );
-	new KListViewItem( m_plstXMods, "mod1" );
-	new KListViewItem( m_plstXMods, "control" );
-	new KListViewItem( m_plstXMods, "lock" );
-	new KListViewItem( m_plstXMods, "shift" );
+	new TDEListViewItem( m_plstXMods, "mod5" );
+	new TDEListViewItem( m_plstXMods, "mod4" );
+	new TDEListViewItem( m_plstXMods, "mod3" );
+	new TDEListViewItem( m_plstXMods, "mod2" );
+	new TDEListViewItem( m_plstXMods, "mod1" );
+	new TDEListViewItem( m_plstXMods, "control" );
+	new TDEListViewItem( m_plstXMods, "lock" );
+	new TDEListViewItem( m_plstXMods, "shift" );
 
 	//------------------
 	pLayoutTop->setRowStretch( 5, 1 );

@@ -53,8 +53,8 @@ private:
 
     TQPtrList<TQCheckListItem> checklist;
 
-    KListViewItem *generalCLI;
-    KListViewItem *webbrowsingCLI;
+    TDEListViewItem *generalCLI;
+    TDEListViewItem *webbrowsingCLI;
 
     TQCheckListItem *clearThumbnails;	
     TQCheckListItem *clearRunCommandHistory;

@@ -280,7 +280,7 @@ extern "C" KDE_EXPORT int kdemain( int argc, char **argv )
     }
 
     // for the KDE-already-running check in starttde
-    KSelectionOwner kde_running( "_KDE_RUNNING", 0 );
+    TDESelectionOwner kde_running( "_KDE_RUNNING", 0 );
     kde_running.claim( false );
 
     KDesktop desktop( x_root_hack, wait_for_kded );

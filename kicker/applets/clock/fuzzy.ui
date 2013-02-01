@@ -252,7 +252,7 @@
                         <cstring>kcfg_Fuzzyness</cstring>
                     </property>
                 </widget>
-                <widget class="KFontRequester" row="2" column="1" rowspan="1" colspan="2">
+                <widget class="TDEFontRequester" row="2" column="1" rowspan="1" colspan="2">
                     <property name="name">
                         <cstring>kcfg_FuzzyFont</cstring>
                     </property>

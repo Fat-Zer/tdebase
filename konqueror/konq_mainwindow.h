@@ -43,16 +43,16 @@
 #include "konq_frame.h"
 
 class TQFile;
-class KAction;
-class KActionCollection;
-class KActionMenu;
+class TDEAction;
+class TDEActionCollection;
+class TDEActionMenu;
 class KBookmarkMenu;
 class KCMultiDialog;
 class KHistoryCombo;
 class KNewMenu;
 class KProgress;
-class KSelectAction;
-class KToggleAction;
+class TDESelectAction;
+class TDEToggleAction;
 class KonqBidiHistoryAction;
 class KBookmarkBar;
 class KonqView;
@@ -61,7 +61,7 @@ class KonqFrame;
 class KonqFrameBase;
 class KonqFrameContainerBase;
 class KonqFrameContainer;
-class KToolBarPopupAction;
+class TDEToolBarPopupAction;
 class KonqLogoAction;
 class KonqViewModeAction;
 class KonqPart;
@@ -187,7 +187,7 @@ public:
 
   virtual void customEvent( TQCustomEvent *event );
 
-  /// Overloaded of KMainWindow
+  /// Overloaded of TDEMainWindow
   virtual void setCaption( const TQString &caption );
 
   /**
@@ -234,7 +234,7 @@ public:
   /**
    * @return the "link view" action, for checking/unchecking from KonqView
    */
-  KToggleAction * linkViewAction()const { return m_paLinkView; }
+  TDEToggleAction * linkViewAction()const { return m_paLinkView; }
 
   void enableAction( const char * name, bool enabled );
   void setActionText( const char * name, const TQString& text );
@@ -381,14 +381,14 @@ public slots:
 
   // Go menu
   void slotUp();
-  void slotUp(KAction::ActivationReason, TQt::ButtonState state);
+  void slotUp(TDEAction::ActivationReason, TQt::ButtonState state);
   void slotUpDelayed();
   void slotBack();
-  void slotBack(KAction::ActivationReason, TQt::ButtonState state);
+  void slotBack(TDEAction::ActivationReason, TQt::ButtonState state);
   void slotForward();
-  void slotForward(KAction::ActivationReason, TQt::ButtonState state);
+  void slotForward(TDEAction::ActivationReason, TQt::ButtonState state);
   void slotHome();
-  void slotHome(KAction::ActivationReason, TQt::ButtonState state);
+  void slotHome(TDEAction::ActivationReason, TQt::ButtonState state);
   void slotGoSystem();
   void slotGoApplications();
   void slotGoMedia();
@@ -410,7 +410,7 @@ public slots:
   void slotPartChanged( KonqView *childView, KParts::ReadOnlyPart *oldPart, KParts::ReadOnlyPart *newPart );
 
   void slotRunFinished();
-  void slotClearLocationBar( KAction::ActivationReason reason, TQt::ButtonState state );
+  void slotClearLocationBar( TDEAction::ActivationReason reason, TQt::ButtonState state );
 
   // reimplement from KParts::MainWindow
   virtual void slotSetStatusBarText( const TQString &text );
@@ -557,7 +557,7 @@ private slots:
   void bookmarksIntoCompletion();
 
   void initBookmarkBar();
-  void slotTrashActivated( KAction::ActivationReason reason, TQt::ButtonState state );
+  void slotTrashActivated( TDEAction::ActivationReason reason, TQt::ButtonState state );
 
   void showPageSecurity();
 
@@ -603,8 +603,8 @@ private:
   void unplugViewModeActions();
   static TQString viewModeActionKey( KService::Ptr service );
 
-  void connectActionCollection( KActionCollection *coll );
-  void disconnectActionCollection( KActionCollection *coll );
+  void connectActionCollection( TDEActionCollection *coll );
+  void disconnectActionCollection( TDEActionCollection *coll );
 
   bool stayPreloaded();
   bool checkPreloadResourceUsage();
@@ -613,72 +613,72 @@ private:
 
   KNewMenu * m_pMenuNew;
 
-  KAction *m_paPrint;
+  TDEAction *m_paPrint;
 
-  KActionMenu *m_pamBookmarks;
+  TDEActionMenu *m_pamBookmarks;
 
-  KToolBarPopupAction *m_paUp;
-  KToolBarPopupAction *m_paBack;
-  KToolBarPopupAction *m_paForward;
-  KAction *m_paHome;
+  TDEToolBarPopupAction *m_paUp;
+  TDEToolBarPopupAction *m_paBack;
+  TDEToolBarPopupAction *m_paForward;
+  TDEAction *m_paHome;
 
   KonqBidiHistoryAction *m_paHistory;
 
-  KAction *m_paSaveViewProfile;
-  KToggleAction *m_paSaveViewPropertiesLocally;
-  KAction *m_paRemoveLocalProperties;
+  TDEAction *m_paSaveViewProfile;
+  TDEToggleAction *m_paSaveViewPropertiesLocally;
+  TDEAction *m_paRemoveLocalProperties;
 
-  KAction *m_paSplitViewHor;
-  KAction *m_paSplitViewVer;
-  KAction *m_paAddTab;
-  KAction *m_paDuplicateTab;
-  KAction *m_paBreakOffTab;
-  KAction *m_paRemoveView;
-  KAction *m_paRemoveTab;
-  KAction *m_paRemoveOtherTabs;
-  KAction *m_paActivateNextTab;
-  KAction *m_paActivatePrevTab;
+  TDEAction *m_paSplitViewHor;
+  TDEAction *m_paSplitViewVer;
+  TDEAction *m_paAddTab;
+  TDEAction *m_paDuplicateTab;
+  TDEAction *m_paBreakOffTab;
+  TDEAction *m_paRemoveView;
+  TDEAction *m_paRemoveTab;
+  TDEAction *m_paRemoveOtherTabs;
+  TDEAction *m_paActivateNextTab;
+  TDEAction *m_paActivatePrevTab;
 
-  KAction *m_paSaveRemoveViewProfile;
-  KActionMenu *m_pamLoadViewProfile;
+  TDEAction *m_paSaveRemoveViewProfile;
+  TDEActionMenu *m_pamLoadViewProfile;
 
-  KToggleAction *m_paLockView;
-  KToggleAction *m_paLinkView;
-  KAction *m_paReload;
-  KAction *m_paReloadAllTabs;
-  KAction *m_paUndo;
-  KAction *m_paCut;
-  KAction *m_paCopy;
-  KAction *m_paPaste;
-  KAction *m_paStop;
-  KAction *m_paRename;
+  TDEToggleAction *m_paLockView;
+  TDEToggleAction *m_paLinkView;
+  TDEAction *m_paReload;
+  TDEAction *m_paReloadAllTabs;
+  TDEAction *m_paUndo;
+  TDEAction *m_paCut;
+  TDEAction *m_paCopy;
+  TDEAction *m_paPaste;
+  TDEAction *m_paStop;
+  TDEAction *m_paRename;
 
-  KAction *m_paReloadStop;
+  TDEAction *m_paReloadStop;
 
-  KAction *m_paTrash;
-  KAction *m_paDelete;
+  TDEAction *m_paTrash;
+  TDEAction *m_paDelete;
 
-  KAction *m_paCopyFiles;
-  KAction *m_paMoveFiles;
-  KAction *m_paNewDir;
+  TDEAction *m_paCopyFiles;
+  TDEAction *m_paMoveFiles;
+  TDEAction *m_paNewDir;
 
-  KAction *m_paMoveTabLeft;
-  KAction *m_paMoveTabRight;
+  TDEAction *m_paMoveTabLeft;
+  TDEAction *m_paMoveTabRight;
 
-  KAction *m_paConfigureExtensions;
-  KAction *m_paConfigureSpellChecking;
+  TDEAction *m_paConfigureExtensions;
+  TDEAction *m_paConfigureSpellChecking;
 
   KonqLogoAction *m_paAnimatedLogo;
 
   KBookmarkBar *m_paBookmarkBar;
 
-  KToggleAction * m_paFindFiles;
-  KToggleAction *m_ptaUseHTML;
+  TDEToggleAction * m_paFindFiles;
+  TDEToggleAction *m_ptaUseHTML;
 
-  KToggleAction *m_paShowMenuBar;
-  KToggleAction *m_paShowStatusBar;
+  TDEToggleAction *m_paShowMenuBar;
+  TDEToggleAction *m_paShowStatusBar;
 
-  KToggleFullScreenAction *m_ptaFullScreen;
+  TDEToggleFullScreenAction *m_ptaFullScreen;
 
   uint m_bLocationBarConnected:1;
   uint m_bURLEnterLock:1;
@@ -698,8 +698,8 @@ private:
 
   KBookmarkMenu* m_pBookmarkMenu;
   KonqExtendedBookmarkOwner *m_pBookmarksOwner;
-  KActionCollection* m_bookmarksActionCollection;
-  KActionCollection* m_bookmarkBarActionCollection;
+  TDEActionCollection* m_bookmarksActionCollection;
+  TDEActionCollection* m_bookmarkBarActionCollection;
 
   KonqViewManager *m_pViewManager;
   KonqFrameBase* m_pChildFrame;
@@ -741,11 +741,11 @@ private:
 
   TQString m_initialFrameName;
 
-  TQPtrList<KAction> m_openWithActions;
-  KActionMenu *m_viewModeMenu;
-  TQPtrList<KAction> m_toolBarViewModeActions; // basically holds two KonqViewActions, one of
+  TQPtrList<TDEAction> m_openWithActions;
+  TDEActionMenu *m_viewModeMenu;
+  TQPtrList<TDEAction> m_toolBarViewModeActions; // basically holds two KonqViewActions, one of
                                               // iconview and one for listview
-  TQPtrList<KRadioAction> m_viewModeActions;
+  TQPtrList<TDERadioAction> m_viewModeActions;
   TQMap<TQString,KService::Ptr> m_viewModeToolBarServices; // similar to m_toolBarViewModeActions
   // it holds a map library name (libkonqiconview/libkonqlistview) ==> service (service for
   // iconview, multicolumnview, treeview, etc .)

@@ -40,8 +40,8 @@ BookmarksButton::BookmarksButton(TQWidget* parent)
       actionCollection(0),
       bookmarkOwner(0)
 {
-    actionCollection = new KActionCollection( this );
-    bookmarkParent = new KPopupMenu(this, "bookmarks");
+    actionCollection = new TDEActionCollection( this );
+    bookmarkParent = new TDEPopupMenu(this, "bookmarks");
     bookmarkOwner = new KBookmarkOwner;
     bookmarkMenu = new KBookmarkMenu(KonqBookmarkManager::self(),
                                      bookmarkOwner,

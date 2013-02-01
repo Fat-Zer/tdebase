@@ -49,7 +49,7 @@ class TQPopupMenu;
  * Ideas and code for the new template handling mechanism ('link' desktop files)
  * from Christoph Pickart <pickart@iam.uni-bonn.de>
  */
-class LIBKONQ_EXPORT KNewMenu : public KActionMenu
+class LIBKONQ_EXPORT KNewMenu : public TDEActionMenu
 {
   Q_OBJECT
 public:
@@ -57,8 +57,8 @@ public:
     /**
      * Constructor
      */
-    KNewMenu( KActionCollection * _collec, const char *name=0L );
-    KNewMenu( KActionCollection * _collec, TQWidget *parentWidget, const char *name=0L );
+    KNewMenu( TDEActionCollection * _collec, const char *name=0L );
+    KNewMenu( TDEActionCollection * _collec, TQWidget *parentWidget, const char *name=0L );
     virtual ~KNewMenu();
 
     /**

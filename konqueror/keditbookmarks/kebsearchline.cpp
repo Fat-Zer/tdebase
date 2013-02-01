@@ -19,21 +19,21 @@
 #include "kebsearchline.h"
 #include "kebsearchline.moc"
 
-KEBSearchLine::KEBSearchLine(TQWidget *parent, KListView *listView, const char *name)
-    : KListViewSearchLine(parent, listView, name)
+KEBSearchLine::KEBSearchLine(TQWidget *parent, TDEListView *listView, const char *name)
+    : TDEListViewSearchLine(parent, listView, name)
 {
     mmode = AND;
 }
 
 KEBSearchLine::KEBSearchLine(TQWidget *parent, const char *name)
-    :KListViewSearchLine(parent, name)
+    :TDEListViewSearchLine(parent, name)
 {
     mmode = AND;
 }
 
 void KEBSearchLine::updateSearch(const TQString &s)
 {
-    KListViewSearchLine::updateSearch(s);
+    TDEListViewSearchLine::updateSearch(s);
     emit searchUpdated();
 }
 
@@ -44,7 +44,7 @@ KEBSearchLine::~KEBSearchLine()
 bool KEBSearchLine::itemMatches(const TQListViewItem *item, const TQString &s) const
 {
     if(mmode == EXACTLY)
-       return KListViewSearchLine::itemMatches(item, s);
+       return TDEListViewSearchLine::itemMatches(item, s);
 
     if(lastpattern != s)
     {
@@ -60,12 +60,12 @@ bool KEBSearchLine::itemMatches(const TQListViewItem *item, const TQString &s) c
        if(it == end) //Nothing to match
            return true;
        for( ; it != end; ++it)
-           if(KListViewSearchLine::itemMatches(item, *it))
+           if(TDEListViewSearchLine::itemMatches(item, *it))
                return true;
     }
     else if(mmode == AND)
        for( ; it != end; ++it)
-           if(! KListViewSearchLine::itemMatches(item, *it))
+           if(! TDEListViewSearchLine::itemMatches(item, *it))
                return false;
 
     return (mmode == AND);

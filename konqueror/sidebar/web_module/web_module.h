@@ -47,7 +47,7 @@ class TDEHTMLSideBar : public TDEHTMLPart
 				);
 
 
-			_linkMenu = new KPopupMenu(widget(),
+			_linkMenu = new TDEPopupMenu(widget(),
 					"link context menu");
 			if (!universal) {
 				_linkMenu->insertItem(i18n("&Open Link"),
@@ -58,7 +58,7 @@ class TDEHTMLSideBar : public TDEHTMLPart
 				_linkMenu->insertItem(i18n("Open in New &Window"),
 						this, TQT_SLOT(loadPage()));
 			}
-			_menu = new KPopupMenu(widget(), "context menu");
+			_menu = new TDEPopupMenu(widget(), "context menu");
 			_menu->insertItem(SmallIcon("reload"), i18n("&Reload"),
 					this, TQT_SIGNAL(reload()));
 			_menu->insertItem(SmallIcon("reload"), i18n("Set &Automatic Reload"),                                                  this, TQT_SIGNAL(setAutoReload()));
@@ -156,7 +156,7 @@ class TDEHTMLSideBar : public TDEHTMLPart
 			}
 		}
 	private:
-		KPopupMenu *_menu, *_linkMenu;
+		TDEPopupMenu *_menu, *_linkMenu;
 		TQString _lastUrl;
 };
 

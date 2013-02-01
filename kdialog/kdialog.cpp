@@ -512,7 +512,7 @@ static int directCommand(TDECmdLineArgs *args)
 	} else { // getsavefilename
 	    TQString result = dlg.selectedFile();
 	    if (!result.isEmpty())  {
-		KRecentDocument::add(result);
+		TDERecentDocument::add(result);
 		cout << result.local8Bit().data() << endl;
 		return 0;
 	    }

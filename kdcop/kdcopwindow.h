@@ -9,8 +9,8 @@
 
 class DCOPClient;
 class TQListViewItem;
-class KAction;
-class KSelectAction;
+class TDEAction;
+class TDESelectAction;
 class TQWidgetStack;
 class TQLabel;
 class KDCOPListView;
@@ -19,7 +19,7 @@ class KDCOPListView;
 #include "kdcoplistview.h"
 #include "kdcopview.h"
 
-class KDCOPWindow : public KMainWindow
+class KDCOPWindow : public TDEMainWindow
 {
   Q_OBJECT
 
@@ -53,8 +53,8 @@ class KDCOPWindow : public KMainWindow
     bool demarshal(TQCString & replyType, TQDataStream & reply, TQListBox *theList);
 
     DCOPClient    * dcopClient;
-    KAction       * exeaction;
-    KSelectAction * langmode;
+    TDEAction       * exeaction;
+    TDESelectAction * langmode;
     kdcopview	  * mainView;
     TQVBoxLayout  * mainLayout;
 };

@@ -39,8 +39,8 @@ class KNewMenu;
 class KWinModule;
 class KBookmarkMenu;
 class KHelpMenu;
-class KActionCollection;
-class KActionMenu;
+class TDEActionCollection;
+class TDEActionMenu;
 class KWindowListMenu;
 
 enum {
@@ -141,9 +141,9 @@ private:
   menuChoice rightButtonChoice;
 
   KNewMenu* menuNew;
-  KActionMenu* bookmarks;
+  TDEActionMenu* bookmarks;
   KBookmarkMenu* bookmarkMenu;
-  KActionCollection * m_actionCollection;
+  TDEActionCollection * m_actionCollection;
   TQPoint m_desktopMenuPosition;
 
   void activateMenu( menuChoice choice, const TQPoint& global );

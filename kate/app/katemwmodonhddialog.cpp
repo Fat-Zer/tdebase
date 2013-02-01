@@ -43,7 +43,7 @@
 class KateDocItem : public TQCheckListItem
 {
   public:
-    KateDocItem( Kate::Document *doc, const TQString &status, KListView *lv )
+    KateDocItem( Kate::Document *doc, const TQString &status, TDEListView *lv )
   : TQCheckListItem( lv, doc->url().prettyURL(), CheckBox ),
         document( doc )
     {
@@ -89,7 +89,7 @@ KateMwModOnHdDialog::KateMwModOnHdDialog( DocVector docs, TQWidget *parent, cons
   lo1->setStretchFactor( t, 1000 );
 
   // document list
-  lvDocuments = new KListView( w );
+  lvDocuments = new TDEListView( w );
   lvDocuments->addColumn( i18n("Filename") );
   lvDocuments->addColumn( i18n("Status on Disk") );
   lvDocuments->setSelectionMode( TQListView::Single );

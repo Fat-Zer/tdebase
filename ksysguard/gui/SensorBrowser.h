@@ -43,7 +43,7 @@ class HostInfo;
  * The SensorBrowser is the graphical front-end of the SensorManager. It
  * displays the currently available hosts and their sensors.
  */
-class SensorBrowser : public KListView, public KSGRD::SensorClient
+class SensorBrowser : public TDEListView, public KSGRD::SensorClient
 {
   Q_OBJECT
 

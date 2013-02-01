@@ -418,35 +418,35 @@ void KDIconView::createActions()
 {
     if (m_bEditableDesktopIcons)
     {
-        KAction *undo = KStdAction::undo( KonqUndoManager::self(), TQT_SLOT( undo() ), &m_actionCollection, "undo" );
+        TDEAction *undo = KStdAction::undo( KonqUndoManager::self(), TQT_SLOT( undo() ), &m_actionCollection, "undo" );
         connect( KonqUndoManager::self(), TQT_SIGNAL( undoAvailable( bool ) ),
              undo, TQT_SLOT( setEnabled( bool ) ) );
         connect( KonqUndoManager::self(), TQT_SIGNAL( undoTextChanged( const TQString & ) ),
              undo, TQT_SLOT( setText( const TQString & ) ) );
         undo->setEnabled( KonqUndoManager::self()->undoAvailable() );
 
-        KAction* paCut = KStdAction::cut( TQT_TQOBJECT(this), TQT_SLOT( slotCut() ), &m_actionCollection, "cut" );
-        KShortcut cutShortCut = paCut->shortcut();
+        TDEAction* paCut = KStdAction::cut( TQT_TQOBJECT(this), TQT_SLOT( slotCut() ), &m_actionCollection, "cut" );
+        TDEShortcut cutShortCut = paCut->shortcut();
         cutShortCut.remove( KKey( SHIFT + Key_Delete ) ); // used for deleting files
         paCut->setShortcut( cutShortCut );
 
         KStdAction::copy( TQT_TQOBJECT(this), TQT_SLOT( slotCopy() ), &m_actionCollection, "copy" );
         KStdAction::paste( TQT_TQOBJECT(this), TQT_SLOT( slotPaste() ), &m_actionCollection, "paste" );
-        KAction *pasteTo = KStdAction::paste( TQT_TQOBJECT(this), TQT_SLOT( slotPopupPasteTo() ), &m_actionCollection, "pasteto" );
+        TDEAction *pasteTo = KStdAction::paste( TQT_TQOBJECT(this), TQT_SLOT( slotPopupPasteTo() ), &m_actionCollection, "pasteto" );
         pasteTo->setEnabled( false ); // only enabled during popupMenu()
 
-        KShortcut reloadShortcut = KStdAccel::shortcut(KStdAccel::Reload);
-        new KAction( i18n( "&Reload" ), "reload", reloadShortcut, TQT_TQOBJECT(this), TQT_SLOT( refreshIcons() ), &m_actionCollection, "reload" );
+        TDEShortcut reloadShortcut = TDEStdAccel::shortcut(TDEStdAccel::Reload);
+        new TDEAction( i18n( "&Reload" ), "reload", reloadShortcut, TQT_TQOBJECT(this), TQT_SLOT( refreshIcons() ), &m_actionCollection, "reload" );
 
-        (void) new KAction( i18n( "&Rename" ), /*"editrename",*/ Key_F2, TQT_TQOBJECT(this), TQT_SLOT( renameSelectedItem() ), &m_actionCollection, "rename" );
-        (void) new KAction( i18n( "&Properties" ), ALT+Key_Return, TQT_TQOBJECT(this), TQT_SLOT( slotProperties() ), &m_actionCollection, "properties" );
-        KAction* trash = new KAction( i18n( "&Move to Trash" ), "edittrash", Key_Delete, &m_actionCollection, "trash" );
-        connect( trash, TQT_SIGNAL( activated( KAction::ActivationReason, TQt::ButtonState ) ),
-                 this, TQT_SLOT( slotTrashActivated( KAction::ActivationReason, TQt::ButtonState ) ) );
+        (void) new TDEAction( i18n( "&Rename" ), /*"editrename",*/ Key_F2, TQT_TQOBJECT(this), TQT_SLOT( renameSelectedItem() ), &m_actionCollection, "rename" );
+        (void) new TDEAction( i18n( "&Properties" ), ALT+Key_Return, TQT_TQOBJECT(this), TQT_SLOT( slotProperties() ), &m_actionCollection, "properties" );
+        TDEAction* trash = new TDEAction( i18n( "&Move to Trash" ), "edittrash", Key_Delete, &m_actionCollection, "trash" );
+        connect( trash, TQT_SIGNAL( activated( TDEAction::ActivationReason, TQt::ButtonState ) ),
+                 this, TQT_SLOT( slotTrashActivated( TDEAction::ActivationReason, TQt::ButtonState ) ) );
 
         TDEConfig config("kdeglobals", true, false);
         config.setGroup( "KDE" );
-        (void) new KAction( i18n( "&Delete" ), "editdelete", SHIFT+Key_Delete, TQT_TQOBJECT(this), TQT_SLOT( slotDelete() ), &m_actionCollection, "del" );
+        (void) new TDEAction( i18n( "&Delete" ), "editdelete", SHIFT+Key_Delete, TQT_TQOBJECT(this), TQT_SLOT( slotDelete() ), &m_actionCollection, "del" );
 
         // Initial state of the actions (cut/copy/paste/...)
         slotSelectionChanged();
@@ -870,12 +870,12 @@ bool KDIconView::deleteGlobalDesktopFiles()
     return !itemsLeft;
 }
 
-void KDIconView::slotTrashActivated( KAction::ActivationReason reason, TQt::ButtonState state )
+void KDIconView::slotTrashActivated( TDEAction::ActivationReason reason, TQt::ButtonState state )
 {
     if (deleteGlobalDesktopFiles())
        return; // All items deleted
 
-    if ( reason == KAction::PopupMenuActivation && ( state & TQt::ShiftButton ) )
+    if ( reason == TDEAction::PopupMenuActivation && ( state & TQt::ShiftButton ) )
        KonqOperations::del(this, KonqOperations::DEL, selectedUrls());
     else
        KonqOperations::del(this, KonqOperations::TRASH, selectedUrls());
@@ -899,7 +899,7 @@ void KDIconView::popupMenu( const TQPoint &_global, const KFileItemList& _items 
     if ( _items.count() == 1 )
         m_popupURL = _items.getFirst()->url();
 
-    KAction* pasteTo = m_actionCollection.action( "pasteto" );
+    TDEAction* pasteTo = m_actionCollection.action( "pasteto" );
     if (pasteTo)
         pasteTo->setEnabled( m_actionCollection.action( "paste" )->isEnabled() );
 
@@ -945,7 +945,7 @@ void KDIconView::slotEnableAction( const char * name, bool enabled )
   if ( sName == "properties" || sName == "editMimeType" )
     return;
 
-  KAction * act = m_actionCollection.action( sName.data() );
+  TDEAction * act = m_actionCollection.action( sName.data() );
   if (act)
     act->setEnabled( enabled );
 }
@@ -1409,7 +1409,7 @@ void KDIconView::slotClipboardDataChanged()
     TQString actionText = TDEIO::pasteActionText();
     bool paste = !actionText.isEmpty();
     if ( paste ) {
-        KAction* pasteAction = m_actionCollection.action( "paste" );
+        TDEAction* pasteAction = m_actionCollection.action( "paste" );
         if ( pasteAction )
             pasteAction->setText( actionText );
     }

@@ -71,7 +71,7 @@ static void silenceQToolBar(TQtMsgType, const char *){}
 
 // helper classes to be able to have a toolbar without move handle
 KateFileSelectorToolBar::KateFileSelectorToolBar(TQWidget *parent)
-  : KToolBar( parent, "Kate FileSelector Toolbar", true )
+  : TDEToolBar( parent, "Kate FileSelector Toolbar", true )
 {
 	setMinimumWidth(10);
 }
@@ -80,7 +80,7 @@ KateFileSelectorToolBar::~KateFileSelectorToolBar(){}
 
 void KateFileSelectorToolBar::setMovingEnabled( bool)
 {
-	KToolBar::setMovingEnabled(false);
+	TDEToolBar::setMovingEnabled(false);
 }
 
 
@@ -111,7 +111,7 @@ KateFileSelector::KateFileSelector( KateMainWindow *mainWindow,
       mainwin(mainWindow),
       viewmanager(viewManager)
 {
-  mActionCollection = new KActionCollection( this );
+  mActionCollection = new TDEActionCollection( this );
 
   TQtMsgHandler oldHandler = tqInstallMsgHandler( silenceQToolBar );
 
@@ -136,18 +136,18 @@ KateFileSelector::KateFileSelector( KateMainWindow *mainWindow,
                    this, TQT_SLOT( selectorViewChanged(KFileView *) ) );
   setStretchFactor(dir, 2);
 
-  KActionCollection *coll = dir->actionCollection();
+  TDEActionCollection *coll = dir->actionCollection();
   // some shortcuts of diroperator that clashes with Kate
-  coll->action( "delete" )->setShortcut( KShortcut( ALT + Key_Delete ) );
-  coll->action( "reload" )->setShortcut( KShortcut( ALT + Key_F5 ) );
-  coll->action( "back" )->setShortcut( KShortcut( ALT + SHIFT + Key_Left ) );
-  coll->action( "forward" )->setShortcut( KShortcut( ALT + SHIFT + Key_Right ) );
+  coll->action( "delete" )->setShortcut( TDEShortcut( ALT + Key_Delete ) );
+  coll->action( "reload" )->setShortcut( TDEShortcut( ALT + Key_F5 ) );
+  coll->action( "back" )->setShortcut( TDEShortcut( ALT + SHIFT + Key_Left ) );
+  coll->action( "forward" )->setShortcut( TDEShortcut( ALT + SHIFT + Key_Right ) );
   // some consistency - reset up for dir too
-  coll->action( "up" )->setShortcut( KShortcut( ALT + SHIFT + Key_Up ) );
-  coll->action( "home" )->setShortcut( KShortcut( CTRL + ALT + Key_Home ) );
+  coll->action( "up" )->setShortcut( TDEShortcut( ALT + SHIFT + Key_Up ) );
+  coll->action( "home" )->setShortcut( TDEShortcut( CTRL + ALT + Key_Home ) );
 
   // bookmarks action!
-  KActionMenu *acmBookmarks = new KActionMenu( i18n("Bookmarks"), "bookmark",
+  TDEActionMenu *acmBookmarks = new TDEActionMenu( i18n("Bookmarks"), "bookmark",
         mActionCollection, "bookmarks" );
   acmBookmarks->setDelayed( false );
   bookmarkHandler = new KBookmarkHandler( this, acmBookmarks->popupMenu() );
@@ -167,9 +167,9 @@ KateFileSelector::KateFileSelector( KateMainWindow *mainWindow,
            filter, TQT_SLOT( addToHistory(const TQString&) ) );
 
   // kaction for the dir sync method
-  acSyncDir = new KAction( i18n("Current Document Folder"), "curfiledir", 0,
+  acSyncDir = new TDEAction( i18n("Current Document Folder"), "curfiledir", 0,
         TQT_TQOBJECT(this), TQT_SLOT( setActiveDocumentDir() ), mActionCollection, "sync_dir" );
-  toolbar->setIconText( KToolBar::IconOnly );
+  toolbar->setIconText( TDEToolBar::IconOnly );
   toolbar->setIconSize( 16 );
   toolbar->setEnableContextMenu( false );
 
@@ -268,7 +268,7 @@ void KateFileSelector::setupToolbar( TDEConfig *config )
                 "short view" << "detailed view" <<
                 "bookmarks" << "sync_dir";
   }
-  KAction *ac;
+  TDEAction *ac;
   for ( TQStringList::Iterator it=tbactions.begin(); it != tbactions.end(); ++it ) {
     if ( *it == "bookmarks" || *it == "sync_dir" )
       ac = mActionCollection->action( (*it).latin1() );
@@ -534,7 +534,7 @@ KFSConfigPage::KFSConfigPage( TQWidget *parent, const char *name, KateFileSelect
 
   // Toolbar - a lot for a little...
   TQGroupBox *gbToolbar = new TQGroupBox( 1, Qt::Vertical, i18n("Toolbar"), this );
-  acSel = new KActionSelector( gbToolbar );
+  acSel = new TDEActionSelector( gbToolbar );
   acSel->setAvailableLabel( i18n("A&vailable actions:") );
   acSel->setSelectedLabel( i18n("S&elected actions:") );
   lo->addWidget( gbToolbar );
@@ -689,7 +689,7 @@ void KFSConfigPage::init()
                 "show hidden" << "properties"*/ <<
                 "bookmarks" << "sync_dir";
   TQRegExp re("&(?=[^&])");
-  KAction *ac;
+  TDEAction *ac;
   TQListBox *lb;
   for ( TQStringList::Iterator it=allActions.begin(); it != allActions.end(); ++it ) {
     lb = l.contains( *it ) ? acSel->selectedListBox() : acSel->availableListBox();
