@@ -118,8 +118,8 @@ bool Client::manage( Window w, bool isMapped )
     original_skip_taskbar = skip_taskbar = ( info->state() & NET::SkipTaskbar) != 0;
     skip_pager = ( info->state() & NET::SkipPager) != 0;
 
-    KStartupInfoId asn_id;
-    KStartupInfoData asn_data;
+    TDEStartupInfoId asn_id;
+    TDEStartupInfoData asn_data;
     bool asn_valid = workspace()->checkStartupNotification( window(), asn_id, asn_data );
 
     workspace()->updateClientLayer( this );

@@ -251,7 +251,7 @@ extern "C" KDE_EXPORT int kdemain( int argc, char **argv )
       wRef.call( "show" );
 
       // stop startup notification
-      KStartupInfo::appStarted(  );
+      TDEStartupInfo::appStarted(  );
 
       return 0;
     }

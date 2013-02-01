@@ -45,16 +45,16 @@ class StartupId
         void stop_startupid();
     protected slots:
         void update_startupid();
-        void gotNewStartup( const KStartupInfoId& id, const KStartupInfoData& data );
-        void gotStartupChange( const KStartupInfoId& id, const KStartupInfoData& data );
-        void gotRemoveStartup( const KStartupInfoId& id );
+        void gotNewStartup( const TDEStartupInfoId& id, const TDEStartupInfoData& data );
+        void gotStartupChange( const TDEStartupInfoId& id, const TDEStartupInfoData& data );
+        void gotRemoveStartup( const TDEStartupInfoId& id );
         void finishKDEStartup();
     protected:
-        KStartupInfo startup_info;
+        TDEStartupInfo startup_info;
         TQWidget* startup_widget;
         TQTimer update_timer;
-        TQMap< KStartupInfoId, TQString > startups; // TQString == pixmap
-        KStartupInfoId current_startup;
+        TQMap< TDEStartupInfoId, TQString > startups; // TQString == pixmap
+        TDEStartupInfoId current_startup;
         bool blinking;
         bool bouncing;
         unsigned int color_index;

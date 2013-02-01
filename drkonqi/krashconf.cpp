@@ -83,9 +83,9 @@ void KrashConfig :: readConfig()
   TQCString startup_id( args->getOption( "startupid" ));
   if (!startup_id.isEmpty())
   { // stop startup notification
-    KStartupInfoId id;
+    TDEStartupInfoId id;
     id.initId( startup_id );
-    KStartupInfo::sendFinish( id );
+    TDEStartupInfo::sendFinish( id );
   }
 
   TDEConfig *config = TDEGlobal::config();

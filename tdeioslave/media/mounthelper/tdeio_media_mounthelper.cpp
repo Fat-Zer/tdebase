@@ -274,7 +274,7 @@ int main(int argc, char **argv)
 	if (TDECmdLineArgs::parsedArgs()->count()==0) TDECmdLineArgs::usage();
 	TDEApplication *app = new  MountHelper();
 
-	KStartupInfo::appStarted();
+	TDEStartupInfo::appStarted();
 	app->dcopClient()->attach();
 	return app->exec();
 }

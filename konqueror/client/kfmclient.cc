@@ -281,16 +281,16 @@ static bool krun_has_error = false;
 
 void clientApp::sendASNChange()
 {
-    KStartupInfoId id;
+    TDEStartupInfoId id;
     id.initId( startup_id_str );
-    KStartupInfoData data;
+    TDEStartupInfoData data;
     data.addPid( 0 );   // say there's another process for this ASN with unknown PID
     data.setHostname(); // ( no need to bother to get this konqy's PID )
     Display* dpy = tqt_xdisplay();
     if( dpy == NULL ) // we may be running without TQApplication here
         dpy = XOpenDisplay( NULL );
     if( dpy != NULL )
-        KStartupInfo::sendChangeX( dpy, id, data );
+        TDEStartupInfo::sendChangeX( dpy, id, data );
     if( dpy != NULL && dpy != tqt_xdisplay())
         XCloseDisplay( dpy );
 }
@@ -320,7 +320,7 @@ bool clientApp::createNewWindow(const KURL & url, bool newTab, bool tempFile, co
         if (!config.readEntry("BrowserApplication").isEmpty())
         {
             clientApp app;
-            KStartupInfo::appStarted();
+            TDEStartupInfo::appStarted();
 
             KRun * run = new KRun( url, 0, 0, false, false /* no progress window */ ); // TODO pass tempFile [needs support in the KRun ctor]
             TQObject::connect( run, TQT_SIGNAL( finished() ), &app, TQT_SLOT( delayedQuit() ));
@@ -367,7 +367,7 @@ bool clientApp::createNewWindow(const KURL & url, bool newTab, bool tempFile, co
             kdError() << "Couldn't start konqueror from konqueror.desktop: " << error << endl;
             */
             // pass kfmclient's startup id to konqueror using kshell
-            KStartupInfoId id;
+            TDEStartupInfoId id;
             id.initId( startup_id_str );
             id.setupStartupEnv();
             TDEProcess proc;
@@ -378,7 +378,7 @@ bool clientApp::createNewWindow(const KURL & url, bool newTab, bool tempFile, co
                 proc << "-tempfile";
             proc << url.url();
             proc.start( TDEProcess::DontCare );
-            KStartupInfo::resetStartupEnv();
+            TDEStartupInfo::resetStartupEnv();
             kdDebug( 1202 ) << "clientApp::createNewWindow TDEProcess started" << endl;
         //}
     }
@@ -455,7 +455,7 @@ bool clientApp::doIt()
   TQCString command = args->arg(0);
 
   // read ASN env. variable for non-KApp cases
-  startup_id_str = KStartupInfo::currentStartupIdEnv().id();
+  startup_id_str = TDEStartupInfo::currentStartupIdEnv().id();
 
   if ( command == "openURL" || command == "newTab" )
   {

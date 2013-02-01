@@ -102,7 +102,7 @@ TopLevel::TopLevel( const TQString &destDir, TQWidget *parent, const char *name 
   mDestDir = destDir;
   mDestDir = mDestDir.replace( TQRegExp( "^~/" ), TQDir::homeDirPath() + "/" );
 	
-  KStartupInfo::appStarted();
+  TDEStartupInfo::appStarted();
 
   TQAccel *accel = new TQAccel( this );
   accel->connectItem( accel->insertItem( Key_Q + CTRL ), kapp, TQT_SLOT( quit() ) );

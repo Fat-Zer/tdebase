@@ -422,12 +422,12 @@ int Minicli::runCommand()
   TQCString asn;
   if( tqApp->desktop()->isVirtualDesktop())
   {
-    asn = KStartupInfo::createNewStartupId();
-    KStartupInfoId id;
+    asn = TDEStartupInfo::createNewStartupId();
+    TDEStartupInfoId id;
     id.initId( asn );
-    KStartupInfoData data;
+    TDEStartupInfoData data;
     data.setXinerama( tqApp->desktop()->screenNumber( this ));
-    KStartupInfo::sendChange( id, data );
+    TDEStartupInfo::sendChange( id, data );
   }
 
   // Determine whether the application should be run through

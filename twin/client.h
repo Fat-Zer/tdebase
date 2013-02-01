@@ -32,7 +32,7 @@ License. See the file "COPYING" for the exact licensing terms.
 
 class TQTimer;
 class TDEProcess;
-class KStartupInfoData;
+class TDEStartupInfoData;
 
 namespace KWinInternal
 {
@@ -457,7 +457,7 @@ class Client : public TQObject, public KDecorationDefines
         void rawShow(); // just shows it
         void rawHide(); // just hides it
 
-        Time readUserTimeMapTimestamp( const KStartupInfoId* asn_id, const KStartupInfoData* asn_data,
+        Time readUserTimeMapTimestamp( const TDEStartupInfoId* asn_id, const TDEStartupInfoData* asn_data,
             bool session ) const;
         Time readUserCreationTime() const;
         static bool sameAppWindowRoleMatch( const Client* c1, const Client* c2, bool active_hack );

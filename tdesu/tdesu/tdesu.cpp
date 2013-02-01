@@ -120,7 +120,7 @@ int main(int argc, char *argv[])
     }
     
     {
-        KStartupInfoId id;
+        TDEStartupInfoId id;
         id.initId( kapp->startupId());
         id.setupStartupEnv(); // make DESKTOP_STARTUP_ID env. var. available again
     }
@@ -356,11 +356,11 @@ static int startApp()
     TQCString password;
     if (needpw)
     {
-        KStartupInfoId id;
+        TDEStartupInfoId id;
         id.initId( kapp->startupId());
-        KStartupInfoData data;
-        data.setSilent( KStartupInfoData::Yes );
-        KStartupInfo::sendChange( id, data );
+        TDEStartupInfoData data;
+        data.setSilent( TDEStartupInfoData::Yes );
+        TDEStartupInfo::sendChange( id, data );
         KDEsuDialog dlg(user, auth_user, keep && !terminal,icon, withIgnoreButton, timeout);
 	if (prompt)
 	    dlg.addLine(i18n("Command:"), command);
@@ -376,7 +376,7 @@ static int startApp()
         int ret = dlg.exec();
         if (ret == KDEsuDialog::Rejected)
         {
-            KStartupInfo::sendFinish( id );
+            TDEStartupInfo::sendFinish( id );
             exit(0);
         }
         if (ret == KDEsuDialog::AsUser)
@@ -384,8 +384,8 @@ static int startApp()
         password = dlg.password();
         keep = dlg.keep();
         TDEConfigGroup(config,"Passwords").writeEntry("Keep", keep);
-        data.setSilent( KStartupInfoData::No );
-        KStartupInfo::sendChange( id, data );
+        data.setSilent( TDEStartupInfoData::No );
+        TDEStartupInfo::sendChange( id, data );
     }
 
     // Some events may need to be handled (like a button animation)

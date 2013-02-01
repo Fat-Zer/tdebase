@@ -748,7 +748,7 @@ KWIN_COMPARE_PREDICATE( SameApplicationActiveHackPredicate, const Client*,
     !cl->isSplash() && !cl->isToolbar() && !cl->isTopMenu() && !cl->isUtility() && !cl->isMenu()
     && Client::belongToSameApplication( cl, value, true ) && cl != value);
 
-Time Client::readUserTimeMapTimestamp( const KStartupInfoId* asn_id, const KStartupInfoData* asn_data,
+Time Client::readUserTimeMapTimestamp( const TDEStartupInfoId* asn_id, const TDEStartupInfoData* asn_data,
     bool session ) const
     {
     Time time = info->userTime();
@@ -928,8 +928,8 @@ void Client::setActive( bool act, bool updateOpacity_)
 
 void Client::startupIdChanged()
     {
-    KStartupInfoId asn_id;
-    KStartupInfoData asn_data;
+    TDEStartupInfoId asn_id;
+    TDEStartupInfoData asn_data;
     bool asn_valid = workspace()->checkStartupNotification( window(), asn_id, asn_data );
     if( !asn_valid )
         return;
@@ -975,8 +975,8 @@ void Client::shortcutActivated()
     
 void Group::startupIdChanged()
     {
-    KStartupInfoId asn_id;
-    KStartupInfoData asn_data;
+    TDEStartupInfoId asn_id;
+    TDEStartupInfoData asn_data;
     bool asn_valid = workspace()->checkStartupNotification( leader_wid, asn_id, asn_data );
     if( !asn_valid )
         return;

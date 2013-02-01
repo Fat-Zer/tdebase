@@ -522,7 +522,7 @@ public:
     typedef TDESharedPtr<Startup> Ptr;
     typedef TQValueVector<Startup::Ptr> List;
 
-    Startup( const KStartupInfoId& id, const KStartupInfoData& data, TQObject * parent,
+    Startup( const TDEStartupInfoId& id, const TDEStartupInfoData& data, TQObject * parent,
         const char *name = 0);
     virtual ~Startup();
 
@@ -540,8 +540,8 @@ public:
      * The name of the icon to be used for the starting task.
      */
     TQString icon() const { return _data.findIcon(); }
-    void update( const KStartupInfoData& data );
-    const KStartupInfoId& id() const { return _id; }
+    void update( const TDEStartupInfoData& data );
+    const TDEStartupInfoId& id() const { return _id; }
 
 signals:
     /**
@@ -550,8 +550,8 @@ signals:
     void changed();
 
 private:
-    KStartupInfoId _id;
-    KStartupInfoData _data;
+    TDEStartupInfoId _id;
+    TDEStartupInfoData _data;
     class StartupPrivate *d;
 };
 
@@ -680,14 +680,14 @@ protected slots:
     //* @internal
     void currentDesktopChanged(int);
     //* @internal
-    void killStartup( const KStartupInfoId& );
+    void killStartup( const TDEStartupInfoId& );
     //* @internal
     void killStartup(Startup::Ptr);
 
     //* @internal
-    void gotNewStartup( const KStartupInfoId&, const KStartupInfoData& );
+    void gotNewStartup( const TDEStartupInfoId&, const TDEStartupInfoData& );
     //* @internal
-    void gotStartupChange( const KStartupInfoId&, const KStartupInfoData& );
+    void gotStartupChange( const TDEStartupInfoId&, const TDEStartupInfoData& );
 
 protected:
     void configure_startup();
@@ -700,7 +700,7 @@ private:
     Task::Dict m_tasksByWId;
     WindowList _skiptaskbar_windows;
     Startup::List _startups;
-    KStartupInfo* _startup_info;
+    TDEStartupInfo* _startup_info;
     KWinModule* m_winModule;
     bool m_trackGeometry;
 

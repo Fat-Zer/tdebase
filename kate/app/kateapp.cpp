@@ -162,7 +162,7 @@ void KateApp::restoreKate ()
     newMainWindow ();
 
   // Do not notify about start there: this makes kicker crazy and kate go to a wrong desktop.
-  // KStartupInfo::setNewStartupId( activeMainWindow(), startupId());
+  // TDEStartupInfo::setNewStartupId( activeMainWindow(), startupId());
 }
 
 bool KateApp::startupKate ()
@@ -178,7 +178,7 @@ bool KateApp::startupKate ()
     if (!sessionManager()->chooseSession ())
     {
       // we will exit kate now, notify the rest of the world we are done
-      KStartupInfo::appStarted (startupId());
+      TDEStartupInfo::appStarted (startupId());
       return false;
     }
   }
@@ -188,7 +188,7 @@ bool KateApp::startupKate ()
     newMainWindow ();
 
   // notify about start
-  KStartupInfo::setNewStartupId( activeMainWindow(), startupId());
+  TDEStartupInfo::setNewStartupId( activeMainWindow(), startupId());
 
   TQTextCodec *codec = m_args->isSet("encoding") ? TQTextCodec::codecForName(m_args->getOption("encoding")) : 0;
 

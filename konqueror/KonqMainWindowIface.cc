@@ -67,7 +67,7 @@ void KonqMainWindowIface::newTab( TQString url, bool tempFile )
 
 void KonqMainWindowIface::newTabASN( TQString url, const TQCString& startup_id, bool tempFile )
 {
-  KStartupInfo::setNewStartupId( m_pMainWindow, startup_id );
+  TDEStartupInfo::setNewStartupId( m_pMainWindow, startup_id );
   m_pMainWindow->openFilteredURL( url, true, tempFile );
 }
 

@@ -30,9 +30,9 @@ class TQPopupMenu;
 class TDEConfig;
 class TDEGlobalAccel;
 class KShortcutDialog;
-class KStartupInfo;
-class KStartupInfoId;
-class KStartupInfoData;
+class TDEStartupInfo;
+class TDEStartupInfoId;
+class TDEStartupInfoData;
 class TQSlider;
 class TQPushButton;
 class TDEProcess;
@@ -268,7 +268,7 @@ class Workspace : public TQObject, public KWinInterface, public KDecorationDefin
         void removeGroup( Group* group, allowed_t );
         Group* findClientLeaderGroup( const Client* c ) const;
 
-        bool checkStartupNotification( Window w, KStartupInfoId& id, KStartupInfoData& data );
+        bool checkStartupNotification( Window w, TDEStartupInfoId& id, TDEStartupInfoData& data );
 
         void focusToNull(); // SELI public?
         enum FocusChainChange { FocusChainMakeFirst, FocusChainMakeLast, FocusChainUpdate };
@@ -615,7 +615,7 @@ class Workspace : public TQObject, public KWinInterface, public KDecorationDefin
 
         bool workspaceInit;
 
-        KStartupInfo* startup;
+        TDEStartupInfo* startup;
 
         bool electric_have_borders;
         int electric_current_border;

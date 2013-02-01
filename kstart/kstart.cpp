@@ -60,21 +60,21 @@ KStart::KStart()
     	    twinmodule->doNotManage( windowtitle );
     }
     // propagate the app startup notification info to the started app
-    KStartupInfoId id;
+    TDEStartupInfoId id;
     id.initId( kapp->startupId());
     id.setupStartupEnv();
 
     //finally execute the comand
     if( proc.start(TDEProcess::DontCare) ) {
-        KStartupInfoData data;
+        TDEStartupInfoData data;
         data.addPid( proc.pid() );
         TQCString bin = proc.args().first();
         data.setName( bin );
         data.setBin( bin.mid( bin.findRev( '/' ) + 1 ));
-        KStartupInfo::sendChange( id, data );
+        TDEStartupInfo::sendChange( id, data );
     }
     else
-        KStartupInfo::sendFinish( id ); // failed to start
+        TDEStartupInfo::sendFinish( id ); // failed to start
 
   TQTimer::singleShot( useRule ? 0 : 120 * 1000, kapp, TQT_SLOT( quit()));
 }

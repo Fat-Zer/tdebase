@@ -42,7 +42,7 @@ static Atom kde_splash_progress;
 
 StartupId::StartupId( TQWidget* parent, const char* name )
     :   TQWidget( parent, name ),
-	startup_info( KStartupInfo::CleanOnCantDetect ),
+	startup_info( TDEStartupInfo::CleanOnCantDetect ),
 	startup_widget( NULL ),
 	blinking( true ),
 	bouncing( false )
@@ -58,14 +58,14 @@ StartupId::StartupId( TQWidget* parent, const char* name )
         }
     connect( &update_timer, TQT_SIGNAL( timeout()), TQT_SLOT( update_startupid()));
     connect( &startup_info,
-        TQT_SIGNAL( gotNewStartup( const KStartupInfoId&, const KStartupInfoData& )),
-        TQT_SLOT( gotNewStartup( const KStartupInfoId&, const KStartupInfoData& )));
+        TQT_SIGNAL( gotNewStartup( const TDEStartupInfoId&, const TDEStartupInfoData& )),
+        TQT_SLOT( gotNewStartup( const TDEStartupInfoId&, const TDEStartupInfoData& )));
     connect( &startup_info,
-        TQT_SIGNAL( gotStartupChange( const KStartupInfoId&, const KStartupInfoData& )),
-        TQT_SLOT( gotStartupChange( const KStartupInfoId&, const KStartupInfoData& )));
+        TQT_SIGNAL( gotStartupChange( const TDEStartupInfoId&, const TDEStartupInfoData& )),
+        TQT_SLOT( gotStartupChange( const TDEStartupInfoId&, const TDEStartupInfoData& )));
     connect( &startup_info,
-        TQT_SIGNAL( gotRemoveStartup( const KStartupInfoId&, const KStartupInfoData& )),
-        TQT_SLOT( gotRemoveStartup( const KStartupInfoId& )));
+        TQT_SIGNAL( gotRemoveStartup( const TDEStartupInfoId&, const TDEStartupInfoData& )),
+        TQT_SLOT( gotRemoveStartup( const TDEStartupInfoId& )));
     }
 
 StartupId::~StartupId()
@@ -80,7 +80,7 @@ void StartupId::configure()
     bouncing = KLaunchSettings::bouncing();
     }
 
-void StartupId::gotNewStartup( const KStartupInfoId& id_P, const KStartupInfoData& data_P )
+void StartupId::gotNewStartup( const TDEStartupInfoId& id_P, const TDEStartupInfoData& data_P )
     {
     TQString icon = data_P.findIcon();
     current_startup = id_P;
@@ -88,7 +88,7 @@ void StartupId::gotNewStartup( const KStartupInfoId& id_P, const KStartupInfoDat
     start_startupid( icon );
     }
 
-void StartupId::gotStartupChange( const KStartupInfoId& id_P, const KStartupInfoData& data_P )
+void StartupId::gotStartupChange( const TDEStartupInfoId& id_P, const TDEStartupInfoData& data_P )
     {
     if( current_startup == id_P )
         {
@@ -101,12 +101,12 @@ void StartupId::gotStartupChange( const KStartupInfoId& id_P, const KStartupInfo
         }
     }
 
-void StartupId::gotRemoveStartup( const KStartupInfoId& id_P )
+void StartupId::gotRemoveStartup( const TDEStartupInfoId& id_P )
     {
     startups.remove( id_P );
     if( startups.count() == 0 )
         {
-        current_startup = KStartupInfoId(); // null
+        current_startup = TDEStartupInfoId(); // null
         if( kde_startup_status == StartupIn )
             start_startupid( KDE_STARTUP_ICON );
         else

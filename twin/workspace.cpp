@@ -173,8 +173,8 @@ Workspace::Workspace( bool restore )
 
     kapp->setGlobalMouseTracking( true ); // so that this doesn't mess eventmask on root window later
     // call this before XSelectInput() on the root window
-    startup = new KStartupInfo(
-        KStartupInfo::DisableKWinModule | KStartupInfo::AnnounceSilenceChanges, this );
+    startup = new TDEStartupInfo(
+        TDEStartupInfo::DisableKWinModule | TDEStartupInfo::AnnounceSilenceChanges, this );
 
     // select windowmanager privileges
     XSelectInput(tqt_xdisplay(), root,
@@ -2716,9 +2716,9 @@ TQString Workspace::desktopName( int desk ) const
     return TQString::fromUtf8( rootInfo->desktopName( desk ) );
     }
 
-bool Workspace::checkStartupNotification( Window w, KStartupInfoId& id, KStartupInfoData& data )
+bool Workspace::checkStartupNotification( Window w, TDEStartupInfoId& id, TDEStartupInfoData& data )
     {
-    return startup->checkStartup( w, id, data ) == KStartupInfo::Match;
+    return startup->checkStartup( w, id, data ) == TDEStartupInfo::Match;
     }
 
 /*!

@@ -180,7 +180,7 @@ void KJobViewerApp::slotJobsShown(KMJobViewer *view, bool hasJobs)
 			m_tray->show();
 	}
 	else {
-		KStartupInfo::appStarted();
+		TDEStartupInfo::appStarted();
 		kapp->quit();
 	}
 }

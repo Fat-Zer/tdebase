@@ -359,7 +359,7 @@ void MainWindow::openUrl( const TQString &url )
 
 void MainWindow::openUrl( const TQString &url, const TQCString& startup_id )
 {
-    KStartupInfo::setNewStartupId( this, startup_id );
+    TDEStartupInfo::setNewStartupId( this, startup_id );
     openUrl( KURL( url ) );
 }
 
