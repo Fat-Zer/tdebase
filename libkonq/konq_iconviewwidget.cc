@@ -1912,8 +1912,8 @@ void KonqIconViewWidget::updatePreviewMimeTypes()
         d->pPreviewMimeTypes->clear();
 
     // Load the list of plugins to determine which mimetypes are supported
-    KTrader::OfferList plugins = KTrader::self()->query("ThumbCreator");
-    KTrader::OfferList::ConstIterator it;
+    TDETrader::OfferList plugins = TDETrader::self()->query("ThumbCreator");
+    TDETrader::OfferList::ConstIterator it;
 
     for ( it = plugins.begin(); it != plugins.end(); ++it ) {
         if ( d->previewSettings.contains((*it)->desktopEntryName()) ) {

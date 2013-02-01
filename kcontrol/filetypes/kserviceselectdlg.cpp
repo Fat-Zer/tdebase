@@ -35,7 +35,7 @@ KServiceSelectDlg::KServiceSelectDlg( const TQString& /*serviceType*/, const TQS
     new TQLabel( i18n( "Select service:" ), vbox );
     m_listbox=new KListBox( vbox );
 
-    // Can't make a KTrader query since we don't have a servicetype to give,
+    // Can't make a TDETrader query since we don't have a servicetype to give,
     // we want all services that are not applications.......
     // So we have to do it the slow way
     // ### Why can't we query for KParts/ReadOnlyPart as the servicetype? Should work fine!

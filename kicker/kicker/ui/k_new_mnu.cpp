@@ -2122,7 +2122,7 @@ void KMenu::initSearch()
     if (!m_search_plugin) {
       m_search_plugin_interface = new TQObject( this, "m_search_plugin_interface" );
       new MyKickoffSearchInterface( this, m_search_plugin_interface, "kickoffsearch interface" );
-      KTrader::OfferList offers = KTrader::self()->query("KickoffSearch/Plugin");
+      TDETrader::OfferList offers = TDETrader::self()->query("KickoffSearch/Plugin");
 
       KService::Ptr service = *offers.begin();
       if (service) {

@@ -71,8 +71,8 @@ SearchProvider *SearchProvider::findByDesktopName(const TQString &name)
 
 SearchProvider *SearchProvider::findByKey(const TQString &key)
 {
-    KTrader::OfferList providers =
-        KTrader::self()->query("SearchProvider", TQString("'%1' in Keys").arg(key));
+    TDETrader::OfferList providers =
+        TDETrader::self()->query("SearchProvider", TQString("'%1' in Keys").arg(key));
     return providers.count() ? new SearchProvider(providers[0]) : 0;
 }
 

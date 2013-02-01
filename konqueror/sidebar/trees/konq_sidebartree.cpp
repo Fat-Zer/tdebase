@@ -770,7 +770,7 @@ void KonqSidebarTree::loadTopLevelItem( KonqSidebarTreeItem *parent,  const TQSt
     KonqSidebarTreeModule * module = 0L;
 
     // Here's where we need to create the right module...
-    // ### TODO: make this KTrader/KLibrary based.
+    // ### TODO: make this TDETrader/KLibrary based.
     TQString moduleName = cfg.readEntry( "X-TDE-TreeModule" );
     TQString showHidden=cfg.readEntry("X-TDE-TreeModule-ShowHidden");
 

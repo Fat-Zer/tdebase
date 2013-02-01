@@ -86,14 +86,14 @@ KParts::ReadOnlyPart *KonqViewFactory::create( TQWidget *parentWidget, const cha
 KonqViewFactory KonqFactory::createView( const TQString &serviceType,
                                          const TQString &serviceName,
                                          KService::Ptr *serviceImpl,
-                                         KTrader::OfferList *partServiceOffers,
-                                         KTrader::OfferList *appServiceOffers,
+                                         TDETrader::OfferList *partServiceOffers,
+                                         TDETrader::OfferList *appServiceOffers,
 					 bool forceAutoEmbed )
 {
   kdDebug(1202) << "Trying to create view for \"" << serviceType << "\"" << endl;
 
   // We need to get those in any case
-  KTrader::OfferList offers, appOffers;
+  TDETrader::OfferList offers, appOffers;
 
   // Query the trader
   getOffers( serviceType, &offers, &appOffers );
@@ -126,7 +126,7 @@ KonqViewFactory KonqFactory::createView( const TQString &serviceType,
   // Look for this service
   if ( !serviceName.isEmpty() )
   {
-      KTrader::OfferList::Iterator it = offers.begin();
+      TDETrader::OfferList::Iterator it = offers.begin();
       for ( ; it != offers.end() && !service ; ++it )
       {
           if ( (*it)->desktopEntryName() == serviceName )
@@ -149,7 +149,7 @@ KonqViewFactory KonqFactory::createView( const TQString &serviceType,
                            .arg(service->name()).arg(KLibLoader::self()->lastErrorMessage()));
   }
 
-  KTrader::OfferList::Iterator it = offers.begin();
+  TDETrader::OfferList::Iterator it = offers.begin();
   for ( ; !factory && it != offers.end() ; ++it )
   {
     service = (*it);
@@ -193,19 +193,19 @@ KonqViewFactory KonqFactory::createView( const TQString &serviceType,
 }
 
 void KonqFactory::getOffers( const TQString & serviceType,
-                             KTrader::OfferList *partServiceOffers,
-                             KTrader::OfferList *appServiceOffers )
+                             TDETrader::OfferList *partServiceOffers,
+                             TDETrader::OfferList *appServiceOffers )
 {
     if ( appServiceOffers )
     {
-        *appServiceOffers = KTrader::self()->query( serviceType, "Application",
+        *appServiceOffers = TDETrader::self()->query( serviceType, "Application",
 "DesktopEntryName != 'kfmclient' and DesktopEntryName != 'kfmclient_dir' and DesktopEntryName != 'kfmclient_html'",
                                                     TQString::null );
     }
 
     if ( partServiceOffers )
     {
-        *partServiceOffers = KTrader::self()->query( serviceType, "KParts/ReadOnlyPart",
+        *partServiceOffers = TDETrader::self()->query( serviceType, "KParts/ReadOnlyPart",
                                                      TQString::null, TQString::null );
     }
 }

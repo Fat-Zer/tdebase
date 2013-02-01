@@ -59,8 +59,8 @@ KonqView::KonqView( KonqViewFactory &viewFactory,
                     KonqFrame* viewFrame,
                     KonqMainWindow *mainWindow,
                     const KService::Ptr &service,
-                    const KTrader::OfferList &partServiceOffers,
-                    const KTrader::OfferList &appServiceOffers,
+                    const TDETrader::OfferList &partServiceOffers,
+                    const TDETrader::OfferList &appServiceOffers,
                     const TQString &serviceType,
                     bool passiveMode
                     )
@@ -325,7 +325,7 @@ bool KonqView::changeViewMode( const TQString &serviceType,
   }
 
   kdDebug(1202) << "Switching view modes..." << endl;
-  KTrader::OfferList partServiceOffers, appServiceOffers;
+  TDETrader::OfferList partServiceOffers, appServiceOffers;
   KService::Ptr service = 0L;
   KonqViewFactory viewFactory = KonqFactory::createView( serviceType, serviceName, &service, &partServiceOffers, &appServiceOffers, forceAutoEmbed );
 

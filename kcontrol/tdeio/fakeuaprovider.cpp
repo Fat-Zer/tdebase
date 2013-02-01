@@ -71,15 +71,15 @@ FakeUASProvider::StatusCode FakeUASProvider::createNewUAProvider( const TQString
 void FakeUASProvider::loadFromDesktopFiles()
 {
   m_providers.clear();
-  m_providers = KTrader::self()->query("UserAgentStrings");
+  m_providers = TDETrader::self()->query("UserAgentStrings");
 }
 
 void FakeUASProvider::parseDescription()
 {
   TQString tmp;
 
-  KTrader::OfferList::ConstIterator it = m_providers.begin();
-  KTrader::OfferList::ConstIterator lastItem = m_providers.end();
+  TDETrader::OfferList::ConstIterator it = m_providers.begin();
+  TDETrader::OfferList::ConstIterator lastItem = m_providers.end();
 
   for ( ; it != lastItem; ++it )
   {

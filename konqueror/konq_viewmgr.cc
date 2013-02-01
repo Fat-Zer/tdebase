@@ -65,7 +65,7 @@ KonqView* KonqViewManager::Initialize( const TQString &serviceType, const TQStri
 {
   //kdDebug(1202) << "KonqViewManager::Initialize()" << endl;
   KService::Ptr service;
-  KTrader::OfferList partServiceOffers, appServiceOffers;
+  TDETrader::OfferList partServiceOffers, appServiceOffers;
   KonqViewFactory newViewFactory = createView( serviceType, serviceName, service, partServiceOffers, appServiceOffers, true /*forceAutoEmbed*/ );
   if ( newViewFactory.isNull() )
   {
@@ -106,7 +106,7 @@ KonqView* KonqViewManager::splitView ( Qt::Orientation orientation,
   KonqFrame* splitFrame = m_pMainWindow->currentView()->frame();
 
   KService::Ptr service;
-  KTrader::OfferList partServiceOffers, appServiceOffers;
+  TDETrader::OfferList partServiceOffers, appServiceOffers;
 
   KonqViewFactory newViewFactory = createView( serviceType, serviceName, service, partServiceOffers, appServiceOffers, forceAutoEmbed );
 
@@ -217,7 +217,7 @@ KonqView* KonqViewManager::splitWindow( Qt::Orientation orientation,
   TQString locationBarURL = m_pMainWindow->currentView()->locationBarURL();
 
   KService::Ptr service;
-  KTrader::OfferList partServiceOffers, appServiceOffers;
+  TDETrader::OfferList partServiceOffers, appServiceOffers;
 
   KonqViewFactory newViewFactory = createView( serviceType, serviceName, service, partServiceOffers, appServiceOffers );
 
@@ -328,7 +328,7 @@ KonqView* KonqViewManager::addTab(const TQString &serviceType, const TQString &s
   }
 
   KService::Ptr service;
-  KTrader::OfferList partServiceOffers, appServiceOffers;
+  TDETrader::OfferList partServiceOffers, appServiceOffers;
 
   KonqViewFactory newViewFactory = createView( serviceType, serviceName, service, partServiceOffers, appServiceOffers, true /*forceAutoEmbed*/ );
 
@@ -984,8 +984,8 @@ KonqView *KonqViewManager::chooseNextView( KonqView *view )
 KonqViewFactory KonqViewManager::createView( const TQString &serviceType,
                                           const TQString &serviceName,
                                           KService::Ptr &service,
-                                          KTrader::OfferList &partServiceOffers,
-                                          KTrader::OfferList &appServiceOffers,
+                                          TDETrader::OfferList &partServiceOffers,
+                                          TDETrader::OfferList &appServiceOffers,
                                           bool forceAutoEmbed )
 {
   kdDebug(1202) << "KonqViewManager::createView" << endl;
@@ -1018,8 +1018,8 @@ KonqViewFactory KonqViewManager::createView( const TQString &serviceType,
 KonqView *KonqViewManager::setupView( KonqFrameContainerBase *parentContainer,
                                       KonqViewFactory &viewFactory,
                                       const KService::Ptr &service,
-                                      const KTrader::OfferList &partServiceOffers,
-                                      const KTrader::OfferList &appServiceOffers,
+                                      const TDETrader::OfferList &partServiceOffers,
+                                      const TDETrader::OfferList &appServiceOffers,
                                       const TQString &serviceType,
                                       bool passiveMode,
                                       bool openAfterCurrentPage )
@@ -1471,7 +1471,7 @@ void KonqViewManager::loadItem( TDEConfig &cfg, KonqFrameContainerBase *parent,
     //kdDebug(1202) << "KonqViewManager::loadItem: ServiceType " << serviceType << " " << serviceName << endl;
 
     KService::Ptr service;
-    KTrader::OfferList partServiceOffers, appServiceOffers;
+    TDETrader::OfferList partServiceOffers, appServiceOffers;
 
     KonqViewFactory viewFactory = KonqFactory::createView( serviceType, serviceName, &service, &partServiceOffers, &appServiceOffers, true /*forceAutoEmbed*/ );
     if ( viewFactory.isNull() )

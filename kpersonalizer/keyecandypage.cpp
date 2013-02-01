@@ -490,8 +490,8 @@ one holds the types, wich are NOT supposed to be shown. We need to take care of 
 void KEyeCandyPage::enablePreview(bool currSettings){
 	TQStringList desktopPreviews;
 	TQStringList konquerorNoPreviews;
-	KTrader::OfferList plugins = KTrader::self()->query("ThumbCreator");
-	for (KTrader::OfferList::ConstIterator it = plugins.begin(); it != plugins.end(); ++it) {
+	TDETrader::OfferList plugins = TDETrader::self()->query("ThumbCreator");
+	for (TDETrader::OfferList::ConstIterator it = plugins.begin(); it != plugins.end(); ++it) {
 		if(prevOther){
 			desktopPreviews.append((*it)->desktopEntryName());
 			kdDebug() << "Adding Preview:" << (*it)->desktopEntryName() << endl;

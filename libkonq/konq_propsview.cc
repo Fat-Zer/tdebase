@@ -563,8 +563,8 @@ const TQStringList& KonqPropsView::previewSettings()
         d->previewsToShow = new TQStringList;
 
         if (d->previewsEnabled) {
-            KTrader::OfferList plugins = KTrader::self()->query( "ThumbCreator" );
-            for ( KTrader::OfferList::ConstIterator it = plugins.begin(); it != plugins.end(); ++it )
+            TDETrader::OfferList plugins = TDETrader::self()->query( "ThumbCreator" );
+            for ( TDETrader::OfferList::ConstIterator it = plugins.begin(); it != plugins.end(); ++it )
             {
             TQString name = (*it)->desktopEntryName();
             if ( ! m_dontPreview.contains(name) )

@@ -28,7 +28,7 @@
 #include <kiconloader.h>
 
 PopupMenuGUIClient::PopupMenuGUIClient( KonqMainWindow *mainWindow,
-                                        const KTrader::OfferList &embeddingServices,
+                                        const TDETrader::OfferList &embeddingServices,
                                         bool showEmbeddingServices, bool doTabHandling )
 {
     //giving a name to each guiclient: just for debugging
@@ -66,8 +66,8 @@ PopupMenuGUIClient::PopupMenuGUIClient( KonqMainWindow *mainWindow,
 
     if ( showEmbeddingServices )
     {
-        KTrader::OfferList::ConstIterator it = embeddingServices.begin();
-        KTrader::OfferList::ConstIterator end = embeddingServices.end();
+        TDETrader::OfferList::ConstIterator it = embeddingServices.begin();
+        TDETrader::OfferList::ConstIterator end = embeddingServices.end();
 
         if ( embeddingServices.count() == 1 )
         {
@@ -166,8 +166,8 @@ ToggleViewGUIClient::ToggleViewGUIClient( KonqMainWindow *mainWindow )
   m_mainWindow = mainWindow;
   m_actions.setAutoDelete( true );
 
-  KTrader::OfferList offers = KTrader::self()->query( "Browser/View" );
-  KTrader::OfferList::Iterator it = offers.begin();
+  TDETrader::OfferList offers = TDETrader::self()->query( "Browser/View" );
+  TDETrader::OfferList::Iterator it = offers.begin();
   while ( it != offers.end() )
   {
     TQVariant prop = (*it)->property( "X-TDE-BrowserView-Toggable" );
@@ -188,8 +188,8 @@ ToggleViewGUIClient::ToggleViewGUIClient( KonqMainWindow *mainWindow )
   if ( m_empty )
     return;
 
-  KTrader::OfferList::ConstIterator cIt = offers.begin();
-  KTrader::OfferList::ConstIterator cEnd = offers.end();
+  TDETrader::OfferList::ConstIterator cIt = offers.begin();
+  TDETrader::OfferList::ConstIterator cEnd = offers.end();
   for (; cIt != cEnd; ++cIt )
   {
     TQString description = i18n( "Show %1" ).arg( (*cIt)->name() );

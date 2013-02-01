@@ -55,7 +55,7 @@ class KonqView;
 class PopupMenuGUIClient : public KXMLGUIClient
 {
 public:
-  PopupMenuGUIClient( KonqMainWindow *mainWindow, const KTrader::OfferList &embeddingServices,
+  PopupMenuGUIClient( KonqMainWindow *mainWindow, const TDETrader::OfferList &embeddingServices,
                       bool isIntoTrash, bool doTabHandling );
   virtual ~PopupMenuGUIClient();
 

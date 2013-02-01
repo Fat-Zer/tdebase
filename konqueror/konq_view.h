@@ -82,8 +82,8 @@ public:
             KonqFrame* viewFrame,
             KonqMainWindow * mainWindow,
             const KService::Ptr &service,
-            const KTrader::OfferList &partServiceOffers,
-            const KTrader::OfferList &appServiceOffers,
+            const TDETrader::OfferList &partServiceOffers,
+            const TDETrader::OfferList &appServiceOffers,
             const TQString &serviceType,
             bool passiveMode);
 
@@ -281,8 +281,8 @@ public:
 
   TQString caption() const { return m_caption; }
 
-  KTrader::OfferList partServiceOffers() { return m_partServiceOffers; }
-  KTrader::OfferList appServiceOffers() { return m_appServiceOffers; }
+  TDETrader::OfferList partServiceOffers() { return m_partServiceOffers; }
+  TDETrader::OfferList appServiceOffers() { return m_appServiceOffers; }
 
   KonqMainWindow *mainWindow() const { return m_pMainWindow; }
 
@@ -465,8 +465,8 @@ private:
   uint m_bBackRightClick:1;
   uint m_bHierarchicalView:1;
   uint m_bDisableScrolling:1;
-  KTrader::OfferList m_partServiceOffers;
-  KTrader::OfferList m_appServiceOffers;
+  TDETrader::OfferList m_partServiceOffers;
+  TDETrader::OfferList m_appServiceOffers;
   KService::Ptr m_service;
   TQString m_serviceType;
   TQString m_caption;

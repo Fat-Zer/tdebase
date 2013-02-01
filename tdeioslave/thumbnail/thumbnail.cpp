@@ -70,7 +70,7 @@
 // iconSize     - the size of the overlay icon to use if any
 // iconAlpha    - the transparency value used for icon overlays
 // plugin       - the name of the plugin library to be used for thumbnail creation.
-//                Provided by the application to save an addition KTrader
+//                Provided by the application to save an addition TDETrader
 //                query here.
 // shmid        - the shared memory segment id to write the image's data to.
 //                The segment is assumed to provide enough space for a 32-bit
@@ -240,10 +240,10 @@ void ThumbnailProtocol::get(const KURL &url)
 #ifdef THUMBNAIL_HACK
         if (plugin.isEmpty())
         {
-            KTrader::OfferList plugins = KTrader::self()->query("ThumbCreator");
+            TDETrader::OfferList plugins = TDETrader::self()->query("ThumbCreator");
             TQMap<TQString, KService::Ptr> mimeMap;
     
-            for (KTrader::OfferList::ConstIterator it = plugins.begin(); it != plugins.end(); ++it)
+            for (TDETrader::OfferList::ConstIterator it = plugins.begin(); it != plugins.end(); ++it)
             {
                 TQStringList mimeTypes = (*it)->property("MimeTypes").toStringList();
                 for (TQStringList::ConstIterator mt = mimeTypes.begin(); mt != mimeTypes.end(); ++mt)

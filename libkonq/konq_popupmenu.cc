@@ -847,7 +847,7 @@ void KonqPopupMenu::setup(KonqPopupFlags kpf)
             }
         }
 
-        KTrader::OfferList offers;
+        TDETrader::OfferList offers;
 
         if (kapp->authorizeKAction("openwith"))
         {
@@ -864,7 +864,7 @@ void KonqPopupMenu::setup(KonqPopupFlags kpf)
                 ++it;
             }
 
-            offers = KTrader::self()->query( first, constraint );
+            offers = TDETrader::self()->query( first, constraint );
         }
 
         //// Ok, we have everything, now insert
@@ -895,7 +895,7 @@ void KonqPopupMenu::setup(KonqPopupFlags kpf)
                     text.appendChild( m_doc.createTextNode( i18n("&Open With") ) );
                 }
 
-                KTrader::OfferList::ConstIterator it = offers.begin();
+                TDETrader::OfferList::ConstIterator it = offers.begin();
                 for( ; it != offers.end(); it++ )
                 {
                     KService::Ptr service = (*it);
@@ -1179,14 +1179,14 @@ void KonqPopupMenu::addPlugins()
 {
     // search for Konq_PopupMenuPlugins inspired by simons kpropsdlg
     //search for a plugin with the right protocol
-    KTrader::OfferList plugin_offers;
+    TDETrader::OfferList plugin_offers;
     unsigned int pluginCount = 0;
-    plugin_offers = KTrader::self()->query( m_sMimeType.isNull() ? TQString::fromLatin1( "all/all" ) : m_sMimeType, "'KonqPopupMenu/Plugin' in ServiceTypes");
+    plugin_offers = TDETrader::self()->query( m_sMimeType.isNull() ? TQString::fromLatin1( "all/all" ) : m_sMimeType, "'KonqPopupMenu/Plugin' in ServiceTypes");
     if ( plugin_offers.isEmpty() )
         return; // no plugins installed do not bother about it
 
-    KTrader::OfferList::ConstIterator iterator = plugin_offers.begin();
-    KTrader::OfferList::ConstIterator end = plugin_offers.end();
+    TDETrader::OfferList::ConstIterator iterator = plugin_offers.begin();
+    TDETrader::OfferList::ConstIterator end = plugin_offers.end();
 
     addGroup( "plugins" );
     // travers the offerlist

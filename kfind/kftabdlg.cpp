@@ -272,7 +272,7 @@ KfindTabWidget::KfindTabWidget(TQWidget *parent, const char *name)
     TQToolTip::add(binaryContextCb,binaryTooltip);
 
     TQPushButton* editRegExp = 0;
-    if ( !KTrader::self()->query("KRegExpEditor/KRegExpEditor").isEmpty() ) {
+    if ( !TDETrader::self()->query("KRegExpEditor/KRegExpEditor").isEmpty() ) {
       // The editor is available, so lets use it.
       editRegExp = new TQPushButton(i18n("&Edit..."), pages[2], "editRegExp");
     }

@@ -305,10 +305,10 @@ void DesktopBehavior::load( bool useDefaults )
     bool bShowHidden = g_pConfig->readBoolEntry("ShowHidden", DEFAULT_SHOW_HIDDEN_ROOT_ICONS);
     showHiddenBox->setChecked(bShowHidden);
     //bool bVertAlign = g_pConfig->readBoolEntry("VertAlign", DEFAULT_VERT_ALIGN);
-    KTrader::OfferList plugins = KTrader::self()->query("ThumbCreator");
+    TDETrader::OfferList plugins = TDETrader::self()->query("ThumbCreator");
     previewListView->clear();
     TQStringList previews = g_pConfig->readListEntry("Preview");
-    for (KTrader::OfferList::ConstIterator it = plugins.begin(); it != plugins.end(); ++it)
+    for (TDETrader::OfferList::ConstIterator it = plugins.begin(); it != plugins.end(); ++it)
         new DesktopBehaviorPreviewItem(this, previewListView, *it, previews.contains((*it)->desktopEntryName()));
     new DesktopBehaviorPreviewItem(this, previewListView, previews.contains("audio/"));
     //

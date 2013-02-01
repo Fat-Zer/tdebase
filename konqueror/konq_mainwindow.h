@@ -734,7 +734,7 @@ private:
 
   ToggleViewGUIClient *m_toggleViewGUIClient;
 
-  KTrader::OfferList m_popupEmbeddingServices;
+  TDETrader::OfferList m_popupEmbeddingServices;
   TQString m_popupService;
   TQString m_popupServiceType;
   KURL m_popupURL;

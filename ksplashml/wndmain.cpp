@@ -346,7 +346,7 @@ void KSplash::loadTheme( const TQString& theme )
 
 ThemeEngine *KSplash::_loadThemeEngine( const TQString& pluginName, const TQString& theme )
 {
-  // Since we may be called before the DCOP server is active, we cannot use the KTrader framework for obtaining plugins. In its
+  // Since we may be called before the DCOP server is active, we cannot use the TDETrader framework for obtaining plugins. In its
   // place, we use the following naive heuristic to locate plugins. If we are not in managed mode, and we are not in testing mode
   // either, we assume that we have been called by starttde. In this case, we simply try to load the library whose name should
   // conform to the following specification:
@@ -369,7 +369,7 @@ ThemeEngine *KSplash::_loadThemeEngine( const TQString& pluginName, const TQStri
   else
   {
     // Fancier way of locating plugins.
-    KService::List list= KTrader::self()->query("KSplash/Plugin", TQString("[X-KSplash-PluginName] == '%1'").arg(pluginName));
+    KService::List list= TDETrader::self()->query("KSplash/Plugin", TQString("[X-KSplash-PluginName] == '%1'").arg(pluginName));
     KService::Ptr ptr;
     if (!list.isEmpty())
     {

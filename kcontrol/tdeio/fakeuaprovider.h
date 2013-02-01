@@ -49,7 +49,7 @@ protected:
   void parseDescription();
 
 private:
-  KTrader::OfferList m_providers;
+  TDETrader::OfferList m_providers;
   TQStringList m_lstIdentity;
   TQStringList m_lstAlias;
   bool m_bIsDirty;

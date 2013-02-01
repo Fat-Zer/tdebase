@@ -126,9 +126,9 @@ void FilterOptions::load( bool useDefaults )
     m_favoriteEngines << "google" << "google_groups" << "google_news" << "webster" << "dmoz" << "wikipedia";
     m_favoriteEngines = config.readListEntry("FavoriteSearchEngines", m_favoriteEngines);
 
-    const KTrader::OfferList services = KTrader::self()->query("SearchProvider");
+    const TDETrader::OfferList services = TDETrader::self()->query("SearchProvider");
 
-    for (KTrader::OfferList::ConstIterator it = services.begin();
+    for (TDETrader::OfferList::ConstIterator it = services.begin();
          it != services.end(); ++it)
     {
       displaySearchProvider(new SearchProvider(*it),

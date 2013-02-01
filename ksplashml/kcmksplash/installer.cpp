@@ -373,7 +373,7 @@ void SplashInstaller::slotSetTheme(int id)
         infoTxt += "</qt>";
 
         TQString pluginName( cnf.readEntry( "Engine", "Default" ) ); // Perhaps no default is better?
-        if ((KTrader::self()->query("KSplash/Plugin", TQString("[X-KSplash-PluginName] == '%1'").arg(pluginName))).isEmpty())
+        if ((TDETrader::self()->query("KSplash/Plugin", TQString("[X-KSplash-PluginName] == '%1'").arg(pluginName))).isEmpty())
         {
           enabled = false;
           error = i18n("This theme requires the plugin %1 which is not installed.").arg(pluginName);

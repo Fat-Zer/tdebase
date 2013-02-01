@@ -69,13 +69,13 @@ public:
   static KonqViewFactory createView( const TQString &serviceType,
 				     const TQString &serviceName = TQString::null,
 				     KService::Ptr *serviceImpl = 0,
-				     KTrader::OfferList *partServiceOffers = 0,
-				     KTrader::OfferList *appServiceOffers = 0,
+				     TDETrader::OfferList *partServiceOffers = 0,
+				     TDETrader::OfferList *appServiceOffers = 0,
 				     bool forceAutoEmbed = false );
 
   static void getOffers( const TQString & serviceType,
-                         KTrader::OfferList *partServiceOffers = 0,
-                         KTrader::OfferList *appServiceOffers = 0);
+                         TDETrader::OfferList *partServiceOffers = 0,
+                         TDETrader::OfferList *appServiceOffers = 0);
 
   static const TDEAboutData* aboutData();
 

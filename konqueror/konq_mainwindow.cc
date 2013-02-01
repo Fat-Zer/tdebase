@@ -1571,9 +1571,9 @@ void KonqMainWindow::slotOpenWith()
 
   TQString serviceName = TQT_TQOBJECT_CONST(sender())->name();
 
-  KTrader::OfferList offers = m_currentView->appServiceOffers();
-  KTrader::OfferList::ConstIterator it = offers.begin();
-  KTrader::OfferList::ConstIterator end = offers.end();
+  TDETrader::OfferList offers = m_currentView->appServiceOffers();
+  TDETrader::OfferList::ConstIterator it = offers.begin();
+  TDETrader::OfferList::ConstIterator end = offers.end();
   for (; it != end; ++it )
     if ( (*it)->desktopEntryName() == serviceName )
     {
@@ -1615,9 +1615,9 @@ void KonqMainWindow::slotViewModeToggle( bool toggle )
 
   // iterate over all services, update the toolbar service map
   // and check if we can do a quick property-based viewmode change
-  const KTrader::OfferList offers = m_currentView->partServiceOffers();
-  KTrader::OfferList::ConstIterator oIt = offers.begin();
-  KTrader::OfferList::ConstIterator oEnd = offers.end();
+  const TDETrader::OfferList offers = m_currentView->partServiceOffers();
+  TDETrader::OfferList::ConstIterator oIt = offers.begin();
+  TDETrader::OfferList::ConstIterator oEnd = offers.end();
   const TQString currentServiceKey = viewModeActionKey( m_currentView->service() );
   for (; oIt != oEnd; ++oIt )
   {
@@ -4725,7 +4725,7 @@ void KonqMainWindow::slotPopupMenu( KXMLGUIClient *client, const TQPoint &_globa
       TQString currentServiceName = currentView->service()->desktopEntryName();
 
       // List of services for the "Preview In" submenu.
-      m_popupEmbeddingServices = KTrader::self()->query(
+      m_popupEmbeddingServices = TDETrader::self()->query(
           m_popupServiceType,
           "KParts/ReadOnlyPart",
           // Obey "HideFromMenus". It defaults to false so we want "absent or true"
@@ -5032,9 +5032,9 @@ void KonqMainWindow::updateOpenWithActions()
   if (!kapp->authorizeKAction("openwith"))
      return;
 
-  const KTrader::OfferList & services = m_currentView->appServiceOffers();
-  KTrader::OfferList::ConstIterator it = services.begin();
-  KTrader::OfferList::ConstIterator end = services.end();
+  const TDETrader::OfferList & services = m_currentView->appServiceOffers();
+  TDETrader::OfferList::ConstIterator it = services.begin();
+  TDETrader::OfferList::ConstIterator end = services.end();
   for (; it != end; ++it )
   {
     KAction *action = new KAction( i18n( "Open with %1" ).arg( (*it)->name() ), 0, 0, (*it)->desktopEntryName().latin1() );
@@ -5089,7 +5089,7 @@ void KonqMainWindow::updateViewModeActions()
       m_viewModeToolBarServices.clear();
   }
 
-  KTrader::OfferList services = m_currentView->partServiceOffers();
+  TDETrader::OfferList services = m_currentView->partServiceOffers();
 
   if ( services.count() <= 1 )
     return;
@@ -5110,8 +5110,8 @@ void KonqMainWindow::updateViewModeActions()
   TDEConfig * config = TDEGlobal::config();
   config->setGroup( "ModeToolBarServices" );
 
-  KTrader::OfferList::ConstIterator it = services.begin();
-  KTrader::OfferList::ConstIterator end = services.end();
+  TDETrader::OfferList::ConstIterator it = services.begin();
+  TDETrader::OfferList::ConstIterator end = services.end();
   for (; it != end; ++it )
   {
       TQVariant prop = (*it)->property( "X-TDE-BrowserView-Toggable" );

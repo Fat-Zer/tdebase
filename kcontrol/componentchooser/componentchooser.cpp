@@ -62,7 +62,7 @@ void CfgComponent::slotComponentChanged(const TQString&) {
 }
 
 void CfgComponent::save(TDEConfig *cfg) {
-		// yes, this can happen if there are NO KTrader offers for this component
+		// yes, this can happen if there are NO TDETrader offers for this component
 		if (!m_lookupDict[ComponentSelector->currentText()])
 			return;
 
@@ -84,9 +84,9 @@ void CfgComponent::load(TDEConfig *cfg) {
 	TQString ServiceTypeToConfigure=cfg->readEntry("ServiceTypeToConfigure");
 
 	TQString MimeTypeOfInterest=cfg->readEntry("MimeTypeOfInterest");
-	KTrader::OfferList offers = KTrader::self()->query(MimeTypeOfInterest, "'"+ServiceTypeToConfigure+"' in ServiceTypes");
+	TDETrader::OfferList offers = TDETrader::self()->query(MimeTypeOfInterest, "'"+ServiceTypeToConfigure+"' in ServiceTypes");
 
-	for (KTrader::OfferList::Iterator tit = offers.begin(); tit != offers.end(); ++tit)
+	for (TDETrader::OfferList::Iterator tit = offers.begin(); tit != offers.end(); ++tit)
         {
 		ComponentSelector->insertItem((*tit)->name());
 		m_lookupDict.insert((*tit)->name(),new TQString((*tit)->desktopEntryName()));

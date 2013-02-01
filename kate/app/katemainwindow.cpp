@@ -602,9 +602,9 @@ void KateMainWindow::mSlotFixOpenWithMenu()
   KMimeType::Ptr mime = KMimeType::findByURL( m_viewManager->activeView()->getDoc()->url() );
   //kdDebug(13001)<<"13000"<<"url: "<<m_viewManager->activeView()->getDoc()->url().prettyURL()<<"mime type: "<<mime->name()<<endl;
   // some checking goes here...
-  KTrader::OfferList offers = KTrader::self()->query(mime->name(), "Type == 'Application'");
+  TDETrader::OfferList offers = TDETrader::self()->query(mime->name(), "Type == 'Application'");
   // for each one, insert a menu item...
-  for(KTrader::OfferList::Iterator it = offers.begin(); it != offers.end(); ++it) {
+  for(TDETrader::OfferList::Iterator it = offers.begin(); it != offers.end(); ++it) {
     if ((*it)->name() == "Kate") continue;
     documentOpenWith->popupMenu()->insertItem( SmallIcon( (*it)->icon() ), (*it)->name() );
   }
@@ -629,7 +629,7 @@ void KateMainWindow::slotOpenWithMenuAction(int idx)
 
   TQString qry = TQString("((Type == 'Application') and (Name == '%1'))").arg( appname.latin1() );
   KMimeType::Ptr mime = KMimeType::findByURL( m_viewManager->activeView()->getDoc()->url() );
-  KTrader::OfferList offers = KTrader::self()->query(mime->name(), qry);
+  TDETrader::OfferList offers = TDETrader::self()->query(mime->name(), qry);
 
   if (!offers.isEmpty()) {
     KService::Ptr app = offers.first();

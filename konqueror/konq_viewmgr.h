@@ -325,8 +325,8 @@ private:
   KonqViewFactory createView( const TQString &serviceType,
                               const TQString &serviceName,
                               KService::Ptr &service,
-                              KTrader::OfferList &partServiceOffers,
-                              KTrader::OfferList &appServiceOffers,
+                              TDETrader::OfferList &partServiceOffers,
+                              TDETrader::OfferList &appServiceOffers,
 			      bool forceAutoEmbed = false );
 
   /**
@@ -336,8 +336,8 @@ private:
   KonqView *setupView( KonqFrameContainerBase *parentContainer,
                        KonqViewFactory &viewFactory,
                        const KService::Ptr &service,
-                       const KTrader::OfferList &partServiceOffers,
-                       const KTrader::OfferList &appServiceOffers,
+                       const TDETrader::OfferList &partServiceOffers,
+                       const TDETrader::OfferList &appServiceOffers,
                        const TQString &serviceType,
                        bool passiveMode, bool openAfterCurrentPage = false);
 

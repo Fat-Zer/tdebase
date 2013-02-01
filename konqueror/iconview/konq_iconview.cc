@@ -226,9 +226,9 @@ KonqKfmIconView::KonqKfmIconView( TQWidget *parentWidget, TQObject *parent, cons
     m_pamPreview->insert( m_paEnablePreviews );
     m_pamPreview->insert( new KActionSeparator(this) );
 
-    KTrader::OfferList plugins = KTrader::self()->query( "ThumbCreator" );
+    TDETrader::OfferList plugins = TDETrader::self()->query( "ThumbCreator" );
     TQMap< TQString, KToggleAction* > previewActions;
-    for ( KTrader::OfferList::ConstIterator it = plugins.begin(); it != plugins.end(); ++it )
+    for ( TDETrader::OfferList::ConstIterator it = plugins.begin(); it != plugins.end(); ++it )
     {
         if ( KToggleAction*& preview = previewActions[ ( *it )->name() ] )
             preview->setName( TQCString( preview->name() ) + ',' + ( *it )->desktopEntryName().latin1() );

@@ -37,7 +37,7 @@ TDEHTMLPluginKTTSD::TDEHTMLPluginKTTSD( TQObject* parent, const char* name, cons
     : Plugin( parent, name )
 {
     // If KTTSD is not installed, hide action.
-    KTrader::OfferList offers = KTrader::self()->query("DCOP/Text-to-Speech", "Name == 'KTTSD'");
+    TDETrader::OfferList offers = TDETrader::self()->query("DCOP/Text-to-Speech", "Name == 'KTTSD'");
     if (offers.count() > 0)
     {
         (void) new KAction( i18n("&Speak Text"),
@@ -46,7 +46,7 @@ TDEHTMLPluginKTTSD::TDEHTMLPluginKTTSD( TQObject* parent, const char* name, cons
             actionCollection(), "tools_kttsd" );
     }
     else
-        kdDebug() << "TDEHTMLPLuginKTTSD::TDEHTMLPluginKTTSD: KTrader did not find KTTSD." << endl;
+        kdDebug() << "TDEHTMLPLuginKTTSD::TDEHTMLPluginKTTSD: TDETrader did not find KTTSD." << endl;
 }
 
 TDEHTMLPluginKTTSD::~TDEHTMLPluginKTTSD()

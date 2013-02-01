@@ -284,7 +284,7 @@ ActionWidget::ActionWidget( const ActionList *list, ConfigDialog* configWidget, 
     listView->setSorting( -1 ); // newly inserted items just append unsorted
 
     cbUseGUIRegExpEditor = new TQCheckBox( i18n("&Use graphical editor for editing regular expressions" ), this );
-    if ( KTrader::self()->query("KRegExpEditor/KRegExpEditor").isEmpty() )
+    if ( TDETrader::self()->query("KRegExpEditor/KRegExpEditor").isEmpty() )
     {
 	cbUseGUIRegExpEditor->hide();
 	cbUseGUIRegExpEditor->setChecked( false );

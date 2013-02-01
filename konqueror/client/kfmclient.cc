@@ -165,7 +165,7 @@ extern "C" KDE_EXPORT int kdemain( int argc, char **argv )
  is configured to reuse always,
  or it's not configured to never reuse, and the URL to-be-opened is "safe".
  The URL is safe, if the view used to view it is listed in the allowed KPart's.
- In order to find out the part, mimetype is needed, and KTrader is needed.
+ In order to find out the part, mimetype is needed, and TDETrader is needed.
  If mimetype is not known, KMimeType is used (which doesn't work e.g. for remote
  URLs, but oh well). Since this function may be running without a TDEApplication
  instance, I'm actually quite surprised it works, and it may sooner or later break.
@@ -222,7 +222,7 @@ static bool startNewKonqueror( TQString url, TQString mimetype, const TQString& 
     }
     if( mimetype.isEmpty())
 	mimetype = KMimeType::findByURL( KURL( url ) )->name();
-    KTrader::OfferList offers = KTrader::self()->query( mimetype, TQString::fromLatin1( "KParts/ReadOnlyPart" ),
+    TDETrader::OfferList offers = TDETrader::self()->query( mimetype, TQString::fromLatin1( "KParts/ReadOnlyPart" ),
 	TQString::null, TQString::null );
     KService::Ptr serv;
     if( offers.count() > 0 )
@@ -529,7 +529,7 @@ bool clientApp::doIt()
     {
       KURL::List urls;
       urls.append( args->url(1) );
-      const KTrader::OfferList offers = KTrader::self()->query( TQString::fromLocal8Bit( args->arg( 2 ) ), TQString::fromLatin1( "Application" ), TQString::null, TQString::null );
+      const TDETrader::OfferList offers = TDETrader::self()->query( TQString::fromLocal8Bit( args->arg( 2 ) ), TQString::fromLatin1( "Application" ), TQString::null, TQString::null );
       if (offers.isEmpty()) return 1;
       KService::Ptr serv = offers.first();
       return KRun::run( *serv, urls );

@@ -4263,7 +4263,7 @@ KonsoleFind::KonsoleFind( TQWidget *parent, const char *name, bool /*modal*/ )
   TQHBox* row = new TQHBox( (TQWidget*)group );
   m_asRegExp = new TQCheckBox( i18n("As &regular expression"), row, "asRegexp" );
 
-  if (!KTrader::self()->query("KRegExpEditor/KRegExpEditor").isEmpty()) {
+  if (!TDETrader::self()->query("KRegExpEditor/KRegExpEditor").isEmpty()) {
     m_editRegExp = new TQPushButton( i18n("&Edit..."), row, "editRegExp" );
     connect( m_asRegExp, TQT_SIGNAL( toggled(bool) ), m_editRegExp, TQT_SLOT( setEnabled(bool) ) );
     connect( m_editRegExp, TQT_SIGNAL( clicked() ), this, TQT_SLOT( slotEditRegExp() ) );
