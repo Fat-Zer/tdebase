@@ -30,7 +30,7 @@
 #include <kdialogbase.h>
 #include <keditlistbox.h>
 #include <kkeydialog.h>
-#include <klistview.h>
+#include <tdelistview.h>
 #include <knuminput.h>
 
 #include "urlgrabber.h"

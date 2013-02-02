@@ -260,7 +260,7 @@ static bool readAfm(const TQString &file, TQString &full, TQString &family, TQSt
 }   
 
 typedef KGenericFactory<KFI::KFileFontPlugin> KFileFontPluginFactory;
-K_EXPORT_COMPONENT_FACTORY(tdefile_font, KFileFontPluginFactory("kfontinst"))
+K_EXPORT_COMPONENT_FACTORY(tdefile_font, KFileFontPluginFactory("tdefontinst"))
 
 namespace KFI
 {

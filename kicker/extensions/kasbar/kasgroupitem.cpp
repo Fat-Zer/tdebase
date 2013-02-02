@@ -62,7 +62,7 @@
 #include <kiconloader.h>
 #include <kpixmap.h>
 #include <kpixmapeffect.h>
-#include <kpopupmenu.h>
+#include <tdepopupmenu.h>
 #include <klocale.h>
 
 #include <taskmanager.h>

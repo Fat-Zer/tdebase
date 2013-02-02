@@ -15,8 +15,8 @@
 #include <klocale.h>
 #include <kiconeffect.h>
 #include <kiconloader.h>
-#include <kpopupmenu.h>
-#include <kaction.h>
+#include <tdepopupmenu.h>
+#include <tdeaction.h>
 #include <kuniqueapplication.h>
 
 #include "kxkbtraywindow.h"

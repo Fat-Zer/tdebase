@@ -32,7 +32,7 @@
 #include <kdebug.h>
 #include <kdesktopfile.h>
 #include <klocale.h>
-#include <klistview.h>
+#include <tdelistview.h>
 #include <kipc.h>
 #include <ksimpleconfig.h>
 #include <dcopclient.h>

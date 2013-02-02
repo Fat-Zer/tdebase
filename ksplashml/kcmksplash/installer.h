@@ -14,7 +14,7 @@
 #include <tqmap.h>
 #include <tqpoint.h>
 
-#include <klistbox.h>
+#include <tdelistbox.h>
 #include <kurl.h>
 
 class TQLabel;

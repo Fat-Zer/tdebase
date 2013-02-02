@@ -27,14 +27,14 @@
 #include <klocale.h>
 #include <kdebug.h>
 #include <kdirwatch.h>
-#include <klistview.h>
+#include <tdelistview.h>
 #include <kinputdialog.h>
 #include <kiconloader.h>
 #include <kmessagebox.h>
 #include <kmdcodec.h>
 #include <kstdguiitem.h>
 #include <kpushbutton.h>
-#include <kpopupmenu.h>
+#include <tdepopupmenu.h>
 
 #include <tqdir.h>
 #include <tqlabel.h>

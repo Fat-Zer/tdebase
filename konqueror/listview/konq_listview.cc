@@ -23,7 +23,7 @@
 #include "konq_infolistviewwidget.h"
 #include "konq_listviewsettings.h"
 
-#include <kaction.h>
+#include <tdeaction.h>
 #include <kapplication.h>
 #include <kdebug.h>
 #include <kdirlister.h>

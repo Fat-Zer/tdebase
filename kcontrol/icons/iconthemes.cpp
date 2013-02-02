@@ -35,7 +35,7 @@
 #undef Unsorted
 #include <kipc.h>
 
-#include <klistview.h>
+#include <tdelistview.h>
 #include <kurlrequesterdlg.h>
 #include <kmessagebox.h>
 #include <kprogress.h>

@@ -29,7 +29,7 @@
 #include <kdebug.h>
 #include <klocale.h>
 #include <knuminput.h>
-#include <klistbox.h>
+#include <tdelistbox.h>
 #include <klineedit.h>
 #include <kicontheme.h>
 #include <kurifilter.h>
@@ -411,7 +411,7 @@ bool KManualProxyDlg::isValidURL( const TQString& _url, KURL* result ) const
     KURL url (_url);
     
     TQStringList filters;
-    filters << "kshorturifilter" << "localdomainurifilter";
+    filters << "tdeshorturifilter" << "localdomainurifilter";
     
     // If the typed URL is malformed, and the filters cannot filter it
     // then it must be an invalid entry.

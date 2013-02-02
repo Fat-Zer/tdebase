@@ -23,12 +23,12 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #include <tqtooltip.h>
 
-#include <kaction.h>
+#include <tdeaction.h>
 #include <kbookmark.h>
 #include <kbookmarkmenu.h>
 #include <konqbookmarkmanager.h>
 #include <klocale.h>
-#include <kpopupmenu.h>
+#include <tdepopupmenu.h>
 
 #include "bookmarksbutton.h"
 #include "bookmarksbutton.moc"

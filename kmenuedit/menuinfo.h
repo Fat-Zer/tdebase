@@ -22,7 +22,7 @@
 
 #include <tqstring.h>
 
-#include <kshortcut.h>
+#include <tdeshortcut.h>
 #include <kservice.h>
 
 class MenuFile;

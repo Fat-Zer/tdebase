@@ -30,7 +30,7 @@
 #include <tqbuttongroup.h>
 #include <tqtabwidget.h>
 #include <tqwhatsthis.h>
-#include <klistview.h>
+#include <tdelistview.h>
 #include <kservice.h>
 #include <klocale.h>
 #include <kglobalsettings.h>

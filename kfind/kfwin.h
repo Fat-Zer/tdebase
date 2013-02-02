@@ -7,7 +7,7 @@
 #ifndef KFWIN_H
 #define KFWIN_H
 
-#include <klistview.h>
+#include <tdelistview.h>
 #include <tdefileitem.h>
 #include <kurl.h>
 

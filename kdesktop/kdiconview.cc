@@ -23,7 +23,7 @@
 #include "kdesktopsettings.h"
 
 #include <tdeio/paste.h>
-#include <kaccel.h>
+#include <tdeaccel.h>
 #include <kapplication.h>
 #include <kcolordrag.h>
 #include <kdebug.h>

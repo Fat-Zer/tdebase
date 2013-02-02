@@ -24,7 +24,7 @@
 
 #include <kdockwidget.h>
 #include <kurl.h>
-#include <ktoolbar.h>
+#include <tdetoolbar.h>
 #include <tdeparts/part.h>
 #include <tdemultitabbar.h>
 

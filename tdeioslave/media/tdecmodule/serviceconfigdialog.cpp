@@ -21,7 +21,7 @@
 
 #include <klocale.h>
 #include <klineedit.h>
-#include <kactionselector.h>
+#include <tdeactionselector.h>
 #include <kicondialog.h>
 #include <tqlistbox.h>
 #include <kservice.h>

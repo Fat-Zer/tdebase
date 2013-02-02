@@ -15,7 +15,7 @@ noinst_LTLIBRARIES = libkdesktopsettings.la
 
 libkdesktopsettings_la_LDFLAGS = $(all_libraries) -no-undefined
 libkdesktopsettings_la_LIBADD = $(LIB_TDECORE)
-libkdesktopsettings_la_SOURCES = kdesktopsettings.kcfgc klaunchsettings.kcfgc 
+libkdesktopsettings_la_SOURCES = kdesktopsettings.kcfgc tdelaunchsettings.kcfgc 
 
 kdesktop_la_SOURCES = main.cc krootwm.cc xautolock.cc kdiconview.cc desktop.cc \
 	lockeng.cc KDesktopIface.skel \
@@ -56,10 +56,10 @@ lockeng.lo: kdesktopsettings.h
 main.lo: kdesktopsettings.h
 minicli.lo: kdesktopsettings.h
 
-# List made with: grep -l klaunchsettings.h *[pc] | sed -e 's/\.c.*$/.lo: klaunchsettings.h/'
-desktop.lo: klaunchsettings.h
-klaunchsettings.lo: klaunchsettings.h
-startupid.lo: klaunchsettings.h
+# List made with: grep -l tdelaunchsettings.h *[pc] | sed -e 's/\.c.*$/.lo: tdelaunchsettings.h/'
+desktop.lo: tdelaunchsettings.h
+tdelaunchsettings.lo: tdelaunchsettings.h
+startupid.lo: tdelaunchsettings.h
 
 messages: rc.cpp
 	$(EXTRACTRC) lock/*.ui >> rc.cpp
@@ -74,4 +74,4 @@ autostartdir = $(datadir)/autostart
 konqservice_DATA = kdesktopSetAsBackground.desktop
 konqservicedir = $(kde_datadir)/konqueror/servicemenus
 
-kde_kcfg_DATA = kdesktop.kcfg klaunch.kcfg
+kde_kcfg_DATA = kdesktop.kcfg tdelaunch.kcfg

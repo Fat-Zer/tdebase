@@ -28,7 +28,7 @@
 #include <tqtimer.h>
 #include <tdefileitem.h>
 #include <kpanelapplet.h>
-#include <kactioncollection.h>
+#include <tdeactioncollection.h>
 
 class TrashButton : public PanelPopupButton
 {

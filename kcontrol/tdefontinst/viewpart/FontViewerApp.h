@@ -5,7 +5,7 @@
 //
 // Class Name    : KFI::CFontViewerApp, KFI::CFontViewAppMainWindow
 // Author        : Craig Drummond
-// Project       : K Font Installer (kfontinst-kcontrol)
+// Project       : K Font Installer (tdefontinst-kcontrol)
 // Creation Date : 30/04/2004
 // Version       : $Revision$ $Date$
 //

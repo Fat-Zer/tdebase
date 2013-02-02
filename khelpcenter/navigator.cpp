@@ -37,14 +37,14 @@
 #include <tqpushbutton.h>
 #include <tqtooltip.h>
 
-#include <kaction.h>
+#include <tdeaction.h>
 #include <kapplication.h>
 #include <ksimpleconfig.h>
 #include <kstandarddirs.h>
 #include <kglobal.h>
 #include <klocale.h>
 #include <kdebug.h>
-#include <klistview.h>
+#include <tdelistview.h>
 #include <kmessagebox.h>
 #include <kiconloader.h>
 #include <kprocio.h>

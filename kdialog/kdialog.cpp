@@ -33,9 +33,9 @@
 #include <kapplication.h>
 #include <kdebug.h>
 //#include <ktopwidget.h>
-#include <kmainwindow.h>
+#include <tdemainwindow.h>
 #include <kpassivepopup.h>
-#include <krecentdocument.h>
+#include <tderecentdocument.h>
 #include <kapplication.h>
 
 #include "widgets.h"

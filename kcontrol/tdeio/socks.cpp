@@ -26,7 +26,7 @@
 #include <tqcheckbox.h>
 
 #include <tdefiledialog.h>
-#include <klistview.h>
+#include <tdelistview.h>
 #include <kmessagebox.h>
 #include <ksocks.h>
 #include <kapplication.h>

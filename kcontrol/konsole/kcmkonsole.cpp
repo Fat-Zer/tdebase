@@ -25,7 +25,7 @@
 #include <kaboutdata.h>
 #include <tdeconfig.h>
 #include <kdebug.h>
-#include <kfontdialog.h>
+#include <tdefontdialog.h>
 #include <kgenericfactory.h>
 #include <kmessagebox.h>
 

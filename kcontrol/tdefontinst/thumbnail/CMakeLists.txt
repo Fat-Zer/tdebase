@@ -11,7 +11,7 @@
 
 include_directories(
   ${CMAKE_BINARY_DIR}
-  ${CMAKE_SOURCE_DIR}/kcontrol/kfontinst/lib
+  ${CMAKE_SOURCE_DIR}/kcontrol/tdefontinst/lib
   ${TDE_INCLUDE_DIR}
   ${TQT_INCLUDE_DIRS}
 )
@@ -30,6 +30,6 @@ install( FILES fontthumbnail.desktop DESTINATION ${SERVICES_INSTALL_DIR} )
 
 tde_add_kpart( fontthumbnail
   SOURCES FontThumbnail.cpp
-  LINK kfontinst-shared
+  LINK tdefontinst-shared
   DESTINATION ${PLUGIN_INSTALL_DIR}
 )

@@ -37,7 +37,7 @@
 #include <kdebug.h>
 #include <ksharedpixmap.h>
 #include <kpixmapio.h>
-#include <kpopupmenu.h>
+#include <tdepopupmenu.h>
 #include <netwm.h>
 #include <tqcstring.h>
 #include <tqpixmap.h>

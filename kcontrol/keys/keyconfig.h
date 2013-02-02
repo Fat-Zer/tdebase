@@ -11,7 +11,7 @@
 #include <tqpushbutton.h>
 #include <tqlistbox.h>
 
-#include <kaccel.h>
+#include <tdeaccel.h>
 #include <kkeydialog.h>
 //#include <tdecmodule.h>
 #include <tqdict.h>

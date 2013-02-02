@@ -175,9 +175,9 @@ KDE3.1 -> KDE3.2
 
 1. StarOffice psstd.fonts generated output is no longer marked line-by line, instead it is marked as a section, e.g.
 
-   # kfontinst <user, if not root> /usr/X11R6/lib/X11/fonts/TrueType
+   # tdefontinst <user, if not root> /usr/X11R6/lib/X11/fonts/TrueType
    <fonts...>
-   # kfontinst <user, if not root> /usr/X11R6/lib/X11/fonts/TrueType
+   # tdefontinst <user, if not root> /usr/X11R6/lib/X11/fonts/TrueType
 
    ...Likewise for Ghostscript's Fontmap
 
@@ -200,7 +200,7 @@ KDE3.1 -> KDE3.2
    for helping me discover the various bugs with Bitmap output.
 3. When displaying bitmap details, if individual entries (family, point size, etc) can't be read, then the
    Xlfd will be displayed.
-4. Ghostscript & StarOffice include guards changed from "kfontinst" to "kfi"  -- this will *require" removing of any previous output!
+4. Ghostscript & StarOffice include guards changed from "tdefontinst" to "kfi"  -- this will *require" removing of any previous output!
 5. Shortened generated TrueType foundry fields - to help with StarOffice
 
 0.10b6->0.10b7 (Test version...)
@@ -237,7 +237,7 @@ KDE3.1 -> KDE3.2
 ==============
 
 *** NOTE
-*** Please delete your existing ~/.kde/share/config/kfontinstrc -or- ~/.kde2/share/config/kfontinstrc file
+*** Please delete your existing ~/.kde/share/config/tdefontinstrc -or- ~/.kde2/share/config/tdefontinstrc file
 *** before using this version
 
 1. Added support for X font server config files.
@@ -316,8 +316,8 @@ KDE3.1 -> KDE3.2
    font, then TDEFontinst itself will try to read the header information (although no preview will be available,
    everything else should still work).
 4. Fixed multiple installing of programs in other/ directory. For instance TDEFontinst's version of ttmkfdir
-   was being installed into $(PREFIX) (usually /usr/bin) as well as $(KDE_DATADIR)/kfontinst - this was incorrect
-   as TDEFontinst will only use the version in $(KDE_DATADIR)/kfontinst, and it was possible that a previous version
+   was being installed into $(PREFIX) (usually /usr/bin) as well as $(KDE_DATADIR)/tdefontinst - this was incorrect
+   as TDEFontinst will only use the version in $(KDE_DATADIR)/tdefontinst, and it was possible that a previous version
    of ttmkfdir (such as that supplied with XFree86) would have been overwritten.
 5. Fixed bug where the user was allowed to select (and subsequently install) fonts which could not be loaded correctly.
 6. Added the ability to enter a custom preview string.
@@ -345,13 +345,13 @@ KDE3.1 -> KDE3.2
 
 0.8.2->0.8.3
 ============
-1. Modified 'kfontinst.kdelnk' so that tdesu is now used - so that a user will automatically be prompted
+1. Modified 'tdefontinst.kdelnk' so that tdesu is now used - so that a user will automatically be prompted
    for the root password.
-2. Modified dialogs to use the KDE caption ("Font Installer") instead of the app name ("kfontinst")
+2. Modified dialogs to use the KDE caption ("Font Installer") instead of the app name ("tdefontinst")
 3. Corrected size of Configure dialog.
 4. Fixed a minor bug where if all fonts were uninstalled, the 'Configure System' button was disabled - therefore not
    allowing you to activate the changes!
-5. Added a command line interface. (type 'kfontinst --help' for details)
+5. Added a command line interface. (type 'tdefontinst --help' for details)
 6. Added option to automatically fix TTF postscript names upon install.
 
 0.8.1->0.8.2
@@ -400,21 +400,21 @@ KDE3.1 -> KDE3.2
 2. Modified ttf2pt1 to accept a parameter to just create .afm files
 3. Added option to modify a .afm file when installing.
 4. Added "Unicode" to list of encodings that can be used.
-5. Removed kfontinst-cp1252.enc, kfontinst-cp1252.xpp -- these were hacks anyway, and seing as Qt2 is going to 
+5. Removed tdefontinst-cp1252.enc, tdefontinst-cp1252.xpp -- these were hacks anyway, and seing as Qt2 is going to 
    support cp1252 by a hard-coded codec, there's no real point...
 6. Rearranged the Configure System dialog - so that Force AFM regeneration is grouped next to the Generate AFMs option.
-7. Encoding files now stored in <TDEDIR>/share/apps/kfontinst/Encodings
+7. Encoding files now stored in <TDEDIR>/share/apps/tdefontinst/Encodings
 
 0.6.1->0.7
 ==========
 1. Modified ttmkfdir & ttf2pt1 to allow usage of X11 style font re-encoding files.
-2. Because .enc files are now used by kfontinst, removed the possibility of using gzipped encodings.
+2. Because .enc files are now used by tdefontinst, removed the possibility of using gzipped encodings.
 3. Added the ability to delete an installed font's .afm file.
 4. Fixed a bug in the TtfPsNameFixer class - this would cause ttf2pt1 to creash when accessing a modified font!
 5. Font encodings are now stored in <KDEDir>/share/x11encodings
 6. Removed the reencode shell script, as the encodng is all done by ttmkfdir.
 7. Removed xfinst shell script - handled internally.
-8. Supplied a kfontinst-cp1252 encoding - with the ugly single-quotes normaly found in .ttf files remapped to
+8. Supplied a tdefontinst-cp1252 encoding - with the ugly single-quotes normaly found in .ttf files remapped to
    the nice looking ones.
 9. Added functionality, when configuring StarOffice, to select an appropriate xprinter.prolog for the selected
    encoding (if one exists)...
@@ -434,9 +434,9 @@ KDE3.1 -> KDE3.2
    to use the microsoft cp1252 enocding scheme. (Previosuly the PS output from StarOffice would not print
    OK with ghostscript - when using extra characters - unless the .ttf file was modified.)
 2. Because of 1, removed the abilty to modify a TrueType font's internal charactermap - this was a hack anyway.
-3. xfinst now uses mkfontdir to create encodings.dir - instead of kfontinst's install procedure copying a standard
+3. xfinst now uses mkfontdir to create encodings.dir - instead of tdefontinst's install procedure copying a standard
    one in (this didn't actually work...)
-4. As kfontinst no longer reads the .enc files themselves, added the ability to use .enc.gz files as well
+4. As tdefontinst no longer reads the .enc files themselves, added the ability to use .enc.gz files as well
    when selecting an encoding for X. 
 5. Re-wrote xfinst & reencode to be plain 'sh' scripts, as opposed to 'tcsh' scripts. 
 

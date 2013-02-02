@@ -734,7 +734,7 @@ TQString CFcEngine::getFcString(FcPattern *pat, const char *val, int faceNo)
 
 TQString CFcEngine::createName(FcPattern *pat, int faceNo)
 {
-//CPD: TODO: the names *need* to match up with kfontchooser's...
+//CPD: TODO: the names *need* to match up with tdefontchooser's...
     TQString name(getFcString(pat, FC_FAMILY, faceNo)),
             str;
     int     intVal;

@@ -42,7 +42,7 @@ KOSPage::KOSPage(TQWidget *parent, const char *name ) : KOSPageDlg(parent,name) 
 	slotKDEDescription();
 	// Set the configfiles
 	cglobal = new TDEConfig("kdeglobals");
-	claunch = new TDEConfig("klaunchrc", false, false);
+	claunch = new TDEConfig("tdelaunchrc", false, false);
 	cwin = new TDEConfig("twinrc");
 	cdesktop = new TDEConfig("kdesktoprc");
 	ckcminput = new TDEConfig("kcminputrc");

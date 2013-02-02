@@ -44,7 +44,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <krun.h>
 #include <twinmodule.h>
 #include <kdialogbase.h>
-#include <kactionselector.h>
+#include <tdeactionselector.h>
 #include <kiconloader.h>
 #include <twin.h>
 

@@ -12,8 +12,8 @@
 
 #include <tdecmodule.h>
 #include <kdialogbase.h>
-#include <kfontdialog.h>
-#include <kfontrequester.h>
+#include <tdefontdialog.h>
+#include <tdefontrequester.h>
 
 #include "kxftconfig.h"
 

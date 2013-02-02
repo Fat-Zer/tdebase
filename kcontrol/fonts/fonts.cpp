@@ -22,7 +22,7 @@
 
 #include <dcopclient.h>
 
-#include <kaccelmanager.h>
+#include <tdeaccelmanager.h>
 #include <kapplication.h>
 #include <kgenericfactory.h>
 #include <kipc.h>

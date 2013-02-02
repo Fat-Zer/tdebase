@@ -24,7 +24,7 @@
 #include <kaboutdata.h>
 #include <kaboutapplication.h>
 #include <kdebug.h>
-#include <kpopupmenu.h>
+#include <tdepopupmenu.h>
 #include <kiconloader.h>
 
 #include "mediaapplet.h"

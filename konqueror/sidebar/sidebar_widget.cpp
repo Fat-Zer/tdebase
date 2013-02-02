@@ -38,7 +38,7 @@
 #include <konq_events.h>
 #include <tdefileitem.h>
 #include <tdeio/netaccess.h>
-#include <kpopupmenu.h>
+#include <tdepopupmenu.h>
 #include <kprocess.h>
 #include <kurlrequesterdlg.h>
 #include <kinputdialog.h>

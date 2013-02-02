@@ -9,7 +9,7 @@
 #include <kcolorbutton.h>
 #include <tdeconfig.h>
 #include <kdialogbase.h>
-#include <kfontdialog.h>
+#include <tdefontdialog.h>
 #include <kgenericfactory.h>
 #include <kglobalsettings.h>
 #include <kstandarddirs.h>

@@ -97,7 +97,7 @@ Time to start a requirement list.
 #include <tdefiledialog.h>
 #include <kurlrequesterdlg.h>
 
-#include <kfontdialog.h>
+#include <tdefontdialog.h>
 #include <kkeydialog.h>
 #include <kstandarddirs.h>
 #include <tqpainter.h>
@@ -114,13 +114,13 @@ Time to start a requirement list.
 #include <knotifydialog.h>
 #undef B0
 #include <kprinter.h>
-#include <kaccelmanager.h>
+#include <tdeaccelmanager.h>
 #include <kurifilter.h>
 
-#include <kaction.h>
+#include <tdeaction.h>
 #include <kshell.h>
 #include <tqlabel.h>
-#include <kpopupmenu.h>
+#include <tdepopupmenu.h>
 #include <klocale.h>
 #include <sys/wait.h>
 #include <sys/stat.h>

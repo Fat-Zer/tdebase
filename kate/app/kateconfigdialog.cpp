@@ -52,7 +52,7 @@
 #include <kglobalsettings.h>
 #include <kiconloader.h>
 #include <kkeydialog.h>
-#include <klistbox.h>
+#include <tdelistbox.h>
 #include <klocale.h>
 #include <ksimpleconfig.h>
 #include <kstdaction.h>

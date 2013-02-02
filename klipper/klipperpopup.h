@@ -20,7 +20,7 @@
 #ifndef _KLIPPERPOPUP_H_
 #define _KLIPPERPOPUP_H_
 
-#include <kpopupmenu.h>
+#include <tdepopupmenu.h>
 #include <tqptrlist.h>
 #include <tqstring.h>
 

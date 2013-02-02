@@ -23,7 +23,7 @@
 
 #include <kapplication.h>
 #include <kglobalaccel.h>
-#include <kpopupmenu.h>
+#include <tdepopupmenu.h>
 #include <tqmap.h>
 #include <tqpixmap.h>
 #include <dcopobject.h>

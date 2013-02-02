@@ -34,7 +34,7 @@
 #include <kcharsets.h>
 #include <kbookmarkmanager.h>
 
-#include <kaction.h>
+#include <tdeaction.h>
 
 TestLinkItrHolder *TestLinkItrHolder::s_self = 0;
 

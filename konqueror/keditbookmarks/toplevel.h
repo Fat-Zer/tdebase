@@ -22,7 +22,7 @@
 #ifndef __toplevel_h
 #define __toplevel_h
 
-#include <kmainwindow.h>
+#include <tdemainwindow.h>
 #include <kcommand.h>
 #include <kbookmark.h>
 

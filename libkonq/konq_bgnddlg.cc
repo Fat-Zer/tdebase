@@ -28,7 +28,7 @@
 #include <kdebug.h>
 #include <kimagefilepreview.h>
 #include <klocale.h>
-//#include <krecentdocument.h>
+//#include <tderecentdocument.h>
 #include <kstandarddirs.h>
 #include <kurlrequester.h>
 

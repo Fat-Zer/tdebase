@@ -36,7 +36,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include <klocale.h>
 #include <kstandarddirs.h>
 #include <kseparator.h>
-#include <klistview.h>
+#include <tdelistview.h>
 #include <ksimpleconfig.h>
 #include <kstringhandler.h>
 #include <kdebug.h>

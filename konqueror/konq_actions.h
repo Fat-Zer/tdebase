@@ -21,7 +21,7 @@
 #define __konq_actions_h__
 
 #include <konq_historymgr.h>
-#include <kaction.h>
+#include <tdeaction.h>
 #include <tqptrlist.h>
 
 class HistoryEntry;

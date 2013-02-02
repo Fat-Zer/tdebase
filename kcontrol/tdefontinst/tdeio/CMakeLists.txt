@@ -12,7 +12,7 @@
 include_directories(
   ${CMAKE_CURRENT_BINARY_DIR}
   ${CMAKE_BINARY_DIR}
-  ${CMAKE_SOURCE_DIR}/kcontrol/kfontinst/lib
+  ${CMAKE_SOURCE_DIR}/kcontrol/tdefontinst/lib
   ${CMAKE_SOURCE_DIR}/kcontrol/fonts
   ${TDE_INCLUDE_DIR}
   ${TQT_INCLUDE_DIRS}
@@ -34,6 +34,6 @@ install( FILES folder.desktop system-folder.desktop package.desktop DESTINATION 
 
 tde_add_kpart( tdeio_fonts AUTOMOC
   SOURCES KioFonts.cpp
-  LINK kxftconfig-static kfontinst-shared tdesu-shared
+  LINK kxftconfig-static tdefontinst-shared tdesu-shared
   DESTINATION ${PLUGIN_INSTALL_DIR}
 )

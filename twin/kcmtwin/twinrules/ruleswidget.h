@@ -22,7 +22,7 @@
 
 #include <kdialogbase.h>
 #include <twin.h>
-#include <kshortcutdialog.h>
+#include <tdeshortcutdialog.h>
 
 #include "ruleswidgetbase.h"
 #include "editshortcutbase.h"

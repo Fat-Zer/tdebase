@@ -46,7 +46,7 @@
 #include <dcopclient.h>
 #include <kinstance.h>
 #include <kaboutdata.h>
-#include <kaction.h>
+#include <tdeaction.h>
 #include <kcmdlineargs.h>
 #include <kdebug.h>
 #include <kdialogbase.h>
@@ -63,7 +63,7 @@
 #include <kmessagebox.h>
 #include <kmimetype.h>
 #include <kopenwith.h>
-#include <kpopupmenu.h>
+#include <tdepopupmenu.h>
 #include <ksimpleconfig.h>
 #include <kstatusbar.h>
 #include <kstdaction.h>

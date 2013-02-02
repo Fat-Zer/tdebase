@@ -34,7 +34,7 @@
 #include <kdebug.h>
 #include <tdeconfig.h>
 #include <klocale.h>
-#include <klistview.h>
+#include <tdelistview.h>
 #include <kmessagebox.h>
 #include <ksimpleconfig.h>
 #include <tdeio/http_slave_defaults.h>

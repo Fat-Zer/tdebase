@@ -31,12 +31,12 @@
 #include <kdebug.h>
 #include <kdesktopfile.h>
 #include <kiconloader.h>
-#include <klistview.h>
+#include <tdelistview.h>
 #include <klocale.h>
 #include <kmessagebox.h>
 #include <knuminput.h>
 #include <kstandarddirs.h>
-#include <kfontrequester.h>
+#include <tdefontrequester.h>
 
 #include <kicondialog.h>
 #include <kiconloader.h>

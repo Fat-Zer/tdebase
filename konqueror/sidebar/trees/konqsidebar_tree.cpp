@@ -6,7 +6,7 @@
 #include <ksimpleconfig.h>
 #include <kinputdialog.h>
 #include <kiconloader.h>
-#include <klistviewsearchline.h>
+#include <tdelistviewsearchline.h>
 
 #include <tqclipboard.h>
 #include <tqdragobject.h>

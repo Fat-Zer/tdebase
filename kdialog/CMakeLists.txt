@@ -24,7 +24,7 @@ link_directories(
 
 tde_add_executable( kdialog AUTOMOC
   SOURCES
-    kdialog.cpp widgets.cpp klistboxdialog.cpp
+    kdialog.cpp widgets.cpp tdelistboxdialog.cpp
     progressdialog.cpp progressdialogiface.skel
   LINK tdeio-shared
   DESTINATION ${BIN_INSTALL_DIR}

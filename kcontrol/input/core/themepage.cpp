@@ -28,7 +28,7 @@
 #include <kmessagebox.h>
 #include <klocale.h>
 #include <tdeconfig.h>
-#include <klistview.h>
+#include <tdelistview.h>
 #include <kdialog.h>
 
 #include <tqlayout.h>

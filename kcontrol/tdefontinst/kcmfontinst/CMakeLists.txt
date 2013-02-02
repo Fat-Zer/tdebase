@@ -12,8 +12,8 @@
 include_directories(
   ${CMAKE_CURRENT_BINARY_DIR}
   ${CMAKE_BINARY_DIR}
-  ${CMAKE_SOURCE_DIR}/kcontrol/kfontinst/lib
-  ${CMAKE_SOURCE_DIR}/kcontrol/kfontinst/viewpart
+  ${CMAKE_SOURCE_DIR}/kcontrol/tdefontinst/lib
+  ${CMAKE_SOURCE_DIR}/kcontrol/tdefontinst/viewpart
   ${TDE_INCLUDE_DIR}
   ${TQT_INCLUDE_DIRS}
 )
@@ -35,6 +35,6 @@ tde_add_kpart( kcm_fontinst AUTOMOC
   SOURCES
     KCmFontInst.cpp KFileFontIconView.cpp KFileFontView.cpp
     PrintDialog.cpp SettingsDialog.cpp
-  LINK kfontinstprint-static kfontinst-shared
+  LINK tdefontinstprint-static tdefontinst-shared
   DESTINATION ${PLUGIN_INSTALL_DIR}
 )

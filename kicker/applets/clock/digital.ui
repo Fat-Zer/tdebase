@@ -289,7 +289,7 @@
 </tabstops>
 <includes>
     <include location="local" impldecl="in implementation">kdialog.h</include>
-    <include location="local" impldecl="in implementation">kfontrequester.h</include>
+    <include location="local" impldecl="in implementation">tdefontrequester.h</include>
     <include location="local" impldecl="in implementation">digital.ui.h</include>
 </includes>
 <Q_SLOTS>

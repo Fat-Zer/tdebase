@@ -20,7 +20,7 @@
 #ifndef __kmenuedit_h__
 #define __kmenuedit_h__
 
-#include <kmainwindow.h>
+#include <tdemainwindow.h>
 #include <treeview.h>
 
 class BasicTab;

@@ -26,7 +26,7 @@
 #include <knotifyclient.h>
 #include <krun.h>
 #include <kshell.h>
-#include <kshortcut.h>
+#include <tdeshortcut.h>
 
 #include <kdirnotify_stub.h>
 

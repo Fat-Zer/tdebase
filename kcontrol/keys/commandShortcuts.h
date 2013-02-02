@@ -22,7 +22,7 @@
 #define __COMMAND_SHORTCUTS_MODULE_H
 
 #include <tqtabwidget.h>
-#include <kshortcut.h>
+#include <tdeshortcut.h>
 #include <tqptrlist.h>
 
 class AppTreeView;

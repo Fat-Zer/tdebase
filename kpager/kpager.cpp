@@ -44,7 +44,7 @@
 
 #include <kapplication.h>
 #include <kglobalsettings.h>
-#include <kaction.h>
+#include <tdeaction.h>
 #include <kstdaction.h>
 #include <kglobal.h>
 #include <tdeconfig.h>
@@ -55,7 +55,7 @@
 #include <netwm.h>
 #include "desktop.h"
 #include <tqpopupmenu.h>
-#include <kpopupmenu.h>
+#include <tdepopupmenu.h>
 #include <kiconloader.h>
 #include <assert.h>
 

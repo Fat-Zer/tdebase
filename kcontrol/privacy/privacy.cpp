@@ -30,7 +30,7 @@
 #include <tdeconfig.h>
 #include <kdialog.h>
 #include <kglobal.h>
-#include <klistview.h>
+#include <tdelistview.h>
 #include <klocale.h>
 #include <kmessagebox.h>
 #include <ktextedit.h>

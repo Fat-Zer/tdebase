@@ -20,7 +20,7 @@
 #include <kpixmapeffect.h>
 #include <klocale.h>
 #include <kstandarddirs.h>
-#include <kpopupmenu.h>
+#include <tdepopupmenu.h>
 
 #include <taskmanager.h>
 

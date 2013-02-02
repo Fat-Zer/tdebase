@@ -21,7 +21,7 @@
 #ifndef __TOPLEVEL_H__
 #define __TOPLEVEL_H__
 
-#include <kmainwindow.h>
+#include <tdemainwindow.h>
 #include <tqlistview.h>
 
 

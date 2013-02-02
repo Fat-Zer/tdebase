@@ -25,7 +25,7 @@
 
 #include <tqstring.h>
 #include <tqwidget.h>
-#include <kmainwindow.h>
+#include <tdemainwindow.h>
 #include <tqlayout.h>
 #include <tqptrlist.h>
 

@@ -63,7 +63,7 @@ if( BUILD_KCONTROL )
   add_subdirectory( xinerama )
   add_subdirectory( display )
   add_subdirectory( kthememanager )
-  add_subdirectory( kfontinst )
+  add_subdirectory( tdefontinst )
   add_subdirectory( access )
   add_subdirectory( hwmanager )
 

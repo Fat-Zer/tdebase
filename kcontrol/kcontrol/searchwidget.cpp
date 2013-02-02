@@ -26,7 +26,7 @@
 #include <klineedit.h>
 #include <kiconloader.h>
 #include <klocale.h>
-#include <klistbox.h>
+#include <tdelistbox.h>
 
 #include "searchwidget.h"
 #include "searchwidget.moc"

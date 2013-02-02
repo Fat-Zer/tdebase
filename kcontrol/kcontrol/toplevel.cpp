@@ -25,7 +25,7 @@
 #include <kaboutapplication.h>
 #include <kmessagebox.h>
 #include <kinstance.h>
-#include <kaction.h>
+#include <tdeaction.h>
 #include <twin.h>
 #include <kiconloader.h>
 #include <klineedit.h>

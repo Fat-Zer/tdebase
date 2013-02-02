@@ -23,7 +23,7 @@
 #include <tdecmodulecontainer.h>
 #include <kdirwatch.h>
 #include <kimageio.h>
-#include <klistview.h>
+#include <tdelistview.h>
 #include <kstaticdeleter.h>
 #include <kstandarddirs.h>
 #include <kdebug.h>

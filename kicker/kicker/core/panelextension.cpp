@@ -32,7 +32,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <khelpmenu.h>
 #include <klocale.h>
 #include <kglobal.h>
-#include <kpopupmenu.h>
+#include <tdepopupmenu.h>
 #include <kiconloader.h>
 #include <tdeconfig.h>
 #include <kstdguiitem.h>

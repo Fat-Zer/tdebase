@@ -23,9 +23,9 @@ link_directories(
 )
 
 
-##### kfontinst (shared) ########################
+##### tdefontinst (shared) ########################
 
-tde_add_library( kfontinst SHARED
+tde_add_library( tdefontinst SHARED
   SOURCES Misc.cpp FcEngine.cpp
   VERSION 0.0.0
   LINK tdeio-shared ${XFT_LIBRARIES}

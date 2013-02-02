@@ -785,7 +785,7 @@ CKioFonts::CKioFonts(const TQCString &pool, const TQCString &app)
         Misc::createDir(itsFolders[mainFolder].location);
 
     //
-    // Work out best params to send to kfontinst
+    // Work out best params to send to tdefontinst
 
     // ...determine if X already knows about the system font path...
     Display *xDisplay=XOpenDisplay(NULL);
@@ -1723,7 +1723,7 @@ void CKioFonts::modified(EFolder folder, bool clearList, const CDirList &dirs)
 
     if(FOLDER_SYS==folder && !itsRoot && !itsCanStorePasswd)
     {
-        // If we modified sys, we're not root, and  couldn't store the passwd, then kfontinst has already been called
+        // If we modified sys, we're not root, and  couldn't store the passwd, then tdefontinst has already been called
         // so no need to ask it to add folder to fontconfig and X's config files...
         itsHasSys=true;
         itsAddToSysFc=false;
@@ -1797,7 +1797,7 @@ void CKioFonts::createRootRefreshCmd(TQCString &cmd, const CDirList &dirs, bool 
 
             if(!tmpCmd.isEmpty())
             {
-                cmd+=" && kfontinst ";
+                cmd+=" && tdefontinst ";
                 cmd+=tmpCmd;
                 cmd+=" ";
                 cmd+=TQFile::encodeName(TDEProcess::quote(*it));
@@ -1806,7 +1806,7 @@ void CKioFonts::createRootRefreshCmd(TQCString &cmd, const CDirList &dirs, bool 
     }
     else if (0!=itsNrsKfiParams[0])
     {
-        cmd+=" && kfontinst ";
+        cmd+=" && tdefontinst ";
         cmd+=itsNrsKfiParams;
         cmd+=" ";
         cmd+=TQFile::encodeName(TDEProcess::quote(itsFolders[FOLDER_SYS].location));
@@ -1846,8 +1846,8 @@ void CKioFonts::doModified()
 
                 for(; it!=end; ++it)
                 {
-                    Misc::doCmd("kfontinst", itsKfiParams, TQFile::encodeName(*it));
-                    KFI_DBUG << "RUN(root): kfontinst " << itsKfiParams << ' ' << *it << endl;
+                    Misc::doCmd("tdefontinst", itsKfiParams, TQFile::encodeName(*it));
+                    KFI_DBUG << "RUN(root): tdefontinst " << itsKfiParams << ' ' << *it << endl;
                 }
 
                 if(itsFolders[FOLDER_SYS].modified.contains(itsFolders[FOLDER_SYS].location))
@@ -1885,8 +1885,8 @@ void CKioFonts::doModified()
 
             for(; it!=end; ++it)
             {
-                 Misc::doCmd("kfontinst", itsKfiParams, TQFile::encodeName(*it));
-                KFI_DBUG << "RUN(non-root): kfontinst " << itsKfiParams << ' ' << *it << endl;
+                 Misc::doCmd("tdefontinst", itsKfiParams, TQFile::encodeName(*it));
+                KFI_DBUG << "RUN(non-root): tdefontinst " << itsKfiParams << ' ' << *it << endl;
             }
         }
         itsFolders[FOLDER_USER].modified.clear();

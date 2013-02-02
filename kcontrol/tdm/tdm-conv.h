@@ -30,10 +30,10 @@
 #include <tqcheckbox.h>
 #include <tqspinbox.h>
 
-#include <klistbox.h>
+#include <tdelistbox.h>
 #include <kcombobox.h>
 #include <kcolorbutton.h>
-#include <klistview.h>
+#include <tdelistview.h>
 #include <kurl.h>
 
 #include <pwd.h>

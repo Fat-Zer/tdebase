@@ -26,7 +26,7 @@
 #include <dcopclient.h>
 #include <kdebug.h>
 #include <kstdaction.h>
-#include <kaction.h>
+#include <tdeaction.h>
 
 #include "testnsplugin.h"
 #include "../NSPluginClassIface_stub.h"

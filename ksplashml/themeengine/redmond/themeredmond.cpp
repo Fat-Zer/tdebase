@@ -17,7 +17,7 @@
 #include <tdeconfig.h>
 #include <kdebug.h>
 #include <kdialogbase.h>
-#include <kfontcombo.h>
+#include <tdefontcombo.h>
 #include <kgenericfactory.h>
 #include <kglobalsettings.h>
 #include <kiconloader.h>

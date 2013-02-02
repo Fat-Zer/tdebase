@@ -20,7 +20,7 @@
 #include <konq_events.h>
 #include <kdebug.h>
 #include <tqapplication.h>
-#include <kaccelmanager.h>
+#include <tdeaccelmanager.h>
 
 KonqSidebar::KonqSidebar( TQWidget *parentWidget, const char *widgetName,
                           TQObject *parent, const char *name, bool universalMode )

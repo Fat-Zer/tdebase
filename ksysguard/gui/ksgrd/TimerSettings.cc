@@ -21,7 +21,7 @@
 
 */
 
-#include <kaccelmanager.h>
+#include <tdeaccelmanager.h>
 #include <klocale.h>
 
 #include <tqcheckbox.h>

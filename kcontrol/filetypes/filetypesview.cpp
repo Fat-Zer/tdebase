@@ -14,7 +14,7 @@
 #include <kdesktopfile.h>
 #include <kipc.h>
 #include <klineedit.h>
-#include <klistview.h>
+#include <tdelistview.h>
 #include <klocale.h>
 #include <kstandarddirs.h>
 

@@ -29,7 +29,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <tqpixmap.h>
 #include <tqframe.h>
 #include <tqtoolbutton.h>
-#include <klistview.h>
+#include <tdelistview.h>
 #include <tqdragobject.h>
 
 #include "kmenubase.h"

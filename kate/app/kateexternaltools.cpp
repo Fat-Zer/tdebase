@@ -33,7 +33,7 @@
 #include <kate/view.h>
 #include <kate/document.h>
 
-#include <klistbox.h>
+#include <tdelistbox.h>
 #include <klocale.h>
 #include <kiconloader.h>
 #include <kmessagebox.h>
@@ -41,7 +41,7 @@
 #include <tdeconfig.h>
 #include <krun.h>
 #include <kicondialog.h>
-#include <kpopupmenu.h>
+#include <tdepopupmenu.h>
 #include <kdebug.h>
 
 #include <tqbitmap.h>

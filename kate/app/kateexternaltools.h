@@ -24,7 +24,7 @@
 #ifndef _KATE_EXTERNAL_TOOLS_H_
 #define _KATE_EXTERNAL_TOOLS_H_
 
-#include <kaction.h>
+#include <tdeaction.h>
 #include <kdialogbase.h>
 #include <kate/document.h>
 #include <kmacroexpander.h>

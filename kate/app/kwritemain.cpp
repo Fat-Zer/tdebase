@@ -43,7 +43,7 @@
 #include <kaboutdata.h>
 #include <kstatusbar.h>
 #include <kstdaction.h>
-#include <kaction.h>
+#include <tdeaction.h>
 #include <kdebug.h>
 #include <kglobal.h>
 #include <kapplication.h>

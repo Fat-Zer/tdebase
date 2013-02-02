@@ -16,7 +16,7 @@
 #include <tqmap.h>
 #include <tqwidget.h>
 #include <tqvaluelist.h>
-#include <kshortcut.h>
+#include <tdeshortcut.h>
 
 #include <X11/X.h>
 #include <fixx11h.h>

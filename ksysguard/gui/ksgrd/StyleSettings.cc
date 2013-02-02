@@ -30,7 +30,7 @@
 #include <tqspinbox.h>
 #include <tqtabwidget.h>
 
-#include <kaccelmanager.h>
+#include <tdeaccelmanager.h>
 #include <kcolorbutton.h>
 #include <kcolordialog.h>
 #include <klocale.h>

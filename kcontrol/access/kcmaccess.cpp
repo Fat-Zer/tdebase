@@ -29,7 +29,7 @@
 #include <tdefiledialog.h>
 #include <kapplication.h>
 #include <kaboutdata.h>
-#include <kshortcut.h>
+#include <tdeshortcut.h>
 #include <kkeynative.h>
 #include <knotifydialog.h>
 

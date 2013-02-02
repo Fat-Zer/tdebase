@@ -29,7 +29,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <tqpopupmenu.h>
 #include <tqtooltip.h>
 
-#include <kactionclasses.h>
+#include <tdeactionclasses.h>
 #include <kickertip.h>
 #include <klocale.h>
 #include <kdesktopfile.h>

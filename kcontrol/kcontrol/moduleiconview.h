@@ -20,7 +20,7 @@
 #ifndef __moduleiconview_h__
 #define __moduleiconview_h__
 
-#include <klistview.h>
+#include <tdelistview.h>
 
 class ConfigModule;
 class ConfigModuleList;

@@ -12,7 +12,7 @@ kcm_kurifilt_la_LDFLAGS  = $(all_libraries) -module -avoid-version -no-undefined
 kcm_kurifilt_la_LIBADD = $(LIB_KSYCOCA)
 # Don't link this lib to the plugins. They are dlopened and linking to them
 # results in crashes when closing tdecmshell.
-# plugins/ikws/libkuriikwsfilter.la plugins/shorturi/libkshorturifilter.la
+# plugins/ikws/libkuriikwsfilter.la plugins/shorturi/libtdeshorturifilter.la
 
 messages: rc.cpp
 	$(EXTRACTRC) plugins/*/*.ui >> rc.cpp

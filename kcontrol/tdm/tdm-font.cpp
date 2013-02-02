@@ -31,7 +31,7 @@
 
 #include <kdialog.h>
 #include <ksimpleconfig.h>
-#include <kfontrequester.h>
+#include <tdefontrequester.h>
 #include <klocale.h>
 
 #include "tdm-font.h"

@@ -12,7 +12,7 @@
 #define _KCMKHOTKEYS_H_
 
 #include <tdecmodule.h>
-#include <kshortcut.h>
+#include <tdeshortcut.h>
 
 #include <actions.h>
 #include <settings.h>

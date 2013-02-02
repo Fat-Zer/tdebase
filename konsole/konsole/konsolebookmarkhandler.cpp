@@ -18,7 +18,7 @@
 
 // Born as tdelibs/tdeio/tdefile/tdefilebookmarkhandler.cpp
 
-#include <kpopupmenu.h>
+#include <tdepopupmenu.h>
 #include <kstandarddirs.h>
 #include <kshell.h>
 #include <tdeio/job.h>

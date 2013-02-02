@@ -12,7 +12,7 @@
 #define _SETTINGS_H_
 
 #include "actions.h"
-#include <kshortcut.h>
+#include <tdeshortcut.h>
 
 class TDEConfig;
 

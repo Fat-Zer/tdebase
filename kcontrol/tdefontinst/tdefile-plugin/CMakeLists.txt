@@ -12,7 +12,7 @@
 include_directories(
   ${CMAKE_CURRENT_BINARY_DIR}
   ${CMAKE_BINARY_DIR}
-  ${CMAKE_SOURCE_DIR}/kcontrol/kfontinst/lib
+  ${CMAKE_SOURCE_DIR}/kcontrol/tdefontinst/lib
   ${TDE_INCLUDE_DIR}
   ${TQT_INCLUDE_DIRS}
 )
@@ -31,6 +31,6 @@ install( FILES tdefile_font.desktop DESTINATION ${SERVICES_INSTALL_DIR} )
 
 tde_add_kpart( tdefile_font
   SOURCES KFileFont.cpp
-  LINK kfontinst-shared tdeio-shared
+  LINK tdefontinst-shared tdeio-shared
   DESTINATION ${PLUGIN_INSTALL_DIR}
 )

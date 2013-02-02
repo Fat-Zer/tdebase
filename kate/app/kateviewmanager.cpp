@@ -28,7 +28,7 @@
 #include "katetabwidget.h"
 
 #include <dcopclient.h>
-#include <kaction.h>
+#include <tdeaction.h>
 #include <kcmdlineargs.h>
 #include <kdebug.h>
 #include <kdiroperator.h>
@@ -37,13 +37,13 @@
 #include <kiconloader.h>
 #include <kglobal.h>
 #include <klocale.h>
-#include <ktoolbar.h>
+#include <tdetoolbar.h>
 #include <kmessagebox.h>
 #include <ksimpleconfig.h>
 #include <kstdaction.h>
 #include <kstandarddirs.h>
 #include <kglobalsettings.h>
-#include <kstdaccel.h>
+#include <tdestdaccel.h>
 
 #include <tdetexteditor/encodinginterface.h>
 

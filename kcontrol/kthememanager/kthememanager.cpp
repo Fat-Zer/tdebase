@@ -31,7 +31,7 @@
 #include <tdefiledialog.h>
 #include <kglobal.h>
 #include <kiconloader.h>
-#include <klistview.h>
+#include <tdelistview.h>
 #include <klocale.h>
 #include <kmessagebox.h>
 #include <kservicegroup.h>

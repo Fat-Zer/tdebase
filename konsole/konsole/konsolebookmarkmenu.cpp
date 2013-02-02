@@ -16,9 +16,9 @@
     Boston, MA 02110-1301, USA.
 */
 
-#include <kpopupmenu.h>
+#include <tdepopupmenu.h>
 #include <kstandarddirs.h>
-#include <kaction.h>
+#include <tdeaction.h>
 
 #include "konsole.h"
 #include "konsolebookmarkmenu.h"

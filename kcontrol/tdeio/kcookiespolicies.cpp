@@ -35,8 +35,8 @@
 #include <kiconloader.h>
 #include <kidna.h>
 #include <kmessagebox.h>
-#include <klistview.h>
-#include <klistviewsearchline.h>
+#include <tdelistview.h>
+#include <tdelistviewsearchline.h>
 #include <klocale.h>
 #include <tdeconfig.h>
 #include <dcopref.h>

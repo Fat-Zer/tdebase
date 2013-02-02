@@ -21,7 +21,7 @@
 #ifndef TDEPRINTFAX_H
 #define TDEPRINTFAX_H
 
-#include <kmainwindow.h>
+#include <tdemainwindow.h>
 #include <kurl.h>
 
 class TDEListBox;

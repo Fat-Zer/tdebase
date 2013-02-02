@@ -12,7 +12,7 @@
 include_directories(
   ${CMAKE_CURRENT_BINARY_DIR}
   ${CMAKE_BINARY_DIR}
-  ${CMAKE_SOURCE_DIR}/kcontrol/kfontinst/lib
+  ${CMAKE_SOURCE_DIR}/kcontrol/tdefontinst/lib
   ${TDE_INCLUDE_DIR}
   ${TQT_INCLUDE_DIRS}
 )
@@ -24,32 +24,32 @@ link_directories(
 
 ##### other data ################################
 
-install( FILES kfontviewpart.desktop DESTINATION ${SERVICES_INSTALL_DIR} )
-install( FILES kfontview.desktop DESTINATION ${XDG_APPS_INSTALL_DIR} )
-install( FILES kfontviewpart.rc kfontviewui.rc DESTINATION ${DATA_INSTALL_DIR}/kfontview )
+install( FILES tdefontviewpart.desktop DESTINATION ${SERVICES_INSTALL_DIR} )
+install( FILES tdefontview.desktop DESTINATION ${XDG_APPS_INSTALL_DIR} )
+install( FILES tdefontviewpart.rc tdefontviewui.rc DESTINATION ${DATA_INSTALL_DIR}/tdefontview )
 
 
-##### libkfontviewpart (module) #################
+##### libtdefontviewpart (module) #################
 
-tde_add_kpart( libkfontviewpart AUTOMOC
+tde_add_kpart( libtdefontviewpart AUTOMOC
   SOURCES FontViewPart.cpp FontViewPartFactory.cpp FontPreview.cpp
-  LINK kfontinstprint-static kfontinst-shared tdeparts-shared
+  LINK tdefontinstprint-static tdefontinst-shared tdeparts-shared
   DESTINATION ${PLUGIN_INSTALL_DIR}
 )
 
 
-##### kfontview (executable) ####################
+##### tdefontview (executable) ####################
 
-tde_add_executable( kfontview AUTOMOC
+tde_add_executable( tdefontview AUTOMOC
   SOURCES FontViewerApp.cpp
   LINK tdeparts-shared
   DESTINATION ${BIN_INSTALL_DIR}
 )
 
 
-##### kfontinstprint (static) ###################
+##### tdefontinstprint (static) ###################
 
-tde_add_library( kfontinstprint STATIC_PIC
+tde_add_library( tdefontinstprint STATIC_PIC
   SOURCES KfiPrint.cpp
   LINK tdeprint-shared
 )

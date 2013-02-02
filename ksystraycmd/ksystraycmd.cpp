@@ -8,7 +8,7 @@
 #include <kglobal.h>
 #include <kiconloader.h>
 #include <klocale.h>
-#include <kpopupmenu.h>
+#include <tdepopupmenu.h>
 #include <kprocess.h>
 #include <twinmodule.h>
 #include <tdeconfig.h>

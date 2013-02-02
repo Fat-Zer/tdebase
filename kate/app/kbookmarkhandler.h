@@ -35,7 +35,7 @@ class KBookmarkHandler : public TQObject, public KBookmarkOwner
     Q_OBJECT
 
 public:
-    KBookmarkHandler( KateFileSelector *parent, TDEPopupMenu *kpopupmenu=0 );
+    KBookmarkHandler( KateFileSelector *parent, TDEPopupMenu *tdepopupmenu=0 );
     ~KBookmarkHandler();
 
     // KBookmarkOwner interface:

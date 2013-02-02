@@ -35,7 +35,7 @@
 #include <unistd.h>
 
 #include <kaboutdata.h>
-#include <kaction.h>
+#include <tdeaction.h>
 #include <kapplication.h>
 #include <kcmdlineargs.h>
 #include <kdebug.h>

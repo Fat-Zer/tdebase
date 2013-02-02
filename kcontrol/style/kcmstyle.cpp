@@ -49,7 +49,7 @@
 #include <kaboutdata.h>
 #include <kdialog.h>
 #include <klibloader.h>
-#include <klistview.h>
+#include <tdelistview.h>
 #include <kmessagebox.h>
 #include <ksimpleconfig.h>
 #include <kstyle.h>

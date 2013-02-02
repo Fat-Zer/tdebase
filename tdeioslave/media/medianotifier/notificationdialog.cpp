@@ -24,7 +24,7 @@
 #include <klocale.h>
 #include <kstandarddirs.h>
 #include <tdeio/global.h>
-#include <klistbox.h>
+#include <tdelistbox.h>
 #include <tqlabel.h>
 #include <tqcheckbox.h>
 #include <tqpushbutton.h>

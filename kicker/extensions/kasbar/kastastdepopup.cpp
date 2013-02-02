@@ -1,4 +1,4 @@
-/* kastaskpopup.cpp
+/* kastastdepopup.cpp
 **
 ** Copyright (C) 2001-2004 Richard Moore <rich@kde.org>
 ** Contributor: Mosfet
@@ -63,8 +63,8 @@
 #include "kastaskitem.h"
 #include "kastasker.h"
 
-#include "kastaskpopup.h"
-#include "kastaskpopup.moc"
+#include "kastastdepopup.h"
+#include "kastastdepopup.moc"
 
 static const int TITLE_HEIGHT = 13;
 

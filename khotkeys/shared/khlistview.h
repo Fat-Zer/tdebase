@@ -13,7 +13,7 @@
 
 #include <tqtimer.h>
 
-#include <klistview.h>
+#include <tdelistview.h>
 #include <kdemacros.h>
 
 namespace KHotKeys

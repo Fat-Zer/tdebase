@@ -20,11 +20,11 @@
 #include "history.h"
 #include "view.h"
 
-#include <kaction.h>
+#include <tdeaction.h>
 #include <kapplication.h>
 #include <kdebug.h>
-#include <kmainwindow.h>
-#include <kpopupmenu.h>
+#include <tdemainwindow.h>
+#include <tdepopupmenu.h>
 #include <kstdguiitem.h>
 #include <kstringhandler.h>
 

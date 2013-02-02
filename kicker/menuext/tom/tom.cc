@@ -44,7 +44,7 @@ using namespace std;
 #include <kmessagebox.h>
 #include <kmimetype.h>
 #include <kpixmap.h>
-#include <krecentdocument.h>
+#include <tderecentdocument.h>
 #include <kservice.h>
 #include <kservicegroup.h>
 #include <kstandarddirs.h>

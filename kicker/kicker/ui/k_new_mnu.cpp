@@ -46,7 +46,7 @@
 #include <dcopclient.h>
 #include <kapplication.h>
 #include <kaboutkde.h>
-#include <kaction.h>
+#include <tdeaction.h>
 #include <kbookmarkmenu.h>
 #include <tdeconfig.h>
 #include <kdebug.h>
@@ -64,7 +64,7 @@
 #include <kurllabel.h>
 #include <krun.h>
 #include <kmimetype.h>
-#include <krecentdocument.h>
+#include <tderecentdocument.h>
 #include <kcompletionbox.h>
 #include <kurifilter.h>
 #include <kbookmarkmanager.h>

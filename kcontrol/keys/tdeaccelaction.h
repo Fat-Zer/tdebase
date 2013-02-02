@@ -1,4 +1,4 @@
-// THIS FILE IS A COPY OF tdelibs/tdecore/kaccelaction.h AND MUST BE KEPT
+// THIS FILE IS A COPY OF tdelibs/tdecore/tdeaccelaction.h AND MUST BE KEPT
 //  IN SYNC WITH THAT FILE.
 
 /* This file is part of the KDE libraries
@@ -28,7 +28,7 @@
 #include <tqstring.h>
 #include <tqvaluevector.h>
 
-#include <kshortcut.h>
+#include <tdeshortcut.h>
 
 class TDEAccelBase;
 

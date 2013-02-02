@@ -32,7 +32,7 @@
 #include <tqwidget.h>
 
 #include <kiconloader.h>
-#include <klistview.h>
+#include <tdelistview.h>
 
 #include "SensorClient.h"
 

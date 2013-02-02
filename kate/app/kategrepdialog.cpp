@@ -32,7 +32,7 @@
 #include <tqcursor.h>
 
 #include <kapplication.h>
-#include <kaccelmanager.h>
+#include <tdeaccelmanager.h>
 #include <kbuttonbox.h>
 #include <tdefiledialog.h>
 #include <kprocess.h>

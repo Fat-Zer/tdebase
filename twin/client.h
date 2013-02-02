@@ -18,7 +18,7 @@ License. See the file "COPYING" for the exact licensing terms.
 #include <netwm.h>
 #include <kdebug.h>
 #include <assert.h>
-#include <kshortcut.h>
+#include <tdeshortcut.h>
 #include <X11/X.h>
 #include <X11/Xlib.h>
 #include <X11/Xutil.h>

@@ -38,7 +38,7 @@
 #include <kipc.h>
 #include <kiconloader.h>
 #include <kurldrag.h>
-#include <kpopupmenu.h>
+#include <tdepopupmenu.h>
 
 #include <konq_operations.h>
 #include <konq_popupmenu.h>

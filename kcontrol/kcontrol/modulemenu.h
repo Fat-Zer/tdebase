@@ -31,7 +31,7 @@ that is intentional :-]
 #include <tqwidget.h>
 #include <tqdict.h>
 
-#include <kpopupmenu.h>
+#include <tdepopupmenu.h>
 
 
 class ConfigModule;

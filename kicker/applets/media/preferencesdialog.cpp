@@ -23,7 +23,7 @@
 #include <kmimetype.h>
 #include <tqvbox.h>
 #include <tqwhatsthis.h>
-#include <klistview.h>
+#include <tdelistview.h>
 #include <tdefiledetailview.h>
 
 class MediumTypeItem : public TQCheckListItem

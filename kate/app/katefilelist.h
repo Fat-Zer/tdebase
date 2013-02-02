@@ -25,7 +25,7 @@
 
 #include <kate/document.h>
 
-#include <klistview.h>
+#include <tdelistview.h>
 
 #include <tqtooltip.h>
 #include <tqcolor.h>

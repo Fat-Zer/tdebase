@@ -27,7 +27,7 @@
 
 #include <tqwidget.h>
 #include <tqintdict.h>
-#include <kmainwindow.h>
+#include <tdemainwindow.h>
 #include <twin.h>
 #include "kpagerIface.h"
 

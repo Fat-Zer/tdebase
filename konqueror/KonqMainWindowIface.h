@@ -24,7 +24,7 @@
 #include <dcopobject.h>
 #include <tqvaluelist.h>
 #include <dcopref.h>
-#include <kmainwindowiface.h>
+#include <tdemainwindowiface.h>
 
 class KonqMainWindow;
 class KDCOPActionProxy;

@@ -23,7 +23,7 @@
 #include <tqintdict.h>
 #include <tqstringlist.h>
 
-#include <kaction.h>
+#include <tdeaction.h>
 #include <kdialogbase.h>
 #include <kurl.h>
 #include <libkonq_export.h>

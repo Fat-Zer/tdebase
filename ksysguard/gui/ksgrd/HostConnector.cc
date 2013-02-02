@@ -19,7 +19,7 @@
 */
 
 #include <kapplication.h>
-#include <kaccelmanager.h>
+#include <tdeaccelmanager.h>
 #include <kcombobox.h>
 #include <klocale.h>
 

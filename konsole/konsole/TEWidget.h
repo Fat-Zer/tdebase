@@ -29,7 +29,7 @@
 #include <tqscrollbar.h>
 #include <tqdragobject.h>
 
-#include <kpopupmenu.h>
+#include <tdepopupmenu.h>
 
 #include "TECommon.h"
 

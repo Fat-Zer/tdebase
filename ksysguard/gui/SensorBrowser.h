@@ -26,7 +26,7 @@
 
 #include <tqdict.h>
 
-#include <klistview.h>
+#include <tdelistview.h>
 #include <ksgrd/SensorClient.h>
 
 class TQMouseEvent;

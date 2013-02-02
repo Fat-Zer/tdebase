@@ -497,7 +497,7 @@
 <includes>
     <include location="local" impldecl="in implementation">tqheader.h</include>
     <include location="local" impldecl="in implementation">kdialog.h</include>
-    <include location="local" impldecl="in implementation">kfontrequester.h</include>
+    <include location="local" impldecl="in implementation">tdefontrequester.h</include>
 </includes>
 <Q_SLOTS>
     <slot>configureType()</slot>
@@ -507,10 +507,10 @@
 <includehints>
     <includehint>kcolorbutton.h</includehint>
     <includehint>kcolorbutton.h</includehint>
-    <includehint>kfontrequester.h</includehint>
+    <includehint>tdefontrequester.h</includehint>
     <includehint>kcolorbutton.h</includehint>
     <includehint>kcolorbutton.h</includehint>
-    <includehint>kfontrequester.h</includehint>
-    <includehint>klistview.h</includehint>
+    <includehint>tdefontrequester.h</includehint>
+    <includehint>tdelistview.h</includehint>
 </includehints>
 </UI>

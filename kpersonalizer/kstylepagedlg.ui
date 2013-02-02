@@ -120,7 +120,7 @@
     </image>
 </images>
 <includes>
-    <include location="global" impldecl="in declaration">klistview.h</include>
+    <include location="global" impldecl="in declaration">tdelistview.h</include>
     <include location="local" impldecl="in implementation">kdialog.h</include>
 </includes>
 <layoutfunctions spacing="KDialog::spacingHint" margin="KDialog::marginHint"/>

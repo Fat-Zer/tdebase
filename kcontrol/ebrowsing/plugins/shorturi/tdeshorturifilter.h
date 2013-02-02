@@ -1,5 +1,5 @@
 /*
-    kshorturifilter.h
+    tdeshorturifilter.h
 
     This file is part of the KDE project
     Copyright (C) 2000 Dawit Alemayehu <adawit@kde.org>

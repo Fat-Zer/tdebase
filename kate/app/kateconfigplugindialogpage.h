@@ -23,7 +23,7 @@
 #include "katemain.h"
 #include "katepluginmanager.h"
 
-#include <klistview.h>
+#include <tdelistview.h>
 
 #include <tqvbox.h>
 

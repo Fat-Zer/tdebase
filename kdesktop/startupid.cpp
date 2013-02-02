@@ -20,7 +20,7 @@
 #include <config.h>
 
 #include "startupid.h"
-#include "klaunchsettings.h"
+#include "tdelaunchsettings.h"
 
 #include <kiconloader.h>
 #include <tqcursor.h>

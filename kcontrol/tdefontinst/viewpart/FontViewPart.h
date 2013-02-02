@@ -5,7 +5,7 @@
 //
 // Class Name    : KFI::CFontViewPart
 // Author        : Craig Drummond
-// Project       : K Font Installer (kfontinst-kcontrol)
+// Project       : K Font Installer (tdefontinst-kcontrol)
 // Creation Date : 03/08/2002
 // Version       : $Revision$ $Date$
 //

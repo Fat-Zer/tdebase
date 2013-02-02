@@ -20,8 +20,8 @@
 #include <tqcursor.h>
 #include <tqpopupmenu.h>
 
-#include <kaction.h>
-#include <kactioncollection.h>
+#include <tdeaction.h>
+#include <tdeactioncollection.h>
 #include <kapplication.h>
 #include <kbookmarkdrag.h>
 #include <kiconloader.h>

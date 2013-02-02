@@ -13,7 +13,7 @@
 
 #include <tqstring.h>
 #include <kdialogbase.h>
-#include <kaccel.h>
+#include <tdeaccel.h>
 #include <kservice.h>
 
 // see also tdebase/kmenuedit/khotkeys.h

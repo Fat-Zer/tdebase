@@ -21,8 +21,8 @@
 #include <tqlistbox.h>
 #include <tqvbox.h>
 
-#include "klistboxdialog.h"
-#include "klistboxdialog.moc"
+#include "tdelistboxdialog.h"
+#include "tdelistboxdialog.moc"
 
 #include "klocale.h"
 

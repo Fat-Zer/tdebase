@@ -27,9 +27,9 @@
 #include <kdebug.h>
 #include <klocale.h>
 #include <kapplication.h>
-#include <kshortcut.h>
+#include <tdeshortcut.h>
 #include <tdeconfig.h>
-#include <kshortcutlist.h>
+#include <tdeshortcutlist.h>
 #include <kkeybutton.h>
 #include <kkeydialog.h>
 

@@ -63,7 +63,7 @@ Copyright (C) 2000 Matthias Ettrich <ettrich@kde.org>
 #include <stdlib.h>
 #include <math.h>
 #include <dmctl.h>
-#include <kaction.h>
+#include <tdeaction.h>
 #include <netwm.h>
 
 #include <X11/Xlib.h>

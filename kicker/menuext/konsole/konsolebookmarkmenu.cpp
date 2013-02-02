@@ -5,7 +5,7 @@
 
 #include <kbookmarkimporter.h>
 #include <kmimetype.h>
-#include <kpopupmenu.h>
+#include <tdepopupmenu.h>
 #include <ksavefile.h>
 #include <kstandarddirs.h>
 //#include <kbookmarkmenu.h>
@@ -16,7 +16,7 @@
 
 #include <tqfile.h>
 
-#include <kaction.h>
+#include <tdeaction.h>
 #include <klocale.h>
 
 

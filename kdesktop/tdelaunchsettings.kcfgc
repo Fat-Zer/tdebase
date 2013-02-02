@@ -1,4 +1,4 @@
-File=klaunch.kcfg
+File=tdelaunch.kcfg
 ClassName=TDELaunchSettings
 Singleton=true
 Mutators=true

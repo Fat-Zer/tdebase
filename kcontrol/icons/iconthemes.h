@@ -22,7 +22,7 @@
 #include <tqimage.h>
 #include <tdecmodule.h>
 #include <tqmap.h>
-#include <klistview.h>
+#include <tdelistview.h>
 
 class TQPushButton;
 class DeviceManager;

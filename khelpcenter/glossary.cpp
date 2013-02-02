@@ -25,7 +25,7 @@
 #include <kdebug.h>
 #include <kiconloader.h>
 #include <klocale.h>
-#include <kmainwindow.h>
+#include <tdemainwindow.h>
 #include <kprocess.h>
 #include <kstandarddirs.h>
 #include <kstatusbar.h>

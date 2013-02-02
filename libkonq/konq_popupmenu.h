@@ -25,7 +25,7 @@
 
 #include <tqpopupmenu.h>
 #include <tqmap.h>
-#include <kaction.h>
+#include <tdeaction.h>
 
 #include <tqstringlist.h>
 

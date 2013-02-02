@@ -22,7 +22,7 @@
 #include <tqlayout.h>
 #include <tqspinbox.h>
 
-#include <kaccelmanager.h>
+#include <tdeaccelmanager.h>
 #include <klocale.h>
 
 #include "KSGAppletSettings.h"

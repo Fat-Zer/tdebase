@@ -19,7 +19,7 @@
 #include <dom/dom_string.h>
 #include <kdebug.h>
 #include "tdehtmlkttsd.h"
-#include <kaction.h>
+#include <tdeaction.h>
 #include <kgenericfactory.h>
 #include <kiconloader.h>
 #include <tqmessagebox.h>

@@ -27,7 +27,7 @@
 #include <tqfile.h>
 #include <tqlistbox.h>
 
-#include <kfontdialog.h>
+#include <tdefontdialog.h>
 #include <kdebug.h>
 #include <klocale.h>
 #include <kcolorbutton.h>

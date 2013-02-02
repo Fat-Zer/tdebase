@@ -18,7 +18,7 @@
 
 #include "ruleslist.h"
 
-#include <klistbox.h>
+#include <tdelistbox.h>
 #include <kpushbutton.h>
 #include <assert.h>
 #include <kdebug.h>

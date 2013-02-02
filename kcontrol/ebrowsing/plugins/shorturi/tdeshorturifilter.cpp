@@ -1,6 +1,6 @@
 /*  -*- c-basic-offset: 2 -*-
 
-    kshorturifilter.h
+    tdeshorturifilter.h
 
     This file is part of the KDE project
     Copyright (C) 2000 Dawit Alemayehu <adawit@kde.org>
@@ -36,7 +36,7 @@
 #include <tdeconfig.h>
 #include <kmimetype.h>
 
-#include "kshorturifilter.h"
+#include "tdeshorturifilter.h"
 
 #define FQDN_PATTERN    "(?:[a-zA-Z0-9][a-zA-Z0-9+-]*\\.[a-zA-Z]+)"
 #define IPv4_PATTERN    "[0-9]{1,3}\\.[0-9]{1,3}(?:\\.[0-9]{0,3})?(?:\\.[0-9]{0,3})?"
@@ -136,7 +136,7 @@ static TQString removeArgs( const TQString& _cmd )
 
 TDEShortURIFilter::TDEShortURIFilter( TQObject *parent, const char *name,
                                   const TQStringList & /*args*/ )
-                :KURIFilterPlugin( parent, name ? name : "kshorturifilter", 1.0),
+                :KURIFilterPlugin( parent, name ? name : "tdeshorturifilter", 1.0),
                  DCOPObject("TDEShortURIFilterIface")
 {
     configure();
@@ -570,7 +570,7 @@ void TDEShortURIFilter::configure()
   }
 }
 
-K_EXPORT_COMPONENT_FACTORY( libkshorturifilter,
+K_EXPORT_COMPONENT_FACTORY( libtdeshorturifilter,
                             KGenericFactory<TDEShortURIFilter>( "kcmkurifilt" ) )
 
-#include "kshorturifilter.moc"
+#include "tdeshorturifilter.moc"

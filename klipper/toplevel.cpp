@@ -32,7 +32,7 @@
 #include <tqdragobject.h>
 
 #include <kaboutdata.h>
-#include <kaction.h>
+#include <tdeaction.h>
 #include <kapplication.h>
 #include <tdeconfig.h>
 #include <kglobal.h>

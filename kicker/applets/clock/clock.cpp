@@ -45,10 +45,10 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <kapplication.h>
 #include <kprocess.h>
 #include <klocale.h>
-#include <kpopupmenu.h>
+#include <tdepopupmenu.h>
 #include <kstringhandler.h>
 #include <tdefiledialog.h>
-#include <kfontrequester.h>
+#include <tdefontrequester.h>
 #include <kglobalsettings.h>
 #include <tdeconfigdialogmanager.h>
 #include <kcalendarsystem.h>

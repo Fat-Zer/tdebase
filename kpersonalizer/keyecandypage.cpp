@@ -31,7 +31,7 @@
 #include <dcopclient.h>
 #include <kipc.h>
 #include <kapplication.h>
-#include <klistview.h>
+#include <tdelistview.h>
 #include <krun.h>
 #include <kmessagebox.h>
 #include <kiconloader.h>

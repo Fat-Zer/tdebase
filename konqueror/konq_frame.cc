@@ -43,7 +43,7 @@
 #include "konq_viewmgr.h"
 
 #include <konq_pixmapprovider.h>
-#include <kstdaccel.h>
+#include <tdestdaccel.h>
 #include <assert.h>
 
 

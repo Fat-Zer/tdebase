@@ -22,7 +22,7 @@
 #define _PRIVACY_H_
 
 #include <tdecmodule.h>
-#include <klistview.h>
+#include <tdelistview.h>
 
 #include "kcmprivacydialog.h"
 #include "kprivacymanager.h"

@@ -2,7 +2,7 @@
 //
 // Class Names   : KFI::CFontViewerApp, KFI::CFontViewerAppMainWindow
 // Author        : Craig Drummond
-// Project       : K Font Installer (kfontinst-kcontrol)
+// Project       : K Font Installer (tdefontinst-kcontrol)
 // Creation Date : 30/04/2004
 // Version       : $Revision$ $Date$
 //
@@ -45,7 +45,7 @@ namespace KFI
 CFontViewerAppMainWindow::CFontViewerAppMainWindow()
                         : KParts::MainWindow((TQWidget *)0L)
 {
-    KLibFactory *factory=KLibLoader::self()->factory("libkfontviewpart");
+    KLibFactory *factory=KLibLoader::self()->factory("libtdefontviewpart");
 
     if(factory)
     {
@@ -112,7 +112,7 @@ static KCmdLineOptions options[] =
     KCmdLineLastOption
 };
 
-static TDEAboutData aboutData("kfontview", I18N_NOOP("Font Viewer"), 0, I18N_NOOP("Simple font viewer"),
+static TDEAboutData aboutData("tdefontview", I18N_NOOP("Font Viewer"), 0, I18N_NOOP("Simple font viewer"),
                             TDEAboutData::License_GPL,
                             I18N_NOOP("(c) Craig Drummond, 2004"));
 

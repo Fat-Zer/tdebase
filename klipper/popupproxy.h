@@ -25,7 +25,7 @@
 #include <tqstring.h>
 #include <tqregexp.h>
 
-#include <kpopupmenu.h>
+#include <tdepopupmenu.h>
 #include <history.h>
 
 class HistoryItem;

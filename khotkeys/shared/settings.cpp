@@ -19,7 +19,7 @@
 #include <tdeconfig.h>
 #include <kdebug.h>
 #include <klocale.h>
-#include <kaccel.h>
+#include <tdeaccel.h>
 #include <kglobal.h>
 #include <kmessagebox.h>
 

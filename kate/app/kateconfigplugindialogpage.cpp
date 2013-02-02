@@ -22,7 +22,7 @@
 
 #include "katepluginmanager.h"
 #include "kateconfigdialog.h"
-#include <klistbox.h>
+#include <tdelistbox.h>
 #include "kateapp.h"
 #include <tqstringlist.h>
 #include <tqhbox.h>

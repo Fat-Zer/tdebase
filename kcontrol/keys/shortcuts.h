@@ -29,7 +29,7 @@
 #include <tqpushbutton.h>
 #include <tqradiobutton.h>
 #include <tqtabwidget.h>
-#include "kaccelaction.h"
+#include "tdeaccelaction.h"
 #include <kcombobox.h>
 #include <kkeydialog.h>
 

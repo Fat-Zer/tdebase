@@ -23,7 +23,7 @@ link_directories(
 ##### other data ################################
 
 install( FILES keys.desktop DESTINATION ${XDG_APPS_INSTALL_DIR} )
-install( FILES kaccel.upd DESTINATION ${KCONF_UPDATE_INSTALL_DIR} )
+install( FILES tdeaccel.upd DESTINATION ${KCONF_UPDATE_INSTALL_DIR} )
 install( PROGRAMS convertShortcuts.pl DESTINATION ${KCONF_UPDATE_INSTALL_DIR} )
 
 install( FILES

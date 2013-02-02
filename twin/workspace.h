@@ -14,7 +14,7 @@ License. See the file "COPYING" for the exact licensing terms.
 
 #include <tqtimer.h>
 #include <tqvaluevector.h>
-#include <kshortcut.h>
+#include <tdeshortcut.h>
 #include <tqcursor.h>
 #include <netwm.h>
 #include <kxmessages.h>

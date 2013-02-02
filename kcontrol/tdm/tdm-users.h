@@ -30,7 +30,7 @@
 #include <tqwidgetstack.h>
 
 #include <klineedit.h>
-#include <klistview.h>
+#include <tdelistview.h>
 #include <kcombobox.h>
 #include <kurl.h>
 

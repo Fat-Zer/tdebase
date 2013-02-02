@@ -36,7 +36,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #include <tqfile.h>
 #include <tqtooltip.h>
-#include <klistview.h>
+#include <tdelistview.h>
 
 #include <time.h>
 #include <stdlib.h> // for getenv()

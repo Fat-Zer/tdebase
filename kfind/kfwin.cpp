@@ -31,7 +31,7 @@
 #include <kmessagebox.h>
 #include <kmimetype.h>
 #include <kglobal.h>
-#include <kpopupmenu.h>
+#include <tdepopupmenu.h>
 #include <tdeio/netaccess.h>
 #include <kurldrag.h>
 #include <tqptrlist.h>

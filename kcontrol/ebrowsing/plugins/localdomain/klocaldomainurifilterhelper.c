@@ -1,5 +1,5 @@
 /*
-    kshorturifilterhelper.cpp
+    tdeshorturifilterhelper.cpp
 
     This file is part of the KDE project
     Copyright (C) 2002 Lubos Lunak <llunak@suse.cz>

@@ -40,7 +40,7 @@
 #include <kdebug.h>
 #include <kapplication.h>
 
-#include <kaction.h>
+#include <tdeaction.h>
 #include <kstdaction.h>
 #include <kedittoolbar.h>
 #include <tdefiledialog.h>
@@ -48,7 +48,7 @@
 #include <kmessagebox.h>
 #include <klineedit.h>
 #include <krun.h>
-#include <klistviewsearchline.h>
+#include <tdelistviewsearchline.h>
 
 #include <kbookmarkdrag.h>
 #include <kbookmarkmanager.h>

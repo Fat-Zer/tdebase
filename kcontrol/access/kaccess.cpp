@@ -18,7 +18,7 @@
 #include <kglobal.h>
 #include <klocale.h>
 #include <netwm.h>
-#include <kshortcut.h>
+#include <tdeshortcut.h>
 #include <kkeynative.h>
 #include <twin.h>
 

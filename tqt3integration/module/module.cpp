@@ -27,7 +27,7 @@
 #include <tdefiledialog.h>
 #include <kglobalsettings.h>
 #include <klocale.h>
-#include <krecentdocument.h>
+#include <tderecentdocument.h>
 #include <twin.h>
 #include <tqtimer.h>
 #include <stdlib.h>

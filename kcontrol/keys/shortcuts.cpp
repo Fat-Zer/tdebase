@@ -38,7 +38,7 @@
 #include <kinputdialog.h>
 #include <klocale.h>
 #include <kmessagebox.h>
-#include <kshortcutlist.h>
+#include <tdeshortcutlist.h>
 #include <ksimpleconfig.h>
 #include <kstandarddirs.h>
 

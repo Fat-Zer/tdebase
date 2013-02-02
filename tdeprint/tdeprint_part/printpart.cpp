@@ -21,7 +21,7 @@
 
 #include <tdeprint/kmmainview.h>
 #include <tdeprint/kiconselectaction.h>
-#include <kaction.h>
+#include <tdeaction.h>
 #include <klocale.h>
 #include <kinstance.h>
 #include <kiconloader.h>

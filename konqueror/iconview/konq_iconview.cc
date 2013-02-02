@@ -27,7 +27,7 @@
 #include <unistd.h>
 #include <tqfile.h>
 
-#include <kaction.h>
+#include <tdeaction.h>
 #include <kapplication.h>
 #include <kdebug.h>
 #include <kdirlister.h>

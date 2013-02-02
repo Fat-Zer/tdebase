@@ -34,7 +34,7 @@
 
 #include <kprocess.h>
 #include <kstandarddirs.h>
-#include <kpopupmenu.h>
+#include <tdepopupmenu.h>
 #include <kapplication.h>
 #include <tdeconfig.h>
 #include <kcmultidialog.h>

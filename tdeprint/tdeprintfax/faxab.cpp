@@ -23,7 +23,7 @@
 #include <tqlabel.h>
 #include <tqlayout.h>
 #include <kpushbutton.h>
-#include <klistview.h>
+#include <tdelistview.h>
 #include <tqheader.h>
 #include <klocale.h>
 #include <kabc/stdaddressbook.h>

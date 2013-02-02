@@ -28,7 +28,7 @@
 #include <tqvbox.h>
 #include <tdefile.h>
 #include <kurl.h>
-#include <ktoolbar.h>
+#include <tdetoolbar.h>
 #include <tqframe.h>
 
 class KateMainWindow;

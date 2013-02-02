@@ -155,7 +155,7 @@ LaunchConfig::load()
 void
 LaunchConfig::load(bool useDefaults)
 {
-  TDEConfig c("klaunchrc", false, false);
+  TDEConfig c("tdelaunchrc", false, false);
 
   c.setReadDefaults( useDefaults );
 
@@ -194,7 +194,7 @@ LaunchConfig::load(bool useDefaults)
   void
 LaunchConfig::save()
 {
-  TDEConfig c("klaunchrc", false, false);
+  TDEConfig c("tdelaunchrc", false, false);
 
   c.setGroup("FeedbackStyle");
   c.writeEntry("BusyCursor",    cb_busyCursor->currentItem() != 0);
@@ -228,7 +228,7 @@ LaunchConfig::defaults()
   void
 LaunchConfig::checkChanged()
 {
-  TDEConfig c("klaunchrc", false, false);
+  TDEConfig c("tdelaunchrc", false, false);
 
   c.setGroup("FeedbackStyle");
 

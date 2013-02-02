@@ -2,7 +2,7 @@
    Copyright (C) 2005 Christoph Cullmann <cullmann@kde.org>
    Copyright (C) 2002, 2003 Joseph Wenninger <jowenn@kde.org>
 
-   GUIClient partly based on ktoolbarhandler.cpp: Copyright (C) 2002 Simon Hausmann <hausmann@kde.org>
+   GUIClient partly based on tdetoolbarhandler.cpp: Copyright (C) 2002 Simon Hausmann <hausmann@kde.org>
 
    This library is free software; you can redistribute it and/or
    modify it under the terms of the GNU Library General Public
@@ -23,7 +23,7 @@
 #include "katemdi.h"
 #include "katemdi.moc"
 
-#include <kaction.h>
+#include <tdeaction.h>
 #include <kdebug.h>
 #include <kglobal.h>
 #include <kglobalsettings.h>
@@ -31,7 +31,7 @@
 #include <klocale.h>
 #include <tdeconfig.h>
 #include <kiconloader.h>
-#include <kpopupmenu.h>
+#include <tdepopupmenu.h>
 #include <kmessagebox.h>
 
 #include <tqvbox.h>
@@ -134,7 +134,7 @@ GUIClient::GUIClient ( MainWindow *mw )
     setXML( completeDescription, false /*merge*/ );
   }
 
-  if (actionCollection()->kaccel()==0)
+  if (actionCollection()->tdeaccel()==0)
     actionCollection()->setWidget(m_mw);
 
   m_toolMenu = new TDEActionMenu(i18n("Tool &Views"),actionCollection(),"kate_mdi_toolview_menu");

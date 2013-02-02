@@ -12,7 +12,7 @@
 #include <tdeconfig.h>
 #include <kdebug.h>
 #include <kdialog.h>
-#include <kfontcombo.h>
+#include <tdefontcombo.h>
 #include <kglobal.h>
 #include <tdehtmldefaults.h>
 #include <klocale.h>

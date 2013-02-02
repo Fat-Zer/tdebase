@@ -42,7 +42,7 @@
 #include <kdebug.h>
 #include <kapplication.h>
 
-#include <kaction.h>
+#include <tdeaction.h>
 #include <kstdaction.h>
 #include <kedittoolbar.h>
 #include <tdefiledialog.h>

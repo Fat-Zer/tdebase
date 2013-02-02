@@ -29,7 +29,7 @@
 #include <tdefileitem.h>
 #include <kglobalsettings.h>
 #include <kipc.h>
-#include <klistview.h>
+#include <tdelistview.h>
 #include <tdeio/job.h>
 #include <klocale.h>
 #include <kmessagebox.h>

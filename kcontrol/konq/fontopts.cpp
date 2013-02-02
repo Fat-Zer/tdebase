@@ -30,8 +30,8 @@
 #include <kcolorbutton.h>
 #include <tdeconfig.h>
 #include <kdebug.h>
-#include <kfontcombo.h>
-#include <kfontdialog.h>
+#include <tdefontcombo.h>
+#include <tdefontdialog.h>
 #include <klocale.h>
 #include <konq_defaults.h> // include default values directly from konqueror
 

@@ -47,10 +47,10 @@
 #include "Misc.h"
 #include "KFileFontIconView.h"
 #include "KFileFontView.h"
-#include <kpopupmenu.h>
-#include <ktoolbar.h>
-#include <ktoolbarbutton.h>
-#include <kstdaccel.h>
+#include <tdepopupmenu.h>
+#include <tdetoolbar.h>
+#include <tdetoolbarbutton.h>
+#include <tdestdaccel.h>
 #include <tdefiledialog.h>
 #include <kmessagebox.h>
 #include <kcmdlineargs.h>
@@ -76,7 +76,7 @@ namespace KFI
 {
 
 CKCmFontInst::CKCmFontInst(TQWidget *parent, const char *, const TQStringList&)
-            : TDECModule(parent, "kfontinst"),
+            : TDECModule(parent, "tdefontinst"),
 #ifdef HAVE_XFT
               itsPreview(NULL),
 #endif
@@ -107,7 +107,7 @@ CKCmFontInst::CKCmFontInst(TQWidget *parent, const char *, const TQStringList&)
 
     TQFrame      *fontsFrame;
 #ifdef HAVE_XFT
-    KLibFactory *factory=KLibLoader::self()->factory("libkfontviewpart");
+    KLibFactory *factory=KLibLoader::self()->factory("libtdefontviewpart");
 
     if(factory)
     {

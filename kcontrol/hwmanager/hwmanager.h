@@ -26,7 +26,7 @@
 #endif
 
 #include <tdecmodule.h>
-#include <klistviewsearchline.h>
+#include <tdelistviewsearchline.h>
 
 #include <dcopobject.h>
 

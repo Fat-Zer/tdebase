@@ -1,5 +1,5 @@
 <!DOCTYPE kpartgui SYSTEM "kpartgui.dtd">
-<kpartgui name="kfontviewpart" version="1">
+<kpartgui name="tdefontviewpart" version="1">
 <ToolBar name="mainToolBar">
   <text>&amp;Main Toolbar</text>
   <Action name="print"/>

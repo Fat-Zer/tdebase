@@ -32,7 +32,7 @@
 #include <kaboutapplication.h>
 #include <kaboutdata.h>
 #include <klocale.h>
-#include <kpopupmenu.h>
+#include <tdepopupmenu.h>
 #include <kmessagebox.h>
 #include <tqpushbutton.h>
 

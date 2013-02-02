@@ -23,7 +23,7 @@
 #include <tqlistview.h>
 
 #include <konq_iconviewwidget.h>
-#include <kaction.h>
+#include <tdeaction.h>
 #include <tdefileitem.h>
 #include <kdirnotify.h>
 #include <kmessagebox.h>

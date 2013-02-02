@@ -35,10 +35,10 @@
 #include <kdebug.h>
 #include <kdialog.h>
 #include <kglobal.h>
-#include <klistview.h>
+#include <tdelistview.h>
 #include <klocale.h>
 #include <kmessagebox.h>
-#include <kpopupmenu.h>
+#include <tdepopupmenu.h>
 #include <kinputdialog.h>
 #include <kurlrequester.h>
 #include <tdecmoduleloader.h>

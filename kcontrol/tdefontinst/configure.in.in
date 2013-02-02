@@ -119,7 +119,7 @@ if test "$KFI_FOUND_FREETYPE" -eq 1; then
         fi
         AC_SUBST(LIB_FONT_ENC)
 
-        FONTINST_SUBDIR="kfontinst"
+        FONTINST_SUBDIR="tdefontinst"
         # Check for Xft...
         ac_xft_headers=0
         ac_CXXFLAGS_save="$CXXFLAGS"
@@ -140,10 +140,10 @@ if test "$KFI_FOUND_FREETYPE" -eq 1; then
         CFLAGS="$ac_CFLAGS_save"
         CPPFLAGS="$ac_CPPFLAGS_save"
     else
-        AC_MSG_WARN([Missing FontConfig - disabling kfontinst!])
+        AC_MSG_WARN([Missing FontConfig - disabling tdefontinst!])
     fi
 else
-    AC_MSG_WARN([Missing FreeType2 - disabling kfontinst!])
+    AC_MSG_WARN([Missing FreeType2 - disabling tdefontinst!])
 fi
 
 AM_CONDITIONAL(include_fontinst_tn, test "$ac_xft_headers" -eq 1)
@@ -152,4 +152,4 @@ if test "$ac_xft_headers" -eq 1 ; then
     AC_DEFINE(HAVE_XFT, 1, [Defines if you have Xft])
 fi
 
-AM_CONDITIONAL(include_kcontrol_kfontinst, test -n "$FONTINST_SUBDIR")
+AM_CONDITIONAL(include_kcontrol_tdefontinst, test -n "$FONTINST_SUBDIR")

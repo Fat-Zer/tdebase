@@ -21,14 +21,14 @@
 
 #include <assert.h>
 
-#include <ktoolbarbutton.h>
+#include <tdetoolbarbutton.h>
 #include <kanimwidget.h>
 #include <kdebug.h>
 #include <kstringhandler.h>
 
 #include <konq_pixmapprovider.h>
 #include <kiconloader.h>
-#include <kpopupmenu.h>
+#include <tdepopupmenu.h>
 #include <kapplication.h>
 
 #include "konq_view.h"

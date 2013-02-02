@@ -32,7 +32,7 @@
 #include <klocale.h>
 #include <kdialog.h>
 #include <kstandarddirs.h>
-#include <klistview.h>
+#include <tdelistview.h>
 #include <kdebug.h>
 
 #include "applettab_impl.h"

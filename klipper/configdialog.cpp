@@ -28,7 +28,7 @@
 
 #include <kiconloader.h>
 #include <klocale.h>
-#include <kpopupmenu.h>
+#include <tdepopupmenu.h>
 #include <twinmodule.h>
 #include <kregexpeditorinterface.h>
 #include <tdeparts/componentfactory.h>

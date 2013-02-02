@@ -21,7 +21,7 @@
 #include <tqpopupmenu.h>
 
 #include <kapplication.h>
-#include <kaction.h>
+#include <tdeaction.h>
 #include <kcursor.h>
 #include <tdeconfig.h>
 #include <kdebug.h>

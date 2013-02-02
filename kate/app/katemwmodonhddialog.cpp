@@ -25,7 +25,7 @@
 #include <kate/document.h>
 
 #include <kiconloader.h>
-#include <klistview.h>
+#include <tdelistview.h>
 #include <klocale.h>
 #include <kmessagebox.h>
 #include <kprocio.h>

@@ -22,7 +22,7 @@
 #include <twinmodule.h>
 #include <klocale.h>
 #include <netwm_def.h>
-#include <kaccel.h>
+#include <tdeaccel.h>
 
 #include <X11/Xlib.h>
 #include <X11/keysym.h>

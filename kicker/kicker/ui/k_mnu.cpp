@@ -38,7 +38,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <dcopclient.h>
 #include <kapplication.h>
 #include <kaboutkde.h>
-#include <kaction.h>
+#include <tdeaction.h>
 #include <kbookmarkmenu.h>
 #include <tdeconfig.h>
 #include <kdebug.h>
@@ -49,7 +49,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <klocale.h>
 #include <kmessagebox.h>
 #include <kstandarddirs.h>
-#include <ktoolbarbutton.h>
+#include <tdetoolbarbutton.h>
 #include <twin.h>
 
 #include "client_mnu.h"

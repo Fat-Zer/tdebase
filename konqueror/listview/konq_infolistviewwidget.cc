@@ -24,7 +24,7 @@
 #include <klocale.h>
 #include <tdefilemetainfo.h>
 #include <kdebug.h>
-#include <kaction.h>
+#include <tdeaction.h>
 #include <kservicetype.h>
 #include <kuserprofile.h>
 #include <tdeio/metainfojob.h>

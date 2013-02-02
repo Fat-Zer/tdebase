@@ -28,7 +28,7 @@
 #include <tqheader.h>
 #include <tqlineedit.h>
 
-#include <klistview.h>
+#include <tdelistview.h>
 #include <kdebug.h>
 #include <kstdguiitem.h>
 #include <tdeio/global.h>

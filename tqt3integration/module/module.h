@@ -25,7 +25,7 @@
 #include <kdedmodule.h>
 #include <kdirselectdialog.h>
 #include <tdefiledialog.h>
-#include <kfontdialog.h>
+#include <tdefontdialog.h>
 #include <kdialogbase.h>
 
 class DCOPClientTransaction;

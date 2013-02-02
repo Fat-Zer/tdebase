@@ -39,7 +39,7 @@
 #include <ktempfile.h>
 #include <kurlrequester.h>
 #include <kmessagebox.h>
-#include <klistview.h>
+#include <tdelistview.h>
 #include <klineedit.h>
 #include <tqlayout.h>
 #include <tqpushbutton.h>

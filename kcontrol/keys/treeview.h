@@ -22,7 +22,7 @@
 #define __treeview_h__
 
 #include <tqstring.h>
-#include <klistview.h>
+#include <tdelistview.h>
 
 class TQPopupMenu;
 class TDEActionCollection;

@@ -31,7 +31,7 @@
 #include <ksystemtray.h>
 #include <kdebug.h>
 #include <kiconloader.h>
-#include <kpopupmenu.h>
+#include <tdepopupmenu.h>
 #include <twin.h>
 #include <kstartupinfo.h>
 

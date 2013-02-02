@@ -27,7 +27,7 @@
 #include <kglobal.h>
 #include <kapplication.h>
 #include <kdebug.h>
-#include <krecentdocument.h>
+#include <tderecentdocument.h>
 #include <kstandarddirs.h>
 
 #include <tqstringlist.h>

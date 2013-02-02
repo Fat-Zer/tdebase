@@ -29,7 +29,7 @@
 #include <dcopclient.h>
 #include <dcopobject.h>
 #include <kapplication.h>
-#include <kmainwindow.h>
+#include <tdemainwindow.h>
 #include <dnssd/servicebrowser.h>
 
 #include <ksgrd/SensorClient.h>

@@ -110,7 +110,7 @@ static int askUser(TDEApplication &app, TQString filename, bool &readonly) {
     return true;
 }
 
-#include <kactioncollection.h>
+#include <tdeactioncollection.h>
 
 extern "C" KDE_EXPORT int kdemain(int argc, char **argv) {
     TDELocale::setMainCatalogue("konqueror");

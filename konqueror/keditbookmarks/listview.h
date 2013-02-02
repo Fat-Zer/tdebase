@@ -28,7 +28,7 @@
 
 #include <klocale.h>
 #include <kbookmark.h>
-#include <klistview.h>
+#include <tdelistview.h>
 #include <kiconloader.h>
 
 #include "toplevel.h"

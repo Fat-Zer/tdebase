@@ -56,7 +56,7 @@ choose <guibutton>Delete</guibutton>.</para>
 
 <para>Configuration (anti-aliasing)</para>
 
-<para>kfontinst and kfontview should probably get a mention too, since
+<para>tdefontinst and tdefontview should probably get a mention too, since
 they don't seem to have any existing docs.</para>
 </sect1>
 

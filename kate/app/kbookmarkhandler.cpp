@@ -25,21 +25,21 @@
 #include <tqtextstream.h>
 
 #include <kbookmarkimporter.h>
-#include <kpopupmenu.h>
+#include <tdepopupmenu.h>
 #include <ksavefile.h>
 #include <kstandarddirs.h>
 #include <kdiroperator.h>
-#include <kaction.h>
+#include <tdeaction.h>
 
 #include "kbookmarkhandler.h"
 #include "kbookmarkhandler.moc"
 
 
-KBookmarkHandler::KBookmarkHandler( KateFileSelector *parent, TDEPopupMenu* kpopupmenu )
+KBookmarkHandler::KBookmarkHandler( KateFileSelector *parent, TDEPopupMenu* tdepopupmenu )
     : TQObject( parent, "KBookmarkHandler" ),
       KBookmarkOwner(),
       mParent( parent ),
-      m_menu( kpopupmenu ),
+      m_menu( tdepopupmenu ),
       m_importStream( 0L )
 {
     if (!m_menu)

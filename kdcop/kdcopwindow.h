@@ -15,7 +15,7 @@ class TQWidgetStack;
 class TQLabel;
 class KDCOPListView;
 
-#include <kmainwindow.h>
+#include <tdemainwindow.h>
 #include "kdcoplistview.h"
 #include "kdcopview.h"
 

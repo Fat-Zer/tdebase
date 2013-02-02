@@ -12,7 +12,7 @@
 #define VOICES_H_
 
 #include <tqwidget.h>
-#include <kshortcut.h>
+#include <tdeshortcut.h>
 
 class Sound;
 class TQTimer;

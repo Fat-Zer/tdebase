@@ -31,7 +31,7 @@
 #include <kapplication.h>
 #include <tdeconfig.h>
 #include <kdialog.h>
-#include <kfontdialog.h>
+#include <tdefontdialog.h>
 #include <kgenericfactory.h>
 #include <kglobal.h>
 #include <kiconloader.h>

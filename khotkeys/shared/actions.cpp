@@ -26,7 +26,7 @@
 #include <dcopclient.h>
 #include <kdesktopfile.h>
 #include <klocale.h>
-#include <kaccel.h>
+#include <tdeaccel.h>
 #include <kservice.h>
 #include <kprocess.h>
 

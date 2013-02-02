@@ -21,14 +21,14 @@ link_directories(
 
 ##### other data ################################
 
-install( FILES kshorturifilter.desktop DESTINATION ${SERVICES_INSTALL_DIR} )
-install( FILES kshorturifilterrc DESTINATION ${CONFIG_INSTALL_DIR} )
+install( FILES tdeshorturifilter.desktop DESTINATION ${SERVICES_INSTALL_DIR} )
+install( FILES tdeshorturifilterrc DESTINATION ${CONFIG_INSTALL_DIR} )
 
 
-##### libkshorturifilter (module) ###############
+##### libtdeshorturifilter (module) ###############
 
-tde_add_kpart( libkshorturifilter AUTOMOC
-  SOURCES kshorturifilter.cpp kshorturifilter.skel
+tde_add_kpart( libtdeshorturifilter AUTOMOC
+  SOURCES tdeshorturifilter.cpp tdeshorturifilter.skel
   LINK tdeio-shared
   DESTINATION ${PLUGIN_INSTALL_DIR}
 )

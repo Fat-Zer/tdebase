@@ -30,7 +30,7 @@
 #include <kaboutdata.h>
 #include <tdecmodule.h>
 #include <tdeio/job.h>
-#include <klistbox.h>
+#include <tdelistbox.h>
 #include <ktextbrowser.h>
 
 class KIOTimeoutControl;

@@ -28,7 +28,7 @@
 #include <kmessagebox.h>
 #include <kstandarddirs.h>
 #include <kprotocolinfo.h>
-#include <kpopupmenu.h>
+#include <tdepopupmenu.h>
 #include <krun.h>
 
 #include <tdeio/job.h>

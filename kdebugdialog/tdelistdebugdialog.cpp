@@ -18,7 +18,7 @@
 */
 
 
-#include "klistdebugdialog.h"
+#include "tdelistdebugdialog.h"
 #include <tdeconfig.h>
 #include <kapplication.h>
 #include <kdebug.h>
@@ -190,4 +190,4 @@ void TDEListDebugDialog::activateArea( TQCString area, bool activate )
   }
 }
 
-#include "klistdebugdialog.moc"
+#include "tdelistdebugdialog.moc"

@@ -24,7 +24,7 @@
 
 #include <klocale.h>
 #include <krun.h>
-#include <kpopupmenu.h>
+#include <tdepopupmenu.h>
 
 #include <tdeio/netaccess.h>
 

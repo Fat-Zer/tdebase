@@ -19,7 +19,7 @@
 #ifndef __kebsearchline_h
 #define __kebsearchline_h
 
-#include <klistviewsearchline.h>
+#include <tdelistviewsearchline.h>
 #include <tqobject.h>
 
 class KEBSearchLine : public TDEListViewSearchLine

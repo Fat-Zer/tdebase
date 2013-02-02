@@ -590,9 +590,9 @@ void KMiniPagerButton::mouseMoveEvent(TQMouseEvent* e)
         bp.drawRect(0, 0, ww, wh);
         bp.fillRect(1, 1, ww - 2, wh - 2, colorGroup().background());
 
-        Task::List tasklist;
-        tasklist.append(m_currentWindow);
-        TaskDrag* drag = new TaskDrag(tasklist, this);
+        Task::List tastdelist;
+        tastdelist.append(m_currentWindow);
+        TaskDrag* drag = new TaskDrag(tastdelist, this);
         TQPoint offset(m_pager->clickPos.x() - (r.x() * w / dw),
                 m_pager->clickPos.y() - (r.y() * h / dh));
         drag->setPixmap(windowImage, offset);

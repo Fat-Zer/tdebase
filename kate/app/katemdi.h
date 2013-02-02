@@ -25,7 +25,7 @@
 
 #include <tdemultitabbar.h>
 #include <kxmlguiclient.h>
-#include <kaction.h>
+#include <tdeaction.h>
 
 #include <tqdict.h>
 #include <tqintdict.h>

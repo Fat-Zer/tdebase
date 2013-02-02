@@ -35,7 +35,7 @@
 #include <kmessagebox.h>
 #include <ksavefile.h>
 #include <kstandarddirs.h>
-#include <kpopupmenu.h>
+#include <tdepopupmenu.h>
 
 #include <ksgrd/SensorClient.h>
 #include <ksgrd/SensorManager.h>

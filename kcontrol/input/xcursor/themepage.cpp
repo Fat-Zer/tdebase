@@ -23,7 +23,7 @@
 #include <klocale.h>
 #include <kaboutdata.h>
 #include <kstandarddirs.h>
-#include <klistview.h>
+#include <tdelistview.h>
 #include <ksimpleconfig.h>
 #include <kglobalsettings.h>
 #include <kdialog.h>

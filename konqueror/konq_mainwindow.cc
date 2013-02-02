@@ -85,7 +85,7 @@
 #include "konq_main.h"
 #include <konq_undo.h>
 #include <kprotocolinfo.h>
-#include <kstdaccel.h>
+#include <tdestdaccel.h>
 #include <kstdaction.h>
 #include <kstandarddirs.h>
 #include <tdesycoca.h>
@@ -97,11 +97,11 @@
 #include <tdefiledialog.h>
 #include <klocale.h>
 #include <kiconloader.h>
-#include <kpopupmenu.h>
+#include <tdepopupmenu.h>
 #include <kprocess.h>
 #include <tdeio/scheduler.h>
 #include <tdeio/netaccess.h>
-#include <kaccelmanager.h>
+#include <tdeaccelmanager.h>
 #include <kstringhandler.h>
 #include <kuser.h>
 #include <netwm.h>

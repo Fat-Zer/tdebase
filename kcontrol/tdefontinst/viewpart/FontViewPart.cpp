@@ -49,7 +49,7 @@
 #include <kmessagebox.h>
 #include <knuminput.h>
 #include <kstdaction.h>
-#include <kaction.h>
+#include <tdeaction.h>
 #include <kinputdialog.h>
 #include <kdialog.h>
 #include <kprinter.h>
@@ -85,7 +85,7 @@ CFontViewPart::CFontViewPart(TQWidget *parent, const char *name)
     itsToolsFrame->setFrameShape(TQFrame::NoFrame);
     previewFrame->setFrameShadow(kcm ? TQFrame::Sunken : TQFrame::Raised);
     previewFrame->setFrameShape(TQFrame::Panel);
-    setInstance(new TDEInstance("kfontview"));
+    setInstance(new TDEInstance("tdefontview"));
 
     itsPreview=new CFontPreview(previewFrame, "FontViewPart::Preview");
     itsPreview->setSizePolicy(TQSizePolicy::MinimumExpanding, TQSizePolicy::MinimumExpanding);
@@ -113,7 +113,7 @@ CFontViewPart::CFontViewPart(TQWidget *parent, const char *name)
     itsPrintAction=KStdAction::print(this, TQT_SLOT(print()), actionCollection(), "print");
     itsPrintAction->setEnabled(false);
 
-    setXMLFile("kfontviewpart.rc");
+    setXMLFile("tdefontviewpart.rc");
     setWidget(itsFrame);
 }
 

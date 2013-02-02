@@ -8,7 +8,7 @@
 #define __KDCOPLISTVIEW_H__
 
 
-#include <klistview.h>
+#include <tdelistview.h>
 class TQDragObject;
 
 class KDCOPListView : public TDEListView

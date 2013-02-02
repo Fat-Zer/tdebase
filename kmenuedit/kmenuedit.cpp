@@ -20,7 +20,7 @@
 
 #include <tqsplitter.h>
 
-#include <kaction.h>
+#include <tdeaction.h>
 #include <kapplication.h>
 #include <tdeconfig.h>
 #include <kdebug.h>
@@ -30,7 +30,7 @@
 #include <kmessagebox.h>
 #include <kservice.h>
 #include <kstdaction.h>
-#include <kstdaccel.h>
+#include <tdestdaccel.h>
 
 #include "treeview.h"
 #include "basictab.h"

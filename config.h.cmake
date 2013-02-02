@@ -81,7 +81,7 @@
 #cmakedefine HAVE_FONTCONFIG 1
 #cmakedefine HAVE_FREETYPE2 1
 
-// kcontrol/kfontinst
+// kcontrol/tdefontinst
 #cmakedefine HAVE_XFT 1
 #cmakedefine HAVE_GETOPT_H 1
 

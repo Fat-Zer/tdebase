@@ -26,7 +26,7 @@
 #include "kdiconview.h"
 #include "minicli.h"
 #include "kdesktopsettings.h"
-#include "klaunchsettings.h"
+#include "tdelaunchsettings.h"
 
 #include <string.h>
 #include <unistd.h>
@@ -59,12 +59,12 @@
 #include <krun.h>
 #include <twin.h>
 #include <kglobalsettings.h>
-#include <kpopupmenu.h>
+#include <tdepopupmenu.h>
 #include <kapplication.h>
 #include <kdirlister.h>
 // Create the equivalent of TDEAccelBase::connectItem
 // and then remove this include and fix reconnects in initRoot() -- ellis
-//#include <kaccelbase.h>
+//#include <tdeaccelbase.h>
 
 extern int kdesktop_screen_number;
 extern TQCString kdesktop_name, kicker_name, twin_name;

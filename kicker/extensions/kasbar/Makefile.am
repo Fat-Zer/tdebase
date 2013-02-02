@@ -8,7 +8,7 @@ lib_LTLIBRARIES = libkasbar.la
 
 libkasbar_la_SOURCES =	kasbar.cpp kasitem.cpp \
 			kastaskitem.cpp	kastasker.cpp kaspopup.cpp \
-			kastaskpopup.cpp kasstartupitem.cpp \
+			kastastdepopup.cpp kasstartupitem.cpp \
 			kasaboutdlg.cpp kasprefsdlg.cpp kasclockitem.cpp \
 			kasgroupitem.cpp kasresources.cpp kasgrouper.cpp \
 			kasloaditem.cpp

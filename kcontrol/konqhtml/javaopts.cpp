@@ -12,7 +12,7 @@
 // (c) Leo Savernik 2002-2003
 
 #include <config.h>
-#include <klistview.h>
+#include <tdelistview.h>
 #include <kurlrequester.h>
 #include <kdebug.h>
 #include <klineedit.h>

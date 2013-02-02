@@ -26,7 +26,7 @@
 #define KONSOLE_H
 
 
-#include <kmainwindow.h>
+#include <tdemainwindow.h>
 #include <kdialogbase.h>
 #include <ksimpleconfig.h>
 #include <keditcl.h>

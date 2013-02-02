@@ -19,7 +19,7 @@
 #include "listboxview.h"
 #include "listboxview.moc"
 
-#include <klistbox.h>
+#include <tdelistbox.h>
 
 namespace Kate {
 

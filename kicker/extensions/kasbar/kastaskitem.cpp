@@ -69,10 +69,10 @@
 #include <kdialog.h>
 #include <kglobal.h>
 #include <kiconloader.h>
-#include <klistview.h>
+#include <tdelistview.h>
 #include <klocale.h>
 #include <kpassivepopup.h>
-#include <kpopupmenu.h>
+#include <tdepopupmenu.h>
 #include <kprocess.h>
 #include <dcopclient.h>
 #include <kapplication.h>
@@ -81,7 +81,7 @@
 #include <taskrmbmenu.h>
 
 #include "kastasker.h"
-#include "kastaskpopup.h"
+#include "kastastdepopup.h"
 #include "kastaskitem.h"
 #include "kasbarextension.h"
 

@@ -22,7 +22,7 @@
 #define SESSION_H
 
 #include <kapplication.h>
-#include <kmainwindow.h>
+#include <tdemainwindow.h>
 #include <tqstrlist.h>
 
 #include "TEPty.h"

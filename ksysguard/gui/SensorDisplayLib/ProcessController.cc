@@ -30,7 +30,7 @@
 #include <klocale.h>
 #include <kmessagebox.h>
 #include <kdialogbase.h>
-#include <klistviewsearchline.h>
+#include <tdelistviewsearchline.h>
 
 #include <ksgrd/SensorManager.h>
 

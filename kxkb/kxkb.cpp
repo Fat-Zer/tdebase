@@ -43,8 +43,8 @@ DESCRIPTION
 #include <ktempfile.h>
 #include <kstandarddirs.h>
 #include <kipc.h>
-#include <kaction.h>
-#include <kpopupmenu.h>
+#include <tdeaction.h>
+#include <tdepopupmenu.h>
 #include <kdebug.h>
 #include <tdeconfig.h>
 

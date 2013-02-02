@@ -54,11 +54,11 @@
 #include <tqapplication.h>
 #include <tqtimer.h>
 
-#include <kactionclasses.h>
+#include <tdeactionclasses.h>
 #include <tdeconfig.h>
 #include <kdebug.h>
 #include <klocale.h>
-#include <kpopupmenu.h>
+#include <tdepopupmenu.h>
 #include <kiconloader.h>
 
 //#include <tdeconfiggroupsaver.h>

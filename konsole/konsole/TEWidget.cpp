@@ -79,7 +79,7 @@
 #include <klocale.h>
 #include <knotifyclient.h>
 #include <kglobalsettings.h>
-#include <kshortcut.h>
+#include <tdeshortcut.h>
 #include <kurldrag.h>
 #include <tdeio/netaccess.h>
 #include <tqlabel.h>

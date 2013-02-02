@@ -20,7 +20,7 @@
 #ifndef __konq_listviewitems_h__
 #define __konq_listviewitems_h__
 
-#include <klistview.h>
+#include <tdelistview.h>
 #include <tqstring.h>
 #include <kicontheme.h>
 

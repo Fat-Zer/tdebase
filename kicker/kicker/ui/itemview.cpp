@@ -48,7 +48,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <kapplication.h>
 #include <kaboutkde.h>
 #include <kpixmapeffect.h>
-#include <kaction.h>
+#include <tdeaction.h>
 #include <kbookmarkmenu.h>
 #include <tdeconfig.h>
 #include <kdebug.h>

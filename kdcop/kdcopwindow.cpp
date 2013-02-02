@@ -12,7 +12,7 @@
 #include <klocale.h>
 #include <kdatastream.h>
 #include <kstdaction.h>
-#include <kaction.h>
+#include <tdeaction.h>
 #include <kapplication.h>
 #include <kmessagebox.h>
 #include <kdialog.h>
@@ -20,11 +20,11 @@
 #include <kiconloader.h>
 #include <klineedit.h>
 #include <keditlistbox.h>
-#include <klistbox.h>
+#include <tdelistbox.h>
 #include <kdialogbase.h>
-#include <kstdaccel.h>
+#include <tdestdaccel.h>
 #include <kcolorbutton.h>
-#include <klistviewsearchline.h>
+#include <tdelistviewsearchline.h>
 
 #include <tqtimer.h>
 #include <tqwidgetstack.h>

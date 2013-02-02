@@ -213,7 +213,7 @@ void RunApplet::run_command(const TQString& command)
 
     _filterData->setData( _input->currentText().stripWhiteSpace() );
     TQStringList filters;
-    filters << "kurisearchfilter" << "kshorturifilter";
+    filters << "kurisearchfilter" << "tdeshorturifilter";
     KURIFilter::self()->filterURI( *(_filterData), filters );
 
     _input->addToHistory(command);

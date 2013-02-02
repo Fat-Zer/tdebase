@@ -23,7 +23,7 @@
 #define __treeview_h__
 
 #include <tqstring.h>
-#include <klistview.h>
+#include <tdelistview.h>
 #include <kservice.h>
 #include <kservicegroup.h>
 

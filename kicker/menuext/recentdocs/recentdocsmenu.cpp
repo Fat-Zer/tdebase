@@ -33,7 +33,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <kglobalsettings.h>
 #include <kapplication.h>
 #include <kurldrag.h>
-#include <krecentdocument.h>
+#include <tderecentdocument.h>
 
 #include "recentdocsmenu.h"
 

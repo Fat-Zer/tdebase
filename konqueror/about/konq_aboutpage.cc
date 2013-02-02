@@ -9,7 +9,7 @@
 #include <kmessagebox.h>
 #include <ksavefile.h>
 #include <kstandarddirs.h>
-#include <kaction.h>
+#include <tdeaction.h>
 #include <kiconloader.h>
 #include <kurifilter.h>
 #include <ktrader.h>

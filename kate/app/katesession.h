@@ -24,7 +24,7 @@
 #include <kdialogbase.h>
 #include <ksimpleconfig.h>
 #include <ksharedptr.h>
-#include <kaction.h>
+#include <tdeaction.h>
 
 #include <tqobject.h>
 #include <tqvaluelist.h>

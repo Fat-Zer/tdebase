@@ -23,7 +23,7 @@
 #include <tqpalette.h>
 #include <tqptrlist.h>
 #include <tqlistview.h>
-#include <klistview.h>
+#include <tdelistview.h>
 #include <tqdict.h>
 
 

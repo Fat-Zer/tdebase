@@ -36,10 +36,10 @@
 #include <kapplication.h>
 #include <kstdaction.h>
 #include <kmenubar.h>
-#include <ktoolbar.h>
-#include <kaction.h>
-#include <klistbox.h>
-#include <klistview.h>
+#include <tdetoolbar.h>
+#include <tdeaction.h>
+#include <tdelistbox.h>
+#include <tdelistview.h>
 #include <tqheader.h>
 #include <klocale.h>
 #include <kiconloader.h>

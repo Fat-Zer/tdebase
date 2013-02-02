@@ -37,9 +37,9 @@
 #include <kdebug.h>
 #include <tdehtmlview.h>
 #include <tdehtml_settings.h>
-#include <kaction.h>
+#include <tdeaction.h>
 #include <kstatusbar.h>
-#include <kstdaccel.h>
+#include <tdestdaccel.h>
 #include <kdialogbase.h>
 
 #include <tqsplitter.h>

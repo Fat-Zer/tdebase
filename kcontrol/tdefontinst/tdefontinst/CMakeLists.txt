@@ -13,7 +13,7 @@ add_definitions( -DOS_${CMAKE_SYSTEM_NAME} )
 
 include_directories(
   ${CMAKE_BINARY_DIR}
-  ${CMAKE_SOURCE_DIR}/kcontrol/kfontinst/lib
+  ${CMAKE_SOURCE_DIR}/kcontrol/tdefontinst/lib
   ${CMAKE_SOURCE_DIR}/kcontrol/fonts/
   ${TDE_INCLUDE_DIR}
   ${TQT_INCLUDE_DIRS}
@@ -25,12 +25,12 @@ link_directories(
 )
 
 
-##### kfontinst (executable) ####################
+##### tdefontinst (executable) ####################
 
-tde_add_executable( kfontinst
+tde_add_executable( tdefontinst
   SOURCES
     Main.cpp FontEngine.cpp Fontmap.cpp GetPid.c
     XConfig.cpp
-  LINK kxftconfig-static kfontinst-shared tdeio-shared
+  LINK kxftconfig-static tdefontinst-shared tdeio-shared
   DESTINATION ${BIN_INSTALL_DIR}
 )

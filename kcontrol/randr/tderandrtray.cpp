@@ -20,14 +20,14 @@
 #include <tqimage.h>
 #include <tqtooltip.h>
 
-#include <kaction.h>
+#include <tdeaction.h>
 #include <kapplication.h>
 #include <kcmultidialog.h>
 #include <kdebug.h>
 #include <khelpmenu.h>
 #include <kiconloader.h>
 #include <klocale.h>
-#include <kpopupmenu.h>
+#include <tdepopupmenu.h>
 #include <kstdaction.h>
 #include <kstdguiitem.h>
 #include <kglobal.h>

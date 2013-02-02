@@ -36,7 +36,7 @@
 #include <tqdragobject.h>
 #include <tqlistbox.h>
 
-#include <klistview.h>
+#include <tdelistview.h>
 
 class KDecorationFactory;
 

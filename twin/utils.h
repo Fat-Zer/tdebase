@@ -16,7 +16,7 @@ License. See the file "COPYING" for the exact licensing terms.
 #include <tqwidget.h>
 #include <kmanagerselection.h>
 #include <netwm_def.h>
-#include <kshortcutdialog.h>
+#include <tdeshortcutdialog.h>
 
 namespace KWinInternal
 {

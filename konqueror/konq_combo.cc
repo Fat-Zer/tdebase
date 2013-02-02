@@ -27,7 +27,7 @@
 #include <kicontheme.h>
 #include <klineedit.h>
 #include <konq_pixmapprovider.h>
-#include <kstdaccel.h>
+#include <tdestdaccel.h>
 #include <kurldrag.h>
 #include <konq_mainwindow.h>
 #include <kstringhandler.h>

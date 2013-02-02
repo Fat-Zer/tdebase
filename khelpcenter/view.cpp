@@ -5,14 +5,14 @@
 
 #include <dom/html_document.h>
 #include <dom/html_misc.h>
-#include <kaction.h>
-#include <kactioncollection.h>
+#include <tdeaction.h>
+#include <tdeactioncollection.h>
 #include <kapplication.h>
 #include <kdebug.h>
 #include <tdehtml_settings.h>
 #include <tdehtmlview.h>
 #include <klocale.h>
-#include <kpopupmenu.h>
+#include <tdepopupmenu.h>
 #include <kstandarddirs.h>
 
 #include <tqfileinfo.h>

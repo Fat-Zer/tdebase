@@ -20,7 +20,7 @@
 #ifndef __deviceiconview_h__
 #define __deviceiconview_h__
 
-#include <klistview.h>
+#include <tdelistview.h>
 #include <kiconloader.h>
 #include <tdehardwaredevices.h>
 

@@ -30,7 +30,7 @@
 #include <kaboutdata.h>
 #include <kcharsets.h>
 #include <kdebug.h>
-#include <kfontdialog.h>
+#include <tdefontdialog.h>
 #include <kglobalsettings.h>
 #include <kiconloader.h>
 #include <kinputdialog.h>
@@ -44,10 +44,10 @@
 #include <tqcheckbox.h>
 #include <tqspinbox.h>
 #include <tqpushbutton.h>
-#include <kpopupmenu.h>
+#include <tdepopupmenu.h>
 #include <krootpixmap.h>
 #include <tdeconfig.h>
-#include <kaction.h>
+#include <tdeaction.h>
 
 // We can't use the ARGB32 visual when embedded in another application
 bool argb_visual = false;

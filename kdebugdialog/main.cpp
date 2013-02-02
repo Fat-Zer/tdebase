@@ -18,7 +18,7 @@
 */
 
 #include "kdebugdialog.h"
-#include "klistdebugdialog.h"
+#include "tdelistdebugdialog.h"
 #include <kcmdlineargs.h>
 #include <kaboutdata.h>
 #include <kstandarddirs.h>

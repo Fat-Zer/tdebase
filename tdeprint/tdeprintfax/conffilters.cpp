@@ -30,7 +30,7 @@
 #include <tqheader.h>
 
 #include <klocale.h>
-#include <klistview.h>
+#include <tdelistview.h>
 #include <kiconloader.h>
 #include <kstandarddirs.h>
 #include <kmessagebox.h>

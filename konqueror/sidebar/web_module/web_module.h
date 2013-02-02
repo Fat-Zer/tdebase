@@ -24,7 +24,7 @@
 #include <kiconloader.h>
 #include <klocale.h>
 #include <konqsidebarplugin.h>
-#include <kpopupmenu.h>
+#include <tdepopupmenu.h>
 #include <tqobject.h>
 
 

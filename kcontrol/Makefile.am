@@ -3,8 +3,8 @@ if include_kcontrol_access
 ACCESS_SUBDIR=access
 endif
 
-if include_kcontrol_kfontinst
-FONTINST_SUBDIR=kfontinst
+if include_kcontrol_tdefontinst
+FONTINST_SUBDIR=tdefontinst
 endif
 
 if include_kcontrol_smartcard

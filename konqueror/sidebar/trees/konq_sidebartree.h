@@ -20,7 +20,7 @@
 #ifndef konq_tree_h
 #define konq_tree_h
 
-#include <klistview.h>
+#include <tdelistview.h>
 #include "konq_sidebartreetoplevelitem.h"
 #include "konqsidebar_tree.h"
 #include <kdirnotify.h>

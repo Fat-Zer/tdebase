@@ -25,12 +25,12 @@
  */
 
 #include <kdebug.h>
-#include <kaction.h>
+#include <tdeaction.h>
 #include <klocale.h>
 #include <kglobal.h>
 #include <tdeconfig.h>
 #include <kcharsets.h>
-#include <kpopupmenu.h>
+#include <tdepopupmenu.h>
 #include <dcopclient.h>
 #include <kgenericfactory.h>
 #include <kprotocolmanager.h>

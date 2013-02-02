@@ -12,7 +12,7 @@ messages:
 	customkeys=`grep "^.include .\.\." keyconfig.cpp | sed -e "s#.*\"\(.*\)\"#\1#"` ;\
 	$(XGETTEXT) $(kcm_keys_la_SOURCES) $$customkeys -o $(podir)/kcmkeys.pot
 
-update_DATA = kaccel.upd
+update_DATA = tdeaccel.upd
 update_SCRIPTS = convertShortcuts.pl
 updatedir = $(kde_datadir)/tdeconf_update
 

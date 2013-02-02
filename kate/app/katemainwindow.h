@@ -29,7 +29,7 @@
 
 #include <tdeparts/part.h>
 
-#include <kaction.h>
+#include <tdeaction.h>
 
 class KateTabWidget;
 class GrepTool;

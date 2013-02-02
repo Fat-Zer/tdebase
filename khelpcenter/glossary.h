@@ -20,7 +20,7 @@
 #ifndef KHC_GLOSSARY_H
 #define KHC_GLOSSARY_H
 
-#include <klistview.h>
+#include <tdelistview.h>
 
 #include <tqdict.h>
 #include <tqdom.h>

@@ -23,7 +23,7 @@
 
 #include "glossary.h"
 
-#include <klistview.h>
+#include <tdelistview.h>
 #include <kurl.h>
 
 #include <tqfile.h>

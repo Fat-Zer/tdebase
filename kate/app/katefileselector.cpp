@@ -26,7 +26,7 @@
 #include "kateviewmanager.h"
 #include "kbookmarkhandler.h"
 
-#include "kactionselector.h"
+#include "tdeactionselector.h"
 
 #include <tqlayout.h>
 #include <tqtoolbutton.h>
@@ -56,11 +56,11 @@
 #include <tdeconfig.h>
 #include <klocale.h>
 #include <kcombobox.h>
-#include <kaction.h>
+#include <tdeaction.h>
 #include <kmessagebox.h>
-#include <ktoolbarbutton.h>
+#include <tdetoolbarbutton.h>
 #include <tqtoolbar.h>
-#include <kpopupmenu.h>
+#include <tdepopupmenu.h>
 #include <kdialog.h>
 #include <kdebug.h>
 //END Includes
@@ -166,7 +166,7 @@ KateFileSelector::KateFileSelector( KateMainWindow *mainWindow,
   connect( filter, TQT_SIGNAL( returnPressed(const TQString&) ),
            filter, TQT_SLOT( addToHistory(const TQString&) ) );
 
-  // kaction for the dir sync method
+  // tdeaction for the dir sync method
   acSyncDir = new TDEAction( i18n("Current Document Folder"), "curfiledir", 0,
         TQT_TQOBJECT(this), TQT_SLOT( setActiveDocumentDir() ), mActionCollection, "sync_dir" );
   toolbar->setIconText( TDEToolBar::IconOnly );

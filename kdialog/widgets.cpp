@@ -22,7 +22,7 @@
 #include <kmessagebox.h>
 
 #include "widgets.h"
-#include "klistboxdialog.h"
+#include "tdelistboxdialog.h"
 #include "progressdialog.h"
 #include <kinputdialog.h>
 #include <kpassdlg.h>

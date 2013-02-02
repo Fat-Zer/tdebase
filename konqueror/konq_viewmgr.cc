@@ -29,7 +29,7 @@
 #include <tqfileinfo.h>
 #include <tqptrlist.h>
 
-#include <kaccelgen.h>
+#include <tdeaccelgen.h>
 #include <kstandarddirs.h>
 #include <kdebug.h>
 #include <kapplication.h>
@@ -40,7 +40,7 @@
 #include <kmessagebox.h>
 
 #include <assert.h>
-#include <kpopupmenu.h>
+#include <tdepopupmenu.h>
 
 // #define DEBUG_VIEWMGR
 

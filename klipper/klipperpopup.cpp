@@ -25,7 +25,7 @@
 #include <klineedit.h>
 
 #include <klocale.h>
-#include <kaction.h>
+#include <tdeaction.h>
 #include <kglobalsettings.h>
 #include <twin.h>
 #include <kapplication.h>

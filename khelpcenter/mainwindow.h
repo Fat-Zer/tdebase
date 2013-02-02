@@ -3,7 +3,7 @@
 
 #include <tqptrlist.h>
 
-#include <kmainwindow.h>
+#include <tdemainwindow.h>
 #include <tdeio/job.h>
 #include <kurl.h>
 #include <tdeparts/browserextension.h>

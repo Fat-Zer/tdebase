@@ -29,7 +29,7 @@
 #include <kdirlister.h>
 #include <klocale.h>
 #include <kprotocolinfo.h>
-#include <kaction.h>
+#include <tdeaction.h>
 #include <kurldrag.h>
 #include <kmessagebox.h>
 #include <kiconloader.h>
@@ -1508,7 +1508,7 @@ bool KonqBaseListViewWidget::caseInsensitiveSort() const
     return m_pBrowserView->m_pProps->isCaseInsensitiveSort();
 }
 
-// based on isExecuteArea from klistview.cpp
+// based on isExecuteArea from tdelistview.cpp
 int KonqBaseListViewWidget::executeArea( TQListViewItem *_item )
 {
    if ( !_item )

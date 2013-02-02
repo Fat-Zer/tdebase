@@ -21,11 +21,11 @@
 
 */
 
-#include <kaccelmanager.h>
+#include <tdeaccelmanager.h>
 #include <kcolorbutton.h>
 #include <kcolordialog.h>
 #include <klineedit.h>
-#include <klistview.h>
+#include <tdelistview.h>
 #include <klocale.h>
 #include <knuminput.h>
 

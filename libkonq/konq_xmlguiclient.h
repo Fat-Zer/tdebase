@@ -22,7 +22,7 @@
 
 #include <sys/types.h>
 
-#include <kaction.h>
+#include <tdeaction.h>
 #include <kxmlguiclient.h>
 #include <tqstringlist.h>
 #include <libkonq_export.h>

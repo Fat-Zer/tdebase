@@ -21,7 +21,7 @@
 #include "kateviewmanager.h"
 #include "katedocmanager.h"
 
-#include <klistview.h>
+#include <tdelistview.h>
 #include <klocale.h>
 #include <kurl.h>
 

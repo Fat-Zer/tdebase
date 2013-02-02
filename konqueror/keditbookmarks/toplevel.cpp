@@ -42,7 +42,7 @@
 
 #include <kapplication.h>
 #include <kstdaction.h>
-#include <kaction.h>
+#include <tdeaction.h>
 #include <dcopclient.h>
 #include <dcopref.h>
 

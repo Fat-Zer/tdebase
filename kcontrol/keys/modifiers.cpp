@@ -11,7 +11,7 @@
 #include <kdebug.h>
 #include <kdialog.h>
 #include <kkeynative.h>
-#include <klistview.h>
+#include <tdelistview.h>
 #include <klocale.h>
 #include <kmessagebox.h>
 

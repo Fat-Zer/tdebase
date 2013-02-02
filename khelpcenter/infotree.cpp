@@ -27,7 +27,7 @@
 #include <tdeconfig.h>
 #include <kdebug.h>
 #include <kiconloader.h>
-#include <klistview.h>
+#include <tdelistview.h>
 #include <klocale.h>
 #include <kstandarddirs.h>
 #include <kurl.h>

@@ -3,7 +3,7 @@
 
 #include <klocale.h>
 
-#define KFI_CATALOGUE                "kfontinst"
+#define KFI_CATALOGUE                "tdefontinst"
 
 // io-slave
 #define KFI_KIO_FONTS_PROTOCOL       "fonts"

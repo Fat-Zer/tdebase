@@ -2,17 +2,17 @@
 
 AM_CPPFLAGS   =  $(all_includes) -DQT_NO_CAST_ASCII
 
-kde_module_LTLIBRARIES = libkshorturifilter.la
+kde_module_LTLIBRARIES = libtdeshorturifilter.la
 
-libkshorturifilter_la_LDFLAGS = $(all_libraries) -module $(KDE_PLUGIN)
-libkshorturifilter_la_LIBADD = $(LIB_KSYCOCA) $(LIB_TDEUI)
+libtdeshorturifilter_la_LDFLAGS = $(all_libraries) -module $(KDE_PLUGIN)
+libtdeshorturifilter_la_LIBADD = $(LIB_KSYCOCA) $(LIB_TDEUI)
 
-libkshorturifilter_la_SOURCES = kshorturifilter.cpp kshorturifilter.skel
+libtdeshorturifilter_la_SOURCES = tdeshorturifilter.cpp tdeshorturifilter.skel
 
-service_DATA = kshorturifilter.desktop
+service_DATA = tdeshorturifilter.desktop
 servicedir = $(kde_servicesdir)
 
-rc_DATA = kshorturifilterrc
+rc_DATA = tdeshorturifilterrc
 rcdir = $(kde_confdir)
 
 METASOURCES = AUTO

@@ -24,7 +24,7 @@
 #include <tqwhatsthis.h>
 
 #include <tdeconfig.h>
-#include <klistview.h>
+#include <tdelistview.h>
 #include <klocale.h>
 #include <kmessagebox.h>
 

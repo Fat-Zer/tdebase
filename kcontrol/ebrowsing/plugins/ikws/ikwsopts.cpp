@@ -34,7 +34,7 @@
 #include <kcombobox.h>
 #include <tdeconfig.h>
 #include <kiconloader.h>
-#include <klistview.h>
+#include <tdelistview.h>
 #include <klocale.h>
 #include <kmessagebox.h>
 #include <kservice.h>
