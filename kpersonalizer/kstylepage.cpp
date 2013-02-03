@@ -324,7 +324,7 @@ void KStylePage::getColors(colorSet *set, bool colorfile ){
 	bool deleteConfig = false;
 	// get the color scheme file and go to the color scheme group
 	if(colorfile){
-		TDEGlobal::dirs()->addResourceType("colors", TDEStandardDirs::kde_default("data")+"kdisplay/color-schemes");
+		TDEGlobal::dirs()->addResourceType("colors", TDEStandardDirs::kde_default("data")+"tdedisplay/color-schemes");
 		// set the style
 		if (kde->isSelected()) {
 			set->bgMode="Flat";

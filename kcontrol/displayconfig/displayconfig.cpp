@@ -749,11 +749,11 @@ KDisplayConfig::KDisplayConfig(TQWidget *parent, const char *name, const TQStrin
 
 	TQVBoxLayout *layout = new TQVBoxLayout(this, 0, KDialog::spacingHint());
 	if (getuid() != 0) {
-		systemconfig = new KSimpleConfig( locateLocal("config", "kdisplay/", true) + "kdisplayconfigrc" );
+		systemconfig = new KSimpleConfig( locateLocal("config", "tdedisplay/", true) + "tdedisplayconfigrc" );
 		systemconfig->setFileWriteMode(0600);
 	}
 	else {
-		systemconfig = new KSimpleConfig( TQString::fromLatin1( KDE_CONFDIR "/kdisplay/kdisplayconfigrc" ));
+		systemconfig = new KSimpleConfig( TQString::fromLatin1( KDE_CONFDIR "/tdedisplay/tdedisplayconfigrc" ));
 		systemconfig->setFileWriteMode(0644);
 	}
 

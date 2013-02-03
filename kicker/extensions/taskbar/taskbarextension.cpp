@@ -70,7 +70,7 @@ TaskBarExtension::TaskBarExtension(const TQString& configFile, Type type,
     connectDCOPSignal("kicker", "kicker", "configurationChanged()",
                       "configure()", false);
 
-    connect(kapp, TQT_SIGNAL(kdisplayPaletteChanged()),
+    connect(kapp, TQT_SIGNAL(tdedisplayPaletteChanged()),
             TQT_SLOT(setBackgroundTheme()));
 
     TQTimer::singleShot(0, this, TQT_SLOT(setBackgroundTheme()));

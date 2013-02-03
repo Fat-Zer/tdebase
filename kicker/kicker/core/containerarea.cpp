@@ -104,7 +104,7 @@ ContainerArea::ContainerArea(TDEConfig* _c,
     setBackground();
 
     connect(&_autoScrollTimer, TQT_SIGNAL(timeout()), TQT_SLOT(autoScroll()));
-    connect(kapp, TQT_SIGNAL(kdisplayPaletteChanged()), TQT_SLOT(setBackground()));
+    connect(kapp, TQT_SIGNAL(tdedisplayPaletteChanged()), TQT_SLOT(setBackground()));
     connect(Kicker::the(), TQT_SIGNAL(immutabilityChanged(bool)),
             TQT_SLOT(immutabilityChanged(bool)));
     connect(this, TQT_SIGNAL(contentsMoving(int, int)), TQT_SLOT(setBackground()));

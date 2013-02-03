@@ -432,7 +432,7 @@ void TOM::initialize()
     }
     else
     {
-      connect(kapp, TQT_SIGNAL(kdisplayPaletteChanged()), TQT_SLOT(paletteChanged()));
+      connect(kapp, TQT_SIGNAL(tdedisplayPaletteChanged()), TQT_SLOT(paletteChanged()));
     }*/
 
     // TASKS

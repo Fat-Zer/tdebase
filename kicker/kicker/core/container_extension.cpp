@@ -168,7 +168,7 @@ void ExtensionContainer::init()
 
     installEventFilter(this); // for mouse event handling
 
-    connect(Kicker::the(), TQT_SIGNAL(kdisplayPaletteChanged()), this, TQT_SLOT(updateHighlightColor()));
+    connect(Kicker::the(), TQT_SIGNAL(tdedisplayPaletteChanged()), this, TQT_SLOT(updateHighlightColor()));
     updateHighlightColor();
 
     // if we were hidden when kicker quit, let's start out hidden as well!

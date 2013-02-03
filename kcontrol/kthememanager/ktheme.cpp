@@ -528,7 +528,7 @@ void KTheme::apply()
         TQDomNodeList colorList = colorsElem.childNodes();
         TDEConfig * colorConf = TDEGlobal::config();
 
-        TQString sCurrentScheme = locateLocal("data", "kdisplay/color-schemes/thememgr.kcsrc");
+        TQString sCurrentScheme = locateLocal("data", "tdedisplay/color-schemes/thememgr.kcsrc");
         KSimpleConfig *colorScheme = new KSimpleConfig( sCurrentScheme );
         colorScheme->setGroup("Color Scheme" );
 

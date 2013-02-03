@@ -211,7 +211,7 @@ void ExtensionManager::configureMenubar(bool duringInit)
         updateMenubar();
 
         m_menubarPanel->show();
-        connect(kapp, TQT_SIGNAL(kdisplayFontChanged()), TQT_SLOT(updateMenubar()));
+        connect(kapp, TQT_SIGNAL(tdedisplayFontChanged()), TQT_SLOT(updateMenubar()));
     }
     else if (m_menubarPanel)
     {

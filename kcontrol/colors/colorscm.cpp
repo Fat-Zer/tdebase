@@ -560,7 +560,7 @@ void KColorScheme::slotAdd()
     }
     else
     {
-       sFile = TDEGlobal::dirs()->saveLocation("data", "kdisplay/color-schemes/") + sFile + ".kcsrc";
+       sFile = TDEGlobal::dirs()->saveLocation("data", "tdedisplay/color-schemes/") + sFile + ".kcsrc";
        KSimpleConfig *config = new KSimpleConfig(sFile);
        config->setGroup( "Color Scheme");
        config->writeEntry("Name", sName);
@@ -580,7 +580,7 @@ void KColorScheme::slotAdd()
 
 void KColorScheme::slotImport()
 {
-	TQString location = locateLocal( "data", "kdisplay/color-schemes/" );
+	TQString location = locateLocal( "data", "tdedisplay/color-schemes/" );
 
 	KURL file ( KFileDialog::getOpenFileName(TQString::null, "*.kcsrc", this) );
 	if ( file.isEmpty() )
@@ -861,7 +861,7 @@ void KColorScheme::readSchemeNames()
 
     // Global + local schemes
     TQStringList list = TDEGlobal::dirs()->findAllResources("data",
-            "kdisplay/color-schemes/*.kcsrc", false, true);
+            "tdedisplay/color-schemes/*.kcsrc", false, true);
 
     // And add them
     for (TQStringList::ConstIterator it = list.begin(); it != list.end(); ++it) {

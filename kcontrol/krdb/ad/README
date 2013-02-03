@@ -35,11 +35,11 @@ Their meaning should be obvious to anyone familiar with
 KDE's desktop wide resources. Install your application
 default file either in
 
-$(TDEDIR)/share/apps/kdisplay/app-defaults
+$(TDEDIR)/share/apps/tdedisplay/app-defaults
 
 or
 
-$(HOME)/.trinity/share/apps/kdisplay/app-defaults
+$(HOME)/.trinity/share/apps/tdedisplay/app-defaults
 
 so that it is available to krdb for reading. If you want to
 override a system file simply copy it to your user

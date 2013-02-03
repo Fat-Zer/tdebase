@@ -309,7 +309,7 @@ void TDMAppearanceWidget::loadColorSchemes(KBackedComboBox *combo)
 {
   // XXX: Global + local schemes
   TQStringList list = TDEGlobal::dirs()->
-      findAllResources("data", "kdisplay/color-schemes/*.kcsrc", false, true);
+      findAllResources("data", "tdedisplay/color-schemes/*.kcsrc", false, true);
   for (TQStringList::ConstIterator it = list.begin(); it != list.end(); ++it)
   {
     KSimpleConfig config(*it, true);

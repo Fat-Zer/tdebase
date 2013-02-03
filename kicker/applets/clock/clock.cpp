@@ -919,7 +919,7 @@ ClockApplet::ClockApplet(const TQString& configFile, Type t, int actions,
 
     connect(m_layoutTimer, TQT_SIGNAL(timeout()), this, TQT_SLOT(fixupLayout()));
     connect(_timer, TQT_SIGNAL(timeout()), TQT_SLOT(slotUpdate()));
-    connect(kapp, TQT_SIGNAL(kdisplayPaletteChanged()), TQT_SLOT(globalPaletteChange()));
+    connect(kapp, TQT_SIGNAL(tdedisplayPaletteChanged()), TQT_SLOT(globalPaletteChange()));
 
     reconfigure();    // initialize clock widget
     slotUpdate();

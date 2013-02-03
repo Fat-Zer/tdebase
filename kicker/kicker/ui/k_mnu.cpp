@@ -247,9 +247,9 @@ void PanelKMenu::initialize()
     if (loadSidePixmap())
     {
         // in case we've been through here before, let's disconnect
-        disconnect(kapp, TQT_SIGNAL(kdisplayPaletteChanged()),
+        disconnect(kapp, TQT_SIGNAL(tdedisplayPaletteChanged()),
                    this, TQT_SLOT(paletteChanged()));
-        connect(kapp, TQT_SIGNAL(kdisplayPaletteChanged()),
+        connect(kapp, TQT_SIGNAL(tdedisplayPaletteChanged()),
                 this, TQT_SLOT(paletteChanged()));
     }
     else

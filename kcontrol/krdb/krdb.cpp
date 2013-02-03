@@ -444,7 +444,7 @@ void runRdb( uint flags )
   // Export colors to non-(KDE/Qt) apps (e.g. Motif, GTK+ apps)
   if (exportColors)
   {
-    TDEGlobal::dirs()->addResourceType("appdefaults", TDEStandardDirs::kde_default("data") + "kdisplay/app-defaults/");
+    TDEGlobal::dirs()->addResourceType("appdefaults", TDEStandardDirs::kde_default("data") + "tdedisplay/app-defaults/");
     TQColorGroup cg = newPal.active();
     TDEGlobal::locale()->insertCatalogue("krdb");
     createGtkrc( true, cg, 1 );

@@ -366,7 +366,7 @@ KTitleBarActionsConfig::KTitleBarActionsConfig (bool _standAlone, TDEConfig *_co
     coMax[b]->setSizePolicy( TQSizePolicy( TQSizePolicy::Fixed, TQSizePolicy::Minimum ));
   }
 
-  connect(kapp, TQT_SIGNAL(kdisplayPaletteChanged()), TQT_SLOT(paletteChanged()));
+  connect(kapp, TQT_SIGNAL(tdedisplayPaletteChanged()), TQT_SLOT(paletteChanged()));
 
   layout->addStretch();
 

@@ -344,7 +344,7 @@ Konsole::Konsole(const char* name, int histon, bool menubaron, bool tabbaron, bo
     if (te) te->setScrollbarLocation(TEWidget::SCRNONE);
   }
 
-//  connect(kapp, TQT_SIGNAL(kdisplayFontChanged()), this, TQT_SLOT(slotFontChanged()));
+//  connect(kapp, TQT_SIGNAL(tdedisplayFontChanged()), this, TQT_SLOT(slotFontChanged()));
 
   kapp->dcopClient()->setDefaultObject( "konsole" );
 

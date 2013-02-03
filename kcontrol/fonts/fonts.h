@@ -1,6 +1,6 @@
 //-----------------------------------------------------------------------------
 //
-// kdisplay, fonts tab
+// tdedisplay, fonts tab
 //
 // Copyright (c)  Mark Donohoe 1997
 //                Lars Knoll 1999

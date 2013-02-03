@@ -125,8 +125,8 @@ Kicker::Kicker()
     configure();
 
     connect(this, TQT_SIGNAL(settingsChanged(int)), TQT_SLOT(slotSettingsChanged(int)));
-    connect(this, TQT_SIGNAL(kdisplayPaletteChanged()), TQT_SLOT(paletteChanged()));
-    connect(this, TQT_SIGNAL(kdisplayStyleChanged()), TQT_SLOT(slotStyleChanged()));
+    connect(this, TQT_SIGNAL(tdedisplayPaletteChanged()), TQT_SLOT(paletteChanged()));
+    connect(this, TQT_SIGNAL(tdedisplayStyleChanged()), TQT_SLOT(slotStyleChanged()));
 
 #if (TQT_VERSION-0 >= 0x030200) // XRANDR support
     connect(desktop(), TQT_SIGNAL(resized(int)), TQT_SLOT(slotDesktopResized()));

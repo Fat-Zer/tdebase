@@ -316,7 +316,7 @@ kg_main( const char *argv0 )
 		app->setStyle( _GUIStyle );
 	}
 
-	_colorScheme = locate( "data", "kdisplay/color-schemes/" + _colorScheme + ".kcsrc" );
+	_colorScheme = locate( "data", "tdedisplay/color-schemes/" + _colorScheme + ".kcsrc" );
 	if (!_colorScheme.isEmpty()) {
 		KSimpleConfig config( _colorScheme, true );
 		config.setGroup( "Color Scheme" );
