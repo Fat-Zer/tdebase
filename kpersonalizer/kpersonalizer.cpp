@@ -75,7 +75,7 @@ KPersonalizer::KPersonalizer(TQWidget *parent, const char *name)
 	addPage( eyecandy, i18n( "Step 3: Eyecandy-O-Meter" ) );
 	setHelpEnabled(TQWizard::page(2), false);
 
-	stylepage= new KStylePage(this);
+	stylepage= new TDEStylePage(this);
 	addPage( stylepage, i18n( "Step 4: Everybody loves Themes" ) );
 	setHelpEnabled(TQWizard::page(3), false);
 

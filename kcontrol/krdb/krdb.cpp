@@ -252,7 +252,7 @@ static void applyQtSettings( TDEConfig& kglobals, TQSettings& settings )
 
   /* export widget style */
   kglobals.setGroup("General");
-  TQString style = kglobals.readEntry("widgetStyle", KStyle::defaultStyle() );
+  TQString style = kglobals.readEntry("widgetStyle", TDEStyle::defaultStyle() );
   if (!style.isEmpty())
     settings.writeEntry("/qt/style", style);
 

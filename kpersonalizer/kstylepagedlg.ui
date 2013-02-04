@@ -1,8 +1,8 @@
 <!DOCTYPE UI><UI version="3.0" stdsetdef="1">
-<class>KStylePageDlg</class>
+<class>TDEStylePageDlg</class>
 <widget class="TQWidget">
     <property name="name">
-        <cstring>KStylePageDlg</cstring>
+        <cstring>TDEStylePageDlg</cstring>
     </property>
     <property name="geometry">
         <rect>

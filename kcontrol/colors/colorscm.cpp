@@ -402,7 +402,7 @@ void KColorScheme::save()
         XDeleteProperty( tqt_xdisplay(), tqt_xrootwin(), XA_RESOURCE_MANAGER );
 #endif
     }
-    runRdb( flags );	// Save the palette to qtrc for KStyles
+    runRdb( flags );	// Save the palette to qtrc for TDEStyles
 
     // Notify all TDE applications
     KIPC::sendMessageAll(KIPC::PaletteChanged);

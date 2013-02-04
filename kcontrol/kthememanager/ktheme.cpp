@@ -324,7 +324,7 @@ TQString KTheme::createYourself( bool pack )
     // 10. Widget style
     globalConf->setGroup( "General" );
     TQDomElement widgetsElem = m_dom.createElement( "widgets" );
-    widgetsElem.setAttribute( "name", globalConf->readEntry( "widgetStyle",KStyle::defaultStyle()  ) );
+    widgetsElem.setAttribute( "name", globalConf->readEntry( "widgetStyle",TDEStyle::defaultStyle()  ) );
     m_root.appendChild( widgetsElem );
 
     // 12.

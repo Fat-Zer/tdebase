@@ -32,7 +32,7 @@ class TDELocale;
 class KCountryPage;
 class KOSPage;
 class KEyeCandyPage;
-class KStylePage;
+class TDEStylePage;
 class KRefinePage;
 
 /** KPersonalizer is the base class of the project */
@@ -77,7 +77,7 @@ private:
 	KCountryPage* countrypage;
 	KOSPage* ospage;
 	KEyeCandyPage* eyecandy;
-	KStylePage* stylepage;
+	TDEStylePage* stylepage;
 	KRefinePage* refinepage;
 	TDELocale* locale;
 	bool os_dirty, eye_dirty, style_dirty;

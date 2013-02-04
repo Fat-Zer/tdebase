@@ -81,7 +81,7 @@ enum OverflowCategoryState { None, Filling, NotNeeded };
 class KMenu : public KMenuBase
 {
     Q_OBJECT
-    TQ_PROPERTY (bool KStyleMenuDropShadow READ useKStyleMenuDropShadow )
+    TQ_PROPERTY (bool TDEStyleMenuDropShadow READ useTDEStyleMenuDropShadow )
 
 public:
     KMenu();
@@ -90,7 +90,7 @@ public:
     int insertClientMenu(KickerClientMenu *p);
     void removeClientMenu(int id);
 
-    bool useKStyleMenuDropShadow() const { return true; }
+    bool useTDEStyleMenuDropShadow() const { return true; }
 
     virtual void showMenu();
     virtual bool eventFilter(TQObject*, TQEvent*);

@@ -43,7 +43,7 @@
 #include "stylepreview.h"
 #include "kstylepage.h"
 
-KStylePage::KStylePage(TQWidget *parent, const char *name ) : KStylePageDlg(parent,name) {
+TDEStylePage::TDEStylePage(TQWidget *parent, const char *name ) : TDEStylePageDlg(parent,name) {
 
 	px_stylesSidebar->setPixmap(UserIcon("step4.png"));
 
@@ -88,13 +88,13 @@ KStylePage::KStylePage(TQWidget *parent, const char *name ) : KStylePageDlg(pare
 	initColors();
 }
 
-KStylePage::~KStylePage(){
+TDEStylePage::~TDEStylePage(){
 	delete ctwin;
 	delete appliedStyle;
 }
 
-void KStylePage::save(bool curSettings){
-	kdDebug() << "KStylePage::save()" << endl;
+void TDEStylePage::save(bool curSettings){
+	kdDebug() << "TDEStylePage::save()" << endl;
 	// First, the style, then the colors as styles overwrite color settings
 	saveStyle(curSettings);
 	saveColors(curSettings);
@@ -104,17 +104,17 @@ void KStylePage::save(bool curSettings){
 }
 
 /** save the widget-style */
-void KStylePage::saveStyle(bool curSettings){
+void TDEStylePage::saveStyle(bool curSettings){
 	TQString style = curSettings ? currentStyle : origStyle;
 	TDEConfig cfg( "kdeglobals" );
 	cfg.setGroup("General");
 	cfg.writeEntry( "widgetStyle", style, true, true );
 	cfg.sync();
-	kdDebug() << "KStylePage::saveStyle(): " << style << endl;
+	kdDebug() << "TDEStylePage::saveStyle(): " << style << endl;
 }
 
 /** save the KWin-style*/
-void KStylePage::saveKWin(bool curSettings){
+void TDEStylePage::saveKWin(bool curSettings){
 	TQString twin = origKWinStyle;
 	if(curSettings) {
 		KDesktopFile* kdf = 0L;
@@ -147,11 +147,11 @@ void KStylePage::saveKWin(bool curSettings){
 	}
 	ctwin->writeEntry("PluginLib", twin);
 	ctwin->sync();
-	kdDebug() << "KStylePage::saveKWin(): " << twin << endl;
+	kdDebug() << "TDEStylePage::saveKWin(): " << twin << endl;
 }
 
 /** Save the color-scheme */
-void KStylePage::saveColors(bool curSettings){
+void TDEStylePage::saveColors(bool curSettings){
 	struct colorSet* toSave;
 	if(curSettings)
 		toSave=&currentColors;  // set the color struct to save as the style colors
@@ -213,11 +213,11 @@ void KStylePage::saveColors(bool curSettings){
 	kdesktop.writeEntry("Color1", toSave->usrCol1);
 	kdesktop.writeEntry("Color2", toSave->usrCol2);
 	kdesktop.sync();
-	kdDebug() << "KStylePage::saveColors(): colorFile: " << toSave->colorFile << endl;
+	kdDebug() << "TDEStylePage::saveColors(): colorFile: " << toSave->colorFile << endl;
 }
 
 /** save the icon-theme*/
-void KStylePage::saveIcons(bool curSettings) {
+void TDEStylePage::saveIcons(bool curSettings) {
 	TQString theme = origIcons;
 	if (curSettings) {
 		if ( (kde->isSelected() || platinum->isSelected() || keramik->isSelected())
@@ -242,11 +242,11 @@ void KStylePage::saveIcons(bool curSettings) {
 		TDEGlobal::config()->writeEntry("Size", icontheme.defaultSize(i));
 	}
 	TDEGlobal::config()->sync();
-	kdDebug() << "KStylePage::saveIcons(): " << theme << endl;
+	kdDebug() << "TDEStylePage::saveIcons(): " << theme << endl;
 }
 
 /** called whenever the selection in the listview changes */
-void KStylePage::slotCurrentChanged() {
+void TDEStylePage::slotCurrentChanged() {
 	// fill the currentColors-struct with the selected color-scheme
 	getColors(&currentColors, true);
 	// fill the currentStyle-string with the selected style-name
@@ -254,7 +254,7 @@ void KStylePage::slotCurrentChanged() {
 	switchPrevStyle();
 }
 
-void KStylePage::changeCurrentStyle() {
+void TDEStylePage::changeCurrentStyle() {
 	// set the style
 	if (cde->isSelected() && cde_exist) {
 		currentStyle="Motif";
@@ -291,14 +291,14 @@ void KStylePage::changeCurrentStyle() {
 		}
 	}
 	// update the preview-widget
-	kdDebug() << "KStylePage::changeCurrentStyle(): "<< currentStyle << endl;
+	kdDebug() << "TDEStylePage::changeCurrentStyle(): "<< currentStyle << endl;
 }
 
 /** to be connected to the OS page. Catches
  *  either KDE, CDE, win or mac and pre-sets the style.
  */
-void KStylePage::presetStyle(const TQString& style){
-	kdDebug() << "KStylePage::presetStyle(): "<< style << endl;
+void TDEStylePage::presetStyle(const TQString& style){
+	kdDebug() << "TDEStylePage::presetStyle(): "<< style << endl;
 	if(style=="KDE") {
 		if (kde_plastik_exist)
 			klv_styles->setSelected(kde,true);
@@ -315,11 +315,11 @@ void KStylePage::presetStyle(const TQString& style){
 }
 
 /** set the defaults for this page */
-void KStylePage::setDefaults(){
+void TDEStylePage::setDefaults(){
 }
 
 /** Fill a colorSet with a colorfile, or the default. */
-void KStylePage::getColors(colorSet *set, bool colorfile ){
+void TDEStylePage::getColors(colorSet *set, bool colorfile ){
 	TDEConfig* config;
 	bool deleteConfig = false;
 	// get the color scheme file and go to the color scheme group
@@ -365,7 +365,7 @@ void KStylePage::getColors(colorSet *set, bool colorfile ){
 		set->contrast=7;
 		config = new KSimpleConfig(set->colorFile, true);
 		config->setGroup("Color Scheme");
-		kdDebug() << "KStylePage::getColors(): schemefile: " << set->colorFile << endl;
+		kdDebug() << "TDEStylePage::getColors(): schemefile: " << set->colorFile << endl;
                 deleteConfig = true;
 	}
 	else {
@@ -383,7 +383,7 @@ void KStylePage::getColors(colorSet *set, bool colorfile ){
 		set->colorFile=config->readEntry("colorScheme", "<default>");
 		set->contrast=config->readNumEntry("contrast", 7);
 		config->setGroup( "General" );
-		kdDebug() << "KStylePage::getColors(): schemefile: "<< set->colorFile << endl;
+		kdDebug() << "TDEStylePage::getColors(): schemefile: "<< set->colorFile << endl;
     }
 	set->foreground=config->readColorEntry( "foreground", &black );
 	set->background=config->readColorEntry( "background", &widget );
@@ -412,7 +412,7 @@ void KStylePage::getColors(colorSet *set, bool colorfile ){
 }
 
 /** Test widget- and twin- styles for availability */
-void KStylePage::getAvailability() {
+void TDEStylePage::getAvailability() {
 	// test, wich styles are available
 	kde_keramik_exist = kde_hc_exist = kde_def_exist = cde_exist
 		= kde_plastik_exist = win_exist = platinum_exist = false;
@@ -467,10 +467,10 @@ void KStylePage::getAvailability() {
 }
 
 /** get the user's former settings */
-void KStylePage::getUserDefaults() {
+void TDEStylePage::getUserDefaults() {
 	// Get the user's current widget-style
 	TDEGlobal::config()->setGroup("General");
-	origStyle = TDEGlobal::config()->readEntry( "widgetStyle", KStyle::defaultStyle() );
+	origStyle = TDEGlobal::config()->readEntry( "widgetStyle", TDEStyle::defaultStyle() );
 
 	// get the user's current KWin-style
 	ctwin = new TDEConfig("twinrc");
@@ -484,14 +484,14 @@ void KStylePage::getUserDefaults() {
 	TDEGlobal::config()->setGroup("Icons");
 	origIcons = TDEGlobal::config()->readEntry("Theme");
 
-	kdDebug() << "KStylePage::getUserDefaults(): style: " << origStyle << endl;
-	kdDebug() << "KStylePage::getUserDefaults(): KWinStyle: " << origKWinStyle << endl;
-	kdDebug() << "KStylePage::getUserDefaults(): Colors: " << usrColors.colorFile << endl;
-	kdDebug() << "KStylePage::getUserDefaults(): Icons: " << origIcons << endl;
+	kdDebug() << "TDEStylePage::getUserDefaults(): style: " << origStyle << endl;
+	kdDebug() << "TDEStylePage::getUserDefaults(): KWinStyle: " << origKWinStyle << endl;
+	kdDebug() << "TDEStylePage::getUserDefaults(): Colors: " << usrColors.colorFile << endl;
+	kdDebug() << "TDEStylePage::getUserDefaults(): Icons: " << origIcons << endl;
 }
 
 /** initialize KDE default color values */
-void KStylePage::initColors() {
+void TDEStylePage::initColors() {
 	widget.setRgb(239, 239, 239);
 	trinity4Blue.setRgb(103,141,178);
         inactiveBackground.setRgb(157,170,186);
@@ -512,7 +512,7 @@ void KStylePage::initColors() {
 }
 
 /** live-update the system */
-void KStylePage::liveUpdate() {
+void TDEStylePage::liveUpdate() {
 	// tell all apps about the changed icons
 	for (int i=0; i<KIcon::LastGroup; i++) {
 		KIPC::sendMessageAll(KIPC::IconChanged, i);
@@ -528,7 +528,7 @@ void KStylePage::liveUpdate() {
 }
 
 /** show the previewWidget styled with the selected one */
-void KStylePage::switchPrevStyle() {
+void TDEStylePage::switchPrevStyle() {
 	TQStyle* style = TQStyleFactory::create(currentStyle);
 	if (!style) return;
 
@@ -548,7 +548,7 @@ void KStylePage::switchPrevStyle() {
 	appliedStyle = style;
 }
 
-void KStylePage::setStyleRecursive(TQWidget* w, TQPalette &palette, TQStyle* s) {
+void TDEStylePage::setStyleRecursive(TQWidget* w, TQPalette &palette, TQStyle* s) {
 	// Apply the new style.
 	w->setStyle(s);
 	// Recursively update all children.
@@ -566,7 +566,7 @@ void KStylePage::setStyleRecursive(TQWidget* w, TQPalette &palette, TQStyle* s) 
 }
 
 /** create a TQPalette of our current colorset */
-TQPalette KStylePage::createPalette() {
+TQPalette TDEStylePage::createPalette() {
 	colorSet *cc = &currentColors;
 	TQColorGroup disabledgrp(cc->windowForeground, cc->background, cc->background.light(150),
 		cc->background.dark(), cc->background.dark(120), cc->background.dark(120),

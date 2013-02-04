@@ -114,7 +114,7 @@ class runMenuWidget : public TQWidget, public QMenuItem
             runLayout->addSpacing(KDialog::spacingHint());
 
             TQSettings settings;
-            if (settings.readEntry("/KStyle/Settings/MenuTransparencyEngine", "Disabled") != "Disabled")
+            if (settings.readEntry("/TDEStyle/Settings/MenuTransparencyEngine", "Disabled") != "Disabled")
             {
                 setBackgroundMode(Qt::X11ParentRelative, Qt::X11ParentRelative);
                 //l1->setBackgroundMode(Qt::X11ParentRelative, Qt::X11ParentRelative);

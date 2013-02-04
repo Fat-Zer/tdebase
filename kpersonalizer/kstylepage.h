@@ -26,12 +26,12 @@
   */
 class TQListViewItem;
 
-class KStylePage : public KStylePageDlg  {
+class TDEStylePage : public TDEStylePageDlg  {
 	Q_OBJECT
 
 public:
-	KStylePage(TQWidget *parent=0, const char *name=0);
-	~KStylePage();
+	TDEStylePage(TQWidget *parent=0, const char *name=0);
+	~TDEStylePage();
 	void save(bool curSettings=true);
 	/** resets to KDE style as default */
 	void setDefaults();

@@ -519,15 +519,15 @@ void KCMStyle::save()
 	bool allowMenuTransparency = false;
 	bool allowMenuDropShadow   = false;
 
-	// Read the KStyle flags to see if the style writer
+	// Read the TDEStyle flags to see if the style writer
 	// has enabled menu translucency in the style.
-	if (appliedStyle && appliedStyle->inherits("KStyle"))
+	if (appliedStyle && appliedStyle->inherits("TDEStyle"))
 	{
 		allowMenuDropShadow = true;
-		KStyle* style = dynamic_cast<KStyle*>(appliedStyle);
+		TDEStyle* style = dynamic_cast<TDEStyle*>(appliedStyle);
 		if (style) {
-			KStyle::KStyleFlags flags = style->styleFlags();
-			if (flags & KStyle::AllowMenuTransparency)
+			TDEStyle::TDEStyleFlags flags = style->styleFlags();
+			if (flags & TDEStyle::AllowMenuTransparency)
 				allowMenuTransparency = true;
 		}
 	}
@@ -573,8 +573,8 @@ void KCMStyle::save()
 	config.writeEntry( "EffectFadeTooltip", item == 2 );
 	item = comboRubberbandEffect->currentItem();
 	{
-		TQSettings settings;	// Only for KStyle stuff
-		settings.writeEntry("/KStyle/Settings/SemiTransparentRubberband", item == 1);
+		TQSettings settings;	// Only for TDEStyle stuff
+		settings.writeEntry("/TDEStyle/Settings/SemiTransparentRubberband", item == 1);
 	}
 	item = comboMenuHandle->currentItem();
 	config.writeEntry( "InsertTearOffHandle", item );
@@ -582,7 +582,7 @@ void KCMStyle::save()
 	config.writeEntry( "EffectAnimateMenu", item == 1 );
 	config.writeEntry( "EffectFadeMenu", item == 2 );
 
-	// Handle KStyle's menu effects
+	// Handle TDEStyle's menu effects
 	TQString engine("Disabled");
 	if (item == 3 && cbEnableEffects->isChecked())	// Make Translucent
 		switch( comboMenuEffectType->currentItem())
@@ -594,19 +594,19 @@ void KCMStyle::save()
 		}
 
 	{	// Braces force a TQSettings::sync()
-		TQSettings settings;	// Only for KStyle stuff
-		settings.writeEntry("/KStyle/Settings/MenuTransparencyEngine", engine);
-		settings.writeEntry("/KStyle/Settings/MenuOpacity", slOpacity->value()/100.0);
- 		settings.writeEntry("/KStyle/Settings/MenuDropShadow",
+		TQSettings settings;	// Only for TDEStyle stuff
+		settings.writeEntry("/TDEStyle/Settings/MenuTransparencyEngine", engine);
+		settings.writeEntry("/TDEStyle/Settings/MenuOpacity", slOpacity->value()/100.0);
+ 		settings.writeEntry("/TDEStyle/Settings/MenuDropShadow",
 					   		cbEnableEffects->isChecked() && cbMenuShadow->isChecked() );
 	}
 
 	// Misc page
 	config.writeEntry( "ShowIconsOnPushButtons", cbIconsOnButtons->isChecked(), true, true );
 	{       // Braces force a TQSettings::sync()
-		TQSettings settings;    // Only for KStyle stuff
-		settings.writeEntry("/KStyle/Settings/ScrollablePopupMenus", cbScrollablePopupMenus->isChecked() );
-		settings.writeEntry("/KStyle/Settings/AutoHideAccelerators", cbAutoHideAccelerators->isChecked() );
+		TQSettings settings;    // Only for TDEStyle stuff
+		settings.writeEntry("/TDEStyle/Settings/ScrollablePopupMenus", cbScrollablePopupMenus->isChecked() );
+		settings.writeEntry("/TDEStyle/Settings/AutoHideAccelerators", cbAutoHideAccelerators->isChecked() );
 	}
 	config.writeEntry( "EffectNoTooltip", !cbEnableTooltips->isChecked(), true, true );
 
@@ -788,7 +788,7 @@ void KCMStyle::loadStyle( TDEConfig& config )
 
 	// Find out which style is currently being used
 	config.setGroup( "General" );
-	TQString defaultStyle = KStyle::defaultStyle();
+	TQString defaultStyle = TDEStyle::defaultStyle();
 	TQString cfgStyle = config.readEntry( "widgetStyle", defaultStyle );
 
 	// Select the current style
@@ -914,7 +914,7 @@ void KCMStyle::loadEffects( TDEConfig& config )
 		comboTooltipEffect->setCurrentItem( 0 );
 		
 	TQSettings settings;
-	bool semiTransparentRubberband = settings.readBoolEntry("/KStyle/Settings/SemiTransparentRubberband", false);
+	bool semiTransparentRubberband = settings.readBoolEntry("/TDEStyle/Settings/SemiTransparentRubberband", false);
 	comboRubberbandEffect->setCurrentItem( semiTransparentRubberband ? 1 : 0 );
 	
 	if ( config.readBoolEntry( "EffectAnimateMenu", false) )
@@ -926,9 +926,9 @@ void KCMStyle::loadEffects( TDEConfig& config )
 
 	comboMenuHandle->setCurrentItem(config.readNumEntry("InsertTearOffHandle", 0));
 
-	// KStyle Menu transparency and drop-shadow options...
+	// TDEStyle Menu transparency and drop-shadow options...
 	
-	TQString effectEngine = settings.readEntry("/KStyle/Settings/MenuTransparencyEngine", "Disabled");
+	TQString effectEngine = settings.readEntry("/TDEStyle/Settings/MenuTransparencyEngine", "Disabled");
 
 #ifdef HAVE_XRENDER
 	if (effectEngine == "XRender") {
@@ -955,10 +955,10 @@ void KCMStyle::loadEffects( TDEConfig& config )
 	else
 		menuPreview->setPreviewMode( MenuPreview::Blend );
 
-	slOpacity->setValue( (int)(100 * settings.readDoubleEntry("/KStyle/Settings/MenuOpacity", 0.90)) );
+	slOpacity->setValue( (int)(100 * settings.readDoubleEntry("/TDEStyle/Settings/MenuOpacity", 0.90)) );
 
 	// Menu Drop-shadows...
-	cbMenuShadow->setChecked( settings.readBoolEntry("/KStyle/Settings/MenuDropShadow", false) );
+	cbMenuShadow->setChecked( settings.readBoolEntry("/TDEStyle/Settings/MenuDropShadow", false) );
 
 	if (cbEnableEffects->isChecked()) {
 		containerFrame->setEnabled( true );
@@ -1034,8 +1034,8 @@ void KCMStyle::loadMisc( TDEConfig& config )
 	cbTearOffHandles->setChecked(config.readBoolEntry("InsertTearOffHandle", false));
 
 	TQSettings settings;
-	cbScrollablePopupMenus->setChecked(settings.readBoolEntry("/KStyle/Settings/ScrollablePopupMenus", false));
-	cbAutoHideAccelerators->setChecked(settings.readBoolEntry("/KStyle/Settings/AutoHideAccelerators", false));
+	cbScrollablePopupMenus->setChecked(settings.readBoolEntry("/TDEStyle/Settings/ScrollablePopupMenus", false));
+	cbAutoHideAccelerators->setChecked(settings.readBoolEntry("/TDEStyle/Settings/AutoHideAccelerators", false));
 
 	m_bToolbarsDirty = false;
 }

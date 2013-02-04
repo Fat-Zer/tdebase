@@ -109,19 +109,19 @@ void KOSPage::saveCheckState(bool currSettings){
 		// write the settings to the configfiles, depending on wich radiobutton is checked
 		if(rb_kde->isChecked()){
 			writeKDE();
-			emit selectedOS("KDE");	// send a signal to be caught by the KStylePage to set the according style by default depending on the OS selection
+			emit selectedOS("KDE");	// send a signal to be caught by the TDEStylePage to set the according style by default depending on the OS selection
 		}
 		else if(rb_unix->isChecked()){
 			writeUNIX();
-			emit selectedOS("CDE");	// send a signal to be caught by the KStylePage to set the according style by default depending on the OS selection
+			emit selectedOS("CDE");	// send a signal to be caught by the TDEStylePage to set the according style by default depending on the OS selection
 		}
 		else if(rb_windows->isChecked()){
 			writeWindows();
-			emit selectedOS("win");	// send a signal to be caught by the KStylePage to set the according style by default depending on the OS selection
+			emit selectedOS("win");	// send a signal to be caught by the TDEStylePage to set the according style by default depending on the OS selection
 		}
 		else if(rb_mac->isChecked()){
 			writeMacOS();
-			emit selectedOS("mac");	// send a signal to be caught by the KStylePage to set the according style by default depending on the OS selection
+			emit selectedOS("mac");	// send a signal to be caught by the TDEStylePage to set the according style by default depending on the OS selection
 		}
 
 		ckaccess->setGroup("Keyboard");
