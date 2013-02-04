@@ -509,7 +509,7 @@ void KonqFrameTabs::slotInitiateDrag( TQWidget *w )
     KURL::List lst;
     lst.append( frame->activeChildView()->url() );
     KURLDrag *d = new KURLDrag( lst, this );
-    d->setPixmap( KMimeType::pixmapForURL( lst.first(), 0, KIcon::Small ) );
+    d->setPixmap( KMimeType::pixmapForURL( lst.first(), 0, TDEIcon::Small ) );
     d->dragCopy();
   }
 }

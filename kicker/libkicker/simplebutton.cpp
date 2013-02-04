@@ -154,11 +154,11 @@ void SimpleButton::generateIcons()
     }
 
     TQImage image = pixmap()->convertToImage();
-    KIconEffect effect;
+    TDEIconEffect effect;
 
-    m_normalIcon = effect.apply(image, KIcon::Panel, KIcon::DefaultState);
-    m_activeIcon = effect.apply(image, KIcon::Panel, KIcon::ActiveState);
-    m_disabledIcon = effect.apply(image, KIcon::Panel, KIcon::DisabledState);
+    m_normalIcon = effect.apply(image, TDEIcon::Panel, TDEIcon::DefaultState);
+    m_activeIcon = effect.apply(image, TDEIcon::Panel, TDEIcon::ActiveState);
+    m_disabledIcon = effect.apply(image, TDEIcon::Panel, TDEIcon::DisabledState);
     
     updateGeometry();
 }
@@ -188,7 +188,7 @@ void SimpleButton::slotSettingsChanged(int category)
 
 void SimpleButton::slotIconChanged( int group )
 {
-    if (group != KIcon::Panel)
+    if (group != TDEIcon::Panel)
     {
         return;
     }

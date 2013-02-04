@@ -39,7 +39,7 @@ namespace TDEIO { class Job; }
  * Used by kdesktop and konq_iconview.
  *
  */
-class LIBKONQ_EXPORT KonqIconViewWidget : public KIconView
+class LIBKONQ_EXPORT KonqIconViewWidget : public TDEIconView
 {
     Q_OBJECT
     TQ_PROPERTY( bool sortDirectoriesFirst READ sortDirectoriesFirst WRITE setSortDirectoriesFirst )

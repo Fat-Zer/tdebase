@@ -156,7 +156,7 @@ void PopupMenuGUIClient::addEmbeddingService( TQDomElement &menu, int idx, const
 
   action.setAttribute( "group", "preview" );
 
-  (void)new TDEAction( name, service->pixmap( KIcon::Small ), 0,
+  (void)new TDEAction( name, service->pixmap( TDEIcon::Small ), 0,
                      TQT_TQOBJECT(m_mainWindow), TQT_SLOT( slotOpenEmbedded() ), actionCollection(), actName );
 }
 

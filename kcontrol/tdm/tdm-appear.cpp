@@ -462,7 +462,7 @@ void TDMAppearanceWidget::save()
   config->writeEntry("LogoArea", noneRadio->isChecked() ? "None" :
 			    logoRadio->isChecked() ? "Logo" : "Clock" );
 
-  config->writeEntry("LogoPixmap", TDEGlobal::iconLoader()->iconPath(logopath, KIcon::Desktop, true));
+  config->writeEntry("LogoPixmap", TDEGlobal::iconLoader()->iconPath(logopath, TDEIcon::Desktop, true));
 
   config->writeEntry("Compositor", compositorcombo->currentId());
 

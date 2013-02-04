@@ -3288,9 +3288,9 @@ void Konsole::notifySessionState(TESession* session, int state)
       && m_tabViewMode != ShowTextOnly) {
 
     TQPixmap normal = TDEGlobal::instance()->iconLoader()->loadIcon(state_iconname,
-                       KIcon::Small, 0, KIcon::DefaultState, 0L, true);
+                       TDEIcon::Small, 0, TDEIcon::DefaultState, 0L, true);
     TQPixmap active = TDEGlobal::instance()->iconLoader()->loadIcon(state_iconname,
-                       KIcon::Small, 0, KIcon::ActiveState, 0L, true);
+                       TDEIcon::Small, 0, TDEIcon::ActiveState, 0L, true);
 
     // make sure they are not larger than 16x16
     if (normal.width() > 16 || normal.height() > 16)

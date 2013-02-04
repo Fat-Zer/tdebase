@@ -276,7 +276,7 @@ void KdeprintFax::addURL(KURL url)
 	TQString	target;
 	if (TDEIO::NetAccess::download(url,target,this))
 	{
-		m_files->insertItem(KMimeType::pixmapForURL(url,0,KIcon::Small),target);
+		m_files->insertItem(KMimeType::pixmapForURL(url,0,TDEIcon::Small),target);
 		actionCollection()->action("file_remove")->setEnabled(true);
 		slotCurrentChanged();
 	}

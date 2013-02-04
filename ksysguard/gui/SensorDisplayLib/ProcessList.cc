@@ -613,16 +613,16 @@ ProcessList::addProcess(KSGRD::SensorPSLine* p, ProcessLVI* pli)
 	TQPixmap pix;
 	if (!iconCache[name])
 	{
-		pix = TDEGlobal::iconLoader()->loadIcon(name, KIcon::Small,
-							  KIcon::SizeSmall, KIcon::DefaultState,
+		pix = TDEGlobal::iconLoader()->loadIcon(name, TDEIcon::Small,
+							  TDEIcon::SizeSmall, TDEIcon::DefaultState,
 							  0L, true);
 		if (pix.isNull() || !pix.mask())
-			pix = TDEGlobal::iconLoader()->loadIcon("unknownapp", KIcon::User,
-								  KIcon::SizeSmall);
+			pix = TDEGlobal::iconLoader()->loadIcon("unknownapp", TDEIcon::User,
+								  TDEIcon::SizeSmall);
 
 		if (pix.width() != 16 || pix.height() != 16)
 		{
-			/* I guess this isn't needed too often. The KIconLoader should
+			/* I guess this isn't needed too often. The TDEIconLoader should
 			 * scale the pixmaps already appropriately. Since I got a bug
 			 * report claiming that it doesn't work with GNOME apps I've
 			 * added this safeguard. */

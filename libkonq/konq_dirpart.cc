@@ -64,10 +64,10 @@ public:
 
 void KonqDirPart::KonqDirPartPrivate::findAvailableIconSizes(void)
 {
-    KIconTheme *root = TDEGlobal::instance()->iconLoader()->theme();
+    TDEIconTheme *root = TDEGlobal::instance()->iconLoader()->theme();
     iconSize.resize(1);
     if (root) {
-	TQValueList<int> avSizes = root->querySizes(KIcon::Desktop);
+	TQValueList<int> avSizes = root->querySizes(TDEIcon::Desktop);
         kdDebug(1203) << "The icon theme handles the sizes:" << avSizes << endl;
 	qHeapSort(avSizes);
 	int oldSize = -1;
@@ -95,10 +95,10 @@ void KonqDirPart::KonqDirPartPrivate::findAvailableIconSizes(void)
 	    }
 	}
     } else {
-	iconSize.append(KIcon::SizeSmall); // 16
-	iconSize.append(KIcon::SizeMedium); // 32
-	iconSize.append(KIcon::SizeLarge); // 48
-	iconSize.append(KIcon::SizeHuge); // 64
+	iconSize.append(TDEIcon::SizeSmall); // 16
+	iconSize.append(TDEIcon::SizeMedium); // 32
+	iconSize.append(TDEIcon::SizeLarge); // 48
+	iconSize.append(TDEIcon::SizeHuge); // 64
     }
     kdDebug(1203) << "Using " << iconSize.count() << " icon sizes." << endl;
 }
@@ -106,7 +106,7 @@ void KonqDirPart::KonqDirPartPrivate::findAvailableIconSizes(void)
 int KonqDirPart::KonqDirPartPrivate::findNearestIconSize(int preferred)
 {
     int s1 = iconSize[1];
-    if (preferred == 0) return TDEGlobal::iconLoader()->currentSize(KIcon::Desktop);
+    if (preferred == 0) return TDEGlobal::iconLoader()->currentSize(TDEIcon::Desktop);
     if (preferred <= s1) return s1;
     for (uint i = 2; i <= iconSize.count(); i++) {
         if (preferred <= iconSize[i]) {
@@ -175,18 +175,18 @@ KonqDirPart::KonqDirPart( TQObject *parent, const char *name )
     // Use these also if the icon theme is scalable.
     int i;
     d->iconSize[0] = 0; // Default value
-    d->iconSize[1] = KIcon::SizeSmall; // 16
-    d->iconSize[2] = KIcon::SizeSmallMedium; // 22
-    d->iconSize[3] = KIcon::SizeMedium; // 32
-    d->iconSize[4] = KIcon::SizeLarge; // 48
-    d->iconSize[5] = KIcon::SizeHuge; // 64
-    d->iconSize[6] = KIcon::SizeEnormous; // 128
+    d->iconSize[1] = TDEIcon::SizeSmall; // 16
+    d->iconSize[2] = TDEIcon::SizeSmallMedium; // 22
+    d->iconSize[3] = TDEIcon::SizeMedium; // 32
+    d->iconSize[4] = TDEIcon::SizeLarge; // 48
+    d->iconSize[5] = TDEIcon::SizeHuge; // 64
+    d->iconSize[6] = TDEIcon::SizeEnormous; // 128
     d->iconSize[7] = 192;
     d->iconSize[8] = 256;
-    KIconTheme *root = TDEGlobal::instance()->iconLoader()->theme();
+    TDEIconTheme *root = TDEGlobal::instance()->iconLoader()->theme();
     if (root)
     {
-      TQValueList<int> avSizes = root->querySizes(KIcon::Desktop);
+      TQValueList<int> avSizes = root->querySizes(TDEIcon::Desktop);
       kdDebug(1203) << "the icon theme handles the following sizes:" << avSizes << endl;
       if (avSizes.count() < 10) {
 	// Use the icon sizes supplied by the theme.
@@ -213,10 +213,10 @@ KonqDirPart::KonqDirPart( TQObject *parent, const char *name )
 
     // Remove in KDE4 ...
     // These are here in the event subclasses access them.
-    m_iIconSize[1] = KIcon::SizeSmall;
-    m_iIconSize[2] = KIcon::SizeMedium;
-    m_iIconSize[3] = KIcon::SizeLarge;
-    m_iIconSize[4] = KIcon::SizeHuge;
+    m_iIconSize[1] = TDEIcon::SizeSmall;
+    m_iIconSize[2] = TDEIcon::SizeMedium;
+    m_iIconSize[3] = TDEIcon::SizeLarge;
+    m_iIconSize[4] = TDEIcon::SizeHuge;
     // ... up to here
 
     TDEAction *a = new TDEAction( i18n( "Configure Background..." ), "background", 0, this, TQT_SLOT( slotBackgroundSettings() ),
@@ -555,23 +555,23 @@ void KonqDirPart::slotIconSizeToggled( bool toggleOn )
     if ( m_paDefaultIcons->isChecked() )
         setIconSize(0);
     else if ( d->aEnormousIcons->isChecked() )
-        setIconSize(d->findNearestIconSize(KIcon::SizeEnormous));
+        setIconSize(d->findNearestIconSize(TDEIcon::SizeEnormous));
     else if ( m_paHugeIcons->isChecked() )
-        setIconSize(d->findNearestIconSize(KIcon::SizeHuge));
+        setIconSize(d->findNearestIconSize(TDEIcon::SizeHuge));
     else if ( m_paLargeIcons->isChecked() )
-        setIconSize(d->findNearestIconSize(KIcon::SizeLarge));
+        setIconSize(d->findNearestIconSize(TDEIcon::SizeLarge));
     else if ( m_paMediumIcons->isChecked() )
-        setIconSize(d->findNearestIconSize(KIcon::SizeMedium));
+        setIconSize(d->findNearestIconSize(TDEIcon::SizeMedium));
     else if ( d->aSmallMediumIcons->isChecked() )
-        setIconSize(d->findNearestIconSize(KIcon::SizeSmallMedium));
+        setIconSize(d->findNearestIconSize(TDEIcon::SizeSmallMedium));
     else if ( m_paSmallIcons->isChecked() )
-        setIconSize(d->findNearestIconSize(KIcon::SizeSmall));
+        setIconSize(d->findNearestIconSize(TDEIcon::SizeSmall));
 }
 
 void KonqDirPart::slotIncIconSize()
 {
     int s = m_pProps->iconSize();
-    s = s ? s : TDEGlobal::iconLoader()->currentSize( KIcon::Desktop );
+    s = s ? s : TDEGlobal::iconLoader()->currentSize( TDEIcon::Desktop );
     uint sizeIndex = 0;
     for ( uint idx = 1; idx < d->iconSize.count() ; ++idx )
         if (s == d->iconSize[idx]) {
@@ -587,7 +587,7 @@ void KonqDirPart::slotIncIconSize()
 void KonqDirPart::slotDecIconSize()
 {
     int s = m_pProps->iconSize();
-    s = s ? s : TDEGlobal::iconLoader()->currentSize( KIcon::Desktop );
+    s = s ? s : TDEGlobal::iconLoader()->currentSize( TDEIcon::Desktop );
     uint sizeIndex = 0;
     for ( uint idx = 1; idx < d->iconSize.count() ; ++idx )
         if (s == d->iconSize[idx]) {
@@ -603,17 +603,17 @@ void KonqDirPart::slotDecIconSize()
 // Only updates Actions, a GUI update is done in the views by reimplementing this
 void KonqDirPart::newIconSize( int size /*0=default, or 16,32,48....*/ )
 {
-    int realSize = (size==0) ? TDEGlobal::iconLoader()->currentSize( KIcon::Desktop ) : size;
+    int realSize = (size==0) ? TDEGlobal::iconLoader()->currentSize( TDEIcon::Desktop ) : size;
     m_paDecIconSize->setEnabled(realSize > d->iconSize[1]);
     m_paIncIconSize->setEnabled(realSize < d->iconSize.back());
 
     m_paDefaultIcons->setChecked(size == 0);
-    d->aEnormousIcons->setChecked(size == d->findNearestIconSize(KIcon::SizeEnormous));
-    m_paHugeIcons->setChecked(size == d->findNearestIconSize(KIcon::SizeHuge));
-    m_paLargeIcons->setChecked(size == d->findNearestIconSize(KIcon::SizeLarge));
-    m_paMediumIcons->setChecked(size == d->findNearestIconSize(KIcon::SizeMedium));
-    d->aSmallMediumIcons->setChecked(size == d->findNearestIconSize(KIcon::SizeSmallMedium));
-    m_paSmallIcons->setChecked(size == d->findNearestIconSize(KIcon::SizeSmall));
+    d->aEnormousIcons->setChecked(size == d->findNearestIconSize(TDEIcon::SizeEnormous));
+    m_paHugeIcons->setChecked(size == d->findNearestIconSize(TDEIcon::SizeHuge));
+    m_paLargeIcons->setChecked(size == d->findNearestIconSize(TDEIcon::SizeLarge));
+    m_paMediumIcons->setChecked(size == d->findNearestIconSize(TDEIcon::SizeMedium));
+    d->aSmallMediumIcons->setChecked(size == d->findNearestIconSize(TDEIcon::SizeSmallMedium));
+    m_paSmallIcons->setChecked(size == d->findNearestIconSize(TDEIcon::SizeSmall));
 }
 
 // Stores the new icon size and updates the GUI
@@ -688,7 +688,7 @@ void KonqDirPart::slotFindClosed()
 
 void KonqDirPart::slotIconChanged( int group )
 {
-    if (group != KIcon::Desktop) return;
+    if (group != TDEIcon::Desktop) return;
     adjustIconSizes();
 }
 

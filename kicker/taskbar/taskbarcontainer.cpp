@@ -154,7 +154,7 @@ void TaskBarContainer::configure()
         }
 
         windowListButton->setPixmap(kapp->iconLoader()->loadIcon(icon,
-                                                                 KIcon::Panel,
+                                                                 TDEIcon::Panel,
                                                                  16));
         windowListButton->setMinimumSize(windowListButton->sizeHint());
         layout->insertWidget(0, windowListButton);
@@ -258,7 +258,7 @@ void TaskBarContainer::popupDirectionChange(KPanelApplet::Direction d)
     if (windowListButton)
     {
         windowListButton->setPixmap(kapp->iconLoader()->loadIcon(icon,
-                                                                 KIcon::Panel,
+                                                                 TDEIcon::Panel,
                                                                  16));
         windowListButton->setMinimumSize(windowListButton->sizeHint());
     }

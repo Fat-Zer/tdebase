@@ -3,7 +3,7 @@
 
 #include <tqtabwidget.h>
 class TypesListItem;
-class KIconButton;
+class TDEIconButton;
 class TQLineEdit;
 class TQListBox;
 class TQButtonGroup;
@@ -47,7 +47,7 @@ private:
   TypesListItem * m_item;
 
   // First tab - General
-  KIconButton *iconButton;
+  TDEIconButton *iconButton;
   TQListBox *extensionLB;
   TQPushButton *addExtButton, *removeExtButton;
   TQLineEdit *description;

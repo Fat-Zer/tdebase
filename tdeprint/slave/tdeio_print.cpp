@@ -796,7 +796,7 @@ TQString KIO_Print::locateData(const TQString& item)
 {
 	TQString	path = locate("data", "tdeprint/template/"+item);
 	if (path.isEmpty())
-		path = TDEGlobal::iconLoader()->iconPath(item, KIcon::Desktop, true);
+		path = TDEGlobal::iconLoader()->iconPath(item, TDEIcon::Desktop, true);
 	return path;
 }
 

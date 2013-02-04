@@ -34,13 +34,13 @@ class TDEAboutData;
 #define ORIGINAL_THEME "original" // no i18n() here!!!
 
 /*
-class KIconViewItem;
+class TDEIconViewItem;
 
-class KThemeDetailsItem: public KIconViewItem
+class KThemeDetailsItem: public TDEIconViewItem
 {
 public:
-    KThemeDetailsItem( KIconView * parent, const TQString & text, const TQPixmap & icon, const TQString & execString )
-        : KIconViewItem( parent, text, icon ) { m_exec = execString; }
+    KThemeDetailsItem( TDEIconView * parent, const TQString & text, const TQPixmap & icon, const TQString & execString )
+        : TDEIconViewItem( parent, text, icon ) { m_exec = execString; }
     virtual ~KThemeDetailsItem() { };
 
     void exec() {

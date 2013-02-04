@@ -616,8 +616,8 @@ void ActionsImpl::slotHideInToolbar() {
 void ActionsImpl::slotChangeIcon() {
     KEBApp::self()->bkInfo()->commitChanges();
     KBookmark bk = ListView::self()->firstSelected()->bookmark();
-    KIconDialog dlg(KEBApp::self());
-    TQString newIcon = dlg.selectIcon(KIcon::Small, KIcon::Place);
+    TDEIconDialog dlg(KEBApp::self());
+    TQString newIcon = dlg.selectIcon(TDEIcon::Small, TDEIcon::Place);
     if (newIcon.isEmpty())
         return;
     EditCommand *cmd = new EditCommand(

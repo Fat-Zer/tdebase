@@ -260,7 +260,7 @@ void CKFileFontView::updateView(bool b)
         {
             CFontListViewItem *item=static_cast<CFontListViewItem *>(it.current());
 
-            item->setPixmap(0, item->fileInfo()->pixmap(KIcon::SizeSmall));
+            item->setPixmap(0, item->fileInfo()->pixmap(TDEIcon::SizeSmall));
         }
     }
 }
@@ -475,9 +475,9 @@ TQDragObject *CKFileFontView::dragObject()
         urls.append( (*it)->url() );
 
     if(urls.count()> 1)
-        pixmap = DesktopIcon("tdemultiple", KIcon::SizeSmall);
+        pixmap = DesktopIcon("tdemultiple", TDEIcon::SizeSmall);
     if(pixmap.isNull())
-        pixmap = currentFileItem()->pixmap(KIcon::SizeSmall);
+        pixmap = currentFileItem()->pixmap(TDEIcon::SizeSmall);
 
     hotspot.setX(pixmap.width() / 2);
     hotspot.setY(pixmap.height() / 2);
@@ -629,7 +629,7 @@ void CKFileFontView::writeConfig(TDEConfig *kc, const TQString &group)
 
 void CFontListViewItem::init()
 {
-    CFontListViewItem::setPixmap(COL_NAME, itsInf->pixmap(KIcon::SizeSmall));
+    CFontListViewItem::setPixmap(COL_NAME, itsInf->pixmap(TDEIcon::SizeSmall));
 
     setText(COL_NAME, itsInf->text());
     setText(COL_SIZE, itsInf->isDir() ? "" : TDEGlobal::locale()->formatNumber(itsInf->size(), 0));

@@ -195,7 +195,7 @@ void ThumbnailProtocol::get(const KURL &url)
 #endif
 
     if (!iconSize)
-        iconSize = TDEGlobal::iconLoader()->currentSize(KIcon::Desktop);
+        iconSize = TDEGlobal::iconLoader()->currentSize(TDEIcon::Desktop);
     if (iconSize != m_iconSize)
         m_iconDict.clear();
     m_iconSize = iconSize;
@@ -341,7 +341,7 @@ void ThumbnailProtocol::get(const KURL &url)
     }
 #endif
 
-    if ((flags & ThumbCreator::BlendIcon) && TDEGlobal::iconLoader()->alphaBlending(KIcon::Desktop))
+    if ((flags & ThumbCreator::BlendIcon) && TDEGlobal::iconLoader()->alphaBlending(TDEIcon::Desktop))
     {
         // blending the mimetype icon in
         TQImage icon = getIcon();
@@ -420,7 +420,7 @@ const TQImage& ThumbnailProtocol::getIcon()
     TQImage* icon = m_iconDict.find(m_mimeType);
     if ( !icon ) // generate it!
     {
-        icon = new TQImage( KMimeType::mimeType(m_mimeType)->pixmap( KIcon::Desktop, m_iconSize ).convertToImage() );
+        icon = new TQImage( KMimeType::mimeType(m_mimeType)->pixmap( TDEIcon::Desktop, m_iconSize ).convertToImage() );
         icon->setAlphaBuffer( true );
 
         int w = icon->width();

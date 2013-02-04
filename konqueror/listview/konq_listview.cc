@@ -675,7 +675,7 @@ void KonqListView::setupActions()
 //  m_paShowDot->setCheckedState(i18n("Hide &Hidden Files"));
   m_paCaseInsensitive = new TDEToggleAction(i18n("Case Insensitive Sort"), 0, this, TQT_SLOT(slotCaseInsensitive()),actionCollection(), "sort_caseinsensitive" );
 
-  newIconSize( KIcon::SizeSmall /* default size */ );
+  newIconSize( TDEIcon::SizeSmall /* default size */ );
 }
 
 void KonqListView::slotSelectionChanged()

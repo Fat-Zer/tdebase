@@ -1063,16 +1063,16 @@ static void redraw_pixmaps()
     }
 
     // Apply the hilight effect to the 'Hover' icons
-    KIconEffect ie;
+    TDEIconEffect ie;
     TQPixmap hilighted;
     for (i = 0; i < P_NUM_BUTTON_TYPES; i++) {
 	int offset = i * NumStates;
 	hilighted = ie.apply(*pixmap[offset + Norm], 
-		KIcon::Small, KIcon::ActiveState);
+		TDEIcon::Small, TDEIcon::ActiveState);
 	*pixmap[offset + Hover] = hilighted;    
 
 	hilighted = ie.apply(*pixmap[offset + INorm], 
-		KIcon::Small, KIcon::ActiveState);
+		TDEIcon::Small, TDEIcon::ActiveState);
 	*pixmap[offset + IHover] = hilighted;    
     }
 

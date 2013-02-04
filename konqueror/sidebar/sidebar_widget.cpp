@@ -488,9 +488,9 @@ void Sidebar_Widget::buttonPopupActivate(int id)
 	{
 		case 1:
 		{
-			KIconDialog kicd(this);
+			TDEIconDialog kicd(this);
 //			kicd.setStrictIconSize(true);
-			TQString iconname=kicd.selectIcon(KIcon::Small);
+			TQString iconname=kicd.selectIcon(TDEIcon::Small);
 			kdDebug()<<"New Icon Name:"<<iconname<<endl;
 			if (!iconname.isEmpty())
 			{

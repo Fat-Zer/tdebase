@@ -57,10 +57,10 @@ class KonqBaseListViewItem : public TDEListViewItem
       int state() const 
       {
          if (m_bDisabled)
-            return KIcon::DisabledState;
+            return TDEIcon::DisabledState;
          if (m_bActive)
-            return KIcon::ActiveState; 
-         return KIcon::DefaultState;
+            return TDEIcon::ActiveState; 
+         return TDEIcon::DefaultState;
       }
 
       /** For KonqMimeTypeResolver */

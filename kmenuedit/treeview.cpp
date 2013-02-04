@@ -134,7 +134,7 @@ void TreeItem::setup()
 
 static TQPixmap appIcon(const TQString &iconName)
 {
-    TQPixmap normal = TDEGlobal::iconLoader()->loadIcon(iconName, KIcon::Small, 0, KIcon::DefaultState, 0L, true);
+    TQPixmap normal = TDEGlobal::iconLoader()->loadIcon(iconName, TDEIcon::Small, 0, TDEIcon::DefaultState, 0L, true);
     // make sure they are not larger than 20x20
     if (normal.width() > 20 || normal.height() > 20)
     {

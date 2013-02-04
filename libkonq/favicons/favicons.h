@@ -36,7 +36,7 @@ namespace TDEIO { class Job; }
  * the default icon for all URLs on the given host. In this case, the
  * second parameter is a host name, otherwise the second parameter is the
  * URL which is associated with the icon. The third parameter is the
- * @ref KIconLoader friendly name of the downloaded icon, the same as
+ * @ref TDEIconLoader friendly name of the downloaded icon, the same as
  * @ref iconForURL will from now on return for any matching URL.
  *
  * @short KDED Module for favicons
@@ -57,7 +57,7 @@ k_dcop:
      * been downloaded yet, TQString::null is returned.
      *
      * @param url the URL for which the icon is queried
-     * @return the icon name suitable to pass to @ref KIconLoader or
+     * @return the icon name suitable to pass to @ref TDEIconLoader or
      *         TQString::null if no icon for this URL was found.
      */
     TQString iconForURL(const KURL &url);

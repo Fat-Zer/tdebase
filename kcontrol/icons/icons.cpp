@@ -32,9 +32,9 @@
 
 #include "icons.h"
 
-/**** KIconConfig ****/
+/**** TDEIconConfig ****/
 
-KIconConfig::KIconConfig(TQWidget *parent, const char *name)
+TDEIconConfig::TDEIconConfig(TQWidget *parent, const char *name)
     : TDECModule(parent, name)
 {
 
@@ -114,13 +114,13 @@ KIconConfig::KIconConfig(TQWidget *parent, const char *name)
     preview();
 }
 
-KIconConfig::~KIconConfig()
+TDEIconConfig::~TDEIconConfig()
 {
   delete mpSystrayConfig;
   delete mpEffect;
 }
 
-TQPushButton *KIconConfig::addPreviewIcon(int i, const TQString &str, TQWidget *parent, TQGridLayout *lay)
+TQPushButton *TDEIconConfig::addPreviewIcon(int i, const TQString &str, TQWidget *parent, TQGridLayout *lay)
 {
     TQLabel *lab = new TQLabel(str, parent);
     lay->addWidget(lab, 1, i, Qt::AlignCenter);
@@ -133,14 +133,14 @@ TQPushButton *KIconConfig::addPreviewIcon(int i, const TQString &str, TQWidget *
     return push;
 }
 
-void KIconConfig::init()
+void TDEIconConfig::init()
 {
     mpLoader = TDEGlobal::iconLoader();
     mpConfig = TDEGlobal::config();
-    mpEffect = new KIconEffect;
+    mpEffect = new TDEIconEffect;
     mpTheme = mpLoader->theme();
     mUsage = 0;
-    for (int i=0; i<KIcon::LastGroup; i++)
+    for (int i=0; i<TDEIcon::LastGroup; i++)
 	mbChanged[i] = false;
 
     // Fill list/checkboxen
@@ -165,11 +165,11 @@ void KIconConfig::init()
     mStates += "Disabled";
 }
 
-void KIconConfig::initDefaults()
+void TDEIconConfig::initDefaults()
 {
-    mDefaultEffect[0].type = KIconEffect::NoEffect;
-    mDefaultEffect[1].type = KIconEffect::NoEffect;
-    mDefaultEffect[2].type = KIconEffect::ToGray;
+    mDefaultEffect[0].type = TDEIconEffect::NoEffect;
+    mDefaultEffect[1].type = TDEIconEffect::NoEffect;
+    mDefaultEffect[2].type = TDEIconEffect::ToGray;
     mDefaultEffect[0].transparant = false;
     mDefaultEffect[1].transparant = false;
     mDefaultEffect[2].transparant = true;
@@ -185,9 +185,9 @@ void KIconConfig::initDefaults()
 
     const int defDefSizes[] = { 32, 22, 22, 16, 32 };
 
-    KIcon::Group i;
+    TDEIcon::Group i;
     TQStringList::ConstIterator it;
-    for(it=mGroups.begin(), i=KIcon::FirstGroup; it!=mGroups.end(); ++it, i++)
+    for(it=mGroups.begin(), i=TDEIcon::FirstGroup; it!=mGroups.end(); ++it, i++)
     {
 	mbDP[i] = false;
 	mbChanged[i] = true;
@@ -213,24 +213,24 @@ void KIconConfig::initDefaults()
         int group = mGroups.findIndex( "Desktop" );
         if ( group != -1 )
         {
-            mEffects[ group ][ activeState ].type = KIconEffect::ToGamma;
+            mEffects[ group ][ activeState ].type = TDEIconEffect::ToGamma;
             mEffects[ group ][ activeState ].value = 0.7;
         }
 
         group = mGroups.findIndex( "Panel" );
         if ( group != -1 )
         {
-            mEffects[ group ][ activeState ].type = KIconEffect::ToGamma;
+            mEffects[ group ][ activeState ].type = TDEIconEffect::ToGamma;
             mEffects[ group ][ activeState ].value = 0.7;
         }
     }
 }
 
-void KIconConfig::read()
+void TDEIconConfig::read()
 {
     if (mpTheme)
     {
-        for (KIcon::Group i=KIcon::FirstGroup; i<KIcon::LastGroup; i++)
+        for (TDEIcon::Group i=TDEIcon::FirstGroup; i<TDEIcon::LastGroup; i++)
             mAvSizes[i] = mpTheme->querySizes(i);
 
         mTheme = mpTheme->current();
@@ -238,7 +238,7 @@ void KIconConfig::read()
     }
     else
     {
-        for (KIcon::Group i=KIcon::FirstGroup; i<KIcon::LastGroup; i++)
+        for (TDEIcon::Group i=TDEIcon::FirstGroup; i<TDEIcon::LastGroup; i++)
             mAvSizes[i] = TQValueList<int>();
 
         mTheme = TQString::null;
@@ -262,17 +262,17 @@ void KIconConfig::read()
 	{
 	    TQString tmp = mpConfig->readEntry(*it2 + "Effect");
 	    if (tmp == "togray")
-		effect = KIconEffect::ToGray;
+		effect = TDEIconEffect::ToGray;
 	    else if (tmp == "colorize")
-		effect = KIconEffect::Colorize;
+		effect = TDEIconEffect::Colorize;
 	    else if (tmp == "togamma")
-		effect = KIconEffect::ToGamma;
+		effect = TDEIconEffect::ToGamma;
 	    else if (tmp == "desaturate")
-		effect = KIconEffect::DeSaturate;
+		effect = TDEIconEffect::DeSaturate;
 	    else if (tmp == "tomonochrome")
-		effect = KIconEffect::ToMonochrome;
+		effect = TDEIconEffect::ToMonochrome;
 	    else if (tmp == "none")
-		effect = KIconEffect::NoEffect;
+		effect = TDEIconEffect::NoEffect;
 	    else continue;
 	    mEffects[i][j].type = effect;
 	    mEffects[i][j].value = mpConfig->readDoubleNumEntry(*it2 + "Value");
@@ -287,14 +287,14 @@ void KIconConfig::read()
     mSysTraySize = mpSystrayConfig->readNumEntry("systrayIconWidth", 22);
 
     mpKickerConfig->setGroup("General");
-    mQuickLaunchSize = mpKickerConfig->readNumEntry("panelIconWidth", KIcon::SizeLarge);
+    mQuickLaunchSize = mpKickerConfig->readNumEntry("panelIconWidth", TDEIcon::SizeLarge);
 
     TDEConfigGroup g( TDEGlobal::config(), "KDE" );
     mpRoundedCheck->setChecked(g.readBoolEntry("IconUseRoundedRect", KDE_DEFAULT_ICONTEXTROUNDED));
     mpActiveEffectCheck->setChecked(g.readBoolEntry("ShowKonqIconActivationEffect", KDE_DEFAULT_KONQ_ACTIVATION_EFFECT));
 }
 
-void KIconConfig::apply()
+void TDEIconConfig::apply()
 {
     int i;
 
@@ -332,7 +332,7 @@ void KIconConfig::apply()
         int delta = 1000, dw, index = -1, size = 0, i;
         TQValueList<int>::Iterator it;
         mpSizeBox->clear();
-        if (mUsage < KIcon::LastGroup) {
+        if (mUsage < TDEIcon::LastGroup) {
             for (it=mAvSizes[mUsage].begin(), i=0; it!=mAvSizes[mUsage].end(); ++it, i++)
             {
                 mpSizeBox->insertItem(TQString().setNum(*it));
@@ -355,31 +355,31 @@ void KIconConfig::apply()
     }
 }
 
-void KIconConfig::preview(int i)
+void TDEIconConfig::preview(int i)
 {
     // Apply effects ourselves because we don't want to sync
     // the configuration every preview.
 
     int viewedGroup;
     if (mpUsageList->text(mUsage) == i18n("Panel Buttons")) {
-        viewedGroup = KIcon::FirstGroup;
+        viewedGroup = TDEIcon::FirstGroup;
     }
     else if (mpUsageList->text(mUsage) == i18n("System Tray Icons")) {
-        viewedGroup = KIcon::FirstGroup;
+        viewedGroup = TDEIcon::FirstGroup;
     }
     else {
-        viewedGroup = (mUsage == KIcon::LastGroup) ? KIcon::FirstGroup : mUsage;
+        viewedGroup = (mUsage == TDEIcon::LastGroup) ? TDEIcon::FirstGroup : mUsage;
     }
 
     TQPixmap pm;
     if (mpUsageList->text(mUsage) == i18n("Panel Buttons")) {
-        pm = mpLoader->loadIcon(mExample, KIcon::NoGroup, mQuickLaunchSize);
+        pm = mpLoader->loadIcon(mExample, TDEIcon::NoGroup, mQuickLaunchSize);
     }
     else if (mpUsageList->text(mUsage) == i18n("System Tray Icons")) {
-        pm = mpLoader->loadIcon(mExample, KIcon::NoGroup, mSysTraySize);
+        pm = mpLoader->loadIcon(mExample, TDEIcon::NoGroup, mSysTraySize);
     }
     else {
-        pm = mpLoader->loadIcon(mExample, KIcon::NoGroup, mSizes[viewedGroup]);
+        pm = mpLoader->loadIcon(mExample, TDEIcon::NoGroup, mSizes[viewedGroup]);
     }
     TQImage img = pm.convertToImage();
     if (mbDP[viewedGroup])
@@ -396,32 +396,32 @@ void KIconConfig::preview(int i)
     mpPreview[i]->setPixmap(pm);
 }
 
-void KIconConfig::preview()
+void TDEIconConfig::preview()
 {
     preview(0);
     preview(1);
     preview(2);
 }
 
-void KIconConfig::load()
+void TDEIconConfig::load()
 {
     load( false );
 }
 
-void KIconConfig::load( bool useDefaults )
+void TDEIconConfig::load( bool useDefaults )
 {
     mpConfig = TDEGlobal::config();
     mpConfig->setReadDefaults( useDefaults );
     read();
     apply();
-    for (int i=0; i<KIcon::LastGroup; i++)
+    for (int i=0; i<TDEIcon::LastGroup; i++)
 	mbChanged[i] = false;
     preview();
     emit changed( useDefaults );
 }
 
 
-void KIconConfig::save()
+void TDEIconConfig::save()
 {
     int i, j;
     TQStringList::ConstIterator it, it2;
@@ -436,19 +436,19 @@ void KIconConfig::save()
 	    TQString tmp;
 	    switch (mEffects[i][j].type)
 	    {
-	    case KIconEffect::ToGray:
+	    case TDEIconEffect::ToGray:
 		tmp = "togray";
 		break;
-	    case KIconEffect::ToGamma:
+	    case TDEIconEffect::ToGamma:
 		tmp = "togamma";
 		break;
-	    case KIconEffect::Colorize:
+	    case TDEIconEffect::Colorize:
 		tmp = "colorize";
 		break;
-	    case KIconEffect::DeSaturate:
+	    case TDEIconEffect::DeSaturate:
 		tmp = "desaturate";
 		break;
-	    case KIconEffect::ToMonochrome:
+	    case TDEIconEffect::ToMonochrome:
 		tmp = "tomonochrome";
 		break;
 	    default:
@@ -487,7 +487,7 @@ void KIconConfig::save()
     emit changed(false);
 
     // Emit KIPC change message.
-    for (int i=0; i<KIcon::LastGroup; i++)
+    for (int i=0; i<TDEIcon::LastGroup; i++)
     {
 	if (mbChanged[i])
 	{
@@ -503,16 +503,16 @@ void KIconConfig::save()
     kapp->dcopClient()->send("kicker", "SystemTrayApplet", "iconSizeChanged()", TQByteArray());
 }
 
-void KIconConfig::defaults()
+void TDEIconConfig::defaults()
 {
     load( true );
 }
 
-void KIconConfig::QLSizeLockedChanged(bool checked) {
+void TDEIconConfig::QLSizeLockedChanged(bool checked) {
     emit changed();
 }
 
-void KIconConfig::slotUsage(int index)
+void TDEIconConfig::slotUsage(int index)
 {
     mUsage = index;
     if (mpUsageList->text(index) == i18n("Panel Buttons")) {
@@ -531,11 +531,11 @@ void KIconConfig::slotUsage(int index)
         mPreviewButton2->setEnabled(false);
         mPreviewButton3->setEnabled(false);
     }
-    else if ( mUsage == KIcon::Panel || mUsage == KIcon::LastGroup )
+    else if ( mUsage == TDEIcon::Panel || mUsage == TDEIcon::LastGroup )
     {
         mpSizeBox->setEnabled(false);
         mpDPCheck->setEnabled(false);
-	mpAnimatedCheck->setEnabled( mUsage == KIcon::Panel );
+	mpAnimatedCheck->setEnabled( mUsage == TDEIcon::Panel );
         mPreviewButton1->setEnabled(true);
         mPreviewButton2->setEnabled(true);
         mPreviewButton3->setEnabled(true);
@@ -544,7 +544,7 @@ void KIconConfig::slotUsage(int index)
     {
         mpSizeBox->setEnabled(true);
         mpDPCheck->setEnabled(true);
-	mpAnimatedCheck->setEnabled( mUsage == KIcon::Desktop );
+	mpAnimatedCheck->setEnabled( mUsage == TDEIcon::Desktop );
         mPreviewButton1->setEnabled(true);
         mPreviewButton2->setEnabled(true);
         mPreviewButton3->setEnabled(true);
@@ -554,9 +554,9 @@ void KIconConfig::slotUsage(int index)
     preview();
 }
 
-void KIconConfig::EffectSetup(int state)
+void TDEIconConfig::EffectSetup(int state)
 {
-    int viewedGroup = (mUsage == KIcon::LastGroup) ? KIcon::FirstGroup : mUsage;
+    int viewedGroup = (mUsage == TDEIcon::LastGroup) ? TDEIcon::FirstGroup : mUsage;
 
     if (mpUsageList->currentText() == i18n("Panel Buttons")) {
         return;
@@ -565,7 +565,7 @@ void KIconConfig::EffectSetup(int state)
         return;
     }
 
-    TQPixmap pm = mpLoader->loadIcon(mExample, KIcon::NoGroup, mSizes[viewedGroup]);
+    TQPixmap pm = mpLoader->loadIcon(mExample, TDEIcon::NoGroup, mSizes[viewedGroup]);
     TQImage img = pm.convertToImage();
     if (mbDP[viewedGroup])
     {
@@ -581,12 +581,12 @@ void KIconConfig::EffectSetup(int state)
     case 2 : caption = i18n("Setup Disabled Icon Effect"); break;
     }
 
-    KIconEffectSetupDialog dlg(mEffects[viewedGroup][state], mDefaultEffect[state], caption, img);
+    TDEIconEffectSetupDialog dlg(mEffects[viewedGroup][state], mDefaultEffect[state], caption, img);
 
     if (dlg.exec() == TQDialog::Accepted)
     {
-        if (mUsage == KIcon::LastGroup) {
-            for (int i=0; i<KIcon::LastGroup; i++)
+        if (mUsage == TDEIcon::LastGroup) {
+            for (int i=0; i<TDEIcon::LastGroup; i++)
                 mEffects[i][state] = dlg.effect();
         } else {
             mEffects[mUsage][state] = dlg.effect();
@@ -597,8 +597,8 @@ void KIconConfig::EffectSetup(int state)
 
         emit changed(true);
 
-        if (mUsage == KIcon::LastGroup) {
-            for (int i=0; i<KIcon::LastGroup; i++)
+        if (mUsage == TDEIcon::LastGroup) {
+            for (int i=0; i<TDEIcon::LastGroup; i++)
                 mbChanged[i] = true;
         } else {
             mbChanged[mUsage] = true;
@@ -607,7 +607,7 @@ void KIconConfig::EffectSetup(int state)
     preview(state);
 }
 
-void KIconConfig::slotSize(int index)
+void TDEIconConfig::slotSize(int index)
 {
     if (mpUsageList->currentText() == i18n("Panel Buttons")) {
         mQuickLaunchSize = mpSizeBox->currentText().toInt();
@@ -620,7 +620,7 @@ void KIconConfig::slotSize(int index)
         emit changed(true);
     }
     else {
-        Q_ASSERT(mUsage < KIcon::LastGroup);
+        Q_ASSERT(mUsage < TDEIcon::LastGroup);
         mSizes[mUsage] = mAvSizes[mUsage][index];
         preview();
         emit changed(true);
@@ -628,9 +628,9 @@ void KIconConfig::slotSize(int index)
     }
 }
 
-void KIconConfig::slotDPCheck(bool check)
+void TDEIconConfig::slotDPCheck(bool check)
 {
-    Q_ASSERT(mUsage < KIcon::LastGroup);
+    Q_ASSERT(mUsage < TDEIcon::LastGroup);
     if (mbDP[mUsage] != check)
     {
         mbDP[mUsage] = check;
@@ -641,9 +641,9 @@ void KIconConfig::slotDPCheck(bool check)
 
 }
 
-void KIconConfig::slotAnimatedCheck(bool check)
+void TDEIconConfig::slotAnimatedCheck(bool check)
 {
-    Q_ASSERT(mUsage < KIcon::LastGroup);
+    Q_ASSERT(mUsage < TDEIcon::LastGroup);
     if (mbAnimated[mUsage] != check)
     {
         mbAnimated[mUsage] = check;
@@ -652,17 +652,17 @@ void KIconConfig::slotAnimatedCheck(bool check)
     }
 }
 
-void KIconConfig::slotRoundedCheck(bool check)
+void TDEIconConfig::slotRoundedCheck(bool check)
 {
     emit changed(true);
 }
 
-void KIconConfig::slotActiveEffect(bool check)
+void TDEIconConfig::slotActiveEffect(bool check)
 {
     emit changed(true);
 }
 
-KIconEffectSetupDialog::KIconEffectSetupDialog(const Effect &effect,
+TDEIconEffectSetupDialog::TDEIconEffectSetupDialog(const Effect &effect,
     const Effect &defaultEffect,
     const TQString &caption, const TQImage &image,
     TQWidget *parent, char *name)
@@ -672,7 +672,7 @@ KIconEffectSetupDialog::KIconEffectSetupDialog(const Effect &effect,
       mDefaultEffect(defaultEffect),
       mExample(image)
 {
-    mpEffect = new KIconEffect;
+    mpEffect = new TDEIconEffect;
 
     TQLabel *lbl;
     TQGroupBox *frame;
@@ -749,67 +749,67 @@ KIconEffectSetupDialog::KIconEffectSetupDialog(const Effect &effect,
     preview();
 }
 
-KIconEffectSetupDialog::~KIconEffectSetupDialog()
+TDEIconEffectSetupDialog::~TDEIconEffectSetupDialog()
 {
   delete mpEffect;
 }
 
-void KIconEffectSetupDialog::init()
+void TDEIconEffectSetupDialog::init()
 {
     mpEffectBox->setCurrentItem(mEffect.type);
-    mpEffectSlider->setEnabled(mEffect.type != KIconEffect::NoEffect);
-    mpEColButton->setEnabled(mEffect.type == KIconEffect::Colorize || mEffect.type == KIconEffect::ToMonochrome);
-    mpECol2Button->setEnabled(mEffect.type == KIconEffect::ToMonochrome);
+    mpEffectSlider->setEnabled(mEffect.type != TDEIconEffect::NoEffect);
+    mpEColButton->setEnabled(mEffect.type == TDEIconEffect::Colorize || mEffect.type == TDEIconEffect::ToMonochrome);
+    mpECol2Button->setEnabled(mEffect.type == TDEIconEffect::ToMonochrome);
     mpEffectSlider->setValue((int) (100.0 * mEffect.value + 0.5));
     mpEColButton->setColor(mEffect.color);
     mpECol2Button->setColor(mEffect.color2);
     mpSTCheck->setChecked(mEffect.transparant);
 }
 
-void KIconEffectSetupDialog::slotEffectValue(int value)
+void TDEIconEffectSetupDialog::slotEffectValue(int value)
 {
      mEffect.value = 0.01 * value;
      preview();
 }
 
-void KIconEffectSetupDialog::slotEffectColor(const TQColor &col)
+void TDEIconEffectSetupDialog::slotEffectColor(const TQColor &col)
 {
      mEffect.color = col;
      preview();
 }
 
-void KIconEffectSetupDialog::slotEffectColor2(const TQColor &col)
+void TDEIconEffectSetupDialog::slotEffectColor2(const TQColor &col)
 {
      mEffect.color2 = col;
      preview();
 }
 
-void KIconEffectSetupDialog::slotEffectType(int type)
+void TDEIconEffectSetupDialog::slotEffectType(int type)
 {
     mEffect.type = type;
-    mpEffectGroup->setEnabled(mEffect.type != KIconEffect::NoEffect);
-    mpEffectSlider->setEnabled(mEffect.type != KIconEffect::NoEffect);
-    mpEffectColor->setEnabled(mEffect.type == KIconEffect::Colorize || mEffect.type == KIconEffect::ToMonochrome);
-    mpEColButton->setEnabled(mEffect.type == KIconEffect::Colorize || mEffect.type == KIconEffect::ToMonochrome);
-    mpEffectColor2->setEnabled(mEffect.type == KIconEffect::ToMonochrome);
-    mpECol2Button->setEnabled(mEffect.type == KIconEffect::ToMonochrome);
+    mpEffectGroup->setEnabled(mEffect.type != TDEIconEffect::NoEffect);
+    mpEffectSlider->setEnabled(mEffect.type != TDEIconEffect::NoEffect);
+    mpEffectColor->setEnabled(mEffect.type == TDEIconEffect::Colorize || mEffect.type == TDEIconEffect::ToMonochrome);
+    mpEColButton->setEnabled(mEffect.type == TDEIconEffect::Colorize || mEffect.type == TDEIconEffect::ToMonochrome);
+    mpEffectColor2->setEnabled(mEffect.type == TDEIconEffect::ToMonochrome);
+    mpECol2Button->setEnabled(mEffect.type == TDEIconEffect::ToMonochrome);
     preview();
 }
 
-void KIconEffectSetupDialog::slotSTCheck(bool b)
+void TDEIconEffectSetupDialog::slotSTCheck(bool b)
 {
      mEffect.transparant = b;
      preview();
 }
 
-void KIconEffectSetupDialog::slotDefault()
+void TDEIconEffectSetupDialog::slotDefault()
 {
      mEffect = mDefaultEffect;
      init();
      preview();
 }
 
-void KIconEffectSetupDialog::preview()
+void TDEIconEffectSetupDialog::preview()
 {
     TQPixmap pm;
     TQImage img = mExample.copy();

@@ -124,13 +124,13 @@ void IconThemesConfig::loadThemes()
 {
   m_iconThemes->clear();
   m_themeNames.clear();
-  TQStringList themelist(KIconTheme::list());
+  TQStringList themelist(TDEIconTheme::list());
   TQString name;
   TQString tname;
   TQStringList::Iterator it;
   for (it=themelist.begin(); it != themelist.end(); ++it)
   {
-    KIconTheme icontheme(*it);
+    TDEIconTheme icontheme(*it);
     if (!icontheme.isValid()) kdDebug() << "notvalid\n";
     if (icontheme.isHidden()) continue;
 
@@ -194,7 +194,7 @@ void IconThemesConfig::installNewTheme()
   TDEGlobal::instance()->newIconLoader();
   loadThemes();
 
-  TQListViewItem *item=iconThemeItem(KIconTheme::current());
+  TQListViewItem *item=iconThemeItem(TDEIconTheme::current());
   m_iconThemes->setSelected(item, true);
   updateRemoveButton();
 }
@@ -289,12 +289,12 @@ void IconThemesConfig::removeSelectedTheme()
         "This will delete the files installed by this theme.</qt>").
 	arg(selected->text(0));
 
-  bool deletingCurrentTheme=(selected==iconThemeItem(KIconTheme::current()));
+  bool deletingCurrentTheme=(selected==iconThemeItem(TDEIconTheme::current()));
 
   int r=KMessageBox::warningContinueCancel(this,question,i18n("Confirmation"),KStdGuiItem::del());
   if (r!=KMessageBox::Continue) return;
 
-  KIconTheme icontheme(m_themeNames[selected->text(0)]);
+  TDEIconTheme icontheme(m_themeNames[selected->text(0)]);
 
   // delete the index file before the async TDEIO::del so loadThemes() will
   // ignore that dir.
@@ -309,9 +309,9 @@ void IconThemesConfig::removeSelectedTheme()
   TQListViewItem *item=0L;
   //Fallback to the default if we've deleted the current theme
   if (!deletingCurrentTheme)
-     item=iconThemeItem(KIconTheme::current());
+     item=iconThemeItem(TDEIconTheme::current());
   if (!item)
-     item=iconThemeItem(KIconTheme::defaultThemeName());
+     item=iconThemeItem(TDEIconTheme::defaultThemeName());
 
   m_iconThemes->setSelected(item, true);
   updateRemoveButton();
@@ -326,12 +326,12 @@ void IconThemesConfig::updateRemoveButton()
   bool enabled = false;
   if (selected)
   {
-    KIconTheme icontheme(m_themeNames[selected->text(0)]);
+    TDEIconTheme icontheme(m_themeNames[selected->text(0)]);
     TQFileInfo fi(icontheme.dir());
     enabled = fi.isWritable();
     // Don't let users remove the current theme.
-    if(m_themeNames[selected->text(0)] == KIconTheme::current() || 
-			 m_themeNames[selected->text(0)] == KIconTheme::defaultThemeName())
+    if(m_themeNames[selected->text(0)] == TDEIconTheme::current() || 
+			 m_themeNames[selected->text(0)] == TDEIconTheme::defaultThemeName())
       enabled = false;
   }
   m_removeButton->setEnabled(enabled);
@@ -343,20 +343,20 @@ void IconThemesConfig::themeSelected(TQListViewItem *item)
   KSVGIconEngine engine;
 #endif 
   TQString dirName(m_themeNames[item->text(0)]);
-  KIconTheme icontheme(dirName);
+  TDEIconTheme icontheme(dirName);
   if (!icontheme.isValid()) kdDebug() << "notvalid\n";
 
   updateRemoveButton();
-  const int size = icontheme.defaultSize(KIcon::Desktop);
+  const int size = icontheme.defaultSize(TDEIcon::Desktop);
 
-  KIcon icon=icontheme.iconPath("exec.png", size, KIcon::MatchBest);
+  TDEIcon icon=icontheme.iconPath("exec.png", size, TDEIcon::MatchBest);
   if (!icon.isValid()) {
 #ifdef HAVE_LIBART
-	  icon=icontheme.iconPath("exec.svg", size, KIcon::MatchBest);
+	  icon=icontheme.iconPath("exec.svg", size, TDEIcon::MatchBest);
 	  if(engine.load(size, size, icon.path))
               m_previewExec->setPixmap(*engine.image());
           else {
-              icon=icontheme.iconPath("exec.svgz", size, KIcon::MatchBest);
+              icon=icontheme.iconPath("exec.svgz", size, TDEIcon::MatchBest);
               if(engine.load(size, size, icon.path))
                   m_previewExec->setPixmap(*engine.image());
           }
@@ -365,14 +365,14 @@ void IconThemesConfig::themeSelected(TQListViewItem *item)
   else
           m_previewExec->setPixmap(TQPixmap(icon.path));
 
-  icon=icontheme.iconPath("folder.png",size,KIcon::MatchBest);
+  icon=icontheme.iconPath("folder.png",size,TDEIcon::MatchBest);
   if (!icon.isValid()) {
 #ifdef HAVE_LIBART
-	  icon=icontheme.iconPath("folder.svg", size, KIcon::MatchBest);
+	  icon=icontheme.iconPath("folder.svg", size, TDEIcon::MatchBest);
 	  if(engine.load(size, size, icon.path))
               m_previewFolder->setPixmap(*engine.image());
           else {
-              icon=icontheme.iconPath("folder.svgz", size, KIcon::MatchBest);
+              icon=icontheme.iconPath("folder.svgz", size, TDEIcon::MatchBest);
               if(engine.load(size, size, icon.path))
                   m_previewFolder->setPixmap(*engine.image());
           }
@@ -381,14 +381,14 @@ void IconThemesConfig::themeSelected(TQListViewItem *item)
   else
   	  m_previewFolder->setPixmap(TQPixmap(icon.path));
 
-  icon=icontheme.iconPath("txt.png",size,KIcon::MatchBest);
+  icon=icontheme.iconPath("txt.png",size,TDEIcon::MatchBest);
   if (!icon.isValid()) {
 #ifdef HAVE_LIBART
-	  icon=icontheme.iconPath("txt.svg", size, KIcon::MatchBest);
+	  icon=icontheme.iconPath("txt.svg", size, TDEIcon::MatchBest);
 	  if(engine.load(size, size, icon.path))
               m_previewDocument->setPixmap(*engine.image());
           else {
-              icon=icontheme.iconPath("txt.svgz", size, KIcon::MatchBest);
+              icon=icontheme.iconPath("txt.svgz", size, TDEIcon::MatchBest);
               if(engine.load(size, size, icon.path))
                   m_previewDocument->setPixmap(*engine.image());
           }
@@ -403,7 +403,7 @@ void IconThemesConfig::themeSelected(TQListViewItem *item)
 
 void IconThemesConfig::load()
 {
-  m_defaultTheme=iconThemeItem(KIconTheme::current());
+  m_defaultTheme=iconThemeItem(TDEIconTheme::current());
   m_iconThemes->setSelected(m_defaultTheme, true);
   updateRemoveButton();
 
@@ -424,10 +424,10 @@ void IconThemesConfig::save()
   config->writeEntry("Theme", m_themeNames[selected->text(0)]);
   delete config;
 
-  KIconTheme::reconfigure();
+  TDEIconTheme::reconfigure();
   emit changed(false);
 
-  for (int i=0; i<KIcon::LastGroup; i++)
+  for (int i=0; i<TDEIcon::LastGroup; i++)
   {
     KIPC::sendMessageAll(KIPC::IconChanged, i);
   }

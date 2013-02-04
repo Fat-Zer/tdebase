@@ -629,9 +629,9 @@ Task::Task(WId win, TQObject *parent, const char *name)
     if(_pixmap.isNull())
     {
         TDEGlobal::iconLoader()->loadIcon(className().lower(),
-                                                    KIcon::Small,
-                                                    KIcon::Small,
-                                                    KIcon::DefaultState,
+                                                    TDEIcon::Small,
+                                                    TDEIcon::Small,
+                                                    TDEIcon::DefaultState,
                                                     0, true);
     }
 
@@ -710,9 +710,9 @@ void Task::refreshIcon()
     if(_pixmap.isNull())
     {
         TDEGlobal::iconLoader()->loadIcon(className().lower(),
-                                                    KIcon::Small,
-                                                    KIcon::Small,
-                                                    KIcon::DefaultState,
+                                                    TDEIcon::Small,
+                                                    TDEIcon::Small,
+                                                    TDEIcon::DefaultState,
                                                     0, true);
     }
 
@@ -908,20 +908,20 @@ TQPixmap Task::bestIcon( int size, bool &isStaticIcon )
   isStaticIcon = false;
 
   switch( size ) {
-  case KIcon::SizeSmall:
+  case TDEIcon::SizeSmall:
     {
       pixmap = icon( 16, 16, true  );
 
       // Icon of last resort
       if( pixmap.isNull() ) {
         pixmap = TDEGlobal::iconLoader()->loadIcon( "go",
-                                                  KIcon::NoGroup,
-                                                  KIcon::SizeSmall );
+                                                  TDEIcon::NoGroup,
+                                                  TDEIcon::SizeSmall );
         isStaticIcon = true;
       }
     }
     break;
-  case KIcon::SizeMedium:
+  case TDEIcon::SizeMedium:
     {
       //
       // Try 34x34 first for KDE 2.1 icons with shadows, if we don't
@@ -938,13 +938,13 @@ TQPixmap Task::bestIcon( int size, bool &isStaticIcon )
       // Icon of last resort
       if( pixmap.isNull() ) {
         pixmap = TDEGlobal::iconLoader()->loadIcon( "go",
-                            KIcon::NoGroup,
-                            KIcon::SizeMedium );
+                            TDEIcon::NoGroup,
+                            TDEIcon::SizeMedium );
         isStaticIcon = true;
       }
     }
     break;
-  case KIcon::SizeLarge:
+  case TDEIcon::SizeLarge:
     {
       // If there's a 48x48 icon in the hints then use it
       pixmap = icon( size, size, false  );
@@ -952,9 +952,9 @@ TQPixmap Task::bestIcon( int size, bool &isStaticIcon )
       // If not, try to get one from the classname
       if ( pixmap.isNull() || pixmap.width() != size || pixmap.height() != size ) {
         pixmap = TDEGlobal::iconLoader()->loadIcon( className(),
-                            KIcon::NoGroup,
+                            TDEIcon::NoGroup,
                             size,
-                            KIcon::DefaultState,
+                            TDEIcon::DefaultState,
                             0L,
                             true );
         isStaticIcon = true;
@@ -969,7 +969,7 @@ TQPixmap Task::bestIcon( int size, bool &isStaticIcon )
       // Icon of last resort
       if( pixmap.isNull() ) {
         pixmap = TDEGlobal::iconLoader()->loadIcon( "go",
-                                                  KIcon::NoGroup,
+                                                  TDEIcon::NoGroup,
                                                   size );
         isStaticIcon = true;
       }

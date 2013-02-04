@@ -356,7 +356,7 @@ void TDELocaleConfig::loadCountryList()
                           .arg(tag) ) );
     TQIconSet icon;
     if ( !map.isNull() )
-      icon = TDEGlobal::iconLoader()->loadIconSet(map, KIcon::Small);
+      icon = TDEGlobal::iconLoader()->loadIconSet(map, TDEIcon::Small);
     m_comboCountry->insertSubmenu( icon, name, tag, sub, -2 );
   }
 
@@ -383,7 +383,7 @@ void TDELocaleConfig::loadCountryList()
     TQString flag( locate( "locale",
                           TQString::fromLatin1( "l10n/%1/flag.png" )
                           .arg(tag) ) );
-    TQIconSet icon( TDEGlobal::iconLoader()->loadIconSet(flag, KIcon::Small) );
+    TQIconSet icon( TDEGlobal::iconLoader()->loadIconSet(flag, TDEIcon::Small) );
     m_comboCountry->insertItem( icon, name, tag, submenu, menu_index );
   }
 

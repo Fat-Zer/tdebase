@@ -97,10 +97,10 @@ class runMenuWidget : public TQWidget, public QMenuItem
             TQHBoxLayout* runLayout = new TQHBoxLayout(this);
             textRect = fontMetrics().boundingRect(i18n("Run:"));
             runLayout->setSpacing(KDialog::spacingHint());
-            runLayout->addSpacing((KDialog::spacingHint() * 3) + KIcon::SizeMedium + textRect.width());
-            icon = DesktopIcon("run", KIcon::SizeMedium);
+            runLayout->addSpacing((KDialog::spacingHint() * 3) + TDEIcon::SizeMedium + textRect.width());
+            icon = DesktopIcon("run", TDEIcon::SizeMedium);
             /*TQLabel* l1 = new TQLabel(this);
-            TQPixmap foo = DesktopIcon("run", KIcon::SizeMedium);
+            TQPixmap foo = DesktopIcon("run", TDEIcon::SizeMedium);
             cout << "foo is: " << foo.width() << " by " << foo.height() << endl;
             l1->setPixmap(foo);
             runLayout->addWidget(l1);*/
@@ -133,7 +133,7 @@ class runMenuWidget : public TQWidget, public QMenuItem
                 //m_runEdit->setBackgroundMode(Qt::X11ParentRelative, Qt::X11ParentRelative);
             }
 
-            setMinimumHeight(KIcon::SizeMedium + 2);
+            setMinimumHeight(TDEIcon::SizeMedium + 2);
         }
         ~runMenuWidget() {}
 
@@ -144,9 +144,9 @@ class runMenuWidget : public TQWidget, public QMenuItem
             TQRect r(rect());
             // ew, nasty hack. may result in coredumps due to horrid C-style cast???
             kapp->style().drawControl(TQStyle::CE_PopupMenuItem, &p, m_menu, r, palette().active(), TQStyle::Style_Enabled,
-                                      TQStyleOption(static_cast<TQMenuItem*>(this), 0, KIcon::SizeMedium ));
+                                      TQStyleOption(static_cast<TQMenuItem*>(this), 0, TDEIcon::SizeMedium ));
             p.drawPixmap(KDialog::spacingHint(), 1, icon);
-            p.drawText((KDialog::spacingHint() * 2) + KIcon::SizeMedium, textRect.height() + ((height() - textRect.height()) / 2), i18n("Run:"));
+            p.drawText((KDialog::spacingHint() * 2) + TDEIcon::SizeMedium, textRect.height() + ((height() - textRect.height()) / 2), i18n("Run:"));
         }
 
         void focusInEvent (TQFocusEvent* e)
@@ -238,7 +238,7 @@ void TOM::initializeRecentDocs()
          */
 
         KDesktopFile f(*it, true /* read only */);
-        m_recentDocsMenu->insertItem(DesktopIcon(f.readIcon(), KIcon::SizeMedium),
+        m_recentDocsMenu->insertItem(DesktopIcon(f.readIcon(), TDEIcon::SizeMedium),
                                      f.readName().replace('&', "&&"), id);
         ++id;
     }
@@ -274,7 +274,7 @@ int TOM::appendTaskGroup(TDEConfig& config, bool inSubMenu)
 
         if (icon != TQString::null)
         {
-            insertItem(DesktopIcon(icon, KIcon::SizeMedium), name, taskGroup);
+            insertItem(DesktopIcon(icon, TDEIcon::SizeMedium), name, taskGroup);
         }
         else
         {
@@ -459,7 +459,7 @@ void TOM::initialize()
 
     PanelServiceMenu* moreApps = new PanelServiceMenu(TQString::null, TQString::null, this, "More Applications");
     moreApps->setFont(m_largerFont);
-    insertItem(DesktopIcon("misc", KIcon::SizeMedium), i18n("More Applications"), moreApps);
+    insertItem(DesktopIcon("misc", TDEIcon::SizeMedium), i18n("More Applications"), moreApps);
     m_submenus.append(moreApps);
 
     if (!m_isImmutable)
@@ -486,7 +486,7 @@ void TOM::initialize()
     }
     else if (kapp->authorize("run_command"))
     {
-        insertItem(DesktopIcon("run", KIcon::SizeMedium), i18n("Run Command..."), this, TQT_SLOT(runCommand()));
+        insertItem(DesktopIcon("run", TDEIcon::SizeMedium), i18n("Run Command..."), this, TQT_SLOT(runCommand()));
     }
 
     // RECENTLY USED ITEMS
@@ -496,7 +496,7 @@ void TOM::initialize()
     m_recentDocsMenu->setFont(m_largerFont);
     connect(m_recentDocsMenu, TQT_SIGNAL(aboutToShow()), this, TQT_SLOT(initializeRecentDocs()));
     connect(m_recentDocsMenu, TQT_SIGNAL(activated(int)), this, TQT_SLOT(openRecentDocument(int)));
-    insertItem(DesktopIcon("document", KIcon::SizeMedium), i18n("Recent Documents"), m_recentDocsMenu);
+    insertItem(DesktopIcon("document", TDEIcon::SizeMedium), i18n("Recent Documents"), m_recentDocsMenu);
     m_submenus.append(m_recentDocsMenu);
 
     TDEPopupMenu* recentApps = new TDEPopupMenu(this, "recentApps");
@@ -512,7 +512,7 @@ void TOM::initialize()
     // if we have no destinations, put the run command here
     if (numDests == 0 && kapp->authorize("run_command"))
     {
-        insertItem(DesktopIcon("run", KIcon::SizeMedium), i18n("Run Command..."), this, TQT_SLOT(runCommand()));
+        insertItem(DesktopIcon("run", TDEIcon::SizeMedium), i18n("Run Command..."), this, TQT_SLOT(runCommand()));
     }
 
 
@@ -533,7 +533,7 @@ void TOM::initialize()
             if (menu)
             {
                 ++m_maxIndex;
-                insertItem(DesktopIcon(info.icon(), KIcon::SizeMedium), info.name(), menu, m_maxIndex);
+                insertItem(DesktopIcon(info.icon(), TDEIcon::SizeMedium), info.name(), menu, m_maxIndex);
                 m_submenus.append(menu);
                 needSeparator = true;
             }
@@ -563,7 +563,7 @@ void TOM::initialize()
         }
     }
 
-    insertItem(DesktopIcon("exit", KIcon::SizeMedium),
+    insertItem(DesktopIcon("exit", TDEIcon::SizeMedium),
                i18n("Logout %1").arg(username), this, TQT_SLOT(logout()));
 }
 
@@ -677,7 +677,7 @@ bool TOM::loadSidePixmap()
     return false;
   }
 
-  KIconEffect::colorize(image, color, 1.0);
+  TDEIconEffect::colorize(image, color, 1.0);
   m_sidePixmap.convertFromImage(image);
 
   image.load(locate("data", "kicker/pics/" + sideTileName));
@@ -687,7 +687,7 @@ bool TOM::loadSidePixmap()
     return false;
   }
 
-  KIconEffect::colorize(image, color, 1.0);
+  TDEIconEffect::colorize(image, color, 1.0);
   m_sideTilePixmap.convertFromImage(image);
 
   if (m_sidePixmap.width() != m_sideTilePixmap.width())

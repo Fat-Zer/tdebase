@@ -370,7 +370,7 @@ void DigitalClock::loadSettings()
     setSegmentStyle(TQLCDNumber::Flat);
 
     if (_prefs->digitalLCDStyle())
-        lcdPattern = KIconLoader("clockapplet").loadIcon("lcd", KIcon::User);
+        lcdPattern = TDEIconLoader("clockapplet").loadIcon("lcd", TDEIcon::User);
 
     setNumDigits(_prefs->digitalShowSeconds() ? 8:5);
 
@@ -477,14 +477,14 @@ void AnalogClock::initBackgroundPixmap()
     //if no antialiasing, use pixmap as-is
     if (_prefs->analogAntialias() == 0)
     {
-      lcdPattern = KIconLoader("clockapplet").loadIcon("lcd",KIcon::User);
+      lcdPattern = TDEIconLoader("clockapplet").loadIcon("lcd",TDEIcon::User);
       _bgScale = 1;
     }
     else
     {
         //make a scaled pixmap -- so when image is reduced it'll look "OK".
         _bgScale = _prefs->analogAntialias()+1;
-        TQImage bgImage = KIconLoader("clockapplet").loadIcon("lcd", KIcon::User).convertToImage();
+        TQImage bgImage = TDEIconLoader("clockapplet").loadIcon("lcd", TDEIcon::User).convertToImage();
         lcdPattern = TQPixmap(bgImage.scale(bgImage.width() * _bgScale,
                              bgImage.height() * _bgScale));
 
@@ -1780,7 +1780,7 @@ void ClockApplet::updateKickerTip(KickerTip::Data& data)
         TZoffset = zone->calc_TZ_offset(activeZone);
     }
 
-    data.icon = DesktopIcon("date", KIcon::SizeMedium);
+    data.icon = DesktopIcon("date", TDEIcon::SizeMedium);
     data.direction = popupDirection();
     data.duration = 4000;
 }

@@ -54,8 +54,8 @@ JoyWidget::JoyWidget(TQWidget *parent, const char *name)
     messageBox = new TQHBox(mainVbox);
     messageBox->setSpacing(KDialog::spacingHint());
     TQLabel *icon = new TQLabel(messageBox);
-    icon->setPixmap(TDEGlobal::iconLoader()->loadIcon("messagebox_warning", KIcon::NoGroup,
-                                                    KIcon::SizeMedium, KIcon::DefaultState, 0, true));
+    icon->setPixmap(TDEGlobal::iconLoader()->loadIcon("messagebox_warning", TDEIcon::NoGroup,
+                                                    TDEIcon::SizeMedium, TDEIcon::DefaultState, 0, true));
     icon->setFixedSize(icon->sizeHint());
     message = new TQLabel(messageBox);
     messageBox->hide();

@@ -92,7 +92,7 @@ void InfoProtocol::get( const KURL& url )
     // extract the path and node from url
     decodeURL( url );
 
-    TQString path = TDEGlobal::iconLoader()->iconPath("up", KIcon::Toolbar, true);
+    TQString path = TDEGlobal::iconLoader()->iconPath("up", TDEIcon::Toolbar, true);
     int revindex = path.findRev('/');
     path = path.left(revindex);
 

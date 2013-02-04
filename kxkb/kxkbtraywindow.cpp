@@ -43,8 +43,8 @@ void KxkbLabelController::setToolTip(const TQString& tip)
 
 void KxkbLabelController::setPixmap(const TQPixmap& pixmap)
 {
-	KIconEffect iconeffect;
-	label->setPixmap( iconeffect.apply(pixmap, KIcon::Panel, KIcon::DefaultState) );
+	TDEIconEffect iconeffect;
+	label->setPixmap( iconeffect.apply(pixmap, TDEIcon::Panel, TDEIcon::DefaultState) );
 }
 
 
@@ -81,7 +81,7 @@ void KxkbLabelController::initLayoutList(const TQValueList<LayoutUnit>& layouts,
 /*	menu->removeItem(CONFIG_MENU_ID);
 	menu->removeItem(HELP_MENU_ID);*/
 	
-    KIconEffect iconeffect;
+    TDEIconEffect iconeffect;
     
 	int cnt = 0;
     TQValueList<LayoutUnit>::ConstIterator it;
@@ -91,7 +91,7 @@ void KxkbLabelController::initLayoutList(const TQValueList<LayoutUnit>& layouts,
 		const TQString variantName = (*it).variant;
 		
 		const TQPixmap& layoutPixmap = LayoutIcon::getInstance().findPixmap(layoutName, m_showFlag, (*it).displayName);
-        const TQPixmap pix = iconeffect.apply(layoutPixmap, KIcon::Small, KIcon::DefaultState);
+        const TQPixmap pix = iconeffect.apply(layoutPixmap, TDEIcon::Small, TDEIcon::DefaultState);
 		
 		TQString fullName = i18n((rules.layouts()[layoutName]));
 		if( variantName.isEmpty() == false )

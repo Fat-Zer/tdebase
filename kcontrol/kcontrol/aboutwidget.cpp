@@ -150,10 +150,10 @@ void AboutWidget::updatePixmap()
     }
     else
     {
-        KIconLoader *loader = TDEGlobal::instance()->iconLoader();
+        TDEIconLoader *loader = TDEGlobal::instance()->iconLoader();
         TQString iconPath;
         if (!_icon.isEmpty()) {
-            iconPath = loader->iconPath( _icon, KIcon::Toolbar );
+            iconPath = loader->iconPath( _icon, TDEIcon::Toolbar );
             content += "<div id=\"tableTitle\"><img src=\"" + iconPath +" \"</a>&nbsp;" + _caption + "</div>";
         }
 
@@ -171,7 +171,7 @@ void AboutWidget::updatePixmap()
             {
                 szName = module->moduleName();
                 szComment = module->comment();
-                iconPath = loader->iconPath( module->icon(), KIcon::Small );
+                iconPath = loader->iconPath( module->icon(), TDEIcon::Small );
 
                 content += "<img src=\"" + iconPath +" \"</a>&nbsp;<a href=\"%1\" class=\"kcm_link\">" + szName + "</a></td><td class=\"kc_rightcol\">" + szComment;
                 KURL moduleURL( TQString("kcm://%1").arg(TQString().sprintf("%p",module)) );

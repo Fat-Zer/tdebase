@@ -68,13 +68,13 @@ TopLevel::TopLevel(const char* name)
 
   TQString size = config->readEntry("IconSize", "Medium");
   if (size == "Small")
-    KCGlobal::setIconSize(KIcon::SizeSmall);
+    KCGlobal::setIconSize(TDEIcon::SizeSmall);
   else if (size == "Large")
-    KCGlobal::setIconSize(KIcon::SizeLarge);
+    KCGlobal::setIconSize(TDEIcon::SizeLarge);
   else if (size == "Huge")
-    KCGlobal::setIconSize(KIcon::SizeHuge);
+    KCGlobal::setIconSize(TDEIcon::SizeHuge);
   else
-    KCGlobal::setIconSize(KIcon::SizeMedium);
+    KCGlobal::setIconSize(TDEIcon::SizeMedium);
 
   // initialize the entries
   _modules = new ConfigModuleList();
@@ -182,8 +182,8 @@ TopLevel::TopLevel(const char* name)
                TQT_SLOT( activateModule( ConfigModule * ) ) );
       _dock->setBaseWidget( aw );
       KWin::setIcons(  winId(),
-		       TDEGlobal::iconLoader()->loadIcon("hwinfo",  KIcon::NoGroup,  32 ),
-		       TDEGlobal::iconLoader()->loadIcon("hwinfo",  KIcon::NoGroup,  16 ) );
+		       TDEGlobal::iconLoader()->loadIcon("hwinfo",  TDEIcon::NoGroup,  32 ),
+		       TDEGlobal::iconLoader()->loadIcon("hwinfo",  TDEIcon::NoGroup,  16 ) );
   }
   else
   {
@@ -205,13 +205,13 @@ TopLevel::~TopLevel()
 
   switch (KCGlobal::iconSize())
     {
-    case KIcon::SizeSmall:
+    case TDEIcon::SizeSmall:
       config->writeEntry("IconSize", "Small");
       break;
-    case KIcon::SizeLarge:
+    case TDEIcon::SizeLarge:
       config->writeEntry("IconSize", "Large");
       break;
-    case KIcon::SizeHuge:
+    case TDEIcon::SizeHuge:
       config->writeEntry("IconSize", "Huge");
       break;
     default:
@@ -295,13 +295,13 @@ void TopLevel::activateIconView()
 
   switch(KCGlobal::iconSize())
     {
-    case KIcon::SizeSmall:
+    case TDEIcon::SizeSmall:
       icon_small->setChecked(true);
       break;
-    case KIcon::SizeLarge:
+    case TDEIcon::SizeLarge:
       icon_large->setChecked(true);
       break;
-    case KIcon::SizeHuge:
+    case TDEIcon::SizeHuge:
       icon_huge->setChecked(true);
       break;
     default:
@@ -323,25 +323,25 @@ void TopLevel::activateTreeView()
 
 void TopLevel::activateSmallIcons()
 {
-  KCGlobal::setIconSize(KIcon::SizeSmall);
+  KCGlobal::setIconSize(TDEIcon::SizeSmall);
   _index->reload();
 }
 
 void TopLevel::activateMediumIcons()
 {
-  KCGlobal::setIconSize(KIcon::SizeMedium);
+  KCGlobal::setIconSize(TDEIcon::SizeMedium);
   _index->reload();
 }
 
 void TopLevel::activateLargeIcons()
 {
-  KCGlobal::setIconSize(KIcon::SizeLarge);
+  KCGlobal::setIconSize(TDEIcon::SizeLarge);
   _index->reload();
 }
 
 void TopLevel::activateHugeIcons()
 {
-  KCGlobal::setIconSize(KIcon::SizeHuge);
+  KCGlobal::setIconSize(TDEIcon::SizeHuge);
   _index->reload();
 }
 

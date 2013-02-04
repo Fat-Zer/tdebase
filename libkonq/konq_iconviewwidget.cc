@@ -115,7 +115,7 @@ struct KonqIconViewWidgetPrivate
 };
 
 KonqIconViewWidget::KonqIconViewWidget( TQWidget * parent, const char * name, WFlags f, bool kdesktop )
-    : KIconView( parent, name, f ),
+    : TDEIconView( parent, name, f ),
       m_rootItem( 0L ), m_size( 0 ) /* default is DesktopIcon size */,
       m_bDesktop( kdesktop ),
       m_bSetGridX( !kdesktop ) /* No line breaking on the desktop */
@@ -186,7 +186,7 @@ void KonqIconViewWidget::focusOutEvent( TQFocusEvent * ev )
     // Matt Newell 2004-09-24
     slotOnViewport();
 
-    KIconView::focusOutEvent( ev );
+    TDEIconView::focusOutEvent( ev );
 }
 
 void KonqIconViewWidget::slotItemRenamed(TQIconViewItem *item, const TQString &name)
@@ -196,7 +196,7 @@ void KonqIconViewWidget::slotItemRenamed(TQIconViewItem *item, const TQString &n
     KFileItem *fileItem = viewItem->item();
 
     // The correct behavior is to show the old name until the rename has successfully
-    // completed. Unfortunately, KIconView forces us to allow the text to be changed
+    // completed. Unfortunately, TDEIconView forces us to allow the text to be changed
     // before we try the rename, so set it back to the pre-rename state.
     viewItem->setText( fileItem->text() );
     kdDebug(1203)<<" fileItem->text() ;"<<fileItem->text()<<endl;
@@ -215,7 +215,7 @@ void KonqIconViewWidget::slotItemRenamed(TQIconViewItem *item, const TQString &n
 
 void KonqIconViewWidget::slotIconChanged( int group )
 {
-    if (group != KIcon::Desktop)
+    if (group != TDEIcon::Desktop)
         return;
 
     int size = m_size;
@@ -292,7 +292,7 @@ void KonqIconViewWidget::slotOnItem( TQIconViewItem *_item )
                 else
 #endif
                 {
-                    TQMovie movie = TDEGlobal::iconLoader()->loadMovie( d->pActiveItem->mouseOverAnimation(), KIcon::Desktop, d->pActiveItem->iconSize() );
+                    TQMovie movie = TDEGlobal::iconLoader()->loadMovie( d->pActiveItem->mouseOverAnimation(), TDEIcon::Desktop, d->pActiveItem->iconSize() );
                     if ( !movie.isNull() )
                     {
                         delete d->m_movie;
@@ -398,7 +398,7 @@ void KonqIconViewWidget::slotOnViewport()
         }
 #endif
         d->pActiveItem->refreshIcon( true );
-        Q_ASSERT( d->pActiveItem->state() == KIcon::DefaultState );
+        Q_ASSERT( d->pActiveItem->state() == TDEIcon::DefaultState );
         //delete d->m_movie;
         //d->m_movie = 0L;
         // TODO a timer to delete the movie after some time if unused?
@@ -427,10 +427,10 @@ void KonqIconViewWidget::slotPreview(const KFileItem *item, const TQPixmap &pix)
         KFileIVI* current = static_cast<KFileIVI *>(it);
         if (current->item() == item)
         {
-            if (item->overlays() & KIcon::HiddenOverlay) {
+            if (item->overlays() & TDEIcon::HiddenOverlay) {
                 TQPixmap p(pix);
 
-                KIconEffect::semiTransparent(p);
+                TDEIconEffect::semiTransparent(p);
                 current->setThumbnailPixmap(p);
             } else {
                 current->setThumbnailPixmap(pix);
@@ -464,10 +464,10 @@ void KonqIconViewWidget::slotMovieUpdate( const TQRect& rect )
     // seems stopAnimation triggers one last update
     if ( d->pActiveItem && d->m_movie && d->pActiveItem->isAnimated() ) {
         const TQPixmap &frame = d->m_movie->framePixmap();
-        // This can happen if the icon was scaled to the desired size, so KIconLoader
+        // This can happen if the icon was scaled to the desired size, so TDEIconLoader
         // will happily return a movie with different dimensions than the icon
         int iconSize=d->pActiveItem->iconSize();
-        if (iconSize==0) iconSize = TDEGlobal::iconLoader()->currentSize( KIcon::Desktop );
+        if (iconSize==0) iconSize = TDEGlobal::iconLoader()->currentSize( TDEIcon::Desktop );
         if ( frame.width() != iconSize || frame.height() != iconSize ) {
             d->pActiveItem->setAnimated( false );
             d->m_movie->pause();
@@ -509,7 +509,7 @@ void KonqIconViewWidget::clear()
 {
     d->pFileTip->setItem( 0L );
     stopImagePreview(); // Just in case
-    KIconView::clear();
+    TDEIconView::clear();
     d->pActiveItem = 0L;
 }
 
@@ -524,7 +524,7 @@ void KonqIconViewWidget::takeItem( TQIconViewItem *item )
     if ( d->pPreviewJob )
       d->pPreviewJob->removeItem( static_cast<KFileIVI *>(item)->item() );
 
-    KIconView::takeItem( item );
+    TDEIconView::takeItem( item );
 }
 
 // Currently unused - remove in KDE 4.0
@@ -636,9 +636,9 @@ void KonqIconViewWidget::setIcons( int size, const TQStringList& stopImagePrevie
 
     if ( sizeChanged || previewSizeChanged )
     {
-        int realSize = size ? size : TDEGlobal::iconLoader()->currentSize( KIcon::Desktop );
+        int realSize = size ? size : TDEGlobal::iconLoader()->currentSize( TDEIcon::Desktop );
         // choose spacing depending on font, but min 5 (due to KFileIVI  move limit)
-        setSpacing( ( m_bDesktop || ( realSize > KIcon::SizeSmall ) ) ?
+        setSpacing( ( m_bDesktop || ( realSize > TDEIcon::SizeSmall ) ) ?
                     QMAX( 5, TQFontMetrics(font()).width('n') ) : 0 );
     }
 
@@ -707,7 +707,7 @@ bool KonqIconViewWidget::mimeTypeMatch( const TQString& mimeType, const TQString
 void KonqIconViewWidget::setItemTextPos( ItemTextPos pos )
 {
     // can't call gridXValue() because this already would need the new itemTextPos()
-    int sz = m_size ? m_size : TDEGlobal::iconLoader()->currentSize( KIcon::Desktop );
+    int sz = m_size ? m_size : TDEGlobal::iconLoader()->currentSize( TDEIcon::Desktop );
 
     if ( m_bSetGridX )
         if ( pos == TQIconView::Bottom )
@@ -718,14 +718,14 @@ void KonqIconViewWidget::setItemTextPos( ItemTextPos pos )
             setGridX( -1 );
         }
 
-    KIconView::setItemTextPos( pos );
+    TDEIconView::setItemTextPos( pos );
 }
 
 void KonqIconViewWidget::gridValues( int* x, int* y, int* dx, int* dy,
                                      int* nx, int* ny )
 {
     int previewSize = previewIconSize( m_size );
-    int iconSize = m_size ? m_size : TDEGlobal::iconLoader()->currentSize( KIcon::Desktop );
+    int iconSize = m_size ? m_size : TDEGlobal::iconLoader()->currentSize( TDEIcon::Desktop );
 
     // Grid size
     // as KFileIVI limits to move an icon to x >= 5, y >= 5, we define a grid cell as:
@@ -786,7 +786,7 @@ void KonqIconViewWidget::calculateGridX()
 int KonqIconViewWidget::gridXValue() const
 {
     // this method is only used in konqi as filemanager (not desktop)
-    int sz = m_size ? m_size : TDEGlobal::iconLoader()->currentSize( KIcon::Desktop );
+    int sz = m_size ? m_size : TDEGlobal::iconLoader()->currentSize( TDEIcon::Desktop );
     int newGridX;
 
     if ( itemTextPos() == TQIconView::Bottom )
@@ -858,7 +858,7 @@ void KonqIconViewWidget::startImagePreview( const TQStringList &, bool force )
         return; // don't start the preview job if not really necessary
     }
 
-    int iconSize = m_size ? m_size : TDEGlobal::iconLoader()->currentSize( KIcon::Desktop );
+    int iconSize = m_size ? m_size : TDEGlobal::iconLoader()->currentSize( TDEIcon::Desktop );
     int size;
 
     d->bBoostPreview = boostPreview();
@@ -1017,7 +1017,7 @@ void KonqIconViewWidget::contentsDragEnterEvent( TQDragEnterEvent *e )
         }
     }
 
-    KIconView::contentsDragEnterEvent( e );
+    TDEIconView::contentsDragEnterEvent( e );
     emit dragEntered( true /*accepted*/ );
 }
 
@@ -1039,13 +1039,13 @@ void KonqIconViewWidget::contentsDragMoveEvent( TQDragMoveEvent *e )
         return;
     }
     emit dragMove( true );
-    KIconView::contentsDragMoveEvent( e );
+    TDEIconView::contentsDragMoveEvent( e );
 }
 
 void KonqIconViewWidget::contentsDragLeaveEvent( TQDragLeaveEvent *e )
 {
     d->bProgramsURLdrag = false;
-    KIconView::contentsDragLeaveEvent(e);
+    TDEIconView::contentsDragLeaveEvent(e);
     emit dragLeft();
 }
 
@@ -1231,7 +1231,7 @@ void KonqIconViewWidget::contentsMouseMoveEvent( TQMouseEvent *e )
         }
     }
     d->renameItem= false;
-    KIconView::contentsMouseMoveEvent( e );
+    TDEIconView::contentsMouseMoveEvent( e );
 }
 
 void KonqIconViewWidget::contentsDropEvent( TQDropEvent * ev )
@@ -1252,7 +1252,7 @@ void KonqIconViewWidget::contentsDropEvent( TQDropEvent * ev )
     // First we need to call TQIconView though, to clear the drag shape
     bool bMovable = itemsMovable();
     setItemsMovable(false); // hack ? call it what you want :-)
-    KIconView::contentsDropEvent( ev );
+    TDEIconView::contentsDropEvent( ev );
     setItemsMovable(bMovable);
 
     TQValueList<TQIconDragItem> lst;
@@ -1260,7 +1260,7 @@ void KonqIconViewWidget::contentsDropEvent( TQDropEvent * ev )
   }
   else
   {
-    KIconView::contentsDropEvent( ev );
+    TDEIconView::contentsDropEvent( ev );
     emit dropped(); // What is this for ? (David)      KDE4: remove
   }
   // Don't do this here, it's too early !
@@ -1302,7 +1302,7 @@ void KonqIconViewWidget::doubleClickTimeout()
     else
     {
         TQMouseEvent e( TQEvent::MouseMove,d->mousePos , 1, d->mouseState);
-        KIconView::contentsMousePressEvent( &e );
+        TDEIconView::contentsMousePressEvent( &e );
     }
     if( d->pActivateDoubleClick->isActive() )
         d->pActivateDoubleClick->stop();
@@ -1330,7 +1330,7 @@ void KonqIconViewWidget::wheelEvent(TQWheelEvent* e)
         return;
     }
 
-    KIconView::wheelEvent(e);
+    TDEIconView::wheelEvent(e);
 }
 
 void KonqIconViewWidget::leaveEvent( TQEvent *e )
@@ -1338,7 +1338,7 @@ void KonqIconViewWidget::leaveEvent( TQEvent *e )
     // when leaving the widget, stop possible pending filetip and icon effect
     slotOnViewport();
 
-    KIconView::leaveEvent(e);
+    TDEIconView::leaveEvent(e);
 }
 
 void KonqIconViewWidget::mousePressChangeValue()
@@ -1393,13 +1393,13 @@ void KonqIconViewWidget::contentsMousePressEvent( TQMouseEvent *e )
     mousePressChangeValue();
     if(d->pActivateDoubleClick && d->pActivateDoubleClick->isActive())
         d->pActivateDoubleClick->stop();
-    KIconView::contentsMousePressEvent( e );
+    TDEIconView::contentsMousePressEvent( e );
 
 }
 
 void KonqIconViewWidget::contentsMouseReleaseEvent( TQMouseEvent *e )
 {
-    KIconView::contentsMouseReleaseEvent( e );
+    TDEIconView::contentsMouseReleaseEvent( e );
     if(d->releaseMouseEvent && d->pActivateDoubleClick && d->pActivateDoubleClick->isActive ())
         d->pActivateDoubleClick->stop();
     slotSelectionChanged();
@@ -1475,7 +1475,7 @@ void KonqIconViewWidget::insertInGrid(TQIconViewItem *item)
 
     if (!m_IconRect.isValid())
     {
-        KIconView::insertInGrid(item);
+        TDEIconView::insertInGrid(item);
         return;
     }
 
@@ -1564,7 +1564,7 @@ void KonqIconViewWidget::lineupIcons()
         return;
     }
 
-    int iconSize = m_size ? m_size : TDEGlobal::iconLoader()->currentSize( KIcon::Desktop );
+    int iconSize = m_size ? m_size : TDEGlobal::iconLoader()->currentSize( TDEIcon::Desktop );
 
     typedef TQValueList<TQIconViewItem*> Bin;
     Bin*** bins = new Bin**[nx];
@@ -1809,7 +1809,7 @@ void KonqIconViewWidget::lineupIcons( TQIconView::Arrangement arrangement )
 
 int KonqIconViewWidget::largestPreviewIconSize( int size ) const
 {
-    int iconSize = size ? size : TDEGlobal::iconLoader()->currentSize( KIcon::Desktop );
+    int iconSize = size ? size : TDEGlobal::iconLoader()->currentSize( TDEIcon::Desktop );
 
     if (iconSize < 28)
         return 48;
@@ -1825,7 +1825,7 @@ int KonqIconViewWidget::largestPreviewIconSize( int size ) const
 
 int KonqIconViewWidget::previewIconSize( int size ) const
 {
-    int iconSize = size ? size : TDEGlobal::iconLoader()->currentSize( KIcon::Desktop );
+    int iconSize = size ? size : TDEGlobal::iconLoader()->currentSize( TDEIcon::Desktop );
 
     if (!d->bBoostPreview)
         return iconSize;
@@ -1849,7 +1849,7 @@ void KonqIconViewWidget::visualActivate(TQIconViewItem * item)
     rect.moveBy( -contentsX(), -contentsY() );
 
     if (TDEGlobalSettings::showKonqIconActivationEffect() == true) {
-        KIconEffect::visualActivate(viewport(), rect, item->pixmap());
+        TDEIconEffect::visualActivate(viewport(), rect, item->pixmap());
     }
 }
 

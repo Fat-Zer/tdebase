@@ -85,7 +85,7 @@
 #include "kastaskitem.h"
 #include "kasbarextension.h"
 
-#define Icon(x) TDEGlobal::iconLoader()->loadIcon( x, KIcon::NoGroup, KIcon::SizeMedium )
+#define Icon(x) TDEGlobal::iconLoader()->loadIcon( x, TDEIcon::NoGroup, TDEIcon::SizeMedium )
 
 static const int CHECK_ATTENTION_DELAY = 2000;
 
@@ -124,11 +124,11 @@ KasTasker *KasTaskItem::kasbar() const
 
 TQPixmap KasTaskItem::icon()
 {
-    int sizes[] = { KIcon::SizeEnormous,
-		    KIcon::SizeHuge,
-		    KIcon::SizeLarge,
-		    KIcon::SizeMedium,
-		    KIcon::SizeSmall };
+    int sizes[] = { TDEIcon::SizeEnormous,
+		    TDEIcon::SizeHuge,
+		    TDEIcon::SizeLarge,
+		    TDEIcon::SizeMedium,
+		    TDEIcon::SizeSmall };
 
     if ( kasbar()->embedThumbnails() && task_->hasThumbnail() ) {
 	usedIconLoader = true;
@@ -194,7 +194,7 @@ void KasTaskItem::paint( TQPainter *p )
 
     //
     // Overlay the small icon if the icon has changed, we have space,
-    // and we are using a KIconLoader icon rather than one from the NET props.
+    // and we are using a TDEIconLoader icon rather than one from the NET props.
     // This only exists because we are almost always using the icon loader for
     // large icons.
     //

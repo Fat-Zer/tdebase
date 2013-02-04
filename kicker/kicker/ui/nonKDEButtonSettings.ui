@@ -128,7 +128,7 @@
                 </size>
             </property>
         </spacer>
-        <widget class="KIconButton" row="0" column="0" rowspan="3" colspan="1">
+        <widget class="TDEIconButton" row="0" column="0" rowspan="3" colspan="1">
             <property name="name">
                 <cstring>m_icon</cstring>
             </property>

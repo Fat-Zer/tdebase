@@ -57,7 +57,7 @@ struct FaviconsModulePrivate
 FaviconsModule::FaviconsModule(const TQCString &obj)
     : KDEDModule(obj)
 {
-    // create our favicons folder so that KIconLoader knows about it
+    // create our favicons folder so that TDEIconLoader knows about it
     d = new FaviconsModulePrivate;
     d->faviconsDir = TDEGlobal::dirs()->saveLocation( "cache", "favicons/" );
     d->faviconsDir.truncate(d->faviconsDir.length()-9); // Strip off "favicons/"
@@ -229,8 +229,8 @@ void FaviconsModule::slotResult(TDEIO::Job *job)
             // Some sites have nasty 32x32 icons, according to the MS docs
             // IE ignores them, well, we scale them, otherwise the location
             // combo / menu will look quite ugly
-            if (io.image().width() != KIcon::SizeSmall || io.image().height() != KIcon::SizeSmall)
-                io.setImage(io.image().smoothScale(KIcon::SizeSmall, KIcon::SizeSmall));
+            if (io.image().width() != TDEIcon::SizeSmall || io.image().height() != TDEIcon::SizeSmall)
+                io.setImage(io.image().smoothScale(TDEIcon::SizeSmall, TDEIcon::SizeSmall));
 
             if (download.isHost)
                 iconName = download.hostOrURL;

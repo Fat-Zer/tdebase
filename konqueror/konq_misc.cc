@@ -248,7 +248,7 @@ void KonqDraggableLabel::mouseMoveEvent( TQMouseEvent * ev )
       KURL::List lst;
       lst.append( m_mw->currentView()->url() );
       TQDragObject * drag = new KURLDrag( lst, m_mw );
-      drag->setPixmap( KMimeType::pixmapForURL( lst.first(), 0, KIcon::Small ) );
+      drag->setPixmap( KMimeType::pixmapForURL( lst.first(), 0, TDEIcon::Small ) );
       drag->dragCopy();
     }
   }

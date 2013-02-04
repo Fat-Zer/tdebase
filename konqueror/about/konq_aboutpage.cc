@@ -98,17 +98,17 @@ TQString KonqAboutPageFactory::launch()
   if ( res.isEmpty() )
     return res;
 
-  KIconLoader *iconloader = TDEGlobal::iconLoader();
-  int iconSize = iconloader->currentSize(KIcon::Desktop);
-  TQString home_icon_path = iconloader->iconPath("kfm_home", KIcon::Desktop );
-  TQString storage_icon_path = iconloader->iconPath("system", KIcon::Desktop );
-  TQString remote_icon_path = iconloader->iconPath("network", KIcon::Desktop );
-  TQString wastebin_icon_path = iconloader->iconPath("trashcan_full", KIcon::Desktop );
-  TQString applications_icon_path = iconloader->iconPath("kmenu", KIcon::Desktop );
-  TQString settings_icon_path = iconloader->iconPath("kcontrol", KIcon::Desktop );
-  TQString help_icon_path = iconloader->iconPath("khelpcenter", KIcon::Desktop );
+  TDEIconLoader *iconloader = TDEGlobal::iconLoader();
+  int iconSize = iconloader->currentSize(TDEIcon::Desktop);
+  TQString home_icon_path = iconloader->iconPath("kfm_home", TDEIcon::Desktop );
+  TQString storage_icon_path = iconloader->iconPath("system", TDEIcon::Desktop );
+  TQString remote_icon_path = iconloader->iconPath("network", TDEIcon::Desktop );
+  TQString wastebin_icon_path = iconloader->iconPath("trashcan_full", TDEIcon::Desktop );
+  TQString applications_icon_path = iconloader->iconPath("kmenu", TDEIcon::Desktop );
+  TQString settings_icon_path = iconloader->iconPath("kcontrol", TDEIcon::Desktop );
+  TQString help_icon_path = iconloader->iconPath("khelpcenter", TDEIcon::Desktop );
   TQString home_folder = TQDir::homeDirPath();
-  TQString continue_icon_path = TQApplication::reverseLayout()?iconloader->iconPath("1leftarrow", KIcon::Small ):iconloader->iconPath("1rightarrow", KIcon::Small );
+  TQString continue_icon_path = TQApplication::reverseLayout()?iconloader->iconPath("1leftarrow", TDEIcon::Small ):iconloader->iconPath("1rightarrow", TDEIcon::Small );
 
   res = res.arg( locate( "data", "tdeui/about/kde_infopage.css" ) );
   if ( kapp->reverseLayout() )
@@ -171,7 +171,7 @@ TQString KonqAboutPageFactory::launch()
       .arg( i18n( "Settings" ) )
       .arg( i18n( "Desktop configuration" ) )
       .arg( continue_icon_path )
-      .arg( KIcon::SizeSmall ).arg( KIcon::SizeSmall )
+      .arg( TDEIcon::SizeSmall ).arg( TDEIcon::SizeSmall )
       .arg( i18n( "Next: An Introduction to Konqueror" ) )
       ;
   i18n("Search the Web");//i18n for possible future use
@@ -190,10 +190,10 @@ TQString KonqAboutPageFactory::intro()
     if ( res.isEmpty() )
 	return res;
 
-    KIconLoader *iconloader = TDEGlobal::iconLoader();
-    TQString back_icon_path = TQApplication::reverseLayout()?iconloader->iconPath("forward", KIcon::Small ):iconloader->iconPath("back", KIcon::Small );
-    TQString gohome_icon_path = iconloader->iconPath("gohome", KIcon::Small );
-    TQString continue_icon_path = TQApplication::reverseLayout()?iconloader->iconPath("1leftarrow", KIcon::Small ):iconloader->iconPath("1rightarrow", KIcon::Small );
+    TDEIconLoader *iconloader = TDEGlobal::iconLoader();
+    TQString back_icon_path = TQApplication::reverseLayout()?iconloader->iconPath("forward", TDEIcon::Small ):iconloader->iconPath("back", TDEIcon::Small );
+    TQString gohome_icon_path = iconloader->iconPath("gohome", TDEIcon::Small );
+    TQString continue_icon_path = TQApplication::reverseLayout()?iconloader->iconPath("1leftarrow", TDEIcon::Small ):iconloader->iconPath("1rightarrow", TDEIcon::Small );
 
     res = res.arg( locate( "data", "tdeui/about/kde_infopage.css" ) );
     if ( kapp->reverseLayout() )
@@ -244,9 +244,9 @@ TQString KonqAboutPageFactory::specs()
     if ( s_specs_html )
         return *s_specs_html;
 
-    KIconLoader *iconloader = TDEGlobal::iconLoader();
+    TDEIconLoader *iconloader = TDEGlobal::iconLoader();
     TQString res = loadFile( locate( "data", "konqueror/about/specs.html" ));
-    TQString continue_icon_path = TQApplication::reverseLayout()?iconloader->iconPath("1leftarrow", KIcon::Small ):iconloader->iconPath("1rightarrow", KIcon::Small );
+    TQString continue_icon_path = TQApplication::reverseLayout()?iconloader->iconPath("1leftarrow", TDEIcon::Small ):iconloader->iconPath("1rightarrow", TDEIcon::Small );
     if ( res.isEmpty() )
 	return res;
 
@@ -330,22 +330,22 @@ TQString KonqAboutPageFactory::tips()
     if ( res.isEmpty() )
 	return res;
 
-    KIconLoader *iconloader = TDEGlobal::iconLoader();
+    TDEIconLoader *iconloader = TDEGlobal::iconLoader();
     TQString viewmag_icon_path =
-	    iconloader->iconPath("viewmag", KIcon::Small );
+	    iconloader->iconPath("viewmag", TDEIcon::Small );
     TQString history_icon_path =
-	    iconloader->iconPath("history", KIcon::Small );
+	    iconloader->iconPath("history", TDEIcon::Small );
     TQString openterm_icon_path =
-	    iconloader->iconPath("openterm", KIcon::Small );
+	    iconloader->iconPath("openterm", TDEIcon::Small );
     TQString locationbar_erase_rtl_icon_path =
-	    iconloader->iconPath("clear_left", KIcon::Small );
+	    iconloader->iconPath("clear_left", TDEIcon::Small );
     TQString locationbar_erase_icon_path =
-	    iconloader->iconPath("locationbar_erase", KIcon::Small );
+	    iconloader->iconPath("locationbar_erase", TDEIcon::Small );
     TQString window_fullscreen_icon_path =
-	    iconloader->iconPath("window_fullscreen", KIcon::Small );
+	    iconloader->iconPath("window_fullscreen", TDEIcon::Small );
     TQString view_left_right_icon_path =
-	    iconloader->iconPath("view_left_right", KIcon::Small );
-    TQString continue_icon_path = TQApplication::reverseLayout()?iconloader->iconPath("1leftarrow", KIcon::Small ):iconloader->iconPath("1rightarrow", KIcon::Small );
+	    iconloader->iconPath("view_left_right", TDEIcon::Small );
+    TQString continue_icon_path = TQApplication::reverseLayout()?iconloader->iconPath("1leftarrow", TDEIcon::Small ):iconloader->iconPath("1rightarrow", TDEIcon::Small );
 
     res = res.arg( locate( "data", "tdeui/about/kde_infopage.css" ) );
     if ( kapp->reverseLayout() )

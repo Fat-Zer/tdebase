@@ -82,7 +82,7 @@ void TypesListItem::setup()
 {
   if (m_mimetype)
   {
-     setPixmap(0, m_mimetype->pixmap(KIcon::Small, IconSize(KIcon::Small)));
+     setPixmap(0, m_mimetype->pixmap(TDEIcon::Small, IconSize(TDEIcon::Small)));
   }
   TQListViewItem::setup();
 }

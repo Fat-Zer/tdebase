@@ -26,7 +26,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #include <kdialogbase.h>
 
-class KIconButton;
+class TDEIconButton;
 class KLineEdit;
 
 class PanelBrowserDialog : public KDialogBase
@@ -45,7 +45,7 @@ protected slots:
     virtual void slotOk();
     void slotPathChanged( const TQString &_text );
 protected:
-    KIconButton *iconBtn;
+    TDEIconButton *iconBtn;
     KLineEdit *pathInput;
     TQPushButton *browseBtn;
 };

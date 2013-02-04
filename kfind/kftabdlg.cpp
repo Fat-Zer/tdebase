@@ -301,7 +301,7 @@ KfindTabWidget::KfindTabWidget(TQWidget *parent, const char *name)
           it != m_types.end(); ++it )
     {
       KMimeType::Ptr typ = *it;
-      typeBox->insertItem(typ->pixmap( KIcon::Small ), typ->comment());
+      typeBox->insertItem(typ->pixmap( TDEIcon::Small ), typ->comment());
     }
 
     if ( editRegExp ) {

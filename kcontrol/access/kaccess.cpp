@@ -574,7 +574,7 @@ void KAccessApp::createDialogContents() {
       lay->setSpacing(KDialog::spacingHint());
 
       TQLabel *label1 = new TQLabel( contents);
-      TQPixmap pixmap = TDEApplication::kApplication()->iconLoader()->loadIcon("messagebox_warning", KIcon::NoGroup, KIcon::SizeMedium, KIcon::DefaultState, 0, true);
+      TQPixmap pixmap = TDEApplication::kApplication()->iconLoader()->loadIcon("messagebox_warning", TDEIcon::NoGroup, TDEIcon::SizeMedium, TDEIcon::DefaultState, 0, true);
       if (pixmap.isNull())
          pixmap = TQMessageBox::standardIcon(TQMessageBox::Warning);
       label1->setPixmap(pixmap);

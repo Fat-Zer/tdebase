@@ -145,19 +145,19 @@ void KasGroupItem::updateIcon()
     Task::Ptr t = items.first();
     if (!t)
 	p = TDEGlobal::iconLoader()->loadIcon( "kicker",
-					     KIcon::NoGroup,
-					     KIcon::SizeSmall );
+					     TDEIcon::NoGroup,
+					     TDEIcon::SizeSmall );
 
-    int sizes[] = { KIcon::SizeEnormous,
-		    KIcon::SizeHuge,
-		    KIcon::SizeLarge,
-		    KIcon::SizeMedium,
-		    KIcon::SizeSmall };
+    int sizes[] = { TDEIcon::SizeEnormous,
+		    TDEIcon::SizeHuge,
+		    TDEIcon::SizeLarge,
+		    TDEIcon::SizeMedium,
+		    TDEIcon::SizeSmall };
 
     p = t->bestIcon( sizes[kasbar()->itemSize()], usedIconLoader );
 
     if ( p.isNull() )
-	p = TDEGlobal::iconLoader()->loadIcon( "error", KIcon::NoGroup, KIcon::SizeSmall );
+	p = TDEGlobal::iconLoader()->loadIcon( "error", TDEIcon::NoGroup, TDEIcon::SizeSmall );
 
     setIcon( p );
 }

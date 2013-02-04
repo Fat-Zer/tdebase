@@ -490,7 +490,7 @@ void KDIconView::setAutoAlign( bool b )
     // Auto line-up icons
     if ( b ) {
         // set maxItemWidth to ensure sane initial icon layout before the auto align code is fully activated
-        int sz = iconSize() ? iconSize() : TDEGlobal::iconLoader()->currentSize( KIcon::Desktop );
+        int sz = iconSize() ? iconSize() : TDEGlobal::iconLoader()->currentSize( TDEIcon::Desktop );
         setMaxItemWidth( QMAX( QMAX( sz, previewIconSize( iconSize() ) ), KonqFMSettings::settings()->iconTextWidth() ) );
         setFont( font() );  // Force calcRect()
 
@@ -505,7 +505,7 @@ void KDIconView::setAutoAlign( bool b )
     }
     else {
         // change maxItemWidth, because when grid-align was active, it changed this for the grid
-        int sz = iconSize() ? iconSize() : TDEGlobal::iconLoader()->currentSize( KIcon::Desktop );
+        int sz = iconSize() ? iconSize() : TDEGlobal::iconLoader()->currentSize( TDEIcon::Desktop );
         setMaxItemWidth( QMAX( QMAX( sz, previewIconSize( iconSize() ) ), KonqFMSettings::settings()->iconTextWidth() ) );
         setFont( font() );  // Force calcRect()
 
@@ -1528,7 +1528,7 @@ void KDIconView::showEvent( TQShowEvent *e )
     if (m_hasExistingPos)
         TQScrollView::showEvent( e );
     else
-        KIconView::showEvent( e );
+        TDEIconView::showEvent( e );
 }
 
 void KDIconView::contentsDropEvent( TQDropEvent * e )
@@ -1548,7 +1548,7 @@ void KDIconView::contentsDropEvent( TQDropEvent * e )
         bool bSignals = signalsBlocked();
         setItemsMovable(false);
         blockSignals(true);
-        KIconView::contentsDropEvent( e );
+        TDEIconView::contentsDropEvent( e );
         blockSignals(bSignals);
         setItemsMovable(bMovable);
         // End hack

@@ -140,10 +140,10 @@ void HideButton::generateIcons()
     TQImage image = pixmap()->convertToImage();
     image = image.smoothScale(size() - TQSize(4, 4), TQ_ScaleMin);
 
-    KIconEffect effect;
+    TDEIconEffect effect;
 
-    m_normalIcon = effect.apply(image, KIcon::Panel, KIcon::DefaultState);
-    m_activeIcon = effect.apply(image, KIcon::Panel, KIcon::ActiveState);
+    m_normalIcon = effect.apply(image, TDEIcon::Panel, TDEIcon::DefaultState);
+    m_activeIcon = effect.apply(image, TDEIcon::Panel, TDEIcon::ActiveState);
 }
 
 void HideButton::slotSettingsChanged(int category)
@@ -167,7 +167,7 @@ void HideButton::slotSettingsChanged(int category)
 
 void HideButton::slotIconChanged(int group)
 {
-    if (group != KIcon::Panel)
+    if (group != TDEIcon::Panel)
     {
         return;
     }

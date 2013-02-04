@@ -100,8 +100,8 @@ PanelAppletOpMenu::PanelAppletOpMenu(int actions, TQPopupMenu *opMenu, const TQP
         }
 
         TQPixmap iconPix(kapp->iconLoader()->loadIcon(icon,
-                                                     KIcon::Small, 0,
-                                                     KIcon::DefaultState,
+                                                     TDEIcon::Small, 0,
+                                                     TDEIcon::DefaultState,
                                                      0, true));
         insertItem(iconPix, i18n("&About %1").arg( titleText ), About);
         needSeparator = !(actions & KPanelApplet::Help);

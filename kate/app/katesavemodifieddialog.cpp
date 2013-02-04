@@ -48,16 +48,16 @@ public:
 	STATE state() const { return m_state;}
 	void setState(enum STATE state) {
 		m_state=state;
-		KIconLoader *loader = TDEGlobal::instance()->iconLoader();
+		TDEIconLoader *loader = TDEGlobal::instance()->iconLoader();
 		switch (state) {
 			case InitialState:
 				setPixmap(0,TQPixmap());
 				break;
 			case SaveOKState:
-				setPixmap(0,loader->loadIcon("ok",KIcon::NoGroup,height()));
+				setPixmap(0,loader->loadIcon("ok",TDEIcon::NoGroup,height()));
 				break;
 			case SaveFailedState:
-				setPixmap(0,loader->loadIcon("cancel",KIcon::NoGroup,height()));
+				setPixmap(0,loader->loadIcon("cancel",TDEIcon::NoGroup,height()));
 				break;
 		}
 	}

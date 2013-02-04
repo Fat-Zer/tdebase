@@ -14,7 +14,7 @@ class TDEListView;
 class TQListViewItem;
 class TQListBox;
 class TQPushButton;
-class KIconButton;
+class TDEIconButton;
 class TQLineEdit;
 class TQComboBox;
 class FileTypeDetails;

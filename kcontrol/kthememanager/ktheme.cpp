@@ -187,7 +187,7 @@ TQString KTheme::createYourself( bool pack )
     // 3. Icons
     globalConf->setGroup( "Icons" );
     TQDomElement iconElem = m_dom.createElement( "icons" );
-    iconElem.setAttribute( "name", globalConf->readEntry( "Theme",KIconTheme::current() ) );
+    iconElem.setAttribute( "name", globalConf->readEntry( "Theme",TDEIconTheme::current() ) );
     createIconElems( "DesktopIcons", "desktop", iconElem, globalConf );
     createIconElems( "MainToolbarIcons", "mainToolbar", iconElem, globalConf );
     createIconElems( "PanelIcons", "panel", iconElem, globalConf );
@@ -483,7 +483,7 @@ void KTheme::apply()
         }
         iconConf->sync();
 
-        for ( int i = 0; i < KIcon::LastGroup; i++ )
+        for ( int i = 0; i < TDEIcon::LastGroup; i++ )
             KIPC::sendMessageAll( KIPC::IconChanged, i );
         KService::rebuildKSycoca( m_parent );
     }

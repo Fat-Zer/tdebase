@@ -92,7 +92,7 @@ void KonqSidebarDirTreeItem::setOpen( bool open )
         MYMODULE->openSubFolder( this );
     else if ( hasStandardIcon() )
     {
-        int size = TDEGlobal::iconLoader()->currentSize( KIcon::Small );
+        int size = TDEGlobal::iconLoader()->currentSize( TDEIcon::Small );
         if ( open )
             setPixmap( 0, DesktopIcon( "folder_open", size ) );
         else

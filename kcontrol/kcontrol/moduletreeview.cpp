@@ -38,12 +38,12 @@
 static TQPixmap appIcon(const TQString &iconName)
 {
      TQString path;
-     TQPixmap normal = TDEGlobal::iconLoader()->loadIcon(iconName, KIcon::Small, 0, KIcon::DefaultState, &path, true);
-     // make sure they are not larger than KIcon::SizeSmall
-     if (normal.width() > KIcon::SizeSmall || normal.height() > KIcon::SizeSmall)
+     TQPixmap normal = TDEGlobal::iconLoader()->loadIcon(iconName, TDEIcon::Small, 0, TDEIcon::DefaultState, &path, true);
+     // make sure they are not larger than TDEIcon::SizeSmall
+     if (normal.width() > TDEIcon::SizeSmall || normal.height() > TDEIcon::SizeSmall)
      {
          TQImage tmp = normal.convertToImage();
-         tmp = tmp.smoothScale(KIcon::SizeSmall, KIcon::SizeSmall);
+         tmp = tmp.smoothScale(TDEIcon::SizeSmall, TDEIcon::SizeSmall);
          normal.convertFromImage(tmp);
      }
      return normal;

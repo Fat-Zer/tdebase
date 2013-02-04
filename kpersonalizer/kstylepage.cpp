@@ -233,9 +233,9 @@ void TDEStylePage::saveIcons(bool curSettings) {
 	// save, what we got
 	TDEGlobal::config()->setGroup("Icons");
 	TDEGlobal::config()->writeEntry("Theme", theme, true, true);
-	KIconTheme icontheme(theme);
+	TDEIconTheme icontheme(theme);
 	const char * const groups[] = { "Desktop", "Toolbar", "MainToolbar", "Small", 0L };
-	for (KIcon::Group i=KIcon::FirstGroup; i<KIcon::LastGroup; i++) {
+	for (TDEIcon::Group i=TDEIcon::FirstGroup; i<TDEIcon::LastGroup; i++) {
 		if (groups[i] == 0L)
 			break;
 		TDEGlobal::config()->setGroup(TQString::fromLatin1(groups[i]) + "Icons");
@@ -456,9 +456,9 @@ void TDEStylePage::getAvailability() {
 
 	// check, wich Icon-themes are available
 	icon_crystalsvg_exist = icon_kdeclassic_exist = icon_Locolor_exist = false;
-	TQStringList icons(KIconTheme::list());
+	TQStringList icons(TDEIconTheme::list());
 	for (TQStringList::iterator it=icons.begin(); it != icons.end(); it++) {
-		KIconTheme icontheme(*it);
+		TDEIconTheme icontheme(*it);
 		if (icontheme.isHidden() || !icontheme.isValid()) continue;
 		if (*it == "crystalsvg") icon_crystalsvg_exist = true;
 		else if (*it == "kdeclassic") icon_kdeclassic_exist = true;
@@ -514,7 +514,7 @@ void TDEStylePage::initColors() {
 /** live-update the system */
 void TDEStylePage::liveUpdate() {
 	// tell all apps about the changed icons
-	for (int i=0; i<KIcon::LastGroup; i++) {
+	for (int i=0; i<TDEIcon::LastGroup; i++) {
 		KIPC::sendMessageAll(KIPC::IconChanged, i);
 	}
 	// tell all apps about the changed style

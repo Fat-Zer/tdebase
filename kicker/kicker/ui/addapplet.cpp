@@ -74,8 +74,8 @@ AppletWidget::AppletWidget(const AppletInfo& info, bool odd, TQWidget *parent)
 
     itemDescription->installEventFilter(this);
 
-    KIconLoader * ldr = TDEGlobal::iconLoader();
-    TQPixmap icon = ldr->loadIcon(info.icon(), KIcon::Panel, KIcon::SizeLarge);
+    TDEIconLoader * ldr = TDEGlobal::iconLoader();
+    TQPixmap icon = ldr->loadIcon(info.icon(), TDEIcon::Panel, TDEIcon::SizeLarge);
     itemPixmap->setPixmap(icon);
     itemPixmap->installEventFilter(this);
 }

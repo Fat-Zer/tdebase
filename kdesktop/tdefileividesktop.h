@@ -66,7 +66,7 @@ class KFileIVIDesktop : public KFileIVI
 
  protected:
     /**
-     * Reimplements KIconView::calcRect to take the shadow metrics
+     * Reimplements TDEIconView::calcRect to take the shadow metrics
      * into account
      */
      virtual void calcRect( const TQString& _text );

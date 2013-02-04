@@ -385,20 +385,20 @@ void kthememanager::queryLNFModules()
         if ( p->isType( KST_KService ) )
         {
             KService *s = static_cast<KService *>( p );
-            ( void ) new KThemeDetailsItem( dlg->lvDetails, s->name(), s->pixmap( KIcon::Desktop ), s->exec() );
+            ( void ) new KThemeDetailsItem( dlg->lvDetails, s->name(), s->pixmap( TDEIcon::Desktop ), s->exec() );
         }
     }
 
     dlg->lvDetails->sort();*/
 
     // For now use a static list
-    KIconLoader * il = TDEGlobal::iconLoader();
-    dlg->btnBackground->setIconSet( il->loadIconSet( "background", KIcon::Desktop, 32 ) );
-    dlg->btnColors->setIconSet( il->loadIconSet( "colorscm", KIcon::Desktop, 32 ) );
-    dlg->btnStyle->setIconSet( il->loadIconSet( "style", KIcon::Desktop, 32 ) );
-    dlg->btnIcons->setIconSet( il->loadIconSet( "icons", KIcon::Desktop, 32 ) );
-    dlg->btnFonts->setIconSet( il->loadIconSet( "fonts", KIcon::Desktop, 32 ) );
-    dlg->btnSaver->setIconSet( il->loadIconSet( "tdescreensaver", KIcon::Desktop, 32 ) );
+    TDEIconLoader * il = TDEGlobal::iconLoader();
+    dlg->btnBackground->setIconSet( il->loadIconSet( "background", TDEIcon::Desktop, 32 ) );
+    dlg->btnColors->setIconSet( il->loadIconSet( "colorscm", TDEIcon::Desktop, 32 ) );
+    dlg->btnStyle->setIconSet( il->loadIconSet( "style", TDEIcon::Desktop, 32 ) );
+    dlg->btnIcons->setIconSet( il->loadIconSet( "icons", TDEIcon::Desktop, 32 ) );
+    dlg->btnFonts->setIconSet( il->loadIconSet( "fonts", TDEIcon::Desktop, 32 ) );
+    dlg->btnSaver->setIconSet( il->loadIconSet( "tdescreensaver", TDEIcon::Desktop, 32 ) );
 }
 
 void kthememanager::updatePreview( const TQString & pixFile )

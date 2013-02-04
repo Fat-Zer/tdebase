@@ -99,34 +99,34 @@ TQPixmap KasStartupItem::icon() const
    case KasBar::Small:
      /* ***** NOP ******
 	pixmap = TDEGlobal::iconLoader()->loadIcon( startup_->icon(),
-						  KIcon::NoGroup,
-						  KIcon::SizeSmall );
+						  TDEIcon::NoGroup,
+						  TDEIcon::SizeSmall );
      */
       break;
    case KasBar::Medium:
 	pixmap = TDEGlobal::iconLoader()->loadIcon( startup_->icon(),
-						  KIcon::NoGroup,
-						  KIcon::SizeMedium );
+						  TDEIcon::NoGroup,
+						  TDEIcon::SizeMedium );
       break;
    case KasBar::Large:
 	pixmap = TDEGlobal::iconLoader()->loadIcon( startup_->icon(),
-						  KIcon::NoGroup,
-						  KIcon::SizeLarge );
+						  TDEIcon::NoGroup,
+						  TDEIcon::SizeLarge );
       break;
    case KasBar::Huge:
 	pixmap = TDEGlobal::iconLoader()->loadIcon( startup_->icon(),
-						  KIcon::NoGroup,
-						  KIcon::SizeHuge );
+						  TDEIcon::NoGroup,
+						  TDEIcon::SizeHuge );
       break;
    case KasBar::Enormous:
 	pixmap = TDEGlobal::iconLoader()->loadIcon( startup_->icon(),
-						  KIcon::NoGroup,
-						  KIcon::SizeEnormous );
+						  TDEIcon::NoGroup,
+						  TDEIcon::SizeEnormous );
       break;
    default:
 	pixmap = TDEGlobal::iconLoader()->loadIcon( "error",
-						  KIcon::NoGroup,
-						  KIcon::SizeSmall );
+						  TDEIcon::NoGroup,
+						  TDEIcon::SizeSmall );
    }
 
    return pixmap;

@@ -64,7 +64,7 @@ PanelExeDialog::PanelExeDialog(const TQString& title, const TQString& descriptio
     ui->m_exec->setURL(path);
     ui->m_commandLine->setText(cmd);
     ui->m_inTerm->setChecked(inTerm);
-    ui->m_icon->setIconType(KIcon::Panel, KIcon::Application);
+    ui->m_icon->setIconType(TDEIcon::Panel, TDEIcon::Application);
 
     updateIcon();
 
@@ -168,7 +168,7 @@ void PanelExeDialog::slotTextChanged(const TQString &str)
 
     if (it != m_partialPath2full.end())
         exeLocation = it.data();
-    KMimeType::pixmapForURL(KURL( exeLocation ), 0, KIcon::Panel, 0, KIcon::DefaultState, &m_icon);
+    KMimeType::pixmapForURL(KURL( exeLocation ), 0, TDEIcon::Panel, 0, TDEIcon::DefaultState, &m_icon);
     updateIcon();
 }
 
@@ -196,7 +196,7 @@ void PanelExeDialog::slotSelect(const TQString& exec)
         return;
     }
 
-    KMimeType::pixmapForURL(KURL( exec ), 0, KIcon::Panel, 0, KIcon::DefaultState, &m_icon);
+    KMimeType::pixmapForURL(KURL( exec ), 0, TDEIcon::Panel, 0, TDEIcon::DefaultState, &m_icon);
     updateIcon();
 }
 

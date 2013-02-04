@@ -139,7 +139,7 @@ void KMenuItem::setDescription(const TQString& txt)
 void KMenuItem::setIcon(const TQString& icon, int size)
 {
     m_icon = icon;
-    TQListViewItem::setPixmap(0, TDEGlobal::iconLoader()->loadIcon(icon, KIcon::Panel, size ));
+    TQListViewItem::setPixmap(0, TDEGlobal::iconLoader()->loadIcon(icon, TDEIcon::Panel, size ));
 }
 
 void KMenuItem::setHasChildren( bool flag )
@@ -1013,8 +1013,8 @@ TQDragObject * ItemView::dragObject()
         return 0;
 
       o = new KMultipleDrag(viewport());
-      TQPixmap pix = TDEGlobal::iconLoader()->loadIcon( kitem->icon(), KIcon::Panel, m_iconSize);
-      TQPixmap add = TDEGlobal::iconLoader()->loadIcon( "add", KIcon::Small );
+      TQPixmap pix = TDEGlobal::iconLoader()->loadIcon( kitem->icon(), TDEIcon::Panel, m_iconSize);
+      TQPixmap add = TDEGlobal::iconLoader()->loadIcon( "add", TDEIcon::Small );
 
       TQPainter p( &pix );
       p.drawPixmap(pix.height()-add.height(), pix.width()-add.width(), add);

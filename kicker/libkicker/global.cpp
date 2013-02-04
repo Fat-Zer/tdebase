@@ -159,11 +159,11 @@ int sizeValue(KPanelExtension::Size s)
 int maxButtonDim()
 {
     int maxDim;
-    //return (2 * KickerSettings::iconMargin()) + KIcon::SizeLarge;
+    //return (2 * KickerSettings::iconMargin()) + TDEIcon::SizeLarge;
 
     KSimpleConfig *kickerconfig = new KSimpleConfig( TQString::fromLatin1( "kickerrc" ));
     kickerconfig->setGroup("General");
-    maxDim = (2 * KickerSettings::iconMargin()) + kickerconfig->readNumEntry("panelIconWidth", KIcon::SizeLarge);;
+    maxDim = (2 * KickerSettings::iconMargin()) + kickerconfig->readNumEntry("panelIconWidth", TDEIcon::SizeLarge);;
     delete kickerconfig;
     return maxDim;
 }
@@ -358,7 +358,7 @@ void colorize(TQImage& image)
         b = (b + (76 - gray) > 255 ? 255 : b + (76 - gray));
     }
     color.setRgb(r, g, b);
-    KIconEffect::colorize(image, color, 1.0);
+    TDEIconEffect::colorize(image, color, 1.0);
 }
 
 TQColor blendColors(const TQColor& c1, const TQColor& c2)
@@ -415,22 +415,22 @@ TQIconSet menuIconSet(const TQString& icon)
         if (iconSize > 0)
         {
             iconset = TDEGlobal::iconLoader()->loadIconSet(icon,
-                                                     KIcon::NoGroup,
+                                                     TDEIcon::NoGroup,
                                                      iconSize, true);
         }
         else if (iconSize == 0)
         {
             TQPixmap normal = TDEGlobal::iconLoader()->loadIcon(icon,
-                                                         KIcon::Small,
+                                                         TDEIcon::Small,
                                                          0,
-                                                         KIcon::DefaultState,
+                                                         TDEIcon::DefaultState,
                                                          0,
                                                          true);
 
             TQPixmap active = TDEGlobal::iconLoader()->loadIcon(icon,
-                                                         KIcon::Small,
+                                                         TDEIcon::Small,
                                                          0,
-                                                         KIcon::ActiveState,
+                                                         TDEIcon::ActiveState,
                                                          0,
                                                          true);
 

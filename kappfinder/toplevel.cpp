@@ -161,7 +161,7 @@ TQListViewItem* TopLevel::addGroupItem( TQListViewItem *parent, const TQString &
 
 void TopLevel::slotScan()
 {
-  KIconLoader* loader = TDEGlobal::iconLoader();
+  TDEIconLoader* loader = TDEGlobal::iconLoader();
 
   mTemplates = TDEGlobal::dirs()->findAllResources( "data", "kappfinder/apps/*.desktop", true );
 
@@ -229,7 +229,7 @@ void TopLevel::slotScan()
       else
         item = new TQCheckListItem( mListView, desktop.readName(), TQCheckListItem::CheckBox );
 
-      item->setPixmap( 0, loader->loadIcon( desktop.readIcon(), KIcon::Small ) );
+      item->setPixmap( 0, loader->loadIcon( desktop.readIcon(), TDEIcon::Small ) );
       item->setText( 1, desktop.readGenericName() );
       item->setText( 2, desktop.readPathEntry( "Exec" ) );
       if ( desktop.readBoolEntry( "X-StandardInstall" ) )

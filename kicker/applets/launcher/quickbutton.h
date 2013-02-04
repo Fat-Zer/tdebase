@@ -53,7 +53,7 @@ public:
     TQString name() const { return m_name; }
     KService::Ptr service() const {return _service;};
     void run() const;
-    TQPixmap pixmap(mode_t _mode = 0, KIcon::Group _group = KIcon::Desktop,
+    TQPixmap pixmap(mode_t _mode = 0, TDEIcon::Group _group = TDEIcon::Desktop,
                    int _force_size = 0, int _state = 0, TQString * _path = 0L) const;
 
 private:

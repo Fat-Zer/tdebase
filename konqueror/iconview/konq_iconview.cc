@@ -671,11 +671,11 @@ void KonqKfmIconView::newIconSize( int size )
     //check for that when checking whether the size changed
     int effSize = size;
     if (effSize == 0)
-       effSize = IconSize(KIcon::Desktop);
+       effSize = IconSize(TDEIcon::Desktop);
 
     int oldEffSize = m_pIconView->iconSize();
     if (oldEffSize == 0)
-       oldEffSize = IconSize(KIcon::Desktop);
+       oldEffSize = IconSize(TDEIcon::Desktop);
 
     // Make sure all actions are initialized.
     KonqDirPart::newIconSize( size );

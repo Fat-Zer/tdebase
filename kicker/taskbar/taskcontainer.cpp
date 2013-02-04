@@ -698,7 +698,7 @@ void TaskContainer::drawButton(TQPainter *p)
             // fade out the icon when minimized
             if (iconified)
             {
-                KIconEffect::semiTransparent( pixmap );
+                TDEIconEffect::semiTransparent( pixmap );
             }
 
             // draw icon
@@ -731,7 +731,7 @@ void TaskContainer::drawButton(TQPainter *p)
 
             if (iconified)
             {
-                KIconEffect::semiTransparent(modPixmap);
+                TDEIconEffect::semiTransparent(modPixmap);
             }
 
             p->drawPixmap(r, modPixmap);
@@ -1664,9 +1664,9 @@ void TaskContainer::updateKickerTip(KickerTip::Data& data)
         data.duration = 4000;
         data.subtext = i18n("Loading application ...");
         data.icon = TDEGlobal::iconLoader()->loadIcon(m_startup->icon(),
-                                                    KIcon::Small,
-                                                    KIcon::SizeMedium,
-                                                    KIcon::DefaultState,
+                                                    TDEIcon::Small,
+                                                    TDEIcon::SizeMedium,
+                                                    TDEIcon::DefaultState,
                                                     0, true);
         return;
     }
@@ -1689,8 +1689,8 @@ void TaskContainer::updateKickerTip(KickerTip::Data& data)
         {
             // try to load icon via net_wm
             pixmap = KWin::icon(tasks.last()->window(),
-                                KIcon::SizeMedium,
-                                KIcon::SizeMedium,
+                                TDEIcon::SizeMedium,
+                                TDEIcon::SizeMedium,
                                 true);
         }
     

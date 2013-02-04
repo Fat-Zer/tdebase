@@ -34,7 +34,7 @@ Dialog::Dialog(TQString url, TQString iconName) :
 
 	enableButton( User1, false );
 
-	TQPixmap pixmap = TDEGlobal::iconLoader()->loadIcon(iconName, KIcon::NoGroup, KIcon::SizeLarge);
+	TQPixmap pixmap = TDEGlobal::iconLoader()->loadIcon(iconName, TDEIcon::NoGroup, TDEIcon::SizeLarge);
 	decryptDialog->encryptedIcon->setPixmap( pixmap );
 
 	connect(decryptDialog->passwordEdit, TQT_SIGNAL (textChanged(const TQString &)), this, TQT_SLOT (slotPasswordChanged(const TQString &)));

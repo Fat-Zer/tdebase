@@ -80,8 +80,8 @@
 #include "kasaboutdlg.h"
 #include "version.h"
 
-#define Icon(x) TDEGlobal::iconLoader()->loadIcon( x, KIcon::NoGroup, KIcon::SizeMedium )
-#define LargeIcon(x) TDEGlobal::iconLoader()->loadIcon( x, KIcon::NoGroup, KIcon::SizeLarge )
+#define Icon(x) TDEGlobal::iconLoader()->loadIcon( x, TDEIcon::NoGroup, TDEIcon::SizeMedium )
+#define LargeIcon(x) TDEGlobal::iconLoader()->loadIcon( x, TDEIcon::NoGroup, TDEIcon::SizeLarge )
 
 KasAboutDialog::KasAboutDialog( TQWidget *parent )
    : KDialogBase( KDialogBase::IconList, i18n("About Kasbar"),

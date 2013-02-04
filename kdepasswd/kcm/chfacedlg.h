@@ -63,7 +63,7 @@ private slots:
 private:
   void addCustomPixmap( TQString imPath, bool saveCopy );
 
-  KIconView *m_FacesWidget;
+  TDEIconView *m_FacesWidget;
 };
 
 #endif // CHFACEDLG_H

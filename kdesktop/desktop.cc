@@ -810,7 +810,7 @@ void KDesktop::slotSettingsChanged(int category)
 
 void KDesktop::slotIconChanged(int group)
 {
-    if ( group == KIcon::Desktop )
+    if ( group == TDEIcon::Desktop )
     {
         kdDebug(1204) << "KDesktop::slotIconChanged" << endl;
         refresh();

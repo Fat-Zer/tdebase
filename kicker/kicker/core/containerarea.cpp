@@ -979,7 +979,7 @@ void ContainerArea::mouseMoveEvent(TQMouseEvent *ev)
         saveContainerConfig(true);
 
         PanelDrag *dd = new PanelDrag(_moveAC, this);
-        dd->setPixmap(kapp->iconLoader()->loadIcon(_moveAC->icon(), KIcon::Small));
+        dd->setPixmap(kapp->iconLoader()->loadIcon(_moveAC->icon(), TDEIcon::Small));
         grabKeyboard();
         dd->drag();
         releaseKeyboard();
@@ -1334,13 +1334,13 @@ void ContainerArea::dropEvent(TQDropEvent *ev)
             {
                 // non-TDE executable
                 TQString pixmapFile;
-                KMimeType::pixmapForURL(url, 0, KIcon::Panel, 0,
-                                        KIcon::DefaultState, &pixmapFile);
+                KMimeType::pixmapForURL(url, 0, TDEIcon::Panel, 0,
+                                        TDEIcon::DefaultState, &pixmapFile);
                 PanelExeDialog dlg(TQString::null, TQString::null, url.path(),
                                    pixmapFile, TQString::null, false, 0);
                 if (dlg.exec() == TQDialog::Accepted)
                 {
-                    // KIconloader returns a full path, we only want the name
+                    // TDEIconloader returns a full path, we only want the name
                     TQFileInfo iconfi(dlg.iconPath());
                     a = new NonKDEAppButtonContainer(dlg.title(),
                                                      dlg.description(),

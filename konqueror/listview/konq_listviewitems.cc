@@ -164,7 +164,7 @@ void KonqListViewItem::setDisabled( bool disabled )
 {
     KonqBaseListViewItem::setDisabled( disabled );
     int iconSize = m_pListViewWidget->iconSize();
-    iconSize = iconSize ? iconSize : TDEGlobal::iconLoader()->currentSize( KIcon::Small ); // Default = small
+    iconSize = iconSize ? iconSize : TDEGlobal::iconLoader()->currentSize( TDEIcon::Small ); // Default = small
     setPixmap( 0, m_fileitem->pixmap( iconSize, state() ) );
 }
 
@@ -176,7 +176,7 @@ void KonqListViewItem::setActive( bool active )
     //#### Optimize away repaint if possible, like the iconview does?
     KonqBaseListViewItem::setActive( active );
     int iconSize = m_pListViewWidget->iconSize();
-    iconSize = iconSize ? iconSize : TDEGlobal::iconLoader()->currentSize( KIcon::Small ); // Default = small
+    iconSize = iconSize ? iconSize : TDEGlobal::iconLoader()->currentSize( TDEIcon::Small ); // Default = small
     setPixmap( 0, m_fileitem->pixmap( iconSize, state() ) );
 }
 

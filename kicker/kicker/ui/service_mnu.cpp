@@ -783,7 +783,7 @@ void PanelServiceMenu::mouseMoveEvent(TQMouseEvent * ev)
 
         case KST_KService:
         {
-            icon = static_cast<KService *>(e)->pixmap(KIcon::Small);
+            icon = static_cast<KService *>(e)->pixmap(TDEIcon::Small);
             TQString filePath = static_cast<KService *>(e)->desktopEntryPath();
             if (filePath[0] != '/')
             {
@@ -796,7 +796,7 @@ void PanelServiceMenu::mouseMoveEvent(TQMouseEvent * ev)
         case KST_KServiceGroup:
         {
             icon = TDEGlobal::iconLoader()
-                   ->loadIcon(static_cast<KServiceGroup *>(e)->icon(), KIcon::Small);
+                   ->loadIcon(static_cast<KServiceGroup *>(e)->icon(), TDEIcon::Small);
             url = "programs:/" + static_cast<KServiceGroup *>(e)->relPath();
             break;
         }

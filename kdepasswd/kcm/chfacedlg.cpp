@@ -63,7 +63,7 @@ ChFaceDlg::ChFaceDlg(const TQString& picsdir, TQWidget *parent, const char *name
   TQLabel *header = new TQLabel( i18n("Select a new face:"), page );
   top->addWidget( header );
 
-  m_FacesWidget = new KIconView( page );
+  m_FacesWidget = new TDEIconView( page );
   m_FacesWidget->setSelectionMode( TQIconView::Single );
   m_FacesWidget->setItemsMovable( false );
   m_FacesWidget->setMinimumSize( 400, 200 );

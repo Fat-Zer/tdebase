@@ -103,6 +103,6 @@ TQPixmap DeviceIconView::loadIcon( const TQString &name )
 	return icon;
 }
 
-KIcon::StdSizes DeviceIconView::iconSize() {
-	return KIcon::SizeSmall;
+TDEIcon::StdSizes DeviceIconView::iconSize() {
+	return TDEIcon::SizeSmall;
 }

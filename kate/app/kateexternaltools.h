@@ -210,7 +210,7 @@ class KateExternalToolServiceEditor : public KDialogBase
 
     class TQLineEdit *leName, *leExecutable, *leMimetypes,*leCmdLine;
     class TQTextEdit *teCommand;
-    class KIconButton *btnIcon;
+    class TDEIconButton *btnIcon;
     class TQComboBox *cmbSave;
 
   private slots:

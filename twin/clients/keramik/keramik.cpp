@@ -633,7 +633,7 @@ TQImage *KeramikHandler::loadImage( const TQString &name, const TQColor &col )
 {
 	if ( col.isValid() ) {
 		TQImage *img = new TQImage( imageDb->image(name)->copy() );
-		KIconEffect::colorize( *img, col, 1.0 );
+		TDEIconEffect::colorize( *img, col, 1.0 );
 		return img;
 	} else
 		return new TQImage( imageDb->image(name)->copy() );
@@ -1268,7 +1268,7 @@ void KeramikClient::updateCaptionBuffer()
 		} else {
 			if ( ! inactiveIcon ) {
 				TQImage img = this->icon().pixmap( TQIconSet::Small, TQIconSet::Normal ).convertToImage();
-				KIconEffect::semiTransparent( img );
+				TDEIconEffect::semiTransparent( img );
 				inactiveIcon = new TQPixmap( img );
 			}
 			icon = inactiveIcon;

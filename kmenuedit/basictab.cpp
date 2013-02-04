@@ -123,7 +123,7 @@ BasicTab::BasicTab( TQWidget *parent, const char *name )
     grid->addMultiCellWidget(_systrayCB, 5, 5, 0, 2);
 
     // setup icon button
-    _iconButton = new KIconButton(general_group);
+    _iconButton = new TDEIconButton(general_group);
     _iconButton->setFixedSize(56,56);
     _iconButton->setIconSize(48);
     connect(_iconButton, TQT_SIGNAL(iconChanged(TQString)), TQT_SLOT(slotChanged()));

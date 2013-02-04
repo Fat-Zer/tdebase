@@ -924,7 +924,7 @@ void KonqPopupMenu::setup(KonqPopupFlags kpf)
                     if ( menu == m_menuElement ) // no submenu -> prefix single offer
                         actionName = i18n( "Open with %1" ).arg( actionName );
 
-                    act = new TDEAction( actionName, (*it)->pixmap( KIcon::Small ), 0,
+                    act = new TDEAction( actionName, (*it)->pixmap( TDEIcon::Small ), 0,
                                        TQT_TQOBJECT(this), TQT_SLOT( slotRunService() ),
                                        &m_ownActions, nam.prepend( "appservice_" ) );
                     addAction( act, menu );

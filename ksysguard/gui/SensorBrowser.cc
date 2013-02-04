@@ -128,7 +128,7 @@ void SensorBrowser::update()
     TQString hostName = mSensorManager->hostName( host );
     HostItem* lvi = new HostItem( this, hostName, id, host );
 
-    TQPixmap pix = TDEGlobal::iconLoader()->loadIcon( "computer", KIcon::Desktop, KIcon::SizeSmall );
+    TQPixmap pix = TDEGlobal::iconLoader()->loadIcon( "computer", TDEIcon::Desktop, TDEIcon::SizeSmall );
     lvi->setPixmap( 0, pix );
 
     HostInfo* hostInfo = new HostInfo( id, host, hostName, lvi );
@@ -214,8 +214,8 @@ void SensorBrowser::answerReceived( int id, const TQString &answer )
       if ( !found ) {
         TQListViewItem* lvi = new TQListViewItem( parent, name );
         if ( j == absolutePath.count() - 1 ) {
-          TQPixmap pix = TDEGlobal::iconLoader()->loadIcon( "ksysguardd", KIcon::Desktop,
-                                               KIcon::SizeSmall );
+          TQPixmap pix = TDEGlobal::iconLoader()->loadIcon( "ksysguardd", TDEIcon::Desktop,
+                                               TDEIcon::SizeSmall );
           lvi->setPixmap( 0, pix );
           lvi->setText( 1, KSGRD::SensorMgr->translateSensorType( sensorType ) );
 

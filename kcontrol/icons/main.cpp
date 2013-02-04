@@ -47,7 +47,7 @@ IconModule::IconModule(TQWidget *parent, const char *name, const TQStringList &)
   tab->addTab(tab1, i18n("&Theme"));
   connect(tab1, TQT_SIGNAL(changed(bool)), this, TQT_SLOT(moduleChanged(bool)));
 
-  tab2 = new KIconConfig(this, "effects");
+  tab2 = new TDEIconConfig(this, "effects");
   tab->addTab(tab2, i18n("Ad&vanced"));
   connect(tab2, TQT_SIGNAL(changed(bool)), this, TQT_SLOT(moduleChanged(bool)));
 

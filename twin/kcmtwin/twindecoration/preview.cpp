@@ -321,8 +321,8 @@ NET::WindowType KDecorationPreviewBridge::windowType( unsigned long ) const
 
 TQIconSet KDecorationPreviewBridge::icon() const
     {
-    return TQIconSet( TDEGlobal::iconLoader()->loadIcon( "xapp", KIcon::NoGroup, 16 ),
-        TDEGlobal::iconLoader()->loadIcon( "xapp", KIcon::NoGroup, 32 ));
+    return TQIconSet( TDEGlobal::iconLoader()->loadIcon( "xapp", TDEIcon::NoGroup, 16 ),
+        TDEGlobal::iconLoader()->loadIcon( "xapp", TDEIcon::NoGroup, 32 ));
     }
 
 TQString KDecorationPreviewBridge::caption() const

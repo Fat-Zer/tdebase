@@ -68,7 +68,7 @@
                                 <property name="name">
                                     <cstring>unnamed</cstring>
                                 </property>
-                                <widget class="KIconButton">
+                                <widget class="TDEIconButton">
                                     <property name="name">
                                         <cstring>iconButton</cstring>
                                     </property>

@@ -864,7 +864,7 @@ void Minicli::setIcon ()
 
   if ( m_iconName == "www" )
   {
-    // Not using KIconEffect::overlay as that requires the same size
+    // Not using TDEIconEffect::overlay as that requires the same size
     // for the icon and the overlay, also the overlay definately doesn't
     // have a more that one-bit alpha channel here
     TQPixmap overlay( locate ( "icon", KMimeType::favIconForURL( m_filterData->uri() ) + ".png" ) );

@@ -82,8 +82,8 @@ void MenuPreview::createPixmaps()
 								 (x % 2) ? 
 								((y % 2) ?  c2 : c1  ) : 	// See the grid? ;-)
 								((y % 2) ?  c1 : c2  ) );	
-		KIconLoader* icl = TDEGlobal::iconLoader();
-		TQPixmap pix = icl->loadIcon("go", KIcon::Desktop, KIcon::SizeLarge, KIcon::ActiveState);
+		TDEIconLoader* icl = TDEGlobal::iconLoader();
+		TQPixmap pix = icl->loadIcon("go", TDEIcon::Desktop, TDEIcon::SizeLarge, TDEIcon::ActiveState);
 		p.drawPixmap( (width()-2-pix.width())/2, (height()-2-pix.height())/2, pix );
 	}
 

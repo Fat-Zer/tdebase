@@ -33,7 +33,7 @@ KRefinePage::KRefinePage(TQWidget *parent, const char *name ) : KRefinePageDlg(p
        pb_kcontrol->hide();
        lb_kcontrol->hide();
    }
-   px_kcontrol->setPixmap(TDEGlobal::iconLoader()->loadIcon("kcontrol", KIcon::Panel, KIcon::SizeMedium));
+   px_kcontrol->setPixmap(TDEGlobal::iconLoader()->loadIcon("kcontrol", TDEIcon::Panel, TDEIcon::SizeMedium));
 }
 KRefinePage::~KRefinePage(){
 }

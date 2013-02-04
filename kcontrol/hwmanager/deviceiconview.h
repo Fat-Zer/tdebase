@@ -65,7 +65,7 @@ class DeviceIconView : public TDEListView
 
 public:
 	DeviceIconView(TQWidget * parent = 0, const char * name = 0);
-	KIcon::StdSizes iconSize();
+	TDEIcon::StdSizes iconSize();
 
 signals:
 	void deviceSelected(TDEGenericDevice*);

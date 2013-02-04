@@ -179,8 +179,8 @@ void StartupId::start_startupid( const TQString& icon_P )
     = { Qt::black, Qt::darkGray, Qt::lightGray, Qt::white, Qt::white };
 
 
-    TQPixmap icon_pixmap = TDEGlobal::iconLoader()->loadIcon( icon_P, KIcon::Small, 0,
-        KIcon::DefaultState, 0, true ); // return null pixmap if not found
+    TQPixmap icon_pixmap = TDEGlobal::iconLoader()->loadIcon( icon_P, TDEIcon::Small, 0,
+        TDEIcon::DefaultState, 0, true ); // return null pixmap if not found
     if( icon_pixmap.isNull())
         icon_pixmap = SmallIcon( "exec" );
     if( startup_widget == NULL )

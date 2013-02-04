@@ -197,8 +197,8 @@ void PanelBrowserMenu::initialize()
                     iconPath = path + '/' + iconPath.mid(2);
 
                 icon = TDEGlobal::iconLoader()->loadIcon(iconPath,
-                                                       KIcon::Small, KIcon::SizeSmall,
-                                                       KIcon::DefaultState, 0, true);
+                                                       TDEIcon::Small, TDEIcon::SizeSmall,
+                                                       TDEIcon::DefaultState, 0, true);
                 if(icon.isNull())
                     icon = CICON("folder");
                 name = c.readEntry("Name", name);
@@ -245,8 +245,8 @@ void PanelBrowserMenu::initialize()
 
                 TQString s = c.readEntry("Icon");
                 if(!_icons->contains(s)) {
-                    icon  = TDEGlobal::iconLoader()->loadIcon(s, KIcon::Small, KIcon::SizeSmall,
-                                                            KIcon::DefaultState, 0, true);
+                    icon  = TDEGlobal::iconLoader()->loadIcon(s, TDEIcon::Small, TDEIcon::SizeSmall,
+                                                            TDEIcon::DefaultState, 0, true);
 
                     if(icon.isNull()) {
                         TQString type = c.readEntry("Type", "Application");

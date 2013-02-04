@@ -786,7 +786,7 @@
 
 	* Moved the icon handling code out of Kasbar and into the Task
 	  class.  Task now provides an API for icon loading that allows
-	  access to different icon sizes and uses KIconLoader where needed.
+	  access to different icon sizes and uses TDEIconLoader where needed.
 
 2001-05-15 Tuesday 01:19  rich
 

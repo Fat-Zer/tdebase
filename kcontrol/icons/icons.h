@@ -36,9 +36,9 @@ class TQWidget;
 
 class KColorButton;
 class TDEConfig;
-class KIconEffect;
-class KIconLoader;
-class KIconTheme;
+class TDEIconEffect;
+class TDEIconLoader;
+class TDEIconTheme;
 
 struct Effect 
 {
@@ -53,13 +53,13 @@ struct Effect
 /**
  * The General Icons tab in kcontrol.
  */
-class KIconConfig: public TDECModule
+class TDEIconConfig: public TDECModule
 {
     Q_OBJECT
 
 public:
-    KIconConfig(TQWidget *parent, const char *name=0);
-    ~KIconConfig();
+    TDEIconConfig(TQWidget *parent, const char *name=0);
+    ~TDEIconConfig();
 
     virtual void load();
     virtual void load( bool useDefaults );
@@ -103,9 +103,9 @@ private:
     int mSysTraySize;
     int mQuickLaunchSize;
 
-    KIconEffect *mpEffect;
-    KIconTheme *mpTheme;
-    KIconLoader *mpLoader;
+    TDEIconEffect *mpEffect;
+    TDEIconTheme *mpTheme;
+    TDEIconLoader *mpLoader;
     TDEConfig *mpConfig;
     KSimpleConfig *mpSystrayConfig;
     KSimpleConfig *mpKickerConfig;
@@ -121,15 +121,15 @@ private:
     TQPushButton *mPreviewButton1, *mPreviewButton2, *mPreviewButton3;
 };
 
-class KIconEffectSetupDialog: public KDialogBase
+class TDEIconEffectSetupDialog: public KDialogBase
 {
     Q_OBJECT
      
 public:
-    KIconEffectSetupDialog(const Effect &, const Effect &,
+    TDEIconEffectSetupDialog(const Effect &, const Effect &,
                            const TQString &, const TQImage &,
 			   TQWidget *parent=0L, char *name=0L);
-    ~KIconEffectSetupDialog();
+    ~TDEIconEffectSetupDialog();
     Effect effect() { return mEffect; }
 
 protected:
@@ -145,7 +145,7 @@ protected slots:
     void slotDefault();
 
 private:
-    KIconEffect *mpEffect;
+    TDEIconEffect *mpEffect;
     TQListBox *mpEffectBox;
     TQCheckBox *mpSTCheck;
     TQSlider *mpEffectSlider;

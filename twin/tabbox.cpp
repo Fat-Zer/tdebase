@@ -434,7 +434,7 @@ void TabBox::drawContents( TQPainter * )
                   if( !icon.isNull())
                     {
                     if( (*it)->isMinimized())
-                        KIconEffect::semiTransparent( icon );
+                        TDEIconEffect::semiTransparent( icon );
                     p.drawPixmap( x+5, y + (lineHeight - iconWidth)/2, icon );
                     }
 

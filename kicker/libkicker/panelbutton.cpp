@@ -74,7 +74,7 @@ PanelButton::PanelButton( TQWidget* parent, const char* name, bool forceStandard
       m_popupDirection(KPanelApplet::Up),
       m_iconAlignment(AlignCenter),
       m_orientation(Qt::Horizontal),
-      m_size((KIcon::StdSizes)-1),
+      m_size((TDEIcon::StdSizes)-1),
       m_fontPercent(0.40),
       m_forceStandardCursor(forceStandardCursor)
 {
@@ -208,7 +208,7 @@ void PanelButton::setOrientation(Orientation o)
 
 void PanelButton::updateIcon(int group)
 {
-    if (group != KIcon::Panel)
+    if (group != TDEIcon::Panel)
     {
         return;
     }
@@ -516,7 +516,7 @@ void PanelButton::mouseReleaseEvent(TQMouseEvent *e)
 	
 	TQPixmap pix = labelIcon();
 	if (KickerSettings::showIconActivationEffect() == true) {
-		KIconEffect::visualActivate(this, this->geometry(), &pix);
+		TDEIconEffect::visualActivate(this, this->geometry(), &pix);
 	}
     }
     TQButton::mouseReleaseEvent(e);
@@ -781,16 +781,16 @@ int PanelButton::preferredIconSize(int proposed_size) const
 {
     // (re)calculates the icon sizes and report true if they have changed.
     // Get sizes from icontheme. We assume they are sorted.
-    KIconTheme *ith = TDEGlobal::iconLoader()->theme();
+    TDEIconTheme *ith = TDEGlobal::iconLoader()->theme();
 
     if (!ith)
     {
         return -1; // unknown icon size
     }
 
-    TQValueList<int> sizes = ith->querySizes(KIcon::Panel);
+    TQValueList<int> sizes = ith->querySizes(TDEIcon::Panel);
 
-    int sz = ith->defaultSize(KIcon::Panel);
+    int sz = ith->defaultSize(TDEIcon::Panel);
 
     if (proposed_size < 0)
     {
@@ -878,10 +878,10 @@ void PanelButton::loadTiles()
 
 void PanelButton::loadIcons()
 {
-    KIconLoader * ldr = TDEGlobal::iconLoader();
+    TDEIconLoader * ldr = TDEGlobal::iconLoader();
     TQString nm = m_iconName;
-    KIcon::States defaultState = isEnabled() ? KIcon::DefaultState :
-                                               KIcon::DisabledState;
+    TDEIcon::States defaultState = isEnabled() ? TDEIcon::DefaultState :
+                                               TDEIcon::DisabledState;
     if (nm=="kmenu-suse")
     {
         TQString pth = locate( "data", "kicker/data/kickoff/kmenu_basic.png" );
@@ -894,12 +894,12 @@ void PanelButton::loadIcons()
         }
     }
     else
-        m_icon = ldr->loadIcon(nm, KIcon::Panel, m_size, defaultState, 0L, true);
+        m_icon = ldr->loadIcon(nm, TDEIcon::Panel, m_size, defaultState, 0L, true);
 
     if (m_icon.isNull())
     {
         nm = defaultIcon();
-        m_icon = ldr->loadIcon(nm, KIcon::Panel, m_size, defaultState);
+        m_icon = ldr->loadIcon(nm, TDEIcon::Panel, m_size, defaultState);
     }
 
     if (!isEnabled())
@@ -908,11 +908,11 @@ void PanelButton::loadIcons()
     }
     else
     {
-        m_iconh = ldr->loadIcon(nm, KIcon::Panel, m_size,
-                                KIcon::ActiveState, 0L, true);
+        m_iconh = ldr->loadIcon(nm, TDEIcon::Panel, m_size,
+                                TDEIcon::ActiveState, 0L, true);
     }
 
-    m_iconz = ldr->loadIcon(nm, KIcon::Panel, KIcon::SizeHuge,
+    m_iconz = ldr->loadIcon(nm, TDEIcon::Panel, TDEIcon::SizeHuge,
                             defaultState, 0L, true );
 }
 

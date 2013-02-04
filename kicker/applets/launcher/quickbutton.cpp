@@ -126,7 +126,7 @@ void QuickURL::run() const
 }
 
 //similar to MimeType::pixmapForURL
-TQPixmap QuickURL::pixmap( mode_t _mode, KIcon::Group _group,
+TQPixmap QuickURL::pixmap( mode_t _mode, TDEIcon::Group _group,
                           int _force_size, int _state, TQString *) const
 {
    TQPixmap pxmap;
@@ -206,8 +206,8 @@ void QuickButton::loadIcon()
     // Set Icon Dimension from size
    _iconDim=std::min(size().width(),size().height())-2*ICON_MARGIN;
    // Load icons
-   _icon = _qurl->pixmap(0, KIcon::Panel, _iconDim, KIcon::DefaultState);
-   _iconh = _qurl->pixmap(0, KIcon::Panel, _iconDim, KIcon::ActiveState);
+   _icon = _qurl->pixmap(0, TDEIcon::Panel, _iconDim, TDEIcon::DefaultState);
+   _iconh = _qurl->pixmap(0, TDEIcon::Panel, _iconDim, TDEIcon::ActiveState);
    setPixmap(_icon);
 }
 
@@ -262,7 +262,7 @@ void QuickButton::launch()
    if (!KickerSettings::showDeepButtons()) {
        setDown(false);
        update();
-       KIconEffect::visualActivate(this, rect());
+       TDEIconEffect::visualActivate(this, rect());
    }
    if (_qurl->kurl().url() == "SPECIAL_BUTTON__SHOW_DESKTOP") {
        if (isOn()) {
@@ -344,10 +344,10 @@ void QuickButton::updateKickerTip(KickerTip::Data &data)
         data.subtext = data.message;
     }
     if (_qurl->url() == "SPECIAL_BUTTON__SHOW_DESKTOP") {
-        data.icon = TDEGlobal::iconLoader()->loadIcon("desktop", KIcon::Panel, KIcon::SizeHuge, KIcon::DefaultState);
+        data.icon = TDEGlobal::iconLoader()->loadIcon("desktop", TDEIcon::Panel, TDEIcon::SizeHuge, TDEIcon::DefaultState);
     }
     else {
-        data.icon = KMimeType::pixmapForURL(_qurl->kurl(), 0, KIcon::Panel, KIcon::SizeHuge, KIcon::DefaultState);
+        data.icon = KMimeType::pixmapForURL(_qurl->kurl(), 0, TDEIcon::Panel, TDEIcon::SizeHuge, TDEIcon::DefaultState);
     }
 }
 

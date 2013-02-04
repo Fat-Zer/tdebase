@@ -27,7 +27,7 @@
 
 class KKeyButton;
 class KLineEdit;
-class KIconButton;
+class TDEIconButton;
 class TQCheckBox;
 class TQGroupBox;
 class TQLabel;
@@ -74,7 +74,7 @@ protected:
     KURLRequester *_execEdit, *_pathEdit;
     KLineEdit    *_termOptEdit, *_uidEdit;
     TQCheckBox    *_terminalCB, *_uidCB, *_launchCB, *_systrayCB;
-    KIconButton  *_iconButton;
+    TDEIconButton  *_iconButton;
     TQGroupBox    *_path_group, *_term_group, *_uid_group, *general_group_keybind;
     TQLabel *_termOptLabel, *_uidLabel, *_pathLabel, *_nameLabel, *_commentLabel, *_execLabel;
     TQLabel	*_descriptionLabel;

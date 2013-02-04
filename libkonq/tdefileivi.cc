@@ -49,8 +49,8 @@ struct KFileIVI::Private
 };
 
 KFileIVI::KFileIVI( KonqIconViewWidget *iconview, KFileItem* fileitem, int size )
-    : KIconViewItem( iconview, fileitem->text() ),
-    m_size( size ), m_state( KIcon::DefaultState ),
+    : TDEIconViewItem( iconview, fileitem->text() ),
+    m_size( size ), m_state( TDEIcon::DefaultState ),
     m_bDisabled( false ), m_bThumbnail( false ), m_fileitem( fileitem )
 {
     d = new KFileIVI::Private;
@@ -86,20 +86,20 @@ void KFileIVI::invalidateThumb( int state, bool redraw )
     TQIconSet::Mode mode;
     switch( state )
     {
-	case KIcon::DisabledState:
+	case TDEIcon::DisabledState:
 	    mode = TQIconSet::Disabled;
 	    break;
-	case KIcon::ActiveState:
+	case TDEIcon::ActiveState:
 	    mode = TQIconSet::Active;
 	    break;
-	case KIcon::DefaultState:
+	case TDEIcon::DefaultState:
 	default:
 	    mode = TQIconSet::Normal;
 	    break;
     }
     d->icons = TQIconSet();
     d->icons.setPixmap( TDEGlobal::iconLoader()->iconEffect()->
-			apply( d->thumb, KIcon::Desktop, state ),
+			apply( d->thumb, TDEIcon::Desktop, state ),
 			TQIconSet::Large, mode );
     m_state = state;
 
@@ -112,7 +112,7 @@ void KFileIVI::setIcon( int size, int state, bool recalc, bool redraw )
     m_size = size;
     m_bThumbnail = false;
     if ( m_bDisabled )
-      m_state = KIcon::DisabledState;
+      m_state = TDEIcon::DisabledState;
     else
       m_state = state;
 
@@ -121,7 +121,7 @@ void KFileIVI::setIcon( int size, int state, bool recalc, bool redraw )
     else {
         int halfSize;
         if (m_size == 0) {
-            halfSize = IconSize(KIcon::Desktop) / 2;
+            halfSize = IconSize(TDEIcon::Desktop) / 2;
         } else {
             halfSize = m_size / 2;
         }
@@ -165,13 +165,13 @@ void KFileIVI::setPixmapDirect( const TQPixmap& pixmap, bool recalc, bool redraw
     TQIconSet::Mode mode;
     switch( m_state )
     {
-	case KIcon::DisabledState:
+	case TDEIcon::DisabledState:
 	    mode = TQIconSet::Disabled;
 	    break;
-	case KIcon::ActiveState:
+	case TDEIcon::ActiveState:
 	    mode = TQIconSet::Active;
 	    break;
-	case KIcon::DefaultState:
+	case TDEIcon::DefaultState:
 	default:
 	    mode = TQIconSet::Normal;
 	    break;
@@ -193,9 +193,9 @@ void KFileIVI::setDisabled( bool disabled )
     if ( m_bDisabled != disabled )
     {
         m_bDisabled = disabled;
-        bool active = ( m_state == KIcon::ActiveState );
-        setEffect( m_bDisabled ? KIcon::DisabledState : 
-                   ( active ? KIcon::ActiveState : KIcon::DefaultState ) );
+        bool active = ( m_state == TDEIcon::ActiveState );
+        setEffect( m_bDisabled ? TDEIcon::DisabledState : 
+                   ( active ? TDEIcon::ActiveState : TDEIcon::DefaultState ) );
     }
 }
 
@@ -207,10 +207,10 @@ void KFileIVI::setThumbnailPixmap( const TQPixmap & pixmap )
     // so we just create a blank TQIconSet here
     d->icons = TQIconSet();
     d->icons.setPixmap( TDEGlobal::iconLoader()->iconEffect()->
-		    apply( pixmap, KIcon::Desktop, KIcon::DefaultState ),
+		    apply( pixmap, TDEIcon::Desktop, TDEIcon::DefaultState ),
 		    TQIconSet::Large, TQIconSet::Normal );
 
-    m_state = KIcon::DefaultState;
+    m_state = TDEIcon::DefaultState;
 
     // Recalc when setting this pixmap!
     updatePixmapSize();
@@ -221,9 +221,9 @@ void KFileIVI::setThumbnailPixmap( const TQPixmap & pixmap )
 void KFileIVI::setActive( bool active )
 {
     if ( active )
-        setEffect( KIcon::ActiveState );
+        setEffect( TDEIcon::ActiveState );
     else
-        setEffect( m_bDisabled ? KIcon::DisabledState : KIcon::DefaultState );
+        setEffect( m_bDisabled ? TDEIcon::DisabledState : TDEIcon::DefaultState );
 }
 
 void KFileIVI::setEffect( int state )
@@ -231,41 +231,41 @@ void KFileIVI::setEffect( int state )
     TQIconSet::Mode mode;
     switch( state )
     {
-	case KIcon::DisabledState:
+	case TDEIcon::DisabledState:
 	    mode = TQIconSet::Disabled;
 	    break;
-	case KIcon::ActiveState:
+	case TDEIcon::ActiveState:
 	    mode = TQIconSet::Active;
 	    break;
-	case KIcon::DefaultState:
+	case TDEIcon::DefaultState:
 	default:
 	    mode = TQIconSet::Normal;
 	    break;
     }
     // Do not update if the fingerprint is identical (prevents flicker)!
 
-    KIconEffect *effect = TDEGlobal::iconLoader()->iconEffect();
+    TDEIconEffect *effect = TDEGlobal::iconLoader()->iconEffect();
 
-    bool haveEffect = effect->hasEffect( KIcon::Desktop, m_state ) !=
-                      effect->hasEffect( KIcon::Desktop, state );
+    bool haveEffect = effect->hasEffect( TDEIcon::Desktop, m_state ) !=
+                      effect->hasEffect( TDEIcon::Desktop, state );
 
                 //kdDebug(1203) << "desktop;defaultstate=" <<
-                //      effect->fingerprint(KIcon::Desktop, KIcon::DefaultState) <<
+                //      effect->fingerprint(TDEIcon::Desktop, TDEIcon::DefaultState) <<
                 //      endl;
                 //kdDebug(1203) << "desktop;activestate=" <<
-                //      effect->fingerprint(KIcon::Desktop, KIcon::ActiveState) <<
+                //      effect->fingerprint(TDEIcon::Desktop, TDEIcon::ActiveState) <<
                 //      endl;
 
     if( haveEffect &&
-        effect->fingerprint( KIcon::Desktop, m_state ) !=
-	effect->fingerprint( KIcon::Desktop, state ) )
+        effect->fingerprint( TDEIcon::Desktop, m_state ) !=
+	effect->fingerprint( TDEIcon::Desktop, state ) )
     {
 	// Effects on are not applied until they are first accessed to
 	// save memory. Do this now when needed
 	if( m_bThumbnail )
 	{
 	    if( d->icons.isGenerated( TQIconSet::Large, mode ) )
-		d->icons.setPixmap( effect->apply( d->thumb, KIcon::Desktop, state ),
+		d->icons.setPixmap( effect->apply( d->thumb, TDEIcon::Desktop, state ),
 				    TQIconSet::Large, mode );
 	}
 	else
@@ -373,7 +373,7 @@ void KFileIVI::paintItem( TQPainter *p, const TQColorGroup &c )
         p->setFont( f );
     }*/
 
-    KIconViewItem::paintItem( p, cg );
+    TDEIconViewItem::paintItem( p, cg );
     paintOverlay(p);
 
 }
@@ -427,7 +427,7 @@ void KFileIVI::setMouseOverAnimation( const TQString& movieFileName )
 {
     if ( !movieFileName.isEmpty() )
     {
-        //kdDebug(1203) << "KIconViewItem::setMouseOverAnimation " << movieFileName << endl;
+        //kdDebug(1203) << "TDEIconViewItem::setMouseOverAnimation " << movieFileName << endl;
         d->m_animatedIcon = movieFileName;
     }
 }
@@ -459,7 +459,7 @@ int KFileIVI::compare( TQIconViewItem *i ) const
 void KFileIVI::updatePixmapSize()
 {
     int size = m_size ? m_size :
-        TDEGlobal::iconLoader()->currentSize( KIcon::Desktop );
+        TDEGlobal::iconLoader()->currentSize( TDEIcon::Desktop );
 
     KonqIconViewWidget* view = static_cast<KonqIconViewWidget*>( iconView() );
 

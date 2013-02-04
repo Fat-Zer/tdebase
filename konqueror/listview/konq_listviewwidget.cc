@@ -839,7 +839,7 @@ void KonqBaseListViewWidget::startDrag()
    if (( urls.count() > 1 ) || (pixmap0Invalid))
    {
       int iconSize = m_pBrowserView->m_pProps->iconSize();
-      iconSize = iconSize ? iconSize : TDEGlobal::iconLoader()->currentSize( KIcon::Small ); // Default = small
+      iconSize = iconSize ? iconSize : TDEGlobal::iconLoader()->currentSize( TDEIcon::Small ); // Default = small
       pixmap2 = DesktopIcon( "tdemultiple", iconSize );
       if ( pixmap2.isNull() )
           kdWarning(1202) << "Could not find multiple pixmap" << endl;
@@ -1011,7 +1011,7 @@ void KonqBaseListViewWidget::slotReturnPressed( TQListViewItem *_item )
 
 	   // call the icon effect if enabled
 	   if (TDEGlobalSettings::showKonqIconActivationEffect() == true) {
-	       KIconEffect::visualActivate(viewport(), rect, pix);
+	       TDEIconEffect::visualActivate(viewport(), rect, pix);
 	   }
 
 	   // clean up

@@ -45,7 +45,7 @@ public:
   static TQString systemVersion() { return _iversion; }
   static TQString systemMachine() { return _imachine; }
   static IndexViewMode viewMode() { return _viewmode; }
-  static KIcon::StdSizes iconSize() { return _iconsize; }
+  static TDEIcon::StdSizes iconSize() { return _iconsize; }
   static TQString baseGroup();
 
   static void setIsInfoCenter(bool b) { _infocenter = b; }
@@ -59,7 +59,7 @@ public:
   static void setSystemVersion(const TQString& n){ _iversion = n; }
   static void setSystemMachine(const TQString& n){ _imachine = n; }
   static void setViewMode(IndexViewMode m) { _viewmode = m; }
-  static void setIconSize(KIcon::StdSizes s) { _iconsize = s; }
+  static void setIconSize(TDEIcon::StdSizes s) { _iconsize = s; }
 
   static void repairAccels( TQWidget * tw );
 
@@ -69,7 +69,7 @@ private:
   static TQStringList _types;
   static TQString _uname, _hname, _isystem, _irelease, _iversion, _imachine, _tdeversion;
   static IndexViewMode _viewmode;
-  static KIcon::StdSizes _iconsize;
+  static TDEIcon::StdSizes _iconsize;
   static TQString _baseGroup;
 };
 

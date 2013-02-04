@@ -46,9 +46,9 @@ PanelBrowserDialog::PanelBrowserDialog( const TQString& path, const TQString &ic
     hbox2->setSpacing( KDialog::spacingHint() );
     TQLabel *label1 = new TQLabel( i18n( "Button icon:" ), hbox2 );
 
-    iconBtn = new KIconButton( hbox2 );
+    iconBtn = new TDEIconButton( hbox2 );
     iconBtn->setFixedSize( 50, 50 );
-    iconBtn->setIconType( KIcon::Panel, KIcon::Place );
+    iconBtn->setIconType( TDEIcon::Panel, TDEIcon::Place );
     label1->setBuddy( iconBtn );
 
     TQHBox *hbox1 = new TQHBox( page );

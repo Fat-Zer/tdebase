@@ -42,7 +42,7 @@ TQString KCGlobal::_irelease = "";
 TQString KCGlobal::_iversion = "";
 TQString KCGlobal::_imachine = "";
 IndexViewMode KCGlobal::_viewmode = Icon;
-KIcon::StdSizes KCGlobal::_iconsize = KIcon::SizeMedium;
+TDEIcon::StdSizes KCGlobal::_iconsize = TDEIcon::SizeMedium;
 TQString KCGlobal::_baseGroup = "";
 
 void KCGlobal::init()

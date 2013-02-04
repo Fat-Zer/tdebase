@@ -28,8 +28,8 @@ FileTypeDetails::FileTypeDetails( TQWidget * parent, const char * name )
   TQHBoxLayout *hBox = new TQHBoxLayout(0L, 0, KDialog::spacingHint());
   firstLayout->addLayout(hBox, 1);
 
-  iconButton = new KIconButton(firstWidget);
-  iconButton->setIconType(KIcon::Desktop, KIcon::MimeType);
+  iconButton = new TDEIconButton(firstWidget);
+  iconButton->setIconType(TDEIcon::Desktop, TDEIcon::MimeType);
   connect(iconButton, TQT_SIGNAL(iconChanged(TQString)), TQT_SLOT(updateIcon(TQString)));
 
   iconButton->setFixedSize(70, 70);

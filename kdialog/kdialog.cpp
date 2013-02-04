@@ -596,47 +596,47 @@ static int directCommand(TDECmdLineArgs *args)
         if (args->count() >= 1)  {
             contextStr = TQString::fromLocal8Bit(args->arg(0));
         }
-        KIcon::Group group = KIcon::NoGroup;
+        TDEIcon::Group group = TDEIcon::NoGroup;
         if ( groupStr == TQString::fromLatin1( "Desktop" ) )
-            group = KIcon::Desktop;
+            group = TDEIcon::Desktop;
         else if ( groupStr == TQString::fromLatin1( "Toolbar" ) )
-            group = KIcon::Toolbar;
+            group = TDEIcon::Toolbar;
         else if ( groupStr == TQString::fromLatin1( "MainToolbar" ) )
-            group = KIcon::MainToolbar;
+            group = TDEIcon::MainToolbar;
         else if ( groupStr == TQString::fromLatin1( "Small" ) )
-            group = KIcon::Small;
+            group = TDEIcon::Small;
         else if ( groupStr == TQString::fromLatin1( "Panel" ) )
-            group = KIcon::Panel;
+            group = TDEIcon::Panel;
         else if ( groupStr == TQString::fromLatin1( "User" ) )
-            group = KIcon::User;
-        KIcon::Context context = KIcon::Any;
+            group = TDEIcon::User;
+        TDEIcon::Context context = TDEIcon::Any;
         // From kicontheme.cpp
         if ( contextStr == TQString::fromLatin1( "Devices" ) )
-            context = KIcon::Device;
+            context = TDEIcon::Device;
         else if ( contextStr == TQString::fromLatin1( "MimeTypes" ) )
-            context = KIcon::MimeType;
+            context = TDEIcon::MimeType;
         else if ( contextStr == TQString::fromLatin1( "FileSystems" ) )
-            context = KIcon::FileSystem;
+            context = TDEIcon::FileSystem;
         else if ( contextStr == TQString::fromLatin1( "Applications" ) )
-            context = KIcon::Application;
+            context = TDEIcon::Application;
         else if ( contextStr == TQString::fromLatin1( "Actions" ) )
-            context = KIcon::Action;
+            context = TDEIcon::Action;
         else if ( contextStr == TQString::fromLatin1( "Animations" ) )
-            context = KIcon::Animation;
+            context = TDEIcon::Animation;
         else if ( contextStr == TQString::fromLatin1( "Categories" ) )
-            context = KIcon::Category;
+            context = TDEIcon::Category;
         else if ( contextStr == TQString::fromLatin1( "Emblems" ) )
-            context = KIcon::Emblem;
+            context = TDEIcon::Emblem;
         else if ( contextStr == TQString::fromLatin1( "Emotes" ) )
-            context = KIcon::Emote;
+            context = TDEIcon::Emote;
         else if ( contextStr == TQString::fromLatin1( "International" ) )
-            context = KIcon::International;
+            context = TDEIcon::International;
         else if ( contextStr == TQString::fromLatin1( "Places" ) )
-            context = KIcon::Place;
+            context = TDEIcon::Place;
         else if ( contextStr == TQString::fromLatin1( "Status" ) )
-            context = KIcon::StatusIcon;
+            context = TDEIcon::StatusIcon;
 
-	KIconDialog dlg(0, "icon dialog");
+	TDEIconDialog dlg(0, "icon dialog");
 	kapp->setTopWidget( &dlg );
 	dlg.setup( group, context);
 	if (!title.isNull())

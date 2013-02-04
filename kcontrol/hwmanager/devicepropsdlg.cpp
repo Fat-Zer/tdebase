@@ -343,7 +343,7 @@ TQString assembleSwitchList(TDESwitchType::TDESwitchType switches) {
 void DevicePropertiesDialog::populateDeviceInformation() {
 	if (m_device) {
 		base->labelDeviceType->setText(m_device->friendlyDeviceType());
-		base->iconDeviceType->setPixmap(m_device->icon(KIcon::SizeSmall));
+		base->iconDeviceType->setPixmap(m_device->icon(TDEIcon::SizeSmall));
 		base->labelDeviceName->setText(m_device->friendlyName());
 		base->labelDeviceNode->setText((m_device->deviceNode().isNull())?i18n("<none>"):m_device->deviceNode());
 		base->labelSystemPath->setText(m_device->systemPath());
