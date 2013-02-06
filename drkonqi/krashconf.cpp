@@ -110,7 +110,7 @@ void KrashConfig :: readConfig()
   m_invalidStackFrameRegExp = debuggers.readEntry("InvalidStackFrameRegExp");
   m_frameRegExp = debuggers.readEntry("FrameRegExp");
   m_neededInValidBacktraceRegExp = debuggers.readEntry("NeededInValidBacktraceRegExp");
-  m_kcrashRegExp = debuggers.readEntry("KCrashRegExp");
+  m_kcrashRegExp = debuggers.readEntry("TDECrashRegExp");
 
   TDEConfig preset(TQString::fromLatin1("presets/%1rc").arg(configname),
                  true, false, "appdata");

@@ -90,7 +90,7 @@ static void crashHandler(int sigId)
 static void signalHandler(int sigId)
 {
     fprintf(stderr, "*** kdesktop got signal %d (Exiting)\n", sigId);
-    KCrash::setEmergencySaveFunction(0); // No restarts any more
+    TDECrash::setEmergencySaveFunction(0); // No restarts any more
     // try to cleanup all windows
     signal(SIGTERM, SIG_DFL); // next one kills
     signal(SIGHUP,  SIG_DFL); // next one kills
@@ -102,7 +102,7 @@ void KDesktop::slotUpAndRunning()
 {
     // Activate crash recovery
     if (getenv("TDE_DEBUG") == NULL)
-        KCrash::setEmergencySaveFunction(crashHandler); // Try to restart on crash
+        TDECrash::setEmergencySaveFunction(crashHandler); // Try to restart on crash
 }
 
 extern "C" KDE_EXPORT int kdemain( int argc, char **argv )

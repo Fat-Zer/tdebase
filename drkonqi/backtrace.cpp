@@ -198,7 +198,7 @@ bool BackTrace::usefulBacktrace()
   return !m_strBt.isNull() && !tooShort && (unknown < frames);
 }
 
-// remove stack frames added because of KCrash
+// remove stack frames added because of TDECrash
 void BackTrace::processBacktrace()
 {
   if( !m_krashconf->kcrashRegExp().isEmpty())
@@ -214,7 +214,7 @@ void BackTrace::processBacktrace()
         --len;
         }
       m_strBt.remove( pos, len );
-      m_strBt.insert( pos, TQString::fromLatin1( "[KCrash handler]\n" ));
+      m_strBt.insert( pos, TQString::fromLatin1( "[TDECrash handler]\n" ));
       }
     }
 }

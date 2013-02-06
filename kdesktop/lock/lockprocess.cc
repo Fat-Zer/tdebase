@@ -289,7 +289,7 @@ LockProcess::LockProcess()
 
     greetPlugin.library = 0;
 
-    KCrash::setCrashHandler(segv_handler);
+    TDECrash::setCrashHandler(segv_handler);
 }
 
 //---------------------------------------------------------------------------

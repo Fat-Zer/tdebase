@@ -71,7 +71,7 @@ Kicker::Kicker()
     // initialize the configuration object
     KickerSettings::instance(instanceName() + "rc");
 
-    if (KCrash::crashHandler() == 0 )
+    if (TDECrash::crashHandler() == 0 )
     {
         // this means we've most likely crashed once. so let's see if we
         // stay up for more than 2 minutes time, and if so reset the
@@ -148,7 +148,7 @@ Kicker::~Kicker()
 
 void Kicker::setCrashHandler()
 {
-    KCrash::setEmergencySaveFunction(Kicker::crashHandler);
+    TDECrash::setEmergencySaveFunction(Kicker::crashHandler);
 }
 
 void Kicker::crashHandler(int /* signal */)

@@ -200,7 +200,7 @@ kg_main( const char *argv0 )
 	kdDebug() << timestamp() << "start" << endl;
 	kde_have_kipc = false;
 	TDEApplication::disableAutoDcopRegistration();
-	KCrash::setSafer( true );
+	TDECrash::setSafer( true );
 
 	TDEProcess *tsak = 0;
 	TDEProcess *proc = 0;

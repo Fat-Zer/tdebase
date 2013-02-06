@@ -163,4 +163,4 @@ RemoveFromBacktraceRegExp=\(no debugging symbols found\)\.\.\.\\n?
 InvalidStackFrameRegExp=\\n#[0-9]+\\s+0x[0-9A-Fa-f]+ \w* \?\?
 FrameRegExp=\\n#[0-9]+\\s+0x[0-9A-Fa-f]+
 NeededInValidBacktraceRegExp=\\n#5
-KCrashRegExp=\\n0x[0123456789abcdefABCDEF]+.*<signal handler called>[ ]*\\n
+TDECrashRegExp=\\n0x[0123456789abcdefABCDEF]+.*<signal handler called>[ ]*\\n

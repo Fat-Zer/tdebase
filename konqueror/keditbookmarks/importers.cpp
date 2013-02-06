@@ -163,7 +163,7 @@ TQString OperaImportCommand::requestFilename() const {
 }
 
 TQString CrashesImportCommand::requestFilename() const {
-    static KCrashBookmarkImporterImpl importer;
+    static TDECrashBookmarkImporterImpl importer;
     return importer.findDefaultLocation();
 }
 
@@ -203,7 +203,7 @@ void OperaImportCommand::doExecute(const KBookmarkGroup &bkGroup) {
 }
 
 void CrashesImportCommand::doExecute(const KBookmarkGroup &bkGroup) {
-    KCrashBookmarkImporterImpl importer;
+    TDECrashBookmarkImporterImpl importer;
     importer.setShouldDelete(true);
     importer.setFilename(m_fileName);
     parseInto(bkGroup, &importer);
