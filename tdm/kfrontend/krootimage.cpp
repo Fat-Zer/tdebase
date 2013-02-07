@@ -39,9 +39,9 @@ static const char description[] =
 
 static const char version[] = "v2.0";
 
-static KCmdLineOptions options[] = {
+static TDECmdLineOptions options[] = {
 	{ "+config", I18N_NOOP( "Name of the configuration file" ), 0 },
-	KCmdLineLastOption
+	TDECmdLineLastOption
 };
 
 static Atom prop_root;

@@ -14,14 +14,14 @@
 #include <kaboutdata.h>
 #include <stdio.h>
 
-static KCmdLineOptions options[] =
+static TDECmdLineOptions options[] =
 {
 	{ "file <file>", I18N_NOOP("Use <file> instead of global config"), 0 },
 	{ "group <group>", I18N_NOOP("Group to look in"), "TDE" },
         { "key <key>", I18N_NOOP("Key to look for"), 0 },
 	{ "type <type>", I18N_NOOP("Type of variable. Use \"bool\" for a boolean, otherwise it is treated as a string"), 0 },
 	{ "+value", I18N_NOOP( "The value to write. Mandatory, on a shell use '' for empty" ), 0 },
-        KCmdLineLastOption
+        TDECmdLineLastOption
 };
 int main(int argc, char **argv)
 {

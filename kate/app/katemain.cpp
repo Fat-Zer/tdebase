@@ -35,7 +35,7 @@
 
 #include <stdlib.h>
 
-static KCmdLineOptions options[] =
+static TDECmdLineOptions options[] =
 {
     { "s", 0 , 0 },
     { "start <name>", I18N_NOOP("Start Kate with a given session"), 0 },
@@ -52,7 +52,7 @@ static KCmdLineOptions options[] =
     { "i", 0, 0 },
     { "stdin", I18N_NOOP("Read the contents of stdin"), 0 },
     { "+[URL]", I18N_NOOP("Document to open"), 0 },
-    KCmdLineLastOption
+    TDECmdLineLastOption
 };
 
 extern "C" KDE_EXPORT int kdemain( int argc, char **argv )

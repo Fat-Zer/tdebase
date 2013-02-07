@@ -24,7 +24,7 @@
 #include <kcmdlineargs.h>
 #include <klocale.h>
 
-static KCmdLineOptions options[] =
+static TDECmdLineOptions options[] =
 {
 	{ "c",                I18N_NOOP("Make an internal copy of the files to print"), 0},
 	{ "P", 0, 0 },
@@ -39,7 +39,7 @@ static KCmdLineOptions options[] =
 	{ "stdin",            I18N_NOOP("Allow printing from STDIN" ),         0},
 	{ "nodialog",         I18N_NOOP("Do not show the print dialog (print directly)"), 0},
 	{ "+file(s)",	      I18N_NOOP("Files to load" ),                        0},
-	KCmdLineLastOption
+	TDECmdLineLastOption
 };
 
 extern "C" int KDE_EXPORT kdemain(int argc, char *argv[])

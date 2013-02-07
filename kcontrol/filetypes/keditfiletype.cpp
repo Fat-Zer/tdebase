@@ -101,11 +101,11 @@ void FileTypeDialog::slotDatabaseChanged()
 
 #include "keditfiletype.moc"
 
-static KCmdLineOptions options[] =
+static TDECmdLineOptions options[] =
 {
   { "parent <winid>", I18N_NOOP("Makes the dialog transient for the window specified by winid"), 0 },
   { "+mimetype",   I18N_NOOP("File type to edit (e.g. text/html)"), 0 },
-  KCmdLineLastOption
+  TDECmdLineLastOption
 };
 
 int main(int argc, char ** argv)

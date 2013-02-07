@@ -42,10 +42,10 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 
 
-static KCmdLineOptions options[] =
+static TDECmdLineOptions options[] =
 {
   { "+desktopfile", I18N_NOOP("The extensions desktop file"), 0 },
-  KCmdLineLastOption
+  TDECmdLineLastOption
 };
 
 KPanelExtension* loadExtension(const AppletInfo& info)

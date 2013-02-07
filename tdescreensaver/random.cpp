@@ -50,13 +50,13 @@ static const char description[] = I18N_NOOP("Start a random TDE screen saver");
 
 static const char version[] = "2.0.0";
 
-static const KCmdLineOptions options[] =
+static const TDECmdLineOptions options[] =
 {
 	{ "setup", I18N_NOOP("Setup screen saver"), 0 },
 	{ "window-id wid", I18N_NOOP("Run in the specified XWindow"), 0 },
 	{ "root", I18N_NOOP("Run in the root XWindow"), 0 },
 	//  { "+-- [options]", I18N_NOOP("Options to pass to the screen saver"), 0 }
-	KCmdLineLastOption
+	TDECmdLineLastOption
 };
 
 //----------------------------------------------------------------------------

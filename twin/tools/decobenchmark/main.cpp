@@ -37,7 +37,7 @@
 #include "preview.h"
 #include "main.h"
 
-static KCmdLineOptions options[] =
+static TDECmdLineOptions options[] =
 {
 	{ "+decoration", "Decoration library to use, such as twin3_plastik.", 0 },
 	{ "+tests", "Which test should be executed ('all', 'repaint', 'caption', 'resize', 'recreation')", 0 },

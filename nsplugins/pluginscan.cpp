@@ -516,10 +516,10 @@ void sigChildHandler(int)
    errno = saved_errno;
 }
 
-static KCmdLineOptions options[] =
+static TDECmdLineOptions options[] =
 {
    { "verbose",     I18N_NOOP("Show progress output for GUI"), 0 },
-   KCmdLineLastOption
+   TDECmdLineLastOption
 };
 
 

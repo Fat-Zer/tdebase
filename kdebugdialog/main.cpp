@@ -67,12 +67,12 @@ TQStringList readAreaList()
   return lst;
 }
 
-static KCmdLineOptions options[] =
+static TDECmdLineOptions options[] =
 {
   { "fullmode", I18N_NOOP("Show the fully-fledged dialog instead of the default list dialog"), 0 },
   { "on <area>", /*I18N_NOOP TODO*/ "Turn area on", 0 },
   { "off <area>", /*I18N_NOOP TODO*/ "Turn area off", 0 },
-  KCmdLineLastOption
+  TDECmdLineLastOption
 };
 
 int main(int argc, char ** argv)

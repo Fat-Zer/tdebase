@@ -32,10 +32,10 @@
 
 #include "kpager.h"
 
-static KCmdLineOptions pagerOpts[] =
+static TDECmdLineOptions pagerOpts[] =
 {
     { "hidden", I18N_NOOP("Create pager but keep the window hidden"), 0 },
-    KCmdLineLastOption
+    TDECmdLineLastOption
 };
 
 bool closed_by_sm = false;

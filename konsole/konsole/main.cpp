@@ -61,7 +61,7 @@ static const char description[] =
   I18N_NOOP("X terminal for use with TDE.");
 
 //   { "T <title>",       0, 0 },
-static KCmdLineOptions options[] =
+static TDECmdLineOptions options[] =
 {
    { "name <name>",     I18N_NOOP("Set window class"), 0 },
    { "ls",              I18N_NOOP("Start login shell"), 0 },
@@ -91,7 +91,7 @@ static KCmdLineOptions options[] =
    { "!e <command>",    I18N_NOOP("Execute 'command' instead of shell"), 0 },
    // WABA: All options after -e are treated as arguments.
    { "+[args]",         I18N_NOOP("Arguments for 'command'"), 0 },
-   KCmdLineLastOption
+   TDECmdLineLastOption
 };
 
 static bool has_noxft = false;

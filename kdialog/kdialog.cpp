@@ -60,7 +60,7 @@ using namespace std;
 extern "C" { int XSetTransientForHint( Display *, unsigned long, unsigned long ); }
 #endif // Q_WS_X11
 
-static KCmdLineOptions options[] =
+static TDECmdLineOptions options[] =
 {
     { "yesno <text>", I18N_NOOP("Question message box with yes/no buttons"), 0 },
     { "yesnocancel <text>", I18N_NOOP("Question message box with yes/no/cancel buttons"), 0 },
@@ -98,7 +98,7 @@ static KCmdLineOptions options[] =
     { "dontagain <file:entry>", I18N_NOOP("Config file and option name for saving the \"dont-show/ask-again\" state"), 0 },
 
     { "+[arg]", I18N_NOOP("Arguments - depending on main option"), 0 },
-    KCmdLineLastOption
+    TDECmdLineLastOption
 };
 
 // this class hooks into the eventloop and outputs the id

@@ -20,7 +20,7 @@ const int XFocusIn = FocusIn;
 #undef KeyRelease
 
 
-static KCmdLineOptions options[] =
+static TDECmdLineOptions options[] =
 {
   { "!+command", I18N_NOOP("Command to execute"), 0 },
   // "!" means: all options after command are treated as arguments to the command
@@ -43,7 +43,7 @@ static KCmdLineOptions options[] =
              "This has no effect unless startonshow is specified and implies keeprunning." ), 0 },
   /*  { "menuitem <item>", I18N_NOOP( "Adds a custom entry to the tray icon menu\n"
       "The item should have the form text:command." ), 0 },*/
-  KCmdLineLastOption
+  TDECmdLineLastOption
 };
 
 int main( int argc, char *argv[] )

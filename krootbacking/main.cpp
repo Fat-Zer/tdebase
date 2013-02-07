@@ -39,9 +39,9 @@ static const char description[] =
 
 static const char version[] = "0.1";
 
-static KCmdLineOptions options[] =
+static TDECmdLineOptions options[] =
 {
-	KCmdLineLastOption
+	TDECmdLineLastOption
 };
 
 int main(int argc, char **argv)

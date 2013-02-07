@@ -52,10 +52,10 @@ int Application::newInstance()
   return KUniqueApplication::newInstance();
 }
 
-static KCmdLineOptions options[] =
+static TDECmdLineOptions options[] =
 {
   { "+[url]", I18N_NOOP("URL to display"), "" },
-  KCmdLineLastOption
+  TDECmdLineLastOption
 };
 
 extern "C" int KDE_EXPORT kdemain( int argc, char **argv )

@@ -34,13 +34,13 @@ static const char description[] =
 // INSERT A DESCRIPTION FOR YOUR APPLICATION HERE
 
 
-static KCmdLineOptions options[] =
+static TDECmdLineOptions options[] =
 {
   { "phone ", I18N_NOOP("Phone number to fax to"), 0 },
   { "immediate", I18N_NOOP("Send fax immediately"), 0 },
   { "batch", I18N_NOOP("Exit after sending"), 0 },
   { "+[file]", I18N_NOOP("File to fax (added to the file list)"), 0 },
-   KCmdLineLastOption
+   TDECmdLineLastOption
   // INSERT YOUR COMMANDLINE OPTIONS HERE
 };
 

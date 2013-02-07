@@ -249,7 +249,7 @@ void MountHelper::slotCancel()
 	exit(0);
 }
 
-static KCmdLineOptions options[] =
+static TDECmdLineOptions options[] =
 {
 	{ "d", I18N_NOOP("Decrypt given URL"), 0 },
 	{ "u", I18N_NOOP("Unmount given URL"), 0 },
@@ -257,7 +257,7 @@ static KCmdLineOptions options[] =
 	{ "e", I18N_NOOP("Eject given URL via kdeeject"), 0},
 	{ "s", I18N_NOOP("Unmount and Eject given URL (necessary for some USB devices)"), 0},
 	{"!+URL",   I18N_NOOP("media:/ URL to mount/unmount/eject/remove"), 0 },
-	KCmdLineLastOption
+	TDECmdLineLastOption
 };
 
 

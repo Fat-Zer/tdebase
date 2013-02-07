@@ -31,11 +31,11 @@
 static const char description[] = I18N_NOOP("TDE menu editor");
 static const char version[] = "0.7";
 
-static const KCmdLineOptions options[] =
+static const TDECmdLineOptions options[] =
 {
 	{ "+[menu]", I18N_NOOP("Sub menu to pre-select"), 0 },
 	{ "+[menu-id]", I18N_NOOP("Menu entry to pre-select"), 0 },
-	KCmdLineLastOption
+	TDECmdLineLastOption
 };
 
 static KMenuEdit *menuEdit = 0;

@@ -32,14 +32,14 @@
 #include <kaboutdata.h>
 #include <stdio.h>
 
-static KCmdLineOptions options[] =
+static TDECmdLineOptions options[] =
 {
 	{ "file <file>", I18N_NOOP("Use <file> instead of global config"), 0 },
 	{ "group <group>", I18N_NOOP("Group to look in"), "TDE" },
         { "key <key>", I18N_NOOP("Key to look for"), 0 },
         { "default <default>", I18N_NOOP("Default value"), 0 },
 	{ "type <type>", I18N_NOOP("Type of variable"), 0 },
-        KCmdLineLastOption
+        TDECmdLineLastOption
 };
 int main(int argc, char **argv)
 {

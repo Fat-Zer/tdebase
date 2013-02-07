@@ -46,12 +46,12 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <X11/Xlib.h>
 
 
-static KCmdLineOptions options[] =
+static TDECmdLineOptions options[] =
 {
   { "+desktopfile", I18N_NOOP("The extension's desktop file"), 0 },
   { "configfile <file>", I18N_NOOP("The config file to be used"), 0 },
   { "callbackid <id>", I18N_NOOP("DCOP callback id of the extension container"), 0 },
-  KCmdLineLastOption
+  TDECmdLineLastOption
 };
 
 extern "C" KDE_EXPORT int kdemain( int argc, char ** argv )

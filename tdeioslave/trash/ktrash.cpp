@@ -25,14 +25,14 @@
 #include <kdirnotify_stub.h>
 #include <kdebug.h>
 
-static KCmdLineOptions options[] =
+static TDECmdLineOptions options[] =
 {
     { "empty", I18N_NOOP( "Empty the contents of the trash" ), 0 },
     //{ "migrate", I18N_NOOP( "Migrate contents of old trash" ), 0 },
     { "restore <file>", I18N_NOOP( "Restore a trashed file to its original location" ), 0 },
     // This hack is for the servicemenu on trash.desktop which uses Exec=ktrash -empty. %f is implied...
     { "+[ignored]", I18N_NOOP( "Ignored" ), 0 },
-    KCmdLineLastOption
+    TDECmdLineLastOption
 };
 
 int main(int argc, char *argv[])

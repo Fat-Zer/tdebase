@@ -31,7 +31,7 @@ DEALINGS IN THE SOFTWARE.
 #include <twin.h>
 #include <X11/Xlib.h>
 
-static const KCmdLineOptions options[] =
+static const TDECmdLineOptions options[] =
     {
     // no need for I18N_NOOP(), this is not supposed to be used directly
         { "pid <pid>", "PID of the application to resume.", 0 },
@@ -39,7 +39,7 @@ static const KCmdLineOptions options[] =
         { "windowname <caption>", "Caption of the window to be resumed.", 0 },
         { "applicationname <name>", "Name of the application to be resumed.", 0 },
         { "wid <id>", "ID of resource belonging to the application.", 0 },
-        KCmdLineLastOption
+        TDECmdLineLastOption
     };
 
 int main( int argc, char* argv[] )

@@ -26,11 +26,11 @@
 
 static const char description[] = I18N_NOOP("KPersonalizer");
 
-static KCmdLineOptions options[] =
+static TDECmdLineOptions options[] =
 {
 	{ "r", I18N_NOOP("Personalizer is restarted by itself"), 0 },
 	{ "before-session", I18N_NOOP("Personalizer is running before Trinity session"), 0 },
-        KCmdLineLastOption
+        TDECmdLineLastOption
 };
 
 int main(int argc, char *argv[])

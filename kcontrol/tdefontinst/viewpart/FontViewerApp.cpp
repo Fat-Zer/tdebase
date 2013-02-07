@@ -106,10 +106,10 @@ CFontViewerApp::CFontViewerApp()
 
 }
 
-static KCmdLineOptions options[] =
+static TDECmdLineOptions options[] =
 {
     { "+[URL]", I18N_NOOP("URL to open"), 0 },
-    KCmdLineLastOption
+    TDECmdLineLastOption
 };
 
 static TDEAboutData aboutData("tdefontview", I18N_NOOP("Font Viewer"), 0, I18N_NOOP("Simple font viewer"),

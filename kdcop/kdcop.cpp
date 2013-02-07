@@ -10,9 +10,9 @@
 
 #include "kdcopwindow.h"
 
-static const KCmdLineOptions options[] =
+static const TDECmdLineOptions options[] =
 {
-    KCmdLineLastOption
+    TDECmdLineLastOption
 };
 
 int main( int argc, char ** argv )

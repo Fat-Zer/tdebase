@@ -40,7 +40,7 @@
 #include <kbookmarkmanager.h>
 #include <kbookmarkexporter.h>
 
-static KCmdLineOptions options[] = {
+static TDECmdLineOptions options[] = {
     {"importmoz <filename>", I18N_NOOP("Import bookmarks from a file in Mozilla format"), 0},
     {"importns <filename>", I18N_NOOP("Import bookmarks from a file in Netscape (4.x and earlier) format"), 0},
     {"importie <filename>", I18N_NOOP("Import bookmarks from a file in Internet Explorer's Favorites format"), 0},
@@ -56,7 +56,7 @@ static KCmdLineOptions options[] = {
     {"customcaption <caption>", I18N_NOOP("Set the user readable caption for example \"Konsole\""), 0},
     {"nobrowser", I18N_NOOP("Hide all browser related functions"), 0},
     {"+[file]", I18N_NOOP("File to edit"), 0},
-    KCmdLineLastOption
+    TDECmdLineLastOption
 };
 
 static void continueInWindow(TQString _wname) {

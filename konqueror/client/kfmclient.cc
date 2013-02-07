@@ -59,13 +59,13 @@ TQCString clientApp::startup_id_str;
 bool clientApp::m_ok = true;
 bool s_interactive = true;
 
-static const KCmdLineOptions options[] =
+static const TDECmdLineOptions options[] =
 {
    { "noninteractive", I18N_NOOP("Non interactive use: no message boxes"), 0},
    { "commands", I18N_NOOP("Show available commands"), 0},
    { "+command", I18N_NOOP("Command (see --commands)"), 0},
    { "+[URL(s)]", I18N_NOOP("Arguments for command"), 0},
-   KCmdLineLastOption
+   TDECmdLineLastOption
 };
 
 extern "C" KDE_EXPORT int kdemain( int argc, char **argv )

@@ -6,10 +6,10 @@
 
 #include "htmlsearch.h"
 
-static KCmdLineOptions options[] =
+static TDECmdLineOptions options[] =
 {
   { "lang <lang>", I18N_NOOP("The language to index"), "en" },
-   KCmdLineLastOption // End of options.
+   TDECmdLineLastOption // End of options.
 };
 
 

@@ -81,11 +81,11 @@ TQString getDocumentPath()
 	return s_documentPath;
 }
 
-static KCmdLineOptions options[] =
+static TDECmdLineOptions options[] =
 {
 	{ "xdgname <argument>", I18N_NOOP("XDG variable name to open"), 0 },
         { "getpath",		I18N_NOOP("Do not launch Konqueror; instead print path to directory if it exists)"), 0 },
-	KCmdLineLastOption
+	TDECmdLineLastOption
 };
 
 int main( int argc, char **argv)

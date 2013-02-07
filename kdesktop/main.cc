@@ -59,7 +59,7 @@ static const char description[] =
 
 static const char version[] = VERSION;
 
-static KCmdLineOptions options[] =
+static TDECmdLineOptions options[] =
 {
    { "x-root", I18N_NOOP("Use this if the desktop window appears as a real window"), 0 },
    { "noautostart", I18N_NOOP("Obsolete"), 0 },
@@ -67,7 +67,7 @@ static KCmdLineOptions options[] =
 #ifdef COMPOSITE
    { "bg-transparency",  I18N_NOOP("Enable background transparency"), 0 },
 #endif
-   KCmdLineLastOption
+   TDECmdLineLastOption
 };
 
 bool argb_visual = false;

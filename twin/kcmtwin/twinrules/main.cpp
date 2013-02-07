@@ -264,12 +264,12 @@ static int edit( Window wid, bool whole_app )
     
 } // namespace
 
-static const KCmdLineOptions options[] =
+static const TDECmdLineOptions options[] =
     {
     // no need for I18N_NOOP(), this is not supposed to be used directly
         { "wid <wid>", "WId of the window for special window settings.", 0 },
         { "whole-app", "Whether the settings should affect all windows of the application.", 0 },
-        KCmdLineLastOption
+        TDECmdLineLastOption
     };
 
 extern "C"

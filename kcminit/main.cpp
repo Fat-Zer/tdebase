@@ -37,11 +37,11 @@
 
 #include <X11/Xlib.h>
 
-static KCmdLineOptions options[] =
+static TDECmdLineOptions options[] =
 {
     { "list", I18N_NOOP("List modules that are run at startup"), 0 },
     { "+module", I18N_NOOP("Configuration module to run"), 0 },
-    KCmdLineLastOption
+    TDECmdLineLastOption
 };
 
 static int ready[ 2 ];

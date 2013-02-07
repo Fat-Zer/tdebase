@@ -153,14 +153,14 @@ bool MyApp::x11EventFilter( XEvent *ev )
 }
 
 
-static KCmdLineOptions options[] =
+static TDECmdLineOptions options[] =
 {
    { "forcelock", I18N_NOOP("Force session locking"), 0 },
    { "dontlock", I18N_NOOP("Only start screensaver"), 0 },
    { "securedialog", I18N_NOOP("Launch the secure dialog"), 0 },
    { "blank", I18N_NOOP("Only use the blank screensaver"), 0 },
    { "internal <pid>", I18N_NOOP("TDE internal command for background process loading"), 0 },
-   KCmdLineLastOption
+   TDECmdLineLastOption
 };
 
 void restore_hidden_override_redirect_windows() {

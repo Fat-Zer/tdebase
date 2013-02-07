@@ -60,12 +60,12 @@ KPanelApplet::Position directionToPosition( int d )
     }
 }
 
-static KCmdLineOptions options[] =
+static TDECmdLineOptions options[] =
 {
   { "+desktopfile", I18N_NOOP("The applet's desktop file"), 0 },
   { "configfile <file>", I18N_NOOP("The config file to be used"), 0 },
   { "callbackid <id>", I18N_NOOP("DCOP callback id of the applet container"), 0 },
-  KCmdLineLastOption
+  TDECmdLineLastOption
 };
 
 extern "C" KDE_EXPORT int kdemain( int argc, char ** argv )

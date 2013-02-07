@@ -29,12 +29,12 @@
 
 #include "tdeio_remote.h"
 
-static const KCmdLineOptions options[] =
+static const TDECmdLineOptions options[] =
 {
 	{ "+protocol", I18N_NOOP( "Protocol name" ), 0 },
 	{ "+pool", I18N_NOOP( "Socket name" ), 0 },
 	{ "+app", I18N_NOOP( "Socket name" ), 0 },
-	KCmdLineLastOption
+	TDECmdLineLastOption
 };
 
 extern "C" {

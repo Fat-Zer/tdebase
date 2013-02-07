@@ -161,11 +161,11 @@ void IndexBuilder::quit()
 }
 
 
-static KCmdLineOptions options[] =
+static TDECmdLineOptions options[] =
 {
   { "+cmdfile", I18N_NOOP("Document to be indexed"), 0 },
   { "+indexdir", I18N_NOOP("Index directory"), 0 },
-  KCmdLineLastOption
+  TDECmdLineLastOption
 };
 
 int main( int argc, char **argv )

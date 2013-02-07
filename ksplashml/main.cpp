@@ -27,14 +27,14 @@
 
 #include "wndmain.h"
 
-static KCmdLineOptions options[] = {
+static TDECmdLineOptions options[] = {
   { "managed", I18N_NOOP("Execute KSplash in MANAGED mode"),0 },
   { "test", I18N_NOOP("Run in test mode"), 0 },
   { "nofork", I18N_NOOP("Do not fork into the background"), 0 },
   { "theme <argument>", I18N_NOOP("Override theme"), "" },
   { "nodcop", I18N_NOOP("Do not attempt to start DCOP server"),0 },
   { "steps <number>", I18N_NOOP("Number of steps"), "7" },
-  KCmdLineLastOption
+  TDECmdLineLastOption
 };
 
 int main( int argc, char **argv )

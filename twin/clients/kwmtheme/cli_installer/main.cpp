@@ -11,10 +11,10 @@
 static const char description[] =
         I18N_NOOP("Installs a KWM theme");
 
-static KCmdLineOptions options[] =
+static TDECmdLineOptions options[] =
 {
     { "+[file]", I18N_NOOP("Path to a theme config file"), 0 },
-    KCmdLineLastOption
+    TDECmdLineLastOption
 };
 
 void copy(const TQString &src, const TQString &dest)

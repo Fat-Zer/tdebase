@@ -37,10 +37,10 @@
 
 #include <X11/Xlib.h>
 
-static const KCmdLineOptions cmdLineOptions[] =
+static const TDECmdLineOptions cmdLineOptions[] =
 {
 	{ "+directory", I18N_NOOP( "Directory to scan for extra bookmarks" ), 0 },
-	KCmdLineLastOption
+	TDECmdLineLastOption
 };
 
 // The code for this function was taken from kdesktop/kcheckrunning.cpp

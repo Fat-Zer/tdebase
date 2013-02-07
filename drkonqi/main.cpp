@@ -42,7 +42,7 @@
 static const char version[] = "1.0";
 static const char description[] = I18N_NOOP( "TDE crash handler gives the user feedback if a program crashed" );
 
-static const KCmdLineOptions options[] =
+static const TDECmdLineOptions options[] =
 {
   {"signal <number>", I18N_NOOP("The signal number that was caught"), 0},
   {"appname <name>",  I18N_NOOP("Name of the program"), 0},
@@ -54,7 +54,7 @@ static const KCmdLineOptions options[] =
   {"startupid <id>", I18N_NOOP("Startup ID of the program"), 0},
   {"tdeinit", I18N_NOOP("The program was started by tdeinit"), 0},
   {"safer", I18N_NOOP("Disable arbitrary disk access"), 0},
-  KCmdLineLastOption
+  TDECmdLineLastOption
 };
 
 int main( int argc, char* argv[] )

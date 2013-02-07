@@ -52,7 +52,7 @@ const char *Version = "1.0";
 
 // NOTE: if you change the position of the -u switch, be sure to adjust it
 // at the beginning of main()
-static KCmdLineOptions options[] = {
+static TDECmdLineOptions options[] = {
     { "+command", I18N_NOOP("Specifies the command to run"), 0 },
     { "c <command>", I18N_NOOP("Specifies the command to run"), "" },
     { "f <file>", I18N_NOOP("Run command under target uid if <file> is not writable"), "" },
@@ -67,7 +67,7 @@ static KCmdLineOptions options[] = {
     { "noignorebutton", I18N_NOOP("Do not display ignore button"), 0 },
     { "i <icon name>", I18N_NOOP("Specify icon to use in the password dialog"), 0},
     { "d", I18N_NOOP("Do not show the command to be run in the dialog"), 0},
-    KCmdLineLastOption
+    TDECmdLineLastOption
 };
 
 

@@ -526,14 +526,14 @@ void KWrite::restore()
   }
 }
 
-static KCmdLineOptions options[] =
+static TDECmdLineOptions options[] =
 {
   { "stdin",    I18N_NOOP("Read the contents of stdin"), 0},
   { "encoding <argument>",      I18N_NOOP("Set encoding for the file to open"), 0 },
   { "line <argument>",      I18N_NOOP("Navigate to this line"), 0 },
   { "column <argument>",      I18N_NOOP("Navigate to this column"), 0 },
   { "+[URL]",   I18N_NOOP("Document to open"), 0 },
-  KCmdLineLastOption
+  TDECmdLineLastOption
 };
 
 extern "C" KDE_EXPORT int kdemain(int argc, char **argv)

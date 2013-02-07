@@ -6,10 +6,10 @@
 #include <stdio.h>
 #include <assert.h>
 
-static KCmdLineOptions options[] =
+static TDECmdLineOptions options[] =
 {
   { "+crash|malloc|div0|assert", "Type of crash.", 0 },
-  KCmdLineLastOption
+  TDECmdLineLastOption
 };
 
 enum CrashType { Crash, Malloc, Div0, Assert };

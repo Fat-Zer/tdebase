@@ -19,10 +19,10 @@
 #include "passwd.h"
 #include "passwddlg.h"
 
-static KCmdLineOptions options[] = 
+static TDECmdLineOptions options[] = 
 {
     { "+[user]", I18N_NOOP("Change password of this user"), 0 },
-    KCmdLineLastOption
+    TDECmdLineLastOption
 };
 
 

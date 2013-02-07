@@ -29,7 +29,7 @@ Copyright (C) 2000 Matthias Ettrich <ettrich@kde.org>
 static const char version[] = "0.4";
 static const char description[] = I18N_NOOP( "The reliable TDE session manager that talks the standard X11R6 \nsession management protocol (XSMP)." );
 
-static const KCmdLineOptions options[] =
+static const TDECmdLineOptions options[] =
 {
    { "r", 0, 0 },
    { "restore", I18N_NOOP("Restores the saved user session if available"), 0},
@@ -37,7 +37,7 @@ static const KCmdLineOptions options[] =
    { "windowmanager <wm>", I18N_NOOP("Starts 'wm' in case no other window manager is \nparticipating in the session. Default is 'twin'"), 0},
    { "windowmanageraddargs <wm>", I18N_NOOP("Pass additional arguments to the window manager. Default is ''"), 0},
    { "nolocal", I18N_NOOP("Also allow remote connections"), 0},
-   KCmdLineLastOption
+   TDECmdLineLastOption
 };
 
 extern KSMServer* the_server;

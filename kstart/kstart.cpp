@@ -250,7 +250,7 @@ void KStart::applyStyle(WId w ) {
 }
 
 // David, 05/03/2000
-static KCmdLineOptions options[] =
+static TDECmdLineOptions options[] =
 {
   { "!+command", I18N_NOOP("Command to execute"), 0 },
   // "!" means: all options after command are treated as arguments to the command
@@ -280,7 +280,7 @@ static KCmdLineOptions options[] =
   { "skiptaskbar", I18N_NOOP("The window does not get an entry in the taskbar"), 0 },
   { "skippager", I18N_NOOP("The window does not get an entry on the pager"), 0 },
   { "tosystray", I18N_NOOP("The window is sent to the system tray in Kicker"), 0 },
-  KCmdLineLastOption
+  TDECmdLineLastOption
 };
 
 int main( int argc, char *argv[] )

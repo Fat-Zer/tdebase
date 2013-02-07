@@ -25,11 +25,11 @@
 
 using namespace KHotKeys;
 
-static const KCmdLineOptions options[] =
+static const TDECmdLineOptions options[] =
     {
     // no need for I18N_NOOP(), this is not supposed to be used directly
         { "id <id>", "Id of the script to add to khotkeysrc.", 0 },
-        KCmdLineLastOption
+        TDECmdLineLastOption
     };
 
 int main( int argc, char* argv[] )

@@ -67,10 +67,10 @@
 
 #include "version.h"
 
-static KCmdLineOptions options[] =
+static TDECmdLineOptions options[] =
 {
    { "test", "Test the basic kasbar code", 0 },
-   KCmdLineLastOption
+   TDECmdLineLastOption
 };
 
 int main( int argc, char **argv )

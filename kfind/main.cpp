@@ -13,10 +13,10 @@
 static const char description[] =
 	I18N_NOOP("TDE file find utility");
 
-static KCmdLineOptions options[] =
+static TDECmdLineOptions options[] =
 {
   { "+[searchpath]", I18N_NOOP("Path(s) to search"), 0 },
-  KCmdLineLastOption
+  TDECmdLineLastOption
 };
 
 int main( int argc, char ** argv )

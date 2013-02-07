@@ -25,11 +25,11 @@
 #include <klocale.h>
 #include <stdlib.h>
 
-static KCmdLineOptions options[] = {
+static TDECmdLineOptions options[] = {
 	{ "d <printer-name>", I18N_NOOP("The printer for which jobs are requested"), 0 },
 	{ "noshow", I18N_NOOP("Show job viewer at startup"), 0},
 	{ "all", I18N_NOOP("Show jobs for all printers"), 0},
-        KCmdLineLastOption
+        TDECmdLineLastOption
 };
 
 

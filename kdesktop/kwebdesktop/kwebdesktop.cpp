@@ -38,13 +38,13 @@
 
 #include "kwebdesktop.moc"
 
-static KCmdLineOptions options[] =
+static TDECmdLineOptions options[] =
 {
   { "+width", I18N_NOOP("Width of the image to create"), 0 },
   { "+height", I18N_NOOP("Height of the image to create"), 0 },
   { "+file", I18N_NOOP("File sname where to dump the output in png format"), 0 },
   { "+[URL]", I18N_NOOP("URL to open (if not specified, it is read from kwebdesktoprc)"), 0 },
-  KCmdLineLastOption
+  TDECmdLineLastOption
 };
 
 KWebDesktopRun::KWebDesktopRun( KWebDesktop* webDesktop, const KURL & url )

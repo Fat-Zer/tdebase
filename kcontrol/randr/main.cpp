@@ -27,10 +27,10 @@
 #include "tderandrapp.h"
 
 static const char tderandrtrayVersion[] = "0.5";
-static const KCmdLineOptions options[] =
+static const TDECmdLineOptions options[] =
 {
 	{ "login", I18N_NOOP("Application is being auto-started at TDE session start"), 0L },
-	KCmdLineLastOption
+	TDECmdLineLastOption
 };
 
 int main(int argc, char **argv)

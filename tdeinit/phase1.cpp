@@ -38,9 +38,9 @@ static const char description[] = I18N_NOOP("TDE Initialization Phase 1");
 
 static const char version[] = "0.1";
 
-static KCmdLineOptions options[] =
+static TDECmdLineOptions options[] =
 {
-	KCmdLineLastOption
+	TDECmdLineLastOption
 };
 
 int main(int argc, char **argv)

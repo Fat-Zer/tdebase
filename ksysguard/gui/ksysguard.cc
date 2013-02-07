@@ -511,10 +511,10 @@ void TopLevel::setSwapInfo( long used, long free, const TQString &unit )
   statusBar()->changeItem( msg, 2 );
 }
 
-static const KCmdLineOptions options[] = {
+static const TDECmdLineOptions options[] = {
   { "showprocesses", I18N_NOOP( "Show only process list of local host" ), 0 },
   { "+[worksheet]", I18N_NOOP( "Optional worksheet files to load" ), 0 },
-  KCmdLineLastOption
+  TDECmdLineLastOption
 };
 
 /*
