@@ -166,7 +166,7 @@ NaughtyApplet::about()
      "(C) 2000 Rik Hemsley (rikkus) <rik@kde.org>"
    );
 
-  KAboutApplication a(&about, this);
+  TDEAboutApplication a(&about, this);
   a.exec();
 }
 

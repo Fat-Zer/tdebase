@@ -508,7 +508,7 @@ void TopLevel::reportBug()
 
 void TopLevel::aboutModule()
 {
-    KAboutApplication dlg(_active->aboutData());
+    TDEAboutApplication dlg(_active->aboutData());
     dlg.exec();
 }
 

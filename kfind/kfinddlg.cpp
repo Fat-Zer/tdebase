@@ -230,7 +230,7 @@ void KfindDlg::copySelection()
 
 void  KfindDlg::about ()
 {
-  KAboutApplication dlg(this, "about", true);
+  TDEAboutApplication dlg(this, "about", true);
   dlg.exec ();
 }
 

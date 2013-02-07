@@ -87,7 +87,7 @@ void TrashApplet::about()
 	               "ervin ipsquad net",
 	               "http://ervin.ipsquad.net");
 
-	KAboutApplication dialog(&data);
+	TDEAboutApplication dialog(&data);
 	dialog.exec();
 }
 

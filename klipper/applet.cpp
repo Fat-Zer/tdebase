@@ -96,7 +96,7 @@ void KlipperApplet::help()
 
 void KlipperApplet::about()
 {
-    KAboutApplication about(this, 0);
+    TDEAboutApplication about(this, 0);
     about.exec();
 }
 

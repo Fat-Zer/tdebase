@@ -500,7 +500,7 @@ void QuickLauncher::about()
                      I18N_NOOP("A simple application launcher"),
                      TDEAboutData::License_GPL_V2, 
                      "(C) 2000 Bill Nagel\n(C) 2004 Dan Bullok\n(C) 2005 Fred Schaettgen");
-    KAboutApplication a(&about, this);
+    TDEAboutApplication a(&about, this);
     a.exec();
 }
 

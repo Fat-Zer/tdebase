@@ -105,7 +105,7 @@ void MediaApplet::about()
                     I18N_NOOP("Good mentor, patient and helpful. Thanks for all!"),
                     "jowenn@kde.org");
     
-    KAboutApplication dialog(&data);
+    TDEAboutApplication dialog(&data);
     dialog.exec();
 }
 
