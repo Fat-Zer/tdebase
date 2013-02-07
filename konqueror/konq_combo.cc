@@ -83,7 +83,7 @@ public:
     void setCompletedItems( const TQStringList& items );
 };
 
-class KonqComboCompletionBox : public KCompletionBox
+class KonqComboCompletionBox : public TDECompletionBox
 {
 public:
     KonqComboCompletionBox( TQWidget *parent, const char *name = 0 );
@@ -108,7 +108,7 @@ KonqCombo::KonqCombo( TQWidget *parent, const char *name )
 
     // We should also connect the completionBox' highlighted signal to
     // our setEditText() slot, because we're handling the signals ourselves.
-    // But we're lazy and let KCompletionBox do this and simply switch off
+    // But we're lazy and let TDECompletionBox do this and simply switch off
     // handling of signals later.
     setHandleSignals( true );
 
@@ -139,7 +139,7 @@ KonqCombo::~KonqCombo()
 {
 }
 
-void KonqCombo::init( KCompletion *completion )
+void KonqCombo::init( TDECompletion *completion )
 {
     setCompletionObject( completion, false ); //KonqMainWindow handles signals
     setAutoDeleteCompletionObject( false );
@@ -838,7 +838,7 @@ void KonqComboLineEdit::setCompletedItems( const TQStringList& items )
 ///////////////////////////////////////////////////////////////////////////////
 
 KonqComboCompletionBox::KonqComboCompletionBox( TQWidget *parent, const char *name )
-                       :KCompletionBox( parent, name ) {}
+                       :TDECompletionBox( parent, name ) {}
 
 void KonqComboCompletionBox::setItems( const TQStringList& items )
 {
@@ -889,9 +889,9 @@ void KonqComboCompletionBox::setItems( const TQStringList& items )
 
     blockSignals( block );
 
-    // Trigger d->down_workaround = true within KCompletionBox
+    // Trigger d->down_workaround = true within TDECompletionBox
     TQStringList dummy;
-    KCompletionBox::insertItems( dummy, 1 );
+    TDECompletionBox::insertItems( dummy, 1 );
 }
 
 void KonqComboCompletionBox::insertStringList( const TQStringList & list, int index )

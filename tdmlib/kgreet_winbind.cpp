@@ -243,7 +243,7 @@ void // virtual
 KWinbindGreeter::loadUsers( const TQStringList &users )
 {
 	allUsers = users;
-	KCompletion *userNamesCompletion = new KCompletion;
+	TDECompletion *userNamesCompletion = new TDECompletion;
 	loginEdit->setCompletionObject( userNamesCompletion );
 	loginEdit->setAutoDeleteCompletionObject( true );
 	loginEdit->setCompletionMode( TDEGlobalSettings::CompletionAuto );

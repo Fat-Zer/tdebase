@@ -25,7 +25,7 @@
 #include <kcombobox.h>
 #include <konq_historymgr.h>
 
-class KCompletion;
+class TDECompletion;
 class TDEConfig;
 
 // we use KHistoryCombo _only_ for the up/down keyboard handling, otherwise
@@ -39,7 +39,7 @@ public:
     ~KonqCombo();
 
     // initializes with the completion object and calls loadItems()
-    void init( KCompletion * );
+    void init( TDECompletion * );
 
     // determines internally if it's temporary or final
     void setURL( const TQString& url );

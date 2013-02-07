@@ -1227,7 +1227,7 @@ void KMenu::initialize()
     else
         m_kcommand->completionObject()->setItems( compList );
 
-    KCompletionBox* box = m_kcommand->completionBox();
+    TDECompletionBox* box = m_kcommand->completionBox();
     if (box)
         box->setActivateOnSelect( false );
 

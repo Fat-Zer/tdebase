@@ -55,8 +55,8 @@ KonqHistoryManager::KonqHistoryManager( TQObject *parent, const char *name )
 
 
     // take care of the completion object
-    m_pCompletion = new KCompletion;
-    m_pCompletion->setOrder( KCompletion::Weighted );
+    m_pCompletion = new TDECompletion;
+    m_pCompletion->setOrder( TDECompletion::Weighted );
 
     // and load the history
     loadHistory();
@@ -619,10 +619,10 @@ bool KonqHistoryManager::loadFallback()
 
 // tries to create a small KonqHistoryEntry out of a string, where the string
 // looks like "http://www.bla.com/bla.html:23"
-// the attached :23 is the weighting from KCompletion
+// the attached :23 is the weighting from TDECompletion
 KonqHistoryEntry * KonqHistoryManager::createFallbackEntry(const TQString& item) const
 {
-    // code taken from KCompletion::addItem(), adjusted to use weight = 1
+    // code taken from TDECompletion::addItem(), adjusted to use weight = 1
     uint len = item.length();
     uint weight = 1;
 

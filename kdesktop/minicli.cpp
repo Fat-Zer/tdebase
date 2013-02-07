@@ -243,7 +243,7 @@ void Minicli::loadConfig()
   int mode = KDesktopSettings::completionMode();
   m_dlg->cbCommand->setCompletionMode( (TDEGlobalSettings::Completion) mode );
 
-  KCompletionBox* box = m_dlg->cbCommand->completionBox();
+  TDECompletionBox* box = m_dlg->cbCommand->completionBox();
   if (box)
     box->setActivateOnSelect( false );
 
@@ -263,8 +263,8 @@ void Minicli::loadConfig()
     users << TQString::fromLocal8Bit(pw->pw_name);
   endpwent();
 
-  KCompletion *completion = new KCompletion;
-  completion->setOrder(KCompletion::Sorted);
+  TDECompletion *completion = new TDECompletion;
+  completion->setOrder(TDECompletion::Sorted);
   completion->insertItems (users);
 
   m_dlg->leUsername->setCompletionObject(completion, true);

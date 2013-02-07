@@ -37,7 +37,7 @@
 
 #include <libkonq_export.h>
 
-class KCompletion;
+class TDECompletion;
 
 
 typedef TQPtrList<KonqHistoryEntry> KonqBaseHistoryList;
@@ -69,7 +69,7 @@ protected:
  * Konqueror instance. Additionally it synchronizes the history with other
  * Konqueror instances via DCOP to keep one global and persistant history.
  *
- * It keeps the history in sync with one KCompletion object
+ * It keeps the history in sync with one TDECompletion object
  */
 class LIBKONQ_EXPORT KonqHistoryManager : public KParts::HistoryProvider,
 			   public KonqHistoryComm
@@ -164,9 +164,9 @@ public:
     void removePending( const KURL& url );
 
     /**
-     * @returns the KCompletion object.
+     * @returns the TDECompletion object.
      */
-    KCompletion * completionObject() const { return m_pCompletion; }
+    TDECompletion * completionObject() const { return m_pCompletion; }
 
     /**
      * @returns the list of all history entries, sorted by date
@@ -370,7 +370,7 @@ private:
     TQ_UINT32 m_maxCount;   // maximum of history entries
     TQ_UINT32 m_maxAgeDays; // maximum age of a history entry
 
-    KCompletion *m_pCompletion; // the completion object we sync with
+    TDECompletion *m_pCompletion; // the completion object we sync with
 
     /**
      * A timer that will emit the KParts::HistoryProvider::updated() signal

@@ -123,7 +123,7 @@ template class TQPtrList<TDEToggleAction>;
 
 TQPtrList<KonqMainWindow> *KonqMainWindow::s_lstViews = 0;
 TDEConfig * KonqMainWindow::s_comboConfig = 0;
-KCompletion * KonqMainWindow::s_pCompletion = 0;
+TDECompletion * KonqMainWindow::s_pCompletion = 0;
 TQFile * KonqMainWindow::s_crashlog_file = 0;
 bool KonqMainWindow::s_preloaded = false;
 KonqMainWindow* KonqMainWindow::s_preloadedWindow = 0;
@@ -3287,8 +3287,8 @@ void KonqMainWindow::initCombo()
            TQT_SLOT( slotMakeCompletion( const TQString& )));
   connect( m_combo, TQT_SIGNAL( substringCompletion( const TQString& )),
            TQT_SLOT( slotSubstringcompletion( const TQString& )));
-  connect( m_combo, TQT_SIGNAL( textRotation( KCompletionBase::KeyBindingType) ),
-           TQT_SLOT( slotRotation( KCompletionBase::KeyBindingType )));
+  connect( m_combo, TQT_SIGNAL( textRotation( TDECompletionBase::KeyBindingType) ),
+           TQT_SLOT( slotRotation( TDECompletionBase::KeyBindingType )));
   connect( m_combo, TQT_SIGNAL( cleared() ),
            TQT_SLOT ( slotClearHistory() ) );
   connect( m_pURLCompletion, TQT_SIGNAL( match(const TQString&) ),
@@ -3382,17 +3382,17 @@ void KonqMainWindow::slotSubstringcompletion( const TQString& text )
     m_combo->setCompletedItems( items );
 }
 
-void KonqMainWindow::slotRotation( KCompletionBase::KeyBindingType type )
+void KonqMainWindow::slotRotation( TDECompletionBase::KeyBindingType type )
 {
   // Tell slotMatch() to do nothing
   m_urlCompletionStarted = false;
 
-  bool prev = (type == KCompletionBase::PrevCompletionMatch);
-  if ( prev || type == KCompletionBase::NextCompletionMatch ) {
+  bool prev = (type == TDECompletionBase::PrevCompletionMatch);
+  if ( prev || type == TDECompletionBase::NextCompletionMatch ) {
     TQString completion = prev ? m_pURLCompletion->previousMatch() :
                                 m_pURLCompletion->nextMatch();
 
-    if( completion.isNull() ) { // try the history KCompletion object
+    if( completion.isNull() ) { // try the history TDECompletion object
         completion = prev ? s_pCompletion->previousMatch() :
                             s_pCompletion->nextMatch();
     }
@@ -5550,10 +5550,10 @@ static TQString hp_tryPrepend( const TQString& s )
 }
 
 
-static void hp_removeDupe( KCompletionMatches& l, const TQString& dupe,
-    KCompletionMatches::Iterator it_orig )
+static void hp_removeDupe( TDECompletionMatches& l, const TQString& dupe,
+    TDECompletionMatches::Iterator it_orig )
 {
-    for( KCompletionMatches::Iterator it = l.begin();
+    for( TDECompletionMatches::Iterator it = l.begin();
          it != l.end();
          ) {
         if( it == it_orig ) {
@@ -5572,14 +5572,14 @@ static void hp_removeDupe( KCompletionMatches& l, const TQString& dupe,
 // remove duplicates like 'http://www.kde.org' and 'http://www.kde.org/'
 // (i.e. the trailing slash)
 // some duplicates are also created by prepending protocols
-static void hp_removeDuplicates( KCompletionMatches& l )
+static void hp_removeDuplicates( TDECompletionMatches& l )
 {
     TQString http = "http://";
     TQString ftp = "ftp://ftp.";
     TQString file = "file:";
     TQString file2 = "file://";
     l.removeDuplicates();
-    for( KCompletionMatches::Iterator it = l.begin();
+    for( TDECompletionMatches::Iterator it = l.begin();
          it != l.end();
          ++it ) {
         TQString str = (*it).value();
@@ -5602,9 +5602,9 @@ static void hp_removeDuplicates( KCompletionMatches& l )
     }
 }
 
-static void hp_removeCommonPrefix( KCompletionMatches& l, const TQString& prefix )
+static void hp_removeCommonPrefix( TDECompletionMatches& l, const TQString& prefix )
 {
-    for( KCompletionMatches::Iterator it = l.begin();
+    for( TDECompletionMatches::Iterator it = l.begin();
          it != l.end();
          ) {
         if( (*it).value().startsWith( prefix )) {
@@ -5617,7 +5617,7 @@ static void hp_removeCommonPrefix( KCompletionMatches& l, const TQString& prefix
 
 // don't include common prefixes like 'http://', i.e. when s == 'h', include
 // http://hotmail.com but don't include everything just starting with 'http://'
-static void hp_checkCommonPrefixes( KCompletionMatches& matches, const TQString& s )
+static void hp_checkCommonPrefixes( TDECompletionMatches& matches, const TQString& s )
 {
     static const char* const prefixes[] = {
         "http://",
@@ -5652,7 +5652,7 @@ TQStringList KonqMainWindow::historyPopupCompletionItems( const TQString& s)
     const TQString file2 = "file://";
     if( s.isEmpty())
 	    return TQStringList();
-    KCompletionMatches matches= s_pCompletion->allWeightedMatches( s );
+    TDECompletionMatches matches= s_pCompletion->allWeightedMatches( s );
     hp_checkCommonPrefixes( matches, s );
     bool checkDuplicates = false;
     if ( !s.startsWith( ftp ) ) {

@@ -494,7 +494,7 @@ protected slots:
   void slotCompletionModeChanged( TDEGlobalSettings::Completion );
   void slotMakeCompletion( const TQString& );
   void slotSubstringcompletion( const TQString& );
-  void slotRotation( KCompletionBase::KeyBindingType );
+  void slotRotation( TDECompletionBase::KeyBindingType );
   void slotMatch( const TQString& );
   void slotClearHistory();
   void slotClearComboHistory();
@@ -730,7 +730,7 @@ private:
   static TDEConfig *s_comboConfig;
   KURLCompletion *m_pURLCompletion;
   // just a reference to KonqHistoryManager's completionObject
-  static KCompletion *s_pCompletion;
+  static TDECompletion *s_pCompletion;
 
   ToggleViewGUIClient *m_toggleViewGUIClient;
 

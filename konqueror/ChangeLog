@@ -270,7 +270,7 @@
 Sat Nov 25 17:38:27 2000  Carsten Pfeiffer  <pfeiffer@kde.org>
 
 	* konq_mainwindow.cc: Completion handling overhauled. We have
-	one KonqHistoryManager, which holds a KCompletion object and syncs
+	one KonqHistoryManager, which holds a TDECompletion object and syncs
 	the history with the completion.
 
 	* konq_view.cc: 

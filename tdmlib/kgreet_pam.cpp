@@ -219,7 +219,7 @@ KPamGreeter::~KPamGreeter()
 void // virtual
 KPamGreeter::loadUsers( const TQStringList &users )
 {
-	KCompletion *userNamesCompletion = new KCompletion;
+	TDECompletion *userNamesCompletion = new TDECompletion;
 	userNamesCompletion->setItems( users );
 	loginEdit->setCompletionObject( userNamesCompletion );
 	loginEdit->setAutoDeleteCompletionObject( true );
